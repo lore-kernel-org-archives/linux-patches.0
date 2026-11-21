@@ -1,13 +1,13 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=205.220.165.32
+Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=205.220.177.32
 ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=pass;
-	t=1795267574;
-	b=u3CZd2HhOpxDLgPB+63XSnWjT6+8QRGQk7Q9CEDYRQYs1QZA9R+L5QtR1m21haFOLOk7
-	 FyJrzKnCXVB36b3jm1Qv87n/oVr17GD+YkmJtUUwHDguzWhBC/VfBcaKN3ytBKy28ZuPc
-	 JaGAaT1XikE2m7i0ljTQxxl+lc8ITY9Sd1sxQjhEXEsQIQdXKFQuHDga5IfEBFMkSSP8v
-	 o9RpEHz5dTWiLdhlNk++VeN90/GH2nTj6cGX4SRTKUsiC46dj8SUNUEcoG/bmv3fMMxJw
-	 nnUN9//pjGZLv9RHPx8iDGZNVR8n3uk3NOeu8W9bI8S2EdGCBqXxaZYotRgUVEVZlPg==
+	t=1795267824;
+	b=bal4PcFI3Ewus4sp3IKRqy5iVN5JjU5x5q1bukLPoepwJV9MReXV7mKI3t9eU8opvaFj
+	 G9JPmiB776vvo1gQBikRWtNivERv2EKjBlNU9DeMpuPppKNZA2qYijh5dPsTH3DCkcuqV
+	 oKIduS26P4r3B/amSk7Iyc6TjMQrmZohsm/WMnxpueobfpvCrhdXb/TSalVtYoqwcbNoI
+	 iVmaJS0jIRb7eAEvUwSjWT8PO8aaGgJ2Cx5q3xJafm/1DMiz8xXyew1o4MwhUoaXWT9Wk
+	 mxEe9KeK4cIq0rynOufwWcbPCMkaKcnjHMWflnFOO/kO32w/z2GTz+cP2Q6/HyuJubw==
 ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795267574;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795267824;
 	h=DMARC-Filter:Received:DKIM-Signature:Received:Received:Received:
 	 DKIM-Signature:Received:Received:Message-ID:Date:User-Agent:Subject:
 	 To:Cc:References:From:Content-Language:In-Reply-To:Content-Type:
@@ -28,108 +28,99 @@ ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
 	 X-MS-Exchange-CrossTenant-UserPrincipalName:
 	 X-MS-Exchange-Transport-CrossTenantHeadersStamped:
 	 X-Proofpoint-Virus-Version:X-Proofpoint-Spam-Details:
-	 X-Authority-Analysis:X-Proofpoint-Spam-Details-Enc:
-	 X-Proofpoint-Spam-Info:X-Proofpoint-ORIG-GUID:X-Proofpoint-GUID;
-	bh=tPnqgvFCwMmJ4MHzaJ6X5JLO2/YKyz6gyWkvZc4PpEg=;
-	b=bH+IyAECi1wisSAYnWlEHhVHwzDqRRuFvpZuXXpwXrp0VdwOm8RL88vbmxIfGZYhDqU6
-	 EieFDkwW0Mv6As8r6WV9hVekXIARJjjsfq1NU8Ty9zTNVRCkkVmhxoFm4trhbvfMvRc53
-	 QM4eVCSTQi7UgWKvSb0QQ3CzhzkyZiCZ7gmyiZCs0P+2tBG4jbVYiuPyyCTL0LTU9ARUp
-	 Sso7hnihVRKapV6nh7RzCEqtH2IcraTi8/ncLa/jNf0WyGfp2uLJyTkaCBd+UggALLR9F
-	 dkF/9YrqXakC1qvurK2emdtyoGebeqU72vIuYGDNPh8IbBOF1D0OIY3N1S+/yaJnbKA==
+	 X-Authority-Analysis:X-Proofpoint-GUID:X-Proofpoint-Spam-Details-Enc:
+	 X-Proofpoint-ORIG-GUID:X-Proofpoint-Spam-Info;
+	bh=oqwULVS8LtvCG85qZy0IqYiHnK5jNMIbmanCJdWgaNU=;
+	b=HZTev2CfPivn2eDWxYr8vHpNLDC6E5q7VnUr00EKKPKRFrWfWkv2OsWFbAlHDXZ/lpEk
+	 S+nF3B/FG5NGsRin/V4P+1xcpV8dusX6F0FgOAyCCTnTX0QVbX7dja81jH5IXvj0XTm3a
+	 pT8NlWrkgoO/hmX3DoBcdP4OvQnylZ1PTxEGpwQo+aGd5iCBsG8sLqRuIqWLpJCAqmApA
+	 /ae9BGPRp0alebweIEpGY0oCp6ZUF4fVrkseXJNKMixW3/OhYOsrg6k35bGPxZwMmfDiq
+	 vUVSzOG0abGBKIJSpfnCEpDzhjyKjSsqbsWX3ONvItZRBjSWgMmq4lIQoC+YAZ03HQw==
 ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
 	dmarc=pass header.from=oracle.com;
 	spf=pass smtp.mailfrom=oracle.com;
-	dkim=pass header.d=oracle.com header.i=@oracle.com header.a=rsa-sha256 header.s=corp-2025-04-25 header.b=nIigFKPf;
-	dkim=pass header.d=oracle.onmicrosoft.com header.i=@oracle.onmicrosoft.com header.a=rsa-sha256 header.s=selector2-oracle-onmicrosoft-com header.b=GAyXBeye;
-	arc=pass header.oldest-pass=0 smtp.remote-ip=205.220.165.32
-Received: from mx0a-00069f02.pphosted.com (mx0a-00069f02.pphosted.com [205.220.165.32])
+	dkim=pass header.d=oracle.com header.i=@oracle.com header.a=rsa-sha256 header.s=corp-2025-04-25 header.b=ZW82gx6V;
+	dkim=pass header.d=oracle.onmicrosoft.com header.i=@oracle.onmicrosoft.com header.a=rsa-sha256 header.s=selector2-oracle-onmicrosoft-com header.b=M0iK1aKs;
+	arc=pass header.oldest-pass=0 smtp.remote-ip=205.220.177.32
+Received: from mx0b-00069f02.pphosted.com (mx0b-00069f02.pphosted.com [205.220.177.32])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9D2A4606A320
-	for <patches@lists.linux.dev>; Sat, 21 Nov 2026 13:26:13 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 9D2A4606A320
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3D988606A32A;
+	Sat, 21 Nov 2026 13:30:23 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 3D988606A32A
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oracle.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oracle.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=oracle.com header.i=@oracle.com header.a=rsa-sha256 header.s=corp-2025-04-25 header.b=nIigFKPf;
-	dkim=pass (1024-bit key) header.d=oracle.onmicrosoft.com header.i=@oracle.onmicrosoft.com header.a=rsa-sha256 header.s=selector2-oracle-onmicrosoft-com header.b=GAyXBeye
-Received: from pps.filterd (m0246627.ppops.net [127.0.0.1])
-	by mx0b-00069f02.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 6ALCpp3w502420;
-	Sat, 21 Nov 2026 13:25:41 GMT
+	dkim=pass (2048-bit key) header.d=oracle.com header.i=@oracle.com header.a=rsa-sha256 header.s=corp-2025-04-25 header.b=ZW82gx6V;
+	dkim=pass (1024-bit key) header.d=oracle.onmicrosoft.com header.i=@oracle.onmicrosoft.com header.a=rsa-sha256 header.s=selector2-oracle-onmicrosoft-com header.b=M0iK1aKs
+Received: from pps.filterd (m0246632.ppops.net [127.0.0.1])
+	by mx0b-00069f02.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 6ALBxT1x1985491;
+	Sat, 21 Nov 2026 13:30:11 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=oracle.com; h=cc
 	:content-transfer-encoding:content-type:date:from:in-reply-to
 	:message-id:mime-version:references:subject:to; s=
-	corp-2025-04-25; bh=tPnqgvFCwMmJ4MHzaJ6X5JLO2/YKyz6gyWkvZc4PpEg=; b=
-	nIigFKPfF3e1Ds7MWMgNxv3y9Dep8U09fXxJmGUYJHRyXS3/zVkX+YvEzSzeer14
-	yJlbRCgxvoLbLkjzB6EglOpKmFv7y5odgrvDvr1pjR8QZFHwc0pkvYwcmxSSIajI
-	gNaYfteba/NsKCoYK+EkWYAjcaVkXa/9ml2Pp7Vx1mechl+3/V1edeJ6piV16A1h
-	mKagSV4d5KLMGEHhqSztCzsWHivhfyJAp3NivmcBdhSu4UTfmZvlarh4UIUOxjLQ
-	qIf8k5IT7f35lm+AbVnp1evs0lkGXZeyK1DfP4xvSeq7uuQ7J9qQfTQw4Casv+2m
-	kLIgsyTt4W/xs4jxKPrJAg==
-Received: from phxpaimrmta01.imrmtpd1.prodappphxaev1.oraclevcn.com (phxpaimrmta01.appoci.oracle.com [138.1.114.2])
-	by mx0b-00069f02.pphosted.com (PPS) with ESMTPS id 4j34r6r6k4-1
+	corp-2025-04-25; bh=oqwULVS8LtvCG85qZy0IqYiHnK5jNMIbmanCJdWgaNU=; b=
+	ZW82gx6Vjbcgy+JJyBp/gm7fnKigYnvoMyLH9X1VMThhjJilj0dIkJ9OFQPShreA
+	yG7RcWn73q+kGeHIzuYv1cuXw6+XJOCECHSN+UNfIg6epUz7cD4/a2Hy/LzycFVV
+	MrR7BQ21+3q8cFHD/MrEGD6p+Ye/j+v68H8UqoJnZ39A+XaKDkGceroS0+yoqYui
+	7SA4qxwREwYOUcBOJf5g3Vs9jPrI1n00VOawBfZKJrqLnNSkt0v9a4R335l4M6KF
+	4Z8z046nDGBcNV1MnmEE/6mE9gZCW91HQmQTwogTWqtZ7EBL7k4MCaFmlyBAzLG3
+	/YYcnFVPsZKT6kKRP+cqAg==
+Received: from phxpaimrmta03.imrmtpd1.prodappphxaev1.oraclevcn.com (phxpaimrmta03.appoci.oracle.com [138.1.37.129])
+	by mx0b-00069f02.pphosted.com (PPS) with ESMTPS id 4j34t50708-1
 	(version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384 bits=256 verify=OK);
-	Sat, 21 Nov 2026 13:25:41 +0000 (GMT)
-Received: from pps.filterd (phxpaimrmta01.imrmtpd1.prodappphxaev1.oraclevcn.com [127.0.0.1])
-	by phxpaimrmta01.imrmtpd1.prodappphxaev1.oraclevcn.com (8.18.1.11/8.18.1.11) with ESMTP id 6ALD2vPI3777953;
-	Sat, 21 Nov 2026 13:25:41 GMT
-Received: from bn8pr05cu002.outbound.protection.outlook.com (mail-eastus2azon11011025.outbound.protection.outlook.com [52.101.57.25])
-	by phxpaimrmta01.imrmtpd1.prodappphxaev1.oraclevcn.com (PPS) with ESMTPS id 4j31qybtv2-1
+	Sat, 21 Nov 2026 13:30:11 +0000 (GMT)
+Received: from pps.filterd (phxpaimrmta03.imrmtpd1.prodappphxaev1.oraclevcn.com [127.0.0.1])
+	by phxpaimrmta03.imrmtpd1.prodappphxaev1.oraclevcn.com (8.18.1.11/8.18.1.11) with ESMTP id 6ALCHl9d309383;
+	Sat, 21 Nov 2026 13:30:10 GMT
+Received: from cy7pr03cu001.outbound.protection.outlook.com (mail-westcentralusazon11010016.outbound.protection.outlook.com [40.93.198.16])
+	by phxpaimrmta03.imrmtpd1.prodappphxaev1.oraclevcn.com (PPS) with ESMTPS id 4j39jgan5s-1
 	(version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384 bits=256 verify=FAIL);
-	Sat, 21 Nov 2026 13:25:41 +0000 (GMT)
+	Sat, 21 Nov 2026 13:30:10 +0000 (GMT)
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=j/fhRYUEk0vmqO39hBP/JZ/dfyWPai/0mgq9D5VxgUoxofVopnlhcr4gFzdyMhQqq16WTj/cm6yHTda/aoGXqMMWHUjZ3jdQrw7S4Jl3BSxDQW5WpcpN0MfqoIOYXH4/7NIPQVy1Y52yC5E5Npe5vda3mbS7mdCYFWwegOp55JHTw3xcPTb8V9c5hxZJMLAEmqBDGOLVPtBn9iZTUtxQCQGdvHnyra2fyo9JxT2Ny7EJ2PIJjzi+0UNQmJYbtezp8A/mDWYoxoBBM8RBmNAWHUzchFf7Cmf1J0VU7ScLpl5lEOWNAEYcE82LBLovSgznCFauIKh11FKakmc4Asq3cg==
+ b=JUN7TBeR5JUc9ZhZLIBrybRFBx1cWYkb2sItVVt2cPkFAeLhhm3mjGPDNQ8FeHxlEfUPRLuTXz3DKc5ub8Ba5VOr9kIu4ml3GW2fDcYkKmo8L+AwV/4uUKtUSfqMpVo73KzS/TuDMAEc0wnlcPBwG7k/lIzk6SIv/qQ1L/Rzoyc+ZjH3H9wejG+tFQdzgMpzhd6XSXjD7lx73zh19zQBX+o5GoRpukpDfxqxonDsVFg1X6tbV9UtoEjdQCdnFNP74A+69tcVV0G1H3VvyCSIDbzqnTQ8yNlriEji91590xV2yfYP+JNwO1YqGg1d+Qzj5BLy/9e6quVaqe8mAkdFvA==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=tPnqgvFCwMmJ4MHzaJ6X5JLO2/YKyz6gyWkvZc4PpEg=;
- b=fhoUKbU8BR8KKGEAYvcjrvlEmpUG1la2GWOyuQbzuYMYMBuiNnvD2KcKIfdH1aqKt3hR4y54T/EAJBdXbG4BOQ8AE1yA3RMGfdkoNF3sYONTgWZmlREgFwnvX8ZevxgKcPB3t0mnvIO1PD66+vCeOdVdVDUAsYFTvOUbdIsmoSpJRAi1dq+oKwLMw6p6FfhU3t4RtVnDEJt1lLts6mBltt/QW5M6LGyP6JNKg+uKHLZ/YGMGfoLD99eEeo54a0W983WE/RLtxAsvEQRT+mxc5JUhtjOT8NW3zKexHwNPYIg17qxeeR7Z64QqEaipzQLtW/2zrTaTsSnC/hvu8F6itw==
+ bh=oqwULVS8LtvCG85qZy0IqYiHnK5jNMIbmanCJdWgaNU=;
+ b=QRV0KlAXeUWRKJB14gU4+J7KtX81Jegor6l7Ka8baYVABlMuuJaTAtrA1Z5g1N58CK6OpwxxB4c+8JBfJ9WU+dU98GSyGVzz3RIdsibwAoCcOj06iaQ6YSFwAIAzzOBYZahsXga3wHuUBXR024YxunxYBExOO1GXCfw1KQGoq/6nBTFxsk9d3A5LU44MfZ2fvma8h/oWQzE7ppicTSGT7QeAdYzGBf0aMODhuoycrmWUCKAQqBLIKSza6NTd4tvrQMxoMTEw4S+ieqilxMU7ZZiitKjRKf0VKENQvIyU4Gc66hpyHnwYNoz4p8ccRqkMN3IYe+AFZh8JaoSpE9OTVQ==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
  smtp.mailfrom=oracle.com; dmarc=pass action=none header.from=oracle.com;
  dkim=pass header.d=oracle.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=oracle.onmicrosoft.com; s=selector2-oracle-onmicrosoft-com;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=tPnqgvFCwMmJ4MHzaJ6X5JLO2/YKyz6gyWkvZc4PpEg=;
- b=GAyXBeyeIkBw2hod4bsU3z1DTx8BAgRC2qBgFUxQWHunA0uCRcFJYnXMGBRYVDrp7buYCPDrlWQP39SJB6OX0+RP0hTZr9IYtLjQmUdPc0QpdRmKporL8H8enbkrL73SKE5cE6xV7lYd5Kl0IE+RXV5LSGG4J3g3fGuCX8FQBE4=
+ bh=oqwULVS8LtvCG85qZy0IqYiHnK5jNMIbmanCJdWgaNU=;
+ b=M0iK1aKsB/JwtNpnMG51RaXyN978CeKSSshL46IRoQi7z09rPPkun1tgfNfh9XeMh1wZBC+HXLQN48GwSI7/7/G6TS+hq7sO5vmBytoES1nMPTwyPk6lOEx6iZ/C2aUIFqvceankKpqXZv4YizIAe1lCKv6sqejs3I5y0Sx/HHs=
 Authentication-Results: mx.microsoft.com 1; dkim=none (message not signed)
  header.d=none;dmarc=none action=none header.from=oracle.com;
 Received: from SJ0PR10MB5834.namprd10.prod.outlook.com (2603:10b6:a03:3ee::16)
  by CO1PR10MB4467.namprd10.prod.outlook.com (2603:10b6:303:90::22) with
  Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.639.12; Sat, 21 Nov
- 2026 13:25:37 +0000
+ 2026 13:30:07 +0000
 Received: from SJ0PR10MB5834.namprd10.prod.outlook.com
  ([fe80::2444:1d33:3ce:d83a]) by SJ0PR10MB5834.namprd10.prod.outlook.com
  ([fe80::2444:1d33:3ce:d83a%6]) with mapi id 15.21.0615.009; Sat, 21 Nov 2026
- 13:25:36 +0000
-Message-ID: <f6984afc-c689-48b9-89e2-950408695005@oracle.com>
-Date: Sat, 21 Nov 2026 18:55:27 +0530
+ 13:30:07 +0000
+Message-ID: <7917cf01-8390-42da-9110-b0ac64ed01c6@oracle.com>
+Date: Sat, 21 Nov 2026 19:00:00 +0530
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 5.15 0621/2214] mm/page_alloc: do not boost watermarks in
- kdump capture kernels
+Subject: Re: [PATCH 5.15 0674/2214] drm/amdgpu: require _PR3 for BOCO
 To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org,
-        Sasha Levin <sashal@kernel.org>, hbathini@linux.ibm.com,
-        Michael Ellerman <mpe@ellerman.id.au>
-Cc: patches@lists.linux.dev, Yuanhe Shu <xiangzao@linux.alibaba.com>,
-        Andrew Morton <akpm@linux-foundation.org>,
-        "Vlastimil Babka (SUSE)" <vbabka@kernel.org>,
-        Johannes Weiner <hannes@cmpxchg.org>,
-        Brendan Jackman <brendan.jackman@linux.dev>,
-        David Hildenbrand <david@kernel.org>,
-        Mel Gorman <mgorman@techsingularity.net>,
-        Michal Hocko <mhocko@suse.com>, Suren Baghdasaryan <surenb@google.com>,
-        Zi Yan <ziy@nvidia.com>
+        Sasha Levin <sashal@kernel.org>
+Cc: patches@lists.linux.dev, Alex Deucher <alexander.deucher@amd.com>,
+        Luigi Lauro <luigi.lauro@gmail.com>
 References: <20261118150009.797899913@linuxfoundation.org>
- <20261118150036.223618798@linuxfoundation.org>
+ <20261118150038.771283640@linuxfoundation.org>
 From: Harshit Mogalapalli <harshit.m.mogalapalli@oracle.com>
 Content-Language: en-US
-In-Reply-To: <20261118150036.223618798@linuxfoundation.org>
+In-Reply-To: <20261118150038.771283640@linuxfoundation.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: FR2P281CA0180.DEUP281.PROD.OUTLOOK.COM
- (2603:10a6:d10:9f::9) To SJ0PR10MB5834.namprd10.prod.outlook.com
+X-ClientProxiedBy: FR0P281CA0206.DEUP281.PROD.OUTLOOK.COM
+ (2603:10a6:d10:ad::15) To SJ0PR10MB5834.namprd10.prod.outlook.com
  (2603:10b6:a03:3ee::16)
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -142,244 +133,202 @@ Precedence: list
 MIME-Version: 1.0
 X-MS-PublicTrafficType: Email
 X-MS-TrafficTypeDiagnostic: SJ0PR10MB5834:EE_|CO1PR10MB4467:EE_
-X-MS-Office365-Filtering-Correlation-Id: b8e71181-f7f4-494e-0b6a-08df47d2edc3
+X-MS-Office365-Filtering-Correlation-Id: 59771906-7d5f-4479-e37a-08df47d38ea6
 X-MS-Exchange-SenderADCheck: 1
 X-MS-Exchange-AntiSpam-Relay: 0
 X-Microsoft-Antispam:
-	BCL:0;ARA:13230040|1800799024|366016|7416014|376014|23010399003|6133799003|18002099003|22082099003|261009223027099003|3023799007|261021135927099003|261021123027099003|261021121427099003|261026140227099003|261026121527099003|261022075727099003|261022105027099003|261028144727099003|4143699003|56012099006|10067099003|261102123227099003|5023799004;
+	BCL:0;ARA:13230040|1800799024|366016|376014|23010399003|18002099003|22082099003|261009223027099003|261021123027099003|261021121427099003|261026140227099003|261026121527099003|261022075727099003|261022105027099003|261028144727099003|4143699003|56012099006|10067099003|261102123227099003|5023799004;
 X-Microsoft-Antispam-Message-Info:
-	Nupa1kBPxfsBo4yEIB211aaBYzj/wMp7Qh+7cSdmqoGIRkIswm4QDUacNAkpx4JFyO1FbHqSOAC4FibdWFkCVZ2Qxja0GYIa+Y5B7m9+Ue0Wfpw9iN2SE1xpIhr72SWVwEjqRnTnquq9USH7i1+hjL9TlRgevmsv894iFhmIR2Z+seKO3JoC4e8w5YKwcI/qDpVck1akiADNtn8okw5+uhhqMNbhgnYzPXVcbeQFIrogGkByeyB2w6vzgI4rJ7b+R2sVl0+2RlDvE8uGgnzIJbqR2FeYkXfhPvuVtmW8XNzteRa6uDzDZpFzGYOlR4aYCQK8YGrxhbrwMbDyN+jeRAyTmkdJAhHf5hj1E/z13O4oK1Slm3412iMwtrbG9Bz8SlL46Tpguc2+z+hiw4MwFj7yYY1Wxhnsr/kAlnK9ThsM/wBwP1LtJVqrKMHgAGDTjKREcdlWnp4XzEvEXDqyzMbDHMuFup0Nk1Bx8tOHFWMfHWmWtMMVVqa2ImpKcD++by1EhbVqo6orcFXQoNNoXPW+pKCykfN92y5Fm692FnXni9PK2Gi8DWT83B3y2aNSWZEsoH7Y7RU+dnhhQRgLxqULMUESNIZHd0aJkEYGH7Q=
+	4Zb0eIIQKj7590b3QJJHlDSwA8aDudybquqsQjIks0HPuWM6cl/iRp8g1QDNmJVmrFqopgpjoiU483Is7IVDWQ2NmqPkHmdfpxwTlekAvWbqnQkjqfH53rReL6qep7LbJVsdEBBKhtGJ1cPMqaa5JBbe+4IBqKxubn0szt/iV8HrPerevg0t6ZACXuuuE8nnSPiByGLG3vh65hxW6KZBs/s4rmQNbCtiDn0nwzS1cp3JodSSI0xfhsMQNl4P5ct6BC1WjQP8vyquW/XaTfpG1GzkHiTPmFjTtSTEGZzENvIgqJ5Ezdl5vLcpurRqhO6MYCfyflUFAjYjCAHVc9afDweOhiowC5p4lDhwxG4shEo7RtSERHZfMq4/+p6INtU9QXoywf9o5Af46XiaocVUFL1yTik5+6U7cVzL8AUjtJrjEoASLITsjNY5PTreY6pVmEXLT/qsm4Zvsg3DSgOJ49/TeniNi6XzOwsl99xjaijTQ1vS+3NQGV8ZEEz/pTLkPz6W2XQqa0L3CSvDBvYXy6QEuqmrlFSG4J9xUZicctptGq7+75KNF62+QS9TZRzSjeX+1/ssl7+Lrd539OTFd0WhDzz2XsUw9YLuONONGA0/odw7Hutlw/oiTi+EqKdN
 X-Forefront-Antispam-Report:
-	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:SJ0PR10MB5834.namprd10.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(1800799024)(366016)(7416014)(376014)(23010399003)(6133799003)(18002099003)(22082099003)(261009223027099003)(3023799007)(261021135927099003)(261021123027099003)(261021121427099003)(261026140227099003)(261026121527099003)(261022075727099003)(261022105027099003)(261028144727099003)(4143699003)(56012099006)(10067099003)(261102123227099003)(5023799004);DIR:OUT;SFP:1101;
+	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:SJ0PR10MB5834.namprd10.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(1800799024)(366016)(376014)(23010399003)(18002099003)(22082099003)(261009223027099003)(261021123027099003)(261021121427099003)(261026140227099003)(261026121527099003)(261022075727099003)(261022105027099003)(261028144727099003)(4143699003)(56012099006)(10067099003)(261102123227099003)(5023799004);DIR:OUT;SFP:1101;
 X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
 X-MS-Exchange-AntiSpam-MessageData-0:
-	=?utf-8?B?enp2RlNMN2hvaG1ZVmNQTEdKMGxVei9HdTVUMnhOcVdpdy8vRWRjTVc2dkNL?=
- =?utf-8?B?aHl4VllhNzZZZ1g2NDIrU2pGZk1WY3pCUGtzTEhjNXRRQ3htVk4yKzFVay9w?=
- =?utf-8?B?WFBHQ2pCOHQwQ1J5YjIwT0FSZHBCSEd3TG5WSXpoZGpPVm1QR3VLaThMUU5q?=
- =?utf-8?B?YnBpTlNoZTh3eXAydldFOW9wdUdwWnJjdFNjMkFTMlZCWVVHZTdpSEhlVnZo?=
- =?utf-8?B?UHJueWtBSjNhT25wVllpbWE4Y2lwK2V5M1JlSzRpTFB1MDUvVWFyaEZvaGRV?=
- =?utf-8?B?SzF0VTNRTFhndkt2N0ErQ2tpUllhck5pZlF2UmI3SnZkbmlvTnNERG1oUFV5?=
- =?utf-8?B?N2piUVAwMkVLL2dqZzdhb296c2dYMlUvL2ZjWCtYSFdhNVFhMnBaeC94TkxQ?=
- =?utf-8?B?M0Vpcm1PcVF5Y2FEeUlyVkZvblhHaEpvLzJGWmhTMGVMcWROTjN6REtFUEYw?=
- =?utf-8?B?YW9UVzJHUzRBRHBiRmxHUklyRG94NnVjRFhsSDFvblFjRVZXU2xxenNnRnNU?=
- =?utf-8?B?UE9pRkVjbTJhaG1IaWE2R09ZZlVEM3A2Z3kzUlVDb0x6NTJ3TVFQVUpQTFFn?=
- =?utf-8?B?SUNrSXlER0NpOHk1MHhaVlQ4bE5UeE55RnNOdTJXUWk2cW5sZjdIM2JiWUVG?=
- =?utf-8?B?NlBDRjgzYnJUWXEyWlptenlSdlFZNGhtOVh6bVlsK0I4TjdPa1UxbGs4MG5v?=
- =?utf-8?B?bXptS0d3MTFRQVJDczdORGNRd2JEaWR0Q0IrQmFDNkowdVlJWG5xem5wRmlY?=
- =?utf-8?B?UjNYaUR4ZmdXaGhPUlE0V3FBNmdKdkNCYng5RDA5YmgyQWVlQ3dUTU00MURm?=
- =?utf-8?B?cnhzQXVOMGhFcFpmOCtZOE5wRDRuaUkvNjF6V0Rqd3hHZjd5WDYzQU1kUkpP?=
- =?utf-8?B?VEhMRUpETEZPVHEvOGtRRzFrYW8zTUNRMUpkcEluTDlTaldIbWJZZjlOTmZy?=
- =?utf-8?B?Y2FLSGJHUGF5bjUvZ3h5YjFvWFJ6YVJBay9nQzZ3S1FzbGVOcGhodnliWGxy?=
- =?utf-8?B?ZE1yTDVYTllrNE1ycDhMU0gxWThBM0VXM1o4OGpVeFZwSVd2K1Y3MjBFZjlw?=
- =?utf-8?B?SS8wRSsvQjQvSTIrbSszd01FUmtoMUhSSG1JYVZGMVk0L216WDEzUUVhSldP?=
- =?utf-8?B?TDZ0WFJGditFTWtrWlYvVHhHT2JyLzR1QnZsMSthaEpza3JlQ256bVFrRnN3?=
- =?utf-8?B?MW9DdHR4dStDVTFzWjAxa2VXcGQ3NncyQTEzKzRlb0lZa2ZmYVpEWE5VNE8v?=
- =?utf-8?B?aDhPSkczeXFtZXJUTHpnRDd6NVl6VXFQbmNqR1dhdGZ5TyszMFE3S2pSd3ZX?=
- =?utf-8?B?NVQ3d3Ixc1MwelRhZWJHRUFuR09HcjJ5VElUT3JkdExNOUZWU252MGcrZVpa?=
- =?utf-8?B?TU9HOTdDeGRONHA2MXB3NmwzN3hXbDB3eGJZMEkzdXhBZFVNd0N0RmFPY2RL?=
- =?utf-8?B?U3FnaFNoczZpelhwRnhoR2lVV29TMFdSZlphTEl0NDcrZEFLVzEwYk9TWDcy?=
- =?utf-8?B?UHppZGsranYwSGNXS2FjU1JUemh5THV5d1U2QmtWblRaeEZacFlzKzhTOGdS?=
- =?utf-8?B?Mnl1cWJVOUhPMG9LTklWQlJkZE9adTIwSFdSWGNjUjFRRWh4SmJSTXNyWVZv?=
- =?utf-8?B?N2xmNjN0SG5BOUU0WFlSRmU0L1NoalU2MDk4QW5LTVVNeCtSdDUrdUhVY08x?=
- =?utf-8?B?RVZRK1VXKzUzTlprVExHRStSME5DS20wbXU1dTlwUStrV2lVZWpQQVAxMENZ?=
- =?utf-8?B?L3RQRFd3bExSaEdYdjhMTWE3T0xrTnlOenI2M1MySlBWYTl3S1VZcjJVOEVS?=
- =?utf-8?B?ZmMrSzlPRVJ3SGRSc2E2Yks5cGp4TkxrTit2ME1sYU4vVU5MTXkvbFBUcG8r?=
- =?utf-8?B?RGNZSU9PVHZRb1BUWkxqWmdqb2xPSm8vc05lL1FxcXhWVnMzcUdXYlRMTzRV?=
- =?utf-8?B?OGJRdk50VDlXdnBXVHIvVDBwdFFCSzNNQkFYSE53OG1RQm9aUlZRWW8ySmp4?=
- =?utf-8?B?Y25XNERGSTNRbnluWmNRdzIzV1MzY1JkQVZQM09WK2FIakJIMk9hcXJKM1JR?=
- =?utf-8?B?eFZaQWlUV3duRmo1S0piMlE4bW5BSVRNVWFmTVlQa0c1ZVVGbkswMVBCbmpJ?=
- =?utf-8?B?T29IeWU0eXBCQW1CNEpGRHBGUUZqckk5NjhrZktvcUpUdmZSb2pGS2pOZVFs?=
- =?utf-8?B?YzUrT2pGSnhzZnRYVFRyRDl0Z3ZrVGZCbHFqTjNoalh2T2ZQN1hpZTU0RE1j?=
- =?utf-8?B?aDhXTGp3ck1RY1ViZHlKY1d6U3hnQ05lYlZGMFNFZnMwMTdMcU90VFJMTmU0?=
- =?utf-8?B?OURXdEp6bkpDc3VvRzc4N1BjbFN2M3BPSDFTUnhMMmxEbzQ0OUczbExCeTdL?=
- =?utf-8?Q?HMEKLeIcNWBoxxFk=3D?=
+	=?utf-8?B?ZDhGMFZTUnd5YS93TFZEcHIrY29OdTdWWkVmSkYrbmhmU1BLZVNiRU5GUW80?=
+ =?utf-8?B?V1dmWnYzYnFxbFIwMzdWcXB0MUpoNVRXdTExRFVKK1BPMjhyWDRUMFB6dVBs?=
+ =?utf-8?B?TmVZalhlM0pIYjNhMnhSTTh4OVlaRXdnUkFsWVI5dXFuVldzZ0tLbnJQbmtI?=
+ =?utf-8?B?NWNsUHhnS3JFSTI0TGxWUVlJSHIySG5lSnBYS0NQRVZzZ1B5cU9DaGJ5U0FL?=
+ =?utf-8?B?QThUZDB1cXRlbFZPcFNXSHpVNnZFZ3h6MHZEVGVETGN3cXpielVwcENFb2RY?=
+ =?utf-8?B?NWRsZklNNmpxdXJEQVFYYld0TWxpaE84N1l3Z2ZadmwvSnBWYURWWjBrWkM5?=
+ =?utf-8?B?RndYLzcvekE0YkVkVlFaRWpFYjJheGozRitkamw3c0x5T0kwK0ZHNUVoWE45?=
+ =?utf-8?B?a1NsckllQmRGL1M0aDRwYVlUMDNKaGkzakhlNndWK3gzbFBRZlNBZGx4NEw3?=
+ =?utf-8?B?UWtMR1BPRnpzdmRaNmZCZzl6VzR1SXVNUTlXdXNpVGVESFdiM0FGTnRoK3RW?=
+ =?utf-8?B?akhDQzN6TTVVdlVHNHFjNWwvMjU4Sm1yZk5sSEFZVWo1Z3RDSWwwQVJxVlNZ?=
+ =?utf-8?B?SEVWK21kM2FpdUNoSG1hYlUxSGkzUTUzdTA1ME9PUXIzWm1aaXIvRHE0N3VC?=
+ =?utf-8?B?YlUwVjcwd3ByTWc0dkk2emxXdDRER1QxbVV1TURpQlAvOGN0UDd3YXpSUk91?=
+ =?utf-8?B?ekhaelN5RE9vLzM1VTUzWWczcVRNNnRXbDRla3ovVExhdXcvSlFxWFF0OHFO?=
+ =?utf-8?B?b2lzMkE1RUZSYmh6UUZVYWFnVlJmbWRZNDhUQmI3RExERDhTdXlObUZDZThO?=
+ =?utf-8?B?L0dxR21uN2FRdVZXR0FwR2tEZWg1clFMTEQyNmpIbStsd3o0U2ZzR3p0a3dL?=
+ =?utf-8?B?ajlWY1pSSE55ZDFVdXZLTEx3QWJLZlpKbDhVZTVuYk5rR29iMURKQ1Z1eVVM?=
+ =?utf-8?B?bXF2QXNtV2ZCWGhDellJc2x0TG00OUQ2V2NhUDNtaGFTc21mTGV2c21ERW01?=
+ =?utf-8?B?VXlCVWVWUEFzSDVKbkVPNmY3bEVvL3AzRXhlUi83YUJMcHN0bS9TNlhGbVBo?=
+ =?utf-8?B?dFNZK3ZsMTBhUkJ4aWNPL3pYcmJHZTFmWkJJbUFObTczbUMyYUQ4UDdGMDVE?=
+ =?utf-8?B?NkVCV1FtYUoxaXdLYmxLY29hSXAxQXJtd1RvWVFDNUhOWGczVlQvV1dWd2xj?=
+ =?utf-8?B?UzBOd1lkajVPQXF0VkFwRjBtRTJUTnBmZHJlS1dhYTJVRjB3N0J5VHYwNU5I?=
+ =?utf-8?B?K3Ewdk5rUkRwVlI1bzNFRnRYbnpJOXZRUHlVOVdDV1pJa1lLbnNWa1BET3B0?=
+ =?utf-8?B?eGhnZGNSOEtGeW5RbWhqUm5KbDZKK1VkZVI2WFBRVEpHRUoxYUJYVm1yZEEy?=
+ =?utf-8?B?eGxyRFc0Z0dCcnQ5cHd3WCtxbnphOFFnSjBuR2FzMk5XVkpQdzhESVJsdlhI?=
+ =?utf-8?B?elJyU0RENXpxdDRXd1UvY3VjYVYwa3hsWVBYNFgyNkxCak5qMTZZUHFjS1lB?=
+ =?utf-8?B?cmZrS2Rnbjd4SlVKOXVKcWtOQTFVQ0dnRnhicUtob1ZIandpZS93UTRYQjE3?=
+ =?utf-8?B?RmRLY0hCT3BWTENDSGVwM3RTZFQxM1Y1bDhsdExEYkhVU0t2RlhlTGFSMTBM?=
+ =?utf-8?B?L21SRVl0aGxaWVFSWndGRit2Y0VQZUI5WVNrajJvNHhVV0huSWNxTnlxVUlI?=
+ =?utf-8?B?ZlNLQWJSbUxYRGhrM2ZPS1lsRVd6TE4vaFFMY0FkYUQzT3JVcWRsbVBOK3hs?=
+ =?utf-8?B?VER1MXR4c0RPYmFWa29CVzVNdUpJSFh3SEF2RnEwajlSNHNiRUxDUVRWbGR2?=
+ =?utf-8?B?MUpRZ3FRcmlNZ09SR0VQUmJjRExmWllrcjdDTllpTEVCODQ2cDd0cmxPY2dQ?=
+ =?utf-8?B?V1U3TjVpUGRJYTlrWExHRTc1M0ZRUFQ0dk9ON2lvaGJLVEI3cDd6RnRlcUd5?=
+ =?utf-8?B?bVI5UkszWjIzWkR6dGxweFh4N3k1cWRWclo5WE5OOTRXNmlvRVRxMEdQY3Ex?=
+ =?utf-8?B?bG1lNnQwbzR5VHJ5RGZ1NDVuOWhCQnJIZzhGOTB1MnpMdGZmd3VhdHhQM0sx?=
+ =?utf-8?B?YVZ5bHgzK3B5L0R5VGJPNDRIbHpCem9OUXl1SWtnSWRoVnFCdFNNckdidkxP?=
+ =?utf-8?B?M3lxakNPR2xuQWNmM2pabzNqZmRLVUI1RG93MGhtUGs4S3EyZlkwc1liaHpi?=
+ =?utf-8?B?djRrVmJER3VidHBJRXdNNS9yOHo2RHEzSDB1SC9jbG55OUlUVjdtaFZVSnd5?=
+ =?utf-8?B?dHpKd3ZMcWx6cEJEWFVjRnBZZTZzaTFLdTZqWVB5TmdwditDLzd0eGpiU05z?=
+ =?utf-8?B?SlBtN3NXYnVZYzVWaVRUUitiNmY4elRDSGwyREM2VEd5WkFmeUY2YWpaN2lS?=
+ =?utf-8?Q?ntQ7wR/hNnReoz3Y=3D?=
 X-Exchange-RoutingPolicyChecked:
-	FzcNOSl3BejL8J1KkclzJoBiL2bq1n9Q21dQm7Uo1WWDMQR61n7URISuX5rh0wlouO425TXxXjjERFe2ZAUfAxxZpLGyZLNcUk7AD7hOKRywDHpM1b2bz5sLcTKd8OW/iR1k1l4RxL2CAP6Ec0JgfZWe/WYnUhYcpmvP2UDXC/MlLBbEdGs13SmVvN8rQ+KsN56vtXcqymhzX1Y1MB4NjyYN2+/o9w2eyF0MpD6jw0v1wdj1Io6LXRSM62yKhTo8kPZrzFX8zSBJB/Y2gZ5hWe6hNl81gDfWNwhgo6FELx/BcvHpMhfSDpBDzDzHT/BI4VwQGeQMNq4ed0rXp/WXiw==
+	Al2pIkYMXcrkcrpqnlC+QhQxRz1dOteoIuWgM1JuscFOTccxSDnjXdYKLdqnB1RXDyQSlpUin1y3ePbn/9wElokdNw4635SDEB2Q2MIYMpYJnXpj/whLWWi48V8OlXvikTFpvpzhmN+1PyRLacKUcnfecVqor9Thgw/DdIQgI+E71URglAcfELgep1Qrc21fk/DReImeKCqv37YDfbBTkdnreSntAcWlZoo/bvOTihJ/73LfH8juPqD0t0YH4dbbW0P07zlDU/oRovrDbmlWqYgZL8WUQqiVVS8TBMA+embyvnAJaJ4U5j4G49qSQNlcQG4slwt0pFBAF3ahM4kE9Q==
 X-MS-Exchange-AntiSpam-ExternalHop-MessageData-ChunkCount: 1
 X-MS-Exchange-AntiSpam-ExternalHop-MessageData-0:
-	n6hR7sFPIk+DE9btkslpUEPa0x2S71wbUzVbpjl7QziTwbyXxnMlfM+81WikOJO1H7n117DsY1rT6Xqn81sEkD+wEqA3pJmS9vcLk4XkBkWbnSrccmpGsAcPWkQPoBslu3W+2RyQTEXJn59l2wQrvtXsYyjWZghDec/0RGbZdUWb5uw2HUAuC+P052AVlWyZCoBVnygg+d+YjxzSGVNuyqcH0vmMbwYKMWCxqMV7HWC03YW1CxodXkn8ygNpHb2rf2of7pgsHYV0mBpWlN4hnxR5f4nhWfRTKWs/rMohmXJzB97ozIjetDgtdROhAqG+fpn9qRuZUD4TRLK4zO38GEzXYxsw3fEBuG7yKBl/CqYa7tjnz8PeUiWpIEd34qApXT2JZWcT5T0W7u1d8d4vfK38JTXtYtZ9pTBbNH+FE11uKtL9drxltbV85SQq4e47m++5UZhoaGdEHMD4LHjTlL8ubbUXEaeOiSDV7wO+d3oBW05h1MuERCcrH/eiVCJoT4wkn859ALWqX5BzuTq+FOSK2u6UBJDfAxo86PgLxH9oGmufK3Uh4Zzp8uAvajbC8/5Bswf1CUrLV1vWc/PKPUQOj3bKpnlcHqgPN1lUquA=
+	z3w8F3xYdGFBcFVXoTGkZcXIyu3ll7ZBEqXLZ7ApgnG4pANhu1vZZ4hipyIu8z9pO90VgL7VgiJdYs9lPwTo+K64b7BgzaAAjxGeVSviAT0mJGYSc9gUWY4//aDOnEmZ1MIxldSDOyKA8zGxTfUXCJy41MuIt5oVGnyH+Pq3y+/oEC8Ngf7lyAJbTfQqgukuPFDF1gF0o7NtX55F+ibCOthigVvKoW/Ar30EK2seMt2LPqdnk6bNyc/YZDBibla2hnTeIxeab7doyx2dOJQ2BKAc2XO0PkjE+VA4YFSbBY46Q5ISFpQngdZZ/m2NW2D5nDopQncd0Qy2k+Z9VjHVGR8c/jMaVwkJIfpkFbzVvV+LQ+qmTtTnR8k4DjkRQZn+aGlJGdj7qR8j3jhrBVgMa1imtCvu7PKZJNsi7PeU7JSZK7V3x710CfbfHIa13fu5kXTKxpr6Ud7QOIml0fEdSt4riWVBJzEdqjncKcBeQkmqqNbrEdV9xMGGk+sihBQd9j3pWZUCaKVGpG7zufxwBjVNz6SOeWMEfkrCU/qOqyWHwKtYD5ldDmX7bjYhArHTeT3O6VmEZudKgjgGmeFWMtSDjin08+FJOa8ywtXVM5s=
 X-OriginatorOrg: oracle.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: b8e71181-f7f4-494e-0b6a-08df47d2edc3
+X-MS-Exchange-CrossTenant-Network-Message-Id: 59771906-7d5f-4479-e37a-08df47d38ea6
 X-MS-Exchange-CrossTenant-AuthSource: SJ0PR10MB5834.namprd10.prod.outlook.com
 X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 21 Nov 2026 13:25:36.8355
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 21 Nov 2026 13:30:06.9757
  (UTC)
 X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
 X-MS-Exchange-CrossTenant-Id: 4e2c6054-71cb-48f1-bd6c-3a9705aca71b
 X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: wYvc7eS4l2CdVkNl1kBQVBC0Hee5B/M8wfjgnUlhM2C6RCPJvqF4y1ANFkaRczhRtXeRu+jNjuIoCjcyo4VQykHi9+1xYdn0PrK2c1uMMQhpkbkhUNp/rjO9wnlvzySm
+X-MS-Exchange-CrossTenant-UserPrincipalName: cCkvX3SBdlOQ5oiSL+CSdJ7LX3mXHCK5DusiFDgBvj4F24N9O8VOIAZLsR9r021T8YCK7YdETE7BIYbZY6jCyLPmYUhfkre/wC0BAZsEGUt8D6aSTCz6yJiqD9VIFp7R
 X-MS-Exchange-Transport-CrossTenantHeadersStamped: CO1PR10MB4467
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.138,FMLib:17.12.100.49
  definitions=2026-11-21_03,2026-11-19_01,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 bulkscore=0
- phishscore=0 lowpriorityscore=0 mlxscore=0 mlxlogscore=999 malwarescore=0
- spamscore=0 suspectscore=0 adultscore=0 classifier=spam adjust=0 reason=mlx
- scancount=1 engine=8.22.0-2611040001 definitions=main-2611210053
-X-Authority-Analysis: v=2.4 cv=M5bYuCws c=1 sm=1 tr=0 ts=6b019bd5 cx=c_pps
- a=XiAAW1AwiKB2Y8Wsi+sD2Q==:117 a=XiAAW1AwiKB2Y8Wsi+sD2Q==:17
+X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 malwarescore=0
+ phishscore=0 bulkscore=0 lowpriorityscore=0 adultscore=0 mlxscore=0
+ suspectscore=0 spamscore=0 mlxlogscore=999 classifier=spam adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2611040001 definitions=main-2611210053
+X-Authority-Analysis: v=2.4 cv=dJIzC+Zb c=1 sm=1 tr=0 ts=6b019ce3 b=1 cx=c_pps
+ a=WeWmnZmh0fydH62SvGsd2A==:117 a=WeWmnZmh0fydH62SvGsd2A==:17
  a=6eWqkTHjU83fiwn7nKZWdM+Sl24=:19 a=z/mQ4Ysz8XfWz/Q5cLBRGdckG28=:19
  a=lCpzRmAYbLLaTzLvsPZ7Mbvzbb8=:19 a=xqWC_Br6kY4A:10 a=IkcTkHD0fZMA:10
  a=zJRp6_cAMcgA:10 a=GoEa3M9JfhUA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=jiCTI4zE5U7BLdzWsZGv:22 a=RD47p0oAkeU5bO7t-o6f:22 a=VwQbUJbxAAAA:8
- a=SRrdq9N9AAAA:8 a=Z4Rwk6OoAAAA:8 a=ufHFDILaAAAA:8 a=yPCof4ZbAAAA:8
- a=R_Myd5XaAAAA:8 a=iox4zFpeAAAA:8 a=1XWaLZrsAAAA:8 a=Ikd4Dj_1AAAA:8
- a=VjHLBOUH5hRGT17idMYA:9 a=QEXdDO2ut3YA:10 a=HkZW87K1Qel5hWWM3VKY:22
- a=ZmIg1sZ3JBWsdXgziEIF:22 a=L2g4Dz8VuBQ37YGmWQah:22 a=WzC6qhA0u3u7Ye7llzcV:22
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMTIxMDA1MyBTYWx0ZWRfXzfdQ5mDNIAxN
- 2IR70AnK7Qbb0/gtLya8QHHqzojv9852avSwU6/PEvqMyebEsdvvhMROyaoiZzsnjZggeTdmDcB
- 7iEMwwGaeTh3eLcYKKjP/lQPqDrPADTtRLtPlDWi/wD/wmZtXdpapln5f63j+OShckr3xhg2AE3
- wxWyGxMFHeht+Qj1aktXe8uPELskc+oDMkOtccxbBFly6ByGXQpdtNo7EHxzo9f34ye2VF0ZLnJ
- JbomoATj6fWqAHHfgaw4gMq2JrSP4OpF8iX9NhOnrPfh0YC33nx9Oywrgvh9klv6isvWZAx97Qf
- kTdHSovhH69EM3taRVALuHBRCI0nYP6PraqmSRBJ1npnQXxX7vKaHjGeOPvjAIAX9kX9wwZqubR
- j0KQt1Je13SrmHXFQ8RQxCNqOqD6VHEp84qZr5TXVIB620u0JMzxmzXdajj9vv+cFyffIYQF+rz
- IklttpipllCnvDGztyA==
-X-Proofpoint-Spam-Info: AW1haW4tMjYxMTIxMDA1MyBTYWx0ZWRfX4CvLZFnExIGR
- nqlzHvrQ5UmfbahIZP6sJyuQ6/I9+uR9YZM90O2bft+VC2mL9o19XlyRJqrJ1M9cKgmmI3n2djr
- T46Erznbc5uFDjDK+TpnhJZGpk3JtuX5BQi2FwXQfHG4V+AwUM48
-X-Proofpoint-ORIG-GUID: EmjZEOZkI1m01oNaNgv3cXI1Vq3OzjFd
-X-Proofpoint-GUID: EmjZEOZkI1m01oNaNgv3cXI1Vq3OzjFd
+ a=jiCTI4zE5U7BLdzWsZGv:22 a=3I1J8UUJPc9JN9BFgKH3:22 a=e5mUnYsNAAAA:8
+ a=pGLkceISAAAA:8 a=zd2uoN0lAAAA:8 a=VwQbUJbxAAAA:8 a=3xI8cquujar_PK4I0sQA:9
+ a=QEXdDO2ut3YA:10 a=WmVTiCyuxqgg3mnwYu6p:22 a=Vxmtnl_E_bksehYqCbjh:22
+X-Proofpoint-GUID: pVKs39_mJCFBzPBBiCA5-pCSJDe7-m45
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMTIxMDA1MyBTYWx0ZWRfX1HUk5f0gv/Ah
+ DUenxRJyoTXBdnlqz6LK1mBDarVji78rBNRa7HAUvyXpltyujretEzHvzd3t+jsUzBpaCHPMjkm
+ bH7bc+6fxo+/tsZ0IH7ZdNyBRshQXPaiu/unL2aemRCi8BwxhKTtywrIAVWgAc9KtUzjy0WcIvr
+ 842W9aXUjNC8gW9Htrn4g/pfyRStFwvy5Uu61xXKsNeCIf2HSDEgOu+pERX5ITdKZS4/IqmcOst
+ i9fYuGJFlu0H0wAimIAdGHRzGIgk8yySFQaaIsNemb2ALaCnatGTznXa7zIIaBpnOZtkm9LfBs+
+ 3qbOQdG0ODAyr9ART5XaCOlLOJ2WOka+G2xiRjDIpEcCm7FVoKPTGiu3gCR/EqofEV7ViEpR/Bo
+ etIED/go99aXWUnqeuKxwblKWnTTogtI55DfoIL8LA9eTbuZDal7pBU/ZYUpZqNDATATCJJbKM9
+ IrnQ6YRjWUBxeysiXmw==
+X-Proofpoint-ORIG-GUID: pVKs39_mJCFBzPBBiCA5-pCSJDe7-m45
+X-Proofpoint-Spam-Info: AW1haW4tMjYxMTIxMDA1MyBTYWx0ZWRfX7JhXlX865TiT
+ rveKZ326nknREcwYacd/ycrQOmG0NCep+vkGQv+KuuxmBnNEYwE09wBjIFpwxGZwgKJFHup5BLx
+ C2teoLpiIFdH/V+UTwBmmSROHDeIs/W07FBPMjlSdjM391MYdhX9
 
 Hi Greg/Sasha,
 
-On 18/11/26 8:08 pm, Greg Kroah-Hartman wrote:
+On 18/11/26 8:09 pm, Greg Kroah-Hartman wrote:
 > 5.15-stable review patch.  If anyone has any objections, please let me know.
 > 
 > ------------------
 > 
-> From: Yuanhe Shu <xiangzao@linux.alibaba.com>
+> From: Luigi Lauro <luigi.lauro@gmail.com>
 > 
-> [ Upstream commit 331f94007d79b3c02d3098eea469a92aea3efc2c ]
+> [ Upstream commit 28f3d169f162ca7e803c5a1f7e1bb55bdc915d1c ]
 > 
-> A watermark boost is not confined to one watermark: wmark_pages() adds it
-> to min, low and high alike, so every watermark check sees it, including
-> should_reclaim_retry() and the last ditch ALLOC_WMARK_HIGH attempt in
-> __alloc_pages_may_oom().  Once the boost exceeds the memory still free the
-> allocator gives up and invokes the OOM killer, and a capture kernel that
-> is still booting has nothing to kill: the boot panics and the vmcore is
-> lost.
+> amdgpu_device_supports_boco() returns true for an AMD_IS_PX device on a
+> system with a hybrid ATPX method even when the device has no ACPI power
+> resource (_PR3). On an APU mini PC with a discrete GPU attached over
+> OCuLink, the iGPU's ATPX method reports hybrid graphics, the dGPU is
+> flagged AMD_IS_PX, and runtime PM in auto mode picks BOCO:
 > 
-> Seen on an arm64 machine with 64K pages, CONFIG_PAGE_BLOCK_MAX_ORDER=10
-> (pageblock = 64M) and crashkernel=512M, running a distribution kernel
-> based on 7.0.14.  A high order UNMOVABLE allocation fell back to a MOVABLE
-> pageblock while the capture kernel was still in do_initcalls():
+>    amdgpu: ATPX Hybrid Graphics
+>    amdgpu 0000:c6:00.0: Using BOCO for runtime pm
 > 
->    Node 0 DMA free:68096kB boost:65536kB min:68160kB
->    low:68800kB high:69440kB managed:479168kB
->    Out of memory and no killable processes...
->    Kernel panic - not syncing: System is deadlocked on memory
+> In BOCO mode the driver leaves powering the device off to the PCI core,
+> which can only do it through _PR3 on the upstream bridge. No device on
+> this dGPU's path has _PR3, so when it runtime suspends the card stays
+> powered, with its fans at about 700 rpm.
 > 
-> The zone was not short of memory.  Subtracting the boost gives min:2624kB
-> low:3264kB high:3904kB, so the 68096kB still free sat 17 times above the
-> high watermark and the allocator would not even have entered its slow
-> path.  The boost supplied 65536kB of the 68160kB min and by itself put the
-> zone 64kB under water.  It is that large because boost_watermark() clamps
-> it with max(pageblock_nr_pages, max_boost); watermark_boost_factor alone
-> would have allowed 5824kB.
+> Require has_pr3 for BOCO, as the function's description ("dGPU with ACPI
+> power resources") says. The same card then picks BACO, which powers it
+> down:
 > 
-> Commit 14f69140ff9c ("mm: limit boost_watermark on small zones") already
-> tried to protect capture kernels, but it infers them from the zone size
-> and skips the boost only below four pageblocks.  arm64 64K pageblocks were
-> 512M then, so the guard reached zones up to 2G;
-> CONFIG_PAGE_BLOCK_MAX_ORDER can cap them at 64M, which shrinks the guard
-> to zones under 256M and lets this 468M zone through.
+>    amdgpu 0000:c6:00.0: Using BACO for runtime pm
 > 
-> kdump is a property of the kernel, not of the zone, so test for it
-> directly.  A capture kernel exits within seconds and never uses the
-> fragmentation avoidance the boost buys.  Normal kernels are unaffected:
-> the size based check still covers their genuinely tiny zones.
+> This only changes systems with a hybrid ATPX method and no _PR3 on the
+> dGPU's upstream bridge, where BOCO cannot cut the power today. Tested on
+> one such system only, an RX 9070 XT (Navi 48) over OCuLink with a Ryzen
+> AI 9 HX 470, with the change backported to 7.2.9: the stock module logs
+> "Using BOCO", the patched one "Using BACO"; BACO runtime suspend powers
+> the card off and it resumes cleanly. Not tested on a hybrid laptop or a
+> Thunderbolt eGPU.
 > 
-> Passing sysctl.vm.watermark_boost_factor=0 to the capture kernel does not
-> cover this window: sysctl.* parameters are written through procfs by
-> do_sysctl_args(), which runs after do_initcalls() where the panic above
-> happened, and watermark_boost_factor has no early_param of its own.
-> 
-> Link: https://lore.kernel.org/20260916112545.3707893-1-xiangzao@linux.alibaba.com
-> Fixes: 1c30844d2dfe ("mm: reclaim small amounts of memory when an external fragmentation event occurs")
-> Signed-off-by: Yuanhe Shu <xiangzao@linux.alibaba.com>
-> Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-> Reviewed-by: Vlastimil Babka (SUSE) <vbabka@kernel.org>
-> Reviewed-by: Johannes Weiner <hannes@cmpxchg.org>
-> Cc: Henry Willard <henry.willard@oracle.com>
-> Cc: Brendan Jackman <brendan.jackman@linux.dev>
-> Cc: David Hildenbrand <david@kernel.org>
-> Cc: Mel Gorman <mgorman@techsingularity.net>
-> Cc: Michal Hocko <mhocko@suse.com>
-> Cc: Suren Baghdasaryan <surenb@google.com>
-> Cc: Zi Yan <ziy@nvidia.com>
-> Cc: <stable@vger.kernel.org> # v5.0
+> Closes: https://gitlab.freedesktop.org/drm/amd/-/issues/5980
+> Assisted-by: Claude:claude-opus-5-5
+> Reviewed-by: Alex Deucher <alexander.deucher@amd.com>
+> Signed-off-by: Luigi Lauro <luigi.lauro@gmail.com>
+> Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+> (cherry picked from commit 1a039805354a44aab7abb2a6e685212d48b17a5e)
+> Cc: stable@vger.kernel.org
 > Signed-off-by: Sasha Levin <sashal@kernel.org>
 > ---
->   mm/page_alloc.c | 12 ++++++++++--
->   1 file changed, 10 insertions(+), 2 deletions(-)
+>   drivers/gpu/drm/amd/amdgpu/amdgpu_device.c | 6 ++----
+>   1 file changed, 2 insertions(+), 4 deletions(-)
 > 
-> diff --git a/mm/page_alloc.c b/mm/page_alloc.c
-> index cfbfd6309c250..396961cdf93be 100644
-> --- a/mm/page_alloc.c
-> +++ b/mm/page_alloc.c
-> @@ -53,6 +53,7 @@
->   #include <linux/debugobjects.h>
->   #include <linux/kmemleak.h>
->   #include <linux/compaction.h>
-> +#include <linux/crash_dump.h>
->   #include <trace/events/kmem.h>
->   #include <trace/events/oom.h>
->   #include <linux/prefetch.h>
-> @@ -2612,10 +2613,17 @@ static inline bool boost_watermark(struct zone *zone)
+> diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_device.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_device.c
+> index d94d02844c64b..5f9fa4a7caa69 100644
+> --- a/drivers/gpu/drm/amd/amdgpu/amdgpu_device.c
+> +++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_device.c
+> @@ -255,10 +255,8 @@ bool amdgpu_device_supports_boco(struct drm_device *dev)
+>   {
+>   	struct amdgpu_device *adev = drm_to_adev(dev);
 >   
->   	if (!watermark_boost_factor)
->   		return false;
-> +
-> +	/*
-> +	 * A kdump capture kernel exits before a boost can pay off, while
-> +	 * the raised watermark can exceed the memory left for the dump.
-> +	 */
-> +	if (is_kdump_kernel())
-> +		return false;
-> +
-
-Hi Greg/Sasha,
+> -	if (adev->has_pr3 ||
+> -	    ((adev->flags & AMD_IS_PX) && amdgpu_is_atpx_hybrid()))
+> -		return true;
+> -	return false;
+> +	/* BOCO needs a platform power resource (_PR3) to cut the power */
+> +	return adev->has_pr3;
 
 I ran an AI-assisted backport review, and the finding looks correct to me.
 
-Verdict: lets try backporting b098f1c32365 ("powerpc/fadump: make 
-is_kdump_kernel() return false when fadump is
-active"). ?
+In 5.15.226-rc1, this can disable BOCO on hybrid GPUs whose _PR3
+power resource is on the link partner but absent on the root port.
 
-In 5.15.226-rc1, this backport disables watermark boosting during active
-PowerPC fadump because the older is_kdump_kernel() also returns true
-there. Upstream excludes fadump from this test.
+The backport makes has_pr3 mandatory in amdgpu_device_supports_boco(),
+but 5.15 still checks the root port when setting that field.
 
-mm/page_alloc.c:
+amdgpu_device.c, amdgpu_device_ip_early_init():
 
-     if (is_kdump_kernel())
-         return false;
+5.15:
 
-The difference is in is_kdump_kernel() (spacing adjusted).
+     if (!(adev->flags & AMD_IS_APU)) {
+         parent = pcie_find_root_port(adev->pdev);
+         adev->has_pr3 = parent ? pci_pr3_present(parent) : false;
+     }
 
-5.15, include/linux/crash_dump.h:
+Upstream (1a039805354a) checks the GPU's link partner:
 
-     return elfcorehdr_addr != ELFCORE_ADDR_MAX;
+     if (!(adev->flags & AMD_IS_APU)) {
+         adev->has_pr3 = adev->link_partner &&
+             pci_pr3_present(adev->link_partner);
 
-Upstream (331f94007d79), arch/powerpc/kernel/crash_dump.c:
+If _PR3 is present on the link partner but absent on the root port, 5.15
+leaves has_pr3 false. Such a GPU previously passed through the
+hybrid-ATPX fallback. Removing that fallback now rejects BOCO and can
+also disable runtime power management.
 
-     return !is_fadump_active() && elfcorehdr_addr !=
-         ELFCORE_ADDR_MAX;
-
-Active fadump also sets elfcorehdr_addr, so the generic 5.15 helper
-returns true for it. This newly disables boosting in that case; the
-parent had no such early return.
-
+Maybe we should take this commit: c21487ce5fa1 ("drm/amdgpu: Adjust _PR3 
+detection") before relying on has_pr3.
 
 Thanks,
 Harshit
-
->   	/*
->   	 * Don't bother in zones that are unlikely to produce results.
-> -	 * On small machines, including kdump capture kernels running
-> -	 * in a small area, boosting the watermark can cause an out of
-> +	 * On small machines, boosting the watermark can cause an out of
->   	 * memory situation immediately.
->   	 */
->   	if ((pageblock_nr_pages * 4) > zone_managed_pages(zone))
+>   }
+>   
+>   /**
 
