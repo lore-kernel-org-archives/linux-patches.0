@@ -1,86 +1,115 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.128.49
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=202.12.124.158
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795228575;
-	b=etJZErmVHSBaT1OQb+nC4wLifFLYllluZDXbWaJy2HCAD/fCPBpuJTUZJy0+RQrFn8n9
-	 /mneN2vTpb1Qx/GazrVe3LEUV1lDyQrYhVFZDCHPY+SWnpuwVPu1BaDfmd3nKuwyku4WL
-	 IgIGFwQW36ab4U6VPAnyxxfy4yEB5v/2TJusgy00qTlBuvG/y7sveKnxuLLqz4esovYhT
-	 iK4QJ3aUJUZqMg1rFhzlX9Jjhfmh/1bGmcbPpn9O8fVROl3wg8C/Hqnxla8b05XkLGQUj
-	 nnZG4hE+M4Bf/ZbpdQeaQgoaEpXlU2dk0mKp5MzZiW8IGT17CFBeqfy11o4ZEhFzqaQ==
+	t=1795230457;
+	b=EM7YAVEWhbG5ztk7UOpDP3PRjJDcB69Z45Vs8PxfOidnyrkcynupiq91sdS2woopB5AC
+	 4XK4QrDmfUgZBxCQaIlHF9r65gOX1WuuAfb60/A28y9NIP3/2stCBa0OIwinrFMTk4dCB
+	 2cWNrHT7/P39xvwHPhqCYyhDBR5ZbOJxJKwZZ22R2B1DuXesddMmJateaG2Cb5hmTEye5
+	 GXUkgD1mUWVEUNv2RmVlXnB2cUjaDcy/7D4WSyCONSbapJmzffQYK/IWS7aT7/EthrQEQ
+	 SKu3/2cEHcOQxKW+fgc8h6Z7VR5ac4vAIVlGMHDolY0LtVITdOLm3VAKYXkGDsRBqyg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795228575;
-	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
-	 X-Gm-Message-State:X-Gm-Gg:X-Received:Received:Message-ID:Date:
-	 MIME-Version:User-Agent:Subject:Content-Language:To:Cc:References:
-	 From:In-Reply-To:Content-Type:Content-Transfer-Encoding;
-	bh=ytKdWC4PKOBa2qHZovVgrsdqwkaFMvswDEZlScEeocU=;
-	b=BFXW36mi28uncwtqUPl/N+MFBc6+7GfWOw2D+O5ioC7zHHJjeef/+UZenNobbrDgQe5U
-	 6p+hsQspCFRMkGdYGtg5rLztt0z5IHYrnkngSppaQ0IRrTEDJSgqAXRbQGl8t8ft+beEG
-	 oWGVnUgj39HohtM0oa5m6MbzJY5Ij7+sy5VVy/VXhLAhoXiwmlYEpJ/v51XrSCFkpSWEY
-	 rCZv0b8XICmOHTs/OZCLvG6pLRPqNN6ICCM9AQJ/nQIAD6SntHU83b2UgePfZvWjizgQU
-	 y2NRHU5zNOIVgPggL9Am2T+77mhrxQt61AJ4N+hYNnlQ8w08wm6VQuZov5hYji1+QiQ==
+	a=rsa-sha256; c=relaxed/relaxed; t=1795230457;
+	h=DMARC-Filter:Received:Received:DKIM-Signature:DKIM-Signature:
+	 X-DKIM2-Info:DKIM2-Signature:X-DKIM2-Info:Message-Instance:
+	 X-ME-Sender:X-ME-Received:X-ME-Proxy-Cause:X-ME-Proxy:Feedback-ID:
+	 Received:Message-ID:Date:MIME-Version:User-Agent:Subject:To:Cc:
+	 References:Content-Language:From:In-Reply-To:Content-Type:
+	 Content-Transfer-Encoding;
+	bh=J9Wo1LLPgZ0M2/7qgQRwy1GrGfua6oHX8t96KgKN3XI=;
+	b=GIgw1B4wBc4ZPO7sAzd9WZV2p8HBAaf25M0C/KTGVNGmsLcOsMJgpNnlYjXPuZg/coTH
+	 OVvAXAknhohHSF74q0+fN7nNEP7ll51T9bQ8fSdS8iFUX8HfTa53S+B574PicDuvbkguM
+	 lYpW3bZJpkakN1RGB7HbqneRIIUY01t8KZcOsoqXSBIpUS1phn6b8j+rILrUkQTu5h+lF
+	 JVQ1bHS6rEwjID11KKSnZsUKvmDfwlb7w8ZWE12es104GRGg3pMsRD8iSYaeWFry/GSEJ
+	 Wdj8p/oV6WO3sJOePdh4LSHcQ4LWLVtffPV88JKvDpVfLcocIekyKBYlotmVwk3MhPw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=googlemail.com;
-	spf=pass smtp.mailfrom=googlemail.com;
-	dkim=pass header.d=googlemail.com header.i=@googlemail.com header.a=rsa-sha256 header.s=20260707 header.b=BdJQ3UIP;
-	arc=none smtp.remote-ip=209.85.128.49
-Received: from mail-wm1-f49.google.com (mail-wm1-f49.google.com [209.85.128.49])
-	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+	dmarc=pass header.from=pobox.com;
+	spf=pass smtp.mailfrom=pobox.com;
+	dkim=pass header.d=pobox.com header.i=@pobox.com header.a=rsa-sha256 header.s=fm2 header.b=Lmxs8yCT;
+	dkim=pass header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=z6omCf2p;
+	arc=none smtp.remote-ip=202.12.124.158
+Received: from fhigh-b7-smtp.messagingengine.com (fhigh-b7-smtp.messagingengine.com [202.12.124.158])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 76F6E606A688
-	for <patches@lists.linux.dev>; Sat, 21 Nov 2026 02:36:14 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 76F6E606A688
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=googlemail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=googlemail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 77134606A6AB
+	for <patches@lists.linux.dev>; Sat, 21 Nov 2026 03:07:35 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 77134606A6AB
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=googlemail.com header.i=@googlemail.com header.a=rsa-sha256 header.s=20260707 header.b=BdJQ3UIP
-Received: by mail-wm1-f49.google.com with SMTP id 5b1f17b1804b1-4bb70074ab2so15455795e9.0
-        for <patches@lists.linux.dev>; Fri, 20 Nov 2026 18:36:14 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlemail.com; s=20260707; t=1795228573; x=1795833373; darn=lists.linux.dev;
-        h=content-transfer-encoding:content-type:in-reply-to:from:references
-         :cc:to:content-language:subject:user-agent:mime-version:date
-         :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
-        bh=ytKdWC4PKOBa2qHZovVgrsdqwkaFMvswDEZlScEeocU=;
-        b=BdJQ3UIP8BWZ2ze4dZrU4skbsl0ecdfLhpU0KwBguRR3xkDN2J3sxMEsACEdWObf5I
-         BEM3Tq/HQTKoH4gifa0pr08mNZ0xXHwxRuCLNH73vRhSt8IAieXTKsFoAwIpa8eUADdK
-         pPPoa2zFjd04lVbwlUCPrbGyqHd9i1X6BWwn8fT1jJ+frK8oqK8WnpgMtuil6n8lN/zg
-         w3alTlsfKTc9e+UoEGQTHmL+z0On6mGbzhMLF8pDmHNnzbj8TOuNdjVUkDdTFKxvbR8o
-         MD0Ex7NViRFoP2vKig3Rb+5M6jiT5tVzlQqa19oxXBZhjSF2krJcEALaga98Hh7ZiVc4
-         d56A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1795228573; x=1795833373;
-        h=content-transfer-encoding:content-type:in-reply-to:from:references
-         :cc:to:content-language:subject:user-agent:mime-version:date
-         :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to:content-type;
-        bh=ytKdWC4PKOBa2qHZovVgrsdqwkaFMvswDEZlScEeocU=;
-        b=CaZ82zYNrb0aZGSjh/hyXCklBcyGdMgoXtyeNSVU+5RweZP7rOQYTo4i1ZBCi7f/Io
-         PXaYUaqzKGPmIr/mQ2Po3LeJhdKpCrAiJVkU1EKAu1UJyZjoombNBCrKaxU0aA5iw8qz
-         M7EOa8ypJ0GSGBy0YRGibI3ilTQrMoQZNAOCD9m5hw/6RQFgSKnODcBJKBdc4aTIg9ZP
-         +2uEqf2BnLy3oZR6GqlmbgWFrvHr13SVpjNo50IBh+BhjDqDxd94pfaIxrK/7hFrIYeh
-         BA9IMSPCXw2Cu0Cit4x3++lTetZvA47HIM1/1A0iMck/52nSpf+EvhA56EnXi9JiCEjT
-         j7ew==
-X-Gm-Message-State: APuU4Z8/oxRBVuY8ePqDlWLNdT9rU7gPpZu1z17ronNd7W5SiKpuwH3i
-	Xxxmay+/Lzt6eeyotGJp8nvtJ5YCpjTn2L/7sgj+uD6iVpl3AEHS37E=
-X-Gm-Gg: AYBFou2gVtHqKgNmzh+VlVfF8DPCG/ss63TbbfdLXbXLBIQzIK5OFPvPwozm9TddSRY
-	632AY6H/ltyvQIRqdKooAFCEOF/xa/nEmCLRu0J0QffTVQ8P7PJop46Qb7I8XIl5qyw2N1z9AGC
-	3at0q4XZa7XfBjoo+cL+hyWTEtjRWphlFVUOjPpcOLpCGsPrH8vXLyJSWgf3sCY7SHFLghOuge2
-	oyzcbxHosDdou9DibQXV3/ZDBouzoLq4tmxLzhkpoYJuN1HgL/XH19kW0mwo6+khQ5iyBAxuPaV
-	FTZkIdNM9GH0J47AJEQ/1pwJmMtlLvz0GUSGo+snBwn32XaXmGiF2fp5OFSy0QBDhogzZ+sF5E9
-	CTZ3VFfILxZ9be56ku1rGuxWtch6qgT7v1qhqtBgDJ8Vb+daM4FsNMAGPPwwZ+uhd2CEMSMjuQs
-	kcFhOpcM/p6XCif+M0iNpFsSwD4rLpGWixqe2+7RXcI/nlXbd8vldfX9h7DsINrpVH1HBB/xrF5
-	BeaSuvpXUtbr5XBIdxdYZvl87PqSse9jX7L9XB2NdT7VzGgAZetfTyCW7N3FSY2X9rXhS1ysV94
-	8absQadBeUzj4byv9NFZtT2S/oMWpjhbU5FTTHx23Ly7KmozdsA0Sl76qTaypys1QNHlTpTfQLY
-	8R9RBd1d1JsX2X7sDi6d7N6CzAQ==
-X-Received: by 2002:a05:600c:4515:b0:4bb:659c:b8db with SMTP id 5b1f17b1804b1-4bb88813b27mr117200775e9.12.1795228572531;
-        Fri, 20 Nov 2026 18:36:12 -0800 (PST)
-Received: from [192.168.1.3] (p5b2ac65d.dip0.t-ipconnect.de. [91.42.198.93])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4bb88402ce9sm106722515e9.0.2026.11.20.18.36.11
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 20 Nov 2026 18:36:12 -0800 (PST)
-Message-ID: <ff148281-de3c-4ce1-8d8a-86a9299f73cf@googlemail.com>
-Date: Sat, 21 Nov 2026 03:36:11 +0100
+	dkim=pass (2048-bit key, unprotected) header.d=pobox.com header.i=@pobox.com header.a=rsa-sha256 header.s=fm2 header.b=Lmxs8yCT;
+	dkim=pass (2048-bit key, unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=z6omCf2p
+Received: from phl-compute-12.internal (phl-compute-12.internal [10.202.2.52])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id F1F9B7A031C
+	for <patches@lists.linux.dev>; Fri, 20 Nov 2026 22:07:34 -0500 (EST)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-12.internal (MEProxy); Fri, 20 Nov 2026 22:07:35 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-transfer-encoding:content-type:content-type:date
+	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm2; t=1795230454;
+	 x=1795316854; bh=J9Wo1LLPgZ0M2/7qgQRwy1GrGfua6oHX8t96KgKN3XI=; b=
+	Lmxs8yCT3kQR5DYslADig4HlNI6WwLgHdmY41GNOzFs49szI7qiWR3uxaup+VA3i
+	9z2457CgwGWwKMEEVcuavIsmBI279x7ZDKRrV9z3WRSjLj1NCbVYL/jtTy2Brn6j
+	e20TahmM5mzWKg9x+IufVpj2J4XtIYNiZzKk2beHoqgLELl+mMjgSrmMcMkaOhm2
+	iyeznuax2//Y5WMJVRZtcFn3V68e+tDeEF7IhTuRcgSIPg15K13kpLq9UN5Z5nqk
+	6i0mzVjwU5CEkl+cz9jxbZceDqbmTMVH/idzwYHnIaYp/yMLakeLdQqb9lNFLNV5
+	r2SK7lV66Xr7S4igtgmp5w==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1795230454; x=
+	1795316854; bh=J9Wo1LLPgZ0M2/7qgQRwy1GrGfua6oHX8t96KgKN3XI=; b=z
+	6omCf2pzRb5ltPzb6LdOizokrVLdiUSe7pWhh3KOTPnnd5cCDAWb6Vnsi4rCKp9J
+	4pXGVi02mlKp90PWlfnnCVAeFNx+/f1NQF5wGOZQxyx+H2CpSNAImUsEYDvx24Iq
+	s00Kzr8litmonhnVWwMrpHVIq8vblOBGn/VK0mDs1kJwzkNpQLhlDX6D0PAHxgDp
+	6RyIM5q4I4OIN5FUwf4cagfltzM4SfgZDZja8MWqmu2p2bRFb6JXpX8b04kaF8V1
+	z8Ayf5mH096iuxgA/YWVhL7D/89oak4v1Jr5qm7/QDkqYIo6Na/NbUgUIu/Ol6l1
+	Oig3bhh7ru28Q2P+dBNoA==
+X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-09;
+	repo=github.com/dkim2wg/interop; date=2026-11-03; sw=lmtpprox;
+	action=sign d=pobox.com a=rsa-sha256;
+DKIM2-Signature: i=1; m=1; t=1795230454; d=pobox.com;
+	mf=PGJhcnJ5bkBwb2JveC5jb20+;
+	rt=PHBhdGNoZXNAbGlzdHMubGludXguZGV2Pg==;
+	s=fm2:rsa-sha256:U5Iiis62ZmKxpzeP9oWvUJFqlufw/ZQmbh+QJ/Jfp81HJnF
+	ojZyZHxJ56bKczL4Q48YtMMS0o1f+Ba7MJNOFqbF6gr/QD/zWYhaOvjKlXTnlXNQ
+	El4f9Gu8QanvHa3o4R2iRc0FmY0RdFZb9XImqhZN+eopS44zKB/mbfHnbfoOybFY
+	RvSnWUiEHeDzj5JJvZtZFvDvZHY0jGNXu3t1luzWhUYaWX8hzFZ/stDLRoFEVTs+
+	sDPjlHz6Cl+Z3sl3iSJYuFvd8T8NH94KPIl1ddSTphbTdxkFqSw4CsNaBLqgEZ0Q
+	lBMGrGq50ZT2VWUN/C5odtm2rH+y8iq7iLb6Hkg==;
+X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-09;
+	repo=github.com/dkim2wg/interop; date=2026-11-03; sw=lmtpprox;
+	action=mi-m=1; hc=14;
+	hn=cc,content-language,content-transfer-encoding,content-type,
+	date,feedback-id,from,in-reply-to,message-id,mime-version,
+	references,subject,to,user-agent;
+Message-Instance: m=1; h=sha256:I09901pHR4NWv3tPw63KpbQgEj0LoAhrK7VIY9URF7o=:bE6K/d0CVO9JyMKrakrnNgv3ETaOBmQDJ118Xg8omA8=;
+X-ME-Sender: <xms:9QoBayrEYiwOUL4A_NxWwCEjgTtsy8YsPkP0BJw0TZmDhxDnFNOYEQ>
+    <xme:9QoBazMitxdzZl1zmnOz1RLwos7bgJlvIGplxSUr0Ej2fAYKwBs3Bw0gcq51N1ce0
+    r0qk_rBmF87krZmwvVWMU99c6zV0aUSR8EGBHtn4xcFE0QycEqI0Fc>
+X-ME-Received: <xmr:9QoBa6021enrwpC13DmYAbJnjm6nFMsu4ffl5iv4JQvdOUY3l52oE6-ntFXhSoRtjOOXi0grS9lz9tVD_ezoR0bG_3Zk6v3C>
+X-ME-Proxy-Cause: dmFkZTF73W6XvnW3/sgv8AYOLneXpXLnNrt0sgIJOGt1T133vMgQby97HXEjs22lOwgey5
+    NGftX/J9V0Z8Cv3wY4x3CURqA6X+HKWZ7r8qQo87MrKku5/hqm5/ExxN0VpMyTY6biEqvk
+    ujj4Ax1RLUCGabxEA969POXGBXQL+UXDTvx7DlYMGWLkZY9Usik+EfK6HGr9H+baLmMgtu
+    t5OuEw6/6XFlxPd+oQrwZxWDBldpr+77scFS/ZBBhEWgm+H46hivy2Am9U6ak8MGa1cK+y
+    vVkPen1YUTeHZvDZHi31EtG9JGacbONCa7HtwqWRL4PnYnPUjoDXZYwflGiT4Is6okibae
+    ofl1a9knIj7O+fxIpB6cheb+AUpGxIB9Zb+ZZHlRFDxd93k5CwsLHM2AtI50hrG3kBT8Mu
+    MFHwJbMziSRpnlsac9zPYYNICxH884hKB73SJw8hqnITIBv3Q9Dx+o2/SOPWL5iSJYWrZ+
+    dLFBUUnKE9SiAQZu+jLNyUB/dfw9TpKIQmm0dC5INGYUhKKUWwVRw5/+9JqkQvRwLpubGs
+    Sg1kDGod2gktjlV6m5UV7VzuaCCbUfE0k0Zxf3lfArXqnFct5GcDrmez7cDjBx11IFVegj
+    P/0XkMMSbN01C1a+HUbYwKCEYd/XAzT6TgXjnlR+OVGw2pOV/0xfUuDgCqpw
+X-ME-Proxy: <xmx:9QoBayBr8JkAA9YxfY7gT5WoG1f8rGbjS064QyGVfEBvc7RFzkMOvA>
+    <xmx:9QoBa3KMnI4dRTootzF2LiS0V8Wp72PGcVHgryMM8SSeLlVwnlCBRQ>
+    <xmx:9QoBa7nuj8V3iI5ez8JyI8YgvmpuHjTsDvAVWRsMQ7_B5ueWoWt8yg>
+    <xmx:9QoBawbXVbgEp2GWt-XDQwSJJD01dchHRmhUtvoLs7eH0WC1W0gaOg>
+    <xmx:9goBa4LaVlwAFbi91TXMMCAi7YzL2pVUyi9E0xJZtfprXos4BXXGyyhI>
+Feedback-ID: i6289494f:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
+ 20 Nov 2026 22:07:31 -0500 (EST)
+Message-ID: <049338b0-ce72-45a7-a8f4-efa7f3f85444@pobox.com>
+Date: Fri, 20 Nov 2026 19:07:30 -0800
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Post: <mailto:patches@lists.linux.dev>
@@ -90,43 +119,40 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-User-Agent: Betterbird (Windows)
-Subject: Re: [PATCH 6.6 0000/3308] 6.6.163-rc2 review
-Content-Language: de-DE
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
-Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
- torvalds@linux-foundation.org, akpm@linux-foundation.org,
- linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
- lkft-triage@lists.linaro.org, pavel@nabladev.com, jonathanh@nvidia.com,
- f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, rwarsow@gmx.de,
- conor@kernel.org, hargar@microsoft.com, broonie@kernel.org,
- achill@achill.org, sr@sladewatkins.com
-References: <20261120055324.975889935@linuxfoundation.org>
-From: Peter Schneider <pschneider1968@googlemail.com>
-In-Reply-To: <20261120055324.975889935@linuxfoundation.org>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 7.3 1870/2651] Bluetooth: L2CAP: take chan->lock for
+ l2cap_chan_add/ready/del
+To: Sasha Levin <sashal@kernel.org>,
+ Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
+Cc: patches@lists.linux.dev, Pauli Virtanen <pav@iki.fi>,
+ Eulgyu Kim <eulgyukim@snu.ac.kr>, Jaeyoung Chung <jjy600901@snu.ac.kr>,
+ Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+References: <42da5e9b-1db9-410e-9c72-9f9f4e9489f7@pobox.com>
+ <2026-11-20-1-daily-reply-0001@kernel.org>
+Content-Language: en-US
+From: "Barry K. Nathan" <barryn@pobox.com>
+In-Reply-To: <2026-11-20-1-daily-reply-0001@kernel.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+Content-Transfer-Encoding: 7bit
 
-Am 20.11.2026 um 06:57 schrieb Greg Kroah-Hartman:
-> This is the start of the stable review cycle for the 6.6.163 release.
-> There are 3308 patches in this series, all will be posted as a response
-> to this one.  If anyone has any issues with these being applied, please
-> let me know.
+On 11/20/26 12:38 PM, Sasha Levin wrote:
+>> Now I get the following when building the current 7.3 stable-queue
+>> (commit 5252483124e6cf016c4a6f41fe1e44f5e1949648) with clang 23.1.6,
+>> same config as before:
+>>
+>> net/bluetooth/l2cap_core.c:128:9: error: mutex
+>>         'l2cap_chan_hold_unless_zero(c).lock' is not held on every path through
+>>         here [-Werror,-Wthread-safety-analysis]
+> Requeued the L2CAP/6lowpan patches for 7.3 together with 15ad901d92a2
+> ("Bluetooth: L2CAP: avoid maybe-return-locked in l2cap_get_chan_by_scid/dcid"),
+> thanks.
 
-Builds, boots and works on my 2-socket Ivy Bridge Xeon E5-2697v2 server. No dmesg oddities or regressions found.
+I have now retested 7.3.5 + the current stable-queue (commit
+3dd4b2d3c1f7915277082781d6dfbe71d7d41800) on my ThinkPad T14 Gen 1
+and my arm64 VM. Builds successfully, works well, no regressions
+observed. Thanks!
 
-Tested-by: Peter Schneider <pschneider1968@googlemail.com>
-
-
-Beste Grüße,
-Peter Schneider
+Tested-by: Barry K. Nathan <barryn@pobox.com>
 
 -- 
-Climb the mountain not to plant your flag, but to embrace the challenge,
-enjoy the air and behold the view. Climb it so you can see the world,
-not so the world can see you.                    -- David McCullough Jr.
-
-OpenPGP:  0xA3828BD796CCE11A8CADE8866E3A92C92C3FF244
-Download: https://www.peters-netzplatz.de/download/pschneider1968_pub.asc
-https://keys.mailvelope.com/pks/lookup?op=get&search=pschneider1968@googlemail.com
-https://keys.mailvelope.com/pks/lookup?op=get&search=pschneider1968@gmail.com
+-Barry K. Nathan  <barryn@pobox.com>
