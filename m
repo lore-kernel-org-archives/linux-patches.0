@@ -1,13 +1,13 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=205.220.177.32
+Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=205.220.165.32
 ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=pass;
-	t=1795275733;
-	b=zRyZagrCNKtT3K8BL8JA6bvdGhYlmOCigB9rGdGVZqf7NBLsk2PHrWwhaLBxNJrTYJ+x
-	 kzsV1Dvttba9tvb8HwGlMFo7dQqbWlLQB+Yj6BUt399ALM5LoEzVnX+tlQ9dADq0RTRom
-	 FTlfkigEg3TVzC0bIStkVyVo6uQ1M1pfa/axhngri2OIXJx40AUnu3ZX9ze4N9Gs3rrbi
-	 4fHTNKxI+vJPwnsOguPQvCFSFnIiOlc1xxMs0W3+L5V8GtXvjTK8OC6XimDw98IAnwq7x
-	 2I2zNPItmQRoAqfeykYLV3VczaosuEjyb24yMm0iNUqEnqWz03sRr7cBPSf625ehB1g==
+	t=1795277238;
+	b=EVMpH9IsL1jNBBrCbkb5ddfpdOnV44wSoPtMm99Hom+WdV5Woo/bpA2LP2KfrrO9jny2
+	 SORizwQNlxM0a52t8NK/EJjrb9U1l7lIteljZLbzlpvhG8j1Vk2fgf0pB0BBIhkJx/K4f
+	 n+pglxgoyEFM5iPFxoCyLnulPHHz66P9k7dMMW26fvHGe02Xej/fvy8Q5Tm67c7p+nJ6S
+	 IdabvwdPMZuKQ4rvRzWIhdpYMAPizgvGy1c6NN2h2FeN0IRNS8W4UyDtcWVE1mcrHpmxi
+	 iR94ka7fpxWVMAwDEzCNjbJb3RRmjs+H1PJmN5+yL9P996lBdKyyY4dFOCbPdRA5lNQ==
 ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795275733;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795277238;
 	h=DMARC-Filter:Received:DKIM-Signature:Received:Received:Received:
 	 DKIM-Signature:Received:Received:Message-ID:Date:User-Agent:Subject:
 	 To:Cc:References:From:Content-Language:In-Reply-To:Content-Type:
@@ -28,100 +28,99 @@ ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
 	 X-MS-Exchange-CrossTenant-UserPrincipalName:
 	 X-MS-Exchange-Transport-CrossTenantHeadersStamped:
 	 X-Proofpoint-Virus-Version:X-Proofpoint-Spam-Details:
-	 X-Authority-Analysis:X-Proofpoint-GUID:X-Proofpoint-Spam-Details-Enc:
-	 X-Proofpoint-ORIG-GUID:X-Proofpoint-Spam-Info;
-	bh=hUqg8kER6+SaMXn3EsMiYl2OOox43wBm5iwx2S6Z3iY=;
-	b=HW8cEJSyu4LQo3uedJAXDvCZzrM7gbdR5ZtUF0vzMmhsMcW1dwes+6g77iJIu0FXmD0L
-	 eJc/0V/T5xoU+fkA4hYlsMM/HUvRwu07tVcS4YcjJ+JjwSJ20WMd14LSZx5lq1Wp2046J
-	 Czj30PPO1hIrpyx7XjHfNNZMSAYG0c8vuxwv/GPo/9qiPoJao8dV2gtd/fSQTVIjPJzUR
-	 mv1IfXoVYMGpt8DIC66EePa6ltDPrUfJe2+RNSSTJnN9eRfgo3z9tu1eZehNL9EsuUzp4
-	 X4orxse5qipbEHFOfoGuqquIHlI1E9bJ88+77QoDe3Ot2oNSAd/QWU+oVhdQasAm9zw==
+	 X-Proofpoint-Spam-Info:X-Proofpoint-ORIG-GUID:
+	 X-Proofpoint-Spam-Details-Enc:X-Authority-Analysis:X-Proofpoint-GUID;
+	bh=PumUfQr/dkVXQx904OhDKa6Er31j6YLGLv4AnhzIpok=;
+	b=1ElQiP0RHFtyFYkk8dVrhYurRuyBGlL4/EldLCgI+SequuVvfeJ5rVtp/5H+Fsao9sLf
+	 ChNbGd6elNZWI6mztt4ZJ5azRZl2IdLz9gdUgH+ei+cHBUhmJeRHuczx3e2sxpOwFxh0W
+	 padETB1TnFOpM/wKoV51U9XnAHXZtQALBEhLT5i84I0yTxUK3+lgonl6/axC+wURKWzwL
+	 3OHFvFfJ22hiDkdlvyglFN2gI3C/3mcyym+YjjsPpkSqXno2d34yn+xbpRW2a+VBvEZ/W
+	 ZH3KwFP5o1Fnesy8Uhvz3/Uv/0aWD7b9g/XWSCvlJqd5gS3bDq8oaXMG9bUk+qPzLPA==
 ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
 	dmarc=pass header.from=oracle.com;
 	spf=pass smtp.mailfrom=oracle.com;
-	dkim=pass header.d=oracle.com header.i=@oracle.com header.a=rsa-sha256 header.s=corp-2025-04-25 header.b=UmAzbgZc;
-	dkim=pass header.d=oracle.onmicrosoft.com header.i=@oracle.onmicrosoft.com header.a=rsa-sha256 header.s=selector2-oracle-onmicrosoft-com header.b=BGs5+8MR;
-	arc=pass header.oldest-pass=0 smtp.remote-ip=205.220.177.32
-Received: from mx0b-00069f02.pphosted.com (mx0b-00069f02.pphosted.com [205.220.177.32])
+	dkim=pass header.d=oracle.com header.i=@oracle.com header.a=rsa-sha256 header.s=corp-2025-04-25 header.b=bTTzCqYg;
+	dkim=pass header.d=oracle.onmicrosoft.com header.i=@oracle.onmicrosoft.com header.a=rsa-sha256 header.s=selector2-oracle-onmicrosoft-com header.b=lHgIsQOj;
+	arc=pass header.oldest-pass=0 smtp.remote-ip=205.220.165.32
+Received: from mx0a-00069f02.pphosted.com (mx0a-00069f02.pphosted.com [205.220.165.32])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F03D1606A320;
-	Sat, 21 Nov 2026 15:42:12 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org F03D1606A320
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EA285606A320
+	for <patches@lists.linux.dev>; Sat, 21 Nov 2026 16:07:17 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org EA285606A320
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oracle.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oracle.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=oracle.com header.i=@oracle.com header.a=rsa-sha256 header.s=corp-2025-04-25 header.b=UmAzbgZc;
-	dkim=pass (1024-bit key) header.d=oracle.onmicrosoft.com header.i=@oracle.onmicrosoft.com header.a=rsa-sha256 header.s=selector2-oracle-onmicrosoft-com header.b=BGs5+8MR
-Received: from pps.filterd (m0246632.ppops.net [127.0.0.1])
-	by mx0b-00069f02.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 6ALFU2ox2328227;
-	Sat, 21 Nov 2026 15:41:57 GMT
+	dkim=pass (2048-bit key) header.d=oracle.com header.i=@oracle.com header.a=rsa-sha256 header.s=corp-2025-04-25 header.b=bTTzCqYg;
+	dkim=pass (1024-bit key) header.d=oracle.onmicrosoft.com header.i=@oracle.onmicrosoft.com header.a=rsa-sha256 header.s=selector2-oracle-onmicrosoft-com header.b=lHgIsQOj
+Received: from pps.filterd (m0246629.ppops.net [127.0.0.1])
+	by mx0b-00069f02.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 6ALEhlYd2935184;
+	Sat, 21 Nov 2026 16:07:11 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=oracle.com; h=cc
 	:content-transfer-encoding:content-type:date:from:in-reply-to
 	:message-id:mime-version:references:subject:to; s=
-	corp-2025-04-25; bh=hUqg8kER6+SaMXn3EsMiYl2OOox43wBm5iwx2S6Z3iY=; b=
-	UmAzbgZcg2s/lp6mVPCJhYl3HeRzWFCEGpE1K3EMBXW3mSNL970YJQpn5+cszSxK
-	PhiTd2lFojy0AeATcNdscSbkVXqGPNLZekplsRBgohPP2FGLbi/HaNR6ik3tRec5
-	8z7qRRXfxRPk6uMI+LAMkXOKZIudRo8QI+q3PvNPpqkatCVSeeeGhHmzJ1rfTanE
-	EnAkhBKKu+nhFXDKXMUAm/4DMPXXq4p7Lxsw05TLdcWf+2kEjgNls0BCh9fOYuta
-	DaQ9QHHxBKRTjYN2wj8fBHoFZJ0IW/ctzVE65+oqTPitMhbSF446jiwvqDJtjm8w
-	a82tYTzkt7sIYUvUpc2Psg==
-Received: from iadpaimrmta01.imrmtpd1.prodappiadaev1.oraclevcn.com (iadpaimrmta01.appoci.oracle.com [130.35.100.223])
-	by mx0b-00069f02.pphosted.com (PPS) with ESMTPS id 4j34t508jv-1
+	corp-2025-04-25; bh=PumUfQr/dkVXQx904OhDKa6Er31j6YLGLv4AnhzIpok=; b=
+	bTTzCqYgr9WjvKvyRLWm9o06B1ubbH/LfqkRTU1K96vmdOA/o5Fc3yBNkJdCOvp1
+	F1tkyT36v6vzxJmlPFnCmVc/jYMVHKX6hcIkl85TK/xgEkXvBRieA47rXWU2rykZ
+	HMne96EbsuvM9qciZubrxk+DAPMxR0MTGTelKXem3VNVU1hRxScIaEY/Xfzrd74r
+	OwYG888dYpWe8OzS6X6gSxDXgT+Y1kQ/4wDcnRPUlU063sVzFrUyXRb0h7WJgKrB
+	BEyp7x3Mx+liKwLG7bDdQHxOItnN7NKgtIDwgjlVLHIwxkbbpUcn63h3pRIc4CKR
+	wtwnEk80kbHyx+x+KuysQA==
+Received: from iadpaimrmta03.imrmtpd1.prodappiadaev1.oraclevcn.com (iadpaimrmta03.appoci.oracle.com [130.35.103.27])
+	by mx0b-00069f02.pphosted.com (PPS) with ESMTPS id 4j34t7g8h8-1
 	(version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384 bits=256 verify=OK);
-	Sat, 21 Nov 2026 15:41:57 +0000 (GMT)
-Received: from pps.filterd (iadpaimrmta01.imrmtpd1.prodappiadaev1.oraclevcn.com [127.0.0.1])
-	by iadpaimrmta01.imrmtpd1.prodappiadaev1.oraclevcn.com (8.18.1.11/8.18.1.11) with ESMTP id 6ALFXMas2828255;
-	Sat, 21 Nov 2026 15:41:57 GMT
-Received: from mw6pr02cu001.outbound.protection.outlook.com (mail-westus2azon11012064.outbound.protection.outlook.com [52.101.48.64])
-	by iadpaimrmta01.imrmtpd1.prodappiadaev1.oraclevcn.com (PPS) with ESMTPS id 4j39pbm5f3-1
+	Sat, 21 Nov 2026 16:07:11 +0000 (GMT)
+Received: from pps.filterd (iadpaimrmta03.imrmtpd1.prodappiadaev1.oraclevcn.com [127.0.0.1])
+	by iadpaimrmta03.imrmtpd1.prodappiadaev1.oraclevcn.com (8.18.1.11/8.18.1.11) with ESMTP id 6ALFXUaf2902445;
+	Sat, 21 Nov 2026 16:07:10 GMT
+Received: from bn8pr05cu002.outbound.protection.outlook.com (mail-eastus2azon11011006.outbound.protection.outlook.com [52.101.57.6])
+	by iadpaimrmta03.imrmtpd1.prodappiadaev1.oraclevcn.com (PPS) with ESMTPS id 4j38wf5at2-1
 	(version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384 bits=256 verify=FAIL);
-	Sat, 21 Nov 2026 15:41:57 +0000 (GMT)
+	Sat, 21 Nov 2026 16:07:10 +0000 (GMT)
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=hDnKAOovO8xmH4APh9zgk2pxz4LrsDUe46pGMWdwYMNdY6Axbh28EBml2wOvZ4FmZ8pOTuGUoHCRIApvv0OTl5i4M8KTCFQ+Zbs6v+jlZm4rvvaM2hv8T4tvsR83vUT9fk5410iqEnKfu1FEmSgyPs1rEZ/1N7Ptt1w6FIrBc25L56bbRKUYHasHUBPIn32XcgtAROX2zcHWdhNNLPmLJF0/qI+aOaq1YDjyw7tgnfkDvgvcU9JTX8nC7DvzRhd0ZzCCSLDtp29m3vriDNR9Um/dkAfZvbXPS6FZ3iJ0h9R+7PxbHys2Dqx2DaCxH3MVcd7BRW6uSLAk2uyORCD22w==
+ b=Od0zlAZkWiQiXzey+cSbZFG2H4jqjHqq9KAt+wS32oxREI3gumoRM3bWPqIvosxRUgvxeIB/ZSAV70pUndaT/QitGN1knuo1gBKA9pqYKe7AGhZw0rVNlLB0rQi8kfLxhvSlFts600VQegTW72gwq+17wtIzhe2Y0WFlIADVCKPZknmg/80DzINxf2/PDvZjc4D862KA7vubux3EeHNUW+RJ7xzVEsVQL/6ir/2n2ySVzYj5as0qHOJbNiqSV05BGgLIFkUW1AxA8y0SUnsjXp7FlcvNcKWXWbo1lYPrh5l59LNAc2mCoezna8lKowxRnABuYoEwXLY6nCX4Iuq2pg==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=hUqg8kER6+SaMXn3EsMiYl2OOox43wBm5iwx2S6Z3iY=;
- b=zU20O6VxYQRHsdq6ZbEcU/aXX7cPZuw5t2USC5mGIx2SF2muJpd238HQYHYLfiKzxND6ual8e8CKEIzfnqLqtr0dHCbq9WfnDE5mklzRSE73K5q6dojYNoZiO79CKAN26yvIImznSHZqA65rMxY//rWJrkBQxNE9y76qtnVcVBh/pBHeipmfLe4SvL4e77OERciYfvDXXbVt/Xp/dxA+xEFLt/a4pfRSw7ek2TTgE8c136Ah2d6qS+NhjOg1a02E7ZQgkrvj9MFTzNhHV61AsftD9MRBQae5euv3GUPJif7xYBIdGD+5ZVfqv/W9zgTFWIzkL+Oxaweh/uZwBAsoXg==
+ bh=PumUfQr/dkVXQx904OhDKa6Er31j6YLGLv4AnhzIpok=;
+ b=vFFYNsxOrjqT2iujRNhcUAumFMTqLgWpamXdf6/ah/JG0+nxks3XiRtuWn/zgFH3BzaTHCIRoLVlB6MstUIrALjJBb44/aGAuDZaHvj0O579+5eNSJJhF98+iV7NJKPQhlaisyX+T3fiEzAAlFgyWmmrFnS8+h3ANbDA8Pz7j3S6aFvqMG3YGUG++8/ap5vX1qqfRlUQk5LTpVa+V2W1XOIgEkCAyQgefqIol2SNY/Yfd1Qn/CW0PTJzxOt5IRI4wvvmkff5wZ4c0voIqG9PIhx2w2szPJ6au9Lc49nR9c7lq9qFUX2IITRn9TkUPWNiFKPRAdewuE4+fGkXN15bQg==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
  smtp.mailfrom=oracle.com; dmarc=pass action=none header.from=oracle.com;
  dkim=pass header.d=oracle.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=oracle.onmicrosoft.com; s=selector2-oracle-onmicrosoft-com;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=hUqg8kER6+SaMXn3EsMiYl2OOox43wBm5iwx2S6Z3iY=;
- b=BGs5+8MRIBQSAOoMe4EVKZ16LktYMtba4DyBnU4ZSRBwl9yfJvfK9cJks3WOV+sPYm5J6wydh7hMnOIV4gjUIbhJ/DQ54X6/697v5Vt6LKF3sq92zRevYZtgxVcCX+yxEsbt/Eppmx5QWYGpK6wgzO7aENq1oNQEX9FabyhnVZ0=
+ bh=PumUfQr/dkVXQx904OhDKa6Er31j6YLGLv4AnhzIpok=;
+ b=lHgIsQOjW1H4hWMugFuVe5/YIx/SfzVQgCZ+jTHeMfCTjee+gNcnZp4iYRujNmJXo6BVDiNN4BHa+w4yBnGWHy6xctgvDbUgQnU0+8+8cbQ/yUNz8dvV4RmBLM07NSJ0BdSDxkrokcB1a57dY8vPBQWMhIhbuK8du4AASCTtu84=
 Authentication-Results: mx.microsoft.com 1; dkim=none (message not signed)
  header.d=none;dmarc=none action=none header.from=oracle.com;
 Received: from SJ0PR10MB5834.namprd10.prod.outlook.com (2603:10b6:a03:3ee::16)
- by SN4PR10MB5559.namprd10.prod.outlook.com (2603:10b6:806:202::16) with
+ by PH7PR10MB6580.namprd10.prod.outlook.com (2603:10b6:510:207::8) with
  Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.639.12; Sat, 21 Nov
- 2026 15:41:52 +0000
+ 2026 16:07:08 +0000
 Received: from SJ0PR10MB5834.namprd10.prod.outlook.com
  ([fe80::2444:1d33:3ce:d83a]) by SJ0PR10MB5834.namprd10.prod.outlook.com
  ([fe80::2444:1d33:3ce:d83a%6]) with mapi id 15.21.0615.009; Sat, 21 Nov 2026
- 15:41:52 +0000
-Message-ID: <1df2aa0e-0cfc-4d21-85a3-d74e4ea83d3d@oracle.com>
-Date: Sat, 21 Nov 2026 21:11:45 +0530
+ 16:07:08 +0000
+Message-ID: <9df186ab-8f92-4d14-a5fc-f5fceec4137b@oracle.com>
+Date: Sat, 21 Nov 2026 21:37:01 +0530
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 5.15 1289/2214] drm/amdgpu: Only enable HDMI audio if
- display supports it
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org,
-        Sasha Levin <sashal@kernel.org>
-Cc: patches@lists.linux.dev, Alex Deucher <alexander.deucher@amd.com>,
-        renpanpan <renpanpan@kylinos.cn>
+Subject: Re: [PATCH 5.15 1811/2214] ALSA: core: Fix unintuitive behavior of
+ snd_power_ref_and_wait()
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
+Cc: patches@lists.linux.dev, WenTao Liang <vulab@iscas.ac.cn>,
+        Takashi Iwai <tiwai@suse.de>, Sasha Levin <sashal@kernel.org>
 References: <20261118150009.797899913@linuxfoundation.org>
- <20261118150103.128986610@linuxfoundation.org>
+ <20261118150123.928813703@linuxfoundation.org>
 From: Harshit Mogalapalli <harshit.m.mogalapalli@oracle.com>
 Content-Language: en-US
-In-Reply-To: <20261118150103.128986610@linuxfoundation.org>
+In-Reply-To: <20261118150123.928813703@linuxfoundation.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: MA5PR01CA0051.INDPRD01.PROD.OUTLOOK.COM
- (2603:1096:a01:1b8::13) To SJ0PR10MB5834.namprd10.prod.outlook.com
+X-ClientProxiedBy: MA5PR01CA0150.INDPRD01.PROD.OUTLOOK.COM
+ (2603:1096:a01:1b9::8) To SJ0PR10MB5834.namprd10.prod.outlook.com
  (2603:10b6:a03:3ee::16)
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -133,222 +132,222 @@ List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
 X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: SJ0PR10MB5834:EE_|SN4PR10MB5559:EE_
-X-MS-Office365-Filtering-Correlation-Id: 5a07f0cc-e6f9-422d-0e9d-08df47e5f694
+X-MS-TrafficTypeDiagnostic: SJ0PR10MB5834:EE_|PH7PR10MB6580:EE_
+X-MS-Office365-Filtering-Correlation-Id: e1943351-4794-4914-eaa8-08df47e97e22
 X-MS-Exchange-SenderADCheck: 1
 X-MS-Exchange-AntiSpam-Relay: 0
 X-Microsoft-Antispam:
-	BCL:0;ARA:13230040|23010399003|376014|366016|1800799024|261028144727099003|261021123027099003|261026140227099003|261022105027099003|261021121427099003|261022075727099003|261102123227099003|5023799004|56012099006|4143699003|10067099003|18002099003|22082099003|261009220027099003|261009223027099003|261009223327099003|261009221727099003|261009221227099003|6133799003|3023799007;
+	BCL:0;ARA:13230040|376014|1800799024|23010399003|366016|5023799004|4143699003|261021123027099003|261102130727099003|261102123227099003|10067099003|261022105027099003|261021121427099003|261026140227099003|56012099006|261026121527099003|261009223027099003|261028144727099003|22082099003|18002099003;
 X-Microsoft-Antispam-Message-Info:
-	f29gJ0jE+z+8QiUQXIOCn8sj+o8lTVbL8VzGtzKh3E7ZHmeahnhlZWlfE9lkNV39oMUxgNookKQPjZ3gBHXgT4Hhse3Bh2ohA7Mgwjc3wBRxSARpr00f3o8nM9OFPMGYf9raVsAXSy098G45BtGXF/SX3p3gXM0J/wcOl8QF+6is6aZQok76QTC7ST+Uu3xqiR1cQ7WJgla6Tln9aFK9t2Vtuv75LPPF3bMww4v5TFPCennkgjef4KpWzrmx8IXUUroEdhelgCziYxZpEjFIWGdSx8JPfsXeMPCY/5lgVdLtu966/P1j58vBvE3ukfyI2YjZ/LPKKsCa0kfchM4iN4IjLLSK5HM3pGijSoNdNXMQxQ12uUQEgVx2J4WQWpvZAkzbGaMRmUOd6Ns3kMC/NcEl3XiJ+8mpLAd9iOwazVGoWoG4qUhOr5G64j0hA1A5QSfPac/QCmAj0RQfDlKLOkM+yCDSQHZrD6ZE/0eVUDqTt73/TnXVQFhPcKFitUwlcEdZfD9+yhxpVMc5oSnn8ny+niFdlLb5XAds2jR3MuL/A0dgyxY4FjBV48T9xcipGfBG/Tp9z5gJ4oDE0sYCjxoY1jBKDrem5J1MvrYwgyzrH6jF7XYMltjAo3YgJc1Uk1WBZSwCPtAYIguFADWM2SV1VzMxufRcwVH2w1gr/ak=
+	IiFUj+E/Csqu7cM0m69yLxphrc+VlE5TOB0LIaIU6A4TyzjJFPQ0mN8bsdkGPS7d99x5R3jTvn5CNpo/KnzKjgyZcRmHe0PJEyk5L3NJi1XFbwHlnJBWzLaME5aNmU7CaNdOJbc7cNMEVCOkS1xWDqwHqC/BMbDRKkSXJxw8DNlaedEbEdD0QNRaaNDK2hOV4ITw2moz9/ThPK5M1FmieAJAZi7/AHLcugVLYSRS4mO8pTs/mne0befdSLHjxXWkmJWu2Bzi9RQorGGlNw/TxLmuoy+EoWlgQ96r1fq/nyFxYpqKS/9HJqyl0NoA+BfM/tTrX6btJqwiyeY2s2hsKplvwQgt6dFaEcEsrid/pCzVt4OK0ML57ato5xRsYrRmwXPxXDfA5E7hIqAKXmjqG5/DuD1Za5aO6NKyzF53rKps1crih0c31d1MNFvFTErLim8cfVJFoY/Zp04PSQcxDlJqU3g2nee3XWnIPb21bJbiu/Hj8ifhPZTiICFyBg0FQDQ1H70Sngr/SEEbkh5oh7FNInrd3FYcwXHJDHtuIs8h0O+s41J9WfbmwxuD/7eh+wbzY9Bo1jkbVKhKrJhMGSri9AcXH3qNZAdHKFB2/h4VzHiDqTG7IW+wjSx+9g9N
 X-Forefront-Antispam-Report:
-	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:SJ0PR10MB5834.namprd10.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(23010399003)(376014)(366016)(1800799024)(261028144727099003)(261021123027099003)(261026140227099003)(261022105027099003)(261021121427099003)(261022075727099003)(261102123227099003)(5023799004)(56012099006)(4143699003)(10067099003)(18002099003)(22082099003)(261009220027099003)(261009223027099003)(261009223327099003)(261009221727099003)(261009221227099003)(6133799003)(3023799007);DIR:OUT;SFP:1101;
+	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:SJ0PR10MB5834.namprd10.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(376014)(1800799024)(23010399003)(366016)(5023799004)(4143699003)(261021123027099003)(261102130727099003)(261102123227099003)(10067099003)(261022105027099003)(261021121427099003)(261026140227099003)(56012099006)(261026121527099003)(261009223027099003)(261028144727099003)(22082099003)(18002099003);DIR:OUT;SFP:1101;
 X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
 X-MS-Exchange-AntiSpam-MessageData-0:
-	=?utf-8?B?Z1VJZVZLNDdXY0dYS0JCV2ZVL1RwMmFsUzJHbXFIZGhnMEt4SDQ2TVNwaW5w?=
- =?utf-8?B?RnE0OEFzZ2lucWRmejBRUzdDb05zMUlXb3FtZUlhRHJLWG1BVElKWjlJc3lB?=
- =?utf-8?B?K1JKLzVndjFZU1g2QU1rZ2NqMERGYWhlaHZraEpSeDUyc096Q3FsN0NON2wz?=
- =?utf-8?B?ai85Q2JaVnB1eFQrS2IzTk1kWmYzMEkzWHFBQWdoLzlLU2NoSXliRmZZYm5x?=
- =?utf-8?B?ZVlWaHliWnRyYTRZZm9oVHZBQlFsbTVKbkcybWsvV0RKZzZBK1lHTzhuLzN1?=
- =?utf-8?B?d0p0cFcvUjY5TVRVQmdQUTRjY0N6RFJaRFllT0l3ekpTQWYyZHpzbVBwNklD?=
- =?utf-8?B?eGYzU05aQSs0aFhrQjRWbTBrUklLUEllTm9jRjdoaytwdExiSjNsNHB6WEtx?=
- =?utf-8?B?aXFoeEx5RkdtazVoN2E0dWFHTXJrQjRESXRNMG5vV0FCU3BjRzkxYUF3alM3?=
- =?utf-8?B?ZnowcmFFc1NrLy9FeGY1SzlyK3JoajlyalIxQ2dORlNIOGhxcVpkalRzNFA5?=
- =?utf-8?B?NU1tS0NQN2d6Q0UyYnVsUGVBczBHWUM4bElDc1lHMVlMTHZYNEdMUFJjeVRS?=
- =?utf-8?B?OURjcjVTN2tKTUZCbmZoY0NoeVh6R0l0amVnMXRQZFBVWit0S1kxZVgvbXUr?=
- =?utf-8?B?SFJkNTVzTUd3ZHlJVGVtTHRuS2piVGhFRjhkWGNDeU9tbStOTnJzbjVYWkxU?=
- =?utf-8?B?R1h0NGdBZ1JEQmRNa1NTUmYvMk45MnZaUFpXYVlybC9GbGtCZkdvM2ZMc3c4?=
- =?utf-8?B?MDU4aTkwcEdZSk85U0ZPK0ZYNmNLNTNnM0liMUJYUkR3VWtaalVyVDFsbWRW?=
- =?utf-8?B?Ry9nR0Y4Q3Q2a3VDeVRTQUQ3azYzeVBYMXByMk85Sm9zOHZrTlp2YXl0Ym82?=
- =?utf-8?B?cnZSWUREWWU2RUtkSU5lYVZPZSt3TVVqN0gya0FHd2FmbWlqUzlXRmRCUGlx?=
- =?utf-8?B?UkpJNVpod0FvVnNkYyt1TGFxTThLc2FKb2l0ZzhZdzdhQTIvQWVoOW1zN3Ja?=
- =?utf-8?B?UFhZWXp6OGwwYTRvRlVUdE52VWdkZmJwVE0rOVVEZTYvS0xFNGN3SWhOa2JT?=
- =?utf-8?B?ZWlPQVRJM2sweGFPdDhuMzIxNTdtL2RFei9sc0JQZlNwVm5hckIrVEdLUmZ3?=
- =?utf-8?B?WmV5MWFOeW5jMm9sc0ZPWWJYVEU1d1ArbWwvRjhKSlR2ZkpJUnAvenA3andH?=
- =?utf-8?B?cUNTRE1hOXlpdHVGWkFudWlsYkdZMzBycXM3cnR3WDF6ZzEzMHNvOW84Z2h6?=
- =?utf-8?B?ZXZZeXIvNHRSNzJOQUJiM1RSbDFxd203bUNlOFVndERzK2JHMXI1bDJrcEVl?=
- =?utf-8?B?OVBaeDJxa3JmZXF0VG9uMEhMRmMrZzB3VGFZenoyTHdoUG1KSzQwSE5CSEtR?=
- =?utf-8?B?L1dpZkp2SWR3VmxsdTl0V3p0VXVBMkxIZFJkTDJSMVpXcXRGSEhwdEFiZlZZ?=
- =?utf-8?B?dk1YSXVkL0dQUW54b0hwZ3BJdGVrMnprRU5rdkNFR3lCazFWaGxoZ0U2bTUx?=
- =?utf-8?B?bzdEN0J6dnljRGlwd3lCZmE5bWZXWXNNL2lpaitiYzdsTTBiZkpPWGJLL3Fx?=
- =?utf-8?B?RU1VaHRrM1lCTllsTG5iWGhXOXhZamthMldLQjVwenhJcjduYlNWZWp6UFhR?=
- =?utf-8?B?YnJXRVhiSks3S2VKQjJmYXN1b01zTWVTQWRLbktmRmdPNk5ZYjlKd3drSmov?=
- =?utf-8?B?ZGhSZVJtV0hVZElveFFheGtlY1llSTluL2NTZ1hqZHVrcE15UGhDelpPUzRz?=
- =?utf-8?B?QXNiRDc3SjFzclBsbmUreVJINy9DRmtRRlExRHFYZjUzTlNpbnpDVzgvbkRW?=
- =?utf-8?B?UTVWaEhqSGFyZHNUSnRiY2ViTGc2V0ExMTJaWDhnSFJBZU9FMjhXQUptZ21w?=
- =?utf-8?B?Y25CblBxU1EzQlkzSE5VQk54c3pIQno3eWtlK01pc3Eva2ZJekRQUjdYRkNx?=
- =?utf-8?B?NzJleEgzMHJKTVlsTGo3ZitxYmE3SHVzaDU1U00yc3FxbHVSa2ZDV0wyYVNT?=
- =?utf-8?B?a0tJbkhmc3VhbWNDbCtONTVPaVNzWUpIMWp4L01VUk92MWRSQ1J3ejE0QVMr?=
- =?utf-8?B?eXMrZE9mVkN2SCtjcENmZEZVQjVaTlF0RVJnT3BqTUlvbGoxMmVRV3dBT25t?=
- =?utf-8?B?VHhWRk5RdnM3SHhYdGZZZW9QaTdnOVJQTU91K2J0TmlLV3JpMDA4NXYwOGhV?=
- =?utf-8?B?MGZvM1dNYmFsem1LeVdFNGt3elBjd3FDODdwSzhqcEppOGRlUlp4ZEFsM2JD?=
- =?utf-8?B?KzRHNVhZc3hRZTRRb2FCSFNFN0poN2dhYW9kdXFWenNVeVVXVGNnaEtleEZN?=
- =?utf-8?B?a2lJTkY3Ymh0R2xkUGRvUnlPRHRzaDQrbHpIcGg4dHYvK2RIdlk5OUMycitq?=
- =?utf-8?Q?JqaZ59HvkF2JivPWlPj38BIc1YmyxKM74F8v4?=
+	=?utf-8?B?Ujl0dDBRZmFEMnVWeUFCQStwelBjejdDUk5xSUF5aGlxak5LWCtiZzRZemRB?=
+ =?utf-8?B?ZGYrYXZyak5nYk8zZjRWQnVRU0VsMUZsSm9GSFZYSlAvY0RmU2Qrc3ExMzRy?=
+ =?utf-8?B?T0IyQnhxS29iKzUvVFoxejNrZlArbmg3anQvTzhsSkFWRWFQOXZlTkFja28r?=
+ =?utf-8?B?REQ1Y2NJb3BnM0pkSjBaSTlGRmZTRFNVR1ZGcEpURWZWNFhIbHY5NUZ3a2tj?=
+ =?utf-8?B?T0JEYXBURGhJeXJoSWJqU2tVdlREQVZSK1d3UmdkZk9nM05YcmVtenR6bjNL?=
+ =?utf-8?B?MkNYQTI5aVBFY0kweHNjY3paVUlTTTVzRXp5Y0lMbE9MZlZMVHdhR05ZbEVp?=
+ =?utf-8?B?eEdLU1Z6VFN5aEU0dmFNelN1NjdONXdFU0pWUUd5U0pOcjJQZy9Sa0FoNlk1?=
+ =?utf-8?B?aURBVHRSVjAwNEt3R3VzUmtkb2w5bCs2dkZDMEpLb1Mvc2tHRmErNFptUFZv?=
+ =?utf-8?B?cFJKcWVWbG10TXREMEhsU1JjSTh6UEF4M3N6NmxhZ2Jlb2lmTGlZUzNETXRM?=
+ =?utf-8?B?YW9hTW5XZW9MVy9YUzdHZDFrL3JOTndkRmljVzRUSitzOUJ3NjY3ZmYvc3ZG?=
+ =?utf-8?B?OE0xcnNKb2V4d0ppMjlVaDBUNWVQMzNHakpkemxUZ1R3TW9EWlJnS1NaOW5l?=
+ =?utf-8?B?cDhtbEU1aEZlV3JPOUVMRExwN0g3K29wUUdKamI2N2czaDJHeXpQYmtKYnB4?=
+ =?utf-8?B?RUozQkxVdDFzSUExa2N4ak1zWmZMTVA5ME96MjhNK1JNTUV3MzNzVmhLYmtr?=
+ =?utf-8?B?SEgzSkZoQkRYS29COUpXMVRiRGlzQU5OS1plSEJqMmEwRVZTa05UMWwxalYw?=
+ =?utf-8?B?bUNYYldIczVWRmY5elYwenhaRy8zZ3d3NkVkZWlhZzA0djBDWUhFcjNJZ0I1?=
+ =?utf-8?B?UENieGtTUUpWMzViTittZEZjeHBHT2xNMGd0TXpXZFZTbzJjMTBrVGJ2Sk9h?=
+ =?utf-8?B?ZW1jTVJNSHhjalhoNFMvZGRtLzB2NFM5WW1hVW9QWS9yR3cydWRnbFp5Skgx?=
+ =?utf-8?B?OFpGSXBZTm9obU9sT2FnZ1ZobWxwdnppT3RZUTYyUFJ3c2l2bGV4SFFDenFx?=
+ =?utf-8?B?OWpjYk5sYWt5cDJoNmt6OVFtRHdUcmxtYndlUzZKbDlFTXNXa2VJKzg1cWRa?=
+ =?utf-8?B?d0lWV1FrYWR3dExVdHB4WkkvMG9iMjJWeGFNNWN1blEzU09QeXMwY1VqOFMw?=
+ =?utf-8?B?WWFheWUxYmRaQnAzcUNZYUFZamh3NmlzemxEdm91cW5hMCtuRm5LVUxIQTVu?=
+ =?utf-8?B?cTJxVHNFTENCY1Q0WlE2TnJ3cDBwcWhualhzc2tZbE5qU0RHVGk0OEFyaHhh?=
+ =?utf-8?B?djFMSXc3MTdydDZvN0dmRFgwWlBncVc2NGs4UTQyV2JHSFQ1MjQ1ckNZWUlQ?=
+ =?utf-8?B?S0E0eWtVcENCSk9WYmcwc1FSS2gvaWFLcnQyV1dWcThGNUxYaXhZWTJDUTNK?=
+ =?utf-8?B?clQ1Y1pzNFpNR3N3b0ZkTkNXdDdiQ0hUODl4eEhDa21QMGhNN2dzT2pIRmNW?=
+ =?utf-8?B?c2lobjdaN0FyblhocjBsOFBmMjgrZWdyYUNBK2ZBN01JSEI4QVdMcHE4c1U2?=
+ =?utf-8?B?MjZISDJHa3oyV2tFMjhVWWVIMnpwSWgwNTh3QzU5cktxdW12UzFUQnQvUnFE?=
+ =?utf-8?B?YWJzOFBHZ2RjUC9TSFp4VmV1MVJoT3d3VXJHVHdSUnpOVHVMUXJxMGRLbW4z?=
+ =?utf-8?B?QkM1Y2ZENitJRi9aMm9FalBWSXlhUHdJMXRtcjZmZFZFWFlBWjVXeTRWT1J3?=
+ =?utf-8?B?aUd4OVI2S3U3cXRyVXhOenRuN0s3QXhKUGc2bmFjN2RNRklhRFp2bU1weHht?=
+ =?utf-8?B?aDZVdGtMN1VwZXozNlNERHR4UXRhMHV4M0w0ejVLMmZUWG1hWHpnVi9FcXFE?=
+ =?utf-8?B?QjBuS05IeHFFbER4c0NsZ3d5aHJqMGJaRFR2SWZsQkcwQTJ0NjB3dzF1WGJh?=
+ =?utf-8?B?K1crTHFuZVNLQnRMaVZPNWYyRm1tMGN6VVFzN3FhWktiLyswcU00a0FSY0t3?=
+ =?utf-8?B?S0hOVjRyMmpPSVNrVWxObDZFQ21JR2VDQWh5NHgvQmZVajRWaUg1UkJ5SVJm?=
+ =?utf-8?B?RmpEYlpMTzY4UGIwQ0lybFAyN2F1WUNZbFlPQm1jN2tuRHpMdjZRVkJJbUs2?=
+ =?utf-8?B?QVNTR0gweWdoOGorSzdpNXJGc0p6QlluTHlzaVBmdjRhK2xrNEc3ZGt1MktQ?=
+ =?utf-8?B?S3gzc1VMQVpJcHI2K0JhTTJhZFVKQWsyUFp2QmM2VUxoTzVqYWhNY1RVZDFI?=
+ =?utf-8?B?QzJWajIrRjB5MkNrQXQxeFRFakF6SUsxK1RoQnB1VlpCNGxhM2xUajZWOW9S?=
+ =?utf-8?B?ejBsUEk4ZEptdjB2cW9qZVRnWDNMdW4zWDc0MEtHb0FqR3VoT1dvRFdtRVhL?=
+ =?utf-8?Q?pfhyst1Yv2Iv54gjLkYijyOCg9Dr+kKN76t4W?=
 X-Exchange-RoutingPolicyChecked:
-	UuuCIoiUSJR2+wOIzgSOHNoYNsYTR/Pi24xHyAiQnNWX0C8s4P6bkJRmUmOpp2sGbj6mx5U19C+cxFSWafnovrq7JNvMFhldgnwyqQrdDLkPl37om5CDJUlD1vlSYFNSqnTjJWhizLriVUpACLeXHc7zYJqNbzuw2VfAUS19OSBtRFecoxaM9tfQetnefI0l1xkTeWdLSYRp6p3+G3HR6Qv8gIVg07jicSj1TVth0ClErUM/z5Oi1g9Kw7fJrPTWYikOF1o3o2Go/R7woZTygh5GBVo5kBTamK+ZO/mYP+zNU72zkAKgt9DQSUMpKtdqC/rhI0oYTnwDrtF0Jmk/Nw==
+	oJHXrVyGFgF7PoWPuJFowcx/CLaTJiPWAfGtmg8KjKjjjfkc/72/DuWdJ1voQNo2bXNOahAthjXCDmJqwyzmn+Bu0pylEr893r6kLOyJ0KMNtV1NIUifErvNSR2Fpm/DtcItQhETtO+tDmJ6kZa+IyGkq0wZeywFyTpD+WsKvObJHyU4Bpg/2blqwF4KL+fOvuRML+uLPbCtCXfnEavFa/56hz/V2vOZ1e+nRqvUPDuha6UoAQkNJVKFQSp+47Rp9zOScc22OPmmf6R71u7VpmFi6vuOsn4wI+w9Bb2VtOSuBRR6zU3RVBahi8UCwz6xp0nA5px/awnrFbNdRjKZYg==
 X-MS-Exchange-AntiSpam-ExternalHop-MessageData-ChunkCount: 1
 X-MS-Exchange-AntiSpam-ExternalHop-MessageData-0:
-	VUHZVlPAykI5dR3R/ouiSTJwREaWdxH1VfzbW8YufWBLYQNt3vt2JdlU9GEKXE5Ye4kpSd4Z0XBOPhdotPWtM5IyG5fTUvvHnsjdEz/JsESVXM6hW2PY36kohSlyeLjq07YtrTt4ewNVnT04FIEa5NmtxBRD0bDW/RZqP2vXdoDZAxzdSNgGKj4xLxkcn1BGdd9PKZIEJOjcE9//3UeNBJF0C3zKkDgD+vsiO8QswRgN22IdldqYeGV/O/EePAByBSnHjR1Wd/K7qOyrFrbNkQXJQe6mYCoxUkKNTw71YxVF7UsRmQRQ+SfUot05QWdcuNV8rFcehXstZeP7a5VgwmGxODpVDU0Ys/dAvf/X73oG8z7yDD/NcW8H7KfAXLWJ0Tu98DkiiMlgyAhPIMXu2s2qrl/6EBVmOuk4qQfD2BWnCFJ0i1/5fZci9R8ZPr1DtXD16j/eIY95XdG+bls3oPr5NilRMlhMOlJrazGGR70nfoTwC/Ueql0VcTcu7DHL+XnvmMJYwMTvoPr0ZLgW+q4QMDO9KGMYzKiV1wEPqtH9qA8o0yFAYe2i5G+HX/qXzEZiUY4cMBN7Riyj45WVHSUsFv5wC1hapckoq1+Gb0w=
+	+eE0gKWUBe5my/Ot6bCCDXzYE9mQSiOIEsrwEXnCqg4Flx3dB2ii9Ied2SWlbfqPJKQCLIBb+j7hyQRMQBu6+2EJPCaYzXB3nAbOlcAGL8nDH8D+l9VeBpIUbgDy0JF0bfhIWs+XwXWhMSL/7PvlcZJvFyhK8gtgKtNLXh/bExFlwtv8IRJFqMe7GkGgdaxTH+6iGSV9jslmTKPoPDcH7tL64ZSCi5Zx4ZqIBpKQdEELTmEZrLkVzQ8aMpsjZ9nSS/o+6+Fvj5b+92S3jRSlqApWLZN3WGMT6NslE7sOowfC2oRAS782ImubGkT+R2JIDMK4ulIK8pH6i5TIlekZqpFBb67UjhVf1mYXjidEzD3VGDmMAZ8wbkUb0VhYVeaxAes+oRQ/+GVx8e9nFjjD1uV90fX1TdXAEOcvzqLNN2lFecIkPIxCyAuTPIBiEB0UVjC8Ea+0L6RpHTU1rgiXlqtR57JC6RETyeP/5yjmKlvufnxaugOflqedulxGJX9n6sieIXZeGCHAvL7kjIB8GSF7uX83ptEyksG3snkHCv6rqWY2vpNmIAQhUkDCOhjXQl6N2oN/lXna+YjTH8/jwy9NOLWYma2SjGivpE4ScVs=
 X-OriginatorOrg: oracle.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 5a07f0cc-e6f9-422d-0e9d-08df47e5f694
+X-MS-Exchange-CrossTenant-Network-Message-Id: e1943351-4794-4914-eaa8-08df47e97e22
 X-MS-Exchange-CrossTenant-AuthSource: SJ0PR10MB5834.namprd10.prod.outlook.com
 X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 21 Nov 2026 15:41:52.2117
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 21 Nov 2026 16:07:08.0084
  (UTC)
 X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
 X-MS-Exchange-CrossTenant-Id: 4e2c6054-71cb-48f1-bd6c-3a9705aca71b
 X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: PiG3aM8C+SAOYS9oj0v7CtbY5xtoyV7grq/EX2L4YMoCdLpKEml2ngdVAyYeBwiU8ZMOmxJA4Dmawq1aXaJ9e6/anOeVLdgeTBeuoBvnPmRG+nS6s0trWUtQsxDIDc+i
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: SN4PR10MB5559
+X-MS-Exchange-CrossTenant-UserPrincipalName: euqjBAXk9KB6W3qKOFd6G7iN1Urr0Z+khF6zkfpPR9OiUe8PDlauvSPmUsv5yJI0sRfwKTcmj4qBt1SGRvDdTOjpwOELdRLtiIGrh1eLU7Sw2B4iufJqZwbW5R9+0pLU
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: PH7PR10MB6580
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.138,FMLib:17.12.100.49
  definitions=2026-11-21_04,2026-11-19_01,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 malwarescore=0
- lowpriorityscore=0 mlxlogscore=999 adultscore=0 phishscore=0 suspectscore=0
- spamscore=0 bulkscore=0 mlxscore=0 classifier=spam adjust=0 reason=mlx
- scancount=1 engine=8.22.0-2611040001 definitions=main-2611210061
-X-Authority-Analysis: v=2.4 cv=dJIzC+Zb c=1 sm=1 tr=0 ts=6b01bbc5 b=1 cx=c_pps
- a=zPCbziy225d3KhSqZt3L1A==:117 a=zPCbziy225d3KhSqZt3L1A==:17
+X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 mlxscore=0
+ suspectscore=0 bulkscore=0 lowpriorityscore=0 malwarescore=0 spamscore=0
+ adultscore=0 phishscore=0 mlxlogscore=999 classifier=spam adjust=0 reason=mlx
+ scancount=1 engine=8.22.0-2611040001 definitions=main-2611210063
+X-Proofpoint-Spam-Info: AW1haW4tMjYxMTIxMDA2NCBTYWx0ZWRfX9JLqFNSbmABG
+ Gb/CDyAvjGWYGfS8jzdVFt4DJzjWYekouyhPDSmbletFIUpqioB/RmlJF1b34GXWywTsSSwQSE6
+ C0pECfmWueUX4okefDJ62TtUlzZhw1WT5ftGdxiEJwnPxikcwD19
+X-Proofpoint-ORIG-GUID: 0pwZdZu5Z_qs5UMZ34L3bXGdmrQWRY6-
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMTIxMDA2NCBTYWx0ZWRfX7XJAKTcp3+oJ
+ VOlQirgRsneKDZcD7SxeZBVt6/MFX5qsRDhFA5NORD3QBXN9Ha5lMK323wNswWtizzSSy41xNx3
+ EX3kbild8716mEDUlbRQ/nkU5yTxJ/FujBVWpoP4hXJ1UtR7TNoK5BpjnehIBW54AC0GXh7h+A1
+ sxHllaAzRTFwGTkjFm6oUocP+PB55iuPlVILdq3/0F8OW/wuyIEYQACSy/wfBdjkQPugfTKu4kh
+ CL5LSXwmxTI/G9i7tKrfXeyTxhCL2sKBENNlp6NJGqlcgNq1P+X9DH/jhCrgOg/DkAO0q0FSJlq
+ MR0XBRqlp6LK3GXbb4gDiNd3RaVQlKuF14uwOnmx7blhGUkQUiZyjjF4IBjIYEakL68RJBjOnBG
+ Xi4wccvS2TihnhzE+hUvB4mU8HUTU87nip5lIGm+coWQ2nv4TLFKsfoYoUvyxKkBAh/2QsdUayl
+ b783bnFytEnHyybQOOTSWceztrzKAjhRJWAN+JLU=
+X-Authority-Analysis: v=2.4 cv=Cocq4X4D c=1 sm=1 tr=0 ts=6b01c1af b=1 cx=c_pps
+ a=qoll8+KPOyaMroiJ2sR5sw==:117 a=qoll8+KPOyaMroiJ2sR5sw==:17
  a=6eWqkTHjU83fiwn7nKZWdM+Sl24=:19 a=z/mQ4Ysz8XfWz/Q5cLBRGdckG28=:19
  a=lCpzRmAYbLLaTzLvsPZ7Mbvzbb8=:19 a=xqWC_Br6kY4A:10 a=IkcTkHD0fZMA:10
  a=zJRp6_cAMcgA:10 a=GoEa3M9JfhUA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=jiCTI4zE5U7BLdzWsZGv:22 a=3I1J8UUJPc9JN9BFgKH3:22 a=zd2uoN0lAAAA:8
- a=VwQbUJbxAAAA:8 a=u56hqi7jsX8yg3cP7pcA:9 a=QEXdDO2ut3YA:10
- a=5yU3S35YU4bGjq-dph-N:22 a=Bho9c0fBagfJEIQBS7DQ:22 cc=ntf awl=host:12100
-X-Proofpoint-GUID: f2p8QsPMbT2FKqsN1RbhsabPjrLvz-Zd
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMTIxMDA2MiBTYWx0ZWRfX3lGLgwcH4+K7
- HpDiYPu1Hts17uVUVRtJCZEMIoSB5rvIxpNhYmkL/+sgk4VH6FlbkFPwO8uZC6RfQqP1vt5a0ZN
- wovzNt8Tnn0vnxuLGynVCuKMwbZxvhVVOFsSx7eQXxFqzBlgMJ/eAngbQec8GJ8h9qMACogqxYO
- HPzuKx5Pvv4oGueNRwYifa4kYyu9d+T2VcOZxb9HATz/hRjYpyaNV3IOWyFRuAErZc7XtawpwbB
- tWC5krCaUAi8Tk3MSvqXj4to9EPdTaWx8QG3LN33P4bXqJi1mMIPmPoaQgnmUC91Q6JZX4ldeuZ
- RsMpYwmLPvoC56znLsraqP6mhNLbOQgWbl5xkKqa15W1snHoBHXLDMaKK1ukZIp4OWvgRR9eWr5
- xj0LBWPf46Qsy7rdDJPiWHysLQMjPzbLe5HtePFrOzsaUwQjUpgrx/22Zc1Jl9RbuwCik0RTtW/
- o18+G7zjBASMmQJJhb5ewRxV+TO3IKehO/bl6Qv4=
-X-Proofpoint-ORIG-GUID: f2p8QsPMbT2FKqsN1RbhsabPjrLvz-Zd
-X-Proofpoint-Spam-Info: AW1haW4tMjYxMTIxMDA2MiBTYWx0ZWRfXy/1yTA3ovE/3
- eVENdT5PY+MaDStCwTh6swo5+uKSQFqAatm6HSDb3XkF5Wj8ih7eVt6ag3UT/SNLFYsZ8A2uCTZ
- uqpTzX7ck6NnGeU2P2JZ1AWD3V8Zj6TGacepXwulizsUcirPheN/
+ a=jiCTI4zE5U7BLdzWsZGv:22 a=EIcjfB9IiI4px24ztqRk:22 a=VwQbUJbxAAAA:8
+ a=bC-a23v3AAAA:8 a=Q8nEdJANQLrPJ0FpOxsA:9 a=QEXdDO2ut3YA:10
+ a=FO4_E8m0qiDe52t0p3_H:22 a=5yU3S35YU4bGjq-dph-N:22 a=Bho9c0fBagfJEIQBS7DQ:22
+ cc=ntf awl=host:12101
+X-Proofpoint-GUID: 0pwZdZu5Z_qs5UMZ34L3bXGdmrQWRY6-
 
 Hi Greg/Sasha,
 
-On 18/11/26 8:19 pm, Greg Kroah-Hartman wrote:
+On 18/11/26 8:28 pm, Greg Kroah-Hartman wrote:
 > 5.15-stable review patch.  If anyone has any objections, please let me know.
 > 
 > ------------------
 > 
-> From: renpanpan <renpanpan@kylinos.cn>
+> From: Takashi Iwai <tiwai@suse.de>
 > 
-> [ Upstream commit 0de95c96655c8a12df62e47871016f49e5cd8618 ]
+> [ Upstream commit b113a891252c3fa4fab11ec8c2894a22ecaf278c ]
 > 
-> The amdgpu legacy DCE audio path (dce_v6/v8/v10) unconditionally calls
-> audio_enable(pin, true) at the end of afmt_setmode(), regardless of
-> whether the connected display advertises audio support in its EDID.
+> snd_power_ref_and_wait() takes the power refcount and doesn't leave it
+> no matter whether it returns an error or not.  However, the majority
+> of callers don't expect but just returns without unreferencing in the
+> caller side upon errors.
 > 
-> This causes a phantom HDMI audio output to appear for displays that
-> have no audio capability (no basic audio bit, no Audio Data Block in
-> EDID), because the GPU sets the AUDIO_ENABLED register bit, which
-> drives the HDA codec's ELDV pin sense, making the codec report the
-> jack as audio-available.
+> For addressing the potential refcount unbalance, rather correct the
+> behavior of snd_power_ref_wait() to unreference upon returning an
+> error.
 > 
-> The radeon, nouveau, and dw-hdmi drivers all gate audio enablement on
-> display_info.has_audio. Apply the same check to amdgpu's DCE
-> afmt_setmode functions.
+> Note that the problem above is likely negligible; the function returns
+> an error only when the sound card is being shutdown, hence it doesn't
+> matter about the power refcount any longer at such a state.
 > 
-> Reviewed-by: Alex Deucher <alexander.deucher@amd.com>
-> Signed-off-by: renpanpan <renpanpan@kylinos.cn>
-> Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-> (cherry picked from commit 842a45c68e0355eea47796551c8761c0c77e8ce0)
-> Cc: stable@vger.kernel.org
-> [ sashal: Replaced unavailable connector->display_info.has_audio checks with drm_detect_monitor_audio(amdgpu_connector_edid(connector)). ]
+> Fixes: e94fdbd7b25d ("ALSA: control: Track in-flight control read/write/tlv accesses")
+> Reported-by: WenTao Liang <vulab@iscas.ac.cn>
+> Closes: https://lore.kernel.org/20260612022121.14329-1-vulab@iscas.ac.cn
+> Link: https://patch.msgid.link/20260614090507.772540-1-tiwai@suse.de
+> Signed-off-by: Takashi Iwai <tiwai@suse.de>
+> Stable-dep-of: a69138357354 ("ALSA: core: Add missing barriers for power_ref vs card->shutdown")
 > Signed-off-by: Sasha Levin <sashal@kernel.org>
 > ---
->   drivers/gpu/drm/amd/amdgpu/dce_v10_0.c | 5 +++--
->   drivers/gpu/drm/amd/amdgpu/dce_v6_0.c  | 5 +++--
->   drivers/gpu/drm/amd/amdgpu/dce_v8_0.c  | 5 +++--
->   3 files changed, 9 insertions(+), 6 deletions(-)
+>   sound/core/init.c | 11 ++++++++---
+>   1 file changed, 8 insertions(+), 3 deletions(-)
 > 
-> diff --git a/drivers/gpu/drm/amd/amdgpu/dce_v10_0.c b/drivers/gpu/drm/amd/amdgpu/dce_v10_0.c
-> index 0b872bc71b70d..d77daf89a9dd9 100644
-> --- a/drivers/gpu/drm/amd/amdgpu/dce_v10_0.c
-> +++ b/drivers/gpu/drm/amd/amdgpu/dce_v10_0.c
-> @@ -1738,8 +1738,9 @@ static void dce_v10_0_afmt_setmode(struct drm_encoder *encoder,
->   	WREG32(mmAFMT_RAMP_CONTROL2 + dig->afmt->offset, 0x00000001);
->   	WREG32(mmAFMT_RAMP_CONTROL3 + dig->afmt->offset, 0x00000001);
->   
-> -	/* enable audio after to setting up hw */
-> -	dce_v10_0_audio_enable(adev, dig->afmt->pin, true);
-> +	/* Only enable audio if the display supports it */
-> +	if (drm_detect_monitor_audio(amdgpu_connector_edid(connector)))
-> +		dce_v10_0_audio_enable(adev, dig->afmt->pin, true);
->   }
->   
->   static void dce_v10_0_afmt_enable(struct drm_encoder *encoder, bool enable)
-> diff --git a/drivers/gpu/drm/amd/amdgpu/dce_v6_0.c b/drivers/gpu/drm/amd/amdgpu/dce_v6_0.c
-> index 5e21eb88b2e71..429c97751e5ca 100644
-> --- a/drivers/gpu/drm/amd/amdgpu/dce_v6_0.c
-> +++ b/drivers/gpu/drm/amd/amdgpu/dce_v6_0.c
-> @@ -1702,8 +1702,9 @@ static void dce_v6_0_afmt_setmode(struct drm_encoder *encoder,
->   		dce_v6_0_audio_dp_enable(encoder, 1);
->   	}
->   
-> -	/* enable audio after setting up hw */
-> -	dce_v6_0_audio_enable(adev, dig->afmt->pin, true);
-> +	/* Only enable audio if the display supports it */
-> +	if (drm_detect_monitor_audio(amdgpu_connector_edid(connector)))
-> +		dce_v6_0_audio_enable(adev, dig->afmt->pin, true);
->   }
+> diff --git a/sound/core/init.c b/sound/core/init.c
+> index 29d7a9082352d..b3c70ffa295bf 100644
+> --- a/sound/core/init.c
+> +++ b/sound/core/init.c
+> @@ -1138,7 +1138,7 @@ EXPORT_SYMBOL(snd_card_file_remove);
+>    * typically around calling control ops.
+>    *
+>    * The caller needs to pull down the refcount via snd_power_unref() later
+> - * no matter whether the error is returned from this function or not.
+> + * when this function returns 0.
+>    *
+>    * Return: Zero if successful, or a negative error code.
+>    */
+> @@ -1151,7 +1151,11 @@ int snd_power_ref_and_wait(struct snd_card *card)
+>   		       card->shutdown ||
+>   		       snd_power_get_state(card) == SNDRV_CTL_POWER_D0,
+>   		       snd_power_unref(card), snd_power_ref(card));
+> -	return card->shutdown ? -ENODEV : 0;
+> +	if (card->shutdown) {
+> +		snd_power_unref(card);
+> +		return  -ENODEV;
+> +	}
+> +	return 0;
 
 
+Hi Greg/Sasha,
 
 I ran an AI-assisted backport review, and the finding looks correct to me.
 
-In 5.15.226-rc1, this backport gates HDMI audio on a detector that reads
-only the first CEA extension. It leaves the pin disabled if audio is
-advertised only in a later collection that upstream recognizes.
+In 5.15.226-rc1, e28afa34b037 makes snd_power_ref_and_wait() drop
+power_ref on shutdown failure, while control callers still drop it
+again. The error path decrements the reference twice.
 
-In dce_v6_0.c, dce_v6_0_afmt_setmode() uses: (Code spacing adjusted.)
+In sound/core/init.c, snd_power_ref_and_wait() now drops it before
+returning -ENODEV: (Code spacing adjusted.)
 
-5.15:
+     if (card->shutdown) {
+         snd_power_unref(card);
+         return  -ENODEV;
+     }
 
-     /* Only enable audio if the display supports it */
-     if (drm_detect_monitor_audio(amdgpu_connector_edid(connector)))
-         dce_v6_0_audio_enable(adev, dig->afmt->pin, true);
+But snd_ctl_elem_read() in sound/core/control.c still drops it after
+either result:
 
-Upstream (842a45c68e03):
+     ret = snd_power_ref_and_wait(card);
+     if (!ret)
+         ret = kctl->get(kctl, control);
+     snd_power_unref(card);
+     if (ret < 0)
+         goto unlock;
 
-     /* Only enable audio if the display supports it */
-     if (connector->display_info.has_audio)
-         dce_v6_0_audio_enable(adev, dig->afmt->pin, true);
+Upstream (b113a891252c) returns on failure first, in
+snd_ctl_elem_read_user():
 
-The 5.15 drm_detect_monitor_audio() path only uses the first CEA
-extension it finds. Upstream's display_info.has_audio includes later CTA
-and DisplayID collections too.
+     result = snd_power_ref_and_wait(card);
+     if (result)
+         return result;
+     result = snd_ctl_elem_read(card, control);
+     snd_power_unref(card);
+     if (result < 0)
+         return result;
 
-DCE v8 and v10 have the same change, maybe we should provide equivalent 
-audio detection before using this gate; upstream uses 0374ffa507d8 
-("drm/edid: parse display info has_audio
-similar to is_hdmi").
+A control operation waiting outside D0 when shutdown occurs takes this
+error path. The double decrement can make teardown wait forever or
+finish its wait too early.
+
+Let us drop this ?
 
 Thanks,
 Harshit
 
->   
->   static void dce_v6_0_afmt_enable(struct drm_encoder *encoder, bool enable)
-> diff --git a/drivers/gpu/drm/amd/amdgpu/dce_v8_0.c b/drivers/gpu/drm/amd/amdgpu/dce_v8_0.c
-> index f3b0642f9d9d2..dc72c04d9b7f7 100644
-> --- a/drivers/gpu/drm/amd/amdgpu/dce_v8_0.c
-> +++ b/drivers/gpu/drm/amd/amdgpu/dce_v8_0.c
-> @@ -1667,8 +1667,9 @@ static void dce_v8_0_afmt_setmode(struct drm_encoder *encoder,
->   	WREG32(mmAFMT_RAMP_CONTROL2 + offset, 0x00000001);
->   	WREG32(mmAFMT_RAMP_CONTROL3 + offset, 0x00000001);
->   
-> -	/* enable audio after setting up hw */
-> -	dce_v8_0_audio_enable(adev, dig->afmt->pin, true);
-> +	/* Only enable audio if the display supports it */
-> +	if (drm_detect_monitor_audio(amdgpu_connector_edid(connector)))
-> +		dce_v8_0_audio_enable(adev, dig->afmt->pin, true);
+
 >   }
+>   EXPORT_SYMBOL_GPL(snd_power_ref_and_wait);
 >   
->   static void dce_v8_0_afmt_enable(struct drm_encoder *encoder, bool enable)
+> @@ -1168,7 +1172,8 @@ int snd_power_wait(struct snd_card *card)
+>   	int ret;
+>   
+>   	ret = snd_power_ref_and_wait(card);
+> -	snd_power_unref(card);
+> +	if (!ret)
+> +		snd_power_unref(card);
+>   	return ret;
+>   }
+>   EXPORT_SYMBOL(snd_power_wait);
 
