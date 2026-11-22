@@ -1,60 +1,59 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795318760;
-	b=XnMCyit+ZIq3jEz/EMUJwSoY6/R7zuWUqQ5jGtLpLuR7bgCXBLCUuoVbRqr1tWnnSTNT
-	 mQWaBJUbWCwCqLaJQNOBDHR+U6nrBZoQfR2kh1a3Xof8xZ5h3i0Ez2KWmOBXarHkxYBWH
-	 wHF69CaJ3cOR1vbfZrRx3Czf8XyczwDIuhe/NP7Xor+dOvV7ohu9vjWURsBHakQUEEon7
-	 LT9BkSqCjEQ7HfwQvoKb4724y7o2UTzyWluJlQR7Oh8zejlCHJ5oXQEPQ1a1eNip4MO5q
-	 eejPFJY8h8HeZUfQ4BgPQP//wH1tPWEo0FTAcl1+8asXhdjF1XlKDV6xLA2re+xUjLQ==
+	t=1795318761;
+	b=e9xf/1HkevXoIHSrNq7u4cHf9wfxeSQ2LIstFZXpHE1J7ZIbDPSR2lJ403Wvwy9n99hc
+	 BNfm43pEYXBoHIQWTymA9uY4SkzJic1Flk2JZhKI3FM/wAzK2END2uj6OdyTiisPLZ3js
+	 pBHpd/DEcca7vVIoscZFwOlYtMsG6OK6u11EHvDidmdxPjP3FpO04Z667N555J8ESry5l
+	 l4RUPK08gCD7N1q7xfxuadeifLkoDu8P+snt60pWHvdamix40xUVhxR9l8zmRa+HSGYz+
+	 b2CAw3hay6i64b1zbw2eKNmMFIwoQpv5A0Tfastmo57XOnsauNgg+cgG5wdTyZfJVzw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795318760;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795318761;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:MIME-Version:Content-Transfer-Encoding;
-	bh=fY1+WU2+/r6ZYT/glN6MM6ZC9upNxp7IZVpAbdSOEOk=;
-	b=uvVQmexUo3VVopBlp2p2IHAl0heck8OwjCqb76y2RNMdW0TRDbNKlg5uDtgLxwTkYhe5
-	 0xD+Cm1rmn2EORZgcxwBnQZ2T7sI/QgvuD2wXLKYaiGLiD8bX9unR/JA+wDsnAfPcXlcU
-	 tuEfGxT1upK+sbkRsX1ST8a/iAH3fT2VrlQyMkiW0mtuVYg+wLftJ+vwOkALCadmMDFSk
-	 S/Q6GZKUULToPS93QAcpX7mfuhheM3Tw/VbGAu2CxDH1D5cwfPWxFUxVnwJmCur+5fXCk
-	 ugconfNZ3de+/kCI+Ki3RIMJL2MZ+ZO9aZgdfiI4C7DOi/70Tb64WNfj7TWnHUTCRkg==
+	bh=PMjOe2VHymuEP4vjRZ6iW+7f15TtW52/tn72WNi8J8M=;
+	b=IDDqZ983BzC80oRVB4kvZbzr+/mfPz1qqKAuJXdoZZ54pCVFdpR+wO184+eZMAVWrg4c
+	 qgzbOsAXgNtuFkyCm+2XsR0tgx4yyQj02pR+ROr2DqNMpOJ1g6yn7t4mw59G7joNRwRgo
+	 6G3ffTyQ5fCQmgWiAbnH+Z4T62pxGtFAvf497B/x5fyAdbrctxwvKJZSI4kJmuJxWWVOO
+	 mJ9ZhyFlnQtsp42RmF5zFMc5jYKyE6VUvbjn8BBFeo39BSB+bhKubkCbSsbYezjtU2Yn4
+	 OGNIQ6oHAC77rCF5Bk2Pt6nNDq62225tMaRhYvv4tD1kGPOF/MAdUHpZotDP3xRlovA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b="ne+v/RYR";
+	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=lq3UpdKv;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A8B88606A32A;
-	Sun, 22 Nov 2026 03:39:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 939C6606A335;
+	Sun, 22 Nov 2026 03:39:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=ne+v/RYR
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5CCD11F000CF;
-	Sun, 22 Nov 2026 03:39:19 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=lq3UpdKv
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8F9851F000CA;
+	Sun, 22 Nov 2026 03:39:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1795318760;
-	bh=fY1+WU2+/r6ZYT/glN6MM6ZC9upNxp7IZVpAbdSOEOk=;
+	s=k20260515; t=1795318761;
+	bh=PMjOe2VHymuEP4vjRZ6iW+7f15TtW52/tn72WNi8J8M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ne+v/RYRVct6Qd+KIJC9QFdJiE+VVLGeISbrdxaqEkRYxA+4J4XhjInG3v8Sk9I+j
-	 +wpQlZfuj0zAMRE6ngZgOF/SrmfsRyG1LVMAIbbilFI4zXpan/8+7JhLPtLsDnz/bR
-	 0YegxgZ+jKEpLM2XDgvVngX7BWox8hJCRCAUmi4x4/6repxbX0tk0fy8HxBQM6dP0z
-	 3U3GazStEAEs4ad+edKHumqrMfE5xYNr2FAu8S3jYKmJa7qr5fUHVs09MDaiIhEAbV
-	 qbzGn87DHHrvMqt6IZhWzbadNDnhqjZ08PEHOCpzupW25BXnv8HOuSe6MtdHaxBlS7
-	 WHGTMheuWEBpw==
+	b=lq3UpdKvk1SxLfTjtXn1jr9SZ7K+rfOxObFw1hHwyY0QAarCWRbne/XmuDHVX69Oy
+	 mrAMwL0b2PMJLPBjtRWju5etwc0J7s1ic32v1duI69RZnDdXaPUFa5llJRQ9RlTjxP
+	 bHw+jQHn0Ak+NZEVfedXFrz/Wwct1TfUlb1bhmVGJM2/2//AV2fibXFgDYzObXefdb
+	 Z4rOgknL3HElxvD2wDU8KAEK5wE6GhSsda+bBa7oS0bJ+6AkDbu2HpIlh/ZJx/v1b+
+	 ah6Kd8+GMYXh4Fml//+UKDEOUSQFmGFiaeyGtQILcjcMi8aL78C32npamRboCn7uuZ
+	 8XEKxnaCTHPSQ==
 From: Sasha Levin <sashal@kernel.org>
 To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	stable@vger.kernel.org
 Cc: Sasha Levin <sashal@kernel.org>,
 	patches@lists.linux.dev,
-	Janne Grunau <j@jannau.net>,
-	Neal Gompa <neal@gompa.dev>,
-	Arend van Spriel <arend.vanspriel@broadcom.com>,
-	Johannes Berg <johannes.berg@intel.com>,
+	Ido Schimmel <idosch@nvidia.com>,
+	Daehyeon Ko <4ncienth@gmail.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Harshit Mogalapalli <harshit.m.mogalapalli@oracle.com>
-Subject: Re: [PATCH 5.15 1081/2214] wifi: brcmfmac: cfg80211: Report port_authorized for 4-way HS offload
-Date: Sat, 21 Nov 2026 22:38:47 -0500
-Message-ID: <2026-11-21-2-daily-reply-0004@kernel.org>
+Subject: Re: [PATCH 5.15 1163/2214] ipv6: remove ifaddr from hash during ifdown list cleanup
+Date: Sat, 21 Nov 2026 22:38:48 -0500
+Message-ID: <2026-11-21-2-daily-reply-0005@kernel.org>
 X-Mailer: git-send-email 2.53.0
-In-Reply-To: <a57865f9-15ff-4fa3-ace4-0b384f53cee3@oracle.com>
-References: <a57865f9-15ff-4fa3-ace4-0b384f53cee3@oracle.com>
+In-Reply-To: <de041750-27a4-4eca-8857-bfa39999deac@oracle.com>
+References: <de041750-27a4-4eca-8857-bfa39999deac@oracle.com>
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Post: <mailto:patches@lists.linux.dev>
@@ -66,10 +65,12 @@ Precedence: list
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-> I suggest: Include 8d70f33ed720 ("wifi: cfg80211: Allow P2P client
-> interface to indicate port authorization") before adding this callback.
+> I suggest: Use the existing global lock for deletion. Upstream relies on
+> e66d11722204 ("ipv6/addrconf: switch to per netns inet6_addr_lst hash
+> table"), which this tree has not completed.
 
-Queued it ahead of the brcmfmac patch for 5.15 and 5.10, thanks.
+Dropped from 5.15 and 5.10, thanks. The three patches queued ahead of it
+stay.
 
 -- 
 Thanks,
