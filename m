@@ -1,58 +1,59 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795318775;
-	b=cH3bEGPIllWzypMSuEmydQ7zi+F6ECMUR9GrcPftcmetUPmPAYe+qkloZckjGSV1m6Oz
-	 Pg/0Z/gyKGnKelW/uBrGouh9vDpEbgeN89EVMct+17eetf/wtdMLuQLqUE6ciXIuiTNXa
-	 o8ZNiQGYreWLef+IH1EFj8YdGmcoYvNDd8ndh1M6Vi/wlxvQTfP/9sgNylr2gPijUhLz+
-	 dv/7XFWGp6mS5ZVAqbt4BqoHzuzBDeZqpeWlYub8/+OZgP0ck0zydTZbWLvIKGEfmCCx8
-	 Q48KLOHN7o1mCnumvM/johu/sWGowTeZc3NJ2oxhPqvPr8wladqPfBFRwgEb/MJ8OuQ==
+	t=1795318777;
+	b=qguRdJHMDghf9NloF3ms09zTIL4GX2fviR6gWipd+EAIeI0TB8DI0qRLL5KvMhtZfpPm
+	 3+TWENIuOeFRYFEJgceW0bZCjNMLTsSL+guR9khlp3b5rLc6GrBj6HdK0DsU4mnaN49y9
+	 FZjgr2a5rNzzW2QgTBBtz3fQozY4lrby3FyKKUR8vS42/GgPeOEp7szKFpnRZ9jHcMNiF
+	 iCl+bT6dqXHZMAU41vHHo6CIw5G3twukmtIaEZpt942qq4faJD92VpLGSbbNc2xkgrfFU
+	 kmW6nl/hGCGbcHdjNf25EMmfPzn8HKjqKRw7xW1QqPPQ/cvvpHEtRu9K3MKjjPfpPrA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795318775;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795318777;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:MIME-Version:Content-Transfer-Encoding;
-	bh=jqOF4VMqq79QszXbzfvJWzTWdMt3ROa73c6SgEJ7QIg=;
-	b=km0izSY7su6FRg3/3uSVPBHgcg8g2XRK7aCO3BtEyu0nsekYzSkamA1CNEBKlqd9DZZo
-	 5beXeW8eFGJCUezUYBZVkWrtNwSJ4/9gTOWeU84/j3jqy5lvWKLVnuVNGJyZGqRBUxoJy
-	 jFzH7qygoGJ8Sc4BzFPbv46Tp/ZdGlRJ5YPuuM9VJTt5Jzu3GnPDBwTCjTWuNDh1P+KC1
-	 nH9WmMPdYZhM/vJKZfslVVRzbqtN+7WuRG8Mi8iyh9EK3ZgwWIA7oBqd10Imhl9cOkHa8
-	 okt16jQhudGyF7L4BNyF+WpjR6U4WRIo6VF7FnmH3VU04iRNkQnx5rcGpkLLDyK3bng==
+	bh=LB6nbpBWcVgSYiPy7SprD3fL8p/ujs5B8Y6va5tsZ5Q=;
+	b=WZTGZxUr9qnSHg7IVX/2Wovz0CrmelyrdUPn3Hyuq+aHPME4ZROLQMcaVhAMggFTlAjj
+	 isiAkWWJ1YC2/PYnLOoKzHSxzWpWQQvPddxY9bBmCc/Om6//PajuWoPuvJ9DEzDTNgbOZ
+	 2JDLX5jWD8lTaZgB70ZZa3Vz3GtcdB7a54a3pFGIBBeIIWs/rS43Ce6+JG2OvHnZWYPBd
+	 lkS9Estax8soWuGrjT8cHLR1gU58aO5DSitnUYwdbRbo9SDM5wurF5kUnMRTGuehncJE8
+	 +fB9BHk3LFuTJFTrXwlCWUfYF/9eAMtMD49G02quCSjKsIJYRVfl60MHM/CZIXefdNQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=KEgVcufG;
+	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=TkKfbi4m;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B9FB3606A33F;
-	Sun, 22 Nov 2026 03:39:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 821CB606A68A;
+	Sun, 22 Nov 2026 03:39:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=KEgVcufG
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D07281F000CF;
-	Sun, 22 Nov 2026 03:39:34 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=TkKfbi4m
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D6C901F000D4;
+	Sun, 22 Nov 2026 03:39:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1795318775;
-	bh=jqOF4VMqq79QszXbzfvJWzTWdMt3ROa73c6SgEJ7QIg=;
+	s=k20260515; t=1795318776;
+	bh=LB6nbpBWcVgSYiPy7SprD3fL8p/ujs5B8Y6va5tsZ5Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=KEgVcufGIo07HOrpPM5pnU2Gw6OrUfzx0PS5dRmR3fSq1cPvLIKJvlJHtHQ1pG7Z0
-	 l+/Xo9EwGuR9Z1o6V5VoSehkwPLiAO+IzKtvSEtTMBAlnB+1F/+BLRB4Js6g/4M/66
-	 bWQblFhbOyHanUH2QHrQ85Of/OofeZfUgvLu/4T5uicoy/A2hpx9GLZQyzPMnmxVHf
-	 fU5dHfDnC+ebHuyaKlJppTGnzZHuEebtJagruJG6rP5yl7KTD7wHH/XtoMkCVR3ONw
-	 FEj0DkRSM+ljFDwLf4OPmbuX39zqJpDxeIvJ+BmP3pP2BBKH4bEJ47wnFk/hDGi2dE
-	 VDRC+ACCme6Jw==
+	b=TkKfbi4mIZwR+/rM13yEdTdNf568YzbHxBZgZ1U7eEn+RyvbmUXP5UxdO7+YivH12
+	 J2A9wvzlrhUq2qISEI8rRmDie1kWAiEWW1249Mzsjl9jzcbOSPSnFJYEh06M1jFXNN
+	 E8H5nmdBkQCnh8qRval1ujyldnKFwV1JIwWeIOoSi1OGJXyu5WHVNKTSU5KghVF0bo
+	 cnmqzghZmXU88Ga7L9X32mQeGoEc3SUZveeRUD8gPTdmVYwBVBCobb4PL6EhCBYHia
+	 Mnx8RDg9fgYNK8ngA44onE+ZS3C7OrRytOa7IrpZkNqxLUz5x79H1q3ShgeawMLfVL
+	 OlbmovsgHoK1Q==
 From: Sasha Levin <sashal@kernel.org>
 To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	stable@vger.kernel.org
 Cc: Sasha Levin <sashal@kernel.org>,
 	patches@lists.linux.dev,
-	Alex Deucher <alexander.deucher@amd.com>,
-	Luigi Lauro <luigi.lauro@gmail.com>,
+	Peter Ujfalusi <peter.ujfalusi@linux.intel.com>,
+	Cezary Rojewski <cezary.rojewski@intel.com>,
+	Takashi Iwai <tiwai@suse.de>,
 	Harshit Mogalapalli <harshit.m.mogalapalli@oracle.com>
-Subject: Re: [PATCH 5.15 0674/2214] drm/amdgpu: require _PR3 for BOCO
-Date: Sat, 21 Nov 2026 22:39:01 -0500
-Message-ID: <2026-11-21-2-daily-reply-0018@kernel.org>
+Subject: Re: [PATCH 5.15 0726/2214] ALSA: hda: Reject codec reset on ASoC (ext_ops) buses
+Date: Sat, 21 Nov 2026 22:39:02 -0500
+Message-ID: <2026-11-21-2-daily-reply-0019@kernel.org>
 X-Mailer: git-send-email 2.53.0
-In-Reply-To: <7917cf01-8390-42da-9110-b0ac64ed01c6@oracle.com>
-References: <7917cf01-8390-42da-9110-b0ac64ed01c6@oracle.com>
+In-Reply-To: <f23e1065-bffa-465a-a421-415b09665e0e@oracle.com>
+References: <f23e1065-bffa-465a-a421-415b09665e0e@oracle.com>
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Post: <mailto:patches@lists.linux.dev>
@@ -64,12 +65,11 @@ Precedence: list
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-> If _PR3 is present on the link partner but absent on the root port, 5.15
-> leaves has_pr3 false. Such a GPU previously passed through the
-> hybrid-ATPX fallback. Removing that fallback now rejects BOCO and can
-> also disable runtime power management.
+> Maybe we shoul route -EOPNOTSUPP through the existing error label to
+> balance the power reference.
 
-Dropped from 6.6, 6.1 and 5.15, thanks.
+Fixed in the 5.15 and 5.10 queues: the -EOPNOTSUPP case now goes through
+the error label. Thanks!
 
 -- 
 Thanks,
