@@ -1,58 +1,73 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795318763;
-	b=SfCzTMcvQn5xHxb7cCjzYz3UL3GTdc4qRF+sHtFMYiNbi2FaZP01auvcDguzvRxxrlt7
-	 ixQZKkB9Az8adlP/CkDeim0zvv6dqeVUBwl0HSgibqy4Dk4BGkgG/9YW4xBt8dz6H1mFN
-	 CHv78H1syEp5c3As6f08igF1XHAkHXEJ4oYpQeoHgZaOGqP/wQzIlWwhi6rUsnD9AwZZg
-	 +3zLlOjMLG/wL00QbEeTcNZt1XvqD6jYsoQNdPa21GTbVFeOxmaH7PBsDx1ZNA1R0HNQi
-	 3/PoTgbmbshkkpKh+l472Bff5P6KbMrOyJcW4mcViPRje3nlO4drz1E40WAYjO7nzgw==
+	t=1795318765;
+	b=PT/I2HYM1Y5fFJE4d+o3e2JXWViKSiDWTq/mUDrre3WoYXJ9KrExLBpJMSVDHCcsLBHX
+	 ivwuyw/SOtkWGrWLVF3HPrGZ6lRTg28MO8mKSisPZ8nOTeZUqpdpfekTnCzLpoxxcEg9G
+	 OB/D0Oi7zIpxjH0Nk2mBG/5M9WESj800OZTEKJq4fo6b/9NspStN6u2hXjJWRf2SXM3Ih
+	 8SdeSehP87Ggt2Df1wAKxhoaajZcnIgnwF4wCEjow1qb4VdWQMTfq5EnIe54J0HtiWATK
+	 GrM/JWil95W8DYx9CICjj2vMaTVKyPh3YVXGTWC8p4c6pp+2OukI/Ch/8RbXNOHlm0A==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795318763;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795318765;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:MIME-Version:Content-Transfer-Encoding;
-	bh=kWlpbiodpAbTKpixvwHPpOgq+8trff1NPZ2cFqIfF+8=;
-	b=lq45DLWW1E/OUzPZbwWunvvQgHpoJPZqm+/mD0bqu5gaEQ8gz93D1317QoBs7tvH0OgU
-	 T5resGhYqAZ72+9+dW4KRBMahSv6WSf5FbhlttbvJrjSCCfe4VggajwQZhmMNd4DarPJC
-	 C9f7HjPKoZ1AnlMZdTGV/wYpzEnPaIqSgVmmp/uZU+Bb4rOMAG9end2QxYX3c5M2Qifkm
-	 8blkU7coQrKtiZZurB6qQ1fdO7vrPB0ET0SAJt5+y2k7EaaKpKpn/0auqLQ/lohsX9J6P
-	 Y/AJcMTAve0ndrxJ8X2U0IFmrRVlApf3bJ1pGgi9/CqI7XKC5Rk41qP+/NzdGABKfvQ==
+	bh=ELP1Gi9OydRgeoQUw8lf/RVUC//Ff1/9sgqvB+TA2bU=;
+	b=XuYW4ivWsbiD+eRlrbra/mCp44fUsL5PeKznImxlIISSixEmFGQ7q87BSt+AuV2cd9mA
+	 2H+oY+d78NHgXmjIP+WIuZyr6eK0ZG+nAE4aN0Ppad8FpOY2ZEO/5l8u0qsyqONZP0fxl
+	 ZjrZMrvIpN3m4piHCK0dKtnR9jJkM2wJy3EqXXG68LNe6HATFpnh4JvEakMvjMBwjNv0+
+	 JDcI1T3z0nkec5022Ehxx32YqWbAMPOHG7BFCJWLawBIuzjZ++rSru0gdSncspdhThYxg
+	 ZKWH2bZ0wrHNhDkbfbD9gd4U3jZb4zH/8lggzYGdVIni3dShczUf2+/6YsIlpdvkD2A==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=APZzULHc;
+	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=C0FnPg59;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2F6FC606A320;
-	Sun, 22 Nov 2026 03:39:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4AF6F606A320;
+	Sun, 22 Nov 2026 03:39:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=APZzULHc
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B0D371F000CF;
-	Sun, 22 Nov 2026 03:39:21 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=C0FnPg59
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BC6381F000D1;
+	Sun, 22 Nov 2026 03:39:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1795318762;
-	bh=kWlpbiodpAbTKpixvwHPpOgq+8trff1NPZ2cFqIfF+8=;
+	s=k20260515; t=1795318764;
+	bh=ELP1Gi9OydRgeoQUw8lf/RVUC//Ff1/9sgqvB+TA2bU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=APZzULHcL8NCJeP1zGRW4Jff/KfsIl5v1keCWjN+Hqi0pc+Rewi5Kwbt5b84A6YRS
-	 vD360vsL75BMm6mOFqr2JfsYFzyRof13dCI+6HnVOo03bIf9L8Iu3x+XIcyJoo0dci
-	 cuHMGqKWHV93Oo89AIBaHQmFvois3ea0aogRWESOtqxs+6VgnMC8yv69d0L+3GuY2D
-	 X/QUoVetvm+hfzYZUBQe1xjVwtYEiabJXKrFW0P8W5RR4Am9Fv0ksEn7qo5rt6f+X5
-	 vwgYE5+0HQwc4c71+FfpfIX+RrMUlV1pNG5pkWK+3weCrsJFhzrwQoWcmhpbHmXidn
-	 v0cMxxo6u3PQQ==
+	b=C0FnPg59WEqH1PjLaUG1QWQMWWSKkz7yyWLd3Q2jMR2/t8zzkD1S4TV/yrA1jd8se
+	 AOiviHoOOuZknmYGm7FX0ttq77CMYw+tuQzU2PlWoAt7vVKiz757j4UeJGdHhznTxm
+	 D409oWmnDageMan9rD4iYpGeu9mOK9hdOz522m5skB8odTXq8oVlJTU9qagyS/fVNZ
+	 2Vat7PgdfyD9RLHr+TU1r4B9boHo4A62SI7HQGvXC5liE2wy82Ua/kNc9e9lsM/Bfk
+	 suJovdGsTrC0gE95dRzPqATN7irKS3yD004vq2/kAS41CzSb8QAotVCdINsosl2lpC
+	 DNFf0ELUAcTag==
 From: Sasha Levin <sashal@kernel.org>
 To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	stable@vger.kernel.org
 Cc: Sasha Levin <sashal@kernel.org>,
 	patches@lists.linux.dev,
-	WenTao Liang <vulab@iscas.ac.cn>,
-	Takashi Iwai <tiwai@suse.de>,
+	Yosry Ahmed <yosryahmed@google.com>,
+	"Matthew Wilcox (Oracle)" <willy@infradead.org>,
+	Christoph Hellwig <hch@lst.de>,
+	Justin Stitt <justinstitt@google.com>,
+	Kent Overstreet <kent.overstreet@linux.dev>,
+	Petr Mladek <pmladek@suse.com>,
+	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
+	Rasmus Villemoes <linux@rasmusvillemoes.dk>,
+	Sergey Senozhatsky <senozhatsky@chromium.org>,
+	Masami Hiramatsu <mhiramat@kernel.org>,
+	Arnd Bergmann <arnd@arndb.de>,
+	Jonathan Corbet <corbet@lwn.net>,
+	Yun Zhou <yun.zhou@windriver.com>,
+	Jacob Keller <jacob.e.keller@intel.com>,
+	Zhen Lei <thunder.leizhen@huawei.com>,
+	Kees Cook <keescook@chromium.org>,
+	"Steven Rostedt (Google)" <rostedt@goodmis.org>,
 	Harshit Mogalapalli <harshit.m.mogalapalli@oracle.com>
-Subject: Re: [PATCH 5.15 1811/2214] ALSA: core: Fix unintuitive behavior of snd_power_ref_and_wait()
-Date: Sat, 21 Nov 2026 22:38:49 -0500
-Message-ID: <2026-11-21-2-daily-reply-0006@kernel.org>
+Subject: Re: [PATCH 5.15 1835/2214] seq_buf: Introduce DECLARE_SEQ_BUF and seq_buf_str()
+Date: Sat, 21 Nov 2026 22:38:50 -0500
+Message-ID: <2026-11-21-2-daily-reply-0007@kernel.org>
 X-Mailer: git-send-email 2.53.0
-In-Reply-To: <9df186ab-8f92-4d14-a5fc-f5fceec4137b@oracle.com>
-References: <9df186ab-8f92-4d14-a5fc-f5fceec4137b@oracle.com>
+In-Reply-To: <789028fc-ea60-4ca6-ab07-065d0244daa2@oracle.com>
+References: <789028fc-ea60-4ca6-ab07-065d0244daa2@oracle.com>
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Post: <mailto:patches@lists.linux.dev>
@@ -64,19 +79,11 @@ Precedence: list
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-> A control operation waiting outside D0 when shutdown occurs takes this
-> error path. The double decrement can make teardown wait forever or
-> finish its wait too early.
->
-> Let us drop this ?
+> Maybe we should check allocation before seq_buf_init(), preserving the
+> existing failure return. Upstream already does so following 68aaee147e59
+> ("mm: memcontrol: fix potential oom_lock recursion deadlock").
 
-Dropped from 5.15, along with the five other patches queued with it for
-a69138357354 ("ALSA: core: Add missing barriers for power_ref vs
-card->shutdown").
-
-6.6 and 6.1 already shipped b113a891252c ("ALSA: core: Fix unintuitive
-behavior of snd_power_ref_and_wait()") with the same double unref in the
-control callers, so I'll send a fix for those two.
+Queued 68aaee147e59 ahead of it for 5.15, thanks.
 
 -- 
 Thanks,
