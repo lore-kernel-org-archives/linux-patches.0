@@ -1,58 +1,58 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795318766;
-	b=JGmCb9V7aRLNL+CAtDemQhDHLRiZCT3+7ykgIhbIyh9JT/QpNEbwQ07LqovdmPB6/xWI
-	 Wi2hLjAJXvp3Q+Ht00t5W5MvWo3xIHVVMNCUBS2Et9KzE5OJLZnEvaqt49PPk6shhy7n+
-	 4Q7Fqg6XgWC9gRJTh2mE1jU+Fq6kbjn+SmGZMMpcpsxxFAMH2x5Zv8AI24OyO8xnxjxp3
-	 xxcwj9jKiMIS15NzhxV+yaXo25ZnNxsjR1EvfaGZKuC5ESWrPuBriwvV0j9YiUmw10BXx
-	 AwVc2cqDfRVLoVCkRj+l9psTASpCJCBPpm6a1TxaOK9q70R5++47YnQAHJiM0Gpwp7g==
+	t=1795318767;
+	b=gidpPlEDN9srKqrKRdnXfAnmbDWtDtIXJf9/LtvowSEf1bc9oqH00AbZRpeWYVWYK7lX
+	 91eOqVs5pOD+7QSWwDM4aGE3nHrbx9HZ7rUfogirSorbSUyf7c9Rx+j8V8/5t/mZFoTqe
+	 Ghpe9cpG1/PahdBWEkwnKO3g0EE48TKL21sVSE2xskp0xnwTwnNsB2rB1XQrdNjFpnUV3
+	 6qT/7RKQ48ecZOC2zBAQNjNAru4FTSiUxdP4Le9GgcHQmpg5X+AsEqhcOlpOJm03pUWpc
+	 DVvBAkRXQE/IDfaQ5XkK6aUh3CZhdoupJc+Cm+kb+mHbG+1/qk6O0N3njFgbaGX8Ubg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795318766;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795318767;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:MIME-Version:Content-Transfer-Encoding;
-	bh=ARZos9Oyp7IlG0S1npOfvHrG1IR5VnbGnlLf6uVLOPg=;
-	b=d2qW+cCeLuRRLeZ1Fi+FqJS5WApCs0GLtZhU72ThSvxplNlfAmLCVF7jmzumnvzFANal
-	 0YF6aMqXrqhP3fTkdh7MZ/lwazNu6Jr1LRa1ZXFbX/Ez4wGt6RHPHMprth9fpDPeqAvTI
-	 AB16PFi74Ixga/wdy7bQIQc0mXCR4Ja/bF62o/iOFqXAmbjkySCmDs4wtxo+vPK0dx/nu
-	 EcAWPvG3fJwwJA3mcJ+hZFQ1u5jt5to3r42786bZzk51LYhh7aeUab2hfPc+0Iq3UthKk
-	 rdZdqPuJO9CrVXPsYAU/LApn5EFIaLkSTXaCarQif6y+dP1qs8sM6pePe1PU9a6CY/w==
+	bh=DjVCtvDJYr0KQoM5KiKptmREvZy0Q1oPOWGfFKXwl4A=;
+	b=ZbD2B51Mord/dhOGX3GwtyJHED89Rtlll0E6jAhCXyKpV7sDRQ39Bp/Jmk9n8pG82fAm
+	 wrPEtaIaX37x6cAcG69DNkDP9O5K9iuDDKRP0r9AOHd7cscHdS69buc2vCNKI6w2rGbr8
+	 DJ9cRqI49QnVQ9nB5v0xu1mT4hbM70ULIiMHxtT3QB1Nm3tKsn1IFEzhc2bDVTzVXAoaS
+	 9muDZzY5wsxVopNJnWMq6f76hvElzjgU0soIGFsyAcC+vzHMRi6u14ETRXcc2yqpUgfwp
+	 DkuAnc8tsCPpmNmVxd5u5f4V6cAfKWKd9G2Pt88Ivn4q4MCwx04CP8UrEYR7+55UtCA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=LQ78X01m;
+	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=UkEHoDdh;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0BDA0606A320;
-	Sun, 22 Nov 2026 03:39:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6E3CA606A32A;
+	Sun, 22 Nov 2026 03:39:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=LQ78X01m
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 277BB1F000CA;
-	Sun, 22 Nov 2026 03:39:25 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=UkEHoDdh
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 357451F000C0;
+	Sun, 22 Nov 2026 03:39:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1795318765;
-	bh=ARZos9Oyp7IlG0S1npOfvHrG1IR5VnbGnlLf6uVLOPg=;
+	s=k20260515; t=1795318767;
+	bh=DjVCtvDJYr0KQoM5KiKptmREvZy0Q1oPOWGfFKXwl4A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=LQ78X01mDubekeobbNXgbX57VKsdjsGg+ryiIKmweWw9yMsoct1SxmWcma/SPf0Nc
-	 z/epq2M4C5HEzHC/M0nxPefied+1sK9cPmvl+gROOe37h0iRHeX13ElRor8tTSE+qO
-	 3SSjoBUtmmC9MzAxE+iYNBHcPJ3IhFymMSvIlU1lWpDOmv5E0Qf4pRzatmSubBLTSD
-	 t77vvENPonqlblB8bk+ksh0r0YztfYRWAf/cJjrLaVXWXoNYZ8K6hlHDviW1sgIuHI
-	 dS7UOshfCvMaV6JESyxyvtdB/fOWips2lHGprlh32mzeuWtgjsTfo+qMUl4ACjplyr
-	 TG/R9cHPxyNJg==
+	b=UkEHoDdh4xkU6wHhYvKUJjX4cuQ7WU91TXHrE56KQl2mJ9dEgz8LgfirgwEQfnBMO
+	 0F1Rk0UeYhbC7c3nos8/b0fHteV7Gdi/QSxPXpEHecWRqFudON8EYZTEYCrQUBd3EF
+	 zi/DSQXc6YkB0CnT3DBqc/O/HJsMqDRjN6DPYW99NCo9VkkIIKbVvUjaMZj+CYzo9a
+	 QwgDuscYucTKOSSP+F50SRZeC/AaaSZfBmwFdHlDFhvgEkx+AUwgtE7cYkcNTyWQzp
+	 RMWXxlFD0nI9w95Wx6Mu07aoJPc/XtTp4A2+kQGTEwJvbE8wxmSUyeGxw/V6cHjFu6
+	 PXueuRl5egDYw==
 From: Sasha Levin <sashal@kernel.org>
 To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	stable@vger.kernel.org
 Cc: Sasha Levin <sashal@kernel.org>,
 	patches@lists.linux.dev,
-	Bob Pearson <rpearsonhpe@gmail.com>,
-	Jason Gunthorpe <jgg@nvidia.com>,
+	Josef Bacik <josef@toxicpanda.com>,
+	Alexei Starovoitov <ast@kernel.org>,
 	Harshit Mogalapalli <harshit.m.mogalapalli@oracle.com>
-Subject: Re: [PATCH 5.15 1964/2214] RDMA/rxe: Create AH index and return to user space
-Date: Sat, 21 Nov 2026 22:38:51 -0500
-Message-ID: <2026-11-21-2-daily-reply-0008@kernel.org>
+Subject: Re: [PATCH 5.15 2025/2214] bpf: Dont take an extension for an iterator program
+Date: Sat, 21 Nov 2026 22:38:52 -0500
+Message-ID: <2026-11-21-2-daily-reply-0009@kernel.org>
 X-Mailer: git-send-email 2.53.0
-In-Reply-To: <866e1857-f714-4150-b3c2-12c0c3573d41@oracle.com>
-References: <866e1857-f714-4150-b3c2-12c0c3573d41@oracle.com>
+In-Reply-To: <3ed06a31-d1c9-4a14-82e1-c66df4acc3c7@oracle.com>
+References: <3ed06a31-d1c9-4a14-82e1-c66df4acc3c7@oracle.com>
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Post: <mailto:patches@lists.linux.dev>
@@ -64,12 +64,11 @@ Precedence: list
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-> I suggest: Supply the indexed-pool setup from 99c13a3e2965 ("RDMA/rxe:
-> Change AH objects to indexed"), including the flag, bounds and maximum
-> count. Or drop this for now.
+> I suggest: Return false for this rejection while the helper and caller
+> retain the boolean convention.
 
-Queued 99c13a3e2965 ahead of it for 5.15, thanks. It keeps 5.15's
-RXE_MAX_AH of 100 and only adds the AH index bounds.
+Fixed in the queue: both patches now return false there on 6.12, 6.6,
+6.1, 5.15 and 5.10. Thanks!
 
 -- 
 Thanks,
