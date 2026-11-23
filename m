@@ -1,99 +1,99 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.160.169
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.160.178
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795447536;
-	b=xgQJPxU6snawPo6WzLPaK7Us6RzyoEbS0jGV30Rcit1CrXNRC1nt2Rum6V/1YjrdEHsp
-	 a1aPrf8AJTkWorSQWyLpLXJqwq1B8mtAn1YGJxvpbPRAI7uKI5mKNfZR6K/e4W/Gt05hv
-	 Lg+Fw8ej5DcvkjPoaNACnAu31LVbLOok8W0qBzetavVuK+uEKQ0WzABqF6W8cygQ8uj/J
-	 iqo2c9iv9nsorPkUDzQdXbMJExeojSDrNE3vRSl2UPJPVzqTTG5BqhOB2wZNVJjBdo6pY
-	 Je4J3B+FBXHNXow9qsbPHyQcXLBkwCSz4KVUxzDB8PdjZxslosKo4+JUeJp+/89p7gQ==
+	t=1795447660;
+	b=IcM9F8lwnjG9uBVkKwSKk/OuM3/I/yKRN/V9iHEU97oIR6gzNEmIsX5Ozw+xaIpFcZvM
+	 4htmik5pA+UCNFgV4Mu0H+tWmAkySViHHok1A4F3j2HK0m1t81Q2OVBi4wXIcvhOGqNrp
+	 BAAtvV3QPt3v1bfCYlXAPWF0olGW2o0bVe/Pz1JYSGKlih1Yd5DCJ+znCBNsT6Ki0if93
+	 bu5MIFgWQNWIgtoCL8GIKRfhoqOMzYdS6PTABP1VE2ymhkjDDGkFLcry3iBbbH/6YXaMg
+	 McmkENrlZDVC/oNRuhNVOB5AIL0XA1nQi79HPcfWbiep93fS9rgIsfwK26bWwx73FGw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795447536;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795447660;
 	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
 	 X-Forwarded-Encrypted:X-Gm-Message-State:X-Gm-Gg:X-Received:Received:
 	 Received:Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
 	 Content-Type:Content-Disposition:In-Reply-To;
-	bh=uJeUtw5BXBG6B+iGuyb9j1OIKHpejrpTmDWG1agjBxs=;
-	b=ZlN83HuCpgx2BD+BakJKiHhGtY4v4auzeO8yilFZ12EQ6ay2VZyVWpY77/NUbO6nmF/g
-	 oHWAUMatFCT7C7oibxqljem8Mea4FYMHEXEuJ7ty3l1Hs5TetlaFJ0li9avQxN0XOTWDq
-	 625tohpKgbB4YfgYZmEIfnrhVLKntsOIHd93sXTKweUM2xvEr7xX2v1wDstDNrHXEqxFK
-	 glNfVris6R1hobgJf11CpZNXMxvI32y81BcRcFg1Dqay57azTMPIoF8X8JIVbAt5bBun+
-	 8o6/sE7VdjgCYDKeyZfNmEsh3f4cdkUrxAcZ2W5JElYJjLFy0is0pJDY0mD+r3UDRwQ==
+	bh=rWLsIhN+kxPGKJoMsbdqyApLe79fwWP1AaQIjJntY6g=;
+	b=3u2AqZxK2FEKRwRLDnDqcqaNYG5WJm+nsnZi1nMwnInMH9YW00t9HBvjEXLeqKqd3Qpl
+	 +HOUBzdPAE/e/CHTbnzQ+OQTyNAl1pHhj4QV3IgH9Zlo2mPlhW/RRGM21ETWNoVdIr6YV
+	 SgEHzoLz56BlIyTk5sPlpF//1KLwTso12I6VFuEkYZv0uKbqk3+O9XreydeYbow3HELNn
+	 u1l/nq2Sk5Ftcawxg4NXJs6Om+J7gGQPLtz5FNe8eHNE02s/fpE7AkH3I3QnKSy+k7VVg
+	 gs/mb8ub6iZYF3DU/55fwHNJGj3jkv4v1tmUSXbCbb/5/MUrpoSX+h/bI24OUDHrZwg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
 	dmarc=none header.from=ziepe.ca;
 	spf=pass smtp.mailfrom=ziepe.ca;
-	dkim=pass header.d=ziepe.ca header.i=@ziepe.ca header.a=rsa-sha256 header.s=google header.b=Q5iwmH+d;
-	arc=none smtp.remote-ip=209.85.160.169
-Received: from mail-qt1-f169.google.com (mail-qt1-f169.google.com [209.85.160.169])
+	dkim=pass header.d=ziepe.ca header.i=@ziepe.ca header.a=rsa-sha256 header.s=google header.b=OFB9sTMd;
+	arc=none smtp.remote-ip=209.85.160.178
+Received: from mail-qt1-f178.google.com (mail-qt1-f178.google.com [209.85.160.178])
 	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E2C2C606A68F
-	for <patches@lists.linux.dev>; Mon, 23 Nov 2026 15:25:35 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org E2C2C606A68F
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 76FAC606A327
+	for <patches@lists.linux.dev>; Mon, 23 Nov 2026 15:27:40 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 76FAC606A327
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ziepe.ca
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ziepe.ca
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=ziepe.ca header.i=@ziepe.ca header.a=rsa-sha256 header.s=google header.b=Q5iwmH+d
-Received: by mail-qt1-f169.google.com with SMTP id d75a77b69052e-5366ae57896so36085971cf.3
-        for <patches@lists.linux.dev>; Mon, 23 Nov 2026 07:25:35 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=ziepe.ca header.i=@ziepe.ca header.a=rsa-sha256 header.s=google header.b=OFB9sTMd
+Received: by mail-qt1-f178.google.com with SMTP id d75a77b69052e-55d360ca878so31377571cf.2
+        for <patches@lists.linux.dev>; Mon, 23 Nov 2026 07:27:40 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ziepe.ca; s=google; t=1795447535; x=1796052335; darn=lists.linux.dev;
+        d=ziepe.ca; s=google; t=1795447659; x=1796052459; darn=lists.linux.dev;
         h=in-reply-to:content-disposition:content-type:mime-version
          :references:message-id:subject:cc:to:from:date:from:to:cc:subject
          :date:message-id:reply-to:content-type;
-        bh=uJeUtw5BXBG6B+iGuyb9j1OIKHpejrpTmDWG1agjBxs=;
-        b=Q5iwmH+dNQzpihQspnPZ5EknU6HI/0PvP1I+036hQnLg13miFGooYywZ5CGnjd+ApV
-         OdeNzbgSAc12r4zav2Z3u5ePi/tGH1XO/MQjx1g8hLrD0tYqBGpal/o6v9dn0eOm7Wk6
-         4G0KZa0rfSGJdq/iMF3tdCuYNHszH6oH+YLxBCbui9po9540zCW1rD6+nVW5jCG5eXkY
-         4xU7PYb/KWFxFwA2mX32ExZ8JAujcfUWv19lrYBC945TsgLEPTyId2qOTY9ZDFyyZpPl
-         Gq3yIAgusZE4aezbrXyYud4Jtwfm80O+dxzkya3D3GKEZCyM8w8gLGmrJINnagaI/zW7
-         exrg==
+        bh=rWLsIhN+kxPGKJoMsbdqyApLe79fwWP1AaQIjJntY6g=;
+        b=OFB9sTMdH8qL8kf+A5/ssPkVj4I6zD1lpDcHgEsYuApY2/1oH7AF4/w+xJ36Ngrrr+
+         YMpAVORFCybBL/RQ1HSR/7FpI0Ex7yokNfpFScR+Up8ujZ/3Uco3pRQB18ktxHrRcJam
+         C72HRS0RLeTemhDR5Jf6hIG0fUqe2G9Qoz81Zm14sOz+pG+j4wpY1CYHztXElRm3A2/D
+         1kVkja3DPFsLe9BO1T6q2pBzVD0ht0EQBi2i3vulX5JEfT3D83p99D2YIeNAIl2aobiO
+         lPz8TDu8fcrSIvHLpFcNOfBhu7DKIlWYCZjWbzKlWMhYO067x4GQ2RH2ons5vosFPexk
+         Shrg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1795447535; x=1796052335;
+        d=1e100.net; s=20260707; t=1795447659; x=1796052459;
         h=in-reply-to:content-disposition:content-type:mime-version
          :references:message-id:subject:cc:to:from:date:x-gm-gg
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
          :content-type;
-        bh=uJeUtw5BXBG6B+iGuyb9j1OIKHpejrpTmDWG1agjBxs=;
-        b=OjmFgjMC2KlvIm3bIdTVM/l8e3NRC5E+YClVwkRUWB3qsz3IJD4BmC43f3J+KcXpin
-         dQTO0fXP8DUtQcHjYXYZHSybTbr8cOrA3/sCamxepHzLh5qcbQwm+4wzn5AguxnlfISX
-         7oDEYhacEGi4936s5OtlQPdTblVpOizciCwVw0oSGCHqK6tMVUZrpD5iumZn/iFS14ZJ
-         SSIR3a/+UPjjFWrCQ85pWDVZneiy0ScHeNb43YGWx/bIH6Jx4N+Sdf9kVEAvP7QJsAT2
-         GJRrALYRU2DkmfYyZCRLKSUtKCgJcnVX8RZZNWuvX9GEFWMCAT9Zw9XzQvLG08kOn4dR
-         eyew==
-X-Forwarded-Encrypted: i=1; AL+hErFgpm5/ynsDZZR47fxWLeIMM0wwNc7o7mAD8YqCkBw+ZEJC2JaovuqYmUgliOMMrwqd4n2YzhwO@lists.linux.dev
-X-Gm-Message-State: APuU4Z+sEvU9rHEKhqsliV9ZHNEkriiV1nRXmLTyzXHv2rn1RkpWQPBu
-	FWs9rg8BdCjnBr9vXNKU51EcvupLqADbbfLHtw8qajODAO3yBFSeGVUrUjKgeYqHfh4=
-X-Gm-Gg: AZFdTZcadR6PsirjisARraJk4Xbg4UwrMt55cU9a/l8JZ2fHln+s3WaUcNURyDpuBid
-	P/IjPZRRsJuht98bcIAmZdzK1EpQ6Unouo9hpe5gRXdT5BYmtBBkhIPihOArDJ8J3K/IYZW8PVX
-	HMnlxPuIId6VxjHk/Lnpy1v8Uz8jQ1MzXdCMftdGS7kO2ykyvqFSfsjk+N/QHmt26HnNh6JrdZi
-	Bd1B/yyZzEu6DM84L19jGPepmkukIjrwczRBFpHM2iqWDH9vfnYcMr5sz1cgZnsYkqpl4L3oQqg
-	X2igCsdNxiC+0b/gYJrMA6hL6ZAbONlQRZhNdb+AaZ+qvVehWY/6Jf8g8zi3pMJM5AOTHP4yvUz
-	cbRQRQr9ZNdKngixuWVFecizyYB3qwuYY111s278d7JF6K3yv42TXStEKH6x0a6cs+afEcoGChP
-	w+P3j1/IjJQMN9qfQAsU+QIixHdyNjAB3tRoQzHJ4dj2FxCJH2aTrTia0cLtuSnB7Tw8OlNhNH5
-	KrmNHfp0+Xqd1Z+q2INSp90r5+Y9M3dZmyYbnp0wmmk3QQjaBFzbyBC2iLI1+VET6i5coR0odSw
-	Yo/uLBTmC+hedTqy66pkf0fi8t+Sv9AqccbuOen+Dj1UTqje/d96AOZGEAT3I602xwM74X/pcOp
-	+KF0=
-X-Received: by 2002:a05:622a:a881:b0:536:6f7d:1145 with SMTP id d75a77b69052e-55d76a27f9fmr215459771cf.21.1795447534734;
-        Mon, 23 Nov 2026 07:25:34 -0800 (PST)
+        bh=rWLsIhN+kxPGKJoMsbdqyApLe79fwWP1AaQIjJntY6g=;
+        b=pGLmvVNYTkx9CiZEzTPeRBQRix2lXdBCnrE17PwG3kAoz47SoLfy4t/P600MfMAUm6
+         u/RGZrDdWcgNV9FvAyKJiuTjwVWyVRZr9wCRn/YMwuqjKVl2ctpKGW6i0WsgMSS4tlAB
+         rNUZLg6s2hnQ/RKCbM5qGjU5Cv4V1HLiQ2jdT0uCa3J1ZdfHzTFCPXO5tcjC/NVJ2/UN
+         CnUt2ATHr04nPggMvc83NA3HVslsQVM173U412T/IPIushmk/JQrbOd1P+WFzHq3728V
+         ONeuZUAULyF4/ooiPTrQu/188MNFSN9APtA7y91HNvgY2+nmx/GGX4KiUTvvLWmnxizL
+         Bi4w==
+X-Forwarded-Encrypted: i=1; AL+hErHUHzHoCqn+5E+zarVyxrkEeUZos1iI262faT8dPhP0EFlrWshmvIkk4BAJ+MCmtkHDqvwb+KKs@lists.linux.dev
+X-Gm-Message-State: APuU4Z8Gi/8c1PvAWfFJKJp1bH17n2TMPDGoUriFhh1RdYgsGP9t9wSq
+	Kn+9dCiJwbgBokVnXYMGe0Ia8WdGNcCsa6ZN7aiO0IV/HVyC5/Tv1eRC+XN6Nn5sIxk=
+X-Gm-Gg: AZFdTZcQIetRGqtyluZwwg+Wd502ifENsxdmUZU6NI0h033Mw34YC4ZlgvHdbrySeDK
+	3aLEZf5WojKJUuMB3WmXbmlKwjnMDF/8TCZpJVz+i4cZUkr4VGM1fAd21ff+nNbQgs5ardZJsYr
+	4SF29ItzkXl88iGH1PtBn4RfNkwaGDvMZLYmmXtis9tQUEWZ0IPLJwOQKW7/dXV45tAZ/T3kjbA
+	6xKiZ4baytcH+IRyvIv90MxxXL7vf4ZgSGI419p9Hz2WigxsskkyACV+J/Qwwtx93xUHgpkrYpc
+	3bg3CA4fN6Eeu0m0UlS/KcDI7UGE+GUDPgQsvpbDXZeBawmKXBKkTd+TGLGIemAXZPIyja1rrqd
+	I5sOIpySQHJ00SX2wwAAFQkKZ5W28dF2HY8Pzz1gtPZAyBJVcr/YaOjm8iML2UwmkuTi0xX2HRZ
+	RVhbMqcF6R8t1PxUlV15sHUABa5gWH2NQ0JFANGT689Zpq+39+E4NISWDEj0sLa6XGCb1crVyFL
+	/HNIxB+rWvfm/qNW7a/DQzed+ZQLhDTKbj9US7mpB43wjPRauHbHMxRXyO+HFQ/5Q+n0EFA0THC
+	jVV+NILhm0rNgK7R0a/9WCF2bGkiU73iaL/gmCPF1oq4ILVDXE6T4XamFeSOtBKdsClt7srMRgi
+	Hc8w=
+X-Received: by 2002:a05:622a:1a8e:b0:535:2794:851c with SMTP id d75a77b69052e-55d76ac54famr221466701cf.39.1795447659366;
+        Mon, 23 Nov 2026 07:27:39 -0800 (PST)
 Received: from ziepe.ca (stjhnbsu6iw-159-2-142-59.dhcp-dynamic.fibreop.nb.bellaliant.net. [159.2.142.59])
-        by smtp.gmail.com with ESMTPSA id d75a77b69052e-55d78807b5fsm100671031cf.6.2026.11.23.07.25.34
+        by smtp.gmail.com with ESMTPSA id d75a77b69052e-55d7882bf70sm102842001cf.11.2026.11.23.07.27.38
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 23 Nov 2026 07:25:34 -0800 (PST)
+        Mon, 23 Nov 2026 07:27:38 -0800 (PST)
 Received: from jgg by wakko with local (Exim 4.97)
 	(envelope-from <jgg@ziepe.ca>)
-	id 1xVVvB-00000000sLi-2ANX;
-	Mon, 23 Nov 2026 11:25:33 -0400
-Date: Mon, 23 Nov 2026 11:25:33 -0400
+	id 1xVVxC-00000000sQR-1ESr;
+	Mon, 23 Nov 2026 11:27:38 -0400
+Date: Mon, 23 Nov 2026 11:27:38 -0400
 From: Jason Gunthorpe <jgg@ziepe.ca>
-To: Leon Romanovsky <leon@kernel.org>, Nicolin Chen <nicolinc@nvidia.com>
-Cc: "Aneesh Kumar K.V" <aneesh.kumar@kernel.org>,
-	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-	linux-coco@lists.linux.dev, Dan Williams <djbw@kernel.org>,
+To: "Aneesh Kumar K.V (Arm)" <aneesh.kumar@kernel.org>
+Cc: linux-coco@lists.linux.dev, Dan Williams <djbw@kernel.org>,
+	Leon Romanovsky <leon@kernel.org>,
 	Bjorn Helgaas <bhelgaas@google.com>,
 	Jonathan Cameron <jonathan.cameron@huawei.com>,
 	Xu Yilun <yilun.xu@linux.intel.com>,
 	Alexey Kardashevskiy <aik@amd.com>,
+	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	"Rafael J . Wysocki" <rafael@kernel.org>,
 	Steven Price <steven.price@arm.com>,
 	Suzuki K Poulose <suzuki.poulose@arm.com>,
@@ -102,15 +102,11 @@ Cc: "Aneesh Kumar K.V" <aneesh.kumar@kernel.org>,
 	Herbert Xu <herbert@gondor.apana.org.au>,
 	driver-core@lists.linux.dev, linux-pci@vger.kernel.org,
 	kvm@vger.kernel.org, patches@lists.linux.dev
-Subject: Re: [PATCH v1 00/10] PCI/TSM: Support guest TSM drivers
-Message-ID: <20261123152533.GE179082@ziepe.ca>
+Subject: Re: [PATCH v1 08/10] PCI/TSM: Add sysfs lock and unlock for
+ guest-assigned devices
+Message-ID: <20261123152738.GF179082@ziepe.ca>
 References: <20261123083337.2731019-1-aneesh.kumar@kernel.org>
- <2026112325-emit-squeezing-5d96@gregkh>
- <20261123090623.GK14811@unreal>
- <yq5a7bi3riha.fsf@kernel.org>
- <20261123115803.GN14811@unreal>
- <yq5awlq3pto0.fsf@kernel.org>
- <20261123135638.GO14811@unreal>
+ <20261123083337.2731019-9-aneesh.kumar@kernel.org>
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Post: <mailto:patches@lists.linux.dev>
@@ -122,85 +118,24 @@ Precedence: list
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20261123135638.GO14811@unreal>
+In-Reply-To: <20261123083337.2731019-9-aneesh.kumar@kernel.org>
 
-On Mon, Nov 23, 2026 at 03:56:38PM +0200, Leon Romanovsky wrote:
-> > >> >> But it should not, as you are making driver core changes that will
-> > >> >> mirror the same thing that that patchset is attempting to do.  Please
-> > >> >> work together on this.
-> > >> >
-> > >> > +10000000,
-> > >> >
-> > >> > Greg,
-> > >> >
-> > >> > This series came as a surprise to me given the fact that device trust
-> > >> > series is exactly for that - allow confidential computing.
+On Mon, Nov 23, 2026 at 02:03:35PM +0530, Aneesh Kumar K.V (Arm) wrote:
+> A confidential guest needs to lock a PCI device before collecting and
+> verifying evidence about it. Userspace also needs a way to unlock the
+> device after use or when verification fails.
+> 
+> Add tsm/lock and tsm/unlock sysfs attributes for TSM drivers
+> implementing devsec_ops. Writing a TSM device name to tsm/lock calls its
+> lock callback. Unlock calls the matching driver's unlock callback
 
-Device trust's primary role in enabling confidential computing is to
-give space for the userspace to do all the TSM and attestation stuff
-to get the device into T=1 private DMA mode.
+I thought we agreed not to do this in sysfs as we worked through the
+SPDM stuff?
 
-It is the userspace that does all this and the userspace bridges from
-"I got the device into T=1 mode" to "Now it meets my userspace policy
-to be trust level Full" and then finally "Now I can bind and start a
-driver"
+LOCKED should be the 'start SPDM' action in the guest
+RUN should be the 'accept SPDM' action in the guest
 
-The two concepts work together, but they are not linked inside the
-kernel.
-
-> > >> > Adversarial is equal to the "cc_accepted".
-
-I expect most policies would make "cc_accepted" as a full trust level,
-but we do want to allow adversarial as an option too.
-
-> > >> I think the confusion stems from this thread:
-> > >> 
-> > >> https://lore.kernel.org/all/yq5amrr8yldi.fsf@kernel.org
-> > >> 
-> > >> Based on that discussion, I understood TRUST and eligibility for private
-> > >> DMA to be complementary attributes. Device acceptance determines whether
-> > >> a device may access private memory, while trust determines whether the
-> > >> core must enforce additional restrictions. 
-
-Yes.
-
-> > > Device trust does little beyond preventing driver binding and recording the
-> > > trust decision in "struct device". The missing piece, which I would expect
-> > > you to address, is ensuring that the IOMMU and private DMA are configured
-> > > only after the trust level has been decided or as part of that decision,
-> > > rather than beforehand, as they are today.
-
-They are orthogonal and unrelated.
-
-All the TDISP and T=1 DMA flow is about how the DMA API works and has
-no direct impact on trust level. You can choose any trust level for a
-device using T=1 DMA.
-
-Getting the device into T=1 should influence how the userspace decides
-to set the trust level, but it doesn't interact inside the kernel.
-
-Aneesh has it right that these are orthogonal and unrelated
-activities. There may be some confusion as Dan attempted to couple
-them, but after discussion we have moved away from that since it
-doesn't meet all the use cases.
-
-> > What I am still trying to understand is how you view the DMA allocation
-> > and mapping paths determining whether a device can access private
-> > memory. Paths such as force_dma_unencrypted() and SWIOTLB receive a
-> > struct device pointer and need to decide whether to use private memory
-> > or shared buffers.
-
-It is Nicolin's work here that needs to go before the TSM drivers:
-
-https://lore.kernel.org/all/cover.1794343501.git.nicolinc@nvidia.com/
-
-Because that is going in and starting to fix the DMA API to work with
-T=1 DMA devices.
-
-The TSM side should sit on top of that to enable it for PCI devices,
-not just integrated devices.
-
-I think for now lets just focus the TSM series on the attestation side
-and we will tackle the PCI and DMA API issues as another series.
+And though we didn't talk about it there is likely some 'destroy SPDM'
+action that is UNLOCK and UNRUN.
 
 Jason
