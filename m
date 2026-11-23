@@ -1,49 +1,145 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=217.140.110.172
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.219.43
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795443291;
-	b=3Zm2t9W0+2yUMf0NjcsCWmPtU3fbqRkyIkOpH0BIJ1lCx7BM4utziuC/RdMHH4i8UtRA
-	 N3EA8XcUXsAPXD6w+eaXLM7unBGBCkNmBnsJUzKp5T2XVPEEA0zZbL4r3dcXIuyb859fC
-	 G//4Fs8sEYeOQVHyxuUt2NdGO0+DYq4mbKq6vZa4zOAOp+Bj3hhyf8+SRwJsppP6jCxij
-	 bTrfIl4zIL/rJfQgBKwkzqxfXaz8bdXW5xFnjwZpViFs77p4lpGu5ZXL4TlHsZxKwpNLT
-	 1dfLn3p4gop16nMj4rJpQ/YGOAvwdDxms53a2n0seFmTjKPmX4uxG8Lfugj9e7wlncQ==
+	t=1795446045;
+	b=lsrwJKkxf8ZQBynOdSLLTlgWGWNYdrGwZSnCqdm69j7oKh4V7saPUlGIIzrnIRoKga0S
+	 jilC5P3PLBy5F55K8SaIKJt5YOVLXZkAIGz7K2HYhfiiMnnMrTI42Iau9DJANOyShVljU
+	 9hVgtSsLL3mdDmwFhDoGKJznxZip4uCteZtXaC+Au/95Mu7qjbhlgs1LgugiyTyT7vLb6
+	 S2fN3mMMb8AQblPPO4S0yme3S+Uz4tseC2hvTE9U3IOClLCUtl2WTnd7hWMx+ifANPTDq
+	 sxOmrcfsmemF1LR9DfjjaRNNnb3i76zDJFNRfxD2CycOcSl9fYxU5QW0YZaFC+MsDKg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795443291;
-	h=DMARC-Filter:Received:Received:DKIM-Signature:Message-ID:Date:
-	 MIME-Version:User-Agent:Subject:To:Cc:References:Content-Language:
-	 From:In-Reply-To:Content-Type:Content-Transfer-Encoding;
-	bh=BzWlJypFH0JBdyX3v3gI3tSAws9JaPsiAy4GuzyD5ZA=;
-	b=1/gJlVfc3FEe/9V3CYcFMU8uBpjbgphCBxToxnBXxxk3jq2QEQE1IaSqqHV38WqSnQbu
-	 CA0AFFmqv1ef5SSrqaeEDFJJtWG4ggbr+1kwXnI5r/5TBWkJss4GmAJmijwUhHxke/hzh
-	 t2PNPKLjJTwF42CxE00vbeRhLa+NltpqVrvyhejoe6Sx2y4lGzP0bZxe0dj1Kp2GXDWSn
-	 e/RpC0+8QQ/+GLITDd2cb3SksyJX3GlMZyY0avWUT0Bsrhp8V5Y39dRnZWQH9wWXfMH78
-	 WH5ilzuQ7g2ZJ39nmgaSR2oxlu7C+8rKYduEQHH1xsiEm/gZBp7p0vGvfcKldJcpweA==
+	a=rsa-sha256; c=relaxed/relaxed; t=1795446045;
+	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
+	 X-Forwarded-Encrypted:X-Gm-Message-State:X-Gm-Gg:X-Received:Received:
+	 Received:Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To;
+	bh=8YXzoVkoKKTn5S6189qRHpEA8zSaXUAPSQ685ax1F0I=;
+	b=h4XvwA0dRapXBCt6RwrtKNCF+ozWI5z2hmS6SSadwPOaPzkXwoRnoSxNczjSds+CesJW
+	 QvodYPIxre3AT5qwZUMASutDzfzOPptOYFt/BYMXgTaMc8jGQ9oLvKLcWrxDPMSt+mvGq
+	 sFPMNj2DyP22of90v/Juo4I4llM6lzo5haKMykvXtN4tneQjclXglYZy107QZR83xhwJB
+	 NmK0auoPTiU8RppZnN8WP6pT5hDfmXookVfewN11BeIdgT0HTVfC547xwOhAdfreE3od5
+	 /iZE3/VyqiUqMZonXV7is+L3au7bJG6S37NMqm+f0CttPKjZRarp72dP0T8aAfzyqBg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=arm.com;
-	spf=pass smtp.mailfrom=arm.com;
-	dkim=pass header.d=arm.com header.i=@arm.com header.a=rsa-sha256 header.s=foss header.b=TpQZw53a;
-	arc=none smtp.remote-ip=217.140.110.172
-Received: from foss.arm.com (foss.arm.com [217.140.110.172])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 55327606A321
-	for <patches@lists.linux.dev>; Mon, 23 Nov 2026 14:14:50 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 55327606A321
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=arm.com
+	dmarc=none header.from=ziepe.ca;
+	spf=pass smtp.mailfrom=ziepe.ca;
+	dkim=pass header.d=ziepe.ca header.i=@ziepe.ca header.a=rsa-sha256 header.s=google header.b="Js/hN7BF";
+	arc=none smtp.remote-ip=209.85.219.43
+Received: from mail-qv1-f43.google.com (mail-qv1-f43.google.com [209.85.219.43])
+	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
+	(No client certificate requested)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 33ACC606A6A4
+	for <patches@lists.linux.dev>; Mon, 23 Nov 2026 15:00:45 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 33ACC606A6A4
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ziepe.ca
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ziepe.ca
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=arm.com header.i=@arm.com header.a=rsa-sha256 header.s=foss header.b=TpQZw53a
-Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
-	by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 6767D143D;
-	Mon, 23 Nov 2026 06:14:46 -0800 (PST)
-Received: from [10.211.55.3] (unknown [10.57.19.170])
-	by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 85C483F632;
-	Mon, 23 Nov 2026 06:14:42 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=arm.com; s=foss;
-	t=1795443289; bh=13+dL+2yU1ST0Gj3ZErbeUJoSIXiq2YVvfbO1TbDWFQ=;
-	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=TpQZw53aO4s2CGwpt4CspTd4evdvoct8/Xd6AMv3lVDPfLwuP1n9VgLyar/Yv0L1g
-	 i8auUfjTyeM5tev+x0ZUJ8vhTZIinVGgUt/LwpuaOjG66TyqxN0O1hfPIueITCccsB
-	 yj4Mzrg8OqqUI0kueXe6Fz3NArQudEjfPYlEiKJQ=
-Message-ID: <17fe3497-b887-4dc1-a8f8-3b647c1880a6@arm.com>
-Date: Mon, 23 Nov 2026 14:14:40 +0000
+	dkim=pass (2048-bit key) header.d=ziepe.ca header.i=@ziepe.ca header.a=rsa-sha256 header.s=google header.b=Js/hN7BF
+Received: by mail-qv1-f43.google.com with SMTP id 6a1803df08f44-9212a5a66f8so29539126d6.2
+        for <patches@lists.linux.dev>; Mon, 23 Nov 2026 07:00:45 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=ziepe.ca; s=google; t=1795446044; x=1796050844; darn=lists.linux.dev;
+        h=in-reply-to:content-disposition:content-type:mime-version
+         :references:message-id:subject:cc:to:from:date:from:to:cc:subject
+         :date:message-id:reply-to:content-type;
+        bh=8YXzoVkoKKTn5S6189qRHpEA8zSaXUAPSQ685ax1F0I=;
+        b=Js/hN7BFiz+V59LU3g3qClRYtgCYYRyqOBkW49G+CeYW1aEcatOFKpUqNmDa6nwoLO
+         EEbZijW6BaZXx7xFQ+7bBLUFNphUSNLLEct5ENjAr5bCyRwBr03momZfim1ZfRs7R6og
+         IuK9n0r/YinKfN0nFoXlYdgmv3JMxrqeV/+rOki5A6zQ16unhdz3qvXlQtHAnyXaCKAw
+         m15ayg/ihxXKoYaonVGoEZTjRJMfkV25c4wJHR9yhGd4A7pVyaHJkb/UtBalcU5uuOxE
+         BqeYptVjjfg+ensmZldQmRMXh2aVA2slv7fdKgNyHhoTrDbMjjhC7R6NhJfv1zKy/aIf
+         S95A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1795446044; x=1796050844;
+        h=in-reply-to:content-disposition:content-type:mime-version
+         :references:message-id:subject:cc:to:from:date:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=8YXzoVkoKKTn5S6189qRHpEA8zSaXUAPSQ685ax1F0I=;
+        b=BVzEokqwOas/+Hjy+VrE+XSr2lEE/BsfA925fstsxToiMtCfPJasVvSjW4owO00uoa
+         Rcjtpnv3yobkywyvsmOvPhxaEPG9jiD0DSbE8rB+dvJ2C74XCWtE6X4U4DDNWH9VH00f
+         DGKII5hKaC7MVKLeIaBpK0oPMqmeFJ2FGgOaratJ7PJIf9ElG54uGY+14G06LnWtl4sO
+         TkNtgYcE9064+N91iNaBtmb7sL/jr6Q1MC5mX3jJSIIvVFy5/JuWjN7iGDdY5eHay5m4
+         K50te+eUKMJUbMA1FYgvw607P6D24eaCXrClHsrCfqaq676MiG4AkGawEto9s0DaruMm
+         NhWA==
+X-Forwarded-Encrypted: i=1; AL+hErEiN/J9IkQjtPEva3S+zR/+fZMnY3FslarocsistCPRNivGMLLKr6VokQAjE6s1lJ8zarync96o@lists.linux.dev
+X-Gm-Message-State: APuU4Z8y2Y7CmnGVH5MdG9mOWpMVIReJ/6ICsAsLYWEt3lzMfK6yIxj1
+	d5DUKkEtxs+3rTMruZdkj45RnaopMXDYTLPSh1lBQsdoQd6gfxi/TRTPUaxV6zaki8U=
+X-Gm-Gg: AZFdTZeJ6yj8/Tzm44h1wpDIFgrg5V+98LIy+PGOIzKcRKHkNQwYX2TTUMf+eLb0ony
+	pcoUZ+hGqSfWGvTI4zbm2v6wgeJJJR4WgPaICdwZPGCo8zxZXsZ7gjjK/hbLL7mM6JfB0WyIHAp
+	WXngti7r591ux1zV1+cMeW/GEZYT1nm7fcTyN7lUqFvwEY9D0jK6XG6wcFF0NgFgvrUmxPjkiGW
+	LIu3mv96ZFjOLQdLRawM9Hg6PxNwQf95Nwih+DUtS5yBALKgL70d8JnWR/E1HXWywCxRlg/PXa1
+	Ambf0f4DpMiIfLk+DbpCoW+QMYnDfgwAMszzkfrS3EDnT3DTcPa8fqaXGk2jK7m/BJxyNy6f7Zb
+	3Miy3xO/KOTSMfGnAz1rx+XhdRMP15pgov5HzQNc1mS7c0ObX8SLVWE7CxS0rjKbtaVc/80rcWZ
+	juI4pDt6nc9CJOe6vmSrn1V0GFwwuggpwo3QG7wKApseREu/UrQchDc6+nC4K1cG/n9qOVRqP0W
+	tVNCbsG5DR142KGtHLHau6i+Noa0HbPVAKtXRAGaP2c4+/XMUj4je9f05f39i062HablZzM41sn
+	EhhztRhoRYXJwJdl7qnF04Yfhd/H7EhzdVgpDOk43SxYOl5vIg6mneYFjyc9XUbNKPxnBY08RP/
+	0Od8=
+X-Received: by 2002:a05:6214:4891:b0:921:27c2:3f89 with SMTP id 6a1803df08f44-92134a3715dmr207386236d6.17.1795446043629;
+        Mon, 23 Nov 2026 07:00:43 -0800 (PST)
+Received: from ziepe.ca (stjhnbsu6iw-159-2-142-59.dhcp-dynamic.fibreop.nb.bellaliant.net. [159.2.142.59])
+        by smtp.gmail.com with ESMTPSA id 6a1803df08f44-92134a16754sm107600476d6.39.2026.11.23.07.00.42
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 23 Nov 2026 07:00:42 -0800 (PST)
+Received: from jgg by wakko with local (Exim 4.97)
+	(envelope-from <jgg@ziepe.ca>)
+	id 1xVVX7-00000000rK9-14j4;
+	Mon, 23 Nov 2026 11:00:41 -0400
+Date: Mon, 23 Nov 2026 11:00:41 -0400
+From: Jason Gunthorpe <jgg@ziepe.ca>
+To: Catalin Marinas <catalin.marinas@arm.com>
+Cc: "Aneesh Kumar K.V (Arm)" <aneesh.kumar@kernel.org>,
+	linux-coco@lists.linux.dev,
+	Andrew Morton <akpm@linux-foundation.org>,
+	Baoquan He <baoquan.he@linux.dev>, Mike Rapoport <rppt@kernel.org>,
+	Pasha Tatashin <pasha.tatashin@soleen.com>,
+	Pratyush Yadav <pratyush@kernel.org>,
+	Christian =?utf-8?B?S8O2bmln?= <christian.koenig@amd.com>,
+	Joerg Roedel <joro@8bytes.org>, Marc Zyngier <maz@kernel.org>,
+	Marek Szyprowski <m.szyprowski@samsung.com>,
+	Robin Murphy <robin.murphy@arm.com>,
+	Steven Price <steven.price@arm.com>,
+	Sumit Semwal <sumit.semwal@linaro.org>,
+	Suzuki K Poulose <suzuki.poulose@arm.com>,
+	Thomas Gleixner <tglx@kernel.org>, Will Deacon <will@kernel.org>,
+	Russell King <linux@armlinux.org.uk>,
+	Benjamin Gaignard <benjamin.gaignard@collabora.com>,
+	Brian Starkey <Brian.Starkey@arm.com>,
+	John Stultz <jstultz@google.com>,
+	Mark Rutland <mark.rutland@arm.com>, Radu Rendec <radu@rendec.net>,
+	"T.J. Mercier" <tjmercier@google.com>,
+	Madhavan Srinivasan <maddy@linux.ibm.com>,
+	Michael Ellerman <mpe@ellerman.id.au>,
+	Nicholas Piggin <npiggin@gmail.com>,
+	Christophe Leroy <chleroy@kernel.org>,
+	Ritesh Harjani <ritesh.list@gmail.com>,
+	Shrikanth Hegde <sshegde@linux.ibm.com>,
+	Alexander Gordeev <agordeev@linux.ibm.com>,
+	Gerald Schaefer <gerald.schaefer@linux.ibm.com>,
+	Heiko Carstens <hca@linux.ibm.com>,
+	Vasily Gorbik <gor@linux.ibm.com>,
+	Christian Borntraeger <borntraeger@linux.ibm.com>,
+	Sven Schnelle <svens@linux.ibm.com>, Ingo Molnar <mingo@redhat.com>,
+	Borislav Petkov <bp@alien8.de>,
+	Dave Hansen <dave.hansen@linux.intel.com>, x86@kernel.org,
+	"H . Peter Anvin" <hpa@zytor.com>, Kiryl Shutsemau <kas@kernel.org>,
+	Rick Edgecombe <rick.p.edgecombe@intel.com>,
+	"K . Y . Srinivasan" <kys@microsoft.com>,
+	Haiyang Zhang <haiyangz@microsoft.com>,
+	Wei Liu <wei.liu@kernel.org>, Dexuan Cui <decui@microsoft.com>,
+	Long Li <longli@microsoft.com>, Paolo Bonzini <pbonzini@redhat.com>,
+	Vitaly Kuznetsov <vkuznets@redhat.com>,
+	Andy Lutomirski <luto@kernel.org>,
+	Peter Zijlstra <peterz@infradead.org>,
+	dri-devel@lists.freedesktop.org, iommu@lists.linux.dev,
+	linaro-mm-sig@lists.linaro.org,
+	linux-arm-kernel@lists.infradead.org, linux-media@vger.kernel.org,
+	linux-mm@kvack.org, kvmarm@lists.linux.dev, patches@lists.linux.dev
+Subject: Re: [PATCH v10 04/13] irqchip/gic-v3-its: Allocate shared tables
+ using CoCo shared memory allocator
+Message-ID: <20261123150041.GB179082@ziepe.ca>
+References: <20261116091137.94252-1-aneesh.kumar@kernel.org>
+ <20261116091137.94252-5-aneesh.kumar@kernel.org>
+ <awQd81MwZqi55gf8@arm.com>
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Post: <mailto:patches@lists.linux.dev>
@@ -53,334 +149,75 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-User-Agent: Thunderbird Daily
-Subject: Re: [RFC PATCH 1/3] fork,arm,x86,fs/resctrl: Fix stale resource group
- assignment vs copy_process()
-To: Reinette Chatre <reinette.chatre@intel.com>, kees@kernel.org,
- mingo@redhat.com, peterz@infradead.org, juri.lelli@redhat.com,
- vincent.guittot@linaro.org, dietmar.eggemann@arm.com, rostedt@goodmis.org,
- bsegall@google.com, mgorman@suse.de, vschneid@redhat.com,
- kprateek.nayak@amd.com, david@kernel.org, ljs@kernel.org,
- liam@infradead.org, vbabka@kernel.org, rppt@kernel.org, surenb@google.com,
- mhocko@suse.com, bp@alien8.de, tglx@linutronix.de,
- dave.hansen@linux.intel.com, tony.luck@intel.com, Dave.Martin@arm.com,
- james.morse@arm.com, babu.moger@amd.com, fustini@kernel.org,
- jedrzej.wasiukiewicz@intel.com
-Cc: fenghuay@nvidia.com, peternewman@google.com, yu.c.chen@intel.com,
- x86@kernel.org, linux-mm@kvack.org, linux-kernel@vger.kernel.org,
- patches@lists.linux.dev
-References: <cover.1795197419.git.reinette.chatre@intel.com>
- <b2e13da64ca3e41207b5d46fb060bccefaf9fecd.1795197419.git.reinette.chatre@intel.com>
-Content-Language: en-US
-From: Ben Horgan <ben.horgan@arm.com>
-In-Reply-To: <b2e13da64ca3e41207b5d46fb060bccefaf9fecd.1795197419.git.reinette.chatre@intel.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <awQd81MwZqi55gf8@arm.com>
 
-Hi Reinette,
+On Mon, Nov 23, 2026 at 11:05:23AM +0000, Catalin Marinas wrote:
+> > -	/*
+> > -	 * If set_memory_decrypted() fails then we don't know what state the
+> > -	 * page is in, so we can't free it. Instead we leak it.
+> > -	 * set_memory_decrypted() will already have WARNed.
+> > -	 */
+> > -	if (ret)
+> > +	if (alloc_cc_shared_pages_node(node, gfp | gfp_flags_quirk,
+> > +				       PAGE_SIZE << order, &mem))
+> >  		return NULL;
+> >  
+> > -	return page;
+> > +	return mem.page;
+> 
+> This part is mostly fine but I do wonder why not make this alloc
+> function the same as buddy alloc_pages_node() - return a struct page
+> pointer.
 
-On 20/11/2026 18:39, Reinette Chatre wrote:
-> During fork a task's CLOSID and RMID are copied into the new task by
-> dup_task_struct(), early in copy_process() without holding tasklist_lock
-> or any lock that resctrl takes. The new task becomes visible to a walk of
-> the task list later in copy_process(), after it is linked onto the task
-> list while the tasklist_lock is held for write.
-> 
-> Removing a resource group moves all of its tasks to another group by
-> walking the task list while holding the tasklist_lock for read, and then
-> frees the CLOSID and RMID of the removed group. A task that copies its
-> parent's CLOSID and RMID before the walk reaches the parent is missed by
-> the walk: it is not on the task list yet, and it cannot get there while
-> the walk holds the tasklist_lock. By the time it is added to the task list
-> the CLOSID and RMID it was initialized with have been freed.
-> 
->     CPU0                                CPU1
->     ====                                ====
-> 
->   fork()
->     copy_process()
->       dup_task_struct()
->         /*
->          * New task inherits the
->          * parent's CLOSID and RMID.
->          */
->                                     rdtgroup_rmdir_{ctrl,mon}()
->                                       rdt_move_group_tasks()
->                                         read_lock(&tasklist_lock)
->                                         for_each_process_thread()
->                                           /*
->                                            * Parent is moved out of
->                                            * the group. New task is
->                                            * not on the task list
->                                            * and is not moved.
->                                            */
->       write_lock_irq(&tasklist_lock)
->         /* Waits for the walk. */
->                                         read_unlock(&tasklist_lock)
->       /* Lock acquired. */
->       list_add_tail_rcu(&p->tasks, ...)
->       write_unlock_irq(&tasklist_lock)
->                                       free_rmid()
->                                       closid_free() /* ctrl only */
-> 
->     New task and every task it creates use the freed CLOSID and RMID.
->     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-> 
-> The new task and every task it goes on to create keep using a CLOSID
-> and RMID that resctrl believes are unused. Once those identifiers are
-> handed to a resource group created later, the strays appear in that
-> group's tasks file, their memory accesses are counted in its monitoring
-> data, and they are subject to its allocation policy, while the group
-> intended for them does not control or monitor them.
-> 
-> Introduce resctrl_copy_process() to copy the parent's CLOSID and RMID
-> into the new task from copy_process(), while the tasklist_lock is held
-> for write. The walk holds the same lock for read for its full duration,
-> so the new task is either already on the task list and assigned by the
-> walk, or the copy happens after the walk completed and observes the
-> parent's new resource group.
-> 
-> resctrl_copy_process() reads two values that some architectures store
-> separately. __rdtgroup_move_task() assigns them with two stores while
-> holding only rdtgroup_mutex, which resctrl_copy_process() cannot take,
-> so those reads can fall between the two stores and leave the new task
-> with the CLOSID of one resource group and the RMID of another. Assign
-> them from __rdtgroup_move_task() while holding tasklist_lock for read
-> as well, so that resctrl_copy_process() observes both as intended.
-> 
-> Add an architecture call to perform the copy because CLOSID and RMID are
-> stored per architecture and cannot be read and written as independent
-> values on all of them.
-> 
-> Fixes: f3cbeacaa06e ("x86/intel_rdt/cqm: Add rmdir support")
-> Reported-by: Jedrzej Wasiukiewicz <jedrzej.wasiukiewicz@intel.com>
-> Signed-off-by: Reinette Chatre <reinette.chatre@intel.com>
-> ---
-> Note to MPAM maintainers:
-> 
-> resctrl_copy_process() runs on every fork(), so
-> resctrl_arch_copy_closid_rmid() is a static inline on x86. Doing so is
-> perhaps not required as fork() is already expensive.
-> 
-> Even so, I attempted doing same for MPAM but ended up with solutions
-> that do not seem ideal:
+I'd argue we shouldn't even be returning struct page here, do many
+places even use the struct page? What for?
 
-Thanks for considering MPAM so carefully.
+Exposing struct page to places that just want a kernel addr means they
+have to call page_address and we are back to the highmem weirdness.
 
+> >  static void its_free_pages(void *addr, unsigned int order)
+> >  {
+> > -	/*
+> > -	 * If the memory cannot be encrypted again then we must leak the pages.
+> > -	 * set_memory_encrypted() will already have WARNed.
+> > -	 */
+> > -	if (set_memory_encrypted((unsigned long)addr, 1 << order))
+> > +	struct cc_shared_layout layout;
+> > +	struct cc_shared_pages mem;
+> > +
+> > +	if (WARN_ON(cc_shared_calc_layout(PAGE_SIZE << order, &layout)))
+> >  		return;
+> > -	free_pages((unsigned long)addr, order);
+> > +
+> > +	mem.page = virt_to_page(addr);
+> > +	mem.shared_size = layout.shared_size;
+> > +	free_cc_shared_pages(&mem);
+> >  }
 > 
-> - A static inline in arch/arm64/include/asm/mpam.h, next to the other
->   accessors of thread_info::mpam_partid_pmg. Nothing on the path from
->   include/linux/resctrl.h reaches that header, so the definition is not
->   visible to resctrl_copy_process(). Making it visible means
->   arch/arm64/include/asm/resctrl.h has to include asm/mpam.h, which
->   does not seem to match MPAM's intended design?
-> 
-> - A static inline in include/linux/arm_mpam.h, beside the
->   resctrl_arch_*() inlines already there. asm/mpam.h includes
->   linux/arm_mpam.h, so the reverse include would be circular and
+> Here it gets weird and I don't see why we can't have just a buddy-like
+> interface. The kernel-doc for alloc says that shared_size must be
+> retained for the corresponding free but without reading the source code,
+> you can't tell that cc_shared_calc_layout() gives you the same
+> shared_size populated by alloc. We have a similar pattern in dma-buf but
+> using the compound page order.
 
-Hmm, the existing include of linux/arm_mpam.h appears to be unnecessary.
-As such, that include can be removed and resctrl_arch_copy_closid_rmid()
-could be a static inline in include/linux/arm_mpam.h.
+This makes sense, we should not be passing size to a free function,
+make a compount page/high order folio instead if the API is going to
+be struct page based.
 
-Thanks,
+> We can get rid of layout and mem structures (or at least not as
+> part of the API). Of course, this assumes that the shared granule size
+> remains constant for a guest's lifetime but I don't think that's a
+> problem.
 
-Ben
+It should be encoded in the struct page meta data, as the order.
 
->   mpam_get_regval() cannot be called. The copy would have to read and
->   write thread_info::mpam_partid_pmg directly, which no code outside
->   asm/mpam.h does today, and would need a CONFIG_ARM64_MPAM guard
->   because the field is only present when it is set.
-> 
-> The out-of-line definition this ended up with matches
-> resctrl_arch_sched_in(). Please let me know (if this is a change you
-> agree with) what kind of shape it needs to take for MPAM. We could also
-> just make x86 and MPAM both be out-of-line - doing so may not be felt by
-> the heavy copy_process().
-> ---
->  arch/arm64/include/asm/mpam.h  |  6 ++++++
->  arch/x86/include/asm/resctrl.h |  7 +++++++
->  drivers/resctrl/mpam_resctrl.c |  6 ++++++
->  fs/resctrl/rdtgroup.c          | 21 +++++++++++++++++++++
->  include/linux/arm_mpam.h       |  1 +
->  include/linux/resctrl.h        | 28 ++++++++++++++++++++++++++++
->  kernel/fork.c                  |  3 +++
->  7 files changed, 72 insertions(+)
-> 
-> diff --git a/arch/arm64/include/asm/mpam.h b/arch/arm64/include/asm/mpam.h
-> index 70d396e7b6da..0746e5d7cc2d 100644
-> --- a/arch/arm64/include/asm/mpam.h
-> +++ b/arch/arm64/include/asm/mpam.h
-> @@ -63,6 +63,12 @@ static inline void mpam_set_task_partid_pmg(struct task_struct *tsk,
->  	WRITE_ONCE(task_thread_info(tsk)->mpam_partid_pmg, regval);
->  }
->  
-> +static inline void mpam_copy_task_partid_pmg(struct task_struct *dst,
-> +					     struct task_struct *src)
-> +{
-> +	WRITE_ONCE(task_thread_info(dst)->mpam_partid_pmg, mpam_get_regval(src));
-> +}
-> +
->  static inline void mpam_thread_switch(struct task_struct *tsk)
->  {
->  	u64 oldregval;
-> diff --git a/arch/x86/include/asm/resctrl.h b/arch/x86/include/asm/resctrl.h
-> index 8f6edcdcfd87..199ca9af0089 100644
-> --- a/arch/x86/include/asm/resctrl.h
-> +++ b/arch/x86/include/asm/resctrl.h
-> @@ -153,6 +153,13 @@ static inline void resctrl_arch_set_closid_rmid(struct task_struct *tsk,
->  	WRITE_ONCE(tsk->rmid, rmid);
->  }
->  
-> +static inline void resctrl_arch_copy_closid_rmid(struct task_struct *dst,
-> +						 struct task_struct *src)
-> +{
-> +	WRITE_ONCE(dst->closid, READ_ONCE(src->closid));
-> +	WRITE_ONCE(dst->rmid, READ_ONCE(src->rmid));
-> +}
-> +
->  static inline bool resctrl_arch_match_closid(struct task_struct *tsk, u32 closid)
->  {
->  	return READ_ONCE(tsk->closid) == closid;
-> diff --git a/drivers/resctrl/mpam_resctrl.c b/drivers/resctrl/mpam_resctrl.c
-> index 5468367776e2..7aea58fca85b 100644
-> --- a/drivers/resctrl/mpam_resctrl.c
-> +++ b/drivers/resctrl/mpam_resctrl.c
-> @@ -345,6 +345,12 @@ void resctrl_arch_set_closid_rmid(struct task_struct *tsk, u32 closid, u32 rmid)
->  	}
->  }
->  
-> +void resctrl_arch_copy_closid_rmid(struct task_struct *dst,
-> +				   struct task_struct *src)
-> +{
-> +	mpam_copy_task_partid_pmg(dst, src);
-> +}
-> +
->  bool resctrl_arch_match_closid(struct task_struct *tsk, u32 closid)
->  {
->  	u64 regval = mpam_get_regval(tsk);
-> diff --git a/fs/resctrl/rdtgroup.c b/fs/resctrl/rdtgroup.c
-> index 57ab090072c2..ebf780fc5fe9 100644
-> --- a/fs/resctrl/rdtgroup.c
-> +++ b/fs/resctrl/rdtgroup.c
-> @@ -657,12 +657,28 @@ static int __rdtgroup_move_task(struct task_struct *tsk,
->  		return -EINVAL;
->  	}
->  
-> +	/*
-> +	 * Hold tasklist_lock for read so that resctrl_copy_process(), which
-> +	 * holds it for write, cannot read the CLOSID and the RMID of @tsk
-> +	 * while only one of the two has been updated.
-> +	 *
-> +	 * Hold tasklist_lock just for the @tsk update. A CPU running @tsk
-> +	 * keeps using the CLOSID and RMID that resctrl_arch_sched_in()
-> +	 * applied when @tsk was last scheduled in, so
-> +	 * update_task_closid_rmid() below has to interrupt that CPU for the
-> +	 * new resource group to take effect. Leave that until after
-> +	 * tasklist_lock has been dropped: a CPU waiting for tasklist_lock
-> +	 * for write waits with interrupts disabled, and @tsk's CPU is the
-> +	 * one that may be waiting, because @tsk may be forking.
-> +	 */
-> +	read_lock(&tasklist_lock);
->  	if (rdtgrp->type == RDTMON_GROUP)
->  		resctrl_arch_set_closid_rmid(tsk, rdtgrp->mon.parent->closid,
->  					     rdtgrp->mon.rmid);
->  	else
->  		resctrl_arch_set_closid_rmid(tsk, rdtgrp->closid,
->  					     rdtgrp->mon.rmid);
-> +	read_unlock(&tasklist_lock);
->  
->  	/*
->  	 * Ensure the task's closid and rmid are written before determining if
-> @@ -2959,6 +2975,11 @@ static void schemata_list_destroy(void)
->   * If @mask is not NULL the cpus on which moved tasks are running are set
->   * in that mask so the update smp function call is restricted to affected
->   * cpus.
-> + *
-> + * Tasks created while this walks the task list are handled by
-> + * resctrl_copy_process(), which tasklist_lock serializes against this walk.
-> + * A new task is either visible to the walk and moved with the others, or
-> + * resctrl_copy_process() assigns it after the walk completes.
->   */
->  static void rdt_move_group_tasks(struct rdtgroup *from, struct rdtgroup *to,
->  				 struct cpumask *mask)
-> diff --git a/include/linux/arm_mpam.h b/include/linux/arm_mpam.h
-> index 002f56e15362..b605e9771c32 100644
-> --- a/include/linux/arm_mpam.h
-> +++ b/include/linux/arm_mpam.h
-> @@ -56,6 +56,7 @@ bool resctrl_arch_mon_capable(void);
->  void resctrl_arch_set_cpu_default_closid(int cpu, u32 closid);
->  void resctrl_arch_set_closid_rmid(struct task_struct *tsk, u32 closid, u32 rmid);
->  void resctrl_arch_set_cpu_default_closid_rmid(int cpu, u32 closid, u32 rmid);
-> +void resctrl_arch_copy_closid_rmid(struct task_struct *dst, struct task_struct *src);
->  void resctrl_arch_sched_in(struct task_struct *tsk);
->  bool resctrl_arch_match_closid(struct task_struct *tsk, u32 closid);
->  bool resctrl_arch_match_rmid(struct task_struct *tsk, u32 closid, u32 rmid);
-> diff --git a/include/linux/resctrl.h b/include/linux/resctrl.h
-> index 10dfdca7f4bf..32d8bf9ca9ba 100644
-> --- a/include/linux/resctrl.h
-> +++ b/include/linux/resctrl.h
-> @@ -7,6 +7,8 @@
->  #include <linux/list.h>
->  #include <linux/pid.h>
->  #include <linux/resctrl_types.h>
-> +#include <linux/sched.h>
-> +#include <linux/sched/task.h>
->  
->  #ifdef CONFIG_ARCH_HAS_CPU_RESCTRL
->  #include <asm/resctrl.h>
-> @@ -729,6 +731,32 @@ extern unsigned int resctrl_rmid_realloc_limit;
->  int resctrl_init(void);
->  void resctrl_exit(void);
->  
-> +#ifdef CONFIG_RESCTRL_FS
-> +/**
-> + * resctrl_copy_process() - Give a new task the resource group of its parent.
-> + * @child:	The new task, which is not yet on the task list.
-> + *
-> + * Call from copy_process() while tasklist_lock is held for write. Serialized
-> + * against rdt_move_group_tasks() and __rdtgroup_move_task() that hold
-> + * tasklist_lock for read.
-> + *
-> + * dup_task_struct() copies the parent's CLOSID and RMID into @child before
-> + * @child is linked onto the task list. If the parent is moved out of a
-> + * resource group that is being removed, that group's CLOSID and RMID are
-> + * freed once the walk completes, leaving @child with stale assignments.
-> + *
-> + * Bring @child up to date with the parent.
-> + */
-> +static inline void resctrl_copy_process(struct task_struct *child)
-> +{
-> +	lockdep_assert_held_write(&tasklist_lock);
-> +
-> +	resctrl_arch_copy_closid_rmid(child, current);
-> +}
-> +#else
-> +static inline void resctrl_copy_process(struct task_struct *child) { }
-> +#endif
-> +
->  #ifdef CONFIG_RESCTRL_FS_PSEUDO_LOCK
->  u64 resctrl_arch_get_prefetch_disable_bits(void);
->  int resctrl_arch_pseudo_lock_fn(void *_plr);
-> diff --git a/kernel/fork.c b/kernel/fork.c
-> index 5efceb8d58a7..8344e0d27b78 100644
-> --- a/kernel/fork.c
-> +++ b/kernel/fork.c
-> @@ -105,6 +105,7 @@
->  #include <linux/stackprotector.h>
->  #include <linux/user_events.h>
->  #include <linux/iommu.h>
-> +#include <linux/resctrl.h>
->  #include <linux/rseq.h>
->  #include <uapi/linux/pidfd.h>
->  #include <linux/pidfs.h>
-> @@ -2491,6 +2492,8 @@ __latent_entropy struct task_struct *copy_process(
->  
->  	klp_copy_process(p);
->  
-> +	resctrl_copy_process(p);
-> +
->  	sched_core_fork(p);
->  
->  	spin_lock(&current->sighand->siglock);
+> Was there a caller you had in mind that needs the common allocator to
+> share less than the whole buddy block?
 
+If we want this it definitely needs to be a void * based API not
+struct page one though..
+
+Jason
