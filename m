@@ -1,44 +1,44 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795422865;
-	b=Udj7ERLUu/xmxNniUFhjn83Csd345tZ90Dk3/pxFnIyHRb5+f+nZHq5/gszKscyfBBd5
-	 qsZyOAoVfiw7yvEG+4kpXCEPe131WV6eFWR4BNHMHJB88rVAS3YzMdJzSnOdKeE45ZB9r
-	 PARlbpgxNR8NYmHMMo4H0jqX/ryg/ip0jEexV27JhPbsvfojEKOL85a4uuKsji30MY26I
-	 V38M52TZPM818q90g6e9vDCDXNfxlF1D2dCleGwEkAZ4KWAyQOv7lBtTnJIKhAZQPzFYM
-	 v8xpkkf0AKjPI0Doj7ZYwfVBVw6B1BMD962IZ6sfQUPBqbOtWzCLpZLN/3ET4Lyi7MQ==
+	t=1795422872;
+	b=kpg57WoG1jFV9liU87akoJzlPFPDkDQUtCG8euNIji+ER5KWQRLZnt2jQcVABGBPaczF
+	 SOfLVPuc5TQDU51IqtpBBaDpRBsImzzB+JlVqG6jAoh1dsTG9iZS4NSxIOLlf0qklmHRY
+	 2Anz4sg0Jdho3aX18u2X6g6OePF7FgmtufYEyUk0J560csDs13qBpNHKwNpdKHz+sZmWE
+	 Gsj1vc+hl6hHllkQ0se6IcrC+TD2S/lWVe2blQ9mPVIucXfB7rNjgH9Ew9WgtoZi05mUc
+	 BuGYndZ0VoJQqzYQfIfyXscgGcf+J5w9feMADA2VL09/ouV0Y8rUsMG7PBwPUBrxL0w==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795422865;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795422872;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:MIME-Version:Content-Transfer-Encoding;
-	bh=1hUL3SB1P4VJJgXuG8hIIZFMdy/J3GLV11Mdb+Pgrk4=;
-	b=yNndXfLbqBOTm7L10Kz7Heywqg3v59WNl9D0QIpsUsdT9+28idQqJJbiJVOYB8SPHLsw
-	 lsB7yU31X3549yEawjAbquS6v/5TG02MHq9w0xxiznYxaGDqqjHS1ueAR/7OT+mqoQKuS
-	 sss8OzpIdeiuEXxOWTwGt7bvQgTEbtSI9+CEm1zcRMP35/LacLzLZ72ZMlAprmeYGmmFA
-	 wkNwWF9fZo+vJbHXDrQ3U5VgoFplNSVdlxigFCk/EO4tVL5w1HieccQIZEgCLn+FXlBgR
-	 xPtG/BhVMHiTy6r4J/j1FojKaQgfG8x/+olTghTVlm8MnfkmR6bTscTOhXFqzV/XGBw==
+	bh=/3FVCNFSODmk6JlCNvbBuVbU+xDkYYseTCLLRPcL+FA=;
+	b=fB2yzoLe7dHHGYJkM4nZ7NaLjxHBy49VBxhGNrEkJ5eG73q2DMizni59gtxPfUbGNIt1
+	 fVYcQNTN40Y7fe3NIAL1cj1gyDyvsj7tAIoGxSMCahqMFMe+W3nXCMr6hlonvcko27bVK
+	 oxQ0i4yotYCUb6sIlrEUq3QWR4uhaUChxdY1309kzuZ3h0p7ddtbdAR7y8FPqgjAaj3JV
+	 bvizx9uZU4D9eVvFvEnALcnbnZ1LkmEVlZ3TYy877VfMZcxMSkneeWchgVgydOE1gxgoO
+	 QCFcxKYHi8TqRJkEKoDSbCXsS6q/Iyj+mC6Nav0r+7YAiRxPL9FIDsZgd7ulB34ldUg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b="jdoUqg/0";
+	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=Jrqfwlll;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5FD40606A31A;
-	Mon, 23 Nov 2026 08:34:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0C3B0606A31F;
+	Mon, 23 Nov 2026 08:34:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=jdoUqg/0
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 92E2E1F000C4;
-	Mon, 23 Nov 2026 08:34:19 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=Jrqfwlll
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 307C61F000EC;
+	Mon, 23 Nov 2026 08:34:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1795422865;
-	bh=1hUL3SB1P4VJJgXuG8hIIZFMdy/J3GLV11Mdb+Pgrk4=;
+	s=k20260515; t=1795422871;
+	bh=/3FVCNFSODmk6JlCNvbBuVbU+xDkYYseTCLLRPcL+FA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=jdoUqg/0ETjpz93Wp1GairowujXzFVlLu66hqXWgZ66hOxzVg0U60KGbIWOHQv0km
-	 ph/JpZTQTb8NjFYJnoQcAuMpTTJcMBYopxqonyXp9fD2x6qBHjXmj9DjjV2gOO4Z8C
-	 i/+clkhJc7yAYpcgRma88j4RzfLq1MTdP766Hlf7UBqgeIWZB6yIXuIkQMDCLwd9Gd
-	 EMCCXjgDxs7tMQDzYyiwcfDlxugdFt65k/8/eGvYoiFZZmU7Nz8tlBLnaIqA4hrkKr
-	 ukdnRoiX+GMVMeGnNbU1X5v+jvmIGALtM/s+hllNjYllkjJc/Si80kZMo3LXU+pBZo
-	 oASXkhK9/4HKA==
+	b=JrqfwlllhPwyVyXY7O/iublZDfU1leSYq4DxrGGIlRte9UPtloGMsqae4Q/CUUUcT
+	 trlV0rnhfnTUeh6LbokURL0LLemfqHyq1gZzbR3/m5i7/8kLqAMaEosP2xYsSoaol+
+	 0jroRASzrzGR59OZhMDjd65ECau+QLzltWY56DabMbzurFeJkGTPGHMnBkQLwuPHVa
+	 fzaYNHo36YwgPegSXTiYUiArkQ9dRZD0Eg1ALOcmrziskDFIJEuoV22gIRRWSC6Gs0
+	 QE+HY/+gNAImrSZlUlp8S2Xui2/sgnushw7DIPxKUVfbXt883ZBE82mzDhPF70uFAV
+	 +RIQlmKo67t4g==
 From: "Aneesh Kumar K.V (Arm)" <aneesh.kumar@kernel.org>
 To: linux-coco@lists.linux.dev
 Cc: "Aneesh Kumar K.V (Arm)" <aneesh.kumar@kernel.org>,
@@ -61,9 +61,9 @@ Cc: "Aneesh Kumar K.V (Arm)" <aneesh.kumar@kernel.org>,
 	linux-pci@vger.kernel.org,
 	kvm@vger.kernel.org,
 	patches@lists.linux.dev
-Subject: [PATCH v1 06/10] PCI/TSM: Notify TSM drivers before waiting for TSM user references
-Date: Mon, 23 Nov 2026 14:03:33 +0530
-Message-ID: <20261123083337.2731019-7-aneesh.kumar@kernel.org>
+Subject: [PATCH v1 07/10] device core: Add helpers to record confidential device acceptance
+Date: Mon, 23 Nov 2026 14:03:34 +0530
+Message-ID: <20261123083337.2731019-8-aneesh.kumar@kernel.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20261123083337.2731019-1-aneesh.kumar@kernel.org>
 References: <20261123083337.2731019-1-aneesh.kumar@kernel.org>
@@ -78,163 +78,200 @@ Precedence: list
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Call the optional prepare_remove callback from tsm_unregister() before
-waiting for TSM user references. Host PF0 callbacks run with
-pci_tsm_rwsem held for write, followed by pci_tsm_pf0::lock. Guest
-device-security callbacks take device::mutex before pci_tsm_rwsem for
-write, matching PCI DMA preparation.
+Add a flag to record whether a device is accepted for private memory
+access, with helpers to set, clear and read it. Setting or clearing the
+flag requires device::mutex and fails with -EBUSY if a driver is
+attached.
 
-Later CCA patches use this callback to reject new host physical device
-(PDEV) operations and guest evidence requests before unregister waits
-for existing users. The guest DMA patch also uses this ordering to
-reject DMA-enable requests while permitting DMA disable.
+Follow-up patches will have TSM drivers mark devices accepted after
+verification and setup. PCI DMA setup will check this state before
+allowing the device to access private memory.
 
-Also invoke prepare_remove() from pci_tsm_destroy() before waiting for
-existing struct pci_tsm_context objects to be released. Sysfs disconnect
-continues to return -EBUSY while those objects remain.
-
+Based on the original patch from Dan Williams <djbw@kernel.org>.
 Signed-off-by: Aneesh Kumar K.V (Arm) <aneesh.kumar@kernel.org>
 ---
- drivers/pci/tsm.c            | 50 +++++++++++++++++++++++++++++++++---
- drivers/virt/coco/tsm-core.c |  2 ++
- include/linux/pci-tsm.h      | 10 ++++++++
- 3 files changed, 59 insertions(+), 3 deletions(-)
+ MAINTAINERS            |  1 +
+ drivers/base/Kconfig   |  4 +++
+ drivers/base/Makefile  |  1 +
+ drivers/base/base.h    |  9 ++++++
+ drivers/base/coco.c    | 68 ++++++++++++++++++++++++++++++++++++++++++
+ include/linux/device.h | 22 ++++++++++++++
+ 6 files changed, 105 insertions(+)
+ create mode 100644 drivers/base/coco.c
 
-diff --git a/drivers/pci/tsm.c b/drivers/pci/tsm.c
-index 56b6c812a8f9..f04498265383 100644
---- a/drivers/pci/tsm.c
-+++ b/drivers/pci/tsm.c
-@@ -906,6 +906,21 @@ static void __pci_tsm_destroy(struct pci_dev *pdev, struct tsm_dev *tsm_dev)
- 	}
- }
+diff --git a/MAINTAINERS b/MAINTAINERS
+index a3ee234d79ae..142ba5af8798 100644
+--- a/MAINTAINERS
++++ b/MAINTAINERS
+@@ -28553,6 +28553,7 @@ T:	git git://git.kernel.org/pub/scm/linux/kernel/git/tsm/linux.git
+ F:	Documentation/ABI/testing/configfs-tsm-report
+ F:	Documentation/driver-api/coco/
+ F:	Documentation/driver-api/pci/tsm.rst
++F:	drivers/base/coco.c
+ F:	drivers/pci/tsm.c
+ F:	drivers/virt/coco/guest/
+ F:	drivers/virt/coco/tsm-core.c
+diff --git a/drivers/base/Kconfig b/drivers/base/Kconfig
+index a9acf4575f4f..be8d1484f210 100644
+--- a/drivers/base/Kconfig
++++ b/drivers/base/Kconfig
+@@ -242,4 +242,8 @@ config FW_DEVLINK_SYNC_STATE_TIMEOUT
+ 	  command line option on every system/board your kernel is expected to
+ 	  work on.
  
-+static void pci_tsm_prepare_remove(struct pci_dev *pdev)
-+{
-+	struct pci_tsm_pf0 *pf0 = to_pci_tsm_pf0(pdev->tsm);
-+	const struct pci_tsm_ops *ops = pdev->tsm->tsm_dev->pci_ops;
++config CONFIDENTIAL_DEVICES
++	depends on ARCH_HAS_CC_PLATFORM
++	bool
 +
-+	lockdep_assert_held_write(&pci_tsm_rwsem);
-+	guard(mutex)(&pf0->lock);
-+	if (pf0->removing)
-+		return;
-+
-+	pf0->removing = true;
-+	if (ops->prepare_remove)
-+		ops->prepare_remove(pdev);
-+}
-+
- void pci_tsm_destroy(struct pci_dev *pdev)
- {
- 	struct tsm_dev *tsm_dev = NULL;
-@@ -916,9 +931,7 @@ void pci_tsm_destroy(struct pci_dev *pdev)
- 	    is_pci_tsm_pf0(pdev)) {
- 		struct pci_tsm_pf0 *pf0 = to_pci_tsm_pf0(pdev->tsm);
+ endmenu
+diff --git a/drivers/base/Makefile b/drivers/base/Makefile
+index 435710f643a5..8f5725e3e670 100644
+--- a/drivers/base/Makefile
++++ b/drivers/base/Makefile
+@@ -26,6 +26,7 @@ obj-$(CONFIG_DEV_COREDUMP) += devcoredump.o
+ obj-$(CONFIG_GENERIC_MSI_IRQ) += platform-msi.o
+ obj-$(CONFIG_GENERIC_ARCH_TOPOLOGY) += arch_topology.o
+ obj-$(CONFIG_ACPI) += physical_location.o
++obj-$(CONFIG_CONFIDENTIAL_DEVICES) += coco.o
  
--		mutex_lock(&pf0->lock);
--		pf0->removing = true;
--		mutex_unlock(&pf0->lock);
-+		pci_tsm_prepare_remove(pdev);
+ obj-y			+= test/
  
- 		if (pf0->dsm_context_users) {
- 			struct completion *drain_complete;
-@@ -1034,6 +1047,37 @@ void pci_tsm_init(struct pci_dev *pdev)
- 	up_read(&pci_tsm_rwsem);
- }
- 
-+/* Reject new device operations before tsm_unregister() waits for users. */
-+void pci_tsm_prepare_unregister(struct tsm_dev *tsm_dev)
-+{
-+	const struct pci_tsm_ops *ops = tsm_dev->pci_ops;
-+	struct pci_dev *pdev = NULL;
-+
-+	if (is_devsec_tsm(tsm_dev)) {
-+		if (!ops->prepare_remove)
-+			return;
-+
-+		for_each_pci_dev(pdev) {
-+			guard(device)(&pdev->dev);
-+			guard(rwsem_write)(&pci_tsm_rwsem);
-+
-+			if (pdev->tsm && pdev->tsm->tsm_dev == tsm_dev)
-+				ops->prepare_remove(pdev);
-+		}
-+
-+		return;
-+	}
-+
-+	guard(rwsem_write)(&pci_tsm_rwsem);
-+	for_each_pci_dev(pdev) {
-+		if (!pdev->tsm || pdev->tsm->tsm_dev != tsm_dev)
-+			continue;
-+
-+		if (is_pci_tsm_pf0(pdev))
-+			pci_tsm_prepare_remove(pdev);
-+	}
-+}
-+
- void pci_tsm_unregister(struct tsm_dev *tsm_dev)
- {
- 	struct pci_dev *pdev = NULL;
-diff --git a/drivers/virt/coco/tsm-core.c b/drivers/virt/coco/tsm-core.c
-index 31ef48203eac..ba9183783dd1 100644
---- a/drivers/virt/coco/tsm-core.c
-+++ b/drivers/virt/coco/tsm-core.c
-@@ -260,6 +260,8 @@ int tsm_unregister(struct tsm_dev *tsm_dev)
- 	}
- 
- 	tsm_dev->unregistering = true;
-+	if (IS_ENABLED(CONFIG_PCI_TSM) && tsm_dev->pci_ops)
-+		pci_tsm_prepare_unregister(tsm_dev);
- 
- 	device_del(&tsm_dev->dev);
- 	/* No new user references can be acquired while the write lock is held. */
-diff --git a/include/linux/pci-tsm.h b/include/linux/pci-tsm.h
-index d93d1c30d734..75df64a2e97d 100644
---- a/include/linux/pci-tsm.h
-+++ b/include/linux/pci-tsm.h
-@@ -25,6 +25,8 @@ struct tsm_dev;
-  * @viommu_get_ops: Return operations for a supported TSM-owned vIOMMU type,
-  *		  or NULL if unsupported
-  * @owner: Module providing the vIOMMU operations, if built as a module
-+ * @prepare_remove: Optional, reject new device operations before TSM unregister
-+ *		  waits for users, or before forced PF0 removal.
+diff --git a/drivers/base/base.h b/drivers/base/base.h
+index 866b2beb6baa..97a9fcb10c97 100644
+--- a/drivers/base/base.h
++++ b/drivers/base/base.h
+@@ -108,8 +108,13 @@ struct driver_private {
+  * @dead: This device is currently either in the process of or has been
+  *	  removed from the system. Any asynchronous events scheduled for this
+  *	  device should exit without taking any action.
++ * @cc_accepted: Device accepted for private memory access. Bus code checks
++ *		 this state before enabling DMA during driver attachment.
   *
-  * The vIOMMU owner holds a TSM user reference, a device reference and a
-  * backend module reference before querying @viommu_get_ops, releasing them
-@@ -36,11 +38,14 @@ struct tsm_dev;
-  *
-  * @viommu_get_ops runs with the backend module pinned. The PCI/TSM
-  * association is checked during acquisition under pci_tsm_rwsem.
-+ * @prepare_remove runs under pci_tsm_rwsem for write, with pci_tsm_pf0::lock
-+ * for link devices or device::mutex for device-security operations.
+  * Nothing outside of the driver core should ever touch these fields.
++ *
++ * All bitfield flags are manipulated under device_lock() to avoid
++ * read-modify-write collisions.
   */
- struct pci_tsm_ops {
- 	struct module *owner;
- 	const struct iommufd_viommu_ops *(*viommu_get_ops)(
- 		struct device *dev, enum iommu_viommu_type type);
-+	void (*prepare_remove)(struct pci_dev *pdev);
- 
- 	/*
- 	 * struct pci_tsm_link_ops - Manage physical link and the TSM/DSM session
-@@ -165,6 +170,7 @@ void pci_tsm_unlock_association(struct pci_tsm *tsm);
- void pci_tsm_set_ready(struct pci_tsm_pf0 *pf0, bool ready);
- int pci_tsm_register(struct tsm_dev *tsm_dev);
- void pci_tsm_unregister(struct tsm_dev *tsm_dev);
-+void pci_tsm_prepare_unregister(struct tsm_dev *tsm_dev);
- int pci_tsm_link_constructor(struct pci_dev *pdev, struct pci_tsm *tsm,
- 			     struct tsm_dev *tsm_dev);
- int pci_tsm_pf0_constructor(struct pci_dev *pdev, struct pci_tsm_pf0 *pf0,
-@@ -203,6 +209,10 @@ static inline void pci_tsm_unregister(struct tsm_dev *tsm_dev)
- {
- }
- 
-+static inline void pci_tsm_prepare_unregister(struct tsm_dev *tsm_dev)
+ struct device_private {
+ 	struct klist klist_children;
+@@ -122,6 +127,10 @@ struct device_private {
+ 	char *deferred_probe_reason;
+ 	struct device *device;
+ 	u8 dead:1;
++#ifdef CONFIG_CONFIDENTIAL_DEVICES
++	u8 cc_accepted:1;
++#endif
++
+ };
+ #define to_device_private_parent(obj)	\
+ 	container_of(obj, struct device_private, knode_parent)
+diff --git a/drivers/base/coco.c b/drivers/base/coco.c
+new file mode 100644
+index 000000000000..3e00bb37556e
+--- /dev/null
++++ b/drivers/base/coco.c
+@@ -0,0 +1,68 @@
++// SPDX-License-Identifier: GPL-2.0
++/* Copyright (C) 2026 Intel Corporation */
++#include <linux/device.h>
++#include <linux/export.h>
++#include <linux/lockdep.h>
++#include "base.h"
++
++/*
++ * The device_cc_*() helpers record whether a device has been accepted for
++ * private memory access. Recording acceptance does not enable DMA. Bus code
++ * can check this state before enabling DMA during driver attachment.
++ */
++
++/**
++ * device_cc_accept() - Record acceptance for private memory access
++ * @dev: device to accept
++ *
++ * Call after the required verification and device setup have succeeded.
++ * This helper only records acceptance; it does not enable DMA.
++ *
++ * Context: The caller must hold dev->mutex. No driver may be attached.
++ * Return: 0 on success, or -EBUSY if a driver is attached.
++ */
++int device_cc_accept(struct device *dev)
 +{
++	lockdep_assert_held(&dev->mutex);
++
++	if (dev->driver)
++		return -EBUSY;
++
++	dev->p->cc_accepted = 1;
++
++	return 0;
++}
++EXPORT_SYMBOL_GPL(device_cc_accept);
++
++/**
++ * device_cc_reject() - Clear acceptance for private memory access
++ * @dev: device whose acceptance state is cleared
++ *
++ * This helper only clears the recorded state; it does not disable DMA.
++ *
++ * Context: The caller must hold dev->mutex. No driver may be attached.
++ * Return: 0 on success, or -EBUSY if a driver is attached.
++ */
++int device_cc_reject(struct device *dev)
++{
++	lockdep_assert_held(&dev->mutex);
++
++	if (dev->driver)
++		return -EBUSY;
++
++	dev->p->cc_accepted = 0;
++
++	return 0;
 +}
 +
- static inline bool pci_tsm_is_configured(struct pci_dev *pdev)
- {
- 	return false;
++/**
++ * device_cc_accepted() - Read the recorded acceptance state
++ * @dev: device to check
++ *
++ * Context: The caller must hold dev->mutex to serialize with state changes.
++ * Return: true if the device is accepted for private memory access.
++ */
++bool device_cc_accepted(struct device *dev)
++{
++	return dev->p->cc_accepted;
++}
+diff --git a/include/linux/device.h b/include/linux/device.h
+index 429e39f647cf..cf872935adae 100644
+--- a/include/linux/device.h
++++ b/include/linux/device.h
+@@ -1396,6 +1396,28 @@ static inline bool device_link_test(const struct device_link *link, u32 flags)
+ 	return !!(link->flags & flags);
+ }
+ 
++/* Confidential Device state helpers */
++#ifdef CONFIG_CONFIDENTIAL_DEVICES
++int device_cc_accept(struct device *dev);
++int device_cc_reject(struct device *dev);
++bool device_cc_accepted(struct device *dev);
++#else
++static inline int device_cc_accept(struct device *dev)
++{
++	lockdep_assert_held(&dev->mutex);
++	return 0;
++}
++static inline int device_cc_reject(struct device *dev)
++{
++	lockdep_assert_held(&dev->mutex);
++	return 0;
++}
++static inline bool device_cc_accepted(struct device *dev)
++{
++	return false;
++}
++#endif /* CONFIG_CONFIDENTIAL_DEVICES */
++
+ /* Create alias, so I can be autoloaded. */
+ #define MODULE_ALIAS_CHARDEV(major,minor) \
+ 	MODULE_ALIAS("char-major-" __stringify(major) "-" __stringify(minor))
 -- 
 2.43.0
 
