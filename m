@@ -1,65 +1,69 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795424788;
-	b=ooB4V1QuDEnh0Gvwdz9h5+z0kBA0IB0KRxnWw4afsv8f7O3aNGcsgYoZrQWihDAVpR4E
-	 4AlwjVQP/stJgcxSb1BHNXQUWLBXJKyiERJuNdT9fXmo/QyNPmJJUslYTNuwz4Mdfez28
-	 NrsuSrpEAXY0KXBhP0zS8V/1BjxVJnLq0QvM0sBQyVTo8DzRitGuRb5wYclwk6RpYnQ6K
-	 +9DVuGrLQ4+n9Ie1QkGpZDDXWpzYbanS1f3c43yDqNxduOCh8/1qIeD3KpvRwbBjfNkaT
-	 WGa7RKinCv9273mfZLc9cVTNVQcBVoNxAqUjLlhZyfBzhrpqHN/WBD9YEkDH9fT/JBA==
+	t=1795427002;
+	b=kme8u+pXqDfXKsR/+0ndLb8bet+v1MgQtAvIamL748LoU0VETaPln45INkkxqbK2CjYL
+	 ktptDwv8XOwzcjRTcAgh1Pdqu9mZqhzu2NaUc3pdAgtM9tMjXxWVbKEOQW7iAaqPecirc
+	 6Oyk5BSHP8TjU5oFYt3/zsSMRBHsgh6UUtG0dSUch2ks7pEwMBIulXkm3iMYpQHRb3oNt
+	 mCadP7LSp5TtwmkYQj85NGqZkKfMhr9z1zf2peaz7P0bwKQNcZrivssxPSzN+ijFAZpTs
+	 FwBIsFynUEU4k4L1XsZUxkd9IVlINf8fPWnTaz5mNsDREKkWQab9JjWfx26y+BBdUiw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795424788;
-	h=Received:DKIM-Signature:Date:From:To:Cc:Subject:Message-ID:
-	 References:MIME-Version:Content-Type:Content-Disposition:In-Reply-To;
-	bh=z3DrjhrQrO2BYHo1W8YewL8VZiJu1abw+mdAXkVRo10=;
-	b=j56fXpiCDQI4XBf4ao1VifKFBwtLkv9+laVRuz+1Ub6fCi5s8UfrDKf+ZcAmk/1ODXvw
-	 1dBUZQbpoD9oRjbHph/drW//pAKYU4ujgUIzB8X3+iEuQWKWvWGlFZCI1lq5lm1ULvxAy
-	 70QaLEqs+iqMPkgpuGXySi6ajUcBXfSezaXQtU0Pa4MAkGqI9oQCv7pYyB/e4udU80zr2
-	 lt/MdMKt8A2ZSgaSHBrLIqy/QBglSCLQIqRqqRuW1u4bZuEduNqzW9t4aRUm9nYcyqumM
-	 hAWilUxg8uOMCNIuI2ajzitSTWCpTfBYEjHzd1zIJnC3F2315Ier8SBHkUkkLaDhWmQ==
+	a=rsa-sha256; c=relaxed/relaxed; t=1795427002;
+	h=Received:DKIM-Signature:X-Mailer:From:To:Cc:Subject:In-Reply-To:
+	 References:Date:Message-ID:MIME-Version:Content-Type;
+	bh=ovTZpuEFEoWoBniAauFNolmkozpPhbGaZO8n0GhWEtw=;
+	b=l1zpcriE/T38qTfvruvXA8v8FqBONOxtRa7Vl5m8pbfZrVvCqLptgmaZB94+YW8mpp/g
+	 D4PfluwYYz581Jzd7EvS6ZdW5ZXoIDIeZ8ZQ+hhnBgRnwFjffecqeLtl8ton5wi7XvK8E
+	 dm4L9oVGg2C0of27vMHcrr4vohOE8QR47EVBJPHrCgxX9Sag14/gg3k4YSn3FJ2k/+KmC
+	 3SLnxsUFPfXt1YkaGvH7gqSBD5YZVzb6MA617u4AdCpwQFZh80hRvuBZyfW9f1poin85a
+	 WFWC8F/OjkdLwBnBMbnuaGOB1Aww2tUFj3VKJlY+gJYeMHSk1+V3Fo5XJW1PB6p/Cnw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b="Ev/KbF3O";
+	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=orv0xpNT;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C426E606A31A;
-	Mon, 23 Nov 2026 09:06:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D58B2606A31A;
+	Mon, 23 Nov 2026 09:43:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=Ev/KbF3O
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 866181F000C6;
-	Mon, 23 Nov 2026 09:06:27 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=orv0xpNT
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7FFB21F000D0;
+	Mon, 23 Nov 2026 09:43:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1795424788;
-	bh=z3DrjhrQrO2BYHo1W8YewL8VZiJu1abw+mdAXkVRo10=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To;
-	b=Ev/KbF3OKJT1NrTyypHir43Ji3PypA3Ny9jOe/nVKGfsjHzqeP+Cwa+SPtqolXMGN
-	 lydZKWAOvT/HA8KHudaFIV+wagOvjUDyePIcmfTVqITJ9limgPbzSAN+FO1kMxrZMt
-	 6owFBS5no6R0UIhs/But10CR9q+ciC9TrvGjKNnlzVBK7ou00dslYtGotEAIEKIDT3
-	 0fQXhs/xSoF3Lkv6qqOkx8RJcVmJsK03JZkNV5cG30uqETnh/WIYOwF+okO9AdHcI6
-	 ezuJfAtXmsEFZDFKStxv7Jq4HAQo4w+gOXH/S2IQWa4/peGaVy9ZxxB2+J8JKKON0p
-	 CzCFWyHfddqZA==
-Date: Mon, 23 Nov 2026 11:06:23 +0200
-From: Leon Romanovsky <leon@kernel.org>
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: "Aneesh Kumar K.V (Arm)" <aneesh.kumar@kernel.org>,
-	linux-coco@lists.linux.dev, Dan Williams <djbw@kernel.org>,
-	Bjorn Helgaas <bhelgaas@google.com>, Jason Gunthorpe <jgg@ziepe.ca>,
+	s=k20260515; t=1795427002;
+	bh=ovTZpuEFEoWoBniAauFNolmkozpPhbGaZO8n0GhWEtw=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date;
+	b=orv0xpNTXOq+Hp2bUGf2xot20ap+p8J9/WaqyVRXto96awU4Yf/gQHFGtkG2rKN/l
+	 QXNxbcpqxfpeV70kidCicmpZ4CwNXlXbGAzxj8dUMM8Mk1BRBmeqIqjCHlC8kuVaWh
+	 wuLb3ZSEH0gv69+b2Ae/+lnpWTpqk53dHAiYAkAIeJvqsNsQjZRwdRXjHIQBAlcxJf
+	 5+tKU0Wxwe4Uh7Y0jbOJdbvx7WssEGSiGZxxutLlpq5q0o2K//pKtKz/M80jRHEccF
+	 +ycfRBr08AO3EYKHdeAJgggQ+sgnf4g9NaFcWMaCwglHb8nA2Y50liAZ+djH7DRR4O
+	 dl1cyWBw42D0g==
+X-Mailer: emacs 31.1 (via feedmail 11-beta-1 I)
+From: Aneesh Kumar K.V <aneesh.kumar@kernel.org>
+To: Leon Romanovsky <leon@kernel.org>,
+	Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: linux-coco@lists.linux.dev, Dan Williams <djbw@kernel.org>,
+	Bjorn Helgaas <bhelgaas@google.com>,
+	Jason Gunthorpe <jgg@ziepe.ca>,
 	Jonathan Cameron <jonathan.cameron@huawei.com>,
 	Xu Yilun <yilun.xu@linux.intel.com>,
 	Alexey Kardashevskiy <aik@amd.com>,
 	"Rafael J . Wysocki" <rafael@kernel.org>,
 	Steven Price <steven.price@arm.com>,
 	Suzuki K Poulose <suzuki.poulose@arm.com>,
-	Lukas Wunner <lukas@wunner.de>, Ashish Kalra <ashish.kalra@amd.com>,
+	Lukas Wunner <lukas@wunner.de>,
+	Ashish Kalra <ashish.kalra@amd.com>,
 	Tom Lendacky <thomas.lendacky@amd.com>,
 	Herbert Xu <herbert@gondor.apana.org.au>,
 	driver-core@lists.linux.dev, linux-pci@vger.kernel.org,
 	kvm@vger.kernel.org, patches@lists.linux.dev
 Subject: Re: [PATCH v1 00/10] PCI/TSM: Support guest TSM drivers
-Message-ID: <20261123090623.GK14811@unreal>
+In-Reply-To: <20261123090623.GK14811@unreal>
 References: <20261123083337.2731019-1-aneesh.kumar@kernel.org>
- <2026112325-emit-squeezing-5d96@gregkh>
+ <2026112325-emit-squeezing-5d96@gregkh> <20261123090623.GK14811@unreal>
+Date: Mon, 23 Nov 2026 15:13:13 +0530
+Message-ID: <yq5a7bi3riha.fsf@kernel.org>
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Post: <mailto:patches@lists.linux.dev>
@@ -69,48 +73,69 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <2026112325-emit-squeezing-5d96@gregkh>
+Content-Type: text/plain
 
-On Mon, Nov 23, 2026 at 09:40:55AM +0100, Greg Kroah-Hartman wrote:
-> On Mon, Nov 23, 2026 at 02:03:27PM +0530, Aneesh Kumar K.V (Arm) wrote:
-> > This series adds the PCI/TSM support needed by a TEE Security Manager
-> > (TSM) driver in a confidential guest. It adds device lock/unlock,
-> > helpers for recording device acceptance and parsing MMIO reports, and
-> > DMA callbacks used during PCI driver attachment. The guest TSM driver and
-> > attestation commands using these interfaces are in follow-up series.
-> > 
-> > This series is based on Dan Williams' "[PATCH v2 00/19] PCI/TSM: TEE I/O
-> > infrastructure" posting [1], particularly the guest LOCK/UNLOCK, ACCEPT
-> > and MMIO report work [2-4]. It retains device_cc_accepted() and the
-> > confidential-device acceptance model from that posting, with changes
-> > adapted to the current PCI/TSM structures and reference APIs. Dan's
-> > device-core acceptance helper and per-host-bridge IDE stream reporting
-> > patch are also included.
-> > 
-> > This series does not adopt the Device Trust changes from Dan's "Device
-> > Evidence and Trust for PCI Security Protocol (TDISP)" [5]. That work is
-> > being developed separately in Leon Romanovsky's "driver core: Authorize
-> > device trust before driver binding" series, [6]. Confidential-device
-> > acceptance is kept separate from that driver-binding trust policy.
-> 
-> But it should not, as you are making driver core changes that will
-> mirror the same thing that that patchset is attempting to do.  Please
-> work together on this.
+Leon Romanovsky <leon@kernel.org> writes:
 
-+10000000,
+> On Mon, Nov 23, 2026 at 09:40:55AM +0100, Greg Kroah-Hartman wrote:
+>> On Mon, Nov 23, 2026 at 02:03:27PM +0530, Aneesh Kumar K.V (Arm) wrote:
+>> > This series adds the PCI/TSM support needed by a TEE Security Manager
+>> > (TSM) driver in a confidential guest. It adds device lock/unlock,
+>> > helpers for recording device acceptance and parsing MMIO reports, and
+>> > DMA callbacks used during PCI driver attachment. The guest TSM driver and
+>> > attestation commands using these interfaces are in follow-up series.
+>> > 
+>> > This series is based on Dan Williams' "[PATCH v2 00/19] PCI/TSM: TEE I/O
+>> > infrastructure" posting [1], particularly the guest LOCK/UNLOCK, ACCEPT
+>> > and MMIO report work [2-4]. It retains device_cc_accepted() and the
+>> > confidential-device acceptance model from that posting, with changes
+>> > adapted to the current PCI/TSM structures and reference APIs. Dan's
+>> > device-core acceptance helper and per-host-bridge IDE stream reporting
+>> > patch are also included.
+>> > 
+>> > This series does not adopt the Device Trust changes from Dan's "Device
+>> > Evidence and Trust for PCI Security Protocol (TDISP)" [5]. That work is
+>> > being developed separately in Leon Romanovsky's "driver core: Authorize
+>> > device trust before driver binding" series, [6]. Confidential-device
+>> > acceptance is kept separate from that driver-binding trust policy.
+>> 
+>> But it should not, as you are making driver core changes that will
+>> mirror the same thing that that patchset is attempting to do.  Please
+>> work together on this.
+>
+> +10000000,
+>
+> Greg,
+>
+> This series came as a surprise to me given the fact that device trust
+> series is exactly for that - allow confidential computing.
+>
+> Adversarial is equal to the "cc_accepted".
 
-Greg,
+I think the confusion stems from this thread:
 
-This series came as a surprise to me given the fact that device trust
-series is exactly for that - allow confidential computing.
+https://lore.kernel.org/all/yq5amrr8yldi.fsf@kernel.org
 
-Adversarial is equal to the "cc_accepted".
+Based on that discussion, I understood TRUST and eligibility for private
+DMA to be complementary attributes. Device acceptance determines whether
+a device may access private memory, while trust determines whether the
+core must enforce additional restrictions. I understood that supporting
+an accepted but adversarial device would require either a private IOTLB
+to restrict its access or an IOMMU.
 
-Thanks
+Therefore, with this series, a request to enable private memory DMA is
+handled as follows:
 
-> 
-> thanks,
-> 
-> greg k-h
+	if (!device_cc_accepted(&pdev->dev)) {
+		ret = -EACCES;
+		goto out;
+	}
+
+	/* Adversarial devices are unsupported for confidential DMA. */
+	if (device_is_adversarial(&pdev->dev)) {
+		ret = -EOPNOTSUPP;
+		goto out;
+	}
+
+
+-aneesh
