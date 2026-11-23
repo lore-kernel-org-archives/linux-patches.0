@@ -1,118 +1,103 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.222.177
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=217.140.110.172
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795451987;
-	b=gGIIkmsVaqY99BHD9AnAlzkLzQcvmDAj6JCjBJRGiKZInRf61Cs5RJT1a9cWsX1os4J+
-	 HkASKW+CH+jLwxYIGStO7BLLIL4EmfysWN+qoJ/tA30+rmn5MFs4vp5QV/mu6u5e47yW+
-	 TEQgNPNe12ZTjAA8YwEEP8/kl7W1Je1UkdsUWowCHg2EsUGoWK1vUpLSMhXELErNJrShG
-	 8km0XrKOcmroQ0q2/q3Z8QO1UUm4VUTKgJk8k/uoSiYjPMzxeJ3CbsEEHinG303xD3pzR
-	 uEJCA1gy1czbKPKiaiosEdxQrg15gRjf8yPkJ+zwJzZpLYe0qz0zgorkQ05WenthbuA==
+	t=1795458576;
+	b=cpgKYOBb7L6LDwQsBNVjZ33Q+ASOXspIgC6Tez2GUXwGLITBUNqSUGPr01pxQEGu24gL
+	 IgH+PHdLXF+NEuJUg9PSi2kaN3SjE4aJx8j18KLjikREP376a0Ivfvai836CsiaUwbCGn
+	 0Z3ucYs1o8hG7L0tKTMFQAbYauOFvLR7ljR+0RcYqwXbk4lIJIwOR+CGARyE3ZOf1SjBb
+	 /Mrf3EgfVn4qxrInfhOdpcySdpMgTIqpv3B42kA6lJ1cFVXT0eh+Zp9w85PRdW0ApQ5uu
+	 KBpgUqjAnwQnlWc5LQvMr9i1r2YSKIgiWWrgayEbCuC0tc5WiJLtBLP/82BKTX3DMdQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795451987;
-	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
-	 X-Forwarded-Encrypted:X-Gm-Message-State:X-Gm-Gg:X-Received:Received:
-	 Received:Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To;
-	bh=drjpTP74JsK51H7vM836NsoylzVlZy0Ll0P6+YE0Z3w=;
-	b=T6xBhL6VmV9JzUTUB3FZWu4GdPoTowcStcIKZtgGtsjiEs34VkHpNfTkeQaiiagPdgnn
-	 k28+jvPkFsiktJK5e72og8sUZtPYZ79JhpNjWbbLopLBBT3e7wEX8Zwfml1wxFsvDjk8B
-	 3L7M1PZX5FQ0NGMTNvmgKQ3LJXo4pQ9GLODanHOboeKjqJU26bT6zbP/zpg/fVfp0Bv96
-	 Y0UbevRafV4qcxcmmiVKJIZpG2mEbfwDLiQidua1o1d2j1lgy1wTipVlLi9LP1E48NOdB
-	 QfUiuBBuY6siQF5Jjv/EfIdvqrJ5cv0jJ6hcMzgdfJ8poAOFThPqvQj1502u27MsLWw==
+	a=rsa-sha256; c=relaxed/relaxed; t=1795458576;
+	h=DMARC-Filter:Received:Received:DKIM-Signature:Date:From:To:Cc:
+	 Subject:Message-ID:References:MIME-Version:Content-Type:
+	 Content-Disposition:Content-Transfer-Encoding:In-Reply-To;
+	bh=4/j1tVsYjuDomGfTOiRNEufIvsMjxkzCoGFkLJLsf4Q=;
+	b=0a86eSRS5JeTfxVsJkCGHx5sNd0VeTCFOfNhWEOOBmQnVSvzv6vUpXkZBZG42SvgVbyy
+	 aPJ1T+SQLPkOVuQr9TgXkgNAGdvP3U6XgKgbo4uvGBxv5yFxXl3G4GeFHP5TcFskVSGpw
+	 YUoB8aXbMSKm49RDqoQ6YeFn1+Q5qNfCmFU8SYkGPVb6jKltJVdXYu0QC9JKN00aNh7kh
+	 QDhp9ztY0NhEOLY+gnKWhvM7u9B+JN5evAv1rn/tmDtBFhrOfTGU3k+ut2pV7ybIzbKN4
+	 7e+o1hgTXfWekIkU+nwlJt62xHqgMFGHWthCzIuJs5LsvLTiS19K74jkpdGsyXIG8aQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=none header.from=ziepe.ca;
-	spf=pass smtp.mailfrom=ziepe.ca;
-	dkim=pass header.d=ziepe.ca header.i=@ziepe.ca header.a=rsa-sha256 header.s=google header.b=JHijAuKO;
-	arc=none smtp.remote-ip=209.85.222.177
-Received: from mail-qk1-f177.google.com (mail-qk1-f177.google.com [209.85.222.177])
-	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
-	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4630B606A31F
-	for <patches@lists.linux.dev>; Mon, 23 Nov 2026 16:39:47 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 4630B606A31F
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ziepe.ca
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ziepe.ca
+	dmarc=pass header.from=arm.com;
+	spf=pass smtp.mailfrom=arm.com;
+	dkim=pass header.d=arm.com header.i=@arm.com header.a=rsa-sha256 header.s=foss header.b=ijpVlN8I;
+	arc=none smtp.remote-ip=217.140.110.172
+Received: from foss.arm.com (foss.arm.com [217.140.110.172])
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6A332606A327;
+	Mon, 23 Nov 2026 18:29:36 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 6A332606A327
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=arm.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=ziepe.ca header.i=@ziepe.ca header.a=rsa-sha256 header.s=google header.b=JHijAuKO
-Received: by mail-qk1-f177.google.com with SMTP id af79cd13be357-93f1e5d7450so352879785a.2
-        for <patches@lists.linux.dev>; Mon, 23 Nov 2026 08:39:47 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ziepe.ca; s=google; t=1795451986; x=1796056786; darn=lists.linux.dev;
-        h=in-reply-to:content-disposition:content-type:mime-version
-         :references:message-id:subject:cc:to:from:date:from:to:cc:subject
-         :date:message-id:reply-to:content-type;
-        bh=drjpTP74JsK51H7vM836NsoylzVlZy0Ll0P6+YE0Z3w=;
-        b=JHijAuKOjY72eOsyCLK5bQSXHi3v7+L9T5QvMEidcai+av6NrQwrzxbskBngKgBjpZ
-         2iJL7Hn5XS23RvpznVhq2a2Qf75izZ+xldFOU3cs+P1rzHDtbP/F35TRlIB1BXuJVQhb
-         9reXgji0m8Hw+l8ST4g+WExqnEVYnq7GvSi0zE2zSc4GOAlt8PCn8dWGg5mWPtUF4p25
-         qp4e6AwW1uSwVJ+DmXdqMvc+HM8EjUCM5FFoXj9pPNqQ2OPxj6+2+bdONHesfW/ggHJT
-         1xyrejXJs6U256UTj215Bbna9M/5WqPUBRxPLBgRyjcYXIFHr/uGYFlWDqbdhOQWX5Iu
-         +Hkw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1795451986; x=1796056786;
-        h=in-reply-to:content-disposition:content-type:mime-version
-         :references:message-id:subject:cc:to:from:date:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=drjpTP74JsK51H7vM836NsoylzVlZy0Ll0P6+YE0Z3w=;
-        b=QlKxuBWJE3aSrFWKAtvlb8Ddoy6lboIK+n/XQl2AgbCnYyZPYc18jZA9yERE+1OzfF
-         maDnoRrB6NvPuUW3lNE5EPZO57ndikMHnbqHw5B5Qs4m1pEECIruKeANzmjKCcJI8WRq
-         PI5GCAQKIB3nD/o/axL6djFVM3i4dwxIjeX818BbUfJYNtf0HP7bjeif0RsucGJAxrd+
-         g0BzOT+4d4TcKU7AgZAu7zDus1iuwo0O825udGiEMu8JjFoeOXHjWbg8+vk754iGwMen
-         MAHWbC9qXdHNGyiOkL/7CRwtb5zkIEHO+jeWsYVkDcIAU9VaPgn2/EqtX9eBgLbJeSDL
-         Y8qg==
-X-Forwarded-Encrypted: i=1; AL+hErFpoqnu+spjXTBMaU3y3BGpTnhHQAK/aIIcDekRl0bFxsdRB6oTQxsaveNlQFeuPAw7oWxmsT/D@lists.linux.dev
-X-Gm-Message-State: APuU4Z+TFs4PZedy3piQOq9Dvo2UfXcPdAYtz6ucPZiK355O42elutGN
-	B+oltyByqbufyaQYaoHpe71Q66FRpY0oh5p4rAKY3Vt3PNCfuiAB/eKug6ClF0CUVRU=
-X-Gm-Gg: AZFdTZfWQluJLGqborfhzHjPf8Fjdw0XCU02F362nN+aN6eqHpc18NxFG/IIORSW435
-	K71v3vJyuadloc9scyuI2NIu7P9jF74oVePsLsOW/ilhofPWYCTTB4GZIu2kbFJBkgof4PmfnvW
-	80dalA/slqUylT2SHJIky4b3eXXzgO2suY+mc2L57sYy7ZnehIBzhTh+0uUWWLVNf4ypcAjUwfy
-	tDrvQBufM/BlNRAun1YpzW2DLB4iUMMcSla39Pr0TPmWh6s/kRQV8EFD6Jabf0eQ/2DiqBT2wGU
-	ececYivCRGWQisOQxbB/ISoAeSif1nyEITR3YjUoaIvfPCJ3Nevpfwc4IvtwupijnqdcEa5OQ3t
-	9S13imHn/4dlJfZOJgBGLbziLmssixm3KTvCkfvkzMAXCslX66Dlus2+HUwHelpRE3cRI2ELFRU
-	af6G4F1u6ihLbQtJzUZV39SJZuga2uiFfZYJKiKMCk9BHT5swBPcy/Uwr6wfM2wadfND1ZTOlow
-	uhJPP7Tzixg8wft2ZV24e1vb36bTjgxNHSdKIm0p7j4GpbYp+6/7AH4cw9JmAJ9U9AMbEEEleEf
-	DSApqGJeKVqpB7G7+PEr7r+wm+kMI6WBN4CKf5pp10nnhlmP4Orty9UMDjTV0pq1gVtKttjSmRi
-	62CY5mDEQghBR3o8exYUb09wv
-X-Received: by 2002:a05:620a:4403:b0:947:7f9b:f839 with SMTP id af79cd13be357-949ba9bf10emr2106812185a.47.1795451986121;
-        Mon, 23 Nov 2026 08:39:46 -0800 (PST)
-Received: from ziepe.ca (stjhnbsu6iw-159-2-142-59.dhcp-dynamic.fibreop.nb.bellaliant.net. [159.2.142.59])
-        by smtp.gmail.com with ESMTPSA id af79cd13be357-949bb424fa6sm828689585a.40.2026.11.23.08.39.45
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 23 Nov 2026 08:39:45 -0800 (PST)
-Received: from jgg by wakko with local (Exim 4.97)
-	(envelope-from <jgg@ziepe.ca>)
-	id 1xVX4y-00000000vk5-44Yr;
-	Mon, 23 Nov 2026 12:39:44 -0400
-Date: Mon, 23 Nov 2026 12:39:44 -0400
-From: Jason Gunthorpe <jgg@ziepe.ca>
-To: "Aneesh Kumar K.V" <aneesh.kumar@kernel.org>
-Cc: Leon Romanovsky <leon@kernel.org>, Nicolin Chen <nicolinc@nvidia.com>,
-	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-	linux-coco@lists.linux.dev, Dan Williams <djbw@kernel.org>,
-	Bjorn Helgaas <bhelgaas@google.com>,
-	Jonathan Cameron <jonathan.cameron@huawei.com>,
-	Xu Yilun <yilun.xu@linux.intel.com>,
-	Alexey Kardashevskiy <aik@amd.com>,
-	"Rafael J . Wysocki" <rafael@kernel.org>,
+	dkim=pass (1024-bit key, unprotected) header.d=arm.com header.i=@arm.com header.a=rsa-sha256 header.s=foss header.b=ijpVlN8I
+Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
+	by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id B72C9143D;
+	Mon, 23 Nov 2026 10:29:32 -0800 (PST)
+Received: from arm.com (usa-sjc-mx-foss1.foss.arm.com [172.31.20.19])
+	by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 8E3763F763;
+	Mon, 23 Nov 2026 10:29:28 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=arm.com; s=foss;
+	t=1795458575; bh=91rRqWnUFnt98sbMIZIWLen5dQtczci7+M9TkR+C2eQ=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=ijpVlN8I1I3lz+oP0f/Ra6j/FKXUuG6yrg9sGG6aArSc3WgM6d06k0TeBcvheHnlB
+	 +bg049yO3+3oRRTrxvdP291vcWCMxo9GAp2+PsBjvQ08/CJLOgCUEhOoOYk7V5y0sg
+	 lWIn7leu+umSmLK0yR2G0mX6r/H/ZewmLWycrNRc=
+Date: Mon, 23 Nov 2026 18:29:25 +0000
+From: Catalin Marinas <catalin.marinas@arm.com>
+To: Jason Gunthorpe <jgg@ziepe.ca>
+Cc: "Aneesh Kumar K.V (Arm)" <aneesh.kumar@kernel.org>,
+	linux-coco@lists.linux.dev,
+	Andrew Morton <akpm@linux-foundation.org>,
+	Baoquan He <baoquan.he@linux.dev>, Mike Rapoport <rppt@kernel.org>,
+	Pasha Tatashin <pasha.tatashin@soleen.com>,
+	Pratyush Yadav <pratyush@kernel.org>,
+	Christian =?iso-8859-1?Q?K=F6nig?= <christian.koenig@amd.com>,
+	Joerg Roedel <joro@8bytes.org>, Marc Zyngier <maz@kernel.org>,
+	Marek Szyprowski <m.szyprowski@samsung.com>,
+	Robin Murphy <robin.murphy@arm.com>,
 	Steven Price <steven.price@arm.com>,
+	Sumit Semwal <sumit.semwal@linaro.org>,
 	Suzuki K Poulose <suzuki.poulose@arm.com>,
-	Lukas Wunner <lukas@wunner.de>, Ashish Kalra <ashish.kalra@amd.com>,
-	Tom Lendacky <thomas.lendacky@amd.com>,
-	Herbert Xu <herbert@gondor.apana.org.au>,
-	driver-core@lists.linux.dev, linux-pci@vger.kernel.org,
-	kvm@vger.kernel.org, patches@lists.linux.dev
-Subject: Re: [PATCH v1 00/10] PCI/TSM: Support guest TSM drivers
-Message-ID: <20261123163944.GK179082@ziepe.ca>
-References: <20261123083337.2731019-1-aneesh.kumar@kernel.org>
- <2026112325-emit-squeezing-5d96@gregkh>
- <20261123090623.GK14811@unreal>
- <yq5a7bi3riha.fsf@kernel.org>
- <20261123115803.GN14811@unreal>
- <yq5awlq3pto0.fsf@kernel.org>
- <20261123135638.GO14811@unreal>
- <20261123152533.GE179082@ziepe.ca>
- <yq5aik1n4iz3.fsf@kernel.org>
+	Thomas Gleixner <tglx@kernel.org>, Will Deacon <will@kernel.org>,
+	Russell King <linux@armlinux.org.uk>,
+	Benjamin Gaignard <benjamin.gaignard@collabora.com>,
+	Brian Starkey <Brian.Starkey@arm.com>,
+	John Stultz <jstultz@google.com>,
+	Mark Rutland <mark.rutland@arm.com>, Radu Rendec <radu@rendec.net>,
+	"T.J. Mercier" <tjmercier@google.com>,
+	Madhavan Srinivasan <maddy@linux.ibm.com>,
+	Michael Ellerman <mpe@ellerman.id.au>,
+	Nicholas Piggin <npiggin@gmail.com>,
+	Christophe Leroy <chleroy@kernel.org>,
+	Ritesh Harjani <ritesh.list@gmail.com>,
+	Shrikanth Hegde <sshegde@linux.ibm.com>,
+	Alexander Gordeev <agordeev@linux.ibm.com>,
+	Gerald Schaefer <gerald.schaefer@linux.ibm.com>,
+	Heiko Carstens <hca@linux.ibm.com>,
+	Vasily Gorbik <gor@linux.ibm.com>,
+	Christian Borntraeger <borntraeger@linux.ibm.com>,
+	Sven Schnelle <svens@linux.ibm.com>, Ingo Molnar <mingo@redhat.com>,
+	Borislav Petkov <bp@alien8.de>,
+	Dave Hansen <dave.hansen@linux.intel.com>, x86@kernel.org,
+	"H . Peter Anvin" <hpa@zytor.com>, Kiryl Shutsemau <kas@kernel.org>,
+	Rick Edgecombe <rick.p.edgecombe@intel.com>,
+	Haiyang Zhang <haiyangz@microsoft.com>,
+	Wei Liu <wei.liu@kernel.org>, Dexuan Cui <decui@microsoft.com>,
+	Paolo Bonzini <pbonzini@redhat.com>,
+	Vitaly Kuznetsov <vkuznets@redhat.com>,
+	Andy Lutomirski <luto@kernel.org>,
+	Peter Zijlstra <peterz@infradead.org>,
+	dri-devel@lists.freedesktop.org, iommu@lists.linux.dev,
+	linaro-mm-sig@lists.linaro.org,
+	linux-arm-kernel@lists.infradead.org, linux-media@vger.kernel.org,
+	linux-mm@kvack.org, kvmarm@lists.linux.dev, patches@lists.linux.dev
+Subject: Re: [PATCH v10 04/13] irqchip/gic-v3-its: Allocate shared tables
+ using CoCo shared memory allocator
+Message-ID: <awSGBdS1AiFhJzZV@arm.com>
+References: <20261116091137.94252-1-aneesh.kumar@kernel.org>
+ <20261116091137.94252-5-aneesh.kumar@kernel.org>
+ <awQd81MwZqi55gf8@arm.com>
+ <20261123150041.GB179082@ziepe.ca>
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Post: <mailto:patches@lists.linux.dev>
@@ -122,47 +107,91 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <yq5aik1n4iz3.fsf@kernel.org>
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20261123150041.GB179082@ziepe.ca>
 
-On Mon, Nov 23, 2026 at 09:51:04PM +0530, Aneesh Kumar K.V wrote:
-> index 429e39f647cf9..01d7877d0b571 100644
-> --- a/include/linux/device.h
-> +++ b/include/linux/device.h
-> @@ -604,6 +604,8 @@ struct device_physical_location {
->   *		ancestor device.
->   * @DEV_FLAG_OFFLINE_DISABLED: If set, the device is permanently online.
->   * @DEV_FLAG_OFFLINE: Set after successful invocation of bus type's .offline().
-> + * @DEV_FLAG_DMA_CC_PRIVATE: The device is able to access private (encrypted)
-> + *		memory, no shared memory bouncing is required from the DMA API.
->   * @DEV_FLAG_COUNT: Number of defined struct_device_flags.
->   */
->  enum struct_device_flags {
-> @@ -617,6 +619,7 @@ enum struct_device_flags {
->  	DEV_FLAG_OF_NODE_REUSED = 7,
->  	DEV_FLAG_OFFLINE_DISABLED = 8,
->  	DEV_FLAG_OFFLINE = 9,
-> +	DEV_FLAG_DMA_CC_PRIVATE = 10,
->  
->  	DEV_FLAG_COUNT
->  };
+On Mon, Nov 23, 2026 at 11:00:41AM -0400, Jason Gunthorpe wrote:
+> On Mon, Nov 23, 2026 at 11:05:23AM +0000, Catalin Marinas wrote:
+> > > -	/*
+> > > -	 * If set_memory_decrypted() fails then we don't know what state the
+> > > -	 * page is in, so we can't free it. Instead we leak it.
+> > > -	 * set_memory_decrypted() will already have WARNed.
+> > > -	 */
+> > > -	if (ret)
+> > > +	if (alloc_cc_shared_pages_node(node, gfp | gfp_flags_quirk,
+> > > +				       PAGE_SIZE << order, &mem))
+> > >  		return NULL;
+> > >  
+> > > -	return page;
+> > > +	return mem.page;
+> > 
+> > This part is mostly fine but I do wonder why not make this alloc
+> > function the same as buddy alloc_pages_node() - return a struct page
+> > pointer.
 > 
-> ...
+> I'd argue we shouldn't even be returning struct page here, do many
+> places even use the struct page? What for?
+
+I just suggested it for similarity with alloc_pages_node(). It can be
+made better indeed.
+
+> Exposing struct page to places that just want a kernel addr means they
+> have to call page_address and we are back to the highmem weirdness.
+
+dma-buf system heap needs struct page for scatterlist, so we need the
+virt_to_page() conversion if we return a VA.
+
+> > >  static void its_free_pages(void *addr, unsigned int order)
+> > >  {
+> > > -	/*
+> > > -	 * If the memory cannot be encrypted again then we must leak the pages.
+> > > -	 * set_memory_encrypted() will already have WARNed.
+> > > -	 */
+> > > -	if (set_memory_encrypted((unsigned long)addr, 1 << order))
+> > > +	struct cc_shared_layout layout;
+> > > +	struct cc_shared_pages mem;
+> > > +
+> > > +	if (WARN_ON(cc_shared_calc_layout(PAGE_SIZE << order, &layout)))
+> > >  		return;
+> > > -	free_pages((unsigned long)addr, order);
+> > > +
+> > > +	mem.page = virt_to_page(addr);
+> > > +	mem.shared_size = layout.shared_size;
+> > > +	free_cc_shared_pages(&mem);
+> > >  }
+> > 
+> > Here it gets weird and I don't see why we can't have just a buddy-like
+> > interface. The kernel-doc for alloc says that shared_size must be
+> > retained for the corresponding free but without reading the source code,
+> > you can't tell that cc_shared_calc_layout() gives you the same
+> > shared_size populated by alloc. We have a similar pattern in dma-buf but
+> > using the compound page order.
 > 
-> +void dma_set_cc_private(struct device *dev, bool private)
-> +{
-> +	dev_assign_dma_cc_private(dev, private);
-> +}
+> This makes sense, we should not be passing size to a free function,
+> make a compount page/high order folio instead if the API is going to
+> be struct page based.
 > 
-> This could easily replace device_cc_accept()/device_cc_accepted() used
-> in this series. I can switch to it if that's the direction we want to
-> take.
+> > We can get rid of layout and mem structures (or at least not as
+> > part of the API). Of course, this assumes that the shared granule size
+> > remains constant for a guest's lifetime but I don't think that's a
+> > problem.
+> 
+> It should be encoded in the struct page meta data, as the order.
 
-I would prefer to settle this with Nicolin's series that is part of
-the point of it since it brings a real user and a justification..
+I agree.
 
-So if you can confirm there than it does enough of what PCI needs that
-the PCI additional is incremental then great.
+> > Was there a caller you had in mind that needs the common allocator to
+> > share less than the whole buddy block?
+> 
+> If we want this it definitely needs to be a void * based API not
+> struct page one though..
 
-Jason
+For whole-block sharing, either a VA or a folio works for me. If the
+allocator takes an order, the requested size and the sharing granule are
+both powers of two. Rounding up to the granule already gives a valid
+buddy block size, so there’s no need for a separate shared_size.
+
+-- 
+Catalin
