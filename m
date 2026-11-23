@@ -1,44 +1,44 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795422828;
-	b=q1TRZKNbRWuZ9Fb1x9gyCYIZ0CibJHrJVWTceJr3IIOJhYQyoe3XhxcxpBO5sooce5n3
-	 4E7vm0L21dn+t1et8Hc2yis7C19UxKpaONakaHV+/BOeCtjwEYu6Kp7OmVtB3w8pcG57L
-	 xFpc/HAyglZKJAfToWhvmXI8XM3GUVyZBoDekNVEySLEaDJbcsWITl1uwtdSgYYMUoz+g
-	 +CtKS4G8Nq7kVK6utTkGvCGGRCbygq/I4HE3t39lrCYDYm5DXKL3p4fxvIAuZj2fpeXuD
-	 D/jOHVjETG/RU/K7CwTN4F294CTlaDawsQYx+L5ErS3Tm98GMF1UbYsj0oyOn6MX8/w==
+	t=1795422834;
+	b=e0nJE6q7ETvA+8FJSPYSKtFa3Ks9jOFtA0V4421qo1EgKVdOeRLx+z6UZSMs+DjTTTDd
+	 oc1JcdmuFQx8tb+BzPSFozmE4wj0etR6p9i5/H+ywXM5JMPy7kP3avzKzIHnIdA6bI7i2
+	 WADpluCavJn0lb0TRB3BbAp7uc1IWjNO1Ybqa7R3s8B3sEVr3Ly/wVWWvfCsvgBGuIfDS
+	 w//G4XAqSYxPgruXrP5DnVVj3jjRAf6B739rJciyk7l9LvCArOiJlBp+0wTqX2lZkr37E
+	 Yu8gWeXFx5PvbCmNB1AR2OwajxqfUBl0XMPWyIjI4ALqdsR5qOlriACmKDcW/CaFvZQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795422828;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795422834;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
-	 MIME-Version:Content-Transfer-Encoding;
-	bh=+1fZ+krt+vzNzwK8rFQAhFc+bk+b5FPV1LAd7hc8WOA=;
-	b=nTPa5j2HZ/AX9pSIWEld6qlxOLjc9kuKrv17M9AryfkE3K3cUbjKDdSfH06UURfpvtTV
-	 Px3GE+uDXpMPPfZ5BxX7yWtHJ+odgmfO5nVKt/S6UPjW3pkL/1yGFXiIYiQrJ/zQl6sJ6
-	 8/NBeS57DqCyGrV+NBfN8LvWlqP5fr5YUW4ErstZysn+XVeTgO/VqruQzkukb9a+yNbqg
-	 +0QMdQOhaOwd51L3IG1uaqY0MymH8dNA5SIMFJRr/LnFaKXaLJFvGHiYqPPzeDfeFKT9A
-	 rVarI251PzRbqupK7iB4CzVxTrwNuCG6Gylpnc4q0fidFhi9ktcJHXr5159pSUspG7A==
+	 In-Reply-To:References:MIME-Version:Content-Transfer-Encoding;
+	bh=O0scTIKxAQUJYWe12ImmOtEeVbN1lJEAM+Vm8C0+Gjw=;
+	b=dfVwhHBdATHKtjYYRlJrWpau/pZITm0nf32cs0aZt2IaqbTGzwXo2d8UTW9alOtTx+yA
+	 1o+V5shyEXbIQ69Kh19zXoHO5pIxhGu4t3mjw4EbHj0Z16lqmr0n5q6zm49PI9jz1BE9b
+	 L5XFzM7ArTl8Bifhe/jBk98UnGCoqwC/vDEILp2ZE+GgqvowknYHwf33Zdms8FGPJtPoM
+	 5o2kV/p8Q5wRe7vj9qm+JlSnbN3MIFJ60ULoHqmcEfD/FgC0GBQYN4xm6n/LvB1g3AxAM
+	 IZVSDTtnYt1A6w9vIY6p+0lnEOpl2HGT/Q+CtRD4MhO5g+G+4jAkvtEm97xEQlVSNYw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=liy8onB1;
+	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=HzGvO1W5;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 05E5E606A31A;
-	Mon, 23 Nov 2026 08:33:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 37DF2606A332;
+	Mon, 23 Nov 2026 08:33:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=liy8onB1
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 28CC01F000C4;
-	Mon, 23 Nov 2026 08:33:41 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=HzGvO1W5
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 35D081F000C0;
+	Mon, 23 Nov 2026 08:33:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1795422827;
-	bh=+1fZ+krt+vzNzwK8rFQAhFc+bk+b5FPV1LAd7hc8WOA=;
-	h=From:To:Cc:Subject:Date;
-	b=liy8onB1uUxbEhYfGGD4DjWd1yVqyirivYPRPnm3vzEiPIT1y6VX2p8ykP/osZhAQ
-	 cmKsabaXtGVw3sHAWHHBVAUh9Dnz1m0KBNGO6C24F9ryY0OZ0zOtOUmDITGAoz5suE
-	 +zmSEcXwl6oV3Wyue6SIfQg2LvLcJIKbVGENnXdnrpbiusVk+/JCX6PDmNq5zQQMrk
-	 NBAdoH4PIE2DgVA60mgi4cswkeTVgh1aD+6S7z5DP+4TxMxN1XfuUBzjbua+NY3a++
-	 FYKsNWXBu3rrlWUlbuMSFw5U7rM50sLczieE9QiCD17lkRunB+ks+vyzEVBQK1OnZY
-	 rI1GW9bkdtwsw==
+	s=k20260515; t=1795422833;
+	bh=O0scTIKxAQUJYWe12ImmOtEeVbN1lJEAM+Vm8C0+Gjw=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References;
+	b=HzGvO1W5Hr0QWfoJMo7mMUUWTS22omZix3u18nm4WPEwyYROWVwCjLoy2YfBR2+VY
+	 AY4AqfrR7rD0v2IWCdj521N3DVArRSOA3iPTASbYu28PihhWzw1lPrmGUbSEZrMeTJ
+	 ajvedFZ9JagcBF7LpspnviYh+8sFmRFM285YgqAkG80BmDWNVX8UeC6B27nGx1cpKx
+	 sMEd/qsz3kAzl8clzqukvoWSYR6TLp53njRr1srj9tQCgU5cyK/kmnxtxrQCRJt1CF
+	 8LAwv5SSDxd1YayObVX8JfEwv+x6nu/7pzPzdL8V3myrdK0oIi8yS3Wtq6IBmelRu+
+	 OFhXVvjr25eng==
 From: "Aneesh Kumar K.V (Arm)" <aneesh.kumar@kernel.org>
 To: linux-coco@lists.linux.dev
 Cc: "Aneesh Kumar K.V (Arm)" <aneesh.kumar@kernel.org>,
@@ -60,11 +60,14 @@ Cc: "Aneesh Kumar K.V (Arm)" <aneesh.kumar@kernel.org>,
 	driver-core@lists.linux.dev,
 	linux-pci@vger.kernel.org,
 	kvm@vger.kernel.org,
-	patches@lists.linux.dev
-Subject: [PATCH v1 00/10] PCI/TSM: Support guest TSM drivers
-Date: Mon, 23 Nov 2026 14:03:27 +0530
-Message-ID: <20261123083337.2731019-1-aneesh.kumar@kernel.org>
+	patches@lists.linux.dev,
+	Dan Williams <dan.j.williams@intel.com>
+Subject: [PATCH v1 01/10] PCI/TSM: Report active IDE streams per host bridge
+Date: Mon, 23 Nov 2026 14:03:28 +0530
+Message-ID: <20261123083337.2731019-2-aneesh.kumar@kernel.org>
 X-Mailer: git-send-email 2.43.0
+In-Reply-To: <20261123083337.2731019-1-aneesh.kumar@kernel.org>
+References: <20261123083337.2731019-1-aneesh.kumar@kernel.org>
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Post: <mailto:patches@lists.linux.dev>
@@ -76,143 +79,239 @@ Precedence: list
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-This series adds the PCI/TSM support needed by a TEE Security Manager
-(TSM) driver in a confidential guest. It adds device lock/unlock,
-helpers for recording device acceptance and parsing MMIO reports, and
-DMA callbacks used during PCI driver attachment. The guest TSM driver and
-attestation commands using these interfaces are in follow-up series.
+From: Dan Williams <dan.j.williams@intel.com>
 
-This series is based on Dan Williams' "[PATCH v2 00/19] PCI/TSM: TEE I/O
-infrastructure" posting [1], particularly the guest LOCK/UNLOCK, ACCEPT
-and MMIO report work [2-4]. It retains device_cc_accepted() and the
-confidential-device acceptance model from that posting, with changes
-adapted to the current PCI/TSM structures and reference APIs. Dan's
-device-core acceptance helper and per-host-bridge IDE stream reporting
-patch are also included.
+The first attempt at an ABI for this failed to account for naming
+collisions across host bridges:
 
-This series does not adopt the Device Trust changes from Dan's "Device
-Evidence and Trust for PCI Security Protocol (TDISP)" [5]. That work is
-being developed separately in Leon Romanovsky's "driver core: Authorize
-device trust before driver binding" series, [6]. Confidential-device
-acceptance is kept separate from that driver-binding trust policy.
+Commit a4438f06b1db ("PCI/TSM: Report active IDE streams")
 
-The guest flow separates three operations:
+Revive this ABI with a per host bridge link that appears at first stream
+creation for a given host bridge and disappears after the last stream is
+removed.
 
-* Lock the device through tsm/lock. This requests the TEE Device Interface
-  Security Protocol (TDISP) LOCKED state, so userspace can verify evidence
-  about the locked configuration. Unlock releases the device configuration
-  and the TSM driver's per-device state. Neither operation is permitted
-  while a PCI driver is attached.
-* Request device use through the attestation evidence-accept operation.
-  A follow-up guest TSM driver validates the reported MMIO mappings,
-  requests TDISP RUN and marks the device accepted. This series supplies
-  the device acceptance state, MMIO report helpers and PCI/TSM locking
-  helpers needed for that work.
-* Enable DMA during PCI driver attachment, after platform DMA configuration
-  and IOMMU setup, before the PCI driver's probe function. Disable DMA
-  during driver detach and setup cleanup. Hold TSM user, device and module
-  references until DMA cleanup finishes calling the TSM driver.
+For systems with many host bridge objects it allows:
 
-Compared with the earlier posting, evidence retrieval and acceptance use
-attestation rather than PCI/TSM evidence storage and the sysfs accept
-attribute.
+    ls /sys/class/tsm/tsmN/pci*/stream*
 
-This series is based on the IOMMUFD/TSM vIOMMU and vDEVICE work [7]. It
-uses that series' TSM references, unregister waits and struct pci_tsm_context
-references. The architecture-specific CCA host and guest drivers and their
-SPDM attestation operations are in separate follow-up series.
+...to find all the host bridges with active streams without first iterating
+over all host bridges. Yilun notes that is handy to have this short cut [1]
+and from an administrator perspective it helps with inventory for
+constrained stream resources.
 
-The full patchset, including attestation, Device Trust, IOMMUFD,
-guest_memfd and the Arm CCA host and guest changes, is available at:
+Link: http://lore.kernel.org/aXLtILY85oMU5qlb@yilunxu-OptiPlex-7050 [1]
+Reviewed-by: Xu Yilun <yilun.xu@linux.intel.com>
+Signed-off-by: Dan Williams <dan.j.williams@intel.com>
+Signed-off-by: Aneesh Kumar K.V (Arm) <aneesh.kumar@kernel.org>
+---
+ Documentation/ABI/testing/sysfs-class-tsm | 13 ++++
+ drivers/pci/ide.c                         |  4 +
+ drivers/virt/coco/tsm-core.c              | 95 +++++++++++++++++++++++
+ include/linux/pci-ide.h                   |  2 +
+ include/linux/tsm.h                       |  4 +
+ 5 files changed, 118 insertions(+)
 
-  https://git.gitlab.arm.com/linux-arm/linux-cca.git
-  branch: cca/topics/7.4/cca-da-integration-v1
-
-Notes:
-* Codex assisted with implementation, review and series organization.
-
-[1] https://lore.kernel.org/all/20260303000207.1836586-1-dan.j.williams@intel.com/
-[2] https://lore.kernel.org/all/20260303000207.1836586-7-dan.j.williams@intel.com/
-[3] https://lore.kernel.org/all/20260303000207.1836586-8-dan.j.williams@intel.com/
-[4] https://lore.kernel.org/all/20260303000207.1836586-10-dan.j.williams@intel.com/
-[5] https://lore.kernel.org/all/20260705220819.2472765-1-djbw@kernel.org/
-[6] https://lore.kernel.org/all/20261105-device-trust-core-v1-0-1e536825b4eb@nvidia.com/
-[7] https://lore.kernel.org/all/20261116081935.85372-1-aneesh.kumar@kernel.org/
-
-Cc: Dan Williams <djbw@kernel.org>
-Cc: Leon Romanovsky <leon@kernel.org>
-Cc: Bjorn Helgaas <bhelgaas@google.com>
-Cc: Jason Gunthorpe <jgg@ziepe.ca>
-Cc: Jonathan Cameron <jonathan.cameron@huawei.com>
-Cc: Xu Yilun <yilun.xu@linux.intel.com>
-Cc: Alexey Kardashevskiy <aik@amd.com>
-Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: Rafael J. Wysocki <rafael@kernel.org>
-Cc: Steven Price <steven.price@arm.com>
-Cc: Suzuki K Poulose <suzuki.poulose@arm.com>
-Cc: Lukas Wunner <lukas@wunner.de>
-Cc: Ashish Kalra <ashish.kalra@amd.com>
-Cc: Tom Lendacky <thomas.lendacky@amd.com>
-Cc: Herbert Xu <herbert@gondor.apana.org.au>
-Cc: driver-core@lists.linux.dev
-Cc: linux-pci@vger.kernel.org
-Cc: kvm@vger.kernel.org
-Cc: patches@lists.linux.dev
-
-Aneesh Kumar K.V (Arm) (9):
-  coco: tsm: Register the TSM class before device drivers
-  PCI/TSM: Let TSM drivers discover the CMA DOE mailbox
-  PCI/TSM: Defer TSM vDEVICE allocation until device setup completes
-  PCI/TSM: Add association locking helpers for evidence acceptance
-  PCI/TSM: Notify TSM drivers before waiting for TSM user references
-  device core: Add helpers to record confidential device acceptance
-  PCI/TSM: Add sysfs lock and unlock for guest-assigned devices
-  PCI/TSM: Build encrypted MMIO descriptors from a supplied report
-  PCI/TSM: Configure accepted device DMA during driver attachment
-
-Dan Williams (1):
-  PCI/TSM: Report active IDE streams per host bridge
-
- Documentation/ABI/testing/sysfs-bus-pci   |  35 +-
- Documentation/ABI/testing/sysfs-class-tsm |  32 +
- Documentation/driver-api/pci/tsm.rst      |  47 ++
- MAINTAINERS                               |   1 +
- drivers/base/Kconfig                      |   4 +
- drivers/base/Makefile                     |   1 +
- drivers/base/base.h                       |   9 +
- drivers/base/coco.c                       |  68 ++
- drivers/crypto/ccp/sev-dev-tsm.c          |   7 +
- drivers/pci/Kconfig                       |   2 +
- drivers/pci/ide.c                         |   4 +
- drivers/pci/pci-driver.c                  |  31 +-
- drivers/pci/tsm.c                         | 749 ++++++++++++++++++++--
- drivers/virt/coco/tsm-core.c              | 150 ++++-
- include/linux/device.h                    |  22 +
- include/linux/ioport.h                    |   1 +
- include/linux/pci-ide.h                   |   2 +
- include/linux/pci-tsm.h                   | 130 +++-
- include/linux/pci.h                       |   1 +
- include/linux/tsm.h                       |   4 +
- 20 files changed, 1248 insertions(+), 52 deletions(-)
- create mode 100644 drivers/base/coco.c
-
-
-base-commit: 65e4fd942f72a9dba0e4e257290c4fa1aa756854
-prerequisite-patch-id: 121492d71cc22b2adbfdedd668868c5a449ad764
-prerequisite-patch-id: 266d2641e47ccf8f57f8ca77d90d193f9cfabbbd
-prerequisite-patch-id: 5502ecfa0b2659885b221f103d44d473c72fec03
-prerequisite-patch-id: 6ec85de28f71ce761596e493a68a56242327c0b1
-prerequisite-patch-id: f6e97602a5b06ffddd2cd3c2815bed27411d51e3
-prerequisite-patch-id: 03d76de408efeb5a2205079bb61face09255ca60
-prerequisite-patch-id: 51872ad4fcd244f3425b81f5a0f05acd4ffa5c39
-prerequisite-patch-id: b56e823a40dc6d1e70e74a00cf3e1da2d0ecc9d7
-prerequisite-patch-id: 53dcbe1d39b6848f778eba736a2779b0e587cfcb
-prerequisite-patch-id: 66c884ec28e3d15a174dfb288858b174fb21480d
-prerequisite-patch-id: 18a7425cf79e0a14ac934cb2a194b27a62d50c9d
-prerequisite-patch-id: e47eb53d14d6f6180eb0606d721bfd55d74c96b3
-prerequisite-patch-id: ce898fc01b883c3318a6bdb883578b8b4e4299a2
-prerequisite-patch-id: 416778d72f4ade8c0f13b9fe3e619ec9d5e9634b
-prerequisite-patch-id: d30d30bbe67196c41b592e79fd0c15a78bec0ae7
+diff --git a/Documentation/ABI/testing/sysfs-class-tsm b/Documentation/ABI/testing/sysfs-class-tsm
+index 2949468deaf7..1ddb8f357961 100644
+--- a/Documentation/ABI/testing/sysfs-class-tsm
++++ b/Documentation/ABI/testing/sysfs-class-tsm
+@@ -7,3 +7,16 @@ Description:
+ 		signals when the PCI layer is able to support establishment of
+ 		link encryption and other device-security features coordinated
+ 		through a platform tsm.
++
++What:		/sys/class/tsm/tsmN/pciDDDD:BB
++Contact:	linux-pci@vger.kernel.org
++Description:
++		(RO) When a PCIe host bridge has established a secure connection
++		via a TSM to an endpoint, this symlink appears. It facilitates a
++		TSM instance scoped view of PCIe Link Encryption and Secure
++		Session resource consumption across host bridges. The symlink
++		appears when a host bridge has 1 or more IDE streams established
++		with this TSM, and disappears when that number returns to 0. See
++		Documentation/ABI/testing/sysfs-devices-pci-host-bridge for the
++		description of the pciDDDD:BB/streamH.R.E symlink and the
++		pciDDDD:BB/available_secure_streams attribute.
+diff --git a/drivers/pci/ide.c b/drivers/pci/ide.c
+index beb67b8fb5c5..19f61f957fb4 100644
+--- a/drivers/pci/ide.c
++++ b/drivers/pci/ide.c
+@@ -11,6 +11,7 @@
+ #include <linux/pci_regs.h>
+ #include <linux/slab.h>
+ #include <linux/sysfs.h>
++#include <linux/tsm.h>
+ 
+ #include "pci.h"
+ 
+@@ -370,6 +371,9 @@ void pci_ide_stream_release(struct pci_ide *ide)
+ 	if (ide->partner[PCI_IDE_EP].enable)
+ 		pci_ide_stream_disable(pdev, ide);
+ 
++	if (ide->tsm_dev)
++		tsm_ide_stream_unregister(ide);
++
+ 	if (ide->partner[PCI_IDE_RP].setup)
+ 		pci_ide_stream_teardown(rp, ide);
+ 
+diff --git a/drivers/virt/coco/tsm-core.c b/drivers/virt/coco/tsm-core.c
+index 696c1abfece7..f07e68dcf6e1 100644
+--- a/drivers/virt/coco/tsm-core.c
++++ b/drivers/virt/coco/tsm-core.c
+@@ -4,11 +4,13 @@
+ #define pr_fmt(fmt) KBUILD_MODNAME ": " fmt
+ 
+ #include <linux/tsm.h>
++#include <linux/pci.h>
+ #include <linux/device.h>
+ #include <linux/module.h>
+ #include <linux/cleanup.h>
+ #include <linux/jiffies.h>
+ #include <linux/pci-tsm.h>
++#include <linux/pci-ide.h>
+ #include <linux/pid.h>
+ #include <linux/sched.h>
+ 
+@@ -273,6 +275,98 @@ int tsm_unregister(struct tsm_dev *tsm_dev)
+ }
+ EXPORT_SYMBOL_GPL(tsm_unregister);
+ 
++static DEFINE_XARRAY(tsm_ide_streams);
++static DEFINE_MUTEX(tsm_ide_streams_lock);
++
++/* tracker for the bridge symlink when the bridge has any streams */
++struct tsm_ide_stream {
++	struct tsm_dev *tsm_dev;
++	struct pci_host_bridge *bridge;
++	struct kref kref;
++};
++
++static struct tsm_ide_stream *create_streams(struct tsm_dev *tsm_dev,
++					    struct pci_host_bridge *bridge)
++{
++	int rc;
++
++	struct tsm_ide_stream *streams __free(kfree) = kzalloc_obj(*streams);
++	if (!streams)
++		return NULL;
++
++	streams->tsm_dev = tsm_dev;
++	streams->bridge = bridge;
++	kref_init(&streams->kref);
++	rc = xa_insert(&tsm_ide_streams, (unsigned long)bridge, streams,
++		       GFP_KERNEL);
++	if (rc)
++		return NULL;
++
++	rc = sysfs_create_link(&tsm_dev->dev.kobj, &bridge->dev.kobj,
++			       dev_name(&bridge->dev));
++	if (rc) {
++		xa_erase(&tsm_ide_streams, (unsigned long)bridge);
++		return NULL;
++	}
++
++	return no_free_ptr(streams);
++}
++
++int tsm_ide_stream_register(struct pci_ide *ide, struct tsm_dev *tsm_dev)
++{
++	struct tsm_ide_stream *streams;
++	struct pci_dev *pdev = ide->pdev;
++	struct pci_host_bridge *bridge = pci_find_host_bridge(pdev->bus);
++
++	guard(mutex)(&tsm_ide_streams_lock);
++	streams = xa_load(&tsm_ide_streams, (unsigned long)bridge);
++	if (streams)
++		kref_get(&streams->kref);
++	else
++		streams = create_streams(tsm_dev, bridge);
++
++	if (!streams)
++		return -ENOMEM;
++
++	ide->tsm_dev = tsm_dev;
++
++	return 0;
++}
++EXPORT_SYMBOL_GPL(tsm_ide_stream_register);
++
++static void destroy_streams(struct kref *kref)
++{
++	struct tsm_ide_stream *streams =
++		container_of(kref, struct tsm_ide_stream, kref);
++	struct tsm_dev *tsm_dev = streams->tsm_dev;
++	struct pci_host_bridge *bridge = streams->bridge;
++
++	lockdep_assert_held(&tsm_ide_streams_lock);
++	sysfs_remove_link(&tsm_dev->dev.kobj, dev_name(&bridge->dev));
++	xa_erase(&tsm_ide_streams, (unsigned long)bridge);
++	kfree(streams);
++}
++
++void tsm_ide_stream_unregister(struct pci_ide *ide)
++{
++	struct tsm_ide_stream *streams;
++	struct tsm_dev *tsm_dev = ide->tsm_dev;
++	struct pci_dev *pdev = ide->pdev;
++	struct pci_host_bridge *bridge = pci_find_host_bridge(pdev->bus);
++
++	guard(mutex)(&tsm_ide_streams_lock);
++	streams = xa_load(&tsm_ide_streams, (unsigned long)bridge);
++	/* catch API abuse */
++	if (dev_WARN_ONCE(&tsm_dev->dev,
++			  !streams || streams->tsm_dev != tsm_dev,
++			  "no IDE streams associated with %s\n",
++			  dev_name(&bridge->dev)))
++		return;
++	kref_put(&streams->kref, destroy_streams);
++	ide->tsm_dev = NULL;
++}
++EXPORT_SYMBOL_GPL(tsm_ide_stream_unregister);
++
+ static void tsm_release(struct device *dev)
+ {
+ 	struct tsm_dev *tsm_dev = container_of(dev, typeof(*tsm_dev), dev);
+@@ -290,6 +384,7 @@ module_init(tsm_init)
+ static void __exit tsm_exit(void)
+ {
+ 	class_unregister(&tsm_class);
++	xa_destroy(&tsm_ide_streams);
+ }
+ module_exit(tsm_exit)
+ 
+diff --git a/include/linux/pci-ide.h b/include/linux/pci-ide.h
+index ae07d9f699c0..381a1bf22a95 100644
+--- a/include/linux/pci-ide.h
++++ b/include/linux/pci-ide.h
+@@ -82,6 +82,7 @@ struct pci_ide_regs {
+  * @host_bridge_stream: allocated from host bridge @ide_stream_ida pool
+  * @stream_id: unique Stream ID (within Partner Port pairing)
+  * @name: name of the established Selective IDE Stream in sysfs
++ * @tsm_dev: For TSM established IDE, the TSM device context
+  *
+  * Negative @stream_id values indicate "uninitialized" on the
+  * expectation that with TSM established IDE the TSM owns the stream_id
+@@ -93,6 +94,7 @@ struct pci_ide {
+ 	u8 host_bridge_stream;
+ 	int stream_id;
+ 	const char *name;
++	struct tsm_dev *tsm_dev;
+ };
+ 
+ /*
+diff --git a/include/linux/tsm.h b/include/linux/tsm.h
+index 0996b888df21..866a71478d3c 100644
+--- a/include/linux/tsm.h
++++ b/include/linux/tsm.h
+@@ -162,4 +162,8 @@ tsm_viommu_get_ops(struct tsm_dev *tsm_dev, struct device *dev,
+ 	return NULL;
+ }
+ #endif
++
++struct pci_ide;
++int tsm_ide_stream_register(struct pci_ide *ide, struct tsm_dev *tsm_dev);
++void tsm_ide_stream_unregister(struct pci_ide *ide);
+ #endif /* __TSM_H */
 -- 
 2.43.0
 
