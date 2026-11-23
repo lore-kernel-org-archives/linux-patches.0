@@ -1,146 +1,112 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=198.175.65.9
+Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=52.101.43.11
 ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=pass;
-	t=1795406410;
-	b=JNtgHMR6JJ1RdmRwWgggGf4Y8zA5EajacFpWgBm0dfpTbtPB1P0RAO/kRUxGqhHoGx8O
-	 JP7e0qNu3AaZgMdTpuQPqzXzjo4oi2mJNzwcZBuZZpKuxhSV0ioWdNaL1YILcnFOWztQQ
-	 lLmKqBNNT9gpwXr0+W4+QH+7ayA1uHYUFq6HML2ZeXDo5i41rJ8qt968RAfP2U1QwAxrn
-	 n0SBhghjzBnMGO80HPHDelGwiirjO0b9HfVSqEF9XszFa6iilQpksaYFQ3d7aj14/6ngp
-	 d3wHpydq57qk/APy12/oO2V5SMFm2Wh8k1Lh8MCTMK1ss8zhMxHcqxKd9CPrM0cJ5+A==
+	t=1795416168;
+	b=baA7T8U+LEZw02FcqVEXohbaezMMvxWIo6Q2vKb12BKzZAFo7S9BPzPqejFufhqZyuiM
+	 vzkz9Y0ZD2vUmoy82WusqZxNQfhonJ6Ep/BZUbl9XPBlwgJ7uJ14quXUZU52TZTilo9cp
+	 1r465TANJYgengBw6XXUowa/4UvoPxvSnwDeeT5mUWS+EKOGVQsHTWD2ukbx42KxOQTt6
+	 x+57x+J+Ox/r+lpCzZHqKJN7PGY6h3IJK4GCLB5PYM0jwgBOCSu16x+f8ZE3SjRV/3tg3
+	 NsMTG8WROQxT4lM+u+s+G+/zyXb75GuH9LQU5KM1zOaPZO7FH+eDrZExrmyiunNVkJw==
 ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795406410;
-	h=DMARC-Filter:DKIM-Signature:X-CSE-ConnectionGUID:X-CSE-MsgGUID:
-	 X-IronPort-AV:X-IronPort-AV:Received:X-CSE-ConnectionGUID:
-	 X-CSE-MsgGUID:X-ExtLoop1:X-IronPort-AV:Received:Received:Received:
-	 Received:DKIM-Signature:Received:Received:Date:From:To:CC:Subject:
-	 Message-ID:References:Content-Type:Content-Disposition:In-Reply-To:
-	 X-ClientProxiedBy:MIME-Version:X-MS-PublicTrafficType:
-	 X-MS-TrafficTypeDiagnostic:X-MS-Office365-Filtering-Correlation-Id:
-	 X-MS-Exchange-SenderADCheck:X-MS-Exchange-AntiSpam-Relay:
-	 X-Microsoft-Antispam:X-Microsoft-Antispam-Message-Info:
-	 X-Forefront-Antispam-Report:
+	a=rsa-sha256; c=relaxed/relaxed; t=1795416168;
+	h=DMARC-Filter:DKIM-Signature:Received:Received:Message-ID:Date:
+	 User-Agent:Subject:To:Cc:References:From:Content-Language:In-Reply-To:
+	 Content-Type:Content-Transfer-Encoding:X-ClientProxiedBy:MIME-Version:
+	 X-MS-PublicTrafficType:X-MS-TrafficTypeDiagnostic:
+	 X-MS-Office365-Filtering-Correlation-Id:X-MS-Exchange-SenderADCheck:
+	 X-MS-Exchange-AntiSpam-Relay:X-Microsoft-Antispam:
+	 X-Microsoft-Antispam-Message-Info:X-Forefront-Antispam-Report:
 	 X-MS-Exchange-AntiSpam-MessageData-ChunkCount:
-	 X-MS-Exchange-AntiSpam-MessageData-0:X-Exchange-RoutingPolicyChecked:
+	 X-MS-Exchange-AntiSpam-MessageData-0:X-OriginatorOrg:
 	 X-MS-Exchange-CrossTenant-Network-Message-Id:
 	 X-MS-Exchange-CrossTenant-AuthSource:X-MS-Exchange-CrossTenant-AuthAs:
 	 X-MS-Exchange-CrossTenant-OriginalArrivalTime:
 	 X-MS-Exchange-CrossTenant-FromEntityHeader:
 	 X-MS-Exchange-CrossTenant-Id:X-MS-Exchange-CrossTenant-MailboxType:
 	 X-MS-Exchange-CrossTenant-UserPrincipalName:
-	 X-MS-Exchange-Transport-CrossTenantHeadersStamped:X-OriginatorOrg;
-	bh=Avw8zqjFIIdPu25KeO6U/ae/z6H5PXtKCaAkwRn4Jys=;
-	b=gucS5DkNwRNGEM1QudGwpklfIdZrcpxEJIpl0duysHvHZnSAcqOdPH0nFbkkSxSD64yT
-	 loA4Lz04pIPFob++THBgR7cIYo/o0KsfXxg7aTCefGIddTzWPEcOnwCnf5YGRnIfUKog+
-	 vkdI5zVVW9OsV7MJeGMmCxA+g4t91Q84MqXWU0HlfFRSWniM7nOK+D+Zw/vA4iVNaG1//
-	 6s9sEOVuKynPSsONIds/UrsS/N7QR6d6vHzivBjQuRjh7nqqziwK7Jb8dldMY3I7lRRSC
-	 qjK8tcgzlOCcUbAMyrJw/ai1wmBWFxkv0VAdH/HoZjv0fO35Xz05okUE8pnutngJGjg==
+	 X-MS-Exchange-Transport-CrossTenantHeadersStamped;
+	bh=pHh3X6JJdHxq2/niH+3LtBoYiZJY8jH8742cfNju9Y8=;
+	b=lfuCd2GnoeQLUyVV7BRFS5AEN4OnWpE1v5U5GpHMdCyDQK4uiJH4OvrDbqj97rtxYg3T
+	 3A+iBY2OP0BtyPvazuKWElu/n0NENHTuN091LgKt0NYXXANi7gxb/mT2pZuBUvQZF6TL7
+	 XKc/OoGN4vqSspz0RFOSguIWJdgFe2rq7oT1+Tyj4vf8ubDuVcABaJG3AzJ7GxWJo+6+S
+	 4123yUOg7/yZEM75mERIs7xSMYZpmc6zYRshSESumKa1HBNDJtsm9v5xKnGJHCm0RYtqo
+	 iqR46FDUschB+5fROeAXGz1ehz1cgLftAwaJD49Lyf7jXCMw1SSa+18/iyauD+BhaUg==
 ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=intel.com;
-	spf=pass smtp.mailfrom=intel.com;
-	dkim=pass header.d=intel.com header.i=@intel.com header.a=rsa-sha256 header.s=Intel header.b=Qz9VTzhc;
-	dkim=pass header.d=intel.com header.i=@intel.com header.a=rsa-sha256 header.s=selector1 header.b=NMJVvxAE;
-	arc=pass header.oldest-pass=0 smtp.remote-ip=198.175.65.9
-Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.9])
-	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
+	dmarc=pass header.from=amd.com;
+	spf=fail smtp.mailfrom=amd.com;
+	dkim=pass header.d=amd.com header.i=@amd.com header.a=rsa-sha256 header.s=selector1 header.b=FcHquteg;
+	arc=pass header.oldest-pass=0 smtp.remote-ip=52.101.43.11
+Received: from SJ2PR03CU001.outbound.protection.outlook.com (mail-westusazon11012011.outbound.protection.outlook.com [52.101.43.11])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange ECDHE (secp384r1) server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 36A89606A320
-	for <patches@lists.linux.dev>; Mon, 23 Nov 2026 04:00:09 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 36A89606A320
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 79184606A33C;
+	Mon, 23 Nov 2026 06:42:47 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 79184606A33C
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=amd.com
+Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=amd.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.a=rsa-sha256 header.s=Intel header.b=Qz9VTzhc;
-	dkim=pass (1024-bit key, unprotected) header.d=intel.com header.i=@intel.com header.a=rsa-sha256 header.s=selector1 header.b=NMJVvxAE
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1795406409; x=1826942409;
-  h=date:from:to:cc:subject:message-id:references:
-   in-reply-to:mime-version;
-  bh=FhO2MJ71j9SsBWoi6AV7L4BXzxzjsC+sDelwQXHzjBQ=;
-  b=Qz9VTzhcsThtmqk8EshPuoBJCHaluj5ZUrfIjrraf3jPMrfjr+PpuRnp
-   oN94qkQyVVhfWiKPTmPM+B3VzYzMdtxkVf5Ukr7j2mTcgIjR5x/GOdTh4
-   EJGgBF5jMaeizinFT46yzhazBGau3KL0rf+3p064x5llwpdAQ154XQnB7
-   UrGBNUWwD4+g3Um9VpoDQPXemvSUM6phVtswawA05qlwy2eVFyJh1gMpU
-   yNqmBluEYSCVc7hpDENcPqM4LIxtPBdt/mNNBSgyF5sKpAqQZO1x372IN
-   m1SeEeDmTudX+CFYnhUhXpnLwmrHAYjeGopunNirMkI1sUcGIZ+4emGIl
-   w==;
-X-CSE-ConnectionGUID: 3yVQQl/BRvafS4A9jDEEeA==
-X-CSE-MsgGUID: qlEp2Da8SdKr5AhuxeEUVA==
-X-IronPort-AV: E=McAfee;i="6800,10657,11974"; a="4050725"
-X-IronPort-AV: E=Sophos;i="6.27,227,1787036400"; 
-   d="scan'208";a="4050725"
-Received: from fmviesa013.fm.intel.com ([10.60.135.153])
-  by orvoesa101.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 22 Nov 2026 20:00:07 -0800
-X-CSE-ConnectionGUID: LaE9MCySSX2IF9Ar0+m1YA==
-X-CSE-MsgGUID: usSp2XPfRCOF59ZCHnKZZQ==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.27,227,1787036400"; 
-   d="scan'208";a="13181446"
-Received: from fmsmsx902.amr.corp.intel.com ([10.18.126.91])
-  by fmviesa013.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 22 Nov 2026 20:00:08 -0800
-Received: from FMSMSX902.amr.corp.intel.com (10.18.126.91) by
- fmsmsx902.amr.corp.intel.com (10.18.126.91) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.2562.56; Sun, 22 Nov 2026 20:00:06 -0800
-Received: from fmsedg902.ED.cps.intel.com (10.1.192.144) by
- FMSMSX902.amr.corp.intel.com (10.18.126.91) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.2562.56 via Frontend Transport; Sun, 22 Nov 2026 20:00:06 -0800
-Received: from CH4PR04CU002.outbound.protection.outlook.com (40.107.201.68) by
- edgegateway.intel.com (192.55.55.82) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.2562.56; Sun, 22 Nov 2026 20:00:06 -0800
+	dkim=pass (1024-bit key, unprotected) header.d=amd.com header.i=@amd.com header.a=rsa-sha256 header.s=selector1 header.b=FcHquteg
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=GcVX84U65ldWhkGHYFghVZkUwQPm54l86eledyXeYoqbsBqAXJzuzn7iEzXHTSS//OsAHHfzKnV8NCNa5NCSZGo4hNsTeWxyxtJ2+Co32y4wh+NKAV5f9ersab5uTGyVYXdUisAwEuIaVbo3G5jHWbYH+/UC5qm6qg6APAce4Ke1thFaChly0V7Dq1fPW5WpVcW6DzmfLvgQlvZK/KM6wZeapJoYSrs360pQuzYvOnkusqXhtgqJprUllU5yrh7G1ro+2Cw8RVIiCgJ4zC7YzjryAALrSrzXO/6Un9ZCgPcdgEO7ZhuXryMwkC7dUBBjA0Gz20niYlCzxnN440mE3g==
+ b=fgmJnXjBwwNHMDnBGp9m+62XzUtXTfiubqMLdqaZtxN3j8tPHVajyWzAanLZ+EM/LH2tNaacjNDlaqRVEqbRatAPNVelkQDFeqRjUfWAZo/lWYpkUAUAxGTqZLKi7hu1a8NyLejNxq5M4ZfQiq50hWBaXa8LiEQ5JAGWu+ZoUEUmNVwnDv/Gyy08zYlibvU9wnx7QIHICue4JUInJK6TgnPlEwkPaW3RuhlFFTXTWEiyE5DyjbCYb+Gsxrwx1UOaF5j6HruhZWN3/Yjz0PSzQz/TcXAE7KNHlU9JaKBzSDIOhQAqSUR3DCdQLycvKWaQppuRS+5C/Ao8PWlGfkunxQ==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=Avw8zqjFIIdPu25KeO6U/ae/z6H5PXtKCaAkwRn4Jys=;
- b=YYvRK4Pc70tvNYOaWzc2hSvKwQyFyLN4CgHChnjPoUOCsZoTKFMvww2fOy1rCBMcjZhhcrheeG0JdnG+/a2v2kT/sjK2k3b2w0w3Rbsn9/hIHMjruaMl7B6HYE+995yAVJ4T1YeIU7WyWpUGCbjhVuoZxtSvNvFmjKqhQF0Z/b9ARa5tj9O9nBqAUYt3NoKFRATADk+MAec85M9g0kF0gtwK3KvyQT5LQEpEvjBPPQOoI45j1Fsl53X7SD38/x0KCWR2c4x1qtCG/ZyU7HlxcSSV0Qd/3rGPrU/oZHtqKVrGspXKowTmGSfdakUmqwvR1d/RbGwixK48C+xnnph0kw==
+ bh=pHh3X6JJdHxq2/niH+3LtBoYiZJY8jH8742cfNju9Y8=;
+ b=h3tIi2kjqy0n0MJZHzeEa3IU2IkgXxztrIMoCy3AdQ6ZTrAvJObalCLVEzC06/zFuh31yJYM+ymyITZTzBqTraK2IMWAhPr7bUzGPJJF1xV+133MTk7B2Z8J2pk3ft6nikFoHHXaiMCmKALzKlx7lkDMGgms4bLgmzQH0U5d80KBbdg7uWAgQB0Q7VL17DxUzYHqfzUNs1eiqoA1YmDgrAw+LYNEFtPpx43WVuNgp/fjyhv9tLzzDZ3GwptoXsjdQ0cf8U2PA+lQOwDuNszOciH/B91NeJP/zMv8BasrQpLLD/AqeS2GwA2xJFhHELxQsSG+sWvf65QC/rtsOWiA8A==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=intel.com; dmarc=pass action=none header.from=intel.com;
- dkim=pass header.d=intel.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=intel.com;
- s=selector1;
+ smtp.mailfrom=amd.com; dmarc=pass action=none header.from=amd.com; dkim=pass
+ header.d=amd.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amd.com; s=selector1;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=Avw8zqjFIIdPu25KeO6U/ae/z6H5PXtKCaAkwRn4Jys=;
- b=NMJVvxAENdwSoccps9Gf0Bl+fcTZYGVr6CAU+tsuc+hhGi0bnfMtLfdNs417S+JUPKM0LMw+UiEv/bxurSxc5eMgxwJzD0ZjCMfPIu5K0cKl4dbARX8xLFtwslX23riDCtNt5o+SE4gjX97EadSW27s5IbJd5hGGO+bYceGpY5k=
+ bh=pHh3X6JJdHxq2/niH+3LtBoYiZJY8jH8742cfNju9Y8=;
+ b=FcHqutegGO8tme1DGpYUcyZ+6Ko6mgZBHK25yXu3epws7I8771OtAcolgfwTFcBtljmqHRFhTnWwOODiM08urnfx5QrsrJ1mPNoXLtGEhtob/+o5b3A9v2FWm4GiJtoXEeh3Nvnf6w0GxG7M0URJwSBl8ormQjdPIADzKB7yeTc=
 Authentication-Results: mx.microsoft.com 1; dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=intel.com;
-Received: from DM4PR11MB6020.namprd11.prod.outlook.com (2603:10b6:8:61::19) by
- PH0PR11MB4901.namprd11.prod.outlook.com (2603:10b6:510:3a::8) with Microsoft
- SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.21.639.14; Mon, 23 Nov 2026 03:59:55 +0000
-Received: from DM4PR11MB6020.namprd11.prod.outlook.com
- ([fe80::3058:1480:e4ac:5765]) by DM4PR11MB6020.namprd11.prod.outlook.com
- ([fe80::3058:1480:e4ac:5765%3]) with mapi id 15.21.0639.012; Mon, 23 Nov 2026
- 03:59:55 +0000
-Date: Mon, 23 Nov 2026 11:48:45 +0800
-From: Chen Yu <yu.c.chen@intel.com>
-To: Reinette Chatre <reinette.chatre@intel.com>
-CC: <kees@kernel.org>, <mingo@redhat.com>, <peterz@infradead.org>,
-	<juri.lelli@redhat.com>, <vincent.guittot@linaro.org>,
-	<dietmar.eggemann@arm.com>, <rostedt@goodmis.org>, <bsegall@google.com>,
-	<mgorman@suse.de>, <vschneid@redhat.com>, <kprateek.nayak@amd.com>,
-	<david@kernel.org>, <ljs@kernel.org>, <liam@infradead.org>,
-	<vbabka@kernel.org>, <rppt@kernel.org>, <surenb@google.com>,
-	<mhocko@suse.com>, <bp@alien8.de>, <tglx@linutronix.de>,
-	<dave.hansen@linux.intel.com>, <tony.luck@intel.com>, <ben.horgan@arm.com>,
-	<Dave.Martin@arm.com>, <james.morse@arm.com>, <babu.moger@amd.com>,
-	<fustini@kernel.org>, <jedrzej.wasiukiewicz@intel.com>,
-	<fenghuay@nvidia.com>, <peternewman@google.com>, <x86@kernel.org>,
-	<linux-mm@kvack.org>, <linux-kernel@vger.kernel.org>,
-	<patches@lists.linux.dev>
-Subject: Re: [RFC PATCH 1/3] fork,arm,x86,fs/resctrl: Fix stale resource
- group assignment vs copy_process()
-Message-ID: <awO3nYazk97csbpO@chenyu-dev>
-References: <cover.1795197419.git.reinette.chatre@intel.com>
- <b2e13da64ca3e41207b5d46fb060bccefaf9fecd.1795197419.git.reinette.chatre@intel.com>
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <b2e13da64ca3e41207b5d46fb060bccefaf9fecd.1795197419.git.reinette.chatre@intel.com>
-X-ClientProxiedBy: SI2P153CA0015.APCP153.PROD.OUTLOOK.COM
- (2603:1096:4:140::21) To DM4PR11MB6020.namprd11.prod.outlook.com
- (2603:10b6:8:61::19)
+ header.d=none;dmarc=none action=none header.from=amd.com;
+Received: from SA1PR12MB999228.namprd12.prod.outlook.com
+ (2603:10b6:806:4db::10) by IA1PR12MB6409.namprd12.prod.outlook.com
+ (2603:10b6:208:38b::7) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.639.13; Mon, 23 Nov
+ 2026 06:41:01 +0000
+Received: from SA1PR12MB999228.namprd12.prod.outlook.com
+ ([fe80::4dba:119e:8e7c:37b3]) by SA1PR12MB999228.namprd12.prod.outlook.com
+ ([fe80::4dba:119e:8e7c:37b3%6]) with mapi id 15.21.0639.012; Mon, 23 Nov 2026
+ 06:41:01 +0000
+Message-ID: <3573001a-24b8-49f3-97c8-7a414c88deb4@amd.com>
+Date: Mon, 23 Nov 2026 17:40:48 +1100
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v9 00/13] iommufd: TSM-backed virtual IOMMUs for
+ confidential guests
+To: "Aneesh Kumar K.V (Arm)" <aneesh.kumar@kernel.org>,
+ linux-coco@lists.linux.dev
+Cc: Alex Williamson <alex@shazbot.org>, Bjorn Helgaas <bhelgaas@google.com>,
+ Catalin Marinas <catalin.marinas@arm.com>,
+ Jacob Pan <jacob.pan@linux.microsoft.com>, Jason Gunthorpe <jgg@ziepe.ca>,
+ Joerg Roedel <joro@8bytes.org>, Jonathan Cameron <jic23@kernel.org>,
+ Jonathan Hunter <jonathanh@nvidia.com>, Kevin Tian <kevin.tian@intel.com>,
+ Krishna Reddy <vdumpa@nvidia.com>, Lukas Wunner <lukas@wunner.de>,
+ Nicolin Chen <nicolinc@nvidia.com>, Robin Murphy <robin.murphy@arm.com>,
+ Samuel Ortiz <sameo@rivosinc.com>,
+ Shameer Kolothum <shameerali.kolothum.thodi@huawei.com>,
+ Steven Price <steven.price@arm.com>,
+ Suravee Suthikulpanit <suravee.suthikulpanit@amd.com>,
+ Suzuki K Poulose <suzuki.poulose@arm.com>,
+ Thierry Reding <thierry.reding@kernel.org>,
+ Vasant Hegde <vasant.hegde@amd.com>, Will Deacon <will@kernel.org>,
+ Xu Yilun <yilun.xu@linux.intel.com>, Ashish Kalra <ashish.kalra@amd.com>,
+ Herbert Xu <herbert@gondor.apana.org.au>, iommu@lists.linux.dev,
+ Jonathan Cameron <jonathan.cameron@huawei.com>,
+ Tom Lendacky <thomas.lendacky@amd.com>, kvm@vger.kernel.org,
+ linux-arm-kernel@lists.infradead.org, linux-pci@vger.kernel.org,
+ linux-tegra@vger.kernel.org, patches@lists.linux.dev
+References: <20261116081935.85372-1-aneesh.kumar@kernel.org>
+From: Alexey Kardashevskiy <aik@amd.com>
+Content-Language: en-US
+In-Reply-To: <20261116081935.85372-1-aneesh.kumar@kernel.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: SY6PR01CA0026.ausprd01.prod.outlook.com
+ (2603:10c6:10:eb::13) To SA1PR12MB999228.namprd12.prod.outlook.com
+ (2603:10b6:806:4db::10)
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Post: <mailto:patches@lists.linux.dev>
@@ -151,383 +117,258 @@ List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
 X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: DM4PR11MB6020:EE_|PH0PR11MB4901:EE_
-X-MS-Office365-Filtering-Correlation-Id: ba257448-ee21-4422-1887-08df49163b7b
+X-MS-TrafficTypeDiagnostic: SA1PR12MB999228:EE_|IA1PR12MB6409:EE_
+X-MS-Office365-Filtering-Correlation-Id: 62dab75d-3ff5-4728-73cd-08df492cbd15
 X-MS-Exchange-SenderADCheck: 1
 X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;ARA:13230040|1800799024|7416014|376014|23010399003|366016|18002099003|22082099003|261009223027099003|3023799007|260925021311599003|260925021911599003|4143699003|10067099003|5023799004|11063799006|56012099006|261102123227099003|261028144727099003|261026140227099003|261026121527099003|261021121427099003|261022075727099003|261022105027099003|260925022911599003;
-X-Microsoft-Antispam-Message-Info: wYrLxelc0R66KPCwxljSMzbZqsiAYjYaS7WaubDN4XExmHrVftypYXjSRQFU2XyJyT6FF4jKIYlOe6gWk1+8fHMp4jIxm2wZki0EpqWpMlOz+Y1yicczigISSDQbGrrXsxi5OwhxhkZCP4vzfNKLgd1QYAlJknqU7H4jYxat5+1CDbRTDox4HZ4LXQ+hRFWmql7FyXV5iRseH2XWe/EE0kht7EdGxATDy65K9GQjahCTqTSpeYAXZ2WN1pe9lJqlat5blfzewE0E6+k0URYHWCWlhNBejJMGUTO7LFGo5axNq8QwybvuGozEGsnXuEcIeYf50jpXzRsx1yDcSj0xweZvlwabS7GDuhXW3tRWoEv7SQUhBf5BDaNG7sMYKxGKjz18T7dm1SOxxxA6l/KmIlJTEvFLHKebwQb4TeAkREEje32MtcF89GnhuCHkQEvmAIcBO3WW1vt9z9P6TOR8Rr2iOL0aCipQkt1u5ftQRfsFjj4IVHRbU5pWQXFS6B8c9bLQLHftf11tf5lKpU3UKwHdXxgx5yX3e/yaivIQaigmuQwJuLlZLUTEXb5GnAlc/BLsElungqhywx5YoYOpCL3gzemLmPhoe6EQE1A27IoRI/nyyEXC170tJfr1HjbwxatZBTtFeU8JIkea94RC0yMxyJKxVGFJrLwzLTeX7N4=
-X-Forefront-Antispam-Report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:DM4PR11MB6020.namprd11.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(1800799024)(7416014)(376014)(23010399003)(366016)(18002099003)(22082099003)(261009223027099003)(3023799007)(260925021311599003)(260925021911599003)(4143699003)(10067099003)(5023799004)(11063799006)(56012099006)(261102123227099003)(261028144727099003)(261026140227099003)(261026121527099003)(261021121427099003)(261022075727099003)(261022105027099003)(260925022911599003);DIR:OUT;SFP:1101;
+X-Microsoft-Antispam:
+	BCL:0;ARA:13230040|1800799024|366016|7416014|376014|23010399003|6133799003|22082099003|18002099003|3023799007|11063799006|56012099006|261026121527099003|261026140227099003|261028144727099003|261102123227099003|261021123027099003|261022105027099003|261021135927099003|261009223027099003|261021121427099003|261022075727099003|10067099003;
+X-Microsoft-Antispam-Message-Info:
+	1WrV9HONL6/KVp1tNng6eEZaXVtm8YdpybbLARDp/YaoiRwfeO1mVA6+nUC3rT4fNWURDdM56+S+LnmaTUOVP8fprJ5HGGyNFB+lLTuUWmXjLJG8KNRLqLaeyEHMWHRPVrCEzDxPUbxYwmHRG6YtiQo2+UYy6aM1iZvZ7DvcmhdrQQZy7V5cO4aQdXOnp5HqBTM7a3yJ/+ybFdE5RwZhaTU9Mq3zozbW9GsNVzk1uZT088gTHuxa1LEYomMTTUoJ9d/77Ix/80xGxjjwxSjycf/bdGF9ZcdFhQVCD76Mp+n+BmMtEpLfmie3YG/uG9IEvvBsik2oQKJHrW157rsEGZZBvmEOZf3B7AfkGCAWimyTiJuKHSJp1YuibZLc1wd7QsM3MYUrN8YSKRcwJb7scFsGW9YZWwRF4Q9R1TLGMVoGnhhmpn54sT5eI1URVFTVFPxA3lCa/fAqpxqHpFK/umUy1kA2p4AfkunJTkZWwToODM7IrxPdUrNvBvEU4PhQgT2Az35MEw8wsnu/2jU/TPlDRYwM9W8FN+T7a8HRUJ3IOK+8OkmbD83HLYscsMgh/QY/nQoGDj7l6aCGzFgaL/Ql/BcPSaMugznI7TDrH+UDTHJuu4CR5guGcTSKwbwp
+X-Forefront-Antispam-Report:
+	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:SA1PR12MB999228.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(1800799024)(366016)(7416014)(376014)(23010399003)(6133799003)(22082099003)(18002099003)(3023799007)(11063799006)(56012099006)(261026121527099003)(261026140227099003)(261028144727099003)(261102123227099003)(261021123027099003)(261022105027099003)(261021135927099003)(261009223027099003)(261021121427099003)(261022075727099003)(10067099003);DIR:OUT;SFP:1101;
 X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?us-ascii?Q?CdO+/ajaLnRvozCMbjedGjTVCCuo/5nRGkOaDt1uzV9jA6NHqDq/abU3kJfL?=
- =?us-ascii?Q?kvY125ltifdfGQxkeQdIkaAk5TvciYCIE23NHDaR8zCFvMLlNL8AUq3Ka9PN?=
- =?us-ascii?Q?jOqHSzKLh/N2DOpLSv5wX+MfE41m3G6XHwvmC7s5Bgd4Dq79izvekrn5CezP?=
- =?us-ascii?Q?CzM7fzRUo77pD72oLSOT+ipQsJhRc+U+l5YNGaUSjGQDETP0brUUMAFF6RZb?=
- =?us-ascii?Q?FLK2dDkMAcwc1mG+i81cIVO860CHSa0o7I3+H3G+gYj3s8iXtg4PPUhZ4zd3?=
- =?us-ascii?Q?js40OSKtkYx202+ucF8I5rd36ICQj1hS7j1wL26qeag3EiZmRpfh4rcvoHra?=
- =?us-ascii?Q?HVsoBsg5R4cQ9V37IypmxB1plr66Nc7LEyoebvqvfFlqK4X1yNTif1eqS5DG?=
- =?us-ascii?Q?TZ3RwX713cnGltCi/lrDcwQfR+Bj+Jppqubqz+nfZ7tMy8Mn/pBrfY6+6PsT?=
- =?us-ascii?Q?3f+z7wlfpMcwhkUIF07iG/whLjod/AX2SZ3xWg3FeTOUwwfy3UGi5kVYX2OL?=
- =?us-ascii?Q?ttVERBeLz5hhT9Iqp8xxADb6gltrg+X6SodFaqRQuGHXYe+K0D+IfsxiYDn5?=
- =?us-ascii?Q?b5GzmhQN/5hGpHvtMxnsGFkaCjvHL1fpe+n2bdTM72MyhY7XLpX12bv13p0p?=
- =?us-ascii?Q?suu3a3m65zVDWmJaa6SxoEQMtL5SXIBAohSkuZwvqrIuTmqoKsYN7lJLrHlO?=
- =?us-ascii?Q?wi7n/23Mm0VrJuFsbNtH7cjxx+KlL2wBcazWjGg/zPrbOzG/9qx6hGKgfyic?=
- =?us-ascii?Q?bwKSRaW5/hbbJsZdbcHGkCnhSkMQYBLTWubRLqEd0RkwjYqK0Xh6aJ5j8SKI?=
- =?us-ascii?Q?HMciYOb5O1uZifYmMIgfvbNQ4UubNhEeD3a4iC7aFo6CSLcdDH3LIcH2NHEq?=
- =?us-ascii?Q?WpRJi6lqrAF4pkXcYlrsEUqPCZnAWzxS2/CH7veJZ0DtbDsYQTboqmHkSiba?=
- =?us-ascii?Q?6CV51EdF3o0Omn3zeIVpA1jRuzWDT4Gl03xHf3Ss3otBJans7+mVKWRRbrev?=
- =?us-ascii?Q?N2erV/zlR9JzmCVaseWIlXTdUIcddPhw1vQVyf+iLE2XVRPX840r6SXQD49k?=
- =?us-ascii?Q?bx+c6a8VRPWHKizE+RbsyeEkUNfm2Z9ggiYQ0L1SRO7N1ImScgp7OhDurGhd?=
- =?us-ascii?Q?ylDiobgNgcpcGhZm0Q3DucjT2EyfsKZHDDNEztNefp9ZpI3pz4XFD7A89coS?=
- =?us-ascii?Q?qcz3pVaC/koXrvgWMsALfkiGgvb/jVnusevl8MN9gVPpCqa6C9loyHqjarj0?=
- =?us-ascii?Q?+HZ6Y/c+lfeWY3CNnyX3TO0ajrNgY8ar7iKXE+/cfGpJVi+Aj/Vs1wfDeu1u?=
- =?us-ascii?Q?Wy1ooF8LfFJXMENjgMt/4z05FuXrAscm2xwwmdZdOHZMKjJBPsUgQL7H7tLL?=
- =?us-ascii?Q?kSXy5B0ZhHnAsizEi+2XAozmkFKN12db7e5PpfI0PIaYSrltLj6rbD0S6a34?=
- =?us-ascii?Q?bO2OQy36Z3/clQWBVDGFaNlDgzlgu6JZ94x5EThGP/gatRh7B4mDtxIb0Nc3?=
- =?us-ascii?Q?1WZSJyW2NpIg1Qs7u4uzCRyaTra6BHbhYvTEbVtZ8kPD16Z/Vc4kqE9DxgSp?=
- =?us-ascii?Q?iVeJywrzdmUxpx3YfP8mD7kKFwiqZUXNymvt9Ixjp5cJosUdReCoOH6Rn8bG?=
- =?us-ascii?Q?sBwKYzv4zpVIubOW/2ISRTw/i3WE1GDmR3/LV2lu+t1jebjsn5eZVR+Ei/vr?=
- =?us-ascii?Q?wA4BgoNObhRMGZnIx2Q1ALy5iHNWJc1EtnxjXpf6HKoAdb+blZ7TweFKijIY?=
- =?us-ascii?Q?4d00sjYTxg=3D=3D?=
-X-Exchange-RoutingPolicyChecked: dI0kc2Mp4rLl+OqKQddvQqkqMcf6HDnvg/f+N8BffhtMMXfJ9qi+NdRg3mgFK81Ev+Mhnx52HW0fdmUqb2d4/JmUutxW0q5XjHiOvjfWkg6JVrtUlLMWcte6qeIKJ5hPL6mioVE85LBeeWJgFYIGib1SQAjj2IrSZvHSFsf7rPIAmnM7dwzmljZWiGMM/Z9bS652TlBTQkAzZ7AqdvxJLIlbDplWX4/lVgf7UO0eiLrt54YfapvvbLJ9CzyYeAgY33Acc4kNDrobZlbd4TPrLLI8GpRtFXc0ka268DB0LlB7/jkMBJSSOyvCgdZsJEaTNuaOnAKdRimPDH9BqpMK+Q==
-X-MS-Exchange-CrossTenant-Network-Message-Id: ba257448-ee21-4422-1887-08df49163b7b
-X-MS-Exchange-CrossTenant-AuthSource: DM4PR11MB6020.namprd11.prod.outlook.com
+X-MS-Exchange-AntiSpam-MessageData-0:
+	=?utf-8?B?eDg4Vkp0VjYrK1hmbzI4b1JycmFLS2JPL01ObEZscEZ4UlUwNlJ4RUxxMzA0?=
+ =?utf-8?B?SXYwdzJKa0Q3ZmgvbjJGQTBYTGduUjJZd0w3bHE2ZEN2Z2lybG5ybnJFVWlR?=
+ =?utf-8?B?cTZXenNPVHZoSnFqNnIyVkdvbzNjOTFZUFhsOXBLNzhzZWdLaUdNVVgrZVpo?=
+ =?utf-8?B?cUhqY29ETkRzbjlVL3Rxdy85Tm5hT1JuYTJBK2RCTmgrT25pR3hjenpiVXdy?=
+ =?utf-8?B?cDRlRG1LRVRtSy9mU2NNekIySEhRSjBrZjRDakVnQm1tTUlXTThRNmdqSlNY?=
+ =?utf-8?B?WW1JaHBRTW1oUU1tQmhNMlZlUnpVMWN5a1JRTHJ2bU51SVVZckN0ZXV1bGhH?=
+ =?utf-8?B?OUdMbWR1VDVDMk9lcXRJZWs3eUVNQm4xT1RpWitJL0t5aGJ2WjhZMmk2NUhL?=
+ =?utf-8?B?cFlOSUY3OW9TazlnaXhjN0FYN2psOGxUc1NpLzc0eHhGRzJDTU9zbjd4SXU2?=
+ =?utf-8?B?VGd0am8xa21jVzlOWEkrUGZjTHBldFFwOThlREFwS2F1S3paQm5VQXdZdEpV?=
+ =?utf-8?B?RVNOTHhzMDd2OG5MN2txUTdTcXNjYzdFRmRDbEw5eWFJZy8reWhtS0syZVky?=
+ =?utf-8?B?SmlhVTk4NFZOOE5tNXJTU1hKTzNBU1lYTUs1WGJhOFpiVCtuMkR6NWYxdEJR?=
+ =?utf-8?B?REwrYW1GSXdwcWpsMEc2eGJmSUR0UnQ5VW9rMnlYMktkTzZmZC94SFo1aWcz?=
+ =?utf-8?B?aDk1cDdMZTZockgzWWZUT3BKaE9IR29sWWxQK2dEbU9VWEJEcWNCelVsV3Bq?=
+ =?utf-8?B?Zzg3WDQ3emRrN0MyY3lNeThrOEVTQzlKVUZUMEFacDhvckV1ZjVzUGhlK1Ir?=
+ =?utf-8?B?YXN0ajBYUXV2ckVteWFWV0J0OThna0tjRUtNd2xReDlwNEV4ZHVQVTZSVGxM?=
+ =?utf-8?B?L1llY0VyOTI3TjVuVFNmT1BsNnZWZmNDaHZXNHJqZktDNHhBaFFOZ0xWRGZH?=
+ =?utf-8?B?M2duNi9NRGtPSklWaXpKYjBkSkpKSUppemEzWTBXTy81WkJaMmI3cTFXdWVl?=
+ =?utf-8?B?Y0E5SHI5Sk9QSEQyOUhKbzRKdE1ldFFwalB1SnJlalVNcWEyaTdSMUhRNVFt?=
+ =?utf-8?B?MW9xL3l5SjVhK1h1bkM1cnpIamk2bGV2dkJyVDRUbXRHSlhzNVdmckxUalM0?=
+ =?utf-8?B?Y0h6Uy9vcmN2ZHZmM3JuS2gwekhrbkgydC9GTUVtWlV1T1BjeWdjc0JieHl1?=
+ =?utf-8?B?RFZIZ2p5V0FYVHpKbzRnTGpncUY5WVlGMHIxcDhheVNrdmlLVjNzZGFUWTJy?=
+ =?utf-8?B?MzNPaHYycjlNR0hjdTdSaDhpUTNZVEtPTVhZTXdXOERsdEFWc0pRNjRVMFF1?=
+ =?utf-8?B?M01GVmM5dS9iOWRTVGRzWGhrUUhYblFvb2IwYlFXTjY4WHV2KzdpM0RDbHJi?=
+ =?utf-8?B?YXJEb2o4TmM1dHl3Nk10S0l4aW9OdC9PZmI5NDdUR1ZtckI5THRjQXo3NS9D?=
+ =?utf-8?B?OGV2bDNFM0JKMjd5YjlMS3ZGY25Lekc2cFVvZnFVY1QrQWNVRC9QdjBoNEJq?=
+ =?utf-8?B?cmVxd20wMG9mL2NsNnhIQ083RStJSGhyc1B6VERlUEcxKzc4emg1Z3pDS2J3?=
+ =?utf-8?B?U2pmWXhZREliajhjYXorOEdzUzM3d096Rm4yNmlnVTVXRjBHVzU0TDhLOVF5?=
+ =?utf-8?B?MXZJaHRWVEZKM0ZmZEJDUGJGTzRXdFlwSWxMN2RTaTBpNUZRQm1VRGhvL2hP?=
+ =?utf-8?B?c1pyTFR3bUYwVmhkdHdVa1lwSjRhN05yVklYNXNWZ0JUVVRYS3hkclA5VHcv?=
+ =?utf-8?B?YUpWSER6dkw1akVSQzV6MENvc0JSY09MNHJLemQzdldtdFRkNHBZZnJWK05B?=
+ =?utf-8?B?MytPR1U0SEIvanBsbEJhTEdpaU0xRnA1ZHd2akc4Tk4yaTRTaERXVlJ6WVdF?=
+ =?utf-8?B?Y0Rpa2xCNURDN1BUSnhYUnFYcGZFV1Zta1l1a0FaN3NJZWowUlJCLzFURHU5?=
+ =?utf-8?B?S0QybzQyZ0t2bWhZVjZlYU5tRkVoU3AvODBJckg3ZVBJVFBGV2JROEg2dmFu?=
+ =?utf-8?B?UjFyZjhYa0lUQk1yT09ycGdMNVp3Nll5emtZdFZJMk0wRXR5Vm1SbzNUNHBw?=
+ =?utf-8?B?VGsrbjkxeEVDSENDd0M2ak42elFaRzYzMDJHdk5yK2hDYm5vZWhQS3MxcVhZ?=
+ =?utf-8?B?KzVOTFpmYXdFNHVGZEE4TVJ5R1RVUjY2V2g1cXpzYTYvYmdVc1d4dE9lbXNL?=
+ =?utf-8?B?ZEtMNTVEWE41KzJRTEFlNVNnYzBzbjhKU3ZuZTlJaU43WnlSdWJTRnJjY0x6?=
+ =?utf-8?B?YlNiTWQ3QVNlelU3RlUwWnNHd1FtWnVCTWF2N3ZQV2k0R0Fac3htd2dFWTVt?=
+ =?utf-8?Q?JWU4RJoiu2j9fHxgaE?=
+X-OriginatorOrg: amd.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 62dab75d-3ff5-4728-73cd-08df492cbd15
+X-MS-Exchange-CrossTenant-AuthSource: SA1PR12MB999228.namprd12.prod.outlook.com
 X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 23 Nov 2026 03:59:54.9716
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 23 Nov 2026 06:41:01.0584
  (UTC)
 X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 46c98d88-e344-4ed4-8496-4ed7712e255d
+X-MS-Exchange-CrossTenant-Id: 3dd8961f-e488-4e60-8e11-a82d994e183d
 X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: PG+zc8iN/n+MHn1jd5TD+ofgKzi0X1G9yJJvPSy3qrfrLf79sPbWCH3ypD0QPtG8Ao0+uuueGBCHKRMKXpyrgw==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: PH0PR11MB4901
-X-OriginatorOrg: intel.com
+X-MS-Exchange-CrossTenant-UserPrincipalName: 4VH20lg8cUnmIBPd3OkOBF6aUnncGiBRw0lvbI/f/VsJ4DgI7IaJdeWkYj/X9dTcC/kwPpT4zN1NvL6Dv1KZrA==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: IA1PR12MB6409
 
-Hi Reinette,
+On 16/11/26 19:19, Aneesh Kumar K.V (Arm) wrote:
+> This series adds IOMMUFD and PCI/TSM infrastructure for assigning PCI
+> devices to confidential guests. A TEE Security Manager (TSM) can provide a
+> virtual IOMMU (vIOMMU), and an IOMMUFD vDEVICE object represents a physical
+> device within that virtual IOMMU.
+> 
+> The series adds a common framework for operations on vDEVICE objects and
+> updates lifetime management to keep the VM and device-security resources
+> available while those objects are in use.
+> 
+> The Arm CCA backend is provided in a separate series, together with
+> operations for TEE Device Interface Security Protocol (TDISP) state changes
+> and access to cached device-attestation objects.
+> 
+> The full series, including the Arm CCA backend, is available at:
 
-On Fri, Nov 20, 2026 at 10:39:30AM -0800, Reinette Chatre wrote:
-> During fork a task's CLOSID and RMID are copied into the new task by
-> dup_task_struct(), early in copy_process() without holding tasklist_lock
-> or any lock that resctrl takes. The new task becomes visible to a walk of
-> the task list later in copy_process(), after it is linked onto the task
-> list while the tasklist_lock is held for write.
-> 
-> Removing a resource group moves all of its tasks to another group by
-> walking the task list while holding the tasklist_lock for read, and then
-> frees the CLOSID and RMID of the removed group. A task that copies its
-> parent's CLOSID and RMID before the walk reaches the parent is missed by
-> the walk: it is not on the task list yet, and it cannot get there while
-> the walk holds the tasklist_lock. By the time it is added to the task list
-> the CLOSID and RMID it was initialized with have been freed.
-> 
->     CPU0                                CPU1
->     ====                                ====
-> 
->   fork()
->     copy_process()
->       dup_task_struct()
->         /*
->          * New task inherits the
->          * parent's CLOSID and RMID.
->          */
->                                     rdtgroup_rmdir_{ctrl,mon}()
->                                       rdt_move_group_tasks()
->                                         read_lock(&tasklist_lock)
->                                         for_each_process_thread()
->                                           /*
->                                            * Parent is moved out of
->                                            * the group. New task is
->                                            * not on the task list
->                                            * and is not moved.
->                                            */
->       write_lock_irq(&tasklist_lock)
->         /* Waits for the walk. */
->                                         read_unlock(&tasklist_lock)
->       /* Lock acquired. */
->       list_add_tail_rcu(&p->tasks, ...)
->       write_unlock_irq(&tasklist_lock)
->                                       free_rmid()
->                                       closid_free() /* ctrl only */
-> 
->     New task and every task it creates use the freed CLOSID and RMID.
->     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-> 
-> The new task and every task it goes on to create keep using a CLOSID
-> and RMID that resctrl believes are unused. Once those identifiers are
-> handed to a resource group created later, the strays appear in that
-> group's tasks file, their memory accesses are counted in its monitoring
-> data, and they are subject to its allocation policy, while the group
-> intended for them does not control or monitor them.
-> 
-> Introduce resctrl_copy_process() to copy the parent's CLOSID and RMID
-> into the new task from copy_process(), while the tasklist_lock is held
-> for write. The walk holds the same lock for read for its full duration,
-> so the new task is either already on the task list and assigned by the
-> walk, or the copy happens after the walk completed and observes the
-> parent's new resource group.
-> 
-> resctrl_copy_process() reads two values that some architectures store
-> separately. __rdtgroup_move_task() assigns them with two stores while
-> holding only rdtgroup_mutex, which resctrl_copy_process() cannot take,
-> so those reads can fall between the two stores and leave the new task
-> with the CLOSID of one resource group and the RMID of another. Assign
-> them from __rdtgroup_move_task() while holding tasklist_lock for read
-> as well, so that resctrl_copy_process() observes both as intended.
-> 
-> Add an architecture call to perform the copy because CLOSID and RMID are
-> stored per architecture and cannot be read and written as independent
-> values on all of them.
-> 
-> Fixes: f3cbeacaa06e ("x86/intel_rdt/cqm: Add rmdir support")
-> Reported-by: Jedrzej Wasiukiewicz <jedrzej.wasiukiewicz@intel.com>
-> Signed-off-by: Reinette Chatre <reinette.chatre@intel.com>
-> ---
-> Note to MPAM maintainers:
-> 
-> resctrl_copy_process() runs on every fork(), so
-> resctrl_arch_copy_closid_rmid() is a static inline on x86. Doing so is
-> perhaps not required as fork() is already expensive.
-> 
-> Even so, I attempted doing same for MPAM but ended up with solutions
-> that do not seem ideal:
-> 
-> - A static inline in arch/arm64/include/asm/mpam.h, next to the other
->   accessors of thread_info::mpam_partid_pmg. Nothing on the path from
->   include/linux/resctrl.h reaches that header, so the definition is not
->   visible to resctrl_copy_process(). Making it visible means
->   arch/arm64/include/asm/resctrl.h has to include asm/mpam.h, which
->   does not seem to match MPAM's intended design?
-> 
-> - A static inline in include/linux/arm_mpam.h, beside the
->   resctrl_arch_*() inlines already there. asm/mpam.h includes
->   linux/arm_mpam.h, so the reverse include would be circular and
->   mpam_get_regval() cannot be called. The copy would have to read and
->   write thread_info::mpam_partid_pmg directly, which no code outside
->   asm/mpam.h does today, and would need a CONFIG_ARM64_MPAM guard
->   because the field is only present when it is set.
-> 
-> The out-of-line definition this ended up with matches
-> resctrl_arch_sched_in(). Please let me know (if this is a change you
-> agree with) what kind of shape it needs to take for MPAM. We could also
-> just make x86 and MPAM both be out-of-line - doing so may not be felt by
-> the heavy copy_process().
-> ---
->  arch/arm64/include/asm/mpam.h  |  6 ++++++
->  arch/x86/include/asm/resctrl.h |  7 +++++++
->  drivers/resctrl/mpam_resctrl.c |  6 ++++++
->  fs/resctrl/rdtgroup.c          | 21 +++++++++++++++++++++
->  include/linux/arm_mpam.h       |  1 +
->  include/linux/resctrl.h        | 28 ++++++++++++++++++++++++++++
->  kernel/fork.c                  |  3 +++
->  7 files changed, 72 insertions(+)
-> 
-> diff --git a/arch/arm64/include/asm/mpam.h b/arch/arm64/include/asm/mpam.h
-> index 70d396e7b6da..0746e5d7cc2d 100644
-> --- a/arch/arm64/include/asm/mpam.h
-> +++ b/arch/arm64/include/asm/mpam.h
-> @@ -63,6 +63,12 @@ static inline void mpam_set_task_partid_pmg(struct task_struct *tsk,
->  	WRITE_ONCE(task_thread_info(tsk)->mpam_partid_pmg, regval);
->  }
->  
-> +static inline void mpam_copy_task_partid_pmg(struct task_struct *dst,
-> +					     struct task_struct *src)
-> +{
-> +	WRITE_ONCE(task_thread_info(dst)->mpam_partid_pmg, mpam_get_regval(src));
-> +}
-> +
->  static inline void mpam_thread_switch(struct task_struct *tsk)
->  {
->  	u64 oldregval;
-> diff --git a/arch/x86/include/asm/resctrl.h b/arch/x86/include/asm/resctrl.h
-> index 8f6edcdcfd87..199ca9af0089 100644
-> --- a/arch/x86/include/asm/resctrl.h
-> +++ b/arch/x86/include/asm/resctrl.h
-> @@ -153,6 +153,13 @@ static inline void resctrl_arch_set_closid_rmid(struct task_struct *tsk,
->  	WRITE_ONCE(tsk->rmid, rmid);
->  }
->  
-> +static inline void resctrl_arch_copy_closid_rmid(struct task_struct *dst,
-> +						 struct task_struct *src)
-> +{
-> +	WRITE_ONCE(dst->closid, READ_ONCE(src->closid));
-> +	WRITE_ONCE(dst->rmid, READ_ONCE(src->rmid));
-> +}
-> +
->  static inline bool resctrl_arch_match_closid(struct task_struct *tsk, u32 closid)
->  {
->  	return READ_ONCE(tsk->closid) == closid;
-> diff --git a/drivers/resctrl/mpam_resctrl.c b/drivers/resctrl/mpam_resctrl.c
-> index 5468367776e2..7aea58fca85b 100644
-> --- a/drivers/resctrl/mpam_resctrl.c
-> +++ b/drivers/resctrl/mpam_resctrl.c
-> @@ -345,6 +345,12 @@ void resctrl_arch_set_closid_rmid(struct task_struct *tsk, u32 closid, u32 rmid)
->  	}
->  }
->  
-> +void resctrl_arch_copy_closid_rmid(struct task_struct *dst,
-> +				   struct task_struct *src)
-> +{
-> +	mpam_copy_task_partid_pmg(dst, src);
-> +}
-> +
->  bool resctrl_arch_match_closid(struct task_struct *tsk, u32 closid)
->  {
->  	u64 regval = mpam_get_regval(tsk);
-> diff --git a/fs/resctrl/rdtgroup.c b/fs/resctrl/rdtgroup.c
-> index 57ab090072c2..ebf780fc5fe9 100644
-> --- a/fs/resctrl/rdtgroup.c
-> +++ b/fs/resctrl/rdtgroup.c
-> @@ -657,12 +657,28 @@ static int __rdtgroup_move_task(struct task_struct *tsk,
->  		return -EINVAL;
->  	}
->  
-> +	/*
-> +	 * Hold tasklist_lock for read so that resctrl_copy_process(), which
-> +	 * holds it for write, cannot read the CLOSID and the RMID of @tsk
-> +	 * while only one of the two has been updated.
-> +	 *
-> +	 * Hold tasklist_lock just for the @tsk update. A CPU running @tsk
-> +	 * keeps using the CLOSID and RMID that resctrl_arch_sched_in()
-> +	 * applied when @tsk was last scheduled in, so
-> +	 * update_task_closid_rmid() below has to interrupt that CPU for the
-> +	 * new resource group to take effect. Leave that until after
-> +	 * tasklist_lock has been dropped: a CPU waiting for tasklist_lock
-> +	 * for write waits with interrupts disabled, and @tsk's CPU is the
-> +	 * one that may be waiting, because @tsk may be forking.
-> +	 */
-> +	read_lock(&tasklist_lock);
->  	if (rdtgrp->type == RDTMON_GROUP)
->  		resctrl_arch_set_closid_rmid(tsk, rdtgrp->mon.parent->closid,
->  					     rdtgrp->mon.rmid);
->  	else
->  		resctrl_arch_set_closid_rmid(tsk, rdtgrp->closid,
->  					     rdtgrp->mon.rmid);
-> +	read_unlock(&tasklist_lock);
-> 
+nah, it is not :(
 
-Is it possible to combine u32 closid and u32 rmid into u64 closid_rmid?
-RDT will no longer support 32-bit kernels, so u64 is always atomic. Then
-we don't need the above tasklist_lock in __rdtgroup_move_task(), and there
-is no race with resctrl_arch_sched_in() - but we do need it during fork()
-though.
-
-I was thinking something like below:
-
---- a/include/linux/sched.h
-+++ b/include/linux/sched.h
-@@ -1362,8 +1362,7 @@ struct task_struct {
- #endif /* CONFIG_PREEMPT_RT */
- #endif /* CONFIG_CGROUPS */
- #ifdef CONFIG_X86_CPU_RESCTRL
--       u32                             closid;
--       u32                             rmid;
-+       u64                             closid_rmid;
- #endif
- 
-        struct futex_sched_data         futex;
-
-static inline u64 resctrl_clos_rmid_val(u32 closid, u32 rmid)
-{
-	return (u64)closid << 32 | rmid;
-}
-
-And we use resctrl_clos_rmid_val(), upper_32_bits(task->closid_rmid)
-lower_32_bits(task->clisid_rmid) in the code.
-
-thanks,
-Chenyu
->  	/*
->  	 * Ensure the task's closid and rmid are written before determining if
-> @@ -2959,6 +2975,11 @@ static void schemata_list_destroy(void)
->   * If @mask is not NULL the cpus on which moved tasks are running are set
->   * in that mask so the update smp function call is restricted to affected
->   * cpus.
-> + *
-> + * Tasks created while this walks the task list are handled by
-> + * resctrl_copy_process(), which tasklist_lock serializes against this walk.
-> + * A new task is either visible to the walk and moved with the others, or
-> + * resctrl_copy_process() assigns it after the walk completes.
->   */
->  static void rdt_move_group_tasks(struct rdtgroup *from, struct rdtgroup *to,
->  				 struct cpumask *mask)
-> diff --git a/include/linux/arm_mpam.h b/include/linux/arm_mpam.h
-> index 002f56e15362..b605e9771c32 100644
-> --- a/include/linux/arm_mpam.h
-> +++ b/include/linux/arm_mpam.h
-> @@ -56,6 +56,7 @@ bool resctrl_arch_mon_capable(void);
->  void resctrl_arch_set_cpu_default_closid(int cpu, u32 closid);
->  void resctrl_arch_set_closid_rmid(struct task_struct *tsk, u32 closid, u32 rmid);
->  void resctrl_arch_set_cpu_default_closid_rmid(int cpu, u32 closid, u32 rmid);
-> +void resctrl_arch_copy_closid_rmid(struct task_struct *dst, struct task_struct *src);
->  void resctrl_arch_sched_in(struct task_struct *tsk);
->  bool resctrl_arch_match_closid(struct task_struct *tsk, u32 closid);
->  bool resctrl_arch_match_rmid(struct task_struct *tsk, u32 closid, u32 rmid);
-> diff --git a/include/linux/resctrl.h b/include/linux/resctrl.h
-> index 10dfdca7f4bf..32d8bf9ca9ba 100644
-> --- a/include/linux/resctrl.h
-> +++ b/include/linux/resctrl.h
-> @@ -7,6 +7,8 @@
->  #include <linux/list.h>
->  #include <linux/pid.h>
->  #include <linux/resctrl_types.h>
-> +#include <linux/sched.h>
-> +#include <linux/sched/task.h>
->  
->  #ifdef CONFIG_ARCH_HAS_CPU_RESCTRL
->  #include <asm/resctrl.h>
-> @@ -729,6 +731,32 @@ extern unsigned int resctrl_rmid_realloc_limit;
->  int resctrl_init(void);
->  void resctrl_exit(void);
->  
-> +#ifdef CONFIG_RESCTRL_FS
-> +/**
-> + * resctrl_copy_process() - Give a new task the resource group of its parent.
-> + * @child:	The new task, which is not yet on the task list.
-> + *
-> + * Call from copy_process() while tasklist_lock is held for write. Serialized
-> + * against rdt_move_group_tasks() and __rdtgroup_move_task() that hold
-> + * tasklist_lock for read.
-> + *
-> + * dup_task_struct() copies the parent's CLOSID and RMID into @child before
-> + * @child is linked onto the task list. If the parent is moved out of a
-> + * resource group that is being removed, that group's CLOSID and RMID are
-> + * freed once the walk completes, leaving @child with stale assignments.
-> + *
-> + * Bring @child up to date with the parent.
-> + */
-> +static inline void resctrl_copy_process(struct task_struct *child)
-> +{
-> +	lockdep_assert_held_write(&tasklist_lock);
-> +
-> +	resctrl_arch_copy_closid_rmid(child, current);
-> +}
-> +#else
-> +static inline void resctrl_copy_process(struct task_struct *child) { }
-> +#endif
-> +
->  #ifdef CONFIG_RESCTRL_FS_PSEUDO_LOCK
->  u64 resctrl_arch_get_prefetch_disable_bits(void);
->  int resctrl_arch_pseudo_lock_fn(void *_plr);
-> diff --git a/kernel/fork.c b/kernel/fork.c
-> index 5efceb8d58a7..8344e0d27b78 100644
-> --- a/kernel/fork.c
-> +++ b/kernel/fork.c
-> @@ -105,6 +105,7 @@
->  #include <linux/stackprotector.h>
->  #include <linux/user_events.h>
->  #include <linux/iommu.h>
-> +#include <linux/resctrl.h>
->  #include <linux/rseq.h>
->  #include <uapi/linux/pidfd.h>
->  #include <linux/pidfs.h>
-> @@ -2491,6 +2492,8 @@ __latent_entropy struct task_struct *copy_process(
->  
->  	klp_copy_process(p);
->  
-> +	resctrl_copy_process(p);
-> +
->  	sched_core_fork(p);
->  
->  	spin_lock(&current->sighand->siglock);
-> -- 
-> 2.56.0
 > 
+>    https://git.gitlab.arm.com/linux-arm/linux-cca.git cca/topics/7.4/tdisp-host-rc3
+> 
+> Notes:
+> * Codex was used to assist with commit message formatting and code
+>    rearrangement.
+> 
+> Changes from v8:
+> https://lore.kernel.org/all/20261104161632.3547423-1-aneesh.kumar@kernel.org
+> * Drop the patch taking an additional KVM file reference for the
+>    iommufd_device lifetime.
+> * Rename the IOMMU_VDEVICE_OP reserved field to __reserved and return
+>    -EOPNOTSUPP when it is nonzero. Keep the ioctl table entries ordered.
+> * Collect Reviewed-by tags.
+> * Address review feedback.
+> 
+> Changes from v7:
+> https://lore.kernel.org/all/20261008055955.4014342-1-aneesh.kumar@kernel.org
+> * Replace IOMMU_VDEVICE_TSM_REQ with the common IOMMU_VDEVICE_OP ioctl
+>    framework. Keep operation definitions and callbacks in the Arm CCA
+>    backend series.
+> * Replace architecture-specific request dispatch, TSM result codes and
+>    buffer-residue returns with operation-specific request/response formats,
+>    a zero-success return convention and resp_len for response lengths.
+> * Hold a KVM file reference for the full iommufd_device lifetime and
+>    require matching device/vIOMMU KVM associations for vDEVICE allocation.
+> * Hold TSM device and user references as well as the backend module
+>    reference for the vIOMMU lifetime. Make unregister reject new users
+>    and wait for existing users before tearing down PCI connections.
+> * Coordinate DSM removal with TSM unregister so the completion used to
+>    wait for users remains valid throughout teardown.
+> * Complete PCI registration before publishing the TSM device and roll
+>    back PCI registration if publication fails. Require PCI operations
+>    when registering a TSM.
+> * Move PCI/TSM core code into drivers/pci/tsm/core.c.
+> * Temporarily disable AMD vIOMMU allocation while its interfaces are updated.
+> 
+> Changes from v6:
+> https://lore.kernel.org/all/20260917140159.1163281-1-aneesh.kumar@kernel.org
+> * Replace the IOMMUFD provider registry with per-device TSM operation lookup.
+> * Move vIOMMU allocation size and initialization into the selected vIOMMU ops.
+> * Select parent HWPT policy from the vIOMMU ops flags.
+> * Pin a vIOMMU's TSM backend module through vIOMMU destruction.
+> 
+> Changes from v5:
+> https://lore.kernel.org/all/20260525154816.1029642-1-aneesh.kumar@kernel.org
+> * Replace the TSM bind/unbind interface with reference-counted contexts.
+> * Add the IOMMUFD vIOMMU provider abstraction.
+> * Route TSM guest requests through vIOMMU ops.
+> 
+> Changes from v4:
+> https://lore.kernel.org/all/20260427061005.901854-1-aneesh.kumar@kernel.org
+> * Switch VFIO/iommufd to use struct file *kvm_file instead of relying on
+>    kvm->users_count references.
+> * Define TSM request scope values globally in iommufd.
+> * Rename the ioctl to IOMMU_VDEVICE_TSM_REQ.
+> * Address other review feedback.
+> 
+> Changes from v2:
+> https://lore.kernel.org/all/20260309111704.2330479-1-aneesh.kumar@kernel.org
+> * Bump the series revision to v4 to keep it in sync with the dependent CCA DA
+>    patchsets. There was no v3 posting.
+> * Drop [PATCH v2 1/3] iommufd/viommu: Allow associating a KVM VM fd with a
+>    vIOMMU
+> * Add two new patches to associate a struct kvm * with iommufd objects:
+>    iommufd/device: Associate a kvm pointer to iommufd_device
+>    iommufd/viommu: Associate a kvm pointer to iommufd_viommu
+> * Address review feedback
+> 
+> Changes from v1:
+> https://lore.kernel.org/all/20250728135216.48084-8-aneesh.kumar@kernel.org
+> * Rebase onto the latest kernel
+> * Address review feedback
+> * Drop the TSM map ioctl; the KVM prefault patch will be used instead to
+>    ensure that private memory is preallocated
+> 
+> 
+> Cc: Alex Williamson <alex@shazbot.org>
+> Cc: Alexey Kardashevskiy <aik@amd.com>
+> Cc: Bjorn Helgaas <bhelgaas@google.com>
+> Cc: Catalin Marinas <catalin.marinas@arm.com>
+> CC: Jacob Pan <jacob.pan@linux.microsoft.com>
+> Cc: Jason Gunthorpe <jgg@ziepe.ca>
+> Cc: Joerg Roedel <joro@8bytes.org>
+> Cc: Jonathan Cameron <jic23@kernel.org>
+> Cc: Jonathan Hunter <jonathanh@nvidia.com>
+> Cc: Kevin Tian <kevin.tian@intel.com>
+> Cc: Krishna Reddy <vdumpa@nvidia.com>
+> Cc: Lukas Wunner <lukas@wunner.de>
+> Cc: Nicolin Chen <nicolinc@nvidia.com>
+> Cc: Robin Murphy <robin.murphy@arm.com>
+> Cc: Samuel Ortiz <sameo@rivosinc.com>
+> Cc: Shameer Kolothum <shameerali.kolothum.thodi@huawei.com>
+> Cc: Steven Price <steven.price@arm.com>
+> Cc: Suravee Suthikulpanit <suravee.suthikulpanit@amd.com>
+> Cc: Suzuki K Poulose <suzuki.poulose@arm.com>
+> Cc: Thierry Reding <thierry.reding@kernel.org>
+> Cc: Vasant Hegde <vasant.hegde@amd.com>
+> Cc: Will Deacon <will@kernel.org>
+> Cc: Xu Yilun <yilun.xu@linux.intel.com>
+> Cc: Ashish Kalra <ashish.kalra@amd.com>
+> Cc: Herbert Xu <herbert@gondor.apana.org.au>
+> Cc: iommu@lists.linux.dev
+> Cc: Jonathan Cameron <jonathan.cameron@huawei.com>
+> Cc: Tom Lendacky <thomas.lendacky@amd.com>
+> Cc: kvm@vger.kernel.org
+> Cc: linux-arm-kernel@lists.infradead.org
+> Cc: linux-coco@lists.linux.dev
+> Cc: linux-pci@vger.kernel.org
+> Cc: linux-tegra@vger.kernel.org
+> Cc: patches@lists.linux.dev
+> 
+> Aneesh Kumar K.V (Arm) (11):
+>    virt: coco: tsm: Require PCI operations when registering a TSM
+>    virt: coco: tsm: Remove the device from lookup before PCI teardown
+>    virt: coco: tsm: Complete PCI registration before publishing the
+>      device
+>    iommufd: Add a vDEVICE operation ioctl framework
+>    PCI/TSM: Remove the legacy guest request interface
+>    PCI/TSM: Keep connections active while device contexts exist
+>    iommufd/viommu: Select vIOMMU operations before allocation
+>    iommufd/viommu: Allow PCI TSM backends to provide vIOMMU operations
+>    iommufd/viommu: Allow vIOMMUs without a parent HWPT
+>    PCI/TSM: Wait for device contexts before removing a DSM
+>    PCI/TSM: Wait for users during unregister
+> 
+> Nicolin Chen (1):
+>    iommufd/viommu: Keep a reference to the KVM file
+> 
+> Shameer Kolothum (1):
+>    iommufd/device: Associate KVM file pointer with iommufd_device
+> 
+>   Documentation/ABI/testing/sysfs-bus-pci       |  15 +-
+>   Documentation/userspace-api/iommufd.rst       |  44 +-
+>   drivers/crypto/ccp/sev-dev-tsm.c              |   4 +-
+>   drivers/iommu/amd/iommu.c                     |   3 +-
+>   drivers/iommu/amd/iommufd.c                   |  18 +-
+>   drivers/iommu/amd/iommufd.h                   |  11 +-
+>   drivers/iommu/amd/nested.c                    |   4 +-
+>   .../arm/arm-smmu-v3/arm-smmu-v3-iommufd.c     |  37 +-
+>   drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c   |   7 +-
+>   drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.h   |  16 +-
+>   .../iommu/arm/arm-smmu-v3/tegra241-cmdqv.c    |  24 +-
+>   drivers/iommu/iommufd/device.c                |   7 +-
+>   drivers/iommu/iommufd/hw_pagetable.c          |  14 +-
+>   drivers/iommu/iommufd/iommufd_private.h       |   3 +
+>   drivers/iommu/iommufd/main.c                  |   3 +
+>   drivers/iommu/iommufd/selftest.c              |  33 +-
+>   drivers/iommu/iommufd/viommu.c                | 155 ++++--
+>   drivers/pci/tsm/core.c                        | 448 ++++++++++--------
+>   drivers/vfio/iommufd.c                        |   3 +-
+>   drivers/virt/coco/tsm-core.c                  | 213 +++++++--
+>   include/linux/iommu.h                         |  20 +-
+>   include/linux/iommufd.h                       |  29 +-
+>   include/linux/pci-tsm.h                       | 154 +++---
+>   include/linux/tsm.h                           |  41 +-
+>   include/uapi/linux/iommufd.h                  |  36 +-
+>   25 files changed, 880 insertions(+), 462 deletions(-)
+> 
+> 
+> base-commit: aebb7274476403040d582c61478df8f4a7bf9cd3
+
+This is v7.4-rc3.
+
+> prerequisite-patch-id: 121492d71cc22b2adbfdedd668868c5a449ad764
+> prerequisite-patch-id: ed31fd728f0adba3d60dcd6f3bae8da1a2193bcc
+
+What are these two? Cannot find them any tree... I really want try this all but also trying to eliminate guessing...
+
+Thanks,
+
+-- 
+Alexey
+
