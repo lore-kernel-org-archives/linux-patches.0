@@ -1,100 +1,67 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=217.140.110.172
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795432472;
-	b=hqxsHjEevTtG9sBRopr0K8+0QESTWPBRRdz0FXJTgl50CGdaYWyIoO1Lm6nsmadiNukd
-	 WJzr2Dda7rVaAEndtk5AA8YUe9qDOKYRgtE/p4hh++xEad2EKSsi+80M8jwAixTLD28hp
-	 6fIo+Thv+pF0WLmNLBauKLOoZ0IpXj/3i7/JR+3CUeO62ld/M2w+hOlvZP2A612GNB6sY
-	 YZIV3a4ISBTwR2KYi8MyvJdnZOZCNz1aXKmonofKDnpRXqH+Cxatl+hgvxiEUvLNnJsaa
-	 uAIRCObtBw6vtK05CznzQDdD/QETfTCigJxdi5hTTlhDbm44uKaJxgN4OSHqGk9+ZYQ==
+	t=1795435088;
+	b=FlQwOHRh6GAI5G2pdDD9D7QocSVaafHkH/XsJkDn1PtElyMkZfAz1bLs+iA+eoKWAd6N
+	 2XcHe9hgp2xiRzTtl8fK9sbSnz3xsjGWHieThwRh4GeCocEZBnKwXqFcoBHv5NUu07CIB
+	 XTnlLbC5wOYgZBPvL00i/Z1yF0TEb8fx9YmxZwKFSF/GTocSQahcCSDw1liFmOeZ1VqjP
+	 eQu9TG4ghCyl6pwbbdoRz4tD7W4qjUHkgXAw5LYWXmb7CgwaNBBE0bqrqkpU6kZU21FFS
+	 fhLNARTWsi0e6jSMLAnVq3WJwBCe4uCgleV4eNfQIB8vYnsDHLP7iC3IOr0XWRAecVg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795432472;
-	h=DMARC-Filter:Received:Received:DKIM-Signature:Date:From:To:Cc:
-	 Subject:Message-ID:References:MIME-Version:Content-Type:
-	 Content-Disposition:Content-Transfer-Encoding:In-Reply-To:X-TUID;
-	bh=M8BgEwiMtUwRuCgZnUVMTSSA8VV5wT5wVfxb83hMYt4=;
-	b=EV74lQf3zKxK/qECQzMEstG8iVszZHQuuZ1jnKzeeODsbjzRjZyps18+O0YyH56tq0Tp
-	 /OHfAKzZ/oMECkX5y33aUWmKhnU9K0eTI9e517WNf/ninFhurCC1jb6sl85C7fdYbl3jq
-	 /qdJs4HtsnDFdhUq/eXrYAJrlmy6M741Zm9hPZOuCgAZkTl0zraMua6sQhr2FyD1SR8Da
-	 MbwiwoCuvIqYzn3BY8Lz5jr7BKQsCBhRhlepyOhdbv/HnrwlsIHxYqoIDueGdXdIcfgIE
-	 xQu+N8kZuN2w1YGWf7ldBlIKDo5wloPgz5gZuw9vNBlagaPZoNbERkqvnXV0IfS+wAQ==
+	a=rsa-sha256; c=relaxed/relaxed; t=1795435088;
+	h=Received:DKIM-Signature:Date:From:To:Cc:Subject:Message-ID:
+	 References:MIME-Version:Content-Type:Content-Disposition:In-Reply-To;
+	bh=0TmBe1tXlcWpfCVrfd1KqqoznT5l5Jx1iU5TZr+SAgw=;
+	b=hTZKecc1gtevVLiSXQoVsKHWKeZnSB+WS1vor/ZQ36UPTcGhm+XQGFeZaeKzQD6TTvqw
+	 GFiHWUhaScbiRSiJ1ByGDL61nhnERH+V6glyCaFM9mQKzukqVxF2JrmqG0hXlN/G8e7Or
+	 rsfd1ZChixV7MlQWboZGzxynuCj/9eekfEe4Qq3W4PitAEj9eDXY+8oD5CG3rbUU4NEXH
+	 zjbeud6kxUV+f1Q4ErdUn7DpvwXKuHy1FPiZ+ggQOr18w4BGOs1b0NSiq/hKOHsahLjYX
+	 7QCn1AlO/8DbJZLeLWmyZryDPzTpFVlPrjJ/ZinAfi0gaZcCwkjgYPJs9LKFRsM6Jaw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=arm.com;
-	spf=pass smtp.mailfrom=arm.com;
-	dkim=pass header.d=arm.com header.i=@arm.com header.a=rsa-sha256 header.s=foss header.b=cUtfC1HA;
-	arc=none smtp.remote-ip=217.140.110.172
-Received: from foss.arm.com (foss.arm.com [217.140.110.172])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2BD2F606A31E;
-	Mon, 23 Nov 2026 11:14:32 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 2BD2F606A31E
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=arm.com
+	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b="Du1Kyd/P";
+	arc=none smtp.remote-ip=100.103.45.18
+Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature ECDSA (prime256v1))
+	(No client certificate requested)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D0EB5606A31E;
+	Mon, 23 Nov 2026 11:58:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=arm.com header.i=@arm.com header.a=rsa-sha256 header.s=foss header.b=cUtfC1HA
-Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
-	by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 7CE821476;
-	Mon, 23 Nov 2026 03:14:28 -0800 (PST)
-Received: from arm.com (usa-sjc-mx-foss1.foss.arm.com [172.31.20.19])
-	by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 1BA2F3F882;
-	Mon, 23 Nov 2026 03:14:23 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=arm.com; s=foss;
-	t=1795432471; bh=4UDMjdKhEafTSrkfoMvLUzagh+R4A1yL+W6+zxTSE3g=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=cUtfC1HA2CZBX5GdLcjS9Fv5iD/xcSaWNNdEjaMRUj8xf0cmPTKcKav27v+CAPLkC
-	 w1bkGxtfk5N0ExzhPBYejU8PO0+4gtg8l1F7GJM4V1zbhqzbrPWAA1+BjvltqwmxMn
-	 LE7OlN/w/0fHifp9euPk5nQuLJbtKZlIitJWjJvE=
-Date: Mon, 23 Nov 2026 11:14:21 +0000
-From: Catalin Marinas <catalin.marinas@arm.com>
-To: "Aneesh Kumar K.V (Arm)" <aneesh.kumar@kernel.org>
-Cc: linux-coco@lists.linux.dev, Andrew Morton <akpm@linux-foundation.org>,
-	Baoquan He <baoquan.he@linux.dev>, Mike Rapoport <rppt@kernel.org>,
-	Pasha Tatashin <pasha.tatashin@soleen.com>,
-	Pratyush Yadav <pratyush@kernel.org>,
-	Christian =?iso-8859-1?Q?K=F6nig?= <christian.koenig@amd.com>,
-	Jason Gunthorpe <jgg@ziepe.ca>, Joerg Roedel <joro@8bytes.org>,
-	Marc Zyngier <maz@kernel.org>,
-	Marek Szyprowski <m.szyprowski@samsung.com>,
-	Robin Murphy <robin.murphy@arm.com>,
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=Du1Kyd/P
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 98C5A1F000C4;
+	Mon, 23 Nov 2026 11:58:07 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1795435088;
+	bh=0TmBe1tXlcWpfCVrfd1KqqoznT5l5Jx1iU5TZr+SAgw=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To;
+	b=Du1Kyd/P8Lt8CAlnCV7czApRJxSEjYBL842wCUV0K57v809kCt9syFf0KB08w77MM
+	 JujsWwgrqh7lztdFxkWRgR4X3WQmsCsj5/8FFfoeif8cO/de/Whfz74lZZCwQ8R6UW
+	 8NJHIwr/RI+Fmc/6yn5zCmCebhKDshF6qsqaP0jfF1oRjGYll/8c3EvfDv3dzSVYj+
+	 dDpJrLtmJkj5SnWHMzQ5EhjhM2UNnM2mtqOPQnVlG/BrW0+x94gc9vI5q2USFGxw5R
+	 cl/r6ieFsaF4x+9d24X2yRBTgGfDQsxUumN0rmfCjpqZvFzIZ07Y9Xr11v4JuwFvi2
+	 MBF1PVHTKOhjA==
+Date: Mon, 23 Nov 2026 13:58:03 +0200
+From: Leon Romanovsky <leon@kernel.org>
+To: "Aneesh Kumar K.V" <aneesh.kumar@kernel.org>
+Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+	linux-coco@lists.linux.dev, Dan Williams <djbw@kernel.org>,
+	Bjorn Helgaas <bhelgaas@google.com>, Jason Gunthorpe <jgg@ziepe.ca>,
+	Jonathan Cameron <jonathan.cameron@huawei.com>,
+	Xu Yilun <yilun.xu@linux.intel.com>,
+	Alexey Kardashevskiy <aik@amd.com>,
+	"Rafael J . Wysocki" <rafael@kernel.org>,
 	Steven Price <steven.price@arm.com>,
-	Sumit Semwal <sumit.semwal@linaro.org>,
 	Suzuki K Poulose <suzuki.poulose@arm.com>,
-	Thomas Gleixner <tglx@kernel.org>, Will Deacon <will@kernel.org>,
-	Russell King <linux@armlinux.org.uk>,
-	Benjamin Gaignard <benjamin.gaignard@collabora.com>,
-	Brian Starkey <Brian.Starkey@arm.com>,
-	John Stultz <jstultz@google.com>,
-	Mark Rutland <mark.rutland@arm.com>, Radu Rendec <radu@rendec.net>,
-	"T.J. Mercier" <tjmercier@google.com>,
-	Madhavan Srinivasan <maddy@linux.ibm.com>,
-	Michael Ellerman <mpe@ellerman.id.au>,
-	Nicholas Piggin <npiggin@gmail.com>,
-	Christophe Leroy <chleroy@kernel.org>,
-	Ritesh Harjani <ritesh.list@gmail.com>,
-	Shrikanth Hegde <sshegde@linux.ibm.com>,
-	Alexander Gordeev <agordeev@linux.ibm.com>,
-	Gerald Schaefer <gerald.schaefer@linux.ibm.com>,
-	Heiko Carstens <hca@linux.ibm.com>,
-	Vasily Gorbik <gor@linux.ibm.com>,
-	Christian Borntraeger <borntraeger@linux.ibm.com>,
-	Sven Schnelle <svens@linux.ibm.com>, Ingo Molnar <mingo@redhat.com>,
-	Borislav Petkov <bp@alien8.de>,
-	Dave Hansen <dave.hansen@linux.intel.com>, x86@kernel.org,
-	"H . Peter Anvin" <hpa@zytor.com>, Kiryl Shutsemau <kas@kernel.org>,
-	Rick Edgecombe <rick.p.edgecombe@intel.com>,
-	"K . Y . Srinivasan" <kys@microsoft.com>,
-	Haiyang Zhang <haiyangz@microsoft.com>,
-	Wei Liu <wei.liu@kernel.org>, Dexuan Cui <decui@microsoft.com>,
-	Long Li <longli@microsoft.com>, Paolo Bonzini <pbonzini@redhat.com>,
-	Vitaly Kuznetsov <vkuznets@redhat.com>,
-	Andy Lutomirski <luto@kernel.org>,
-	Peter Zijlstra <peterz@infradead.org>,
-	dri-devel@lists.freedesktop.org, iommu@lists.linux.dev,
-	linaro-mm-sig@lists.linaro.org,
-	linux-arm-kernel@lists.infradead.org, linux-media@vger.kernel.org,
-	linux-mm@kvack.org, kvmarm@lists.linux.dev, patches@lists.linux.dev
-Subject: Re: [PATCH v10 01/13] mm: Add an allocator for CoCo shared memory
-Message-ID: <awQgDYK2Bq0QGpNU@arm.com>
-References: <20261116091137.94252-1-aneesh.kumar@kernel.org>
- <20261116091137.94252-2-aneesh.kumar@kernel.org>
+	Lukas Wunner <lukas@wunner.de>, Ashish Kalra <ashish.kalra@amd.com>,
+	Tom Lendacky <thomas.lendacky@amd.com>,
+	Herbert Xu <herbert@gondor.apana.org.au>,
+	driver-core@lists.linux.dev, linux-pci@vger.kernel.org,
+	kvm@vger.kernel.org, patches@lists.linux.dev
+Subject: Re: [PATCH v1 00/10] PCI/TSM: Support guest TSM drivers
+Message-ID: <20261123115803.GN14811@unreal>
+References: <20261123083337.2731019-1-aneesh.kumar@kernel.org>
+ <2026112325-emit-squeezing-5d96@gregkh>
+ <20261123090623.GK14811@unreal>
+ <yq5a7bi3riha.fsf@kernel.org>
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Post: <mailto:patches@lists.linux.dev>
@@ -104,32 +71,92 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20261116091137.94252-2-aneesh.kumar@kernel.org>
-X-TUID: 696EyIiS0JVf
+In-Reply-To: <yq5a7bi3riha.fsf@kernel.org>
 
-On Mon, Nov 16, 2026 at 02:41:24PM +0530, Aneesh Kumar K.V (Arm) wrote:
-> diff --git a/MAINTAINERS b/MAINTAINERS
-> index 3e626e45d432..5ce879ea2ef4 100644
-> --- a/MAINTAINERS
-> +++ b/MAINTAINERS
-> @@ -28553,6 +28553,8 @@ F:	drivers/pci/tsm/
->  F:	drivers/virt/coco/guest/
->  F:	drivers/virt/coco/tsm-core.c
->  F:	include/linux/*tsm*.h
-> +F:	include/linux/cc_shared.h
-> +F:	mm/cc_shared.c
+On Mon, Nov 23, 2026 at 03:13:13PM +0530, Aneesh Kumar K.V wrote:
+> Leon Romanovsky <leon@kernel.org> writes:
+> 
+> > On Mon, Nov 23, 2026 at 09:40:55AM +0100, Greg Kroah-Hartman wrote:
+> >> On Mon, Nov 23, 2026 at 02:03:27PM +0530, Aneesh Kumar K.V (Arm) wrote:
+> >> > This series adds the PCI/TSM support needed by a TEE Security Manager
+> >> > (TSM) driver in a confidential guest. It adds device lock/unlock,
+> >> > helpers for recording device acceptance and parsing MMIO reports, and
+> >> > DMA callbacks used during PCI driver attachment. The guest TSM driver and
+> >> > attestation commands using these interfaces are in follow-up series.
+> >> > 
+> >> > This series is based on Dan Williams' "[PATCH v2 00/19] PCI/TSM: TEE I/O
+> >> > infrastructure" posting [1], particularly the guest LOCK/UNLOCK, ACCEPT
+> >> > and MMIO report work [2-4]. It retains device_cc_accepted() and the
+> >> > confidential-device acceptance model from that posting, with changes
+> >> > adapted to the current PCI/TSM structures and reference APIs. Dan's
+> >> > device-core acceptance helper and per-host-bridge IDE stream reporting
+> >> > patch are also included.
+> >> > 
+> >> > This series does not adopt the Device Trust changes from Dan's "Device
+> >> > Evidence and Trust for PCI Security Protocol (TDISP)" [5]. That work is
+> >> > being developed separately in Leon Romanovsky's "driver core: Authorize
+> >> > device trust before driver binding" series, [6]. Confidential-device
+> >> > acceptance is kept separate from that driver-binding trust policy.
+> >> 
+> >> But it should not, as you are making driver core changes that will
+> >> mirror the same thing that that patchset is attempting to do.  Please
+> >> work together on this.
+> >
+> > +10000000,
+> >
+> > Greg,
+> >
+> > This series came as a surprise to me given the fact that device trust
+> > series is exactly for that - allow confidential computing.
+> >
+> > Adversarial is equal to the "cc_accepted".
+> 
+> I think the confusion stems from this thread:
+> 
+> https://lore.kernel.org/all/yq5amrr8yldi.fsf@kernel.org
+> 
+> Based on that discussion, I understood TRUST and eligibility for private
+> DMA to be complementary attributes. Device acceptance determines whether
+> a device may access private memory, while trust determines whether the
+> core must enforce additional restrictions. I understood that supporting
+> an accepted but adversarial device would require either a private IOTLB
+> to restrict its access or an IOMMU.
 
-Would it make sense to put these under a separate CoCo memory sharing
-and encryption entry? It should also cover include/linux/mem_encrypt.h
-and include/linux/cc_platform.h. Both are shared interfaces with no
-specific MAINTAINERS entry.
+I reached a completely different conclusion from that discussion.
 
-I don’t mind who maintains the entry but I’d list both linux-coco and
-linux-mm. We can leave include/linux/set_memory.h out for now since
-most of that header deals with page permissions and cacheability.
+Device trust does little beyond preventing driver binding and recording the
+trust decision in "struct device". The missing piece, which I would expect
+you to address, is ensuring that the IOMMU and private DMA are configured
+only after the trust level has been decided or as part of that decision,
+rather than beforehand, as they are today.
 
--- 
-Catalin
+Thanks
+
+> 
+> Therefore, with this series, a request to enable private memory DMA is
+> handled as follows:
+> 
+> 	if (!device_cc_accepted(&pdev->dev)) {
+> 		ret = -EACCES;
+> 		goto out;
+> 	}
+> 
+> 	/* Adversarial devices are unsupported for confidential DMA. */
+> 	if (device_is_adversarial(&pdev->dev)) {
+> 		ret = -EOPNOTSUPP;
+> 		goto out;
+> 	}
+
+The snippet above clearly shows why it is a good idea to wait until support
+for device trust levels is accepted. An adversarial device is untrusted
+from the PCI perspective and must have private DMA and a separate IOMMU
+group.
+
+Thanks
+
+> 
+> 
+> -aneesh
+> 
