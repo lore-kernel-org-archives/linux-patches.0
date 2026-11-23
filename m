@@ -1,145 +1,116 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.219.43
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.160.169
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795446045;
-	b=lsrwJKkxf8ZQBynOdSLLTlgWGWNYdrGwZSnCqdm69j7oKh4V7saPUlGIIzrnIRoKga0S
-	 jilC5P3PLBy5F55K8SaIKJt5YOVLXZkAIGz7K2HYhfiiMnnMrTI42Iau9DJANOyShVljU
-	 9hVgtSsLL3mdDmwFhDoGKJznxZip4uCteZtXaC+Au/95Mu7qjbhlgs1LgugiyTyT7vLb6
-	 S2fN3mMMb8AQblPPO4S0yme3S+Uz4tseC2hvTE9U3IOClLCUtl2WTnd7hWMx+ifANPTDq
-	 sxOmrcfsmemF1LR9DfjjaRNNnb3i76zDJFNRfxD2CycOcSl9fYxU5QW0YZaFC+MsDKg==
+	t=1795447536;
+	b=xgQJPxU6snawPo6WzLPaK7Us6RzyoEbS0jGV30Rcit1CrXNRC1nt2Rum6V/1YjrdEHsp
+	 a1aPrf8AJTkWorSQWyLpLXJqwq1B8mtAn1YGJxvpbPRAI7uKI5mKNfZR6K/e4W/Gt05hv
+	 Lg+Fw8ej5DcvkjPoaNACnAu31LVbLOok8W0qBzetavVuK+uEKQ0WzABqF6W8cygQ8uj/J
+	 iqo2c9iv9nsorPkUDzQdXbMJExeojSDrNE3vRSl2UPJPVzqTTG5BqhOB2wZNVJjBdo6pY
+	 Je4J3B+FBXHNXow9qsbPHyQcXLBkwCSz4KVUxzDB8PdjZxslosKo4+JUeJp+/89p7gQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795446045;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795447536;
 	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
 	 X-Forwarded-Encrypted:X-Gm-Message-State:X-Gm-Gg:X-Received:Received:
 	 Received:Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
 	 Content-Type:Content-Disposition:In-Reply-To;
-	bh=8YXzoVkoKKTn5S6189qRHpEA8zSaXUAPSQ685ax1F0I=;
-	b=h4XvwA0dRapXBCt6RwrtKNCF+ozWI5z2hmS6SSadwPOaPzkXwoRnoSxNczjSds+CesJW
-	 QvodYPIxre3AT5qwZUMASutDzfzOPptOYFt/BYMXgTaMc8jGQ9oLvKLcWrxDPMSt+mvGq
-	 sFPMNj2DyP22of90v/Juo4I4llM6lzo5haKMykvXtN4tneQjclXglYZy107QZR83xhwJB
-	 NmK0auoPTiU8RppZnN8WP6pT5hDfmXookVfewN11BeIdgT0HTVfC547xwOhAdfreE3od5
-	 /iZE3/VyqiUqMZonXV7is+L3au7bJG6S37NMqm+f0CttPKjZRarp72dP0T8aAfzyqBg==
+	bh=uJeUtw5BXBG6B+iGuyb9j1OIKHpejrpTmDWG1agjBxs=;
+	b=ZlN83HuCpgx2BD+BakJKiHhGtY4v4auzeO8yilFZ12EQ6ay2VZyVWpY77/NUbO6nmF/g
+	 oHWAUMatFCT7C7oibxqljem8Mea4FYMHEXEuJ7ty3l1Hs5TetlaFJ0li9avQxN0XOTWDq
+	 625tohpKgbB4YfgYZmEIfnrhVLKntsOIHd93sXTKweUM2xvEr7xX2v1wDstDNrHXEqxFK
+	 glNfVris6R1hobgJf11CpZNXMxvI32y81BcRcFg1Dqay57azTMPIoF8X8JIVbAt5bBun+
+	 8o6/sE7VdjgCYDKeyZfNmEsh3f4cdkUrxAcZ2W5JElYJjLFy0is0pJDY0mD+r3UDRwQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
 	dmarc=none header.from=ziepe.ca;
 	spf=pass smtp.mailfrom=ziepe.ca;
-	dkim=pass header.d=ziepe.ca header.i=@ziepe.ca header.a=rsa-sha256 header.s=google header.b="Js/hN7BF";
-	arc=none smtp.remote-ip=209.85.219.43
-Received: from mail-qv1-f43.google.com (mail-qv1-f43.google.com [209.85.219.43])
+	dkim=pass header.d=ziepe.ca header.i=@ziepe.ca header.a=rsa-sha256 header.s=google header.b=Q5iwmH+d;
+	arc=none smtp.remote-ip=209.85.160.169
+Received: from mail-qt1-f169.google.com (mail-qt1-f169.google.com [209.85.160.169])
 	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 33ACC606A6A4
-	for <patches@lists.linux.dev>; Mon, 23 Nov 2026 15:00:45 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 33ACC606A6A4
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E2C2C606A68F
+	for <patches@lists.linux.dev>; Mon, 23 Nov 2026 15:25:35 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org E2C2C606A68F
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ziepe.ca
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ziepe.ca
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=ziepe.ca header.i=@ziepe.ca header.a=rsa-sha256 header.s=google header.b=Js/hN7BF
-Received: by mail-qv1-f43.google.com with SMTP id 6a1803df08f44-9212a5a66f8so29539126d6.2
-        for <patches@lists.linux.dev>; Mon, 23 Nov 2026 07:00:45 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=ziepe.ca header.i=@ziepe.ca header.a=rsa-sha256 header.s=google header.b=Q5iwmH+d
+Received: by mail-qt1-f169.google.com with SMTP id d75a77b69052e-5366ae57896so36085971cf.3
+        for <patches@lists.linux.dev>; Mon, 23 Nov 2026 07:25:35 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ziepe.ca; s=google; t=1795446044; x=1796050844; darn=lists.linux.dev;
+        d=ziepe.ca; s=google; t=1795447535; x=1796052335; darn=lists.linux.dev;
         h=in-reply-to:content-disposition:content-type:mime-version
          :references:message-id:subject:cc:to:from:date:from:to:cc:subject
          :date:message-id:reply-to:content-type;
-        bh=8YXzoVkoKKTn5S6189qRHpEA8zSaXUAPSQ685ax1F0I=;
-        b=Js/hN7BFiz+V59LU3g3qClRYtgCYYRyqOBkW49G+CeYW1aEcatOFKpUqNmDa6nwoLO
-         EEbZijW6BaZXx7xFQ+7bBLUFNphUSNLLEct5ENjAr5bCyRwBr03momZfim1ZfRs7R6og
-         IuK9n0r/YinKfN0nFoXlYdgmv3JMxrqeV/+rOki5A6zQ16unhdz3qvXlQtHAnyXaCKAw
-         m15ayg/ihxXKoYaonVGoEZTjRJMfkV25c4wJHR9yhGd4A7pVyaHJkb/UtBalcU5uuOxE
-         BqeYptVjjfg+ensmZldQmRMXh2aVA2slv7fdKgNyHhoTrDbMjjhC7R6NhJfv1zKy/aIf
-         S95A==
+        bh=uJeUtw5BXBG6B+iGuyb9j1OIKHpejrpTmDWG1agjBxs=;
+        b=Q5iwmH+dNQzpihQspnPZ5EknU6HI/0PvP1I+036hQnLg13miFGooYywZ5CGnjd+ApV
+         OdeNzbgSAc12r4zav2Z3u5ePi/tGH1XO/MQjx1g8hLrD0tYqBGpal/o6v9dn0eOm7Wk6
+         4G0KZa0rfSGJdq/iMF3tdCuYNHszH6oH+YLxBCbui9po9540zCW1rD6+nVW5jCG5eXkY
+         4xU7PYb/KWFxFwA2mX32ExZ8JAujcfUWv19lrYBC945TsgLEPTyId2qOTY9ZDFyyZpPl
+         Gq3yIAgusZE4aezbrXyYud4Jtwfm80O+dxzkya3D3GKEZCyM8w8gLGmrJINnagaI/zW7
+         exrg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1795446044; x=1796050844;
+        d=1e100.net; s=20260707; t=1795447535; x=1796052335;
         h=in-reply-to:content-disposition:content-type:mime-version
          :references:message-id:subject:cc:to:from:date:x-gm-gg
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
          :content-type;
-        bh=8YXzoVkoKKTn5S6189qRHpEA8zSaXUAPSQ685ax1F0I=;
-        b=BVzEokqwOas/+Hjy+VrE+XSr2lEE/BsfA925fstsxToiMtCfPJasVvSjW4owO00uoa
-         Rcjtpnv3yobkywyvsmOvPhxaEPG9jiD0DSbE8rB+dvJ2C74XCWtE6X4U4DDNWH9VH00f
-         DGKII5hKaC7MVKLeIaBpK0oPMqmeFJ2FGgOaratJ7PJIf9ElG54uGY+14G06LnWtl4sO
-         TkNtgYcE9064+N91iNaBtmb7sL/jr6Q1MC5mX3jJSIIvVFy5/JuWjN7iGDdY5eHay5m4
-         K50te+eUKMJUbMA1FYgvw607P6D24eaCXrClHsrCfqaq676MiG4AkGawEto9s0DaruMm
-         NhWA==
-X-Forwarded-Encrypted: i=1; AL+hErEiN/J9IkQjtPEva3S+zR/+fZMnY3FslarocsistCPRNivGMLLKr6VokQAjE6s1lJ8zarync96o@lists.linux.dev
-X-Gm-Message-State: APuU4Z8y2Y7CmnGVH5MdG9mOWpMVIReJ/6ICsAsLYWEt3lzMfK6yIxj1
-	d5DUKkEtxs+3rTMruZdkj45RnaopMXDYTLPSh1lBQsdoQd6gfxi/TRTPUaxV6zaki8U=
-X-Gm-Gg: AZFdTZeJ6yj8/Tzm44h1wpDIFgrg5V+98LIy+PGOIzKcRKHkNQwYX2TTUMf+eLb0ony
-	pcoUZ+hGqSfWGvTI4zbm2v6wgeJJJR4WgPaICdwZPGCo8zxZXsZ7gjjK/hbLL7mM6JfB0WyIHAp
-	WXngti7r591ux1zV1+cMeW/GEZYT1nm7fcTyN7lUqFvwEY9D0jK6XG6wcFF0NgFgvrUmxPjkiGW
-	LIu3mv96ZFjOLQdLRawM9Hg6PxNwQf95Nwih+DUtS5yBALKgL70d8JnWR/E1HXWywCxRlg/PXa1
-	Ambf0f4DpMiIfLk+DbpCoW+QMYnDfgwAMszzkfrS3EDnT3DTcPa8fqaXGk2jK7m/BJxyNy6f7Zb
-	3Miy3xO/KOTSMfGnAz1rx+XhdRMP15pgov5HzQNc1mS7c0ObX8SLVWE7CxS0rjKbtaVc/80rcWZ
-	juI4pDt6nc9CJOe6vmSrn1V0GFwwuggpwo3QG7wKApseREu/UrQchDc6+nC4K1cG/n9qOVRqP0W
-	tVNCbsG5DR142KGtHLHau6i+Noa0HbPVAKtXRAGaP2c4+/XMUj4je9f05f39i062HablZzM41sn
-	EhhztRhoRYXJwJdl7qnF04Yfhd/H7EhzdVgpDOk43SxYOl5vIg6mneYFjyc9XUbNKPxnBY08RP/
-	0Od8=
-X-Received: by 2002:a05:6214:4891:b0:921:27c2:3f89 with SMTP id 6a1803df08f44-92134a3715dmr207386236d6.17.1795446043629;
-        Mon, 23 Nov 2026 07:00:43 -0800 (PST)
+        bh=uJeUtw5BXBG6B+iGuyb9j1OIKHpejrpTmDWG1agjBxs=;
+        b=OjmFgjMC2KlvIm3bIdTVM/l8e3NRC5E+YClVwkRUWB3qsz3IJD4BmC43f3J+KcXpin
+         dQTO0fXP8DUtQcHjYXYZHSybTbr8cOrA3/sCamxepHzLh5qcbQwm+4wzn5AguxnlfISX
+         7oDEYhacEGi4936s5OtlQPdTblVpOizciCwVw0oSGCHqK6tMVUZrpD5iumZn/iFS14ZJ
+         SSIR3a/+UPjjFWrCQ85pWDVZneiy0ScHeNb43YGWx/bIH6Jx4N+Sdf9kVEAvP7QJsAT2
+         GJRrALYRU2DkmfYyZCRLKSUtKCgJcnVX8RZZNWuvX9GEFWMCAT9Zw9XzQvLG08kOn4dR
+         eyew==
+X-Forwarded-Encrypted: i=1; AL+hErFgpm5/ynsDZZR47fxWLeIMM0wwNc7o7mAD8YqCkBw+ZEJC2JaovuqYmUgliOMMrwqd4n2YzhwO@lists.linux.dev
+X-Gm-Message-State: APuU4Z+sEvU9rHEKhqsliV9ZHNEkriiV1nRXmLTyzXHv2rn1RkpWQPBu
+	FWs9rg8BdCjnBr9vXNKU51EcvupLqADbbfLHtw8qajODAO3yBFSeGVUrUjKgeYqHfh4=
+X-Gm-Gg: AZFdTZcadR6PsirjisARraJk4Xbg4UwrMt55cU9a/l8JZ2fHln+s3WaUcNURyDpuBid
+	P/IjPZRRsJuht98bcIAmZdzK1EpQ6Unouo9hpe5gRXdT5BYmtBBkhIPihOArDJ8J3K/IYZW8PVX
+	HMnlxPuIId6VxjHk/Lnpy1v8Uz8jQ1MzXdCMftdGS7kO2ykyvqFSfsjk+N/QHmt26HnNh6JrdZi
+	Bd1B/yyZzEu6DM84L19jGPepmkukIjrwczRBFpHM2iqWDH9vfnYcMr5sz1cgZnsYkqpl4L3oQqg
+	X2igCsdNxiC+0b/gYJrMA6hL6ZAbONlQRZhNdb+AaZ+qvVehWY/6Jf8g8zi3pMJM5AOTHP4yvUz
+	cbRQRQr9ZNdKngixuWVFecizyYB3qwuYY111s278d7JF6K3yv42TXStEKH6x0a6cs+afEcoGChP
+	w+P3j1/IjJQMN9qfQAsU+QIixHdyNjAB3tRoQzHJ4dj2FxCJH2aTrTia0cLtuSnB7Tw8OlNhNH5
+	KrmNHfp0+Xqd1Z+q2INSp90r5+Y9M3dZmyYbnp0wmmk3QQjaBFzbyBC2iLI1+VET6i5coR0odSw
+	Yo/uLBTmC+hedTqy66pkf0fi8t+Sv9AqccbuOen+Dj1UTqje/d96AOZGEAT3I602xwM74X/pcOp
+	+KF0=
+X-Received: by 2002:a05:622a:a881:b0:536:6f7d:1145 with SMTP id d75a77b69052e-55d76a27f9fmr215459771cf.21.1795447534734;
+        Mon, 23 Nov 2026 07:25:34 -0800 (PST)
 Received: from ziepe.ca (stjhnbsu6iw-159-2-142-59.dhcp-dynamic.fibreop.nb.bellaliant.net. [159.2.142.59])
-        by smtp.gmail.com with ESMTPSA id 6a1803df08f44-92134a16754sm107600476d6.39.2026.11.23.07.00.42
+        by smtp.gmail.com with ESMTPSA id d75a77b69052e-55d78807b5fsm100671031cf.6.2026.11.23.07.25.34
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 23 Nov 2026 07:00:42 -0800 (PST)
+        Mon, 23 Nov 2026 07:25:34 -0800 (PST)
 Received: from jgg by wakko with local (Exim 4.97)
 	(envelope-from <jgg@ziepe.ca>)
-	id 1xVVX7-00000000rK9-14j4;
-	Mon, 23 Nov 2026 11:00:41 -0400
-Date: Mon, 23 Nov 2026 11:00:41 -0400
+	id 1xVVvB-00000000sLi-2ANX;
+	Mon, 23 Nov 2026 11:25:33 -0400
+Date: Mon, 23 Nov 2026 11:25:33 -0400
 From: Jason Gunthorpe <jgg@ziepe.ca>
-To: Catalin Marinas <catalin.marinas@arm.com>
-Cc: "Aneesh Kumar K.V (Arm)" <aneesh.kumar@kernel.org>,
-	linux-coco@lists.linux.dev,
-	Andrew Morton <akpm@linux-foundation.org>,
-	Baoquan He <baoquan.he@linux.dev>, Mike Rapoport <rppt@kernel.org>,
-	Pasha Tatashin <pasha.tatashin@soleen.com>,
-	Pratyush Yadav <pratyush@kernel.org>,
-	Christian =?utf-8?B?S8O2bmln?= <christian.koenig@amd.com>,
-	Joerg Roedel <joro@8bytes.org>, Marc Zyngier <maz@kernel.org>,
-	Marek Szyprowski <m.szyprowski@samsung.com>,
-	Robin Murphy <robin.murphy@arm.com>,
+To: Leon Romanovsky <leon@kernel.org>, Nicolin Chen <nicolinc@nvidia.com>
+Cc: "Aneesh Kumar K.V" <aneesh.kumar@kernel.org>,
+	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+	linux-coco@lists.linux.dev, Dan Williams <djbw@kernel.org>,
+	Bjorn Helgaas <bhelgaas@google.com>,
+	Jonathan Cameron <jonathan.cameron@huawei.com>,
+	Xu Yilun <yilun.xu@linux.intel.com>,
+	Alexey Kardashevskiy <aik@amd.com>,
+	"Rafael J . Wysocki" <rafael@kernel.org>,
 	Steven Price <steven.price@arm.com>,
-	Sumit Semwal <sumit.semwal@linaro.org>,
 	Suzuki K Poulose <suzuki.poulose@arm.com>,
-	Thomas Gleixner <tglx@kernel.org>, Will Deacon <will@kernel.org>,
-	Russell King <linux@armlinux.org.uk>,
-	Benjamin Gaignard <benjamin.gaignard@collabora.com>,
-	Brian Starkey <Brian.Starkey@arm.com>,
-	John Stultz <jstultz@google.com>,
-	Mark Rutland <mark.rutland@arm.com>, Radu Rendec <radu@rendec.net>,
-	"T.J. Mercier" <tjmercier@google.com>,
-	Madhavan Srinivasan <maddy@linux.ibm.com>,
-	Michael Ellerman <mpe@ellerman.id.au>,
-	Nicholas Piggin <npiggin@gmail.com>,
-	Christophe Leroy <chleroy@kernel.org>,
-	Ritesh Harjani <ritesh.list@gmail.com>,
-	Shrikanth Hegde <sshegde@linux.ibm.com>,
-	Alexander Gordeev <agordeev@linux.ibm.com>,
-	Gerald Schaefer <gerald.schaefer@linux.ibm.com>,
-	Heiko Carstens <hca@linux.ibm.com>,
-	Vasily Gorbik <gor@linux.ibm.com>,
-	Christian Borntraeger <borntraeger@linux.ibm.com>,
-	Sven Schnelle <svens@linux.ibm.com>, Ingo Molnar <mingo@redhat.com>,
-	Borislav Petkov <bp@alien8.de>,
-	Dave Hansen <dave.hansen@linux.intel.com>, x86@kernel.org,
-	"H . Peter Anvin" <hpa@zytor.com>, Kiryl Shutsemau <kas@kernel.org>,
-	Rick Edgecombe <rick.p.edgecombe@intel.com>,
-	"K . Y . Srinivasan" <kys@microsoft.com>,
-	Haiyang Zhang <haiyangz@microsoft.com>,
-	Wei Liu <wei.liu@kernel.org>, Dexuan Cui <decui@microsoft.com>,
-	Long Li <longli@microsoft.com>, Paolo Bonzini <pbonzini@redhat.com>,
-	Vitaly Kuznetsov <vkuznets@redhat.com>,
-	Andy Lutomirski <luto@kernel.org>,
-	Peter Zijlstra <peterz@infradead.org>,
-	dri-devel@lists.freedesktop.org, iommu@lists.linux.dev,
-	linaro-mm-sig@lists.linaro.org,
-	linux-arm-kernel@lists.infradead.org, linux-media@vger.kernel.org,
-	linux-mm@kvack.org, kvmarm@lists.linux.dev, patches@lists.linux.dev
-Subject: Re: [PATCH v10 04/13] irqchip/gic-v3-its: Allocate shared tables
- using CoCo shared memory allocator
-Message-ID: <20261123150041.GB179082@ziepe.ca>
-References: <20261116091137.94252-1-aneesh.kumar@kernel.org>
- <20261116091137.94252-5-aneesh.kumar@kernel.org>
- <awQd81MwZqi55gf8@arm.com>
+	Lukas Wunner <lukas@wunner.de>, Ashish Kalra <ashish.kalra@amd.com>,
+	Tom Lendacky <thomas.lendacky@amd.com>,
+	Herbert Xu <herbert@gondor.apana.org.au>,
+	driver-core@lists.linux.dev, linux-pci@vger.kernel.org,
+	kvm@vger.kernel.org, patches@lists.linux.dev
+Subject: Re: [PATCH v1 00/10] PCI/TSM: Support guest TSM drivers
+Message-ID: <20261123152533.GE179082@ziepe.ca>
+References: <20261123083337.2731019-1-aneesh.kumar@kernel.org>
+ <2026112325-emit-squeezing-5d96@gregkh>
+ <20261123090623.GK14811@unreal>
+ <yq5a7bi3riha.fsf@kernel.org>
+ <20261123115803.GN14811@unreal>
+ <yq5awlq3pto0.fsf@kernel.org>
+ <20261123135638.GO14811@unreal>
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Post: <mailto:patches@lists.linux.dev>
@@ -151,73 +122,85 @@ Precedence: list
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <awQd81MwZqi55gf8@arm.com>
+In-Reply-To: <20261123135638.GO14811@unreal>
 
-On Mon, Nov 23, 2026 at 11:05:23AM +0000, Catalin Marinas wrote:
-> > -	/*
-> > -	 * If set_memory_decrypted() fails then we don't know what state the
-> > -	 * page is in, so we can't free it. Instead we leak it.
-> > -	 * set_memory_decrypted() will already have WARNed.
-> > -	 */
-> > -	if (ret)
-> > +	if (alloc_cc_shared_pages_node(node, gfp | gfp_flags_quirk,
-> > +				       PAGE_SIZE << order, &mem))
-> >  		return NULL;
-> >  
-> > -	return page;
-> > +	return mem.page;
-> 
-> This part is mostly fine but I do wonder why not make this alloc
-> function the same as buddy alloc_pages_node() - return a struct page
-> pointer.
+On Mon, Nov 23, 2026 at 03:56:38PM +0200, Leon Romanovsky wrote:
+> > >> >> But it should not, as you are making driver core changes that will
+> > >> >> mirror the same thing that that patchset is attempting to do.  Please
+> > >> >> work together on this.
+> > >> >
+> > >> > +10000000,
+> > >> >
+> > >> > Greg,
+> > >> >
+> > >> > This series came as a surprise to me given the fact that device trust
+> > >> > series is exactly for that - allow confidential computing.
 
-I'd argue we shouldn't even be returning struct page here, do many
-places even use the struct page? What for?
+Device trust's primary role in enabling confidential computing is to
+give space for the userspace to do all the TSM and attestation stuff
+to get the device into T=1 private DMA mode.
 
-Exposing struct page to places that just want a kernel addr means they
-have to call page_address and we are back to the highmem weirdness.
+It is the userspace that does all this and the userspace bridges from
+"I got the device into T=1 mode" to "Now it meets my userspace policy
+to be trust level Full" and then finally "Now I can bind and start a
+driver"
 
-> >  static void its_free_pages(void *addr, unsigned int order)
-> >  {
-> > -	/*
-> > -	 * If the memory cannot be encrypted again then we must leak the pages.
-> > -	 * set_memory_encrypted() will already have WARNed.
-> > -	 */
-> > -	if (set_memory_encrypted((unsigned long)addr, 1 << order))
-> > +	struct cc_shared_layout layout;
-> > +	struct cc_shared_pages mem;
-> > +
-> > +	if (WARN_ON(cc_shared_calc_layout(PAGE_SIZE << order, &layout)))
-> >  		return;
-> > -	free_pages((unsigned long)addr, order);
-> > +
-> > +	mem.page = virt_to_page(addr);
-> > +	mem.shared_size = layout.shared_size;
-> > +	free_cc_shared_pages(&mem);
-> >  }
-> 
-> Here it gets weird and I don't see why we can't have just a buddy-like
-> interface. The kernel-doc for alloc says that shared_size must be
-> retained for the corresponding free but without reading the source code,
-> you can't tell that cc_shared_calc_layout() gives you the same
-> shared_size populated by alloc. We have a similar pattern in dma-buf but
-> using the compound page order.
+The two concepts work together, but they are not linked inside the
+kernel.
 
-This makes sense, we should not be passing size to a free function,
-make a compount page/high order folio instead if the API is going to
-be struct page based.
+> > >> > Adversarial is equal to the "cc_accepted".
 
-> We can get rid of layout and mem structures (or at least not as
-> part of the API). Of course, this assumes that the shared granule size
-> remains constant for a guest's lifetime but I don't think that's a
-> problem.
+I expect most policies would make "cc_accepted" as a full trust level,
+but we do want to allow adversarial as an option too.
 
-It should be encoded in the struct page meta data, as the order.
+> > >> I think the confusion stems from this thread:
+> > >> 
+> > >> https://lore.kernel.org/all/yq5amrr8yldi.fsf@kernel.org
+> > >> 
+> > >> Based on that discussion, I understood TRUST and eligibility for private
+> > >> DMA to be complementary attributes. Device acceptance determines whether
+> > >> a device may access private memory, while trust determines whether the
+> > >> core must enforce additional restrictions. 
 
-> Was there a caller you had in mind that needs the common allocator to
-> share less than the whole buddy block?
+Yes.
 
-If we want this it definitely needs to be a void * based API not
-struct page one though..
+> > > Device trust does little beyond preventing driver binding and recording the
+> > > trust decision in "struct device". The missing piece, which I would expect
+> > > you to address, is ensuring that the IOMMU and private DMA are configured
+> > > only after the trust level has been decided or as part of that decision,
+> > > rather than beforehand, as they are today.
+
+They are orthogonal and unrelated.
+
+All the TDISP and T=1 DMA flow is about how the DMA API works and has
+no direct impact on trust level. You can choose any trust level for a
+device using T=1 DMA.
+
+Getting the device into T=1 should influence how the userspace decides
+to set the trust level, but it doesn't interact inside the kernel.
+
+Aneesh has it right that these are orthogonal and unrelated
+activities. There may be some confusion as Dan attempted to couple
+them, but after discussion we have moved away from that since it
+doesn't meet all the use cases.
+
+> > What I am still trying to understand is how you view the DMA allocation
+> > and mapping paths determining whether a device can access private
+> > memory. Paths such as force_dma_unencrypted() and SWIOTLB receive a
+> > struct device pointer and need to decide whether to use private memory
+> > or shared buffers.
+
+It is Nicolin's work here that needs to go before the TSM drivers:
+
+https://lore.kernel.org/all/cover.1794343501.git.nicolinc@nvidia.com/
+
+Because that is going in and starting to fix the DMA API to work with
+T=1 DMA devices.
+
+The TSM side should sit on top of that to enable it for PCI devices,
+not just integrated devices.
+
+I think for now lets just focus the TSM series on the attestation side
+and we will tackle the PCI and DMA API issues as another series.
 
 Jason
