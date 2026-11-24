@@ -1,52 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795492998;
-	b=VfqjAhu/8z4Q/VbuwXzWVu/+m9+g4fwzHeWtoTKp0LC/4YEagDH8athkppr3YVTui9il
-	 G/nCHOfMZ6uckrXuSfnPFepwiYAHQqGdYTdqPrWbFPZqu9H1iz3VHtPHVKOA0akx/IpL7
-	 8gImO9JSYf5kWwIb8RK2UYwZmx2mxmdO5XBkACDX+eUwFW6KagUb/M0KwXLIh9pbihUUM
-	 jUYNf+5smcjviBLN0pcIxddJK0J8CFoQmVtrpEgmcg6n6dPiYCHkXWgtcA5Dx/PvSwByT
-	 HeWlGwFsOFIWK7q2r3o32inNH/NhS8q2TNZuY1f8N4PAT8+NJheSNsz73+/XFnEsBYg==
+	t=1795493548;
+	b=zgCL6IHAnGWvGDnIlCa0LUczerz5vRInX+TYWW27cSvVju7pVSnOkHbg5Fc+Mzdnx3wS
+	 bD1yfMjnoDLrubJmYw11qMgnmOAy6J5ggx85LB5Mnz8BUtqQWv4J5Veep9FcQjRc6/30i
+	 wNahda6592lx0zloTRZ/xkiHhKR3Q/YNmqf3Ltn2l1Y9nBYaAz6WktGloRNNF98PeosHS
+	 H57aTUlxe6LLBk8TL3VsiaFDLDrvacK8tFrTFM8HlidQsu4yQ5XLMeVE5qJJ2SwYd1kGX
+	 tjGUqN1U0EBaifn/1E8Z+iPc9Yp/0vnDDTlTBRbRfd0Sb7xk7N4n4wxFSnNCLSvFv0A==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795492998;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795493548;
 	h=Received:DKIM-Signature:X-Mailer:From:To:Cc:Subject:In-Reply-To:
 	 References:Date:Message-ID:MIME-Version:Content-Type;
-	bh=0uolOVqD40xxzEqeWG55ZDWSlt7NaVVPmj6fMxUPPhA=;
-	b=ONIrdnf/G72rg1pH88slOJ8u5ACgVC8w+2DOf9IY0Cu89QwyVHvQyE1Oafnz3EMwwCX+
-	 vg0q+v4voMxW/Xy9HbRqjrYDtYwJmdYftun1t8GNiu8pjYCeL/jTtwV6Mj6j+bbdxC9MJ
-	 CWrkxvzERWai47tLeRPrZLZVnOJypCNS4nqcyzLcauq/PrkxVc/TbTbOQUyj4cAb/0nzu
-	 dEYUNsJtwPNkkA1fkncJcoKzS2Ppwl/HFIftnuuN3Emo4EHCFy6TAqZ6+8nQmcJe1pA2p
-	 HocdBq8WWLNZzzi0Hk3nCPLm9Izo25THiGAWIkSwL2X87rxqu4U6BRrUazNip8Tc1ow==
+	bh=TOPyh86e0J/wqM6iyFTSqLXbZQLp2s74/uc/F4v5k2k=;
+	b=eeFN2un9TOwRzFrtZXYHzBw3PIGJRoSjoFW4DqeY1+ARUMqPvfnxAtvTuOQWwkbX5OcF
+	 EUgH8+6/NEI1ObbgXYRPSqn8ya2VhVPwMXLt3wLPRkEnsxLcWvPTfoaQqTltKRI5ZymFn
+	 Z7csx+pKMgBJwU118ckGvGZJh1JmqlK2PudHDo5Na6W7KM9bhnx94ri33rBDBH2+a7WVn
+	 KlJg+LvhRutdWGheY2zP6NbpOQJG3EySw9NzKa3wBTN4M38N3yjcrSS7mObFCvxyTZEY5
+	 m11Pu2sh3Ncrj3eAzBZQNVj1TVjtB04dn9qeoa8mY+drvON+8BjOHmd2z8G4f2SbZxQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=dUBfTU2b;
+	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=TacI6VBy;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 17EFF606A31E;
-	Tue, 24 Nov 2026 04:03:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5F93A606A31E;
+	Tue, 24 Nov 2026 04:12:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=dUBfTU2b
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4B5A81F000D0;
-	Tue, 24 Nov 2026 04:03:05 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=TacI6VBy
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 03F6F1F000D4;
+	Tue, 24 Nov 2026 04:12:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1795492997;
-	bh=0uolOVqD40xxzEqeWG55ZDWSlt7NaVVPmj6fMxUPPhA=;
+	s=k20260515; t=1795493548;
+	bh=TOPyh86e0J/wqM6iyFTSqLXbZQLp2s74/uc/F4v5k2k=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date;
-	b=dUBfTU2bZcriHyCyznmH+wtA4cnOoSaG8LaH1IiDJmFTGiErgOff/JaXdhZtcKNpR
-	 QVrWCpJegIFq7g/12U5wBrAGd+26SB9CbXYXNjEJddRYB/CEBLMRRSly+b67LsJFLa
-	 vH6tqLGB05fpyjzFuvcVfpD1qP1GdWX8X991h3E88f19Nm/bD3flaoI5G3ei9yJp78
-	 glKx0hXlkIKU7OobyUcTjw/wXDd5+EnqSvZQyJBYQ55CZJDfqAwbDsksWrIu7/TPu5
-	 J0l8jFnsHmTZuwZsGnBw/hhNHfDY31+c6PfotH7V5Kytit6yI755loWgbMEnvqOReH
-	 o7scafsqHqvow==
+	b=TacI6VByHmOlrNMYSCRpaldILoRzjvB7MBWa7eaMuyWG/LfquQTS7/HAwYu9490pe
+	 XQ2F8WyNFlP6ZRGn3e6cLQsHNlim7ClGQmqalBH5tr2THZ2VixKCIswPPTBu+Ezszn
+	 gMMUpSrPneTOQh4Ad8nB4h/DPqDEewrvZ8CBE0c0CFM1aPs7BSu0j77dIR9LrU1I6E
+	 NwO7weBpkdOlqKdKe7Q0BdLDX1hJflxxZT/NzzdL9ixUyP/DKAXhYiR0OJWrX1u2sq
+	 Gdj9K9g33VNSw8R1+0e5cJecESdB63deRy19Ht+5ShIxR6iGfgeVcjEZVujvuZB75J
+	 LFDjnVJuqj/Gg==
 X-Mailer: emacs 31.1 (via feedmail 11-beta-1 I)
 From: Aneesh Kumar K.V <aneesh.kumar@kernel.org>
-To: Baolu Lu <baolu.lu@linux.intel.com>, linux-coco@lists.linux.dev
-Cc: baolu.lu@linux.intel.com, Alex Williamson <alex@shazbot.org>,
+To: Jacob Pan <jacob.pan@linux.microsoft.com>
+Cc: linux-coco@lists.linux.dev, Alex Williamson <alex@shazbot.org>,
 	Alexey Kardashevskiy <aik@amd.com>,
 	Bjorn Helgaas <bhelgaas@google.com>,
 	Catalin Marinas <catalin.marinas@arm.com>,
-	Jacob Pan <jacob.pan@linux.microsoft.com>,
 	Jason Gunthorpe <jgg@ziepe.ca>,
 	Joerg Roedel <joro@8bytes.org>,
 	Jonathan Cameron <jic23@kernel.org>,
@@ -71,15 +70,16 @@ Cc: baolu.lu@linux.intel.com, Alex Williamson <alex@shazbot.org>,
 	Jonathan Cameron <jonathan.cameron@huawei.com>,
 	Tom Lendacky <thomas.lendacky@amd.com>, kvm@vger.kernel.org,
 	linux-arm-kernel@lists.infradead.org, linux-pci@vger.kernel.org,
-	linux-tegra@vger.kernel.org, patches@lists.linux.dev
-Subject: Re: [PATCH v9 08/13] PCI/TSM: Keep connections active while device
- contexts exist
-In-Reply-To: <0996eead-a63e-4a17-96d3-45ccd48cd4b1@linux.intel.com>
+	linux-tegra@vger.kernel.org, patches@lists.linux.dev,
+	jacob.pan@linux.microsoft.com
+Subject: Re: [PATCH v9 09/13] iommufd/viommu: Select vIOMMU operations
+ before allocation
+In-Reply-To: <20261120094207.00002e89@linux.microsoft.com>
 References: <20261116081935.85372-1-aneesh.kumar@kernel.org>
- <20261116081935.85372-9-aneesh.kumar@kernel.org>
- <0996eead-a63e-4a17-96d3-45ccd48cd4b1@linux.intel.com>
-Date: Tue, 24 Nov 2026 09:33:02 +0530
-Message-ID: <yq5awlq2c1vt.fsf@kernel.org>
+ <20261116081935.85372-10-aneesh.kumar@kernel.org>
+ <20261120094207.00002e89@linux.microsoft.com>
+Date: Tue, 24 Nov 2026 09:42:12 +0530
+Message-ID: <yq5atsl6c1gj.fsf@kernel.org>
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Post: <mailto:patches@lists.linux.dev>
@@ -91,24 +91,48 @@ Precedence: list
 MIME-Version: 1.0
 Content-Type: text/plain
 
-Baolu Lu <baolu.lu@linux.intel.com> writes:
+Jacob Pan <jacob.pan@linux.microsoft.com> writes:
 
-> On 11/16/2026 4:19 PM, Aneesh Kumar K.V (Arm) wrote:
->> Add PCI TEE Security Manager (TSM) contexts that prevent PF0 disconnect
->> while in use. Verify that the device is connected to the requested TSM.
->> Each successful get returns a separate context and requires a matching
->> put. Reject disconnect with -EBUSY until all contexts are released.
+> Hi Aneesh,
+>
+> On Mon, 16 Nov 2026 13:49:31 +0530
+> "Aneesh Kumar K.V (Arm)" <aneesh.kumar@kernel.org> wrote:
+>
+>> Physical IOMMU drivers currently provide the vIOMMU size and
+>> initialization callbacks through iommu_ops. The initialization
+>> callback then selects and installs the corresponding
+>> iommufd_viommu_ops.
 >> 
->> Remove the legacy bind and unbind interface. Device security state is
->> managed by the backend, so also remove the associated "bound" sysfs
->> attribute and its ABI documentation.
->
-> This patch does two things: add pci tsm contexts to keep the pf0 active
-> while in use, and remove the old device bind/unbind interface. Could
-> these changes be split into separate patches? That would make the
-> changes easier to review.
+>> Add iommu_ops::get_viommu_ops() to select the operations from the
+>> physical device and requested vIOMMU type before allocation. Move the
+>> size and initialization callbacks into iommufd_viommu_ops. The core
+>> can then validate the selected operations, allocate the driver
+>> structure, initialize it, and install the operations.
+> The patch title is slightly misleading since it does not change the
+> order between setting viommu_ops and allocation. IMHO, it is more like:
+> "Move vIOMMU ops selection into the core"
 >
 
-Sure, I will split the bind/unbind removal into a separate patch.
+previously we did
+	ops = iommu_dev->ops;
+	viommu_size = ops->get_viommu_size(idev->dev, cmd->type);
+	viommu = (struct iommufd_viommu *)_iommufd_object_alloc_ucmd(
+		ucmd, viommu_size, IOMMUFD_OBJ_VIOMMU);
+	rc = ops->viommu_init(viommu, hwpt_paging->common.domain,
+			      user_data.len ? &user_data : NULL);
+	if (rc)
+
+and viommu_ini did things like
+		viommu->ops = &arm_vsmmu_ops;
+
+With this patch it becomes
+	ops = iommu_dev->ops->get_viommu_ops(idev->dev, cmd->type);
+	viommu_size = ops->get_viommu_size(idev->dev, cmd->type);
+	viommu = (struct iommufd_viommu *)_iommufd_object_alloc_ucmd(
+		ucmd, viommu_size, IOMMUFD_OBJ_VIOMMU);
+	rc = ops->viommu_init(viommu, idev->dev,
+
+
+That is, we now select the vIOMMU ops before allocation.
 
 -aneesh
