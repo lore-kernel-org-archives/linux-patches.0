@@ -1,101 +1,113 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.167.42
-ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=pass;
-	t=1795485888;
-	b=hYVo84HSOusRs0M+I6ms3t/gIwK78h86nDLleo/jfNii2mMQ58kDdFm4RpfEq9TmaABW
-	 iDOpSfDQTL2rY88+xgulBCkegmtItcBgwVYSqUPsqi1fIhHWBxGax4Xn+42VCuk6yuKT0
-	 7z0ijJA3H+O80qsCAFkYB74u4XtKHA729n9zad2JcgatQnDUh6pDSiiNZaIlhJ/Y/Dbrz
-	 Odwrc5h44zEK2W6SxopJHo3b7xIDktQdCAD/ezBi9HK+mCYoqBOCx7RSped90VdFqpL01
-	 UtI194uEr50bDrRo7770YwZlmpHkqdsnr6JmD6SyvYDEW3K73YYgj8n9O/blqE1FbQw==
-ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795485888;
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.219.47
+ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
+	t=1795488525;
+	b=elPBanufeQV2ol+vAR/Wbc5DeKhHWMt9det3HpNxkFCCq0f/Wa28SajwKSr/H7lnRE5i
+	 lzh82F/rmFizvHIZQbFxCU5wXHswrQa0ut04kh8vEO1+xsgsbyAwQk1a6hRS7HG4B0M8y
+	 +DXyrTx9c+a/nlfOnBzOPn4ozPVf0G8WxLNYZIejQ8RI9q5eZ/x5vHVbTReFTNrG4ZEiU
+	 K074I2TLdm/1x6u2chADbYW/e/k4sC5YM7/QJ98XSW8ZFdgXc41LdN3mDWnNg9+MrZtqH
+	 C9FrYzylSnaa9C8ZjsGAWxH9GQloIXGtwEkgCZZ4mRB/YQEWzOi4uX3c6aksgTbMYJw==
+ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795488525;
 	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
-	 X-Forwarded-Encrypted:X-Gm-Message-State:X-Gm-Gg:X-Received:
-	 MIME-Version:References:In-Reply-To:From:Date:X-Gm-Features:
-	 Message-ID:Subject:To:Cc:Content-Type:Content-Transfer-Encoding;
-	bh=QZ8jeJhff8TwVzDr8mq7hnVn9Uwjnn1WsiAHJK7NNrs=;
-	b=KG8gGORwwAk5cbSmfNew9w9x51j0eE8LXdn4QtNYana4Zg2vKNw48fxT5OOtPMfWuTdt
-	 7g+ilKM/wgRsq8zN7hqDCKzag+egkGziJr+d69DTCyR9+ZNetfx0pdo/KFyT0eHiHb7ib
-	 F7m8wthFqVyXf/kKvEAv2ZcE410qmvHNrwaTFwWJYcHOl26J/IRxR8LtrvwP8jZtO5Oqp
-	 MPwgeTUPV3L14QeDUFy3DblRXud060SBv7UkLEkkAYshu9j+E7nYYXIdtwSVa1mpbUbhv
-	 kUpdjP+TnkAQVUsCBG2TXrwohkI9UWzTdLOG0eQYFYobMqhFVnZfLfqc2LxyN4Cq7xw==
-ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=google.com;
-	spf=pass smtp.mailfrom=google.com;
-	dkim=pass header.d=google.com header.i=@google.com header.a=rsa-sha256 header.s=20260707 header.b=Au1HBdhe;
-	arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.167.42
-Received: from mail-lf1-f42.google.com (mail-lf1-f42.google.com [209.85.167.42])
+	 X-Forwarded-Encrypted:X-Gm-Message-State:X-Gm-Gg:X-Received:Received:
+	 Received:Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To;
+	bh=feBMC46Kg9xglm0UM1RjR22Aujb6Qvmmma1ih7AmJ8A=;
+	b=RLmSFy3IJ+xSiGOGNriDVaj6mQdtOiP4QsWmc23IGsL4giInDM3FASDXwtDG9ccg0NcK
+	 W3b3SKBH1u9ce3SbsjTJisj0LdkU+MXZeQ2EW9TpXJHj+/3WFdeQUN1WaiNohf2OEDx+f
+	 VEttYDPSESvCJ0Da3yggsvtntenAPA4w9ySBIhwr93eUYeXnnKYLv9jMavsErMFVm1eOQ
+	 hkiGXQ/dxrbwB+wsBSZ/+MCE83KIPVjRbKh87owAcfBDh+OXnLwv9sXdqJ1frgZkilOXR
+	 rSmWi3M+YOo4krOw+JyXlGCs4BBkeIps1Jhdvpx63gWhEgb+pwCBiPE2/YvgkrYuBJA==
+ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
+	dmarc=none header.from=ziepe.ca;
+	spf=pass smtp.mailfrom=ziepe.ca;
+	dkim=pass header.d=ziepe.ca header.i=@ziepe.ca header.a=rsa-sha256 header.s=google header.b=RtNA4YSv;
+	arc=none smtp.remote-ip=209.85.219.47
+Received: from mail-qv1-f47.google.com (mail-qv1-f47.google.com [209.85.219.47])
 	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 14084606A326
-	for <patches@lists.linux.dev>; Tue, 24 Nov 2026 02:04:47 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 14084606A326
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D2A3D606A321
+	for <patches@lists.linux.dev>; Tue, 24 Nov 2026 02:48:44 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org D2A3D606A321
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ziepe.ca
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ziepe.ca
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.a=rsa-sha256 header.s=20260707 header.b=Au1HBdhe
-Received: by mail-lf1-f42.google.com with SMTP id 2adb3069b0e04-5be58ad9600so19739e87.0
-        for <patches@lists.linux.dev>; Mon, 23 Nov 2026 18:04:47 -0800 (PST)
-ARC-Seal: i=1; a=rsa-sha256; t=1795485886; cv=none;
-        d=google.com; s=arc-20260327;
-        b=mrnhDZ0cCIBj+JV4XKChAl7J8+0TbL7B6EPAHXfPDx+vTcgxnmcIlqxlbSsxJrLo1R
-         gCWkbqqXUVaewa66p6h5IUTnpp/N1EDWQ0BYZ9FqafLOfooxGqBKBBdsbVYzv3npRLb3
-         jTAwe4B7rs0pv3NuOJ048rHcPplclVvw0AYraxu+SQkc/uYEznj6pb612aYIbwU/bmBr
-         W4KE7IQ55BN6YVhstqpWN+S2WJP7lQsV9/svw1Nx8hK0Nx2SUX0s+KL6rg8Lk/LuaN+w
-         owapR26yHwpxJS980uI7nf/qRkzaMLkS4kVomp9sMUicJPHW7no2yCiAOpwQP4LLiraD
-         M2XQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:dkim-signature;
-        bh=QZ8jeJhff8TwVzDr8mq7hnVn9Uwjnn1WsiAHJK7NNrs=;
-        fh=lgnU14s0Y6+QoZpT4xO2xufr3SqWXuLqgsuKwl6EqYU=;
-        b=mhIHjOdA/5bPXUwBslVVxuY58arVf1166TT47UuOv/v9jit7Db4RQEhx+OLBfKHx1S
-         heyOkWUc6msxd+EQycD84vg6fzR1ghdnmv2CGznW+FdcLFHg73gCN8xMwyhsQGKzvTvh
-         1sEgr5/Tt21+9sX4I94qTWCQQdy59R+RZAg/7Yiz0k8af7M/fkMYNya+OU0rqL1g6IyG
-         2jf8KvRu8aq/X7INpR0yUjq+noH4tZf8efObVefgUYFay9SJ56J3iJ2rOKU4e+AOXBfs
-         yx+0LIdn+fPxsEPkfBNl+sqAuswqFiYuhW+kNLFIbaSVRweHXhbs17YrKYGuKLP0Zc2O
-         Ph8g==;
-        darn=lists.linux.dev
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+	dkim=pass (2048-bit key) header.d=ziepe.ca header.i=@ziepe.ca header.a=rsa-sha256 header.s=google header.b=RtNA4YSv
+Received: by mail-qv1-f47.google.com with SMTP id 6a1803df08f44-91c847584b8so45987986d6.0
+        for <patches@lists.linux.dev>; Mon, 23 Nov 2026 18:48:44 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20260707; t=1795485886; x=1796090686; darn=lists.linux.dev;
-        h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:from:in-reply-to:references:mime-version:from:to:cc:subject
+        d=ziepe.ca; s=google; t=1795488524; x=1796093324; darn=lists.linux.dev;
+        h=in-reply-to:content-disposition:content-type:mime-version
+         :references:message-id:subject:cc:to:from:date:from:to:cc:subject
          :date:message-id:reply-to:content-type;
-        bh=QZ8jeJhff8TwVzDr8mq7hnVn9Uwjnn1WsiAHJK7NNrs=;
-        b=Au1HBdheIzpAbd2JoZkJkQuYbnbYLjNGax+9Hgqt/+wgW+dQkphN03XyI7+UWrLxw5
-         izZydNoKXNvErjrsKMm2ue+FEhfe50HtcfX6uJGyctgWhIG8mZ11UuqS7K54uMoj7+9M
-         eKapPGz7xh/ofqlTmLTn5qyO7ylq6eZ+jI+9AeTed6iskeCWbWx8tRDs8GpOv3/i0LMy
-         xJoVMQfgJIDlbfl9cynDPzxBpDF+theiAdtA8DmYSpNLp19XPjBmDBrqkieFxaKbgGIy
-         X0JzD9V+vycsTLSKbic559tNb6t/Ay0vyk0+UhUiw/xYLbSDQ+oX7+6ICznujlH2Y44D
-         dUKA==
+        bh=feBMC46Kg9xglm0UM1RjR22Aujb6Qvmmma1ih7AmJ8A=;
+        b=RtNA4YSvLFMZ5lnSiZh1m1NlL+D+riCXGTcQdepviTMC3WSnMRhYxcLrqMYSyFcISA
+         lc5MWZXgRQcIAsAbDjrgEqTk7DeXyYZZkiOm8X/uCU3eZtVKJK44Zom4T03iQ1AsVoyT
+         Ysblwh8C/dugkHM2f0c7Fh0Epz+5BFxRCOOgTwFZc9cS5mbyKjmom07PZOt+nOjlfznH
+         MFUlvndIDvQCLlNAIid00vWeHyvV3nrPiutokTEH9blml+TO3aC9SOSR2z5WXqsHP1Wu
+         Ogmu+Tq4grBPADLinR+htLAeN+MAHIra8jOwTHLVZ0KugquZv+w+xIOtHSdODzTRKb/H
+         d7Gw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1795485886; x=1796090686;
-        h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:from:in-reply-to:references:mime-version:x-gm-gg
+        d=1e100.net; s=20260707; t=1795488524; x=1796093324;
+        h=in-reply-to:content-disposition:content-type:mime-version
+         :references:message-id:subject:cc:to:from:date:x-gm-gg
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
          :content-type;
-        bh=QZ8jeJhff8TwVzDr8mq7hnVn9Uwjnn1WsiAHJK7NNrs=;
-        b=KM+gjhiYN82YSthZFGc51NaSQ+EHbWIBjLGfJanlyo5ZbxeGJQC92bAXT8MzapgC6D
-         5g4Zh5AFfeBUA2j+OUVwBmXp2VpX+wfRBVEZS8Yj22M0vPkKSlzfduDNanf2X/Lw+xhr
-         hVmws4Y88LB0w9WEMin+06a5+br++AqvAGcOMHOD6fKkQDLK9K5xcvoJb34l+vPpouZB
-         T5Z8Mth31NnW3jKk9gZniy5jTlIZRXm7da7lTwL7f1/YYkS/nCR3B0VlFZxd8NlXoPHN
-         HYApQqBN3qxR+LsYc54kg1OiS7g3r9CT1LqW0TzzKfgezs//a+i03lA5ZCLKrXt7lfx5
-         33zw==
-X-Forwarded-Encrypted: i=1; AL+hErHniDfswM1gY5m/Kmo3DoWyzNjGvCym73YR4+nnnyeAcUHUqrax3JGPKKkz+vwbaHk1+X5fJmJz@lists.linux.dev
-X-Gm-Message-State: APuU4Z9jePj+BUDBw2SpVqPpf7QWaZB7WIqF1124J4/iMk0doZcbxxk+
-	CEkLV2VS/114iaimjS90HBvQAL3ZK4G16cPVdH2S5UAjHIbKhSbAxNm4crqCCeRHe3ACZHuBu+5
-	UV8gaVEOfGzi4o5y9HruLEHTEVaRO7K2RHwm9sZA9
-X-Gm-Gg: AZFdTZfz5qJV6ZKui0KrAzHbXI1yiboYExAACr/0pOVx3sYTYurJaz0zENg+XIFBVsY
-	JfuBfiqh38hpWth/1HTgCWhqKKL/EUxc+ofpS8x13eIprw/tckyjEONO9PuTOwFJuKLDeAczWZy
-	ExMwqe/icrXZOnH6+286Ku9skqTGz4sHM2ckWr4NiXeUxjIWMF5MxHzc9ZYdSa6tH1vkhzrC2T6
-	ZpvlhIkKLcveml6ITz9QXRJY3a5udIQ4Kj3Cdsh0GnbndL+P6dUVGTI3w04txqn3OS9qUgVmZ39
-	yXJqYHDiSJbLor4Xn4AZsDK9Tp94sbsjIWgz7yKXSDn9UuouLOovg+O8MktIhxQcPQknV/tAXG5
-	SKl2kGQd5C1vOA+A6plwc8tj3JWKq87mK67vBwAhMMP/xJh7+59lkwJHthT5Z4sAVQyNtNHwDZO
-	NPfEsWi723/KkVbiaLts1wkGl4SxpUiu8PDp6F9btupm45/O2aOBM=
-X-Received: by 2002:a05:6512:b9e:b0:5c1:5209:5a44 with SMTP id
- 2adb3069b0e04-5c1c8239441mr351300e87.4.1795485885773; Mon, 23 Nov 2026
- 18:04:45 -0800 (PST)
+        bh=feBMC46Kg9xglm0UM1RjR22Aujb6Qvmmma1ih7AmJ8A=;
+        b=gZ9HpNhlIdC9wL6EgKsRRDTpTqGITKe5M3WMMJu57fW1k8OkUw9YLGAj+/QNMcoRTq
+         FpU+R/QSGFVFsFCzsQmIRYC0HcgrTeWix1BBl0WyM9t2QsBSrNEHZUCREyLLbd49cjOI
+         7AU+7KDebzfcOwCga1Vj8hb16CduaTWRzvKx8ItMlWsUUqxjqFMdVw4RXUo9D+e2+BPM
+         UCOi1Lcgfn+zTAHDC4tJrMff39MmIZBfF5eUHnzPzQzrh2JhDB0Sb/Op8smmnXmLk6vc
+         BF7iZwJ6+S7y09QR4ptVpcMbkOJIY/2nJU8ZkFab1akljuB/G7anh6cpOlYOt1+d8im2
+         DdwA==
+X-Forwarded-Encrypted: i=1; AL+hErF66h09zAkur+01GbDLfgwKtrOGbBTCyWAfwFLUtkxn60gaefLvSxdTd7R4+3Wu/B6VkArnoLNY@lists.linux.dev
+X-Gm-Message-State: APuU4Z8fITc5mjJRrV3tNoxksAwr/6EPkv65aPHfg7G28b8/VXiIbZNj
+	puFnBB0kKGTR3Zx6xKMhOAxWd8hsSpXHQOXK7XrR/Wqc+TX9ZfPU0txjaUnDxr4YZpo=
+X-Gm-Gg: AZFdTZfIAQNPSz4cmR1A9lax81E3auw6n83szFL+Lup3hRsD43Ezob+jJrn6O+MYNMT
+	kt5/1OZGCFKev2wY9XYe6CbQmiOqlxAZBQtH95epoFfBqcK2aDi8B6UdjVvfSQ+S5LVlJXOqxWB
+	w/0q1+HdHPidBkX7pZaHUcO8HwPCL0OGh3p+Pu0j2/1TLfIqfIwK1Ym1aytpTde1khtvXfYqkUC
+	Z+B7vFY+08vtghs2snST7MqDHEdu0D9LOSh7WviDmuZSeEuzlQi/8xLQxVe2jChj9yau5tWqAqS
+	Ph3hxlFGDVO+ZNXlcgPXeQXxps7iHbp8wZtXZZJSN3PQKyAtnLrJyY1mVviAZYcF2xN1O+6o+vH
+	FS8R1cKAyklD0QYbKFH4Htbr5+WCLiY/DD4J+1nuHNw7GOhw7N9QB0/3USnykJxXqB8i9ZdwUAu
+	186si7QQrmyaRWRxKnMibhJTLsHYemRdF0lkULTA4Hs/7VEni78QSucFJPrUxyHQBqEE8x1of33
+	drGIC1i4s7EcCubKxa3/4BBVwveMcla8Zo5DNbpNrtDDErirJrKGv+9U4UmRHmQoEqZ0QcuLH01
+	lY1fwQw=
+X-Received: by 2002:a05:6214:2263:b0:921:37ed:5c6 with SMTP id 6a1803df08f44-92137ed06efmr217313286d6.22.1795488523691;
+        Mon, 23 Nov 2026 18:48:43 -0800 (PST)
+Received: from ziepe.ca ([142.177.118.84])
+        by smtp.gmail.com with ESMTPSA id 6a1803df08f44-921349d14d1sm122581686d6.18.2026.11.23.18.48.43
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 23 Nov 2026 18:48:43 -0800 (PST)
+Received: from jgg by wakko with local (Exim 4.97)
+	(envelope-from <jgg@ziepe.ca>)
+	id 1xVgaI-000000002sY-302b;
+	Mon, 23 Nov 2026 22:48:42 -0400
+Date: Mon, 23 Nov 2026 22:48:42 -0400
+From: Jason Gunthorpe <jgg@ziepe.ca>
+To: Alexey Kardashevskiy <aik@amd.com>
+Cc: "Aneesh Kumar K.V (Arm)" <aneesh.kumar@kernel.org>,
+	linux-coco@lists.linux.dev, Dan Williams <djbw@kernel.org>,
+	Leon Romanovsky <leon@kernel.org>,
+	Bjorn Helgaas <bhelgaas@google.com>,
+	Jonathan Cameron <jonathan.cameron@huawei.com>,
+	Xu Yilun <yilun.xu@linux.intel.com>,
+	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+	"Rafael J . Wysocki" <rafael@kernel.org>,
+	Steven Price <steven.price@arm.com>,
+	Suzuki K Poulose <suzuki.poulose@arm.com>,
+	Lukas Wunner <lukas@wunner.de>, Ashish Kalra <ashish.kalra@amd.com>,
+	Tom Lendacky <thomas.lendacky@amd.com>,
+	Herbert Xu <herbert@gondor.apana.org.au>,
+	driver-core@lists.linux.dev, linux-pci@vger.kernel.org,
+	kvm@vger.kernel.org, patches@lists.linux.dev,
+	Dan Williams <dan.j.williams@intel.com>
+Subject: Re: [PATCH v1 01/10] PCI/TSM: Report active IDE streams per host
+ bridge
+Message-ID: <20261124024842.GB9566@ziepe.ca>
+References: <20261123083337.2731019-1-aneesh.kumar@kernel.org>
+ <20261123083337.2731019-2-aneesh.kumar@kernel.org>
+ <f377271d-353f-4c8e-94d5-98159a66ab28@amd.com>
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Post: <mailto:patches@lists.linux.dev>
@@ -105,53 +117,46 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-References: <20261123083337.2731019-1-aneesh.kumar@kernel.org> <20261123083337.2731019-11-aneesh.kumar@kernel.org>
-In-Reply-To: <20261123083337.2731019-11-aneesh.kumar@kernel.org>
-From: Jianxiong Gao <jxgao@google.com>
-Date: Mon, 23 Nov 2026 18:04:19 -0800
-X-Gm-Features: Aa3M54qI-S6sAhD3oo3lD3dF7U9WjxfGl_G2FEa2MNAlB4C8vKhlPO9m5SK63WY
-Message-ID: <CAMGD6P0pNAnq9U80dnpgbz+hHbX1yH1bdmXjcie4oiq7KizU=A@mail.gmail.com>
-Subject: Re: [PATCH v1 10/10] PCI/TSM: Configure accepted device DMA during
- driver attachment
-To: "Aneesh Kumar K.V (Arm)" <aneesh.kumar@kernel.org>
-Cc: linux-coco@lists.linux.dev, Dan Williams <djbw@kernel.org>, 
-	Leon Romanovsky <leon@kernel.org>, Bjorn Helgaas <bhelgaas@google.com>, Jason Gunthorpe <jgg@ziepe.ca>, 
-	Jonathan Cameron <jonathan.cameron@huawei.com>, Xu Yilun <yilun.xu@linux.intel.com>, 
-	Alexey Kardashevskiy <aik@amd.com>, Greg Kroah-Hartman <gregkh@linuxfoundation.org>, 
-	"Rafael J . Wysocki" <rafael@kernel.org>, Steven Price <steven.price@arm.com>, 
-	Suzuki K Poulose <suzuki.poulose@arm.com>, Lukas Wunner <lukas@wunner.de>, 
-	Ashish Kalra <ashish.kalra@amd.com>, Tom Lendacky <thomas.lendacky@amd.com>, 
-	Herbert Xu <herbert@gondor.apana.org.au>, driver-core@lists.linux.dev, 
-	linux-pci@vger.kernel.org, kvm@vger.kernel.org, patches@lists.linux.dev, 
-	Zhichuang Sun <zhichuang@google.com>, Piranava Tamilselvan <piranavat@google.com>, 
-	Erdem Aktas <erdemaktas@google.com>, Ackerley Tng <ackerleytng@google.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <f377271d-353f-4c8e-94d5-98159a66ab28@amd.com>
 
-On Mon, Nov 23, 2026 at 02:03:37PM +0530, Aneesh Kumar K.V (Arm) wrote:
-> + /* driver_managed_dma is unsupported. */
-> + if (to_pci_driver(pdev->dev.driver)->driver_managed_dma) {
-> + ret =3D -EOPNOTSUPP;
-> + goto out;
-> + }
+On Tue, Nov 24, 2026 at 11:11:49AM +1100, Alexey Kardashevskiy wrote:
+> On 23/11/26 19:33, Aneesh Kumar K.V (Arm) wrote:
+> > From: Dan Williams <dan.j.williams@intel.com>
+> > 
+> > The first attempt at an ABI for this failed to account for naming
+> > collisions across host bridges:
+> > 
+> > Commit a4438f06b1db ("PCI/TSM: Report active IDE streams")
+> > 
+> > Revive this ABI with a per host bridge link that appears at first stream
+> > creation for a given host bridge and disappears after the last stream is
+> > removed.
+> > 
+> > For systems with many host bridge objects it allows:
+> > 
+> >      ls /sys/class/tsm/tsmN/pci*/stream*
+> > 
+> > ...to find all the host bridges with active streams without first iterating
+> > over all host bridges. Yilun notes that is handy to have this short cut [1]
+> > and from an administrator perspective it helps with inventory for
+> > constrained stream resources.
+> > 
+> > Link: http://lore.kernel.org/aXLtILY85oMU5qlb@yilunxu-OptiPlex-7050 [1]
+> > Reviewed-by: Xu Yilun <yilun.xu@linux.intel.com>
+> > Signed-off-by: Dan Williams <dan.j.williams@intel.com>
+> > Signed-off-by: Aneesh Kumar K.V (Arm) <aneesh.kumar@kernel.org>
+> > ---
+> >   Documentation/ABI/testing/sysfs-class-tsm | 13 ++++
+> >   drivers/pci/ide.c                         |  4 +
+> >   drivers/virt/coco/tsm-core.c              | 95 +++++++++++++++++++++++
+> 
+> I'll take to the tsm tree, thanks!
 
-Hi Aneesh,
-A short clarification question on this check: once a guest TSM driver
-implements dma_enable, pci_tsm_dma_prepare() will reject binding
-vfio-pci (and other driver_managed_dma drivers like pci-stub) with
--EOPNOTSUPP on both locked and accepted TDIs.
-Is rejecting driver_managed_dma just a scope limit for this series, or
-the intended long-term policy? If it's a scope limit, is the expected
-direction for in-guest vfio-pci to enable private DMA when it claims DMA
-ownership / attaches an IOMMU domain (via iommufd or vfio_iommu_type1),
-rather than during pci_dma_configure()?
-We run a userspace accelerator driver over vfio-pci inside a confidential
-guest on an accepted TDI (similar in model to DPDK/SPDK), so knowing the
-planned direction for driver_managed_dma =E2=80=94 and whether any upstream=
- work
-is planned for in-guest vfio-pci support on TDIs =E2=80=94 would really hel=
-p us
-plan.
+Lets not take any new sysfs APIs please. These all need a careful
+thing and we are not having a good history right now on any of these.
 
-Thanks,
-Jianxiong Gao and Zhichuang Sun
+I'm not even sure what this is supposed to be for, is it debugging?
+
+Jason
