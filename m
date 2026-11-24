@@ -1,77 +1,49 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=217.140.110.172
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795510835;
-	b=B+laAPsnlz6TQeDC/o0tzAZOcmJ3tiodypPT6Min9ni4uMIXd+Qp9Vqvm/6xvuSZZ/mn
-	 Q/RRotgU1gKbPVRCLRICCicapb/Z23j5nz720D6Cky0+yQaoKMSVPJrWPxNEZ5xvvRU5R
-	 1MQeJBMhNvFLwooxwtfISKWWe9vjTjmHZSukDmAVRAVvClVnzqs4F7s/FWWWp2GaVdeJr
-	 sBKB/0TydcpSjlSsSw0/ff0U9otvS0/C6NIpcf/GLtfWqS4woE+sUkTGoLALkpqiPI+Hb
-	 HkqnyUhWI293DvZyulFAgaP66d4CtCSF+xKSUY8oHHA23+OUos1wMYbg/bYKkABTA0A==
+	t=1795514929;
+	b=TGfOO8aRVPQAqvqVp5ioQ1HHVNtjS0QxyehjNzS3h/rLkUf4lt0Iw6OCKM5BMQ20bmY0
+	 8lwS7fNpFaTCuhkOQZoEAtGJXQer9vPxLrlyUYs/Cp2aXh6chYoPHqCIcC1eHstJ08e1b
+	 knp6zwFHVKG30juAUOLkA5AOfUjbl798+RMITrDGnbUKPF4QyaYz1TfrV9nCo2WzM84ow
+	 7qI87Aq0k73eKZk4kPSGmwu2v54H2/A44+4BlXBmCM+QglUSNvMH93JqaKXSE+mtTFRRI
+	 Fi0rGBf58H29U9Aw9AdPCHfvujpsFJueOdiPiPJbRAzlMFq4GMCDLYaiU/7QZYk9+Tw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795510835;
-	h=Received:DKIM-Signature:X-Mailer:From:To:Cc:Subject:In-Reply-To:
-	 References:Date:Message-ID:MIME-Version:Content-Type:
-	 Content-Transfer-Encoding;
-	bh=Qt6UQLCPSMtUGw2PneN+8G6f4t6FF/Je5nAGO6KM+ck=;
-	b=Rp23XS5QIMUySjNIwpio6Khp64J9G0pSX2WPHM8bM2dq/H+wMAm7i3/B16EE64RfZoA5
-	 GT0/DJQfQRIeCa91/AIQUF07wDwAkI8S+fn6+4kIGTAaV9tnIHVeB3cAlLQHJ0F4uBnGO
-	 OKkhBCY6hyT10Cmh3AmEW+3TKSBdaydyQeDhhmlMgqgYxSdJ4aisaycOzu2csQXTjU5VA
-	 yJ3E0lvFRxb9fVMtevkGGbEWM+N5PYv+6PraRILTpOGsI7eg7Di41qCPv5jtDmagjrMaq
-	 n54p85XaIejBY0cl2LwzXrG4fkv3znUDJwAGsr9/LESgQbBE4lNxDV/7oVpw6l56Aaw==
+	a=rsa-sha256; c=relaxed/relaxed; t=1795514929;
+	h=DMARC-Filter:Received:Received:DKIM-Signature:Message-ID:Date:
+	 MIME-Version:User-Agent:Subject:To:Cc:References:Content-Language:
+	 From:In-Reply-To:Content-Type:Content-Transfer-Encoding;
+	bh=rzf3/cqvmzHGv3qFSL5QC6mYfqjlWuS+RwxjyMzoNb8=;
+	b=5T680KYFv8hrekt4UOWji5dYv5zdbAH8Y5Z5w9tfoVMz5I1u9KWsr06QYqP/Q9z7aDs5
+	 kN+SmaTc3HH2IXFxQP+6bKKoQvt504h67atPFsrFKI6SmzXvoYDy2cdIZ407e8dowk86R
+	 ym2VfEDBXudkpyf1k1J7nLDTYVkL+4iZ/P/DTQmGqQ9ijRyw1c+kfQHO8dqVE+ipISg2E
+	 vzHZAExSTvSt1AJ/BZ1xshV+JgXzNtaIK5bNBpEyuhK8AwIS9HLKoKIv8z3Gja+JsZQFV
+	 uenOprJLkbl8wQAGBK+UQvhaL10YdSVuIw6oBP8msVOsWQ+RuWEevUo4EG5V9S/FKhw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=cq5YppoE;
-	arc=none smtp.remote-ip=100.103.45.18
-Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1))
-	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C797B606A31E;
-	Tue, 24 Nov 2026 09:00:35 +0000 (UTC)
+	dmarc=pass header.from=arm.com;
+	spf=pass smtp.mailfrom=arm.com;
+	dkim=pass header.d=arm.com header.i=@arm.com header.a=rsa-sha256 header.s=foss header.b="IR8Cmp/i";
+	arc=none smtp.remote-ip=217.140.110.172
+Received: from foss.arm.com (foss.arm.com [217.140.110.172])
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0B42D606A6B2
+	for <patches@lists.linux.dev>; Tue, 24 Nov 2026 10:08:48 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 0B42D606A6B2
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=arm.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=cq5YppoE
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D148B1F000C0;
-	Tue, 24 Nov 2026 09:00:28 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1795510835;
-	bh=Qt6UQLCPSMtUGw2PneN+8G6f4t6FF/Je5nAGO6KM+ck=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date;
-	b=cq5YppoE2RGMHDASP9dR2GuHpLApTRS7/GhRuCKIn+m8wGrOIcwyVw/qq0Il/AHih
-	 chw96NsdWgfampEF6cppz6ZTvnll8YtGh91OtPE/abs6GyptrLnay9kviweTzbWZg8
-	 ban3OG6fhIKF4+XR3VONkCjXzMp/XMLnzBX4iKbkHtbGL0z25XvOSAsiHpy7E4myc9
-	 6HmN90IsKX+DeGX8dhINNHm4Y+o2eNKkxI82SQb/uEMAj0NI0docLn0F0lX8iBeooD
-	 xlPoI87U9EQyFa9isi/dsrUUx84N8xmmqGmxaYKJ1aGg3SO2e+/fqY2IAXXaNdkS/G
-	 FIeEs0/cNvpPg==
-X-Mailer: emacs 31.1 (via feedmail 11-beta-1 I)
-From: Aneesh Kumar K.V <aneesh.kumar@kernel.org>
-To: Jianxiong Gao <jxgao@google.com>
-Cc: linux-coco@lists.linux.dev, Dan Williams <djbw@kernel.org>,
-	Leon Romanovsky <leon@kernel.org>,
-	Bjorn Helgaas <bhelgaas@google.com>,
-	Jason Gunthorpe <jgg@ziepe.ca>,
-	Jonathan Cameron <jonathan.cameron@huawei.com>,
-	Xu Yilun <yilun.xu@linux.intel.com>,
-	Alexey Kardashevskiy <aik@amd.com>,
-	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-	"Rafael J . Wysocki" <rafael@kernel.org>,
-	Steven Price <steven.price@arm.com>,
-	Suzuki K Poulose <suzuki.poulose@arm.com>,
-	Lukas Wunner <lukas@wunner.de>,
-	Ashish Kalra <ashish.kalra@amd.com>,
-	Tom Lendacky <thomas.lendacky@amd.com>,
-	Herbert Xu <herbert@gondor.apana.org.au>,
-	driver-core@lists.linux.dev, linux-pci@vger.kernel.org,
-	kvm@vger.kernel.org, patches@lists.linux.dev,
-	Zhichuang Sun <zhichuang@google.com>,
-	Piranava Tamilselvan <piranavat@google.com>,
-	Erdem Aktas <erdemaktas@google.com>,
-	Ackerley Tng <ackerleytng@google.com>
-Subject: Re: [PATCH v1 10/10] PCI/TSM: Configure accepted device DMA during
- driver attachment
-In-Reply-To: <CAMGD6P0pNAnq9U80dnpgbz+hHbX1yH1bdmXjcie4oiq7KizU=A@mail.gmail.com>
-References: <20261123083337.2731019-1-aneesh.kumar@kernel.org>
- <20261123083337.2731019-11-aneesh.kumar@kernel.org>
- <CAMGD6P0pNAnq9U80dnpgbz+hHbX1yH1bdmXjcie4oiq7KizU=A@mail.gmail.com>
-Date: Tue, 24 Nov 2026 14:30:25 +0530
-Message-ID: <yq5aeccabo46.fsf@kernel.org>
+	dkim=pass (1024-bit key) header.d=arm.com header.i=@arm.com header.a=rsa-sha256 header.s=foss header.b=IR8Cmp/i
+Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
+	by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 33BC8339;
+	Tue, 24 Nov 2026 02:08:45 -0800 (PST)
+Received: from [10.2.212.8] (e134344.arm.com [10.2.212.8])
+	by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id E6A3D3F632;
+	Tue, 24 Nov 2026 02:08:42 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=arm.com; s=foss;
+	t=1795514928; bh=vwI/GWBLyLVLTmTN2EUL2154TR5p4FeVvygLq0PiHOU=;
+	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
+	b=IR8Cmp/iF3CMKl01+dPH1sFgUvIbQzEGczcmIfbo4wYDkv+0Wn5W2chAQOali2dvB
+	 rldSikGgRg6cMBLtnB8NpHz6KtWdbciGwkm3bII1+gNHDr5CVsuNCW/xcfRgxLpWFx
+	 mNWAuqCIgeAlBg/WVI0u/CT24AqB+33esgT65JH8=
+Message-ID: <6825b01a-3235-4e4f-90f8-9e75646bfd17@arm.com>
+Date: Tue, 24 Nov 2026 10:08:41 +0000
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Post: <mailto:patches@lists.linux.dev>
@@ -81,49 +53,86 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+User-Agent: Mozilla Thunderbird
+Subject: Re: [RFC PATCH 1/3] fork,arm,x86,fs/resctrl: Fix stale resource group
+ assignment vs copy_process()
+To: Reinette Chatre <reinette.chatre@intel.com>, kees@kernel.org,
+ mingo@redhat.com, peterz@infradead.org, juri.lelli@redhat.com,
+ vincent.guittot@linaro.org, dietmar.eggemann@arm.com, rostedt@goodmis.org,
+ bsegall@google.com, mgorman@suse.de, vschneid@redhat.com,
+ kprateek.nayak@amd.com, david@kernel.org, ljs@kernel.org,
+ liam@infradead.org, vbabka@kernel.org, rppt@kernel.org, surenb@google.com,
+ mhocko@suse.com, bp@alien8.de, tglx@linutronix.de,
+ dave.hansen@linux.intel.com, tony.luck@intel.com, Dave.Martin@arm.com,
+ james.morse@arm.com, babu.moger@amd.com, fustini@kernel.org,
+ jedrzej.wasiukiewicz@intel.com
+Cc: fenghuay@nvidia.com, peternewman@google.com, yu.c.chen@intel.com,
+ x86@kernel.org, linux-mm@kvack.org, linux-kernel@vger.kernel.org,
+ patches@lists.linux.dev
+References: <cover.1795197419.git.reinette.chatre@intel.com>
+ <b2e13da64ca3e41207b5d46fb060bccefaf9fecd.1795197419.git.reinette.chatre@intel.com>
+ <17fe3497-b887-4dc1-a8f8-3b647c1880a6@arm.com>
+ <307b89b8-7613-46c2-a8a5-f6ecf7d05b25@intel.com>
+Content-Language: en-US
+From: Ben Horgan <ben.horgan@arm.com>
+In-Reply-To: <307b89b8-7613-46c2-a8a5-f6ecf7d05b25@intel.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 
-Jianxiong Gao <jxgao@google.com> writes:
+Hi Reinette,
 
-> On Mon, Nov 23, 2026 at 02:03:37PM +0530, Aneesh Kumar K.V (Arm) wrote:
->> + /* driver_managed_dma is unsupported. */
->> + if (to_pci_driver(pdev->dev.driver)->driver_managed_dma) {
->> + ret =3D -EOPNOTSUPP;
->> + goto out;
->> + }
->
-> Hi Aneesh,
-> A short clarification question on this check: once a guest TSM driver
-> implements dma_enable, pci_tsm_dma_prepare() will reject binding
-> vfio-pci (and other driver_managed_dma drivers like pci-stub) with
-> -EOPNOTSUPP on both locked and accepted TDIs.
-> Is rejecting driver_managed_dma just a scope limit for this series, or
-> the intended long-term policy?
->
+On 24/11/2026 00:43, Reinette Chatre wrote:
+> Hi Ben,
+> 
+> Thank you very much for taking a look.
+> 
+> On 11/23/26 6:14 AM, Ben Horgan wrote:
+>> On 20/11/2026 18:39, Reinette Chatre wrote:
+>>>
+>>> - A static inline in include/linux/arm_mpam.h, beside the
+>>>   resctrl_arch_*() inlines already there. asm/mpam.h includes
+>>>   linux/arm_mpam.h, so the reverse include would be circular and
+>>
+>> Hmm, the existing include of linux/arm_mpam.h appears to be unnecessary.
+> 
+> ah, I see. I can include a preparatory patch that removes it.
+> 
+>> As such, that include can be removed and resctrl_arch_copy_closid_rmid()
+>> could be a static inline in include/linux/arm_mpam.h.
+> 
+> As a follow up, do you prefer include/linux/arm_mpam.h to contain the
+> full implementation like below, which is the first access of mpam_partid_pmg
+> outside arch/arm64/include/asm/mpam.h:
+> 
+> static inline void resctrl_arch_copy_closid_rmid(struct task_struct *dst,
+> 						 struct task_struct *src)
+> {
+> 	WRITE_ONCE(task_thread_info(dst)->mpam_partid_pmg, mpam_get_regval(src));
+> }
+> 
+> or, do you prefer to contain all users of mpam_partid_pmg in
+> arch/arm64/include/asm/mpam.h and thus instead implement solution as:
 
-Wouldn't that require an IOMMU to be available inside the guest? The
-current implementation uses dma-direct, and I haven't yet looked into
-private memory access through a stage-1 IOMMU.
+Yes. The second option looks best to me.
 
-That check was added because I have not yet investigated what is needed
-to support drivers such as vfio-pci inside the guest.
+Thanks,
 
+Ben
 
-> If it's a scope limit, is the expected
-> direction for in-guest vfio-pci to enable private DMA when it claims DMA
-> ownership / attaches an IOMMU domain (via iommufd or vfio_iommu_type1),
-> rather than during pci_dma_configure()?
-> We run a userspace accelerator driver over vfio-pci inside a confidential
-> guest on an accepted TDI (similar in model to DPDK/SPDK), so knowing the
-> planned direction for driver_managed_dma =E2=80=94 and whether any upstre=
-am work
-> is planned for in-guest vfio-pci support on TDIs =E2=80=94 would really h=
-elp us
-> plan.
+> 
+> arch/arm64/include/asm/mpam.h:
+> static inline void mpam_copy_task_partid_pmg(struct task_struct *dst,
+> 					     struct task_struct *src)
+> {
+> 	WRITE_ONCE(task_thread_info(dst)->mpam_partid_pmg, mpam_get_regval(src));
+> }
+> 
+> include/linux/arm_mpam.h:
+> static inline void resctrl_arch_copy_closid_rmid(struct task_struct *dst,
+> 						 struct task_struct *src)
+> {
+> 	mpam_copy_task_partid_pmg(dst, src);
+> }
+> 
+> Reinette
 
-
-I have not yet looked into this enough to comment on how it should be
-implemented. I will follow up later.
-
--aneesh
