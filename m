@@ -1,54 +1,57 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795618439;
-	b=AWs0DaXFba7YsREdcfLZM7BHAAu38Y7W24L/uepj2vFXvRRI28rnNM/pCfge3Tf6GDTQ
-	 +CY6U+hP5ig6qaXYegs5FdE7o/VOdoRbr7o3c7tp9tEGUbHTdFNf9dY3LvH1yEdUsww1l
-	 2tKRjkHNTXDEk6bz5jiRgOXi5d1PFUqGV2wNNDZeY614UnKSxQKWTgyAOpsjNPud0Ic6Q
-	 eu/F51nsdr4nVw5NI/gtF64K1ppX3wa8e297AbhAoZ6XaLRCeumHPln5FX9veNE1TZ0xn
-	 7EZTUGqeR1dS5y079o1i8CepjEmY73j2orBvLZdx9e/E/5iB4vd5Y5GQmGtoFJrcHSQ==
+	t=1795618442;
+	b=qJ/P8PSTY2bz5DEUldgVYMtKgreiXQvIOjTpa3HBMfHhiGMOTBUOjcFsorK+9Owojh2/
+	 1bqwxrT3YRDYsmVqMRurkaKWTUOEt0EKEOgZ8EIkhwyPb/2q4yxfRp76lPJOzl0fV36gJ
+	 7MI0TxVB7mc6R2pjB/E3bnqOf5aoxX5ezefEnC67m+1Rl9RkF0lD6fot+AvZfeTaxdLhv
+	 GxzXfC6PWGKLvBhTNMGGjQuXQxsLnFZ8A/6eN1s5QsKFhistkDjyTnd63ooztER5p7J2i
+	 5J2CvWYOYHMCF9WsAMvGL/cX7UsnpoAjTw+z2mTYfWXemCJ6s5Q/hw63JMV2+Uqthdw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795618439;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795618442;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=8ld4SFau+Ni5LmfKKq5avqmQ1PbteP4sZQdZupwumtY=;
-	b=2px5L6VzikV01/kczPK50zw6Crdkg3AOkKaQqXrcm8YUjwKGpMflkge83UqAmdp0dffU
-	 aCeC3DWOtWOjHiJU06Bdn1qTR/CTc+VhAoCu+S/epizlH6NA30uDtTJdy55/8EIDkVIOJ
-	 S52sRuq0B6tawo9uY+GGRQiCIzbocnPkY1jHYpE5vyIL5rZducWBbDv9jMJtXkmv91edX
-	 FGFcgWFxXaAgUOH8AdHcUw9O9SH3aQfxfZ5Hpljue2TJxiFc7CkPiUGI2v3ci8ljj+nRm
-	 TsXr0//i8qVR55Y7QQ2TW28OKq4cN3qlWd33othZw+dMMuEH+QBxFBmuzfANpLDtTLA==
+	bh=3IVwCjoV111ovYvgUVfKMKoXeIRckMSyOmyzGL2Uaqs=;
+	b=mLBQ/INtBGRvVY4vOAkF1SpQOSScdTC3BccN3Gn7d3Ey2LEIElpD3XBf9FCo39cCZ3y7
+	 +rO+4zqvc2vM/qT1eFdCIgogKq92x1E2Vl4gkCzP7derxpilSSMIa1sda5yTgaG9UIqcN
+	 UXpWGFYE6sy7RlVNp9Gne94R0NJ2+b47Ilv6gem0X1VcE1xwmiwYDWjZHwxUxiOr/ODvL
+	 cgQDMflunnOZxOi/ZG/JHzZqQAuWfhKi4GJGL6Ra5z/1Q9YNFLm5vGgSGAOndNEJAJIM0
+	 2wqs6XEmoZgm0xwbHJoP211AeejY20TjU4wdMOXDJJ/Ed9DSyDOsCdb7xSPcqdlPn/g==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=lx2Iw319;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Wix058Hr;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1A46B606A31E;
-	Wed, 25 Nov 2026 14:53:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1CCF7606A31E;
+	Wed, 25 Nov 2026 14:54:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=lx2Iw319
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B83A11F000C6;
-	Wed, 25 Nov 2026 14:53:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Wix058Hr
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1244F1F000C6;
+	Wed, 25 Nov 2026 14:54:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795618438;
-	bh=8ld4SFau+Ni5LmfKKq5avqmQ1PbteP4sZQdZupwumtY=;
+	s=korg; t=1795618441;
+	bh=3IVwCjoV111ovYvgUVfKMKoXeIRckMSyOmyzGL2Uaqs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=lx2Iw319qoje7nmdvDvs8mlNL9SQBrSe8IgjV4/717DFxA1x4B5k2WpNqROh5qI85
-	 0C0bEwYLjBfYVLEBvy7RxRHGzNEcXDprya98HPAlztLTDuOG+V4TOR0bT1KrCJDD5G
-	 VR2JLB7yQl8vixstIK4Y3fP/tsBvFof0+Y62EnX8=
+	b=Wix058HrsikPsf6LXIKYeqpaMT4hSFHVh/LwExwtCmwWL78SQMoYeqYRp5g7n9pol
+	 SQw06HQemHUXmVFA7SO42tS/63elIy4YM1Gwj9PaJN+Nb6++lX/ml+ChIqwuz4EdcX
+	 ZdpTB3FCDr5ThujqyeBb+53LIjSWKCaLTIz5nbfw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jason Zhang <jdz@google.com>,
+	Anvik Loitongbam <permissiontogallop@gmail.com>,
+	Yingjie Wang <x-professor@outlook.com>,
+	Eric Dumazet <edumazet@kernel.org>,
+	Jiayuan Chen <jiayuan.chen@linux.dev>,
+	Neal Cardwell <ncardwell@google.com>,
 	Kuniyuki Iwashima <kuniyu@google.com>,
-	Ido Schimmel <idosch@nvidia.com>,
 	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0280/1005] ipv4: Call rt_add_uncached_list() if !do_cache in ip_route_input_slow().
-Date: Wed, 25 Nov 2026 15:26:58 +0100
-Message-ID: <20261125143828.302814651@linuxfoundation.org>
+Subject: [PATCH 7.3 0281/1005] tcp: ipv6: do not read ireq->pktopts from tcp_v6_send_synack()
+Date: Wed, 25 Nov 2026 15:26:59 +0100
+Message-ID: <20261125143828.326118306@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143821.729802100@linuxfoundation.org>
 References: <20261125143821.729802100@linuxfoundation.org>
@@ -70,74 +73,114 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kuniyuki Iwashima <kuniyu@google.com>
+From: Eric Dumazet <edumazet@kernel.org>
 
-[ Upstream commit 4019af3afd72864ec6abbfde2d76e416a64456c2 ]
+[ Upstream commit 8e069fd3fd396b89af417e50b359bc9892dd41cd ]
 
-Since the cited commit, ip_route_input_slow() could call
-rt_dst_alloc() with vrf in the local_input: path.
+When IPV6_FL_F_REFLECT is set on a listener, or the
+net.ipv6.flowlabel_reflect sysctl has FLOWLABEL_REFLECT_ESTABLISHED,
+tcp_v6_send_synack() reflects the flowlabel of the SYN packet,
+reading it from the skb stored in ireq->pktopts.
 
-If res->fi != NULL and one of the following is true,
+Since commit 079096f103fa ("tcp/dccp: install syn_recv requests
+into ehash table"), request sockets are processed without holding
+the listener lock. A cpu can then process a retransmitted SYN for a
+request socket, and send a SYNACK from tcp_check_req(), while another
+cpu receives the ACK completing the 3WHS. tcp_v6_syn_recv_sock()
+consumes ireq->pktopts when it wins the hashdance, and the first cpu
+reads a freed skb:
 
-  - a non-zero itag from fib_validate_source_reason()
-    (realms/classid)
-  - RTN_BROADCAST with BC_FORWARDING enabled
+  BUG: KASAN: slab-use-after-free in tcp_v6_send_synack (include/linux/skbuff.h:3152 include/linux/ipv6.h:110 net/ipv6/tcp_ipv6.c:582)
+  Read of size 8 at addr ffff88802b08b608 by task poc-ipv6-pktopt/5076
 
-do_cache is set to false.
+  Call Trace:
+   <IRQ>
+   tcp_v6_send_synack (include/linux/skbuff.h:3152 include/linux/ipv6.h:110 net/ipv6/tcp_ipv6.c:582)
+   tcp_rtx_synack (net/ipv4/tcp_output.c:4719)
+   tcp_check_req (net/ipv4/tcp_minisocks.c:762)
+   tcp_v6_rcv (net/ipv6/tcp_ipv6.c:1826)
+   ip6_protocol_deliver_rcu (net/ipv6/ip6_input.c:479)
+   ip6_input_finish (net/ipv6/ip6_input.c:534)
+   ip6_input (include/linux/netfilter.h:325 include/linux/netfilter.h:319 net/ipv6/ip6_input.c:545)
+   ipv6_rcv (include/net/dst.h:481 net/ipv6/ip6_input.c:119 include/linux/netfilter.h:325 include/linux/netfilter.h:319 net/ipv6/ip6_input.c:351)
 
-Then, the route is not added to rt_uncached_list, so the
-route cannot be removed from rt_flush_dev().
+  Freed by task 5074 on cpu 0 at 15.412249s:
+   kmem_cache_free (include/linux/kasan.h:235 mm/slub.c:2780 mm/slub.c:6630 mm/slub.c:6757)
+   tcp_v6_syn_recv_sock (net/ipv6/tcp_ipv6.c:1528)
+   tcp_check_req (net/ipv4/tcp_minisocks.c:934)
+   tcp_v6_rcv (net/ipv6/tcp_ipv6.c:1826)
+   ip6_protocol_deliver_rcu (net/ipv6/ip6_input.c:479)
+   ip6_input_finish (net/ipv6/ip6_input.c:534)
 
-If the route is cached in sk->sk_rx_dst, removing the
-vrf device gets stuck. [0]
+Request socket migration has the same issue: reqsk_migrate_reset()
+transfers ireq->pktopts to the clone, which can be freed while
+another cpu holding a reference on the old request socket is still
+sending a SYNACK.
 
-Let's call rt_add_uncached_list() if !do_cache in
-ip_route_input_slow().
+The SYNACK timer itself is not an issue, because
+inet_csk_reqsk_queue_drop() calls timer_delete_sync().
 
-[0]:
-unregister_netdevice: waiting for vrf0 to become free. Usage count = 2
-ref_tracker: netdev@000000008b304ac4 has 1/1 users at
-     dst_alloc+0x14b/0x490
-     ip_route_input_rcu+0x1540/0x2530
-     ip_route_input_noref+0x5a/0x90
-     ip_rcv_finish_core+0x4b0/0x1140
-     ip_rcv_finish+0xe6/0x190
-     ip_rcv+0x6c/0x130
-     __netif_receive_skb+0x121/0x300
-     process_backlog+0x2df/0x5e0
-     __napi_poll+0x8c/0x380
-     net_rx_action+0x43c/0xab0
-     handle_softirqs+0x19f/0x520
-     do_softirq+0x46/0x60
-     __local_bh_enable_ip+0x79/0x80
-     __dev_queue_xmit+0x1b0e/0x24c0
-     ip_finish_output2+0x8b2/0xcd0
-     ip_output+0xf2/0x1e0
+Save the flowlabel of the SYN in the request socket instead, so that
+tcp_v6_send_synack() no longer needs ireq->pktopts.
 
-Fixes: f5a0aab84b74 ("net: ipv4: dst for local input routes should use l3mdev if relevant")
-Reported-by: Jason Zhang <jdz@google.com>
-Signed-off-by: Kuniyuki Iwashima <kuniyu@google.com>
-Link: https://patch.msgid.link/20261101064418.2055158-4-kuniyu@google.com
-Reviewed-by: Ido Schimmel <idosch@nvidia.com>
+As a side effect, the flowlabel is also reflected for SYN packets
+reusing a TIME_WAIT socket, as ireq->pktopts is not set in this case.
+
+Fixes: e994b2f0fb92 ("tcp: do not lock listener to process SYN packets")
+Fixes: 079096f103fa ("tcp/dccp: install syn_recv requests into ehash table")
+Fixes: c905dee62232 ("tcp: Migrate TCP_NEW_SYN_RECV requests at retransmitting SYN+ACKs.")
+Reported-by: Anvik Loitongbam <permissiontogallop@gmail.com>
+Reported-by: Yingjie Wang <x-professor@outlook.com>
+Closes: https://lore.kernel.org/netdev/82c31e4d5043f3dbd11b44177cfba779d335aae3.1793599929.git.x-professor@outlook.com/
+Signed-off-by: Eric Dumazet <edumazet@kernel.org>
+Reviewed-by: Jiayuan Chen <jiayuan.chen@linux.dev>
+Reviewed-by: Neal Cardwell <ncardwell@google.com>
+Reviewed-by: Kuniyuki Iwashima <kuniyu@google.com>
+Link: https://patch.msgid.link/20261102075441.3771550-1-edumazet@kernel.org
 Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv4/route.c | 2 ++
- 1 file changed, 2 insertions(+)
+ include/linux/tcp.h | 3 +++
+ net/ipv6/tcp_ipv6.c | 5 +++--
+ 2 files changed, 6 insertions(+), 2 deletions(-)
 
-diff --git a/net/ipv4/route.c b/net/ipv4/route.c
-index 67c4fae2384b3..1720323d9f025 100644
---- a/net/ipv4/route.c
-+++ b/net/ipv4/route.c
-@@ -2494,6 +2494,8 @@ ip_route_input_slow(struct sk_buff *skb, __be32 daddr, __be32 saddr,
+diff --git a/include/linux/tcp.h b/include/linux/tcp.h
+index 6a8c77719322f..647b585e1cf94 100644
+--- a/include/linux/tcp.h
++++ b/include/linux/tcp.h
+@@ -179,6 +179,9 @@ struct tcp_request_sock {
+ 	u8				ao_rcv_next;
+ 	bool				used_tcp_ao;
+ #endif
++#if IS_ENABLED(CONFIG_IPV6)
++	__be32				syn_flowlabel;
++#endif
+ };
  
- 		if (unlikely(!rt_cache_route(nhc, rth)))
- 			rt_add_uncached_list(rth);
-+	} else {
-+		rt_add_uncached_list(rth);
- 	}
- 	skb_dst_set(skb, &rth->dst);
- 	reason = SKB_NOT_DROPPED_YET;
+ #define tcp_rsk(ptr) container_of_const(ptr, struct tcp_request_sock, req.req)
+diff --git a/net/ipv6/tcp_ipv6.c b/net/ipv6/tcp_ipv6.c
+index be50b2fe12742..40025284b9110 100644
+--- a/net/ipv6/tcp_ipv6.c
++++ b/net/ipv6/tcp_ipv6.c
+@@ -578,8 +578,8 @@ static int tcp_v6_send_synack(const struct sock *sk, struct dst_entry *dst,
+ 				    &ireq->ir_v6_rmt_addr);
+ 
+ 		fl6->daddr = ireq->ir_v6_rmt_addr;
+-		if (inet6_test_bit(REPFLOW, sk) && ireq->pktopts)
+-			fl6->flowlabel = ip6_flowlabel(ipv6_hdr(ireq->pktopts));
++		if (inet6_test_bit(REPFLOW, sk))
++			fl6->flowlabel = tcp_rsk(req)->syn_flowlabel;
+ 
+ 		tclass = READ_ONCE(sock_net(sk)->ipv4.sysctl_tcp_reflect_tos) ?
+ 				(tcp_rsk(req)->syn_tos & ~INET_ECN_MASK) |
+@@ -789,6 +789,7 @@ static void tcp_v6_init_req(struct request_sock *req,
+ 	ireq->ir_v6_loc_addr = ipv6_hdr(skb)->daddr;
+ 	ireq->ir_rmt_addr = LOOPBACK4_IPV6;
+ 	ireq->ir_loc_addr = LOOPBACK4_IPV6;
++	tcp_rsk(req)->syn_flowlabel = ip6_flowlabel(ipv6_hdr(skb));
+ 
+ 	/* So that link locals have meaning */
+ 	if ((!sk_listener->sk_bound_dev_if || l3_slave) &&
 -- 
 2.53.0
 
