@@ -1,52 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795623015;
-	b=M/GMWl/gmp4OpmBk1GIdRmv5oXWpQYkclN5ameDIAosPW90D/KYdDLRQfhEqe9RT4mFG
-	 PNvBD6aIskriLh4tT8meEFO+tAXfchKskgAUvcZ4ACtzC0Xf8eiZQL4TMWglYT318f9Cu
-	 vPc/kBOzM8eCRMWccW3SK5393ORydkO/7AhO83WQKIuzkVk8FxsqfKz9BWEXsnOO8BMGv
-	 2cv3IgbMxQ+zU9QIuAkINCc213RDE9VeeZIx11WXYHr5gR1nnqiMM1xSIWpOypUcDdbBY
-	 cNO14XdRn4dwJ7FhmX3b2PnhrIF7womJwpXb81HptJae9mSDVR56NOIJUejKLom+Jgw==
+	t=1795623018;
+	b=wnPpx3fd9onbuCDYWEDZykx0sv7Ua2N1ZxBS1ASLZchdG5B5nmYRNPArpGhsKCOU1u5G
+	 LW86ZWEOf/RUBIk7gThNww2jFerx6ZTgJluECq05YZIwXhxu0Qvr+wU361RGDUHwyKTB8
+	 uYjV7VKj9wE6s+G9o/+2honAVrIBp2quoCzSBkEdw2ceOGxfCA0zqFbttT9btPplYY6A2
+	 tFZnDW/xgxwGXN3KQ/eQDuQbg+E5mlTczDTUQA7gEocLu876dfiybiO6ZiEBx6gzegXIH
+	 o9n5brWkCjY/eg3UZ5M7HMXIeTyVSMdbIbVSus0X1yjvH8sXEyioDbj97OT3B/qeUCA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795623015;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795623018;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=0cdmB3fd3Dlb/B+UnPe6Z3wVoCxbe5RhQpYkvM6PgYk=;
-	b=UoPzrb1HAr+1ySjv+f212JHk9JQqVmSV6uSg4t9CSp3mIe6sFz3JYT3RtPwEbUGE0PLI
-	 UhuyWFOALN/Y4YeeOyBvCanf8iFWdI8mpN1jHTfX1CmlYa6LmKalHU1v6yhz22X5XKw1+
-	 mZrc0Nw8KyLzyIwSvP95w+aDxascWXbVFB1IOSuC1/+K7kgZ856a/Iatqzx5u0L3lAiUZ
-	 5XX5knSeTjYnwDDAtt+wMly9phdmQDaZPjIUyTJcOp4wUDJkOnPRizN2mOltHlnyTEEsf
-	 G1E0tzzBLCniHmDk+atT86oLVmIIZvt1Bi+BCFr8SroMw0oI3xhif3i8ltrSsv+xbCQ==
+	bh=4SYUXuhmuLv6LTFRK8DiyU2Cpj67vaj/xXQMPiqVX6E=;
+	b=JW4yOw4RkLIgn3nCSR3fzzGzXY1V/CSQDGe9eUCmE3IVksNmLmkNPr/WfUscTMrArLis
+	 Qlu3SxJdMuRTi34M+kjMZZvaCy6XjfSi8alHC53OZD+a101ZszAwaBmVO+3awdEkK4PQd
+	 A4qrTS0+kvqDveGd86FZQAUgzxwc91ZYlElSoR7yAzzcx+Kuupjdrs8SSrPg6vrk6bdRt
+	 kxDp7dDX5Nktxw+Y3LTuWUjqOE2r1hVNa6vWP7nH5YUnErbZQhBHCHvnhs1cKNFEDRh9G
+	 U2ZlHnCqXlST+1cOJyFXZ/2VXerpOQZThPHWkuCt4Mw5oy5VWAFBiRI85S1MLop8ylg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=h5BG21ii;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=zuXnIY86;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7A260606A321;
-	Wed, 25 Nov 2026 16:10:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6DA71606A31E;
+	Wed, 25 Nov 2026 16:10:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=h5BG21ii
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CA9C31F000C4;
-	Wed, 25 Nov 2026 16:10:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=zuXnIY86
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9EAB41F000C6;
+	Wed, 25 Nov 2026 16:10:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795623015;
-	bh=0cdmB3fd3Dlb/B+UnPe6Z3wVoCxbe5RhQpYkvM6PgYk=;
+	s=korg; t=1795623018;
+	bh=4SYUXuhmuLv6LTFRK8DiyU2Cpj67vaj/xXQMPiqVX6E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=h5BG21iiWEgn4quANmsKe7QL9cn8dX99buAvoKQwL95gqlIz8vULe2egdfGBxaMew
-	 c+yT0C0KwdvYHQ9DZkNt9pmSO1FVQnQrARcrFcFgOJe359hK3M3RDKf6bK+LJgHcLV
-	 Sb9YxLPhIrc6fEVD+FRrOXpsyxYz/faDdCyaTwho=
+	b=zuXnIY86EpKNVEAM3nVI0olYXJoCfXF+igJyQ6WfgDJH3dNL15bgUz9FoX0aRJkK4
+	 tSQc08Pz52D1GwVD+ag7xkAVNpsoUOfHXGLh3CFYE0QIFAdC6K/tLAyqR+N2DM1b+y
+	 GTJceZZV4PyVDvsPUyEVJPBIlTvOQr4A7HTAuw8k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable@kernel.org,
-	Kyle Zeng <kylebot@openai.com>,
+	Eric Dumazet <edumazet@kernel.org>,
 	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.18 721/990] net: gro: avoid parsing headers from shared fragments
-Date: Wed, 25 Nov 2026 15:34:48 +0100
-Message-ID: <20261125143838.967448931@linuxfoundation.org>
+Subject: [PATCH 6.18 722/990] net: gro: do not undo remote checksum offload on merged packets
+Date: Wed, 25 Nov 2026 15:34:49 +0100
+Message-ID: <20261125143838.989574468@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143822.072087159@linuxfoundation.org>
 References: <20261125143822.072087159@linuxfoundation.org>
@@ -68,63 +67,99 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kyle Zeng <kylebot@openai.com>
+From: Eric Dumazet <edumazet@kernel.org>
 
-commit 44818c9a826d766dc0e21179dc76f229334f1dda upstream.
+commit c817ec1b06875b98460fbd19591be541bc3fa924 upstream.
 
-When an skb has an empty linear head, skb_gro_reset_offset() can expose
-the first page fragment directly to GRO header parsers. For an
-SKBFL_SHARED_FRAG skb, those bytes may still be writable through a file
-mapping. Headers validated during receive can therefore differ from the
-headers later copied into the linear head and used during completion.
+skb_gro_flush_final_remcsum() calls skb_gro_remcsum_cleanup() to undo
+the checksum adjustment done by skb_gro_remcsum_process() when the
+packet was not consumed by GRO.
 
-For example, changing an IPv6 destination-options length between the
-short and full header fetches in ipv6_gro_pull_exthdrs() can make
-ipv6_gro_complete() pass an out-of-bounds offset to udp6_gro_complete().
-A userspace reproducer triggered a KASAN slab-out-of-bounds read there
-on an unmodified kernel as UID 1000. The same completion path can write
-the UDP checksum and length through the invalid offset. The packet has
-trusted TCP GSO metadata and spliced file data, so it reaches completion
-without an skb zerocopy destructor or a second GRO packet.
+When the inner handler merged the packet (NAPI_GRO_CB(skb)->same_flow
+is set), grc->offset can no longer be trusted:
 
-Disable the direct-fragment fast path for skbs with externally writable
-fragments. With an empty linear head, frag0_len remains zero, so
-skb_gro_header_slow() pulls each required header into the linear head
-before it is inspected. Subsequent pulls preserve the validated prefix.
-This covers both gro_receive_skb() and napi_gro_frags(), including other
-protocols using the same helpers. Linear headers and private fragments
-retain their existing fast paths.
+- skb_gro_receive() either gives the frags or the head of the skb
+  to the held packet, or uses __skb_pull(skb, offset) before adding
+  the skb to the frag_list of the held packet.
 
-Codex assisted with review of the supplied report, reproducer and draft
-fix, related-path analysis, and this changelog. The patched
-net/core/gro.o builds with W=1 using the supplied x86-64 configuration,
-allyesconfig and allmodconfig. The fix was checked by code-path analysis;
-the reproducer and kernel selftests have not been run on a booted
-patched kernel.
+- skb_gro_receive_list() uses skb_pull(skb, skb_gro_offset(skb)).
 
-The issue was found by an LLM.
+grc->offset is relative to the original skb->data, so the 2-byte
+read-modify-write done by skb_gro_remcsum_cleanup() can land in
+the payload of a packet which now belongs to the GRO packet.
+pskb_may_pull() can also be called on this frag_list member.
 
-Fixes: dff0b0161ad5 ("net: gro: parse ipv6 ext headers without frag0 invalidation")
-Cc: stable@kernel.org
-Signed-off-by: Kyle Zeng <kylebot@openai.com>
-Link: https://patch.msgid.link/20261031050752.31869-1-kylebot@openai.com
+With fraglist GRO, this can also be a use-after-free:
+pskb_may_pull(skb, skb_gro_offset(skb)) in skb_gro_receive_list()
+or udp_gro_receive_segment() releases the first page fragment if it
+only contains headers. NAPI_GRO_CB(skb)->frag0 and frag0_len are not
+updated, so skb_gro_remcsum_cleanup() takes the fast path and writes
+through frag0 into a page the skb no longer holds a reference on.
+The non merged case, where frag0 is used after this pull, is handled
+in the following patch.
+
+For skbs merged by skb_gro_receive(), the cleanup can be skipped:
+the skb is freed, or its headers are rebuilt from the head skb in
+skb_segment().
+
+Fraglist members keep their own inner headers, as skb_segment_list()
+only copies the link-layer and tunnel headers from the head skb.
+Their checksum can not be right in all cases: a packet forwarded with
+its tunnel header needs the original value, while a VXLAN packet
+decapsulated locally needs the adjusted one, as vxlan_remcsum() only
+adjusts the head skb. Make skb_gro_receive_list() refuse packets with
+skb->remcsum_offload set, so that fraglist members never carry an
+adjusted checksum.
+
+This affects VXLAN (VXLAN_F_REMCSUM_NOPARTIAL) and GUE
+(FOU_F_REMCSUM_NOPARTIAL).
+
+This was found while fixing a report from Taesoo Kim and Cen Zhang,
+who used LLM assisted code analysis and provided reproducers.
+
+Fixes: 26c4f7da3e41 ("net: Fix remcsum in GRO path to not change packet")
+Cc: stable@vger.kernel.org
+Signed-off-by: Eric Dumazet <edumazet@kernel.org>
+Link: https://patch.msgid.link/20261104151042.1157782-2-edumazet@kernel.org
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/core/gro.c |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ include/net/gro.h |    8 +++++++-
+ net/core/gro.c    |    7 +++++++
+ 2 files changed, 14 insertions(+), 1 deletion(-)
 
---- a/net/core/gro.c
-+++ b/net/core/gro.c
-@@ -419,7 +419,8 @@ static inline void skb_gro_reset_offset(
- 	headlen = skb_headlen(skb);
- 	NAPI_GRO_CB(skb)->frag0 = skb->data;
- 	NAPI_GRO_CB(skb)->frag0_len = headlen;
--	if (headlen)
-+	/* Shared fragments must be pulled into the linear head before parsing. */
-+	if (headlen || skb_has_shared_frag(skb))
+--- a/include/net/gro.h
++++ b/include/net/gro.h
+@@ -351,7 +351,13 @@ static inline void skb_gro_remcsum_clean
+ 	void *ptr;
+ 	size_t plen = grc->offset + sizeof(u16);
+ 
+-	if (!grc->delta)
++	/* Once merged, grc->offset can not be trusted: the frags or head
++	 * of this skb now belong to the GRO packet, or skb->data was pulled
++	 * past the headers before adding it to a frag_list.
++	 * skb_gro_receive_list() does not merge packets with an adjusted
++	 * checksum, other merged packets do not use their headers anymore.
++	 */
++	if (!grc->delta || NAPI_GRO_CB(skb)->same_flow)
  		return;
  
- 	pinfo = skb_shinfo(skb);
+ 	ptr = skb_gro_header(skb, plen, grc->offset);
+--- a/net/core/gro.c
++++ b/net/core/gro.c
+@@ -243,6 +243,13 @@ int skb_gro_receive_list(struct sk_buff
+ 		     NAPI_GRO_CB(skb)->flush))
+ 		return -E2BIG;
+ 
++	/* Fraglist members keep their own headers. Their checksum can not
++	 * be right both for a forwarded packet and for a decapsulated one,
++	 * if remote checksum offload adjusted it.
++	 */
++	if (unlikely(skb->remcsum_offload))
++		return -EINVAL;
++
+ 	if (!pskb_may_pull(skb, skb_gro_offset(skb))) {
+ 		NAPI_GRO_CB(skb)->flush = 1;
+ 		return -ENOMEM;
 
 
