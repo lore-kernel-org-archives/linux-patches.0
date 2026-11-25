@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795622508;
-	b=Na+os0wzrzgiWYKBFJubb8jznN9pp222lleqOq4aykzpdCE0ioP9e5TcDwfLqH+FzPYy
-	 mxu0X25i0fEZSa+5wQ0OTdSIzalR48melB6+ri6zdo9To5POE4/PiEyV0RL6C5HMNExuC
-	 D1nt9yZ86Nqi1LJGW4t7kTUHznYYbxJtisYBbWEaZH5eRD8PZxpj6PzyOs6BGNEFQA2eJ
-	 9INenRJXIwnHab8VP7ap4ZTPkWwPy9Hzw/1TtSn/T13oLShKM4G08uSY6T8A7qRuj4m0I
-	 4Hm5K6v+M3fPxUzY2qpvElB1AJ2IHzm3EeHcQyy75OskkJ8bk+NVRWuZMSXW4Qm49Tw==
+	t=1795622511;
+	b=lcxq34AWfL2oJoRmOQ62UHm0cW4Edv/5m0l0IbbqL6pkpnBVpJvW6Pq4x1EHixipS+//
+	 owGJYQxfPasJtMtyle1sQ2XNVYdgAx9/ojyl4UbPNKJp3FcZHaeUaphlNjG1mztCqTayM
+	 aWAsOf9D8l3xreGQtMLNQPRdGeRU7NEhlWB0F8HpVfaEKjBp8sveIboDEYo47y1UIykUs
+	 nFiOj+1AI92d/y9bF7eqI04PPUoCyD6w5xsYCLAERhwpTVK1wKEv5FR8ByZH8LsHf7B1i
+	 4N34TERg0uiboW8ba+Ta2mprTK0nGWWzXBRaMz2fdzVmVjEjL1YS+kywZyd+tfkC7oQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795622508;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795622511;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=Jbx6jZ7wbpdesYZDfQlEal8J3xWB974SDlSuuYknrPI=;
-	b=p3iCmvL0RVa+ScPkJSxSXnbL/MKGS7uKSboqqpjOeaz0aH/a49yTlhhVQLfNa1KapwWO
-	 IZmsFa7lN3yU2rsl6feb1QMigAYVC7bLe6EABD1ZxdFJFUQ5tqO/TjVMP2Ctb5VChG7Xv
-	 6SRi/QBMQD3e92/kas1h3rHyxWOGe0k9lbO3BGiMntLJEZZ2BRkW9r/+O4Oztj0MKMNzR
-	 VVEHvs/P4pkqwuR7SnlIUvQdhcTEok7h6F44kX6IbV2t0mt4f55eIHXt1GGQworAPQ0jT
-	 ab0DdDAPX/Y2MFXLbbYngf+ooGkRv7Y0tm69CXDWXMhGuOIFe6VZtVVQ8IO3her1hVQ==
+	bh=8+mY4F69dH0v+37rNKOFkOYeLFklWj14x5tzvzgV/0A=;
+	b=AozLLRA/gDVQhK5rMk0E1XbC/93VP3WWOrBEdNDfKW9jjYg304clUm3YSj1paeEs8VDh
+	 ud2O44s972CPx5f6c57uothZukYBZMeM1rS+eAB3YdG8wXkMRaw5qN9zFw3sLJoHI2FTY
+	 RUG9ZoFR/qbSU478yk1AhRXGBdEiC2n5HbE7S/NXIg+ISIBwJfpB0hnN6HL98EVOxIu5A
+	 5t4MIycRJ5W/NRH42c9acSeoDSvUKRGREZ5I4JKgQrT4ywPCS2mUcTJPGR9iZFTMaQ2fq
+	 JI1ewuTlvo+s1RGxrVAqHKDpQqa13Ydt3k2jnvHkci7Z62OJ9GD16cWYUH7HkwJgLPA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=eeCh+z0e;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=1uRzLctG;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 94F6C606A32C;
-	Wed, 25 Nov 2026 16:01:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D9FF9606A321;
+	Wed, 25 Nov 2026 16:01:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=eeCh+z0e
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 855041F000D3;
-	Wed, 25 Nov 2026 16:01:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=1uRzLctG
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C0A851F000CA;
+	Wed, 25 Nov 2026 16:01:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795622508;
-	bh=Jbx6jZ7wbpdesYZDfQlEal8J3xWB974SDlSuuYknrPI=;
+	s=korg; t=1795622511;
+	bh=8+mY4F69dH0v+37rNKOFkOYeLFklWj14x5tzvzgV/0A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=eeCh+z0eQGpmV39f6yjwXq4K15V/L1QWgEdj/B9/076WMUpllJ3ZSTh+K+tAu5QPE
-	 zh5Stx5UWpQUeamL+cnidpimQS5E3ybokBJt53ZFsgxJcS78Ohu+LYNr2Ja7m8rMbg
-	 CwWp4QUhoSml9hSmLQn1rjhztkbiDOXbQFK+dcyQ=
+	b=1uRzLctGlv9s1TMNWBxD9VYg5DnhBYWqHLHPorz+SNMP52dGaIVgjuRyqXXFkkjhO
+	 exRLXOza74qKtU6F2BylxzGWT2whDMIGKDMGnPPHRI41w5GXnI1uwN4vO+yGiUQ+k4
+	 YeWJGgdFhtP0Bf/cdgVn8C0kFGAsnnePVQIVzD2c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zipdox <zipdox@zipdox.net>,
-	Takashi Iwai <tiwai@suse.de>,
+	Nathan Chancellor <nathan@kernel.org>,
+	Andy Shevchenko <andriy.shevchenko@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 561/990] ALSA: usb-audio: Fix UAC2 mixer unit request handling
-Date: Wed, 25 Nov 2026 15:32:08 +0100
-Message-ID: <20261125143835.238364259@linuxfoundation.org>
+Subject: [PATCH 6.18 562/990] serial: 8250_mid: Add missing module namespace import for SERIAL_8250
+Date: Wed, 25 Nov 2026 15:32:09 +0100
+Message-ID: <20261125143835.262872571@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143822.072087159@linuxfoundation.org>
 References: <20261125143822.072087159@linuxfoundation.org>
@@ -68,104 +68,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Takashi Iwai <tiwai@suse.de>
+From: Nathan Chancellor <nathan@kernel.org>
 
-[ Upstream commit 0458d97859840506c3688a963dcd4f72b4a23083 ]
+[ Upstream commit 789f52f83305032ecfaaf7efae9a8ba75815c01b ]
 
-For a request for a Mixer Unit on UAC2 (also UAC3), the wValue is
-different from UAC1 and an incompatible value must be passed.
-Namely, UAC1 takes a word consisting of 1-based input channel in the
-high byte and 1-based output channel in the low byte.
-Meanwhile, UAC2/3 takes UAC2_MU_MIXER in the high byte and a MCN
-(0-based bit position of input/output channels) in the low byte.
-The current driver implementation blindly assumes the UAC1 way, hence
-it would cause a firmware error.
+After commit 1c305d5f1daa ("serial: 8250_mid: wait for LSR tx empty
+before setting termios"), modpost errors (or warning with
+CONFIG_MODULE_ALLOW_MISSING_NAMESPACE_IMPORTS=y):
 
-This patch attempts to implement the conversion to UAC2 MCN at
-get_ctl_value_v2() and snd_usb_mixer_set_ctl_value() for mixer units.
-At the points above, the old wValue containing ICN and OCN is
-converted to the corresponding MCN, and it's used as the proper
-wValue.
+  ERROR: modpost: drivers/tty/serial/8250/8250_mid.ko: module uses symbol 'serial8250_wait_for_xmitr' from namespace 'SERIAL_8250', but does not import it.
 
-Reported-by: Zipdox <zipdox@zipdox.net>
-Closes: https://lore.kernel.org/d46fcac6-bd7e-4fc4-95e1-4e8d39f92ad3@zipdox.net
-Fixes: 23caaf19b11e ("ALSA: usb-mixer: Add support for Audio Class v2.0")
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
-Link: https://patch.msgid.link/20260930155356.348608-3-tiwai@suse.de
+Add the missing module namespace import to clear up the error/warning.
+
+Fixes: 1c305d5f1daa ("serial: 8250_mid: wait for LSR tx empty before setting termios")
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+Reviewed-by: Andy Shevchenko <andriy.shevchenko@intel.com>
+Link: https://patch.msgid.link/20260927-tty-8250_mid-ns-import-v1-1-84d0482e1c5d@kernel.org
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/usb/mixer.c | 23 +++++++++++++++++++++++
- sound/usb/mixer.h |  2 ++
- 2 files changed, 25 insertions(+)
+ drivers/tty/serial/8250/8250_mid.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/sound/usb/mixer.c b/sound/usb/mixer.c
-index f4e44c31111cd..e578a29a675f0 100644
---- a/sound/usb/mixer.c
-+++ b/sound/usb/mixer.c
-@@ -335,6 +335,17 @@ static int get_ctl_value_v1(struct usb_mixer_elem_info *cval, int request,
- 	return -EINVAL;
- }
- 
-+/* convert the given UAC1 wValue (ICN|OCN) to UAC2 MCN */
-+static unsigned char to_mcn(const struct usb_mixer_elem_info *cval,
-+			    unsigned int validx)
-+{
-+	unsigned char m = (validx >> 8) & 0xff; /* 1-based input channel */
-+	unsigned char v = validx & 0xff; /* 1-based output channel */
-+
-+	/* num_inputs * num_outputs is guaranteed to be < 256 */
-+	return (m - 1) * cval->num_outputs + (v - 1);
-+}
-+
- static int get_ctl_value_v2(struct usb_mixer_elem_info *cval, int request,
- 			    int validx, int *value_ret)
- {
-@@ -347,6 +358,10 @@ static int get_ctl_value_v2(struct usb_mixer_elem_info *cval, int request,
- 
- 	val_size = uac2_ctl_value_size(cval->val_type);
- 
-+	/* correct wValue for UAC2 mixer control with MCN */
-+	if (cval->v2_mixer)
-+		validx = (UAC2_MU_MIXER << 8) | to_mcn(cval, validx);
-+
- 	if (request == UAC_GET_CUR) {
- 		bRequest = UAC2_CS_CUR;
- 		size = val_size;
-@@ -473,6 +488,10 @@ int snd_usb_mixer_set_ctl_value(struct usb_mixer_elem_info *cval,
- 		}
- 
- 		request = UAC2_CS_CUR;
-+
-+		/* correct wValue for UAC2 mixer control with MCN */
-+		if (cval->v2_mixer)
-+			validx = (UAC2_MU_MIXER << 8) | to_mcn(cval, validx);
- 	}
- 
- 	value_set = convert_bytes_value(cval, value_set);
-@@ -2206,6 +2225,10 @@ static void build_mixer_unit_ctl(struct mixer_build *state,
- 
- 	snd_usb_mixer_elem_init_std(&cval->head, state->mixer, unitid);
- 	cval->control = in_ch + 1; /* based on 1 */
-+	if (state->mixer->protocol == UAC_VERSION_2 ||
-+	    state->mixer->protocol == UAC_VERSION_3)
-+		cval->v2_mixer = true;
-+	cval->num_outputs = num_outs;
- 	cval->val_type = USB_MIXER_S16;
- 	for (i = 0; i < num_outs; i++) {
- 		__u8 *c = uac_mixer_unit_bmControls(desc, state->mixer->protocol);
-diff --git a/sound/usb/mixer.h b/sound/usb/mixer.h
-index 8e5e8da6d480f..00ffefb751d2a 100644
---- a/sound/usb/mixer.h
-+++ b/sound/usb/mixer.h
-@@ -97,6 +97,8 @@ struct usb_mixer_elem_info {
- 	int cache_val[MAX_CHANNELS];
- 	u8 initialized;
- 	u8 min_mute;
-+	u8 num_outputs;
-+	bool v2_mixer;
- 	void *private_data;
- };
- 
+diff --git a/drivers/tty/serial/8250/8250_mid.c b/drivers/tty/serial/8250/8250_mid.c
+index c02ecb96e8b6f..47f820fcd1a45 100644
+--- a/drivers/tty/serial/8250/8250_mid.c
++++ b/drivers/tty/serial/8250/8250_mid.c
+@@ -415,3 +415,4 @@ module_pci_driver(mid8250_pci_driver);
+ MODULE_AUTHOR("Intel Corporation");
+ MODULE_LICENSE("GPL v2");
+ MODULE_DESCRIPTION("Intel MID UART driver");
++MODULE_IMPORT_NS("SERIAL_8250");
 -- 
 2.53.0
 
