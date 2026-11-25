@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795621983;
-	b=qjd2NZCujPS53rTYwMNfOe/Y9Ov0sh7LHA+uoRHTaXYPNSuk0H8/+VQMFsNl2TdzQJRh
-	 qHjinvS7MoIDqa2hw6+1YSg6/n43nwZENojmlc0C8n3sPoejqNLJRTcw/Y/uOck3lsYUx
-	 VmEt7OIpv8XZfj2Nh1cZDFRyQeWOo4e1kV3RIbdhgz0l8Yhu0SZQLC+zzLZIJfZZWupGC
-	 1DZAgjZ1fk+sHsg8oXQUfWa52s/0SU3AYUlwZFWM1l47jys75WTKFeZi/I1dlXeidA+b8
-	 Al5pvtSMRGek10OamOjgK/I2e2uCfR4oAJ0E73M9CeS6AqUZluQ2MZeQRZeeJgEXBfA==
+	t=1795621986;
+	b=Lu2nY509QAlgx/JgvS+ZrSy9EJT8nJPfX14h/BsPp0Sr/m0IspLfV6jtfiHaKkEF2xnA
+	 CRsh9mmmzb+TKV5CpBSW9Ir/cBFjCrGuy6bmVC3BOi71CcASLeVssepHFhPpCRUkk2uke
+	 qWJzevtQDQiZ51RTL04qmfpwtsnFvQ6PO3b7NJi+owrv92TwNkRpHcIya5fX7gWx0U055
+	 0HohAVRbI4357tvbON6ZOEpzeGGBeXiQZ+Z2e33lrrEhoGY5jFTY0nKyzIe455j2LE6X4
+	 RRvlRQwmMUwkDZUdy62v3FT0w87ZDB+0Sw44JR5o2Uf7MptcHCRAvpZfZ5icp9Elb+Q==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795621983;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795621986;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=Sl75g0c9/wXhcmfoBJVekKZyfq4XISi9andxPLwXDI0=;
-	b=etzbs9WyOgaN6hp9F4TSNicRlM/voCHdYNF+GX2dky7VqgJVnfhPk16ChqKkpohrGO7N
-	 cH26GmitTQcolY1fZtUCU/1JlAPkFzQSlNyz3K8F/cuDFoNEvx7ZN6VcqMA7u3HiWlKM3
-	 fqp//90fYap1atNzQQiEGQ5XjblKl5EIQk43IWOXcnAB8JUvxHZH9cGct58PIADZ8Fwqf
-	 FB+ZKQOY4qwAlsIh81wfT7SuAYWgjOeshbHDmQaMe6atW0mxiN3GCduaY/+nAMxLhMFAV
-	 C/lqWseJagWZ7reCQDIl+098lkl6+NcnZAS9ZCyp+i1VHzKoGNX2wB4Z14vIiy/7ENw==
+	bh=sdfg7LNhlqktNotx/lRTxdKflC1RLK9mdAYHc2A8UwA=;
+	b=fZNeegIJuzbmdJNWMtOgYFa10PbiUJktpijbtBs/iheUFQ3FCqRn6J1vlbo7JwJ77XPo
+	 ZberenslA9/U2DStGKllSUAINteF14zTCKOwFk3vmgNioQLG0QYncnkQ7+UxkfPonzGMB
+	 fk7JMdJyiaTOG7LOZCVa+ACd+sOdOFTyuDioBbj15vNqZdqLhJoA0fPzDie2k6cm2Vp+b
+	 /O+zXAzzgvsRWpxREZ3rNNotxMs/e+qpmTfwfdx6AKO+a3pOptnFQtyiG7DgKKRFTm1Gq
+	 lBC8mcLFPajAsSEBeV7mXxD6Ea4ip1Xrql0q55UNbcoKPporP00losLJ/FAXX3Du4LA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="Ab/y3uy6";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=G6v8kWq8;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 13A5C606A31E;
-	Wed, 25 Nov 2026 15:53:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F2302606A321;
+	Wed, 25 Nov 2026 15:53:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Ab/y3uy6
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 62A0A1F000C0;
-	Wed, 25 Nov 2026 15:53:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=G6v8kWq8
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3311A1F000C0;
+	Wed, 25 Nov 2026 15:53:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795621982;
-	bh=Sl75g0c9/wXhcmfoBJVekKZyfq4XISi9andxPLwXDI0=;
+	s=korg; t=1795621985;
+	bh=sdfg7LNhlqktNotx/lRTxdKflC1RLK9mdAYHc2A8UwA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Ab/y3uy6tcZ5PAKMD3g997TfX9Eb3PFF5GzfAAbh8feIc9G9qdR6C8Eb6+GW19f9J
-	 zgDKLUIDE7e166l1WAMIu6VRzl+pvmtQ7Ltgptoq1eJZVhAIBol9ek9SxQvjipBLpw
-	 dfknbqFEcG2W2oz8XyulqwFeH021vEnhIBdX8oVY=
+	b=G6v8kWq8ODnIIDdPPs+M/ZcTFNemgh4QdPJQEoD0+fQuBavDY1gKuRXuy/DEH0rEn
+	 J9MeKfPJHl09cbOpIdE5C4AEBkKPor9DXOuaCUsWTJ2v+pCXesSG+vNtTiL2x1ttjk
+	 UYOobXKUYWhoo80tYq3cdX6HkAuwEbx86OG0BU1k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mark Korenberg <socketpair@gmail.com>,
-	Ming Lei <tom.leiming@gmail.com>,
-	Jens Axboe <axboe@kernel.dk>,
+	Kyle Zeng <kylebot@openai.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 391/990] ublk: publish a new device by its id only once it is set up
-Date: Wed, 25 Nov 2026 15:29:18 +0100
-Message-ID: <20261125143831.255240385@linuxfoundation.org>
+Subject: [PATCH 6.18 392/990] net: skbuff: preserve fclone lifetime when freeing stolen heads
+Date: Wed, 25 Nov 2026 15:29:19 +0100
+Message-ID: <20261125143831.279288025@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143822.072087159@linuxfoundation.org>
 References: <20261125143822.072087159@linuxfoundation.org>
@@ -69,87 +68,61 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mark Korenberg <socketpair@gmail.com>
+From: Kyle Zeng <kylebot@openai.com>
 
-[ Upstream commit e5c463e5074a940c644d54d8fc29aba06709aab0 ]
+[ Upstream commit 86706ffa990ecd46a4326f8eecbccbbd60a6cb8d ]
 
-ADD_DEV stores the device in ublk_index_idr when it allocates the id,
-and control commands find it there as soon as ublk_add_chdev() has
-initialized its struct device, before the char device is added. If
-dev_set_name() or cdev_device_add() then fails, ublk_add_chdev() drops
-the initial reference to free the device. A DEL_DEV that found the
-device meanwhile waits for ublk_ctl_mutex, then calls ublk_remove():
-cdev_device_del() of a device that was never added, and a second put of
-the initial reference, which frees the device under the callers still
-holding references.
+skb_morph() can give an skb from skbuff_fclone_cache a page-fragment
+head without changing its fclone tag. IPv4 reassembly can produce such
+an skb, which can subsequently reach the GRO stolen-head path.
 
-Reserve the id with a NULL entry, which idr_find() and the idr iterators
-skip, and store the device once ublk_add_chdev() succeeded.
+napi_skb_free_stolen_head() puts the shell into the ordinary NAPI skb
+cache without dropping its fclone_ref. If the embedded companion is
+still live, KASAN poisons it along with the original, and later cache
+reuse or eviction can overwrite or free the allocation underneath it.
+A mirrored batman-adv DAT packet retained in a plug qdisc reproduces a
+KASAN use-after-free in plug_dequeue().
 
-Fixes: 71f28f3136af ("ublk_drv: add io_uring based userspace block driver")
-Signed-off-by: Mark Korenberg <socketpair@gmail.com>
-Reviewed-by: Ming Lei <tom.leiming@gmail.com>
-Link: https://patch.msgid.link/20261105-ublk-del-gendisk-hang-v1-1-913a91a4314d@gmail.com
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Use kfree_skbmem() for fclones in napi_skb_free_stolen_head(), retaining
+NAPI caching for ordinary skb heads. Also use kfree_skbmem() in
+kfree_skb_partial(), whose stolen-head branch has the same assumption
+about the allocation cache. This releases the shell according to its
+allocation kind and preserves any live companion without freeing the
+data that has been transferred to the receiving skb.
+
+Fixes: f450d539c05a ("skbuff: introduce {,__}napi_build_skb() which reuses NAPI cache heads")
+Signed-off-by: Kyle Zeng <kylebot@openai.com>
+Link: https://patch.msgid.link/20261030042329.74461-1-kylebot@openai.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/block/ublk_drv.c | 23 +++++++++++++++++++++--
- 1 file changed, 21 insertions(+), 2 deletions(-)
+ net/core/skbuff.c | 6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/block/ublk_drv.c b/drivers/block/ublk_drv.c
-index 8db1f9d9272c6..60bc10ca5ef2b 100644
---- a/drivers/block/ublk_drv.c
-+++ b/drivers/block/ublk_drv.c
-@@ -2905,14 +2905,18 @@ static int ublk_alloc_dev_number(struct ublk_device *ub, int idx)
- 	int i = idx;
- 	int err;
- 
-+	/*
-+	 * Only reserve the id: the device is published by
-+	 * ublk_publish_dev_number() once it is fully set up.
-+	 */
- 	spin_lock(&ublk_idr_lock);
- 	/* allocate id, if @id >= 0, we're requesting that specific id */
- 	if (i >= 0) {
--		err = idr_alloc(&ublk_index_idr, ub, i, i + 1, GFP_NOWAIT);
-+		err = idr_alloc(&ublk_index_idr, NULL, i, i + 1, GFP_NOWAIT);
- 		if (err == -ENOSPC)
- 			err = -EEXIST;
- 	} else {
--		err = idr_alloc(&ublk_index_idr, ub, 0, UBLK_MAX_UBLKS,
-+		err = idr_alloc(&ublk_index_idr, NULL, 0, UBLK_MAX_UBLKS,
- 				GFP_NOWAIT);
+diff --git a/net/core/skbuff.c b/net/core/skbuff.c
+index f1b0045667124..de69f89086513 100644
+--- a/net/core/skbuff.c
++++ b/net/core/skbuff.c
+@@ -1458,6 +1458,10 @@ void napi_skb_free_stolen_head(struct sk_buff *skb)
+ 		skb_orphan(skb);
+ 		skb->slow_gro = 0;
  	}
- 	spin_unlock(&ublk_idr_lock);
-@@ -2923,6 +2927,19 @@ static int ublk_alloc_dev_number(struct ublk_device *ub, int idx)
- 	return err;
++	if (skb->fclone != SKB_FCLONE_UNAVAILABLE) {
++		kfree_skbmem(skb);
++		return;
++	}
+ 	napi_skb_cache_put(skb);
  }
  
-+/*
-+ * Make the device visible to control commands by its id. Before its char
-+ * device is added, DEL_DEV could find it and remove a char device that was
-+ * never added, and drop the reference that ublk_add_chdev() drops on
-+ * failure.
-+ */
-+static void ublk_publish_dev_number(struct ublk_device *ub)
-+{
-+	spin_lock(&ublk_idr_lock);
-+	WARN_ON_ONCE(idr_replace(&ublk_index_idr, ub, ub->ub_number) != NULL);
-+	spin_unlock(&ublk_idr_lock);
-+}
-+
- static void ublk_free_dev_number(struct ublk_device *ub)
+@@ -6126,7 +6130,7 @@ void kfree_skb_partial(struct sk_buff *skb, bool head_stolen)
  {
- 	spin_lock(&ublk_idr_lock);
-@@ -3409,6 +3426,8 @@ static int ublk_ctrl_add_dev(const struct ublksrv_ctrl_cmd *header)
- 	 * ublk_add_chdev() will cleanup everything if it fails.
- 	 */
- 	ret = ublk_add_chdev(ub);
-+	if (!ret)
-+		ublk_publish_dev_number(ub);
- 	goto out_unlock;
- 
- out_deinit_queues:
+ 	if (head_stolen) {
+ 		skb_release_head_state(skb);
+-		kmem_cache_free(net_hotdata.skbuff_cache, skb);
++		kfree_skbmem(skb);
+ 	} else {
+ 		__kfree_skb(skb);
+ 	}
 -- 
 2.53.0
 
