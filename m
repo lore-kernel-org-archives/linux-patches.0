@@ -1,53 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795619113;
-	b=l0X/l4uTVosvI6hfx+UMcyi0+qm3OJqslak5hXV6cpBxCxBC9hXanaEfduR2jDXRMX7b
-	 hMKKLZOK7tR1GomwUPaZ3N15uZyHAxMxiTQ0fLo/951VEWGjVrvCRbGZlluc5hlWcx7DV
-	 S94vQDGH+EabG6OxWcXwVP5413VYcQhuCKa8fHDvYnqVI32eS1tuSuLKvOlzDoe8Pfwxe
-	 601HSC+l4LuY0jqnr/vfgn+4nM4JCiKaQazK4A9gguX2YDMpmZQLN3B09TFcPa2qX8VXe
-	 CXctGOdZ8mWF8h2V2Jhq+QGW2vpBUw7diuHjiteU0YEVN9kkQjhlMAGWCMHWmmobq/A==
+	t=1795619116;
+	b=smdqNduSHcYc3xY7WYFxM64BVqsEx2gAP7FZIhz84mj6CayOIOBHsNTQFqOqM05onBSY
+	 fWT5holOJr8TfJkxKdUF/dbQWOziO5t+U5UHvyY+eRncnbh45Xy1rvaUr0V00PzsCQTQO
+	 ypLLaUOERJ2Q/+21UThmFWSmjh//rORGCHHDXJQlsFDGQshUDSWh8um9BUYTOlrAbilnW
+	 HHheLu8YHYpT/iqXpi2wOTPzX4ZzOYl3K0y+I4KJ0WH0qekPlNMYHY8HGExvTCFUUyU/x
+	 FoN0vPWpyVrhxtsbNJMTkr7YmvwBKGYRf3dMeWmMqIHsi0NVJB2r5bRGolCFh8u2JkA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795619113;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795619116;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=bg7Ub4JShGHFk9tmeUIsk+N2Yaf+HYyEAGs65YR949I=;
-	b=a3tKmLKw5VB1tfWioB1HsPYhwpJ350ieBpfgHgBoFh70ILxHn3CyAE6wHypssm4UsQ9u
-	 YD+aKtIs1Uq0u1Xz00vQ4oKREnnfXXyzU5GUsTPrhxJSBZQnw7op3sZCX4GNDmjxNh9vy
-	 R/WHM6+CLLM4bVo21LxZOjE7nXGBkbcH9an8R1iy0RWIxqDdZ7ezdUhsPIN00EQFUEc1E
-	 vDaVZpa9MzMAvPQk+ic46WImreXWChl6LUDNFJhF2g6SXHXOLhl6Dx3pl5XTxOtCT9VT2
-	 OUoB+Ekb3wdD9uaKfY4Jsr9hLWZVF67T2S1ABil3FwtEyF9xYkv1mCFM8A6nmIwyONg==
+	bh=JuCAiGiP6ch73ajTEFd3MClrq9aQxxIbvItwKrRw9zM=;
+	b=LoTpFaVanfYPovBknT6kK/Vr0fbJzni0nkdK51TMAYTLvPEaeOB9of5hTQ+ZSVUkUEea
+	 pke0WjGngkfSz53bcbWoUJWYRKaxw6iYMflvkomIDY5b4fF65b/V6OUlSFTbqbYceiQjM
+	 aW9Ja4GgmlIzWuLm44vGm0Gi/QZQeyQI8oY+1sTvetEGonfVuu/hdF51OZMzErC41Y5xk
+	 jZHjM5inm4MgagmaoO0KXvUbKVul+1xdBlbEemeX22f5gZ2IrS85axlqyJ4njOLhHPU3d
+	 g0T/tV/6/PT37gw81x3tzjnZsVQoueHOmXXYUi0hz80YFALHiKeCjiU87sv7TQjXgNw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=KhSPUW5J;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=IHcnpggi;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B0CE2606A31E;
-	Wed, 25 Nov 2026 15:05:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8AFA7606A31E;
+	Wed, 25 Nov 2026 15:05:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=KhSPUW5J
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AB9111F000CA;
-	Wed, 25 Nov 2026 15:05:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=IHcnpggi
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D59941F000D0;
+	Wed, 25 Nov 2026 15:05:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795619113;
-	bh=bg7Ub4JShGHFk9tmeUIsk+N2Yaf+HYyEAGs65YR949I=;
+	s=korg; t=1795619116;
+	bh=JuCAiGiP6ch73ajTEFd3MClrq9aQxxIbvItwKrRw9zM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=KhSPUW5JewjHOZcBCqgRWpS2iCT64cbv+KaTf9YjRSi20IohQ2KNgDuFaPtUE1MMU
-	 CshatQxhzRTeiFTB9CQ+LriOgZ9u0THKbx7gsh2L8PUYVixfq3iekJI3Jh0Sqlf3zK
-	 vuCKyJimOaOXn6GzZ95B8UVyXUzWJutJ1zw4ukRM=
+	b=IHcnpggiHkR3b6k7ItQc6fx+YIuGbfLTdQKp0PiotJDFKL3gdT9BNC9Mg6WkF5D6X
+	 gR4Aw3u/X7N3ANahXcBHk7aFQw0PJcj+q4/ESGMXrX0ay0B7ZEVY01/eEdY6GS9U2W
+	 TZneYaXA5mdE6vvX/pDwBtwbbZ1Ydn8iahcHOPXQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Li RongQing <lirongqing@baidu.com>,
-	Hangbin Liu <liuhangbin@kylinos.cn>,
+	Ivan Vecera <ivecera@redhat.com>,
+	Vadim Fedorenko <vadim.fedorenko@linux.dev>,
+	Petr Oros <poros@redhat.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0457/1005] team: fix promisc/allmulti leak in team_port_add error path
-Date: Wed, 25 Nov 2026 15:29:55 +0100
-Message-ID: <20261125143832.453385512@linuxfoundation.org>
+Subject: [PATCH 7.3 0493/1005] dpll: notify about a reference sync pair only if it was added
+Date: Wed, 25 Nov 2026 15:30:31 +0100
+Message-ID: <20261125143833.294242606@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143821.729802100@linuxfoundation.org>
 References: <20261125143821.729802100@linuxfoundation.org>
@@ -69,68 +70,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Li RongQing <lirongqing@baidu.com>
+From: Ivan Vecera <ivecera@redhat.com>
 
-[ Upstream commit ff618cb00a645f1e3f89068c5fbda3f3a7f4ae63 ]
+[ Upstream commit 7a3837929d049dac1f931620f30b100993ce2594 ]
 
-team_port_add() increments the port's promiscuity and allmulti
-counts before calling team_dev_type_check_change(). If the latter
-fails, the error path does not undo these increments, leaving the
-port in promiscuous and allmulti mode even though it was not
-successfully added to the team.
+dpll_pin_ref_sync_pair_add() sends a pin change notification even when
+xa_insert() fails and nothing has changed. zl3073x gets -EBUSY when
+another channel has already added the same pair and ignores it, so user
+space is notified about a change that did not happen.
 
-Undo the promiscuity increment under err_set_slave_allmulti and the
-allmulti increment under err_set_dev_type, so each error label only
-reverts what was successfully applied, matching the cleanup performed
-by team_port_del().
+Send the notification only after a successful insert.
 
-With the promiscuity rollback now living under err_set_slave_allmulti,
-the inline dev_set_promiscuity(port_dev, -1) in the dev_set_allmulti()
-failure branch becomes redundant: that branch already jumps to
-err_set_slave_allmulti, which undoes the promiscuity increment. Drop
-the inline call to avoid doing it twice.
+Found by code review. Reproduced on a ZL30732A board with kprobes on
+dpll_pin_ref_sync_pair_add() and __dpll_pin_change_ntf(): loading the
+driver adds one pair twice and the add failing with -EBUSY sends a
+notification. With this patch it does not, and the successful add still
+does. A test module adding one pair twice shows the same on the monitor
+group.
 
-Found by source code audit.
-
-Fixes: 0ae9cfc454ea ("team: Move team device type change at the end of team_port_add")
-Signed-off-by: Li RongQing <lirongqing@baidu.com>
-Reviewed-by: Hangbin Liu <liuhangbin@kylinos.cn>
-Link: https://patch.msgid.link/20261104015217.2222-1-lirongqing@baidu.com
+Fixes: 58256a26bfb3 ("dpll: add reference sync get/set")
+Signed-off-by: Ivan Vecera <ivecera@redhat.com>
+Reviewed-by: Vadim Fedorenko <vadim.fedorenko@linux.dev>
+Reviewed-by: Petr Oros <poros@redhat.com>
+Link: https://patch.msgid.link/20261105131145.1010406-2-ivecera@redhat.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/team/team_core.c | 9 +++++----
- 1 file changed, 5 insertions(+), 4 deletions(-)
+ drivers/dpll/dpll_core.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/net/team/team_core.c b/drivers/net/team/team_core.c
-index 957cc7885d2fb..cfb833c307c14 100644
---- a/drivers/net/team/team_core.c
-+++ b/drivers/net/team/team_core.c
-@@ -1365,11 +1365,8 @@ static int team_port_add(struct team *team, struct net_device *port_dev,
- 	/* set allmulti level to new slave */
- 	if (dev->flags & IFF_ALLMULTI) {
- 		err = dev_set_allmulti(port_dev, 1);
--		if (err) {
--			if (dev->flags & IFF_PROMISC)
--				dev_set_promiscuity(port_dev, -1);
-+		if (err)
- 			goto err_set_slave_allmulti;
--		}
- 	}
+diff --git a/drivers/dpll/dpll_core.c b/drivers/dpll/dpll_core.c
+index 8389983f42569..277692d12d3d1 100644
+--- a/drivers/dpll/dpll_core.c
++++ b/drivers/dpll/dpll_core.c
+@@ -1081,7 +1081,8 @@ int dpll_pin_ref_sync_pair_add(struct dpll_pin *pin,
+ 	mutex_lock(&dpll_lock);
+ 	ret = xa_insert(&pin->ref_sync_pins, ref_sync_pin->id,
+ 			ref_sync_pin, GFP_KERNEL);
+-	__dpll_pin_change_ntf(pin);
++	if (!ret)
++		__dpll_pin_change_ntf(pin);
+ 	mutex_unlock(&dpll_lock);
  
- 	err = team_dev_type_check_change(dev, port_dev);
-@@ -1397,7 +1394,11 @@ static int team_port_add(struct team *team, struct net_device *port_dev,
- 	return 0;
- 
- err_set_dev_type:
-+	if (dev->flags & IFF_ALLMULTI)
-+		dev_set_allmulti(port_dev, -1);
- err_set_slave_allmulti:
-+	if (dev->flags & IFF_PROMISC)
-+		dev_set_promiscuity(port_dev, -1);
- err_set_slave_promisc:
- 	__team_option_inst_del_port(team, port);
- 
+ 	return ret;
 -- 
 2.53.0
 
