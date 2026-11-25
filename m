@@ -1,51 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795617870;
-	b=fLZ9OT5x//qQ2+MkPlkeojh8XD5uKAGEqBiadNNpLVGjCQ0JafrTm+7UwaqCWZbWunvK
-	 sEhgC2K+4YmiR+TH0oEBX4grTDFDY9f3izSyG7Kl4nSyYsj9lFefMSWxUW44vVz5C3lz9
-	 JrMmsq1OlsB+5T62StHwakrTopAV2kyqjn5hJwKieqW2xAyzxcho+XnmURr31ZqA2ceKX
-	 RE4TmjxERU59+sjDyHRHV6dHQK20taxJp+ILcEaYndWT6fseRDNjEgAzy0r0whv5G3J62
-	 OURXAj7qf9vhcWWg+lAvHBJzEx6L+t+7Ye8QwANqrohP/w7izkWSabagBf0wJQGS54Q==
+	t=1795617873;
+	b=IcsqAY24sA2zE2D5fbl9Ij5DgpGOTbnfEtrRR7SlughlWqgzBkcbx2R3nv0YZw45hUjQ
+	 p8NHPKBk/D5T8LQgCIJ9a8tAYG3ATcaY8FlKR9yp1JimP3sCRCxjQ2jNF9HJRGWBRSAOk
+	 pE+gS9c391jJj+Py+5cF9UGoXiz8LA6w06TpT0AJfkp9sykaCEf4czz4dJEQpj04eqRXt
+	 aSq0oTbqRryMa/MihB247Qodv1vqfpu1DWrqRgw0lb5RSPhJiCjh6tAOuip4hHZvj7etA
+	 jLvnHKUum7cfF7KpOXz4+CcSeXhvEr8dcojUwiaLukdWW5+O8y8kIwQTAQ7QTfqR3bQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795617870;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795617873;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=bTIUG2ykpPB+bR54cW726l2e9uACKZLwUuqhros4AZg=;
-	b=W+jMpmsim236MJc8+cGAM07HGO3yoJgfjIkDKHMI5PBNGnHOHHQ6UnV+101B4UdXtsTO
-	 BA8pdzv+DlV3Cp6eFFSmmPZrEEjY6/gnF4YpbOYThYcWHufSDT1ZHZyJawT4xJkzcfqXo
-	 6bYYbgNpurIBXb/Nmd5hddRPID37/37F8igoMJyJ9KtR/5VQXswJEo7NW6SXDOMdVfmwM
-	 TwfC6k8fWul3v/bZ1qq07s/3oF8y78r8YluP7XIp6q+8GR3IzL+icyzfGrTO/devXn37X
-	 0Oo+wQAs2yKxgd36aC7QzZ3/CxOB9lUuhJ9lYTxb37tfRU0n1eDUGOwOkwcpG1JYS9A==
+	bh=Vjcv8mIjjO3HqhxZeiW9Q7eUKdsler0SF1MT8Hsl5QE=;
+	b=C1MOjCcLilWCyws10dFq5oPlQigSpixfVRtRr/dnBLi/C1zv0EzA3uF/uu687VOIerS2
+	 rCD+79qfcZphr02iu2hazKJMQm0Y8gGTsBZFnzby2S3VHXdzbddR0mGAiii0Myed9cC6H
+	 ijyUtQTNx/HQZIvTCFXb/vAav4uGA6droQ4Sv7yBAlLxpKgiNAsO5y2m3TOnNO9KQdKn6
+	 Lxfjn5iZm/6YOTZODBTfAY4rnwp8tq4bsE+RQE84l1XewdmNd2FspdFdCMzH3Wo8WkxUV
+	 /YukphjgiCt/XoJbnD0s3nnUTCkI0bJbaDk2QfT+AmSQ15Nj0CixFicMPSwuGbrU+jQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=btg5AcqW;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=HhwEoTlI;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 554D1606A31E;
-	Wed, 25 Nov 2026 14:44:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2F153606A31E;
+	Wed, 25 Nov 2026 14:44:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=btg5AcqW
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 210551F000C0;
-	Wed, 25 Nov 2026 14:44:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=HhwEoTlI
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7FDC81F000C0;
+	Wed, 25 Nov 2026 14:44:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795617869;
-	bh=bTIUG2ykpPB+bR54cW726l2e9uACKZLwUuqhros4AZg=;
+	s=korg; t=1795617873;
+	bh=Vjcv8mIjjO3HqhxZeiW9Q7eUKdsler0SF1MT8Hsl5QE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=btg5AcqWf+HuxFDDxbSjij40bydC+Y8zHFK+NHHtGAoXekzNzWAUhbnT14fTQjyFF
-	 6PqN4E/zmZNmNG37s3jYrYyW3aB2l8pVKgoJzIfmA4yzV3qzonWi1HsfzflmxpQWHM
-	 AQ/CT2NSJrhJgwz6xqGGNMNKekNyH99MyU00K/VI=
+	b=HhwEoTlIQvsmQzxtpdssnhtohRYpAHb1Hz0A/AxNwph0RPE03YPVDOciYISqM/RxY
+	 +QIpo2og+w4ExTBh0Kg5qO0GVap01H7tB2E3mxqQaaXUjTZIEni5uX4EM/9H+ejLmH
+	 YEqH4+eYE2WGOJrVRUo2GYRKLsakeySRyBO0E46E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Alexei Starovoitov <ast@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0100/1005] bpf: Refuse to map an arena at address 0
-Date: Wed, 25 Nov 2026 15:23:58 +0100
-Message-ID: <20261125143824.088387448@linuxfoundation.org>
+Subject: [PATCH 7.3 0101/1005] bpf: Dont let bpf_arena_free_pages() see a half-set user range
+Date: Wed, 25 Nov 2026 15:23:59 +0100
+Message-ID: <20261125143824.111950833@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143821.729802100@linuxfoundation.org>
 References: <20261125143821.729802100@linuxfoundation.org>
@@ -69,42 +69,54 @@ Content-Transfer-Encoding: 8bit
 
 From: Alexei Starovoitov <ast@kernel.org>
 
-[ Upstream commit ca580b034380fa9a69cc973637d1859ec4f5b344 ]
+[ Upstream commit 52498f14c2d26d67a9bf06998b797900827a06ad ]
 
-The first mmap() of an arena sets user_vm_start and user_vm_end. Each
-subsequent mmap() must use the same range. The value 0 in user_vm_start
-means that the range is not set, but a mapping can start at address 0. Then
-arena_map_mmap() does not check vm_start and sets user_vm_start again. The
-range tree counts pages from user_vm_start. With a new user_vm_start it
-reports allocated pages as free, and apply_range_set_cb() fails with
--EBUSY.
+If map_extra is 0, the first arena_map_mmap() sets user_vm_start and
+user_vm_end. It holds arena->lock, but bpf_arena_free_pages() reads both
+fields without this mutex. The kfunc relies on the verifier, which rejects
+a prog if user_vm_start of its arena is 0. But this check covers only the
+maps in used_maps. The kfunc accepts any trusted pointer to struct bpf_map.
 
-An arena at address 0 is not useful, because the verifier rejects all progs
-that refer to it. Return -EINVAL from arena_get_unmapped_area(). It runs
-before mmap() removes the old mappings in the range.
+Thus the kfunc can run during arena_map_mmap() and read user_vm_start as 0
+and user_vm_end as vma->vm_end. Then min() does not limit page_cnt to the
+arena. arena_free_range() unmaps and frees pages of other vmalloc areas.
+
+Read user_vm_start one time and return if it is 0. This value means that no
+range is set, because arena_get_unmapped_area() rejects address 0. If only
+user_vm_end is still 0, uaddr_end is 0 and the kfunc returns, as today.
 
 Fixes: 317460317a02 ("bpf: Introduce bpf_arena.")
 Signed-off-by: Alexei Starovoitov <ast@kernel.org>
-Link: https://patch.msgid.link/20261101190535.1454146-4-alexei.starovoitov@gmail.com
+Link: https://patch.msgid.link/20261101190535.1454146-5-alexei.starovoitov@gmail.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/bpf/arena.c | 3 +++
- 1 file changed, 3 insertions(+)
+ kernel/bpf/arena.c | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
 diff --git a/kernel/bpf/arena.c b/kernel/bpf/arena.c
-index 868589f073301..a10981be21fe6 100644
+index a10981be21fe6..607768ef4bb5f 100644
 --- a/kernel/bpf/arena.c
 +++ b/kernel/bpf/arena.c
-@@ -650,6 +650,9 @@ static unsigned long arena_get_unmapped_area(struct file *filp, unsigned long ad
- 	ret = mm_get_unmapped_area(filp, addr, len * 2, 0, flags);
- 	if (IS_ERR_VALUE(ret))
- 		return ret;
-+	if (!ret)
-+		/* user_vm_start == 0 means that the user range is not set yet */
-+		return -EINVAL;
- 	if ((ret >> 32) == ((ret + len - 1) >> 32))
- 		return ret;
- 	if (WARN_ON_ONCE(arena->user_vm_start))
+@@ -990,6 +990,8 @@ static int arena_free_range(struct bpf_arena *arena, long uaddr, long page_cnt)
+ 
+ static void arena_free_pages(struct bpf_arena *arena, long uaddr, long page_cnt, bool sleepable)
+ {
++	/* The first mmap() may be setting the user range right now */
++	u64 user_vm_start = READ_ONCE(arena->user_vm_start);
+ 	struct mem_cgroup *new_memcg, *old_memcg;
+ 	u64 full_uaddr, uaddr_end;
+ 	struct arena_free_span *s;
+@@ -997,8 +999,8 @@ static void arena_free_pages(struct bpf_arena *arena, long uaddr, long page_cnt,
+ 	/* only aligned lower 32-bit are relevant */
+ 	uaddr = (u32)uaddr;
+ 	uaddr &= PAGE_MASK;
+-	full_uaddr = clear_lo32(arena->user_vm_start) + uaddr;
+-	if (full_uaddr < arena->user_vm_start)
++	full_uaddr = clear_lo32(user_vm_start) + uaddr;
++	if (!user_vm_start || full_uaddr < user_vm_start)
+ 		return;
+ 	uaddr_end = min(arena->user_vm_end, full_uaddr + (page_cnt << PAGE_SHIFT));
+ 	if (full_uaddr >= uaddr_end)
 -- 
 2.53.0
 
