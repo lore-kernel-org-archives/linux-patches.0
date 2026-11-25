@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795622629;
-	b=lVNzoHDDYk4W7RVUiTGCoksbGB8lv7ZgBeZqbaLCsEws1a0M2Z+DwL+hrJcBTPsvOA1C
-	 fn/vm/27gRKq2GsRdF/5b+Ps+9IGRAyBxNF0lv/kpvtkE7W+qlOCvnGQbZDtP7YF/PRqt
-	 mvLFf7qYnqDI/BNEoOilfOXIIm+tQUraC2LS9J9TVEYy8qAxqflNIJ4onASgXvVPkPlyO
-	 YgPtmk9Y1UdTEcPSQlCg8RJFMiZD/NDcqISJDDHc9qytomuMBJI1xL6JuNxJSO92oTBAI
-	 cdMzGdvtlYZgel+uuHZhO9ZHr8FfzqLdoNp4XpkdrJAHn09g0zjDJzFxek2CMIWlhcQ==
+	t=1795622633;
+	b=eUr7RXAxIb/hShaky8tfwaa5/eu6wS0qOi88fxsfYlL6MLLCdCUPwBPUXoHGtaH14lje
+	 2kwik07NzESr+tcV0LXv1oJDmPiYjmh4MCQabVAZK6fCI3pUF95TLNoMCvs4jdnyFHYqN
+	 OhKP2kHN5QY2C+7yTdmE8+NLi55DVJ9nc2oH6ECgIA5A4SVS1krEF8TFC4IK0yukCMuJU
+	 S4vNcz0gqVSrvfwlydpmQ526FIN3//dHEkq2d1HbvIrQVdfEpOyZ8b+cwZzTrcYceGDbB
+	 NiAB+XCNxkKypJwmwcUrUPgnyaJrA+3Mpqb3zCXquZ+N/e1YFVG+JShXlOiK7rBHf/A==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795622629;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795622633;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=bSHuRPvrVQkXAzrB9RXh/dzhdi2u3QYwis1NqxSWWEs=;
-	b=dfKj7bAEmPVl2b6Om0jPsxGOixzwp+wxu2HwTe4sQgwLW2O4iHzWz/gG9L3P+jyiOmgr
-	 S2U4ws8QDbAJSzc+IijySZ5a1XupR55wtQ8oNPbHCPmQNy/oBpqKXIZDJEmOo4tJp3jKt
-	 9RL1lAoUfopFffu09BWIQGErp6XODlGQ0uZ6GkotNe3eQ97NnPwuUn6TUsK50++9YFO6/
-	 OtfDV6F5LOr0pTrsKmpvHH67TsFgbmwMEtxYvbMqxHNUPUqtYpu4Fp0SZQ6T80x91sLL8
-	 Dt/TgaJ5flUSPzMrfFKuegRBCCibNKO3JWjF2wNQQ0t/FO1mLbLoB+G3Nn4pu6sqyxg==
+	bh=E/LIHm57NhIOekzwJ/TvatuJKifcJYWR9H+0+Lo8X2Q=;
+	b=jKB+Sgoo5cqf4putZULpNy3VpPEn3lJCfBKOabAS2yTV6h3/COD+MJk6/DQWMbLCoh5d
+	 ic5l2JLaU5Fp8rcu2GRBH2/nDRlL+6qy2+ZRV4NOo35Fz6XlgivfnEQ3edSifUvIvSyM6
+	 0zH3LLtXqZByAKCv+C1m2WK+IwU6CNKzgsp5V/B/IM1eiQhjn7dn6N4nThRQA3uUZA6B7
+	 W6+4D/2fb8HEVsN840PmsY25tPAa+sL5MS5GOUymTNs+7mJXyFP+pnRyacA4qE8PrhTD6
+	 AzwclYTmAX6VTGQzcGmeHtjTO5McieFwyjTNlA698X4C03Kb8LjuC2Rhu4MCsuv2JRw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ghUBl7fM;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=zFTVzjnp;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 84DD1606A31E;
-	Wed, 25 Nov 2026 16:03:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ED255606A31E;
+	Wed, 25 Nov 2026 16:03:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ghUBl7fM
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BD57F1F000C4;
-	Wed, 25 Nov 2026 16:03:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=zFTVzjnp
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0BB891F000C6;
+	Wed, 25 Nov 2026 16:03:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795622629;
-	bh=bSHuRPvrVQkXAzrB9RXh/dzhdi2u3QYwis1NqxSWWEs=;
+	s=korg; t=1795622632;
+	bh=E/LIHm57NhIOekzwJ/TvatuJKifcJYWR9H+0+Lo8X2Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ghUBl7fMLg4p6OzAZzK/C+2BdD+Env+7VOOPJEuiLKhI39khSdSrJ1OV3zcPo7yvz
-	 JR1tcxy0irYEp0rihByLT2B1MOMP2SFBhHYqrzPdWfdu9UKRpytOV59zq1Ab53SNpD
-	 jxI+KTq084ywDUdqePFm3VXnlC0DfwNZRhxRo36E=
+	b=zFTVzjnpVAn2CKWTKoHe4EROCt17UJ+UsQcku3jT4ymuf4Myp2xWicFIBtOLFQ0cY
+	 5lHOYyo33t01jtY/x8knDQZQABs7LEpLnTCo1EQMqo00XzFt7Z5hFw90thiV35r0D7
+	 0A5j+IIEbXoPdDTfyA6qaJm5qKTY0naa7ErKer64=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ian Rogers <irogers@google.com>,
-	Arnaldo Carvalho de Melo <acme@redhat.com>,
+	Vikas Gupta <vikas.gupta@broadcom.com>,
+	Dharmender Garg <dharmender.garg@broadcom.com>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 543/990] perf machine: Add session back pointer to fix out of bounds read
-Date: Wed, 25 Nov 2026 15:31:50 +0100
-Message-ID: <20261125143834.817499532@linuxfoundation.org>
+Subject: [PATCH 6.18 592/990] bnge: skip dev_addr when building the VNIC unicast list
+Date: Wed, 25 Nov 2026 15:32:39 +0100
+Message-ID: <20261125143835.958194686@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143822.072087159@linuxfoundation.org>
 References: <20261125143822.072087159@linuxfoundation.org>
@@ -68,203 +69,102 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ian Rogers <irogers@google.com>
+From: Vikas Gupta <vikas.gupta@broadcom.com>
 
-[ Upstream commit d227b45fc162ce9134bb96f33f71e6952ec36ea5 ]
+[ Upstream commit 0b3fc7fe6f3f68569b9f9139893491b61a4b45b9 ]
 
-thread__e_machine_endian() decides whether a thread is live, and so
-whether to read /proc/pid/exe rather than fall back to the perf.data
-environment, by recovering the session from the machine:
+The default VNIC programs the device's MAC as L2 filter 0 in
+bnge_init_chip() via bnge_hwrm_set_vnic_filter(bn, 0, 0, dev_addr).
+bnge_cfg_rx_mode() then walks dev->uc and programs each unicast
+address as a further L2 filter, without excluding dev_addr.
 
-	session = container_of(machine->machines, struct perf_session,
-			       machines);
-	is_live = !session->data;
+Skip dev_addr when building uc_list, since it is already installed as
+filter 0. As dev_addr now takes neither a uc_list slot nor an
+l2_filters[] slot, count only the non-dev_addr entries for the
+uc_list overflow check too, otherwise an input such as
+{dev_addr, A, B, C} would needlessly fall back to promiscuous mode
+even though A, B and C fit in exact-match filters.
+bnge_uc_list_updated() applies the same skip and count so the
+change detection stays consistent and does not loop.
 
-That only holds when the struct machines is the one embedded in a struct
-perf_session. It is not the only one. aslr_tool keeps its own in struct
-aslr_tool, and hists_cumulate, hists_filter, hists_link, hists_output
-and thread-maps-share each put one on the stack. For those the
-container_of subtracts offsetof(struct perf_session, machines) from an
-address that was never inside a session, and the following load of
-session->data reads outside the object, which is what ASan reports.
+This issue was caught by Sashiko (nipa).
 
-Replace the derivation with an explicit link. machines__init() takes the
-owning session, or NULL when the machines is standalone, and
-thread__e_machine_endian() reads it back through machines__session().
+Tested on Thor Ultra device.
 
-A NULL session is treated as live. The tests use synthetic pids that
-have no /proc entry, so the read fails there and the e_machine falls
-back to EM_HOST as before, rather than being decided by whatever the
-out of bounds read happened to return. perf inject registers its
-session with the aslr tool once the session exists, before any event is
-processed, so that tool keeps reporting file based threads as not live.
-
-Fixes: 70351029b556 ("perf thread: Add support for reading the e_machine type for a thread")
-Assisted-by: Antigravity:gemini-3.1-pro
-Signed-off-by: Ian Rogers <irogers@google.com>
-Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
-[ sashal: adapted to machines__init() returning void and dropped the ASLR hunks since that code is absent, so the test callers pass NULL as a plain statement. ]
+Fixes: 9afad4a17174 ("bng_en: Configure default VNIC")
+Signed-off-by: Vikas Gupta <vikas.gupta@broadcom.com>
+Reviewed-by: Dharmender Garg <dharmender.garg@broadcom.com>
+Link: https://patch.msgid.link/20261006141928.1432927-1-vikas.gupta@broadcom.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+[ sashal: Adapted to the older API: kept dev-based netdev_for_each_uc_addr() iteration and locking in bnge_cfg_def_vnic() instead of the upstream uc/snapshot parameters and bnge_cfg_rx_mode(). ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/perf/tests/hists_cumulate.c    |  2 +-
- tools/perf/tests/hists_filter.c      |  2 +-
- tools/perf/tests/hists_link.c        |  2 +-
- tools/perf/tests/hists_output.c      |  2 +-
- tools/perf/tests/thread-maps-share.c |  2 +-
- tools/perf/util/machine.c            |  3 ++-
- tools/perf/util/machine.h            | 10 +++++++++-
- tools/perf/util/session.c            |  2 +-
- tools/perf/util/thread.c             |  8 +++-----
- 9 files changed, 20 insertions(+), 13 deletions(-)
+ .../net/ethernet/broadcom/bnge/bnge_netdev.c  | 27 +++++++++++++------
+ 1 file changed, 19 insertions(+), 8 deletions(-)
 
-diff --git a/tools/perf/tests/hists_cumulate.c b/tools/perf/tests/hists_cumulate.c
-index 3eb9ef8d7ec63..bdf4ce82612dd 100644
---- a/tools/perf/tests/hists_cumulate.c
-+++ b/tools/perf/tests/hists_cumulate.c
-@@ -724,7 +724,7 @@ static int test__hists_cumulate(struct test_suite *test __maybe_unused, int subt
- 		goto out;
- 	err = TEST_FAIL;
+diff --git a/drivers/net/ethernet/broadcom/bnge/bnge_netdev.c b/drivers/net/ethernet/broadcom/bnge/bnge_netdev.c
+index 02be751f3d8fc..d1c55ac9318f2 100644
+--- a/drivers/net/ethernet/broadcom/bnge/bnge_netdev.c
++++ b/drivers/net/ethernet/broadcom/bnge/bnge_netdev.c
+@@ -1670,18 +1670,19 @@ static bool bnge_uc_list_updated(struct bnge_net *bn)
+ 	struct bnge_vnic_info *vnic = &bn->vnic_info[BNGE_VNIC_DEFAULT];
+ 	struct net_device *dev = bn->netdev;
+ 	struct netdev_hw_addr *ha;
+-	int off = 0;
+-
+-	if (netdev_uc_count(dev) != (vnic->uc_filter_count - 1))
+-		return true;
++	int off = 0, count = 0;
  
--	machines__init(&machines);
-+	machines__init(&machines, /*session=*/NULL);
- 
- 	/* setup threads/dso/map/symbols also */
- 	machine = setup_fake_machine(&machines);
-diff --git a/tools/perf/tests/hists_filter.c b/tools/perf/tests/hists_filter.c
-index 1cebd20cc91c0..4a1d45ecc03ff 100644
---- a/tools/perf/tests/hists_filter.c
-+++ b/tools/perf/tests/hists_filter.c
-@@ -131,7 +131,7 @@ static int test__hists_filter(struct test_suite *test __maybe_unused, int subtes
- 		goto out;
- 	err = TEST_FAIL;
- 
--	machines__init(&machines);
-+	machines__init(&machines, /*session=*/NULL);
- 
- 	/* setup threads/dso/map/symbols also */
- 	machine = setup_fake_machine(&machines);
-diff --git a/tools/perf/tests/hists_link.c b/tools/perf/tests/hists_link.c
-index 996f5f0b3bd17..0af2ba1ad1aa5 100644
---- a/tools/perf/tests/hists_link.c
-+++ b/tools/perf/tests/hists_link.c
-@@ -303,7 +303,7 @@ static int test__hists_link(struct test_suite *test __maybe_unused, int subtest
- 		goto out;
- 
- 	err = TEST_FAIL;
--	machines__init(&machines);
-+	machines__init(&machines, /*session=*/NULL);
- 
- 	/* setup threads/dso/map/symbols also */
- 	machine = setup_fake_machine(&machines);
-diff --git a/tools/perf/tests/hists_output.c b/tools/perf/tests/hists_output.c
-index ee5ec8bda60e5..a80263ab1d346 100644
---- a/tools/perf/tests/hists_output.c
-+++ b/tools/perf/tests/hists_output.c
-@@ -611,7 +611,7 @@ static int test__hists_output(struct test_suite *test __maybe_unused, int subtes
- 		goto out;
- 	err = TEST_FAIL;
- 
--	machines__init(&machines);
-+	machines__init(&machines, /*session=*/NULL);
- 
- 	/* setup threads/dso/map/symbols also */
- 	machine = setup_fake_machine(&machines);
-diff --git a/tools/perf/tests/thread-maps-share.c b/tools/perf/tests/thread-maps-share.c
-index e9ecd30a5c058..cea1f92b5302c 100644
---- a/tools/perf/tests/thread-maps-share.c
-+++ b/tools/perf/tests/thread-maps-share.c
-@@ -27,7 +27,7 @@ static int test__thread_maps_share(struct test_suite *test __maybe_unused, int s
- 	 * other  group (pid: 4, tids: 4, 5)
- 	*/
- 
--	machines__init(&machines);
-+	machines__init(&machines, /*session=*/NULL);
- 	machine = &machines.host;
- 
- 	/* create process with 4 threads */
-diff --git a/tools/perf/util/machine.c b/tools/perf/util/machine.c
-index 091022e9c867f..0fcbd56746f24 100644
---- a/tools/perf/util/machine.c
-+++ b/tools/perf/util/machine.c
-@@ -229,9 +229,10 @@ void machine__delete(struct machine *machine)
+ 	netdev_for_each_uc_addr(ha, dev) {
++		if (ether_addr_equal(ha->addr, dev->dev_addr))
++			continue;
++		if (count >= vnic->uc_filter_count - 1)
++			return true;
+ 		if (!ether_addr_equal(ha->addr, vnic->uc_list + off))
+ 			return true;
+-
+ 		off += ETH_ALEN;
++		count++;
  	}
+-	return false;
++	return count != vnic->uc_filter_count - 1;
  }
  
--void machines__init(struct machines *machines)
-+void machines__init(struct machines *machines, struct perf_session *session)
+ static bool bnge_promisc_ok(struct bnge_net *bn)
+@@ -1693,9 +1694,9 @@ static int bnge_cfg_def_vnic(struct bnge_net *bn)
  {
- 	machine__init(&machines->host, "", HOST_KERNEL_ID);
-+	machines->session = session;
- 	machines->host.machines = machines;
- 	machines->guests = RB_ROOT_CACHED;
- }
-diff --git a/tools/perf/util/machine.h b/tools/perf/util/machine.h
-index 22a42c5825fab..049bbbdfa20d2 100644
---- a/tools/perf/util/machine.h
-+++ b/tools/perf/util/machine.h
-@@ -15,6 +15,7 @@ struct dso;
- struct dso_id;
- struct evsel;
- struct perf_sample;
-+struct perf_session;
- struct symbol;
- struct target;
- struct thread;
-@@ -148,13 +149,20 @@ int machine__process_event(struct machine *machine, union perf_event *event,
- typedef void (*machine__process_t)(struct machine *machine, void *data);
+ 	struct bnge_vnic_info *vnic = &bn->vnic_info[BNGE_VNIC_DEFAULT];
+ 	struct net_device *dev = bn->netdev;
++	int i, off = 0, rc, uc_count = 0;
+ 	struct bnge_dev *bd = bn->bd;
+ 	struct netdev_hw_addr *ha;
+-	int i, off = 0, rc;
+ 	bool uc_update;
  
- struct machines {
-+	/** @session: back link to owning session if there is one. */
-+	struct perf_session *session;
- 	struct machine host;
- 	struct rb_root_cached guests;
- };
+ 	netif_addr_lock_bh(dev);
+@@ -1715,10 +1716,20 @@ static int bnge_cfg_def_vnic(struct bnge_net *bn)
+ 	vnic->uc_filter_count = 1;
  
--void machines__init(struct machines *machines);
-+void machines__init(struct machines *machines, struct perf_session *session);
- void machines__exit(struct machines *machines);
- 
-+static inline struct perf_session *machines__session(struct machines *machines)
-+{
-+	return machines->session;
-+}
-+
- void machines__process_guests(struct machines *machines,
- 			      machine__process_t process, void *data);
- 
-diff --git a/tools/perf/util/session.c b/tools/perf/util/session.c
-index 0eee9d2f59d9a..f737ddb377553 100644
---- a/tools/perf/util/session.c
-+++ b/tools/perf/util/session.c
-@@ -152,7 +152,7 @@ struct perf_session *__perf_session__new(struct perf_data *data,
- 	session->decomp_data.zstd_decomp = &session->zstd_data;
- 	session->active_decomp = &session->decomp_data;
- 	INIT_LIST_HEAD(&session->auxtrace_index);
--	machines__init(&session->machines);
-+	machines__init(&session->machines, session);
- 	ordered_events__init(&session->ordered_events,
- 			     ordered_events__deliver_event, NULL);
- 
-diff --git a/tools/perf/util/thread.c b/tools/perf/util/thread.c
-index bda001ccf571d..6e22f83ae1e1b 100644
---- a/tools/perf/util/thread.c
-+++ b/tools/perf/util/thread.c
-@@ -513,12 +513,10 @@ uint16_t thread__e_machine(struct thread *thread, struct machine *machine)
- 		bool is_live = machine->machines == NULL;
- 
- 		if (!is_live) {
--			/* Check if the session has a data file. */
--			struct perf_session *session = container_of(machine->machines,
--								    struct perf_session,
--								    machines);
-+			/* Check if the session has a data file (assume no session is a test). */
-+			struct perf_session *session = machines__session(machine->machines);
- 
--			is_live = !session->data;
-+			is_live = !session || !session->data;
- 		}
- 		/* Read from /proc/pid/exe if live. */
- 		if (is_live)
+ 	netif_addr_lock_bh(dev);
+-	if (netdev_uc_count(dev) > (BNGE_MAX_UC_ADDRS - 1)) {
++	/* dev_addr is already programmed as L2 filter 0, so it takes neither a
++	 * uc_list slot nor an l2_filters[] slot. Count only the entries that
++	 * will actually be programmed so the overflow check matches the fill
++	 * loop below (and bnge_uc_list_updated()).
++	 */
++	netdev_for_each_uc_addr(ha, dev)
++		if (!ether_addr_equal(ha->addr, dev->dev_addr))
++			uc_count++;
++	if (uc_count > BNGE_MAX_UC_ADDRS - 1) {
+ 		vnic->rx_mask |= CFA_L2_SET_RX_MASK_REQ_MASK_PROMISCUOUS;
+ 	} else {
+ 		netdev_for_each_uc_addr(ha, dev) {
++			if (ether_addr_equal(ha->addr, dev->dev_addr))
++				continue;
+ 			memcpy(vnic->uc_list + off, ha->addr, ETH_ALEN);
+ 			off += ETH_ALEN;
+ 			vnic->uc_filter_count++;
 -- 
 2.53.0
 
