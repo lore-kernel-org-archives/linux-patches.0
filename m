@@ -1,53 +1,55 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795621707;
-	b=d2Y2vpDy3MNfXVxgW78YdI69GM6m8hAnSzg13lIKUnhxFaloWPMD2/6rIoHkesyNJfHr
-	 O2zZhEUsFNyfYU1uSBXoTCUYrjDtaoaz2FbcGleTUEiGmIDJOJebuRq1pdvM/qYgGxaVq
-	 boIDta2iiKJhWI3OxuSryP5kDvQrOlgjW6aP5LgKN0GMcMXDSMRVwnVVuzlRegbUoHBPX
-	 vXUN/odXIcASXaNIWdmo3xeQ9y7g8GXNqDuSBecRhER1aH2K3dVLBdJYZbKRqBhNiRhu6
-	 x/fpEw5RZHG2TfymCpxFlgTjqnPDovJuSY/U5+3HDY4HLGmFyM+dIAt5iTrlGhVc5XQ==
+	t=1795621710;
+	b=pM+xtBkg4yLFDCJ+v5vqKiMATQZhRRZjTFTj2OP7/vQhKz6TjNrNoULJDCi+uWAskQTy
+	 NYUPSfGYkqNzSoVfgrWREIy8l6osTsVarujcwPUvwVJ1MO0T09JK7DQZ21SRcYPW5cVgT
+	 LAjQBPAVQeEOweG1W/JJEPJ7v2CUOfucDx58E1C9aU8zsR5VZNSkNRO8lCSOJYOrMK186
+	 veFcJiOmfvhVCOazQqQRorVoG6lyCTLSaXBwxLoblt0oUPNccoPqTewnk5PyZpZbNkijx
+	 03yFtM9W/djhXjQ0h3Tw9B1ZHEgeYsOIz5GAlg1jlgHQYauXCZwrGFJOCDrYnPwH31g==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795621707;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795621710;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=g/td2BlaeAXgOXrj7cAyg5fcFKv0W8g1UzX7lk7093w=;
-	b=ASQTvWYXiktQ3LQ8F/Z86xgjv4uy12qdL1eu7bWJ5M68KSk8Anw2vUjicr7LnO8Ac1G3
-	 BJQUAtcHRbOrbzsMPt+iQ7dqP5PN6Wx21vGLpkdJMtZgpOYf6IzF/nnMQsL0gfAi71nmg
-	 UD6x/SNvOZbV65mp2ytFsmLQ6yawubXzO+z1Ut28yA1kaz1eFokdwi42kO2yW3kk1aeUC
-	 jELLwIc1Y2bnjd4XvwcD0Kx+65wjHz0o6eb4J35T1WAXvD7aRd3Sv5VseOIdX44tVGdw6
-	 XDx2rNBKovB/bYI5xL98ebsW5hQoqWsPt4GZxHioXXaCcTY+aaOV3o04SUGsK2UV9+Q==
+	bh=yeATkVzGhbdFQsT0XvLOO7npB7ZplbLKQibTrKyw8Uc=;
+	b=svERocsi6ErFTxN6ldWWTEyAjIQD8FJLTVXfaUEAeO7E5s2NZk328u8p+hUypBxNinQH
+	 NdCQm1pWuC3CqdU4EBgya1Yyw/s9NzRNQo34tpSPGslSXgyRKCwa+hNFATav99vDPEN6D
+	 SgUV6CHu25/wy6rEtM3Rnq5YXglQ80fu5oBw+oBDs4bLdwgdARCdO5sisHxUQaaFVa1i4
+	 YAzlpQtSc2hEVVkwj9EuOCr25trzC7MJpuNoNXE6M9HcvuBvOznCA9g1wBsFfcUCcOOjJ
+	 seozCfeCDrYTeGg1jRotkMZEI74zr8WrIYQlJvgyDFKYiTBGGFw4Cy2lbi8OFZeznTg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=PV9hXd70;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=M6VoVG0Z;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9FB7C606A327;
-	Wed, 25 Nov 2026 15:48:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C3182606A31E;
+	Wed, 25 Nov 2026 15:48:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=PV9hXd70
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F15B31F000CA;
-	Wed, 25 Nov 2026 15:48:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=M6VoVG0Z
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C5DF01F000C4;
+	Wed, 25 Nov 2026 15:48:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795621707;
-	bh=g/td2BlaeAXgOXrj7cAyg5fcFKv0W8g1UzX7lk7093w=;
+	s=korg; t=1795621710;
+	bh=yeATkVzGhbdFQsT0XvLOO7npB7ZplbLKQibTrKyw8Uc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=PV9hXd70Z9W7yCJ5mb3Gy1pagg6vdnwWcPnsbabmMwxmNcF4u1H8EiFlgVlpDO9mK
-	 pU5VWkm/eDryArNgIwCy5gEtNvS53bPAXukNrnvZ6jALH2BgsFGuq0OfxBP2njARpW
-	 GAB18GfKRTzfLk4eh/7+zpI62FM6IMstxiRI80k0=
+	b=M6VoVG0ZpTsi12btsHWjr5nHpCAksB16Om0mqTK0kg6fZ3BU9N+5VGAIqydiTgS9f
+	 0q1gNL5/GylzZip3J40PQuK0jO/R/VrhRCAFL8GaCRnp4inyRKF94ufyl1HHr2DUP8
+	 Lk9PEqDIBUDK3dy93WZXagrlATZDumnDpUPlwsKM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hungyu Lin <dennylin0707@gmail.com>,
-	Jeff Layton <jlayton@kernel.org>,
-	"Christian Brauner (Amutable)" <brauner@kernel.org>,
+	Hui Su <sh_def@163.com>,
+	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
+	Ingo Molnar <mingo@kernel.org>,
+	Vincent Guittot <vincent.guittot@linaro.org>,
+	Kayra Cizmeci <kayracizmeci@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 304/990] vfs: preserve subsecond timestamps at filesystem time limits
-Date: Wed, 25 Nov 2026 15:27:51 +0100
-Message-ID: <20261125143829.213827688@linuxfoundation.org>
+Subject: [PATCH 6.18 313/990] sched/pelt: Fix u32 truncation of the PELT period count
+Date: Wed, 25 Nov 2026 15:28:00 +0100
+Message-ID: <20261125143829.423285439@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143822.072087159@linuxfoundation.org>
 References: <20261125143822.072087159@linuxfoundation.org>
@@ -69,55 +71,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hungyu Lin <dennylin0707@gmail.com>
+From: Hui Su <sh_def@163.com>
 
-[ Upstream commit 55a0c91000646b008261e3b1e15d1e774f3026e4 ]
+[ Upstream commit a0c755e574e37fddb59edf175f27dc3877e7fe23 ]
 
-timestamp_truncate() clears tv_nsec whenever the clamped seconds equal
-either filesystem time limit. This also drops the fractional part of
-timestamps whose seconds were already within the supported range.
+accumulate_sum() computes the number of elapsed PELT periods in a
+u64 but returns u32. When the count is a multiple of 2^32, it is
+truncated to zero even though the PELT sums have been updated.
 
-For example, setting a JFS mtime to 0.123456789 produces 0.000000000,
-although the filesystem can store the requested value. Utilities such
-as touch and cp -p consequently lose valid subsecond timestamps when
-preserving these endpoint values. Timestamps strictly between the
-filesystem limits are unaffected.
+The caller interprets zero as no period boundary crossed and skips
+recomputing the averages, leaving *_avg stale relative to *_sum.
 
-Only clear tv_nsec when clamping actually changes tv_sec. Continue to
-truncate in-range nanoseconds to the filesystem's timestamp granularity,
-including when the seconds equal either endpoint.
+Return the period count as u64 so the caller can test it without
+truncation.
 
-Ben Hutchings suggested comparing clamped and original seconds in the
-2019 utimes review. That caller was switched to timestamp_truncate(),
-but the helper retained its endpoint equality check.
-
-Link: https://lore.kernel.org/lkml/12c095e595836a7ff7f2c7b2a32cb5544dd29b55.camel@codethink.co.uk/
-Fixes: 50e17c000c46 ("vfs: Add timestamp_truncate() api")
-Signed-off-by: Hungyu Lin <dennylin0707@gmail.com>
-Link: https://patch.msgid.link/20261101113815.52911-1-dennylin0707@gmail.com
-Reviewed-by: Jeff Layton <jlayton@kernel.org>
-Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
+Fixes: a481db34b9be ("sched/fair: Optimize ___update_sched_avg()")
+Signed-off-by: Hui Su <sh_def@163.com>
+Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
+Signed-off-by: Ingo Molnar <mingo@kernel.org>
+Reviewed-by: Vincent Guittot <vincent.guittot@linaro.org>
+Reviewed-by: Kayra Cizmeci <kayracizmeci@gmail.com>
+Link: https://patch.msgid.link/20261023025207.2967903-1-sh_def@163.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/inode.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ kernel/sched/pelt.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/fs/inode.c b/fs/inode.c
-index b60111fad771a..a5333c9ff761d 100644
---- a/fs/inode.c
-+++ b/fs/inode.c
-@@ -2741,9 +2741,10 @@ struct timespec64 timestamp_truncate(struct timespec64 t, struct inode *inode)
+diff --git a/kernel/sched/pelt.c b/kernel/sched/pelt.c
+index fa83bbaf4f3e8..75a48236ec463 100644
+--- a/kernel/sched/pelt.c
++++ b/kernel/sched/pelt.c
+@@ -99,7 +99,7 @@ static u32 __accumulate_pelt_segments(u64 periods, u32 d1, u32 d3)
+  *      d1 y^p + 1024 \Sum y^n + d3 y^0		(Step 2)
+  *                     n=1
+  */
+-static __always_inline u32
++static __always_inline u64
+ accumulate_sum(u64 delta, struct sched_avg *sa,
+ 	       unsigned long load, unsigned long runnable, int running)
  {
- 	struct super_block *sb = inode->i_sb;
- 	unsigned int gran = sb->s_time_gran;
-+	time64_t seconds = t.tv_sec;
- 
- 	t.tv_sec = clamp(t.tv_sec, sb->s_time_min, sb->s_time_max);
--	if (unlikely(t.tv_sec == sb->s_time_max || t.tv_sec == sb->s_time_min))
-+	if (unlikely(t.tv_sec != seconds))
- 		t.tv_nsec = 0;
- 
- 	/* Avoid division in the common cases 1 ns and 1 s. */
 -- 
 2.53.0
 
