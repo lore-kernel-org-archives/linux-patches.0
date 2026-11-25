@@ -1,58 +1,56 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795618371;
-	b=bXZTbeABC4rXaPedi55mfo/PEc5nIozsdlesPlD1SoVyZhV6zujv7Amd+IT+x3dgCdcK
-	 js7ntABis3rZwxaPEyl+i1iMBJuJxmiQnDjnEATOxnp6MT+03E0mCzYl2GoKVj0SjVG80
-	 7eNdeW0zlicxMbSoSQVE5w0eAqvTy0hGuIdjm1aMLYP/q8llIxHhagbB6VSC1Ls8Qo6G1
-	 J1VNveyxLpIcmlz4CjXHiTKuKH+PLKc9C16wr2pEk8NCk1rViDefFS6AeSlBgMvTOKBpv
-	 ibAgkomR/wuCv0DWM78pUk3ueXcGuTc/H1txe3Yq4sde+P+BwGIzSC+8cUPrwTxF9Aw==
+	t=1795618374;
+	b=bM1xewL84ddCL6E1SV5PMu6zCNuQas+4KjFJxq1y9+4l92XMZqDTg9M0agIlI5cZWKmK
+	 HmiMgdy6sjAr/KFH4n3YLyAZyqz8zQNMyNnSZOh118018CuDi1uSwRRwsHKtGz6G8Xjkp
+	 xP0MEv0JbjHqMKbyXq9pzwNv4KAPhhRQOSRhHePnwuujoHV7BRSG9oxgC8EwJo71Tutjd
+	 6lOCcnwaLWymt0Vo8gEPxjqdirH2ItYah8LAL5tPpEd+kkYDBaKnG7Ke5zgNiqk65J6wP
+	 57wMuusW8EbVAq3H7OkTNgxcF+k3kNb321xsR5ReDcT/K7DKEc25wmGvC8Ra3dJb3dw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795618371;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795618374;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=k8T60hfhv8Ai2rjyn+filaCFMbcmLlPYuA0xTFTeMdY=;
-	b=sq/zV+b6aeTyHmKcXHDuGdbwvoBjlAXN1+T3RbceE4HXK/+pcdVwYVfMS6fJE5/Y/MLu
-	 PsfTohXHOmGmoQTxbzh8n27r9a/25z9mfM0y1ZB+p/0+J1wowhLh9sntApe1aVAC/+Gd/
-	 4QSkga0obtuQiIhQTkfRdOtgudKdDGMiR5aVr7Tb/yKdewEkNSZCQoIctx0UUo3WBIIb1
-	 oJSRKw11wIClb+78QjWYA3Dvd9fApCw7uQcTldUWrtIB1W/8pPnZzvr94ShvfD83MvYIv
-	 eMDKxqubOAKxOlbi31u2H6qL5Mby51u5yAeBXEg8NZ6Z+nXJV9iCd+3W6nfsugMnPWQ==
+	bh=3X0USbftzYc+XsVrEeyjz6BEix9LCWN8QLgQtRidxhA=;
+	b=5OO56YBv0yU88uNP2+IUGvw4bxrq9sZA1iXrCQFvT3VRfBRGlJ3TAeobul+le+d3CXbw
+	 mP8TNc4zDFwGOgO2KtGTZCwd1pRntUDRrRvkZeE4mdLB8PJcw443GHZ4tdt8PHQfxP/JL
+	 4L/SS5ctI03CwEV2ITYgXwQwr361YqaZz/BPHFxrire4n3ZoWpNt012QO9cOZ5NpOno0o
+	 WP4oCdlkQxy41PdkZF7AwQvgi0mQkT0DZ1C/PngHIht+XU0SwVoSexZ5e85fMe10xNV2O
+	 IOtFUYv+25rkibPOk/WgbkRYFqEAPyFXphe2izGIxj7V4UMk5EWCPX8n2JzWekAkShQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=W+NM4GE9;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=wPwxypGF;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7BAF3606A321;
-	Wed, 25 Nov 2026 14:52:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C0551606A323;
+	Wed, 25 Nov 2026 14:52:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=W+NM4GE9
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AAF301F000C6;
-	Wed, 25 Nov 2026 14:52:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=wPwxypGF
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 148B81F000C6;
+	Wed, 25 Nov 2026 14:52:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795618371;
-	bh=k8T60hfhv8Ai2rjyn+filaCFMbcmLlPYuA0xTFTeMdY=;
+	s=korg; t=1795618374;
+	bh=3X0USbftzYc+XsVrEeyjz6BEix9LCWN8QLgQtRidxhA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=W+NM4GE9GPyP+Q2rQDM/xZBgfP2ZBTtSmiELSLh4QPvanSPEuLseVUjpIIHzVEduh
-	 JWi+fMOgMFy4hEBVrfhk7xYc3p1nK++xSmr7bQ2fU6r9F5X8ihSy3RPNf2EWOQ1Za+
-	 F0EG+nNe6q9wZRG1cvAdwb0mAjI16w61XOOaGnXM=
+	b=wPwxypGFjPo0TBi5WloMt4+sRP3r1lNhWIcJYnJiVZD+dTS9zuwbfZVgmQqqmwre3
+	 eJk+g5nEQzZTkIHxggeJ1b+lDBVcWeB/17aRnkmFVcmMAkjWl4hVq7i3MDPQy5zMwT
+	 cwsZbAa9NEd9YAm9cC4G7hSlOeO5kEBPw2BTFRgY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hannes Reinecke <hare@suse.de>,
 	Christoph Hellwig <hch@lst.de>,
 	Sagi Grimberg <sagi@grimberg.me>,
 	Chaitanya Kulkarni <kch@nvidia.com>,
-	Hannes Reinecke <hare@kernel.org>,
-	Josef Bacik <josef@toxicpanda.com>,
+	Chris Mason <mason@kernel.org>,
 	Jens Axboe <axboe@kernel.dk>,
 	Keith Busch <kbusch@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0257/1005] nvmet-auth: keep the old keys if the new ones fail
-Date: Wed, 25 Nov 2026 15:26:35 +0100
-Message-ID: <20261125143827.759510769@linuxfoundation.org>
+Subject: [PATCH 7.3 0258/1005] nvmet-rdma: disconnect only established queues
+Date: Wed, 25 Nov 2026 15:26:36 +0100
+Message-ID: <20261125143827.782807394@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143821.729802100@linuxfoundation.org>
 References: <20261125143821.729802100@linuxfoundation.org>
@@ -74,131 +72,83 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Josef Bacik <josef@toxicpanda.com>
+From: Chris Mason <mason@kernel.org>
 
-[ Upstream commit 41ad4af45ac90259c652135b24539a08a92a7491 ]
+[ Upstream commit 000a9f4492abad6008682b55571ddc31941963e3 ]
 
-AUTH_Negotiate on the admin queue has nvmet_setup_auth() reload the
-host's keys, and it frees the old host key first. If decoding the new
-secret fails, or an allocation does, the controller is left without a
-host key, which means no authentication at all: nvmet_check_auth_status()
-passes everything and I/O queue Connects no longer ask for it. configfs
-accepts any string starting with "DHHC-1:" and a digit, so one typo
-while changing a secret opens the namespaces to any connected admin
-queue.
+Over iWARP, rdma_disconnect() sleeps in iw_cm_disconnect() until the
+ESTABLISHED event of the connection has been handled, and iw_cm handles
+all events of all connections one at a time on iw_cm_wq.
+nvmet_rdma_destroy_port_queues(), nvmet_rdma_remove_one() and
+nvmet_rdma_delete_ctrl() walk the queue list with
+nvmet_rdma_queue_mutex held and call rdma_disconnect() for each, while
+nvmet_rdma_cm_handler() takes the same mutex. If the walk sleeps on a
+queue whose ESTABLISHED is queued behind another queue's event, both
+are stuck and iWARP connection handling is dead until reboot. A peer
+sets that up by connecting in a loop, or over siw by asking for MPA
+peer-to-peer mode and then staying silent, which delays ESTABLISHED
+indefinitely.
 
-Decode the new keys first and only then replace the old ones.
+Only call rdma_disconnect() for a queue in NVMET_RDMA_Q_LIVE, which the
+handler sets when it gets ESTABLISHED. A queue that never got there is
+left to the release work: ib_drain_qp() moves the QP to the error
+state, which ends the connection, and rdma_destroy_id() tells the peer.
+Over IB and RoCE the skipped call did nothing more than that.
 
-Fixes: db1312dd9548 ("nvmet: implement basic In-Band Authentication")
-Cc: Hannes Reinecke <hare@suse.de>
+Fixes: f1d4ef7d8883 ("nvmet-rdma: register ib_client to not deadlock in device removal")
+Fixes: fcf73a804c7d ("nvmet-rdma: fix use-after-free when a port is removed")
 Cc: Christoph Hellwig <hch@lst.de>
 Cc: Sagi Grimberg <sagi@grimberg.me>
 Cc: Chaitanya Kulkarni <kch@nvidia.com>
-Reviewed-by: Hannes Reinecke <hare@kernel.org>
 Reviewed-by: Christoph Hellwig <hch@lst.de>
-Signed-off-by: Josef Bacik <josef@toxicpanda.com>
+Signed-off-by: Chris Mason <mason@kernel.org>
 Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Keith Busch <kbusch@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/nvme/target/auth.c | 69 ++++++++++++++++----------------------
- 1 file changed, 28 insertions(+), 41 deletions(-)
+ drivers/nvme/target/rdma.c | 15 +++++++++++++--
+ 1 file changed, 13 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/nvme/target/auth.c b/drivers/nvme/target/auth.c
-index 574025730834c..ccba84b1344e0 100644
---- a/drivers/nvme/target/auth.c
-+++ b/drivers/nvme/target/auth.c
-@@ -135,6 +135,7 @@ u8 nvmet_setup_auth(struct nvmet_ctrl *ctrl, struct nvmet_sq *sq, bool reset)
- 	int ret = 0;
- 	struct nvmet_host_link *p;
- 	struct nvmet_host *host = NULL;
-+	struct nvme_dhchap_key *host_key, *ctrl_key = NULL;
+diff --git a/drivers/nvme/target/rdma.c b/drivers/nvme/target/rdma.c
+index b9e39d1657d29..aab43d2aa0485 100644
+--- a/drivers/nvme/target/rdma.c
++++ b/drivers/nvme/target/rdma.c
+@@ -1694,7 +1694,7 @@ static void nvmet_rdma_queue_established(struct nvmet_rdma_queue *queue)
  
- 	down_read(&nvmet_config_sem);
- 	if (nvmet_is_disc_subsys(ctrl->subsys))
-@@ -172,55 +173,41 @@ u8 nvmet_setup_auth(struct nvmet_ctrl *ctrl, struct nvmet_sq *sq, bool reset)
- 		goto out_unlock;
+ static void __nvmet_rdma_queue_disconnect(struct nvmet_rdma_queue *queue)
+ {
+-	bool disconnect = false;
++	bool disconnect = false, live = false;
+ 	unsigned long flags;
+ 
+ 	pr_debug("cm_id= %p queue->state= %d\n", queue->cm_id, queue->state);
+@@ -1713,6 +1713,7 @@ static void __nvmet_rdma_queue_disconnect(struct nvmet_rdma_queue *queue)
+ 		}
+ 		fallthrough;
+ 	case NVMET_RDMA_Q_LIVE:
++		live = queue->state == NVMET_RDMA_Q_LIVE;
+ 		queue->state = NVMET_RDMA_Q_DISCONNECTING;
+ 		disconnect = true;
+ 		break;
+@@ -1722,7 +1723,17 @@ static void __nvmet_rdma_queue_disconnect(struct nvmet_rdma_queue *queue)
+ 	spin_unlock_irqrestore(&queue->state_lock, flags);
+ 
+ 	if (disconnect) {
+-		rdma_disconnect(queue->cm_id);
++		/*
++		 * Over iWARP rdma_disconnect() sleeps until the CM has handled
++		 * the ESTABLISHED event of this connection. The CM handles the
++		 * events of all connections one at a time, and our handler
++		 * takes nvmet_rdma_queue_mutex, which callers of this function
++		 * hold. So a queue that has not seen the event is left to the
++		 * release work: ib_drain_qp() moves the queue pair to the error
++		 * state, which ends the connection.
++		 */
++		if (live)
++			rdma_disconnect(queue->cm_id);
+ 		queue_work(nvmet_wq, &queue->release_work);
  	}
- 
--	if (host->dhchap_hash_id == ctrl->shash_id) {
--		pr_debug("Re-use existing hash ID %d\n",
--			 ctrl->shash_id);
--	} else {
--		ctrl->shash_id = host->dhchap_hash_id;
--	}
--
--	/* Skip the 'DHHC-1:XX:' prefix */
--	nvme_auth_free_key(ctrl->host_key);
--	ctrl->host_key = nvme_auth_extract_key(host->dhchap_secret + 10,
--					       host->dhchap_key_hash);
--	if (IS_ERR(ctrl->host_key)) {
-+	/*
-+	 * Skip the 'DHHC-1:XX:' prefix. Keep the old keys until the new ones
-+	 * are there: a controller without a host key needs no authentication.
-+	 */
-+	host_key = nvme_auth_extract_key(host->dhchap_secret + 10,
-+					 host->dhchap_key_hash);
-+	if (IS_ERR(host_key)) {
- 		ret = NVME_AUTH_DHCHAP_FAILURE_NOT_USABLE;
--		ctrl->host_key = NULL;
--		goto out_free_hash;
-+		goto out_unlock;
- 	}
-+	if (host->dhchap_ctrl_secret) {
-+		ctrl_key = nvme_auth_extract_key(host->dhchap_ctrl_secret + 10,
-+						 host->dhchap_ctrl_key_hash);
-+		if (IS_ERR(ctrl_key)) {
-+			nvme_auth_free_key(host_key);
-+			ret = NVME_AUTH_DHCHAP_FAILURE_NOT_USABLE;
-+			goto out_unlock;
-+		}
-+	}
-+	nvme_auth_free_key(ctrl->host_key);
-+	ctrl->host_key = host_key;
-+	nvme_auth_free_key(ctrl->ctrl_key);
-+	ctrl->ctrl_key = ctrl_key;
-+	ctrl->shash_id = host->dhchap_hash_id;
- #ifdef CONFIG_NVME_TARGET_AUTH_DEBUG
- 	pr_debug("%s: using hash %s key %*ph\n", __func__,
- 		 ctrl->host_key->hash > 0 ?
- 		 nvme_auth_hmac_name(ctrl->host_key->hash) : "none",
- 		 (int)ctrl->host_key->len, ctrl->host_key->key);
-+	if (ctrl->ctrl_key)
-+		pr_debug("%s: using ctrl hash %s key %*ph\n", __func__,
-+			 ctrl->ctrl_key->hash > 0 ?
-+			 nvme_auth_hmac_name(ctrl->ctrl_key->hash) : "none",
-+			 (int)ctrl->ctrl_key->len, ctrl->ctrl_key->key);
- #endif
--	nvme_auth_free_key(ctrl->ctrl_key);
--	if (!host->dhchap_ctrl_secret) {
--		ctrl->ctrl_key = NULL;
--		goto out_unlock;
--	}
--
--	ctrl->ctrl_key = nvme_auth_extract_key(host->dhchap_ctrl_secret + 10,
--					       host->dhchap_ctrl_key_hash);
--	if (IS_ERR(ctrl->ctrl_key)) {
--		ret = NVME_AUTH_DHCHAP_FAILURE_NOT_USABLE;
--		ctrl->ctrl_key = NULL;
--		goto out_free_hash;
--	}
--#ifdef CONFIG_NVME_TARGET_AUTH_DEBUG
--	pr_debug("%s: using ctrl hash %s key %*ph\n", __func__,
--		 ctrl->ctrl_key->hash > 0 ?
--		 nvme_auth_hmac_name(ctrl->ctrl_key->hash) : "none",
--		 (int)ctrl->ctrl_key->len, ctrl->ctrl_key->key);
--#endif
--out_free_hash:
--	if (ret) {
--		if (ctrl->host_key) {
--			nvme_auth_free_key(ctrl->host_key);
--			ctrl->host_key = NULL;
--		}
--		ctrl->shash_id = 0;
--	}
- out_unlock:
- 	up_read(&nvmet_config_sem);
- 
+ }
 -- 
 2.53.0
 
