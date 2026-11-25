@@ -1,52 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795625086;
-	b=hy6Igx0oXWC+i5m5cw6uddGHN6Dv5f7Rq4GzKPY3O25/4eY/47b12XR07eKo3taL9QxJ
-	 TpE09XRjHx8Z/YxvQa9okqIIaTazQ1lln33wlG4vBK3Dovk4u5Kel2U2t6TJkSd81KRuy
-	 /LKV8tANx31DSmG2izqckjNaYxFn+RuuYKqtjmDDvQ2IRlC7nVEYh/p0z0ey7h+HzVDMy
-	 enHXQTD3hSpx2VtYUXCLpDVQQjACP+5wN7e2ROQUt8SaxigimAIZm1jMmnYsDV1/zvF4I
-	 yJU7pRma311At/s5eRkZQY42bj/FQUC2srFkbpf9h+k1Lyn4tuRMgf8FI0ZHgluU4Yg==
+	t=1795625089;
+	b=IT4Reg8VDozFI8Kg09QdooQL2MLz7tiM6Z0Q9JFXTO7GHiYHF3E2+1WbtV+8uP8vaLVE
+	 GNCWUpqHzD63u67WjRpAVSflippOuBiZ18mFgUA6YqNT38Tw5QFOc4P9PCs15+5lx/T8M
+	 Q8YCH7UdFoBOD8BvXaobxlewXu/YHJFYllfFhrcFZLf/Ba/ehUDvSBIEzPJsZlyDjWsCt
+	 s6/ClEoBMS+kag9pb77zNLSsbuhT007gM6eSeWxV5LjbCHOThM55yhSMhdr+4ECEGsEx3
+	 B4wEg3iQkpX9zMYTDc36Q5yfImD4z02S+cqB9+tbc04C+mEbdyXRXh+IohU5X24Wd5w==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795625086;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795625089;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=FaNC4eEwMTq0E6NFdkXHTusT1x6p/UVU6Swx3r8aig4=;
-	b=atZZjOvmCOl+vinc/wc98bnlp0HBJHJUnkzqsicHpomDAaa3VA/TPlH/eEFOkuFZsIK+
-	 eFymPqKyYUcfm9xvnVWVd79MzG4m9deVDFTXaHGy25O/wVYHuzaXstq6M50e3T98e/MHg
-	 zKH5aXPt3z1JKacCFsGYOerJFK55flWAmsMzI/USZOI8ex6Lc6Bxz2P+mnHCx9OiHX97y
-	 gURC79dJWLDsCWu7Di8zdzSqkIB46+B5VmYMniz117PRCG1x3sjtInL1wstW0AcbLQ/GP
-	 xCWTI5YgPqhNHzwXSd0fa5dZzjAK5QwLvK/iUtUYVu7jktix75SkOPZw0Yw3DURVYYA==
+	bh=PT0n67v2eTqn1RXyvRqsuIE0yfGjQli5JEbdsgC/aTQ=;
+	b=dLCbVbXIyM74/LKnAtQpGsHnXb6j6LE2NFp59AlworeVwQI5xmJ5nUmX6i0bOUbOKxyM
+	 VpCNlcMSnj5aLD1uoCRMEoPngPIsf2TnRGnhVrjp64oGTmbUjPACjqbZO45z+1Z1jAApV
+	 IY43/VfoM2U7JjhK470EZ3s99lfQW630YJv3G/FpKyoT3LkyMiKOYb3LF+8Mc9CW2cCkf
+	 Zk+9kQrzwgHGFMLQp8hiUflhznnP/qnm6yMGum2XdtQDVQdP3jdQzD12a+qY5f3HfXXYD
+	 Tpo1JrTQy6sQM+D+ph3O3RCYiDIpdp6Gz0bZueQ3iqu6n1/QZ2pvkoL4RX2V/S9q+eQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=TMZaVEjh;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ILcjJWCM;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 25E6D606A327;
-	Wed, 25 Nov 2026 16:44:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7FD95606A329;
+	Wed, 25 Nov 2026 16:44:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=TMZaVEjh
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2DCAE1F000D4;
-	Wed, 25 Nov 2026 16:44:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ILcjJWCM
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 805401F000D8;
+	Wed, 25 Nov 2026 16:44:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795625085;
-	bh=FaNC4eEwMTq0E6NFdkXHTusT1x6p/UVU6Swx3r8aig4=;
+	s=korg; t=1795625089;
+	bh=PT0n67v2eTqn1RXyvRqsuIE0yfGjQli5JEbdsgC/aTQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=TMZaVEjh4lGqZVMphSHo9Lc3gBRrwWe0zUKTOBmsYWTMoYbxfUrAPQ6462nTpNVHr
-	 KZd8u3oWZkgsQrho7oMCGTRXM/cdqsnHyJ4vo8O3x1Xd8EcIgLRiIUfQcPKJRJt8lU
-	 V9TYTlgDvlmWb1z8p0sWOYpuBItuaqptV3QaJGG8=
+	b=ILcjJWCMJI3DRlB6aojOBUs2I8/FRbADqeHLUzZf7lG1titVEOvOe8hgmzISOWpK2
+	 mJFI6q5nhf3izK5NrCRicLAa22/ksoYKbE8Ny61FQEhHvmnHzZ9xjmzU2AvjsgGIga
+	 FyOACcB3nwgPfPM3eZp0nuiaIfBdJs2lj06bu+os=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
-	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 401/816] ACPI: glue: Rework the success message in acpi_device_notify()
-Date: Wed, 25 Nov 2026 15:32:29 +0100
-Message-ID: <20261125143858.480560540@linuxfoundation.org>
+Subject: [PATCH 6.12 402/816] ACPI: glue: Carry out companion lookup under bus_type_sem
+Date: Wed, 25 Nov 2026 15:32:30 +0100
+Message-ID: <20261125143858.503712618@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143849.205329330@linuxfoundation.org>
 References: <20261125143849.205329330@linuxfoundation.org>
@@ -70,43 +69,129 @@ Content-Transfer-Encoding: 8bit
 
 From: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 
-[ Upstream commit aef7792cddcac7ab400912c2947a595401d4a7e8 ]
+[ Upstream commit c94619c8a5b5d3b980433d247ac87a2d1c827cb6 ]
 
-Using an ACPI handle in the acpi_device_notify() success message is
-somewhat misleading because the "physical" device is not bound to an
-ACPI namespace object in that function, but to an ACPI device object
-attached to it.  Moreover, the message is outright confusing for the
-"physical" devices bound to ACPI devices without ACPI namespace
-objects (for example, fixed event buttons).
+When acpi_device_notify() looks up an ACPI companion for the given
+device, it invokes callbacks from struct acpi_bus_type() without
+synchronization which may lead to a use-after-free if the driver
+module containing those callbacks is unloaded at the same time.
 
-Address this by turning that message into a dev_dbg() one printed for
-the "physical" device and mentioning the name of the ACPI companion.
+Address this by holding bus_type_sem throughout the entire ACPI
+companion lookup and the execution of the .setup() callback in
+struct acpi_bus_type (if present) instead of dropping the semaphore
+(prematurely) after finding a matching struct acpi_bus_type.
 
-Fixes: ab06eb920401 ("ACPI: scan: Register platform devices for fixed event buttons")
+For this purpose, rename acpi_get_bus_type() to acpi_companion_lookup(),
+make it return a struct acpi_device pointer, and move the relevant code
+from acpi_device_notify() to it.
+
+Also notice that the only case in which the .bind() callback from an
+ACPI scan handler may need to be invoked is when the given device is
+a platform one, so adjust acpi_device_notify() accordingly and drop
+the "done" label that is not used any more from it.
+
+Fixes: 2ef5236660b6 ("ACPI: glue: Look for ACPI bus type only if ACPI companion is not known")
 Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
-Reviewed-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-Link: https://patch.msgid.link/2448150.ElGaqSPkdT@rafael.j.wysocki
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
-Stable-dep-of: c94619c8a5b5 ("ACPI: glue: Carry out companion lookup under bus_type_sem")
+Link: https://patch.msgid.link/3089807.e9J7NaK4W3@rafael.j.wysocki
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/acpi/glue.c | 3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+ drivers/acpi/glue.c | 61 +++++++++++++++++++++------------------------
+ 1 file changed, 29 insertions(+), 32 deletions(-)
 
 diff --git a/drivers/acpi/glue.c b/drivers/acpi/glue.c
-index 54cc709be3166..c01ebf20a9318 100644
+index c01ebf20a9318..e2a40847d24b6 100644
 --- a/drivers/acpi/glue.c
 +++ b/drivers/acpi/glue.c
-@@ -396,8 +396,7 @@ void acpi_device_notify(struct device *dev)
- 		adev->handler->bind(dev);
+@@ -59,19 +59,34 @@ int unregister_acpi_bus_type(struct acpi_bus_type *type)
+ }
+ EXPORT_SYMBOL_GPL(unregister_acpi_bus_type);
  
- done:
--	acpi_handle_debug(ACPI_HANDLE(dev), "Bound to device %s\n",
--			  dev_name(dev));
-+	dev_dbg(dev, "Bound to ACPI device %s\n", acpi_dev_name(adev));
+-static struct acpi_bus_type *acpi_get_bus_type(struct device *dev)
++static struct acpi_device *acpi_companion_lookup(struct device *dev)
+ {
+-	struct acpi_bus_type *tmp, *ret = NULL;
++	struct acpi_bus_type *type;
+ 
+-	down_read(&bus_type_sem);
+-	list_for_each_entry(tmp, &bus_type_list, list) {
+-		if (tmp->match(dev)) {
+-			ret = tmp;
+-			break;
++	guard(rwsem_read)(&bus_type_sem);
++
++	list_for_each_entry(type, &bus_type_list, list) {
++		struct acpi_device *adev;
++
++		if (!type->match(dev))
++			continue;
++
++		adev = type->find_companion(dev);
++		if (!adev) {
++			dev_dbg(dev, "ACPI companion not found\n");
++			return NULL;
+ 		}
++		if (acpi_bind_one(dev, adev)) {
++			dev_dbg(dev, "Binding to ACPI companion failed\n");
++			return NULL;
++		}
++		if (type->setup)
++			type->setup(dev);
++
++		return adev;
+ 	}
+-	up_read(&bus_type_sem);
+-	return ret;
++
++	return NULL;
  }
  
- void acpi_device_notify_remove(struct device *dev)
+ #define FIND_CHILD_MIN_SCORE	1
+@@ -362,40 +377,22 @@ void acpi_device_notify(struct device *dev)
+ 
+ 	ret = acpi_bind_one(dev, NULL);
+ 	if (ret) {
+-		struct acpi_bus_type *type = acpi_get_bus_type(dev);
+-
+-		if (!type)
++		adev = acpi_companion_lookup(dev);
++		if (!adev)
+ 			return;
+-
+-		adev = type->find_companion(dev);
+-		if (!adev) {
+-			dev_dbg(dev, "ACPI companion not found\n");
+-			return;
+-		}
+-		ret = acpi_bind_one(dev, adev);
+-		if (ret) {
+-			dev_dbg(dev, "Binding to ACPI companion failed\n");
+-			return;
+-		}
+-		if (type->setup) {
+-			type->setup(dev);
+-			goto done;
+-		}
+ 	} else {
+ 		adev = ACPI_COMPANION(dev);
+ 
+ 		if (dev_is_pci(dev)) {
+ 			pci_acpi_setup(dev, adev);
+-			goto done;
+ 		} else if (dev_is_platform(dev)) {
+ 			acpi_configure_pmsi_domain(dev);
++
++			if (adev->handler && adev->handler->bind)
++				adev->handler->bind(dev);
+ 		}
+ 	}
+ 
+-	if (adev->handler && adev->handler->bind)
+-		adev->handler->bind(dev);
+-
+-done:
+ 	dev_dbg(dev, "Bound to ACPI device %s\n", acpi_dev_name(adev));
+ }
+ 
 -- 
 2.53.0
 
