@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795618094;
-	b=1q+wUiae7JRDC6MC0l05qsWDhVgAOQsJR1+p4w9lXXd2qc5f9qkQFMProlO7kd6qyVTK
-	 RWRfMgWRy5hwZUDsteTpyZmzsT3IX+Rh7jlmTuZa3rnx5DQUbgghuzOWdbHe5jsIhmeTY
-	 Jdys80OUvup/w47vvogwQGOyexZBl8OLpuVy6YIwVbs1IIqGwogeafM/hygw1WHIyfpPX
-	 UgvLInmZuXQU28WVOI+f4vjv1INqBZ0JdkdfR301Y2QVLOngidF5tTcYxz56Ndx33U3Yu
-	 fDqBYWlrRJenrHQNteuczkVtvfEVBkRgmh5gmrEzPLSiz/Zhc/TTcAG14tEk+0nYhfA==
+	t=1795618097;
+	b=0MAy6rV0/D3L8J13OxJGXqI6+3lQFwmOKXHNEPgwDZK2lQJyHmhb61LyNO9i8jsWOTnU
+	 l5EKlkXw5t3nJfNL4fYclJa8jDyWe8YUdVnLQJbhjv+PlfMIxEo1fYUlkQNjnYD65nXVX
+	 lG0KNJilG9jEp1kWsZXeBTKt89wr7VkcKXMh0xiiV4tTq3ufJVRBIA7hpZD1KgZmMpxcb
+	 IjtENw+BUuxs5GeY69orcpJ+mAkl+UWr5NskveJyNJ6px6Rn16RFzp/ECNnER0Q2b/zuF
+	 sDnWh9LUPh/w1Z7jYpd3H9dFHxtdKsQoK070endxrJTeSd/BNrdcfwYnxEcyRdbHyDw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795618094;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795618097;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=fwtIf4Z1G2ZUYMTk9hOQu6rqs4TJYX+7EAUblXzf5mU=;
-	b=3Y2TLuQPyHr5aEQfkNv1KZo5G8og0RSKkmLdpQE6KFQI1RE2/90xI2QbpsTlzrvuDEK4
-	 8nh1DEQMG/zYkxqV0oSJHJfwu3BWDnfhHOrA/JGF4oUho5gAZGzlSuASp0050+sx8C/MP
-	 cBx9yaqU3NTnSb8KENOu3mGSsiqg3Q5XY7UIx6B//EYhRV1BzZH9QjY6m+jpXxNGXw6aA
-	 zlbDDvMwM2J4aET9Cj53etSfHZY/moBCm116VvxSmroXGPoIMLUY3vBTTLOWyPIc2IHAx
-	 qPfo4KJlPpDOiqXvt221g/iM3GmzBNp+NcopZ946lWvyJzO+x6nq/u/ZwLVD+rbG0rw==
+	bh=QGo3mE6a4G5nKT6nLjCnI69hdZWXebI05gC3ZZeZcgA=;
+	b=Mgx9PPJNsSa6cvL4osgW0R9PEzpD4HBZa2r5vXeQWH/zeFHhzpWav1xyUQy4BLC7ewOq
+	 0JZgIsRc5GgSb96laZ7e84o29Pyjw9iY8ZP56anMJI+mym0pn9D/CnPDcDh3KBeAf783X
+	 B0XN53002lAKokXHkUCKQtlJNDxlknL/cJLR1Rz8k3Muw1DxSTE5eZIOtow7y/lLMcvY6
+	 TAVaNNFwJRterWl2DEi8Q6CQbSGRVCUb0eEHOgp8eplRzU9fkIleEaPnBtHeGzkWiByea
+	 vtYYN99ngpFDIG3tEVCQJQuE2Ppr2DMjBFaDZh90NMLGqZVw1WQccHtfelVCCRwTFog==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=VJihtkje;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=U8hEhZhV;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6546F606A31E;
-	Wed, 25 Nov 2026 14:48:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3C721606A31E;
+	Wed, 25 Nov 2026 14:48:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=VJihtkje
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2C5B71F000CF;
-	Wed, 25 Nov 2026 14:48:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=U8hEhZhV
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8D3851F000C0;
+	Wed, 25 Nov 2026 14:48:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795618093;
-	bh=fwtIf4Z1G2ZUYMTk9hOQu6rqs4TJYX+7EAUblXzf5mU=;
+	s=korg; t=1795618097;
+	bh=QGo3mE6a4G5nKT6nLjCnI69hdZWXebI05gC3ZZeZcgA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=VJihtkjebXjkmQR4Gkp7RIGkbHchwoQSR62WooWZh8uCFXHSL42xoN/AMFr4DPK4s
-	 vxRNSkpJJ3H0/sZI8yiXipCVJKg91w9f6e3yYG8Mlsp1iMzgcOI8pVt17Y1EMQCslP
-	 pUPsiZ+4TPPeApRWccUgBLxIPGWCS24sIPqtVXuc=
+	b=U8hEhZhVdEreKPVNshsDoX0NL1tOo8kTOD6StaBwNL8VBTjB1xeWi8KjyifkRFeTU
+	 6llf1xqYmnuKFwt9axdJkUj+yzhveA9Ycr7AzVoHr3ocIro7+1nGP/KyZgVVvyJJWD
+	 O65M7oJucufbcNCHefprjEZO6oQQaNAdyvrpWg00=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Suraj Kandpal <suraj.kandpal@intel.com>,
-	Mitul Golani <mitulkumar.ajitkumar.golani@intel.com>,
+	Animesh Manna <animesh.manna@intel.com>,
+	Dibin Moolakadan Subrahmanian <dibin.moolakadan.subrahmanian@intel.com>,
 	Joonas Lahtinen <joonas.lahtinen@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0124/1005] drm/i915/display: Limit NVL TRANS_VTOTAL.Vtotal skip to A-step
-Date: Wed, 25 Nov 2026 15:24:22 +0100
-Message-ID: <20261125143824.645319021@linuxfoundation.org>
+Subject: [PATCH 7.3 0125/1005] drm/i915/cmtg: Disable CMTG after encoder disable in hsw_crtc_disable()
+Date: Wed, 25 Nov 2026 15:24:23 +0100
+Message-ID: <20261125143824.667705901@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143821.729802100@linuxfoundation.org>
 References: <20261125143821.729802100@linuxfoundation.org>
@@ -69,63 +69,78 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Suraj Kandpal <suraj.kandpal@intel.com>
+From: Animesh Manna <animesh.manna@intel.com>
 
-[ Upstream commit f704594d36809780cf41fb201729dc1ac352c5d4 ]
+[ Upstream commit 0a5bad4cd8b87b8d575e3efccaa06c02158db32f ]
 
-The hardware issue which required us to keep vtotal as 0 has since been
-fixed on B0 well, so applying the workaround there is no longer correct
-and causes issues on B-stepping.
-Restrict the workaround to A-step only, in both transcoder timing paths
-and in the crtc_vtotal readout fixup in intel_vrr_get_config().
+hsw_crtc_disable() disables CMTG at the very start of the CRTC disable
+sequence, before intel_encoders_disable(). With this ordering, the wait
+for CMTG_STATE to clear after CMTG_ENABLE is cleared intermittently
+times out:
 
-Fixes: a78d11e7859b ("drm/i915/display: Skip TRANS_VTOTAL.Vtotal write on NVL pre-C0")
-Signed-off-by: Suraj Kandpal <suraj.kandpal@intel.com>
-Reviewed-by: Mitul Golani<mitulkumar.ajitkumar.golani@intel.com>
-Link: https://patch.msgid.link/20261022040528.1403569-1-suraj.kandpal@intel.com
-(cherry picked from commit b749007b1ed67bc5482d15d3a1f6fe74555a81df)
+  xe 0000:00:02.0: [drm] CMTG: A disable timeout
+  WARNING: drivers/gpu/drm/i915/display/intel_cmtg.c:205 intel_cmtg_disable+0x331/0x3d0 [xe]
+
+This is seen with igt@kms_hdr@bpc-switch-suspend, which repeatedly
+disables and re-enables the eDP across modesets and suspend/resume.
+
+Move the CMTG disable after intel_encoders_disable(), so the eDP-side
+teardown (panel unprepare, ALPM disable, backlight off) has completed,
+but keep it before intel_encoders_post_disable() and
+intel_dpll_disable(). The transcoder timing generator, DDI buffer and
+port PLL are therefore still running while CMTG_STATE is polled, and
+the requirement to disable CMTG before the transcoder and the port PLL
+feeding it are turned off is preserved.
+
+v2:
+- Modify commit description regarding PSR exit. [Dibin]
+- Add fixes tag. [Jani, Dibin]
+v3:
+- Add a cover letter with links to v1 and v2 for the review
+  history. [Dibin]
+
+Fixes: c588a324183b ("drm/i915/cmtg: Add trigger to enable/disable cmtg")
+Signed-off-by: Animesh Manna <animesh.manna@intel.com>
+Reviewed-by: Dibin Moolakadan Subrahmanian <dibin.moolakadan.subrahmanian@intel.com>
+Link: https://patch.msgid.link/20261026082906.802048-2-animesh.manna@intel.com
+(cherry picked from commit f85fb6e8fd6cf7802285ccd2dbcb631efca8303f)
 Signed-off-by: Joonas Lahtinen <joonas.lahtinen@linux.intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/i915/display/intel_display.c | 4 ++--
- drivers/gpu/drm/i915/display/intel_vrr.c     | 2 +-
- 2 files changed, 3 insertions(+), 3 deletions(-)
+ drivers/gpu/drm/i915/display/intel_display.c | 15 +++++++++++----
+ 1 file changed, 11 insertions(+), 4 deletions(-)
 
 diff --git a/drivers/gpu/drm/i915/display/intel_display.c b/drivers/gpu/drm/i915/display/intel_display.c
-index 9dfd095f325f7..10235c728db43 100644
+index 10235c728db43..8210dbd6c438d 100644
 --- a/drivers/gpu/drm/i915/display/intel_display.c
 +++ b/drivers/gpu/drm/i915/display/intel_display.c
-@@ -2779,7 +2779,7 @@ void intel_set_transcoder_timings(const struct intel_crtc_state *crtc_state,
- 		       HSYNC_END(adjusted_mode->crtc_hsync_end - 1));
+@@ -1791,15 +1791,22 @@ static void hsw_crtc_disable(struct intel_atomic_state *state,
+ 		intel_atomic_get_old_crtc_state(state, crtc);
+ 	struct intel_crtc *pipe_crtc;
  
- 	if (display->platform.novalake &&
--	    IS_DISPLAY_STEP(display, STEP_A0, STEP_C0))
-+	    IS_DISPLAY_STEP(display, STEP_A0, STEP_B0))
- 		crtc_vtotal = 1;
- 
- 	intel_de_write(display, TRANS_VTOTAL(display, transcoder),
-@@ -2876,7 +2876,7 @@ void intel_set_transcoder_timings_lrr(const struct intel_crtc_state *crtc_state,
- 	 * is the transcoder's undelayed vblank.
+-	if (crtc->cmtg.enabled && intel_cmtg_is_allowed(old_crtc_state)) {
+-		intel_cmtg_set_clk_select(old_crtc_state);
+-		intel_cmtg_disable(old_crtc_state);
+-	}
+ 	/*
+ 	 * FIXME collapse everything to one hook.
+ 	 * Need care with mst->ddi interactions.
  	 */
- 	if (display->platform.novalake &&
--	    IS_DISPLAY_STEP(display, STEP_A0, STEP_C0))
-+	    IS_DISPLAY_STEP(display, STEP_A0, STEP_B0))
- 		crtc_vtotal = 1;
+ 	intel_encoders_disable(state, crtc);
++
++	/*
++	 * Disable CMTG after the encoders are disabled, but before the
++	 * transcoder and port PLL are torn down in
++	 * intel_encoders_post_disable()/intel_dpll_disable().
++	 */
++	if (crtc->cmtg.enabled && intel_cmtg_is_allowed(old_crtc_state)) {
++		intel_cmtg_set_clk_select(old_crtc_state);
++		intel_cmtg_disable(old_crtc_state);
++	}
++
+ 	intel_encoders_post_disable(state, crtc);
  
- 	intel_de_write(display, TRANS_VTOTAL(display, transcoder),
-diff --git a/drivers/gpu/drm/i915/display/intel_vrr.c b/drivers/gpu/drm/i915/display/intel_vrr.c
-index cfc0cfbff017a..6e03122743967 100644
---- a/drivers/gpu/drm/i915/display/intel_vrr.c
-+++ b/drivers/gpu/drm/i915/display/intel_vrr.c
-@@ -1110,7 +1110,7 @@ void intel_vrr_get_config(struct intel_crtc_state *crtc_state)
- 		}
- 
- 		if (display->platform.novalake &&
--		    IS_DISPLAY_STEP(display, STEP_A0, STEP_C0))
-+		    IS_DISPLAY_STEP(display, STEP_A0, STEP_B0))
- 			crtc_state->hw.adjusted_mode.crtc_vtotal =
- 				intel_vrr_vmin_vtotal(crtc_state);
- 
+ 	intel_dpll_disable(old_crtc_state);
 -- 
 2.53.0
 
