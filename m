@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795622475;
-	b=rv+zzrSvrRz0Etn1NGTZ+17mH33wnyC5+4AaJwDSVSk/h1uBXtLZmFSUTCZXLa1xj2sO
-	 16aZ7K5hzlxWxR0R4X1JGM77GRagI25qi2lMQG2y4g0sO14et0Vemv098tFxdOAMfq8ay
-	 B2pRBY6U/h8+cY9i9Y7IUP26UwKqpzdaXLPwmd0JDaov5V3bCgL+FM2eMb8vMWEy9k8oA
-	 6IzUDW/CCMpMAY2EvXfU0svND7Jr1tpnooHCSHgj1/l9NizlwAklBAK8g8EC8dHJX0kwf
-	 Xp6M8jb/hBGKSrjkET7mDljSs/fHhGo3G/oRUQPZlQbkY1+LlAIPbP/PfhWcbSzjV2g==
+	t=1795622479;
+	b=RuOVhJz1JXgxQyi2lrDilFnl01ZbZyCqzaeop1+DLPmLTCU9Y9q9ZKHz/Jd0SFoulTi3
+	 t9XW5J/X3lsuxdg5lHmYc7XBYzIGmO+c3A4BkrS74ibLUte/Z8ap6iqDY3+LaSeraatca
+	 RqTuCoDXVTmh6wakMMubeYz0+Ybn/T2TzOMqUJyQmhQcPYZsabca++vXHxlcoGdx2l35F
+	 2mcvnUlm6sxtb166gJqrl5sZbRk6jiWQ4Dc4P66Der2u0Q6yk5uge1AjYCjj4T6EpZEYb
+	 fSuStWjAfwhts2pw+z9YI2EmG5t5PqQnFNYHcMwczCPMuHQMVfJxHtQsZMawdQnEYsA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795622475;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795622479;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Type:Content-Transfer-Encoding;
-	bh=78AJrDyE3drvjeKkLXq4fXZVLtH9qwRE4IDlbZa35sE=;
-	b=vmdNNkCaYGWYTfZYnTpEz5TOLD3rGNop/iSX4pIrufYEJoO3L43ComBt1zJsGD+techM
-	 bZt9nZScn1a6GT31vg7gm/caAVWGYOZlvAQr5lOAi29VToExoKOXj2m3Y5CoO63h5QKUO
-	 rtt0CpjlZKz4XjPYwUyD7herTY+BGxtrxGWhY+yUVqF5eQ8lD02HXpBOpqAnnEuG3OTH9
-	 okyi+Ewt2kTrnJTVkm9kqrrzWlo/5CuEfMlf+DEbFVGqXBHdTkJqm+oyMIjUDN5HlAtO4
-	 tqmA4nbMfF5S1TOY07ShU25+bAdEizoVvjExlBydpd+ac/HL1s9Ag5lUo2uQJHCiKBw==
+	 MIME-Version:Content-Transfer-Encoding;
+	bh=FJxGguNNvyFITfzv8vy3ARBxwSF90i8U9CXmZJGZ6sY=;
+	b=iswRGm+EFg69pXk2T6lT9MkieQYmToBSKGTDg7f+3U2FKMGEAUFDTLPSUsWre+8RWpi0
+	 KsCGisG8jQr7NAxL5/b6LhsG1ZG0J/gKyWz/WC3zucizAne4G6LSL2SACoz9QpTgteIbM
+	 tyJNvPQ4jipQ64cvKsuZTv4ulvW+nsLOodwbhft6Qjmo3vEJ69lFhy5ZwB5Y56Y2EKSGg
+	 RU8sqgE7TRHCxz5TJVDbQ3TG4jWbZM2qAN2J5L14xl5vO1eWIFqUsxmxreSXk9LeW3XxJ
+	 Uiqk76OtX+ebkPL0a7nm2BGMujvhZ/DaHVEaxWF4NgKR4bGVe34c28KcnnC18kdv8ig==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=m+XdQRmf;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=VCT2s4ic;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B4005606A329;
-	Wed, 25 Nov 2026 16:01:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5F15E606A326;
+	Wed, 25 Nov 2026 16:01:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=m+XdQRmf
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BDDCE1F000C0;
-	Wed, 25 Nov 2026 16:01:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=VCT2s4ic
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 230C81F000C0;
+	Wed, 25 Nov 2026 16:01:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795622475;
-	bh=78AJrDyE3drvjeKkLXq4fXZVLtH9qwRE4IDlbZa35sE=;
+	s=korg; t=1795622478;
+	bh=FJxGguNNvyFITfzv8vy3ARBxwSF90i8U9CXmZJGZ6sY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=m+XdQRmfXauZwrdeA0wHbyzpDZGjJC2itUeAOfRl1YnY7cJ+j9+/26Zns886AhUUu
-	 jAfRIGaeHtJHxOZv6Kqcomeb6o/+9maAz6VEfy90x0ir3wNC9e15C5XsOPNz8rhYrO
-	 agzH8VNqzN0y008R27+SCjRoQ/LF9HkKUHtEv76E=
+	b=VCT2s4icu7XTT7FuNpvkvz7p8bCeXGJXVsSO5Y504y6Lz2ha/9Erk87kYl+MvLLIq
+	 hEA+Bj95CIJj1V9AmJ6yFMYDfuR2WcmiS/nDSCUEFi6rvJjJDS73IDUEDoQ4qGuInS
+	 jwmmhPcUx+JNkf+xEZk2mTUUazGBApGlUeXERvVs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?J=C3=A9r=C3=A9my=20Jean?= <Jeremy.Jean@oss.cyber.gouv.fr>,
-	Eric Dumazet <edumazet@kernel.org>,
-	Dave Miller <davem@davem-thinkpadp1gen8.ibmlond.csb>,
+	Abel Vesa <abel.vesa@oss.qualcomm.com>,
+	Bjorn Andersson <bjorn.andersson@oss.qualcomm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 495/990] inet: frags: prevent acceptance of partially authenticated reassembly
-Date: Wed, 25 Nov 2026 15:31:02 +0100
-Message-ID: <20261125143833.690712080@linuxfoundation.org>
+Subject: [PATCH 6.18 544/990] arm64: dts: qcom: x1-asus-vivobook-s15: Mark the EC reset gpio as reserved
+Date: Wed, 25 Nov 2026 15:31:51 +0100
+Message-ID: <20261125143834.841644810@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143822.072087159@linuxfoundation.org>
 References: <20261125143822.072087159@linuxfoundation.org>
@@ -63,136 +62,46 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Jérémy Jean <Jeremy.Jean@oss.cyber.gouv.fr>
+From: Abel Vesa <abel.vesa@oss.qualcomm.com>
 
-[ Upstream commit 6fb4e32f2ce3234ae0c416872e911706a3484430 ]
+[ Upstream commit 94a0d3a2595821878de98d495e89691f694a2083 ]
 
-A reassembled skb retains the secpath from its first fragment, which
-makes it possible for the final policy check to accept bytes that were
-not covered by the transform recorded on the skb. This can affect IPsec
-tunnel traffic, including AH and ESP, and allow a packet to be accepted
-even though only part of its payload was authenticated.
+GPIO 65 from TLMM is used by the embedded controller as its reset line.
 
-Reject a fragment when its secpath differs from the fragments already
-in the queue, and keep overlap statistics limited to actual overlaps.
+On some devices, toggling the embedded controller reset line makes the
+device not power up at all, unless the battery is unplugged.
 
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Cc: stable@vger.kernel.org
-Signed-off-by: Jérémy Jean <Jeremy.Jean@oss.cyber.gouv.fr>
-Reviewed-by: Eric Dumazet <edumazet@kernel.org>
-Signed-off-by: Dave Miller <davem@davem-thinkpadp1gen8.ibmlond.csb>
-[ sashal: Adapted the ip6_frag_queue overlap stat to use ip6_dst_idev(skb_dst(skb)) instead of a local idev, and kept existing IPFRAG_TOOBIG/truesize context in inet_frag.h and inet_fragment.c. ]
+So reserve it in order to prevent Linux from requesting or
+reconfiguring it.
+
+Fixes: d0e2f8f62dff ("arm64: dts: qcom: Add device tree for ASUS Vivobook S 15")
+Signed-off-by: Abel Vesa <abel.vesa@oss.qualcomm.com>
+Link: https://patch.msgid.link/20260922-dts-qcom-hamoa-reserve-ec-reset-gpio-v3-9-fde7f8a53382@oss.qualcomm.com
+Signed-off-by: Bjorn Andersson <bjorn.andersson@oss.qualcomm.com>
+[ sashal: Applied the one-line GPIO 65 reservation to the single-file Vivobook S 15 devicetree, since the upstream shared .dtsi file does not exist here. ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/net/inet_frag.h  |  1 +
- include/net/xfrm.h       | 17 +++++++++++++++++
- net/ipv4/inet_fragment.c |  5 +++++
- net/ipv4/ip_fragment.c   |  3 ++-
- net/ipv6/reassembly.c    |  5 +++--
- 5 files changed, 28 insertions(+), 3 deletions(-)
+ arch/arm64/boot/dts/qcom/x1e80100-asus-vivobook-s15.dts | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/include/net/inet_frag.h b/include/net/inet_frag.h
-index 6aea2d1ac376f..c1fb419a9cf03 100644
---- a/include/net/inet_frag.h
-+++ b/include/net/inet_frag.h
-@@ -173,6 +173,7 @@ extern const u8 ip_frag_ecn_table[16];
- #define IPFRAG_OK	0
- #define IPFRAG_DUP	1
- #define IPFRAG_OVERLAP	2
-+#define IPFRAG_MIXED_SECPATH	3
- #define IPFRAG_TOOBIG	4
+diff --git a/arch/arm64/boot/dts/qcom/x1e80100-asus-vivobook-s15.dts b/arch/arm64/boot/dts/qcom/x1e80100-asus-vivobook-s15.dts
+index f2960953e608f..7abd519f38a4e 100644
+--- a/arch/arm64/boot/dts/qcom/x1e80100-asus-vivobook-s15.dts
++++ b/arch/arm64/boot/dts/qcom/x1e80100-asus-vivobook-s15.dts
+@@ -742,6 +742,7 @@ &smb2360_1_eusb2_repeater {
+ &tlmm {
+ 	gpio-reserved-ranges = <34 2>, /* Unused */
+ 			       <44 4>, /* SPI (TPM) */
++			       <65 1>, /* EC reset */
+ 			       <238 1>; /* UFS Reset */
  
- /* Max sum of the truesize of fragments in a queue. This keeps the sums
-diff --git a/include/net/xfrm.h b/include/net/xfrm.h
-index af0869c14a253..7479fe2ca5f5e 100644
---- a/include/net/xfrm.h
-+++ b/include/net/xfrm.h
-@@ -1189,6 +1189,23 @@ secpath_reset(struct sk_buff *skb)
- #endif
- }
- 
-+static inline bool
-+secpath_equal(const struct sk_buff *skb1, const struct sk_buff *skb2)
-+{
-+	const struct sec_path *sp1 = skb_sec_path(skb1);
-+	const struct sec_path *sp2 = skb_sec_path(skb2);
-+	int i;
-+
-+	if (!sp1 || !sp2)
-+		return sp1 == sp2;
-+	if (sp1->len != sp2->len)
-+		return false;
-+	for (i = 0; i < sp1->len; i++)
-+		if (sp1->xvec[i] != sp2->xvec[i])
-+			return false;
-+	return true;
-+}
-+
- static inline int
- xfrm_addr_any(const xfrm_address_t *addr, unsigned short family)
- {
-diff --git a/net/ipv4/inet_fragment.c b/net/ipv4/inet_fragment.c
-index 4d55444a6f30f..1f0327f07faa2 100644
---- a/net/ipv4/inet_fragment.c
-+++ b/net/ipv4/inet_fragment.c
-@@ -24,6 +24,7 @@
- #include <net/inet_ecn.h>
- #include <net/ip.h>
- #include <net/ipv6.h>
-+#include <net/xfrm.h>
- 
- #include "../core/sock_destructor.h"
- 
-@@ -448,6 +449,10 @@ int inet_frag_queue_insert(struct inet_frag_queue *q, struct sk_buff *skb,
- 	if (skb->truesize > INET_FRAG_MAX_TRUESIZE - q->truesize)
- 		return IPFRAG_TOOBIG;
- 
-+	/* The reassembled skb keeps the first fragment's secpath. */
-+	if (last && !secpath_equal(last, skb))
-+		return IPFRAG_MIXED_SECPATH;
-+
- 	/* An IP fragment is never a GSO packet, but an untrusted source
- 	 * (virtio_net_hdr) may have attached GSO metadata to it. Do not let
- 	 * that reach the reassembled skb, whose head keeps the first
-diff --git a/net/ipv4/ip_fragment.c b/net/ipv4/ip_fragment.c
-index 03e19a29df05e..ef7fd61284a3f 100644
---- a/net/ipv4/ip_fragment.c
-+++ b/net/ipv4/ip_fragment.c
-@@ -378,8 +378,9 @@ static int ip_frag_queue(struct ipq *qp, struct sk_buff *skb, int *refs)
- 		err = -EINVAL;
- 		goto err;
- 	}
-+	if (err == IPFRAG_OVERLAP)
-+		__IP_INC_STATS(net, IPSTATS_MIB_REASM_OVERLAPS);
- 	err = -EINVAL;
--	__IP_INC_STATS(net, IPSTATS_MIB_REASM_OVERLAPS);
- discard_qp:
- 	inet_frag_kill(&qp->q, refs);
- 	__IP_INC_STATS(net, IPSTATS_MIB_REASMFAILS);
-diff --git a/net/ipv6/reassembly.c b/net/ipv6/reassembly.c
-index a5e0cec45974a..74ac8e8bc19b6 100644
---- a/net/ipv6/reassembly.c
-+++ b/net/ipv6/reassembly.c
-@@ -236,9 +236,10 @@ static int ip6_frag_queue(struct net *net,
- 		err = -EINVAL;
- 		goto err;
- 	}
-+	if (err == IPFRAG_OVERLAP)
-+		__IP6_INC_STATS(net, ip6_dst_idev(skb_dst(skb)),
-+				IPSTATS_MIB_REASM_OVERLAPS);
- 	err = -EINVAL;
--	__IP6_INC_STATS(net, ip6_dst_idev(skb_dst(skb)),
--			IPSTATS_MIB_REASM_OVERLAPS);
- discard_fq:
- 	inet_frag_kill(&fq->q, refs);
- 	__IP6_INC_STATS(net, ip6_dst_idev(skb_dst(skb)),
+ 	edp_reg_en: edp-reg-en-state {
 -- 
 2.53.0
 
