@@ -1,54 +1,55 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795619045;
-	b=Jtpa5BkYI3377kDnzil7pKeamgUL40M9WiS/X5qxGQhP0K3UiWOlZzBcrjL5vMfxczNT
-	 NVWIVcOxTQ6cOohBYueftKgumy3aohrLpHI/NLaI3Yx1gOELP4sq3CudzGIP1Q9XS2HJy
-	 VZAcnmpiQxq0Qu+37Sf6Kgi4GgL19KpFBSWe7KY0uJle9eLt3Z/jErqzCEbHjsYt8v+B5
-	 Q2mZdDiw3NQVfG6RMFercCs8fCnyWSBql3IQjRvJjm186foDMovFBPJkN7OQc5vcesA6N
-	 M4FGiCKW3zbaFRDGR0h4TR4+p6SJ5/eR2Z0p+ybRI0PR65SaSolMQt3zPYEnw7ZpLcA==
+	t=1795619048;
+	b=RGo1avu6xMn8cNApo37hVNSf8bkDx2mBqqb/kVJXndJyJ4kCMAH0pLqfSJu4XQeRPu1Z
+	 7Z3Pdk+kENGrGX/zOsWOWWG71AFR24FZrS0pnQAdFeyKAO1d3PwvgkOVdavdhcAW1mWeg
+	 56VKV3OikgHSXWjdi4QfeP/bMqPBIfVjDA6ec8cL8XsJQM4HmshIZDRGQG6Ip5Jf/2jY7
+	 WkYhpxsHxcFTTqzqm1dEpltN+WRM1pnxlbbuYvwunEeWlDbFufh/1cZic2Sqb3JPPakbC
+	 QDX/TEqb7gOLnJkTRQ6yq6IVshqfqtLskXd2TaldVvsjtdm300dtwXHZQRe7hn/ayvg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795619045;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795619048;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=psO8cFdBmYwPTHLoXe6lA6LRLKwbCPWAshqMkt11AvE=;
-	b=1VZAUeBvDOcJ9zCwtskmLwG0H9VFRVasdXd0D2sBOEZohzEObFY1zoSsYG23zfUOTcNc
-	 1C0PFJwpr1AvtkdW9sMzLXsfRs+u0irmVHfkla/hv+u6pFLaKTkHNIQpYWXZ7Q+ZGI19f
-	 uA71/gePtqj59qjsNkPC8HmFMmnWoo5Z7lTo7xJw/1jb0Rwux1twEeMcNoHlY0MZzwuv3
-	 hX7PVeVkq/VZIGGJzBXweC0r3hEQE4Sj0MjBAK0WAefCTWkGqKmrq8NOx5umuwruXy/7e
-	 /tZEjDUaA1gE6Km6hjQ+AjQucooVSCNahNEI0mOpF7HlKknUJp5VaPoQveY/wB5aczQ==
+	bh=MxFFTnStJAl18qRZne0AInSt35mI17B07RWCGb1PBvI=;
+	b=JJL48WYbpGNB8vYEokFB4iIO8tkH27cuyqBX1YauNXwpGUkk5n4gnzONvnukrlSRmxiZ
+	 YBySUM+AbWyz78FkSEFFFKir3GfEl9/wfIBq2VIplF1dXZ1so9yZWgHFBywNqeoqJpcJI
+	 5RPB7R9bhPaSnx8xKsggyMV/6QrUTGsfvmQHNXsHtrqWDvSMBYAbSQC3x96OB09qO8WqJ
+	 jpRQGodJhBb69gX3dmrBDm+LlowzWAhbmqbv12TnXVYD77KEx8dsiJf3WRBpRquOQUPn7
+	 rxbuZS1AN2KC1sEn2izmBqMnBKgEMaHkTEfr/u/VyNliuX7PuiVlvVdKMenKlWbsqrw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=e7JvoU2H;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=zDv49PGy;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A167E606A31E;
-	Wed, 25 Nov 2026 15:04:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A7465606A31E;
+	Wed, 25 Nov 2026 15:04:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=e7JvoU2H
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F11E31F000C0;
-	Wed, 25 Nov 2026 15:04:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=zDv49PGy
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CBA211F000C6;
+	Wed, 25 Nov 2026 15:04:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795619045;
-	bh=psO8cFdBmYwPTHLoXe6lA6LRLKwbCPWAshqMkt11AvE=;
+	s=korg; t=1795619048;
+	bh=MxFFTnStJAl18qRZne0AInSt35mI17B07RWCGb1PBvI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=e7JvoU2Hiq5jG4qhWQLOv4gG7CpaSewhVqUJ/FAHp3xLaTTIBxTICo5zj88GUCK9Q
-	 QS7iE4TMQIBzE6PuGDWYyo6Dp50cl0e5yAky+jjoPFFfz6sHqGJytokWjJ9ejrzt9S
-	 RysMR2hbiFMTpymuZsxf7YyeJO3oxUh4/on8w47g=
+	b=zDv49PGyiP/LLGSqrBAsf0t5NLahWhWLmlSTTaJdz8DL09ncT3ZMhq3BSQgEFtZ8N
+	 VtAPuSJjSrgeYg+ubozJwRNplaSJ7rWqm3L1zelchosfem+SCfvwuMwAPP+/CV8uzJ
+	 k809KTre2Vl/QwWupe+jp1OIr7kaaVdxpKkAKhbc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sashiko <sashiko-bot@kernel.org>,
-	Waiman Long <longman@redhat.com>,
-	Ridong Chen <ridong.chen@linux.dev>,
-	Tejun Heo <tj@kernel.org>,
+	Gal Pressman <gal@nvidia.com>,
+	Jianbo Liu <jianbol@nvidia.com>,
+	Cosmin Ratiu <cratiu@nvidia.com>,
+	Tariq Toukan <tariqt@nvidia.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0472/1005] cgroup/cpuset: Protect current->mems_allowed read in cpuset_fork()
-Date: Wed, 25 Nov 2026 15:30:10 +0100
-Message-ID: <20261125143832.802232904@linuxfoundation.org>
+Subject: [PATCH 7.3 0455/1005] net/mlx5: Bridge, fix bogus MDB offload errors
+Date: Wed, 25 Nov 2026 15:29:53 +0100
+Message-ID: <20261125143832.406352153@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143821.729802100@linuxfoundation.org>
 References: <20261125143821.729802100@linuxfoundation.org>
@@ -70,58 +71,99 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Waiman Long <longman@redhat.com>
+From: Gal Pressman <gal@nvidia.com>
 
-[ Upstream commit a25cc4c75fdd8921f160bc3950665889eba7374b ]
+[ Upstream commit c714f324eac17b2df03419b5cd5368687efd8e27 ]
 
-Reading mems_allowed of the current task outside of cpuset_mutex critical
-section should be protected by using mems_allowed_seq seqlock as the
-nodemask can be updated concurrently leading to a torn read. Such
-protection is currently not implemented in cpuset_fork() for the
-!CLONE_INTO_CGROUP case. As a result, the child task may inherit an empty
-or corrupted mems_allowed nodemask. This violates NUMA memory policy
-constraints and causes subsequent page allocations to unconditionally
-fail, potentially leading to crashes or spurious OOM killer invocations
-for the child task.
+MDB add operations are queued on the switchdev deferred queue
+(SWITCHDEV_F_DEFER), while vlan object deletions are handled
+synchronously.
+A 'bridge vlan del' can overtake an MDB add that is still queued, and
+the vlan is already gone by the time the driver is called.
 
-Fix that by using a read_mems_allowed_begin/read_mems_allowed_retry()
-loop to protect the mems_allowed read.
+The two operations are independent in practice: in my test, the MDB add
+is triggered by assigning the VF an IPv6 address (hence joining a
+solicited-node multicast group), while another process deletes the vlan
+from its representor.
 
-Fixes: 06f4e9489891 ("cpuset: make sure new tasks conform to the current config of the cpuset")
-Reported-by: Sashiko <sashiko-bot@kernel.org>
-Link: https://sashiko.dev/#/bug/linux-601100b4-fa77-45fd-99f9-bfbd4385201f
-Signed-off-by: Waiman Long <longman@redhat.com>
-Reviewed-by: Ridong Chen <ridong.chen@linux.dev>
-Signed-off-by: Tejun Heo <tj@kernel.org>
+Racing 'bridge mdb add' against concurrent 'bridge vlan del' could
+result in:
+
+[ 5390.967651] mlx5_core 0000:08:00.0: E-Switch: Failed to lookup bridge port vlan metadata (vport=1)
+[ 5390.969120] mlx5_core 0000:08:00.1: E-Switch: Failed to lookup bridge port vlan metadata to create MDB (MAC=33:33:ff:12:00:05,vid=2204,vport=1)
+[ 5390.971676] mlx5_core 0000:08:00.1 eth4: Failed to add Port Multicast Database entry (object id=2) with error: -EINVAL (-22).
+               Failure in updating the port's Multicast Database could lead to
+               multicast forwarding issues.
+
+The error cannot reach anyone that could do anything with it, switchdev
+returned success to the bridge as soon as the MDB object was queued, and
+the errno only flags the entry as offload failed.
+The end result is correct either way, if the MDB has been offloaded
+before the vlan was deleted, mlx5_esw_bridge_port_mdb_vlan_flush() would
+have removed it.
+
+The FDB path already treats this as a harmless race,
+mlx5_esw_bridge_port_vlan_lookup() reports it on 'info' logging level
+and skips the offload. mlxsw did the same in [1].
+
+Skip the MDB offload, report on 'info' logging level and return
+-EOPNOTSUPP: switchdev_port_obj_add_deferred() does not log it, and
+br_switchdev_mdb_complete() skips the port group flag update.
+
+[1] Commit 17b334a876fe ("mlxsw: spectrum_switchdev: Don't warn about valid situations")
+
+Fixes: 70f0302b3f20 ("net/mlx5: Bridge, implement mdb offload")
+Signed-off-by: Gal Pressman <gal@nvidia.com>
+Signed-off-by: Jianbo Liu <jianbol@nvidia.com>
+Reviewed-by: Cosmin Ratiu <cratiu@nvidia.com>
+Signed-off-by: Tariq Toukan <tariqt@nvidia.com>
+Link: https://patch.msgid.link/20261104183715.771390-1-tariqt@nvidia.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/cgroup/cpuset.c | 11 ++++++++++-
- 1 file changed, 10 insertions(+), 1 deletion(-)
+ .../ethernet/mellanox/mlx5/core/esw/bridge.c  | 21 ++++++++++---------
+ 1 file changed, 11 insertions(+), 10 deletions(-)
 
-diff --git a/kernel/cgroup/cpuset.c b/kernel/cgroup/cpuset.c
-index 8f0979b73e20f..67d79749a1444 100644
---- a/kernel/cgroup/cpuset.c
-+++ b/kernel/cgroup/cpuset.c
-@@ -3980,11 +3980,20 @@ static void cpuset_fork(struct task_struct *task)
- 	rcu_read_unlock();
+diff --git a/drivers/net/ethernet/mellanox/mlx5/core/esw/bridge.c b/drivers/net/ethernet/mellanox/mlx5/core/esw/bridge.c
+index b4cf3c5ac0dde..9fac6f985a866 100644
+--- a/drivers/net/ethernet/mellanox/mlx5/core/esw/bridge.c
++++ b/drivers/net/ethernet/mellanox/mlx5/core/esw/bridge.c
+@@ -1867,26 +1867,27 @@ int mlx5_esw_bridge_port_mdb_add(struct net_device *dev, u16 vport_num, u16 esw_
  
- 	if (cs == oldcs) {
-+		unsigned int seq;
-+
- 		if (cs == &top_cpuset)
- 			return;
- 
- 		set_cpus_allowed_ptr(task, current->cpus_ptr);
--		task->mems_allowed = current->mems_allowed;
-+		/*
-+		 * A cpuset.mems update can update current->mems_allowed
-+		 * concurrently, so retry it again if it really happens.
+ 	port = mlx5_esw_bridge_port_lookup(vport_num, esw_owner_vhca_id, br_offloads);
+ 	if (!port) {
+-		esw_warn(br_offloads->esw->dev,
++		/* MDB is added asynchronously from the switchdev deferred
++		 * queue while port might have been deleted concurrently.
 +		 */
-+		do {
-+			seq = read_mems_allowed_begin();
-+			task->mems_allowed = current->mems_allowed;
-+		} while (read_mems_allowed_retry(seq));
- 		return;
++		esw_info(br_offloads->esw->dev,
+ 			 "Failed to lookup bridge port to add MDB (MAC=%pM,vport=%u)\n",
+ 			 addr, vport_num);
+-		NL_SET_ERR_MSG_FMT_MOD(extack,
+-				       "Failed to lookup bridge port to add MDB (MAC=%pM,vport=%u)",
+-				       addr, vport_num);
+-		return -EINVAL;
++		return -EOPNOTSUPP;
+ 	}
+ 
+ 	bridge = port->bridge;
+ 	if (bridge->flags & MLX5_ESW_BRIDGE_VLAN_FILTERING_FLAG && vid) {
+ 		vlan = mlx5_esw_bridge_vlan_lookup(vid, port);
+ 		if (!vlan) {
+-			esw_warn(br_offloads->esw->dev,
++			/* MDB is added asynchronously from the switchdev
++			 * deferred queue while vlan might have been deleted
++			 * concurrently.
++			 */
++			esw_info(br_offloads->esw->dev,
+ 				 "Failed to lookup bridge port vlan metadata to create MDB (MAC=%pM,vid=%u,vport=%u)\n",
+ 				 addr, vid, vport_num);
+-			NL_SET_ERR_MSG_FMT_MOD(extack,
+-					       "Failed to lookup vlan metadata for MDB (MAC=%pM,vid=%u,vport=%u)",
+-					       addr, vid, vport_num);
+-			return -EINVAL;
++			return -EOPNOTSUPP;
+ 		}
  	}
  
 -- 
