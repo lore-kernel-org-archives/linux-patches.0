@@ -1,58 +1,78 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=185.128.210.58
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795625140;
-	b=QMr5GGkIFrsbzlulVwppBRZXfZl/7xuXDV2S6QT4y4bg0b4W47CkM2wsd/gJ5JC9O6d4
-	 RZvgAwD27soDkAn6gvbhwoPbrVZ8JD+kDOjF30hwffPqyY96ikZfyzUoE4p5ltmXD8peL
-	 P1u1AS+dvu1uE6MYXWYol8uI7WFnhM0gc7/UnnbEwh02Zvlj3upUmZuHxEcbm3dJhVv1m
-	 IzBdkAEVQ8b1S4Qr5pBwr51eOuSI74lym1sQZc3JoFKi8asrR9YfoA5dsFNOHlvEFiEEo
-	 iLipJXn/M+dY64hbeGtp2NHwnEWS501qSq2d/P+zxksKqJlaf16usw7t76ZBTZ41whQ==
+	t=1795625144;
+	b=DJqwBvWnn1ozQ0QscB7jHH70bPAvZ0+Zs/jJ7uxoZzRUzdUd/M8J+eUozTDndFTO1mUB
+	 wl0KemQQIvU8qNqJWuouVp92WE21CgSA/n41JVr82hSzhYt8i3ZPTgEmho4DgSFOPYUIn
+	 ysuYEWk2ML5SSh5TMBs/o2eiamf5U8C5oeQ+ULB+dlY81m4oCkGcmQ9k0ZoUxjxqtesk0
+	 raR8/3XJAkQy4yc11Yu+shuVFOABdIjJTU7GAtQX8riO0OchXrO/p2PhnXCvRUfujeiso
+	 3vFkvy32NMGVIitVkfxI+bBxT8TR6tHr1KjkhY2H8fJ3vYLvCySzSE8MFjhMWKrhitw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795625140;
-	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
-	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Transfer-Encoding;
-	bh=e6LT3yPreuassQcNnETGxhQRSof91/H+uvvYWu6KiQM=;
-	b=hveyHRlIFypcN1rpykDVONAE33LRwNZCgGoX/t0UqFpTDytk9GHxxkAPd5IOPC8y76tn
-	 A5J5NO6tZL9b6LaFAQ+xBaq8MQurbr4kbNkdvZAO9jSnqqNOJ7oig/Suf9JBAVZ0e6aLz
-	 Dj3dqQjDffWK3BmQrPaE4q1LpZNpjjAZ15WAZqySe60yw0dZoN/Wwqu9LSo4enkRr4qXa
-	 +ULLZlD8raJVoaAbbRMfa2phaQ7aUYza4Vy0wgpo3RxEdvxJfvX2PEal3s5MGzQpKdFMN
-	 DgpcAai8K56Vi/uqAJoToVauvKANugdWfNV8D1bGUjtRN4pCJGLbWIh4Zdp5MlaB1mw==
+	a=rsa-sha256; c=relaxed/relaxed; t=1795625144;
+	h=DMARC-Filter:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:
+	 X-Mailer:In-Reply-To:References:MIME-Version:
+	 Content-Transfer-Encoding;
+	bh=vC74YOAPrBcAC9LMP7HaSPzA4IqP9flaTn0o7gnLByI=;
+	b=fLxN/OThD0sGIEFD8FRhFWlcrmOXufR/v7u0EFx53bbHyOC2WcsKDTrd0Mc7yHI1o8N7
+	 Zhsta2L7fzopPESHqKG7//ML+3LPvjPlBJ68YQxAUXTkfzbB3L3VYGutuzEw55HMUQ7rj
+	 4Cmlb400KqC7vw+pJhFvvsHK1YHCSfwy4YV31Hq6r1AhXxZzTPc+xxUPr4J7KtD2z2IPD
+	 mhhFG38DhyEmBT6L1W/xLA7826X3/yxPEme3ZLXrawdH1PYQN33RaSwXbn0eXRR/6CzNK
+	 xdzFqsRma8Tnoiq2AAF/DQWm5MKr/UWN7YjIXKA6q7SgmbLE4+vqU/NHs1QZSzHIt4Q==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=gzmR55E1;
-	arc=none smtp.remote-ip=100.103.45.18
-Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
+	dmarc=pass header.from=librecast.net;
+	spf=pass smtp.mailfrom=librecast.net;
+	dkim=pass header.d=librecast.net header.i=@librecast.net header.a=rsa-sha256 header.s=2026110900 header.b="Z/Vehjjv";
+	arc=none smtp.remote-ip=185.128.210.58
+Received: from bregans-0.gladserv.net (bregans-0.gladserv.net [185.128.210.58])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1))
+	 key-exchange ECDHE (prime256v1) server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A654F606A685;
-	Wed, 25 Nov 2026 16:45:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AA28C606A6A2;
+	Wed, 25 Nov 2026 16:45:43 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org AA28C606A6A2
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=librecast.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=librecast.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=gzmR55E1
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 039EA1F000E0;
-	Wed, 25 Nov 2026 16:45:39 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795625140;
-	bh=e6LT3yPreuassQcNnETGxhQRSof91/H+uvvYWu6KiQM=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=gzmR55E1MlbfN1FcoAJu2PNrs0AhO6YEiPwAq23eap/nKifKAOK15bAnxtR6+0IHL
-	 g6IFFYFyl5GJkOBJHkD9Bs3+JiQSJU8K2U0hekjzrjsWj8GhYaVdd7a2pVpu5eBZO0
-	 wI9IQSO2KVykb+y1dVMgNEEGti/jutwk4XOQbx2o=
-From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-To: stable@vger.kernel.org
-Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+	dkim=pass (2048-bit key, unprotected) header.d=librecast.net header.i=@librecast.net header.a=rsa-sha256 header.s=2026110900 header.b=Z/Vehjjv
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+	d=librecast.net; s=2026110900; h=Content-Transfer-Encoding:MIME-Version:
+	References:In-Reply-To:Message-ID:Date:Subject:Cc:To:From:Sender:Reply-To:
+	Content-Type:Content-ID:Content-Description:Resent-Date:Resent-From:
+	Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID:List-Id:List-Help:
+	List-Unsubscribe:List-Subscribe:List-Post:List-Owner:List-Archive;
+	bh=vC74YOAPrBcAC9LMP7HaSPzA4IqP9flaTn0o7gnLByI=; t=1795625143; x=1796489143; 
+	b=Z/VehjjvbV6ckWi/Dd6idtHC80NSqO9NXHnQfa44KrW2M1x82RnVInJ3Q9vHa/ykq6TR48F8Bkx
+	KnBMpwcogTd4NH22MOk3yOP52qq+wSXQkyZnXBFyWZSS1trzLeQ5r3WufX5AdUyXNrKHYwH+CsIVk
+	rNPyFgp0D9OVMOGaqBKnkbZOkCo67h8LO3A/CJIPGRZv5mgENIBpsJvIE6cxFXtmZW96nUm9edGGL
+	A+P5NrknY7PfG9p5l3ZjdlqZLFJZz4v/E1ySoSiEiatN8M22Fk76Rw025Q+gKW35O4ZOTEVfIVA69
+	C3kQLoCWk41hAgqyPzuJ9RkN8fL8FOlAleoQ==;
+From: Brett A C Sheffield <bacs@librecast.net>
+To: gregkh@linuxfoundation.org
+Cc: stable@vger.kernel.org,
 	patches@lists.linux.dev,
-	Shen Lichuan <shenlichuan@vivo.com>,
-	Sebastian Reichel <sebastian.reichel@collabora.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 375/816] power: supply: Correct multiple typos in comments
-Date: Wed, 25 Nov 2026 15:32:03 +0100
-Message-ID: <20261125143857.877205062@linuxfoundation.org>
+	linux-kernel@vger.kernel.org,
+	torvalds@linux-foundation.org,
+	akpm@linux-foundation.org,
+	linux@roeck-us.net,
+	shuah@kernel.org,
+	patches@kernelci.org,
+	lkft-triage@lists.linaro.org,
+	pavel@nabladev.com,
+	jonathanh@nvidia.com,
+	f.fainelli@gmail.com,
+	sudipm.mukherjee@gmail.com,
+	rwarsow@gmx.de,
+	conor@kernel.org,
+	hargar@microsoft.com,
+	broonie@kernel.org,
+	achill@achill.org,
+	sr@sladewatkins.com,
+	Brett A C Sheffield <bacs@librecast.net>
+Subject: Re: [PATCH 7.3 0000/1005] 7.3.7-rc1 review
+Date: Wed, 25 Nov 2026 16:36:52 +0000
+Message-ID: <20261125163654.740362-1-bacs@librecast.net>
 X-Mailer: git-send-email 2.56.1
-In-Reply-To: <20261125143849.205329330@linuxfoundation.org>
-References: <20261125143849.205329330@linuxfoundation.org>
-User-Agent: quilt/0.69
-X-stable: review
-X-Patchwork-Hint: ignore
+In-Reply-To: <20261125143821.729802100@linuxfoundation.org>
+References: <20261125143821.729802100@linuxfoundation.org>
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Post: <mailto:patches@lists.linux.dev>
@@ -64,153 +84,12 @@ Precedence: list
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+# Librecast Test Results
 
-------------------
+044/044 [ OK ] liblcrq
+010/010 [ OK ] libmld
+120/120 [ OK ] liblibrecast
 
-From: Shen Lichuan <shenlichuan@vivo.com>
+CPU/kernel: Linux auntie 7.3.7-rc1-g7f248ec61cf1 #1 SMP PREEMPT_DYNAMIC Wed Nov 25 15:12:41 -00 2026 x86_64 AMD Ryzen 9 9950X 16-Core Processor AuthenticAMD GNU/Linux
 
-[ Upstream commit 570c2234d5d62d52be7e8e35169b96d98378a7ce ]
-
-Fixed some spelling errors, the details are as follows:
-
--in the code comments:
-	dettached->detached
-	meausered->measured
-	meausurement->measurement
-	sholuld->should
-	Tempreture->Temperature
-	measuremnts->measurements
-	detecing->detecting
-	persent->percent
-	Parallell->Parallel
-
-Signed-off-by: Shen Lichuan <shenlichuan@vivo.com>
-Link: https://lore.kernel.org/r/20240914085415.3886-1-shenlichuan@vivo.com
-Signed-off-by: Sebastian Reichel <sebastian.reichel@collabora.com>
-Stable-dep-of: 1fba78714201 ("power: supply: qcom_smbx: set the charge enable after software control")
-Signed-off-by: Sasha Levin <sashal@kernel.org>
----
- drivers/power/supply/88pm860x_battery.c | 4 ++--
- drivers/power/supply/ab8500_btemp.c     | 2 +-
- drivers/power/supply/charger-manager.c  | 2 +-
- drivers/power/supply/da9030_battery.c   | 4 ++--
- drivers/power/supply/max8925_power.c    | 2 +-
- drivers/power/supply/qcom_battmgr.c     | 2 +-
- drivers/power/supply/qcom_smbx.c        | 2 +-
- 7 files changed, 9 insertions(+), 9 deletions(-)
-
-diff --git a/drivers/power/supply/88pm860x_battery.c b/drivers/power/supply/88pm860x_battery.c
-index 34619c4d4eced..b7938fbb24a51 100644
---- a/drivers/power/supply/88pm860x_battery.c
-+++ b/drivers/power/supply/88pm860x_battery.c
-@@ -422,7 +422,7 @@ static irqreturn_t pm860x_batt_handler(int irq, void *data)
- 		info->temp_type = PM860X_TEMP_TINT;
- 	}
- 	mutex_unlock(&info->lock);
--	/* clear ccnt since battery is attached or dettached */
-+	/* clear ccnt since battery is attached or detached */
- 	clear_ccnt(info, &ccnt_data);
- 	return IRQ_HANDLED;
- }
-@@ -566,7 +566,7 @@ static int measure_temp(struct pm860x_battery_info *info, int *data)
- 		ret = measure_12bit_voltage(info, PM8607_GPADC1_MEAS1, data);
- 		if (ret)
- 			return ret;
--		/* meausered Vtbat(mV) / Ibias_current(11uA)*/
-+		/* measured Vtbat(mV) / Ibias_current(11uA)*/
- 		*data = (*data * 1000) / GPBIAS2_GPADC1_UA;
- 
- 		if (*data > TBAT_NEG_25D) {
-diff --git a/drivers/power/supply/ab8500_btemp.c b/drivers/power/supply/ab8500_btemp.c
-index 082bd09cbedfd..769d28ebca105 100644
---- a/drivers/power/supply/ab8500_btemp.c
-+++ b/drivers/power/supply/ab8500_btemp.c
-@@ -283,7 +283,7 @@ static void ab8500_btemp_periodic_work(struct work_struct *work)
- 			dev_warn(di->dev, "failed to identify the battery\n");
- 	}
- 
--	/* Failover if a reading is erroneous, use last meausurement */
-+	/* Failover if a reading is erroneous, use last measurement */
- 	ret = thermal_zone_get_temp(di->tz, &bat_temp);
- 	if (ret) {
- 		dev_err(di->dev, "error reading temperature\n");
-diff --git a/drivers/power/supply/charger-manager.c b/drivers/power/supply/charger-manager.c
-index 272f963b69130..8d2c5de1603af 100644
---- a/drivers/power/supply/charger-manager.c
-+++ b/drivers/power/supply/charger-manager.c
-@@ -221,7 +221,7 @@ static bool is_charging(struct charger_manager *cm)
- 
- 	/* If at least one of the charger is charging, return yes */
- 	for (i = 0; cm->desc->psy_charger_stat[i]; i++) {
--		/* 1. The charger sholuld not be DISABLED */
-+		/* 1. The charger should not be DISABLED */
- 		if (cm->emergency_stop)
- 			continue;
- 		if (!cm->charger_enabled)
-diff --git a/drivers/power/supply/da9030_battery.c b/drivers/power/supply/da9030_battery.c
-index 04e0f4162d42b..b89604a8c0199 100644
---- a/drivers/power/supply/da9030_battery.c
-+++ b/drivers/power/supply/da9030_battery.c
-@@ -269,7 +269,7 @@ static void da9030_charger_check_state(struct da9030_charger *charger)
- 		}
- 		if (charger->adc.vchmax_res > charger->thresholds.vcharge_max ||
- 		    charger->adc.vchmin_res < charger->thresholds.vcharge_min ||
--		    /* Tempreture readings are negative */
-+		    /* Temperature readings are negative */
- 		    charger->adc.tbat_res < charger->thresholds.tbat_high ||
- 		    charger->adc.tbat_res > charger->thresholds.tbat_low) {
- 			/* disable charger */
-@@ -470,7 +470,7 @@ static int da9030_battery_charger_init(struct da9030_charger *charger)
- 	if (ret)
- 		return ret;
- 
--	/* enable auto ADC measuremnts */
-+	/* enable auto ADC measurements */
- 	return da903x_write(charger->master, DA9030_ADC_AUTO_CONTROL,
- 			    DA9030_ADC_TBAT_ENABLE | DA9030_ADC_VBAT_IN_TXON |
- 			    DA9030_ADC_VCH_ENABLE | DA9030_ADC_ICH_ENABLE |
-diff --git a/drivers/power/supply/max8925_power.c b/drivers/power/supply/max8925_power.c
-index 621a006d52a96..fc24a6d3b63d8 100644
---- a/drivers/power/supply/max8925_power.c
-+++ b/drivers/power/supply/max8925_power.c
-@@ -73,7 +73,7 @@ struct max8925_power_info {
- 	unsigned		usb_online:1;
- 	unsigned		bat_online:1;
- 	unsigned		chg_mode:2;
--	unsigned		batt_detect:1;	/* detecing MB by ID pin */
-+	unsigned		batt_detect:1;	/* detecting MB by ID pin */
- 	unsigned		topoff_threshold:2;
- 	unsigned		fast_charge:3;
- 	unsigned		no_temp_support:1;
-diff --git a/drivers/power/supply/qcom_battmgr.c b/drivers/power/supply/qcom_battmgr.c
-index 81ec6ab7e1ad0..2c34cda87d07b 100644
---- a/drivers/power/supply/qcom_battmgr.c
-+++ b/drivers/power/supply/qcom_battmgr.c
-@@ -153,7 +153,7 @@ struct qcom_battmgr_message {
- 			__le32 capacity_low;
- 			__le32 capacity_warning;
- 			__le32 cycle_count;
--			/* thousandth of persent */
-+			/* thousandth of percent */
- 			__le32 accuracy;
- 			__le32 max_sample_time_ms;
- 			__le32 min_sample_time_ms;
-diff --git a/drivers/power/supply/qcom_smbx.c b/drivers/power/supply/qcom_smbx.c
-index 099d1385ea12d..1f35416b0d939 100644
---- a/drivers/power/supply/qcom_smbx.c
-+++ b/drivers/power/supply/qcom_smbx.c
-@@ -837,7 +837,7 @@ static const struct smb_init_register smb_init_seq[] = {
- 		  AUTO_RECHG_BIT | EN_ANALOG_DROP_IN_VBATT_BIT |
- 		  CHARGER_INHIBIT_BIT,
- 	  .val = CHARGER_INHIBIT_BIT },
--	/* STAT pin software override, match downstream. Parallell charging? */
-+	/* STAT pin software override, match downstream. Parallel charging? */
- 	{ .addr = STAT_CFG,
- 	  .mask = STAT_SW_OVERRIDE_CFG_BIT,
- 	  .val = STAT_SW_OVERRIDE_CFG_BIT },
--- 
-2.53.0
-
-
-
+Tested-by: Brett A C Sheffield <bacs@librecast.net>
