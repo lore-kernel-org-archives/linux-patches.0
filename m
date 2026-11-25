@@ -1,52 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795622326;
-	b=LeRgbgc3OvkgAXEpuyEt7649+4hFBq9K2MlEidlGz1f/zYfvjSgQYkVSyW7W0Fvftile
-	 1+pV28QjmorvZ2EcuFGDk82aSLmnrrmhj0gNPLvn72JTR2lm4CeScn0AaK2nnHtV+czx8
-	 pjEpnGCjVd90N8igX3cM1D9EuIrlVlhdBoC9AOBTEn1w4L9HEBUDdgiEaOiaiu65i5cd0
-	 WfHRgR/NUobgZr4AsxSwQbYrvFzviWugUyiGwlxC1GLIjS6JkNkBi86ADckBrNQkpOeMY
-	 uWkjy1td+NVabLw06YoNEvMZlJEbyvTvfkjN0YLe7K1YpwswW/ag2IJZpVVJgjiMFmA==
+	t=1795622329;
+	b=grZdps52+o9T8uhpwrAoAJ540JJToleabO+9KDOyrmHIh++FHuzIMypUiwTgN5JUGfAf
+	 lo1AjeaxMFf3J/z8Frlj1s22ex5g4gphlnMfdmBV/NOfIWSvUJlFIv0vDjCuR4ipb/FvR
+	 O6C5nwjDC1rsdl1MWKxE+/HPAbKEovOV8h7iHKWWKP9pu4FSg/ZpaOc3BIoShX4+DiQ81
+	 YLfUmkyEnN0FDsNZeJ1+V+mJ4xUpaM4RteSDnFE7G3S2ReZJsahyTNCa2T4BrkQJKxLw3
+	 /GIdob5RyEyEsm31yP8cnMCwXXrRg81t91/Iwr3ZfJ/KDpHN62uLYhQq4iKJ9Erx2uQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795622326;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795622329;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=VXVsYy+IzT+mOz5N3HAYvxr7/NXjkcqexQHrgPIKYh0=;
-	b=sUmAi8mlrNOG+zsu1G/1oktoc2OadvnTf1aC0deRUYmwjfgsZ25k2+3DmkMB47jq6ZoZ
-	 Ehe54ZnYxQ4yw4C/YguKy0RDafZiDYOgtDe8I/w1YAYdSwkzC+s1/m6Iqfz0ag5S2NBlM
-	 uHho8K6BxMumm3RPo/Unwv2Upzd1o2ySn/uWhaqaVv5zv1SmAsTu6/LWu0w+q0kV0nlTV
-	 ey7nDM4SFUJ0GUkAzd5JM1oaEo8Gj71ZDAUmqkgvJdyzYhz7MfNgQjvp4Xs79xuzjLjlY
-	 DbHbjDuzw+Lq3VQFBeT++e4Z1pPkOF2YaWLPycCqAYJ+LtdN3B00tuW2JpAEv0LWf7Q==
+	bh=VZV5jtBpVZCuefBInyCEeMRFeOkz6WnAWa/jl5PRdSs=;
+	b=T/j1zxt9Sz+/VdsVp+sh1/b9aa/w2PcTMH/WE3z3IZB6uohcERp6VeRutM92EvPDp/Ar
+	 d732sHOxmGnMchZG+u40liXBl3FhorZLfV6sBwx1xPfg+iSJSOifNxglDxEvyO1omaWHl
+	 mqLAul//j11s8c/7j1lEqIjh9dyWLJBPYDj1kypz4co/O4Te/DY/zIWajbzof1+/I/1ok
+	 xF6e49sPXaJbfMPGXLgg412N6eG/L4BnccNllREHffvvTGpuhzH7MYrUHBiPtTvYh+vXN
+	 05zpOWV1O1Bip4iwCDBZ5/8t5VLQZbrAN2AgF4xNPsid9h9Z6TwT3TM7/XBNtIKVC6w==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=eVoa2yfA;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=n4OZp4LO;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5D205606A330;
-	Wed, 25 Nov 2026 15:58:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 556CC606A326;
+	Wed, 25 Nov 2026 15:58:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=eVoa2yfA
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 84B491F000C6;
-	Wed, 25 Nov 2026 15:58:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=n4OZp4LO
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A17DE1F000C4;
+	Wed, 25 Nov 2026 15:58:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795622326;
-	bh=VXVsYy+IzT+mOz5N3HAYvxr7/NXjkcqexQHrgPIKYh0=;
+	s=korg; t=1795622329;
+	bh=VZV5jtBpVZCuefBInyCEeMRFeOkz6WnAWa/jl5PRdSs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=eVoa2yfASvOWsQ5ungb7k4HX3xMODh/EM3hSBSHtJVhuPbYwZO0d0I+0498f4cbeT
-	 mg/xm5ybPUWH1pDPYlz/jmoEuDHPG6CSp/gxDGJWgqV9fZdBsQISa/FlVeeUXZDOSr
-	 A5E+ZmLAtN21+BInBoW1BDC6Ex8S3x+k/5jWMqhU=
+	b=n4OZp4LOXhE7zTJVshNJkWRRfc7KQNBxPzHUvV0BdHHVB9tuN4g6B8PfIfjakQJKO
+	 XAT2qfLY6tXcRF73CoxjT6cv3DjisMQvdpUqKMLfPxE/nZ9BDrGZnZrF60dclcgDV7
+	 n14q2ruRSyiBn3TLsjFYn4eGB+w+B9aPiwK6fkho=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	LiangCheng Wang <zaq14760@gmail.com>,
-	Mark Brown <broonie@kernel.org>,
+	Charlton Lin <charlton.lin@intel.com>,
+	Uma Shankar <uma.shankar@intel.com>,
+	Vidya Srinivas <vidya.srinivas@intel.com>,
+	Joonas Lahtinen <joonas.lahtinen@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 447/990] ASoC: max98090: keep the MIC boost across mic input power-up
-Date: Wed, 25 Nov 2026 15:30:14 +0100
-Message-ID: <20261125143832.564198679@linuxfoundation.org>
+Subject: [PATCH 6.18 496/990] drm/i915/display: Disable pipe joiner on WCL
+Date: Wed, 25 Nov 2026 15:31:03 +0100
+Message-ID: <20261125143833.713815124@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143822.072087159@linuxfoundation.org>
 References: <20261125143822.072087159@linuxfoundation.org>
@@ -68,100 +70,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: LiangCheng Wang <zaq14760@gmail.com>
+From: Vidya Srinivas <vidya.srinivas@intel.com>
 
-[ Upstream commit 58d51fa6ff1d21e79c3c340bfb3155dfa3025ca3 ]
+[ Upstream commit b42b656db1384255044754cd2163d370d766b776 ]
 
-PA1EN/PA2EN select both the MIC1/MIC2 preamp enable and its gain
-(0 = off, 1 = 0 dB, 2 = +20 dB, 3 = +30 dB). "MICn Boost Volume" keeps
-the selected gain in max98090->pa1en/pa2en while the input is off, and
-max98090_micinput_event() writes it to the field when the "MICn Input"
-widget powers up.
+Pipe joining is not supported in the WCL display configuration.
+Report no joiner support on WCL so that modes which would require
+joining are rejected, matching the 4k 60Hz maximum resolution
+documented for the platform.
 
-The event handler also reads the field back to keep the stored gain in
-sync ("Update for volatile"), but it does so on POST_PMU and POST_PMD.
-The widget drives PA1EN/PA2EN as a single enable bit, the low bit of
-the field, so at both points DAPM has just rewritten it:
+v2: Rebase onto latest upstream
+v3: Fix up the commit message
+v4: Split the scaler and joiner changes into separate patches (Jani)
 
-  - POST_PMU: DAPM has set the field to 1, so the read-back stores
-    0 dB and the handler then restores 0 dB.
-  - POST_PMD: DAPM has cleared the low bit, so a +30 dB (3) gain reads
-    back as +20 dB (2).
-
-As a result every capture starts at 0 dB: a boost set while the input is
-powered down, e.g. restored by alsactl or an audio HAL at boot, never
-takes effect, and one changed during capture is lost at the next
-power-up.
-
-Read the field back on PRE_PMD instead, while it still holds the active
-gain, and only restore the stored gain on POST_PMU.
-
-Tested on i.MX95 with a MAX98090 headset mic on MIC1, running NXP's
-6.18.38 vendor kernel (max98090_micinput_event() is the same as in
-mainline): with MIC1 Boost Volume set to 2 (+30 dB) before capture,
-register 0x10 reads 0x20 (0 dB) during capture without this change and
-0x60 (+30 dB) with it, and a boost changed during capture is kept for
-the next capture.
-
-Fixes: 685e42154dcf ("ASoC: Replace max98090 Device Driver")
-Signed-off-by: LiangCheng Wang <zaq14760@gmail.com>
-Link: https://patch.msgid.link/20261111-max98090-mic-boost-v1-1-20b9bd8816db@gmail.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Bspec: 74286
+Fixes: f8e1c3e07db1 ("drm/i915/xe3lpd: Add support for display version 30.02")
+Cc: stable@vger.kernel.org
+Suggested-by: Charlton Lin <charlton.lin@intel.com>
+Reviewed-by: Uma Shankar <uma.shankar@intel.com>
+Signed-off-by: Vidya Srinivas <vidya.srinivas@intel.com>
+Signed-off-by: Uma Shankar <uma.shankar@intel.com>
+Link: https://patch.msgid.link/20261028070404.1913843-3-vidya.srinivas@intel.com
+(cherry picked from commit 917676a55a690319a01b45d3956eaf94ba564df8)
+Signed-off-by: Joonas Lahtinen <joonas.lahtinen@linux.intel.com>
+[ sashal: Dropped the unrelated eDP VBT pipe_joiner_enable check from the context, since this branch lacks it, and applied only the WCL DISPLAY_VERx100 != 3002 condition. ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/codecs/max98090.c | 22 ++++++++++++----------
- 1 file changed, 12 insertions(+), 10 deletions(-)
+ drivers/gpu/drm/i915/display/intel_dp.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/sound/soc/codecs/max98090.c b/sound/soc/codecs/max98090.c
-index 830caf62d0fa8..f686f80b2c522 100644
---- a/sound/soc/codecs/max98090.c
-+++ b/sound/soc/codecs/max98090.c
-@@ -743,14 +743,6 @@ static int max98090_micinput_event(struct snd_soc_dapm_widget *w,
- 	else
- 		val = (val & M98090_MIC_PA2EN_MASK) >> M98090_MIC_PA2EN_SHIFT;
+diff --git a/drivers/gpu/drm/i915/display/intel_dp.c b/drivers/gpu/drm/i915/display/intel_dp.c
+index 84fca860c93ee..27bd54c4b4e63 100644
+--- a/drivers/gpu/drm/i915/display/intel_dp.c
++++ b/drivers/gpu/drm/i915/display/intel_dp.c
+@@ -490,9 +490,9 @@ bool intel_dp_has_joiner(struct intel_dp *intel_dp)
+ 	if (intel_dp->mso_link_count)
+ 		return false;
  
--	if (val >= 1) {
--		if (w->reg == M98090_REG_MIC1_INPUT_LEVEL) {
--			max98090->pa1en = val - 1; /* Update for volatile */
--		} else {
--			max98090->pa2en = val - 1; /* Update for volatile */
--		}
--	}
--
- 	switch (event) {
- 	case SND_SOC_DAPM_POST_PMU:
- 		/* If turning on, set to most recently selected volume */
-@@ -759,6 +751,14 @@ static int max98090_micinput_event(struct snd_soc_dapm_widget *w,
- 		else
- 			val = max98090->pa2en + 1;
- 		break;
-+	case SND_SOC_DAPM_PRE_PMD:
-+		if (val >= 1) {
-+			if (w->reg == M98090_REG_MIC1_INPUT_LEVEL)
-+				max98090->pa1en = val - 1;
-+			else
-+				max98090->pa2en = val - 1;
-+		}
-+		return 0;
- 	case SND_SOC_DAPM_POST_PMD:
- 		/* If turning off, turn off */
- 		val = 0;
-@@ -1108,11 +1108,13 @@ static const struct snd_soc_dapm_widget max98090_dapm_widgets[] = {
+-	return DISPLAY_VER(display) >= 12 ||
++	return ((DISPLAY_VER(display) >= 12 && DISPLAY_VERx100(display) != 3002) ||
+ 		(DISPLAY_VER(display) == 11 &&
+-		 encoder->port != PORT_A);
++		 encoder->port != PORT_A));
+ }
  
- 	SND_SOC_DAPM_PGA_E("MIC1 Input", M98090_REG_MIC1_INPUT_LEVEL,
- 		M98090_MIC_PA1EN_SHIFT, 0, NULL, 0, max98090_micinput_event,
--		SND_SOC_DAPM_POST_PMU | SND_SOC_DAPM_POST_PMD),
-+		SND_SOC_DAPM_POST_PMU | SND_SOC_DAPM_PRE_PMD |
-+		SND_SOC_DAPM_POST_PMD),
- 
- 	SND_SOC_DAPM_PGA_E("MIC2 Input", M98090_REG_MIC2_INPUT_LEVEL,
- 		M98090_MIC_PA2EN_SHIFT, 0, NULL, 0, max98090_micinput_event,
--		SND_SOC_DAPM_POST_PMU | SND_SOC_DAPM_POST_PMD),
-+		SND_SOC_DAPM_POST_PMU | SND_SOC_DAPM_PRE_PMD |
-+		SND_SOC_DAPM_POST_PMD),
- 
- 	SND_SOC_DAPM_MIXER("LINEA Mixer", SND_SOC_NOPM, 0, 0,
- 		&max98090_linea_mixer_controls[0],
+ static int dg2_max_source_rate(struct intel_dp *intel_dp)
 -- 
 2.53.0
 
