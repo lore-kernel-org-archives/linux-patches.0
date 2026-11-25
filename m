@@ -1,52 +1,50 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795620214;
-	b=pgAiyq4lf99WQbe7mSP/nxz16SsGIB4vDHGlK4H8EoBSdlK/2rSVEd8UgfK7eEKpix82
-	 gqQ2wZVY3apQRsWG2qL68B6hHlu7tDFEFtLUdAN6G5KT9ltJVP+d6RHYpjXnnWBFeFM2x
-	 GxYHuR89csAMdJmaHgyJknAK0bUpmVJUZRxUHKDvY+iOF7bN+UmprqWmARBQUpNdul1z3
-	 fud8s85nkPRMzqxrm/H3vOQfDZwadEs6TwTogD+apuI14cxS3QJp6d2Gb/T88BtpYQdlA
-	 CyvbY/46R8QBsRoCQRlm58p7+USf/ZPEQNzgGq1kqIfra6dbKiw8J9pX+f8xh6KWycw==
+	t=1795620218;
+	b=zhcTBLvNxuhnSq4Z5Sw5NViOYzN7bqeiqvgvdxN4IBEytLJYq7+U2E9IZULt7qOJWMhc
+	 MaLIJ6ES4jC2el2D+fgpfa95PQUzbQruTYzAp2DWsMcIwsTqSHzlCrMIS/kbGUHaJeWis
+	 jSTNXR+6Bd2cE42SLY4iqtiwA9dtCBE3GnQevm27YveGKtks1nvrMpqFOXuFXz0rlnNrH
+	 c38J1A/mcZczgEfrieM3VFjfLuJ1oaAu4JvwynaiBhFtOp9M6LLUeOV2xFt8qSWw4AXuo
+	 x4IgGF+bqzFW+jzEFW25FUn5RxMJw9fQxUPtdl4HAmtlp0YjIYY/mX1QPMOQQjIpuGQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795620214;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795620218;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=ezNGJNsIhUWpi09who8mIhUlS4fJ0b3gQbeL2Xt6eY0=;
-	b=N2N1hSS/xtJJQVRNFHS26euLoZpkFjAxzbbrn+8bfkFFn+UdXW/PT6qLt4fpx39bxoYR
-	 IiSpUgdYeUTeMcqUiZTkkGsKFukmkK2i4wR6wtTGfuzq5DuAztvGJX5MRYzn1upsUzscv
-	 bN+yoVimGb0LRRy3QuS/4y83NwEvCi0FbSLCvTVdkHWmDH+MlaeT8YnPxQ+2bI9bGjpwz
-	 zJG0OAqi9adtMeJzbVjkRSLXab06T/uLhHeKKMmazoCNeRN/T35ZGqkb/AYkbtKHIHXhx
-	 FwBQIXJsOe+XfYPY+y/5mjw2DFe82DfnPKpit1oHuAk80eeWFDgzTqaqf9KQ5OeowlQ==
+	bh=ea8SM13CcfUQuWQyV5vsFfSUDtHmhZl7xXraZf0z6U4=;
+	b=izyNqPDlHweWDORQryuU3drjo8DxS8tANguMfaESKLaDk5E3nBxH/cCKVQ51q3mcNJxz
+	 ca2EhNKcP1jvEhQrdwXfdrT7P/TWHaIKy4muqBKU2X0FysD57xIVnNzLUXsjVAmIOowKN
+	 LwQ8voicuU2WPsLle3oFD+YfJ9XZcozuO0MxeQq+pXvys6d86BQdBJfbKbigbakF9ytsH
+	 fX0P1NK75bhSHA9G33ZPjLiqw/p2KPaVUSjAP9DcNT9WldUBMiBRI+oQg/yhx5ausTlWw
+	 IWr3GZa0BNEZKxi3IEoef5XcE0+0CRooYiBqIiT5lS1D4CiwFSOiHDcttJPl58JQ2GA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=RJ4xXh4V;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=yaf4ZvvC;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C264B606A31E;
-	Wed, 25 Nov 2026 15:23:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EF307606A31E;
+	Wed, 25 Nov 2026 15:23:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=RJ4xXh4V
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CC9A91F000CF;
-	Wed, 25 Nov 2026 15:23:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=yaf4ZvvC
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E6F111F000C6;
+	Wed, 25 Nov 2026 15:23:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795620214;
-	bh=ezNGJNsIhUWpi09who8mIhUlS4fJ0b3gQbeL2Xt6eY0=;
+	s=korg; t=1795620217;
+	bh=ea8SM13CcfUQuWQyV5vsFfSUDtHmhZl7xXraZf0z6U4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=RJ4xXh4V5hA8zhupSaGN7nnnWBBthMMifCymeWwtwwgtXxC/KtElafwxObWAOKxU0
-	 gYAp63aLOGWditDApLyvlcc4JAugm3vlG7hJlVd2LfVts8iVuduDyY7uwcRxRcL8/h
-	 KoM3t6bw2OGTUww/51+mLsP0yjXD8dGT+/KIr2AM=
+	b=yaf4ZvvCH6a6KNogmEtnO+QINYmLrhC073PifdgrT12XNNVFQFP1/A5dlHGX/DKz8
+	 QS1vEqx8FpyUC2A0LSyf+sd2Jy034If7j/ZhB/Ek98HSQP/w21BnbDveH15S+Z05Rj
+	 T9hmXh56X7MBpyR98hYuzWXGXtyaFlNuYqELLMds=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	liuyong <pkfxxxing@gmail.com>,
-	Namjae Jeon <linkinjeon@kernel.org>,
 	Paulo Alcantara <pc@manguebit.org>
-Subject: [PATCH 7.3 0847/1005] smb: client: validate descriptor headers before query result allocation
-Date: Wed, 25 Nov 2026 15:36:25 +0100
-Message-ID: <20261125143841.554263186@linuxfoundation.org>
+Subject: [PATCH 7.3 0848/1005] smb: client: dont give up writeback on the first replayable error
+Date: Wed, 25 Nov 2026 15:36:26 +0100
+Message-ID: <20261125143841.577412740@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143821.729802100@linuxfoundation.org>
 References: <20261125143821.729802100@linuxfoundation.org>
@@ -68,86 +66,118 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: liuyong <pkfxxxing@gmail.com>
+From: Paulo Alcantara <pc@manguebit.org>
 
-commit ffb59029c0d52bf76fdd2678f5d6fd13e26220dd upstream.
+commit 274dec866f0882ee5a0f3d58d4d5c31af0c02417 upstream.
 
-query_info() uses the server's returned length instead of the caller's
-minimum when a dynamic result is requested. A zero-length ACL response
-can therefore return ZERO_SIZE_PTR to id_mode_to_cifs_acl(), whose
-ownership-change path reads dacloffset before checking the header size.
-A KASAN-enabled test shows a read at address 0x20 and a kernel Oops.
+Read and write retries follow the hard and retrans mount options, and
+mounts are soft with no retrans by default.  For writeback this means
+that a single replayable error, e.g. a reconnect while sending, fails
+the subrequest and netfs ends writeback with its folios clean: the data
+is gone, possibly long after write(2) succeeded, with only fsync(2) left
+to notice.  NFS soft mounts, by comparison, wait minutes for a server to
+answer before failing a request.
 
-Validate the returned range and the caller's minimum before allocating
-the dynamic result. Keep the reported length zero if validation fails.
+Keep retrying writeback on replayable errors, with exponential backoff:
+forever on hard mounts, and on soft mounts for max(3, retrans) echo
+intervals from the first failure - 3 minutes by default, the time after
+which a silent server is considered unresponsive.  The window applies to
+each write sent to the server, not to the whole writeback.  umount -f or
+a shutdown still stops it right away.  Direct and unbuffered writes,
+whose callers get the error, keep following the mount options.
 
-Use the security descriptor header size as the minimum in SMB2_query_acl().
-DACL-only and SACL-only xattr queries do not require owner and group SIDs,
-so enforcing MIN_SEC_DESC_LEN would reject short descriptors that these
-queries could previously return. The rewrite paths validate the required
-owner/group SIDs and DACL separately before using their contents.
-
-These issues were discovered and fixed by Qihoo 360's Tulongfeng
-multi-agent system.
-
-Fixes: 9ee2afe5207b ("cifs: prevent copying past input buffer boundaries")
-Cc: stable@vger.kernel.org
-Signed-off-by: liuyong <pkfxxxing@gmail.com>
-Reviewed-by: Namjae Jeon <linkinjeon@kernel.org>
+Fixes: 2c1238a7477a ("cifs: make retry logic in read/write path consistent with other paths")
 Signed-off-by: Paulo Alcantara <pc@manguebit.org>
+Cc: stable@vger.kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/smb/client/cifsacl.h |   14 --------------
- fs/smb/client/smb2pdu.c |   11 ++++++++++-
- 2 files changed, 10 insertions(+), 15 deletions(-)
+ fs/smb/client/cifsglob.h  |    1 +
+ fs/smb/client/file.c      |   21 +++++++++++++++++++++
+ fs/smb/client/smb2ops.c   |    9 +--------
+ fs/smb/client/smb2proto.h |    9 +++++++++
+ 4 files changed, 32 insertions(+), 8 deletions(-)
 
---- a/fs/smb/client/cifsacl.h
-+++ b/fs/smb/client/cifsacl.h
-@@ -93,18 +93,4 @@ struct owner_group_sids {
- 	struct owner_sid group;
- } __packed;
- 
--/*
-- * Minimum security identifier can be one for system defined Users
-- * and Groups such as NULL SID and World or Built-in accounts such
-- * as Administrator and Guest and consists of
-- * Revision + Num (Sub)Auths + Authority + Domain (one Subauthority)
-- */
--#define MIN_SID_LEN  (1 + 1 + 6 + 4) /* in bytes */
--
--/*
-- * Minimum security descriptor can be one without any SACL and DACL and can
-- * consist of revision, type, and two sids of minimum size for owner and group
-- */
--#define MIN_SEC_DESC_LEN  (sizeof(struct smb_ntsd) + (2 * MIN_SID_LEN))
--
- #endif /* _CIFSACL_H */
---- a/fs/smb/client/smb2pdu.c
-+++ b/fs/smb/client/smb2pdu.c
-@@ -4058,6 +4058,14 @@ replay_again:
- 				ses->Suid, info_class, (__u32)info_type);
- 
- 	if (dlen) {
-+		rc = smb2_validate_iov(le16_to_cpu(rsp->OutputBufferOffset),
-+				       le32_to_cpu(rsp->OutputBufferLength),
-+				       &rsp_iov, min_len);
-+		if (rc) {
-+			*dlen = 0;
-+			goto qinf_exit;
-+		}
-+
- 		*dlen = le32_to_cpu(rsp->OutputBufferLength);
- 		if (!*data) {
- 			*data = kmalloc(*dlen, GFP_KERNEL);
-@@ -4112,7 +4120,8 @@ SMB2_query_acl(const unsigned int xid, s
- 
- 	return query_info(xid, tcon, persistent_fid, volatile_fid,
- 			  0, SMB2_O_INFO_SECURITY, extra_info,
--			  SMB2_MAX_BUFFER_SIZE, MIN_SEC_DESC_LEN, data, plen);
-+			  SMB2_MAX_BUFFER_SIZE, sizeof(struct smb_ntsd),
-+			  data, plen);
+--- a/fs/smb/client/cifsglob.h
++++ b/fs/smb/client/cifsglob.h
+@@ -1503,6 +1503,7 @@ struct cifs_io_subrequest {
+ 	bool				replay;
+ 	unsigned int			retries;	/* number of retries so far */
+ 	unsigned int			cur_sleep;	/* time to sleep before replay */
++	unsigned long			retry_deadline;
+ 	struct kvec			iov[2];
+ 	struct TCP_Server_Info		*server;
+ #ifdef CONFIG_CIFS_SMB_DIRECT
+--- a/fs/smb/client/file.c
++++ b/fs/smb/client/file.c
+@@ -53,12 +53,33 @@ bool cifs_io_stopped(struct cifs_io_subr
+ 	return aborts && rwsem_is_contended(&sb->s_umount);
  }
  
- int
++static bool cifs_writeback_retry_expired(struct cifs_io_subrequest *subreq,
++					 struct cifs_tcon *tcon)
++{
++	struct TCP_Server_Info *server = tcon->ses->server;
++	unsigned long window;
++
++	if (tcon->retry)
++		return false;
++	if (!subreq->retry_deadline) {
++		window = max(3U, server->retrans) * server->echo_interval;
++		subreq->retry_deadline = (jiffies + window) | 1;
++	}
++	return time_after(jiffies, subreq->retry_deadline);
++}
++
+ bool cifs_io_should_replay(struct cifs_io_subrequest *subreq)
+ {
+ 	struct cifs_tcon *tcon = tlink_tcon(subreq->req->cfile->tlink);
+ 
+ 	if (cifs_io_stopped(subreq))
+ 		return false;
++	if (subreq->rreq->origin == NETFS_WRITEBACK) {
++		if (cifs_writeback_retry_expired(subreq, tcon))
++			return false;
++		smb2_replay_backoff(&subreq->cur_sleep);
++		return true;
++	}
+ 	return smb2_should_replay(tcon, &subreq->retries, &subreq->cur_sleep);
+ }
+ 
+--- a/fs/smb/client/smb2ops.c
++++ b/fs/smb/client/smb2ops.c
+@@ -2935,14 +2935,7 @@ bool smb2_should_replay(struct cifs_tcon
+ 		return false;
+ 
+ 	if (tcon->retry || (*pretries)++ < tcon->ses->server->retrans) {
+-		/* Update sleep time for exponential backoff */
+-		if (!(*pcur_sleep))
+-			(*pcur_sleep) = 1;
+-		else {
+-			(*pcur_sleep) = ((*pcur_sleep) << 1);
+-			if ((*pcur_sleep) > CIFS_MAX_SLEEP)
+-				(*pcur_sleep) = CIFS_MAX_SLEEP;
+-		}
++		smb2_replay_backoff(pcur_sleep);
+ 		return true;
+ 	}
+ 
+--- a/fs/smb/client/smb2proto.h
++++ b/fs/smb/client/smb2proto.h
+@@ -119,6 +119,15 @@ unsigned long smb_rqst_len(struct TCP_Se
+ void smb2_set_next_command(struct cifs_tcon *tcon, struct smb_rqst *rqst);
+ void smb2_set_related(struct smb_rqst *rqst);
+ void smb2_set_replay(struct TCP_Server_Info *server, struct smb_rqst *rqst);
++
++static inline void smb2_replay_backoff(int *pcur_sleep)
++{
++	if (!*pcur_sleep)
++		*pcur_sleep = 1;
++	else
++		*pcur_sleep = min(*pcur_sleep << 1, CIFS_MAX_SLEEP);
++}
++
+ bool smb2_should_replay(struct cifs_tcon *tcon, int *pretries,
+ 			int *pcur_sleep);
+ 
 
 
