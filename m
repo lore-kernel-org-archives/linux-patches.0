@@ -1,42 +1,42 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795618943;
-	b=3nh0ATNGw2PTlXI9xEAekKWr+F9AjjnTI+NnuDvfuiSSaHejujfiPMaI8ZXgIUlMn2+j
-	 O1DgE31yw2NS19RP5vZ8QNTu/0zt3WPf1wF+jR27h9pqOQvrDUJdeLeyLZ2MrEIXMyzUd
-	 YRlenfyrXZMaWQu4v0r5SAghaUNcoX+JdJUrHNqAhwkHV1T7KsFjGb3BX5iAMrDbMD1QH
-	 /X6JZcwGSzgviVc1vaXiEB4AvI0bAaAsNL6vosuanN91K4w8BFR+OtXm3YygMxxAJOn+g
-	 1LIJ1wRK1bzfA9dKOnsFjzHw1tNs8DjY95gLwE+qvRazsAG2s/7YGtnHgaxG9zfCa4Q==
+	t=1795618946;
+	b=V1BA7wOTirOeL6ZsIrHqIOUlQn/OWARR7L7/ycTHll7VAFORCZX+QRDSiCV4Y/ox5Tuq
+	 oGYeFUzfu2wvwHzlU0jRN/JtMYpFXwB+2F2GuKyOH5Txli37VcSY8JJ+1z98P1PJckLD2
+	 3DE4VLi4GsKJAsWx87mB+gYUNj8Dd/Iu0TRQwby/xlO39pyzSJZQjXSjCdRTpjibOBzM4
+	 Ky2VlMbQdsSWgqF6apPc1cmxMgkTpOmMOjCJGq09M02gxw0mBt+e0kUcF0sA/Z77j3H1e
+	 1sXsQN95RbfVbfnGKVmDFe0VcIB0VF21yqNZ7LpMLRPhs/AH4dIwF2QKFHs3Lk+MV1w==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795618943;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795618946;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=QTp+m6nj8ust3funPe0YVLWlH3d1Z3ry/r79OOODS+c=;
-	b=JZRsz9rfql+5xOazD0PsxKn/PJWZEP1hJwDWwn2hroD7EYvqWpgvB9AXR1DB6vp5Qtrg
-	 rV/PoLdZzW35XYDuoDGCcy/2kxOT+5icJyv/JwC/FeLjY00gUvFzwLYmD6Nc54KRHYJPS
-	 EBrkR9cu/SKGgADov/aNfQOtBIJ/SuSPlY/itG1I6WjPSmiw2yq2LbuzeMPJh8dQEXPkg
-	 asGmbTawHB3h7lQQ3Z3mvESYydI3k7O5xAYVp5EOzQYiYsKHfziVsJIx5EVRu7gkWQBB4
-	 1wssBnujMHBdyRfZMv+ycVXsZydwp15SGGioEvt74st0/puQZTyYu9jLkd0Q0+tX5og==
+	bh=g9qgTFLdYHZ+/pn47fQRqVN4amMrloF/GCOSIPYFxJw=;
+	b=oOOhfY/f5lszGSSCOQrnzKZJddKpOQR+wG+P7Lrp1WtvWUUl7dxh3EmJMiHn8iMP1+D+
+	 UHo60SNbkEMJGYXzzhZxafudTlkKz8544+70aC+/XjXhtjxiqHpbv0OpLb2EKNp5DKhyj
+	 yi1iy45bGybS0eBPE3Bj3aOW0YSIUw4jgIpBRoGnYNRjE6Kil08w/RKyHLu9uY5pq1+St
+	 d2ieJNjPvqVPrBoWY9d2/7dX0n7ac937z5cASs8cAc0/FZgw0pVmzpoQiImGNL25j1QbG
+	 LkUJKvu+fzsoQY62jazDoYtSGSK29wH/8HdZxufjqCYKQcOZTQtHmeyO6eeIjrJw5mA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Fqso3uUh;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=0QeU7VXz;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 96C8D606A327;
-	Wed, 25 Nov 2026 15:02:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A1017606A321;
+	Wed, 25 Nov 2026 15:02:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Fqso3uUh
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E68791F000C4;
-	Wed, 25 Nov 2026 15:02:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=0QeU7VXz
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BAFEA1F000C0;
+	Wed, 25 Nov 2026 15:02:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795618943;
-	bh=QTp+m6nj8ust3funPe0YVLWlH3d1Z3ry/r79OOODS+c=;
+	s=korg; t=1795618946;
+	bh=g9qgTFLdYHZ+/pn47fQRqVN4amMrloF/GCOSIPYFxJw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Fqso3uUhXzcZq/kDpoJH1L7AvoHS0QGgL9/ijOALcVvbTa1zzLsoRD6LFANSrG6Mj
-	 PxLZsXoPMykXbt/ZMxl5UW8dfcF1yfrdhfY5J8J4WgihH6psolTYUqQLH/sMmgOXSD
-	 Cz7CgXi3agHx2x6HkyYN0c3Py80T1eT+xuZwx1h8=
+	b=0QeU7VXzRlfklYONPMZ4EqXRt/xfUD4Rerqj7ztTI4h+YEfxTCvC/9AdLn8Q+ETYK
+	 TkKYIg4EDI57nFO1ig6VK9LL4TFkJga4ZDx/z1Vvr6yu6h2hpcHqe729FQDPSJ21Os
+	 YojdI+43RlymUUmuaJ8bwmwoKwp1vZdGPzjUqyFk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -44,9 +44,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Avi Weiss <thnkslprpt@gmail.com>,
 	Anna Schumaker <anna.schumaker@hammerspace.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0437/1005] SUNRPC: Balance switch queue length on transport removal
-Date: Wed, 25 Nov 2026 15:29:35 +0100
-Message-ID: <20261125143831.987867336@linuxfoundation.org>
+Subject: [PATCH 7.3 0438/1005] SUNRPC: Balance queue accounting when relocating a task
+Date: Wed, 25 Nov 2026 15:29:36 +0100
+Message-ID: <20261125143832.009843270@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143821.729802100@linuxfoundation.org>
 References: <20261125143821.729802100@linuxfoundation.org>
@@ -70,36 +70,43 @@ Content-Transfer-Encoding: 8bit
 
 From: Avi Weiss <thnkslprpt@gmail.com>
 
-[ Upstream commit 8acd94f02a960c8936df25a7af9c02c8ea87064d ]
+[ Upstream commit f14b157168ac106cfac6d577e08726488b1b886c ]
 
-When call_connect_status() moves a task off a transport marked for
-removal, it decrements xprt->queuelen but leaves the switch's
-xps_queuelen unchanged. The stale count persists after the task
-finishes and skews multipath transport selection.
+When rpc_task_set_transport() relocates a movable task from an
+offline transport, it releases the request and drops the
+transport reference without decrementing the old transport's
+queuelen or the switch's xps_queuelen. Releasing the task
+later only accounts for the replacement transport.
 
-Decrement xps_queuelen alongside xprt->queuelen, matching the normal
-transport release path.
+The stale counts affect transport selection and can prevent
+xprt_delete_locked() from removing an otherwise idle transport.
 
-Fixes: 6f081693e7b2 ("sunrpc: remove an offlined xprt using sysfs")
+Use rpc_task_release_xprt() to balance the previous assignment
+before selecting a replacement. Pass clnt explicitly because
+rpc_task_set_client() can assign a transport before tk_client
+is initialized.
+
+Fixes: 82ee41b85cef ("SUNRPC don't resend a task on an offlined transport")
 Signed-off-by: Avi Weiss <thnkslprpt@gmail.com>
 Signed-off-by: Anna Schumaker <anna.schumaker@hammerspace.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/sunrpc/clnt.c | 1 +
- 1 file changed, 1 insertion(+)
+ net/sunrpc/clnt.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/net/sunrpc/clnt.c b/net/sunrpc/clnt.c
-index ba6fdd70414db..6fc36e516c1c6 100644
+index 6fc36e516c1c6..33e64c0225f37 100644
 --- a/net/sunrpc/clnt.c
 +++ b/net/sunrpc/clnt.c
-@@ -2262,6 +2262,7 @@ call_connect_status(struct rpc_task *task)
- 
- 				xprt_release(task);
- 				value = atomic_long_dec_return(&xprt->queuelen);
-+				atomic_long_dec(&xps->xps_queuelen);
- 				if (value == 0)
- 					rpc_xprt_switch_remove_xprt(xps, saved,
- 								    true);
+@@ -1197,7 +1197,7 @@ void rpc_task_set_transport(struct rpc_task *task, struct rpc_clnt *clnt)
+ 		      (task->tk_flags & RPC_TASK_MOVEABLE)))
+ 			return;
+ 		xprt_release(task);
+-		xprt_put(task->tk_xprt);
++		rpc_task_release_xprt(clnt, task->tk_xprt);
+ 	}
+ 	if (task->tk_flags & RPC_TASK_NO_ROUND_ROBIN)
+ 		task->tk_xprt = rpc_task_get_first_xprt(clnt);
 -- 
 2.53.0
 
