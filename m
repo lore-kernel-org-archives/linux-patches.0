@@ -1,52 +1,59 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795620971;
-	b=j5kFxwW3uVUYzoYu55ecqlooOnnaqPkkiBvlDeWq7mlmqUnF+hlCgh4PWYBDsBFSA1eI
-	 AdiGkLjH99aFIRBQDoVUHv+qo2MhAwkRp+j93DlW1UxykrgJxgjbqqCeqYl6hbql+i8eu
-	 4rDm3jW5wOV0MIFG3glp/gM354UYwDt0mwK+qQoRKO2vv6Pa/7mfvWxC+B4oHnMY4ITOb
-	 ewQgYh2XN8rNQu0nBPk1QvXlgs8u/gzz8H3RVQs97F2olBSqmDdqIsVZWPGO26MS4fkNj
-	 vFkLfjXQqXofw+tS+rr3WWuaQvoSi28nRXGTG5tweb8mozCFCIoT3GA4NmVbZN7Y1gg==
+	t=1795620974;
+	b=Qtmnl63t+KiB9uqDQ0K0skjPxKp1d4Upw0dhudxV4iI2juDjsRrbOaalXKx9Mxl8Vwik
+	 D97gSHMOSGEQmTSjMWf8i50VJHNVf5eZGLaGLb4tudIT5zowqQFwgdY6Dn1HLCuc/QukG
+	 WqvlfNJim5CdClELdm7Mz/ZhV8mEUT7VNJfiZcLu10Lj7uitBx+M3N1L13AkYA6dgoIyi
+	 HRcG+8hOfdgQJYmZih46rwe1wGT/8t1JdjVqItl7u0ane/SzwgI5004dnwyrz0SXfLTLl
+	 8PdYkB/fEAjwkwnRbu8BjlugX10qYExkZWyBEiKDhmoeOblbXgBPjy85Ck6BPv6k5eQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795620971;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795620974;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=AY+zZKbqEqmbfQzBMEk3zz4htjVImKx0a2STKHeMsGk=;
-	b=mHA9UV6NkSbP7s9JQLbWB0lyAeyUfmimw3iCm9EPuLpfUUH6oL08UNNJHE+89qmQt2oc
-	 eDNOeosOFjdYA1EyPxMWEWJoOSvODYtSW+Ty6ESdjCFkutQYfFLK6xP1BcgeLpCrWfNFI
-	 leiomlxLPAmoC8r5Ccsm7/5hHonwqYUPxlJRLV6SoXYfKObeWVCbA1g1zCuR7spUvkr+f
-	 CexPQgOeSTxm3WHankLrcW0JdO+UiamQnSkdy0fecQnDuJXwdny94QknhuS0V/9KpepV6
-	 K+1xjDS1QLTYi23GM53W6ki/SAa4/7zAqUfZOWWzg25AlLEixk0yOu9OpUxqQ6qWSvQ==
+	bh=tNGko5YjgAmaKluT9M9p3Rpp9OqrTNL0ct0TPgaxV+U=;
+	b=QAFwMVoqe0lcYPYUpPeaaqT3hGAy34RI+5YY7a14LktOH8OwckewcR8ilftvxMVuLhz9
+	 jEmLryXaydaeHe9qJI+K4Dlj2PeE1qJgsv61kPwIMQ3hVf5rbAGrAE+bYqsvahHGf1irb
+	 7QYHauhlBOxjMWElXEl/BbYej8iOCvvkH/uLUImnFVA1UtbgAy6NFX/6tx9aobZ2l8tcE
+	 /H/4Xi26ngrZLR2gqYe5baAcnartTyYN9f72WIuWLeVcxj/dAlUTrioisw7vkAtHDmUzH
+	 Nn7YoMoaQlMKybMrR6fupnXK1UKTRuRInp+UBqZ4p3UvB9PdruiBuh3BLTNm7yxG5Iw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=jQX14Nyx;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=mitzb5Pg;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4C15A606A6AD;
-	Wed, 25 Nov 2026 15:36:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 451F4606A32D;
+	Wed, 25 Nov 2026 15:36:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=jQX14Nyx
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 54ECB1F000D0;
-	Wed, 25 Nov 2026 15:36:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=mitzb5Pg
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 19B7B1F000C4;
+	Wed, 25 Nov 2026 15:36:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795620970;
-	bh=AY+zZKbqEqmbfQzBMEk3zz4htjVImKx0a2STKHeMsGk=;
+	s=korg; t=1795620973;
+	bh=tNGko5YjgAmaKluT9M9p3Rpp9OqrTNL0ct0TPgaxV+U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=jQX14NyxSCTLAbeKVi8FnjqsutKdtk7NjBPP4p09pkQqy/ZEtm5AALKih/3oviS/v
-	 bV8ZUsELg9olOK9nyB2Qfz6euRpLrMVpWrT0qgomXW+F9SfkheeCvhztVKEMTK5SxG
-	 lKBsd9C1aJ5UP3lgrgMtzJl1ZdADQ58M9s5LedPU=
+	b=mitzb5PgvEnijUzMBv9eiPY6N7t6kkhhk2e1Kks8lGKf8MbhKgODKrt6UMRECnv3a
+	 3CKulKsvGEdp4qaL4x2caJJisaQtZmvJQ6vuXS/5CKZXLqPaj6TdBh5to0t0Gl7YMf
+	 C7c6vTtp/GtU+myyuzQeiJAd32GNpdFrZE9PnwGY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yuanfu Xie <yuanfuxie@stu.pku.edu.cn>,
+	Yizhou Zhao <zhaoyz24@mails.tsinghua.edu.cn>,
+	Yuxiang Yang <yangyx22@mails.tsinghua.edu.cn>,
+	Ao Wang <wangao@seu.edu.cn>,
+	Xuewei Feng <fengxw06@126.com>,
+	Qi Li <qli01@tsinghua.edu.cn>,
+	Ke Xu <xuke@tsinghua.edu.cn>,
+	Chengfeng Ye <nicoyip.dev@gmail.com>,
+	Michael Grzeschik <mgr@kernel.org>,
 	Dominique Martinet <asmadeus@codewreck.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 081/990] 9p: do not store the create fid on special files
-Date: Wed, 25 Nov 2026 15:24:08 +0100
-Message-ID: <20261125143823.985098628@linuxfoundation.org>
+Subject: [PATCH 6.18 064/990] net/9p/usbg: fix descriptor cleanup use-after-free
+Date: Wed, 25 Nov 2026 15:23:51 +0100
+Message-ID: <20261125143823.587284547@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143822.072087159@linuxfoundation.org>
 References: <20261125143822.072087159@linuxfoundation.org>
@@ -68,83 +75,76 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yuanfu Xie <yuanfuxie@stu.pku.edu.cn>
+From: Yizhou Zhao <zhaoyz24@mails.tsinghua.edu.cn>
 
-[ Upstream commit 56894cadf21c34abbba7f74b8f5d78dabf69dd39 ]
+[ Upstream commit 0955472fff1e9f9e410a0300136924ebc8bd7a16 ]
 
-v9fs_vfs_atomic_open_dotl() always stores the create fid in
-file->private_data after finish_open().  FIFO and device inodes
-already have type-specific file_operations that own that field.
-Overwriting it with the fid makes later read/write/close treat the
-p9_fid as a pipe_inode_info, which corrupts the fid and can use it
-after it has been clunked.  The non-dotl atomic_open path does not
-assign the fid this way.
+usb9pfs_free_func() frees the f_usb9pfs object before calling
+usb_free_all_descriptors().  The usb_function passed to the latter is
+embedded in the freed object, so removing the function from a gadget
+dereferences freed memory.
 
-Only attach the fid for regular files and directories.  Special
-files do not need the create fid; leave it for the existing
-p9_fid_put() on the out path so it is clunked before return.
+The failing teardown sequence is:
 
-KASAN report, linux-stable 4982d3552a3b:
+  configfs unlink
+    usb9pfs_free_func()
+      kfree(usb9pfs)
+      usb_free_all_descriptors(f)
+        dereference the embedded usb_function
 
-BUG: KASAN: slab-use-after-free in anon_pipe_prefill_and_lock+0x376/0x3f0
-Read of size 4 at addr ffff88800ab30538 by task repro/1
+KASAN reported:
 
-Call Trace:
- <TASK>
- anon_pipe_prefill_and_lock+0x376/0x3f0
- anon_pipe_write+0x127/0x1600
- fifo_pipe_write+0x24/0x300
- vfs_write+0x659/0xd00
- ksys_write+0x10f/0x200
- do_syscall_64+0xdd/0x4a0
- </TASK>
+  BUG: KASAN: slab-use-after-free in usb_free_all_descriptors+0x138/0x190
+  Read of size 8 at addr ffff888106a73088 by task poc/95
+  Call Trace:
+   usb_free_all_descriptors+0x138/0x190
+   config_usb_cfg_unlink+0x1f0/0x2f0
+   configfs_unlink+0x321/0x6f0
 
-Fixes: 30d904947459 ("kill struct opendata")
-Signed-off-by: Yuanfu Xie <yuanfuxie@stu.pku.edu.cn>
-Message-ID: <92377346-29E9-46D3-96F5-AABA8A64CD57@stu.pku.edu.cn>
+Free the descriptors before freeing their containing object.
+
+Fixes: a3be076dc174 ("net/9p/usbg: Add new usb gadget function transport")
+Reported-by: Yizhou Zhao <zhaoyz24@mails.tsinghua.edu.cn>
+Reported-by: Yuxiang Yang <yangyx22@mails.tsinghua.edu.cn>
+Reported-by: Ao Wang <wangao@seu.edu.cn>
+Reported-by: Xuewei Feng <fengxw06@126.com>
+Reported-by: Qi Li <qli01@tsinghua.edu.cn>
+Reported-by: Ke Xu <xuke@tsinghua.edu.cn>
+Assisted-by: GLM:GLM-5.1
+Signed-off-by: Yizhou Zhao <zhaoyz24@mails.tsinghua.edu.cn>
+Co-developed-by: Chengfeng Ye <nicoyip.dev@gmail.com>
+Signed-off-by: Chengfeng Ye <nicoyip.dev@gmail.com>
+Acked-by: Michael Grzeschik <mgr@kernel.org>
+Message-ID: <20260529081817.77898-1-zhaoyz24@mails.tsinghua.edu.cn>
+Message-ID: <20260731150414.3135662-1-nicoyip.dev@gmail.com>
 Signed-off-by: Dominique Martinet <asmadeus@codewreck.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/9p/vfs_inode_dotl.c | 24 ++++++++++++++++--------
- 1 file changed, 16 insertions(+), 8 deletions(-)
+ net/9p/trans_usbg.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/fs/9p/vfs_inode_dotl.c b/fs/9p/vfs_inode_dotl.c
-index f154b7a45d4f9..4240b3588c537 100644
---- a/fs/9p/vfs_inode_dotl.c
-+++ b/fs/9p/vfs_inode_dotl.c
-@@ -329,16 +329,24 @@ v9fs_vfs_atomic_open_dotl(struct inode *dir, struct dentry *dentry,
- 	err = finish_open(file, dentry, generic_file_open);
- 	if (err)
- 		goto out;
--	file->private_data = ofid;
-+	/*
-+	 * Special files have type-specific fops that own
-+	 * file->private_data.  The create fid is unused
-+	 * there: leave it for p9_fid_put() on the out
-+	 * path so it is clunked before we return.
-+	 */
-+	if (S_ISREG(inode->i_mode) || S_ISDIR(inode->i_mode)) {
-+		file->private_data = ofid;
- #ifdef CONFIG_9P_FSCACHE
--	if (v9ses->cache & CACHE_FSCACHE) {
--		struct v9fs_inode *v9inode = V9FS_I(inode);
--		fscache_use_cookie(v9fs_inode_cookie(v9inode),
--				   file->f_mode & FMODE_WRITE);
--	}
-+		if (v9ses->cache & CACHE_FSCACHE) {
-+			struct v9fs_inode *v9inode = V9FS_I(inode);
-+			fscache_use_cookie(v9fs_inode_cookie(v9inode),
-+					   file->f_mode & FMODE_WRITE);
-+		}
- #endif
--	v9fs_fid_add_modes(ofid, v9ses->flags, v9ses->cache, flags);
--	v9fs_open_fid_add(inode, &ofid);
-+		v9fs_fid_add_modes(ofid, v9ses->flags, v9ses->cache, flags);
-+		v9fs_open_fid_add(inode, &ofid);
-+	}
- 	file->f_mode |= FMODE_CREATED;
- out:
- 	p9_fid_put(dfid);
+diff --git a/net/9p/trans_usbg.c b/net/9p/trans_usbg.c
+index dd5d833f2c827..1592b99ae00c7 100644
+--- a/net/9p/trans_usbg.c
++++ b/net/9p/trans_usbg.c
+@@ -753,8 +753,6 @@ static void usb9pfs_free_func(struct usb_function *f)
+ 	struct f_usb9pfs *usb9pfs = func_to_usb9pfs(f);
+ 	struct f_usb9pfs_opts *opts;
+ 
+-	kfree(usb9pfs);
+-
+ 	opts = container_of(f->fi, struct f_usb9pfs_opts, func_inst);
+ 
+ 	mutex_lock(&opts->lock);
+@@ -762,6 +760,8 @@ static void usb9pfs_free_func(struct usb_function *f)
+ 	mutex_unlock(&opts->lock);
+ 
+ 	usb_free_all_descriptors(f);
++
++	kfree(usb9pfs);
+ }
+ 
+ static int usb9pfs_set_alt(struct usb_function *f,
 -- 
 2.53.0
 
