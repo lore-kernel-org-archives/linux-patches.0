@@ -1,54 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795624887;
-	b=P3CLf+d/usExEbs4b+HXZc990DwrTTe3eHZLArfAkXZIczMKNQ8kl8Xl0fbDH95ubdZU
-	 e73VxR2MFvznWBMXe67PNKSvzGWtvCf4vCZ3aNQEgruGlVVBqrK4dGBJnyvHqwZ4I5Sc2
-	 d/bDBGTV/3bTLVHhtgTK2NrrehGiEX/1AgHTWGvjIgmjghIQcAqtw62QgyanXhMry60cM
-	 yw15n02YsjAbBy+5L9SdjgVauvlaJ4YJMso+GCZNX1kXqaCpIvS5OIMuE30Laf6iR9t2R
-	 uInZ4HPv9s7S16iQLLSRMCB1XfWEIjKobVqR5dPgDHotuuovJfUlgKnta2YT37eACNQ==
+	t=1795624891;
+	b=ypW9lIu9yu7eNAklWB2EEqsY11p34RIwaAeZ92FoADGAbfIC8jRKdFBrhr7D84MSlZad
+	 9ZqGjAk8W0SdAaHF84FFqz+R6GLCzV8n3nWzUNJzJ47AzGfl8+1MhaMI949KjmTuN7fWB
+	 HNlhguj/uApTDX835uFFlWxpJUE3/JcVWMcAEwy22dtMA++HEuX01HkRMxVMB+lycmMfr
+	 T3AWTxiXA7F3SZBKRU65ekNX0+RL+sgZda8VencHszgR/qG8JPPJjgWR7Yq8lpkzaM2TV
+	 d/sPjIZtO9TXNQ2j/h/HNGKia7o4nAcBmxGKlEPBTlYFsu34kUE+CRAp8BqHdFN6/7Q==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795624887;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795624891;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=nQYEpRZs6PcFW94zShNURk3NM0ExUAxeB9cPSuy5PbM=;
-	b=cprh9geSfFvKHk5ux/bx6QJqqO3bfHQtgr1SFywwX7xDokh/8WQdv/uCXTfi7zg5asUy
-	 JHIU2VtqzOQgtFBJARAfRqfCCFRoAOQzPUtsaKntYbZogh5MquckDAC4X8aA4Mof2ksVA
-	 xNwKbZvp0Pp8HNodk3V0JsFZpZthiCDHisogFJdV61QixBmtkq8POjQVIWCkUI2j6Gurr
-	 w0Z+VWdme9UPYpSPFb48YpwbtBcBE3B9LmINaCxrbAFLxcnZnXACqmy+Qun+rRlxy/51R
-	 uSGNQ1qeh9jUpHY5XQPQLxTYmGsWcZ9myCQabyyPmj0AI2Mx6nLxN0nJllG7zbeppcw==
+	bh=gw7SgFgkrCeV/moIIQo+BwpmzPjCNEcA+1fz4zrtOzs=;
+	b=qPc5F+QHmXVABxCXXhbQR5D4cUWF15+zzdtFX06qkDOjmKHTMcASCzFxnKSjD17dc2x8
+	 gxC7gsCYfbVQPtEDsWbjpPQ43fSvPU2KZ/KQH7VEzP9JS9M7eMwbHy0ksuGsb1AqTTAWA
+	 ZdZvm2Bl/CDUs5jmGwR/rqBhQKZRSZD9gkzoxevBCYam9nh+NTIMgtEQ0esQBlfXb6HU6
+	 WCehguF9o1kxiORzi5++xwgZ/2zg80B5HZBXdPo3khm2MLqj+R1GqqnIF9CLHTvRPQYb7
+	 yj4gMn+8JlLkbYG64pTHGXA1xZZTX5EDurmy5wT++Z6R8VmKY2GIbCI5GCGv/78L0Ng==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=xdG1zKYM;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=TqgjEmOd;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DC9DD606A321;
-	Wed, 25 Nov 2026 16:41:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 80396606A31E;
+	Wed, 25 Nov 2026 16:41:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=xdG1zKYM
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BD1691F000C0;
-	Wed, 25 Nov 2026 16:41:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=TqgjEmOd
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2829F1F000D0;
+	Wed, 25 Nov 2026 16:41:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795624887;
-	bh=nQYEpRZs6PcFW94zShNURk3NM0ExUAxeB9cPSuy5PbM=;
+	s=korg; t=1795624890;
+	bh=gw7SgFgkrCeV/moIIQo+BwpmzPjCNEcA+1fz4zrtOzs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=xdG1zKYMUf5rETCtZwy2tKbvMOL6VtX3uJDk+L6d+JCRe5pos0eT53VRCTr04eoeQ
-	 yCXh3JpmxXy2vhHfdk/Q/XxOPQGhuKt2Cs7dkkx8Y8Bbe8DgL9TfylzSVYiampcWge
-	 mekNq0iQb6Uc6muXKjM4Vy93O8bHVNk0/K8he7bA=
+	b=TqgjEmOd+aBB2Ge0G63u7G6XZ33IBFdzQy/77d9Kk57xAeowkKmOGxCaObZMFe9uH
+	 3htgNDO6zpaPTSkMntAEc6J6HJiCXtGIg7EPpp6XKUSzrXG7RkjbufaBrK1805jF5W
+	 qhz3zkqjQh2/v1HMNux9/4CsuL3Sc3K6hlLlHeBc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Miklos Szeredi <miklos@szeredi.hu>,
-	Amir Goldstein <amir73il@gmail.com>,
-	Pavel Tikhomirov <ptikhomirov@virtuozzo.com>,
-	"Denis V. Lunev" <den@openvz.org>,
+	Anandu Padinhare <Anandu.Padinhare@electrifex.com>,
+	Lorenzo Bianconi <lorenzo.bianconi@oss.qualcomm.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 321/816] ovl: release the upperdir/workdir in-use locks before the umount sync
-Date: Wed, 25 Nov 2026 15:31:09 +0100
-Message-ID: <20261125143856.631426907@linuxfoundation.org>
+Subject: [PATCH 6.12 339/816] net: stmmac: count XDP_PASS frames in rx_packets on the XSK zero-copy path
+Date: Wed, 25 Nov 2026 15:31:27 +0100
+Message-ID: <20261125143857.045195870@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143849.205329330@linuxfoundation.org>
 References: <20261125143849.205329330@linuxfoundation.org>
@@ -70,140 +69,59 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Denis V. Lunev <den@openvz.org>
+From: Anandu Padinhare <Anandu.Padinhare@electrifex.com>
 
-[ Upstream commit cb6c084182d4c69b7eeff0bd519dd7e018749602 ]
+[ Upstream commit 070411c1590c8172eb4d86f045d99c372f22fe23 ]
 
-The in-use locks on upperdir and workdir are released by ovl_free_fs()
-from ->put_super(). generic_shutdown_super() calls sync_filesystem()
-before that, and ovl_sync_fs() syncs the whole upper filesystem, so the
-locks stay held across a journal commit and a cache flush of the upper
-fs after the overlay is gone. With index=on a new overlay that uses the
-same upperdir, or uses it as a lowerdir, fails to mount in that window:
+In the AF_XDP zero-copy RX path, frames that the XDP program passes to
+the stack are handed over by stmmac_dispatch_skb_zc(). That function
+increments rx_pkt_n instead of rx_packets since
+commit 133466c3bbe1 ("net: stmmac: use per-queue 64 bit statistics where necessary").
 
-  overlayfs: upperdir is in-use as upperdir/workdir of another mount,
-  mount with '-o index=off' to override exclusive upperdir protection.
+stmmac_rx_zc() already adds every processed frame to rx_pkt_n, so each
+XDP_PASS frame is counted twice there, and rx_packets, which
+ndo_get_stats64() reports, never counts them: on a zero-copy queue
+rx_bytes grows with the passed frames while rx_packets stays still.
 
-Userspace hits this when the last reference is not dropped by umount(2)
-itself. Docker with the containerd snapshotter mounts a snapshot on a
-thread with a private mount namespace for docker cp and for buildkit,
-and the superblock dies when that thread exits, after the reply to the
-client has gone out. The next request then gets EBUSY. The window grows
-with the flush latency of the upper fs and is there even if nothing was
-written through the overlay, as the mount itself dirties the upper.
+Count the frame in rx_packets, as the regular RX path and the code
+before that commit did.
 
-->kill_sb() is called once s_active drops to zero, with no mount and no
-open file left. Release the locks there, before generic_shutdown_super()
-runs. What the dying superblock still does to the upper fs, the sync and
-dropping its references to upper dentries and inodes, does not touch the
-contents of upperdir or workdir. ovl_free_fs() still releases the locks
-for a failed mount, so clear the *_locked flags to keep it from
-unlocking a second time and dropping the lock of a newer mount.
+Found while testing AF_XDP zero-copy on an ADSP-SC598 (adi-dwmac,
+100 Mbit/s link): rx_pkt_n grew almost twice as fast as the frames the
+MAC delivered, while "ip -s link" counted almost none.
 
-This takes the sync out of the window but does not close it: the final
-mntput of a dying mount namespace runs from task_work, after the exiting
-thread may have reported completion. Userspace that needs the
-directories free should umount(2) before saying the job is done.
+Tested on that board with a 6.18-based kernel, whose zero-copy RX
+accounting matches net. An AF_XDP zero-copy socket on queue 0 received
+frames of one EtherType while UDP traffic was passed to the stack. In a
+run with 60 s of traffic before the change, rx_pkt_n was 1.88 times the
+frames that reached the driver (MAC frames minus RX FIFO overflows) and
+"ip -s link" counted 55 RX packets. In the same test with the change,
+rx_pkt_n equals the frames that reached the driver and rx_packets equals
+the frames passed to the stack.
 
-Fixes: 2cac0c00a6cd ("ovl: get exclusive ownership on upper/work dirs")
-Cc: Miklos Szeredi <miklos@szeredi.hu>
-Cc: Amir Goldstein <amir73il@gmail.com>
-Cc: Pavel Tikhomirov <ptikhomirov@virtuozzo.com>
-Signed-off-by: Denis V. Lunev <den@openvz.org>
-Signed-off-by: Amir Goldstein <amir73il@gmail.com>
+Fixes: 133466c3bbe1 ("net: stmmac: use per-queue 64 bit statistics where necessary")
+Signed-off-by: Anandu Padinhare <Anandu.Padinhare@electrifex.com>
+Reviewed-by: Lorenzo Bianconi <lorenzo.bianconi@oss.qualcomm.com>
+Link: https://patch.msgid.link/PNYPR01MB11444552E41C2B17A992492C0FD762@PNYPR01MB11444.INDPRD01.PROD.OUTLOOK.COM
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/overlayfs/overlayfs.h |  1 +
- fs/overlayfs/params.c    |  5 +----
- fs/overlayfs/super.c     | 12 +++++++++++-
- fs/overlayfs/util.c      | 12 ++++++++++++
- 4 files changed, 25 insertions(+), 5 deletions(-)
+ drivers/net/ethernet/stmicro/stmmac/stmmac_main.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/fs/overlayfs/overlayfs.h b/fs/overlayfs/overlayfs.h
-index 53d1f0e0c924a..a6fd11315a6e7 100644
---- a/fs/overlayfs/overlayfs.h
-+++ b/fs/overlayfs/overlayfs.h
-@@ -548,6 +548,7 @@ static inline int ovl_set_impure_dir(struct dentry *dentry)
- bool ovl_inuse_trylock(struct dentry *dentry);
- void ovl_inuse_unlock(struct dentry *dentry);
- bool ovl_is_inuse(struct dentry *dentry);
-+void ovl_inuse_unlock_all(struct ovl_fs *ofs);
- bool ovl_need_index(struct dentry *dentry);
- int ovl_nlink_start(struct dentry *dentry);
- void ovl_nlink_end(struct dentry *dentry);
-diff --git a/fs/overlayfs/params.c b/fs/overlayfs/params.c
-index d8b1a43375038..17656a6d183ff 100644
---- a/fs/overlayfs/params.c
-+++ b/fs/overlayfs/params.c
-@@ -742,15 +742,12 @@ void ovl_free_fs(struct ovl_fs *ofs)
- 	struct vfsmount **mounts;
- 	unsigned i;
+diff --git a/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c b/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
+index 16eec53ee9222..e17a203290552 100644
+--- a/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
++++ b/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
+@@ -5230,7 +5230,7 @@ static void stmmac_dispatch_skb_zc(struct stmmac_priv *priv, u32 queue,
+ 	napi_gro_receive(&ch->rxtx_napi, skb);
  
-+	ovl_inuse_unlock_all(ofs);
- 	iput(ofs->workbasedir_trap);
- 	iput(ofs->workdir_trap);
- 	dput(ofs->whiteout);
- 	dput(ofs->workdir);
--	if (ofs->workdir_locked)
--		ovl_inuse_unlock(ofs->workbasedir);
- 	dput(ofs->workbasedir);
--	if (ofs->upperdir_locked)
--		ovl_inuse_unlock(ovl_upper_mnt(ofs)->mnt_root);
- 
- 	/* Reuse ofs->config.lowerdirs as a vfsmount array before freeing it */
- 	mounts = (struct vfsmount **) ofs->config.lowerdirs;
-diff --git a/fs/overlayfs/super.c b/fs/overlayfs/super.c
-index 6a9db5b742598..b847c475f62ba 100644
---- a/fs/overlayfs/super.c
-+++ b/fs/overlayfs/super.c
-@@ -1486,13 +1486,23 @@ int ovl_fill_super(struct super_block *sb, struct fs_context *fc)
- 	return err;
+ 	u64_stats_update_begin(&rxq_stats->napi_syncp);
+-	u64_stats_inc(&rxq_stats->napi.rx_pkt_n);
++	u64_stats_inc(&rxq_stats->napi.rx_packets);
+ 	u64_stats_add(&rxq_stats->napi.rx_bytes, len);
+ 	u64_stats_update_end(&rxq_stats->napi_syncp);
  }
- 
-+static void ovl_kill_sb(struct super_block *sb)
-+{
-+	struct ovl_fs *ofs = OVL_FS(sb);
-+
-+	/* Nothing can modify them now, do not hold them across the sync */
-+	if (ofs)
-+		ovl_inuse_unlock_all(ofs);
-+	kill_anon_super(sb);
-+}
-+
- struct file_system_type ovl_fs_type = {
- 	.owner			= THIS_MODULE,
- 	.name			= "overlay",
- 	.init_fs_context	= ovl_init_fs_context,
- 	.parameters		= ovl_parameter_spec,
- 	.fs_flags		= FS_USERNS_MOUNT | FS_ALLOW_IDMAP,
--	.kill_sb		= kill_anon_super,
-+	.kill_sb		= ovl_kill_sb,
- };
- MODULE_ALIAS_FS("overlay");
- 
-diff --git a/fs/overlayfs/util.c b/fs/overlayfs/util.c
-index 4c0881f0b75e0..b8adda549c473 100644
---- a/fs/overlayfs/util.c
-+++ b/fs/overlayfs/util.c
-@@ -1042,6 +1042,18 @@ bool ovl_is_inuse(struct dentry *dentry)
- 	return inuse;
- }
- 
-+void ovl_inuse_unlock_all(struct ovl_fs *ofs)
-+{
-+	if (ofs->workdir_locked) {
-+		ovl_inuse_unlock(ofs->workbasedir);
-+		ofs->workdir_locked = false;
-+	}
-+	if (ofs->upperdir_locked) {
-+		ovl_inuse_unlock(ovl_upper_mnt(ofs)->mnt_root);
-+		ofs->upperdir_locked = false;
-+	}
-+}
-+
- /*
-  * Does this overlay dentry need to be indexed on copy up?
-  */
 -- 
 2.53.0
 
