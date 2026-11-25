@@ -1,53 +1,55 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795618622;
-	b=z42suuT3OEeudnevq4Sbeolw5cokblgq5HZeciuGTbBUpgKs8xipQKXSXNfE8S+Z+may
-	 d92gc9eSaCSH8F+QB3ICZ04n+kUBvQ9YLf2adXI8McjY4uy+Q9Ts9jAz3BShHHIFtwhaT
-	 KwfLTCKPc1knhu+yvCsb/jImSiQfvGEACErl7kooXN3L6HgVYoFKkPIHKeCaxKh0jEjBZ
-	 /WWKdWmwcQsoojvwQSglRAdZLPwaLfi7itJCsqICZsE22kUCTVNaxivr3CydfOTUsvSk0
-	 7e/tgjkP3fYqu1ejozR5SshqaLacpBV1B9ZLnSjvNcLKEKAbRDzHmdcc1IfablWSX/Q==
+	t=1795618625;
+	b=0N869yjEmlx761n3VbW2FArii1LgZBCmgsM8j6C7Gp0B6HOzMn9cGHjqnM81qVh0VVU+
+	 +ANdWJOkp/U3ec9pfwVeBP8oqAUXhmCmhPbtENgCoO+B7OvH7ep8XhU3+e9waYy8hojkD
+	 9kJHmgHUHekEMO48lXS78wGc6slSuFMhDV/LyJovWJ8AhzPazGPhKxmgYXrlkYe/MkVge
+	 7lyMZsgx/pdv5ODlChxc4ZR6d9+Q6T53ZFCywwa6RhpT+HsONCktMsoOVd1/XzCR5qp2+
+	 p/H6s0H7C1yfBZkmIZf0I6budQH5MFUetEmBC5wro9hcLQ2PUoqQ6Il6Dd4bbsK2mxw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795618622;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795618625;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=m2wWFuPllTMrxuclMyAzI0AailKXYtwagxaSWfYQRvs=;
-	b=CJlNNRo7wtIXUD2X/5avaTo0R7xeQ2tyS47Pbl8u1bpGLGeCTRqkkvgewGZJjhS1fB8f
-	 wyV+tmI9bGdgXzp3JBAvVuCRATiTB6NWJn0qTsGivezVH8jNvjIzFlcYMZ8yC8ILIOZjp
-	 P9SmrRZ8ZHx/sChIDHxAuI70yrxC1M2Rs61aCW/0Usj7dFK1LmWfdAdSf6u9SnczZ3gAu
-	 +Z+pueezLIG1ks+hQLPsu6w5Cm0am6FKzl75UWPzXA9HEjP8nP0zaD+c10z1ouMrolJm9
-	 MPh/CvXYuLt6DeaLqiEbK3aKFA0jO4HlGBTcyvX3EpW2Vw37v6V2IWPJDObkISkkHMg==
+	bh=fr4fvBrHkUYOmryKrYimI8Rw1U+wSyYwGethpSz0Rxk=;
+	b=3Nb3zbfF/JLpPYirSk8aOW1jNb3ELKEvPKSkapu0H5jUClbMPVrycx3BP6dZgqdjC6lA
+	 dZQwAO5fOGtq7cMjdZgqUe/z+WidHnAOYfkAsT494KANZ7TrWX6F6LwDu/OKQzlcsbUmp
+	 Zp/IcLk3cJb+7Wy8vfNkGZwnLRA//4+3bADCz9NGsVMW3AlpOPSoq9saBheIj3Playbay
+	 1jnblpPgBT7Kn6JDkq1R7uJ6rKc4pw85k2VUIBRzYnNQHNcboAAp0jeT2ZNDjJ/pffv+4
+	 seoX92Q2arhsQCwOG1ydNrmaXtlh1erj7uSLH8j6qyb7amiqN+6jh/ky05ofqFblaUg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=XrC82MJ6;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=C7l4dqT7;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1A70D606A31E;
-	Wed, 25 Nov 2026 14:57:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 767A2606A323;
+	Wed, 25 Nov 2026 14:57:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=XrC82MJ6
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 055871F000C4;
-	Wed, 25 Nov 2026 14:57:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=C7l4dqT7
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 418D91F000C6;
+	Wed, 25 Nov 2026 14:57:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795618621;
-	bh=m2wWFuPllTMrxuclMyAzI0AailKXYtwagxaSWfYQRvs=;
+	s=korg; t=1795618624;
+	bh=fr4fvBrHkUYOmryKrYimI8Rw1U+wSyYwGethpSz0Rxk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=XrC82MJ6sCo+tSUcnUPtyFiaL0sox0P1KGlERIE4DtJZpv7UkOrRvXPdEqHAUsBF0
-	 4NHHtZaN9ANvYh7Nt/DAdz1mf/az/mbNGTRmyfKc+mo2kPYrXZu1xg5ja2+s/U9o6l
-	 aTNIwel1zKWz4smg1nA91cf05oLpTpUJYzh6DCms=
+	b=C7l4dqT7BZpsiDNQvS8ArE75sHK79sVIO8sTYsfsNMBiDJvGgB2wgtKDcNU7b33Tu
+	 bJfbwRyXLOe9qMn1PL482sMWvGQ4gfvxFZGG4u2OBuOmb2kdea55F2nrcsMBbaXwjC
+	 mPwT/ew0W3B+AM5cE3UPvRLl/VTVeuPNt6lAfEDI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ian Rogers <irogers@google.com>,
-	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
-	Ingo Molnar <mingo@kernel.org>,
+	Lorenzo Bianconi <lorenzo.bianconi@oss.qualcomm.com>,
+	Daniel Machon <daniel.machon@microchip.com>,
+	Nicolai Buchwitz <nb@tipi-net.de>,
+	Maxime Chevallier <maxime.chevallier@bootlin.com>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0337/1005] perf/core: Clamp deferred callchain entry count to fit u16 header.size
-Date: Wed, 25 Nov 2026 15:27:55 +0100
-Message-ID: <20261125143829.629100186@linuxfoundation.org>
+Subject: [PATCH 7.3 0311/1005] net: stmmac: set XDP metadata length on the page_pool RX path
+Date: Wed, 25 Nov 2026 15:27:29 +0100
+Message-ID: <20261125143829.022334763@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143821.729802100@linuxfoundation.org>
 References: <20261125143821.729802100@linuxfoundation.org>
@@ -69,82 +71,71 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ian Rogers <irogers@google.com>
+From: Lorenzo Bianconi <lorenzo.bianconi@oss.qualcomm.com>
 
-[ Upstream commit 5e4d83fb3616ebf807df1ce1b0ee7a8cdcb5ff87 ]
+[ Upstream commit 6d9b7c85af57305ec2bd5907124478867edcc60b ]
 
-In perf_callchain_deferred_output(), if trace->nr is large enough that
-sizeof(deferred_event->event) + trace->nr * sizeof(u64) + id_header_size
-exceeds U16_MAX, header.size wraps while the output loop still writes
-all trace->nr entries into the ring buffer.
+stmmac_rx() initializes the XDP buffer with the metadata area valid, so
+an XDP program can reserve metadata with bpf_xdp_adjust_meta() and write
+it in [xdp->data_meta, xdp->data), for example to export the RX hardware
+timestamp obtained from the metadata kfunc. When such a frame is passed
+to the stack, the skb is built in place around the same page with
+napi_build_skb(), but skb_metadata_set() is never called.
 
-Clamp nr per event (accounting for event->id_header_size when
-sample_id_all is enabled) so the record never overflows u16 header.size.
+napi_build_skb() clears skb_shared_info up to dataref, which includes
+meta_len, so skb_metadata_len() stays zero. The stack and TC BPF then see
+an empty metadata range even though the bytes are present in the skb
+headroom. The AF_XDP zero-copy path already records the length in
+stmmac_construct_skb_zc().
 
-Fixes: c69993ecdd4d ("perf: Support deferred user unwind")
-Signed-off-by: Ian Rogers <irogers@google.com>
-Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
-Signed-off-by: Ingo Molnar <mingo@kernel.org>
-Link: https://patch.msgid.link/20261025215508.1237480-2-irogers@google.com
+Record the metadata length after reserving the headroom and adding the
+frame data. No copy is needed because the skb is built over the buffer the
+XDP program wrote to. With the length recorded, the software VLAN
+stripping path can move the metadata together with the MAC header, as it
+already does for zero-copy frames.
+
+Fixes: e3f9c3e34840 ("net: stmmac: add Rx HWTS metadata to XDP receive pkt")
+Signed-off-by: Lorenzo Bianconi <lorenzo.bianconi@oss.qualcomm.com>
+Reviewed-by: Daniel Machon <daniel.machon@microchip.com>
+Reviewed-by: Nicolai Buchwitz <nb@tipi-net.de>
+Reviewed-by: Maxime Chevallier <maxime.chevallier@bootlin.com>
+Link: https://patch.msgid.link/20261102-stmmac_meatada_pp_path-v1-1-d93cc4f9a864@oss.qualcomm.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/events/core.c | 16 +++++++++++-----
- 1 file changed, 11 insertions(+), 5 deletions(-)
+ drivers/net/ethernet/stmicro/stmmac/stmmac_main.c | 10 +++++++---
+ 1 file changed, 7 insertions(+), 3 deletions(-)
 
-diff --git a/kernel/events/core.c b/kernel/events/core.c
-index 2cd3c5def0499..2f1b4c6ba1cae 100644
---- a/kernel/events/core.c
-+++ b/kernel/events/core.c
-@@ -10397,8 +10397,6 @@ struct perf_callchain_deferred_event {
- 	struct {
- 		struct perf_event_header	header;
- 		u64				cookie;
--		u64				nr;
--		u64				ips[];
- 	} event;
- };
+diff --git a/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c b/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
+index bd495ab5cd260..9ff7aecefca22 100644
+--- a/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
++++ b/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
+@@ -5960,7 +5960,7 @@ static int stmmac_rx(struct stmmac_priv *priv, int limit, u32 queue)
+ 		}
  
-@@ -10407,12 +10405,19 @@ static void perf_callchain_deferred_output(struct perf_event *event, void *data)
- 	struct perf_callchain_deferred_event *deferred_event = data;
- 	struct perf_output_handle handle;
- 	struct perf_sample_data sample;
-+	u64 nr = deferred_event->trace->nr;
-+	u16 size, id_size, max_payload;
- 	int ret;
--	u16 size = sizeof(deferred_event->event) + (deferred_event->trace->nr * sizeof(u64));
+ 		if (!skb) {
+-			unsigned int head_pad_len;
++			unsigned int metasize;
  
- 	if (!event->attr.defer_output)
- 		return;
+ 			/* XDP program may expand or reduce tail */
+ 			buf1_len = ctx.xdp.data_end - ctx.xdp.data;
+@@ -5977,10 +5977,14 @@ static int stmmac_rx(struct stmmac_priv *priv, int limit, u32 queue)
+ 			}
  
-+	id_size = event->attr.sample_id_all ? event->id_header_size : 0;
-+	max_payload = round_down(U16_MAX - sizeof(deferred_event->event) -
-+				 sizeof(u64) - id_size, sizeof(u64));
-+	nr = min_t(u64, nr, max_payload / sizeof(u64));
-+	size = sizeof(deferred_event->event) + sizeof(u64) + nr * sizeof(u64);
+ 			/* XDP program may adjust header */
+-			head_pad_len = ctx.xdp.data - ctx.xdp.data_hard_start;
+-			skb_reserve(skb, head_pad_len);
++			skb_reserve(skb,
++				    ctx.xdp.data - ctx.xdp.data_hard_start);
+ 			skb_put(skb, buf1_len);
+ 			skb_mark_for_recycle(skb);
 +
- 	/* XXX do we really need sample_id_all for this ??? */
- 	perf_event_header__init(&deferred_event->event.header, &sample,
- 				PERF_RECORD_CALLCHAIN_DEFERRED,
-@@ -10426,8 +10431,10 @@ static void perf_callchain_deferred_output(struct perf_event *event, void *data)
- 		return;
- 
- 	perf_output_put(&handle, deferred_event->event);
--	for (int i = 0; i < deferred_event->trace->nr; i++) {
-+	perf_output_put(&handle, nr);
-+	for (u64 i = 0; i < nr; i++) {
- 		u64 entry = deferred_event->trace->entries[i];
-+
- 		perf_output_put(&handle, entry);
- 	}
- 	perf_event__output_id_sample(event, &handle, &sample);
-@@ -10442,7 +10449,6 @@ static void perf_unwind_deferred_callback(struct unwind_work *work,
- 		.trace = trace,
- 		.event = {
- 			.cookie = cookie,
--			.nr = trace->nr,
- 		},
- 	};
- 
++			metasize = ctx.xdp.data - ctx.xdp.data_meta;
++			if (metasize)
++				skb_metadata_set(skb, metasize);
+ 			buf->page = NULL;
+ 		} else if (buf1_len) {
+ 			dma_sync_single_for_cpu(priv->device, buf->addr,
 -- 
 2.53.0
 
