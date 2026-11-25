@@ -1,51 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795620007;
-	b=Wzk82zVrMdnxZpRkhp9QE5Lssa+RSW3dsFZ12K+u+ZmaDTlEVyLcymRUkx4h/s6rFqCb
-	 4ORQPYR3QlahiheY6miuJZEIIyRjs1x9/PaEXwrRglSxuGPakirdyK6lPOftGB6xcEVGa
-	 thznnxM9lTLMoCD4dVu8Nt8By1TGFh7JraglRNQ4ODLwa/EWIgodFwO6xxjrhx1eGuQY4
-	 5hRZBuOG2Btj7RCEExec7T7c8aYKQLamaF8Ujlin+3vFXNxSzBVOpm3RfkajsCiXLmYNs
-	 vFMmzjkMNpcU34rig7deP4P766Gv6/nQg+AFp33tMqpQ1fGLfls1FpBrQs49K4uUWcA==
+	t=1795620010;
+	b=kQif0bkkUb81JF+l6Bx87uoDiM2+SCK3oUrxZLAqEe8UcYf8KhzgC9N/T1NFKshmPpNT
+	 ThlenqQ6hwzfbkRVFIyitVJrCCG7msI0zoi5f26g8YeVbt+wlAkzbWRMv+42suXSAeOLT
+	 Yj3RyYHBtiEk2YBNCQe0jkaO3bQ7FHeFbJLl21pgvF+WtpgULJzlf/XMJb2RqClnAxuY2
+	 vt3fneW3zcfj6QITen1wWCxf5Hf/HPCMJbq92++fW6B35FIfr7b86Ft3UZXOF88KyTJP7
+	 BzwIDsjISRL932RuFX775D8TvlPqNZRc9VPJ4J9JYAn6gJkAlicTv3KydSDSBC9GZDA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795620007;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795620010;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=VqW20fjntJNEY8sXOms7FE3/ILvzxq+fGPajv4P5y/Y=;
-	b=GsPv3hcDnhnHJ4xC7J0vX33brG4VXQbwIvxnEZCbiUEjnignIZsZTGUxXe7/dYAQUXgV
-	 R7BCxfu1TboDMARgRzxRM9LDTJbGo60vJ30LPCMPvl4qCpp5bCvhdEfCAWA6thwCKdjM9
-	 DsQeowXKX3C6Pb0sddG324XDqpe8qI6kjOgFaVHTK+CV0Vl0D0yQnbM15c+mWwr1UVxrC
-	 yAPQtB9QYa8iju4hfLpfFlB9rUifJeM5/3DK/zkGY1HJwJ+qBjE0dxwwq30XTxF7JB3OB
-	 BSf2rHcg8pYOxeQEVeEHXDf8RtBsKJ/4EQ3lfFusSS6vrLIgrp+TeiPmI1vreNO4yog==
+	bh=Z0nOLLchb9z3e+hSQNhdKJboZ/PjqT5Oi5zTXQpL9ss=;
+	b=o4TCmmwn4Gg2z2C1DygX7uVChQAKXsUb8RSLgXW1BszEAo6+qJUdR0A24uMFjm9k2bVO
+	 +vz/Rhd0CFJ8uf0m74J7L+W72W/wgyDoiZl7EF1G/IZJ1zKxnTfsA0fyMAgZYwsqftnny
+	 wz/VybkmnTNihENdbVB5wkISaTRnFgORjN5UTGNvRy+3yF0Lh93zT8E+/WC4Ij6nCe+xv
+	 REhVxCCfxVMDDdBW7Qcsk0SpZkSKV7O1Lkcu/P2UzQVkdQvxiHbgotYmmvgaxdc2AWwBr
+	 f2H+HQBDRhVB1eW2GhNOOWoZTeZiL4Qi9ojxM0qiaSQB4FlZ1nNA2+pU4m3/QpydBaQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=qagUxQqV;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="uHmwNbF/";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2D547606A32D;
-	Wed, 25 Nov 2026 15:20:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 46ABC606A323;
+	Wed, 25 Nov 2026 15:20:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=qagUxQqV
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7E0901F000C0;
-	Wed, 25 Nov 2026 15:20:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=uHmwNbF/
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 585101F000C6;
+	Wed, 25 Nov 2026 15:20:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795620007;
-	bh=VqW20fjntJNEY8sXOms7FE3/ILvzxq+fGPajv4P5y/Y=;
+	s=korg; t=1795620009;
+	bh=Z0nOLLchb9z3e+hSQNhdKJboZ/PjqT5Oi5zTXQpL9ss=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=qagUxQqV0cr1zmyIPyghVIPChgHaSi9k8GxdRZSNP7TmWIvDiyM8NVzKrG98mkqKI
-	 /hDHe5arkzkVVKGFmPiDCEhf2bDIDZGyBG3pgd9Ko3FBYdd3WOUG+ArEvT1bxW4LeE
-	 MYdqqgNu9gyvHkYKXCBItGsDjgH+Wx3a/NObqG7M=
+	b=uHmwNbF/xAHJZRKwj9Mxsv9bKOzTuOdrdJmfISvqymWXt/sj+c38kH4mS+Ugm17w0
+	 4InIoDmADJxyhA9rKm4X3AmfK9MW0c7su5U7hM/lrjsMs4qlTAYvwopXx9t/1IYKfM
+	 BoAvhLIOrKWU8ini51pXhrXa6oMs2+JKSftzWYW0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Mike Rapoport (Microsoft)" <rppt@kernel.org>,
+	Bibo Mao <maobibo@loongson.cn>,
+	Tao Cui <cuitao@kylinos.cn>,
 	Huacai Chen <chenhuacai@loongson.cn>
-Subject: [PATCH 7.3 0777/1005] LoongArch: Restore KFENCE pages through DMW on resume
-Date: Wed, 25 Nov 2026 15:35:15 +0100
-Message-ID: <20261125143839.943347263@linuxfoundation.org>
+Subject: [PATCH 7.3 0778/1005] LoongArch: KVM: Clear device pointer in irqchip destroy callbacks
+Date: Wed, 25 Nov 2026 15:35:16 +0100
+Message-ID: <20261125143839.965828444@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143821.729802100@linuxfoundation.org>
 References: <20261125143821.729802100@linuxfoundation.org>
@@ -67,74 +68,75 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mike Rapoport (Microsoft) <rppt@kernel.org>
+From: Tao Cui <cuitao@kylinos.cn>
 
-commit 40d7a3e63c3d88b43e9115d23d9937dd506bbd02 upstream.
+commit a9ce1a00afb0402668877d37c04ffd0e53d48832 upstream.
 
-With KFENCE enabled, resume from hibernation triggers KFENCE reports
-while swsusp_asm_resume() copies the image pages, for example:
+The destroy callbacks of the four irqchip devices free the device
+structure without clearing kvm->arch.{ipi,eiointc,pch_pic,dmsintc},
+leaving a dangling pointer. ops->destroy() is not only called at VM
+teardown but also when KVM_CREATE_DEVICE succeeds and the following
+anon_inode_getfd() fails (e.g. under RLIMIT_NOFILE); the VM stays
+alive, kvm_arch_irqchip_in_kernel() still reports true, and interrupt
+injection dereferences the freed device.
 
-  BUG: KFENCE: use-after-free write in swsusp_asm_resume+0x20/0x94
-
-  Use-after-free write at 0x00000000a57ee925 (in kfence-#254):
-   swsusp_asm_resume+0x20/0x94
-   hibernation_restore+0x128/0x1a0
-   load_image_and_restore+0x6c/0xc8
-   software_resume+0x240/0x260
-   do_one_initcall+0x68/0x200
-   kernel_init_freeable+0x26c/0x304
-   kernel_init+0x20/0x134
-   ret_from_kernel_thread+0x24/0x1d0
-   ret_from_kernel_thread_asm+0xc/0x98
-
-During resume from hibernation, the image pages that occupy physical
-pages used by the restore kernel are first loaded into free pages and
-then, as the very last step, swsusp_asm_resume() copies them to their
-final location pointed to by pbe->orig_address, which the hibernation
-core sets to page_address() of the page in the restore kernel.
-
-The early KFENCE pool is allocated from memblock and normally occupies
-the same physical pages in the restore kernel and in the image kernel,
-so these pages are usually copied by swsusp_asm_resume().
-
-The KFENCE pool is remapped into the KFENCE area above vm_map_base and
-set_page_address() adjusts page->virtual so that page_address() returns
-the page-table mapped alias rather than the DMW virtual address of the
-pool pages.
-
-Hence, pbe->orig_address of KFENCE pages points to that alias and
-swsusp_asm_resume() writes them through the page tables. But:
-
-* the copy loop overwrites the kernel page tables, so a TLB refill for
-  the KFENCE alias may use a partially restored page table
-* the KFENCE pool pages that are protected in the restore kernel fault
-  in the middle of the copy
-
-Convert pbe->orig_address to DMW addresses before starting the copy.
+Clear the pointer when destroying.
 
 Cc: stable@vger.kernel.org
-Fixes: 0ca84aeaee15 ("LoongArch: Make {virt, phys, page, pfn} translation work with KFENCE")
-Signed-off-by: Mike Rapoport (Microsoft) <rppt@kernel.org>
+Fixes: c532de5a67a7 ("LoongArch: KVM: Add IPI device support")
+Fixes: 2e8b9df82631 ("LoongArch: KVM: Add EIOINTC device support")
+Fixes: e785dfacf7e7 ("LoongArch: KVM: Add PCHPIC device support")
+Fixes: 229132c309d6 ("LoongArch: KVM: Add DMSINTC device support")
+Reviewed-by: Bibo Mao <maobibo@loongson.cn>
+Signed-off-by: Tao Cui <cuitao@kylinos.cn>
 Signed-off-by: Huacai Chen <chenhuacai@loongson.cn>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/loongarch/power/hibernate.c |    6 ++++++
- 1 file changed, 6 insertions(+)
+ arch/loongarch/kvm/intc/dmsintc.c |    1 +
+ arch/loongarch/kvm/intc/eiointc.c |    1 +
+ arch/loongarch/kvm/intc/ipi.c     |    1 +
+ arch/loongarch/kvm/intc/pch_pic.c |    1 +
+ 4 files changed, 4 insertions(+)
 
---- a/arch/loongarch/power/hibernate.c
-+++ b/arch/loongarch/power/hibernate.c
-@@ -59,6 +59,12 @@ extern int swsusp_asm_resume(void);
+--- a/arch/loongarch/kvm/intc/dmsintc.c
++++ b/arch/loongarch/kvm/intc/dmsintc.c
+@@ -166,6 +166,7 @@ static void kvm_dmsintc_destroy(struct k
+ 		return;
  
- int swsusp_arch_resume(void)
- {
-+#ifdef CONFIG_KFENCE
-+	struct pbe *pbe;
-+
-+	for (pbe = restore_pblist; pbe; pbe = pbe->next)
-+		pbe->orig_address = __va(virt_to_phys(pbe->orig_address));
-+#endif
- 	/* Avoid TLB mismatch during and after kernel resume */
- 	local_flush_tlb_all();
- 	return swsusp_asm_resume();
+ 	kfree(dev->kvm->arch.dmsintc);
++	dev->kvm->arch.dmsintc = NULL;
+ 	kfree(dev);
+ }
+ 
+--- a/arch/loongarch/kvm/intc/eiointc.c
++++ b/arch/loongarch/kvm/intc/eiointc.c
+@@ -675,6 +675,7 @@ static void kvm_eiointc_destroy(struct k
+ 
+ 	kvm = dev->kvm;
+ 	eiointc = kvm->arch.eiointc;
++	kvm->arch.eiointc = NULL;
+ 	mutex_lock(&kvm->slots_lock);
+ 	kvm_io_bus_unregister_dev(kvm, KVM_IOCSR_BUS, &eiointc->device);
+ 	kvm_io_bus_unregister_dev(kvm, KVM_IOCSR_BUS, &eiointc->device_vext);
+--- a/arch/loongarch/kvm/intc/ipi.c
++++ b/arch/loongarch/kvm/intc/ipi.c
+@@ -444,6 +444,7 @@ static void kvm_ipi_destroy(struct kvm_d
+ 
+ 	kvm = dev->kvm;
+ 	ipi = kvm->arch.ipi;
++	kvm->arch.ipi = NULL;
+ 	mutex_lock(&kvm->slots_lock);
+ 	kvm_io_bus_unregister_dev(kvm, KVM_IOCSR_BUS, &ipi->device);
+ 	mutex_unlock(&kvm->slots_lock);
+--- a/arch/loongarch/kvm/intc/pch_pic.c
++++ b/arch/loongarch/kvm/intc/pch_pic.c
+@@ -483,6 +483,7 @@ static void kvm_pch_pic_destroy(struct k
+ 
+ 	kvm = dev->kvm;
+ 	s = kvm->arch.pch_pic;
++	kvm->arch.pch_pic = NULL;
+ 	/* unregister pch pic device and free it's memory */
+ 	mutex_lock(&kvm->slots_lock);
+ 	kvm_io_bus_unregister_dev(kvm, KVM_MMIO_BUS, &s->device);
 
 
