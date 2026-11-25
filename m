@@ -1,51 +1,50 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795620554;
-	b=i04LKd+Bphp7VVg3XTBYsEnlZZ+Q0Zb8Jdcc79vJgXJeS94PuEnTg0r7EqmTrIevs3c1
-	 WuBGPcFadyxOIWt2+vX6hDdMk0mDy0dBdGpkJFvpze1bCSBA7sQHO2JsnAmzzQVmJpod5
-	 yzz4+GIhnk6JpzSLsJZuxsy/EDGsuvA7c5TdaXRZK191lYFLq/fECukWAlQZ6Tq7SokLq
-	 RWVpLNAazsDl+1kdKX+bU0gSwTI9I6t+BEduURX3vIlE0rhf5uR0U309+MiQAAmomIZf/
-	 UNwTKARsNuDoWqAsTE5gVnMHddQ/JNmQw78GCxS7upK5pZkU+MXLyLJbxF0RMV7+dUg==
+	t=1795620557;
+	b=yQtjpzkvBNMD8YAbPH4BB6iWgTwmgtWtUxPvJ/H60GHYb2l1K8moGp32BHrd7V1dPf6+
+	 Yqa3C4dw9fiAwEhvGBBoIiH89TvfV97ch7fjXDDkWAU1AY53iQhYgEWl8pdyfP1Qu8DZc
+	 71onYGU1DzzhIodQynSrybrJXsLP+PmHdUI5eGUK2TWbogjgJev/bcp16MnaD73R0OovK
+	 JCG+TxrWhPIFw645vVXAdb/g4uS5teqwQkg5BUIJxzrGPcG6TMUma/HI/4TqKaRcjowK0
+	 PPQ8z2YyYZ6d1PZtlKlZMmgHR4jromtDWfGKxRWBKfFWg3r5VUfAVY/XE1aHXsiLHPQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795620554;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795620557;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=l+ryeFzlvNamrx65QQMQJ5n1m7iYC1FUGPfqNO+Umhw=;
-	b=xyTAz76n3CjwjrMWENw7d7Nb5SbETcc9mnfYSva4jThvDRmNS+hp/NLp+gnv5+4pLhF+
-	 dabqWQRJ5xJRB09MJxVlxHabc+qg0EUCmu5NlVasQrSHyDUifpe6JgBIWprC2nrRnoKJn
-	 O49GcxaLxj6dODkQGM0/RrpEfj+JSAiozB5zBNwmWKj4HGb0KENUnqhfsHsEsJy5LRs9/
-	 IOjcPOLx0VtFi2QRx+r0aitHXbyz2/fxZkNwiPaC7Pyh4zqAaL7/LrlWUBEo45imDhBLl
-	 AQfmrCZQIagJwzPFjT/lxgQ9E8e/T+599BUbZeMrgnGXNd3rgrxOj/MvDLDTaRLNJfw==
+	bh=VAM7YJqFOFcSwissMV/S8KnEfCbYtUHQqwTjns9lVSA=;
+	b=24PsbmHapbbpf/J8n7HlPjx7B1XMuMc5rA+qPKWVAl1zLj0c6Bq0H9LsJEpDK2KI318k
+	 EaL49X6uHF1LGr+9T57qWcSEHzPLe6d7d+1kdV1WEz1SVv2fyBMNJ8MNoQmROUiaBvLS/
+	 YZt7I9oF8gFBHm3SCYH4HeSq0/vIn374Hwo+AGwPzYqFI5VuTROcPvVSfQ2hn6AutBDsm
+	 zCD6UMDNf/hFuBrySSDBJYY+k/APJ/zV9aP8lyoRb5NG21q8lv4+dyzHv28FIST94VNc/
+	 KvgrMoJVtVylIlGXx69HYnvbtwIN/YonjNNelbfqZbcSZ8URNsJWNuyile2z8l5E6OQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=2lMWH+ck;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="MCyI/Ebt";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1E951606A321;
-	Wed, 25 Nov 2026 15:29:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 69122606A31E;
+	Wed, 25 Nov 2026 15:29:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=2lMWH+ck
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 62C1A1F000C6;
-	Wed, 25 Nov 2026 15:29:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=MCyI/Ebt
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 36A321F000C4;
+	Wed, 25 Nov 2026 15:29:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795620553;
-	bh=l+ryeFzlvNamrx65QQMQJ5n1m7iYC1FUGPfqNO+Umhw=;
+	s=korg; t=1795620556;
+	bh=VAM7YJqFOFcSwissMV/S8KnEfCbYtUHQqwTjns9lVSA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=2lMWH+ckCDgSGUQZpDTqhMVhGvuTfiD+VV3mYD0BqlsYkCeiBwMSvzdj2ZYpTxB6r
-	 EWFIWICSOKFrvK6LCfl1GEhF9JHA0zA3sn9oAV3qD3Dvt++WXm4NGgzE0Lj57QLqDP
-	 /fwjUAo3h8R3CJj4HtUoGOU3RJd2xYkAeKzhwNEM=
+	b=MCyI/EbtePte5EzaNAj8DFFKen6jUnkKQH2v5o1IGRHOSMR8ePlRy8J0/SPwqKMJ+
+	 nZOS5BjKca7BSfgbXwCaxooW4xTez5PhrH+MkF5y9SJ1do+dQzYfXZgJ/EFEynkB02
+	 1pyHuZyfT1GlVfk9/jWNiSkZVRfxFYHsJNI8X3oA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+763813d65c7e18c1b6d5@syzkaller.appspotmail.com,
 	Johan Hovold <johan@kernel.org>
-Subject: [PATCH 7.3 0956/1005] USB: serial: io_edgeport: fix NULL-deref on early status
-Date: Wed, 25 Nov 2026 15:38:14 +0100
-Message-ID: <20261125143844.066919126@linuxfoundation.org>
+Subject: [PATCH 7.3 0957/1005] USB: serial: io_edgeport: fix potential close() use-after-free
+Date: Wed, 25 Nov 2026 15:38:15 +0100
+Message-ID: <20261125143844.090962080@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143821.729802100@linuxfoundation.org>
 References: <20261125143821.729802100@linuxfoundation.org>
@@ -69,54 +68,48 @@ Content-Transfer-Encoding: 8bit
 
 From: Johan Hovold <johan@kernel.org>
 
-commit ae22e9b6412e5dc99e1cf8bd13c6176d44c7d42e upstream.
+commit 839ff5fa30995c40cd5fba15fd976ad63416738a upstream.
 
-The driver submits the interrupt-in URB during probe or on first port
-open, which on completion may submit the bulk-in URB before all ports
-have been opened and their waitqueues have been initialised.
+Add the missing open check on write() and locking when updating the port
+status during close() to prevent a racing interrupt completion handler
+from trying to submit more data for the port while its write URB and
+FIFO are being deallocated.
 
-If a (malicious) device sends a status message for a port that has not
-yet been opened this may lead to a NULL-pointer dereference in the
-bulk-in completion handler when attempting to wakeup blocked tasks.
-
-Move waitqueue initialisation from open() to port_probe() to address
-this.
+This issue was flagged by Sashiko when reviewing a related fix.
 
 Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Reported-by: syzbot+763813d65c7e18c1b6d5@syzkaller.appspotmail.com
-Link: https://lore.kernel.org/6a8818d8.ae6ddae5.3da009.0031.GAE@google.com
 Cc: stable@vger.kernel.org
+Link: https://sashiko.dev/#/patchset/20260714101316.823942-1-shpark061104%40gmail.com?part=1
 Signed-off-by: Johan Hovold <johan@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/serial/io_edgeport.c |   10 +++++-----
- 1 file changed, 5 insertions(+), 5 deletions(-)
+ drivers/usb/serial/io_edgeport.c |    8 ++++++++
+ 1 file changed, 8 insertions(+)
 
 --- a/drivers/usb/serial/io_edgeport.c
 +++ b/drivers/usb/serial/io_edgeport.c
-@@ -877,11 +877,6 @@ static int edge_open(struct tty_struct *
- 		}
- 	}
+@@ -1085,7 +1085,9 @@ static void edge_close(struct usb_serial
  
--	/* initialize our wait queues */
--	init_waitqueue_head(&edge_port->wait_open);
--	init_waitqueue_head(&edge_port->wait_chase);
--	init_waitqueue_head(&edge_port->wait_command);
--
- 	/* initialize our port settings */
- 	edge_port->txCredits = 0;	/* Can't send any data yet */
- 	/* Must always set this bit to enable ints! */
-@@ -2965,6 +2960,11 @@ static int edge_port_probe(struct usb_se
- 		return -ENOMEM;
+ 	/* port->close = true; */
+ 	edge_port->closePending = false;
++	spin_lock_irq(&edge_port->ep_lock);
+ 	edge_port->open = false;
++	spin_unlock_irq(&edge_port->ep_lock);
+ 	edge_port->openPending = false;
  
- 	spin_lock_init(&edge_port->ep_lock);
+ 	usb_kill_urb(edge_port->write_urb);
+@@ -1127,6 +1129,12 @@ static int edge_write(struct tty_struct
+ 
+ 	spin_lock_irqsave(&edge_port->ep_lock, flags);
+ 
++	/* avoid accessing freed fifo if tty_wakeup() races with close() */
++	if (!edge_port->open) {
++		spin_unlock_irqrestore(&edge_port->ep_lock, flags);
++		return 0;
++	}
 +
-+	init_waitqueue_head(&edge_port->wait_open);
-+	init_waitqueue_head(&edge_port->wait_chase);
-+	init_waitqueue_head(&edge_port->wait_command);
-+
- 	edge_port->port = port;
- 
- 	usb_set_serial_port_data(port, edge_port);
+ 	/* calculate number of bytes to put in fifo */
+ 	copySize = min_t(unsigned int, count,
+ 				(edge_port->txCredits - fifo->count));
 
 
