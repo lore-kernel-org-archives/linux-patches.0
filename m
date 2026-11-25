@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795622026;
-	b=BHz2fHoqn0Kn3KJwB9KEnbQJaqIh8VGlUQAiNGhwiI5NlY4iyt0vNUOKPPQc3mcaRfmR
-	 NiJ629OYwVnpHI2D2CKcJRruZK8hMBGRcDOsTGQcvUOvuMI4fzkddjpFhhYy9Q2YtJ7nw
-	 tSWFyWwGn1hmmBOFqIg0XTya9tfO9Lm2ob11Z1Oiq3+C4LG+pOgOnDdfhNIcR1sXKhf1v
-	 4jXUXKPK94u7CxJvYq54LNckrz5G28SZzXNmLVoUsKU+i6Im4QjcjTiXzSiPbPnzuqHEe
-	 AjmxPd6pIVvLHq88yiMzM4hGTlSN3Mvh/br5DRU5xtrOPVfGOb7vB/5ZbEMUW9V/D3A==
+	t=1795622030;
+	b=KWvgBUTSddRHS7z1m2DkZNL1tYeZ0SzplUHhCdbgQGm2FT/oMAhQnZL4Gsf7etBkODfo
+	 yoiaQ0CKEmlgQy1s699Oz4lwXErO0DcZWN13ZcYdLlrptWvGgqXKW1ya51Y+fsKT99xGx
+	 p++pykUA8QFtD7nsCJBScQekwz71YlH9+8PpmmZNGFLDVce2GJiGjQwjZrRXysxBQVc7e
+	 RCAGmkzSgbReEy7RqkperOlleDvTVe4TfFiY3SGngW/QCHKemgaspDkhas28RjX+Rj+fY
+	 W33GQY7RR78JJzYZYqleNT6bd+kc507hJsfrXg3hXWacNT7Ui4ysbEAQ8vICFeO9iiQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795622026;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795622030;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Type:Content-Transfer-Encoding;
-	bh=5qcjMZ8aqgyclhlRusve/ToHfq8+tCbUgUTKmPCDOEs=;
-	b=JrTXpL0+8MHyfmgoQ7G8klQTUEqPwh/+PiyD9iHdD+WT6WoSdzZY+2BYrviX4US1Fuhm
-	 zrCMjgAx+hCiIWl8QVFqfHThkCPeNTXOFN+qka92v+a6bTjoir/8YyYt9G/YAdo5Pu6Ej
-	 NiQegA38tiupd0RBnPXUFcK+QysGM0CT+GLqvEONaya2MQDlHc4ugTQLWWE06ZMV66rj+
-	 lX2JhBKbClcjfydvJ6W6PCu1zXDQLuSIJzdbInC/LmmX7XowiAAbApfCioMu0KtGRHN4E
-	 XHCr2erG5xSWodYG5hJZR3NVd1BbuTg7U5SsDX0Hph4ykLMgJdoBNopPfoLxULdR0RA==
+	 MIME-Version:Content-Transfer-Encoding;
+	bh=o4BWcqBvuAUIqQuPYAyjFrkLqcniZZRGfp24TwG1LRs=;
+	b=hnoQ+5p2od0OLbl6b347YSTYLHmvL+1MWoIQU7s9KpRTINSHNlcBOdcL1Lqb8yGnSos1
+	 ZKg3V3UNbs9BwDK9kmS8PzXNZi7RzR9ngLxFC4yNMGGG0HVFNa/gcMU9zLykYQnv54CS5
+	 ljq5flNj2ud4VoSiGZI/nRH3iMvlwnGJl7XVXE2OIcD7eCBRAUY0G41jULbEXvYMOyOgC
+	 pPzJQvkiw5BcLv60PFqltgeSlpfU33THMi2w4jKc+kZZ927vXGRN/btPpyiyp3rZX3NAO
+	 nX1eC2oXFzX6PKTqn+JupXBU0w/pSH9wWAygRqTe6ww7RN4gBx0t4Q6Y+CI+7K5Y/lw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="VSi/KRlD";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=OP0lLwOA;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CB99E606A327;
-	Wed, 25 Nov 2026 15:53:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0B0E9606A321;
+	Wed, 25 Nov 2026 15:53:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=VSi/KRlD
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B6FB31F000C6;
-	Wed, 25 Nov 2026 15:53:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=OP0lLwOA
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E5A391F000CF;
+	Wed, 25 Nov 2026 15:53:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795622026;
-	bh=5qcjMZ8aqgyclhlRusve/ToHfq8+tCbUgUTKmPCDOEs=;
+	s=korg; t=1795622029;
+	bh=o4BWcqBvuAUIqQuPYAyjFrkLqcniZZRGfp24TwG1LRs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=VSi/KRlD6umjpnDpuQUwVIT3D3yEzgBj5WTUiDf/NSlR+KLOXTZ+tX1WMxFDxZtUC
-	 HHcBD4iHyMw53AZn40guO6AjV7sws+FXz8ij2VykSWjEfX9QKlc0p6HY5EtoSLkQWA
-	 GsuRbMzxdPfkoo0mwNlcG6ozp1UEAsgkbrqcFgac=
+	b=OP0lLwOAVxC3Jll5xaviP4GHwMHdu6gDSUqpdraa9IuRroGQKGt3heZ7LAQVmvutQ
+	 bJL13U3jNagF55V+9opr5GLat9bZo2dHUvv0TvtTpNVGUe5u77TajvBbLGYaZ4WH0v
+	 WSD8DglJCQt4Cv9xA2mDfN4EuS//+4w2sujCENpc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Maciej Fijalkowski <maciej.fijalkowski@intel.com>,
-	=?UTF-8?q?Bj=C3=B6rn=20T=C3=B6pel?= <bjorn@kernel.org>,
+	Li RongQing <lirongqing@baidu.com>,
+	Hangbin Liu <liuhangbin@kylinos.cn>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 400/990] idpf: free stashed XSk Rx frame when releasing the queue
-Date: Wed, 25 Nov 2026 15:29:27 +0100
-Message-ID: <20261125143831.470438847@linuxfoundation.org>
+Subject: [PATCH 6.18 409/990] team: fix promisc/allmulti leak in team_port_add error path
+Date: Wed, 25 Nov 2026 15:29:36 +0100
+Message-ID: <20261125143831.678507354@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143822.072087159@linuxfoundation.org>
 References: <20261125143822.072087159@linuxfoundation.org>
@@ -63,58 +63,74 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Maciej Fijalkowski <maciej.fijalkowski@intel.com>
+From: Li RongQing <lirongqing@baidu.com>
 
-[ Upstream commit 3cbee39da8251098e2631a106fafcaebc7c8e66b ]
+[ Upstream commit ff618cb00a645f1e3f89068c5fbda3f3a7f4ae63 ]
 
-idpf_xskrq_poll() stashes a partially received multi-buffer frame in
-rxq->xsk, with its frags on pool->xskb_list. Nothing frees or clears
-rxq->xsk on queue release, as idpf_rx_desc_rel() only returns the page
-stash sharing its storage for non-XSk queues.
+team_port_add() increments the port's promiscuity and allmulti
+counts before calling team_dev_type_check_change(). If the latter
+fails, the error path does not undo these increments, leaving the
+port in promiscuous and allmulti mode even though it was not
+successfully added to the team.
 
-On ifdown, the buffers are lost to user space and, as the pool outlives
-the queue, the stale frags are taken as frags of the next frame. If the
-pool is disabled on a running interface, the queue restarts in page
-mode with rxq->xdp.data still pointing to an xskb of the pool, which is
-freed later. The page path then takes it for a partial frame, writes
-frag info through it and returns it to a page pool.
+Undo the promiscuity increment under err_set_slave_allmulti and the
+allmulti increment under err_set_dev_type, so each error label only
+reverts what was successfully applied, matching the cleanup performed
+by team_port_del().
 
-Free the stashed frame and clear the pointer when the XSk state of the
-queue is cleared, while the pool is still attached.
+With the promiscuity rollback now living under err_set_slave_allmulti,
+the inline dev_set_promiscuity(port_dev, -1) in the dev_set_allmulti()
+failure branch becomes redundant: that branch already jumps to
+err_set_slave_allmulti, which undoes the promiscuity increment. Drop
+the inline call to avoid doing it twice.
 
-Fixes: 9705d6552f58 ("idpf: implement Rx path for AF_XDP")
-Signed-off-by: Maciej Fijalkowski <maciej.fijalkowski@intel.com>
-Reviewed-by: Björn Töpel <bjorn@kernel.org>
-Link: https://patch.msgid.link/20261102124950.958345-10-maciej.fijalkowski@intel.com
+Found by source code audit.
+
+Fixes: 0ae9cfc454ea ("team: Move team device type change at the end of team_port_add")
+Signed-off-by: Li RongQing <lirongqing@baidu.com>
+Reviewed-by: Hangbin Liu <liuhangbin@kylinos.cn>
+Link: https://patch.msgid.link/20261104015217.2222-1-lirongqing@baidu.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/intel/idpf/xsk.c | 5 +++++
- 1 file changed, 5 insertions(+)
+ drivers/net/team/team_core.c | 9 +++++----
+ 1 file changed, 5 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/net/ethernet/intel/idpf/xsk.c b/drivers/net/ethernet/intel/idpf/xsk.c
-index fd2cc43ab43cb..463c6852f8c99 100644
---- a/drivers/net/ethernet/intel/idpf/xsk.c
-+++ b/drivers/net/ethernet/intel/idpf/xsk.c
-@@ -132,6 +132,11 @@ void idpf_xsk_clear_queue(void *q, enum virtchnl2_queue_type type)
- 		if (!idpf_queue_has_clear(XSK, rxq))
- 			return;
+diff --git a/drivers/net/team/team_core.c b/drivers/net/team/team_core.c
+index cb0ff3d89de93..f1d45e157efca 100644
+--- a/drivers/net/team/team_core.c
++++ b/drivers/net/team/team_core.c
+@@ -1257,11 +1257,8 @@ static int team_port_add(struct team *team, struct net_device *port_dev,
+ 	/* set allmulti level to new slave */
+ 	if (dev->flags & IFF_ALLMULTI) {
+ 		err = dev_set_allmulti(port_dev, 1);
+-		if (err) {
+-			if (dev->flags & IFF_PROMISC)
+-				dev_set_promiscuity(port_dev, -1);
++		if (err)
+ 			goto err_set_slave_allmulti;
+-		}
+ 	}
  
-+		if (rxq->xsk) {
-+			libeth_xsk_buff_free_slow(rxq->xsk);
-+			rxq->xsk = NULL;
-+		}
-+
- 		rxq->pool = NULL;
- 		break;
- 	case VIRTCHNL2_QUEUE_TYPE_RX_BUFFER:
+ 	err = team_dev_type_check_change(dev, port_dev);
+@@ -1287,7 +1284,11 @@ static int team_port_add(struct team *team, struct net_device *port_dev,
+ 	return 0;
+ 
+ err_set_dev_type:
++	if (dev->flags & IFF_ALLMULTI)
++		dev_set_allmulti(port_dev, -1);
+ err_set_slave_allmulti:
++	if (dev->flags & IFF_PROMISC)
++		dev_set_promiscuity(port_dev, -1);
+ err_set_slave_promisc:
+ 	__team_option_inst_del_port(team, port);
+ 
 -- 
 2.53.0
 
