@@ -1,55 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795618871;
-	b=W64FJrNObCX6HpViDotSGSg0OqnkIu6C4TSYMdHRMIYWQ0lq/AlmD0pLEp3CrCUoIPmi
-	 GN32f+2DP34DeGkmrgY48cV/R2ahzqArugkWE5IW791IETPp5KJPYeJfj+4Sij+EHcIym
-	 CKnAKaiI8cgJkq+tw9W64/8MBcMgYDytBnBwQ4cL/XRkC2pfmn7+9lqFX6GrQi0XZejoj
-	 N9HHuprYWpG9Jq3D+aZGJR4CLvR5Druuv23MJipFXOSymE6dKdR5/UzWyLWpGa0JYv2UA
-	 ysy5xMys1Rzm0BeEvpCwwF8Dp1R+d5feMYFvPSIAITEZLp4Ez/Ss3TFq3C1fkRf3TSQ==
+	t=1795618874;
+	b=D/Mk0HG/yKcq2DmmuNPbEToV3PNJyl+Xwuhs9/pkqvc+7tUu8x46niKUXq9ssq8NHxjB
+	 MYUX/e1Dd2lO4MA0g5wlqorjae1WVTkPHOmhGHJsAZiQNPhkY4H/8bBhx7Wvxj28HRr2n
+	 6s+MYFYP+Z3q7Pb3Nb18PILhJwDNtNtZytMyWElDBa00oZs8mt3vpYGpPY2d5avXTWtR/
+	 YQqdA3fKDdYYyRuE6DSMz7sk7Xxq8j7l1Y5bscohQIIqCH0zpx5i7hzSrdJFwwQLRTYAn
+	 5hK/t5ap4g3Dpv63DibZQTfLsKkv7o/C+vV5Udy5DIdvi3pnUvfmioJgOrdTMWUhmfQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795618871;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795618874;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=qOZV2QQ+htZyp/VY12UySDNen0PWT2Nc5BZfVtswGeA=;
-	b=Ob78uU77EE2sSXSCDrU0bNVG5UgKNBtpbn9UahcmAGIyEUegaOYkCD1GtyUremtEBOzo
-	 J/25XhwLOBic1Osl/yRfry+e2lgyr2n3UZhLj7bklxhvwnzLQfNa8NnnY7UOGRuVvtqxH
-	 lN7FxSbvGUCrYGot5VGlXx8upjVEiooUd8LU8I8zT4jYD4NckJdZ/rhlD/PkQGF75Rqrv
-	 +rVRhYBYmIFJRN402x4W9VycLjwQyjz4uIJXGK3yTfZwih1u4TPUNRp/Ccad1/HAqSUn/
-	 GXmAFddxS5a+5hOEgadgC/0eAmL78I/W93Ymt3cL1IG6tCbPjG3yiDU1PSwY1rMdgqA==
+	bh=jUaRw1oqvhe9cQac+FTCaWS73lRarXkgRgdlDH4iGKU=;
+	b=yDS5lzWDSdBLhjwU7RWJVgolT3uui7om0S+/NJh1zaOaikHXOkshKH1fuEF1YhOuwyHW
+	 A1A94qGMATWGqT1HuAbr7Bp943JosfCsq79Q/50kFQnLFPTCeageT7LQhuo8QEKqH66eu
+	 zYJEZ+PSGDN5BbG1eA8/MQdD1AG8VXI8icqINvBLuINtzrukybz+0aOWgn5fPflMzb6SL
+	 nyN36bMB3kyI8nypeWNMRJ5nmaW+vQ1qnTYCRiClMbR0lfDsDlHxUqSyn7w4Bt79XvITc
+	 6lWiEzyjbZtqLOER7cy7zWHTBGxVmx9p0gFoETOTKf/fyc2hHff4pXezVvsp1BvxQeg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=BsiaqKPo;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=UXI4uWR0;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9C0E1606A321;
-	Wed, 25 Nov 2026 15:01:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D83CB606A33E;
+	Wed, 25 Nov 2026 15:01:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=BsiaqKPo
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A8FE41F000C0;
-	Wed, 25 Nov 2026 15:01:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=UXI4uWR0
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 86B911F000E1;
+	Wed, 25 Nov 2026 15:01:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795618871;
-	bh=qOZV2QQ+htZyp/VY12UySDNen0PWT2Nc5BZfVtswGeA=;
+	s=korg; t=1795618874;
+	bh=jUaRw1oqvhe9cQac+FTCaWS73lRarXkgRgdlDH4iGKU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=BsiaqKPoOfgnYQlKXd1xeV9HULVJ1jxw4sJxRERE7t9Ft+Ybv+o8XeDxlEBT4m/5o
-	 5UkXbm+cHEvPBZnS/e6OmGkNkVoY89TtnlOT8OB9sSzLkuJxObGslqUmL2E5tLYl1M
-	 BAYMtI2bU0CrXibgVUsmOl47I6mOTzva73FTiaoU=
+	b=UXI4uWR0QnkSS/M1jgYKs9uE5kmTxYeE4yrynLw29im5LYPZb9mQrNklH0WAMkWuY
+	 kBulEGqkyrGdbeQYItXfDvPr2oxJtWKGvUJd6abecfkerpoQrfGQNEL4WcBujpOUeO
+	 kzncEGO7kdnyLd/h1G2I38Bg1lU5K2lXK3kYirgA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sashiko <sashiko-bot@kernel.org>,
-	Waiman Long <longman@redhat.com>,
-	Ridong Chen <chenridong@xiaomi.com>,
-	Guopeng Zhang <zhangguopeng@kylinos.cn>,
-	Tejun Heo <tj@kernel.org>,
+	Samuel Leyva <samuelslg03idk@gmail.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0416/1005] cgroup/cpuset: Reset partition data when an invalid partition stays invalid
-Date: Wed, 25 Nov 2026 15:29:14 +0100
-Message-ID: <20261125143831.497770243@linuxfoundation.org>
+Subject: [PATCH 7.3 0417/1005] ASoC: amd: acp: es83xx: Enable speaker amplifier after the codec output
+Date: Wed, 25 Nov 2026 15:29:15 +0100
+Message-ID: <20261125143831.522149211@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143821.729802100@linuxfoundation.org>
 References: <20261125143821.729802100@linuxfoundation.org>
@@ -71,101 +68,97 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ridong Chen <chenridong@xiaomi.com>
+From: Samuel Leyva <samuelslg03idk@gmail.com>
 
-[ Upstream commit ba4834fc81ddc0b500843c827c09d3ff95a317a9 ]
+[ Upstream commit f392763d73356760eac3e4ab7c87b0855be0d4bb ]
 
-When cpuset.cpus or cpuset.cpus.exclusive of a partition root is
-changed, update_cpumask() and update_exclusive_cpumask() copy the new
-effective_xcpus computed for the trial cpuset into the cpuset, and call
-reset_partition_data() only if the partition was valid before and is
-invalid now:
+The speaker amplifier GPIO is driven from a SUPPLY widget. DAPM powers
+supplies before the rest of the path, so the amplifier is enabled while
+the ES8316 headphone driver and charge pump, which also feed the
+speakers, are still powering up. This results in an audible pop every
+time the speaker output is powered on.
 
-	if ((old_prs > 0) && !is_partition_valid(cs))
-		reset_partition_data(cs);
+Move the speaker GPIO handling to the Speaker endpoint widget, which
+DAPM powers up last and powers down first, and give the codec output a
+short time to settle before enabling the amplifier.
 
-An invalid partition root (old_prs < 0) that stays invalid is not
-covered. Its effective_xcpus is then left with the trial value, which
-is computed from user_xcpus() and so falls back to cpuset.cpus when
-cpuset.cpus.exclusive is cleared. As an invalid partition root does not
-own any exclusive CPUs, and rm_siblings_excl_cpus() treats a non-empty
-effective_xcpus of a sibling without cpuset.cpus.exclusive as owned,
-those CPUs can then no longer be claimed by a sibling:
+The headphone path is left unchanged: the Headphone endpoint widget
+shares its power-up rank with the codec output drivers, so moving it
+would not guarantee the same ordering, and it could not be tested.
 
-  # A1: cpuset.cpus=2-3, cpuset.cpus.exclusive=2-3, root, with tasks
-  # offline CPUs 2-3 -> A1 becomes invalid
-  echo > A1/cpuset.cpus.exclusive
-  cat A1/cpuset.cpus.exclusive.effective    # 2-3, expected empty
-  echo 3 > B1/cpuset.cpus.exclusive         # -EINVAL
-
-Reset the partition data whenever the cpuset is a partition root, valid
-or not, and ends up invalid. As effective_xcpus may be cleared by that,
-also force update_cpumasks_hier() to update the subtree, so that the
-effective_xcpus of the descendants doesn't keep the released CPUs. Add
-test cases for it.
-
-Fixes: de9f15e21c55 ("cpuset: use parse_cpulist for setting cpus.exclusive")
-Fixes: c5866c9a007d ("cpuset: refactor CPU mask buffer parsing logic")
-Reported-by: Sashiko <sashiko-bot@kernel.org>
-Link: https://sashiko.dev/#/patchset/20261101114206.2434398-1-ridong.chen%40linux.dev?part=15
-Reviewed-by: Waiman Long <longman@redhat.com>
-Signed-off-by: Ridong Chen <chenridong@xiaomi.com>
-Reviewed-by: Guopeng Zhang <zhangguopeng@kylinos.cn>
-Tested-by: Guopeng Zhang <zhangguopeng@kylinos.cn>
-Signed-off-by: Tejun Heo <tj@kernel.org>
+Fixes: 54fcd9dd44b2 ("ASoC: amd: acp: Add machine driver that enables sound for systems with a ES8336 codec")
+Signed-off-by: Samuel Leyva <samuelslg03idk@gmail.com>
+Link: https://patch.msgid.link/20261107232225.3838-3-samuelslg03idk@gmail.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/cgroup/cpuset.c                            | 10 ++++++++--
- tools/testing/selftests/cgroup/test_cpuset_prs.sh |  6 ++++++
- 2 files changed, 14 insertions(+), 2 deletions(-)
+ sound/soc/amd/acp/acp3x-es83xx/acp3x-es83xx.c | 16 +++++++++-------
+ 1 file changed, 9 insertions(+), 7 deletions(-)
 
-diff --git a/kernel/cgroup/cpuset.c b/kernel/cgroup/cpuset.c
-index 6f336ace3033a..8f0979b73e20f 100644
---- a/kernel/cgroup/cpuset.c
-+++ b/kernel/cgroup/cpuset.c
-@@ -2640,8 +2640,11 @@ static int update_cpumask(struct cpuset *cs, struct cpuset *trialcs,
- 	spin_lock_irq(&callback_lock);
- 	cpumask_copy(cs->cpus_allowed, trialcs->cpus_allowed);
- 	cpumask_copy(cs->effective_xcpus, trialcs->effective_xcpus);
--	if ((old_prs > 0) && !is_partition_valid(cs))
-+	if (old_prs && !is_partition_valid(cs)) {
- 		reset_partition_data(cs);
-+		/* effective_xcpus may be cleared, update the subtree too */
-+		force = true;
-+	}
- 	spin_unlock_irq(&callback_lock);
+diff --git a/sound/soc/amd/acp/acp3x-es83xx/acp3x-es83xx.c b/sound/soc/amd/acp/acp3x-es83xx/acp3x-es83xx.c
+index eb0e9a6af6ef1..80985d044896c 100644
+--- a/sound/soc/amd/acp/acp3x-es83xx/acp3x-es83xx.c
++++ b/sound/soc/amd/acp/acp3x-es83xx/acp3x-es83xx.c
+@@ -18,6 +18,7 @@
+ #include <linux/input.h>
+ #include <linux/io.h>
+ #include <linux/acpi.h>
++#include <linux/delay.h>
+ #include <linux/dmi.h>
+ #include <linux/string_choices.h>
+ #include "../acp-mach.h"
+@@ -60,6 +61,8 @@ static const struct snd_pcm_hw_constraint_list constraints_channels = {
+ #define ES83xx_12288_KHZ_MCLK_FREQ   (48000 * 256)
+ #define ES83xx_48_MHZ_MCLK_FREQ      (48000 * 1000)
  
- 	/* effective_cpus/effective_xcpus will be updated here */
-@@ -2705,8 +2708,11 @@ static int update_exclusive_cpumask(struct cpuset *cs, struct cpuset *trialcs,
- 	spin_lock_irq(&callback_lock);
- 	cpumask_copy(cs->exclusive_cpus, trialcs->exclusive_cpus);
- 	cpumask_copy(cs->effective_xcpus, trialcs->effective_xcpus);
--	if ((old_prs > 0) && !is_partition_valid(cs))
-+	if (old_prs && !is_partition_valid(cs)) {
- 		reset_partition_data(cs);
-+		/* effective_xcpus may be cleared, update the subtree too */
-+		force = true;
-+	}
- 	spin_unlock_irq(&callback_lock);
- 
- 	/*
-diff --git a/tools/testing/selftests/cgroup/test_cpuset_prs.sh b/tools/testing/selftests/cgroup/test_cpuset_prs.sh
-index 78ed0500e11db..7d5ca28e46c21 100755
---- a/tools/testing/selftests/cgroup/test_cpuset_prs.sh
-+++ b/tools/testing/selftests/cgroup/test_cpuset_prs.sh
-@@ -364,6 +364,12 @@ TEST_MATRIX=(
- 	# cpuset.cpus is allowed, but those extra CPUs are ignored.
- 	"  C2-3:P1   C3:P1  .      .      .     C2-4    .      .     0 A1:|A2:2-3 A1:P1|A2:P1"
- 
-+	# Clearing cpuset.cpus.exclusive of an invalid partition releases its
-+	# exclusive CPUs, including those of its descendants, so a sibling
-+	# can claim them.
-+	" CX2-3:P1    .     .     C3  T:O2=0:O3=0:X  .     .      X3   0 XA1:|XB1:3 A1:P-1"
-+	" CX2-3:P1   X3     .     C3  T:O2=0:O3=0:X  .     .      X3   0 XA1:|XA2:|XB1:3 A1:P-1"
++#define ES83XX_AMP_ON_DELAY_MS	50
 +
- 	# A child cannot recover until its exclusive CPUs are available again.
- 	" CX1-4:P1 CX3-4:P1 .     .     X1-2     .      .      .     0 A1:1-2|A2:1-2|XA2: A1:P1|A2:P-1"
- 	" CX1-4:P1 CX3-4:P1 .     .  X1-2:X1-4   .      .      .     0 A1:1-2|A2:3-4|XA2:3-4 A1:P1|A2:P1"
+ static int acp3x_es83xx_headphone_power_event(struct snd_soc_dapm_widget *w,
+ 					    struct snd_kcontrol *kcontrol, int event);
+ static int acp3x_es83xx_speaker_power_event(struct snd_soc_dapm_widget *w,
+@@ -114,7 +117,7 @@ static struct snd_soc_jack_pin es83xx_jack_pins[] = {
+ };
+ 
+ static const struct snd_soc_dapm_widget acp3x_es83xx_widgets[] = {
+-	SND_SOC_DAPM_SPK("Speaker", NULL),
++	SND_SOC_DAPM_SPK("Speaker", acp3x_es83xx_speaker_power_event),
+ 	SND_SOC_DAPM_HP("Headphone", NULL),
+ 	SND_SOC_DAPM_MIC("Headset Mic", NULL),
+ 	SND_SOC_DAPM_MIC("Internal Mic", NULL),
+@@ -122,9 +125,6 @@ static const struct snd_soc_dapm_widget acp3x_es83xx_widgets[] = {
+ 	SND_SOC_DAPM_SUPPLY("Headphone Power", SND_SOC_NOPM, 0, 0,
+ 			    acp3x_es83xx_headphone_power_event,
+ 			    SND_SOC_DAPM_PRE_PMD | SND_SOC_DAPM_POST_PMU),
+-	SND_SOC_DAPM_SUPPLY("Speaker Power", SND_SOC_NOPM, 0, 0,
+-			    acp3x_es83xx_speaker_power_event,
+-			    SND_SOC_DAPM_PRE_PMD | SND_SOC_DAPM_POST_PMU),
+ };
+ 
+ static const struct snd_soc_dapm_route acp3x_es83xx_audio_map[] = {
+@@ -138,7 +138,6 @@ static const struct snd_soc_dapm_route acp3x_es83xx_audio_map[] = {
+ 	 */
+ 	{"Speaker", NULL, "HPOL"},
+ 	{"Speaker", NULL, "HPOR"},
+-	{"Speaker", NULL, "Speaker Power"},
+ };
+ 
+ 
+@@ -186,10 +185,13 @@ static int acp3x_es83xx_speaker_power_event(struct snd_soc_dapm_widget *w,
+ 	struct acp3x_es83xx_private *priv = get_mach_priv(card);
+ 
+ 	dev_dbg(priv->codec_dev, "speaker power event: %d\n", event);
+-	if (SND_SOC_DAPM_EVENT_ON(event))
++	if (SND_SOC_DAPM_EVENT_ON(event)) {
++		/* Let the codec output settle before enabling the amplifier */
++		msleep(ES83XX_AMP_ON_DELAY_MS);
+ 		priv->speaker_on = true;
+-	else
++	} else {
+ 		priv->speaker_on = false;
++	}
+ 
+ 	gpiod_set_value_cansleep(priv->gpio_speakers, priv->speaker_on);
+ 	gpiod_set_value_cansleep(priv->gpio_headphone, priv->headphone_on);
 -- 
 2.53.0
 
