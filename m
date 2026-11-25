@@ -1,55 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795625023;
-	b=NNlI91MDCwJi2joTgxxLoAK2ZNKRDTAl9prUZKHyrTlx8If4g8xe8FzDyUQfv2wuMGyO
-	 hBuipn2JiyL7rBMr1KnjIN9Xj9Ql+AALXS3/UKmY38wvk2BjJaG5g63Mqmg8z+syv+fQ+
-	 KgJjibHH4n9JUXuk+8UW5k3Qo8KPwjoDnmuzyYSuXf3Xj3b6bFxSSU1tmBHJ7pgtivfAA
-	 Lp5M7xjC+yEKnJxIZG3dFeFxNCx9BiDVic+NnDHoMGnsJgA0y2XXA6gKaNQUaibBspYwK
-	 4J8h9Eapq3QEM8bBhUFuTd4bm5JwGFjmRXjV1gazoBAuFDnRxzcw2gzLbe9M6C14n0w==
+	t=1795625026;
+	b=DBxircKGpPLiI08rZy9TnGLPxgHy90q2WRqoQLpAIawKfgiJpmAjuVVRrMfH+/hIy7mY
+	 yB21tucoGWnvdD6zUJcaWWrpwL+lFOM3M1WEhyv+D0OZDzVp9QBsKcWTtkOoXapSBosww
+	 ld1EHBCGJ+CiQ29kH8Y2ZopXww6zHZCYTxxBdmDedg/i2f0eheQ0wOzmOSzphV0TMlfYz
+	 M8oyhJ0kBjXZ0QRXNG4CmdfqAvCEFbOhhAlVTjOxMaddSErwh+s+j1uio4G58qoP6843B
+	 sIVRGvFcvOyFHFKQ3/nueswsHoLAI5BJrbrQjhf+Q9E7iKOq8LNkkQvHvqdR0TxF5Vw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795625023;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795625026;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=nwsawGvHRvAQqhgYx5CLlM/CfHtlNR3dxZdkDCx3N40=;
-	b=jRTZ9YdreAfalk2c8m7k/2U9wQam/KexQe1ot9CsoGfoLm/YCPnzOoKUTHZm3P0EKjga
-	 6y/lhROIstDWC25t7grm0SQ0Va5gjKWEfQEyY1qEwo8/S4pH4WGhsevOFzk1PEslxml4z
-	 A24WpWVpHOk6sXa6RKuzw4n9wPk1b1whWEm0Fn+l84YkOdWNteze4o1xKviQVEdZXlKKT
-	 kqbZiOrMV6aEyXfao5AcNsS3j3RfjCl3qGaiNlaYKLY2LCGkmzzxVDSwfhDUnZE8KUL8F
-	 XfKGusVYTxR20+Qq0/5yOkC6lBnkF3FgJUTGqPP3/4RwcqyzoEzhYm5995kYx0G+k/A==
+	bh=bSJjW9s5SV55+D0VDHlgqJUQ8Bl+sBpEYOPfk7KANM8=;
+	b=Po3ktcDx3TSR061YX5ncMqK1NIzPIUIAYP4AQssz4IhZgJ1P8uacJiQv/QnYQm9k+sZS
+	 sk8dDgoVwTLGqUgYLwqu0PDEqsEy8sKEYLiMmhD6DmvlrFBh4ZC7A7bOrFcuKV/PK2Ikn
+	 Osc+EeLi0catdiU6TmKel62Vun6TeJxA7Vn5co/iEPaqpJ3en9Tz8YWB+MjwiC1SGH6Vj
+	 YownXsrWepWlSa4k6932VbAw0mNhHxEQtrAWyTShVKRLcr/NEv20+m5N8M9KOvs+GNdRR
+	 b7YlYAE5xXEEIA9Hz0+oJuRXjkk3+aCfTpya3esQD885zGBjhV2tX4T5beOiAkBaTzw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=BUbUUEvf;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=rW80EjwE;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 098CE606A321;
-	Wed, 25 Nov 2026 16:43:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3CB18606A31E;
+	Wed, 25 Nov 2026 16:43:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=BUbUUEvf
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 578391F000C4;
-	Wed, 25 Nov 2026 16:43:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=rW80EjwE
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 852E71F000C4;
+	Wed, 25 Nov 2026 16:43:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795625022;
-	bh=nwsawGvHRvAQqhgYx5CLlM/CfHtlNR3dxZdkDCx3N40=;
+	s=korg; t=1795625026;
+	bh=bSJjW9s5SV55+D0VDHlgqJUQ8Bl+sBpEYOPfk7KANM8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=BUbUUEvfWzHHdA5eqeZAloi7M0TLTdlfVW+bjUym65Zrx2vcUE8YJwpjbU21fKooa
-	 4b2ivTiL90RZQyDqksBt5sDmQnbMksynHwDgKIw0OKtViTJIOjNV2nkB0J1bkBocCG
-	 9ngoJjOwenYq8+Zz4qtnIxa0PpV3lg2GQBBtAoNg=
+	b=rW80EjwEmsNfuF2hFRYe+l2mWKJdPOokygcVAkHQh9ch04S/cbp4+rkcqDnnR7L1H
+	 uBlHcToBsfGP/F2kqsi5SjmfeJ4IXthF9/DRzrKWogBaA+x28O3Wlj42+I9eInVXzz
+	 WOy2AaZ+KQrheWbnH+80DsqI6rV/Z3n5hNysDO8E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Josef Bacik <josef@toxicpanda.com>,
-	"Mike Rapoport (Microsoft)" <rppt@kernel.org>,
-	"Lorenzo Stoakes (ARM)" <ljs@kernel.org>,
-	Muhammad Usama Anjum <usama.anjum@arm.com>,
-	"David Hildenbrand (Arm)" <david@kernel.org>,
+	Alexandr <youdoit@mail.ru>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 382/816] mm/userfaultfd: wake all waiters on unregister
-Date: Wed, 25 Nov 2026 15:32:10 +0100
-Message-ID: <20261125143858.047737106@linuxfoundation.org>
+Subject: [PATCH 6.12 383/816] ALSA: hda/realtek: Enable mute and mic-mute LEDs on HP ENVY 17-cr0xxx
+Date: Wed, 25 Nov 2026 15:32:11 +0100
+Message-ID: <20261125143858.071135162@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143849.205329330@linuxfoundation.org>
 References: <20261125143849.205329330@linuxfoundation.org>
@@ -71,76 +68,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Josef Bacik <josef@toxicpanda.com>
+From: Alexandr <youdoit@mail.ru>
 
-[ Upstream commit 3afb19d68cc5e7851fdb1069c8094af97bd80417 ]
+[ Upstream commit cf79cc4996bf936fe159af2a600519b3ebd4ccb7 ]
 
-UFFDIO_UNREGISTER only wakes pending faults if VM_UFFD_MISSING is set.
-Threads waiting on write-protect, minor or RWP faults can therefore remain
-asleep after unregistering a range that does not track missing faults.
+The HP ENVY Laptop 17-cr0xxx (subsystem ID 103c:8a2e) has mute and
+mic-mute LEDs on the F8 and F5 keys that never light up on Linux: the
+existing quirk entry only sets up the CS35L41 amplifiers.
 
-Wake pending faults regardless of the registration mode so they can retry
-without an explicit UFFDIO_WAKE or closing the userfaultfd. This matches
-the existing behavior for missing faults, including removing unread fault
-messages for the woken waiters.
+The board uses the same LED wiring as the HP ENVY x360 15-ey0xxx
+(103c:8a31): the mute LED is driven by COEF 0x0b bits 3:2 and the
+mic-mute LED by GPIO2 with inverted polarity. Both were verified with
+hda-verb on the actual hardware. Switch the entry to
+ALC287_FIXUP_CS35L41_I2C_2_HP_MUTE_LEDS, which chains the amplifier
+setup with ALC245_FIXUP_HP_X360_MUTE_LEDS, and use the DMI product name
+of the board.
 
-Fix generated by an LLM and sent by Josef Bacik in private.
-
-Fixes: 63b2d4174c4a ("userfaultfd: wp: add the writeprotect API to userfaultfd ioctl")
-Cc: stable@vger.kernel.org
-Signed-off-by: Josef Bacik <josef@toxicpanda.com>
-[ david: rebase; simplify description ]
-Reviewed-by: Mike Rapoport (Microsoft) <rppt@kernel.org>
-Reviewed-by: Lorenzo Stoakes (ARM) <ljs@kernel.org>
-Tested-by: Muhammad Usama Anjum <usama.anjum@arm.com>
-Link: https://patch.msgid.link/20261031-fixes_core-v3-24-d6437171ecc3@kernel.org
-Signed-off-by: David Hildenbrand (Arm) <david@kernel.org>
-[ sashal: Wake target kept as the VMA's own userfaultfd ctx instead of upstream's ctx argument, since this tree lacks the check that rejects unregistering another ctx's VMA; the file path also differs. ]
+Fixes: aa8e3ef4fe53 ("ALSA: hda/realtek: Add quirks for various HP ENVY models")
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Alexandr <youdoit@mail.ru>
+Link: https://patch.msgid.link/20261103142121.74032-1-youdoit@mail.ru
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/userfaultfd.c | 22 ++++++++++------------
- 1 file changed, 10 insertions(+), 12 deletions(-)
+ sound/pci/hda/patch_realtek.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/fs/userfaultfd.c b/fs/userfaultfd.c
-index e1b1a5b1a757a..77b295cb39906 100644
---- a/fs/userfaultfd.c
-+++ b/fs/userfaultfd.c
-@@ -1491,6 +1491,8 @@ static int userfaultfd_unregister(struct userfaultfd_ctx *ctx,
- 
- 	ret = 0;
- 	for_each_vma_range(vmi, vma, end) {
-+		struct userfaultfd_wake_range range;
-+
- 		cond_resched();
- 
- 		BUG_ON(!vma_can_userfault(vma, vma->vm_flags, wp_async));
-@@ -1511,18 +1513,14 @@ static int userfaultfd_unregister(struct userfaultfd_ctx *ctx,
- 		/* Prevent new userfaults from being queued after the wakeup. */
- 		vma_start_write(vma);
- 
--		if (userfaultfd_missing(vma)) {
--			/*
--			 * Wake any concurrent pending userfault while
--			 * we unregister, so they will not hang
--			 * permanently and it avoids userland to call
--			 * UFFDIO_WAKE explicitly.
--			 */
--			struct userfaultfd_wake_range range;
--			range.start = start;
--			range.len = vma_end - start;
--			wake_userfault(vma->vm_userfaultfd_ctx.ctx, &range);
--		}
-+		/*
-+		 * Wake any concurrent pending userfault while we unregister,
-+		 * so they will not hang permanently and it avoids userland to
-+		 * call UFFDIO_WAKE explicitly.
-+		 */
-+		range.start = start;
-+		range.len = vma_end - start;
-+		wake_userfault(vma->vm_userfaultfd_ctx.ctx, &range);
- 
- 		vma = userfaultfd_clear_vma(&vmi, prev, vma,
- 					    start, vma_end);
+diff --git a/sound/pci/hda/patch_realtek.c b/sound/pci/hda/patch_realtek.c
+index 1a68e683801b1..bfc75a1733fb5 100644
+--- a/sound/pci/hda/patch_realtek.c
++++ b/sound/pci/hda/patch_realtek.c
+@@ -11089,7 +11089,7 @@ static const struct hda_quirk alc269_fixup_tbl[] = {
+ 	SND_PCI_QUIRK(0x103c, 0x8a2b, "HP Envy 15", ALC287_FIXUP_CS35L41_I2C_2),
+ 	SND_PCI_QUIRK(0x103c, 0x8a2c, "HP Envy 16", ALC287_FIXUP_CS35L41_I2C_2),
+ 	SND_PCI_QUIRK(0x103c, 0x8a2d, "HP Envy 16", ALC287_FIXUP_CS35L41_I2C_2),
+-	SND_PCI_QUIRK(0x103c, 0x8a2e, "HP Envy 16", ALC287_FIXUP_CS35L41_I2C_2),
++	SND_PCI_QUIRK(0x103c, 0x8a2e, "HP ENVY Laptop 17-cr0xxx", ALC287_FIXUP_CS35L41_I2C_2_HP_MUTE_LEDS),
+ 	SND_PCI_QUIRK(0x103c, 0x8a30, "HP Envy 17", ALC287_FIXUP_CS35L41_I2C_2),
+ 	SND_PCI_QUIRK(0x103c, 0x8a31, "HP Envy 15", ALC287_FIXUP_CS35L41_I2C_2),
+ 	SND_PCI_QUIRK(0x103c, 0x8a4f, "HP Victus 15-fa0xxx (MB 8A4F)", ALC245_FIXUP_HP_MUTE_LED_COEFBIT),
 -- 
 2.53.0
 
