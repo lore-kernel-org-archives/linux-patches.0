@@ -1,52 +1,56 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795618254;
-	b=qgbUdZp5gygTR+USPKV1y+pys/4gDyKeejxrbiT6FyWgAyrKii0DSyK00bL3JOPk77bX
-	 Z8aBnx6htRSezkfxaunzPlHGej2JwZexP9iT8UZsAoRQOlSN8QBv49NXKy9s1pHJXGVrB
-	 J9DIs1HLb+uTX7HR7vl1NLyQnZDM8lz60e6iXFDd5JV0v7ZjR/8ghyemjFX5+FloE5Pae
-	 MGMfHDQSL9F7MSllj8S81MTjZeP7gHlap/lLNYH6xctX/xmGkbiJ38uqo6cKulcMrs7Iy
-	 fv2ADfTIh1DZxXO4y8BKhaNERw+rOI4uZwmQJMC5tdRO7yRoYoLW/8LEitKQXliqhaA==
+	t=1795618257;
+	b=TOiaH0yatrzsuX7/vRm6iXekmn6A3fpy0t0mmzIypz9FGVUosX2+ACVgwlj4jmLwz5X9
+	 6ruZAGzf4sCgqoa1PJdPSDMMq94z9bN1a8N+wu78bwc6ZQXSBPunZBZQK56M0HT0PalCm
+	 oJfX186APnwCLyNUppndVfeB+FobQxz4uZe+IE7ppYBkt/aB9+rQrlgt894NhNNYgSvvs
+	 Pg1AMAmQxzYveYt5iNP0fWVeJGFABBVLBfwNmUwbT3h6C+nzZCG3h7LKXh8gOE8xBDn14
+	 BKQ9NQndNYi/t2MGWGI5v5ZGbSVYr1cC/PDtS5v5xQs63HK7aA3UdbYwDsLRfEvahmg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795618254;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795618257;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=HfLcSH1Wah3be28lfOl55LyqsHHKRmFw7UkGW6m+mgk=;
-	b=aUU/2YcOpnCbyL3g8CcJS8VHS2vr/tM9wpf/Dah54SWjX/13L4vQl2HcZXAh4psb+EUC
-	 VYJzQEldoifHODYTGWE0LKaCgvYA6lOO5aMDrNefZ0Ey+gdAWi2HI+FZ1/nHUncuCEfrw
-	 Azo7QrsTB+le0v9ZvEVTUTogL3/+V9f0q/OMBjO0hzDrSSYXRT892m1jv3Q6hOkv2A26G
-	 klGqV4nnVxrzO3fSKtj5nDlaruRTrNO2pl2l/1im5n+aMARJMozm7lsa3+bkaLzhe6Q/q
-	 sSp0SU69RNnSrWTeBPHgk6YiXbjxZ53mXJzGFTsekM+fjdjSMBeTUyxLDIBwge5yWJA==
+	bh=v1h9iCU9xhZRsrH1zxmZFN+lCrA1r7F9o5cGgpjpcQ0=;
+	b=rvt61Cyvq1nAihse8AzpHsIuAUP7pm4vgTnjJPRHEcTvIm5unv1DH6guwqfZU7v2Tpam
+	 Q5w9Dblz8auQDLcfMA+CBCfgeks0gYKyC31wAWjOQml+S/S7yElQ4yCo5Ec+k/IJYOhq/
+	 y4Fx3wDOGZcYZdaRo2z/7mm7SEE455JrTeOpIrhFT+kCvwIgQNwBgJ6O/2YgImbsvud54
+	 GIIwk8+LkYyP0MCx6SbI7waJXHxiBYYo8hXjkKfhSoJm6glkw/II54kEkxWhWv0K5eK5O
+	 MLa468ofC5aZlwku4sp7iel7u3nTStr+rIq8q0ud+eAeAA6RWV+zm8YTNYULGHNOysA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=1GEiQu84;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=spJ2cq2i;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4A021606A31E;
-	Wed, 25 Nov 2026 14:50:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 51322606A31E;
+	Wed, 25 Nov 2026 14:50:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=1GEiQu84
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 99EBE1F000C0;
-	Wed, 25 Nov 2026 14:50:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=spJ2cq2i
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6B19B1F000C0;
+	Wed, 25 Nov 2026 14:50:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795618254;
-	bh=HfLcSH1Wah3be28lfOl55LyqsHHKRmFw7UkGW6m+mgk=;
+	s=korg; t=1795618256;
+	bh=v1h9iCU9xhZRsrH1zxmZFN+lCrA1r7F9o5cGgpjpcQ0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=1GEiQu84cy+W6tdcylmwjlK4qmZlZzGZac/FYQsEcB3g1dvhuAwHvJMLSmdZNZY9j
-	 ef8p9lTcLwb6sGURh+aAiEl1VwRSHbxboPzFyNPJB7S1/fulZRHRi81VFyFllsPi2Y
-	 /Z7PLOcbcqgqYO/LkAiikz+nDBqKHgZHJJGE1L8Q=
+	b=spJ2cq2imB1BFwaGhMwxIbEuiyZue5cpX1uLdIM/MJQ2hSTry5ToSY9UNINSqV/xX
+	 GUPN5ZY5IIw8CZBkiPIBYp4qSEZ01WC2yzOBG8r7YybVk4Gf64C7KBb8gi5s8LuoGu
+	 vbx6wP39AEa3WySIlVbX8lmcdNlrbK2Ilcovws0M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yifan Zhang <yfzhang23@stu.pku.edu.cn>,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
+	Leo Yang <Leo-Yang@quantatw.com>,
+	Paolo Abeni <pabeni@redhat.com>,
+	Jeremy Kerr <jk@codeconstruct.com.au>,
+	Matt Johnston <matt@codeconstruct.com.au>,
+	netdev@vger.kernel.org,
+	Bart Van Assche <bvanassche@acm.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0214/1005] Bluetooth: validate retained LE Set CIG Parameters command length
-Date: Wed, 25 Nov 2026 15:25:52 +0100
-Message-ID: <20261125143826.753979949@linuxfoundation.org>
+Subject: [PATCH 7.3 0223/1005] mctp i3c: Fix locking in an error path
+Date: Wed, 25 Nov 2026 15:26:01 +0100
+Message-ID: <20261125143826.965634465@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143821.729802100@linuxfoundation.org>
 References: <20261125143821.729802100@linuxfoundation.org>
@@ -68,61 +72,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yifan Zhang <yfzhang23@stu.pku.edu.cn>
+From: Bart Van Assche <bvanassche@acm.org>
 
-[ Upstream commit ed4d302af778b9e2ead28134a2196c09a4ad248a ]
+[ Upstream commit 750eb5ab457e62e221a9c8521e2274f14c85b387 ]
 
-hci_cc_le_set_cig_params() validates the controller response but not the
-parameters of the previously sent command.  A short command can claim a
-large num_cis without containing the corresponding cis[] array.  A
-complete successful response then makes the handler read beyond the
-command skb while looking up each CIS ID.
+If netdev_alloc_skb() fails, mctp_i3c_read() jumps to a label that
+unlocks mi->lock although that mutex has not been locked yet. Fix this
+by returning -ENOMEM directly. This bug has been detected by the Clang
+thread-safety analyzer.
 
-KASAN reports:
-
-  BUG: KASAN: slab-out-of-bounds in hci_cc_le_set_cig_params
-  Read of size 1
-  hci_cc_le_set_cig_params
-  hci_cmd_complete_evt
-  hci_event_packet
-
-Obtain the retained parameter length and require both the fixed header and
-the complete CIS array before using the command data.
-
-The reproducer no longer triggers a KASAN report with this change.
-
-Fixes: 71e9588435c3 ("Bluetooth: ISO: use correct CIS order in Set CIG Parameters event")
-Closes: https://lore.kernel.org/linux-bluetooth/179317463153.87610.8996555110609321376@stu.pku.edu.cn/
-Signed-off-by: Yifan Zhang <yfzhang23@stu.pku.edu.cn>
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Cc: Leo Yang <Leo-Yang@quantatw.com>
+Cc: Paolo Abeni <pabeni@redhat.com>
+Cc: Jeremy Kerr <jk@codeconstruct.com.au>
+Cc: Matt Johnston <matt@codeconstruct.com.au>
+Cc: netdev@vger.kernel.org
+Fixes: 2d2d4f60ed26 ("mctp i3c: fix MCTP I3C driver multi-thread issue")
+Signed-off-by: Bart Van Assche <bvanassche@acm.org>
+Acked-by: Matt Johnston <matt@codeconstruct.com.au>
+Link: https://patch.msgid.link/71e0a880ffe7a83237e501b07884bf54343e76ca.1793296780.git.bvanassche@acm.org
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/bluetooth/hci_event.c | 7 +++++--
- 1 file changed, 5 insertions(+), 2 deletions(-)
+ drivers/net/mctp/mctp-i3c.c | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
-diff --git a/net/bluetooth/hci_event.c b/net/bluetooth/hci_event.c
-index 64db225a9f109..cb7abdc5546f9 100644
---- a/net/bluetooth/hci_event.c
-+++ b/net/bluetooth/hci_event.c
-@@ -3985,13 +3985,16 @@ static u8 hci_cc_le_set_cig_params(struct hci_dev *hdev, void *data,
- 	struct hci_conn *conn;
- 	u8 status = rp->status;
- 	bool pending = false;
-+	size_t len;
- 	int i;
+diff --git a/drivers/net/mctp/mctp-i3c.c b/drivers/net/mctp/mctp-i3c.c
+index 4e857dd5df642..5f225999d715e 100644
+--- a/drivers/net/mctp/mctp-i3c.c
++++ b/drivers/net/mctp/mctp-i3c.c
+@@ -111,8 +111,7 @@ static int mctp_i3c_read(struct mctp_i3c_device *mi)
+ 			       mi->mrl + sizeof(struct mctp_i3c_internal_hdr));
+ 	if (!skb) {
+ 		stats->rx_dropped++;
+-		rc = -ENOMEM;
+-		goto err;
++		return -ENOMEM;
+ 	}
  
- 	bt_dev_dbg(hdev, "status 0x%2.2x", rp->status);
- 
--	cp = hci_sent_cmd_data(hdev, HCI_OP_LE_SET_CIG_PARAMS);
-+	cp = hci_sent_cmd_data_len(hdev, HCI_OP_LE_SET_CIG_PARAMS, &len);
- 	if (!rp->status &&
--	    (!cp || rp->num_handles != cp->num_cis ||
-+	    (!cp || len < sizeof(*cp) ||
-+	     len < struct_size(cp, cis, cp->num_cis) ||
-+	     rp->num_handles != cp->num_cis ||
- 	     rp->cig_id != cp->cig_id ||
- 	     skb->len < array_size(rp->num_handles, sizeof(*rp->handle)))) {
- 		bt_dev_err(hdev, "unexpected Set CIG Parameters response data");
+ 	skb->protocol = htons(ETH_P_MCTP);
 -- 
 2.53.0
 
