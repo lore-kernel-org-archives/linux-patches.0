@@ -1,51 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795622436;
-	b=AEbQG0VOIGCny29AU7s/e7lWrZjRwCcI2Oduk9VviVdeYrD79Fw8vcSEBk7m5I0mpIxo
-	 NkNJtUmwwrgHmPQi5bb8o42RZpkGwmT6kwipK8vAAA7zGvXlkWcLHWSJ4q4zSSrDSVP/2
-	 NtfA7oQ9rMpFpC9itGD7Q7Ln8H8bw2XJ9dEdlwgnhHrna53ETlC6DP9/ETM3HyFmsCPsF
-	 msqsw/bl9Orot9FI9L6lZDz4nCAIPSuSkTTnVNXSRynscj+nIooGDmmjt3mQhFPBcGSBh
-	 ccyefrTSUpMqBqkLs07P4duD1A3+rWbmJUQdbyrCTfLTS4o/TwGSaP4isAeKjasKYTg==
+	t=1795622439;
+	b=yRl0XvK0lbus6j5plhBSdUgq7jFYQf/cyNAy07V2P9+M+3uXOWvmeONqSAxQ097Hb0P6
+	 B3Z4mjWm1M82/MaJB349EPEybPFzqsgyiI4NHf3Ev0oDtiJrLdeHk+JwjwGDQFwhI8UG2
+	 iGWKNULqGNkYfaXCVlFeoDjCMmCcOpym6Gj+07mssCKqigXQT2181fFTYkGz2EWz8Lq5j
+	 +PauNIR7V4XJJqatWRAQlKwn4iafyMd3GoVGcUXzBvgYoH+xHJRvgajDrFgjkBdN9YsL0
+	 /C9wWTZPr/s6B/loS/HYxRSUTAS0qdipISCpoEtGrzCeZ6M6Dxt0O/GZHo+wSMSxr1A==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795622436;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795622439;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=sQUWP+bal7qrnA4fwQW1Mw1DiRQAjcvzs6clgLGhC7g=;
-	b=HWG8C62RVaOAdLerMRYEwepv1TmiVoWXgQj6gqEanS68w/myqaxlXqyjKFlQqXQUOqKq
-	 PyV6webCQl05a4rOWso42Ms0+MnbqRg0NRUyBjwhhtGQtDNwGHCHoovG636ZQgV16hq/K
-	 yiXkdvG0Uiwa9xaIBjZSQldlp38mCFbtCGxWfKLQCOMFlTC2ZmyQ9mwlTjFD4yDVkWpcg
-	 aTn8HKJJ14qsJ3ROjh/5fPcNC12dXLH9tAS/2GBriR5Hj2Ei4Gwlvxd4bQNYJZGv1KgCy
-	 CTmfVrweK2cLH8nyVJ4paYyzkdwpPLft+GXL74NLbtMIObEu7dffg41NqPw8LRMLWFQ==
+	bh=7CTFsnu/tIxJ9qOWUgfINbJgP3Dx6m79gne4sMKDdQ0=;
+	b=uHYsrspFplNCN7J0VWPNkXEmyzN7bIAQOw9BwzcT++XLA3+tVop1qCjVRwZSKStmXIRA
+	 dywYNW1YDAr0ppi7sDufuKIlzEW3IO6F6xmEOfOkFoADmoXDt3PfsVec2sdI3o70Vk0Ua
+	 2cG0Npe4cETkwcaiJgrUeJqwgPg3C6wzMdhlDcDyRLQlxV8o+46fN8+gWWNA4nwjya20D
+	 +jbPhq4lmf8wlFl2bjqAgk2+sCVvT/Ul5U8Nb/msAroDRCxkI98iu94BiFlJShXLY6Gic
+	 5Br1PAhG0UiXc/U27SJH3oh6c1638EkTsHeXbGZPmIkw5UetbOtX9B1Si3tQrJcPDjQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=0NaHBUvE;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="ZVgUtqp/";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E01B9606A327;
-	Wed, 25 Nov 2026 16:00:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 27D08606A31E;
+	Wed, 25 Nov 2026 16:00:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=0NaHBUvE
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F0CB11F000C6;
-	Wed, 25 Nov 2026 16:00:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ZVgUtqp/
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CA0BA1F000C4;
+	Wed, 25 Nov 2026 16:00:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795622435;
-	bh=sQUWP+bal7qrnA4fwQW1Mw1DiRQAjcvzs6clgLGhC7g=;
+	s=korg; t=1795622438;
+	bh=7CTFsnu/tIxJ9qOWUgfINbJgP3Dx6m79gne4sMKDdQ0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=0NaHBUvE4rtr2PHu4P5aOVLiCMcDTm1/Qq6842UbwNWtKuYkHoDM3vK0gSd8luxhy
-	 ORkS6CLppKkponIMZQFyreprN1y6KaYXdqDYSvdwS7iMgAEt3CqsRhSrglbEeMRIQU
-	 wh3QIGG171dfQgCPtuo+yBzFO+rMnemY49DS13Iw=
+	b=ZVgUtqp/hv8EDmoxOwsLwyWa+8Q/QI4X42IzLRX/ftJjQijWaqqvX8t4lj20oaXif
+	 sU9FuEEM5tlv33Ar8TkittHNpsWA0CZhxhF4k6Z0w4YeeP8wQEYdeCRYO1aUkU6rsv
+	 K8J1PzfR0EtPvBRENjHqykIJT6ix47GWwjLluz5o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Alexei Starovoitov <ast@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 535/990] bpf, x86: Fix timed may_goto with private stack
-Date: Wed, 25 Nov 2026 15:31:42 +0100
-Message-ID: <20261125143834.624014840@linuxfoundation.org>
+Subject: [PATCH 6.18 536/990] bpf: Adjust pc-relative insn copied into its own patch
+Date: Wed, 25 Nov 2026 15:31:43 +0100
+Message-ID: <20261125143834.648217814@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143822.072087159@linuxfoundation.org>
 References: <20261125143822.072087159@linuxfoundation.org>
@@ -69,89 +69,122 @@ Content-Transfer-Encoding: 8bit
 
 From: Alexei Starovoitov <ast@kernel.org>
 
-[ Upstream commit bb83425b3cdcb7bb3c629598a4d5efad9cc80733 ]
+[ Upstream commit 67a3b916a7ae7c1a6bed08555417d444de6f5838 ]
 
-arch_bpf_timed_may_goto() computes the address of count and timestamp
-as rbp + offset. When the prog uses private stack the JIT maps r10 to r9
-and nothing is reserved under rbp, so bpf_check_timed_may_goto() reads
-and writes the timestamp in the kernel stack, where
-arch_bpf_timed_may_goto() has just saved r0-r5 or further down.
-The following loop in fentry prog with r0-r5 set to zero:
+bpf_do_misc_fixups() inits may_goto count by patching the first insn
+of a subprog with [ST, ST, first insn]. bpf_convert_ctx_accesses()
+patches insn that needs a barrier with [nospec, insn].
+bpf_adj_branches() doesn't adjust insns inside the patch, so when
+the copy is a call, ld_imm64 of a func or a jump that points backward
+its target is off by the number of insns in front of it:
 
-  1: may_goto +2
-     r6 += 1
-     goto 1b
+  static int A(void)  { return 1; }
+  static int A2(void) { return 2; }
+  static int B(void)
+  {
+          int i, ret = A();
 
-leaves r3 with ktime in it when the prog has 64 bytes of stack and
-ends after 65535 iterations when it has 128.
+          for (i = 0; i < 10 && can_loop; i++)
+                  ...
+          return ret;
+  }
 
-Add the frame pointer to the offset in the JIT, where rbp vs r9 is
-known, and pass the pointer in AX.
+When A is placed in front of B and may_goto is timed 'call A' becomes
+call of A + 2. B returns 2 when A + 2 is the start of A2. Otherwise
+the prog is rejected with "verifier bug: No program to jit at insn".
 
-arm64 and powerpc JITs keep the address of private stack in BPF_REG_FP
-and are not affected.
+Add bpf_adj_moved_insn() and use it for both copies.
 
-Fixes: 2fb761823ead ("bpf, x86: Add x86 JIT support for timed may_goto")
+Fixes: 011832b97b31 ("bpf: Introduce may_goto instruction")
+Fixes: d6f1c85f2253 ("bpf: Fall back to nospec for Spectre v1")
 Signed-off-by: Alexei Starovoitov <ast@kernel.org>
-Link: https://patch.msgid.link/20260924233130.1213812-2-alexei.starovoitov@gmail.com
-[ sashal: Dropped the absent kfunc-argument block from the hunk's context, so the new timed may_goto add-frame-pointer code is inserted right after the !imm32 check. ]
+Link: https://patch.msgid.link/20260924233130.1213812-4-alexei.starovoitov@gmail.com
+[ sashal: Applied the changes to kernel/bpf/verifier.c instead of fixups.c, using the local function names convert_ctx_accesses() and do_misc_fixups() in place of the bpf_-prefixed upstream ones. ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/net/bpf_jit_comp.c       | 12 ++++++++++++
- arch/x86/net/bpf_timed_may_goto.S | 10 ++--------
- 2 files changed, 14 insertions(+), 8 deletions(-)
+ kernel/bpf/verifier.c | 55 +++++++++++++++++++++++++++++++++++++++++--
+ 1 file changed, 53 insertions(+), 2 deletions(-)
 
-diff --git a/arch/x86/net/bpf_jit_comp.c b/arch/x86/net/bpf_jit_comp.c
-index 39cf6974e11e1..86f50102f8b7d 100644
---- a/arch/x86/net/bpf_jit_comp.c
-+++ b/arch/x86/net/bpf_jit_comp.c
-@@ -2421,6 +2421,18 @@ st:			if (is_imm8(insn->off))
- 			}
- 			if (!imm32)
- 				return -EINVAL;
-+			if (func == (u8 *)arch_bpf_timed_may_goto) {
-+				u32 fp = priv_frame_ptr ? X86_REG_R9 : BPF_REG_FP;
+diff --git a/kernel/bpf/verifier.c b/kernel/bpf/verifier.c
+index 8ac91e5ced84b..13864488b5a07 100644
+--- a/kernel/bpf/verifier.c
++++ b/kernel/bpf/verifier.c
+@@ -21471,6 +21471,44 @@ static struct bpf_prog *bpf_patch_insn_data(struct bpf_verifier_env *env, u32 of
+ 	return new_prog;
+ }
+ 
++/*
++ * insn was moved down by delta insns inside its own patch. Operands relative
++ * to the pc that point in front of the old position did not move with it.
++ */
++static int bpf_adj_moved_insn(struct bpf_insn *insn, u32 delta)
++{
++	u8 class = BPF_CLASS(insn->code), op = BPF_OP(insn->code);
++	s64 off = insn->imm, off_min = S32_MIN;
++	bool is_imm = true;
 +
-+				/*
-+				 * AX has the offset of count and timestamp
-+				 * in the stack. Turn it into a pointer.
-+				 * add r10, rbp or add r10, r9
-+				 */
-+				maybe_emit_mod(&prog, BPF_REG_AX, fp, true);
-+				EMIT2(0x01, add_2reg(0xC0, BPF_REG_AX, fp));
-+				ip += 3;
++	if (bpf_pseudo_func(insn) || bpf_pseudo_call(insn)) {
++		/* subprog that started at the old position starts with the patch */
++		if (off >= 0)
++			return 0;
++	} else if ((class == BPF_JMP || class == BPF_JMP32) &&
++		   op != BPF_CALL && op != BPF_EXIT) {
++		if (insn->code != (BPF_JMP32 | BPF_JA)) {
++			off = insn->off;
++			off_min = S16_MIN;
++			is_imm = false;
++		}
++		/* jump to itself stays */
++		if (off >= -1)
++			return 0;
++	} else {
++		return 0;
++	}
++
++	off -= delta;
++	if (off < off_min)
++		return -ERANGE;
++	if (is_imm)
++		insn->imm = off;
++	else
++		insn->off = off;
++	return 0;
++}
++
+ /*
+  * For all jmp insns in a given 'prog' that point to 'tgt_idx' insn adjust the
+  * jump offset by 'delta'.
+@@ -21962,7 +22000,13 @@ static int convert_ctx_accesses(struct bpf_verifier_env *env)
+ 			struct bpf_insn *patch = insn_buf;
+ 
+ 			*patch++ = BPF_ST_NOSPEC();
+-			*patch++ = *insn;
++			*patch = *insn;
++			ret = bpf_adj_moved_insn(patch++, 1);
++			if (ret) {
++				verbose(env, "insn %d cannot be patched due to 16-bit range\n",
++					env->insn_aux_data[i + delta].orig_idx);
++				return ret;
 +			}
- 			if (priv_frame_ptr) {
- 				push_r9(&prog);
- 				ip += 2;
-diff --git a/arch/x86/net/bpf_timed_may_goto.S b/arch/x86/net/bpf_timed_may_goto.S
-index 54c690cae1908..6c6e03f725a30 100644
---- a/arch/x86/net/bpf_timed_may_goto.S
-+++ b/arch/x86/net/bpf_timed_may_goto.S
-@@ -11,12 +11,6 @@
- SYM_FUNC_START(arch_bpf_timed_may_goto)
- 	ANNOTATE_NOENDBR
+ 			cnt = patch - insn_buf;
+ 			new_prog = bpf_patch_insn_data(env, i + delta, insn_buf, cnt);
+ 			if (!new_prog)
+@@ -23576,7 +23620,14 @@ static int do_misc_fixups(struct bpf_verifier_env *env)
+ 						     BPF_MAX_LOOPS);
+ 		}
+ 		/* Copy first actual insn to preserve it */
+-		insn_buf[cnt++] = env->prog->insnsi[subprog_start];
++		insn_buf[cnt] = env->prog->insnsi[subprog_start];
++		ret = bpf_adj_moved_insn(&insn_buf[cnt], cnt);
++		if (ret) {
++			verbose(env, "insn %d cannot be patched due to 16-bit range\n",
++				env->insn_aux_data[subprog_start].orig_idx);
++			return ret;
++		}
++		cnt++;
  
--	/*
--	 * r10 passes us stack depth, load the pointer to count and timestamp
--	 * into r10 by adding it to BPF frame pointer.
--	 */
--	leaq (%rbp, %r10, 1), %r10
--
- 	/* Setup frame. */
- 	pushq %rbp
- 	movq %rsp, %rbp
-@@ -30,8 +24,8 @@ SYM_FUNC_START(arch_bpf_timed_may_goto)
- 	pushq %r8
- 
- 	/*
--	 * r10 has the pointer to count and timestamp, pass it as first
--	 * argument.
-+	 * r10 has the pointer to count and timestamp. JIT added the frame
-+	 * pointer to the offset. Pass it as first argument.
- 	 */
- 	movq %r10, %rdi
- 
+ 		new_prog = bpf_patch_insn_data(env, subprog_start, insn_buf, cnt);
+ 		if (!new_prog)
 -- 
 2.53.0
 
