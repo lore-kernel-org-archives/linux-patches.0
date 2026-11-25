@@ -1,51 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795625818;
-	b=q/cWBRyU3QNZuggpOUkqHbhVF6Y2TncNuP1zSEL+HDjEeZz/QixXeIOjwgnUHsbdUt/P
-	 /D5SNQpBdzjgVKxsz5NVBuDjluU88DuCpcNDpuHgDMZ7SUPSbspFqyIjGRKeJ1NWrBgx4
-	 6lyhQ1bblRBkgwu3owb4oNLqo8XdR+RwZXN3EBbHXJif5bPwXc4tNL1sF0S81Z4nKKwFs
-	 qjjQTckHnt0gKKQK3m/Epl2dKM0+AeyLoe7qZep58vXMQFwJgOv1m4NLiZ4rjtYl5qixX
-	 YzEcSgLm8cXU6RlpL37vfDw08QDb7sIZ/QgzlSIUM7jIVQd85zK+wfIwEHDj6yYDHvA==
+	t=1795625821;
+	b=FUWksEhgeEiUQe4fCvM/xiXqQqnp1Xisjx5jkWU1Zbshe6TbfOKt0V6GuwymSPl8t9DS
+	 ZCOna9DFxBbfQR2IqyrYc1LZUPoLGFnKJ4mdk13jVSAQFpN/05778JFt9HBCjhOL/laVw
+	 f/mbMpP1Xj3thKBYgsoqQV8ZQgudocsTvyeu/wBpQLLBYdIGL6BiOUYpXO2OLjaHK0pq0
+	 8Vt0cJR/mSAkSq6jBjlEq965TVnl4Y8DpcPxE6Ta+clR613qemS7j/k6TVEm9r0nzGgsD
+	 FXe9CBriTsv0T7o0tnv6btH3mX3DbEJHxuW+R/5qGeVS2cf0BY1n4nuJp19Qxpmsq5g==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795625818;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795625821;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=ByqOF28Dj7Nm6xdD2F61Ai71wNGVo1HTCMLM0Et2KW4=;
-	b=inc30EzK8c/aDllhbheDMvDr0+R9zQ7qUKY+nf6ZvWo+8d04bUzXqwpH/OYehSgeZioP
-	 pbjQSmXFFEvsvN20nLJV0Qx15bmRlMW4KA9tD/8OC1JuVZSg66PwvLQXVLbzbw6j2uNj8
-	 7x0NJajjuXz6WDyNoZj/OadOwhR48kvxSYa6q2u15K70yZAlIrxlGTDvL5FK79cvj3+kZ
-	 H4I2Ezzsas3RLNpkQTQMfqddc/F3i8EekyTKWL5eSjX8LpYunL6QVAVAqghY/TYvvstCb
-	 CStHPxmCpAnvxR/4iaYyyLAXaUIAcTLZ2YxOE9yBTOMLngafLeK4OZuFUHAGdwwK6UA==
+	bh=A5Lc30jBAWm4isNJuSrwUNB1UjbjbUUVCvr3ur7AJWI=;
+	b=2yfCEFSuzxV2JnGrdnKOdqHKG8b0yr3MPhJUpWnxBm/0tV1seTIx1KnjknXjA4Sqtpig
+	 2i7yRPheEVueEEM4T/KnFNCmBu6BkMeB7ZkiyAivw9U71dYHX93ROESsyD49YIwYPoPTK
+	 uZDNL0Aoi5Cyn0S+Ee0lVrmQNAQ8MUl+PEEU6myrBRIQNH0cIbg1n3RIYu5Zsck2cT22W
+	 /vGsw1WFbJo5Js7mIzq+iWOWSCaya1v2kEc5Hj68DzNteRmXJoKiMOhfih00RYyQoBNmL
+	 PcSvstcaZLu2AUKHXAS3g8xUovN1CYh16W9qUvAwLwZokHRvdBZhiCSa5aZ1cbDFy9Q==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=0pgcXIW9;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=psm48FIS;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 50880606A31E;
-	Wed, 25 Nov 2026 16:56:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A5A0C606A321;
+	Wed, 25 Nov 2026 16:57:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=0pgcXIW9
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A2FDE1F000E0;
-	Wed, 25 Nov 2026 16:56:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=psm48FIS
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 96CE11F000CA;
+	Wed, 25 Nov 2026 16:57:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795625818;
-	bh=ByqOF28Dj7Nm6xdD2F61Ai71wNGVo1HTCMLM0Et2KW4=;
+	s=korg; t=1795625821;
+	bh=A5Lc30jBAWm4isNJuSrwUNB1UjbjbUUVCvr3ur7AJWI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=0pgcXIW9QbOqJTI/4t3OezLVnCBIYVTznH+BhuWkwmD34lcmvCOI1CKmiikjxsjMO
-	 zCWIFtFmraIdvTooeIaIZYp1bAlWh9kUsehSpwmWCJKnZEEjO9Rr6vzxPufEL2BDU0
-	 6ylRVUquFkqzP7C5ODrxIyB6CZT8d0HbT6KZ9vO8=
+	b=psm48FISS8pWLdGiSjxjU3YY9PHq7keNOQC5Z3dvF3D+uztRnXBtucWyQkf/m6uxg
+	 3jzbWWsMXPwvWrZ95i3Q/+GVcTHAsKUBI6N2RN2abHsfOTVqm9n96RZ9HUq3nQmrqF
+	 KYzGRJvo83Yr8IU370YboJhLnd7nlTvp1T0l9DEk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Stanislav Aleksandrov <lightofmysoul@gmail.com>,
 	Guenter Roeck <linux@roeck-us.net>
-Subject: [PATCH 6.12 640/816] hwmon: (max31760) Leave standby mode at probe
-Date: Wed, 25 Nov 2026 15:36:28 +0100
-Message-ID: <20261125143903.998490895@linuxfoundation.org>
+Subject: [PATCH 6.12 641/816] hwmon: (max31760) Report 0 RPM before the first fan speed measurement
+Date: Wed, 25 Nov 2026 15:36:29 +0100
+Message-ID: <20261125143904.021201590@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143849.205329330@linuxfoundation.org>
 References: <20261125143849.205329330@linuxfoundation.org>
@@ -69,43 +69,37 @@ Content-Transfer-Encoding: 8bit
 
 From: Stanislav Aleksandrov <lightofmysoul@gmail.com>
 
-commit 95bddc5252a4c0a2ed9d62e7e53a3461265d9603 upstream.
+commit 33d58cbf2ab26bda81bc3052158d8b9867d5b9a6 upstream.
 
-The driver never clears the standby bit (CR2_STBY) during probe.
-While max31760_resume() clears this bit on resume, probe only
-configured CR2_ALERTS.
+The tachometer count registers initialize to 0 until the first
+measurement cycle completes after power-on. To prevent division by
+zero, tach_to_rpm() clamped tach == 0 to 1, causing it to compute
+and report 3,000,000 RPM (60 * 100000 / 1 / 2).
 
-If the chip was left in standby (for example, by boot firmware or a
-previously running OS before a warm reboot), it remains in standby:
-temperature sensing, fan speed counting, and PWM output are halted.
-This occurs on the Samsung Galaxy XR, where the bootloader places the
-chip in standby during boot.
-
-Clear CR2_STBY alongside setting CR2_ALERTS in probe.
+Return 0 RPM when tach == 0 instead.
 
 Fixes: 38b04ad02d0d ("drivers: hwmon: Add max31760 fan speed controller driver")
 Cc: stable@vger.kernel.org
 Signed-off-by: Stanislav Aleksandrov <lightofmysoul@gmail.com>
-Link: https://patch.msgid.link/20261108-max31760-fixes-v1-2-a61450463059@gmail.com
+Link: https://patch.msgid.link/20261108-max31760-fixes-v1-3-a61450463059@gmail.com
 Signed-off-by: Guenter Roeck <linux@roeck-us.net>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/hwmon/max31760.c |    5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ drivers/hwmon/max31760.c |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
 --- a/drivers/hwmon/max31760.c
 +++ b/drivers/hwmon/max31760.c
-@@ -533,8 +533,9 @@ static int max31760_probe(struct i2c_cli
+@@ -68,8 +68,9 @@ static const int max31760_pwm_freq[] = {
  
- 	dev_set_drvdata(dev, state);
+ static int tach_to_rpm(u16 tach)
+ {
++	/* The count is 0 until the first measurement */
+ 	if (tach == 0)
+-		tach = 1;
++		return 0;
  
--	/* Set alert output to comparator mode */
--	ret = regmap_set_bits(state->regmap, REG_CR2, CR2_ALERTS);
-+	/* Leave standby mode, set alert output to comparator mode */
-+	ret = regmap_update_bits(state->regmap, REG_CR2, CR2_STBY | CR2_ALERTS,
-+				 CR2_ALERTS);
- 	if (ret)
- 		return dev_err_probe(dev, ret, "cannot write register\n");
- 
+ 	return 60 * 100000 / tach / 2;
+ }
 
 
