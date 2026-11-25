@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795622219;
-	b=M3nTOs/U5wfpV6PEYsL5rmEtL/7Nrs5v6qxhLMKkWnxqgW2tjC5SbQsnU9iy/C6ntYLh
-	 mekEuBNZh7BFchxAJSn6ba5TLhc+KN4lH/YOzy2fhDugnp6vRH8M+kOEfoJt/aQmj4JKi
-	 BAitrW3xunmsFte7iISitJRe1ZvkkY/bCBYTC14patmoYKYmLVKVQKe2TlyYFgpSvIlZ+
-	 vk6xDVdmxPSpH/7woEGsJ5v+sWkcgYTFzWhCCmDvhxNkx8nTDd0kH727y9oXu5ssMKTfQ
-	 VBuHeVDFgDQ2hWN8gabJ6ozCUWzt1iI/ri/0OGTipSIr/AWDwlQHfiox8nyI8OIaJdQ==
+	t=1795622222;
+	b=gAHtgMzN8wfib7+tXI4mIni2ZHYFq8naeV49GJ8CQbqf2NCYqNNpcvpMIfvPU1ZlzjEM
+	 KDdwZI2PdSNcspcmaGummRy897fiPRCsGCI5cR5jV1GNI18nrsVu9XBcvDKodJflO6G0K
+	 CpNLr8xuGG/Z4zaNEGfzOiZYlXTYOH4wnGbK0eiNUPtk1RZuHr3ODf81Fa8UY3gAQjWGX
+	 Nw/vtmVa1b1bI1oFZ8IFmFpfyYwua3jGsvFN6Wi0BnXaUGQxYWMEKB/1kVz6+hTaUugaM
+	 BCMXAk3xuFTrroiLF5p5RCjHxg7V7qYWg/zibZLrx4yt06akFsSQITWjXfRe28QIplg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795622219;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795622222;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=yfPj42Gz+a1+NGRX62knUmFxuQayZqdNSQ5rgz/pO/I=;
-	b=AMWgul8cd3A3yqznIC5S6iu/tz4F8QkKxSRdDpp0hTnFmo/nIjQJMMXySd62LceJD8iD
-	 mKCdHRiCfzrB1gC5KchRmLiP3iq6qgt96P1oKz1o49DnYenGvOUkjpzG5AucJZZK9Uy0u
-	 dYZH9AExJB145AbM0mpIym8F4rcunw1zFNrcESDzyACOi4bIEkwa2GcMmUMhXS34IozMK
-	 4HUEQP14XEnwlVXp8NSrOLd6YmQYFhTPV3mPPQqDyQOw+jLJfcL4sfJPXFlTE8BrcQfsX
-	 XAs3YHRvfu7r2zLl2wXUS3W6e4R431s/x06njBC/rn6AV0C3lsCv95VlmS39kTUe04Q==
+	bh=ongkyQIyf7PDt9hqKmp7L7v7gdk/J4oHQKakjyYWrus=;
+	b=EMVZxn6FgagmdoS/QEkCtgBTztHz8J/fFLOd4Df6nBjBhxiGG4WxxXDYruOVXr1RemY0
+	 W+hsn2BZK40/lkcP00jQ0DVvVTxl3HyS5yycVBMgMoKK1ggcFK/ZCvY32PD5nY0vQcXJH
+	 Fz71syFI6Usox77ndI0twpUUEqcLN/g59mK90pW8NQL3SWXuXOrtk44CUXdoH9cJHHgmr
+	 3ByDQJ/d+ThvU8u58dBYUS/8XQBxsPjEQbJ6sEqn9M2c+3zaXgm2ecZjIPdVcTQV8Bdqe
+	 mhCsRKbmekwmPDQLxlOspq4owClczBSR54u5R4PeISg4bF4TXY2vI8TKZGLctPsYgzA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=DTYlAvLd;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=GS8Pa54b;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 690E8606A326;
-	Wed, 25 Nov 2026 15:56:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 178FE606A31E;
+	Wed, 25 Nov 2026 15:57:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=DTYlAvLd
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0DE571F000C0;
-	Wed, 25 Nov 2026 15:56:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=GS8Pa54b
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 582861F000CA;
+	Wed, 25 Nov 2026 15:57:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795622218;
-	bh=yfPj42Gz+a1+NGRX62knUmFxuQayZqdNSQ5rgz/pO/I=;
+	s=korg; t=1795622221;
+	bh=ongkyQIyf7PDt9hqKmp7L7v7gdk/J4oHQKakjyYWrus=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=DTYlAvLdvYXMw+eLrTo9dKuSw9aF9Qloye2ew6nKdIB2i+/EP67DnZeDiGGm95rlC
-	 o2/fe41o/1b7L3ZTVPlpKAPeDM5q29j/eX61qCZoXN87o/16zsJNaYLVUY48wfEFxi
-	 Qb+vAne3u2RNu3cB63b1tMODAyxbePI6yjy9SyR4=
+	b=GS8Pa54bgyICkauDvgwNYYTK8x2xbJBfZkgWrFmF1tyRzpJqm3gH6iwKAhD5k2uru
+	 J2v0xcQDO5k5G8TUzE1uL2ZGsQ/UyXgUdZPDEQdcLyeMzzzhsbe8gTwGz7Elpan2F2
+	 2hraOIm44riYHx9uYA6otShV2uKxXhJR3+PioHOM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sashiko <sashiko-bot@kernel.org>,
-	Eric Dumazet <edumazet@kernel.org>,
+	Kuniyuki Iwashima <kuniyu@google.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 467/990] net: virtio: fix UDP tunnel GSO header of VLAN tagged packets
-Date: Wed, 25 Nov 2026 15:30:34 +0100
-Message-ID: <20261125143833.037088191@linuxfoundation.org>
+Subject: [PATCH 6.18 468/990] tcp: Pass req->rsk_listener to inet_csk_reqsk_queue_drop() in tcp_check_req().
+Date: Wed, 25 Nov 2026 15:30:35 +0100
+Message-ID: <20261125143833.059321280@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143822.072087159@linuxfoundation.org>
 References: <20261125143822.072087159@linuxfoundation.org>
@@ -69,86 +68,77 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eric Dumazet <edumazet@kernel.org>
+From: Kuniyuki Iwashima <kuniyu@google.com>
 
-[ Upstream commit 9e244f94128a4b89004f0564b66e039e58318a34 ]
+[ Upstream commit a9782a6f2bbd0c444689725a710d8b21eab61bc5 ]
 
-virtio_net_hdr_tnl_from_skb() builds a wrong header for VLAN tagged UDP
-tunnel GSO packets.
+When connection migration happens in tcp_v[46]_rcv(), a new
+listener is passed to tcp_check_req().
 
-1) When the skb carries a hwaccel VLAN tag, tun_put_user() inserts the
-   802.1Q header in the frame it copies to user space or vhost-net, and
-   passes vlan_hlen = VLAN_HLEN. virtio_net_hdr_from_skb() adds
-   vlan_hlen to csum_start, but inner_nh_offset and outer_th_offset do
-   not account for it, and are 4 bytes short of the real inner L3 and
-   outer UDP headers in the emitted frame.
+When either of the following is true,
 
-   tun advertises NETIF_F_HW_VLAN_CTAG_TX and NETIF_F_HW_VLAN_STAG_TX
-   in hw_enc_features, and its vlan_features keep the UDP tunnel GSO
-   features, so this happens for example with a VLAN filtering bridge
-   with a tagged port, or with a vlan device on top of a tap.
+  * the new listener queue is full and
+    net.ipv4.tcp_abort_on_overflow is set
 
-2) The outer family comes from skb->protocol, which is ETH_P_8021Q or
-   ETH_P_8021AD when the VLAN tag is in the packet data, so a packet
-   with an outer IPv6 header is reported as
-   VIRTIO_NET_HDR_GSO_UDP_TUNNEL_IPV4. This happens when
-   __vlan_hwaccel_push_inside() inserted the tag because the device does
-   not offload it: virtio_net never offloads VLAN insertion but keeps
-   UDP tunnel GSO in its vlan_features, and tun does the same with VLAN
-   TX offload disabled, or with QinQ (outer tag offloaded, inner tag in
-   the data).
+  * the packet has RST or (not stripped) SYN
 
-The receiver sets inner_network_header and transport_header from these
-offsets, and checks them with the wrong outer family. A forwarded
-packet that gets segmented again uses the wrong inner headers, and a
-receiver checking the outer headers against the virtio header drops
-the packet.
+tcp_check_req() sends RST and calls inet_csk_reqsk_queue_drop().
 
-Add vlan_hlen to both offsets like csum_start, and take the outer
-family from vlan_get_protocol(), which skips VLAN tags in the data.
+Here, the new listener is passed, and its qlen is decremented
+wrongly while reqsk is tied to the old listener.
 
-Fixes: a2fb4bc4e2a6 ("net: implement virtio helpers to handle UDP GSO tunneling.")
-Reported-by: Sashiko <sashiko-bot@kernel.org>
-Closes: https://lore.kernel.org/netdev/179421814766.994134.3669228181251158303@kernel.org/
-Closes: https://lore.kernel.org/netdev/179433950084.994134.15100186606737698605@kernel.org/
-Signed-off-by: Eric Dumazet <edumazet@kernel.org>
-Link: https://patch.msgid.link/20261110213628.3476051-2-edumazet@kernel.org
+Once qlen underflows, inet_csk_reqsk_queue_is_full() always
+return true, and the new listener stops serving.
+
+Without the patch, this script times out while waiting for SYN+ACK
+since the new listener drops SYN, but with the patch, 3WHS completes.
+
+    0 `sysctl -q net.ipv4.tcp_migrate_req=1`
+   +0 `sysctl -q net.ipv4.tcp_syncookies=0`
+   +0 socket(..., SOCK_STREAM, IPPROTO_TCP) = 3
+   +0 setsockopt(3, SOL_SOCKET, SO_REUSEPORT, [1], 4) = 0
+   +0 bind(3, ..., ...) = 0
+   +0 socket(..., SOCK_STREAM, IPPROTO_TCP) = 4
+   +0 setsockopt(4, SOL_SOCKET, SO_REUSEPORT, [1], 4) = 0
+   +0 bind(4, ..., ...) = 0
+   +0 listen(4, 128) = 0
+   +0 < S 0:0(0) win 32792 <mss 1000>
+   +0 > S. 0:0(0) ack 1 <...>
+   +0 listen(3, 128) = 0
+   +0 close(4) = 0
+ +.01 < R 1:1(0) win 0
+   +0 socket(..., SOCK_STREAM, IPPROTO_TCP) = 5
+   +0 listen(5, 1) = 0
+ +.01 < S 0:0(0) win 32792 <mss 1000>
+   +0 > S. 0:0(0) ack 1 <...>
+   +0 < . 1:1(0) ack 1 win 32792
+   +0 fcntl(3, F_SETFL, O_RDWR|O_NONBLOCK) = 0
+   +0 accept(3, ..., ...) = 6
+
+Let's pass req->rsk_listener instead.
+
+Fixes: d4f2c86b2b7e ("tcp: Migrate TCP_NEW_SYN_RECV requests at receiving the final ACK.")
+Signed-off-by: Kuniyuki Iwashima <kuniyu@google.com>
+Link: https://patch.msgid.link/20261111020304.1532064-2-kuniyu@google.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/virtio_net.h | 12 +++++++++---
- 1 file changed, 9 insertions(+), 3 deletions(-)
+ net/ipv4/tcp_minisocks.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/include/linux/virtio_net.h b/include/linux/virtio_net.h
-index b7b6b542f4763..fc9667176f23c 100644
---- a/include/linux/virtio_net.h
-+++ b/include/linux/virtio_net.h
-@@ -622,7 +622,10 @@ virtio_net_hdr_tnl_from_skb(const struct sk_buff *skb,
- 	if (feature_hdrlen && hdr->hdr_len)
- 		__virtio_net_set_tnl_hdrlen(skb, hdr);
+diff --git a/net/ipv4/tcp_minisocks.c b/net/ipv4/tcp_minisocks.c
+index ebcd78ad13efa..accd276830e2e 100644
+--- a/net/ipv4/tcp_minisocks.c
++++ b/net/ipv4/tcp_minisocks.c
+@@ -980,7 +980,7 @@ struct sock *tcp_check_req(struct sock *sk, struct sk_buff *skb,
+ 		tcp_reset(sk, skb);
+ 	}
+ 	if (!fastopen) {
+-		bool unlinked = inet_csk_reqsk_queue_drop(sk, req);
++		bool unlinked = inet_csk_reqsk_queue_drop(req->rsk_listener, req);
  
--	if (skb->protocol == htons(ETH_P_IPV6))
-+	/* skb->protocol is the VLAN protocol when the tag is in the
-+	 * packet data.
-+	 */
-+	if (vlan_get_protocol(skb) == htons(ETH_P_IPV6))
- 		hdr->gso_type |= VIRTIO_NET_HDR_GSO_UDP_TUNNEL_IPV6;
- 	else
- 		hdr->gso_type |= VIRTIO_NET_HDR_GSO_UDP_TUNNEL_IPV4;
-@@ -630,8 +633,11 @@ virtio_net_hdr_tnl_from_skb(const struct sk_buff *skb,
- 	if (skb_shinfo(skb)->gso_type & SKB_GSO_UDP_TUNNEL_CSUM)
- 		hdr->flags |= VIRTIO_NET_HDR_F_UDP_TUNNEL_CSUM;
- 
--	inner_nh = skb->inner_network_header - skb_headroom(skb);
--	outer_th = skb->transport_header - skb_headroom(skb);
-+	/* Like csum_start, the offsets must account for a VLAN tag
-+	 * the caller inserts in the frame.
-+	 */
-+	inner_nh = skb->inner_network_header - skb_headroom(skb) + vlan_hlen;
-+	outer_th = skb->transport_header - skb_headroom(skb) + vlan_hlen;
- 	vhdr->inner_nh_offset = cpu_to_le16(inner_nh);
- 	vhdr->outer_th_offset = cpu_to_le16(outer_th);
- 	return 0;
+ 		if (unlinked)
+ 			__NET_INC_STATS(sock_net(sk), LINUX_MIB_EMBRYONICRSTS);
 -- 
 2.53.0
 
