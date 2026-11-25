@@ -1,52 +1,56 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795618398;
-	b=oKvHIS7HcuTsyBthmq2/dk4s23YWyuFqtDgGvl3CiW0LVjoVn0H+eHySO5wZztnN2stP
-	 kLJ17dixvXBH+6vUI3auj5mDZlV1/S+tptPWQfU74sJO4yVojAOyYCPp+T1CCCN6SetAA
-	 B0kqaeu8lAwXzRbtHtkGiwU+Ghq5dPGMmdFGz5AIpbJjhv6rZbJcDpqeBDhAMaX1Q8r8u
-	 mJvEfQWpTFeyH1d98hFhmf5afAirvNMR40JE4E3cW/+6sOrJh+ISwHZt+T3ZbrFDa7OGe
-	 vOFGj+6LRZwOqYHUyjm2P+h9ZiiYdy4Baryv3bHyNPaeNzF73L/bu6udLmkWhDNjXRA==
+	t=1795618401;
+	b=gBJ8/DxYwtFmuHvNTreABXGXhPolUyKmemsbJ88K0wtugbq86gAkUuD8x5Mj+7+CR1in
+	 FHyuoc/TXWPouyySw+oCut51Qr8CoUv71I0TvBJ66bwf2td0++tb0fxTZTpPzFp0B7tmV
+	 4sE5etqytuhfg4Dy+2Nd4YZQqEfnCxjg07qm0n+CU7Nm0kpwbwzbdvVU1TKNA9hODnoP0
+	 x+Uamrqdzx9591BALszKJd98ykiD7ZfQNIV5w8Ef7CG5rgGyWcaL9xVIv+txvjqQvASo/
+	 anEX0Eo18KxezVC+Socr5LBtpbCD/BnFqYzq/D1HCdiZWHbaVTzSDtXzYPi1RHRsYnQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795618398;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795618401;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=6SFQY6PmZey4VU9YRoQuKeQdTTTFsCWClV4mlC+yhiY=;
-	b=fuqcj/9X0k65k7gHdgP5oA1f8lJk0hXvLXwi6nPa47VtF4ST9me8wh5XUIjFhxo+0hsJ
-	 5v2lHT6uroMCuyhzSZyUi0K/+U5WN1pBECO014R105xuspMLfvXx6GmBFKRRa1MdhbzeD
-	 FTOUKne1xfSzSAffmG+e/BHuAfAB88AXeRv6Yro+IiInaUhkm/9F9qLlmGkWrB2G830Ko
-	 PjLrrEnPgrqgMnJuJiCeyBRqDz0620YvDkqGi2Mqx4w10xpl9GGrcrxzhfsUy8rSOK2/Z
-	 FWRIMA2RPJr/gxw95NT+g59JfyvY5cZCdGpKXh+meE8L1AJgAMKbA9odzVvUDRm17zg==
+	bh=XW8x7JWJjosEiRNAQoDPH6we+pFSDoAfXVu7olGFj+Q=;
+	b=pYzo1+lDFfWLlBi3aKN9S66KYo4Ceq1I9xMH59qeroz2SzvZDJ8r6zi4/weRUK4rOAuv
+	 iwaECSHVIgGhCQV45er7GiANm2ekLfYA3Nr4mKRI93vtbN0769CGewJ3Zj6+2hiZUlKKY
+	 EGwFvqg1aD+5Y5Zde9CVyaJvVrRcMYte3XmpxUp+LRYRTqNFaf6gRKr5eHWNnxQxJe0ZX
+	 bGi6Ocy7zXE3JKnHUFn0lMs+zo6B/IAu+mkTNa1B2oM5IYlkAUquBc8KX9C4zOm3O9zRr
+	 03IRyG49NdV3G2hZMXJPi7XJJp0CXlLt38Sk6k+UEt7z7E+ZE62ixzXb8lirdim9tfw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=WwM276Kg;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=B8cJUnwt;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2D2B9606A329;
-	Wed, 25 Nov 2026 14:53:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 45D4A606A31E;
+	Wed, 25 Nov 2026 14:53:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=WwM276Kg
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 200341F000D0;
-	Wed, 25 Nov 2026 14:53:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=B8cJUnwt
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 553451F000EE;
+	Wed, 25 Nov 2026 14:53:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795618397;
-	bh=6SFQY6PmZey4VU9YRoQuKeQdTTTFsCWClV4mlC+yhiY=;
+	s=korg; t=1795618400;
+	bh=XW8x7JWJjosEiRNAQoDPH6we+pFSDoAfXVu7olGFj+Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=WwM276KgvvePC9xIKjhfzhYjIjWmlyzcOxdTvPqrbqaWHfVsb4fxwMuzBAO2X/esC
-	 p97RJHzJ2JDYK/xObypSDpzqzLtNJ2JQqR9+N/WYeqnb7qOyMk72v9Ihr6jtBR7aeF
-	 3mjwZjrYpMfP1ziDQMJv6sB2YRAiG4had8Si7fkM=
+	b=B8cJUnwttOERWCEh0NgMrBrieQy3YpZycb3YLeTMsy1ie744EC/YFrnyFrArMgoji
+	 TByq2+8t43GeVRvlzEBovxauDZVG7/fe/AKOnAXD+9YOxObROA+nYkcX4ZdLvLOOxl
+	 s9rjlcMtV4p8WLB+6ukwg9r1y6MhKc7aVWpYpecE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yifan Zhang <yfzhang23@stu.pku.edu.cn>,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
+	Christoph Hellwig <hch@lst.de>,
+	Sagi Grimberg <sagi@grimberg.me>,
+	Chaitanya Kulkarni <kch@nvidia.com>,
+	Chris Mason <mason@kernel.org>,
+	Jens Axboe <axboe@kernel.dk>,
+	Keith Busch <kbusch@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0213/1005] Bluetooth: validate retained LE Create CIS command length
-Date: Wed, 25 Nov 2026 15:25:51 +0100
-Message-ID: <20261125143826.731520050@linuxfoundation.org>
+Subject: [PATCH 7.3 0261/1005] nvmet-rdma: queue the release work under the mutex
+Date: Wed, 25 Nov 2026 15:26:39 +0100
+Message-ID: <20261125143827.852866240@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143821.729802100@linuxfoundation.org>
 References: <20261125143821.729802100@linuxfoundation.org>
@@ -68,130 +72,64 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yifan Zhang <yfzhang23@stu.pku.edu.cn>
+From: Chris Mason <mason@kernel.org>
 
-[ Upstream commit 1eb52f35fc8fb06ab7f2973fff29cba81f96b947 ]
+[ Upstream commit 80095787f776967361cca76357f19e5445e0cd75 ]
 
-hci_cs_le_create_cis() retrieves the parameters of the previously sent
-command without their length.  It then trusts num_cis and walks the
-flexible cis[] array when a controller reports a failed command.
+nvmet_rdma_remove_one() takes the queue mutex, unlists each queue of
+the device and queues its release work, then flushes nvmet-wq. So a
+queue that still holds objects on the device must either be on the
+list or have its release work queued. nvmet_rdma_queue_disconnect()
+breaks that: it unlists the queue under the mutex, drops it, and only
+then calls __nvmet_rdma_queue_disconnect() to queue the work. A device
+removal in that window finds nothing to wait for, and the release work
+then destroys the QP and CQ share on a freed device.
 
-A five-byte HCI command containing only num_cis can therefore make the
-handler read beyond the command skb.  KASAN reports:
+Queue the work before dropping the mutex, as nvmet_rdma_remove_one()
+itself does. That's safe now that rdma_disconnect() no longer sleeps on
+an iWARP event that needs the same mutex.
 
-  BUG: KASAN: slab-out-of-bounds in hci_cs_le_create_cis
-  Read of size 2
-  hci_cs_le_create_cis
-  hci_cmd_status_evt
-  hci_event_packet
-
-Add a length-returning saved-command helper and require the fixed header
-and complete CIS array before walking it.
-
-The reproducer no longer triggers a KASAN report with this change.
-
-Fixes: 26afbd826ee3 ("Bluetooth: Add initial implementation of CIS connections")
-Closes: https://lore.kernel.org/linux-bluetooth/179317462624.87574.6271582002629080499@stu.pku.edu.cn/
-Signed-off-by: Yifan Zhang <yfzhang23@stu.pku.edu.cn>
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Fixes: f1d4ef7d8883 ("nvmet-rdma: register ib_client to not deadlock in device removal")
+Cc: Christoph Hellwig <hch@lst.de>
+Cc: Sagi Grimberg <sagi@grimberg.me>
+Cc: Chaitanya Kulkarni <kch@nvidia.com>
+Reviewed-by: Christoph Hellwig <hch@lst.de>
+Signed-off-by: Chris Mason <mason@kernel.org>
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Signed-off-by: Keith Busch <kbusch@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/net/bluetooth/hci_core.h |  2 ++
- net/bluetooth/hci_core.c         | 18 ++++++++++++++----
- net/bluetooth/hci_event.c        |  7 ++++++-
- 3 files changed, 22 insertions(+), 5 deletions(-)
+ drivers/nvme/target/rdma.c | 12 ++++++------
+ 1 file changed, 6 insertions(+), 6 deletions(-)
 
-diff --git a/include/net/bluetooth/hci_core.h b/include/net/bluetooth/hci_core.h
-index 19870576bd90b..cac282584c616 100644
---- a/include/net/bluetooth/hci_core.h
-+++ b/include/net/bluetooth/hci_core.h
-@@ -2379,6 +2379,8 @@ void hci_send_sco(struct hci_conn *conn, struct sk_buff *skb);
- void hci_send_iso(struct hci_conn *conn, struct sk_buff *skb);
+diff --git a/drivers/nvme/target/rdma.c b/drivers/nvme/target/rdma.c
+index a1914f9a1b30f..e7dbfa383c57d 100644
+--- a/drivers/nvme/target/rdma.c
++++ b/drivers/nvme/target/rdma.c
+@@ -1745,17 +1745,17 @@ static void __nvmet_rdma_queue_disconnect(struct nvmet_rdma_queue *queue)
  
- void *hci_sent_cmd_data(struct hci_dev *hdev, __u16 opcode);
-+void *hci_sent_cmd_data_len(struct hci_dev *hdev, __u16 opcode,
-+			    size_t *len);
- void *hci_recv_event_data(struct hci_dev *hdev, __u8 event);
- 
- u32 hci_conn_get_phy(struct hci_conn *conn);
-diff --git a/net/bluetooth/hci_core.c b/net/bluetooth/hci_core.c
-index cfc6d3db32bb6..8784c28297ac2 100644
---- a/net/bluetooth/hci_core.c
-+++ b/net/bluetooth/hci_core.c
-@@ -3138,7 +3138,8 @@ int __hci_cmd_send(struct hci_dev *hdev, u16 opcode, u32 plen,
- EXPORT_SYMBOL(__hci_cmd_send);
- 
- /* Get data from the previously sent command */
--static void *hci_cmd_data(struct sk_buff *skb, __u16 opcode)
-+static void *hci_cmd_data(struct sk_buff *skb, __u16 opcode,
-+			  size_t *len)
+ static void nvmet_rdma_queue_disconnect(struct nvmet_rdma_queue *queue)
  {
- 	struct hci_command_hdr *hdr;
- 
-@@ -3150,23 +3151,32 @@ static void *hci_cmd_data(struct sk_buff *skb, __u16 opcode)
- 	if (hdr->opcode != cpu_to_le16(opcode))
- 		return NULL;
- 
-+	if (len)
-+		*len = skb->len - HCI_COMMAND_HDR_SIZE;
-+
- 	return skb->data + HCI_COMMAND_HDR_SIZE;
+-	bool disconnect = false;
+-
++	/*
++	 * Queue the release work with &nvmet_rdma_queue_mutex held, so that
++	 * nvmet_rdma_remove_one() either finds the queue on the list or the
++	 * work has already been queued.
++	 */
+ 	mutex_lock(&nvmet_rdma_queue_mutex);
+ 	if (!list_empty(&queue->queue_list)) {
+ 		list_del_init(&queue->queue_list);
+-		disconnect = true;
++		__nvmet_rdma_queue_disconnect(queue);
+ 	}
+ 	mutex_unlock(&nvmet_rdma_queue_mutex);
+-
+-	if (disconnect)
+-		__nvmet_rdma_queue_disconnect(queue);
  }
  
- /* Get data from the previously sent command */
--void *hci_sent_cmd_data(struct hci_dev *hdev, __u16 opcode)
-+void *hci_sent_cmd_data_len(struct hci_dev *hdev, __u16 opcode, size_t *len)
- {
- 	void *data;
- 
- 	/* Check if opcode matches last sent command */
--	data = hci_cmd_data(hdev->sent_cmd, opcode);
-+	data = hci_cmd_data(hdev->sent_cmd, opcode, len);
- 	if (!data)
- 		/* Check if opcode matches last request */
--		data = hci_cmd_data(hdev->req_skb, opcode);
-+		data = hci_cmd_data(hdev->req_skb, opcode, len);
- 
- 	return data;
- }
- 
-+/* Get data from the previously sent command */
-+void *hci_sent_cmd_data(struct hci_dev *hdev, __u16 opcode)
-+{
-+	return hci_sent_cmd_data_len(hdev, opcode, NULL);
-+}
-+
- /* Get data from last received event */
- void *hci_recv_event_data(struct hci_dev *hdev, __u8 event)
- {
-diff --git a/net/bluetooth/hci_event.c b/net/bluetooth/hci_event.c
-index 33d89319db0c3..64db225a9f109 100644
---- a/net/bluetooth/hci_event.c
-+++ b/net/bluetooth/hci_event.c
-@@ -4488,6 +4488,7 @@ static void hci_cs_le_create_cis(struct hci_dev *hdev, u8 status)
- {
- 	struct hci_cp_le_create_cis *cp;
- 	bool pending = false;
-+	size_t len;
- 	int i;
- 
- 	bt_dev_dbg(hdev, "status 0x%2.2x", status);
-@@ -4495,10 +4496,14 @@ static void hci_cs_le_create_cis(struct hci_dev *hdev, u8 status)
- 	if (!status)
- 		return;
- 
--	cp = hci_sent_cmd_data(hdev, HCI_OP_LE_CREATE_CIS);
-+	cp = hci_sent_cmd_data_len(hdev, HCI_OP_LE_CREATE_CIS, &len);
- 	if (!cp)
- 		return;
- 
-+	if (len < sizeof(*cp) ||
-+	    len < struct_size(cp, cis, cp->num_cis))
-+		return;
-+
- 	hci_dev_lock(hdev);
- 
- 	/* Remove connection if command failed */
+ static void nvmet_rdma_queue_connect_fail(struct rdma_cm_id *cm_id,
 -- 
 2.53.0
 
