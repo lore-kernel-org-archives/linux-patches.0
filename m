@@ -1,50 +1,50 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795623276;
-	b=gs9V+YBXxJjM9gxF5tXcDmQFE3PmuoCHdn/NGUsRSRPtazuMgk801vmouD+CFKDdRrNl
-	 IgvTqV7sbsZbzu8c/h9+bKmCHy1opZ51M/XK5fAgVJ9yAfctn4LsNil0hC0omzNsthMy5
-	 3GktnICqsowOHZuoV70qDqjb0o7NEe3IaHVDx7NeRE1g4T4Vr7EHRni098X89tA/XcXW8
-	 J0lvR78NPBIQR/WvL8kijEYVCYFOSX4u6mOr+4G24rMRHUEb656W93LNMc3bplyydbe0b
-	 kcbgxqUws4j5e1SNXUH+FOve4x7tOgxM0nuIl1yk/Lwe25TP3gdQZeGWU6SagU9ivIg==
+	t=1795623279;
+	b=nDjT16xombBKCCP6D2bDdNWJC/q5O7nYm90wrNdPjN0BrXJ9lPkPnASmc9SEP64yyTOF
+	 91fihfGCnUIAslODfpH5FapetHLF/ONnfDMUgymBnh2ovOXsPHwtvjt8hhPdECtTQS2bu
+	 WGH85jtsKXz3D/9HEJF/S7KgLFSXBNRBNcRh/CNwYCaZ5FWPP8iU8mU6b7/A1Z9gGZFm8
+	 Adj+N5Js+bAC8KCDsp7/8P3Td0+xRwpD81f8L45I1kBaKOnrUIKxKcDjKEoBeN8oQm7PW
+	 6Bpoth9iIRzdl3KD3oJ2xn1tggKWEbvrbrJ8mOfANREWy26V7iNbGwmzn446oBVjeow==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795623276;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795623279;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=KMNdL3EEcNdtM59+KY3/k+eNGxAgaL8rCh2ue4hpnNs=;
-	b=BS5REQ1r//2MEs+lSDms0gJK4CWdELFTiET0q0PaNmYsGG/utFzASS70usfJVR61jgZO
-	 JdjeHSBvPbtV09qLVF3MZUm50n031OVuNQxWS4GOYtbCNMEYPiOQdDPLqjHUddkbs6xa5
-	 0ddwRRA4G9Iy9/PebKxTmfeaXZywkKCvwcUXAEYwumyHHLD3JkEyDpH5JDb44mWBEeGYW
-	 7WBsnObqDH54qj3mSJm9UWUbg63nrsYGMhTdQhmzlBFkdkt3D6F/LlxayQInBNAFHZL7i
-	 m/eFjn7akQrI09P0Yn/oKV9fzaRegVmW8JlKfKUa18tVPG8b6CIIvJi2jgHK8q1cTgg==
+	bh=vQgLWQNwwvUDYwQd5K/SDVbx0c30ynssEfzcKeFLg5c=;
+	b=sdQA7Ihny5QIzCr0Ug8XhNRuWnbOua6ABpyadQFu7YiOR8jj+S9mMOIOABKC0O2tTDUE
+	 eGmVi68LMEtfTj3goJOdHYQgmremGkL9OV7ZDWuEXa1H886OJSS3ABAac45PQRwzoDAWT
+	 nkU4oOEWlqWIabHSkdsqh40OPLf+7mErbbQa+ur3a9IosL8UhGVU4q/0SOVj7/XkYyMlL
+	 nlTFCRS3m5ICshEl1U8yNgQbfQGX+9w26dCZ/4E6NB4X+lgu65kjTv4TE4GYmIXWHXx47
+	 Z5F2jVSoZflF937EbBUucvdYWk4rCfv2onqCD49UJdPxSULRC5HkV+4mpmsaCBZSR8g==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=hdP+MGY3;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=FjRBR0dW;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0D884606A31E;
-	Wed, 25 Nov 2026 16:14:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EEDDA606A323;
+	Wed, 25 Nov 2026 16:14:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=hdP+MGY3
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DD7961F000C6;
-	Wed, 25 Nov 2026 16:14:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=FjRBR0dW
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0EBF31F000CA;
+	Wed, 25 Nov 2026 16:14:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795623275;
-	bh=KMNdL3EEcNdtM59+KY3/k+eNGxAgaL8rCh2ue4hpnNs=;
+	s=korg; t=1795623278;
+	bh=vQgLWQNwwvUDYwQd5K/SDVbx0c30ynssEfzcKeFLg5c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=hdP+MGY3fXT2KUElgvtv+bI2ecXhVQhXJH1+9ap5X5IDhOKWRtvqlKo38OgDCbwjB
-	 wS+PhSQPfcChaFKLpvvmEuuhr8Yqy2V37azs18A+V1rQFLTB8F0QKukpwAjCoCBpkS
-	 9g3D3wqlGgy6qR4jk+qy2shI+0qHNB/OE0HC6+2k=
+	b=FjRBR0dWwws1suLS4haY4LJ/kNme92dV0+9rUwW5uFr7zqXWcbbShMpU7MKf62u3k
+	 B7ez5TPlvUKs+JNemvoxQWXvDee5HV3NiLvH50yLZffbBoS5az1FwRoBxzLWFUnPPF
+	 5edI96Tx4XH3e2/MkeQfq5/tHkwRz4a2LiRSqaqI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>
-Subject: [PATCH 6.18 806/990] tracing/probes: Fix missing BTF kind checks in char pointer/array helpers
-Date: Wed, 25 Nov 2026 15:36:13 +0100
-Message-ID: <20261125143840.924263022@linuxfoundation.org>
+Subject: [PATCH 6.18 807/990] tracing/probes: Fix user-space dereference string array store type
+Date: Wed, 25 Nov 2026 15:36:14 +0100
+Message-ID: <20261125143840.948323933@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143822.072087159@linuxfoundation.org>
 References: <20261125143822.072087159@linuxfoundation.org>
@@ -68,53 +68,55 @@ Content-Transfer-Encoding: 8bit
 
 From: Masami Hiramatsu (Google) <mhiramat@kernel.org>
 
-commit c1e2c63e65421068566db3dde44dfd4fe7adb46d upstream.
+commit 2721573e6c6faaba2e31f352f2c02ec5f3ecf5e9 upstream.
 
-In struct btf_type, the type ID and byte size share a union, and only
-BTF_KIND_INT types are followed by a 32-bit integer encoding word.
-Because btf_type_is_char_ptr() and btf_type_is_char_array() do not
-verify that the outer type is BTF_KIND_PTR or that the resolved element
-type is a non-NULL BTF_KIND_INT before inspecting it, non-pointer BTF
-types can have their byte size misinterpreted as a BTF type ID, and
-arrays of non-integer types read out-of-bounds or misinterpret trailing
-BTF metadata as BTF_INT_* encoding bits.
+When finalizing a string array argument (e.g. +0u(%reg):string[N]),
+finalize_fetch_insn() advances the instruction pointer to a new slot
+for the store operation before checking whether the preceding operation
+was FETCH_OP_UDEREF. As a result, user-space dereference string arrays
+with type "string" emit FETCH_OP_ST_STRING (kernel memory read) instead
+of FETCH_OP_ST_USTRING.
 
-Validate the BTF type kinds and NULL pointers before reading inner type
-metadata in both helpers.
+Check for FETCH_OP_UDEREF before advancing the instruction pointer.
 
-Link: https://lore.kernel.org/all/179455851632.403392.258264246782960594.stgit@devnote2/
+Link: https://lore.kernel.org/all/179455854396.403392.18073771811100192405.stgit@devnote2/
 
-Fixes: 27973e5c64b9 ("tracing/probes: Add string type check with BTF")
+Fixes: e65f7ae7f4da ("tracing/probe: Support user-space dereference")
 Cc: stable@vger.kernel.org
 Signed-off-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/trace/trace_probe.c |    8 ++++++++
- 1 file changed, 8 insertions(+)
+ kernel/trace/trace_probe.c |    6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
 --- a/kernel/trace/trace_probe.c
 +++ b/kernel/trace/trace_probe.c
-@@ -356,6 +356,9 @@ static bool btf_type_is_char_ptr(struct
- 	const struct btf_type *real_type;
- 	u32 intdata;
+@@ -1484,6 +1484,8 @@ static int finalize_fetch_insn(struct fe
  
-+	if (BTF_INFO_KIND(type->info) != BTF_KIND_PTR)
-+		return false;
+ 	/* Store operation */
+ 	if (parg->type->is_string) {
++		bool is_uderef;
 +
- 	real_type = btf_type_skip_modifiers(btf, type->type, NULL);
- 	if (!real_type)
- 		return false;
-@@ -380,6 +383,11 @@ static bool btf_type_is_char_array(struc
- 	array = (const struct btf_array *)(type + 1);
+ 		/* Check bad combination of the type and the last fetch_insn. */
+ 		if (!strcmp(parg->type->name, "symstr")) {
+ 			if (code->op != FETCH_OP_REG && code->op != FETCH_OP_STACK &&
+@@ -1503,6 +1505,7 @@ static int finalize_fetch_insn(struct fe
+ 			}
+ 		}
  
- 	real_type = btf_type_skip_modifiers(btf, array->type, NULL);
-+	if (!real_type)
-+		return false;
-+
-+	if (BTF_INFO_KIND(real_type->info) != BTF_KIND_INT)
-+		return false;
++		is_uderef = (code->op == FETCH_OP_UDEREF);
+ 		if (!strcmp(parg->type->name, "symstr") ||
+ 		    (code->op == FETCH_OP_IMM || code->op == FETCH_OP_COMM ||
+ 		     code->op == FETCH_OP_DATA) || code->op == FETCH_OP_TP_ARG ||
+@@ -1523,8 +1526,7 @@ static int finalize_fetch_insn(struct fe
+ 		}
  
- 	intdata = btf_type_int(real_type);
- 	return !(BTF_INT_ENCODING(intdata) & BTF_INT_SIGNED)
+ 		/* If op == DEREF, replace it with STRING */
+-		if (!strcmp(parg->type->name, "ustring") ||
+-		    code->op == FETCH_OP_UDEREF)
++		if (!strcmp(parg->type->name, "ustring") || is_uderef)
+ 			code->op = FETCH_OP_ST_USTRING;
+ 		else if (!strcmp(parg->type->name, "symstr"))
+ 			code->op = FETCH_OP_ST_SYMSTR;
 
 
