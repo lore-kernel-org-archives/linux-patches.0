@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795619273;
-	b=UvbBKnccqyCvWc2YKZ4JPhkgjOCjYsB9dD6rfob7gIvvaoKRGvUsOV++PJ4/jaIa7+gb
-	 WyHzS5yQEftiEeH7oZPzO8sp42QWqLIF45nqqMuldHtiMpS5aSX5iK4vHzajR9ynakAOd
-	 3bDvzkdNrS2Qd+zN4S40Afpq2uWZ0r/z0h+kBp6ycSiVW8UxtiHGdSArkZVRiInGdoinb
-	 hcoybIqq8mLnxNkBssVmJuvDqqCres5h74+ZiRamTnexVFvpBQ/wnJWwqVeS+w/s5A8lr
-	 V0F3Bk3lA1YCj6w2kFh1fEu0ee3EqmZGzWzrXq2xR1LXS2AvQSzcLXWoT4IwWt0JZuQ==
+	t=1795619276;
+	b=egH9HmePayEMZicKBprBBnE9hVp3AdI4Q3snRZIWWajIzqsDYP0VZwFTYLo2KxvcCTwG
+	 u7EdnzJ8oI8jNR2ACnMLkg2EXAJ0Uymx3lgq7cweQPJO6uL6mAEhB1ak1nnNgM3EtVhM7
+	 QDXlKAISZaUjEx+wqQz6fkGfsdHRAvTafTduoxwGK2/42ARL/L3TsNxr6gwQrsRjNSPt1
+	 Qwlhz1veeyKsXeWFftWuzFHVYe86DIt1c+qv1yr/iXCD+49LQU6a8OJXzAXHS1V90VoG3
+	 yX5wcvz1cn9kYSxV4B1+qdgOZp9kbT4XIfm8+5gygjzScaJP0V6bPEMjN1bFntGEXZQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795619273;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795619276;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=9Z7cD2dIWeAS6fJRySzyJvPRoYq8mD5Y9rNbsRVjs1I=;
-	b=X08Jh57ScDOuwEvBFMajhKu1DcZyreB7b9DWylN/XtyrbVyRLYvKLEDBj0cf/QGMi2rb
-	 bgzPz3gxFCJ6X9B3P5LEPghI1zN3abiSzxVDOeIs4Hj0fBneF2M/HAVV5BCCRxc+MaccS
-	 v3u2UU1EJvpb8jk+3bvGFyQVyFYgkTj5qMHZAqNCznpZOlfSqBnOA/kfUG22w0kkOoDYY
-	 T0cXZyE27Dy5Auv8ddER6Xbn4P69D6crabK1v0hUZPJU+KZpVtLUNhzm6RucgdFeSWdjQ
-	 ItepJx9KRZYqm5jG9dcduRrxsM9wBHQRRJKlmQHEMl50/KyfB2J11jQGOHm8tbxCvYQ==
+	bh=TNK46Xz48WQK4yf4Hmjw+POLl4TCrb57VuW6CUjaV9s=;
+	b=WP1gT49PSjMYz+WHWuF+5FhODk3NWxbUBStteAoFyGxaaTDvl8etT3xETjz903jC0BNd
+	 9EIFYA1AO1E5+N+xRz2IT4mfKnUrcHZsSdsCAohDEvFimk5TAO+h/V71LQRWJjXSqDNZA
+	 dYxgIUivS2Y+YOcGIWntFtXeSKRx2g0kt1HxRSbO/8B2n5uF1bE7i5FUMmWvIcGCgoQwC
+	 J8m07hI3TPxkR6cFnVDaxsmXdDvL95WxnpvT+EVGsyIvCxbeoILUPCmTNn8fp+jmOxsUU
+	 WnYM+HzJvgu7idHUN1nHU1r8O6ISfRna6v8PeUvlINo1j88z8W232aiKJHgK7Ho5jIw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=IXIz5ENL;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=2ZSqsceP;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 17D2F606A321;
-	Wed, 25 Nov 2026 15:07:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 22DF2606A329;
+	Wed, 25 Nov 2026 15:07:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=IXIz5ENL
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 08A091F000C6;
-	Wed, 25 Nov 2026 15:07:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=2ZSqsceP
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3F0301F000C6;
+	Wed, 25 Nov 2026 15:07:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795619272;
-	bh=9Z7cD2dIWeAS6fJRySzyJvPRoYq8mD5Y9rNbsRVjs1I=;
+	s=korg; t=1795619275;
+	bh=TNK46Xz48WQK4yf4Hmjw+POLl4TCrb57VuW6CUjaV9s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=IXIz5ENLmFzRGRosINV9aCMnKa0dIqntWXynrDZAouW3vLSKu6ke+KSvIsrz+4wNc
-	 DUA0aQk4Vax5orlDcrpdBuu7XmS/HT1T3o7TeFMJ+Avg7Ln8AsphXSCQlTSobNPyzy
-	 V47bgvlqYt9UhoNJDzsnpdDCFJ7sAaDB5guZymt4=
+	b=2ZSqscePdHX+WAxilf4dYfsEHCnVPP+ahln+NVhZ9P9CGrKICowJfIxZ7S1VQqOW1
+	 FLCKYZm5165hdZW9vEVTrU5m8CCLQP9Cpa3g+seYj7oCZE98cjGLTE3xJBu1fdg7h4
+	 nxFR2vh/frhgTSOom73Zfu/lC3CPS5FfYB+AXCKg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Wenbo Sun <sunwenbo@cmss.chinamobile.com>,
 	Kuniyuki Iwashima <kuniyu@google.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0542/1005] tcp: Pass req->rsk_listener to inet_csk_reqsk_queue_drop() in tcp_check_req().
-Date: Wed, 25 Nov 2026 15:31:20 +0100
-Message-ID: <20261125143834.442759562@linuxfoundation.org>
+Subject: [PATCH 7.3 0543/1005] af_unix: Inherit SO_INQ in unix_stream_connect()
+Date: Wed, 25 Nov 2026 15:31:21 +0100
+Message-ID: <20261125143834.464911419@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143821.729802100@linuxfoundation.org>
 References: <20261125143821.729802100@linuxfoundation.org>
@@ -68,77 +69,56 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kuniyuki Iwashima <kuniyu@google.com>
+From: Wenbo Sun <sunwenbo@cmss.chinamobile.com>
 
-[ Upstream commit a9782a6f2bbd0c444689725a710d8b21eab61bc5 ]
+[ Upstream commit 0359338fd8cf1a2dc001d0cd69c331c17decee88 ]
 
-When connection migration happens in tcp_v[46]_rcv(), a new
-listener is passed to tcp_check_req().
+When SO_INQ is enabled on a listening AF_UNIX SOCK_STREAM socket,
+accepted sockets created by unix_stream_connect() do not inherit
+u->recvmsg_inq from the listener, unlike TCP_INQ, AF_VSOCK SO_INQ,
+and AF_UNIX SO_RIGHTS_NOTRUNC. As a result, recvmsg() on the
+accepted socket never puts an SCM_INQ control message unless SO_INQ
+is set again after accept().
 
-When either of the following is true,
+Copy otheru->recvmsg_inq to newu->recvmsg_inq in
+unix_stream_connect() using READ_ONCE() to pair with the lockless
+WRITE_ONCE() in unix_setsockopt().
 
-  * the new listener queue is full and
-    net.ipv4.tcp_abort_on_overflow is set
+Found during LLM-assisted code review of unix_stream_connect() while
+comparing option inheritance between SO_INQ and SO_RIGHTS_NOTRUNC.
 
-  * the packet has RST or (not stripped) SYN
+Confirmed on UML (x86_64) by enabling SO_INQ on a listening AF_UNIX
+SOCK_STREAM socket before listen() and accept(), sending data from a
+connected client, and observing that recvmsg() on the accepted socket
+returned no SCM_INQ control message.
 
-tcp_check_req() sends RST and calls inet_csk_reqsk_queue_drop().
+Tested on UML (x86_64) against the reproducer, verifying that
+recvmsg() on the accepted socket now returns the expected SCM_INQ
+control message, and ran the tools/testing/selftests/net/af_unix/scm_inq
+selftest (all 6 test cases passed).
 
-Here, the new listener is passed, and its qlen is decremented
-wrongly while reqsk is tied to the old listener.
-
-Once qlen underflows, inet_csk_reqsk_queue_is_full() always
-return true, and the new listener stops serving.
-
-Without the patch, this script times out while waiting for SYN+ACK
-since the new listener drops SYN, but with the patch, 3WHS completes.
-
-    0 `sysctl -q net.ipv4.tcp_migrate_req=1`
-   +0 `sysctl -q net.ipv4.tcp_syncookies=0`
-   +0 socket(..., SOCK_STREAM, IPPROTO_TCP) = 3
-   +0 setsockopt(3, SOL_SOCKET, SO_REUSEPORT, [1], 4) = 0
-   +0 bind(3, ..., ...) = 0
-   +0 socket(..., SOCK_STREAM, IPPROTO_TCP) = 4
-   +0 setsockopt(4, SOL_SOCKET, SO_REUSEPORT, [1], 4) = 0
-   +0 bind(4, ..., ...) = 0
-   +0 listen(4, 128) = 0
-   +0 < S 0:0(0) win 32792 <mss 1000>
-   +0 > S. 0:0(0) ack 1 <...>
-   +0 listen(3, 128) = 0
-   +0 close(4) = 0
- +.01 < R 1:1(0) win 0
-   +0 socket(..., SOCK_STREAM, IPPROTO_TCP) = 5
-   +0 listen(5, 1) = 0
- +.01 < S 0:0(0) win 32792 <mss 1000>
-   +0 > S. 0:0(0) ack 1 <...>
-   +0 < . 1:1(0) ack 1 win 32792
-   +0 fcntl(3, F_SETFL, O_RDWR|O_NONBLOCK) = 0
-   +0 accept(3, ..., ...) = 6
-
-Let's pass req->rsk_listener instead.
-
-Fixes: d4f2c86b2b7e ("tcp: Migrate TCP_NEW_SYN_RECV requests at receiving the final ACK.")
-Signed-off-by: Kuniyuki Iwashima <kuniyu@google.com>
-Link: https://patch.msgid.link/20261111020304.1532064-2-kuniyu@google.com
+Fixes: df30285b3670 ("af_unix: Introduce SO_INQ.")
+Signed-off-by: Wenbo Sun <sunwenbo@cmss.chinamobile.com>
+Reviewed-by: Kuniyuki Iwashima <kuniyu@google.com>
+Link: https://patch.msgid.link/20261111023222.77227-1-sunwenbo@cmss.chinamobile.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv4/tcp_minisocks.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ net/unix/af_unix.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/net/ipv4/tcp_minisocks.c b/net/ipv4/tcp_minisocks.c
-index 0ddfd5af6e58f..a05bb02e204c3 100644
---- a/net/ipv4/tcp_minisocks.c
-+++ b/net/ipv4/tcp_minisocks.c
-@@ -974,7 +974,7 @@ struct sock *tcp_check_req(struct sock *sk, struct sk_buff *skb,
- 		tcp_reset(sk, skb);
- 	}
- 	if (!fastopen) {
--		bool unlinked = inet_csk_reqsk_queue_drop(sk, req);
-+		bool unlinked = inet_csk_reqsk_queue_drop(req->rsk_listener, req);
+diff --git a/net/unix/af_unix.c b/net/unix/af_unix.c
+index 42cffeafc8c14..6be50ef557d69 100644
+--- a/net/unix/af_unix.c
++++ b/net/unix/af_unix.c
+@@ -1752,6 +1752,7 @@ static int unix_stream_connect(struct socket *sock, struct sockaddr_unsized *uad
+ 	newu = unix_sk(newsk);
+ 	otheru = unix_sk(other);
+ 	newu->listener = other;
++	newu->recvmsg_inq = READ_ONCE(otheru->recvmsg_inq);
+ 	newu->scm_rights_notrunc = READ_ONCE(otheru->scm_rights_notrunc);
+ 	RCU_INIT_POINTER(newsk->sk_wq, &newu->peer_wq);
  
- 		if (unlinked)
- 			__NET_INC_STATS(sock_net(sk), LINUX_MIB_EMBRYONICRSTS);
 -- 
 2.53.0
 
