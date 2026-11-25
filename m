@@ -1,42 +1,42 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795622651;
-	b=uTp/fzDtOHMLIfOKNrMSX70R1UAULhLwWIuOD4FaCy/iclsZKoOzgUig1SgLR3JPDpk4
-	 xuVG9PSVc0LJKhZgl5ToDTbNX3CWVjhRYdW5XsqU+GV3xtS/KOWxCqpHerdUi5ixnC80V
-	 4M90gLr5xeNN6knCann/+CLsXUFunVPA0muYMXPFkEbLZXNURHaye7hlrufbAjWfHqoBt
-	 wlMii5HLiEf5540aS4Q6zYSm6Hf1Cxty5yZ/JhHJjcsGXEfUj3zJ/gXUAuqK4bHqHgSdI
-	 YDQPBn3IqVnjuPNMThFAG7J8bFLeTUSiJ7zu8VApWvhXBSQkdzMaxOBV7Etg88b6/3g==
+	t=1795622655;
+	b=4kohCzOr3Ah/K0FusbUsEy5sMbIfBtm5Si1iroPjMwz35hR6hAViN1Gal8B+TUJGqjlC
+	 qEAK0a9njxYCLBydC0SjE4RSKfKaKPgI99EVt9qrFpJmUobtw74VibIcVvX0x2tpwikUw
+	 glbK7BkiuhGCefnr8Ns8QpngoSNGH36XzH3+W0QPmturMokS0jE2TaIQzDaYaJh+aAPyy
+	 OKN11g4gvIOH8S9xBes7HfwdqsPwXIiWn+XTkqyq+9zPl8AQZJuixcV1MlwoqqEagvv9Q
+	 tx104tHk/89e0d//G0wjZh1/D3u8au4kDDyo7/giE0rPoid9Y76K5zQ4WdgKnwISL7w==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795622651;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795622655;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=wjR3/W47WIrmF90ptQeAeVTLEWOEKTzbImbjzAUHwcM=;
-	b=csTYggZXVRTx49HSgmRG5+HnwKx/vE9PbNFYp93ZDIJpQmkiHozxO4Is5C90CdxthanG
-	 0jVPAING6XnXOMRqK/IYvaOwYoLEitVuaxoZG3/CoT0QGesxA5NRBgrEC3u6f8Vsa7rvp
-	 kVGVquxsIo9mFvu7aCjeEvW336mlfM8dHFpBN2tLN47IJVndMYrsuZb+7vf4dYLfZn/NA
-	 z21yiuwukFS+bSyq/TqLmm9DuXr4rIT8/yAxyt3sag/5bnp5SZt+2Im2toPpcpCWSw7Hy
-	 gB+iLvlAeYdL5hFV1ZaCWjBleFSqEZyhfz3FToVLjOjeqKxxElnQfYqaiTQ+krcTE/w==
+	bh=yz2Q1KcDJbxUqvQK7Cc3MwJoopqkz/YuZ7JAh8z1du8=;
+	b=Dof6KlKGlf6fRh1p5eEi9gla8bju5ByjdOn7SsUGDkv9yfjSl3z++DqZbbtttpvAVLCD
+	 XeUz9V63VyRseOxM+SLlBBP8osaBskFLBrF/a91wqCv7JbhZgS/X+8WXi9SSMuC4eBDbb
+	 9Qhi5IescBaq0zEmKbyV3epS+XXApRN2XsuBX957LCYGEkmoF6qq4Y3mORcacmwe2OTJy
+	 RBfFKlKHB9b4fYayOXPfu+EJ/r98U8+q8stiaUvOlewbTJuqYRpquIyyolOtXpFtJqTj9
+	 iVoBSlCrhFyyBp1cXItxkLDREe/wcgMl5MPOa3OyPb4UpGd8WF9J9I8TwfwlMP/mCCA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="vX62a3/d";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="H60XN/u2";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B2714606A31E;
-	Wed, 25 Nov 2026 16:04:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0FD16606A335;
+	Wed, 25 Nov 2026 16:04:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=vX62a3/d
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 089711F000D1;
-	Wed, 25 Nov 2026 16:04:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=H60XN/u2
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3FC461F000C0;
+	Wed, 25 Nov 2026 16:04:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795622651;
-	bh=wjR3/W47WIrmF90ptQeAeVTLEWOEKTzbImbjzAUHwcM=;
+	s=korg; t=1795622654;
+	bh=yz2Q1KcDJbxUqvQK7Cc3MwJoopqkz/YuZ7JAh8z1du8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=vX62a3/d/dYbZPRNRvkOMUFGTpwU4d2EfCBRtuZdznx974ikkk6nQDyEWIuAC/6Gm
-	 QuiMJZeIwa2yq8yO9a7FS5C1Tp1A7RPK5hQ3rvDGKNblXBHDJK3U9d7a9FodIV2rha
-	 2ijX5SngWXo12bOO7Tlnp1Bz0TYlkPtMp5UEWOTw=
+	b=H60XN/u26/VC7EUWt6WOBGPZfKd6+1tcKxAH55cslG5XZECrIESm8umc4yxvc4UW2
+	 VmZt8mVUBF0W+8NiqwspO4S4+1atd3uVga0ecNJC2Kekka4MWDAiAS5L6UdBqJE7Fw
+	 gzwQQpU43aMtV1+KHE7BCLN1lXodgvVjw7nWxD2g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -44,9 +44,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Josef Bacik <josef@toxicpanda.com>,
 	Alexei Starovoitov <ast@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 606/990] bpf: Free what map_free() unlinks for sleepable readers
-Date: Wed, 25 Nov 2026 15:32:53 +0100
-Message-ID: <20261125143836.287979114@linuxfoundation.org>
+Subject: [PATCH 6.18 607/990] bpf: Let bpf_dynptr_write() mark a global function
+Date: Wed, 25 Nov 2026 15:32:54 +0100
+Message-ID: <20261125143836.311620486@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143822.072087159@linuxfoundation.org>
 References: <20261125143822.072087159@linuxfoundation.org>
@@ -70,48 +70,47 @@ Content-Transfer-Encoding: 8bit
 
 From: Josef Bacik <josef@toxicpanda.com>
 
-[ Upstream commit 5bdd61e98da5468140aff5b5abc0e8544deaf2ee ]
+[ Upstream commit 589998616e0f9190ba6f6644a19532c5b2ba66d0 ]
 
-bpf_local_storage_map_free() takes the elements of the map off the lists
-of their owners, which are alive, and frees them, and the storage of an
-owner with its last element, behind a plain RCU grace period.  Nobody uses
-the map any more, but the other maps of these owners are in use.  A
-sleepable program calls the get and delete helpers under
-rcu_read_lock_trace() only.  While it walks the list of an owner for its
-own map, or is about to lock the storage, the element it stands on, or the
-storage, can be freed under it.
+The caller of a global function loses its packet pointers if the function
+may change packet data. That is found out by a scan for calls of the
+helpers which bpf_helper_changes_pkt_data() lists.
 
-Whatever else takes an element off the list of a live owner frees it
-behind an RCU Tasks Trace grace period, which implies a plain one.  Do so
-in bpf_local_storage_map_free() as well.  It waits for these callbacks
-before it frees the map.
+bpf_dynptr_write() is not on the list, because it depends on the type of
+the dynptr: check_helper_call() looks at it. The scan cannot do that, and
+so a global function which makes a dynptr from the skb, or gets one as an
+argument, and writes through it counts as harmless. The write can
+reallocate the head of the skb, and the caller goes on with pointers into
+the old one, which has been freed.
 
-This does not help a sleepable program that hands an owner to the helpers
-which nobody holds, and which may be gone by then.
+Let every call of bpf_dynptr_write() mark the function, as a tail call
+does. The same mark decides whether a program may replace a function.
 
-Fixes: dcf456c9a095 ("bpf: Fix usage of trace RCU in local storage.")
+Fixes: 51081a3f25c7 ("bpf: track changes_pkt_data property for global functions")
 Signed-off-by: Josef Bacik <josef@toxicpanda.com>
 Signed-off-by: Alexei Starovoitov <ast@kernel.org>
-Link: https://patch.msgid.link/20261017163745.3341787-31-alexei.starovoitov@gmail.com
-[ sashal: Replaced the upstream change in the missing bpf_selem_unlink_nofail() with flipping bpf_selem_unlink(selem, true) to false in bpf_local_storage_map_free(). ]
+Link: https://patch.msgid.link/20261017230950.802052-10-alexei.starovoitov@gmail.com
+[ sashal: Applied the same change in kernel/bpf/verifier.c instead of kernel/bpf/cfg.c, which doesn't exist here, with one differing context line (struct bpf_kfunc_call_arg_meta meta;). ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/bpf/bpf_local_storage.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ kernel/bpf/verifier.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/kernel/bpf/bpf_local_storage.c b/kernel/bpf/bpf_local_storage.c
-index b931fbceb54da..9fb26ae066f54 100644
---- a/kernel/bpf/bpf_local_storage.c
-+++ b/kernel/bpf/bpf_local_storage.c
-@@ -890,7 +890,7 @@ void bpf_local_storage_map_free(struct bpf_map *map,
- 				struct bpf_local_storage_elem, map_node))) {
- 			if (busy_counter)
- 				this_cpu_inc(*busy_counter);
--			bpf_selem_unlink(selem, true);
-+			bpf_selem_unlink(selem, false);
- 			if (busy_counter)
- 				this_cpu_dec(*busy_counter);
- 			cond_resched_rcu();
+diff --git a/kernel/bpf/verifier.c b/kernel/bpf/verifier.c
+index dc7b4d0280f65..1890c0ba642ab 100644
+--- a/kernel/bpf/verifier.c
++++ b/kernel/bpf/verifier.c
+@@ -18471,7 +18471,9 @@ static int visit_insn(int t, struct bpf_verifier_env *env)
+ 			 */
+ 			if (ret == 0 && fp->might_sleep)
+ 				mark_subprog_might_sleep(env, t);
+-			if (bpf_helper_changes_pkt_data(insn->imm))
++			/* nobody knows yet whether the dynptr is that of an skb */
++			if (bpf_helper_changes_pkt_data(insn->imm) ||
++			    insn->imm == BPF_FUNC_dynptr_write)
+ 				mark_subprog_changes_pkt_data(env, t);
+ 		} else if (insn->src_reg == BPF_PSEUDO_KFUNC_CALL) {
+ 			struct bpf_kfunc_call_arg_meta meta;
 -- 
 2.53.0
 
