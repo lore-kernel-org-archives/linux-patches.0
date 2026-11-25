@@ -1,55 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795620776;
-	b=eeSeUgVYiqTFcZlrOFKjf55gUI6k3EeAlpNOfW/AWeV4p4XothsZsA37AcrCHiY0ykau
-	 YH7v3GrGp/bkqGxGMSTE7w8ATrcWQE72HpteNYjzOMuHCiXJrK7O1BnILMliwALzQ8bUG
-	 GAft+Dvh09MTg1kiLKshqyS3vminPhUk2jxZTBlHNuGaZczgGi7g6KWcDx/hH6gsbojn6
-	 7CRv0Ydp2r9MBuw3qpDVQzBVa3ogQVp7khT0s98hSEwasYu1wGOKnK/lhASTzXDdG5xPY
-	 9J/jpQzqc6IvT334Ld/Vxs+n4KK//xZixgA8YIcyj4qHrgkAQ7mb11KSmV+lfVI/tdA==
+	t=1795620779;
+	b=d3xkQGeD8fS2vwRYj05BUMjsyi9pS2+vR7I9fB33p8e1w205LjOVQRG4LP5zoOPMNSCu
+	 ziGnXiczUVSVDKquzikuLoaPZy5URGdS8vPxIk78LtEtp8/4gURaR/sJwwh9SzuVBAvtZ
+	 BhJO9qzJMDSHgpXihmcNGiROZOpK48sftH07FAeqCJ/j0NZrARovfaXxglH1Fo3zkBLU/
+	 MdgHTFYYaqp3grc47n6ZRUtDFcUotzM9q4uR+RWZEBeLhVImNTSQ7VyQBw7tUVxoA/n/1
+	 d9dPiYvyZZoVJTUDQoSeeVB4QxnJb2BNCOOaifm6I0FmQP8tznPTAnzr/CLlbpSknpw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795620776;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795620779;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Transfer-Encoding;
-	bh=wxJNraM0JnWLZzfnjo/OgztwZbTgvujhu4fsRNC68cQ=;
-	b=AnaNKiOoH4kzIdFzbuGsIas+0BdPa2MEhJKJafaYVCQd8rFsJvWh5sX/H7oyxn2kZvmG
-	 bHnGIKVHAVWvtiP8xpqNIQ7gx0DTHyxcVD3SfCxZ26jQFNOWiga2IUgwpb51xx57iIDcr
-	 VMzswsNrcBHjUt3WuF/e1D5XmGHRTDGBe+dpequH1nrd5YBrKwx/xE6D35i/7vTccTQm6
-	 aD6F+pwoZyysXg35yKhIZJn6zRUkaySyrDrUswPYINknKuFIek+yb0IjoKR8mdavTrnjd
-	 24nu4X8NLdkOmBJcO1X9kk8h5e/VUvqifENY8jY/izVfDB9r2jUSu4sj6JgSTlFZjZA==
+	 MIME-Version:Content-Type:Content-Transfer-Encoding;
+	bh=VynmYEDT334Fkc3azGxIjp6h5jRyOsDzUuYkJFpyUu0=;
+	b=0q82Ted6YfdsXLQFHz7IUzHwklnV1wTkMtvtMwg7PLmN/1AjSQ49ZSb/HjjVxo7YOeuB
+	 3BDqzlNggh/0Psp/4okoFdhaK6qpbSgcJ+Q/0DBSSBHrTiKXv8JdJV3JNpLzqZfzdJj+C
+	 lGq9Q9uwKo86JXwlL/AYFs9u40R31f5rj6OBSGWCPWkoAc1s925TbysKwYiboTtaja4SG
+	 Bpy2nQUmbl8AZl24Lr7OYYBbhFpOB5+Fyf6Deq3OJB1xygQHYQn20aVlPMr3GaUU468iC
+	 Q1pP4EI6o/vo/YCX0nEAeIuYJyABQDQjZqzLTMC2tPAauz7Qjbeg6F1WQBUl5Kd24xg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=BsmtI2dL;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=KPYuXhmK;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 269A3606A31E;
-	Wed, 25 Nov 2026 15:32:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 16074606A31E;
+	Wed, 25 Nov 2026 15:32:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=BsmtI2dL
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ED09C1F000D0;
-	Wed, 25 Nov 2026 15:32:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=KPYuXhmK
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 432CA1F000C0;
+	Wed, 25 Nov 2026 15:32:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795620775;
-	bh=wxJNraM0JnWLZzfnjo/OgztwZbTgvujhu4fsRNC68cQ=;
+	s=korg; t=1795620778;
+	bh=VynmYEDT334Fkc3azGxIjp6h5jRyOsDzUuYkJFpyUu0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=BsmtI2dL5NoUIVm7AHeK562zhqtMlM1SNRdLwpNYmTn/eIiBlj3CVdTD08+48wgMp
-	 bmtzm45hsEV7MFY/bcx0MUDtk1aFgWxdTAmCDjqNNEgii/SE2s79PheNIPcDvHy0WM
-	 1g6EWJryS9yWllt+9vjj7CTIey+qV3tN00wvv1II=
+	b=KPYuXhmKf7UnxgWzJEnvfGP6Fp7jwNZXnR3vX+uBC7APmuViSPxD2pVu10vIEnz7f
+	 DY1bLhOG3p0iKk0oFoQztL0xd8koa+BILMMRkT5/GTS2pyfgDZPzVn21WuW7/KQojY
+	 1funHhD2F/9PZBsYJS1lFV+tZCL9D6rS44z6yVEQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pierre-Louis Bossart <pierre-louis.bossart@linux.dev>,
-	Bard Liao <bard.liao@intel.com>,
-	Sergey Lebedev <lsa.uz@pm.me>,
-	German Pablo Lindo <germanpapulindez@gmail.com>,
-	Vinod Koul <vkoul@kernel.org>,
+	Ilya Dryomov <idryomov@gmail.com>,
+	=?UTF-8?q?Jordan=20DESNO=C3=8BS?= <jordan.desnoes@francetv.fr>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 011/990] soundwire: dmi-quirks: drop the ghost RT1320 on the Surface Pro 11 (Intel)
-Date: Wed, 25 Nov 2026 15:22:58 +0100
-Message-ID: <20261125143822.351251729@linuxfoundation.org>
+Subject: [PATCH 6.18 012/990] libceph: generalize ceph_x_encrypt_offset() and ceph_x_encrypt_buflen()
+Date: Wed, 25 Nov 2026 15:22:59 +0100
+Message-ID: <20261125143822.374645078@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143822.072087159@linuxfoundation.org>
 References: <20261125143822.072087159@linuxfoundation.org>
@@ -65,107 +62,228 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Sergey Lebedev <lsa.uz@pm.me>
+From: Ilya Dryomov <idryomov@gmail.com>
 
-[ Upstream commit d32e04c052342d7d1cc03f6ba4cbd135cd0112bc ]
+commit 0ee8bccf7396d50726c9c8dd3135fb64a9fe8426 upstream.
 
-The Microsoft Surface Pro 11 for Business (Intel, Lunar Lake) carries a
-single physical RT1320 amplifier on link 0 and describes it twice:
+- introduce the notion of a data offset for ceph_x_encrypt_offset()
+  to allow for e.g. confounder to be prepended before the encryption
+  header in the future.  For CEPH_CRYPTO_AES, the data offset is 0
+  (i.e. nothing is prepended).
 
-  SWRA  _ADR 0x000030025D132000   SDCA class 0
-  SWRB  _ADR 0x000030025D132001   SDCA class 1
+- adjust ceph_x_encrypt_buflen() accordingly and make it account for
+  PKCS#7 padding that is used by CEPH_CRYPTO_AES precisely instead of
+  just always adding 16.
 
-Identical apart from the class id: same link, same manufacturer, part and
-version, same unique id 0. The part reports class 1, so only SWRB
-enumerates. SWRA never attaches on any boot or firmware version tested,
-including the November 2025 bundle.
-
-The ghost is not harmless. It consumes an amplifier index in
-find_acpi_adr_device(), so the real part is named "rt1320-2" and the stock
-sof-soundwire UCM profile enables switches on a device that is not there.
-Its endpoints also reach create_sdw_dailink(), which builds DAI link names
-from link id and function type alone; the ghost declares the same SmartMic
-function as the real part, so the card fails to register at all:
-
-  sysfs: cannot create duplicate filename
-    '.../sof_sdw/SDW0-Capture-SmartMic'
-  kobject_add_internal failed for SDW0-Capture-SmartMic with -EEXIST
-  sof_sdw sof_sdw: probe with driver sof_sdw failed with error -12
-
-Remap its _ADR to zero so sdw_acpi_find_slaves() never creates the
-peripheral, which is how ghost devices are handled already - see
-ghost_realtek and global_ghost_adr in this file. Both failures then
-disappear, because neither path is reached.
-
-Matched on DMI_PRODUCT_SKU rather than the product name. A later batch of
-the same model could carry a different RT1320 version, which would change
-the _ADR; keying on the SKU keeps this remap to the hardware it was
-verified on, and follows dell_sku_0A3E above.
-
-Link: https://lore.kernel.org/linux-sound/20260830151516.44629-1-lsa.uz@pm.me/
-Suggested-by: Pierre-Louis Bossart <pierre-louis.bossart@linux.dev>
-Suggested-by: Bard Liao <bard.liao@intel.com>
-Signed-off-by: Sergey Lebedev <lsa.uz@pm.me>
-Reviewed-by: Pierre-Louis Bossart <pierre-louis.bossart@linux.dev>
-Tested-by: German Pablo Lindo <germanpapulindez@gmail.com>
-Link: https://patch.msgid.link/20260913210849.6446-1-lsa.uz@pm.me
-Signed-off-by: Vinod Koul <vkoul@kernel.org>
+Signed-off-by: Ilya Dryomov <idryomov@gmail.com>
+[ Jordan: resolve conflict with 821365487aa5 in __ceph_x_decrypt() ]
+Signed-off-by: Jordan DESNOËS <jordan.desnoes@francetv.fr>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/soundwire/dmi-quirks.c | 28 ++++++++++++++++++++++++++++
- 1 file changed, 28 insertions(+)
+ net/ceph/auth_x.c | 44 +++++++++++++++++++++++++++++---------------
+ net/ceph/crypto.c | 25 +++++++++++++++++++++++++
+ net/ceph/crypto.h |  2 ++
+ 3 files changed, 56 insertions(+), 15 deletions(-)
 
-diff --git a/drivers/soundwire/dmi-quirks.c b/drivers/soundwire/dmi-quirks.c
-index 72e59b50b6853..f9183e0e63bfa 100644
---- a/drivers/soundwire/dmi-quirks.c
-+++ b/drivers/soundwire/dmi-quirks.c
-@@ -111,6 +111,25 @@ static const struct adr_remap ghost_realtek[] = {
- 	{}
- };
+diff --git a/net/ceph/auth_x.c b/net/ceph/auth_x.c
+index f805a813308fd..d1c7b78808279 100644
+--- a/net/ceph/auth_x.c
++++ b/net/ceph/auth_x.c
+@@ -44,23 +44,35 @@ static int ceph_x_should_authenticate(struct ceph_auth_client *ac)
+ 	return !!need;
+ }
  
-+/*
-+ * The Microsoft Surface Pro 11 (Intel) describes its single physical RT1320
-+ * amplifier twice on link 0, as two _ADR entries differing only in SDCA class
-+ * id and sharing the same unique id. Only the class 1 entry enumerates; the
-+ * class 0 entry is a ghost.
-+ *
-+ * Matched on the product SKU rather than the product name: a later batch of the
-+ * same model could carry a different RT1320 version, which would change the
-+ * _ADR. Keying on the SKU keeps this remap to the hardware it was verified on.
-+ */
-+static const struct adr_remap microsoft_sp11_intel[] = {
-+	/* ghost rt1320 on link0 */
-+	{
-+		0x000030025d132000ull,
-+		0x0000000000000000ull
-+	},
-+	{}
-+};
+-static int ceph_x_encrypt_offset(void)
++static int __ceph_x_encrypt_offset(const struct ceph_crypto_key *key)
+ {
+-	return sizeof(u32) + sizeof(struct ceph_x_encrypt_header);
++	return ceph_crypt_data_offset(key) +
++	       sizeof(struct ceph_x_encrypt_header);
+ }
+ 
+-static int ceph_x_encrypt_buflen(int ilen)
++static int ceph_x_encrypt_offset(const struct ceph_crypto_key *key)
+ {
+-	return ceph_x_encrypt_offset() + ilen + 16;
++	return sizeof(u32) + __ceph_x_encrypt_offset(key);
++}
 +
- static const struct dmi_system_id adr_remap_quirk_table[] = {
- 	/* TGL devices */
- 	{
-@@ -242,6 +261,15 @@ static const struct dmi_system_id adr_remap_quirk_table[] = {
- 		},
- 		.driver_data = (void *)ghost_realtek,
- 	},
-+	/* LNL devices */
-+	{
-+		.matches = {
-+			DMI_MATCH(DMI_SYS_VENDOR, "Microsoft Corporation"),
-+			DMI_EXACT_MATCH(DMI_PRODUCT_SKU,
-+					"Surface_Pro_11th_Edition_With_Intel_For_Business_2103")
-+		},
-+		.driver_data = (void *)microsoft_sp11_intel,
-+	},
- 	{}
- };
++/*
++ * AES: ciphertext_len | hdr | data... | padding
++ */
++static int ceph_x_encrypt_buflen(const struct ceph_crypto_key *key,
++				 int data_len)
++{
++	int encrypt_len = sizeof(struct ceph_x_encrypt_header) + data_len;
++	return sizeof(u32) + ceph_crypt_buflen(key, encrypt_len);
+ }
+ 
+ static int ceph_x_encrypt(struct ceph_crypto_key *secret, void *buf,
+ 			  int buf_len, int plaintext_len)
+ {
+-	struct ceph_x_encrypt_header *hdr = buf + sizeof(u32);
++	struct ceph_x_encrypt_header *hdr;
+ 	int ciphertext_len;
+ 	int ret;
+ 
++	hdr = buf + sizeof(u32) + ceph_crypt_data_offset(secret);
+ 	hdr->struct_v = 1;
+ 	hdr->magic = cpu_to_le64(CEPHX_ENC_MAGIC);
+ 
+@@ -77,7 +89,7 @@ static int ceph_x_encrypt(struct ceph_crypto_key *secret, void *buf,
+ static int __ceph_x_decrypt(struct ceph_crypto_key *secret, void *p,
+ 			    int ciphertext_len)
+ {
+-	struct ceph_x_encrypt_header *hdr = p;
++	struct ceph_x_encrypt_header *hdr;
+ 	int plaintext_len;
+ 	int ret;
+ 
+@@ -91,6 +103,7 @@ static int __ceph_x_decrypt(struct ceph_crypto_key *secret, void *p,
+ 		return -EINVAL;
+ 	}
+ 
++	hdr = p + ceph_crypt_data_offset(secret);
+ 	if (le64_to_cpu(hdr->magic) != CEPHX_ENC_MAGIC) {
+ 		pr_err("%s bad magic\n", __func__);
+ 		return -EINVAL;
+@@ -198,7 +211,7 @@ static int process_one_ticket(struct ceph_auth_client *ac,
+ 	}
+ 
+ 	/* blob for me */
+-	dp = *p + ceph_x_encrypt_offset();
++	dp = *p + ceph_x_encrypt_offset(secret);
+ 	ret = ceph_x_decrypt(secret, p, end);
+ 	if (ret < 0)
+ 		goto out;
+@@ -225,7 +238,7 @@ static int process_one_ticket(struct ceph_auth_client *ac,
+ 	ceph_decode_8_safe(p, end, is_enc, bad);
+ 	if (is_enc) {
+ 		/* encrypted */
+-		tp = *p + ceph_x_encrypt_offset();
++		tp = *p + ceph_x_encrypt_offset(&th->session_key);
+ 		ret = ceph_x_decrypt(&th->session_key, p, end);
+ 		if (ret < 0)
+ 			goto out;
+@@ -317,7 +330,7 @@ static int encrypt_authorizer(struct ceph_x_authorizer *au,
+ 	p = (void *)(msg_a + 1) + le32_to_cpu(msg_a->ticket_blob.blob_len);
+ 	end = au->buf->vec.iov_base + au->buf->vec.iov_len;
+ 
+-	msg_b = p + ceph_x_encrypt_offset();
++	msg_b = p + ceph_x_encrypt_offset(&au->session_key);
+ 	msg_b->struct_v = 2;
+ 	msg_b->nonce = cpu_to_le64(au->nonce);
+ 	if (server_challenge) {
+@@ -373,7 +386,7 @@ static int ceph_x_build_authorizer(struct ceph_auth_client *ac,
+ 		goto out_au;
+ 
+ 	maxlen = sizeof(*msg_a) + ticket_blob_len +
+-		ceph_x_encrypt_buflen(sizeof(*msg_b));
++		ceph_x_encrypt_buflen(&au->session_key, sizeof(*msg_b));
+ 	dout("  need len %d\n", maxlen);
+ 	if (au->buf && au->buf->alloc_len < maxlen) {
+ 		ceph_buffer_put(au->buf);
+@@ -512,7 +525,7 @@ static int ceph_x_build_request(struct ceph_auth_client *ac,
+ 		struct ceph_x_authenticate *auth = (void *)(head + 1);
+ 		void *enc_buf = xi->auth_authorizer.enc_buf;
+ 		struct ceph_x_challenge_blob *blob = enc_buf +
+-							ceph_x_encrypt_offset();
++					     ceph_x_encrypt_offset(&xi->secret);
+ 		u64 *u;
+ 
+ 		p = auth + 1;
+@@ -639,7 +652,7 @@ static int handle_auth_session_key(struct ceph_auth_client *ac, u64 global_id,
+ 	ceph_decode_need(p, end, len, e_inval);
+ 	dout("%s connection secret blob len %d\n", __func__, len);
+ 	if (len > 0) {
+-		dp = *p + ceph_x_encrypt_offset();
++		dp = *p + ceph_x_encrypt_offset(&th->session_key);
+ 		ret = ceph_x_decrypt(&th->session_key, p, *p + len);
+ 		if (ret < 0)
+ 			return ret;
+@@ -816,7 +829,7 @@ static int decrypt_authorizer_challenge(struct ceph_crypto_key *secret,
+ 		return ret;
+ 
+ 	dout("%s decrypted %d bytes\n", __func__, ret);
+-	dp = challenge + sizeof(struct ceph_x_encrypt_header);
++	dp = challenge + __ceph_x_encrypt_offset(secret);
+ 	dend = dp + ret;
+ 
+ 	ceph_decode_skip_8(&dp, dend, e_inval);  /* struct_v */
+@@ -863,7 +876,7 @@ static int decrypt_authorizer_reply(struct ceph_crypto_key *secret,
+ 	u8 struct_v;
+ 	int ret;
+ 
+-	dp = *p + ceph_x_encrypt_offset();
++	dp = *p + ceph_x_encrypt_offset(secret);
+ 	ret = ceph_x_decrypt(secret, p, end);
+ 	if (ret < 0)
+ 		return ret;
+@@ -986,7 +999,8 @@ static int calc_signature(struct ceph_x_authorizer *au, struct ceph_msg *msg,
+ 			__le32 front_crc;
+ 			__le32 middle_crc;
+ 			__le32 data_crc;
+-		} __packed *sigblock = enc_buf + ceph_x_encrypt_offset();
++		} __packed *sigblock = enc_buf +
++				       ceph_x_encrypt_offset(&au->session_key);
+ 
+ 		sigblock->len = cpu_to_le32(4*sizeof(u32));
+ 		sigblock->header_crc = msg->hdr.crc;
+diff --git a/net/ceph/crypto.c b/net/ceph/crypto.c
+index 5601732cf4faa..2b98daffe9af7 100644
+--- a/net/ceph/crypto.c
++++ b/net/ceph/crypto.c
+@@ -285,6 +285,31 @@ int ceph_crypt(const struct ceph_crypto_key *key, bool encrypt,
+ 	}
+ }
+ 
++int ceph_crypt_data_offset(const struct ceph_crypto_key *key)
++{
++	switch (key->type) {
++	case CEPH_CRYPTO_NONE:
++	case CEPH_CRYPTO_AES:
++		return 0;
++	default:
++		BUG();
++	}
++}
++
++int ceph_crypt_buflen(const struct ceph_crypto_key *key, int data_len)
++{
++	switch (key->type) {
++	case CEPH_CRYPTO_NONE:
++		return data_len;
++	case CEPH_CRYPTO_AES:
++		/* PKCS#7 padding at the end */
++		return data_len + AES_BLOCK_SIZE -
++		       (data_len & (AES_BLOCK_SIZE - 1));
++	default:
++		BUG();
++	}
++}
++
+ static int ceph_key_preparse(struct key_preparsed_payload *prep)
+ {
+ 	struct ceph_crypto_key *ckey;
+diff --git a/net/ceph/crypto.h b/net/ceph/crypto.h
+index a20bad6d1e964..736ec6d2fbcb2 100644
+--- a/net/ceph/crypto.h
++++ b/net/ceph/crypto.h
+@@ -28,6 +28,8 @@ void ceph_crypto_key_destroy(struct ceph_crypto_key *key);
+ /* crypto.c */
+ int ceph_crypt(const struct ceph_crypto_key *key, bool encrypt,
+ 	       void *buf, int buf_len, int in_len, int *pout_len);
++int ceph_crypt_data_offset(const struct ceph_crypto_key *key);
++int ceph_crypt_buflen(const struct ceph_crypto_key *key, int data_len);
+ int ceph_crypto_init(void);
+ void ceph_crypto_shutdown(void);
  
 -- 
 2.53.0
