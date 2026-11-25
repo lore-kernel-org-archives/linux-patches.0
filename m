@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795625595;
-	b=1zOddoLySutyTXvj2fdnsD7EjrDVTVkoNebtGv7Z5orns+HQsqVezOFP+B5GBQbgdA67
-	 P0ebasA1WjqZ9aIXjkwXbipDpb8kM8IELt7tPF9mzriX2ddABTCSiSQu/L39ZTpF9HTVL
-	 k917k2Qy3LdJEFjsCRA4v+ze0plgUNx/CBl9bVPx6ny9OdfskDd2sneC5AMrYjHzh7VXL
-	 27siZLptdwhCAf/v77X+nnoITsTdDfqdz5wP1Btuw8WNMaZahBmlLQ5szwO11PU0n3oP4
-	 h6wIecZDJ55dxGlEEq6xyjUh7ik+684Bdkrcpa/YSVCdHQynuAR2MUIJDwWkg9hS+PQ==
+	t=1795625598;
+	b=Jr8AY+HBMw2EnfzLeeIUFMqEz5rl4yQHEZKrDo2/HIMVcawVSCKl1GaiRZOZqDjte01N
+	 F2XvgyQ9/bgHw1eq1YumyLUiHp3LRzMOhnjnsVVlR0Ebsr6FHvWL25gKNSsghcEyC+1J7
+	 BduQhYpJbKH/kKS40c3JQ3gzLZBobBRXHbajPOKSHl7P+uAXbz5nX1AiMhUgcOyKeQhLY
+	 gZ33XEMKrm4plo9b61xuy7Y+iTY/rasIH8XxQGouM1vrW+lmFwozuaSAs6xFx08y1B/3o
+	 vJA8cdbe9Ttz/00PpdFVhXytyIm3xsB1fXRxARSfBn7MFXZ93bSv6tCpKqujvu/pbxg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795625595;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795625598;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=rJL5p6HKwzpRACD4JUM5HjYA0B6yhP2PRxgp6OvMYj4=;
-	b=f+zMsOuRx39AaMAZ7xttK+/ovcdWna4LW+eEj3dh0O+AeLN0s1DOXZ+7TNECUvXn+CaX
-	 eFFB97SY109sq/yE+o+ualuQhx7nbZOJeZlo/fTQ2Yt1UC1zgqzilSymJFyMHCnWT0S29
-	 wwrLXeTUbS9LS2hkL/Lhs12y/W4Abm6cRndei86nICWq+wOst8n5fDvHFnX0i5OWclCut
-	 8j8CXksEmtKbnGF41BgcOQ+HgB7ZScAZMHx2nxR4KFRk9q2OsbocvoHd+g2VqNsAOwvvs
-	 baiH4mTAumbSqfsK7BCE2R3pqiudB21S+7lpxr7K72wl4qvm6FHD3a8TMbyTcrRxtUw==
+	bh=urj1TevFUPtb+wk1N8kezcXZx/fWT3u7EVqStm1Cb3Q=;
+	b=Zw1sA522w971MTer7E/HR2+7WEZ1NTEPAzpGcQYylySzkaPIi24FCnUVrH6iWGliQuK4
+	 ZCMGJDRdyYFSs+Mvd4lJMGyCHn8zGOqVmVJwyEFZlJXe7cRfhQUlolq2ERwRS2oSS4j06
+	 zelvKXLve47TOJz0rMkJzkgHTdSEtq2POPOxxZFR/idnuqiYciKDsPLf+h2hWK0PDGYwr
+	 aXEy2rMSPkSyHAtva6VZwvchnentbmWwTAl3gAlXesqiGFlwpurB634boTeS+DY6tTkcW
+	 aQo1EGfy5cgCcosXOaSoo3PpXJdRviQJtaZbcy+p5DWsFF8fJl1E+qRBTcbktx/8giA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ItDNe3kx;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Wq1xunDs;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7DA4B606A31E;
-	Wed, 25 Nov 2026 16:53:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 55CB1606A323;
+	Wed, 25 Nov 2026 16:53:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ItDNe3kx
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7A0D51F000C4;
-	Wed, 25 Nov 2026 16:53:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Wq1xunDs
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9DCBD1F000CF;
+	Wed, 25 Nov 2026 16:53:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795625595;
-	bh=rJL5p6HKwzpRACD4JUM5HjYA0B6yhP2PRxgp6OvMYj4=;
+	s=korg; t=1795625598;
+	bh=urj1TevFUPtb+wk1N8kezcXZx/fWT3u7EVqStm1Cb3Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ItDNe3kxBOg26WzAeYegK7taT8WAWPuvbIaAWE9niffpQ4nU5UitR59UNCJEp4TJD
-	 OXQcX0wZRhNzLFu53p7iDxNDJI1k39b2qCXkkbKrOzUctWAcz2MDsSJy6IiLuH5W17
-	 Mhbag9X+tfJIIp0TGmwanc8oi2dmt0h3MRuJ4+gw=
+	b=Wq1xunDsQirEeNcLYYNjsx5Irh3kbT77wAF9L8wkGRGaaHpaZ0fUT1KVylzpngKqU
+	 gdlyVwE5xcdnorOOc4LArYT8JS7+RrCsR4Tc1e9IS9VTfepnbj8DiSrPXOsUwD8Hw/
+	 vzwYRnTEfqgv856Nh5Ll//Mwu+wxj2a+6GtB6rME=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Gregory Price (Meta)" <gourry@gourry.net>,
-	"Vlastimil Babka (SUSE)" <vbabka@kernel.org>,
-	Zi Yan <ziy@nvidia.com>
-Subject: [PATCH 6.12 569/816] mm/mempolicy: read the zoneref slot once in mempolicy_slab_node()
-Date: Wed, 25 Nov 2026 15:35:17 +0100
-Message-ID: <20261125143902.353023836@linuxfoundation.org>
+	Josef Bacik <josef@toxicpanda.com>,
+	"David Hildenbrand (Arm)" <david@kernel.org>,
+	"Vlastimil Babka (SUSE)" <vbabka@kernel.org>
+Subject: [PATCH 6.12 570/816] mm/memory_hotplug: resize zones under their seqlock
+Date: Wed, 25 Nov 2026 15:35:18 +0100
+Message-ID: <20261125143902.375371527@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143849.205329330@linuxfoundation.org>
 References: <20261125143849.205329330@linuxfoundation.org>
@@ -68,72 +68,115 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Gregory Price (Meta) <gourry@gourry.net>
+From: Josef Bacik <josef@toxicpanda.com>
 
-commit 4cc1bcdf2e4ebcd319005ce2ea132489f6155139 upstream.
+commit 58e81bb7de5aac8ec5e4aa21d401e7dafbd4058b upstream.
 
-For a bind or preferred-many policy, mempolicy_slab_node() tests the
-first matching slot's zone for NULL, then reads the slot again to look
-up the zone's node. Offlining a zone's last block rebuilds the
-zonelists in place, so the second read can return the terminator:
+With CONFIG_DEBUG_VM the page allocator checks that a page which is
+freed, split or allocated lies within its zone. The check reads
+zone->zone_start_pfn and zone->spanned_pages under zone->span_seqlock, as
+memory hotplug can change the two at any time.
 
-  CPU 0                             CPU 1
-  mempolicy_slab_node()
-    zonelist_zone(slot 4)
-      = node 2 NORMAL
-                                    offline_pages()
-                                      build_all_zonelists()
-                                        slot 4 = NULL
-    zonelist_node_idx(slot 4)
-      zone_to_nid(NULL)
+Commit 27cacaad16c5 ("mm,memory_hotplug: drop unneeded locking") removed
+the write side, since all resizing is serialized by the hotplug lock. That
+leaves the reader without protection. When memory below the start of a
+zone goes online, the start is lowered first and the size is raised
+afterwards. When the lowest memory of a zone goes offline, the size is
+reduced first. In between, the zone seems to end before its last pages. If
+one of them goes through the allocator at that moment, it is reported as
+being outside of the zone triggers VM_BUG_ON_PAGE().
 
-Current GCC merges the two reads, but nothing requires it. With
-mm/mempolicy.o built with -fno-inline -fno-ipa-sra, holding a bound
-task's slab_strict_numa allocation between the reads while a movable
-block earlier in the zonelist goes offline oopses every time:
+Write the two fields in a write section of the seqlock. Interrupts are
+disabled as pages are freed from interrupts, too, and the reader would
+wait for the writer which it has interrupted.
 
-  BUG: kernel NULL pointer dereference, address: 0000000000000060
-  RIP: 0010:zone_to_nid+0x0/0x10
-  Call Trace:
-   kmem_cache_alloc_noprof+0x294/0x610
-   do_getname+0x34/0x230
-
-mempolicy_slab_node() and zonelist_node_idx() are tail calls here, so
-neither appears in the trace.
-
-Read the slot once and use that zone.
-
-Fixes: 11cd8638c37f ("mm, page_alloc: remove stop_machine from build_all_zonelists")
+Fixes: 27cacaad16c5 ("mm,memory_hotplug: drop unneeded locking")
 Cc: stable@vger.kernel.org
-Signed-off-by: Gregory Price (Meta) <gourry@gourry.net>
-Reviewed-by: Vlastimil Babka (SUSE) <vbabka@kernel.org>
-Link: https://patch.msgid.link/20261101021340.2251928-12-gourry@gourry.net
-Reviewed-by: Zi Yan <ziy@nvidia.com>
+Assisted-by: LLM
+Signed-off-by: Josef Bacik <josef@toxicpanda.com>
+Signed-off-by: David Hildenbrand (Arm) <david@kernel.org>
+Link: https://patch.msgid.link/20261103-pgalloc-ai-hotfixes-v2-4-e0d2890ab74f@kernel.org
 Signed-off-by: Vlastimil Babka (SUSE) <vbabka@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- mm/mempolicy.c |    4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ mm/memory_hotplug.c |   44 ++++++++++++++++++++++++++++----------------
+ 1 file changed, 28 insertions(+), 16 deletions(-)
 
---- a/mm/mempolicy.c
-+++ b/mm/mempolicy.c
-@@ -1937,6 +1937,7 @@ unsigned int mempolicy_slab_node(void)
- 	case MPOL_PREFERRED_MANY:
- 	{
- 		struct zoneref *z;
-+		struct zone *zone;
+--- a/mm/memory_hotplug.c
++++ b/mm/memory_hotplug.c
+@@ -479,6 +479,22 @@ static unsigned long find_biggest_sectio
+ 	return 0;
+ }
  
++/*
++ * The page allocator checks pages against the span of their zone while the
++ * zone is resized, see page_outside_zone_boundaries(). It must not see the
++ * new value of one field together with the old value of the other one.
++ */
++static void zone_set_span(struct zone *zone, unsigned long start_pfn,
++			  unsigned long spanned_pages)
++{
++	unsigned long flags;
++
++	write_seqlock_irqsave(&zone->span_seqlock, flags);
++	zone->zone_start_pfn = start_pfn;
++	zone->spanned_pages = spanned_pages;
++	write_sequnlock_irqrestore(&zone->span_seqlock, flags);
++}
++
+ static void shrink_zone_span(struct zone *zone, unsigned long start_pfn,
+ 			     unsigned long end_pfn)
+ {
+@@ -494,13 +510,10 @@ static void shrink_zone_span(struct zone
+ 		 */
+ 		pfn = find_smallest_section_pfn(nid, zone, end_pfn,
+ 						zone_end_pfn(zone));
+-		if (pfn) {
+-			zone->spanned_pages = zone_end_pfn(zone) - pfn;
+-			zone->zone_start_pfn = pfn;
+-		} else {
+-			zone->zone_start_pfn = 0;
+-			zone->spanned_pages = 0;
+-		}
++		if (pfn)
++			zone_set_span(zone, pfn, zone_end_pfn(zone) - pfn);
++		else
++			zone_set_span(zone, 0, 0);
+ 	} else if (zone_end_pfn(zone) == end_pfn) {
  		/*
- 		 * Follow bind policy behavior and start allocation at the
-@@ -1947,7 +1948,8 @@ unsigned int mempolicy_slab_node(void)
- 		zonelist = &NODE_DATA(node)->node_zonelists[ZONELIST_FALLBACK];
- 		z = first_zones_zonelist(zonelist, highest_zoneidx,
- 							&policy->nodes);
--		return zonelist_zone(z) ? zonelist_node_idx(z) : node;
-+		zone = zonelist_zone(z);
-+		return zone ? zone_to_nid(zone) : node;
+ 		 * If the section is biggest section in the zone, it need
+@@ -511,11 +524,10 @@ static void shrink_zone_span(struct zone
+ 		pfn = find_biggest_section_pfn(nid, zone, zone->zone_start_pfn,
+ 					       start_pfn);
+ 		if (pfn)
+-			zone->spanned_pages = pfn - zone->zone_start_pfn + 1;
+-		else {
+-			zone->zone_start_pfn = 0;
+-			zone->spanned_pages = 0;
+-		}
++			zone_set_span(zone, zone->zone_start_pfn,
++				      pfn - zone->zone_start_pfn + 1);
++		else
++			zone_set_span(zone, 0, 0);
  	}
- 	case MPOL_LOCAL:
- 		return node;
+ }
+ 
+@@ -723,12 +735,12 @@ static void node_states_set_node(int nod
+ static void __meminit resize_zone_range(struct zone *zone, unsigned long start_pfn,
+ 		unsigned long nr_pages)
+ {
+-	unsigned long old_end_pfn = zone_end_pfn(zone);
++	unsigned long end_pfn = max(start_pfn + nr_pages, zone_end_pfn(zone));
+ 
+-	if (zone_is_empty(zone) || start_pfn < zone->zone_start_pfn)
+-		zone->zone_start_pfn = start_pfn;
++	if (!zone_is_empty(zone) && start_pfn > zone->zone_start_pfn)
++		start_pfn = zone->zone_start_pfn;
+ 
+-	zone->spanned_pages = max(start_pfn + nr_pages, old_end_pfn) - zone->zone_start_pfn;
++	zone_set_span(zone, start_pfn, end_pfn - start_pfn);
+ }
+ 
+ static void __meminit resize_pgdat_range(struct pglist_data *pgdat, unsigned long start_pfn,
 
 
