@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795619581;
-	b=E1bJtgJKRxCRHBU8U+Kz3jsGJTdsKGXgWQeXATIc+1hhV2I9LvrBQw0wX1xsqBG7B1sq
-	 mXl0xiIAFo7Nj8cCOH5j9fqp6l6iXeG7W4Birnf1RfTNejVUIIyNTtGIa5IHkd3Yp9D/N
-	 GLB1XH33fWreLwKG/uVYeCknWVBM8mKW4Zy7EW9cU3GzyhmSecZ463LKfgBQMnenEujyT
-	 6e4IOnsc8nIzLUO38e2Be6NEi4s+28x+upXDwLddZOnOo5puw75ZTaJAzsAAfHSpvmtqf
-	 cstqcyuuljvMxsvDC/Aq+brk3A9ES2HMhEzO26o/ZO5DrUVT7hbszs+55qQq6FCvFjA==
+	t=1795619584;
+	b=jxdzPxNfhwsi85dGdesm5z1y3jLTunVi1bG3rWGIQOFChBbFuSaWbyQsUviI8c1jvAjJ
+	 flV83azXT5cwtdmpZupY+LNx04umAwn7Pg/6PYhoKPGGzUxtm4QGnESvmLE/WQ9lXlhes
+	 fyF0eWVulzZYtxk7P8arvDUCGKyDhpO+vf6/Xs6mHVn7ofMVM0LGcHM7+BUfwBTwUGH65
+	 Bl7w27T3Ev/YofPGSj5OYmV6rv/OGwA2pK52l6Y3TgURP9AhlRc1cthkv/2nm6raJMc6a
+	 P4nMiG0RFzcblLjFcxsqkLFjRfaW156d4DeWO7p8J/yJN/o3RX742aZ+N9cZfPV8big==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795619581;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795619584;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=JkaN6o63N/fMcCvO1SLf9F+dVq/NdCuniLZIZ/rHW0Q=;
-	b=2V3wPkScNguyImLXbgY1aVInaHVsY/z72W1ocRYq2WMHTourOC/6AYIdFD2OgoiI9TzY
-	 vyHbIyTqPYeqLYN8JFBg029nOn8i89eeYA/cNGAMX28gRg/xd3mtw9Q6TDvSA6zrUioeR
-	 BzPMLIACYlIAk2P/5oqBSS9DwLsdVc4K46j1R9stckDlQwRHskVHoSyX4v+I45ybwipA2
-	 nvRcE7SJLycFBXCCYFOKz1/L/gLwSUSwC24Gagf3sj3GYbvh86I5m20qpgCF147SpKA5P
-	 PS5tOE1jCpAIVNanoNdSNEytYub0YlV83FhOg4uWXaIVKuJS0fyrFVIBHihM4kA1lyA==
+	bh=6w4chp7zeEqi+YirnrnjffDlS+XM1fM6uN+sNDq9BiM=;
+	b=bdELYxYtKHRi2nKMxCILufD8n9QIHZeo179DmW6JQvwmSjzRd6gfz0VgNVpH41CVOjxw
+	 +BseMCihAF+zz8JNto3GckEChubn8tEKMzvWIaxB+7rqPZB3F/XPi6+Oexyh3L+SiFyHa
+	 EhYTkJygmNn2/bZpEFNgRsSMMtl1/QAb4S3RIIcpqy+2SSbfW4o2d+t/m+Gi9OaIzFK9x
+	 qlVf4bD68NqpX//KTOimlkpqZlxgqsoI6OMzjtUt7VH+St7jA3yPiK0WayzCjcGYizL33
+	 fOGUu10QvxXILTVpCY/2sdEe8Sp9GigaqCkAQX/3dvyk0s5YI/BXHWN9N6cnKVqwTJw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=sb5ampf9;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=a8N+ieuU;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DE3A1606A323;
-	Wed, 25 Nov 2026 15:13:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BAEE6606A31E;
+	Wed, 25 Nov 2026 15:13:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=sb5ampf9
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1F4291F000C0;
-	Wed, 25 Nov 2026 15:13:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=a8N+ieuU
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1952B1F000C0;
+	Wed, 25 Nov 2026 15:13:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795619581;
-	bh=JkaN6o63N/fMcCvO1SLf9F+dVq/NdCuniLZIZ/rHW0Q=;
+	s=korg; t=1795619584;
+	bh=6w4chp7zeEqi+YirnrnjffDlS+XM1fM6uN+sNDq9BiM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=sb5ampf9wImFPyUbB+jP6Dv6OvsWvJ+BWyui/EhngCUVgME3fUOHBI/LDVeUnYiVY
-	 ctyZDr9i+rKLnq6pZ9rCHiqF0BdojYE18v/IX8YWB4CGGtOuICHKXuxPv5ImuJ3rJX
-	 Lj/PRpqr9tB9sNg7Cg/BDG1Hd4PLt92h4J3B7Wck=
+	b=a8N+ieuU3w/j8wbU7efc83yPlwNI2o1sV/+5tlUpMKSTN7XtjmwnKsgGLewPCjn5z
+	 iFIXrjeyLIOe7CqPpJJZW5eAZtUKJzA84VyuXvklAPUjMWv3zjgLiU9xQaJ2LYXFsg
+	 LcLJf/qHzRKc2BIgKCHlt37ribrdghgVyM7r+3gg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yingjie Wang <x-professor@outlook.com>,
-	Kuniyuki Iwashima <kuniyu@google.com>,
+	Hyunwoo Kim <imv4bel@gmail.com>,
 	Eric Dumazet <edumazet@kernel.org>,
+	Kuniyuki Iwashima <kuniyu@google.com>,
 	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 7.3 0641/1005] tcp: free saved_syn after an RCU grace period
-Date: Wed, 25 Nov 2026 15:32:59 +0100
-Message-ID: <20261125143836.768832782@linuxfoundation.org>
+Subject: [PATCH 7.3 0642/1005] tcp: do not coalesce segments after FIN
+Date: Wed, 25 Nov 2026 15:33:00 +0100
+Message-ID: <20261125143836.792297950@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143821.729802100@linuxfoundation.org>
 References: <20261125143821.729802100@linuxfoundation.org>
@@ -69,153 +69,129 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yingjie Wang <x-professor@outlook.com>
+From: Hyunwoo Kim <imv4bel@gmail.com>
 
-commit 2b9fd1a0abf0c1c7200be7a33cfeeca1c68089b6 upstream.
+commit 1c46780dec48893b8c25fd5e33a3127e8dc39dd4 upstream.
 
-tcp_reqsk_record_syn() allocates saved_syn separately from its request
-socket. bpf_sock_ops_get_syn() can load that pointer while processing a
-retransmitted SYN under RCU.
+A FIN consumes a sequence number. If another FIN segment is coalesced
+into an skb that already carries FIN, end_seq advances to account for
+the additional FIN, but tcp_flags still contains only one FIN bit.
 
-There are two ownership transfers which can let another CPU reclaim the
-allocation while such a reader is still using it.
+When the preceding gap is filled and tcp_ofo_queue() processes the
+coalesced skb, rcv_nxt advances to the skb's end_seq. When the receive
+path consumes all data in the skb, copied_seq advances by the data
+length and one sequence number for FIN. If three or more FIN segments
+have been coalesced into one skb, tcp_inq() can still return a positive
+value after the receive queue becomes empty and the SOCK_DONE adjustment
+is applied.
 
-First, tcp_move_syn() transfers req->saved_syn to a newly created child
-socket. The child can be closed and tcp_saved_syn_free() can reclaim the
-allocation before a reader of the old request finishes.
+TCP_ZEROCOPY_RECEIVE is another consumer affected by this state.
+tcp_zerocopy_receive() takes its length from tcp_inq() and follows
+skb->next without checking for the end of the receive queue.
 
-Second, inet_reqsk_clone() shallow-copies request_sock during request
-migration. After reqsk_migrate_reset() clears the old request pointer, the
-migrated clone owns it. However, a reader which already loaded the pointer
-from the old request can still be using it when the clone is released.
+Software kTLS receive is one consumer affected by this state. When
+strp->copy_mode is false, tls_strp_msg_consume() calls the TCP helper
+tcp_read_done() to consume the current TLS record. In the reproducer,
+tcp_read_done() consumed the record data and one FIN before freeing the
+receive skb.
 
-I found this through LLM-assisted concurrency fuzzing.
+When kTLS looked for the next record, tcp_inq() reported at least
+TLS_HEADER_SIZE bytes even though the receive queue was empty.
+tcp_recv_skb() returned NULL, so tls_strp_load_anchor_with_queue() hit
+WARN_ON_ONCE() and returned without updating the anchor.
 
-Mark the request-socket saved_syn pointer as RCU protected and use RCU
-accessors for its reads and updates. Keep the full-socket pointer plain
-because all of its accesses hold the socket lock. Embed an rcu_head in
-struct saved_syn and use kfree_rcu() in both teardown paths. This lets a
-request-side reader which loaded the object before an ownership transfer
-finish.
+Since tcp_inq() had reported at least TLS_HEADER_SIZE,
+tls_strp_read_sock() proceeded to tls_strp_check_queue_ok().
+skb_shinfo(strp->anchor)->frag_list still pointed to the freed receive
+skb. tls_strp_check_queue_ok() then read TCP_SKB_CB(first)->seq through
+the stale pointer, causing a use-after-free.
 
-This follows commit e3f33b0a1d89 ("ipv4: free inet_opt and ireq_opt
-after an RCU grace period"), which fixed the same ownership-transfer
-pattern for IPv4 options.
+The reproducer followed this call path:
 
-The issue was confirmed with KASAN on v7.3-16007-g36aad21d50d1 using
-temporary kernel instrumentation to widen the reader and request-migration
-window. KASAN reported a slab-use-after-free read in
-bpf_sock_ops_get_syn(), with the allocation freed by __reqsk_free() from
-reqsk_timer_handler(). The same explicit migration test completed without
-a report with deferred reclamation. A patched kernel without the delay
-instrumentation also completed a successful migration and seven saved-SYN
-reads without a KASAN report.
+  tls_rx_rec_done()
+    tls_strp_msg_consume()
+      tcp_read_done()                       // frees the receive skb
+    tls_strp_check_rcv()
+      tls_strp_read_sock()
+        tls_strp_load_anchor_with_queue()   // returns after WARN_ON_ONCE()
+          tcp_recv_skb() == NULL
+        tls_strp_check_queue_ok()
+          TCP_SKB_CB(first)->seq            // reads the freed receive skb
 
-Fixes: 0813a841566f ("bpf: tcp: Allow bpf prog to write and parse TCP header option")
-Fixes: c905dee62232 ("tcp: Migrate TCP_NEW_SYN_RECV requests at retransmitting SYN+ACKs.")
+KASAN reported:
+
+  BUG: KASAN: slab-use-after-free in tls_strp_check_queue_ok.isra.0+0x5f/0x100
+  Read of size 4 at addr ffff888103169ca8 by task ktls-server/71
+  ...
+  Call Trace:
+   <TASK>
+   ...
+   tls_strp_check_queue_ok.isra.0+0x5f/0x100
+   tls_strp_check_rcv+0x2a9/0x400
+   ...
+   tls_sw_recvmsg+0x3ce/0xa10
+   ...
+   sock_recvmsg+0xea/0x100
+   __sys_recvfrom+0x142/0x1f0
+   ...
+   __x64_sys_recvfrom+0x76/0x90
+   do_syscall_64+0xdd/0x4a0
+   entry_SYSCALL_64_after_hwframe+0x77/0x7f
+   ...
+   </TASK>
+  ...
+  Freed by task 71:
+   ...
+   napi_skb_cache_put+0x24/0xf0
+   skb_attempt_defer_free+0x183/0x3b0
+   tcp_read_done+0x2d4/0x340
+   tls_strp_msg_consume+0x45/0x80
+   tls_sw_recvmsg+0x3c4/0xa10
+   ...
+
+In tcp_try_coalesce(), skip coalescing when the destination skb already
+carries FIN. tcp_add_backlog() calls skb_try_coalesce() directly instead
+of using this helper, so add the same check there. Since both paths check
+only the destination skb, a final segment carrying data and FIN can still
+be coalesced into an skb without FIN when the other coalescing checks pass.
+
+Fixes: e93a0435f809 ("tcp: allow segment with FIN in tcp_try_coalesce()")
+Fixes: 4f693b55c3d2 ("tcp: implement coalescing on backlog queue")
 Cc: stable@vger.kernel.org
-Signed-off-by: Yingjie Wang <x-professor@outlook.com>
-Reviewed-by: Kuniyuki Iwashima <kuniyu@google.com>
+Signed-off-by: Hyunwoo Kim <imv4bel@gmail.com>
 Reviewed-by: Eric Dumazet <edumazet@kernel.org>
-Link: https://patch.msgid.link/38fa9f2cc476502e9b1c1fef09ebba1df5dd5901.1793795528.git.x-professor@outlook.com
+Reviewed-by: Kuniyuki Iwashima <kuniyu@google.com>
+Link: https://patch.msgid.link/au3HMfqNW3_DRMqS@v4bel
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- include/linux/tcp.h             |    6 +++---
- include/net/request_sock.h      |    3 ++-
- net/core/filter.c               |    2 +-
- net/ipv4/inet_connection_sock.c |    6 +++---
- net/ipv4/tcp_input.c            |    2 +-
- 5 files changed, 10 insertions(+), 9 deletions(-)
+ net/ipv4/tcp_input.c |    4 ++++
+ net/ipv4/tcp_ipv4.c  |    2 ++
+ 2 files changed, 6 insertions(+)
 
---- a/include/linux/tcp.h
-+++ b/include/linux/tcp.h
-@@ -612,13 +612,13 @@ static inline void fastopen_queue_tune(s
- static inline void tcp_move_syn(struct tcp_sock *tp,
- 				struct request_sock *req)
- {
--	tp->saved_syn = req->saved_syn;
--	req->saved_syn = NULL;
-+	tp->saved_syn = unrcu_pointer(req->saved_syn);
-+	RCU_INIT_POINTER(req->saved_syn, NULL);
- }
- 
- static inline void tcp_saved_syn_free(struct tcp_sock *tp)
- {
--	kfree(tp->saved_syn);
-+	kfree_rcu(tp->saved_syn, rcu);
- 	tp->saved_syn = NULL;
- }
- 
---- a/include/net/request_sock.h
-+++ b/include/net/request_sock.h
-@@ -39,6 +39,7 @@ struct request_sock_ops {
- };
- 
- struct saved_syn {
-+	struct rcu_head rcu;
- 	u32 mac_hdrlen;
- 	u32 network_hdrlen;
- 	u32 tcp_hdrlen;
-@@ -68,7 +69,7 @@ struct request_sock {
- 	struct timer_list		rsk_timer;
- 	const struct request_sock_ops	*rsk_ops;
- 	struct sock			*sk;
--	struct saved_syn		*saved_syn;
-+	struct saved_syn __rcu		*saved_syn;
- 	u32				secid;
- 	u32				peer_secid;
- 	u32				timeout;
---- a/net/core/filter.c
-+++ b/net/core/filter.c
-@@ -6188,7 +6188,7 @@ static int bpf_sock_ops_get_syn(struct b
- 			 * not be available.  It has to resort to
- 			 * saved_syn (if it is saved).
- 			 */
--			saved_syn = inet_reqsk(sk)->saved_syn;
-+			saved_syn = rcu_dereference(inet_reqsk(sk)->saved_syn);
- 		else
- 			saved_syn = tcp_sk(sk)->saved_syn;
- 
---- a/net/ipv4/inet_connection_sock.c
-+++ b/net/ipv4/inet_connection_sock.c
-@@ -869,7 +869,7 @@ reqsk_alloc_noprof(const struct request_
- 	req_to_sk(req)->sk_prot = sk_listener->sk_prot;
- 	sk_node_init(&req_to_sk(req)->sk_node);
- 	sk_tx_queue_clear(req_to_sk(req));
--	req->saved_syn = NULL;
-+	RCU_INIT_POINTER(req->saved_syn, NULL);
- 	req->syncookie = 0;
- 	req->num_timeout = 0;
- 	req->num_retrans = 0;
-@@ -908,7 +908,7 @@ void __reqsk_free(struct request_sock *r
- 	req->rsk_ops->destructor(req);
- 	if (req->rsk_listener)
- 		sock_put(req->rsk_listener);
--	kfree(req->saved_syn);
-+	kfree_rcu(unrcu_pointer(req->saved_syn), rcu);
- 	kmem_cache_free(req->rsk_ops->slab, req);
- }
- 
-@@ -979,7 +979,7 @@ static void reqsk_queue_migrated(struct
- 
- static void reqsk_migrate_reset(struct request_sock *req)
- {
--	req->saved_syn = NULL;
-+	RCU_INIT_POINTER(req->saved_syn, NULL);
- #if IS_ENABLED(CONFIG_IPV6)
- 	inet_rsk(req)->ipv6_opt = NULL;
- 	inet_rsk(req)->pktopts = NULL;
 --- a/net/ipv4/tcp_input.c
 +++ b/net/ipv4/tcp_input.c
-@@ -7636,7 +7636,7 @@ static void tcp_reqsk_record_syn(const s
- 			saved_syn->network_hdrlen = skb_network_header_len(skb);
- 			saved_syn->tcp_hdrlen = tcp_hdrlen(skb);
- 			memcpy(saved_syn->data, base, len);
--			req->saved_syn = saved_syn;
-+			RCU_INIT_POINTER(req->saved_syn, saved_syn);
- 		}
- 	}
- }
+@@ -5263,6 +5263,10 @@ static bool tcp_try_coalesce(struct sock
+ 	if (!tcp_skb_can_collapse_rx(to, from))
+ 		return false;
+ 
++	/* Nothing follows a FIN. */
++	if (unlikely(TCP_SKB_CB(to)->tcp_flags & TCPHDR_FIN))
++		return false;
++
+ 	if (!skb_try_coalesce(to, from, fragstolen, &delta))
+ 		return false;
+ 
+--- a/net/ipv4/tcp_ipv4.c
++++ b/net/ipv4/tcp_ipv4.c
+@@ -1957,6 +1957,8 @@ enum skb_drop_reason tcp_add_backlog(str
+ 	    ((TCP_SKB_CB(tail)->tcp_flags ^
+ 	      TCP_SKB_CB(skb)->tcp_flags) &
+ 	     (TCPHDR_ECE | TCPHDR_CWR | TCPHDR_AE)) ||
++	    /* Nothing follows a FIN, see tcp_try_coalesce() */
++	    (TCP_SKB_CB(tail)->tcp_flags & TCPHDR_FIN) ||
+ 	    !tcp_skb_can_collapse_rx(tail, skb) ||
+ 	    thtail->doff != th->doff ||
+ 	    memcmp(thtail + 1, th + 1, hdrlen - sizeof(*th)) ||
 
 
