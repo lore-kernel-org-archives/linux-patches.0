@@ -1,51 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795619906;
-	b=AoupDLXLrs2XIZRm7eHBi86F1QP+gwcXRD+AYWvaHWJfW+uFKFiAXXfQnwpE0GbejuSh
-	 6Y1o1hG+l0WciG8Y8z/7uRQZqjpZzMuoLYNU0bJg9RBdlI08B4tiCft3Bcqai9Qc1VZv4
-	 /9VtGu6t2sS9wFV8mDa6YE7OSr0VHRQtbacUwmMT29YzlH8QYmEVGE5hRlicOgtMZzrWp
-	 PKdDkXqcechQNoaONpSJE47cMHSdLBQf8JgPld0MNgicvqRE9LGgBXTXr+aoDnjnyT6Kl
-	 TYZle500vuVjz4Qrtf0yPyPyOaJn6pvJ37NyakIZwnOrKQqXMSkNqwIR49cpVrin8Jg==
+	t=1795619910;
+	b=CFJMcXTEBJmUkp93q9hZyXjAnghWYy/UzSQJv4VMrzPm3hifHmC6n6HZm0G3Vu97FOAA
+	 kvI071AKb1B/+dw1ZoSd6XH1JhtbgsRzRVk5fHlf+scSZjFU+XxNBk+OqG2GWw7BJwDcD
+	 dUbHUsAC61eJyFg6gVP6z6ERK/JfDm5oDOsItT0cQunNVSqv1KDXFyNCzyA7e1Yrd/NwH
+	 DU+czpgl8pxrcGLAkRDrCe9lxzSFSiw5JwK0SyzDSXV4dKF4+I3uyTIptl134Ou/HfVaS
+	 N9Y5b/SHCVH9eMJlwY1eL+8+gwW7DHN3aHKRVxzuUKLzmtDy7qR/En5CwHuavnUUC6w==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795619906;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795619910;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=J4aNBGyNQjlcdhfTGFi5cxWEk7hreIHiZ/9Y5p4kj0w=;
-	b=D6l54ci9DvhL553Em+bJ7Ovz01M7APpZm+9VWqr6/mgvZwaxnTv5x7k1ET4Kt+68ztVd
-	 YTFu+suL9m3DtBxPiZKT7Hb1RGXQPUvX+Mmw9jj7v8WPKUPeXW2cc7IkUn4cU0Y1+TuxS
-	 Rx7K2fKKfxfDQMOGDpaaEac1kgh+gfjSdwPUOUckEtfYzVEK2EaD3Cr6WLqia5uBrrdTD
-	 nIQ4MUrmK3axlcLrSMeOH9evUHaH5iuU4h2/VJuWq/1gXI0mqqrGvsbiQegq7ncSFcou8
-	 yqe1HYStBBy4JXBuzRsQ4/uliUxTHaZ/rahP/r5WDn8R8/dPf9EaZRducXNktbLZCIA==
+	bh=zKFV1Biw10/VVxuZuG2CVK3Q++JuPcfrlfLjNt9kjMk=;
+	b=EiLFIrToD0iPd2vnX5/Au09ekLtDXuoS/3t63cgC+2bav1o3qZimHSS1j/ozbIOcJpzQ
+	 63pXCoehzcod3zw70GSlPPwpsHBfR1SUwTdGWiAjTd8zv4WI0Xn07Bj/4dFGRcJMfTYqL
+	 jasADq7QrCuc79vQGOuCNuVcIKuUR4iADeA2ltg/+eiSDsIXTdiH2SFRnapN/uuV3HsQg
+	 /GUUSaWyrHfiEEzwXc0u+WKTFI3lYpeys9F2+D+gyEs5wgI5RUtUaf5cDRGQwpKyddo+i
+	 18/auLdy27TVGkyYpcoSUVdTCOf6tkRs0XzgxXgNXRKzsVtCk2CXReGhrIix7KYF7ig==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="vy/u/nki";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="qSq/rsq2";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 916E0606A31E;
-	Wed, 25 Nov 2026 15:18:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3279F606A323;
+	Wed, 25 Nov 2026 15:18:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=vy/u/nki
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DA7DF1F000D2;
-	Wed, 25 Nov 2026 15:18:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=qSq/rsq2
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B76301F000D0;
+	Wed, 25 Nov 2026 15:18:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795619906;
-	bh=J4aNBGyNQjlcdhfTGFi5cxWEk7hreIHiZ/9Y5p4kj0w=;
+	s=korg; t=1795619909;
+	bh=zKFV1Biw10/VVxuZuG2CVK3Q++JuPcfrlfLjNt9kjMk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=vy/u/nkihf3jq9/iFoTkqBmpFQKYGJ6Fn1Ins3iQ5TZNrOhZTqqFyJycLzqQxHxg/
-	 +60X+34juTk3wz2JhHBpc3KCs5DuX99TZBr4cm4IdI15RU1PmN5zIfrANaqVVH4jI/
-	 sg3ar8e4+FzpsmsOdNvHkP4BH+OXrkrJ7YjSsOLI=
+	b=qSq/rsq2SIJX8Ndrk9wFgTrS4hmW8tRfXi2m7ADPIczFoRUgUISwXxRkKFijRGIrj
+	 dh4bZ2D2dtUU6aELcKpVOX0F2xrDILdT8CYfk5aDsQ6kMlmHPpLYW3qJvj3atoAeow
+	 v/MGKVSiZVMgDTjS9zEx5CJg14gHhsSHCMM4oMZ4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jan Kara <jack@suse.cz>,
+	Hyungjung Joo <jhj140711@gmail.com>,
+	HyeongJun An <sammiee5311@gmail.com>,
 	"Christian Brauner (Amutable)" <brauner@kernel.org>
-Subject: [PATCH 7.3 0700/1005] ext4: dont read the inode block in ext4_sync_inode_metadata()
-Date: Wed, 25 Nov 2026 15:33:58 +0100
-Message-ID: <20261125143838.153931976@linuxfoundation.org>
+Subject: [PATCH 7.3 0701/1005] fs/adfs: bound directory entry name length in adfs_fplus_getnext()
+Date: Wed, 25 Nov 2026 15:33:59 +0100
+Message-ID: <20261125143838.178705696@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143821.729802100@linuxfoundation.org>
 References: <20261125143821.729802100@linuxfoundation.org>
@@ -67,67 +68,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Christian Brauner <brauner@kernel.org>
+From: HyeongJun An <sammiee5311@gmail.com>
 
-commit 2ca2e88b106175c1037939de52cb28e4cb545b9e upstream.
+commit ebf5025b0d989f95542fc9da899b7de2fec499f2 upstream.
 
-Without a journal ext4_sync_inode_metadata() looks the inode table
-block up with __ext4_get_inode_loc_noinmem() which reads it from disk,
-with readahead of the inode table on top, if it isn't cached. But a
-block that isn't cached is neither dirty nor under writeback, so there's
-nothing to write or to wait for.
+adfs_fplus_getnext() reads the per-entry name length bigdirobnamelen
+straight from the on-disk big directory and passes it to
+adfs_dir_copyfrom() as the copy length into obj->name[], a fixed
+ADFS_MAX_NAME_LEN (260) byte buffer.  adfs_dir_copyfrom() only bounds
+the copy against the number of directory buffers, not the size of the
+destination, so a crafted image with bigdirobnamelen larger than the
+buffer overflows the stack-allocated object_info::name that
+adfs_fplus_iterate() passes in.
 
-That read is also something we can't afford once inode eviction calls
-->sync_inode_metadata() from reclaim. So look the block up with
-ext4_get_inode_loc_noio() instead and treat -EAGAIN as nothing to do.
+adfs_object_fixup() may additionally append a four byte ",xyz" filetype
+suffix, so the accepted length must also leave room for that.
 
-Note that ext4_get_inode_loc_noio() also returns -EAGAIN for a block
-that isn't uptodate. Such a block is being read or failed to be read
-and can't be dirty either. A block whose write failed still counts as
-uptodate for ext4_buffer_uptodate() so the write error still gets
-reported.
+The old-style directory parser (dir_f.c) already clamps names to
+ADFS_F_NAME_LEN, and adfs_fplus_validate_header() validates the header
+name fields, but the per-entry name length in the big directory format
+was never checked.  Reject over-long entries, using -EIO as elsewhere
+in this file for a corrupt big directory.
 
-Suggested-by: Jan Kara <jack@suse.cz>
-Cc: stable@vger.kernel.org # v7.3
-Reviewed-by: Jan Kara <jack@suse.cz>
-Link: https://patch.msgid.link/20261109-work-inode-metadata_writeback-v3-4-91ac6c024018@kernel.org
+Reported-by: Hyungjung Joo <jhj140711@gmail.com>
+Closes: https://lore.kernel.org/all/CAP_j_b9BqyQrk3D5nj6RSa=eGcs2HkRYsWc3WdXeXp9O3=z4nQ@mail.gmail.com/
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Cc: stable@vger.kernel.org
+Signed-off-by: HyeongJun An <sammiee5311@gmail.com>
+Link: https://patch.msgid.link/20260715115231.1585166-1-sammiee5311@gmail.com
 Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/ext4/inode.c |   12 +++++++-----
- 1 file changed, 7 insertions(+), 5 deletions(-)
+ fs/adfs/dir_fplus.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/fs/ext4/inode.c
-+++ b/fs/ext4/inode.c
-@@ -5922,22 +5922,24 @@ int ext4_sync_inode_metadata(struct inod
- 	if (WARN_ON_ONCE(EXT4_SB(inode->i_sb)->s_journal))
- 		return -EFSCORRUPTED;
+--- a/fs/adfs/dir_fplus.c
++++ b/fs/adfs/dir_fplus.c
+@@ -192,6 +192,8 @@ adfs_fplus_getnext(struct adfs_dir *dir,
+ 	obj->indaddr  = le32_to_cpu(bde.bigdirindaddr);
+ 	obj->attr     = le32_to_cpu(bde.bigdirattr);
+ 	obj->name_len = le32_to_cpu(bde.bigdirobnamelen);
++	if (obj->name_len > ADFS_MAX_NAME_LEN - 4)	/* leave room for ,xyz suffix */
++		return -EIO;
  
--	err = __ext4_get_inode_loc_noinmem(inode, &iloc);
--	if (err)
--		return err;
- 	mmb = READ_ONCE(EXT4_I(inode)->i_metadata_bhs);
- 	if (mmb) {
- 		err = mmb_sync(mmb);
- 		if (err)
--			goto out;
-+			return err;
- 	}
-+	/* A block that isn't cached is neither dirty nor under writeback. */
-+	err = ext4_get_inode_loc_noio(inode, &iloc);
-+	if (err == -EAGAIN)
-+		return 0;
-+	if (err)
-+		return err;
- 	sync_dirty_buffer(iloc.bh);
- 	if (buffer_write_io_error(iloc.bh)) {
- 		ext4_error_inode_block(inode, iloc.bh->b_blocknr, EIO,
- 				       "IO error syncing inode");
- 		err = -EIO;
- 	}
--out:
- 	brelse(iloc.bh);
- 	return err;
- }
+ 	offset = adfs_fplus_offset(h, le32_to_cpu(h->bigdirentries));
+ 	offset += le32_to_cpu(bde.bigdirobnameptr);
 
 
