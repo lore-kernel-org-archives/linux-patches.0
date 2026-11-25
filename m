@@ -1,51 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795619762;
-	b=WMy1KFMkz3YSXcGE1Ts+XaXefR8pJe5dQoPCg/KO/WlUlCeDu4s/sBNNAC/iS9sr6l85
-	 wZGshSiNJV7mKf0gZ1iMH+u/mdUXTCGtnESVcMX9vRBCshLfwnFI7uBj7sHXB2gE5JjcM
-	 AEfcRfYcdeFbcui40acpNysuzZTusYLk5LsrmDX7EJUZUMebff2A2+InrcK675Tp46A2w
-	 zfFL3/m8TbQiLVY6b60sOHarMsqKmROruNifeuSrT6CXtFXgvA5qjDhven/QotNuhIOpd
-	 WuctkBoiPOdbmvGQdSWFXkttDxIubCTXDt8PIGPMfWPqWp2/VE16C6vTqqkWFY/ACuQ==
+	t=1795619766;
+	b=C+4c5qEpiZom5lY1h0YIWwAZ3ON7+h/biqa41xkyH8ZWmINz30pvMY99Q8Lkand1UXlF
+	 jFPtEKrA65EJ9/sOpVzbB2EasCkyciW1vrRzW2oLRxKdYa60A6COF53Fl/FoEBh/+743j
+	 WLdMbXIaGVk5lLQDpvzjCWLOPiulA8ycMKODKNUMpCa77OzioRA7mNLmEqsuhVkyfihsO
+	 WJIyqd/ExSZglI9y6m7U8tuLuoELmv95ZmVNjtDj4Amag2fq192xqm6ih1spJ2Zx91miO
+	 uuQFKji0IoZCC1oozd8FaDZw8h29qn2BK/lHx6hzh0enVmb3iGyvhM9FTafY6SixkWg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795619762;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795619766;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Type:Content-Transfer-Encoding;
-	bh=G0tK/CQ8TlfeA28Pn182l46szUIHBmaDfm1Em10rQbs=;
-	b=QwHA1wNhIP+rCDjk2VJ9dfq2fvFRY73+NdBhzXm0YXne6Ruw/oTmp9yTtrUYqaAAxfQA
-	 famtUSHvvuWeHYZyfXsQbUtB52pIgUhqgCuanuUkH64e8dayCDevrnzgVLTAr3F+l4J5P
-	 FZLHS+/w3h+79av9merFce9AKmu4XBKNxa3tLxGvQFWeRc5ZyNxnbf+6WxG0pZlY061GV
-	 6zMH7Hx9vtpdvcGuJc3Pi+mWt9wv4A1uOjT3mH2XCTtVE8AAoZ/hjq0tNfQY7MHgbnhgu
-	 tBphqjLknYUcd8di3v2CNLOHSNRd35CA+Vr5zERzgajNx7I1rL70dYyo497abFxycsw==
+	 MIME-Version:Content-Transfer-Encoding;
+	bh=KqxHTU8DFuYZQCYo42m4+HDXvuWZievROVNqa0nawHE=;
+	b=flAOl1BLcq0LdxsxEWGboaLFiVHPRpfmZmDHUYOSBohzkezuEAlXjA/VfeoVdimMSLV1
+	 NRxQ2JDJoyyaI1RruUj4z2LAaCuvJpB2WhQzNhIzax2SflZjh5BnBCysCTlHwEPk+l8Eu
+	 oYJIABbBvgUIYfZsR+Jz9oGKXKRo4NkIPiSSeaoXFajmL7+2QTVNb9rPoJ5SCXmPkwetX
+	 QRQ0OnKJmimEmAQePTVBLowxX4WGOpGSGkmrwb4/1/s3vqlhsM9UkSWoR240eK0zRtINO
+	 WHdZmYr3fu3x80IrxJ5rT6I4dDzvfMG6VOxSqV1kpiR/2xL/n1cOoEBqlLj8n1Ssi+g==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=a1ZGV6zQ;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=CSMvtnAG;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C5064606A329;
-	Wed, 25 Nov 2026 15:16:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1D4B9606A321;
+	Wed, 25 Nov 2026 15:16:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=a1ZGV6zQ
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1609D1F000C6;
-	Wed, 25 Nov 2026 15:16:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=CSMvtnAG
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1869B1F000C6;
+	Wed, 25 Nov 2026 15:16:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795619762;
-	bh=G0tK/CQ8TlfeA28Pn182l46szUIHBmaDfm1Em10rQbs=;
+	s=korg; t=1795619765;
+	bh=KqxHTU8DFuYZQCYo42m4+HDXvuWZievROVNqa0nawHE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=a1ZGV6zQrshZahZMrgQZNx/c2jUwVxlPVAbY13hcOuAuMuNHEYpnFirlPKGMRsRii
-	 9E94yHnpj6WexAiPmQPvpAx6Ae0XURu6DiFf+KS2sd+6AawcSHPhcnWl9whmxsseSM
-	 b5pRc+Y2dbQOJpA8ZjeX5n2OEL/EZLSHuXWGmXuE=
+	b=CSMvtnAGFr9Mlr7wiDU7g7H+woPoJc/snfOUKqnVtcdjIvuKNd7bSDPK60Vd4wnR0
+	 jcsrnTCGJR924GH2ReNjC5jUuC+vm9X5kcaRXBdj7v5mVaB17vv2c2o8wDu7msdWVM
+	 cLRPk+JCH/S/TFZy3QzwCtG1omEW5Kl+uL/yXsFU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?J=C3=A9r=C3=A9my=20Jean?= <Jeremy.Jean@oss.cyber.gouv.fr>,
-	Herbert Xu <herbert@gondor.apana.org.au>
-Subject: [PATCH 7.3 0693/1005] crypto: essiv - fix use-after-free in AEAD path
-Date: Wed, 25 Nov 2026 15:33:51 +0100
-Message-ID: <20261125143837.987729617@linuxfoundation.org>
+	Cheng Yongkang <teel4res@gmail.com>,
+	"Christian Brauner (Amutable)" <brauner@kernel.org>
+Subject: [PATCH 7.3 0702/1005] fs/proc: fix the write length returned by proc_sys_call_handler()
+Date: Wed, 25 Nov 2026 15:34:00 +0100
+Message-ID: <20261125143838.203700447@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143821.729802100@linuxfoundation.org>
 References: <20261125143821.729802100@linuxfoundation.org>
@@ -61,50 +61,69 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 7.3-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Jérémy Jean <Jeremy.Jean@oss.cyber.gouv.fr>
+From: Cheng Yongkang <teel4res@gmail.com>
 
-commit e9ce64dce975a14700e835003847415e29918474 upstream.
+commit fbdc020ee1b82079102e493aaa7200de5f497a38 upstream.
 
-The request that ESSIV submits to its wrapped AEAD transform may
-finish before crypto_aead_encrypt() or crypto_aead_decrypt() returns.
-In case this happens, essiv_aead_done() calls aead_request_complete()
-on the original ESSIV request, which can end up freeing the request
-before essiv_aead_crypt() resumes, creating a UAF:
+proc_sys_call_handler() reads the write length from iov_iter_count() and
+copies that many bytes from the iterator into kbuf.  A cgroup/sysctl BPF
+program can replace the new value through bpf_sysctl_set_new_value() and
+update count to the length of the replacement value.  The handler then
+returns that adjusted count as the number of bytes written, even though
+the iterator originally held a different number of bytes.
 
-  BUG: KASAN: slab-use-after-free in essiv_aead_crypt+0x8e6/0x950
-  Read of size 8 at addr ffff888102af1360 by task init/66
+If the replacement value is longer than the original input, ->write_iter()
+reports more bytes than the iterator held.  splice(2) passes that value to
+iter_file_splice_write(), which subtracts it from the pipe length and
+walks past the pipe head:
 
-Check the return status before dereferencing rctx after submitting that
-request. If the operation did not return -EINPROGRESS or -EBUSY, then
-the request cannot have been freed yet.
+  Splice Exceeded! ret=7 tot=1 left=0
+  Oops: general protection fault
+  RIP: 0010:iter_file_splice_write+0xb6f/0x1170
 
-Fixes: be1eb7f78aa8 ("crypto: essiv - create wrapper template for ESSIV generation")
+The write path consumes at most the original iterator length in
+copy_from_iter_full() before the BPF hook runs.  Return the smaller of the
+adjusted and original counts on the write path, so an expanded BPF value
+cannot exceed the iterator while a handler that reports a shorter parsed
+length still produces a short write.  The read path keeps using the
+adjusted count for copy_to_iter().
+
+Fixes: 4e63acdff864 ("bpf: Introduce bpf_sysctl_{get,set}_new_value helpers")
 Cc: stable@vger.kernel.org
-Assisted-by: LLM
-Signed-off-by: Jérémy Jean <Jeremy.Jean@oss.cyber.gouv.fr>
-Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
+Signed-off-by: Cheng Yongkang <teel4res@gmail.com>
+Link: https://patch.msgid.link/179328314073.648427.7892850166511253762@gmail.com
+Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- crypto/essiv.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ fs/proc/proc_sysctl.c |    5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
---- a/crypto/essiv.c
-+++ b/crypto/essiv.c
-@@ -250,7 +250,7 @@ static int essiv_aead_crypt(struct aead_
- 	err = enc ? crypto_aead_encrypt(subreq) :
- 		    crypto_aead_decrypt(subreq);
+--- a/fs/proc/proc_sysctl.c
++++ b/fs/proc/proc_sysctl.c
+@@ -557,6 +557,8 @@ static ssize_t proc_sys_call_handler(str
+ 	struct ctl_table_header *head = grab_header(inode);
+ 	const struct ctl_table *table = PROC_I(inode)->sysctl_entry;
+ 	size_t count = iov_iter_count(iter);
++	/* ->write_iter() must never report more than the iterator held */
++	size_t orig_count = count;
+ 	char *kbuf;
+ 	ssize_t error;
  
--	if (rctx->assoc && err != -EINPROGRESS && err != -EBUSY)
-+	if (err != -EINPROGRESS && err != -EBUSY)
- 		kfree(rctx->assoc);
- 	return err;
- }
+@@ -607,7 +609,8 @@ static ssize_t proc_sys_call_handler(str
+ 			goto out_free_buf;
+ 	}
+ 
+-	error = count;
++	/* the write path consumed at most the original iterator length */
++	error = write ? min(count, orig_count) : count;
+ out_free_buf:
+ 	kvfree(kbuf);
+ out:
 
 
