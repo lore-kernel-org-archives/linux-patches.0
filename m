@@ -1,52 +1,50 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795623506;
-	b=dRWx5RzmGm+zCz9+UR7/7pyMLzufRwBr0YT3KU8k1uMwP0M5fD2LI0BVSKG+PtgLKGrB
-	 aE0qyx3kGl9c7hOo/iGTMPgwSp7eOwC0SJQdqzvc4CBfv8sf1ncQYn6nGQMZ18gpTiZ7m
-	 +/DMzHwuoje8wO17Wvjf345/Xglhr+Vne08XoD+R1CgE0gNKBe98GSOtVFw9DXnOR4buZ
-	 H7fjuaEzY0ET7tUXv+/SpIKsTJNrSefua+mWrOhiNn1kLqLdCRX5nTaz6+U3pbHaTXCnh
-	 P3Paf2FKCmO4mW9M8hhvRo2njaTCxiAWEvVEG+KG0N4tzWHdWJCjbKfwivSrXfhdYzw==
+	t=1795623509;
+	b=ty6xsgbEK4RBbMPFj9H779JMXuKPd6xlUYaodKmO14H48BwtYQyFYD/uidKttQbg8832
+	 PXrODub3xAu/F9wiob3CgQQNqhRwq3d9FFHb8+O3NQUo5Mx0GcQfXiuAziFxwpuM+mZAJ
+	 g7awzmEV/t3ictY+LKnDH++Yt17nwgpcLzEvm5XdTk8FxYn6Oi+1D00JP0IJcehECEYm+
+	 0bl9HXaKDwf6mus6s6lbTex1o7YgEFCmkusgS+WqShBjKdvp2/ouG9UddcT2VhoGqDXu5
+	 +/vv/z7yWuwG4nKz1N31+vrJ3iIwd1Q8D3IaFFcgsMzTPtNlB+DV6w35YtwkCkm6/5Q==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795623506;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795623509;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=7UGzTsLzq96T2g9+eiKUm8Z5Bwj2sqCXjsXBIrF6gh0=;
-	b=Yw5dAcxaM7zztxf8YJMbdX8BcK+vI0evpVRK0DZfoD72927xuNUl2BIpptjsvpAvzABi
-	 Na+rnnOwvHtUEqMWvMCJz0xbxmf3gK0UG1ZpRWFvQTvoikXBWc7xIdBH4jsIkVNCD0Q32
-	 4Ef63FSTiDzpUUW9a8JU0YtJS2crC+C3ZPRuUK70mVxeJHZP/+vmtCUS8JaPNa6oDapPW
-	 MllSWicWzGeXOIuJXlFvHkqMk3RaRHPx0DroTGs5IDuka5KVpQ097ozF4VKFJNUYppgMY
-	 QfAR+nKgFqD2zClqkGAQGmPBPTXT3XldSHjAXeIjboAonzje8VhT2epRBUTCGcm+vDg==
+	bh=xYKITj+INStKbk15oGb3SXffurbmB1h+DHbbWrhahp0=;
+	b=F+h18Qso0/k3fy//ufpMw2xzfl4TN2m93Fk/B33W+2Yjxw/Wo4FsrBXF8UU32IfuqPT1
+	 YXi4FWrQyKB36kJ8epKtO+DFy50pKl8GR2w6IbrJ7Rrv772JFaed1I6igS028vgyQEuRx
+	 sqFopbjuFf2IbOiN50xLP0TjPyIv0NeDzPw3DHPn0sXeuKII042KQJFMw8mC2V+OFC/2z
+	 SXG4xKnHVTmuXi7vtxzuccXkpO5368wwd8aym5IStpXwAnfE/wSjwr6E2NghqgcQu5j7T
+	 eC9kudzSS3yf4BrB9k/nNVJptxYkViUTjIef3Vm5IEXcfWsDNRJsF8jSrBKDwaNj6WA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=dZufx3n3;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="pd5V/HxS";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 176E0606A321;
-	Wed, 25 Nov 2026 16:18:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 73641606A31E;
+	Wed, 25 Nov 2026 16:18:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=dZufx3n3
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5014F1F000C4;
-	Wed, 25 Nov 2026 16:18:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=pd5V/HxS
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 74EC11F000C4;
+	Wed, 25 Nov 2026 16:18:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795623505;
-	bh=7UGzTsLzq96T2g9+eiKUm8Z5Bwj2sqCXjsXBIrF6gh0=;
+	s=korg; t=1795623509;
+	bh=xYKITj+INStKbk15oGb3SXffurbmB1h+DHbbWrhahp0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=dZufx3n3m2//b+6LPZkrdKrrMQnob1ttbuDncJ75JjbLV0lOyV0dMD3I0iS7AZ972
-	 sixADtwpLu0xlyW/AiCTIY9EBxmDzyS9X542F3l+OcRTaRiq2ZpqZt2zkVrKoe4raK
-	 BRFvf3BO1Cdo6rfiwA01EIGlEMZWXJcKsmN5UzTI=
+	b=pd5V/HxS75XtXzHfBFk3nnTZi2YysvJvJvIdYNe0QuLwRqqRZtrh4PEb05uRPDa1r
+	 4sDlUmuD1MjxWd1b1YinpkjlqZ0z7K96Jz7Btd9woVAXIOwgKZs//f/aM55w6Hi37a
+	 936+F+AVgYnhrGQUmo7NRQw9wU4/Z2AnJb0Sc1PY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	liuyong <pkfxxxing@gmail.com>,
-	Namjae Jeon <linkinjeon@kernel.org>,
 	Paulo Alcantara <pc@manguebit.org>
-Subject: [PATCH 6.18 837/990] smb: client: compare owner and group SIDs using their encoded lengths
-Date: Wed, 25 Nov 2026 15:36:44 +0100
-Message-ID: <20261125143841.637353479@linuxfoundation.org>
+Subject: [PATCH 6.18 838/990] smb: client: dont block dying tasks waiting for writeback on close
+Date: Wed, 25 Nov 2026 15:36:45 +0100
+Message-ID: <20261125143841.660362703@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143822.072087159@linuxfoundation.org>
 References: <20261125143822.072087159@linuxfoundation.org>
@@ -68,47 +66,81 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: liuyong <pkfxxxing@gmail.com>
+From: Paulo Alcantara <pc@manguebit.org>
 
-commit a2dabe73ea05ad3b3f8e1cc08fb2e7c2ddc5564b upstream.
+commit 15ea186abbcd04157c62e0901701870b812bb2bd upstream.
 
-populate_new_aces() compares owner and group SIDs over sizeof(struct
-smb_sid), including storage for all 15 possible subauthorities. Received
-SIDs contain only their encoded subauthorities. The comparison can read
-past the security descriptor, as shown by the supplied KASAN report for
-a 44-byte descriptor during chmod.
+cifs_flush() waits uninterruptibly for the writeback it starts.  A task
+that gets killed while closing a file on a hard mount with an
+unresponsive server is stuck in D state until the server comes back.  It
+also consumes any writeback error for a caller that is about to exit,
+hiding it from everyone else.
 
-The input SIDs have already been checked by sid_from_sd(). Require equal
-subauthority counts, then compare only the fixed SID header and the
-encoded subauthorities with memcmp(). The count check ensures that both
-validated SIDs contain the number of bytes being compared.
+Wait killably instead.  If the closer gets killed, stop waiting and leave
+the error bits in the mapping for others to see; writeback already in
+flight completes on its own.  Don't wait at all, nor check for errors,
+if it is already dying.
 
-These issues were discovered and fixed by Qihoo 360's Tulongfeng
-multi-agent system.
+This is also needed before letting dying tasks issue their writes from a
+worker, which would otherwise make them wait for every one of them.
 
-Fixes: 0f22053e811c ("cifs: Fix unix perm bits to cifsacl conversion for "other" bits.")
-Cc: stable@vger.kernel.org
-Signed-off-by: liuyong <pkfxxxing@gmail.com>
-Reviewed-by: Namjae Jeon <linkinjeon@kernel.org>
+Fixes: d3f1322af8f8 ("cifs: wait for writeback to complete in cifs_flush")
 Signed-off-by: Paulo Alcantara <pc@manguebit.org>
+Cc: stable@vger.kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/smb/client/cifsacl.c |    5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ fs/smb/client/file.c |   33 ++++++++++++++++++++++++++++++---
+ 1 file changed, 30 insertions(+), 3 deletions(-)
 
---- a/fs/smb/client/cifsacl.c
-+++ b/fs/smb/client/cifsacl.c
-@@ -1061,7 +1061,10 @@ static void populate_new_aces(char *nacl
- 	 * updated in the inode.
- 	 */
+--- a/fs/smb/client/file.c
++++ b/fs/smb/client/file.c
+@@ -2856,17 +2856,44 @@ fsync_exit:
+ 	return rc;
+ }
  
--	if (!memcmp(pownersid, pgrpsid, sizeof(struct smb_sid))) {
-+	if (pownersid->num_subauth == pgrpsid->num_subauth &&
-+	    !memcmp(pownersid, pgrpsid,
-+		    CIFS_SID_BASE_SIZE +
-+		    pownersid->num_subauth * sizeof(__le32))) {
- 		/*
- 		 * Case when owner and group SIDs are the same.
- 		 * Set the more restrictive of the two modes.
++static int cifs_wait_writeback_killable(struct address_space *mapping)
++{
++	struct folio_batch fbatch;
++	pgoff_t index = 0;
++	int rc = 0;
++
++	folio_batch_init(&fbatch);
++	while (!rc &&
++	       filemap_get_folios_tag(mapping, &index, (pgoff_t)-1,
++				      PAGECACHE_TAG_WRITEBACK, &fbatch)) {
++		for (unsigned int i = 0;
++		     !rc && i < folio_batch_count(&fbatch); i++)
++			rc = folio_wait_writeback_killable(fbatch.folios[i]);
++		folio_batch_release(&fbatch);
++		cond_resched();
++	}
++	return rc;
++}
++
+ /*
+  * As file closes, flush all cached write data for this inode checking
+  * for write behind errors.
+  */
+ int cifs_flush(struct file *file, fl_owner_t id)
+ {
++	struct address_space *mapping = file->f_mapping;
+ 	struct inode *inode = file_inode(file);
+-	int rc = 0;
++	int rc = 0, rc2;
+ 
+-	if (file->f_mode & FMODE_WRITE)
+-		rc = filemap_write_and_wait(inode->i_mapping);
++	if (file->f_mode & FMODE_WRITE) {
++		rc = filemap_fdatawrite(mapping);
++		if (fatal_signal_pending(current) ||
++		    cifs_wait_writeback_killable(mapping))
++			return 0;
++		rc2 = filemap_check_errors(mapping);
++		if (!rc)
++			rc = rc2;
++	}
+ 
+ 	cifs_dbg(FYI, "Flush inode %p file %p rc %d\n", inode, file, rc);
+ 	if (rc) {
 
 
