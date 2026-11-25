@@ -1,52 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795621231;
-	b=zyuShXqktpf4e8ToSXW/eP7ttiXBa1umWavpOyeKGf5efnwHO/i3etgmn4jX5AryabOC
-	 pYw+JKhbeH0uv9vw6w81ayjBNN8UuC3Z/gU7aJ8Mv6Bhdv40Y8AzR5moGJJ/IBH25rOie
-	 gsUdzKARQ7K0ARNV06oobN2vFeGuHUZVD0ZS+jaL4ZPpZKXN7qcJnBWWUdyhrxJ72hn0+
-	 UFEyw1w3Pe3EZqdmcbJ4q0M2iu9mfC1xWyOWjhzAUaCB++Vqyz9ROV2EXpk+a/5yarDkA
-	 eF7K+CdRPOrJheFbpNF8eM4Fi0rjkKxExuvBxSj9HeArGqQVroacy4m3h6pOHLWp9hA==
+	t=1795621234;
+	b=Y93U8uqsUYXw03fMbvONFWCP8n5rq20lWfAExr/72zNC2jU7g8O5w4lkpINxZhni4sKf
+	 grFDMxVSzWiSti3yZSmGMW7ssAWOZQ9eDPEXUnVXDE3bQLlH6zn5X8ZUST2SuesxM+jGs
+	 /bMW3Kk63enUG3AiQaKW4hSyErS7yWT+jkL4luXmqlLeJcAC6YyVYoLzmWlwZFm1BHGP0
+	 iB4LhBH3rv+m36vkWHuW6jEzAdw0zpN3YgGzw/qtSM1SYRjJmLqIOcapofiPm5BMLcYX5
+	 iVPh8Mk1sZqUAUN2kFQPugPt51EeIbyq1d3JfMGDwgKJqCjnJ6+WRT/32hRkzmVA46A==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795621231;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795621234;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=/ALD9iVFxkaTjGLISXtbJncN7Cj7Y9yJmrKLgsqN1ZQ=;
-	b=hJwX9Wx3dTbW6uwdQ0DGi5KtIQGRrS1hS3KR2CWE4yWIkbbaatOI4lYwZ3zT9bvpUvOE
-	 1hwqZZANPP+kQ9XUXV+3wy8rJhuF36OIPuT8lKL6FS3elHMH5kbdQvnWRCUgx1pkqWhHl
-	 ZUGT5+CilkG7NnqIBvEDtfsd2idFfDLajSntTZltZKYn0xTY3DPthwXQwpXcWJSiXYYRK
-	 aqMgLpg2Mc5KQIyDaaq7q+HKHxSxG5Ql5F6UmjGdEEc3PP7m/yN7kzqqFNUKwmOxIqnK1
-	 9vTMpgMtzkM1iMrRzQRaf1HLfSZ2MXClyqNqGKTQ0PW/lRS/9Ts0PJTWpwAEpYEypqw==
+	bh=IcG2hYi5iq6lyWYRv1C9QN8KyPTY6m5D2R2thafX/mU=;
+	b=XaTwapWdhEr23FgXKvkquCTT4ci/qVZlWv0fO72cdFtLMuE/qsjmEkaS40kXXEKO7bpD
+	 KPawqb5Mxk8650IoIAt3RP9R91Rqob42ssJCpHqpDFQ8x8SsEarHq54hXtPYh/zIJDYyz
+	 QVRb/LGWqukk6I4hmafVMZ6lv8mhB7RDUEdYKe3TYaCdvAyus0j0uYBMj5xex2Ma31Fb1
+	 WCexrA+WfY1MeO3Ob7EQPOeSdY/n+H/54OvhCZHTTi0hJX90U1SbDTucV3UZVk07xhGdT
+	 b3uus6TQa/hHex88lO3DhTIKI5NwXH4erk4WpotbFpscQY8xUk2cC36wIYAAGlllAkA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=kgjgZXvv;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=vCgLq8pg;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 480AB606A321;
-	Wed, 25 Nov 2026 15:40:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B339C607DEBC;
+	Wed, 25 Nov 2026 15:40:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=kgjgZXvv
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 292971F008B2;
-	Wed, 25 Nov 2026 15:40:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=vCgLq8pg
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8205B1F000D0;
+	Wed, 25 Nov 2026 15:40:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795621230;
-	bh=/ALD9iVFxkaTjGLISXtbJncN7Cj7Y9yJmrKLgsqN1ZQ=;
+	s=korg; t=1795621234;
+	bh=IcG2hYi5iq6lyWYRv1C9QN8KyPTY6m5D2R2thafX/mU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=kgjgZXvvOhbHOcuudOYnzeLJLR41TSloltWqUz3t74G+0CYWsbzfjq7JiklyqzimS
-	 vxDfER2BGNIeR/gExR+GGJdnYIRzmMZwKmCjE0kNHE6JO+Ci79UkzOWbXdV0s1MitE
-	 nTuGVmDvLMbxJxWaogtg/Bd0PWLAzK3r3/lKQLr4=
+	b=vCgLq8pgwu9AZRrnqbiPdlb4FW8sCC2Pvq8fx6aEd5Z5n+D9FxXa4E9LGyzFcXHkn
+	 lY7zT99punkBM7GeonImDjVy34FbhstWgkqT1DrnYDNIOkVWxDdfp/8JBvY0jwGn4L
+	 mUUhSHuFhjEZYjpJ2LFn4hyDPKX/I1gMjSKcBZT4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chris Mason <mason@kernel.org>,
 	Alexei Starovoitov <ast@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 117/990] bpf, cgroup: Keep the skb network offset signed
-Date: Wed, 25 Nov 2026 15:24:44 +0100
-Message-ID: <20261125143824.827657144@linuxfoundation.org>
+Subject: [PATCH 6.18 118/990] bpf: Dont let bpf_skb_adjust_room() raise gso_size to GSO_BY_FRAGS
+Date: Wed, 25 Nov 2026 15:24:45 +0100
+Message-ID: <20261125143824.851313127@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143822.072087159@linuxfoundation.org>
 References: <20261125143822.072087159@linuxfoundation.org>
@@ -68,76 +67,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chris Mason <mason@kernel.org>
+From: Alexei Starovoitov <ast@kernel.org>
 
-[ Upstream commit 3f9780d62dd1112ca15b5ae73568d29d42ccc950 ]
+[ Upstream commit 6d8118937ba477e03fa2e94e9bd9abac7291a2a2 ]
 
-cgroup_skb progs see a packet from its network header. While they run,
-__cgroup_bpf_run_filter_skb() moves skb->data there. It assumes that the
-network header is not after skb->data. It negates skb_network_offset(skb)
-and pushes skb->data by this offset. The offset is an unsigned int.
+When bpf_skb_adjust_room() shrinks a TCP GSO skb, it adds the number of
+removed bytes to gso_size. gso_size has 16 bits, and nothing checks the
+sum. Thus gso_size can wrap to 0 or to a small size, or it can be
+GSO_BY_FRAGS. GSO_BY_FRAGS is not a size. It tells skb_segment() to read
+the length of each segment from the frag_list. If the TCP GSO skb has no
+frag_list, skb_segment() dereferences a NULL pointer.
 
-But ip6mr_cache_report() and bpf_lwt_xmit_reroute() can pass an skb that
-has data before the network header. Then the offset wraps. On a 64-bit
-kernel skb->data is then far below skb->head.
+Return -ENOTSUPP and do not change the skb if the sum is GSO_BY_FRAGS or
+larger. With BPF_F_ADJ_ROOM_FIXED_GSO the helper does not change gso_size,
+so it shrinks the skb as before.
 
-skb->len has 32 bits and wraps to the correct value, thus only skb->data is
-wrong. A read of packet data faults or gets other memory.
-
-Keep the offset in an int. Pull skb->data when the network header is after
-it. Otherwise push it, as today.
-
-Fixes: 3007098494be ("cgroup: add support for eBPF programs")
-Signed-off-by: Chris Mason <mason@kernel.org>
+Fixes: 2be7e212d541 ("bpf: add bpf_skb_adjust_room helper")
 Signed-off-by: Alexei Starovoitov <ast@kernel.org>
-Link: https://patch.msgid.link/20261101190535.1454146-15-alexei.starovoitov@gmail.com
+Link: https://patch.msgid.link/20261101190535.1454146-16-alexei.starovoitov@gmail.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/bpf/cgroup.c | 17 ++++++++++++++---
- 1 file changed, 14 insertions(+), 3 deletions(-)
+ net/core/filter.c | 8 ++++++++
+ 1 file changed, 8 insertions(+)
 
-diff --git a/kernel/bpf/cgroup.c b/kernel/bpf/cgroup.c
-index 9223d76774f21..14521bd99c7a8 100644
---- a/kernel/bpf/cgroup.c
-+++ b/kernel/bpf/cgroup.c
-@@ -1630,7 +1630,7 @@ int __cgroup_bpf_run_filter_skb(struct sock *sk,
- 				struct sk_buff *skb,
- 				enum cgroup_bpf_attach_type atype)
- {
--	unsigned int offset = -skb_network_offset(skb);
-+	int offset = skb_network_offset(skb);
- 	struct sock *save_sk;
- 	void *saved_data_end;
- 	struct cgroup *cgrp;
-@@ -1642,7 +1642,15 @@ int __cgroup_bpf_run_filter_skb(struct sock *sk,
- 	cgrp = sock_cgroup_ptr(&sk->sk_cgrp_data);
- 	save_sk = skb->sk;
- 	skb->sk = sk;
--	__skb_push(skb, offset);
-+
-+	/*
-+	 * The program sees the packet from its network header on, on
-+	 * whichever side of skb->data that header lies.
-+	 */
-+	if (offset > 0)
-+		__skb_pull(skb, offset);
-+	else
-+		__skb_push(skb, -offset);
- 
- 	/* compute pointers for the bpf prog */
- 	bpf_compute_and_save_data_end(skb, &saved_data_end);
-@@ -1684,7 +1692,10 @@ int __cgroup_bpf_run_filter_skb(struct sock *sk,
- 			ret = -EFAULT;
+diff --git a/net/core/filter.c b/net/core/filter.c
+index 8f92e2bf85517..9463c10d0c907 100644
+--- a/net/core/filter.c
++++ b/net/core/filter.c
+@@ -3701,6 +3701,14 @@ static int bpf_skb_net_shrink(struct sk_buff *skb, u32 off, u32 len_diff,
+ 			return -ENOTSUPP;
  	}
- 	bpf_restore_data_end(skb, saved_data_end);
--	__skb_pull(skb, offset);
-+	if (offset > 0)
-+		__skb_push(skb, offset);
-+	else
-+		__skb_pull(skb, -offset);
- 	skb->sk = save_sk;
  
- 	return ret;
++	/*
++	 * The MSS is raised by len_diff. It has 16 bits, and GSO_BY_FRAGS is
++	 * not a size.
++	 */
++	if (skb_is_gso(skb) && !(flags & BPF_F_ADJ_ROOM_FIXED_GSO) &&
++	    skb_shinfo(skb)->gso_size + len_diff >= GSO_BY_FRAGS)
++		return -ENOTSUPP;
++
+ 	ret = skb_unclone(skb, GFP_ATOMIC);
+ 	if (unlikely(ret < 0))
+ 		return ret;
 -- 
 2.53.0
 
