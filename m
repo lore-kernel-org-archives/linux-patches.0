@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795618251;
-	b=jkk8qaEiF0CbBtI1z1W7SxFjHIHiAYIbo9jeeu5Kjimqv3sAT0bzCh6zZTlC9Ejmkgfa
-	 t2xBqfE6IQjg2Ea81Ba1WVTXy5jP3Aj2ypnkuLGuGsh6fgTEQpNeg9piF+mUrlCREx2Se
-	 rXW81nfPMOyUSrctiZhZDgTdnxSmjPkrOa/t41X9hYDbaVGaRn8riZEqtqVfs0DmTLSm8
-	 aBfEbdjFhTJnxjk6ak5EDgaJs6jYPtP5LypDCv0v13l22m9t75Urb86MS0dKNVFh2fVWO
-	 RnP+ZMUo+pfrG2h4o4gQAtj+H0+ovLLOSK7oapUTBg0gAudtVknC3ATovpGrtP3o/VQ==
+	t=1795618254;
+	b=qgbUdZp5gygTR+USPKV1y+pys/4gDyKeejxrbiT6FyWgAyrKii0DSyK00bL3JOPk77bX
+	 Z8aBnx6htRSezkfxaunzPlHGej2JwZexP9iT8UZsAoRQOlSN8QBv49NXKy9s1pHJXGVrB
+	 J9DIs1HLb+uTX7HR7vl1NLyQnZDM8lz60e6iXFDd5JV0v7ZjR/8ghyemjFX5+FloE5Pae
+	 MGMfHDQSL9F7MSllj8S81MTjZeP7gHlap/lLNYH6xctX/xmGkbiJ38uqo6cKulcMrs7Iy
+	 fv2ADfTIh1DZxXO4y8BKhaNERw+rOI4uZwmQJMC5tdRO7yRoYoLW/8LEitKQXliqhaA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795618251;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795618254;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=RtRbybSCetn5UBCgkOnnetw2pa4xj8fPxOM/OMVafFU=;
-	b=qnyET16LZsSPsdfFVQWCHD6rYOPWHf+C2kENmmlqDajEyiRy0T3eCoku9zwo6SnF9k/j
-	 xpJjZvtWDWvGzNGFE4ddPrSGYzgs01lzu2JGVNc2i/1vLtkf7c0yCMe4Hig4qLjBscLRh
-	 q9RPvRDdaOmSSL74jWQ/z5+O9G1YOMWEhXwFx9LMkGvWbbdFCJYCEJsSEkZkYAZxscx2W
-	 8Ajn0ZahifNghXTURO6/BFNZVXYLyAvnNKAhleAFbNATRA+1udAEyVLs2woFE1V3ozX2S
-	 CtaKjiHZbvKuGyUEoPD1ptkL7OSmSFQvaDm3qDWE0aqRyYCWsi1XIFV1qRmEqQRmYXA==
+	bh=HfLcSH1Wah3be28lfOl55LyqsHHKRmFw7UkGW6m+mgk=;
+	b=aUU/2YcOpnCbyL3g8CcJS8VHS2vr/tM9wpf/Dah54SWjX/13L4vQl2HcZXAh4psb+EUC
+	 VYJzQEldoifHODYTGWE0LKaCgvYA6lOO5aMDrNefZ0Ey+gdAWi2HI+FZ1/nHUncuCEfrw
+	 Azo7QrsTB+le0v9ZvEVTUTogL3/+V9f0q/OMBjO0hzDrSSYXRT892m1jv3Q6hOkv2A26G
+	 klGqV4nnVxrzO3fSKtj5nDlaruRTrNO2pl2l/1im5n+aMARJMozm7lsa3+bkaLzhe6Q/q
+	 sSp0SU69RNnSrWTeBPHgk6YiXbjxZ53mXJzGFTsekM+fjdjSMBeTUyxLDIBwge5yWJA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=DhraDJeM;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=1GEiQu84;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5F11A606A321;
-	Wed, 25 Nov 2026 14:50:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4A021606A31E;
+	Wed, 25 Nov 2026 14:50:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=DhraDJeM
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 55B071F000C4;
-	Wed, 25 Nov 2026 14:50:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=1GEiQu84
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 99EBE1F000C0;
+	Wed, 25 Nov 2026 14:50:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795618250;
-	bh=RtRbybSCetn5UBCgkOnnetw2pa4xj8fPxOM/OMVafFU=;
+	s=korg; t=1795618254;
+	bh=HfLcSH1Wah3be28lfOl55LyqsHHKRmFw7UkGW6m+mgk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=DhraDJeMhe6zyt3YBn4YscdDWpeCwjyHdXbfcvNj/KgdbE7At4kdglpu9xQt8uxSM
-	 ypoYU5c9unAoSqb5EFK+MJT3ocwHyFTOO/YqesTpZD/vQuutzOT9ZVBgGSD4rU4eyE
-	 6OB4XF3PsynyFwSpxR68tOUW8sQFXrcbZfsoQWZY=
+	b=1GEiQu84cy+W6tdcylmwjlK4qmZlZzGZac/FYQsEcB3g1dvhuAwHvJMLSmdZNZY9j
+	 ef8p9lTcLwb6sGURh+aAiEl1VwRSHbxboPzFyNPJB7S1/fulZRHRi81VFyFllsPi2Y
+	 /Z7PLOcbcqgqYO/LkAiikz+nDBqKHgZHJJGE1L8Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
-	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
-	Mark Brown <broonie@kernel.org>,
+	Yifan Zhang <yfzhang23@stu.pku.edu.cn>,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0165/1005] regulator: qcom_spmi: dont take a sleeping lock in the SAW IPI
-Date: Wed, 25 Nov 2026 15:25:03 +0100
-Message-ID: <20261125143825.606240569@linuxfoundation.org>
+Subject: [PATCH 7.3 0214/1005] Bluetooth: validate retained LE Set CIG Parameters command length
+Date: Wed, 25 Nov 2026 15:25:52 +0100
+Message-ID: <20261125143826.753979949@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143821.729802100@linuxfoundation.org>
 References: <20261125143821.729802100@linuxfoundation.org>
@@ -69,122 +68,61 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+From: Yifan Zhang <yfzhang23@stu.pku.edu.cn>
 
-[ Upstream commit 053c50a7052549aab0d310ad505947db3e211592 ]
+[ Upstream commit ed4d302af778b9e2ead28134a2196c09a4ad248a ]
 
-The SAW voltage change runs on CPU 0 from an IPI, but it reaches the SAW
-registers through the syscon regmap, which is protected by a spinlock_t.
-That is a sleeping lock on PREEMPT_RT, and lockdep complains as soon as
-VDD_APCC actually changes voltage:
+hci_cc_le_set_cig_params() validates the controller response but not the
+parameters of the previously sent command.  A short command can claim a
+large num_cis without containing the corresponding cis[] array.  A
+complete successful response then makes the handler read beyond the
+command skb while looking up each CIS ID.
 
-  BUG: Invalid wait context
-  ...
-  regmap_lock_spinlock+0x18/0x30
-  regmap_read+0x3c/0x78
-  spmi_saw_set_vdd+0x50/0x1ac
-  __flush_smp_call_function_queue+0x1ac/0x334
+KASAN reports:
 
-Map the SAW with a regmap of our own that uses a raw spinlock, and fail
-the probe when that cannot be done instead of carrying an error pointer
-around as the SAW regmap.
+  BUG: KASAN: slab-out-of-bounds in hci_cc_le_set_cig_params
+  Read of size 1
+  hci_cc_le_set_cig_params
+  hci_cmd_complete_evt
+  hci_event_packet
 
-Fixes: 0caecaa87202 ("regulator: qcom_spmi: Add support for SAW")
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-Link: https://patch.msgid.link/20261019-fix-qcom-saw-v1-3-9c7ba3fc2493@oss.qualcomm.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Obtain the retained parameter length and require both the fixed header and
+the complete CIS array before using the command data.
+
+The reproducer no longer triggers a KASAN report with this change.
+
+Fixes: 71e9588435c3 ("Bluetooth: ISO: use correct CIS order in Set CIG Parameters event")
+Closes: https://lore.kernel.org/linux-bluetooth/179317463153.87610.8996555110609321376@stu.pku.edu.cn/
+Signed-off-by: Yifan Zhang <yfzhang23@stu.pku.edu.cn>
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/regulator/Kconfig               |  1 +
- drivers/regulator/qcom_spmi-regulator.c | 35 +++++++++++++++++++------
- 2 files changed, 28 insertions(+), 8 deletions(-)
+ net/bluetooth/hci_event.c | 7 +++++--
+ 1 file changed, 5 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/regulator/Kconfig b/drivers/regulator/Kconfig
-index 89789ac7a786c..9e4d3b859ed1b 100644
---- a/drivers/regulator/Kconfig
-+++ b/drivers/regulator/Kconfig
-@@ -1191,6 +1191,7 @@ config REGULATOR_QCOM_SMD_RPM
- config REGULATOR_QCOM_SPMI
- 	tristate "Qualcomm SPMI regulator driver"
- 	depends on SPMI || COMPILE_TEST
-+	select REGMAP_MMIO
- 	help
- 	  If you say yes to this option, support will be included for the
- 	  regulators found in Qualcomm SPMI PMICs.
-diff --git a/drivers/regulator/qcom_spmi-regulator.c b/drivers/regulator/qcom_spmi-regulator.c
-index c1a41ce70b363..a04ddb1eac940 100644
---- a/drivers/regulator/qcom_spmi-regulator.c
-+++ b/drivers/regulator/qcom_spmi-regulator.c
-@@ -12,13 +12,13 @@
- #include <linux/bitops.h>
- #include <linux/slab.h>
- #include <linux/of.h>
-+#include <linux/of_address.h>
- #include <linux/of_device.h>
- #include <linux/platform_device.h>
- #include <linux/ktime.h>
- #include <linux/regulator/driver.h>
- #include <linux/regmap.h>
- #include <linux/list.h>
--#include <linux/mfd/syscon.h>
- #include <linux/io.h>
+diff --git a/net/bluetooth/hci_event.c b/net/bluetooth/hci_event.c
+index 64db225a9f109..cb7abdc5546f9 100644
+--- a/net/bluetooth/hci_event.c
++++ b/net/bluetooth/hci_event.c
+@@ -3985,13 +3985,16 @@ static u8 hci_cc_le_set_cig_params(struct hci_dev *hdev, void *data,
+ 	struct hci_conn *conn;
+ 	u8 status = rp->status;
+ 	bool pending = false;
++	size_t len;
+ 	int i;
  
- /* Pin control enable input pins. */
-@@ -1335,6 +1335,14 @@ static irqreturn_t spmi_regulator_vs_ocp_isr(int irq, void *data)
+ 	bt_dev_dbg(hdev, "status 0x%2.2x", rp->status);
  
- static struct regmap *saw_regmap;
- 
-+static const struct regmap_config saw_regmap_config = {
-+	.name = "saw",
-+	.reg_bits = 32,
-+	.val_bits = 32,
-+	.reg_stride = 4,
-+	.use_raw_spinlock = true,
-+};
-+
- static void spmi_saw_set_vdd(void *data)
- {
- 	u32 vctl, data3, avs_ctl, pmic_sts;
-@@ -2504,7 +2512,8 @@ static int qcom_spmi_regulator_probe(struct platform_device *pdev)
- 	const char *name;
- 	struct device *dev = &pdev->dev;
- 	struct device_node *node = pdev->dev.of_node;
--	struct device_node *syscon, *reg_node;
-+	struct device_node *saw, *reg_node;
-+	void __iomem *saw_base;
- 	struct property *reg_prop;
- 	int ret, lenp;
- 	struct list_head *vreg_list;
-@@ -2523,12 +2532,22 @@ static int qcom_spmi_regulator_probe(struct platform_device *pdev)
- 	if (!reg)
- 		return -ENODEV;
- 
--	syscon = of_parse_phandle(node, "qcom,saw-reg", 0);
--	if (syscon) {
--		saw_regmap = syscon_node_to_regmap(syscon);
--		of_node_put(syscon);
--		if (IS_ERR(saw_regmap))
--			dev_err(dev, "ERROR reading SAW regmap\n");
-+	saw = of_parse_phandle(node, "qcom,saw-reg", 0);
-+	if (saw) {
-+		saw_base = devm_of_iomap(dev, saw, 0, NULL);
-+		of_node_put(saw);
-+		if (IS_ERR(saw_base))
-+			return dev_err_probe(dev, PTR_ERR(saw_base),
-+					     "failed to map the SAW\n");
-+
-+		saw_regmap = devm_regmap_init_mmio(dev, saw_base,
-+						   &saw_regmap_config);
-+		if (IS_ERR(saw_regmap)) {
-+			ret = PTR_ERR(saw_regmap);
-+			saw_regmap = NULL;
-+			return dev_err_probe(dev, ret,
-+					     "failed to set the SAW regmap up\n");
-+		}
- 	}
- 
- 	for (; reg->name; reg++) {
+-	cp = hci_sent_cmd_data(hdev, HCI_OP_LE_SET_CIG_PARAMS);
++	cp = hci_sent_cmd_data_len(hdev, HCI_OP_LE_SET_CIG_PARAMS, &len);
+ 	if (!rp->status &&
+-	    (!cp || rp->num_handles != cp->num_cis ||
++	    (!cp || len < sizeof(*cp) ||
++	     len < struct_size(cp, cis, cp->num_cis) ||
++	     rp->num_handles != cp->num_cis ||
+ 	     rp->cig_id != cp->cig_id ||
+ 	     skb->len < array_size(rp->num_handles, sizeof(*rp->handle)))) {
+ 		bt_dev_err(hdev, "unexpected Set CIG Parameters response data");
 -- 
 2.53.0
 
