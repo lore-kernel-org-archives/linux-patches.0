@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795622101;
-	b=vUMB6Wr4qBSyvP5Z0jALlICYZpVQYTibIfyOVeo08DRo5b5/DdSOWnCjai3IrjJXT2U/
-	 IUYy2IbMlihuK/08mARcyibUGRCt/T7m7AnbWZB0S2hPhSo3tG4IiJ0go+DTPHGk7iInC
-	 JZXlFKLEN7fPgek72Tn22lHF4v1tzATu15kzEU49+HiKFUAsa8IpROkHSquFshorZT9B/
-	 V6WwIg4BMpalpcDLrhOW6BfzCSH31O1qa+S4VNJ0sLd3nrP16khRaPK0P+Esox75RJJ2u
-	 Xzpaby7F0nEGnIxNQbxkyrAJIjYaAyeAmgmbbJ3jchGHREtLoavfao7Ylt6FfN5gqNA==
+	t=1795622104;
+	b=5D/hRnSZ8OLFKqxH/yqvOUUzVhIud5wGWVYx9aFrVsH6QA5RPITVPlpIkFEtH1m9cd37
+	 uz7/qyZOGBZBPzXy0i11Ek+DGzdmj4y3D54ix1NWY0q9p+YuJB+a8yZS+U+0eoQZl/vW8
+	 dS1E/iR1W4TME9tXt6IW1hu4gn808qkVBqdlwGFL6+p8kTTeD+kcnGAB9rdKH0IXmiFYo
+	 6E9dE2lZEOS1VWEMwFhk+bo77tuJWsRaZ4LUOmOuUGhj50TkYkVXAJLXqMRhzYnrvBYdD
+	 qOctHS1A9QBnSuEvNtl69hSBPMWcX2L9n9SuLGWqQaMCU9MmUUyBYdzQzuzsJGMQBUA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795622101;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795622104;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=gTovXyATXnXXRuhJstxEzrCW4NrzsOBWDuaoIlKxyQA=;
-	b=nS4IjN+EbZaakIOmXVUXvHGP/EhUj2oEVLutShQ5V1N/qBddTjmawFlYvcGNSbg4XSYB
-	 I4b4ydvBe83C0swWqt55Cer6cKEu/sr58C4vw5b4++ju0hdr5RTN8/SkW2S82VfiMe2oU
-	 +56yj2PkP7C8QSSH9In7XVgyYzwUVcuG0zbvJmaR3CYt+R0S9I3bZeRSQ7C7/8vMAsDrW
-	 DPHJj7jOtVzxTJCKud7DdR62WPsy/JCmpTZod1zVajZcBdXi6WGn0lJ0nsxwQ2TFbaj6O
-	 +breUdd5YKe8iCmZCSVtPktvbeSlPFScXTynUc0Xmyh8/cKh/rqGnW0umNJmtzDhDwA==
+	bh=1zddXNkAhxZUufstEaSC70GPNZTTiDDxUkMsegWR1Sg=;
+	b=OTO071rtXuHIWZNCAWzk/5qwwI28LHca7QwiUNuvy5wW1I4gtpOnbJQsSnCan6t3mv1V
+	 K1VHZBzMr76UnAgbxiB+b9w2ywToTiIiXXR9ttU4SyT31rajj6tCmFBkUU8AsrWdeIgSR
+	 sxq2uXAqEjQPuT6gH0ZNgmTrawQSNc7IeHlqpG50MFIEqnmEB8GDbmemE909EftEZXMCg
+	 JZp3jUJVLsbPr55LouHqPg9fMB+3BAFaazrflTyDBJNdiLUtZ7DgkPKWcK3pFnFhIM4HK
+	 kYRzeoiUeTAKuCMHNIDkqcam2X6e2mI+S5vvuS4WKHt/z+TZjXKVaSmaAXgzc0bfT8w==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=hvnkainL;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=eBriW6Br;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4C3AD606A327;
-	Wed, 25 Nov 2026 15:55:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1D43F606A321;
+	Wed, 25 Nov 2026 15:55:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=hvnkainL
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9B9361F000CF;
-	Wed, 25 Nov 2026 15:55:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=eBriW6Br
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 645591F000C0;
+	Wed, 25 Nov 2026 15:55:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795622101;
-	bh=gTovXyATXnXXRuhJstxEzrCW4NrzsOBWDuaoIlKxyQA=;
+	s=korg; t=1795622103;
+	bh=1zddXNkAhxZUufstEaSC70GPNZTTiDDxUkMsegWR1Sg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=hvnkainLcC0gfV6ZBggQ523GMH8tMZqCf3L9qcGx6KGhxN91HIVJcp8JfbxIz2m8d
-	 VtU5KW8cWGVuhRvx67JoGVxLrOUo6lY35iiv25TwKQud1zWvX9cy37bKegE3L56Xu+
-	 wtxqxHf5kteA8t1Tm0XY0Xx239rtlBHCn7tae/KM=
+	b=eBriW6Br4Pt7GuHKUVprelAgpssr3P5VUlR8Vy6xyrlAdHFRb5rwQ5KTA3MGVE4AL
+	 q4MEXtV5KuKXGkPm26GZSixXwS679btffGYePQpNo5BazTULS/PmWIWKWO7xtgvTIB
+	 F2+pYphFY8Td3v1xVQAwZkf0+qP8dm+a873oQQEA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lim Chanyoun <onleaf322@gmail.com>,
+	Qihang Tang <q.h.hack.winter@gmail.com>,
 	Kuniyuki Iwashima <kuniyu@google.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 404/990] af_unix: Convert unsigned long to u64 for GC.
-Date: Wed, 25 Nov 2026 15:29:31 +0100
-Message-ID: <20261125143831.562866496@linuxfoundation.org>
+Subject: [PATCH 6.18 405/990] af_unix: Remove gc_in_progress check in unix_peek_fpl().
+Date: Wed, 25 Nov 2026 15:29:32 +0100
+Message-ID: <20261125143831.586334618@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143822.072087159@linuxfoundation.org>
 References: <20261125143822.072087159@linuxfoundation.org>
@@ -71,112 +71,51 @@ Content-Transfer-Encoding: 8bit
 
 From: Kuniyuki Iwashima <kuniyu@google.com>
 
-[ Upstream commit d5f898d4c47217ce42506698a3a98741393217b7 ]
+[ Upstream commit 0edbc945eb9edd0086f25b151a79cfe4adc0dfa8 ]
 
-Lim Chanyoun reported that unix_vertex_max_scc_index could
-wrap around on 32-bit kernels, which confuses GC into purging
-a live socket receive queue.
+unix_vertex_dead() and unix_peek_fpl() are synchronised
+with unix_peek_seq to prevent GC from purging a live
+socket's recvq.
 
-I apparently designed GC with u64 in mind to avoid wraparound. [0]
+unix_peek_fpl() skips the synchronisation if gc_in_progress
+is false.
 
-Let's make it true on 32-bit kernels.
+However, on weakly ordered arch, GC might have already
+started working while the write to gc_in_progress is
+buffered.
 
-Note that unix_vertex.{out_degree,index} are converted for
-consistency; they are bounded by the number of allocated
-objects and do not exceed UINT_MAX on 32-bit kernels.
+This does not occur on x86.
 
-Fixes: 4090fa373f0e ("af_unix: Replace garbage collection algorithm.")
-Link: https://lore.kernel.org/netdev/20240228030508.31297-1-kuniyu@amazon.com/ #[0]
-Reported-by: Lim Chanyoun <onleaf322@gmail.com>
+This is an unlikely path that happens only when AF_UNIX
+fd is peeked so not worth complicating.
+
+Instead of adding memory barriers in unix_gc() and
+unix_peek_fpl(), let's simply remove the broken short-circuit.
+
+Fixes: e5b31d988a41 ("af_unix: Give up GC if MSG_PEEK intervened.")
+Reported-by: Qihang Tang <q.h.hack.winter@gmail.com>
 Signed-off-by: Kuniyuki Iwashima <kuniyu@google.com>
-Link: https://patch.msgid.link/20261104082058.452188-1-kuniyu@google.com
+Link: https://patch.msgid.link/20261104162858.991930-1-kuniyu@google.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/unix/garbage.c | 28 ++++++++++++++--------------
- 1 file changed, 14 insertions(+), 14 deletions(-)
+ net/unix/garbage.c | 3 ---
+ 1 file changed, 3 deletions(-)
 
 diff --git a/net/unix/garbage.c b/net/unix/garbage.c
-index 11b75d37ac03a..1007e110e377c 100644
+index 1007e110e377c..fc1828e01bdbc 100644
 --- a/net/unix/garbage.c
 +++ b/net/unix/garbage.c
-@@ -78,9 +78,9 @@ struct unix_vertex {
- 	struct list_head edges;
- 	struct list_head entry;
- 	struct list_head scc_entry;
--	unsigned long out_degree;
--	unsigned long index;
--	unsigned long scc_index;
-+	u64 out_degree;
-+	u64 index;
-+	u64 scc_index;
- };
+@@ -330,9 +330,6 @@ void unix_peek_fpl(struct scm_fp_list *fpl)
+ 	if (!fpl || !fpl->count_unix)
+ 		return;
  
- struct unix_edge {
-@@ -148,8 +148,8 @@ enum unix_vertex_index {
- 	UNIX_VERTEX_INDEX_START,
- };
- 
--static unsigned long unix_vertex_unvisited_index = UNIX_VERTEX_INDEX_MARK1;
--static unsigned long unix_vertex_max_scc_index = UNIX_VERTEX_INDEX_START;
-+static u64 unix_vertex_unvisited_index = UNIX_VERTEX_INDEX_MARK1;
-+static u64 unix_vertex_max_scc_index = UNIX_VERTEX_INDEX_START;
- 
- static void unix_add_edge(struct scm_fp_list *fpl, struct unix_edge *edge)
- {
-@@ -373,7 +373,7 @@ static bool unix_vertex_dead(struct unix_vertex *vertex)
- }
- 
- static LIST_HEAD(unix_visited_vertices);
--static unsigned long unix_vertex_grouped_index = UNIX_VERTEX_INDEX_MARK2;
-+static u64 unix_vertex_grouped_index = UNIX_VERTEX_INDEX_MARK2;
- 
- static bool unix_scc_dead(struct list_head *scc)
- {
-@@ -451,14 +451,14 @@ static bool unix_scc_cyclic(struct list_head *scc)
- 	return false;
- }
- 
--static unsigned long __unix_walk_scc(struct unix_vertex *vertex,
--				     unsigned long *last_index,
--				     struct sk_buff_head *hitlist)
-+static u64 __unix_walk_scc(struct unix_vertex *vertex,
-+			   u64 *last_index,
-+			   struct sk_buff_head *hitlist)
- {
--	unsigned long cyclic_sccs = 0;
- 	LIST_HEAD(vertex_stack);
- 	struct unix_edge *edge;
- 	LIST_HEAD(edge_stack);
-+	u64 cyclic_sccs = 0;
- 
- next_vertex:
- 	/* Push vertex to vertex_stack and mark it as on-stack
-@@ -554,12 +554,12 @@ static unsigned long __unix_walk_scc(struct unix_vertex *vertex,
- 	return cyclic_sccs;
- }
- 
--static unsigned long unix_graph_cyclic_sccs;
-+static u64 unix_graph_cyclic_sccs;
- 
- static void unix_walk_scc(struct sk_buff_head *hitlist)
- {
--	unsigned long last_index = UNIX_VERTEX_INDEX_START;
--	unsigned long cyclic_sccs = 0;
-+	u64 last_index = UNIX_VERTEX_INDEX_START;
-+	u64 cyclic_sccs = 0;
- 
- 	unix_vertex_max_scc_index = UNIX_VERTEX_INDEX_START;
- 
-@@ -582,7 +582,7 @@ static void unix_walk_scc(struct sk_buff_head *hitlist)
- 
- static void unix_walk_scc_fast(struct sk_buff_head *hitlist)
- {
--	unsigned long cyclic_sccs = unix_graph_cyclic_sccs;
-+	u64 cyclic_sccs = unix_graph_cyclic_sccs;
- 
- 	while (!list_empty(&unix_unvisited_vertices)) {
- 		struct unix_vertex *vertex;
+-	if (!READ_ONCE(gc_in_progress))
+-		return;
+-
+ 	/* Invalidate the final refcnt check in unix_vertex_dead(). */
+ 	spin_lock(&unix_peek_lock);
+ 	raw_write_seqcount_barrier(&unix_peek_seq);
 -- 
 2.53.0
 
