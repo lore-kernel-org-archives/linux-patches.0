@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795618353;
-	b=CnuEED0mIvwMr9IFLXg0t2Lxk3tLfZPYuvKwYFU4ifh6gtvgUfd1uSKJYccLwBesdqGv
-	 vN8pqqKcb2CmWgU+WuHPlR+SI6BDew+RTXbK1eX8Uc/SBjejfgaEI8xQPHlOs9UwCyftk
-	 zmoqPYol8EJmsArQuYmn458Htva68Z7dwC4cFSoJuyvUxeEnQV+e0Pv6E2BXDe5x6qZnl
-	 2D58h5EA7DE9qXJeOp2c+dHqdzK3E3bpXPhz6KYpjlb+ESQi1LqUhX4v72YIonsxYOX2r
-	 9m/Ypbn9qNETEyfCRA9BGWsRSunTEW4msEUf+rk9MKXCIsAt580OoqDQeV3L5Y8BGkw==
+	t=1795618355;
+	b=5CjLF2ledNFcnnbNeoWbwl73OOwAz6z065DbXwvcw0m0SUMa7eyX28LadMI+h7QBI7Cg
+	 kYgxtJdtV6y8e9S6F/N0VpgeWOwBkcU77z+zHAZ2ohCSbH8ViQg0GuJC4/VWiq+dUiywQ
+	 qZ1MQ0tmqAbeX3mEBYkuDAB/nHaNXI5rGlNhll8W6TT1TP3zW2O7SVvXDVVXSV/Y7m+mm
+	 t/oe0UpqYlI0tKvUipSd1QP6EmAemjKjkK0c9YJ9RTpxvMdWXT3qcIwqkSMYSDBJtD9F+
+	 S/4w+/ghOU0fvkNQJUgqxJrXN9SfqFTYze2ZxYo1Jr1YpLLeNB2JbgxUmaahCGuSQhQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795618353;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795618355;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=rDtn62xPDxLzMtbL0yxNvVBs1QSZyas94Eg7gg77U0U=;
-	b=cqaL/epX+0jfyq+IUNVazy3MpBZWSb7oNJLUIt6QP8BVOKTG1oI8iIyX9ooNcP5wh0Oi
-	 daIib4jWbNyBD6y3IFPLZKfSs653lL72SJBNSyDU1DAh0eRsMAGmVgOo26/Y7QHE5gpNp
-	 AAAk0FhlJ/5OKWC1GRcmC3SKq681S4crFyQFqzTph2yJFNp1Hux7oL19uMYF4xISWEr90
-	 QlQqIYD/Whti4sdHjMFgfunv9BWkL4tmEIaomzdVUKbicaHHCEaxp6zepUXiRNjiYWPIk
-	 ggG7qAM3/drox9MX2cJEnDu3McIsf43GGLHZ1XU3JLXVbmu75dSuH1XhwTgfroi594g==
+	bh=DxysbBRi4XimAFT73YeaiuSRxKseeL/VfPWArlLR7b8=;
+	b=qHdXHba/rDzPAXQJJcRddJMCb1RboPGhJwICAIYUZrG6MY9Gm736wKpmPnpuNqyZ9tBh
+	 KNmwabS6+5nCs4JggN58qt3Uwz6OR68XNNCua74jnRk8OvBRGOLk6L5gWVIbNtwRst58g
+	 0tG2sPWs+NO0A9iTPRtqODpZqd06dsHb0nUHlsHyd27+UclKIRg1M4V8OBc3O411cK+HB
+	 DA3U+VFtR5y/6l0JyBJkHaOOQmvpXQQtgjzUXWEz3sNXYqsmTu2+OIUS2U5xa+MV8gxDi
+	 1iI5jSp6Is04rKC74wbDcYBCTSa5/A0XcTZV3nNef3K+RGKJ3tsnA9jwXx03xokwN9Q==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=meKOixtQ;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=lhex7EZO;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3E221606A32C;
-	Wed, 25 Nov 2026 14:52:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B3D8D606A321;
+	Wed, 25 Nov 2026 14:52:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=meKOixtQ
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3599A1F000CA;
-	Wed, 25 Nov 2026 14:52:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=lhex7EZO
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 10B701F000C4;
+	Wed, 25 Nov 2026 14:52:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795618352;
-	bh=rDtn62xPDxLzMtbL0yxNvVBs1QSZyas94Eg7gg77U0U=;
+	s=korg; t=1795618355;
+	bh=DxysbBRi4XimAFT73YeaiuSRxKseeL/VfPWArlLR7b8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=meKOixtQK9zht7QiAHuqJ/x7q0o51iJFiybFUhJ3cIWssvq/pACHv1zW7LAjolZ10
-	 N9ECGYe/ARgbOhcJUjj2+z0NDWwNMlLMw5nWnCLQasc4vYTUWIEdEBfSzcNaslu2zo
-	 sR0tJZrGdeONBhEx6IfiKIJeE438toTjxZ3fVSZ8=
+	b=lhex7EZO6Jsj1zmYAipj0gSbNbc0BuKai4U7GA6op1YenrjmICBKKgX4es95Pz0IY
+	 N3ryWat4IHo281IMpzROwHVHmk0sRqMDGVe1ELvjVsZ+I0Q0mvv/TDOhpPsB2C3bdp
+	 tysK4un+ubBbdydz13/fJXQ4ZgTGGat+K+Y45szg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Florian Fainelli <florian.fainelli@broadcom.com>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Xu Yunxiang <xyx2021@mail.ustc.edu.cn>,
+	Alexei Starovoitov <ast@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0252/1005] net: dsa: b53: Enable IGMP and MLD control packet CPU copies
-Date: Wed, 25 Nov 2026 15:26:30 +0100
-Message-ID: <20261125143827.642303071@linuxfoundation.org>
+Subject: [PATCH 7.3 0217/1005] bpf: Propagate scalar precision through stack arguments
+Date: Wed, 25 Nov 2026 15:25:55 +0100
+Message-ID: <20261125143826.824314849@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143821.729802100@linuxfoundation.org>
 References: <20261125143821.729802100@linuxfoundation.org>
@@ -68,182 +68,84 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Florian Fainelli <florian.fainelli@broadcom.com>
+From: Xu Yunxiang <xyx2021@mail.ustc.edu.cn>
 
-[ Upstream commit 3362cb822ea750399a15b741713181fd8560bd17 ]
+[ Upstream commit d537252cc8a53b6ed6a3e7d0d895cb1cdd3ba42c ]
 
-IGMPv2 reports and MLDv1 reports are addressed to the multicast group
-itself. Once the first listener is installed in the ARL table, subsequent
-reports can follow that entry without reaching the CPU. The bridge then
-fails to learn additional listeners, although static MDB forwarding works.
+Outgoing stack arguments retain scalar verifier state separately from
+registers and ordinary spills. State comparison uses their precision
+marks, but propagate_precision() does not carry those dependencies from
+a reused state to the current path's ancestors. A path can consequently
+reuse a state without making earlier checkpoints distinguish scalar
+values that will later be used as memory offsets.
 
-Enable the high-level protocol classifiers so that IGMP and MLD control
-packets are copied to the CPU independently of the multicast ARL lookup.
-Retain normal L2 forwarding by clearing the CPU-only forwarding modes,
-and preserve unrelated protocol-control fields.
+Seed the existing backtracking batch with precise scalar argument slots
+from every frame. Incoming arguments live in the caller's outgoing
+slots, so include caller frames as well as the current frame.
 
-Handle the BCM5395's 16-bit register and different classifier fields
-separately from the 32-bit layout on the BCM531xx, BCM5301x and newer
-integrated RoboSwitch families, including BCM7445, BCM7278 and BCM4908.
-Export the helper and call it from bcm_sf2_sw_setup() as well, since SF2
-uses its own setup operation instead of b53_setup(). This also restores
-the classifiers after the switch reset on resume. Leave older devices
-with different IGMP controls untouched, and propagate register access
-failures during setup.
+Also cover scalar argument slots in bpf_mark_all_scalars_precise(), so
+conservative fallback preserves the same invariant. Keep its existing
+ancestor-only traversal and leave pointer and uninitialized slots alone.
 
-The SF2 setup integration and BCM4908 chip gate were updated with
-assistance from OpenAI Codex in response to review feedback.
+AI assistance was used in preparing this patch.
 
-Fixes: 5d65b64a3d97 ("net: dsa: b53: Add support for MDB")
-Signed-off-by: Florian Fainelli <florian.fainelli@broadcom.com>
-Link: https://patch.msgid.link/20261028235100.3892374-2-florian.fainelli@broadcom.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Fixes: 0f6bd5e7a804 ("bpf: Support stack arguments for bpf functions")
+Signed-off-by: Xu Yunxiang <xyx2021@mail.ustc.edu.cn>
+Signed-off-by: Alexei Starovoitov <ast@kernel.org>
+Link: https://patch.msgid.link/20261102190350.788433-2-xyx2021@mail.ustc.edu.cn
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/dsa/b53/b53_common.c | 57 ++++++++++++++++++++++++++++++++
- drivers/net/dsa/b53/b53_priv.h   |  1 +
- drivers/net/dsa/b53/b53_regs.h   | 17 ++++++++++
- drivers/net/dsa/bcm_sf2.c        |  5 +++
- 4 files changed, 80 insertions(+)
+ kernel/bpf/backtrack.c | 11 +++++++++++
+ kernel/bpf/states.c    | 14 ++++++++++++++
+ 2 files changed, 25 insertions(+)
 
-diff --git a/drivers/net/dsa/b53/b53_common.c b/drivers/net/dsa/b53/b53_common.c
-index 0880310c9ce3f..e54f6d4d1f7bb 100644
---- a/drivers/net/dsa/b53/b53_common.c
-+++ b/drivers/net/dsa/b53/b53_common.c
-@@ -836,6 +836,59 @@ void b53_brcm_hdr_setup(struct dsa_switch *ds, int port)
- }
- EXPORT_SYMBOL(b53_brcm_hdr_setup);
- 
-+int b53_enable_mcast_snooping(struct b53_device *dev)
-+{
-+	u16 val16;
-+	u32 val;
-+	int ret;
-+
-+	/* Older switches use different IGMP controls, not HL_PRTC_CTRL. */
-+	if (is5325(dev) || is5365(dev) || dev->chip_id == BCM5389_DEVICE_ID ||
-+	    is5397_98(dev) || is63xx(dev))
-+		return 0;
-+
-+	/* IGMPv2 and MLDv1 reports use the group's destination MAC. Once
-+	 * the first listener is offloaded, ordinary multicast forwarding
-+	 * can keep subsequent reports from reaching the bridge CPU.
-+	 */
-+
-+	/* BCM5395 has a narrower register and a single IGMP classifier.
-+	 * Its ICMPv6 classifier also covers MLD.
-+	 */
-+	if (dev->chip_id == BCM5395_DEVICE_ID) {
-+		ret = b53_read16(dev, B53_MGMT_PAGE, B53_HL_PRTC_CTRL, &val16);
-+		if (ret)
-+			return ret;
-+
-+		val16 |= HL_PRTC_IGMP_IP_EN_5395 | HL_PRTC_ICMPV6_EN;
-+		/* Zero forwarding modes copy control traffic to the CPU
-+		 * independently of the ARL lookup, retaining L2 forwarding.
-+		 */
-+		val16 &= ~(HL_PRTC_IGMP_FWD_MODE_5395 |
-+			   HL_PRTC_ICMPV6_FWD_MODE);
-+
-+		return b53_write16(dev, B53_MGMT_PAGE, B53_HL_PRTC_CTRL,
-+				   val16);
-+	}
-+
-+	ret = b53_read32(dev, B53_MGMT_PAGE, B53_HL_PRTC_CTRL, &val);
-+	if (ret)
-+		return ret;
-+
-+	val |= HL_PRTC_IGMP_RPTLVE_EN | HL_PRTC_IGMP_QRY_EN |
-+	       HL_PRTC_IGMP_UKN_EN | HL_PRTC_MLD_RPTDONE_EN |
-+	       HL_PRTC_MLD_QRY_EN;
-+	/* Zero forwarding modes copy control traffic to the CPU
-+	 * independently of the ARL lookup, retaining L2 forwarding.
-+	 */
-+	val &= ~(HL_PRTC_IGMP_RPTLVE_FWD_MODE | HL_PRTC_IGMP_QRY_FWD_MODE |
-+		 HL_PRTC_IGMP_UKN_FWD_MODE | HL_PRTC_MLD_RPTDONE_FWD_MODE |
-+		 HL_PRTC_MLD_QRY_FWD_MODE);
-+
-+	return b53_write32(dev, B53_MGMT_PAGE, B53_HL_PRTC_CTRL, val);
-+}
-+EXPORT_SYMBOL(b53_enable_mcast_snooping);
-+
- static void b53_enable_cpu_port(struct b53_device *dev, int port)
- {
- 	u8 port_ctrl;
-@@ -1334,6 +1387,10 @@ static int b53_setup(struct dsa_switch *ds)
- 			b53_disable_port(ds, port);
+diff --git a/kernel/bpf/backtrack.c b/kernel/bpf/backtrack.c
+index 50c66115ab45e..cdf96ef68f7e4 100644
+--- a/kernel/bpf/backtrack.c
++++ b/kernel/bpf/backtrack.c
+@@ -711,6 +711,17 @@ void bpf_mark_all_scalars_precise(struct bpf_verifier_env *env,
+ 						i, -(j + 1) * 8);
+ 				}
+ 			}
++			for (j = 0; j < func->out_stack_arg_cnt; j++) {
++				reg = &func->stack_arg_regs[j];
++				if (reg->type != SCALAR_VALUE || reg->precise)
++					continue;
++				reg->precise = true;
++				if (env->log.level & BPF_LOG_LEVEL2) {
++					verbose(env,
++						"force_precise: frame%d: forcing r11%d to be precise\n",
++						i, -(j + 1) * BPF_REG_SIZE);
++				}
++			}
+ 		}
  	}
- 
-+	ret = b53_enable_mcast_snooping(dev);
-+	if (ret)
-+		return ret;
-+
- 	return b53_setup_devlink_resources(ds);
  }
- 
-diff --git a/drivers/net/dsa/b53/b53_priv.h b/drivers/net/dsa/b53/b53_priv.h
-index 29cca7945df71..c4d2a41c714f6 100644
---- a/drivers/net/dsa/b53/b53_priv.h
-+++ b/drivers/net/dsa/b53/b53_priv.h
-@@ -504,6 +504,7 @@ static inline struct gpio_desc *b53_switch_get_reset_gpio(struct b53_device *dev
- /* Exported functions towards other drivers */
- void b53_imp_vlan_setup(struct dsa_switch *ds, int cpu_port);
- int b53_configure_vlan(struct dsa_switch *ds);
-+int b53_enable_mcast_snooping(struct b53_device *dev);
- void b53_get_strings(struct dsa_switch *ds, int port, u32 stringset,
- 		     uint8_t *data);
- void b53_get_ethtool_stats(struct dsa_switch *ds, int port, uint64_t *data);
-diff --git a/drivers/net/dsa/b53/b53_regs.h b/drivers/net/dsa/b53/b53_regs.h
-index 54a278db67c9f..cfdb5ed383260 100644
---- a/drivers/net/dsa/b53/b53_regs.h
-+++ b/drivers/net/dsa/b53/b53_regs.h
-@@ -274,6 +274,23 @@
- /* Revision ID register (8 bit) */
- #define B53_REV_ID			0x40
- 
-+/* High-level protocol control (16 bit on BCM5395, otherwise 32 bit) */
-+#define B53_HL_PRTC_CTRL			0x50
-+#define   HL_PRTC_ICMPV6_EN		BIT(4)
-+#define   HL_PRTC_ICMPV6_FWD_MODE		BIT(5)
-+#define   HL_PRTC_IGMP_IP_EN_5395		BIT(6)
-+#define   HL_PRTC_IGMP_FWD_MODE_5395	BIT(8)
-+#define   HL_PRTC_IGMP_RPTLVE_EN		BIT(9)
-+#define   HL_PRTC_IGMP_RPTLVE_FWD_MODE	BIT(10)
-+#define   HL_PRTC_IGMP_QRY_EN		BIT(11)
-+#define   HL_PRTC_IGMP_QRY_FWD_MODE	BIT(12)
-+#define   HL_PRTC_IGMP_UKN_EN		BIT(13)
-+#define   HL_PRTC_IGMP_UKN_FWD_MODE	BIT(14)
-+#define   HL_PRTC_MLD_RPTDONE_EN		BIT(15)
-+#define   HL_PRTC_MLD_RPTDONE_FWD_MODE	BIT(16)
-+#define   HL_PRTC_MLD_QRY_EN		BIT(17)
-+#define   HL_PRTC_MLD_QRY_FWD_MODE		BIT(18)
-+
- /* Broadcom header RX control (16 bit) */
- #define B53_BRCM_HDR_RX_DIS		0x60
- 
-diff --git a/drivers/net/dsa/bcm_sf2.c b/drivers/net/dsa/bcm_sf2.c
-index de3efa3ce9a75..f3b56ea87b07b 100644
---- a/drivers/net/dsa/bcm_sf2.c
-+++ b/drivers/net/dsa/bcm_sf2.c
-@@ -1059,6 +1059,7 @@ static int bcm_sf2_sw_setup(struct dsa_switch *ds)
- {
- 	struct bcm_sf2_priv *priv = bcm_sf2_to_priv(ds);
- 	unsigned int port;
-+	int ret;
- 
- 	/* Enable all valid ports and disable those unused */
- 	for (port = 0; port < priv->hw_params.num_ports; port++) {
-@@ -1074,6 +1075,10 @@ static int bcm_sf2_sw_setup(struct dsa_switch *ds)
- 	b53_configure_vlan(ds);
- 	bcm_sf2_enable_acb(ds);
- 
-+	ret = b53_enable_mcast_snooping(priv->dev);
-+	if (ret)
-+		return ret;
-+
- 	return b53_setup_devlink_resources(ds);
- }
- 
+diff --git a/kernel/bpf/states.c b/kernel/bpf/states.c
+index f28b11c189085..4b407b629c995 100644
+--- a/kernel/bpf/states.c
++++ b/kernel/bpf/states.c
+@@ -1066,6 +1066,20 @@ static int propagate_precision(struct bpf_verifier_env *env,
+ 			bpf_bt_set_frame_slot(&env->bt, fr, i);
+ 			first = false;
+ 		}
++		for (i = 0; i < state->out_stack_arg_cnt; i++) {
++			state_reg = &state->stack_arg_regs[i];
++			if (state_reg->type != SCALAR_VALUE || !state_reg->precise)
++				continue;
++			if (env->log.level & BPF_LOG_LEVEL2) {
++				if (first)
++					verbose(env, "frame %d: propagating r11%d",
++						fr, -(i + 1) * BPF_REG_SIZE);
++				else
++					verbose(env, ",r11%d", -(i + 1) * BPF_REG_SIZE);
++			}
++			bt_set_frame_stack_arg_slot(&env->bt, fr, i);
++			first = false;
++		}
+ 		if (!first && (env->log.level & BPF_LOG_LEVEL2))
+ 			verbose(env, "\n");
+ 	}
 -- 
 2.53.0
 
