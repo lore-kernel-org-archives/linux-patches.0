@@ -1,52 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795621645;
-	b=RTx8eXxz/rrLt8iyJ5bnKMa9ZnMgLfBBNwGZZ0x0ti4IMN7y10oMTEvtQ0V6hBr2ymwh
-	 IFsSWjmORuqk11GO8vraCKU4v03ON8vO1zPi82HDz6J7mSh4tOaHorAbuZIt7xIXxImpl
-	 B6Ztrk3OO19WAAGWE80LzW1geZE+vS9n3iV0KPYZ9aG1cal+M2lWK3eCRqHxp0arVvgCs
-	 QCQ7UNpXmJ5F/nJDFUlSp931EKPy1qvdBmtPr/pntN/Awm46R5FlaekpMkfsxChY1FcKm
-	 6iXCMJ/5WBl83LNByWCUx6gftI0wi2cMSIa6m1/Dd69LY72v5mmhHyPwkka8Qzl/wYA==
+	t=1795621649;
+	b=29jT6JIvYhJxLv70U+OpOGVP20NuO1V5fOsMOuwH2UC7QgXhMmELbmbPX2QcWx4YNx+i
+	 0gSQvzJ2ViKgHpkqaR3F+hnpGNhriLVgURmyUktdfkcmM8R5mdFb0PGW0LsO/brEfD5y1
+	 5fX8L9Dk6lHqq2ap9FQxB2DChDhOSPms4NuA7OwpTHQSBJd3ZyvEFCMP8r8//pEW50+2e
+	 ntXOmLqbNfb61EZclb14TFDNJ8iMxDTv4kidL1ct3GAHelszkqYRGouw2uF6oAD82mp28
+	 siqqH23Q1ps1iEuhu7T8jyFcZ+jCR4HyJLKVRBMOlx9ztoQ06pSf+NdG9TzBFgPSTOw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795621645;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795621649;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=8ciAUalwdSE6jeXqBLaVtWYMEaSY/D6llb2sJBO5mMI=;
-	b=31Sox7Ra+/sfN+pL0v+So3hBp8+vCjKAXpuptWFGNVRLoj6iWNmZF6NVYG5rg1POW9L1
-	 8deQQwn88pG/MM77tTgpnxBzhGACdvCZkpsaCL3+bSX5djmYCkbK3xfd7CsLTvSzW6aeg
-	 SPomiliL06G5d+b+ptU64JUDlYVH5mOXriN1qA99EdH9uamJs/Yj9wXN1obbGK95B7yVC
-	 iSxcP28702i0a6VzfsED3XA05BanUOuyGCpwGSeQ+4/Lk95ubjEjaay0nvNTyo/5SIUF6
-	 Lmx9kNxdypGauEF2V60ybyxe+Ea3RiGJiEfUYejd2U6G/l1nLfwBOu7ntlvdsKJ4f9Q==
+	bh=0OU1rQBVoz+tZjFFFjYt58hguJAWpYK0RxzjZzzsVT8=;
+	b=NNuc+JV2RUpApQw9WmBhdpGt189eWOHgMKn6pSJkAP+g34atCj4E8DxEUGu8JtGBw3wz
+	 RDhlDFXyOx3Ypslo/+cHSePE0LJFR8rY0vscednTj2/7FVY/3tQaLj+S+Y9hq68wWOETZ
+	 jBQiGv2ioXIfAhliSGCJOcbaO/M9OaKUhWSy8NdkxZOCthEplq/nA0HeObiStrehwSGor
+	 94JiyMs510APc7ywpmbkcR5S2HGNaKNvlnmYJGpvt9tytjp1zADhE+Om2wD8rf4u914LL
+	 XN911jgZiDujSIsnRZlEsnhN8E8E8ra19M9vQjsAZZAclJ36/x7H4yitnLSuA8ZhjlA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=FAc1bps2;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=s0t+zNru;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CB0CA606A336;
-	Wed, 25 Nov 2026 15:47:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1C6AA606A339;
+	Wed, 25 Nov 2026 15:47:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=FAc1bps2
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 26D811F000C0;
-	Wed, 25 Nov 2026 15:47:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=s0t+zNru
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 152971F000C6;
+	Wed, 25 Nov 2026 15:47:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795621645;
-	bh=8ciAUalwdSE6jeXqBLaVtWYMEaSY/D6llb2sJBO5mMI=;
+	s=korg; t=1795621648;
+	bh=0OU1rQBVoz+tZjFFFjYt58hguJAWpYK0RxzjZzzsVT8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=FAc1bps2I7+PCwdMZxYTX87Gszc4cselG39xPIZZdftc7BAArMfds+iL48op+XBR/
-	 LUs2157CjDgECP668LT4WYGZUtlgsBEp0uhKjU7jzQPGE6/iHbQo9HatR8Hwb/hB3s
-	 n0gc7dZ58jbF8fz6UAH4DPPAS7jJza3qTDOhl5jg=
+	b=s0t+zNruz6RMXSFr0h1EUlqQfnpzns+ktVYBIlasuCsEwzKSSM/jqOzmcpEJUAjns
+	 bTwOiae7EN1CRwvB8yMRxRZsTWPz2ujlKnYFmwKhQQYRqRIRWUsJgJiEZbCowQqfS4
+	 JXU1Rsv1DfAIIBe/WNW5ULg4VQGAvaTAo4917+Pg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Florian Westphal <fw@strlen.de>,
-	Pablo Neira Ayuso <pablo@netfilter.org>,
+	Alex Elder <elder@riscstar.com>,
+	Linus Walleij <linusw@kernel.org>,
+	Michael Walle <mwalle@kernel.org>,
+	Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 290/990] netfilter: nat: zero newrange before filling it in
-Date: Wed, 25 Nov 2026 15:27:37 +0100
-Message-ID: <20261125143828.881151832@linuxfoundation.org>
+Subject: [PATCH 6.18 291/990] gpio: regmap: Support sparsed fixed direction
+Date: Wed, 25 Nov 2026 15:27:38 +0100
+Message-ID: <20261125143828.905097040@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143822.072087159@linuxfoundation.org>
 References: <20261125143822.072087159@linuxfoundation.org>
@@ -68,90 +70,151 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Florian Westphal <fw@strlen.de>
+From: Linus Walleij <linusw@kernel.org>
 
-[ Upstream commit d1bb235aa409a4e5aeba6c748d953d948625b1e9 ]
+[ Upstream commit 68d801eabda5219dcc25c9de98d3bbdb5b51b0a5 ]
 
-nf_nat_masquerade_ipv4(), nf_nat_masquerade_ipv6(), netmap_tg4() and
-netmap_tg6() each build a stack-local struct nf_nat_range2 from the
-caller-supplied range, inheriting range->flags unmodified. Two of them
-only memset() the min_addr/max_addr members, the other two don't
-memset() anything at all, so newrange.base_proto is left as stack
-garbage.
+On some regmapped GPIOs apparently only a sparser selection of the lines
+(not all) are actually fixed direction.
 
-If the inherited flags include NF_NAT_RANGE_PROTO_OFFSET,
-nf_nat_l4proto_unique_tuple() reads range->base_proto.all to compute
-the NAT port offset. Neither the NETMAP nor the MASQUERADE targets
-mask the flags field in their checkentry callback, so this
-uninitialized stack value can end up feeding the NAT port selection.
+Support this situation by adding an optional bitmap indicating which
+GPIOs are actually fixed direction and which are not.
 
-The per-member memset()s are not enough: they have to enumerate every
-field that must be cleared, and base_proto was missed when
-NF_NAT_RANGE_PROTO_OFFSET/base_proto was added to the struct. memset()
-the whole struct instead, so every member is covered regardless of
-which ones get explicitly assigned afterwards.
-
-There are other places that miss this, but those hardcode .flags so
-nat core won't read from the uninitialized fields.
-
-C99 initializers would be preferrable, but this is a more intrusive
-change.  Lets followup in nf-next and convert others as well.
-
-This is an LLM finding.
-
-Fixes: 2eb0f624b709 ("netfilter: add NAT support for shifted portmap ranges")
-Signed-off-by: Florian Westphal <fw@strlen.de>
-Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
+Link: https://lore.kernel.org/linux-gpio/20260501155421.3329862-10-elder@riscstar.com/
+Tested-by: Alex Elder <elder@riscstar.com>
+Signed-off-by: Linus Walleij <linusw@kernel.org>
+Reviewed-by: Michael Walle <mwalle@kernel.org>
+Reviewed-by: Alex Elder <elder@riscstar.com>
+Link: https://patch.msgid.link/20260511-regmap-gpio-sparse-fixed-dir-v3-1-1429ec453be7@kernel.org
+Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
+Stable-dep-of: 80415a6ff295 ("gpio: regmap: free the irqchip if adding the irq domain fails")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/netfilter/nf_nat_masquerade.c | 4 ++--
- net/netfilter/xt_NETMAP.c         | 4 ++--
- 2 files changed, 4 insertions(+), 4 deletions(-)
+ drivers/gpio/gpio-regmap.c  | 37 +++++++++++++++++++++++++++++++++----
+ include/linux/gpio/regmap.h |  7 +++++++
+ 2 files changed, 40 insertions(+), 4 deletions(-)
 
-diff --git a/net/netfilter/nf_nat_masquerade.c b/net/netfilter/nf_nat_masquerade.c
-index 1a506b0c6511a..2506aace39bcf 100644
---- a/net/netfilter/nf_nat_masquerade.c
-+++ b/net/netfilter/nf_nat_masquerade.c
-@@ -62,8 +62,7 @@ nf_nat_masquerade_ipv4(struct sk_buff *skb, unsigned int hooknum,
- 		nat->masq_index = out->ifindex;
+diff --git a/drivers/gpio/gpio-regmap.c b/drivers/gpio/gpio-regmap.c
+index c64805dcb9f88..4f83027ab2032 100644
+--- a/drivers/gpio/gpio-regmap.c
++++ b/drivers/gpio/gpio-regmap.c
+@@ -31,6 +31,7 @@ struct gpio_regmap {
+ 	unsigned int reg_clr_base;
+ 	unsigned int reg_dir_in_base;
+ 	unsigned int reg_dir_out_base;
++	unsigned long *fixed_direction_mask;
+ 	unsigned long *fixed_direction_output;
  
- 	/* Transfer from original range. */
--	memset(&newrange.min_addr, 0, sizeof(newrange.min_addr));
--	memset(&newrange.max_addr, 0, sizeof(newrange.max_addr));
-+	memset(&newrange, 0, sizeof(newrange));
- 	newrange.flags       = range->flags | NF_NAT_RANGE_MAP_IPS;
- 	newrange.min_addr.ip = newsrc;
- 	newrange.max_addr.ip = newsrc;
-@@ -259,6 +258,7 @@ nf_nat_masquerade_ipv6(struct sk_buff *skb, const struct nf_nat_range2 *range,
- 	if (nat)
- 		nat->masq_index = out->ifindex;
+ #ifdef CONFIG_REGMAP_IRQ
+@@ -128,6 +129,20 @@ static int gpio_regmap_set_with_clear(struct gpio_chip *chip,
+ 	return regmap_write(gpio->regmap, reg, mask);
+ }
  
-+	memset(&newrange, 0, sizeof(newrange));
- 	newrange.flags		= range->flags | NF_NAT_RANGE_MAP_IPS;
- 	newrange.min_addr.in6	= src;
- 	newrange.max_addr.in6	= src;
-diff --git a/net/netfilter/xt_NETMAP.c b/net/netfilter/xt_NETMAP.c
-index cb2ee80d84fa8..591a6af6c61fa 100644
---- a/net/netfilter/xt_NETMAP.c
-+++ b/net/netfilter/xt_NETMAP.c
-@@ -42,6 +42,7 @@ netmap_tg6(struct sk_buff *skb, const struct xt_action_param *par)
- 				   netmask.ip6[i];
++static bool gpio_regmap_fixed_direction(struct gpio_regmap *gpio,
++					unsigned int offset)
++{
++	if (!gpio->fixed_direction_output)
++		return false;
++
++	/* In this case only some GPIOs are fixed as input/output */
++	if (gpio->fixed_direction_mask &&
++	    !test_bit(offset, gpio->fixed_direction_mask))
++		return false;
++
++	return true;
++}
++
+ static int gpio_regmap_get_direction(struct gpio_chip *chip,
+ 				     unsigned int offset)
+ {
+@@ -135,7 +150,7 @@ static int gpio_regmap_get_direction(struct gpio_chip *chip,
+ 	unsigned int base, val, reg, mask;
+ 	int invert, ret;
+ 
+-	if (gpio->fixed_direction_output) {
++	if (gpio_regmap_fixed_direction(gpio, offset)) {
+ 		if (test_bit(offset, gpio->fixed_direction_output))
+ 			return GPIO_LINE_DIRECTION_OUT;
+ 		else
+@@ -292,12 +307,23 @@ struct gpio_regmap *gpio_regmap_register(const struct gpio_regmap_config *config
+ 			goto err_free_gpio;
  	}
  
-+	memset(&newrange, 0, sizeof(newrange));
- 	newrange.flags	= range->flags | NF_NAT_RANGE_MAP_IPS;
- 	newrange.min_addr	= new_addr;
- 	newrange.max_addr	= new_addr;
-@@ -89,8 +90,7 @@ netmap_tg4(struct sk_buff *skb, const struct xt_action_param *par)
- 		new_ip = ip_hdr(skb)->saddr & ~netmask;
- 	new_ip |= mr->range[0].min_ip & netmask;
++	if (config->fixed_direction_mask) {
++		gpio->fixed_direction_mask = bitmap_alloc(chip->ngpio,
++							    GFP_KERNEL);
++		if (!gpio->fixed_direction_mask) {
++			ret = -ENOMEM;
++			goto err_free_gpio;
++		}
++		bitmap_copy(gpio->fixed_direction_mask,
++			    config->fixed_direction_mask, chip->ngpio);
++	}
++
+ 	if (config->fixed_direction_output) {
+ 		gpio->fixed_direction_output = bitmap_alloc(chip->ngpio,
+ 							    GFP_KERNEL);
+ 		if (!gpio->fixed_direction_output) {
+ 			ret = -ENOMEM;
+-			goto err_free_gpio;
++			goto err_free_bitmap_dirmask;
+ 		}
+ 		bitmap_copy(gpio->fixed_direction_output,
+ 			    config->fixed_direction_output, chip->ngpio);
+@@ -319,7 +345,7 @@ struct gpio_regmap *gpio_regmap_register(const struct gpio_regmap_config *config
  
--	memset(&newrange.min_addr, 0, sizeof(newrange.min_addr));
--	memset(&newrange.max_addr, 0, sizeof(newrange.max_addr));
-+	memset(&newrange, 0, sizeof(newrange));
- 	newrange.flags	     = mr->range[0].flags | NF_NAT_RANGE_MAP_IPS;
- 	newrange.min_addr.ip = new_ip;
- 	newrange.max_addr.ip = new_ip;
+ 	ret = gpiochip_add_data(chip, gpio);
+ 	if (ret < 0)
+-		goto err_free_bitmap;
++		goto err_free_bitmap_output;
+ 
+ #ifdef CONFIG_REGMAP_IRQ
+ 	if (config->regmap_irq_chip) {
+@@ -345,8 +371,10 @@ struct gpio_regmap *gpio_regmap_register(const struct gpio_regmap_config *config
+ 
+ err_remove_gpiochip:
+ 	gpiochip_remove(chip);
+-err_free_bitmap:
++err_free_bitmap_output:
+ 	bitmap_free(gpio->fixed_direction_output);
++err_free_bitmap_dirmask:
++	bitmap_free(gpio->fixed_direction_mask);
+ err_free_gpio:
+ 	kfree(gpio);
+ 	return ERR_PTR(ret);
+@@ -366,6 +394,7 @@ void gpio_regmap_unregister(struct gpio_regmap *gpio)
+ 
+ 	gpiochip_remove(&gpio->gpio_chip);
+ 	bitmap_free(gpio->fixed_direction_output);
++	bitmap_free(gpio->fixed_direction_mask);
+ 	kfree(gpio);
+ }
+ EXPORT_SYMBOL_GPL(gpio_regmap_unregister);
+diff --git a/include/linux/gpio/regmap.h b/include/linux/gpio/regmap.h
+index 87983a5f3681e..a23e1c2b933a1 100644
+--- a/include/linux/gpio/regmap.h
++++ b/include/linux/gpio/regmap.h
+@@ -38,6 +38,12 @@ struct regmap;
+  *			offset to a register/bitmask pair. If not
+  *			given the default gpio_regmap_simple_xlate()
+  *			is used.
++ * @fixed_direction_mask:
++ *			(Optional) Bitmap representing the GPIO lines that
++ *			make use of the @fixed_direction_output list to
++ *			enforce direction of the GPIO. If this is NULL
++ *			and @fixed_direction_output is defined, ALL GPIOs
++ *			are assumed to be fixed direction (out or in).
+  * @fixed_direction_output:
+  *			(Optional) Bitmap representing the fixed direction of
+  *			the GPIO lines. Useful when there are GPIO lines with a
+@@ -89,6 +95,7 @@ struct gpio_regmap_config {
+ 	int reg_stride;
+ 	int ngpio_per_reg;
+ 	struct irq_domain *irq_domain;
++	unsigned long *fixed_direction_mask;
+ 	unsigned long *fixed_direction_output;
+ 
+ #ifdef CONFIG_REGMAP_IRQ
 -- 
 2.53.0
 
