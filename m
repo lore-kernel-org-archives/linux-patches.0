@@ -1,52 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795621588;
-	b=mNI0lys4zun8Z8+nYNmGK6OiVwSAoiTYKr6VRk0cFkDhMVipSwVPRcfw5kCV0VmX/9i0
-	 OAbB1yXxxNs0qlc9S8KRB34ydHJLo4KwN3d1/5LtZuDkRPbGCsZ6t+x9mto2wtuptSO+t
-	 h/ejDmfbXeMfT5mpaRzVqYxoYtQCzcQkrfcX9DlnKuNnn1VIMxlz0oPP3TCyHhmvUXKl9
-	 qE62dyqQ1ODHcVJ0YZfF7fJ8OZ5uKrFTFLhaMXW8z+NKI5OOHm6r/yx0IS2v1UButEeLM
-	 24KYcvy+Ob+ghm/PEZ0nPx1J5eu0u7yGOEZ/zEMr3arMuSMjeLQFZ6xoW6y9noprVtw==
+	t=1795621590;
+	b=q513HFzO6hXOsGKoG6R96QPoc8iD8ozhpHWJeKM7NvQDWxsktLNwxu9iSPJV2i2hIZtR
+	 bSs6HTWjUKcQcWQmlE2K/832+0fwLnH52DHidJFilDo3lOgF7kygfoZtpg/sjVhE2koui
+	 ip6GCx+MwedXXUgi08bish/J1cSz6Q8Tk+0ZD2oDtHt7/88Pg5nv7NVkO49hOE6YX/n07
+	 2SLITjfxGNtqbVy722kP/S/HPNmyIN7EMj71XA5ej2HNwTbj5Buluga+VxVFQTCzEcs/y
+	 OZW78xLC36PJZlEu0wQBoreKXgyViWSuC05NHKviGjDaNY/+fQHWg0y0XL9qkQOO7PA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795621588;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795621590;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Type:Content-Transfer-Encoding;
-	bh=fSRDOuZBDItmBo6PjsGOiFUQbj7LlnMY9qbC433m0ro=;
-	b=ssRF+FJ0QsvbR3LadJDPTTPFLjfdxja3S/XNPZPDXb0JEeH+bl8AomhPOeG7xHYmw/kU
-	 etoDaEetvy+c+KrdB7BDzIcOWFbIoZcnMJqU6gkMTULo8oZLRptGZZJP7tT9Zfd2oXgE/
-	 qoIUE7134yTuvU8DH1wjfFSpKDOxsHbQtGoHWrbwZ8dsL3a1V/9Zc3bnB6W8XspVetLhV
-	 sJA9rolLWtzXmFDWXWBZOrxKjsASIBFa6ZnW5a/4BErC/dYj/RlQ64F3ThYEP4DjtHMbu
-	 +wjPgtxQgPtrr9qVet/KWVTMJBxBtnaltM1fkdUDILJfLFH/49aAG3EM/SDbasIIFmw==
+	 MIME-Version:Content-Transfer-Encoding;
+	bh=4Ld+QUMTEnbCJjG2pNZ5Gex1nMS6TkUsclgQfvGW5bM=;
+	b=M8wmlch9dw6doT/QIqSIBDuOh9Dbj6wMQnnZJr+oEDZxa89FrgbfPiJMb64zEJyTJ1Uz
+	 EBP1iLUfjo97Vn2ckYKSQguufMI+sXGeMNCD3P57ubJxTmF3Skw1A36fvPyDqOlW0XYqP
+	 RvQlbllgBULI6zf5AWj+CTus6yxXJx+McKWbt+Zcuym/BiL6mnFm1RUJ4aLhJa/e0RDVs
+	 sHpn2NiUQt6eRU7DH7usta4TWztohsU1161GWwk0q2NAxWoSaUqER/p+yHg0ropIeRIkT
+	 ZK+D4FONl0mt71KBuZOfASwQvAYuCDqaYZhZUrc770NsrmfaOTar5xBKY+CuidKUyBw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=csdxgyQ+;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=l8RtnNtT;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DFEF0606A321;
-	Wed, 25 Nov 2026 15:46:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BC67F606A32C;
+	Wed, 25 Nov 2026 15:46:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=csdxgyQ+
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D6CF11F000D1;
-	Wed, 25 Nov 2026 15:46:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=l8RtnNtT
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0FF961F000C6;
+	Wed, 25 Nov 2026 15:46:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795621587;
-	bh=fSRDOuZBDItmBo6PjsGOiFUQbj7LlnMY9qbC433m0ro=;
+	s=korg; t=1795621590;
+	bh=4Ld+QUMTEnbCJjG2pNZ5Gex1nMS6TkUsclgQfvGW5bM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=csdxgyQ+xY4l/8R02vcuorT/h+0+YBgg7RB1HDHuF5BgGhFXcdkuW6lAY2DFu64nw
-	 qPkscBACQaERvsKJjaRytxcs9hC76GuNDwq/08W0fbcKJRsndEZ/iabq6QAowYn7Yp
-	 DaAMGZ3tuf1ZStFI64Zjn0+CcJC0LvHIp2NgSYh4=
+	b=l8RtnNtTEcTo5LhaGoncJ+C49IIRsZrkvA1KGBiGYFuLUkAl5kpMBDtK5vEcU/KkE
+	 tzHfVx7FYdJcB00ouJIwabJPzEF+2ZJUc2so5O24tpOftK66j5He500KK86a7BMSNW
+	 w42zb0UR6Bl3sFxYQQw3mzQ7ijnHrAqTV9rBXIag=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Micha=C5=82=20Kope=C4=87?= <michal.kopec@3mdeb.com>,
-	Takashi Iwai <tiwai@suse.de>,
+	Jason Zhang <jdz@google.com>,
+	Kuniyuki Iwashima <kuniyu@google.com>,
+	Ido Schimmel <idosch@nvidia.com>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 274/990] ALSA: hda/core: Stop capability walk on empty capability header
-Date: Wed, 25 Nov 2026 15:27:21 +0100
-Message-ID: <20261125143828.506598882@linuxfoundation.org>
+Subject: [PATCH 6.18 257/990] ipv6: Flush exception route while replacing nexthop.
+Date: Wed, 25 Nov 2026 15:27:04 +0100
+Message-ID: <20261125143828.112172924@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143822.072087159@linuxfoundation.org>
 References: <20261125143822.072087159@linuxfoundation.org>
@@ -62,71 +64,119 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Michał Kopeć <michal.kopec@3mdeb.com>
+From: Kuniyuki Iwashima <kuniyu@google.com>
 
-[ Upstream commit f65c917397c77daeb7e6d0893ebe89107ddd5692 ]
+[ Upstream commit 9401b428b5d4dfe1fd5752973fd02b4e9cd05536 ]
 
-snd_hdac_bus_parse_capabilities() walks the controller's linked
-capability list starting at LLCH. On some platforms one of the entries
-reads back as all zeros. Such a header does not describe a capability,
-but the walk still treats it as one: it falls into the default case and
-reports an error, printing the raw register value instead of the
-capability ID:
+The following creates a cyclic reference between IPv6 route
+and nexthop:
 
-  snd_hda_intel 0000:00:1f.3: Unknown capability 0
+  1. create a nexthop A
+  2. create a nexthop group w/ A
+  3. create an IPv6 route with the nexthop group
+  4. create an exception route w/ A
+  5. replace A with a new nexthop B in the nexthop group
+  6. remove the IPv6 route
+  7. replace B with A in the nexthop group
+  8. remove the nexthop group
 
-The walk then stops anyway, because the next pointer of a zero header
-is 0, so the message is only noise.
+Then, removing a device tied to the route gets stuck and
+triggers the splat below. [0]
 
-Treat an all-zero header as the end of the list, the same way a failed
-read (-1) is already handled, and log it at debug level only. Also
-print the capability ID in hex for a genuinely unknown capability,
-instead of the full header value.
+At 5., fib6_nh_release_dsts() is called, but it does not
+flush exception routes, so the nexthop A continues to grab
+the IPv6 route reference.
 
-Fixes: 0b00a5615dc4 ("ALSA: hdac_ext: add hdac extended controller")
-Signed-off-by: Michał Kopeć <michal.kopec@3mdeb.com>
-Link: https://patch.msgid.link/20261102114939.2182131-1-michal.kopec@3mdeb.com
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+  nh_A->rt6i_exception_bucket[] -> rt6_ex->rt6i->from
+
+At 6., fib6_purge_rt() calls rt6_flush_exceptions(), but it
+only purges exceptions tied to nexthop B.  Also, the route is
+unlinked from the nexthop group by list_del_init(&rt->nh_list).
+
+  -> f6i->nh -> nhg->nh_entries[]
+
+At 8., __remove_nexthop_fib() cannot find the IPv6 route, and
+remove_nexthop_group() calls list_del_init(&nhge->nh_list) to
+unlink the group from the nexthop A's nhe->grp_list.
+
+  nhg->nh_entries[] -> nh_A -> ... -> f6i
+
+Here, the nexthop A is reachable from net->nexthop.devhash[],
+but remove_nexthop_from_groups() cannot find the nexthop group,
+leaking the whole chain.
+
+Let's call fib6_nh_flush_exceptions() in fib6_nh_release_dsts().
+
+[0]:
+unregister_netdevice: waiting for gre6 to become free. Usage count = 4
+ref_tracker: netdev@000000009652f190 has 1/3 users at
+     dst_alloc+0x14b/0x490
+     ip6_rt_cache_alloc+0x27b/0x670
+     __ip6_rt_update_pmtu+0x572/0x850
+     ip6_tnl_xmit+0x8c5/0x1b70
+     __gre6_xmit+0x7af/0xaa0
+     ip6gre_tunnel_xmit+0x685/0xdc0
+     dev_hard_start_xmit+0x204/0x5a0
+     __dev_queue_xmit+0xe8a/0x2550
+     ip6_finish_output+0x232/0x570
+     ip6_output+0x226/0x3b0
+     ip6_send_skb+0x133/0x250
+     rawv6_push_pending_frames+0x503/0x6f0
+     rawv6_sendmsg+0xdf0/0x1310
+     sock_sendmsg_nosec+0xde/0x130
+     __sys_sendto+0x27f/0x320
+     __x64_sys_sendto+0xd9/0xf0
+
+Fixes: 7bf4796dd099 ("nexthops: add support for replace")
+Reported-by: Jason Zhang <jdz@google.com>
+Signed-off-by: Kuniyuki Iwashima <kuniyu@google.com>
+Link: https://patch.msgid.link/20261101064418.2055158-2-kuniyu@google.com
+Reviewed-by: Ido Schimmel <idosch@nvidia.com>
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/hda/core/controller.c | 10 +++++++++-
- 1 file changed, 9 insertions(+), 1 deletion(-)
+ net/ipv6/route.c | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
-diff --git a/sound/hda/core/controller.c b/sound/hda/core/controller.c
-index a7c00ad801170..fd09b4b18fd84 100644
---- a/sound/hda/core/controller.c
-+++ b/sound/hda/core/controller.c
-@@ -426,6 +426,13 @@ int snd_hdac_bus_parse_capabilities(struct hdac_bus *bus)
- 			break;
- 		}
+diff --git a/net/ipv6/route.c b/net/ipv6/route.c
+index af376b9568e2f..c11cf3c65c9f7 100644
+--- a/net/ipv6/route.c
++++ b/net/ipv6/route.c
+@@ -3733,9 +3733,10 @@ void fib6_nh_release(struct fib6_nh *fib6_nh)
+ {
+ 	struct rt6_exception_bucket *bucket;
  
-+		/* An all-zero header means no capability is present here */
-+		if (!cur_cap) {
-+			dev_dbg(bus->dev, "Empty capability header at offset 0x%x\n",
-+				offset);
-+			break;
-+		}
++	fib6_nh_release_dsts(fib6_nh);
 +
- 		switch ((cur_cap & AZX_CAP_HDR_ID_MASK) >> AZX_CAP_HDR_ID_OFF) {
- 		case AZX_ML_CAP_ID:
- 			dev_dbg(bus->dev, "Found ML capability\n");
-@@ -456,7 +463,8 @@ int snd_hdac_bus_parse_capabilities(struct hdac_bus *bus)
- 			break;
+ 	rcu_read_lock();
  
- 		default:
--			dev_err(bus->dev, "Unknown capability %d\n", cur_cap);
-+			dev_err(bus->dev, "Unknown capability ID 0x%x\n",
-+				(cur_cap & AZX_CAP_HDR_ID_MASK) >> AZX_CAP_HDR_ID_OFF);
- 			cur_cap = 0;
- 			break;
- 		}
+-	fib6_nh_flush_exceptions(fib6_nh, NULL);
+ 	bucket = fib6_nh_get_excptn_bucket(fib6_nh, NULL);
+ 	if (bucket) {
+ 		rcu_assign_pointer(fib6_nh->rt6i_exception_bucket, NULL);
+@@ -3744,7 +3745,6 @@ void fib6_nh_release(struct fib6_nh *fib6_nh)
+ 
+ 	rcu_read_unlock();
+ 
+-	fib6_nh_release_dsts(fib6_nh);
+ 	free_percpu(fib6_nh->rt6i_pcpu);
+ 
+ 	fib_nh_common_release(&fib6_nh->nh_common);
+@@ -3754,6 +3754,8 @@ void fib6_nh_release_dsts(struct fib6_nh *fib6_nh)
+ {
+ 	int cpu;
+ 
++	fib6_nh_flush_exceptions(fib6_nh, NULL);
++
+ 	if (!fib6_nh->rt6i_pcpu)
+ 		return;
+ 
 -- 
 2.53.0
 
