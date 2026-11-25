@@ -1,54 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795626143;
-	b=L+0MkWdQgaau9pHd2DwrzgL8/wDTI/d8/avZwjn9/xOp4T65RdwBQRYBrFbDpb7UWSqm
-	 8oIubwQ27HJUekE5o/90qYKjwkF3jqfEXRPStM+E9AzJO/yBkSSP2yh7FAh14rONnMtXF
-	 r9OAcpk/iQgFTjuZhKB59arTSaft6TvukpldVTSaozTnr31SH8CUKK8U583vJ9tETqoUV
-	 7OyRcmGhRgD8FS2GRBu1ZqnsvjBMyBKONTbUUqj6HAw6Zupoby+5SOtfAAzPS2zM+xWqF
-	 yMxFkq4EOax0EuYeFGNKipKnG/UnyUW0surbQN/tCXYpzEE7Gk61lpFPxsETyHLzmsw==
+	t=1795626146;
+	b=iVmISbFULCbun6bWk1wKSM8p8Zp32IOHxgr7ehiSCInSdDW/sGDUWZlTrgZy1qwLJKNJ
+	 dv7UftDbxsxX0irSsHEoIax4TglHrff3GJp8b4vccGzbp6SisYkUt4T5tkDtv+50lrPgX
+	 ZdzkIOnKSVkdIeK4Niyl/1oD6PC2ZkN2fEhDdWtOfigPzE3USwIHXg4Ai6juOWIKxOL4S
+	 dlKr9DrALxxOnlA9T7/5KQR0OGXo2V9kqKCn/63O765uzvWRtT+aiMPNv3BozjFNK3ot3
+	 MMLC1Fosv81JreQwfggROUMGF5Bfg3IW8dFcLsOFwqL4u+rLBBkEa0bXdycd+SpbULA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795626143;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795626146;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=NjmlFCrJANf/QjInu6+efOH78Bdr4y3qb5b8/0Yb7ks=;
-	b=sLWo/8Qd8j4CB+A7L7YBBeKS9gKuw65iVNNd80giDU/S0m4onxEm3gVJJgoVurQV7ptZ
-	 oE8wbyrESsWGBtfJrd+RpOfY9BCuMaQwrSyXR7kDqhqfSbUUhPq4DhU58ua4/tjyIXGO6
-	 Zl9ph/ckRTNxn79ZOJjEID4TzB0ITFBB0v+qlfkRf1OlKCCF9FaXuTBSYFd56O1MqMbPZ
-	 fMfDsqhtivKcdEiGj3EBhga41pm7KORnh+tcgXAryccyGzZo5DrsVfUX2gN+701qZwNNf
-	 LoNRxUEOXdXxHh+hgxx1rrSx/xGfV+OhlKfBVTYkBxXvvWF05hyoHHhHzUXnNqRgvQw==
+	bh=PJmk8YId4GpUwO4zv5me6z3RLEJtWWUPmpVYsiRxHiw=;
+	b=Ruen7/vphss+BsA8cKctiOksMuArprZCpcGZe0T6C04nvyq4K+eizLxOVQMH2B1DMdlI
+	 NF8JsCRG2LB5eg3TwVw0tqiHtu9warL4L2McJIbIUb3tHMq8fgl/gDoqzzZT9KamBy+bh
+	 cg/QCkxGIY2tGgTdXeyqrRi8QuPOdbkao5WDxMmwaxtDap+85DYi39xgs8eZIJnx57FhM
+	 BX+Nj3c20S4HCnt0vXx30EdiZm9SwCVT3O5hcqWAieMf3DPtA+h1TQ2O6f3+EljYzaZuc
+	 25hchtFX8mI1IlsMSGR73rm0Mlt/p2gZfi0TBnWUxt4S8UYlo/VPjUvJp80UGXwtzhg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=y6raaYtP;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=qDLSIXiv;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B6436606A31E;
-	Wed, 25 Nov 2026 17:02:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C6888606A31E;
+	Wed, 25 Nov 2026 17:02:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=y6raaYtP
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B5A111F000C4;
-	Wed, 25 Nov 2026 17:02:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=qDLSIXiv
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DC7811F000C0;
+	Wed, 25 Nov 2026 17:02:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795626143;
-	bh=NjmlFCrJANf/QjInu6+efOH78Bdr4y3qb5b8/0Yb7ks=;
+	s=korg; t=1795626146;
+	bh=PJmk8YId4GpUwO4zv5me6z3RLEJtWWUPmpVYsiRxHiw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=y6raaYtPy8XDaNwM/kcZNp52OmZpp3xS59Vd0OhkUISxwZ0CeQKcj1VIH1cYBFPCz
-	 +xtRVTrkGiAkoHjKIJyznvjw/1AB7NStUYDWCzRn7HUQQtpoL3SvlGl26Tkq5UtQ3O
-	 zNNA/l9bSgZql2YL4yy6reaZHI0AKOH+wrHB1mSs=
+	b=qDLSIXivIMvn7IrcEggqP8i4UYB6A9eEgpi5Wykm5ubGjE0l2u3OZrLCTYRAujCdq
+	 YpLhOaZnLXQG+BjkSfaPq1gQ3IoNvD8C9n2WDL08lXBgJdMus93nc6vgcJmT0VlBl3
+	 0/Hi2ZDvqeJM23V+9WS05T1AacttRaTUY+Y1lZCg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	stable <stable@kernel.org>,
-	Bin Yu <byu@xidian.edu.cn>,
-	Cheng Wen <wencheng@xidian.edu.cn>,
-	YuanZhe Liu <25031212351@stu.xidian.edu.cn>,
-	Alan Stern <stern@rowland.harvard.edu>
-Subject: [PATCH 6.12 744/816] usb: usbtest: prevent divide by zero in simple_io() with zero length
-Date: Wed, 25 Nov 2026 15:38:12 +0100
-Message-ID: <20261125143906.398305956@linuxfoundation.org>
+	Uttkarsh Aggarwal <uttkarsh.aggarwal@oss.qualcomm.com>,
+	Peter Chen <peter.chen@oss.qualcomm.com>,
+	Heikki Krogerus <heikki.krogeurs@linuc.intel.com>
+Subject: [PATCH 6.12 745/816] usb: typec: ucsi: Set ucsi->connector before enabling notifications
+Date: Wed, 25 Nov 2026 15:38:13 +0100
+Message-ID: <20261125143906.421361950@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143849.205329330@linuxfoundation.org>
 References: <20261125143849.205329330@linuxfoundation.org>
@@ -70,58 +69,72 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: YuanZhe Liu <25031212351@stu.xidian.edu.cn>
+From: Uttkarsh Aggarwal <uttkarsh.aggarwal@oss.qualcomm.com>
 
-commit fdaca138694111153f96c7d76877734b9dbf0e01 upstream.
+commit 5b4b83c2ffe8740f6f3e54ea4d4962a62c063ef1 upstream.
 
-A divide error oops was observed in simple_io():
+In ucsi_init(), ucsi->connector is assigned only after the
+UCSI_SET_NOTIFICATION_ENABLE command completes. But once that command
+is sent, the PPM is free to raise a connector change notification at
+any time, which is handled through:
 
-	usbtest 1-1:1.0: TEST 3:  write/1 0..0 bytes 16307 times
-	Oops: divide error: 0000 [#1] SMP KASAN
-	RIP: 0010:simple_io+0x2c4/0x540 drivers/usb/misc/usbtest.c:497
+    ucsi_notify_common() -> ucsi_connector_change()
 
-The variable-length tests (test 3 and test 4) compute the next URB
-size with "len %= max", where max is the original
-urb->transfer_buffer_length. However, when a zero-length transfer is
-requested (param->length == 0), simple_alloc_urb() still returns a valid
-URB with transfer_buffer_length set to 0. On the first vary update,
-"len %= max" divides by zero and the kernel oopses.
+ucsi_connector_change() indexes into ucsi->connector to get the
+connector and schedule its work item. If this notification arrives
+before ucsi_init() reaches the "ucsi->connector = connector;" line,
+ucsi->connector is still NULL and the driver crashes dereferencing it.
 
-Commit 564e69893c63 ("USB: usbtest: prevent a divide by zero bug") added
-the equivalent zero check to alloc_sglist(), which covers the
-scatterlist tests (test 7/8), but the single-URB variable-length path in
-simple_io() was left unprotected.
+Fix this by setting ucsi->connector right after the connectors are
+registered, before notifications are enabled, so it is always valid
+by the time a connector change event can be delivered. Also clear
+ucsi->connector in the err_unregister path so it isn't left pointing
+at freed memory if a later step in ucsi_init() fails.
 
-Fix this by returning -EINVAL early from simple_io() when vary is
-requested but max is zero, so the divide by zero never occurs.
-Zero-length transfers without vary remain valid for the other callers of
-simple_io().
-
+Fixes: 0482c34ec6f8 ("usb: ucsi: Fix ucsi->connector race")
 Cc: stable <stable@kernel.org>
-Co-developed-by: Bin Yu <byu@xidian.edu.cn>
-Signed-off-by: Bin Yu <byu@xidian.edu.cn>
-Co-developed-by: Cheng Wen <wencheng@xidian.edu.cn>
-Signed-off-by: Cheng Wen <wencheng@xidian.edu.cn>
-Signed-off-by: YuanZhe Liu <25031212351@stu.xidian.edu.cn>
-Reviewed-by: Alan Stern <stern@rowland.harvard.edu>
-Link: https://patch.msgid.link/20261016072750.34256-1-25031212351@stu.xidian.edu.cn
+Signed-off-by: Uttkarsh Aggarwal <uttkarsh.aggarwal@oss.qualcomm.com>
+Reviewed-by: Peter Chen <peter.chen@oss.qualcomm.com>
+Reviewed-by: Heikki Krogerus <heikki.krogeurs@linuc.intel.com>
+Link: https://patch.msgid.link/20260929092939.1806907-1-uttkarsh.aggarwal@oss.qualcomm.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/misc/usbtest.c |    3 +++
- 1 file changed, 3 insertions(+)
+ drivers/usb/typec/ucsi/ucsi.c |   10 +++++++++-
+ 1 file changed, 9 insertions(+), 1 deletion(-)
 
---- a/drivers/usb/misc/usbtest.c
-+++ b/drivers/usb/misc/usbtest.c
-@@ -466,6 +466,9 @@ static int simple_io(
- 	int			retval = 0;
- 	unsigned long		expire;
+--- a/drivers/usb/typec/ucsi/ucsi.c
++++ b/drivers/usb/typec/ucsi/ucsi.c
+@@ -1868,6 +1868,14 @@ static int ucsi_init(struct ucsi *ucsi)
+ 			goto err_unregister;
+ 	}
  
-+	if (vary && !max)
-+		return -EINVAL;
++	/*
++	 * Set ucsi->connector before enabling notifications. A connector
++	 * change event can be handled as soon as the notifications are
++	 * enabled below, and ucsi_connector_change() indexes into
++	 * ucsi->connector, so it must not be NULL at that point.
++	 */
++	ucsi->connector = connector;
 +
- 	urb->context = &completion;
- 	while (retval == 0 && iterations-- > 0) {
- 		init_completion(&completion);
+ 	/* Enable all supported notifications */
+ 	ntfy = ucsi_get_supported_notifications(ucsi);
+ 	command = UCSI_SET_NOTIFICATION_ENABLE | ntfy;
+@@ -1875,7 +1883,6 @@ static int ucsi_init(struct ucsi *ucsi)
+ 	if (ret < 0)
+ 		goto err_unregister;
+ 
+-	ucsi->connector = connector;
+ 	ucsi->ntfy = ntfy;
+ 
+ 	mutex_lock(&ucsi->ppm_lock);
+@@ -1889,6 +1896,7 @@ static int ucsi_init(struct ucsi *ucsi)
+ 	return 0;
+ 
+ err_unregister:
++	ucsi->connector = NULL;
+ 	for (con = connector; con->port; con++)
+ 		ucsi_unregister_port(con);
+ 	for (i = 0; i < ucsi->cap.num_connectors; i++)
 
 
