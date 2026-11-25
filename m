@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795625160;
-	b=p2XStdOe0LqB0ie28vtG40Fqnoyvg185BEwcBpqfMep1PSIv+1+59sTSLre69gJ2Gxga
-	 r7SR3Uq5aKYSVZT7G9U0p7FCKfibdlNKa1XhArUp+McDU9UlsT6+ez9h8rmtePQfdWgOG
-	 y6KCGvZ3xaDIpzX50yVgmX9OwCnmrPosttiS+D3+dCDp0osKzie7n7VgUoKomvFLn8QS/
-	 kR8P5yHFGwOU2s8QElNzDGaCmfW+cwtxQkUtZlxTZ67yQ9voXXNY3VhRnH7IcI5PVI2+o
-	 X4FUomImVpBGBj0+lSzMv4T/cZkPv0V48dUuExX6LZMob3/hl+uC1GTqUo2Ca5+SHvg==
+	t=1795625164;
+	b=v79ZdA5KtA/khlpx1wnNGVd1mIXaXWD5Ubs+DA26Zl1UZPizM4PZL8ef0jtmZLBc69Lh
+	 AYz5RvavPPMh9igi36FjjpqHNa3cJpk8eAAGDhDTh9MQqPsFeFC3FjdMW1ISW69a6JPRt
+	 lT5XQ0SgqXKXHl2maJm/yNj1cwVqvpclLKOpp0OXCFa28Ujjtz1H260A0VTsp+QM40CLB
+	 1q5qw1MGRxlXfTbT4So2Nw/ko2ogbaRUgvmX8YhTA+VfTxILr4/CWg5yJyPrw5KbTWDtv
+	 aVC7IWBuokt28SL4A8aAjiVtSCqoSTRBtxWglGHeToKSIZNXcT7lPk5TAazntnp+92w==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795625160;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795625164;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=is8NU7Wl0JZGOfZ3kCQ8isUbB120Y8lvp76qi/xJZ5c=;
-	b=aPsX40e5wyrobXzMLSdDUUGu1JWt1TFVlMIXUAAmXMNP4GpwFvOcDdjHl1pSh5qkJX3p
-	 4M32/an+UXJDAyoabI4AsoGYwHDsagIaJpqKldrQJz2K6ivZsdLtiVA14Ryi/mUDNaWL6
-	 pn5dNCAmCNGUgVRphs4CuttOk80nZpzx4rxD8NYoNcqS7DaFuIYXCNUcXsPmYGHaeuXMo
-	 Uq+YHmtskIXmvZlJ/cDHYP5hpBtMEF0VIXQusAo3WMcqVCuxC3JtBO8t2MYg3zvyi0uqv
-	 nGDgKTp1u+Yy3PJgDfIKRUZZ2G9Yia3YhX/lsstLNibPbqDnF8t03Of1vVO5xlNaU/g==
+	bh=MtTsc/ey/CqXFVUGITNeSta7clININdKBZxNWxFltyk=;
+	b=v5zVUuPLLp9Lwe2oYIWzlhWLmD53dJ2VK15gcLBMv/lo0QxC3HiVp+UyzDqtsX1CiyY0
+	 erOsYLXE3czw6KI0gEVwmIHvpuryMZJDsWocUy7ZUkPVkkO/WFdm7oSY6uBe+FEBIX/Sn
+	 4DDfRK/xysLO86FCV1eTUKQqdf4HanfKTSBODvH3Zm8tKQsYKYltMx59vMLwt8DDpfUu2
+	 1VPbwW0KWGUlZCC+jT8hmYTJor0AJCa95ephnox/riW5P8F166dF5Lg74SNbl4O8tgKcC
+	 hqJQVMVgG1EFK9SBSd/J6yAsbETUwa2NS5ylEODP3OfiZn16lG7gQPgeeFyNCtN2u3Q==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=II8At2Sb;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=asWkUfeZ;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B897F606A33A;
-	Wed, 25 Nov 2026 16:46:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ED2B4606A321;
+	Wed, 25 Nov 2026 16:46:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=II8At2Sb
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CACA61F000D0;
-	Wed, 25 Nov 2026 16:45:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=asWkUfeZ
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2E00A1F000EC;
+	Wed, 25 Nov 2026 16:46:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795625160;
-	bh=is8NU7Wl0JZGOfZ3kCQ8isUbB120Y8lvp76qi/xJZ5c=;
+	s=korg; t=1795625163;
+	bh=MtTsc/ey/CqXFVUGITNeSta7clININdKBZxNWxFltyk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=II8At2SbEuw8pbuOIW74vPm7tjRCB2wSd3uQMYMIlE9N+pHeQ62Sh5wHAX0kujhGr
-	 xJC+0nZZchEM8JalXzsWFAv4GPCaZM2kAq32mIfyB88+Q+BM5UIXqydsALGlj8rKEC
-	 EZzAOuB2LnqGoRPJYJo1gU8YzhZzHXq+Al1YG5CU=
+	b=asWkUfeZlJOO0+gNhn8CShBuHrwZdOoCqlKA327F7zs751FbFgMIkka+nqmrCIQRx
+	 7kPfrMzVBycMLGygWBNgUHLOygwb+k3M5wkp1wa3n6h4md67S4wZtRxf2b6p+3XzCZ
+	 QUjZtZ4JtJ+hpUnfxoaHDjBMzfBZ1rfeMi3xKIhM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hao Sun <sunhao.th@gmail.com>,
 	Kumar Kartikeya Dwivedi <memxor@gmail.com>,
+	Hao Sun <sunhao.th@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 427/816] bpf: Fix uninit read for non-fetch atomics on partially spilled slots
-Date: Wed, 25 Nov 2026 15:32:55 +0100
-Message-ID: <20261125143859.078648487@linuxfoundation.org>
+Subject: [PATCH 6.12 428/816] bpf: Fix uninit read for helper mem args on partially spilled slots
+Date: Wed, 25 Nov 2026 15:32:56 +0100
+Message-ID: <20261125143859.100764049@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143849.205329330@linuxfoundation.org>
 References: <20261125143849.205329330@linuxfoundation.org>
@@ -70,90 +70,61 @@ Content-Transfer-Encoding: 8bit
 
 From: Hao Sun <sunhao.th@gmail.com>
 
-[ Upstream commit 5a84b4424db8ae07f0ac682ab031c37a91dce50b ]
+[ Upstream commit b3861495d2b2f7459cddf49e63fa0758ba430583 ]
 
-check_stack_read_fixed_off() skips partial spill checks for non-fetch
-atomics; the following prog can be loaded:
+check_stack_range_initialized() takes the spilled register path when
+bpf_is_spilled_reg(ss) holds, which, however, only looks at the last
+byte of the slot. Hence, a partially spilled scalar (on the lower part)
+bypasses the check and the following loads:
 
 0: (b7) r1 = 1                        ; R1=1
 1: (63) *(u32 *)(r10 -8) = r1         ; R1=1 R10=fp0 fp-8=????1
-2: (db) lock *(u64 *)(r10 -8) += r1   ; R1=1 R10=fp0 fp-8=mmmmmmmm
-3: (79) r0 = *(u64 *)(r10 -8)         ; R0=scalar() R10=fp0 fp-8=mmmmmmmm
-4: (77) r0 >>= 32                     ; R0=scalar(smin=0,smax=umax=0xffffffff,var_off=(0x0; 0xffffffff))
-5: (95) exit
+2: (18) r1 = 0x0                      ; R1=map_ptr(map=rb,ks=0,vs=0)
+4: (bf) r2 = r10                      ; R2=fp0 R10=fp0
+5: (07) r2 += -8                      ; R2=fp-8
+6: (b7) r3 = 8                        ; R3=8
+7: (b7) r4 = 0                        ; R4=0
+8: (85) call bpf_ringbuf_output#130
+...
 
-When test run:
-	retval=4294967295
+When executed, it dumps the uninit four bytes:
+	RINGBUF: 01 00 00 00 ff ff ff ff
 
-Note fp-8 is ????1 at #1, yet it becomes fp-8=mmmmmmmm after the
-non-fetching atomic add at #2; hence the high 32 bits are leaked.
+This is the same root cause as the non-fetch atomic case fixed in
+commit 5a84b4424db8 ("bpf: Fix uninit read for non-fetch atomics on
+partially spilled slots").
 
-Fix by applying the partial load check; after the patch, the
-prog is rejected:
-
-Verification failed: Memory Safety: Uninitialized stack read
-
-Reason:
-  This rejected read uses 8 bytes at stack offset -8, but byte 4 in that range is uninitialized on
-  this path. Programs loaded with CAP_PERFMON can be allowed to read uninitialized stack bytes, but
-  this program is being rejected without that allowance.
-
-At:
-  ...
-      0 | (b7) r1 = 1
-      1 | (63) *(u32 *)(r10 -8) = r1
-  >>> 2 | (db) lock *(u64 *)(r10 -8) += r1
-      3 | (79) r0 = *(u64 *)(r10 -8)
-      4 | (77) r0 >>= 32
-
-This affects CAP_BPF only.
+Fix by only taking the spilled register path for the bytes marked
+STACK_SPILL, so the rest of the slot goes through the usual checks.
 
 Fixes: 354e8f1970f8 ("bpf: Support <8-byte scalar spill and refill")
+Suggested-by: Kumar Kartikeya Dwivedi <memxor@gmail.com>
 Signed-off-by: Hao Sun <sunhao.th@gmail.com>
-Link: https://lore.kernel.org/bpf/20260924131342.934290-1-sunhao.th@gmail.com
+Link: https://lore.kernel.org/bpf/20260925082814.1554771-1-sunhao.th@gmail.com
 Signed-off-by: Kumar Kartikeya Dwivedi <memxor@gmail.com>
-[ sashal: Moved the dst_regno < 0 early return after the partial-spill checks, keeping the existing mark_reg_read() and copy_register_state()/subreg_def code and splitting the subreg_def declaration. ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/bpf/verifier.c | 12 +++++++++---
- 1 file changed, 9 insertions(+), 3 deletions(-)
+ kernel/bpf/verifier.c | 7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
 
 diff --git a/kernel/bpf/verifier.c b/kernel/bpf/verifier.c
-index b66d0487444f1..63bb703e0a64d 100644
+index 63bb703e0a64d..8666fb0ea3b75 100644
 --- a/kernel/bpf/verifier.c
 +++ b/kernel/bpf/verifier.c
-@@ -5140,15 +5140,18 @@ static int check_stack_read_fixed_off(struct bpf_verifier_env *env,
- 			}
+@@ -7812,7 +7812,12 @@ static int check_stack_range_initialized(
+ 			goto mark;
+ 		}
  
- 			mark_reg_read(env, reg, reg->parent, REG_LIVE_READ64);
--			if (dst_regno < 0)
--				return 0;
- 
- 			if (size <= spill_size &&
- 			    bpf_stack_narrow_access_ok(off, size, spill_size)) {
-+				s32 subreg_def;
-+
-+				if (dst_regno < 0)
-+					return 0;
-+
- 				/* The earlier check_reg_arg() has decided the
- 				 * subreg_def for this insn.  Save it first.
- 				 */
--				s32 subreg_def = state->regs[dst_regno].subreg_def;
-+				subreg_def = state->regs[dst_regno].subreg_def;
- 
- 				copy_register_state(&state->regs[dst_regno], reg);
- 				state->regs[dst_regno].subreg_def = subreg_def;
-@@ -5180,6 +5183,9 @@ static int check_stack_read_fixed_off(struct bpf_verifier_env *env,
- 					return -EACCES;
- 				}
- 
-+				if (dst_regno < 0)
-+					return 0;
-+
- 				if (spill_cnt == size &&
- 				    tnum_is_const(reg->var_off) && reg->var_off.value == 0) {
- 					__mark_reg_const_zero(env, &state->regs[dst_regno]);
+-		if (is_spilled_reg(&state->stack[spi]) &&
++		/*
++		 * Only the bytes marked STACK_SPILL hold the spilled register.
++		 * The rest of a narrowly spilled slot keeps its previous type
++		 * and must be initialized on its own.
++		 */
++		if (*stype == STACK_SPILL &&
+ 		    (state->stack[spi].spilled_ptr.type == SCALAR_VALUE ||
+ 		     env->allow_ptr_leaks)) {
+ 			if (clobber) {
 -- 
 2.53.0
 
