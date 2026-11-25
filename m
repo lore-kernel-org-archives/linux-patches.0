@@ -1,52 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795625135;
-	b=AopJbaTvXOCz1EhH0K+306GM/26+ckOG7K1T3GBs12u4jlfq7HHg4G1UlosHDPIqcWAd
-	 9nYd9C3Yz4Te1Hjo8jxXeOx0EzcsfQHIQZWgZ7pKMn9nruDbMBLAlMSRN+uD5x12arILN
-	 0J0rP2uPjE0ScMnKD3dnTJ6JWVa/2tCVRz0kj9J9Cv6QYJoGP7dvHAAcFCdj7IizH5YhH
-	 PydenE11hxPJH45faLT4fiD78vZYQq/bUv0G4b4D+r21ydXChYM1cFbsMlGhIW0WBR6Ed
-	 fj+fbSQg84sVs+BLRY8Ac5JmkTiqnGRGixne4PDeGtWdRS1jNT3SM3yIlLezIJVC+xw==
+	t=1795625138;
+	b=YiKx68brnpVKtjL+nA6Vbx9wOsoZyilillV+be/aHPtg//bWihc0WCTjaBIClKWvviAF
+	 byzS5ltblz89MSK/lvy8qjvKJNeFUcl4xxnC3xaE4h+Ko/XBFIlGaAqSyZ1hs5cGmP9lB
+	 ymIVIMoVFDQrcnnpcTfi2aqTURlCSf42dmpj/CmOR7Vfc1J0cq4iIytS3HjwxOm2BJUsa
+	 Xb3T0N0PHb2ozVbn7Nf+3nFiUGONhW7k/1aJNvaTIaA0DsR4LDMZNdkRN1YzxrhykSH9l
+	 gDpDJ5S5sjwCn5Ez6LvlLv59e+Ni1wxPU8w2MoSVhVyFuyJMWxW4TkPYy/mZZlFcgRA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795625135;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795625138;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=Knb856X/DjSnNNXJdFLRn8K+/axHBBUXQYJswen2hDw=;
-	b=xjXTVGRq8qy4LIgwockVA8hlrjAGx74kSbkwKJDUXkZGotv7qgALqLkwWDtWd4zwXwDD
-	 GV6NVVCkIDhdzuDNGTayo8vVpLk9VsvmzoY2c+8he5arfKVWZ7xBk7QXrkdZE7czQqAjn
-	 alQ3Yp3QJ6kkVwZoKGvO/yxUJ3/Abdu3by8u/2zcycw0WQnP0ZZkpwmpn3wfwKm5PabZb
-	 kNX0s9xuw/sGa6xACrJx/GWUHtXZlvvIzytaaLz4vq/zeF8uaMczWWxwjFAuzGVfOKAuC
-	 IUFHVu44C40Ygye5qz4+eYxRf2jYyOrtiX/LBwjNaSgBKDaJE4Q2aw/K0pe0FuN0QQg==
+	bh=NgN43YrXJln/sOFqbFJ8nlj04vZmDZUN+I4stHhlMuk=;
+	b=NsxpcmfnFyuVYHkGGpUeF3ThaU6V6L2SIiZSZJwqeYHxssfhpkw1LYQsszmNCc9YVm1+
+	 WFif1ALxS81FPeQw8tL4oLczFZ+8sodOAfqErrYLB+31A4TmPEgujfGq6w2ZBb7OBv5XG
+	 WdWj0VAnW2DvexCS0rZdZ4AbiuVSvNTnBV3gnIJk4ZmLoeM0FxR4IdEn0p05yYvaS38ds
+	 yF3xfpEztxl+cDtoIkwjhpubdVolVw26ipl7KmsvVz+lr8PSESoSdPWW4hmA7ySCCmc/y
+	 i+pSSY7/vpjvL3lU8ANa9aQ2Smrf8pCpdXRPBJUnyQtZSrDcsRvSFAp4+3Z1eqY4gvg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=iO7cbM6K;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=bd6I74aR;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E5567606A321;
-	Wed, 25 Nov 2026 16:45:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 05A96606A6B3;
+	Wed, 25 Nov 2026 16:45:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=iO7cbM6K
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 408EF1F000C4;
-	Wed, 25 Nov 2026 16:45:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=bd6I74aR
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0E1A31F000D4;
+	Wed, 25 Nov 2026 16:45:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795625134;
-	bh=Knb856X/DjSnNNXJdFLRn8K+/axHBBUXQYJswen2hDw=;
+	s=korg; t=1795625137;
+	bh=NgN43YrXJln/sOFqbFJ8nlj04vZmDZUN+I4stHhlMuk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=iO7cbM6Kl+IEoTwLmsMSefG5MiGCI5XsY7f13yr0LF68L2zjk6KpIlGcQAUJ1kuhV
-	 CuFaIYPSvAxX1gnHiFymzLhRgB305kBYVXCPKROkSXLTT+G9dqsPlNumaCt+zfihsS
-	 zCi6nP6JyQd9L7qmq3AvQcnvrLVA6drUPvoFuYlY=
+	b=bd6I74aRQPoUsXamfcMgehWXIBIg4khSWPemmr4SKcETwWkN5VxoRNNsiYMXxJfH2
+	 vNSJylu153usPgB2wCE0/oMyzfFkW++nZaYy65kdrO9uzTcyCG7J/xWj8lOMqiU6eK
+	 J6hyUUuOlEnryQblXwGFs/cxlod8KMAxX0vmnukg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Devin Wittmayer <lucid_duck@justthetip.ca>,
-	Felix Fietkau <nbd@nbd.name>,
+	stable@kernel.org,
+	Jianping Li <jianping.li@oss.qualcomm.com>,
+	Ekansh Gupta <ekansh.gupta@oss.qualcomm.com>,
+	Srinivas Kandagatla <srini@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 373/816] wifi: mt76: take rcu_read_lock in the USB/SDIO tx completion path
-Date: Wed, 25 Nov 2026 15:32:01 +0100
-Message-ID: <20261125143857.830620707@linuxfoundation.org>
+Subject: [PATCH 6.12 374/816] misc: fastrpc: Allocate entire reserved memory for Audio PD in probe
+Date: Wed, 25 Nov 2026 15:32:02 +0100
+Message-ID: <20261125143857.853382579@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143849.205329330@linuxfoundation.org>
 References: <20261125143849.205329330@linuxfoundation.org>
@@ -68,88 +70,349 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Devin Wittmayer <lucid_duck@justthetip.ca>
+From: Jianping Li <jianping.li@oss.qualcomm.com>
 
-[ Upstream commit a7871a7ae5a8625f0ba0a89454ac734c383dd538 ]
+[ Upstream commit 9e47ad9c562e82cabfbb9afa6c2b0dcdf2702a39 ]
 
-The USB and SDIO completion path reads a station pointer that RCU
-protects, without holding the read lock. Lockdep catches it on the
-first association:
+Allocating and freeing Audio PD memory from userspace is unsafe because
+the kernel cannot reliably determine when the DSP has finished using the
+memory. Userspace may free buffers while they are still in use by the DSP,
+and remote free requests cannot be safely trusted.
 
-  mt76.h:1305 suspicious rcu_dereference_check() usage!
-  no locks held by mt76-usb-status/1254.
-   mt7925_usb_sdio_tx_complete_skb+0x119/0x130 [mt7925_common]
-   mt76_queue_tx_complete+0x27/0x60 [mt76]
-   mt76u_status_worker+0xed/0x1e0 [mt76_usb]
+Additionally, the current implementation allows userspace to repeatedly
+grow the Audio PD heap, but does not support shrinking it. This can lead
+to unbounded memory usage over time, effectively causing a memory leak.
 
-  mt7925/mac.c:856 suspicious rcu_dereference_check() usage!
-   mt7925_tx_check_aggr.part.0+0xc2/0xe0 [mt7925_common]
-   mt7925_usb_sdio_tx_complete_skb+0xa0/0x130 [mt7925_common]
+Fix this by allocating the entire Audio PD reserved-memory region during
+rpmsg probe and tying its lifetime to the rpmsg channel. This removes
+userspace-controlled alloc/free and ensures that memory is reclaimed only
+when the DSP process is torn down.
 
-mt7921 does the same, and warns once instead of twice because its
-aggregation check reads the default link directly. The DMA path makes
-the same reads but completes from softirq, so it stays quiet.
+The reserved-memory region is now mandatory for the Audio PD domain.
+Rather than failing rpmsg probe when it is missing, validate it in
+fastrpc_init_create_static_process() and reject only the static-process
+creation. This keeps the fastrpc device probing for all other domains
+even on a misconfigured device tree.
 
-Take the read lock around the lookup and the check.
-
-Tested on 7.2-rc5 with lockdep, fresh module load per arm, 4000
-packets each and no change to the link:
-
-                             splats before   after
-    MT7925  Netgear A9000          2           0
-    MT7921  Alfa                   1           0
-    mt7921e same kernel            0           0
-
-Fixes: dc66a129adf1 ("wifi: mt76: add a wrapper for wcid access with validation")
-Fixes: c22769de2509 ("wifi: mt76: mt7925u: use connac3 tx aggr check in tx complete")
-Cc: stable@vger.kernel.org
-Signed-off-by: Devin Wittmayer <lucid_duck@justthetip.ca>
-Link: https://patch.msgid.link/20261003233056.94497-1-lucid_duck@justthetip.ca
-Signed-off-by: Felix Fietkau <nbd@nbd.name>
+Fixes: 0871561055e66 ("misc: fastrpc: Add support for audiopd")
+Cc: stable@kernel.org
+Signed-off-by: Jianping Li <jianping.li@oss.qualcomm.com>
+Reviewed-by: Ekansh Gupta <ekansh.gupta@oss.qualcomm.com>
+Link: https://lore.kernel.org/all/20260814101955.234238-1-jianping.li@oss.qualcomm.com/
+Signed-off-by: Srinivas Kandagatla <srini@kernel.org>
+Link: https://patch.msgid.link/20261002101220.1084101-3-srinivas.kandagatla@oss.qualcomm.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+[ sashal: Replaced of_reserved_mem_region_to_resource() with of_parse_phandle()/of_reserved_mem_lookup(), and used the existing fdev_error label instead of err_free_data. ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/mediatek/mt76/mt7921/mac.c | 3 +++
- drivers/net/wireless/mediatek/mt76/mt7925/mac.c | 3 +++
- 2 files changed, 6 insertions(+)
+ drivers/misc/fastrpc.c | 198 ++++++++++++++++++++++-------------------
+ 1 file changed, 106 insertions(+), 92 deletions(-)
 
-diff --git a/drivers/net/wireless/mediatek/mt76/mt7921/mac.c b/drivers/net/wireless/mediatek/mt76/mt7921/mac.c
-index 6da67054e521d..89df72e20598b 100644
---- a/drivers/net/wireless/mediatek/mt76/mt7921/mac.c
-+++ b/drivers/net/wireless/mediatek/mt76/mt7921/mac.c
-@@ -832,11 +832,14 @@ void mt7921_usb_sdio_tx_complete_skb(struct mt76_dev *mdev,
- 	u16 idx;
- 
- 	idx = le32_get_bits(txwi[1], MT_TXD1_WLAN_IDX);
+diff --git a/drivers/misc/fastrpc.c b/drivers/misc/fastrpc.c
+index a4577ef5a3946..9c016ef288200 100644
+--- a/drivers/misc/fastrpc.c
++++ b/drivers/misc/fastrpc.c
+@@ -47,8 +47,6 @@
+ #define ADSP_MMAP_HEAP_ADDR  4
+ /* MAP static DMA buffer on DSP User PD */
+ #define ADSP_MMAP_DMA_BUFFER  6
+-/* Add memory to static PD pool protection thru hypervisor */
+-#define ADSP_MMAP_REMOTE_HEAP_ADDR  8
+ /* Add memory to userPD pool, for user heap */
+ #define ADSP_MMAP_ADD_PAGES 0x1000
+ /* Add memory to userPD pool, for LLC heap */
+@@ -273,10 +271,14 @@ struct fastrpc_channel_ctx {
+ 	struct kref refcount;
+ 	/* Flag if dsp attributes are cached */
+ 	bool valid_attributes;
++	/* Flag if audio PD init mem was allocated */
++	bool audio_init_mem;
++	/* Audio PD reserved remote heap region */
++	phys_addr_t remote_heap_addr;
++	u64 remote_heap_size;
+ 	u32 dsp_attributes[FASTRPC_MAX_DSP_ATTRIBUTES];
+ 	struct fastrpc_device *secure_fdevice;
+ 	struct fastrpc_device *fdevice;
+-	struct fastrpc_buf *remote_heap;
+ 	struct list_head invoke_interrupted_mmaps;
+ 	bool secure;
+ 	bool unsigned_support;
+@@ -1320,15 +1322,24 @@ static int fastrpc_init_create_static_process(struct fastrpc_user *fl,
+ 	struct fastrpc_init_create_static init;
+ 	struct fastrpc_invoke_args *args;
+ 	struct fastrpc_phy_page pages[1];
++	struct fastrpc_channel_ctx *cctx = fl->cctx;
+ 	char *name;
+ 	int err;
+-	bool scm_done = false;
+ 	struct {
+ 		int pgid;
+ 		u32 namelen;
+ 		u32 pageslen;
+ 	} inbuf;
+ 	u32 sc;
++	unsigned long flags;
++	bool sent_heap = false;
 +
-+	rcu_read_lock();
- 	wcid = rcu_dereference(mdev->wcid[idx]);
- 	sta = wcid_to_sta(wcid);
++	if (!cctx->remote_heap_addr || !cctx->remote_heap_size) {
++		err = -ENOMEM;
++		dev_err(fl->sctx->dev,
++			"remote heap memory region is not added\n");
++		return err;
++	}
  
- 	if (sta && likely(e->skb->protocol != cpu_to_be16(ETH_P_PAE)))
- 		mt76_connac2_tx_check_aggr(sta, txwi);
-+	rcu_read_unlock();
+ 	args = kcalloc(FASTRPC_CREATE_STATIC_PROCESS_NARGS, sizeof(*args), GFP_KERNEL);
+ 	if (!args)
+@@ -1350,31 +1361,6 @@ static int fastrpc_init_create_static_process(struct fastrpc_user *fl,
+ 		goto err;
+ 	}
  
- 	skb_pull(e->skb, headroom);
- 	mt76_tx_complete_skb(mdev, e->wcid, e->skb);
-diff --git a/drivers/net/wireless/mediatek/mt76/mt7925/mac.c b/drivers/net/wireless/mediatek/mt76/mt7925/mac.c
-index a8d0cd09184e3..876236888519f 100644
---- a/drivers/net/wireless/mediatek/mt76/mt7925/mac.c
-+++ b/drivers/net/wireless/mediatek/mt76/mt7925/mac.c
-@@ -1482,11 +1482,14 @@ void mt7925_usb_sdio_tx_complete_skb(struct mt76_dev *mdev,
- 	u16 idx;
+-	if (!fl->cctx->remote_heap) {
+-		err = fastrpc_remote_heap_alloc(fl, fl->sctx->dev, init.memlen,
+-						&fl->cctx->remote_heap);
+-		if (err)
+-			goto err_name;
+-
+-		/* Map if we have any heap VMIDs associated with this ADSP Static Process. */
+-		if (fl->cctx->vmcount) {
+-			u64 src_perms = BIT(QCOM_SCM_VMID_HLOS);
+-
+-			err = qcom_scm_assign_mem(fl->cctx->remote_heap->dma_addr,
+-							(u64)fl->cctx->remote_heap->size,
+-							&src_perms,
+-							fl->cctx->vmperms, fl->cctx->vmcount);
+-			if (err) {
+-				dev_err(fl->sctx->dev,
+-					"Failed to assign memory with dma_addr %pad size 0x%llx err %d\n",
+-					&fl->cctx->remote_heap->dma_addr,
+-					fl->cctx->remote_heap->size, err);
+-				goto err_map;
+-			}
+-			scm_done = true;
+-		}
+-	}
+-
+ 	inbuf.pgid = fl->tgid;
+ 	inbuf.namelen = init.namelen;
+ 	inbuf.pageslen = 0;
+@@ -1388,8 +1374,25 @@ static int fastrpc_init_create_static_process(struct fastrpc_user *fl,
+ 	args[1].length = inbuf.namelen;
+ 	args[1].fd = -1;
  
- 	idx = le32_get_bits(txwi[1], MT_TXD1_WLAN_IDX);
+-	pages[0].addr = fl->cctx->remote_heap->dma_addr;
+-	pages[0].size = fl->cctx->remote_heap->size;
++	/*
++	 * Audio PD is a static PD and retains the remote heap
++	 * information across daemon restarts. Therefore only
++	 * the first attach should provide heap information to
++	 * DSP. Subsequent attaches reuse the previously
++	 * initialized memory pool.
++	 */
++	spin_lock_irqsave(&cctx->lock, flags);
++	if (!cctx->audio_init_mem) {
++		pages[0].addr = cctx->remote_heap_addr;
++		pages[0].size = cctx->remote_heap_size;
++		cctx->audio_init_mem = true;
++		inbuf.pageslen = 1;
++		sent_heap = true;
++	} else {
++		pages[0].addr = 0;
++		pages[0].size = 0;
++	}
++	spin_unlock_irqrestore(&cctx->lock, flags);
+ 
+ 	args[2].ptr = (u64)(uintptr_t) pages;
+ 	args[2].length = sizeof(*pages);
+@@ -1407,27 +1410,11 @@ static int fastrpc_init_create_static_process(struct fastrpc_user *fl,
+ 
+ 	return 0;
+ err_invoke:
+-	if (fl->cctx->vmcount && scm_done) {
+-		u64 src_perms = 0;
+-		struct qcom_scm_vmperm dst_perms;
+-		u32 i;
+-
+-		for (i = 0; i < fl->cctx->vmcount; i++)
+-			src_perms |= BIT(fl->cctx->vmperms[i].vmid);
+-
+-		dst_perms.vmid = QCOM_SCM_VMID_HLOS;
+-		dst_perms.perm = QCOM_SCM_PERM_RWX;
+-		err = qcom_scm_assign_mem(fl->cctx->remote_heap->dma_addr,
+-						(u64)fl->cctx->remote_heap->size,
+-						&src_perms, &dst_perms, 1);
+-		if (err)
+-			dev_err(fl->sctx->dev, "Failed to assign memory dma_addr %pad size 0x%llx err %d\n",
+-				&fl->cctx->remote_heap->dma_addr, fl->cctx->remote_heap->size, err);
++	if (sent_heap) {
++		spin_lock_irqsave(&cctx->lock, flags);
++		cctx->audio_init_mem = false;
++		spin_unlock_irqrestore(&cctx->lock, flags);
+ 	}
+-err_map:
+-	fastrpc_buf_free(fl->cctx->remote_heap);
+-	fl->cctx->remote_heap = NULL;
+-err_name:
+ 	kfree(name);
+ err:
+ 	kfree(args);
+@@ -1937,7 +1924,7 @@ static int fastrpc_req_mmap(struct fastrpc_user *fl, char __user *argp)
+ 	if (copy_from_user(&req, argp, sizeof(req)))
+ 		return -EFAULT;
+ 
+-	if (req.flags != ADSP_MMAP_ADD_PAGES && req.flags != ADSP_MMAP_REMOTE_HEAP_ADDR) {
++	if (req.flags != ADSP_MMAP_ADD_PAGES) {
+ 		dev_err(dev, "flag not supported 0x%x\n", req.flags);
+ 
+ 		return -EINVAL;
+@@ -1948,10 +1935,7 @@ static int fastrpc_req_mmap(struct fastrpc_user *fl, char __user *argp)
+ 		return -EINVAL;
+ 	}
+ 
+-	if (req.flags == ADSP_MMAP_REMOTE_HEAP_ADDR)
+-		err = fastrpc_remote_heap_alloc(fl, dev, req.size, &buf);
+-	else
+-		err = fastrpc_buf_alloc(fl, dev, req.size, &buf);
++	err = fastrpc_buf_alloc(fl, dev, req.size, &buf);
+ 
+ 	if (err) {
+ 		dev_err(dev, "failed to allocate buffer\n");
+@@ -1990,20 +1974,6 @@ static int fastrpc_req_mmap(struct fastrpc_user *fl, char __user *argp)
+ 	/* let the client know the address to use */
+ 	req.vaddrout = rsp_msg.vaddr;
+ 
+-	/* Add memory to static PD pool, protection thru hypervisor */
+-	if (req.flags == ADSP_MMAP_REMOTE_HEAP_ADDR && fl->cctx->vmcount) {
+-		u64 src_perms = BIT(QCOM_SCM_VMID_HLOS);
+-
+-		err = qcom_scm_assign_mem(buf->dma_addr, (u64)buf->size,
+-			&src_perms, fl->cctx->vmperms, fl->cctx->vmcount);
+-		if (err) {
+-			dev_err(fl->sctx->dev,
+-				"Failed to assign memory dma_addr %pad size 0x%llx err %d",
+-				&buf->dma_addr, buf->size, err);
+-			goto err_assign;
+-		}
+-	}
+-
+ 	spin_lock(&fl->lock);
+ 	list_add_tail(&buf->node, &fl->mmaps);
+ 	spin_unlock(&fl->lock);
+@@ -2323,6 +2293,50 @@ static int fastrpc_device_register(struct device *dev, struct fastrpc_channel_ct
+ 	return err;
+ }
+ 
++static int fastrpc_init_reserved_mem(struct fastrpc_channel_ctx *cctx,
++				     struct device *rdev, u32 domain_id)
++{
++	struct device_node *rmem_node;
++	struct reserved_mem *rmem;
++	u64 src_perms;
 +
-+	rcu_read_lock();
- 	wcid = rcu_dereference(mdev->wcid[idx]);
- 	sta = wcid_to_sta(wcid);
++	/* Only SDSP and ADSP domains use a reserved remote heap region */
++	if (domain_id != SDSP_DOMAIN_ID && domain_id != ADSP_DOMAIN_ID)
++		return 0;
++
++	rmem_node = of_parse_phandle(rdev->of_node, "memory-region", 0);
++	if (!rmem_node) {
++		/*
++		 * The reserved-memory region is optional at probe time. For
++		 * the Audio PD (ADSP) domain its absence is validated later in
++		 * fastrpc_init_create_static_process(), so keep probing here.
++		 */
++		return 0;
++	}
++
++	rmem = of_reserved_mem_lookup(rmem_node);
++	of_node_put(rmem_node);
++	if (!rmem)
++		return 0;
++
++	/*
++	 * Audio PD (ADSP) is a static PD: cache the region so its lifetime
++	 * is tied to the rpmsg channel instead of being controlled by
++	 * userspace.
++	 */
++	if (domain_id == ADSP_DOMAIN_ID) {
++		cctx->remote_heap_addr = rmem->base;
++		cctx->remote_heap_size = rmem->size;
++	}
++
++	if (!cctx->vmcount)
++		return 0;
++
++	src_perms = BIT(QCOM_SCM_VMID_HLOS);
++	return qcom_scm_assign_mem(rmem->base, rmem->size, &src_perms,
++				  cctx->vmperms, cctx->vmcount);
++}
++
+ static int fastrpc_rpmsg_probe(struct rpmsg_device *rpdev)
+ {
+ 	struct device *rdev = &rpdev->dev;
+@@ -2330,8 +2344,6 @@ static int fastrpc_rpmsg_probe(struct rpmsg_device *rpdev)
+ 	int i, err, domain_id = -1, vmcount;
+ 	const char *domain;
+ 	bool secure_dsp;
+-	struct device_node *rmem_node;
+-	struct reserved_mem *rmem;
+ 	unsigned int vmids[FASTRPC_MAX_VMIDS];
  
- 	if (sta && likely(e->skb->protocol != cpu_to_be16(ETH_P_PAE)))
- 		mt7925_tx_check_aggr(sta, e->skb, wcid);
-+	rcu_read_unlock();
+ 	err = of_property_read_string(rdev->of_node, "label", &domain);
+@@ -2374,24 +2386,9 @@ static int fastrpc_rpmsg_probe(struct rpmsg_device *rpdev)
+ 		}
+ 	}
  
- 	skb_pull(e->skb, headroom);
- 	mt76_tx_complete_skb(mdev, e->wcid, e->skb);
+-	rmem_node = of_parse_phandle(rdev->of_node, "memory-region", 0);
+-	if (domain_id == SDSP_DOMAIN_ID && rmem_node) {
+-		u64 src_perms;
+-
+-		rmem = of_reserved_mem_lookup(rmem_node);
+-		if (!rmem) {
+-			err = -EINVAL;
+-			goto fdev_error;
+-		}
+-
+-		src_perms = BIT(QCOM_SCM_VMID_HLOS);
+-
+-		err = qcom_scm_assign_mem(rmem->base, rmem->size, &src_perms,
+-				    data->vmperms, data->vmcount);
+-		if (err)
+-			goto fdev_error;
+-
+-	}
++	err = fastrpc_init_reserved_mem(data, rdev, domain_id);
++	if (err)
++		goto fdev_error;
+ 
+ 	secure_dsp = !(of_property_read_bool(rdev->of_node, "qcom,non-secure-domain"));
+ 	data->secure = secure_dsp;
+@@ -2487,8 +2484,25 @@ static void fastrpc_rpmsg_remove(struct rpmsg_device *rpdev)
+ 	list_for_each_entry_safe(buf, b, &cctx->invoke_interrupted_mmaps, node)
+ 		list_del(&buf->node);
+ 
+-	if (cctx->remote_heap)
+-		fastrpc_buf_free(cctx->remote_heap);
++	if (cctx->remote_heap_size && cctx->vmcount) {
++		u64 src_perms = 0;
++		int err, i;
++		struct qcom_scm_vmperm dst_perms;
++
++		for (i = 0; i < cctx->vmcount; i++)
++			src_perms |= BIT(cctx->vmperms[i].vmid);
++
++		dst_perms.vmid = QCOM_SCM_VMID_HLOS;
++		dst_perms.perm = QCOM_SCM_PERM_RWX;
++
++		err = qcom_scm_assign_mem(cctx->remote_heap_addr,
++					  cctx->remote_heap_size, &src_perms,
++					  &dst_perms, 1);
++		if (err)
++			dev_err(&rpdev->dev,
++				"Failed to assign memory back to HLOS: addr %pa size %#llx err %d\n",
++				&cctx->remote_heap_addr, cctx->remote_heap_size, err);
++	}
+ 
+ 	of_platform_depopulate(&rpdev->dev);
+ 
 -- 
 2.53.0
 
