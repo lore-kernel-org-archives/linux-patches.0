@@ -1,52 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795619753;
-	b=Uu8x46pn3jD3ul7+//Qv+5XYnHvGBRljGMXUp26/JQpe3V4G6HaQCzyDNdIk5pSX4ILX
-	 Dga5dkpUgxZhB1cSFrwgNiKCKXfdn+5+9ZiAMGn08HwJ4sZydtBWXfVoZ/AUfoRxmYSWJ
-	 JslzMtKVaAUIHnXcbYOuIiZCUXc89EQOPjDxO9G6MyaUkuvQJ52gy4hhmjIvdKyu9zuLV
-	 qYgJqZn95FuCDaF3A+NNACpqf37hdxM73vyOEk8UpCwUNygadI+60deV7y99yy90YEzYJ
-	 hK+Ia+rCsIeQt9mroRYVjhiiABgcYDTFoSU72p6LNjwALTGBUzApjik8LjVulXIxSBg==
+	t=1795619756;
+	b=XVFQoLYsCcFeqxqiVGEysVeDmKcHrnO6ive7InAZWMkZgMh2F3h3Is8SyzhlHhys/YNJ
+	 LvM2NqpO2AOfXf6yIAMoKUGXn03mRiPr2oNCjJELle78xv0GTYlfCAypocNbXWr/6/4hc
+	 SFUeHiKz6p81hSg5VIsjwmzunSJrML3PS6elSTc4TH3ZNzV1dR/zlEzJxSkvIY3ZbSmPe
+	 2EDq9IFfQs5RRrAWVds2w1GAwL/L4OjJvB9Uwo4uliDp80QY+qLlzfoHszO8In5G8QcBW
+	 jWgeFD59Ah6+1w3zKhR8uWRRBYQxEwcZVph7PxFirRdB7X1w7pdqKnTXPnn2MW+ZrUg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795619753;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795619756;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=5149e+qbDdbBeHvmfHIoaS4msBgfvLWXRJUx1d2woDE=;
-	b=FgmBr/V/wtUtQe7UbEZDjbnfQCStWq3RXgeJ9/8EZJpNWEI3EZYIfjhQxkP1+oXokRC4
-	 ddt1GoT9uterZp7aFbZmwzg8jDJnq39uIwPFZgmBH5FaekZ91sgf09ROjNWVhWu3jCleL
-	 VqNxSdw1no3EBcDKiNlm4kewhl1WbSmnfPdq9hxraTPqtFpR8SE8ukqEKkW/CW8tZUgVn
-	 sVqKJ7J7Z7RO43oFttX6qGEgRYtiRBH5tKvUfzXJsMv6I+516VsT6cLs/w7A6Q7u1Nds/
-	 G1lKihlhDG76Y0i37hLiUBAoJsNCGauWvN6rMVtbSpJly04oKXHR7JauQTk1yCpOheQ==
+	bh=07eDr7khUQNc7DSmROhbc1SJ/LbKAgLspRI+1F5fTYU=;
+	b=gX3Q3PTriOuc2xCnigvb9XONYedIIEdIe738X54d5m1MxuvA9IOibCD83eyxohiXZooL
+	 e144qAyYazkzVbLH6XfII+KCrIW7bjkLYzj9WsG3LOfg1GXYCqJDVjV+oZaxzsgUJ0zo1
+	 i057IBPhWfrMGspMm4vWMJDK0sijtZSe/v7BE+VbxSm4jBh62RDVWb84a0qXBHk6Gh1kY
+	 wW/x+8oPCo3DRMM38vGf9iIg7dv00ReONodmsqYZX/Izkr6ey55WJQOYN4C+QiaacFCCh
+	 zFlvCfUlr9AY3Ga8O5B8fAXmLZRWpsHKIJ6W3y5n9NlUpkLzLcTUVs1RdBs0nD08J9A==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=PdzwjUI5;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=lW8uZR5e;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 33F70606A321;
-	Wed, 25 Nov 2026 15:15:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3860B606A321;
+	Wed, 25 Nov 2026 15:15:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=PdzwjUI5
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 390BA1F000D3;
-	Wed, 25 Nov 2026 15:15:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=lW8uZR5e
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 769A41F000CA;
+	Wed, 25 Nov 2026 15:15:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795619752;
-	bh=5149e+qbDdbBeHvmfHIoaS4msBgfvLWXRJUx1d2woDE=;
+	s=korg; t=1795619756;
+	bh=07eDr7khUQNc7DSmROhbc1SJ/LbKAgLspRI+1F5fTYU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=PdzwjUI52Yx+9V7uTP91ubRRGwRpsXBjUVQuk32X+F4CFYB6OiPqf6/cHiJKn3vn9
-	 ROo+RFjM6TaXNcFOhpZ9UnfEcTUw4BmOq1E2qMBDkBbHlgsYu83wA7nVVDFFTYJ1jU
-	 zbZExhjyXp3DRdlHpsXKDNi7sqkeWtNhAe5d28DE=
+	b=lW8uZR5eYeF47Rmp3HHZGWNrpGbrkhxi0zsbaCjIGeIGjUgW0xLmDu9t1ETzMVsH7
+	 bBKryugIXhspZU2ZzbGFvGNV9fDkT2d+Z2AzIQSW/N5s3v9md9RSPSYEmGr1P5+IzD
+	 xcjL2po1G3WA1CFuzrqLP9NOJeApF/MJgf9z5Fuo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chengfeng Ye <nicoyip.dev@gmail.com>,
-	Julian Anastasov <ja@ssi.bg>,
-	Pablo Neira Ayuso <pablo@netfilter.org>
-Subject: [PATCH 7.3 0652/1005] ipvs: fix protocol data lifetime during namespace teardown
-Date: Wed, 25 Nov 2026 15:33:10 +0100
-Message-ID: <20261125143837.024667408@linuxfoundation.org>
+	Joas Antonio dos Santos <joasantonio108@gmail.com>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 7.3 0653/1005] gtp: free the skb after handling an echo response
+Date: Wed, 25 Nov 2026 15:33:11 +0100
+Message-ID: <20261125143837.046939586@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143821.729802100@linuxfoundation.org>
 References: <20261125143821.729802100@linuxfoundation.org>
@@ -68,90 +67,108 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chengfeng Ye <nicoyip.dev@gmail.com>
+From: Joas Antonio dos Santos <joasantonio108@gmail.com>
 
-commit 832aa3e89e806bb2667fe4e656b705f4088b3c9d upstream.
+commit f17b293d155f377e4cff582b8113991d2ad346d6 upstream.
 
-IPVS frees its per-net protocol data before control cleanup cancels
-defense work and unregisters the sysctl table. A defense worker can load
-a protocol data pointer, then namespace cleanup can unlink and free that
-object before the worker dereferences pd->pp or pd->next. The worker's
-securetcp_lock does not serialize with protocol cleanup. A concurrent
-defense-mode sysctl write can reach the same timeout update path.
+gtp0_handle_echo_resp() and gtp1u_handle_echo_resp() return the result
+of genlmsg_multicast_netns() to gtp_encap_recv().  When the netlink
+notification is delivered that result is 0, and gtp_encap_recv() treats
+0 as "the skb has been consumed":
 
-KASAN reported:
+	switch (ret) {
+	case 1:
+		netdev_dbg(gtp->dev, "pass up to the process\n");
+		break;
+	case 0:
+		break;
+	case -1:
+		netdev_dbg(gtp->dev, "GTP packet has been dropped\n");
+		kfree_skb(skb);
+		ret = 0;
+		break;
+	}
 
-  BUG: KASAN: slab-use-after-free in ip_vs_protocol_timeout_change
-  Workqueue: events_long defense_work_handler
-  Call Trace:
-   ip_vs_protocol_timeout_change+0x1b4/0x1e0
-   update_defense_level+0x63e/0xd80
-   defense_work_handler+0x1e/0xc0
-  Allocated by task 125:
-   ip_vs_protocol_net_init+0xda/0x2f0
-   __ip_vs_init+0x16b/0x240
-   setup_net+0xfc/0x310
-  Freed by task 12:
-   ip_vs_protocol_net_cleanup+0x1d6/0x2e0
-   __ip_vs_cleanup_batch+0x7d/0x100
-   cleanup_net+0x38c/0x770
+The echo response handlers only read from the skb and never free it or
+pass it on, so every echo response that is reported to a listener on the
+gtp multicast group leaks the skb.  Echo responses are handled for any
+peer when the UDP sockets were created by the kernel, so a remote host
+can leak memory on the receiver by sending GTP echo responses while a
+process with CAP_NET_ADMIN is subscribed to the gtp multicast group, for
+example a daemon that monitors echo responses.
 
-Run control cleanup before protocol cleanup so that defense work and
-active sysctl handlers have finished before their protocol data is freed.
-Initialize protocols before exposing the control interface, and unwind
-in reverse order, to enforce the same lifetime on initialization failure.
-Protocol initialization and exit do not depend on control state.
+The error paths do not leak but have a related problem.  -ENOMEM and the error from
+genlmsg_multicast_netns() (-ESRCH when nobody listens) are not -1, so
+they are returned unchanged to the UDP stack, which takes a negative
+value from encap_rcv() as a request to resubmit the packet to the
+protocol with that number.
 
-Fixes: 9330419d9aa4 ("IPVS: netns, use ip_vs_proto_data as param.")
+Return -1 when the notification cannot be built, so that
+gtp_encap_recv() drops the skb, and consume the skb once the
+notification has been handed to netlink, whether or not anybody is
+listening.
+
+Found by LLM-assisted source review, untested.
+
+Fixes: d33bd757d362 ("gtp: Implement GTP echo request")
 Cc: stable@vger.kernel.org
-Signed-off-by: Chengfeng Ye <nicoyip.dev@gmail.com>
-Acked-by: Julian Anastasov <ja@ssi.bg>
-Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
+Signed-off-by: Joas Antonio dos Santos <joasantonio108@gmail.com>
+Link: https://patch.msgid.link/20261110-gtp-echo-rsp-leak-v1-1-192c032f3dfa@gmail.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/netfilter/ipvs/ip_vs_core.c |   12 ++++++------
- 1 file changed, 6 insertions(+), 6 deletions(-)
+ drivers/net/gtp.c |   22 ++++++++++++++--------
+ 1 file changed, 14 insertions(+), 8 deletions(-)
 
---- a/net/netfilter/ipvs/ip_vs_core.c
-+++ b/net/netfilter/ipvs/ip_vs_core.c
-@@ -2502,12 +2502,12 @@ static int __net_init __ip_vs_init(struc
- 	if (ip_vs_estimator_net_init(ipvs) < 0)
- 		goto estimator_fail;
+--- a/drivers/net/gtp.c
++++ b/drivers/net/gtp.c
+@@ -560,16 +560,19 @@ static int gtp0_handle_echo_resp(struct
  
--	if (ip_vs_control_net_init(ipvs) < 0)
--		goto control_fail;
--
- 	if (ip_vs_protocol_net_init(ipvs) < 0)
- 		goto protocol_fail;
+ 	msg = nlmsg_new(NLMSG_DEFAULT_SIZE, GFP_ATOMIC);
+ 	if (!msg)
+-		return -ENOMEM;
++		return -1;
  
-+	if (ip_vs_control_net_init(ipvs) < 0)
-+		goto control_fail;
+ 	ret = gtp_genl_fill_echo(msg, 0, 0, 0, GTP_CMD_ECHOREQ, echo);
+ 	if (ret < 0) {
+ 		nlmsg_free(msg);
+-		return ret;
++		return -1;
+ 	}
+ 
+-	return genlmsg_multicast_netns(&gtp_genl_family, dev_net(gtp->dev),
+-				       msg, 0, GTP_GENL_MCGRP, GFP_ATOMIC);
++	genlmsg_multicast_netns(&gtp_genl_family, dev_net(gtp->dev),
++				msg, 0, GTP_GENL_MCGRP, GFP_ATOMIC);
++	consume_skb(skb);
 +
- 	if (ip_vs_app_net_init(ipvs) < 0)
- 		goto app_fail;
++	return 0;
+ }
  
-@@ -2527,10 +2527,10 @@ sync_fail:
- conn_fail:
- 	ip_vs_app_net_cleanup(ipvs);
- app_fail:
--	ip_vs_protocol_net_cleanup(ipvs);
--protocol_fail:
- 	ip_vs_control_net_cleanup(ipvs);
- control_fail:
-+	ip_vs_protocol_net_cleanup(ipvs);
-+protocol_fail:
- 	ip_vs_estimator_net_cleanup(ipvs);
- estimator_fail:
- 	net->ipvs = NULL;
-@@ -2547,8 +2547,8 @@ static void __net_exit __ip_vs_cleanup_b
- 		ipvs = net_ipvs(net);
- 		ip_vs_conn_net_cleanup(ipvs);
- 		ip_vs_app_net_cleanup(ipvs);
--		ip_vs_protocol_net_cleanup(ipvs);
- 		ip_vs_control_net_cleanup(ipvs);
-+		ip_vs_protocol_net_cleanup(ipvs);
- 		ip_vs_estimator_net_cleanup(ipvs);
- 		IP_VS_DBG(2, "ipvs netns %d released\n", ipvs->gen);
- 		net->ipvs = NULL;
+ static int gtp_proto_to_family(__u16 proto)
+@@ -747,16 +750,19 @@ static int gtp1u_handle_echo_resp(struct
+ 
+ 	msg = nlmsg_new(NLMSG_DEFAULT_SIZE, GFP_ATOMIC);
+ 	if (!msg)
+-		return -ENOMEM;
++		return -1;
+ 
+ 	ret = gtp_genl_fill_echo(msg, 0, 0, 0, GTP_CMD_ECHOREQ, echo);
+ 	if (ret < 0) {
+ 		nlmsg_free(msg);
+-		return ret;
++		return -1;
+ 	}
+ 
+-	return genlmsg_multicast_netns(&gtp_genl_family, dev_net(gtp->dev),
+-				       msg, 0, GTP_GENL_MCGRP, GFP_ATOMIC);
++	genlmsg_multicast_netns(&gtp_genl_family, dev_net(gtp->dev),
++				msg, 0, GTP_GENL_MCGRP, GFP_ATOMIC);
++	consume_skb(skb);
++
++	return 0;
+ }
+ 
+ static int gtp_parse_exthdrs(struct sk_buff *skb, unsigned int *hdrlen)
 
 
