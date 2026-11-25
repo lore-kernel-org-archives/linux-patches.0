@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795618047;
-	b=h4GligDY+1y3NEP56QrnJ7Z8Lz6LlDSmDFC9ymySifxUGoiYEqs2vlN89yejLzs7U/BA
-	 BkUj5+4+oQBIKC84VOyNCmv5+YLYGyWwFMEOOGBL0JxQcpU+yziIzOrx/09IkIwNxE8BT
-	 P+s75H+pQUwf9TEAdnfOGsiseRdOARH6vvgb9Qn0eCfTTFZCklldlTZNLFBH1NwWh5GqZ
-	 WXRPkJLRG8Ubor90z7G5+uXMidyFcmfUf6a+afQZD1W97esa0yrk4fW4aIvk/W3KS6JcM
-	 9q7K/qtZ4oZi7iDmBA0pW2Yw8LSq3dTO3D2gr6Re1tKSMdt2aDINHbYABboB9oAPM8w==
+	t=1795618052;
+	b=Mz3nwguRqOn5pVm9FU4xw5CzdlG/Zw6hPXtLZFZ0lx9Jx3VpfrYHUvtgEMDEIxIk3Aue
+	 67VY85RwSDtdLwJtQqOkVK7UfZDAfnbmsbkSl+nqkPjYO1WO0uMmkTlX246HugknwM9rM
+	 AhD0NS42d7mGp4swPVo1AAsUz5/e5tC5LspOnVTLKY1tccB51AjSFZzdTRJIjQRkZ6V2g
+	 yVcgiBdw6YmHXctSbcafo7X3sGd/mJmlyXrgHpya3H+uHYcHcNuIU+6xrbecIbR098K2w
+	 R6AMT2DymH/o5lfLErwF4D79i2PTMHQbsaWTQ2M8bx+Wn7NBcUiywOvdTGD3PNw61NA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795618047;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795618052;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=GmGKcL4vJj17IhFQiR6hX5m5t6I0P3xT27qcLLuxF6Q=;
-	b=XtIjTflfhQ2n6DW604NqtfL+4ImeqVOoIs8XxzfiDPRyS8oQlbBaa/be75gOmJ9s7XO6
-	 vbf9fVmEBIdEK0Jj+GGYNEUgMx60Mle4noqBMIVnwZjjMNxL3wIRr0pUSmYxApbhqOWsl
-	 EKXfVoXZCQJvA1Pqjh6D6tYmky7JemCy07//E/B0qAWJV9UOZdnSkePoTi6qtbHyii63p
-	 mwW71y7YGZClZWckkAsfzXclMZsdA8xcdNKv2le08n3OFTGUFt6WUMN+527vicIy+q/9c
-	 mR9ySm6Ulx/V8l/LKMQmpVh6Vh3KEAGRHQI+jAeQhpehBpeUMUEfXt2V2P+AGwbqDTw==
+	bh=aSwOgYDBL6eN3iOm0IeuoCFODMXxf5AGA+SRyUlnXkw=;
+	b=RHn1CPTFpCTXZj7s0i7BncLX+QnfELAt0RadFCxLQv0l3ITUP5y8zM4qS+O+8DBz79Co
+	 nZ8sNAn4vm67/8vJL6yZJmkSwvI0IDgmncPp1efchS8zdJWC8gWn9/WsGxQhOA9f9xSKz
+	 Yqo+qfmi1YcZbu4eqrCdvdXR5pizrbDC1p3XyOLzoLNjdvq9X9habnmG6DcY18P67+rRt
+	 3Tq5VVA6s+XZu+Pbc9dRl/c8UBBUdGSXmgZwH+eMZinUUTtfsqeOWoGkYibbMjxlei234
+	 uA5TH1H55akmOrL+GR7+DjQy0QgLpjqdq8+bfZ6Y7+JBUwqH/x/h/wwfafocHCsZz6Q==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=iG9Oj3lJ;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=XkLFGwnX;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DE3FD606A32C;
-	Wed, 25 Nov 2026 14:47:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 62684606A321;
+	Wed, 25 Nov 2026 14:47:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=iG9Oj3lJ
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 351D81F000CA;
-	Wed, 25 Nov 2026 14:47:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=XkLFGwnX
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C07FF1F000C0;
+	Wed, 25 Nov 2026 14:47:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795618047;
-	bh=GmGKcL4vJj17IhFQiR6hX5m5t6I0P3xT27qcLLuxF6Q=;
+	s=korg; t=1795618051;
+	bh=aSwOgYDBL6eN3iOm0IeuoCFODMXxf5AGA+SRyUlnXkw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=iG9Oj3lJnBFK5zmezSkEY7SiZn8GQJj8mei0OToqn7JtdOqwPuH7Ah3Q/iuafb1k7
-	 y10FGJjSdbXMtceax0gF3J++HiG+y4eB7mxzgo8wnsUdRyRuXsjfjEVaL/xuw2gPFp
-	 U4xMXldaa8m1U3cD6urBNsn7Ph9MAcWCOzwrxiek=
+	b=XkLFGwnXzv+2Z3F6QlkK19VJ33J+YYqXiO/rLfUleDZQaHXtJsDXjPAdFr1bXw8dX
+	 c7USpIT2KtXiikaBhavsPVdxqNJePYTY+RA9BS0Oc0bEDCf/1OBJxqlJsbJBjx+cqR
+	 +v+0Hhy1ndRu1idl7Ctf9gYkNi9groyuTJ9m9UJU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jia Jia <physicalmtea@gmail.com>,
-	Mike Christie <michael.christie@oracle.com>,
-	"Michael S. Tsirkin" <mst@redhat.com>,
+	Alban Bedel <alban.bedel@lht.dlh.de>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0155/1005] vhost-scsi: preserve event ordering
-Date: Wed, 25 Nov 2026 15:24:53 +0100
-Message-ID: <20261125143825.368607956@linuxfoundation.org>
+Subject: [PATCH 7.3 0120/1005] spi: Fix ACPI SPI resources using relative path
+Date: Wed, 25 Nov 2026 15:24:18 +0100
+Message-ID: <20261125143824.552999745@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143821.729802100@linuxfoundation.org>
 References: <20261125143821.729802100@linuxfoundation.org>
@@ -69,41 +68,55 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jia Jia <physicalmtea@gmail.com>
+From: Alban Bedel <alban.bedel@lht.dlh.de>
 
-[ Upstream commit a9a428115b7d8aa45e12e41899f90f60551bfa82 ]
+[ Upstream commit 4825287f6d2346e9273f35a928d1ef40e68bc58b ]
 
-vhost_scsi_send_evt() uses llist_add(), so pending events are LIFO.
-vhost_scsi_complete_events() walks the detached list directly.
-This can deliver a later hotplug or hotunplug event before an earlier
-one.
+ACPI resources can use relative path when pointing to other
+resources. This didn't work with SPISerialBus resources because the
+device defining the resource was not passed to acpi_get_handle().
 
-Reverse the detached list before processing it.
-This keeps delivery in enqueue order.
+Pass the ACPI device handle through the lookup context to also allow
+for relative paths.
 
-Fixes: a6c9af87363c ("tcm_vhost: Add hotplug/hotunplug support")
-Signed-off-by: Jia Jia <physicalmtea@gmail.com>
-Reviewed-by: Mike Christie <michael.christie@oracle.com>
-Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
-Message-ID: <20260915094244.7900-2-physicalmtea@gmail.com>
+Signed-off-by: Alban Bedel <alban.bedel@lht.dlh.de>
+Link: https://patch.msgid.link/20261001153507.2011806-1-alban.bedel@lht.dlh.de
+Signed-off-by: Mark Brown <broonie@kernel.org>
+Stable-dep-of: 2d0953ab69d3 ("spi: acpi: only look up the IRQ of confirmed SPI devices")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/vhost/scsi.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/spi/spi.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/vhost/scsi.c b/drivers/vhost/scsi.c
-index ddc9bea190ded..738db166cb5db 100644
---- a/drivers/vhost/scsi.c
-+++ b/drivers/vhost/scsi.c
-@@ -667,7 +667,7 @@ static void vhost_scsi_complete_events(struct vhost_scsi *vs, bool drop)
- 	struct llist_node *llnode;
+diff --git a/drivers/spi/spi.c b/drivers/spi/spi.c
+index 172141650b648..e5ef3ca769d53 100644
+--- a/drivers/spi/spi.c
++++ b/drivers/spi/spi.c
+@@ -2983,6 +2983,7 @@ EXPORT_SYMBOL_GPL(devm_spi_new_ancillary_device);
+ #ifdef CONFIG_ACPI
+ struct acpi_spi_lookup {
+ 	struct spi_controller 	*ctlr;
++	acpi_handle		device_handle;
+ 	u32			max_speed_hz;
+ 	u32			mode;
+ 	int			irq;
+@@ -3077,7 +3078,7 @@ static int acpi_spi_add_resource(struct acpi_resource *ares, void *data)
+ 			if (lookup->index != -1 && lookup->n++ != lookup->index)
+ 				return 1;
  
- 	mutex_lock(&vq->mutex);
--	llnode = llist_del_all(&vs->vs_event_list);
-+	llnode = llist_reverse_order(llist_del_all(&vs->vs_event_list));
- 	llist_for_each_entry_safe(evt, t, llnode, list) {
- 		if (!drop)
- 			vhost_scsi_do_evt_work(vs, evt);
+-			status = acpi_get_handle(NULL,
++			status = acpi_get_handle(lookup->device_handle,
+ 						 sb->resource_source.string_ptr,
+ 						 &parent_handle);
+ 
+@@ -3169,6 +3170,7 @@ struct spi_device *acpi_spi_device_alloc(struct spi_controller *ctlr,
+ 		return ERR_PTR(-EINVAL);
+ 
+ 	lookup.ctlr		= ctlr;
++	lookup.device_handle	= acpi_device_handle(adev);
+ 	lookup.irq		= -1;
+ 	lookup.index		= index;
+ 	lookup.n		= 0;
 -- 
 2.53.0
 
