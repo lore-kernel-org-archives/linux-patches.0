@@ -1,54 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795622617;
-	b=Dwzqrvl5TNomwbv4BCp378PnAUGK9x0NRk5ZljARh2mwFB4aGp6zx9zymBAmIE5T+/GW
-	 Ah2rinm6b7pZ8NGXgU6dC4rcYahZo1+mGNcnyMigQrYSegHiGWSkz2wPTd8lGxbcYFI0u
-	 OTft7R96H4KfN7YSEue9usUYirZnPpgd7QWiNmO4BCA2b6WFGtt4/6E8rYKlmcFVTnX4a
-	 20XHB8pGZfJR6Bh+l4sDMdUd3IDc1ktG6F9cGBmD6nm4QJe1tL4vNOd7bkOynMnX9h16n
-	 bSNqSoQGNvbkNY8Nl0FX3GOYwYYC1m6HhFiW3+p5kySIKpckcXveB9dwGnGLcQ0jEJQ==
+	t=1795622620;
+	b=kJlZkWROCjLF+tEaLikbOcMm+GHciTgF2tvAlOI67KXd49q+rtAr5xtrbTwoHnBGS7E+
+	 va5vFe9EMYSkWRUyab4LvS60Z9duw8dvo+p1ftW6N8rDZ4nhyp9PenpxRzMBUOqPUGIpu
+	 7Td3+2b2UWM7b8NV+BqpvlTWXybaS6Ky0qHNM4/6HA+10tHLYEAm6+gGVVedh68LsjSKA
+	 /ADC9uMp9lQMEfPRD3IkineIyKo74POB2eIn/9J6tS/++RirCq533h2jYivFjmsdTbIAU
+	 KctcF4N5Gq0fHT6BStrDv9jCe78i6wMIbHyWWz+ZXWI9XLn5XN30aGGYmJEmC4wg6Rg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795622617;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795622620;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=sRpeaOJ4RRbywfh3USsDc5STCW0r2UrR6rNWGYeezX8=;
-	b=h+stnMKRwUM2wlyOB27SS+se8Urf2LyJyQhaCDS45xcRUcjCQ7gUMX26KSOlyql7uvNe
-	 9eOrWlViFuIwcGHVm3kbk4pDgiiWQVgsl8BvDnpBGB5R3xyX4ZwpdP61+XfSPw9XGCE7g
-	 j5fmCuA1anhC0TNBy6edoQ1CbcCb33xbv28WUp1xpm6wcqkKNc0iL2F0sxzR0v/9B4Oac
-	 gpeON9Gt2vv017uSyhg2lGqx/DllQ9z53WX/749DgkhfsSlvAeOBuWKJuhRibHdXaaXxl
-	 Pdwgg1w5IBHrdB8ZhQXIkhxKfeRJw+EJb0r5DA5neFoFVIxja/d7rS+IY1lajMje4zw==
+	bh=AnlNtP+uWh3L7cIDRc2mAC2znnN0eN9vMFGshMuiIk4=;
+	b=RsZuIx1WPF3qCnWbHpQgXi+lFdF7bBIb8gZRE7eHpt1YkJZp1EHZiK0OZSP/hC7+VKpv
+	 mGWj1LozduD/+cmWD6VIHv0WOS2nx8148bHgX7vwJH7DKEBdJVtusmQ4F1Op9W5StlqiX
+	 UyPOh1zIklM4NsPBM0MMKHvLua5T9LIskSbTKFoX2gxpl/BYzRBKZTrhcZ7RRUEm89IM3
+	 0WdCuRToBWZas6ivYfKaR2huI2Vq/XBUez2sbcbHoG4bEfjh+OV9lt8x1Mh6OlvxqajDP
+	 hV/J37W734ZztBeZHNOd8EawyIvZ6/Bqly3UzaqigRbRSdK+/kNk5Fb2qo5053kSJ9g==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=h0EEpfEU;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="i/AXngVC";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 42C80606A31E;
-	Wed, 25 Nov 2026 16:03:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5A683606A321;
+	Wed, 25 Nov 2026 16:03:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=h0EEpfEU
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B48881F000D1;
-	Wed, 25 Nov 2026 16:03:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=i/AXngVC
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 28A3F1F000D1;
+	Wed, 25 Nov 2026 16:03:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795622616;
-	bh=sRpeaOJ4RRbywfh3USsDc5STCW0r2UrR6rNWGYeezX8=;
+	s=korg; t=1795622619;
+	bh=AnlNtP+uWh3L7cIDRc2mAC2znnN0eN9vMFGshMuiIk4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=h0EEpfEU23ZxmxFD/ZTLii5K0ny49Ahpv9QnGf5sTWrjDlwkWsRv1e3qnJKn78ibi
-	 r1DFgvMrl7NJwjy5ypY0w2B5YFo1RP7I2NAhZI6hQEgvdxuUiLi/g1NJcUPAJkAxTQ
-	 72rfdvffhinTOrA3joOJeCa+rQMLA47oXmTq8Mks=
+	b=i/AXngVCz6QWreqNHtYnFj3A3osQ8J4JGkiS/Qd3PG01mKHy1+zxxiIN+96MHhy55
+	 M4yxA8H81cNfFMXR3W2o3UpfdE/IvRomiCI0NiCX3j7fcEjDbGJJCf6bbqKu7Uhw/T
+	 mXVanS+fvijaSxYsITWBZB53JL1J4pJOWM/2YeZM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kang Yang <kang.yang@oss.qualcomm.com>,
+	Pardeep Kaur <pardeep.kaur@oss.qualcomm.com>,
+	Rameshkumar Sundaram <rameshkumar.sundaram@oss.qualcomm.com>,
 	Baochen Qiang <baochen.qiang@oss.qualcomm.com>,
-	Vasanthakumar Thiagarajan <vasanthakumar.thiagarajan@oss.qualcomm.com>,
 	Jeff Johnson <jeff.johnson@oss.qualcomm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 549/990] wifi: ath12k: fix skb leak on monitor PPDU ID wraparound
-Date: Wed, 25 Nov 2026 15:31:56 +0100
-Message-ID: <20261125143834.958761732@linuxfoundation.org>
+Subject: [PATCH 6.18 550/990] wifi: ath12k: fix out-of-bounds access on TX stats arrays
+Date: Wed, 25 Nov 2026 15:31:57 +0100
+Message-ID: <20261125143834.982031616@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143822.072087159@linuxfoundation.org>
 References: <20261125143822.072087159@linuxfoundation.org>
@@ -70,84 +70,70 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kang Yang <kang.yang@oss.qualcomm.com>
+From: Pardeep Kaur <pardeep.kaur@oss.qualcomm.com>
 
-[ Upstream commit 97b144b82e2388efef1f78269626d61de0480feb ]
+[ Upstream commit c8f83d3389d1d1b318ac3bd2ae3d60c2862c90b4 ]
 
-ath12k_dp_mon_comp_ppduid() updates *ppdu_id and returns
-msdu_ppdu_id to indicate that a PPDU transition was detected.
+The fw_tx_status[], tx_wbm_rel_source[], and tqm_rel_reason[] arrays
+are indexed directly by values read from hardware without bounds checks.
+Values at or beyond MAX_FW_TX_STATUS, HAL_WBM_REL_SRC_MODULE_MAX, or
+MAX_TQM_RELEASE_REASON respectively would write past the end of the
+arrays causing memory corruption.
 
-When PPDU IDs wrap around, msdu_ppdu_id can be 0. In that case
-the function updates *ppdu_id but returns 0, causing
-ath12k_wifi7_dp_rx_mon_mpdu_pop() to interpret the result as
-"no PPDU update" and continue processing the MPDU.
+Add likely() bounds checks before incrementing each counter. For
+tx_wbm_rel_source[] and tqm_rel_reason[], add WARN_ON_ONCE() on the
+out-of-bounds else branch. For fw_tx_status[], no WARN_ON_ONCE is added
+since the switch statement that follows already calls ath12k_warn() in
+its default: branch for unknown values, avoiding a double-warn.
 
-The MSDUs are then linked into head_msdu while their RX
-descriptors have already been detached. Later,
-ath12k_wifi7_dp_rx_mon_dest_process() detects the PPDU
-mismatch and exits with the partially built MSDU chain,
-leaking the SKBs.
+Tested-on: QCN9274 hw2.0 PCI WLAN.WBE.1.6.r1-00402-QCAHKSWPL_SILICONZ-1
 
-kmemleak reports the leak through:
-  kmemleak_alloc()
-  __netdev_alloc_skb()
-  ath12k_dp_rx_bufs_replenish()
-  ath12k_wifi7_dp_rx_mon_dest_process()
-
-Fix this by returning a boolean value from
-ath12k_dp_mon_comp_ppduid() so the update notification is
-independent of the actual PPDU ID value.
-
-Tested-on: WCN7850 hw2.0 PCI WLAN.HMT.1.1.c7-00108-QCAHMTSWPL_V1.0_V2.0_SILICONZ_UPSTREAM-3
-
-Fixes: 72bfbf19b7da ("wifi: ath12k: add support to reap and process mon dest ring")
-Signed-off-by: Kang Yang <kang.yang@oss.qualcomm.com>
+Fixes: c5c62287e690 ("wifi: ath12k: Add device dp stats support")
+Signed-off-by: Pardeep Kaur <pardeep.kaur@oss.qualcomm.com>
+Reviewed-by: Rameshkumar Sundaram <rameshkumar.sundaram@oss.qualcomm.com>
 Reviewed-by: Baochen Qiang <baochen.qiang@oss.qualcomm.com>
-Reviewed-by: Vasanthakumar Thiagarajan <vasanthakumar.thiagarajan@oss.qualcomm.com>
-Link: https://patch.msgid.link/20260916060325.854-6-kang.yang@oss.qualcomm.com
+Link: https://patch.msgid.link/20260819053247.1420393-2-pardeep.kaur@oss.qualcomm.com
 Signed-off-by: Jeff Johnson <jeff.johnson@oss.qualcomm.com>
-[ sashal: Kept the function static in dp_mon.c and dropped the header hunk, since this tree has no prototype; only the return type changed to bool. ]
+[ sashal: Applied the same three bounds checks to the pre-wifi7-split dp_tx.c and used ab->device_stats instead of dp->device_stats. ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/ath/ath12k/dp_mon.c | 15 +++++++--------
- 1 file changed, 7 insertions(+), 8 deletions(-)
+ drivers/net/wireless/ath/ath12k/dp_tx.c | 13 ++++++++++---
+ 1 file changed, 10 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/net/wireless/ath/ath12k/dp_mon.c b/drivers/net/wireless/ath/ath12k/dp_mon.c
-index cfd9ea83887aa..2cb4e0bb0221a 100644
---- a/drivers/net/wireless/ath/ath12k/dp_mon.c
-+++ b/drivers/net/wireless/ath/ath12k/dp_mon.c
-@@ -1860,24 +1860,23 @@ ath12k_dp_rx_mon_buf_done(struct ath12k_base *ab, struct hal_srng *srng,
- 	return DP_MON_STATUS_REPLINISH;
- }
+diff --git a/drivers/net/wireless/ath/ath12k/dp_tx.c b/drivers/net/wireless/ath/ath12k/dp_tx.c
+index 92bb9fc420264..ed8c82346608b 100644
+--- a/drivers/net/wireless/ath/ath12k/dp_tx.c
++++ b/drivers/net/wireless/ath/ath12k/dp_tx.c
+@@ -667,7 +667,8 @@ ath12k_dp_tx_process_htt_tx_complete(struct ath12k_base *ab, void *desc,
  
--static u32 ath12k_dp_mon_comp_ppduid(u32 msdu_ppdu_id, u32 *ppdu_id)
-+static bool ath12k_dp_mon_comp_ppduid(u32 msdu_ppdu_id, u32 *ppdu_id)
- {
--	u32 ret = 0;
--
- 	if ((*ppdu_id < msdu_ppdu_id) &&
- 	    ((msdu_ppdu_id - *ppdu_id) < DP_NOT_PPDU_ID_WRAP_AROUND)) {
- 		/* Hold on mon dest ring, and reap mon status ring. */
- 		*ppdu_id = msdu_ppdu_id;
--		ret = msdu_ppdu_id;
--	} else if ((*ppdu_id > msdu_ppdu_id) &&
--		((*ppdu_id - msdu_ppdu_id) > DP_NOT_PPDU_ID_WRAP_AROUND)) {
-+		return true;
-+	}
-+	if ((*ppdu_id > msdu_ppdu_id) &&
-+	    ((*ppdu_id - msdu_ppdu_id) > DP_NOT_PPDU_ID_WRAP_AROUND)) {
- 		/* PPDU ID has exceeded the maximum value and will
- 		 * restart from 0.
- 		 */
- 		*ppdu_id = msdu_ppdu_id;
--		ret = msdu_ppdu_id;
-+		return true;
- 	}
--	return ret;
-+	return false;
- }
+ 	wbm_status = le32_get_bits(status_desc->info0,
+ 				   HTT_TX_WBM_COMP_INFO0_STATUS);
+-	ab->device_stats.fw_tx_status[wbm_status]++;
++	if (likely(wbm_status < MAX_FW_TX_STATUS))
++		ab->device_stats.fw_tx_status[wbm_status]++;
  
- static
+ 	switch (wbm_status) {
+ 	case HAL_WBM_REL_HTT_TX_COMP_STATUS_OK:
+@@ -1071,11 +1072,17 @@ void ath12k_dp_tx_completion_handler(struct ath12k_base *ab, int ring_id)
+ 		/* Find the HAL_WBM_RELEASE_INFO0_REL_SRC_MODULE value */
+ 		buf_rel_source = le32_get_bits(tx_status->info0,
+ 					       HAL_WBM_RELEASE_INFO0_REL_SRC_MODULE);
+-		ab->device_stats.tx_wbm_rel_source[buf_rel_source]++;
++		if (likely(buf_rel_source < HAL_WBM_REL_SRC_MODULE_MAX))
++			ab->device_stats.tx_wbm_rel_source[buf_rel_source]++;
++		else
++			WARN_ON_ONCE(1);
+ 
+ 		rel_status = le32_get_bits(tx_status->info0,
+ 					   HAL_WBM_COMPL_TX_INFO0_TQM_RELEASE_REASON);
+-		ab->device_stats.tqm_rel_reason[rel_status]++;
++		if (likely(rel_status < MAX_TQM_RELEASE_REASON))
++			ab->device_stats.tqm_rel_reason[rel_status]++;
++		else
++			WARN_ON_ONCE(1);
+ 
+ 		/* Release descriptor as soon as extracting necessary info
+ 		 * to reduce contention
 -- 
 2.53.0
 
