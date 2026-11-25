@@ -1,52 +1,56 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795618408;
-	b=QzXEHITSROTFnKqolcZBpz5zH3MPY3/6SyrXL6kRHkR16Oq7xegtrhPWDS8dqfWqlX5a
-	 hbuvYJ1Tw7nxCIAzFB1kPdQkZNYbMr/3ngqAT/W/BAQnUjK+Ux/M8l3EWbl/7lbz3/tfe
-	 Q4rW5Mc2M0UPA2XlErVlmpzxXAM5Acf/+yQiTXPlY0jA35PDdcTMFuAGAq1D7QROI8kpF
-	 8XDClpPpWGbK1kHKs2vMrTO20LOTonQ8c8gUDLJQPkGr3utQhaK1LfSuvJGlaKaPHIKrx
-	 7tdvd556evpYGureyeAzGJYt95ME0xiUw+lFBJ1DzsQyWkYye5u+8Em+W7Bq/H8vNww==
+	t=1795618410;
+	b=ufk2pmvlL0EDEkNe8Ztp4OUgJbrbbOyjB5vDYtHpdeVh+az33z+B45w8bEUdMQlvkdvd
+	 PdF2KMMr9ULi/VPL3t/rO6qlKnD63YnI55Uo3k1xhxJVaVJCkK7RNGr7m8HLYoZnHExeM
+	 iiGGHf0GXWMJO+yTLiFeBCfPLSvyaqMP0hScmmaDylHtg9mr9VQafaEWQ3FK117ojh5zw
+	 gTd9jraZcNcGDsHTqVanSH/zRcOC7skgIkD7S/2Dtp1rR+v7aJeXdB6EypSbNUEPzJ9X3
+	 sU6UirJdsGHN556XzEcCpBV00ZlD28esTm2MhYtlVDNZmiOKtGElSPc5IMNYLWDjQqA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795618408;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795618410;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=Uz6DFbfuPpKtEUz6GlRqDahSG2NRT7kDn3WHUgFpSXI=;
-	b=CEejY6KhzVDpYYgIqfl0Nt5Sxo9s383fRebfKDkBTz91t2fdXkr8ki/RxRTg/DGryiF6
-	 62tutOvidPLu2ETCQ/apNAI8xJq1qJ13D67K8jylTAblaNHHXf/5iwqJDqQn49orhCvgP
-	 DlCQ4IUW/Ga6hqyGgKW2tD8ZSmx9yOerKt+oh/ANRbg4zCY/Ly8QTnHxBnNczcgJZAJK5
-	 x4+dYvKDGKpKoGnHqhe7YG2vhgf2IQmIUuL7eU7/jMmzurTMNUeZr0AqbqP9gLa7dAtD+
-	 boSJ3JBhCyi7MCPJFdzL7s491n8C7QGYgpSVnZH0i+k5VcWw4A9jYuKZVdSTdi7uaeA==
+	bh=EvrHdB4HyOPfK/OscwizNlIoegBc9BCtlc1rSKb0W48=;
+	b=nXZA3ALUziwMzlF9wGfPMW44+JqdwzvUtkNaqVtskUychzp/Ptm0ZuPOTwN4giwSRMiz
+	 R4GMXnYIlSR/715+kk17q1xKu15/ERiPhE2H7HBcbdjmp4IParm0XdFSoRjRxBGOFpxbb
+	 q9Vr8uoMb2KogbDwqtDe+7spOd6mh5T0RKYR6oT9iU0Z5o2jH9k9UZKhNO/r1k1QTN1fN
+	 zmvdlpolKHZWeLO6kXgUUNKS3Gu2h41Myzj278C/3P/d60leuig8wi7+8Jl+8SdR4bRAB
+	 YEZLKgZvLm8MgC1oBvl+cK/LA6EM9jg1tuxLDpdczulKaC68N70IUDXQ1wE8/nfHG5w==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=1uIry3vY;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=hM7cPzWQ;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 04562606A321;
-	Wed, 25 Nov 2026 14:53:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9D5DF606A321;
+	Wed, 25 Nov 2026 14:53:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=1uIry3vY
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E4C071F000D1;
-	Wed, 25 Nov 2026 14:53:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=hM7cPzWQ
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E6E2A1F000C0;
+	Wed, 25 Nov 2026 14:53:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795618407;
-	bh=Uz6DFbfuPpKtEUz6GlRqDahSG2NRT7kDn3WHUgFpSXI=;
+	s=korg; t=1795618410;
+	bh=EvrHdB4HyOPfK/OscwizNlIoegBc9BCtlc1rSKb0W48=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=1uIry3vYMjbIUasJ8sleP/dNN3YoRCMu0JvQnSftWBv3ccUlPmcBuqdAiVPXbXgaU
-	 Cpf9EoJDkFDGf45dtsm4+rfz4cKmlkOOPx4GRFtmT1tMEmIzHOZlPqaio1RoY8rN/h
-	 bYKANuWgCAlgTugp6tvJAkK2/S7cHeHB84inG4WQ=
+	b=hM7cPzWQPVqWaQD0Y7RchTxZ9vjgq+oFg/gJqgtDm6TBk8CNBVj7SAviHqYuZbcFe
+	 beBQGTv9R5bsewOk37zZ3jPgWsHGDE+cAtpCx0V8J4HXOoOJ17Po5Ute+MUCp0HcmF
+	 6q9iedKwryuk+WPsK8x50ME1c9BB62HJeo1JzKYE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hungyu Lin <dennylin0707@gmail.com>,
-	Jan Kara <jack@suse.cz>,
+	Tom Williams <Tom.D.Williams@MorganStanley.com>,
+	Guillaume Nault <gnault@redhat.com>,
+	Kuniyuki Iwashima <kuniyu@google.com>,
+	Neal Cardwell <ncardwell@google.com>,
+	Eric Dumazet <edumazet@kernel.org>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0271/1005] isofs: handle Rock Ridge long-form dates before 1900
-Date: Wed, 25 Nov 2026 15:26:49 +0100
-Message-ID: <20261125143828.088701737@linuxfoundation.org>
+Subject: [PATCH 7.3 0272/1005] tcp: Fix dup-ack detection on non-SACK bidirectional data transfer.
+Date: Wed, 25 Nov 2026 15:26:50 +0100
+Message-ID: <20261125143828.111106754@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143821.729802100@linuxfoundation.org>
 References: <20261125143821.729802100@linuxfoundation.org>
@@ -68,65 +72,165 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hungyu Lin <dennylin0707@gmail.com>
+From: Guillaume Nault <gnault@redhat.com>
 
-[ Upstream commit 0cbfc16fe49629f5c1fc3628405661c2b938ec61 ]
+[ Upstream commit 11140c51df12e594d6bf2c8d2af5dec63b0219ac ]
 
-iso_date() stores the year relative to 1900 and rejects negative values.
-Rock Ridge LONG_FORM timestamps encode calendar years from 1 to 9999,
-so valid years before 1900 are returned as seconds since the Unix epoch
-equal to zero instead of their recorded dates. For example, an 1899
-timestamp on an image produced by xorriso is reported as 1970 by stat,
-and cp -p preserves that incorrect time.
+When receiving a pure ack from a peer that also sends data, we can
+have SEG.SEQ > SND.WL1, even though the segment contains no data. This
+makes tcp_may_update_window() return true (because of the
+"after(ack_seq, tp->snd_wl1)" condition), and tcp_ack_update_window()
+then adds FLAG_WIN_UPDATE to the segment set of flags, even when
+there's no window update.
 
-Use the calendar year for both timestamp formats and pass it directly
-to mktime64(). Keep the epoch fallback for year zero, while allowing
-valid long-form years before 1900. Short-form dates are unchanged.
+Since FLAG_WIN_UPDATE prevents the segment from being considered as
+dup-ack (as it's part of FLAG_NOT_DUP), this can inhibit fast
+retransmit on non-SACK connections, making recovery very slow as it
+now entirely relies on RTO.
 
-Fixes: 5ea45f54c8d6 ("isofs: fix Y2038 and Y2156 issues in Rock Ridge TF entry")
-Signed-off-by: Hungyu Lin <dennylin0707@gmail.com>
-Link: https://patch.msgid.link/20261029004902.76944-1-dennylin0707@gmail.com
-Signed-off-by: Jan Kara <jack@suse.cz>
+The "DUPLICATE ACKNOWLEDGMENT" definition of RFC 5681, section 2,
+says that lack of window update is a necessary condition for a dup ack:
+"(e) the advertised window in the incoming acknowledgment equals the
+advertised window in the last incoming acknowledgment.". Spurious
+window updates can thus prevent dup ack detection and, in the end, fast
+retransmit.
+
+Avoid this scenario by setting FLAG_WIN_UPDATE only when a window
+update actually occurs. Pure acks with SEG.SEQ > SND.WL1 can now
+be detected as dup-ack and trigger fast retransmission.
+
+Also, stop setting FLAG_WIN_UPDATE in tcp_ack()'s header prediction
+path. One of the conditions for header prediction to happen is that
+received segments don't trigger a window update. This flag update was
+thus wrong to begin with. Now that tcp_ack_update_window() sets
+FLAG_WIN_UPDATE only if a window update actually occurred, we need the
+header prediction path to stop reporting spurious window updates too.
+Otherwise BPF programs would get inconsistent window update information
+(CA_ACK_WIN_UPDATE) between fast an slow paths.
+
+Finally, add FLAG_SND_UNA_ADVANCED to the definition of FLAG_NOT_DUP.
+This is necessary for the case where an incoming segment acknowledges
+less than a full segment of the retransmit queue. Such segments were
+not considered dubious by tcp_ack_is_dubious() because of the spurious
+FLAG_WIN_UPDATE flag, which prevented the segment from being seen as a
+duplicate ack. Now that FLAG_WIN_UPDATE doesn't cover this scenario
+anymore, we need another way to mark these acks as non-duplicate.
+Adding FLAG_SND_UNA_ADVANCED to FLAG_NOT_DUP is the natural way of
+doing this, since, by definition, a segment advancing SND.UNA, even by
+a small amount, cannot be a duplicate ack.
+
+A side effect of this patch is that repeated zero window acks received
+from peer can now be considered duplicate acks (because of the the
+"|| !win" condition in tcp_may_update_window()). Therefore, they can
+now trigger fast retransmission and fast recovery, including congestion
+window reduction, when the peer is stalled. This is RFC compliant and
+shouldn't have any negative effect.
+
+Add packetdrill selftest. Before this patch, the 1001:2001 segment was
+retransmitted upon RTO, now it's sent right after reception of the
+third duplicate ack.
+
+Thanks to Tom Williams for the investigation help and initial
+reproducer.
+
+Reported-by: Tom Williams <Tom.D.Williams@MorganStanley.com>
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Signed-off-by: Guillaume Nault <gnault@redhat.com>
+Reviewed-by: Kuniyuki Iwashima <kuniyu@google.com>
+Reviewed-by: Neal Cardwell <ncardwell@google.com>
+Reviewed-by: Eric Dumazet <edumazet@kernel.org>
+Link: https://patch.msgid.link/6426d558e45fc6ab724c40af62e4a8793215dd8a.1793219189.git.gnault@redhat.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/isofs/util.c | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ net/ipv4/tcp_input.c                          |  6 +--
+ .../tcp_bidir_fast_retransmit_nosack.pkt      | 42 +++++++++++++++++++
+ 2 files changed, 45 insertions(+), 3 deletions(-)
+ create mode 100644 tools/testing/selftests/net/packetdrill/tcp_bidir_fast_retransmit_nosack.pkt
 
-diff --git a/fs/isofs/util.c b/fs/isofs/util.c
-index 42f479da0b282..6f9a90e58a890 100644
---- a/fs/isofs/util.c
-+++ b/fs/isofs/util.c
-@@ -25,7 +25,7 @@ struct timespec64 iso_date(u8 *p, int flags)
- 		year = (p[0] - '0') * 1000 +
- 		       (p[1] - '0') * 100 +
- 		       (p[2] - '0') * 10 +
--		       (p[3] - '0') - 1900;
-+		       (p[3] - '0');
- 		month = ((p[4] - '0') * 10 + (p[5] - '0'));
- 		day = ((p[6] - '0') * 10 + (p[7] - '0'));
- 		hour = ((p[8] - '0') * 10 + (p[9] - '0'));
-@@ -34,7 +34,7 @@ struct timespec64 iso_date(u8 *p, int flags)
- 		ts.tv_nsec = ((p[14] - '0') * 10 + (p[15] - '0')) * 10000000;
- 		tz = p[16];
- 	} else {
--		year = p[0];
-+		year = p[0] + 1900;
- 		month = p[1];
- 		day = p[2];
- 		hour = p[3];
-@@ -45,10 +45,10 @@ struct timespec64 iso_date(u8 *p, int flags)
- 		tz = flags & ISO_DATE_HIGH_SIERRA ? 0 : p[6];
- 	}
+diff --git a/net/ipv4/tcp_input.c b/net/ipv4/tcp_input.c
+index 8efa1cf5a67cd..6453815b03b4a 100644
+--- a/net/ipv4/tcp_input.c
++++ b/net/ipv4/tcp_input.c
+@@ -107,7 +107,8 @@ int sysctl_tcp_max_orphans __read_mostly = NR_FILE;
+ #define FLAG_TS_PROGRESS	0x40000 /* Positive timestamp delta */
  
--	if (year < 0) {
-+	if (year < 1) {
- 		ts.tv_sec = 0;
- 	} else {
--		ts.tv_sec = mktime64(year+1900, month, day, hour, minute, second);
-+		ts.tv_sec = mktime64(year, month, day, hour, minute, second);
+ #define FLAG_ACKED		(FLAG_DATA_ACKED|FLAG_SYN_ACKED)
+-#define FLAG_NOT_DUP		(FLAG_DATA|FLAG_WIN_UPDATE|FLAG_ACKED)
++#define FLAG_NOT_DUP		(FLAG_DATA|FLAG_WIN_UPDATE|FLAG_ACKED|	\
++				 FLAG_SND_UNA_ADVANCED)
+ #define FLAG_CA_ALERT		(FLAG_DATA_SACKED|FLAG_ECE|FLAG_DSACKING_ACK)
+ #define FLAG_FORWARD_PROGRESS	(FLAG_ACKED|FLAG_DATA_SACKED)
  
- 		/* sign extend */
- 		if (tz & 0x80)
+@@ -3959,11 +3960,11 @@ static int tcp_ack_update_window(struct sock *sk, const struct sk_buff *skb, u32
+ 		nwin <<= tp->rx_opt.snd_wscale;
+ 
+ 	if (tcp_may_update_window(tp, ack, ack_seq, nwin)) {
+-		flag |= FLAG_WIN_UPDATE;
+ 		tcp_update_wl(tp, ack_seq);
+ 
+ 		if (tp->snd_wnd != nwin) {
+ 			tp->snd_wnd = nwin;
++			flag |= FLAG_WIN_UPDATE;
+ 
+ 			/* Note, it is the only place, where
+ 			 * fast path is recovered for sending TCP.
+@@ -4354,7 +4355,6 @@ static int tcp_ack(struct sock *sk, const struct sk_buff *skb, int flag)
+ 		 */
+ 		tcp_update_wl(tp, ack_seq);
+ 		tcp_snd_una_update(tp, ack);
+-		flag |= FLAG_WIN_UPDATE;
+ 
+ 		NET_INC_STATS(sock_net(sk), LINUX_MIB_TCPHPACKS);
+ 	} else {
+diff --git a/tools/testing/selftests/net/packetdrill/tcp_bidir_fast_retransmit_nosack.pkt b/tools/testing/selftests/net/packetdrill/tcp_bidir_fast_retransmit_nosack.pkt
+new file mode 100644
+index 0000000000000..5c66b7171d229
+--- /dev/null
++++ b/tools/testing/selftests/net/packetdrill/tcp_bidir_fast_retransmit_nosack.pkt
+@@ -0,0 +1,42 @@
++// SPDX-License-Identifier: GPL-2.0
++//
++// Verify that non-SACK connections properly detect duplicate acks when mixed
++// with other data segments from peer.
++
++`./defaults.sh`
++
++    0     socket(..., SOCK_STREAM, IPPROTO_TCP) = 4
++   +0...0 connect(4, ..., ...) = 0
++
++   // Three-way handshake, SACK not supported by peer
++   +0 > S  0:0(0) <mss 1460,sackOK,TS val 0 ecr 0,nop,wscale 8>
++   +0 < S. 0:0(0) ack 1 win 65535 <mss 1000>
++   +0 > .  1:1(0) ack 1
++
++   // Send 1000 bytes, peer acks everything
++   +0 send(4, ..., 1000, 0) = 1000
++   +0 > P. 1:1001(1000) ack 1
++   +0 < .  1:1(0) ack 1001 win 65535
++
++   // Send 4000 more bytes
++   +0 send(4, ..., 4000, 0) = 4000
++   +0 > P. 1001:5001(4000) ack 1
++
++   // Receive first dup-ack (considering segment 1001-2001 was lost)
++   +0 < .  1:1(0) ack 1001 win 65535
++
++   // Receive unrelated data segment from peer and ack it
++   +0 < P. 1:11(10) ack 1001 win 65535
++   +0 > .  5001:5001(0) ack 11
++
++   // Receive second dup-ack
++   +0 < .  11:11(0) ack 1001 win 65535
++
++   // Receive another data segment from peer and ack it
++   +0 < P. 11:21(10) ack 1001 win 65535
++   +0 > .  5001:5001(0) ack 21
++
++   // Receive third dup-ack, which should trigger fast retransmit (without
++   // waiting for RTO)
++   +0 < .  21:21(0) ack 1001 win 65535
++   +0 > .  1001:2001(1000) ack 21
 -- 
 2.53.0
 
