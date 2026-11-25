@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795624052;
-	b=3MvfEygXPCLGXEs5NUC99EUpCwKMjQ3oi4gYmkfNuluMxB+ElA3jyHLs+61/r0BbLvn+
-	 eaV3nFEqrO3BcnkhL0Rc4/2uv3+IFqbIwlOIhP/uQhV+7NOYZV8lPxPybxu229VvjGmcm
-	 s8yc+7BGmq4+dlpSOGbE4CcRP7gfKX8OpEQpXQjta7lwhOcef8Y/AnZFZE9kYJJmsusuX
-	 VCNlHY6Sk9o3xIeEgo/GpEEvmHn0sxUNubWaLUwMJEVrBaHlDKmL1aQzfb/ENsRK9NF85
-	 UpBAwaI8rcmd9tkjcgEJNqcg6mK4JyL0LALA+LGs9OKTFfFoZ8+WUI0yJOV1KZdc4og==
+	t=1795624055;
+	b=WT4znKjjlm72g0eSncC3IVKLXpJWheQZCl8LxtgaqNLh0r0elHrsPJEgroPkG3sIoKfu
+	 wV7aBDJydMFMxo+jRy1DSduJRy6Poi6m75He21XpEpOVIP2/Pmcf6a4s5ax5aS4ms2xxx
+	 L4SYqmvBMd7QBkU33lsEvX/LlOJzEsHpepHKoWEXOXPohsAdaDgxX+DjPXdfmlk2VMmqa
+	 2EwoOYI707iqRfASk7AeEdI66Ri3pL1hBUY3Ap/kkI9sL439k/0Z5kEFHvmuaRLop65Ha
+	 1FTRUEUZzUhQ52PXKieqhhndIGJnfoh8n3hSd+7REim2fWUYRCSZTRWZyj90uPUV/Cg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795624052;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795624055;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=86JJxIZ/ou1YtRqMg9M1Ai2lXee4qkR4wVmN9+8MSDQ=;
-	b=mLK4gKUa3gr0sAOFLRbtRaWTnXywmZRazDm3zay2OyYV5eqgQQt4y+78SvADgb3zT70s
-	 FNa0U496UVZQhFlbfjj43wY1jesM3TDChtwx7mTiZbQZg/FTb2iXl1tuWksvXwIQAhhBH
-	 E6X88Bbbni+5T6Ng8SKegN9IMDaBemfpcmNAsNScyfwgLFmPt2qW5p8VJUtnr0i1+QB3q
-	 E+yEQg7PI2aOT8hSqQXHCV2b9rVvxI+3zaUHJvG3X6VxQVJhSvyXvpPeWcqJ+xpEtgVh3
-	 tyA88dbf8Ovt9Er9oXj2By0ynI4yZJLC71S//HBrJUe4Xmx4Rn5h7wAY7+tK+RwFlhQ==
+	bh=QjH7KmPtvOXV9ZRbu4BNHB3Ds2xlY8sSIFqJoFeJUtw=;
+	b=CxDSiG84J0dHd1IelpCb2tARspx50GgFopqfWOCRwg1O93innBRJvdT/4zXKCtWRT/M1
+	 6OwiRh12nKVFSsrQbnP4jKUrVEvRs5BtcD0QDjj/sM4SDGeLxzGfqPDBYy3sQv1KdeSre
+	 ac84k7hV6Q88sCsnaj4ZYlA8sYkm4EzpJUeGs+Ba3nu7XaTdZzzG4AuM/swj+gdhzgEcA
+	 tI6iRwN9A8aEfSVKItUYymK1qHkG0+V/GWoND6CKWt5hIwiFdvGDHVUGYgI3ma/0YiCU8
+	 Mn5NBF1wRjzQiQRf/Ljd8eRbgiWIyoAlQJ2mW9dRupvwd8n3PPSKqiyXhUvHdmQM0tQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=xWgUM2y8;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Gjfpl9Lk;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 08811606A31E;
-	Wed, 25 Nov 2026 16:27:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2944C606A321;
+	Wed, 25 Nov 2026 16:27:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=xWgUM2y8
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E42FF1F000C4;
-	Wed, 25 Nov 2026 16:27:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Gjfpl9Lk
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2E23A1F000C0;
+	Wed, 25 Nov 2026 16:27:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795624051;
-	bh=86JJxIZ/ou1YtRqMg9M1Ai2lXee4qkR4wVmN9+8MSDQ=;
+	s=korg; t=1795624054;
+	bh=QjH7KmPtvOXV9ZRbu4BNHB3Ds2xlY8sSIFqJoFeJUtw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=xWgUM2y8Saywkm3DkOYFt86f61DCr87jGeFewf5jcnTEbFEbhYVCVDoYVAbqB877/
-	 Lljej0m2DS0wtNVk/DLs9T3t8E7XPsdjnG9ZUZID+Dd0QUlpCht13vkd7HGxx0ISf2
-	 QMWACptiHtGrg/t+gw2NhhMWs0UaJOwbypq/JxlQ=
+	b=Gjfpl9LkO9M3yL25iP8lAOuRM5zjotrDC6YU+pXIavi/KuCLfPYZgavqVTXlOnRvy
+	 8+22M3Gl34h+jCxJ6zYmwXW4i1cya8fkjRm22qtizly1iwHHMVDtHCDoB84sDjvfwP
+	 8uiFweLGf4k9ORPJ4HX42EeeiBevSHSZIiDAFE7w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	guolingxing <guolingxing@tju.edu.cn>,
-	Qu Wenruo <wqu@suse.com>,
-	David Sterba <dsterba@suse.com>,
+	Yang Xiuwei <yangxiuwei@kylinos.cn>,
+	Jens Axboe <axboe@kernel.dk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 069/816] btrfs: verity: propagate orphan insertion errors when enabling verity
-Date: Wed, 25 Nov 2026 15:26:57 +0100
-Message-ID: <20261125143850.819478212@linuxfoundation.org>
+Subject: [PATCH 6.12 034/816] io_uring/futex: fail soft links when cancelling a wait
+Date: Wed, 25 Nov 2026 15:26:22 +0100
+Message-ID: <20261125143850.008673456@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143849.205329330@linuxfoundation.org>
 References: <20261125143849.205329330@linuxfoundation.org>
@@ -69,45 +68,34 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: guolingxing <guolingxing@tju.edu.cn>
+From: Yang Xiuwei <yangxiuwei@kylinos.cn>
 
-[ Upstream commit 45a686dff6b91c3667cd8188d3a02c69f62f4d00 ]
+Commit 9a7cbe50dd95594d6fb3c57b8454ace58d8d8d0a upstream.
 
-btrfs_begin_enable_verity() ignores the return value of
-btrfs_orphan_add() and unconditionally returns 0. If orphan insertion
-fails, btrfs_orphan_add() aborts the transaction, but the generic
-fs-verity code still proceeds with Merkle tree construction because
-the begin_enable_verity callback reported success.
+__io_futex_cancel() completes the request with -ECANCELED but does
+not call req_set_fail(). IOSQE_IO_LINK dependents then still run.
 
-Return the error so that fs-verity stops immediately instead of
-continuing after the initialization failure.
-
-The transaction is already aborted by btrfs_orphan_add() and the
-handle is released by btrfs_end_transaction(), so no additional
-cleanup is needed.
-
-Fixes: 705242538ff3 ("btrfs: verity metadata orphan items")
-Signed-off-by: guolingxing <guolingxing@tju.edu.cn>
-Reviewed-by: Qu Wenruo <wqu@suse.com>
-Signed-off-by: David Sterba <dsterba@suse.com>
+Fixes: 194bb58c6090 ("io_uring: add support for futex wake and wait")
+Signed-off-by: Yang Xiuwei <yangxiuwei@kylinos.cn>
+Link: https://patch.msgid.link/20261114072246.741950-2-yangxiuwei@kylinos.cn
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/btrfs/verity.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ io_uring/futex.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/fs/btrfs/verity.c b/fs/btrfs/verity.c
-index fb0eb6c4fd221..65a17d7e4e53f 100644
---- a/fs/btrfs/verity.c
-+++ b/fs/btrfs/verity.c
-@@ -604,7 +604,7 @@ static int btrfs_begin_enable_verity(struct file *filp)
- 		set_bit(BTRFS_INODE_VERITY_IN_PROGRESS, &inode->runtime_flags);
- 	btrfs_end_transaction(trans);
+diff --git a/io_uring/futex.c b/io_uring/futex.c
+index 990568baf393a..59b679e1e26f2 100644
+--- a/io_uring/futex.c
++++ b/io_uring/futex.c
+@@ -108,6 +108,7 @@ static bool __io_futex_cancel(struct io_ring_ctx *ctx, struct io_kiocb *req)
+ 	}
  
--	return 0;
-+	return ret;
- }
- 
- /*
+ 	hlist_del_init(&req->hash_node);
++	req_set_fail(req);
+ 	io_req_set_res(req, -ECANCELED, 0);
+ 	io_req_task_work_add(req);
+ 	return true;
 -- 
 2.53.0
 
