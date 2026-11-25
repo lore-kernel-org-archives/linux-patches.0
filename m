@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795623577;
-	b=B/ZO6ooqnWUh2AkFeDEfNHTzkbaOcAC4hyofM0RGJc/mWl3WYzEJ0M/jcYmUJQFEerU6
-	 rOlX5v9+RjAVtfv6vg4ZzneZZERWsXO+cR/jkg1wrrA4m3c6yAwWsIJrgSTE7ixjHomvn
-	 BJqLBn2JaSV7vOSJ+h/Eh+/bwWZsjut+tV+JTjk8bh9PqjxzOpaK77L0+IrIHYHeEQo3y
-	 zEH2Q/CG7eMQI35fLpJ+NCQLx0K9KTu6pAH0H5mmec+5HdgMe8Bgt8hMUuT90oFH3ds5T
-	 JUdRMoL7Ct9yEcOWOafEssaph6PrJNUtdVbjFgfMTckwu/EloET0g0IrWcOJwyXYVcA==
+	t=1795623581;
+	b=Wh39XkPFzHKlzCm92dz3CW6yrDOPIbbDcypdiNKnkh6YkevLf3UFGvfGpQ+OG600Xqns
+	 Tr2aGh3uwYMzwOhjFp7Z268v1xPKV9+F92dGbllJsrukopasWTTjQ4Zgyjxn0iXfaOrPV
+	 cK/tSpJ5In+F21cZIRyzmmI1QJOrSUtIG0Dm7LuV1Eqve/vqQy7QkNVme9V+CUMWvhAOG
+	 kBaInMqN/D4WOKld6NaXRZY6KY+rP+H2ITvQEFnTzsplFMfz0TRvgPfGKNqa2IqKeyFY8
+	 4fGR9FMeLqNOT+mnPfmPFgEa1usRldZMlIxl4rJYB9QPziehgrA1of1AQYqWOzx1uqw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795623577;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795623581;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Transfer-Encoding;
-	bh=k/paMM+GFGhJwnyCC42ss19g89dTxIAdCBJhdd7l3dE=;
-	b=qVxOdlAVv4TPvBtSISXHocgHRH6jCk2WWsHzL0u5c+VFNfx5MMO1SmwYrBxzCWKslL1x
-	 dMrvnsyZ45fuu4z+UMG0Nq+7mez6bO5m1X9Ch2Gp2a6Dlw6Zy5GoFtL4QwpyAi1qGzPNC
-	 Ki8pJE8O39XsjbKZMcBBLqZ+d8fOlHo+VCI7V6w26Mgwg1YFrzQs1JefJpUcrBACol40H
-	 YDjgYr9ddP9dauGILo+lXX0FK9cC4aRmNWGiWCEkNhV2trp/HyotgYOiaoXiKfu/9RWPN
-	 HUdTvxsS3PSa7phRM//zoSaYqwY+ZDVvd+lc+TMaUORwWG6kEgKlw7+ieLo/TTHbuQA==
+	 MIME-Version:Content-Type:Content-Transfer-Encoding;
+	bh=DNaWGkPQUV8PyCKualnGIre00P30moFU+a+R3cX45KQ=;
+	b=4Va6wtSUH6D/WZOAN1rfW67Q8xmFxa29sZLkIo06AogD9bg2WtOCdXA5TL8OTeQgdWHj
+	 7M++rHyT7xqnBnv3KFYldtt/CTHTdlznvDQgVVjH5q7D4QmeZMTaRD/IpSB08RDcuDrqJ
+	 TD46rKhME87yBeVJXHD1Lt05RjO06o/JXqkwNDEEW/bOWy+4As+y0VaBLdgWfHns2Wc03
+	 aFy4Df6palFqwwDrMAM4qxgkqnv2lmhXcxmQ74X1Qb2GvBGOu50E97X7PspBDo8YHUkBW
+	 MiytJ9i5qU1VWIOHZVKg9BiAt80mzxGxA4oNBibeQX0uaWqBd/2n23RuKH2v5caKQqQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Z4bWLagg;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=oHreoWlw;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DA982606A323;
-	Wed, 25 Nov 2026 16:19:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3938B606A31E;
+	Wed, 25 Nov 2026 16:19:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Z4bWLagg
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 382DF1F000C0;
-	Wed, 25 Nov 2026 16:19:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=oHreoWlw
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 61DA41F000CF;
+	Wed, 25 Nov 2026 16:19:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795623577;
-	bh=k/paMM+GFGhJwnyCC42ss19g89dTxIAdCBJhdd7l3dE=;
+	s=korg; t=1795623580;
+	bh=DNaWGkPQUV8PyCKualnGIre00P30moFU+a+R3cX45KQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Z4bWLaggEjGsiNkQ3Qw1BjYl/3+xir6PMVk90gBel36Jiyne32E99TJ/tBRpqE5bK
-	 SbhAEowT8dWQaJCQiOZ8CcW//e9ekneMlTB0pjrm6U3uxX+ZGFbhTCGCD0dMssm0/+
-	 Rbds7YptP844sDabolJTMdI4mOJfkFkWmLuLS3QI=
+	b=oHreoWlwRKLjrhnhCCNrld6xLwGGGlqMugQhOc/9KOWN19MegBLrCkcwAeZNselQ3
+	 YDMt0RtzNPt99QEwCn/Zrs3D2eCU7vfWxGVxXvV5KasLwe3QRFuWke5q1C/UZhr89w
+	 m+iAD03i4o+APScZQjpm6mdu0amV9dhRrEmb/hSo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Olivier Kaloudoff <olivier.kaloudoff@gmail.com>,
 	stable <stable@kernel.org>,
-	Chaz Bailey <charles.s.bailey@gmail.com>,
-	Krishna Kurapati <krishna.kurapati@oss.qualcomm.com>,
-	Heikki Krogerus <heikki.krogerus@linux.intel.com>
-Subject: [PATCH 6.18 905/990] usb: typec: nb7vpq904m: Set client data in probe to avoid crash on remove
-Date: Wed, 25 Nov 2026 15:37:52 +0100
-Message-ID: <20261125143843.206898617@linuxfoundation.org>
+	Alan Stern <stern@rowland.harvard.edu>
+Subject: [PATCH 6.18 906/990] usb: uas: ignore UAS for ASMT135x bridges (174c:55aa)
+Date: Wed, 25 Nov 2026 15:37:53 +0100
+Message-ID: <20261125143843.230263033@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143822.072087159@linuxfoundation.org>
 References: <20261125143822.072087159@linuxfoundation.org>
@@ -63,45 +62,96 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Chaz Bailey <charles.s.bailey@gmail.com>
+From: Olivier Kaloudoff <olivier.kaloudoff@gmail.com>
 
-commit 2022b10726be78849626ea3fa33038ee96a54e46 upstream.
+commit fafd23d61494461256d374f67c121f2712e1af2f upstream.
 
-nb7vpq904m_probe() allocates struct nb7vpq904m, but client data is not
-set during probe.
+The ASMedia chip detection in uas_use_uas_driver() assumes that every
+device with idVendor/idProduct 174c:5106 or 174c:55aa reporting a
+config.MaxPower of 0 is an ASM1153 with working UAS.
 
-In nb7vpq904m_remove(), i2c_get_clientdata(client) returns NULL, leading
-to a NULL pointer dereference when accessing nb7->retimer or nb7->sw.
+ASMT135x bridges (iProduct "ASMT135x") share the same 174c:55aa id and
+also report MaxPower == 0, so they take the "ASM1153, do nothing"
+path — but their UAS implementation is broken:
 
-Set client data upon successful allocation in probe.
+- The first READ(16) issued by sd probing times out after 30 s;
+  enumeration only completes after a uas_eh_abort_handler plus a full
+  uas_eh_host_reset_handler cycle:
 
-Fixes: 88d8f3ac9c67 ("usb: typec: add support for the nb7vpq904m Type-C Linear Redriver")
+    scsi 3:0:0:0: Direct-Access  ASMT  ASMT135x  0  PQ: 0 ANSI: 6
+    sd 3:0:0:0: [sdb] tag#26 uas_eh_abort_handler 0 uas-tag 1 inflight: CMD IN
+    sd 3:0:0:0: [sdb] tag#26 CDB: Read(16) 88 00 00 00 00 00 00 00 00 00 00 00 00 01 00 00
+    scsi host3: uas_eh_host_reset_handler start
+    usb 6-2: reset SuperSpeed USB device number 2 using xhci_hcd
+    scsi host3: uas_eh_host_reset_handler success
+
+- Under concurrent load the bridge stalls: all inflight commands (20+
+  UAS tags in the captured incident, mixed READ(16)/WRITE(16)) hit the
+  30 s UAS timeout in the same event, forcing repeated abort/reset
+  cycles and eventually a USB disconnect.  Writes dropped mid-flight
+  during these resets returned zeros to the filesystem (observed as
+  XFS metadata corruption on the mounted volume).
+
+- Sequential-write throughput is ~45 MiB/s under UAS versus ~136 MiB/s
+  after disabling UAS (usb-storage BOT mode), which is fully stable:
+  several tens of GiB written without a single error.
+
+- Bulk reads of healthy LBA ranges do work under UAS (~190 MiB/s, no
+  errors); the failure pattern is command-timeout at enumeration and
+  under queue depth / write load, not a broken transfer path.
+
+Since 174c:55aa is shared across several ASMedia bridges and enclosure
+rebrandings, distinguish the ASMT135x by its product string — the same
+approach used for the HIKSEMI MD202 check a few lines below.  The
+product strings of working bridges using the same id ("ASM1053E",
+"ASM1153", "ASM1153E", "ASM1351", vendor rebrands such as "YZWY_TECH")
+do not contain "ASMT135", so the match is safe.
+
+Verified on an ORICO enclosure (iManufacturer "ASMT", iProduct
+"ASMT135x", bcdDevice 1.00) attached through an Alpine Ridge TB3 dock:
+with the equivalent usb-storage quirks parameter (174c:55aa:u) the
+device is completely stable.
+
+Signed-off-by: Olivier Kaloudoff <olivier.kaloudoff@gmail.com>
 Cc: stable <stable@kernel.org>
-Signed-off-by: Chaz Bailey <charles.s.bailey@gmail.com>
-Reviewed-by: Krishna Kurapati <krishna.kurapati@oss.qualcomm.com>
-Reviewed-by: Heikki Krogerus <heikki.krogerus@linux.intel.com>
-Link: https://patch.msgid.link/20261016122045.187862-1-charles.s.bailey@gmail.com
+Acked-by: Alan Stern <stern@rowland.harvard.edu>
+Link: https://patch.msgid.link/20261014165741.35758-1-olivier.kaloudoff@gmail.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/typec/mux/nb7vpq904m.c |    1 +
- 1 file changed, 1 insertion(+)
+ drivers/usb/storage/uas-detect.h |    8 +++++++-
+ 1 file changed, 7 insertions(+), 1 deletion(-)
 
---- a/drivers/usb/typec/mux/nb7vpq904m.c
-+++ b/drivers/usb/typec/mux/nb7vpq904m.c
-@@ -396,6 +396,7 @@ static int nb7vpq904m_probe(struct i2c_c
- 		return -ENOMEM;
- 
- 	nb7->client = client;
-+	i2c_set_clientdata(client, nb7);
- 
- 	nb7->regmap = devm_regmap_init_i2c(client, &nb7_regmap);
- 	if (IS_ERR(nb7->regmap)) {
+--- a/drivers/usb/storage/uas-detect.h
++++ b/drivers/usb/storage/uas-detect.h
+@@ -78,6 +78,8 @@ static int uas_use_uas_driver(struct usb
+ 	 * ASM1051 - with broken (*) uas support
+ 	 * ASM1053 - with working uas support, but problems with large xfers
+ 	 * ASM1153 - with working uas support
++	 * ASMT135x - broken uas support, shares the ASM1153 MaxPower == 0
++	 *            signature, identify it by its product string
+ 	 *
+ 	 * Devices with these chips re-use a number of device-ids over the
+ 	 * entire line, so the device-id is useless to determine if we're
+@@ -99,7 +101,11 @@ static int uas_use_uas_driver(struct usb
+ 			(le16_to_cpu(udev->descriptor.idProduct) == 0x5106 ||
+ 			 le16_to_cpu(udev->descriptor.idProduct) == 0x55aa)) {
+ 		if (udev->actconfig->desc.bMaxPower == 0) {
+-			/* ASM1153, do nothing */
++			if (udev->product && strstr(udev->product, "ASMT135")) {
++				/* ASMT135x, broken uas */
++				flags |= US_FL_IGNORE_UAS;
++			}
++			/* else ASM1153, do nothing */
+ 		} else if (udev->speed < USB_SPEED_SUPER) {
+ 			/* No streams info, assume ASM1051 */
+ 			flags |= US_FL_IGNORE_UAS;
 
 
