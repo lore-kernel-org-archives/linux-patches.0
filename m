@@ -1,51 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795619492;
-	b=PJkd3fKScQmHDrTtR/MqHmxZp4jJ8ULEc3qqwh7MUj7qoRiUmJj41bjhAptDAFBIeP+E
-	 srbdVSE7IzKS6O+VaI0LZPRNUIaIsV6vkglElAgZvs7usHTATkiH/mDZxVpLKJ+zXHYlv
-	 S7gsZqGZvqLVXYGijgnJerlfVQMe4JZU7Kbx1kGJhCBMpqVBalqeEyjCw4d40rWvhDbsg
-	 qTzEQYIo78zyjKfonDaTJn1z/wwuDyeQ1JVfjfNe6HrC/lX99uas5bN1OlHFoqRPrzD6n
-	 hqRDWx6gnrpLK2cgYJLopzbu/0q3K517uy4kWVN3QlaeTV2qt+j77H9ccX4pH6ukqjg==
+	t=1795619494;
+	b=F7zklo0caqcf4jkcUM0BGw4cely7C6SwsCQ5GyvdFsQ+ZJthUrXnl5dj3ZSD0aNBAHyc
+	 97369i8AZlfzhrAW7HiJTfqAxRvn/UwIz62xPli7ik7/3J9Hevxvf04UwvoCsJYt+VFIM
+	 K3BlyK+FhVB9PdrmdUDkUCPqgL6h39wgHo7Gk60Gt+pxdo8DOu2Jj7EUwCO25nV+4wPsh
+	 iGSq0vlyO6dIBXfVEjGTnxhMR7M7g3bu5y8YaYMZafgscpuXBkoBmhluunPxauzm8nrC6
+	 z7q5Z08+baOUucWkNvbLDqh31FU2VlmD2x7luC3T6oVX/8MDBaOpCBq+Qh1N8i2OIUw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795619492;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795619494;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=SswOJmYAXe4oJBHUnFTIF7B2K7okJPc+P5SF+8QQvFE=;
-	b=WJY13vhblU5CWKR2LEpvFYzNC50IzbMLUt1BmKGN/GCkGDXNP8nOn92ta2wJWXD/39e5
-	 L6K39qbj/9KD83aP/gzAzDK/n3P4syMH/pToBEl6npCv5oYXdf5+uNKy5+6KmuseJzHxr
-	 jjSnTiTM7Ps3I46ypITtQ94lPX4C31w7qAor2jSaSj79deCKxFjfgQLlreQnEwn7zogO2
-	 Bi0i0IKdJQRvS4z5Q+q6eC/G8DbyHQjxs7cujm/8JSo2Xva+OsIozEfGonn0h2tuCp6gq
-	 HrfGWf3XHGH3cLhHLu2go9G6EkPzd4dZFQFQoch28ttxB/9+ohWFDLymkVToAdkTIMg==
+	bh=yz3Opfs3Y2qi9jOM07e10tc7hmAmCZFYe4r90mjsDlc=;
+	b=2SADXz4Eeg6ceQ6RcG7wSFO7c3SzQVvSHQmECYV4e6teNvgQ6rsWFY+YmSQQxHVnUj8V
+	 goPBqN3AEtTftqlH+/y2XYhMqjOkMV05GywoYmbneg6bbUhb8O3lDZLi+TPTn8K3i+H8L
+	 Ot0jOgms8S/zYK6AUSTvOI2SV1WRUd5vNO107zdmmwvbqoHLM1YKSX3G8iT3y2v3pcb7z
+	 jkShJRj+zFtE9oPD1ty+Ezheko8Gv/A/2hI4B0OjyYeaBI/P9YWOA8K8Og24IragORuEf
+	 LILlY5AVstA8vS+curXHv4SFvuiy3KGj5c/nDehUWIB+WMRZnu49VYrFllzd13Lw1rg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=L9nmiq+r;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Khpj2uVx;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EAE8D606A31E;
-	Wed, 25 Nov 2026 15:11:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C239D606A31E;
+	Wed, 25 Nov 2026 15:11:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=L9nmiq+r
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D41161F000D1;
-	Wed, 25 Nov 2026 15:11:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Khpj2uVx
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1CDC31F000C0;
+	Wed, 25 Nov 2026 15:11:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795619491;
-	bh=SswOJmYAXe4oJBHUnFTIF7B2K7okJPc+P5SF+8QQvFE=;
+	s=korg; t=1795619494;
+	bh=yz3Opfs3Y2qi9jOM07e10tc7hmAmCZFYe4r90mjsDlc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=L9nmiq+r5tGTi+Kjhz8qen/VVnSJhQKlvePfuYjtZqdgZsoSa/hCvO7sY8x3PI7Me
-	 B+QaFufl4c1mZkwil8TlYSmuU5hrdh04AsMH9uUllaxriMTz6dGlsxCHe+Kgf5wCZg
-	 3e1MtK5i6knY3OQO6dcjdhLhydufMLGdMMQTLv3g=
+	b=Khpj2uVxv4a7/ll1lCKylNMMAdsWl1QhBWe17ebGf8LeJZ3WEQ9pchzVasGZzT6CF
+	 6JERiWGEy45Wpqk4xllo5fv5GN+LW/RUuASmGvoL0YvFDJ3NIOl5rexnYZ7CWIAV99
+	 yWcoY0S+jO01b4too1R1BGNJSfOG8eNm9hYdjfJw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hungyu Lin <dennylin0707@gmail.com>,
-	"Christian Brauner (Amutable)" <brauner@kernel.org>
-Subject: [PATCH 7.3 0614/1005] coda: honor the append state of each write
-Date: Wed, 25 Nov 2026 15:32:32 +0100
-Message-ID: <20261125143836.128464977@linuxfoundation.org>
+	Florian Bezdeka <florian.bezdeka@siemens.com>,
+	Thomas Gleixner <tglx@kernel.org>
+Subject: [PATCH 7.3 0615/1005] entry: Complete syscall_enter_from_user_mode_work() to bool migration
+Date: Wed, 25 Nov 2026 15:32:33 +0100
+Message-ID: <20261125143836.152853439@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143821.729802100@linuxfoundation.org>
 References: <20261125143821.729802100@linuxfoundation.org>
@@ -67,48 +67,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hungyu Lin <dennylin0707@gmail.com>
+From: Florian Bezdeka <florian.bezdeka@siemens.com>
 
-commit 87ea037a9166a5842356ce68e3585fc6e756603b upstream.
+commit efe191f1605a149b06eb0fe1ff975e7d3137c9bb upstream.
 
-coda_open() adds O_APPEND to the container file's f_flags after it has
-been opened, without updating its cached f_iocb_flags. An O_APPEND write
-can therefore overwrite existing data instead of appending. For example,
-writing "Z" to a file containing "abc" produces "Zbc" rather than "abcZ".
+The return type of syscall_enter_from_user_mode_work() was changed to
+bool in the commit referenced below.
 
-Pass RWF_APPEND or RWF_NOAPPEND to vfs_iter_write() according to the
-incoming IOCB_APPEND state. This also honors changes made with F_SETFL
-and per-write append overrides instead of relying on the container's
-open-time flags.
+While doing so, one caller in syscall_enter_from_user_mode_randomize_stack()
+was overlooked and stayed at the previous type: long.
 
-Fixes: 164f4064ca81 ("keep iocb_flags() result cached in struct file")
-Cc: stable@vger.kernel.org # 6.9+
-Signed-off-by: Hungyu Lin <dennylin0707@gmail.com>
-Link: https://patch.msgid.link/20261105051406.52442-1-dennylin0707@gmail.com
-Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
+Update this caller accordingly.
+
+Fixes: 05c033db7e9a ("entry, treewide: Make syscall_enter_from_user_mode[_work]() indicate syscall execution")
+Signed-off-by: Florian Bezdeka <florian.bezdeka@siemens.com>
+Signed-off-by: Thomas Gleixner <tglx@kernel.org>
+Cc: stable@vger.kernel.org
+Link: https://patch.msgid.link/20261030-wip-flo-fixup-entry-code-v1-2-7724c29e800b@siemens.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/coda/file.c |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ include/linux/entry-common.h | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/fs/coda/file.c
-+++ b/fs/coda/file.c
-@@ -71,6 +71,7 @@ coda_file_write_iter(struct kiocb *iocb,
- 	struct file *host_file = cfi->cfi_container;
- 	loff_t ki_pos = iocb->ki_pos;
- 	size_t count = iov_iter_count(to);
-+	rwf_t flags = (iocb->ki_flags & IOCB_APPEND) ? RWF_APPEND : RWF_NOAPPEND;
- 	ssize_t ret;
- 
- 	ret = venus_access_intent(coda_inode->i_sb, coda_i2f(coda_inode),
-@@ -80,7 +81,7 @@ coda_file_write_iter(struct kiocb *iocb,
- 		goto finish_write;
- 
- 	inode_lock(coda_inode);
--	ret = vfs_iter_write(cfi->cfi_container, to, &iocb->ki_pos, 0);
-+	ret = vfs_iter_write(cfi->cfi_container, to, &iocb->ki_pos, flags);
- 	coda_inode->i_size = file_inode(host_file)->i_size;
- 	coda_inode->i_blocks = (coda_inode->i_size + 511) >> 9;
- 	inode_set_mtime_to_ts(coda_inode, inode_set_ctime_current(coda_inode));
+diff --git a/include/linux/entry-common.h b/include/linux/entry-common.h
+index a8b2430eadc5..15278416f886 100644
+--- a/include/linux/entry-common.h
++++ b/include/linux/entry-common.h
+@@ -202,7 +202,7 @@ do {									\
+ 									\
+ 	instrumentation_begin();					\
+ 	local_irq_enable();						\
+-	long _ret = syscall_enter_from_user_mode_work(regs, syscall);	\
++	bool _ret = syscall_enter_from_user_mode_work(regs, syscall);	\
+ 	instrumentation_end();						\
+ 									\
+ 	_ret;								\
+-- 
+2.56.1
+
 
 
