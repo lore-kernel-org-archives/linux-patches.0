@@ -1,56 +1,55 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795621822;
-	b=IHbDKghotjh+bmHNJoGl6tYGRXp6j48KTv3I4R1aINatqhYegPOudSDV7Gr94H6DzDpb
-	 0o/WPZnPm1bFDlV9qlvJQP6zJNxFZVca+CZLhtzq0a8DpQWTvi2shXyZV3+FsnsfTFCnN
-	 q7crqMbO9BHcpnp8zJccTm2KPw2044TKsbL89GGjgbPvQ+tBex/UbXe34hTJUJUm56i/c
-	 FONZJ/fNyPYOCoxQxTfF2corWteXGXiPsSke4pDJfHye1lBKZY7Sk+6AJOLpokMEIMbwz
-	 5w2QQmfMH4LUDlyV86MwYEMqzn/H6oBF7qBHi6GJJuMHzbTfQhraCJlKV38x5e6u1oQ==
+	t=1795621826;
+	b=s9haAAbkPw/hoQhzymqhtSvvXufIbU3mYO/D8lOhcLkhcsnDYreHzJqFDafMWcrDyDwV
+	 CnUAEZuj+7RkzKrnMTa5hg4DSyQlV2Q9WJFgwqjlxTbCy5ZdrJGWHuaypbAMWqJb9lyrM
+	 jMu4Rk8jIUKtbyz/NuWxSm+Z052iwsdoBKjS6wPnGHsigCbDTLqYWw9pqVbQ5q5ybWXqk
+	 bRTKCbVxskZH7yan4XU+awWW0AXSKvfU/mCgrJe2HKv6becYT+khSYp7bU+rzlkWNjdTD
+	 o0qbIaxHrJG8WukBiYhrjeGvXvh5HZQtJ8u1/vlBq1D8YwQEdXYwxd+uIxLP/EnZF8Q==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795621822;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795621826;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=XFpd7LpVJhqMPGC1O2RVhdhSKSa/qWuwRQe21jzHb+A=;
-	b=i3VSbIeNSbh+rQZYRrtEvhouGelzaXTl1cBz2ieIh8pMAzhrqAaa55BHEk3aH/GKL+Tc
-	 Ddp8j4E6zGJVkyvAPMAyJtgSSZGLsuyjwY4N5cxLdzE93kxy9OwIQpuA8S2iZvjoIIjGK
-	 kFPO5eSdxLFRCP4kVC7Bf5GFolWgopz+ffpGDQqi+51HVvWe1ttm7If4jxeirLtHCSdbV
-	 9iG26dBg+6gepVtQBf5nh2uI9k/irGc5Qge1dVHg2I9lm+FKJn5Wvgn3hEAlJTOeoz/Us
-	 MaIuOf3AiZqtiNUjjTTYNO9eEd/qpfaGeVsdCV6oWEdlEP7HPH9DL5MZ3jYqiZWUjSQ==
+	bh=lzGJwn1nKUUZdPHQzPwJhc5gbjL0H1NXQzm7BfvL0so=;
+	b=MRvK3hL2kD9k+3gXufEBgdgLgLgfPRYkR7B+7zXxwyLeaixdf+4Ry1zGG6f7TZht/30H
+	 3SkG4i4IJnvIXqtnj7s1chl7iYQ3Jg0kDEkISAfUxfM3VKDV5SshBaGzDUK0APEp80pD6
+	 HnK5uSscxRIR8ESN1fQOuJirWl8pOZjyN9r9dp8LaZzgbkDT8yI9OFuw5bkaeq6+JPqEp
+	 aT8wYulqmWjSU/lTkab2eawAGt+o6LcgWiqyt9+9hEbDqfuTTpnTji7g6bi6n6WCY0yL6
+	 7iTKgwDDU93yxiF01wiyw67pIytZlf4YnLZH337opfdodZcRH6VUKAR9//G1CHr0fdQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=iFiX8FET;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ihANfsxl;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B43E6606A335;
-	Wed, 25 Nov 2026 15:50:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DC557606A32E;
+	Wed, 25 Nov 2026 15:50:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=iFiX8FET
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E773A1F000CA;
-	Wed, 25 Nov 2026 15:50:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ihANfsxl
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 91B721F000E1;
+	Wed, 25 Nov 2026 15:50:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795621822;
-	bh=XFpd7LpVJhqMPGC1O2RVhdhSKSa/qWuwRQe21jzHb+A=;
+	s=korg; t=1795621826;
+	bh=lzGJwn1nKUUZdPHQzPwJhc5gbjL0H1NXQzm7BfvL0so=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=iFiX8FETtFf6NtJBfiZPHQzhdh9+lsVsfZWODdyFEVmFrzguMaKB8NcpTOARw1ggr
-	 43MdfIR8NcIWR3m2h1OSPjge/sYwbAmbm24Yt1ZDxFfalKZ9jHJaWXMwpIIixxm7Tp
-	 uk8xUJtSBFwp4pTfskceH8OQxQJUYnI1/CgTBoiU=
+	b=ihANfsxlvK7Sy7Jt5zTbI0s2Q+XnJVZO1WsfRgjH3Lm6UMZk2Y/lYzfN7PjQnvHTY
+	 Z47SFdoxb+CrYk5UHBYAqEcfIHEYtwzm1utFKellpTmFf/IFYWymMLodV8x9hlX86J
+	 32nVa3KQjQxUJao4REhUQ+aA3W34MtOC9z5ppoO0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tvrtko Ursulin <tvrtko.ursulin@igalia.com>,
-	Helen Koike <koike@igalia.com>,
+	kernel test robot <lkp@intel.com>,
 	Matt Roper <matthew.d.roper@intel.com>,
 	Rodrigo Vivi <rodrigo.vivi@intel.com>,
 	Matthew Brost <matthew.brost@intel.com>,
 	Dave Airlie <airlied@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 344/990] drm/xe/lrc: Restore CTX_CS_INDIRECT_CTX_OFFSET programming for pre-Xe2
-Date: Wed, 25 Nov 2026 15:28:31 +0100
-Message-ID: <20261125143830.150453843@linuxfoundation.org>
+Subject: [PATCH 6.18 345/990] drm/xe: Fix build with DRM_XE=y and CONFIGFS_FS=m
+Date: Wed, 25 Nov 2026 15:28:32 +0100
+Message-ID: <20261125143830.174260312@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143822.072087159@linuxfoundation.org>
 References: <20261125143822.072087159@linuxfoundation.org>
@@ -72,75 +71,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Helen Koike <koike@igalia.com>
+From: Rodrigo Vivi <rodrigo.vivi@intel.com>
 
-[ Upstream commit badac1974e098dba1a0a7f413e53f5b6ae24ab10 ]
+[ Upstream commit da475c094342b6d5c8bc020b19d6900130bed047 ]
 
-CTX_CS_INDIRECT_CTX_OFFSET default value is not retrieved from the GPU
-by inhibit+context save mechanism since it is not part of the Engine
-Context. Thus, at restore, 0x0 is programmed back to the GPU, which is
-an invalid value according to the PRM.
+When xe is built-in but configfs is a module, xe_configfs.o is not
+linked into xe, while IS_ENABLED(CONFIG_CONFIGFS_FS) in xe_configfs.h
+still exposes the real declarations, leading to undefined references.
 
-This causes sporadic hangs on Alder Lake when executing test
-IntelAngleEnd2EndTestCases (error VK_DEVICE_LOST).
+Use IS_REACHABLE() so this case falls back to the stubs, the same as
+CONFIGFS_FS=n.
 
-Fix it by partially reverting commit c9dfd66cb91e ("drm/xe/lrc: Allow
-INDIRECT_CTX for more engine classes"). Re-add the programming of
-CTX_CS_INDIRECT_CTX_OFFSET for pre-Xe2 (in theory it should apply to all
-platforms, but we got an unexpected behaviour on Xe2 that still requires
-investigation).
-
-Fixes: c9dfd66cb91e ("drm/xe/lrc: Allow INDIRECT_CTX for more engine classes")
-Suggested-by: Tvrtko Ursulin <tvrtko.ursulin@igalia.com>
-Signed-off-by: Helen Koike <koike@igalia.com>
+Fixes: 16280ded45fb ("drm/xe: Add configfs to enable survivability mode")
+Reported-by: kernel test robot <lkp@intel.com>
+Closes: https://lore.kernel.org/oe-kbuild-all/202610160935.Qk4ZxBxY-lkp@intel.com/
+Closes: https://lore.kernel.org/oe-kbuild-all/202610162335.FEwMdGY9-lkp@intel.com/
+Suggested-by: Matt Roper <matthew.d.roper@intel.com>
+Assisted-by: LLM
 Reviewed-by: Matt Roper <matthew.d.roper@intel.com>
-Link: https://patch.msgid.link/20261016214112.1647202-1-koike@igalia.com
+Link: https://patch.msgid.link/20261021194555.2171344-2-rodrigo.vivi@intel.com
 Signed-off-by: Rodrigo Vivi <rodrigo.vivi@intel.com>
-(cherry picked from commit b99292acb2dce61ce50d37f54a66d84b768b8927)
+(cherry picked from commit 30499cbd796117b63be3b59a1781c25ea3f4b27f)
 Signed-off-by: Matthew Brost <matthew.brost@intel.com>
 Signed-off-by: Dave Airlie <airlied@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/xe/regs/xe_lrc_layout.h | 3 +++
- drivers/gpu/drm/xe/xe_lrc.c             | 8 ++++----
- 2 files changed, 7 insertions(+), 4 deletions(-)
+ drivers/gpu/drm/xe/xe_configfs.h | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/xe/regs/xe_lrc_layout.h b/drivers/gpu/drm/xe/regs/xe_lrc_layout.h
-index b5eff383902c5..1b101edb838bf 100644
---- a/drivers/gpu/drm/xe/regs/xe_lrc_layout.h
-+++ b/drivers/gpu/drm/xe/regs/xe_lrc_layout.h
-@@ -40,4 +40,7 @@
- #define INDIRECT_CTX_RING_START_UDW	(0x08 + 1)
- #define INDIRECT_CTX_RING_CTL		(0x0a + 1)
+diff --git a/drivers/gpu/drm/xe/xe_configfs.h b/drivers/gpu/drm/xe/xe_configfs.h
+index 08cce375ae0f3..ba24c1839d378 100644
+--- a/drivers/gpu/drm/xe/xe_configfs.h
++++ b/drivers/gpu/drm/xe/xe_configfs.h
+@@ -12,7 +12,7 @@
  
-+#define CTX_INDIRECT_CTX_OFFSET_MASK	REG_GENMASK(15, 6)
-+#define CTX_INDIRECT_CTX_OFFSET_DEFAULT	REG_FIELD_PREP(CTX_INDIRECT_CTX_OFFSET_MASK, 0xd)
-+
- #endif
-diff --git a/drivers/gpu/drm/xe/xe_lrc.c b/drivers/gpu/drm/xe/xe_lrc.c
-index 53eadea8ab38d..29a30e83f988c 100644
---- a/drivers/gpu/drm/xe/xe_lrc.c
-+++ b/drivers/gpu/drm/xe/xe_lrc.c
-@@ -1371,15 +1371,15 @@ setup_indirect_ctx(struct xe_lrc *lrc, struct xe_hw_engine *hwe)
- 	finish_bo(&state);
- 	kfree(state.buffer);
+ struct pci_dev;
  
--	/*
--	 * Enable INDIRECT_CTX leaving INDIRECT_CTX_OFFSET at its default: it
--	 * varies per engine class, but the default is good enough
--	 */
- 	xe_lrc_write_ctx_reg(lrc,
- 			     CTX_CS_INDIRECT_CTX,
- 			     (xe_bo_ggtt_addr(lrc->bo) + state.offset) |
- 			     /* Size in CLs. */
- 			     (state.written * sizeof(u32) / 64));
-+	if (GRAPHICS_VER(lrc_to_xe(lrc)) < 20)
-+		xe_lrc_write_ctx_reg(lrc,
-+				     CTX_CS_INDIRECT_CTX_OFFSET,
-+				     CTX_INDIRECT_CTX_OFFSET_DEFAULT);
- 
- 	return 0;
- }
+-#if IS_ENABLED(CONFIG_CONFIGFS_FS)
++#if IS_REACHABLE(CONFIG_CONFIGFS_FS)
+ int xe_configfs_init(void);
+ void xe_configfs_exit(void);
+ void xe_configfs_check_device(struct pci_dev *pdev);
 -- 
 2.53.0
 
