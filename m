@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795619179;
-	b=WKulZhH0mlDXAihGcmzou6VvtYVy3zyI0PBg7HmB146TNOEoUadlQ4mHjNn1rYxZH7Zv
-	 RGGIPrtVSN3r+5taibC3nHcqMl3TDIBHjfrhwKLTqHEY2IwOqZPuN2um2X6v44l4AsoKT
-	 Zl5okYyigDFqp+VVb4DLsULjIKrMIkVRSeT2VRg7qZNpJ7DKw5R/LP0xryGdhxAiQ6BHf
-	 JVg8p5v2pWeFP7zhNClNOakQYWWpHG8rxhIpuRkqZlup4F5EbgUmG4R1kp2wwv05ItpxR
-	 +GlupeH0Q5vl9Rrfh87CkkANb1SOIugxJ8tw6XGfWJbY1vfoHPpgPC+7VxY8BBuP5Dw==
+	t=1795619182;
+	b=KRaGYaXeBDk3d964gS/NpYehOXG0CiOKQ2gHpF/Ahd8+XVGhDTj0IcmLwo65X6sUAvzv
+	 GsNSXPQv1zS/2QD0iOlSU0mApEWgNppPmtmS89ywIXMKBf6DyeFBeuAzk/EOssALTsT1w
+	 NvWaeMRtxCulhou9WCjZ4r68p9RUDs2R9OAe2I2P54NndPo92GSkxIm7Q9f9C0qhatQGA
+	 Pyfow9Fr555Ay0eTmZerhCi2Kv2K5Y6wWnoLTNCRA4wHD6NNPqrQW8TpQjaZI9YRDwtfS
+	 AznVFIPZXeB+l3mbMobFcuNK+JqS6ahfa+MVmtnoEqEcmXz+KRclTuD/2ZcSIBuJBdA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795619179;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795619182;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=n8WfNdETjBCU0ACrU91c61/3BbbaGdGc9O+rIF1GnJc=;
-	b=b3i8AEYEVUeqHj0aC7ADRpmqOxMi9Fw87KLE51QTp5UQuRhCCC/b6eWt1msu5GCrhwWu
-	 KyQ+m58McXL75YVNnYazhHUK9OPyeJ0ZkIgKoIIHi7MqsiP7R/+L0wEoiJ16ilfeSp71L
-	 A/Y8Di2UNEquU+bU7tAQNkW+pAjbdm7wV7GmXfBhc2bNnwx4A0O+TET7O97GKJrk0w1Km
-	 dyX6xaX1dgQmYwavpaN9yZ4hTnHzCWZ6minTwe3HMvqxQLuQ7qqUMB/uvuv3Uqqwk4msc
-	 ZUeVl+5mdBSIQShp+GU4dn7F4JAvjDCdo723sdSZ/pVai5nKUf7ejBCtVLDw7FmUlgg==
+	bh=hzVtzW4lNw0E0hsRp85pnWT/yk+yVR709OHCUWP8zYk=;
+	b=g2pufS91IByshzMHuk8IVb8AkO7N5Y1IkpS6NMTqTyycnqMsQ1WGZGvMXJ28wO4YjbLV
+	 R7qkzfbHumuN1sUoauOgEQDksBBOfsQmLCGlYPxXU2Pbmv6mFm/OI6atf6r5mqoUXiTqH
+	 kleoaaiSFR0cxbbORLya/82Rp0ZcHtUN829SZIYQdvpJVW9hFTFRTrDsPreMftlFTpvDn
+	 n8lcIdMFdcnPUghcQaq4msDbEbOu4zrcpERauPEByC9r/Rx6eYISe0LOcw2x8fO19FqKt
+	 wo7gzP9EET2TNITbVesVK1Gcbc+QKeM9CtuoDjx9M10cMEhkghJm0rRbYcKSycWdooA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=YnL9WAhU;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=KZqxk8gA;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AF93C606A321;
-	Wed, 25 Nov 2026 15:06:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B0975606A321;
+	Wed, 25 Nov 2026 15:06:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=YnL9WAhU
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B34DE1F000C0;
-	Wed, 25 Nov 2026 15:06:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=KZqxk8gA
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CE0511F000C0;
+	Wed, 25 Nov 2026 15:06:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795619179;
-	bh=n8WfNdETjBCU0ACrU91c61/3BbbaGdGc9O+rIF1GnJc=;
+	s=korg; t=1795619182;
+	bh=hzVtzW4lNw0E0hsRp85pnWT/yk+yVR709OHCUWP8zYk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=YnL9WAhUNTI79EqofHSf/LuL6OBoSnS7c2Su2dCga+tMjSzPabZyu6Jgd8Rf2Hmxw
-	 7UxPzfdkCIFrZDtvTdgApGBUPAg3JWGVGonwxCrgo6LT3Vj9dNf52oRRZnOC5B00UL
-	 /53IlmxBJmHZUEQdHIjUWcGR7XL0I8H/88ACQ5rQ=
+	b=KZqxk8gAPurGOvTx9Ab5YeqUgKC3WbWoRtr/7GqyGmKIfidFACeySlUtqEBNv5FIs
+	 RRSVWiQSyulItilljO/McGBszzXRQsBpe9Rml9O4JeNvIBvYjDHNmvUiX34v56/qQd
+	 +R69DZ/mHdvvSRqiKFxA/54g6woetUY5G0c4ZNDw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kavitha Daula <kavi@edera.dev>,
-	Juergen Gross <jgross@suse.com>,
+	LiangCheng Wang <zaq14760@gmail.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0516/1005] xen/grant-table: annotate on-stack work in gnttab_unmap_refs_sync()
-Date: Wed, 25 Nov 2026 15:30:54 +0100
-Message-ID: <20261125143833.833119067@linuxfoundation.org>
+Subject: [PATCH 7.3 0517/1005] ASoC: max98090: keep the MIC boost across mic input power-up
+Date: Wed, 25 Nov 2026 15:30:55 +0100
+Message-ID: <20261125143833.857100589@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143821.729802100@linuxfoundation.org>
 References: <20261125143821.729802100@linuxfoundation.org>
@@ -68,90 +68,100 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kavitha Daula <kavi@edera.dev>
+From: LiangCheng Wang <zaq14760@gmail.com>
 
-[ Upstream commit 704f812cdab8bbf30987653c1c76c0d2c1e135e7 ]
+[ Upstream commit 58d51fa6ff1d21e79c3c340bfb3155dfa3025ca3 ]
 
-Both callers of gnttab_unmap_refs_sync(), free_persistent_gnts() and
-xen_blkbk_unmap_purged_grants() in blkback, keep their struct
-gntab_unmap_queue_data on the stack. gnttab_unmap_refs_async() sets up
-the delayed work inside it with INIT_DELAYED_WORK(), so with
-CONFIG_DEBUG_OBJECTS_WORK and CONFIG_DEBUG_OBJECTS_TIMERS every
-persistent grant teardown warns twice, once for the work and once for
-its timer:
+PA1EN/PA2EN select both the MIC1/MIC2 preamp enable and its gain
+(0 = off, 1 = 0 dB, 2 = +20 dB, 3 = +30 dB). "MICn Boost Volume" keeps
+the selected gain in max98090->pa1en/pa2en while the input is off, and
+max98090_micinput_event() writes it to the field when the "MICn Input"
+widget powers up.
 
-  [  104.366085] ODEBUG: object ffffc9004020fad8 is on stack ffffc9004020c000, but NOT annotated.
-  [  104.371551] WARNING: CPU: 1 PID: 48 at lib/debugobjects.c:672 lookup_object_or_alloc.part.0+0x12b/0x1f0
-  Call Trace:
-   <TASK>
-   __debug_object_init+0xfe/0x1a0
-   debug_object_init+0x38/0x50
-   __init_work+0x28/0x30
-   gnttab_unmap_refs_async+0x18/0xa0
-   gnttab_unmap_refs_sync+0x61/0x90
-   free_persistent_gnts+0x179/0x280
-   xen_blkbk_free_caches+0x16/0x30
-   xen_blkif_disconnect+0xfa/0x2d0
-   frontend_changed+0x90/0x680
-   xenbus_otherend_changed+0x80/0xb0
-   frontend_changed+0x14/0x20
-   xenwatch_thread+0x96/0x1a0
-   kthread+0x11d/0x250
-   ret_from_fork+0x29f/0x2d0
-   ret_from_fork_asm+0x1a/0x30
-   </TASK>
+The event handler also reads the field back to keep the stored gain in
+sync ("Update for volatile"), but it does so on POST_PMU and POST_PMD.
+The widget drives PA1EN/PA2EN as a single enable bit, the low bit of
+the field, so at both points DAPM has just rewritten it:
 
-gnttab_unmap_refs_sync() waits for the unmap to complete before it
-returns, so the work never outlives the caller's frame. Initialise it
-with INIT_DELAYED_WORK_ONSTACK() when the item is on the stack and
-destroy it before returning. The function is exported, so an item that
-is not on the stack keeps INIT_DELAYED_WORK().
+  - POST_PMU: DAPM has set the field to 1, so the read-back stores
+    0 dB and the handler then restores 0 dB.
+  - POST_PMD: DAPM has cleared the low bit, so a +30 dB (3) gain reads
+    back as +20 dB (2).
 
-Fixes: b44166cd46e2 ("xen/grant: introduce func gnttab_unmap_refs_sync()")
-Signed-off-by: Kavitha Daula <kavi@edera.dev>
-Reviewed-by: Juergen Gross <jgross@suse.com>
-Signed-off-by: Juergen Gross <jgross@suse.com>
-Message-ID: <20261105000137.82224-1-kavithadaula@Kavithas-MacBook-Pro.local>
+As a result every capture starts at 0 dB: a boost set while the input is
+powered down, e.g. restored by alsactl or an audio HAL at boot, never
+takes effect, and one changed during capture is lost at the next
+power-up.
+
+Read the field back on PRE_PMD instead, while it still holds the active
+gain, and only restore the stored gain on POST_PMU.
+
+Tested on i.MX95 with a MAX98090 headset mic on MIC1, running NXP's
+6.18.38 vendor kernel (max98090_micinput_event() is the same as in
+mainline): with MIC1 Boost Volume set to 2 (+30 dB) before capture,
+register 0x10 reads 0x20 (0 dB) during capture without this change and
+0x60 (+30 dB) with it, and a boost changed during capture is kept for
+the next capture.
+
+Fixes: 685e42154dcf ("ASoC: Replace max98090 Device Driver")
+Signed-off-by: LiangCheng Wang <zaq14760@gmail.com>
+Link: https://patch.msgid.link/20261111-max98090-mic-boost-v1-1-20b9bd8816db@gmail.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/xen/grant-table.c | 12 +++++++++++-
- 1 file changed, 11 insertions(+), 1 deletion(-)
+ sound/soc/codecs/max98090.c | 22 ++++++++++++----------
+ 1 file changed, 12 insertions(+), 10 deletions(-)
 
-diff --git a/drivers/xen/grant-table.c b/drivers/xen/grant-table.c
-index 076c1b0ab87fd..11c2ef1cc86eb 100644
---- a/drivers/xen/grant-table.c
-+++ b/drivers/xen/grant-table.c
-@@ -38,6 +38,7 @@
- #include <linux/sched.h>
- #include <linux/mm.h>
- #include <linux/slab.h>
-+#include <linux/sched/task_stack.h>
- #include <linux/vmalloc.h>
- #include <linux/uaccess.h>
- #include <linux/io.h>
-@@ -1361,12 +1362,21 @@ static void unmap_refs_callback(int result,
- int gnttab_unmap_refs_sync(struct gntab_unmap_queue_data *item)
- {
- 	struct unmap_refs_callback_data data;
-+	bool on_stack = object_is_on_stack(item);
+diff --git a/sound/soc/codecs/max98090.c b/sound/soc/codecs/max98090.c
+index 64dc442e90663..696ea68e38f80 100644
+--- a/sound/soc/codecs/max98090.c
++++ b/sound/soc/codecs/max98090.c
+@@ -743,14 +743,6 @@ static int max98090_micinput_event(struct snd_soc_dapm_widget *w,
+ 	else
+ 		val = (val & M98090_MIC_PA2EN_MASK) >> M98090_MIC_PA2EN_SHIFT;
  
- 	init_completion(&data.completion);
- 	item->data = &data;
- 	item->done = &unmap_refs_callback;
--	gnttab_unmap_refs_async(item);
-+	/* blkback keeps @item, and so its retry work, on the stack. */
-+	if (on_stack)
-+		INIT_DELAYED_WORK_ONSTACK(&item->gnttab_work, gnttab_unmap_work);
-+	else
-+		INIT_DELAYED_WORK(&item->gnttab_work, gnttab_unmap_work);
-+	item->age = 0;
-+	__gnttab_unmap_refs_async(item);
- 	wait_for_completion(&data.completion);
-+	if (on_stack)
-+		destroy_delayed_work_on_stack(&item->gnttab_work);
+-	if (val >= 1) {
+-		if (w->reg == M98090_REG_MIC1_INPUT_LEVEL) {
+-			max98090->pa1en = val - 1; /* Update for volatile */
+-		} else {
+-			max98090->pa2en = val - 1; /* Update for volatile */
+-		}
+-	}
+-
+ 	switch (event) {
+ 	case SND_SOC_DAPM_POST_PMU:
+ 		/* If turning on, set to most recently selected volume */
+@@ -759,6 +751,14 @@ static int max98090_micinput_event(struct snd_soc_dapm_widget *w,
+ 		else
+ 			val = max98090->pa2en + 1;
+ 		break;
++	case SND_SOC_DAPM_PRE_PMD:
++		if (val >= 1) {
++			if (w->reg == M98090_REG_MIC1_INPUT_LEVEL)
++				max98090->pa1en = val - 1;
++			else
++				max98090->pa2en = val - 1;
++		}
++		return 0;
+ 	case SND_SOC_DAPM_POST_PMD:
+ 		/* If turning off, turn off */
+ 		val = 0;
+@@ -1121,11 +1121,13 @@ static const struct snd_soc_dapm_widget max98090_dapm_widgets[] = {
  
- 	return data.result;
- }
+ 	SND_SOC_DAPM_PGA_E("MIC1 Input", M98090_REG_MIC1_INPUT_LEVEL,
+ 		M98090_MIC_PA1EN_SHIFT, 0, NULL, 0, max98090_micinput_event,
+-		SND_SOC_DAPM_POST_PMU | SND_SOC_DAPM_POST_PMD),
++		SND_SOC_DAPM_POST_PMU | SND_SOC_DAPM_PRE_PMD |
++		SND_SOC_DAPM_POST_PMD),
+ 
+ 	SND_SOC_DAPM_PGA_E("MIC2 Input", M98090_REG_MIC2_INPUT_LEVEL,
+ 		M98090_MIC_PA2EN_SHIFT, 0, NULL, 0, max98090_micinput_event,
+-		SND_SOC_DAPM_POST_PMU | SND_SOC_DAPM_POST_PMD),
++		SND_SOC_DAPM_POST_PMU | SND_SOC_DAPM_PRE_PMD |
++		SND_SOC_DAPM_POST_PMD),
+ 
+ 	SND_SOC_DAPM_MIXER("LINEA Mixer", SND_SOC_NOPM, 0, 0,
+ 		&max98090_linea_mixer_controls[0],
 -- 
 2.53.0
 
