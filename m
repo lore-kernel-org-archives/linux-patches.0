@@ -1,51 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795619512;
-	b=2VGlT+pUA7qH4kaK0/IW5P0favfgx/94x0292qh0SaJLHWXvK0P6uqZT5Hr0OuGEJsXt
-	 Ff8fPSRlhnwttzk/IRnPKU9DKuQTOV3jm26uAa9jUZxsYXLVz9Rzdm1KNDQeuMhVRM8ft
-	 i4VhRKKDNhyo4OGxKQHdm0s/vRD3LQqAgcDa4yfAycb0ih1HrFCCOr6N7llTGw18Y5/d8
-	 dZwNxEH02IOU8cKIn91878iwRslj+6/h9IrYTOY1AslmAUNjTT6VulG8thlALKGDoPBn5
-	 64eCusO4dbvONYSJt4tNLciw8izqMuBhIbJ+8tcrSQ8oe3Xj7tcvNjnEav6ev9Zgitg==
+	t=1795619515;
+	b=OhuIBBOXoCPgGqMO9nrmz1H8TFGQp+E6AeT+aEexU3bfDkFXdzpYMHY+0qMBVjQilCu/
+	 FcPjnHS2nsKn7an0kk1x4LioEAkQTIFNLXBUnsRY1Sk4KxaODYLVFSlPMruA7TfLtay1D
+	 JX4KuX+hj47WR7HEMioImLMUTL2TAndyxtKVXflJvauXDsWLH1FwXsmtr0yB1tgQixsUP
+	 QiwA9WMUER5COgwD4uBqI0fju9q1ZFk3rdQDvdlfZ3uYskt9jd3qKMma0PMuWwBsxv9bW
+	 OzE8MuqVZL6zC9DWVKQSueNkGxktOmSWcMM8zbB6Q/DTqtvrTdh3bboBax20i0Oa7TQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795619512;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795619515;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=LY5XevDSeGhKhnQIRUVD500gdXpxyo1+mlOipP2BbEs=;
-	b=1PDExpoDkMjVSzWKLROb7peOU10mESlRxQeT0laX7arR/XnkewmZfrOq7LCHnVK06mZ0
-	 yu20QzZPqI2c0FZLUvKJ8RYu2zbtLQUpCsRt3mnhL2oGBplOgY1A925eLlJ8kS56pq/+A
-	 aNHiKAhDdBVvOa6fnx6JPck/vagVxY7JSiOC1zrJ2ge60jCnT1E2TNB+PSMGOFNQAjLZy
-	 CiSBRi14o9mGUC8x8ZoEFHGRlWNRGuQ7lzvump/dJws2haRFki4Dv/lHpLhNjhS4PI1Jx
-	 iUt3pJ9UtYz0rWOXGeAe/YcXXRvbnNzaMQg9QUkE1QHUAqUgH0KP3eufCI+vrc4QpTA==
+	bh=zp8EnKsGjYDMgazJzdPP8okha89zSfewh6dvqwjtyhg=;
+	b=RaaD4gUUWFDvYDAhWeoTM5NDgy/iq2oCe5El9yufryhEr41MgH8x9aB9kO5Kez4TaGy4
+	 jGdlHClRqTnhbam0vW5MG04gH4iUzLBJZnSLoje/civwE6RN7FnPzOABrZ+wJttWUx09F
+	 N4SC+eO9X7n4DD+8lzxNv5hv4WzIHZRBuCM2ZXTP8mqXK8ohwIlLm3GHfoU1VLbeR5eyc
+	 EZaXivOQ5dcFCBChx2n8giW4u9Y2G4z9NZZOg9xGPNei6N7puFtU+l814pUMsCGjLlgQQ
+	 /xnv02ztwRTyTthMqJWifrCnyEos0Z6ekJRUeM0GWx17PjNSntBW7cR72FIswScvqGA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=jMKddbK+;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=lgogrfjp;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7B1E0606A31E;
-	Wed, 25 Nov 2026 15:11:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8F6FB606A31E;
+	Wed, 25 Nov 2026 15:11:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=jMKddbK+
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6A9FA1F000CF;
-	Wed, 25 Nov 2026 15:11:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=lgogrfjp
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A04E31F000C4;
+	Wed, 25 Nov 2026 15:11:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795619512;
-	bh=LY5XevDSeGhKhnQIRUVD500gdXpxyo1+mlOipP2BbEs=;
+	s=korg; t=1795619515;
+	bh=zp8EnKsGjYDMgazJzdPP8okha89zSfewh6dvqwjtyhg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=jMKddbK+tB2T7KiLk6TIA8EpEp62M++Wc7IPuVPEL+2oodaIdUKs9BJX2zVYdv0Sv
-	 y93r5BHoYptXBiYsy7jK+kair+BGOWmeqm2TwtjLswTCtnGV74gPzK6VSHzksJ3hIE
-	 epwbqfdcF66Pg1hKHP+49rybM9zVI7fecOnDnujI=
+	b=lgogrfjp3d+dW27kJBYXMhLLHyB1JktMaoE6i7HyZx3yf7rbQ4treDiE/qqlI7xSF
+	 np5NcV80fgv3zi2hYdBUv+fT0j+0AtOCZCxQFQ9aHX1hwb5IhA7Bqqref7SBq0fjPp
+	 AkbwjYrvvXPSPaZooqKI56VI76pjBY7T6Gj7tii8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Davidlohr Bueso <dave@stgolabs.net>,
+	Breno Leitao <leitao@debian.org>,
+	Tariq Toukan <tariqt@nvidia.com>,
 	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 7.3 0620/1005] mctp: accept MSG_CMSG_COMPAT in recvmsg
-Date: Wed, 25 Nov 2026 15:32:38 +0100
-Message-ID: <20261125143836.271204082@linuxfoundation.org>
+Subject: [PATCH 7.3 0621/1005] net/mlx5e: Fix queue stats access to queues without stats
+Date: Wed, 25 Nov 2026 15:32:39 +0100
+Message-ID: <20261125143836.294397482@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143821.729802100@linuxfoundation.org>
 References: <20261125143821.729802100@linuxfoundation.org>
@@ -67,35 +68,69 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Davidlohr Bueso <dave@stgolabs.net>
+From: Breno Leitao <leitao@debian.org>
 
-commit 350e1d0d3b386fcc0cff2d37aa920fab4800bf72 upstream.
+commit 9a24799e219b1699bb1c144248c8c500b9504db5 upstream.
 
-32-bit userspace running on a 64-bit kernel is unable to receive MCTP
-messages on an AF_MCTP socket, even though sending succeeds. There is
-nothing for MCTP to do with it beyond not rejecting it, as af_packet,
-af_key and can/isotp already do, for example.
+I am seeing the following mlx5e crash in the Meta fleet:
 
-Fixes: 833ef3b91de6 ("mctp: Populate socket implementation")
+  pc : mlx5e_get_queue_stats_rx+0x4c/0xc8
+  Call trace:
+   mlx5e_get_queue_stats_rx+0x4c/0xc8 (P)
+   netdev_stat_queue_sum+0x78/0x480
+   netdev_nl_qstats_get_dump_one+0xf0/0x268
+   netdev_nl_qstats_get_dumpit+0x7c/0x1f8
+
+When dumping device-wide qstats, the core calls the per-queue callbacks
+for every queue below real_num_{rx,tx}_queues, regardless of whether the
+netdev is up. Some of those queues have no stats behind them:
+
+ - RX stats live in priv->channel_stats[], which only has entries for
+   channels that have been opened (stats_nch). real_num_rx_queues can
+   be larger, for example after the channel count is raised while the
+   netdev is down, or after opening the channels failed part way.
+
+ - TX stats are looked up in priv->txq2sq_stats[], which is NULL for
+   SQs that were never activated and for HTB queues while the channels
+   are closed.
+
+In both cases the callback dereferences a NULL pointer. The dump needs
+no privileges, so any user can trigger it.
+
+Return early for RX queues at or above stats_nch and for TX queues
+without SQ stats.
+
+Fixes: 7b66ae536a78 ("net/mlx5e: Add per queue netdev-genl stats")
 Cc: stable@vger.kernel.org
-Signed-off-by: Davidlohr Bueso <dave@stgolabs.net>
-Link: https://patch.msgid.link/20261105160704.2546031-1-dave@stgolabs.net
+Signed-off-by: Breno Leitao <leitao@debian.org>
+Reviewed-by: Tariq Toukan <tariqt@nvidia.com>
+Link: https://patch.msgid.link/20261104-mlx5e-qstats-null-v1-1-a6a003245cec@debian.org
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/mctp/af_mctp.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/net/ethernet/mellanox/mlx5/core/en_main.c |    5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
---- a/net/mctp/af_mctp.c
-+++ b/net/mctp/af_mctp.c
-@@ -292,7 +292,7 @@ static int mctp_recvmsg(struct socket *s
- 	u8 type;
- 	int rc;
+--- a/drivers/net/ethernet/mellanox/mlx5/core/en_main.c
++++ b/drivers/net/ethernet/mellanox/mlx5/core/en_main.c
+@@ -5490,7 +5490,7 @@ static void mlx5e_get_queue_stats_rx(str
+ 	struct mlx5e_rq_stats *xskrq_stats;
+ 	struct mlx5e_rq_stats *rq_stats;
  
--	if (flags & ~(MSG_DONTWAIT | MSG_TRUNC | MSG_PEEK))
-+	if (flags & ~(MSG_DONTWAIT | MSG_TRUNC | MSG_PEEK | MSG_CMSG_COMPAT))
- 		return -EOPNOTSUPP;
+-	if (mlx5e_is_uplink_rep(priv) || !mlx5e_stats_nch_read(priv))
++	if (mlx5e_is_uplink_rep(priv) || i >= mlx5e_stats_nch_read(priv))
+ 		return;
  
- 	skb = skb_recv_datagram(sk, flags, &rc);
+ 	channel_stats = priv->channel_stats[i];
+@@ -5522,6 +5522,9 @@ static void mlx5e_get_queue_stats_tx(str
+ 	 * inactive sqs.
+ 	 */
+ 	sq_stats = priv->txq2sq_stats[i];
++	if (!sq_stats)
++		return;
++
+ 	stats->packets = sq_stats->packets;
+ 	stats->bytes = sq_stats->bytes;
+ 
 
 
