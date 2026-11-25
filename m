@@ -1,42 +1,42 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795618783;
-	b=dxeUocO3N0oFf40UYpRiU6OxJ+pFE5tU6rXVt6+Tl6iakus+Rp/rFtM2pemApq95mhmx
-	 BfpGadRo7OLo8YmqU59dSREbub0IX8pYNKZSpEDn1zZ3wrGOkXQ05wOmbNlhmR42iaTbF
-	 s432KgzVA+tKtAgYh1kSwSHJda2g+HCNLXA4JiuZI7d1PQmilSjFJ7UbwKljH/QR3oxde
-	 Lrl2+5IPOuv5rYX61wKJgAcWvJLiWfVQ0BYZbHNUy8IDfvw1afuIEH4PhSVEn5gDuEY5r
-	 rUJiAyitO33THVEJQfQFySe3GEijITwYlhVYCHHBvZTK9HAqQqyClNI/wlIow3/Lhvw==
+	t=1795618787;
+	b=SSk7dAzZ8qsZbB9H51rqLqskL0VIKKqXe6gKxonouqS04v/rkMdxJ8MwN4SPIDaVeISF
+	 DLqPV3Nbf7+fFFlkuzcdtZNYbjOQJFFFzp/aa9gMJQyqdUvZfiObgDrYw66qOeKxzchDs
+	 uXxmubjifqWG74cicujCpAwMsUxtVws1tkwHjoB9pokut2NCHCwwVlvvQ99ffuY27tFsq
+	 mR1jO+e7M/ZdMIY5QwoG07es7BNkQcFslXSBHIFtlqUthvs7MbAPEwY3lxi4ijSvhaJOF
+	 48alUHUr6W6CZBK/ih5wwnC0UltWsRcTr1l0sOeGFzbunRk4JZTmDhmqoV5V1MYoO+w==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795618783;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795618787;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=eZ5KT2k2B/pbmOn1HG17iBX145ZMjM6VoYEPBfoJ7mg=;
-	b=Nmew/h3tpq5+V+sPzZvH9NoH3UzwbyUYxrq05NnRxXIDbaxH7hSQkLKtD0tA82+ErKJj
-	 kOO3U6mZhMWAS28CipyovOIKTgV7+pRGuIbkqnYBjOAwnfIDWoDg9k9uhTS3Rg7Xh4Gtz
-	 P6wr16Fynqxo6sG/FXyGYiIfNHl4j3d2lE2pUhT0xiDSfVerul/fUzXACtc7lAhSRZFsH
-	 6wDLiIJ1dc2UTtuRr2zhqaZ73vN3/o/HY1E5jLsN+WmCMkhtAPI62ywUUg19b24ro7HJu
-	 lZuaonsoibo+PDdr9YB/u1h1+aet7VWFNGD8bigVmPc5MbFru3JwJVQxHpRj6w66n2A==
+	bh=WCEA1919lW1nmQpgR6y5ZtH6hwHdN5mOb1belgeynV8=;
+	b=GGB+kVxZZ56LNJOw8clJODPy9Hf+nbrZT5Fdb852pwtYH97vJtM/Ct8czvRMZeeQRJ2g
+	 k5M7x6ExqEqC53ivdWxdLcdtdO6nnM1fbqlf6ZwqdxDy77PJRT469tF0vMNQj3kCBhxtm
+	 vpXyx/MjsizxA8fYFMNNOGS3pd9VnEEsVYU2IUVmLeO9U8G7Chf2QsDVwpUHY0npLPxe/
+	 B/wM1X4UIUA2Q0FErjT+x4xXLO4Ogz9PMRmaEEZFdxPhQR1qSKuDpP2eCiaQMVIZa6hLG
+	 +J5u0MV9UJAw4BojMVo0KIeBL3OEqqgFGFXuexVedJbY/RE7sqNBIBNdzreYhrYGMaQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=pfU6ckbX;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=IObsPXBB;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8AA3F606A31E;
-	Wed, 25 Nov 2026 14:59:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2022C606A321;
+	Wed, 25 Nov 2026 14:59:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=pfU6ckbX
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A23541F000C6;
-	Wed, 25 Nov 2026 14:59:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=IObsPXBB
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 068151F000C4;
+	Wed, 25 Nov 2026 14:59:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795618783;
-	bh=eZ5KT2k2B/pbmOn1HG17iBX145ZMjM6VoYEPBfoJ7mg=;
+	s=korg; t=1795618786;
+	bh=WCEA1919lW1nmQpgR6y5ZtH6hwHdN5mOb1belgeynV8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=pfU6ckbXtMogmAVRH63C1RB+p53v/fG+72geSkOcYHSPOWPz+IPdJhrWLjaA5FDAO
-	 PnBHUlsGR2Lwcio6tcrqUIAXCIBYXFfIljPTbEGFdydCwkT6RBBIstyQyt6Sy4ISVv
-	 egPxJuHDzdfpxVWaRSdMxa/376ElRIkUos0WOLx8=
+	b=IObsPXBB3rsPa7UwYW7CIwzv6TEjjG2Pub0vk7FN1TLdaIkC0ANRssHcHRhmoQ4u9
+	 OtDvQ5lcNZLUDoGKlfOGf1C/vYTrYMWxLnxplO9n3dVpfQulKIK/9jBO68PiwOTBP1
+	 V5xdeL8AELF8UddbRWj0z5GOdYAUDuXFA0RllnAc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -46,9 +46,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Matthew Brost <matthew.brost@intel.com>,
 	Dave Airlie <airlied@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0387/1005] drm/xe/hwmon: Fix pcode power limit handling
-Date: Wed, 25 Nov 2026 15:28:45 +0100
-Message-ID: <20261125143830.808767226@linuxfoundation.org>
+Subject: [PATCH 7.3 0388/1005] drm/xe/hwmon: Decode mailbox temperature as sign-magnitude
+Date: Wed, 25 Nov 2026 15:28:46 +0100
+Message-ID: <20261125143830.832147506@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143821.729802100@linuxfoundation.org>
 References: <20261125143821.729802100@linuxfoundation.org>
@@ -72,203 +72,87 @@ Content-Transfer-Encoding: 8bit
 
 From: Karthik Poosa <karthik.poosa@intel.com>
 
-[ Upstream commit 94099304b80e8c6e842c2626f603930577938f3a ]
+[ Upstream commit c9d8ef7f6835ddfca8259c322804038799be5641 ]
 
-Return early on pcode read failure in xe_hwmon_pcode_rmw_power_limit()
-and propagate errors to callers.
+The mailbox temperature is an 8-bit sign-magnitude value (bit 7 sign,
+bits 6:0 magnitude, range -127..127), not two's-complement. Casting the
+raw byte to s8 decodes negative readings incorrectly.
 
-Replace boot_power_limit_read with per-channel
-read_power_limit_from_pcode[], set on the first successful pcode write,
-so reads and writes stay consistent even if the default limit write at
-boot fails.
+Add mbx_temp_decode(), store the raw byte as u8, and use it in
+get_mc_temp() and get_pcie_temp() so temperatures are decoded correctly.
 
-Also return PWR_LIM_EN for power label so card label visibility works.
-
-v2: Move default power limit writes to helper
-    xe_hwmon_pcode_set_default_power_limits().
-
-Fixes: 8aa7306631f0 ("drm/xe/hwmon: Fix xe_hwmon_power_max_write")
+Fixes: 3a0cb885e111 ("drm/xe/hwmon: Expose memory controller temperature")
 Signed-off-by: Karthik Poosa <karthik.poosa@intel.com>
 Reviewed-by: Rodrigo Vivi <rodrigo.vivi@intel.com>
-Link: https://patch.msgid.link/20261015071434.1063785-2-karthik.poosa@intel.com
+Link: https://patch.msgid.link/20261015071434.1063785-3-karthik.poosa@intel.com
 Signed-off-by: Rodrigo Vivi <rodrigo.vivi@intel.com>
-(cherry picked from commit c5b502e43f7cd6456663d5bae495551646a5e125)
+(cherry picked from commit 1bbbd7d98fa588d5ace3d79ce56d8928f18768f5)
 Signed-off-by: Matthew Brost <matthew.brost@intel.com>
 Signed-off-by: Dave Airlie <airlied@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/xe/xe_hwmon.c | 84 +++++++++++++++++++++++------------
- 1 file changed, 55 insertions(+), 29 deletions(-)
+ drivers/gpu/drm/xe/xe_hwmon.c | 20 ++++++++++++++++----
+ 1 file changed, 16 insertions(+), 4 deletions(-)
 
 diff --git a/drivers/gpu/drm/xe/xe_hwmon.c b/drivers/gpu/drm/xe/xe_hwmon.c
-index 08cec511806fa..74d7faf85df04 100644
+index 74d7faf85df04..123aef35aaacd 100644
 --- a/drivers/gpu/drm/xe/xe_hwmon.c
 +++ b/drivers/gpu/drm/xe/xe_hwmon.c
-@@ -165,8 +165,8 @@ struct xe_hwmon {
- 	struct xe_hwmon_energy_info ei[CHANNEL_MAX];
- 	/** @fi: Fan info for fanN_input */
- 	struct xe_hwmon_fan_info fi[FAN_MAX];
--	/** @boot_power_limit_read: is boot power limits read */
--	bool boot_power_limit_read;
-+	/** @read_power_limit_from_pcode: pcode accepted power limits write for the channel */
-+	bool read_power_limit_from_pcode[CHANNEL_MAX];
- 	/** @pl1_on_boot: power limit PL1 on boot */
- 	u32 pl1_on_boot[CHANNEL_MAX];
- 	/** @pl2_on_boot: power limit PL2 on boot */
-@@ -175,9 +175,9 @@ struct xe_hwmon {
- 	struct xe_hwmon_thermal_info temp;
+@@ -104,6 +104,10 @@ enum sensor_attr_power {
+ /* Index of memory controller in READ_THERMAL_DATA output */
+ #define TEMP_INDEX_MCTRL	2
+ 
++/* Mailbox temperature is sign-magnitude: bit 7 sign, bits 6:0 magnitude. */
++#define TEMP_MBX_SIGN		BIT(7)
++#define TEMP_MBX_MAG		GENMASK(6, 0)
++
+ /* Maximum characters in hwmon label name */
+ #define MAX_LABEL_SIZE		16
+ 
+@@ -139,8 +143,8 @@ struct xe_hwmon_thermal_info {
+ 	};
+ 	/** @count: no of temperature sensors available for the platform */
+ 	u8 count;
+-	/** @value: signed value from each sensor */
+-	s8 value[U8_MAX];
++	/** @value: per-sensor raw mailbox temperature; bit7=sign, bits6:0=magnitude */
++	u8 value[U8_MAX];
+ 	/** @vram_label: vram label names */
+ 	char vram_label[MAX_VRAM_CHANNELS][MAX_LABEL_SIZE];
  };
- 
--static inline int prepare_power_limit_param2(const struct xe_hwmon *hwmon)
-+static inline int prepare_power_limit_param2(const struct xe_hwmon *hwmon, int channel)
- {
--	if (hwmon->boot_power_limit_read) {
-+	if (hwmon->read_power_limit_from_pcode[channel]) {
- 		if (hwmon->xe->info.platform >= XE_CRESCENTISLAND)
- 			return READ_PL_ACCEPTED;
- 		else
-@@ -198,7 +198,8 @@ static int xe_hwmon_pcode_read_power_limit(const struct xe_hwmon *hwmon, u32 att
- 						  (channel == CHANNEL_CARD) ?
- 						  READ_PSYSGPU_POWER_LIMIT :
- 						  READ_PACKAGE_POWER_LIMIT,
--						  prepare_power_limit_param2(hwmon)), &val0, &val1);
-+						  prepare_power_limit_param2(hwmon, channel)),
-+			    &val0, &val1);
- 
- 	if (ret) {
- 		drm_dbg(&hwmon->xe->drm, "read failed ch %d val0 0x%08x, val1 0x%08x, ret %d\n",
-@@ -213,14 +214,14 @@ static int xe_hwmon_pcode_read_power_limit(const struct xe_hwmon *hwmon, u32 att
- 	else if (attr == PL2_HWMON_ATTR)
- 		*uval = (val1 & PWR_LIM_EN) ? val1 : 0;
- 	else if (attr == hwmon_power_label)
--		*uval = (val0 & PWR_LIM_EN) ? 1 : (val1 & PWR_LIM_EN) ? 1 : 0;
-+		*uval = (val0 | val1) & PWR_LIM_EN;
- 	else
- 		*uval = 0;
- 
+@@ -821,6 +825,14 @@ static int xe_hwmon_pcode_read_thermal_info(struct xe_hwmon *hwmon)
  	return ret;
  }
  
--static int xe_hwmon_pcode_rmw_power_limit(const struct xe_hwmon *hwmon, u32 attr, u8 channel,
-+static int xe_hwmon_pcode_rmw_power_limit(struct xe_hwmon *hwmon, u32 attr, u8 channel,
- 					  u32 clr, u32 set)
- {
- 	struct xe_tile *root_tile = xe_device_get_root_tile(hwmon->xe);
-@@ -231,10 +232,13 @@ static int xe_hwmon_pcode_rmw_power_limit(const struct xe_hwmon *hwmon, u32 attr
- 						  (channel == CHANNEL_CARD) ?
- 						  READ_PSYSGPU_POWER_LIMIT :
- 						  READ_PACKAGE_POWER_LIMIT,
--						  prepare_power_limit_param2(hwmon)), &val0, &val1);
--	if (ret)
--		drm_dbg(&hwmon->xe->drm, "read failed ch %d val0 0x%08x, val1 0x%08x, ret %d\n",
-+						  prepare_power_limit_param2(hwmon, channel)),
-+			    &val0, &val1);
-+	if (ret) {
-+		drm_err(&hwmon->xe->drm, "read failed ch %d val0 0x%08x, val1 0x%08x, ret %d\n",
- 			channel, val0, val1, ret);
-+		return ret;
-+	}
- 
- 	if (attr == PL1_HWMON_ATTR)
- 		val0 = (val0 & ~clr) | set;
-@@ -248,9 +252,36 @@ static int xe_hwmon_pcode_rmw_power_limit(const struct xe_hwmon *hwmon, u32 attr
- 							     WRITE_PSYSGPU_POWER_LIMIT :
- 							     WRITE_PACKAGE_POWER_LIMIT, 0),
- 							     val0, val1, PCODE_DEFAULT_TIMEOUT_MS);
--	if (ret)
-+	if (ret) {
- 		drm_dbg(&hwmon->xe->drm, "write failed ch %d val0 0x%08x, val1 0x%08x, ret %d\n",
- 			channel, val0, val1, ret);
-+		return ret;
-+	}
++/* Decode an 8-bit sign-magnitude mailbox temperature to degrees Celsius. */
++static int mbx_temp_decode(u8 value)
++{
++	int temp = value & TEMP_MBX_MAG;
 +
-+	/* Read from pcode once it holds a driver-written limit */
-+	if (!hwmon->read_power_limit_from_pcode[channel])
-+		hwmon->read_power_limit_from_pcode[channel] = true;
-+
-+	return 0;
++	return (value & TEMP_MBX_SIGN) ? -temp : temp;
 +}
 +
-+static int xe_hwmon_pcode_set_default_power_limits(struct xe_hwmon *hwmon)
-+{
-+	int ret = 0;
-+
-+	ret |= xe_hwmon_pcode_rmw_power_limit(hwmon, PL1_HWMON_ATTR, CHANNEL_CARD,
-+						       PWR_LIM | PWR_LIM_TIME,
-+						       hwmon->pl1_on_boot[CHANNEL_CARD]);
-+	ret |= xe_hwmon_pcode_rmw_power_limit(hwmon, PL1_HWMON_ATTR, CHANNEL_PKG,
-+						       PWR_LIM | PWR_LIM_TIME,
-+						       hwmon->pl1_on_boot[CHANNEL_PKG]);
-+	ret |= xe_hwmon_pcode_rmw_power_limit(hwmon, PL2_HWMON_ATTR, CHANNEL_CARD,
-+						       PWR_LIM | PWR_LIM_TIME,
-+						       hwmon->pl2_on_boot[CHANNEL_CARD]);
-+	ret |= xe_hwmon_pcode_rmw_power_limit(hwmon, PL2_HWMON_ATTR, CHANNEL_PKG,
-+						       PWR_LIM | PWR_LIM_TIME,
-+						       hwmon->pl2_on_boot[CHANNEL_PKG]);
-+
- 	return ret;
+ static int get_mc_temp(struct xe_hwmon *hwmon, long *val)
+ {
+ 	struct xe_tile *root_tile = xe_device_get_root_tile(hwmon->xe);
+@@ -837,7 +849,7 @@ static int get_mc_temp(struct xe_hwmon *hwmon, long *val)
+ 	}
+ 
+ 	for (i = TEMP_INDEX_MCTRL; i < hwmon->temp.count - 1; i++)
+-		average += hwmon->temp.value[i];
++		average += mbx_temp_decode(hwmon->temp.value[i]);
+ 
+ 	average /= (hwmon->temp.count - TEMP_INDEX_MCTRL - 1);
+ 	*val = average * MILLIDEGREE_PER_DEGREE;
+@@ -860,7 +872,7 @@ static int get_pcie_temp(struct xe_hwmon *hwmon, long *val)
+ 		data = REG_FIELD_GET(PCIE_SENSOR_MASK, data);
+ 
+ 	data = REG_FIELD_GET(TEMP_MASK, data);
+-	*val = (s8)data * MILLIDEGREE_PER_DEGREE;
++	*val = mbx_temp_decode(data) * MILLIDEGREE_PER_DEGREE;
+ 
+ 	return 0;
  }
- 
-@@ -394,7 +425,9 @@ static int xe_hwmon_power_max_write(struct xe_hwmon *hwmon, u32 attr, int channe
- 		if (hwmon->xe->info.has_mbx_power_limits) {
- 			drm_dbg(&hwmon->xe->drm, "disabling %s on channel %d\n",
- 				PWR_ATTR_TO_STR(attr), channel);
--			xe_hwmon_pcode_rmw_power_limit(hwmon, attr, channel, PWR_LIM_EN, 0);
-+			ret = xe_hwmon_pcode_rmw_power_limit(hwmon, attr, channel, PWR_LIM_EN, 0);
-+			if (ret)
-+				goto unlock;
- 			xe_hwmon_pcode_read_power_limit(hwmon, attr, channel, &reg_val);
- 		} else {
- 			reg_val = xe_mmio_rmw32(mmio, rapl_limit, PWR_LIM_EN, 0);
-@@ -655,15 +688,19 @@ xe_hwmon_power_max_interval_store(struct device *dev, struct device_attribute *a
- 
- 	mutex_lock(&hwmon->hwmon_lock);
- 
--	if (hwmon->xe->info.has_mbx_power_limits)
--		xe_hwmon_pcode_rmw_power_limit(hwmon, power_attr, channel, PWR_LIM_TIME, rxy);
--	else
-+	ret = count;
-+	if (hwmon->xe->info.has_mbx_power_limits) {
-+		ret = xe_hwmon_pcode_rmw_power_limit(hwmon, power_attr, channel, PWR_LIM_TIME, rxy);
-+		if (!ret)
-+			ret = count;
-+	} else {
- 		r = xe_mmio_rmw32(mmio, xe_hwmon_get_reg(hwmon, REG_PKG_RAPL_LIMIT, channel),
- 				  PWR_LIM_TIME, rxy);
-+	}
- 
- 	mutex_unlock(&hwmon->hwmon_lock);
- 
--	return count;
-+	return ret;
- }
- 
- /* PSYS PL1 */
-@@ -1487,22 +1524,11 @@ xe_hwmon_get_preregistration_info(struct xe_hwmon *hwmon)
- 		} else {
- 			drm_info(&hwmon->xe->drm, "Using mailbox commands for power limits\n");
- 			/* Write default limits to read from pcode from now on. */
--			xe_hwmon_pcode_rmw_power_limit(hwmon, PL1_HWMON_ATTR,
--						       CHANNEL_CARD, PWR_LIM | PWR_LIM_TIME,
--						       hwmon->pl1_on_boot[CHANNEL_CARD]);
--			xe_hwmon_pcode_rmw_power_limit(hwmon, PL1_HWMON_ATTR,
--						       CHANNEL_PKG, PWR_LIM | PWR_LIM_TIME,
--						       hwmon->pl1_on_boot[CHANNEL_PKG]);
--			xe_hwmon_pcode_rmw_power_limit(hwmon, PL2_HWMON_ATTR,
--						       CHANNEL_CARD, PWR_LIM | PWR_LIM_TIME,
--						       hwmon->pl2_on_boot[CHANNEL_CARD]);
--			xe_hwmon_pcode_rmw_power_limit(hwmon, PL2_HWMON_ATTR,
--						       CHANNEL_PKG, PWR_LIM | PWR_LIM_TIME,
--						       hwmon->pl2_on_boot[CHANNEL_PKG]);
-+			if (xe_hwmon_pcode_set_default_power_limits(hwmon))
-+				drm_warn(&hwmon->xe->drm, "Failed to set default power limits\n");
- 			hwmon->scl_shift_power = PWR_UNIT;
- 			hwmon->scl_shift_energy = ENERGY_UNIT;
- 			hwmon->scl_shift_time = TIME_UNIT;
--			hwmon->boot_power_limit_read = true;
- 		}
- 	} else {
- 		drm_info(&hwmon->xe->drm, "Using register for power limits\n");
 -- 
 2.53.0
 
