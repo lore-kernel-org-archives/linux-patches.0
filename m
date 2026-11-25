@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795624233;
-	b=CKHdvIgTQPCqlgNwUH1V9UfOqHuKIe9H4WsUUZQcKQLtfbvU+ifa93Ppw3CaXh8yObUk
-	 whNtFPZOuZug7bd/p7D6PhBZtOwmnf+1iYy91BeDmn1BS9f46LZ3NVz8ESi4FDeS3t/LM
-	 JFotOQOFybpAHQBLniiFjyYmI3WyRXA46RnY0eDqeoz9PybA5iJhRIyc0gH/67po0nGTt
-	 LzFj89O0aqHdARJ0BDGvHkJYWNyWWxpi2NjeAY8Up9maXxipsPwSN7k+YciCsD3yE4t89
-	 ln9/qDAg8/VpEjA5TnBHD4XvOPGg0U1WQwbfCXJSZj9bL6qqzpDoYJKu5PBmKvKToJQ==
+	t=1795624236;
+	b=zLanu8a6vaXR2SXF7B9cK+FxnietJftQ+PYRyZLrB1tLTmHHcQA98JmpbbIrcvf1D6cR
+	 sDEeB8YP5K+ZPzOBSJ7R06u/B0eOPdGIltKxY59H+/pWLQIkoW7zUKvIBEWo8s1fec8tF
+	 eAjmfnQ+v9F+6Jkw4KEJnvTYHWWpZbcuAs5d6XuFbzsANOMsHHbFd8E5AjirfFZ9JKqyj
+	 Op60LLHD4TiYe9cKkYyI3K/0jJA6rcVeV7ZkU6TM5d2L+0OEW99W0gd+hZBxH1KwJH0xN
+	 oUPreEi+ItM83+PqM16nmpCHRo07XxXDq8jjF8t3iKW/f9h9yFucA7T08yl+CmENCLg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795624233;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795624236;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=O3yqL8HTWoPNvswYyvp9nQrAHqA+/Do+qbag8QQzBsE=;
-	b=gLEg2MSCcpgkA/qiGyTIqG1S67vfrzVBDZtX4Yf7NNqk1Tb48V/IY+HdBtfyUFdA+Kss
-	 Db0cGyWIHl0riBq67mOI23krN3sHGSxTPv2+P/3T0E1UviYkkbO3VanbWvC3ftz4/3oM/
-	 O0Bsnz1TaicTXis9Px4bs0K6Xr799K93EnZQKvyQst+ic2uLjRKf7crvDXnCPmyzANWf2
-	 gm+J6OJ/kxtcSfsAQrsGZulJPUSg4ZA9RKADeEVNvT8VGlEwfqURQgkVt8NVzhOUiNcmf
-	 Kyq2D+dOHgEu8lNb8UqxLLJOkEN8yOuSzKS8ZRngzlN2vTRgvgrDRt021hysjbs9w1Q==
+	bh=+Bw45AWEH61ij5oFJWg+eJGURVFynrdEmV6xD/ho/Ic=;
+	b=GeLmzGQC7lWaXZ7hxwJOVTN0tiG3ElRbtj7YbZrNt36gg39EkiVsZrLS2i42gVp8FD4A
+	 /pgmFUswWsqyf9YQ+XZP0lOn6Bbc560C+4eQk4ITvQHaK6A3EyC8WzEi5tDgNYKv0qCYw
+	 3fFDpha5SGPvpyjTlOokHr7GhsWoVdcr8KpMjs1Jo/hQNTOleF+UP6Qu0cXKZsOQb4ASp
+	 hmGhjlLIq4nVq/gi6MWJ8Db8C7axkVL7JTu7e2F842NVZZfjOB0rkPiT6JhU+T/KZGnOv
+	 Cw8EhWPUZ7UJ8NHMsUNE2yw4wo5U0YYMqqG+F5uw4dmBxEfetrkTxDtgG8fj0UWAbzQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=LJZRvSZk;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=pDZMlJ3u;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 96117606A33F;
-	Wed, 25 Nov 2026 16:30:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4DEFF606A68C;
+	Wed, 25 Nov 2026 16:30:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=LJZRvSZk
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 502E31F000CA;
-	Wed, 25 Nov 2026 16:30:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=pDZMlJ3u
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7CAAE1F000CA;
+	Wed, 25 Nov 2026 16:30:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795624232;
-	bh=O3yqL8HTWoPNvswYyvp9nQrAHqA+/Do+qbag8QQzBsE=;
+	s=korg; t=1795624236;
+	bh=+Bw45AWEH61ij5oFJWg+eJGURVFynrdEmV6xD/ho/Ic=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=LJZRvSZkM388RujELD3TO6V0P2qB3mjBrkLc8GiXI7GwuAgInTThYR+QWHylSwagz
-	 J6s1Imu5fkgpFUq+vfPPw6mmoe+RbSNG2qiYs2qzqpgWLpWn6rpFu1Hl6NMSxOU1nS
-	 PB64PkJaB6ddW48IEyXqGnIQsftiph0EohqF0ISM=
+	b=pDZMlJ3uECEH0xJxux4P2KrScEAKt2o8qNw7gywJCVsDxkW8C/+O82GE8QH/qLn1n
+	 9iCK+Kwx70z2YZl67BaGtO/Os03jL51SQA5xYyfVriSXBE7ED0UOTZa8E22HOb4hR0
+	 IQ+XCLWIUD8GTo5TrRFgTYuKn5ztZ9MXgSqwpc8w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Daniel Machon <daniel.machon@microchip.com>,
-	Simon Horman <horms@kernel.org>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Vladimir Zapolskiy <vz@kernel.org>,
+	Neil Armstrong <neil.armstrong@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 125/816] net: lan966x: dont free XDP buffers in fdma tx clear with budget 0
-Date: Wed, 25 Nov 2026 15:27:53 +0100
-Message-ID: <20261125143852.099932230@linuxfoundation.org>
+Subject: [PATCH 6.12 126/816] drm/panel: visionox-r66451: Send the brightness value MSB first
+Date: Wed, 25 Nov 2026 15:27:54 +0100
+Message-ID: <20261125143852.123144448@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143849.205329330@linuxfoundation.org>
 References: <20261125143849.205329330@linuxfoundation.org>
@@ -69,57 +68,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Daniel Machon <daniel.machon@microchip.com>
+From: Vladimir Zapolskiy <vz@kernel.org>
 
-[ Upstream commit 263a5514cb9535380734b5e300b298f82570eb57 ]
+[ Upstream commit 00fe6be187ffde738fdb71ea7deb671fc939e583 ]
 
-lan966x_fdma_tx_clear_buf() runs from the NAPI poll and frees the
-buffers of completed tx DCBs with napi_consume_skb(),
-page_pool_recycle_direct() and xdp_return_frame_bulk().
+The panel expects to get two bytes of the DCS Set Display Brightness
+command with the most significant byte first, and it uses the lower
+12 bits of the value, use mipi_dsi_dcs_set_display_brightness_large()
+to correct the programmed brightness values.
 
-netpoll calls the NAPI poll with a budget of 0 and hardirqs disabled.
-With a budget of 0, a driver cannot call any XDP or page pool API.
+Tested on the SM8350-HDK display card, the display brightness increases
+gradually with:
 
-Before this patch, the XDP_TX pages and ndo_xdp_xmit frames are freed
-regardless of the budget. With netconsole on the port that owns the
-FDMA NAPI, such a buffer is freed with hardirqs disabled, and
-__page_pool_put_page() warns via lockdep_assert_no_hardirq().
+  for v in $(seq 16 16 4095); do sleep 0.1; \
+    echo $v > /sys/class/backlight/ae94000.dsi.0/brightness; \
+  done
 
-Leave the XDP buffers of completed DCBs in place when the budget is 0,
-and free them in the next NAPI poll. napi_consume_skb() already handles
-a budget of 0, so skbs are still freed.
+while without the change the display is dark during all writes.
 
-Found by an AI code review agent. Reproduced on a lan9668 board with a
-modified kernel that runs the NAPI poll with a budget of 0 and hardirqs
-disabled. With the fix the warning is gone.
-
-Fixes: 19c6f534f636 ("net: lan966x: Add support for XDP_TX")
-Signed-off-by: Daniel Machon <daniel.machon@microchip.com>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Link: https://patch.msgid.link/20261029-lan966x-fdma-tx-clear-budget-v1-1-38c52d7aab8c@microchip.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Fixes: a6dfab2738fc ("drm/panel: Add driver for Visionox r66451 panel")
+Signed-off-by: Vladimir Zapolskiy <vz@kernel.org>
+Reviewed-by: Neil Armstrong <neil.armstrong@linaro.org>
+Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
+Link: https://patch.msgid.link/20261101212458.2431191-2-vz@kernel.org
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/microchip/lan966x/lan966x_fdma.c | 6 ++++++
- 1 file changed, 6 insertions(+)
+ drivers/gpu/drm/panel/panel-visionox-r66451.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/net/ethernet/microchip/lan966x/lan966x_fdma.c b/drivers/net/ethernet/microchip/lan966x/lan966x_fdma.c
-index 11a341fc45779..6dad3c019f01c 100644
---- a/drivers/net/ethernet/microchip/lan966x/lan966x_fdma.c
-+++ b/drivers/net/ethernet/microchip/lan966x/lan966x_fdma.c
-@@ -354,6 +354,12 @@ static void lan966x_fdma_tx_clear_buf(struct lan966x *lan966x, int weight)
- 		if (!fdma_db_is_done(db))
- 			continue;
+diff --git a/drivers/gpu/drm/panel/panel-visionox-r66451.c b/drivers/gpu/drm/panel/panel-visionox-r66451.c
+index 493f2a6076f8d..c2b53458a9698 100644
+--- a/drivers/gpu/drm/panel/panel-visionox-r66451.c
++++ b/drivers/gpu/drm/panel/panel-visionox-r66451.c
+@@ -254,7 +254,7 @@ static int visionox_r66451_bl_update_status(struct backlight_device *bl)
+ 	struct mipi_dsi_device *dsi = bl_get_data(bl);
+ 	u16 brightness = backlight_get_brightness(bl);
  
-+		/* XDP and page pool APIs can't be used with a budget of 0.
-+		 * Leave these buffers for the next NAPI poll.
-+		 */
-+		if (!weight && !dcb_buf->use_skb)
-+			continue;
-+
- 		dcb_buf->dev->stats.tx_packets++;
- 		dcb_buf->dev->stats.tx_bytes += dcb_buf->len;
+-	return mipi_dsi_dcs_set_display_brightness(dsi, brightness);
++	return mipi_dsi_dcs_set_display_brightness_large(dsi, brightness);
+ }
  
+ static const struct backlight_ops visionox_r66451_bl_ops = {
 -- 
 2.53.0
 
