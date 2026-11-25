@@ -1,54 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795625783;
-	b=FryR6eTJaSAgacXXBuQkV4qKqI0JNHgFWZkDRYFv/2ER5gDNVmFUvWIJOaeeXzRTecn8
-	 lJu/aZNCZnIbVFeInobFd6Y6xChx/faEbwb7lPHxU6puub58fg9z/NROcHOVpE1HvM/WK
-	 LQ6Mq+uWemtwm2Q20ni3Xfz39qLnTXpLB0BqTU1S9Hx3Q3aeQMg9dWf2OyTPTS/bCHpYO
-	 fwI7FBoRY47rHpcgvtzDf+2O6dI0iNA+/emx0x7wyzbPU66Y+wOwKb0qtKVxFIPL9yg97
-	 lwIZsE00x0O898WU4G5hL7vjzT9+f1xJ9+PmbcHDSYP7D+pRbQ6Lequ7LKMvnzbCKkg==
+	t=1795625786;
+	b=ozw2DV9BTaAnaloNJhPHiw2U3bddtkRKtbsc9M4QTIZMzCi6xoelK2bInMFpeXOw9oJz
+	 JTvlDT4igMbpGcFS+Re7c63uZ7h1Pxsp1L27ntkPqaM/hpouq/C/NpOI1+SlpCy6fu3BF
+	 hLgPoahhk6+uglvR7uS38CdW+ks7lbl169KYULqexMm9LgH9LNYFO/ilSrqU1vNNCBWO4
+	 sqojnn+xlXnR6T3uQ/6IDnMV38jVehWadBjZ9sYELafdxnFyaur+dwBv/+AGelaCz8LVH
+	 ITN/wiO5UGK4Y23FkbgCX8qGsIwNveebLxFWpA/VhzwK+9mv/EuWl0RvNeJboZ8piBw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795625783;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795625786;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=KfpOqPLaEmNXoAqb+0ut9UfC56FWFhLsl5JZ/hxYVDg=;
-	b=XWlD6jUZzkhXVHOGvC+9LxsgmcehttmZ80WS+zQdkF74B1GG1qWS3vpmlKwwkd1hmcOg
-	 nmstW3o9rlpkY/hHO/D3a2uBt8v61i6xzKg6EQSmnYqsYCcGbtAVFqFk6K4XR5ZJtowfq
-	 7E8DLOlcB6oTuufnXefqHdVn9yPLlsbzxRlfDSwsNpBVUFNTGLlKsg0CXjlvS6As737lI
-	 Gdy9AQVRMfQMkDD0uh7z4NhCXSnx2u1R+htfmsSe1tBTotfAuym/wSOnPIMSl7qozgVi2
-	 AVVzoxRorSxFsHSXM4VSfBgRmn1fGVdPpj9hE6CLZ5hIxhEWGpWtW18541dBAsNqaCA==
+	bh=N2cpKy/LUiMS6VdFahUfNr4z+22SQn8VQLvSD65BXoI=;
+	b=Tj5v+ppjbuaCUbGtcVJ16V3FsY+6Vlpq7laXznEob1HOGcp1ZUkbcAhX5uJm3AC+PeI3
+	 CCWXC7ulyDl0IZUvBdE/J88Jf1Qgvq5GSe8EIRNpNlzOWF0I47+9WAbex+7iTyPlb/hHb
+	 aTtFudtzYgueg0/SjhC91E76paWLR7IVU+FRz4hk6fkyPZKBEeKghh4AyfFZ0Z/pZaXUD
+	 q7fa48Epd9EuAgIHS7BM/UV8L22NnHvqwgJF0GBwk+xaSh/eebIXttowXjWELICdfvPqq
+	 jD9/9wMYkPaOkL6rTw6MR8Dm54FUGnOuu7ctNglfT4f7UjP1kSaxi1ho0HIGy9oyx5A==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="l/hg6sfr";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=rI3SBLW2;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 004EA606A321;
-	Wed, 25 Nov 2026 16:56:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6B2F6606A31E;
+	Wed, 25 Nov 2026 16:56:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=l/hg6sfr
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E8B401F000CA;
-	Wed, 25 Nov 2026 16:56:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=rI3SBLW2
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5F80C1F000CA;
+	Wed, 25 Nov 2026 16:56:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795625782;
-	bh=KfpOqPLaEmNXoAqb+0ut9UfC56FWFhLsl5JZ/hxYVDg=;
+	s=korg; t=1795625785;
+	bh=N2cpKy/LUiMS6VdFahUfNr4z+22SQn8VQLvSD65BXoI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=l/hg6sfr9PHqyAEgCJlMlOrImt+TxqSRMLYptA/qJSF7GE/2qw5LEtPt6E/Mi87pV
-	 8f0x2GhnpleaRKOt6zc+h5w+tVURq7Zj3GwGhGiddnrJWS6JfyPjBowjRL1t6MzAqy
-	 7Dv46+6qE5rcS4LlXvr1SRk2+a80hoDaoWVAYfi0=
+	b=rI3SBLW23B8PduCz0KMwo5Kfw3/lYEtxaypu8gVx5cfcyicdZPFMrCsXSyCh2m0oy
+	 RsqHOH00jsYVPC9bnndxByD6Z1oGy1p0f+bPF8kGtR1s0rK2kbr0g9wn/gC0BMX9Me
+	 KdyP/015RuyeaM+QVfPr8C8Fu3d0lkkvmyNqpFsk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jaeyoung Chung <jjy600901@snu.ac.kr>,
-	Dave Hansen <dave.hansen@linux.intel.com>,
-	Ingo Molnar <mingo@kernel.org>,
-	Linus Torvalds <torvalds@linuxfoundation.org>,
-	"Peter Zijlstra (Intel)" <peterz@infradead.org>
-Subject: [PATCH 6.12 630/816] x86/mm: Ensure write visibility during LDT installation
-Date: Wed, 25 Nov 2026 15:36:18 +0100
-Message-ID: <20261125143903.767868828@linuxfoundation.org>
+	Andrey Misiurov <andrey.misyrov@gmail.com>,
+	Juergen Gross <jgross@suse.com>
+Subject: [PATCH 6.12 631/816] xen/gntdev: fix deadlock between map ioctl and mmap
+Date: Wed, 25 Nov 2026 15:36:19 +0100
+Message-ID: <20261125143903.789855567@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143849.205329330@linuxfoundation.org>
 References: <20261125143849.205329330@linuxfoundation.org>
@@ -70,70 +67,82 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dave Hansen <dave.hansen@linux.intel.com>
+From: Andrey Misiurov <andrey.misyrov@gmail.com>
 
-commit 0dc2a4dac3d04e9e4479aeb0b46172feab1cca0a upstream.
+commit 7620a997e4854c94eacebf0c2d453fbd78ccdb46 upstream.
 
-During LDT installation, the intent is to overwrite the old per-mm
-LDT value, then send an IPI to the mm user CPUs to have each load
-the new value.
+Commit 45ca1afe2fd1 ("xen/gntdev: fix error handling in ioctl") moved
+copy_to_user() in gntdev_ioctl_map_grant_ref() under priv->lock. A
+fault in copy_to_user() takes mmap_lock, while gntdev_mmap() is called
+with mmap_lock held and takes priv->lock:
 
-But there is an ordering problem: a new mm user CPU sets itself in
-mm_cpumask() and then reads mm->context.ldt. The LDT-installing CPU
-writes mm->context.ldt and then reads mm_cpumask(). But, there is
-nothing which orders the LDT installation side actions. The CPU
-can read mm_cpumask() before its write becomes visible.
+  ioctl thread                        mmap thread
+  mutex_lock(&priv->lock)
+                                      mmap_write_lock(mm)
+                                      gntdev_mmap()
+                                        mutex_lock(&priv->lock)
+  copy_to_user() faults
+    mmap_read_lock(mm)
 
-Ensure that new mm user CPUs see the new mm->context.ldt. Make
-mm->context.ldt visible before reading mm_cpumask().
+Reproduced on Debian 6.12.111 in a Xen guest, with the ioctl argument
+on a MAP_PRIVATE file page that has not been written yet. sysrq-w:
 
-Also convert the smp_store_release() over to a WRITE_ONCE().
-smp_store_release() has an internal barrier which is weaker than
-the new smp_mb(). Avoid an extra barrier by converting it to
-WRITE_ONCE().
+  task:repro state:D stack:0 pid:4479 tgid:4477 ppid:1 flags:0x00000000
+   rwsem_down_read_slowpath+0x25c/0x480
+   down_read_killable+0x48/0xc0
+   lock_mm_and_find_vma+0x96/0x250
+   do_user_addr_fault+0x12d/0x620
+   exc_page_fault+0x7e/0x180
+   asm_exc_page_fault+0x26/0x30
+   _copy_to_user+0x36/0x50
+   gntdev_ioctl+0x3b9/0xa00 [xen_gntdev]
+   __x64_sys_ioctl+0x97/0xc0
+  task:repro state:D stack:0 pid:4480 tgid:4477 ppid:1 flags:0x00000000
+   __mutex_lock.constprop.0+0x41b/0x720
+   gntdev_mmap+0x4d/0x330 [xen_gntdev]
+   __mmap_region+0x697/0xb10
+   mmap_region+0x78/0xa0
+   do_mmap+0x45d/0x630
+   vm_mmap_pgoff+0xf8/0x1c0
 
-Also refresh/correct misleading comments. READ/WRITE_ONCE() do not
-"synchronize" anything themselves.
+Drop priv->lock before copy_to_user() again. On failure, re-take it
+and remove the map by index, as IOCTL_GNTDEV_UNMAP_GRANT_REF does,
+since another thread may have unmapped it meanwhile.
 
-Reported-by: Jaeyoung Chung <jjy600901@snu.ac.kr>
-Signed-off-by: Dave Hansen <dave.hansen@linux.intel.com>
-Signed-off-by: Ingo Molnar <mingo@kernel.org>
-Tested-by: Jaeyoung Chung <jjy600901@snu.ac.kr>
-Acked-by: Linus Torvalds <torvalds@linuxfoundation.org>
-Acked-by: Peter Zijlstra (Intel) <peterz@infradead.org>
-Cc: <stable@vger.kernel.org>
+Fixes: 45ca1afe2fd1 ("xen/gntdev: fix error handling in ioctl")
+Cc: stable@vger.kernel.org
+Signed-off-by: Andrey Misiurov <andrey.misyrov@gmail.com>
+Reviewed-by: Juergen Gross <jgross@suse.com>
+Signed-off-by: Juergen Gross <jgross@suse.com>
+Message-ID: <20261013170745.583279-1-andrey.misyrov@gmail.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/kernel/ldt.c |   12 +++++++++---
- 1 file changed, 9 insertions(+), 3 deletions(-)
+ drivers/xen/gntdev.c |    8 ++++++--
+ 1 file changed, 6 insertions(+), 2 deletions(-)
 
---- a/arch/x86/kernel/ldt.c
-+++ b/arch/x86/kernel/ldt.c
-@@ -43,7 +43,7 @@ void load_mm_ldt(struct mm_struct *mm)
- {
- 	struct ldt_struct *ldt;
+--- a/drivers/xen/gntdev.c
++++ b/drivers/xen/gntdev.c
+@@ -678,15 +678,19 @@ static long gntdev_ioctl_map_grant_ref(s
+ 	mutex_lock(&priv->lock);
+ 	gntdev_add_map(priv, map);
+ 	op.index = map->index << PAGE_SHIFT;
++	mutex_unlock(&priv->lock);
  
--	/* READ_ONCE synchronizes with smp_store_release */
-+	/* Pairs with WRITE_ONCE() in install_ldt() */
- 	ldt = READ_ONCE(mm->context.ldt);
+ 	if (copy_to_user(u, &op, sizeof(op)) != 0) {
+-		list_del(&map->next);
++		mutex_lock(&priv->lock);
++		map = gntdev_find_map_index(priv, op.index >> PAGE_SHIFT,
++					    op.count);
++		if (map)
++			list_del(&map->next);
+ 		mutex_unlock(&priv->lock);
+ 		gntdev_put_map(priv, map);
+ 		return -EFAULT;
+ 	}
  
- 	/*
-@@ -422,8 +422,14 @@ static void install_ldt(struct mm_struct
- {
- 	mutex_lock(&mm->context.lock);
+-	mutex_unlock(&priv->lock);
+ 	return 0;
+ }
  
--	/* Synchronizes with READ_ONCE in load_mm_ldt. */
--	smp_store_release(&mm->context.ldt, ldt);
-+	/*
-+	 * Ensure that new mm user CPUs either see the new LDT value
-+	 * or get an IPI. Make the store visible before reading
-+	 * mm_cpumask(). New mm users make their mm_cpumask() writes
-+	 * visible before reading mm->context.ldt.
-+	 */
-+	WRITE_ONCE(mm->context.ldt, ldt);
-+	smp_mb();
- 
- 	/* Activate the LDT for all CPUs using currents mm. */
- 	on_each_cpu_mask(mm_cpumask(mm), flush_ldt, mm, true);
 
 
