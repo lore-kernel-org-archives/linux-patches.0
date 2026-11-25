@@ -1,51 +1,50 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795623406;
-	b=pM52OT/RzyLxM9SfaHVT2X3F5yaJ8FK/+O7koCiSLYDnrxzbc9CidiVajYKabU7cIjbP
-	 Jz/NcaesVye2D5BNZW3HgcuW9Ddz1raJSerD0KOjJ09kArqd9M4XfkzXs1ouCKGp1K39j
-	 1FZFyWtOWxy6xkc+jpgu/aoxfe7apXY7L9B2YmShBStXa5RdqNb2ETXyxMd3DMNBTpKL3
-	 6KuKxeKkOHl8LJCQxgEq2PT8F3ACeRI7f/7KNlf75/OJNya/5eLnVOgupy0qvVIURSy4G
-	 HoMoOReiHLWYKQLgvuOIbZkZpJqBXFBotrCosvJcRGLqgt0nK7mrnhhXPPq+0fGFImA==
+	t=1795623409;
+	b=GTXl/HFnxw9aFxYhO0boayVUi0EwnY5G3HFL8tBCfKRZmYHZrR5SqaECofPGK4OSFEQZ
+	 d0YhG6TBeJdC5KhMShExXqwoO2/cOQVbzCS2osPGivNiJpTSVvKO7nY8n99Ijdc4P9mcO
+	 lpsPo4ENx/SAvyGdFFo4RwntXZOD/H+SAsNKJRm8ml0k0qVuGZQ6luGAoZbj66vJUHSGs
+	 kJ+gprz7sG7ofeCSSQcmGbGC5RTAKdTAjQGA/o/ISeAD6owHSQGDhBl50nEU63712KZHG
+	 jtollIA/57G+53p7pAzZyxf8KrtRl9WPUbWSzMWqSz10ronhVW41S1kyiQUS1E49Nvw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795623406;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795623409;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=5cc0QV0I0KB8Jdj0mbOSRfV6jHj+CcaW4dNY0lz1Jf0=;
-	b=0ApPQPBRYM4t1gi4XiaZO/PEGgRFIrPZHHyCZRfGNv/Dqn4zI0VLQBhKnJ2gK49Mf1Oe
-	 xSBXFHNwdJgpP1hasjjY7wjFHtvRnpO4TbGvDRbFtAm/0LE5CIwOubU/dczGylVAAjdde
-	 KjHSCRURWziFgQ8ZWYOnv8c52Z5h3Phn5Zi69uDj4f73KxrK/tDPvKgEmLhwprjVQwzfO
-	 oblicA740ilHIQrUHCy4Sgh1t7O4HxyZLDZ7+aehDrBzu9MfjE3uvgSBKrXVTmOZOBgQw
-	 TF1gRuCFK8W0Vicr47Uin+U/WPgZI26nUC9HpA/UKgRxxZLAFdcREzqvl2JqZbPE/zA==
+	bh=qRCkFHFNy1+uN5UBVz1plQ3EfQArGZn1WoFCoN9u58Y=;
+	b=K1ELFDhMMaV+9DEl4IqtiprIY3tbrwdSn6ECPOvQngtMs258q76KsOomape6HzKpY+r8
+	 p30QMyPv5M8YIXi80WVikjcpNk7gLx37L+fPxYVJ8wt/24HoIEZ7Mfk27UbUa5uqJqMkz
+	 0c12k9LJdgBAt+VQZuMWkI27/RXuYAhLJnVxQldpa05J6iatzT2U+ttPdSwGk7edJMYan
+	 KDvAyas3DqcxSyuSv3Fm5fgfgfmbSOhAjYHcc7L+kKhLKqi4ZwzYC/CdlyDFDGXHYgVmg
+	 73YX5leCvShdF96qdJ7xL+EecscdmVtcGsDIZmoZvO22Ao2vHp/drGs430KxFNXfCnA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=YsPMjGcR;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=pLFaALCJ;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5D8E2606A326;
-	Wed, 25 Nov 2026 16:16:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 34141606A321;
+	Wed, 25 Nov 2026 16:16:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=YsPMjGcR
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AE0961F000C6;
-	Wed, 25 Nov 2026 16:16:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=pLFaALCJ
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 852821F000C6;
+	Wed, 25 Nov 2026 16:16:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795623406;
-	bh=5cc0QV0I0KB8Jdj0mbOSRfV6jHj+CcaW4dNY0lz1Jf0=;
+	s=korg; t=1795623409;
+	bh=qRCkFHFNy1+uN5UBVz1plQ3EfQArGZn1WoFCoN9u58Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=YsPMjGcRyHr+QilJsNETgrqrBAJcdLk+FRMW2zfaOOpEKw7/0WH4Su+arnIKHmOYQ
-	 lqLsHj63xBuXFHjj861Od3F4IbmqmljJnDpq5dmMh6/4y9ZtOKEEivXltPApJjSnto
-	 pBFTmWWsQZS9B7u8lxZ9P54dKr63SaXX/Rgg2eK8=
+	b=pLFaALCJQF+XwIGk8TebRb4AUiIt9AWLGDebi4cfQpGcxLKdQAUckJOq16/FexOT2
+	 o37XqjfWiEFeMCOms3L1kUr/1fZKFuHE4O23lR7t9QSSdqICPv7XAHPWS0zEe5iEVf
+	 7R7qeQTDIkvtpZmWhyY32TB2qbI8d1rGk8Wvj3JY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yaohan Li <shunsheng1218@gmail.com>,
-	Mikulas Patocka <mpatocka@redhat.com>
-Subject: [PATCH 6.18 850/990] dm: avoid double-dropping the zone reset submission reference
-Date: Wed, 25 Nov 2026 15:36:57 +0100
-Message-ID: <20261125143841.940089095@linuxfoundation.org>
+	Amir Goldstein <amir73il@gmail.com>
+Subject: [PATCH 6.18 833/990] ovl: report the requested redirect_dir mode in conflicting options
+Date: Wed, 25 Nov 2026 15:36:40 +0100
+Message-ID: <20261125143841.546500592@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143822.072087159@linuxfoundation.org>
 References: <20261125143822.072087159@linuxfoundation.org>
@@ -67,52 +66,155 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yaohan Li <shunsheng1218@gmail.com>
+From: Amir Goldstein <amir73il@gmail.com>
 
-commit c4965effbe15f837a8089e79c0fc17ab19363cce upstream.
+commit 248503755b3cab89742edcc3cfd53adbcf7bfec2 upstream.
 
-On an error in __send_zone_reset_all(), the submission reference
-held by the dm_io can be decremented there and again by the caller's
-error path. If another clone is still outstanding, the second drop
-can release the dm_io before that clone completes.
+Since the redirect_dir mode is stored as an enum, "off" is translated to
+"follow" or "nofollow" when parsing the option and redirect_dir=follow is
+translated to "on" for a non-upper mount, so the errors about options
+that conflict with an explicit redirect_dir= report a mode that the user
+did not request.
 
-Only drop the submission reference in __send_zone_reset_all() on
-success. On failure, leave the reference for the caller's existing
-error handling to release once.
+Translate "off" when verifying the mount options instead of when parsing
+them and report the requested mode in those errors.
 
-The error path was reproduced under KASAN with an injected GFP_NOIO
-allocation failure while another zone-reset clone remained in
-flight. With the change, the same failure was reported normally,
-without the observed use-after-free, and ordinary zone resets
-continued to work.
-
-Fixes: 81e7706345f06 ("dm: handle REQ_OP_ZONE_RESET_ALL")
+Fixes: af5f2396b671 ("ovl: store enum redirect_mode in config instead of a string")
 Cc: stable@vger.kernel.org
-Assisted-by: ZCode:GLM-4
-Signed-off-by: Yaohan Li <shunsheng1218@gmail.com>
-Signed-off-by: Mikulas Patocka <mpatocka@redhat.com>
+Signed-off-by: Amir Goldstein <amir73il@gmail.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/md/dm.c |    9 +++++++--
- 1 file changed, 7 insertions(+), 2 deletions(-)
+ fs/overlayfs/overlayfs.h |   10 +++++++---
+ fs/overlayfs/params.c    |   43 ++++++++++++++++++++++++++++++-------------
+ 2 files changed, 37 insertions(+), 16 deletions(-)
 
---- a/drivers/md/dm.c
-+++ b/drivers/md/dm.c
-@@ -1924,8 +1924,13 @@ static blk_status_t __send_zone_reset_al
- 			break;
+--- a/fs/overlayfs/overlayfs.h
++++ b/fs/overlayfs/overlayfs.h
+@@ -74,9 +74,13 @@ enum ovl_entry_flag {
+ };
+ 
+ enum {
+-	OVL_REDIRECT_OFF,	/* "off" mode is never used. In effect	*/
+-	OVL_REDIRECT_FOLLOW,	/* ...it translates to either "follow"	*/
+-	OVL_REDIRECT_NOFOLLOW,	/* ...or "nofollow".			*/
++	/*
++	 * "off" mode is never used after mount options are verified. In effect
++	 * it translates to either "follow" or "nofollow".
++	 */
++	OVL_REDIRECT_OFF,
++	OVL_REDIRECT_FOLLOW,
++	OVL_REDIRECT_NOFOLLOW,
+ 	OVL_REDIRECT_ON,
+ };
+ 
+--- a/fs/overlayfs/params.c
++++ b/fs/overlayfs/params.c
+@@ -112,18 +112,28 @@ const struct constant_table ovl_paramete
+ 	{}
+ };
+ 
++static const char *ovl_redirect_mode_name(int redirect_mode)
++{
++	return ovl_parameter_redirect_dir[redirect_mode].name;
++}
++
+ static const char *ovl_redirect_mode(struct ovl_config *config)
+ {
+-	return ovl_parameter_redirect_dir[config->redirect_mode].name;
++	return ovl_redirect_mode_name(config->redirect_mode);
+ }
+ 
+-static int ovl_redirect_mode_def(void)
++static int ovl_redirect_follow_mode(void)
+ {
+-	return ovl_redirect_dir_def	  ? OVL_REDIRECT_ON :
+-	       ovl_redirect_always_follow ? OVL_REDIRECT_FOLLOW :
++	return ovl_redirect_always_follow ? OVL_REDIRECT_FOLLOW :
+ 					    OVL_REDIRECT_NOFOLLOW;
+ }
+ 
++static int ovl_redirect_mode_def(void)
++{
++	return ovl_redirect_dir_def ? OVL_REDIRECT_ON :
++				      ovl_redirect_follow_mode();
++}
++
+ static const struct constant_table ovl_parameter_verity[] = {
+ 	{ "off",	OVL_VERITY_OFF     },
+ 	{ "on",		OVL_VERITY_ON      },
+@@ -656,11 +666,6 @@ static int ovl_parse_param(struct fs_con
+ 		break;
+ 	case Opt_redirect_dir:
+ 		config->redirect_mode = result.uint_32;
+-		if (config->redirect_mode == OVL_REDIRECT_OFF) {
+-			config->redirect_mode = ovl_redirect_always_follow ?
+-						OVL_REDIRECT_FOLLOW :
+-						OVL_REDIRECT_NOFOLLOW;
+-		}
+ 		ctx->set.redirect = true;
+ 		break;
+ 	case Opt_index:
+@@ -816,7 +821,13 @@ int ovl_init_fs_context(struct fs_contex
+ 	if (!ofs)
+ 		goto out_err;
+ 
+-	ofs->config.redirect_mode	= ovl_redirect_mode_def();
++	/*
++	 * The module default determines only if new redirects are created in
++	 * upper dir.  If they are not, the redirect follow mode will be
++	 * determined after parsing mount options.
++	 */
++	ofs->config.redirect_mode	= ovl_redirect_dir_def ?
++					  OVL_REDIRECT_ON : OVL_REDIRECT_OFF;
+ 	ofs->config.index		= ovl_index_def;
+ 	ofs->config.uuid		= ovl_uuid_def();
+ 	ofs->config.nfs_export		= ovl_nfs_export_def;
+@@ -874,6 +885,8 @@ int ovl_fs_params_verify(const struct ov
+ 			 struct ovl_config *config)
+ {
+ 	struct ovl_opt_set set = ctx->set;
++	/* The requested redirect_dir=, for reporting conflicts with it */
++	int redirect_opt = config->redirect_mode;
+ 
+ 	/* Workdir/index are useless in non-upper mount */
+ 	if (!config->upperdir) {
+@@ -900,6 +913,10 @@ int ovl_fs_params_verify(const struct ov
+ 		config->uuid = OVL_UUID_NULL;
  	}
  
--	/* Release the reference that alloc_io() took for submission. */
--	atomic_sub(1, &ci->io->io_count);
-+	/*
-+	 * Release the reference that alloc_io() took for submission. On error,
-+	 * that reference was not consumed: dm_split_and_process_bio() releases
-+	 * it on the error path, so do not release it here a second time.
-+	 */
-+	if (sts == BLK_STS_OK)
-+		atomic_dec(&ci->io->io_count);
- 
- 	return sts;
- }
++	/* Resolve redirect_dir=off to the default redirect follow mode */
++	if (config->redirect_mode == OVL_REDIRECT_OFF)
++		config->redirect_mode = ovl_redirect_follow_mode();
++
+ 	/*
+ 	 * This is to make the logic below simpler.  It doesn't make any other
+ 	 * difference, since redirect_dir=on is only used for upper.
+@@ -911,7 +928,7 @@ int ovl_fs_params_verify(const struct ov
+ 	if (config->metacopy && config->redirect_mode != OVL_REDIRECT_ON) {
+ 		if (set.metacopy && set.redirect) {
+ 			pr_err("conflicting options: metacopy=on,redirect_dir=%s\n",
+-			       ovl_redirect_mode(config));
++			       ovl_redirect_mode_name(redirect_opt));
+ 			return -EINVAL;
+ 		}
+ 		if (set.redirect) {
+@@ -920,7 +937,7 @@ int ovl_fs_params_verify(const struct ov
+ 			 * in this conflict.
+ 			 */
+ 			pr_info("disabling metacopy due to redirect_dir=%s\n",
+-				ovl_redirect_mode(config));
++				ovl_redirect_mode_name(redirect_opt));
+ 			config->metacopy = false;
+ 		} else {
+ 			/* Automatically enable redirect otherwise. */
+@@ -987,7 +1004,7 @@ int ovl_fs_params_verify(const struct ov
+ 		if (set.redirect &&
+ 		    config->redirect_mode != OVL_REDIRECT_NOFOLLOW) {
+ 			pr_err("conflicting options: userxattr,redirect_dir=%s\n",
+-			       ovl_redirect_mode(config));
++			       ovl_redirect_mode_name(redirect_opt));
+ 			return -EINVAL;
+ 		}
+ 		if (config->metacopy && set.metacopy) {
 
 
