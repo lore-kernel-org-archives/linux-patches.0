@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795617722;
-	b=Kz7Cw+zeLow9xe+uGVLQqYBbuPNTzizxNJkTqplMzcTieJhSDHYBHQyNFvVM4EZO109T
-	 tv22nTh7uuzrERAeuxa4mtP/+vP4NI3W8p/yzw/57x+PBbdVSgV2Fthhc8mQmVHpg3bLB
-	 2vmqgdDUXgkVLZZBtZxaWK9wLgmZYFwRy2fC/yTpGwXA/3OKs6khsIOyuH3rylD97BYM8
-	 jAyL1vgCjMtm7U9qf36Q7v/T7OyEJxLuX0SD6kYxaG68oNI2SWZ3LaJDnhoN17tUjym75
-	 1558VR0GT8kpX81n8ma65wBE0nMKCHa2EIH+YnurSxASem33yJ6bl72uk45dblXxUDA==
+	t=1795617726;
+	b=tWUE7DA//xTBMCYoinlHllDpGt43WNLtvApY7wdngDJaDsaMJ3wOpPpX2Avm9ZuhYt6l
+	 iQ9dyfq7Hv3iMAXGE2T3Xo9r/SxQtX2athPpIPbg424tn33raBEdEm/DvejLPi1FMtZEJ
+	 c2yF4cF2MugnXD3sq7gjxi0tQ0lL9EPJGjG+9vBSKI9pbiqppvQhBe5qv6QaCUSv4TIVs
+	 gMHM6DQYj/KkGMdrmMZIM3zCxpiyYq91fd0Xr2RH3rNa3hcnYPCgqzxMqqxoBBuKx2eFC
+	 qCusmLHpLjUBJqWEaEjJ59/0/dDsPljc8ZpREzAuzdSZ1VP7ySBvY4Eldz3vKhRiO8w==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795617722;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795617726;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=+gFEbO0SAUCX00ic2Czgx8a0pjotk5k3wY/VHPdaRvY=;
-	b=sGRFnwWby25gGKsTAMmEszvwEXtGlT232LUq76vDOQWu4k+LAzV7wz4LqO4FtVI9xjzF
-	 vrteeV/f9n2oEBjOXgkAoJWjYWioAfzscEYscWnrMthYOoCBThShs8XWGDhHGNcbESSov
-	 xVx5rjOyKs4FXTtBPpsqeukjxj5+iNV0h6385HjeMPNCy/WPB7u3VYF6fTQREfBtjiXqi
-	 hpznMPbYZqpg0NArQSF6RW73B4IFKXX37PkclDAz8E3Z2/F+hkiB7xcDZh6wHsE1KRwe1
-	 LyVpkvlr/kJBnhdfDQIK5FaxfcPzfSeema/Iavg/eJVl0Lm2/y3RgXt1LqlWe/jBIgg==
+	bh=ciiJ2U2ubuE0aAkmLsUBKbOyAZKrDnZ1VmcGvPlnPtk=;
+	b=y7p2lTvJ+slTPfXV3tHpxY6AddBjqaV+68efOO7BIlupcbJOq0n0lOLZT36Ybq+4zBU5
+	 9wv1nea9aCSigVbUY5/oOOIK9M+V8JYUF6/VGZt/kjqhxARyumu7mAbW5OCZgPllR2RzN
+	 Ozkj3jUFKEydqS7TLSm/3cg7H71/SJ4AzAJnBJc8YOymhtBQbw2AnhgjvRvWv+awBgMRf
+	 rrvq8Df+W6N7d4yUEfLtpotKtwsp2eXll2r+cytK6mvbblkL/GGGxcCfHq6WdyfXlB/wo
+	 NSlUo3/huxnTPjG07TdNTTGctnPkluURN6Y9UABnQ4zveKcI8vQido9JUkvkEaTlL2Q==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=GXAMbnsq;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Xa9q31MP;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AE48E606A32A;
-	Wed, 25 Nov 2026 14:42:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C6A1F606A329;
+	Wed, 25 Nov 2026 14:42:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=GXAMbnsq
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0E8151F000EF;
-	Wed, 25 Nov 2026 14:42:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Xa9q31MP
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 996181F000C6;
+	Wed, 25 Nov 2026 14:42:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795617722;
-	bh=+gFEbO0SAUCX00ic2Czgx8a0pjotk5k3wY/VHPdaRvY=;
+	s=korg; t=1795617726;
+	bh=ciiJ2U2ubuE0aAkmLsUBKbOyAZKrDnZ1VmcGvPlnPtk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=GXAMbnsqWV4yBhHay6YMP/g/Bj1d5GTkBynuFTECFc03cEA92XXb2BFEXiJBJOfHv
-	 xyCcXSkIvVBHry448aMTkhREggDvfs24Mj9vetAGGfG/E/Je02khO+GADbcLJZERfz
-	 JlHy3Bwq4V+7YtVJZT4USerXA2D+KUGQTBrLsme4=
+	b=Xa9q31MPV2xjqaQovZUMcLfwIZVaBMHx2fvRXnBkP4Sc+D2X+YhFVxjeeY64iQpqn
+	 MtDAyvHKexBaeidOzUlKh4ilCG2eL1YBQ6G5t5QsCThLEOCMq0QMvZSqBUb+TL2IRT
+	 CJ9OXtzDYvvra0PKYlFchVrzkEKEuC5OADZPjZ3Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Giuseppe Piscitelli <ooonea@gmail.com>,
-	Bart Van Assche <bvanassche@acm.org>,
+	Laurence Oberman <loberman@redhat.com>,
+	Matthew Whitehead <tedheadster@gmail.com>,
 	"Martin K. Petersen (Oracle)" <mkp@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0053/1005] scsi: core: Balance the pseudo target reap reference
-Date: Wed, 25 Nov 2026 15:23:11 +0100
-Message-ID: <20261125143822.983258543@linuxfoundation.org>
+Subject: [PATCH 7.3 0054/1005] scsi: aha1542: Remove unneeded scsi_dma_unmap() call
+Date: Wed, 25 Nov 2026 15:23:12 +0100
+Message-ID: <20261125143823.007623640@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143821.729802100@linuxfoundation.org>
 References: <20261125143821.729802100@linuxfoundation.org>
@@ -69,57 +69,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Giuseppe Piscitelli <ooonea@gmail.com>
+From: Matthew Whitehead <tedheadster@gmail.com>
 
-[ Upstream commit 8a832fb632da303cdf0704e0d56722ec47799f19 ]
+[ Upstream commit 9ec6671b137de06f0345962fb8091466b7d56a96 ]
 
-With memory allocation profiling enabled, unloading scsi_debug reports
-allocations left at module unload. A stock Linux 7.2.11 VM without OpenZFS
-emitted the following on each of three load/unload cycles:
+aha1542 never DMA maps the command's scatterlist. Data is bounced
+through a per-command buffer allocated with dma_alloc_coherent() in
+aha1542_init_cmd_priv(), the adapter is programmed with
+acmd->data_buffer_handle, and the payload is copied to and from the
+request segments in aha1542_queuecommand() and aha1542_free_cmd().
 
-[    1.644665] drivers/scsi/scsi_debug.c:8863 module scsi_debug func:sdebug_add_host_helper has 1024 allocated at module unload
-[    1.656260] drivers/scsi/scsi_debug.c:1261 module scsi_debug func:sdebug_target_alloc has 16 allocated at module unload
+The scsi_dma_unmap() call left in aha1542_free_cmd() therefore unmaps
+a scatterlist that was never mapped. With CONFIG_DMA_API_DEBUG enabled
+this results in:
 
-scsi_alloc_target() supplies a reap reference for its caller. The SCSI
-device initializer takes another reference, which device removal drops.
-scsi_get_pseudo_sdev() drops its caller reference only when device
-allocation fails. On success the target cannot be destroyed, retaining its
-driver-private data and its parent host and adapter.
+  device driver tries to free DMA memory it has not allocated
+    [device address=0x0000000000000000] [size=0 bytes]
 
-Drop the caller reference in the common cleanup path, as the other
-scsi_alloc_target() callers do.
+Remove the call.
 
-Fixes: d630fbf6fc8c ("scsi: core: Support allocating a pseudo SCSI device")
-Signed-off-by: Giuseppe Piscitelli <ooonea@gmail.com>
-Reviewed-by: Bart Van Assche <bvanassche@acm.org>
-Link: https://patch.msgid.link/20261027100859.1031135-1-ooonea@gmail.com
+Verified by testing on real hardware.
+
+Fixes: 2f2fef022c3e ("aha1542: use a local bounce buffer")
+Suggested-by: Laurence Oberman <loberman@redhat.com>
+Assisted-by: LLM
+Signed-off-by: Matthew Whitehead <tedheadster@gmail.com>
+Reviewed-by: Laurence Oberman <loberman@redhat.com>
+Link: https://patch.msgid.link/20260929144528.7061-1-tedheadster@gmail.com
 Signed-off-by: Martin K. Petersen (Oracle) <mkp@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/scsi/scsi_scan.c | 5 ++---
- 1 file changed, 2 insertions(+), 3 deletions(-)
+ drivers/scsi/aha1542.c | 2 --
+ 1 file changed, 2 deletions(-)
 
-diff --git a/drivers/scsi/scsi_scan.c b/drivers/scsi/scsi_scan.c
-index 6cd77b0592e45..53a0af2104ef0 100644
---- a/drivers/scsi/scsi_scan.c
-+++ b/drivers/scsi/scsi_scan.c
-@@ -2156,14 +2156,13 @@ struct scsi_device *scsi_get_pseudo_sdev(struct Scsi_Host *shost)
- 		goto out;
+diff --git a/drivers/scsi/aha1542.c b/drivers/scsi/aha1542.c
+index 93dab19c1cb95..1cd85da47cc9c 100644
+--- a/drivers/scsi/aha1542.c
++++ b/drivers/scsi/aha1542.c
+@@ -271,8 +271,6 @@ static void aha1542_free_cmd(struct scsi_cmnd *cmd)
+ 			buf += bv.bv_len;
+ 		}
+ 	}
+-
+-	scsi_dma_unmap(cmd);
+ }
  
- 	sdev = scsi_alloc_sdev(starget, U64_MAX, NULL);
--	if (!sdev) {
--		scsi_target_reap(starget);
-+	if (!sdev)
- 		goto put_target;
--	}
- 
- 	sdev->borken = 0;
- 
- put_target:
-+	scsi_target_reap(starget);
- 	/* See also the get_device(dev) call in scsi_alloc_target(). */
- 	put_device(&starget->dev);
- 
+ static irqreturn_t aha1542_interrupt(int irq, void *dev_id)
 -- 
 2.53.0
 
