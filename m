@@ -1,55 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795625046;
-	b=kI8tq9aBGLGmOlO1PhVKshVSIxKDvXd7i1UC72nTSKizFN5hSEQNF/2+XIi8kIx51Hss
-	 AW0/DPKZPjPzM/RewfT9R3PGbevk/Z0vr0K3LvY/9PFd0SEIfqxF0dG6siQXypEPTeYAU
-	 6i7XMqO27MY7RDMPilfxX2LpakUwBvl+QrDgCnjzYsOxfXoP9j1u6L1f1pbWlOa1ULifi
-	 nYm2uWr3Q7VbCVXWQK4G5gmgVtXw5PAl8G5ttfVQiwa+B+hYbS2vEvlbIAtBOZQGNaXv+
-	 P5T1uJGoF3HFoNmzIREnEJWLoGSz4hzq7oUHCQcGnxxQj6SWA6pgNkU1I1LL6T1nZOQ==
+	t=1795625049;
+	b=ypN2VS67NnIyNPfqFwOrur8Kf2/U1C8JS9lu+C17zxwhlxXk8XiV9vrxVlIddYxQ61JR
+	 AsUSayW/eLzkTDqXiE7/vgCgKpADzX95NALSaOL4t1y14Y/3M57cOem0MNY5HbvRT7lCk
+	 MzUvhvj/QAKq93vbWUVtQVThw7O+D7uCSQzPzPzOCL+eAUPX5HanEXIOwLp00fVhyJYud
+	 GRe9q9nrODGRirUomwOmv/KMkVAEbbsPhz/egF0l5DBYFlFYNPR+ETO+lFrEdlSaPMgiv
+	 /vUCIxSC/WFlyX+xja5uoj/QABoaqM+x1TnF5GxCu7HEfSzsDJlJiLzQ8rHhlbMdp9Q==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795625046;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795625049;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=omRWr8c4vuS5WJ6vKs8TVlLy3NH+b4IfkR+mmWmW8C0=;
-	b=o+bhh669mGJ6kn29ceri/+oc59bO2x8T24K/yMoC4BU7XFricBHxfS1vR+1bV1Uc6mC5
-	 pVTeoBiflS6GNw600tYdD63TDr7rPR6uVi+9YpN8XtpMh/oeHk1Z/6L2wCQ7xm3GDYSdk
-	 SoyhTfNcq19TvaKZcPUyacpDp1aWIg+ewnuC5Jdnj+FhEKI2jEP4w5mlfVQX6FViZQlMP
-	 CspTLRegFqluWa1j4/NpVk7DjxRFs0NTFf2HMse3cud8sBuIfgly5e0zy3TcfL7UK5ljb
-	 vlQcMbJKs0L8ijz1jHqFpO/aQyM/NopeBic0+uhOOSyiRXvYXFHaJRKppqbflS9HOmg==
+	bh=54zAwcoKceQzRMjVlqgYCC+M14Pfvrc2iR1V1AZMVi8=;
+	b=LiaMjNs53fr1KqIuez8oDB+UY58B6kyg2Iz9rn9SlbU0y1euOUTOdT4u9qAF5qxK4zTh
+	 mg0cEx6f8a/Fw6Dpwx/UJNbA0tl7/unoIPEPOz/g8CdTtXfKps1MBU3/52AfR8d0YjSET
+	 I6XWDTXKN3DwLwMEvop9JQ3i6zPONppvoRusZxxPdOQ7uTb4PFRrQhyKhDLxwTaqVyOPM
+	 6Fr3mBtPzsG08CZBVGgXFyrwI8322l784VtvTQ66K2M2VwhpCbwMqM9H7Hl9ZPI+nM7Ob
+	 gDqgzm8BSk6XfE4N/h4WFYBI5IoTvEUPYAT7Z+WG1VeyCnxFT8AJLdgZu8gziDi0L9w==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=IqNmC28M;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=e1NghXZi;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B672C606A32A;
-	Wed, 25 Nov 2026 16:44:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B35DA606A32C;
+	Wed, 25 Nov 2026 16:44:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=IqNmC28M
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 194D71F000C6;
-	Wed, 25 Nov 2026 16:44:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=e1NghXZi
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E390E1F000C6;
+	Wed, 25 Nov 2026 16:44:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795625046;
-	bh=omRWr8c4vuS5WJ6vKs8TVlLy3NH+b4IfkR+mmWmW8C0=;
+	s=korg; t=1795625049;
+	bh=54zAwcoKceQzRMjVlqgYCC+M14Pfvrc2iR1V1AZMVi8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=IqNmC28MMSyLzC/rYBG9NvVNokACbbH1sGEfPuUmzMmOniPxGqSdPVh/do46154aY
-	 TTwtxzu06jiFZtN5u/4ZkegYJsvUP7ruLgcoD1WBxMX6NCTMJ7Ctctfzr5kaliAcNV
-	 i8XgndQxh2B0R9docbzyA1szlX0+dD1ElX5tWLXE=
+	b=e1NghXZi8Qp6qaywnchH7cYq9ch8QFjUqlb2f8eCoSTRUqXV5Dbmw8Ff00diRsMk1
+	 ZE7BJbUUzFf887w4u4k7oX/bogcvBOEkl4CaTpw5SIqnMUjg2wreF+Uc+qKNOkNHwQ
+	 Lat1wHdHYWAc+50rhiXUTny/z22nipCToOQ9++u8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Davidlohr Bueso <dave@stgolabs.net>,
-	Dave Jiang <dave.jiang@intel.com>,
-	Alison Schofield <alison.schofield@intel.com>,
-	Shaikh Kamaluddin <shaikhkamal2012@gmail.com>,
-	"Gregory Price (Meta)" <gourry@gourry.net>,
+	Horst Birthelmer <hbirthelmer@ddn.com>,
+	Jingbo Xu <jefflexu@linux.alibaba.com>,
+	Miklos Szeredi <mszeredi@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 389/816] cxl/test: Map mock device nodes to an online node
-Date: Wed, 25 Nov 2026 15:32:17 +0100
-Message-ID: <20261125143858.206396691@linuxfoundation.org>
+Subject: [PATCH 6.12 390/816] fuse: dont bump attr_version for async direct read completion
+Date: Wed, 25 Nov 2026 15:32:18 +0100
+Message-ID: <20261125143858.228535499@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143849.205329330@linuxfoundation.org>
 References: <20261125143849.205329330@linuxfoundation.org>
@@ -71,74 +69,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Davidlohr Bueso <dave@stgolabs.net>
+From: Jingbo Xu <jefflexu@linux.alibaba.com>
 
-[ Upstream commit 6f057dea152574dd044382fd0ba5ed19e3ecba25 ]
+[ Upstream commit fc60668db85584da911e5d0a65c8698628f98bba ]
 
-cxl_type3_mem_init() and cxl_type2_mem_init() assign alternating NUMA
-nodes to the mock memdevs to model multi-node topologies. On a
-single-node host node 1 has no pgdat, and the first node-aware
-allocation in an odd device's probe faults on a NULL zonelist:
+The attr_version counter should only be incremented when cached
+attributes are actually modified (as documented in commit 1fb69e781729
+("fuse: fix race between getattr and write")).  Async direct reads do not
+modify any cached inode attributes (size, mtime, ctime), so bumping
+attr_version in fuse_aio_complete() for reads is incorrect.
 
-  Oops: general protection fault, probably for non-canonical address 0xdffffc00000006e3
-  KASAN: probably user-memory-access in range [0x0000000000003718-0x000000000000371f]
-  Workqueue: async async_run_entry_fn
-  RIP: __alloc_frozen_pages_noprof+0x288
-   new_slab
-   ___slab_alloc
-   __kmalloc_node_track_caller_noprof
-   devm_kmalloc
-   cxl_mock_mem_probe
+This unconditional bump causes a livelock when auto_inval_data is
+enabled together with writeback_cache: fuse_cache_read_iter() issues a
+FUSE_GETATTR before every read, but by the time the response arrives,
+an async DIO read completion has already incremented fi->attr_version
+past the snapshot taken before the request.  The GETATTR result is then
+discarded (attr_version race), fi->i_time is never refreshed, and every
+subsequent read triggers yet another GETATTR -- creating an infinite
+loop of useless round-trips.
 
-Map the requested node to an online one, as dax_hmem already does
-for its target node.
+Fix this by only bumping attr_version for write completions, consistent
+with the synchronous DIO write path (fuse_write_update_attr) and the
+cached write path.
 
-Fixes: cf1f6877b088 ("cxl/memdev: Add numa_node attribute")
-Signed-off-by: Davidlohr Bueso <dave@stgolabs.net>
-Reviewed-by: Dave Jiang <dave.jiang@intel.com>
-Reviewed-by: Alison Schofield <alison.schofield@intel.com>
-Tested-by: Alison Schofield <alison.schofield@intel.com>
-Tested-by: Shaikh Kamaluddin <shaikhkamal2012@gmail.com>
-Reviewed-by: Gregory Price (Meta) <gourry@gourry.net>
-Link: https://patch.msgid.link/20260831175119.3247915-1-dave@stgolabs.net
-Signed-off-by: Dave Jiang <dave.jiang@intel.com>
-[ sashal: adapted the three set_dev_node() call sites in the single cxl_mem_init() since the type2/type3 init helpers don't exist here, and dropped the fourth upstream site ]
+Fixes: 01e9d11a3e79 ("fuse: add support of async IO")
+Reviewed-by: Horst Birthelmer <hbirthelmer@ddn.com>
+Signed-off-by: Jingbo Xu <jefflexu@linux.alibaba.com>
+Signed-off-by: Miklos Szeredi <mszeredi@redhat.com>
+[ sashal: Only the if condition line differs in context: inode is declared inside the if (res >= 0) block and there is no mapping variable, so the one-line condition change was applied to that layout. ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/testing/cxl/test/cxl.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ fs/fuse/file.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/tools/testing/cxl/test/cxl.c b/tools/testing/cxl/test/cxl.c
-index 49e8b82004cb5..2432892dfcad2 100644
---- a/tools/testing/cxl/test/cxl.c
-+++ b/tools/testing/cxl/test/cxl.c
-@@ -1274,7 +1274,7 @@ static int cxl_mem_init(void)
- 		if (!pdev)
- 			goto err_mem;
- 		pdev->dev.parent = &dport->dev;
--		set_dev_node(&pdev->dev, i % 2);
-+		set_dev_node(&pdev->dev, numa_map_to_online_node(i % 2));
+diff --git a/fs/fuse/file.c b/fs/fuse/file.c
+index f733a0f781146..89b6021a428eb 100644
+--- a/fs/fuse/file.c
++++ b/fs/fuse/file.c
+@@ -735,7 +735,7 @@ static void fuse_aio_complete(struct fuse_io_priv *io, int err, ssize_t pos)
+ 	if (!left && !io->blocking) {
+ 		ssize_t res = fuse_get_res_by_io(io);
  
- 		rc = cxl_mock_platform_device_add(pdev, &cxl_mem[i]);
- 		if (rc)
-@@ -1289,7 +1289,7 @@ static int cxl_mem_init(void)
- 		if (!pdev)
- 			goto err_single;
- 		pdev->dev.parent = &dport->dev;
--		set_dev_node(&pdev->dev, i % 2);
-+		set_dev_node(&pdev->dev, numa_map_to_online_node(i % 2));
- 
- 		rc = cxl_mock_platform_device_add(pdev, &cxl_mem_single[i]);
- 		if (rc)
-@@ -1305,7 +1305,7 @@ static int cxl_mem_init(void)
- 		if (!pdev)
- 			goto err_rcd;
- 		pdev->dev.parent = &rch->dev;
--		set_dev_node(&pdev->dev, i % 2);
-+		set_dev_node(&pdev->dev, numa_map_to_online_node(i % 2));
- 
- 		rc = cxl_mock_platform_device_add(pdev, &cxl_rcd[i]);
- 		if (rc)
+-		if (res >= 0) {
++		if (res >= 0 && io->write) {
+ 			struct inode *inode = file_inode(io->iocb->ki_filp);
+ 			struct fuse_conn *fc = get_fuse_conn(inode);
+ 			struct fuse_inode *fi = get_fuse_inode(inode);
 -- 
 2.53.0
 
