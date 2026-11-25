@@ -1,52 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795619478;
-	b=kMvyIz+k4cmJfZitgyxsdQMMPT2MlJ+vV0lnrmfaNTV6S4NdgdJH9zaCe1Rf6vuPb1aq
-	 sBSjjQ6pGiHOznGgvC6TQczrSJCilxczmfYaxajHbHJAPqBnxbPXuW8Fwsn6qotbEOXyS
-	 t8eZfWOqjEHkDbFUg7EJ+A7rPxKeZUZWpRbKaPlT8N+05DAf/C+Jvz9IQ7eMj5LB7AxiE
-	 7hZ6LnWOuFpe5Hplv1TUN9heRj+PPO9oCRsucGXNxOY8x9Yx+tpjnrz7tJJeL57QzJXDY
-	 60/vWBRvA7ty2XRyab1uaCSqY8gKdIlyI0QDSCnhZ95i6nIiowzFYYNlZM2Gq+lFKOQ==
+	t=1795619482;
+	b=A7SXk5eY84avqDyKsw3oCd1SAjEs9buMKx7QH+7m1+EY7zaohxHk7VX3MHOn2nzGtaRU
+	 tIUWufK4ZHUaSTmzFBbiIWcwq+wi2ei0pz0ai0t/3YDpXFUptQoszHq9jHta1tlJhfzgE
+	 KEGpM3pCKhmB2UmG2iaWRMD6Zi2HLTzF7RwzuiCqCXdauui1bPrFMAUZrF5YgEX5j5fnx
+	 M4eu12FTeRUuOgsKIPBT35YQBizLXMX50Ivq8fhianhLhM+MMC61+lauuyM2xz4lfWl7Q
+	 dOqEnHEzVJsrZZnB7MdhsnaeEpsovlKkga8Ohll+x73gmbSQ9CKBA2fKRAIkOe0JKrw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795619478;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795619482;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=1P3xBQHIxMU6lQTWhhFuu+CgoP8aOzSUZ/3Va1158EQ=;
-	b=hR3wN5R+O+T8l0XYe1IEBEfuxqHzD75HUs9VIdW0vcPs9EnjFALgyIe193ZB2np8cd5B
-	 3UE/nA8E6HIXLLEUECaQ7wyyADsIeXIpu4CLRGpkPcv0aJUsuKS1aKCRR54NF2J0XaqdM
-	 rfvk3yjUa2PPx2AFTl7ZGjhGovtzGCWNGtgVmDvT4PKOn1Df21xqHbkrl01sPoHzjxJI6
-	 /1msW+43OWbkA4KqRWhnlwSg8PL7zENII/MfERTMdYSWGNvWF+ToNmVPRIB3CVCfAklH+
-	 ROg+Phg5yDYrvOX417KqfEf4c8g4Qfe87DLpsty001N9oqAONdG+4BpYU0SxbaTWSTA==
+	bh=/GLetW2do/uHJZw+OByUqhtX0sneMfymE0rR1BwzD4o=;
+	b=Nhtxj3eAOjsKEFyWRx/xoOFngura9ZYUvb6QtcEttfy3vKuv6O9J3NG/tH6VgJtsVFm5
+	 s+nZxDRM/hYN/f7trwuya0nNXKVmHwh1GemMR5p2hsE1hYMwgmLaBeZuhDjuTL7qR/3ZQ
+	 te4n1SmkikQCV76Tdz+KHb9bPl4KJt58nChHGNeA+MVNra9APfCJ5n9XZHSB/I327x88u
+	 aWiTapHFnRGQuLxTFCd85ziKRRneg94putr24Tq4foFHl913k5zRidR1qmKvI7P8RNHOp
+	 wbNsglpbo+aHZxMh4Whs3oNpmoKJn3VOmYmma9IkApC13++cEXs23iNgDBoWVsv8aJg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="FVIDfI6/";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=s7bpfwpY;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A15C1606A33F;
-	Wed, 25 Nov 2026 15:11:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EBEE3606A31E;
+	Wed, 25 Nov 2026 15:11:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=FVIDfI6/
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E86011F01568;
-	Wed, 25 Nov 2026 15:11:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=s7bpfwpY
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CA3D71F000C0;
+	Wed, 25 Nov 2026 15:11:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795619478;
-	bh=1P3xBQHIxMU6lQTWhhFuu+CgoP8aOzSUZ/3Va1158EQ=;
+	s=korg; t=1795619481;
+	bh=/GLetW2do/uHJZw+OByUqhtX0sneMfymE0rR1BwzD4o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=FVIDfI6/3iAjAdTuewgCEb7Zwco/BjPGz9wPCj580UyMfrsynKz28UUsZ1CpOUQe7
-	 Mz5Kpxu+GrXmHGE2OCxciP5QaUsQEBt/RRK4TSYn02xjyMq6A/fBFr5zWclTG9Sfoa
-	 xsbsAhQ5QdpKGkYLIgCIDo9QCncnY5B28hTlu/Qk=
+	b=s7bpfwpY5buTp91MFsksEDZpkKU465Zo0MTe8iP30buSnxwJZJj2PVckQuIJsGfgE
+	 /F0Pv36nG4iovF/CfpIJ4EY+OE74Q8VRFhQZcaaGXDUeHlWsVlr++5j6O4P+4ZdiAF
+	 9uBpEt2gBuRUIJg2cjFFAIozY5Gc2RC5O1r30VjE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Breno Leitao <leitao@debian.org>,
-	Shuai Xue <xueshuai@linux.alibaba.com>,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>
-Subject: [PATCH 7.3 0610/1005] ACPI: APEI: GHES: Fix severity check in ghes_log_hwerr()
-Date: Wed, 25 Nov 2026 15:32:28 +0100
-Message-ID: <20261125143836.033408605@linuxfoundation.org>
+	Eduardo Mucelli Rezende Oliveira <edumucelli@gmail.com>,
+	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>
+Subject: [PATCH 7.3 0611/1005] bootconfig: Trim unquoted values at end of file
+Date: Wed, 25 Nov 2026 15:32:29 +0100
+Message-ID: <20261125143836.056851248@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143821.729802100@linuxfoundation.org>
 References: <20261125143821.729802100@linuxfoundation.org>
@@ -68,48 +67,81 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Breno Leitao <leitao@debian.org>
+From: Eduardo Mucelli Rezende Oliveira <edumucelli@gmail.com>
 
-commit cf12faa1e76d43f97b1486aaec959b16baca498a upstream.
+commit 381b391bfaa3f10d52da4740529804b0b6b8160d upstream.
 
-ghes_log_hwerr() is meant to count recoverable GHES errors in
-hwerror_data[], but it skips them and counts informational records
-instead. As a result, recoverable CPU, memory, CXL and vendor-specific
-errors reported through GHES never show up in a vmcore.
+__xbc_parse_value() trims an unquoted value when it encounters a
+delimiter, but leaves trailing whitespace intact when it reaches the end
+of the input. Thus "key = value   " has a different value depending on
+whether the file ends with a newline. The extra whitespace also reaches
+the rendered kernel command line.
 
-ghes_do_proc() passes ghes_log_hwerr() the record severity after
-ghes_severity() has converted it to a GHES_SEV_* value.
-ghes_log_hwerr() compares it against CPER_SEV_RECOVERABLE, which is 0
-in the CPER enum and matches GHES_SEV_NO, so only informational records
-pass and GHES_SEV_RECOVERABLE ones return early.
+Trim unquoted values after the scan finishes, including at end of input.
+Skip trimming after a closing quote so intentional whitespace in quoted
+values remains unchanged. Add checks for scalars, arrays and quoted
+values without a final newline.
 
-Compare against GHES_SEV_RECOVERABLE instead.
+Link: https://lore.kernel.org/all/31f248f330e716b925add3a0ba76f62826527312.1794337724.git.edumucelli@gmail.com/
 
-Recoverable PCIe errors that ghes_handle_aer() hands to AER are also
-counted by pci_dev_aer_stats_incr(), so with the check fixed they are
-counted twice under HWERR_RECOV_PCI. That is not addressed here.
-
-Fixes: 3fa805c37dd4 ("vmcoreinfo: track and log recoverable hardware errors")
+Fixes: 76db5a27a827 ("bootconfig: Add Extra Boot Config support")
 Cc: stable@vger.kernel.org
-Signed-off-by: Breno Leitao <leitao@debian.org>
-Reviewed-by: Shuai Xue <xueshuai@linux.alibaba.com>
-Link: https://patch.msgid.link/20261030-ghes-hwerr-sev-v1-1-145ceb996c77@debian.org
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Signed-off-by: Eduardo Mucelli Rezende Oliveira <edumucelli@gmail.com>
+Signed-off-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/acpi/apei/ghes.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ lib/bootconfig.c                    |    5 +++--
+ tools/bootconfig/test-bootconfig.sh |   18 ++++++++++++++++++
+ 2 files changed, 21 insertions(+), 2 deletions(-)
 
---- a/drivers/acpi/apei/ghes.c
-+++ b/drivers/acpi/apei/ghes.c
-@@ -912,7 +912,7 @@ EXPORT_SYMBOL_NS_GPL(cxl_cper_kfifo_get,
+--- a/lib/bootconfig.c
++++ b/lib/bootconfig.c
+@@ -790,16 +790,17 @@ static int __init __xbc_parse_value(char
+ 				return xbc_parse_error("No value delimiter", p);
+ 			if (*p)
+ 				p++;
+-			break;
++			goto skip_trim;
+ 		}
+ 		if (strchr(",;\n#}", c)) {
+ 			*p++ = '\0';
+-			v = strim(v);
+ 			break;
+ 		}
+ 	}
+ 	if (quotes)
+ 		return xbc_parse_error("No closing quotes", p);
++	v = strim(v);
++skip_trim:
+ 	if (c == '#') {
+ 		p = skip_comment(p);
+ 		c = '\n';	/* A comment must be treated as a newline */
+--- a/tools/bootconfig/test-bootconfig.sh
++++ b/tools/bootconfig/test-bootconfig.sh
+@@ -171,6 +171,24 @@ $BOOTCONF $INITRD > $OUTFILE
+ xfail grep -q 'val[[:space:]]' $OUTFILE
+ xpass grep -q 'val2[[:space:]]' $OUTFILE
  
- static void ghes_log_hwerr(int sev, guid_t *sec_type)
- {
--	if (sev != CPER_SEV_RECOVERABLE)
-+	if (sev != GHES_SEV_RECOVERABLE)
- 		return;
- 
- 	if (guid_equal(sec_type, &CPER_SEC_PROC_ARM) ||
++echo "Remove unquoted trailing whitespace at end of file"
++printf 'foo = val \t' > $TEMPCONF
++$BOOTCONF -l $TEMPCONF > $OUTFILE
++printf 'foo = "val"\n' > $TEMPCONF
++xpass cmp $TEMPCONF $OUTFILE
++
++echo "Remove trailing whitespace from the last array value at end of file"
++printf 'foo = first, last \t' > $TEMPCONF
++$BOOTCONF -l $TEMPCONF > $OUTFILE
++printf 'foo = "first", "last"\n' > $TEMPCONF
++xpass cmp $TEMPCONF $OUTFILE
++
++echo "Keep quoted trailing whitespace at end of file"
++printf 'foo = "val "' > $TEMPCONF
++$BOOTCONF -l $TEMPCONF > $OUTFILE
++printf 'foo = "val "\n' > $TEMPCONF
++xpass cmp $TEMPCONF $OUTFILE
++
+ echo "Showing correct line:column of no closing brace"
+ cat > $TEMPCONF << EOF
+ foo {
 
 
