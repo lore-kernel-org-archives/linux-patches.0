@@ -1,55 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795622039;
-	b=HAI+1ahRs4mnrpUKAI6ywPN2XTaxz1IQO48gMn4xz6TovcU8wDlBGTjBnQOic7VRhbd1
-	 +be/lArFHPH23cq9nLRraQ9GCP6oDx3YQDmSIpbdcpvNC9g9R3vBduP5tXQLzRCoGcAZW
-	 OCyFn7NYctiqXj7xQp0SJ6vElArX3MK/taAbYVQYJ/t3uNnsRBha3ZT5sZ2pnxwRhix46
-	 Pody0THA4IF6Scbm8zemVNuYK7g+P6+x8p922X1uyXvt6rMKgL6DFNMht9PWQ0QGNiJ+y
-	 TVccW3f4f3Sr9Z3rvt8q9jtMHxlQ9AfPoCl7SFPh1lNEjEjEl3xj1wXEZW/ZTygM22w==
+	t=1795622042;
+	b=BaxoBEJ2ufoRmZUr6e6RL0ltvxUxnnQnfrNSHb9VA9sFSLRfEkwFOPIAXTrozVbIBR6F
+	 cvY7m4X17j/Oukv+lzgCefYXcnqBWhGVkRIXZAHIsWnf5BJztxpu0iv5FIZH/AmZlCOWV
+	 sKTE8ySXjsyyztLWXnxwsa9995lR3XYp0o5xEKLTJ6zLFNriT7vQ6Ou7BjRxSuOgamFoc
+	 Wj/Ts4Q/LGL7ngyL0ngTtp3/bpRTC4Xfs71MbrwiUk1POXV2P9TPm7/gjHzOARQOvMGZv
+	 Zi9wTgQeYvYYwxaegZ7SOt0uq2Wxf8RaK2/YmUls0KzR7suUgr7up1pmPWWGQk8WWKA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795622039;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795622042;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=pqnMQX5dr7mwse+ly2Uxz/rnk+E9Z9VW6q1/L5WPiJo=;
-	b=jzRgLdBKdhfXODxrtTBX4kgDW5QS/+476aRQmD6LiIQiGoBIgpn1bfA393zEAaKH10W5
-	 VwPq/AUo5Hqu5LHQJb5nFK+vTOOMQGsM/kgn9ZeKeBILEUoTYCJeICBI6Lo0469Oe/0uD
-	 njCJNab7RyZKq83bZQNbaSxX4rM+QiwwcGMa7RUE4tKEsokWQo8DSSy9Mu8GUiLFqbwto
-	 FNCdVzdGocVW9pQTvC3+7Omajw4QXb3Wbvac8/XH55iOlxBVGydUs3v/dlASCmPLNyjEP
-	 n1kG7XjjIrzabqV8j1x2v5mwZOnJ4NtNAMItRX1t2KyR+LReQHIhY+b36MKMVUisXeA==
+	bh=vIhxbdbI72Whp3h9h7u7RTb65IbmEtyRvZ5KNH/hsZY=;
+	b=dhFR+kd2mnRpj0+CRwpKxC+IbtPtRHF8HjCONXMDzPc4b9j+KDmwIkFCgKwdanNU9KNT
+	 3VsGbffbovktMARKObluTPdJT/PPoU62Suj/kq1tZbmRPSgrOysaOuJ//l/Wl4a/bb9Ta
+	 y5JJ/97ZRy+i+0eM7C8l1LWdoAsl2+FZptqlYlqo1BQGydwvJQoG5n98ckvglp2+NN+Yd
+	 3mzORiy4t9vPWowKldEH6yqgBjRI7J5mqtmoLGcWgCc02/a47j06OSdDWfUJ0pvHTKwJn
+	 CvIWrf56yKp8ifwnMmiErdnG2gc2FOzRivCpUOhgovBLs+DrO2c6/Um7vWEfN+6/CsA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=2D1j85Kh;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=KLbqNu7h;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6D4B6606A321;
-	Wed, 25 Nov 2026 15:53:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CC201606A321;
+	Wed, 25 Nov 2026 15:54:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=2D1j85Kh
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A58611F000EE;
-	Wed, 25 Nov 2026 15:53:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=KLbqNu7h
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1048B1F000C0;
+	Wed, 25 Nov 2026 15:54:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795622039;
-	bh=pqnMQX5dr7mwse+ly2Uxz/rnk+E9Z9VW6q1/L5WPiJo=;
+	s=korg; t=1795622042;
+	bh=vIhxbdbI72Whp3h9h7u7RTb65IbmEtyRvZ5KNH/hsZY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=2D1j85KhG9qjxUO/mETDyAHQ8YGrZ9Ams0dNDitwvPiB1Twqy4t7E08c7IwyHlMNX
-	 jHTjww59B6OX294biMBHKngp25hnyA9z479FerbfaFmEK+aaQpGQ0P2LrT+ALYTd4z
-	 meZI/0gw7/HF/WYUHBxQvQGxhQQi5326F9owGSHs=
+	b=KLbqNu7hCBb17SW2NSsxwqkJAfTOvFJPjS227TKfFKasZJU2yBkWfF+wFIgPl2Wqw
+	 C2GmrQZRiVUD7BgLHvfygyleZ3+FZvQUCLHMGLFWFWXNkS9fa2gwppvD3XlDvrjFD5
+	 6TK0yDKCpkFqkQPJ2fqZJzOVtY1aWpAZWIfGOSBA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Kyle Zeng <kylebot@openai.com>,
 	Eric Dumazet <edumazet@kernel.org>,
-	Jiayuan Chen <jiayuan.chen@linux.dev>,
 	Kuniyuki Iwashima <kuniyu@google.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 412/990] net: protect negative destination advice with RCU
-Date: Wed, 25 Nov 2026 15:29:39 +0100
-Message-ID: <20261125143831.750184418@linuxfoundation.org>
+Subject: [PATCH 6.18 413/990] net: require a full socket in sock_confirm_neigh()
+Date: Wed, 25 Nov 2026 15:29:40 +0100
+Message-ID: <20261125143831.773744337@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143822.072087159@linuxfoundation.org>
 References: <20261125143822.072087159@linuxfoundation.org>
@@ -73,55 +72,84 @@ Content-Transfer-Encoding: 8bit
 
 From: Kyle Zeng <kylebot@openai.com>
 
-[ Upstream commit 4b77d2792c3e482afa108c08f224ea6fa396d80b ]
+[ Upstream commit c78b47704934e44442f4e48bfdcc99039e3b85a5 ]
 
-SO_CNX_ADVICE calls __dst_negative_advice() while holding the socket
-lock. Connected UDP sends can still invalidate or replace sk_dst_cache
-without that lock. A concurrent sk_dst_check() can drop the final
-destination reference and allow an RCU callback to destroy it while
-__dst_negative_advice() retains only a borrowed pointer. This can cause
-a use-after-free while accessing dst->ops or running the negative_advice
-callback.
+An skb can retain dst_pending_confirm after its original output and
+socket owner have changed. For example, a raw MSG_CONFIRM packet can
+cross veth, have a TCP request socket assigned by TPROXY, and be bridged
+into gretap. Neighbor output for the outer packet then calls
+sock_confirm_neigh() with the request socket in skb->sk.
 
-The writer-side ordering fixed by commit 92f1655aa2b2 ("net: fix
-__dst_negative_advice() race") does not protect this reader from an
-independent cache replacement.
+The helper unconditionally treats a non-NULL skb->sk as a full socket
+when accessing sk_dst_pending_confirm. TCP request and TIME_WAIT sockets
+do not contain that field. This produces an out-of-bounds four-byte read
+and, if the word is nonzero, an out-of-bounds four-byte zero write. A
+KASAN-enabled kernel reports:
 
-Hold an RCU read-side critical section across the lookup and callback.
-This follows the datagram release callbacks and covers IPv4, IPv6, and
-XFRM advice without changing cache-reset or reference-ownership rules.
+  BUG: KASAN: slab-out-of-bounds in ip_finish_output2+0xc9f/0xd60
+  Read of size 4 at addr ffff8880bdc3d880 by task tproxy_dst_conf/1771
 
-Fixes: a87cb3e48ee8 ("net: Facility to report route quality of connected sockets")
+Require sk_fullsock() before accessing the socket field, moving the
+existing helper earlier in the header to make it available here. Keep
+neigh_confirm() independent of the socket type so the skb's neighbor
+confirmation still works, including for socketless packets. This also
+covers the IPv6, VRF, and BPF neighbor-output callers.
+
+Fixes: 4ff0620354f2 ("net: add dst_pending_confirm flag to skbuff")
 Signed-off-by: Kyle Zeng <kylebot@openai.com>
 Signed-off-by: Eric Dumazet <edumazet@kernel.org>
-Reviewed-by: Jiayuan Chen <jiayuan.chen@linux.dev>
 Reviewed-by: Kuniyuki Iwashima <kuniyu@google.com>
-Link: https://patch.msgid.link/20261104131744.1056562-1-edumazet@kernel.org
+Link: https://patch.msgid.link/20261104132900.1071940-1-edumazet@kernel.org
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/net/sock.h | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ include/net/sock.h | 19 ++++++++++---------
+ 1 file changed, 10 insertions(+), 9 deletions(-)
 
 diff --git a/include/net/sock.h b/include/net/sock.h
-index fb91d72a955dd..49d4c25271bee 100644
+index 49d4c25271bee..dd728a89c10f0 100644
 --- a/include/net/sock.h
 +++ b/include/net/sock.h
-@@ -2176,10 +2176,13 @@ sk_dst_get(const struct sock *sk)
+@@ -2231,6 +2231,14 @@ struct dst_entry *__sk_dst_check(struct sock *sk, u32 cookie);
  
- static inline void __dst_negative_advice(struct sock *sk)
+ struct dst_entry *sk_dst_check(struct sock *sk, u32 cookie);
+ 
++/* This helper checks if a socket is a full socket,
++ * ie _not_ a timewait or request socket.
++ */
++static inline bool sk_fullsock(const struct sock *sk)
++{
++	return (1 << sk->sk_state) & ~(TCPF_TIME_WAIT | TCPF_NEW_SYN_RECV);
++}
++
+ static inline void sk_dst_confirm(struct sock *sk)
  {
--	struct dst_entry *dst = __sk_dst_get(sk);
-+	struct dst_entry *dst;
+ 	if (!READ_ONCE(sk->sk_dst_pending_confirm))
+@@ -2242,7 +2250,8 @@ static inline void sock_confirm_neigh(struct sk_buff *skb, struct neighbour *n)
+ 	if (skb_get_dst_pending_confirm(skb)) {
+ 		struct sock *sk = skb->sk;
  
-+	rcu_read_lock();
-+	dst = __sk_dst_get(sk);
- 	if (dst && dst->ops->negative_advice)
- 		dst->ops->negative_advice(sk, dst);
-+	rcu_read_unlock();
+-		if (sk && READ_ONCE(sk->sk_dst_pending_confirm))
++		if (sk && sk_fullsock(sk) &&
++		    READ_ONCE(sk->sk_dst_pending_confirm))
+ 			WRITE_ONCE(sk->sk_dst_pending_confirm, 0);
+ 		neigh_confirm(n);
+ 	}
+@@ -2966,14 +2975,6 @@ skb_sk_is_prefetched(struct sk_buff *skb)
+ #endif /* CONFIG_INET */
  }
  
- static inline void dst_negative_advice(struct sock *sk)
+-/* This helper checks if a socket is a full socket,
+- * ie _not_ a timewait or request socket.
+- */
+-static inline bool sk_fullsock(const struct sock *sk)
+-{
+-	return (1 << sk->sk_state) & ~(TCPF_TIME_WAIT | TCPF_NEW_SYN_RECV);
+-}
+-
+ static inline bool
+ sk_is_refcounted(struct sock *sk)
+ {
 -- 
 2.53.0
 
