@@ -1,53 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795624868;
-	b=R7H09U6iiqnu9j1HhmqFwOZzsq65vL1IDmf1F9+oGQxs0wYF8VgRnmKL7z4xwZFluGVP
-	 Z3egkGDW0aC0FZ8I7Ae1p+zHujOYdLd8Y0WmpTGde27yT3sQ0QDpqVK3KEO9Jtqgz4mzY
-	 QVybomCa6Lh7jf5B9EwgcFv18GaUbEqT8T/ryrNefNO/7Vux7blDvF9RF6LZNo3Zhb7eU
-	 qPeikn5H1vE6ePNvv9VOYKfNZS7urZ5REA7wF9wohezA8Q/4MqizgAchzYY1LQ8VoDrEr
-	 xT4i0bybX3EiKxpsIW0uiC59OGKtVHUChMgWqdmYcJ17PUwRpUkRJiaGMVYrDzXJALw==
+	t=1795624871;
+	b=CXb26WRrWH6kwObF3/u59S4am2cs93W9Y5qJHPUe+DwdEJI8Z92BVqrbJhRdblHxeF+X
+	 4ZXKYyikgCCz8LNi+SsGyPwTI6d40WvY6NnZBUBfidYXP/OzvF0dlDT/qyJiJ3T3Pjdcl
+	 onpIm5LD8ELS9+RuSfoAklCBn5ABlcDFYP6cUvM2vMcjtg/we53pllsyz5N+GP5d3KMMD
+	 bR2rtzqsK/Pwx9KpBqnpSOkS1JyoawB4Tko2Q99OsllG480n+SsFWTbrxC8y0ilsW8pQk
+	 5WlQ/Xne/arCEWbouT63cYS4V4ETjf5kxUMM51FdeRUtsunBQR9bzQUB/L5uhn0ZBNQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795624868;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795624871;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=epWxy9H9VlD0b5aY0JkVJ5XXxpXoyLO/6yIIaya8XWQ=;
-	b=r/3UJ7O91H7S/pgYhUt0NDGT6kDXuwWUdF3saNTSi25dxWg6aHMAbAZsQAmmvL2qP7TI
-	 jo1/5ggxfG8WQcgFQ2nyIffCkvWa8VGYn5k7H1lNDW6xoyqA7fZbfkqoVNpt9AXX54xtZ
-	 YEBmJyp3XCghBfq19Jje89fyC2DQAiIZyUHjHDQ2pR1wlWhh04ZeghBEsZQTsO2E8wkcP
-	 2n8dS6expT1Js9eUX3LzDjRohFNbX1DmN9TEQxzGJrzV9H53m3oitXNL7SV5MNEHrL6yi
-	 LzRl8GST/ocrgIio4WFCs8257Nmz/ZzSMsaGRoO0d0gkERrylzx+oWkMehqrHHQQv7w==
+	bh=bdRrp6VsYYHoK4QGew9/mcQlGV0PIv1/k9p6By8yp1c=;
+	b=znKcL8xM7TnNVg0C4ebAUIefil28uFGKwUWsAoLXb6+NQaPp0J6rA5LECA0wND8ocTaa
+	 BMXkmM2An26prWwBw9Igcf9SD00+1JAIuN1LScXbMEboj6mDHHsAC7lM00SStaufcwOqc
+	 PBhQZjq+cUXwhslYPXSlCJO31cQqVsJRchvrwS7kvLpW+kypyvGUchrqKIKzraKv08xxt
+	 o/ZgVpIcLzg6IlbVdw9/0sKT3wzMs81arQbJrgfsTFcEZ+aQtarvFsi++0w+qYmPr8B/Q
+	 6mgaFvhrxI75Vlj/qRw2UWIEl97JvbIhqgS0epiBfGDcpTqek7rPVn/F4I9oq12zfjg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="uA7/642V";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=0MKtdHS1;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7C908606A31E;
-	Wed, 25 Nov 2026 16:41:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B1768606A327;
+	Wed, 25 Nov 2026 16:41:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=uA7/642V
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 95A2E1F000D1;
-	Wed, 25 Nov 2026 16:41:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=0MKtdHS1
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8406C1F000CF;
+	Wed, 25 Nov 2026 16:41:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795624868;
-	bh=epWxy9H9VlD0b5aY0JkVJ5XXxpXoyLO/6yIIaya8XWQ=;
+	s=korg; t=1795624871;
+	bh=bdRrp6VsYYHoK4QGew9/mcQlGV0PIv1/k9p6By8yp1c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=uA7/642Voe4I7wj+b8I0bHClBVJcineeoUJxB0/PKB7F0br+Z3Bh+8vDFah6Pmsnk
-	 0SNk3COpj59SKMujxbmnWlZv+6UzP3dpGqSLab8qfcjirlbIh8GWYc//9k6UCC7AtQ
-	 Gp9XruVMzwlSerbbdIdgfaACm0kSQlD/JaQW/YFY=
+	b=0MKtdHS1nSqwAlO3NP3VHAHgO6TLKGO9/raZScwuaeILzE6Ubo0pIglS9Jf8PFemD
+	 vF4m9l3E3au7oRCrqPxi9Oa1Jiw57yZxkFs31MQ18pjCh7yfRNxJICWJL7LFLWE6sZ
+	 6ZLN3ZHFjyvip1e6gYHCj/vanKtLuFtgRiDP/gvM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kyle Zeng <kylebot@openai.com>,
-	Eric Dumazet <edumazet@kernel.org>,
+	Eric Dumazet <edumazet@google.com>,
+	Octavian Purdila <tavip@google.com>,
+	Neal Cardwell <ncardwell@google.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 333/816] fou: gue: check IP version of held packets for direct IP encapsulation
-Date: Wed, 25 Nov 2026 15:31:21 +0100
-Message-ID: <20261125143856.907626139@linuxfoundation.org>
+Subject: [PATCH 6.12 334/816] net: rfs: add sock_rps_delete_flow() helper
+Date: Wed, 25 Nov 2026 15:31:22 +0100
+Message-ID: <20261125143856.930727961@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143849.205329330@linuxfoundation.org>
 References: <20261125143849.205329330@linuxfoundation.org>
@@ -69,59 +70,139 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eric Dumazet <edumazet@kernel.org>
+From: Eric Dumazet <edumazet@google.com>
 
-[ Upstream commit c59f004734a2a7c0e427011db13aca524e781498 ]
+[ Upstream commit 9cd5ef0b8c04c46a15c8f5d002f02ea0d0477790 ]
 
-For GUE version 0, gue_gro_receive() compares the base GUE header and
-its optional fields with every held packet. For GUE version 1 (direct
-IP encapsulation), it skips this comparison and selects the next GRO
-handler only from the IP version of the incoming packet.
+RFS can exhibit lower performance for workloads using short-lived
+flows and a small set of 4-tuple.
 
-A held version 0 GUE packet from the same outer flow therefore stays
-eligible. For example, a GUE/IPv4/UDP packet can be aggregated with a
-direct IPv4/TCP packet, and inet_gro_receive() then parses the held
-packet's GUE header as an IPv4 header.
+This is often the case for load-testers, using a pair of hosts,
+if the server has a single listener port.
 
-Clear same_flow for held packets whose first nibble does not match the
-incoming IP version. A valid version 0 GUE header always has a first
-nibble between 0 and 3, so this also separates the two GUE formats.
-The reverse case is already handled: the version 0 path compares the
-whole base GUE header, including the version bits.
+Typical use case :
 
-Fixes: c1e48af7960e ("gue: Implement direction IP encapsulation")
-Reported-by: Kyle Zeng <kylebot@openai.com>
-Signed-off-by: Eric Dumazet <edumazet@kernel.org>
-Link: https://patch.msgid.link/20261106195615.2498766-1-edumazet@kernel.org
+Server : tcp_crr -T128 -F1000 -6 -U -l30 -R 14250
+Client : tcp_crr -T128 -F1000 -6 -U -l30 -c -H server | grep local_throughput
+
+This is because RFS global hash table contains stale information,
+when the same RSS key is recycled for another socket and another cpu.
+
+Make sure to undo the changes and go back to initial state when
+a flow is disconnected.
+
+Performance of the above test is increased by 22 %,
+going from 372604 transactions per second to 457773.
+
+Signed-off-by: Eric Dumazet <edumazet@google.com>
+Reported-by: Octavian Purdila <tavip@google.com>
+Reviewed-by: Neal Cardwell <ncardwell@google.com>
+Link: https://patch.msgid.link/20250515100354.3339920-1-edumazet@google.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Stable-dep-of: 8c011697f76a ("tcp: do not resurrect a former listener with SO_ATTACH_REUSEPORT_[CE]BPF")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv4/fou_core.c | 12 ++++++++++++
- 1 file changed, 12 insertions(+)
+ include/net/rps.h          | 24 ++++++++++++++++++++++++
+ net/ipv4/inet_hashtables.c |  6 ++++--
+ net/ipv4/udp.c             |  2 ++
+ net/sctp/socket.c          |  2 +-
+ 4 files changed, 31 insertions(+), 3 deletions(-)
 
-diff --git a/net/ipv4/fou_core.c b/net/ipv4/fou_core.c
-index f1cfd5381e45b..37cfbece08c54 100644
---- a/net/ipv4/fou_core.c
-+++ b/net/ipv4/fou_core.c
-@@ -365,6 +365,18 @@ static struct sk_buff *gue_gro_receive(struct sock *sk,
- 		default:
- 			goto out;
- 		}
+diff --git a/include/net/rps.h b/include/net/rps.h
+index a93401d23d66e..6e98aa7655afe 100644
+--- a/include/net/rps.h
++++ b/include/net/rps.h
+@@ -122,6 +122,30 @@ static inline void sock_rps_record_flow(const struct sock *sk)
+ #endif
+ }
+ 
++static inline void sock_rps_delete_flow(const struct sock *sk)
++{
++#ifdef CONFIG_RPS
++	struct rps_sock_flow_table *table;
++	u32 hash, index;
 +
-+		/* Match the encapsulation format and IP version. */
-+		list_for_each_entry(p, head, list) {
-+			const struct iphdr *iph2;
++	if (!static_branch_unlikely(&rfs_needed))
++		return;
 +
-+			if (!NAPI_GRO_CB(p)->same_flow)
-+				continue;
++	hash = READ_ONCE(sk->sk_rxhash);
++	if (!hash)
++		return;
 +
-+			iph2 = (const struct iphdr *)(p->data + off);
-+			if (iph2->version != ((struct iphdr *)guehdr)->version)
-+				NAPI_GRO_CB(p)->same_flow = 0;
-+		}
- 		goto next_proto;
- 	default:
- 		goto out;
++	rcu_read_lock();
++	table = rcu_dereference(net_hotdata.rps_sock_flow_table);
++	if (table) {
++		index = hash & table->mask;
++		if (READ_ONCE(table->ents[index]) != RPS_NO_CPU)
++			WRITE_ONCE(table->ents[index], RPS_NO_CPU);
++	}
++	rcu_read_unlock();
++#endif
++}
++
+ static inline u32 rps_input_queue_tail_incr(struct softnet_data *sd)
+ {
+ #ifdef CONFIG_RPS
+diff --git a/net/ipv4/inet_hashtables.c b/net/ipv4/inet_hashtables.c
+index e7b312f7cd98f..7035e35bea5e1 100644
+--- a/net/ipv4/inet_hashtables.c
++++ b/net/ipv4/inet_hashtables.c
+@@ -23,11 +23,12 @@
+ #if IS_ENABLED(CONFIG_IPV6)
+ #include <net/inet6_hashtables.h>
+ #endif
+-#include <net/secure_seq.h>
+ #include <net/hotdata.h>
+ #include <net/ip.h>
+-#include <net/tcp.h>
++#include <net/rps.h>
++#include <net/secure_seq.h>
+ #include <net/sock_reuseport.h>
++#include <net/tcp.h>
+ 
+ u32 inet_ehashfn(const struct net *net, const __be32 laddr,
+ 		 const __u16 lport, const __be32 faddr,
+@@ -783,6 +784,7 @@ void inet_unhash(struct sock *sk)
+ 	if (sk_unhashed(sk))
+ 		return;
+ 
++	sock_rps_delete_flow(sk);
+ 	if (sk->sk_state == TCP_LISTEN) {
+ 		struct inet_listen_hashbucket *ilb2;
+ 
+diff --git a/net/ipv4/udp.c b/net/ipv4/udp.c
+index 22eee4fdd5d8d..4fc8263286f2e 100644
+--- a/net/ipv4/udp.c
++++ b/net/ipv4/udp.c
+@@ -119,6 +119,7 @@
+ #if IS_ENABLED(CONFIG_IPV6)
+ #include <net/ipv6_stubs.h>
+ #endif
++#include <net/rps.h>
+ 
+ struct udp_table udp_table __read_mostly;
+ EXPORT_SYMBOL(udp_table);
+@@ -2050,6 +2051,7 @@ void udp_lib_unhash(struct sock *sk)
+ 		struct udp_table *udptable = udp_get_table_prot(sk);
+ 		struct udp_hslot *hslot, *hslot2;
+ 
++		sock_rps_delete_flow(sk);
+ 		hslot  = udp_hashslot(udptable, sock_net(sk),
+ 				      udp_sk(sk)->udp_port_hash);
+ 		hslot2 = udp_hashslot2(udptable, udp_sk(sk)->udp_portaddr_hash);
+diff --git a/net/sctp/socket.c b/net/sctp/socket.c
+index 7734ca92335aa..3c8b9b8b07e03 100644
+--- a/net/sctp/socket.c
++++ b/net/sctp/socket.c
+@@ -8390,7 +8390,7 @@ static int sctp_hash(struct sock *sk)
+ 
+ static void sctp_unhash(struct sock *sk)
+ {
+-	/* STUB */
++	sock_rps_delete_flow(sk);
+ }
+ 
+ /* Check if port is acceptable.  Possibly find first available port.
 -- 
 2.53.0
 
