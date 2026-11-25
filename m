@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795619714;
-	b=njR1pzQeIV+xNZtgAvOe+c9IcnQW7KZZ5EKWGsi2ZjxL5l01USlVsnnz4BGrxNCsMbFN
-	 VTnkfR10Bpd2sqhryvVc2neopS2ytJfo3vP8TjLWwhR0FgnXSzTenSkaVOCg7Tl9IWfcO
-	 hGT1iCMgR+jUWyNoKG3+SY3yBYO5Ay222mlQfwT24m3tYzTxheN2iyY0okrAdxmez9Zus
-	 bYrTqBYNbt0nzhpy3EGox9sB6u4lszfqYocYYt3ZSaoKpkHSuPJa7fVX5WlkUZ1z3DOvX
-	 YhR7zOlIAZ/4vFg6wudzQjhXpvOKfLFt6FAMV2lrWSF5ekxo0pOuJGX2qA2B+BmajBA==
+	t=1795619717;
+	b=FqC0yIBPY5ehsVTUbH0VjNK3OmmaKEqZaDE8xhE5VIdIkwsftUkgxBU9tBHBHBFzd5va
+	 CoN/64GIGrAqCXpdYYsnBowM2f+IYdKxt3exO9Ysap6Scb/htq1lDecBFdkA0LR5h9ZfM
+	 K8As1uVeO/w9hYjFdr9wcMsTf/N00w5Ku6/fSg3yjPwJf2wYLakKr0VjxxjUE85kja/jG
+	 SsgDrxiIfGJfM6A8Gnxicmy9GjNcL78yFx6olcWJuaPsYxnPwbNhntw4k6QrqYwfGmi0X
+	 p4swe6/utvBhkKZEyGnDR/NmIDgmMtuM4/5vFOY0VRPA4ZvZYjqoyihFTIswM1unYeQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795619714;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795619717;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Type:Content-Transfer-Encoding;
-	bh=GBz/5iHeyMjakYn2pCirFpfBZAb+8cJH6in6JoCvW68=;
-	b=4cawJegVyyHGDXjrhHwsUfQjoOEEpHClq6AGIqxEmBtnwp6nkE42wfULcXgo7fB0fGYz
-	 rIJGZ75YoX6tPvc6vm6PdEhnQN20kAIjcex5zIxHqi8KBMBxRzqsS3VT5urapOvi/RAlK
-	 tFyxJFwUVWnc1hO96YqDtnBHL3HBUi54L1bVtGHkr+jq9hj+iVeoHj6TD1G0gavp910zt
-	 oHxxhXaqIibbFqJC+U7UJYaWcBjT6ZmqhSXeaEuiLxFQuHIuOCE+nN7bfYmXpSHHFRkep
-	 EP2XP+/C9wKyDkXLs0fa6nXpsS6yGiXZoIYATAAZMnrCrQG1Pf/LhUwlYIA6KglXMtA==
+	 MIME-Version:Content-Transfer-Encoding;
+	bh=GncAzsxCNo+Q0fH15SZ14hFYHTTp8j9lEbbRUzWIL58=;
+	b=Rc9olpMOpG36lgSFKp4JRil2lwltBfLvydV/rFoYpm8XWQ/pe1MrJ+591cchaus7Dhn7
+	 P7ruyWxeMApE21d24ZvMovetLbCBz3b27JfUcMJlw0eFSOgJTZ3jsRpTVKdzrqsd/5Z/S
+	 rt5WhLWyLApLrcH4jdGOsBolfc3fJ4/vmIGpULmafaXN+NrSITuFORdY+sHFtA5AqUx70
+	 l1LiPtj610Ferm0sPYGKg7+tjBgFhuR0G8ajQDZ8xah/CQodZtgtzAzEhqJoyjOizuKOw
+	 0rOc1MmtojZPknP0aeux5ZW2NqatYZqSMCldS/0AW0VBOliHvUrd0Etb0rENSZNt9Vg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=JVR1krg9;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=EXXWkKqz;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8D2E9606A339;
-	Wed, 25 Nov 2026 15:15:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2910D606A339;
+	Wed, 25 Nov 2026 15:15:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=JVR1krg9
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0F49A1F000C4;
-	Wed, 25 Nov 2026 15:15:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=EXXWkKqz
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6426F1F000E6;
+	Wed, 25 Nov 2026 15:15:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795619713;
-	bh=GBz/5iHeyMjakYn2pCirFpfBZAb+8cJH6in6JoCvW68=;
+	s=korg; t=1795619716;
+	bh=GncAzsxCNo+Q0fH15SZ14hFYHTTp8j9lEbbRUzWIL58=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=JVR1krg99lPENQs2DvHmveiSzfnr+IIpw1+VThv1ZO7z1u97A03slELru7+l/XItf
-	 NSPP7DSA3c7+LTHmXtNcgAtgMdrkMTULE/xsGBrzCmTVFysYcZQ5Hojdj+EHPxYBeS
-	 H7BdOcAfRYjXyqQOh2U2MTPAIS2hjO2jZnMdCb3I=
+	b=EXXWkKqz85LRBnIEabbnvf8gJRlgsfvUjq3FD18zZbzI9cwaWAd5PTgRrUVp+9Ij/
+	 7P6GtOJKj6dUkfD4uKZnjFVhvqIzR4VL0vlMTawdZl9TpT5g3OHXM6xkmP/olla/eK
+	 hZ9q08wIevxg9ptnJJk0xALGTHdWlIyUGp5R4lpM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eric Dumazet <edumazet@kernel.org>,
-	=?UTF-8?q?Dani=C3=ABl=20Trujillo?= <datrujillo@nvidia.com>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 7.3 0648/1005] ipv4: fib_trie: prevent speculative out-of-bounds child access
-Date: Wed, 25 Nov 2026 15:33:06 +0100
-Message-ID: <20261125143836.930556604@linuxfoundation.org>
+	Bin Yu <byu@xidian.edu.cn>,
+	Cheng Wen <wencheng@xidian.edu.cn>,
+	YuanZhe Liu <25031212351@stu.xidian.edu.cn>,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Subject: [PATCH 7.3 0684/1005] Bluetooth: btusb: fix use-after-free in force_poll_sync
+Date: Wed, 25 Nov 2026 15:33:42 +0100
+Message-ID: <20261125143837.775667609@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143821.729802100@linuxfoundation.org>
 References: <20261125143821.729802100@linuxfoundation.org>
@@ -62,126 +63,81 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 7.3-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Daniël Trujillo <datrujillo@nvidia.com>
+From: YuanZhe Liu <25031212351@stu.xidian.edu.cn>
 
-commit fd3d73286662950656f54616d0b3fea29e2dc99a upstream.
+commit 868c886f45f7c10dc888b94c6993352702a84d04 upstream.
 
-fib_table_lookup() checks the child index against the bounds before
-passing it to get_child_rcu().
+The force_poll_sync debugfs file uses the driver's struct btusb_data as
+its private data. The file is created under hdev->debugfs and is removed
+only when the HCI device is released, while btusb_disconnect() frees
+btusb_data unconditionally. The HCI device can outlive the driver data,
+for example when an HCI socket still references it, so reading or
+writing the already opened file then dereferences freed memory:
 
-The index is derived from the lookup key, which in turn is derived from
-flp->daddr. A userspace process can therefore influence the index by
-triggering lookups for chosen destination IPv4 addresses.
+  BUG: KASAN: slab-use-after-free in force_poll_sync_read+0x129/0x140
+  Read of size 1 at addr ffff88800cfb7038
+  ...
+  Freed by task ...:
+   kfree
+   btusb_disconnect
 
-If this bounds check is mispredicted as in-bounds, an out-of-bounds index
-can be transiently passed to get_child_rcu(). The value loaded beyond the
-child array is then treated as a node pointer. A later transient
-dereference of that pointer can cause a data-dependent cache footprint.
+Remove the debugfs file before the private data is freed.
+debugfs_remove() waits for callers that are already inside the file
+operations, and any later access fails with -EIO instead of reaching the
+driver, so the force_poll_sync file can no longer dereference btusb_data
+after it is gone.
 
-This was found during Spectre-v1 research. Leakage was demonstrated with
-instrumentation that delays branch resolution with a CLFLUSH before the
-mispredicted branch and makes the leaked location deterministic for
-reproducible measurement. In that setup, a userspace-controlled IPv4
-lookup key was able to trigger a transient out-of-bounds child access.
-The transient use of the loaded value as a pointer caused a
-data-dependent cache footprint that was recoverable from userspace using
-Prime+Probe. A real-world attacker would likely need to delay branch
-resolution, which was not demonstrated end-to-end without the added
-CLFLUSH.
-
-Sanitize the index with array_index_nospec() before accessing the child
-array. This removed the observed leakage in the described setup.
-
-Apply the hardening before setting cindex in fib_table_lookup(), because
-cindex can later be used by the backtrace path to load another child
-pointer. fib_find_node() has the same pattern, with the checked index
-derived from a user-provided key in fib_table_insert() and
-fib_table_delete(). leaf_walk_rcu() has a similar checked cindex before
-get_child_rcu(), and the traversed state can be influenced by userspace
-actions. fib_find_node() runs under RTNL and leaf_walk_rcu() is not on
-the packet lookup hot path, so harden those analogous accesses in the
-same way. Also harden fib_trie_get_next(), where a mispredicted loop
-condition could transiently read one child past the array.
-
-I see a slowdown of roughly 10% in a microbenchmark where we call
-fib_table_lookup() with 64 routes directly from inside the kernel. I
-observed no slowdown in a loopback UDP sendto() microbenchmark.
-
-Fixes: 9f9e636d4f89 ("fib_trie: Optimize fib_table_lookup to avoid wasting time on loops/variables")
+Fixes: 800fe5ec302e ("Bluetooth: btusb: Add support for queuing during polling interval")
 Cc: stable@vger.kernel.org
-Reviewed-by: Eric Dumazet <edumazet@kernel.org>
-Signed-off-by: Daniël Trujillo <datrujillo@nvidia.com>
-Link: https://patch.msgid.link/20261106-fib-trie-nospec-v3-1-53da6550dcf8@nvidia.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Co-developed-by: Bin Yu <byu@xidian.edu.cn>
+Signed-off-by: Bin Yu <byu@xidian.edu.cn>
+Co-developed-by: Cheng Wen <wencheng@xidian.edu.cn>
+Signed-off-by: Cheng Wen <wencheng@xidian.edu.cn>
+Signed-off-by: YuanZhe Liu <25031212351@stu.xidian.edu.cn>
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/ipv4/fib_trie.c |   14 +++++++++++++-
- 1 file changed, 13 insertions(+), 1 deletion(-)
+ drivers/bluetooth/btusb_main.c |   10 ++++++++--
+ 1 file changed, 8 insertions(+), 2 deletions(-)
 
---- a/net/ipv4/fib_trie.c
-+++ b/net/ipv4/fib_trie.c
-@@ -61,6 +61,7 @@
- #include <linux/export.h>
- #include <linux/vmalloc.h>
- #include <linux/notifier.h>
-+#include <linux/nospec.h>
- #include <net/net_namespace.h>
- #include <net/inet_dscp.h>
- #include <net/ip.h>
-@@ -961,6 +962,8 @@ static struct key_vector *fib_find_node(
- 			break;
- 		}
+--- a/drivers/bluetooth/btusb_main.c
++++ b/drivers/bluetooth/btusb_main.c
+@@ -1063,6 +1063,8 @@ struct btusb_data {
+ 	int (*disconnect)(struct hci_dev *hdev);
  
-+		index = array_index_nospec(index, 1ul << n->bits);
+ 	int oob_wake_irq;   /* irq for out-of-band wake-on-bt */
 +
- 		/* keep searching until we find a perfect match leaf or NULL */
- 	} while (IS_TNODE(n));
++	struct dentry *force_poll_sync_dentry;
+ };
  
-@@ -1466,6 +1469,8 @@ int fib_table_lookup(struct fib_table *t
- 		if (IS_LEAF(n))
- 			goto found;
+ static void btusb_reset(struct hci_dev *hdev)
+@@ -4557,8 +4559,9 @@ static int btusb_probe(struct usb_interf
  
-+		index = array_index_nospec(index, 1ul << n->bits);
+ 	usb_set_intfdata(intf, data);
+ 
+-	debugfs_create_file("force_poll_sync", 0644, hdev->debugfs, data,
+-			    &force_poll_sync_fops);
++	data->force_poll_sync_dentry =
++		debugfs_create_file("force_poll_sync", 0644, hdev->debugfs,
++				    data, &force_poll_sync_fops);
+ 
+ 	return 0;
+ 
+@@ -4599,6 +4602,9 @@ static void btusb_disconnect(struct usb_
+ 	if (!data)
+ 		return;
+ 
++	debugfs_remove(data->force_poll_sync_dentry);
++	data->force_poll_sync_dentry = NULL;
 +
- 		/* only record pn and cindex if we are going to be chopping
- 		 * bits later.  Otherwise we are just wasting cycles.
- 		 */
-@@ -1766,6 +1771,8 @@ static struct key_vector *leaf_walk_rcu(
- 		if (cindex >> pn->bits)
- 			break;
+ 	hdev = data->hdev;
+ 	usb_set_intfdata(data->intf, NULL);
  
-+		cindex = array_index_nospec(cindex, 1ul << pn->bits);
-+
- 		/* descend into the next child */
- 		n = get_child_rcu(pn, cindex++);
- 		if (!n)
-@@ -1787,6 +1794,8 @@ static struct key_vector *leaf_walk_rcu(
- 			continue;
- 		}
- 
-+		cindex = array_index_nospec(cindex, 1ul << pn->bits);
-+
- 		/* grab the next available node */
- 		n = get_child_rcu(pn, cindex++);
- 		if (!n)
-@@ -2431,7 +2440,10 @@ static struct key_vector *fib_trie_get_n
- 
- 	while (!IS_TRIE(pn)) {
- 		while (cindex < child_length(pn)) {
--			struct key_vector *n = get_child_rcu(pn, cindex++);
-+			struct key_vector *n;
-+
-+			cindex = array_index_nospec(cindex, child_length(pn));
-+			n = get_child_rcu(pn, cindex++);
- 
- 			if (!n)
- 				continue;
 
 
