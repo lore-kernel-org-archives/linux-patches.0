@@ -1,51 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795623791;
-	b=ISvbR8MqT2dNwN9dBdKVyVFPqpZDCkZkryplv3u0gezYxYHFz0Tdk3b1tCifELBQVqTC
-	 FSxZnxgcpgfTrAsSNNBUod57LTOIRz0fSmrnBJ9i0lJCf44Kq84FkpyGsmSx528Qsc4cm
-	 6IKaVBFdxtIECTIBhGsU1aCbY3o7w+jGtP4KFTRiQoZ6+PFtHohn2OVrGCaniPuqnQwuK
-	 X+NS07UUv8VUwDHf/jVR58cIL3ViN4vgWr6B+y6rpzI8QyUTNvmVPQcs++HnR/i4LZS4c
-	 Ynkm67/I/4sajN0waJ4Wk4VS2jbNpgerHhYYlbx+8RWUMMP+gEzV4Z251IUrkCyaPvQ==
+	t=1795623794;
+	b=b4eJ3Hzcz3mBXJQzT6lMdwl7SfZTFNFqcHbD5A66ZMrLwOwMEwjcGaytNUS7vHFNNrG6
+	 GY1eQHCL8yRpTrx/knmMhGU6gnj85Ok7TkMBneDQcW4e/wC0MbcbOloW4ic+x37RH1q0s
+	 7Xvazu3h7/u9+F8SXqpmFJMtyPdLdBALmFXDGmGZb2HubewwD3Z9H7pu1c2lwXuemwa1R
+	 0tclCWntCL2duBlgwXYIRdUs+PzDnLXPncKtZkt6Ro0i79eoyl/Bs1qfqXhLi7g3RJi2N
+	 EgZ+DcUp5E2tHsw6IweXVI7iQiWHOirxoOgjYaWh3644d2KQYMVCFthsEaToo2MmEdQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795623791;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795623794;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=PkcYhhKx0yWX552hSKFXDCqhfYL8I8GjEafFO7+h/qs=;
-	b=Lg8WbUdUHCgazz8WtwX5YntKN3T6vDY7cszP14Abc7fHAWyEQtRuQLtVWe4Nq5kscUBf
-	 vgSWgy9kfYphVNTMx0zhIYmOPi3n5pC1UiJdEIF9QvrTWfyffUYsWhrjhqz5cyVGdQzL4
-	 vpGTylT65QkVQvFzQgizkvTkTyQnq0B6S4VzxN5mCrCffqfG/spxgnVzByRr/jjpBUI22
-	 mXttDSD+Nk82ySDkulrUtjce7e7jGXKL2dE+89hrIM0gHy/duUAWq5xJf2p/wFHdXZpUq
-	 bP5Tg5FG/BYcAUfcpavVN29a4R44XHyfTqweZVyXvod/HGUg3p4kZ07bZTlOUJEZecw==
+	bh=hk8LX8GlTn8jQyxkpjeP72gQNfyM+gklQyfVo73H0A0=;
+	b=VKSgQ+qq2wiadmiXMLpBdlq4nO4/ku2okOJm84WOPxV154W5z62019rSO/5JWuyXRv+F
+	 dpmTDbrhIs9XFy0tUVE8SSeOJhhXLLScgUuSOzC5I4Pm/Yg7HnFbxTMpBljTtaXfL3tYo
+	 WBy+ItVKmrIfBGSVlEkhl6KarzCWaFs5763vvopudjvWHImSvSypq6Dya182F313xbzT8
+	 /nRkEpX7N1Q30RHqHbDaZXHR71c71vkWhpExEbcWQszjYT+vc+tb84Wv3IeuXHDxA88Qt
+	 EWKCPd+FjexlBy8GKbHXGKBotQrfrsou5bBOkbYc5xvofOne9f5vG3yKtVwzwFXe5sw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=soK7xmaw;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=bdZPz1Mv;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 04E19606A321;
-	Wed, 25 Nov 2026 16:23:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 335BC606A338;
+	Wed, 25 Nov 2026 16:23:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=soK7xmaw
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 570521F000C4;
-	Wed, 25 Nov 2026 16:23:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=bdZPz1Mv
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2D56B1F000ED;
+	Wed, 25 Nov 2026 16:23:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795623790;
-	bh=PkcYhhKx0yWX552hSKFXDCqhfYL8I8GjEafFO7+h/qs=;
+	s=korg; t=1795623793;
+	bh=hk8LX8GlTn8jQyxkpjeP72gQNfyM+gklQyfVo73H0A0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=soK7xmawJwB0S8XKLdjLJ3+GoA0+XdlpgFLP0UhCdhneojyMtEExziNNUZbjbLyBC
-	 P8J3Lqf3f89UBUxTBLQC1riAOW7AKsSqk3RBwsVlSrmr3IoOOXANgdzItYgJi0XI6J
-	 22eV8bo7kr9xNspoMC1So18crsQZn9zwZWw0Nl3Q=
+	b=bdZPz1MvgWU4j2SRpuC9Pqo9E1CPzOAwvMffX8VCBL9zdN40FOf/3Xov6vgEWOusw
+	 p9XrAba1MXwud0uVRQBWILBkbPJqtVuw7s2FdXTeFqf5POj/iwbRU6FfeogwtF71T4
+	 n2OHathakQS46dbNaMVyaZOZTUTFmuaQGQbdpRLQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hyunjung Ko <hj351016@gmail.com>,
-	Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
-Subject: [PATCH 6.18 970/990] gpio: mpsse: reject bulk-in endpoints smaller than 3 bytes
-Date: Wed, 25 Nov 2026 15:38:57 +0100
-Message-ID: <20261125143844.704601092@linuxfoundation.org>
+	Daksh Sahni <swizzguy76@gmail.com>,
+	Jeff Hugo <jeff.hugo@oss.qualcomm.com>,
+	Karol Wachowski <karol.wachowski@linux.intel.com>
+Subject: [PATCH 6.18 971/990] accel/ivpu: Defer recovery until probe completes
+Date: Wed, 25 Nov 2026 15:38:58 +0100
+Message-ID: <20261125143844.728890917@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143822.072087159@linuxfoundation.org>
 References: <20261125143822.072087159@linuxfoundation.org>
@@ -67,51 +68,81 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hyunjung Ko <hj351016@gmail.com>
+From: Karol Wachowski <karol.wachowski@linux.intel.com>
 
-commit f94f85f82e042c89a1e64ed3ff1d591a2bccfa7b upstream.
+commit dc61b19db1f77deb4c15bb71e64f46071447837c upstream.
 
-mpsse_read() reads min(len + 2, wMaxPacketSize) bytes and then copies
-len_actual - 2 bytes to the caller. A device that declares a bulk-in
-endpoint with wMaxPacketSize 1 completes the read with len_actual 1, so
-the copy length becomes -1 and memcpy() runs far past the one byte
-buffer on the caller's stack and past bulk_in_buf:
+An error IRQ that fires after ivpu_boot() enables interrupts queues
+recovery_work during probe. If probe then fails, the device is torn
+down while the work runs, and the work faults on the unmapped BARs:
 
-  memcpy: detected buffer overflow: 18446744073709551615 byte write of buffer size 1
-  WARNING: lib/string_helpers.c:1036 at __fortify_report+0x6e/0xc0
+  BUG: unable to handle page fault for address: ffffcfc6680200f4
+  Workqueue: events_unbound ivpu_pm_recovery_work [intel_vpu]
+  RIP: 0010:ivpu_hw_ip_ipc_rx_addr_get+0xc/0xb0 [intel_vpu]
   Call Trace:
-   __fortify_panic+0xd/0x10
-   gpio_mpsse_get_multiple+0x767/0x780
-   gpio_mpsse_gpio_get+0xa2/0xf0
-   gpiod_get_raw_value_commit+0xf8/0x1f0
-   gpiod_get_value_cansleep+0x1e/0xa0
-   value_show+0x42/0x90
+   ivpu_wait_for_ready+0x155/0x220 [intel_vpu]
+   ivpu_boot+0x9e/0x270 [intel_vpu]
+   ivpu_resume+0xa4/0xd0 [intel_vpu]
+   ivpu_pm_reset_complete+0x2c/0x90 [intel_vpu]
+   ivpu_pm_recovery_work+0xf6/0x140 [intel_vpu]
 
-Reproduced with dummy_hcd and raw-gadget. A read needs room for the two
-status bytes plus at least one data byte, so refuse to bind otherwise.
+If probe succeeds, the recovery runs concurrently with the rest of
+probe, and its pm_runtime_disable() discards the initial autosuspend
+request, leaving the NPU active until first use. Any recovery that
+starts while the NPU is idle loses the pending autosuspend the same way.
 
-Fixes: c46a74ff05c0 ("gpio: add support for FTDI's MPSSE as GPIO")
-Cc: stable@vger.kernel.org
-Signed-off-by: Hyunjung Ko <hj351016@gmail.com>
-Link: https://patch.msgid.link/20261117104110.240112-1-hj351016@gmail.com
-Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
+Keep recovery_work disabled from ivpu_pm_init() until ivpu_pm_enable().
+A trigger during probe still runs diagnostics and masks interrupts, and
+ivpu_pm_enable() runs the deferred recovery before the initial
+autosuspend request. A trigger racing with ivpu_pm_enable() can cause
+a second, harmless recovery. Request autosuspend at the end of
+ivpu_pm_reset_complete() so the NPU suspends again after every reset.
+
+Fixes: 852be13f3bd3 ("accel/ivpu: Add PM support")
+Cc: stable@vger.kernel.org # v6.10+
+Reported-by: Daksh Sahni <swizzguy76@gmail.com>
+Closes: https://lore.kernel.org/r/20261107174215.15818-1-swizzguy76@gmail.com
+Tested-by: Daksh Sahni <swizzguy76@gmail.com>
+Reviewed-by: Jeff Hugo <jeff.hugo@oss.qualcomm.com>
+Signed-off-by: Karol Wachowski <karol.wachowski@linux.intel.com>
+Link: https://patch.msgid.link/20261110121534.3566028-1-karol.wachowski@linux.intel.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpio/gpio-mpsse.c |    4 ++++
- 1 file changed, 4 insertions(+)
+ drivers/accel/ivpu/ivpu_pm.c |    9 ++++++++-
+ 1 file changed, 8 insertions(+), 1 deletion(-)
 
---- a/drivers/gpio/gpio-mpsse.c
-+++ b/drivers/gpio/gpio-mpsse.c
-@@ -677,6 +677,10 @@ static int gpio_mpsse_probe(struct usb_i
- 	if (err)
- 		return err;
+--- a/drivers/accel/ivpu/ivpu_pm.c
++++ b/drivers/accel/ivpu/ivpu_pm.c
+@@ -148,8 +148,8 @@ static void ivpu_pm_reset_complete(struc
+ 	up_write(&vdev->pm->reset_lock);
+ 	atomic_set(&vdev->pm->reset_pending, 0);
  
-+	/* Every read carries two status bytes ahead of the data */
-+	if (usb_endpoint_maxp(priv->bulk_in) < 3)
-+		return -EINVAL;
+-	pm_runtime_mark_last_busy(vdev->drm.dev);
+ 	pm_runtime_enable(vdev->drm.dev);
++	pm_request_autosuspend(vdev->drm.dev);
+ }
+ 
+ static void ivpu_pm_recovery_work(struct work_struct *work)
+@@ -403,6 +403,7 @@ void ivpu_pm_init(struct ivpu_device *vd
+ 	atomic_set(&pm->reset_counter, 0);
+ 
+ 	INIT_WORK(&pm->recovery_work, ivpu_pm_recovery_work);
++	disable_work(&pm->recovery_work);
+ 	INIT_DELAYED_WORK(&pm->job_timeout_work, ivpu_job_timeout_work);
+ 
+ 	if (ivpu_disable_recovery)
+@@ -427,6 +428,12 @@ void ivpu_pm_enable(struct ivpu_device *
+ {
+ 	struct device *dev = vdev->drm.dev;
+ 
++	enable_work(&vdev->pm->recovery_work);
++	if (atomic_read(&vdev->pm->reset_pending)) {
++		queue_work(system_dfl_wq, &vdev->pm->recovery_work);
++		flush_work(&vdev->pm->recovery_work);
++	}
 +
- 	priv->bulk_in_buf = devm_kmalloc(dev, usb_endpoint_maxp(priv->bulk_in),
- 					 GFP_KERNEL);
- 	if (!priv->bulk_in_buf)
+ 	pm_runtime_allow(dev);
+ 	pm_runtime_mark_last_busy(dev);
+ 	pm_runtime_put_autosuspend(dev);
 
 
