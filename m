@@ -1,51 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795620276;
-	b=Wi2OvbMBwLcKm6KWy01PWsE8YV9oHgu7Bioykz1Id2EjqzVVEkXiCbn6TCZJOSlxsJ20
-	 3iJNxEPGreft996Fi6Z+hQRTsKH32AK7JcQL+yk9PEOZ5KEOuiE2hTM3S5lZm5GdWfH5M
-	 5P7C7OSv1eazTjpM7MdKe5L06LVY0ZTTAooqcryKKXQn8g7fxP1tlfMvzPTzXlR+QqsRy
-	 ecmHZfM+XyeRxEa26kCT+E1l/7PK5wp9PDFZGLMdVvxx3oeAX9UscgaltuNnffUCYL92N
-	 u5fO+BCgMuKF+PG14tw4BKqp1TkumPS+JfKVmpSGvHJx/lRYGW7Yr1kifWa+hLabIVA==
+	t=1795620280;
+	b=UXsa1gHpo7oMWQ0NfxTc2LV1fSwP7fnXQOuPY7mq8Cg3NP23cSZ2ujbub3u9eVCf6Clo
+	 BgCXes61JWwM43QbFDXGSaFjTc9KgJ1SatsiQWaEo8J0G2lFo/ul9t2DpuLh6GPi3LzGi
+	 oRAxKz0eoZwMHBDg9/Vy1tirm4UQVlYGFvHfyS8W6Ixg6aEJ7WuVKF+sA66zI8vPHzlyU
+	 zAfXYojkvSiqgVVikMFemk5mVhrgqoqMbIsKKqRMScYxoie911qHidatN22X+rrhFvQwR
+	 ujpy/ZdTvocSDIL+Dt8h5yRQpr3FY2xoS1NnlKOMukxQDne52ixLupVrsctxB3AjNWQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795620276;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795620280;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=BouRQ5pBIhaVdNgRC85c/0HbahGoFqREtbcTiOuJm0o=;
-	b=a2kNotgIvLs9kAH7/zxLDUais5eCBkBJ0eyTdQ+ntO1BC7tSPdsniC+4ygysICmrhIpR
-	 l0NeyEokjnNzCoc8imeR4m/AuWAhk008AxbdAjV7o9uB9QEX5+LY+pTAuKGBGNQpyLVwY
-	 zXsdl1l2zl+C/DnrG1qvY8gPK9F818V8I5k/M9UWJd8vAy3/B2B8yPi02pf3Tec+WOmmD
-	 k1f27jpb1Rpp1UioGq8Np9pF5QOcX67peioZ0SuiKHcRD8hNfptb92puUlfzi44ZL/o3O
-	 rBK0R/iDHjCTFdkqKp8jiztQDMulRKPFnI+4kPrjo5A87joqirnvmIjey8AO11S5IZQ==
+	bh=qniwJuaiKqu8zVSC9f3IFaARrmvT/lO8ngiubz2Mvfs=;
+	b=IkrOArghzYST2uF/tVLYPRyAHiD3eJPheB0Kr3Lb82SXqf7CUVIPAY+G1YsHmjyHiuXq
+	 AmFrc6lBBP4vVNVWRfWTuh94LR/tkqRSAIm7WKrAgvu3JES405yGvG0Dp62DtUTxNLJu8
+	 pMWpi9RQlsEEyjLZUdPdQG7lPTWEiKK9cLjUDL7VGCThSJGrFxP0GQvKUe0zKhFU+mcgd
+	 UBX+5MPegz06igcv+lW3LlKeCNDIY08nzY5L8FS6LqGG48PqYsSVFMmWx+jE9l3BvlI06
+	 dhvoK1316DX6u1hpRs7xJE0v8TGmHgvpgH378PwyIEESgI7Lma8I8Ko+vQKzqYM9oNA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="J/RUwpTO";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=UIi2MJJQ;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 669C9606A326;
-	Wed, 25 Nov 2026 15:24:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 21C00606A323;
+	Wed, 25 Nov 2026 15:24:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=J/RUwpTO
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9808E1F00AD4;
-	Wed, 25 Nov 2026 15:24:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=UIi2MJJQ
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F3DDD1F000EF;
+	Wed, 25 Nov 2026 15:24:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795620276;
-	bh=BouRQ5pBIhaVdNgRC85c/0HbahGoFqREtbcTiOuJm0o=;
+	s=korg; t=1795620279;
+	bh=qniwJuaiKqu8zVSC9f3IFaARrmvT/lO8ngiubz2Mvfs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=J/RUwpTOYpkdXD135gF8jMdD2TkevJob4sq++eV5UClMWMER32sUNpjTV7KQgIzPn
-	 Q4neJIpv00ano6erS0NVF3R3cQytqhVmPVnh1q67kYfqfMtQwHwePD1aaHKEQ6g5LP
-	 KkVb8nh2T7rczvlOndyZp68kEibKcPtHdxWw8MiQ=
+	b=UIi2MJJQK4Q19/fewSjrDOetswxoq/ETXBf7/wvwNDUTRurHFPdG+JlAw70CA/EoU
+	 IFm9rr/yC/18tLeD7dfn2blVAA6BYDhmkm6dyQdY0c4ihTWQn/i6A/1dk7zk08IKqN
+	 Opqfyyo+7u/i8KDmbKDPrdH42e8UL7ZBoW4Go/ZA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mikulas Patocka <mpatocka@redhat.com>,
-	Wentao Liang <vulab@iscas.ac.cn>
-Subject: [PATCH 7.3 0865/1005] dm-sysfs: fix misbehavior if kobject_init_and_add fails
-Date: Wed, 25 Nov 2026 15:36:43 +0100
-Message-ID: <20261125143841.971317076@linuxfoundation.org>
+	Giuseppe Piscitelli <ooonea@gmail.com>,
+	Namjae Jeon <linkinjeon@kernel.org>,
+	Paulo Alcantara <pc@manguebit.org>
+Subject: [PATCH 7.3 0839/1005] smb: client: flush deferred handles of other names before a hard link open
+Date: Wed, 25 Nov 2026 15:36:17 +0100
+Message-ID: <20261125143841.372047267@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143821.729802100@linuxfoundation.org>
 References: <20261125143821.729802100@linuxfoundation.org>
@@ -67,52 +68,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mikulas Patocka <mpatocka@redhat.com>
+From: Paulo Alcantara <pc@manguebit.org>
 
-commit 406d576cc457203cf86eac7f17839b2efec81db4 upstream.
+commit 25912ed3b75dcf5ff623dcb549b925dd0d0948f7 upstream.
 
-If kobject_init_and_add fails, we must call kobject_put (see the comment
-at kobject_init_and_add).
+Opening a hard link of a file whose other name still holds a deferred,
+leased handle fails with EINVAL over SMB3.  The client caches lease keys
+per inode, but the server ties a lease to the file name it was granted
+under, so reusing the inode's lease key to open a different name of the
+same inode is rejected with STATUS_INVALID_PARAMETER (MS-SMB2 3.3.5.9.11).
 
-Before calling kobject_init_and_add, we must zero the kobject (see
-https://lwn.net/Articles/52085/). If the first call to dm_sysfs_init
-failed, it may be called again, and that second call would see an
-uninitialized kobject.
+Commit 262b73ef442e ("smb3 client: fix open hardlink on deferred close
+file error") already closes the inode's deferred handles before such an
+open so the new name can take a fresh lease, but cifs_get_hardlink_path()
+only triggered that flush when a cached handle had the same open flags as
+the new open, so a differently accessed name - written then read, say -
+slipped through and still failed.
 
+Match on the name instead: flush when a cached handle for another name of
+the inode is open, regardless of access mode.
+
+Reported-by: Giuseppe Piscitelli <ooonea@gmail.com>
+Closes: https://lore.kernel.org/r/CACmoRBbDZR3eyEM65j73sWMS7A=T89z1QAvCP=+u0WGzZhwW6g@mail.gmail.com
+Fixes: 262b73ef442e ("smb3 client: fix open hardlink on deferred close file error")
 Cc: stable@vger.kernel.org
-Fixes: 784aae735d9b ("dm: add name and uuid to sysfs")
-Signed-off-by: Mikulas Patocka <mpatocka@redhat.com>
-Reported-by: Wentao Liang <vulab@iscas.ac.cn>
+Reviewed-by: Namjae Jeon <linkinjeon@kernel.org>
+Signed-off-by: Paulo Alcantara <pc@manguebit.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/md/dm-sysfs.c |   17 ++++++++++++++---
- 1 file changed, 14 insertions(+), 3 deletions(-)
+ fs/smb/client/file.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/md/dm-sysfs.c
-+++ b/drivers/md/dm-sysfs.c
-@@ -128,9 +128,20 @@ static const struct kobj_type dm_ktype =
-  */
- int dm_sysfs_init(struct mapped_device *md)
- {
--	return kobject_init_and_add(dm_kobject(md), &dm_ktype,
--				    &disk_to_dev(dm_disk(md))->kobj,
--				    "%s", "dm");
-+	struct kobject *kobj = dm_kobject(md);
-+	int r;
-+
-+	/* The kobject must be zeroed before calling kobject_init */
-+	memset(kobj, 0, sizeof(struct kobject));
-+	r = kobject_init_and_add(kobj, &dm_ktype,
-+				 &disk_to_dev(dm_disk(md))->kobj,
-+				 "%s", "dm");
-+	if (unlikely(r)) {
-+		/* Weird semantics - we must call kobject_put on failure */
-+		dm_sysfs_exit(md);
-+		return r;
-+	}
-+	return 0;
- }
+--- a/fs/smb/client/file.c
++++ b/fs/smb/client/file.c
+@@ -2232,7 +2232,7 @@ cifs_get_hardlink_path(struct cifs_tcon
+ 	spin_lock(&cinode->open_file_lock);
  
- /*
+ 	list_for_each_entry(open_file, &cinode->openFileList, flist) {
+-		if (file->f_flags == open_file->f_flags) {
++		if (open_file->dentry != file_dentry(file)) {
+ 			rc = -EINVAL;
+ 			break;
+ 		}
 
 
