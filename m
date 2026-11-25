@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795625074;
-	b=T5QyloEu6d4VGFh2QmMQXWd5DNnkW+swR3+b0CRsb0kTofRO867Xy114NPSwlV+4YkdT
-	 ZC+irxgNqcmWR4cOJfpubAVYEy9choi/I29u4m73uizkfmZl4OvotbP2nD07hminurExY
-	 Hoznjv6UjiR/3dYYW2uzjoC1eNNISFuXgt/PC7vO2HVJ1cPW50fwe2aUXXWrxmSgB1S0F
-	 ahjrsd0sVYFWint0NmMzlhycGmRWP39yeESD4eX64CJaZD342QcpnVCZxG+myV7X7l0cm
-	 rsMBe7Z51Ar+fMXp3Ex2e1CsD1ooj82fxtIFQQXRWWLI2rlIA5kmtMyuAER6duGktrw==
+	t=1795625077;
+	b=E+zz29NBUIYdN/2IHzSS4wxrzSNIIN4iOEajzBiL4pnUKhZgHNAVGK9llSCUGZjYQ3Op
+	 f/8jFGJZhPmmLm+Gm5y8hR1kYeGyBEMppECfmiHCBYX1711p4oxkDKUKdhLzK9GFTga1R
+	 jHBXILp02M+qwUv+TZbpI+zodCuG1Hcipkp+9NqxKWyT3hstAYWzw9dMBa3jw6buYijZr
+	 WjeR3uwJyaPruzUTNy4yU1eUlPElyuBWjIYKhMXIOTg++n3v1kuF62rOAvPiNuLxZefV3
+	 2k0CiV5/W0ZI8rV5TwdgfTi9MEpvHSjMsR6A0hwpE9jp6m2/e5iYjueVR6u1WC9VMCQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795625074;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795625077;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=K2D18nlUML7/a38yFq2KosKsMJ9X5Bzhw4pg3bLRBO4=;
-	b=cityidDewHrajZ9xpr2iKFMLbs9PPsAP/0jLzLgfUeNKZ7vFEtV1uW9X1RgqsECCUUHr
-	 D7JH0iDP6wDiDGvvpHmzeWCma/FiOb/ub1qRD8e7ghl/goSGX2DCUEFmwv5vN00Vdf/74
-	 TWlxCj9+IAlcxYzrjgLRLpiK2rs0hl7kt11KybhchsYsOb8lZJP6dvBEbDKAeitcBrF/X
-	 rEYjM3u3EhNO98U1IRpQDjxFycUwj6d9nmJb8PZtf6PEOnkeLazE5879Bx7ya91syuHvx
-	 er8RtSjgQ2BrhCSDK1RfnHpXZoUrCfFDzvfrdd6LwvzH7o8DrJX0N0QEBMgY8cKz7OQ==
+	bh=82/i3/+y9+7B9totqN+4qfOEbMAt7j01vgY6hKGoNMA=;
+	b=ZyEWxgFsQqnRnmQhIwGSWAWAMt2R9k4GoUipYc5v+jNXrhEtKgOnvjUxKkU0hQvZSwMf
+	 7pgsq7H4jCCgOPJa9awalNd89bb6wKmAnrDWzJPtUYP5kuQHHBjlGh1flNaO/Cv+WnAMg
+	 X+amtWu6Tfiqw7QKFR5rPyjrn2+eR+GvLUNW0sIgr4eG7UTOClMdSEcl1PVO9wYQKnRaw
+	 Spw3mxYfb01TMnTPXeYodjWn6zrelQswN/BQltKa+9fdpWJ5/gFKaBsfVYYxFwREQ77yo
+	 MAAhpGwe+Cw3+NTPItk/eaAD5jCXQ3U732/bH/iuM9VNLAV4fZHp0UOZ164WYa2kASA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=gEFgJPRf;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Bh2WOaD4;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 772BD606A31E;
-	Wed, 25 Nov 2026 16:44:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 46F12606A31E;
+	Wed, 25 Nov 2026 16:44:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=gEFgJPRf
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BDE821F000C0;
-	Wed, 25 Nov 2026 16:44:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Bh2WOaD4
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 97EE91F000C4;
+	Wed, 25 Nov 2026 16:44:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795625074;
-	bh=K2D18nlUML7/a38yFq2KosKsMJ9X5Bzhw4pg3bLRBO4=;
+	s=korg; t=1795625077;
+	bh=82/i3/+y9+7B9totqN+4qfOEbMAt7j01vgY6hKGoNMA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=gEFgJPRfyhk0NBzUaaFn3E1VYqjzJx2AaK5KjWI2mcwnIj/JyHBhY5xK5r56hndsD
-	 zjBWH/r01qUbWE6DiD22skc4r0g+ZU7V5QO8Zp4wveJCfO/3Zz3U+Q9bYTWo42ZhvU
-	 q5ixPrQI3xdniCuGa0gESY9WedP5z19OuPmyjTwA=
+	b=Bh2WOaD439vOPV3iPT3dGqUJvdsKBCaN+8+TOH/OJc9Td4197oZZsCPZ62WfF8BWI
+	 8vx1OCoiJYnwd0zecNvNj8gfWFpjhHlZ0BUovVssaa5fTT14lml64TkO9/pXodPnfR
+	 w+blgGfgprJ3YVy2Jt5jePN3OSb0SerYIOt1n04k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Baochen Qiang <baochen.qiang@oss.qualcomm.com>,
-	Rameshkumar Sundaram <rameshkumar.sundaram@oss.qualcomm.com>,
-	Jeff Johnson <jeff.johnson@oss.qualcomm.com>,
+	Eric Dumazet <edumazet@google.com>,
+	Lorenzo Bianconi <lorenzo.bianconi@oss.qualcomm.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 397/816] wifi: ath12k: fix truncated TX buffer DMA address in MSDU ext descriptor
-Date: Wed, 25 Nov 2026 15:32:25 +0100
-Message-ID: <20261125143858.389757388@linuxfoundation.org>
+Subject: [PATCH 6.12 398/816] sit: charge ip_tunnel_prl_entry allocations to memcg
+Date: Wed, 25 Nov 2026 15:32:26 +0100
+Message-ID: <20261125143858.412172309@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143849.205329330@linuxfoundation.org>
 References: <20261125143849.205329330@linuxfoundation.org>
@@ -69,47 +69,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Baochen Qiang <baochen.qiang@oss.qualcomm.com>
+From: Eric Dumazet <edumazet@google.com>
 
-[ Upstream commit 979ecb88ed3528e08dd7f87b90b029374226ca84 ]
+[ Upstream commit 40a2b90f5190fcc7b083809fa93f2799abefeeb1 ]
 
-ath12k_wifi7_hal_tx_cmd_ext_desc_setup() programs the low 32 bits of the
-TX buffer physical address into HAL_TX_MSDU_EXT_INFO0_BUF_PTR_LO but
-hardcodes the high bits field HAL_TX_MSDU_EXT_INFO1_BUF_PTR_HI to 0x0.
+ipip6_tunnel_add_prl() allocates struct ip_tunnel_prl_entry for each
+potential router entry added via SIOCADDPRL.
+An unprivileged user with CAP_NET_ADMIN in a user namespace can add
+an unbounded number of entries, consuming uncharged kernel memory.
 
-dma_addr_t is 64-bit on platforms with CONFIG_ARCH_DMA_ADDR_T_64BIT, so
-whenever a TX buffer is mapped above the 4 GB boundary the upper bits of
-paddr are dropped and the firmware is handed a truncated address,
-leading to potential TX failures.
+Commit 1b51d8271973 ("memcg: ipv6/sit: account and don't WARN on
+ip_tunnel_prl structs allocation") added accounting to the temporary
+buffer in ipip6_tunnel_get_prl(), but missed the entry allocations
+in ipip6_tunnel_add_prl().
 
-Write the upper bits of paddr into BUF_PTR_HI to fix this issue.
+Use GFP_KERNEL_ACCOUNT when allocating struct ip_tunnel_prl_entry.
 
-Issue found during code review, compile tested only.
-
-Fixes: d889913205cf ("wifi: ath12k: driver for Qualcomm Wi-Fi 7 devices")
-Signed-off-by: Baochen Qiang <baochen.qiang@oss.qualcomm.com>
-Reviewed-by: Rameshkumar Sundaram <rameshkumar.sundaram@oss.qualcomm.com>
-Link: https://patch.msgid.link/20260818-ath12k-truncated-tx-dma-addr-v1-1-ead978969371@oss.qualcomm.com
-Signed-off-by: Jeff Johnson <jeff.johnson@oss.qualcomm.com>
-[ sashal: Applied the same one-line BUF_PTR_HI change to dp_tx.c and the ath12k_hal_tx_cmd_ext_desc_setup() name, since this tree has no wifi7 subdirectory or function prefix. ]
+Fixes: 1b51d8271973 ("memcg: ipv6/sit: account and don't WARN on ip_tunnel_prl structs allocation")
+Signed-off-by: Eric Dumazet <edumazet@google.com>
+Acked-by: Lorenzo Bianconi <lorenzo.bianconi@oss.qualcomm.com>
+Link: https://patch.msgid.link/20260907075846.2913645-3-edumazet@google.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+[ sashal: Changed GFP_KERNEL to GFP_KERNEL_ACCOUNT on the existing kzalloc() call, since the kzalloc_obj() helper used by the upstream patch doesn't exist in this tree. ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/ath/ath12k/dp_tx.c | 2 +-
+ net/ipv6/sit.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/net/wireless/ath/ath12k/dp_tx.c b/drivers/net/wireless/ath/ath12k/dp_tx.c
-index f08ab5a4112c0..2e2f228b74c88 100644
---- a/drivers/net/wireless/ath/ath12k/dp_tx.c
-+++ b/drivers/net/wireless/ath/ath12k/dp_tx.c
-@@ -111,7 +111,7 @@ static void ath12k_hal_tx_cmd_ext_desc_setup(struct ath12k_base *ab,
- {
- 	tcl_ext_cmd->info0 = le32_encode_bits(ti->paddr,
- 					      HAL_TX_MSDU_EXT_INFO0_BUF_PTR_LO);
--	tcl_ext_cmd->info1 = le32_encode_bits(0x0,
-+	tcl_ext_cmd->info1 = le32_encode_bits((u64)ti->paddr >> HAL_ADDR_MSB_REG_SHIFT,
- 					      HAL_TX_MSDU_EXT_INFO1_BUF_PTR_HI) |
- 			       le32_encode_bits(ti->data_len,
- 						HAL_TX_MSDU_EXT_INFO1_BUF_LEN);
+diff --git a/net/ipv6/sit.c b/net/ipv6/sit.c
+index eb42d3075e77d..c1617f3e09d91 100644
+--- a/net/ipv6/sit.c
++++ b/net/ipv6/sit.c
+@@ -394,7 +394,7 @@ ipip6_tunnel_add_prl(struct ip_tunnel *t, struct ip_tunnel_prl *a, int chg)
+ 		goto out;
+ 	}
+ 
+-	p = kzalloc(sizeof(struct ip_tunnel_prl_entry), GFP_KERNEL);
++	p = kzalloc(sizeof(struct ip_tunnel_prl_entry), GFP_KERNEL_ACCOUNT);
+ 	if (!p) {
+ 		err = -ENOBUFS;
+ 		goto out;
 -- 
 2.53.0
 
