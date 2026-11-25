@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795625408;
-	b=sh1hu6QlGQxPCyLlX2bCwtisesiwdjjr5XD389UqRfbLtxVfIIb96R7GV9O1Ob0sscla
-	 +bvURAe+SNyH3pptJtdOrqtjRrfe8Zj82G/bgBtYDOha37uX8W8ERHyV6f3Zn/IMSZ3Z0
-	 w7thX20+fMgC/OzQ2PUk49i4DKFkVTKrwQRoEVh941wMsiFnthyY4P/6+V2Ooqsa8ygbN
-	 721jAoiUTE6VApQHvUJ3BT7kK0zHWULgS8kzNuFtVZPKeWnTLQeDvyTjSS16esNzK0AxS
-	 LMJWPeQIcEMLR7fxeEvwy5s4aEE7oj5kW9wwnbp4Fp6OhmdWgFEcA7wSH6xYgpYTprw==
+	t=1795625411;
+	b=t6I6oF7pxZQK+3SJgES8dIg788cKgvO7m4b8aTKTfg+5dwoFg0ERaCb5Lfiah9NbllDm
+	 a+Opc5qYj6OlcVtT1MHvA1qnE6teG5xMSKTHBr7M8ZIUALeAGtBNe9LdCStCAU1ybQGt+
+	 mJjMQYh0BXKgIF2z3VgvhhDtEXR5ZfF0LT56hhpaVS29k46xFBKIU8dWSAW+h0J48QSPu
+	 2ad4G0a9StZBTP7EuKzq+oLYB6PBIKZCrO8BGPc41uy0JzP9l3b2BjB5Mr3N+6ELeRqpd
+	 ZBXiIxl1D1ZlYu6ytUvQvzEPNVLqWNyK2D766f2WecU4b1U6lca7ZrBN6RGQDePajqA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795625408;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795625411;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=Drd90u229O6Hb6fyRAQm4j7/lyLG7lZhy/IdTWpotYg=;
-	b=0g3tvSL2DLImW7FgQ3RCx5woZtVBsiH3CbxxHXjIwsGl6rOlaiatp6fBhpV6rtKRJfhj
-	 hm1rK8S+Lzc/ikx0qKysVlSxWk8iF5i0Me04lc1CKZOWfvjsW571Jap0MFXZ+a4M8mIAc
-	 tn7UBy3HUKGqXZ3LuiFSXw9vOXyzuWQ2GZCUXXhQ/voUL5WINYao1JhR9YBYc2UQv5uCw
-	 AjzQ3mI4ettHx1VwRtV5PFhaNpKEbpkE6cIxrE8narz2BtQLLdybX/D+4KlJmxHE/Dygz
-	 rLtrfDx+MLjzahtvwZ389N81Zpk4otReKcbQlxFBQkdpbXRWmpbqOsqi3gVPwfjT1HA==
+	bh=JZX0ukB7tgpdHVR/gjjMRf3n2aJl6cbLeRzzV8LG2Mk=;
+	b=IkviDz/kYcd6khcsw9DNGXeiXhBhKQ215UhKxw63uvoU+aDsCDndMf2ADmZprL7a3fJU
+	 rJwjU5neXEzESsy20bLXJKauFIcnVjbM7lrsE6NUc7oOGeB2S32EZe7ezY2Fx9DVOlnwP
+	 /lpCgFrdn+7qbu0FgXg4a/aa8TF2CB93aJSteErWjAk9yerVvzgWTjmHHst2SQt14Jfx7
+	 pVwwA5TzmWs6xnP8Hrxsv+ZRPOcWkh0Oib6hVDHBW2CWXUMIo0l4b7vnoqA3VnWLZEmw0
+	 WHyqdUIqGSZJ1nXGFoiHGYUcoVVlE/zKllihIZKC40isauVuYCspvbYQSUy/a5eWxnw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ecaPuVlO;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=R1xs9cTc;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2D685606A321;
-	Wed, 25 Nov 2026 16:50:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ECCDF606A31E;
+	Wed, 25 Nov 2026 16:50:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ecaPuVlO
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 29D031F000C4;
-	Wed, 25 Nov 2026 16:50:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=R1xs9cTc
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 17E871F000C0;
+	Wed, 25 Nov 2026 16:50:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795625407;
-	bh=Drd90u229O6Hb6fyRAQm4j7/lyLG7lZhy/IdTWpotYg=;
+	s=korg; t=1795625410;
+	bh=JZX0ukB7tgpdHVR/gjjMRf3n2aJl6cbLeRzzV8LG2Mk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ecaPuVlO4418AIAbIxopwKAwR7vaOSWMgkQBVWMgvt6p87jOeXcOmJzKom5xDav00
-	 FLZW7r1xvLFx2POGSoOuPAj0+cSPWT9YqtqvosqUfaXH9+cpoAaWI4I7O1k8t/DqGz
-	 aVevBixf+hatN7NGlLJNKrwklbMuy6AizcUXOdfk=
+	b=R1xs9cTcWybs7eKHHkMwfZ0TKDDaQLeqE3dYrnH226RHE2jvydhQ9Ol1XmVPcTEfZ
+	 okbAzgq5tX3tMpVRrgX0CSf5c3nkfB2gPmsvzOvi0AGsIKqtcoTE0OXUY0Jhi5vlXV
+	 FpYq+d86pHthGNi5JseeuvdkzYK8k9FR3DnpeKnk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Viktor Menshin <ripeeerr@gmail.com>,
-	Takashi Iwai <tiwai@suse.de>,
+	Josef Bacik <josef@toxicpanda.com>,
+	Alexei Starovoitov <ast@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 504/816] ALSA: hda/realtek: Fix hiss/crackle on Lenovo Xiaoxin 14 GT (17aa:3912)
-Date: Wed, 25 Nov 2026 15:34:12 +0100
-Message-ID: <20261125143900.854234601@linuxfoundation.org>
+Subject: [PATCH 6.12 505/816] bpf: Use the frame mem type in devmap egress XDP
+Date: Wed, 25 Nov 2026 15:34:13 +0100
+Message-ID: <20261125143900.876865156@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143849.205329330@linuxfoundation.org>
 References: <20261125143849.205329330@linuxfoundation.org>
@@ -68,124 +68,74 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Viktor Menshin <ripeeerr@gmail.com>
+From: Josef Bacik <josef@toxicpanda.com>
 
-[ Upstream commit 2fc28b1186d6fce8b046e6118072cf3ca32f2960 ]
+[ Upstream commit b3ca872947ef322c475ceaa7a76a9ebb3356152e ]
 
-Commit 3a3e810e9108 ("ALSA: hda/realtek: Add quirk for Lenovo Xiaoxin
-14 GT") added a quirk mapping SSID 17aa:3912 to
-ALC287_FIXUP_YOGA9_14IAP7_BASS_SPK_PIN, chosen by analogy with
-neighboring SSIDs (0x390d, 0x3911, 0x391a) without being verified on
-hardware, as noted in that commit's own message.
+A devmap egress program that removes a whole fragment of a redirected
+xdp_frame with bpf_xdp_adjust_tail() or bpf_xdp_pull_data() frees it
+with page_frag_free() whatever the frame's memory type is. For a
+MEM_TYPE_PAGE_POOL frame from a page_pool based driver this drops the
+page reference owned by the pool while the pool still accounts the
+fragment ("page_pool leak" bad page, leaked pp reference).
 
-I have since tested it on the actual hardware (Lenovo Xiaoxin Pro 14
-ASP10, same 17aa:3912 SSID) and confirmed it does not fix the reported
-issue. ALC287_FIXUP_YOGA9_14IAP7_BASS_SPK_PIN only repoints pin 0x17
-and the preferred DAC pairs for the bass speaker; it does not touch
-the codec's vendor processing coefficients. The actual symptom -
-constant electrical hiss/crackle on both the headphone jack and the
-internal speakers, independent of volume - is unrelated to pin/DAC
-routing and is also present on stock Windows before the Realtek
-driver is installed, which points at those coefficients being left
-at their power-on default.
+kernel/bpf/devmap.c:dev_map_bpf_prog_run() points xdp.rxq at an
+on-stack
 
-To find the correct values, I passed the physical HD Audio controller
-through to a Windows 10 VM (VFIO, with QEMU patched to log CORB verb
-traffic) and captured the coefficient writes the vendor Realtek driver
-performs at init. Replaying a single one of them on Linux via hda-verb
-reproducibly eliminates the headphone jack noise:
+    struct xdp_rxq_info rxq = { .dev = rx_dev };
 
-    hda-verb /dev/snd/hwC#D0 0x20 SET_COEF_INDEX 0x36
-    hda-verb /dev/snd/hwC#D0 0x20 SET_PROC_COEF  0x77d7
+whose mem.type is 0, i.e. MEM_TYPE_PAGE_SHARED, and
+net/core/filter.c:bpf_xdp_shrink_data() releases frags according to
+rxq->mem.type. cpumap, which runs programs on xdp_frames the same way,
+already copies xdpf->mem_type into its private rxq for each frame.
 
-This has held up across reboots and kernel updates for several weeks
-(applied via a small systemd oneshot unit while testing).
+With 9000 byte frames from virtio_net and an egress program that cuts the
+fragments off:
 
-Add a dedicated fixup that performs this coefficient write and chains
-it with the existing ALC287_FIXUP_YOGA9_14IAP7_BASS_SPK_PIN (which may
-still be relevant for the bass speaker pin wiring on this board), and
-point the 17aa:3912 quirk entry at it instead.
+  BUG: Bad page state in process swapper/3  pfn:10660b
+  page dumped because: page_pool leak
+   bad_page+0xbd/0x190
+   __free_frozen_pages+0x5c7/0x900
+   bpf_xdp_adjust_tail+0x3be/0x480
+   bpf_prog_dad43f894a3faff7_egress+0x15c/0x1cd
+   dev_map_bpf_prog_run+0x288/0x610
 
-Honesty note: this fixes the headphone jack. The internal speakers
-still have noise under certain conditions (notably worse on AC power)
-that I have not been able to isolate via coefficient-table replay;
-that part remains open. Sending what is verified to work rather than
-holding this back.
+The pool waits for these pages for ever when its device is gone. That is
+the harmless case. A page of the pool can hold more than one fragment
+while its refcount is 1: the first page_frag_free() frees it under the
+fragment which is still in use, and the second one runs into
 
-Link: https://bugzilla.kernel.org/show_bug.cgi?id=221203
-Fixes: 3a3e810e9108 ("ALSA: hda/realtek: Add quirk for Lenovo Xiaoxin 14 GT")
-Signed-off-by: Viktor Menshin <ripeeerr@gmail.com>
-Link: https://patch.msgid.link/20261015132157.57198-1-ripeeerr@gmail.com
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
-[ sashal: Moved the new function to sit before alc295_fixup_dell_inspiron_top_speakers() since the upstream anchor is missing, and applied the edits to patch_realtek.c with adjusted context. ]
+  page dumped because: VM_BUG_ON_PAGE(page_ref_count(page) == 0)
+  kernel BUG at include/linux/mm.h:1846!
+
+veth is not affected. It takes references of its own on the pages and
+redirects the frame as MEM_TYPE_PAGE_SHARED.
+
+Fix by setting rxq.mem.type from each frame before running the devmap
+program, as cpu_map_bpf_prog_run_xdp() does.
+
+Fixes: ca9984c5f0ab ("bpf: devmap: provide rxq after redirect")
+Signed-off-by: Josef Bacik <josef@toxicpanda.com>
+Signed-off-by: Alexei Starovoitov <ast@kernel.org>
+Link: https://patch.msgid.link/20261017163745.3341787-2-alexei.starovoitov@gmail.com
+[ sashal: Changed rxq.mem.type = xdpf->mem_type; to rxq.mem = xdpf->mem; because this tree's xdp_frame has a struct xdp_mem_info mem member instead of a flat mem_type field. ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/pci/hda/patch_realtek.c | 31 ++++++++++++++++++++++++++++++-
- 1 file changed, 30 insertions(+), 1 deletion(-)
+ kernel/bpf/devmap.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/sound/pci/hda/patch_realtek.c b/sound/pci/hda/patch_realtek.c
-index b18eb7974c8eb..726fc58b17ee7 100644
---- a/sound/pci/hda/patch_realtek.c
-+++ b/sound/pci/hda/patch_realtek.c
-@@ -7718,6 +7718,28 @@ static void alc287_fixup_yoga9_14iap7_bass_spk_pin(struct hda_codec *codec,
- 	}
- }
+diff --git a/kernel/bpf/devmap.c b/kernel/bpf/devmap.c
+index 1c64c4cff41ec..368c9d50aa8bb 100644
+--- a/kernel/bpf/devmap.c
++++ b/kernel/bpf/devmap.c
+@@ -348,6 +348,7 @@ static int dev_map_bpf_prog_run(struct bpf_prog *xdp_prog,
  
-+/*
-+ * The Lenovo Xiaoxin 14 GT (SSID 17aa:3912) uses the same bass-speaker
-+ * pin wiring as its 0x390d/0x3911/0x391a siblings, but on this board the
-+ * codec's vendor processing coefficients (node 0x20) are left at their
-+ * power-on default instead of being programmed the way the vendor
-+ * (Windows) driver programs them. That leaves audible hiss/crackle on
-+ * both the headphone jack and the internal speakers, independent of
-+ * volume, regardless of which pin/DAC routing is used.
-+ *
-+ * This single coefficient write was captured from the vendor driver's
-+ * own init sequence (via a VFIO pass-through of the physical codec to a
-+ * Windows VM) and confirmed to eliminate the headphone jack noise.
-+ */
-+static void alc287_fixup_lenovo_xiaoxin_14gt_hp_noise(struct hda_codec *codec,
-+						       const struct hda_fixup *fix, int action)
-+{
-+	if (action != HDA_FIXUP_ACT_INIT)
-+		return;
-+
-+	alc_write_coef_idx(codec, 0x36, 0x77d7);
-+}
-+
- static void alc295_fixup_dell_inspiron_top_speakers(struct hda_codec *codec,
- 					  const struct hda_fixup *fix, int action)
- {
-@@ -8225,6 +8247,7 @@ enum {
- 	ALC287_FIXUP_YOGA9_14IAP7_BASS_SPK,
- 	ALC287_FIXUP_YOGA9_14IAP7_BASS_SPK_PIN,
- 	ALC287_FIXUP_YOGA9_14IMH9_BASS_SPK_PIN,
-+	ALC287_FIXUP_LENOVO_XIAOXIN_14GT_HP_NOISE,
- 	ALC295_FIXUP_DELL_INSPIRON_TOP_SPEAKERS,
- 	ALC236_FIXUP_DELL_DUAL_CODECS,
- 	ALC287_FIXUP_CS35L41_I2C_2_THINKPAD_ACPI,
-@@ -10552,6 +10575,12 @@ static const struct hda_fixup alc269_fixups[] = {
- 		.chained = true,
- 		.chain_id = ALC287_FIXUP_CS35L41_I2C_2,
- 	},
-+	[ALC287_FIXUP_LENOVO_XIAOXIN_14GT_HP_NOISE] = {
-+		.type = HDA_FIXUP_FUNC,
-+		.v.func = alc287_fixup_lenovo_xiaoxin_14gt_hp_noise,
-+		.chained = true,
-+		.chain_id = ALC287_FIXUP_YOGA9_14IAP7_BASS_SPK_PIN,
-+	},
- 	[ALC295_FIXUP_DELL_INSPIRON_TOP_SPEAKERS] = {
- 		.type = HDA_FIXUP_FUNC,
- 		.v.func = alc295_fixup_dell_inspiron_top_speakers,
-@@ -11707,7 +11736,7 @@ static const struct hda_quirk alc269_fixup_tbl[] = {
- 	SND_PCI_QUIRK(0x17aa, 0x3902, "Lenovo E50-80", ALC269_FIXUP_DMIC_THINKPAD_ACPI),
- 	SND_PCI_QUIRK(0x17aa, 0x390d, "Lenovo Yoga Pro 7 14ASP10", ALC287_FIXUP_YOGA9_14IAP7_BASS_SPK_PIN),
- 	SND_PCI_QUIRK(0x17aa, 0x3911, "Lenovo Yoga Pro 7 14IAH10", ALC287_FIXUP_YOGA9_14IAP7_BASS_SPK_PIN),
--	SND_PCI_QUIRK(0x17aa, 0x3912, "Lenovo Xiaoxin 14 GT", ALC287_FIXUP_YOGA9_14IAP7_BASS_SPK_PIN),
-+	SND_PCI_QUIRK(0x17aa, 0x3912, "Lenovo Xiaoxin 14 GT", ALC287_FIXUP_LENOVO_XIAOXIN_14GT_HP_NOISE),
- 	SND_PCI_QUIRK(0x17aa, 0x3913, "Lenovo 145", ALC236_FIXUP_LENOVO_INV_DMIC),
- 	SND_PCI_QUIRK(0x17aa, 0x391f, "Yoga S990-16 pro Quad YC Quad", ALC287_FIXUP_TAS2781_I2C),
- 	SND_PCI_QUIRK(0x17aa, 0x3920, "Yoga S990-16 pro Quad VECO Quad", ALC287_FIXUP_TAS2781_I2C),
+ 		xdp_convert_frame_to_buff(xdpf, &xdp);
+ 		xdp.txq = &txq;
++		rxq.mem = xdpf->mem;
+ 		xdp.rxq = &rxq;
+ 
+ 		act = bpf_prog_run_xdp(xdp_prog, &xdp);
 -- 
 2.53.0
 
