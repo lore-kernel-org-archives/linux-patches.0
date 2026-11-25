@@ -1,50 +1,50 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795620289;
-	b=SE1VSPOiXlU8dwXRwrJSXDJcBq/o/Pf74awmVlg9724vWO8KYx3CJ+TJMHiRlEX3IRQg
-	 c3lZ/Y79bfH5hirW0H+/xw7FDJ8RfSLoMJWYyFzMnMY1ikRpa0XKF9WeC9zPECcU7on7h
-	 DEueepCEUXcT1TLEKoGDynIn6KZdNvG09S5+S9T2j/6EFkDgsDwAVcf36rSQFoL2PG9Rp
-	 P5rlWMfaLE7yVRDNgd/LYV7chLMXUvLcoOiZ9fVM2G1VwCDK+PVyOLbYTDSfJizNb+jbP
-	 syoZvVFtUQwqvkYQt2HRPhy8lifc5VBYBEx9TC0/9qWHDVIZGBT/dS6smeNxVoc6DTQ==
+	t=1795620293;
+	b=XIrJo/3uA+1SI4MjGh+dbfWcNak+1YyLi1oTol7wf0YgfTVPIip4tOsBSySBc5n3NLW+
+	 X7+1k0bqzYEH1cog1yKuu4hyZX5vmnx/zEDqRlTEg37p7++IhZ63KoWq02Q/9SSuJDNKp
+	 8sg+/C4yKAczImZy6Hjz85H6YEhw/JJsYbTY8AIjuXIsHqPS0ct/M9qCF1QpBXlItu83U
+	 ZOxReS5JQXz65yD/em2TLaoCxkLZSOxhMiv8naavqJntVq2E3G9RpXWhZ89XLRKj+h6T0
+	 IzISTT0iodWh/v5HP2c3+zJKOxyO56nAeBUeCbk56pxiryZ0e+DMdpAR3yEswFA8rUg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795620289;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795620293;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=c2AN2v+3EZOOS3oJblxHmj1/2ZYdM0zCI3HIfqWWulg=;
-	b=ayW9LwO04rRo3UXBeIh2gMjjFxMUTjy5+wZWs2H+Cwj3W1RFqx2zzlxVHd65NF4w8xTt
-	 7sj7vzymNckRyEET/Cpzmfgn9f+0b8gSqM5RuXP5PvXCreoogmKQTGkv5P+KSJDUc2jcF
-	 uLm6kXLk6W3T0ziS5rJA4Hz8fMtfw7oZa83J8WwtJTxOhr6NYcw2Yu/zQUXbONF2O6ahQ
-	 r8ihpBc4T84zos1AGam+MsEGPwQ7JQeF+pRmBiKRuAjdG7Lv2xE/O6iB0dpYEh1zQEgu3
-	 bAvnR3d41kfU5rvr0a7jjVzE+caibzyCdT32y5U3ZPkO3vhtkbKyL23hZmjmYtjNjJA==
+	bh=7QnETkf51Sim4sJ40SUPib8moi+JMRJdvVk7ee1z9YM=;
+	b=nD9XKy/nRHaiVMsBRepja2tqzdHVulwhuaEFC1utM/thH8hrLPBeq8wlv8vGsoaEVd/O
+	 ld5m35Lk2v+pC+Fc6agjzYrPELtmE8pCj/V5GeUrOWhLNHDklpwtR48Yc+538soJpc53f
+	 q5k3uXYvvNqIUdhP6R5qGNLN3Tymi1zxu6goUjA/s8Y3+UHmDf/3H7tacZBZ04Y7RLyvs
+	 JlFtgSexnZhPclSpWidIojq9OpvGyBzYU5jGyez1lQXcaMMjpaYvEOGjCUJShL2eGzvQK
+	 jaEMXKuX+VSUvdIq4cx3B6Fn8Iag0ZRw91s4/d3Mmx8bXnfcjRGCBwIH8wFuQYTb8ng==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=l7NLQeE6;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ojvuqKaO;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ABEF6606A31E;
-	Wed, 25 Nov 2026 15:24:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 70E2A606A323;
+	Wed, 25 Nov 2026 15:24:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=l7NLQeE6
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D4DA31F0156D;
-	Wed, 25 Nov 2026 15:24:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ojvuqKaO
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5F5FC1F000D3;
+	Wed, 25 Nov 2026 15:24:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795620289;
-	bh=c2AN2v+3EZOOS3oJblxHmj1/2ZYdM0zCI3HIfqWWulg=;
+	s=korg; t=1795620292;
+	bh=7QnETkf51Sim4sJ40SUPib8moi+JMRJdvVk7ee1z9YM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=l7NLQeE6RvdkuOrMiWhUGpA43S/YfaaLzdRARHXPFuif+sBHY1F6ERWnmAo4smAm5
-	 RM7QXBY14omLb5pundX3RZfJMSGiRNHndVOK48FuqA5hbUC0s+B4jxXabVmXvcRbnn
-	 4vHwxiCfDeV37xaj0sW9qTqAIwCtNhekqkZ4Oya0=
+	b=ojvuqKaO+YjgVsf3cnNunG4yNemQvmPxXi+71KHaeJRCnafZfczYDXRrVTcHYSUKy
+	 ya0welzs23Foy6Mj7uybrxU6WH3XBuP92S6Ru6/HSQ/Ii073UE8ujnrP6kTN1dwE+A
+	 bf2Hbzng7oT+SfSez73Nef0p8INKT5KCVs0qEd9U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Mikulas Patocka <mpatocka@redhat.com>
-Subject: [PATCH 7.3 0868/1005] dm persistent data: dont ignore writeback errors
-Date: Wed, 25 Nov 2026 15:36:46 +0100
-Message-ID: <20261125143842.040933108@linuxfoundation.org>
+Subject: [PATCH 7.3 0869/1005] dm persistent data: dont leak bufio buffer if find_leaf fails
+Date: Wed, 25 Nov 2026 15:36:47 +0100
+Message-ID: <20261125143842.064674360@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143821.729802100@linuxfoundation.org>
 References: <20261125143821.729802100@linuxfoundation.org>
@@ -68,46 +68,40 @@ Content-Transfer-Encoding: 8bit
 
 From: Mikulas Patocka <mpatocka@redhat.com>
 
-commit fa887f2ebee7aff97eb87b3365939616ade09774 upstream.
+commit b27523a0781aae0b51ac13f29dc65373d14b8434 upstream.
 
-An error returned by ie_cache_writeback could be silently overwritten by
-another successful ie_cache_writeback. This commit fixes disk_ll_commit,
-so that it doesn't ignore the error and returns it immediatelly.
+If find_leaf fails, the function dm_btree_cursor_begin would return an
+error, but it would keep the dm-bufio buffers held. This would result in
+a memory leak and a warning when releasing the dm-bufio cache.
+
+This commit fixes it, so that dm_btree_cursor_begin releases the buffers
+on error.
 
 Signed-off-by: Mikulas Patocka <mpatocka@redhat.com>
 Assisted-by: Claude:claude-opus-5
 Cc: stable@vger.kernel.org
-Fixes: 6b06dd5a9722 ("dm space map disk: cache a small number of index entries")
+Fixes: 7d111c81fa29 ("dm btree: introduce cursor api")
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/md/persistent-data/dm-space-map-common.c |    9 ++++++---
- 1 file changed, 6 insertions(+), 3 deletions(-)
+ drivers/md/persistent-data/dm-btree.c |    8 +++++++-
+ 1 file changed, 7 insertions(+), 1 deletion(-)
 
---- a/drivers/md/persistent-data/dm-space-map-common.c
-+++ b/drivers/md/persistent-data/dm-space-map-common.c
-@@ -1190,17 +1190,20 @@ static dm_block_t disk_ll_max_entries(st
+--- a/drivers/md/persistent-data/dm-btree.c
++++ b/drivers/md/persistent-data/dm-btree.c
+@@ -1582,7 +1582,13 @@ int dm_btree_cursor_begin(struct dm_btre
+ 	if (r)
+ 		return r;
  
- static int disk_ll_commit(struct ll_disk *ll)
- {
--	int r = 0;
-+	int r;
- 	unsigned int i;
- 
- 	for (i = 0; i < IE_CACHE_SIZE; i++) {
- 		struct ie_cache *iec = ll->ie_cache + i;
- 
--		if (iec->valid && iec->dirty)
-+		if (iec->valid && iec->dirty) {
- 			r = ie_cache_writeback(ll, iec);
-+			if (unlikely(r))
-+				return r;
-+		}
- 	}
- 
--	return r;
+-	return find_leaf(c);
++	r = find_leaf(c);
++	if (unlikely(r)) {
++		dm_btree_cursor_end(c);
++		return r;
++	}
++
 +	return 0;
  }
+ EXPORT_SYMBOL_GPL(dm_btree_cursor_begin);
  
- int sm_ll_new_disk(struct ll_disk *ll, struct dm_transaction_manager *tm)
 
 
