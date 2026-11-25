@@ -1,53 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795619346;
-	b=hXJqczQYC7td6RKxjP5lbXCVv7TzMuNAHPSzk2i/rbc5wOK3tcQf80GrfGMZu7ILxPVP
-	 rKvG34iUbZScUUTr8zAu17VwR1rV1jbQBUqd9tMXlJq9FiAjatfHpMJmQtdX+Wra5TCVJ
-	 dPO1M1Sl1b87kWBHbHLzDqRHpI+xvTVftCx2KWhwB9D9b6gNWs2Q5Zt6L8pKSQkmyUaiN
-	 eSKOwQmN69yziGZkEKay7hRWUDC8w+bg75T7if02yV/m7AWsUhagXx5QYdt3tQkJbG1Ij
-	 oKketD+bpTBtHScMXOEst/FcP1d0kamErsfNDoDB4UF1dKt2EtSEBruQ9ir8b4yeqOw==
+	t=1795619349;
+	b=wGN3dMcF2R5HZiuFJCFhP7G0e1FdrWU3LldtC1Hmtk6qrxbfzYbw0x6v9IXJRUBQytyg
+	 yshDTG2mijfu/vkQO76U5diy4yOyGJktt1fQm2qTOc/UB7K17LZcc1Apl5p/EpXrn825o
+	 4XAagMUETsDIBU2DKMeg6Cbul4OJpb9H1L2BSzWXZdK5kI7zroSpWwuECIE0gS+2jq5Kc
+	 /bU7L5l/wzqpEBiGWjuAR/wWPK5eVqqmVJO7eqdLVvn8g2li+I36IoFbSwK/nUTltVoKs
+	 m/3I7im2rc4ETGedbXKoF8liL2NPnbGPbdtSDrtlc4oJek27EVhsizKNvpqApmGL36A==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795619346;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795619349;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=M0xtMTeLh8tGXL99ml4RcoIlyBHsQfwJ2AZgx+czk6A=;
-	b=WSXOa9YQTSJ/pTCwDgnbYgWX6nSv5/DrdRMSqZtwd8kx1kaG3V+J9zHYcqDKwdVrHnyU
-	 MGL6KXuaoUELMSAYlnQsvmKxCYkL4YFmRUHAxgjYMRs76/25K2bDcozI/VTXLtfccbxty
-	 zNqOegGsKXPGm0uqo0d8DTIgHKpChvlgmQ2bJ77Mzg/qAvgT7/g3VgpCeaCp4zJnRAgq7
-	 izCpan/fLAc5/RFsExj0TZxPv4GOEN5ui8rqPONw4oUN6JQL03BfacqQ1z8m0ljzO2FZ8
-	 Xk7aysZ7xi+Snhe8a6vdaso/q2CWg1NmEnx/Qwp1aBEaVkn/Fonntxw7hdeFPU1+Kkw==
+	bh=jB3EH4RYoveUx8Ht/T5czR5TntNE5O5/BOoO4zpaSN0=;
+	b=10eWYukOOkjKYzFvcJK4AU/9fZGigjqBjETds9gmw03TQ+ym115Wgdp0jaf29q0e1Spq
+	 MdT2fgFZ/qDqAIOAiu3Af9pB2D1IIrl+QXnuTHCz1VQxcwElt8Iv9jyW7dAEiXZOgS+ch
+	 5D/ma3XpoKuyBfk5r74UbE88roM+2pCjMHCCQnVm6MaYsLW7WQpxLjmNkpCfsffuyOoeB
+	 g4mNstdNyo3DHvpFYge/8JIluv/Nbh5kDmb9XgRuIEZfoEiYy0md8Z9ncvI5reT7ivCKp
+	 kl8taXGFhdOgmZpbiTBarGYc3DSBu1LGEUI65UCxU5i2KmlMU6AMhyK+0fIwrTmLigw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=rT3Xr3Ok;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=HW9ThjnU;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1F1D1606A333;
-	Wed, 25 Nov 2026 15:09:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 58311606A326;
+	Wed, 25 Nov 2026 15:09:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=rT3Xr3Ok
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EC3B11F000EF;
-	Wed, 25 Nov 2026 15:09:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=HW9ThjnU
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 444EB1F000D8;
+	Wed, 25 Nov 2026 15:09:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795619345;
-	bh=M0xtMTeLh8tGXL99ml4RcoIlyBHsQfwJ2AZgx+czk6A=;
+	s=korg; t=1795619348;
+	bh=jB3EH4RYoveUx8Ht/T5czR5TntNE5O5/BOoO4zpaSN0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=rT3Xr3OkTJXYY/oazl6Nw2ASQ1jpOCngVrjKQpQ/WItLkLCn/BaOph9QDgN7mTrUi
-	 CBavCg+zkayBJEDI71YPs+CyCgDUQFzV+TAVzmQo+LOI/AUatgfqBzqArB30Caml1K
-	 ZMx5nw42tl4TlmLOWEr9DYdBeDRqZ8c0Xxckplk4=
+	b=HW9ThjnU4D6OFvZ4M/gXyY85/pj74es1948KbfY+DdjomNHMO7xAYkHjcd0eQcBqd
+	 HOsZWoXntClKrVTErXOA3SbtY7sCWifcDp5p0Pw0Zw/ZO5qXOFrngRjSVtVjOlXu1g
+	 o6HgrWMUaEZe6d9alK2zWJuM2zAyO6CfH9jsnVYE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	sashiko-bot <sashiko-bot@kernel.org>,
-	Chuck Lever <cel@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0550/1005] tls: Break the connection after a burst of empty data records
-Date: Wed, 25 Nov 2026 15:31:28 +0100
-Message-ID: <20261125143834.630115040@linuxfoundation.org>
+	Angel J <iamanaws@httpd.dev>,
+	Takashi Iwai <tiwai@suse.de>
+Subject: [PATCH 7.3 0568/1005] ALSA: hda/realtek: Fix the Dell XPS 8940 headset microphone
+Date: Wed, 25 Nov 2026 15:31:46 +0100
+Message-ID: <20261125143835.058680578@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143821.729802100@linuxfoundation.org>
 References: <20261125143821.729802100@linuxfoundation.org>
@@ -69,152 +67,66 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jakub Kicinski <kuba@kernel.org>
+From: Angel J <iamanaws@httpd.dev>
 
-[ Upstream commit 201f0531e413d6cdd9673a77bea340839e1713ae ]
+commit ae28ba98f55a2f30fed57371899b8cecd7cbde64 upstream.
 
-TLS permits zero-length application_data records, and RFC 8446
-suggests them for generating cover traffic. Nothing bounds how many of
-them a reader processes back to back, though. They advance neither
-loop bound in tls_sw_recvmsg() and tls_sw_read_sock(), so a peer
-streaming them faster than the reader decrypts them keeps it in the
-kernel for as long as they arrive. recvmsg() does not check for signals
-while records are ready, and its peek and async paths queue every empty
-record on rx_list. read_sock consumers like nvme-tcp hold the socket
-lock throughout and never get control back.
+The Dell XPS 8940 (1028:09c5) has an ALC3861 codec (0x10ec0899).
+Its BIOS marks the headset microphone pin at NID 0x19 as disconnected
+(0x411111f0). With no external microphone input in the pin configuration,
+the generic parser creates a shared headphone/mic input on NID 0x1b
+instead. Headphone playback works, but the headset microphone is silent.
 
-Break the connection once a reader decrypts more than 128 consecutive
-empty data records without sleeping or returning to its caller in
-between, treating the burst as a protocol violation like a malformed
-record header. A stream of empty records which the reader keeps up with
-costs no more than any other traffic, so the count starts over on every
-read and whenever the reader waits for the next record. The strparser
-is stopped before it parses the next record, so the reader gets the
-error from tls_rx_rec_wait() and no later record is delivered.
-Returning to the caller and keeping the connection alive would need a
-way to wake read_sock consumers which installed their own sk_data_ready
-after the handshake, a lot of code for a peer that is either broken or
-malicious.
+Override NID 0x19 as a front microphone without independent presence
+detection. This gives the generic parser the dedicated microphone
+input and preserves NID 0x1b for simultaneous headphone playback.
 
-Consume empty records in recvmsg() rather than queuing them on rx_list,
-so that repeated MSG_PEEK cannot pile them up past the per-read count.
-Decrypt them synchronously, too. Once a recvmsg() call has decrypted a
-record asynchronously, recv_end replaces the error with the result of
-process_rx_list(), so a call that saw only empty records returns 0, a
-false EOF, instead of the error or -EAGAIN.
+I encountered this issue on my XPS 8940. Similar symptoms were also
+reported by a user on Ubuntu:
+https://bugs.launchpad.net/bugs/1971232
 
-Reported-by: sashiko-bot <sashiko-bot@kernel.org>
-Closes: https://sashiko.dev/#/patchset/20260720-tcp-read-sock-v2-0-29545d034f3c@kernel.org?part=1
-Closes: https://sashiko.dev/#/patchset/20260630191551.875664-1-cel@kernel.org?part=1
-Link: https://lore.kernel.org/all/20261019-tls-follow-on-v6-0-ab01c4ecca0c@kernel.org/
-Fixes: c46234ebb4d1 ("tls: RX path for ktls")
-Fixes: 3be28e2c9cd0 ("net/tls: Consume empty data records in tls_sw_read_sock()")
-Reviewed-by: Chuck Lever <cel@kernel.org>
-Link: https://patch.msgid.link/20261111185522.2859004-2-kuba@kernel.org
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Cc: stable@vger.kernel.org
+Assisted-by: Codex (GPT-6.1 Sol)
+Signed-off-by: Angel J <iamanaws@httpd.dev>
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Link: https://patch.msgid.link/20261103150336.507675-1-iamanaws@httpd.dev
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- include/net/tls.h |  1 +
- net/tls/tls_sw.c  | 29 +++++++++++++++++++++++++----
- 2 files changed, 26 insertions(+), 4 deletions(-)
+ sound/hda/codecs/realtek/alc882.c |   10 ++++++++++
+ 1 file changed, 10 insertions(+)
 
-diff --git a/include/net/tls.h b/include/net/tls.h
-index e57bef58851ea..0b001b8ab1c3b 100644
---- a/include/net/tls.h
-+++ b/include/net/tls.h
-@@ -139,6 +139,7 @@ struct tls_sw_context_rx {
- 	u8 zc_capable:1;
- 	u8 reader_contended:1;
- 	bool key_update_pending;
-+	u8 empty_run;
- 
- 	struct tls_strparser strp;
- 
-diff --git a/net/tls/tls_sw.c b/net/tls/tls_sw.c
-index 47e46547108e9..3dc0d9db3e882 100644
---- a/net/tls/tls_sw.c
-+++ b/net/tls/tls_sw.c
-@@ -1153,6 +1153,7 @@ tls_rx_rec_wait(struct sock *sk, bool nonblock, bool released, bool has_copied)
- 		if (!timeo)
- 			return -EAGAIN;
- 
-+		ctx->empty_run = 0;
- 		released = true;
- 		add_wait_queue(sk_sleep(sk), &wait);
- 		sk_set_bit(SOCKWQ_ASYNC_WAITDATA, sk);
-@@ -1572,6 +1573,7 @@ static int tls_rx_one_record(struct sock *sk, struct msghdr *msg,
- 			     struct tls_decrypt_arg *darg)
- {
- 	struct tls_context *tls_ctx = tls_get_ctx(sk);
-+	struct tls_sw_context_rx *ctx = tls_sw_ctx_rx(tls_ctx);
- 	struct tls_prot_info *prot = &tls_ctx->prot_info;
- 	struct strp_msg *rxm;
- 	int err;
-@@ -1589,6 +1591,19 @@ static int tls_rx_one_record(struct sock *sk, struct msghdr *msg,
- 	rxm->full_len -= prot->overhead_size;
- 	tls_advance_record_sn(sk, prot, &tls_ctx->rx);
- 
-+	/* A peer may send empty data records, e.g. as cover traffic, but
-+	 * a burst of them traps the reader in the kernel. Treat more than
-+	 * 128 in a row, without the reader sleeping or returning to the
-+	 * caller in between, as a protocol violation. Stop the strparser
-+	 * before the next record gets parsed, so the reader finds the
-+	 * error in tls_rx_rec_wait().
-+	 */
-+	if (rxm->full_len ||
-+	    tls_msg(darg->skb)->control != TLS_RECORD_TYPE_DATA)
-+		ctx->empty_run = 0;
-+	else if (unlikely(++ctx->empty_run > 128))
-+		tls_strp_abort_strp(&ctx->strp, -EBADMSG);
-+
- 	return tls_check_pending_rekey(sk, tls_ctx, darg->skb);
- }
- 
-@@ -1768,6 +1783,7 @@ static int tls_rx_reader_acquire(struct sock *sk, struct tls_sw_context_rx *ctx,
- 	}
- 
- 	WRITE_ONCE(ctx->reader_present, 1);
-+	ctx->empty_run = 0;
- 
- 	return 0;
- }
-@@ -1881,9 +1897,11 @@ int tls_sw_recvmsg(struct sock *sk,
- 		    tlm->control == TLS_RECORD_TYPE_DATA)
- 			darg.zc = true;
- 
--		/* Do not use async mode if record is non-data */
-+		/* Do not use async mode if record is non-data or empty,
-+		 * recv_end would report an error after empty records as EOF.
-+		 */
- 		if (tlm->control == TLS_RECORD_TYPE_DATA)
--			darg.async = ctx->async_capable;
-+			darg.async = ctx->async_capable && to_decrypt;
- 		else
- 			darg.async = false;
- 
-@@ -1925,7 +1943,10 @@ int tls_sw_recvmsg(struct sock *sk,
- 
- 			DEBUG_NET_WARN_ON_ONCE(darg.skb == ctx->strp.anchor);
- 
--			if (async) {
-+			/* Consume empty records, even when peeking, so that
-+			 * they cannot pile up on rx_list.
-+			 */
-+			if (async && chunk) {
- 				/* TLS 1.2-only, to_decrypt must be text len */
- 				chunk = min_t(int, to_decrypt, len);
- 				async_copy_bytes += chunk;
-@@ -1946,7 +1967,7 @@ int tls_sw_recvmsg(struct sock *sk,
- 			if (err < 0)
- 				goto put_on_rx_list_err;
- 
--			if (is_peek) {
-+			if (is_peek && chunk) {
- 				peeked += chunk;
- 				goto put_on_rx_list;
- 			}
--- 
-2.53.0
-
+--- a/sound/hda/codecs/realtek/alc882.c
++++ b/sound/hda/codecs/realtek/alc882.c
+@@ -50,6 +50,7 @@ enum {
+ 	ALC889_FIXUP_MP41_VREF,
+ 	ALC882_FIXUP_INV_DMIC,
+ 	ALC882_FIXUP_NO_PRIMARY_HP,
++	ALC898_FIXUP_DELL_XPS8940_MIC,
+ 	ALC887_FIXUP_ASUS_BASS,
+ 	ALC887_FIXUP_BASS_CHMAP,
+ 	ALC1220_FIXUP_GB_DUAL_CODECS,
+@@ -507,6 +508,13 @@ static const struct hda_fixup alc882_fix
+ 		.type = HDA_FIXUP_FUNC,
+ 		.v.func = alc882_fixup_no_primary_hp,
+ 	},
++	[ALC898_FIXUP_DELL_XPS8940_MIC] = {
++		.type = HDA_FIXUP_PINS,
++		.v.pins = (const struct hda_pintbl[]) {
++			{ 0x19, 0x02a19130 }, /* headset mic, no separate jack detect */
++			{}
++		},
++	},
+ 	[ALC887_FIXUP_ASUS_BASS] = {
+ 		.type = HDA_FIXUP_PINS,
+ 		.v.pins = (const struct hda_pintbl[]) {
+@@ -610,6 +618,8 @@ static const struct hda_quirk alc882_fix
+ 	SND_PCI_QUIRK(0x1025, 0x0259, "Acer Aspire 5935", ALC889_FIXUP_DAC_ROUTE),
+ 	SND_PCI_QUIRK(0x1025, 0x026b, "Acer Aspire 8940G", ALC882_FIXUP_ACER_ASPIRE_8930G),
+ 	SND_PCI_QUIRK(0x1025, 0x0296, "Acer Aspire 7736z", ALC882_FIXUP_ACER_ASPIRE_7736),
++	SND_PCI_QUIRK(0x1028, 0x09c5, "Dell XPS 8940",
++		      ALC898_FIXUP_DELL_XPS8940_MIC),
+ 	SND_PCI_QUIRK(0x1043, 0x13c2, "Asus A7M", ALC882_FIXUP_EAPD),
+ 	SND_PCI_QUIRK(0x1043, 0x1873, "ASUS W90V", ALC882_FIXUP_ASUS_W90V),
+ 	SND_PCI_QUIRK(0x1043, 0x1971, "Asus W2JC", ALC882_FIXUP_ASUS_W2JC),
 
 
