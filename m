@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795624903;
-	b=ozedO2L5iw5WPSF7epaK0AYVFOdVn44/ZRKgNuVcTOToeBkz5UNxcg7SQABCW68Vs3Lx
-	 v6jPAjU2DWGsWRZZ99avIdvngDn3cMuULnvvBJeGNmBM6g5k8fqYSvNcYLTpiZCyeTQe9
-	 efMnvOu2ZKBWxM+mTx4jra0oGFNXbf20ujt0IBjPwjZ4cC37+fg3Wd2PNYHr56JhEnkwR
-	 1oqR/C92oa8zFMem1hQxtiEYarVm/Km2e+76I46d2X9oT8tdXHkhiN7toAOTABXLdxd8W
-	 20XYITMth6sY47t32xT+0zbn3ij+ZUIgiuAq92qTlDbErja1lQ4M8llMed5yC1BKo2g==
+	t=1795624906;
+	b=o3dPjEmFN2TPOVltQ7WJiyXl2/IM1WD6qu9upcFF7bpsxlGC7Eh3oq+G55VEsHQ0X6eG
+	 x4w9RLMnd9nLy1Kg6w86eor/rhhojpL133lyujQDcQ+QmGgHOJedU9a3YN+HVTMmgrToe
+	 o+XVvnGAtKgV+Df+57its9WyD4JHrxAzBXyKd8JZYIxRuEp03Yy/nsw10rlNtoznRk5b6
+	 1e6nhrFK6XxQFLPThQkGge0QluLwH7kjnZuPr1khML+lRLXLe/EA680NAkYv3Q/GRAk2F
+	 Vk6JEz8MKhSGGmR5FJ7NzvQ7sxW7F0Yaf5qCpWNBMydX6FalbZzpEB+Ajky1/AywqXA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795624903;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795624906;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=9YXbeFS80jqutf4ODeL+KfqUQJDJ8KGPI9Fa6otFSKU=;
-	b=gTxwhpj5nnm7hFJuGG6t8dcIvDjqElVqZIi0qmkckT1r0i0GIVGrlQkMHDXx3Y80+0+C
-	 DzR1BS3xUdPwRTrobxfRl2F5rfeS9Yrz2I2W+JKLtWWOJeR+bfp9qbfJA1X+veE7aLau6
-	 4GL4NOQx0ocXDv8YiPdh8c2X4L2QFNrS+FEe0ltCQPh2jrhhtBSYKOyfc7/BcXMAzekz3
-	 VIDbuX3RlofDsoPpNiaJsxBqwZfNDWQIP0jiYde4FSgYCTz7ALM8G7v5wwsf/o/Zaz6iQ
-	 522C3FkHs/7okLRAdv6wEksYNNdBK1w7Rh1ng6HHdExVDBZ+OzsfIIOPCmvokAJbc6Q==
+	bh=N4BgddI9Z5obqWb3chtaybnMpOKkuVnPPIoSJTL8cpE=;
+	b=QgAQiRfIwcqwyoreE0TMid6AorYwc4I9xSx6+aQsnfsK7rS4VxXVCPcKn1wpG92sZVtD
+	 jYbQzkaMzIDpddLUgvEiKEyzBk7uGetNQkd6IyVUFYGgBadKqYAHsS8J6UXfWDVdW7G25
+	 uz6Vqib9xAtWq1OAe6b1BLe9xzwR+AonpMGfWkdWDTu1kNtgd1iN7K3/UKguRIcdSo2V8
+	 8Ia6sCfM7CZn9sK/ZipdVQsOiHxGoMZGVNatsjOB0AYvrJHH5gCmzeCokvSyOECQ3VWvh
+	 WtiJEPcn9bYnTHS7OW9QbCbx2Kyd6I5nUF9Gl9AdVVyvtX3ZGU9WWmfRaUV1jy2dQYg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=MBYHZufh;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=pNMa2Vn1;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 892CC606A31E;
-	Wed, 25 Nov 2026 16:41:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7E0A1606A32E;
+	Wed, 25 Nov 2026 16:41:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=MBYHZufh
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A862B1F000D3;
-	Wed, 25 Nov 2026 16:41:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=pNMa2Vn1
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CAB531F000F2;
+	Wed, 25 Nov 2026 16:41:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795624903;
-	bh=9YXbeFS80jqutf4ODeL+KfqUQJDJ8KGPI9Fa6otFSKU=;
+	s=korg; t=1795624906;
+	bh=N4BgddI9Z5obqWb3chtaybnMpOKkuVnPPIoSJTL8cpE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=MBYHZufhau+RFIzBMQSCkLp5M4uNynbaSmH4dM8/5vXiSrG8HscMQGZ/mmalNv9M6
-	 oeQEixiSREEwhwM4kdFrmmIfWQYss4R1OecwW2VVbeHjQAv9w5w5sXLxYD6U91b/Lk
-	 xCgNeOugCewMVKZOc72X1UmbJe42PmuAXnK20Rb8=
+	b=pNMa2Vn1u/5VsTOubslmDibYSZUmQ9WlWudf2HF1ru9DaD84PEoVEbqWujx9IXXFS
+	 JeiiE+g6S8M8TwBcNpQmMayPiCSrebpHymPED3fCnAgYxBdnF6Jtbx6U/uEMM+yris
+	 EdkcRYusGP3HqbHC1skWsVqajAksBtCyzaTHc3mM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	LiangCheng Wang <zaq14760@gmail.com>,
-	Mark Brown <broonie@kernel.org>,
+	Chris Mason <mason@kernel.org>,
+	Kuniyuki Iwashima <kuniyu@google.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 343/816] ASoC: max98090: keep the MIC boost across mic input power-up
-Date: Wed, 25 Nov 2026 15:31:31 +0100
-Message-ID: <20261125143857.137779333@linuxfoundation.org>
+Subject: [PATCH 6.12 344/816] tcp: Drop any segments if DEFER_CONNECT is set.
+Date: Wed, 25 Nov 2026 15:31:32 +0100
+Message-ID: <20261125143857.160231400@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143849.205329330@linuxfoundation.org>
 References: <20261125143849.205329330@linuxfoundation.org>
@@ -68,100 +69,91 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: LiangCheng Wang <zaq14760@gmail.com>
+From: Chris Mason <mason@kernel.org>
 
-[ Upstream commit 58d51fa6ff1d21e79c3c340bfb3155dfa3025ca3 ]
+[ Upstream commit 44809e49177992b15708a150437d9aebc5beea9c ]
 
-PA1EN/PA2EN select both the MIC1/MIC2 preamp enable and its gain
-(0 = off, 1 = 0 dB, 2 = +20 dB, 3 = +30 dB). "MICn Boost Volume" keeps
-the selected gain in max98090->pa1en/pa2en while the input is off, and
-max98090_micinput_event() writes it to the field when the "MICn Input"
-widget powers up.
+TCP Fast Open lets a client send data in its SYN. With
+TCP_FASTOPEN_CONNECT and a cached Fast Open cookie, which the server
+sent in the SYN-ACK of an earlier connection, the connection is set up
+in two steps:
 
-The event handler also reads the field back to keep the stored gain in
-sync ("Update for volatile"), but it does so on POST_PMU and POST_PMD.
-The widget drives PA1EN/PA2EN as a single enable bit, the low bit of
-the field, so at both points DAPM has just rewritten it:
+- connect() sends nothing, so that the SYN can carry the data of the
+  first write(). It only sets DEFER_CONNECT and inserts the socket into
+  the hash table in SYN_SENT.
+- The first write() calls tcp_connect(), which runs tcp_connect_init()
+  and sends the SYN.
 
-  - POST_PMU: DAPM has set the field to 1, so the read-back stores
-    0 dB and the handler then restores 0 dB.
-  - POST_PMD: DAPM has cleared the low bit, so a +30 dB (3) gain reads
-    back as +20 dB (2).
+A socket must not accept any segment before it has sent its SYN. But
+nothing on the receive path checks DEFER_CONNECT. So until the write(),
+the half-initialised socket processes segments like any socket in
+SYN_SENT, and a forged SYN is accepted.
 
-As a result every capture starts at 0 dB: a boost set while the input is
-powered down, e.g. restored by alsactl or an audio HAL at boot, never
-takes effect, and one changed during capture is lost at the next
-power-up.
+Similarly, ICMP with seq matching ISN is accepted in the state.
+Before commit 57889a8f6d49 ("tcp: initialize send sequence numbers
+before deferring TFO"), even seq 0 message was accepted.
 
-Read the field back on PRE_PMD instead, while it still holds the active
-gain, and only restore the stored gain on POST_PMU.
+Drop any segments if DEFER_CONNECT is set.
 
-Tested on i.MX95 with a MAX98090 headset mic on MIC1, running NXP's
-6.18.38 vendor kernel (max98090_micinput_event() is the same as in
-mainline): with MIC1 Boost Volume set to 2 (+30 dB) before capture,
-register 0x10 reads 0x20 (0 dB) during capture without this change and
-0x60 (+30 dB) with it, and a boost changed during capture is kept for
-the next capture.
-
-Fixes: 685e42154dcf ("ASoC: Replace max98090 Device Driver")
-Signed-off-by: LiangCheng Wang <zaq14760@gmail.com>
-Link: https://patch.msgid.link/20261111-max98090-mic-boost-v1-1-20b9bd8816db@gmail.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Fixes: 19f6d3f3c842 ("net/tcp-fastopen: Add new API support")
+Signed-off-by: Chris Mason <mason@kernel.org>
+[kuniyu: revised DEFER_CONNECT tests and the commit message]
+Signed-off-by: Kuniyuki Iwashima <kuniyu@google.com>
+Link: https://patch.msgid.link/20261107235720.3129212-3-kuniyu@google.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/codecs/max98090.c | 22 ++++++++++++----------
- 1 file changed, 12 insertions(+), 10 deletions(-)
+ net/ipv4/tcp_input.c | 9 +++++++++
+ net/ipv4/tcp_ipv4.c  | 2 +-
+ net/ipv6/tcp_ipv6.c  | 2 +-
+ 3 files changed, 11 insertions(+), 2 deletions(-)
 
-diff --git a/sound/soc/codecs/max98090.c b/sound/soc/codecs/max98090.c
-index 9253707bccde9..8d5a8bfde13b9 100644
---- a/sound/soc/codecs/max98090.c
-+++ b/sound/soc/codecs/max98090.c
-@@ -743,14 +743,6 @@ static int max98090_micinput_event(struct snd_soc_dapm_widget *w,
- 	else
- 		val = (val & M98090_MIC_PA2EN_MASK) >> M98090_MIC_PA2EN_SHIFT;
+diff --git a/net/ipv4/tcp_input.c b/net/ipv4/tcp_input.c
+index 547adefba7ea9..eb8f824254866 100644
+--- a/net/ipv4/tcp_input.c
++++ b/net/ipv4/tcp_input.c
+@@ -6832,6 +6832,15 @@ tcp_rcv_state_process(struct sock *sk, struct sk_buff *skb)
+ 		goto discard;
  
--	if (val >= 1) {
--		if (w->reg == M98090_REG_MIC1_INPUT_LEVEL) {
--			max98090->pa1en = val - 1; /* Update for volatile */
--		} else {
--			max98090->pa2en = val - 1; /* Update for volatile */
--		}
--	}
--
- 	switch (event) {
- 	case SND_SOC_DAPM_POST_PMU:
- 		/* If turning on, set to most recently selected volume */
-@@ -759,6 +751,14 @@ static int max98090_micinput_event(struct snd_soc_dapm_widget *w,
- 		else
- 			val = max98090->pa2en + 1;
- 		break;
-+	case SND_SOC_DAPM_PRE_PMD:
-+		if (val >= 1) {
-+			if (w->reg == M98090_REG_MIC1_INPUT_LEVEL)
-+				max98090->pa1en = val - 1;
-+			else
-+				max98090->pa2en = val - 1;
+ 	case TCP_SYN_SENT:
++		/* We sent nothing yet, so no segment belongs to this connection.
++		 * Send no RST: it would be built from this socket, whose TCP-AO
++		 * keys are not set up either.
++		 */
++		if (unlikely(inet_test_bit(DEFER_CONNECT, sk))) {
++			SKB_DR_SET(reason, NOT_SPECIFIED);
++			goto discard;
 +		}
-+		return 0;
- 	case SND_SOC_DAPM_POST_PMD:
- 		/* If turning off, turn off */
- 		val = 0;
-@@ -1108,11 +1108,13 @@ static const struct snd_soc_dapm_widget max98090_dapm_widgets[] = {
++
+ 		tp->rx_opt.saw_tstamp = 0;
+ 		tcp_mstamp_refresh(tp);
+ 		queued = tcp_rcv_synsent_state_process(sk, skb, th);
+diff --git a/net/ipv4/tcp_ipv4.c b/net/ipv4/tcp_ipv4.c
+index 4d1b3c4602a36..293a3b2bdd9e3 100644
+--- a/net/ipv4/tcp_ipv4.c
++++ b/net/ipv4/tcp_ipv4.c
+@@ -539,7 +539,7 @@ int tcp_v4_err(struct sk_buff *skb, u32 info)
+ 		if (!(type == ICMP_DEST_UNREACH && code == ICMP_FRAG_NEEDED))
+ 			__NET_INC_STATS(net, LINUX_MIB_LOCKDROPPEDICMPS);
+ 	}
+-	if (sk->sk_state == TCP_CLOSE)
++	if (sk->sk_state == TCP_CLOSE || inet_test_bit(DEFER_CONNECT, sk))
+ 		goto out;
  
- 	SND_SOC_DAPM_PGA_E("MIC1 Input", M98090_REG_MIC1_INPUT_LEVEL,
- 		M98090_MIC_PA1EN_SHIFT, 0, NULL, 0, max98090_micinput_event,
--		SND_SOC_DAPM_POST_PMU | SND_SOC_DAPM_POST_PMD),
-+		SND_SOC_DAPM_POST_PMU | SND_SOC_DAPM_PRE_PMD |
-+		SND_SOC_DAPM_POST_PMD),
+ 	if (static_branch_unlikely(&ip4_min_ttl)) {
+diff --git a/net/ipv6/tcp_ipv6.c b/net/ipv6/tcp_ipv6.c
+index 431d958272b8d..d8d3a688c0104 100644
+--- a/net/ipv6/tcp_ipv6.c
++++ b/net/ipv6/tcp_ipv6.c
+@@ -418,7 +418,7 @@ static int tcp_v6_err(struct sk_buff *skb, struct inet6_skb_parm *opt,
+ 	if (sock_owned_by_user(sk) && type != ICMPV6_PKT_TOOBIG)
+ 		__NET_INC_STATS(net, LINUX_MIB_LOCKDROPPEDICMPS);
  
- 	SND_SOC_DAPM_PGA_E("MIC2 Input", M98090_REG_MIC2_INPUT_LEVEL,
- 		M98090_MIC_PA2EN_SHIFT, 0, NULL, 0, max98090_micinput_event,
--		SND_SOC_DAPM_POST_PMU | SND_SOC_DAPM_POST_PMD),
-+		SND_SOC_DAPM_POST_PMU | SND_SOC_DAPM_PRE_PMD |
-+		SND_SOC_DAPM_POST_PMD),
+-	if (sk->sk_state == TCP_CLOSE)
++	if (sk->sk_state == TCP_CLOSE || inet_test_bit(DEFER_CONNECT, sk))
+ 		goto out;
  
- 	SND_SOC_DAPM_MIXER("LINEA Mixer", SND_SOC_NOPM, 0, 0,
- 		&max98090_linea_mixer_controls[0],
+ 	if (static_branch_unlikely(&ip6_min_hopcount)) {
 -- 
 2.53.0
 
