@@ -1,42 +1,42 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795619075;
-	b=BbspwcoGVlAx65iy8OD0rp/mJK/q3giIXen4XGDxQy8RFWqT/92YzeRevXzbCTMrFChi
-	 +57eqRkBwQwDIZ4pZm7HDhRXhHdDN/fgTza1i92hVXoalnwo6oXBF0ex4MG+Zi+8nSR0Y
-	 UUIHe4vjZsvrmmGqpfPxHq+8ayUJeB/IWh32hMq4WHsyVZJqyM7Ki79vIxYZj8FcWdcgF
-	 Rh9I8nGQMdHbNIKboB9RDOqlsEJ/kW+d35YvVBuGYXL+mor/EFGCZvUhoeAqcykacHDCC
-	 1znaTX6Aymehhf+6VTaT5TAPPEx0VX4LlnJnnIYzgmyLiKgiZAbP/CtBnt0CGZgZMAA==
+	t=1795619078;
+	b=BoKrvU9FiOBTef7ORGKGJ8QyhlPu3Y6/lEL81IoyOCE6JjaGyuq7uItkDcv+lSmpjnuX
+	 E8mvPrwH6pSsR2AcneUUuXFQWGlHxzWVkRe/ei/AloQZ1+lR0yHp7R57r0fJIgJRdoWzH
+	 /8eAZjWDxCIARPlIi1smsaB0JViRSt2g0N8wlsBs4jyAP5ekLEirCfHxIG4dQU9rIPOvB
+	 smNweykmbe7IskUSupryxieY5AN/be7Btx6OAUT6ZeWRJzvPHsL11Oc/0HOusc3+aWqEt
+	 ieqwud9hXLXTrhRczpW+TXB3qgSXGcP3mbr4YYRTE70q615trKOGtfWY8B0jmJpukOg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795619075;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795619078;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=X/it84lTAWOOgMTVw8DDboI/GNf1ZQMwSe84DFMDTBU=;
-	b=mdXZGCMGJECtE0/Z90kRh5P1cpsbrRlj5le6hKSVBuD2623vR8b685dvRnjD4o++cZz+
-	 S2cBE8GgCzECwPz+wmQen7tiSowcFWO8VBggoQ9YMzanTrA1mgclbHQ+fBXrjsgLAjuHB
-	 F9+ZgitLxovV0yYSk+fPFBxBTGl4Ul3acrTWLCl0p8H010LXu/jjE+CzBSp9y4TZ59SzK
-	 md/QgzD65I1AW8Wt+rQhM1uiyZSi1oK7PYl3eJRLUyMC5cihfoiHo+R3NXoSkYpJxA7MQ
-	 SpfFhfW8x7zIVoFRjECjV3aNlZ9njoPDY8jgFk5YppXzf20m81TUk661ihCPrdmnr7w==
+	bh=69opm3gLJtZ5REwgnOhH/HyKCuJrZ0TemLa6M88FQN8=;
+	b=MA6QuPbcDvASKurJEn3Kuu8+RKwaSH3Inb+8nxgbtFTVVbVOOGm/Ki8oAzBqA8+R3YhV
+	 YZ9GGytG9QgLoG4E7lAGHKqGAALmfX7w7zL8UAnXvENFUa3FK0QsU7zXvpF4PUUpFCs/S
+	 oG/9kmJwcIxlfiiwy1/Tjbj8UeW7uAVv0qplmkCa0UNIUn9YPp1kjUdhcnPBfWNyrLt80
+	 c2usRazmh3kvwIHCERY+Wk3QmHOHc07O/6JaB1dBrWEbZLinYFestYAwjlhkJANXO6qMO
+	 mK4eyL316VemWzR/Q4WB6Ch69s/nMTFYbRuOxXOKYqPB2H3hul+e5axL7Ig3EOuRPhQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=m4G1jvBu;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="0/RNyUqV";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5427A606A31E;
-	Wed, 25 Nov 2026 15:04:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C6390606A31E;
+	Wed, 25 Nov 2026 15:04:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=m4G1jvBu
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8F1F91F000C0;
-	Wed, 25 Nov 2026 15:04:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=0/RNyUqV
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EE7481F000CF;
+	Wed, 25 Nov 2026 15:04:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795619075;
-	bh=X/it84lTAWOOgMTVw8DDboI/GNf1ZQMwSe84DFMDTBU=;
+	s=korg; t=1795619078;
+	bh=69opm3gLJtZ5REwgnOhH/HyKCuJrZ0TemLa6M88FQN8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=m4G1jvBurubybrN59Tohw4Ww8uw0rh+1+FLpAbvoU1s2biJgl8ol3aKUsfX3nIvhZ
-	 p9m3njqXgx+KY4kGGhMsCvfltjHmnFkf0gvG9nNoNcHQFQPKc/9DE6njsZG4UMTwiP
-	 yrJj83BrullWXOh1Tllds6G41sPE9l5v/YtB+ugI=
+	b=0/RNyUqVuiHz2SFcyUsVmrvBaPugyQDoUwtDaYblo1OzQdA+6fqwpEM1Vnp7SCP/g
+	 lNCyoDWx4nwmSX4EQwLs247D++FO44NbGcXd4c04wR0zyqs+UXhv6IxfxJO9crg9uN
+	 VgIBF3gi88DiOMI5Gh+9RhRaUzEGHQqy/4gSOByk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -44,9 +44,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Alexander Duyck <alexanderduyck@fb.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0481/1005] fbnic: Fix service task races with ndo_stop and PM suspend
-Date: Wed, 25 Nov 2026 15:30:19 +0100
-Message-ID: <20261125143833.017455252@linuxfoundation.org>
+Subject: [PATCH 7.3 0482/1005] fbnic: Disable PTP completions during the Tx force-flush
+Date: Wed, 25 Nov 2026 15:30:20 +0100
+Message-ID: <20261125143833.040863474@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143821.729802100@linuxfoundation.org>
 References: <20261125143821.729802100@linuxfoundation.org>
@@ -70,148 +70,73 @@ Content-Transfer-Encoding: 8bit
 
 From: Alexander Duyck <alexanderduyck@fb.com>
 
-[ Upstream commit 05ec5504ff69dac8867292c0e778fe79c3dde83c ]
+[ Upstream commit 7d4568edce74ac72794cdd42767cc116bf1ca9b4 ]
 
-The service task can run after the datapath has been torn down
-underneath it. ndo_stop stops the task with the cancel_delayed_work
-function, which does not wait for a pass already executing. It cannot
-use the cancel_delayed_work_sync function, as ndo_stop holds RTNL and
-the task takes RTNL itself, so a pass blocked on RTNL while ndo_stop
-runs carries on once ndo_stop returns.
+When the Tx queues fail to go idle, fbnic_wait_all_queues_idle() falls
+back to fbnic_tx_flush(), which sets FBNIC_TMI_DROP_CTRL_EN. That bit
+only drops packets at the Tx MAC Interface start of packet protection FIFO.
 
-By then the fbnic_down function has demoted the host MACDA and action
-entries to UPDATE and disabled the host queues, and ndo_stop has handed
-ownership back to firmware, which clears fw_heartbeat_enabled. The late
-pass's health check reports a firmware crash that did not happen, and
-the fbnic_fw_config_after_crash function reclaims ownership and writes
-the host rules back to hardware. If the BMC raised
-FBNIC_FW_CAP_F_BMC_TCAM_REINIT in that window, the fbnic_bmc_rpc_check
-function does the same through the __fbnic_set_rx_mode function. Either
-way host traffic is steered at queues that are no longer running until
-the next open and close.
+The PTP completion path is governed by a separate bit in the same
+register. With only the drop enable set, a timestamped frame has its
+packet discarded while the matching completion is still forwarded to
+the host. fbnic_clean_tsq() then walks the ring with no packet left to
+match it against and reports "Tx timestamp without matching packet".
+The drop does not retire the completion either, as the completion FIFO
+is only drained when the completion disable is set.
 
-The fbnic_pm_suspend function, which also serves shutdown and PCIe
-error recovery, has the same problem and a worse one. It calls ndo_stop
-directly with the device detached but __LINK_STATE_START still set, so
-a late pass there sees the interface running, restores the host state,
-and keeps re-arming itself every second after the mailbox, IRQs and
-MMIO are gone.
+Set FBNIC_TMI_DROP_CTRL_CMPL_DIS together with the drop enable so the
+completions are drained rather than leaked to the host, and clear both
+bits again when the flush is turned off.
 
-Only run the health and BMC checks, and only re-arm, while the
-interface is running and the device is present. The __dev_close_many
-function clears __LINK_STATE_START under RTNL before it calls ndo_stop,
-and the suspend path detaches the device under RTNL, so a late pass now
-leaves the host state alone and stops. The BMC flags stay raised, and
-the __fbnic_open function reclaims ownership, restarts the heartbeat
-and rebuilds the BMC rules on the next open. The fbnic_pm_suspend
-function also cancels the task synchronously once it has dropped RTNL,
-so a pass already running cannot overlap the mailbox and IRQ teardown.
-
-On resume the __fbnic_pm_attach function called the fbnic_up function,
-which schedules the next pass, before attaching the device, all without
-RTNL. A pass that ran in between would now see the device detached and
-stop for good. Check for an init failure first, then hold RTNL and the
-instance lock across the stats reset, the fbnic_up call and the attach,
-as the suspend path does, so the pass blocks until the device is
-present. This also gives the fbnic_up function the instance lock it
-expects for the napi_enable_locked calls and the rx mode rewrite.
-
-A device that detaches itself on a failed register read likewise stops
-re-arming the task until recovery attaches it.
-
-The issue was found by code review. The change was tested on fbnic
-hardware with firmware 26.09.14-017_h7ab84d2ef68f by cycling the
-interface through DPC/AER recoveries for a day.
-
-Fixes: 04a230b27d8f ("fbnic: Add logic to repopulate RPC TCAM if BMC enables channel")
-Fixes: 6ae7da8e9e06 ("eth: fbnic: reprogram TCAMs after FW crash")
+Fixes: ad3d9f8bc66c ("eth: fbnic: add TX packets timestamping support")
 Signed-off-by: Alexander Duyck <alexanderduyck@fb.com>
-Link: https://patch.msgid.link/179381515284.9644.1846335740085170889.stgit@ahduyck-xeon-server.home.arpa
+Link: https://patch.msgid.link/179381515954.9644.10831265959574467679.stgit@ahduyck-xeon-server.home.arpa
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/meta/fbnic/fbnic_pci.c | 38 ++++++++++++++++-----
- 1 file changed, 29 insertions(+), 9 deletions(-)
+ drivers/net/ethernet/meta/fbnic/fbnic_csr.h  |  1 +
+ drivers/net/ethernet/meta/fbnic/fbnic_txrx.c | 10 +++++++---
+ 2 files changed, 8 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/net/ethernet/meta/fbnic/fbnic_pci.c b/drivers/net/ethernet/meta/fbnic/fbnic_pci.c
-index c6698e3002a13..1335310a1cc18 100644
---- a/drivers/net/ethernet/meta/fbnic/fbnic_pci.c
-+++ b/drivers/net/ethernet/meta/fbnic/fbnic_pci.c
-@@ -229,18 +229,25 @@ static void fbnic_service_task(struct work_struct *work)
+diff --git a/drivers/net/ethernet/meta/fbnic/fbnic_csr.h b/drivers/net/ethernet/meta/fbnic/fbnic_csr.h
+index baba3471bf5a4..c601b64aa2646 100644
+--- a/drivers/net/ethernet/meta/fbnic/fbnic_csr.h
++++ b/drivers/net/ethernet/meta/fbnic/fbnic_csr.h
+@@ -459,6 +459,7 @@ enum {
+ #define FBNIC_TMI_SOP_PROT_CTRL		0x04400		/* 0x11000 */
+ #define FBNIC_TMI_DROP_CTRL		0x04401		/* 0x11004 */
+ #define FBNIC_TMI_DROP_CTRL_EN			CSR_BIT(0)
++#define FBNIC_TMI_DROP_CTRL_CMPL_DIS		CSR_BIT(1)
+ #define FBNIC_TMI_DROP_PKTS		0x04402		/* 0x11008 */
+ #define FBNIC_TMI_DROP_BYTE_L		0x04403		/* 0x1100c */
+ #define FBNIC_TMI_ILLEGAL_PTP_REQS	0x04409		/* 0x11024 */
+diff --git a/drivers/net/ethernet/meta/fbnic/fbnic_txrx.c b/drivers/net/ethernet/meta/fbnic/fbnic_txrx.c
+index 69cd96a4508f3..c869b88db81ac 100644
+--- a/drivers/net/ethernet/meta/fbnic/fbnic_txrx.c
++++ b/drivers/net/ethernet/meta/fbnic/fbnic_txrx.c
+@@ -2309,15 +2309,19 @@ void fbnic_disable(struct fbnic_net *fbn)
  
- 	fbnic_fw_check_heartbeat(fbd);
- 
--	fbnic_health_check(fbd);
--
--	fbnic_bmc_rpc_check(fbd);
--
- 	if (netif_carrier_ok(fbd->netdev)) {
- 		netdev_lock(fbd->netdev);
- 		fbnic_napi_depletion_check(fbd->netdev);
- 		netdev_unlock(fbd->netdev);
- 	}
- 
--	if (netif_running(netdev))
-+	/* fbnic_service_task_stop() does not wait for a pass that is already
-+	 * blocked on RTNL, so one can run after ndo_stop. Leave host state
-+	 * alone in that case, and do not re-arm; __fbnic_open() reclaims and
-+	 * rebuilds it. The PM path calls ndo_stop with the device detached but
-+	 * still running; fbnic_up() starts the task again on resume.
-+	 */
-+	if (netif_running(netdev) && netif_device_present(netdev)) {
-+		fbnic_health_check(fbd);
+ static void fbnic_tx_flush(struct fbnic_dev *fbd)
+ {
++	u32 drop_ctrl = FBNIC_TMI_DROP_CTRL_EN | FBNIC_TMI_DROP_CTRL_CMPL_DIS;
 +
-+		fbnic_bmc_rpc_check(fbd);
-+
- 		schedule_delayed_work(&fbd->service_task, HZ);
-+	}
+ 	netdev_warn(fbd->netdev, "triggering Tx flush\n");
  
- 	rtnl_unlock();
- }
-@@ -455,6 +462,12 @@ static int fbnic_pm_suspend(struct device *dev)
- 	netdev_unlock(netdev);
- 	rtnl_unlock();
- 
-+	/* ndo_stop could not wait for a pass already blocked on RTNL. That
-+	 * pass no longer re-arms, but wait for it to finish before the
-+	 * mailbox, IRQs and MMIO go away.
-+	 */
-+	cancel_delayed_work_sync(&fbd->service_task);
-+
- null_uc_addr:
- 	fbnic_fw_log_disable(fbd);
- 
-@@ -555,19 +568,26 @@ static void __fbnic_pm_attach(struct device *dev)
- 	struct net_device *netdev = fbd->netdev;
- 	struct fbnic_net *fbn;
- 
--	rtnl_lock();
--	fbnic_reset_hw_stats(fbd);
--	rtnl_unlock();
--
- 	if (fbnic_init_failure(fbd))
- 		return;
- 
- 	fbn = netdev_priv(netdev);
- 
-+	/* Hold RTNL until the device is attached, so the service task pass
-+	 * fbnic_up() schedules cannot run until it will see it present.
-+	 */
-+	rtnl_lock();
-+	netdev_lock(netdev);
-+
-+	fbnic_reset_hw_stats(fbd);
-+
- 	if (netif_running(netdev))
- 		fbnic_up(fbn);
- 
- 	netif_device_attach(netdev);
-+
-+	netdev_unlock(netdev);
-+	rtnl_unlock();
+-	fbnic_rmw32(fbd, FBNIC_TMI_DROP_CTRL, FBNIC_TMI_DROP_CTRL_EN,
+-		    FBNIC_TMI_DROP_CTRL_EN);
++	/* Drop packets and retire their PTP completions */
++	fbnic_rmw32(fbd, FBNIC_TMI_DROP_CTRL, drop_ctrl, drop_ctrl);
  }
  
- static int __maybe_unused fbnic_pm_resume(struct device *dev)
+ static void fbnic_tx_flush_off(struct fbnic_dev *fbd)
+ {
+-	fbnic_rmw32(fbd, FBNIC_TMI_DROP_CTRL, FBNIC_TMI_DROP_CTRL_EN, 0);
++	u32 drop_ctrl = FBNIC_TMI_DROP_CTRL_EN | FBNIC_TMI_DROP_CTRL_CMPL_DIS;
++
++	fbnic_rmw32(fbd, FBNIC_TMI_DROP_CTRL, drop_ctrl, 0);
+ }
+ 
+ struct fbnic_idle_regs {
 -- 
 2.53.0
 
