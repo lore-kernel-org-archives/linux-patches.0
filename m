@@ -1,54 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795617574;
-	b=XeICBcrxWTnbwPAyRBXeKj2XBCaRWXKMbbekJjdIVmjk+Cv7CSJPUmFYVEY/jWLrBdsg
-	 yNr/HD8sgMKoqM2xdfz6fRlgT+HHk7Zg1lxGfz7kuztX8UUsChjlMQLr94FqEu+/PwpR8
-	 yIMFH5yCNHngbAy5KP1Q0EUj3zjB7GejmM/gQtgbchg/7HkmDIQgzJJQHzaxrVSUaAL4+
-	 P+slSQj09kH31IBlzi8fJrYil/M50qaEJACaUPBdxOJzRxqZfCyX/B8hSrQQ0SG3RkCll
-	 1PtAC2bjhK2c86d121vSJL0MrWb1ccQKSZDU58zCOtaP5cE9Z02JuKklQr3vCxaYiwA==
+	t=1795617578;
+	b=lZzWE5gOpTRt+tbvLu7PyZNZZ2DFz0uwrG6l6PCR2NfFyJZG0e2z9clypkXL5c1cC5f3
+	 jsFMbSrYdJzyhCMwlOR7vYInWAiNFPNCJv4tNmNda4XWykVWmtoB+PdpG39t7z4gpdKgJ
+	 K2gn43549tsn1uw2xcQFN6MH1SHFJm5nYNp+3URLAZNaT0yePRG7ybJDNA5j/g4yqm307
+	 a67ApcB7+gg1Pd+E/kzmknLC29oCkLyYx1QRvh4X0APQ1USWV2Hh20pQdIaTEHcCUY/u7
+	 b5kQMjhYyLP+RFWWWXnRR3vZ8f/NrupmCKM61yoJ0iN8s1xsCf4MLOiDyn3xStP19mA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795617574;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795617578;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=YGL8AAM+Rywzpq9uB50ZUd7o5Q5t6RYYQmAYETE2/9M=;
-	b=xvMo5IFFoANpiXg2OwENMxs8HMAVqHuitOUjoRurzDd4ngBzUOiDH+uvon+Skt2ONgsQ
-	 4O7P+X8rdxxNg7N1J+Wjf6YqmWf8GhFLflJSRE6T31krdtBnq5Ymq+HELZKTRFIGOsg3z
-	 7YYBf6vcFODTBkool3yIJZW7NSPWEZUaZ/DiRpiUkahLauNS2Y1Naz80ZjaWx6z5rET3I
-	 rEAxRYC8/ZYdYhpZGyLAetngrO+dNhS45SaS3PXoDJhFECTi0gwKN4AGsYRxuECzWopqt
-	 k7KVwPrLyNMpmi7k90y9dqHGpGJ7wPJTXHlLwSnyjgSQv+yKfc9HkGAcjFpnPxUZZZA==
+	bh=ZNNJuCQIkM0uYnnJgaRyv/d1fcwplLGBJPk+N3crYv8=;
+	b=Jl28aupdwzkdU+DRKIvHqrGorbewTSxg3SW37uKqmpTh71Y9nj0Xu/IdfzIJkgeQ+U4D
+	 EhrJHVcVALkunC7U10+yWHOvj5hrRTA2c2AUmImUIGCLYzbpNICAgx4gZUWE3kh8TDNqj
+	 AVO6opOKPEmZAYT+y53vThg251cY7sOTudWrbaqp8Y3F477m0RYUCMsHEK6Cg1mHn/o3C
+	 XWiewpYLkOEknwcgTFA+LR0BatS3LvYd7SzLlN/57SbNFPTvxYmNcGmy6lSBod17ztd86
+	 Lm23J7eF2btsF+P69ZAvKjazWKqhg2v7GyNE62VA/xNCeLQ+6enhxiH6RmDRxFr00og==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=AJensEkC;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=X9GgSUNS;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 96632606A31E;
-	Wed, 25 Nov 2026 14:39:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 21D2F606A31E;
+	Wed, 25 Nov 2026 14:39:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=AJensEkC
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 586271F000EC;
-	Wed, 25 Nov 2026 14:39:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=X9GgSUNS
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A39B91F000D1;
+	Wed, 25 Nov 2026 14:39:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795617573;
-	bh=YGL8AAM+Rywzpq9uB50ZUd7o5Q5t6RYYQmAYETE2/9M=;
+	s=korg; t=1795617577;
+	bh=ZNNJuCQIkM0uYnnJgaRyv/d1fcwplLGBJPk+N3crYv8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=AJensEkCbIj3wzWtLGlBeNkqB0uvwX+DMuAEyfAtvyh0xj3/U0vN5iLrS7V37Pjjo
-	 BlpHrDswRZtPgJgsPTVK/kozqO+E6ODjt8SQ+3uO1uaUVefx17gcDXlgOzv5z0sRMW
-	 EtDFb4telarRbee/t3M5WebDCSKtXHEJeSL/e2iM=
+	b=X9GgSUNSMy48AUbN44xT4EGTK1H5I+5PeO+o+Zksz20Rg9Vdwcm6QV1TfyKR/4g/Z
+	 DIXRSdZx7y5i8kJ4kvCVY7OLBWbSrb6noWwnfwzJhGfSRcMFtKKCL8kJPBz9H/Ywal
+	 ASRCZNmoWyXDVf2sbSilS3dDiQWKxHmaLLFDR1yE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sashiko <sashiko-bot@kernel.org>,
-	Willem de Bruijn <willemb@google.com>,
-	Eric Dumazet <edumazet@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Matthew Schwartz <matthew.schwartz@linux.dev>,
+	Antheas Kapenekakis <lkml@antheas.dev>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0001/1005] tun: clear stale skb->protocol of NAPI frags skbs
-Date: Wed, 25 Nov 2026 15:22:19 +0100
-Message-ID: <20261125143821.771647658@linuxfoundation.org>
+Subject: [PATCH 7.3 0010/1005] ALSA: hda/tas2781: Prevent throwing away custom calibration addresses
+Date: Wed, 25 Nov 2026 15:22:28 +0100
+Message-ID: <20261125143821.979121243@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143821.729802100@linuxfoundation.org>
 References: <20261125143821.729802100@linuxfoundation.org>
@@ -70,58 +69,70 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eric Dumazet <edumazet@kernel.org>
+From: Antheas Kapenekakis <lkml@antheas.dev>
 
-[ Upstream commit 3287cd714a853d9443c4a743eca010aedcfbbcdd ]
+[ Upstream commit ba39a31448857da3b848174c9130b466b3ccddba ]
 
-With IFF_NAPI_FRAGS, tun_napi_alloc_frags() gets its skb from
-napi_get_frags(). If GRO merged the previous frame with
-GRO_MERGED_FREE, that skb was recycled by napi_reuse_skb(), which does
-not reset skb->protocol set by napi_frags_skb() for the previous frame.
+The V2 UEFI spec for per-device calibration data in TAS allows for
+manufacturers to specify up to five custom calibration register
+addresses and values to optimize per-device in factory.
 
-tun_get_user() calls tun_vnet_hdr_tnl_to_skb() before eth_type_trans(),
-so the virtio header checks see the protocol of the previous frame:
-GSO packets without VIRTIO_NET_HDR_F_NEEDS_CSUM are dissected with the
-wrong protocol. A following change checks the outer protocol of UDP
-tunnel GSO packets, which would then reject a valid frame when the two
-ethertypes differ.
+A basic description of the spec is found in a comment in function
+tas2781_apply_calib(). However, currently, for the condition of
+p->dspbin_typ != TASDEV_BASIC, if custom calibration addresses have been
+provided by the manufacturer, they are ignored and the ones listed in
+firmware are used.
 
-This needs GRO to hold packets across writes, and IFF_NAPI_FRAGS needs
-CAP_NET_ADMIN.
+In case the manufacturer chose to change different registers other than
+the default ones (r0, invr0, r0_low, pow, tlimit), this causes the
+UEFI calibration data to scratch different registers and cause the
+firmware to misbehave. This is true in the Xbox ROG Ally X, for one of
+the firmwares, where it pops and has audio dropouts after the
+calibration data is applied.
 
-Clear skb->protocol in tun_napi_alloc_frags(), like skbs allocated
-by tun_alloc_skb() or build_skb(). eth_type_trans() sets it later.
+Therefore, add a new bool to indicate that UEFI supplied custom
+calibration addresses, and if so, use them regardless of dspbin_typ.
 
-Fixes: 90e33d459407 ("tun: enable napi_gro_frags() for TUN/TAP driver")
-Reported-by: Sashiko <sashiko-bot@kernel.org>
-Closes: https://lore.kernel.org/netdev/179386753589.488856.11455181721004759454@kernel.org/
-Suggested-by: Willem de Bruijn <willemb@google.com>
-Reviewed-by: Willem de Bruijn <willemb@google.com>
-Signed-off-by: Eric Dumazet <edumazet@kernel.org>
-Link: https://patch.msgid.link/20261110213628.3476051-3-edumazet@kernel.org
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Closes: https://lore.kernel.org/all/179122346529.6.9250312386131579603.1671009695@8alias.com/
+Co-developed-by: Matthew Schwartz <matthew.schwartz@linux.dev>
+Signed-off-by: Matthew Schwartz <matthew.schwartz@linux.dev>
+Signed-off-by: Antheas Kapenekakis <lkml@antheas.dev>
+Link: https://patch.msgid.link/20261102174052.1216670-1-lkml@antheas.dev
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/tun.c | 6 ++++++
- 1 file changed, 6 insertions(+)
+ sound/hda/codecs/side-codecs/tas2781_hda.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/net/tun.c b/drivers/net/tun.c
-index 2ed348b953159..8a5ffd6904891 100644
---- a/drivers/net/tun.c
-+++ b/drivers/net/tun.c
-@@ -1500,6 +1500,12 @@ static struct sk_buff *tun_napi_alloc_frags(struct tun_file *tfile,
- 	if (!skb)
- 		return ERR_PTR(-ENOMEM);
+diff --git a/sound/hda/codecs/side-codecs/tas2781_hda.c b/sound/hda/codecs/side-codecs/tas2781_hda.c
+index 9162173ccb105..b9b6e44f8791a 100644
+--- a/sound/hda/codecs/side-codecs/tas2781_hda.c
++++ b/sound/hda/codecs/side-codecs/tas2781_hda.c
+@@ -89,6 +89,7 @@ static void tas2781_apply_calib(struct tasdevice_priv *p)
+ 		TASDEVICE_REG(0, 0x18, 0x7c),
+ 	};
+ 	unsigned int crc, oft, node_num;
++	bool custom_addr = false;
+ 	unsigned char *buf;
+ 	int i, j, k, l;
  
-+	/* An skb recycled by napi_reuse_skb() keeps the protocol of a
-+	 * previous frame. eth_type_trans() sets it after the virtio
-+	 * header checks, which must not see a stale one.
-+	 */
-+	skb->protocol = 0;
-+
- 	linear = iov_iter_single_seg_count(it);
- 	err = __skb_grow(skb, linear);
- 	if (err)
+@@ -129,6 +130,7 @@ static void tas2781_apply_calib(struct tasdevice_priv *p)
+ 		for (j = 0, k = 0; j < node_num; j++) {
+ 			oft = j * 6 + 3;
+ 			if (tmp_val[oft] == TASDEV_UEFI_CALI_REG_ADDR_FLG) {
++				custom_addr = true;
+ 				for (i = 0; i < TASDEV_CALIB_N; i++) {
+ 					buf = &data[(oft + i + 1) * 4];
+ 					cali_reg[i] = TASDEVICE_REG(buf[1],
+@@ -188,7 +190,7 @@ static void tas2781_apply_calib(struct tasdevice_priv *p)
+ 		}
+ 	}
+ 
+-	if (p->dspbin_typ == TASDEV_BASIC) {
++	if (custom_addr || p->dspbin_typ == TASDEV_BASIC) {
+ 		r->r0_reg = cali_reg[0];
+ 		r->invr0_reg = cali_reg[1];
+ 		r->r0_low_reg = cali_reg[2];
 -- 
 2.53.0
 
