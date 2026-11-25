@@ -1,42 +1,42 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795621932;
-	b=UV0FH/6PXiLv/0unVjr0GyJRJ0X5ONkZmrCVjuo9qoO58JQ5x3awIwVveDLOfs4k3ZHQ
-	 TUgzAPmJ7+sI9CuHVetHhg6WRokEYnye1KMnwr4xHXih62d3ZJf2RiYtNE1uDlgIIi30M
-	 onBPd7LheFnklQxkONPekOVmGhCagrcYPMqjxOhw55KpN5GwIzyfsIL8Yt9jbcRpTF+bK
-	 sJNnaesbOgOe3Sl9K66AKqDQ3Cx7+i+evUdubanpJl1GQ/dHJ0dbYRxMZdiai4VptiQ3x
-	 16VYXClozJcjN1VuKoBfji1RlpRsIKOuVBYSk/TMuNu8c3Nx9/p2ZYcwo0N6GlJ832Q==
+	t=1795621935;
+	b=1IPndY0AW4dkJ05dKHHYkWVsjbnfgc8WAVp4dQfieFxCPvJtFf/vXLuXwOATSwZRtCv6
+	 U7X3OsYvNAWv3nyoqigoOTZ84dRqUxvfZEAf5L54BrCbfkNHWzQItKGdxIR/kqY0sghaW
+	 Z4x/gg4BUPgEgopeThEBH8IegzbNpTBfaAAu80zRkfxX8vZyt0+1tTKHFRkAfJ33lrX0X
+	 BiDXfWZMgpsSwJqaIzODRXIbMUmVylTsR7rB8OCFRaleVfJAhlKRMkCwrB6HvysvfnMYD
+	 dnsoRuRp+Ww7esAPw2ShqZvnUt/4NirAz7j24AsOSn/x+cJHWLvzdT6kyOmwSk1b42g==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795621932;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795621935;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=fzEF7o/omOWI8CNqY8iqKh2jI3TEz65v7IfHntqQQoU=;
-	b=HYFt3dc0S2do+PEqlMykjI/zy2V9yhCrneKnkPVNx//o65B+/BZL+7yw1HemirCSkTim
-	 ZooIdTDsOnBI2J5eUGGJz0vNR92cTlyNI0xnmY0kzt498XGn8MCwYxsuILTIYAqjRzaxJ
-	 fb7NbC88SGQrWA8JdmSfffqx3Tc6aVDw6piupwGcg0RBGAVoduExHzsOrBarSeQp0/DPd
-	 5TnOQFkvvtXniXVwhjBrhKOU97lRC57dBtlONYVV5j1v09nx7MK59jurYFNigECLfTsee
-	 +qzsdmXMs48s09ahT5Y/xYhX7m/wN8ryXK3rWlpfK/G5C7dbo5OL4ZtHiutHp7039Kw==
+	bh=SQSmlFtp2qS+FZTIrTmbVewKmTUhPo3f915+cVb/Rh0=;
+	b=Jb/GoTO6z+9lVdDxmzvqF0SKttqNa8bnj0ozJFqas6zMQQMsJy3q5h90+vNeBlBRkw2k
+	 VkI5yD0SYVubnrSWk9r8bYhYcKILLqo7PzAUFYm88CBUvLlZ5waL804uj7RPSXLAWS5uG
+	 mDvK5Q2ZkTtYEgCedWCf0uIvRWgRdhAcRlckXBUlsgTmTNSAC8wU1HRDWennUPPszoG6/
+	 zbrVwTD5+NKzS1fDUvtojmSFdOgEo+tdecCHqMDlnCNaSh0IznIgIS2rf0i5Yq+PAOGq1
+	 5PvQjORae5DA+zCzbiIK21MFLXEh1UmQ7Tzv+Lt8zmGn1z5azKYVwg9W3kn7fjLyv/A==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="JD8Oxe/A";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=KJVM0QRp;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 77BC6606A32E;
-	Wed, 25 Nov 2026 15:52:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7FB58606A321;
+	Wed, 25 Nov 2026 15:52:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=JD8Oxe/A
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5899D1F000C0;
-	Wed, 25 Nov 2026 15:52:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=KJVM0QRp
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CAD151F000D3;
+	Wed, 25 Nov 2026 15:52:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795621932;
-	bh=fzEF7o/omOWI8CNqY8iqKh2jI3TEz65v7IfHntqQQoU=;
+	s=korg; t=1795621935;
+	bh=SQSmlFtp2qS+FZTIrTmbVewKmTUhPo3f915+cVb/Rh0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=JD8Oxe/Atb3J19JcGPL3UhkDXAyeMhUcElDfrlfSjbqwoyxBIPFGiJIvf84vjOelJ
-	 XZ2HNyAwm1fK2cIwpDNNxhUH+ysvp77QI0+5hnZDgvBVA6xEtv/quOLq5efQq3ZzUl
-	 755sOxWNajpXzTwmRS0oVEe7183bbFPbzIM5Qjbk=
+	b=KJVM0QRp6b4t51H+wt2NgDDlyym1ESwDfOVxW+ZX2XmAqHd8ra9o9sZyC9SM9+x7R
+	 TfDLLmBtI53WBn7wAaRUBtssFyYnBwwIj1TALDn/XNLuWeCcWUwA8i1ZZxIH5+XDjj
+	 3w13EtONDg6mQUSDdYMCL1s7f26zHqnZe8Gln+14=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -44,9 +44,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Avi Weiss <thnkslprpt@gmail.com>,
 	Anna Schumaker <anna.schumaker@hammerspace.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 378/990] NFSv4.1: retain MDS I/O until both thresholds are met
-Date: Wed, 25 Nov 2026 15:29:05 +0100
-Message-ID: <20261125143830.948438830@linuxfoundation.org>
+Subject: [PATCH 6.18 379/990] NFS: honor UTIME_NOW atime with explicit mtime
+Date: Wed, 25 Nov 2026 15:29:06 +0100
+Message-ID: <20261125143830.971485920@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143822.072087159@linuxfoundation.org>
 References: <20261125143822.072087159@linuxfoundation.org>
@@ -70,40 +70,42 @@ Content-Transfer-Encoding: 8bit
 
 From: Avi Weiss <thnkslprpt@gmail.com>
 
-[ Upstream commit eab627dcd18a18a44a2cbee47df3058d3637ba0d ]
+[ Upstream commit 2ffcf17d26dabef5793aeadf75a23c595a72be08 ]
 
-When both size and I/O thresholds are configured,
-pnfs_within_mdsthreshold() uses size && io to decide whether to
-keep I/O on the MDS. Both variables indicate an unmet threshold,
-so reaching only one threshold returns false and may trigger
-pNFS layout acquisition while the other threshold remains unmet.
+When utimensat() requests UTIME_NOW for atime and an explicit mtime,
+the VFS sets ATTR_ATIME but not ATTR_ATIME_SET (as it should). The
+delegated explicit-mtime path calls nfs_set_timestamps_to_ts(), which
+skips atime, but nfs_setattr() then clears ATTR_ATIME, allowing the
+syscall to succeed without updating atime.
 
-Use logical OR instead of AND to stay with MDS I/O until both
-thresholds are met, as recommended by RFC 8881 Section 5.12.6.
-The new RFC contains the same threshold selection rule as RFC
-5661 which is referenced in function comment.
+The delegated explicit-mtime path already updates ctime locally.
+The VFS also supplies the requested atime value in ia_atime,
+even when ATTR_ATIME_SET is absent.
 
-Fixes: d23d61c8d351 ("NFSv4.1 test the mdsthreshold hint parameters")
+Check ATTR_ATIME instead of ATTR_ATIME_SET to also apply the
+UTIME_NOW atime value supplied by the VFS.
+
+Fixes: aba41e90aade ("NFSv4.2: fix setattr caching of TIME_[MODIFY|ACCESS]_SET when timestamps are delegated")
 Signed-off-by: Avi Weiss <thnkslprpt@gmail.com>
 Signed-off-by: Anna Schumaker <anna.schumaker@hammerspace.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/nfs/pnfs.c | 2 +-
+ fs/nfs/inode.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/fs/nfs/pnfs.c b/fs/nfs/pnfs.c
-index 3d2d219a24e47..e389fb5159d67 100644
---- a/fs/nfs/pnfs.c
-+++ b/fs/nfs/pnfs.c
-@@ -2059,7 +2059,7 @@ static bool pnfs_within_mdsthreshold(struct nfs_open_context *ctx,
- 		break;
+diff --git a/fs/nfs/inode.c b/fs/nfs/inode.c
+index 970e67768d67e..f74273cca3503 100644
+--- a/fs/nfs/inode.c
++++ b/fs/nfs/inode.c
+@@ -662,7 +662,7 @@ static void nfs_set_timestamps_to_ts(struct inode *inode, struct iattr *attr)
+ 		inode_maybe_inc_iversion(inode, updated);
+ 		cache_flags |= NFS_INO_INVALID_CTIME | NFS_INO_INVALID_MTIME;
  	}
- 	if (size_set && io_set) {
--		if (size && io)
-+		if (size || io)
- 			ret = true;
- 	} else if (size || io)
- 		ret = true;
+-	if (attr->ia_valid & ATTR_ATIME_SET) {
++	if (attr->ia_valid & ATTR_ATIME) {
+ 		inode_set_atime_to_ts(inode, attr->ia_atime);
+ 		cache_flags |= NFS_INO_INVALID_ATIME;
+ 	}
 -- 
 2.53.0
 
