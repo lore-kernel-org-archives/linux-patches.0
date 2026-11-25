@@ -1,50 +1,50 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795623448;
-	b=kpu/s1WbjS2dmn0JWRtC88+JBJ3cCDC4tco9eVjTpNElq5Hlr1BITZ3E4o5O07oyNKpt
-	 Cb0igX8nF8SngBgakdxY71kJi+BpvDUvEmXqF0EKB8I96DynriTYCPQ979y6dhbexLOYM
-	 HJhaf4QAT1xUzColdusi/sBaMhe5ZoOvl9Q+m4T4ebNpREN6o5EKfwvX0hA9Vef4EWGlH
-	 vsjVQNI1efVQVuqLy2/9JU9X50x5iSVdOmV0Saim167fskeQRgborDc+wVPWXD0Yv4dZR
-	 pFPeXV2Bo+6Lw3M8g+tzC4nXOQttaED7m2K2kJq/mk32ca7G4aQdcR1YznkPmOhFlqA==
+	t=1795623451;
+	b=Qu+aq44vUNhFEES+DqdT9RQrRefP+imEHjHLMd/1tOPkBAk2lsKlgf8QAqKwaqhuUD1L
+	 1xBWagU8wmCT0gqxvsg/79zaRMk8OrX9FDjc6lSl5uPLXKj/l5Se0xECUQ43ApRbkba75
+	 AeNpjqLkkKXm/2v2gU6aiYfoyF4xSiVW7gKAX+S5vgBCwnOQFAKpauZw1+Z2VWWmBniyK
+	 wM8iRUbLMsXOPQcwbtBh6eZRg5XausIzTLsGlW3kL2jQhCEmOntqXHvGrgyHqvHdcsjN6
+	 bMjgECmppKIagikC2qG+xMGD2v1MHvlAJpJ0vhPVompXt9u9/ME21iyeV379c+vuNGg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795623448;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795623451;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=QOgLlnZRbxtgoD5L2cXJ+qHeaf3vgfuxY5MeijOYiew=;
-	b=cDuuEXCRyqffZFRtkii7ukH4m6CFVWjDf/xYbdqt8mBVgY73+ta9dJagCuWWLdWvhIsK
-	 Wh8YVJ+APScfAStFGATM2bn9HyEOLe35fFSV3M3PBod6pgdiYjXuVGWQ9oNK8aAv1zQ2b
-	 l7j/wl8IKna4PbL1R6xa+bGiEDcAcjbS9wllP4SuuXQrUkYS/8c0Mz3GJDyU4pnzpajJH
-	 RozHj8AGXn9snZrs5f8jd/um9Com5nPtcrpixA29iMiAnjw3YbBEWzS0DWwT3pngI9U6g
-	 REH/LSGqwePP2z/enS8rGJOi8w/9HiFxfJwDLW07PuA7B8PiRmVn2JXs493WGzhGZWQ==
+	bh=rPH3l/dv8BsXEu/55GYS69vpmro2ryZVXvsuX7YDsHw=;
+	b=jk2oQe5BVXqCJjShtd7iXF3rF9oMVTKKfwz+lgX4vmnWy9Puy96Vq1fp4lMm2Lz7J+az
+	 2Qg78fTqYVsCPUJKl4qsgdUm9Rk9qDrsWbgLmiq23d5tJw31e6GEAKfLwSO9YrmY08Tva
+	 TxkM2NHaTsSUFga87olpT4uBpUtsk7UYEC+1V8GHPth4qQx/c0MxfbUFlPlbCmsL1o67G
+	 i4EFqSyG5IH+iIE1DLWO4V0gbZAgPlZaHUCMdh0jjeRuZ73HynXUwdQGr+c1eoqv2EFYW
+	 FzQVvwtClu1ISr5OdtFTkwg+PrEpVOhH1w94Hl82MZ9jfYItaEU2WJi6yyAxlnmR+4g==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=v5z4sP10;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=cGhT4UWY;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E72E7606A321;
-	Wed, 25 Nov 2026 16:17:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 01943606A31E;
+	Wed, 25 Nov 2026 16:17:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=v5z4sP10
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4343B1F000C6;
-	Wed, 25 Nov 2026 16:17:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=cGhT4UWY
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 12ABB1F000CA;
+	Wed, 25 Nov 2026 16:17:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795623447;
-	bh=QOgLlnZRbxtgoD5L2cXJ+qHeaf3vgfuxY5MeijOYiew=;
+	s=korg; t=1795623450;
+	bh=rPH3l/dv8BsXEu/55GYS69vpmro2ryZVXvsuX7YDsHw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=v5z4sP10HQS7y3ENqBKK3QDiwAGQcs/rbW2F83cG92daysE+7MMq6AE3OrFENYcY8
-	 y7XpTgNQyoHrd2Cd0pNX2Iv1hTOIyt5MeFOQjvorhDrUDsfxQ1mQPLxzzYUvvERKDI
-	 FvqDd88kAYOVvPT9YLZ4KOfywkYAWKpzQt3noUJ0=
+	b=cGhT4UWYKilFUFXpdP9f02o/Fh8ZSWy+7Gjmfvk1IHnqUnSpZKfK590N85G/+uL07
+	 6XzK1ggm7KQupuELLkrT1ACvJp0kqz+Xmg0P4WJSangqnssT+0hvsOp8+BBnAhxIW4
+	 0nwdSoXsNpsvUkcSv6As0h/hqZkS70dWyQSteyI8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Mikulas Patocka <mpatocka@redhat.com>
-Subject: [PATCH 6.18 862/990] dm persistent data: test return value of node_copy
-Date: Wed, 25 Nov 2026 15:37:09 +0100
-Message-ID: <20261125143842.217805352@linuxfoundation.org>
+Subject: [PATCH 6.18 863/990] dm persistent data: dont ignore writeback errors
+Date: Wed, 25 Nov 2026 15:37:10 +0100
+Message-ID: <20261125143842.241125532@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143822.072087159@linuxfoundation.org>
 References: <20261125143822.072087159@linuxfoundation.org>
@@ -68,60 +68,46 @@ Content-Transfer-Encoding: 8bit
 
 From: Mikulas Patocka <mpatocka@redhat.com>
 
-commit 624d146d97c5fbe7200ef4b2dd5350ecf57d6b79 upstream.
+commit fa887f2ebee7aff97eb87b3365939616ade09774 upstream.
 
-There were 3 places where the return value of node_copy was not tested.
+An error returned by ie_cache_writeback could be silently overwritten by
+another successful ie_cache_writeback. This commit fixes disk_ll_commit,
+so that it doesn't ignore the error and returns it immediatelly.
 
 Signed-off-by: Mikulas Patocka <mpatocka@redhat.com>
 Assisted-by: Claude:claude-opus-5
 Cc: stable@vger.kernel.org
-Fixes: c671ffa55d8b ("dm btree remove: change a bunch of BUG_ON() calls to proper errors")
+Fixes: 6b06dd5a9722 ("dm space map disk: cache a small number of index entries")
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/md/persistent-data/dm-btree-remove.c |   13 ++++++++++---
- 1 file changed, 10 insertions(+), 3 deletions(-)
+ drivers/md/persistent-data/dm-space-map-common.c |    9 ++++++---
+ 1 file changed, 6 insertions(+), 3 deletions(-)
 
---- a/drivers/md/persistent-data/dm-btree-remove.c
-+++ b/drivers/md/persistent-data/dm-btree-remove.c
-@@ -253,7 +253,9 @@ static int __rebalance2(struct dm_btree_
- 		/*
- 		 * Merge
- 		 */
--		node_copy(left, right, -nr_right);
-+		ret = node_copy(left, right, -nr_right);
-+		if (unlikely(ret))
-+			return ret;
- 		left->header.nr_entries = cpu_to_le32(nr_left + nr_right);
- 		delete_at(parent, r->index);
+--- a/drivers/md/persistent-data/dm-space-map-common.c
++++ b/drivers/md/persistent-data/dm-space-map-common.c
+@@ -1190,17 +1190,20 @@ static dm_block_t disk_ll_max_entries(st
  
-@@ -315,13 +317,16 @@ static int delete_center_node(struct dm_
+ static int disk_ll_commit(struct ll_disk *ll)
  {
- 	uint32_t max_entries = le32_to_cpu(left->header.max_entries);
- 	unsigned int shift = min(max_entries - nr_left, nr_center);
-+	int ret;
+-	int r = 0;
++	int r;
+ 	unsigned int i;
  
- 	if (nr_left + shift > max_entries) {
- 		DMERR("node shift out of bounds");
- 		return -EINVAL;
+ 	for (i = 0; i < IE_CACHE_SIZE; i++) {
+ 		struct ie_cache *iec = ll->ie_cache + i;
+ 
+-		if (iec->valid && iec->dirty)
++		if (iec->valid && iec->dirty) {
+ 			r = ie_cache_writeback(ll, iec);
++			if (unlikely(r))
++				return r;
++		}
  	}
  
--	node_copy(left, center, -shift);
-+	ret = node_copy(left, center, -shift);
-+	if (unlikely(ret))
-+		return ret;
- 	left->header.nr_entries = cpu_to_le32(nr_left + shift);
+-	return r;
++	return 0;
+ }
  
- 	if (shift != nr_center) {
-@@ -333,7 +338,9 @@ static int delete_center_node(struct dm_
- 		}
- 
- 		node_shift(right, shift);
--		node_copy(center, right, shift);
-+		ret = node_copy(center, right, shift);
-+		if (unlikely(ret))
-+			return ret;
- 		right->header.nr_entries = cpu_to_le32(nr_right + shift);
- 	}
- 	*key_ptr(parent, r->index) = right->keys[0];
+ int sm_ll_new_disk(struct ll_disk *ll, struct dm_transaction_manager *tm)
 
 
