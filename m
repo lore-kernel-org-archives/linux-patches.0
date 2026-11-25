@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795624473;
-	b=jlL2Mqqkm8ASUoNnV1XX3E+wyGjbPCcWvx5jpZa1Av/utJ5KzIRh78+e8evxaViaOHVq
-	 sE5z8+IFqGOmhX/cndIi5ZYEurwWhDFsXu4SCQe61CljmR1NcBd3pRC3d3Q4Cr+qEssqJ
-	 F0mebl/yNB4KQZ0HENYEAe95XRKvZKuS94g9OGFxEO6SX6A2mYVOeKlSVA7J9jiqbra7q
-	 8u18KpxDV4fa3VyOSd9wdlVwmNLsHzDobqOYPzyh6YKac9E7AY6U9H4ZKXrU/v6AJJnAy
-	 2bVfNvZioUN9qTq0CESzMolcpjdyai3LWZyTDo2raSrk3E0RDoIXBJOosuxjHWfVLRw==
+	t=1795624476;
+	b=k8b3nklCshTAyXXKW+7abWnRInwJjTVTd2llZH8lkBia3MTn596OuE1NnQsWQyrEycR2
+	 a8aIXvO+HYhScQXWRI6mvqJSNLD8QaDMdJ3E6FzK82a7IsHDNZ6SIgQOpNyaYG4dta8JU
+	 +KlmewJN5xkm7nGa+k1qOCRzdlYTQOA0Xus7AyKs3AsjQSIlpb0bL14O+qrIEmcmM1BEj
+	 P05tdHPWg/91c7HvIXyDYzF2PfQuwCloFlqc9Y5ad01f8Z54z5WlS/Hkusq0gMTKv9Eyc
+	 Uun+t/9xiLm62DMiRJLp4oJYNZtbvKOrFerlC0+J7dNtYB8MN7meRNsFGrvgDRT4wTg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795624473;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795624476;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Type:Content-Transfer-Encoding;
-	bh=1/CfZcSObHI9D3g3DfFwo+vACfPRLKxuvQcBqUbiJ9c=;
-	b=WSBvJiwUj/NHsXn//A9MZOMYGxWTzjaQJVy7VQNX4+68ca1eFnTf4GEjvxhm1v//vSfn
-	 QE0hW7pP82ctFRVqCWBpNVTE+mtW0VgNEjxDADbUfjsACLvICnA55C2D7Q7z2IWMG+XF2
-	 R/I68IoM8RB94dX/0MLBpKjsYxfamGLt+LeBv5Um/nHxynquntNydLFXTJHPkGFsb3EDV
-	 umGq6n5JfMfY9KwJ25jInANwvFr7SkLQGGdRGPte/EL+e3VblX2yflGsX04EhO52DoRP2
-	 Llxg/ab6IavlX/+U+4uytXFJCmZSW6ucMT24bAEQuC/1taSI1NKsBEdLhZeQF3OUtIA==
+	 MIME-Version:Content-Transfer-Encoding;
+	bh=KzN5lXQS+0LXFPC9nyE17t9w6vOShgNzAWXhm3hY7T0=;
+	b=X4PsWJHyMi41zj+skeAaMARelHn/WY52fmsGIHWfCxLBikthoSDZ44hJUrdTROvBzPQf
+	 SHdqF+n5w5egaTv60EFGNuV5Nw8bLhagnGEAVyV7RDq7cHh3kv8MT4uqW9lj6C1VFdC5h
+	 +/Kkit733Lx9gDSR/vOGaAW0X7JYvf3xd9NuNARtJLihMSGW1JAaFf68yGZCx6FOmWEXL
+	 gtHXeCBbV0CELo1O5mfdr9FkRzQlF5GmN7D6NSNnBCWuUpADNRMD7VmI7WF3XQ/Ms557X
+	 Al/M8CufEpxNLBQgifVjKPhXCnEvNogRv/72SNGWiuZVaQ+zM6PjorDsbeRaV4oFYOQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=vKFYRHGo;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=E4gvgaMy;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6A495606A33A;
-	Wed, 25 Nov 2026 16:34:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B1A3F606A33B;
+	Wed, 25 Nov 2026 16:34:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=vKFYRHGo
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4300E1F000CA;
-	Wed, 25 Nov 2026 16:34:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=E4gvgaMy
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8DBC01F000D2;
+	Wed, 25 Nov 2026 16:34:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795624472;
-	bh=1/CfZcSObHI9D3g3DfFwo+vACfPRLKxuvQcBqUbiJ9c=;
+	s=korg; t=1795624476;
+	bh=KzN5lXQS+0LXFPC9nyE17t9w6vOShgNzAWXhm3hY7T0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=vKFYRHGolnXUSLJ7YhkHuCMfex0Ntmfv+rwBYaXNA8xels8k53z7731B/Uk6ZZPUi
-	 gI8KfHTVKf83UI0lwvJ8XGKdJt9OVu1CoLDBbqvWM8gN49fi3tHHVFpA7pcrgww842
-	 /CM9JDl46TT9z/NIkv3cC05deSCb4Au2i005kk1U=
+	b=E4gvgaMyoU4/i163gW3SXCvGxDu9CL3hPYr2XvFZMl62iQi+HlxQrmLdc7OFTDlHt
+	 vLtO+gT9kdyAqIcpKug4WSuOxnuAC13WnYb+FwTGtV7YvuNJGApCSlp0g06ncnWXWP
+	 Mc/pce0J7qJtr87Co/GcpXhJBnZb2cJjuRKC937U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhou Minqiang <zhouminqiang2@huawei.com>,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+	Linfeng Sun <linfeng.sun.dev@gmail.com>,
+	"Michael S. Tsirkin" <mst@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 204/816] PM: runtime: Fix check_flush_dependency warning from pm_runtime_remove
-Date: Wed, 25 Nov 2026 15:29:12 +0100
-Message-ID: <20261125143853.918387327@linuxfoundation.org>
+Subject: [PATCH 6.12 178/816] vhost-vdpa: initialize state before publishing cdev
+Date: Wed, 25 Nov 2026 15:28:46 +0100
+Message-ID: <20261125143853.311165740@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143849.205329330@linuxfoundation.org>
 References: <20261125143849.205329330@linuxfoundation.org>
@@ -62,83 +62,62 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Zhou Minqiang <zhouminqiang2@huawei.com>
+From: Linfeng Sun <linfeng.sun.dev@gmail.com>
 
-[ Upstream commit 1f65b45f0f16e1c80a68a5757c9556f78bb39f19 ]
+[ Upstream commit 4b03d1e7f13613af708441a061556de99891a516 ]
 
-When a WQ_MEM_RECLAIM workqueue (e.g. iscsi_ctrl) triggers device removal
-via device_del -> pm_runtime_remove, the unconditional flush_work inside
-pm_runtime_remove can trigger a check_flush_dependency warning:
+Initialize the completion and as hash buckets before cdev_device_add()
+makes the device accessible.
 
-  CPU1: pm_wq worker                 CPU2: iscsi_ctrl wq
-  --------                           --------
-
-  pm_runtime_work(starget)           pm_runtime_remove(starget)
-    spin_lock_irq(&starget->lock)      __pm_runtime_disable(starget, false)
-    request_pending = false              spin_lock_irq(&starget->lock)
-                                         (blocked, CPU1 holds the lock)
-
-    rpm_suspend(starget, RPM_NOWAIT)
-      status = RPM_SUSPENDING
-      rpm_callback(cb, starget)
-        spin_unlock_irq(&starget->lock)
-                                         (acquires lock)
-                                         disable_depth 0→1
-                                         __pm_runtime_barrier():
-                                           request_pending == false
-                                             → skip cancel_work_sync
-                                           status == RPM_SUSPENDING
-                                             → enter wait_queue, sleep
-                                           spin_unlock_irq(&starget->lock)
-        cb(starget) → 0
-        spin_lock_irq(&starget->lock)
-      status = RPM_SUSPENDED
-      wake_up_all(&wait_queue)
-                                           (woken up, waiting for lock)
-      spin_unlock(&starget->lock)          spin_lock_irq(&starget->lock)
-                                             status == RPM_SUSPENDED
-      spin_lock(&parent->lock)                → exit wait_queue
-      rpm_idle(parent, RPM_ASYNC)        barrier returns
-      spin_unlock(&parent->lock)       flush_work(&starget->work)
-      spin_lock(&starget->lock)          __flush_work(from_cancel=false)
-      spin_unlock_irq(&starget->lock)      check_flush_dependency()
-                                            ← WARNING!
-
-Replace flush_work with cancel_work_sync in pm_runtime_remove.
-cancel_work_sync internally calls __flush_work with from_cancel=true,
-which causes check_flush_dependency to return early before the warning.
-This preserves the use-after-free fix from commit 29ab76827761
-("PM: runtime: Fix a race condition related to device removal")
-without the warning.
-
-Fixes: 29ab76827761 ("PM: runtime: Fix a race condition related to device removal")
-Signed-off-by: Zhou Minqiang <zhouminqiang2@huawei.com>
-Link: https://patch.msgid.link/20261104115641.2682786-1-zhouminqiang2@huawei.com
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Fixes: 4c8cf31885f6 ("vhost: introduce vDPA-based backend")
+Assisted-by: OpenAI-Codex:GPT-5.6
+Signed-off-by: Linfeng Sun <linfeng.sun.dev@gmail.com>
+Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
+Message-ID: <20261011-fix-null-pointer-in-vhost_vdpa_release-v2-1-66ba929971ce@gmail.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/base/power/runtime.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/vhost/vdpa.c | 9 +++++----
+ 1 file changed, 5 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/base/power/runtime.c b/drivers/base/power/runtime.c
-index 291941c22d959..68a871a517bd9 100644
---- a/drivers/base/power/runtime.c
-+++ b/drivers/base/power/runtime.c
-@@ -1887,7 +1887,7 @@ void pm_runtime_reinit(struct device *dev)
- void pm_runtime_remove(struct device *dev)
- {
- 	__pm_runtime_disable(dev, false);
--	flush_work(&dev->power.work);
-+	cancel_work_sync(&dev->power.work);
- 	pm_runtime_reinit(dev);
- }
+diff --git a/drivers/vhost/vdpa.c b/drivers/vhost/vdpa.c
+index 9e881c4d25ba3..011e36847b4ee 100644
+--- a/drivers/vhost/vdpa.c
++++ b/drivers/vhost/vdpa.c
+@@ -1703,7 +1703,7 @@ static int vhost_vdpa_probe(struct vdpa_device *vdpa)
+ 		return minor;
+ 	}
+ 
+-	atomic_set(&v->opened, 0);
++	atomic_set(&v->opened, 1);
+ 	spin_lock_init(&v->config_lock);
+ 	v->minor = minor;
+ 	v->vdpa = vdpa;
+@@ -1727,16 +1727,17 @@ static int vhost_vdpa_probe(struct vdpa_device *vdpa)
+ 
+ 	cdev_init(&v->cdev, &vhost_vdpa_fops);
+ 	v->cdev.owner = THIS_MODULE;
++	init_completion(&v->completion);
++	for (i = 0; i < VHOST_VDPA_IOTLB_BUCKETS; i++)
++		INIT_HLIST_HEAD(&v->as[i]);
+ 
+ 	r = cdev_device_add(&v->cdev, &v->dev);
+ 	if (r)
+ 		goto err;
+ 
+-	init_completion(&v->completion);
+ 	vdpa_set_drvdata(vdpa, v);
+ 
+-	for (i = 0; i < VHOST_VDPA_IOTLB_BUCKETS; i++)
+-		INIT_HLIST_HEAD(&v->as[i]);
++	atomic_set_release(&v->opened, 0);
+ 
+ 	return 0;
  
 -- 
 2.53.0
