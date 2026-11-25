@@ -1,54 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795624325;
-	b=Bym+Bhe81DTZqRh0/bLfoPXzZLLigcquawmFTVI2Lk+iPLoQqCi79565U04bGSC5/0iV
-	 6LcwFV3wAftd6AjK/Ar7ei4TZcwCb9Ld/gi/KgiOC7H2GFD+Td6x6wxptPNuYRvHGrl5e
-	 Q/4Jb2xmg6NyeU0HXKIGPoEpqWO3oLA3hhDiOJ0c/VlHF98pqCtMPpwrs6HCmXe+KvC0I
-	 /YuKD8InrGHe3EAEcbSiM0X6CoNkfDScqtf9FiPbmnn2JlVU0xB8ITz9Y6EvZIyVkdytw
-	 oPBZtVW2QOZtdqhdplzCWLVyh5aGCPTPrnoEh+LRP7WBI5XHkkr5eSKSkMs3G0S+kOQ==
+	t=1795624329;
+	b=dtmsv+9r8EZ2kfmMdusA6BJWVLxsmBiO1kv2xZ1P1xiQt3tfRA10tv2/HkMPG277u53p
+	 UzBwAtMY2YXCEnIJ/cQervZUCnbtLOaDxHLW9rXEDz+ji9ltRMkk64o25cxaJSDoDFCVK
+	 5YJcGS814QBV5dhYMdvivht0S1MRzkjpUpfS4V/BKwNKf/EDwo9VfWWInI2kTvcKobpAr
+	 J9Sv+IUV7DReWLfmgGVNlDHOKH5sZtXOPohrTCqyx8bi9a9ATJEfGw+AfP558/pp6A8Vp
+	 3mJByfDtiJR2JIgq89XAIFdiJJA3h3vdeQQv9sze5uBjm65HMn//0De2vDluBX9wzLA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795624325;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795624329;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=IEZh4CDbq8oEG2TCWz5eWaMFGSDkxmi/Z4plolc9zeM=;
-	b=5DteVCqDK2OrQ44Y5YdAvZ5DbrStgxSKGwwTAz5a4HrCdObkzOz9onQ7xy7hu/IDIZm6
-	 txnsom3pUfgpFyb12UIy2KDgBqnNgQcWdwYVJ3a1zRx/Ru+8td4WthN6ml6yvxOf6dWNE
-	 sOypQJn570LdyduzP3VsWx8nWG5kB/IgxtVpbBcRgHS/ep+KtNeB2108mKbfnPLRDHxSX
-	 sCWu6HfanTQOt7udQ1LDJsuzCzPHSJSUlGfFZyr6Z6P0clvt4pi8ZPrG7l+D9a89HLacT
-	 LpayIuxoGybP9xvje+UTKXgLX7jM1iNOx0UwFwDBCAP1IOq4MzOoKykpDUwwLRGKVhQ==
+	bh=MCEvmXGFM9tm8QoKk4cWNTzZOh8kkIBi2QovhRGPHL4=;
+	b=D3kSy907qsRvPQasyq5RuDPoX67A7bTIHGwGCd6KDgR04x75texAbbTr4T+QRmmuKnyM
+	 7KdgxrclyiM0t0ImiWsMmvTcIc0gfx+kU0SmtzWhkGkntamRPd32uE6SGg2dZ+wamRQxL
+	 GMCjG1ensj1UhlwNXzqrJ5gdQJBEXC3uN+jnW5+pQjD6ImONqB92x4qYAsFViEgUeEBRR
+	 YW9ZlI9hyH5OTOepsd8jP+ixRQL1s//5v90ajPo4uYTyI0SERxEBhhOg/N2PHrEZdGfDi
+	 pJj+t3KSvn3OTR9cBiA34WTeI2f56Klk/Ky67PHpWUQukmEk7vtptNYP0j/8i7Yp9pQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=lcdnctsf;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=QEew319I;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D53D3606A33D;
-	Wed, 25 Nov 2026 16:32:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4045D606A33C;
+	Wed, 25 Nov 2026 16:32:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=lcdnctsf
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 28B421F000E6;
-	Wed, 25 Nov 2026 16:32:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=QEew319I
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0CFE11F000D2;
+	Wed, 25 Nov 2026 16:32:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795624325;
-	bh=IEZh4CDbq8oEG2TCWz5eWaMFGSDkxmi/Z4plolc9zeM=;
+	s=korg; t=1795624328;
+	bh=MCEvmXGFM9tm8QoKk4cWNTzZOh8kkIBi2QovhRGPHL4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=lcdnctsfCdzH8W7JFxx5q98AObHOQih6jUNdIgYIG+KheDmqbutFIYD9e9mQQHEIs
-	 JOcIRyni3WmQzAfGyAuyf0JqRMiFCh2s13yUEsG9GKyvPMIbDXLU8LVryX/K+AqVqg
-	 1ClWHkX1kKznr0ozfIfcszQ7QDuQyXE3F0hdzkug=
+	b=QEew319IcwAmoc8V+RQoCX4x4TdbLfUFZ9AwQIXeJoQVEElPlxBybRnwGkkNpOQ2j
+	 4S2LzLOw8KSixe0Ii2NE47UHKRkngnukpltww3VPkDkacqmJhsSAH3tzi7N9YBmOye
+	 ja9iElJrkBlYDwSw4gUh13Ad9b5RFJYgvPWGWGR4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alex Austin <alex.austin@amd.com>,
-	Alejandro Lucero <alucerop@amd.com>,
-	Pieter Jansen van Vuuren <pieter.jansen-van-vuuren@amd.com>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Cen Zhang <zzzccc427@gmail.com>,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 130/816] sfc: ptp: avoid racing PPS timestamp updates
-Date: Wed, 25 Nov 2026 15:27:58 +0100
-Message-ID: <20261125143852.214324386@linuxfoundation.org>
+Subject: [PATCH 6.12 157/816] Bluetooth: hci_sync: Copy the LE accept list under hdev->lock
+Date: Wed, 25 Nov 2026 15:28:25 +0100
+Message-ID: <20261125143852.829917660@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143849.205329330@linuxfoundation.org>
 References: <20261125143849.205329330@linuxfoundation.org>
@@ -70,131 +68,261 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alex Austin <alex.austin@amd.com>
+From: Cen Zhang <zzzccc427@gmail.com>
 
-[ Upstream commit 23d23e6c6517d0fea4f64340a23e33c89f82c03c ]
+[ Upstream commit 674006912777747170ad70d7727804ad4f2d047f ]
 
-efx_ptp_pps_worker() can race with SIOCHWTSTAMP via
-efx_ptp_change_mode(). After the worker completes synchronization, the
-ioctl can start another synchronization and update host_time_pps while
-the worker copies it into the PPS event. This can report a partially
-updated timestamp. Serializing synchronization transactions alone does
-not protect this copy, which happens after phc_lock is released.
+The LE accept-list mirror consists of bdaddr_list entries that are
+added, removed and freed under hdev->lock. The ordinary branch of
+hci_update_accept_list_sync() traverses this list without that lock.
+The request worker's req_lock does not serialize raw HCI completions,
+and the RCU sections protect connection and pending-action lookups,
+not the accept-list nodes.
 
-Return the timestamp through the caller's own pps_event_time rather
-than the shared field in efx_ptp_data, so the worker reads storage no
-one else can write.
+Changing connectability can reach this iterator through
+set_connectable_sync(), hci_update_connectable_sync(),
+hci_update_passive_scan_sync() and hci_passive_scan_sync(). With a
+populated mirror, a privileged raw HCI sender can issue
+HCI_OP_LE_CLEAR_ACCEPT_LIST while request work is reconciling it:
 
-Fixes: 7c236c43b838 ("sfc: Add support for IEEE-1588 PTP")
-Signed-off-by: Alex Austin <alex.austin@amd.com>
-Reviewed-by: Alejandro Lucero <alucerop@amd.com>
-Reviewed-by: Pieter Jansen van Vuuren <pieter.jansen-van-vuuren@amd.com>
-Link: https://patch.msgid.link/20261026123023.3566549-4-alex.austin@amd.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+  Request work                    HCI event work
+  select b and successor t
+                                  hci_cc_le_clear_accept_list()
+                                    hci_dev_lock(hdev)
+                                    hci_bdaddr_list_clear()
+                                      unlink nodes and kfree(b)
+                                    hci_dev_unlock(hdev)
+  read b->bdaddr_type
+
+The clear completion can therefore free the selected node before its
+field read, or the saved successor before the iterator advances.
+KASAN reported a one-byte read of bdaddr_type from the freed node.
+
+Copy each entry's address and type under hdev->lock and reconcile the
+private array instead. Release the mutex before issuing synchronous
+commands, since their completion handlers also acquire it. Free the
+copy after iteration and use the existing error path to disable
+accept-list filtering if allocation fails.
+
+This change has not been runtime-tested.
+
+KASAN report as below:
+
+    ==================================================================
+    BUG: KASAN: slab-use-after-free in hci_passive_scan_sync+0x1cc4/0x1f80
+    Read of size 1 at addr ffff888105ee6c56 by task kworker/u17:1/499
+
+    Workqueue: hci0 hci_cmd_sync_work
+    Call Trace:
+     <TASK>
+     dump_stack_lvl+0x93/0xd0
+     print_report+0xce/0x630
+     ? hci_passive_scan_sync+0x1cc4/0x1f80
+     ? srso_alias_return_thunk+0x5/0xfbef5
+     ? __virt_addr_valid+0x20d/0x410
+     ? hci_passive_scan_sync+0x1cc4/0x1f80
+     kasan_report+0xe0/0x110
+     ? hci_passive_scan_sync+0x1cc4/0x1f80
+     hci_passive_scan_sync+0x1cc4/0x1f80
+     ? pmbd_gate_site_armed+0x31/0x1c0
+     ? __pfx_hci_passive_scan_sync+0x10/0x10
+     ? srso_alias_return_thunk+0x5/0xfbef5
+     ? pmbd_probe_hit_cookie+0x10/0x1c0
+     ? __pfx_pmbd_probe_hit_cookie+0x10/0x10
+     ? hci_update_passive_scan_sync+0x43f/0x9e0
+     ? srso_alias_return_thunk+0x5/0xfbef5
+     ? lock_release+0xc8/0x280
+     hci_update_passive_scan_sync+0x473/0x9e0
+     hci_update_connectable_sync+0x13c/0x250
+     set_connectable_sync+0x39/0xb0
+     hci_cmd_sync_work+0x1b3/0x450
+     ? srso_alias_return_thunk+0x5/0xfbef5
+     process_one_work+0x908/0x19c0
+     ? __pfx_process_one_work+0x10/0x10
+     ? srso_alias_return_thunk+0x5/0xfbef5
+     ? lock_is_held_type+0x8f/0x100
+     ? srso_alias_return_thunk+0x5/0xfbef5
+     worker_thread+0x65c/0xe40
+     ? __pfx_worker_thread+0x10/0x10
+     kthread+0x34f/0x460
+     ? srso_alias_return_thunk+0x5/0xfbef5
+     ? __pfx_kthread+0x10/0x10
+     ret_from_fork+0x659/0x940
+     ? __pfx_ret_from_fork+0x10/0x10
+     ? srso_alias_return_thunk+0x5/0xfbef5
+     ? __switch_to+0x74f/0xf80
+     ? __pfx_kthread+0x10/0x10
+     ret_from_fork_asm+0x1a/0x30
+     </TASK>
+
+    Allocated by task 511:
+     kasan_save_stack+0x33/0x60
+     kasan_save_track+0x14/0x30
+     __kasan_kmalloc+0xaa/0xb0
+     __kmalloc_cache_noprof+0x251/0x610
+     hci_bdaddr_list_add+0x179/0x390
+     hci_cc_le_add_to_accept_list+0x189/0x2d0
+     hci_cmd_complete_evt+0x373/0xab0
+     hci_event_packet+0x4e8/0xc70
+     hci_rx_work+0x367/0xf00
+     process_one_work+0x908/0x19c0
+     worker_thread+0x65c/0xe40
+     kthread+0x34f/0x460
+     ret_from_fork+0x659/0x940
+     ret_from_fork_asm+0x1a/0x30
+
+    Freed by task 511:
+     kasan_save_stack+0x33/0x60
+     kasan_save_track+0x14/0x30
+     kasan_save_free_info+0x3b/0x60
+     __kasan_slab_free+0x5f/0x80
+     kfree+0x307/0x580
+     hci_bdaddr_list_clear+0x134/0x230
+     hci_cc_le_clear_accept_list+0x80/0x1f0
+     hci_cmd_complete_evt+0x373/0xab0
+     hci_event_packet+0x4e8/0xc70
+     hci_rx_work+0x367/0xf00
+     process_one_work+0x908/0x19c0
+     worker_thread+0x65c/0xe40
+     kthread+0x34f/0x460
+     ret_from_fork+0x659/0x940
+     ret_from_fork_asm+0x1a/0x30
+
+    The buggy address belongs to the object at ffff888105ee6c40
+                                                                which
+                                belongs to the cache kmalloc-32 of size 32
+    The buggy address is located 22 bytes inside of
+                                                                freed
+                                32-byte region [ffff888105ee6c40,
+                                ffff888105ee6c60)
+
+    The buggy address belongs to the physical page:
+        page: refcount:0 mapcount:0 mapping:0000000000000000
+    index:0xffff888105ee69c0 pfn:0x105ee6
+    flags: 0x200000000000200(workingset|node=0|zone=2)
+    page_type: f5(slab)
+        raw: 0200000000000200 ffff888100042780 ffffea0004187150
+    ffffea00042534d0
+        raw: ffff888105ee69c0 000000000040003f 00000000f5000000
+    0000000000000000
+    page dumped because: kasan: bad access detected
+
+    Memory state around the buggy address:
+     ffff888105ee6b00: fa fb fb fb fc fc fc fc fa fb fb fb fc fc fc fc
+     ffff888105ee6b80: fa fb fb fb fc fc fc fc fa fb fb fb fc fc fc fc
+    >ffff888105ee6c00: fa fb fb fb fc fc fc fc fa fb fb fb fc fc fc fc
+                                                     ^
+     ffff888105ee6c80: fa fb fb fb fc fc fc fc fa fb fb fb fc fc fc fc
+     ffff888105ee6d00: fa fb fb fb fc fc fc fc fa fb fb fb fc fc fc fc
+    ==================================================================
+
+Fixes: e8907f76544f ("Bluetooth: hci_sync: Make use of hci_cmd_sync_queue set 3")
+Assisted-by: LLM
+Signed-off-by: Cen Zhang <zzzccc427@gmail.com>
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/sfc/ptp.c | 26 ++++++++++++++++----------
- 1 file changed, 16 insertions(+), 10 deletions(-)
+ net/bluetooth/hci_sync.c | 53 ++++++++++++++++++++++++++++++++--------
+ 1 file changed, 43 insertions(+), 10 deletions(-)
 
-diff --git a/drivers/net/ethernet/sfc/ptp.c b/drivers/net/ethernet/sfc/ptp.c
-index 608bcba90c509..3aed327a5ec70 100644
---- a/drivers/net/ethernet/sfc/ptp.c
-+++ b/drivers/net/ethernet/sfc/ptp.c
-@@ -268,7 +268,6 @@ struct efx_ptp_rxfilter {
-  * @evt_frag_idx: Current fragment number
-  * @evt_code: Last event code
-  * @start: Address at which MC indicates ready for synchronisation
-- * @host_time_pps: Host time at last PPS
-  * @adjfreq_ppb_shift: Shift required to convert scaled parts-per-billion
-  * frequency adjustment into a fixed point fractional nanosecond format.
-  * @current_adjfreq: Current ppb adjustment.
-@@ -330,7 +329,6 @@ struct efx_ptp_data {
- 	int evt_frag_idx;
- 	int evt_code;
- 	struct efx_buffer start;
--	struct pps_event_time host_time_pps;
- 	unsigned int adjfreq_ppb_shift;
- 	s64 current_adjfreq;
- 	struct ptp_clock *phc_clock;
-@@ -912,7 +910,8 @@ static void efx_ptp_read_timeset(MCDI_DECLARE_STRUCT_PTR(data),
- static int
- efx_ptp_process_times(struct efx_nic *efx, MCDI_DECLARE_STRUCT_PTR(synch_buf),
- 		      size_t response_length,
--		      const struct pps_event_time *last_time)
-+		      const struct pps_event_time *last_time,
-+		      struct pps_event_time *host_time_pps)
+diff --git a/net/bluetooth/hci_sync.c b/net/bluetooth/hci_sync.c
+index b29d996feab6b..ddfa09b8176a1 100644
+--- a/net/bluetooth/hci_sync.c
++++ b/net/bluetooth/hci_sync.c
+@@ -2923,6 +2923,31 @@ static struct conn_params *conn_params_copy(struct list_head *list, size_t *n)
+ 	return p;
+ }
+ 
++static struct conn_params *le_accept_list_copy(struct hci_dev *hdev,
++					       size_t *n)
++{
++	struct bdaddr_list *entry;
++	struct conn_params *params;
++	size_t i = 0;
++
++	hci_dev_lock(hdev);
++
++	*n = list_count_nodes(&hdev->le_accept_list);
++	params = kvzalloc_objs(struct conn_params, *n);
++	if (!params)
++		goto unlock;
++
++	list_for_each_entry(entry, &hdev->le_accept_list, list) {
++		bacpy(&params[i].addr, &entry->bdaddr);
++		params[i].addr_type = entry->bdaddr_type;
++		i++;
++	}
++
++unlock:
++	hci_dev_unlock(hdev);
++	return params;
++}
++
+ /* Clear LE Accept List */
+ static int hci_le_clear_accept_list_sync(struct hci_dev *hdev)
  {
- 	unsigned number_readings =
- 		MCDI_VAR_ARRAY_LEN(response_length,
-@@ -990,6 +989,10 @@ efx_ptp_process_times(struct efx_nic *efx, MCDI_DECLARE_STRUCT_PTR(synch_buf),
- 			   "PTP bad synchronisation seconds\n");
- 		return -EAGAIN;
+@@ -2953,7 +2978,6 @@ static int hci_le_clear_accept_list_sync(struct hci_dev *hdev)
+ static u8 hci_update_accept_list_sync(struct hci_dev *hdev)
+ {
+ 	struct conn_params *params;
+-	struct bdaddr_list *b, *t;
+ 	u8 num_entries = 0;
+ 	bool pend_conn, pend_report;
+ 	u8 filter_policy;
+@@ -3018,20 +3042,27 @@ static u8 hci_update_accept_list_sync(struct hci_dev *hdev)
+ 	 * report. If not present in either list, then remove it from
+ 	 * the controller.
+ 	 */
+-	list_for_each_entry_safe(b, t, &hdev->le_accept_list, list) {
++	params = le_accept_list_copy(hdev, &n);
++	if (!params) {
++		err = -ENOMEM;
++		goto done;
++	}
++
++	for (i = 0; i < n; i++) {
+ 		rcu_read_lock();
+ 
+-		if (hci_conn_hash_lookup_le(hdev, &b->bdaddr, b->bdaddr_type)) {
++		if (hci_conn_hash_lookup_le(hdev, &params[i].addr,
++					    params[i].addr_type)) {
+ 			rcu_read_unlock();
+ 			continue;
+ 		}
+ 
+ 		pend_conn = hci_pend_le_action_lookup(&hdev->pend_le_conns,
+-						      &b->bdaddr,
+-						      b->bdaddr_type);
+-		pend_report = hci_pend_le_action_lookup(&hdev->pend_le_reports,
+-							&b->bdaddr,
+-							b->bdaddr_type);
++						      &params[i].addr,
++						      params[i].addr_type);
++		pend_report = hci_pend_le_action_lookup(
++			&hdev->pend_le_reports, &params[i].addr,
++			params[i].addr_type);
+ 
+ 		rcu_read_unlock();
+ 
+@@ -3039,14 +3070,16 @@ static u8 hci_update_accept_list_sync(struct hci_dev *hdev)
+ 		 * remove it from the acceptlist.
+ 		 */
+ 		if (!pend_conn && !pend_report) {
+-			hci_le_del_accept_list_sync(hdev, &b->bdaddr,
+-						    b->bdaddr_type);
++			hci_le_del_accept_list_sync(hdev, &params[i].addr,
++						    params[i].addr_type);
+ 			continue;
+ 		}
+ 
+ 		num_entries++;
  	}
+ 
++	kvfree(params);
 +
-+	if (!host_time_pps)
-+		return 0;
-+
- 	delta.tv_sec = (last_sec - start_sec) & 1;
- 	delta.tv_nsec =
- 		last_time->ts_real.tv_nsec -
-@@ -1006,8 +1009,8 @@ efx_ptp_process_times(struct efx_nic *efx, MCDI_DECLARE_STRUCT_PTR(synch_buf),
- 	delta.tv_nsec += ktime_to_timespec64(mc_time).tv_nsec;
- 
- 	/* Set PPS timestamp to match NIC top of second */
--	ptp->host_time_pps = *last_time;
--	pps_sub_ts(&ptp->host_time_pps, delta);
-+	*host_time_pps = *last_time;
-+	pps_sub_ts(host_time_pps, delta);
- 
- 	return 0;
- }
-@@ -1020,7 +1023,8 @@ efx_ptp_process_times(struct efx_nic *efx, MCDI_DECLARE_STRUCT_PTR(synch_buf),
-  * the function that registered it, so a secondary function can capture here
-  * without serializing against the primary.
-  */
--static int efx_ptp_synchronize(struct efx_nic *efx, unsigned int num_readings)
-+static int efx_ptp_synchronize(struct efx_nic *efx, unsigned int num_readings,
-+			       struct pps_event_time *host_time_pps)
- {
- 	struct efx_ptp_data *ptp = efx->ptp_data;
- 	MCDI_DECLARE_BUF(synch_buf, MC_CMD_PTP_OUT_SYNCHRONIZE_LENMAX);
-@@ -1069,7 +1073,7 @@ static int efx_ptp_synchronize(struct efx_nic *efx, unsigned int num_readings)
- 				 &response_length);
- 	if (rc == 0) {
- 		rc = efx_ptp_process_times(efx, synch_buf, response_length,
--					   &last_time);
-+					   &last_time, host_time_pps);
- 		if (rc == 0)
- 			++ptp->good_syncs;
- 		else
-@@ -1501,14 +1505,15 @@ static void efx_ptp_pps_worker(struct work_struct *work)
- {
- 	struct efx_ptp_data *ptp =
- 		container_of(work, struct efx_ptp_data, pps_work);
-+	struct pps_event_time host_time_pps = {};
- 	struct efx_nic *efx = ptp->efx;
- 	struct ptp_clock_event ptp_evt;
- 
--	if (efx_ptp_synchronize(efx, PTP_SYNC_ATTEMPTS))
-+	if (efx_ptp_synchronize(efx, PTP_SYNC_ATTEMPTS, &host_time_pps))
- 		return;
- 
- 	ptp_evt.type = PTP_CLOCK_PPSUSR;
--	ptp_evt.pps_times = ptp->host_time_pps;
-+	ptp_evt.pps_times = host_time_pps;
- 	ptp_clock_event(ptp->phc_clock, &ptp_evt);
- }
- 
-@@ -1849,7 +1854,8 @@ int efx_ptp_change_mode(struct efx_nic *efx, bool enable_wanted,
- 				rc = efx_ptp_start(efx);
- 			if (rc == 0) {
- 				rc = efx_ptp_synchronize(efx,
--							 PTP_SYNC_ATTEMPTS * 2);
-+							 PTP_SYNC_ATTEMPTS * 2,
-+							 NULL);
- 				if (rc != 0)
- 					efx_ptp_stop(efx);
- 			}
+ 	/* Since all no longer valid accept list entries have been
+ 	 * removed, walk through the list of pending connections
+ 	 * and ensure that any new device gets programmed into
 -- 
 2.53.0
 
