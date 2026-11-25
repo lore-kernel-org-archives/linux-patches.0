@@ -1,51 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795619766;
-	b=C+4c5qEpiZom5lY1h0YIWwAZ3ON7+h/biqa41xkyH8ZWmINz30pvMY99Q8Lkand1UXlF
-	 jFPtEKrA65EJ9/sOpVzbB2EasCkyciW1vrRzW2oLRxKdYa60A6COF53Fl/FoEBh/+743j
-	 WLdMbXIaGVk5lLQDpvzjCWLOPiulA8ycMKODKNUMpCa77OzioRA7mNLmEqsuhVkyfihsO
-	 WJIyqd/ExSZglI9y6m7U8tuLuoELmv95ZmVNjtDj4Amag2fq192xqm6ih1spJ2Zx91miO
-	 uuQFKji0IoZCC1oozd8FaDZw8h29qn2BK/lHx6hzh0enVmb3iGyvhM9FTafY6SixkWg==
+	t=1795619769;
+	b=mTlHLd6HpDYviIJ1MrISoJc0eWczg+g0CBEX/TSqDcCaPXTmL8drdxVkGAV4AI3VAlXP
+	 rHxx9F4OaSryXoR1jvOHqcmx1rF1PvTfC9VUiRHEIlHrJaaX3zQtekyHhFB2WleExCIkJ
+	 j+X0Ejb7yQEilSNJBQOVpSDZL+jD7hdBji9Eka1JShtcyVyl1hVDjwPTvmBQhpCBbdfuh
+	 O0eSvak3opZEcVn3aR8hpgNRMeGDu8Qihy7LU4M1WsTFuhVEzxdUnGLIu+xRHfvMLSkKi
+	 M+jj3C7cbgGRHDfQLuODcaFvfWztI5etGKWuWSrMvFaUtc7C5E7uqn+RxZVI/7W1TsQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795619766;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795619769;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=KqxHTU8DFuYZQCYo42m4+HDXvuWZievROVNqa0nawHE=;
-	b=flAOl1BLcq0LdxsxEWGboaLFiVHPRpfmZmDHUYOSBohzkezuEAlXjA/VfeoVdimMSLV1
-	 NRxQ2JDJoyyaI1RruUj4z2LAaCuvJpB2WhQzNhIzax2SflZjh5BnBCysCTlHwEPk+l8Eu
-	 oYJIABbBvgUIYfZsR+Jz9oGKXKRo4NkIPiSSeaoXFajmL7+2QTVNb9rPoJ5SCXmPkwetX
-	 QRQ0OnKJmimEmAQePTVBLowxX4WGOpGSGkmrwb4/1/s3vqlhsM9UkSWoR240eK0zRtINO
-	 WHdZmYr3fu3x80IrxJ5rT6I4dDzvfMG6VOxSqV1kpiR/2xL/n1cOoEBqlLj8n1Ssi+g==
+	bh=xd0yptUQGnf+AzSnRJ1Th94bMe/XS5iyqk4eIN/ZC+o=;
+	b=pLOyh2HFn5jAjOCASix01EJDoBXo+edCnERmEi/1CpbHo+ZbKIC/KbsI/clG7KNErXza
+	 cqEStHhE0b4Tmzqwml+hz03UtVKUWEqr/qJh+SldspQlI9vIJnCQmX+bx9c0zUAoCwYh6
+	 TNmngCW9239RwV2Lp32/1rf9i9OwNe3iFp+IocoXaJBlQ5KFd1r/QZYhQMhagsvdJc/Kb
+	 ZG8eAoCkxqpVYl1fseZLm5t/tiK94F/0LH3bgG+a8JPvKOYdqrYwZAWXeIyGVqwVyknRK
+	 53bSJz99rEQd5VfqaKsj3S4WyQBEMlgRt6JQ1XtJCaBKlDlP+CUf/y0S496aih40vQA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=CSMvtnAG;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=edho1Gl3;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1D4B9606A321;
-	Wed, 25 Nov 2026 15:16:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 453ED606A323;
+	Wed, 25 Nov 2026 15:16:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=CSMvtnAG
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1869B1F000C6;
-	Wed, 25 Nov 2026 15:16:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=edho1Gl3
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4E6511F000D1;
+	Wed, 25 Nov 2026 15:16:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795619765;
-	bh=KqxHTU8DFuYZQCYo42m4+HDXvuWZievROVNqa0nawHE=;
+	s=korg; t=1795619768;
+	bh=xd0yptUQGnf+AzSnRJ1Th94bMe/XS5iyqk4eIN/ZC+o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=CSMvtnAGFr9Mlr7wiDU7g7H+woPoJc/snfOUKqnVtcdjIvuKNd7bSDPK60Vd4wnR0
-	 jcsrnTCGJR924GH2ReNjC5jUuC+vm9X5kcaRXBdj7v5mVaB17vv2c2o8wDu7msdWVM
-	 cLRPk+JCH/S/TFZy3QzwCtG1omEW5Kl+uL/yXsFU=
+	b=edho1Gl3mgY5lte6fcjthEpiiVaJr6dLtSeBI8ACFN6ldX/IKAmT09nnJbfY145Ih
+	 JdCLV0zKaHGbS6ZYuJi60DhQrKA1IausUVmT2xixsKAy/uBpCGT+3N+WWm3wUCuRtz
+	 Rero+uRdf5eWQM5CHtZ2f/urh5rnI9VKgEZZund4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Cheng Yongkang <teel4res@gmail.com>,
 	"Christian Brauner (Amutable)" <brauner@kernel.org>
-Subject: [PATCH 7.3 0702/1005] fs/proc: fix the write length returned by proc_sys_call_handler()
-Date: Wed, 25 Nov 2026 15:34:00 +0100
-Message-ID: <20261125143838.203700447@linuxfoundation.org>
+Subject: [PATCH 7.3 0703/1005] fs/splice: clamp an over-reported write_iter result
+Date: Wed, 25 Nov 2026 15:34:01 +0100
+Message-ID: <20261125143838.227071904@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143821.729802100@linuxfoundation.org>
 References: <20261125143821.729802100@linuxfoundation.org>
@@ -69,61 +69,53 @@ Content-Transfer-Encoding: 8bit
 
 From: Cheng Yongkang <teel4res@gmail.com>
 
-commit fbdc020ee1b82079102e493aaa7200de5f497a38 upstream.
+commit 2d956723e82cddae8ff8e9da99a666217b02065f upstream.
 
-proc_sys_call_handler() reads the write length from iov_iter_count() and
-copies that many bytes from the iterator into kbuf.  A cgroup/sysctl BPF
-program can replace the new value through bpf_sysctl_set_new_value() and
-update count to the length of the replacement value.  The handler then
-returns that adjusted count as the number of bytes written, even though
-the iterator originally held a different number of bytes.
-
-If the replacement value is longer than the original input, ->write_iter()
-reports more bytes than the iterator held.  splice(2) passes that value to
-iter_file_splice_write(), which subtracts it from the pipe length and
-walks past the pipe head:
+iter_file_splice_write() builds a bvec iterator of at most
+sd.total_len - left bytes and passes it to ->write_iter().  It then
+subtracts the returned length from sd.total_len and walks the pipe
+buffers by that length.  A ->write_iter() implementation that reports
+more bytes than the iterator held makes sd.total_len underflow and the
+dismissal loop advance pipe->tail past pipe->head, releasing a zeroed
+pipe buffer:
 
   Splice Exceeded! ret=7 tot=1 left=0
   Oops: general protection fault
   RIP: 0010:iter_file_splice_write+0xb6f/0x1170
 
-The write path consumes at most the original iterator length in
-copy_from_iter_full() before the BPF hook runs.  Return the smaller of the
-adjusted and original counts on the write path, so an expanded BPF value
-cannot exceed the iterator while a handler that reports a shorter parsed
-length still produces a short write.  The read path keeps using the
-adjusted count for copy_to_iter().
+Commit a3de58b12ce0 ("netfs: Fix unbuffered write error handling")
+added the warning for this condition but only reports it.  Clamp the
+return value to the size of the iterator that was actually handed to
+->write_iter(), so the pipe accounting stays consistent even when a
+producer violates the iterator contract.
 
-Fixes: 4e63acdff864 ("bpf: Introduce bpf_sysctl_{get,set}_new_value helpers")
+Fixes: 8d0207652cbe ("->splice_write() via ->write_iter()")
 Cc: stable@vger.kernel.org
 Signed-off-by: Cheng Yongkang <teel4res@gmail.com>
-Link: https://patch.msgid.link/179328314073.648427.7892850166511253762@gmail.com
+Link: https://patch.msgid.link/179328314072.648427.13388575162083843840@gmail.com
 Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/proc/proc_sysctl.c |    5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ fs/splice.c |    9 ++++++---
+ 1 file changed, 6 insertions(+), 3 deletions(-)
 
---- a/fs/proc/proc_sysctl.c
-+++ b/fs/proc/proc_sysctl.c
-@@ -557,6 +557,8 @@ static ssize_t proc_sys_call_handler(str
- 	struct ctl_table_header *head = grab_header(inode);
- 	const struct ctl_table *table = PROC_I(inode)->sysctl_entry;
- 	size_t count = iov_iter_count(iter);
-+	/* ->write_iter() must never report more than the iterator held */
-+	size_t orig_count = count;
- 	char *kbuf;
- 	ssize_t error;
+--- a/fs/splice.c
++++ b/fs/splice.c
+@@ -737,9 +737,12 @@ iter_file_splice_write(struct pipe_inode
+ 		sd.pos = kiocb.ki_pos;
+ 		if (ret <= 0)
+ 			break;
+-		WARN_ONCE(ret > sd.total_len - left,
+-			  "Splice Exceeded! ret=%zd tot=%zu left=%zu\n",
+-			  ret, sd.total_len, left);
++		if (unlikely(ret > sd.total_len - left)) {
++			WARN_ONCE(1,
++				  "Splice Exceeded! ret=%zd tot=%zu left=%zu\n",
++				  ret, sd.total_len, left);
++			ret = sd.total_len - left;
++		}
  
-@@ -607,7 +609,8 @@ static ssize_t proc_sys_call_handler(str
- 			goto out_free_buf;
- 	}
- 
--	error = count;
-+	/* the write path consumed at most the original iterator length */
-+	error = write ? min(count, orig_count) : count;
- out_free_buf:
- 	kvfree(kbuf);
- out:
+ 		sd.num_spliced += ret;
+ 		sd.total_len -= ret;
 
 
