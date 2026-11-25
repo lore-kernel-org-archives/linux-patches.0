@@ -1,51 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795619992;
-	b=I0cnClHVues2nY3rlL6S8EpSQJjKwJMR+e38VASAtRcRtnHPOOg3HqahLfFn9MNUUsG8
-	 3XK8hyqpQ4J7KqYuCokfhM6P+WmZ/pzN4DTjnpDAwHYzVw1vdNQkTIeckDxlnrTvEWDfT
-	 0wj4tFUz6cKQhgHKJyXqx12mORq0FHwXqvgRF4PCFSQksUjBMXwUTi+MiuAy95dysSlPX
-	 qoA6NvE6LBXUWpcE2pts9eR7hzAgTm6xV2uDPHS3rFer+0+rVyT5AEsN3z1UBJyDgYyzk
-	 YWW5o3Baph01CN98KAWRgFoSaszIXCDOKeAuZL0mwC5RAWNX6XUSe/cB7KX0VBB2XNw==
+	t=1795619995;
+	b=xIAllPD4pBhc6DODRybFMk3gIDydiysJEjCNp+C9ehshDEEY8vLfGv1bT7nB5tahnLny
+	 K6QPGVovm5JJb/wdBik++e3LLe83/klu/PKNA2SO16C6C9KuHgUNeKSnUt9AkOiY7Gqlv
+	 hn+CNQEGtU6mtT4r8nMaqOW6cmq1gSUg3JNqMAnySAkIh3FztUjFnGSi66lZkwmB0k8M7
+	 v+i+x2wOkEwTN+1emFqvvJQK1hJNOHiktJ+cwTVV+n1buZ0vuOxto0M5b76TcFk35sYMt
+	 VsjJAqVZuNkPkQyTRQpcbcDNCqX/E63ragq8qsQskCdoWIHFddym7/UBdksMx641R7g==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795619992;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795619995;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=/7kcyyPdXqIsMGMqxTm4rbRWazQCRzzXAB6nGjWcBLg=;
-	b=Ii8gzZ1CXJn/VgC7NB+4iPCzZpEZERglgexmBj69A/cJVx0lpPdsmYpopVD5cErZs8IK
-	 NtqR5w9DfsHUmakQgP/ODQ8eKbhP8yR3L4NRXiUadR6urp5xYVe0VEMiW5hWTAnVojd6s
-	 PCyLFYB/xQ0swtLx6r0XtiNUjv6FjixGBQ303IzWFenWs2Tk4Hw6b+NUQ8MiEnVYrNzTb
-	 hHz+CN3VBkH3MLlsubTXGhdmD8K7G0P/V8h157TbySvug7g8F4SKqitHYdAWkvOhlnUjJ
-	 p6VsOpSF3XmY0pw5LRbrzL3ue+FOtkGJBCKOVtFC69T6aamMj6FFjVxbJ6Q4LsyCiXA==
+	bh=gqpIrQ7KL5Pk92pSqbZulfmTDquM/rS6tt/bxDqrKZo=;
+	b=H9zdXka3tEIGinSRnEtTFKe9GouchoEY3PD14ZfNrSQqcTatiEGvcAdZ3MsYbPM7Bzme
+	 38Ujy7etZHXh8fXj7w9DUMpTC9wUollpasJd8NAFPKts6yCOhITX4lxxpxhAzhZaXPe3m
+	 xd4EG172ksupKM+XgYZDLvr+FUVXnl8S22vIkFsm0gOoQ0p5TwQscmIIqHuLV5NuNIeis
+	 U8t7Y9f+I6GXFbGRjxF89aWRKvo2z/w8ghoi0/YK7id9sQ17Nol0cOxwauTjT0bntU6fw
+	 dWrq29JSFm8xyyZJg+/g2MX91hTLn4ZaUkUNMHTN9NIlBFKq5EA4FdV0kcZxRPpqzKg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=MMoCCgmI;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=VKCiNHj2;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 44B7E606A31E;
-	Wed, 25 Nov 2026 15:19:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7186C606A31E;
+	Wed, 25 Nov 2026 15:19:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=MMoCCgmI
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E68241F000C4;
-	Wed, 25 Nov 2026 15:19:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=VKCiNHj2
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6632F1F000C6;
+	Wed, 25 Nov 2026 15:19:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795619991;
-	bh=/7kcyyPdXqIsMGMqxTm4rbRWazQCRzzXAB6nGjWcBLg=;
+	s=korg; t=1795619994;
+	bh=gqpIrQ7KL5Pk92pSqbZulfmTDquM/rS6tt/bxDqrKZo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=MMoCCgmIDTqWFrlgJD2ETu2Ags9l037yKukBVUjYQalzYNB7UVrlOLU9ghXwqWI2w
-	 +SWlg6diyKQL12h44Enfo8KOOP75aag6gu3ao88yCiCAb4kEB6lpWyDc+ge4u+9lqX
-	 x0ibWIa3JGMmCrHDxyNs4N5K4D+pRVe1FyECZals=
+	b=VKCiNHj2m+yVSqRTI5FyefqVoKznToh5Bg/0p7dSsGBtsA/HkEm+ZNQcHlsZNhpEi
+	 E8uqJqkhGU2u22tKUfzqrIk2bZlybJO18hJq5LyzlnQBH93tU7So2GfsZmBbjiXsfN
+	 ESMGGKoi0ujMF9XAvH8eEALd07RpbfQq4NXHfXT8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Michail Andreas Michalopoulos <mike.michalo@gmail.com>,
-	Namjae Jeon <linkinjeon@kernel.org>
-Subject: [PATCH 7.3 0772/1005] ksmbd: refuse reauthentication of an expired session as another user
-Date: Wed, 25 Nov 2026 15:35:10 +0100
-Message-ID: <20261125143839.829371022@linuxfoundation.org>
+	Tiezhu Yang <yangtiezhu@loongson.cn>,
+	Huacai Chen <chenhuacai@loongson.cn>
+Subject: [PATCH 7.3 0773/1005] LoongArch: BPF: Make arena support depend on 128-bit cmpxchg
+Date: Wed, 25 Nov 2026 15:35:11 +0100
+Message-ID: <20261125143839.852490270@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143821.729802100@linuxfoundation.org>
 References: <20261125143821.729802100@linuxfoundation.org>
@@ -67,58 +67,89 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Michail Andreas Michalopoulos <mike.michalo@gmail.com>
+From: Tiezhu Yang <yangtiezhu@loongson.cn>
 
-commit 265709f9dc271693d1a261a62242db652fcc471d upstream.
+commit 9496832b824ab5f570c86d65e3b6f08163e6908b upstream.
 
-When a Kerberos session expires, its owner can reauthenticate it. For an
-NTLM reauthentication, ntlm_authenticate() only compares the new user with
-sess->user when the session is still valid. An expired session is in
-SMB2_SESSION_IN_PROGRESS during the reauthentication, so it takes the
-other branch and simply sets sess->user to the new user:
+When testing bpf selftest "jit_insns/cast_to_user", there are different
+behaviors on different Loongson machines.
 
-- the session's open files, tree connects and other state, created under
-  the original user's identity, now belong to whichever user just
-  authenticated, and a later Kerberos reauthentication is compared
-  against that user rather than the original one;
-- the original struct ksmbd_user is overwritten without being freed.
+(1) Loongson-3A6000
+  $ sudo ./test_progs -a jit_insns/cast_to_user
+  ...
+  Summary: 1/1 PASSED, 0 SKIPPED, 0/0 FAILED
 
-krb5_authenticate() already refuses a different user in this case, and
-the valid-session branch of ntlm_authenticate() does too. Do the same for
-an expired session: compare with the existing user and refuse a different
-one with -EKEYREJECTED, freeing the newly looked-up user either way.
+(2) Loongson-3A5000
+  $ sudo ./test_progs -a jit_insns/cast_to_user
+  ...
+  libbpf: map 'arena': failed to create: -ENOMEM
+  run_subtest:FAIL:unexpected_load_failure unexpected error: -12 (errno 12)
+  ...
+  Summary: 0/0 PASSED, 0 SKIPPED, 1/1 FAILED
 
-An AI assistant was used to find and fix this and as an independent
-reviewer.
+This is because the arena range tree uses kmalloc_nolock() API, which
+requires 128-bit atomic cmpxchg. This feature is provided by not only
+hardware SCQ extension but also assembler support on LoongArch. On CPUs
+without the SCQ extension, or if the older versions of assembler do not
+support the sc.q instruction, arena map creation fails with a misleading
+-ENOMEM error.
 
-Fixes: a47634cd729b ("ksmbd: expire SMB sessions when Kerberos tickets expire")
+Since system_has_cmpxchg128() and arch_cmpxchg128() are only available
+when CONFIG_AS_HAS_SCQ_EXTENSION is enabled (need assembler support), we
+guard bpf_jit_supports_arena() with an #ifdef block to preserve compile-
+time robustness first, and then safely return system_has_cmpxchg128() if
+defined, otherwise falling back to false. This ensures that arena map
+creation cleanly fails with a -EOPNOTSUPP on the systems without either
+the assembler support or the hardware SCQ extension.
+
+With this patch, here is the test result on Loongson-3A5000 without SCQ
+extension:
+
+  $ sudo ./test_progs -a jit_insns/cast_to_user
+  ...
+  libbpf: map 'arena': failed to create: -EOPNOTSUPP
+  run_subtest:FAIL:unexpected_load_failure unexpected error: -95 (errno 95)
+  ...
+  Summary: 0/0 PASSED, 0 SKIPPED, 1/1 FAILED
+
+It is better to mark the test status as SKIPPED rather than logging a
+false-alarm failure if the feature is not supported, but this belongs
+to a separate bpf selftest patch.
+
+This is similar to commit 536b523b4073 ("bpf, riscv: Make arena support
+depend on ZACAS").
+
+Note that BPF should not depend on a SLUB debug-mode escape hatch, so no
+need to consider the slub_debug exception.
+
 Cc: stable@vger.kernel.org
-Signed-off-by: Michail Andreas Michalopoulos <mike.michalo@gmail.com>
-Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
+Fixes: 4fdb5dd8aeba ("LoongArch: BPF: Implement bpf_addr_space_cast instruction")
+Signed-off-by: Tiezhu Yang <yangtiezhu@loongson.cn>
+Signed-off-by: Huacai Chen <chenhuacai@loongson.cn>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/smb/server/smb2pdu.c |   11 +++++++++++
- 1 file changed, 11 insertions(+)
+ arch/loongarch/net/bpf_jit.c |   11 ++++++++++-
+ 1 file changed, 10 insertions(+), 1 deletion(-)
 
---- a/fs/smb/server/smb2pdu.c
-+++ b/fs/smb/server/smb2pdu.c
-@@ -2358,6 +2358,17 @@ static int ntlm_authenticate(struct ksmb
- 			return -EKEYREJECTED;
- 		}
- 		ksmbd_free_user(user);
-+	} else if (sess->user) {
-+		/*
-+		 * Reauthentication of an expired session: as for a valid
-+		 * session, and as krb5_authenticate() does, it must be by the
-+		 * same user. Replacing sess->user would also leak the old one.
-+		 */
-+		if (!ksmbd_compare_user(sess->user, user)) {
-+			ksmbd_free_user(user);
-+			return -EKEYREJECTED;
-+		}
-+		ksmbd_free_user(user);
- 	} else {
- 		sess->user = user;
- 	}
+--- a/arch/loongarch/net/bpf_jit.c
++++ b/arch/loongarch/net/bpf_jit.c
+@@ -2436,7 +2436,16 @@ bool bpf_jit_bypass_spec_v4(void)
+ 
+ bool bpf_jit_supports_arena(void)
+ {
+-	return true;
++	/*
++	 * The arena range tree uses kmalloc_nolock(), which requires
++	 * 128-bit atomic cmpxchg; this is provided by not only hardware
++	 * SCQ extension but also assembler support on LoongArch.
++	 */
++#ifdef system_has_cmpxchg128
++	return system_has_cmpxchg128();
++#else
++	return false;
++#endif
+ }
+ 
+ bool bpf_jit_supports_fsession(void)
 
 
