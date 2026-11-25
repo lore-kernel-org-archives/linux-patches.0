@@ -1,72 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795625029;
-	b=1Hx7vatyIrTOoxgwFCTgoUCjRT2dPJWLGsBReFwswPywoDb8JsXIgfDbr3zvxJ9z+MqG
-	 x8GMz3KvuUSZvnvV2z0vwyJKURkusZ2kjGHQTabrdvcyeFvmIrEt7V2r3zvzMH5nBCMiS
-	 /OmZnNMjPQtEkNHJO229S/Iiz5wf7ltUbJhaUCJPtZ8ooOoQszQaeLVAbgIAI+5yWoG5B
-	 OUXNzrKXZs5WYcy1v7rVESko+PxcSAlxUSM/Cblgpke18rS7k+PljIAtg9J099Dn34q50
-	 0FtkEnqbLi8JSkwWeWMYunLtnsAi2Q4+ye2vrYFEihi+dJtyeqqCwe/ypCKOPsy4ZIQ==
+	t=1795625032;
+	b=t6WqwsIOeVQBDpJnmD18dd8qjq0fn0lglKfjyxEzw26SgphLCMbLx7ciFbKCwhJFYK1J
+	 wbkBGEAQeIhw2WX/ak0BM/uYyfPzq6M7mc18nX5opmOTheCp6WX2RywRZKTOQF/tGeRDG
+	 EXoYygsa7aswRkh6krISg2+jAqpsgPbnBQGsCp4DqJBbjAcxE8WFicyWHQDZFJ1rk5ulE
+	 Oe8TrOa5cv9I6VdPr6xR/2DJqUxmvXqTdU0WoNkU1qckSZaTSEs9LkXORuVdRzPOY3m5T
+	 zseFhU606VZlKowT3zkS+Zivrh+SLjW+FaNtIyXZW8iffX1uwP/qqBqsrHKngqJPMIg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795625029;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795625032;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=fA2HuY9ulj7KwzdIQAua8dniHNHoOhIJDFYcTrSWCKg=;
-	b=Yjya3yudprokKe18MnzOuCVBS5WDIaNSXKOykV6Z/jntE60XIs878S+SBQY8f0k6o71N
-	 mhXGdaJTs+LYTJc1Jpd67b0mY5rzgWG9mBseaaQte+A/d0Wlj29A+xTgCgLXzlxLknGoW
-	 LrZXSwYzAFXkPFnn2vJtAE6dIbVgeWsK2D1FuPhy9mnZes5GP7TmsJ5sG0rZDnRWeRuGV
-	 IEbCfoikTRQfkpwE0PuFVG6fTYRpRY5DWQl25+cie7o8jCIZydbcqclN5BZrQ6tS/fqEt
-	 NA2+p55sl0c590UAfcxwBDPNajnPqq6XOHmiv8TFIFmGuJicebZG5+PXbZfsnrTel1w==
+	bh=bKVHnvmPvNhv4wrWTI/NNewpbKoWzRNAu889gAqWQkk=;
+	b=bK5DnXJEqc2+QKC43iciAdM7MiT9z7epAuLTvsel7yKSzyEmg7o+6i1Itpgbl10kCHPY
+	 8BNQEtWoHl8yNKLF5NE7z+S/NlbHCmX2L+XOJOugADm74jFs2sEkFewiOU+YqxDVpYeUp
+	 j9LOM+M1zMMePiYcu4q6H3Lqw8nUH87erUgS+RNpsEt1PJ743dflV+glWXnaetyvAyIf2
+	 CK8Cfu0uod995PHUJxKFNpxwk++t3V0CSHyiEM1Rsu36z+wmQo8SgOG1MatWVe5j90lqU
+	 xzFpepPT7pkzgr0oxKIvvKr8q+gAgz/MOecx4fH3P9sODT3+kcirmca8L5c3bdY1KBA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Oj0A2fA+;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=X7qO0hQa;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 54DEC606A321;
-	Wed, 25 Nov 2026 16:43:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 22CD8606A31E;
+	Wed, 25 Nov 2026 16:43:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Oj0A2fA+
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3D22F1F000C6;
-	Wed, 25 Nov 2026 16:43:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=X7qO0hQa
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7267C1F000C0;
+	Wed, 25 Nov 2026 16:43:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795625028;
-	bh=fA2HuY9ulj7KwzdIQAua8dniHNHoOhIJDFYcTrSWCKg=;
+	s=korg; t=1795625032;
+	bh=bKVHnvmPvNhv4wrWTI/NNewpbKoWzRNAu889gAqWQkk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Oj0A2fA+rcjUwTTG/gQh+ozoODRaMXloB5Br6nPyykS942epzsEbKU1Epgw9yDShF
-	 T7aoCy1ktzBlxQNvuhG7kgNrRfeHjcM3t1QlAvPMN/ofxPStVnO17B8c+4Vo3/1VzT
-	 U0fm7eE+QG4ZyXqiyvQtM95H4DD5teLwBdY2OvKw=
+	b=X7qO0hQa2SAa+grn5dUPUAeFC4ouQPp6fZ5UIfvtjr2yR2hTKjI/UCZWGNaVKQfjm
+	 rAhlPa6AMIbDOTlNuQ14tBDKp6veObxu1fSljN/MVr6oYCYDw6iA2oGgxgfNEUz+Rk
+	 k/IbjwraMgiKM1svbcXvvuqWMORH9BwhQ16URlHI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Salvatore Dipietro <dipiets@amazon.it>,
-	Andrew Morton <akpm@linux-foundation.org>,
-	"Vlastimil Babka (SUSE)" <vbabka@kernel.org>,
-	Zi Yan <ziy@nvidia.com>,
-	Johannes Weiner <hannes@cmpxchg.org>,
-	Christoph Hellwig <hch@lst.de>,
-	David Hildenbrand <david@kernel.org>,
-	Michal Hocko <mhocko@suse.com>,
-	Matthew Wilcox <willy@infradead.org>,
-	Dave Chinner <dgc@kernel.org>,
-	Ritesh Harjani <ritesh.list@gmail.com>,
-	Dmitry Ilvokhin <d@ilvokhin.com>,
-	Hazem Mohamed Abuelfotoh <abuehaze@amazon.com>,
-	Ali Saidi <alisaidi@amazon.com>,
-	Geoff Blake <blakgeof@amazon.com>,
-	Christian Brauner <brauner@kernel.org>,
-	dipietro.salvatore@gmail.com,
-	"Darrick J. Wong" <djwong@kernel.org>,
-	Brendan Jackman <brendan.jackman@linux.dev>,
-	rvvandan@amazon.com,
-	Suren Baghdasaryan <surenb@google.com>,
-	"Garg, Shivank" <shivankg@amd.com>,
+	Ian Rogers <irogers@google.com>,
+	Hui Su <sh_def@163.com>,
+	Namhyung Kim <namhyung@kernel.org>,
+	Arnaldo Carvalho de Melo <acme@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 384/816] mm/page_alloc: avoid direct reclaim and compaction for costly __GFP_NORETRY allocations
-Date: Wed, 25 Nov 2026 15:32:12 +0100
-Message-ID: <20261125143858.093324927@linuxfoundation.org>
+Subject: [PATCH 6.12 385/816] perf evsel: Restrict incremental open error unwind
+Date: Wed, 25 Nov 2026 15:32:13 +0100
+Message-ID: <20261125143858.116621401@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143849.205329330@linuxfoundation.org>
 References: <20261125143849.205329330@linuxfoundation.org>
@@ -88,181 +70,68 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Salvatore Dipietro <dipiets@amazon.it>
+From: Hui Su <sh_def@163.com>
 
-[ Upstream commit 0e05a469c29400eb6e35448ce7318581688a1806 ]
+[ Upstream commit d023b2110d0d7232ba952a486c497ba8817f6f66 ]
 
-Commit 5d8edfb900d5 ("iomap: Copy larger chunks from userspace")
-introduced high-order folio allocations in the iomap buffered write path.
-When memory is fragmented, each failed costly-order allocation enters
-__alloc_pages_slowpath() which runs direct reclaim, direct compaction and
-drain_all_pages(), causing a 0.38x throughput drop on PostgreSQL pgbench
-(simple-update) with 1024 clients on a 96-vCPU arm64 system.
+evsel__open_cpu(), evsel__tool_pmu_open() and
+evsel__hwmon_pmu_open() support opening a subrange of a CPU map, bounded
+by [start_cpu_map_idx, end_cpu_map_idx).
 
-The root issue is that direct reclaim and direct compaction are too
-expensive for hot allocation paths that have fallbacks to smaller
-allocations.  __filemap_get_folio_mpol() already marks higher-order
-allocations with __GFP_NORETRY | __GFP_NOWARN, signalling that the caller
-can handle failure.  However, the page allocator still enters the full
-blocking slowpath for costly orders with __GFP_NORETRY, which is
-unnecessarily aggressive when the caller will simply retry at a lower
-order.
+Their error paths, however, unwind using "while (--idx >= 0)" all the way
+back to CPU index 0 regardless of start_cpu_map_idx. If lower CPU indices
+were opened by an earlier invocation, a later incremental open failure
+therefore closes those existing file descriptors and overwrites their
+slots with -1.
 
-For costly-order allocations with __GFP_NORETRY, clear
-__GFP_DIRECT_RECLAIM at the very start of the slowpath, before
-can_direct_reclaim, can_compact and the nofail checks are evaluated.  This
-makes the entire slowpath treat the request as non-blocking: no direct
-reclaim, no direct compaction and no drain_all_pages() IPI across every
-CPU.  Reclaim and compaction move to the background instead: kswapd is
-still woken for reclaim, and it wakes kcompactd for defragmentation.  The
-system keeps its long-term health while the latency-critical direct
-allocation path no longer stalls.
+Before this fix, running the new incremental open test demonstrates this
+corruption:
 
-Allocations that also request __GFP_THISNODE are exempted.  That flag
-pairing identifies the local-node-first THP attempt issued by
-alloc_pages_mpol() (mempolicy.c), which relies on direct compaction to
-form transparent huge pages.
+  $ perf test -v "Tool PMU"
+   12: Tool PMU:
+   12.1: Tool PMU                                                      : Ok
+   12.2: Tool PMU leader                                               : Ok
+   12.3: Incremental open error unwind boundary:
+     FAILED: CPU 0 FD overwritten: FD(evsel, 0, 0)=-1, expected 4
+  FAILED!
 
-Clearing __GFP_DIRECT_RECLAIM makes these allocations reach the
-!can_direct_reclaim bailout, which since commit 4c0ed883e051
-("mm/page_alloc: fix defrag_mode for non-reclaimable allocations") drops
-ALLOC_NOFRAGMENT and retries instead of failing when defrag_mode is on.
-With vm.defrag_mode=1 a __GFP_NORETRY allocation could therefore succeed
-by fragmenting another migratetype's pageblock.  That is the wrong trade
-for a caller that has already communicated it can handle failure and has a
-cheap lower-order fallback, so exclude __GFP_NORETRY from the relaxation.
-The exclusion is not restricted to costly orders: any __GFP_NORETRY caller
-has said it can cope with failure, so failing is preferable to fragmenting
-for all of them.
+Stop the unwind at start_cpu_map_idx so that only file descriptors
+opened by the current invocation are rolled back.
 
-Test environment:
-  Hardware:  AWS EC2 m8g.24xlarge (96 vCPU, arm64)
-             12x 1TB IO2 32000 IOPS RAID0 XFS
-  OS:        AL2023
-  Kernel:    v7.3-rc1
-  Database:  PostgreSQL 18.4
-  Workload:  pgbench simple-update, 1024 clients, 96 threads, 1200s
+After this fix:
 
-Results (average of 3 runs, TPS):
+  $ perf test -v "Tool PMU"
+   12: Tool PMU:
+   12.1: Tool PMU                                                      : Ok
+   12.2: Tool PMU leader                                               : Ok
+   12.3: Incremental open error unwind boundary                        : Ok
 
-  Config                                       Avg TPS   % vs baseline
-  v7.3-rc1 baseline (vm.defrag_mode=0)          58,602               -
-  v7.3-rc1 + this patch (vm.defrag_mode=0)     157,246         +168.3%
-  v7.3-rc1 baseline (vm.defrag_mode=1)         109,012               -
-  v7.3-rc1 + this patch (vm.defrag_mode=1)     157,778          +44.7%
-
-Link: https://lore.kernel.org/20261001082152.2879289-1-dipiets@amazon.it
-Link: https://lore.kernel.org/all/20260403193535.9970-1-dipiets@amazon.it/T/#t [v1]
-Link: https://lore.kernel.org/linux-mm/20260420161404.642-1-dipiets@amazon.it/T/#u [v2]
-Link: https://lore.kernel.org/all/20260710143437.12379-1-dipiets@amazon.it/T/#u [v3]
-Link: https://lore.kernel.org/all/20260904115629.3993331-1-dipiets@amazon.it/T/#u [v4]
-Link: https://lore.kernel.org/all/20260911142102.2294202-1-dipiets@amazon.it/T/#u [v5]
-Fixes: 5d8edfb900d5 ("iomap: Copy larger chunks from userspace")
-Signed-off-by: Salvatore Dipietro <dipiets@amazon.it>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Acked-by: Vlastimil Babka (SUSE) <vbabka@kernel.org>
-Acked-by: Zi Yan <ziy@nvidia.com>
-Reviewed-by: Johannes Weiner <hannes@cmpxchg.org>
-Reviewed-by: Christoph Hellwig <hch@lst.de>
-Cc: David Hildenbrand <david@kernel.org>
-Cc: Michal Hocko <mhocko@suse.com>
-Cc: Matthew Wilcox <willy@infradead.org>
-Cc: Dave Chinner <dgc@kernel.org>
-Cc: Ritesh Harjani <ritesh.list@gmail.com>
-Cc: Dmitry Ilvokhin <d@ilvokhin.com>
-Cc: Hazem Mohamed Abuelfotoh <abuehaze@amazon.com>
-Cc: Ali Saidi <alisaidi@amazon.com>
-Cc: Geoff Blake <blakgeof@amazon.com>
-Cc: Christian Brauner <brauner@kernel.org>
-Cc: <dipietro.salvatore@gmail.com>
-Cc: Darrick J. Wong <djwong@kernel.org>
-Cc: Brendan Jackman <brendan.jackman@linux.dev>
-Cc: <rvvandan@amazon.com>
-Cc: Suren Baghdasaryan <surenb@google.com>
-Cc: "Garg, Shivank" <shivankg@amd.com>
-
-introduced high-order folio allocations in the iomap buffered write path.
-When memory is fragmented, each failed costly-order allocation enters
-__alloc_pages_slowpath() which runs direct reclaim, direct compaction and
-drain_all_pages(), causing a 0.38x throughput drop on PostgreSQL pgbench
-(simple-update) with 1024 clients on a 96-vCPU arm64 system.
-
-The root issue is that direct reclaim and direct compaction are too
-expensive for hot allocation paths that have fallbacks to smaller
-allocations.  __filemap_get_folio_mpol() already marks higher-order
-allocations with __GFP_NORETRY | __GFP_NOWARN, signalling that the caller
-can handle failure.  However, the page allocator still enters the full
-blocking slowpath for costly orders with __GFP_NORETRY, which is
-unnecessarily aggressive when the caller will simply retry at a lower
-order.
-
-For costly-order allocations with __GFP_NORETRY, clear
-__GFP_DIRECT_RECLAIM at the very start of the slowpath, before
-can_direct_reclaim, can_compact and the nofail checks are evaluated.  This
-makes the entire slowpath treat the request as non-blocking: no direct
-reclaim, no direct compaction and no drain_all_pages() IPI across every
-CPU.  Reclaim and compaction move to the background instead: kswapd is
-still woken for reclaim, and it wakes kcompactd for defragmentation.  The
-system keeps its long-term health while the latency-critical direct
-allocation path no longer stalls.
-
-Allocations that also request __GFP_THISNODE are exempted.  That flag
-pairing identifies the local-node-first THP attempt issued by
-alloc_pages_mpol() (mempolicy.c), which relies on direct compaction to
-form transparent huge pages.
-
-Clearing __GFP_DIRECT_RECLAIM makes these allocations reach the
-!can_direct_reclaim bailout, which since commit 4c0ed883e051
-("mm/page_alloc: fix defrag_mode for non-reclaimable allocations") drops
-ALLOC_NOFRAGMENT and retries instead of failing when defrag_mode is on.
-With vm.defrag_mode=1 a __GFP_NORETRY allocation could therefore succeed
-by fragmenting another migratetype's pageblock.  That is the wrong trade
-for a caller that has already communicated it can handle failure and has a
-cheap lower-order fallback, so exclude __GFP_NORETRY from the relaxation.
-
-[ sashal: Dropped the defrag_mode hunk and kept can_compact = gfp_compaction_allowed(gfp_mask) without can_direct_reclaim &&, since this tree lacks the earlier defrag_mode change. ]
+Fixes: 4804e0111662d7d8 ("perf stat: Use affinity for opening events")
+Fixes: 240505b2d0adcdc8 ("perf tool_pmu: Factor tool events into their own PMU")
+Fixes: 53cc0b351ec99278 ("perf hwmon_pmu: Add a tool PMU exposing events from hwmon in sysfs")
+Reviewed-by: Ian Rogers <irogers@google.com>
+Signed-off-by: Hui Su <sh_def@163.com>
+Acked-by: Namhyung Kim <namhyung@kernel.org>
+Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
+[ sashal: Dropped the tool_pmu.c, hwmon_pmu.c and tests/tool_pmu.c hunks because those files don't exist here, leaving only the one-line unwind bound in evsel__open_cpu(). ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- mm/page_alloc.c | 18 +++++++++++++++---
- 1 file changed, 15 insertions(+), 3 deletions(-)
+ tools/perf/util/evsel.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/mm/page_alloc.c b/mm/page_alloc.c
-index 51a1aad29d5a8..997d844ac0de0 100644
---- a/mm/page_alloc.c
-+++ b/mm/page_alloc.c
-@@ -4291,10 +4291,10 @@ static inline struct page *
- __alloc_pages_slowpath(gfp_t gfp_mask, unsigned int order,
- 						struct alloc_context *ac)
- {
--	bool can_direct_reclaim = gfp_mask & __GFP_DIRECT_RECLAIM;
--	bool can_compact = gfp_compaction_allowed(gfp_mask);
--	bool nofail = gfp_mask & __GFP_NOFAIL;
- 	const bool costly_order = order > PAGE_ALLOC_COSTLY_ORDER;
-+	bool can_direct_reclaim;
-+	bool can_compact;
-+	bool nofail;
- 	struct page *page = NULL;
- 	unsigned int alloc_flags;
- 	unsigned long did_some_progress;
-@@ -4306,6 +4306,18 @@ __alloc_pages_slowpath(gfp_t gfp_mask, unsigned int order,
- 	unsigned int zonelist_iter_cookie;
- 	int reserve_flags;
- 
-+	/*
-+	 * Costly __GFP_NORETRY callers have a cheap fallback, so don't stall
-+	 * them in reclaim or compaction. __GFP_THISNODE callers are exempt.
-+	 */
-+	if (costly_order && (gfp_mask & __GFP_NORETRY) &&
-+	    !(gfp_mask & __GFP_THISNODE))
-+		gfp_mask &= ~__GFP_DIRECT_RECLAIM;
-+
-+	can_direct_reclaim = gfp_mask & __GFP_DIRECT_RECLAIM;
-+	can_compact = gfp_compaction_allowed(gfp_mask);
-+	nofail = gfp_mask & __GFP_NOFAIL;
-+
- 	if (unlikely(nofail)) {
- 		/*
- 		 * We most definitely don't want callers attempting to
+diff --git a/tools/perf/util/evsel.c b/tools/perf/util/evsel.c
+index e84dacb5627b6..6798db83bf7cc 100644
+--- a/tools/perf/util/evsel.c
++++ b/tools/perf/util/evsel.c
+@@ -2483,7 +2483,7 @@ static int evsel__open_cpu(struct evsel *evsel, struct perf_cpu_map *cpus,
+ 			FD(evsel, idx, thread) = -1;
+ 		}
+ 		thread = nthreads;
+-	} while (--idx >= 0);
++	} while (--idx >= start_cpu_map_idx);
+ 	errno = old_errno;
+ 	return err;
+ }
 -- 
 2.53.0
 
