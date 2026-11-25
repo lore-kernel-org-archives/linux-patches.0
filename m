@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795622313;
-	b=SuDCJuWA0/NbPAv/rv2HpjauUN4XGEZLi9fS3vjjQYesk7OhimLn6BpTz0W7XLr5JpNI
-	 SXpubd9C7s4fK3IIWMNkl04ITcowdsq5fGcqfWtYU0/slWZ1aPGr65mSWwi8upp0hgzPR
-	 QzwKKcqkKzvWoo6g4SOrenlz9EfVgk8TQ+ftE6kQafwhBEvQn0x9yNmqKU2W4wDoo+meb
-	 yEonsf0bYHResz5ivvBUuxNa863GabCRhGAypHB51/7AIcPc/vdP89MuLLoj5+PtE7834
-	 99Uy1xK1wqyFcA5FO5b0jvSf0UqTCVMgRtH06iET8yzNd9l1DxqnDO+VHSyaKWIcKqQ==
+	t=1795622316;
+	b=ti8IBonbPgs5iacEF3fYK9bY+fqE4haANtB6xZji560+E2t/XONx8IpoooCXoT53iqza
+	 +KkgD++Oct8/obzG/ztO7fe+a/rh/7spg5Dm1xVtL62Ucyk3MQbqt6aq1IybPmuB5+Jpo
+	 tKmcp0fLYn9/ZtU1wiS3R14OG5Wn+Jz8zUw3tq4+zI0VWk1XYPd/LIevn6jDRxSMpnq15
+	 72LZYifaTouhGc8csnJpYbrQOUlJxiOa0jrhd1hLchKH3llTtlguyHCygkXfhqMa28KZY
+	 CKdQjiImCDKT6JH4QHNV60KvghVg2Knf35H29HhWnlaq6F920KLs7uONdAZ5/8mNNBQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795622313;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795622316;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=B9QCAzTi1XuGXIu8Tvth128Omtf51h52wpfOf4mi33g=;
-	b=uIZkgRwqwEyWErYoPHBuPOeFcDnPUaX1tZ9Zjk7FtuZtQDFp5rQxBX+s4OOhJBlOJL7W
-	 pP+P/gkl6zsh2i3DlVF9uL2ssQbEjX53Atp+knaOt0Pjzkqa/h4iD7JY7QlxEj3zRy/NC
-	 AtNvlJL1AHNeIinRwXk1vJczpCULQNjpVuoHrlUJd7ncbMQyMKyLC6uK67Bv/8Es8BcUT
-	 rUzLjifKOwxO+UKIU+nyffiAoot1dNt/Ij2NHzgmEM7bUONYwUEYiWY6mWEWRwu7OY0h6
-	 K5OAmpHIQeUSMFPgqg6xg3u6RCiRXAesMj4XEwEFcaEl9radefJARl1M92XSq+EwjSg==
+	bh=jPrDFjoZMqRJ70pKrJHuvmQt05b7oXZmrcsWM2vVV74=;
+	b=gImhg3p50/d1JAxVFxB2ql0tPtZ3EpUFZ0XcIL3rTAgqOiTC4T9IZ+6jsqDcUwLNnqzS
+	 DifH3ZGwhfQdIArgVye14iPgfIKssJYNJkKN4UclREshtIX2uun+x5loxpWjj/4qVYZw3
+	 wx/Y9DVBJwQy5e9Qx+dEkFOVNzcNUs4oeOg86EAXKIRWrmp+salClw1ikKAYOj0NPQVKo
+	 ofL9Sy3CTGhdud1o1lveqxj3bblKd+GqDlfZ/DzJu4OqsvnghjcFDPlz+I3QpNdEx2ko6
+	 KJEp9dba07pn4U72E9kW6Yft+UvEgRaLDnqn6BehUoVMQFC/72W4TcsALUQHQ+Nng1A==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="m/P7Dvir";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=PhQ1ItZR;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2E962606A689;
-	Wed, 25 Nov 2026 15:58:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B57C660A260F;
+	Wed, 25 Nov 2026 15:58:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=m/P7Dvir
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7794D1F00A3C;
-	Wed, 25 Nov 2026 15:58:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=PhQ1ItZR
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D3B751F000C6;
+	Wed, 25 Nov 2026 15:58:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795622313;
-	bh=B9QCAzTi1XuGXIu8Tvth128Omtf51h52wpfOf4mi33g=;
+	s=korg; t=1795622316;
+	bh=jPrDFjoZMqRJ70pKrJHuvmQt05b7oXZmrcsWM2vVV74=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=m/P7DvirPIouapvug7d+neMZtpcWHd33bvkMrjYH00jGnITK9WYcYN6ASZns2J+jo
-	 /N9PXjdDy1SpPvYctUQdsNHCwnKdDrK/HBlJ5Jrp8UjVGMAIBAzyVSA1xtiPZwtnxu
-	 LutKjiJjxpAw2qGeYaU+aBUwKvroM1a073TOkmnk=
+	b=PhQ1ItZRkWH0spbSa34VUpb/a1GVAnR5yCZOC/uaOVcqbr4I2i0xWMX4u+WKDR/QH
+	 TCkArE69BeVZg8jsAXEXeSRht5tepqD3A5bUVoR3xDkEDdRTFJckc1LAYXJ2jlBkP6
+	 2vHVRWQBLnnJ/jjMs3l8aOuMb9xPxz8eaO8VmSnw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ofri Zangi <ofriz@xsightlabs.com>,
+	Alexandre Cassen <acassen@corp.free.fr>,
+	Mark Bloch <mbloch@nvidia.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 453/990] tls: fix async encryption race on weakly ordered architectures
-Date: Wed, 25 Nov 2026 15:30:20 +0100
-Message-ID: <20261125143832.704559657@linuxfoundation.org>
+Subject: [PATCH 6.18 454/990] net/mlx5: HWS, fix flow meter release on FTE update
+Date: Wed, 25 Nov 2026 15:30:21 +0100
+Message-ID: <20261125143832.727295900@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143822.072087159@linuxfoundation.org>
 References: <20261125143822.072087159@linuxfoundation.org>
@@ -68,80 +69,149 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ofri Zangi <ofriz@xsightlabs.com>
+From: Alexandre Cassen <acassen@corp.free.fr>
 
-[ Upstream commit a2fd526d644233d6a892c28173f07c61e21e4c93 ]
+[ Upstream commit 145480b28ca82e9fae789427cc4569e596515a32 ]
 
-With async encryption, a record can be transmitted without its TLS
-header on weakly ordered architectures such as arm64, because the
-consumer may observe rec->tx_ready set while still seeing the old
-scatterlist entry.
+HWS has no duplicate match. When a flower filter is replaced in place,
+its new rule waits as the pending duplicate of the old FTE. Once the
+old rule goes, switch_to_pending_act_dests() copies the pending actions
+over the FTE before update_fte() releases the actions of the old rule.
+An HWS rule reads the base id of its meter action through a pointer to
+the exe_aso of the FTE. That release takes the meter action of the new
+rule instead.
 
-tls_encrypt_done() restores the TLS header in the scatterlist entry
-(sge->offset -= prot->prepend_size, sge->length += prot->prepend_size)
-and then publishes the record with smp_store_mb(rec->tx_ready, true).
-On another CPU, tls_tx_records() checks rec->tx_ready with READ_ONCE()
-and then reads the entry in tls_push_sg().
+When the two meters sit in different ASO objects, the old meter action
+leaks. It keeps its ASO object referenced. The firmware then fails to
+destroy that object and to free the PD of the meters, and its STC is
+still in the pool when the context closes. The new meter action is
+destroyed one release early, while a rule still points to it, and the
+last release underflows its refcount:
 
-Nothing orders these accesses. The barrier in smp_store_mb() comes
-after the tx_ready store, so it does not order the earlier scatterlist
-update before it. On the reader side, READ_ONCE() does not order the
-later loads of sge->offset and sge->length. The reader can therefore
-see tx_ready set together with the old offset and length, and pushes
-the record without its header.
+  mlx5_core 0000:b1:00.1: mlx5_cmd_out_err:822:(pid 2641): DESTROY_GENERAL_OBJECT(0xa03) op_mod(0x24) failed, status bad resource(0x5), syndrome (0xeeda5c), err(-22)
+  refcount_t: underflow; use-after-free.
+  WARNING: lib/refcount.c:96 at refcount_dec_not_one+0x3f/0x60, CPU#43: tc/2641
+  Call Trace:
+   <TASK>
+   mlx5_fs_put_hws_action.part.0+0x1a/0xa0 [mlx5_core]
+   mlx5_fs_destroy_fs_actions+0xa8/0x110 [mlx5_core]
+   mlx5_cmd_hws_delete_fte+0x49/0x90 [mlx5_core]
+   del_hw_fte+0x209/0x320 [mlx5_core]
+   mlx5_del_flow_rules+0x10b/0x260 [mlx5_core]
+   __mlx5_eswitch_del_rule+0x5c/0x1b0 [mlx5_core]
+   mlx5_eswitch_del_offloaded_rule+0x10/0x20 [mlx5_core]
+   mlx5e_tc_rule_unoffload+0x4b/0x100 [mlx5_core]
+   mlx5e_tc_unoffload_fdb_rules+0x35/0x80 [mlx5_core]
+   mlx5e_tc_del_fdb_flow+0x2ca/0x310 [mlx5_core]
+   mlx5e_tc_del_flow+0x5d/0x2d0 [mlx5_core]
+   mlx5e_flow_put+0x3a/0x80 [mlx5_core]
+   mlx5e_delete_flower+0x291/0x460 [mlx5_core]
+   mlx5e_setup_tc_block_cb+0xc4/0x110 [mlx5_core]
+   tc_setup_cb_destroy+0xcc/0x1b0
+   fl_hw_destroy_filter+0xa1/0xe0 [cls_flower]
+   __fl_delete+0x2d0/0x3d0 [cls_flower]
+   fl_destroy+0xbd/0x160 [cls_flower]
+   tcf_proto_destroy+0x3b/0x110
+   tcf_proto_put+0x3d/0x70
+   tc_del_tfilter+0x362/0x8f0
+   rtnetlink_rcv_msg+0x384/0x460
+   netlink_rcv_skb+0x61/0x120
+   rtnetlink_rcv+0x15/0x30
+   netlink_unicast+0x2a1/0x3d0
+   netlink_sendmsg+0x237/0x490
+   ____sys_sendmsg+0x33b/0x360
+   ___sys_sendmsg+0x99/0xf0
+   __sys_sendmsg+0x93/0x100
+   __x64_sys_sendmsg+0x1d/0x30
+   x64_sys_call+0x821/0x23d0
+   do_syscall_64+0xba/0x550
+   entry_SYSCALL_64_after_hwframe+0x76/0x7e
+   </TASK>
+  mlx5_core 0000:b1:00.1: mlx5_cmd_out_err:822:(pid 2642): DEALLOC_PD(0x801) op_mod(0x0) failed, status bad resource state(0x9), syndrome (0xef0c8a), err(-22)
+  mlx5_core 0000:b1:00.1: mlx5hws_pool_destroy:386:(pid 2642): Attempting to destroy non-empty pool
 
-Publish tx_ready with smp_store_release() in tls_encrypt_done() and read
-it with smp_load_acquire() in tls_tx_records(), so that observing
-tx_ready guarantees the restored scatterlist entry is visible. Keep the
-full barrier that smp_store_mb() provided as an explicit smp_mb(), as
-it is still needed to order the tx_ready store before the tx_list head
-check.
+Keep the base id in the rule action, as the sampler id is.
 
-The issue was discovered during development on an arm64 system.
-A curl download test over kTLS failed with:
+Discovered while stress testing a 5G UPF kernel code. Without this fix,
+the reproduction below gives the trace above on a ConnectX-7 with
+firmware 28.48.1000. It only uses tc and devlink, with no kernel
+change. 129 meters cannot fit in one ASO object. DEV is the uplink
+representor and PCI its devlink handle:
 
-  curl: (56) OpenSSL SSL_read: error:0A00010B:SSL routines::wrong version number, errno 0
+  r() { echo "filter $1 dev $DEV ingress prio 1 handle $2 protocol ip flower skip_sw dst_ip 10.0.0.$2 action police index $3 rate 1mbit burst 32k conform-exceed drop/pipe action drop"; }
+  devlink dev param set $PCI name flow_steering_mode value hmfs cmode runtime
+  devlink dev eswitch set $PCI mode switchdev
+  tc qdisc add dev $DEV ingress
+  for i in $(seq 129); do r add $i $i; done | tc -b -
+  r replace 1 1000 | tc -b -
+  tc filter del dev $DEV ingress prio 1
+  devlink dev eswitch set $PCI mode legacy
 
-Fixes: a42055e8d2c3 ("net/tls: Add support for async encryption of records for performance")
-Signed-off-by: Ofri Zangi <ofriz@xsightlabs.com>
-Link: https://patch.msgid.link/20261108-tls-async-tx-ordering-v1-1-f9a1844ca88e@xsightlabs.com
+With this fix, the reproduction runs clean on the same ConnectX-7.
+It was not tested against kernel selftests.
+
+Fixes: 82d3639ef7dc ("net/mlx5: fs, add support for flow meters HWS action")
+Signed-off-by: Alexandre Cassen <acassen@corp.free.fr>
+Reviewed-by: Mark Bloch <mbloch@nvidia.com>
+Link: https://patch.msgid.link/20261110173437.2471233-1-acassen@corp.free.fr
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/tls/tls_sw.c | 13 ++++++++++---
- 1 file changed, 10 insertions(+), 3 deletions(-)
+ .../net/ethernet/mellanox/mlx5/core/steering/hws/fs_hws.c | 8 ++++----
+ .../net/ethernet/mellanox/mlx5/core/steering/hws/fs_hws.h | 2 +-
+ 2 files changed, 5 insertions(+), 5 deletions(-)
 
-diff --git a/net/tls/tls_sw.c b/net/tls/tls_sw.c
-index ad6c0d61d5474..4f982594f11d3 100644
---- a/net/tls/tls_sw.c
-+++ b/net/tls/tls_sw.c
-@@ -436,7 +436,8 @@ int tls_tx_records(struct sock *sk, int flags)
+diff --git a/drivers/net/ethernet/mellanox/mlx5/core/steering/hws/fs_hws.c b/drivers/net/ethernet/mellanox/mlx5/core/steering/hws/fs_hws.c
+index 6a5068ff013a7..7b677653be5bd 100644
+--- a/drivers/net/ethernet/mellanox/mlx5/core/steering/hws/fs_hws.c
++++ b/drivers/net/ethernet/mellanox/mlx5/core/steering/hws/fs_hws.c
+@@ -523,13 +523,13 @@ mlx5_fs_get_action_aso_meter(struct mlx5_fs_hws_context *fs_ctx,
+ }
  
- 	/* Tx all ready records */
- 	list_for_each_entry_safe(rec, tmp, &ctx->tx_list, list) {
--		if (READ_ONCE(rec->tx_ready)) {
-+		/* Pairs with smp_store_release() in tls_encrypt_done() */
-+		if (smp_load_acquire(&rec->tx_ready)) {
- 			if (flags == -1)
- 				tx_flags = rec->tx_flags;
- 			else
-@@ -504,8 +505,14 @@ static void tls_encrypt_done(void *data, int err)
- 	if (rec) {
- 		struct tls_rec *first_rec;
+ static void mlx5_fs_put_action_aso_meter(struct mlx5_fs_hws_context *fs_ctx,
+-					 struct mlx5_exe_aso *exe_aso)
++					 u32 base_id)
+ {
+ 	struct mlx5_fs_hws_data *meter_hws_data;
+ 	struct xarray *meters_xa;
  
--		/* Mark the record as ready for transmission */
--		smp_store_mb(rec->tx_ready, true);
-+		/* Mark the record as ready for transmission. Pairs with
-+		 * smp_load_acquire() in tls_tx_records(): the sge
-+		 * offset/length update above must be visible before tx_ready.
-+		 */
-+		smp_store_release(&rec->tx_ready, true);
-+
-+		/* Order the tx_ready store before the tx_list head check */
-+		smp_mb();
+ 	meters_xa = &fs_ctx->hws_pool.aso_meters;
+-	meter_hws_data = xa_load(meters_xa, exe_aso->base_id);
++	meter_hws_data = xa_load(meters_xa, base_id);
+ 	if (!meter_hws_data)
+ 		return;
+ 	return mlx5_fs_put_hws_action(meter_hws_data);
+@@ -704,7 +704,7 @@ static void mlx5_fs_destroy_fs_action(struct mlx5_flow_root_namespace *ns,
+ 		mlx5_fc_put_hws_action(fs_action->counter);
+ 		break;
+ 	case MLX5HWS_ACTION_TYP_ASO_METER:
+-		mlx5_fs_put_action_aso_meter(fs_ctx, fs_action->exe_aso);
++		mlx5_fs_put_action_aso_meter(fs_ctx, fs_action->aso_base_id);
+ 		break;
+ 	case MLX5HWS_ACTION_TYP_SAMPLER:
+ 		mlx5_fs_put_dest_action_sampler(fs_ctx, fs_action->sampler_id);
+@@ -939,7 +939,7 @@ static int mlx5_fs_fte_get_hws_actions(struct mlx5_flow_root_namespace *ns,
+ 			fte_action->exe_aso.flow_meter.init_color;
+ 		(*ractions)[num_actions++].action = tmp_action;
+ 		fs_actions[num_fs_actions].action = tmp_action;
+-		fs_actions[num_fs_actions++].exe_aso = &fte_action->exe_aso;
++		fs_actions[num_fs_actions++].aso_base_id = fte_action->exe_aso.base_id;
+ 	}
  
- 		/* If received record is at head of tx_list, schedule tx */
- 		first_rec = list_first_entry(&ctx->tx_list,
+ 	if (fte_action->action & MLX5_FLOW_CONTEXT_ACTION_DROP) {
+diff --git a/drivers/net/ethernet/mellanox/mlx5/core/steering/hws/fs_hws.h b/drivers/net/ethernet/mellanox/mlx5/core/steering/hws/fs_hws.h
+index 344c80112ab78..8f7730b50c07c 100644
+--- a/drivers/net/ethernet/mellanox/mlx5/core/steering/hws/fs_hws.h
++++ b/drivers/net/ethernet/mellanox/mlx5/core/steering/hws/fs_hws.h
+@@ -57,7 +57,7 @@ struct mlx5_fs_hws_rule_action {
+ 	struct mlx5hws_action *action;
+ 	union {
+ 		struct mlx5_fc *counter;
+-		struct mlx5_exe_aso *exe_aso;
++		u32 aso_base_id;
+ 		u32 sampler_id;
+ 	};
+ };
 -- 
 2.53.0
 
