@@ -1,51 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795623395;
-	b=A1t7xvI4ytvFDiX3FPOLtmOPhWA60u205vCI/u5yx36wFyhBfM1bzJvFaOWLC2SiXwTC
-	 0QUQYUaiwg29PV5UQ/4FZrHEgLoVS4EI7XYvdhBnj8X7KARg2BfUEWIHKSW9suujy3+UK
-	 W4Yc2cieZXkTxnZSYrExYrdoIdDFLTxWjDfVsc3Czj3oECZPRfJIOlNQCFCSUS483bLn1
-	 hL8xiSs7G+wbjw52czzYM2XkT9YUQfdcsZLd53l5PA6xXdPyNGjyBaROnoBc3/y+0bR/w
-	 6V1obIICVHuKihMu8sh8pouK8iihWiYScOmkxerDUwgW07W8VSVGlRrRcwz161n72Fw==
+	t=1795623398;
+	b=GL++Sn+EFwOoBYpZdCSYBBGCk1SRBOQpp+QQTb0J1XLiruqpo0JgwY/A7h4h8BNzkjNW
+	 Xwl5phIF+lIgq4BgZ+IdB/r1ZYutkSxFYME15Cj7V8uKXrzbO/pQX5Svb8Lj/W6o+/Jim
+	 GwllSLNkK2yn97CVDjrMIltNTxEjojeoOdvrI4xGt7TGqkPRgFfEwY8YCDY8ll+QOBgu1
+	 J4ZpFsFbklxLnq5sX6UUo9pINg6zzBNljW2hE0l64Bh4u9XpuLgRpXJh/TtMUDIARDBje
+	 HhLopsTe+tqghoDDvesDGWIav4Xu3U8qh2ipRBFJVTIPGOhNwUGpd/gt0rHE3xYkTiw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795623395;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795623398;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=ht/p7XNXgobLYAlJYVz8ItZ4AIDXuDq10LIHibQRbhg=;
-	b=xdi4WtSSQt/a/JA0cWDIfEIy0VTb6DO+oAKa0lRXSNGtr00LaThwh+On1nhPU03gbxhN
-	 MlRIiac/CmLw2aWR//+xpjwT/yb6r3XnLYto7PUAZRBdnkq63ChTR8W8Ve7A1294dLWJR
-	 T105rvGL+rkJwe4rCdfXeJ4C+LsY1sduUoz7iKmzzVA4133UyeaZ0xSyaDwn3ChRZfGUR
-	 ZW0fdldAe7rGywzQrYuXQL6lx4wrB1miabs+s5JJqWlrIT35F71+MDJpo9u+bwjrF5Fxx
-	 9IWPmgStlGllL2BT7R2sSvPlropzsiQR9JFmBdJgHmk+CrLYFZWKdTY5lI+CFgLZw4Q==
+	bh=XUrZ0aRiGLWv4DFECgni3rgNZkEnpi7iSyWBZAddjMo=;
+	b=SoHKShTjpohUNxGR3guxpshiDZOqdAI3H2W72pToGt8JGPt39IcIYL2DtSU8O+c4HZil
+	 iQp2fmKlnA7nDcjsHAi6nWozSnklFblDa7A47BvFbZEdnf8Yni/bk3nAxPXeIgzB2QAZn
+	 r4bJqPT15fmChm39TbUSSaU6rZca4k96eHd3P08JCm/zaHB2SkYaUv9MkqOwEGyiP0I65
+	 ShuU0iZy7b1t5lHLU6UDuRX6rnq04eXn6Xf3CGaTS0Ko6o/o05H4JuP/6jcUJFZ4yPguJ
+	 25QnnV6Jvp5rOZ540twjqYke3x92KR45T9uN42ftfZaFrSih5WCiKAgiDEhP/rr8gsw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=uDGnLOZw;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=f4agWOmV;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 16F51606A321;
-	Wed, 25 Nov 2026 16:16:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E4087606A31E;
+	Wed, 25 Nov 2026 16:16:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=uDGnLOZw
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 63F0A1F000C4;
-	Wed, 25 Nov 2026 16:16:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=f4agWOmV
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 403811F000C4;
+	Wed, 25 Nov 2026 16:16:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795623394;
-	bh=ht/p7XNXgobLYAlJYVz8ItZ4AIDXuDq10LIHibQRbhg=;
+	s=korg; t=1795623397;
+	bh=XUrZ0aRiGLWv4DFECgni3rgNZkEnpi7iSyWBZAddjMo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=uDGnLOZwzdX7zjozwPCcKGGYSkt6Is2Ig6cwZfwmxEVPWxOY+C7UBY5GAbMlR/fqa
-	 7ki2bdXnmJmKYgxPgMu0gVOMfD0Q82SxQZOfvWBwqDcLNG5AgK3XUofNInakHuxYfz
-	 uQx7LQf9ECqJjdB3b4DI3ApMPH1k98U+gRIL31eY=
+	b=f4agWOmV1wNB45t4DynZ3tX/X3ZoW8sFwybONnYr5sgpYhBHnb/4hJ55TTzaTUdwp
+	 HQTZAxq3ipIOCuMWC/DAgPJSUoDYrdhWx3aZGYO/8SGNrOJdLghfc4HxSkvK91lqO6
+	 lS/BHXiYIghS36jrFTAyKllnC0WcnjWrtwcbvu60=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	David Howells <dhowells@redhat.com>,
+	Joseph Qi <joseph.qi@linux.alibaba.com>,
 	Paulo Alcantara <pc@manguebit.org>
-Subject: [PATCH 6.18 846/990] smb: client: retry writes that couldnt be issued due to a reconnect
-Date: Wed, 25 Nov 2026 15:36:53 +0100
-Message-ID: <20261125143841.848924490@linuxfoundation.org>
+Subject: [PATCH 6.18 847/990] smb: client: skip NULL channel in __cifs_put_smb_ses()
+Date: Wed, 25 Nov 2026 15:36:54 +0100
+Message-ID: <20261125143841.871970369@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143822.072087159@linuxfoundation.org>
 References: <20261125143822.072087159@linuxfoundation.org>
@@ -67,44 +67,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Paulo Alcantara <pc@manguebit.org>
+From: Joseph Qi <joseph.qi@linux.alibaba.com>
 
-commit 64db0dc1f3e689145e698bc1b20ee70b1724b945 upstream.
+commit 8deaf64a59a263161dfc5128f8398fb3dcba4fac upstream.
 
-__cifs_issue_write() fails a subrequest with -EAGAIN when its handle got
-invalidated or its credits belong to a session from before a reconnect,
-both before sending anything.  netfs used to retry any -EAGAIN by itself,
-but now only retries subrequests marked for it, so these writes fail and
-their folios end writeback clean, losing the data.
+cifs_chan_skip_or_disable() clears a secondary channel's slot in the
+session (ses->chans[chan_index].server = NULL) without lowering
+chan_count when the server stops supporting multichannel.  When the
+session is later released, __cifs_put_smb_ses() walks every slot up to
+chan_count and calls cifs_put_tcp_session() on it, which dereferences
+the server pointer immediately, so a slot left NULL by the skip path
+makes the release crash with a NULL pointer dereference.
 
-Mark them for retry instead.  The retry gets the handle reopened and
-fresh credits in cifs_prepare_write().
+Clearing a slot without lowering chan_count is older than
+cifs_chan_skip_or_disable(): cifs_chan_update_iface() could already do
+the same since commit b54034a73baf9 ("cifs: during reconnect, update
+interface if necessary"), and the release loop has been unguarded
+since then.  Commit 12d1e301bdfd1 ("cifs: do not let
+cifs_chan_update_iface deallocate channels") later removed that
+trigger, but the crash is reachable through it on older kernels.
 
-Fixes: 82e8885bd763 ("netfs: when subreq is marked for retry, do not check if it faced an error")
-Reviewed-by: David Howells <dhowells@redhat.com>
-Signed-off-by: Paulo Alcantara <pc@manguebit.org>
+cifs_decrease_secondary_channels() already guards the same put with
+if (server).  Add the same guard to the release loop so a skipped
+channel slot is left alone.
+
+Fixes: b54034a73baf9 ("cifs: during reconnect, update interface if necessary")
 Cc: stable@vger.kernel.org
+Signed-off-by: Joseph Qi <joseph.qi@linux.alibaba.com>
+Signed-off-by: Paulo Alcantara <pc@manguebit.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/smb/client/file.c |    6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ fs/smb/client/connect.c |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
---- a/fs/smb/client/file.c
-+++ b/fs/smb/client/file.c
-@@ -140,10 +140,12 @@ out:
- 	return;
+--- a/fs/smb/client/connect.c
++++ b/fs/smb/client/connect.c
+@@ -2178,7 +2178,8 @@ void __cifs_put_smb_ses(struct cifs_ses
+ 			kref_put(&ses->chans[i].iface->refcount, release_iface);
+ 			ses->chans[i].iface = NULL;
+ 		}
+-		cifs_put_tcp_session(ses->chans[i].server, 0);
++		if (ses->chans[i].server)
++			cifs_put_tcp_session(ses->chans[i].server, 0);
+ 		ses->chans[i].server = NULL;
+ 	}
  
- fail:
--	if (rc == -EAGAIN)
-+	if (rc == -EAGAIN) {
- 		trace_netfs_sreq(subreq, netfs_sreq_trace_retry);
--	else
-+		__set_bit(NETFS_SREQ_NEED_RETRY, &subreq->flags);
-+	} else {
- 		trace_netfs_sreq(subreq, netfs_sreq_trace_fail);
-+	}
- 	add_credits_and_wake_if(wdata->server, &wdata->credits, 0);
- 	cifs_write_subrequest_terminated(wdata, rc);
- 	goto out;
 
 
