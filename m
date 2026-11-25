@@ -1,52 +1,57 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795622974;
-	b=j1xjo5hoUsgPfNUOWvsG2PIeub7gkbfjtTeETG6BocO6Ge8t1HmMySUVn+ZxN02ureYq
-	 wEZCyxd8Tn5wBaZDp5Z39sAlRwclnuycirLYCmotRMSpEcqE9Y0+FoiX3Nh3/Cq+PAGjk
-	 0e6R98KtHtDON19LXjlkcC/yXy9KM2xV4nT0ucVllqlK5O9FodbknppPpIpFVId4NSx82
-	 rudS3FWOuhOt/GTt52V+EzmwlqthaShmgPcUSQ84GysqxSZg1M95jHwpdhjYbDDTw84sK
-	 iX6OJRMe1y03n0edZ0MIC2cECRjDRJ7fTe57UUFpUox5GQpH0BVegfUVMIYvyrFTe+g==
+	t=1795622978;
+	b=Y6ydONOYKAz7KWvM7nfeNmeSihoe2d/65quvDaRY3gy9pINBsh+5U7YuWGbHhTVC5lAh
+	 hrZXBKmXoo4BgR3nwTH/lf1rQGk108n1I5VgYhMBng3qymQbg4QnstoTenxHEeNXFclkQ
+	 cZrboDnjD50cXyE9Oi1uixxTSWrp9kacdXwkzLJD5L03HbR6vxD+3lEhgMYi2ccWGVeO8
+	 xdKNn/I7F1k1JmLyuVOJ5e4OKGyezxLmOnVxkkWtZtDkOZ9I5SwpH/0yh6nY2/dZ8zLSO
+	 L7zayjZKdtif3zOPJ3MazZS2Vy0wFQ0QhSZ63+eu7uidBcWIDJRhexbhwVcFWJ1Snbw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795622974;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795622978;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=mPjOQIDkKIacdgfJu2FNYg7RLodT3197PcmNkQdU1yA=;
-	b=dgYdnZyJQvRMvEf6zm7+aiqY2M3ucA/f3Rl6xS+VKSlZMD8kn6/Osvm5fjFeZHrm1QCE
-	 mRWVj18+oMfmghIYhMCLbNHWSbpz8V76DnFjiKc0dN6ezOnduf+sVp0weaLR7fsgwdyAK
-	 ZDwNpTuKZE/nuD78B2Vc+5k2S/5oF0YjI4YOiZPF/ykWYsIJYPVyuVh8lAlMsy2ZnRhPp
-	 GkwEUZ1kJGhNKe+pA3zQ33jCv7kCZTEuGKVr5erIqX8GzKMb0Zo2QNIhWv25m2LKwbHSK
-	 hggMhqMBqAoJELm3StEMtXdtM6dVDPQJMkJTfGBLQF7VewrluB3R4y/62ormLVzp60g==
+	bh=W5fO8qt8vd3u7UyryCTvxIx5t9L3PFr6Fz+88L8mgk8=;
+	b=BTaEB3wo3+ssfUOvEumjE7cS5WqBEjl5z4Bdj6fOM0m5UHsPdoeEKFXfxjiAQgxA1XhE
+	 7+kVBScDDSfqLkjBYOH88CuGs+UD2Ms1GxrhxRvWJRl4cb6HzBn95udReFY+gMyErRli9
+	 huvb6FBgNKMXDiLtb9s4uYT5rwaiaQ34SAGn2B3eKB6fn1Z8F43C5pTOtpJPG6Tpv2S4j
+	 Y5WICyu7BvqKnnGLV73EgLcJmBwee6go7w3huC9R95RKtCcJcgQUikztpUocba3wwueZ4
+	 whbqEIxu2wmmjOvsJBoauljgnYeVeJ4xWGjjOaYl7lVuZrb6URKPUCVqa9FErJfzrng==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=AsxqUkJZ;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=MPpIDpMC;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 89C6E606A31E;
-	Wed, 25 Nov 2026 16:09:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 64CC9606A331;
+	Wed, 25 Nov 2026 16:09:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=AsxqUkJZ
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DBE671F000F0;
-	Wed, 25 Nov 2026 16:09:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=MPpIDpMC
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3747E1F000C0;
+	Wed, 25 Nov 2026 16:09:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795622974;
-	bh=mPjOQIDkKIacdgfJu2FNYg7RLodT3197PcmNkQdU1yA=;
+	s=korg; t=1795622977;
+	bh=W5fO8qt8vd3u7UyryCTvxIx5t9L3PFr6Fz+88L8mgk8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=AsxqUkJZgKyz0GL9Xsrb6/xG4AoxTMIBHhmIJzbUQYLuGjbVifleWm+DDkfOzryIT
-	 NlQY8xPj4+MV9K2N+pR/L5CC+8YzRQBAhEgtMCX2HkA+f4/W9a9cwxzfCNY6O74W5t
-	 EdfZ8pIUluNe1IItFw+ljf1gm9UPkRzFuJZ+250g=
+	b=MPpIDpMC3UHJTB1lUyFZTcX38DIlEvXkN9SpogYUS1lV6o8JM/ix1rZYm7Iygji8K
+	 BcZyiMV6w+YGcZWMlaAdTQw8Yi041dh2KSZLQz1qHAPPW+je5bwK6dHGQBWBrNZDif
+	 cAq9tZVzkcnf2OI3jow7t6G7EoLrX2HwyNeLfgDY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hyunwoo Kim <imv4bel@gmail.com>,
-	Kuniyuki Iwashima <kuniyu@google.com>,
+	Vega <vega@nebusec.ai>,
+	Sashiko <sashiko-bot@kernel.org>,
+	Zixuan Chai <petalzu987@gmail.com>,
+	Ren Wei <weir@nebusec.ai>,
+	Hangbin Liu <liuhangbin@kylinos.cn>,
+	Pablo Neira Ayuso <pablo@netfilter.org>,
+	Andrea Mayer <andrea.mayer@uniroma2.it>,
 	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.18 709/990] tcp: fix request_sock use-after-free during Fast Open accept()
-Date: Wed, 25 Nov 2026 15:34:36 +0100
-Message-ID: <20261125143838.690358182@linuxfoundation.org>
+Subject: [PATCH 6.18 710/990] seg6: validate state in netfilter continuations
+Date: Wed, 25 Nov 2026 15:34:37 +0100
+Message-ID: <20261125143838.714959733@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143822.072087159@linuxfoundation.org>
 References: <20261125143822.072087159@linuxfoundation.org>
@@ -68,88 +73,255 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hyunwoo Kim <imv4bel@gmail.com>
+From: Zixuan Chai <petalzu987@gmail.com>
 
-commit 62754aad50d0b30938bd8ce30b43474ce502a2af upstream.
+commit 549484dd3e80a721d51bd695f22a800d2e05bea1 upstream.
 
-Commit e3d95ad7da4f ("inet: avoid fastopen lock for regular accept()")
-made inet_csk_accept() check tfo_listener before taking fastopenq.lock
-to avoid taking the lock for connections that did not use Fast Open.
+When nf_hooks_lwtunnel is enabled, End.DX4 sends decapsulated packets
+through NF_INET_PRE_ROUTING. If DNAT changes the inner destination,
+nf_nat_ipv4_pre_routing() drops skb_dst(), and the continuation then
+dereferences the missing dst's lwtstate. This causes a KASAN NULL
+pointer dereference and fatal exception panic.
 
-reqsk_fastopen_remove() clears tfo_listener while holding fastopenq.lock,
-then reads req->sk. If inet_csk_accept() concurrently observes
-tfo_listener after it has been cleared, it skips fastopenq.lock and
-drops the last reference to the request_sock. This can free the
-request_sock while reqsk_fastopen_remove() is still using it.
+End.DX6 has the same issue with IPv6 DNAT. In seg6_iptunnel,
+POST_ROUTING SNAT with an outbound XFRM policy can replace the dst before
+the continuation resumes.
 
-If the freed memory is reused for a new request_sock with req->sk ==
-NULL, the reset path in reqsk_fastopen_remove() can append the new
-request_sock to the original listener's list of requests that caused an
-RST. After the new request_sock is freed, the next append writes through
-the stale rskq_rst_tail into freed memory.
+Validate the current dst and expected lwtstate type in each NF_HOOK()
+continuation before calling the existing handler. Drop packets with
+missing or incompatible state while preserving direct no-hook paths.
+The helpers return bool because callers only need a validity check.
 
-KASAN reported the following use-after-free when writing
-fastopenq->rskq_rst_tail->dl_next = req:
+Testing shows that the End.DX4 DNAT reproducer triggers a KASAN NULL
+pointer dereference without this change and no longer does so with the
+fix. The SNAT+ESP/XFRM reproducer also completes without the reported
+fault. The in-tree End.DX4 netfilter forwarding selftest passes all four
+bidirectional checks with nf_hooks_lwtunnel disabled and enabled.
 
-  BUG: KASAN: slab-use-after-free in reqsk_fastopen_remove+0x142/0x210
-  Write of size 8 at addr ffff888108230688 by task swapper/5/0
-  ...
-  Call Trace:
-   <IRQ>
-   ...
-   reqsk_fastopen_remove+0x142/0x210
-   tcp_check_req+0x96f/0xdd0
-   ...
-   tcp_rcv_state_process+0x19c/0x26b0
-   ...
-   tcp_v4_do_rcv+0x16e/0x490
-   tcp_v4_rcv+0x14a0/0x1af0
-   ...
-   ip_protocol_deliver_rcu+0x39/0x1e0
-   ip_local_deliver_finish+0x124/0x1e0
-   ip_local_deliver+0xfb/0x1e0
-   ...
-   </IRQ>
-
-To widen the race windows, mdelay(5) was added after newsk = req->sk,
-mdelay(20) after the if (req) reqsk_put(req) block, and mdelay(100)
-after tcp_rsk(req)->tfo_listener = false. The KASAN report above was
-reproduced with this kernel.
-
-For the lockless check, use tcp_sk(newsk)->syn_fastopen_child instead of
-tfo_listener, which reqsk_fastopen_remove() clears.
-
-syn_fastopen_child is a field of the Fast Open child TCP socket
-referenced by newsk, not of the request_sock. It is set before the child
-socket is added to the accept queue. The paths that call
-reqsk_fastopen_remove() in response to a remote ACK or RST do not clear
-this field.
-
-inet_csk_accept() uses this field to take fastopenq.lock only for Fast
-Open child sockets and rechecks tfo_listener while holding the lock.
-Connections that did not use Fast Open continue to avoid the lock.
-
-Fixes: e3d95ad7da4f ("inet: avoid fastopen lock for regular accept()")
+Fixes: 7a3f5b0de364 ("netfilter: add netfilter hooks to SRv6 data plane")
 Cc: stable@vger.kernel.org
-Signed-off-by: Hyunwoo Kim <imv4bel@gmail.com>
-Reviewed-by: Kuniyuki Iwashima <kuniyu@google.com>
-Link: https://patch.msgid.link/avQKA_YTAThtbsYU@v4bel
+Reported-by: Vega <vega@nebusec.ai>
+Reported-by: Sashiko <sashiko-bot@kernel.org>
+Closes: https://sashiko.dev/#/patchset/20260720204430.1886091-1-xmei5@asu.edu
+Signed-off-by: Zixuan Chai <petalzu987@gmail.com>
+Signed-off-by: Ren Wei <weir@nebusec.ai>
+Reviewed-by: Hangbin Liu <liuhangbin@kylinos.cn>
+Acked-by: Pablo Neira Ayuso <pablo@netfilter.org>
+Reviewed-by: Andrea Mayer <andrea.mayer@uniroma2.it>
+Link: https://patch.msgid.link/8574739acd6f5d9eb0a5640e893122619e9f79ef.1793726355.git.petalzu987@gmail.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/ipv4/inet_connection_sock.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ net/ipv6/seg6_iptunnel.c |   46 +++++++++++++++++++++++++++++++++++----
+ net/ipv6/seg6_local.c    |   55 ++++++++++++++++++++++++++++++++++++++++++++---
+ 2 files changed, 94 insertions(+), 7 deletions(-)
 
---- a/net/ipv4/inet_connection_sock.c
-+++ b/net/ipv4/inet_connection_sock.c
-@@ -684,7 +684,7 @@ struct sock *inet_csk_accept(struct sock
- 	newsk = req->sk;
+--- a/net/ipv6/seg6_iptunnel.c
++++ b/net/ipv6/seg6_iptunnel.c
+@@ -18,6 +18,7 @@
+ #include <net/ip6_fib.h>
+ #include <net/route.h>
+ #include <net/seg6.h>
++#include <net/dst_metadata.h>
+ #include <linux/seg6.h>
+ #include <linux/seg6_iptunnel.h>
+ #include <net/addrconf.h>
+@@ -58,6 +59,21 @@ static inline struct seg6_lwt *seg6_lwt_
+ 	return (struct seg6_lwt *)lwt->data;
+ }
  
- 	if (sk->sk_protocol == IPPROTO_TCP &&
--	    tcp_rsk(req)->tfo_listener) {
-+	    tcp_sk(newsk)->syn_fastopen_child) {
- 		spin_lock_bh(&queue->fastopenq.lock);
- 		if (tcp_rsk(req)->tfo_listener) {
- 			/* We are still waiting for the final ACK from 3WHS
++static bool seg6_skb_has_lwtstate(struct sk_buff *skb)
++{
++	struct dst_entry *dst;
++
++	if (unlikely(!skb_valid_dst(skb)))
++		return false;
++
++	dst = skb_dst(skb);
++	if (unlikely(!dst->lwtstate ||
++		     dst->lwtstate->type != LWTUNNEL_ENCAP_SEG6))
++		return false;
++
++	return true;
++}
++
+ static inline struct seg6_iptunnel_encap *
+ seg6_encap_lwtunnel(struct lwtunnel_state *lwt)
+ {
+@@ -538,6 +554,17 @@ drop:
+ 	return err;
+ }
+ 
++static int seg6_input_core_nf(struct net *net, struct sock *sk,
++			      struct sk_buff *skb)
++{
++	if (unlikely(!seg6_skb_has_lwtstate(skb))) {
++		kfree_skb(skb);
++		return -EINVAL;
++	}
++
++	return seg6_input_core(net, sk, skb);
++}
++
+ static int seg6_input_nf(struct sk_buff *skb)
+ {
+ 	struct net_device *dev = skb_dst_dev(skb);
+@@ -546,10 +573,10 @@ static int seg6_input_nf(struct sk_buff
+ 	switch (skb->protocol) {
+ 	case htons(ETH_P_IP):
+ 		return NF_HOOK(NFPROTO_IPV4, NF_INET_POST_ROUTING, net, NULL,
+-			       skb, NULL, dev, seg6_input_core);
++			       skb, NULL, dev, seg6_input_core_nf);
+ 	case htons(ETH_P_IPV6):
+ 		return NF_HOOK(NFPROTO_IPV6, NF_INET_POST_ROUTING, net, NULL,
+-			       skb, NULL, dev, seg6_input_core);
++			       skb, NULL, dev, seg6_input_core_nf);
+ 	}
+ 
+ 	return -EINVAL;
+@@ -624,6 +651,17 @@ drop:
+ 	return err;
+ }
+ 
++static int seg6_output_core_nf(struct net *net, struct sock *sk,
++			       struct sk_buff *skb)
++{
++	if (unlikely(!seg6_skb_has_lwtstate(skb))) {
++		kfree_skb(skb);
++		return -EINVAL;
++	}
++
++	return seg6_output_core(net, sk, skb);
++}
++
+ static int seg6_output_nf(struct net *net, struct sock *sk, struct sk_buff *skb)
+ {
+ 	struct net_device *dev = skb_dst_dev(skb);
+@@ -631,10 +669,10 @@ static int seg6_output_nf(struct net *ne
+ 	switch (skb->protocol) {
+ 	case htons(ETH_P_IP):
+ 		return NF_HOOK(NFPROTO_IPV4, NF_INET_POST_ROUTING, net, sk, skb,
+-			       NULL, dev, seg6_output_core);
++			       NULL, dev, seg6_output_core_nf);
+ 	case htons(ETH_P_IPV6):
+ 		return NF_HOOK(NFPROTO_IPV6, NF_INET_POST_ROUTING, net, sk, skb,
+-			       NULL, dev, seg6_output_core);
++			       NULL, dev, seg6_output_core_nf);
+ 	}
+ 
+ 	return -EINVAL;
+--- a/net/ipv6/seg6_local.c
++++ b/net/ipv6/seg6_local.c
+@@ -24,6 +24,7 @@
+ #include <net/addrconf.h>
+ #include <net/ip6_route.h>
+ #include <net/dst_cache.h>
++#include <net/dst_metadata.h>
+ #include <net/ip_tunnels.h>
+ #ifdef CONFIG_IPV6_SEG6_HMAC
+ #include <net/seg6_hmac.h>
+@@ -211,6 +212,21 @@ static struct seg6_local_lwt *seg6_local
+ 	return (struct seg6_local_lwt *)lwt->data;
+ }
+ 
++static bool seg6_local_skb_has_lwtstate(struct sk_buff *skb)
++{
++	struct dst_entry *dst;
++
++	if (unlikely(!skb_valid_dst(skb)))
++		return false;
++
++	dst = skb_dst(skb);
++	if (unlikely(!dst->lwtstate ||
++		     dst->lwtstate->type != LWTUNNEL_ENCAP_SEG6_LOCAL))
++		return false;
++
++	return true;
++}
++
+ static struct ipv6_sr_hdr *get_and_validate_srh(struct sk_buff *skb)
+ {
+ 	struct ipv6_sr_hdr *srh;
+@@ -942,6 +958,17 @@ static int input_action_end_dx6_finish(s
+ 	return dst_input(skb);
+ }
+ 
++static int input_action_end_dx6_finish_nf(struct net *net, struct sock *sk,
++					  struct sk_buff *skb)
++{
++	if (unlikely(!seg6_local_skb_has_lwtstate(skb))) {
++		kfree_skb(skb);
++		return -EINVAL;
++	}
++
++	return input_action_end_dx6_finish(net, sk, skb);
++}
++
+ /* decapsulate and forward to specified nexthop */
+ static int input_action_end_dx6(struct sk_buff *skb,
+ 				struct seg6_local_lwt *slwt)
+@@ -962,7 +989,7 @@ static int input_action_end_dx6(struct s
+ 	if (static_branch_unlikely(&nf_hooks_lwtunnel_enabled))
+ 		return NF_HOOK(NFPROTO_IPV6, NF_INET_PRE_ROUTING,
+ 			       dev_net(skb->dev), NULL, skb, skb->dev,
+-			       NULL, input_action_end_dx6_finish);
++			       NULL, input_action_end_dx6_finish_nf);
+ 
+ 	return input_action_end_dx6_finish(dev_net(skb->dev), NULL, skb);
+ drop:
+@@ -1030,6 +1057,17 @@ static int input_action_end_dx4_finish(s
+ 	return dst_input(skb);
+ }
+ 
++static int input_action_end_dx4_finish_nf(struct net *net, struct sock *sk,
++					  struct sk_buff *skb)
++{
++	if (unlikely(!seg6_local_skb_has_lwtstate(skb))) {
++		kfree_skb(skb);
++		return -EINVAL;
++	}
++
++	return input_action_end_dx4_finish(net, sk, skb);
++}
++
+ static int input_action_end_dx4(struct sk_buff *skb,
+ 				struct seg6_local_lwt *slwt)
+ {
+@@ -1050,7 +1088,7 @@ static int input_action_end_dx4(struct s
+ 	if (static_branch_unlikely(&nf_hooks_lwtunnel_enabled))
+ 		return NF_HOOK(NFPROTO_IPV4, NF_INET_PRE_ROUTING,
+ 			       dev_net(skb->dev), NULL, skb, skb->dev,
+-			       NULL, input_action_end_dx4_finish);
++			       NULL, input_action_end_dx4_finish_nf);
+ 
+ 	return input_action_end_dx4_finish(dev_net(skb->dev), NULL, skb);
+ drop:
+@@ -1684,6 +1722,17 @@ static int seg6_local_input_core(struct
+ 	return rc;
+ }
+ 
++static int seg6_local_input_core_nf(struct net *net, struct sock *sk,
++				    struct sk_buff *skb)
++{
++	if (unlikely(!seg6_local_skb_has_lwtstate(skb))) {
++		kfree_skb(skb);
++		return -EINVAL;
++	}
++
++	return seg6_local_input_core(net, sk, skb);
++}
++
+ static int seg6_local_input(struct sk_buff *skb)
+ {
+ 	if (skb->protocol != htons(ETH_P_IPV6)) {
+@@ -1694,7 +1743,7 @@ static int seg6_local_input(struct sk_bu
+ 	if (static_branch_unlikely(&nf_hooks_lwtunnel_enabled))
+ 		return NF_HOOK(NFPROTO_IPV6, NF_INET_LOCAL_IN,
+ 			       dev_net(skb->dev), NULL, skb, skb->dev, NULL,
+-			       seg6_local_input_core);
++			       seg6_local_input_core_nf);
+ 
+ 	return seg6_local_input_core(dev_net(skb->dev), NULL, skb);
+ }
 
 
