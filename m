@@ -1,54 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795621221;
-	b=HzKwE442c704W/y+Wb/Mn3/HCPL0Yn7zfu76YETv9Fw8y6MD04Kn6XpBQryL91cn4a5P
-	 jbHV7yfXkoXvZmDlHgofNST0Jf+B3zn/ymEs7nowdB6MVDWOP7GpbVn8ZHea8Lntsun3o
-	 BHleJHKm37f5wx1f+IxfHjuYkJdRkt1DqyRPRb3IJ8iCGz8eJar18+zrKJhSy6CRwOgay
-	 7ZC257r/nzzTLQjJvGE84WpSbJ8A0ps0lfRXF8OQAsFtZG6Z0L807Lf1mfBOZp+5bhOW/
-	 DQL8Yjxd7HPwhbQjTwBLzguKKGw9mFWRwR909jZ6rzVb0Siy1OI15zJPNgSETG6Tftw==
+	t=1795621224;
+	b=ncQ9Xr5UzTrArM8kAdnH4rf6acZ27gqKMLLlJlFh2Cfdie/LJsZ/ezCgtFIpLqJhzEoF
+	 LCQfr54QwASUjNBI8CLAGruTEaeCJ23ztcGf3AyI3EUW1uwmoCgPKfYyt+Qb+XQPJ4waI
+	 8yvLoBg6/uBA6px0vyn/wvLGA4BSu+XV0nOnKKhfBkY/c2IcPJkAQko9jrZgJWYQDlK/e
+	 26OhUvI3IStRk2tMWeJMnsms8d3kg0omO+FqYntZtpJAtYQC7yjs6K1lczSbya/weG+af
+	 snILXWfIsLYhAj/C0UvD+wl5t08XlHu2M43kHnLsnkgHNFeRx2wspXGIm3ugR+k08aQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795621221;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795621224;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=PULGO/mx0qhUxDnpsugwAzRrshF9hoOs+fMXXRQO+mk=;
-	b=1mFJ+JyMuVnMPcqGB4MB3Fz05tWenXCXzDVQTHtd9sOkobjIF8c5011EtBeCtyk1LdGU
-	 SabXzIlRQFw6gn5HqbPPyWT1zkkV1qZ0En26JFMXOT7e1VuYjyzC2bGAryiZqHfjgy9x0
-	 zl21KL6FCx/GwO59UImUTu4Lz/VbmNT1ysQbvljKQrRDaHFIZEGbwpi2RZxWuDEoDO6vV
-	 p4hxEb6Sh74qztHzzzSGgv73Df0ksVvNOuvjds4o6AWNOk+w3FDq0tjFRS6fqZTHTVJsd
-	 KrZAokzX9kxxeNvofhGCnX9vfvLQoEmH4zaqPCFe49CLViWIQ+N9XoQI81tX4rlh4nA==
+	bh=SypibDFQJGGNITdoA83gJCk7gh8HgGl4kZejbQAJuMY=;
+	b=UWb6WrTLIPeEKJ1pce7Y6clSDbBtk/3VzjCVNdF76siQ1l0FXr1oYQ6vN4NZp2FhZyFZ
+	 FI6jVrseNE3Vo3SO0wn6I35sWNYSKNJkW4XROJ7cOfIhp7PJ/cS8Dc4SJ6um+Pl94p2YN
+	 cvGBhsLyb2tlkYqJVeeILjewHwaafbC9Gw/MeUTfwDaWIFvTGucV9e7VaKRImpec/Kk9v
+	 /eI2GvfcIJ1DjJg8sEIaX2+kiC7szusuFht7ykOEURoQl2hXGSHxMjn/bkGqdu8I2GLZs
+	 pNfBL7FKreWguPWrnhTlt6diHq/Ox6fEIZuraBKfSE3/nWzfX5TPdyi0uZGhf6PQARA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="DFrcvpE/";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=thxyQeVN;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 66BE4607DE85;
-	Wed, 25 Nov 2026 15:40:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 89A4260A2635;
+	Wed, 25 Nov 2026 15:40:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=DFrcvpE/
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 70C581F000EB;
-	Wed, 25 Nov 2026 15:40:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=thxyQeVN
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AE60B1F000EB;
+	Wed, 25 Nov 2026 15:40:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795621221;
-	bh=PULGO/mx0qhUxDnpsugwAzRrshF9hoOs+fMXXRQO+mk=;
+	s=korg; t=1795621224;
+	bh=SypibDFQJGGNITdoA83gJCk7gh8HgGl4kZejbQAJuMY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=DFrcvpE/HquUFmZADPd5NvmINkm2pcU++X4I99b5Eh4yFaIHep9b9BpGXY7Hs8mEP
-	 MzEt4E/MY/Uyz3WxG6mu2J6oePWWNZvmgjX7Hko/ZRJszYwYOr2rbwDnZxCxy6h55i
-	 RYP91FLWAGU0i29105cF3YQg3744f8L4n8fatd84=
+	b=thxyQeVNTvcZjnd7ta4hIraR+w8W1/8dauB+YCTbsLnXdimC0+cdNl4S/cYcC759H
+	 wX7NA/2+VWlpbOUaULYSX6DJ88gwDthNIjNlVpscLHuJsF6dcvnNAOHRCXexUVpWHO
+	 M/I+/TwQHAtiAhd/wdmG/xyzzf7gqkCak7JJqNes=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	co+6dcbccedc9ec6452@bugs.sh,
-	Xiang Mei <xmei5@asu.edu>,
-	"Michael S. Tsirkin" <mst@redhat.com>,
-	Paul Moses <p@1g4.org>,
+	Alexei Starovoitov <ast@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 157/990] vdpa: fix double free of the reply skb in vdpa_nl_cmd_dev_config_get_doit()
-Date: Wed, 25 Nov 2026 15:25:24 +0100
-Message-ID: <20261125143825.770872753@linuxfoundation.org>
+Subject: [PATCH 6.18 115/990] bpf: Remove the WARN from arena_get_unmapped_area()
+Date: Wed, 25 Nov 2026 15:24:42 +0100
+Message-ID: <20261125143824.780246008@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143822.072087159@linuxfoundation.org>
 References: <20261125143822.072087159@linuxfoundation.org>
@@ -70,79 +67,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Xiang Mei <xmei5@asu.edu>
+From: Alexei Starovoitov <ast@kernel.org>
 
-[ Upstream commit 1f8824fe7f6eaaf2355404db08d3cd05a28aa576 ]
+[ Upstream commit 15dedd4b259289bffb8a5485b81722fdaebac71a ]
 
-genlmsg_reply() consumes the reply skb on every outcome: netlink_unicast()
-frees it whether it queues it, drops it, or bails out early.
-vdpa_nl_cmd_dev_config_get_doit() lets its return value fall through to the
-shared error label, which calls nlmsg_free(msg) again and double-frees the
-sk_buff on any reply failure. The failure is reachable unprivileged:
-VDPA_CMD_DEV_CONFIG_GET carries no GENL_ADMIN_PERM, so batching several
-requests into one sendto() on a socket with a shrunken SO_RCVBUF fills the
-receive queue, and netlink_attachskb() then takes its MSG_DONTWAIT path,
-freeing the skb and returning -EAGAIN.
+The user range of an arena must not cross a 4 GiB boundary. Thus
+arena_get_unmapped_area() asks the mm for 2 * len bytes and rounds the
+result up if necessary. If user_vm_start is not 0, addr must be equal to
+it. A WARN_ON_ONCE() assumes that the mm returns addr. But addr is only a
+hint without MAP_FIXED, and the mm can return a different range that
+crosses a boundary. This is not a kernel bug.
 
-Set msg to NULL once genlmsg_reply() has consumed it so the shared exit
-path frees the skb only on the early error gotos that still own it;
-nlmsg_free(NULL) is a no-op.
+Remove the WARN_ON_ONCE() and its -EFAULT. arena_map_mmap() already
+compares vm_start with user_vm_start under arena->lock. If the rounded
+result is user_vm_start, mmap() succeeds. If not, it returns -EBUSY.
 
-  BUG: KASAN: slab-use-after-free in sk_skb_reason_drop (net/core/skbuff.c:1220)
-  Read of size 4 at addr ffff88800d99d49c by task exploit/147
-  Call Trace:
-   sk_skb_reason_drop (net/core/skbuff.c:1220)
-   vdpa_nl_cmd_dev_config_get_doit (drivers/vdpa/vdpa.c:1324)
-   genl_family_rcv_msg_doit (net/netlink/genetlink.c:1114)
-   genl_rcv_msg (net/netlink/genetlink.c:1194)
-   netlink_rcv_skb (net/netlink/af_netlink.c:2556)
-   genl_rcv (net/netlink/genetlink.c:1218)
-   netlink_unicast (net/netlink/af_netlink.c:1345)
-   netlink_sendmsg (net/netlink/af_netlink.c:1900)
-   __sys_sendto (net/socket.c:2281)
-   __x64_sys_sendto (net/socket.c:2284)
-   entry_SYSCALL_64_after_hwframe (arch/x86/entry/entry_64.S:121)
-
-  The buggy address belongs to the object at ffff88800d99d3c0
-   which belongs to the cache skbuff_head_cache of size 232
-  The buggy address is located 220 bytes inside of
-   freed 232-byte region [ffff88800d99d3c0, ffff88800d99d4a8)
-
-Fixes: ad69dd0bf26b ("vdpa: Introduce query of device config layout")
-Reported-by: co+6dcbccedc9ec6452@bugs.sh
-Closes: https://lore.kernel.org/all/ILTHcT8oe1HP47sY25JVxssvKmkCTjYlX9Hs%40bugs.sh/
-Assisted-by: Claude:claude-opus-5
-Signed-off-by: Xiang Mei <xmei5@asu.edu>
-Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
-Reported-by: Paul Moses <p@1g4.org>
-Message-ID: <20260912215401.126194-1-xmei5@asu.edu>
+Fixes: 317460317a02 ("bpf: Introduce bpf_arena.")
+Signed-off-by: Alexei Starovoitov <ast@kernel.org>
+Link: https://patch.msgid.link/20261101190535.1454146-7-alexei.starovoitov@gmail.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/vdpa/vdpa.c | 7 ++++---
- 1 file changed, 4 insertions(+), 3 deletions(-)
+ kernel/bpf/arena.c | 3 ---
+ 1 file changed, 3 deletions(-)
 
-diff --git a/drivers/vdpa/vdpa.c b/drivers/vdpa/vdpa.c
-index caf0ee5d6856c..3d25238873afb 100644
---- a/drivers/vdpa/vdpa.c
-+++ b/drivers/vdpa/vdpa.c
-@@ -1314,15 +1314,16 @@ static int vdpa_nl_cmd_dev_config_get_doit(struct sk_buff *skb, struct genl_info
- 	}
- 	err = vdpa_dev_config_fill(vdev, msg, info->snd_portid, info->snd_seq,
- 				   0, info->extack);
--	if (!err)
-+	if (!err) {
- 		err = genlmsg_reply(msg, info);
-+		msg = NULL;
-+	}
- 
- mdev_err:
- 	put_device(dev);
- dev_err:
- 	up_read(&vdpa_dev_lock);
--	if (err)
--		nlmsg_free(msg);
-+	nlmsg_free(msg);
- 	return err;
+diff --git a/kernel/bpf/arena.c b/kernel/bpf/arena.c
+index b3c70596c576e..3d3bad292bad0 100644
+--- a/kernel/bpf/arena.c
++++ b/kernel/bpf/arena.c
+@@ -354,9 +354,6 @@ static unsigned long arena_get_unmapped_area(struct file *filp, unsigned long ad
+ 		return -EINVAL;
+ 	if ((ret >> 32) == ((ret + len - 1) >> 32))
+ 		return ret;
+-	if (WARN_ON_ONCE(arena->user_vm_start))
+-		/* checks at map creation time should prevent this */
+-		return -EFAULT;
+ 	return round_up(ret, SZ_4G);
  }
  
 -- 
