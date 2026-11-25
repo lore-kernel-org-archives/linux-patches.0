@@ -1,52 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795622511;
-	b=lcxq34AWfL2oJoRmOQ62UHm0cW4Edv/5m0l0IbbqL6pkpnBVpJvW6Pq4x1EHixipS+//
-	 owGJYQxfPasJtMtyle1sQ2XNVYdgAx9/ojyl4UbPNKJp3FcZHaeUaphlNjG1mztCqTayM
-	 aWAsOf9D8l3xreGQtMLNQPRdGeRU7NEhlWB0F8HpVfaEKjBp8sveIboDEYo47y1UIykUs
-	 nFiOj+1AI92d/y9bF7eqI04PPUoCyD6w5xsYCLAERhwpTVK1wKEv5FR8ByZH8LsHf7B1i
-	 4N34TERg0uiboW8ba+Ta2mprTK0nGWWzXBRaMz2fdzVmVjEjL1YS+kywZyd+tfkC7oQ==
+	t=1795622514;
+	b=M5tygY9JRs61vN3otDp5tcN4ZEnq+ODkbNncsOKebukdw3VXbAnVbw6N9K/TYdcYF4g9
+	 qbB3MZDn7On5LYgy3/Hbhsmu6Ksl1X42yU2eKg0U996BF90/8S5hUxm6Fj0T5l6mkAE3q
+	 jV20yVXZG7KT3/mqQKAnIQN6BJfyRAFuu3VY++WNdbe4cLFbzxSsCinrCrV7+ndpy3YQp
+	 6Mbttdijsw6ompkggc4O6X6C5EntEKmj6j7+Gcp3u6AWGoOfiIwp20uuyqtmG/PEMqJLi
+	 +H6pLH2M6/OQYH4kVyOyLTpSOXYkB4LLGxnhTT4xXhav+n8IZEnRTeu2er5NvCcFh+w==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795622511;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795622514;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=8+mY4F69dH0v+37rNKOFkOYeLFklWj14x5tzvzgV/0A=;
-	b=AozLLRA/gDVQhK5rMk0E1XbC/93VP3WWOrBEdNDfKW9jjYg304clUm3YSj1paeEs8VDh
-	 ud2O44s972CPx5f6c57uothZukYBZMeM1rS+eAB3YdG8wXkMRaw5qN9zFw3sLJoHI2FTY
-	 RUG9ZoFR/qbSU478yk1AhRXGBdEiC2n5HbE7S/NXIg+ISIBwJfpB0hnN6HL98EVOxIu5A
-	 5t4MIycRJ5W/NRH42c9acSeoDSvUKRGREZ5I4JKgQrT4ywPCS2mUcTJPGR9iZFTMaQ2fq
-	 JI1ewuTlvo+s1RGxrVAqHKDpQqa13Ydt3k2jnvHkci7Z62OJ9GD16cWYUH7HkwJgLPA==
+	bh=0ehQ+u0zXGifeNcXLVF3FwDhFlUH7R1PphHlobYqxxw=;
+	b=cH+Dj1K0CBHQnCg0gYvBbY5U6dn671oLiJx0PZoFJG2/nur05agFgu/XYEodZAv+9sYH
+	 jRNNsl3AWwpqSHBO5qWtpRFqW4vjuYz1X7VAlyYL8VshmDoArgn8bu6wSWuulhFUi0Qcl
+	 NbeLHYolfaWvyAvDNx9DBsc+d+Wf5CwZrUTXlAXdd/9P4JvVil09EsMsiInkd+iR4k4H8
+	 nWYRQAFbZ9P9NZciBaDaHZ6cdUObbvtm45NHZYIcWAagToKspKXSeg2F8Q38dCdYF5wSl
+	 +qeuJitI9+2LW2dENbXUGyT4PRAizIzoQrIoZWOnDGl5qAGWoe2bhYm9yx0+hc1U0FQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=1uRzLctG;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=TPZTSz7P;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D9FF9606A321;
-	Wed, 25 Nov 2026 16:01:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AD535606A326;
+	Wed, 25 Nov 2026 16:01:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=1uRzLctG
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C0A851F000CA;
-	Wed, 25 Nov 2026 16:01:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=TPZTSz7P
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0317E1F000D4;
+	Wed, 25 Nov 2026 16:01:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795622511;
-	bh=8+mY4F69dH0v+37rNKOFkOYeLFklWj14x5tzvzgV/0A=;
+	s=korg; t=1795622514;
+	bh=0ehQ+u0zXGifeNcXLVF3FwDhFlUH7R1PphHlobYqxxw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=1uRzLctGlv9s1TMNWBxD9VYg5DnhBYWqHLHPorz+SNMP52dGaIVgjuRyqXXFkkjhO
-	 exRLXOza74qKtU6F2BylxzGWT2whDMIGKDMGnPPHRI41w5GXnI1uwN4vO+yGiUQ+k4
-	 YeWJGgdFhtP0Bf/cdgVn8C0kFGAsnnePVQIVzD2c=
+	b=TPZTSz7P+uUu0AcUv02K4/dcTr+NXuNyx6CzERhrHI3ifGqwtyxeMrpVDuY65MwZA
+	 WVInAl3yKBm3tADvJiXVmFlOVFyRPFI7t5HTLDzLzzNUqLjaA5/rVHkTtXCAa85b8Q
+	 L51LhRRKdw0RPM/LntyVtb/ajWaPBLWOXMIRJHCw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nathan Chancellor <nathan@kernel.org>,
-	Andy Shevchenko <andriy.shevchenko@intel.com>,
+	Kang Yang <kang.yang@oss.qualcomm.com>,
+	Baochen Qiang <baochen.qiang@oss.qualcomm.com>,
+	Vasanthakumar Thiagarajan <vasanthakumar.thiagarajan@oss.qualcomm.com>,
+	Jeff Johnson <jeff.johnson@oss.qualcomm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 562/990] serial: 8250_mid: Add missing module namespace import for SERIAL_8250
-Date: Wed, 25 Nov 2026 15:32:09 +0100
-Message-ID: <20261125143835.262872571@linuxfoundation.org>
+Subject: [PATCH 6.18 545/990] wifi: ath12k: fix skb leak on paddr mismatch in wifi7 mon RX pop
+Date: Wed, 25 Nov 2026 15:31:52 +0100
+Message-ID: <20261125143834.865710057@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143822.072087159@linuxfoundation.org>
 References: <20261125143822.072087159@linuxfoundation.org>
@@ -68,37 +70,63 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Nathan Chancellor <nathan@kernel.org>
+From: Kang Yang <kang.yang@oss.qualcomm.com>
 
-[ Upstream commit 789f52f83305032ecfaaf7efae9a8ba75815c01b ]
+[ Upstream commit 4dfe8e3ac731c3372b5c1f1f73b0676c301c3916 ]
 
-After commit 1c305d5f1daa ("serial: 8250_mid: wait for LSR tx empty
-before setting termios"), modpost errors (or warning with
-CONFIG_MODULE_ALLOW_MISSING_NAMESPACE_IMPORTS=y):
+When rxcb->paddr does not match the MSDU-list paddr reported by
+the link descriptor, ath12k_wifi7_dp_rx_mon_mpdu_pop() sets
+drop_mpdu = true and continues to the next MSDU. At that point
+the skb is still attached to the descriptor via desc_info->skb;
+the local msdu variable only holds a copy of that pointer. The
+continue skips the rest of the loop body, which would normally
+DMA-unmap the buffer, free the skb, clear desc_info->skb, and
+append the descriptor to used_list in the next_msdu block.
 
-  ERROR: modpost: drivers/tty/serial/8250/8250_mid.ko: module uses symbol 'serial8250_wait_for_xmitr' from namespace 'SERIAL_8250', but does not import it.
+The descriptor therefore stays in_use with the skb attached
+forever. The skb is never DMA-unmapped, delivered, freed or
+replaced, and HW does not write into it either because the
+descriptor is no longer posted to any SRNG. The descriptor is
+also never returned to used_list, so
+ath12k_dp_rx_bufs_replenish() cannot allocate a fresh buffer
+for it and the RX refill ring gradually drains.
 
-Add the missing module namespace import to clear up the error/warning.
+The skb is still reachable via dp->rxbaddr[][].skb and is
+reclaimed at teardown by ath12k_dp_cc_cleanup(), so this is not
+a kmemleak-style unreachable leak. Nevertheless, both the
+descriptor slot and the skb memory are wasted for the module
+lifetime, and under sustained mismatches monitor RX stalls.
 
-Fixes: 1c305d5f1daa ("serial: 8250_mid: wait for LSR tx empty before setting termios")
-Signed-off-by: Nathan Chancellor <nathan@kernel.org>
-Reviewed-by: Andy Shevchenko <andriy.shevchenko@intel.com>
-Link: https://patch.msgid.link/20260927-tty-8250_mid-ns-import-v1-1-84d0482e1c5d@kernel.org
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Remove the continue so drop_mpdu remains true, execution reaches
+the DMA unmap and dev_kfree_skb_any() below, and the descriptor
+is returned to used_list via the next_msdu block for replenish.
+
+Tested-on: WCN7850 hw2.0 PCI WLAN.HMT.1.1.c7-00108-QCAHMTSWPL_V1.0_V2.0_SILICONZ_UPSTREAM-3
+
+Fixes: 72bfbf19b7da ("wifi: ath12k: add support to reap and process mon dest ring")
+Signed-off-by: Kang Yang <kang.yang@oss.qualcomm.com>
+Reviewed-by: Baochen Qiang <baochen.qiang@oss.qualcomm.com>
+Reviewed-by: Vasanthakumar Thiagarajan <vasanthakumar.thiagarajan@oss.qualcomm.com>
+Link: https://patch.msgid.link/20260916060325.854-2-kang.yang@oss.qualcomm.com
+Signed-off-by: Jeff Johnson <jeff.johnson@oss.qualcomm.com>
+[ sashal: Renamed the file path from the wifi7 split (wifi7/dp_mon.c, ath12k_wifi7_dp_rx_mon_mpdu_pop) to ath12k/dp_mon.c with ath12k_dp_rx_mon_mpdu_pop; the one-line continue removal itself is unchanged. ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/tty/serial/8250/8250_mid.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/net/wireless/ath/ath12k/dp_mon.c | 1 -
+ 1 file changed, 1 deletion(-)
 
-diff --git a/drivers/tty/serial/8250/8250_mid.c b/drivers/tty/serial/8250/8250_mid.c
-index c02ecb96e8b6f..47f820fcd1a45 100644
---- a/drivers/tty/serial/8250/8250_mid.c
-+++ b/drivers/tty/serial/8250/8250_mid.c
-@@ -415,3 +415,4 @@ module_pci_driver(mid8250_pci_driver);
- MODULE_AUTHOR("Intel Corporation");
- MODULE_LICENSE("GPL v2");
- MODULE_DESCRIPTION("Intel MID UART driver");
-+MODULE_IMPORT_NS("SERIAL_8250");
+diff --git a/drivers/net/wireless/ath/ath12k/dp_mon.c b/drivers/net/wireless/ath/ath12k/dp_mon.c
+index 3752fa0eed30b..a7cb7ba62f2d4 100644
+--- a/drivers/net/wireless/ath/ath12k/dp_mon.c
++++ b/drivers/net/wireless/ath/ath12k/dp_mon.c
+@@ -4173,7 +4173,6 @@ ath12k_dp_rx_mon_mpdu_pop(struct ath12k *ar, int mac_id,
+ 					   i, (unsigned long)rxcb->paddr,
+ 					   (unsigned long)msdu_list.paddr[i]);
+ 				drop_mpdu = true;
+-				continue;
+ 			}
+ 			if (!rxcb->unmapped) {
+ 				dma_unmap_single(ar->ab->dev, rxcb->paddr,
 -- 
 2.53.0
 
