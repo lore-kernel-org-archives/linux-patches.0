@@ -1,51 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795624179;
-	b=MgO8g9KFyg7R2AFgKs984DYE9P98YbHTJ0aeXInQujAPfMRKXOfUIngIRvuH41zlwrlx
-	 qkKSsIe1hFa4Mpb0onTsYsimO5ayaVhpJ4wtTGC85SO7ISdmJmsscJYQCcNCpTZOLUL1n
-	 uJp5sRLLhRo0L3UP8KGRzkh+L/Qqo/d5/Y4JmjX4LzQ9g2PagWsLZVAyWF/lR0o7tEzRZ
-	 85IuVn+/5clWPgyx5P15qZeFDC3nvOV0ecmfAXThlxuNHDvh9JW4kfblO82sz+m2mHt4/
-	 /HX/UiH+iQdGdPB9NJRPnyl+2XnmSPnk5Gr/CQWW1cmI/fGZRP7x1pmOWPbcfiTsDWg==
+	t=1795624182;
+	b=s6im7RxRcOD2QxNT06yFwwI9MtzuylP135SeY9kOEELQ4431MaA5v/BpzBpidMVFj19/
+	 /mqUhFcOu5XBG6NBBeTCsIiu/+fwIQJeVOYWfQw2RHUKs5qVA9oef7UUg3hGSgk3840tu
+	 r+nl5SFj/eFWiIm0Mxud8JCPje+laXxiDhh1lPx2xTPxyJNIwC910RSZ5JWUwi9SdSzFB
+	 VE0wQL4kMmGpkvIkChzoax814w7Q56WTseYy0JJSYUo5g3SnXoDRcqyyITCFlTmkukI+4
+	 YaVT1DUs9DZONIFVRQOrTJys3Vv+0rBCxeAHHB4xVGk/hIYGWJSLXsKhslj/K6S4iVw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795624179;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795624182;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=J08mpqEiymjuaCJNMLLAdaSHQ+ETP6LLJN4dVcoFaBA=;
-	b=0JeUcj7MlTr74g0ZqiTQ3Phs9ACC7FX7FhmpVdfDh4CMuHBrCt9I+pRSthU4+i6D2szH
-	 pRKlRggquNrSL1DTFlKTvOrfOZIThlxq9d8mAcyuw7n04W7yqfaSBZwThyQfg0MCWaC0J
-	 fjrXDo5qRCqP1TfS8AIceCUSekizBmTBApE+sKM01Rznx4Fu2XsoVdgM/HPr4I9Fz+m47
-	 3/3aALD4wO1//gdPTYEhheHwQcHXEbkCuDaHs8wnuijBL9J5EDtVsEXFeW6wVYW+U+VJb
-	 EXlJ4TYCspc3WZ27Glm6O+Q3hHLjVy/jbiit+IX/FTprJXw5eD6e4BayhFkpFWcZjLA==
+	bh=Nf4/HKWOflN9VQgguyK6c0j5Cvj+TPLd6PE1IQU+SQA=;
+	b=r92A70Ds8MVakEltr6tFI6yqj4sQHpS8pGrBaIyUz6vkXhpiQs22Rdz7KU+KMzEtBCC5
+	 T2LiWDmRdzWV0Lnuvp6CcQ7+DVm072/+JaliNTCYUcdxjf2SIQTnwGT0xtA62Byt0IELS
+	 WJ8keTzbqrX5N9LWR8+J7SV52+6IRM4ZfWZsfpkgYBHevtfFIUfyk1Phutd9qYiXDd8UN
+	 FS+EEUShbu7z2Lgcs1e8gbHKVKFcJEfdcaNkG8qyaQJJdTdfS+K5qEcVZM0H+B4JHLLF5
+	 yU0cNfQfsLF9VHuslaSTHwgDTJ1bfKNF7V0MuChjPLurQgS5xGO6lVt4IWDbB4o8krw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=bf0cxG6r;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Ruod7kTY;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B2D89606A332;
-	Wed, 25 Nov 2026 16:29:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B39E2606A326;
+	Wed, 25 Nov 2026 16:29:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=bf0cxG6r
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5EA861F000D2;
-	Wed, 25 Nov 2026 16:29:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Ruod7kTY
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B2E421F000D4;
+	Wed, 25 Nov 2026 16:29:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795624178;
-	bh=J08mpqEiymjuaCJNMLLAdaSHQ+ETP6LLJN4dVcoFaBA=;
+	s=korg; t=1795624182;
+	bh=Nf4/HKWOflN9VQgguyK6c0j5Cvj+TPLd6PE1IQU+SQA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=bf0cxG6rymoAyJogmL2sP+l9t6YvJQSCPm4cA1Gz7SN8TW961/Np1SYN48zE5QuXs
-	 4VsRIenQWiTCudQ/SN+JbXGiCGrv5/Ym5P7aD4oYBKaH3LJviQ+HBruk0+1NmioWHI
-	 7ObGDRnAr0j6fStQXXkbg1xac6ATfzVkNo7fZW+Q=
+	b=Ruod7kTYW6sNW42z1KRqrrDmh9p4iOlQr8ngeQmP+G3me0VvuIYIqzgi2yi5r10AD
+	 LJGRadXt6IhFIuGo9Lu9HMto+WhteK1mJxRwQMlaXuOu1Z5eZzXsZx+fLdTvOwyX/G
+	 flt9vuEDhG5/OQG68AGDOflJyOVgq9jQS1Sprm00=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Chris Mason <mason@kernel.org>,
 	Alexei Starovoitov <ast@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 109/816] bpf: Require BPF_LWT_REROUTE when an lwt_in prog changes the protocol
-Date: Wed, 25 Nov 2026 15:27:37 +0100
-Message-ID: <20261125143851.736677197@linuxfoundation.org>
+Subject: [PATCH 6.12 110/816] bpf: Move the transport header with the moved headers
+Date: Wed, 25 Nov 2026 15:27:38 +0100
+Message-ID: <20261125143851.759542284@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143849.205329330@linuxfoundation.org>
 References: <20261125143849.205329330@linuxfoundation.org>
@@ -67,57 +68,112 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alexei Starovoitov <ast@kernel.org>
+From: Chris Mason <mason@kernel.org>
 
-[ Upstream commit d9618a6196953718f7470de5d2e84121bed063f7 ]
+[ Upstream commit a9d08fe60fa728ce0e3a99085241e8e790fb14c6 ]
 
-When an lwt_in prog returns BPF_OK, bpf_input() calls orig_input(), the
-input handler of the route. This handler is for one IP version and needs a
-dst of the same family. But BPF_LWT_ENCAP_IP lets the prog push a header of
-the other IP version and thus change skb->protocol. Then the handler reads
-and changes a header of the other IP version. The push of an SRH also
-replaces the dst, because seg6_lookup_nexthop() puts an rt6_info into the
-skb. Then ip_forward() uses the rt6_info as a struct rtable.
+bpf_skb_net_hdr_pop() removes len bytes at offset off.
+bpf_skb_net_hdr_push() does the opposite.
 
-Drop the skb with -EINVAL when skb->protocol changes, as bpf_xmit() does.
-Drop it also when the family of the dst changes, because skb->protocol does
-not always show this change. Today no such skb leaves as the prog made it.
-A prog works as before if it returns BPF_LWT_REROUTE, or if it pushes an
-SRH on an IPv6 route.
+           skb->data       off
+  before   | A             | removed | B            |
+  after              | A             | B            |
+                     skb->data       off
 
-The commit in the first Fixes tag lets a prog change skb->protocol. The
-commit in the second tag adds the check to bpf_xmit() only.
+mac_header and network_header move with A. transport_header moves only when
+it is equal to network_header. inner_transport_header never moves. This is
+correct only for a header in B. In bpf_lwt_seg6_adjust_srh()
+transport_header is in A. bpf_skb_adjust_room() can remove both transport
+headers. With an incorrect header offset, the stack can drop the skb or
+read outside of it.
 
-Fixes: 52f278774e79 ("bpf: implement BPF_LWT_ENCAP_IP mode in bpf_lwt_push_encap")
-Fixes: 3bd0b15281af ("bpf: add handling of BPF_LWT_REROUTE to lwt_bpf.c")
+Also move transport_header with A when it is in A. Set it to offset off
+when it is in the removed bytes. In BPF_ADJ_ROOM_MAC mode it is then equal
+to network_header. Do not unset it, because skb_gso_validate_mac_len() uses
+it without a check. After a removal, set inner_transport_header to off when
+it is not in B and skb->encapsulation is set. A has only outer headers.
+
+Fixes: fe94cc290f53 ("bpf: Add IPv6 Segment Routing helpers")
+Fixes: 868d523535c2 ("bpf: add bpf_skb_adjust_room encap flags")
+Signed-off-by: Chris Mason <mason@kernel.org>
 Signed-off-by: Alexei Starovoitov <ast@kernel.org>
-Link: https://patch.msgid.link/20261101190535.1454146-24-alexei.starovoitov@gmail.com
+Link: https://patch.msgid.link/20261101190535.1454146-26-alexei.starovoitov@gmail.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/core/lwt_bpf.c | 10 ++++++++++
- 1 file changed, 10 insertions(+)
+ net/core/filter.c | 37 +++++++++++++++++++++++++++++++------
+ 1 file changed, 31 insertions(+), 6 deletions(-)
 
-diff --git a/net/core/lwt_bpf.c b/net/core/lwt_bpf.c
-index 7b669f206abd7..331d4fd271960 100644
---- a/net/core/lwt_bpf.c
-+++ b/net/core/lwt_bpf.c
-@@ -159,6 +159,16 @@ static int bpf_input(struct sk_buff *skb)
- 			bpf_lwt_reset_cb(skb, proto);
- 		if (ret == BPF_LWT_REROUTE)
- 			return bpf_lwt_input_reroute(skb);
-+		/*
-+		 * orig_input() is for the old protocol only, see bpf_xmit().
-+		 * It also needs a dst of the old family. BPF_LWT_ENCAP_SEG6
-+		 * puts an IPv6 dst into the skb.
-+		 */
-+		if (skb->protocol != proto ||
-+		    skb_dst(skb)->ops->family != dst->ops->family) {
-+			kfree_skb(skb);
-+			return -EINVAL;
-+		}
+diff --git a/net/core/filter.c b/net/core/filter.c
+index 1cebf5d12e81e..359180c91d034 100644
+--- a/net/core/filter.c
++++ b/net/core/filter.c
+@@ -3353,9 +3353,25 @@ static int bpf_skb_generic_pop(struct sk_buff *skb, u32 off, u32 len)
+ 	return 0;
+ }
+ 
++/*
++ * bpf_skb_net_hdr_push() inserts bytes at @off, bpf_skb_net_hdr_pop() removes
++ * bytes at @off. Both move the bytes in front of @off together with skb->data,
++ * and leave the rest of the packet where it is. Return true if the transport
++ * header is in the part that moves. A transport header that is equal to the
++ * network header stays equal to it.
++ */
++static bool bpf_skb_trans_hdr_moves(const struct sk_buff *skb, u32 off)
++{
++	if (skb->transport_header == skb->network_header)
++		return true;
++
++	return skb_transport_header_was_set(skb) &&
++	       (u32)skb_transport_offset(skb) < off;
++}
++
+ static int bpf_skb_net_hdr_push(struct sk_buff *skb, u32 off, u32 len)
+ {
+-	bool trans_same = skb->transport_header == skb->network_header;
++	bool trans_moves = bpf_skb_trans_hdr_moves(skb, off);
+ 	int ret;
+ 
+ 	/* There's no need for __skb_push()/__skb_pull() pair to
+@@ -3366,8 +3382,8 @@ static int bpf_skb_net_hdr_push(struct sk_buff *skb, u32 off, u32 len)
+ 	if (likely(!ret)) {
+ 		skb->mac_header -= len;
+ 		skb->network_header -= len;
+-		if (trans_same)
+-			skb->transport_header = skb->network_header;
++		if (trans_moves)
++			skb->transport_header -= len;
  	}
  
- 	if (unlikely(!dst->lwtstate->orig_input)) {
+ 	return ret;
+@@ -3375,7 +3391,7 @@ static int bpf_skb_net_hdr_push(struct sk_buff *skb, u32 off, u32 len)
+ 
+ static int bpf_skb_net_hdr_pop(struct sk_buff *skb, u32 off, u32 len)
+ {
+-	bool trans_same = skb->transport_header == skb->network_header;
++	bool trans_moves = bpf_skb_trans_hdr_moves(skb, off);
+ 	int ret;
+ 
+ 	/* Same here, __skb_push()/__skb_pull() pair not needed. */
+@@ -3383,8 +3399,17 @@ static int bpf_skb_net_hdr_pop(struct sk_buff *skb, u32 off, u32 len)
+ 	if (likely(!ret)) {
+ 		skb->mac_header += len;
+ 		skb->network_header += len;
+-		if (trans_same)
+-			skb->transport_header = skb->network_header;
++		if (trans_moves) {
++			skb->transport_header += len;
++		} else if (skb_transport_header_was_set(skb) &&
++			   skb_transport_offset(skb) < (int)off) {
++			/* It was in the removed bytes or before skb->data. */
++			skb_set_transport_header(skb, off);
++		}
++		/* Do not leave the inner transport header in front of @off. */
++		if (skb->encapsulation &&
++		    skb_inner_transport_offset(skb) < (int)off)
++			skb_set_inner_transport_header(skb, off);
+ 	}
+ 
+ 	return ret;
 -- 
 2.53.0
 
