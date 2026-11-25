@@ -1,54 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795622949;
-	b=hJEOv5g3NcE+nd+Yh5utdgcvYbllMEykmbck5klXwVXeoCAQDyLKsDo/ACIkAC0YKoGk
-	 hKUZ6jy/vkSihUYdLgMNpVxB8xBBg3u/yxF98kf4YlLGMxN+4JJ8Bt308e7/v7j1fb+Cm
-	 STDHqkldefJ+RUzxwi3zZtz0EiTFpALHs1LnftG1C/as86zpeCtgQMOcWxHZzvrIRMDED
-	 4CmXcF4tufNbG7DnpUc0BAHH01otBBJa/M73Nu7iyCa9WUDjxgtLWwes6byA+TsQJ5M3M
-	 naRI/Fj5Y1EbnvNkE3YUK03cPB9mqCJm3FaHW1Az/N+TtxVO6T5dNOEhDxLlJ9aiMJg==
+	t=1795622952;
+	b=ugGpgtfo02rOt5iBlx6OX7iQ3X/QDZAfVkYsLISwkh6vmRkPCJ2leR5mQQXbJDoeajzg
+	 4lThAL2Pe2L+YSt0j83H2Qpz+vg6tqKrtnunHjk9xzYnwgcCsgpvC7Ta0uruOLFbXVxaP
+	 RD/BbU+alk86gFv0k1JjUW0JRNygO55bu9Y1THITg1TbZdzPtpMBKh/QSbkfbO6SukPJZ
+	 qr/zBDrSW8JzJvUDlFOG4ruEQjn2aQvGMo25mSk2ZOOg/hQqF8CNnv+2f5x0DRgeWy8Z+
+	 90W8V4I7aZNlRCSxKvoS3b+CC7e+pyXGMVWgcpHdkrvr1zOZRnO+cKDPO0VYQ1a+x0g==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795622949;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795622952;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=Hi93+7zxYBHN+Ijw8XFAmp3AjM7PPoWwT/wjFZq6NM4=;
-	b=FzuxOqb1Mjq5Dzn41N1CIdRHrndPuDB/a84viIC82p5Cv+dBRi1J3PdSdEjkm7PaVSr+
-	 jqH8nhQcukkqxjPd4v85NsSzGYcDHMeD3HcvoWGnTrexyk87zA/V/tXEuo3XQk3lwGyrb
-	 cxLb5PvCxqOSzvPW578ybvltw6+jDeI83fqwMWt+Y1YotjJwE5a8jw0fwaeG8hI61auJf
-	 VHUfh8W6W7Z+yJGQz2BxSsFI+oY2Isi76OUReAJoq9lEoS0WyU1bbAJZMfwJWcukozTiL
-	 zk1lkmYEx6guGWIgkWmDt/vmNxK6U2c1QEQhu5AemLT3jAee1Ly1kbrQI/l1AUdz6zg==
+	bh=8UisHrJbuRQMDB8mGfCW5BbcBBZAJckzp/VJbijTuTk=;
+	b=qIU8Hvb8vF2vTF6RDYfw1r1Rnffl1IoTUXcgyTDeWT+iAJFWycmYtjHQB6DKOIMWQUFT
+	 pL+sGLIZx32RBVFeBzWe9qjT1KzOkNciwubU30Ma/WTRYGzbERRmJ0JWsPAK2RN163m2z
+	 Meo20UV0pdqCYgqi7cbfIvfN7MjoIqI0CbcZ4rEVIzmAFSE0fKLYSUlJazqB90iSyujmS
+	 8NVL21dGS34bVPZrHuvbju97Duw5g/5uAtmTThLMnXb9TcaK1AhTNZhOjhjaq4u3SzzKE
+	 JAOLKYZZinwuCPrj1NHfmZfwgofzEFKKUiLkq67aEQ+k1v/Zy+W+E36VNBqaq9G8iyQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=TZ0z7M6e;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=JDOpg3v1;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 15224606A321;
-	Wed, 25 Nov 2026 16:09:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4E36B606A31E;
+	Wed, 25 Nov 2026 16:09:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=TZ0z7M6e
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5CF591F000CA;
-	Wed, 25 Nov 2026 16:09:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=JDOpg3v1
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 310B71F000C6;
+	Wed, 25 Nov 2026 16:09:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795622948;
-	bh=Hi93+7zxYBHN+Ijw8XFAmp3AjM7PPoWwT/wjFZq6NM4=;
+	s=korg; t=1795622951;
+	bh=8UisHrJbuRQMDB8mGfCW5BbcBBZAJckzp/VJbijTuTk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=TZ0z7M6ekf662A2bPtt/ghqtv6YVQtc6Ajz+7tP6HnLUSnNirFvMR3ePRUK5EpHC1
-	 UCsTYXifZiQGX/XmX9HpqGZ8LW77T/pf5YJSreHTk+ZSLulGuWCivyNGSTa7CQFQ6L
-	 CveHXTo+AEO+LmBIXbJE0j6UGsfM85cKRLAD1nX4=
+	b=JDOpg3v1vkhlKfwWeTVof6G29FsxQdAie1lMhg1A82h3c/H2NhxpUzYuPSP2L1TQf
+	 1Okf9TDIqrwSQQI29rv0pYqPMaEgo6howjjmejNWrVq/+tIcCFYEZNfCE3qowA2uGo
+	 t0jap/MSYGMifzPhA6npuanipZuct5JUVtU+cX+o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bin Yu <byu@xidian.edu.cn>,
-	Cheng Wen <wencheng@xidian.edu.cn>,
-	YuanZhe Liu <25031212351@stu.xidian.edu.cn>,
-	Oleksij Rempel <o.rempel@pengutronix.de>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.18 702/990] net: usb: lan78xx: let unregister_netdev() stop phylink
-Date: Wed, 25 Nov 2026 15:34:29 +0100
-Message-ID: <20261125143838.525770434@linuxfoundation.org>
+	Maciej Fijalkowski <maciej.fijalkowski@intel.com>,
+	Stanislav Fomichev <sdf@fomichev.me>,
+	Jason Xing <kerneljasonxing@gmail.com>,
+	Rongzheng Wang <testwrzwrz@gmail.com>,
+	Paolo Abeni <pabeni@redhat.com>
+Subject: [PATCH 6.18 703/990] xsk: defer software checksum until the skb is complete
+Date: Wed, 25 Nov 2026 15:34:30 +0100
+Message-ID: <20261125143838.549944234@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143822.072087159@linuxfoundation.org>
 References: <20261125143822.072087159@linuxfoundation.org>
@@ -70,60 +70,81 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: YuanZhe Liu <25031212351@stu.xidian.edu.cn>
+From: Rongzheng Wang <testwrzwrz@gmail.com>
 
-commit 9280128245612b30ca4a238daa6a777b0f4e583e upstream.
+commit f2eddafbfcc004098425fee7c5664adbe29152d7 upstream.
 
-lan78xx_disconnect() stops phylink before unregistering the net device.
-phylink_start() is only called from lan78xx_open(), so when the device is
-unplugged before the interface has been brought up, the attached PHY is
-still in PHY_READY and phy_stop() reports:
+When XDP_UMEM_TX_SW_CSUM is used with multi-buffer TX, xsk_skb_metadata()
+calls skb_checksum_help() while only the first descriptor has been added to
+the skb. The checksum therefore covers just the first fragment, and
+skb_checksum_help() sets ip_summed to CHECKSUM_NONE, so the remaining
+fragments are never included in the checksum.
 
-  called from state READY
-  WARNING: drivers/net/phy/phy.c:1670 at phy_stop+0xad/0x380
+Move the software checksum calculation to the point where the last
+descriptor has been added to the skb.
 
-The same warning is emitted after an ifup/ifdown cycle, where the PHY is
-already in PHY_HALTED.
+On a checksum failure the packet is now dropped instead of being returned
+to the application for a retry. This path is not reachable with the
+existing metadata validation, but the behavior change is intentional.
 
-unregister_netdev() already closes a running device, which calls
-lan78xx_stop() and phylink_stop() with dev->dev_mutex held and after the
-URBs have been terminated. Unregister first and disconnect the PHY
-afterwards, so the interface is stopped exactly once and only while it is
-running, and the net device can no longer be opened while its phylink
-instance has no PHY attached.
-
-Fixes: e110bc825897 ("net: usb: lan78xx: Convert to PHYLINK for improved PHY and MAC management")
+Fixes: 11614723af26 ("xsk: Add option to calculate TX checksum in SW")
 Cc: stable@vger.kernel.org
-Co-developed-by: Bin Yu <byu@xidian.edu.cn>
-Signed-off-by: Bin Yu <byu@xidian.edu.cn>
-Co-developed-by: Cheng Wen <wencheng@xidian.edu.cn>
-Signed-off-by: Cheng Wen <wencheng@xidian.edu.cn>
-Signed-off-by: YuanZhe Liu <25031212351@stu.xidian.edu.cn>
-Reviewed-by: Oleksij Rempel <o.rempel@pengutronix.de>
-Link: https://patch.msgid.link/20261031165213.2738-1-25031212351@stu.xidian.edu.cn
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Reviewed-by: Maciej Fijalkowski <maciej.fijalkowski@intel.com>
+Acked-by: Stanislav Fomichev <sdf@fomichev.me>
+Reviewed-by: Jason Xing <kerneljasonxing@gmail.com>
+Signed-off-by: Rongzheng Wang <testwrzwrz@gmail.com>
+Link: https://patch.msgid.link/20261104034809.24545-2-testwrzwrz@gmail.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/usb/lan78xx.c |    5 ++---
- 1 file changed, 2 insertions(+), 3 deletions(-)
+ net/xdp/xsk.c |   23 +++++++++++++++--------
+ 1 file changed, 15 insertions(+), 8 deletions(-)
 
---- a/drivers/net/usb/lan78xx.c
-+++ b/drivers/net/usb/lan78xx.c
-@@ -4594,13 +4594,12 @@ static void lan78xx_disconnect(struct us
- 	udev = interface_to_usbdev(intf);
- 	net = dev->net;
- 
-+	unregister_netdev(net);
-+
- 	rtnl_lock();
--	phylink_stop(dev->phylink);
- 	phylink_disconnect_phy(dev->phylink);
- 	rtnl_unlock();
- 
--	unregister_netdev(net);
+--- a/net/xdp/xsk.c
++++ b/net/xdp/xsk.c
+@@ -902,14 +902,6 @@ static int xsk_skb_metadata(struct sk_bu
+ 		skb->csum_start = hr + csum_start;
+ 		skb->csum_offset = csum_offset;
+ 		skb->ip_summed = CHECKSUM_PARTIAL;
 -
- 	timer_shutdown_sync(&dev->stat_monitor);
- 	set_bit(EVENT_DEV_DISCONNECT, &dev->flags);
- 	cancel_delayed_work_sync(&dev->wq);
+-		if (unlikely(pool->tx_sw_csum)) {
+-			int err;
+-
+-			err = skb_checksum_help(skb);
+-			if (err)
+-				return err;
+-		}
+ 	}
+ 
+ 	if (flags & XDP_TXMD_FLAGS_LAUNCH_TIME)
+@@ -921,6 +913,15 @@ static int xsk_skb_metadata(struct sk_bu
+ 	return 0;
+ }
+ 
++static int xsk_skb_sw_csum(struct sk_buff *skb, struct xsk_buff_pool *pool)
++{
++	if (unlikely(pool->tx_sw_csum &&
++		     skb->ip_summed == CHECKSUM_PARTIAL))
++		return skb_checksum_help(skb);
++
++	return 0;
++}
++
+ static struct sk_buff *xsk_build_skb_zerocopy(struct xdp_sock *xs,
+ 					      struct xdp_desc *desc)
+ {
+@@ -1174,6 +1175,12 @@ static int __xsk_generic_xmit(struct soc
+ 			continue;
+ 		}
+ 
++		err = xsk_skb_sw_csum(skb, xs->pool);
++		if (unlikely(err)) {
++			xsk_drop_skb(skb);
++			goto out;
++		}
++
+ 		err = __dev_direct_xmit(skb, xs->queue_id);
+ 		if  (err == NETDEV_TX_BUSY) {
+ 			/* Tell user-space to retry the send */
 
 
