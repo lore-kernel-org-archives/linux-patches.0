@@ -1,52 +1,55 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795619104;
-	b=i3tjK5lkCu8enLBMCKxiP4XoYQz8GV3IjxdcKx4CAXmo1KruQ/b5jqOl3R/MMl6+R30V
-	 S3prB9RUHz0T+xUzCzuX+pzugeUnsba1MLqmwxPxKq0z7daSQo0VKi3/ut6emhKuDlow/
-	 FEMXmbS3LNSoxYOTPLZnElPDQ7nXtDz9rUHGj6/1CPGF5NAxewp/y1t4aaeX7ivQe6L8z
-	 a35ztUgPWxE7Wqi6Esgws5KbZZLinABKoycJVRCDnIjftSw5/rfO4W9UCPZB699wzifNO
-	 S4k/5zUhQfR1RmhwjlBkwE5Of4/m+eIkj/JxfJy1IwbCbmHagNbIxii4+EhWH8Tu6oQ==
+	t=1795619107;
+	b=kIavTxcVrrCOCZT04NU7SWYU48Maq5YtZZgMXDQTvK4ydoGDcojWHlTqae/mH6OsETn7
+	 F3a9YQkqCWjOCFok4bk5kUhHIqMMxfu/iuLKPH1OC7Krras6eyywsv7QejOqhKqjtGSWI
+	 Eg+95FtXsob/tA+wPMetdwJNJhDrfAlIeKoYr4Rx4DB+1+5tSeXbj9Okr/hGS+u8pRSy2
+	 N7/pfx1dh5US5l7FdShfuLWfS5qs4PY53bbApms6C/09J+Zog388RJjqccClGnvVYAJsT
+	 gELAF+Gy+scG9KoxUOg4hVh1Q/nIbxPdp8JD7DtDSPArQsRezR5R07iqPxVmo58keHg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795619104;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795619107;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=V/CS4BldytsWkpo5ehW6PyHyKhsqi34kXxo9YCIWD6A=;
-	b=4R5s+g9pNKL9+rD8ay1VC693RL4EEv7b4tF/Ry57KnXu5vKFaoTWlK5L8bGThQ5mBjzi
-	 WP6FWAfdsK+ZXi2JvX0GCZd+mm23lP9aQt7TKjWMPmEi4FPF7B1jF0vjEnDNAwHrT9qc4
-	 a9PCwpbqZT2vHy2nF0Q/9IrdEik72fwOrxkojskwDLfFrj5rJzvcdgvKI8hDATG62TL26
-	 Amdxxf3f2X+/CQlUVwOxnWGudIx39vCvdEZXdOF0E8KI3uW0P62B6GMZNWNoor7PzQmoY
-	 PNzi4PfJnluoJ4bLreb6pey7RhhB4SYlUzX5v4urU3qtlvy7kR/TKjAts3CbQfu+mkQ==
+	bh=F1RjG2olC2n05ycsLfKZfdukTNfESHL8qpZKtW2VkqU=;
+	b=Dp6FFM70zrVVrV2/fZzTtsQebI/zyDbYkDwvtQxDMffu11tfYL3C9KbW4vItq+15GStN
+	 pEAT8oq8gPbF8bgPGDff7fUVsj6jUH6wsukqhEdUkeXUaljCfWO370Q9TpOMqaiynqXQy
+	 EUb2lnD3/EewAfflrOqI5/zv1Io/9gCGqSTeRp9mAjMBB3/KEQuI1lQLg2yepvxXG1Tc/
+	 P+zUdGCfmkv3VUxhBouVfsG+5i73xs2x8uJn4IUjsTDCNXugkcZ/hHR0gM+oI8vJaybS9
+	 Vv2gRTe80OLp1R+gUuxef8ITvRdz6Wr2he2iLTs1Yyyz8Iwdrzx0T0bzKGjlVaVJoUw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=wVXydAo1;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=q3sCV9oU;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D04BA606A323;
-	Wed, 25 Nov 2026 15:05:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A5BA2606A321;
+	Wed, 25 Nov 2026 15:05:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=wVXydAo1
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2BD6C1F000C4;
-	Wed, 25 Nov 2026 15:05:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=q3sCV9oU
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 07E4E1F000C0;
+	Wed, 25 Nov 2026 15:05:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795619104;
-	bh=V/CS4BldytsWkpo5ehW6PyHyKhsqi34kXxo9YCIWD6A=;
+	s=korg; t=1795619107;
+	bh=F1RjG2olC2n05ycsLfKZfdukTNfESHL8qpZKtW2VkqU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=wVXydAo125CFUMVOgyhnkhhoneez7XxKhQhBV9wn4EkPz1xUtJhdJZG33d+bKuNZW
-	 k/+0libpczVIBnl1UZ4TE3Wzkrk1K8scJriKJOWp0Fwk48m7EhE44CQbAdAxCpPkSY
-	 MhMi1u1k/GEtxBbRfGmdCNkSluJK089X1nuI08ac=
+	b=q3sCV9oUmIqvv3ly3l4ZCLi/CElEydYmiQV8VC31YM+S9vzCUROjyvRDhM9x6be7J
+	 v+lL+TRguieFBAw7Hza41fAN6Nk2eTTlrUrZ/GsGdJKuqblXjdKFvB1ZGI4bf1hNCx
+	 PXlglvTDrLaRSFgCzGqu8wTo0Z6SCLgfKuvfbRIE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tim Menninger <tmenninger@everpuredata.com>,
-	Anna Schumaker <anna.schumaker@hammerspace.com>,
+	Shay Drory <shayd@nvidia.com>,
+	Moshe Shemesh <moshe@nvidia.com>,
+	Mark Bloch <mbloch@nvidia.com>,
+	Tariq Toukan <tariqt@nvidia.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0490/1005] NFSv4/flexfiles: limit transport disconnects when cancelling I/O
-Date: Wed, 25 Nov 2026 15:30:28 +0100
-Message-ID: <20261125143833.225592232@linuxfoundation.org>
+Subject: [PATCH 7.3 0491/1005] net/mlx5: E-switch, Restore host PF enable for ECPF that isnt E-switch manager
+Date: Wed, 25 Nov 2026 15:30:29 +0100
+Message-ID: <20261125143833.249139552@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143821.729802100@linuxfoundation.org>
 References: <20261125143821.729802100@linuxfoundation.org>
@@ -68,60 +71,86 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Tim Menninger <tmenninger@everpuredata.com>
+From: Shay Drory <shayd@nvidia.com>
 
-[ Upstream commit 788c4f628565897e7090cdf5bb2e049e74aeca96 ]
+[ Upstream commit 4777203cc9af51db5ae647920c14ee9451e783d7 ]
 
-ff_layout_cancel_io() cancels RPC tasks associated with a recalled or
-revoked layout segment. If any matching tasks are found, it then calls
-rpc_clnt_disconnect().
+The cited commit breaks host PF enable_hca when the ECPF isn't E-switch
+manager. For example, when the link layer is infiniband, the ECPF isn't
+E-switch manager, so after the cited commit enable_hca is never issued
+for the host PF, it stays in initializing state and fails to probe.
 
-rpc_clnt_disconnect() disconnects every transport attached to the RPC
-client. A data server client can have multiple transports, while the
-cancelled requests may have used only a subset of them. Cancelling I/O
-for one layout segment can therefore disrupt unrelated I/O using other
-transports belonging to the same data server client.
+Fix it by checking esw_allowed() only for vport bookkeeping
 
-This is particularly disruptive with RPC/RDMA during data server
-recovery, where unnecessary transport disconnects can result in repeated
-reconnect activity on otherwise unaffected connections.
-
-Use rpc_cancel_tasks_and_disconnect() instead. Matching tasks are still
-cancelled, but only matching requests belonging to that client that
-remain on the transport transmit or receive queues are marked for
-disconnect. When such a request is released, SUNRPC conditionally
-disconnects the connection generation on which that request was sent.
-
-This preserves cancellation and draining of I/O associated with the
-layout segment without disconnecting unrelated transports attached to
-the same RPC client.
-
-Fixes: b739a5bd9d9f ("NFSv4/flexfiles: Cancel I/O if the layout is recalled or revoked")
-Signed-off-by: Tim Menninger <tmenninger@everpuredata.com>
-Signed-off-by: Anna Schumaker <anna.schumaker@hammerspace.com>
+Fixes: 0e6c95c98829 ("net/mlx5: Support devlink port state for host PF")
+Signed-off-by: Shay Drory <shayd@nvidia.com>
+Reviewed-by: Moshe Shemesh <moshe@nvidia.com>
+Reviewed-by: Mark Bloch <mbloch@nvidia.com>
+Signed-off-by: Tariq Toukan <tariqt@nvidia.com>
+Link: https://patch.msgid.link/20261104184756.773910-1-tariqt@nvidia.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/nfs/flexfilelayout/flexfilelayout.c | 7 +++----
- 1 file changed, 3 insertions(+), 4 deletions(-)
+ .../net/ethernet/mellanox/mlx5/core/eswitch.c | 24 +++++++++----------
+ 1 file changed, 12 insertions(+), 12 deletions(-)
 
-diff --git a/fs/nfs/flexfilelayout/flexfilelayout.c b/fs/nfs/flexfilelayout/flexfilelayout.c
-index 1bc6559ab660f..a4ccd53c79e79 100644
---- a/fs/nfs/flexfilelayout/flexfilelayout.c
-+++ b/fs/nfs/flexfilelayout/flexfilelayout.c
-@@ -2597,10 +2597,9 @@ static void ff_layout_cancel_io(struct pnfs_layout_segment *lseg)
- 			clnt = ds_clp->cl_rpcclient;
- 			if (!clnt)
- 				goto next;
--			if (!rpc_cancel_tasks(clnt, -ECANCELED,
--					      ff_layout_match_io, lseg))
--				goto next;
--			rpc_clnt_disconnect(clnt);
-+			rpc_cancel_tasks_and_disconnect(clnt, -ECANCELED,
-+							ff_layout_match_io,
-+							lseg);
- next:
- 			nfs4_ff_layout_put_deviceid(mirror_ds);
- 		}
+diff --git a/drivers/net/ethernet/mellanox/mlx5/core/eswitch.c b/drivers/net/ethernet/mellanox/mlx5/core/eswitch.c
+index fc197d1dc9dfe..603e8ae72734c 100644
+--- a/drivers/net/ethernet/mellanox/mlx5/core/eswitch.c
++++ b/drivers/net/ethernet/mellanox/mlx5/core/eswitch.c
+@@ -1509,13 +1509,9 @@ int mlx5_esw_pf_enable_hca(struct mlx5_core_dev *dev, u16 vport_num)
+ 	struct mlx5_vport *vport;
+ 	int err;
+ 
+-	if (!mlx5_core_is_ecpf(dev) || !mlx5_esw_allowed(esw))
++	if (!mlx5_core_is_ecpf(dev))
+ 		return 0;
+ 
+-	vport = mlx5_eswitch_get_vport(esw, vport_num);
+-	if (IS_ERR(vport))
+-		return PTR_ERR(vport);
+-
+ 	/* Once vport and representor are ready, take the PF out of
+ 	 * initializing state. Enabling HCA clears the iser->initializing
+ 	 * bit and PF driver loading can progress.
+@@ -1524,7 +1520,11 @@ int mlx5_esw_pf_enable_hca(struct mlx5_core_dev *dev, u16 vport_num)
+ 	if (err)
+ 		return err;
+ 
+-	vport->pf_activated = true;
++	if (mlx5_esw_allowed(esw)) {
++		vport = mlx5_eswitch_get_vport(esw, vport_num);
++		if (!IS_ERR(vport))
++			vport->pf_activated = true;
++	}
+ 
+ 	return 0;
+ }
+@@ -1535,18 +1535,18 @@ int mlx5_esw_pf_disable_hca(struct mlx5_core_dev *dev, u16 vport_num)
+ 	struct mlx5_vport *vport;
+ 	int err;
+ 
+-	if (!mlx5_core_is_ecpf(dev) || !mlx5_esw_allowed(esw))
++	if (!mlx5_core_is_ecpf(dev))
+ 		return 0;
+ 
+-	vport = mlx5_eswitch_get_vport(esw, vport_num);
+-	if (IS_ERR(vport))
+-		return PTR_ERR(vport);
+-
+ 	err = mlx5_cmd_pf_disable_hca(dev, vport_num);
+ 	if (err)
+ 		return err;
+ 
+-	vport->pf_activated = false;
++	if (mlx5_esw_allowed(esw)) {
++		vport = mlx5_eswitch_get_vport(esw, vport_num);
++		if (!IS_ERR(vport))
++			vport->pf_activated = false;
++	}
+ 
+ 	return 0;
+ }
 -- 
 2.53.0
 
