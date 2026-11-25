@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795622059;
-	b=IvU/k1BcOH6tRVP7mOrKljLTZDZ/bamjPRFcyq36nlPb6Aol+QGzF0eqTFe/wRmzWEo1
-	 agRcNJqsczdjy5itFWYFxyW3e3pLkSujKdTHuPNXxQsByQnxUNZ8+otvw/GCcaBA5oEPK
-	 bQEbH1sJTdOPvjGSghZn7KDkfBm29yZRGsMz5kYE66Zi116oufU5OhsRlntDcBEif+Sdl
-	 os5RY7vN4F9ep8pbmI3nQ++rMcjh4aPgspoZ3z680VT8c6u8hy8ZbEALVfL70SBeVYl33
-	 gsrS2JN1TUasT16L1iWORiKnL48f0IliZtfsEnD1Xbj8a0aJz7Mu/mB2lZ6cp9+1F6A==
+	t=1795622062;
+	b=BzOec0PSdVW0HcVRUVA13eIcTCUhgOi6uOsDXNUis9OtCEYF09oCLF5NLYBzY1ztiMwq
+	 UdUaG5eAjN6YGGvZ96QetLFfYO7QRVKnaHeI6lsjoYk0GHnXhMc/wkfbCClte2ppk3AB2
+	 P2Nevqb5f0D7SEUDk3sLRaWRu35H0J/AKc0r6q/FWKD41GmMY+VULfR45Tq7s0Iky5MC/
+	 t/QXDHeEaR/UD4a3S357myXLHINwinjQwdysz54WvP7HtbYVxuFBmwfat/HpfZYAoTn1q
+	 0iPOtC7TZxoA7V55X8jrr0kQQY9bNincCEMrdZYLB1gu7bOVpY/0btcAXbfET6VQX1A==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795622059;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795622062;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=fn6BbnpKC1gz/wq+d32O0bSDuDS+XZ7InDAiROYjMIs=;
-	b=OzxXREfDIhNE2B36q/RtE1uLghejlbpLOvYX0F8VzWzgObAA/sAaWioKbc99b9puT5Wi
-	 thKQdXC+UcPQ2toZjckFe6IyRR7Nu2Oe4DSXnYzpouLfMoh4Q/VkZBVjvF1vsBqn9n9m1
-	 sXv9n7TSx4eDN34yaQsTj1a71Ix+74bXOxAOTzHs7SDHcrC5BeJiT2uluwX7w9lBK7rLP
-	 ZksZ8qc9/I3/NE5Nyp54cWHPY4ElgCumVSASbiR7qiq+484I9Au3GasQGZEYhoCQeBLj7
-	 PIx7/8oA7LSTHxMaMRSqKbCmsd0cn+KbduCjl4IAjapGRHKPdCynnDWD8LF1jcsSi4w==
+	bh=h158Da9hMF1pQv4LQyVi0x6Uek8d2CG8ubSEF9Ddgcc=;
+	b=oESO239X+l6vF4uHWPbl9AcjZ0KPn4/gP7LqjvHV4kXt5pg4vGfGX6DAqZnhJ7W04mzU
+	 Ckvhlf7smR9QWt2ciGMnqm5ncx4391cdywzqxLUZilL++VB96zpplTKv4kw30c290UnrB
+	 fUzRwm/DuWigoJD8DtLYtdfh4j7txuN3T82SJ02MNpj1uiigryVYZI9ZIzV7PfIDOPj7M
+	 XdBZna5piQw/1FoHNM9PyOmWnVquNmFM+vJhKqq6Gq+GfX8phDdi2Jpwg+0EwpLWG2z5T
+	 I28HUfAK3nEJ6kqeFuB4s+DkuMtIvoPkYQOt+FU/AGSaS9fYUB97IBFYq+knR4hC4Qg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=yihVgE51;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="s7LpEn/E";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B9B32606A337;
-	Wed, 25 Nov 2026 15:54:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4B96D606A689;
+	Wed, 25 Nov 2026 15:54:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=yihVgE51
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 354F71F000C4;
-	Wed, 25 Nov 2026 15:54:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=s7LpEn/E
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 987C21F000F4;
+	Wed, 25 Nov 2026 15:54:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795622058;
-	bh=fn6BbnpKC1gz/wq+d32O0bSDuDS+XZ7InDAiROYjMIs=;
+	s=korg; t=1795622062;
+	bh=h158Da9hMF1pQv4LQyVi0x6Uek8d2CG8ubSEF9Ddgcc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=yihVgE51EjAusi8Sjw6K6JZUeDg3S4mgRIAIq/PjFbT1iXraunejY1VU8+aGAhS/K
-	 3rUyEEkjWllixt2dm4kASxzw9zKlZAH5OG83z5oAjbpqAltsIFfRDNuCsci/KEkGDH
-	 r+9B06SerR9IX7djEtBIzSHb1/3vRFDzoDa76OaU=
+	b=s7LpEn/EymuXaz1gghRepZJCSy5CpHrORX2Y7zQvaeKoGVcGdlWr9fMsuPSDY9bWZ
+	 0pf7buWegFeYiM8c2Csa3oO6tDZ9QgaS9eHlTrKk9vW+E5h0ZQUQuZw3Fh0D8lz1mZ
+	 Hfm6IsRKpPISM4dOCkYT+koMWzu5G8Ybz5uhd/yc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Amir Goldstein <amir73il@gmail.com>,
-	"Christian Brauner (Amutable)" <brauner@kernel.org>,
+	Stefano Munari <stefanomunari.sm@gmail.com>,
+	Oleksij Rempel <o.rempel@pengutronix.de>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 418/990] ovl: allow idmapping overlay mounts
-Date: Wed, 25 Nov 2026 15:29:45 +0100
-Message-ID: <20261125143831.890380138@linuxfoundation.org>
+Subject: [PATCH 6.18 401/990] net: usb: lan78xx: resume phylink on non-reset USB resume
+Date: Wed, 25 Nov 2026 15:29:28 +0100
+Message-ID: <20261125143831.493087760@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143822.072087159@linuxfoundation.org>
 References: <20261125143822.072087159@linuxfoundation.org>
@@ -68,54 +69,72 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Christian Brauner <brauner@kernel.org>
+From: Stefano Munari <stefanomunari.sm@gmail.com>
 
-[ Upstream commit adedb6a00a1e4c77b1de9ea1f63b5008ad0c21f5 ]
+[ Upstream commit be9587c47db16faaca5415f533637755c65a4eb0 ]
 
-Now that every overlay inode operation honors the overlay mount idmap,
-allow the merged overlay mount itself to be idmapped by setting
-FS_ALLOW_IDMAP on ovl_fs_type.  mount_setattr(MOUNT_ATTR_IDMAP) can
-then apply an idmapping to an overlay mount, exposing the merged tree
-under a different ownership view.
+lan78xx_suspend() calls phylink_suspend(dev->phylink, false) on an open
+interface, which always stops phylink and halts the PHY. The matching
+phylink_resume() is only called from lan78xx_reset_resume().
+When the USB device stays powered across system sleep (e.g. s2idle) and
+the USB core calls .resume instead, the link stays down until the interface
+is brought down and up by hand. The ifdown triggers:
 
-The composition is clean because overlayfs already normalizes every
-underlying id through the relevant layer idmap when it copies
-attributes into the overlay inode (ovl_copyattr()); the overlay inode's
-i_{u,g}id are thus "overlay-final" ids.  The overlay mount idmap
-composes on top of that pivot: it is applied to (getattr) and removed
-from (setattr, create) those ids at the overlay-inode boundary -
-permission, getattr, setattr, ACL owner checks and inode_init_owner() -
-while the underlying layers keep being accessed with the mounter's
-credentials through their own, possibly idmapped, mounts.  The mount
-idmap therefore only changes how the caller sees the overlay inode and
-never widens the mounter's access to the layers.
+  WARNING: drivers/net/phy/phy.c:1670 at phy_stop+0x44/0xc8
+  called from state HALTED
 
-This is deliberately the final code patch of the series: only once
-every operation honors the mount idmap is it safe to make overlay
-mounts idmappable.
+Move phylink_resume() to the end of lan78xx_resume(), which both resume
+paths go through, and call it only if the resume succeeded and the
+interface was open, mirroring lan78xx_suspend(). As a side effect,
+lan78xx_reset_resume() no longer starts phylink on a closed interface.
 
-Link: https://patch.msgid.link/20260615-work-idmapped-overlayfs-v1-6-7381632aa402@kernel.org
-Reviewed-by: Amir Goldstein <amir73il@gmail.com>
-Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
-Stable-dep-of: cb6c084182d4 ("ovl: release the upperdir/workdir in-use locks before the umount sync")
+Tested on a Raspberry Pi 3B+ (LAN7515) with s2idle: the link now comes
+back up on its own after resume and ifdown no longer warns.
+
+Fixes: e110bc825897 ("net: usb: lan78xx: Convert to PHYLINK for improved PHY and MAC management")
+Signed-off-by: Stefano Munari <stefanomunari.sm@gmail.com>
+Tested-by: Oleksij Rempel <o.rempel@pengutronix.de>
+Link: https://patch.msgid.link/20261102235133.23011-1-stefanomunari.sm@gmail.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/overlayfs/super.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/net/usb/lan78xx.c | 16 +++++++---------
+ 1 file changed, 7 insertions(+), 9 deletions(-)
 
-diff --git a/fs/overlayfs/super.c b/fs/overlayfs/super.c
-index 52d6f32a5a7c3..71ce12e203ea0 100644
---- a/fs/overlayfs/super.c
-+++ b/fs/overlayfs/super.c
-@@ -1611,7 +1611,7 @@ struct file_system_type ovl_fs_type = {
- 	.name			= "overlay",
- 	.init_fs_context	= ovl_init_fs_context,
- 	.parameters		= ovl_parameter_spec,
--	.fs_flags		= FS_USERNS_MOUNT,
-+	.fs_flags		= FS_USERNS_MOUNT | FS_ALLOW_IDMAP,
- 	.kill_sb		= kill_anon_super,
- };
- MODULE_ALIAS_FS("overlay");
+diff --git a/drivers/net/usb/lan78xx.c b/drivers/net/usb/lan78xx.c
+index 133ea36388147..785d356a8dd5b 100644
+--- a/drivers/net/usb/lan78xx.c
++++ b/drivers/net/usb/lan78xx.c
+@@ -5377,6 +5377,12 @@ static int lan78xx_resume(struct usb_interface *intf)
+ out:
+ 	mutex_unlock(&dev->dev_mutex);
+ 
++	if (!ret && dev_open) {
++		rtnl_lock();
++		phylink_resume(dev->phylink);
++		rtnl_unlock();
++	}
++
+ 	return ret;
+ }
+ 
+@@ -5391,15 +5397,7 @@ static int lan78xx_reset_resume(struct usb_interface *intf)
+ 	if (ret < 0)
+ 		return ret;
+ 
+-	ret = lan78xx_resume(intf);
+-	if (ret < 0)
+-		return ret;
+-
+-	rtnl_lock();
+-	phylink_resume(dev->phylink);
+-	rtnl_unlock();
+-
+-	return 0;
++	return lan78xx_resume(intf);
+ }
+ 
+ static const struct usb_device_id products[] = {
 -- 
 2.53.0
 
