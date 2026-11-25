@@ -1,51 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795620474;
-	b=vKZ2k+Nr2p++XSO022h2RBTfAeInUdTxkxzGF37dlHu0ewpUi7Os84CDoJrK8MZXHttH
-	 1mkMVrqQ9t/MwimY2AafgeOJsRTDKfavmdZuRygaQkIWsFYPftSHYI55SLtukgXB3CPG7
-	 4M3SQ2fHwJxJu6tC3jf8vuIIFLVS4IpNnLP9m1nQ1uYXpuKVdddiAkqvQuQOCguLzsYAo
-	 9Am1Fr1tjhV/4FyvZcvlV0Qy3A9Ny0BF/1qahUSgTguQJxj76eNsE7NkTSk0eLLwaIimM
-	 TanFgJjTwcnh6t2hI9HfyIh/PP6UanFof80Y+pgr2VhhAu1v+s5edbdwzSh8nBmgYPQ==
+	t=1795620477;
+	b=M9GAUy8qjOTBDF0L+Ad8Kj9Xt3NBOj4MxpOQdvoHQEAyRiIoVxLfR4r+4/aldA58H0NU
+	 nDTNMNRGWOmZ+YhinEWa93mpo1+OFydHtqDAx2XOKtE1UxI925Z32VKQxYISRbv0y8kHK
+	 IcErplLCGp55ROePStelkPe+EgPceFqU4B2ARpo9qdbNAG9PFtDYQcZ6RF4Q6Y9CijQeX
+	 dsI3LZKFICZI841EkCMOt4MtwKh5R1gQ8M/EQUBHT+p1t/o0eJO/sfh1vpKgoIzmtwp9Z
+	 ttmGHWFTUXW3sHrxSGEmz0l/jPIFU/6w+HChthyql0fjMuqOIuRpQH0prM34sJ3kKCw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795620474;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795620477;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=k/YneSbEumJlmAq0UcHUoqgiwz8b9otwGTogKSUn3/4=;
-	b=xMi04/gFxdopjyalkpHgK5jsHETFoZwXTsgzbfs95KnOOBDXX26T9lO5Wu3CTT4J1yCs
-	 iV3YcPNj1JPu0yT0t5KoCQNmrFEKI+dDfWOGVzuYir/FXzNGGrwie0wNV5PfQ1173BSQG
-	 EflQ946sYBp97pWWWjauRj4LcgP5ydQgdZSRODZeay/21+ikP8Zswk3Nfn3+wFhyahNss
-	 rrSp/z8/XobUnHaK9YKvq4xCilLuNIsq5W5hwmvHzUeF2XYxAQXcMrPtMY1uKPp6AEWg7
-	 LM57pQXQsGtt1ACbkF5BdBIoVYcReVTCppzd/oDY+OS2p37kKORDr8UvO/bxfWFhUmA==
+	bh=pqvyyk54KknM2yKY2Ap6fiaSvtycnIKI1D4T3/FW/3Y=;
+	b=GibiCV9dqDw6yPyfOJJsEcdZq/Nw60wGbdiA0v2TG2Ax5oRWaMMqrDglQW8iM+JS4lWn
+	 48dovtbexacWnLK2on+9Zoys1DXmjktTrPAw0BXJKq5Bs2Swer7ITobk/CcPvzEtQAi72
+	 Enx18v1uvbNRRYsVaT4ZtosW5N2lNUqNI2oiEjGR1wEAkO/WQj2CM2cbEyRW4pGHPstqM
+	 AZp2tOZ746on5+LBjpW17QE08HmQdEd9z135oQtNoivQfFqF0LwxGoIWujj0G2l4uuLDH
+	 iI3EuiJTZW3TLbOQ0lvc/mQcfzbS/K/0yzPVgIGGDja4UF885NC3dpqK8n3W0zi3GOg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=saOig2Wa;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=jPQ9mYkE;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A8EF8606A326;
-	Wed, 25 Nov 2026 15:27:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9E374606A321;
+	Wed, 25 Nov 2026 15:27:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=saOig2Wa
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C12BC1F000C0;
-	Wed, 25 Nov 2026 15:27:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=jPQ9mYkE
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 919751F000C4;
+	Wed, 25 Nov 2026 15:27:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795620474;
-	bh=k/YneSbEumJlmAq0UcHUoqgiwz8b9otwGTogKSUn3/4=;
+	s=korg; t=1795620477;
+	bh=pqvyyk54KknM2yKY2Ap6fiaSvtycnIKI1D4T3/FW/3Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=saOig2WaRbeOiydCaf39YBXFavuhMVj4Pl91Bqn1IGgK2kEDMbPRXDzDsRfYgpQfK
-	 Rkw82xsP6HjF2m1r00W24NJ+ppV9EEZGEL8qwNR8JuXQX7l0Oqm/l4rj57VmsqeIIS
-	 kCBelB4nlZv0h7ayxq7T9JC4Gth9pXaTH8h7mSFA=
+	b=jPQ9mYkEwm+hopK3BgD2RNB4VYN+KdC6J6tbDBKTbp3KymkPCITEgTWON8TtYT1kI
+	 yqBTeV53E4z2UmXBghYXCLXwvk7aGqzWCPO+h1KjC9vw1W5oVnFVzb46f6+7lW/yY+
+	 3MVq6miDvld8+LapD3hTDjDh/vbFYKfHzAKukUuU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	stable <stable@kernel.org>,
-	Sonali Pradhan <sonalipradhan@google.com>
-Subject: [PATCH 7.3 0928/1005] usb: gadget: f_midi: fix UAF race during IN request handling
-Date: Wed, 25 Nov 2026 15:37:46 +0100
-Message-ID: <20261125143843.425232042@linuxfoundation.org>
+	Cosmin Tanislav <cosmin-gabriel.tanislav.xa@renesas.com>,
+	Vladyslav Tymoshchuk <tvlad744@gmail.com>,
+	Leonardo Costa <leonardo.costa@toradex.com>,
+	Hiago De Franco <hiago.franco@toradex.com>
+Subject: [PATCH 7.3 0929/1005] usb: gadget: f_ncm: restart the TX timer if the TX freelist is empty
+Date: Wed, 25 Nov 2026 15:37:47 +0100
+Message-ID: <20261125143843.447379552@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143821.729802100@linuxfoundation.org>
 References: <20261125143821.729802100@linuxfoundation.org>
@@ -67,65 +70,65 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sonali Pradhan <sonalipradhan@google.com>
+From: Cosmin Tanislav <cosmin-gabriel.tanislav.xa@renesas.com>
 
-commit 78a8d6537f1de34770e460edee360b556ef40427 upstream.
+commit 78585f90feb3bbaf3b1c642294c8c47e451dc3cf upstream.
 
-f_midi_disable() drains and frees pre-allocated IN requests from
-in_req_fifo without holding midi->transmit_lock. If f_midi_transmit()
-runs concurrently on the workqueue, f_midi_do_transmit() can peek a
-request from in_req_fifo and write into its buffer while
-f_midi_disable() frees it, leading to a use-after-free.
+ncm_wrap_ntb() aggregates datagrams into a pending NTB, which is sent
+either when it becomes full, or after 300us since the NTB was started,
+using ndo_start_xmit() (eth_start_xmit()).
 
-Additionally, when usb_ep_queue() fails in f_midi_do_transmit() (such
-as with -ESHUTDOWN when the endpoint is disabled concurrently), it
-resets req->length = 0 and returns active instead of the error code,
-causing the do-while loop in f_midi_transmit() to keep spinning under
-midi->transmit_lock until the substream is drained.
+ndo_start_xmit() returns NETDEV_TX_BUSY when the TX freelist is empty.
 
-Fix this by acquiring midi->transmit_lock in f_midi_disable() while
-releasing IN requests from in_req_fifo, and returning the error code
-from f_midi_do_transmit() when usb_ep_queue() fails so f_midi_transmit()
-aborts immediately and drops active substreams.
+For regular packets this is fine since the networking core will requeue
+them, but for timer-flushed packets there is no logic to handle this
+situation, and HRTIMER_NORESTART is returned from ncm_tx_timeout()
+without checking eth_start_xmit()'s return value.
 
-Fixes: e1e3d7ec5da3 ("usb: gadget: f_midi: pre-allocate IN requests")
+Under sustained TX saturation the request freelist is empty most of the
+time. Since the timer is never restarted, small packets keep getting
+accumulated into the NTB, until either TX_MAX_NUM_DPE packets are stored
+or NTB_DEFAULT_IN_SIZE is reached, which is an unknown amount of time.
+
+Check the return value of ndo_start_xmit() and restart the timer after
+another 300us.
+
 Cc: stable <stable@kernel.org>
-Signed-off-by: Sonali Pradhan <sonalipradhan@google.com>
-Link: https://patch.msgid.link/20261028074821.579450-1-sonalipradhan@google.com
+Fixes: 6d3865f9d41f ("usb: gadget: NCM: Add transmit multi-frame.")
+Signed-off-by: Cosmin Tanislav <cosmin-gabriel.tanislav.xa@renesas.com>
+Tested-by: Vladyslav Tymoshchuk <tvlad744@gmail.com>
+Tested-by: Leonardo Costa <leonardo.costa@toradex.com>
+Reported-by: Hiago De Franco <hiago.franco@toradex.com>
+Closes: https://lore.kernel.org/all/20231204183751.64202-1-hiagofranco@gmail.com/
+Link: https://patch.msgid.link/20260817192638.437798-1-cosmin-gabriel.tanislav.xa@renesas.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/gadget/function/f_midi.c |    4 ++++
- 1 file changed, 4 insertions(+)
+ drivers/usb/gadget/function/f_ncm.c |    7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
 
---- a/drivers/usb/gadget/function/f_midi.c
-+++ b/drivers/usb/gadget/function/f_midi.c
-@@ -420,6 +420,7 @@ static void f_midi_disable(struct usb_fu
- 	struct f_midi *midi = func_to_midi(f);
- 	struct usb_composite_dev *cdev = f->config->cdev;
- 	struct usb_request *req = NULL;
-+	unsigned long flags;
+--- a/drivers/usb/gadget/function/f_ncm.c
++++ b/drivers/usb/gadget/function/f_ncm.c
+@@ -1148,6 +1148,7 @@ static enum hrtimer_restart ncm_tx_timeo
+ {
+ 	struct f_ncm *ncm = container_of(data, struct f_ncm, task_timer);
+ 	struct net_device *netdev = READ_ONCE(ncm->netdev);
++	netdev_tx_t ret;
  
- 	DBG(cdev, "disable\n");
- 
-@@ -431,8 +432,10 @@ static void f_midi_disable(struct usb_fu
- 	usb_ep_disable(midi->out_ep);
- 
- 	/* release IN requests */
-+	spin_lock_irqsave(&midi->transmit_lock, flags);
- 	while (kfifo_get(&midi->in_req_fifo, &req))
- 		free_ep_req(midi->in_ep, req);
-+	spin_unlock_irqrestore(&midi->transmit_lock, flags);
- 
- 	f_midi_drop_out_substreams(midi);
+ 	if (netdev) {
+ 		/* XXX This allowance of a NULL skb argument to ndo_start_xmit
+@@ -1158,7 +1159,11 @@ static enum hrtimer_restart ncm_tx_timeo
+ 		 *
+ 		 * This will call directly into u_ether's eth_start_xmit()
+ 		 */
+-		netdev->netdev_ops->ndo_start_xmit(NULL, netdev);
++		ret = netdev->netdev_ops->ndo_start_xmit(NULL, netdev);
++		if (ret == NETDEV_TX_BUSY) {
++			hrtimer_forward_now(data, TX_TIMEOUT_NSECS);
++			return HRTIMER_RESTART;
++		}
+ 	}
+ 	return HRTIMER_NORESTART;
  }
-@@ -661,6 +664,7 @@ static int f_midi_do_transmit(struct f_m
- 		ERROR(midi, "%s failed to queue req: %d\n",
- 		      midi->in_ep->name, err);
- 		req->length = 0; /* Re-use request next time. */
-+		return err;
- 	} else {
- 		/* Upon success, put request at the back of the queue. */
- 		kfifo_skip(&midi->in_req_fifo);
 
 
