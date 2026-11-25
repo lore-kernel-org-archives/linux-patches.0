@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795618355;
-	b=5CjLF2ledNFcnnbNeoWbwl73OOwAz6z065DbXwvcw0m0SUMa7eyX28LadMI+h7QBI7Cg
-	 kYgxtJdtV6y8e9S6F/N0VpgeWOwBkcU77z+zHAZ2ohCSbH8ViQg0GuJC4/VWiq+dUiywQ
-	 qZ1MQ0tmqAbeX3mEBYkuDAB/nHaNXI5rGlNhll8W6TT1TP3zW2O7SVvXDVVXSV/Y7m+mm
-	 t/oe0UpqYlI0tKvUipSd1QP6EmAemjKjkK0c9YJ9RTpxvMdWXT3qcIwqkSMYSDBJtD9F+
-	 S/4w+/ghOU0fvkNQJUgqxJrXN9SfqFTYze2ZxYo1Jr1YpLLeNB2JbgxUmaahCGuSQhQ==
+	t=1795618359;
+	b=SzNiko/kkEPqNJEDEtgZQQD5eLCyH9zpB5c/70xHCS1SKWTXJP1/UogxNEKkPKLy52z5
+	 9G4USijtmybiPulmxVrmC0D6WNA1E8Xe5U8U54Y0rj9R5kRIAwdrOl/xOksoITGbAB9V9
+	 M+cfkxd4S9NdlGRAI3FgdQ2pcf858HewJGFjSeSMRqWahE/VE9V/IAnoEf4uUY5s899xu
+	 B8i8PPkdktPQGcsl1LIDe9v5m4bD0kInf6ZVoLfz9dZj9JFI7baR/gQO77Pk7s392Ta/h
+	 2/FigezoonhShHF7Iw15nNfnxx2aI48TIw3z6gwoN2UeaNVjOIAs1tcZ1j/HzJyXcnQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795618355;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795618359;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=DxysbBRi4XimAFT73YeaiuSRxKseeL/VfPWArlLR7b8=;
-	b=qHdXHba/rDzPAXQJJcRddJMCb1RboPGhJwICAIYUZrG6MY9Gm736wKpmPnpuNqyZ9tBh
-	 KNmwabS6+5nCs4JggN58qt3Uwz6OR68XNNCua74jnRk8OvBRGOLk6L5gWVIbNtwRst58g
-	 0tG2sPWs+NO0A9iTPRtqODpZqd06dsHb0nUHlsHyd27+UclKIRg1M4V8OBc3O411cK+HB
-	 DA3U+VFtR5y/6l0JyBJkHaOOQmvpXQQtgjzUXWEz3sNXYqsmTu2+OIUS2U5xa+MV8gxDi
-	 1iI5jSp6Is04rKC74wbDcYBCTSa5/A0XcTZV3nNef3K+RGKJ3tsnA9jwXx03xokwN9Q==
+	bh=nNNJip760frXzhWhMcS7zXtk1k7rWKByeV8keOJgNIk=;
+	b=VwjgYZ0ShXD66wxGM8ZBf/D8yjxCURvh+4fblF15yOsEqRf7n3WTfWnA0INWPPoFA5nc
+	 kGRNwm8HXFEPTIyZtKLeu5xZ3qh500cNApuoSYN1djKTi3dguP3/IIuFp76YyX3fvQF49
+	 ILupSwxUxDlGCy2gITwAkLUrFp38wjtCy8yii6aq14ok+b2sK+e5kY0z9fghj1a6zmlX3
+	 5ZIjiKllzdWYkXWGVRuxzBcvMtWSLUqJw+5Q/Sx8YjHEORx/NkD+5bdwhiQlqHo8cXrXs
+	 IJf+umH3RSgd/0s+Tvd4cz8MwyJ3Z3KjCK1/uuJnH72awBIHI6M8Y4HQadvgYAH8xIw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=lhex7EZO;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=CcaJfim7;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B3D8D606A321;
-	Wed, 25 Nov 2026 14:52:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F3C55606A31E;
+	Wed, 25 Nov 2026 14:52:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=lhex7EZO
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 10B701F000C4;
-	Wed, 25 Nov 2026 14:52:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=CcaJfim7
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DBE5D1F000C6;
+	Wed, 25 Nov 2026 14:52:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795618355;
-	bh=DxysbBRi4XimAFT73YeaiuSRxKseeL/VfPWArlLR7b8=;
+	s=korg; t=1795618358;
+	bh=nNNJip760frXzhWhMcS7zXtk1k7rWKByeV8keOJgNIk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=lhex7EZO6Jsj1zmYAipj0gSbNbc0BuKai4U7GA6op1YenrjmICBKKgX4es95Pz0IY
-	 N3ryWat4IHo281IMpzROwHVHmk0sRqMDGVe1ELvjVsZ+I0Q0mvv/TDOhpPsB2C3bdp
-	 tysK4un+ubBbdydz13/fJXQ4ZgTGGat+K+Y45szg=
+	b=CcaJfim70bG6TlJeHe4mYsyAc6c6w3Bt5B+nKX4zAArcW4OFqpiRp795sANvInFal
+	 hGM4bQsqDz7huiVU8lkc9lWDR+35pv0SXwcyH/zHaElBVKTpoEH5MN/UhpPP+2kQIX
+	 aHbEOo4/+INsFmXZxJ2HJN0dIsEMOQZ7oY2paxQU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xu Yunxiang <xyx2021@mail.ustc.edu.cn>,
-	Alexei Starovoitov <ast@kernel.org>,
+	Alexander Goodkind <alex@goodkind.io>,
+	Simon Horman <horms@kernel.org>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0217/1005] bpf: Propagate scalar precision through stack arguments
-Date: Wed, 25 Nov 2026 15:25:55 +0100
-Message-ID: <20261125143826.824314849@linuxfoundation.org>
+Subject: [PATCH 7.3 0253/1005] net: ethernet: mediatek: preserve sibling PPE bindings
+Date: Wed, 25 Nov 2026 15:26:31 +0100
+Message-ID: <20261125143827.667118694@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143821.729802100@linuxfoundation.org>
 References: <20261125143821.729802100@linuxfoundation.org>
@@ -68,84 +69,67 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Xu Yunxiang <xyx2021@mail.ustc.edu.cn>
+From: Alexander Goodkind <alex@goodkind.io>
 
-[ Upstream commit d537252cc8a53b6ed6a3e7d0d895cb1cdd3ba42c ]
+[ Upstream commit 34cc22a9ce6ae0228dcd09a57df23aea62e22b04 ]
 
-Outgoing stack arguments retain scalar verifier state separately from
-registers and ordinary spills. State comparison uses their precision
-marks, but propagate_precision() does not carry those dependencies from
-a reused state to the current path's ancestors. A path can consequently
-reuse a state without making earlier checkpoints distinguish scalar
-values that will later be used as memory offsets.
+__mtk_ppe_check_skb() clears entry->hash for flows bound to other
+hardware slots in the same software hash bucket. mtk_flow_offload_stats()
+then skips their hardware counter updates. L2 cleanup also frees sibling
+subflows without invalidating their hardware rules.
 
-Seed the existing backtracking batch with precise scalar argument slots
-from every frame. Incoming arguments live in the caller's outgoing
-slots, so include caller frames as well as the current frame.
+Restrict both cleanup paths to entries assigned to the inspected slot.
 
-Also cover scalar argument slots in bpf_mark_all_scalars_precise(), so
-conservative fallback preserves the same invariant. Keep its existing
-ancestor-only traversal and leave pointer and uninitialized slots alone.
+Two UDP trials reproduced the counter failure on a GL-MT3000/MT7981
+running unmodified OpenWrt 25.12.5 with Linux 6.12.94:
 
-AI assistance was used in preparing this patch.
+1. Start a UDP connection.
+2. Add a control connection in a different hash bucket.
+3. Add a connection in the first connection's hash bucket.
 
-Fixes: 0f6bd5e7a804 ("bpf: Support stack arguments for bpf functions")
-Signed-off-by: Xu Yunxiang <xyx2021@mail.ustc.edu.cn>
-Signed-off-by: Alexei Starovoitov <ast@kernel.org>
-Link: https://patch.msgid.link/20261102190350.788433-2-xyx2021@mail.ustc.edu.cn
+AI code review of the original patch identified the cleanup problem
+in L2 subflows.
+
+Full ARM64 builds with allmodconfig and allyesconfig passed before
+and after the patch using GCC 14.2.0 and W=1, without new warnings.
+The builds used CONFIG_WERROR=n because the unmodified ARM64 kernel
+already emits warnings. Hardware testing has not run for this revision.
+
+Fixes: c4f033d9e03e ("net: ethernet: mtk_eth_soc: rework hardware flow table management")
+Fixes: 33fc42de3327 ("net: ethernet: mtk_eth_soc: support creating mac address based offload entries")
+Link: https://github.com/openwrt/openwrt/pull/26107
+Signed-off-by: Alexander Goodkind <alex@goodkind.io>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Link: https://patch.msgid.link/20261030010517.45639-1-alex@goodkind.io
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/bpf/backtrack.c | 11 +++++++++++
- kernel/bpf/states.c    | 14 ++++++++++++++
- 2 files changed, 25 insertions(+)
+ drivers/net/ethernet/mediatek/mtk_ppe.c | 5 ++---
+ 1 file changed, 2 insertions(+), 3 deletions(-)
 
-diff --git a/kernel/bpf/backtrack.c b/kernel/bpf/backtrack.c
-index 50c66115ab45e..cdf96ef68f7e4 100644
---- a/kernel/bpf/backtrack.c
-+++ b/kernel/bpf/backtrack.c
-@@ -711,6 +711,17 @@ void bpf_mark_all_scalars_precise(struct bpf_verifier_env *env,
- 						i, -(j + 1) * 8);
- 				}
- 			}
-+			for (j = 0; j < func->out_stack_arg_cnt; j++) {
-+				reg = &func->stack_arg_regs[j];
-+				if (reg->type != SCALAR_VALUE || reg->precise)
-+					continue;
-+				reg->precise = true;
-+				if (env->log.level & BPF_LOG_LEVEL2) {
-+					verbose(env,
-+						"force_precise: frame%d: forcing r11%d to be precise\n",
-+						i, -(j + 1) * BPF_REG_SIZE);
-+				}
-+			}
+diff --git a/drivers/net/ethernet/mediatek/mtk_ppe.c b/drivers/net/ethernet/mediatek/mtk_ppe.c
+index 8451dc3fd00aa..d8fa1f2b43244 100644
+--- a/drivers/net/ethernet/mediatek/mtk_ppe.c
++++ b/drivers/net/ethernet/mediatek/mtk_ppe.c
+@@ -754,8 +754,7 @@ void __mtk_ppe_check_skb(struct mtk_ppe *ppe, struct sk_buff *skb, u16 hash)
+ 
+ 	hlist_for_each_entry_safe(entry, n, head, list) {
+ 		if (entry->type == MTK_FLOW_TYPE_L2_SUBFLOW) {
+-			if (unlikely(FIELD_GET(MTK_FOE_IB1_STATE, hwe->ib1) ==
+-				     MTK_FOE_STATE_BIND))
++			if (entry->hash != hash)
+ 				continue;
+ 
+ 			entry->hash = 0xffff;
+@@ -764,7 +763,7 @@ void __mtk_ppe_check_skb(struct mtk_ppe *ppe, struct sk_buff *skb, u16 hash)
  		}
- 	}
- }
-diff --git a/kernel/bpf/states.c b/kernel/bpf/states.c
-index f28b11c189085..4b407b629c995 100644
---- a/kernel/bpf/states.c
-+++ b/kernel/bpf/states.c
-@@ -1066,6 +1066,20 @@ static int propagate_precision(struct bpf_verifier_env *env,
- 			bpf_bt_set_frame_slot(&env->bt, fr, i);
- 			first = false;
+ 
+ 		if (found || !mtk_flow_entry_match(ppe->eth, entry, hwe)) {
+-			if (entry->hash != 0xffff)
++			if (entry->hash == hash)
+ 				entry->hash = 0xffff;
+ 			continue;
  		}
-+		for (i = 0; i < state->out_stack_arg_cnt; i++) {
-+			state_reg = &state->stack_arg_regs[i];
-+			if (state_reg->type != SCALAR_VALUE || !state_reg->precise)
-+				continue;
-+			if (env->log.level & BPF_LOG_LEVEL2) {
-+				if (first)
-+					verbose(env, "frame %d: propagating r11%d",
-+						fr, -(i + 1) * BPF_REG_SIZE);
-+				else
-+					verbose(env, ",r11%d", -(i + 1) * BPF_REG_SIZE);
-+			}
-+			bt_set_frame_stack_arg_slot(&env->bt, fr, i);
-+			first = false;
-+		}
- 		if (!first && (env->log.level & BPF_LOG_LEVEL2))
- 			verbose(env, "\n");
- 	}
 -- 
 2.53.0
 
