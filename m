@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795619069;
-	b=h1lvSOB0KkHf1PmW7IPJTSfNEomL0+JQLoCrh9+fynACB1O5ZNWxxbLdibaHiwy2sBoZ
-	 wj9f9IiKlS0MxfzxnGmWyWXFX5/+Rssr+uIFcfFmNYp6D1MauBlUzJ70sgcStzzwz86KY
-	 JhfsLsCLSlHYe0F5s1Y9GeBmIr6tVokphiwOKSZq1TdZ8sdtaWWJdqKRiDmolQpxemgEN
-	 ul0L5qLQ8lslQV+BphKjwmwE9bjXtUosp9NUaMFhlpsFnrpAsP1A6hD2INztEDSsD/fwy
-	 c53Q2nkWRQu1tVSzs1KUNUNNrbD8nvspIM51Bvp+FKuAWNWhWv5rh8/OLnYwtRNfnrA==
+	t=1795619072;
+	b=IpzEUMZ7c8/qbfgsMzHqDOWSNAuF7SCr/rRJ2iUQ7GoT4wsqHai6Emll11FQWGVGjvW7
+	 lx0nvM6ZSS2t4TxJKXHIbAuhPbSULCUdjMsqO403VrtTJiNmxn8XVDpx77j5cZ47KwqVT
+	 Cdp3JMTiYSXGU6Felnx4l1P4NT7+7G3le/lKc7zDpOHUTjdw+WZYzbDagHihEfHXYTtwq
+	 TV7HTQ11znKOrj1Lg0uSPCX2x+aopDhUUK6of9iXITGHBTOxWemp+0ngLB+Lm3hTdAmum
+	 WvJo9njxdiyIqI7UDM++ZX2S8iFxpEFcBaZHrZBtFsyEpUzy6acMJo6GFKA7+TF9Ntw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795619069;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795619072;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=65ofErfO0pkQJRCgq+LpRAaoiEuXyha0Hs1E5jQBQ3k=;
-	b=LtrB3A4MuECHQksuwWlqLm0znqe1OgzZZh+sZ8zic5GpwAp7pJTy+H6t5kniIxKgLo+B
-	 cAHTEIBiIiZHqavCZTMjPk8CIOkr/a4AUPybR3wzms84Zf7MNw+wxqjxKQgXXeOl5owt2
-	 ehu/TSy4AvbhfxG8C0ejmm+59lBuYggLHq1MmWtBSl2cEJE8zMW3A87jimy7y5/kQqOZe
-	 SCVuDaBkjhshIHNVmjj/u+OMGxTOpb0wYHn3azGpUTgBw3AdelxT6h2bZrcuV6Td6IV0B
-	 GPsv5dP630RBhRYqYdpLwrPjiUJzC1dR9APMt4ylZ4CBq6JcPbaoU1h1QmciiAuMDfA==
+	bh=jSMOVGCCeS6R1d7dLcW26bytAnXzWD6Vt2HcnLZcmR4=;
+	b=5RoCKftbnO25X5tfBmTuVZmiFLqEFn24QJjTcTxRpcnXAS7Nl6RWpVIm5qR0M6/5fpaw
+	 OyFEQLzUQkY/8K7e4xKJXgCXHgEc7DTgpKO76v6q+qW0c7WYmvXMd0QIbhkTvPkk1q6nO
+	 9LZkiAZU6XfK6FO1yS8K17t+vNljCIZJj1M6/e9uUxh97mDM5GqRA04SFAS8h683QJ3Ho
+	 BNg/9utzZhF9oyXq0z6hvk6WURzNKxbUPtzJbmBZ8KbHdVTWGiM6oB3nGETZqex2cghpz
+	 X+2XlUNhuNnYbpARu7ZyhGpSSwHrvMVqvm7BvKJgUhFVJ7oWO7eo9i+7qeh/tVnqvoA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=NYJJ9MfW;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=DYHC2dtk;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1765A606A31E;
-	Wed, 25 Nov 2026 15:04:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 47ED6606A326;
+	Wed, 25 Nov 2026 15:04:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=NYJJ9MfW
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 16C551F000C0;
-	Wed, 25 Nov 2026 15:04:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=DYHC2dtk
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7D70C1F000CF;
+	Wed, 25 Nov 2026 15:04:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795619068;
-	bh=65ofErfO0pkQJRCgq+LpRAaoiEuXyha0Hs1E5jQBQ3k=;
+	s=korg; t=1795619072;
+	bh=jSMOVGCCeS6R1d7dLcW26bytAnXzWD6Vt2HcnLZcmR4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=NYJJ9MfWpfjJhLp+h5soUm7KQoK+lwYK10OdBB/nwoY8Vi8/jda3YqDk7ooC54ypC
-	 FQXZCIQK7hMP629Urm4suKGPSgUaZoSlRHxOGxRCRfQMUlVaPVyfLRVbv72A93zRMU
-	 M+p7gegto1NCqUYwnis4Aw8fNEmVvJAeV1cic0wk=
+	b=DYHC2dtkT4bGpjpYvfC+bRf9wdnvp8h6SIw3nwwOC0Oq/YaBsr/K2sYCC0x53jexY
+	 pWw4LPSjV7YC6H8qctyDjiev5rYTsvz6ltuI8TtW83kRO9DKjfo1zSu9In1m0/hHZX
+	 rBkE1ooSNouzARem34wNzWahkR1nvMMwkZGIBdQs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kang Chen <k.chen@smail.nju.edu.cn>,
-	Tejun Heo <tj@kernel.org>,
+	Umang Pokhriyal <umangpokhriyall@gmail.com>,
+	Willem de Bruijn <willemb@google.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0479/1005] sched_ext: make DSQ iterator stay drained after NULL
-Date: Wed, 25 Nov 2026 15:30:17 +0100
-Message-ID: <20261125143832.969358188@linuxfoundation.org>
+Subject: [PATCH 7.3 0480/1005] tun: delete the flow entries of the moved queue on detach
+Date: Wed, 25 Nov 2026 15:30:18 +0100
+Message-ID: <20261125143832.992869113@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143821.729802100@linuxfoundation.org>
 References: <20261125143821.729802100@linuxfoundation.org>
@@ -68,79 +69,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kang Chen <k.chen@smail.nju.edu.cn>
+From: Umang Pokhriyal <umangpokhriyall@gmail.com>
 
-[ Upstream commit fcbff7b56a881bbe041b6c5ba12831a3c1ac1bb4 ]
+[ Upstream commit 4cc0a3f897074cea28dae38f1cd9bb230dae5d86 ]
 
-nldsq_cursor_next_task() unlinks the iteration cursor when it reaches the
-end of the DSQ.  A later call sees list_empty(&cursor->node), starts
-from the DSQ head again, and returns the first task of the same
-iteration.
+When a queue is detached, __tun_detach() moves the last queue into the
+freed slot and decrements tun->numqueues. The flow entries that point at
+the old index of the moved queue, now tun->numqueues, are meant to be
+deleted, but the call passes tun->numqueues + 1, an index that never
+exists, so nothing is deleted.
 
-The verifier relies on the iterator contract that once next() returns
-NULL it keeps returning NULL: process_iter_next_call() marks the
-iterator DRAINED and treats the result of later next() calls as the
-constant zero.  A restarted DSQ iteration therefore hands the BPF
-program a task pointer while the verifier believes R0 == 0.
+Until those entries are refreshed by a write on their flow or age out,
+tun_automq_select_queue() returns an index past the last queue, and
+netdev_core_pick_tx() sends every such flow to queue 0 and warns:
 
-Remember the drained state in the cursor flags and return NULL on every
-later next() call.  The cursor has spare flag bits and the BPF-visible
-iterator layout is unchanged.
+  tapq0 selects TX queue 3, but real number of TX queues is 3
 
-Fixes: 650ba21b131e ("sched_ext: Implement DSQ iterator")
-Signed-off-by: Kang Chen <k.chen@smail.nju.edu.cn>
-Signed-off-by: Tejun Heo <tj@kernel.org>
+Found with an LLM while testing how a VMM detaches tap queues when a
+guest lowers its virtio-net queue pairs. With four queues, 30 flows
+learned on queue 3 and queue 1 detached, all 30 went to queue 0 with the
+warning; with this patch they are spread by hash and no warning is
+printed (3 runs each, in a guest booted on net).
+
+Pass tun->numqueues.
+
+Fixes: 96442e42429e ("tuntap: choose the txq based on rxq")
+Signed-off-by: Umang Pokhriyal <umangpokhriyall@gmail.com>
+Reviewed-by: Willem de Bruijn <willemb@google.com>
+Link: https://patch.msgid.link/20261104174240.138491-1-umangpokhriyall@gmail.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/sched/ext/ext.c | 17 +++++++++++++++--
- 1 file changed, 15 insertions(+), 2 deletions(-)
+ drivers/net/tun.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/kernel/sched/ext/ext.c b/kernel/sched/ext/ext.c
-index 78773d42b32df..e0d3d73ef031f 100644
---- a/kernel/sched/ext/ext.c
-+++ b/kernel/sched/ext/ext.c
-@@ -492,12 +492,14 @@ enum scx_dsq_iter_flags {
- 	/* iterate in the reverse dispatch order */
- 	SCX_DSQ_ITER_REV		= 1U << 16,
+diff --git a/drivers/net/tun.c b/drivers/net/tun.c
+index dfdc4b5bd27f8..3cb2c87fa8137 100644
+--- a/drivers/net/tun.c
++++ b/drivers/net/tun.c
+@@ -615,7 +615,7 @@ static void __tun_detach(struct tun_file *tfile, bool clean)
+ 		}
  
-+	__SCX_DSQ_ITER_DRAINED		= 1U << 28,
- 	__SCX_DSQ_ITER_HAS_REENQ	= 1U << 29,
- 	__SCX_DSQ_ITER_HAS_SLICE	= 1U << 30,
- 	__SCX_DSQ_ITER_HAS_VTIME	= 1U << 31,
- 
- 	__SCX_DSQ_ITER_USER_FLAGS	= SCX_DSQ_ITER_REV,
- 	__SCX_DSQ_ITER_ALL_FLAGS	= __SCX_DSQ_ITER_USER_FLAGS |
-+					  __SCX_DSQ_ITER_DRAINED |
- 					  __SCX_DSQ_ITER_HAS_REENQ |
- 					  __SCX_DSQ_ITER_HAS_SLICE |
- 					  __SCX_DSQ_ITER_HAS_VTIME,
-@@ -10236,13 +10238,24 @@ __bpf_kfunc int bpf_iter_scx_dsq_new(struct bpf_iter_scx_dsq *it, u64 dsq_id,
- __bpf_kfunc struct task_struct *bpf_iter_scx_dsq_next(struct bpf_iter_scx_dsq *it)
- {
- 	struct bpf_iter_scx_dsq_kern *kit = (void *)it;
-+	struct task_struct *p;
- 
--	if (!kit->dsq)
-+	if (!kit->dsq || (kit->cursor.flags & __SCX_DSQ_ITER_DRAINED))
- 		return NULL;
- 
- 	guard(raw_spinlock_irqsave)(&kit->dsq->lock);
- 
--	return nldsq_cursor_next_task(&kit->cursor, kit->dsq);
-+	p = nldsq_cursor_next_task(&kit->cursor, kit->dsq);
-+	/*
-+	 * nldsq_cursor_next_task() unlinks the cursor and starts from the DSQ
-+	 * head when it is called again.  The verifier relies on an iterator
-+	 * which returned NULL to keep returning NULL (see
-+	 * process_iter_next_call()), so remember the drained state.
-+	 */
-+	if (!p)
-+		kit->cursor.flags |= __SCX_DSQ_ITER_DRAINED;
-+
-+	return p;
- }
- 
- /**
+ 		synchronize_net();
+-		tun_flow_delete_by_queue(tun, tun->numqueues + 1);
++		tun_flow_delete_by_queue(tun, tun->numqueues);
+ 		/* Drop read queue */
+ 		tun_queue_purge(tfile);
+ 		spin_lock_bh(&ntfile->tx_ring.consumer_lock);
 -- 
 2.53.0
 
