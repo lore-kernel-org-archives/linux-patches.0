@@ -1,54 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795622607;
-	b=3r3RlTLem7By0SM6RpnzhWApcBQFBZdd2ctNhTyJOrXDjVU6glddYEzrACGfWn+v02TG
-	 1Kk43nYfWAXOVC2xxD29wPLXb8KqrHdf+wpF5ZiKSNuRtJh8xe57hq4fFffubN/UnZ9Vt
-	 exNXguhEFal/8ahQ6uF49kqhm9BPL1sztsVnI7prYb6FmGgR2E/iflfZKhUSpGrNkFaqr
-	 CXNfFZF45ZVzJw1aAAe34BqaJiR+EdZhKVwTmvTXYpeLOnmLKZQulCxWstwb/7GI5ovd1
-	 GHjj56VsscEBcJXU3urPKXJ9p4hEt+T+XvBogX/jMXwGRKkpe5U8QpuKP6Jy76cCHZw==
+	t=1795622610;
+	b=w3k4v1t/IhbW3kLvlET0+0hyeMxRPjTBsHMoVBxZ4LYyhvz7ZKSQfKUDy3f4BOATNm2W
+	 mZWragv8UH2DbYsXo7PZtqgadIUI2CzBRN9FRScSFGOi8Hxmthf66EWnacNd8m4ckkgCt
+	 BLXOJxL8Lx1Cks9wboeCYRXW4Tw7x+qERNa0KJab8Oo4uUloNs0wGYzbfNFlQHPZGBU/x
+	 kTT8+yNwbkuGHVUEAQtXgmP/TpeTJqyypwvowc3+rRQ7a8jOPcCeZuNDydpdUPl3WuonL
+	 Z2384WWVFpFJ7qYphHdDeJDUxlZNraswANN6LDENQ/Br+4BTSqhBVee3fzKOWhKLv3Q==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795622607;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795622610;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=MYyw7IBPu4a6XMrHsl6p8reYW/6R+eycMmqHWOrRDy8=;
-	b=05sj6eGIAqq3Hmp3Th+QxZmhUZlpkbwVp00D0W4V2lO0o+whEYGc5TNYGL2a4mmgnNuH
-	 K5lO2E4O9aGldF75wqHFmY75i6MsAjAfZLS+6Rtmu75+vV8kTNaVSaCWcAPjVkXONZ2D5
-	 CcGGe/wBM4eSN+aQcDbjAYpedYipYB5F+Jal7P8QuETzduhN+422UKSgpGGt4ByT/s/v1
-	 T3k1fIEn62opugT/IN4ApINkMhtk18HkmS4Mo59vQ+iDwJIEkfplIY2WabljDhSGaL3x1
-	 6jzXDG3HLglSDm85jU8OMJX8vg0Z09tq3v6oYqb4ytHFzvYTMjZSML2g/Yo2K/dlFDQ==
+	bh=wd1Pkgas0ie9zb9XQMAEBOxOEeFG4HgBYNOMNueZRBM=;
+	b=FpagrXm+Y8mlAk7Ovhjreotf5J1zKpyFWFViZkf/jKU/fUEfqMu6WFFleFGehgKsJX0u
+	 oKs4Jnnficr4PKis2Dl/mu+AJE0leNgTxPV2lDiiRbz+0OVi+hruIqbAPEXmZRxUEo/Es
+	 akgeOireaaprnOfPpDmTJCOef4fdirhUNGY5tC0Qs2OtpJKMbjNWIMzF7UjTn/Qx3LTXh
+	 oaqZJtfTFYk2/sTkjW8cYWuT+0RELTpFnFQm0QHrZcq3/y1qpa3bQzxQGFRxbP5N/NsSj
+	 6upaSwW2I8zBDpdhI16URDi74svv/GHeGrMXV+l16lQqHFOv8kv3emeuqu6ruMJZx+Q==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=NltLscS4;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=bbOdNjCG;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 30664606A321;
-	Wed, 25 Nov 2026 16:03:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 48A0E606A323;
+	Wed, 25 Nov 2026 16:03:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=NltLscS4
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F0CB81F000C4;
-	Wed, 25 Nov 2026 16:03:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=bbOdNjCG
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 511821F000C4;
+	Wed, 25 Nov 2026 16:03:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795622606;
-	bh=MYyw7IBPu4a6XMrHsl6p8reYW/6R+eycMmqHWOrRDy8=;
+	s=korg; t=1795622609;
+	bh=wd1Pkgas0ie9zb9XQMAEBOxOEeFG4HgBYNOMNueZRBM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=NltLscS4fAUsfWhokW2Szg3/Pp1mZX3fUO5yb4svRZAfkuYmAN/+WAJjM3OoakgAK
-	 x6EK/r4M4So8tyPxwmYE3Axd5gGFgaLc//BdaAQvMFTTyUm69FZEnYog4tFE0o7tKZ
-	 BvqzbuUyTkxK6pCcXDsq+rIRkhaVcjwfEnwWwPKw=
+	b=bbOdNjCGAvsOSA1aSmPE7Fd33+H/G2T32q9x6AbL15egy0kb8C6Yl2ZmKlN2OZ/9d
+	 y6V2eHUAP65+/SX9ULMeaDMe9eecilw2O6JU+iSV8/a4+bCAbHBBbuQY4lG6jxv6zn
+	 WYJyr4AgRApogVssmPUhgeZexZz4Uv/eGMKBYc9w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Maxime Chevallier <maxime.chevallier@bootlin.com>,
-	Lorenzo Bianconi <lorenzo.bianconi@oss.qualcomm.com>,
-	Daniel Thompson <daniel@riscstar.com>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Aaradhana Sahu <aaradhana.sahu@oss.qualcomm.com>,
+	Baochen Qiang <baochen.qiang@oss.qualcomm.com>,
+	Rameshkumar Sundaram <rameshkumar.sundaram@oss.qualcomm.com>,
+	Jeff Johnson <jeff.johnson@oss.qualcomm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 589/990] net: stmmac: align real_num_tx_queues to mqprio configuration
-Date: Wed, 25 Nov 2026 15:32:36 +0100
-Message-ID: <20261125143835.888374878@linuxfoundation.org>
+Subject: [PATCH 6.18 590/990] wifi: ath12k: Fix NAPI resource leaks in AHB external IRQ paths
+Date: Wed, 25 Nov 2026 15:32:37 +0100
+Message-ID: <20261125143835.912273606@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143822.072087159@linuxfoundation.org>
 References: <20261125143822.072087159@linuxfoundation.org>
@@ -70,156 +70,125 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Lorenzo Bianconi <lorenzo.bianconi@oss.qualcomm.com>
+From: Aaradhana Sahu <aaradhana.sahu@oss.qualcomm.com>
 
-[ Upstream commit ac1ca0c3e139a2ebef2fc6c570af6647329726f1 ]
+[ Upstream commit ebc938ba1d5ff33652013b99c7b9a74f05690336 ]
 
-stmmac_hw_setup() unconditionally sets the number of real TX queues to
-plat->tx_queues_to_use on every device open. When a tc-mqprio qdisc is
-offloaded the driver reduces netif_set_real_num_tx_queues() to the number
-of queues enabled by the offload, but the next device open reverts it to
-plat->tx_queues_to_use while the netdev TC map is still the one programmed
-by the qdisc, leaving the two inconsistent.
+Currently, NAPI instances and their associated netdevs allocated for AHB
+external IRQ groups are not released when external IRQ configuration
+fails. They are also not freed when arch_init() fails after
+ath12k_ahb_config_irq() succeeds during probe, or when the driver is
+unloaded.
 
-Track the number of TX queues enabled by the current qdisc configuration
-in the per-qdisc state (priv->xmit_qdisc.num_tx_queues) and use it in
-stmmac_hw_setup(). The field defaults to plat->tx_queues_to_use at probe
-time and when the mqprio qdisc is destroyed, meaning no offload is active
-and the number of real TX queues must match the number of queues the
-driver allocated, and it is updated to the offloaded queue count on a
-successful mqprio setup.
+Fix this by adding a common cleanup helper to release the NAPI instances
+and associated netdevs. Call it from the external IRQ configuration error
+path, probe error path, and driver cleanup path.
 
-mqprio only validates the requested queue ranges against
-dev->real_num_tx_queues, which can be larger than plat->tx_queues_to_use
-while the interface has not been opened yet. Reject a qopt whose highest
-referenced queue (offset + count) exceeds plat->tx_queues_to_use, so
-xmit_qdisc.num_tx_queues can never be larger than the number of TX queues
-the driver provisions. Otherwise stmmac_hw_setup() would expose TX queues
-without an allocated DMA ring.
+Tested-on: IPQ5332 hw1.0 AHB WLAN.WBE.1.6-01275-QCAHKSWPL_SILICONZ-1
 
-Refuse to lower the number of TX queues below the count required by the
-active mqprio offload in stmmac_reinit_queues(), otherwise
-netif_set_real_num_tx_queues() would leave real_num_tx_queues
-inconsistent with the netdev TC map.
-
-The issue has been reported by sashiko and the patch has been tested on
-a Qualcomm RB3-Gen2 board.
-
-Fixes: 195e4f409a40 ("net: stmmac: support fp parameter of tc-mqprio")
-Tested-by: Maxime Chevallier <maxime.chevallier@bootlin.com>
-Signed-off-by: Lorenzo Bianconi <lorenzo.bianconi@oss.qualcomm.com>
-Link: https://patch.msgid.link/20261006-stmmac-mqprio-prio-offload-v5-2-d7da93419784@oss.qualcomm.com
-Tested-by: Daniel Thompson <daniel@riscstar.com>
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
-[ sashal: Moved the queue-range check into a pre-pass before any state change, since the local mqprio setup lacks upstream's staging arrays, and used the existing num_stack_tx_queues variable. ]
+Fixes: 6cee30f0da75 ("wifi: ath12k: add AHB driver support for IPQ5332")
+Fixes: 614c23e24ee8 ("wifi: ath12k: Support arch-specific DP device allocation")
+Signed-off-by: Aaradhana Sahu <aaradhana.sahu@oss.qualcomm.com>
+Reviewed-by: Baochen Qiang <baochen.qiang@oss.qualcomm.com>
+Reviewed-by: Rameshkumar Sundaram <rameshkumar.sundaram@oss.qualcomm.com>
+Link: https://patch.msgid.link/20261001045423.493121-1-aaradhana.sahu@oss.qualcomm.com
+[renamed label err_free_irq]
+Signed-off-by: Jeff Johnson <jeff.johnson@oss.qualcomm.com>
+[ sashal: Dropped the arch_init/arch_deinit parts missing on this branch and routed the ath12k_core_init() failure in probe to the new err_free_ext_napi label. ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/stmicro/stmmac/stmmac.h      |  6 ++++++
- drivers/net/ethernet/stmicro/stmmac/stmmac_main.c | 12 +++++++++++-
- drivers/net/ethernet/stmicro/stmmac/stmmac_tc.c   | 15 +++++++++++++++
- 3 files changed, 32 insertions(+), 1 deletion(-)
+ drivers/net/wireless/ath/ath12k/ahb.c | 41 ++++++++++++++++++++++++---
+ 1 file changed, 37 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/net/ethernet/stmicro/stmmac/stmmac.h b/drivers/net/ethernet/stmicro/stmmac/stmmac.h
-index 61e182278d156..7cb09679a0d97 100644
---- a/drivers/net/ethernet/stmicro/stmmac/stmmac.h
-+++ b/drivers/net/ethernet/stmicro/stmmac/stmmac.h
-@@ -282,6 +282,12 @@ struct stmmac_priv {
- 	/* Protect est parameters */
- 	struct mutex est_lock;
- 	struct stmmac_est *est;
+diff --git a/drivers/net/wireless/ath/ath12k/ahb.c b/drivers/net/wireless/ath/ath12k/ahb.c
+index 1a1195951a140..39cb9901dbd76 100644
+--- a/drivers/net/wireless/ath/ath12k/ahb.c
++++ b/drivers/net/wireless/ath/ath12k/ahb.c
+@@ -183,6 +183,26 @@ static void __ath12k_ahb_ext_irq_disable(struct ath12k_base *ab)
+ 	}
+ }
+ 
++static void ath12k_ahb_free_napi_for_group(struct ath12k_ext_irq_grp *irq_grp)
++{
++	netif_napi_del(&irq_grp->napi);
++	free_netdev(irq_grp->napi_ndev);
++	irq_grp->napi_ndev = NULL;
++}
 +
-+	struct {
-+		bool enabled;
-+		u32 num_tx_queues;
-+	} xmit_qdisc;
++static void ath12k_ahb_free_napi(struct ath12k_base *ab, int num_ext_irq_grp)
++{
++	int i;
 +
- 	struct dma_features dma_cap;
- 	struct stmmac_counters mmc;
- 	int hw_cap_support;
-diff --git a/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c b/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
-index 0dc333218aa98..c4053684dec3f 100644
---- a/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
-+++ b/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
-@@ -3552,7 +3552,7 @@ static int stmmac_hw_setup(struct net_device *dev)
- 
- 	/* Configure real RX and TX queues */
- 	netif_set_real_num_rx_queues(dev, priv->plat->rx_queues_to_use);
--	netif_set_real_num_tx_queues(dev, priv->plat->tx_queues_to_use);
-+	netif_set_real_num_tx_queues(dev, priv->xmit_qdisc.num_tx_queues);
- 
- 	/* Start the ball rolling... */
- 	stmmac_start_all_dma(priv);
-@@ -7484,6 +7484,10 @@ int stmmac_reinit_queues(struct net_device *dev, u32 rx_cnt, u32 tx_cnt)
- 	struct stmmac_priv *priv = netdev_priv(dev);
- 	int ret = 0, i;
- 
-+	if (priv->xmit_qdisc.enabled &&
-+	    tx_cnt < priv->xmit_qdisc.num_tx_queues)
-+		return -EINVAL;
++	for (i = 0; i < num_ext_irq_grp; i++)
++		ath12k_ahb_free_napi_for_group(&ab->ext_irq_grp[i]);
++}
 +
- 	if (netif_running(dev))
- 		stmmac_release(dev);
- 
-@@ -7491,6 +7495,9 @@ int stmmac_reinit_queues(struct net_device *dev, u32 rx_cnt, u32 tx_cnt)
- 
- 	priv->plat->rx_queues_to_use = rx_cnt;
- 	priv->plat->tx_queues_to_use = tx_cnt;
-+	if (!priv->xmit_qdisc.enabled)
-+		priv->xmit_qdisc.num_tx_queues = tx_cnt;
++static void ath12k_ahb_free_ext_napi(struct ath12k_base *ab)
++{
++	ath12k_ahb_free_napi(ab, ATH12K_EXT_IRQ_GRP_NUM_MAX);
++}
 +
- 	if (!netif_is_rxfh_configured(dev))
- 		for (i = 0; i < ARRAY_SIZE(priv->rss.table); i++)
- 			priv->rss.table[i] = ethtool_rxfh_indir_default(i,
-@@ -7682,6 +7689,9 @@ int stmmac_dvr_probe(struct device *device,
- 	ndev->xdp_features = NETDEV_XDP_ACT_BASIC | NETDEV_XDP_ACT_REDIRECT |
- 			     NETDEV_XDP_ACT_XSK_ZEROCOPY;
- 
-+	/* Default qdisc num_tx_queues */
-+	priv->xmit_qdisc.num_tx_queues = priv->plat->tx_queues_to_use;
-+
- 	ret = stmmac_tc_init(priv, priv);
- 	if (!ret) {
- 		ndev->hw_features |= NETIF_F_HW_TC;
-diff --git a/drivers/net/ethernet/stmicro/stmmac/stmmac_tc.c b/drivers/net/ethernet/stmicro/stmmac/stmmac_tc.c
-index bd28d0e6361d0..a254644bc7b81 100644
---- a/drivers/net/ethernet/stmicro/stmmac/stmmac_tc.c
-+++ b/drivers/net/ethernet/stmicro/stmmac/stmmac_tc.c
-@@ -1242,6 +1242,9 @@ static int stmmac_reset_tc_mqprio(struct net_device *ndev,
+ static void ath12k_ahb_ext_grp_enable(struct ath12k_ext_irq_grp *irq_grp)
  {
- 	struct stmmac_priv *priv = netdev_priv(ndev);
+ 	int i;
+@@ -580,8 +600,10 @@ static int ath12k_ahb_config_ext_irq(struct ath12k_base *ab)
+ 		irq_grp->grp_id = i;
  
-+	priv->xmit_qdisc.num_tx_queues = priv->plat->tx_queues_to_use;
-+	priv->xmit_qdisc.enabled = false;
-+
- 	netdev_reset_tc(ndev);
- 	netif_set_real_num_tx_queues(ndev, priv->plat->tx_queues_to_use);
- 
-@@ -1261,6 +1264,15 @@ static int tc_setup_dwmac510_mqprio(struct stmmac_priv *priv,
- 	if (!num_tc)
- 		return stmmac_reset_tc_mqprio(ndev, extack);
- 
-+	for (u32 tc = 0; tc < num_tc; tc++) {
-+		if (qopt->offset[tc] + qopt->count[tc] >
-+		    priv->plat->tx_queues_to_use) {
-+			NL_SET_ERR_MSG_MOD(extack,
-+					   "Queues exceed hw TX queues");
-+			return -EINVAL;
+ 		irq_grp->napi_ndev = alloc_netdev_dummy(0);
+-		if (!irq_grp->napi_ndev)
+-			return -ENOMEM;
++		if (!irq_grp->napi_ndev) {
++			ret = -ENOMEM;
++			goto free_napi_ndev;
 +		}
-+	}
-+
- 	err = netdev_set_num_tc(ndev, num_tc);
- 	if (err)
- 		return err;
-@@ -1284,6 +1296,9 @@ static int tc_setup_dwmac510_mqprio(struct stmmac_priv *priv,
- 	if (err)
- 		goto err_reset_tc;
  
-+	priv->xmit_qdisc.num_tx_queues = num_stack_tx_queues;
-+	priv->xmit_qdisc.enabled = true;
+ 		netif_napi_add(irq_grp->napi_ndev, &irq_grp->napi,
+ 			       ath12k_ahb_ext_grp_napi_poll);
+@@ -628,12 +650,19 @@ static int ath12k_ahb_config_ext_irq(struct ath12k_base *ab)
+ 					       ath12k_ahb_ext_interrupt_handler,
+ 					       IRQF_TRIGGER_RISING,
+ 					       irq_name[irq_idx], irq_grp);
+-			if (ret)
++			if (ret) {
+ 				ath12k_warn(ab, "failed request_irq for %d\n", irq);
++				ath12k_ahb_free_napi_for_group(irq_grp);
++				goto free_napi_ndev;
++			}
+ 		}
+ 	}
+ 
+ 	return 0;
 +
++free_napi_ndev:
++	ath12k_ahb_free_napi(ab, i);
++	return ret;
+ }
+ 
+ static int ath12k_ahb_config_irq(struct ath12k_base *ab)
+@@ -1071,11 +1100,14 @@ static int ath12k_ahb_probe(struct platform_device *pdev)
+ 	ret = ath12k_core_init(ab);
+ 	if (ret) {
+ 		ath12k_err(ab, "failed to init core: %d\n", ret);
+-		goto err_rproc_deconfigure;
++		goto err_free_ext_napi;
+ 	}
+ 
  	return 0;
  
- err_reset_tc:
++err_free_ext_napi:
++	ath12k_ahb_free_ext_napi(ab);
++
+ err_rproc_deconfigure:
+ 	ath12k_ahb_deconfigure_rproc(ab);
+ 
+@@ -1115,6 +1147,7 @@ static void ath12k_ahb_free_resources(struct ath12k_base *ab)
+ {
+ 	struct platform_device *pdev = ab->pdev;
+ 
++	ath12k_ahb_free_ext_napi(ab);
+ 	ath12k_hal_srng_deinit(ab);
+ 	ath12k_ce_free_pipes(ab);
+ 	ath12k_ahb_resource_deinit(ab);
 -- 
 2.53.0
 
