@@ -1,51 +1,50 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795620059;
-	b=j+Eusl3ujX5OxF7oQ3VmVzfbV/5wOC6XXY8l4Yt1hQof1F90g8A3QqquoE4FAD/zWqtz
-	 S5nhn9wdBoYG2UQHtCW1ZP0WirpZauT96SxNO4B6CCMEnAN0uUELwhYl3nJean7WMxlGo
-	 FbrRN3/hHEdyzo67BuSU5nfu+1YZ0VvzPzpFMn9fMjjIECfMYJLUTb9BKSpc+tJK/niPC
-	 12M+aGnvDWICtE1Qj55OsIoWJGquTvUNDCG4w3U6s2HaXxXmXL38no8Qy2aPrbKYlDogD
-	 csGuqJ2C0IvYTIw13ubGJgzjGR7a68R+SGdYtWKhl6jyo0X+YbdAJYsqtR8smFUzFCw==
+	t=1795620062;
+	b=iM536Cs5l8cn9rM7qSSVMj6x7K0BPC8ZQZ0vR25NDfdaAYJ9Ij5vyH9c3tEeNmaevZFF
+	 PQPLyQOsenx26bP2VluBdgOsjrglqueOAETOtqhUZweqMpe7phqYWeI8GXqtagZjOmmOm
+	 NTu+RLQC+paQMNSHEbCcc2UaP7BTJELF/c7B2LeVU8VGQIknmq5fc2dBVMiKrqo7yuWvA
+	 XFGoaYuGr/TLcgvnHMm/4LisQjOHdRwYdmeXqdlq66MrQCNwfcAnf77bVcZ7MmHsmPqwl
+	 eDmzV1wVMw1G+iyBktL//SUE97ni4MBequ3zESSYEHcSMKvV4bZvE+6/z07z4ducuGw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795620059;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795620062;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=jM208BMiTq7TEZq7Jq+OlfV5jB05mCmZj3Sl073xKgU=;
-	b=Uqe1yhsIaK1whoGSM3lNR6DYmcompQ1gFM351nvl2VYH+CQ1mP1Nx8TKi2XXiRMm/V65
-	 sJ8Fi//Q15u80VWkK1sHpGr7TT0AnqFr134kxSEKtv/JX8auRmwKPCw8v/UE5yuQyWTMc
-	 J0xjBy5Ev4EdWP2WE8ujIVDW6PJzZbZ4U2bg0nxHvtCJyvHH5MFT9Y2MdKD+qxGGhQclh
-	 rJ8ZNnvmKtG3ZkparDd7/i0uasjTHAtnEW9o7HhOyGQfZyLMhxzaV5M005kn26llrJnQk
-	 IH6wxXYNcRN3WfVKOpaOgv+VFoGh4nUPWI5zU0fb7UYeumUBCIZMI47ZF9KOd8eY6+A==
+	bh=Q+lsCqzAy2Vfh83TVHfdwf4kHKAs1KOU83MMVveU3us=;
+	b=LJAY9tHScYv6EpY2m7kuJRn8tYrS7VPK3oSoYf0CSn89g4fK6sOtYD0GNEZ9obC5wprA
+	 z5oCNEfr5+SLo0PgcgSh63DuJR5B7c97pqvv+RfcExNgLGQ8qUd8akbfHgDkLe0IrwP47
+	 VX3UepTfjtXuX51sN927InQ61XWdOmnacF53tmNjl5F5CrPcjC1Y6TZFjcK2H5wbPC5N4
+	 YTgSYb+fFKKNFpQvl+HilVowajM9m/+nMTGTyAfIlFFY3yxsl4NhQ1TeYvj+ffkbqcjWV
+	 OuMCZ/4/OslrAx9EYh8TagsnRTuxoqxdXylQjinWAOm8NO6eKfVXf7um2DzEG4PS8bw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=zbq2lW6w;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="W1lFSI/6";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 63B64606A321;
-	Wed, 25 Nov 2026 15:20:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F1451606A321;
+	Wed, 25 Nov 2026 15:21:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=zbq2lW6w
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A3F5E1F000C0;
-	Wed, 25 Nov 2026 15:20:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=W1lFSI/6
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C3D2E1F000E1;
+	Wed, 25 Nov 2026 15:21:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795620058;
-	bh=jM208BMiTq7TEZq7Jq+OlfV5jB05mCmZj3Sl073xKgU=;
+	s=korg; t=1795620061;
+	bh=Q+lsCqzAy2Vfh83TVHfdwf4kHKAs1KOU83MMVveU3us=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=zbq2lW6w/Y3Dy4UhETBBZ8oz8MTFzGoRZIF5wAW39X7ZDn0bkXOhpLfX4/n9Sb6Ej
-	 D6E5Qh3rcpd4vx33dpGDdUeDWUJpe7JrMtZVTk48W6Ljwb4KQN0XtUNRT38Pj7JSE8
-	 N/B09xYSB3Uae1UTdsjaCnSjisYUT4f1x+dg0TEA=
+	b=W1lFSI/6Quwa/B9QF8DpQ3PrVR18mKJWYGUke00div1xVvc5y6q1G7SlJyv6TIkHY
+	 fRERBd/ToeHEuYliN0A3vLj1vcyyljUalUQN6E102A2j2CGPuT5AaJMujxb6WYNZh+
+	 Tj3NVqwxvzMfbvDaJacC7oE7ynK3IAQiGLB1talM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andrey Misiurov <andrey.misyrov@gmail.com>,
-	Juergen Gross <jgross@suse.com>
-Subject: [PATCH 7.3 0740/1005] xen/gntdev: fix deadlock between map ioctl and mmap
-Date: Wed, 25 Nov 2026 15:34:38 +0100
-Message-ID: <20261125143839.090329318@linuxfoundation.org>
+	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>
+Subject: [PATCH 7.3 0789/1005] tracing/probes: Fix user-space dereference string array store type
+Date: Wed, 25 Nov 2026 15:35:27 +0100
+Message-ID: <20261125143840.222077521@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143821.729802100@linuxfoundation.org>
 References: <20261125143821.729802100@linuxfoundation.org>
@@ -67,82 +66,57 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Andrey Misiurov <andrey.misyrov@gmail.com>
+From: Masami Hiramatsu (Google) <mhiramat@kernel.org>
 
-commit 7620a997e4854c94eacebf0c2d453fbd78ccdb46 upstream.
+commit 2721573e6c6faaba2e31f352f2c02ec5f3ecf5e9 upstream.
 
-Commit 45ca1afe2fd1 ("xen/gntdev: fix error handling in ioctl") moved
-copy_to_user() in gntdev_ioctl_map_grant_ref() under priv->lock. A
-fault in copy_to_user() takes mmap_lock, while gntdev_mmap() is called
-with mmap_lock held and takes priv->lock:
+When finalizing a string array argument (e.g. +0u(%reg):string[N]),
+finalize_fetch_insn() advances the instruction pointer to a new slot
+for the store operation before checking whether the preceding operation
+was FETCH_OP_UDEREF. As a result, user-space dereference string arrays
+with type "string" emit FETCH_OP_ST_STRING (kernel memory read) instead
+of FETCH_OP_ST_USTRING.
 
-  ioctl thread                        mmap thread
-  mutex_lock(&priv->lock)
-                                      mmap_write_lock(mm)
-                                      gntdev_mmap()
-                                        mutex_lock(&priv->lock)
-  copy_to_user() faults
-    mmap_read_lock(mm)
+Check for FETCH_OP_UDEREF before advancing the instruction pointer.
 
-Reproduced on Debian 6.12.111 in a Xen guest, with the ioctl argument
-on a MAP_PRIVATE file page that has not been written yet. sysrq-w:
+Link: https://lore.kernel.org/all/179455854396.403392.18073771811100192405.stgit@devnote2/
 
-  task:repro state:D stack:0 pid:4479 tgid:4477 ppid:1 flags:0x00000000
-   rwsem_down_read_slowpath+0x25c/0x480
-   down_read_killable+0x48/0xc0
-   lock_mm_and_find_vma+0x96/0x250
-   do_user_addr_fault+0x12d/0x620
-   exc_page_fault+0x7e/0x180
-   asm_exc_page_fault+0x26/0x30
-   _copy_to_user+0x36/0x50
-   gntdev_ioctl+0x3b9/0xa00 [xen_gntdev]
-   __x64_sys_ioctl+0x97/0xc0
-  task:repro state:D stack:0 pid:4480 tgid:4477 ppid:1 flags:0x00000000
-   __mutex_lock.constprop.0+0x41b/0x720
-   gntdev_mmap+0x4d/0x330 [xen_gntdev]
-   __mmap_region+0x697/0xb10
-   mmap_region+0x78/0xa0
-   do_mmap+0x45d/0x630
-   vm_mmap_pgoff+0xf8/0x1c0
-
-Drop priv->lock before copy_to_user() again. On failure, re-take it
-and remove the map by index, as IOCTL_GNTDEV_UNMAP_GRANT_REF does,
-since another thread may have unmapped it meanwhile.
-
-Fixes: 45ca1afe2fd1 ("xen/gntdev: fix error handling in ioctl")
+Fixes: e65f7ae7f4da ("tracing/probe: Support user-space dereference")
 Cc: stable@vger.kernel.org
-Signed-off-by: Andrey Misiurov <andrey.misyrov@gmail.com>
-Reviewed-by: Juergen Gross <jgross@suse.com>
-Signed-off-by: Juergen Gross <jgross@suse.com>
-Message-ID: <20261013170745.583279-1-andrey.misyrov@gmail.com>
+Signed-off-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/xen/gntdev.c |    8 ++++++--
- 1 file changed, 6 insertions(+), 2 deletions(-)
+ kernel/trace/trace_probe.c |    6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
---- a/drivers/xen/gntdev.c
-+++ b/drivers/xen/gntdev.c
-@@ -670,15 +670,19 @@ static long gntdev_ioctl_map_grant_ref(s
- 	mutex_lock(&priv->lock);
- 	gntdev_add_map(priv, map);
- 	op.index = map->index << PAGE_SHIFT;
-+	mutex_unlock(&priv->lock);
+--- a/kernel/trace/trace_probe.c
++++ b/kernel/trace/trace_probe.c
+@@ -1956,6 +1956,8 @@ static int finalize_fetch_insn(struct fe
  
- 	if (copy_to_user(u, &op, sizeof(op)) != 0) {
--		list_del(&map->next);
-+		mutex_lock(&priv->lock);
-+		map = gntdev_find_map_index(priv, op.index >> PAGE_SHIFT,
-+					    op.count);
-+		if (map)
-+			list_del(&map->next);
- 		mutex_unlock(&priv->lock);
- 		gntdev_put_map(priv, map);
- 		return -EFAULT;
- 	}
+ 	/* Store operation */
+ 	if (parg->type->is_string) {
++		bool is_uderef;
++
+ 		/* Check bad combination of the type and the last fetch_insn. */
+ 		if (!strcmp(parg->type->name, "symstr")) {
+ 			if (code->op != FETCH_OP_REG && code->op != FETCH_OP_STACK &&
+@@ -1975,6 +1977,7 @@ static int finalize_fetch_insn(struct fe
+ 			}
+ 		}
  
--	mutex_unlock(&priv->lock);
- 	return 0;
- }
++		is_uderef = (code->op == FETCH_OP_UDEREF);
+ 		if (!strcmp(parg->type->name, "symstr") ||
+ 		    (code->op == FETCH_OP_IMM || code->op == FETCH_OP_COMM ||
+ 		     code->op == FETCH_OP_IMMSTR) || code->op == FETCH_OP_TP_ARG ||
+@@ -1995,8 +1998,7 @@ static int finalize_fetch_insn(struct fe
+ 		}
  
+ 		/* If op == DEREF, replace it with STRING */
+-		if (!strcmp(parg->type->name, "ustring") ||
+-		    code->op == FETCH_OP_UDEREF)
++		if (!strcmp(parg->type->name, "ustring") || is_uderef)
+ 			code->op = FETCH_OP_ST_USTRING;
+ 		else if (!strcmp(parg->type->name, "symstr"))
+ 			code->op = FETCH_OP_ST_SYMSTR;
 
 
