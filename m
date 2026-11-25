@@ -1,54 +1,55 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795621461;
-	b=R3mEGiHveP6cdMNICjfOsrJ/qRB0NJWBkL/YAECqW7cC/p5A0Yo3il4YTT2XaUWh9B4Q
-	 aQLbAGoTNMYEo1JhXGZ3BJR3vRtp+8fATX4Pzm0gnTwyiv1XXcYxy3vFbDpgybHVYuyl7
-	 2jKDeUAhurGBOIXj3MDVWc1u4cYMajZxSkYhOv2UA2gnxXui7XcQ2dZlyOetOD88m/19o
-	 9cGOs5kkispQAI/TG/u+25Q8ifi1IDjAmqJqhJiMgQdRFYho5JVkV5CF777cZ20rVaN2A
-	 w0x0qJDCVVi+7fZacEC5aBcf2FwwN10eKvYuexK8lkPU9CZpRjhwr23ErtNn5wjGr7g==
+	t=1795621464;
+	b=njUb6yWcOSTOMNR3xbVXtHd6a8laVmYwVffSYPbb5vwkP01YuVpmFcfT/IyPqgTxKMzI
+	 wlnPs8e2d6CndcBrYq3+ln6NhappE8BFpAWhNPqk0R3EMeKILRLPH9Uf2T4YB+IrcXRPX
+	 ZjYyABimF/U91HijNVLd36wD/MSQT/t9UqnHDahpCIHY7GpK4VhVeP4pelSoei3ppI1F/
+	 +gSUYE4imk36QCG/xwSnen+qBzrP8HD54wPBFH4gJPYmcoJZ7GOXjGwFjWnR+SojSJafN
+	 DDBJWycwVVeKhxAPQn/p6Doy6znAZ9bQLTRvw2V6VOKEzh//JHnyd5jrjqRncDRqHRg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795621461;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795621464;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=Y18R0VyOxtO0AWL71Sr+Z5ZbweC1TpbAAvqkm2ULukc=;
-	b=veVt9mQ6zXAA7ZbCJEzwBl4atL0yPuNbq5j0HucJuY9EFaiA8susmBSnEJ3oX25/zZk7
-	 q4fOcVJLKCVLy2z/mwuBdVKwHUgS9qCJvtTeyUbEwnuXKjQBSqTHvUoBbI723Ep57XoSb
-	 1Hp6r72zo/X+I3pKZVOdF5YnW+jXSdszigq57xotAQiK0xtAedzCSrYsWEGMDgr2rNVvv
-	 FxLp0g5hAqBLNMFROz45y8xLJfQwg/go86eQQOOGFMps6U95laYQCdvBAjlN3ajQnSXhf
-	 PK5bAu+pH8HaQHKH3JOQ6hY1VsWnRUmVtQknbD0eOvMb1EVJtjJ8bou2hO0UVp/4C+w==
+	bh=ONDvDGO3CmovF2+y04mcxmEA/G5yhNP3klTwDbrAqFw=;
+	b=eN1pbqxV81bcgI6EDjC1T6huiDXaLeycWrQ1ffltc9A4MUvwNjW+o3ja4Srpw+l2144P
+	 NP2+RgIcgrLnCxgajABuTyX6CNKWGaZ8dziys8QQ425QyGn2GT2HzV6KA0zRS3xH5Xl8e
+	 mRYbW7X3XMBSf+CC0BExqs8+cOs6Gu2iDD1C2vGm2zt7/HEY4mbcC9VgW7/HbWminCFzc
+	 mTe+f7AkMou1PbFq8dh/znVEIQfRHl0z7TD/91pmUrqU7A3YBOxg8lmEyT9w50AgfUjPV
+	 8jyVy5NZdiMjL+MRotLEVVdkkINAtB+lAbX87Nx1UuS8loXa76ysNvvSX8S2wWsKRzA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=rf9JRlc0;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=D6uNv8Ak;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1DBE2606A337;
-	Wed, 25 Nov 2026 15:44:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 36953606A329;
+	Wed, 25 Nov 2026 15:44:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=rf9JRlc0
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 175031F000D0;
-	Wed, 25 Nov 2026 15:44:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=D6uNv8Ak
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 555B81F000CA;
+	Wed, 25 Nov 2026 15:44:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795621460;
-	bh=Y18R0VyOxtO0AWL71Sr+Z5ZbweC1TpbAAvqkm2ULukc=;
+	s=korg; t=1795621463;
+	bh=ONDvDGO3CmovF2+y04mcxmEA/G5yhNP3klTwDbrAqFw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=rf9JRlc0Mn6sFNIuXNNybTiJ1gw/dDk4fl3A5ozfD+NGoLenUxLv6j+fWzvi+P++i
-	 d8YIyoNisFB1MYR2KyJb4HIDubw/KDaGdjORrCecat5LCAxRWZEnZk3Me5fR6rRvce
-	 nz8zCKq+MUMQ8u+Sy/tAEphUYrAQF+PUfVKjBcQA=
+	b=D6uNv8AksXbVpPXs+zo5tI2xVHy07Ie21pAn/JXMEoJj4yWRTBgzRgb4odOv+Q8Q6
+	 73NAy62U95GIk7HhxLeDmi98aM2V/BV21lWsQAhS1hT/fegnmqAhyj3RA7HcJWoce+
+	 rDUE0Pdh5+ZRB7ZFbKsKNfv8NOmc+5Vyqt7vx2WY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Ard Biesheuvel <ardb@kernel.org>,
 	Christoph Hellwig <hch@lst.de>,
+	Hannes Reinecke <hare@suse.de>,
 	Eric Biggers <ebiggers@kernel.org>,
 	Keith Busch <kbusch@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 232/990] nvme-auth: common: add KUnit tests for TLS key derivation
-Date: Wed, 25 Nov 2026 15:26:39 +0100
-Message-ID: <20261125143827.523650395@linuxfoundation.org>
+Subject: [PATCH 6.18 233/990] nvme-auth: common: add HMAC helper functions
+Date: Wed, 25 Nov 2026 15:26:40 +0100
+Message-ID: <20261125143827.546458817@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143822.072087159@linuxfoundation.org>
 References: <20261125143822.072087159@linuxfoundation.org>
@@ -72,257 +73,155 @@ Content-Transfer-Encoding: 8bit
 
 From: Eric Biggers <ebiggers@kernel.org>
 
-[ Upstream commit f990ad67f0febc51274adb604d5bdeab0d06d024 ]
+[ Upstream commit 4263ca1cae5cebc09ba95375c4a8927bf4b39d49 ]
 
-Unit-test the sequence of function calls that derive tls_psk, so that we
-can be more confident that changes in the implementation don't break it.
-
-Since the NVMe specification doesn't seem to include any test vectors
-for this (nor does its description of the algorithm seem to match what
-was actually implemented, for that matter), I just set the expected
-values to the values that the code currently produces.  In the case
-of SHA-512, nvme_auth_generate_digest() currently returns -EINVAL, so
-for now the test tests for that too.  If it is later determined that
-some other behavior is needed, the test can be updated accordingly.
-
-Tested with:
-
-    tools/testing/kunit/kunit.py run --kunitconfig drivers/nvme/common/
+Add some helper functions for computing HMAC-SHA256, HMAC-SHA384, or
+HMAC-SHA512 values using the crypto library instead of crypto_shash.
+These will enable some significant simplifications and performance
+improvements in nvme-auth.
 
 Acked-by: Ard Biesheuvel <ardb@kernel.org>
 Acked-by: Christoph Hellwig <hch@lst.de>
+Reviewed-by: Hannes Reinecke <hare@suse.de>
 Signed-off-by: Eric Biggers <ebiggers@kernel.org>
 Signed-off-by: Keith Busch <kbusch@kernel.org>
 Stable-dep-of: 41ad4af45ac9 ("nvmet-auth: keep the old keys if the new ones fail")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/nvme/common/.kunitconfig       |   6 +
- drivers/nvme/common/Kconfig            |   8 ++
- drivers/nvme/common/Makefile           |   2 +
- drivers/nvme/common/tests/auth_kunit.c | 175 +++++++++++++++++++++++++
- 4 files changed, 191 insertions(+)
- create mode 100644 drivers/nvme/common/.kunitconfig
- create mode 100644 drivers/nvme/common/tests/auth_kunit.c
+ drivers/nvme/common/Kconfig |  2 ++
+ drivers/nvme/common/auth.c  | 66 +++++++++++++++++++++++++++++++++++++
+ include/linux/nvme-auth.h   | 14 ++++++++
+ 3 files changed, 82 insertions(+)
 
-diff --git a/drivers/nvme/common/.kunitconfig b/drivers/nvme/common/.kunitconfig
-new file mode 100644
-index 0000000000000..60a038dc9423d
---- /dev/null
-+++ b/drivers/nvme/common/.kunitconfig
-@@ -0,0 +1,6 @@
-+CONFIG_KUNIT=y
-+CONFIG_PCI=y
-+CONFIG_BLOCK=y
-+CONFIG_BLK_DEV_NVME=y
-+CONFIG_NVME_HOST_AUTH=y
-+CONFIG_NVME_AUTH_KUNIT_TEST=y
 diff --git a/drivers/nvme/common/Kconfig b/drivers/nvme/common/Kconfig
-index da963e4f3f1f8..d19988c13af5f 100644
+index d19988c13af5f..1ec507d1f9b5f 100644
 --- a/drivers/nvme/common/Kconfig
 +++ b/drivers/nvme/common/Kconfig
-@@ -13,3 +13,11 @@ config NVME_AUTH
+@@ -13,6 +13,8 @@ config NVME_AUTH
  	select CRYPTO_DH
  	select CRYPTO_DH_RFC7919_GROUPS
  	select CRYPTO_HKDF
-+
-+config NVME_AUTH_KUNIT_TEST
-+	tristate "KUnit tests for NVMe authentication" if !KUNIT_ALL_TESTS
-+	depends on KUNIT && NVME_AUTH
-+	default KUNIT_ALL_TESTS
-+	help
-+	  Enable KUnit tests for some of the common code for NVMe over Fabrics
-+	  In-Band Authentication.
-diff --git a/drivers/nvme/common/Makefile b/drivers/nvme/common/Makefile
-index 681514cf2e2f5..fd9d01a609463 100644
---- a/drivers/nvme/common/Makefile
-+++ b/drivers/nvme/common/Makefile
-@@ -7,3 +7,5 @@ obj-$(CONFIG_NVME_KEYRING)	+= nvme-keyring.o
++	select CRYPTO_LIB_SHA256
++	select CRYPTO_LIB_SHA512
  
- nvme-auth-y			+= auth.o
- nvme-keyring-y			+= keyring.o
-+
-+obj-$(CONFIG_NVME_AUTH_KUNIT_TEST) += tests/auth_kunit.o
-diff --git a/drivers/nvme/common/tests/auth_kunit.c b/drivers/nvme/common/tests/auth_kunit.c
-new file mode 100644
-index 0000000000000..28b8dd1e3b186
---- /dev/null
-+++ b/drivers/nvme/common/tests/auth_kunit.c
-@@ -0,0 +1,175 @@
-+// SPDX-License-Identifier: GPL-2.0-only
-+/*
-+ * Unit tests for NVMe authentication functions
-+ *
-+ * Copyright 2026 Google LLC
-+ */
-+
+ config NVME_AUTH_KUNIT_TEST
+ 	tristate "KUnit tests for NVMe authentication" if !KUNIT_ALL_TESTS
+diff --git a/drivers/nvme/common/auth.c b/drivers/nvme/common/auth.c
+index 854711bff7f9a..a8e205b0411bf 100644
+--- a/drivers/nvme/common/auth.c
++++ b/drivers/nvme/common/auth.c
+@@ -12,6 +12,7 @@
+ #include <crypto/hash.h>
+ #include <crypto/dh.h>
+ #include <crypto/hkdf.h>
 +#include <crypto/sha2.h>
-+#include <kunit/test.h>
-+#include <linux/nvme.h>
-+#include <linux/nvme-auth.h>
-+#include <linux/slab.h>
-+
-+struct nvme_auth_test_values {
-+	u8 hmac_id;
-+	size_t hash_len;
-+	u8 expected_psk[NVME_AUTH_MAX_DIGEST_SIZE];
-+	char *expected_psk_digest;
-+	u8 expected_tls_psk[NVME_AUTH_MAX_DIGEST_SIZE];
-+};
-+
-+static void kfree_action(void *ptr)
-+{
-+	kfree(ptr);
-+}
-+
-+static void kunit_add_kfree_action(struct kunit *test, void *ptr)
-+{
-+	KUNIT_ASSERT_EQ(test, 0,
-+			kunit_add_action_or_reset(test, kfree_action, ptr));
-+}
-+
+ #include <linux/nvme.h>
+ #include <linux/nvme-auth.h>
+ 
+@@ -234,6 +235,71 @@ void nvme_auth_free_key(struct nvme_dhchap_key *key)
+ }
+ EXPORT_SYMBOL_GPL(nvme_auth_free_key);
+ 
 +/*
-+ * Test the derivation of a TLS PSK from the initial skey.  The vals parameter
-+ * gives the expected value of tls_psk as well as the intermediate values psk
-+ * and psk_digest.  The inputs are implicitly the fixed values set below.
++ * Start computing an HMAC value, given the algorithm ID and raw key.
++ *
++ * The context should be zeroized at the end of its lifetime.  The caller can do
++ * that implicitly by calling nvme_auth_hmac_final(), or explicitly (needed when
++ * a context is abandoned without finalizing it) by calling memzero_explicit().
 + */
-+static void
-+test_nvme_auth_derive_tls_psk(struct kunit *test,
-+			      const struct nvme_auth_test_values *vals)
++int nvme_auth_hmac_init(struct nvme_auth_hmac_ctx *hmac, u8 hmac_id,
++			const u8 *key, size_t key_len)
 +{
-+	const u8 hmac_id = vals->hmac_id;
-+	const size_t hash_len = vals->hash_len;
-+	const size_t skey_len = hash_len;
-+	u8 skey[NVME_AUTH_MAX_DIGEST_SIZE];
-+	u8 c1[NVME_AUTH_MAX_DIGEST_SIZE];
-+	u8 c2[NVME_AUTH_MAX_DIGEST_SIZE];
-+	const char *subsysnqn = "subsysnqn";
-+	const char *hostnqn = "hostnqn";
-+	u8 *psk = NULL, *tls_psk = NULL;
-+	char *psk_digest = NULL;
-+	size_t psk_len;
-+	int ret;
-+
-+	for (int i = 0; i < NVME_AUTH_MAX_DIGEST_SIZE; i++) {
-+		skey[i] = 'A' + i;
-+		c1[i] = i;
-+		c2[i] = 0xff - i;
++	hmac->hmac_id = hmac_id;
++	switch (hmac_id) {
++	case NVME_AUTH_HASH_SHA256:
++		hmac_sha256_init_usingrawkey(&hmac->sha256, key, key_len);
++		return 0;
++	case NVME_AUTH_HASH_SHA384:
++		hmac_sha384_init_usingrawkey(&hmac->sha384, key, key_len);
++		return 0;
++	case NVME_AUTH_HASH_SHA512:
++		hmac_sha512_init_usingrawkey(&hmac->sha512, key, key_len);
++		return 0;
 +	}
++	pr_warn("%s: invalid hash algorithm %d\n", __func__, hmac_id);
++	return -EINVAL;
++}
++EXPORT_SYMBOL_GPL(nvme_auth_hmac_init);
 +
-+	ret = nvme_auth_generate_psk(hmac_id, skey, skey_len, c1, c2, hash_len,
-+				     &psk, &psk_len);
-+	kunit_add_kfree_action(test, psk);
-+	KUNIT_ASSERT_EQ(test, 0, ret);
-+	KUNIT_ASSERT_EQ(test, hash_len, psk_len);
-+	KUNIT_ASSERT_MEMEQ(test, vals->expected_psk, psk, psk_len);
-+
-+	ret = nvme_auth_generate_digest(hmac_id, psk, psk_len, subsysnqn,
-+					hostnqn, &psk_digest);
-+	kunit_add_kfree_action(test, psk_digest);
-+	if (vals->expected_psk_digest == NULL) {
-+		/*
-+		 * Algorithm has an ID assigned but is not supported by
-+		 * nvme_auth_generate_digest().
-+		 */
-+		KUNIT_ASSERT_EQ(test, -EINVAL, ret);
++void nvme_auth_hmac_update(struct nvme_auth_hmac_ctx *hmac, const u8 *data,
++			   size_t data_len)
++{
++	switch (hmac->hmac_id) {
++	case NVME_AUTH_HASH_SHA256:
++		hmac_sha256_update(&hmac->sha256, data, data_len);
++		return;
++	case NVME_AUTH_HASH_SHA384:
++		hmac_sha384_update(&hmac->sha384, data, data_len);
++		return;
++	case NVME_AUTH_HASH_SHA512:
++		hmac_sha512_update(&hmac->sha512, data, data_len);
 +		return;
 +	}
-+	KUNIT_ASSERT_EQ(test, 0, ret);
-+	KUNIT_ASSERT_STREQ(test, vals->expected_psk_digest, psk_digest);
-+
-+	ret = nvme_auth_derive_tls_psk(hmac_id, psk, psk_len, psk_digest,
-+				       &tls_psk);
-+	kunit_add_kfree_action(test, tls_psk);
-+	KUNIT_ASSERT_EQ(test, 0, ret);
-+	KUNIT_ASSERT_MEMEQ(test, vals->expected_tls_psk, tls_psk, psk_len);
++	/* Unreachable because nvme_auth_hmac_init() validated hmac_id */
++	WARN_ON_ONCE(1);
 +}
++EXPORT_SYMBOL_GPL(nvme_auth_hmac_update);
 +
-+static void test_nvme_auth_derive_tls_psk_hmac_sha256(struct kunit *test)
++/* Finish computing an HMAC value.  Note that this zeroizes the HMAC context. */
++void nvme_auth_hmac_final(struct nvme_auth_hmac_ctx *hmac, u8 *out)
 +{
-+	static const struct nvme_auth_test_values vals = {
-+		.hmac_id = NVME_AUTH_HASH_SHA256,
-+		.hash_len = SHA256_DIGEST_SIZE,
-+		.expected_psk = {
-+			0x17, 0x33, 0xc5, 0x9f, 0xa7, 0xf4, 0x8f, 0xcf,
-+			0x37, 0xf5, 0xf2, 0x6f, 0xc4, 0xff, 0x02, 0x68,
-+			0xad, 0x4f, 0x78, 0xe0, 0x30, 0xf4, 0xf3, 0xb0,
-+			0xbf, 0xd1, 0xd4, 0x7e, 0x7b, 0xb1, 0x44, 0x7a,
-+		},
-+		.expected_psk_digest = "OldoKuTfKddMuyCznAZojkWD7P4D9/AtzDzLimtOxqI=",
-+		.expected_tls_psk = {
-+			0x3c, 0x17, 0xda, 0x62, 0x84, 0x74, 0xa0, 0x4d,
-+			0x22, 0x47, 0xc4, 0xca, 0xb4, 0x79, 0x68, 0xc9,
-+			0x15, 0x38, 0x81, 0x93, 0xf7, 0xc0, 0x71, 0xbd,
-+			0x94, 0x89, 0xcc, 0x36, 0x66, 0xcd, 0x7c, 0xc8,
-+		},
-+	};
-+
-+	test_nvme_auth_derive_tls_psk(test, &vals);
++	switch (hmac->hmac_id) {
++	case NVME_AUTH_HASH_SHA256:
++		hmac_sha256_final(&hmac->sha256, out);
++		return;
++	case NVME_AUTH_HASH_SHA384:
++		hmac_sha384_final(&hmac->sha384, out);
++		return;
++	case NVME_AUTH_HASH_SHA512:
++		hmac_sha512_final(&hmac->sha512, out);
++		return;
++	}
++	/* Unreachable because nvme_auth_hmac_init() validated hmac_id */
++	WARN_ON_ONCE(1);
 +}
++EXPORT_SYMBOL_GPL(nvme_auth_hmac_final);
 +
-+static void test_nvme_auth_derive_tls_psk_hmac_sha384(struct kunit *test)
-+{
-+	static const struct nvme_auth_test_values vals = {
-+		.hmac_id = NVME_AUTH_HASH_SHA384,
-+		.hash_len = SHA384_DIGEST_SIZE,
-+		.expected_psk = {
-+			0xf1, 0x4b, 0x2d, 0xd3, 0x23, 0x4c, 0x45, 0x96,
-+			0x94, 0xd3, 0xbc, 0x63, 0xf8, 0x96, 0x8b, 0xd6,
-+			0xb3, 0x7c, 0x2c, 0x6d, 0xe8, 0x49, 0xe2, 0x2e,
-+			0x11, 0x87, 0x49, 0x00, 0x1c, 0xe4, 0xbb, 0xe8,
-+			0x64, 0x0b, 0x9e, 0x3a, 0x74, 0x8c, 0xb1, 0x1c,
-+			0xe4, 0xb1, 0xd7, 0x1d, 0x35, 0x9c, 0xce, 0x39,
-+		},
-+		.expected_psk_digest = "cffMWk8TSS7HOQebjgYEIkrPrjWPV4JE5cdPB8WhEvY4JBW5YynKyv66XscN4A9n",
-+		.expected_tls_psk = {
-+			0x27, 0x74, 0x75, 0x32, 0x33, 0x53, 0x7b, 0x3f,
-+			0xa5, 0x0e, 0xb7, 0xd1, 0x6a, 0x8e, 0x43, 0x45,
-+			0x7d, 0x85, 0xf4, 0x90, 0x6c, 0x00, 0x5b, 0x22,
-+			0x36, 0x61, 0x6c, 0x5d, 0x80, 0x93, 0x9d, 0x08,
-+			0x98, 0xff, 0xf1, 0x5b, 0xb8, 0xb7, 0x71, 0x19,
-+			0xd2, 0xbe, 0x0a, 0xac, 0x42, 0x3e, 0x75, 0x90,
-+		},
+ struct nvme_dhchap_key *nvme_auth_transform_key(
+ 		const struct nvme_dhchap_key *key, const char *nqn)
+ {
+diff --git a/include/linux/nvme-auth.h b/include/linux/nvme-auth.h
+index a4b248c24ccf6..4f9a6599077cc 100644
+--- a/include/linux/nvme-auth.h
++++ b/include/linux/nvme-auth.h
+@@ -7,6 +7,7 @@
+ #define _NVME_AUTH_H
+ 
+ #include <crypto/kpp.h>
++#include <crypto/sha2.h>
+ 
+ struct nvme_dhchap_key {
+ 	size_t len;
+@@ -23,6 +24,19 @@ const char *nvme_auth_hmac_name(u8 hmac_id);
+ const char *nvme_auth_digest_name(u8 hmac_id);
+ size_t nvme_auth_hmac_hash_len(u8 hmac_id);
+ u8 nvme_auth_hmac_id(const char *hmac_name);
++struct nvme_auth_hmac_ctx {
++	u8 hmac_id;
++	union {
++		struct hmac_sha256_ctx sha256;
++		struct hmac_sha384_ctx sha384;
++		struct hmac_sha512_ctx sha512;
 +	};
-+
-+	test_nvme_auth_derive_tls_psk(test, &vals);
-+}
-+
-+static void test_nvme_auth_derive_tls_psk_hmac_sha512(struct kunit *test)
-+{
-+	static const struct nvme_auth_test_values vals = {
-+		.hmac_id = NVME_AUTH_HASH_SHA512,
-+		.hash_len = SHA512_DIGEST_SIZE,
-+		.expected_psk = {
-+			0x9c, 0x9f, 0x08, 0x9a, 0x61, 0x8b, 0x47, 0xd2,
-+			0xd7, 0x5f, 0x4b, 0x6c, 0x28, 0x07, 0x04, 0x24,
-+			0x48, 0x7b, 0x44, 0x5d, 0xd9, 0x6e, 0x70, 0xc4,
-+			0xc0, 0x9b, 0x55, 0xe8, 0xb6, 0x00, 0x01, 0x52,
-+			0xa3, 0x36, 0x3c, 0x34, 0x54, 0x04, 0x3f, 0x38,
-+			0xf0, 0xb8, 0x50, 0x36, 0xde, 0xd4, 0x06, 0x55,
-+			0x35, 0x0a, 0xa8, 0x7b, 0x8b, 0x6a, 0x28, 0x2b,
-+			0x5c, 0x1a, 0xca, 0xe1, 0x62, 0x33, 0xdd, 0x5b,
-+		},
-+		/* nvme_auth_generate_digest() doesn't support SHA-512 yet. */
-+		.expected_psk_digest = NULL,
-+	};
-+
-+	test_nvme_auth_derive_tls_psk(test, &vals);
-+}
-+
-+static struct kunit_case nvme_auth_test_cases[] = {
-+	KUNIT_CASE(test_nvme_auth_derive_tls_psk_hmac_sha256),
-+	KUNIT_CASE(test_nvme_auth_derive_tls_psk_hmac_sha384),
-+	KUNIT_CASE(test_nvme_auth_derive_tls_psk_hmac_sha512),
-+	{},
 +};
-+
-+static struct kunit_suite nvme_auth_test_suite = {
-+	.name = "nvme-auth",
-+	.test_cases = nvme_auth_test_cases,
-+};
-+kunit_test_suite(nvme_auth_test_suite);
-+
-+MODULE_DESCRIPTION("Unit tests for NVMe authentication functions");
-+MODULE_LICENSE("GPL");
++int nvme_auth_hmac_init(struct nvme_auth_hmac_ctx *hmac, u8 hmac_id,
++			const u8 *key, size_t key_len);
++void nvme_auth_hmac_update(struct nvme_auth_hmac_ctx *hmac, const u8 *data,
++			   size_t data_len);
++void nvme_auth_hmac_final(struct nvme_auth_hmac_ctx *hmac, u8 *out);
+ 
+ u32 nvme_auth_key_struct_size(u32 key_len);
+ struct nvme_dhchap_key *nvme_auth_extract_key(const char *secret, u8 key_hash);
 -- 
 2.53.0
 
