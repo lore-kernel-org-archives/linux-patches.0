@@ -1,53 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795624242;
-	b=BKDgadGWO4kakwbVpRwm+S1DZqT983v12rnzkSpOQ2D3qSB/1ZNVXQpnWuSnT+2TkKMd
-	 NfBPDwfPfeI+RHBXfrWOrpQKAdnwniXLpee7hzAZ9UQIb3enZEdPxo4KfJWOmjiP1kvbE
-	 /iWMxa8+yemakXiH/0UPn75rJDBilzWCuMvZTjPYU4C5e4h3j9h19looXrx5InQ96rKuh
-	 8ajwBu4bQy65KouQgJSEpdmMwL8/NnGUPlDpozRyfvWTUBj1zasNxkeexoX05m3nCudbX
-	 ekTZtooemhKOX55cDwYtGB/h+nRGHSulceN786ii4GQ+wvB4aFL5QcQ50sUkqw4M3eQ==
+	t=1795624245;
+	b=Z96hOpvVOLboUBRZSb+8e01nGCTmb3+HH0ZTWp7a3f3IhqRJh+nldGfGVxi5kdG+i93n
+	 nvWBNztSTPK5ojYE70LgqhxFc0KYINYwAN3epHHAKXD2xShQ911t7kwuBIBhS6tu+ONlL
+	 fXO/25hIaYSbMiA/jQ1U5Ia/Lf69SHjx9UTL9FWM6B5o1oH2kBWvhAknONmQ3qlOPHMYq
+	 42XaFg1VSBtNL5D8l0xd0uZWl0zMO20dIZjg42wgGjPx/ix8DVFvVUDp9Fc+KE2nfuUzd
+	 yh4qW2E3gFPzs31nALoZMXMMouAAuXdjjGdTbJD2vRamvtsVjTXkFXrNemEr79ztfsg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795624242;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795624245;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=xvatjj1hHAF5m+4nBynBO7l3StGzKppLpYiOX2OaWJw=;
-	b=FN/XoLScRJkmRrtm7n98IuHf6i1tukolHGhNfdl4DlVm7iEFvJ1ak4hTrObQJn1+Uc2+
-	 4VcmchDfJtNZVd9yosQGGYQGeDuSzDZfM/tVALGHnjjXjnyb7w2HrIp8tBHdd+C3PQ7uv
-	 lBV2NDh1yWVYHY/76Zt9uqseG7YA0WgnI254npFh+mgYIJuUcey7bRZKbdgYuv2+vWkNj
-	 9lAf8/PMsz9WJCqIUYUZrdNUY5OcVp102K9du5gEje6FewMnCAYIYnCTPXdVUj3AsT6TB
-	 y78vCT+YghKPBBZARzh5WEci4JiorboljajXQLr2nFBK2EHtVqaOGb0sAR+6rLO6tZQ==
+	bh=QPyT0IpwxJzEzbfOxW1bLkDguaTBgBtR+HTjzM7D3Wk=;
+	b=s7eQ5xmoOn04MahYLvRlCuvGUzhmm7Pa5uCtLGMMa2reGVT377qXDT4pyX8i9ASL4Aco
+	 YUg3wqAe0ljGNEaJGUlxk/yXXTZ9IFhyTrpBI5mWi5LIE9exnNnd9RBOSfw79ELKo6sl2
+	 A/HNIBtCa0+yLCcHcVJOljGSxzQD/K6mTNvgIYPS2ndJKRNvA7wbYd7/sjK8+uOXXFNGA
+	 4MdhXhp32NYwX8RuyrHK1UILtrQBzE0PhjcrHnIW3PzT9GB/RL7p2CQKW/Zqzzr1kOTvb
+	 558zCcZxfcOLxWnxDr5a6Cja1cM+j4PtZr6rYmL/pprfqSM/+blB2VkPw2CM3ueLuhg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=gdJQdiMf;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=hzT+aeZz;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9FC35606A691;
-	Wed, 25 Nov 2026 16:30:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C81BB606A682;
+	Wed, 25 Nov 2026 16:30:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=gdJQdiMf
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 673EE1F000C0;
-	Wed, 25 Nov 2026 16:30:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=hzT+aeZz
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9551E1F000CA;
+	Wed, 25 Nov 2026 16:30:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795624241;
-	bh=xvatjj1hHAF5m+4nBynBO7l3StGzKppLpYiOX2OaWJw=;
+	s=korg; t=1795624245;
+	bh=QPyT0IpwxJzEzbfOxW1bLkDguaTBgBtR+HTjzM7D3Wk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=gdJQdiMfW43inKVGrshx/1j1F+xRx4QIX0/zSTZtIEutkEw9XUQv2WSJZpRTCgCUu
-	 TAKEjtDN/DbRwLSFmzr1gEMsXnN48isjtL4RIiG1mQsPziUQ+lhpY+56aWRDFv94o/
-	 b1l3Q4P0vH0eOrSG5//0IvRnjGUcJVV7yN3kYqsI=
+	b=hzT+aeZzG+vCyMpwgl8d7g7TZVnSK8eGRx5uZFpb41i6RegjSKI8G2pjggHaA8Ctq
+	 oz84CLgHCeLtZt4MMqfVzbPLd9rXxZQNyZuqIGUQKbmsJ4BOmEwMrXS2FLqmkko9QU
+	 fd7U3YHx4lBHikpWafDmlYu9mU8Px8wBC8OFzcMI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Thomas Fourier <fourier.thomas@gmail.com>,
-	Alex Elder <elder@riscstar.com>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 084/816] net: ipa: Fix double free of the interrupt structure on config error
-Date: Wed, 25 Nov 2026 15:27:12 +0100
-Message-ID: <20261125143851.165618644@linuxfoundation.org>
+	Sasha Levin <sashal@kernel.org>,
+	Takashi Iwai <tiwai@suse.de>
+Subject: [PATCH 6.12 085/816] ALSA: memalloc: Free the new pages when WC DMA mapping fails
+Date: Wed, 25 Nov 2026 15:27:13 +0100
+Message-ID: <20261125143851.188781297@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143849.205329330@linuxfoundation.org>
 References: <20261125143849.205329330@linuxfoundation.org>
@@ -69,76 +67,54 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Thomas Fourier <fourier.thomas@gmail.com>
+[ Upstream commit 016fe9695e6dc1322ddfe8c7dbc7b973483b4a24 ]
 
-[ Upstream commit cb284914e749388eef402938bdb3115fe1f6d337 ]
+snd_dma_wc_alloc() keeps the newly allocated pages in a local variable,
+and snd_dma_alloc_dir_pages() stores them in dmab->area only after
+->alloc() returns.  If dma_map_single() fails, the error path passes
+dmab->area to do_free_pages() instead, and that is still NULL at this
+point for the usual callers.
 
-Since ipa_interrupt_init() allocates struct ipa_interrupt in ipa_probe(),
-the structure is owned by ipa_probe() and released with
-ipa_interrupt_exit() on its error paths and in ipa_remove().  The error
-path of ipa_interrupt_config() still frees it with kfree().  If
-ipa_interrupt_config() fails (called from ipa_config() via ipa_setup()),
-ipa_probe() unwinds through err_interrupt_exit, which frees the same
-structure again.
+The pages are then leaked with their write-combining attribute still
+set, set_memory_wb() warns about the zero address, and for buffers
+larger than a page free_pages_exact() goes on to free the struct pages
+of the bogus addresses 4096, 8192 and so on.  With CONFIG_DEBUG_VM that
+hits the VM_BUG_ON() in free_pages():
 
-Drop the kfree() from ipa_interrupt_config(); it should only undo what it
-set up itself. Drop the leftover initialization and cleanup of
-ipa->interrupt now managed in ipa_proble() and ipa_remove() of ipa_main.c.
+  kernel BUG at mm/page_alloc.c:5600!
+  RIP: 0010:free_pages_exact+0xcb/0xd0
+  Call Trace:
+   snd_dma_wc_alloc+0x14f/0x160 [snd_pcm]
+   snd_dma_alloc_dir_pages+0x4f/0x80 [snd_pcm]
 
-Fixes: ad1be80d7582 ("net: ipa: introduce ipa_interrupt_init()")
-Signed-off-by: Thomas Fourier <fourier.thomas@gmail.com>
-Reviewed-by: Alex Elder <elder@riscstar.com>
-Link: https://patch.msgid.link/20261029082100.17722-2-fourier.thomas@gmail.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+This was reproduced on an x86 guest without swiotlb by allocating
+SNDRV_DMA_TYPE_DEV_WC buffers for a device with a 24-bit streaming DMA
+mask, so that dma_map_single() fails.
+
+Free the pages that were just allocated.
+
+Fixes: c880a5146642 ("ALSA: memalloc: Use proper DMA mapping API for x86 WC buffer allocations")
+Signed-off-by: Sasha Levin <sashal@kernel.org>
+Link: https://patch.msgid.link/20261028144441.992127-1-sashal@kernel.org
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ipa/ipa_interrupt.c | 12 ++----------
- 1 file changed, 2 insertions(+), 10 deletions(-)
+ sound/core/memalloc.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/net/ipa/ipa_interrupt.c b/drivers/net/ipa/ipa_interrupt.c
-index 245a069970556..dc5315ce31d32 100644
---- a/drivers/net/ipa/ipa_interrupt.c
-+++ b/drivers/net/ipa/ipa_interrupt.c
-@@ -261,10 +261,8 @@ int ipa_interrupt_config(struct ipa *ipa)
- 	interrupt->enabled = 0;
- 	interrupt->suspend_enabled = bitmap_zalloc(ipa->endpoint_count,
- 						   GFP_KERNEL);
--	if (!interrupt->suspend_enabled) {
--		ret = -ENOMEM;
--		goto err_kfree;
--	}
-+	if (!interrupt->suspend_enabled)
-+		return -ENOMEM;
- 
- 	/* Disable IPA interrupt types */
- 	reg = ipa_reg(ipa, IPA_IRQ_EN);
-@@ -290,8 +288,6 @@ int ipa_interrupt_config(struct ipa *ipa)
- 		goto err_disable_wakeup;
+diff --git a/sound/core/memalloc.c b/sound/core/memalloc.c
+index b3853583d2ae1..e2887c9a24631 100644
+--- a/sound/core/memalloc.c
++++ b/sound/core/memalloc.c
+@@ -506,7 +506,7 @@ static void *snd_dma_wc_alloc(struct snd_dma_buffer *dmab, size_t size)
+ 		return NULL;
+ 	dmab->addr = dma_map_single(dmab->dev.dev, p, size, DMA_BIDIRECTIONAL);
+ 	if (dma_mapping_error(dmab->dev.dev, dmab->addr)) {
+-		do_free_pages(dmab->area, size, true);
++		do_free_pages(p, size, true);
+ 		return NULL;
  	}
- 
--	ipa->interrupt = interrupt;
--
- 	return 0;
- 
- err_disable_wakeup:
-@@ -300,8 +296,6 @@ int ipa_interrupt_config(struct ipa *ipa)
- 	free_irq(interrupt->irq, interrupt);
- err_free_bitmap:
- 	bitmap_free(interrupt->suspend_enabled);
--err_kfree:
--	kfree(interrupt);
- 
- 	return ret;
- }
-@@ -312,8 +306,6 @@ void ipa_interrupt_deconfig(struct ipa *ipa)
- 	struct ipa_interrupt *interrupt = ipa->interrupt;
- 	struct device *dev = ipa->dev;
- 
--	ipa->interrupt = NULL;
--
- 	dev_pm_clear_wake_irq(dev);
- 	(void)device_init_wakeup(dev, false);
- 	free_irq(interrupt->irq, interrupt);
+ 	return p;
 -- 
 2.53.0
 
