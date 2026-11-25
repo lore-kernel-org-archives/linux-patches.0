@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795622633;
-	b=eUr7RXAxIb/hShaky8tfwaa5/eu6wS0qOi88fxsfYlL6MLLCdCUPwBPUXoHGtaH14lje
-	 2kwik07NzESr+tcV0LXv1oJDmPiYjmh4MCQabVAZK6fCI3pUF95TLNoMCvs4jdnyFHYqN
-	 OhKP2kHN5QY2C+7yTdmE8+NLi55DVJ9nc2oH6ECgIA5A4SVS1krEF8TFC4IK0yukCMuJU
-	 S4vNcz0gqVSrvfwlydpmQ526FIN3//dHEkq2d1HbvIrQVdfEpOyZ8b+cwZzTrcYceGDbB
-	 NiAB+XCNxkKypJwmwcUrUPgnyaJrA+3Mpqb3zCXquZ+N/e1YFVG+JShXlOiK7rBHf/A==
+	t=1795622636;
+	b=S9Vh4dJqCH7NbPWUrAxcinQxKJIhPhj7pgoZXHGeXR0ddqgb121kZX4zWSNdSK+XvPv0
+	 bakXk7TZYaFehODbii0X+KO251b8sucp1V17TuXzpStTv0VXs6jd3aANOJtXVx2UC/BGE
+	 IQ+kvGeG776MXA8TYZlxwlgjaIlgYbV/Y/N0C99qGKD8edQsQlGvtySmEz1k5C2itlfKG
+	 g4i9fUhFPPvt4ll8Fud5dIgWVAwkYVbC/gBXiqprBhBw+C2JHIUOIUls6PN63em0NdTLy
+	 kSgkKPGCvY4H9h4wMeKRkXBslbs3clNRfRGJs5I6a7w7SzsLhCVXwwG6Lbde0d+k+rg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795622633;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795622636;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=E/LIHm57NhIOekzwJ/TvatuJKifcJYWR9H+0+Lo8X2Q=;
-	b=jKB+Sgoo5cqf4putZULpNy3VpPEn3lJCfBKOabAS2yTV6h3/COD+MJk6/DQWMbLCoh5d
-	 ic5l2JLaU5Fp8rcu2GRBH2/nDRlL+6qy2+ZRV4NOo35Fz6XlgivfnEQ3edSifUvIvSyM6
-	 0zH3LLtXqZByAKCv+C1m2WK+IwU6CNKzgsp5V/B/IM1eiQhjn7dn6N4nThRQA3uUZA6B7
-	 W6+4D/2fb8HEVsN840PmsY25tPAa+sL5MS5GOUymTNs+7mJXyFP+pnRyacA4qE8PrhTD6
-	 AzwclYTmAX6VTGQzcGmeHtjTO5McieFwyjTNlA698X4C03Kb8LjuC2Rhu4MCsuv2JRw==
+	bh=dSRFAmy9OdN9/sY8Hz2tnmmSlCIcZs9Esli17dJBPJU=;
+	b=ATW8djTtOAOAUB8k7e7FB6wCK0623U/oQV0IudZz/4Q0owITXRj/Vx7lB6FmUIRfmuO7
+	 N23s//YqUxMs64ogfedEe1kF3vXR89976XJCtdJlKQ+JfnWVkwsR0qnzIN30PHV1DsUCp
+	 Bo2xXlh83sL7z1pHwMhPXA2pVbZufvyYErToHNgu/w//f+xz61gjo9OrQNP0acYkNaR4P
+	 SgdOWJWwSKgkK8c+l47cN7BJ/SbocacucsqXqagKgL31mqjhXUGKtBxU/E6pI+vwB75+u
+	 nFqfGhxUL97xeNQnr+YMpG+iwWvVeGnm8gMMeLt5CfmSRrfzHlGpIWa7F+izFeuy+1w==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=zFTVzjnp;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=w+9ri22v;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ED255606A31E;
-	Wed, 25 Nov 2026 16:03:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3E60E606A31E;
+	Wed, 25 Nov 2026 16:03:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=zFTVzjnp
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0BB891F000C6;
-	Wed, 25 Nov 2026 16:03:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=w+9ri22v
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 577DE1F000C6;
+	Wed, 25 Nov 2026 16:03:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795622632;
-	bh=E/LIHm57NhIOekzwJ/TvatuJKifcJYWR9H+0+Lo8X2Q=;
+	s=korg; t=1795622635;
+	bh=dSRFAmy9OdN9/sY8Hz2tnmmSlCIcZs9Esli17dJBPJU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=zFTVzjnpVAn2CKWTKoHe4EROCt17UJ+UsQcku3jT4ymuf4Myp2xWicFIBtOLFQ0cY
-	 5lHOYyo33t01jtY/x8knDQZQABs7LEpLnTCo1EQMqo00XzFt7Z5hFw90thiV35r0D7
-	 0A5j+IIEbXoPdDTfyA6qaJm5qKTY0naa7ErKer64=
+	b=w+9ri22v8i/qtr9FQcJcwb0ticDJxVabNqAFLpbScgp9A/SI29CesmdwjxO8GGvox
+	 5D1QcPFZzSmLmhVN8geVxfGyNdHRapat679u5F6L1Lk53fymZ+1s1g9NUasIwCjfNg
+	 x3ssnWBbeETpGdKFyhfPivUab8Q/bfHs6I8RLBME=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vikas Gupta <vikas.gupta@broadcom.com>,
-	Dharmender Garg <dharmender.garg@broadcom.com>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Josef Bacik <josef@toxicpanda.com>,
+	Alexei Starovoitov <ast@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 592/990] bnge: skip dev_addr when building the VNIC unicast list
-Date: Wed, 25 Nov 2026 15:32:39 +0100
-Message-ID: <20261125143835.958194686@linuxfoundation.org>
+Subject: [PATCH 6.18 601/990] bpf: Dont hand out a linked element as extra element
+Date: Wed, 25 Nov 2026 15:32:48 +0100
+Message-ID: <20261125143836.171048561@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143822.072087159@linuxfoundation.org>
 References: <20261125143822.072087159@linuxfoundation.org>
@@ -69,102 +68,112 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Vikas Gupta <vikas.gupta@broadcom.com>
+From: Josef Bacik <josef@toxicpanda.com>
 
-[ Upstream commit 0b3fc7fe6f3f68569b9f9139893491b61a4b45b9 ]
+[ Upstream commit ccb88db8dac8fabde58656d5d4a33711e89c480a ]
 
-The default VNIC programs the device's MAC as L2 filter 0 in
-bnge_init_chip() via bnge_hwrm_set_vnic_filter(bn, 0, 0, dev_addr).
-bnge_cfg_rx_mode() then walks dev->uc and programs each unicast
-address as a further L2 filter, without excluding dev_addr.
+When htab_map_update_elem() replaces an element of a preallocated map,
+alloc_htab_elem() takes the spare element of this cpu and puts the old
+element into the per-cpu slot right away, long before the old element is
+unlinked from its bucket.  The bucket lock disables interrupts, but it
+does not keep out an NMI, or a tracing program on the return of
+alloc_htab_elem().  bpf_prog_active only helps if both programs are
+kprobe, tracepoint or perf_event programs.  A program that updates an
+existing key in another bucket of the same map gets to use the slot:
 
-Skip dev_addr when building uc_list, since it is already installed as
-filter 0. As dev_addr now takes neither a uc_list slot nor an
-l2_filters[] slot, count only the non-dev_addr entries for the
-uc_list overflow check too, otherwise an input such as
-{dev_addr, A, B, C} would needlessly fall back to promiscuous mode
-even though A, B and C fit in exact-match filters.
-bnge_uc_list_updated() applies the same skip and count so the
-change detection stays consistent and does not loop.
+  htab_map_update_elem(k1)              tc, xdp, fentry, raw_tp, ...
+    alloc_htab_elem()
+      l_new = *pl_new
+      *pl_new = l_old                   still linked in bucket 1
+      <NMI>
+        htab_map_update_elem(k2)        perf_event program
+          l_new = *pl_new               the l_old of the outer update
+          hlist_nulls_add_head_rcu(l_new, bucket 2)
+          hlist_nulls_del_rcu(k2's old element)
+      </NMI>
+    hlist_nulls_add_head_rcu(l_new, bucket 1)
+    hlist_nulls_del_rcu(l_old)
 
-This issue was caught by Sashiko (nipa).
+If l_old was the first element of bucket 1, the outer add points its pprev
+at l_new, and the delete takes it out of bucket 1 only.  l_new->next now
+leads into bucket 2, where l_old stays with a poisoned pprev, on which a
+delete of k2 crashes.  If it was not the first, the delete takes it out of
+bucket 2: k2 is gone from the map, and the chain of bucket 1 still contains
+l_old, whose next pointer leads into bucket 2.
 
-Tested on Thor Ultra device.
+Either way a walk of bucket 1 ends on the nulls value of bucket 2.
+lookup_nulls_elem_raw() restarts whenever that happens, so every lookup in
+bucket 1 which does not find its key spins forever:
 
-Fixes: 9afad4a17174 ("bng_en: Configure default VNIC")
-Signed-off-by: Vikas Gupta <vikas.gupta@broadcom.com>
-Reviewed-by: Dharmender Garg <dharmender.garg@broadcom.com>
-Link: https://patch.msgid.link/20261006141928.1432927-1-vikas.gupta@broadcom.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
-[ sashal: Adapted to the older API: kept dev-based netdev_for_each_uc_addr() iteration and locking in bnge_cfg_def_vnic() instead of the upstream uc/snapshot parameters and bnge_cfg_rx_mode(). ]
+  rcu: INFO: rcu_preempt detected stalls on CPUs/tasks:
+   __htab_map_lookup_elem+0x354/0x4d0
+
+  BUG: KASAN: wild-memory-access in htab_map_delete_elem+0x30c/0x670
+  Write of size 8 at addr dead000000000122 by task extra/102
+
+An NMI between the load and the store of the slot makes both updates use
+the same element, with much the same result.
+
+Empty the slot when the spare element is taken, in a way that is atomic
+on this cpu, and put the old element in only after it has been unlinked
+and its timers and the like have been cancelled.  A nested update that
+finds the slot empty, which is the case that corrupted the map, fails with
+-EBUSY.
+
+Fixes: 8c290e60fa2a ("bpf: fix hashmap extra_elems logic")
+Signed-off-by: Josef Bacik <josef@toxicpanda.com>
+Signed-off-by: Alexei Starovoitov <ast@kernel.org>
+Link: https://patch.msgid.link/20261017163745.3341787-5-alexei.starovoitov@gmail.com
+[ sashal: Replaced check_and_cancel_fields() with the older check_and_free_fields() helper in htab_map_update_elem(), since the cancel helper does not exist here. ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../net/ethernet/broadcom/bnge/bnge_netdev.c  | 27 +++++++++++++------
- 1 file changed, 19 insertions(+), 8 deletions(-)
+ kernel/bpf/hashtab.c | 22 ++++++++++++++++------
+ 1 file changed, 16 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/net/ethernet/broadcom/bnge/bnge_netdev.c b/drivers/net/ethernet/broadcom/bnge/bnge_netdev.c
-index 02be751f3d8fc..d1c55ac9318f2 100644
---- a/drivers/net/ethernet/broadcom/bnge/bnge_netdev.c
-+++ b/drivers/net/ethernet/broadcom/bnge/bnge_netdev.c
-@@ -1670,18 +1670,19 @@ static bool bnge_uc_list_updated(struct bnge_net *bn)
- 	struct bnge_vnic_info *vnic = &bn->vnic_info[BNGE_VNIC_DEFAULT];
- 	struct net_device *dev = bn->netdev;
- 	struct netdev_hw_addr *ha;
--	int off = 0;
--
--	if (netdev_uc_count(dev) != (vnic->uc_filter_count - 1))
--		return true;
-+	int off = 0, count = 0;
+diff --git a/kernel/bpf/hashtab.c b/kernel/bpf/hashtab.c
+index ffc534384f84d..95e9a760a7be3 100644
+--- a/kernel/bpf/hashtab.c
++++ b/kernel/bpf/hashtab.c
+@@ -1085,11 +1085,17 @@ static struct htab_elem *alloc_htab_elem(struct bpf_htab *htab, void *key,
+ 	if (prealloc) {
+ 		if (old_elem) {
+ 			/* if we're updating the existing element,
+-			 * use per-cpu extra elems to avoid freelist_pop/push
++			 * use per-cpu extra elems to avoid freelist_pop/push.
++			 * The caller puts old_elem into the slot once it is
++			 * unlinked. Until then the slot is empty for an NMI
++			 * or a kprobe that updates this map on this cpu.
+ 			 */
+ 			pl_new = this_cpu_ptr(htab->extra_elems);
+-			l_new = *pl_new;
+-			*pl_new = old_elem;
++			l_new = READ_ONCE(*pl_new);
++			do {
++				if (!l_new)
++					return ERR_PTR(-EBUSY);
++			} while (!try_cmpxchg_local(pl_new, &l_new, NULL));
+ 		} else {
+ 			struct pcpu_freelist_node *l;
  
- 	netdev_for_each_uc_addr(ha, dev) {
-+		if (ether_addr_equal(ha->addr, dev->dev_addr))
-+			continue;
-+		if (count >= vnic->uc_filter_count - 1)
-+			return true;
- 		if (!ether_addr_equal(ha->addr, vnic->uc_list + off))
- 			return true;
--
- 		off += ETH_ALEN;
-+		count++;
+@@ -1251,11 +1257,15 @@ static long htab_map_update_elem(struct bpf_map *map, void *key, void *value,
+ 	if (l_old) {
+ 		hlist_nulls_del_rcu(&l_old->hash_node);
+ 
+-		/* l_old has already been stashed in htab->extra_elems, free
+-		 * its special fields before it is available for reuse.
++		/*
++		 * l_old replaces the extra element that alloc_htab_elem() took.
++		 * Free its special fields first: once it is in the
++		 * slot, the next update on this cpu can reuse it.
+ 		 */
+-		if (htab_is_prealloc(htab))
++		if (htab_is_prealloc(htab)) {
+ 			check_and_free_fields(htab, l_old);
++			WRITE_ONCE(*this_cpu_ptr(htab->extra_elems), l_old);
++		}
  	}
--	return false;
-+	return count != vnic->uc_filter_count - 1;
- }
- 
- static bool bnge_promisc_ok(struct bnge_net *bn)
-@@ -1693,9 +1694,9 @@ static int bnge_cfg_def_vnic(struct bnge_net *bn)
- {
- 	struct bnge_vnic_info *vnic = &bn->vnic_info[BNGE_VNIC_DEFAULT];
- 	struct net_device *dev = bn->netdev;
-+	int i, off = 0, rc, uc_count = 0;
- 	struct bnge_dev *bd = bn->bd;
- 	struct netdev_hw_addr *ha;
--	int i, off = 0, rc;
- 	bool uc_update;
- 
- 	netif_addr_lock_bh(dev);
-@@ -1715,10 +1716,20 @@ static int bnge_cfg_def_vnic(struct bnge_net *bn)
- 	vnic->uc_filter_count = 1;
- 
- 	netif_addr_lock_bh(dev);
--	if (netdev_uc_count(dev) > (BNGE_MAX_UC_ADDRS - 1)) {
-+	/* dev_addr is already programmed as L2 filter 0, so it takes neither a
-+	 * uc_list slot nor an l2_filters[] slot. Count only the entries that
-+	 * will actually be programmed so the overflow check matches the fill
-+	 * loop below (and bnge_uc_list_updated()).
-+	 */
-+	netdev_for_each_uc_addr(ha, dev)
-+		if (!ether_addr_equal(ha->addr, dev->dev_addr))
-+			uc_count++;
-+	if (uc_count > BNGE_MAX_UC_ADDRS - 1) {
- 		vnic->rx_mask |= CFA_L2_SET_RX_MASK_REQ_MASK_PROMISCUOUS;
- 	} else {
- 		netdev_for_each_uc_addr(ha, dev) {
-+			if (ether_addr_equal(ha->addr, dev->dev_addr))
-+				continue;
- 			memcpy(vnic->uc_list + off, ha->addr, ETH_ALEN);
- 			off += ETH_ALEN;
- 			vnic->uc_filter_count++;
+ 	htab_unlock_bucket(b, flags);
+ 	if (l_old && !htab_is_prealloc(htab))
 -- 
 2.53.0
 
