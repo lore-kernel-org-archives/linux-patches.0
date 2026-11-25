@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795620873;
-	b=MDk5UJ95UJ40P2BQTAGu+Qr3Nrlk4cgY4cPv7rmLOAj4EJ80lThhI2NsxgkVOaUc3iVa
-	 H5/pkJRQvdlgSUDH69OAOfNG4kLbuO97dYeK0/zDCow8cJuhmcEOhlWZWfpzuVC7VZnTJ
-	 kIJEHOb1hsFUxhqNXRG+UIcjoNJ13zHoG17j22YNfkVuMT3BcHUU+xT+hg0y4mzydzWkv
-	 2FlvCWkYiphiQbczUWc0kIB+IV+x8TH8K3ckBf2ANtou3PD+RaiAAwwF9lsfLh9XwHNvj
-	 7v4qnQGFYjnt138FJq5vl9ICwEARbVkg1vlMLkADB2D05UUz3ijWdhXqUS4fBhtiTNw==
+	t=1795620877;
+	b=5tNIz3gkEsmzFomOI66sI6Zu2GZihUAZvp762qu5t7bwvQD2ZH7MQiVdK941J2z9ZIbC
+	 ibP3Yt6WuydoYXmhUsF73onwoj0VCNQWSo/o3E7Fo//g+FOrZ4CAZUSBaDmcGAUPWowz5
+	 ksjVj/AtBTOQIpj1/YhTzH4YL8vKNNvQJReRLSL1Cf/hHLLqq/Q9RrbgK0RpGnIC//VTQ
+	 Q+MoQK+WsXizVTY+7BqlIT4HZBjxRJAdeJYgRs0hxgFMU15AA3ml/nRlS4XOckpOR5fS+
+	 z1kZI7rWLHLkRtqE1RnQ/gVpVIMsjTs5z5if4SmIfp0EB+GBFehqIO3GAqxAfw9/rcw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795620873;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795620877;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=sPkfjt4LQ7sSbxNa1YNu6EFHK0hrZK3pvTu8ejW8NbM=;
-	b=nyK5Bhb9fSzU7zzmOkdzIuCHAkgizSU5g9f10/NGuC/pp78+59lknXXYQ6wrUsno1dDm
-	 mVuFVR9s1z1m/5JVbM13rbpjaVYETsDnA53AhwsU6HtCJm6VmLF8NcV+uyKGy1HPxoe8w
-	 6SZNc5YM3bE9U7aHiaQ01Dq6Vi0GFJB6IpB0kyT1uw5K0jUbJuNDxBTTAunMjLTtb07Wx
-	 HsT3AXvU9KP3BqoWcmGfYg7GVVZlmMCXhJHAtEG/GjZSNkez5+Bhlt4/tmiTJD53DAemi
-	 GA1Gp86PWJKTkcIX7RbwYOdwzL7ZBsB1urDIbXCl6sPIlIQGAR9dJdhmFdlnde2/p4A==
+	bh=Cp33RBCkAyhtmALzdvFFu7etrqgFG5qgkI1DU9aQsFU=;
+	b=zUDJiRB+W8w4XXpRwRBDGKRZzL6CN0nPDSRiV51pXqRf46q3YUE2Ri/IgLeORuoV2F6H
+	 GwzVb4PaeECLGGscN8nVR8lf2n3KlKmFWgX/8KfJZP2Swo+e81s8kLojv4PBRiIw8BZF/
+	 F/xe1hI9WOXv9A9ZwHj5mEEkH2WPah60+0g3Ff0ULDNeg2dmWiyoWP9olZnOoxFHsfQ4j
+	 8Gn51kccuenX1t1PauZA/tuh6NIWnBDCa2UQCIAOhhEgxeabzccuJMdHyEmyspcoDDxKK
+	 p+kvaKs6qurtn3xULspzT/v8eILvZ+yxzflZlrUz5FIyMi9PlEVNpUaG4GT0wtKq9PQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=WA5l032F;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=PjgatllY;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DDB28606A323;
-	Wed, 25 Nov 2026 15:34:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 282D0606A323;
+	Wed, 25 Nov 2026 15:34:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=WA5l032F
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D5E341F000C4;
-	Wed, 25 Nov 2026 15:34:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=PjgatllY
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3D8681F000C6;
+	Wed, 25 Nov 2026 15:34:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795620873;
-	bh=sPkfjt4LQ7sSbxNa1YNu6EFHK0hrZK3pvTu8ejW8NbM=;
+	s=korg; t=1795620876;
+	bh=Cp33RBCkAyhtmALzdvFFu7etrqgFG5qgkI1DU9aQsFU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=WA5l032F51WpezfpRV2z+DP9otJx5ZWu/2si9h1w3hKHGubBCeB45CADrkC6X1BD+
-	 6Yh37vYU5kuTJzLrrYi2tN2TAZlsw8i7cECyICFfN04PM3d+V06hxqImWaciXzvCvg
-	 c7OtmCtQnvgwTuS/6T6oQ5G3Yj1aIkj8oZ/1OJRo=
+	b=PjgatllYhHoEMPH0LlP0stsywI9It9gDKijxbC5Qwim8u+kbLyio9TUyGEb6Wr1BD
+	 NUOPPiyyJAhFYhxhNQOwSahGCyi8q02UCq7IR3kgSmBnyHU0Pz5pvn07FxKyIjpqqh
+	 r/AtE6P4ty8KrJ8RCMS+Q4GIp72DU2iAQDUQtC6I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Siddharth Chintamaneni <sidchintamaneni@gmail.com>,
+	Mikhail Malyshev <mike.malyshev@gmail.com>,
 	Jens Axboe <axboe@kernel.dk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 049/990] io_uring/kbuf: initialize arg->out_len from arg->max_len in io_buffers_select()
-Date: Wed, 25 Nov 2026 15:23:36 +0100
-Message-ID: <20261125143823.239747149@linuxfoundation.org>
+Subject: [PATCH 6.18 050/990] io_uring/io-wq: apply the current cpuset to new workers
+Date: Wed, 25 Nov 2026 15:23:37 +0100
+Message-ID: <20261125143823.262205807@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143822.072087159@linuxfoundation.org>
 References: <20261125143822.072087159@linuxfoundation.org>
@@ -68,40 +68,122 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Siddharth Chintamaneni <sidchintamaneni@gmail.com>
+From: Mikhail Malyshev <mike.malyshev@gmail.com>
 
-Commit b7322810d1870ccc0d293ad383d94ef583d5057b upstream.
+Commit 0659e44ce739ecd856164c75a5325b7959a2921d upstream.
 
-io_buffers_select() passes &arg->out_len to io_provided_buffers_select()
-on the legacy provided-buffer path. Because callers initialize
-arg->max_len (from sqe->len) while leaving arg->out_len as 0,
-io_provided_buffers_select() sees *len == 0 and always selects the full
-buffer size buf->len, ignoring the user-specified sqe->len limit.
+Since commit 84eacf177faa ("io_uring/io-wq: inherit cpuset of cgroup in
+io worker"), io_wq_create() copies the cpuset of the creating task into
+wq->cpu_mask, and io_init_new_worker() gives each new worker that copy.
+A cpuset change, or a move of the task to another cgroup, updates the
+workers that exist but not the copy, so workers started later run on
+the CPUs the cgroup had when the io-wq was created, which may since
+have been given to other tasks. Workers come and go for the life of the
+io-wq, and a worker that cpuset moved is also retired at its next idle
+timeout and replaced on the old CPUs.
 
-Initialize arg->out_len = arg->max_len before calling
-io_provided_buffers_select().
+Keep wq->cpu_mask for the affinity of the io-wq itself, all CPUs or the
+mask set with IORING_REGISTER_IOWQ_AFF, and intersect it with the cpuset
+of the worker when the worker starts, falling back to the cpuset if the
+two do not intersect, as __set_cpus_allowed_ptr() does. Use the same
+mask in the idle exit test, and go back to all CPUs when the registered
+affinity is removed.
 
-Fixes: 35c8711c8fc4 ("io_uring/kbuf: add helpers for getting/peeking multiple buffers")
-Signed-off-by: Siddharth Chintamaneni <sidchintamaneni@gmail.com>
-Link: https://patch.msgid.link/20261116193146.65315-1-sidchintamaneni@gmail.com
+Fixes: 84eacf177faa ("io_uring/io-wq: inherit cpuset of cgroup in io worker")
+Cc: stable@vger.kernel.org
+Signed-off-by: Mikhail Malyshev <mike.malyshev@gmail.com>
+Link: https://patch.msgid.link/20261111162705.1150983-1-mike.malyshev@gmail.com
 Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- io_uring/kbuf.c | 1 +
- 1 file changed, 1 insertion(+)
+ io_uring/io-wq.c | 44 +++++++++++++++++++++++++++++++++++++++-----
+ 1 file changed, 39 insertions(+), 5 deletions(-)
 
-diff --git a/io_uring/kbuf.c b/io_uring/kbuf.c
-index c091c3c462e18..6659f56e91fc6 100644
---- a/io_uring/kbuf.c
-+++ b/io_uring/kbuf.c
-@@ -355,6 +355,7 @@ int io_buffers_select(struct io_kiocb *req, struct buf_sel_arg *arg,
- 				req->flags |= REQ_F_BUF_MORE;
+diff --git a/io_uring/io-wq.c b/io_uring/io-wq.c
+index fd53297af26ec..0d74e365d54a1 100644
+--- a/io_uring/io-wq.c
++++ b/io_uring/io-wq.c
+@@ -731,6 +731,34 @@ static bool io_worker_retire(struct io_wq_acct *acct, struct io_worker *worker)
+ 	return false;
+ }
+ 
++/*
++ * The CPUs a worker of @wq runs on: those of the io-wq affinity that the
++ * worker's cpuset allows, or the cpuset if they have none in common, as the
++ * scheduler does with a task's requested affinity when its cpuset changes.
++ * Read the cpuset each time: it can change while the io-wq exists.
++ */
++static void io_wq_worker_cpus(struct io_wq *wq, struct task_struct *tsk,
++			      struct cpumask *cpus)
++{
++	cpuset_cpus_allowed(tsk, cpus);
++	if (cpumask_intersects(cpus, wq->cpu_mask))
++		cpumask_and(cpus, cpus, wq->cpu_mask);
++}
++
++/* Is the current worker on a CPU that a new worker would not get? */
++static bool io_wq_worker_off_cpus(struct io_wq *wq)
++{
++	cpumask_var_t cpus;
++	bool off;
++
++	if (!alloc_cpumask_var(&cpus, GFP_KERNEL))
++		return false;
++	io_wq_worker_cpus(wq, current, cpus);
++	off = !cpumask_test_cpu(raw_smp_processor_id(), cpus);
++	free_cpumask_var(cpus);
++	return off;
++}
++
+ static int io_wq_worker(void *data)
+ {
+ 	struct io_worker *worker = data;
+@@ -809,8 +837,7 @@ static int io_wq_worker(void *data)
  		}
- 	} else {
-+		arg->out_len = arg->max_len;
- 		ret = io_provided_buffers_select(req, &arg->out_len, sel->buf_list, arg->iovs);
+ 		if (!ret) {
+ 			last_timeout = true;
+-			exit_mask = !cpumask_test_cpu(raw_smp_processor_id(),
+-							wq->cpu_mask);
++			exit_mask = io_wq_worker_off_cpus(wq);
+ 		}
  	}
- out_unlock:
+ 
+@@ -860,9 +887,16 @@ void io_wq_worker_sleeping(struct task_struct *tsk)
+ static void io_init_new_worker(struct io_wq *wq, struct io_wq_acct *acct, struct io_worker *worker,
+ 			       struct task_struct *tsk)
+ {
++	cpumask_var_t cpus;
++
+ 	tsk->worker_private = worker;
+ 	worker->task = tsk;
+-	set_cpus_allowed_ptr(tsk, wq->cpu_mask);
++	/* Without a mask, the worker keeps its creator's CPUs. */
++	if (alloc_cpumask_var(&cpus, GFP_KERNEL)) {
++		io_wq_worker_cpus(wq, tsk, cpus);
++		set_cpus_allowed_ptr(tsk, cpus);
++		free_cpumask_var(cpus);
++	}
+ 
+ 	raw_spin_lock(&acct->workers_lock);
+ 	hlist_nulls_add_head_rcu(&worker->nulls_node, &acct->free_list);
+@@ -1361,7 +1395,7 @@ struct io_wq *io_wq_create(unsigned bounded, struct io_wq_data *data)
+ 
+ 	if (!alloc_cpumask_var(&wq->cpu_mask, GFP_KERNEL))
+ 		goto err;
+-	cpuset_cpus_allowed(data->task, wq->cpu_mask);
++	cpumask_copy(wq->cpu_mask, cpu_possible_mask);
+ 	wq->acct[IO_WQ_ACCT_BOUND].max_workers = bounded;
+ 	wq->acct[IO_WQ_ACCT_UNBOUND].max_workers =
+ 				task_rlimit(current, RLIMIT_NPROC);
+@@ -1545,7 +1579,7 @@ int io_wq_cpu_affinity(struct io_uring_task *tctx, cpumask_var_t mask)
+ 		else
+ 			ret = -EINVAL;
+ 	} else {
+-		cpumask_copy(tctx->io_wq->cpu_mask, allowed_mask);
++		cpumask_copy(tctx->io_wq->cpu_mask, cpu_possible_mask);
+ 	}
+ 	rcu_read_unlock();
+ 
 -- 
 2.53.0
 
