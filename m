@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795624060;
-	b=kAemGpWXfYRIyglEZ1dWefp3KkArBN0xV1f7qGQbD5M8Iw1ob/K2qWF8k2qUFUFqgn4J
-	 Die/3fShM1Uyq3MWo9K/QyvfsNVB84cF2gz8NkJaTlupFcr8RpNAI9TgJ1sUkFaJAQqen
-	 LZqFXXX+Uvf0Al9dRiYtyDm8G9IGV/XA2/42E6NlUvXzHQGyC16yTyCatkeFAsPtLyTFV
-	 FPOFjFP/jp72OYz5InGlb3TuDpnNr7cswzslYkXOr+VlWshdGAeUuFT9wCELwXGBZ1CIZ
-	 GHstPiNoeXiG0d+67nb4BAgklT/jW1S3tDwDiPDIOtDdOJMcG45mkUeMnb56qM7AK7w==
+	t=1795624063;
+	b=02r5PG48M1i8qAosVi4+haJMAgLtCYDUQZ/J90chfEv2pfTV/rI20RM0wp0SOiwA4DDZ
+	 yI14ehBoiVcvf9PrB4BXPzLgdFw0Vme7d63zRwJU8J0CXb2hsGaXTt4a/cXixDvwfA4Ca
+	 Efl2Vw068e/ItSZRihKTSSRWFsJPcexEHOBKWzbca8e5FTkMEgW7X/qWEr5ZOd+DUUZAL
+	 aT+8dngD87D/f2goXwo5XBZR+AtoTnpSI4rcYCUIrP1NwzFPktocjJwePrX+DR0kgvmC2
+	 Hd2rTymssPiapcYd59rUwIEQBWVy0rQY92hRtGyRf5C1CzWbSiCbeMITaqzhg8rLHhg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795624060;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795624063;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=6yx8bh+n5CSco4aUhhfTvQHTyhYNfBtnHR2ukueQLPU=;
-	b=MYNrvFdZMi+c5vneRufvPKVPjBmyGQyPO2fMQPcEcjSm6PomWW9f4jZ8QIQxRtGpghTx
-	 6lA76KKeNI1ef6uQZWHrrU84clAinlJBFqQ1aholYLcx0V8kje36qP6B4M/T3NjJzoRq8
-	 ZYl8nR5vLUagN7IrEzuDE6WP60pKlkr0LEqO3jmJdjBuQq3crQ5j5HmNfwFG0fW5U3WYB
-	 IT/ymAdJhtimjQifbRhcN1PfgoRbk+6sU4bX76Ve+nwRa53Wwff8FBv/flEQ04wme1KJD
-	 k1oVPSiqE7Oztt6dGt8Om4h7L0uqbdq1Ax+mVsvBEnPFqCdoVhxQGGZDa2SIDX/4m7Q==
+	bh=bjsxO/h/RxFuFmlkyhZNClVOMYtEyjnmQWn9GWp8wWM=;
+	b=jDXfRrpeUIdJ07D+AoCChvtQmPslHjG9otc9d4HpZoNizKQudkGH9zk4B7DhpMnTOd8D
+	 0ta/GTTd6+YmYVhkE2UjZm4Zc6oIcmPb0pLoEzr6p6dkaWEDwRSVePTBol1Taii9b1HIj
+	 ivcdfWijm2UzxztI8zBQKhkioc970NACRkYknZnITgupSYeDpiR5Rj4dRSmOERS+Xbraz
+	 QBAJIIdQjI5EAiUltXiJ6mrpRH1w15Y80sDk3JHw133czqthbN+aC4ZHXkqm76HwttHdJ
+	 2EDZgPUfz98WkfAWtQpWi3mTZx8qUm63HCj9Efk0y+DcTZFH1pVUajHVu17hrqIP+VA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=wFk5d4D0;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=FZB5xi64;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7C04D606A323;
-	Wed, 25 Nov 2026 16:27:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 55EC1606A323;
+	Wed, 25 Nov 2026 16:27:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=wFk5d4D0
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CC99F1F000C4;
-	Wed, 25 Nov 2026 16:27:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=FZB5xi64
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A6ACD1F000CA;
+	Wed, 25 Nov 2026 16:27:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795624060;
-	bh=6yx8bh+n5CSco4aUhhfTvQHTyhYNfBtnHR2ukueQLPU=;
+	s=korg; t=1795624063;
+	bh=bjsxO/h/RxFuFmlkyhZNClVOMYtEyjnmQWn9GWp8wWM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=wFk5d4D04rV3MjFpouhbY4OGaUV9MzgiPeyZaeuTSx6SfS5eiypFRrASW6c/XfE/i
-	 Auxr/mBIe4ixlKheavlocznMOp11e70kdUYaHU0NHreMt+voXWVbmKgzOP7SWnDNMU
-	 pb6XiZLsw4yK9d3MgfhtmUpezzktGg5UZO32ZfUQ=
+	b=FZB5xi64OIQDP0LjqvtADH2IeBxR8/e/ayiqzO1w8DADYqKMuJQ1tprl63o1MOto/
+	 T5NX9xkpPyiMks3JnwkBt9w3A+bw+RvNaQjRMIY5Au9c3rKsVO2IAT3VidIVfjiz2Z
+	 fAqSdvLxSKhvz6KdWpSmGr/+YHyCE0MJA5eDG2hs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Qu Wenruo <wqu@suse.com>,
-	Filipe Manana <fdmanana@suse.com>,
+	Johannes Thumshirn <johannes.thumshirn@wdc.com>,
+	Thomas Fourier <fourier.thomas@gmail.com>,
 	David Sterba <dsterba@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 071/816] btrfs: scrub: fix lost wakeup and hang when cancelling a scrub that is finishing
-Date: Wed, 25 Nov 2026 15:26:59 +0100
-Message-ID: <20261125143850.865105963@linuxfoundation.org>
+Subject: [PATCH 6.12 072/816] btrfs: zoned: fix double free of bitmaps on clone failure
+Date: Wed, 25 Nov 2026 15:27:00 +0100
+Message-ID: <20261125143850.888127574@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143849.205329330@linuxfoundation.org>
 References: <20261125143849.205329330@linuxfoundation.org>
@@ -69,55 +69,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Filipe Manana <fdmanana@suse.com>
+From: Thomas Fourier <fourier.thomas@gmail.com>
 
-[ Upstream commit bda65e5115fe66ee0d8cf4ade11807f9fca4f0e1 ]
+[ Upstream commit 8c66a6aa59a5df1d672d72b7cd379d897ff73200 ]
 
-When scrub finishes, it does a wakeup on the fs_info->scrub_pause_wait
-wait queue and then sets dev->scrub_sctx to NULL. On the other hand the
-scrub cancel code (btrfs_scrub_cancel_dev()) waits on that wait queue
-for dev->scrub_sctx to be NULL. So this means if btrfs_scrub_cancel_dev()
-is called right when scrub is finishing and sees the wakeup before the
-NULL is assigned to dev->scrub_sctx by btrfs_scrub_dev(), it hangs.
+btrfs_clone_dev_zone_info() duplicates the original orig_dev->zone_info
+with kmemdup(), which also copies the seq_zones, empty_zones and
+active_zones pointers. The clone then replaces them one by one with
+fresh bitmaps. If one of the allocations fails, the error path frees all
+three pointers, including those not yet replaced, which still point to
+the bitmaps owned by the original device.
 
-Fix this by doing the wakeup in btrfs_scrub_dev() after setting
-dev->scrub_sctx to NULL.
+Clear the three pointers right after kmemdup() so the error path only frees
+what this function allocated.
 
-Fixes: a2de733c78fa ("btrfs: scrub")
-Reviewed-by: Qu Wenruo <wqu@suse.com>
-Signed-off-by: Filipe Manana <fdmanana@suse.com>
+Fixes: 21e61ec6d0bb ("btrfs: zoned: clone zoned device info when cloning a device")
+Reviewed-by: Johannes Thumshirn <johannes.thumshirn@wdc.com>
+Signed-off-by: Thomas Fourier <fourier.thomas@gmail.com>
 Signed-off-by: David Sterba <dsterba@suse.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/btrfs/scrub.c | 8 +++++++-
- 1 file changed, 7 insertions(+), 1 deletion(-)
+ fs/btrfs/zoned.c | 5 +++++
+ 1 file changed, 5 insertions(+)
 
-diff --git a/fs/btrfs/scrub.c b/fs/btrfs/scrub.c
-index 9afe36341d8a3..fc01ae2dcb69d 100644
---- a/fs/btrfs/scrub.c
-+++ b/fs/btrfs/scrub.c
-@@ -3067,7 +3067,6 @@ int btrfs_scrub_dev(struct btrfs_fs_info *fs_info, u64 devid, u64 start,
- 	memalloc_nofs_restore(nofs_flag);
+diff --git a/fs/btrfs/zoned.c b/fs/btrfs/zoned.c
+index e417613ca9c60..b4bb02bd99ae5 100644
+--- a/fs/btrfs/zoned.c
++++ b/fs/btrfs/zoned.c
+@@ -615,6 +615,11 @@ struct btrfs_zoned_device_info *btrfs_clone_dev_zone_info(struct btrfs_device *o
+ 	if (!zone_info)
+ 		return NULL;
  
- 	atomic_dec(&fs_info->scrubs_running);
--	wake_up(&fs_info->scrub_pause_wait);
- 
- 	if (progress)
- 		memcpy(progress, &sctx->stat, sizeof(*progress));
-@@ -3080,6 +3079,13 @@ int btrfs_scrub_dev(struct btrfs_fs_info *fs_info, u64 devid, u64 start,
- 	dev->scrub_ctx = NULL;
- 	mutex_unlock(&fs_info->scrub_lock);
- 
-+	/*
-+	 * We have set dev->scrub_ctx to NULL, now do the wakeup as a concurrent
-+	 * scrub cancel (btrfs_scrub_cancel_dev()) waits for dev->scrub_ctx to
-+	 * be set to NULL.
-+	 */
-+	wake_up(&fs_info->scrub_pause_wait);
++	/* Don't let the error path free the bitmaps still owned by @orig_dev. */
++	zone_info->seq_zones = NULL;
++	zone_info->empty_zones = NULL;
++	zone_info->active_zones = NULL;
 +
- 	scrub_workers_put(fs_info);
- 	scrub_put_ctx(sctx);
- 
+ 	zone_info->seq_zones = bitmap_zalloc(zone_info->nr_zones, GFP_KERNEL);
+ 	if (!zone_info->seq_zones)
+ 		goto out;
 -- 
 2.53.0
 
