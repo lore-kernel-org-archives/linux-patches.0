@@ -1,52 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795622451;
-	b=487WnXUinqgQ60LsTWfK3sDy/bRHMc8p442ZDdf0iosVWgEuaxD4Tgw/Hjipcg7zF3am
-	 XVaW8bPkDgeX25ELTGX+b+19JnvucrB8ZHMmvAod2SByrm5iY73O/FgPyOpeE8uy2aP6o
-	 GCpjCF5AxUYJXBTHpYAxUnuR33bAx+P1/FWtHMI0Wnul7E1zVhI5pYLE5V6d49enx+UXa
-	 BG/MeKlQc20UPRLbUbn3yG61bfIBuK7p2nPu58lEHVXQkYEzfyiOGx73fWxrrxqK3209J
-	 apjfWFWwT9x4YVBzT6ObgHVU8ge4H2u3jjs4TJ1b/P0FjIzMRh056tAdLb0NwNp9RTQ==
+	t=1795622454;
+	b=NcODn5gUoJWiQZZjIom/ZYk6o0zgsP2nMiYiVxh++CivRmDSJkn84yEMGO1v+xtoXRNI
+	 pbN3x7qYTtSpXx4emiZzvaSYwklnciUavfTnHsnAb5IAYFRrNW3MCDDvplAbpqe+JN5GM
+	 hIEpONgRJyFwHodOmD1UEMhJvLhiqdZzaPXE6RRKGQK5CcEnmgkIZi/c4kR6dhjkm55Zu
+	 vlSw0Xc2V/bWPi3i/dsIyBD0TiP3ie8X1Mmm+5vKxUsd/fauhADKs9NYbdg6K6DJWM34G
+	 RUbbNoCRNwUIKOf2jtdIWqzl267HQzYvRQMIj+keKkFKTqbJEqAuivG8GaMHSvQxXIA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795622451;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795622454;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=lqggNljsQBRwcpSe8HhGysSvYzFScyXynqgbub9WJ8o=;
-	b=IwYVaydUzSA3qR4lHZPm1MiL+XW6ygc/jbkC8burnPERZMAuTQH8CrjPxXQT5a7cNgG0
-	 KkUZnW0QWFs4YaHMntY+OmH1qY4Bf1CpSkHiftW3Qi2Rrk6zIfXeqsnCbHb5sB+Iqr0VC
-	 7vBb6OGIjvr/VaxTrygm5flalKW1b7IDsXAxTR2SxW9H/Wkb9YkTU+4wxcvhEQCmsJRiJ
-	 pKXzhIyOu8s794OkYWmNNAMAYUfkc3zLqC68g7ukmUAsrIDK219WDhpAj2ttIBFeEgqdj
-	 sWTx6G1r2Z2VujZnbZp26K5KaGyz96IULBYOB6mFFVjP0PJhbNtOZsy8U6AvFpx9IPw==
+	bh=6IcZTZMhQTMcJU+6JA6jYg9PHAN66cRLiR5xhFJeBtk=;
+	b=txszyLRGiAfQoCULHSDIc7wBP9zIphBHgOEL43GtKSa2aEiTgsVcDMdRfKaq9VhW2uSU
+	 qIF4xkT1vnw3ZG6LUoxaQ+64MDdtnaxzWq1KyEbvk6wGcOLnIMNwHerrnOjmhdBp/UA6T
+	 qpv/ETFewRlhBA6guG7zgMtvK+TlrP3qlSP7ZRlO20PInINRIYoJuYOs210FdryrvQjMd
+	 UmNmfjeEwNC+xSohb1TobLM559NS2SKSR3389gZ7YA2ffi8JJzKua0iPXU43dfwd3uSfC
+	 dNMppxVBmT+9S3btqs56ap3icOYtyrG9Ztt4huLQa1CO4+lWArUsNqIhLT2BXnLpnUg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=UnyE1QMa;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=g0yu3u8L;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 152FE606A31E;
-	Wed, 25 Nov 2026 16:00:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 690F3606A31E;
+	Wed, 25 Nov 2026 16:00:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=UnyE1QMa
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1215F1F000CF;
-	Wed, 25 Nov 2026 16:00:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=g0yu3u8L
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3D4851F000CF;
+	Wed, 25 Nov 2026 16:00:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795622450;
-	bh=lqggNljsQBRwcpSe8HhGysSvYzFScyXynqgbub9WJ8o=;
+	s=korg; t=1795622453;
+	bh=6IcZTZMhQTMcJU+6JA6jYg9PHAN66cRLiR5xhFJeBtk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=UnyE1QMail1ScMchwtsrUTJe3yXgZIXDzRTqkQQo3BKkIT8xEcvdKeQcziK476PI0
-	 xmZC/oetSKfWVgW7mxgymagY25FGXLP5p+tbWHZF26FqchAQsNIcuCfR+x92TwexGe
-	 0+HNOsXwrjxuv64qZ02XyF75a2O9LnvqaYooMdhE=
+	b=g0yu3u8L6TzNN5eCIKv7CHrYEwWWqgJ51wsTRCitJE44vXihKLe46FKFwvBCgj2EN
+	 NYwrf+OVGq9WLEAkIo0E8/IrREZBpWZeNbHxnMAXrArXdRwd6NwKndGImObBlJjfNC
+	 JEdPqltxBCAwhBQrLc8O+gExcPM71nmwfAawN9LQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kumar Kartikeya Dwivedi <memxor@gmail.com>,
-	Hao Sun <sunhao.th@gmail.com>,
+	Sashiko <sashiko-bot@kernel.org>,
+	Kanishka De Silva <kpskanna1915@gmail.com>,
+	Joanne Koong <joannelkoong@gmail.com>,
+	Miklos Szeredi <mszeredi@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 540/990] bpf: Fix uninit read for helper mem args on partially spilled slots
-Date: Wed, 25 Nov 2026 15:31:47 +0100
-Message-ID: <20261125143834.743734086@linuxfoundation.org>
+Subject: [PATCH 6.18 541/990] fuse: zero the correct range on a short read reply
+Date: Wed, 25 Nov 2026 15:31:48 +0100
+Message-ID: <20261125143834.768501547@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143822.072087159@linuxfoundation.org>
 References: <20261125143822.072087159@linuxfoundation.org>
@@ -68,66 +70,122 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hao Sun <sunhao.th@gmail.com>
+From: Joanne Koong <joannelkoong@gmail.com>
 
-[ Upstream commit b3861495d2b2f7459cddf49e63fa0758ba430583 ]
+[ Upstream commit d0a079b5b94bf5e10f1c00bd092eda0333782037 ]
 
-check_stack_range_initialized() takes the spilled register path when
-bpf_is_spilled_reg(ss) holds, which, however, only looks at the last
-byte of the slot. Hence, a partially spilled scalar (on the lower part)
-bypasses the check and the following loads:
+When a read reply is shorter than the requested range, fuse_copy_folio()
+zeroes everything in the folio outside the copied bytes. However, for
+folios with block sizes smaller than the folio size, this can clear
+blocks outside the requested range which are uptodate, or dirty and have
+not yet been written back.
 
-0: (b7) r1 = 1                        ; R1=1
-1: (63) *(u32 *)(r10 -8) = r1         ; R1=1 R10=fp0 fp-8=????1
-2: (18) r1 = 0x0                      ; R1=map_ptr(map=rb,ks=0,vs=0)
-4: (bf) r2 = r10                      ; R2=fp0 R10=fp0
-5: (07) r2 += -8                      ; R2=fp-8
-6: (b7) r3 = 8                        ; R3=8
-7: (b7) r4 = 0                        ; R4=0
-8: (85) call bpf_ringbuf_output#130
-...
+Move the zeroing logic into fuse_copy_folios(), since descs[i].length
+needs to be used, and clear only the tail of the requested range that
+the server did not send.
 
-When executed, it dumps the uninit four bytes:
-	RINGBUF: 01 00 00 00 ff ff ff ff
+The range is also no longer cleared upfront in the non
+cs->skip_folio_copy case. This is fine since a failed copy leaves those
+blocks non-uptodate, so the uncopied bytes are never visible. This also
+matches the pre-existing behavior in the non-short-read case (a failed
+copy doesn't zero out the range in the folio). This lets the zeroing
+logic stay the same regardless of whether the folio copy is skipped or
+not.
 
-This is the same root cause as the non-fetch atomic case fixed in
-commit 5a84b4424db8 ("bpf: Fix uninit read for non-fetch atomics on
-partially spilled slots").
-
-Fix by only taking the spilled register path for the bytes marked
-STACK_SPILL, so the rest of the slot goes through the usual checks.
-
-Fixes: 354e8f1970f8 ("bpf: Support <8-byte scalar spill and refill")
-Suggested-by: Kumar Kartikeya Dwivedi <memxor@gmail.com>
-Signed-off-by: Hao Sun <sunhao.th@gmail.com>
-Link: https://lore.kernel.org/bpf/20260925082814.1554771-1-sunhao.th@gmail.com
-Signed-off-by: Kumar Kartikeya Dwivedi <memxor@gmail.com>
-
-[ sashal: Context lines differ because the target tree still uses is_spilled_reg() on state->stack[spi] where upstream uses bpf_is_spilled_reg(ss); the patch was applied by hand with identical added and removed lines. ]
-
+Fixes: a4c9ab1d4975 ("fuse: use iomap for buffered writes")
+Reported-by: Sashiko <sashiko-bot@kernel.org>
+Reported-by: Kanishka De Silva <kpskanna1915@gmail.com>
+Signed-off-by: Joanne Koong <joannelkoong@gmail.com>
+Signed-off-by: Miklos Szeredi <mszeredi@redhat.com>
+[ sashal: Moved zeroing into fuse_copy_folios() in dev.c, kept fuse_copy_folio() static so the dev.h hunk is dropped, and omitted the skip_folio_copy/folio_zero_segments logic that isn't present here. ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/bpf/verifier.c | 7 ++++++-
- 1 file changed, 6 insertions(+), 1 deletion(-)
+ fs/fuse/dev.c    | 32 ++++++++++++++++++++------------
+ fs/fuse/notify.c |  2 +-
+ 2 files changed, 21 insertions(+), 13 deletions(-)
 
-diff --git a/kernel/bpf/verifier.c b/kernel/bpf/verifier.c
-index c8a72c96e227a..23c1401a97bdf 100644
---- a/kernel/bpf/verifier.c
-+++ b/kernel/bpf/verifier.c
-@@ -8318,7 +8318,12 @@ static int check_stack_range_initialized(
- 			goto mark;
- 		}
+diff --git a/fs/fuse/dev.c b/fs/fuse/dev.c
+index 0f9ef3ca9824f..56bc4381c2874 100644
+--- a/fs/fuse/dev.c
++++ b/fs/fuse/dev.c
+@@ -1129,17 +1129,10 @@ static int fuse_ref_folio(struct fuse_copy_state *cs, struct folio *folio,
+  * done atomically
+  */
+ static int fuse_copy_folio(struct fuse_copy_state *cs, struct folio **foliop,
+-			   unsigned offset, unsigned count, int zeroing)
++			   unsigned offset, unsigned count)
+ {
+ 	int err;
+ 	struct folio *folio = *foliop;
+-	size_t size;
+-
+-	if (folio) {
+-		size = folio_size(folio);
+-		if (zeroing && count < size)
+-			folio_zero_range(folio, 0, size);
+-	}
  
--		if (is_spilled_reg(&state->stack[spi]) &&
+ 	while (count) {
+ 		if (cs->write && cs->pipebufs && folio) {
+@@ -1156,7 +1149,7 @@ static int fuse_copy_folio(struct fuse_copy_state *cs, struct folio **foliop,
+ 			}
+ 		} else if (!cs->len) {
+ 			if (cs->move_folios && folio &&
+-			    offset == 0 && count == size) {
++			    offset == 0 && count == folio_size(folio)) {
+ 				err = fuse_try_move_folio(cs, foliop);
+ 				if (err <= 0)
+ 					return err;
+@@ -1197,10 +1190,25 @@ static int fuse_copy_folios(struct fuse_copy_state *cs, unsigned nbytes,
+ 
+ 	for (i = 0; i < ap->num_folios && (nbytes || zeroing); i++) {
+ 		int err;
++		struct folio *folio = ap->folios[i];
+ 		unsigned int offset = ap->descs[i].offset;
+-		unsigned int count = min(nbytes, ap->descs[i].length);
++		unsigned int length = ap->descs[i].length;
++		unsigned int count = min(nbytes, length);
++
 +		/*
-+		 * Only the bytes marked STACK_SPILL hold the spilled register.
-+		 * The rest of a narrowly spilled slot keeps its previous type
-+		 * and must be initialized on its own.
++		 * The reply may be shorter than what was asked for. The full
++		 * descs[i].length is reported as read, so the tail bytes the
++		 * server did not send are about to be marked uptodate and need
++		 * to be zeroed.
++		 *
++		 * Only [offset, offset + length) can be touched since the
++		 * rest of the folio can hold blocks that are already uptodate
++		 * or dirty, and clearing those would lose data.
 +		 */
-+		if (*stype == STACK_SPILL &&
- 		    (state->stack[spi].spilled_ptr.type == SCALAR_VALUE ||
- 		     env->allow_ptr_leaks)) {
- 			if (clobber) {
++		if (folio && zeroing && count < length)
++			folio_zero_range(folio, offset + count, length - count);
+ 
+-		err = fuse_copy_folio(cs, &ap->folios[i], offset, count, zeroing);
++		err = fuse_copy_folio(cs, &ap->folios[i], offset, count);
+ 		if (err)
+ 			return err;
+ 
+@@ -1835,7 +1843,7 @@ static int fuse_notify_store(struct fuse_conn *fc, unsigned int size,
+ 		nr_bytes = min_t(unsigned, num, folio_size(folio) - folio_offset);
+ 		nr_pages = (offset + nr_bytes + PAGE_SIZE - 1) >> PAGE_SHIFT;
+ 
+-		err = fuse_copy_folio(cs, &folio, folio_offset, nr_bytes, 0);
++		err = fuse_copy_folio(cs, &folio, folio_offset, nr_bytes);
+ 		if (!folio_test_uptodate(folio) && !err && offset == 0 &&
+ 		    (nr_bytes == folio_size(folio) || file_size == end)) {
+ 			folio_zero_segment(folio, nr_bytes, folio_size(folio));
+diff --git a/fs/fuse/notify.c b/fs/fuse/notify.c
+index 7cd63502e124b..f21ba27f0f82e 100644
+--- a/fs/fuse/notify.c
++++ b/fs/fuse/notify.c
+@@ -184,7 +184,7 @@ static int fuse_notify_store(struct fuse_conn *fc, unsigned int size,
+ 		folio_offset = offset_in_folio(folio, pos);
+ 		nr_bytes = min(num, folio_size(folio) - folio_offset);
+ 
+-		err = fuse_copy_folio(cs, &folio, folio_offset, nr_bytes, 0);
++		err = fuse_copy_folio(cs, &folio, folio_offset, nr_bytes);
+ 		if (!folio_test_uptodate(folio) && !err && folio_offset == 0 &&
+ 		    (nr_bytes == folio_size(folio) || file_size == end)) {
+ 			folio_zero_segment(folio, nr_bytes, folio_size(folio));
 -- 
 2.53.0
 
