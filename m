@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795622891;
-	b=dw/1xIk7BNscR2WboJIUgyNz3sj+qph+fYYGL+SKKQRXYASL27WTz0fVX876WYq9z+9e
-	 3IIxcKWIw27SIth6Ol+tzsYeW72c8bEjBvQkut/1v/QNmVfkpQL2An2DFzgLHNY5CFNyL
-	 roV7KE3u1n57dSLVesLo64HCv/cHF1RkJ9oSaFMseOenoMdc847EOiGUBT4RaWcQSf22u
-	 a13C9DSEam2GLDaeJgpk+A0FwduHSL09555l5P7f/yhHln5QnBfDcw+FAbXf+mSA80Dgn
-	 1UPV6Mb5zQVtnSiO4pI4zEIb/7eAaLd3GEA/UalvSJH5kmCGs/5NtqehJzoNuGboRfA==
+	t=1795622894;
+	b=Qmwg1kipSnjXXBNu5iSaIUo+2NqPR82xfSMYbZyb341drzK4cE4pgLIL2oGqG11orofj
+	 nDbO2m8Yg9mladrvmO4eeAspb0zlL2nB2IsYdfRcBe6mr/3WWy029GMjh0zWBEjOuYNb0
+	 6TPkQmvv2RllpbNidHX4R6wN+3peWl6EuUTYq7l6rMl2FEiJAGfYgm56BPO/2p2z1R1nn
+	 OU0HtR+hNSJTF/zwM0SPlIv0pl0fkIXM7PXOVx5/0NT3EbXd89+QWDXGEriYdGtiWuY1W
+	 LdQcHI2fur1MHnNXobDRaOGfckcOAb9xi6hcCQHdxOq1bA4H67XL5tummzYB2yY/vkw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795622891;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795622894;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=d3moZhsn7E+LFV5JStLFti3CwMovcmXU2CDWvQm/iTU=;
-	b=w13orRkw+ktsC5741x1tqzMPhfCe11zCh2yc7qPXyyobs59TxJ/brCtQikFJv+/oW/y9
-	 JIJnmj1gCYdqkoE6YMPgWK8pRJd2RRbQIBote9r6wAEcPJthh/zNBaykLlb5ZTNoceJOs
-	 7V3LHnTMJ8oVW0qeTLNN8xbXbfXwnkDW11GdtJBrDDFxK9FCR6EYStP+mtIphXUCbwwdV
-	 eS94Mdce58+J9q42Dwiwabw0VicwBMvVWb6yNQfudrDkCS5Yo0+4S/W4oD92ntQsp5giE
-	 aOpRRnpKTxMXBxgMrmh7NrKyx16VGgotlS9T/9CbsZVch5auVV+kK4qQ9svM8+Lksrg==
+	bh=t/iKBnTCyWKFlBpIGuhCj/JsdyRqY7m9devrgQlLNog=;
+	b=FFUitPif+57L1Xd78Tfg9jjISASaMP8qwvDxjN7EVoDT2ZVuEX+XtuD2nEY8v/nLw0p1
+	 G2l5O1O2egNkAouZBnaqBwXmAh4CrlbkaAbZ1sqzgtuJlhM0Ly5nNzm//FO0whWd4quao
+	 TTc7QL9737Qli3GuUFwUPPP8UoufsgLplvaTBnaw6vngH3X6wG0Mf0bIM0+j/j2RLFrNY
+	 B0xouS1xc5uBlGPpAnMVHCjpznvxa4UovvNfPQGCSARRZ1AlKpFYJu9jwooRjfrYLY2DX
+	 72Kzhseu5ytvZn24HLqz2VxxnQcHYHe4JfMNBdAwgzQrJ9lBi5PNGtVmSBEjwhvI+/w==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="g6kX/qeF";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=oYYiSFgG;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 94034606A321;
-	Wed, 25 Nov 2026 16:08:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6B05B606A31E;
+	Wed, 25 Nov 2026 16:08:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=g6kX/qeF
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E62601F000C0;
-	Wed, 25 Nov 2026 16:08:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=oYYiSFgG
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BB43D1F000C0;
+	Wed, 25 Nov 2026 16:08:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795622891;
-	bh=d3moZhsn7E+LFV5JStLFti3CwMovcmXU2CDWvQm/iTU=;
+	s=korg; t=1795622894;
+	bh=t/iKBnTCyWKFlBpIGuhCj/JsdyRqY7m9devrgQlLNog=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=g6kX/qeFfEy3Yi/rxpuk8g2Q5GzZXv7qFcOwvLVhL0tlWIoiaFedz/cu0Q9lXlI0k
-	 t6WmrGNtPU68bNRVOmdl3r2rCqB7klZBxQH+S+NQcGDF7L8g6O8Rs9XKONBZU87nyS
-	 kVNn6PUm+BacRLciwNl2pjNFtYQ++lQ1AxwOYh1g=
+	b=oYYiSFgGwk42EN3Rgq7Gkx2KXiE7yEpf5cOufAOLiGGgeK7XnKyl/0TXTNnmAhDO8
+	 1c8Pt9HF03bmScSbY2iW20MTyhlN78UA9ht+unftWLzbMcfY9MOuXWdVpBELQHOD/t
+	 +pwR4wcv1nj90PSys9wea9SUmSgxCTdKcl/l979M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Josef Bacik <josef@toxicpanda.com>,
-	"David Hildenbrand (Arm)" <david@kernel.org>,
+	"Gregory Price (Meta)" <gourry@gourry.net>,
+	Zi Yan <ziy@nvidia.com>,
 	"Vlastimil Babka (SUSE)" <vbabka@kernel.org>
-Subject: [PATCH 6.18 681/990] mm/memory_hotplug: resize zones under their seqlock
-Date: Wed, 25 Nov 2026 15:34:08 +0100
-Message-ID: <20261125143838.038038579@linuxfoundation.org>
+Subject: [PATCH 6.18 682/990] mm/page_alloc: dont undo another isolation in alloc_contig_range
+Date: Wed, 25 Nov 2026 15:34:09 +0100
+Message-ID: <20261125143838.060649685@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143822.072087159@linuxfoundation.org>
 References: <20261125143822.072087159@linuxfoundation.org>
@@ -68,115 +68,68 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Josef Bacik <josef@toxicpanda.com>
+From: Gregory Price (Meta) <gourry@gourry.net>
 
-commit 58e81bb7de5aac8ec5e4aa21d401e7dafbd4058b upstream.
+commit 7d9c29ed8feec8bfbe5e5f673ba2b5926da11375 upstream.
 
-With CONFIG_DEBUG_VM the page allocator checks that a page which is
-freed, split or allocated lies within its zone. The check reads
-zone->zone_start_pfn and zone->spanned_pages under zone->span_seqlock, as
-memory hotplug can change the two at any time.
+An alloc_contig_range() that overlaps a block going offline can leave
+the offline spinning until it gets a signal, holding the device hotplug
+lock.  When isolation fails, alloc_contig_frozen_range() undoes it over
+the whole range, clearing the offline's MIGRATE_ISOLATE too:
 
-Commit 27cacaad16c5 ("mm,memory_hotplug: drop unneeded locking") removed
-the write side, since all resizing is serialized by the hotplug lock. That
-leaves the reader without protection. When memory below the start of a
-zone goes online, the start is lowered first and the size is raised
-afterwards. When the lowest memory of a zone goes offline, the size is
-reduced first. In between, the zone seems to end before its last pages. If
-one of them goes through the allocator at that moment, it is reported as
-being outside of the zone triggers VM_BUG_ON_PAGE().
+  CPU 1 (offline_pages)               CPU 2 (alloc_contig_range)
+  start_isolate_page_range()
+    blocks are MIGRATE_ISOLATE
+                                      start_isolate_page_range()
+                                        -EBUSY on CPU 1's blocks
+                                      undo_isolate_page_range()
+                                        blocks are MIGRATE_MOVABLE
+  test_pages_isolated()
+    never succeeds again
 
-Write the two fields in a write section of the seqlock. Interrupts are
-disabled as pages are freed from interrupts, too, and the reader would
-wait for the writer which it has interrupted.
+start_isolate_page_range() fails only on a block someone else isolated,
+after undoing its own, so this undo only ever clears another caller's.
+Return directly, as before alloc_contig_range() went pageblock granular.
 
-Fixes: 27cacaad16c5 ("mm,memory_hotplug: drop unneeded locking")
+With offline_pages() parked after isolating a DIMM block and a 1G
+hugetlb allocation made over it, the offline on base still loops 30s
+later in 4 of 4 runs:
+
+  offline_pages+0x5b2/0x1570
+  memory_subsys_offline+0x17e/0x470
+  device_offline+0x250/0x340
+  state_store+0x88/0x110
+
+With this patch the allocation still fails, and the offline completes in
+3 of 3 runs.
+
+Fixes: b2c9e2fbba32 ("mm: make alloc_contig_range work at pageblock granularity")
 Cc: stable@vger.kernel.org
-Assisted-by: LLM
-Signed-off-by: Josef Bacik <josef@toxicpanda.com>
-Signed-off-by: David Hildenbrand (Arm) <david@kernel.org>
-Link: https://patch.msgid.link/20261103-pgalloc-ai-hotfixes-v2-4-e0d2890ab74f@kernel.org
+Signed-off-by: Gregory Price (Meta) <gourry@gourry.net>
+Link: https://patch.msgid.link/20261027042204.3741307-5-gourry@gourry.net
+Reviewed-by: Zi Yan <ziy@nvidia.com>
 Signed-off-by: Vlastimil Babka (SUSE) <vbabka@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- mm/memory_hotplug.c |   44 ++++++++++++++++++++++++++++----------------
- 1 file changed, 28 insertions(+), 16 deletions(-)
+ mm/page_alloc.c |    6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
---- a/mm/memory_hotplug.c
-+++ b/mm/memory_hotplug.c
-@@ -479,6 +479,22 @@ static unsigned long find_biggest_sectio
- 	return 0;
- }
+--- a/mm/page_alloc.c
++++ b/mm/page_alloc.c
+@@ -7104,9 +7104,13 @@ int alloc_contig_range_noprof(unsigned l
+ 	 * put back to page allocator so that buddy can use them.
+ 	 */
  
-+/*
-+ * The page allocator checks pages against the span of their zone while the
-+ * zone is resized, see page_outside_zone_boundaries(). It must not see the
-+ * new value of one field together with the old value of the other one.
-+ */
-+static void zone_set_span(struct zone *zone, unsigned long start_pfn,
-+			  unsigned long spanned_pages)
-+{
-+	unsigned long flags;
-+
-+	write_seqlock_irqsave(&zone->span_seqlock, flags);
-+	zone->zone_start_pfn = start_pfn;
-+	zone->spanned_pages = spanned_pages;
-+	write_sequnlock_irqrestore(&zone->span_seqlock, flags);
-+}
-+
- static void shrink_zone_span(struct zone *zone, unsigned long start_pfn,
- 			     unsigned long end_pfn)
- {
-@@ -494,13 +510,10 @@ static void shrink_zone_span(struct zone
- 		 */
- 		pfn = find_smallest_section_pfn(nid, zone, end_pfn,
- 						zone_end_pfn(zone));
--		if (pfn) {
--			zone->spanned_pages = zone_end_pfn(zone) - pfn;
--			zone->zone_start_pfn = pfn;
--		} else {
--			zone->zone_start_pfn = 0;
--			zone->spanned_pages = 0;
--		}
-+		if (pfn)
-+			zone_set_span(zone, pfn, zone_end_pfn(zone) - pfn);
-+		else
-+			zone_set_span(zone, 0, 0);
- 	} else if (zone_end_pfn(zone) == end_pfn) {
- 		/*
- 		 * If the section is biggest section in the zone, it need
-@@ -511,11 +524,10 @@ static void shrink_zone_span(struct zone
- 		pfn = find_biggest_section_pfn(nid, zone, zone->zone_start_pfn,
- 					       start_pfn);
- 		if (pfn)
--			zone->spanned_pages = pfn - zone->zone_start_pfn + 1;
--		else {
--			zone->zone_start_pfn = 0;
--			zone->spanned_pages = 0;
--		}
-+			zone_set_span(zone, zone->zone_start_pfn,
-+				      pfn - zone->zone_start_pfn + 1);
-+		else
-+			zone_set_span(zone, 0, 0);
- 	}
- }
++	/*
++	 * On failure this has undone its own isolation, and any other
++	 * isolated blocks in the range belong to someone else, e.g. offline.
++	 */
+ 	ret = start_isolate_page_range(start, end, mode);
+ 	if (ret)
+-		goto done;
++		return ret;
  
-@@ -706,12 +718,12 @@ static void online_pages_range(unsigned
- static void __meminit resize_zone_range(struct zone *zone, unsigned long start_pfn,
- 		unsigned long nr_pages)
- {
--	unsigned long old_end_pfn = zone_end_pfn(zone);
-+	unsigned long end_pfn = max(start_pfn + nr_pages, zone_end_pfn(zone));
+ 	drain_all_pages(cc.zone);
  
--	if (zone_is_empty(zone) || start_pfn < zone->zone_start_pfn)
--		zone->zone_start_pfn = start_pfn;
-+	if (!zone_is_empty(zone) && start_pfn > zone->zone_start_pfn)
-+		start_pfn = zone->zone_start_pfn;
- 
--	zone->spanned_pages = max(start_pfn + nr_pages, old_end_pfn) - zone->zone_start_pfn;
-+	zone_set_span(zone, start_pfn, end_pfn - start_pfn);
- }
- 
- static void __meminit resize_pgdat_range(struct pglist_data *pgdat, unsigned long start_pfn,
 
 
