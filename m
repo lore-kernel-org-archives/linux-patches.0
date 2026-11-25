@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795624555;
-	b=jSJAKeo+aH608+g5NGa0MX60PqTJVsHOhsH/o3XXdnqkorpKaQgdTX7ckhIGx/+rF0qw
-	 Yq+yYzBKU2/3zlRsoQTlwdMV7NAjLjPEx0IJAJ/wkjHTIDA3Nb/UMiJxDt2fEO0U4sVR4
-	 Ed91C+gF5Zeg1xHJyD7wNS0A8X0YlHGavy5GdjoWAhSvETW8+vftRuwtO685O+JB1W4qA
-	 5IBuszn56lI5aXn2L07LgVGLeAIvrHAc4vEhagiSFkLnWE6sRsN/pvobhG3t4Jp2990Qr
-	 ZwJzVBqUClipa31RGYnROMQyDAx95JjtoB0zaEAnQ+jng60aMsj5WMxuZZjZmTpoyHA==
+	t=1795624558;
+	b=Sldm1MvHZGK+eNdd2tiDGEUibJbWWaMkjFYoHNUc1w80tlUmkqcmjpUim4cRfGegfBWx
+	 Q6/jtbVzQtzF1zgkMzYustCw9udDG8VS6A5zt9b5Q+z6nRqjtOdm8WroKER0XJUwZP55B
+	 0j1tFnsSlQaWh/rgycVXLy5R0XP5vGqpdHL/czjubzRtKC5775b/FMR6dd3AnMiwF2pz5
+	 GHMi0o9eXBlBpOkNJ0hVDu5huRHvdEXnJwMVUGHDaXjJh/4GIrBOBJQx/tbU+VOw6Fzl5
+	 WyZuxpM9C4Piot3MLNol4K0YLTY9Iy2MpiTUpCm/vglhVDWRstxvD1J9Vus5iBqZgCg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795624555;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795624558;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=4uTOxRdjsQWWu3DxLiWA5+wSIVWaCISCWTJpG9v6oxE=;
-	b=V9q4nhSBsBpku3oG9uyFEvoHxN9AdkbslRNEdzXL/Qq7hWm4XHDLB+zovV4G0gR39gP9
-	 HkwDQfG6NFTj6mnd5J3Eo3GXFdlvYEVcM5OuKF/1IIb82P/HCD/gFNEi7kRAZykyWbO/t
-	 OXxXbutWvRkgyHsqFnT6azyweX9as6L8H6w4hfeyAq5r4jbKJF5pee6S372O4fHkFhYGc
-	 sm74UuZsgq9023F/gAWsG6wxT65/nu3sJA6vrlEY6AM6p+FoUklI3vRYTd4VxTCCPKNpW
-	 6cQ0gKOGEApOtxQfXW7s8408dESdstLuSY3++/n8CHg0yqYrnAe0lTwSpXrTWrbAZpQ==
+	bh=pYcv3RDfuY9U4nhjctg2wf0GtuGqOCaPg6OZhroGaBA=;
+	b=Zv1nWmdTjsCKMMdu9l5RZkNcu1m3yDWTVOw3E+2sDdz5U9AG8jRd4p24/HrHIuL1uttI
+	 p4LrUOmD2/HInim0WqcCxQ6B6IrbPVBDrA9m/QQYU/nRz5ItfgrGgrk6gFr9bcw30jHLW
+	 WAMp01mULFEdupMEicGkbeEzWqfe1J72nQXUPrZS4F/jpXLjJFsCh166cGfU6PRmkUgHi
+	 5NxnP7eOWSen3AmRVU3DpBlifK7jGltF/clLDxEUwqx4+g+X3w3UAPckqs54XoRQ7TtPm
+	 APADYNMQ6pwz8Tq7XCm8GED0VMCIItwCNfdCTwzIJPH8sQjuiC7PlW/AJxoyiVbkN5A==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="dJNW6/cO";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=n+IiqeFF;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 50FC6606A33B;
-	Wed, 25 Nov 2026 16:35:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 32157606A321;
+	Wed, 25 Nov 2026 16:35:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=dJNW6/cO
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2B6A51F000CA;
-	Wed, 25 Nov 2026 16:35:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=n+IiqeFF
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6BB931F000D1;
+	Wed, 25 Nov 2026 16:35:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795624554;
-	bh=4uTOxRdjsQWWu3DxLiWA5+wSIVWaCISCWTJpG9v6oxE=;
+	s=korg; t=1795624558;
+	bh=pYcv3RDfuY9U4nhjctg2wf0GtuGqOCaPg6OZhroGaBA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=dJNW6/cOpL6vRHwEPSVYoOqGT2f/yVtNsYc9oxP0zuVDzCIPt47A1o67TVJxdIt7n
-	 22mC5IvdyjgzN8zN411gWK7p2Lo1bgiEdgUBPMEqdOrQ1b1jnMd2ucVmqeY6XNxqS3
-	 fbRRTePhnSTJHX0EQgghWs209CoSW78iULP+XPyk=
+	b=n+IiqeFFOD0oNlgKT+w5wrFyYs3DWAaBvVYu/+VzS5HE938K32MAeDWb2ABBOYzbm
+	 sMj7RLhyZP93JqFh/27HN8Srf/ICM/zLXr8Aq9UJFgI6hmTJnuuyi5Xhva2txJKdCt
+	 gm13foNwXRKKBIuo6Ryr/SGpcjNgw4KoZyU2PMvc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Richard Fitzgerald <rf@opensource.cirrus.com>,
-	Takashi Iwai <tiwai@suse.de>,
+	Laveesh Bansal <laveeshb@laveeshbansal.com>,
+	Pablo Neira Ayuso <pablo@netfilter.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 224/816] ALSA: hda: cs35l56: Stop cs_dsp before calling cs_dsp_power_down()
-Date: Wed, 25 Nov 2026 15:29:32 +0100
-Message-ID: <20261125143854.391551260@linuxfoundation.org>
+Subject: [PATCH 6.12 233/816] netfilter: bridge: use DEBUG_NET_WARN_ON_ONCE in nf_ct_bridge_refrag()
+Date: Wed, 25 Nov 2026 15:29:41 +0100
+Message-ID: <20261125143854.601614650@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143849.205329330@linuxfoundation.org>
 References: <20261125143849.205329330@linuxfoundation.org>
@@ -68,43 +68,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Richard Fitzgerald <rf@opensource.cirrus.com>
+From: Laveesh Bansal <laveeshb@laveeshbansal.com>
 
-[ Upstream commit 8c63987ac7fe605c337edbf9052cf97e2a415558 ]
+[ Upstream commit 683ff28ab18accb25268741a724645eee839d41a ]
 
-In cs35l56_hda_unbind() call cs_dsp_stop() before cs_dsp_power_down()
-if cs_dsp is in a running state.
+nf_ct_bridge_refrag() warns when skb->protocol is neither IPv4 nor IPv6.
+A vlan filtering bridge can get there with a vlan ethertype: if the
+protocol of the tag of a frame differs from the vlan_protocol of the
+bridge, br_allowed_ingress() moves the tag back into the packet after
+NF_BR_PRE_ROUTING, where bridge conntrack has already defragmented it.
 
-cs35l56_hda_runtime_resume() calls cs_dsp_run() if cs_dsp_power_up() has
-previously run successfully. If cs35l56_hda_unbind() is then called while
-in this runtime-resumed state cs_dsp will be running. The code wasn't
-checking for this and was calling cs_dsp_power_down() while still in a
-running state, which is illegal. This is currently fairly harmless for
-the cs35l56 driver. But it doesn't comply with the API, so potentially
-could break with any future changes that expect the correct API use.
+Anyone who can send fragments into a port of such a bridge can trigger the
+warning, which takes the machine down with panic_on_warn. The packet is
+dropped either way, so only warn on kernels built with CONFIG_DEBUG_NET.
 
-Fixes: fb78d73dde2d4 ("ALSA: hda/cs35l56: Call cs_dsp_power_down() before calling cs_dsp_remove()")
-Signed-off-by: Richard Fitzgerald <rf@opensource.cirrus.com>
-Link: https://patch.msgid.link/20261104122337.1072468-1-rf@opensource.cirrus.com
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+This only avoids the warning. Such fragmented packets are still dropped.
+syzbot reported the warning. It keeps triggering on CONFIG_DEBUG_NET
+kernels until the vlan tag is handled, which is left for a follow-up:
+
+  https://syzkaller.appspot.com/bug?extid=a8ba738fe2db6b4bb27f
+
+Fixes: 3c171f496ef5 ("netfilter: bridge: add connection tracking system")
+Assisted-by: LLM
+Signed-off-by: Laveesh Bansal <laveeshb@laveeshbansal.com>
+Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/pci/hda/cs35l56_hda.c | 2 ++
- 1 file changed, 2 insertions(+)
+ net/bridge/netfilter/nf_conntrack_bridge.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/sound/pci/hda/cs35l56_hda.c b/sound/pci/hda/cs35l56_hda.c
-index 8663de44d97f7..938d49c0b992a 100644
---- a/sound/pci/hda/cs35l56_hda.c
-+++ b/sound/pci/hda/cs35l56_hda.c
-@@ -742,6 +742,8 @@ static void cs35l56_hda_unbind(struct device *dev, struct device *master, void *
- 	cs_dsp_cleanup_debugfs(&cs35l56->cs_dsp);
- 	debugfs_remove_recursive(cs35l56->debugfs_root);
- #endif
-+	if (cs35l56->cs_dsp.running)
-+		cs_dsp_stop(&cs35l56->cs_dsp);
+diff --git a/net/bridge/netfilter/nf_conntrack_bridge.c b/net/bridge/netfilter/nf_conntrack_bridge.c
+index b17962672ebfc..e7603a144538c 100644
+--- a/net/bridge/netfilter/nf_conntrack_bridge.c
++++ b/net/bridge/netfilter/nf_conntrack_bridge.c
+@@ -359,7 +359,7 @@ nf_ct_bridge_refrag(struct sk_buff *skb, const struct nf_hook_state *state,
+ 		nf_br_ip6_fragment(state->net, state->sk, skb, &data, output);
+ 		break;
+ 	default:
+-		WARN_ON_ONCE(1);
++		DEBUG_NET_WARN_ON_ONCE(1);
+ 		return NF_DROP;
+ 	}
  
- 	if (cs35l56->base.fw_patched)
- 		cs_dsp_power_down(&cs35l56->cs_dsp);
 -- 
 2.53.0
 
