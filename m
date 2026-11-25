@@ -1,51 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795626281;
-	b=KG0iTWXMePXs3lzPui5hxkMtoiGrJlI/NdBb45ABk5eFhXkx8jiRXJpyyrFv0BmQhpjI
-	 HaQ6GrurhqX682sDP4ZbGwemwHeqaghM/TavETnJLpVlGriY5FLViRpgrQzR+aUKAqhri
-	 k0OxZvSwf1bnjKPfkxPLa8fUiclDaqe9cyVkuk5QxYo0PJ3kLTZ+fDOCxKuhUkkIXabCO
-	 g/5Fz2A3JQDdMRIy6LdGfIjMZMUcXdiYSh2prcKOzpWP63Mjaipqdlgsz9a/A847kUjmE
-	 88QY9FCI0At8i5DtNF1xvCIIylYki+tuBx6X0QoTxrVMRtF7vwG9A9yOlvWOBVlkdmQ==
+	t=1795626284;
+	b=YZMijz1cvE+FOsJLT0b3lzi8v/c/23xcrbIPXRTeO8OwHQnTMiXxyzem4yXRlxXOO0yx
+	 Dlc0N4sQu3XZKNviufRbDZHfOXttik1t+s1HchNEr+x8El6vHp4EckQvwQC98XYjhVfEE
+	 B4Owy7I+W/Lr9VlZTgUTobfGZa8rbi94h2SetxJVTkh/QiruvBkxi3JwSRD43X8tzuIAH
+	 /koXT0ZGVmpqYczTLMy5dFR3MP1oOErtfuuwf/Lxcy7Q/wri2brkP5RHJG7UNT6wzWAPh
+	 I4WE8zKSCgvlVNoRzgyyEInqihHQwUYy7HDe9tF92E+ZnrZ/zP6CRFFb1G+pVRIqp3Q==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795626281;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795626284;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=1/tTzEnWjJqkl24HpNyM2nwu2uRzUbRYoDzFmeqn4QQ=;
-	b=Z7lhW5jpPc4M3TBnuaSvJl3CaseRcI3wzsJdGdHVQSgzpCImkkClPc2HQlcSu7MBLlgB
-	 F/c+2l5nwh/jibkdnG7CuE5C5TA3QNWyR21An+z6lxQyJB3zrke1zTB20GwgGvZC9BSwB
-	 Xzhww/3qCdYbV1oHfc/4u85R4tGjw+fKoKktl0KinRYQ4Cr2iwc+SUN8KXhj5aNZhvyF/
-	 ZH+/GJZEdgGkIdAJlD6mAjDBHsR4pdObf8CTA3LEk5CzoqRMABldcFt3a+iOaVVDUvwv1
-	 nFgCHZEfpQT4EYLNqtimRFN/GmJuAQeYeOJiLxZfyp2jPSWgl+ThKbP7N6oO4i7b4pw==
+	bh=o4Z0HKX0S+ESxb6Sc+1S5qIEtknRY23zXKq+lgmgxhI=;
+	b=VH+xEdgfph5vOg+pXocifxLLlktxweu55YOKPaJvccRyYY00z623OOH7gss4owh4/mvN
+	 wWoA9AdYhBb3hWZJTPzBR0Czjl+w87uScoLVQaau5iumf4Ofc76wDhmo3KOaVYWIneSAz
+	 qZNzJCMCQ0t7JXKjE0dO8HM/0ZAyl+N6EmPVRIpMliHEVrOK8CcQt4kOy2wDbL7/2/Ddo
+	 9w/5P/hpICyv8tHLSNQEkz4QR6BMLkh9UqZIbcU4ZJHVlBL8ss29N0/bMFSfg1mo4+cIK
+	 xKrR08Uuigre75TdBxFBYAHZW4Y6fGNlQ9IcBu+cV7VQb0cFYHk7lP1gYggdHVh4Klg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=HuWah5m3;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ps7hsVu8;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7B905606A31E;
-	Wed, 25 Nov 2026 17:04:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 54425606A31E;
+	Wed, 25 Nov 2026 17:04:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=HuWah5m3
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 81FB11F000C4;
-	Wed, 25 Nov 2026 17:04:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ps7hsVu8
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A4E0F1F000C4;
+	Wed, 25 Nov 2026 17:04:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795626281;
-	bh=1/tTzEnWjJqkl24HpNyM2nwu2uRzUbRYoDzFmeqn4QQ=;
+	s=korg; t=1795626284;
+	bh=o4Z0HKX0S+ESxb6Sc+1S5qIEtknRY23zXKq+lgmgxhI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=HuWah5m3zCy+Cr2SVhjRK2qeP70YxUKw8TljKjAuBUy8MMHrjKaejjT5u2CHZtVeN
-	 JB1NCU1zGF5ycA2lgDEMBydybHvZnnPwtcWTkGtlFmlRN6iwhMcnXRjESNV/W9WIIl
-	 zNXtIGvFIBc0XB7vfepq6EzUXqm1hgHgUNpG3cXU=
+	b=ps7hsVu8Jrlwa4oar7JHUnM3E/4O9u8y4o3EP7lmnHb9jeQH0meBmiXg9gi8bF6AJ
+	 ur5vDkL239uBBFCdAOcHqzrLmBmX3fXMB3WlBqjbTLY7RS+Vle6eSMBSRymQZ9EqcA
+	 unk08IPD5BnzJuEAJ34AW/a9qWaqOL3TkkQB+xDY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Arnav Kapoor <kapoorarnav43@gmail.com>,
 	Jean-Baptiste Maneyrol <jean-baptiste.maneyrol@tdk.com>,
 	Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>
-Subject: [PATCH 6.12 790/816] iio: imu: inv_icm42600: fix parsing of all FIFO frames for odr change
-Date: Wed, 25 Nov 2026 15:38:58 +0100
-Message-ID: <20261125143907.458339760@linuxfoundation.org>
+Subject: [PATCH 6.12 791/816] iio: imu: inv_mpu6050: fix magnetometer scale of Y and Z axes
+Date: Wed, 25 Nov 2026 15:38:59 +0100
+Message-ID: <20261125143907.481102623@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143849.205329330@linuxfoundation.org>
 References: <20261125143849.205329330@linuxfoundation.org>
@@ -67,81 +68,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jean-Baptiste Maneyrol <jean-baptiste.maneyrol@tdk.com>
+From: Arnav Kapoor <kapoorarnav43@gmail.com>
 
-commit 4a141623442888458d147f4e61fe47411c0e4e17 upstream.
+commit e5f7a6684a23d9b20184a81b4ebded3b3504ccdc upstream.
 
-For getting all odr change events, we need to parse all FIFO frames
-in each iio device. Fix this correctly by sending effectively all
-frames to all iio devices.
+inv_mpu_magn_get_scale() returns st->magn_raw_to_gauss[chan->address],
+where magn_raw_to_gauss[] holds one coefficient per axis, computed in
+inv_magn_init() from the per-axis factory sensitivity adjustment values
+(ASAX, ASAY, ASAZ) of the AK8975/AK8963 magnetometer.
 
-Previously only batches of frames containing a matching sensor event
-were sent to the corresponding iio device.
+However INV_MPU9X50_MAGN_CHAN() never sets .address, so it is 0 for all
+three magnetometer channels. As a result the Y and Z channels report the
+scale computed from the X axis adjustment value, and userspace scales
+the Y and Z readings with the wrong per-axis calibration.
 
-Fixes: f670d4d34773 ("iio: imu: inv_icm42600: fix odr change not caught in certain cases")
+Set .address to the axis index (0 for X, 1 for Y, 2 for Z) in the
+channel macro, matching the order used to fill magn_raw_to_gauss[].
+
+Fixes: b1392de06184 ("iio: imu: inv_mpu6050: add MPU925x magnetometer support")
+Signed-off-by: Arnav Kapoor <kapoorarnav43@gmail.com>
+Acked-by: Jean-Baptiste Maneyrol <jean-baptiste.maneyrol@tdk.com>
 Cc: stable@vger.kernel.org
-Signed-off-by: Jean-Baptiste Maneyrol <jean-baptiste.maneyrol@tdk.com>
 Signed-off-by: Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/iio/imu/inv_icm42600/inv_icm42600_buffer.c |   24 ++++++++-------------
- 1 file changed, 10 insertions(+), 14 deletions(-)
+ drivers/iio/imu/inv_mpu6050/inv_mpu_core.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/drivers/iio/imu/inv_icm42600/inv_icm42600_buffer.c
-+++ b/drivers/iio/imu/inv_icm42600/inv_icm42600_buffer.c
-@@ -532,22 +532,20 @@ int inv_icm42600_buffer_fifo_parse(struc
- 		ts = &gyro_st->ts;
- 		inv_sensors_timestamp_interrupt(ts, st->fifo.watermark.eff_gyro,
- 						st->timestamp.gyro);
--		ret = inv_icm42600_gyro_parse_fifo(st->indio_gyro);
--		if (ret)
--			return ret;
- 	}
- 
-+	ret = inv_icm42600_gyro_parse_fifo(st->indio_gyro);
-+	if (ret)
-+		return ret;
-+
- 	/* handle accelerometer timestamp and FIFO data parsing */
- 	if (st->fifo.nb.accel > 0) {
- 		ts = &accel_st->ts;
- 		inv_sensors_timestamp_interrupt(ts, st->fifo.watermark.eff_accel,
- 						st->timestamp.accel);
--		ret = inv_icm42600_accel_parse_fifo(st->indio_accel);
--		if (ret)
--			return ret;
- 	}
- 
--	return 0;
-+	return inv_icm42600_accel_parse_fifo(st->indio_accel);
- }
- 
- int inv_icm42600_buffer_hwfifo_flush(struct inv_icm42600_state *st,
-@@ -572,20 +570,18 @@ int inv_icm42600_buffer_hwfifo_flush(str
- 	if (st->fifo.nb.gyro > 0) {
- 		ts = &gyro_st->ts;
- 		inv_sensors_timestamp_interrupt(ts, st->fifo.nb.gyro, gyro_ts);
--		ret = inv_icm42600_gyro_parse_fifo(st->indio_gyro);
--		if (ret)
--			return ret;
- 	}
- 
-+	ret = inv_icm42600_gyro_parse_fifo(st->indio_gyro);
-+	if (ret)
-+		return ret;
-+
- 	if (st->fifo.nb.accel > 0) {
- 		ts = &accel_st->ts;
- 		inv_sensors_timestamp_interrupt(ts, st->fifo.nb.accel, accel_ts);
--		ret = inv_icm42600_accel_parse_fifo(st->indio_accel);
--		if (ret)
--			return ret;
- 	}
- 
--	return 0;
-+	return inv_icm42600_accel_parse_fifo(st->indio_accel);
- }
- 
- int inv_icm42600_buffer_init(struct inv_icm42600_state *st)
+--- a/drivers/iio/imu/inv_mpu6050/inv_mpu_core.c
++++ b/drivers/iio/imu/inv_mpu6050/inv_mpu_core.c
+@@ -1550,6 +1550,8 @@ static const unsigned long inv_mpu_scan_
+ 		.type = IIO_MAGN,					\
+ 		.modified = 1,						\
+ 		.channel2 = _chan2,					\
++		/* index of the axis in magn_raw_to_gauss[] */		\
++		.address = (_chan2) - IIO_MOD_X,			\
+ 		.info_mask_separate = BIT(IIO_CHAN_INFO_SCALE) |	\
+ 				      BIT(IIO_CHAN_INFO_RAW),		\
+ 		.scan_index = _index,					\
 
 
