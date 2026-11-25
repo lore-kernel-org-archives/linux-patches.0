@@ -1,53 +1,55 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795624035;
-	b=vf8MRTn4xjhp8ltj6TY8J1/SebC/V4mki4qd08AmLPFB287RnYRnVzrlVLD5OgjRPbfJ
-	 c2iYbhx9rq12IyltohxSpWTAn/t7QPLL0H7MbWxTruYmc5rapQ7euB3Lzv1Ind+WTZ6qp
-	 jG11ve774Te+WH8PvCQvgFNL40USM1ePgkwudfMpmt5e5LLSzE0lqY360XmNGAxfUq7xv
-	 YiWHXfmMM0TD4S+reyQ6UAmpFxHoyl7GuaFt99+B5VrhsKVCjddgGb0VlgFe/urTfPRHV
-	 Uq6tiNhWL9IwWw1rM1H3Tkv7g9sSTehFYaNCkR6G49JGOq2LDTm/TnPmR6Q/hctF68A==
+	t=1795624039;
+	b=c6uhM7L5abFsiZJxxfdXBM5EZ/AOjpHkyRDWV1HDVt8d85FNNOqKc8igAGxXNy8uRnCb
+	 DGrDRi4RpiKjCxrlVr3iXdUauRkP+e727pI5EhF9S1JwSQ8qryyupD5C4/hKA/eUGs7cy
+	 T3ByYnSlY06W/S3opLf7siyANvsmPwtyWTCf/lDX0cA7JfAAYoVoiXKR8JKHwgqf8mFYQ
+	 OOcBf16nrX8cxmkrBaGnMbfrjNLX97ENH/Wutwqv3tIzVhtlALWLaFRenWve88TIkRf9c
+	 0vJu5PqyRct6oSeUCkgbabcNwaSI8SgDNKQFZo6CtvuZKc12kSW14/f34UBuFbfUdew==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795624035;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795624039;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=MtmVIbsSd6S7YtCG8BhZUXLPPbHCSuM+MeGtsA6meiE=;
-	b=e4hdGXInZcNZDtkrVVDVlFl2qvrNfoOdYVgXTuP6B6PPTpksKKds4h8VWF3K6s8qJ7mG
-	 rI4RNtym1f4CWvmal7U6bwomXESGlpQoQzTrmby1iISMQBMPE5CbKY3agwPMTjMhWwtL7
-	 17+wRXYjuuGc6TwnBpeReUcYY6q6ZLr+VXYT6yISJKNZSB09GT0srV0X0k7ZljjdoCW35
-	 LvHYwzZojEy5B7tIoW6zP4DjhFG6zGRzMjiWuJbvwjKt6SbyC8vJEEIQ8T/kXlW8xEsp3
-	 R5Vhe+VkVnSNyuOCnrbe9sOD5FGOOgEqCqJbHoI4vZd5zKLRnQyjq3wzPeLtNRTm42w==
+	bh=5Lr/XnHGfzARulfEG8UNhyPTM5bWDTVs5tm7lHJw4Hc=;
+	b=rbpiLHNCWG71auS5q7MbeCZwDqgdI+fpkFBE5yBmPhO9ARPjF8dIT8sLSmHnGEoT0VNP
+	 PW9E9mqstjkP17OnFVR5KFUR2btLCeP7kjAi71YCJiT4MHLrKX0SZcEjsdvrzHc+VnOdB
+	 WfwBN/NqXx69mdU2S71o9DsHRNyNSwWeAIM88e3b1gOZmEdip6scDZD4GX5jnzX0ir8T1
+	 hhPLt6fEVIsAQOcRLdsoHoTciIrbIk/di1iBqWhV8M4HRN5ayhcLsWii+6KMpP3UJu1bC
+	 23H3EzQIGbqxf7arRXb5xFyPb7QWhciuPW70W/9fyh6zHBtARgTB9QySKV5ei9h8IyQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="Iw/rOeNA";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=JEueqrTO;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B183D606A327;
-	Wed, 25 Nov 2026 16:27:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E1045606A323;
+	Wed, 25 Nov 2026 16:27:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Iw/rOeNA
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A3DD91F000E1;
-	Wed, 25 Nov 2026 16:27:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=JEueqrTO
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 043C41F000C0;
+	Wed, 25 Nov 2026 16:27:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795624035;
-	bh=MtmVIbsSd6S7YtCG8BhZUXLPPbHCSuM+MeGtsA6meiE=;
+	s=korg; t=1795624038;
+	bh=5Lr/XnHGfzARulfEG8UNhyPTM5bWDTVs5tm7lHJw4Hc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Iw/rOeNAbPbam5f1u0m3HuaB7UhV87qAyyYBMLef7D84xUnZBJIiJ1mnZJcUWZ3lJ
-	 V0YIvCP9IXeDA7RlMsgOQBdaPFdM9JmD+P+nSkuom37DnJZz8of4xe8usHBGJa6KDO
-	 qg5towBmiQ8nA5V+jTKlIBREVej1PJpSapVCHY/c=
+	b=JEueqrTO19A4bjJIRVGSrr/zylG7AcTJwgrmK1RFMrbX7TthflNQUWlxeg3hG73tQ
+	 UqggGebwmNRbJw2fq6Zm7bw+yQB0DgPCJljSq874z6aMx6jbhmamycEo8mwGHGCCyi
+	 se7APqVb5V3hsHbxbr0rsZUQR8YIopfBA622AnBE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Filippo Falezza <effeffe99@gmail.com>,
-	Loic Poulain <loic.poulain@oss.qualcomm.com>,
-	Jeff Johnson <jeff.johnson@oss.qualcomm.com>,
+	Hazley Samsudin <hazleycryilis@gmail.com>,
+	David Ahern <dsahern@kernel.org>,
+	Hangbin Liu <liuhangbin@kylinos.cn>,
+	Andrea Mayer <andrea.mayer@uniroma2.it>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 064/816] wifi: ath10k: Stop unanswered temperature reads
-Date: Wed, 25 Nov 2026 15:26:52 +0100
-Message-ID: <20261125143850.702242532@linuxfoundation.org>
+Subject: [PATCH 6.12 065/816] seg6: fix transport header for inner IPv4 with IP options
+Date: Wed, 25 Nov 2026 15:26:53 +0100
+Message-ID: <20261125143850.726144364@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143849.205329330@linuxfoundation.org>
 References: <20261125143849.205329330@linuxfoundation.org>
@@ -69,97 +71,203 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Filippo Falezza <effeffe99@gmail.com>
+From: Andrea Mayer <andrea.mayer@uniroma2.it>
 
-[ Upstream commit 2a87e367c62856b87a90f745c6b7d2eb91e0c51f ]
+[ Upstream commit 5838f10563d58afca6711edb5e4eda968ca181d9 ]
 
-Reading the ath10k hwmon temperature sends WMI_PDEV_GET_TEMPERATURE and
-waits up to 5 s (ATH10K_THERMAL_SYNC_TIMEOUT_HZ) for the reply event,
-holding conf_mutex. Not all firmware answers: the WCN3990 firmware
-WLAN.HL.3.3.1-00694-QCAHLSWMTPLZ-1 on a Motorola Moto G 5G Plus
-codename nairo (SM7250) never sends the event, so every read of
-temp1_input stalls for 5 s, logs
+The End.DT4, End.DT46 (its IPv4 path only) and End.DX4 behaviors set the
+transport header of the decapsulated IPv4 packet at a fixed 20 bytes, the
+size of an IPv4 header without options. They do not validate the header
+length either. With options, the transport header points at the first
+option byte. The effects include:
+- ping -R sends an echo request with a 60-byte IPv4 header to a local
+  address through an End.DT4 or an End.DX4 SID. Since icmp_rcv()
+  computes the ICMP checksum from the first option byte, the request
+  fails the check and is counted in IcmpInCsumErrors.
+- A UDP datagram can reach a port that an iptables rule drops. The rule
+  checks the UDP header after the full IPv4 header, while the socket
+  lookup reads it at the fixed 20-byte offset.
+- With an inbound AH state, ah_input() reads the AH header at the fixed
+  20-byte offset, but copies the IPv4 header over it with the length in
+  the IHL field. A packet shorter than that length can make ah_input()
+  write past the end of the data, into skb_shared_info when the skb has
+  no tailroom.
 
-  ath10k_snoc 18800000.wifi: failed to synchronize thermal read
+Validate the inner IPv4 header length with the new helper
+seg6_validate_iphdr_len() and set the transport header at that length. A
+packet that is not IPv4, whose header length field is below 5, or whose
+header is truncated, is dropped with a drop reason. The fix is limited to
+the header length, which the transport header relies on. Other checks done
+on IPv4 input, such as the header checksum, the total length and the IP
+options, are not addressed here.
 
-and returns -ETIMEDOUT. Tools that read all hwmon sensors, such as
-lm-sensors, hang for 5 s on every run, and configuration changes of the
-interface wait for conf_mutex in the meantime.
+Found by code inspection while reviewing commit 44930446dde4 ("ipv6: seg6:
+clear IPv4 control block on IPIP decapsulation"), as a pre-existing issue
+that Sashiko also reported on v2 of that patch. Without this patch, a
+bpftrace probe on ah_input() shows the reporter's reproducer packet
+written into skb_shared_info. With it, that packet is dropped before
+ah_input(), ping -R no longer fails the ICMP checksum, the UDP datagram
+reaches its real port, and the SRv6 selftests still pass. These effects
+reproduce on an unmodified kernel, without error injection.
 
-Whether the firmware answers cannot be told from the chip: firmware that
-answers and firmware that does not both advertise
-WMI_SERVICE_THERM_THROT, and WCN3990 firmware differs between devices.
-Instead, remember that the running firmware did not answer, and return
--EOPNOTSUPP right away on later reads. Forget it when the firmware
-starts, so that a restarted or updated firmware is asked again.
-
-The first read after each firmware start still takes 5 s when the
-firmware does not answer. Reads on firmware that answers are unchanged.
-
-Fixes: e98199a8c27f ("ath10k: enable QCA6174/QCA9377 to read the chip temperature")
-Signed-off-by: Filippo Falezza <effeffe99@gmail.com>
-Reviewed-by: Loic Poulain <loic.poulain@oss.qualcomm.com>
-Link: https://patch.msgid.link/20261027-ath10k-temperature-v2-1-0793e80d73bc@gmail.com
-Signed-off-by: Jeff Johnson <jeff.johnson@oss.qualcomm.com>
+Fixes: 891ef8dd2a8d ("ipv6: sr: implement additional seg6local actions")
+Fixes: 664d6f86868b ("seg6: add support for the SRv6 End.DT4 behavior")
+Reported-by: Hazley Samsudin <hazleycryilis@gmail.com>
+Closes: https://lore.kernel.org/netdev/20260809221915.2ffc1ecd0f445fcb70270e31@uniroma2.it/
+Reviewed-by: David Ahern <dsahern@kernel.org>
+Reviewed-by: Hangbin Liu <liuhangbin@kylinos.cn>
+Signed-off-by: Andrea Mayer <andrea.mayer@uniroma2.it>
+Link: https://patch.msgid.link/20261028171511.35-1-andrea.mayer@uniroma2.it
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/ath/ath10k/core.c    | 1 +
- drivers/net/wireless/ath/ath10k/thermal.c | 9 ++++++++-
- drivers/net/wireless/ath/ath10k/thermal.h | 2 ++
- 3 files changed, 11 insertions(+), 1 deletion(-)
+ net/ipv6/seg6_local.c | 69 +++++++++++++++++++++++++++++++++----------
+ 1 file changed, 53 insertions(+), 16 deletions(-)
 
-diff --git a/drivers/net/wireless/ath/ath10k/core.c b/drivers/net/wireless/ath/ath10k/core.c
-index f9b51d98d20bb..e3dcf034c8725 100644
---- a/drivers/net/wireless/ath/ath10k/core.c
-+++ b/drivers/net/wireless/ath/ath10k/core.c
-@@ -2979,6 +2979,7 @@ int ath10k_core_start(struct ath10k *ar, enum ath10k_firmware_mode mode,
- 	clear_bit(ATH10K_FLAG_CRASH_FLUSH, &ar->dev_flags);
+diff --git a/net/ipv6/seg6_local.c b/net/ipv6/seg6_local.c
+index 9259b2d2da059..7c0d98a65c8b7 100644
+--- a/net/ipv6/seg6_local.c
++++ b/net/ipv6/seg6_local.c
+@@ -149,9 +149,7 @@ struct seg6_end_dt_info {
+ 	int vrf_ifindex;
+ 	int vrf_table;
  
- 	ar->running_fw = fw;
-+	ar->thermal.broken = false;
+-	/* tunneled packet family (IPv4 or IPv6).
+-	 * Protocol and header length are inferred from family.
+-	 */
++	/* tunneled packet family (IPv4 or IPv6) */
+ 	u16 family;
+ };
  
- 	if (!test_bit(ATH10K_FW_FEATURE_NON_BMI,
- 		      ar->running_fw->fw_file.fw_features)) {
-diff --git a/drivers/net/wireless/ath/ath10k/thermal.c b/drivers/net/wireless/ath/ath10k/thermal.c
-index 8b15ec07b1071..9b81f9ae58d74 100644
---- a/drivers/net/wireless/ath/ath10k/thermal.c
-+++ b/drivers/net/wireless/ath/ath10k/thermal.c
-@@ -75,6 +75,12 @@ static ssize_t ath10k_thermal_show_temp(struct device *dev,
- 		goto out;
- 	}
+@@ -969,6 +967,40 @@ static int input_action_end_dx6(struct sk_buff *skb,
+ 	return -EINVAL;
+ }
  
-+	/* Don't stall every read on firmware that never answers */
-+	if (ar->thermal.broken) {
-+		ret = -EOPNOTSUPP;
-+		goto out;
++/* Validate the length of the IPv4 header at skb->data (which must point to
++ * the network header) and report that length, options included.
++ * Only the version, the header length and the presence of the whole header
++ * are checked.
++ * The length is written only when SKB_NOT_DROPPED_YET is returned.
++ *
++ * skb pointers may change: after this call, the caller must evaluate again
++ * any pointer into the packet data.
++ */
++static enum skb_drop_reason
++seg6_validate_iphdr_len(struct sk_buff *skb, int *hdrlen)
++{
++	enum skb_drop_reason reason;
++	const struct iphdr *iph;
++	int len;
++
++	reason = pskb_may_pull_reason(skb, sizeof(struct iphdr));
++	if (reason)
++		return reason;
++
++	iph = ip_hdr(skb);
++	if (iph->version != 4 || iph->ihl < 5)
++		return SKB_DROP_REASON_IP_INHDR;
++
++	len = ip_hdrlen(skb);
++
++	reason = pskb_may_pull_reason(skb, len);
++	if (reason)
++		return reason;
++
++	*hdrlen = len;
++	return SKB_NOT_DROPPED_YET;
++}
++
+ static int input_action_end_dx4_finish(struct net *net, struct sock *sk,
+ 				       struct sk_buff *skb)
+ {
+@@ -998,14 +1030,18 @@ static int input_action_end_dx4_finish(struct net *net, struct sock *sk,
+ static int input_action_end_dx4(struct sk_buff *skb,
+ 				struct seg6_local_lwt *slwt)
+ {
++	SKB_DR(reason);
++	int hdrlen;
++
+ 	if (!decap_and_validate(skb, IPPROTO_IPIP))
+ 		goto drop;
+ 
+-	if (!pskb_may_pull(skb, sizeof(struct iphdr)))
++	reason = seg6_validate_iphdr_len(skb, &hdrlen);
++	if (reason)
+ 		goto drop;
+ 
+ 	skb->protocol = htons(ETH_P_IP);
+-	skb_set_transport_header(skb, sizeof(struct iphdr));
++	skb_set_transport_header(skb, hdrlen);
+ 	nf_reset_ct(skb);
+ 
+ 	if (static_branch_unlikely(&nf_hooks_lwtunnel_enabled))
+@@ -1015,7 +1051,7 @@ static int input_action_end_dx4(struct sk_buff *skb,
+ 
+ 	return input_action_end_dx4_finish(dev_net(skb->dev), NULL, skb);
+ drop:
+-	kfree_skb(skb);
++	kfree_skb_reason(skb, reason);
+ 	return -EINVAL;
+ }
+ 
+@@ -1150,16 +1186,24 @@ static struct sk_buff *end_dt_vrf_core(struct sk_buff *skb,
+ 	struct seg6_end_dt_info *info = &slwt->dt_info;
+ 	struct net_device *vrf;
+ 	__be16 protocol;
++	SKB_DR(reason);
+ 	int hdrlen;
+ 
+ 	vrf = end_dt_get_vrf_rcu(skb, info);
+ 	if (unlikely(!vrf))
+ 		goto drop;
+ 
++	if (unlikely(info->family != AF_UNSPEC && info->family != family)) {
++		pr_warn_once("seg6local: SRv6 End.DT* family mismatch");
++		goto drop;
 +	}
 +
- 	reinit_completion(&ar->thermal.wmi_sync);
- 	ret = ath10k_wmi_pdev_get_temperature(ar);
- 	if (ret) {
-@@ -90,7 +96,8 @@ static ssize_t ath10k_thermal_show_temp(struct device *dev,
- 	time_left = wait_for_completion_timeout(&ar->thermal.wmi_sync,
- 						ATH10K_THERMAL_SYNC_TIMEOUT_HZ);
- 	if (!time_left) {
--		ath10k_warn(ar, "failed to synchronize thermal read\n");
-+		ath10k_warn(ar, "failed to synchronize thermal read, not asking again until the firmware restarts\n");
-+		ar->thermal.broken = true;
- 		ret = -ETIMEDOUT;
- 		goto out;
+ 	switch (family) {
+ 	case AF_INET:
+ 		protocol = htons(ETH_P_IP);
+-		hdrlen = sizeof(struct iphdr);
++		reason = seg6_validate_iphdr_len(skb, &hdrlen);
++		if (unlikely(reason))
++			goto drop;
+ 		break;
+ 	case AF_INET6:
+ 		protocol = htons(ETH_P_IPV6);
+@@ -1171,11 +1215,6 @@ static struct sk_buff *end_dt_vrf_core(struct sk_buff *skb,
+ 		goto drop;
  	}
-diff --git a/drivers/net/wireless/ath/ath10k/thermal.h b/drivers/net/wireless/ath/ath10k/thermal.h
-index 1f4de9fbf2b30..d1fb5b958c37c 100644
---- a/drivers/net/wireless/ath/ath10k/thermal.h
-+++ b/drivers/net/wireless/ath/ath10k/thermal.h
-@@ -19,6 +19,8 @@ struct ath10k_thermal {
- 	/* protected by conf_mutex */
- 	u32 throttle_state;
- 	u32 quiet_period;
-+	/* the running firmware did not answer a temperature request */
-+	bool broken;
- 	/* temperature value in Celsius degree
- 	 * protected by data_lock
- 	 */
+ 
+-	if (unlikely(info->family != AF_UNSPEC && info->family != family)) {
+-		pr_warn_once("seg6local: SRv6 End.DT* family mismatch");
+-		goto drop;
+-	}
+-
+ 	skb->protocol = protocol;
+ 
+ 	skb_dst_drop(skb);
+@@ -1186,7 +1225,7 @@ static struct sk_buff *end_dt_vrf_core(struct sk_buff *skb,
+ 	return end_dt_vrf_rcv(skb, family, vrf);
+ 
+ drop:
+-	kfree_skb(skb);
++	kfree_skb_reason(skb, reason);
+ 	return ERR_PTR(-EINVAL);
+ }
+ 
+@@ -1199,9 +1238,7 @@ static int input_action_end_dt4(struct sk_buff *skb,
+ 	if (!decap_and_validate(skb, IPPROTO_IPIP))
+ 		goto drop;
+ 
+-	if (!pskb_may_pull(skb, sizeof(struct iphdr)))
+-		goto drop;
+-
++	/* end_dt_vrf_core() validates the inner IPv4 header length */
+ 	skb = end_dt_vrf_core(skb, slwt, AF_INET);
+ 	if (!skb)
+ 		/* packet has been processed and consumed by the VRF */
 -- 
 2.53.0
 
