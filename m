@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795618058;
-	b=LUptA4aBtQjDBTLDOrkTZfjwnW2sP+jjX314yuyQh+iSz7UtAEtwmegYmLs6ek4eWHNs
-	 1zwkvwL6S/Ec7XeDZFSjks+bJmuWO2hLHx6AraUzUepMwqzACZ02bZdjrvM5bX/q0eUEG
-	 EvvSxLrbXrb4DkUJPL4cgUhJyNNrfV/c4g69lUFuDBjEmRtg2mIpkaBkc2lnOcchYBTO7
-	 LxTY3mCX9nlZ0JSA4N0c7f/9+LTRUEYxhuuAZtynVvUdR/nLtU9atygOjqOevWUFHs6+U
-	 qZxLDbMjuXVtnk+p9NqNBQiSlzQFYSiBhR3cohXegJroWNu0r9Qunw807NaH8fhBFMg==
+	t=1795618061;
+	b=p64btwsa3HhGtVkCi+JMGTGl1A5IoSB14zOKG9+sVG+DQ29ygYVqbJj3sWF5/CBHJ/l/
+	 l1pB+ab0lLqJZ+2PQDtGINEyT5RYGSwM6x/fFf2YqvGfIn86SwoXtrcyrKxL6Cr0if0Ze
+	 v0TwSO/i/vxB0E8btKNBXp5jtOnVNpFTQ/pOeMIZdfK/AZ8ZOPjm16o69DO5F9v/boKsW
+	 gjjhFyk4BKCFy98D9YDMD9la4amCbRumh97HKFZMAEfzC6I81V6CVTRPjUiMlDK6WYjvi
+	 vGnx0fpJAERccAn5WC5RA7rFVXf3jNkYVIwqGSX2kOvA3ec0BkXsQHa3YetiO3PrRzQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795618058;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795618061;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=N+4lp0imzPKJoma02hOHCA80pyopKErQeBOkZjgNkeI=;
-	b=ejE+rRRhPWUWh8NiMKzlfAo12q5VEYXxGUuf+vrsqcBVTmFHqCiYI4v3FB5J6c+OCqra
-	 byqPJGRXrcjG0h9WlPtUzU0bAxNREKIGrKgljWULJFjICa4dQhR8amWE858/uA87sII7b
-	 g5o7adZb3zlP0rqWHmdF9hjaTzZnwyrwTpQWkNjwf1rBpMvVL94JE6qTtpv4xBFLf54pJ
-	 L+yhJC3PYMBpEOi/3VkpGYt+cLp/uGN8flCBTkyR49y+x/Gd+VpE3bupV3Vsy4sgMa1x+
-	 6DEb44ZxpbvIneMd6Ox+qKUX+/1G3HyPQmRLXkx6i+BfJkAC/+OlQNgUqSSfalI9z9Q==
+	bh=S8Kjiu2xoUE8eVuavV2oRwm+mBUs0KcABjBL5v3aOt8=;
+	b=sknx6ggGVhLS6Ht1yT1f63WpwdOpL/7pDjG4lSoXpepbxezZ2FzjeVavFcs++lZlgVt7
+	 wVx3LalNJlTUh3VwEPqssShufUbwLiQU4ZKdp1Ol4944+dHz7aGhubjPvthJBBPfq1RwX
+	 f/83X7d+xdsCgStIrPfodJTMa/xo3mRgkP3e649b8qZmB0dOELVxDPxEVOAAjxzd1R21c
+	 8hkZRdOcb0U3Df4/Qa7JkRyN9SrsOdr6EYdjHWCDVHuovzzWQ5PWSCkAFXO3GjshfldCh
+	 OgoyRWP5aks2z7Dq742LK93R20KXnb9PmsxTu82B5fFxgAaDKvanyTBsU/XzP5Kb1Gg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=PdWWKHxe;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=kWyBUD2m;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2655D606A323;
-	Wed, 25 Nov 2026 14:47:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 64AC6606A338;
+	Wed, 25 Nov 2026 14:47:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=PdWWKHxe
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 56D0F1F000EF;
-	Wed, 25 Nov 2026 14:47:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=kWyBUD2m
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AB98E1F000C4;
+	Wed, 25 Nov 2026 14:47:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795618057;
-	bh=N+4lp0imzPKJoma02hOHCA80pyopKErQeBOkZjgNkeI=;
+	s=korg; t=1795618061;
+	bh=S8Kjiu2xoUE8eVuavV2oRwm+mBUs0KcABjBL5v3aOt8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=PdWWKHxe7dm3D2SIY/qzVtU9DC8DcPRAWtCQSTmo7s8SysyE9Bktt92OA6gmEpxww
-	 452Z4xCSSJ+eM1au3N1jMwf0jZ+7ujH98n0CYJIdWXaLqdOcmCaCVkos1kdCOpK21d
-	 lsfbQM7jVJuYwcaz7VPUII0+LvxhnwA/9IOHPOEk=
+	b=kWyBUD2mHN4A+q7QLjP4+fSOeB5VAZPv2Os53wjp54xk9/JlylbKramznEB6LPpf6
+	 iVaH9AzVV1bsMkBgsivD0u4SF1EplG7TlY3Aa5utvXY9hyI8YEwbijVklpNAPfHsZW
+	 jZxAmrz4egXti7Gir9VRXh1hwC5+M1842TSPlzMg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Linfeng Sun <linfeng.sun.dev@gmail.com>,
+	Maoxia <2312891301@qq.com>,
 	"Michael S. Tsirkin" <mst@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0157/1005] vhost: fix dirty logging for in-order used ring entries
-Date: Wed, 25 Nov 2026 15:24:55 +0100
-Message-ID: <20261125143825.415974335@linuxfoundation.org>
+Subject: [PATCH 7.3 0158/1005] virtio_pci: add missing newline to the pmcsr error message
+Date: Wed, 25 Nov 2026 15:24:56 +0100
+Message-ID: <20261125143825.440115015@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143821.729802100@linuxfoundation.org>
 References: <20261125143821.729802100@linuxfoundation.org>
@@ -68,78 +68,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Linfeng Sun <linfeng.sun.dev@gmail.com>
+From: Maoxia <2312891301@qq.com>
 
-[ Upstream commit bfcde6b64769bc168037b8bd882de4def4b2b3f4 ]
+[ Upstream commit 104d58a6d2592898fbb6989732600b07d543a8e5 ]
 
-With VIRTIO_F_IN_ORDER, one used ring element can represent multiple
-buffers, so vhost_add_used_n_in_order() can write consecutive elements to
-nonadjacent slots. Dirty logging combines the initial slot with a length
-based on the final position, which can miss written elements or log past
-the end of the ring.
+The error message emitted when the PCI power management control
+register cannot be read is not newline-terminated, so the next kernel
+message is appended to it on the same line.
 
-Replay nheads[] after the write barrier and log the written slots,
-coalescing adjacent elements and splitting at gaps and wraps.
+Add the missing '\n'.
 
-Fixes: 67a873df0c41 ("vhost: basic in order support")
-Signed-off-by: Linfeng Sun <linfeng.sun.dev@gmail.com>
-Message-ID: <20260912-fix-log_write-v1-1-72c23db01268@gmail.com>
+Fixes: dff4fa0e5785 ("virtio: Add support for no-reset virtio PCI PM")
+Signed-off-by: Maoxia <2312891301@qq.com>
 Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
+Message-ID: <tencent_031B923A83E0DEE884BD05D49030890C0406@qq.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/vhost/vhost.c | 30 +++++++++++++++++++++++-------
- 1 file changed, 23 insertions(+), 7 deletions(-)
+ drivers/virtio/virtio_pci_common.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/vhost/vhost.c b/drivers/vhost/vhost.c
-index 0226c4c597093..86126e2ea8cbc 100644
---- a/drivers/vhost/vhost.c
-+++ b/drivers/vhost/vhost.c
-@@ -3163,7 +3163,6 @@ static int vhost_add_used_n_in_order(struct vhost_virtqueue *vq,
- 		return -EINVAL;
+diff --git a/drivers/virtio/virtio_pci_common.c b/drivers/virtio/virtio_pci_common.c
+index b90c174450b20..24af84b0c6adf 100644
+--- a/drivers/virtio/virtio_pci_common.c
++++ b/drivers/virtio/virtio_pci_common.c
+@@ -633,7 +633,7 @@ static bool vp_supports_pm_no_reset(struct device *dev)
  
- 	start = vq->last_used_idx & (vq->num - 1);
--	used = vq->used->ring + start;
- 
- 	for (i = 0; i < count; i++) {
- 		if (vhost_put_used(vq, &heads[i], start, 1)) {
-@@ -3176,14 +3175,31 @@ static int vhost_add_used_n_in_order(struct vhost_virtqueue *vq,
+ 	pci_read_config_word(pci_dev, pci_dev->pm_cap + PCI_PM_CTRL, &pmcsr);
+ 	if (PCI_POSSIBLE_ERROR(pmcsr)) {
+-		dev_err(dev, "Unable to query pmcsr");
++		dev_err(dev, "Unable to query pmcsr\n");
+ 		return false;
  	}
  
- 	if (unlikely(vq->log_used)) {
-+		unsigned int log_count = 0;
-+		int log_start = 0, next;
-+
- 		/* Make sure data is seen before log. */
- 		smp_wmb();
--		/* Log used ring entry write. */
--		log_used(vq, ((void __user *)used - (void __user *)vq->used),
--			 (vq->num - start) * sizeof *used);
--		if (start + count > vq->num)
--			log_used(vq, 0,
--				 (start + count - vq->num) * sizeof *used);
-+		/* Log contiguous runs of used ring entries that were written. */
-+		start = vq->last_used_idx & (vq->num - 1);
-+		for (i = 0; i < count; i++) {
-+			if (!log_count)
-+				log_start = start;
-+			log_count++;
-+
-+			next = start + nheads[i];
-+			if (next >= vq->num)
-+				next -= vq->num;
-+			if (i + 1 == count || next != start + 1) {
-+				used = vq->used->ring + log_start;
-+				log_used(vq,
-+					 ((void __user *)used -
-+					  (void __user *)vq->used),
-+					 log_count * sizeof(*used));
-+				log_count = 0;
-+			}
-+			start = next;
-+		}
- 	}
- 
- 	old = vq->last_used_idx;
 -- 
 2.53.0
 
