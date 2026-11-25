@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795624935;
-	b=dey/248nXehRDBberGj+v0bA0wyBgvgaNDehbR167OQTx1X7/7OORvmC/481VasuwH6u
-	 Hnn4x+DyIQ+k26jcziB+9LwRtKQ0kgVvOkoPVC7tBzckYzQvDbSw7T1n4Bl5bVxTK8I0N
-	 N6TBlHsf3qSRa8sBPzmK8/0974qIknOXoPf+H+AFecYzuUQ4s4kVZmAJQNbXXcdQ2EIzZ
-	 TX3NIncnQav1uK13R2koucHN4rIfT/oTd3bFUgBSqpSr04ABTYHVzl6JaoJJD9V4helKi
-	 WzlL7wfXcJ7vcaHI8D7o4QZSemYfjUGFaE/bhDj7vrngVEoEYHGITOXEIO78gla0lQg==
+	t=1795624939;
+	b=nLzkS2kjEvN5LOiHIrwrxXFQyItq9ZLG843TUPDsXXriDLUX1vPBPQuYX9Xa+iDV4xMh
+	 07zH8wx8DaLJ0Oag778RpcfYQ9CJ9MJkRpNSGB//qtcD+Uc7ywazWyHXSkBqsuP8lJBYw
+	 uSTxIWZEsQjcMLmeHxVb9zo3Ar+IbnevlwCUt2UmOLOM+L4VOV+CDeEMN30fvpEWk2MRQ
+	 3vl1ncjpHWdU+KZ07UIR7dcwKQcP5yjEI9y865gWZIThOs2GNDINcFw3haq9fc6QWBttH
+	 ueyhCgYAterO3vWqzIQ8K/I2mY57JdmPPPgkd070++3rKIg3px3fS9BYIaINVcFMXWQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795624935;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795624939;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=FOPXVvF3Mg0kf0rqjI6dJ3u0NUgj0jhRW9HItk1AHus=;
-	b=bSWTY+URl6FAim6g8IxfGCbIqepdvX8rjmkPjwNCBx/cJZLIdAfFRihD62oLzE6mEqrg
-	 qopz8CfE2nV5l7ejkzKQh98B7JT03RAX5My0W+kXiFDMQyaWuUdPXKTVaGm+EAKfSdg+h
-	 pafnPq6FTxrCxmpFWf+1SYd6YSWTDeAyOwCqBM7D9AfzwpqLx8WYO5b+DCBA3D7r037tC
-	 ULOYHleqyZX4UWM8FJ670N/8SviKo0JGTLFchxFSvMZKDe285KTLStaUbP/hB/UCj8QZD
-	 qX0mDbivX0ooa14Mif+AAN/B/5sqKTJ35Sdm6Hs6/BP8NBCxiAQ16FFI0FT3LjJtl3w==
+	bh=YmEDafXbOxTnwHlcHZLJY0LuzIqDhnbZmG5fn51XxhQ=;
+	b=pyl73RF4xScARYVCkmOv3OEkX5ckM32Ix0ZHoIeqvpVWqVSo490xx9/RgcTdb6LFxxE2
+	 1W+3AQA12UviNvOyFSlhvjf3pwKP9185pD9xVpD7s/blWwp/Gen3bcLkRvLC2LLMfIJJG
+	 kGy5Ys8ZplNFFANqVx98aSVmKBRqHOHCO4IDEqzH7ZwzODPUVIpdQQ9W9MmR+qaEtU0nN
+	 srsVQxT3fzu2ey5JPdZB8ZRExxcOfLcW2HWvx6eGsbg+Oc4oMQCRZH2c1jv2zoVg9EUgU
+	 10zZ9N3McTCo+e4D3Fn0DglInICpYZIM0MhrvGoxM61/EtOO84Z54/EJKLZqeS1UNHw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=tUIvg9eU;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=nm3LOjvg;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DA8A8606A31E;
-	Wed, 25 Nov 2026 16:42:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 85D9F606A31E;
+	Wed, 25 Nov 2026 16:42:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=tUIvg9eU
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 179B41F000C6;
-	Wed, 25 Nov 2026 16:42:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=nm3LOjvg
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1E3061F000E1;
+	Wed, 25 Nov 2026 16:42:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795624935;
-	bh=FOPXVvF3Mg0kf0rqjI6dJ3u0NUgj0jhRW9HItk1AHus=;
+	s=korg; t=1795624938;
+	bh=YmEDafXbOxTnwHlcHZLJY0LuzIqDhnbZmG5fn51XxhQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=tUIvg9eUfOZPeKMD2g3jRqkKu+FjpfG/616NoHJ3FFknaocYecRrNQ6GyzZnW+/DR
-	 LOOg6muW3uPLnwHtXUXjgJz+x07LBkLU3BzfKqh9E+g5+6d8qx6A+h6+iVnNf9+rg6
-	 KtqUDd6EyaCeRkUvc6aHQ8fjn6vpFlyRTlfcgCsI=
+	b=nm3LOjvgpdzHAFobUN+fooa+dezD0HFf6GVAg3TDRDr+1AZLUXjM7AqloA245xhQ+
+	 tOC3RyDRXTNTn1d9OSKVfvzL5jeIpgQqJ2vswr8OyernSg8Im9JXO63OQcMz2kY4z3
+	 +EG+AFpZ+FmMG45nIc3wOPjq9USdmhVwG9jJwUDU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kuniyuki Iwashima <kuniyu@google.com>,
+	Wenbo Sun <sunwenbo@cmss.chinamobile.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 352/816] tcp: Pass req->rsk_listener to inet_csk_reqsk_queue_drop() in tcp_check_req().
-Date: Wed, 25 Nov 2026 15:31:40 +0100
-Message-ID: <20261125143857.345896303@linuxfoundation.org>
+Subject: [PATCH 6.12 353/816] amt: use ipv6_hdr() in amt_mldv1_leave_handler()
+Date: Wed, 25 Nov 2026 15:31:41 +0100
+Message-ID: <20261125143857.369075451@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143849.205329330@linuxfoundation.org>
 References: <20261125143849.205329330@linuxfoundation.org>
@@ -68,77 +68,60 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kuniyuki Iwashima <kuniyu@google.com>
+From: Wenbo Sun <sunwenbo@cmss.chinamobile.com>
 
-[ Upstream commit a9782a6f2bbd0c444689725a710d8b21eab61bc5 ]
+[ Upstream commit 6730fe495c35f174a424ab58cf5fdf99ce4746e9 ]
 
-When connection migration happens in tcp_v[46]_rcv(), a new
-listener is passed to tcp_check_req().
+In amt_mldv1_leave_handler(), which handles IPv6 MLDv1 Done
+(ICMPV6_MGM_REDUCTION) messages, the source address is mistakenly
+extracted via ip_hdr(skb)->saddr into host.ip4 instead of copying the
+IPv6 source address from ipv6_hdr(skb)->saddr into host.ip6 as
+amt_mldv1_report_handler() does.
 
-When either of the following is true,
+Because amt_lookup_group() compares the full union amt_addr for v6
+groups, looking up the group with a 32-bit IPv4 header slice fails to
+match the group entry created by amt_mldv1_report_handler(). As a
+result, amt_del_group() is not called when an MLDv1 listener leaves,
+and the AMT relay continues forwarding multicast traffic until the
+group timer expires.
 
-  * the new listener queue is full and
-    net.ipv4.tcp_abort_on_overflow is set
+Use ipv6_hdr(skb) and copy ip6h->saddr into host.ip6 so that MLDv1
+Done messages properly match and delete the corresponding IPv6 group.
 
-  * the packet has RST or (not stripped) SYN
+This issue was found via LLM-assisted code review, confirmed by
+reproducing the stale group forwarding in a User-Mode Linux (ARCH=um)
+environment, and verified in UML by testing that AMT relay multicast
+forwarding stops immediately after receiving an MLDv1 Done message.
 
-tcp_check_req() sends RST and calls inet_csk_reqsk_queue_drop().
-
-Here, the new listener is passed, and its qlen is decremented
-wrongly while reqsk is tied to the old listener.
-
-Once qlen underflows, inet_csk_reqsk_queue_is_full() always
-return true, and the new listener stops serving.
-
-Without the patch, this script times out while waiting for SYN+ACK
-since the new listener drops SYN, but with the patch, 3WHS completes.
-
-    0 `sysctl -q net.ipv4.tcp_migrate_req=1`
-   +0 `sysctl -q net.ipv4.tcp_syncookies=0`
-   +0 socket(..., SOCK_STREAM, IPPROTO_TCP) = 3
-   +0 setsockopt(3, SOL_SOCKET, SO_REUSEPORT, [1], 4) = 0
-   +0 bind(3, ..., ...) = 0
-   +0 socket(..., SOCK_STREAM, IPPROTO_TCP) = 4
-   +0 setsockopt(4, SOL_SOCKET, SO_REUSEPORT, [1], 4) = 0
-   +0 bind(4, ..., ...) = 0
-   +0 listen(4, 128) = 0
-   +0 < S 0:0(0) win 32792 <mss 1000>
-   +0 > S. 0:0(0) ack 1 <...>
-   +0 listen(3, 128) = 0
-   +0 close(4) = 0
- +.01 < R 1:1(0) win 0
-   +0 socket(..., SOCK_STREAM, IPPROTO_TCP) = 5
-   +0 listen(5, 1) = 0
- +.01 < S 0:0(0) win 32792 <mss 1000>
-   +0 > S. 0:0(0) ack 1 <...>
-   +0 < . 1:1(0) ack 1 win 32792
-   +0 fcntl(3, F_SETFL, O_RDWR|O_NONBLOCK) = 0
-   +0 accept(3, ..., ...) = 6
-
-Let's pass req->rsk_listener instead.
-
-Fixes: d4f2c86b2b7e ("tcp: Migrate TCP_NEW_SYN_RECV requests at receiving the final ACK.")
-Signed-off-by: Kuniyuki Iwashima <kuniyu@google.com>
-Link: https://patch.msgid.link/20261111020304.1532064-2-kuniyu@google.com
+Fixes: b75f7095d4d4 ("amt: add mld report message handler")
+Signed-off-by: Wenbo Sun <sunwenbo@cmss.chinamobile.com>
+Link: https://patch.msgid.link/20261111031147.105834-1-sunwenbo@cmss.chinamobile.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv4/tcp_minisocks.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/net/amt.c | 5 ++---
+ 1 file changed, 2 insertions(+), 3 deletions(-)
 
-diff --git a/net/ipv4/tcp_minisocks.c b/net/ipv4/tcp_minisocks.c
-index a43f082b871ed..567710d43c13f 100644
---- a/net/ipv4/tcp_minisocks.c
-+++ b/net/ipv4/tcp_minisocks.c
-@@ -900,7 +900,7 @@ struct sock *tcp_check_req(struct sock *sk, struct sk_buff *skb,
- 		tcp_reset(sk, skb);
- 	}
- 	if (!fastopen) {
--		bool unlinked = inet_csk_reqsk_queue_drop(sk, req);
-+		bool unlinked = inet_csk_reqsk_queue_drop(req->rsk_listener, req);
+diff --git a/drivers/net/amt.c b/drivers/net/amt.c
+index 589d44b31c381..3d560d5dc981f 100644
+--- a/drivers/net/amt.c
++++ b/drivers/net/amt.c
+@@ -2129,13 +2129,12 @@ static void amt_mldv1_leave_handler(struct amt_dev *amt, struct sk_buff *skb,
+ 				    struct amt_tunnel_list *tunnel)
+ {
+ 	struct mld_msg *mld = (struct mld_msg *)icmp6_hdr(skb);
+-	struct iphdr *iph = ip_hdr(skb);
++	struct ipv6hdr *ip6h = ipv6_hdr(skb);
+ 	struct amt_group_node *gnode;
+ 	union amt_addr group, host;
  
- 		if (unlinked)
- 			__NET_INC_STATS(sock_net(sk), LINUX_MIB_EMBRYONICRSTS);
+ 	memcpy(&group.ip6, &mld->mld_mca, sizeof(struct in6_addr));
+-	memset(&host, 0, sizeof(union amt_addr));
+-	host.ip4 = iph->saddr;
++	memcpy(&host.ip6, &ip6h->saddr, sizeof(struct in6_addr));
+ 
+ 	gnode = amt_lookup_group(tunnel, &group, &host, true);
+ 	if (gnode) {
 -- 
 2.53.0
 
