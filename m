@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795618404;
-	b=e8d5jwHVOpkCAd/F2noaaHXoMLXpcrWDWI12VArUKWJOD62g6r3kV+4XzNGoS2bLrd8M
-	 SuVspAh9O/qpMLYyldSmUrViZGt4TjvOES7tKBnqyMEOfNsYdtwVSeNYedH7QjsNzLogM
-	 /nkf7zGkyvliVC5WE4nNGXRGYNkdAlPlflmtpEyo2zSPESLWEyOVj3mP8j3AmzmcDQ6hA
-	 hhJPunhLKyuW84+JsGSQ43gTc1sorMwYAzYGU/ViOZWE7v3jOLROvNkdlx3VJ6+I5Aqqy
-	 tYsXGqVGoWhxx/ec+4yeT04HqYM0e/n4vbrGw8DppeiTMA5EE3rAl1jPkIROVtbDRTw==
+	t=1795618408;
+	b=QzXEHITSROTFnKqolcZBpz5zH3MPY3/6SyrXL6kRHkR16Oq7xegtrhPWDS8dqfWqlX5a
+	 hbuvYJ1Tw7nxCIAzFB1kPdQkZNYbMr/3ngqAT/W/BAQnUjK+Ux/M8l3EWbl/7lbz3/tfe
+	 Q4rW5Mc2M0UPA2XlErVlmpzxXAM5Acf/+yQiTXPlY0jA35PDdcTMFuAGAq1D7QROI8kpF
+	 8XDClpPpWGbK1kHKs2vMrTO20LOTonQ8c8gUDLJQPkGr3utQhaK1LfSuvJGlaKaPHIKrx
+	 7tdvd556evpYGureyeAzGJYt95ME0xiUw+lFBJ1DzsQyWkYye5u+8Em+W7Bq/H8vNww==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795618404;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795618408;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=xFg2wmgQuM3R/r7zJUnL83umQbf1+fzEtgB4/8sFTGA=;
-	b=u4ETC4/+WPN/OOfa76awqozRexZctMEmjidOhQEZJLCfqHw3199xZM7aielMdMeL3H58
-	 X8JQpYBLAVgSu6aILIUxogKJW32ckV6vgNp4b1kfPHPtP/TWlsjdYHmyQZ8pGp3srY4Hr
-	 zmpyfQiA6OPIz7SjQwHl0GOLnSz93b6+pbNt639S9IGH385uCE4ZUdqsIJEkktW7U9xhU
-	 7EWG0zBErETuO30nFTw8F0jr/QRdCq0bRlOP6rE7w2GQj6uGBdnZZDxrPPQL49N6r56el
-	 02s40jYhtmRoL8eqmktOB+PC1j7WBzUcirV/c19hRq8Q2lYq3QpIuJYD2XRRB8S1zsg==
+	bh=Uz6DFbfuPpKtEUz6GlRqDahSG2NRT7kDn3WHUgFpSXI=;
+	b=CEejY6KhzVDpYYgIqfl0Nt5Sxo9s383fRebfKDkBTz91t2fdXkr8ki/RxRTg/DGryiF6
+	 62tutOvidPLu2ETCQ/apNAI8xJq1qJ13D67K8jylTAblaNHHXf/5iwqJDqQn49orhCvgP
+	 DlCQ4IUW/Ga6hqyGgKW2tD8ZSmx9yOerKt+oh/ANRbg4zCY/Ly8QTnHxBnNczcgJZAJK5
+	 x4+dYvKDGKpKoGnHqhe7YG2vhgf2IQmIUuL7eU7/jMmzurTMNUeZr0AqbqP9gLa7dAtD+
+	 boSJ3JBhCyi7MCPJFdzL7s491n8C7QGYgpSVnZH0i+k5VcWw4A9jYuKZVdSTdi7uaeA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=uLpnQF6M;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=1uIry3vY;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 79A32606A31E;
-	Wed, 25 Nov 2026 14:53:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 04562606A321;
+	Wed, 25 Nov 2026 14:53:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=uLpnQF6M
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 880671F000D8;
-	Wed, 25 Nov 2026 14:53:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=1uIry3vY
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E4C071F000D1;
+	Wed, 25 Nov 2026 14:53:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795618404;
-	bh=xFg2wmgQuM3R/r7zJUnL83umQbf1+fzEtgB4/8sFTGA=;
+	s=korg; t=1795618407;
+	bh=Uz6DFbfuPpKtEUz6GlRqDahSG2NRT7kDn3WHUgFpSXI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=uLpnQF6MQ5Y1W50/Z2WAqDHp+lK62CqC9p3BcqvNT3cfJ0m/Lur1sZH3M38VI1k2f
-	 3Oof5xI3t9Vn2/qlhrohGGQwhIV+axoAkfkJFw385086Gq3E9VJ/Ckf+aVPMDbT5Ce
-	 NpJCv7GlQoVQuFUbKWI/jy+OIVlF1Wi9dvroJOso=
+	b=1uIry3vYMjbIUasJ8sleP/dNN3YoRCMu0JvQnSftWBv3ccUlPmcBuqdAiVPXbXgaU
+	 Cpf9EoJDkFDGf45dtsm4+rfz4cKmlkOOPx4GRFtmT1tMEmIzHOZlPqaio1RoY8rN/h
+	 bYKANuWgCAlgTugp6tvJAkK2/S7cHeHB84inG4WQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sashiko <sashiko-bot@kernel.org>,
-	Daejun Park <daejun7.park@samsung.com>,
-	Gao Xiang <xiang@kernel.org>,
+	Hungyu Lin <dennylin0707@gmail.com>,
+	Jan Kara <jack@suse.cz>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0270/1005] erofs: treat files shared by inode_share as stacked
-Date: Wed, 25 Nov 2026 15:26:48 +0100
-Message-ID: <20261125143828.064459665@linuxfoundation.org>
+Subject: [PATCH 7.3 0271/1005] isofs: handle Rock Ridge long-form dates before 1900
+Date: Wed, 25 Nov 2026 15:26:49 +0100
+Message-ID: <20261125143828.088701737@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143821.729802100@linuxfoundation.org>
 References: <20261125143821.729802100@linuxfoundation.org>
@@ -69,57 +68,65 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Daejun Park <daejun7.park@samsung.com>
+From: Hungyu Lin <dennylin0707@gmail.com>
 
-[ Upstream commit 7c26dc33ea7bb677db294bfb4e58d4207477c9e3 ]
+[ Upstream commit 0cbfc16fe49629f5c1fc3628405661c2b938ec61 ]
 
-A file-backed mount whose image or extra device is on a block-backed
-EROFS passes erofs_is_stacked_file(). If inode_share shares that file,
-erofs_real_inode() may pick an inode of a file-backed EROFS in the same
-domain to read it. File-backed reads then nest in the same task.
+iso_date() stores the year relative to 1900 and rejects negative values.
+Rock Ridge LONG_FORM timestamps encode calendar years from 1 to 9999,
+so valid years before 1900 are returned as seconds since the Unix epoch
+equal to zero instead of their recorded dates. For example, an 1899
+timestamp on an image produced by xorriso is reported as 1970 by stat,
+and cp -p preserves that incorrect time.
 
-Treat files that use erofs_ishare_fops as stacked.
+Use the calendar year for both timestamp formats and pass it directly
+to mktime64(). Keep the epoch fallback for year zero, while allowing
+valid long-form years before 1900. Short-form dates are unchanged.
 
-Fixes: 34096ba919fd ("erofs: support unencoded inodes for page cache share")
-Reported-by: Sashiko <sashiko-bot@kernel.org>
-Link: https://sashiko.dev/#/patchset/20261030-erofs-fileio-bioset-v1-1-caf47adbb3a3@samsung.com
-Signed-off-by: Daejun Park <daejun7.park@samsung.com>
-Reviewed-by: Gao Xiang <xiang@kernel.org>
-Signed-off-by: Gao Xiang (Docker) <xiang@kernel.org>
+Fixes: 5ea45f54c8d6 ("isofs: fix Y2038 and Y2156 issues in Rock Ridge TF entry")
+Signed-off-by: Hungyu Lin <dennylin0707@gmail.com>
+Link: https://patch.msgid.link/20261029004902.76944-1-dennylin0707@gmail.com
+Signed-off-by: Jan Kara <jack@suse.cz>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/erofs/super.c | 10 ++++++++--
- 1 file changed, 8 insertions(+), 2 deletions(-)
+ fs/isofs/util.c | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/fs/erofs/super.c b/fs/erofs/super.c
-index ee01a5ef85931..e92a7fa90ae34 100644
---- a/fs/erofs/super.c
-+++ b/fs/erofs/super.c
-@@ -125,9 +125,12 @@ void *erofs_read_metadata(struct super_block *sb, struct erofs_buf *buf,
- /* see the comment in erofs_fc_fill_super() */
- static bool erofs_is_stacked_file(struct file *file)
- {
--	struct super_block *sb = file_inode(file)->i_sb;
-+	struct inode *inode = file_inode(file);
-+	struct super_block *sb = inode->i_sb;
+diff --git a/fs/isofs/util.c b/fs/isofs/util.c
+index 42f479da0b282..6f9a90e58a890 100644
+--- a/fs/isofs/util.c
++++ b/fs/isofs/util.c
+@@ -25,7 +25,7 @@ struct timespec64 iso_date(u8 *p, int flags)
+ 		year = (p[0] - '0') * 1000 +
+ 		       (p[1] - '0') * 100 +
+ 		       (p[2] - '0') * 10 +
+-		       (p[3] - '0') - 1900;
++		       (p[3] - '0');
+ 		month = ((p[4] - '0') * 10 + (p[5] - '0'));
+ 		day = ((p[6] - '0') * 10 + (p[7] - '0'));
+ 		hour = ((p[8] - '0') * 10 + (p[9] - '0'));
+@@ -34,7 +34,7 @@ struct timespec64 iso_date(u8 *p, int flags)
+ 		ts.tv_nsec = ((p[14] - '0') * 10 + (p[15] - '0')) * 10000000;
+ 		tz = p[16];
+ 	} else {
+-		year = p[0];
++		year = p[0] + 1900;
+ 		month = p[1];
+ 		day = p[2];
+ 		hour = p[3];
+@@ -45,10 +45,10 @@ struct timespec64 iso_date(u8 *p, int flags)
+ 		tz = flags & ISO_DATE_HIGH_SIERRA ? 0 : p[6];
+ 	}
  
--	return (sb->s_op == &erofs_sops && !sb->s_bdev) || sb->s_stack_depth;
-+	return (sb->s_op == &erofs_sops && !sb->s_bdev) || sb->s_stack_depth ||
-+	       (IS_ENABLED(CONFIG_EROFS_FS_PAGE_CACHE_SHARE) &&
-+		inode->i_fop == &erofs_ishare_fops);
- }
+-	if (year < 0) {
++	if (year < 1) {
+ 		ts.tv_sec = 0;
+ 	} else {
+-		ts.tv_sec = mktime64(year+1900, month, day, hour, minute, second);
++		ts.tv_sec = mktime64(year, month, day, hour, minute, second);
  
- static int erofs_init_device(struct erofs_buf *buf, struct super_block *sb,
-@@ -713,6 +716,9 @@ static int erofs_fc_fill_super(struct super_block *sb, struct fs_context *fc)
- 		 * EROFS is the only fs supporting file-backed mounts for now.
- 		 * It MUST change if another fs plans to support them, which
- 		 * may also require adjusting FILESYSTEM_MAX_STACK_DEPTH.
-+		 * Files shared by inode_share may be read through a
-+		 * file-backed EROFS in the same domain, so treat them as
-+		 * stacked too.
- 		 */
- 		if (erofs_is_stacked_file(sbi->dif0.file)) {
- 			erofs_err(sb, "file-backed mounts cannot be applied to stacked fses");
+ 		/* sign extend */
+ 		if (tz & 0x80)
 -- 
 2.53.0
 
