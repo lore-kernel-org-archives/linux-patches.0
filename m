@@ -1,54 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795624884;
-	b=Irf7bL9GECoWqcpaBbKkO6y3XOFGADkHfJUBL3a+liQ+RVoj7p14fscmgjnM4+1clMuN
-	 L1RvYgLEU0pRnRmTa5aSPFbuB2Pj6ZAfGoMqyfNgc1qwtW5MydZZjQ1tf8Wu57Y3uiHzC
-	 mKAcxa5CaYQEP8cI9E5XrlHay75V10CHidstAahFbdhXuOoLYT4Ml9qRWawGueCFdVmxM
-	 GTf4m77xHVYu9Tc/Tl1+brwCnJD0ucPHJLacWo197OO9iWimGGQDz6JUhqV5Zie39Lz+W
-	 BzrsVJtx/wRRStp2kxKkkVHpkglctVKVt0JGpt9EpSmc38/n7dGGfayQs378b8LfLBg==
+	t=1795624887;
+	b=P3CLf+d/usExEbs4b+HXZc990DwrTTe3eHZLArfAkXZIczMKNQ8kl8Xl0fbDH95ubdZU
+	 e73VxR2MFvznWBMXe67PNKSvzGWtvCf4vCZ3aNQEgruGlVVBqrK4dGBJnyvHqwZ4I5Sc2
+	 d/bDBGTV/3bTLVHhtgTK2NrrehGiEX/1AgHTWGvjIgmjghIQcAqtw62QgyanXhMry60cM
+	 yw15n02YsjAbBy+5L9SdjgVauvlaJ4YJMso+GCZNX1kXqaCpIvS5OIMuE30Laf6iR9t2R
+	 uInZ4HPv9s7S16iQLLSRMCB1XfWEIjKobVqR5dPgDHotuuovJfUlgKnta2YT37eACNQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795624884;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795624887;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=Ek6Ps5aIHr0dLT+U35A+0ZgV66mYoZ1oJUrhzxkJc78=;
-	b=ZvNnmlppzF7IRVtPwYKU7jYr3XxVkCT5WGxe1V/uX8+0qG8LyiLadRZaTqjliGMlDUF9
-	 rPDpao042bqQ2Msgc+X++0tfXkekzlfxcVYVibTZMGP33wqGXJStOIJ2Lsq+ozhVx7A9q
-	 DnEJfI0SVOLfJsGZ29W1JZnzPpFNDcIQpEgx4FwDWm88fOcykQ0JsPfIFW0p/6a7ZJaje
-	 kEVEwH+NRg8SiuJLwoqHhmFi4Zm7EPZpQ6TRsyJ1ssFlqQK4SPtVB1haVTC/7zxGorl6L
-	 t8GhbJNb+P+nSJJAn3qWeOciCVTp3tmRL0BTDHbip4X/+npZ+mOV8DUECttiYZqqhMg==
+	bh=nQYEpRZs6PcFW94zShNURk3NM0ExUAxeB9cPSuy5PbM=;
+	b=cprh9geSfFvKHk5ux/bx6QJqqO3bfHQtgr1SFywwX7xDokh/8WQdv/uCXTfi7zg5asUy
+	 JHIU2VtqzOQgtFBJARAfRqfCCFRoAOQzPUtsaKntYbZogh5MquckDAC4X8aA4Mof2ksVA
+	 xNwKbZvp0Pp8HNodk3V0JsFZpZthiCDHisogFJdV61QixBmtkq8POjQVIWCkUI2j6Gurr
+	 w0Z+VWdme9UPYpSPFb48YpwbtBcBE3B9LmINaCxrbAFLxcnZnXACqmy+Qun+rRlxy/51R
+	 uSGNQ1qeh9jUpHY5XQPQLxTYmGsWcZ9myCQabyyPmj0AI2Mx6nLxN0nJllG7zbeppcw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=lZzetHVv;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=xdG1zKYM;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DBBC1606A31E;
-	Wed, 25 Nov 2026 16:41:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DC9DD606A321;
+	Wed, 25 Nov 2026 16:41:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=lZzetHVv
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 732DD1F000C0;
-	Wed, 25 Nov 2026 16:41:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=xdG1zKYM
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BD1691F000C0;
+	Wed, 25 Nov 2026 16:41:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795624884;
-	bh=Ek6Ps5aIHr0dLT+U35A+0ZgV66mYoZ1oJUrhzxkJc78=;
+	s=korg; t=1795624887;
+	bh=nQYEpRZs6PcFW94zShNURk3NM0ExUAxeB9cPSuy5PbM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=lZzetHVvz2LMcLveAlDdx6LM+Dom8OxkaQ0T8Xd1ShXGcMyKF85nBV/umPH0eE0P8
-	 /8tMPx4hPKOMd95XwIQJToJUIJHDFw+NTWAsFIiFA/9iWYTdX1NPnURB+exo8ZAAHI
-	 VjygnzV+m99kuKmT+3FJs0wrHk8goHR5jN4j5otM=
+	b=xdG1zKYMUf5rETCtZwy2tKbvMOL6VtX3uJDk+L6d+JCRe5pos0eT53VRCTr04eoeQ
+	 yCXh3JpmxXy2vhHfdk/Q/XxOPQGhuKt2Cs7dkkx8Y8Bbe8DgL9TfylzSVYiampcWge
+	 mekNq0iQb6Uc6muXKjM4Vy93O8bHVNk0/K8he7bA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kyle Zeng <kylebot@openai.com>,
-	Willem de Bruijn <willemb@google.com>,
-	Eric Dumazet <edumazet@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Miklos Szeredi <miklos@szeredi.hu>,
+	Amir Goldstein <amir73il@gmail.com>,
+	Pavel Tikhomirov <ptikhomirov@virtuozzo.com>,
+	"Denis V. Lunev" <den@openvz.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 338/816] net: gro: compare skb->protocol in gro_list_prepare()
-Date: Wed, 25 Nov 2026 15:31:26 +0100
-Message-ID: <20261125143857.021792185@linuxfoundation.org>
+Subject: [PATCH 6.12 321/816] ovl: release the upperdir/workdir in-use locks before the umount sync
+Date: Wed, 25 Nov 2026 15:31:09 +0100
+Message-ID: <20261125143856.631426907@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143849.205329330@linuxfoundation.org>
 References: <20261125143849.205329330@linuxfoundation.org>
@@ -70,63 +70,140 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eric Dumazet <edumazet@kernel.org>
+From: Denis V. Lunev <den@openvz.org>
 
-[ Upstream commit 511582022bfd07475d0daa209e6e6aa5a940740d ]
+[ Upstream commit cb6c084182d4c69b7eeff0bd519dd7e018749602 ]
 
-gro_list_prepare() checks whether a held packet may belong to the same
-flow as the incoming one by comparing the device, VLAN tag, metadata
-and the link-layer header, using dev->hard_header_len as its length.
+The in-use locks on upperdir and workdir are released by ovl_free_fs()
+from ->put_super(). generic_shutdown_super() calls sync_filesystem()
+before that, and ovl_sync_fs() syncs the whole upper filesystem, so the
+locks stay held across a journal commit and a cache flush of the upper
+fs after the overlay is gone. With index=on a new overlay that uses the
+same upperdir, or uses it as a lowerdir, fails to mount in that window:
 
-On devices without a link-layer header (hard_header_len == 0), such as
-L3 GRE tunnels, no compared byte carries the outer protocol:
-skb->protocol comes from the tunnel header. Packets of different
-protocols can then stay eligible, and the GRO handler selected from the
-incoming skb->protocol parses the held packet with the wrong layout.
+  overlayfs: upperdir is in-use as upperdir/workdir of another mount,
+  mount with '-o index=off' to override exclusive upperdir protection.
 
-For example, take an IPv4/UDP packet held by UDP GRO and a
-VLAN/IPv4/TCP packet received on the same ipgre device.
-vlan_gro_receive() reads the first four bytes of the held IPv4 header
-as a VLAN header. With crafted values, the held packet survives up to
-tcp_gro_receive(), which uses its UDP header as a TCP header. With a
-short linear part, the FIN/PSH update of the held packet's TCP flags
-can then write into skb_shared_info.
+Userspace hits this when the last reference is not dropped by umount(2)
+itself. Docker with the containerd snapshotter mounts a snapshot on a
+thread with a private mount namespace for docker cp and for buildkit,
+and the superblock dies when that thread exits, after the reply to the
+client has gone out. The next request then gets EBUSY. The window grows
+with the flush latency of the upper fs and is there even if nothing was
+written through the overlay, as the mount itself dirties the upper.
 
-The VLAN, GRE, IPv4 and IPv6 GRO handlers compare the next-protocol
-field of their own header, so once the outer protocol matches, the
-inner layers are checked too. Only the outermost protocol was not
-compared.
+->kill_sb() is called once s_active drops to zero, with no mount and no
+open file left. Release the locks there, before generic_shutdown_super()
+runs. What the dying superblock still does to the upper fs, the sync and
+dropping its references to upper dentries and inodes, does not touch the
+contents of upperdir or workdir. ovl_free_fs() still releases the locks
+for a failed mount, so clear the *_locked flags to keep it from
+unlocking a second time and dropping the lock of a newer mount.
 
-Compare skb->protocol too. On Ethernet devices this is redundant with
-compare_ether_header(), but it is cheap.
+This takes the sync out of the window but does not close it: the final
+mntput of a dying mount namespace runs from task_work, after the exiting
+thread may have reported completion. Userspace that needs the
+directories free should umount(2) before saying the job is done.
 
-GUE direct IP encapsulation has a similar issue, but there both packets
-have the same outer protocol, so it is fixed separately in
-gue_gro_receive().
-
-Fixes: 60769a5dcd87 ("ipv4: gre: add GRO capability")
-Reported-by: Kyle Zeng <kylebot@openai.com>
-Reviewed-by: Willem de Bruijn <willemb@google.com>
-Signed-off-by: Eric Dumazet <edumazet@kernel.org>
-Link: https://patch.msgid.link/20261109164540.3104392-1-edumazet@kernel.org
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: 2cac0c00a6cd ("ovl: get exclusive ownership on upper/work dirs")
+Cc: Miklos Szeredi <miklos@szeredi.hu>
+Cc: Amir Goldstein <amir73il@gmail.com>
+Cc: Pavel Tikhomirov <ptikhomirov@virtuozzo.com>
+Signed-off-by: Denis V. Lunev <den@openvz.org>
+Signed-off-by: Amir Goldstein <amir73il@gmail.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/core/gro.c | 1 +
- 1 file changed, 1 insertion(+)
+ fs/overlayfs/overlayfs.h |  1 +
+ fs/overlayfs/params.c    |  5 +----
+ fs/overlayfs/super.c     | 12 +++++++++++-
+ fs/overlayfs/util.c      | 12 ++++++++++++
+ 4 files changed, 25 insertions(+), 5 deletions(-)
 
-diff --git a/net/core/gro.c b/net/core/gro.c
-index 6a730b4593e1c..f0817aa5294c3 100644
---- a/net/core/gro.c
-+++ b/net/core/gro.c
-@@ -379,6 +379,7 @@ static void gro_list_prepare(const struct list_head *head,
- 		}
+diff --git a/fs/overlayfs/overlayfs.h b/fs/overlayfs/overlayfs.h
+index 53d1f0e0c924a..a6fd11315a6e7 100644
+--- a/fs/overlayfs/overlayfs.h
++++ b/fs/overlayfs/overlayfs.h
+@@ -548,6 +548,7 @@ static inline int ovl_set_impure_dir(struct dentry *dentry)
+ bool ovl_inuse_trylock(struct dentry *dentry);
+ void ovl_inuse_unlock(struct dentry *dentry);
+ bool ovl_is_inuse(struct dentry *dentry);
++void ovl_inuse_unlock_all(struct ovl_fs *ofs);
+ bool ovl_need_index(struct dentry *dentry);
+ int ovl_nlink_start(struct dentry *dentry);
+ void ovl_nlink_end(struct dentry *dentry);
+diff --git a/fs/overlayfs/params.c b/fs/overlayfs/params.c
+index d8b1a43375038..17656a6d183ff 100644
+--- a/fs/overlayfs/params.c
++++ b/fs/overlayfs/params.c
+@@ -742,15 +742,12 @@ void ovl_free_fs(struct ovl_fs *ofs)
+ 	struct vfsmount **mounts;
+ 	unsigned i;
  
- 		diffs = (unsigned long)p->dev ^ (unsigned long)skb->dev;
-+		diffs |= p->protocol != skb->protocol;
- 		diffs |= p->vlan_all ^ skb->vlan_all;
- 		diffs |= skb_metadata_differs(p, skb);
- 		if (maclen == ETH_HLEN)
++	ovl_inuse_unlock_all(ofs);
+ 	iput(ofs->workbasedir_trap);
+ 	iput(ofs->workdir_trap);
+ 	dput(ofs->whiteout);
+ 	dput(ofs->workdir);
+-	if (ofs->workdir_locked)
+-		ovl_inuse_unlock(ofs->workbasedir);
+ 	dput(ofs->workbasedir);
+-	if (ofs->upperdir_locked)
+-		ovl_inuse_unlock(ovl_upper_mnt(ofs)->mnt_root);
+ 
+ 	/* Reuse ofs->config.lowerdirs as a vfsmount array before freeing it */
+ 	mounts = (struct vfsmount **) ofs->config.lowerdirs;
+diff --git a/fs/overlayfs/super.c b/fs/overlayfs/super.c
+index 6a9db5b742598..b847c475f62ba 100644
+--- a/fs/overlayfs/super.c
++++ b/fs/overlayfs/super.c
+@@ -1486,13 +1486,23 @@ int ovl_fill_super(struct super_block *sb, struct fs_context *fc)
+ 	return err;
+ }
+ 
++static void ovl_kill_sb(struct super_block *sb)
++{
++	struct ovl_fs *ofs = OVL_FS(sb);
++
++	/* Nothing can modify them now, do not hold them across the sync */
++	if (ofs)
++		ovl_inuse_unlock_all(ofs);
++	kill_anon_super(sb);
++}
++
+ struct file_system_type ovl_fs_type = {
+ 	.owner			= THIS_MODULE,
+ 	.name			= "overlay",
+ 	.init_fs_context	= ovl_init_fs_context,
+ 	.parameters		= ovl_parameter_spec,
+ 	.fs_flags		= FS_USERNS_MOUNT | FS_ALLOW_IDMAP,
+-	.kill_sb		= kill_anon_super,
++	.kill_sb		= ovl_kill_sb,
+ };
+ MODULE_ALIAS_FS("overlay");
+ 
+diff --git a/fs/overlayfs/util.c b/fs/overlayfs/util.c
+index 4c0881f0b75e0..b8adda549c473 100644
+--- a/fs/overlayfs/util.c
++++ b/fs/overlayfs/util.c
+@@ -1042,6 +1042,18 @@ bool ovl_is_inuse(struct dentry *dentry)
+ 	return inuse;
+ }
+ 
++void ovl_inuse_unlock_all(struct ovl_fs *ofs)
++{
++	if (ofs->workdir_locked) {
++		ovl_inuse_unlock(ofs->workbasedir);
++		ofs->workdir_locked = false;
++	}
++	if (ofs->upperdir_locked) {
++		ovl_inuse_unlock(ovl_upper_mnt(ofs)->mnt_root);
++		ofs->upperdir_locked = false;
++	}
++}
++
+ /*
+  * Does this overlay dentry need to be indexed on copy up?
+  */
 -- 
 2.53.0
 
