@@ -1,58 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795618977;
-	b=uWa8k2KjNDIcWsXDLid/dLpiZqGQlmHERWhF2QMXZRDGQ5JVwFihNXJMJoELLa3BQboN
-	 /YlObH/+YqRj7u5h1Wb/2bxSC2+15YNmJPeHde5GghgRPKs47W0xzxSsWQolB4vqHNSCL
-	 DOM7LX1lrkn10cqaANEjPidqT6uH/4zlryKnf4+cGTJWg+g5AWZdL9XFvK2BBQIl5RMyZ
-	 Ci1Zny8/JjorHhmO26ZoxmzRf0PQ5hTz9SoGrdPDmZqHZNn0SNu1g7voPOlprBC3Gb7Hw
-	 HH+bjMTMkidGSSyKdvzwd7P4+ecM5md1vLAl7OFS+7wCyY0GilO4WwruFrTlxkQ+k/g==
+	t=1795618980;
+	b=PZS5g0rzfeiTklMmPerSeynK1Lfj60oufYvIQfZYQqCCnrHG234YoFskAAARdyxJXfec
+	 aW2GXfh0hz5GdLl1p8pv4HdrOhI5MvfyZF3s1FNoVCK3sPTNAog/kcjkp13TJ3o/+zj8p
+	 pp9NYAkwmk8rMnSqe9XMZ/2lPAWbnqgDOvghUyD83nka8HCQZH06h4brG2eoWbpvjE56X
+	 xgu9QR/WG0Rcz9SDkosCKPG00ym+ZTseluixM9VksWL8Ws/z//wOecyUhsd8aVEBr0CKD
+	 1nkeG5CUWARn2CTSAgNq3sLbkjYSDLoS9CdeuguhmLZddP0oVjEJFjenEriIpZp0c1Q==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795618977;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795618980;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Type:Content-Transfer-Encoding;
-	bh=vjiJ7yvU4deSDaKsn0f8VsF+/ruXfOczSEjSOwOqmLo=;
-	b=FDvYgZeRMWAp+oYDjO/m8G+hZEXpWA2nNlqWY5PO1XMXtCnA31jTIAsc+NBBQ9Qsp8Xf
-	 BTJfrhtnr/m2phpM58yQY4gOfqo7vyG4vgsz+8nJZPmWEUe+tbLdG5P7BkODKSNBLcP2O
-	 H7ZGPn85Z03RVCWeiAkxGKhtRBSz0Itee0tQy/XcSLBNMk4BRvVxvaoMMDx7L1VwxrPIr
-	 FAajsBLGlF9Xwa6ICP8wxOXBldTTcYOtC3eVl5rpn1zJpWzeDqw9XXwpi/fayUzqk9RKb
-	 QU+VhvD12GgsfJIszJBMJtVFrgGiXb4CyxXzi6G4V/8VV3RSsmttrlSFqgkE3oxBUlA==
+	bh=M9csYQyH9f8paD8Q/OLfAsoIpGfJ/VG9mvkQPRNY588=;
+	b=KCpGftpnIvYTnluZLEVkwGPHhKNlwwk+rCKAUBh7ZlqWDyxYb/r0eqE6wD5eiNJICuKP
+	 6NF+GuOPrDoxgg7FpGcaTozJ8Wuw4DqEVzQNPZVtBa+1p2ixGv2xhd95YL3eesxgLThK3
+	 LvNVABhL9qdNGqbHLZ9tJeibs8BSDtEgh9WfAGzm0oOAE5L8KQ/kLz38jbqKOOH+4vt52
+	 lb7L92ZhmMPR6JcnPO+CpjOyjiGNzUY/jvqhvp6NxxMD7GoYGVTGdRkDO+77Ut0BJrvzi
+	 EU03zxUywe0PlVFrfY2juuVo9mC12i/8Ow1JR55paajQgEFxt9ATCL4iiWuFFihioUw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=2ASry1i8;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Eo2eYec3;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F0A56606A31E;
-	Wed, 25 Nov 2026 15:02:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 188F1606A329;
+	Wed, 25 Nov 2026 15:03:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=2ASry1i8
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4BCA61F000C0;
-	Wed, 25 Nov 2026 15:02:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Eo2eYec3
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 299191F000CF;
+	Wed, 25 Nov 2026 15:02:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795618976;
-	bh=vjiJ7yvU4deSDaKsn0f8VsF+/ruXfOczSEjSOwOqmLo=;
+	s=korg; t=1795618979;
+	bh=M9csYQyH9f8paD8Q/OLfAsoIpGfJ/VG9mvkQPRNY588=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=2ASry1i8/QLfC0sRyVHX4LvSzHUxZ+TxZg9LeeHCNoyMDRyHFUcQlVIFduWf+qt+V
-	 DqSJjOMk4NeHughhjnMUuDxTNp40CY7IACrstibhiD6joLebqLlg7a93CBW1SK9UyD
-	 l+lwAnITpB04CP7tEVWHbqFK+gwo1hlvZmU29uEQ=
+	b=Eo2eYec3wKoddPHWDKzIW5rGrx+brOs+q2N5QnuS3drQjzaCVRhPL2O93tc5ajkl8
+	 O4GT1SQmJ/3dBcj/X+pdmbazkrK8k7ZIc6AdVfzYQdm9Dh81wT2fTJzkRyQ2Aeqvlg
+	 KEbfoGLGmozYpon6qCCBGmfAON+Ze0NRMge2o1dg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chenguang Zhao <zhaochenguang@kylinos.cn>,
-	Aleksandr Loktionov <aleksandr.loktionov@intel.com>,
-	Jason Xing <kerneljasonxing@gmail.com>,
 	Maciej Fijalkowski <maciej.fijalkowski@intel.com>,
-	Patryk Holda <patryk.holda@intel.com>,
-	Tony Nguyen <anthony.l.nguyen@intel.com>,
 	=?UTF-8?q?Bj=C3=B6rn=20T=C3=B6pel?= <bjorn@kernel.org>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0447/1005] i40e: xsk: fix multi-buffer XDP_PASS skb construction
-Date: Wed, 25 Nov 2026 15:29:45 +0100
-Message-ID: <20261125143832.219376504@linuxfoundation.org>
+Subject: [PATCH 7.3 0448/1005] ice: xsk: free stashed Rx frame when cleaning the ring
+Date: Wed, 25 Nov 2026 15:29:46 +0100
+Message-ID: <20261125143832.243198206@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143821.729802100@linuxfoundation.org>
 References: <20261125143821.729802100@linuxfoundation.org>
@@ -75,69 +70,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chenguang Zhao <zhaochenguang@kylinos.cn>
+From: Maciej Fijalkowski <maciej.fijalkowski@intel.com>
 
-[ Upstream commit 76b41e83e69ae4ab23cc3535e36b780ea17e76c2 ]
+[ Upstream commit d5e7a86b7cd6c38a628635baace7eb2fdce14a43 ]
 
-When AF_XDP ZC receives a multi-buffer frame and the XDP program
-returns XDP_PASS, i40e_construct_skb_zc() copies frags into a new
-skb. The copy used skb_frag_page() as the memcpy source (page
-metadata instead of packet data) and passed a virtual address to
-__skb_fill_page_desc_noacc(), which expects a struct page *.
+ice_clean_rx_irq_zc() stashes a partially received multi-buffer frame
+in rx_ring->xsk, with its frags on pool->xskb_list. next_to_clean is
+already past its buffers, so ice_xsk_clean_rx_ring(), which walks
+next_to_clean..next_to_use, misses the frame, and ice_vsi_cfg_rxq()
+later clears the pointer via ring->xdp.data.
 
-Use skb_frag_address() for the copy, attach frags with
-skb_add_rx_frag() so len/data_len/truesize are updated, and on
-dev_alloc_page() failure free the skb via the shared out path so
-xsk_buff_free() still runs and previously attached pages are
-released by kfree_skb.
+The buffers are lost to user space and, as the pool outlives the ring
+across ifdown/ifup or a reset, the stale frags are taken as frags of
+the next frame. Before commit 93f53db9f9dc ("ice: switch to Page
+Pool"), the frame was tracked by rx_ring->first_desc and leaked the
+same way.
 
-Fixes: 1c9ba9c14658 ("i40e: xsk: add RX multi-buffer support")
-Signed-off-by: Chenguang Zhao <zhaochenguang@kylinos.cn>
-Reviewed-by: Aleksandr Loktionov <aleksandr.loktionov@intel.com>
-Reviewed-by: Jason Xing <kerneljasonxing@gmail.com>
-Acked-by: Maciej Fijalkowski <maciej.fijalkowski@intel.com>
-Tested-by: Patryk Holda <patryk.holda@intel.com>
-Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
+Free the stashed frame when cleaning the ring.
+
+Fixes: 1bbc04de607b ("ice: xsk: add RX multi-buffer support")
+Signed-off-by: Maciej Fijalkowski <maciej.fijalkowski@intel.com>
 Reviewed-by: Björn Töpel <bjorn@kernel.org>
-Link: https://patch.msgid.link/20261102124950.958345-8-maciej.fijalkowski@intel.com
+Link: https://patch.msgid.link/20261102124950.958345-9-maciej.fijalkowski@intel.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/intel/i40e/i40e_xsk.c | 13 +++++--------
- 1 file changed, 5 insertions(+), 8 deletions(-)
+ drivers/net/ethernet/intel/ice/ice_xsk.c | 5 +++++
+ 1 file changed, 5 insertions(+)
 
-diff --git a/drivers/net/ethernet/intel/i40e/i40e_xsk.c b/drivers/net/ethernet/intel/i40e/i40e_xsk.c
-index 624f85851a7d1..e48fee2a4229e 100644
---- a/drivers/net/ethernet/intel/i40e/i40e_xsk.c
-+++ b/drivers/net/ethernet/intel/i40e/i40e_xsk.c
-@@ -318,22 +318,19 @@ static struct sk_buff *i40e_construct_skb_zc(struct i40e_ring *rx_ring,
- 		goto out;
+diff --git a/drivers/net/ethernet/intel/ice/ice_xsk.c b/drivers/net/ethernet/intel/ice/ice_xsk.c
+index bf14ed8f87a3b..0c1ce3e86a45b 100644
+--- a/drivers/net/ethernet/intel/ice/ice_xsk.c
++++ b/drivers/net/ethernet/intel/ice/ice_xsk.c
+@@ -912,6 +912,11 @@ void ice_xsk_clean_rx_ring(struct ice_rx_ring *rx_ring)
+ 	if (xdp_rxq_info_is_reg(&rx_ring->xdp_rxq))
+ 		xdp_rxq_info_unreg(&rx_ring->xdp_rxq);
  
- 	for (int i = 0; i < nr_frags; i++) {
--		struct skb_shared_info *skinfo = skb_shinfo(skb);
- 		skb_frag_t *frag = &sinfo->frags[i];
-+		unsigned int frag_size = skb_frag_size(frag);
- 		struct page *page;
--		void *addr;
++	if (rx_ring->xsk) {
++		xsk_buff_free(&rx_ring->xsk->base);
++		rx_ring->xsk = NULL;
++	}
++
+ 	while (ntc != ntu) {
+ 		struct xdp_buff *xdp = *ice_xdp_buf(rx_ring, ntc);
  
- 		page = dev_alloc_page();
- 		if (!page) {
- 			dev_kfree_skb(skb);
--			return NULL;
-+			skb = NULL;
-+			goto out;
- 		}
--		addr = page_to_virt(page);
- 
--		memcpy(addr, skb_frag_page(frag), skb_frag_size(frag));
--
--		__skb_fill_page_desc_noacc(skinfo, skinfo->nr_frags++,
--					   addr, 0, skb_frag_size(frag));
-+		memcpy(page_to_virt(page), skb_frag_address(frag), frag_size);
-+		skb_add_rx_frag(skb, i, page, 0, frag_size, PAGE_SIZE);
- 	}
- 
- out:
 -- 
 2.53.0
 
