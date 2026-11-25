@@ -1,52 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795625585;
-	b=lMIlO1hu9iYm55qi78VSnu5So+YlhJmRMtSS/1tGkPXkYLPFU1DJ0olsLDh/GfxlDnGj
-	 KmV9FWhzlk0cVD2QfwuJ730oeQwiPDlNszHJpzUuaXXd851hT2dY8gewgkFfuzuK/S7H3
-	 tWd5/AAG+KlHe/EP90PsYPFzHifgBb4JsRzF3xrYCwufH2ZgJKeUKJsB+mtCTxljw/QAd
-	 fnH9IwmQALJ7V6ZjapBe1n3+vFbR/G6yQv2Ip9k9NZbk/m82v+HoP+DdZw0iy1/6ln1fA
-	 ehdqNEso4FcO2c5r7CbXeN/m5Oru8Omymu6g03oV7D0CjOcmi+8xOqcUBAQwFDp7nbQ==
+	t=1795625588;
+	b=vKvzsaQjcSno/IVrFe4zE0bEzU5EwnK0pQXAqV9LGV+SvUY4cI5hVrPFZ5KxKF1QucSG
+	 26uWik1g7G4OQBVBRnEoRp5D3Cc+0XBvpo7xopQ1uq3j5lMJ/xVkfVOlaCJ9Oh2KhfIqT
+	 RbynO5l/QOcvf6kOUx32IDpBuUh/xDX048kgiq1UU5UImOrnb0zxWtXSxr5kzQkjDVyPh
+	 vhN8YSDyc1XoKPrKoje9r5mJin7bG7AYZqKjYNbl7oRc/bG8Fym7hf2t2d7wuQe39Rkul
+	 rmJ8AcNH8u1sGYVBrb7CzLPS4Q43OaL+QAW418wxXbnKU/XpX/fVu7JcBv5IZvY16ww==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795625585;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795625588;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=lR9lWPdVuUZnkUFLDq0NQfDnCLTF9wpv/ETdbcpfyWY=;
-	b=w4zMtVmdWbRzxKGb/PpSJXvEXmfYICjf9vxHFuJfM+dJig+gPunGSGsyHE4v9JoKq9DC
-	 aQRHlw0pNsb54L1S0k5Cp7Z1v8nRGpicy3L/Ob3DxZV7VIaNKmflBzNYFGRNwWeP9L8sT
-	 Ta1X0BeLEtvIoFvWEy/UAUMN4ORl0FkdYy3Tv7cqlsf9iEx4U0Vnvq1XKLD+3VhEMrbD8
-	 RKOAKuB1R2lWFmDTdbKTHOQi3xCripvTGA8DtzSFuiJK5qRl4GanTS9+shpB4pEWuuA98
-	 PYfaF2L6i6rZ4G53tbPgdUcxd+bXS58CEzUVB5aYo6g8Gc3V1pLDvLdhUf8nHHjpIWg==
+	bh=ZQTk2Woue7l3NFdnbtTg8CWLfYIE6gGyIjrwS3diYRg=;
+	b=tpfWUbB/8uMz1a8Y2Q3K38oRtnuh8YM/xV3t04Tq2L04xXmH/hHF+BOYDn6XPf1zrsRs
+	 0+gfafiGjoWDdRZtp4NMlFBJmtcR6McvUXBQUU0I6Mvzagaza1uEm9jGT+JcWACZ845GY
+	 X5TEP0sH8TqUmrxFK2QXSD8C+AFfdodZgLwrRyqiyJBuKV0F4QNtxlTxeF8sWroskK6rl
+	 7WsZBmqJooqqPkqBoGF9211ErWysRWh0hRIbFX5slr/Auhgu3LHnQmw6oAG+UDTAE7MrC
+	 6jv900bXRhkZOd/E8YM8TCxlgQXaAkWxQ+R5fF/lQ1cfjHjALn+QzBLuK++CC7worVA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=0p0MnvBD;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=BVS+lpjI;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A4050606A31E;
-	Wed, 25 Nov 2026 16:53:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 751B8606A31E;
+	Wed, 25 Nov 2026 16:53:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=0p0MnvBD
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4DB081F000C4;
-	Wed, 25 Nov 2026 16:53:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=BVS+lpjI
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B9CAB1F000C4;
+	Wed, 25 Nov 2026 16:53:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795625584;
-	bh=lR9lWPdVuUZnkUFLDq0NQfDnCLTF9wpv/ETdbcpfyWY=;
+	s=korg; t=1795625588;
+	bh=ZQTk2Woue7l3NFdnbtTg8CWLfYIE6gGyIjrwS3diYRg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=0p0MnvBDFJJBfAP1tTP/usYdl4kJaqVecJtj/ZzeYexJe1v1pWVG6yhdBaFd4HEHs
-	 dYnTLlauQcWSEQtWI3sMkwRkgtQYc9rZQCVUCf9LBl5iRZYFbVjFKHUKL/S8XRwoYr
-	 MkD2pwwCY5w+OrY3PfWrzjyGrk7lcZzwUz2H2HDE=
+	b=BVS+lpjIvJzERqRhhCJGh2R32umTY5o+PZpBcZ/K/EieVaR24Q7UTfLnpV+QzGo9m
+	 IbHVU0n8nc63+pMRXMur5p38b3+hFo67JxFNzrelhn9iDAmvND7Ojs4XlhhBwEDR13
+	 CZlcT86YfC1uDqARnKPG0IMcRzqkHEifJFIBzPTE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Cen Zhang <zzzccc427@gmail.com>,
-	Takashi Iwai <tiwai@suse.de>,
+	Alexei Starovoitov <ast@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 520/816] ALSA: aloop: Keep shared timer callbacks alive through close
-Date: Wed, 25 Nov 2026 15:34:28 +0100
-Message-ID: <20261125143901.223856844@linuxfoundation.org>
+Subject: [PATCH 6.12 511/816] bpf: Dont let an extension reach further into the context than its target
+Date: Wed, 25 Nov 2026 15:34:19 +0100
+Message-ID: <20261125143901.013415408@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143849.205329330@linuxfoundation.org>
 References: <20261125143849.205329330@linuxfoundation.org>
@@ -68,108 +67,64 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Cen Zhang <zzzccc427@gmail.com>
+From: Alexei Starovoitov <ast@kernel.org>
 
-[ Upstream commit a7d4d780f34b9e43eefab6a7e6c9f4101f2c144e ]
+[ Upstream commit fcbfa99aa657627528b75e7dc1023bcb0b84e558 ]
 
-The shared sound-timer callback must finish using the selected PCM
-runtimes before a close can detach them. loopback_snd_timer_period_elapsed()
-saves the active substreams under cable->lock, then drops the lock before
-calling snd_pcm_period_elapsed() or snd_pcm_stop_xrun(). The sound-timer
-backend has no per-stream close drain, and free_cable() keeps the timer
-open when the paired endpoint remains attached.
+How large the context of a raw tracepoint, tracepoint or syscall program
+is depends on what the program is attached to, or is run with.
+bpf_probe_register(), perf_event_set_bpf_prog() and the test runs compare
+that with max_ctx_offset of the program.
 
-With both directions running on a shared sound timer, playback can be
-dropped and closed while a notification is pending. Capture keeps the
-timer alive, allowing this order:
+An extension of the program, or of one of its global functions, gets the
+same context.  How far it reaches is noted in its own max_ctx_offset, which
+nobody looks at.  On a tracepoint with one argument it reads the stack
+behind the arguments, in a test run the memory behind the context, or
+from NULL if there is none:
 
-  Timer callback                       Playback owner
-  --------------                       --------------
-  select playback under cable->lock
-  unlock; delay notification
-                                       DROP; HW_FREE -> OPEN
-                                       close: snd_pcm_drop(); unlock
-                                       free_cable(); peer stays alive
-  snd_pcm_period_elapsed()
-    lock stream; cache runtime
-                                       snd_pcm_detach_substream()
-                                         free runtime and its fasync
-    read runtime->fasync
+  BUG: KASAN: stack-out-of-bounds in bpf_prog_954b5d2051843629_ts28_ext_far+0x7e/0x113
+  Read of size 8 at addr ffffc90000def7b8 by task ts28/104
 
-The stream lock taken by snd_pcm_drop() cannot protect a notification
-that starts after it returns, and detach does not take it. The callback
-can therefore read runtime->fasync after the runtime has been freed, and
-an escaped notification can also reach a replacement runtime if the same
-substream slot is reopened before the notification resumes.
+  BUG: KASAN: slab-out-of-bounds in bpf_prog_954b5d2051843629_ts28_ext_far+0x7e/0x113
+  Read of size 8 at addr ffff88810712c3e8 by task ts28/104
 
-Take the existing cable->stop_count reference under cable->lock when
-selecting the targets and release it after the PCM callbacks finish,
-including the XRUN path. free_cable() already removes the closing
-endpoint under that lock and waits for stop_count before returning, so
-runtime detach and slot reuse cannot overtake the notification.
+Refuse to attach an extension that reaches further than the program which
+it extends.  A program that leaves the context to its extensions has to
+touch as much of it as they do.
 
-Fixes: 26c53379f98d ("ALSA: aloop: Support selection of snd_timer instead of jiffies")
-Signed-off-by: Cen Zhang <zzzccc427@gmail.com>
-Assisted-by: LLM
-Link: https://patch.msgid.link/pm-pmb-275c4399f517e09d7188-v2-2f64c1328529ef7a8fec@gmail.com
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
-[ sashal: Replaced snd_refcount get/put with atomic_inc/atomic_dec_and_test plus wake_up on the existing stop_count, and adapted the function body to the spin_lock_irqsave form instead of scoped_guard. ]
+Fixes: be8704ff07d2 ("bpf: Introduce dynamic program extensions")
+Signed-off-by: Alexei Starovoitov <ast@kernel.org>
+Link: https://patch.msgid.link/20261017230950.802052-3-alexei.starovoitov@gmail.com
+[ sashal: Dropped the missing kprobe_write_ctx context block, so the new max_ctx_offset check for EXT programs is inserted after the trampoline/tgt_prog selection instead. ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/drivers/aloop.c | 12 +++++++++---
- 1 file changed, 9 insertions(+), 3 deletions(-)
+ kernel/bpf/syscall.c | 13 +++++++++++++
+ 1 file changed, 13 insertions(+)
 
-diff --git a/sound/drivers/aloop.c b/sound/drivers/aloop.c
-index fa8d2877516d9..7c69f5141ed2e 100644
---- a/sound/drivers/aloop.c
-+++ b/sound/drivers/aloop.c
-@@ -98,7 +98,7 @@ struct loopback_ops {
- struct loopback_cable {
- 	spinlock_t lock;
- 	struct loopback_pcm *streams[2];
--	/* in-flight peer stops running outside cable->lock */
-+	/* in-flight PCM callbacks running outside cable->lock */
- 	atomic_t stop_count;
- 	wait_queue_head_t stop_wait;
- 	struct snd_pcm_hardware hw;
-@@ -809,6 +809,8 @@ static void loopback_snd_timer_period_elapsed(struct loopback_cable *cable,
- 	valid_runtime = (running & (1 << SNDRV_PCM_STREAM_PLAYBACK)) ?
- 				dpcm_play->substream->runtime :
- 				dpcm_capt->substream->runtime;
-+	/* Keep runtimes alive through the PCM callbacks. */
-+	atomic_inc(&cable->stop_count);
- 
- 	/* resolution is only valid for SNDRV_TIMER_EVENT_TICK events */
- 	if (event == SNDRV_TIMER_EVENT_TICK) {
-@@ -823,7 +825,7 @@ static void loopback_snd_timer_period_elapsed(struct loopback_cable *cable,
- 				snd_pcm_stop_xrun(substream_play);
- 			if (substream_capt)
- 				snd_pcm_stop_xrun(substream_capt);
--			return;
-+			goto exit;
- 		}
+diff --git a/kernel/bpf/syscall.c b/kernel/bpf/syscall.c
+index 8fd823047c3a0..2626189f746ba 100644
+--- a/kernel/bpf/syscall.c
++++ b/kernel/bpf/syscall.c
+@@ -3452,6 +3452,19 @@ static int bpf_tracing_prog_attach(struct bpf_prog *prog,
+ 		tr = prog->aux->dst_trampoline;
+ 		tgt_prog = prog->aux->dst_prog;
  	}
++	/*
++	 * The size of these contexts depends on what the program is attached
++	 * to, or run with. That is compared with max_ctx_offset of the program,
++	 * and nobody looks at the one of its extensions.
++	 */
++	if (prog->type == BPF_PROG_TYPE_EXT &&
++	    (tgt_prog->type == BPF_PROG_TYPE_RAW_TRACEPOINT ||
++	     tgt_prog->type == BPF_PROG_TYPE_TRACEPOINT ||
++	     tgt_prog->type == BPF_PROG_TYPE_SYSCALL) &&
++	    prog->aux->max_ctx_offset > tgt_prog->aux->max_ctx_offset) {
++		err = -EINVAL;
++		goto out_unlock;
++	}
  
-@@ -847,6 +849,10 @@ static void loopback_snd_timer_period_elapsed(struct loopback_cable *cable,
- 		snd_pcm_period_elapsed(substream_play);
- 	if (substream_capt)
- 		snd_pcm_period_elapsed(substream_capt);
-+
-+exit:
-+	if (atomic_dec_and_test(&cable->stop_count))
-+		wake_up(&cable->stop_wait);
- }
- 
- static void loopback_snd_timer_function(struct snd_timer_instance *timeri,
-@@ -1092,7 +1098,7 @@ static void free_cable(struct snd_pcm_substream *substream)
- 		other_alive = cable->streams[!substream->stream];
- 	}
- 
--	/* Pair with the stop_count increment in loopback_check_format(). */
-+	/* Wait for PCM callbacks running outside cable->lock. */
- 	wait_event(cable->stop_wait, !atomic_read(&cable->stop_count));
- 	if (other_alive)
- 		return;
+ 	err = bpf_link_prime(&link->link.link, &link_primer);
+ 	if (err)
 -- 
 2.53.0
 
