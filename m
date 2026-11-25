@@ -1,42 +1,42 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795619129;
-	b=pMINyHmY3gDWJCBd3R9drJyOQmxinpurepnJkOg++gIpKqqa7z6BBbW/cpmPC4rymv5t
-	 0uVkAPfJdwU8WzIAcBfMqmtWOi0MXxYTfPEt1r5nSFSwxalrRjMNYYDkllANC1OeJpUKh
-	 TgF6n0lTjrNRoPlTcbeY4hrKKo+R6pYXomCWFHS3OVOMCRAZHPSYKY4OccHeCc2ZHErxz
-	 AWtlxuLg1p+lp6gDuL1n5R89Sfgqz88/YgDXLCRgEMihEPtxzYvgK4ReiDEMWbrt283xU
-	 RxItBRlz7ITsQySsz6+cFjc9kRUylPjWZOXFgJzeJxTgs3o7rEOSjyPIF+LL9BY2cWA==
+	t=1795619132;
+	b=DJtpTURItOKmC3J2M8quQGYXn74DtY4BoTJ8HPTaXrJ4SdYp8CWjyfF4fKfffq8OGKoM
+	 WT0fwAsqY89YgM94Yc7nUAByA8IM6IVRjBwp31+a7CNvd14o5e/Od49Xulnwh8asslXZI
+	 RKBtgrYdvRUkxc5hnuhW/2ye2xz2qWY9Mh8yc8hUr5fK2D3WbgJGqw/gNJse4Oz9mXXBl
+	 68IMl60r/+GbM5oDhk1D+TcqUvaQsSwOj5JhXEZHbyAz/AY6M5dJgXiDUiGseVJv2Pbc9
+	 JY0msvaTqb1GrLNzolBCb+Y57amt1SkETSe8oZuEcInJX/GanYhcAAZLq6nklid4Aaw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795619129;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795619132;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=h/fd3B16Av7iEx4vWwRIT35b62dBJ6fYvP8EOm5OPzg=;
-	b=trz+Eh3beaT6k512AiQ6jbArdrmGdHg/oQ1fz6AndFxRpXUj1kTcE3OV6dsntHHFeovM
-	 ETi8EvYHhuFgbo9uKGShYWlD4RXflQJ19Cuy15NnC4g57j4AUnG85tDpBku6ZiqxhhQBJ
-	 cgx2jJ5yRXyLhvptcAATM8/mLt6sZHXaYvt95XRUOb6PHr6MGlzb6uPie45+GUa5tpPVR
-	 +DXc4O9fIwrP/dTt5cs9wSgb0euaR6dCbaIrXqkyLxQZmeAqiRSdTWT8Wkt6OXcPy+TF3
-	 Hl8Q6cchOc6XihiOHoO7DMNHrPgIG374blIGV7dx0pguHPwUUoalmcUO7Dse2zF7vsA==
+	bh=4yyVXTJBGgMOwQzOplBA3YmZmIMaR/PmuPPRSQy+gkw=;
+	b=NFIaOUG6NquNQklv+YH//XOc9jBXta5RzcyDlFZMrPpuoE3auWqRJ1v8KU6RRrM6zhqI
+	 rCSDvgKEl5qBS3II1SoDH4w9eL4c3sTNsa9jnKFYRRUzhyVMDO7Nz4VShmTpevSfwRLO0
+	 z2HwHzPoX1EbFX8hCDJInw4rnotslbE1VzuPeA0whcaoI8Wf73WSwznwevSBaFQYGs7I3
+	 FtTgsLe/xDjP0tCrNd0uWvOskrwoOkwin2wRwz4hEI99K1aBiCT4Y0fm/gUKJ1YGdX3NM
+	 RasJriBG8N7Hdnpw1/C2+dCtRYWTHVGihekIh7JIqpvUI+eN1Q32Lit/EFDZEFdTC+A==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=wDCtj99B;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=hjAUTHDD;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 02CB0606A31E;
-	Wed, 25 Nov 2026 15:05:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 43835606A32C;
+	Wed, 25 Nov 2026 15:05:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=wDCtj99B
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 033961F000D2;
-	Wed, 25 Nov 2026 15:05:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=hjAUTHDD
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 23E621F000CF;
+	Wed, 25 Nov 2026 15:05:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795619128;
-	bh=h/fd3B16Av7iEx4vWwRIT35b62dBJ6fYvP8EOm5OPzg=;
+	s=korg; t=1795619131;
+	bh=4yyVXTJBGgMOwQzOplBA3YmZmIMaR/PmuPPRSQy+gkw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=wDCtj99Bie3dWuQ3hY45A/S7Ejlw77VZh+YHCm0s8O+fMdHQpvhLAuwrg4e5Ck4N/
-	 +3TRN4fNJzyDioGENuhtzh15Df9EPcp/cOUINVHSuReTIkqNHOikQ70b/EqvS6Hmd5
-	 k+TAxhurqACjLQTtt/qck3ip9yGdrAiaMurplA6g=
+	b=hjAUTHDDwWgDBin57BjZfs7TRSJ0I8dTGVtyIukTX0VQjK2Ufr3+5fiA0S6EYNvlF
+	 dNQU0T4inpv4pETpQHG6QQWL/R+QDGt7qqJolim0t4WxOjhiRfCTX7/UJIL99DpU2O
+	 JMWQrKNgd0t0nZwEIqi4guvXCk7T48Y1Hax13/ho=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -46,9 +46,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Tariq Toukan <tariqt@nvidia.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0497/1005] net/mlx5e: Release IPsec root table reference on RX setup failure
-Date: Wed, 25 Nov 2026 15:30:35 +0100
-Message-ID: <20261125143833.387018387@linuxfoundation.org>
+Subject: [PATCH 7.3 0498/1005] net/mlx5e: Serialize ipsec encap reservations with eswitch operations
+Date: Wed, 25 Nov 2026 15:30:36 +0100
+Message-ID: <20261125143833.410307180@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143821.729802100@linuxfoundation.org>
 References: <20261125143821.729802100@linuxfoundation.org>
@@ -72,136 +72,213 @@ Content-Transfer-Encoding: 8bit
 
 From: Cosmin Ratiu <cratiu@nvidia.com>
 
-[ Upstream commit e8303b58108519ff103241442c0a7602fa106af5 ]
+[ Upstream commit b102f927c69e2d7cf849bcfb7f7b0cd6e52fc1b0 ]
 
-Switchdev RX setup takes a root-chain table reference before creating
-its flow tables. If creation fails, rx_get() returns without
-incrementing the RX reference count, so rx_destroy() never releases the
-chain reference.
+mlx5_eswitch_block_encap() takes mode_lock but ignores
+eswitch_operation_in_progress. mlx5_devlink_eswitch_encap_mode_set()
+claims the operation and drops mode_lock while rebuilding the FDB and
+updating offloads.encap, so a reservation can read a stale or
+rolled-back encap value. In diagram form:
 
-Extract the cleanup logic in a counter-partner to the function acquiring
-the root table ref, and call it on error to properly release everything.
-Also call it from the normal destroy path to reduce code duplication.
+T1: first IPsec SA (NIC table)   T2: encap none -> basic
+                                 mlx5_devlink_eswitch_encap_mode_set()
+                                   down_write(&esw->mode_lock)
+                                   sees num_block_encap == 0
+                                   eswitch_operation_in_progress = true
+                                   up_write(&esw->mode_lock)
+                                   esw_destroy_offloads_fdb_tables()
+mlx5e_xfrm_add_state()
+  mlx5e_ipsec_fs_tunnel_allowed()
+    mlx5_eswitch_block_encap()
+      down_write(&esw->mode_lock)
+      reads encap == NONE
+      num_block_encap++
+      up_write(&esw->mode_lock)
+                                   esw->offloads.encap = BASIC
+                                   esw_create_offloads_fdb_tables()
 
-mlx5_esw_ipsec_rx_status_pass_dest_get() ignored chain table acquisition
-errors, returning success with an error pointer as the destination. The
-new unwind could then release a reference that was never taken.
-Propagate the error so cleanup only runs after a successful get.
+The race happens therefore because offloads.encap is not consistently
+accessed under mode_lock. There are other variations of the above race
+(e.g. in rollback, or in tx_create()).
 
-Discovered by Sashiko. Not triggered as it's an unlikely error path.
+Use mlx5_esw_lock() to reject a reservation while an operation is in
+progress. This implies changing mlx5e_ipsec_fs_tunnel_allowed() to
+propagate the error. Note that these are not new failure modes as it
+seems on first glance, because if the eswitch_operation_in_progress flag
+is set, rx_get()/tx_get()->mlx5_eswitch_block_mode() already fails with
+-EBUSY. The new code simply protects against an operation initiated in
+the short window after mlx5_eswitch_block_mode().
 
-Fixes: 1762f132d542 ("net/mlx5e: Support IPsec packet offload for RX in switchdev mode")
+This race was found by Sashiko during inspection of another patch of
+this series. No attempt has been made to trigger it, as it requires very
+precise timing.
+
+Fixes: baac8351f74c ("net/mlx5e: Reduce eswitch mode_lock protection context")
 Signed-off-by: Cosmin Ratiu <cratiu@nvidia.com>
 Reviewed-by: Jianbo Liu <jianbol@nvidia.com>
 Signed-off-by: Tariq Toukan <tariqt@nvidia.com>
-Link: https://patch.msgid.link/20261105211637.1083978-2-tariqt@nvidia.com
+Link: https://patch.msgid.link/20261105211637.1083978-3-tariqt@nvidia.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../mellanox/mlx5/core/en_accel/ipsec_fs.c    | 20 +++++++++++--------
- .../mellanox/mlx5/core/esw/ipsec_fs.c         | 15 ++++++++++++--
- .../mellanox/mlx5/core/esw/ipsec_fs.h         |  6 ++++++
- 3 files changed, 31 insertions(+), 10 deletions(-)
+ .../mellanox/mlx5/core/en_accel/ipsec.c       |  5 ++++-
+ .../mellanox/mlx5/core/en_accel/ipsec.h       |  2 +-
+ .../mellanox/mlx5/core/en_accel/ipsec_fs.c    | 21 ++++++++++++-------
+ .../net/ethernet/mellanox/mlx5/core/eswitch.h |  6 +++---
+ .../mellanox/mlx5/core/eswitch_offloads.c     | 20 +++++++++++-------
+ 5 files changed, 35 insertions(+), 19 deletions(-)
 
+diff --git a/drivers/net/ethernet/mellanox/mlx5/core/en_accel/ipsec.c b/drivers/net/ethernet/mellanox/mlx5/core/en_accel/ipsec.c
+index e6dd911475e31..a8c7f09f903fc 100644
+--- a/drivers/net/ethernet/mellanox/mlx5/core/en_accel/ipsec.c
++++ b/drivers/net/ethernet/mellanox/mlx5/core/en_accel/ipsec.c
+@@ -812,7 +812,10 @@ static int mlx5e_xfrm_add_state(struct net_device *dev,
+ 
+ 	if (x->props.mode == XFRM_MODE_TUNNEL &&
+ 	    x->xso.type == XFRM_DEV_OFFLOAD_PACKET) {
+-		allow_tunnel_mode = mlx5e_ipsec_fs_tunnel_allowed(sa_entry);
++		err = mlx5e_ipsec_fs_tunnel_allowed(sa_entry);
++		if (err < 0)
++			goto unblock_mode;
++		allow_tunnel_mode = err;
+ 		if (!allow_tunnel_mode) {
+ 			NL_SET_ERR_MSG_MOD(extack,
+ 					   "Packet offload tunnel mode is disabled due to encap settings");
+diff --git a/drivers/net/ethernet/mellanox/mlx5/core/en_accel/ipsec.h b/drivers/net/ethernet/mellanox/mlx5/core/en_accel/ipsec.h
+index abcbd38db9dbb..f4b2d7b950c00 100644
+--- a/drivers/net/ethernet/mellanox/mlx5/core/en_accel/ipsec.h
++++ b/drivers/net/ethernet/mellanox/mlx5/core/en_accel/ipsec.h
+@@ -320,7 +320,7 @@ void mlx5e_accel_ipsec_fs_del_rule(struct mlx5e_ipsec_sa_entry *sa_entry);
+ int mlx5e_accel_ipsec_fs_add_pol(struct mlx5e_ipsec_pol_entry *pol_entry);
+ void mlx5e_accel_ipsec_fs_del_pol(struct mlx5e_ipsec_pol_entry *pol_entry);
+ void mlx5e_accel_ipsec_fs_modify(struct mlx5e_ipsec_sa_entry *sa_entry);
+-bool mlx5e_ipsec_fs_tunnel_allowed(struct mlx5e_ipsec_sa_entry *sa_entry);
++int mlx5e_ipsec_fs_tunnel_allowed(struct mlx5e_ipsec_sa_entry *sa_entry);
+ 
+ int mlx5_ipsec_create_sa_ctx(struct mlx5e_ipsec_sa_entry *sa_entry);
+ void mlx5_ipsec_free_sa_ctx(struct mlx5e_ipsec_sa_entry *sa_entry);
 diff --git a/drivers/net/ethernet/mellanox/mlx5/core/en_accel/ipsec_fs.c b/drivers/net/ethernet/mellanox/mlx5/core/en_accel/ipsec_fs.c
-index 8ffa8068e90ac..fd9fbf3593330 100644
+index fd9fbf3593330..1529d47303234 100644
 --- a/drivers/net/ethernet/mellanox/mlx5/core/en_accel/ipsec_fs.c
 +++ b/drivers/net/ethernet/mellanox/mlx5/core/en_accel/ipsec_fs.c
-@@ -720,6 +720,16 @@ static void ipsec_rx_sa_selector_destroy(struct mlx5_core_dev *mdev,
- 	mlx5_destroy_flow_table(rx->ft.sa_sel);
+@@ -1072,9 +1072,12 @@ static int rx_create(struct mlx5_core_dev *mdev, struct mlx5e_ipsec *ipsec,
+ 		goto err_fs_ft_sa_sel;
+ 
+ 	/* Create FT */
+-	if (mlx5_ipsec_device_caps(mdev) & MLX5_IPSEC_CAP_TUNNEL)
+-		rx->allow_tunnel_mode =
+-			mlx5_eswitch_block_encap(mdev, rx == ipsec->rx_esw);
++	if (mlx5_ipsec_device_caps(mdev) & MLX5_IPSEC_CAP_TUNNEL) {
++		err = mlx5_eswitch_block_encap(mdev, rx == ipsec->rx_esw);
++		if (err < 0)
++			goto err_fs_ft;
++		rx->allow_tunnel_mode = err;
++	}
+ 
+ 	if (rx->allow_tunnel_mode)
+ 		flags = MLX5_FLOW_TABLE_TUNNEL_EN_REFORMAT;
+@@ -1315,9 +1318,12 @@ static int tx_create(struct mlx5e_ipsec *ipsec, struct mlx5e_ipsec_tx *tx,
+ 	if (err)
+ 		goto err_status_rule;
+ 
+-	if (mlx5_ipsec_device_caps(mdev) & MLX5_IPSEC_CAP_TUNNEL)
+-		tx->allow_tunnel_mode =
+-			mlx5_eswitch_block_encap(mdev, tx == ipsec->tx_esw);
++	if (mlx5_ipsec_device_caps(mdev) & MLX5_IPSEC_CAP_TUNNEL) {
++		err = mlx5_eswitch_block_encap(mdev, tx == ipsec->tx_esw);
++		if (err < 0)
++			goto err_encap;
++		tx->allow_tunnel_mode = err;
++	}
+ 
+ 	if (tx->allow_tunnel_mode)
+ 		flags = MLX5_FLOW_TABLE_TUNNEL_EN_REFORMAT;
+@@ -1387,6 +1393,7 @@ static int tx_create(struct mlx5e_ipsec *ipsec, struct mlx5e_ipsec_tx *tx,
+ err_sa_ft:
+ 	if (tx->allow_tunnel_mode)
+ 		mlx5_eswitch_unblock_encap(mdev);
++err_encap:
+ 	mlx5_del_flow_rules(tx->status.rule);
+ err_status_rule:
+ 	mlx5_destroy_flow_table(tx->ft.status);
+@@ -2854,7 +2861,7 @@ void mlx5e_accel_ipsec_fs_modify(struct mlx5e_ipsec_sa_entry *sa_entry)
+ 	memcpy(sa_entry, &sa_entry_shadow, sizeof(*sa_entry));
  }
  
-+static void
-+ipsec_rx_status_pass_dest_put(struct mlx5e_ipsec *ipsec,
-+			      struct mlx5e_ipsec_rx *rx,
-+			      u32 family)
-+{
-+	mlx5_ipsec_fs_roce_rx_destroy(ipsec->roce, family, ipsec->mdev);
-+	if (rx == ipsec->rx_esw)
-+		mlx5_esw_ipsec_rx_status_pass_dest_put(ipsec);
-+}
-+
- static void rx_destroy(struct mlx5_core_dev *mdev, struct mlx5e_ipsec *ipsec,
- 		       struct mlx5e_ipsec_rx *rx, u32 family)
+-bool mlx5e_ipsec_fs_tunnel_allowed(struct mlx5e_ipsec_sa_entry *sa_entry)
++int mlx5e_ipsec_fs_tunnel_allowed(struct mlx5e_ipsec_sa_entry *sa_entry)
  {
-@@ -739,13 +749,7 @@ static void rx_destroy(struct mlx5_core_dev *mdev, struct mlx5e_ipsec *ipsec,
+ 	struct mlx5e_ipsec *ipsec = sa_entry->ipsec;
+ 	struct xfrm_state *x = sa_entry->x;
+diff --git a/drivers/net/ethernet/mellanox/mlx5/core/eswitch.h b/drivers/net/ethernet/mellanox/mlx5/core/eswitch.h
+index 8b1f93b13ea9c..c904860df7b3e 100644
+--- a/drivers/net/ethernet/mellanox/mlx5/core/eswitch.h
++++ b/drivers/net/ethernet/mellanox/mlx5/core/eswitch.h
+@@ -967,7 +967,7 @@ void mlx5_eswitch_unload_reps(struct mlx5_eswitch *esw);
+ bool mlx5_eswitch_is_peer(struct mlx5_eswitch *esw,
+ 			  struct mlx5_eswitch *peer_esw);
  
- 	ipsec_rx_policy_destroy(rx);
+-bool mlx5_eswitch_block_encap(struct mlx5_core_dev *dev, bool from_fdb);
++int mlx5_eswitch_block_encap(struct mlx5_core_dev *dev, bool from_fdb);
+ void mlx5_eswitch_unblock_encap(struct mlx5_core_dev *dev);
  
--	mlx5_ipsec_fs_roce_rx_destroy(ipsec->roce, family, mdev);
--
--#ifdef CONFIG_MLX5_ESWITCH
--	if (rx == ipsec->rx_esw)
--		mlx5_chains_put_table(esw_chains(ipsec->mdev->priv.eswitch),
--				      0, 1, 0);
--#endif
-+	ipsec_rx_status_pass_dest_put(ipsec, rx, family);
- }
+ int mlx5_eswitch_block_mode(struct mlx5_core_dev *dev);
+@@ -1071,10 +1071,10 @@ mlx5_eswitch_reload_ib_reps(struct mlx5_eswitch *esw)
+ static inline void
+ mlx5_eswitch_unload_reps(struct mlx5_eswitch *esw) {}
  
- static void ipsec_rx_create_attr_set(struct mlx5e_ipsec *ipsec,
-@@ -1115,7 +1119,7 @@ static int rx_create(struct mlx5_core_dev *mdev, struct mlx5e_ipsec *ipsec,
- err_fs_ft_sa_sel:
- 	mlx5_destroy_flow_table(rx->ft.status);
- err_fs_ft_status:
--	mlx5_ipsec_fs_roce_rx_destroy(ipsec->roce, family, mdev);
-+	ipsec_rx_status_pass_dest_put(ipsec, rx, family);
- 	return err;
- }
- 
-diff --git a/drivers/net/ethernet/mellanox/mlx5/core/esw/ipsec_fs.c b/drivers/net/ethernet/mellanox/mlx5/core/esw/ipsec_fs.c
-index ab50d2c734ede..f8c97954b6eaf 100644
---- a/drivers/net/ethernet/mellanox/mlx5/core/esw/ipsec_fs.c
-+++ b/drivers/net/ethernet/mellanox/mlx5/core/esw/ipsec_fs.c
-@@ -34,12 +34,23 @@ void mlx5_esw_ipsec_rx_create_attr_set(struct mlx5e_ipsec *ipsec,
- int mlx5_esw_ipsec_rx_status_pass_dest_get(struct mlx5e_ipsec *ipsec,
- 					   struct mlx5_flow_destination *dest)
+-static inline bool
++static inline int
+ mlx5_eswitch_block_encap(struct mlx5_core_dev *dev, bool from_fdb)
  {
--	dest->type = MLX5_FLOW_DESTINATION_TYPE_FLOW_TABLE;
--	dest->ft = mlx5_chains_get_table(esw_chains(ipsec->mdev->priv.eswitch), 0, 1, 0);
-+	struct mlx5_flow_table *ft;
-+
-+	ft = mlx5_chains_get_table(esw_chains(ipsec->mdev->priv.eswitch),
-+				   0, 1, 0);
-+	if (IS_ERR(ft))
-+		return PTR_ERR(ft);
- 
-+	dest->type = MLX5_FLOW_DESTINATION_TYPE_FLOW_TABLE;
-+	dest->ft = ft;
- 	return 0;
+-	return true;
++	return 1;
  }
  
-+void mlx5_esw_ipsec_rx_status_pass_dest_put(struct mlx5e_ipsec *ipsec)
-+{
-+	mlx5_chains_put_table(esw_chains(ipsec->mdev->priv.eswitch), 0, 1, 0);
-+}
-+
- int mlx5_esw_ipsec_rx_setup_modify_header(struct mlx5e_ipsec_sa_entry *sa_entry,
- 					  struct mlx5_flow_act *flow_act)
- {
-diff --git a/drivers/net/ethernet/mellanox/mlx5/core/esw/ipsec_fs.h b/drivers/net/ethernet/mellanox/mlx5/core/esw/ipsec_fs.h
-index 514c15258b1d1..bb6f2423078bd 100644
---- a/drivers/net/ethernet/mellanox/mlx5/core/esw/ipsec_fs.h
-+++ b/drivers/net/ethernet/mellanox/mlx5/core/esw/ipsec_fs.h
-@@ -12,6 +12,7 @@ void mlx5_esw_ipsec_rx_create_attr_set(struct mlx5e_ipsec *ipsec,
- 				       struct mlx5e_ipsec_rx_create_attr *attr);
- int mlx5_esw_ipsec_rx_status_pass_dest_get(struct mlx5e_ipsec *ipsec,
- 					   struct mlx5_flow_destination *dest);
-+void mlx5_esw_ipsec_rx_status_pass_dest_put(struct mlx5e_ipsec *ipsec);
- int mlx5_esw_ipsec_rx_setup_modify_header(struct mlx5e_ipsec_sa_entry *sa_entry,
- 					  struct mlx5_flow_act *flow_act);
- void mlx5_esw_ipsec_rx_id_mapping_remove(struct mlx5e_ipsec_sa_entry *sa_entry);
-@@ -32,6 +33,11 @@ static inline int mlx5_esw_ipsec_rx_status_pass_dest_get(struct mlx5e_ipsec *ips
- 	return -EINVAL;
+ static inline void mlx5_eswitch_unblock_encap(struct mlx5_core_dev *dev)
+diff --git a/drivers/net/ethernet/mellanox/mlx5/core/eswitch_offloads.c b/drivers/net/ethernet/mellanox/mlx5/core/eswitch_offloads.c
+index eb74b62601682..f298e72eeec53 100644
+--- a/drivers/net/ethernet/mellanox/mlx5/core/eswitch_offloads.c
++++ b/drivers/net/ethernet/mellanox/mlx5/core/eswitch_offloads.c
+@@ -4689,25 +4689,31 @@ int mlx5_devlink_eswitch_inline_mode_get(struct devlink *devlink, u8 *mode)
+ 	return esw_inline_mode_to_devlink(esw->offloads.inline_mode, mode);
  }
  
-+static inline
-+void mlx5_esw_ipsec_rx_status_pass_dest_put(struct mlx5e_ipsec *ipsec)
-+{
-+}
-+
- static inline int mlx5_esw_ipsec_rx_setup_modify_header(struct mlx5e_ipsec_sa_entry *sa_entry,
- 							struct mlx5_flow_act *flow_act)
+-bool mlx5_eswitch_block_encap(struct mlx5_core_dev *dev, bool from_fdb)
++/* Return 1 if allowed, 0 if disallowed by the configuration, or -EBUSY
++ * if an eswitch operation is in progress.
++ */
++int mlx5_eswitch_block_encap(struct mlx5_core_dev *dev, bool from_fdb)
  {
+ 	struct mlx5_eswitch *esw = dev->priv.eswitch;
+ 	enum devlink_eswitch_encap_mode encap;
+-	bool allow_tunnel = false;
++	int ret;
+ 
+ 	if (!mlx5_esw_allowed(esw))
+-		return true;
++		return 1;
++
++	ret = mlx5_esw_lock(esw);
++	if (ret)
++		return ret;
+ 
+-	down_write(&esw->mode_lock);
+ 	encap = esw->offloads.encap;
+ 	if (esw->mode == MLX5_ESWITCH_LEGACY ||
+ 	    (encap == DEVLINK_ESWITCH_ENCAP_MODE_NONE && !from_fdb)) {
+-		allow_tunnel = true;
++		ret = 1;
+ 		esw->offloads.num_block_encap++;
+ 	}
+-	up_write(&esw->mode_lock);
++	mlx5_esw_unlock(esw);
+ 
+-	return allow_tunnel;
++	return ret;
+ }
+ 
+ void mlx5_eswitch_unblock_encap(struct mlx5_core_dev *dev)
 -- 
 2.53.0
 
