@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795619039;
-	b=Hh0HusDbNiKxc+LwaKkv6jHwgGp9kmMjrKx9VByFR0VN0cmj84xXHUitZlm6Txe1e3FS
-	 GoAahVKMl6ZbdxT1IGskFbY8ulUZJi1ehm1jXIEQO6uwmCqpt+1KdtUq84vNXOTT2wsre
-	 dpgNvmTTA6BQuWSab8/hV+QXCYF144jU5xmvRsS985DEJz+pg6gl7P+GA7Ahv0dVGY7xY
-	 QMGp8M73q1KvWzfpzDnvxi+XrWgaGVXJC9Z/a0AKTD5Y3Z6C0ArZBxQedYduN0X/VsU8f
-	 10dCGVdYjCPCJbOOu4KDrDaeyW39fRzxx5wgdxjThRNLCogtx+oFXpiXEUBpo/7kJDQ==
+	t=1795619042;
+	b=OsuegJ3Ei32VUqb5B311yLzvrmarR4K6d1d75JpA5vCbBiNzx62leR/GO1FBRgyMtmOI
+	 HKsUWy4tEbcCTZaTZDTSrSg5hBdbUHzmGNS8ocpY6lEcH9W3137a9XbAgadXn+vv0bOGM
+	 7TYp3d/XwPjxGFOflCLaOfrai71UXHPbPOFTF/Gh5FKUWMdNpvmlIpkAYMm7xzBY+qu9e
+	 MM78JaDVJNlXrPmCjq+r6c/Amt3cCHinDbagKmFILF0XW3CQBZdpuLbUJ77RxiaeOaaLb
+	 jvDmEw/pFX8IZDjKzYaDoYAcAn6XrLeaq7YKsKezVS8DWZIXuhyso4TVodNUYbMWBnw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795619039;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795619042;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=ODFxbGoOHM3evWs3z04v0ZVj7M/5DK379NaKWKoqQFg=;
-	b=j4P9ZRRgi4aSrnitiL7jXTJieyK0hqb0zCeMjme5I33YHPsAMvqwCE3CMbkh7BD7NqhJ
-	 IcjC3aXHhXVD0vKIxrwMiTwifhvgSiSE/YTHxfEHC79vYSTMeeH53k8L/OoJeaY4lXFLW
-	 Dqqm5FGf8UbgxjvUB/WxSLjWVHW4lDB/jWrqNncZ66ZbrFO4HCz57bxkJqMcK54Q2d4V7
-	 3teF3bCFDbad6zAfomu6tSZu5VlpeXBHbZDBp+L7XTmnUPOFsi+Jvh3EGj7oeppPN9ksk
-	 SqpqMeEhlO6bgXoH1ajQZG2M6v+hhQtW57smcsJDH84nLLKcUp7hkM+FxgTc2tfjUDg==
+	bh=lpkLgQgmRpE7uPP+y1sG1N2QMKZ+6k6mgbsxD7zC6UE=;
+	b=GlodM9VSZqbEvsD1V2FJWDBHMY8sHCEBmtZcFSS3fv7+3rnE2FccCzkve4rWO5PQjkNM
+	 D5mC3pcJPThXVSKe+pgI/HKazgMgP5cSwzj67XxxVAMFkqq44kzHaXbqTfMWSKUbRQVFG
+	 0OdllaUNCMzLuVKddvcGqBjrtI8T1XIBew54sa2GnT/dHyNb59PXEpDuHRa3pyWAZ5D9j
+	 RDZlR3F+SpP+8By28P8PRZGssdzNyAD7/rm+GCwRyoKY+CciSzCogeiF6+7kcGKQTsfzN
+	 neJBJOgji6J2M3/1CJqs2BTFMlzKN/lMyUlFx/h7NMZxLuRGYHeUn152cr5GJTLTgqw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=uV0gmH7Z;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ITJEKqBl;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 80B0F606A321;
-	Wed, 25 Nov 2026 15:03:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C9F0C606A31E;
+	Wed, 25 Nov 2026 15:04:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=uV0gmH7Z
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 934441F000CA;
-	Wed, 25 Nov 2026 15:03:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ITJEKqBl
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E98581F000CA;
+	Wed, 25 Nov 2026 15:04:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795619039;
-	bh=ODFxbGoOHM3evWs3z04v0ZVj7M/5DK379NaKWKoqQFg=;
+	s=korg; t=1795619042;
+	bh=lpkLgQgmRpE7uPP+y1sG1N2QMKZ+6k6mgbsxD7zC6UE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=uV0gmH7Z/bk4EA9vNWYpeldNe4meboedY4gPZ30Ijm/lbs74KTVwCFTu5pUtBy99v
-	 jGZd1X2kqyupW3JeM5AAvVEV8nCgSa+yBfudsaesEow3MqlsAxpIx3xolIs7SVjIMR
-	 ua0qkx1Nlelvc+G2pCZWrgN35KdNmyKLTiIX4910=
+	b=ITJEKqBlyRY4Ee0Y9RAHspa8/9+bZuXzffk0sHKpujpgdSSTOj82AZCp5WReqTxow
+	 ncIq+qREJoZax6kYcH4CfZSB3uaHKtt2x3z/tPnR4Zc3HR7TMoAvYLIVF5K8vPveIs
+	 YawJYweRSee5mPRe7TFH22LtrpkniZNywp+13FTw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eric Dumazet <edumazet@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Zhang Qiao <zhangqiao22@huawei.com>,
+	Tejun Heo <tj@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0470/1005] bonding: fix slave_cnt leak on XDP enslave failure
-Date: Wed, 25 Nov 2026 15:30:08 +0100
-Message-ID: <20261125143832.755861778@linuxfoundation.org>
+Subject: [PATCH 7.3 0471/1005] sched_ext: Fix partial-SMT core counting in calc_shard_layout()
+Date: Wed, 25 Nov 2026 15:30:09 +0100
+Message-ID: <20261125143832.779553195@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143821.729802100@linuxfoundation.org>
 References: <20261125143821.729802100@linuxfoundation.org>
@@ -68,84 +68,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eric Dumazet <edumazet@kernel.org>
+From: Zhang Qiao <zhangqiao22@huawei.com>
 
-[ Upstream commit a978095699641d4f83a32b499a981c419c94abca ]
+[ Upstream commit 3b1ce3e0ccba4aadbf6330a5ed8bda78f0c9353a ]
 
-bond_enslave() increments bond->slave_cnt before setting up XDP on the
-new slave. If that setup fails (slave has no XDP support, already has
-an XDP program, or dev_xdp_propagate() fails), the error path jumps to
-err_sysfs_del, which never decrements slave_cnt.
+calc_shard_layout() counts the cores of an LLC to spread them evenly
+across shards. A core is counted when its cpu is the first cpu of
+topology_sibling_cpumask(), but the cores scx_cid_init() builds are
+the siblings intersected with @llc_cpus.
 
-Each failed enslave therefore leaves slave_cnt one too high:
-- SIOCBONDINFOQUERY reports a wrong num_slaves,
-- balance-rr picks slave ids beyond the end of the slave list, so
-  bond_get_slave_by_id() falls back to the first usable slave and
-  transmit is skewed toward it.
+The sibling mask may contain cpus outside @llc_cpus - siblings which
+landed in another node or LLC unit, or offlined siblings on archs
+that keep them in the mask (mips, sparc64). A core whose first
+sibling is such a cpu is never counted, so cores_per_shard and
+nr_large come out too small and the shards end up uneven.
 
-Reproducer:
+Count a core at its first sibling in @llc_cpus, matching the cores the
+build loop constructs.
 
-  ip link add bond0 type bond mode balance-rr
-  ip link set bond0 xdpdrv obj xdp_dummy.bpf.o sec xdp
-  for i in 0 1 2; do
-    ip link add d$i type dummy
-    ip link set d$i master bond0   # fails: Slave does not support XDP
-  done
-
-num_slaves read via SIOCBONDINFOQUERY is 3 before this patch, 0 after.
-
-Add an err_dec_slave_cnt label ahead of err_sysfs_del and use it from
-the three XDP failure paths, which are the only failures after the
-increment.
-
-Fixes: 9e2ee5c7e7c3 ("net, bonding: Add XDP support to the bonding driver")
-Signed-off-by: Eric Dumazet <edumazet@kernel.org>
-Link: https://patch.msgid.link/20261104092851.688361-1-edumazet@kernel.org
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: e2c841b91bf9 ("sched_ext: Add CID sharding")
+Signed-off-by: Zhang Qiao <zhangqiao22@huawei.com>
+Signed-off-by: Tejun Heo <tj@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/bonding/bond_main.c | 9 ++++++---
- 1 file changed, 6 insertions(+), 3 deletions(-)
+ kernel/sched/ext/cid.c | 8 +++++++-
+ 1 file changed, 7 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/net/bonding/bond_main.c b/drivers/net/bonding/bond_main.c
-index a1c156c145b2d..e9f5e753f6770 100644
---- a/drivers/net/bonding/bond_main.c
-+++ b/drivers/net/bonding/bond_main.c
-@@ -2305,7 +2305,7 @@ int bond_enslave(struct net_device *bond_dev, struct net_device *slave_dev,
- 			SLAVE_NL_ERR(bond_dev, slave_dev, extack,
- 				     "Slave does not support XDP");
- 			res = -EOPNOTSUPP;
--			goto err_sysfs_del;
-+			goto err_dec_slave_cnt;
- 		}
- 	} else if (bond->xdp_prog) {
- 		struct netdev_bpf xdp = {
-@@ -2319,14 +2319,14 @@ int bond_enslave(struct net_device *bond_dev, struct net_device *slave_dev,
- 			SLAVE_NL_ERR(bond_dev, slave_dev, extack,
- 				     "Slave has XDP program loaded, please unload before enslaving");
- 			res = -EOPNOTSUPP;
--			goto err_sysfs_del;
-+			goto err_dec_slave_cnt;
- 		}
+diff --git a/kernel/sched/ext/cid.c b/kernel/sched/ext/cid.c
+index 3d0687184b448..17c86f25a59cd 100644
+--- a/kernel/sched/ext/cid.c
++++ b/kernel/sched/ext/cid.c
+@@ -63,7 +63,13 @@ static void calc_shard_layout(const struct cpumask *llc_cpus, u32 shard_size,
  
- 		res = dev_xdp_propagate(slave_dev, &xdp);
- 		if (res < 0) {
- 			/* ndo_bpf() sets extack error message */
- 			slave_dbg(bond_dev, slave_dev, "Error %d calling ndo_bpf\n", res);
--			goto err_sysfs_del;
-+			goto err_dec_slave_cnt;
- 		}
- 		if (bond->xdp_prog)
- 			bpf_prog_inc(bond->xdp_prog);
-@@ -2348,6 +2348,9 @@ int bond_enslave(struct net_device *bond_dev, struct net_device *slave_dev,
- 	return 0;
- 
- /* Undo stages on error */
-+err_dec_slave_cnt:
-+	WRITE_ONCE(bond->slave_cnt, bond->slave_cnt - 1);
-+
- err_sysfs_del:
- 	bond_sysfs_slave_del(new_slave);
+ 	for_each_cpu(cpu, llc_cpus) {
+ 		nr_cpus++;
+-		if (cpumask_first(topology_sibling_cpumask(cpu)) == cpu)
++		/*
++		 * scx_cid_init() forms each core from the siblings in
++		 * @llc_cpus. The sibling mask may include cpus outside
++		 * @llc_cpus, so count a core at its first sibling in @llc_cpus.
++		 */
++		if (cpumask_first_and(topology_sibling_cpumask(cpu),
++				      llc_cpus) == cpu)
+ 			nr_cores++;
+ 	}
  
 -- 
 2.53.0
