@@ -1,42 +1,42 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795625411;
-	b=t6I6oF7pxZQK+3SJgES8dIg788cKgvO7m4b8aTKTfg+5dwoFg0ERaCb5Lfiah9NbllDm
-	 a+Opc5qYj6OlcVtT1MHvA1qnE6teG5xMSKTHBr7M8ZIUALeAGtBNe9LdCStCAU1ybQGt+
-	 mJjMQYh0BXKgIF2z3VgvhhDtEXR5ZfF0LT56hhpaVS29k46xFBKIU8dWSAW+h0J48QSPu
-	 2ad4G0a9StZBTP7EuKzq+oLYB6PBIKZCrO8BGPc41uy0JzP9l3b2BjB5Mr3N+6ELeRqpd
-	 ZBXiIxl1D1ZlYu6ytUvQvzEPNVLqWNyK2D766f2WecU4b1U6lca7ZrBN6RGQDePajqA==
+	t=1795625413;
+	b=ICnIIkgsE19IOXPV1B6AsiOT64cuOr3uN5dw/Jffsj27THZG4Rm3b/OsjvRe7IpagOO1
+	 HRaKcuEQK/+1RK2xzaZllnrsogPVadr+iXYgECTDXQ5QaZ5m6QE/x1buz3rpsoO2lZmZ2
+	 LLiNWk2d7dypCRkeSQI/Guygepln8+Vv6dygnnrkvCFpca5kdl74JtCwxrXgx4ftbv1DL
+	 BRa8O6pbzoR4sAFmmuCZwyb2rarJjQHAIjenvjCiu+65t373WAATU0eS5hctu33wAxD8N
+	 dnMGVUWMMs+atsDLuVZPHqa3anWFKRZO0I/fqAxO8UUDMGwSEzAY/+/WaslEm2o5miw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795625411;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795625413;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=JZX0ukB7tgpdHVR/gjjMRf3n2aJl6cbLeRzzV8LG2Mk=;
-	b=IkviDz/kYcd6khcsw9DNGXeiXhBhKQ215UhKxw63uvoU+aDsCDndMf2ADmZprL7a3fJU
-	 rJwjU5neXEzESsy20bLXJKauFIcnVjbM7lrsE6NUc7oOGeB2S32EZe7ezY2Fx9DVOlnwP
-	 /lpCgFrdn+7qbu0FgXg4a/aa8TF2CB93aJSteErWjAk9yerVvzgWTjmHHst2SQt14Jfx7
-	 pVwwA5TzmWs6xnP8Hrxsv+ZRPOcWkh0Oib6hVDHBW2CWXUMIo0l4b7vnoqA3VnWLZEmw0
-	 WHyqdUIqGSZJ1nXGFoiHGYUcoVVlE/zKllihIZKC40isauVuYCspvbYQSUy/a5eWxnw==
+	bh=q6NfSRfCnectekOWpc7i0sH7LS2gx7uO2gjQfNfunWo=;
+	b=i7MPATsGdc9zabigqWgZ7r0kyM9ttqK69dU0e/9slRCUhJ6N7UmcuU5oUaObDjtsjwUU
+	 sIS0ogBUyIyshFZHpeAIE1vOqBs/DR32wW5HONVq1nbjqrhbNWu5+Qobf/rmjFWP/UmiY
+	 tA5vORLI5pFp2cbXNTrzrVI3bGWQbCpAspDWhKev3PHgRFj8xfChcstYjGd1fHFjja/Vm
+	 JoK3mnqDvU3FDdaUvbLQ2g/b4CRonXrj7w2+7xFfR9g6RfAsQEgA96cXFavr71mSeMA9n
+	 F3hgGy6oqOupC3OqFU9qDfVvyjzPlrpIJ3Af3r/bQtFil1b+CRknusAdTTeYwef1tjQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=R1xs9cTc;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="aiW/4Cy2";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ECCDF606A31E;
-	Wed, 25 Nov 2026 16:50:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CC60E606A326;
+	Wed, 25 Nov 2026 16:50:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=R1xs9cTc
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 17E871F000C0;
-	Wed, 25 Nov 2026 16:50:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=aiW/4Cy2
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E52B21F000C4;
+	Wed, 25 Nov 2026 16:50:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795625410;
-	bh=JZX0ukB7tgpdHVR/gjjMRf3n2aJl6cbLeRzzV8LG2Mk=;
+	s=korg; t=1795625413;
+	bh=q6NfSRfCnectekOWpc7i0sH7LS2gx7uO2gjQfNfunWo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=R1xs9cTcWybs7eKHHkMwfZ0TKDDaQLeqE3dYrnH226RHE2jvydhQ9Ol1XmVPcTEfZ
-	 okbAzgq5tX3tMpVRrgX0CSf5c3nkfB2gPmsvzOvi0AGsIKqtcoTE0OXUY0Jhi5vlXV
-	 FpYq+d86pHthGNi5JseeuvdkzYK8k9FR3DnpeKnk=
+	b=aiW/4Cy2XxxN2KDVaCZCYSO5rGZCgoFCpTx8KwPwYdkM2fIFcUFt7LZgmDX+iutun
+	 Avs6mnp7SoRRSzNXCtPyfUQPaoqhQTd4Hwb/Y3XuNxiQq7D3ek0GETmXf6/ZrplAxU
+	 HY609+YWBv3GhTSpd4J1h0eoowsSyOb5hEf/d2Xc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -44,9 +44,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Josef Bacik <josef@toxicpanda.com>,
 	Alexei Starovoitov <ast@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 505/816] bpf: Use the frame mem type in devmap egress XDP
-Date: Wed, 25 Nov 2026 15:34:13 +0100
-Message-ID: <20261125143900.876865156@linuxfoundation.org>
+Subject: [PATCH 6.12 506/816] bpf: Dont hand out a linked element as extra element
+Date: Wed, 25 Nov 2026 15:34:14 +0100
+Message-ID: <20261125143900.900106157@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143849.205329330@linuxfoundation.org>
 References: <20261125143849.205329330@linuxfoundation.org>
@@ -70,72 +70,115 @@ Content-Transfer-Encoding: 8bit
 
 From: Josef Bacik <josef@toxicpanda.com>
 
-[ Upstream commit b3ca872947ef322c475ceaa7a76a9ebb3356152e ]
+[ Upstream commit ccb88db8dac8fabde58656d5d4a33711e89c480a ]
 
-A devmap egress program that removes a whole fragment of a redirected
-xdp_frame with bpf_xdp_adjust_tail() or bpf_xdp_pull_data() frees it
-with page_frag_free() whatever the frame's memory type is. For a
-MEM_TYPE_PAGE_POOL frame from a page_pool based driver this drops the
-page reference owned by the pool while the pool still accounts the
-fragment ("page_pool leak" bad page, leaked pp reference).
+When htab_map_update_elem() replaces an element of a preallocated map,
+alloc_htab_elem() takes the spare element of this cpu and puts the old
+element into the per-cpu slot right away, long before the old element is
+unlinked from its bucket.  The bucket lock disables interrupts, but it
+does not keep out an NMI, or a tracing program on the return of
+alloc_htab_elem().  bpf_prog_active only helps if both programs are
+kprobe, tracepoint or perf_event programs.  A program that updates an
+existing key in another bucket of the same map gets to use the slot:
 
-kernel/bpf/devmap.c:dev_map_bpf_prog_run() points xdp.rxq at an
-on-stack
+  htab_map_update_elem(k1)              tc, xdp, fentry, raw_tp, ...
+    alloc_htab_elem()
+      l_new = *pl_new
+      *pl_new = l_old                   still linked in bucket 1
+      <NMI>
+        htab_map_update_elem(k2)        perf_event program
+          l_new = *pl_new               the l_old of the outer update
+          hlist_nulls_add_head_rcu(l_new, bucket 2)
+          hlist_nulls_del_rcu(k2's old element)
+      </NMI>
+    hlist_nulls_add_head_rcu(l_new, bucket 1)
+    hlist_nulls_del_rcu(l_old)
 
-    struct xdp_rxq_info rxq = { .dev = rx_dev };
+If l_old was the first element of bucket 1, the outer add points its pprev
+at l_new, and the delete takes it out of bucket 1 only.  l_new->next now
+leads into bucket 2, where l_old stays with a poisoned pprev, on which a
+delete of k2 crashes.  If it was not the first, the delete takes it out of
+bucket 2: k2 is gone from the map, and the chain of bucket 1 still contains
+l_old, whose next pointer leads into bucket 2.
 
-whose mem.type is 0, i.e. MEM_TYPE_PAGE_SHARED, and
-net/core/filter.c:bpf_xdp_shrink_data() releases frags according to
-rxq->mem.type. cpumap, which runs programs on xdp_frames the same way,
-already copies xdpf->mem_type into its private rxq for each frame.
+Either way a walk of bucket 1 ends on the nulls value of bucket 2.
+lookup_nulls_elem_raw() restarts whenever that happens, so every lookup in
+bucket 1 which does not find its key spins forever:
 
-With 9000 byte frames from virtio_net and an egress program that cuts the
-fragments off:
+  rcu: INFO: rcu_preempt detected stalls on CPUs/tasks:
+   __htab_map_lookup_elem+0x354/0x4d0
 
-  BUG: Bad page state in process swapper/3  pfn:10660b
-  page dumped because: page_pool leak
-   bad_page+0xbd/0x190
-   __free_frozen_pages+0x5c7/0x900
-   bpf_xdp_adjust_tail+0x3be/0x480
-   bpf_prog_dad43f894a3faff7_egress+0x15c/0x1cd
-   dev_map_bpf_prog_run+0x288/0x610
+  BUG: KASAN: wild-memory-access in htab_map_delete_elem+0x30c/0x670
+  Write of size 8 at addr dead000000000122 by task extra/102
 
-The pool waits for these pages for ever when its device is gone. That is
-the harmless case. A page of the pool can hold more than one fragment
-while its refcount is 1: the first page_frag_free() frees it under the
-fragment which is still in use, and the second one runs into
+An NMI between the load and the store of the slot makes both updates use
+the same element, with much the same result.
 
-  page dumped because: VM_BUG_ON_PAGE(page_ref_count(page) == 0)
-  kernel BUG at include/linux/mm.h:1846!
+Empty the slot when the spare element is taken, in a way that is atomic
+on this cpu, and put the old element in only after it has been unlinked
+and its timers and the like have been cancelled.  A nested update that
+finds the slot empty, which is the case that corrupted the map, fails with
+-EBUSY.
 
-veth is not affected. It takes references of its own on the pages and
-redirects the frame as MEM_TYPE_PAGE_SHARED.
-
-Fix by setting rxq.mem.type from each frame before running the devmap
-program, as cpu_map_bpf_prog_run_xdp() does.
-
-Fixes: ca9984c5f0ab ("bpf: devmap: provide rxq after redirect")
+Fixes: 8c290e60fa2a ("bpf: fix hashmap extra_elems logic")
 Signed-off-by: Josef Bacik <josef@toxicpanda.com>
 Signed-off-by: Alexei Starovoitov <ast@kernel.org>
-Link: https://patch.msgid.link/20261017163745.3341787-2-alexei.starovoitov@gmail.com
-[ sashal: Changed rxq.mem.type = xdpf->mem_type; to rxq.mem = xdpf->mem; because this tree's xdp_frame has a struct xdp_mem_info mem member instead of a flat mem_type field. ]
+Link: https://patch.msgid.link/20261017163745.3341787-5-alexei.starovoitov@gmail.com
+[ sashal: Context lines adapted to the older tree (check_and_free_fields, old_map_ptr handling, four-argument htab_unlock_bucket), with fix lines identical to upstream. ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/bpf/devmap.c | 1 +
- 1 file changed, 1 insertion(+)
+ kernel/bpf/hashtab.c | 23 ++++++++++++++++-------
+ 1 file changed, 16 insertions(+), 7 deletions(-)
 
-diff --git a/kernel/bpf/devmap.c b/kernel/bpf/devmap.c
-index 1c64c4cff41ec..368c9d50aa8bb 100644
---- a/kernel/bpf/devmap.c
-+++ b/kernel/bpf/devmap.c
-@@ -348,6 +348,7 @@ static int dev_map_bpf_prog_run(struct bpf_prog *xdp_prog,
+diff --git a/kernel/bpf/hashtab.c b/kernel/bpf/hashtab.c
+index 98308f3a7f6e9..a6ffc4a8dc43f 100644
+--- a/kernel/bpf/hashtab.c
++++ b/kernel/bpf/hashtab.c
+@@ -1114,11 +1114,17 @@ static struct htab_elem *alloc_htab_elem(struct bpf_htab *htab, void *key,
+ 	if (prealloc) {
+ 		if (old_elem) {
+ 			/* if we're updating the existing element,
+-			 * use per-cpu extra elems to avoid freelist_pop/push
++			 * use per-cpu extra elems to avoid freelist_pop/push.
++			 * The caller puts old_elem into the slot once it is
++			 * unlinked. Until then the slot is empty for an NMI
++			 * or a kprobe that updates this map on this cpu.
+ 			 */
+ 			pl_new = this_cpu_ptr(htab->extra_elems);
+-			l_new = *pl_new;
+-			*pl_new = old_elem;
++			l_new = READ_ONCE(*pl_new);
++			do {
++				if (!l_new)
++					return ERR_PTR(-EBUSY);
++			} while (!try_cmpxchg_local(pl_new, &l_new, NULL));
+ 		} else {
+ 			struct pcpu_freelist_node *l;
  
- 		xdp_convert_frame_to_buff(xdpf, &xdp);
- 		xdp.txq = &txq;
-+		rxq.mem = xdpf->mem;
- 		xdp.rxq = &rxq;
+@@ -1281,16 +1287,19 @@ static long htab_map_update_elem(struct bpf_map *map, void *key, void *value,
+ 	if (l_old) {
+ 		hlist_nulls_del_rcu(&l_old->hash_node);
  
- 		act = bpf_prog_run_xdp(xdp_prog, &xdp);
+-		/* l_old has already been stashed in htab->extra_elems, free
+-		 * its special fields before it is available for reuse. Also
+-		 * save the old map pointer in htab of maps before unlock
+-		 * and release it after unlock.
++		/*
++		 * l_old replaces the extra element that alloc_htab_elem() took.
++		 * Free its special fields first: once it is in the slot, the
++		 * next update on this cpu can reuse it. Also save the old map
++		 * pointer in htab of maps before unlock and release it after
++		 * unlock.
+ 		 */
+ 		old_map_ptr = NULL;
+ 		if (htab_is_prealloc(htab)) {
+ 			if (map->ops->map_fd_put_ptr)
+ 				old_map_ptr = fd_htab_map_get_ptr(map, l_old);
+ 			check_and_free_fields(htab, l_old);
++			WRITE_ONCE(*this_cpu_ptr(htab->extra_elems), l_old);
+ 		}
+ 	}
+ 	htab_unlock_bucket(htab, b, hash, flags);
 -- 
 2.53.0
 
