@@ -1,51 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795622546;
-	b=MkVyk7DpjcpEAuZQBb5N35XX2Je7G38risLumCcbXwTMtl6dV7GN8c4uPDEyAaw38tIx
-	 fctOnm6FLv9MAYbWoiISKjvjaL3GmXhCEWtjzyoOizXoYau3bdeDr5099osLzi2itG4hU
-	 7EwE486QalWYwt1c8GKSf22dG0eSE4kiwKKNkvLqTQ/5LZUYa+494ZZMFADHYLiwji3VA
-	 mUHO4LzCse2OnnUc3h5Bzvc0hpWH+1IMeIUACoCBJns0gPPKq81HDLaL0QuYijgnYy6r1
-	 zNc1Py0W7l99rrFpPX8pJHvX8iEGUhThDrCtU43s+bf0LrVUCbmpgA5t8mRuqvYjWsw==
+	t=1795622550;
+	b=HUevBgKL6ikGNBk1SqtXgG32fw+ErfHtLizTUzR+O07ok9EnBStVougPm1nXNaOCCAN9
+	 cCzxH+D5/20AQ6VI7dIR2sRFIf0aAMOxuoL0B7Qy7n61w1Ctm/RQZhcKbuKbo69gemWhH
+	 4xIhl3oZQc5Jsq5hnbOPAlXAeEVjtDqB2B4w0ry60BWUZdrp/kxPMxiHfGTkpYEr1kD57
+	 EdbcLHD+1nV7N3NgPmbTgco/MYq5RfkS2H88iAGa6O3oyTkmsli8QSd6fGLFOtOzapGL1
+	 MJqRQEZmxcrQdaBoWP5DzEBOUTH01yw+ZHpdqO6Mq+lsazp5YZll+f7KksZs36au01Q==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795622546;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795622550;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=RWe8Q31iTU6dNmtbGgoRdWtI12Zf2gbbDwiQOTdf+uw=;
-	b=3svt9bk5VPjVFVhxSRhDWcz8pdWl4WD+OktaXdb11aUsjR86RG3+ao/PoToe/1OfO4zu
-	 u50vwZmPLMqqxANpdJktfX2HIhoeV/RkDJqepStZqkLGYz/ESVF/4CCqhH9rTxwezxXSJ
-	 uZ6YzrtWoNa5U0r3nGvJa/RnoCMpSXcu3IgDYfr1ToGgjXFhNt0IsxI5nhtU2OaTOflWM
-	 oFi/9mBaHrfr3V/v/y95cUQnxRCGemzo2ojL2BdwDZjaxbF6+CFXRKDBYCZ64auP/ajL4
-	 VKDufHcMp3zlK5E0EHaJgkGT4TmOwLOCM0dGRIbE7fM9sfrqGvL4Y2CeqvtK1o2cqcQ==
+	bh=nUDg/DhHBg4PzGNBGh9v6GXtfdMNOt3RDLyjAhYbMeE=;
+	b=PwVKAuuRLhWD4rYgDALPJJCVleXXZ5UiMS+ERxcAb+spn9O5AXcoXZmL7Z+UxEHvJ/Td
+	 Ku4HU1Y3qciaX1OK7vUk0A3ML/xrBvq3n1dK/Z1TtWPrcPZ1ycL5L7wUX5M50oqcuUfqw
+	 fdOj+AUrUxx1wJKz/B/UZVMz4RMj21D5IrFS7+YyQipzg8fZwFBiYLoyJYqH3BVGTdjKS
+	 g02/5F6qNSA3dRPetaqMRzj/IDlzOV5m3RffRZdF96FinDKep9tJuzyDpgW41WVpEyCfe
+	 IeTvMcx9M4/nGgsReAvPQ5WqOcGM9LRXtMNdLem0zehAW84T1WCLNlazvzBy/t9Acqg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Quu0qErP;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=PmiL7LCP;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C632C606A321;
-	Wed, 25 Nov 2026 16:02:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E4347606A321;
+	Wed, 25 Nov 2026 16:02:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Quu0qErP
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BD1021F000CA;
-	Wed, 25 Nov 2026 16:02:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=PmiL7LCP
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ED99E1F000CA;
+	Wed, 25 Nov 2026 16:02:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795622546;
-	bh=RWe8Q31iTU6dNmtbGgoRdWtI12Zf2gbbDwiQOTdf+uw=;
+	s=korg; t=1795622549;
+	bh=nUDg/DhHBg4PzGNBGh9v6GXtfdMNOt3RDLyjAhYbMeE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Quu0qErP68bbNGKMBYWMPTaYLWBEDE84HzsZXaiOOYBdqswESX4Uj7RT/RYS5NyJ3
-	 ijMWOKM8hNsxQ8zmJ8zA65be/fcthjruTZpmm/LmIZVA9nl+VtjimfruEgKkd+WntI
-	 0FTaafNaHf1Aci/R4hUkhhOA19yAiLsghXMG4ZRc=
+	b=PmiL7LCPCQTCsxCJaG+7vzgUzjBaaDuNOF+L7fHITFV5mu4ESOnbK4UgPVmXKXdPo
+	 N8/THb697INjpvr0/Ppl9V8yVsSVjXueYZB/PC6ToX9h3fgO3vgleN8aZEmB6A9MOT
+	 vijs8FpqEs/YH6q5EPXOxFgI8gQTNq0xxVTZhJnw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Felix Fietkau <nbd@nbd.name>,
+	Kang Yang <kang.yang@oss.qualcomm.com>,
+	Baochen Qiang <baochen.qiang@oss.qualcomm.com>,
+	Vasanthakumar Thiagarajan <vasanthakumar.thiagarajan@oss.qualcomm.com>,
+	Jeff Johnson <jeff.johnson@oss.qualcomm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 572/990] wifi: mt76: mt7921: fix of_node reference leaks in regd update
-Date: Wed, 25 Nov 2026 15:32:19 +0100
-Message-ID: <20261125143835.491379195@linuxfoundation.org>
+Subject: [PATCH 6.18 546/990] wifi: ath12k: free pending MSDUs on duplicate mon link descriptor
+Date: Wed, 25 Nov 2026 15:31:53 +0100
+Message-ID: <20261125143834.887530908@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143822.072087159@linuxfoundation.org>
 References: <20261125143822.072087159@linuxfoundation.org>
@@ -67,135 +70,54 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Felix Fietkau <nbd@nbd.name>
+From: Kang Yang <kang.yang@oss.qualcomm.com>
 
-[ Upstream commit 2f209a8dca88507bc094de370e582adefc55723e ]
+[ Upstream commit d8e8eac3fcffc114a79f7d07d7cb73cc16645381 ]
 
-mt7921_regd_channel_update() and __mt7921_mcu_set_clc() never
-release the nodes returned by mt76_find_power_limits_node(),
-of_get_child_by_name() and mt76_find_channel_node(). Each regulatory
-domain change and each CLC update on a device with DT power limits
-leaks these references.
+ath12k_wifi7_dp_rx_mon_mpdu_pop() aborts processing when a duplicate
+monitor link descriptor is detected.
 
-Release every node after use. This relies on
-mt76_find_power_limits_node() also returning a reference for the
-fallback node, which it does since commit 3a62c9f7ec3d ("wifi: mt76:
-Fix of_node reference leak in mt76_get_rate_power_limits()").
+Previous iterations may already have linked MSDUs onto *head_msdu
+and detached the corresponding RX buffers from their descriptors.
+Returning without completing or freeing the chain leaves those
+skbs orphaned, resulting in a memory leak.
 
-Fixes: 09382d8f8641 ("wifi: mt76: mt7921: update the channel usage when the regd domain changed")
-Link: https://patch.msgid.link/20261007112419.1277594-3-nbd@nbd.name
-Signed-off-by: Felix Fietkau <nbd@nbd.name>
-[ sashal: Applied the fix inside mt7921_regd_channel_update() in init.c (no regd.c here) and inlined the mt7921_regd_dt_has_channel() helper, with no goto out on the 5 GHz check. ]
+kmemleak reports these skbs in field testing:
+  kmemleak_alloc()
+  __netdev_alloc_skb()
+  ath12k_dp_rx_bufs_replenish()
+  ath12k_wifi7_dp_rx_mon_dest_process()
+
+Free the accumulated MSDU chain before returning and clear
+*head_msdu so callers observe a consistent state.
+
+Tested-on: WCN7850 hw2.0 PCI WLAN.HMT.1.1.c7-00108-QCAHMTSWPL_V1.0_V2.0_SILICONZ_UPSTREAM-3
+
+Fixes: 72bfbf19b7da ("wifi: ath12k: add support to reap and process mon dest ring")
+Signed-off-by: Kang Yang <kang.yang@oss.qualcomm.com>
+Reviewed-by: Baochen Qiang <baochen.qiang@oss.qualcomm.com>
+Reviewed-by: Vasanthakumar Thiagarajan <vasanthakumar.thiagarajan@oss.qualcomm.com>
+Link: https://patch.msgid.link/20260916060325.854-3-kang.yang@oss.qualcomm.com
+Signed-off-by: Jeff Johnson <jeff.johnson@oss.qualcomm.com>
+[ sashal: Applied to the pre-split monitor RX file with the function name ath12k_dp_rx_mon_mpdu_pop() instead of the wifi7 path and name; the two-line change itself is identical. ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../net/wireless/mediatek/mt76/mt7921/init.c  | 31 ++++++++++++++-----
- .../net/wireless/mediatek/mt76/mt7921/mcu.c   |  7 ++++-
- 2 files changed, 29 insertions(+), 9 deletions(-)
+ drivers/net/wireless/ath/ath12k/dp_mon.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/net/wireless/mediatek/mt76/mt7921/init.c b/drivers/net/wireless/mediatek/mt76/mt7921/init.c
-index b9098a7331b1a..67a3b3dcf60a2 100644
---- a/drivers/net/wireless/mediatek/mt76/mt7921/init.c
-+++ b/drivers/net/wireless/mediatek/mt76/mt7921/init.c
-@@ -67,7 +67,7 @@ mt7921_regd_channel_update(struct wiphy *wiphy, struct mt792x_dev *dev)
- 	(!(dev->phy.clc_chan_conf & BIT(idx)) && (cfreq) >= (sfreq) && (cfreq) <= (efreq))
- 	struct ieee80211_supported_band *sband;
- 	struct mt76_dev *mdev = &dev->mt76;
--	struct device_node *np, *band_np;
-+	struct device_node *np, *band_np, *chan_np;
- 	struct ieee80211_channel *ch;
- 	int i, cfreq;
- 
-@@ -79,28 +79,39 @@ mt7921_regd_channel_update(struct wiphy *wiphy, struct mt792x_dev *dev)
- 		ch = &sband->channels[i];
- 		cfreq = ch->center_freq;
- 
--		if (np && (!band_np || !mt76_find_channel_node(band_np, ch))) {
--			ch->flags |= IEEE80211_CHAN_DISABLED;
--			continue;
-+		if (np) {
-+			chan_np = band_np ?
-+				  mt76_find_channel_node(band_np, ch) : NULL;
-+			of_node_put(chan_np);
-+			if (!chan_np) {
-+				ch->flags |= IEEE80211_CHAN_DISABLED;
-+				continue;
-+			}
+diff --git a/drivers/net/wireless/ath/ath12k/dp_mon.c b/drivers/net/wireless/ath/ath12k/dp_mon.c
+index a7cb7ba62f2d4..0e9b02f1140fc 100644
+--- a/drivers/net/wireless/ath/ath12k/dp_mon.c
++++ b/drivers/net/wireless/ath/ath12k/dp_mon.c
+@@ -4130,6 +4130,8 @@ ath12k_dp_rx_mon_mpdu_pop(struct ath12k *ar, int mac_id,
+ 		if (pmon->mon_last_linkdesc_paddr == paddr) {
+ 			pmon->rx_mon_stats.dup_mon_linkdesc_cnt++;
+ 			spin_unlock_bh(&pmon->mon_lock);
++			kfree_skb_list(*head_msdu);
++			*head_msdu = NULL;
+ 			return rx_bufs_used;
  		}
  
- 		/* UNII-4 */
- 		if (IS_UNII_INVALID(0, 5845, 5925))
- 			ch->flags |= IEEE80211_CHAN_DISABLED;
- 	}
-+	of_node_put(band_np);
- 
- 	sband = wiphy->bands[NL80211_BAND_6GHZ];
- 	if (!sband)
--		return;
-+		goto out;
- 
- 	band_np = np ? of_get_child_by_name(np, "txpower-6g") : NULL;
- 	for (i = 0; i < sband->n_channels; i++) {
- 		ch = &sband->channels[i];
- 		cfreq = ch->center_freq;
- 
--		if (np && (!band_np || !mt76_find_channel_node(band_np, ch))) {
--			ch->flags |= IEEE80211_CHAN_DISABLED;
--			continue;
-+		if (np) {
-+			chan_np = band_np ?
-+				  mt76_find_channel_node(band_np, ch) : NULL;
-+			of_node_put(chan_np);
-+			if (!chan_np) {
-+				ch->flags |= IEEE80211_CHAN_DISABLED;
-+				continue;
-+			}
- 		}
- 
- 		/* UNII-5/6/7/8 */
-@@ -110,6 +121,10 @@ mt7921_regd_channel_update(struct wiphy *wiphy, struct mt792x_dev *dev)
- 		    IS_UNII_INVALID(4, 6875, 7125))
- 			ch->flags |= IEEE80211_CHAN_DISABLED;
- 	}
-+	of_node_put(band_np);
-+
-+out:
-+	of_node_put(np);
- }
- 
- void mt7921_regd_update(struct mt792x_dev *dev)
-diff --git a/drivers/net/wireless/mediatek/mt76/mt7921/mcu.c b/drivers/net/wireless/mediatek/mt76/mt7921/mcu.c
-index 7363a553a007d..5e6e3cb4d5e15 100644
---- a/drivers/net/wireless/mediatek/mt76/mt7921/mcu.c
-+++ b/drivers/net/wireless/mediatek/mt76/mt7921/mcu.c
-@@ -3,6 +3,7 @@
- 
- #include <linux/fs.h>
- #include <linux/firmware.h>
-+#include <linux/of.h>
- #include "mt7921.h"
- #include "mcu.h"
- #include "../mt76_connac2_mac.h"
-@@ -1361,6 +1362,7 @@ int __mt7921_mcu_set_clc(struct mt792x_dev *dev, u8 *alpha2,
- 		.acpi_conf = mt792x_acpi_get_flags(&dev->phy),
- 		.mtcl_conf = mt792x_acpi_get_mtcl_conf(&dev->phy, alpha2),
- 	};
-+	struct device_node *np;
- 	int ret, valid_cnt = 0;
- 	u32 buf_len = 0;
- 	u8 *pos;
-@@ -1370,8 +1372,11 @@ int __mt7921_mcu_set_clc(struct mt792x_dev *dev, u8 *alpha2,
- 
- 	if (dev->phy.chip_cap & MT792x_CHIP_CAP_CLC_EVT_EN)
- 		req.cap |= CLC_CAP_EVT_EN;
--	if (mt76_find_power_limits_node(&dev->mt76))
-+
-+	np = mt76_find_power_limits_node(&dev->mt76);
-+	if (np)
- 		req.cap |= CLC_CAP_DTS_EN;
-+	of_node_put(np);
- 
- 	buf_len = le32_to_cpu(clc->len) - sizeof(*clc);
- 	pos = clc->data;
 -- 
 2.53.0
 
