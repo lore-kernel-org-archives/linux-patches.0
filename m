@@ -1,50 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795623282;
-	b=rG4neT8HPvDIXveBwortBhftoYk9DFiO27WJv6187yT6eXGv8Duqn2Rv7jL07rfZS8fv
-	 SNM5woK0/E5htd15NI2oaHLkZm3f4SEXabpsyjoS9xrsjJHiIoEcCByPxdbqwtPrvbg6p
-	 kj8yPdXpoiesB5iPGiVZZyPyLfHQsqoTWsy+b1sot9IgTvDPp0g9Sbh6GMUBgMHYGgvAq
-	 oqNoKoZkGZhm/eyYX45fUFVkIa1UivZYmY5WxJjU3ToZ8PPJawhrqFvxIVq5eL+sW9Ywv
-	 EYwT+DiwnxtsUyPCU4X79aGLnEJj46IGaqhQkxzB3KfzgYVlCpBsY8G6OIpK5nY72Lg==
+	t=1795623285;
+	b=4Uhty/4prUC5SfBPDVofO5OtU9F7u4rrl9IcF0YsdGQoZ3iUJVASiReYOxIjz3tZdw2r
+	 0D+4qXXLBtGbnMRNUmBS6ZswlXYKHR5UCeqTYi9bPHR9EOb2lCIkl8Owd3kInqtZbXH7Y
+	 DSYhpELQMITYJ6p8kI+zb/GkUoPBowo55pPZUjhrzkIwNqvN0BwotVwxfhI831RjfLPpc
+	 dFA36uYsqC5VXk3FCNPa+1n8sbOxZEBLuiirqjl9XGF+piLFQ9U1+Hx5LiYuPGA34m5pP
+	 pyWU9aWLUS/rJ99kkN813DIuXXpGdD6u7SufTjHkaP21UQ6TLwrJnfGnk6HTFH9NS9w==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795623282;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795623285;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=KHCVXBXbghOYOp5voKWChXzqb5FhY66C7fZbb8K9sFo=;
-	b=Om0V+Yh0x04EKFx7EHhVyLWmWOVSLklCcZLHq4oMvqH7S+cJCvun2NUvTsJlqFgLfPrb
-	 Pk15cDkOM8aaYR9/kPrYYrymsw7EX5gH4ehznJ2jeRuYubF3l7r9v9bqQWuOcIBZFMZYx
-	 irElFTOExRmOyMHTOho3+zI+w3HDQ4EIHfGTS7dlwI2B6uXGPNTJTe/nQT+GPCeHWZzM0
-	 r0QIf9D9+FYqSbwKGki33uYyDsUYWk5MqUtBMACd1rAT4+ZBTD6GLeSFvpq1zkJp5+vMp
-	 8fi8VN4QNkuN7NeXdt0BYNwyRCTJJCrdBbCbDcduGshm+3VsZw9dUSe9ZTBhywhi29w==
+	bh=p8e04RdQPBARzKttA8L/Q/OP8ZdgUGN7lFMELC0lgJY=;
+	b=H+TEr305T5vhlNCKXjyNIMUagANBTmg5KbR28MZ0aKilhCezY12Xt8yta5Pkn0ci1avI
+	 An3p3QaR9mRXjsWdwaQtJEYEJbuXVHE9OlRDKN/28DnjpANnmC34ekB5WYu/XtZWyHVLU
+	 jV2OWgJXjXLQ7QDzaZhxU+BEdRqCIk9nb0d94BsdDmszDGhxfJNwD7yjBN+9ykwfMoF9s
+	 HjCYvEn3wJSlDZFKCaIXFZrASi4JvfRa9qZAOjhBSrwotSXx6+P1+AqwRg0Jg86k882KV
+	 suRXFbbAg5T9lVhKWNzZxjfrMYytcq49RWSsaLagMvAl9qGcSi9xLYo85yNQYzPpgfg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=WruCo9Mw;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=OvRs+lGI;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0FF28606A31E;
-	Wed, 25 Nov 2026 16:14:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B8225606A321;
+	Wed, 25 Nov 2026 16:14:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=WruCo9Mw
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1E5021F000C4;
-	Wed, 25 Nov 2026 16:14:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=OvRs+lGI
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 88B6E1F000C0;
+	Wed, 25 Nov 2026 16:14:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795623281;
-	bh=KHCVXBXbghOYOp5voKWChXzqb5FhY66C7fZbb8K9sFo=;
+	s=korg; t=1795623285;
+	bh=p8e04RdQPBARzKttA8L/Q/OP8ZdgUGN7lFMELC0lgJY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=WruCo9MwghDrcyr13xTBeoIlKejfyWAcL+Yw6q2S7DqjLNmcUMZtL9UyK6mUMtgAk
-	 Wa4LYcG5cDSn3NOIt/SqYpn9wWglrq5PSS5jW5C2rQFUdpohB4RyMdTNkcG6ueGbX7
-	 sM9CDjuzWl7+Uh9zywnXQUlsL/Naa8IUGyZT9npY=
+	b=OvRs+lGIXTJKxYz0abIb8eSoY0erYQhNqTABasKScL+HrNF55LMjMI+Vr1F5IU4vI
+	 4h9DDqKjnxwLp+L8oDPPWR5s7nAA0BqtQteqlDXPYTleX2pgkBS9RxudCDes9dhSsU
+	 TIJJ3YanebcyqiLGT1hgYX/oYNkWvhIgdQaVxqWo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>
-Subject: [PATCH 6.18 808/990] tracing/probes: Reject array count on non-dereference string sources
-Date: Wed, 25 Nov 2026 15:36:15 +0100
-Message-ID: <20261125143840.971771383@linuxfoundation.org>
+	Rameshkumar Sundaram <rameshkumar.sundaram@oss.qualcomm.com>,
+	Benoit Masson <yahoo@perenite.com>,
+	Jeff Johnson <jeff.johnson@oss.qualcomm.com>
+Subject: [PATCH 6.18 809/990] wifi: ath12k: assign device id from the WSI index
+Date: Wed, 25 Nov 2026 15:36:16 +0100
+Message-ID: <20261125143840.995141718@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143822.072087159@linuxfoundation.org>
 References: <20261125143822.072087159@linuxfoundation.org>
@@ -66,44 +68,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Masami Hiramatsu (Google) <mhiramat@kernel.org>
+From: Benoit Masson <yahoo@perenite.com>
 
-commit 0941144ebeaf3ce46c80711f00e935921eb28b21 upstream.
+commit 81986a81f09fae73926c7c44863b335880269c90 upstream.
 
-The runtime array loop (FETCH_OP_LP_ARRAY) for string types requires a
-preceding memory dereference instruction so it can advance the pointer
-address on each iteration. Non-dereference string sources such as $comm,
-immediate strings, and eprobe event fields cannot be indexed as pointer
-arrays, but finalize_fetch_insn() still accepts an array count on them
-and emits an invalid FETCH_OP_LP_ARRAY sequence.
+Devices of a hardware group are added to ag->ab[] in PCI probe
+completion order (ab->device_id = ag->num_probed++), which is not
+stable across boots. The wiphy radio array is built from ag->ab[] and
+the wiphy device is taken from its first entry, so the wiphy sysfs
+path and the mapping of radio indices to bands change on every boot.
 
-Reject string array counts when the preceding operation is not a memory
-dereference.
+Persisted wireless configurations reference radios by index (e.g.
+OpenWrt/hostapd "radio0"), so such a configuration attaches to a
+random band at each boot. This affects any multi-chip group with
+single-band radios, e.g. TP-Link Archer BE800 (three QCN9274/QCN9224
+radios in one group).
 
-Link: https://lore.kernel.org/all/179455855309.403392.4197028577158545202.stgit@devnote2/
+Store each ab in ag->ab[] at its wsi_info.index, which is derived from
+the device tree WSI ring and is therefore deterministic.
+ag->num_probed remains the group device counter. The unassign path is
+unchanged, it already indexes ag->ab[] by ab->device_id.
 
-Fixes: 40b53b771806 ("tracing: probeevent: Add array type support")
-Cc: stable@vger.kernel.org
-Signed-off-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
+Suggested-by: Rameshkumar Sundaram <rameshkumar.sundaram@oss.qualcomm.com>
+Fixes: 6f245ea0ec6c ("wifi: ath12k: introduce device group abstraction")
+Cc: stable@vger.kernel.org # 6.14+
+Signed-off-by: Benoit Masson <yahoo@perenite.com>
+Reviewed-by: Rameshkumar Sundaram <rameshkumar.sundaram@oss.qualcomm.com>
+Link: https://patch.msgid.link/20260928213322.98949-1-yahoo@perenite.com
+Signed-off-by: Jeff Johnson <jeff.johnson@oss.qualcomm.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/trace/trace_probe.c |    6 ++++++
- 1 file changed, 6 insertions(+)
+ drivers/net/wireless/ath/ath12k/core.c |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
---- a/kernel/trace/trace_probe.c
-+++ b/kernel/trace/trace_probe.c
-@@ -1518,6 +1518,12 @@ static int finalize_fetch_insn(struct fe
- 			 * For the symstr, it doesn't need to dereference, thus
- 			 * it just get the value.
- 			 */
-+			if (parg->count && (code->op != FETCH_OP_DEREF &&
-+					    code->op != FETCH_OP_UDEREF)) {
-+				trace_probe_log_err(ctx->offset + type_offset,
-+						    BAD_STRING);
-+				return -EINVAL;
-+			}
- 			code++;
- 			if (code->op != FETCH_OP_NOP) {
- 				trace_probe_log_err(ctx->offset, TOO_MANY_OPS);
+--- a/drivers/net/wireless/ath/ath12k/core.c
++++ b/drivers/net/wireless/ath/ath12k/core.c
+@@ -1943,7 +1943,8 @@ exit:
+ 		goto invalid_group;
+ 	}
+ 
+-	ab->device_id = ag->num_probed++;
++	ag->num_probed++;
++	ab->device_id = wsi->index;
+ 	ag->ab[ab->device_id] = ab;
+ 	ab->ag = ag;
+ 
 
 
