@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795622775;
-	b=jaLLLUchVRXPHxpMCV0UxjxP6UnDdsMv+aEMf9b7kGSdQOJE5er0slmXdxXKLEjfetHr
-	 X4Fj2FGlYSl2qrsFFGjft6+g4PQvDjJsmhFuR1szX9/ExL5oKaEdqFt4Nhry7yr5NRmse
-	 MXhA08E7G2WLow1Jj+37Bg/C7pTvslgodGO2/vfmo63IuoYSiNlCGQxjhVSWiWfAPij57
-	 K4kt/bzq8q4zoTFL6KM9NbtQKlrWiyqPZKqyHsC9w8KMjC8+wLjNp+6DS6pfL7Mn1nt1r
-	 plzV5oWFvkM4u4OGvZGRsCiYl3QUe1/1PX4QXiaZlmSYL4cXOGzO2WkquIDtQKhcwOQ==
+	t=1795622777;
+	b=DZr2XmviJgSh5LvziXy8rV6Ai9wMoHEaOK3yfgvUx3TxpUnFKMSRrguMyY7OnDaKRJF+
+	 Un4zdeRqVj5Au4N9z9o0JmjSTdXwEOGx659OtSju19MIyAYHvI6foxWww62MmQ4/WFRHS
+	 9z9iiBwZ75ZBMsNH0YFbzvIe8v1MH/ucf2Tjkb0w+eHNkicj0Jch7ynwVaSASwfPY06kX
+	 WxWSoiwO2svoWZrRtj/1jcsw3oYSIk895oN5GBBA+iQbySsLboLbBksm4a8fHZaeSieWh
+	 LVtaVp7mVmyi3F2P0+676NYpwh4R7Djd9aVlW3tIZJT6H5p+nuoYiE91necOb/6PEfg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795622775;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795622777;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=2Dyimly4XMwC4/0v/RkvKKxAMZ4muQXkIxFtR3tBTSc=;
-	b=4+iS16KL5Ak9ddobo6mjiqA85IvHCC37r72uKSxDmGZ875da6LrU8pkU8f8wZI2Ukz27
-	 lXib93NlJND1xl+W1wuOuoHNP5UmUxOppMd/oiePC6AIJhp1KFHtf/56da2mluXy7EgdD
-	 oaV64PfjWS5YCoUirxL87g2/soZdNnbHxNo4TCpx5CjOnjXq1airYPdRi7Ci+sJhwagx+
-	 TEK7ePzD8ECTS89JgV8eQ9++x6q0T2MXwQVeBO/tN82FuJabVbjEJjD9uV33kPEPbFf0/
-	 p++fHW8mdaASc7VGHo0VV434Tevghcp7I+vZ4D3zSUn1Hdzivs3/HLZfHkmKUwSYz/w==
+	bh=FD/nsNkd+BYwhssePftdJIKlJQFOPbwT3eChFBhgoWA=;
+	b=PSDLD/nto/5fCRGdo3C3bp7Hx0W+Jw7tzg2j1sb74SZTqUBjaE3pdD3kAIMyNwcaeZxD
+	 R0fMmeD5WbKsnf1i4oNjaIV5oN46NPFn7pgTHIE5U6sWLqajdcTCiGlRHPtiLw7KFLQXS
+	 2Meij2nGergEU2tb5BUJLGR1EDAi6WwYLu2tjemgRN/O65D8nJRmL8JnZoMvqZXpw1Xc+
+	 AKtWZ2yc0CdJCgLGkIYgrTaQr/F6L5kn+TKLsorLHuRNGs/c4Klrgypy5EcNQDGqKTa3q
+	 J4IIypjPjc+54J+33OjX8vDCW5OadxBYSK9NfDmqQLE+qy3jQ7SYsfRo2yiYrjOC7aQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=OPDRSz3u;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=fGcRBcJM;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0FDFA606A31E;
-	Wed, 25 Nov 2026 16:06:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D4EA0606A321;
+	Wed, 25 Nov 2026 16:06:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=OPDRSz3u
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 602461F000C4;
-	Wed, 25 Nov 2026 16:06:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=fGcRBcJM
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 324E31F000C4;
+	Wed, 25 Nov 2026 16:06:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795622774;
-	bh=2Dyimly4XMwC4/0v/RkvKKxAMZ4muQXkIxFtR3tBTSc=;
+	s=korg; t=1795622777;
+	bh=FD/nsNkd+BYwhssePftdJIKlJQFOPbwT3eChFBhgoWA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=OPDRSz3uh+yCu1dLPLb6wXoBk+YofBrrib+I3R2+hivvK8rh2dF/m+0HvkMY2Cjg4
-	 PdfJnYg0Vrh2t6wg3wW/zk/LtkusMBvyE352iQ8RQraohM/4dXBoQu7ql6b39qdOOY
-	 vm9biy45/nKzBw+4PL8yxGJP0jky5Qw8/XZVAMbA=
+	b=fGcRBcJMnbvwcl/iayBqOjrht1rSYwC7msxBRgKco/tIjp6fwJ4EgVG8Gaqo4+Y44
+	 Z62oZDiz/+A5AWe7qZvHZ5ph2yFuH+L/2beI8jA4q8v0GXArfSfGByeddyy4JQcb8j
+	 sZFT3rekpb3Dx9w10fGZXadjQVRMD6tT/flDW6xE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pengpeng Hou <hppiscas@163.com>,
-	Thomas Gleixner <tglx@kernel.org>,
-	Radu Rendec <radu@rendec.net>,
+	Ju Nan <junan76@163.com>,
+	Linus Walleij <linusw@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 598/990] irqchip/mst-intc: Validate the DT interrupt range
-Date: Wed, 25 Nov 2026 15:32:45 +0100
-Message-ID: <20261125143836.099327702@linuxfoundation.org>
+Subject: [PATCH 6.18 599/990] pinctrl: stm32: Fix the unit of the hwspinlock timeout
+Date: Wed, 25 Nov 2026 15:32:46 +0100
+Message-ID: <20261125143836.122997035@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143822.072087159@linuxfoundation.org>
 References: <20261125143822.072087159@linuxfoundation.org>
@@ -69,47 +68,90 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pengpeng Hou <hppiscas@163.com>
+From: Ju Nan <junan76@163.com>
 
-[ Upstream commit 16f25d326e5d3b9fd51bc5e3916ecbffbca63e7b ]
+[ Upstream commit 544b3f8042dd7c18baa48dcb1a393ff8b6742322 ]
 
-The driver takes an inclusive interrupt range from the device tree
-without checking its endpoints. A reversed range wraps the unsigned
-count calculation, and a range larger than MST_INTC_MAX_IRQS exceeds the
-controller capacity used by the driver.
+HWSPNLCK_TIMEOUT is passed to hwspin_lock_timeout_in_atomic(), whose
+timeout argument is in milliseconds, not microseconds:
 
-Reject these ranges before calculating nr_irqs or creating the domain.
-Check the difference after ordering the endpoints so the validation
-itself cannot wrap.
+  atomic_delay += HWSPINLOCK_RETRY_DELAY_US;
+  if (atomic_delay > to * 1000)
+          return -ETIMEDOUT;
 
-The issue was found by our static-analysis tool.
+The hwspinlock core documents this explicitly:
 
-Fixes: ad4c938c92af ("irqchip/irq-mst: Add MStar interrupt controller support")
-Signed-off-by: Pengpeng Hou <hppiscas@163.com>
-Signed-off-by: Thomas Gleixner <tglx@kernel.org>
-Assisted-by: gpt 5
-Reviewed-by: Radu Rendec <radu@rendec.net>
-Link: https://patch.msgid.link/20260920034236.16229-1-hppiscas@163.com
-[ sashal: Context adjusted: the upstream range check is inserted above this tree's older kzalloc(sizeof(*cd), GFP_KERNEL) call instead of kzalloc_obj(*cd). ]
+  If the mode is HWLOCK_IN_ATOMIC (called from an atomic context) the
+  timeout is handled with busy-waiting delays, hence shall not exceed
+  few msecs.
+
+Fixes: 290a9f937e5a ("pinctrl: stm32: use the hwspin_lock_timeout_in_atomic() API")
+Signed-off-by: Ju Nan <junan76@163.com>
+Signed-off-by: Linus Walleij <linusw@kernel.org>
+[ sashal: Dropped the two hunks touching the skipped I/O-sync and skew-delay functions (absent here), so only the HWSPNLCK_TIMEOUT_MS rename and the five existing callers apply. ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/irqchip/irq-mst-intc.c | 3 +++
- 1 file changed, 3 insertions(+)
+ drivers/pinctrl/stm32/pinctrl-stm32.c | 12 ++++++------
+ 1 file changed, 6 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/irqchip/irq-mst-intc.c b/drivers/irqchip/irq-mst-intc.c
-index 7f760f555a76a..d380030eda935 100644
---- a/drivers/irqchip/irq-mst-intc.c
-+++ b/drivers/irqchip/irq-mst-intc.c
-@@ -263,6 +263,9 @@ static int __init mst_intc_of_init(struct device_node *dn,
- 	    of_property_read_u32_index(dn, "mstar,irqs-map-range", 1, &irq_end))
- 		return -EINVAL;
+diff --git a/drivers/pinctrl/stm32/pinctrl-stm32.c b/drivers/pinctrl/stm32/pinctrl-stm32.c
+index 384fdc13a504b..8f9935d07e432 100644
+--- a/drivers/pinctrl/stm32/pinctrl-stm32.c
++++ b/drivers/pinctrl/stm32/pinctrl-stm32.c
+@@ -82,7 +82,7 @@
+ #define gpio_range_to_bank(chip) \
+ 		container_of(chip, struct stm32_gpio_bank, range)
  
-+	if (irq_end < irq_start || irq_end - irq_start >= MST_INTC_MAX_IRQS)
-+		return -EINVAL;
-+
- 	cd = kzalloc(sizeof(*cd), GFP_KERNEL);
- 	if (!cd)
- 		return -ENOMEM;
+-#define HWSPNLCK_TIMEOUT	1000 /* usec */
++#define HWSPNLCK_TIMEOUT_MS	1
+ 
+ static const char * const stm32_gpio_functions[] = {
+ 	"gpio", "af0", "af1",
+@@ -559,7 +559,7 @@ static int stm32_gpio_domain_activate(struct irq_domain *d,
+ 
+ 	if (pctl->hwlock) {
+ 		ret = hwspin_lock_timeout_in_atomic(pctl->hwlock,
+-						    HWSPNLCK_TIMEOUT);
++						    HWSPNLCK_TIMEOUT_MS);
+ 		if (ret) {
+ 			dev_err(pctl->dev, "Can't get hwspinlock\n");
+ 			return ret;
+@@ -896,7 +896,7 @@ static int stm32_pmx_set_mode(struct stm32_gpio_bank *bank,
+ 
+ 	if (pctl->hwlock) {
+ 		err = hwspin_lock_timeout_in_atomic(pctl->hwlock,
+-						    HWSPNLCK_TIMEOUT);
++						    HWSPNLCK_TIMEOUT_MS);
+ 		if (err) {
+ 			dev_err(pctl->dev, "Can't get hwspinlock\n");
+ 			goto unlock;
+@@ -1033,7 +1033,7 @@ static int stm32_pconf_set_driving(struct stm32_gpio_bank *bank,
+ 
+ 	if (pctl->hwlock) {
+ 		err = hwspin_lock_timeout_in_atomic(pctl->hwlock,
+-						    HWSPNLCK_TIMEOUT);
++						    HWSPNLCK_TIMEOUT_MS);
+ 		if (err) {
+ 			dev_err(pctl->dev, "Can't get hwspinlock\n");
+ 			goto unlock;
+@@ -1084,7 +1084,7 @@ static int stm32_pconf_set_speed(struct stm32_gpio_bank *bank,
+ 
+ 	if (pctl->hwlock) {
+ 		err = hwspin_lock_timeout_in_atomic(pctl->hwlock,
+-						    HWSPNLCK_TIMEOUT);
++						    HWSPNLCK_TIMEOUT_MS);
+ 		if (err) {
+ 			dev_err(pctl->dev, "Can't get hwspinlock\n");
+ 			goto unlock;
+@@ -1135,7 +1135,7 @@ static int stm32_pconf_set_bias(struct stm32_gpio_bank *bank,
+ 
+ 	if (pctl->hwlock) {
+ 		err = hwspin_lock_timeout_in_atomic(pctl->hwlock,
+-						    HWSPNLCK_TIMEOUT);
++						    HWSPNLCK_TIMEOUT_MS);
+ 		if (err) {
+ 			dev_err(pctl->dev, "Can't get hwspinlock\n");
+ 			goto unlock;
 -- 
 2.53.0
 
