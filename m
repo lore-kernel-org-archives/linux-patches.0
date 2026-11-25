@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795624564;
-	b=fKwUK++WUC1ADXHySsDvi4Zm5HEfCZQXeJEGi70/irHEwNbWgl18pQmXnVt35zdRqQY5
-	 ufW+Zr7z4tA4Le2hbQFzkH0OamiWQN0veyUSbwuRom0PhX4IetrKjTrUfY49obL3Tdgj9
-	 sq9Xb4hk51/dRZfSxV088SBRPH1QVYSjS9pHGvzpGtSkhPo+uuMSZe44zhNRmq4kE99Uu
-	 OuMbJ3vTazLVmF8yfdxweL2YG8HNPurxpw3y1brPpMkXO69Sr1apcu099WTwXEiMaPALG
-	 xuDl8as2qkDktvORrulC+cfYeByrwJ8ID1XnJO8kDv/EMS2GHWR8ciZ22/KXhAH5Ayg==
+	t=1795624567;
+	b=EgRYwPV1+KX0+AhnaM3Bk0sMuOmpwnoHc9p4oRMcOzCQ/tqUcXUhUiYQJY2rMGwiP2kH
+	 WXRqx1/LIDkwLTDiQeNPV4HhcwPAtuUPr/VCUsasXwSWrrs9rUGLr8T5o1/gDC0GS3Wco
+	 WgIUt+0xFiYpx6YQdzGRr6PFJVpBl0++ELn37HetxehgdeFwoK+Ch74y9fC+1F4y06cyS
+	 L+V8eCXjCCy1J1wA5V5xSXwOk42EcSkid40M7V6zfdE7IGm6Vm86weuG30unBRj5U8nJs
+	 JolNcFUF8puD4gGaQdtn/2rj6jMeo6/cY1QJyctJ2rABRDAhV3DUYWBra8FWNxDHqaQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795624564;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795624567;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=8cklMt92i3TVWuiCdNHCmAWhYoNn66Nr7uk449/yvnQ=;
-	b=4IKPmPNwb2ieQ9D3+TkLXlJZAcdDRIWmzbPyaI4U92ANG2kF7Iam8pEBoMBVeMknSCz8
-	 sTnlUXlruItS0owBc6+5g1Lm2cTn4zwguOf8iZFFyqFGusIanaRja1sB8THAizEhz/Xe4
-	 onBcV+jRr2QXYc5V+qMA8IFE5qlIZPWl2XJrZaS9CpYAUwpHQ9PazVPHMwFYqbfXZZ+V5
-	 wVU4QLjPgmAZEH0F49xjr+kPXSvo0S0ufwkrc8vseJ/gJ0LEG6Ow6GrAyorU8z4h1ixl3
-	 FrbplsQwX/pxP7bvQLDj5CNMU4dupOKsXd4dINY0AJykL06ALqh8Ab0AKMxTZubOMyA==
+	bh=S/K/z80B4x4+CLNKS6d0URXGLkk00NMWUrXN7jGF4JA=;
+	b=3DuPjows44syQstyghwWlI+S/w4yFRIufXhMi7J9Wi3V0cDq1XOrmddfPVfDMrUBwJV8
+	 1YY+S6T2+dtgTW12GaI7e3hDE0TleIkBP7r0q3lSp/JcXU7UcYshVxVwxmip8ylrB0pAu
+	 ZphKlx+fajy7mBCevrOSHb45s49hKuXjgzM9k7UIOp8ae6P/1y1aKiR78aUfEnOKwpJ79
+	 xT8sv63JOUzPDbBF3QB1hm9UHB7NcBQsHQ8hVziq1xADA1kKIJloN3XPBPeTZfAJ3t1bd
+	 inwejyoPwOqTqaY4oO6Vi85jEAjwhR/GDjaG+aZt7U4Q79QLXfAXd0u39M2st1VIWHQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=wJEdTwWI;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=mxaCTDQE;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 73F1F606A334;
-	Wed, 25 Nov 2026 16:36:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CC9CB606A33A;
+	Wed, 25 Nov 2026 16:36:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=wJEdTwWI
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4A0FD1F000D8;
-	Wed, 25 Nov 2026 16:36:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=mxaCTDQE
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 971F01F000CF;
+	Wed, 25 Nov 2026 16:36:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795624563;
-	bh=8cklMt92i3TVWuiCdNHCmAWhYoNn66Nr7uk449/yvnQ=;
+	s=korg; t=1795624567;
+	bh=S/K/z80B4x4+CLNKS6d0URXGLkk00NMWUrXN7jGF4JA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=wJEdTwWIbTKKThAEZcU4FPVQcREEKbTgif441EjuqOr65DiZxuaYEKI2e++Nd9vsZ
-	 k0H2qorrRF4kZ+9a6tkgnS9Gf8JYgqO9BGJEVzlWgh++6op77rp43T51QMKxl4S+O5
-	 DhJ/C0EA2u3sFKGNGr8SAXRx+FUmMLvvM4JiubaQ=
+	b=mxaCTDQE4rPrGbqga189igL2/ggvv5UK0uV9GDzkS2GS/hkvFM7meAc2kJToe7zyd
+	 XhVgMvc4V+/0pkblCfV6Sb8n/pCzgPs8qAnmmTdLKQs7SWK/H7u/4eKFExq8PgA2Ke
+	 lNBhlCCuxnYRCG4SRZIPaJwHtqxcB1hPN3h780RM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Joas Antonio dos Santos <joasantonio108@gmail.com>,
-	Fernando Fernandez Mancera <fmancera@suse.de>,
+	Xingyuan Mo <hdthky0@gmail.com>,
 	Pablo Neira Ayuso <pablo@netfilter.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 235/816] netfilter: nf_conntrack_sip: fix OOB read in ct_sip_parse_transport()
-Date: Wed, 25 Nov 2026 15:29:43 +0100
-Message-ID: <20261125143854.647020908@linuxfoundation.org>
+Subject: [PATCH 6.12 236/816] netfilter: nf_tables: fix memleak when rule deletion fails with hardware offload
+Date: Wed, 25 Nov 2026 15:29:44 +0100
+Message-ID: <20261125143854.671080938@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143849.205329330@linuxfoundation.org>
 References: <20261125143849.205329330@linuxfoundation.org>
@@ -69,58 +68,89 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Joas Antonio dos Santos <joasantonio108@gmail.com>
+From: Pablo Neira Ayuso <pablo@netfilter.org>
 
-[ Upstream commit 7af52bda65c0bbbf40894aa3df36ac1bb5697984 ]
+[ Upstream commit e95b3be75ae0652d40a48a210f0cf5197b3b3783 ]
 
-ct_sip_parse_transport() compares the value of the "transport=" header
-parameter against "TCP"/"UDP" with strncasecmp(..., 3), but it never
-checks that the parsed value is at least 3 bytes long.
+Allocate flow rule object after transaction has been allocation and rule
+deactivation has been performed, otherwise memleak is possible.  Let the
+transaction unwind the existing rule deactivation from the abort path,
+this needs to update nft_flow_rule_destroy() to skip release if
+flow_rule is null.
 
-ct_sip_parse_param() returns matchlen = end - start, where end is the
-next ';' or, when there is no ';', the end of the payload buffer
-(limit = dptr + datalen).  If the "transport=" value is only 1 or 2
-bytes long and runs exactly to the end of the payload (e.g. a REGISTER
-request whose Contact header ends in ";transport=T" with no trailing
-CRLF), matchlen is less than 3 while strncasecmp() still reads up to 3
-bytes, reading 1-2 bytes past the end of the linearized skb data.
+While at this, remove check for non-null flow_rule in newrule error path
+now that nft_flow_rule_destroy() is skipped if flow_rule is null.
 
-Add a matchlen check before the comparison, mirroring the
-sdp_media_type() pattern a few lines below, so short values cannot reach
-strncasecmp().
-
-The bug was found by LLM-assisted manual review of the SIP helper's
-parsers and confirmed with a userspace ASan harness built from the
-verbatim parser functions, which reports a heap-buffer-overflow read of
-size 2 in strncasecmp() called from ct_sip_parse_transport().
-
-Fixes: ea45f12a2766d ("[NETFILTER]: nf_conntrack_sip: parse SIP headers properly")
-Link: https://patch.msgid.link/20260815133104.50369-1-joasantonio108@gmail.com/
-Signed-off-by: Joas Antonio dos Santos <joasantonio108@gmail.com>
-Assisted-by: Claude:claude-opus-5-5
-Reviewed-by: Fernando Fernandez Mancera <fmancera@suse.de>
+Fixes: 63b48c73ff56 ("netfilter: nf_tables_offload: undo updates if transaction fails")
+Reported-by: Xingyuan Mo <hdthky0@gmail.com>
+Link: https://patch.msgid.link/20261028062204.1079089-1-hdthky0@gmail.com/
 Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/netfilter/nf_conntrack_sip.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ net/netfilter/nf_tables_api.c     | 21 +++++++++------------
+ net/netfilter/nf_tables_offload.c |  3 +++
+ 2 files changed, 12 insertions(+), 12 deletions(-)
 
-diff --git a/net/netfilter/nf_conntrack_sip.c b/net/netfilter/nf_conntrack_sip.c
-index 449a6e53feae4..12b8c7fcca640 100644
---- a/net/netfilter/nf_conntrack_sip.c
-+++ b/net/netfilter/nf_conntrack_sip.c
-@@ -707,9 +707,9 @@ static int ct_sip_parse_transport(struct nf_conn *ct, const char *dptr,
+diff --git a/net/netfilter/nf_tables_api.c b/net/netfilter/nf_tables_api.c
+index 4b6cb990ab743..7553ebdced1d8 100644
+--- a/net/netfilter/nf_tables_api.c
++++ b/net/netfilter/nf_tables_api.c
+@@ -599,16 +599,6 @@ static int nft_delrule(struct nft_ctx *ctx, struct nft_rule *rule)
+ 	if (trans == NULL)
+ 		return -ENOMEM;
  
- 	if (ct_sip_parse_param(ct, dptr, dataoff, datalen, "transport=",
- 			       &matchoff, &matchlen)) {
--		if (!strncasecmp(dptr + matchoff, "TCP", strlen("TCP")))
-+		if (matchlen >= 3 && !strncasecmp(dptr + matchoff, "TCP", 3))
- 			*proto = IPPROTO_TCP;
--		else if (!strncasecmp(dptr + matchoff, "UDP", strlen("UDP")))
-+		else if (matchlen >= 3 && !strncasecmp(dptr + matchoff, "UDP", 3))
- 			*proto = IPPROTO_UDP;
- 		else
- 			return 0;
+-	if (ctx->chain->flags & NFT_CHAIN_HW_OFFLOAD) {
+-		flow = nft_flow_rule_create(ctx->net, rule);
+-		if (IS_ERR(flow)) {
+-			nft_trans_destroy(trans);
+-			return PTR_ERR(flow);
+-		}
+-
+-		nft_trans_flow_rule(trans) = flow;
+-	}
+-
+ 	err = nf_tables_delrule_deactivate(ctx, rule);
+ 	if (err < 0) {
+ 		nft_trans_destroy(trans);
+@@ -616,6 +606,14 @@ static int nft_delrule(struct nft_ctx *ctx, struct nft_rule *rule)
+ 	}
+ 	nft_rule_expr_deactivate(ctx, rule, NFT_TRANS_PREPARE);
+ 
++	if (ctx->chain->flags & NFT_CHAIN_HW_OFFLOAD) {
++		flow = nft_flow_rule_create(ctx->net, rule);
++		if (IS_ERR(flow))
++			return PTR_ERR(flow);
++
++		nft_trans_flow_rule(trans) = flow;
++	}
++
+ 	return 0;
+ }
+ 
+@@ -4225,8 +4223,7 @@ static int nf_tables_newrule(struct sk_buff *skb, const struct nfnl_info *info,
+ err_destroy_flow_rule:
+ 	nft_use_dec_restore(&chain->use);
+ err_destroy_flow:
+-	if (flow)
+-		nft_flow_rule_destroy(flow);
++	nft_flow_rule_destroy(flow);
+ err_release_rule:
+ 	nft_rule_expr_deactivate(&ctx, rule, NFT_TRANS_PREPARE_ERROR);
+ 	nf_tables_rule_destroy(&ctx, rule);
+diff --git a/net/netfilter/nf_tables_offload.c b/net/netfilter/nf_tables_offload.c
+index 196dd3c00ad05..7629829c9336e 100644
+--- a/net/netfilter/nf_tables_offload.c
++++ b/net/netfilter/nf_tables_offload.c
+@@ -148,6 +148,9 @@ void nft_flow_rule_destroy(struct nft_flow_rule *flow)
+ 	struct flow_action_entry *entry;
+ 	int i;
+ 
++	if (!flow)
++		return;
++
+ 	flow_action_for_each(i, entry, &flow->rule->action) {
+ 		switch (entry->id) {
+ 		case FLOW_ACTION_REDIRECT:
 -- 
 2.53.0
 
