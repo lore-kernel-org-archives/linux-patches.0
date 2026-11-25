@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795621439;
-	b=uoIP71sZ81vMLbX0wmGbMf1ShD63OZ1OfIxqfexwLzZ8Ab1iHTPkoX+l4hK9v3LFYri3
-	 Ma3F5TtCyYn5Nu1BxW0zJaHDevOVf/Or0Q8MXVyxWNPCLRad4SE/VAjUpema+Gh90YuVe
-	 1l00GbQuPdIzIatxjBpL8K8VfZ1R3L1n4RgsIl76oZVzP1Kg62VB2q+PMNwT1sDKNi605
-	 lHjuK0Che7+d6dF/A2bf13N9uly4eMHF/HMJUrGktVIw3w3OXQu7u0OXdIr/lZxesNakO
-	 ZVX8nV1Q9qZ3jYZv32j7OgqdTLr8CxQPdvDimalgD7TcFveSZGG93lrXNKWRoWQuJMw==
+	t=1795621442;
+	b=H0ifFJCIcT1Sl2Lwv58kiwyp4uNQZGVl8vom8LJGPA0cP/khhMAoPtLKmBlDAZ8MtIW6
+	 l62Ka2hTqB1DMLBKlsB5JigAs5yVfWo5RVSIe9nV/CQqbHHKeSdq8zesNL7q7NIm61vZO
+	 jTo83SNBKtRpko8ZRx7Io3ND7lxFE4lqR1/3n1cBz85Zrdmb6h6WI2NGNjC5fdr+2gQAB
+	 SLznXSVq/axVxPJxQcQOTe0nHA+qXSWVgFgpyeEvCftpuQJAnSE/apbrKcUULGqghD2Hc
+	 Q0jmOQf//47BXcLpz9/Ll2A//f9qnc/NmICvWgLnj9j+RvfbIsm4I224mKhDamlG0Rg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795621439;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795621442;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=r9ZqF6eAkQfO7hiVUOSkLwBJHkCH3VNtLgbJlsDPmSY=;
-	b=IvJT91w+qYnaehCJ5l6WppF9cG1Ga117B3TCtCamLSZH9JY/fMBUOPv+PECoOinLxMkk
-	 VFSt6CZb7AxYzri9RPr8FHNaNUVwphNS05SNgjIjrvRNuAne3Ao/5Dgh+9IanCcETTcGy
-	 aJFiMW1e5mVAFTTxbX5ivRq7iyZEZG3iMr9fQCbIDL/K7p129PfAvyrt9X0IiAOWD1i3Q
-	 jiggkd8hKTlCt/De/TmNblT3qFO9jM6misbEaYuFmwsd1Jdwvk3H3a76i9ueuy+50SIDb
-	 wMJhe4I/lYAgfmEQDWHeEsEa5d/ZkZxLixlLbfmdwse1d7LWLE5QIMLcZuLsmYu9zjA==
+	bh=r0z6W9xj6A8Zf/+mAzrD/N76DmKRRaAmQGhlByoguoE=;
+	b=OrBig9PGQ+V1ea+nRKd59KxM1taENC5TwO5dLvvvuCpLpledbidLjTbG6vSgAlwoR+Wf
+	 GfXAItuHdqHvsP0GEB2OcoZD21Jzh+3jg5z1ZeMbWmjHAQA4aSzcXcWmMIzjbgAyrZKnt
+	 qramG92OwX0zZh67jVtSiOePU6AuJ4JQleu/PX2RvL5zeNiZKcwLWSlkLJVCniBaumiah
+	 iBjySyLA5ImIuor791zJXFhrF+JDLrvwpMIjB5CTb1ihxsomo2dEmq7sbL5K6x2waLqON
+	 9xbNaLCG/tiumNpqUydvQFqetJ+GbXIdVBZlKGBbBMtzWSCrQD2j1ZftWYlRHx/JTDQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=LZizzDiM;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="TFMz/EA0";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 48827606A32D;
-	Wed, 25 Nov 2026 15:43:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 813D1606A329;
+	Wed, 25 Nov 2026 15:44:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=LZizzDiM
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5109B1F000C4;
-	Wed, 25 Nov 2026 15:43:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=TFMz/EA0
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 990F41F000C4;
+	Wed, 25 Nov 2026 15:44:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795621438;
-	bh=r9ZqF6eAkQfO7hiVUOSkLwBJHkCH3VNtLgbJlsDPmSY=;
+	s=korg; t=1795621442;
+	bh=r0z6W9xj6A8Zf/+mAzrD/N76DmKRRaAmQGhlByoguoE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=LZizzDiMa4iXSqxFHb7cn5dSPuOC7IsfzoTwUrb7UO4IW3/iLKcbYgBLc7qtEqaf2
-	 qS08JjTeiC5teAZZXrJW54KiZ2zxBfiLxgH9FjolX07P9Mxuw4hZpPETzZtivIyM82
-	 hlrtkgWp1EEbjLaB5m8g86Ro4JY6wpfSYCDutfLw=
+	b=TFMz/EA0GxHRafGOcqA6OuR/bRD/3q0ae2RMsplwftHR8J4cyw4QKuRqUD4hj1xON
+	 Hgn1odz2xIw0HN7eWaLfpcmRBsH/s//gDY7DxWh4Tzu/FmbatetBSQwlYyQ/mAH+tU
+	 SHBGRD8TAQpbSCNUHdbazdNoCAnVoZowVd2u3oz8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+13df72e0dc4be5c62215@syzkaller.appspotmail.com,
-	Mingbing Zhai <zhaimingbing@cmss.chinamobile.com>,
-	"Michael S. Tsirkin" <mst@redhat.com>,
+	Alexander Goodkind <alex@goodkind.io>,
+	Simon Horman <horms@kernel.org>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 208/990] virtio_balloon: initialize wakeup_lock before virtqueues are set up
-Date: Wed, 25 Nov 2026 15:26:15 +0100
-Message-ID: <20261125143826.963654375@linuxfoundation.org>
+Subject: [PATCH 6.18 226/990] net: ethernet: mediatek: preserve sibling PPE bindings
+Date: Wed, 25 Nov 2026 15:26:33 +0100
+Message-ID: <20261125143827.384306202@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143822.072087159@linuxfoundation.org>
 References: <20261125143822.072087159@linuxfoundation.org>
@@ -69,74 +69,67 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mingbing Zhai <zhaimingbing@cmss.chinamobile.com>
+From: Alexander Goodkind <alex@goodkind.io>
 
-[ Upstream commit 161aa708b02cc997a51701c342f3cebade0b5164 ]
+[ Upstream commit 34cc22a9ce6ae0228dcd09a57df23aea62e22b04 ]
 
-Since c578123e63da ("virtio_balloon: Treat stats requests as wakeup
-events") the stats_request() virtqueue callback takes vb->wakeup_lock
-via start_wakeup_event().  init_vqs() registers that callback and even
-primes and kicks the stats queue, so the lock is reachable from irq
-context as soon as init_vqs() returns, long before the driver sets
-DRIVER_OK: vring_interrupt() dispatches to the callback without any
-DRIVER_OK check unless CONFIG_VIRTIO_HARDEN_NOTIFICATION is set, and
-that option depends on BROKEN.  syzbot hit it from a threaded irq:
+__mtk_ppe_check_skb() clears entry->hash for flows bound to other
+hardware slots in the same software hash bucket. mtk_flow_offload_stats()
+then skips their hardware counter updates. L2 cleanup also frees sibling
+subflows without invalidating their hardware rules.
 
-  INFO: trying to register non-static key in stats_request
-  ...
-  assign_lock_key
-  register_lock_class
-  lock_acquire
-  rt_spin_lock
-  start_wakeup_event drivers/virtio/virtio_balloon.c:150 [inline]
-  stats_request drivers/virtio/virtio_balloon.c:435
+Restrict both cleanup paths to entries assigned to the inspected slot.
 
-The lock is only initialized near the end of virtballoon_probe(),
-after init_vqs() and several steps that can still fail and unwind
-through del_vqs(), where a racing interrupt still finds the callback
-registered.  Until then it is whatever kzalloc() left in vb: lockdep
-complains about the unregistered lock class, and wakeup_signal_mask
-and processing_wakeup_event get updated from irq context while probe
-is still running.
+Two UDP trials reproduced the counter failure on a GL-MT3000/MT7981
+running unmodified OpenWrt 25.12.5 with Linux 6.12.94:
 
-The rt_spin_lock() in the report is just spin_lock() on PREEMPT_RT;
-any PROVE_LOCKING build takes the same path.
+1. Start a UDP connection.
+2. Add a control connection in a different hash bucket.
+3. Add a connection in the first connection's hash bucket.
 
-stop_update_lock(), which the same callback also acquires, is already
-initialized before init_vqs(); do the same for wakeup_lock.
+AI code review of the original patch identified the cleanup problem
+in L2 subflows.
 
-Fixes: c578123e63da ("virtio_balloon: Treat stats requests as wakeup events")
-Reported-by: syzbot+13df72e0dc4be5c62215@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=13df72e0dc4be5c62215
-Signed-off-by: Mingbing Zhai <zhaimingbing@cmss.chinamobile.com>
-Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
-Message-ID: <20261016025429.901-1-zhaimingbing@cmss.chinamobile.com>
+Full ARM64 builds with allmodconfig and allyesconfig passed before
+and after the patch using GCC 14.2.0 and W=1, without new warnings.
+The builds used CONFIG_WERROR=n because the unmodified ARM64 kernel
+already emits warnings. Hardware testing has not run for this revision.
+
+Fixes: c4f033d9e03e ("net: ethernet: mtk_eth_soc: rework hardware flow table management")
+Fixes: 33fc42de3327 ("net: ethernet: mtk_eth_soc: support creating mac address based offload entries")
+Link: https://github.com/openwrt/openwrt/pull/26107
+Signed-off-by: Alexander Goodkind <alex@goodkind.io>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Link: https://patch.msgid.link/20261030010517.45639-1-alex@goodkind.io
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/virtio/virtio_balloon.c | 3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+ drivers/net/ethernet/mediatek/mtk_ppe.c | 5 ++---
+ 1 file changed, 2 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/virtio/virtio_balloon.c b/drivers/virtio/virtio_balloon.c
-index 0386e7b459bb1..cf53c1cf674b3 100644
---- a/drivers/virtio/virtio_balloon.c
-+++ b/drivers/virtio/virtio_balloon.c
-@@ -963,6 +963,7 @@ static int virtballoon_probe(struct virtio_device *vdev)
- 	INIT_WORK(&vb->update_balloon_stats_work, update_balloon_stats_func);
- 	INIT_WORK(&vb->update_balloon_size_work, update_balloon_size_func);
- 	spin_lock_init(&vb->stop_update_lock);
-+	spin_lock_init(&vb->wakeup_lock);
- 	mutex_init(&vb->balloon_lock);
- 	init_waitqueue_head(&vb->acked);
- 	vb->vdev = vdev;
-@@ -1068,8 +1069,6 @@ static int virtballoon_probe(struct virtio_device *vdev)
- 			goto out_unregister_oom;
- 	}
+diff --git a/drivers/net/ethernet/mediatek/mtk_ppe.c b/drivers/net/ethernet/mediatek/mtk_ppe.c
+index bb01a7355932a..fc1362cd821cd 100644
+--- a/drivers/net/ethernet/mediatek/mtk_ppe.c
++++ b/drivers/net/ethernet/mediatek/mtk_ppe.c
+@@ -754,8 +754,7 @@ void __mtk_ppe_check_skb(struct mtk_ppe *ppe, struct sk_buff *skb, u16 hash)
  
--	spin_lock_init(&vb->wakeup_lock);
--
- 	/*
- 	 * The virtio balloon itself can't wake up the device, but it is
- 	 * responsible for processing wakeup events passed up from the transport
+ 	hlist_for_each_entry_safe(entry, n, head, list) {
+ 		if (entry->type == MTK_FLOW_TYPE_L2_SUBFLOW) {
+-			if (unlikely(FIELD_GET(MTK_FOE_IB1_STATE, hwe->ib1) ==
+-				     MTK_FOE_STATE_BIND))
++			if (entry->hash != hash)
+ 				continue;
+ 
+ 			entry->hash = 0xffff;
+@@ -764,7 +763,7 @@ void __mtk_ppe_check_skb(struct mtk_ppe *ppe, struct sk_buff *skb, u16 hash)
+ 		}
+ 
+ 		if (found || !mtk_flow_entry_match(ppe->eth, entry, hwe)) {
+-			if (entry->hash != 0xffff)
++			if (entry->hash == hash)
+ 				entry->hash = 0xffff;
+ 			continue;
+ 		}
 -- 
 2.53.0
 
