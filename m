@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795622072;
-	b=mugt3wWpq2+of66QRQ2xPwM6liZgB+9AcjWp+HccXvXUQTM/cDsAjLHPhNCv+8TC+R5s
-	 W7UFkJnwWlhRXeUlm9CSdf0s5sQr24zSfKPC7tr+4qOO9+sPk3yEqmLSMFCpGOUt42u1q
-	 M4fCmZAGuSr32m/wgx2tQd6MIZHYrHOVVZwQR8zlMw7ofNCatFqT9s3mC3nyhhhUkNR9l
-	 GdBiA71vws64bAQVjjQNTxK+ulKmIN8o/yx4JKxfvu5MHRlgLOWNBT+62KLBKoYpe8b2e
-	 fAm5hBbXIo9U/4qPL9I0l09Ma/vau/DGLP74OHm+gU/6nNyljfpBoAUFbFVHkvrQPmw==
+	t=1795622075;
+	b=07Qwh4QmZ143AINgOEQBjvhgzsyL8ti28Iw4wrEI2h739KAh8AiGdeiKxtQQLn0vGZON
+	 x4E8Ap7xmhDQ8AbTjaiiLX3Dpulvmw0A9Y5dfvSsGAiDTGTZMdoAYlAaB3LR/Jbz1Gv9l
+	 UzLE97/3Gb4BWMyZxDQ1yej4ls2yr5EkOj3FD6fHwKPE8THvdgKMMQ2DjFO8K6tkCLYJw
+	 NuYcYkYMDokaKKknqBxYrN3GPy82pIPRjYxD7M1A5xh8lQ7N1BKjIpZdhUfD4ysnpsk2s
+	 W8rkXkumo4/HLh38eYBgWjPWsjXcenh6npHjlv+Oh26yGW/4KjggLgfu4VVr+CNy6yw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795622072;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795622075;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=Rp3ZACmNw48zHE6lGFRMag2CxBRPXmCftaa5hVCrAjI=;
-	b=WxBa52VACNtBkr0K6jucbCKuD1GxmfdzCve0AnY+466xL9LYA/f7ywGm7vBTv/Ge4tJ8
-	 yrEykaJamuGDMEfaeOMnh/0ib//IkvXxclsYpvTWRXzjyKYNrLoOSBW6RQMrNfS4C5E/X
-	 mYiYP0cKoHmEIm428+dES4JUmdeaMUOQfN1VS8LeWXiSXTaEneEijrr3Twm4OEzlTQ6kw
-	 0RCGTjjWiEquBeX4I8cY4G6+yhhl0K1ad80ikE+vCHqb+KY4fx6ySHfJCbWKYNDEIF+7O
-	 LyLamE3exVM5r4mWkxwowiP+1Z2/8evE6mbJfvlIM7D/hO7q7nlP1I11pJrfib+PUcA==
+	bh=McR3D9SHHjzbbnOW6HgosaBFvA6fPt4KRX+rLfFEBjE=;
+	b=DRYN4x0/Vsz0ZsPoU26PAtj17/7BXlXTrcFbKZrWgAy29BPPB7cfkhK2Fjl98XE94SMc
+	 EUzqGNRZuBrOwaSO4KJR5iDbnBWZ2GctOkUSdGRyyxd7lix4PA2xujeU7s/Aks5mjdMEF
+	 SE1VitBTO4e9Met1K89RJGfya4hhliSSWsNhpy6bbkWIibJDDnTFsT2Wc5zApbWxMSn2/
+	 z/7nw15dsozSFm8NeCYmVztkR3ieADYBXvQ9U0W2GeJDz2GPUfAyLP4wgJLaCGf/oY3fT
+	 MnFJGTbjcV8pGtAI/B0apqlzDysMD6OsTYn2/sD4oxENeL1Vrd1Mixokbl9BuCsjIwA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ToWzbBf9;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Gdvj0o16;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 46308606A32C;
-	Wed, 25 Nov 2026 15:54:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4BF8D606A32D;
+	Wed, 25 Nov 2026 15:54:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ToWzbBf9
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 470CD1F000C4;
-	Wed, 25 Nov 2026 15:54:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Gdvj0o16
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8F1881F000D1;
+	Wed, 25 Nov 2026 15:54:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795622071;
-	bh=Rp3ZACmNw48zHE6lGFRMag2CxBRPXmCftaa5hVCrAjI=;
+	s=korg; t=1795622075;
+	bh=McR3D9SHHjzbbnOW6HgosaBFvA6fPt4KRX+rLfFEBjE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ToWzbBf9e7vkRpJ2Y/UIEyNkfH2wJfHpexFY8/C58TWelMiGgH0kXeoa2mdzXriTu
-	 WpGaM0jYk69f6/1qzKHl6SAXoyjVQl8h/Mcx0Hn+Ukykv2A2vydsfXMyiQRQRDmriO
-	 dvN1lh1Pqxhy2eya3FZXTFVUBIfooZI6gabEkA4E=
+	b=Gdvj0o163BQ/d4UHkXXB7rYJwoSZn1yIyJX1e3CYgPl4pFMZ4K55zSbodVvE/rSJG
+	 ETkJ37DgIPNRsghQ+xkpQETdfnEfRLk5Eem8bRJZvwWgkNfPynCPkJGxMCIZ2KhFfi
+	 BblrAsKHQDoJdun+5J8BSOTnQfFZPTTcVHMnPTKc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Olga Kornievskaia <okorniev@redhat.com>,
-	Anna Schumaker <anna.schumaker@hammerspace.com>,
+	Umang Pokhriyal <umangpokhriyall@gmail.com>,
+	Willem de Bruijn <willemb@google.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 421/990] NFSv4: wake blocking lock waiters when a delegated lock is released
-Date: Wed, 25 Nov 2026 15:29:48 +0100
-Message-ID: <20261125143831.960113276@linuxfoundation.org>
+Subject: [PATCH 6.18 422/990] tun: delete the flow entries of the moved queue on detach
+Date: Wed, 25 Nov 2026 15:29:49 +0100
+Message-ID: <20261125143831.982680236@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143822.072087159@linuxfoundation.org>
 References: <20261125143822.072087159@linuxfoundation.org>
@@ -68,80 +69,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Olga Kornievskaia <okorniev@redhat.com>
+From: Umang Pokhriyal <umangpokhriyall@gmail.com>
 
-[ Upstream commit e8433473eca284bc561373d0a0fff632f76aa594 ]
+[ Upstream commit 4cc0a3f897074cea28dae38f1cd9bb230dae5d86 ]
 
-When the client holds a delegation, _nfs4_proc_setlk() caches POSIX
-locks locally and never sends a LOCK to the server. It has to strip
-FL_SLEEP to do so, since that branch runs holding
-sp->so_delegreturn_mutex and nfsi->rwsem and F_SETLKW can block
-indefinitely. A contending waiter is therefore never placed on the VFS
-blocked-lock list, and locks_wake_up_blocks() does not reach it when the
-holder releases.
+When a queue is detached, __tun_detach() moves the last queue into the
+freed slot and decrements tun->numqueues. The flow entries that point at
+the old index of the moved queue, now tun->numqueues, are meant to be
+deleted, but the call passes tun->numqueues + 1, an index that never
+exists, so nothing is deleted.
 
-The waiter blocks in nfs4_retry_setlk() on clp->cl_lock_waitq instead,
-whose only waker is nfs4_callback_notify_lock(). The server never saw a
-LOCK for a cached lock, so it does not know anyone is waiting and will
-never send a CB_NOTIFY_LOCK; nfs4_proc_unlck() returns early without
-sending LOCKU for the same reason. The waiter sleeps out the full
-NFS4_LOCK_MAXTIMEOUT of 30s before retrying a lock that is long free.
+Until those entries are refreshed by a write on their flow or age out,
+tun_automq_select_queue() returns an index past the last queue, and
+netdev_core_pick_tx() sends every such flow to queue 0 and warns:
 
-Wake cl_lock_waitq when releasing a cached lock. The releasing thread
-cannot tell which waiter wants the lock, so the wakeup names only the
-inode; make the owner comparison in nfs4_wake_lock_waiter() conditional
-on cbnl_valid so that a CB_NOTIFY_LOCK still wakes exactly the owner it
-names. The inode restriction matters: without it every blocked locker
-for the server is woken, and those on non-delegated state each retry
-with a LOCK RPC.
+  tapq0 selects TX queue 3, but real number of TX queues is 3
 
-Fixes: a1d617d8f134 ("nfs: allow blocking locks to be awoken by lock callbacks")
-Assisted-by: Claude Opus 5
-Signed-off-by: Olga Kornievskaia <okorniev@redhat.com>
-Signed-off-by: Anna Schumaker <anna.schumaker@hammerspace.com>
+Found with an LLM while testing how a VMM detaches tap queues when a
+guest lowers its virtio-net queue pairs. With four queues, 30 flows
+learned on queue 3 and queue 1 detached, all 30 went to queue 0 with the
+warning; with this patch they are spread by hash and no warning is
+printed (3 runs each, in a guest booted on net).
+
+Pass tun->numqueues.
+
+Fixes: 96442e42429e ("tuntap: choose the txq based on rxq")
+Signed-off-by: Umang Pokhriyal <umangpokhriyall@gmail.com>
+Reviewed-by: Willem de Bruijn <willemb@google.com>
+Link: https://patch.msgid.link/20261104174240.138491-1-umangpokhriyall@gmail.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/nfs/nfs4proc.c | 19 ++++++++++++++++---
- 1 file changed, 16 insertions(+), 3 deletions(-)
+ drivers/net/tun.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/fs/nfs/nfs4proc.c b/fs/nfs/nfs4proc.c
-index 1e8c1fe993aaf..f37f71226d0ea 100644
---- a/fs/nfs/nfs4proc.c
-+++ b/fs/nfs/nfs4proc.c
-@@ -7323,8 +7323,15 @@ static int nfs4_proc_unlck(struct nfs4_state *state, int cmd, struct file_lock *
- 	if (status != 0)
- 		goto out;
- 	/* Is this a delegated lock? */
--	if (test_bit(NFS_LOCK_INITIALIZED, &lsp->ls_flags) == 0)
-+	if (test_bit(NFS_LOCK_INITIALIZED, &lsp->ls_flags) == 0) {
-+		struct nfs_client *clp = NFS_SERVER(inode)->nfs_client;
-+		struct cb_notify_lock_args cbnl = { .cbnl_valid = false };
-+
-+		/* The server never saw it, so it will not notify waiters */
-+		nfs_copy_fh(&cbnl.cbnl_fh, NFS_FH(inode));
-+		__wake_up(&clp->cl_lock_waitq, TASK_NORMAL, 0, &cbnl);
- 		goto out;
-+	}
- 	alloc_seqid = NFS_SERVER(inode)->nfs_client->cl_mvops->alloc_seqid;
- 	seqid = alloc_seqid(&lsp->ls_seqid, GFP_KERNEL);
- 	status = -ENOMEM;
-@@ -7746,8 +7753,14 @@ nfs4_wake_lock_waiter(wait_queue_entry_t *wait, unsigned int mode, int flags, vo
- 		struct nfs_lowner		*lowner = &cbnl->cbnl_owner,
- 						*wowner = &waiter->owner;
+diff --git a/drivers/net/tun.c b/drivers/net/tun.c
+index 51b598d53f5bf..d7780a0069218 100644
+--- a/drivers/net/tun.c
++++ b/drivers/net/tun.c
+@@ -607,7 +607,7 @@ static void __tun_detach(struct tun_file *tfile, bool clean)
+ 		}
  
--		/* Only wake if the callback was for the same owner. */
--		if (lowner->id != wowner->id || lowner->s_dev != wowner->s_dev)
-+		/*
-+		 * Only wake the owner a CB_NOTIFY_LOCK names. A lock cached
-+		 * under a delegation is released locally, and the releasing
-+		 * thread cannot tell which waiter wants it, so those wakeups
-+		 * (cbnl_valid false) name only the inode and wake them all.
-+		 */
-+		if (cbnl->cbnl_valid &&
-+		    (lowner->id != wowner->id || lowner->s_dev != wowner->s_dev))
- 			return 0;
- 
- 		/* Make sure it's for the right inode */
+ 		synchronize_net();
+-		tun_flow_delete_by_queue(tun, tun->numqueues + 1);
++		tun_flow_delete_by_queue(tun, tun->numqueues);
+ 		/* Drop read queue */
+ 		tun_queue_purge(tfile);
+ 		tun_set_real_num_queues(tun);
 -- 
 2.53.0
 
