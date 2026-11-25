@@ -1,51 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795623441;
-	b=XIsgkeqzfq94Vf+cniu9QFEQVMGFwpT0aW6aYyFsrYkJNEbgLb5M5PR2M78wbkZWhH4O
-	 +4fzUb1ZXACOfLQgI7cjykn+Xehw6Y8sw+jxZX/8HkZBefdDNLOOJbxW0ZPWMrbuLVS5x
-	 qKwDafGP+KP2Yonzezt0zrMK1SsnYgf/sfh6Oj6inImoPNozOCGBy9HDB5Ffj1h4unjoD
-	 JYcoXHw2HiCx/4ijPs4sOAoNp2F3Rj1pet7Bvu/BvUyV5c7CUy9uu9u/n1Ulk7hzoYfqQ
-	 5glJiju0CEN+RCwFT4rVOZmmrhV2/dGdbHYOHCWqGVfk729E7gOZtpyfI7VU++GIZCg==
+	t=1795623445;
+	b=bksqKf2XqYWnC8eAczxckXKutqjCXXZ4k8k9AhnIlezQyAeTblxfQIYDQcreN5tftuES
+	 fjkRC2HaKY70CAZsa+cVI4rSyKTNSLQ4OIiHAT4owFKfJfiA0+7Bz+MufYMxIF8sJm7CV
+	 sGWXQH0tub0EaNZkfTrUuGO+OL7r2yBlprBS7Y4+KZYOiCHCmwuMkV4crHq9ipLPQV2J4
+	 U3grUzE5GTOZy7QPShscsR2uOYvAi6VN4p0cvu5ZmzHxm0stcRtgjzu/MjxPwqNxIKjae
+	 JMVP0tl08YgJkimIeEC5mYuLQEiuvDYynwKaekc5nLEvzqdNJidN86U6HyuKtARcPXg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795623441;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795623445;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=gXgEqI3TWURW7FxXOXIdRTFuxO3FCG7niomXMfqE1JQ=;
-	b=txkRNu5ij+5pVIShMmlYvTIJXmnrISX0ZJTq9JR2IxlPSxOwP4KM+Nq0w7XQ9LDI7q4y
-	 jJOFtuz2dz3Azf4kxQ4kdUSLA7ai1lyV6rF1qfMT9cnxmCvV1nm/cWtziaxmE6+cmze+5
-	 RMW2zNetneBkgAz+4bTl9GQxxv9mg5tfqUvp329s0rXU8JsNJ/jdRIhitTJhBTtpjfWNt
-	 DD5zZQ0795mmlVI+UGpDFCs4WzWiMe6b+wjmT6PFpZvrl+Y8T6fkD7QowS9JCcxafAibk
-	 WM9to56gXohMgot5CaTLjLBxIroar0kyxVst5B6J4++ctHRiBj70YHUkEnIpnII3HKA==
+	bh=9uOKg5Yrw22NMV+z6XCcqSEqXzzffs3K5iTJK98B0z0=;
+	b=K/v2u946Y5cw9HBQHSZ2XnSr2irD2ZlKMnokH3cO6Biar2GGC1G90F0Lpbp4dCZzSrbf
+	 SN2bNIIDQQCSq2oCT2Igdj6g3f1wfSdqZ6AmqYN87BUnLBEr3dDh4b6OkuUUwOYARJdN4
+	 f2xsNUjh9tjRJQyK8e736MHHkPg1onmFqR4hl/Kn2qrziG+1R4sSG3uiZXtTsctfcz1Wz
+	 pfY7wKUt+EzCkGt26uoW0XiRFdcv4g1iKJWp/bYoBqM6+wcgSro/5UpF/H/8HtVIHGTzV
+	 A+VZpcieESZDDR3BK4bFPiI602f3f8yCBft7nVsyvB5QWRp8dAIzsi+gd3r4FN5hHjA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=obpRDeDl;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=eVnIzeAD;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D8C1E606A321;
-	Wed, 25 Nov 2026 16:17:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3117D606A323;
+	Wed, 25 Nov 2026 16:17:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=obpRDeDl
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CF7381F000CA;
-	Wed, 25 Nov 2026 16:17:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=eVnIzeAD
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 09E061F000CF;
+	Wed, 25 Nov 2026 16:17:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795623441;
-	bh=gXgEqI3TWURW7FxXOXIdRTFuxO3FCG7niomXMfqE1JQ=;
+	s=korg; t=1795623444;
+	bh=9uOKg5Yrw22NMV+z6XCcqSEqXzzffs3K5iTJK98B0z0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=obpRDeDlpgBMKDjypWk+/6vbj8ZRWH/UMROsk8Yv3FxINkIJIiP83a7+ZyX3UIaR6
-	 vMz89dCD4Eorb1Y7CjRRwpEdQ91KwX1LlXnY0GJGYmDi4kcKmgmLX2BQxEH82135UN
-	 pp3vnpPfnkykfWN2exxYwIoZld+2rtr9cQfFqQTk=
+	b=eVnIzeADgEAUkdBot86fQ0MSUnzXVHjKSJ9mr7g2Z4hfpxDg/kCM3yT3Q8xzA8amM
+	 oImoMjykqDTo1603gzNI4lj5oFARr/5rRhHZzh0PofjQBcU4zLSebUpbYl6g7EaVXv
+	 1MzQK91+LFsm6iC03OYcoK9f5KycfOHeBL+v3HoQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Giuseppe Scrivano <giuseppe@scrivano.org>,
-	Amir Goldstein <amir73il@gmail.com>
-Subject: [PATCH 6.18 834/990] ovl: return EIO if the lowerdata is missing
-Date: Wed, 25 Nov 2026 15:36:41 +0100
-Message-ID: <20261125143841.568926601@linuxfoundation.org>
+	Hongyu Jin <hongyu.jin@unisoc.com>,
+	"weijiang.zhou" <weijiang.zhou@unisoc.com>,
+	Mikulas Patocka <mpatocka@redhat.com>
+Subject: [PATCH 6.18 861/990] dm-verity: dont restart or panic on errors during system shutdown
+Date: Wed, 25 Nov 2026 15:37:08 +0100
+Message-ID: <20261125143842.194757862@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143822.072087159@linuxfoundation.org>
 References: <20261125143822.072087159@linuxfoundation.org>
@@ -67,48 +68,85 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Giuseppe Scrivano <giuseppe@scrivano.org>
+From: Weijiang Zhou <weijiang.zhou@unisoc.com>
 
-commit 0d5e729c515f4ae4eacc179dbcf350d9b499a161 upstream.
+commit 47930d1236d2988cdc580c10d3af21b6b02d7ece upstream.
 
-The data of a metacopy file that redirects to a data-only layer is
-looked up when the file is opened, and the error of the lookup is
-returned as is.  If the data file is missing, open() fails with ENOENT
-even though the file is there and stat() works.
+Commit 252bd1256396 ("dm verity: skip verity work if I/O error when system
+is shutting down") stopped I/O errors during shutdown from triggering a
+restart, since devices may legitimately be gone by then. Errors that reach
+verity_handle_err(), e.g. through a failed hash block read followed by a
+failed FEC attempt, are not covered and still call kernel_restart() or
+panic().
 
-This can be an integrity problem when using composefs: a data file that
-is changed or has the wrong fs-verity digest is reported with EIO, but
-a missing one is not reported, the file just looks like it does not
-exist, e.g. a configuration file that overrides the defaults.
+During a reboot that is both wrong (nothing is corrupt) and harmful: it
+races with the reboot already in progress and replaces its reason with
+"dm-verity device corrupted", which bootloaders such as Android's treat as
+a verity failure and switch the device to EIO mode.
 
-Return EIO as it is already done in ovl_lookup() when no lower data is
-found for a metacopy file.  ENOMEM is not changed.
+Apply the same shutdown check in verity_handle_err(). Corruption is still
+logged, recorded in hash_failed and reported via uevent, and the I/O still
+fails.
 
-Fixes: 42dd69ae1af4 ("ovl: implement lazy lookup of lowerdata in data-only layers")
+Signed-off-by: Hongyu Jin <hongyu.jin@unisoc.com>
+Signed-off-by: weijiang.zhou <weijiang.zhou@unisoc.com>
+Signed-off-by: Mikulas Patocka <mpatocka@redhat.com>
+Fixes: 252bd1256396 ("dm verity: skip verity work if I/O error when system is shutting down")
 Cc: stable@vger.kernel.org
-Signed-off-by: Giuseppe Scrivano <giuseppe@scrivano.org>
-Signed-off-by: Amir Goldstein <amir73il@gmail.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/overlayfs/namei.c |    8 ++++++++
- 1 file changed, 8 insertions(+)
+ drivers/md/dm-verity-target.c |   27 ++++++++++++++++++---------
+ 1 file changed, 18 insertions(+), 9 deletions(-)
 
---- a/fs/overlayfs/namei.c
-+++ b/fs/overlayfs/namei.c
-@@ -1047,6 +1047,14 @@ out:
- out_err:
- 	pr_warn_ratelimited("lazy lowerdata lookup failed (%pd2, err=%i)\n",
- 			    dentry, err);
-+	/*
-+	 * The data of a metacopy file is missing or is not a regular file in
-+	 * the data-only layers: the layers are corrupted.  Do not return the
-+	 * error of the lookup (e.g. ENOENT) to the caller, it would make the
-+	 * file look like it does not exist.
-+	 */
-+	if (err != -ENOMEM)
-+		err = -EIO;
- 	goto out;
+--- a/drivers/md/dm-verity-target.c
++++ b/drivers/md/dm-verity-target.c
+@@ -156,6 +156,15 @@ static void verity_hash_at_level(struct
  }
  
+ /*
++ * Skip verity work in response to I/O error when system is shutting down.
++ */
++static inline bool verity_is_system_shutting_down(void)
++{
++	return system_state == SYSTEM_HALT || system_state == SYSTEM_POWER_OFF
++		|| system_state == SYSTEM_RESTART;
++}
++
++/*
+  * Handle verification errors.
+  */
+ static int verity_handle_err(struct dm_verity *v, enum verity_block_type type,
+@@ -204,6 +213,15 @@ out:
+ 	if (v->mode == DM_VERITY_MODE_LOGGING)
+ 		return 0;
+ 
++	/*
++	 * Devices may already be quiesced (e.g. UFS set offline by its
++	 * shutdown hook), so a failure here does not imply corruption.  Fail
++	 * the I/O but do not restart or panic, which would also override the
++	 * reboot reason of the shutdown already in progress.
++	 */
++	if (verity_is_system_shutting_down())
++		return 1;
++
+ 	if (v->mode == DM_VERITY_MODE_RESTART)
+ 		kernel_restart("dm-verity device corrupted");
+ 
+@@ -523,15 +541,6 @@ static int verity_verify_io(struct dm_ve
+ 	return 0;
+ }
+ 
+-/*
+- * Skip verity work in response to I/O error when system is shutting down.
+- */
+-static inline bool verity_is_system_shutting_down(void)
+-{
+-	return system_state == SYSTEM_HALT || system_state == SYSTEM_POWER_OFF
+-		|| system_state == SYSTEM_RESTART;
+-}
+-
+ static void restart_io_error(struct work_struct *w)
+ {
+ 	kernel_restart("dm-verity device has I/O error");
 
 
