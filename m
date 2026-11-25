@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795623844;
-	b=DlZogDsLk8veXz9tH4k0ElGxWCMVbUkVo29sFl666cXyC1r/13Trtdwnlmr3lixINtG1
-	 vV2TDRjGMLWwAEJ1hABIl0m1MJ9IznaDdxwOKu5bNNB26cSw0tHgOycQCbCK/pLoN9klD
-	 N0KOK79DU4VyLrjRSHppgJvan0B7HhUcBv+dHPa+4jBDCWWGiPi3NBjlff46QnsAScIra
-	 1k6uN0tjJpFy8X1VfckOnNtA2zK4Yxm+c+bx6lIhNMefBAKY1wFLOXWkQBSyr2BZt3m5X
-	 RbF3yvMEkcanulUmfZ72WwZnEZubE18f0IE4IyyiNtIKKzR3yVnjD9/5jjgggBdKN8w==
+	t=1795623847;
+	b=c2STVz4gBAeS6jYww02WlQJcvU/F383TPVaeXy0A633iBOBZVYLvVU6nLBxGwAS/coVq
+	 CMTo9B3xvKpDw+S7HGGP+octvbcJTUzZ2KMH9dkO3Rd2fVhq0UWO2zJ2eh34GmLrrh545
+	 0/Yy/KJvWQkVa6tEfEt6oZsy3fPZ5FdapoyIJ/3QGL4PXTi/6YrCXKtqL4Dm093an8FFF
+	 d5zYUss7VCQY4rNAkxtDAZyQuJz0ho1RISoW/VOQBlNDXLWsZAQ3IgVLJgNK98EBKwCez
+	 9hB28EfIk7cIJSVuSqhQaY2gmsdOGSYqCgDkjp5qkC1akl/pfqmkP5IUk7H7XkQsJmQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795623844;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795623847;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=mL8TJ6WC014P+LHnJadjKV/AZevBEY+CcHl8FmIMAHE=;
-	b=Q2MIxpYaTF6NBm/D+/ravauFiI589z2ZLd4T/nnBsndEKC4cfoyshQZVlQ5I4pw6W9ww
-	 iMa0mcgTxUHEFQoQ+W4h9bV7LN4EhIMl+wwnulpsvvejSKeOYwQILhfoa7tMpKdo+0Ns0
-	 FFYdmnWaoU7BOmv71DEEMH4pnFjwMRNXCBIhQr7qJ0O7jCgnfUcROwYbpPUote/qXetCI
-	 e+VOoi2YBvTf7ynP0+cNyriiD7/SLuXzhxPRRiwzXaMvKg5oyn08K5xme9Ga2Gl85xXQa
-	 hI9hWKLmZshBy5XUoOC7SJTFcoX/IPvFJBQkQeUlOoeSdUI8+6+3BJd74EIxBQG2JBg==
+	bh=5F/LOFyzwk/IAkLlwNBMs9Q9e4Eer9MXncrG9Fl/5uk=;
+	b=zi8P2RA9WmiyYUv/yJQXVTKh5bccXekRWc6TjHeDfWRC+TKNLm8CSLm+0A2tjBR31E/p
+	 CPReWQlezGZ41wRyy7Z+nuN1xszjqaItnjYwgIWLsIVhJ/WfrtrjfQZS6DCoLKWL9eJMV
+	 6Y+vSO4FERqrqfq0JPSp/qo7GiKiRWE5L3Gm66UPB6Z2uFRpJf487AalR+iR0jP7wHaC+
+	 8d8KfXFj0nrer1f3bPwZ9AM3qhWYS/b5q/sNE42wvKk/Mr0ZMmLOZ6Hp8njEdVzsSa7sr
+	 79dKokA+WaMPeFTl31nO6DJ7/PDZwIqAdYIXp1BYWQqp/Uk9LB9Jikoq/YDxIGjkMpA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=nWPzGI9W;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ei7gRL9B;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 93D86606A31E;
-	Wed, 25 Nov 2026 16:24:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 958A2606A31E;
+	Wed, 25 Nov 2026 16:24:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=nWPzGI9W
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C62931F000C6;
-	Wed, 25 Nov 2026 16:24:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ei7gRL9B
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9AB331F000C6;
+	Wed, 25 Nov 2026 16:24:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795623844;
-	bh=mL8TJ6WC014P+LHnJadjKV/AZevBEY+CcHl8FmIMAHE=;
+	s=korg; t=1795623847;
+	bh=5F/LOFyzwk/IAkLlwNBMs9Q9e4Eer9MXncrG9Fl/5uk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=nWPzGI9WjQs6eEIzo1Ozvrz3TE8gQUbkABY1579DHXfnM+t/XHzbZVHqQ9SGvs+zt
-	 j/+RaxoxhFbBjP9S+uv7z3l+jdg4mcuHRq9OioWEjg+E1Bx14dugrYihKOwMm+f2ts
-	 N4y3n7BRysDCx+bU+sL/gyUSCK/vNdsu0wLBBPr0=
+	b=ei7gRL9BdCBpnEaxuq3hVMKocYKPNYGBOWbSn81dfzQUJpwekaAwU+LW9J9LaIK1V
+	 AiPGao9g8b3wegtIDPPd+p8QlNrgIO76ONkPshIsrV1eXiBP/R3zT2OrGnBRtqeUht
+	 MyTu5ZxIHOqphPSfAdWmbzrTIqCJREqKz0L7z0WQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pierre Barre <pierre@barre.sh>,
-	Christian Schoenebeck <linux_oss@crudebyte.com>,
+	sandeen@redhat.com,
+	Stefano Garzarella <sgarzare@redhat.com>,
 	Dominique Martinet <asmadeus@codewreck.org>
-Subject: [PATCH 6.18 977/990] 9p: fix access mode flags being ORed instead of replaced
-Date: Wed, 25 Nov 2026 15:39:04 +0100
-Message-ID: <20261125143844.868459636@linuxfoundation.org>
+Subject: [PATCH 6.18 978/990] 9p: fix privport option setting wrong RDMA field
+Date: Wed, 25 Nov 2026 15:39:05 +0100
+Message-ID: <20261125143844.891520487@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143822.072087159@linuxfoundation.org>
 References: <20261125143822.072087159@linuxfoundation.org>
@@ -68,48 +68,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pierre Barre <pierre@barre.sh>
+From: Stefano Garzarella <sgarzare@redhat.com>
 
-commit da2346a48a5a1fed86c3fe3d73c0b60e7b3027c9 upstream.
+commit 7fb9bd3659051ff74a29387de0023bb8300e4aa7 upstream.
 
-Since commit 1f3e4142c0eb ("9p: convert to the new mount API"),
-v9fs_apply_options() applies parsed mount flags with |= onto flags
-already set by v9fs_session_init(). For 9P2000.L, session_init sets
-V9FS_ACCESS_CLIENT as the default, so when the user mounts with
-"access=user", both bits end up set. Access mode checks compare
-against exact values, so having both bits set matches neither mode.
-
-This causes v9fs_fid_lookup() to fall through to the default switch
-case, using INVALID_UID (nobody/65534) instead of current_fsuid()
-for all fid lookups. Root is then unable to chown or perform other
-privileged operations.
-
-Fix by clearing the access mask before applying the user's choice.
+While reviewing a patch adding vsock transport to 9p, I noticed that
+since commit 1f3e4142c0eb ("9p: convert to the new mount API"), the
+Opt_privport case incorrectly sets rdma_opts->port instead of
+rdma_opts->privport, so mounting with the privport option overwrites
+the RDMA port number instead of enabling privileged port usage.
 
 Fixes: 1f3e4142c0eb ("9p: convert to the new mount API")
-Signed-off-by: Pierre Barre <pierre@barre.sh>
-Reviewed-by: Christian Schoenebeck <linux_oss@crudebyte.com>
-Message-ID: <0ddc72da-d196-4f01-8755-0086f670e779@app.fastmail.com>
 Cc: stable@vger.kernel.org
+Cc: sandeen@redhat.com
+Signed-off-by: Stefano Garzarella <sgarzare@redhat.com>
+Acked-by: Eric Sandeen <sandeen@redhat.com>
+Message-ID: <20260703102254.114446-1-sgarzare@redhat.com>
 Signed-off-by: Dominique Martinet <asmadeus@codewreck.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/9p/v9fs.c |    4 ++++
- 1 file changed, 4 insertions(+)
+ fs/9p/v9fs.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
 --- a/fs/9p/v9fs.c
 +++ b/fs/9p/v9fs.c
-@@ -408,7 +408,11 @@ static void v9fs_apply_options(struct v9
- 	/*
- 	 * Note that we must |= flags here as session_init already
- 	 * set basic flags. This adds in flags from parsed options.
-+	 * Default access flags must be cleared if session options
-+	 * changes them to avoid mangling the setting.
- 	 */
-+	if (ctx->session_opts.flags & V9FS_ACCESS_MASK)
-+		v9ses->flags &= ~V9FS_ACCESS_MASK;
- 	v9ses->flags |= ctx->session_opts.flags;
- #ifdef CONFIG_9P_FSCACHE
- 	v9ses->cachetag = ctx->session_opts.cachetag;
+@@ -384,7 +384,7 @@ int v9fs_parse_param(struct fs_context *
+ 		break;
+ 	case Opt_privport:
+ 		fd_opts->privport = true;
+-		rdma_opts->port = true;
++		rdma_opts->privport = true;
+ 		break;
+ 	}
+ 
 
 
