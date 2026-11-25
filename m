@@ -1,52 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795625719;
-	b=Al37mvaiSR167HZqTMnRxMDAVsWMNau+dnGB3gjrEdyZhaA/cD0MRPVmV3ZmhWEWFT4F
-	 llK2wnONYvNuSSfT5wTN3khjETGQUUz/trOlqEO3OjeBTnQfc5vt34KYIB4TKJbfg7Qxt
-	 0qk0K2toHu+Bu7zfNbK9zpqu4S2eguexd+9LtDL2d4xBTV+4kRDAkXvCiFLjQ9UWuEEVJ
-	 xljKD1XzwlZrq9KtmP/poF9KmftjNFr44k6LGD6z/zhUrd/bE9qsxrSzdDL8i+4lYqG9i
-	 dNJlFHslzr9xmjuguD6cFwrlekoWzCymkxoOnf1zTBfTxuTRkDmIWwUDQ0oQuLB/e5w==
+	t=1795625722;
+	b=foSJ9cpVVlDXTkcLYgFPjqydkXjLCmgcJnpFtO4KsjOGTodmHbi836U+Ij899WJIf48M
+	 KFlwmMDH+xRMsMhPMOsd/69S357c9J01t5H/J+HleGBvBCHQM4z+UyjRYyNh0KjKy1PXr
+	 Ih3q/wDcQeK/crq7M8jusaVjyvSAuLj9Tka6HXzKnjE7NGC/hy3SrYAF/Tm4vo/WuLyYS
+	 HaSxOKfP2VcuEXL0CFHW8h8DjJi6/UwAnUxIBbEp6mH3ICl9NZF11MaAuC/Wx6awOpg7m
+	 HeE/G1Ab1q+CA0Yz1Z7xEBuzlaoZCgQuOfKzn4W2AEQYmYOOfvVUT5Yjco9ImUMe3eA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795625719;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795625722;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=L7AdpE4t3TBv+jOxHlQc6h8jXyIiSN3Ek+yg4sXQAtc=;
-	b=WAFLf+PUNYwnHYjCRUBPt6bnnMZhq75arOnB8otnlSVE5+7OtgAOMWXrbp+dISeCdHi9
-	 N/WSB//SBEILgAfUKUkp6SxybUKIPwPBt9LiVKyCwPDQFCVNJdYQqXZolp7mmBdApFBLF
-	 Nj6G/FlNIQ1t9ULfvKfbGOEYsyGvkO1OQuLNTBKCLoZW3iEDGPqmADdm7jHuU6W2G03Eq
-	 BQpLb+WNV+GVfeX2DKjst5RYPRkkWeWD6aKGq6Gul4nQR9nNjGER0Pl8oP6xkQvkNA9WW
-	 AYAmbuM+A4T/8jZSWhy0XAiZ3nrbPMRH70i/6tLlIML0wr8mnc2zlnTsuz9OZYqCOVQ==
+	bh=CAq00TjPCmuY3H8lP2JMMiVaUn1sXPq6EmMitfbrDBY=;
+	b=Lyfidva70PWb5dJR8DIOQgtLXpgXyKySjaTY2fj7f2tRD2quhS25rClwODx8AWKvTgob
+	 /hJFeKDChSzO6OCBYjWSiOvRWvPZ7Gt0Zzm1XolAltlntuISVRiyiD4sWmv++rXthUeph
+	 Paz/W1sMxOY8gZlLgGiVzX/gTjycngc8SohzP1Pog7SPWJUNGEaTsS1vB29WhYRJ0gTDP
+	 rtFYnf+pNIcr0ssKg3aEvMVb6c6N03qLeWUWZIN+XQrI9XuFFg4Z7aVpcH9XM2Fr5qEL+
+	 I76vdNY8TxcQ0gImrDPo3SA2vZtIWZdmn0Ju55usu42YxaEmVgaTx7/jqaQryAuACYg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=hqYIdLPc;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=qyOznbU2;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 79F3C606A32D;
-	Wed, 25 Nov 2026 16:55:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5086C606A323;
+	Wed, 25 Nov 2026 16:55:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=hqYIdLPc
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CC2A81F000C4;
-	Wed, 25 Nov 2026 16:55:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=qyOznbU2
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A111F1F000C6;
+	Wed, 25 Nov 2026 16:55:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795625719;
-	bh=L7AdpE4t3TBv+jOxHlQc6h8jXyIiSN3Ek+yg4sXQAtc=;
+	s=korg; t=1795625722;
+	bh=CAq00TjPCmuY3H8lP2JMMiVaUn1sXPq6EmMitfbrDBY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=hqYIdLPcTWygyaPoOL7gXntX0tjSHwuHKMecMnWwHv1MwH1m+fRX5KfDD2gvcfZ6z
-	 kXO9GgRxhUSuwoxxVtfsZUPoaaw0KdqhhE92e+Dlh1AUD5Uyp2rPI1ee6L7WVDjkAB
-	 7ZkyvsNGQm9uFcxNHEd7OCjunH/COCFmY1z8EfdQ=
+	b=qyOznbU2keKFKhXyxikQ7tAApkXiYvBuTqzdwd8yB5TCpY/OBZLSVgc4heZ4YVFa9
+	 95zp3Uk3EYxxBLzUtGELkrdvgXAE5Ft6BMzvNU1XyHQy0kdZ0e1tNut8uNxMLXYzQB
+	 vp49KhTbkR43Hq6Cv87lCTV54W28G53zlwr4f8NQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kyle Zeng <kylebot@openai.com>,
-	Jan Kara <jack@suse.cz>,
+	Avi Weiss <thnkslprpt@gmail.com>,
 	"Christian Brauner (Amutable)" <brauner@kernel.org>
-Subject: [PATCH 6.12 565/816] aio: dont let exit_aio() return before complete() is done
-Date: Wed, 25 Nov 2026 15:35:13 +0100
-Message-ID: <20261125143902.259829757@linuxfoundation.org>
+Subject: [PATCH 6.12 566/816] splice, net: avoid MSG_MORE when the bvec array fills
+Date: Wed, 25 Nov 2026 15:35:14 +0100
+Message-ID: <20261125143902.282989266@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143849.205329330@linuxfoundation.org>
 References: <20261125143849.205329330@linuxfoundation.org>
@@ -68,65 +67,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Christian Brauner <brauner@kernel.org>
+From: Avi Weiss <thnkslprpt@gmail.com>
 
-commit ac4b449b39e605123c12ea10042cafc9b6f39603 upstream.
+commit 8eaa35c6c29ae669949f4b5b0814c3d34c8ed658 upstream.
 
-exit_aio() kills all contexts in one go and waits for them with a
-single on-stack struct ctx_rq_wait. The count starts at table->nr, each
-killed context drops one count in free_ioctx_reqs() and exit_aio()
-subtracts the empty slots afterwards. Whoever drops the last count
-either calls complete() or, if it is exit_aio(), skips the wait.
+splice_to_socket() leaves tail at the last included pipe buffer when
+its 16-entry bvec array fills. If the requested length exceeds the
+available pipe data, pipe_occupancy() counts that buffer again and sets
+MSG_MORE even though the pipe is empty. Small TCP transfers can then be
+delayed until the cork timeout expires.
 
-With a full table skipped is zero and atomic_sub_and_test(0, ...) only
-tells us whether the count already hit zero. free_ioctx_reqs() runs from
-the percpu_ref RCU callback, so if exit_aio() is off the CPU long enough
-the last callback can have done its atomic_dec_and_test() but not yet
-called complete():
+Advance tail before checking the array limit so the occupancy test
+counts only pipe buffers that have not been included in the send.
 
-    free_ioctx_reqs()                    exit_aio()
-    atomic_dec_and_test() // 1 -> 0
-                                         atomic_sub_and_test(0) // true
-                                         kfree(table)
-                                         return
-    complete(&wait.comp)
-
-complete() then locks and writes a completion on a stack frame that is
-gone. So hold an extra count for exit_aio() itself. Then the last count
-is always dropped by exit_aio() after it waited, or by a callback while
-exit_aio() waits for it. An unprivileged user gets there with four
-io_setup() calls and an exit without io_destroy().
-
-Reported-by: Kyle Zeng <kylebot@openai.com>
-Fixes: dc48e56d7616 ("aio: fix serial draining in exit_aio()")
+Fixes: ca2d49f77ce4 ("splice, net: Fix splice_to_socket() to handle pipe bufs larger than a page")
 Cc: stable@vger.kernel.org
-Link: https://patch.msgid.link/20261030-work-aio-exit_aio-v1-1-83942022a4c4@kernel.org
-Reviewed-by: Jan Kara <jack@suse.cz>
+Signed-off-by: Avi Weiss <thnkslprpt@gmail.com>
+Link: https://patch.msgid.link/20261031095922.3577591-2-thnkslprpt@gmail.com
 Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/aio.c |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ fs/splice.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/fs/aio.c
-+++ b/fs/aio.c
-@@ -910,7 +910,7 @@ void exit_aio(struct mm_struct *mm)
- 	if (!table)
- 		return;
+--- a/fs/splice.c
++++ b/fs/splice.c
+@@ -871,9 +871,9 @@ ssize_t splice_to_socket(struct pipe_ino
  
--	atomic_set(&wait.count, table->nr);
-+	atomic_set(&wait.count, table->nr + 1);
- 	init_completion(&wait.comp);
+ 			bvec_set_page(&bvec[bc++], buf->page, seg, buf->offset);
+ 			remain -= seg;
++			tail++;
+ 			if (remain == 0 || bc >= ARRAY_SIZE(bvec))
+ 				break;
+-			tail++;
+ 		}
  
- 	skipped = 0;
-@@ -934,7 +934,7 @@ void exit_aio(struct mm_struct *mm)
- 		kill_ioctx(mm, ctx, &wait);
- 	}
- 
--	if (!atomic_sub_and_test(skipped, &wait.count)) {
-+	if (!atomic_sub_and_test(skipped + 1, &wait.count)) {
- 		/* Wait until all IO for the context are done. */
- 		wait_for_completion(&wait.comp);
- 	}
+ 		if (!bc)
 
 
