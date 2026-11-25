@@ -1,54 +1,55 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795618840;
-	b=a3ZFGb7gkMPZtZ2iaCA7Xbab+rSEwTJa6p/V+cZykftu+pFGj5pcvHYReWXnKjtGr9OI
-	 8D7/TwKkU9XugYiPMJieD3dotIUGzpaJIxBB7Gt3qUraBGsMAc8S2/t+Jx9CqVS5LVPzC
-	 WOjue94xb4EcVv6UhGi3dRCxO7NO5De69KzSBqKGfws7FSf2qTPWhQcemL0K33+XpkQ+y
-	 K3+tjS6kNzztFLzpX4jTSGTJeaLFvA2W3fCjKLGZWDNfiOQcV1B8VPzamqLD5ZarUnqH5
-	 Ggh18Mvdzj3Jsw/m0ya00obbNzldn1ECBbMqvvFEd83lbR8KpT/Sbj9a3Cymb1K0Sfg==
+	t=1795618843;
+	b=wJEevVPfIdRoqNzfxM0EbGCHmw6QUue6pjKoaqm7TuVc/3E9w6oAC+2MlAVG8EJ5/y3r
+	 +di/hHoLK3bq1M7J2xxITUvcYIh49yU2Hcy3bg/lljbEmsXhkMdWM4uwjDISow09tz674
+	 q+z3h/uRG7JsSpSGPs94/+d8azENny9Bhi/TmrBGO4i245GHSs+97cwMyYDVb4lTgiL4Z
+	 Zngky7zFl/IAX6ioleVmKd3UkOYUH/9OhQ2cimwPNz3F/nDljrHmKCgFMXy1I03O2hP8Y
+	 NQ9GBcMy6ISZh15lQMaGr1SYWbFX4w6bKgxWPGnu242UTG+75xWK4VkaDEm2dT/WC+Q==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795618840;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795618843;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Transfer-Encoding;
-	bh=Jx9Ova79j7iDaxBm7lwcwmbSo6kP8IogAVnnklYYOmo=;
-	b=YtAq/20Bhwfmqcv3WtorkVszcm6nQ2rDLddA9UAIg8N6FY7O5uhJKoLYJu66AB0hJaDO
-	 DRm2+/Ozz/HYXZxGJUY3Xpt/a9QDjLllDZmZVO2NWPXTQ0m+XBzkYSDbbRuPXBH9l0L3o
-	 SA8yJVKCPzwrzVSYLWu3LB3jb07QwcdAONdlJvTDJhPHCShLsl81GWCdMa3rls0G7o9R0
-	 aqnpKYevgyg5HyGBa0V717QHRi1/Mcm8aJidaBh3MBSwr6TdQIu8yjRJ+Wc4ejgTVR5vf
-	 kN6IGtZO4SdU15xjQ0RQUkxq1unQW9w93J+WVQWJCZt76/d5W5Vg7NpIiNW9Rnf4LYQ==
+	 MIME-Version:Content-Type:Content-Transfer-Encoding;
+	bh=dECGgWJ9KI8manjf6Ax/HIiu4R6mUlY6FKgoY9xNp8k=;
+	b=U5H2fWqNmg/ji1hN9y9NZTWGPPUqbVD+GY321kMOOKecadQB5o3R8eMIx11b3opyFnZo
+	 qS87+M+S8EDPVl+TukLVpIK0AjFJ0VykQ4MA5VRGvMTLsZCVTy8RBV1vHFwUb4oY2gsT6
+	 XYiCYG1lFVlQ7W6Yi6tinlH043AcS/Nkax9jcEvx0D+f4h/Vhd7XezCooAMTpHzCrga0V
+	 x9Eou4qmin81PWsr0j/2QObAFZN93xsle/GaK8hNxNJsz9k1zpcUOU9zVmRTXcQPGkNDJ
+	 u8BIokzjM68WySVDREQvU92b8Z2yoUwVCIZ46h69i1c7LBCiVGDCpJRy4VrGYYn5jAw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=qRtxeDJe;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=tXGK2pyI;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 10CBC606A323;
-	Wed, 25 Nov 2026 15:00:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6467B606A321;
+	Wed, 25 Nov 2026 15:00:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=qRtxeDJe
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2CBF51F000D0;
-	Wed, 25 Nov 2026 15:00:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=tXGK2pyI
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3A9A01F000C0;
+	Wed, 25 Nov 2026 15:00:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795618839;
-	bh=Jx9Ova79j7iDaxBm7lwcwmbSo6kP8IogAVnnklYYOmo=;
+	s=korg; t=1795618842;
+	bh=dECGgWJ9KI8manjf6Ax/HIiu4R6mUlY6FKgoY9xNp8k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=qRtxeDJe7/dSmj3XyIAUq5uDwz1yL4zRFw8deQZUODeScwHFX+Y2rNwcHFtHjYwqu
-	 +PtpIeGdLToldq/7rnIkyOd4216CFBLNRg5yWkgj6x42qBSf/f3jXABgY4QbEHdGat
-	 NdiHX+nweOCZbd+ZXRUG5XvzY7iT5fDbbgPVzBlU=
+	b=tXGK2pyIA4stcmWMwKAE68rUmC0b1VahYZqmDkcPyBAunZ1wSpzQK3eEFmhrO5xg9
+	 8LQaGjjfH6qhmTFPjM670eokWNIRf9aWs0tTM1QQxIpUyHz07HkzOTMiK83ScplnuX
+	 S5GkYFjHuMX2Lan7xbuMiUbDpi1Q23nEmoTUA0os=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Daniele Ceraolo Spurio <daniele.ceraolospurio@intel.com>,
-	Badal Nilawar <badal.nilawar@intel.com>,
 	Matthew Brost <matthew.brost@intel.com>,
+	=?UTF-8?q?Thomas=20Hellstr=C3=B6m?= <thomas.hellstrom@linux.intel.com>,
+	Himal Prasad Ghimiray <himal.prasad.ghimiray@intel.com>,
+	Arvind Yadav <arvind.yadav@intel.com>,
 	Dave Airlie <airlied@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0403/1005] drm/xe/xe_late_bind_fw: Fix firmware leak on missing manifest entry
-Date: Wed, 25 Nov 2026 15:29:01 +0100
-Message-ID: <20261125143831.192647617@linuxfoundation.org>
+Subject: [PATCH 7.3 0404/1005] drm/xe/svm: Preserve default PAT index when resetting VMA attributes
+Date: Wed, 25 Nov 2026 15:29:02 +0100
+Message-ID: <20261125143831.217050290@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143821.729802100@linuxfoundation.org>
 References: <20261125143821.729802100@linuxfoundation.org>
@@ -64,74 +65,57 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 7.3-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Badal Nilawar <badal.nilawar@intel.com>
+From: Arvind Yadav <arvind.yadav@intel.com>
 
-[ Upstream commit 74f1a6f03f2d46537f929a1b13f7dcd378437a4d ]
+[ Upstream commit e800602296e8668b4cf143fc12d7cee4b31e64aa ]
 
-Release firmware when the "LTES" manifest entry is not found in the
-firmware header.
+xe_vma_set_default_attributes() replaces the VMA attributes with a
+default structure. It sets pat_index to the saved default PAT index,
+but leaves default_pat_index zero.
 
-Fixes: efa29317a553 ("drm/xe/xe_late_bind_fw: Extract and print version info")
-Reviewed-by: Daniele Ceraolo Spurio <daniele.ceraolospurio@intel.com>
-Link: https://patch.msgid.link/20261102172527.2794537-9-badal.nilawar@intel.com
-Signed-off-by: Badal Nilawar <badal.nilawar@intel.com>
-(cherry picked from commit 3e4b2a6349ed7258057fa95a1e58730615703dae)
+When the saved default is non-zero, the two fields no longer match.
+xe_vma_has_default_mem_attrs() then reports that the reset VMA has
+non-default attributes, triggering a warning in xe_vm_alloc_vma()
+during SVM garbage collection. A later reset also uses the incorrect
+zero value.
+
+Preserve default_pat_index when restoring the default attributes.
+
+Fixes: 4a938d3886d6 ("drm/xe: Merge adjacent default-attribute VMAs during garbage collection")
+Cc: Matthew Brost <matthew.brost@intel.com>
+Cc: Thomas Hellström <thomas.hellstrom@linux.intel.com>
+Cc: Himal Prasad Ghimiray <himal.prasad.ghimiray@intel.com>
+Signed-off-by: Arvind Yadav <arvind.yadav@intel.com>
+Reviewed-by: Himal Prasad Ghimiray <himal.prasad.ghimiray@intel.com>
+Signed-off-by: Matthew Brost <matthew.brost@intel.com>
+Link: https://patch.msgid.link/20261027085952.2882874-1-arvind.yadav@intel.com
+(cherry picked from commit ce155027427a0c76be173f19f911b414d9d686bc)
 Signed-off-by: Matthew Brost <matthew.brost@intel.com>
 Signed-off-by: Dave Airlie <airlied@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/xe/xe_late_bind_fw.c | 15 ++++++++-------
- 1 file changed, 8 insertions(+), 7 deletions(-)
+ drivers/gpu/drm/xe/xe_svm.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/gpu/drm/xe/xe_late_bind_fw.c b/drivers/gpu/drm/xe/xe_late_bind_fw.c
-index 768442ca7da6d..1bddfaf0fb9f0 100644
---- a/drivers/gpu/drm/xe/xe_late_bind_fw.c
-+++ b/drivers/gpu/drm/xe/xe_late_bind_fw.c
-@@ -335,19 +335,19 @@ static int __xe_late_bind_fw_init(struct xe_late_bind *late_bind, u32 fw_id)
- 	if (fw->size > XE_LB_MAX_PAYLOAD_SIZE) {
- 		drm_err(&xe->drm, "Firmware %s size %zu is larger than max pay load size %u\n",
- 			lb_fw->blob_path, fw->size, XE_LB_MAX_PAYLOAD_SIZE);
--		release_firmware(fw);
--		return -ENODATA;
-+		ret = -ENODATA;
-+		goto release_fw;
- 	}
- 
- 	ret = parse_lb_layout(lb_fw, fw->data, fw->size, "LTES");
- 	if (ret)
--		return ret;
-+		goto release_fw;
- 
- 	lb_fw->payload_size = fw->size;
- 	lb_fw->payload = drmm_kzalloc(&xe->drm, lb_fw->payload_size, GFP_KERNEL);
- 	if (!lb_fw->payload) {
--		release_firmware(fw);
--		return -ENOMEM;
-+		ret = -ENOMEM;
-+		goto release_fw;
- 	}
- 
- 	drm_info(&xe->drm, "Using %s firmware from %s version %u.%u.%u.%u\n",
-@@ -356,10 +356,11 @@ static int __xe_late_bind_fw_init(struct xe_late_bind *late_bind, u32 fw_id)
- 		 lb_fw->version.hotfix, lb_fw->version.build);
- 
- 	memcpy((void *)lb_fw->payload, fw->data, lb_fw->payload_size);
--	release_firmware(fw);
- 	INIT_WORK(&lb_fw->work, xe_late_bind_work);
- 
--	return 0;
-+release_fw:
-+	release_firmware(fw);
-+	return ret;
- }
- 
- static int xe_late_bind_fw_init(struct xe_late_bind *late_bind)
+diff --git a/drivers/gpu/drm/xe/xe_svm.c b/drivers/gpu/drm/xe/xe_svm.c
+index b228a737cfd6d..281b81c28e16d 100644
+--- a/drivers/gpu/drm/xe/xe_svm.c
++++ b/drivers/gpu/drm/xe/xe_svm.c
+@@ -330,6 +330,7 @@ static void xe_vma_set_default_attributes(struct xe_vma *vma)
+ 	struct xe_vma_mem_attr default_attr = {
+ 		.preferred_loc.devmem_fd = DRM_XE_PREFERRED_LOC_DEFAULT_DEVICE,
+ 		.preferred_loc.migration_policy = DRM_XE_MIGRATE_ALL_PAGES,
++		.default_pat_index = vma->attr.default_pat_index,
+ 		.pat_index = vma->attr.default_pat_index,
+ 		.atomic_access = DRM_XE_ATOMIC_UNDEFINED,
+ 		.purgeable_state = XE_MADV_PURGEABLE_WILLNEED,
 -- 
 2.53.0
 
