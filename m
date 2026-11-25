@@ -1,42 +1,42 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795617806;
-	b=WOIkY5OjsksAyp50tXnwb/+EyF3yCjQzw3fwL3f8cQ4IJJrnDE9wNoKN97fSQ+iCOBqs
-	 uypPtJCkHjXAvrSWsvgYikAgEuJGsjM3dAN2j7kQYkUy3toR4TS0NzZqeZyY/kpbU0KdA
-	 hjlTpL952st2pu5k98EsKI/gqliavx0vk73wMYMhalB/dMoN2C4qukMKpd13bVOL8L+4c
-	 /POL73VRomAoR+8NFBEclXQbmWI17RnNaWyHHrzrWbeBzbMh+akoDdyAk5mcKtwtpgpll
-	 q+DxiXq69OTEiV+wgXZEU8xyBE47p8BI9t4ZV+kQhZtn+WYpShMQAvta0abtGzEJKfQ==
+	t=1795617809;
+	b=qxtT8NYKbz3nJIBV4PkcTG5iRKXuxwACbS1qzRtOLXKhXdLDxh6cifp9HpwI2VsNHHE+
+	 +v/IJUSsxy8m9tdu8RGFGPg5owd6gCFv+qz3B4wmKYUl0ADv3OECexBm/A1k/XtN5FJiZ
+	 58oTTUUFGLLZjQL+u3AUHnrU7dUli+zXXAXlh7ZSZZhKb5JYfaQh1okyBMoqXvLPVC/1V
+	 x34QgDzaPy+7ByYorqxYSUdlA5SCv7NSgmlTSs35suHTaqIxSjvzNn5j667cwkUUz9NmZ
+	 ZIhxyVQIWQyLTN+TD7aSbtPd1f3N9gofh5o3lKohrO9SRfD/NSdp3FMOgnsHabo0LEQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795617806;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795617809;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=vsOiGDgVtFmZIPPxGqhcAJpuIjzyRj0v7twarPqChSo=;
-	b=kdRafpN2BdXqnvbCcPOpgLvLD1+1AI5AEbTBYanUTutTu2+lD5GseEikj+JVfIP/G1ez
-	 vz5E41SW+dtry1Nv81C5kLPxIFpGTW9qOivL0eGRnTBCAuyPo6JVYcGp9MJqSts8JDbGj
-	 lqvQIA3HYaot/aikHXhnXhwP7h1NSW9PPMmSs6g1pVbWqMTCjS40Ybv2ogZRhwHfC7N2N
-	 Zv2YMoIoAbeJLZbTg0fng0ajbPQpcDO1m0oKDsMkCHqTprk+/AxTY4eYQW/3XrzDWSBMf
-	 tFDd9gBWVZdXFRyEAWdc0fiGE41EI+l6Iyaa3zNa4eJJf/BNurInc3Ftt995XGj2mew==
+	bh=Tn+SBS9Drmt95hHXCJGNJGA28GXfCRR/8x2n31bmmsw=;
+	b=5VQq5KuPt7EBrAlSVr6LqKLO1WFBtsDkkG4tkr1wRtJoWZiXzURpBWizZNl5rEcQwWfj
+	 pJcT0RNpJMHql958H567hItupZLccBaaGYI0NUl6p3WYsitq498CQ7maPFVCFmS9tweah
+	 f+smufjh14dkBEnT7JxDRWsG9ZmhSSvGg7Cw7KRkJOmG1622lRPpzuR7YsLFYGfBVVuM5
+	 KDTxlk7YtIUF5GJAJ0ymgDXtSYRLaWmkhcCGjDxI5jGNiD7Ph5QfKNwnK2DgWkVE5FSgj
+	 leovdCgZ4qZGU7zTRs+gSzMlD1XV4Tpb0lVwQfqLL3qW0p67DwU2Fk+vR32kjNjUlHw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=avpbF5Ef;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=TW5Ikk9v;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8071E606A323;
-	Wed, 25 Nov 2026 14:43:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 57F78606A329;
+	Wed, 25 Nov 2026 14:43:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=avpbF5Ef
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D33B01F000CA;
-	Wed, 25 Nov 2026 14:43:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=TW5Ikk9v
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A7CC21F000C6;
+	Wed, 25 Nov 2026 14:43:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795617806;
-	bh=vsOiGDgVtFmZIPPxGqhcAJpuIjzyRj0v7twarPqChSo=;
+	s=korg; t=1795617809;
+	bh=Tn+SBS9Drmt95hHXCJGNJGA28GXfCRR/8x2n31bmmsw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=avpbF5EfPDp1o/N3ESCDoa3hUCU0fvPMbMBGNe3+kUp6fdivf4DyX61++dGSkPa87
-	 q53byqXxLRtDL3LOYZKQVWlfIyKwmGm6L2gXp7ZSR3HjAoxQDf4P4OfNgWxPfWvjsT
-	 MccMvqE0rJje3lu7nyGpkOrCfELGxSLytR34NaKc=
+	b=TW5Ikk9vkHtnL1bkecKy53YD5H2Py53mnreiV6wrtveo0f4U+ng3qkFTiLp4fvigY
+	 7FqkWq5aff0LjxdJWIsDNqjqF32nbNTMhonpNW/TdO+8gHzi2m9+knO9XTUfHA6pMY
+	 OAL1eVLRPG7cAT6+h9jUii3E6O/GufK1e1yFCnts=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -44,9 +44,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	James Hilliard <james.hilliard1@gmail.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0081/1005] ptp: unwind partially completed virtual clock creation
-Date: Wed, 25 Nov 2026 15:23:39 +0100
-Message-ID: <20261125143823.639047279@linuxfoundation.org>
+Subject: [PATCH 7.3 0082/1005] ptp: vclock: propagate physical clock sampling errors
+Date: Wed, 25 Nov 2026 15:23:40 +0100
+Message-ID: <20261125143823.662572777@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143821.729802100@linuxfoundation.org>
 References: <20261125143821.729802100@linuxfoundation.org>
@@ -70,58 +70,287 @@ Content-Transfer-Encoding: 8bit
 
 From: James Hilliard <james.hilliard1@gmail.com>
 
-[ Upstream commit 3dea778260e3dddf30651a6913d87a42861346a2 ]
+[ Upstream commit d1bdfdafd663dd00b01d43eb3391f87718f2a09d ]
 
-n_vclocks_store() publishes the new clock count only after every child
-has been registered. If a later registration fails, it returns without
-unregistering the children already created by that request. Those clocks
-are left out of n_vclocks, and a subsequent request can overwrite their
-index entries without removing them.
+The cyclecounter read callback cannot report errors. ptp_vclock_read()
+ignores the return from the physical clock and consumes its output even
+if the read failed. A zero sample followed by the real counter can add
+an extra 32-bit wrap to virtual time. This was found by code inspection
+of reset-time PHC access and the virtual clock callers.
 
-Unregister the newly created children in reverse order and clear their
-index entries on failure. Leave the previously installed clocks and
-their count unchanged. The n_vclocks mutex serializes this rollback with
-other sysfs changes, and parent removal drains the store before walking
-the children.
+Sample the parent before calling timecounter_read() or timecounter_init()
+and have the cyclecounter callback return the cached successful sample.
+On failure, leave the counter and frequency adjustment unchanged and
+return the PHC error to the caller.
 
-This was found by code inspection while adding initial PHC sample error
-handling to virtual clock registration.
+Retry the first failed refresh after 10 ms instead of waiting another two
+seconds. With the existing 32-bit nanosecond mask, timecounter_cyc2time()
+can interpret a fresh timestamp as being in the past once the last
+successful refresh is about 2.147 seconds old. An isolated read failure
+should not deliberately defer the next attempt until that sample is four
+seconds old.
 
-Fixes: 73f37068d540 ("ptp: support ptp physical/virtual clocks conversion")
+Double the retry delay after consecutive failures, up to the normal
+two-second refresh interval, and reset it after a successful refresh.
+Each virtual clock has its own worker, and a failed parent read can involve
+bus traffic and error logging. Backoff limits that repeated work during a
+persistent failure while retaining a prompt first retry.
+
+Limit each retry delay to the next regular refresh deadline. Otherwise,
+backoff can skip the next two-second refresh opportunity and lose a full
+counter wrap even when the parent has recovered before that refresh was
+due. Advance the deadline when an attempt reaches it without resetting the
+backoff, so sustained failures still settle at the normal refresh interval.
+Keep the retry state private to each clock's auxiliary worker.
+
+Take the initial sample and initialize the counter before publishing the
+clock. Return an error pointer from registration and propagate its errno
+through n_vclocks, including when the initial sample fails. Queue the first
+refresh immediately after registration so registration latency is not
+followed by another full refresh interval.
+
+Keep the existing cyclecounter mask and scaling. These scheduling changes
+do not guarantee timely samples: prolonged read failures or worker delays
+can still exceed the half-wrap conversion window, and a gap of about
+4.295 seconds between successful samples can lose a full counter wrap.
+Do not assume that getcycles64() exposes a full-width nanosecond counter.
+
+Fixes: 5d43f951b1ac ("ptp: add ptp virtual clock driver framework")
 Signed-off-by: James Hilliard <james.hilliard1@gmail.com>
-Link: https://patch.msgid.link/20261026-ptp-vclock-sampling-v6-2-e705612541f1@gmail.com
+Link: https://patch.msgid.link/20261026-ptp-vclock-sampling-v6-3-e705612541f1@gmail.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/ptp/ptp_sysfs.c | 8 +++++++-
- 1 file changed, 7 insertions(+), 1 deletion(-)
+ drivers/ptp/ptp_private.h |  6 ++-
+ drivers/ptp/ptp_sysfs.c   |  4 +-
+ drivers/ptp/ptp_vclock.c  | 89 ++++++++++++++++++++++++++++++---------
+ 3 files changed, 76 insertions(+), 23 deletions(-)
 
+diff --git a/drivers/ptp/ptp_private.h b/drivers/ptp/ptp_private.h
+index ec8633126d6b8..99e7eb241336e 100644
+--- a/drivers/ptp/ptp_private.h
++++ b/drivers/ptp/ptp_private.h
+@@ -81,7 +81,11 @@ struct ptp_vclock {
+ 	struct hlist_node vclock_hash_node;
+ 	struct cyclecounter cc;
+ 	struct timecounter tc;
+-	struct mutex lock;	/* protects tc/cc */
++	u64 cycles;
++	struct mutex lock;	/* protects tc/cc and the cached sample */
++	/* Owned by the auxiliary worker. */
++	unsigned long retry_delay;
++	unsigned long refresh_deadline;
+ };
+ 
+ /*
 diff --git a/drivers/ptp/ptp_sysfs.c b/drivers/ptp/ptp_sysfs.c
-index 1b4530be42a20..2d46f69e8c100 100644
+index 2d46f69e8c100..8e0e0aa099815 100644
 --- a/drivers/ptp/ptp_sysfs.c
 +++ b/drivers/ptp/ptp_sysfs.c
-@@ -229,7 +229,7 @@ static ssize_t n_vclocks_store(struct device *dev,
+@@ -228,8 +228,10 @@ static ssize_t n_vclocks_store(struct device *dev,
+ 	if (num > ptp->n_vclocks) {
  		for (i = 0; i < num - ptp->n_vclocks; i++) {
  			vclock = ptp_vclock_register(ptp);
- 			if (!vclock)
--				goto out;
-+				goto err_register;
+-			if (!vclock)
++			if (IS_ERR(vclock)) {
++				err = PTR_ERR(vclock);
+ 				goto err_register;
++			}
  
  			*(ptp->vclock_index + ptp->n_vclocks + i) =
  				vclock->clock->index;
-@@ -261,6 +261,12 @@ static ssize_t n_vclocks_store(struct device *dev,
- 	mutex_unlock(&ptp->n_vclocks_mux);
+diff --git a/drivers/ptp/ptp_vclock.c b/drivers/ptp/ptp_vclock.c
+index 84cb527f59ccc..b97f3a8772602 100644
+--- a/drivers/ptp/ptp_vclock.c
++++ b/drivers/ptp/ptp_vclock.c
+@@ -4,6 +4,7 @@
+  *
+  * Copyright 2021 NXP
+  */
++#include <linux/jiffies.h>
+ #include <linux/slab.h>
+ #include <linux/hashtable.h>
+ #include "ptp_private.h"
+@@ -13,6 +14,7 @@
+ #define PTP_VCLOCK_FADJ_SHIFT		9
+ #define PTP_VCLOCK_FADJ_DENOMINATOR	15625ULL
+ #define PTP_VCLOCK_REFRESH_INTERVAL	(HZ * 2)
++#define PTP_VCLOCK_RETRY_INTERVAL		msecs_to_jiffies(10)
  
- 	return count;
-+err_register:
-+	num = i;
-+	if (num)
-+		device_for_each_child_reverse(dev, &num, unregister_vclock);
-+	for (num = 0; num < i; num++)
-+		ptp->vclock_index[ptp->n_vclocks + num] = -1;
- out:
- 	mutex_unlock(&ptp->n_vclocks_mux);
- 	return err;
+ /* protects vclock_hash addition/deletion */
+ static DEFINE_SPINLOCK(vclock_hash_lock);
+@@ -42,21 +44,39 @@ static void ptp_vclock_hash_del(struct ptp_vclock *vclock)
+ 	synchronize_srcu(&vclock_srcu);
+ }
+ 
++/* The caller holds vclock->lock, or has not published the clock yet. */
++static int ptp_vclock_sample(struct ptp_vclock *vclock)
++{
++	struct ptp_clock *ptp = vclock->pclock;
++	struct timespec64 ts;
++	int err;
++
++	err = ptp->info->getcycles64(ptp->info, &ts);
++	if (!err)
++		vclock->cycles = timespec64_to_ns(&ts);
++
++	return err;
++}
++
+ static int ptp_vclock_adjfine(struct ptp_clock_info *ptp, long scaled_ppm)
+ {
+ 	struct ptp_vclock *vclock = info_to_vclock(ptp);
+ 	s64 adj;
++	int err;
+ 
+ 	adj = (s64)scaled_ppm << PTP_VCLOCK_FADJ_SHIFT;
+ 	adj = div_s64(adj, PTP_VCLOCK_FADJ_DENOMINATOR);
+ 
+ 	if (mutex_lock_interruptible(&vclock->lock))
+ 		return -EINTR;
+-	timecounter_read(&vclock->tc);
+-	vclock->cc.mult = PTP_VCLOCK_CC_MULT + adj;
++	err = ptp_vclock_sample(vclock);
++	if (!err) {
++		timecounter_read(&vclock->tc);
++		vclock->cc.mult = PTP_VCLOCK_CC_MULT + adj;
++	}
+ 	mutex_unlock(&vclock->lock);
+ 
+-	return 0;
++	return err;
+ }
+ 
+ static int ptp_vclock_adjtime(struct ptp_clock_info *ptp, s64 delta)
+@@ -75,15 +95,16 @@ static int ptp_vclock_gettime(struct ptp_clock_info *ptp,
+ 			      struct timespec64 *ts)
+ {
+ 	struct ptp_vclock *vclock = info_to_vclock(ptp);
+-	u64 ns;
++	int err;
+ 
+ 	if (mutex_lock_interruptible(&vclock->lock))
+ 		return -EINTR;
+-	ns = timecounter_read(&vclock->tc);
++	err = ptp_vclock_sample(vclock);
++	if (!err)
++		*ts = ns_to_timespec64(timecounter_read(&vclock->tc));
+ 	mutex_unlock(&vclock->lock);
+-	*ts = ns_to_timespec64(ns);
+ 
+-	return 0;
++	return err;
+ }
+ 
+ static int ptp_vclock_gettimex(struct ptp_clock_info *ptp,
+@@ -115,13 +136,16 @@ static int ptp_vclock_settime(struct ptp_clock_info *ptp,
+ {
+ 	struct ptp_vclock *vclock = info_to_vclock(ptp);
+ 	u64 ns = timespec64_to_ns(ts);
++	int err;
+ 
+ 	if (mutex_lock_interruptible(&vclock->lock))
+ 		return -EINTR;
+-	timecounter_init(&vclock->tc, &vclock->cc, ns);
++	err = ptp_vclock_sample(vclock);
++	if (!err)
++		timecounter_init(&vclock->tc, &vclock->cc, ns);
+ 	mutex_unlock(&vclock->lock);
+ 
+-	return 0;
++	return err;
+ }
+ 
+ static int ptp_vclock_getcrosststamp(struct ptp_clock_info *ptp,
+@@ -151,8 +175,24 @@ static long ptp_vclock_refresh(struct ptp_clock_info *ptp)
+ 	struct ptp_vclock *vclock = info_to_vclock(ptp);
+ 	struct timespec64 ts;
+ 
+-	ptp_vclock_gettime(&vclock->info, &ts);
++	/* Retry transient failures promptly, but back off during long outages. */
++	if (ptp_vclock_gettime(&vclock->info, &ts)) {
++		unsigned long now = jiffies;
++
++		/* Retries must not postpone the next regular refresh attempt. */
++		if (!vclock->retry_delay || time_after_eq(now, vclock->refresh_deadline))
++			vclock->refresh_deadline = now + PTP_VCLOCK_REFRESH_INTERVAL;
++
++		if (!vclock->retry_delay)
++			vclock->retry_delay = PTP_VCLOCK_RETRY_INTERVAL;
++		else
++			vclock->retry_delay = min_t(unsigned long,
++						    vclock->retry_delay * 2,
++						    PTP_VCLOCK_REFRESH_INTERVAL);
++		return min(vclock->retry_delay, vclock->refresh_deadline - now);
++	}
+ 
++	vclock->retry_delay = 0;
+ 	return PTP_VCLOCK_REFRESH_INTERVAL;
+ }
+ 
+@@ -174,12 +214,9 @@ static const struct ptp_clock_info ptp_vclock_info = {
+ static u64 ptp_vclock_read(struct cyclecounter *cc)
+ {
+ 	struct ptp_vclock *vclock = cc_to_vclock(cc);
+-	struct ptp_clock *ptp = vclock->pclock;
+-	struct timespec64 ts = {};
+-
+-	ptp->info->getcycles64(ptp->info, &ts);
+ 
+-	return timespec64_to_ns(&ts);
++	/* The cyclecounter callback cannot report a failed PHC read. */
++	return vclock->cycles;
+ }
+ 
+ static const struct cyclecounter ptp_vclock_cc = {
+@@ -192,10 +229,11 @@ static const struct cyclecounter ptp_vclock_cc = {
+ struct ptp_vclock *ptp_vclock_register(struct ptp_clock *pclock)
+ {
+ 	struct ptp_vclock *vclock;
++	int err;
+ 
+ 	vclock = kzalloc_obj(*vclock);
+ 	if (!vclock)
+-		return NULL;
++		return ERR_PTR(-ENOMEM);
+ 
+ 	vclock->pclock = pclock;
+ 	vclock->info = ptp_vclock_info;
+@@ -214,20 +252,29 @@ struct ptp_vclock *ptp_vclock_register(struct ptp_clock *pclock)
+ 
+ 	mutex_init(&vclock->lock);
+ 
++	err = ptp_vclock_sample(vclock);
++	if (err)
++		goto free_vclock;
++	timecounter_init(&vclock->tc, &vclock->cc, 0);
++
+ 	vclock->clock = ptp_clock_register(&vclock->info, &pclock->dev);
+-	if (IS_ERR_OR_NULL(vclock->clock)) {
+-		kfree(vclock);
+-		return NULL;
++	if (IS_ERR(vclock->clock)) {
++		err = PTR_ERR(vclock->clock);
++		goto free_vclock;
+ 	}
+ 
+ 	ptp_vclock_set_subclass(vclock->clock);
+ 
+-	timecounter_init(&vclock->tc, &vclock->cc, 0);
+-	ptp_schedule_worker(vclock->clock, PTP_VCLOCK_REFRESH_INTERVAL);
++	/* The initial sample predates registration; refresh without more delay. */
++	ptp_schedule_worker(vclock->clock, 0);
+ 
+ 	ptp_vclock_hash_add(vclock);
+ 
+ 	return vclock;
++
++free_vclock:
++	kfree(vclock);
++	return ERR_PTR(err);
+ }
+ 
+ void ptp_vclock_unregister(struct ptp_vclock *vclock)
 -- 
 2.53.0
 
