@@ -1,51 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795620837;
-	b=vRds/03TwaNrxeO7SpqHWaNSD3jCRoKvBghawWBxobonKbtKXfCCLqhjgWc9TVMKQzE+
-	 OXKAzPumG4QZwp+t9GVtkG43DPLTIZYs+y3Tv644sJsyTgnDaz2MaO0oi3uepc7PNgeRX
-	 oW60j8S7QRtKE6lMcx7h04e8vUeFIX7koOVe41GiHzITqAwRm4gqKQFQSAHmfcMrzy1j8
-	 lJWGMDmjbn9MGfZktQA2+HOUiPhg5u2cmzogvlSt3uAAxqVR9uq3qtqKhkHedMAYxnxP2
-	 KhJ0FoBuGZfovAZVF6l8opNdETIKIq39LoleMOCbkEUGpm8i6Sqb+iUma64KgLdwT6Q==
+	t=1795620839;
+	b=ESVWC4wo+0rbye72D4V/KhreFcQ5UfJETrRhSt93wiHtbEecn8JSE+ultPVSA8xVwcdX
+	 B7al/CdsjBaVx5YHi9OebrDfQjWsHM+T9OAvlzpQTwRw75gnAmWRlaWNYpKzqEK+KB2qR
+	 t4N5MihbOHUnjXKYmzd0p1+KLVh+ytgs/bulDAM4TMUzvR8wA3bmhku+pVH3qNQPfBkRn
+	 77vJEDYkb0/DL35wp1AaqslkyAgr1Le9FO1xfe59URcSDZ66VZdqfsuuKfGFpWtCcnZ9N
+	 tFF/CTzCdlvSVIU4HvTAzn5C8rI4vpBygJrfo3X8FJ/FIKRZxDoZVTdiIKfHqyuhCEg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795620837;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795620839;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=I95tmY3nng6SC62ztDazEth6cMm4Qhfs7Mnr/MyAoBo=;
-	b=nK36CEHxkK96BqH/23pN13oqu3dNea5qvLI338HjfB+CNMCSblevsFbtSFCLb/poSnq/
-	 swBgVnD797ExKdgG4MbVRKl1n8GrIsGXts6Rnnfqhsm5dUzgmFzsRbx0cNV3ZemzUc+3i
-	 TW6cCNlaGRmB9f2sM66pW94moiDqBYoqj5yXh930pHnu5PwNNxvJnrzsevcc8LKhMJOIw
-	 6cKaBkQxC6CSpQxVM7lglwDB3UVcjXO3OV3zNPmP0SLc7WrnS9yz9xfPG88q1ZpS5X0iD
-	 Rg93zG1zsAmhAl9MYKXVwX/jfHOlJ5ySOxpTf3m7EdtK6SyFqO1O28JfCM4+Tg39SFw==
+	bh=zni4NA52Hant3rK4sdQwiqXhsINS6/+NUYgasJwA86c=;
+	b=R9Ut0mKu/y2mtl/m6Tq4CxQq93qH/5okvqIp7jzs1r5hoOFcvsqIp89/R4TuYcMxZJp4
+	 IC8kkew78R6rp2rorFIQJuOBKMghe7OUmmJuTjpJg93JlHKufSanPVHdtcnfujq9rtsSc
+	 7JjCIIPiRgRNkceU4vE04cXNwr1sOvKJTBmUo3YYo7yV05qpZHGKJ2EARLhKGHXxvgOKf
+	 lUo4KBYflKX2ZsnHryP+GvjIRb3Ioe59HtDxdBBltdVzR2SOqxij7J/vFWRmmfy9WIFTq
+	 I/Powk1CyMi+joyZzzDGHSQhW9HpkSvLs8XHNaekxt7tz1IsuWbcivxHooxv9y6+pDA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=dyx871e7;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=A5cY9NP0;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E2885606A329;
-	Wed, 25 Nov 2026 15:33:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A66C8606A323;
+	Wed, 25 Nov 2026 15:33:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=dyx871e7
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 00F191F000C0;
-	Wed, 25 Nov 2026 15:33:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=A5cY9NP0
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F14181F008B2;
+	Wed, 25 Nov 2026 15:33:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795620836;
-	bh=I95tmY3nng6SC62ztDazEth6cMm4Qhfs7Mnr/MyAoBo=;
+	s=korg; t=1795620839;
+	bh=zni4NA52Hant3rK4sdQwiqXhsINS6/+NUYgasJwA86c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=dyx871e7WYhgZPnj+/b5FM1N/3rlWH0UQ0tbgjevOqSyfedN9i7j1/oAONG8yGm8t
-	 cMuXUOiWhbwgu4QwEPPJM8s0kUmQrUWKBIAOHHgUze8T4sNky40xsnWefTufAKcopF
-	 4Nrcaj5DAtJmkfm8cWsno+A45Lu86dSOSEgGOClo=
+	b=A5cY9NP0WmBj7H7yWi0RFqxR20/Jk0Pq5FfaQ9BpCrJK8ZeQsK72zI8bOvg1/gqHX
+	 LdJT2toUCnr9Hj9CsEZ506DQvVsa7X7a5cAPBql5yZgjLdWt4QV96/0IcZV4tbb2eb
+	 yFS2do85AaA/9/Ex1UwZ1ajfBD7cWIVsSRRLJ5xA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Bernard Pidoux <bernard.f6bvp@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 038/990] netrom: keep T1 running after answering a NAK
-Date: Wed, 25 Nov 2026 15:23:25 +0100
-Message-ID: <20261125143822.980902589@linuxfoundation.org>
+Subject: [PATCH 6.18 039/990] netrom: give the sysctl timer limits in milliseconds
+Date: Wed, 25 Nov 2026 15:23:26 +0100
+Message-ID: <20261125143823.004651282@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143822.072087159@linuxfoundation.org>
 References: <20261125143822.072087159@linuxfoundation.org>
@@ -69,44 +69,66 @@ Content-Transfer-Encoding: 8bit
 
 From: Bernard Pidoux <bernard.f6bvp@gmail.com>
 
-When an INFO or INFOACK frame carries the NAK flag, nr_send_nak_frame()
-sends the frame at V(A) again and then stops T1, although that frame,
-and any sent after it, are still waiting for an acknowledgment.
+Since commit 4d8937d0b113 ("[NETROM]: Eleminate HZ from NET/ROM kernel
+interfaces") the NET/ROM timer sysctls hold milliseconds, converted
+with msecs_to_jiffies() where they are used, but their limits were left
+in jiffies: 5 * HZ to 600 * HZ for the transport timeout, 1 * HZ to
+60 * HZ for the acknowledge delay, 1 * HZ to 1000 * HZ for the busy
+delay, up to 65535 * HZ for the no activity timeout. They only match
+with HZ=1000.
 
-If this copy is lost too, no timer is left: nothing is sent again, and
-the circuit is not cleared after N2 tries either. It stays stuck until
-the peer sends something or the idle timer, if set, closes it.
+With HZ=100 the largest transport timeout that can be written is 60 s
+while the default is 120 s, and the largest busy delay is 100 s while
+the default is 180 s: once changed, a default can no longer be put
+back. The smallest transport timeout accepted is 0.5 s instead of 5 s.
+With HZ=250 the acknowledge delay is limited to 15 s instead of 60 s.
 
-Restart T1 instead, as nr_check_iframes_acked() does when part of the
-window is acknowledged.
+Seen on a Raspberry Pi node (HZ=100): writing back the current values
+120000 to transport_timeout and 180000 to transport_busy_delay fails
+with EINVAL, and 60000 is accepted.
 
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Give the limits in milliseconds, as was done for ROSE. With HZ=1000
+nothing changes.
+
+Fixes: 4d8937d0b113 ("[NETROM]: Eleminate HZ from NET/ROM kernel interfaces")
 Signed-off-by: Bernard Pidoux <bernard.f6bvp@gmail.com>
 Assisted-by: Claude:claude-opus-5-5
-(cherry picked from commit e18a382a74b93a3c0ab52e0fedc8343d9d4facc9)
+(cherry picked from commit e59d8b990552be401ace7750a4617ffa07c86637)
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/netrom/nr_out.c | 7 ++++++-
- 1 file changed, 6 insertions(+), 1 deletion(-)
+ net/netrom/sysctl_net_netrom.c | 17 +++++++++--------
+ 1 file changed, 9 insertions(+), 8 deletions(-)
 
-diff --git a/net/netrom/nr_out.c b/net/netrom/nr_out.c
-index 150cb4263d314..1c6b4386c86b4 100644
---- a/net/netrom/nr_out.c
-+++ b/net/netrom/nr_out.c
-@@ -135,7 +135,12 @@ void nr_send_nak_frame(struct sock *sk)
- 	nr->condition &= ~NR_COND_ACK_PENDING;
- 	nr->vl         = nr->vr;
- 
--	nr_stop_t1timer(sk);
-+	/*
-+	 * The frame just sent again, and any sent after it, still wait for
-+	 * an acknowledgment: keep T1 running so that losing this copy too
-+	 * is noticed.
-+	 */
-+	nr_start_t1timer(sk);
- }
- 
- void nr_kick(struct sock *sk)
+diff --git a/net/netrom/sysctl_net_netrom.c b/net/netrom/sysctl_net_netrom.c
+index 7dc0fa628f2e7..bccc165a4a2ec 100644
+--- a/net/netrom/sysctl_net_netrom.c
++++ b/net/netrom/sysctl_net_netrom.c
+@@ -15,16 +15,17 @@
+ static int min_quality[] = {0}, max_quality[] = {255};
+ static int min_obs[]     = {0}, max_obs[]     = {255};
+ static int min_ttl[]     = {0}, max_ttl[]     = {255};
+-static int min_t1[]      = {5 * HZ};
+-static int max_t1[]      = {600 * HZ};
++/* The timers are given in milliseconds */
++static int min_t1[]      = {5 * MSEC_PER_SEC};
++static int max_t1[]      = {600 * MSEC_PER_SEC};
+ static int min_n2[]      = {2}, max_n2[]      = {127};
+-static int min_t2[]      = {1 * HZ};
+-static int max_t2[]      = {60 * HZ};
+-static int min_t4[]      = {1 * HZ};
+-static int max_t4[]      = {1000 * HZ};
++static int min_t2[]      = {1 * MSEC_PER_SEC};
++static int max_t2[]      = {60 * MSEC_PER_SEC};
++static int min_t4[]      = {1 * MSEC_PER_SEC};
++static int max_t4[]      = {1000 * MSEC_PER_SEC};
+ static int min_window[]  = {1}, max_window[]  = {127};
+-static int min_idle[]    = {0 * HZ};
+-static int max_idle[]    = {65535 * HZ};
++static int min_idle[]    = {0 * MSEC_PER_SEC};
++static int max_idle[]    = {65535 * MSEC_PER_SEC};
+ static int min_route[]   = {0}, max_route[]   = {1};
+ static int min_fails[]   = {1}, max_fails[]   = {10};
+ static int min_reset[]   = {0}, max_reset[]   = {1};
 -- 
 2.53.0
 
