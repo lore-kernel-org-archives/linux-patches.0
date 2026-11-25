@@ -1,53 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795618242;
-	b=NHQ25JTa8w1RYGNAPNh9HLAAwKA22aDz+ydOHNV9Gupe22iNf2cmBoKMkBnshPNrAPuL
-	 44hJJvM2gYGR25jCVqO7o5W9IECk59R8/mV6rX0+7A2WBViixRomePUvL16a4jr8EE47J
-	 PlK+cDfJHNSy4DNwAZ6NrAK1fkdWGqFsGuukztdw0RIpJho3VXWXRXvhbUgBrqZ31Wxtd
-	 67DBKAS+afjXBr57lak1JxC72D5nUibHuFkzff7f66PJIuUpB4tJRvUreEzyrZSj3kTrC
-	 gMLFc5DHGlmTSVXl+k0sUsX9JHHpGPLAX9GbqOuHQTDMC5Ov2p0DjeMuh5YmqAPfPBQ==
+	t=1795618245;
+	b=kd0C0npn6FFwpWr8kbfuk8ZPbxXusvap2yJeRxOl1z2H9l4VWKsTHIpTCQ+y3TXy67rF
+	 ocpk37oYc2J/aR5PmwUGIGel1kVT2qLlyJZ+ODoO2Bk2Xy1Vojd0GKw6xLymQuS8UirLh
+	 Dll4hiKbT5VY1HFEiY50+ODGxyILXix54XBWJhCnh06O/8YxBS/E5uLxqAHtAvWyNc6LG
+	 utgQjIrzF2LCEAJRF1opDDpoaYmHpnkW+FpvVYvR8uPoOl1GP6m9Et6CbOQirW7l91fq4
+	 QvurjLo7ImxK/bdtQ/wXtv5CwxuVCuUKvI/IBjIKDIJoMAA7i1tlDJEloKS0Z2xT7xQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795618242;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795618245;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=rDd4099udCXNM6hhmE0fqq6WpScEJIjKYHyUazi3rWI=;
-	b=I28xkrMN16tWdiFeYLU5BN9z3ZVok2Y3o75ZDMxbmJ6Nzj9hbKKBz7lS43WJoP020bHy
-	 +eyHg0ZtzzbQwu4VpByhyMCwUiJqBT7cnyt3Q+O/x6mzRjJVIFaD/Mk2858nOz2rAN/F5
-	 BV7BxzxTqa2Vz67VwCdcG+CqlxjbMqowFGqyD2+kFK1K8Z66gdpDGsCB0X5VQgNd3asyw
-	 kD0yPoh6BP/AFBeGDzmwNLGP80Z/PycfrjiMZ9yxJwfZoOPoqHwVCWscBEP+oAqJkRyJt
-	 jzUqp663gERLSUrZ+fm1NK5IwJD9j9HJtYR2nigDD4azfAGu8XE8jLmQgSSwYct6u/A==
+	bh=yt378NC0+q+XGudM1P6jFRMNUeKF/t7gsegzrFyNaYs=;
+	b=iQcusHCC4mur4AWXinz1PcHcgjsS+uRCCQHDvGia9Vj2I2zBcpyWTpn4b415T6kbOhqr
+	 ueMUafE/aRoa+xhC1eZiFJSjZkpHJLGZ80XOTbR5NVGpuT99DUxJ0/nMy8bGaxS+UKTcc
+	 aH9aI9UDFAlsYj77Sk0tPnxNTRxhyYZ6b6MfuJsTRghyporCap2eh/OgPa+IygFYIRJIe
+	 TJaybsP7hYu2gnf4rzAfOkXBoIcR5f0pfQ7c7bQOdaZpnbImdYXdRsM6PlzngZ+3VcVSd
+	 4JlDP2SvNT59JiEvLWt16Lw/daYzfKEd1p7UzRzULyIgZMpPjbhJOZSvsQbe9OaEvDA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Ax2fHv6g;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Mhih9hLI;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D68E5606A31E;
-	Wed, 25 Nov 2026 14:50:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6C4B8606A321;
+	Wed, 25 Nov 2026 14:50:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Ax2fHv6g
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E47101F000C6;
-	Wed, 25 Nov 2026 14:50:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Mhih9hLI
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BCB761F000C6;
+	Wed, 25 Nov 2026 14:50:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795618242;
-	bh=rDd4099udCXNM6hhmE0fqq6WpScEJIjKYHyUazi3rWI=;
+	s=korg; t=1795618245;
+	bh=yt378NC0+q+XGudM1P6jFRMNUeKF/t7gsegzrFyNaYs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Ax2fHv6g/XVdjLYry40T8HDXzMgfIDnXzJkx4d0gMPTeo/3OfFJZICosFhtbIOGMd
-	 ZfcDHSQ60vKvmafDEeSwtuP1blp0+6/m3o+VKaVZa68HlWcml9v4Weo9kp0RLuJuJ6
-	 sQsbXUvfXwEEd3DGL2YfG+XXzr90vDRcbgUHqwJA=
+	b=Mhih9hLIj1lJh3ym/F9RCXGgh/ZLb6AwFIUuQpqjlYXk7KEYBct4L2fpf8KTFwoVb
+	 9xma8ctgPH+jeO8JUOnYapS72QPCAinysDn19jKA8J4NiuT2tVwvQZ49wA9AGcmwVS
+	 3ixJI1qcOFN1equrkn/kxx4W/C9GD5Mmjw+Rk2N4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Maxime Chevallier <maxime.chevallier@bootlin.com>,
-	Lorenzo Bianconi <lorenzo.bianconi@oss.qualcomm.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Nicolai Buchwitz <nb@tipi-net.de>,
+	James Clark <jjc@jclark.com>,
+	Vadim Fedorenko <vadim.fedorenko@linux.dev>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0172/1005] net: stmmac: propagate PTP init failures in __stmmac_open() and stmmac_resume()
-Date: Wed, 25 Nov 2026 15:25:10 +0100
-Message-ID: <20261125143825.770831431@linuxfoundation.org>
+Subject: [PATCH 7.3 0173/1005] net: stmmac: ptp: switch to gettimex64() interface
+Date: Wed, 25 Nov 2026 15:25:11 +0100
+Message-ID: <20261125143825.793658631@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143821.729802100@linuxfoundation.org>
 References: <20261125143821.729802100@linuxfoundation.org>
@@ -69,338 +70,191 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Lorenzo Bianconi <lorenzo.bianconi@oss.qualcomm.com>
+From: James Clark <jjc@jclark.com>
 
-[ Upstream commit 8181678a92f0143ad3dafcc2e811afa44ecb4fd6 ]
+[ Upstream commit d7804253678eb18d2be950e0542364b50be096a9 ]
 
-stmmac_setup_ptp() returns void and swallows both PTP setup errors:
-the PTP reference clock enable and stmmac_init_timestamping()
-failures are logged but never propagated. When they fail, the MAC
-system time counter is left in its post-reset, non-running state,
-while the driver keeps operating as if timestamping were up.
-This matters for TAPRIO/EST qdisc offloading, which derives the EST
-base time from the hardware timestamp counter: arming the gate list
-against a non-advancing time base would leave the schedule permanently
-stuck.
+The stmmac PTP support currently implements the gettime64 callback to
+retrieve the hardware clock time. Update the implementation to provide
+the gettimex64 callback instead, adding support for the
+PTP_SYS_OFFSET_EXTENDED ioctl.
 
-Make stmmac_setup_ptp() return an error code and propagate the
-failure in __stmmac_open(), stopping the DMA engines when PTP setup
-fails. In stmmac_resume(), re-initialise timestamping only when the
-PTP clock was registered before suspend, re-apply the platform clock
-rate configuration, and stop the DMA engines if re-initialisation
-fails.
+The system clock readings are taken around the read of the nanoseconds
+register in get_systime(), so get_systime() gains a ptp_system_timestamp
+argument.
 
-While at it, factor the hardware timestamping capability check into a
-stmmac_check_timestamp_cap() helper and apply it to the hwtstamp get
-path and the ethtool ts_info path. stmmac_setup_ptp() now enables the
-PTP reference clock and runs the platform ptp_clk_freq_config()
-callback before validating the resulting clock rate; if no valid rate
-is available, it disables the clock and returns success without
-registering the PTP clock. This keeps the interface operational on
-platforms with PTP-capable silicon but an unconfigured PTP clock,
-where timestamping cannot be enabled: instead of failing, the driver
-proceeds without setting up timestamping. Extend the timestamping gate
-on the set path (which keeps testing the core's basic/advanced
-timestamping capability) and the devlink registration with the PTP
-reference clock rate requirement.
-
-Gate the PTP reference clock enable/disable in the platform noirq
-suspend/resume callbacks on priv->ptp_enabled, keeping the clock
-reference balanced against the new early return in
-stmmac_release_ptp().
-
-Reviewed-by: Maxime Chevallier <maxime.chevallier@bootlin.com>
-Signed-off-by: Lorenzo Bianconi <lorenzo.bianconi@oss.qualcomm.com>
-Link: https://patch.msgid.link/20260914-stmmac-ptp-error-propagate-v5-1-81149897e65d@oss.qualcomm.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Reviewed-by: Nicolai Buchwitz <nb@tipi-net.de>
+Assisted-by: LLM
+Signed-off-by: James Clark <jjc@jclark.com>
+Reviewed-by: Vadim Fedorenko <vadim.fedorenko@linux.dev>
+Link: https://patch.msgid.link/20261008103809.1848255-1-jjc@jclark.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Stable-dep-of: 23d96de472f7 ("net: stmmac: re-apply taprio offload in __stmmac_open() and stmmac_resume()")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/stmicro/stmmac/stmmac.h  |   7 ++
- .../ethernet/stmicro/stmmac/stmmac_ethtool.c  |   3 +-
- .../net/ethernet/stmicro/stmmac/stmmac_main.c | 114 +++++++++++++-----
- .../ethernet/stmicro/stmmac/stmmac_platform.c |   6 +-
- 4 files changed, 95 insertions(+), 35 deletions(-)
+ drivers/net/ethernet/stmicro/stmmac/hwif.h    |  5 ++++-
+ .../ethernet/stmicro/stmmac/stmmac_hwtstamp.c |  7 +++++--
+ .../net/ethernet/stmicro/stmmac/stmmac_ptp.c  | 21 ++++++++++---------
+ .../stmicro/stmmac/stmmac_selftests.c         |  4 ++--
+ .../net/ethernet/stmicro/stmmac/stmmac_tc.c   |  3 ++-
+ 5 files changed, 24 insertions(+), 16 deletions(-)
 
-diff --git a/drivers/net/ethernet/stmicro/stmmac/stmmac.h b/drivers/net/ethernet/stmicro/stmmac/stmmac.h
-index 9cdad84308568..e782323df61ec 100644
---- a/drivers/net/ethernet/stmicro/stmmac/stmmac.h
-+++ b/drivers/net/ethernet/stmicro/stmmac/stmmac.h
-@@ -336,6 +336,8 @@ struct stmmac_priv {
- 	struct kernel_hwtstamp_config tstamp_config;
- 	struct ptp_clock *ptp_clock;
- 	struct ptp_clock_info ptp_clock_ops;
-+	bool ptp_enabled;
+diff --git a/drivers/net/ethernet/stmicro/stmmac/hwif.h b/drivers/net/ethernet/stmicro/stmmac/hwif.h
+index 9925b789bcc9f..bfcc930fd831f 100644
+--- a/drivers/net/ethernet/stmicro/stmmac/hwif.h
++++ b/drivers/net/ethernet/stmicro/stmmac/hwif.h
+@@ -496,6 +496,8 @@ struct stmmac_ops {
+ #define stmmac_fpe_map_preemption_class(__priv, __args...) \
+ 	stmmac_do_callback(__priv, mac, fpe_map_preemption_class, __args)
+ 
++struct ptp_system_timestamp;
 +
- 	unsigned int default_addend;
- 	u32 sub_second_inc;
- 	u32 systime_flags;
-@@ -426,6 +428,11 @@ int stmmac_set_clk_tx_rate(void *bsp_priv, struct clk *clk_tx_i,
- 
- struct plat_stmmacenet_data *stmmac_plat_dat_alloc(struct device *dev);
- 
-+static inline bool stmmac_check_timestamp_cap(struct stmmac_priv *priv)
-+{
-+	return priv->dma_cap.time_stamp || priv->dma_cap.atime_stamp;
-+}
-+
- static inline bool stmmac_xdp_is_enabled(struct stmmac_priv *priv)
- {
- 	return !!priv->xdp_prog;
-diff --git a/drivers/net/ethernet/stmicro/stmmac/stmmac_ethtool.c b/drivers/net/ethernet/stmicro/stmmac/stmmac_ethtool.c
-index e2c5b69505104..30e0d499326d8 100644
---- a/drivers/net/ethernet/stmicro/stmmac/stmmac_ethtool.c
-+++ b/drivers/net/ethernet/stmicro/stmmac/stmmac_ethtool.c
-@@ -1008,8 +1008,7 @@ static int stmmac_get_ts_info(struct net_device *dev,
- {
- 	struct stmmac_priv *priv = netdev_priv(dev);
- 
--	if ((priv->dma_cap.time_stamp || priv->dma_cap.atime_stamp)) {
--
-+	if (stmmac_check_timestamp_cap(priv)) {
- 		info->so_timestamping = SOF_TIMESTAMPING_TX_SOFTWARE |
- 					SOF_TIMESTAMPING_TX_HARDWARE |
- 					SOF_TIMESTAMPING_RX_HARDWARE |
-diff --git a/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c b/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
-index 7149b14bdad48..f6400d439b9b1 100644
---- a/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
-+++ b/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
-@@ -653,7 +653,8 @@ static int stmmac_hwtstamp_set(struct net_device *dev,
- 	u32 ts_master_en = 0;
- 	u32 ts_event_en = 0;
- 
--	if (!(priv->dma_cap.time_stamp || priv->adv_ts)) {
-+	if (!priv->plat->clk_ptp_rate ||
-+	    !(priv->dma_cap.time_stamp || priv->adv_ts)) {
- 		NL_SET_ERR_MSG_MOD(extack, "No support for HW time stamping");
- 		priv->hwts_tx_en = 0;
- 		priv->hwts_rx_en = 0;
-@@ -843,7 +844,7 @@ static int stmmac_hwtstamp_get(struct net_device *dev,
- {
- 	struct stmmac_priv *priv = netdev_priv(dev);
- 
--	if (!(priv->dma_cap.time_stamp || priv->dma_cap.atime_stamp))
-+	if (!stmmac_check_timestamp_cap(priv))
- 		return -EOPNOTSUPP;
- 
- 	*config = priv->tstamp_config;
-@@ -866,11 +867,6 @@ static int stmmac_init_tstamp_counter(struct stmmac_priv *priv,
- {
- 	struct timespec64 now;
- 
--	if (!priv->plat->clk_ptp_rate) {
--		netdev_err(priv->dev, "Invalid PTP clock rate");
--		return -EINVAL;
--	}
--
- 	stmmac_config_hw_tstamping(priv, priv->ptpaddr, systime_flags);
- 	priv->systime_flags = systime_flags;
- 
-@@ -885,26 +881,37 @@ static int stmmac_init_tstamp_counter(struct stmmac_priv *priv,
- 	return 0;
+ /* PTP and HW Timer helpers */
+ struct stmmac_hwtimestamp {
+ 	void (*config_hw_tstamping) (void __iomem *ioaddr, u32 data);
+@@ -505,7 +507,8 @@ struct stmmac_hwtimestamp {
+ 	int (*config_addend) (void __iomem *ioaddr, u32 addend);
+ 	int (*adjust_systime) (void __iomem *ioaddr, u32 sec, u32 nsec,
+ 			       int add_sub, int gmac4);
+-	void (*get_systime) (void __iomem *ioaddr, u64 *systime);
++	void (*get_systime)(void __iomem *ioaddr, u64 *systime,
++			    struct ptp_system_timestamp *sts);
+ 	void (*get_ptptime)(void __iomem *ioaddr, u64 *ptp_time);
+ 	void (*timestamp_interrupt)(struct stmmac_priv *priv);
+ 	void (*hwtstamp_correct_latency)(struct stmmac_priv *priv);
+diff --git a/drivers/net/ethernet/stmicro/stmmac/stmmac_hwtstamp.c b/drivers/net/ethernet/stmicro/stmmac/stmmac_hwtstamp.c
+index b9a985fa772c9..870c740b4a506 100644
+--- a/drivers/net/ethernet/stmicro/stmmac/stmmac_hwtstamp.c
++++ b/drivers/net/ethernet/stmicro/stmmac/stmmac_hwtstamp.c
+@@ -183,7 +183,8 @@ static int adjust_systime(void __iomem *ioaddr, u32 sec, u32 nsec,
+ 					 10, 100000);
  }
  
-+static int stmmac_init_ptp_clk_freq(struct stmmac_priv *priv)
-+{
-+	if (priv->plat->ptp_clk_freq_config)
-+		priv->plat->ptp_clk_freq_config(priv);
-+
-+	if (!priv->plat->clk_ptp_rate) {
-+		netdev_info(priv->dev, "PTP clock rate not configured\n");
-+		return -EINVAL;
-+	}
-+
-+	return 0;
-+}
-+
+-static void get_systime(void __iomem *ioaddr, u64 *systime)
++static void get_systime(void __iomem *ioaddr, u64 *systime,
++			struct ptp_system_timestamp *sts)
+ {
+ 	u64 ns, sec0, sec1;
+ 
+@@ -191,8 +192,10 @@ static void get_systime(void __iomem *ioaddr, u64 *systime)
+ 	sec1 = readl_relaxed(ioaddr + PTP_STSR);
+ 	do {
+ 		sec0 = sec1;
++		ptp_read_system_prets(sts);
+ 		/* Get the TSSS value */
+-		ns = readl_relaxed(ioaddr + PTP_STNSR);
++		ns = readl(ioaddr + PTP_STNSR);
++		ptp_read_system_postts(sts);
+ 		/* Get the TSS value */
+ 		sec1 = readl_relaxed(ioaddr + PTP_STSR);
+ 	} while (sec0 != sec1);
+diff --git a/drivers/net/ethernet/stmicro/stmmac/stmmac_ptp.c b/drivers/net/ethernet/stmicro/stmmac/stmmac_ptp.c
+index 3bfcc9760dce7..e54a3c8878265 100644
+--- a/drivers/net/ethernet/stmicro/stmmac/stmmac_ptp.c
++++ b/drivers/net/ethernet/stmicro/stmmac/stmmac_ptp.c
+@@ -89,7 +89,8 @@ static int stmmac_adjust_time(struct ptp_clock_info *ptp, s64 delta)
+ 		u64 cycle_time;
+ 
+ 		mutex_lock(&priv->est_lock);
+-		priv->ptp_clock_ops.gettime64(&priv->ptp_clock_ops, &current_time);
++		priv->ptp_clock_ops.gettimex64(&priv->ptp_clock_ops,
++					       &current_time, NULL);
+ 		current_time_ns = timespec64_to_ktime(current_time);
+ 		time.tv_nsec = priv->est->btr_reserve[0];
+ 		time.tv_sec = priv->est->btr_reserve[1];
+@@ -114,15 +115,15 @@ static int stmmac_adjust_time(struct ptp_clock_info *ptp, s64 delta)
+ }
+ 
  /**
-  * stmmac_init_timestamping - initialise timestamping
-  * @priv: driver private structure
-- * Description: this is to verify if the HW supports the PTPv1 or PTPv2.
-- * This is done by looking at the HW cap. register.
-- * This function also registers the ptp driver.
-+ *
-+ * Description: initialise the hardware timestamping counter, reset the
-+ * timestamping configuration and derive the advanced timestamping flags from
-+ * the HW capabilities. The caller must have ensured a valid PTP reference
-+ * clock rate (see stmmac_init_ptp_clk_freq()); the configured state is valid
-+ * as long as the interface is open and not suspended, and this function is
-+ * re-run on resume.
-+ *
-+ * Return: 0 on success, a negative errno otherwise.
+- * stmmac_get_time
+- *
++ * stmmac_get_timex - read the PTP clock, with system timestamps if requested
+  * @ptp: pointer to ptp_clock_info structure
+  * @ts: pointer to hold time/result
++ * @sts: pointer to hold system timestamps around the read, or NULL
+  *
+- * Description: this function will read the current time from the
+- * hardware clock and store it in @ts.
++ * Return: 0
   */
- static int stmmac_init_timestamping(struct stmmac_priv *priv)
+-static int stmmac_get_time(struct ptp_clock_info *ptp, struct timespec64 *ts)
++static int stmmac_get_timex(struct ptp_clock_info *ptp, struct timespec64 *ts,
++			    struct ptp_system_timestamp *sts)
  {
- 	bool xmac = dwmac_is_xmac(priv->plat->core_type);
- 	int ret;
+ 	struct stmmac_priv *priv =
+ 	    container_of(ptp, struct stmmac_priv, ptp_clock_ops);
+@@ -130,7 +131,7 @@ static int stmmac_get_time(struct ptp_clock_info *ptp, struct timespec64 *ts)
+ 	u64 ns = 0;
  
--	if (priv->plat->ptp_clk_freq_config)
--		priv->plat->ptp_clk_freq_config(priv);
--
--	if (!(priv->dma_cap.time_stamp || priv->dma_cap.atime_stamp)) {
--		netdev_info(priv->dev, "PTP not supported by HW\n");
--		return -EOPNOTSUPP;
--	}
--
- 	ret = stmmac_init_tstamp_counter(priv, STMMAC_HWTS_ACTIVE |
- 					       PTP_TCR_TSCFUPDT);
- 	if (ret) {
-@@ -937,24 +944,48 @@ static int stmmac_init_timestamping(struct stmmac_priv *priv)
- 	return 0;
- }
+ 	read_lock_irqsave(&priv->ptp_lock, flags);
+-	stmmac_get_systime(priv, priv->ptpaddr, &ns);
++	stmmac_get_systime(priv, priv->ptpaddr, &ns, sts);
+ 	read_unlock_irqrestore(&priv->ptp_lock, flags);
  
--static void stmmac_setup_ptp(struct stmmac_priv *priv)
-+static int stmmac_setup_ptp(struct stmmac_priv *priv)
- {
- 	int ret;
+ 	*ts = ns_to_timespec64(ns);
+@@ -200,7 +201,7 @@ static int stmmac_enable(struct ptp_clock_info *ptp,
  
-+	if (!stmmac_check_timestamp_cap(priv)) {
-+		netdev_info(priv->dev, "PTP not supported\n");
-+		return 0;
-+	}
-+
- 	ret = clk_prepare_enable(priv->plat->clk_ptp_ref);
--	if (ret < 0)
-+	if (ret < 0) {
- 		netdev_warn(priv->dev,
- 			    "failed to enable PTP reference clock: %pe\n",
- 			    ERR_PTR(ret));
-+		return ret;
-+	}
+ 		target_ns = cfg->start.tv_nsec + ((u64)cfg->start.tv_sec * NSEC_PER_SEC);
  
--	if (stmmac_init_timestamping(priv) == 0)
--		stmmac_ptp_register(priv);
-+	if (stmmac_init_ptp_clk_freq(priv)) {
-+		clk_disable_unprepare(priv->plat->clk_ptp_ref);
-+		return 0;
-+	}
-+
-+	ret = stmmac_init_timestamping(priv);
-+	if (ret) {
-+		clk_disable_unprepare(priv->plat->clk_ptp_ref);
-+		return ret;
-+	}
-+
-+	stmmac_ptp_register(priv);
-+	priv->ptp_enabled = true;
-+
-+	return 0;
- }
+-		stmmac_get_systime(priv, priv->ptpaddr, &ns);
++		stmmac_get_systime(priv, priv->ptpaddr, &ns, NULL);
+ 		if (ns > TIME64_MAX - PTP_SAFE_TIME_OFFSET_NS)
+ 			return -EINVAL;
  
- static void stmmac_release_ptp(struct stmmac_priv *priv)
- {
-+	if (!priv->ptp_enabled)
-+		return;
-+
- 	stmmac_ptp_unregister(priv);
- 	clk_disable_unprepare(priv->plat->clk_ptp_ref);
-+	priv->ptp_enabled = false;
- }
+@@ -304,7 +305,7 @@ const struct ptp_clock_info stmmac_ptp_clock_ops = {
+ 	.pps = 0,
+ 	.adjfine = stmmac_adjust_freq,
+ 	.adjtime = stmmac_adjust_time,
+-	.gettime64 = stmmac_get_time,
++	.gettimex64 = stmmac_get_timex,
+ 	.settime64 = stmmac_set_time,
+ 	.enable = stmmac_enable,
+ };
+@@ -321,7 +322,7 @@ const struct ptp_clock_info dwmac1000_ptp_clock_ops = {
+ 	.pps = 0,
+ 	.adjfine = stmmac_adjust_freq,
+ 	.adjtime = stmmac_adjust_time,
+-	.gettime64 = stmmac_get_time,
++	.gettimex64 = stmmac_get_timex,
+ 	.settime64 = stmmac_set_time,
+ 	.enable = dwmac1000_ptp_enable,
+ };
+diff --git a/drivers/net/ethernet/stmicro/stmmac/stmmac_selftests.c b/drivers/net/ethernet/stmicro/stmmac/stmmac_selftests.c
+index 6c01fdb6667e6..57aedf5228081 100644
+--- a/drivers/net/ethernet/stmicro/stmmac/stmmac_selftests.c
++++ b/drivers/net/ethernet/stmicro/stmmac/stmmac_selftests.c
+@@ -1887,7 +1887,7 @@ static int stmmac_test_tbs(struct stmmac_priv *priv)
+ 		return ret;
  
- static void stmmac_legacy_serdes_power_down(struct stmmac_priv *priv)
-@@ -4175,10 +4206,12 @@ static int __stmmac_open(struct net_device *dev,
- 	ret = stmmac_hw_setup(dev);
- 	if (ret < 0) {
- 		netdev_err(priv->dev, "%s: Hw setup failed\n", __func__);
--		goto init_error;
-+		return ret;
- 	}
+ 	read_lock_irqsave(&priv->ptp_lock, flags);
+-	stmmac_get_systime(priv, priv->ptpaddr, &curr_time);
++	stmmac_get_systime(priv, priv->ptpaddr, &curr_time, NULL);
+ 	read_unlock_irqrestore(&priv->ptp_lock, flags);
  
--	stmmac_setup_ptp(priv);
-+	ret = stmmac_setup_ptp(priv);
-+	if (ret)
-+		goto ptp_error;
+ 	if (!curr_time) {
+@@ -1909,7 +1909,7 @@ static int stmmac_test_tbs(struct stmmac_priv *priv)
  
- 	stmmac_init_coalesce(priv);
+ 	/* Check if expected time has elapsed */
+ 	read_lock_irqsave(&priv->ptp_lock, flags);
+-	stmmac_get_systime(priv, priv->ptpaddr, &curr_time);
++	stmmac_get_systime(priv, priv->ptpaddr, &curr_time, NULL);
+ 	read_unlock_irqrestore(&priv->ptp_lock, flags);
  
-@@ -4203,7 +4236,10 @@ static int __stmmac_open(struct net_device *dev,
- 		hrtimer_cancel(&priv->dma_conf.tx_queue[chan].txtimer);
+ 	if ((curr_time - start_time) < STMMAC_TBS_LT_OFFSET)
+diff --git a/drivers/net/ethernet/stmicro/stmmac/stmmac_tc.c b/drivers/net/ethernet/stmicro/stmmac/stmmac_tc.c
+index a7721b2eee968..399d5cb427005 100644
+--- a/drivers/net/ethernet/stmicro/stmmac/stmmac_tc.c
++++ b/drivers/net/ethernet/stmicro/stmmac/stmmac_tc.c
+@@ -1070,7 +1070,8 @@ static int tc_taprio_configure(struct stmmac_priv *priv,
  
- 	stmmac_release_ptp(priv);
--init_error:
-+ptp_error:
-+	stmmac_stop_all_dma(priv);
-+	stmmac_mac_set(priv, priv->ioaddr, false);
-+
- 	return ret;
- }
- 
-@@ -7796,8 +7832,7 @@ static int stmmac_register_devlink(struct stmmac_priv *priv)
- 	/* For now, what is exposed over devlink is only relevant when
- 	 * timestamping is available and we have a valid ptp clock rate
- 	 */
--	if (!(priv->dma_cap.time_stamp || priv->dma_cap.atime_stamp) ||
--	    !priv->plat->clk_ptp_rate)
-+	if (!stmmac_check_timestamp_cap(priv) || !priv->plat->clk_ptp_rate)
- 		return 0;
- 
- 	priv->devlink = devlink_alloc(&stmmac_devlink_ops, sizeof(*dl_priv),
-@@ -8415,14 +8450,19 @@ int stmmac_resume(struct device *dev)
- 	ret = stmmac_hw_setup(ndev);
- 	if (ret < 0) {
- 		netdev_err(priv->dev, "%s: Hw setup failed\n", __func__);
--		stmmac_legacy_serdes_power_down(priv);
--		mutex_unlock(&priv->lock);
--		rtnl_unlock();
--		return ret;
-+		goto error_unlock;
- 	}
- 
--	stmmac_init_timestamping(priv);
-+	if (priv->ptp_enabled) {
-+		if (stmmac_init_ptp_clk_freq(priv))
-+			goto init_coalesce;
- 
-+		ret = stmmac_init_timestamping(priv);
-+		if (ret)
-+			goto error_stop_dma;
-+	}
-+
-+init_coalesce:
- 	stmmac_init_coalesce(priv);
- 	phylink_rx_clk_stop_block(priv->phylink);
- 	stmmac_set_rx_mode(ndev);
-@@ -8445,6 +8485,16 @@ int stmmac_resume(struct device *dev)
- 	netif_device_attach(ndev);
- 
- 	return 0;
-+
-+error_stop_dma:
-+	stmmac_stop_all_dma(priv);
-+	stmmac_mac_set(priv, priv->ioaddr, false);
-+error_unlock:
-+	stmmac_legacy_serdes_power_down(priv);
-+	mutex_unlock(&priv->lock);
-+	rtnl_unlock();
-+
-+	return ret;
- }
- EXPORT_SYMBOL_GPL(stmmac_resume);
- 
-diff --git a/drivers/net/ethernet/stmicro/stmmac/stmmac_platform.c b/drivers/net/ethernet/stmicro/stmmac/stmmac_platform.c
-index 6128ed1bd521a..19d4815544990 100644
---- a/drivers/net/ethernet/stmicro/stmmac/stmmac_platform.c
-+++ b/drivers/net/ethernet/stmicro/stmmac/stmmac_platform.c
-@@ -959,7 +959,8 @@ static int __maybe_unused stmmac_pltfr_noirq_suspend(struct device *dev)
- 
- 	if (!priv->wolopts) {
- 		/* Disable clock in case of PWM is off */
--		clk_disable_unprepare(priv->plat->clk_ptp_ref);
-+		if (priv->ptp_enabled)
-+			clk_disable_unprepare(priv->plat->clk_ptp_ref);
- 
- 		ret = pm_runtime_force_suspend(dev);
- 		if (ret)
-@@ -984,6 +985,9 @@ static int __maybe_unused stmmac_pltfr_noirq_resume(struct device *dev)
- 		if (ret)
- 			return ret;
- 
-+		if (!priv->ptp_enabled)
-+			return 0;
-+
- 		ret = clk_prepare_enable(priv->plat->clk_ptp_ref);
- 		if (ret < 0) {
- 			netdev_warn(priv->dev,
+ 	mutex_lock(&priv->est_lock);
+ 	/* Adjust for real system time */
+-	priv->ptp_clock_ops.gettime64(&priv->ptp_clock_ops, &current_time);
++	priv->ptp_clock_ops.gettimex64(&priv->ptp_clock_ops, &current_time,
++				       NULL);
+ 	current_time_ns = timespec64_to_ktime(current_time);
+ 	time = stmmac_calc_tas_basetime(qopt->base_time, current_time_ns,
+ 					qopt->cycle_time);
 -- 
 2.53.0
 
