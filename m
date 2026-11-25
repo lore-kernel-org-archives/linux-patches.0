@@ -1,52 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795624712;
-	b=4AoBWLUn+szbTlQcrwy1GqdnTzKx75+3BOORbSco++7sAz1yQyzXeM4nr++E+fVdyOYd
-	 m36OOfqEWrcb637l/nwEJ3m4rJma80vPSbFXo1Nx++tVvjf8ILUrgZARZ0IHIQdmT0ScH
-	 tRCt+nKSku7+txdNL6cqV3FJYNqa92x/Oz78kLnQ1UE1laPrTUbUjGljs4HYDNAo213HI
-	 Cs0lcvQVZyeELiQgZ12ltvFB7PIRWq1Ii9PBPmqzR0Vlg/9rUAos1b6BogzI62zt2mQYg
-	 yMuiiyTeEXf+CufJ+fLdgs2y+fiaopvq8AJd4lBxoWiR3ecubv8zw1f+BCr7A/7j0zg==
+	t=1795624716;
+	b=vuFbXHsudqEQwYgD8gZ6gJhMNFerX/m6310Xjh5E3MB92XR2OjLtGr77aGmXKKHX+uXQ
+	 wz7okG48mQ6geuRO8A1071TyN8qFoq1wQQv1qxxspiXPCYkaA93kWaYuEe0RFvo7b/i+o
+	 jKfHd9LrUvzTLCssWo4SScxAP5+fkay6BZlz9TvWGLD/NWAuKsihZ8HrCh2IZJ84Ll21L
+	 xKztKH9Gw9kDij6Z2EUCLB968/9R5ZdimurgVoPvaPn/lXT8vGXksYJ8eCU8C9BQRz3AW
+	 00T0dsZHYqwWSgldXiZPgDHq4vDvZnM5BYlJl9jp1Heosv5Ruog/MNDeD+s4n4tZMwQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795624712;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795624716;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=ZeUb+BqoxjitliAwJXBb/4Mmu5xcWLHV3+q5lMf/i+4=;
-	b=SUFNMbutAWf9A/etIVDSV2BiBxOPKtZPUQJEdW95lCwJLrNV786a+v5oEUJ9dYRMZiOX
-	 nuVro9+BU1Ht+u7EBMpnOBqVxhRRrxBgANpJl/+IYBlbPy2NsH168GtkjYZ99OxWvHgw4
-	 czJTWUa8Eewa9VxPPRAKPi4pv5JVU6q7XbEmt+LNYCuot3iwJBaF7LQPldI9Xc0ikVb2U
-	 beJHJ9Z6oqnpO1VLJUi8raIpDmm5ig22TZAdJ+1+8iVDyqSXzitz0118epQf5A0pDDJi2
-	 cSQuLum7XZO59nGu/O5i3khwl02Ro3Fune/TdXs1Y0rJyeSuTLmWRmtu7Q2pDTOFyBQ==
+	bh=gsHjIQuyC7QdqgZXCIanIqK274lqZOoTBLtnx+LU9R0=;
+	b=gost9IVL9lcQVXbBeECOUutgw13R/Ce+l9AGPM+nZGpan8FXi8GQDBC4BCd8qkj6vHQ4
+	 YjoJcrKV9zv4r3QZl6bay3hrE6u4r8tp9L+INca28TU1A0PEBOmr9svfnmxwoklUiJyZC
+	 sViLd1EPjvjBJwIcNmM6YlxN0vnuzr2ekV7QlL+2rENTTn8tm98syyfCtRVhsek7Iyc6+
+	 oa5au3r4Fr+fqmTEfwDGi57vQ9zhpTyh68ns72nqTadcZEbD5Pj6xE7gC4II3l7BVE5GB
+	 kNXo0eXqrfS65zGiKNcIdzrMLlvTrJTDFy0dWz7mKYfBJlTNTHvMrRbro24ep3oMoNA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=jke+kJzX;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=oAqLKma5;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C733B606A33B;
-	Wed, 25 Nov 2026 16:38:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 60A4D606A33B;
+	Wed, 25 Nov 2026 16:38:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=jke+kJzX
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E6C461F000D0;
-	Wed, 25 Nov 2026 16:38:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=oAqLKma5
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 512561F000D0;
+	Wed, 25 Nov 2026 16:38:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795624712;
-	bh=ZeUb+BqoxjitliAwJXBb/4Mmu5xcWLHV3+q5lMf/i+4=;
+	s=korg; t=1795624715;
+	bh=gsHjIQuyC7QdqgZXCIanIqK274lqZOoTBLtnx+LU9R0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=jke+kJzXPtgmOl4JUf+yTvVbTiNfN1/kVw0RZ0JqIwbLqtpdvfsyBFBe8ooLZD4Og
-	 spONPy97865fkE5GNyW1+D9y2b0R+1O8OqaELyGaQEg59/gTA1sfdCDhX/P43EOT1C
-	 vVg++QQDaKtsboGVZjq6vVObRcgkA+TyKuw/RYQc=
+	b=oAqLKma5HvVOMAyKS8qYDuycs90BDL8WNUULGILeAWPHKESwn7w5a//Ex0dB69xoL
+	 Zi0C6nTt0nRG/amkJ8AtRfp4UKKJS8f8Alyf88dLGZigBlY+hYdm239zKyNGvtqwl+
+	 K7uIhLvaN1QnCwAy3i0V7h+jtigeYQdgSPGFAmUI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tyler Baker <tyler.baker@oss.qualcomm.com>,
+	Vijendar Mukunda <Vijendar.Mukunda@amd.com>,
+	Ranjani Sridharan <ranjani.sridharan@linux.intel.com>,
+	Bard Liao <yung-chuan.liao@linux.intel.com>,
 	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 284/816] ASoC: soc-core: copy the DAI link names into the card
-Date: Wed, 25 Nov 2026 15:30:32 +0100
-Message-ID: <20261125143855.781739047@linuxfoundation.org>
+Subject: [PATCH 6.12 285/816] ASoC: SOF: amd: remove else condition in resume sequence
+Date: Wed, 25 Nov 2026 15:30:33 +0100
+Message-ID: <20261125143855.803934690@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143849.205329330@linuxfoundation.org>
 References: <20261125143849.205329330@linuxfoundation.org>
@@ -68,69 +70,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Tyler Baker <tyler.baker@oss.qualcomm.com>
+From: Vijendar Mukunda <Vijendar.Mukunda@amd.com>
 
-[ Upstream commit 33a130f6ed8c75ed59b12889a417a57fb80d0abf ]
+[ Upstream commit e46da64f333ede33adc3a1903821a73ed6c018a6 ]
 
-snd_soc_of_get_dai_link_codecs() and snd_soc_of_get_dai_link_cpus()
-keep a DAI name owned by the component, which is freed when the
-component unbinds, so the card cannot bind again afterwards.
+Else condition is not required after break/return statement.
+Remove else condition in resume callback.
 
-Copy the name onto the card device, as simple-card and audio-graph-card
-do since commit aa173b70d372 ("ASoC: generic: keep fallback dai_name
-stable across rebind").
-
-Fixes: e894efef9ac7 ("ASoC: core: add support to card rebind")
-Fixes: 900dedd7e47c ("ASoC: Introduce snd_soc_of_get_dai_link_cpus")
-Signed-off-by: Tyler Baker <tyler.baker@oss.qualcomm.com>
-Link: https://patch.msgid.link/20261106054333.2748248-2-tyler.baker@oss.qualcomm.com
+Signed-off-by: Vijendar Mukunda <Vijendar.Mukunda@amd.com>
+Reviewed-by: Ranjani Sridharan <ranjani.sridharan@linux.intel.com>
+Reviewed-by: Bard Liao <yung-chuan.liao@linux.intel.com>
+Link: https://patch.msgid.link/20250502154445.3008598-2-Vijendar.Mukunda@amd.com
 Signed-off-by: Mark Brown <broonie@kernel.org>
+Stable-dep-of: 34ea81a7f284 ("ASoC: SOF: amd: guard adata->sdw dereferences with NULL check in IRQ handler")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/soc-core.c | 16 ++++++++++++++++
- 1 file changed, 16 insertions(+)
+ sound/soc/sof/amd/acp.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/sound/soc/soc-core.c b/sound/soc/soc-core.c
-index 5097b287b889a..eb76d71de65e9 100644
---- a/sound/soc/soc-core.c
-+++ b/sound/soc/soc-core.c
-@@ -3674,6 +3674,18 @@ void snd_soc_of_put_dai_link_codecs(struct snd_soc_dai_link *dai_link)
+diff --git a/sound/soc/sof/amd/acp.c b/sound/soc/sof/amd/acp.c
+index 35eb23d2a056d..7f8ee9f356452 100644
+--- a/sound/soc/sof/amd/acp.c
++++ b/sound/soc/sof/amd/acp.c
+@@ -649,9 +649,9 @@ int amd_sof_acp_resume(struct snd_sof_dev *sdev)
+ 			return ret;
+ 		}
+ 		return acp_memory_init(sdev);
+-	} else {
+-		return acp_dsp_reset(sdev);
+ 	}
++
++	return acp_dsp_reset(sdev);
  }
- EXPORT_SYMBOL_GPL(snd_soc_of_put_dai_link_codecs);
+ EXPORT_SYMBOL_NS(amd_sof_acp_resume, SND_SOC_SOF_AMD_COMMON);
  
-+/* dai_name belongs to the component, which can unbind before the card. */
-+static int snd_soc_of_dup_dai_name(struct device *dev,
-+				   struct snd_soc_dai_link_component *dlc)
-+{
-+	if (!dlc->dai_name)
-+		return 0;
-+
-+	dlc->dai_name = devm_kstrdup_const(dev, dlc->dai_name, GFP_KERNEL);
-+
-+	return dlc->dai_name ? 0 : -ENOMEM;
-+}
-+
- /*
-  * snd_soc_of_get_dai_link_codecs - Parse a list of CODECs in the devicetree
-  * @dev: Card device
-@@ -3703,6 +3715,8 @@ int snd_soc_of_get_dai_link_codecs(struct device *dev,
- 	/* Parse the list */
- 	for_each_link_codecs(dai_link, index, component) {
- 		ret = snd_soc_of_get_dlc(of_node, NULL, component, index);
-+		if (!ret)
-+			ret = snd_soc_of_dup_dai_name(dev, component);
- 		if (ret)
- 			goto err;
- 	}
-@@ -3758,6 +3772,8 @@ int snd_soc_of_get_dai_link_cpus(struct device *dev,
- 	/* Parse the list */
- 	for_each_link_cpus(dai_link, index, component) {
- 		ret = snd_soc_of_get_dlc(of_node, NULL, component, index);
-+		if (!ret)
-+			ret = snd_soc_of_dup_dai_name(dev, component);
- 		if (ret)
- 			goto err;
- 	}
 -- 
 2.53.0
 
