@@ -1,55 +1,50 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795620390;
-	b=afdTFNibVSWXcvZ9PcbcKcrLWVrgk9AOn+8kCiGz/b63stPHAFjTbCDQ4oQGi0gDdLCh
-	 TN14auNHNY3RxPQLBNzNBzA6tdwLjTiPKwxVT2VfX4mxgKLPYUUFH0bK26rFqNo13qbe8
-	 PoXQQAyNNHusXxAvLYY+Y7UbHEA/pBF2IGj0um5xEJCMl9PMVn5/1TKOSUEywfu854yB7
-	 Y9V6RI5kmdwXQ7qTpiBhQ9xRg62J0QhjHhFVbAF/lqERoTvtBchMXQP0R7VvkgtO98HM3
-	 CNu26K56C5ezQ8rkLKjdLID+I0yxDNYD5WXUKiw+f7tSLozGGDTbkPzgSycGGE6xZFQ==
+	t=1795620393;
+	b=M0Sz4Fso4z6t9Fd8neOdD+GiEy/JMSNNMPvQ40JImCXjbIYE2rpgkJIW7wIkUxGkOOi9
+	 lMXtP2uXkmAjIVSBidia8fHb8xW4+6wrmHS4UCBTnqZXqnbDk4nz7soZq2O5OVMRehQ6W
+	 XRNh9Jsx1RepueyvhuL/R15bX6pRE11PYNp+bXRsIdIub7aQGeNCPIG9fnN8vfStVqCS4
+	 pRrYzAqY09U8w2M8VOntHpgK5z9Kb9Jk0GaQRxa1DsgusUy5xfo5/nuw5a7BkoDUoaCto
+	 gFpu7LwgTsCz/JFUa2IuwETe2BaOb5xiAUbiKViKPuc0vfoK7bMN8R4nhO1Dhiv/www==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795620390;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795620393;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=WtptMmUV2+pa+Kj63gcE6lSJ7PTWDxyGYid9jyr9Pr4=;
-	b=xq/GU7s6DS1SDqjCXUvO7IkMlnMxld+nzzDUBJXdwYiBNQc2LYF8T2UF33byqJ/bVYa3
-	 2PiTTodFXs3TOI0R5EcelXN520ExnQ1zb+82YZcAyiETNE9w/8tdcjOhI31bHhRRoahqU
-	 vwodKmvgIbH96s+ZgjfoyTrtI/4DjqbRdrvbQQKJuLTvGBLLh18kquTM3csOG/MLBmxwI
-	 D3D/PuT961qncupFUmDDiVP5gcfj+ErLQhbtUyJqO0uGXauKMOOg2EGVq3HyuHPIB4xq9
-	 Vn9tfOMcBBmbTXlYd+8dUm5AAt8zXVu5A57SfusqokT+TRoNq6uJHFM8J/lTFhmqELg==
+	bh=vjryKb7mx+EW+nwKiaIIdIgOUn4Es6tXVx8zO+8E1iw=;
+	b=BZ/kLM5pbhHa0EhRRBb+OzLvMxmCUHh3i8lH4q7HGaYiFMSLiRB5XGO4pFY0xzIDTm0A
+	 a4dHK6A1GmmRpQyExS+GRc5xHJokhoF7GW1U0nBsJHRdX/KtS8ILqUUOBJ87KxANcrUdz
+	 o6Rc76yTtB3HSEqhSWxsx7gQRNCcXKfwl+aXl6CJuX8awYBKH75XOxYrY88RdfUbTRAr4
+	 wIsQrQnrb5NeCjlO7yoPo14QWLS/TUivGZS7+JWo1ILU/pntpJPgx3sBsBDfUNyCP78T+
+	 A3Fhmx8LKgEqNkdY52Mm4kztADCzRuy3xvcGMfKj7jXOZo6WPZ6L4WQb42Iks9KbCLQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=z5MbZZSV;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=D0ijYHuQ;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 187D4606A327;
-	Wed, 25 Nov 2026 15:26:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 13092606A31E;
+	Wed, 25 Nov 2026 15:26:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=z5MbZZSV
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6D1E31F000C0;
-	Wed, 25 Nov 2026 15:26:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=D0ijYHuQ
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 402271F000C4;
+	Wed, 25 Nov 2026 15:26:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795620389;
-	bh=WtptMmUV2+pa+Kj63gcE6lSJ7PTWDxyGYid9jyr9Pr4=;
+	s=korg; t=1795620392;
+	bh=vjryKb7mx+EW+nwKiaIIdIgOUn4Es6tXVx8zO+8E1iw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=z5MbZZSV0po9XUdPds8GMw/ykTCIpHqWeMkSu34YU3jidnKTT+qDcKO4+kFbli0mS
-	 ZQnCKPnmxmfHos5B/4Ka+P1EKVrzc4RC/uQfMbYBLCF1Jd1ma2+2g8koN7FISVqzVD
-	 hPSyxnAVXmwZf6lpfyQnO/9GBpjeAjt0Mz8O5v8o=
+	b=D0ijYHuQzWPl2dlkAXZqk9GgcFRepQlg7aVlaelQ5B85uwfgwGWvyYf5rFiIfJpBM
+	 xfxkENRlwXnldga1EWQMaLMrNsguIwnvs5nxhCDnT3Om+fBWp91fv2CQa6Y9UwwqTX
+	 BDLVJOdeAVharmdyLPD5PQSN7yiCgvPf9VEh1ZSQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable <stable@kernel.org>,
-	Bryan Tan <bryan-bt.tan@broadcom.com>,
-	Vishnu Dasa <vishnu.dasa@broadcom.com>,
-	Broadcom internal kernel review list <bcm-kernel-feedback-list@broadcom.com>,
-	Arnd Bergmann <arnd@arndb.de>,
-	Josef Bacik <josef@toxicpanda.com>
-Subject: [PATCH 7.3 0902/1005] misc: vmw_vmci: wait for callbacks in event unsubscribe
-Date: Wed, 25 Nov 2026 15:37:20 +0100
-Message-ID: <20261125143842.821138146@linuxfoundation.org>
+	"Jiri Slaby (SUSE)" <jirislaby@kernel.org>
+Subject: [PATCH 7.3 0903/1005] serial: 8250_exar: check priv->gpio properly
+Date: Wed, 25 Nov 2026 15:37:21 +0100
+Message-ID: <20261125143842.844550684@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143821.729802100@linuxfoundation.org>
 References: <20261125143821.729802100@linuxfoundation.org>
@@ -71,68 +66,61 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Josef Bacik <josef@toxicpanda.com>
+From: Jiri Slaby (SUSE) <jirislaby@kernel.org>
 
-commit 824a27d391cf934d3232e8e2dabee221fc4e18ae upstream.
+commit 0353b51965883cf70dad162908e07395f242000f upstream.
 
-event_deliver() calls the callbacks of the subscribers inside an RCU read
-side critical section. vmci_event_unsubscribe() used to call
-synchronize_rcu() before it freed the subscription. This did more than
-to protect the struct vmci_subscription: when the function returned, no
-callback was running any more, and its callers rely on that.
+priv->gpio is set by platform_device_register_full(), which returns
+error-encoded pointers on failure, not NULL. Sashiko reported:
 
-vmci_transport_free_resources() unsubscribes from
-VMCI_EVENT_QP_PEER_DETACH and frees the struct vmci_transport, which is
-the callback data, a few lines later:
+> Does __xr17v35x_register_gpio() return an ERR_PTR if
+> platform_device_register_full() fails?
+>
+> If it does, we might be storing an error pointer directly into
+> priv->gpio in xr17v35x_register_gpio() without validating it with
+> IS_ERR(). Because the error is ignored, the device probe
+> successfully continues.
 
-  CPU0                                CPU1
-  event_deliver()
-    rcu_read_lock()
-    vmci_transport_peer_detach_cb()
-                                      vmci_event_unsubscribe()
-                                        list_del_rcu(&s->node)
-                                        kvfree_rcu_mightsleep(s)
-                                      kfree(transport)
-      spin_lock_bh(&trans->lock)
+Before commit 1145d1a0703f ("serial: 8250_exar: use
+platform_device_register_full()"), __xr17v35x_register_gpio()
+returned NULL on any failure (platform_device_alloc(),
+device_add_software_node() or platform_device_add() failing were all
+turned into a NULL return). The plain truthy check in
+xr17v35x_unregister_gpio() matched that convention. That commit
+switched registration to platform_device_register_full(), which
+reports failure as an ERR_PTR() instead of NULL, but the unregister
+check was never updated to match. As a result, a failed registration
+left an error pointer in priv->gpio, and unbind would tear it down as
+if it were a real platform_device, dereferencing the encoded error
+value in device_remove_software_node() and
+platform_device_unregister().
 
-The event is sent when the peer of the queue pair detaches, so the other
-end of a vsock connection chooses the time. vmci_transport_exit() and
-vmci_guest_remove_device() unsubscribe callbacks which are gone with
-their module.
+Use IS_ERR_OR_NULL() instead, so both the unset (non-EXAR vendor,
+priv->gpio never assigned) and failed-registration (ERR_PTR) cases
+are skipped.
 
-kvfree_rcu_mightsleep() only waits for a grace period if it cannot
-allocate memory. Bring the synchronize_rcu() back. The cleanup work of
-the vmci transport now waits for one grace period per socket again.
-
-Fixes: 6da3f33770e0 ("misc: vmw_vmci: Switch to kvfree_rcu() API")
-Cc: stable <stable@kernel.org>
-Cc: Bryan Tan <bryan-bt.tan@broadcom.com>
-Cc: Vishnu Dasa <vishnu.dasa@broadcom.com>
-Cc: Broadcom internal kernel review list <bcm-kernel-feedback-list@broadcom.com>
-Cc: Arnd Bergmann <arnd@arndb.de>
-Signed-off-by: Josef Bacik <josef@toxicpanda.com>
-Link: https://patch.msgid.link/2026102715-escapable-quaintly-8530@gregkh
+Fixes: 1145d1a0703f ("serial: 8250_exar: use platform_device_register_full()")
+Signed-off-by: Jiri Slaby (SUSE) <jirislaby@kernel.org>
+Cc: stable@vger.kernel.org
+Assisted-by: LLM
+Link: https://lore.kernel.org/all/sashiko-outbox-170895@kernel.org/
+Link: https://patch.msgid.link/28c09cf858795491f66667781bf79fb6a603f159.1793704520.git.jirislaby@kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/misc/vmw_vmci/vmci_event.c |    7 ++++++-
- 1 file changed, 6 insertions(+), 1 deletion(-)
+ drivers/tty/serial/8250/8250_exar.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/misc/vmw_vmci/vmci_event.c
-+++ b/drivers/misc/vmw_vmci/vmci_event.c
-@@ -213,7 +213,12 @@ int vmci_event_unsubscribe(u32 sub_id)
- 	if (!s)
- 		return VMCI_ERROR_NOT_FOUND;
+--- a/drivers/tty/serial/8250/8250_exar.c
++++ b/drivers/tty/serial/8250/8250_exar.c
+@@ -1180,7 +1180,7 @@ static int xr17v35x_register_gpio(struct
  
--	kvfree_rcu_mightsleep(s);
-+	/*
-+	 * Wait for event_deliver(): the caller is going to free what the
-+	 * callback works on.
-+	 */
-+	synchronize_rcu();
-+	kfree(s);
- 
- 	return VMCI_SUCCESS;
- }
+ static void xr17v35x_unregister_gpio(struct exar8250 *priv)
+ {
+-	if (priv->gpio) {
++	if (!IS_ERR_OR_NULL(priv->gpio)) {
+ 		__xr17v35x_unregister_gpio(priv->gpio);
+ 		priv->gpio = NULL;
+ 	}
 
 
