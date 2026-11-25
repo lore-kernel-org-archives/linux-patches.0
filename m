@@ -1,52 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795623144;
-	b=jPfDcJ2Zpezw+qft5VYThneLY4jMJnbLFx/LaINickP8BVm0cHG7DTzEAb3FtmVr0E9c
-	 ANFh7NTkFJX66u/22bmRDExpf0ZzWEUl4kc8gc77I/TMwR4Syo3/N1fy6rMgUUxGI0AqK
-	 67kQ5RP6cb+MniuCGdoaiavaI2nmO2QTrdgsggjD1Sb7MhMEOGd1q6FMMxyEDeGbrRG9i
-	 s3ZQ0pUTLeU/HL2io3O4fCyQJ/R7V63p9Ks6zVQDbnSG/4yTPbZRWGh58DeRKUB61vLrv
-	 FIdZtC7W52qnps7gOAFH33DIb+MsLwI9/puOQzcpnElZEscLVfQ/7Wbj286HPNMZITw==
+	t=1795623147;
+	b=IRzvHXvYzyporCAUS5lRvpXp6WuzqWQ97tW1tl1h2mqo+CBGGs7gdvqi80Yn1FCVc/SE
+	 kI0eavuEUW6LsIaNBKcm6NrgFMYTuOCl+HnzDcFwN5aVh7zSmum71OYfWPruTKqZ0qkCU
+	 orw6rN9V4+pKJOTU1ZpwyXBgUYEYKB8Nr3vcR3QuXFL6DNF0M/SD2/jaVhs2fsehfkV5y
+	 //7expcq++HhVLwolufM2a0QOtX/SL1mU6cFFKS2ZebNbrXJoZnO+jBOgp97qIf5NCufv
+	 RlcyoKzchZP9iQI9Fg+FP1Rg1E+AVCgQP/6YqBaR7QMa5Od1aynGD70HbDJaNZ/o7eA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795623144;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795623147;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=1XRVto0S/+nmOIege+3cpISjD9z3AhvR+wXD6teQn1A=;
-	b=FwoSZr0OcrqHBTyj0fjIV/rNVPwxRNv1/15Sx+/VXYsJps1TAQgXi2j+gtm0p3KM3t0V
-	 9frWP+OvaAXfLUhCaQpkIkSOvWqpxFCftAvcgthTFdOSCQf10MT8mP6m47vazmu34RpDm
-	 EeGnhnSTdA95MuItezFz0/70C85KI4901mtMi8uUfGV9jfB7Q8+Y9S4YjoOhe4wzTLwn+
-	 9ao1188g6cIN8Oq6ucU/u9sRawgB7sSKJ+eMCzE1STg7GPfR0LYvBKK89OOhkuQL4NKZ2
-	 NWdEllXwZHqQOMK7eG0HCWHrKC1Vw8NzknBoh0CLeIo3UO+wfUo+IQ8u5Q/Y6CvsNdg==
+	bh=aCXM2hzVhm/tjUWt6rfsFZUGvXNHGxnE9GjTqlISPjI=;
+	b=u8+VkF6ze4VXbqM6DqoPrzEUhngtiDZm9ON+SaGWQWeJQWKx5vX+vK3cc9LGGygEHnw2
+	 MUy7TSVbyBjSmh/5IRwrQCG7P0Ieaebq1ACOA0UdWavOA7ZH3itYqd0AUMokp8IGxKgwy
+	 lN9UWEb18MGVk+wGSaWGvqj+EFoEBLPWYE456RK6iGOyJyy/uY72Bo9c2q3Iv4TQbvbL8
+	 DpsYOPTYxvk304dPtcoxaJg1RvXTw/Sj25RKd9i/+6qfZlGxKLA6rIloZEOj7l1SKgMRm
+	 pHbdEzTTTyYM/kMP1kMLwGFrUB0XzhRrw+8j3rUUpgjzx3BBbVCZsEuiIoGmD+anK3Q==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=MEpG2Dfv;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=HWy99EeA;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 39FEE606A31E;
-	Wed, 25 Nov 2026 16:12:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 11EA9606A323;
+	Wed, 25 Nov 2026 16:12:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=MEpG2Dfv
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 892BD1F000C4;
-	Wed, 25 Nov 2026 16:12:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=HWy99EeA
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 627041F000C0;
+	Wed, 25 Nov 2026 16:12:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795623144;
-	bh=1XRVto0S/+nmOIege+3cpISjD9z3AhvR+wXD6teQn1A=;
+	s=korg; t=1795623146;
+	bh=aCXM2hzVhm/tjUWt6rfsFZUGvXNHGxnE9GjTqlISPjI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=MEpG2Dfvm/tG19QNNDDcdMXS5T9s/gTjdpcWXTzDjzd3V/5Zy2bKx/BpMnkTXHcM1
-	 ISeBgcwfFgWuWi2RK5aNZjdgEnpbZOB99+AlWc4o1fgLynpCVrKzmTj0QCIAffeFrk
-	 kgHzo6XMuil8oVQfqtLdI71wEyZfyopFjyHkYrYQ=
+	b=HWy99EeARvWjMZqtBgpSr2+BSnwBdb1RrOtd9wuKtNgcj1A2Lsa5yeQFeBFBnOV0l
+	 TnFKqyKkvi92xNhfGLYtWqBLXISwyk4jDkviL+CN3TKK188nwcEAMKDg7XhbTmJxiw
+	 DoIVp60u3wacUjYJaSwU0Ciyokf6xSgDPOg6BqO8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Baoli Zhang <baoli.zhang@linux.intel.com>,
-	Peter Ujfalusi <peter.ujfalusi@linux.intel.com>,
-	Mark Brown <broonie@kernel.org>
-Subject: [PATCH 6.18 738/990] ASoC: SOF: ipc4-topology: Fix pin format leak in process widget setup
-Date: Wed, 25 Nov 2026 15:35:05 +0100
-Message-ID: <20261125143839.354204734@linuxfoundation.org>
+	Guanglei Zhu <zhugl3@xiaopeng.com>,
+	Jarkko Sakkinen <jarkko@kernel.org>
+Subject: [PATCH 6.18 765/990] tpm: eventlog: check the payload size before reading tag events
+Date: Wed, 25 Nov 2026 15:35:32 +0100
+Message-ID: <20261125143839.973448204@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143822.072087159@linuxfoundation.org>
 References: <20261125143822.072087159@linuxfoundation.org>
@@ -68,52 +67,75 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Baoli Zhang <baoli.zhang@linux.intel.com>
+From: Guanglei Zhu <zhugl3@xiaopeng.com>
 
-commit e5c09fe3f9c8d9da33b177ee432db15b6ab46884 upstream.
+commit 0a385f668ba77d29ae167c1668fd452418ebc9d6 upstream.
 
-sof_ipc4_widget_setup_comp_process() allocates the input and output pin
-format arrays via sof_ipc4_get_audio_fmt(). When the following
-sof_ipc4_widget_setup_msg() fails, e.g. because the firmware does not
-provide a module matching the widget UUID, the error path jumps to the
-'err' label, which frees the process struct and clears swidget->private
-but skips sof_ipc4_free_audio_fmt(). The arrays are then unreachable and
-are reported by kmemleak:
+The EVENT_TAG branch of get_event_name() casts the event payload to
+struct tcpa_pc_event and reads from it:
 
-    sof_ipc4_get_audio_fmt+0xc9/0x420 [snd_sof]
-    sof_ipc4_widget_setup_comp_process+0x8e/0x200 [snd_sof]
-    snd_sof_load_topology+0x71a/0x840 [snd_sof]
-    sof_pcm_probe+0x77/0x120 [snd_sof]
-    snd_soc_component_probe+0x21/0x60 [snd_soc_core]
-    ...
+	pc_event = (struct tcpa_pc_event *)event_entry;
 
-Jump to 'free_available_fmt' instead, as the other process widget error
-paths after sof_ipc4_get_audio_fmt() already do.
+	switch (do_endian_conversion(pc_event->event_id)) {
+	...
+		for (i = 0; i < 20; i++)
+			d_len += sprintf(&data[2*i], "%02x",
+					pc_event->event_data[i]);
 
-The other IPC4 widget setup functions (pga, mixer, src, asrc) free the
-audio formats in their common error label and are not affected.
+The log iterators only verify that the event header plus the declared
+event_size stays within the log buffer; they do not require the
+payload of an EVENT_TAG entry to be large enough for the fields the
+branch reads. A truncated entry makes the branch read up to 20 bytes
+of event_data[] past the end of the entry, and, for the last entry in
+the log, past the end of the buffer itself.
 
-Fixes: f9efae954905 ("ASoC: SOF: ipc4-topology: Add support for base config extension")
+The legacy PC Client spec defines the EV_EVENT_TAG payload as a
+TCPA_PC_EVENT - event_id, event_size and event-type-specific data -
+so a conformant entry carries the 8-byte header and the hash-type
+ids carry a full digest. The log itself, however, is an ACPI table
+the firmware leaves in memory: the TPM never measures the log, so
+the kernel cannot tell a conformant log from a corrupted one. The
+iterators already work on that assumption - they stop once the
+declared event_size runs past the buffer end - and the readers
+should apply the same rule to what they take off the payload.
+
+Skip entries whose payload cannot even hold the event id, and skip
+the 20-byte digest dump when the payload cannot hold the full
+tcpa_pc_event header plus the digest, so the branch never reads
+beyond the entry it is formatting.
+
 Cc: stable@vger.kernel.org
-Signed-off-by: Baoli Zhang <baoli.zhang@linux.intel.com>
-Acked-by: Peter Ujfalusi <peter.ujfalusi@linux.intel.com>
-Link: https://patch.msgid.link/20261109005604.1004362-1-baoli.zhang@linux.intel.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Fixes: 55a82ab3181b ("[PATCH] tpm: add bios measurement log")
+Signed-off-by: Guanglei Zhu <zhugl3@xiaopeng.com>
+Reviewed-by: Jarkko Sakkinen <jarkko@kernel.org>
+Signed-off-by: Jarkko Sakkinen <jarkko@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/soc/sof/ipc4-topology.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/char/tpm/eventlog/tpm1.c |    7 +++++++
+ 1 file changed, 7 insertions(+)
 
---- a/sound/soc/sof/ipc4-topology.c
-+++ b/sound/soc/sof/ipc4-topology.c
-@@ -1205,7 +1205,7 @@ static int sof_ipc4_widget_setup_comp_pr
+--- a/drivers/char/tpm/eventlog/tpm1.c
++++ b/drivers/char/tpm/eventlog/tpm1.c
+@@ -178,6 +178,10 @@ static int get_event_name(char *dest, st
+ 		}
+ 		break;
+ 	case EVENT_TAG:
++		if (do_endian_conversion(event->event_size) <
++		    sizeof(pc_event->event_id))
++			break;
++
+ 		pc_event = (struct tcpa_pc_event *)event_entry;
  
- 	ret = sof_ipc4_widget_setup_msg(swidget, &process->msg);
- 	if (ret)
--		goto err;
-+		goto free_available_fmt;
- 
- 	/* parse process init module payload config type from module info */
- 	fw_module = swidget->module_info;
+ 		/* ToDo Row data -> Base64 */
+@@ -203,6 +207,9 @@ static int get_event_name(char *dest, st
+ 			name = tcpa_pc_event_id_strings[do_endian_conversion
+ 							(pc_event->event_id)];
+ 			n_len = strlen(name);
++			if (do_endian_conversion(event->event_size) <
++			    sizeof(struct tcpa_pc_event) + 20)
++				break;
+ 			for (i = 0; i < 20; i++)
+ 				d_len += sprintf(&data[2*i], "%02x",
+ 						pc_event->event_data[i]);
 
 
