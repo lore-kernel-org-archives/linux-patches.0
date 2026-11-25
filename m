@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795621597;
-	b=abfWstnHHxTd5Th0p3mMSnZVaCud8ZUqqEmu5NF7mhz9p1NBpXzBcyD3P8QN46ah4tWp
-	 uIkneuW3NNO74ICtBKNrx72Xk2SoTahQH3zT3tZo1Gp4CCsGazs5+LmD0jA/3gprZ+Pxx
-	 i6gZ8CoEoMZufeCl6MzfdyKzpxJ9GZcH3QhswCMpLPLlA1wgRPsJ1EyOqj6KKNaMHWp6v
-	 28tNWmXVvS5OkY30wNKICjJEEi7J3aOZQhlIyQYMwskf9xE07zpVJEwAdozu4CmCd3gct
-	 E4D4Ie+RXR0Dx4Qe9rvzYpag7BF0rwwn6G4hyvDbYRxuGo4qAo7Rux8NxO+3ejc6nDQ==
+	t=1795621600;
+	b=QRbT5pwYjFBFIz246rMnJQnErm9PWFfqvX0N6peFEplQcflH+9NllxvaU3IiA52fJ6fs
+	 Ld3K7d85X2QDa7WtWaSup0YiFb4kXZ7LvvWWMHOOWCwV9V/to4UKi3ijnj6JzF6cRGDWI
+	 Jjxm8tp8eRDUDen8ACgJInmKM4Qs4WtncEX+x20952V9TwY1TwRnx+4PBEo0bMSS0WvAF
+	 HxiFhrANlICZhwmEjiO+S4Pf6cxLUCEipdpsSwKhbSJVeHebYuka3K4Cv0vQLoGjcmVws
+	 z/EJWduaRMrVMp7n/q/TcpZmIxqW77prPTlC7e8C+cCMrVOns8HdU80XVYqowNJrpSA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795621597;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795621600;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=/4dTYLjAZ21u1drCREHWIxRR0tDDSawoe7cpfFLURhc=;
-	b=FsAM5lxlsOLRPeJMv7tdqEdVyq7aDSled3hqwWELSuB6zaraGoduVHEYM7pvz2GJuQRF
-	 GPclJr2GtcYnfgK41n9IUsq706GE3FpfHL3Hoij2P4nQPf/3+5Ftk3yFt5im9zgOtVXrb
-	 mSadVEquGsavdmSpTW9NI3P8Tv5xv45BE8YLQEB7hub1MxnFj5MXNG9lnYsZcN+HCHx9N
-	 a/uSsQNYvxW24Ow+UV/V92xE6cy9tgPB7+5BbogzF6LJ7W0BjEsqJzMLTboK8M+2fc9TR
-	 uJxoPXtFS5IX48DFh5/ZtTj+EbYERprrunVg9TftW/zLm32EzqC+9EAEoU5gRj31VZw==
+	bh=OwS1gGbLNg+mEaD7yhA2k2bixLRCg/XISUzied8Utmg=;
+	b=Kxd2jasg+i9BPLoi6riHdEHFCb1RLxzNFhSAYVdRqpT94pNcBWBAdzwrFcr+iyUODfbH
+	 5lP3EIJPcmc4Bwpafu1g5G2wGfloBVaDzndA54gqiQSm0WS6Spc2EHGBJoQ32ZA8wB7Sa
+	 p8N28kftD73LvMqvkHyYgLukUgPDD9Snd6p0TBPx2rhp5hA8b05E6lx0RJT3nZLmxo/Ct
+	 LsAUWlxEIlifQ/N6h6sHUyKSLplI2ntahTD7CKrJVxyDtyI4ULUbvGTiZlNYdRbBEAiRz
+	 mKUTkPZusfVxigJAst9xCvQH1FMofzBWYDnHQ2k7mbR4P5YBvHEXDJWNCs/FoI+EOkg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=td6632Yh;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Li5qxF2m;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2C848606A339;
-	Wed, 25 Nov 2026 15:46:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 26E32606A681;
+	Wed, 25 Nov 2026 15:46:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=td6632Yh
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5ACF81F000C0;
-	Wed, 25 Nov 2026 15:46:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Li5qxF2m
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 523221F000E1;
+	Wed, 25 Nov 2026 15:46:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795621596;
-	bh=/4dTYLjAZ21u1drCREHWIxRR0tDDSawoe7cpfFLURhc=;
+	s=korg; t=1795621599;
+	bh=OwS1gGbLNg+mEaD7yhA2k2bixLRCg/XISUzied8Utmg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=td6632YhJFPS84d4QqLs2FdnZgRN7xJdmVUJQSaLB+OS4adS2lJQofuZC1d9vesHx
-	 CjgNwC8aR6tqJ+KSqUC+JBM53b5/iHN1neHAMEODgNuTPGB6i7ENqsX+JW7Fqe2pss
-	 w+6a0mh0TZqlwgt/J2GLSn5hL/WfyOM6HR996zyI=
+	b=Li5qxF2mIwZWFzcy9XkKZgUufs03QdXmwHX4m+J+urts1kzPW1h29S5Fh5lJ/Hlg1
+	 C2SIeqvODK3Eiy7SlLaUZsfbTYiydBjD0JDLIrrqIw3Epwx1fsO01n+pkfuN8uO0SL
+	 KN2ydiIvTHWJceWHvHUi3/oEPB8rU9AZehE/aQO0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Colton Pawielski <colton.pawielski@gmail.com>,
-	Daniel Machon <daniel.machon@microchip.com>,
+	Timur Stukan <timur.stukan.linux@gmail.com>,
+	Hangbin Liu <liuhangbin@kylinos.cn>,
 	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 276/990] net: 8139cp: keep Rx masked while NAPI is scheduled
-Date: Wed, 25 Nov 2026 15:27:23 +0100
-Message-ID: <20261125143828.552923448@linuxfoundation.org>
+Subject: [PATCH 6.18 277/990] bonding: 3ad: dont set BOND_LINK_FAIL on a slave that is not up
+Date: Wed, 25 Nov 2026 15:27:24 +0100
+Message-ID: <20261125143828.576391420@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143822.072087159@linuxfoundation.org>
 References: <20261125143822.072087159@linuxfoundation.org>
@@ -69,58 +69,84 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Colton Pawielski <colton.pawielski@gmail.com>
+From: Timur Stukan <timur.stukan.linux@gmail.com>
 
-[ Upstream commit 547b1ae5ec50b7d81b05b4219e0db7e56279d65f ]
+[ Upstream commit 9a65b9c2a97594bcaaf393329807653eff895bbf ]
 
-cp_rx_poll() calls napi_complete_done() and only then takes cp->lock
-with interrupts disabled to unmask the Rx interrupts. An interrupt
-that is not masked while polling (TxOK, TxErr, ...) can arrive in
-between. cp_interrupt() then sees the Rx status bits, which are still
-set, finds NAPI no longer scheduled, masks Rx and schedules NAPI again.
-cp_rx_poll() then carries on and unmasks Rx anyway.
+In 802.3ad mode, when bond_update_speed_duplex() fails on NETDEV_UP or
+NETDEV_CHANGE, bond_slave_netdev_event() sets the slave link to FAIL if
+the slave has ever been up (last_link_up != 0), and to DOWN otherwise,
+so that miimon can set it right once speed/duplex are valid.
 
->From that point Rx interrupts are enabled while NAPI is scheduled:
-cp_interrupt() leaves the Rx bits for the poll routine, does not mask
-them because napi_schedule_prep() fails, and the level-triggered
-interrupt fires again as soon as it returns. On an SH7751 LANDISK
-under combined Tx/Rx load this interrupt storm was captured with a RAM
-trace right before the board locked up hard.
+last_link_up is never cleared, so a slave that is currently DOWN but
+was up before is set to FAIL as well. miimon then treats it as a slave
+that is still in use and takes it through the full down path again:
+the link failure count is incremented, "link status definitely down"
+is logged and the 802.3ad port is disabled a second time, although the
+slave has not been up since it went down.
 
-Mask Rx in cp_interrupt() whenever Rx status is pending, not only when
-NAPI gets scheduled. If the race leaves Rx unmasked, the next interrupt
-masks it again, and the pending poll unmasks it when it completes.
+Reproduced in 802.3ad mode with miimon=100 by setting a slave down and
+up again. On NETDEV_UP the speed is still unknown, so the notifier sets
+FAIL, and the next miimon pass sees no carrier and proposes DOWN:
 
-Fixes: ab1e7e1d2666 ("8139cp: use napi_complete_done()")
-Signed-off-by: Colton Pawielski <colton.pawielski@gmail.com>
-Reviewed-by: Daniel Machon <daniel.machon@microchip.com>
-Link: https://patch.msgid.link/20261031-b4-8139cp-napi-v2-1-5824797c0fe6@gmail.com
+	ip link add bond0 type bond mode 802.3ad miimon 100 lacp_rate 1
+	ip link set enp0s3 down
+	ip link set enp0s4 down
+	ip link set enp0s3 master bond0
+	ip link set enp0s4 master bond0
+	ip link set enp0s3 up
+	ip link set enp0s4 up
+	ip link set bond0 up
+	# wait for LACP to settle
+	ip link set enp0s3 down
+	ip link set enp0s3 up
+
+procfs then shows "Link Failure Count: 2" in enp0s3 slave part. Also in
+dmesg wrote twice: "link status definitely down, disabling slave".
+
+Fix this by setting FAIL only for a slave that is currently UP and
+leaving other states alone. An up slave that loses speed/duplex still
+goes through FAIL as before, and DOWN/BACK slaves are left to miimon,
+as in the other modes.
+
+Fixes: ea53abfab960 ("bonding/802.3ad: fix link_failure_count tracking")
+Signed-off-by: Timur Stukan <timur.stukan.linux@gmail.com>
+Reviewed-by: Hangbin Liu <liuhangbin@kylinos.cn>
+Link: https://patch.msgid.link/20261101145653.63648-1-timur.stukan.linux@gmail.com
 Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/realtek/8139cp.c | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ drivers/net/bonding/bond_main.c | 15 +++++----------
+ 1 file changed, 5 insertions(+), 10 deletions(-)
 
-diff --git a/drivers/net/ethernet/realtek/8139cp.c b/drivers/net/ethernet/realtek/8139cp.c
-index 9016527e229ac..8f81dc7deef1e 100644
---- a/drivers/net/ethernet/realtek/8139cp.c
-+++ b/drivers/net/ethernet/realtek/8139cp.c
-@@ -600,11 +600,11 @@ static irqreturn_t cp_interrupt (int irq, void *dev_instance)
- 		goto out_unlock;
- 	}
- 
--	if (status & (RxOK | RxErr | RxEmpty | RxFIFOOvr))
--		if (napi_schedule_prep(&cp->napi)) {
--			cpw16_f(IntrMask, cp_norx_intr_mask);
-+	if (status & (RxOK | RxErr | RxEmpty | RxFIFOOvr)) {
-+		cpw16_f(IntrMask, cp_norx_intr_mask);
-+		if (napi_schedule_prep(&cp->napi))
- 			__napi_schedule(&cp->napi);
+diff --git a/drivers/net/bonding/bond_main.c b/drivers/net/bonding/bond_main.c
+index 2e9e1b4d74da9..7066059ff3e28 100644
+--- a/drivers/net/bonding/bond_main.c
++++ b/drivers/net/bonding/bond_main.c
+@@ -3964,18 +3964,13 @@ static int bond_slave_netdev_event(unsigned long event,
+ 	case NETDEV_CHANGE:
+ 		/* For 802.3ad mode only:
+ 		 * Getting invalid Speed/Duplex values here will put slave
+-		 * in weird state. Mark it as link-fail if the link was
+-		 * previously up or link-down if it hasn't yet come up, and
+-		 * let link-monitoring (miimon) set it right when correct
+-		 * speeds/duplex are available.
++		 * in weird state. Mark an up slave as link-fail and let
++		 * miimon set it right when correct speed/duplex are available.
+ 		 */
+ 		if (bond_update_speed_duplex(slave) &&
+-		    BOND_MODE(bond) == BOND_MODE_8023AD) {
+-			if (slave->last_link_up)
+-				slave->link = BOND_LINK_FAIL;
+-			else
+-				slave->link = BOND_LINK_DOWN;
 -		}
-+	}
++		    BOND_MODE(bond) == BOND_MODE_8023AD &&
++		    slave->link == BOND_LINK_UP)
++			slave->link = BOND_LINK_FAIL;
  
- 	if (status & (TxOK | TxErr | TxEmpty | SWInt))
- 		cp_tx(cp);
+ 		if (BOND_MODE(bond) == BOND_MODE_8023AD)
+ 			bond_3ad_adapter_speed_duplex_changed(slave);
 -- 
 2.53.0
 
