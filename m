@@ -1,55 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795620766;
-	b=36BQKCxrvnbDWSBzrpX1rtjflN5VKcQBXU7mNbOl87jyP6jvr0BiuCKWIR8CEpIzajor
-	 +FuskSkQoBuxrEOQj8CoucEh87Sd1rLZWDWjQWg8upRcAS7xzJAvnVpUauVy4AbuwDzaa
-	 VJxlgX4CSqRn/l0vwJdw2s2IrJGEM15PE/YM9/sVXB8Pp3U8SaA5UjAu28f38jcQfwE6v
-	 z3KUAeGAIUIfr2DiqYT7g12ulKSmUwVMDtW4HbdWCUFrVLiMxDr2pGg8a9+5T3H556Ne7
-	 2oOLbH0flffBvZMzYkTSlsY/yI2DwhD2pl6R0+e2RHe6ZvuPmUX2xWUS4qKchAgJRQg==
+	t=1795620770;
+	b=1uzmRj3m1VDE4KumrEKHMDZ/FShyFx3QfRExZxUzn2P8ZvaeTRV5Y36/tW7/1XzRXeKW
+	 XTk9s7fWOTAp9WldPN8H3vz35Es0fsP2QlAIDtkTXZFJuBC9QRPU38G0/QUDKVc5SL7aZ
+	 8O/TQetelJWKsklf5PhJbcB4A3icTDs7Lu6h8rqLHm/6FYvNZapF5KkIIfl7bYRHwJaJu
+	 0DEB9sLCjYqOLKVza3o0dHS4BdAzwLPJUZi9JtA1/H87kl0Ss7K17SgNYBEpxMlQ+8Hvd
+	 GGmvufYiY/d5qUzmqlcSJwlEZUmQTOm2FIvl7pLQwd1hjHwCoPtGYWXAOy0RM6cRt0A==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795620766;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795620770;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=3Ur6Ak/J0nrA3RoiEtnBu+MVSDQz7V9CCAuq5Paf3Hk=;
-	b=t8+JhY06xOenxQxdERw5PgCv3H8k2mh+7NnrcaELlFhFDvl+ipTfgCRaEIjZ0yuHaN3g
-	 sB/Br89dIJsoFBOWNybfa21zQoXqfKf6Pkkv9lP5QdxjgegxnpHAliZ2/Qk3GGd+zfxRk
-	 GsgkvSniEsdNCeh2d6CLt1yZFazXeUKqwPQE13uOJsl88E2KkPpQWzjuggBql3GxV9gmq
-	 qpTNg4gEl+VqHflFQdEzV5qu1+JViF+GhdF4zAnzBwXCGs9V7Uf1NaRZ2lwkmbZMXhyvY
-	 tQBYO6wbkznXZCurBRGK7/wbXWEhUQillKDugQwR0NM5y1mFnman4KSInnsSluzdNsw==
+	bh=r+w5ah3V0g4VoEPtIT4bkT3lzeLgsFG6uQD6XUW21Ss=;
+	b=SXdVZ5xLHXcuYbgvHYtsDf3dnlP/H+AG6w58Eh2x89HVi3uWEJI3QgaMKMri/BX2EEoD
+	 iXnOUgCVgrr2ftSmswS41WdQ6ky6wcoQzfWwNULEVxA9tijE5r1qOGuZrc8gtqqaQwmT8
+	 uEuIQpZiQ2wVkJTTElXwunjEEDj/cGLi7G9svQcb9g8+BQZlKnM/D9JthTdJHpXr/lpWk
+	 iIKo3F4Wq/o2b5dYRsGPlRfkz03lxSJZ268qNZ4j7R2PjPu5klGdWW086E5KTV9nc+6bg
+	 lReka9LKH0yA93Ev9sZ/g/be34rUUpFJV2hkIirjgBfeMzoswFV+2ysnRULDAYd+TvA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=oqMzuFTI;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=DmdhLrj2;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 563B5606A323;
-	Wed, 25 Nov 2026 15:32:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 46FD1606A32C;
+	Wed, 25 Nov 2026 15:32:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=oqMzuFTI
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6CD111F000C4;
-	Wed, 25 Nov 2026 15:32:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=DmdhLrj2
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CFFA51F000EB;
+	Wed, 25 Nov 2026 15:32:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795620766;
-	bh=3Ur6Ak/J0nrA3RoiEtnBu+MVSDQz7V9CCAuq5Paf3Hk=;
+	s=korg; t=1795620769;
+	bh=r+w5ah3V0g4VoEPtIT4bkT3lzeLgsFG6uQD6XUW21Ss=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=oqMzuFTIj0zmoLOA63w0/mXrtnJMm8m7wpTKUgTgfX8mllNZodRQF4iNOeVApgDKb
-	 NqDJNQNANt81uKmAxGqKCPL587eJxTpbNflil8qfL6MIQdxwgLdyVfu08ut/mLBX+k
-	 cikD/HAfYWTljC+otVEKj9tgixkJdhCnPH6zmtOc=
+	b=DmdhLrj2NnJRIDYMHGxWWwYwdMlhLKuNl7UZ5VmZO/g1VVuaYqyQAEJr/Tc150rmm
+	 bvfuY9FHRiypwFhiPhZDYEpiKNk+wiJHF3kYnHRmxnYIxuxNd938DYraYgcYIQNXsj
+	 0eG55HQ9dgF5DyxTeTepglBF8D9VBPQnR1yPXpZU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hassan Sultan <hassansultan@google.com>,
-	Willem de Bruijn <willemb@google.com>,
-	"Michael S. Tsirkin" <mst@redhat.com>,
-	Eric Dumazet <edumazet@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Sataporn Saijai <excursively@gmail.com>,
+	Bard Liao <yung-chuan.liao@linux.intel.com>,
+	Vinod Koul <vkoul@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 008/990] net: virtio: validate outer protocol of UDP tunnel GSO packets
-Date: Wed, 25 Nov 2026 15:22:55 +0100
-Message-ID: <20261125143822.281336958@linuxfoundation.org>
+Subject: [PATCH 6.18 009/990] soundwire: dmi-quirks: add Lenovo Yoga Slim 7i 14IPH11
+Date: Wed, 25 Nov 2026 15:22:56 +0100
+Message-ID: <20261125143822.305398811@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143822.072087159@linuxfoundation.org>
 References: <20261125143822.072087159@linuxfoundation.org>
@@ -71,333 +69,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eric Dumazet <edumazet@kernel.org>
+From: Sataporn Saijai <excursively@gmail.com>
 
-[ Upstream commit 73e08d50eb139e7329032c89a4cb105cf43ef278 ]
+[ Upstream commit c3133906d5bda343bd5c1d8ad63074a14506ad72 ]
 
-virtio_net_hdr_tnl_to_skb() trusts the virtio header to describe a
-UDP tunnel over IPv4 or IPv6, but never checks that the frame actually
-carries such outer headers. Because VIRTIO_NET_HDR_F_NEEDS_CSUM is
-mandatory for tunnel GSO, __virtio_net_hdr_to_skb() skips the flow
-dissector, so virtio_net_hdr_match_proto() is never applied either.
+The Lenovo Yoga Slim 7i 14IPH11 (DMI product 83QM) declares an RT722 on
+link 3 that is not actually present and never attaches, leaving the
+machine with no audio. Since the address is already handled by the
+ghost_realtek table, only the DMI match is needed.
 
-A guest (or a tap writer) can then inject a frame with an arbitrary
-outer ethertype, for example ETH_P_NSH, with SKB_GSO_UDP_TUNNEL set.
-The GSO stack then runs nsh_gso_segment() on top of the UDP tunnel
-segmentation, which assumes a different header layout. The result is
-segments with skb->data before skb->head, and a host crash in
-skb_under_panic() as soon as a later layer pushes a header:
-
-  skbuff: skb_under_panic: ... put:4 ... dev:gretap1
-  kernel BUG at net/core/skbuff.c:215!
-   skb_push
-   __gre_xmit
-   gre_tap_xmit
-   ...
-   tun_get_user
-
-Validate the outer headers with the parsing helpers from Michael's
-series "net: resolve uncommon partial checksums at ingress":
-
-- locate the L3 header: Ethernet with optional VLAN tags, or the
-  network header set by the caller. skb->protocol is not trusted when
-  it disagrees with the frame.
-- require the outer L3 protocol to match the declared tunnel type.
-- require the outer UDP header exactly at outer_th_offset, after IPv4
-  options or IPv6 extension headers, and reject fragments.
-
-Unlike the original helpers:
-
-- the callers tell whether the frame starts with an Ethernet header,
-  with a new has_eth argument of virtio_net_hdr_tnl_to_skb(), instead
-  of using the device type. tun frames packets from its IFF_TAP and
-  IFF_TUN flags, and TUNSETLINK can set the device type to any value.
-  virtio_net and tun_xdp_one() always pass true, tun_get_user() passes
-  whether the device is IFF_TAP.
-- ipv6_find_hdr() stops at an AH header, as Willem suggested in the
-  review of that series.
-
-Fixes: a2fb4bc4e2a6 ("net: implement virtio helpers to handle UDP GSO tunneling.")
-Reported-by: Hassan Sultan <hassansultan@google.com>
-Suggested-by: Willem de Bruijn <willemb@google.com>
-Link: https://lore.kernel.org/netdev/93d0e37c99711bebdf60c120af03010455c2f2e2.1793276116.git.mst@redhat.com/
-Co-developed-by: Michael S. Tsirkin <mst@redhat.com>
-Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
-Reviewed-by: Willem de Bruijn <willemb@google.com>
-Acked-by: Michael S. Tsirkin <mst@redhat.com>
-Signed-off-by: Eric Dumazet <edumazet@kernel.org>
-Link: https://patch.msgid.link/20261110213628.3476051-4-edumazet@kernel.org
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Sataporn Saijai <excursively@gmail.com>
+Reviewed-by: Bard Liao <yung-chuan.liao@linux.intel.com>
+Link: https://patch.msgid.link/20260818182020.143096-1-excursively@gmail.com
+Signed-off-by: Vinod Koul <vkoul@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/tun.c          |   9 +-
- drivers/net/tun_vnet.h     |   5 +-
- drivers/net/virtio_net.c   |   2 +-
- include/linux/virtio_net.h | 169 +++++++++++++++++++++++++++++++++++++
- 4 files changed, 180 insertions(+), 5 deletions(-)
+ drivers/soundwire/dmi-quirks.c | 7 +++++++
+ 1 file changed, 7 insertions(+)
 
-diff --git a/drivers/net/tun.c b/drivers/net/tun.c
-index 20fbd2d60191b..51b598d53f5bf 100644
---- a/drivers/net/tun.c
-+++ b/drivers/net/tun.c
-@@ -1868,7 +1868,8 @@ static ssize_t tun_get_user(struct tun_struct *tun, struct tun_file *tfile,
- 		break;
- 	}
- 
--	if (tun_vnet_hdr_tnl_to_skb(tun->flags, features, skb, &hdr)) {
-+	if (tun_vnet_hdr_tnl_to_skb(tun->flags, features, skb, &hdr,
-+				    (tun->flags & TUN_TYPE_MASK) == IFF_TAP)) {
- 		atomic_long_inc(&tun->rx_frame_errors);
- 		err = -EINVAL;
- 		goto free_skb;
-@@ -2492,7 +2493,11 @@ static int tun_xdp_one(struct tun_struct *tun,
- 	tnl_hdr = (struct virtio_net_hdr_v1_hash_tunnel *)gso;
- 	skb->dev = tun->dev;
- 	skb_set_network_header(skb, ETH_HLEN);
--	if (tun_vnet_hdr_tnl_to_skb(tun->flags, features, skb, tnl_hdr)) {
-+	/* Frames always start with an Ethernet header here, as the
-+	 * eth_type_trans() call below expects.
-+	 */
-+	if (tun_vnet_hdr_tnl_to_skb(tun->flags, features, skb, tnl_hdr,
-+				    true)) {
- 		atomic_long_inc(&tun->rx_frame_errors);
- 		kfree_skb(skb);
- 		ret = -EINVAL;
-diff --git a/drivers/net/tun_vnet.h b/drivers/net/tun_vnet.h
-index fa5cab9d3e55c..7fff1ae89cacb 100644
---- a/drivers/net/tun_vnet.h
-+++ b/drivers/net/tun_vnet.h
-@@ -197,9 +197,10 @@ static inline netdev_features_t tun_vnet_hdr_guest_features(int vnet_hdr_sz)
- static inline int
- tun_vnet_hdr_tnl_to_skb(unsigned int flags, netdev_features_t features,
- 			struct sk_buff *skb,
--			const struct virtio_net_hdr_v1_hash_tunnel *hdr)
-+			const struct virtio_net_hdr_v1_hash_tunnel *hdr,
-+			bool has_eth)
- {
--	return virtio_net_hdr_tnl_to_skb(skb, hdr,
-+	return virtio_net_hdr_tnl_to_skb(skb, hdr, has_eth,
- 				features & NETIF_F_GSO_UDP_TUNNEL,
- 				features & NETIF_F_GSO_UDP_TUNNEL_CSUM,
- 				tun_vnet_is_little_endian(flags));
-diff --git a/drivers/net/virtio_net.c b/drivers/net/virtio_net.c
-index ca0d14df5d79f..59da65040d047 100644
---- a/drivers/net/virtio_net.c
-+++ b/drivers/net/virtio_net.c
-@@ -2604,7 +2604,7 @@ static void virtnet_receive_done(struct virtnet_info *vi, struct receive_queue *
- 
- 	skb->dev = dev;
- 	skb_set_network_header(skb, ETH_HLEN);
--	if (virtio_net_hdr_tnl_to_skb(skb, &hdr->tnl_hdr, vi->rx_tnl,
-+	if (virtio_net_hdr_tnl_to_skb(skb, &hdr->tnl_hdr, true, vi->rx_tnl,
- 				      vi->rx_tnl_csum,
- 				      virtio_is_little_endian(vi->vdev))) {
- 		net_warn_ratelimited("%s: bad gso: type: %x, size: %u, flags %x tunnel %d tnl csum %d\n",
-diff --git a/include/linux/virtio_net.h b/include/linux/virtio_net.h
-index d6466f96cdd00..b7b6b542f4763 100644
---- a/include/linux/virtio_net.h
-+++ b/include/linux/virtio_net.h
-@@ -5,7 +5,10 @@
- #include <linux/if_vlan.h>
- #include <linux/ip.h>
- #include <linux/ipv6.h>
-+#include <linux/netdevice.h>
- #include <linux/udp.h>
-+#include <net/ip.h>
-+#include <net/ipv6.h>
- #include <net/tcp.h>
- #include <uapi/linux/tcp.h>
- #include <uapi/linux/virtio_net.h>
-@@ -48,6 +51,145 @@ static inline int virtio_net_hdr_set_proto(struct sk_buff *skb,
- 	return 0;
- }
- 
-+/* TODO: nothing virtio specific here, move to ip.h */
-+
-+/*
-+ * Pull and minimally validate the IPv4 header at @nhoff.
-+ * Returns the header and stores the transport header offset in
-+ * @thoff, or NULL if truncated or malformed.  The whole header,
-+ * options included, is guaranteed linear on return.
-+ */
-+static inline struct iphdr *virtio_net_ip4_parse(struct sk_buff *skb,
-+						  unsigned int nhoff,
-+						  unsigned int *thoff)
-+{
-+	unsigned int ihl;
-+	struct iphdr *iph;
-+
-+	if (!pskb_may_pull(skb, nhoff + sizeof(struct iphdr)))
-+		return NULL;
-+
-+	iph = (struct iphdr *)(skb->data + nhoff);
-+	if (iph->version != 4 ||
-+	    iph->ihl < sizeof(struct iphdr) / sizeof(u32))
-+		return NULL;
-+
-+	ihl = iph->ihl * sizeof(u32);
-+	*thoff = nhoff + ihl;
-+	/* Pull the options as well: the transport header offset
-+	 * returned above must be within the linear data.  iph goes
-+	 * stale across the pull.
-+	 */
-+	if (!pskb_may_pull(skb, nhoff + ihl))
-+		return NULL;
-+
-+	return (struct iphdr *)(skb->data + nhoff);
-+}
-+
-+/* Where does the L3 header start, and what protocol is it?
-+ * With @has_eth, the frame starts with an Ethernet header, possibly
-+ * followed by VLAN tags. Otherwise the L3 header starts at the network
-+ * header offset the caller set up.
-+ *
-+ * The caller knows how the frame will be parsed later: the device
-+ * type does not tell, as tun can change it with TUNSETLINK.
-+ */
-+static inline bool
-+virtio_net_l3_start(struct sk_buff *skb, bool has_eth, int *nhoff,
-+		    __be16 *proto)
-+{
-+	if (has_eth) {
-+		__be16 h_proto;
-+
-+		if (!pskb_may_pull(skb, ETH_HLEN))
-+			return false;
-+		h_proto = eth_hdr(skb)->h_proto;
-+		/* skb->protocol is a sender claim, and parts of the
-+		 * stack parse the packet per it: when it disagrees with
-+		 * the frame we do not know which view the packet will
-+		 * be parsed as, so do not validate.
-+		 */
-+		if (skb->protocol && skb->protocol != h_proto)
-+			return false;
-+		*nhoff = ETH_HLEN;
-+		*proto = h_proto;
-+		if (eth_type_vlan(*proto)) {
-+			*proto = __vlan_get_protocol(skb, *proto, nhoff);
-+			if (!*proto)
-+				return false;
-+		}
-+	} else {
-+		const struct iphdr *iph;
-+
-+		*nhoff = skb_network_offset(skb);
-+		/* An unset network header shows up as an offset
-+		 * outside of the packet.
-+		 */
-+		if (*nhoff < 0 || (unsigned int)*nhoff >= skb->len)
-+			return false;
-+		/* No L2 header to cross-check with: take the protocol
-+		 * from the IP version at the network header.
-+		 */
-+		if (!pskb_may_pull(skb, *nhoff + 1))
-+			return false;
-+		iph = (const struct iphdr *)(skb->data + *nhoff);
-+		if (iph->version == 4)
-+			*proto = htons(ETH_P_IP);
-+		else if (iph->version == 6)
-+			*proto = htons(ETH_P_IPV6);
-+		else
-+			return false;
-+		if (skb->protocol && skb->protocol != *proto)
-+			return false;
-+	}
-+	return true;
-+}
-+
-+/* Walk the L3 header at @nhoff: where does its transport header
-+ * start, and which protocol is it?  Returns false if the header
-+ * is truncated, malformed or fragmented.
-+ */
-+static inline bool
-+virtio_net_l4_start(struct sk_buff *skb, unsigned int nhoff, __be16 proto,
-+		    unsigned int *thoff, int *ip_proto)
-+{
-+	if (proto == htons(ETH_P_IP)) {
-+		const struct iphdr *iph = virtio_net_ip4_parse(skb, nhoff, thoff);
-+
-+		if (!iph || ip_is_fragment(iph))
-+			return false;
-+		*ip_proto = iph->protocol;
-+		return true;
-+	}
-+
-+	if (proto == htons(ETH_P_IPV6)) {
-+		const struct ipv6hdr *iph;
-+		int flags = IP6_FH_F_AUTH;
-+
-+		if (!pskb_may_pull(skb, nhoff + sizeof(*iph)))
-+			return false;
-+		iph = (const void *)(skb->data + nhoff);
-+		if (iph->version != 6)
-+			return false;
-+		*thoff = nhoff + sizeof(*iph);
-+		*ip_proto = iph->nexthdr;
-+		if (*ip_proto != IPPROTO_TCP && *ip_proto != IPPROTO_UDP) {
-+			*thoff = nhoff;
-+			/* Find the transport header behind any
-+			 * extension headers. IP6_FH_F_AUTH stops
-+			 * the walk at AH, so frames with AH are rejected.
-+			 */
-+			*ip_proto = ipv6_find_hdr(skb, thoff, -1, NULL,
-+						  &flags);
-+			if (*ip_proto < 0 || flags & IP6_FH_F_FRAG)
-+				return false;
-+		}
-+		return true;
-+	}
-+
-+	return false;
-+}
-+
- static inline int __virtio_net_hdr_to_skb(struct sk_buff *skb,
- 					  const struct virtio_net_hdr *hdr,
- 					  bool little_endian, u8 hdr_gso_type)
-@@ -282,9 +424,33 @@ static inline unsigned int virtio_l3min(bool is_ipv6)
- 	return is_ipv6 ? sizeof(struct ipv6hdr) : sizeof(struct iphdr);
- }
- 
-+/* Do the tunnel offsets match the outer headers in the frame?
-+ * The L3 header the tunnel claims must be the one the frame
-+ * carries, with UDP following it at @outer_th.
-+ */
-+static inline bool
-+virtio_net_tnl_offsets_ok(struct sk_buff *skb, bool has_eth, bool outer_isv6,
-+			  unsigned int outer_th)
-+{
-+	int nhoff;
-+	__be16 proto;
-+	unsigned int thoff;
-+	int ip_proto;
-+
-+	if (!virtio_net_l3_start(skb, has_eth, &nhoff, &proto))
-+		return false;
-+	if (outer_isv6 != (proto == htons(ETH_P_IPV6)))
-+		return false;
-+	if (!virtio_net_l4_start(skb, nhoff, proto, &thoff, &ip_proto))
-+		return false;
-+
-+	return ip_proto == IPPROTO_UDP && outer_th == thoff;
-+}
-+
- static inline int
- virtio_net_hdr_tnl_to_skb(struct sk_buff *skb,
- 			  const struct virtio_net_hdr_v1_hash_tunnel *vhdr,
-+			  bool has_eth,
- 			  bool tnl_hdr_negotiated,
- 			  bool tnl_csum_negotiated,
- 			  bool little_endian)
-@@ -338,6 +504,9 @@ virtio_net_hdr_tnl_to_skb(struct sk_buff *skb,
- 	if (ret)
- 		return ret;
- 
-+	if (!virtio_net_tnl_offsets_ok(skb, has_eth, outer_isv6, outer_th))
-+		return -EINVAL;
-+
- 	/* In case of USO, the inner protocol is still unknown and
- 	 * `inner_isv6` is just a guess, additional parsing is needed.
- 	 * The previous validation ensures that accessing an ipv4 inner
+diff --git a/drivers/soundwire/dmi-quirks.c b/drivers/soundwire/dmi-quirks.c
+index 768255dd12db6..e49325331b3df 100644
+--- a/drivers/soundwire/dmi-quirks.c
++++ b/drivers/soundwire/dmi-quirks.c
+@@ -214,6 +214,13 @@ static const struct dmi_system_id adr_remap_quirk_table[] = {
+ 		},
+ 		.driver_data = (void *)ghost_realtek,
+ 	},
++	{
++		.matches = {
++			DMI_MATCH(DMI_SYS_VENDOR, "LENOVO"),
++			DMI_MATCH(DMI_PRODUCT_NAME, "83QM"),
++		},
++		.driver_data = (void *)ghost_realtek,
++	},
+ 	{
+ 		.matches = {
+ 			DMI_MATCH(DMI_SYS_VENDOR, "LENOVO"),
 -- 
 2.53.0
 
