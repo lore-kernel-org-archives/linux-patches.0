@@ -1,52 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795623809;
-	b=K92ULCo31h2HbTbCmIvsUZYb/FqIWfLfHFk1LojWyL0vcF1toJi+LkqKbiJgGkMQsSkq
-	 yD+0vjLCzCya//VCCFB5omZM16OUlaq646IgTpD4xwiFpjvjlkt4sa6wsrn1wfpn5azXd
-	 SUyPx6LA1Lvumf58UMTFHsZ2CmIyyTThZLTA7S14rFm+ZZx0lAYprN9mfAUvV0tZ5feQE
-	 Cnim8Ix10lD1cGyLglpHTDP78gAvZlhK/j4U9/hg10ZkoQK6JS/RhDWjTdl3T2nBuDAtZ
-	 fqQ9bncl7sZ1le9NgQtW8p0RhygF+SHV8BZeHhesrLmpFKWiLfrv7JF9ZwWGfk0cxuQ==
+	t=1795623812;
+	b=TyqDyJYrkQhncNdJz9TCFm2UWhUerxeeqRTQ6pMAjsfuT82QVqQE4Go1f90IDJGREgZ7
+	 T/nIqrBfVj31rDrx4WO4+TOk44RxDR3OGFsEUMRzMX+pR4VDkavxNi7YWcJoNR1YMVy6Y
+	 seGavZj1bqyI9AGXE2ptPneVx4GfW/YPqPaBf8OANCoT8AaMJGP6eIUyOSYlCP+2nyv1I
+	 +BViZbfbo1CLb6QtgOOQMnhF3ekwd8XHvDuhGmJ1o0nliLWEAdeGOwUyB14BPs+updtBk
+	 OBGtO204r/shvY91c6HjBAOdwMTzASmO9VkefFRdfwK9qs+wadNLfqRrCrYuhemxe+Q==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795623809;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795623812;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Type:Content-Transfer-Encoding;
-	bh=VKyYoKZrQE06LTaW+oilv7UwyB11J6sa7RaE4oIygeA=;
-	b=knj6KI05tQ+9AO3lYngReQwzmQGT8YfXqRR4vjCec246vdq2wdZM2kaYxolFBN4Kjife
-	 fMVUfNbeopMVQuFk3Ga17gd9oWmekzv94Z7AQykBbWonMr5aikfc4LZOra6vXSZAEJtMP
-	 H7A7AwdoN7a2oa91cyTdf1BSuIySUdVdpCsQsErbinjABcyy6x8uf334xqyy8GJFGgb2O
-	 o7p29HuHOQjFrk4cIZVDfovuk0Qyz3T3kx1vepS5AXo1pruFkJUGFQaq5oafwjH47pd+M
-	 0iFdETuIeEde8dOqQm23ocxHG0jy8B3zQMokECxTi1BtUIitbFktsZa60f9/NrOQMUQ==
+	 MIME-Version:Content-Transfer-Encoding;
+	bh=UDn24deRpVFJt+Cy8KDAsF3XDHXDebD5ClQRBmBWqN0=;
+	b=FktCN7d93KBELgq/WVf9D+4BYKlOQwFBD/fjltwWvEfAkAsIkb+USTd/hZsIZV9zhFI6
+	 QqbSpiGvpX36vpIzyvFCCp5aWSM8XZXm7naJ0gaDfNvOhCoU7t/lVNehvZaXrMn78Zkp5
+	 8jH/ZMUbL4CIhqC/1TXx7Bm0GsWZ8rRdBNqJa81v2LwwuQMbkph3nDbIg57ZokgMwgDPu
+	 fdKlkPYQTpPm9sHGmYu9xw9AqEOQniaKgduOhlzf+YQ1HMSYbDFK+YFJAc0pXlJQPUk2G
+	 YLUgcGGV1HBc44swPhz98jJb7mkyj/DKRVxK2xNNQsbTCgpzfqPurJalttwmlaj0eFQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ucJjd9Qu;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=qyb95Rhp;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7E5A5606A321;
-	Wed, 25 Nov 2026 16:23:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A2D0B606A31E;
+	Wed, 25 Nov 2026 16:23:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ucJjd9Qu
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8C3461F000C4;
-	Wed, 25 Nov 2026 16:23:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=qyb95Rhp
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 653061F000C6;
+	Wed, 25 Nov 2026 16:23:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795623809;
-	bh=VKyYoKZrQE06LTaW+oilv7UwyB11J6sa7RaE4oIygeA=;
+	s=korg; t=1795623811;
+	bh=UDn24deRpVFJt+Cy8KDAsF3XDHXDebD5ClQRBmBWqN0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ucJjd9QuiqIt7z1VbsjgyUZC16cnEGUlCElkj2pznw1iZL4/o5a6iZskzkxQayjqq
-	 CrJorGTBaZ8IKJRPpTrqZcFSySHmjeLk7/YXGW/60ZS1PUSpvPRYajQ/oohdgEviCy
-	 M6usYv40HdHSREuotOXF5e4KViqwixUYDOZ7M010=
+	b=qyb95RhpxIuuluQMonwSQ9K07Rj20mxUPcwP5lTFfPw9roFixwM/8bl9e9kyK7Goa
+	 VEuBLkoPsBnAL2739hboXvtVhUshwO0hZw1JT7E07HaW6R9ZZN/E5xjOhjS7ieB6zv
+	 fsTc3LKBRz1Lno35HZ+suE/Xwc0Njoti4fXr0HYE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
-	Jesse Zhang <Jesse.Zhang@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>
-Subject: [PATCH 6.18 932/990] drm/amdgpu: fix the error handling of amdgpu_vm_init_entities()
-Date: Wed, 25 Nov 2026 15:38:19 +0100
-Message-ID: <20261125143843.827236488@linuxfoundation.org>
+	Hui Peng <benquike@gmail.com>,
+	Johan Hovold <johan@kernel.org>
+Subject: [PATCH 6.18 933/990] USB: serial: garmin_gps: validate packet data length in nat_receive()
+Date: Wed, 25 Nov 2026 15:38:20 +0100
+Message-ID: <20261125143843.849474795@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143822.072087159@linuxfoundation.org>
 References: <20261125143822.072087159@linuxfoundation.org>
@@ -62,70 +61,108 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Jesse Zhang <Jesse.Zhang@amd.com>
+From: Hui Peng <benquike@gmail.com>
 
-commit de0f2a6eabd019a3129025862bffca934a5d7180 upstream.
+commit ca783a2d55b3361493917ad4a3573715ba902503 upstream.
 
-When initializing the immediate entity fails, amdgpu_vm_init_entities()
-destroys that entity which was never set up, and when initializing the
-delayed entity fails, it returns without destroying the immediate one.
+In nat_receive() (called from garmin_write() when userspace writes to
+/dev/ttyUSBn in MODE_NATIVE mode), while garmin_data_p->insize is less
+than GARMIN_PKTHDR_LENGTH (12), the loop copies up to 12 bytes into
+garmin_data_p->inbuffer. Once garmin_data_p->insize reaches
+GARMIN_PKTHDR_LENGTH, nat_receive() computes the total packet size as:
 
-On navi48, with the allocation of the immediate entity's scheduler list
-failing through failslab while opening the render node:
+  len = GARMIN_PKTHDR_LENGTH + getDataLength(garmin_data_p->inbuffer);
 
-  Oops: general protection fault, probably for non-canonical address 0xdffffc0000000001: 0000 [#1] SMP KASAN NOPTI
-  KASAN: null-ptr-deref in range [0x0000000000000008-0x000000000000000f]
-  RIP: 0010:do_raw_spin_lock+0x7b/0x280
-   _raw_spin_lock+0x3c/0x50
-   drm_sched_rq_remove_entity+0x90/0x2a0 [gpu_sched]
-   drm_sched_entity_kill+0x86/0x5a0 [gpu_sched]
-   drm_sched_entity_fini+0x23/0x270 [gpu_sched]
-   drm_sched_entity_destroy+0x24/0x30 [gpu_sched]
-   amdgpu_vm_init_entities+0xc7/0x100 [amdgpu]
-   amdgpu_vm_init+0x5d1/0x1480 [amdgpu]
-   amdgpu_driver_open_kms+0x2b1/0xd10 [amdgpu]
+Because getDataLength() returns a signed int from __le32_to_cpup(), a
+12-byte header with a negative 32-bit length field (such as 0xfffffff5,
+i.e., -11) causes len to underflow to a small positive value (12 + (-11)
+= 1) without any bounds check at that point. Then garmin_data_p->insize
+>= len (12 >= 1) evaluates to true and nat_receive() calls
+garmin_write_bulk(port, inbuffer, 1, 0), which allocates a 1-byte slab
+buffer via kmemdup() and immediately reads 4 bytes from it in
+getLayerId(buffer) (and again in garmin_write_bulk_callback() when the
+URB completes):
 
-Only destroy the immediate entity once it exists and the delayed one
-failed.
+  BUG: KASAN: slab-out-of-bounds in garmin_write_bulk.constprop.0+0x3eb/0x500
+  Read of size 4 at addr ffff888002cc0ba0 by task init/1
+  Call Trace:
+   <TASK>
+   dump_stack_lvl+0x70/0xa0
+   print_report+0x153/0x4c6
+   kasan_report+0xf1/0x120
+   garmin_write_bulk.constprop.0+0x3eb/0x500
+   garmin_write+0x60f/0x1450
+   serial_write+0x123/0x200
+   n_tty_write+0x8ea/0xeb0
+   file_tty_write.isra.0+0x44f/0x7a0
+   vfs_write+0x671/0xd20
 
-Fixes: 55bf196f60df ("drm/amdgpu: reset VM when an error is detected")
-Reviewed-by: Christian König <christian.koenig@amd.com>
-Signed-off-by: Jesse Zhang <Jesse.Zhang@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-(cherry picked from commit 2f538f57501a71baeb7116ff7485f9a7025e4fb9)
+Validate the unsigned 32-bit data length (dlen >= GPS_IN_BUFSIZ -
+GARMIN_PKTHDR_LENGTH, matching the existing len >= GPS_IN_BUFSIZ bound)
+in nat_receive() as soon as the 12-byte header is present, resetting
+insize and returning -EINVPKT on invalid lengths so garmin_write_bulk()
+is only ever called with a full valid packet header (12 <= len <
+GPS_IN_BUFSIZ).
+
+Tested in QEMU against Linux 7.3.0-rc3 by emulating a Garmin USB GPS
+device (091e:0003) via dummy_hcd + raw-gadget, switching /dev/ttyUSB0
+to MODE_NATIVE via PRIV_PKTID_SET_MODE, and writing a 12-byte native
+packet with data length 0xfffffff5: on the unfixed kernel this triggers
+KASAN slab-out-of-bounds reads in garmin_write_bulk() and
+garmin_write_bulk_callback(), whereas on the fixed kernel nat_receive()
+rejects the packet with -EINVPKT and 0 KASAN faults.
+
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
 Cc: stable@vger.kernel.org
+Assisted-by: LLM
+Signed-off-by: Hui Peng <benquike@gmail.com>
+[ johan: move comment and dev_dbg(); add comment about redundant check ]
+Signed-off-by: Johan Hovold <johan@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/amdgpu/amdgpu_vm.c |   10 +++++++---
- 1 file changed, 7 insertions(+), 3 deletions(-)
+ drivers/usb/serial/garmin_gps.c |   19 ++++++++++++-------
+ 1 file changed, 12 insertions(+), 7 deletions(-)
 
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_vm.c
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_vm.c
-@@ -527,11 +527,15 @@ static int amdgpu_vm_init_entities(struc
- 				  adev->vm_manager.vm_pte_scheds,
- 				  adev->vm_manager.vm_pte_num_scheds, NULL);
- 	if (r)
-+		return r;
+--- a/drivers/usb/serial/garmin_gps.c
++++ b/drivers/usb/serial/garmin_gps.c
+@@ -749,11 +749,7 @@ static int nat_receive(struct garmin_dat
+ 			len = GARMIN_PKTHDR_LENGTH;
+ 
+ 		if (len >= GPS_IN_BUFSIZ) {
+-			/* seems to be an invalid packet, ignore rest
+-			   of input */
+-			dev_dbg(&garmin_data_p->port->dev,
+-				"%s - packet size too large: %d\n",
+-				__func__, len);
++			/* should never end up here given the dlen check below */
+ 			garmin_data_p->insize = 0;
+ 			count = 0;
+ 			result = -EINVPKT;
+@@ -772,8 +768,17 @@ static int nat_receive(struct garmin_dat
+ 
+ 		/* do we have a complete packet ? */
+ 		if (garmin_data_p->insize >= GARMIN_PKTHDR_LENGTH) {
+-			len = GARMIN_PKTHDR_LENGTH+
+-			   getDataLength(garmin_data_p->inbuffer);
++			u32 dlen = getDataLength(garmin_data_p->inbuffer);
 +
-+	r = drm_sched_entity_init(&vm->delayed, DRM_SCHED_PRIORITY_NORMAL,
-+				  adev->vm_manager.vm_pte_scheds,
-+				  adev->vm_manager.vm_pte_num_scheds, NULL);
-+	if (r)
- 		goto error;
- 
--	return drm_sched_entity_init(&vm->delayed, DRM_SCHED_PRIORITY_NORMAL,
--				     adev->vm_manager.vm_pte_scheds,
--				     adev->vm_manager.vm_pte_num_scheds, NULL);
-+	return 0;
- 
- error:
- 	drm_sched_entity_destroy(&vm->immediate);
++			if (dlen >= GPS_IN_BUFSIZ - GARMIN_PKTHDR_LENGTH) {
++				/* invalid packet, ignore rest of input */
++				dev_dbg(&garmin_data_p->port->dev, "%s - invalid length: %u\n",
++					__func__, dlen);
++				garmin_data_p->insize = 0;
++				result = -EINVPKT;
++				break;
++			}
++			len = GARMIN_PKTHDR_LENGTH + dlen;
+ 			if (garmin_data_p->insize >= len) {
+ 				garmin_write_bulk(garmin_data_p->port,
+ 						   garmin_data_p->inbuffer,
 
 
