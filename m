@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795625259;
-	b=kKE5D/8sf9CwTqje01PELlcKLFi7MWDKoJiqKf5nzziDFjlFuTpptp2lpQLX5tYJYewY
-	 kelbDKEgxFBQRbv9MawMLMYEfh3Ux6P94DJQRE2OS7Mg9zK5YvqblrJRAoPVFCq2AdPnb
-	 jki5MeD1KKE6yNPVY3qGmP4s3dZwcJrwVE1IF23X8YrPX8gNOV005tB0bKn8eY8x14z61
-	 cMDAGNKHC0Avk5DMTxguihgLT0RAM5HD8Mw6dR/0/CUmgTGT0mCSoWj+mxMMXU0bUbZNU
-	 WVJle2QAYRn+fR/QIwqxewboWp75KSuWegkCbmlMJASA9T/nCDW2Nb11MQEeV9pXlZg==
+	t=1795625262;
+	b=N4HBFH3WhlP1LKLgDpd5CHKnrys9rsYU3r5wrOHTLrlXml8Bcb1eH5e6BbyRiG7go5TG
+	 WlLaZ2+alrmNpiMi7ULbJ/dMmIbAc2VklhEXXoj6jTcWmu2/a39BRF6aWW4Ebv4hVYk7O
+	 dkWfED8quWrapYfG5BQcyrDDBZRubU4klMnoDXEg2yfF6+YDaF/6ZpisCZT72DvTwaI0Q
+	 ppvuFLWR6t81s0uJavUCaR43F2jBKkrx1/7a0v5e9KtOCYYPA2gle/oCH9yA+C/kdcSIS
+	 nsZXeeZ7qwGnALqmpfSfG6LjGUIqLUSs0jltRHinqgjTI2QMiITV0K7mGwCEb18utVQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795625259;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795625262;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=pWSasSQx6mNqQsjp0BqdPJCtKJw+tssrCwAAAql2Xmk=;
-	b=gZlviZiBCTRLuE+0+S4uaSyeQ+JPweJAKlAdbezBzCL/Tc3xHZ9yXQX9cGr5wiQVF0Kt
-	 JbvymaU1qh044A4/d0mNKuSjh8QYS6BRpH35hOQuU17logZBq5RdUW8ElFHxsClq4crJF
-	 3MBHeU9yOqrSKmBkVQuMsw/KxsTtAVCRODwLZBzziaxvlihcWb1lUvY6deFjCcBUIozNs
-	 uqEhbULcyi5DeFmycxY2PYrSGQXDLQMAHjXQZpBf7kzhIbR9qM16/YN6U8G09U1conWqn
-	 tl39izH91S02a35/dIBShO0Hp1FSB0GhxSOXNQbOi2P7GAhB95dFtF078Lo+vfukdfw==
+	bh=9EgYzxtYiLN0vDmCYVSFMQKtkYCU8DSAa7SdGU1vdoM=;
+	b=ULgNRjUVYad3r8b8+w2DKp4ocgE/qNquEZdAHfyl+ETiNIxjju/NjZ5cGxPnUjKR9h/S
+	 Ntm1ijJ+oWfz2NrJMDS0Qu0uF8VOM6TEG8374FqLjtY22YntMxgrLJsfp4ynH0RFqQ86/
+	 yuXEUKUEAkBESF5X56tyaG2PkTTTPf4XsEp+ajk7sHDuyLq9glPnpdNZ5aFtzzRItQoOB
+	 M8aqzCBmnWVuOQmP7J7Bx4TV1l7QOmw/gG4Bno5Lq7RlDw9rTqrGkthpg9aH/xwAZ/iXb
+	 Fo1+fukgMKZnx1sbz+oECXynjoL5DiBV1O+A/koin6CBjSjQpxdiOs4tV3msOQ+8DPw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=zabXI6fA;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ueAeJMAQ;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AF324606A323;
-	Wed, 25 Nov 2026 16:47:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8BE2D606A32C;
+	Wed, 25 Nov 2026 16:47:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=zabXI6fA
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EC1371F000E6;
-	Wed, 25 Nov 2026 16:47:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ueAeJMAQ
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D72DF1F000EC;
+	Wed, 25 Nov 2026 16:47:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795625259;
-	bh=pWSasSQx6mNqQsjp0BqdPJCtKJw+tssrCwAAAql2Xmk=;
+	s=korg; t=1795625262;
+	bh=9EgYzxtYiLN0vDmCYVSFMQKtkYCU8DSAa7SdGU1vdoM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=zabXI6fAn9I5KAi+9bUw2Su7vXyzi1H7M9o4yx8BAGNn50n6cUc0SGIGPOplSgLRx
-	 Ve3QWZgT+OkGf8x5PydhA9k7HW5dTr0RyYBf7riQ7fzoU4amehxEl05Y6mwomogiay
-	 48CBtsczu+oWdm4tDv9a//KSVQ/uqIfknEPlsMv8=
+	b=ueAeJMAQGwaN7M0PFCO0NPsDEtS3zeF5z+D7omPs0BpbkFpJZRD+3218+SgoSMbZ+
+	 4VC2nddMPgpcWsIzSq4RSfOlNtREiWJAMIOKqc4+/7cHF5Q3kXOUxQLFUXI1KKbYpk
+	 UBzOQL1EFNQZZVcjTxyIfPtUK0qIeqQwi4dO1lng=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nicolin Chen <nicolinc@nvidia.com>,
-	Mostafa Saleh <smostafa@google.com>,
-	Will Deacon <will@kernel.org>,
+	Marco Giunta <marco_giunta@outlook.it>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 456/816] iommu/arm-smmu-v3: Dont rb_erase() a never-inserted stream node
-Date: Wed, 25 Nov 2026 15:33:24 +0100
-Message-ID: <20261125143859.745989321@linuxfoundation.org>
+Subject: [PATCH 6.12 457/816] ASoC: aw88399: skip BSTS check when boost converter is bypassed
+Date: Wed, 25 Nov 2026 15:33:25 +0100
+Message-ID: <20261125143859.769238073@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143849.205329330@linuxfoundation.org>
 References: <20261125143849.205329330@linuxfoundation.org>
@@ -69,73 +68,73 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Nicolin Chen <nicolinc@nvidia.com>
+From: Marco Giunta <marco_giunta@outlook.it>
 
-[ Upstream commit 2888520bdcbe0599cfc77b2fad8dc6c95505a3cb ]
+[ Upstream commit 664824782df63013ba8686b649c625cac4793248 ]
 
-arm_smmu_insert_master() skips inserting a stream whose StreamID duplicates
-one the same master already owns (bridged PCI devices can present duplicate
-IDs), leaving that master->streams[i].node zeroed and unlinked from the
-smmu->streams rb-tree.
+The sysst check in aw_dev_check_sysst() requires BSTS (boost finished)
+to assert, but on hardware where the boost converter is bypassed via
+external power supply (BSTCTRL10 register 0x69, EN_HVBAT bit 2 set),
+BSTS (SYSST register 0x01, bit 9) will never assert.
 
-Both the insert error-rollback loop and arm_smmu_remove_master() then call
-rb_erase() on every master->streams[i].node unconditionally. rb_erase() on
-a zeroed node sees a NULL parent, treats the node as the tree root and sets
-root->rb_node = NULL, silently emptying the whole SID tree and breaking SID
-lookups (and DMA) for every other master on the SMMU.
+The vendor's generic driver (aw883xx) handles this by reading EN_HVBAT and
+conditionally masking out BSTS from the sysst check. The in-tree driver
+missed this logic when the original code was ported upstream.
 
-Mark each node with RB_CLEAR_NODE() after sort_nonatomic() reorders the
-array, since sorting relocates the entries and would leave the earlier
-self-referential RB_CLEAR_NODE() pointer stale. An un-inserted node then
-stays RB_EMPTY_NODE() and is skipped in both erase loops; inserted nodes
-are linked by rb_find_add() and erased as before.
+Add the same conditional check, matching the vendor driver's
+aw_dev_sysst_check() implementation.
 
-Fixes: b00d24997a11 ("iommu/arm-smmu-v3: Fix iommu_device_probe bug due to duplicated stream ids")
-Assisted-by: LLM
-Signed-off-by: Nicolin Chen <nicolinc@nvidia.com>
-Reviewed-by: Mostafa Saleh <smostafa@google.com>
-Signed-off-by: Will Deacon <will@kernel.org>
-[ sashal: Dropped the upstream ordering comment and placed the RB_CLEAR_NODE() loop before mutex_lock(), since this tree has no build_invs allocation or sort step. ]
+Fixes: 8ade6cc7e261 ("ASoC: codecs: Add aw88399 amplifier driver")
+Signed-off-by: Marco Giunta <marco_giunta@outlook.it>
+Link: https://patch.msgid.link/SN6PR19MB2303FF1922BF5F876378066FFC8F2@SN6PR19MB2303.namprd19.prod.outlook.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
+[ sashal: Ported to the single-file driver layout: the EPS_EN defines went into the local header and the BSTS-skip check into aw_dev_check_sysst(), since the upstream bsts_unreliable context is absent. ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c | 10 ++++++++--
- 1 file changed, 8 insertions(+), 2 deletions(-)
+ sound/soc/codecs/aw88399.c | 13 +++++++++++++
+ sound/soc/codecs/aw88399.h |  5 +++++
+ 2 files changed, 18 insertions(+)
 
-diff --git a/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c b/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c
-index af3070db47460..5e19fce65e2ba 100644
---- a/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c
-+++ b/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c
-@@ -3242,6 +3242,9 @@ static int arm_smmu_insert_master(struct arm_smmu_device *smmu,
- 		return -ENOMEM;
- 	master->num_streams = fwspec->num_ids;
+diff --git a/sound/soc/codecs/aw88399.c b/sound/soc/codecs/aw88399.c
+index bba59885242d0..63c849a19da72 100644
+--- a/sound/soc/codecs/aw88399.c
++++ b/sound/soc/codecs/aw88399.c
+@@ -285,6 +285,19 @@ static int aw_dev_check_sysst(struct aw_device *aw_dev)
+ 	else
+ 		check_val = AW88399_BIT_SYSST_SWS_CHECK;
  
-+	for (i = 0; i < fwspec->num_ids; i++)
-+		RB_CLEAR_NODE(&master->streams[i].node);
++	/*
++	 * When an external power supply (EPS) is used to feed the amplifier
++	 * (EN_HVBAT bit in BSTCTRL10 set), the boost converter is bypassed,
++	 * and BSTS (boost finished) will never assert. Skip the BSTS check in
++	 * this case, matching the vendor driver's behavior.
++	 */
++	ret = regmap_read(aw_dev->regmap, AW88399_BSTCTRL10_REG, &reg_val);
++	if (ret)
++		return ret;
 +
- 	mutex_lock(&smmu->streams_mutex);
- 	for (i = 0; i < fwspec->num_ids; i++) {
- 		struct arm_smmu_stream *new_stream = &master->streams[i];
-@@ -3277,7 +3280,9 @@ static int arm_smmu_insert_master(struct arm_smmu_device *smmu,
++	if (reg_val & (~AW88399_EPS_EN_MASK))
++		check_val &= ~AW88399_BSTS_FINISHED_VALUE;
++
+ 	for (i = 0; i < AW88399_DEV_SYSST_CHECK_MAX; i++) {
+ 		ret = regmap_read(aw_dev->regmap, AW88399_SYSST_REG, &reg_val);
+ 		if (ret)
+diff --git a/sound/soc/codecs/aw88399.h b/sound/soc/codecs/aw88399.h
+index 5e9cdf725d3dd..1e9fab17f28c3 100644
+--- a/sound/soc/codecs/aw88399.h
++++ b/sound/soc/codecs/aw88399.h
+@@ -446,6 +446,11 @@
+ #define AW88399_NOISE_GATE_EN_MASK	\
+ 	(~(((1<<AW88399_NOISE_GATE_EN_BITS_LEN)-1) << AW88399_NOISE_GATE_EN_START_BIT))
  
- 	if (ret) {
- 		for (i--; i >= 0; i--)
--			rb_erase(&master->streams[i].node, &smmu->streams);
-+			if (!RB_EMPTY_NODE(&master->streams[i].node))
-+				rb_erase(&master->streams[i].node,
-+					 &smmu->streams);
- 		kfree(master->streams);
- 	}
- 	mutex_unlock(&smmu->streams_mutex);
-@@ -3296,7 +3301,8 @@ static void arm_smmu_remove_master(struct arm_smmu_master *master)
- 
- 	mutex_lock(&smmu->streams_mutex);
- 	for (i = 0; i < fwspec->num_ids; i++)
--		rb_erase(&master->streams[i].node, &smmu->streams);
-+		if (!RB_EMPTY_NODE(&master->streams[i].node))
-+			rb_erase(&master->streams[i].node, &smmu->streams);
- 	mutex_unlock(&smmu->streams_mutex);
- 
- 	kfree(master->streams);
++#define AW88399_EPS_EN_START_BIT	(2)
++#define AW88399_EPS_EN_BITS_LEN		(1)
++#define AW88399_EPS_EN_MASK		\
++	(~(((1 << AW88399_EPS_EN_BITS_LEN) - 1) << AW88399_EPS_EN_START_BIT))
++
+ #define AW88399_WDT_CNT_START_BIT	(0)
+ #define AW88399_WDT_CNT_BITS_LEN	(8)
+ #define AW88399_WDT_CNT_MASK		\
 -- 
 2.53.0
 
