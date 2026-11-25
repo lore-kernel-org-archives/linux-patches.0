@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795618906;
-	b=1I60WKqi8dAzWy+Yfg/YzhjACjdPh12dpZu2zqjnbTrXQKHy5MI8hLerpnve63qPFwZX
-	 1ffMTDrRddSfFXiSsBbrDvik5vzOJXJ07uPhEpMMM7mF6Z+180Ns8lchMkVEHUT6B4t2P
-	 ipxkA3kzDue2Qow8Ez1FkvER7tt0pgS1oqvF9MtOzxl7vfyb6yOitH0EMgNjLOICV5crU
-	 i51aZWWPflFkOibSM0Ud+FyzZ+VYX8BnXGWIdvHgicnfAeAE7wYkKyfBAi6YmNja1JHBg
-	 PkxwpxcG9wu8azZFFEnDX1/q2TMezAPiavBdhJgIECiwujJ9+tkJvV1Vv0fW8Ghf0Vw==
+	t=1795618909;
+	b=2Rbbft6H/wBGOV+vk7GDdI8T5MsS0zMAiENRQ7fRHJ14I1P4besjFkZuSwucEZxsWgpI
+	 GOTIZau5wL4lgbZq+mGjFS02oNS+K0EbwOnDJe2hLC4oNuCGFoUdvD7UrBFKrEzJys8a6
+	 wUxC+NVW2qeh4tf5+aE/vZQeEoGIFp7IlQtn7RZlOq6STn85ECa8E3dlIvG54Qn9cqfUR
+	 wvcBsSeb4f7bSCZhUxGMF7QgPDxvy0PWUIlHxZktF6lMx8bFZfE8O7NgNfzB3toOhsw+J
+	 tUcmDWkt0PR5lkfokPG60lOSfa9eXNt6in2ygzeY7+tLYA0e2a5nnVYdunlBGsj1Qyg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795618906;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795618909;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=igsNaDvVY7y4iHWYovUo5POwKX+bmzsCz1Y/gRGaESo=;
-	b=2H0GC8ppPzCL/ubwK8pd2Zmidak6p0BWLRn1QMG+zRoHnFPL4fUkRivZMDVuhMvvOd5h
-	 f2orGvhOUc2xkhMhzt/T/MG8K2fErFbcwF0HZwPHDIsc7INhaBgiHqr6quR1lFn7GOvDG
-	 VHUNNTjVTVWt34RmThWQfvDtOEz5dAWVMK0tCkBBL/qJcPR6Wt0z4simqnAhE70ItymWV
-	 RiYnBsgmqUV6Eog+Yy1LjYLD9pZyS7ZsDuPP7ttF+335e7FyHs/yxCu6PES/lpBL6sktA
-	 5faAil5kFO7ZjcwUrYOL9ufa4swrMr4NTtEIIN3lolqqxMokASR7Ut0eHmE/aj3XmMQ==
+	bh=0SOBLM2Llf3IseQbq78DV56G2NgLZXg+k+WP9jPMEsY=;
+	b=HBZF80PnR+8S1HJZyWflHght+oY0yyrSaxNWoAqXqipTSplDyvbPjSF44dptEJM4CLM1
+	 6SMNIHS2CrGbdemtAJQ+rV8ajBgxXk4HPHeuA0IdFD+7wOcoJ0OgjAqT+kEq1OzgbwJzM
+	 YT4DWDkVmASnoppsOz7VH5/S84MV/dVhoywOM8dFVEJhlIB0Wpi72OuxT3MICqmo3wFKE
+	 05jW79HHtSZ7LhfJgkg/t546ODgXHEBHYG5u48173Qza4BMILAVS4cEZOoAYwXo0StOSF
+	 1hC70ZgAkPzys1HSemdFK1YkOMIcHfMCOrxQ0qjbV+loGSnQRXear2yaz6pJGY64awA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="ZjbDo/AS";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=YqU4Oh7F;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3744E606A330;
-	Wed, 25 Nov 2026 15:01:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C7344606A321;
+	Wed, 25 Nov 2026 15:01:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ZjbDo/AS
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 721881F000CA;
-	Wed, 25 Nov 2026 15:01:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=YqU4Oh7F
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EC0D21F000F0;
+	Wed, 25 Nov 2026 15:01:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795618906;
-	bh=igsNaDvVY7y4iHWYovUo5POwKX+bmzsCz1Y/gRGaESo=;
+	s=korg; t=1795618909;
+	bh=0SOBLM2Llf3IseQbq78DV56G2NgLZXg+k+WP9jPMEsY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ZjbDo/ASED7dTEckFo7eM8A4mRObtI5X30P3XIDvphjTYtphkk5U8iSn5WneeHnZ/
-	 2yLWw1oOQqSp6XIp/ka4/oP5Fl9pxQoRTvRqx5vtjVMPvWbyiOefkyi0iN7VbKHvby
-	 ftJ3/3vl29n7eGcyWILUUyTEXrdnExesVWY9pmJ8=
+	b=YqU4Oh7FodGYiwAiwDeZ6poXjAg8WIarlnpsdoyVb46iArzmUeQk5hmdDL3K90Zd7
+	 UaD5oAaXHOICNTefHtDPOGNPLvLheQB1p9/RmPpvSxNJInnYvkVToEjqR6VrF2oe3w
+	 k7xv5HjKM1O1D39OWswWaILTkRhf/JerBDFHi5HQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zachary Huang <zuzhenhuang365@gmail.com>,
-	Mark Brown <broonie@kernel.org>,
+	Avi Weiss <thnkslprpt@gmail.com>,
+	Anna Schumaker <anna.schumaker@hammerspace.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0426/1005] ASoC: es9356: fix the capture gain dB scale
-Date: Wed, 25 Nov 2026 15:29:24 +0100
-Message-ID: <20261125143831.732819771@linuxfoundation.org>
+Subject: [PATCH 7.3 0427/1005] NFSv4.1: retain MDS I/O until both thresholds are met
+Date: Wed, 25 Nov 2026 15:29:25 +0100
+Message-ID: <20261125143831.755475595@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143821.729802100@linuxfoundation.org>
 References: <20261125143821.729802100@linuxfoundation.org>
@@ -68,58 +68,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zachary Huang <zuzhenhuang365@gmail.com>
+From: Avi Weiss <thnkslprpt@gmail.com>
 
-[ Upstream commit 412a061ebf8ce0d4d49fc7352dba8d641257b3a6 ]
+[ Upstream commit eab627dcd18a18a44a2cbee47df3058d3637ba0d ]
 
-The two capture gain controls are declared with a TLV step of 3 (FU33,
-analog mic) and 6 (FU11, DMIC).  The TLV step is expressed in 0.01 dB
-units, so this advertises 0.03 dB and 0.06 dB per step: with a value
-range of 0..10 and 0..3 the whole controls appear to span only 0.30 dB
-and 0.18 dB.
+When both size and I/O thresholds are configured,
+pnfs_within_mdsthreshold() uses size && io to decide whether to
+keep I/O on the MDS. Both variables indicate an unmet threshold,
+so reaching only one threshold returns false and may trigger
+pNFS layout acquisition while the other threshold remains unmet.
 
-The hardware steps are 3 dB and 6 dB, i.e. 0..30 dB and 0..18 dB.
-Measured on a MECHREVO WUJIE 14SAH (ES9356 on SoundWire link 0) by
-recording the same signal at all four FU11 settings:
+Use logical OR instead of AND to stay with MDS I/O until both
+thresholds are met, as recommended by RFC 8881 Section 5.12.6.
+The new RFC contains the same threshold selection rule as RFC
+5661 which is referenced in function comment.
 
-    FU11=0   rms  523  (-35.9 dBFS)
-    FU11=1   rms 1007  (-30.3 dBFS)
-    FU11=2   rms 2011  (-24.2 dBFS)
-    FU11=3   rms 3794  (-18.7 dBFS)
-
-That is about +6 dB per step, matching the hardware definition rather
-than the advertised 0.06 dB.
-
-Because userspace (alsamixer, PipeWire/WirePlumber) derives the volume
-from this TLV, the capture gain currently looks like a control without
-any usable range, which is also why the default setting seems impossible
-to raise from the desktop.
-
-Fixes: 5d9cb740cd38 ("ASoC: es9356-sdca: Add ES9356 SDCA driver")
-Assisted-by: LLM
-Signed-off-by: Zachary Huang <zuzhenhuang365@gmail.com>
-Link: https://patch.msgid.link/179398129782.44051.2897523393297405157@gmail.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Fixes: d23d61c8d351 ("NFSv4.1 test the mdsthreshold hint parameters")
+Signed-off-by: Avi Weiss <thnkslprpt@gmail.com>
+Signed-off-by: Anna Schumaker <anna.schumaker@hammerspace.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/codecs/es9356.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ fs/nfs/pnfs.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/sound/soc/codecs/es9356.c b/sound/soc/codecs/es9356.c
-index 80db0f2f4aef6..02c0c34c04546 100644
---- a/sound/soc/codecs/es9356.c
-+++ b/sound/soc/codecs/es9356.c
-@@ -59,8 +59,8 @@ static int es9356_sdw_component_probe(struct snd_soc_component *component)
- }
- 
- static const DECLARE_TLV_DB_SCALE(out_vol_tlv, -9600, 12, 0);
--static const DECLARE_TLV_DB_SCALE(amic_gain_tlv, 0, 3, 0);
--static const DECLARE_TLV_DB_SCALE(dmic_gain_tlv, 0, 6, 0);
-+static const DECLARE_TLV_DB_SCALE(amic_gain_tlv, 0, 300, 0);
-+static const DECLARE_TLV_DB_SCALE(dmic_gain_tlv, 0, 600, 0);
- 
- static const struct snd_kcontrol_new es9356_sdca_controls[] = {
- 	SDCA_SINGLE_Q78_TLV("FU41 Left Playback Volume",
+diff --git a/fs/nfs/pnfs.c b/fs/nfs/pnfs.c
+index 0d51be32b6380..ff85b82a1e222 100644
+--- a/fs/nfs/pnfs.c
++++ b/fs/nfs/pnfs.c
+@@ -2071,7 +2071,7 @@ static bool pnfs_within_mdsthreshold(struct nfs_open_context *ctx,
+ 		break;
+ 	}
+ 	if (size_set && io_set) {
+-		if (size && io)
++		if (size || io)
+ 			ret = true;
+ 	} else if (size || io)
+ 		ret = true;
 -- 
 2.53.0
 
