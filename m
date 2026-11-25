@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795625851;
-	b=w+Gvt+x66s7bzKfoeyIg/ZnVIrLI9Vqb9T4AtKB/ZEswejbbtfNpDNPpkApgMKn8gW8K
-	 eCTyzaxmppP8qx8Meug14wN+9aY7rGi1ZomjR+h8S+09YfdY+Ag41GxY9HO9kcR3oIcpl
-	 0vD0lmWzfajrkYysP1jnps4hqz/9GplU3wwBCHduc7X3uICnDUE0T28tQibmJTh/fzgnb
-	 O1TdcjCWhmrFTy1pr51nrNBtd8qkod4SKAkO5Aie3azuqAWUNOden6vTwoODuqjy07t6E
-	 xbhVa3eGOO29EtL9AdVqWU/924oOlrhLfkR7Ool0q2SYOTklHfGdJm64rqxwiyie1Kw==
+	t=1795625854;
+	b=KmfMZHRn/5ArplhFZPyvrOoc3R55QgYX06K6xCO5h+A1gqYRutg2i5+aWHrsIcIkjvNq
+	 +vAU8xlx+Kd3u5B3ldYUQOA1o4e8SibndreqOlNcwr1znEy7P952CrqElnlrhN5uWKOx2
+	 exuhf0BVHOhRTcHDDsIjBmE95MP9OFpUVr7hWPcdPMu6dg8ou3bETHiAgiB/98lw6wzPc
+	 ox4CceTNR6+q9InX8EvN0rIq1pK2ovhZgIyvD0ulTffsIjQLpaB+Y1ycH5CkVmIFQEYzf
+	 9tsC4uE+2doZTLMiZwXGjfnP8cukEg7jR0iO4RN5FPPmK2+ckwuM9sc6jB42wjSgDgQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795625851;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795625854;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=9NsGECueXBOIrUVhx3jSxMCSJNHd+LB+JYGdQwfiKCU=;
-	b=OP9ZBQwm/8aUsrTtKVcx7zvsUpqKCC1QYMCJ3soQITq7r4d8KJgoLWlWmUGHE3e3WyFu
-	 /COI7qegLyKXkhHcRbZUhRwVBg/sk84bkI/2XDjdjui9JUyK8mheevhw4fWTcCwRDiWLV
-	 o+ZGIS2FikL92vG86wEYqBhWmcp0retswAexQdiNeq2RnfeNsx+PwwmVa8V4eqj9pnfy2
-	 9OqOZbyE3aS3KvOqzB4NubDG6MmwsqyryTN/FBWSS08TMarXf1t7QkUHw20AbaBIfcJ4l
-	 +ZSYhodB9qoT8OK3Z7Dy4Ve/i6WsNbkaFSUWblF7p2Do3Y3L1ac2rdmBN8f/VGIfgBA==
+	bh=SUzZ5fB7xZozepo3dIgvp6XClYJHfP8dqXcDU2A4Fqc=;
+	b=3R+O5LbjTsnh4nh6W0EVh1eJP0Y7m8EDnuH50eVklLXrSMtZHz7cUu3DrgXsWao0tNuP
+	 2iTuQG85/WNfXffo51Y5KKPBmROlypvMAQOwu57n7zZbphyFaFyhW4CNVtS1xFn4b37Br
+	 DLIHUNjTZvleatr5iIfIck4fxwxvB712OVjWr0iN/5PN/CZeHjG8gedRDT3+I8eoZGGga
+	 ETbI0ah3mgyQmSDWd8ys8dAiqh4ZHj5jzCFG7KjBLCNww9cKir2p5UtPcA81VNjUdpNTe
+	 xjL/hGY5aJSR6/jz76H17PyOGuGVz17Rh7dl+iUDjc6r0SDYVSXU9iJ4rECUasbkMMg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=L5yWYX79;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=dyUFP0KB;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 31905606A31E;
-	Wed, 25 Nov 2026 16:57:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B552E606A321;
+	Wed, 25 Nov 2026 16:57:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=L5yWYX79
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 79C8E1F000D2;
-	Wed, 25 Nov 2026 16:57:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=dyUFP0KB
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B09B61F000D1;
+	Wed, 25 Nov 2026 16:57:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795625851;
-	bh=9NsGECueXBOIrUVhx3jSxMCSJNHd+LB+JYGdQwfiKCU=;
+	s=korg; t=1795625854;
+	bh=SUzZ5fB7xZozepo3dIgvp6XClYJHfP8dqXcDU2A4Fqc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=L5yWYX79kUUxC0tx1qGF6561z8hEqtxrw+snFAkXbh/vc/UQGboLJ2BcNC2mBupsJ
-	 Frv4JrmtsgrzXRIfKGWoWkUE8Ypmx65pS8q+G+uBwhoXNICX5JB/Cq81lFKXXwxiTP
-	 xiyrNxaFqqKsyXn8lnJIk7w2ukMDmdu3nnD6ybt4=
+	b=dyUFP0KBdH9OxOxg08bJwLAqXZSQJhfThnuwtZvaOuqYNCOVJzumEpHvbbypayQZ7
+	 HvUTqFTPJTvsPdd89ZzQAcdf4dd3T/oZY2t+s7kWqFhnlW6C4eVsnSRlMQ5Vyb6d60
+	 iVhdsEw8IrCHm4J3qhRA44KiCguUTWZW9W7lwUrE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andrey Misiurov <andrey.misyrov@gmail.com>,
+	Tim Budding <tim.budding@gmail.com>,
 	Xin Long <lucien.xin@gmail.com>,
-	Dave Miller <davem@davem-thinkpadp1gen8.ibmlond.csb>
-Subject: [PATCH 6.12 649/816] sctp: fix ASCONF address change on single-homed hosts
-Date: Wed, 25 Nov 2026 15:36:37 +0100
-Message-ID: <20261125143904.205480794@linuxfoundation.org>
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 6.12 650/816] sctp: fix I-FORWARD-TSN handling of fragments on other streams
+Date: Wed, 25 Nov 2026 15:36:38 +0100
+Message-ID: <20261125143904.228656567@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143849.205329330@linuxfoundation.org>
 References: <20261125143849.205329330@linuxfoundation.org>
@@ -68,72 +68,127 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Andrey Misiurov <andrey.misyrov@gmail.com>
+From: Tim Budding <tim.budding@gmail.com>
 
-commit 5175b2fb34c77cf2cd56a290affa45412cb3a228 upstream.
+commit 5b9cfc6491a6e32e7315dc222992c7dbd5baa3e9 upstream.
 
-Commit 9b2854f86f0b ("sctp: don't free the ASCONF's own transport in
-DEL-IP processing") refuses a DEL-IP of the transport the ASCONF was
-located by, so that a later wildcard DEL-IP cannot use it after free.
+sctp_report_iftsn() incorrectly frees queued I-DATA fragments in two
+cases. First, it drops any queued fragments with TSN less than or equal
+to the New Cumulative TSN. This prevents reconstruction of messages
+still being received on other streams and can fully block an ordered
+stream. Second, it calls sctp_intl_abort_pd() if the New Cumulative TSN
+equals the highest TSN seen. This check exists for association resets
+but can be inadvertently triggered by any I-FORWARD-TSN that arrives
+before data with a higher TSN, causing data loss and, if a partial
+delivery is in progress on an ordered stream, an aborted association.
 
-This also breaks the single-homed address change (RFC 5061 5.3.2). The
-host sends [Address Parameter L] [ADD-IP S] [DEL-IP L], the association
-is located by L, and DEL-IP L is now refused. The sender never gets an
-all-success ASCONF-ACK, keeps src_out_of_asoc_ok set and stops sending
-data, so the association stalls.
+Fix the first by freeing fragments from sctp_intl_skip() based on
+stream, U bit, and MID instead of TSN. Fix the second by moving the call
+to sctp_intl_abort_pd() from sctp_report_iftsn() to the corresponding
+reset handlers.
 
-Fix the wildcard DEL-IP instead: look up the transport of the packet
-source rather than reusing asconf->transport. Both DEL-IP paths can
-now free asconf->transport, and chunks bundled after the ASCONF still
-use it, so point it at a surviving transport: the packet source for the
-wildcard delete, the primary path for a plain one.
+Observed in real use as unexpected message loss. Reproduced on an
+unmodified kernel with the sctp_ifwdtsn.sh selftest added later in this
+series, which passes with this fix. Reproduction and fix done with AI
+assistance.
 
-Found by manual code inspection while reviewing a backport of commit
-9b2854f86f0b; reproduced on a two-namespace single-homed renumber.
-
-Fixes: 9b2854f86f0b ("sctp: don't free the ASCONF's own transport in DEL-IP processing")
+Fixes: 47b20a88566f ("sctp: implement report_ftsn for sctp_stream_interleave")
 Cc: stable@vger.kernel.org
-Signed-off-by: Andrey Misiurov <andrey.misyrov@gmail.com>
+Signed-off-by: Tim Budding <tim.budding@gmail.com>
 Acked-by: Xin Long <lucien.xin@gmail.com>
-Signed-off-by: Dave Miller <davem@davem-thinkpadp1gen8.ibmlond.csb>
+Link: https://patch.msgid.link/20261105050225.49292-4-tim.budding@gmail.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/sctp/sm_make_chunk.c |   17 ++++++++---------
- 1 file changed, 8 insertions(+), 9 deletions(-)
+ net/sctp/stream.c            |    2 ++
+ net/sctp/stream_interleave.c |   32 +++++++++++---------------------
+ 2 files changed, 13 insertions(+), 21 deletions(-)
 
---- a/net/sctp/sm_make_chunk.c
-+++ b/net/sctp/sm_make_chunk.c
-@@ -3191,9 +3191,12 @@ static __be16 sctp_process_asconf_param(
- 		 * packet MUST be deleted.
- 		 */
- 		if (af->is_any(&addr)) {
--			sctp_assoc_set_primary(asoc, asconf->transport);
--			sctp_assoc_del_nonprimary_peers(asoc,
--							asconf->transport);
-+			peer = sctp_assoc_lookup_paddr(asoc, &asconf->source);
-+			if (!peer)
-+				return SCTP_ERROR_REQ_REFUSED;
-+			sctp_assoc_set_primary(asoc, peer);
-+			sctp_assoc_del_nonprimary_peers(asoc, peer);
-+			asconf->transport = peer;
- 			return SCTP_ERROR_NO_ERROR;
- 		}
+--- a/net/sctp/stream.c
++++ b/net/sctp/stream.c
+@@ -749,6 +749,7 @@ struct sctp_chunk *sctp_process_strreset
+ 	 */
+ 	max_tsn_seen = sctp_tsnmap_get_max_tsn_seen(&asoc->peer.tsn_map);
+ 	asoc->stream.si->report_ftsn(&asoc->ulpq, max_tsn_seen);
++	asoc->stream.si->abort_pd(&asoc->ulpq, GFP_ATOMIC);
  
-@@ -3206,13 +3209,9 @@ static __be16 sctp_process_asconf_param(
- 		if (!peer)
- 			return SCTP_ERROR_DNS_FAILED;
+ 	/* G1: Compute an appropriate value for the Receiver's Next TSN -- the
+ 	 *     TSN that the peer should use to send the next DATA chunk.  The
+@@ -1028,6 +1029,7 @@ struct sctp_chunk *sctp_process_strreset
+ 			LIST_HEAD(temp);
  
--		/* Don't free asconf->transport; a later wildcard DEL-IP
--		 * parameter reuses it.
--		 */
--		if (peer == asconf->transport)
--			return SCTP_ERROR_REQ_REFUSED;
+ 			asoc->stream.si->report_ftsn(&asoc->ulpq, mtsn);
++			asoc->stream.si->abort_pd(&asoc->ulpq, GFP_ATOMIC);
+ 
+ 			sctp_tsnmap_init(&asoc->peer.tsn_map,
+ 					 SCTP_TSN_MAP_INITIAL,
+--- a/net/sctp/stream_interleave.c
++++ b/net/sctp/stream_interleave.c
+@@ -1203,28 +1203,21 @@ static void sctp_report_fwdtsn(struct sc
+ 	sctp_ulpq_abort_pd(ulpq, GFP_ATOMIC);
+ }
+ 
+-static void sctp_intl_reasm_flushtsn(struct sctp_ulpq *ulpq, __u32 ftsn)
++static void sctp_intl_reasm_flush_mid(struct sk_buff_head *reasm, __u16 sid,
++				      __u32 mid)
+ {
+ 	struct sk_buff *pos, *tmp;
+ 
+-	skb_queue_walk_safe(&ulpq->reasm, pos, tmp) {
++	skb_queue_walk_safe(reasm, pos, tmp) {
+ 		struct sctp_ulpevent *event = sctp_skb2event(pos);
+-		__u32 tsn = event->tsn;
+ 
+-		if (TSN_lte(tsn, ftsn)) {
+-			__skb_unlink(pos, &ulpq->reasm);
+-			sctp_ulpevent_free(event);
+-		}
+-	}
++		if (event->stream < sid)
++			continue;
++		if (event->stream > sid || MID_lt(mid, event->mid))
++			break;
+ 
+-	skb_queue_walk_safe(&ulpq->reasm_uo, pos, tmp) {
+-		struct sctp_ulpevent *event = sctp_skb2event(pos);
+-		__u32 tsn = event->tsn;
 -
- 		sctp_assoc_rm_peer(asoc, peer);
-+		if (asconf->transport == peer)
-+			asconf->transport = asoc->peer.primary_path;
- 		break;
- 	case SCTP_PARAM_SET_PRIMARY:
- 		/* ADDIP Section 4.2.4
+-		if (TSN_lte(tsn, ftsn)) {
+-			__skb_unlink(pos, &ulpq->reasm_uo);
+-			sctp_ulpevent_free(event);
+-		}
++		__skb_unlink(pos, reasm);
++		sctp_ulpevent_free(event);
+ 	}
+ }
+ 
+@@ -1232,11 +1225,6 @@ static void sctp_report_iftsn(struct sct
+ {
+ 	/* Move the Cumulattive TSN Ack ahead. */
+ 	sctp_tsnmap_skip(&ulpq->asoc->peer.tsn_map, ftsn);
+-	/* purge the fragmentation queue */
+-	sctp_intl_reasm_flushtsn(ulpq, ftsn);
+-	/* abort only when it's for all data */
+-	if (ftsn == sctp_tsnmap_get_max_tsn_seen(&ulpq->asoc->peer.tsn_map))
+-		sctp_intl_abort_pd(ulpq, GFP_ATOMIC);
+ }
+ 
+ static void sctp_handle_fwdtsn(struct sctp_ulpq *ulpq, struct sctp_chunk *chunk)
+@@ -1260,6 +1248,7 @@ static void sctp_intl_skip(struct sctp_u
+ 			sctp_intl_stream_abort_pd(ulpq, sid, mid, 0x1,
+ 						  GFP_ATOMIC);
+ 		}
++		sctp_intl_reasm_flush_mid(&ulpq->reasm_uo, sid, mid);
+ 		return;
+ 	}
+ 
+@@ -1271,6 +1260,7 @@ static void sctp_intl_skip(struct sctp_u
+ 		sctp_intl_stream_abort_pd(ulpq, sid, mid, 0x0, GFP_ATOMIC);
+ 	}
+ 
++	sctp_intl_reasm_flush_mid(&ulpq->reasm, sid, mid);
+ 	sctp_mid_skip(stream, in, sid, mid);
+ 
+ 	sctp_intl_reap_ordered(ulpq, sid);
 
 
