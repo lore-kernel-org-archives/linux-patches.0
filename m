@@ -1,51 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795623769;
-	b=XmMmZUdxpnb++mpQ4nNEjUrcdPJcdXWJuY0Dg3JJFl1LdkZ+GW1zmfGsvNuFuUnVOaSm
-	 lkFb562MO9y4E9ZDXwqdZaVDnYnW+4UHd2Bv1mvGfCRvs11YcS676dlrKUrJZ6KBcRGvc
-	 kTTRXZBwbiHxN6icRXiJXabN73J6E245X6rnCB8NyTGWjIFOfUfwKKXg5PUzbHG6IJ2OB
-	 ciChgEYKNyk6yPCanRISJne6acmNg1uReau/1NfNrsy+hZgiJZWh1J81X79bevQYmap2y
-	 OZJ0hHFFEL+9R6phtNHVEiKFoFWplEdSwjyX9d8LPNt1thf2zXNxCXrkokjw5T/ZdEA==
+	t=1795623772;
+	b=Rrh++Y3KBM6IiLkjCZJhfh7W+BNjx6yJCOi94j9IlMUpV7WUcKTaIOmSB+jkqn1ftrg/
+	 2RkRFdOLa5Bf92JoqqzsdguqZSnagjX84AVodgW/289ZuJn5QSGGjY6H1zK6IzP9+9wsa
+	 xvClBE1SfBl/n+c/045rxFDGOkLnBU6rQWfrmSaoyiMPruChbgh1j/qljyWqI+4FTnECM
+	 7iyfjUbiekzBiGd8+eXSwHD3uhYki9Cww6XQMj1ajCZCaifcJafTFoHkVECGE9yp7y3rN
+	 BwgGe4PJwAGoMhdokXIrez97qzmQsj/X+UVFY5L4XjEoviLpd2KjCpxHcQH21Dwbyyg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795623769;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795623772;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=9WBQpVQC/bELDlswi3JxKWsNWvwAelJajccj14N91+8=;
-	b=Vk1RKdfobpeJ0iXjhNgyVLe5osXqJPzQH+7dAFN7CesfbfqYWjcdMrbLjnKCVlz/yMAU
-	 5bek482k/+RwVsHGQ2fcjjSQdGt1mX2DFK0aJLC+o8R2hOM4tdjzCD8qKKmOFrFTiPwwU
-	 0QUbTcy2pe55romI1Jw81DQy3Df0Gs02sGSYHIv1q2eAxUVwCD09vbiA89Tm4VgrCfHmJ
-	 4TgTM+tWYif6fJyba3NirulPVgkE7jOxc3lfzMJKUufAD3adMZdpB9/QI7Djo40aTdjyI
-	 UGJ94B37x5c4lwKdZuh5+Um2J6w8wV0HUIxJnN0gpiHaM0av8C7JbQE1e3O3amm6F/g==
+	bh=iRneP6yXE4PRffpYafFw0KynuTn0hIvTWpdftqi8+A8=;
+	b=I/RNXlxQxMZmnbuEpJ4d2rCV1D/MgKCBo4L7id6+5RHvwtGxDlk2Nm/N69vb6g7BE2Qd
+	 D14WNvQpS8ZEySSp6Ij+EjWHRzkAdJ+jf+DqfAhsGl+8gvuDgQiXUscegKkmN3VBIiviV
+	 nB2tozQf+lYdUtD87poNwh+K9iHMNq/eMEturKI4zJcqz4NGct8xx3QwBL2Se1B3Z2osl
+	 yqspIA487u87s+EJdnYMT6VhZg4FKZvIXQuANQ1NPMvnvhf+2g/ha6dDLHdlwJS+3avg2
+	 HYlBPAroU2ekYmUXTJ9CB9Que5driutcsF/KKVpMrnJ71tBi7aO50s08MkHtCR7lk9g==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=f9NOAgIU;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=bygXFJEV;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7FE2B606A321;
-	Wed, 25 Nov 2026 16:22:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4B5C5606A31E;
+	Wed, 25 Nov 2026 16:22:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=f9NOAgIU
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CFB861F000C4;
-	Wed, 25 Nov 2026 16:22:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=bygXFJEV
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9B48A1F000C4;
+	Wed, 25 Nov 2026 16:22:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795623769;
-	bh=9WBQpVQC/bELDlswi3JxKWsNWvwAelJajccj14N91+8=;
+	s=korg; t=1795623772;
+	bh=iRneP6yXE4PRffpYafFw0KynuTn0hIvTWpdftqi8+A8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=f9NOAgIUksTBdDs/AKNGD6tFynQlBAQ2ngcIFycOjm4xVSnDAJ9LM1WqnJCRbO7Ch
-	 Wuqu/ncevgUkPaqyX9loltCsICajBbBtKbOzIousv5bj3V46lukMA0xghOhB4H+q4M
-	 yoHqZBKgC37DfjNXdUDNfrkAzqvFhuU71I/3QH/E=
+	b=bygXFJEVt6m61BiB26XFfMF2N4zQcY9bqqqKmrvq6E70HBmeZMaMwJQsP7HF/q/mE
+	 kDpltA4Tffz6RWBG+H8dpW5tdtucxUX863GWqEYjLtV2xGO8WWR5jLJK3+Lsj9BhIz
+	 POabeQr8xeZ4f6DsYfDTBzjbeCT5kPekWElYDkyQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Arnav Kapoor <kapoorarnav43@gmail.com>,
+	Salah Triki <salah.triki@gmail.com>,
 	Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>
-Subject: [PATCH 6.18 964/990] iio: proximity: sx9500: ignore event config writes that dont change state
-Date: Wed, 25 Nov 2026 15:38:51 +0100
-Message-ID: <20261125143844.565592563@linuxfoundation.org>
+Subject: [PATCH 6.18 965/990] iio: temperature: mlx90614: Fix dual channel probe condition check
+Date: Wed, 25 Nov 2026 15:38:52 +0100
+Message-ID: <20261125143844.588271050@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143822.072087159@linuxfoundation.org>
 References: <20261125143822.072087159@linuxfoundation.org>
@@ -67,44 +67,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Arnav Kapoor <kapoorarnav43@gmail.com>
+From: Salah Triki <salah.triki@gmail.com>
 
-commit b8ed9165906597b69a46fabf39ab41690721ebe8 upstream.
+commit 4d4e75b3074bc29525c963a81c19471528f29a45 upstream.
 
-sx9500_write_event_config() adjusts the channel and close/far user
-counts on every write, even when the event is already in the requested
-state. Writing 0 to a disabled event and then 1 leaves the counts at 0,
-so the channel and its interrupts stay off while the event reads as
-enabled. As channel_users[] is shared with raw reads, those can then
-wait forever for a conversion. Writing 1 twice and then 0 has the
-opposite effect.
+In mlx90614_probe_num_ir_sensors(), the check on chip_info->dual_channel
+is inverted.
 
-Return early when the state doesn't change, as
-sx_common_write_event_config() does.
+Currently, if dual_channel is true (MLX90614), the function returns 0
+immediately without checking op_eeprom_config1. This forces all MLX90614
+devices to be registered as single sensor (num_channels = 2), making the
+second object temperature channel inaccessible.
 
-Fixes: 4193c0f1d863 ("iio: driver for Semtech SX9500 proximity solution")
-Signed-off-by: Arnav Kapoor <kapoorarnav43@gmail.com>
+Conversely, if dual_channel is false (MLX90615), the function skips the
+early return and performs an unnecessary SMBus read on EEPROM CONFIG1 even
+though MLX90615 does not support dual channel operation.
+
+Fix this by negating the condition so that single-channel chips return
+early with 0, while dual-channel capable chips (MLX90614) proceed to read
+the EEPROM configuration register to detect whether 1 or 2 object channels
+are present.
+
+Fixes: 3d5ead238bc8 ("iio: mlx90614: Factor our register IO and constants into model specific descriptor")
+Signed-off-by: Salah Triki <salah.triki@gmail.com>
 Cc: stable@vger.kernel.org
 Signed-off-by: Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/iio/proximity/sx9500.c |    6 ++++++
- 1 file changed, 6 insertions(+)
+ drivers/iio/temperature/mlx90614.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/iio/proximity/sx9500.c
-+++ b/drivers/iio/proximity/sx9500.c
-@@ -548,6 +548,12 @@ static int sx9500_write_event_config(str
+--- a/drivers/iio/temperature/mlx90614.c
++++ b/drivers/iio/temperature/mlx90614.c
+@@ -569,7 +569,7 @@ static int mlx90614_probe_num_ir_sensors
+ 	const struct mlx_chip_info *chip_info = data->chip_info;
+ 	s32 ret;
  
- 	mutex_lock(&data->mutex);
+-	if (chip_info->dual_channel)
++	if (!chip_info->dual_channel)
+ 		return 0;
  
-+	/* The user counts must only change when the state does. */
-+	if (data->event_enabled[chan->channel] == state) {
-+		ret = 0;
-+		goto out_unlock;
-+	}
-+
- 	if (state) {
- 		ret = sx9500_inc_chan_users(data, chan->channel);
- 		if (ret < 0)
+ 	ret = i2c_smbus_read_word_data(client, chip_info->op_eeprom_config1);
 
 
