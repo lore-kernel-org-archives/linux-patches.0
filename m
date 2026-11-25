@@ -1,52 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795620614;
-	b=YIuwQw4KFAeb4GqGQIV3r+Ysq36Ifz8Q8PHmSr/vzguGbKON69Rugkf1wLpXYyUIVgR2
-	 C4VBemW1ksLL2JnF4K5EOE+uJO5Igx5cYD4xFG/UBq28gExckUPuaylZXfulYbwqFtnCG
-	 dUkftGdTh/420b3Bor6jFl8yvZmflqwyenu9yODaiDuG21Hi/f0Am73/19LM2E8ZblBlb
-	 CYNUa85vmcchPSTUeIv4HqylSuMa/0OFyj243fR2mEiGmjWBl2231ByCqoiY5bnEyArBQ
-	 q0OYJDvob5gNy5rD2+dx6CaKSgJiVgAfQt+ntpCpugMqX2bop5rzA/av06Ct0BdgXVg==
+	t=1795620617;
+	b=4jZlzWV/l80GCDJGZxipYgN+MDO1P9e36xDRHWdl1DNdYf6DeG+CIXNwHikXnA1gXlS4
+	 vTE1yFo2Dnk1O4C9asGGxzQr/7kuig3Fsb7eXwf56ExPZUWGkGaJG4UaYzOT6Xd1shlsE
+	 eWPKudC7l++8pDTCO3IXSp29xtzZ5USVEpV3gAk2MbVtJsYIZKNitwTVd0UdpVQQkNHw1
+	 P4eOKS8lqWY9Ewlcxjqx6ssWQOK1qLAOgC6X/SiKYrXMhxUy/Syxg2fV+Dt/AcooqvOQA
+	 jyvANJTC8jEyWyokRxsgYU59unAjjotQMLMeqpkX5n5vFH2XcIm5l3HDikCwP0cp7kA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795620614;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795620617;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=g4BRbyjax9qdgBfHYiQKM305LDrNfbKD4zEdRzL8MUA=;
-	b=Ijvl689zP0TK3AZJRfl2eh9TokQkp0eR8GgBQnOyGP4C81gSB46Nz4alrvU3vRspzNtY
-	 l/RTz+CCl7L/+/LDHM6ogocFkejjh6veECcY+xCNAEHRPRo1iB45uW9nxMAs7s1e0I3L+
-	 uwaZmCOwQBfE7JHpc2Mjkamhq69BA9UIeiueGLYjB65IMXHBkMa95+ADPnyzAmw/4r4Wd
-	 gjojHufuJMomOtvfwqyyFVXrFW2eH/kEPMi/lzZujw9cmXWNHKSXpxXmuQ423CpNO0TaT
-	 j/kyKdv5Ez0SC1uU71tLGP9FRD4h2THLOuGOp8hRDxc6bxojmjU0kPdwEwRdefLHeag==
+	bh=o98M6tJWcXcd4jGs9cw70Gftu+QCpqKE7/9ZRiEMDa0=;
+	b=EW1XoxlvuzRcr9Osb5/P6t6Dyzb1gxQ1L3qy0ToBL4weHoAsVmSsbPwtq/fgAFB5QtD/
+	 KZjivLlWw356ygj1jQ62dTBCQvwDgHfbeFUO4J456A7JylB53btCrJ91Qfotbtp+euij+
+	 C51xysF+OxtmWZMtlUcUq2VTeJC/fzaGABPgDOdPKykOjt0fiZETWa2oRx+DS9If6HPD3
+	 VNCeIiJrabuR3i4P7agNMwJDc7WeH8JScvRgiFzOZy3gNJmVaBMm0eCG9o1eEBrJRYMyz
+	 4e8f5u5+NJaC95tIuR+Uwc1t75xet66GboR0vwoK04cuIewKJTWN8/9uhAU96GIH0ew==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=0hDIRume;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=urwfxOhj;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 023C3606A321;
-	Wed, 25 Nov 2026 15:30:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EC894606A33E;
+	Wed, 25 Nov 2026 15:30:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=0hDIRume
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5647F1F000CA;
-	Wed, 25 Nov 2026 15:30:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=urwfxOhj
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1B4E31F000C6;
+	Wed, 25 Nov 2026 15:30:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795620613;
-	bh=g4BRbyjax9qdgBfHYiQKM305LDrNfbKD4zEdRzL8MUA=;
+	s=korg; t=1795620616;
+	bh=o98M6tJWcXcd4jGs9cw70Gftu+QCpqKE7/9ZRiEMDa0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=0hDIRume7UPTu9Hcf0itRnvocYICwADF+mAa/dId/YbjSAGOwyEMRiyyk4naA8BIz
-	 Ffdb2XjPYYLRZhZsQNJaWDE9Rh37FMTKbeXM62wi0fPVUTpXIHOjor34nLZy1Z1/tT
-	 PE1CgE+N5dl6xUdW1SPD7foMj6opVqvaHws3WRAQ=
+	b=urwfxOhjds8EZGG6aiTX1Mc4YZucps0uSNYr3+QgUu1UDxGDxqMxWMKoub/KEB1tc
+	 GkWiWexqfTf9XV7xz4EEBQFHi66OCMjTei+PLGZWovQHXwb5J489pMSef9xr9PVTWn
+	 C/s/ExckUdAgWrGSydeKVR4uDqKBTjGXiWTH5iUI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Srinivas Pandruvada <srinivas.pandruvada@linux.intel.com>,
-	Semyon Maryasin <simeon@maryasin.name>,
+	Vidhu Sarwal <vidhu.linux@gmail.com>,
 	Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>
-Subject: [PATCH 7.3 0974/1005] iio: hid-sensors: fix fractional part for unit exponents -7 and -8
-Date: Wed, 25 Nov 2026 15:38:32 +0100
-Message-ID: <20261125143844.481579676@linuxfoundation.org>
+Subject: [PATCH 7.3 0975/1005] iio: humidity: am2315: fix negative temperature decoding
+Date: Wed, 25 Nov 2026 15:38:33 +0100
+Message-ID: <20261125143844.503875419@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143821.729802100@linuxfoundation.org>
 References: <20261125143821.729802100@linuxfoundation.org>
@@ -68,47 +67,55 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Srinivas Pandruvada <srinivas.pandruvada@linux.intel.com>
+From: Vidhu Sarwal <vidhu.linux@gmail.com>
 
-commit 79c8dffd84e9784ec05bea68dbe5e71f7ec9941a upstream.
+commit 0a570feeca37d85fbfd6b4f6e3d9f33e1461c634 upstream.
 
-split_micro_fraction() scales the remainder to micro units by
-multiplying it by 10^(6 - exp). The unit exponent of a HID field goes
-down to -8, so exp can be 7 or 8 here. Then the argument of int_pow()
-is negative, which the unsigned parameter turns into a huge power of
-ten: 0 modulo 2^64. As a result, the fractional part of a value read
-from the hysteresis attributes is always reported as 0.
+The AM2315/AM2320 report temperature as a sign-magnitude value,
+with bit 15 as the sign and bits 14-0 as the magnitude.
+am2315_read_data() stores the raw value directly in an s16, causing
+negative temperatures to be interpreted as two's complement. Both the
+read_raw and the triggered buffer paths are affected.
 
-Divide by 10^(exp - 6) in these two cases. This matches the reverse
-conversion in convert_to_vtf_format().
+Decode the sign bit before storing the temperature value. Positive
+readings are unaffected.
 
-Fixes: 73c6768b710a ("iio: hid-sensors: Common attribute and trigger")
+Fixes: 366a3270c1c5 ("iio: humidity: Add support for AM2315")
+Signed-off-by: Vidhu Sarwal <vidhu.linux@gmail.com>
 Cc: stable@vger.kernel.org
-Signed-off-by: Srinivas Pandruvada <srinivas.pandruvada@linux.intel.com>
-Tested-by: Semyon Maryasin <simeon@maryasin.name>
 Signed-off-by: Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/iio/common/hid-sensors/hid-sensor-attributes.c |    7 ++++++-
- 1 file changed, 6 insertions(+), 1 deletion(-)
+ drivers/iio/humidity/am2315.c |   12 ++++++++++--
+ 1 file changed, 10 insertions(+), 2 deletions(-)
 
---- a/drivers/iio/common/hid-sensors/hid-sensor-attributes.c
-+++ b/drivers/iio/common/hid-sensors/hid-sensor-attributes.c
-@@ -98,9 +98,14 @@ static void simple_div(int dividend, int
- static void split_micro_fraction(unsigned int no, int exp, int *val1, int *val2)
- {
- 	int divisor = int_pow(10, exp);
-+	unsigned int rem;
+--- a/drivers/iio/humidity/am2315.c
++++ b/drivers/iio/humidity/am2315.c
+@@ -113,6 +113,7 @@ static int am2315_read_data(struct am231
+ 	 */
+ 	u8 rx_buf[8];
+ 	u16 crc;
++	u16 temp_raw;
  
- 	*val1 = no / divisor;
--	*val2 = no % divisor * int_pow(10, 6 - exp);
-+	rem = no % divisor;
-+	if (exp > 6)
-+		*val2 = rem / (unsigned int)int_pow(10, exp - 6);
-+	else
-+		*val2 = rem * int_pow(10, 6 - exp);
- }
+ 	/* First wake up the device. */
+ 	am2315_ping(data->client);
+@@ -144,8 +145,15 @@ static int am2315_read_data(struct am231
  
- /*
+ 	sensor_data->hum_data = (rx_buf[AM2315_HUM_OFFSET] << 8) |
+ 				 rx_buf[AM2315_HUM_OFFSET + 1];
+-	sensor_data->temp_data = (rx_buf[AM2315_TEMP_OFFSET] << 8) |
+-				  rx_buf[AM2315_TEMP_OFFSET + 1];
++
++	/*
++	 * Temperature is sign-magnitude, not two's complement:
++	 * bit 15 is the sign, bits 14-0 are the magnitude (x0.1 degC).
++	 */
++	temp_raw = (rx_buf[AM2315_TEMP_OFFSET] << 8) |
++		   rx_buf[AM2315_TEMP_OFFSET + 1];
++	sensor_data->temp_data = (temp_raw & 0x8000) ?
++				  -(temp_raw & 0x7fff) : temp_raw;
+ 
+ 	return ret;
+ 
 
 
