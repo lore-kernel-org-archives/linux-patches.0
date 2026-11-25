@@ -1,51 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795625981;
-	b=zIU6lE5BTuQFuSPbZNUeLLrFs+019DPC67uhr7uPmaB8EWrgDY7q++cibxzyefwGtgBD
-	 bp1qIaDH4nH2k6uVuxA+qWkyAFYQsrAJa264r2lO7mglSmlL7cKUuNCIo306Nnrhr5h4R
-	 +i6MHG/fGac4s0iWebS2wJsmNJTPaNUkTGSIq8X8ovN035A3cMaAtK5+sGld9tiN3DJsP
-	 9+pVeciyzUjQpwRK+r2793udedcbvGwSKRk8ictTa+XqVmS97wgSayO0BOtEFZeg9WYCx
-	 XvK+ppQCLaN2ze/ftHTYr0+24iv8+JMEObQPrNr6bMloQj+mnQDMmK/luO14rHr/XIg==
+	t=1795625984;
+	b=WdA923RXO4kgr0dZIvJrSe9cgFfZiX0hAmngjmHePRsETep/GylOFVL+v5C+zGECt5i/
+	 hNxlLKUDY7f/OGibiuPJ4qEdIP/42b7n/bFud8cV8cbCMXzcOJ8l+8QOqRygYKCHS9IZn
+	 55G9/exx8IXX3Z0aefIubYOwV7B2kuhMIow6hMY+1vzbKAgK4eEs7/Dwwd8tLXWheCrls
+	 nS0PDOZNZGcRYmIJ7AaJDKJUw5cRw7oOdn4g6CyRIApvpIi7wCvqm7Krrg6UQD8OTQFcM
+	 5tT3gVx2hU/7fuLW85DE5vc5+c6Lqewd7BSohSsU1JMVOVPdek8xyUDipGxAS4hkUzg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795625981;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795625984;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=pSC5nswjpSstnTnjfA0u8emZWVUT3jMv2x02BvUJrcU=;
-	b=xeRlnpUA5tlFkWUhlRdkfU8KZdk2Q3Iuk7LEnPQ0cP68STHxhGhgB9u1OB7/VDf+Hsmu
-	 EwWBNGQKcDsxg2bIyp/D4N9Tco79ioGh3p8Q6YdeIg8bbP6VQWoa8NBt5if0WNHde5nHk
-	 AdM725iMASnqPtYHFv08uofnkxW0wzIPkgeXHypR9uZE0jPRwBDozgWh0jRaKxeS/pJC8
-	 UnTh5FwHa66Umq4Pp3Elx0MObmI9vZeAEmZFXr5vG23ilhEt4oguSDyEWmQTZOFE/hffR
-	 W3PRhdKvuW5BgiZJBPMIOTJL0WvkZIMZOxbH6CdW51EsaLVXeTtvuuXI2PhW2wOpGYQ==
+	bh=MWMzctNGx2RSRu2X3nKxVumPkpg2Ln2o1sVtZ7YJ1Tc=;
+	b=WorUgDXk/uRYyysJnzIrgQ3JKPm7x5DfzmJ9ALXN7W6AwUEVVRSe4/GRGMQy9vEsCWLq
+	 r3OaoHcHbFM7K3nKgS0AqiC70oMgpPwKPNFwFp2/FN2WKE9B2XDQ4LjgaVU73NwXa8JUG
+	 KshVEM7oUavEJ8HeEr/0SItDAej/kNPwHDyo742e1Yvx3d70PNVLCCShwEmgzO9T5tHi5
+	 FnKrtSTvY3l6mtildkI3HU/vdEsln2YtITDeWwpu/hadA9Zd+BMUZMF9oeNCp2nhbI296
+	 C98dvGgSW/ZzUri9LcZH01Xw/PYHcwvzVS8gsF9vQin0SqHOuuq4ce7aYwISQNpYfCA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=g1d8ecqI;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=gBCJgpjH;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 034A7606A31E;
-	Wed, 25 Nov 2026 16:59:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5081D606A326;
+	Wed, 25 Nov 2026 16:59:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=g1d8ecqI
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D70D51F000CF;
-	Wed, 25 Nov 2026 16:59:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=gBCJgpjH
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2943D1F000C0;
+	Wed, 25 Nov 2026 16:59:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795625980;
-	bh=pSC5nswjpSstnTnjfA0u8emZWVUT3jMv2x02BvUJrcU=;
+	s=korg; t=1795625983;
+	bh=MWMzctNGx2RSRu2X3nKxVumPkpg2Ln2o1sVtZ7YJ1Tc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=g1d8ecqIzHY45mV64ZOyVcc1NO52Us0WYFXDQiUgWspT7HfbVmIk9ftnpyQqQy0xj
-	 6vonQK1Z8vV08tVwqgxA6Hvo3amWGQ8AJNy0D5rPSBe055FMAWomkhxJbC5QGuKU8o
-	 4rTyqgKMlu+XKPnWs3BkXkdH8O5FPzdnq4tJ4rSk=
+	b=gBCJgpjHbgnQBoiS86FrE4sKB4rSFi6iE5uv4Szo+N5groun71JsYBjiFW+/Nu5k/
+	 Q1i5NoMLViFiLP9gSAKA+P+EBhdJnYY1to7EIxr0q6D08HrC4x7Wm7wsBBGjFNyC2v
+	 76tD9LFGVrD20jMecEoPiBQq70noXDAOYNklqrkM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shao Mingyin <shao.mingyin@zte.com.cn>,
+	Yaohan Li <shunsheng1218@gmail.com>,
 	Mikulas Patocka <mpatocka@redhat.com>
-Subject: [PATCH 6.12 691/816] dm log userspace: drop the device reference on error
-Date: Wed, 25 Nov 2026 15:37:19 +0100
-Message-ID: <20261125143905.180207880@linuxfoundation.org>
+Subject: [PATCH 6.12 692/816] dm: avoid double-dropping the zone reset submission reference
+Date: Wed, 25 Nov 2026 15:37:20 +0100
+Message-ID: <20261125143905.203441991@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143849.205329330@linuxfoundation.org>
 References: <20261125143849.205329330@linuxfoundation.org>
@@ -67,49 +67,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: shao.mingyin@zte.com.cn <shao.mingyin@zte.com.cn>
+From: Yaohan Li <shunsheng1218@gmail.com>
 
-commit 0550d3b14e008b033b02cfce668008ec6addffe4 upstream.
+commit c4965effbe15f837a8089e79c0fc17ab19363cce upstream.
 
-userspace_ctr() takes a reference on the log device with
-dm_get_device().  When the integrated-flush workqueue allocation fails it
-jumps to the shared error path, which frees the log context without
-dropping that reference, so the device stays busy and cannot be removed.
+On an error in __send_zone_reset_all(), the submission reference
+held by the dm_io can be decremented there and again by the caller's
+error path. If another clone is still outstanding, the second drop
+can release the dm_io before that clone completes.
 
-userspace_dtr() drops the reference correctly; do the same here.
+Only drop the submission reference in __send_zone_reset_all() on
+success. On failure, leave the reference for the caller's existing
+error handling to release once.
 
-Fixes: 5066a4df1f42 ("dm log userspace: allow mark requests to piggyback on flush requests")
+The error path was reproduced under KASAN with an injected GFP_NOIO
+allocation failure while another zone-reset clone remained in
+flight. With the change, the same failure was reported normally,
+without the observed use-after-free, and ordinary zone resets
+continued to work.
+
+Fixes: 81e7706345f06 ("dm: handle REQ_OP_ZONE_RESET_ALL")
 Cc: stable@vger.kernel.org
-Signed-off-by: Shao Mingyin <shao.mingyin@zte.com.cn>
+Assisted-by: ZCode:GLM-4
+Signed-off-by: Yaohan Li <shunsheng1218@gmail.com>
 Signed-off-by: Mikulas Patocka <mpatocka@redhat.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/md/dm-log-userspace-base.c |    6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+ drivers/md/dm.c |    9 +++++++--
+ 1 file changed, 7 insertions(+), 2 deletions(-)
 
---- a/drivers/md/dm-log-userspace-base.c
-+++ b/drivers/md/dm-log-userspace-base.c
-@@ -294,9 +294,11 @@ static int userspace_ctr(struct dm_dirty
- 		}
- 		r = dm_get_device(ti, devices_rdata,
- 				  dm_table_get_mode(ti->table), &lc->log_dev);
--		if (r)
-+		if (r) {
- 			DMERR("Failed to register %s with device-mapper",
- 			      devices_rdata);
-+			goto out;
-+		}
+--- a/drivers/md/dm.c
++++ b/drivers/md/dm.c
+@@ -1945,8 +1945,13 @@ static blk_status_t __send_zone_reset_al
+ 			break;
  	}
  
- 	if (lc->integrated_flush) {
-@@ -314,6 +316,8 @@ static int userspace_ctr(struct dm_dirty
- out:
- 	kfree(devices_rdata);
- 	if (r) {
-+		if (lc->log_dev)
-+			dm_put_device(lc->ti, lc->log_dev);
- 		mempool_exit(&lc->flush_entry_pool);
- 		kfree(lc);
- 		kfree(ctr_str);
+-	/* Release the reference that alloc_io() took for submission. */
+-	atomic_sub(1, &ci->io->io_count);
++	/*
++	 * Release the reference that alloc_io() took for submission. On error,
++	 * that reference was not consumed: dm_split_and_process_bio() releases
++	 * it on the error path, so do not release it here a second time.
++	 */
++	if (sts == BLK_STS_OK)
++		atomic_dec(&ci->io->io_count);
+ 
+ 	return sts;
+ }
 
 
