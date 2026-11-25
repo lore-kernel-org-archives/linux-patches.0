@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795618136;
-	b=ELmXG+RRLwEaeMX6goX5W4FPFvDqc20u3Uda/0XAKNmFbh0OWWzsuOzvmBvVcXvIS88Z
-	 lhrW2pEGk/fVLEu2NyWfXJ6rPPhSQTwejy9Fm+5QHo/jyCi9gXgLIskUgN4O3FAvwT1TD
-	 MwhJ1a646Q2QST97CGCfRTU1o0hDrQDhLcTqWDmv9CeXxSII7S8xwyZPQjGDPMjLyb6YA
-	 3zWryMvDVxiysSCo6cYtB7VWpbTxezNcBd5uAkrChA7Dn5nT0yITWE2k4zbpiuunxPzjS
-	 sgGPHWLaYt/Apk2vGHop76NHp9fy1a/7aTyDA6ws7uKTUwWHclC6ddjvAALIHuIp2Cg==
+	t=1795618139;
+	b=ow+K+3F5Cq4YQehei/B1XFpTZPbA8cgYbxjADIconb7BdJq0hWFQaDvyJyxp9WA9xpCO
+	 Cm+kngmt3GnWzV2fzU+fUD7aMSe1B3pkEFJd9r5U+zVrwGCh+fefi0Ya0qIzlrgdST94T
+	 OBsxVq4vv5gBugCjh0/8Xti8EFxzTqg2eK3mzrxqvcl9QUYAgzQGj38n1R5rYUJqUfKlz
+	 A0hzSJc144ZSkldAVGnn9il8jApfF9R/NI75P71GJHW+00GOsPq2qMw68dt5JxQV0citW
+	 /1mBsSbvz2LWLm8FpqmkBFN5uRpyUTbHX8EfjIp84IMMHY1BS81pCWIvqwklHzPGHdw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795618136;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795618139;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=6VO8ujGMQHblkuWVRzu6j/vSyMk3q5hTX+YY3+bxxXU=;
-	b=k7PYxwUbZCjkaJX2q/Z3u/a614eBletrTZh/NzaIVWq4lmVYyIEQxfgKkBoLlxdyCTnM
-	 nBIHfc99pp9DurI6fGk1SIrz5ck0BeCTXodXMAHLbIcKBYIp15xCg9/Fr2idKuNd5jf0i
-	 kfE+F1G5v4+vz5xzKju9Aum+300hTsk1g7oIv73yPjoisuZzwFL0qEo19+n6AgQvoGZDo
-	 Buhva4jzoqJ1KLOUJ+R4tb78MlcdKSHnZLBOxX0r25LTku5dqiAgTpCCIvwS5tvchRSsk
-	 vT5UU9Lr8v5yDZQdrfnGyTC4N/K0dKu/OYzh2nlZzpKCRChEKoYOnWm/S1BMlHEj2xA==
+	bh=kdLgMINmQAyMdVbvm14NY6g6g+eLFb5UL+Ivq/MyABA=;
+	b=hlWIxrTCft14tkBmEgfPbE9bZmSqxGETA2zcVKzBq0m/GzHFJUiC31JXluTj8bp+Niib
+	 W+cMfqswE4jrkRGN7JmI5633XGZwrAECtBhSg91eWRUmMAx5edW1uX5hVI3UB9nwlU7gn
+	 8/gTfLb72haKyyhuUHFxM5PkhFOi/dKaLVuh75c/hBLV/nSxPNtFbF/Wz/wN2CGBeupln
+	 sZlRXKT8pVwHtpKfri693kFSbQ588ydWVfum9PHxHgbiTx5vsJaeHNumTGms5gWC02kJx
+	 WPLUXK9uPIbRF7hobIaZbaDGOAgVP2SyjS1giGKHNiDDYO6yh2x2pQ0GLUlk87zluLA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=gO7qI1YU;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=rehQv1Tc;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 49502606A31E;
-	Wed, 25 Nov 2026 14:48:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2045B606A31E;
+	Wed, 25 Nov 2026 14:48:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=gO7qI1YU
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 45FD81F000C6;
-	Wed, 25 Nov 2026 14:48:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=rehQv1Tc
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 70DA11F000C6;
+	Wed, 25 Nov 2026 14:48:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795618135;
-	bh=6VO8ujGMQHblkuWVRzu6j/vSyMk3q5hTX+YY3+bxxXU=;
+	s=korg; t=1795618139;
+	bh=kdLgMINmQAyMdVbvm14NY6g6g+eLFb5UL+Ivq/MyABA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=gO7qI1YU/fe+p/Uuea2h828f0WBcEd54tr5kG+2KOiRhEYa7DQVYPaLOHpvdhGtkU
-	 mK16e64T6V/gzV6wpQ0HHFdspQDQ3mM4I57LEsJFnLVXBFAFd1ee4tnvHPD2gecxx5
-	 Um8BBzDqiBsREvVxkIRgklJ58Qi00s/toXIMpnAs=
+	b=rehQv1Tc+pEIQCQC7wTgCKoWgkYg15BBKbubIWjsq03eewFbs013/3elhGv+jWye2
+	 YfNIUdHPk56RsXx0YlZbgOgFDzA33b/WYf20GUwvC2VOFa45LqMSj1JRl1SX6D0qQP
+	 TmDmyP+fGbzSh+BRnYO71FyMVEBgplfvKwxshLRA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Guangshuo Li <liguangshuo@mail.sdu.edu.cn>,
-	Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>,
+	Alexandre Mergnat <amergnat@baylibre.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0167/1005] gpio: mpc8xxx: Fix potential use-after-free of IRQ domain
-Date: Wed, 25 Nov 2026 15:25:05 +0100
-Message-ID: <20261125143825.654676301@linuxfoundation.org>
+Subject: [PATCH 7.3 0185/1005] regulator: mt6363: Use 8-bit register values
+Date: Wed, 25 Nov 2026 15:25:23 +0100
+Message-ID: <20261125143826.076043712@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143821.729802100@linuxfoundation.org>
 References: <20261125143821.729802100@linuxfoundation.org>
@@ -68,89 +68,72 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Guangshuo Li <liguangshuo@mail.sdu.edu.cn>
+From: Alexandre Mergnat <amergnat@baylibre.com>
 
-[ Upstream commit 9e4b35c95fede87bad36f68b7ff1eae94ea6b910 ]
+[ Upstream commit 7318d3833067e4edb7c2a9bc244e8818b1597ff2 ]
 
-GPIO chip cleanup can call the to_irq callback while releasing requested
-GPIOs. Removing the IRQ domain first leaves that callback using a freed
-domain, both on removal and after an IRQ request failure.
+The registers are 8 bits wide, but the regulator regmap uses 16-bit
+values, so every access also covers the next register. On little-endian
+CPUs, each regmap_write() also writes zero to the next register:
+disabling VS2 or a VBUCK rail through its clear register 0x212 also
+clears the enable bits of VS1, VS3 and three VSRAM rails in 0x213.
 
-Register domain cleanup before GPIO chip registration so devres removes
-the chip before freeing the domain.
+Change the regmap values to 8 bits. Store the BUCK and TMA keys as
+__le16 so that the low byte goes to the first key register on any CPU,
+as it did on little-endian CPUs.
 
-This issue was found by our static analysis tool under development.
-
-Fixes: 257e10752c13 ("gpio: mpc8xxx: Use of_mm_gpiochip_remove")
-Signed-off-by: Guangshuo Li <liguangshuo@mail.sdu.edu.cn>
-Link: https://patch.msgid.link/a4fec7fe970d6fc9135b488f57ba7e145b809359.1793377433.git.liguangshuo@mail.sdu.edu.cn
-Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
+Fixes: 3c36965df808 ("regulator: Add support for MediaTek MT6363 SPMI PMIC Regulators")
+Signed-off-by: Alexandre Mergnat <amergnat@baylibre.com>
+Link: https://patch.msgid.link/20261102-rgp-67-mt6363-regulator-fixes-v1-1-420789a3113e@baylibre.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpio/gpio-mpc8xxx.c | 22 +++++++++++++++-------
- 1 file changed, 15 insertions(+), 7 deletions(-)
+ drivers/regulator/mt6363-regulator.c | 11 ++++++-----
+ 1 file changed, 6 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/gpio/gpio-mpc8xxx.c b/drivers/gpio/gpio-mpc8xxx.c
-index a6868f6738315..605393d3c9920 100644
---- a/drivers/gpio/gpio-mpc8xxx.c
-+++ b/drivers/gpio/gpio-mpc8xxx.c
-@@ -319,6 +319,14 @@ static const struct of_device_id mpc8xxx_gpio_ids[] = {
- 	{}
- };
+diff --git a/drivers/regulator/mt6363-regulator.c b/drivers/regulator/mt6363-regulator.c
+index e56a2f0dd7778..52220117ce249 100644
+--- a/drivers/regulator/mt6363-regulator.c
++++ b/drivers/regulator/mt6363-regulator.c
+@@ -384,7 +384,7 @@ static unsigned int mt6363_regulator_get_mode(struct regulator_dev *rdev)
  
-+static void mpc8xxx_irq_domain_remove(void *data)
-+{
-+	struct mpc8xxx_gpio_chip *mpc8xxx_gc = data;
-+
-+	if (mpc8xxx_gc->irq)
-+		irq_domain_remove(mpc8xxx_gc->irq);
-+}
-+
- static int mpc8xxx_probe(struct platform_device *pdev)
+ static int mt6363_buck_unlock(struct regmap *map, bool unlock)
  {
- 	const struct mpc8xxx_gpio_devtype *devtype = NULL;
-@@ -405,6 +413,11 @@ static int mpc8xxx_probe(struct platform_device *pdev)
- 						       mpc8xxx_gc->regs + GPIO_DIR);
- 	}
+-	u16 buf = unlock ? MT6363_BUCK_TOP_UNLOCK_VALUE : 0;
++	__le16 buf = cpu_to_le16(unlock ? MT6363_BUCK_TOP_UNLOCK_VALUE : 0);
  
-+	/* GPIO chip cleanup still needs the IRQ domain. */
-+	ret = devm_add_action_or_reset(dev, mpc8xxx_irq_domain_remove, mpc8xxx_gc);
-+	if (ret)
-+		return ret;
-+
- 	ret = devm_gpiochip_add_data(dev, gc, mpc8xxx_gc);
- 	if (ret) {
- 		dev_err(dev,
-@@ -437,7 +450,7 @@ static int mpc8xxx_probe(struct platform_device *pdev)
- 	if (ret) {
- 		dev_err(dev, "failed to devm_request_irq(%d), ret = %d\n",
- 			mpc8xxx_gc->irqn, ret);
--		goto err;
-+		return ret;
- 	}
- 
- 	ret = devm_device_init_wakeup(dev);
-@@ -445,19 +458,14 @@ static int mpc8xxx_probe(struct platform_device *pdev)
- 		return dev_err_probe(dev, ret, "Failed to init wakeup\n");
- 
- 	return 0;
--err:
--	irq_domain_remove(mpc8xxx_gc->irq);
--	return ret;
+ 	return regmap_bulk_write(map, MT6363_BUCK_TOP_KEY_PROT_LO, &buf, sizeof(buf));
  }
+@@ -485,7 +485,8 @@ static int mt6363_regulator_set_load(struct regulator_dev *rdev, int load_uA)
  
- static void mpc8xxx_remove(struct platform_device *pdev)
+ static int mt6363_vemc_set_voltage_sel(struct regulator_dev *rdev, unsigned int sel)
  {
- 	struct mpc8xxx_gpio_chip *mpc8xxx_gc = platform_get_drvdata(pdev);
+-	const u16 tma_unlock_key = MT6363_TMA_UNLOCK_VALUE;
++	const __le16 tma_unlock_key = cpu_to_le16(MT6363_TMA_UNLOCK_VALUE);
++	const __le16 tma_lock_key = cpu_to_le16(0);
+ 	const struct regulator_desc *rdesc = rdev->desc;
+ 	struct regmap *regmap = rdev->regmap;
+ 	unsigned int range, val;
+@@ -542,8 +543,8 @@ static int mt6363_vemc_set_voltage_sel(struct regulator_dev *rdev, unsigned int
  
--	if (mpc8xxx_gc->irq) {
-+	if (mpc8xxx_gc->irq)
- 		irq_set_chained_handler_and_data(mpc8xxx_gc->irqn, NULL, NULL);
--		irq_domain_remove(mpc8xxx_gc->irq);
--	}
+ lock_tma:
+ 	/* Unconditionally re-lock TMA */
+-	val = 0;
+-	regmap_bulk_write(rdev->regmap, MT6363_TOP_TMA_KEY_L, &val, 2);
++	regmap_bulk_write(rdev->regmap, MT6363_TOP_TMA_KEY_L,
++			  &tma_lock_key, sizeof(tma_lock_key));
+ 
+ 	return ret;
  }
- 
- static int mpc8xxx_suspend(struct device *dev)
+@@ -814,7 +815,7 @@ static struct regmap *mt6363_spmi_register_regmap(struct device *dev)
+ {
+ 	struct regmap_config mt6363_regmap_config = {
+ 		.reg_bits = 16,
+-		.val_bits = 16,
++		.val_bits = 8,
+ 		.max_register = 0x1f90,
+ 		.fast_io = true,
+ 	};
 -- 
 2.53.0
 
