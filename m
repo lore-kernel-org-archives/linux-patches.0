@@ -1,51 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795619352;
-	b=F7rFftbKEMYF3OZUIuI5cJPSU7JYLOZPLXNSNvIb1GQnuSvyM2qunBPYayVoDELzi2iS
-	 ALWsF5VYubDgG3V3W7IzQo+I5Ud/ntHSB4D0+IesJiKMkwlx6H0zNryFCIFpFKtFlvpx7
-	 pzZbrdP0E6yMjoJSISzV6MxxrE85I5xC0sjKEJ/hq2x2QoeMC8DfeA3OkXrLjAN2YkejV
-	 LszL7NTFZED5pbrIU8OBmuOPHRB0pw4Rp5dAlkHAX5q2FO63OnSaOrFEJuoJyaXvH5spc
-	 K4VkKDMDoBFGE1Ffm6kWL6tIpg3PhriEt+3hzcdcF1F6Ki/78zy28eRM0LWlTxEdB5A==
+	t=1795619356;
+	b=Rx2W44gqcTU6u6L4uqGRIPntNtYL76fBgwfKOJgQ4SqB7FHIY6oAkjBmknbo/Am0gVkz
+	 8/wEOrGgW0DbWdX5ODNERz9DIkkssPCI9Zs2wMvDx5N6MUMc2Ypqf6hL8rc9PupYoKScL
+	 LVfRXTLUWUSiEqeu06hhhE8wTmDdAaxhdQOGV6WXaKXqZrCMyhfz2w6Pvof6vny33D6Ep
+	 BLRP8H8CGyFOL9GX83U7gyqVBSgthI3gKspLrJ0CtL4TDiCX8Iqpr5TMfLpQwgn2yF2Pe
+	 cS8+tDKt63kui6lfWyWi557nOYbvRZlP3sxNJc1s2dMjEL2grpC6TAOE7SPRZh3Huyw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795619352;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795619356;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=EhAZ0ygHDqkszNY3O3LGar9tlPJCMwbNyeo4tJv7720=;
-	b=KSwA9Y92usp4N6LFt4p8acbWip0rqfFJ9VQV53rhuwfQTsHDM5pIVDmHQTz1mBPXxVpu
-	 WEOg7mkcd1dQgEDF7T26c11npdZlcBq4day+lECoPgECdi0VdOu0ZAyFFs9J4jR7ymCJn
-	 Bfdo1hH6VwBNzk4ey6YHTWLKd7VOl3CUSzgActG3x7jcfYSgxK/JsFxdgFA/zjZrC4hj4
-	 fzFQUZ5GXlrEtM5iBJsyEZImoZ52WHzh4XL3HqnZBs4wPLzPuPPdBB3Z/GFFBLRGeekxd
-	 aSdXqMR5/fi41tz4BoI5CDxk8c3osT5M4UPAD3w5KnzgUCxQU4RbCqL+9FcKQ+Yr/GA==
+	bh=JL77zS4VNECsc7XkWOxsO3UGn9Er5K3Ll5YhWCQ/X4c=;
+	b=uhFCMkPd57sMUmVJ+Ggq4xgum2F1S3zNbtaR/QP93pIoC2tr+KB/CXWfadphhNz7A2ks
+	 fbhxtmMpy/4DZEqo8+IifE1rp8cRJsx9lK2LfvPjHZHG3wpDinOrRzAJHD5+YBs6VAhSe
+	 ihOV/qsRwD+aveIpd5GrhAumtgGIBO49rW8Eehx6uGpVZZPT49a3hK5Fnprdiz6cmQ/Sf
+	 DIY5i2V7bTVa+mXehTQLfHc1NK8V6UVF96MKSiXppq0I/ukWdVsXGnUqQIsHClMpA3rp+
+	 xMHmwUhVHIdena8QCd0np5YvNIDEwNlJMcWqISmoGe8IRPzIen0zw0IZYAHkFffFY+Q==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=R147OSJp;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=qnayEiRB;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4E24C606A31E;
-	Wed, 25 Nov 2026 15:09:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E09B6606A321;
+	Wed, 25 Nov 2026 15:09:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=R147OSJp
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 834DF1F000C4;
-	Wed, 25 Nov 2026 15:09:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=qnayEiRB
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D13A01F000C4;
+	Wed, 25 Nov 2026 15:09:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795619352;
-	bh=EhAZ0ygHDqkszNY3O3LGar9tlPJCMwbNyeo4tJv7720=;
+	s=korg; t=1795619355;
+	bh=JL77zS4VNECsc7XkWOxsO3UGn9Er5K3Ll5YhWCQ/X4c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=R147OSJpRXO032ISz71reFq2gTSLuzZ6ZViod7+yEBHghz8AHWoW/8FeQ8MZzUWmh
-	 Xf+DdfTNB4+nrwGGuHPMMfqGGHOCMHvoX4OsFqy6rkBS6LNVltYvMDC+3vwt2N00Pn
-	 lai3uJkrr6Cbej2xTs1MWzuGdqiSZpBdcYXFVTJ8=
+	b=qnayEiRBt8IvOyw8u/PDhVNL2u4bOi67vwH8bbxJ66tK0t6W32xFN526v8hUU+QKU
+	 8IE/reNiGb+yoikG/q3JnsR2c75KTtsna3Q0PWx2xy7oV6MzRqKrpQXTbiaQQ8qkNL
+	 EVFUjNCQ8CpY0aAUC9fLtX3KYfDaXdsjjMLAGMe0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Gichoon Han <gichoon.han@samsung.com>,
+	Andrew Davison <andy@dvsn.net>,
 	Takashi Iwai <tiwai@suse.de>
-Subject: [PATCH 7.3 0569/1005] ALSA: usb-audio: Drop capture packets with bogus actual_length
-Date: Wed, 25 Nov 2026 15:31:47 +0100
-Message-ID: <20261125143835.080164914@linuxfoundation.org>
+Subject: [PATCH 7.3 0570/1005] ALSA: hda: Fix [codec] ID matching in patch files for IDs with bit 31 set
+Date: Wed, 25 Nov 2026 15:31:48 +0100
+Message-ID: <20261125143835.103245023@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143821.729802100@linuxfoundation.org>
 References: <20261125143821.729802100@linuxfoundation.org>
@@ -67,61 +67,61 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Gichoon Han <gichoon.han@samsung.com>
+From: Andrew Davison <andy@dvsn.net>
 
-commit eed0e9583a290e6adbe3a8480bdae911f31e1ed9 upstream.
+commit fda103c1432f344e1cd548f346d157b1e67ee7c5 upstream.
 
-retire_capture_urb() copies urb->iso_frame_desc[i].actual_length bytes
-out of urb->transfer_buffer at the packet's offset, but never checks
-that value against the requested packet length.  A host controller
-reporting more data than requested makes memcpy() read past the end
-of the URB transfer buffer.
+parse_codec_mode() reads the vendor and subsystem IDs of a patch file's
+[codec] line into an int, and skips the check when the value is zero or
+negative, as documented. An ID with bit 31 set, such as SigmaTel's
+0x8384xxxx or Intel's 0x8086xxxx, comes out negative, so it is taken as
+a wildcard and the section is applied to every codec instead of the one
+it names.
 
-Commit 06be918062ad ("ALSA: usb-audio: Bound packet copies by the PCM
-buffer size") clamps the count to the PCM ring buffer size, which
-protects the destination.  The source slot is only ep->curpacksize
-bytes per packet, though, so the over-read remains.
+This was seen on an OpenPeak OpenFrame 2 with an IDT 92HD75B2X5
+(0x111d7608). A patch file written for the STAC9202 (0x83847632) in the
+related OpenFrame 1 was applied to it, swapping the headphone and
+speaker pin configurations, so auto-mute never muted the speaker.
 
-This was hit on an ARM32 system (vendor 5.4 kernel; the code path is
-unchanged in mainline) with a full-speed UAC1 microphone behind a
-high-speed hub, i.e. the EHCI siTD path.  sitd_complete() computes
-actual_length as desc->length - SITD_LENGTH(t); the controller
-reported a remaining length larger than the programmed one, the value
-wrapped to ~4G, and the capture copy faulted on the first unmapped
-page after the URB buffer:
+Read the IDs as long long, so real IDs are compared exactly. Values
+written as negative numbers (e.g. -1) still act as wildcards, as
+documented; a hex value such as 0xffffffff is now compared as written.
 
-  Unable to handle kernel paging request at virtual address e8756000
-  Internal error: Oops: 7 [#1] PREEMPT SMP ARM
-  r3 : 00000000  r2 : 0001e700  r1 : e8756000  r0 : e878fc80
-  Code: ba000002 f5d1f03c f5d1f05c f5d1f07c (e8b151f8)
+Tested on 6.18.60 on an OpenFrame 2, with a rebuilt snd-hda-codec and
+the STAC9202 patch file: user_pin_configs stays empty for the IDT codec,
+and the headphone and line-out pins are assigned as the BIOS sets them.
+Not tested on a STAC9202 itself.
 
-A packet can never legitimately carry more than its requested length,
-so warn and skip it instead of copying.
+The bug was tracked down and this fix written with an AI coding
+assistant (Claude Code, Claude Opus 5.5), which also ran the tests
+above. I have reviewed the change and the tests.
 
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Fixes: ef940b0403d4 ("ALSA: hda - Allow patching with any vendor/subsystem ids")
 Cc: stable@vger.kernel.org
-Signed-off-by: Gichoon Han <gichoon.han@samsung.com>
-Link: https://patch.msgid.link/20261110060021.2146383-1-gichoon.han@samsung.com
+Signed-off-by: Andrew Davison <andy@dvsn.net>
+Link: https://patch.msgid.link/20261106175518.18629-1-andy@dvsn.net
 Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/usb/pcm.c |    6 ++++++
- 1 file changed, 6 insertions(+)
+ sound/hda/common/sysfs.c |    5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
---- a/sound/usb/pcm.c
-+++ b/sound/usb/pcm.c
-@@ -1337,6 +1337,12 @@ static void retire_capture_urb(struct sn
- 					    "frame %d active: %d\n", i,
- 					    urb->iso_frame_desc[i].status);
- 		bytes = urb->iso_frame_desc[i].actual_length;
-+		if (unlikely(bytes > urb->iso_frame_desc[i].length)) {
-+			dev_warn_ratelimited(&subs->dev->dev,
-+					     "packet %d: actual_length %u exceeds length %u, dropping\n",
-+					     i, bytes, urb->iso_frame_desc[i].length);
-+			continue;
-+		}
- 		if (subs->stream_offset_adj > 0) {
- 			unsigned int adj = min(subs->stream_offset_adj, bytes);
- 			cp += adj;
+--- a/sound/hda/common/sysfs.c
++++ b/sound/hda/common/sysfs.c
+@@ -512,11 +512,12 @@ static inline int strmatch(const char *a
+ static void parse_codec_mode(char *buf, struct hda_bus *bus,
+ 			     struct hda_codec **codecp)
+ {
+-	int vendorid, subid, caddr;
++	long long vendorid, subid;
++	int caddr;
+ 	struct hda_codec *codec;
+ 
+ 	*codecp = NULL;
+-	if (sscanf(buf, "%i %i %i", &vendorid, &subid, &caddr) == 3) {
++	if (sscanf(buf, "%lli %lli %i", &vendorid, &subid, &caddr) == 3) {
+ 		list_for_each_codec(codec, bus) {
+ 			if ((vendorid <= 0 || codec->core.vendor_id == vendorid) &&
+ 			    (subid <= 0 || codec->core.subsystem_id == subid) &&
 
 
