@@ -1,52 +1,50 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795620381;
-	b=C5DKA/KtkDnBZwga8/Jqd7MtGRVmOfO0pM83QMrXKcH3rqgCa7Q9djnzq+DoadQjdgB0
-	 suJLON13LLGiKCUXOagMRNW8Qt2YiIzlLmbN7JArkNY1S3JN7eZxLR7fyO/8H6gLmZd/O
-	 ngS49j8cWnbq4EO6DVXlMTObsfNgtykp/BSrfXOooaPNGhI4ncQV/5q5DNJlMTVoyLDhU
-	 e7P86wKReoCTYc77nabNwRKyQUp2wvqD5TDaVCrEELgHPbOKVmdoT9NJpCDpiJp6/oI0T
-	 PJsQQDtIT4AJ+iNJ7se8qyB5bUjdU+Idtz6HRAS3xA/tndv/LnKpwzjb/2J6sroEaJQ==
+	t=1795620384;
+	b=lvPJqLEuZqqdgllBBT5jFjTG17eQFPPBOCoIAl1xA6phG0gaegAebi+rThornRK3wGFv
+	 asiDusI5C8dM7GhpSbFnLAhc/H3M1rt/LWMUwEA+5uoorTwNxeZNxLpoWH7bVpTd7o8lH
+	 NPYESR2dqqDlmDQr19LpV5UFLCVbFXUiioXmleEIfF4WQA56N5reWim+sVb28xV0lzkTk
+	 fCVqGMyvZZZRPQcOnVrUr1pjXPO0iFCEjswX9mINGM7PZSI8zo0ElXUusQD2xhiVVFIcC
+	 ZaZKTzbFEWhgMX2TkoMz9vZzDVd2FKy0aUPXv36/M30vV/XMSg4QLtoF00C+PMt1PWQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795620381;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795620384;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Type:Content-Transfer-Encoding;
-	bh=fg9geOFW5EqatdKLEPcGl0ZCQOtm8shtS4jRTcCpnGA=;
-	b=F6ee4CrocHWHSpL22N9CHQM5RxdVE0yif/ZFh5V/+6X2h9TS09SSbrFVpkeNh7FHrMY7
-	 cfskeuucXbzRTiTU9QMkJoM7B/5mTgD6HoiwKYFVpaUHhuiItuqfKQRygVXt2mR7x82jQ
-	 LibAqqfuagpVUJWtQq/mUjdJB3XrOMuU9AkfPdN8B/vuJYy+ko2hq01bfn+0Igenu6Wdm
-	 cKyJDfSHPKHQ3+IlAystwtrIP8iyMwLxYP2t809Gpfzypg26UgkivhRXldbGofewv7TjN
-	 9p6WZAYCRWb0TLFqplF4X4aejqEwQ6CZjehjNt7C0OZyFGmhDZj/qUfYBCjGNdIKMMQ==
+	 MIME-Version:Content-Transfer-Encoding;
+	bh=S3qpmuj9tBTXK6vo9KAR9v5Y7fnuKqdQtz44SBaVGFw=;
+	b=JGicGs9i3IKjiMjS0LQWtkrsgpyaN0xv/2XzCcCHt46hAZTn1tHxrtBpRbSjkDxWy+m2
+	 KqMnVgY+6nPn7ImfQaH9OfoefHQqEYdBR9WvrfcSTV5EiEhXEc3GZXe4PtPdOakgtM5II
+	 nAGLTq3RqY9ASmOAiwdHVL8vBXo1sd1RoWkRGyVukpqYBBNSPHv/AKT/IxtnuFmO4+o0B
+	 ynXoQAufQQ/YCmuyrwl3calb/bY9gIllXsbv+CCiGdZ2xuvGJvO1oBHN/Cb/65sYfGHew
+	 NzOn3g05laqWSCLRZH+1czmYMrNZjGRFJs7qDvEQLpSBUj/ZEklL50ufeqrOmW/lxzA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=HkdneQNF;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=GUXUUTEz;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
+	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8EC8C606A31E;
-	Wed, 25 Nov 2026 15:26:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2AD8D606A321;
+	Wed, 25 Nov 2026 15:26:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=HkdneQNF
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9E80C1F000C6;
-	Wed, 25 Nov 2026 15:26:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=GUXUUTEz
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7A55C1F000C4;
+	Wed, 25 Nov 2026 15:26:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795620381;
-	bh=fg9geOFW5EqatdKLEPcGl0ZCQOtm8shtS4jRTcCpnGA=;
+	s=korg; t=1795620384;
+	bh=S3qpmuj9tBTXK6vo9KAR9v5Y7fnuKqdQtz44SBaVGFw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=HkdneQNFmM/ta/jQV3DpKR8KPPKmnoy/eWj5K2N+lQhP6iw0EjfHwUd9TjJ/amE6Z
-	 zihAQstOVyoS9TZP/x9WqxH+kblKxcbisxGDi6EJIfEgVJlbSH/pBOEOwx3dTTfREO
-	 Zvk9QxOH/N0gEDAIa7YhKaBuJgWFccapT51QHWPM=
+	b=GUXUUTEzC3PyqT8izvFkVW6358ROXzJun39RIaLQsvYHlx/lyh/5fcYn4H7K801xT
+	 dxUHPBuvx4B528aZvAvXEuR+BvHAjUG8CPYv+RWF4l8xb+RrG+OYat/WbnSTtkiwu/
+	 ye4pQQxH00ZY+HXotTmUbTVSMFEzz8OLom7K+0D4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable <stable@kernel.org>,
-	=?UTF-8?q?Antonio=20V=C3=A1zquez=20Blanco?= <antoniovazquezblanco@gmail.com>,
-	Alexander Usyskin <alexander.usyskin@intel.com>
-Subject: [PATCH 7.3 0899/1005] mei: me: add ice lake point LP iTouch DID
-Date: Wed, 25 Nov 2026 15:37:17 +0100
-Message-ID: <20261125143842.752648203@linuxfoundation.org>
+	Guangshuo Li <lgs201920130244@gmail.com>
+Subject: [PATCH 7.3 0900/1005] misc: bcm-vk: fix DMA allocation memory leak
+Date: Wed, 25 Nov 2026 15:37:18 +0100
+Message-ID: <20261125143842.774975153@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143821.729802100@linuxfoundation.org>
 References: <20261125143821.729802100@linuxfoundation.org>
@@ -62,77 +60,112 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 7.3-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Antonio Vázquez Blanco <antoniovazquezblanco@gmail.com>
+From: Guangshuo Li <lgs201920130244@gmail.com>
 
-commit 73383d06da9a1ded4c85845407cb4029aeecca39 upstream.
+commit a36b3db60466d44eefcc5c252ce927c043429922 upstream.
 
-Add the device ID for the Intel Precise Touch & Stylus (iTouch) function
-on Ice Lake Point LP. It appears as PCI device 8086:34e4, next to the
-regular MEI function at 8086:34e0, on Microsoft Surface Pro 7 and
-Surface Laptop 3.
+bcm_vk_dma_alloc() leaks dma->pages and pinned user-page references
+when page pinning or coherent SG allocation fails. DMA mapping
+failures can also leave the SG list and earlier mappings unreleased,
+as bcm_vk_sg_alloc() skips the partially initialized slot.
 
-Without this entry mei_me does not bind, the touch controller is
-unreachable, and neither the touchscreen nor the pen work. Users
-currently work around this by binding the device by hand at boot:
+This issue was found by our static analysis tool under development.
 
-  echo "8086 34e4 ffffffff ffffffff 0 0 9" > \
-          /sys/bus/pci/drivers/mei_me/new_id
-
-where the trailing 9 is the mei_me_cfgs[] index of MEI_ME_PCH12_CFG.
-That is fragile by construction, since the index is positional and any
-reordering of the config array silently changes which config the device
-gets.
-
-This ID was first reported in June 2020, together with Sunrise Point's
-0x9d3e, in "mei: me: Add itouch device IDs for SPT / ICP" [1]. That
-submission was declined over the server platform ID conflict, and the
-Sunrise Point half was subsequently added in commit 372a829862e5 ("mei:
-me: add MEI device for SPT with ITPS capability"). Ice Lake Point was
-never added.
-
-Use MEI_ME_PCH12_SPS_ITOUCH_CFG, so that the device is reported with the
-correct kind and the SPS firmware exclusion applies. Note this is not the
-config the manual new_id workaround above selects: it reports kind
-"itouch" rather than "mei", and it does not set up a DMA ring.
-
-Link: https://lore.kernel.org/all/20200601155954.764558-1-dorian.stoll@tmsp.io/ [1]
-Cc: stable <stable@kernel.org>
-Signed-off-by: Antonio Vázquez Blanco <antoniovazquezblanco@gmail.com>
-Acked-by: Alexander Usyskin <alexander.usyskin@intel.com>
-Link: https://patch.msgid.link/20261029084859.4537-1-antoniovazquezblanco@gmail.com
+Fixes: 111d746bb476 ("misc: bcm-vk: add VK messaging support")
+Cc: stable@vger.kernel.org
+Signed-off-by: Guangshuo Li <lgs201920130244@gmail.com>
+Link: https://patch.msgid.link/20261027150921.137189-1-lgs201920130244@gmail.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/misc/mei/hw-me-regs.h |    1 +
- drivers/misc/mei/pci-me.c     |    1 +
- 2 files changed, 2 insertions(+)
+ drivers/misc/bcm-vk/bcm_vk_sg.c |   43 +++++++++++++++++++++++++++++++++-------
+ 1 file changed, 36 insertions(+), 7 deletions(-)
 
---- a/drivers/misc/mei/hw-me-regs.h
-+++ b/drivers/misc/mei/hw-me-regs.h
-@@ -94,6 +94,7 @@
- #define PCI_DEVICE_ID_INTEL_MEI_CDF        0x18D3  /* Cedar Fork */
+--- a/drivers/misc/bcm-vk/bcm_vk_sg.c
++++ b/drivers/misc/bcm-vk/bcm_vk_sg.c
+@@ -78,7 +78,8 @@ static int bcm_vk_dma_alloc(struct devic
+ 		dma->nr_pages = (err >= 0) ? err : 0;
+ 		dev_err(dev, "get_user_pages_fast, err=%d [%d]\n",
+ 			err, dma->nr_pages);
+-		return err < 0 ? err : -EINVAL;
++		err = err < 0 ? err : -EINVAL;
++		goto err_pages;
+ 	}
  
- #define PCI_DEVICE_ID_INTEL_MEI_ICP_LP     0x34E0  /* Ice Lake Point LP */
-+#define PCI_DEVICE_ID_INTEL_MEI_ICP_LP_3   0x34E4  /* Ice Lake Point LP 3 (iTouch) */
- #define PCI_DEVICE_ID_INTEL_MEI_ICP_N      0x38E0  /* Ice Lake Point N */
+ 	/* Max size of sg list is 1 per mapped page + fields at start */
+@@ -90,8 +91,10 @@ static int bcm_vk_dma_alloc(struct devic
+ 					 dma->sglen,
+ 					 &dma->handle,
+ 					 GFP_KERNEL);
+-	if (!dma->sglist)
+-		return -ENOMEM;
++	if (!dma->sglist) {
++		err = -ENOMEM;
++		goto err_pages;
++	}
  
- #define PCI_DEVICE_ID_INTEL_MEI_JSP_N      0x4DE0  /* Jasper Lake Point N */
---- a/drivers/misc/mei/pci-me.c
-+++ b/drivers/misc/mei/pci-me.c
-@@ -98,6 +98,7 @@ static const struct pci_device_id mei_me
- 	{ PCI_DEVICE_DATA(INTEL, MEI_CMP_H_3, MEI_ME_PCH8_ITOUCH_CFG) },
+ 	dma->sglist[SGLIST_NUM_SG] = 0;
+ 	dma->sglist[SGLIST_TOTALSIZE] = vkdata->size;
+@@ -108,8 +111,8 @@ static int bcm_vk_dma_alloc(struct devic
+ 			       dma->direction);
+ 	transfer_size = size;
+ 	if (unlikely(dma_mapping_error(dev, sg_addr))) {
+-		__free_page(dma->pages[0]);
+-		return -EIO;
++		err = -EIO;
++		goto err_sglist;
+ 	}
  
- 	{ PCI_DEVICE_DATA(INTEL, MEI_ICP_LP, MEI_ME_PCH12_CFG) },
-+	{ PCI_DEVICE_DATA(INTEL, MEI_ICP_LP_3, MEI_ME_PCH12_SPS_ITOUCH_CFG) },
- 	{ PCI_DEVICE_DATA(INTEL, MEI_ICP_N, MEI_ME_PCH12_CFG) },
+ 	for (i = 1; i < dma->nr_pages; i++) {
+@@ -121,8 +124,8 @@ static int bcm_vk_dma_alloc(struct devic
+ 				    size,
+ 				    dma->direction);
+ 		if (unlikely(dma_mapping_error(dev, addr))) {
+-			__free_page(dma->pages[i]);
+-			return -EIO;
++			err = -EIO;
++			goto err_unmap;
+ 		}
  
- 	{ PCI_DEVICE_DATA(INTEL, MEI_TGP_LP, MEI_ME_PCH15_CFG) },
+ 		/*
+@@ -167,6 +170,32 @@ static int bcm_vk_dma_alloc(struct devic
+ #endif
+ 
+ 	return 0;
++
++err_unmap:
++	/*
++	 * Unmap completed SG entries and the in-progress DMA range,
++	 * which has not been written to the SG list yet.
++	 */
++	sgdata = (struct _vk_data *)&dma->sglist[SGLIST_VKDATA_START];
++	for (i = 0; i < dma->sglist[SGLIST_NUM_SG]; i++) {
++		size = sgdata[i].size;
++		addr = get_unaligned(&sgdata[i].address);
++		dma_unmap_page(dev, addr, size, dma->direction);
++	}
++	dma_unmap_page(dev, sg_addr, transfer_size, dma->direction);
++
++err_sglist:
++	dma_free_coherent(dev, dma->sglen, dma->sglist, dma->handle);
++
++err_pages:
++	for (i = 0; i < dma->nr_pages; i++)
++		put_page(dma->pages[i]);
++	kfree(dma->pages);
++	dma->pages = NULL;
++	dma->sglist = NULL;
++	dma->sglen = 0;
++	dma->nr_pages = 0;
++	return err;
+ }
+ 
+ int bcm_vk_sg_alloc(struct device *dev,
 
 
