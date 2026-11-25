@@ -1,51 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795619349;
-	b=wGN3dMcF2R5HZiuFJCFhP7G0e1FdrWU3LldtC1Hmtk6qrxbfzYbw0x6v9IXJRUBQytyg
-	 yshDTG2mijfu/vkQO76U5diy4yOyGJktt1fQm2qTOc/UB7K17LZcc1Apl5p/EpXrn825o
-	 4XAagMUETsDIBU2DKMeg6Cbul4OJpb9H1L2BSzWXZdK5kI7zroSpWwuECIE0gS+2jq5Kc
-	 /bU7L5l/wzqpEBiGWjuAR/wWPK5eVqqmVJO7eqdLVvn8g2li+I36IoFbSwK/nUTltVoKs
-	 m/3I7im2rc4ETGedbXKoF8liL2NPnbGPbdtSDrtlc4oJek27EVhsizKNvpqApmGL36A==
+	t=1795619352;
+	b=F7rFftbKEMYF3OZUIuI5cJPSU7JYLOZPLXNSNvIb1GQnuSvyM2qunBPYayVoDELzi2iS
+	 ALWsF5VYubDgG3V3W7IzQo+I5Ud/ntHSB4D0+IesJiKMkwlx6H0zNryFCIFpFKtFlvpx7
+	 pzZbrdP0E6yMjoJSISzV6MxxrE85I5xC0sjKEJ/hq2x2QoeMC8DfeA3OkXrLjAN2YkejV
+	 LszL7NTFZED5pbrIU8OBmuOPHRB0pw4Rp5dAlkHAX5q2FO63OnSaOrFEJuoJyaXvH5spc
+	 K4VkKDMDoBFGE1Ffm6kWL6tIpg3PhriEt+3hzcdcF1F6Ki/78zy28eRM0LWlTxEdB5A==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795619349;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795619352;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=jB3EH4RYoveUx8Ht/T5czR5TntNE5O5/BOoO4zpaSN0=;
-	b=10eWYukOOkjKYzFvcJK4AU/9fZGigjqBjETds9gmw03TQ+ym115Wgdp0jaf29q0e1Spq
-	 MdT2fgFZ/qDqAIOAiu3Af9pB2D1IIrl+QXnuTHCz1VQxcwElt8Iv9jyW7dAEiXZOgS+ch
-	 5D/ma3XpoKuyBfk5r74UbE88roM+2pCjMHCCQnVm6MaYsLW7WQpxLjmNkpCfsffuyOoeB
-	 g4mNstdNyo3DHvpFYge/8JIluv/Nbh5kDmb9XgRuIEZfoEiYy0md8Z9ncvI5reT7ivCKp
-	 kl8taXGFhdOgmZpbiTBarGYc3DSBu1LGEUI65UCxU5i2KmlMU6AMhyK+0fIwrTmLigw==
+	bh=EhAZ0ygHDqkszNY3O3LGar9tlPJCMwbNyeo4tJv7720=;
+	b=KSwA9Y92usp4N6LFt4p8acbWip0rqfFJ9VQV53rhuwfQTsHDM5pIVDmHQTz1mBPXxVpu
+	 WEOg7mkcd1dQgEDF7T26c11npdZlcBq4day+lECoPgECdi0VdOu0ZAyFFs9J4jR7ymCJn
+	 Bfdo1hH6VwBNzk4ey6YHTWLKd7VOl3CUSzgActG3x7jcfYSgxK/JsFxdgFA/zjZrC4hj4
+	 fzFQUZ5GXlrEtM5iBJsyEZImoZ52WHzh4XL3HqnZBs4wPLzPuPPdBB3Z/GFFBLRGeekxd
+	 aSdXqMR5/fi41tz4BoI5CDxk8c3osT5M4UPAD3w5KnzgUCxQU4RbCqL+9FcKQ+Yr/GA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=HW9ThjnU;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=R147OSJp;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 58311606A326;
-	Wed, 25 Nov 2026 15:09:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4E24C606A31E;
+	Wed, 25 Nov 2026 15:09:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=HW9ThjnU
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 444EB1F000D8;
-	Wed, 25 Nov 2026 15:09:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=R147OSJp
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 834DF1F000C4;
+	Wed, 25 Nov 2026 15:09:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795619348;
-	bh=jB3EH4RYoveUx8Ht/T5czR5TntNE5O5/BOoO4zpaSN0=;
+	s=korg; t=1795619352;
+	bh=EhAZ0ygHDqkszNY3O3LGar9tlPJCMwbNyeo4tJv7720=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=HW9ThjnU4D6OFvZ4M/gXyY85/pj74es1948KbfY+DdjomNHMO7xAYkHjcd0eQcBqd
-	 HOsZWoXntClKrVTErXOA3SbtY7sCWifcDp5p0Pw0Zw/ZO5qXOFrngRjSVtVjOlXu1g
-	 o6HgrWMUaEZe6d9alK2zWJuM2zAyO6CfH9jsnVYE=
+	b=R147OSJpRXO032ISz71reFq2gTSLuzZ6ZViod7+yEBHghz8AHWoW/8FeQ8MZzUWmh
+	 Xf+DdfTNB4+nrwGGuHPMMfqGGHOCMHvoX4OsFqy6rkBS6LNVltYvMDC+3vwt2N00Pn
+	 lai3uJkrr6Cbej2xTs1MWzuGdqiSZpBdcYXFVTJ8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Angel J <iamanaws@httpd.dev>,
+	Gichoon Han <gichoon.han@samsung.com>,
 	Takashi Iwai <tiwai@suse.de>
-Subject: [PATCH 7.3 0568/1005] ALSA: hda/realtek: Fix the Dell XPS 8940 headset microphone
-Date: Wed, 25 Nov 2026 15:31:46 +0100
-Message-ID: <20261125143835.058680578@linuxfoundation.org>
+Subject: [PATCH 7.3 0569/1005] ALSA: usb-audio: Drop capture packets with bogus actual_length
+Date: Wed, 25 Nov 2026 15:31:47 +0100
+Message-ID: <20261125143835.080164914@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143821.729802100@linuxfoundation.org>
 References: <20261125143821.729802100@linuxfoundation.org>
@@ -67,66 +67,61 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Angel J <iamanaws@httpd.dev>
+From: Gichoon Han <gichoon.han@samsung.com>
 
-commit ae28ba98f55a2f30fed57371899b8cecd7cbde64 upstream.
+commit eed0e9583a290e6adbe3a8480bdae911f31e1ed9 upstream.
 
-The Dell XPS 8940 (1028:09c5) has an ALC3861 codec (0x10ec0899).
-Its BIOS marks the headset microphone pin at NID 0x19 as disconnected
-(0x411111f0). With no external microphone input in the pin configuration,
-the generic parser creates a shared headphone/mic input on NID 0x1b
-instead. Headphone playback works, but the headset microphone is silent.
+retire_capture_urb() copies urb->iso_frame_desc[i].actual_length bytes
+out of urb->transfer_buffer at the packet's offset, but never checks
+that value against the requested packet length.  A host controller
+reporting more data than requested makes memcpy() read past the end
+of the URB transfer buffer.
 
-Override NID 0x19 as a front microphone without independent presence
-detection. This gives the generic parser the dedicated microphone
-input and preserves NID 0x1b for simultaneous headphone playback.
+Commit 06be918062ad ("ALSA: usb-audio: Bound packet copies by the PCM
+buffer size") clamps the count to the PCM ring buffer size, which
+protects the destination.  The source slot is only ep->curpacksize
+bytes per packet, though, so the over-read remains.
 
-I encountered this issue on my XPS 8940. Similar symptoms were also
-reported by a user on Ubuntu:
-https://bugs.launchpad.net/bugs/1971232
+This was hit on an ARM32 system (vendor 5.4 kernel; the code path is
+unchanged in mainline) with a full-speed UAC1 microphone behind a
+high-speed hub, i.e. the EHCI siTD path.  sitd_complete() computes
+actual_length as desc->length - SITD_LENGTH(t); the controller
+reported a remaining length larger than the programmed one, the value
+wrapped to ~4G, and the capture copy faulted on the first unmapped
+page after the URB buffer:
 
+  Unable to handle kernel paging request at virtual address e8756000
+  Internal error: Oops: 7 [#1] PREEMPT SMP ARM
+  r3 : 00000000  r2 : 0001e700  r1 : e8756000  r0 : e878fc80
+  Code: ba000002 f5d1f03c f5d1f05c f5d1f07c (e8b151f8)
+
+A packet can never legitimately carry more than its requested length,
+so warn and skip it instead of copying.
+
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
 Cc: stable@vger.kernel.org
-Assisted-by: Codex (GPT-6.1 Sol)
-Signed-off-by: Angel J <iamanaws@httpd.dev>
+Signed-off-by: Gichoon Han <gichoon.han@samsung.com>
+Link: https://patch.msgid.link/20261110060021.2146383-1-gichoon.han@samsung.com
 Signed-off-by: Takashi Iwai <tiwai@suse.de>
-Link: https://patch.msgid.link/20261103150336.507675-1-iamanaws@httpd.dev
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/hda/codecs/realtek/alc882.c |   10 ++++++++++
- 1 file changed, 10 insertions(+)
+ sound/usb/pcm.c |    6 ++++++
+ 1 file changed, 6 insertions(+)
 
---- a/sound/hda/codecs/realtek/alc882.c
-+++ b/sound/hda/codecs/realtek/alc882.c
-@@ -50,6 +50,7 @@ enum {
- 	ALC889_FIXUP_MP41_VREF,
- 	ALC882_FIXUP_INV_DMIC,
- 	ALC882_FIXUP_NO_PRIMARY_HP,
-+	ALC898_FIXUP_DELL_XPS8940_MIC,
- 	ALC887_FIXUP_ASUS_BASS,
- 	ALC887_FIXUP_BASS_CHMAP,
- 	ALC1220_FIXUP_GB_DUAL_CODECS,
-@@ -507,6 +508,13 @@ static const struct hda_fixup alc882_fix
- 		.type = HDA_FIXUP_FUNC,
- 		.v.func = alc882_fixup_no_primary_hp,
- 	},
-+	[ALC898_FIXUP_DELL_XPS8940_MIC] = {
-+		.type = HDA_FIXUP_PINS,
-+		.v.pins = (const struct hda_pintbl[]) {
-+			{ 0x19, 0x02a19130 }, /* headset mic, no separate jack detect */
-+			{}
-+		},
-+	},
- 	[ALC887_FIXUP_ASUS_BASS] = {
- 		.type = HDA_FIXUP_PINS,
- 		.v.pins = (const struct hda_pintbl[]) {
-@@ -610,6 +618,8 @@ static const struct hda_quirk alc882_fix
- 	SND_PCI_QUIRK(0x1025, 0x0259, "Acer Aspire 5935", ALC889_FIXUP_DAC_ROUTE),
- 	SND_PCI_QUIRK(0x1025, 0x026b, "Acer Aspire 8940G", ALC882_FIXUP_ACER_ASPIRE_8930G),
- 	SND_PCI_QUIRK(0x1025, 0x0296, "Acer Aspire 7736z", ALC882_FIXUP_ACER_ASPIRE_7736),
-+	SND_PCI_QUIRK(0x1028, 0x09c5, "Dell XPS 8940",
-+		      ALC898_FIXUP_DELL_XPS8940_MIC),
- 	SND_PCI_QUIRK(0x1043, 0x13c2, "Asus A7M", ALC882_FIXUP_EAPD),
- 	SND_PCI_QUIRK(0x1043, 0x1873, "ASUS W90V", ALC882_FIXUP_ASUS_W90V),
- 	SND_PCI_QUIRK(0x1043, 0x1971, "Asus W2JC", ALC882_FIXUP_ASUS_W2JC),
+--- a/sound/usb/pcm.c
++++ b/sound/usb/pcm.c
+@@ -1337,6 +1337,12 @@ static void retire_capture_urb(struct sn
+ 					    "frame %d active: %d\n", i,
+ 					    urb->iso_frame_desc[i].status);
+ 		bytes = urb->iso_frame_desc[i].actual_length;
++		if (unlikely(bytes > urb->iso_frame_desc[i].length)) {
++			dev_warn_ratelimited(&subs->dev->dev,
++					     "packet %d: actual_length %u exceeds length %u, dropping\n",
++					     i, bytes, urb->iso_frame_desc[i].length);
++			continue;
++		}
+ 		if (subs->stream_offset_adj > 0) {
+ 			unsigned int adj = min(subs->stream_offset_adj, bytes);
+ 			cp += adj;
 
 
