@@ -1,51 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795619878;
-	b=Pi60p6pqGojiQ22S2v0/pm3gBgVKm5lUaqJHsBhNGFigvZKdpjjBwQObzUxonwvfjCu4
-	 kBMKpy62dDkd2E8ivXqXpYcjyEh0YaJYqKQqxU5/3Yf1x5Lq6K/ca+aYcizedNYqAX5TV
-	 n+cNWq6Uyr17g+waf3tYXiFNong3xtAxmyec1LMapdibR6mtmlv1ekY0x6orwQfTrtgHw
-	 4O8m5Cu5/By3Mqhcyr8DbRO83lOBMNk7qXDDNVVgn+vMmEs/XrdAriWqwZcp1rebnUv1v
-	 sKxn02ELMSimnuN72YtxkldxzglOM9YR8GMZ33ya3mmlmoXajjpU1eQXrjDpZOWlq6g==
+	t=1795619881;
+	b=lma5heNuuSkhYz9t4clvf7l2y3xYJAIn84XNKWZjDknmA4W3JQlGz+bVahUXWyn3z5Ei
+	 O2MmEMuIW6zMbqC79KG9wJZ/qLDOkkeesH77Dep6zxxSTbVHqqMpSoI/e2JxA6bL0rTck
+	 ecAjsX1iSLSyKTbqTiVPqqNC1y4zBbUabsZo7gl/80i24/v50X3V5mKnwWRUxqIdtK3a6
+	 wrss+c0xXB6OwQEZ9GaAECNhzJ9U3UuyGiqwGZkQAxsutwoaczyaM/wmp4E4mCadJeaN/
+	 UXOCW7s/Oo67bj3ZUkoRMJKW3uNe03dmWMQyTDG1HyZMEeYtkmFWxcnwYKUXISLHLtw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795619878;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795619881;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=Z2pxOFtBoSxx74KpkcRi42HdY4Ah7g5Fq9ppX9DkT94=;
-	b=p95cIHCn1c+YpS5fIe9XBIiZ5Znrg7WNuwL/LsZelaDO9usoiZk8qd1YPgH0x1jGvMxO
-	 Qo4xGbuJk+vbdQomoieVQan1CZt8tTYhWGs9fcW0SnxN/miwAe+SQCLwLZqaebRAx3nN8
-	 TDe+Rs5gIQz6tBPRR1ACGFjwW48lx6JQ59jo7/2ps2RP9Gx+kbzLzKGoTuOxXqGTATH56
-	 51v3L/SRX9GrzhcSyC/3rdsBPrPYsE5jEwSmQTpvU0NNBv40FTneagTU1jL0gwi/V/8dE
-	 LdIFN85fxARk4PWcH5xNd+W742b4jtGchrmGuH6H+CobZn5KIsrQ6ATeY6v/EO1WctA==
+	bh=SVPqftiYavmRGN6Q9iz9jSeWZ/uzwWDG1krk+lhK9AY=;
+	b=QhneKi60eH410h04l+oRKYra37fcUuEfT3HgQlfTsEMqpT//Q9il6XQ9aGik8sgSZl9Q
+	 hqZABx+bYNB1qSRIk8ig8GkLEcmZlHzhC0UllwYTX3DT5w3X9IKQg9iyRfpR9WX6U+EMD
+	 b8pSuFUOQPj/by7BNwOx94jAeqMCkGRCtVdF+c+AIDCQGyKNe7Sj5DAn76j0BDGMe/DXL
+	 j8JbiNYvJlbMN/UpvFiBSkfVgQuEOcx+wgppFUGdGjcWCl+TTek/OfDrkUMu8NsOa9ag4
+	 ZmldxFZfTQuiaY8gAPFRrGKEYOsa4zN95MDjLtskUUORN3gG9xEfyggSbzPu1iYeG7A==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=yZVzyuKS;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="R/NStexE";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 49DAB606A31E;
-	Wed, 25 Nov 2026 15:17:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4C729606A31E;
+	Wed, 25 Nov 2026 15:18:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=yZVzyuKS
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8EE841F000C6;
-	Wed, 25 Nov 2026 15:17:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=R/NStexE
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B4B8B1F000C4;
+	Wed, 25 Nov 2026 15:18:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795619878;
-	bh=Z2pxOFtBoSxx74KpkcRi42HdY4Ah7g5Fq9ppX9DkT94=;
+	s=korg; t=1795619881;
+	bh=SVPqftiYavmRGN6Q9iz9jSeWZ/uzwWDG1krk+lhK9AY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=yZVzyuKSxamxbsEWVZB6J6pJQ9/xdW6GWE/pOJ5NQ2+xgmw+8tPXeV0MlGEtKcLof
-	 sEHyZtTsBmeWYYVU9DhSDbfI1xi/KbsIQzehkBFpu246cTpcfv5sd8K8Sc3KZM2+st
-	 Q5HtrNS5kipshA2JSyWy1WnybKPkK1aES6apEvHE=
+	b=R/NStexEBjMxWxKeqoQ9iXtd7+1eR1z8kSgWgIh72sA7WOOJjMz4coiV1Xk1SNlw4
+	 NIhYuwa7r+E1j7sQJKnpiqZP1pLYxBKgOSfcCU/8/sl3jONS9IOILca7pJ1BB56kTR
+	 GbvCGWeqPCGQ1h0Sg+L8HQChmaTeYFeBmVVT7/Ds=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhao Feng <zhaofeng2@cmss.chinamobile.com>,
+	Lad Prabhakar <prabhakar.mahadev-lad.rj@bp.renesas.com>,
 	Guenter Roeck <linux@roeck-us.net>
-Subject: [PATCH 7.3 0734/1005] watchdog: npcm: fix clock prepare leak when setting timeout on a running watchdog
-Date: Wed, 25 Nov 2026 15:34:32 +0100
-Message-ID: <20261125143838.955429582@linuxfoundation.org>
+Subject: [PATCH 7.3 0735/1005] watchdog: rzv2h: Use pm_runtime_put_sync()
+Date: Wed, 25 Nov 2026 15:34:33 +0100
+Message-ID: <20261125143838.977784414@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143821.729802100@linuxfoundation.org>
 References: <20261125143821.729802100@linuxfoundation.org>
@@ -67,72 +67,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zhao Feng <zhaofeng2@cmss.chinamobile.com>
+From: Lad Prabhakar <prabhakar.mahadev-lad.rj@bp.renesas.com>
 
-commit 57c7cbe21acc77291ec0fbdd4bd72aa259cf4986 upstream.
+commit ca800e625d18a9f5b19f94ab837ceb3fccdca22f upstream.
 
-npcm_wdt_start() unconditionally prepares and enables the watchdog
-clock, and npcm_wdt_stop() is the only place that disables it.
-npcm_wdt_set_timeout() calls npcm_wdt_start() again whenever the
-watchdog is already active, so every WDIOC_SETTIMEOUT ioctl issued
-while the watchdog is running takes one extra clock prepare/enable
-reference that is never dropped.
+pm_runtime_put() may trigger the idle check after pm_runtime_disable()
+is run as part of devm_pm_runtime_enable()'s cleanup action, leaving
+runtime PM active.
 
-Split the register programming out of npcm_wdt_start() into a
-__npcm_wdt_start() helper that assumes the clock is already running,
-and call the helper from npcm_wdt_set_timeout() instead; only the
-watchdog .start callback (and the restart path, which intentionally
-keeps the clock) now acquires the clock.
+Use pm_runtime_put_sync() to ensure the idle check runs synchronously.
 
-Fixes: af084fdccfaf ("watchdog: npcm: Enable clock if provided")
+Fixes: f6febd0a30b6e ("watchdog: Add Watchdog Timer driver for RZ/V2H(P)")
 Cc: stable@vger.kernel.org
-Signed-off-by: Zhao Feng <zhaofeng2@cmss.chinamobile.com>
-Link: https://patch.msgid.link/20261109071004.1506-1-zhaofeng2@cmss.chinamobile.com
+Signed-off-by: Lad Prabhakar <prabhakar.mahadev-lad.rj@bp.renesas.com>
+Link: https://patch.msgid.link/20261001165201.763882-3-prabhakar.mahadev-lad.rj@bp.renesas.com
 Signed-off-by: Guenter Roeck <linux@roeck-us.net>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/watchdog/npcm_wdt.c |   15 +++++++++++----
- 1 file changed, 11 insertions(+), 4 deletions(-)
+ drivers/watchdog/rzv2h_wdt.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/drivers/watchdog/npcm_wdt.c
-+++ b/drivers/watchdog/npcm_wdt.c
-@@ -145,13 +145,11 @@ static int npcm_wdt_ping(struct watchdog
- 	return 0;
- }
+--- a/drivers/watchdog/rzv2h_wdt.c
++++ b/drivers/watchdog/rzv2h_wdt.c
+@@ -174,7 +174,7 @@ static int rzv2h_wdt_stop(struct watchdo
+ 	if (priv->of_data->wdtdcr)
+ 		rzt2h_wdt_wdtdcr_count_stop(priv);
  
--static int npcm_wdt_start(struct watchdog_device *wdd)
-+static void __npcm_wdt_start(struct watchdog_device *wdd)
- {
- 	struct npcm_wdt *wdt = to_npcm_wdt(wdd);
- 	u32 val;
- 
--	clk_prepare_enable(wdt->clk);
--
- 	if (wdd->timeout < 2)
- 		val = 0x800;
- 	else if (wdd->timeout < 3)
-@@ -176,6 +174,15 @@ static int npcm_wdt_start(struct watchdo
- 	val |= NPCM_WTRE | NPCM_WTE | NPCM_WTR | NPCM_WTIE;
- 
- 	writel(val, wdt->reg);
-+}
-+
-+static int npcm_wdt_start(struct watchdog_device *wdd)
-+{
-+	struct npcm_wdt *wdt = to_npcm_wdt(wdd);
-+
-+	clk_prepare_enable(wdt->clk);
-+
-+	__npcm_wdt_start(wdd);
+-	pm_runtime_put(wdev->parent);
++	pm_runtime_put_sync(wdev->parent);
  
  	return 0;
  }
-@@ -216,7 +223,7 @@ static int npcm_wdt_set_timeout(struct w
- 		wdd->timeout = 2750;
+@@ -268,7 +268,7 @@ static int rzt2h_wdt_wdtdcr_init(struct
  
- 	if (watchdog_active(wdd))
--		npcm_wdt_start(wdd);
-+		__npcm_wdt_start(wdd);
+ 	rzt2h_wdt_wdtdcr_count_stop(priv);
+ 
+-	pm_runtime_put(&pdev->dev);
++	pm_runtime_put_sync(&pdev->dev);
  
  	return 0;
  }
