@@ -1,52 +1,50 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795620152;
-	b=in6u0eNWbrIJHTdc71ktyMpKK520egdbENuu0iW5pJF5oJ5ETG6HMTWxKPRyH/r0Jkw7
-	 g7usUlN0FG5yP0z1asCU6vnhw4FU4S6tPXNwZioFWI7qiX4txC/WVevPZTkO5rVA1c5nZ
-	 +xsFi3rDjo2I/pCfOaog/MJEg6TM1U7PtOEKZUlQ/eZuakdXTq0ChyatVZNI1A4h/ge8l
-	 Eq2jUNFNMjlag8dHUqgsBUpLFfGoc4pfF3pQYTO4SLdOFq0tEgYFcdhV4n4hvHa7wE91h
-	 jZ7otMTnNHupi1XSNxbmLsMiNcquKFUlQhm1lDd7kCxqNQPrZ9RPrxEmdTWY7d7Scpg==
+	t=1795620155;
+	b=VI20s3kHziDDqjRp0PeuHpqTgal7XRe2lnR1VPi76zoZ7LxfU2vDjB3cmuYWDEnlQgC4
+	 mRERCNclrM7AJgVhl3zB/cYNOp3rfMFUdNEYDPnabEuDIeX7ynbTfjilf4qHUpzY+lrNu
+	 PRvJgXTHOc8fxGO/MsQ4OOXPjCbCkj63BGrVUqxcsv8gRNzcSmRyTxzaQXX/vkYsdpAfu
+	 PN73Z3otOF9DWur2/9TildTIH959ih0k/MtMQ6xD1E1PbguauGHbuz/hgXU7/uaeHTjlM
+	 G2EKxVTFL+V1EqDzriquv0VRM4eVqMk2lKYBedZMiVZgd8rbl2lXzotHjQhALMKOEHQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795620152;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795620155;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Type:Content-Transfer-Encoding;
-	bh=SJYTubhPJCSSbBBzkWxfWWI3fui9VF7/AlbRcCTph7I=;
-	b=2HjImy+j426Q8sCGKM9F5pzY+LNJ4521iKYYttQrvgNKrBp22rRaphD2flRylWTxBqYU
-	 kji6a08pKgTQCxavKDz6PghW3WpaTDBQepOlS9CuXpTZ+pbYUmOuF7psAts0B6a/8OD8t
-	 sJ0swr2OV3Lw+/HStjmg+MbNt5jNamZzI39sEw/QUejshGZwVoQs3cOaz1fhaK1AylMY4
-	 YaWrwrVCJ2RzTx+e0n45nXOTEm06h3lezoUrgjcieKGgYxGucSuomUbZdspm3v3uHDdJe
-	 y4xX/PN8/IhOuvOskMoA89aZbK+x5r3jIFnoOhoNdLQYHCGJlo4OvspllrPmG6GksMQ==
+	 MIME-Version:Content-Transfer-Encoding;
+	bh=BC6wQ4XbIAeYfOKjQWD1dOod9luEHVohCP5fk4/B/iY=;
+	b=SmIqPQ7aWA+CILyLWVkBeK5obioMTezDaFDUfcD2noodUuAJ9wGw2nqqODsDXsanSApz
+	 dKdqQsk2p3xa+NLiG2JaATgCLU7+99IDRn9/fUDaR0QcyApjHE03T1eT6/goLO1t1o5lf
+	 9dT2pV+IFQdVfnow7UX/NHvhVv7Ou9voqMyJnmSLx0ZB1EYGKfhimKQALgbeu4jwjr0vX
+	 WbzDnSOzv2Zco5L5FwGWFfvEL89iXtXYiFW6zS4grNU44ssmo6t11mdFLkhfMA2MT2mtF
+	 R70QhgllA4hCEUX8zzxczw7BxtQylh1CdbX/Cl4Gxu7XfCbD7j9ETXYwskX9j/cnfow==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=AeC8++YE;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=1GFC0IGz;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5CC21606A331;
-	Wed, 25 Nov 2026 15:22:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 59BF4606A32A;
+	Wed, 25 Nov 2026 15:22:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=AeC8++YE
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 705AC1F000C4;
-	Wed, 25 Nov 2026 15:22:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=1GFC0IGz
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A5EDC1F000C4;
+	Wed, 25 Nov 2026 15:22:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795620152;
-	bh=SJYTubhPJCSSbBBzkWxfWWI3fui9VF7/AlbRcCTph7I=;
+	s=korg; t=1795620155;
+	bh=BC6wQ4XbIAeYfOKjQWD1dOod9luEHVohCP5fk4/B/iY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=AeC8++YEVZ59wcTScRWZ7V4G6jPCtg7ABbo12qRxoh34mEOIY5BWu8qkQ4t5hDEFx
-	 8+gElhWuX31Rr/oJh9jBMYkRpYuOKneRl7HwYJAZujmsPny0HS5LjAy+Nc2YSn4/C0
-	 rzt4wwfdmMyhiCeMIGQ9byeYPV0OczG1ByzL6rIo=
+	b=1GFC0IGzNduVlpWyXc3L8rhGRxFEFnqGQb4cEx2Av3Q4bDlp0BQtlDfRDaE6405y5
+	 Dife6KLS406MV8Z4JqyUGpkj03zg45ph6ZStZm/ldkSyR285Kg+TrG7gHPLC0/49s6
+	 Ozp66oj8c13o0PqF0RSTSlsfeIoFcrFiXiZrrNHE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christian Brauner <brauner@kernel.org>,
-	=?UTF-8?q?J=C3=A9r=C3=A9my=20Jean?= <Jeremy.Jean@oss.cyber.gouv.fr>,
 	Amir Goldstein <amir73il@gmail.com>
-Subject: [PATCH 7.3 0825/1005] ovl: reject different lower idmaps on the same fs
-Date: Wed, 25 Nov 2026 15:36:03 +0100
-Message-ID: <20261125143841.050467746@linuxfoundation.org>
+Subject: [PATCH 7.3 0826/1005] ovl: report the requested redirect_dir mode in conflicting options
+Date: Wed, 25 Nov 2026 15:36:04 +0100
+Message-ID: <20261125143841.073748256@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143821.729802100@linuxfoundation.org>
 References: <20261125143821.729802100@linuxfoundation.org>
@@ -62,83 +60,161 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 7.3-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Jérémy Jean <Jeremy.Jean@oss.cyber.gouv.fr>
+From: Amir Goldstein <amir73il@gmail.com>
 
-commit 720f40c05b2785406121da0151543751204f2953 upstream.
+commit 248503755b3cab89742edcc3cfd53adbcf7bfec2 upstream.
 
-Overayfs mounted with index=on or nfs_export=on require file handle
-support from backing filesystems.
+Since the redirect_dir mode is stored as an enum, "off" is translated to
+"follow" or "nofollow" when parsing the option and redirect_dir=follow is
+translated to "on" for a non-upper mount, so the errors about options
+that conflict with an explicit redirect_dir= report a mode that the user
+did not request.
 
-Overlay file handles identify a backing filesystem, but not the lower
-mount used to decode it. If lower layers share a superblock and use
-different idmaps, a handle can decode through the wrong layer.
+Translate "off" when verifying the mount options instead of when parsing
+them and report the requested mode in those errors.
 
-Record the first idmap on a private lower clone for each backing
-filesystem. Fail if another clone has a different idmap. Comparing
-the private clones prevents mount_setattr() from changing the checked
-state. Distinct idmap objects are treated as ambiguous.
-
-Fixes: bc70682a497c ("ovl: support idmapped layers")
-Suggested-by: Christian Brauner <brauner@kernel.org>
-Link: Link: https://lore.kernel.org/all/20260925-server-hager-riskieren-06116eded213@brauner/
+Fixes: af5f2396b671 ("ovl: store enum redirect_mode in config instead of a string")
 Cc: stable@vger.kernel.org
-Signed-off-by: Jérémy Jean <Jeremy.Jean@oss.cyber.gouv.fr>
 Signed-off-by: Amir Goldstein <amir73il@gmail.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/overlayfs/ovl_entry.h |    2 ++
- fs/overlayfs/super.c     |   23 +++++++++++++++++++++++
- 2 files changed, 25 insertions(+)
+ fs/overlayfs/overlayfs.h |   10 +++++++---
+ fs/overlayfs/params.c    |   43 ++++++++++++++++++++++++++++++-------------
+ 2 files changed, 37 insertions(+), 16 deletions(-)
 
---- a/fs/overlayfs/ovl_entry.h
-+++ b/fs/overlayfs/ovl_entry.h
-@@ -24,6 +24,8 @@ struct ovl_config {
- struct ovl_sb {
- 	struct super_block *sb;
- 	dev_t pseudo_dev;
-+	/* Idmap of the first lower layer on this fs */
-+	const struct mnt_idmap *lower_idmap;
- 	/* Unusable (conflicting) uuid */
- 	bool bad_uuid;
- 	/* Used as a lower layer (but maybe also as upper) */
---- a/fs/overlayfs/super.c
-+++ b/fs/overlayfs/super.c
-@@ -1121,6 +1121,29 @@ static int ovl_get_layers(struct super_b
- 		}
+--- a/fs/overlayfs/overlayfs.h
++++ b/fs/overlayfs/overlayfs.h
+@@ -74,9 +74,13 @@ enum ovl_entry_flag {
+ };
  
- 		/*
-+		 * Lower file handles identify the lower fs, but not the layer,
-+		 * so with different idmaps on the same lower fs, index and
-+		 * nfs_export may decode a file handle through a layer with the
-+		 * wrong idmap.  Following copy up origin without index is only
-+		 * used for st_ino, which does not depend on the idmap.
-+		 */
-+		if (i < nr_merged_lower &&
-+		    (ofs->config.index || ofs->config.nfs_export)) {
-+			const struct mnt_idmap *idmap = mnt_idmap(mnt);
-+			struct ovl_sb *fs = &ofs->fs[fsid];
+ enum {
+-	OVL_REDIRECT_OFF,	/* "off" mode is never used. In effect	*/
+-	OVL_REDIRECT_FOLLOW,	/* ...it translates to either "follow"	*/
+-	OVL_REDIRECT_NOFOLLOW,	/* ...or "nofollow".			*/
++	/*
++	 * "off" mode is never used after mount options are verified. In effect
++	 * it translates to either "follow" or "nofollow".
++	 */
++	OVL_REDIRECT_OFF,
++	OVL_REDIRECT_FOLLOW,
++	OVL_REDIRECT_NOFOLLOW,
+ 	OVL_REDIRECT_ON,
+ };
+ 
+--- a/fs/overlayfs/params.c
++++ b/fs/overlayfs/params.c
+@@ -112,18 +112,28 @@ const struct constant_table ovl_paramete
+ 	{}
+ };
+ 
++static const char *ovl_redirect_mode_name(int redirect_mode)
++{
++	return ovl_parameter_redirect_dir[redirect_mode].name;
++}
 +
-+			if (!fs->lower_idmap) {
-+				fs->lower_idmap = idmap;
-+			} else if (fs->lower_idmap != idmap) {
-+				pr_err("lower layer '%pd2' conflicts with idmap of another lower layer on the same fs, mount with '-o index=off,nfs_export=off' to override.\n",
-+				       l->path.dentry);
-+				iput(trap);
-+				kern_unmount(mnt);
-+				return -EINVAL;
-+			}
-+		}
+ static const char *ovl_redirect_mode(struct ovl_config *config)
+ {
+-	return ovl_parameter_redirect_dir[config->redirect_mode].name;
++	return ovl_redirect_mode_name(config->redirect_mode);
+ }
+ 
+-static int ovl_redirect_mode_def(void)
++static int ovl_redirect_follow_mode(void)
+ {
+-	return ovl_redirect_dir_def	  ? OVL_REDIRECT_ON :
+-	       ovl_redirect_always_follow ? OVL_REDIRECT_FOLLOW :
++	return ovl_redirect_always_follow ? OVL_REDIRECT_FOLLOW :
+ 					    OVL_REDIRECT_NOFOLLOW;
+ }
+ 
++static int ovl_redirect_mode_def(void)
++{
++	return ovl_redirect_dir_def ? OVL_REDIRECT_ON :
++				      ovl_redirect_follow_mode();
++}
 +
-+		/*
- 		 * Make lower layers R/O.  That way fchmod/fchown on lower file
- 		 * will fail instead of modifying lower fs.
- 		 */
+ static const struct constant_table ovl_parameter_verity[] = {
+ 	{ "off",	OVL_VERITY_OFF     },
+ 	{ "on",		OVL_VERITY_ON      },
+@@ -659,11 +669,6 @@ static int ovl_parse_param(struct fs_con
+ 		break;
+ 	case Opt_redirect_dir:
+ 		config->redirect_mode = result.uint_32;
+-		if (config->redirect_mode == OVL_REDIRECT_OFF) {
+-			config->redirect_mode = ovl_redirect_always_follow ?
+-						OVL_REDIRECT_FOLLOW :
+-						OVL_REDIRECT_NOFOLLOW;
+-		}
+ 		ctx->set.redirect = true;
+ 		break;
+ 	case Opt_index:
+@@ -819,7 +824,13 @@ int ovl_init_fs_context(struct fs_contex
+ 	if (!ofs)
+ 		goto out_err;
+ 
+-	ofs->config.redirect_mode	= ovl_redirect_mode_def();
++	/*
++	 * The module default determines only if new redirects are created in
++	 * upper dir.  If they are not, the redirect follow mode will be
++	 * determined after parsing mount options.
++	 */
++	ofs->config.redirect_mode	= ovl_redirect_dir_def ?
++					  OVL_REDIRECT_ON : OVL_REDIRECT_OFF;
+ 	ofs->config.index		= ovl_index_def;
+ 	ofs->config.uuid		= ovl_uuid_def();
+ 	ofs->config.nfs_export		= ovl_nfs_export_def;
+@@ -877,6 +888,8 @@ int ovl_fs_params_verify(const struct ov
+ 			 struct ovl_config *config)
+ {
+ 	struct ovl_opt_set set = ctx->set;
++	/* The requested redirect_dir=, for reporting conflicts with it */
++	int redirect_opt = config->redirect_mode;
+ 
+ 	/* Workdir/index are useless in non-upper mount */
+ 	if (!config->upperdir) {
+@@ -903,6 +916,10 @@ int ovl_fs_params_verify(const struct ov
+ 		config->uuid = OVL_UUID_NULL;
+ 	}
+ 
++	/* Resolve redirect_dir=off to the default redirect follow mode */
++	if (config->redirect_mode == OVL_REDIRECT_OFF)
++		config->redirect_mode = ovl_redirect_follow_mode();
++
+ 	/*
+ 	 * This is to make the logic below simpler.  It doesn't make any other
+ 	 * difference, since redirect_dir=on is only used for upper.
+@@ -914,7 +931,7 @@ int ovl_fs_params_verify(const struct ov
+ 	if (config->metacopy && config->redirect_mode != OVL_REDIRECT_ON) {
+ 		if (set.metacopy && set.redirect) {
+ 			pr_err("conflicting options: metacopy=on,redirect_dir=%s\n",
+-			       ovl_redirect_mode(config));
++			       ovl_redirect_mode_name(redirect_opt));
+ 			return -EINVAL;
+ 		}
+ 		if (set.redirect) {
+@@ -923,7 +940,7 @@ int ovl_fs_params_verify(const struct ov
+ 			 * in this conflict.
+ 			 */
+ 			pr_info("disabling metacopy due to redirect_dir=%s\n",
+-				ovl_redirect_mode(config));
++				ovl_redirect_mode_name(redirect_opt));
+ 			config->metacopy = false;
+ 		} else {
+ 			/* Automatically enable redirect otherwise. */
+@@ -990,7 +1007,7 @@ int ovl_fs_params_verify(const struct ov
+ 		if (set.redirect &&
+ 		    config->redirect_mode != OVL_REDIRECT_NOFOLLOW) {
+ 			pr_err("conflicting options: userxattr,redirect_dir=%s\n",
+-			       ovl_redirect_mode(config));
++			       ovl_redirect_mode_name(redirect_opt));
+ 			return -EINVAL;
+ 		}
+ 		if (config->metacopy && set.metacopy) {
 
 
