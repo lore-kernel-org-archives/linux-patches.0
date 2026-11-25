@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795619976;
-	b=uANmHWbYzmZPQZ0zp9GYogaaHqcImR38zrQRLc2byuG570MZZWJmWUxu29+tw9S+I/56
-	 QdDDJI47wse/hJ7ePt6gdizL8HH9i/cG+kLykqbO1t/T4+EQMFbxrK7qCgPhUS0xsSlgo
-	 HrIg+rcC1LSsmowcc2K0IMPSucH9VQknJm/+MrkOuEoGLZ9CCncffxnHbdzHzYIbmPleY
-	 sPl6lpa01oeETE+3JKJlj9RXTqTdUn6AbDrcUkCDP2tpBubV5LI+CS2FSV/kTL06u3zHQ
-	 C2yABXtUfN4i0+ycl5tZ+eDZk2TEi7xnDsH/vyhyYYJCGeYbJgQ6AZh//yStuR3Ilxw==
+	t=1795619979;
+	b=oGVcQbjapt9GJqY6E7HoKxau505U/y8ONqewrd+SAj9yop6ULZRMrPvX05Y6ozxu2N3f
+	 vIX/L5kg4y9+pN86NIJwn7Gb0vxnXZyV+1C3jBeiLKjw1VjHHCNOoAC2J5sXw/ZSVcR4Q
+	 s3OcEIN5PidChO+yhpR152gj5ZzqrOJzMCTN5MAijgY79Zh8OFSTpMHS+V6matnDtoY/+
+	 8TD/KsZQPo8J9UNqraGp0BhuuqD3DXtLmxfxkDoeLEE8gfXBPnywp2iMMB1MHQ2xI1HWP
+	 vHfCS5RXRNvxuGhatRgRHTe9p2rGHZKJiu8mpmv8iSoLuAPqYdukY/icm+WJjHejMpQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795619976;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795619979;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=CnFTUaQNATzBIml+7lLPfvLeS+L0unVXCwX6b2pIWFU=;
-	b=StOdOCZY7WunGGTbLx74L153olLPMj1u8gRNNAEbM2DAtNi7nuJ4X0YsaK42P3J4sypS
-	 cANzHiSmMNe3w0FJqYmaNvDo3pZj/gImMPDbwBZj3jl6LBdcOJspbNwBE+/P81I8g2xQT
-	 ZyY7Yf5GdwRK9jMzlc+uG5CUjrHckSJkjA0e4A/4SSrjIQhK5+14Hwzy4HUD6qnuGgRnK
-	 unMu4a/4og2JblbhOjS+0xRbCQ8fiKoS2+ynce4ZTuilsvaO66ByUi04oAOWfJo2dnly6
-	 b1MOP+44pVei8EX/7Wbef6KoOQplplMKR8GuXBlfzRCmrG9sWVkq3D9zCqZdmVEPJ0Q==
+	bh=VE9KcoSSKfAfLEqd4TIMvHBgYk6wwsf2Rw2tPjpLakU=;
+	b=Kbi5VdG4lPhe9XLsB1t1LDcgaAgETjkyf5dZOGazP9EpxEb/SsYpVxMaDCLYU9JbT2fb
+	 qiM2CfNOkCOrkDJKVXnynZyRA0/QlCFPzYZlfhPrxbMyGci0xpsevEe7osD9s/5+zjzuH
+	 +Obax2wDRbF9/qVg21zUoDUKxplyKcvw7nMgcd2z7IxQp93/7N0AiHYexojMlOoctRXgY
+	 FxUnJ0BE7jBWlOU1nXWXV77024zo8pWcn7QlGrZhOTuOK4ajUls7+QlkOSkhDtegsxILh
+	 SiJvPOj8b3mP/0hHgZxUHUveCla2oOAFxfnS9jKl7MEpsaHZGKhltzvHFN5kar1IN6A==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="1Y+/Ea7W";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=lsKXImux;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 48785606A321;
-	Wed, 25 Nov 2026 15:19:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4177E606A329;
+	Wed, 25 Nov 2026 15:19:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=1Y+/Ea7W
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 997A41F000C4;
-	Wed, 25 Nov 2026 15:19:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=lsKXImux
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6CB601F000C4;
+	Wed, 25 Nov 2026 15:19:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795619976;
-	bh=CnFTUaQNATzBIml+7lLPfvLeS+L0unVXCwX6b2pIWFU=;
+	s=korg; t=1795619979;
+	bh=VE9KcoSSKfAfLEqd4TIMvHBgYk6wwsf2Rw2tPjpLakU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=1Y+/Ea7WxhzrL+SUPtoX6x+P7NbcCgiCglQ9KB3umwHf3BJm9ufJ4Otiq66+zTiK2
-	 fHh8389UCNw2OJyRTWNv4/TxBBAlKs4uRJ9IYJahrQtTurC+xkCzxKjEghJQGhrCO0
-	 xYqtC5F0T8UY66kJL2CVDhTbS8oyFLRfEkdmOxNU=
+	b=lsKXImuxVA8TNNv32cZ4uZbXHSkXsfv2pHSKamenCfxr90XI/KD9P/+m+Iz8pWjVK
+	 DACfePVb/vVh+hPGecKMgNSwwDpzag/gh5zYsA93GP8/5P8vb3Po0EPmahKexWeBVt
+	 Ef1Ur9W1LrY+TUGuIN8M1VQdM9UWTavDfHWs0/sc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sashiko <sashiko-bot@kernel.org>,
-	Tim Budding <tim.budding@gmail.com>,
+	Xiang Mei <xmei5@asu.edu>,
+	Weiming Shi <bestswngs@gmail.com>,
 	Xin Long <lucien.xin@gmail.com>,
 	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 7.3 0768/1005] sctp: report the partially delivered MID in PARTIAL_DELIVERY_ABORTED
-Date: Wed, 25 Nov 2026 15:35:06 +0100
-Message-ID: <20261125143839.737098826@linuxfoundation.org>
+Subject: [PATCH 7.3 0769/1005] sctp: reset stored flag for each association
+Date: Wed, 25 Nov 2026 15:35:07 +0100
+Message-ID: <20261125143839.759971955@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143821.729802100@linuxfoundation.org>
 References: <20261125143821.729802100@linuxfoundation.org>
@@ -69,56 +69,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Tim Budding <tim.budding@gmail.com>
+From: Weiming Shi <bestswngs@gmail.com>
 
-commit 3097fba868019924e92b8786ebd473992565f015 upstream.
+commit 173712d868eb20628ad82deb07f6829a68a9e064 upstream.
 
-When an I-FORWARD-TSN skips the message being partially delivered on a
-stream, sctp_intl_skip() passes the MID from the I-FORWARD-TSN to the
-PARTIAL_DELIVERY_ABORTED notification as pdapi_seq. That MID is the
-highest one skipped on the stream, so when more than one message is
-skipped, the notification names a later message instead of the one
-whose partial delivery was aborted.
+sctp_send_asconf_del_ip() walks every association on an endpoint. The
+stored flag records that the current association took the single-homed
+deferral path and therefore did not allocate an ASCONF chunk. It is
+currently scoped to the whole function. Once one association sets it,
+later eligible multihomed associations allocate chunks but skip
+sctp_send_asconf(), leaking each chunk and its skb.
 
-Report the MID being partially delivered, sin->mid_uo or sin->mid,
-instead.
+Reset stored for every association so only an association taking the
+deferral path skips transmission. In an A/B kmemleak test, the
+vulnerable kernel reported 210 leaked objects from this call path and the
+fixed kernel reported none.
 
-Reproduced on an unmodified kernel with the pdapi and pdapi_uo tests of
-the sctp_ifwdtsn.sh selftest added later in this series, which pass
-with this fix. Reproduction and fix done with AI assistance.
-
-Fixes: de60fe910543 ("sctp: implement handle_ftsn for sctp_stream_interleave")
-Reported-by: Sashiko <sashiko-bot@kernel.org>
-Closes: https://lore.kernel.org/all/179293012867.3134.16497481637722705271@kernel.org/
 Cc: stable@vger.kernel.org
-Signed-off-by: Tim Budding <tim.budding@gmail.com>
+Fixes: 8a07eb0a50ae ("sctp: Add ASCONF operation on the single-homed host")
+Reported-by: Xiang Mei <xmei5@asu.edu>
+Signed-off-by: Weiming Shi <bestswngs@gmail.com>
 Acked-by: Xin Long <lucien.xin@gmail.com>
-Link: https://patch.msgid.link/20261105050225.49292-3-tim.budding@gmail.com
+Link: https://patch.msgid.link/20261108161149.2774119-1-bestswngs@gmail.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/sctp/stream_interleave.c |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ net/sctp/socket.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/net/sctp/stream_interleave.c
-+++ b/net/sctp/stream_interleave.c
-@@ -1245,7 +1245,7 @@ static void sctp_intl_skip(struct sctp_u
- 	if (flags & SCTP_FTSN_U_BIT) {
- 		if (sin->pd_mode_uo && !MID_lt(mid, sin->mid_uo)) {
- 			sin->pd_mode_uo = 0;
--			sctp_intl_stream_abort_pd(ulpq, sid, mid, 0x1,
-+			sctp_intl_stream_abort_pd(ulpq, sid, sin->mid_uo, 0x1,
- 						  GFP_ATOMIC);
- 		}
- 		sctp_intl_reasm_flush_mid(&ulpq->reasm_uo, sid, mid);
-@@ -1257,7 +1257,7 @@ static void sctp_intl_skip(struct sctp_u
+--- a/net/sctp/socket.c
++++ b/net/sctp/socket.c
+@@ -809,7 +809,6 @@ static int sctp_send_asconf_del_ip(struc
+ 	struct sctp_sockaddr_entry *saddr;
+ 	int 			i;
+ 	int 			retval = 0;
+-	int			stored = 0;
  
- 	if (sin->pd_mode) {
- 		sin->pd_mode = 0;
--		sctp_intl_stream_abort_pd(ulpq, sid, mid, 0x0, GFP_ATOMIC);
-+		sctp_intl_stream_abort_pd(ulpq, sid, sin->mid, 0x0, GFP_ATOMIC);
- 	}
+ 	chunk = NULL;
+ 	sp = sctp_sk(sk);
+@@ -822,6 +821,7 @@ static int sctp_send_asconf_del_ip(struc
+ 		 __func__, sk, addrs, addrcnt);
  
- 	sctp_intl_reasm_flush_mid(&ulpq->reasm, sid, mid);
+ 	list_for_each_entry(asoc, &ep->asocs, asocs) {
++		int stored = 0;
+ 
+ 		if (!asoc->peer.asconf_capable)
+ 			continue;
 
 
