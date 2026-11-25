@@ -1,51 +1,59 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795622961;
-	b=rmA6EpmpuSnwBogMNaV8gQcEZ4KiJIUyY63F1XN5/lbnNe5ZiHzroeH4cLvKlLBEDaSE
-	 Vr3WYFzs52NMH7CYs8GmnSorcwETgPCMcwxJnqnWtgGi5BV1XbIkZXtQhRbXMMBvDpsAw
-	 5EfawhLC2iT75L2QUPv4e9x3X+cUx85Jx3IWqYW7yiIh/6B1NAhzzDzdNCg0ZYtEqzXoq
-	 v44Ts4DdrFQkjlemX0fpWLC45nGd2QudnGnOYqTIAT8R04HS39HbLvXEvdFlg+mrc8U8f
-	 MY6bqR5Zyqo+IFMBAkz8zlKixScdUvUBhTOvaJgHhpQDP7xQ+5yawJfAwyth6mp52nQ==
+	t=1795622964;
+	b=zPk2SCdbFAiL03zXsjVRKweIw0nKwA8/rQ0mKvaY7RYHLlIH/w7E1AKdaTvo+MFvmX9z
+	 jvATxsgIVDjXhmyGorjgE9Rt/FvQpalkClufQXF9BaJ/2hCnHxceuNQ0qqPCcpuS2YTTK
+	 kxKWlDRJTnCDXhAkU/qsAndejc8K1e6Xi/yMS6ZzuKpJIaCY5fC4L6db8JeIiVRJ8oJus
+	 uw3jNHURiQc4ia0EP1EnRwSFXszNRkBTRKxb+uxI1wzfdpc5NbG+SyoCsAzLcSZSO9AYD
+	 xXajakN1VXqGfLxH/RjoXGNI0hs7Mw/rNGnh/3rmEPW/CAhGL7dwdmu2lP0oVL4Binw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795622961;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795622964;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=jb7+coVZ6c52s/IfUT5vVWMGZujA/+cENKoU2T8osCI=;
-	b=zYagIchF0AZwtgkb8sOHShEAHRE0Zmc2xJHeh+5AyMrn2/QP3V7un/4U0ChkKI3j8Xyb
-	 EV74diNcuLdBJPXhD1rV4ommFMm2OGcRNR//7+sJCfOfqUt9eSTDSEJHFWGkOZB3OnDs+
-	 Si77sPwBP3WfE6VoHuYrqzEYXpci6vxHvRRl7BuiZkIruAjNhwzN0ktW2s+MLeC606Cpg
-	 aMPKEWK8HTLo6GbYWyurYYVcfTjgpo/0GX2OXv7VXkFgL1S7rCoctmIY8CXmBgWVAOHc9
-	 EW402YWs1N9zKfx3koqgDXLRZaUmyMzIcsC+rjJGxwW5w+v0lY+zcIVya4GnE6Qwf7w==
+	bh=tO6Sb8MzESzhRDTH+PbmpCeofEVfsGmsNrAzLkCrdCE=;
+	b=ipqqBQ8vQRlQMQ+Sq3ZyFbBcZxAtrxXJcx4Fso1eiwjqzLRylBHfGuLph8xtHhvAeq7S
+	 DsXOtjop1CbEz9XhkC6sw+fbxnGvqEa8C/qnK4M2e/p/Y/uzgG7DgONEJVjmJVmRSGL4C
+	 YOaRJhNu10fmR+wkwnbk4hdJydsrTSbqV/fKalyd11DJJNzz11J/wSUVgwOTOAzctWhFZ
+	 +YQmbf5Uob9O45KOjt3ZjRaHExU7sHPUjEDHsl7bICTK7aw5dFVvs/Pmeg0gpb/sZICji
+	 RXrCGUNrVS8EIBU13kfj3bqZdZzv7sR/IbmTaw9bQOy2iKuflv0u8dv8REvfvmrDg4g==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=XSHZbYWH;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=xJjW06Gk;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B55CE606A31E;
-	Wed, 25 Nov 2026 16:09:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AFD2D606A321;
+	Wed, 25 Nov 2026 16:09:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=XSHZbYWH
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9CF751F000C6;
-	Wed, 25 Nov 2026 16:09:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=xJjW06Gk
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DB9361F000C6;
+	Wed, 25 Nov 2026 16:09:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795622961;
-	bh=jb7+coVZ6c52s/IfUT5vVWMGZujA/+cENKoU2T8osCI=;
+	s=korg; t=1795622964;
+	bh=tO6Sb8MzESzhRDTH+PbmpCeofEVfsGmsNrAzLkCrdCE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=XSHZbYWHosa035UxGfO/qlTbFMgSFpnc1NrbP7PcEegejsmD/4f6poqJHzlxnX2VT
-	 8FDPwOzA//nI0ACnlqeFkcMCxFnIS47l6RqIAlgGM6PBBa01EsPWXI1jvSUaBss139
-	 F8ijq0sbM54frDcVU9uBubJc95XR0kX3utJdzYlo=
+	b=xJjW06GkeKWeY876zgko4ZsfX93dagU665cbgrhaBMEAEGLEJxPxewV3qYNJTUrGK
+	 XBR/mZQRcn6rLZ7VvwIVvorZZ4PiYY7q26LL7cbgGpyHL7d61ctTkKrHetG/louLLo
+	 VKZ84oAVclerKgVahfTOHIR4yzk6T/YMEFVXHKAQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Rishikesh Jethwani <rjethwani@purestorage.com>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.18 706/990] tls: only install push_pending_record for a TX context
-Date: Wed, 25 Nov 2026 15:34:33 +0100
-Message-ID: <20261125143838.621173466@linuxfoundation.org>
+	Ilya Maximets <i.maximets@ovn.org>,
+	Sasha Levin <sashal@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>,
+	"David S. Miller" <davem@davemloft.net>,
+	Eric Dumazet <edumazet@kernel.org>,
+	Paolo Abeni <pabeni@redhat.com>,
+	Simon Horman <horms@kernel.org>,
+	Sridhar Samudrala <sridhar.samudrala@intel.com>,
+	Kees Cook <kees@kernel.org>,
+	Jean-Paul Sergent <jpsergent@gmail.com>
+Subject: [PATCH 6.18 689/990] net: dst_metadata: fix memcmp overread in skb_metadata_dst_cmp
+Date: Wed, 25 Nov 2026 15:34:16 +0100
+Message-ID: <20261125143838.227807237@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143822.072087159@linuxfoundation.org>
 References: <20261125143822.072087159@linuxfoundation.org>
@@ -67,67 +75,59 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Rishikesh Jethwani <rjethwani@purestorage.com>
+From: Jean-Paul Sergent <jpsergent@gmail.com>
 
-commit c47e766c5307c06a78304582b2b5b5ab01ee1358 upstream.
+commit 74a7db839308dd7d1c3f72dd1e3299784df3affb upstream.
 
-tls_set_sw_offload() assigns ctx->push_pending_record for both
-directions, but the hook is a TX-side dispatcher. On a socket whose TX
-side is HW offloaded, tls_set_device_offload() installs
-tls_device_push_pending_record(); any later TLS_RX setsockopt
-overwrites it with tls_sw_push_pending_record(), because
-tls_set_device_offload_rx() itself calls tls_set_sw_offload(sk, 0, NULL)
-for the software half of a successful HW RX offload, and so does the
-fallback when the RX offload is declined (NIC with TX-only offload,
-tls_dev_add() failure).
+Commit 3fcece12bc1b6 ("net: store port/representator id in
+metadata_dst") dropped the options_len equality check when converting
+skb_metadata_dst_cmp() to a type switch, so the memcmp length is taken
+from skb a alone.  When skb b carries fewer options than a, the
+comparison reads past b's allocation.
 
->From then on tls_handle_open_record() (a TLS_SET_RECORD_TYPE cmsg after
-a MSG_MORE send, or the close path with a pending writer) runs
-tls_sw_push_pending_record() against priv_ctx_tx, which is a
-struct tls_offload_context_tx, not a struct tls_sw_context_tx, and
-reads open_rec from inside the offload context. On x86_64 without lock
-debugging that field overlays sg_tx_data[2].dma_address, which is never
-set, so the push is silently skipped and the data buffered by the
-MSG_MORE send is later sent under the cmsg's record type, e.g.
-application data in a handshake or alert record. Enabling
-CONFIG_DEBUG_SPINLOCK, CONFIG_DEBUG_LOCK_ALLOC and CONFIG_LOCKDEP, but
-not CONFIG_LOCK_STAT, in the tested x86_64 configuration moves open_rec
-over sg_tx_data[5].page_link. Once populated, its page pointer and
-scatterlist flags are interpreted as a tls_rec pointer and dereferenced
-while reading msg_plaintext.sg.size.
+Hit in practice with Cilium geneve GRO aggregation, comparing an skb
+carrying 12 bytes of tunnel options against one carrying none:
 
-Only set the hook when initialising the TX side.
+  memcmp: detected buffer overflow: 108 byte read of buffer size 96
+  WARNING: CPU: 0 PID: 15 at lib/string_helpers.c:1036 __fortify_report
+   __fortify_panic+0x9/0x10
+   skb_metadata_dst_cmp+0x11b/0x120
+   dev_gro_receive+0x303/0x620
+   gro_cell_poll+0x67/0xa0
 
-Found by code review while developing TLS 1.3 HW offload rekey support.
+Restore the check: unequal options_len means different metadata and no
+aggregation; the memcmp only runs when both sides carry the same
+options length.
 
-Tested with HW TLS TX and RX offload on Mellanox ConnectX-6 Dx (Crypto
-Enabled): after setting TLS_RX, send() "AAAA" with MSG_MORE, then
-sendmsg() "BBBB" with a TLS_SET_RECORD_TYPE cmsg for a handshake
-record. Without this patch the peer receives a single handshake record
-"AAAABBBB"; with it, an application data record "AAAA" followed by a
-handshake record "BBBB".
-
-Fixes: e8f69799810c ("net/tls: Add generic NIC offload infrastructure")
+Fixes: 3fcece12bc1b6 ("net: store port/representator id in metadata_dst")
 Cc: stable@vger.kernel.org
-Signed-off-by: Rishikesh Jethwani <rjethwani@purestorage.com>
-Link: https://patch.msgid.link/20261102213011.4191020-1-rjethwani@purestorage.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Cc: Ilya Maximets <i.maximets@ovn.org>
+Cc: Sasha Levin <sashal@kernel.org>
+Cc: Jakub Kicinski <kuba@kernel.org>
+Cc: "David S. Miller" <davem@davemloft.net>
+Cc: Eric Dumazet <edumazet@kernel.org>
+Cc: Paolo Abeni <pabeni@redhat.com>
+Cc: Simon Horman <horms@kernel.org>
+Cc: Sridhar Samudrala <sridhar.samudrala@intel.com>
+Cc: Kees Cook <kees@kernel.org>
+Signed-off-by: Jean-Paul Sergent <jpsergent@gmail.com>
+Link: https://patch.msgid.link/20261109082410.206140-1-jpsergent@gmail.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/tls/tls_sw.c |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ include/net/dst_metadata.h |    2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/net/tls/tls_sw.c
-+++ b/net/tls/tls_sw.c
-@@ -2933,7 +2933,8 @@ int tls_set_sw_offload(struct sock *sk,
- 		}
- 	}
- 
--	ctx->push_pending_record = tls_sw_push_pending_record;
-+	if (tx)
-+		ctx->push_pending_record = tls_sw_push_pending_record;
- 
- 	/* setkey is the last operation that could fail during a
- 	 * rekey. if it succeeds, we can start modifying the
+--- a/include/net/dst_metadata.h
++++ b/include/net/dst_metadata.h
+@@ -116,6 +116,8 @@ static inline int skb_metadata_dst_cmp(c
+ 		return memcmp(&a->u.port_info, &b->u.port_info,
+ 			      sizeof(a->u.port_info));
+ 	case METADATA_IP_TUNNEL:
++		if (a->u.tun_info.options_len != b->u.tun_info.options_len)
++			return 1;
+ 		return memcmp(&a->u.tun_info, &b->u.tun_info,
+ 			      sizeof(a->u.tun_info) +
+ 					 a->u.tun_info.options_len);
 
 
