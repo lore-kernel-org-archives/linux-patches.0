@@ -1,51 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795623054;
-	b=ANq91XvKyFTpFE3pokJ9rP3uSohT6YBwS/RbEfPkdhjAD1Bl9bzcYyfSvN5v1dCc9ClP
-	 +PI8LJ0GKKyvP8FUGK70YJvtSbUvgofoVfeCoPrRDeIrthSfIYzOTQUY0x9ODad259KUR
-	 Bb3QbMOw3Wb04SL+Hr+sx0IKPjKYyYBf7jku7yBuZSOSZ9vg+a0SrSlrJu2HQquykqbLh
-	 U92tgo/tggEoaSRiGDO4oS5tL6rFJHY1an1R/kvzh2d7qCaRzD8rOLDe8QorAf1B+GzL7
-	 Qf7s2/9gnaWz2XttIOxW1yX7qIT9yJ4UUUrffgy27QDt90A3rHt8TUv/sC+yFlQ2tSA==
+	t=1795623057;
+	b=w9gD9apTOmz2TI5GtPEjwI/zp6v/JUN6B1T01es202BnXIzPrKKIO2X0mB7v/wS3HrGK
+	 nWtuuBswFwN/PVLaXFyVGsMPH6dZ0J2hfnHgUygMtM18Wag5TA4dW5aJYQGH4r6ooz6U7
+	 DE/lb+m1uRgPdiBVThnQyZqsoOidQxsuJ1/Jfifc6bLejSK+LqMRrsRECZAnnKihinmu0
+	 CzY5EXMFluCjJlMGkuug4y6D1k0Tl6bJCGVVqhlRu9tv5Lzg2OP2nVZ15sX3Mz+bWi436
+	 QC31XKLsb3egdz752Nj4YVyGCT5Y4fbOMCQG+LrvcDwOjKxnnU7fI7h6XHWmcgkL41w==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795623054;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795623057;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=UuRCskjsDApie3OEUBzNmjTEARf5CVCASNMZ1x/UEcY=;
-	b=nT6Vet/SqpOByNYw+7VT+rM8ai3QOYkJQqgC9eH/tVtgBWt+lFR8zhcD81sTj5IYcgFJ
-	 tfHougBVdIUmGxFC4zgmweUWwhTY8f9b2Hd9dll//P5EYUii8KwmHRY+U9UEPpK0sfem8
-	 xlPG6yFKz4+LJQL4VIDPIPNbYy1FgjmZUre9Xcp2tz4fBIJAltBnJhZcolu5p0m7vYNjo
-	 pwITtdG7aX0LyUcUAdjGHUrR1BAm+tT9l0kP6qkqD5iEklMY3za2aOn97/L7v+Vdf6yQx
-	 Dr309y89ZoJQ9v8Lj1RH8mCHrCIzF/ClSDDWoVWbgw2a3HUKj5I0xO6bnQZ1oa65vAw==
+	bh=1Mq6V+ufpSOnWRQY/VvQYYWNqC6lE8vloc+jMktKR1U=;
+	b=bV/ykuml+pXrCgdqTY0ACJeu0BWS22PVgzdDD+8h5VaUGmvKvETEOQ02vYBfeCbfjx3r
+	 BnSuLdmYjKH+GDmzgsC2m0QIyzKNx75UeV+prupN5y9Ce1RUL6utnzaBfwdQ/ieplk2pM
+	 w1E64WEm2aH/zy3TYOpnuZUfcTTrLMVdi3QUPm/Mf5z62L6s/qMISJLfe3Ty0zTHI3G05
+	 jQvxhouNlGexV/+t7QTeDStTVYh6WfmPh00D+Lo0vkLCqcHTFpdIZPF+Cn8mFtNrV5Ez1
+	 m0xNZodvvpySyNgr3ULCnVEj2akR7qdFlI3CXCVsViiY4Nl0ov5w2FhY0iiWgtRN7+w==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=mlvb2lpC;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="o/g/QlY1";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 837CC606A31E;
-	Wed, 25 Nov 2026 16:10:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 56C01606A321;
+	Wed, 25 Nov 2026 16:10:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=mlvb2lpC
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A41AB1F000C0;
-	Wed, 25 Nov 2026 16:10:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=o/g/QlY1
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A8A761F000C4;
+	Wed, 25 Nov 2026 16:10:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795623054;
-	bh=UuRCskjsDApie3OEUBzNmjTEARf5CVCASNMZ1x/UEcY=;
+	s=korg; t=1795623057;
+	bh=1Mq6V+ufpSOnWRQY/VvQYYWNqC6lE8vloc+jMktKR1U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=mlvb2lpCCWj0EnAJCgAgF3DncfZoqGBM6frVkk51ha9Hc076+5KjbgumY31R7lAmw
-	 HK/D05uOX8d2TVDuNCg+21owi5pNpE7nntCPNB/u8bBGVfrN3sCQgQKzeHcenqytVN
-	 zQibVIs+KxodtugQhEm/2GFIzzd3VcqBipya0sWQ=
+	b=o/g/QlY1pF4F+uFi5k5Os20gB1zuEOkEjGZFX379OrXk9GKI0sQiY7DEEnJcwnHgY
+	 h6U0kDKzQ4SaOeAsRzETHe1RZ6M17kIlJtBODDaBGrvLeqTsf4pM+Dje38zzkDUdWX
+	 3r89rB1F0CyvVbXqT6gUuX2VHB8BqfNHuckQTgNc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tim Menninger <tmenninger@everpuredata.com>,
-	Anna Schumaker <anna.schumaker@hammerspace.com>
-Subject: [PATCH 6.18 733/990] NFSv4: Prevent indefinite waits for out-of-order OPEN stateids
-Date: Wed, 25 Nov 2026 15:35:00 +0100
-Message-ID: <20261125143839.237068303@linuxfoundation.org>
+	Joas Antonio dos Santos <joasantonio108@gmail.com>,
+	Simon Horman <horms@kernel.org>,
+	Aaron Conole <aconole@redhat.com>,
+	Eelco Chaudron <echaudron@ovn.org>,
+	Paolo Abeni <pabeni@redhat.com>
+Subject: [PATCH 6.18 734/990] openvswitch: advance by the real header length in get_ipv6_ext_hdrs()
+Date: Wed, 25 Nov 2026 15:35:01 +0100
+Message-ID: <20261125143839.260631747@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143822.072087159@linuxfoundation.org>
 References: <20261125143822.072087159@linuxfoundation.org>
@@ -67,64 +70,85 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Tim Menninger <tmenninger@everpuredata.com>
+From: Joas Antonio dos Santos <joasantonio108@gmail.com>
 
-commit 151d95a1e696979a7d54b23c96338754be2fcc1f upstream.
+commit dbce972650ed6348e3d3856e49308aa5603e02a7 upstream.
 
-When processing an out-of-order OPEN stateid on an NFSv4.1 or later
-mount, nfs_set_open_stateid_locked() waits for stateid updates to be
-processed in order. A five-second timeout is intended to prevent
-indefinite waits when preceding updates never arrive.
+get_ipv6_ext_hdrs() walks the IPv6 extension header chain to fill
+key->ipv6.exthdrs, but advances to the next header with ipv6_optlen()
+whatever the current header is.  That is only right for Hop-by-Hop,
+Destination Options and Routing headers:
 
-However, each iteration calls schedule_timeout() with a fresh
-five-second timeout. An update to the shared open state can wake the
-caller without satisfying its ordering check. The remaining timeout
-is then discarded, and the next iteration starts another full wait.
+ - an Authentication Header is ((hdrlen + 2) << 2) bytes long
+   (ipv6_authlen()), so with hdrlen = 4 the walk skips 40 bytes instead
+   of 24 and reads the next "header" from the ICV and payload;
 
-Under sustained concurrent OPEN/CLOSE activity on the same open state,
-repeated wakeups can prevent the timeout from ever expiring. Some
-tasks can remain stuck in update_open_stateid() while others continue
-making progress.
+ - a Fragment header is always 8 bytes, and the byte read as hdrlen is
+   its Reserved field, which the sender controls and receivers ignore,
+   so a non-zero value makes the walk skip up to 2048 bytes and miss
+   the headers that follow;
 
-Compute a single deadline on entry and pass only the remaining time
-to schedule_timeout(). Once the deadline expires, take the existing
-timeout path rather than starting another wait. This prevents
-wakeups from extending the wait indefinitely.
+ - in a non-first fragment nothing after the Fragment header is a
+   header at all, it is the middle of the fragmentable part, yet the
+   walk keeps parsing it as an extension header chain.
 
-Observed on Linux 6.8.0 and reproduced on 7.3.0 with 96 concurrent
-O_RDWR|O_TRUNC open/close loops on one NFSv4.1/TCP file (nconnect=16).
-Ten workers made no progress for over 300 seconds while others ran.
-With the fix, all workers resumed after transient stalls.
+In all cases the OFPIEH12_* bits stored in key->ipv6.exthdrs depend on
+bytes chosen by the sender rather than on the headers that are actually
+present: payload bytes that look like another AH or a Hop-by-Hop header
+add OFPIEH12_UNREP/OFPIEH12_UNSEQ, and real headers after a Fragment
+header can go unreported.  Flows that match on OVS_KEY_ATTR_IPV6_EXTHDRS
+then classify such packets wrongly.  There is no memory safety issue,
+skb_header_pointer() bounds every read.
 
-Fixes: c9399f21c215 ("NFSv4: Fix OPEN / CLOSE race")
+Advance by sizeof(struct frag_hdr) for Fragment headers and by
+ipv6_authlen() for AH, and stop at the Fragment header if its offset is
+non-zero, as ipv6_find_hdr() does.
+
+Fixes: 28a3f0601727 ("net: openvswitch: IPv6: Add IPv6 extension header support")
+Link: https://lore.kernel.org/all/178905555085.219967.6617611783437228045@kernel.org/
 Cc: stable@vger.kernel.org
-Signed-off-by: Tim Menninger <tmenninger@everpuredata.com>
-Signed-off-by: Anna Schumaker <anna.schumaker@hammerspace.com>
+Signed-off-by: Joas Antonio dos Santos <joasantonio108@gmail.com>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Reviewed-by: Aaron Conole <aconole@redhat.com>
+Reviewed-by: Eelco Chaudron <echaudron@ovn.org>
+Link: https://patch.msgid.link/20261102-ovs-exthdrs-v2-1-21ceef6a243d@gmail.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/nfs/nfs4proc.c |    5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ net/openvswitch/flow.c |   19 ++++++++++++++++++-
+ 1 file changed, 18 insertions(+), 1 deletion(-)
 
---- a/fs/nfs/nfs4proc.c
-+++ b/fs/nfs/nfs4proc.c
-@@ -1775,6 +1775,8 @@ static void nfs_set_open_stateid_locked(
- {
- 	DEFINE_WAIT(wait);
- 	int status = 0;
-+	unsigned long deadline = jiffies + 5 * HZ;
-+	signed long remaining;
- 	for (;;) {
+--- a/net/openvswitch/flow.c
++++ b/net/openvswitch/flow.c
+@@ -370,11 +370,28 @@ static void get_ipv6_ext_hdrs(struct sk_
+ 			return;
+ 		}
  
- 		if (nfs_stateid_is_sequential(state, stateid))
-@@ -1809,7 +1811,8 @@ static void nfs_set_open_stateid_locked(
++		if (next_type == IPPROTO_FRAGMENT) {
++			struct frag_hdr _fh, *fh;
++
++			fh = skb_header_pointer(skb, start, sizeof(_fh), &_fh);
++			if (!fh)
++				break;
++			/* Only the first fragment has the headers that follow. */
++			if (fh->frag_off & htons(IP6_OFFSET))
++				break;
++			start += sizeof(_fh);
++			next_type = fh->nexthdr;
++			continue;
++		}
++
+ 		hp = skb_header_pointer(skb, start, sizeof(_hdr), &_hdr);
+ 		if (!hp)
+ 			break;
++		if (next_type == IPPROTO_AH)
++			start += ipv6_authlen(hp);
++		else
++			start += ipv6_optlen(hp);
+ 		next_type = hp->nexthdr;
+-		start += ipv6_optlen(hp);
+ 	}
+ }
  
- 		if (!fatal_signal_pending(current) &&
- 		    !nfs_current_task_exiting()) {
--			if (schedule_timeout(5*HZ) == 0)
-+			remaining = (long)(deadline - jiffies);
-+			if (remaining <= 0 || schedule_timeout(remaining) == 0)
- 				status = -EAGAIN;
- 			else
- 				status = 0;
 
 
