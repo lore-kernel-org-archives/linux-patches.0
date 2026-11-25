@@ -1,50 +1,50 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795619369;
-	b=1oHgGmsWQw8L/4iRe3L61LAjM8mkYSGshuH+/1rPh3nhkhH+StneRNi8lzFVMzZGldxB
-	 Tyz6px6WGI3HjEnJj+1EpBJPMUqrseUhivUQdR1hyoS8IElkVyhJoshYYdxkp/HILod4F
-	 iOgM7LvmpQd+dp9zAXOUaMsPdrYhbjyWAELEKsmU6O9q6XauuNaqkoBWntws9/S7pU7mI
-	 sQpIfxhwtP5ORCcHV6daUN/A9JeZJ3IafboOh39br97wgHinHUBVl5tVCnW5nWHBduuhp
-	 EQTPRZHfI9U8ik2JOC0T3lY9+IQHEJmhnmzw6ThGzYi1SK3PR2zKz/zErZXNvxkx1Vw==
+	t=1795619372;
+	b=lb+7Gx1RKzmnaeBNMMpeFLwsalhc5PJnpZuQ3KdoW0YkO9fNG5WU4wZ02oe8VnZ/c1hr
+	 XkoWCx4mkQO5DtHBSFHZAMGOGPCkx9LnaFJCuQdzd42sDr56KKenK8Ed7B2p0CpoLGGJE
+	 97qj1j9VXjxL0qn2jWmK1G0Pi+7jmN8q//Y69k9QGOSpVz7WBh3HivomUBGne2jLVAKUT
+	 A6zmp1F2rhPpgUjmSUeeEdIVPFRNHgAir1d55cKlZk92qg+DWI1zCs0FymUTmyMesnUba
+	 cpGBC/kcyUmhn3QFmNhNhomyPZHFLkK4pvqEDl6cTSeKhUy/FrFLkVUYNHrtW81rlhQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795619369;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795619372;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=HpMA2TTypCl+j2hfIkylWidIzPSxJU6cckrIziEae2g=;
-	b=ARk1awJhCf8/oRjYPJHcIDs/gWi4e9pZCS1mJ9xsJsQTugPWiqNnye7TIsdJikwJOjUa
-	 UqtvVX2kt6WShdIUKcTXDyqnS3+qqT+8iIdVMxZciJBJg4MqvfpjL4fPq2HYRMEtxDx7R
-	 NvqAS6PawK6HggxZj0059E/+AmKzsr8AlnI72Ui0Tvxt+gkCPoG7o8tFXq82XxstSHeCJ
-	 9rN2Y21LNi5F5OuXukumQGHSCd3jTXmLCf9kRcht4PXXouz81yer8V2KRywLqS8W/tyk7
-	 0gD/mBMLQyI5RLzGNG6CB9V5nJp98j7pZ+N+tsQ61tAFQh13WmXvsvN583r5kKcXxqA==
+	bh=W6G+0VZY5FYa+TpFRLmIydB95e25gPjPOYi+0gntYLI=;
+	b=3T/v4EC8CVNamS2WJhJz2KJgkD1jWzlNNcrcJto1h9dJiaBUSCp3BfnDeFD6KjfDKf5W
+	 05QVZopfq/TMD5Dg84VzDCLvlj3H2fuaZ5nUI+rLtzbgrV9Nx+wG8ZQHHzVRyqxHOwNQs
+	 GBxv6Srqj0MoF1pRUFBjPMMA4RrE0fbY/0EpMzoI++xXCxvre7BRlw4kDnF089iD1g5rl
+	 XEyExJir8bYrYDJPLux5FU2840wZZczVwWgYz3/D4PzeqZ7wD95upyM5dPczBdNe+QFqh
+	 QEh0KSUVgq743xBGkYur8tcRzk52JXZv2IXeP2xW9GLwq3TbcBRMcuTm91ZDuu8t7fA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=nYNgrLn4;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=1JpeoTKM;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E664A606A323;
-	Wed, 25 Nov 2026 15:09:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4DD97606A323;
+	Wed, 25 Nov 2026 15:09:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=nYNgrLn4
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2B6B71F000CA;
-	Wed, 25 Nov 2026 15:09:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=1JpeoTKM
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 820971F000CF;
+	Wed, 25 Nov 2026 15:09:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795619368;
-	bh=HpMA2TTypCl+j2hfIkylWidIzPSxJU6cckrIziEae2g=;
+	s=korg; t=1795619372;
+	bh=W6G+0VZY5FYa+TpFRLmIydB95e25gPjPOYi+0gntYLI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=nYNgrLn4NHs0mYeqHE2qq3FcB16bjGjoKmfRSXDJG+Hl6ku8k8xC4Bon9ULmlSQRY
-	 bLRutx6iSiXha6mCEou8RY83xlT2Drimw54+sJksKVZyY1dB8TWryWtOsx0aJmV/SP
-	 0mAD3MtSfDAOmUsIV4yD9lJBVhX4GFpffwqdwyno=
+	b=1JpeoTKMcOZn+9z3BkA4T5s4xh4vQNAE5JaOOgHPK2z1XigWgKYqSw1ptcauJOtVE
+	 +6cwdawVc1fSHLupZvkxrv9frg8Z5BjlhSOn1J2pr5kG8Sqx5nYQvPjxroGqVGWU1+
+	 uj08iV6Cc0JqKcTLrAfaFOfC7jXFdx0wDOB5Myc4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>
-Subject: [PATCH 7.3 0574/1005] kprobes: Fix double free and NULL deref in unregister_kretprobes()
-Date: Wed, 25 Nov 2026 15:31:52 +0100
-Message-ID: <20261125143835.195146714@linuxfoundation.org>
+Subject: [PATCH 7.3 0575/1005] kprobes: Validate re-registration earlier in register_kretprobe()
+Date: Wed, 25 Nov 2026 15:31:53 +0100
+Message-ID: <20261125143835.218017980@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143821.729802100@linuxfoundation.org>
 References: <20261125143821.729802100@linuxfoundation.org>
@@ -68,54 +68,156 @@ Content-Transfer-Encoding: 8bit
 
 From: Masami Hiramatsu (Google) <mhiramat@kernel.org>
 
-commit 2053bac1d6e47b33fa2e570c87518395e64f7da0 upstream.
+commit a553b499f22bf054964d4fd16d136f3d4f836c23 upstream.
 
-In unregister_kretprobes(), if __unregister_kprobe_top() returns an error
-(e.g., if the kretprobe was not registered or was already unregistered),
-rethook_free(rps[i]->rh) or rcu_assign_pointer(rps[i]->rph->rp, NULL) is
-still executed. For rethook-based kretprobes, calling rethook_free() on an
-already-freed rethook causes a double-free / list corruption in RCU. For
-legacy kretprobes, rps[i]->rph is NULL after previous cleanup, resulting
-in a NULL pointer dereference.
+register_kretprobe() only checked for re-registration if rp->kp.addr was
+specified, skipping the check when rp was registered with symbol_name
+and rp->kp.addr was NULL. In that scenario, register_kretprobe()
+proceeded to allocate a new rethook (or kretprobe holder), and when
+register_kprobe(&rp->kp) subsequently failed due to re-registration, the
+error path freed and NULL-ed rp->rh (or rp->rph) on the still-active
+kretprobe, leading to NULL pointer dereferences when the active probe
+was hit.
 
-Skip rethook_free() and rph cleanup if __unregister_kprobe_top() fails,
-and clear rps[i]->rh after synchronize_rcu() has waited for in-flight
-pre_handler_kretprobe() invocations to complete.
+Resolve the target address via _kprobe_addr() up-front and check whether
+the probe is already registered at that address via
+check_kprobe_rereg_at() before allocating any resources, and drop the
+WARN_ON_ONCE() in the re-registration check now that re-registration is
+gracefully detected and rejected.
 
-Link: https://lore.kernel.org/all/179375031660.247640.6349602689169856649.stgit@devnote2/
+Link: https://lore.kernel.org/all/179375032568.247640.17429793187163536192.stgit@devnote2/
 
-Fixes: 73f9b911faa7 ("kprobes: Use rethook for kretprobe if possible")
+Fixes: 0188b87899ff ("kretprobe: Avoid re-registration of the same kretprobe earlier")
 Cc: stable@vger.kernel.org
 Signed-off-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/kprobes.c |    8 ++++++--
- 1 file changed, 6 insertions(+), 2 deletions(-)
+ kernel/kprobes.c |   72 ++++++++++++++++++++++++++++++-------------------------
+ 1 file changed, 40 insertions(+), 32 deletions(-)
 
 --- a/kernel/kprobes.c
 +++ b/kernel/kprobes.c
-@@ -2370,8 +2370,10 @@ void unregister_kretprobes(struct kretpr
- 	for (i = 0; i < num; i++) {
- 		guard(mutex)(&kprobe_mutex);
+@@ -1558,52 +1558,61 @@ _kprobe_addr(kprobe_opcode_t *addr, cons
+ 	return addr;
+ }
  
--		if (__unregister_kprobe_top(&rps[i]->kp) < 0)
-+		if (__unregister_kprobe_top(&rps[i]->kp) < 0) {
- 			rps[i]->kp.addr = NULL;
-+			continue;
+-static kprobe_opcode_t *kprobe_addr(struct kprobe *p)
+-{
+-	bool on_func_entry;
+-
+-	return _kprobe_addr(p->addr, p->symbol_name, p->offset, &on_func_entry);
+-}
+-
+ /*
+  * Check the 'p' is valid and return the aggregator kprobe
+  * at the same address.
+  */
+-static struct kprobe *__get_valid_kprobe(struct kprobe *p)
++static struct kprobe *__get_valid_kprobe_at(struct kprobe *p, kprobe_opcode_t *addr)
+ {
++	struct hlist_head *head;
+ 	struct kprobe *ap, *list_p;
+ 
+ 	lockdep_assert_held(&kprobe_mutex);
+ 
+-	ap = get_kprobe(p->addr);
+-	if (unlikely(!ap))
++	if (unlikely(!addr))
+ 		return NULL;
+ 
+-	if (p == ap)
+-		return ap;
+-
+-	list_for_each_entry(list_p, &ap->list, list)
+-		if (list_p == p)
+-		/* kprobe p is a valid probe */
++	head = &kprobe_table[hash_ptr(addr, KPROBE_HASH_BITS)];
++	hlist_for_each_entry_rcu(ap, head, hlist,
++				 lockdep_is_held(&kprobe_mutex)) {
++		if (ap == p) {
++			p->addr = addr;
+ 			return ap;
 +		}
- #ifdef CONFIG_KRETPROBE_ON_RETHOOK
- 		rethook_free(rps[i]->rh);
- #else
-@@ -2383,7 +2385,9 @@ void unregister_kretprobes(struct kretpr
- 	for (i = 0; i < num; i++) {
- 		if (rps[i]->kp.addr) {
- 			__unregister_kprobe_bottom(&rps[i]->kp);
--#ifndef CONFIG_KRETPROBE_ON_RETHOOK
-+#ifdef CONFIG_KRETPROBE_ON_RETHOOK
-+			rps[i]->rh = NULL;
-+#else
- 			free_rp_inst(rps[i]);
- #endif
- 		}
++		if (ap->addr == addr && kprobe_aggrprobe(ap)) {
++			list_for_each_entry(list_p, &ap->list, list) {
++				if (list_p == p) {
++					p->addr = addr;
++					return ap;
++				}
++			}
++		}
++	}
+ 
+ 	return NULL;
+ }
+ 
+-/*
+- * Warn and return error if the kprobe is being re-registered since
+- * there must be a software bug.
+- */
+-static inline int warn_kprobe_rereg(struct kprobe *p)
++static inline struct kprobe *__get_valid_kprobe(struct kprobe *p)
++{
++	return __get_valid_kprobe_at(p, p->addr);
++}
++
++/* Return error if the kprobe is being re-registered */
++static inline int check_kprobe_rereg_at(struct kprobe *p, kprobe_opcode_t *addr)
+ {
+ 	guard(mutex)(&kprobe_mutex);
+ 
+-	if (WARN_ON_ONCE(__get_valid_kprobe(p)))
++	if (__get_valid_kprobe_at(p, addr))
+ 		return -EINVAL;
+ 
+ 	return 0;
+ }
+ 
++static inline int check_kprobe_rereg(struct kprobe *p)
++{
++	return check_kprobe_rereg_at(p, p->addr);
++}
++
+ static int check_ftrace_location(struct kprobe *p)
+ {
+ 	unsigned long addr = (unsigned long)p->addr;
+@@ -1734,7 +1743,7 @@ int register_kprobe(struct kprobe *p)
+ 		return PTR_ERR(addr);
+ 	p->addr = addr;
+ 
+-	ret = warn_kprobe_rereg(p);
++	ret = check_kprobe_rereg(p);
+ 	if (ret)
+ 		return ret;
+ 
+@@ -2270,20 +2279,19 @@ int register_kretprobe(struct kretprobe
+ 	int ret;
+ 	int i;
+ 	void *addr;
++	bool on_func_entry;
+ 
+-	ret = kprobe_on_func_entry(rp->kp.addr, rp->kp.symbol_name, rp->kp.offset);
+-	if (ret)
+-		return ret;
++	addr = _kprobe_addr(rp->kp.addr, rp->kp.symbol_name, rp->kp.offset, &on_func_entry);
++	if (IS_ERR(addr))
++		return PTR_ERR(addr);
++
++	if (!on_func_entry)
++		return -EINVAL;
+ 
+-	/* If only 'rp->kp.addr' is specified, check reregistering kprobes */
+-	if (rp->kp.addr && warn_kprobe_rereg(&rp->kp))
++	if (check_kprobe_rereg_at(&rp->kp, addr))
+ 		return -EINVAL;
+ 
+ 	if (kretprobe_blacklist_size) {
+-		addr = kprobe_addr(&rp->kp);
+-		if (IS_ERR(addr))
+-			return PTR_ERR(addr);
+-
+ 		for (i = 0; kretprobe_blacklist[i].name != NULL; i++) {
+ 			if (kretprobe_blacklist[i].addr == addr)
+ 				return -EINVAL;
 
 
