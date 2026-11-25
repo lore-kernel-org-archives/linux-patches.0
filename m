@@ -1,56 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795624458;
-	b=B+niVl6XciBBNdUNZkUUqpG+LQ2zhm6jk0JTvU1PzYaHf5JL3J1CvKoMeXhUEYLzbBId
-	 lgDNtC26aY6aBJYC+JQLqWW/ObkWlT4rnn8Yy1Mw5A2MHsFAUJVlWPjYS46G4KS+ss8x1
-	 oDd9WpKB3IFjBk+bmtbx/3CPQGE0QsHXNxi+USmNrNDKdh8BIbRbMixVbQdQtQTaBoDPj
-	 Qd94fi66E6LrHpJfhM5CzlOhFLTmQhsBP5I1qv5HhnH0z2a+FC1VR0U/lz/xLbeF9yB1j
-	 5GtQiSS38ZJgQZ9UUBai8EXIRa+ZpisSX/l5cRI9egX4bU5D6iYuTAQXX4LfaZdy+tg==
+	t=1795624461;
+	b=XZWDEsgYo4VfLUgX5GHlJupPzyEUf8l17hx6q8c85VKyg4kXcTfdgwrVUq5kCsdbUxET
+	 al1wJbXsLnlfSWqDhyj4DfWvMQ6sKsC/L+cJckXv9v9n3R6vAcSgkJC7c1DBL3glmqr4i
+	 kpBM/L7Z+AOmQk1B7XCH1VIvYoVaVRlrD9uIwleofdaUA/XbOffHRS+i70xy/yqc/4uMy
+	 lo3UEiUlDfxFioSTllyZsnizM1UBSPQP8q+3pk/V2kYfeGI5MaFazjNST4wDDq4eoUp7B
+	 YEaqHmYbTB4xzLw5dMM3GoYHbeOV88Jw5IbUNwYJ0lmqPIH4xAskYcoFIZkmmB/QJnA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795624458;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795624461;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=UFuL5I+u7upz5JOcm4e2F3fddf0JHbttEoqwREmA32g=;
-	b=FcpZmcflhoR+wJM03DXBbMMEdHpuZJeQ0cEWS9iaxjmP97DbipYOxt4EgzcZv4sGtlhs
-	 DywirMnzkNcjyZeuOhtxQ8zWQ/yx5ky7uiRvs2+4MGVq9j76+wSbDZfycBooUhPQDCzaM
-	 CTvA7eTroybD2aK2Pz8KEuAXEZ5XlcDlnc7bYEss6ZdMkuBdb8TGsmwnY2ru/rQ9T+r0D
-	 8bMCDZlaxUYrxIzazcH8vwFhbzI/I2WSIfkl7F0vQXuo+avnuFBk348+nTMHAENP5fq6D
-	 FMRB6zYnorODsz2qCTcU9nTt6CsOr7hhazh/Wuc5kDJkV4wP2G2uDZVxV+yfFQmA/Vw==
+	bh=/MNpjfB8DZbtXJAL+H2yG2+D8L/9dLSEWm3VtAd2L3o=;
+	b=ABQMGSvTWykxYwzVCT6/M/l7P0Abm73lHNVsFY/LdGPHSJZOlZgIzDMVDnfLU0ZOuFYp
+	 RUGRkani74ybbp9LOaTUWj8oQyokOZkinjiculj3o+Y5a26BLrhDzOadLCKBo+Bkw4QYw
+	 7QOh2GOGRMfgQxi5vZKGFhSKaLQMYrNyMZ7jDifsVGuZW1H9MeGHbT7XeWvIHOA+qtdRO
+	 1OouYLR65xkMBqXDVNiCRt8269jaRnGv6+WGLHSbfNkYca+x3duMBfIixHw49rHjNxmZq
+	 SKGjPLyR9oksYA0DW5jYLVz+1MMLELI1HJKI2jtpr9tY2qZMJ4AgWqy+XbhbnuJxUnQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=LKPWCLtn;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=L1okvHlK;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 583A2606A33C;
-	Wed, 25 Nov 2026 16:34:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2B279606A33A;
+	Wed, 25 Nov 2026 16:34:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=LKPWCLtn
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AF0DA1F000C4;
-	Wed, 25 Nov 2026 16:34:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=L1okvHlK
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7C7671F000C4;
+	Wed, 25 Nov 2026 16:34:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795624458;
-	bh=UFuL5I+u7upz5JOcm4e2F3fddf0JHbttEoqwREmA32g=;
+	s=korg; t=1795624461;
+	bh=/MNpjfB8DZbtXJAL+H2yG2+D8L/9dLSEWm3VtAd2L3o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=LKPWCLtnw1R8VdfU99m0B1H3SL6uCRtIwHk+71A5W5GN7EAJ2788mysskYYDt1qOF
-	 QJ+E45QxH/xpRgV0RY3xC2y2PyAwF4HYeYIN6twfIMov28D2x+QhFpG3SMExHYU6XU
-	 DKgyBnddnfUvQ/njNeakvuIMUf0LKDZ3VfopdcfI=
+	b=L1okvHlKfQfb9evgZwGOwJnUp0Zu0gBe9fieGRhKU3RcSjos7Lv1vi9EesKVco9pt
+	 RE0C9ROF8wHJ+ckd4gTbngqhIfhh8wkx7pAalYlgyRulhmglfrI7c9YLgdmST6S6Ub
+	 gynEdAGNuJFT0M3NE1uxU/GEcR2XmxRCeh4ii8HQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christoph Hellwig <hch@lst.de>,
-	Sagi Grimberg <sagi@grimberg.me>,
-	Chaitanya Kulkarni <kch@nvidia.com>,
-	Chris Mason <mason@kernel.org>,
-	Jens Axboe <axboe@kernel.dk>,
-	Keith Busch <kbusch@kernel.org>,
+	James Clark <jjc@jclark.com>,
+	Jacob Keller <Jacob.e.keller@intel.com>,
+	Dave Miller <davem@davem-thinkpadp1gen8.ibmlond.csb>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 199/816] nvmet-rdma: disconnect a queue on device removal
-Date: Wed, 25 Nov 2026 15:29:07 +0100
-Message-ID: <20261125143853.799128291@linuxfoundation.org>
+Subject: [PATCH 6.12 200/816] net: ethernet: ti: am65-cpts: adjust perout genf following ptp changes
+Date: Wed, 25 Nov 2026 15:29:08 +0100
+Message-ID: <20261125143853.821830925@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143849.205329330@linuxfoundation.org>
 References: <20261125143849.205329330@linuxfoundation.org>
@@ -72,76 +69,165 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chris Mason <mason@kernel.org>
+From: James Clark <jjc@jclark.com>
 
-[ Upstream commit a4387799d4228866dc1746b466cd17e1c638d050 ]
+[ Upstream commit 3f1054a0cb09552dd54db024694f74747f9f1d49 ]
 
-cma_remove_one() sends DEVICE_REMOVAL to the owner of every cm_id on
-the device and then waits, without timeout, until they're all
-destroyed. nvmet_rdma_device_removal() does nothing for a queue cm_id
-and leaves the queues to nvmet_rdma_remove_one(), which only works if
-that runs first. As a module it does, nvmet-rdma registers after
-rdma_cm. Built in, both register at the same initcall level and
-drivers/Makefile lists nvme/ ahead of infiniband/, so cma_remove_one()
-runs first and waits for cm_ids that only the later callback would
-destroy. Since the RDMA CM drops all later events for a cm_id once it
-has sent DEVICE_REMOVAL, a peer closing its connection doesn't help
-either. One connection from anyone who can reach the port hangs "rdma
-link delete" until something else ends the queue.
+A periodic output requested by PTP_PEROUT_REQUEST2 drifts away from
+the PHC as soon as the PHC frequency is adjusted, for example by ptp4l
+or ts2phc: at +10 ppm each edge is 10 us later than the one before.
 
-Call nvmet_rdma_queue_disconnect() for the queue. It unlists the queue
-and queues the release work, which destroys the cm_id. Don't wait for
-it, rdma_destroy_id() waits for the handler to return, which was the
-deadlock before commit f1d4ef7d8883.
+The GenF that generates the output counts its period in ref_clk
+cycles, which the PPM correction of the CPTS clock does not reach;
+each GenF has its own PPM registers. am65_cpts_ptp_adjfine() programs
+them only for the GenF used for PPS, and am65_cpts_perout_enable_hw()
+starts every GenF with them cleared, so a GenF used for a periodic
+output is never corrected.
 
-Fixes: f1d4ef7d8883 ("nvmet-rdma: register ib_client to not deadlock in device removal")
-Cc: Christoph Hellwig <hch@lst.de>
-Cc: Sagi Grimberg <sagi@grimberg.me>
-Cc: Chaitanya Kulkarni <kch@nvidia.com>
-Reviewed-by: Christoph Hellwig <hch@lst.de>
-Signed-off-by: Chris Mason <mason@kernel.org>
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
-Signed-off-by: Keith Busch <kbusch@kernel.org>
+Commit eb9233ce6751 ("net: ethernet: ti: am65-cpts: adjust pps following
+ptp changes") added the correction for the PPS GenF, and
+commit 7849c42da2ca ("net: ethernet: ti: am65-cpts: adjust estf following
+ptp changes") passed the same values to the ESTFs.
+
+In am65_cpts_ptp_adjfine(), update every enabled GenF the way the PPS
+GenF was updated: read its control register, set or clear the PPM
+direction bit and write it back with the PPM value. The PPS GenF and the
+ESTFs get exactly the values they got before. In
+am65_cpts_perout_enable_hw(), start a GenF with the current correction
+instead of none; this applies to the PPS GenF too.
+
+Tested on a BeagleY-AI (J722S) with the GENF0 output looped back to
+the HW1_TS_PUSH input (EXTTS 0). With the PHC frequency adjusted by
++10 ppm before the periodic output is started, the edges drift 10 us
+per second against the PHC without this patch (290 us after 29 s);
+with it, they stay 20 to 23 ns after the PHC second. This also works
+if the frequency is adjusted after the periodic output has started.
+
+Fixes: f6bd59526ca5 ("net: ethernet: ti: introduce am654 common platform time sync driver")
+Signed-off-by: James Clark <jjc@jclark.com>
+Reviewed-by: Jacob Keller <Jacob.e.keller@intel.com>
+Signed-off-by: Dave Miller <davem@davem-thinkpadp1gen8.ibmlond.csb>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/nvme/target/rdma.c | 17 ++++++++---------
- 1 file changed, 8 insertions(+), 9 deletions(-)
+ drivers/net/ethernet/ti/am65-cpts.c | 67 +++++++++++++++++++----------
+ 1 file changed, 45 insertions(+), 22 deletions(-)
 
-diff --git a/drivers/nvme/target/rdma.c b/drivers/nvme/target/rdma.c
-index 970452397b5d5..079342828173a 100644
---- a/drivers/nvme/target/rdma.c
-+++ b/drivers/nvme/target/rdma.c
-@@ -1777,10 +1777,13 @@ static void nvmet_rdma_queue_connect_fail(struct rdma_cm_id *cm_id,
-  * queue cm_id and/or a device bound listener cm_id (where in this
-  * case queue will be null).
-  *
-- * We registered an ib_client to handle device removal for queues,
-- * so we only need to handle the listening port cm_ids. In this case
-- * we nullify the priv to prevent double cm_id destruction and destroying
-- * the cm_id implicitly by returning a non-zero rc to the callout.
-+ * The RDMA CM waits until each cm_id of the device is destroyed, so a queue
-+ * has to go now. Our ib_client also removes the queues, but it cannot be
-+ * relied on here: built in, it is called after the RDMA CM's client.
-+ *
-+ * For a listening port cm_id we nullify the priv to prevent double cm_id
-+ * destruction and destroying the cm_id implicitly by returning a non-zero
-+ * rc to the callout.
-  */
- static int nvmet_rdma_device_removal(struct rdma_cm_id *cm_id,
- 		struct nvmet_rdma_queue *queue)
-@@ -1788,11 +1791,7 @@ static int nvmet_rdma_device_removal(struct rdma_cm_id *cm_id,
- 	struct nvmet_rdma_port *port;
+diff --git a/drivers/net/ethernet/ti/am65-cpts.c b/drivers/net/ethernet/ti/am65-cpts.c
+index 8ffbfaa3ab18c..2e2c22dbb8f93 100644
+--- a/drivers/net/ethernet/ti/am65-cpts.c
++++ b/drivers/net/ethernet/ti/am65-cpts.c
+@@ -176,6 +176,9 @@ struct am65_cpts {
+ 	struct mutex ptp_clk_lock; /* PHC access sync */
+ 	u64 timestamp;
+ 	u32 genf_enable;
++	bool genf_neg_adj;
++	u32 genf_ppm_hi;
++	u32 genf_ppm_low;
+ 	u32 hw_ts_enable;
+ 	u32 estf_enable;
+ 	struct sk_buff_head txq;
+@@ -436,9 +439,11 @@ static int am65_cpts_ptp_adjfine(struct ptp_clock_info *ptp, long scaled_ppm)
+ {
+ 	struct am65_cpts *cpts = container_of(ptp, struct am65_cpts, ptp_info);
+ 	u32 estf_ctrl_val = 0, estf_ppm_hi = 0, estf_ppm_low = 0;
++	u32 genf_ctrl_val[AM65_CPTS_GENF_MAX_NUM];
++	u32 genf_ppm_hi, genf_ppm_low;
+ 	s32 ppb = scaled_ppm_to_ppb(scaled_ppm);
+ 	int pps_index = cpts->pps_genf_idx;
+-	u64 adj_period, pps_adj_period;
++	u64 adj_period, genf_adj_period;
+ 	u32 ctrl_val, ppm_hi, ppm_low;
+ 	unsigned long flags;
+ 	int neg_adj = 0, i;
+@@ -470,20 +475,33 @@ static int am65_cpts_ptp_adjfine(struct ptp_clock_info *ptp, long scaled_ppm)
+ 	ppm_hi = upper_32_bits(adj_period) & 0x3FF;
+ 	ppm_low = lower_32_bits(adj_period);
  
- 	if (queue) {
--		/*
--		 * This is a queue cm_id. we have registered
--		 * an ib_client to handle queues removal
--		 * so don't interfere and just return.
++	/* GenF PPM will do correction using cpts refclk tick which is
++	 * (cpts->ts_add_val + 1) ns, so GenF length PPM adj period
++	 * need to be corrected.
++	 */
++	genf_adj_period = adj_period * (cpts->ts_add_val + 1);
++	genf_ppm_hi = upper_32_bits(genf_adj_period) & 0x3FF;
++	genf_ppm_low = lower_32_bits(genf_adj_period);
++	cpts->genf_neg_adj = neg_adj;
++	cpts->genf_ppm_hi = genf_ppm_hi;
++	cpts->genf_ppm_low = genf_ppm_low;
++
++	for (i = 0; i < AM65_CPTS_GENF_MAX_NUM; i++) {
++		if (cpts->genf_enable & BIT(i)) {
++			genf_ctrl_val[i] = am65_cpts_read32(cpts,
++							    genf[i].control);
++			if (neg_adj)
++				genf_ctrl_val[i] &= ~BIT(1);
++			else
++				genf_ctrl_val[i] |= BIT(1);
++		}
++	}
++
+ 	if (cpts->pps_enabled) {
+-		estf_ctrl_val = am65_cpts_read32(cpts, genf[pps_index].control);
+-		if (neg_adj)
+-			estf_ctrl_val &= ~BIT(1);
+-		else
+-			estf_ctrl_val |= BIT(1);
+-
+-		/* GenF PPM will do correction using cpts refclk tick which is
+-		 * (cpts->ts_add_val + 1) ns, so GenF length PPM adj period
+-		 * need to be corrected.
 -		 */
-+		nvmet_rdma_queue_disconnect(queue);
- 		return 0;
+-		pps_adj_period = adj_period * (cpts->ts_add_val + 1);
+-		estf_ppm_hi = upper_32_bits(pps_adj_period) & 0x3FF;
+-		estf_ppm_low = lower_32_bits(pps_adj_period);
++		/* am65_cpts_perout_enable_hw() sets pps_index in genf_enable */
++		estf_ctrl_val = genf_ctrl_val[pps_index];
++		estf_ppm_hi = genf_ppm_hi;
++		estf_ppm_low = genf_ppm_low;
  	}
  
+ 	spin_lock_irqsave(&cpts->lock, flags);
+@@ -500,10 +518,13 @@ static int am65_cpts_ptp_adjfine(struct ptp_clock_info *ptp, long scaled_ppm)
+ 	am65_cpts_write32(cpts, ppm_hi, ts_ppm_hi);
+ 	am65_cpts_write32(cpts, ppm_low, ts_ppm_low);
+ 
+-	if (cpts->pps_enabled) {
+-		am65_cpts_write32(cpts, estf_ctrl_val, genf[pps_index].control);
+-		am65_cpts_write32(cpts, estf_ppm_hi, genf[pps_index].ppm_hi);
+-		am65_cpts_write32(cpts, estf_ppm_low, genf[pps_index].ppm_low);
++	for (i = 0; i < AM65_CPTS_GENF_MAX_NUM; i++) {
++		if (cpts->genf_enable & BIT(i)) {
++			am65_cpts_write32(cpts, genf_ctrl_val[i],
++					  genf[i].control);
++			am65_cpts_write32(cpts, genf_ppm_hi, genf[i].ppm_hi);
++			am65_cpts_write32(cpts, genf_ppm_low, genf[i].ppm_low);
++		}
+ 	}
+ 
+ 	for (i = 0; i < AM65_CPTS_ESTF_MAX_NUM; i++) {
+@@ -513,7 +534,6 @@ static int am65_cpts_ptp_adjfine(struct ptp_clock_info *ptp, long scaled_ppm)
+ 			am65_cpts_write32(cpts, estf_ppm_low, estf[i].ppm_low);
+ 		}
+ 	}
+-	/* All GenF/EstF can be updated here the same way */
+ 	spin_unlock_irqrestore(&cpts->lock, flags);
+ 
+ 	mutex_unlock(&cpts->ptp_clk_lock);
+@@ -679,9 +699,12 @@ static void am65_cpts_perout_enable_hw(struct am65_cpts *cpts,
+ 		val = lower_32_bits(cycles);
+ 		am65_cpts_write32(cpts, val, genf[req->index].length);
+ 
+-		am65_cpts_write32(cpts, 0, genf[req->index].control);
+-		am65_cpts_write32(cpts, 0, genf[req->index].ppm_hi);
+-		am65_cpts_write32(cpts, 0, genf[req->index].ppm_low);
++		am65_cpts_write32(cpts, cpts->genf_neg_adj ? 0 : BIT(1),
++				  genf[req->index].control);
++		am65_cpts_write32(cpts, cpts->genf_ppm_hi,
++				  genf[req->index].ppm_hi);
++		am65_cpts_write32(cpts, cpts->genf_ppm_low,
++				  genf[req->index].ppm_low);
+ 
+ 		cpts->genf_enable |= BIT(req->index);
+ 	} else {
 -- 
 2.53.0
 
