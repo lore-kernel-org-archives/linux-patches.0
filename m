@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795624828;
-	b=3PhZej5xIgieyaVkASDd1X6Qiao3dZw83fdDR/l+1x+0XVHe/CskQFGkouvP2463LqNV
-	 tkOTmVZZHGCGNMU8L9jtFBVKyHea0of8DfjlqADUXbDI4U/m0/Sm/K/JuLoMgMOy8opHG
-	 hNYvpzvLZqzBZRZ+i2mZKzQae7pOKwc4u5LVBUYYhPqDUzoshxjQHQAohlsOyA1T1f2Uk
-	 C+gYSprXUNit/no2OQM8s9aWwZCqkbeFcBwCmJKkoiyyQorkpMNCpni0QNIqJZ3fnF0F0
-	 bs1oya/XsVQVBHL3guIhVaaL1sD6BvpxZ15nD2/yNWKKxyae8W6fHBpP7zn/xdU5M/w==
+	t=1795624832;
+	b=LGr8ixXNvmZix2W25j72Od2eyPJwGQWG3hCAvk/GOYcbqJL7a/eifSit64D0diroClLM
+	 EpTw1WBZbqGtXalMBD68gONnrkOMG3sg8xZY7re+2TmhPXJfOhlXPr2XVIOM3z0PYNPDT
+	 M/XNv2Maf5EQ9lW8uA3+lo1Kp/0QgdtWRsvKm+lODTABi7AL4Q8vVHEeml8HcxlXDoDOF
+	 C3gqhGeyksbU4Jz/VM8krAFtABWA+m/Y9DWxO8f/ZBJCHuuJQDDM/Yv1xRNQfPD1Wjgm4
+	 puQ8a4vWI0wWl0hsCz5wqEtTk2wGtQydoqopZE+GKsnI330u6L4va/ljH+7N3ruzWgg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795624828;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795624832;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=Xx+QHzR/Vm8LKXIUuMIcF+CAee5PEOjOn5+gLLRbwsU=;
-	b=tSlAgu6E6wwJ+vfwZbqDszQ09dZIoH27Mu5qYjMgUPh2n6qXMPjOfG0r5WBftQpp9PEf
-	 +KXPyvytMyVmwJyBc1cJP4Tqm3zI/V+yTnierxsdWS5a1EdECtrOqhfUIuj5IA2PlVj8p
-	 1WjMNqTXhoD2baGotKFryFcXQtuwbTMVvTKNnaMXe9V09yxEvDuxdc7/G6HhZxTrzwf7Z
-	 nDRCt3Ik3+VGOQdLyaaM9iBKcVXfffgSxUkm4ys8eiHUL/17t/kVm39AnlEeu0LA7YUCw
-	 Fs0A0Uy20EOXmCUBxvD7Mb26ea1QnOppyTc4TlyyBTvd5nCcGVDE4WduX4k5akDzj4A==
+	bh=ueb3LrvGlr49t1NoejR/7xSFup9MUO1hrRHZNUXzE9A=;
+	b=D43PgcAvlERU2k03JAWUGbExsGaEdi94ohaqt1lpMfV0d0ttkFVEeNRKXsXNmuOJU8+w
+	 rbR7ThEDDbcKUk10oXhuxh5uIkgoCQ72o/YEjRyYQ9hHRTnK0yHssduvyAyQ7HOlJMcDD
+	 1DQFCNi2XrgmN+p/qChNMN7RNV72v+eRVsmcMsqTYbCLX1/Aud3lvYn8eICmlGKbuky1X
+	 Czi/9cXVMNBuH9GMkc6zo209WPAyksI3p3tox0DOUYJ+aHrKI8DbrQJ+8N4n+gXzIlmbc
+	 mfeX8XsqUt8EovbbhX11QX8JEHsVz4czgEelFVAqoc+qbZYclSnjK3E7Nej+jYroexA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=gN8rXr7N;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=OU9VzH8P;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A277C606A687;
-	Wed, 25 Nov 2026 16:40:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1C65E606A323;
+	Wed, 25 Nov 2026 16:40:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=gN8rXr7N
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AD62F1F00A19;
-	Wed, 25 Nov 2026 16:40:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=OU9VzH8P
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F00CE1F000D0;
+	Wed, 25 Nov 2026 16:40:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795624828;
-	bh=Xx+QHzR/Vm8LKXIUuMIcF+CAee5PEOjOn5+gLLRbwsU=;
+	s=korg; t=1795624831;
+	bh=ueb3LrvGlr49t1NoejR/7xSFup9MUO1hrRHZNUXzE9A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=gN8rXr7NX3KYt1MmVg0VpJytLXymuvJW9SbzqiG+C0/bhV7TzDYM8dawEnRxHgF1u
-	 FFhtyua0cHTvcS+2zlTQiZYzL2tzwhNtR5OMMlVBeWMjo/H+czN+Pae9nYOevMXwaD
-	 CfUCWatevb2zDMOhhpkuTSG92j0/rKx5eD8Hj0jE=
+	b=OU9VzH8Pm1hjHHvwNvpogWffeA073hLgSGVKZn6XVu3Jn4VA3cbG/pVFdh8VjETl1
+	 VKQnuFVPSdKvoAszhfjkQE46/+yFe6v5C5bF7l3HLHYNPpblNd9p2VrFxo2+RDhfNy
+	 wfSixCDyQK81WstwNzCMRbTJGLvRiL7e79vqmCCU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Luka Gejak <luka.gejak@linux.dev>,
-	Mehmet Fide <mehmet.fide@screeningeagle.com>,
-	Johannes Berg <johannes.berg@intel.com>,
+	Damien Le Moal <dlemoal@kernel.org>,
+	Niklas Cassel <cassel@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 318/816] wifi: mac80211: abort chanswitch when leaving an IBSS
-Date: Wed, 25 Nov 2026 15:31:06 +0100
-Message-ID: <20261125143856.562244044@linuxfoundation.org>
+Subject: [PATCH 6.12 276/816] ata: libata-scsi: fix MODE SELECT field pointer for unsupported subpages
+Date: Wed, 25 Nov 2026 15:30:24 +0100
+Message-ID: <20261125143855.599041445@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143849.205329330@linuxfoundation.org>
 References: <20261125143849.205329330@linuxfoundation.org>
@@ -69,44 +68,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mehmet Fide <mehmet.fide@screeningeagle.com>
+From: Niklas Cassel <cassel@kernel.org>
 
-[ Upstream commit 12f97c692dcbce088554a5530c79c55174ccee1a ]
+[ Upstream commit 2a4c61cf94d48ec8560473d4fd5383583ce8809c ]
 
-ieee80211_ibss_disconnect() leaves CSA active, as ieee80211_stop_mesh()
-did until commit ac7472a24bd4 ("wifi: mac80211: abort chanswitch when
-leaving a mesh"). An IBSS left during its countdown and joined again
-refuses every new channel switch with -EBUSY.
+When the mode page of a MODE SELECT parameter list has an unsupported
+SUBPAGE CODE, ata_scsi_mode_select_xlat() sets the FIELD POINTER of the
+INVALID FIELD IN PARAMETER LIST sense data to the SUBPAGE CODE byte of
+the mode page header (byte 1 of the page) if the SPF bit is set, and to
+the PAGE CODE byte (byte 0 of the page) otherwise.
 
-Abort the channel switch the same way.
+However, the SPF bit is tested on p[0] after p has already been advanced
+past the mode page header, so the test reads bit 6 of the first byte of
+the mode page data instead. If the parameter list ends with the mode
+page header, it even reads the byte that follows the parameter list in
+buffer, which is not initialized when no data beyond the parameter list
+was transferred.
 
-Fixes: cd7760e62c2a ("mac80211: add support for CSA in IBSS mode")
-Reported-by: Luka Gejak <luka.gejak@linux.dev>
-Closes: https://lore.kernel.org/linux-wireless/796598480d47c5bf474d11828769e864b8209558@linux.dev/
-Signed-off-by: Mehmet Fide <mehmet.fide@screeningeagle.com>
-Reviewed-by: Luka Gejak <luka.gejak@linux.dev>
-Link: https://patch.msgid.link/20261025193615.1123718-1-mehmet.fide@gmail.com
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+The test is not needed anyway: spg can only be non-zero for a mode page
+in sub_page format, i.e. with the SPF bit set, and the field in error is
+the SUBPAGE CODE. Always set the FIELD POINTER to the SUBPAGE CODE byte,
+which follows the mode parameter header, the block descriptors and the
+PAGE CODE byte.
+
+Fixes: 7780081c1f04 ("libata-scsi: Set information sense field for invalid parameter")
+Reviewed-by: Damien Le Moal <dlemoal@kernel.org>
+Link: https://lore.kernel.org/r/20261103205448.931471-14-cassel@kernel.org
+Signed-off-by: Niklas Cassel <cassel@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/mac80211/ibss.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ drivers/ata/libata-scsi.c | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
-diff --git a/net/mac80211/ibss.c b/net/mac80211/ibss.c
-index 9df43cd76979e..96fad8c057e7c 100644
---- a/net/mac80211/ibss.c
-+++ b/net/mac80211/ibss.c
-@@ -683,6 +683,10 @@ static void ieee80211_ibss_disconnect(struct ieee80211_sub_if_data *sdata)
- 	ifibss->state = IEEE80211_IBSS_MLME_SEARCH;
- 
- 	netif_carrier_off(sdata->dev);
-+
-+	sdata->vif.bss_conf.csa_active = false;
-+	ieee80211_vif_unblock_queues_csa(sdata);
-+
- 	if (!sta_info_flush(sdata, -1))
- 		synchronize_net();
- 
+diff --git a/drivers/ata/libata-scsi.c b/drivers/ata/libata-scsi.c
+index 442f45099f0da..05aad48ccf5aa 100644
+--- a/drivers/ata/libata-scsi.c
++++ b/drivers/ata/libata-scsi.c
+@@ -4365,8 +4365,7 @@ static unsigned int ata_scsi_mode_select_xlat(struct ata_queued_cmd *qc)
+ 				break;
+ 			fallthrough;
+ 		default:
+-			fp = (p[0] & 0x40) ? 1 : 0;
+-			fp += hdr_len + bd_len;
++			fp = hdr_len + bd_len + 1;
+ 			goto invalid_param;
+ 		}
+ 	}
 -- 
 2.53.0
 
