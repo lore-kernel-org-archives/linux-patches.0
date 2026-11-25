@@ -1,42 +1,42 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795621284;
-	b=PGM5cn+oIqidZJYJ7W9eFtYb4BMYgm2VTyF0zx3hJ9s3kDVk4oE1YNKUtm38I6bsMP7e
-	 /SvQT9FBJm2N00Q/y1IKS4f8CPOQ0kmbVNdW4tELKhEQ9ZsAFT+al4IelFJbIHTpjEk6s
-	 dfIa+6xcC7027YXs8FqvbeUrslvNaUGfCk1oAJ2Thi9FV3aQCip3xSztvJVPaKJuiM2IP
-	 6eq98BJHiKt7rJXL5AhKYceDpsg9uV9Wm3p3VaumK232scYtHxVZDTYwZPRamvQ9cbmKB
-	 G2aYZS2sfFJ2raTQOBDeaHmP7yDzMoy0PF75zysV5MrzAjRSoM6S4fX5s99BSzcct5w==
+	t=1795621287;
+	b=g+ej234fHG0vgdRmW70Zyl7PH6PW1iSLmB1YaoFxqUMooeVUGQLnd80aHqzyBueVOsHg
+	 gkmK93LeaexqCtwjFYcXRzQSgpM/O0cVOE6/Pxt89vguoFRYQi/isjxqldjwXNIomwkDM
+	 yf4Q5y8xnHPvXUKbo4ZguXf/TDA7MYefgMVIx5XvD0NrWI7gOrQmp9X9GP5ZzoCV1Qtxj
+	 cxMIK9qu5PueRpAAImfTBTrh3oHfTIl2e8jgT920B+WLC3U5umIul7B5gI94YXxHJg7bM
+	 zA6w9cRl3GmG2DoQopdE0YI+OUG6RJG28E3T7nXnnIE3A+TN3nMJniw5IVoME8bKC5g==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795621284;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795621287;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=4LZ1A1Xkdsaw2p2a1h+SCv37QZ6AGG6VKBza8uVQIZY=;
-	b=1mFJIJtToX5P9TidYiRVTDkPfi9rc0lZxiAuMgNtFDw4hhY46eGDgJJXnGIU9Lm+pd7B
-	 KFfUbo6bgFCqCS/jkaCqxiOFOhE/pEVCJe/VMx1esI0YwX0ZyPm2YXJUXZyzduqYXqqHn
-	 ySTNpSu7oxV5APVWw/E0wYAt/B8evEEP1/vJwVWFKzXP5g4XZLRncodJbvTSh6vtVhDL0
-	 pJt5L+te7d18z8dRrjevwrlrU5zCr6QON4bY0bQlSPM/ZPqImSS1EvtE3AjnZb0SUwSRt
-	 XzEzTumH9ikaXY1XOU58XIRKfpeSz9KGyycZQ7sh6bL6anr+t+NASYVVT+d1tJofnGw==
+	bh=NuOfJv39rYUJf7iACobkJo/2sYzVsMznBzMuLMg2XLg=;
+	b=RjggRYnVK43NxUpORZm+02u5WRRhDYoM7ZEsVcp5+oIvfnWNV4TGsK7H1A87M46UYprq
+	 S9COcfED4mIlzQvbwG9TroQhoGLhw5V6mLThKuVCjWmDBczbguZKvfIshmggkFp67G4Kr
+	 6pAfc2m4Johs6eLGeMKQbe+KEbNEQNB3H1PkoNmQAIN6mKBbmGiQd2xOLIAaBa7JbzfjJ
+	 SiWSAur61b/Z0YRRkjTVqF9j68AACaBUJUY5CNjI+eFrlthEMRsVt7+28R72ORElgDHCv
+	 5ct42PWEOzH59YeCoT9j9i/Iu+thbKaesgkG2daL0AbIwXLoYWF3amJxsrTyQYikwew==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=owEJrsYd;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=GwDVBGU9;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1A5B6606A33F;
-	Wed, 25 Nov 2026 15:41:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C249060A5BC7;
+	Wed, 25 Nov 2026 15:41:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=owEJrsYd
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 157BA1F000C4;
-	Wed, 25 Nov 2026 15:41:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=GwDVBGU9
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 587E91F000EE;
+	Wed, 25 Nov 2026 15:41:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795621283;
-	bh=4LZ1A1Xkdsaw2p2a1h+SCv37QZ6AGG6VKBza8uVQIZY=;
+	s=korg; t=1795621286;
+	bh=NuOfJv39rYUJf7iACobkJo/2sYzVsMznBzMuLMg2XLg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=owEJrsYdnTiBcpwYWHBy18hS3S+LNLvvsKV0apKtN0vRm37+IlIwVKw3O6jt7ERLT
-	 WWbsAx7jAHrxd164V03hfN211WTOvGn2BIlfYhuNUcbLB3CjWuDFXqT/NqkawJLdhy
-	 TFAPozwieNKJgZpw1aQVxqky5CXTnirOWTn+qV/E=
+	b=GwDVBGU9h4KUQBGF59RkQYC1n/T6aPnJEZqkno98DlDbL1AsZthmCbisG1FN8lAqN
+	 iaZ2i6M4cHervnkerlcbqctw5Y8pDpzqFCewve6Li6EK8EUxAQt81XwPbPFtKjuOEQ
+	 85VE25djjb7DAE8hfGA7IJWrQ4Ir97LsV4t2cJwc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -46,9 +46,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Chris Lu <chris.lu@mediatek.com>,
 	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 178/990] Bluetooth: btmtk: drop zero-length ISO packets from endpoint padding
-Date: Wed, 25 Nov 2026 15:25:45 +0100
-Message-ID: <20261125143826.261463807@linuxfoundation.org>
+Subject: [PATCH 6.18 179/990] Bluetooth: btmtk: bound the ISO payload length by the controllers MTU
+Date: Wed, 25 Nov 2026 15:25:46 +0100
+Message-ID: <20261125143826.284082194@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143822.072087159@linuxfoundation.org>
 References: <20261125143822.072087159@linuxfoundation.org>
@@ -72,31 +72,26 @@ Content-Transfer-Encoding: 8bit
 
 From: Chris Lu <chris.lu@mediatek.com>
 
-[ Upstream commit 8524c3588fbb9d5c1b876e6f908c42926845650d ]
+[ Upstream commit d015faf684129a276f2137ad2e11c6c985294648 ]
 
-The ISO interrupt IN endpoint delivers a fixed-size transfer that holds
-one HCI ISO packet and zero-fills the remainder. That padding belongs to
-the transfer rather than to the stream, so it has to be dropped instead of
-reported to the host.
+btmtk_recv_isopkt() bounds the Data_Total_Length reported by the
+controller with skb_tailroom(skb) < hci_skb_expect(skb). That keeps the
+reassembly inside the skb, but it enforces no protocol limit: the head
+allocation is rounded up to the next kmalloc bucket and skb_tailroom()
+reports what the bucket can hold rather than what was requested, which is
+several hundred bytes more. An oversized length therefore passes, and the
+parser keeps pulling bytes out of the following transfers to fill it,
+swallowing the real ISO packets they carry until the frame is handed to
+hci_recv_frame().
 
-btmtk_recv_isopkt() keeps parsing it: the zero bytes read as an ISO header
-with handle 0 and a Data_Total_Length of zero, and each one is passed to
-hci_recv_frame() as a complete frame. A single transfer yields a long run
-of them, which is what fills the HCI log with malformed ISO packets, and
-iso_recv() drops the SDU it is reassembling whenever handle 0 belongs to a
-live CIS/BIS.
+The controller reports the largest ISO_Data_Packet_Length it will send in
+LE Read Buffer Size [v2], which hci_cc_le_read_buffer_size_v2() keeps in
+hdev->iso_mtu. Once that is available, bound the length by it and size the
+receive skb to hold that much plus the 4-byte header. HCI_MAX_ISO_SIZE is
+kept only as a fallback for the window before the command completes.
 
-A zero Data_Total_Length carries no ISO Data Load, so such a packet is
-never part of the stream. Check for the zero-filled remainder before
-starting to parse the next frame, rather than after assembling a 4-byte
-header: a remainder shorter than HCI_ISO_HDR_SIZE would otherwise be held
-across calls as a partial header, corrupting the next transfer's framing.
-This also means a fully zero-filled remainder no longer costs an skb
-allocation that gets immediately freed. Reaching a zero Data_Total_Length
-any other way is then a genuine error, not padding.
-
-This was observed on MT7925, but btmtk_recv_isopkt() is shared by every
-MediaTek USB controller that supports ISO data.
+Keep the skb_tailroom() test as well, because a fragment started before
+hdev->iso_mtu was populated sits in an skb sized for the fallback.
 
 Fixes: ceac1cb0259d ("Bluetooth: btusb: mediatek: add ISO data transmission functions")
 Co-developed-by: Hao Qin <hao.qin@mediatek.com>
@@ -107,54 +102,54 @@ Signed-off-by: Chris Lu <chris.lu@mediatek.com>
 Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/bluetooth/btmtk.c | 20 ++++++++++++++++++++
- 1 file changed, 20 insertions(+)
+ drivers/bluetooth/btmtk.c | 18 ++++++++++++++++--
+ 1 file changed, 16 insertions(+), 2 deletions(-)
 
 diff --git a/drivers/bluetooth/btmtk.c b/drivers/bluetooth/btmtk.c
-index 961a47a9c8c43..51b55eceba5f1 100644
+index 51b55eceba5f1..1518b93f4676d 100644
 --- a/drivers/bluetooth/btmtk.c
 +++ b/drivers/bluetooth/btmtk.c
-@@ -7,6 +7,7 @@
- #include <linux/usb.h>
- #include <linux/iopoll.h>
- #include <linux/overflow.h>
-+#include <linux/string.h>
- #include <linux/unaligned.h>
+@@ -1168,8 +1168,15 @@ static int btmtk_recv_isopkt(struct hci_dev *hdev, void *buffer, int count)
+ 	struct btmtk_data *btmtk_data = hci_get_priv(hdev);
+ 	struct sk_buff *skb;
+ 	unsigned long flags;
++	unsigned int iso_mtu;
+ 	int err = 0;
  
- #include <net/bluetooth/bluetooth.h>
-@@ -1176,6 +1177,14 @@ static int btmtk_recv_isopkt(struct hci_dev *hdev, void *buffer, int count)
- 		int len;
- 
- 		if (!skb) {
-+			/* Drop the endpoint's zero-filled padding before
-+			 * allocating an skb for it; a zero Data_Total_Length
-+			 * check below would miss a padding remainder
-+			 * shorter than an ISO header.
-+			 */
-+			if (mem_is_zero(buffer, count))
-+				break;
++	/* The controller reports the largest Data_Total_Length it will send in
++	 * LE Read Buffer Size [v2]. Fall back to HCI_MAX_ISO_SIZE while that
++	 * command has not completed yet.
++	 */
++	iso_mtu = hdev->iso_mtu ? hdev->iso_mtu : HCI_MAX_ISO_SIZE;
 +
- 			skb = bt_skb_alloc(HCI_MAX_ISO_SIZE, GFP_ATOMIC);
+ 	spin_lock_irqsave(&btmtk_data->isorxlock, flags);
+ 	skb = btmtk_data->isopkt_skb;
+ 
+@@ -1185,7 +1192,8 @@ static int btmtk_recv_isopkt(struct hci_dev *hdev, void *buffer, int count)
+ 			if (mem_is_zero(buffer, count))
+ 				break;
+ 
+-			skb = bt_skb_alloc(HCI_MAX_ISO_SIZE, GFP_ATOMIC);
++			skb = bt_skb_alloc(HCI_ISO_HDR_SIZE + iso_mtu,
++					   GFP_ATOMIC);
  			if (!skb) {
  				err = -ENOMEM;
-@@ -1199,6 +1208,17 @@ static int btmtk_recv_isopkt(struct hci_dev *hdev, void *buffer, int count)
- 			/* Complete ISO header */
- 			hci_skb_expect(skb) = __le16_to_cpu(dlen);
+ 				break;
+@@ -1219,7 +1227,13 @@ static int btmtk_recv_isopkt(struct hci_dev *hdev, void *buffer, int count)
+ 				break;
+ 			}
  
-+			if (!hci_skb_expect(skb)) {
-+				/* Zero padding was ruled out above, so a
-+				 * zero Data_Total_Length here is invalid.
-+				 */
-+				kfree_skb(skb);
-+				skb = NULL;
-+
-+				err = -EILSEQ;
-+				break;
-+			}
-+
- 			if (skb_tailroom(skb) < hci_skb_expect(skb)) {
+-			if (skb_tailroom(skb) < hci_skb_expect(skb)) {
++			/* Reject a length the controller said it would never
++			 * send. The skb_tailroom() test is kept because a
++			 * fragment started before hdev->iso_mtu was populated
++			 * sits in a smaller skb than iso_mtu now allows.
++			 */
++			if (hci_skb_expect(skb) > iso_mtu ||
++			    skb_tailroom(skb) < hci_skb_expect(skb)) {
  				kfree_skb(skb);
  				skb = NULL;
+ 
 -- 
 2.53.0
 
