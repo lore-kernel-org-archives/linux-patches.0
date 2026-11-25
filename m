@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795624335;
-	b=t4Y61uDaqM5njR84tvd0GSJxfL0LgpUXaxdCBufRYQUey5NFSUjfZtuSenl5k8Eaia6y
-	 bOJQChozMErFq/GwZhZN5wy2F6iWKVjYdYZzKiC/X8dUaLmtrF4XEMjuPa6KvO6U+rJe7
-	 R7yXz1m0QnkGCNURdfFFW86F0lDI/nKUUoq5ixMDOnufGu0AAXBODTbVCjts8AYyBNCBo
-	 CHqy+0ZBSnCDZ95+4gt9rT0N+gBsJiqRtVGMe6uBjQtl2rFcLVOzrHibCpnRDVmlWqWFY
-	 SN81HqLkK9CKHB5UD1eBZ4V64r6OTuyUFAtttEm6Z7Axlb4GYim+jrShZQXWR82QDHQ==
+	t=1795624339;
+	b=fyli2P0JZssKLMIQFQ9+NOSDEaZTaILROfMO1dOicsCHXAx7hY8R0ORdxMKGp9mbsKH1
+	 VjLV1dfr3xAvKRk+kqlsnKx3WOmxD59AE4N1iMbYzqy6ze90DmeLYii+wVNzvmOnN9O+j
+	 y7zBQmS50aArX0j4P6C0ghDtw5e2zrjnO0ApduKj9PDIFVgnEFz22dTXKjUZdB3pd5mk0
+	 sOkpXJWssD0j50k2ADUlWsRHWw+9lUE6AImc9XfmrZyechxteBh2z6HOiCQxLZnbphO4w
+	 oQzNw5L1rTW+FYAql+W1c1Ou9/WaZW02xtfjVe0vdxOuLMlaL23MgRQAaVoymoLOOHg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795624335;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795624339;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=2TU0FkHzC4kVCl3PyJxB7HWCJvicEJ49AJIDJhV3P2Q=;
-	b=TEFO4Ms371cmoFAr/xfUIdPDr0cggnPcZFvJ0zdQ/BEqMHfahDJBooaz8l0yU33ZjhoA
-	 z4hnd5xwSmTgujHdcDWihFvn7qFcQqS6UzRKt6e9Cp3+Pn/WRriWevmzJnrvHo6M74UlH
-	 WjcpdIa/lMxKIgnqnTWZ1B05/Esguj2PCXfeZIVvjoqOqV12xUs3wQrB6y+OhxSo7jrtj
-	 F9XJbB/vsmJz9GztBjj3hK1lIbi33987OU4ssFiV87+EtlsDaeW8j03HhD7ZZiptaZOMG
-	 +n0vALm5dSBMazhIFEG76hSKpYopywDB+c1d0vmWg2VRAp6YZQmCgJcZFuuK9lUfp5g==
+	bh=86ifAsgDsH6DPH7a3NOwiA5bKKRbbFDvtrpYd5litic=;
+	b=QCZZwXhQAMVFDH7O5FwpqHJrEIw83aZflVz0mkAwzTGeJxLtYlojSheXg5RvXbFpIajL
+	 NguAKNLQokLkmJgLyVImy89JHoiAiLj87VNDeGwNmtsZAUi2gsdvbPJ4C/7dyZhZ6xW4p
+	 DWNzhO00vHcsCWuqWhqn5A+1JL5Dpq7w7Fail5zmOY5N4fx91PTBBhRr1tbihGS1Xwugo
+	 nV4Nv4RZHfo14JhtoBtQvO20egF6dFeq41HDVCE1CaT4A7r0Mqbi3Nc/JKQPjxIN8nyRn
+	 OzS6qiJVFnyAF4wKlF5OC9Yw7SnZpmhi8yQFWYcdRMa96We47BpCmPT+lfKl9ilC06Q==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=q4iLRMvC;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=JhXSbveW;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C1209606A33B;
-	Wed, 25 Nov 2026 16:32:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6E665606A33C;
+	Wed, 25 Nov 2026 16:32:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=q4iLRMvC
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A3F631F000C6;
-	Wed, 25 Nov 2026 16:32:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=JhXSbveW
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0EDE91F000C0;
+	Wed, 25 Nov 2026 16:32:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795624335;
-	bh=2TU0FkHzC4kVCl3PyJxB7HWCJvicEJ49AJIDJhV3P2Q=;
+	s=korg; t=1795624338;
+	bh=86ifAsgDsH6DPH7a3NOwiA5bKKRbbFDvtrpYd5litic=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=q4iLRMvCTdVLY4rmqquhmT7nUXu6yMuG+vvhm6Zvfx1g/Y5m5uPB4klOkUU1UzEVw
-	 QsNqLhwQBfg5STy+KCDQOe5webIgdqOKF+2YFQZJH1ibnbI9Obnh4spqyWZl0aVFPP
-	 NWCVa5u8L+joU+sgWP8AS3n95g90mdWybz4aDAbw=
+	b=JhXSbveWNIZPQzI3ko9Pf1yzuNb+LEXEE2PRgBqeRLsIbGYo2Fxarz730C5In3v9m
+	 wVbVI9umh5m3oobXAALfP9agb60sg+uE9b9AhAUr0bGTOqDhU8RYQ84As+KPJjG8Lc
+	 Fu3W92pcMw/L+cd2rseEZ1fVVDKO2ozjRMpvyMrE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shuai Zhang <shuai.zhang@oss.qualcomm.com>,
+	Tobias Wilken <tooangel@tooangel.de>,
 	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 159/816] Bluetooth: mgmt: reply to cancelled mgmt commands instead of silently dropping
-Date: Wed, 25 Nov 2026 15:28:27 +0100
-Message-ID: <20261125143852.876524840@linuxfoundation.org>
+Subject: [PATCH 6.12 160/816] Bluetooth: MGMT: Return RFKILLED for Set Powered on a blocked controller
+Date: Wed, 25 Nov 2026 15:28:28 +0100
+Message-ID: <20261125143852.900051549@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143849.205329330@linuxfoundation.org>
 References: <20261125143849.205329330@linuxfoundation.org>
@@ -68,70 +68,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Shuai Zhang <shuai.zhang@oss.qualcomm.com>
+From: Tobias Wilken <tooangel@tooangel.de>
 
-[ Upstream commit c0bb764fc082672678d371c375597a6a9f614cf9 ]
+[ Upstream commit 7eac80614300563470cffabf4df2b63616787ee7 ]
 
-The kernel sets HCI_AUTO_OFF when a controller is first registered and
-starts a 2-second timer. On slower boots bluetoothd and the HCI_AUTO_OFF
-timer can race: hci_power_off() is already queued while bluetoothd is
-still in the middle of its adapter setup sequence. hci_cmd_sync_clear()
-then cancels any pending mgmt commands with -ECANCELED, including the
-MGMT_OP_REMOVE_ADV_MONITOR sent by reset_adv_monitors() early in the
-setup sequence.
+Since MGMT_OP_SET_POWERED runs through hci_cmd_sync, powering on a
+controller that is blocked by rfkill fails with -ERFKILL from
+hci_dev_open_sync(), and mgmt_set_powered_complete() reports it with
+mgmt_status(err). mgmt_errno_status() has no case for -ERFKILL, so
+userspace gets MGMT_STATUS_FAILED instead of MGMT_STATUS_RFKILLED.
 
-When auto_off=1, hci_dev_close_sync() skips __mgmt_power_off() entirely,
-so there is no fallback path to reply to the cancelled commands.
-mgmt_remove_adv_monitor_complete() silently returns on -ECANCELED, leaving
-the command with no reply. Since bluez's mgmt queue is strictly serialised,
-this stalls all subsequent commands indefinitely, leaving bluetoothd unable
-to register the adapter.
+Before that conversion, power on went through hci_power_on(), whose
+error path mgmt_set_powered_failed() still maps -ERFKILL to
+MGMT_STATUS_RFKILLED. bluetoothd relies on that status: for
+RFKILLED it sets the adapter PowerState to "off-blocked" and returns
+org.bluez.Error.Blocked for the Powered property, for any other status
+it returns org.bluez.Error.Failed.
 
-Fix by mapping -ECANCELED to MGMT_STATUS_CANCELLED in mgmt_errno_status()
-and replying to the cancelled command in mgmt_remove_adv_monitor_complete()
-instead of returning early.
+With the controller soft blocked, "bluetoothctl power on" printed
+"Failed to set power on: org.bluez.Error.Failed" and btmon showed
+"Set Powered (0x0005) Status: Failed (0x03)". With this change it
+prints org.bluez.Error.Blocked and btmon shows "Status: RFKilled
+(0x12)".
 
-Signed-off-by: Shuai Zhang <shuai.zhang@oss.qualcomm.com>
+Map -ERFKILL to MGMT_STATUS_RFKILLED in mgmt_errno_status().
+
+Fixes: cf75ad8b41d2 ("Bluetooth: hci_sync: Convert MGMT_SET_POWERED")
+Assisted-by: LLM
+Signed-off-by: Tobias Wilken <tooangel@tooangel.de>
 Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
-Stable-dep-of: 7eac80614300 ("Bluetooth: MGMT: Return RFKILLED for Set Powered on a blocked controller")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/bluetooth/mgmt.c | 14 +++++++++++++-
- 1 file changed, 13 insertions(+), 1 deletion(-)
+ net/bluetooth/mgmt.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
 diff --git a/net/bluetooth/mgmt.c b/net/bluetooth/mgmt.c
-index c883d3da19030..a9570bd4f33dd 100644
+index a9570bd4f33dd..ec54d383510f4 100644
 --- a/net/bluetooth/mgmt.c
 +++ b/net/bluetooth/mgmt.c
-@@ -303,6 +303,8 @@ static u8 mgmt_errno_status(int err)
- 		return MGMT_STATUS_ALREADY_CONNECTED;
- 	case -ENOTCONN:
+@@ -305,6 +305,8 @@ static u8 mgmt_errno_status(int err)
  		return MGMT_STATUS_DISCONNECTED;
-+	case -ECANCELED:
-+		return MGMT_STATUS_CANCELLED;
+ 	case -ECANCELED:
+ 		return MGMT_STATUS_CANCELLED;
++	case -ERFKILL:
++		return MGMT_STATUS_RFKILLED;
  	}
  
  	return MGMT_STATUS_FAILED;
-@@ -5652,8 +5654,18 @@ static void mgmt_remove_adv_monitor_complete(struct hci_dev *hdev,
- 	struct mgmt_pending_cmd *cmd = data;
- 	struct mgmt_cp_remove_adv_monitor *cp;
- 
--	if (status == -ECANCELED)
-+	/* Reply to a cancelled command so bluetoothd's serialised mgmt queue
-+	 * is not blocked.
-+	 */
-+	if (status == -ECANCELED) {
-+		cp = cmd->param;
-+		rp.monitor_handle = cp->monitor_handle;
-+
-+		mgmt_cmd_complete(cmd->sk, cmd->hdev->id, cmd->opcode,
-+				  mgmt_status(status), &rp, sizeof(rp));
-+		mgmt_pending_free(cmd);
- 		return;
-+	}
- 
- 	hci_dev_lock(hdev);
- 
 -- 
 2.53.0
 
