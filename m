@@ -1,51 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795622439;
-	b=yRl0XvK0lbus6j5plhBSdUgq7jFYQf/cyNAy07V2P9+M+3uXOWvmeONqSAxQ097Hb0P6
-	 B3Z4mjWm1M82/MaJB349EPEybPFzqsgyiI4NHf3Ev0oDtiJrLdeHk+JwjwGDQFwhI8UG2
-	 iGWKNULqGNkYfaXCVlFeoDjCMmCcOpym6Gj+07mssCKqigXQT2181fFTYkGz2EWz8Lq5j
-	 +PauNIR7V4XJJqatWRAQlKwn4iafyMd3GoVGcUXzBvgYoH+xHJRvgajDrFgjkBdN9YsL0
-	 /C9wWTZPr/s6B/loS/HYxRSUTAS0qdipISCpoEtGrzCeZ6M6Dxt0O/GZHo+wSMSxr1A==
+	t=1795622442;
+	b=LKw44j9vYW8A9GZE927q7vsyudhCY6w2va7K4MKqBCvgr7zZto3T6TfSVOniQGWwzANG
+	 Z/yMFzrVPkgYBV9J94Dg7484hkTJc/I1sypZht3Eru5juqSxsbeYOXhMunvCPA52fbkjy
+	 jY9IlZWt6Ulwm7GxkCqXKZ0ph8jWzaFANLGjpRzf1xmT8TkGnYerzdu2+KATsuktCYaV6
+	 wdIgL88/95pNrzurRn4dPZP4rw+ER7oMv9LM5hyEi05w4h1rQv98z1Vy80O1CE9FsZh2q
+	 QIqlMIITTzY78sPcPl8d4SNp2F9uRYGcxQMku2zi0r8b4nRdwarxylplnob5q2SAuSQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795622439;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795622442;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=7CTFsnu/tIxJ9qOWUgfINbJgP3Dx6m79gne4sMKDdQ0=;
-	b=uHYsrspFplNCN7J0VWPNkXEmyzN7bIAQOw9BwzcT++XLA3+tVop1qCjVRwZSKStmXIRA
-	 dywYNW1YDAr0ppi7sDufuKIlzEW3IO6F6xmEOfOkFoADmoXDt3PfsVec2sdI3o70Vk0Ua
-	 2cG0Npe4cETkwcaiJgrUeJqwgPg3C6wzMdhlDcDyRLQlxV8o+46fN8+gWWNA4nwjya20D
-	 +jbPhq4lmf8wlFl2bjqAgk2+sCVvT/Ul5U8Nb/msAroDRCxkI98iu94BiFlJShXLY6Gic
-	 5Br1PAhG0UiXc/U27SJH3oh6c1638EkTsHeXbGZPmIkw5UetbOtX9B1Si3tQrJcPDjQ==
+	bh=/VUlKNPjpTtIIIInKXjLbsmJKX7lEmdpeG6bZtJksHA=;
+	b=z2Qigt3bZuqfr3I9z+1aQE+Wddb39MFEyEup3xqP72MUq0rHfCc27PxKUUWahA2IEsLS
+	 Y9Fdb5jzD4f8TXGyBL5MN8piAFlKAcEsiOfOuQLkRywxVnk2MHAm5s7Fh2I7n8flVSGxd
+	 VY0JZMGgJtlHM+/ZW54IAZamlaj3sKMD5SH/L2kmRTMJrOBcIwg76M3xvmDZxvwkbGpdb
+	 OQGZe4ydA+o/E2WfRI4a+7lMwXrPjwKjjM0L/SGDY7/i64nU6DrNMI0JU55Mjho+Y8rL8
+	 LG6RGQ7Hv6eoZwOpiYNgtmaRhie0e1ia2Eru+eEdJCa0pY9FTiawjhk6FqwEq+Zz5dw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="ZVgUtqp/";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Jf6g08C+;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 27D08606A31E;
-	Wed, 25 Nov 2026 16:00:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0A44F606A31E;
+	Wed, 25 Nov 2026 16:00:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ZVgUtqp/
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CA0BA1F000C4;
-	Wed, 25 Nov 2026 16:00:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Jf6g08C+
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 08CF71F000C4;
+	Wed, 25 Nov 2026 16:00:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795622438;
-	bh=7CTFsnu/tIxJ9qOWUgfINbJgP3Dx6m79gne4sMKDdQ0=;
+	s=korg; t=1795622441;
+	bh=/VUlKNPjpTtIIIInKXjLbsmJKX7lEmdpeG6bZtJksHA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ZVgUtqp/hv8EDmoxOwsLwyWa+8Q/QI4X42IzLRX/ftJjQijWaqqvX8t4lj20oaXif
-	 sU9FuEEM5tlv33Ar8TkittHNpsWA0CZhxhF4k6Z0w4YeeP8wQEYdeCRYO1aUkU6rsv
-	 K8J1PzfR0EtPvBRENjHqykIJT6ix47GWwjLluz5o=
+	b=Jf6g08C+MnMyp4zSCL9vmP9FIRjSyORH6et7SudpK7BnQHLb7Z7PJRZtp7xTlYPXd
+	 gNQ/SJc61QG57jDOWzucCmli41wnC+dJ3k2a7O0CAbixxx8Ob0uRnyaFN7wjPGNnSY
+	 5bGuj8eyHrmpXeQkzPeeYn+g7dUqUxfGmYqyyAMc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Alexei Starovoitov <ast@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 536/990] bpf: Adjust pc-relative insn copied into its own patch
-Date: Wed, 25 Nov 2026 15:31:43 +0100
-Message-ID: <20261125143834.648217814@linuxfoundation.org>
+Subject: [PATCH 6.18 537/990] bpf: Fix overflow of jump offset in may_goto expansion
+Date: Wed, 25 Nov 2026 15:31:44 +0100
+Message-ID: <20261125143834.670852425@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143822.072087159@linuxfoundation.org>
 References: <20261125143822.072087159@linuxfoundation.org>
@@ -69,122 +69,133 @@ Content-Transfer-Encoding: 8bit
 
 From: Alexei Starovoitov <ast@kernel.org>
 
-[ Upstream commit 67a3b916a7ae7c1a6bed08555417d444de6f5838 ]
+[ Upstream commit 8a12a00f6c5dba70a6d908fe27a3c980d42b9515 ]
 
-bpf_do_misc_fixups() inits may_goto count by patching the first insn
-of a subprog with [ST, ST, first insn]. bpf_convert_ctx_accesses()
-patches insn that needs a barrier with [nospec, insn].
-bpf_adj_branches() doesn't adjust insns inside the patch, so when
-the copy is a call, ld_imm64 of a func or a jump that points backward
-its target is off by the number of insns in front of it:
+may_goto is expanded into 'if AX == 0 goto off + 5' when it's timed,
+off + 2 when it's not and off - 1 when it jumps backward. The sum is
+stored into 16-bit off without a range check, so may_goto +32763
+turns into:
 
-  static int A(void)  { return 1; }
-  static int A2(void) { return 2; }
-  static int B(void)
-  {
-          int i, ret = A();
+  if r12 == 0x0 goto pc-32768
 
-          for (i = 0; i < 10 && can_loop; i++)
-                  ...
-          return ret;
-  }
+and the prog jumps backward when may_goto expires.
 
-When A is placed in front of B and may_goto is timed 'call A' becomes
-call of A + 2. B returns 2 when A + 2 is the start of A2. Otherwise
-the prog is rejected with "verifier bug: No program to jit at insn".
-
-Add bpf_adj_moved_insn() and use it for both copies.
+Emit 'if AX != 0 goto +1; gotol' when the offset doesn't fit and
+compute the offset from the number of insns in the expansion.
+JITs that don't support gotol will reject such prog.
 
 Fixes: 011832b97b31 ("bpf: Introduce may_goto instruction")
-Fixes: d6f1c85f2253 ("bpf: Fall back to nospec for Spectre v1")
+Fixes: e723608bf428 ("bpf: Add verifier support for timed may_goto")
 Signed-off-by: Alexei Starovoitov <ast@kernel.org>
-Link: https://patch.msgid.link/20260924233130.1213812-4-alexei.starovoitov@gmail.com
-[ sashal: Applied the changes to kernel/bpf/verifier.c instead of fixups.c, using the local function names convert_ctx_accesses() and do_misc_fixups() in place of the bpf_-prefixed upstream ones. ]
+Link: https://patch.msgid.link/20260924233130.1213812-6-alexei.starovoitov@gmail.com
+[ sashal: Ported the may_goto overflow fix into verifier.c, since this tree has no fixups.c, and used the older do_misc_fixups() and is_may_goto_insn() names. ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/bpf/verifier.c | 55 +++++++++++++++++++++++++++++++++++++++++--
- 1 file changed, 53 insertions(+), 2 deletions(-)
+ kernel/bpf/verifier.c | 68 ++++++++++++++++++++++++++++---------------
+ 1 file changed, 44 insertions(+), 24 deletions(-)
 
 diff --git a/kernel/bpf/verifier.c b/kernel/bpf/verifier.c
-index 8ac91e5ced84b..13864488b5a07 100644
+index 13864488b5a07..407526349ccfa 100644
 --- a/kernel/bpf/verifier.c
 +++ b/kernel/bpf/verifier.c
-@@ -21471,6 +21471,44 @@ static struct bpf_prog *bpf_patch_insn_data(struct bpf_verifier_env *env, u32 of
- 	return new_prog;
+@@ -22735,6 +22735,30 @@ static int add_hidden_subprog(struct bpf_verifier_env *env, struct bpf_insn *pat
+ 	return 0;
  }
  
 +/*
-+ * insn was moved down by delta insns inside its own patch. Operands relative
-+ * to the pc that point in front of the old position did not move with it.
++ * Expand may_goto: load the count from the stack, jump to the target of
++ * may_goto when it is zero, then the tail that updates the count.
++ * Use gotol when the target is too far for 16-bit offset of a conditional jump.
 + */
-+static int bpf_adj_moved_insn(struct bpf_insn *insn, u32 delta)
++static int may_goto_expand(struct bpf_insn *insn_buf, int off, int stack_off,
++			   const struct bpf_insn *tail, int tail_cnt)
 +{
-+	u8 class = BPF_CLASS(insn->code), op = BPF_OP(insn->code);
-+	s64 off = insn->imm, off_min = S32_MIN;
-+	bool is_imm = true;
++	int cnt = 0;
 +
-+	if (bpf_pseudo_func(insn) || bpf_pseudo_call(insn)) {
-+		/* subprog that started at the old position starts with the patch */
-+		if (off >= 0)
-+			return 0;
-+	} else if ((class == BPF_JMP || class == BPF_JMP32) &&
-+		   op != BPF_CALL && op != BPF_EXIT) {
-+		if (insn->code != (BPF_JMP32 | BPF_JA)) {
-+			off = insn->off;
-+			off_min = S16_MIN;
-+			is_imm = false;
-+		}
-+		/* jump to itself stays */
-+		if (off >= -1)
-+			return 0;
++	/* Forward jump has to step over the tail */
++	off = off >= 0 ? off + tail_cnt : off - 1;
++
++	insn_buf[cnt++] = BPF_LDX_MEM(BPF_DW, BPF_REG_AX, BPF_REG_10, stack_off);
++	if (off == (s16)off) {
++		insn_buf[cnt++] = BPF_JMP_IMM(BPF_JEQ, BPF_REG_AX, 0, off);
 +	} else {
-+		return 0;
++		insn_buf[cnt++] = BPF_JMP_IMM(BPF_JNE, BPF_REG_AX, 0, 1);
++		insn_buf[cnt++] = BPF_JMP32_A(off >= 0 ? off : off - 1);
 +	}
-+
-+	off -= delta;
-+	if (off < off_min)
-+		return -ERANGE;
-+	if (is_imm)
-+		insn->imm = off;
-+	else
-+		insn->off = off;
-+	return 0;
++	memcpy(insn_buf + cnt, tail, tail_cnt * sizeof(*tail));
++	return cnt + tail_cnt;
 +}
 +
- /*
-  * For all jmp insns in a given 'prog' that point to 'tgt_idx' insn adjust the
-  * jump offset by 'delta'.
-@@ -21962,7 +22000,13 @@ static int convert_ctx_accesses(struct bpf_verifier_env *env)
- 			struct bpf_insn *patch = insn_buf;
+ /* Do various post-verification rewrites in a single program pass.
+  * These rewrites simplify JIT and interpreter implementations.
+  */
+@@ -23015,6 +23039,18 @@ static int do_misc_fixups(struct bpf_verifier_env *env)
  
- 			*patch++ = BPF_ST_NOSPEC();
--			*patch++ = *insn;
-+			*patch = *insn;
-+			ret = bpf_adj_moved_insn(patch++, 1);
-+			if (ret) {
-+				verbose(env, "insn %d cannot be patched due to 16-bit range\n",
-+					env->insn_aux_data[i + delta].orig_idx);
-+				return ret;
-+			}
- 			cnt = patch - insn_buf;
+ 		if (is_may_goto_insn(insn) && bpf_jit_supports_timed_may_goto()) {
+ 			int stack_off_cnt = -stack_depth - 16;
++			/*
++			 * AX is used as an argument to pass in stack_off_cnt
++			 * (to add to r10/fp), and also as the return value of
++			 * the call to arch_bpf_timed_may_goto.
++			 */
++			struct bpf_insn tail[] = {
++				BPF_ALU64_IMM(BPF_SUB, BPF_REG_AX, 1),
++				BPF_JMP_IMM(BPF_JNE, BPF_REG_AX, 0, 2),
++				BPF_MOV64_IMM(BPF_REG_AX, stack_off_cnt),
++				BPF_EMIT_CALL(arch_bpf_timed_may_goto),
++				BPF_STX_MEM(BPF_DW, BPF_REG_10, BPF_REG_AX, stack_off_cnt),
++			};
+ 
+ 			/*
+ 			 * Two 8 byte slots, depth-16 stores the count, and
+@@ -23031,22 +23067,8 @@ static int do_misc_fixups(struct bpf_verifier_env *env)
+ 			 * after subtraction, rinse and repeat.
+ 			 */
+ 			stack_depth_extra = 16;
+-			insn_buf[0] = BPF_LDX_MEM(BPF_DW, BPF_REG_AX, BPF_REG_10, stack_off_cnt);
+-			if (insn->off >= 0)
+-				insn_buf[1] = BPF_JMP_IMM(BPF_JEQ, BPF_REG_AX, 0, insn->off + 5);
+-			else
+-				insn_buf[1] = BPF_JMP_IMM(BPF_JEQ, BPF_REG_AX, 0, insn->off - 1);
+-			insn_buf[2] = BPF_ALU64_IMM(BPF_SUB, BPF_REG_AX, 1);
+-			insn_buf[3] = BPF_JMP_IMM(BPF_JNE, BPF_REG_AX, 0, 2);
+-			/*
+-			 * AX is used as an argument to pass in stack_off_cnt
+-			 * (to add to r10/fp), and also as the return value of
+-			 * the call to arch_bpf_timed_may_goto.
+-			 */
+-			insn_buf[4] = BPF_MOV64_IMM(BPF_REG_AX, stack_off_cnt);
+-			insn_buf[5] = BPF_EMIT_CALL(arch_bpf_timed_may_goto);
+-			insn_buf[6] = BPF_STX_MEM(BPF_DW, BPF_REG_10, BPF_REG_AX, stack_off_cnt);
+-			cnt = 7;
++			cnt = may_goto_expand(insn_buf, insn->off, stack_off_cnt,
++					      tail, ARRAY_SIZE(tail));
+ 
  			new_prog = bpf_patch_insn_data(env, i + delta, insn_buf, cnt);
  			if (!new_prog)
-@@ -23576,7 +23620,14 @@ static int do_misc_fixups(struct bpf_verifier_env *env)
- 						     BPF_MAX_LOOPS);
- 		}
- 		/* Copy first actual insn to preserve it */
--		insn_buf[cnt++] = env->prog->insnsi[subprog_start];
-+		insn_buf[cnt] = env->prog->insnsi[subprog_start];
-+		ret = bpf_adj_moved_insn(&insn_buf[cnt], cnt);
-+		if (ret) {
-+			verbose(env, "insn %d cannot be patched due to 16-bit range\n",
-+				env->insn_aux_data[subprog_start].orig_idx);
-+			return ret;
-+		}
-+		cnt++;
+@@ -23058,16 +23080,14 @@ static int do_misc_fixups(struct bpf_verifier_env *env)
+ 			goto next_insn;
+ 		} else if (is_may_goto_insn(insn)) {
+ 			int stack_off = -stack_depth - 8;
++			struct bpf_insn tail[] = {
++				BPF_ALU64_IMM(BPF_SUB, BPF_REG_AX, 1),
++				BPF_STX_MEM(BPF_DW, BPF_REG_10, BPF_REG_AX, stack_off),
++			};
  
- 		new_prog = bpf_patch_insn_data(env, subprog_start, insn_buf, cnt);
- 		if (!new_prog)
+ 			stack_depth_extra = 8;
+-			insn_buf[0] = BPF_LDX_MEM(BPF_DW, BPF_REG_AX, BPF_REG_10, stack_off);
+-			if (insn->off >= 0)
+-				insn_buf[1] = BPF_JMP_IMM(BPF_JEQ, BPF_REG_AX, 0, insn->off + 2);
+-			else
+-				insn_buf[1] = BPF_JMP_IMM(BPF_JEQ, BPF_REG_AX, 0, insn->off - 1);
+-			insn_buf[2] = BPF_ALU64_IMM(BPF_SUB, BPF_REG_AX, 1);
+-			insn_buf[3] = BPF_STX_MEM(BPF_DW, BPF_REG_10, BPF_REG_AX, stack_off);
+-			cnt = 4;
++			cnt = may_goto_expand(insn_buf, insn->off, stack_off,
++					      tail, ARRAY_SIZE(tail));
+ 
+ 			new_prog = bpf_patch_insn_data(env, i + delta, insn_buf, cnt);
+ 			if (!new_prog)
 -- 
 2.53.0
 
