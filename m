@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795621126;
-	b=1dJVSuE49W5GL9g+6jt/BRZi3uxIIM77Hx6tNdRz7yNoZkiHkH5FKi7lwOHlj3StR8/O
-	 q8kVoN1OnHQ3/A/ytsM7+bkGNjhGOP4awmQaLjDMV1IpzMXEY5pZg8UGgYBYAqX0v6/4W
-	 dJC0ywGyXWtnFlfKuJkaIQ5IdGi+sLSMLoh84pB5GYMLso8hOQOKFWyS7raPRTpefjXkM
-	 6fJ2encUkhD1ezQFY0kzwLUaOVaxlENKfZxFDlfN9KULX+bbZ4m822AWckAaJ2wG7ScaR
-	 OdM1LWlX8kWQDfADsw6zIt/f8w+l1qroslfj1hGcNggak0G/in3Jl86nnUX1iWHcXlQ==
+	t=1795621129;
+	b=a3buYardHX1YBuqyE155CpqUTGWwOQxbIXuFzIZKcfah76uEq4RMzMPkc5P8n8I2QK65
+	 QmYnzxVD/VW7ZzxADbmTzbdZYPHsdFCieu/nggRhpJDUmFwTNy61Jk/1/wSESO3D8xpka
+	 Sznf1YRSNLciYjtRLH+1aAWzDcSgaFDX5rbvLCMd3LZS+m7dqaCGdMDGGoawdXGr5vA2L
+	 NTUHQ2Np+u2VufmTb3EXZ8BmhIgi2DISyOHXeg5fK9iD9cfqde6cdwq0fyWZYfd19YSyZ
+	 Cr1bcnratEZxvJC4RtPxwwxOmnD0YR7WTTs6NShOPMsmRCqDRXaKgflyo5lgwfRWlRQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795621126;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795621129;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=bI/jXQ2KapG8aHPP+TmdFQTz2YIR1oOoJZuC/bjx4x0=;
-	b=aTcmiN4ZSUq4uGPGu40y/xp5GLswOG83ddflG+/ITlQsyw1G4QN4z3lylpkcZiqISKbz
-	 ZjzPd1sby/KUCZFdl+LE4P/LhLH0fuNdfMSqNh0sdXV0UxsrfgDnYTPyseJGRiq4V9799
-	 azRs+1eYEuCTgbeZfzBf/Ocpb9VWh1aE7TWq/iYj6OltjyXcXJTAyxcAkhExZ7tFKZ9ZC
-	 LOH7dZoaGxZtSQvpXNZli0rvsXiRrnbKNma1+q1XZ2rBXR1Ac5eoemMpxG/eigm1Co6tn
-	 /WpbqODsg2WwBgDlLTglN4hyDvyjFQQbRDbZ+8oxsg/Em9ZltgWh6Prum73NdZm2MTA==
+	bh=FtR3ubQum7f0VQ+kGO1hjNJE1UtMOozQYnLhT4z3fak=;
+	b=WtYL5KESIuq1I5vVn/5OOWSwoURcwCxgkTihHo7pUGgoluPSLV1iVxrhvBVYWkWn7cL7
+	 SprOqjcbjC6wSCydjirXjSbIBLHLq6uGHbH7gP0wuh/9LT3AobqyoMhFBgyImPLdqbnzX
+	 EI9dC636g2MRsimvR1JHK5bKsfZAMOrjSdgyZYapng+z42PbA4bYXWmUslo2cJboOU8HD
+	 peDt2pC0sIjPwk5F9tjjafjFncToR2fukKhySQZd/sat5H+Ju+v4IHFUMH5kE8Ks56pQa
+	 X5oY7CleXWg5ZybQG89DFLTw+l2Op1NYNdeR/AMouPONlFbVYll4gufBzf4rRV9y1nA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=SqTeHVhQ;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=AAfTtsEP;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5879F606A31E;
-	Wed, 25 Nov 2026 15:38:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7F7C5606A330;
+	Wed, 25 Nov 2026 15:38:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=SqTeHVhQ
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A91F61F000CA;
-	Wed, 25 Nov 2026 15:38:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=AAfTtsEP
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7D2371F000C6;
+	Wed, 25 Nov 2026 15:38:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795621126;
-	bh=bI/jXQ2KapG8aHPP+TmdFQTz2YIR1oOoJZuC/bjx4x0=;
+	s=korg; t=1795621129;
+	bh=FtR3ubQum7f0VQ+kGO1hjNJE1UtMOozQYnLhT4z3fak=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=SqTeHVhQ0BXkSzC1LOtnALNPMAVujudIU/xtS9IWPNQWH0INDwZrJhmxFm4sFnjsH
-	 kStVFLdaq3ytLX8HUiEoUC8WiCiq/oWuZKAY0NofaG+Fi7VNoNiyoiwo+EjP4GwtBB
-	 ekBAnz8CRChs18oDSEN4RSxjDkfO3sjGjOdSAAow=
+	b=AAfTtsEP6FL1OPDCF/R1fPfcU/lKHdzRIID5xUfvRXFrhPPZZDNb0D7/7H/uKYmrr
+	 PYsleIZHWh0hv5Wb2ERHwwToQDKM87lNrt1GArjUbtRA8zaRJdt6gjJOxK6p6UXgSm
+	 mlrJ+9Di5tVXR628FL+FYEG/GFF1UGQhFGfYnB4s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yuqiang Sun <izaiahsun@gmail.com>,
-	Alexei Starovoitov <ast@kernel.org>,
+	Joas Antonio dos Santos <joasantonio108@gmail.com>,
+	Simon Horman <horms@kernel.org>,
+	Dave Miller <davem@davem-thinkpadp1gen8.ibmlond.csb>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 130/990] bpf: lwt: Free the skb when bpf_xmit() fails to expand the headroom
-Date: Wed, 25 Nov 2026 15:24:57 +0100
-Message-ID: <20261125143825.131725939@linuxfoundation.org>
+Subject: [PATCH 6.18 131/990] net/mlx5: macsec: free struct mlx5_fs_id after an RCU grace period
+Date: Wed, 25 Nov 2026 15:24:58 +0100
+Message-ID: <20261125143825.154949414@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143822.072087159@linuxfoundation.org>
 References: <20261125143822.072087159@linuxfoundation.org>
@@ -68,63 +69,63 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yuqiang Sun <izaiahsun@gmail.com>
+From: Joas Antonio dos Santos <joasantonio108@gmail.com>
 
-[ Upstream commit 5e96760b25fdedbbf9312827f1f237d6b18b03e8 ]
+[ Upstream commit 902407bc588575af0ceae5de4f635fe1e024f258 ]
 
-When an LWT xmit program returns BPF_OK, bpf_xmit() makes sure that
-the skb still has room for the link layer header. If
-pskb_expand_head() fails there, bpf_xmit() returns -ENOMEM without
-freeing the skb. Its callers, lwtunnel_xmit() and then
-ip_finish_output2() or ip6_finish_output2(), take any return value
-other than LWTUNNEL_XMIT_CONTINUE to mean that the skb has been
-consumed, so nothing frees it.
+macsec_fs_id_del() removes a struct mlx5_fs_id from its rhashtable with
+rhashtable_remove_fast() and then frees it with kfree() right away.
 
-Each such failure leaks the skb, together with what it holds: its dst
-and its charge to the sending socket, so the socket is never freed
-either. The other error paths of bpf_xmit() (BPF_DROP, an illegal
-return code, a changed protocol, a failed reroute) all free the skb.
+The TX (SCI) table is read locklessly from the transmit path:
+mlx5e_macsec_handle_tx_skb() and mlx5e_macsec_tx_build_eseg() call
+mlx5_macsec_fs_get_fs_id_from_hashtable(), which does
+rhashtable_lookup() under rcu_read_lock() and then reads
+mlx5_fs_id->id. A transmit that looked the entry up just before it was
+removed reads freed memory.
 
-Free it here too.
+Before commit d4ece08f4b1d ("net/mlx5: Maintain fs_id xarray per MACsec
+device inside macsec steering") the SCI table held struct
+mlx5e_macsec_sa directly, and mlx5e_macsec_del_txsa() freed it with
+kfree_rcu_mightsleep(). That commit moved the table into macsec_fs.c
+with the new struct mlx5_fs_id, but frees it with a plain kfree().
 
-The leak was found with kbound, a static analysis prototype for
-ownership mismatches at kernel interfaces, on v7.2.12; it is present in
-mainline.
+Add an rcu_head to struct mlx5_fs_id and free it with kfree_rcu().
 
-Build-tested with x86_64 and arm64 allmodconfig (W=1, sparse): no new
-warnings. Run-tested on QEMU (x86_64, KVM) with KASAN: a route through a
-dummy device with an LWT xmit program that pushes one byte with
-bpf_skb_change_head(), so the headroom check has to expand the head, and
-failslab limited to allocations under bpf_xmit(). Each of 10 pings then
-fails with ENOMEM. Without this patch each leaves a raw socket behind
-(RAW slab objects 6 -> 16); with it none does (6 -> 6), and nothing else
-is reported. Without injection both kernels go from 6 to 6.
+The same issue was flagged by the Sashiko AI review as a pre-existing
+problem while reviewing the HW-GRO for PSP series.
 
-Fixes: 3a0af8fd61f9 ("bpf: BPF for lightweight tunnel infrastructure")
-Signed-off-by: Yuqiang Sun <izaiahsun@gmail.com>
-Signed-off-by: Alexei Starovoitov <ast@kernel.org>
-Link: https://patch.msgid.link/20261101182343.17991-1-izaiahsun@gmail.com
+Fixes: d4ece08f4b1d ("net/mlx5: Maintain fs_id xarray per MACsec device inside macsec steering")
+Link: https://lore.kernel.org/all/20260909065542.4B80D1F00ACA@smtp.kernel.org/
+Signed-off-by: Joas Antonio dos Santos <joasantonio108@gmail.com>
+Assisted-by: Yaga Agent HackerSec Claude:claude-opus-5-5
+Reviewed-by: Simon Horman <horms@kernel.org>
+Signed-off-by: Dave Miller <davem@davem-thinkpadp1gen8.ibmlond.csb>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/core/lwt_bpf.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/net/ethernet/mellanox/mlx5/core/lib/macsec_fs.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/net/core/lwt_bpf.c b/net/core/lwt_bpf.c
-index 982599bb41c97..6d29da9f5460b 100644
---- a/net/core/lwt_bpf.c
-+++ b/net/core/lwt_bpf.c
-@@ -341,8 +341,10 @@ static int bpf_xmit(struct sk_buff *skb)
- 			 * made before LWT xmit.
- 			 */
- 			ret = xmit_check_headroom(skb, hroom);
--			if (unlikely(ret))
-+			if (unlikely(ret)) {
-+				kfree_skb(skb);
- 				return ret;
-+			}
+diff --git a/drivers/net/ethernet/mellanox/mlx5/core/lib/macsec_fs.c b/drivers/net/ethernet/mellanox/mlx5/core/lib/macsec_fs.c
+index e6be2f01daf4c..f6d09e4509e55 100644
+--- a/drivers/net/ethernet/mellanox/mlx5/core/lib/macsec_fs.c
++++ b/drivers/net/ethernet/mellanox/mlx5/core/lib/macsec_fs.c
+@@ -94,6 +94,7 @@ struct mlx5_fs_id {
+ 	refcount_t refcnt;
+ 	sci_t sci;
+ 	struct rhash_head hash;
++	struct rcu_head rcu;
+ };
  
- 			return LWTUNNEL_XMIT_CONTINUE;
- 		case BPF_REDIRECT:
+ struct mlx5_macsec_device {
+@@ -684,7 +685,7 @@ static void macsec_fs_id_del(struct list_head *macsec_devices_list, u32 fs_id,
+ 
+ 	xa_erase(fs_id_xa, fs_id);
+ 
+-	kfree(fs_id_found);
++	kfree_rcu(fs_id_found, rcu);
+ 
+ 	if (macsec_fs_is_macsec_device_empty(macsec_device)) {
+ 		list_del(&macsec_device->macsec_devices_list_entry);
 -- 
 2.53.0
 
