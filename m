@@ -1,52 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795619734;
-	b=43nGIcM18F7Svze/Vl4FvmH0E0wrSKS5jRCO/H5WtNQfzEiPjKm359nPOZE9Nk/zwJC/
-	 c7WMxND+TWwINwCdupfUo9b0qmmoqboMsAkdr+j3uQEG3XHXbW9am+HFMMG+VFVUM+GUP
-	 AhjWX/BhQBSJZz5VYpIydXgepco4eKTxD+rhWmnOgjrYbtaWcCmg63HY8eHQSiQGYoqqz
-	 Qvus4li2xqk13kD+Aewok+OlYKjwYPR90TKSNeC+kFoxHVc+8KGl9A8pLvqjvOpnT1l7y
-	 iz2nCdPjtKbZ1ixX2l9RTB3+I7mOra45+g73xDnNdHT+cVxIDnpkMRFqZCzqN6lcLbg==
+	t=1795619737;
+	b=pyWJ23LxLrCIsThijKRc5kz1oVhtOmA+7djyIzt1R5zsgKT6iirLfR1Qy0WuZq/e7FaF
+	 VqXMyLaNVAL0ysh4gfk5ow05+IrCA060KMm7L1bANqauE/Az5SfQ+nkgwn5lokNAIUIn7
+	 m6sXddtVt70rtxSZud5EGWCMKIfnTO8RHoTxV2PiLrKZIiImOZXaX0utKngp4o9jHsxBg
+	 N33SYV3xlsszD5d8ZbcmhBeGK0TJ+o/rvHhxldTIr+BaerfIcXDBMupxknOm1acddBNs5
+	 OnWLq8KIO/7hxu/7zIye8mAsq6OyIrvZKmVNWvD/oyPR4l6HyC8wqLL2Qd43JtDN9Gw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795619734;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795619737;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=LPl656BAo355gM+1z4JYoi/lI4ITRshqodlV9WefDO0=;
-	b=d4xcNJBpPHzNwG2SY09kB8PL7t3XGio/JFbUPjGGu7lWxc9YeT5xo0A1WVZ13hmUNBKu
-	 nVd0JbuJ+QAblW/UsvmRLnWr9qc99GWYnPtuK1JaRUDzaAfZM0chr29jntIFtixrKxAp4
-	 8NbikrVSh4NHtpzOryJH21cKAXNy7YdDvjD3GedSdHyd+DM8shB4hr6Y833d9FjPqOG7p
-	 9oJqC8laaAWy7UrWZkizPwY2uxU9U0yAbSSayfjFFN/SNDUfTDmBd4rvNtdyHtw10cIwS
-	 VI0ty6INNLBTxWqGBRcWlaxbVQXnGi8aK353S0k7MmWnpIBMBv/0VizXcNbXqlsCzTQ==
+	bh=nLI0u7MRA6tOw6qpLv40k8Bf7FMnMDhQ0VjIIlOTm1M=;
+	b=DqRciEMaHK9ks7hacZzWzvkI3Ebxvt1jE/Edo7JVvIYRC6SoABbL1NJewAN8PUTbr3CZ
+	 F+GLvbqDd2SfAzeG6k/JW0HzPgJ1KvPwnY8AOY/AhPfiVCrwtP/tfD0Z21qJqcW7jjwzG
+	 NXF27jTeQXhmHRQ2MWo/Gio+uOsEax9SUo8Hhvtfn+vGyER8c0nGoas7xgMMHU0W6OeXC
+	 ciaRNJCoSQoxLbyJMmPQWLDedWQm89PkqUtyezfyRa/Qmb5msF9AldRj3Z8XDh4ZPVHWb
+	 G0BUj+Nl9tZjPhPqriOwlJG944LsIeMFz0nz855N+wjhll0sqomGRHFJEtFmBcpGZrw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ScosEA7w;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Hn4OHo2A;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 006DF606A33B;
-	Wed, 25 Nov 2026 15:15:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A57CB606A31E;
+	Wed, 25 Nov 2026 15:15:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ScosEA7w
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 065ED1F000D2;
-	Wed, 25 Nov 2026 15:15:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Hn4OHo2A
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 788F81F000D0;
+	Wed, 25 Nov 2026 15:15:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795619733;
-	bh=LPl656BAo355gM+1z4JYoi/lI4ITRshqodlV9WefDO0=;
+	s=korg; t=1795619737;
+	bh=nLI0u7MRA6tOw6qpLv40k8Bf7FMnMDhQ0VjIIlOTm1M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ScosEA7wd0jNMIDd8gqiytuATQf1v1Rvkib64skAF6t80nnjhJICd7OYooVFXdbyt
-	 YcMvpdKJxmD7I0P1ScEQ+0osMWklZVNQNe5H1MZWX74aknFN9BRP4Lz2zhp0SQOcGw
-	 Tlu3wC3VXGDTp/Ob3+zniWQExgrUDuHg9oS/CGao=
+	b=Hn4OHo2AqusD/HpfombjTBjF2gqNcSStKt11wHC8l99O+4LIxlu2sZOGCtw77fMbp
+	 RUltA8Xzhy7CiJK8OoL3Dwh8e9Ztdoxm8LYqEO6ZgC1dXEBzKpaBA/n/aoXJG4nfp4
+	 sUeYmWerbfoXsnYVUJzp1bWPK8vzbvj4sytl7MFE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mani Tofigh <mt4022@columbia.edu>,
-	Tao Cui <cuitao@kylinos.cn>,
-	Tejun Heo <tj@kernel.org>
-Subject: [PATCH 7.3 0689/1005] cgroup/freezer: walk exiting tasks in the v1 freezer
-Date: Wed, 25 Nov 2026 15:33:47 +0100
-Message-ID: <20261125143837.892592754@linuxfoundation.org>
+	Tejun Heo <tj@kernel.org>,
+	Tao Cui <cuitao@kylinos.cn>
+Subject: [PATCH 7.3 0690/1005] cgroup/freezer: Fix exiting tasks left frozen forever after rmdir
+Date: Wed, 25 Nov 2026 15:33:48 +0100
+Message-ID: <20261125143837.916363479@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143821.729802100@linuxfoundation.org>
 References: <20261125143821.729802100@linuxfoundation.org>
@@ -68,93 +67,113 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mani Tofigh <mt4022@columbia.edu>
+From: Tejun Heo <tj@kernel.org>
 
-commit 8ab6980c70076db5f8c0c66a5fac06472b254333 upstream.
+commit e1aed52b68a361f6fc047b24a37d9ec4d928a158 upstream.
 
-An exiting task can stay frozen after its v1 freezer cgroup is thawed.
-Since commit a72f73c4dd9b ("cgroup: Don't expose dead tasks in cgroup")
-the css task walk hides an exiting task once its process has no live
-threads left.  That count drops when another thread of the process
-exits, which can happen between the freeze and the thaw walk.  A pid
-namespace init hits this easily since it waits freezably in
-zap_pid_ns_processes() after commit 81933038f5e2 ("pid_namespace: make
-zap_pid_ns_processes() freezable"):
+Since 93618edf7538 ("cgroup: Defer css percpu_ref kill on rmdir until cgroup
+is depopulated"), rmdir succeeds once cgroup.procs is empty, but exiting
+tasks hidden from it can stay in the cgroup until their final context
+switch. If such a task is frozen in a v1 freezer cgroup, nothing is left to
+thaw it after rmdir: freezer.state is gone with the cgroup, and a THAWED
+write to an ancestor clears only CGROUP_FREEZING_PARENT.
 
-  Task A (pid ns init)      Task B (A's thread)      Task C
-                            do_exit()
-                              exit_signals()
-  do_exit()
-    zap_pid_ns_processes()
-                                                     write FROZEN
-                                                       /* A frozen */
-                              /* live count 0 */
-                                                     write THAWED
-                                                       /* A skipped */
+8ab6980c7007 ("cgroup/freezer: walk exiting tasks in the v1 freezer") made
+the freezer walks include exiting tasks. A FROZEN write now also freezes a
+hidden task in a freezable sleep on its exit path. The fix depends on that
+commit, as the thaw reaches hidden tasks through the same walk.
 
-A then stays frozen even after SIGKILL:
+Since 81933038f5e2 ("pid_namespace: make zap_pid_ns_processes() freezable"),
+an exiting pid namespace init sleeps that way until a parent outside the
+namespace reaps a zombie in it.
 
-  [   10.775155] task:fz-init         state:D stack:28152 pid:65    tgid:65    ppid:1      task_flags:0xc0004c flags:0x00080000
-  [   10.775176] Call Trace:
-  [   10.775180]  <TASK>
-  [   10.775188]  __schedule+0x10f1/0x4760
-  [   10.775252]  schedule+0xd7/0x2c0
-  [   10.775265]  zap_pid_ns_processes+0x2c7/0x5f0
-  [   10.775346]  do_exit+0x1bf4/0x2560
-  [   10.775403]  __x64_sys_exit+0x3d/0x50
-  [   10.775414]  x64_sys_call+0x156c/0x1570
-  [   10.775425]  do_syscall_64+0xfb/0x590
-  [   10.775450]  entry_SYSCALL_64_after_hwframe+0x77/0x7f
-  [   10.775529]  </TASK>
+Thaw the cgroup from ->css_killed(), as a THAWED write to it would. A
+descendant removed earlier can still hold hidden tasks frozen through
+CGROUP_FREEZING_PARENT. The thaw reaches it too, as its css stays online
+until its tasks are gone.
 
-Use CSS_TASK_ITER_WITH_DEAD in the three v1 freezer walks so they all
-see the same tasks, as commit 60f21a264930 ("cgroup, sched_ext: Include
-exiting tasks in cgroup iter") did for sched_ext.  With the fix, A is
-thawed and exits.
+rmdir removes freezer.state only after ->css_killed() returns, and a write
+to it takes no cgroup_mutex. A FROZEN write after the thaw would freeze the
+removed cgroup again, so refuse to freeze a dead cgroup.
 
-This bug was identified and confirmed with the help of a deterministic
-hypervisor currently under development.  The C reproducer below however
-hits it within about 10s.
+Verified with a reproducer, including under a frozen parent, from an already
+removed child and with a racing FROZEN write.
 
-Fixes: a72f73c4dd9b ("cgroup: Don't expose dead tasks in cgroup")
+Fixes: 93618edf7538 ("cgroup: Defer css percpu_ref kill on rmdir until cgroup is depopulated")
 Cc: stable@vger.kernel.org # v7.1+
-Signed-off-by: Mani Tofigh <mt4022@columbia.edu>
+Signed-off-by: Tejun Heo <tj@kernel.org>
 Reviewed-by: Tao Cui <cuitao@kylinos.cn>
 Tested-by: Tao Cui <cuitao@kylinos.cn>
-Signed-off-by: Tejun Heo <tj@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/cgroup/legacy_freezer.c |    6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ kernel/cgroup/legacy_freezer.c | 34 ++++++++++++++++++++++++++++++++++
+ 1 file changed, 34 insertions(+)
 
+diff --git a/kernel/cgroup/legacy_freezer.c b/kernel/cgroup/legacy_freezer.c
+index bd11047f2311..1792523d119a 100644
 --- a/kernel/cgroup/legacy_freezer.c
 +++ b/kernel/cgroup/legacy_freezer.c
-@@ -265,7 +265,7 @@ static void update_if_frozen(struct cgro
+@@ -382,6 +382,24 @@ static void freezer_change_state(struct freezer *freezer, bool freeze)
+ 	 * CGROUP_FREEZING_PARENT.
+ 	 */
+ 	mutex_lock(&freezer_mutex);
++
++	/*
++	 * A dead cgroup must not be frozen.
++	 *
++	 * rmdir thaws the cgroup from freezer_css_killed(), but freezer.state
++	 * stays writable until rmdir removes it a moment later. A FROZEN write
++	 * in that gap would freeze the cgroup again, and nothing could thaw it
++	 * after that.
++	 *
++	 * A freezer.state write doesn't take cgroup_mutex, but testing
++	 * cgroup_is_dead() without it is safe. rmdir marks the cgroup dead
++	 * before the thaw, so a write that takes freezer_mutex after the thaw
++	 * sees it dead. One that takes it before the thaw may still see the
++	 * cgroup alive, but the thaw then undoes its freeze.
++	 */
++	if (freeze && data_race(cgroup_is_dead(freezer->css.cgroup)))
++		goto out_unlock;
++
+ 	rcu_read_lock();
+ 	css_for_each_descendant_pre(pos, &freezer->css) {
+ 		struct freezer *pos_f = css_freezer(pos);
+@@ -403,10 +421,25 @@ static void freezer_change_state(struct freezer *freezer, bool freeze)
+ 		css_put(pos);
+ 	}
  	rcu_read_unlock();
++out_unlock:
+ 	mutex_unlock(&freezer_mutex);
+ 	cpus_read_unlock();
+ }
  
- 	/* are all tasks frozen? */
--	css_task_iter_start(css, 0, &it);
-+	css_task_iter_start(css, CSS_TASK_ITER_WITH_DEAD, &it);
- 
- 	while ((task = css_task_iter_next(&it))) {
- 		if (freezing(task) && !frozen(task))
-@@ -309,7 +309,7 @@ static void freeze_cgroup(struct freezer
- 	struct css_task_iter it;
- 	struct task_struct *task;
- 
--	css_task_iter_start(&freezer->css, 0, &it);
-+	css_task_iter_start(&freezer->css, CSS_TASK_ITER_WITH_DEAD, &it);
- 	while ((task = css_task_iter_next(&it)))
- 		freeze_task(task);
- 	css_task_iter_end(&it);
-@@ -320,7 +320,7 @@ static void unfreeze_cgroup(struct freez
- 	struct css_task_iter it;
- 	struct task_struct *task;
- 
--	css_task_iter_start(&freezer->css, 0, &it);
-+	css_task_iter_start(&freezer->css, CSS_TASK_ITER_WITH_DEAD, &it);
- 	while ((task = css_task_iter_next(&it)))
- 		__thaw_task(task);
- 	css_task_iter_end(&it);
++/**
++ * freezer_css_killed - Thaw a freezer cgroup being removed
++ * @css: css being killed
++ *
++ * Exiting tasks hidden from cgroup.procs can still be in the cgroup when it is
++ * removed, and a frozen one has nothing left to thaw it once freezer.state is
++ * gone. Thaw the cgroup as a THAWED write to it would. A frozen ancestor keeps
++ * the tasks frozen through CGROUP_FREEZING_PARENT until the ancestor is thawed.
++ */
++static void freezer_css_killed(struct cgroup_subsys_state *css)
++{
++	freezer_change_state(css_freezer(css), false);
++}
++
+ static ssize_t freezer_write(struct kernfs_open_file *of,
+ 			     char *buf, size_t nbytes, loff_t off)
+ {
+@@ -466,6 +499,7 @@ static struct cftype files[] = {
+ struct cgroup_subsys freezer_cgrp_subsys = {
+ 	.css_alloc	= freezer_css_alloc,
+ 	.css_online	= freezer_css_online,
++	.css_killed	= freezer_css_killed,
+ 	.css_offline	= freezer_css_offline,
+ 	.css_free	= freezer_css_free,
+ 	.attach		= freezer_attach,
+-- 
+2.56.1
+
 
 
