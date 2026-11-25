@@ -1,56 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795621532;
-	b=x/Vp1nSvzcHd+EoPQ9sBMu6SuqDoKuAa7XQQ7AjULtgTKr6rFS0Cj+7AK/2PXavzwUeD
-	 5O67SfSv1SivigVvUTn+MWXuhI07ks+1OHu7Pu7yH1R8RLdaWfFnVFq17zHbM3xkJ7XaH
-	 dyHJniXKDQifeKWXm3gA3EEEOAIVb0TByP42Cr27yD2kWOQFkj2u7UsDBW1d7rejQjz9j
-	 5ABsdhnGO9I3oQ3cwNt7/ttomBXY1YsQbmKOrrTNlPcvCt+cJl75IRJjEAVswccxWBrRi
-	 DsejVsESPiRAxfevrtOAsbIJJ5ew6wzIZN7czhw3ryf0fZGfrkjEpuH/ZzOKBxOeOMw==
+	t=1795621536;
+	b=27TDJ9IARfE4QLiJE9WRhL5SY4HeR74Q2hcpxY0H/AxbAZRc0i0Dhcij0lEvJBhf+T+H
+	 xvcRriyLbSi1suHfJA111a7oFvydMdXpynjjulp0blsvLxBi/vg1qEYWH7DZRLaI6t3M7
+	 qX7cPoMfv+eWfNo1r3pBKBgnPVY3gteufqRGcKsx/gvWZIt0n9t2aOFkabMcOoQnEOl+X
+	 ciM6P5yaWKKQCzPqzAgWNNZq76o1BVI5zffJDpR5G8gqynJarSQ+rtkBfAPsCbzXwZfCn
+	 in93BLNw9UdGNO1uLAR3Ntxv8ghGzoyz5YuLVNmbf+WCg9+kL4xl76Lpj44L7XNSjGA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795621532;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795621536;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=SDev6d9vJ0fG7zfbOOzy307XaHSqaOTi0lwlWf0UYkM=;
-	b=vIIuyX+L13LIFxKXYmQeaeKZ3/GvTBgWdt7HvCUq7z8vmCMQ5+1wAyz0gnVjquTFg1wR
-	 cEVJZIKOm579mWCUikXFSOxTzMbzxfCZWubXZU5TUmZ+2YP5NYIqpTFRYxXBkE3SV/oyz
-	 9nU4gTMCkd0ERU/K8B4rgRoObqepg1mnjKAhbzVa553UOQckl4hiDeFdkxJQxX0A/eFos
-	 Hmo5dRbf3slPx7AqdxYK5XySmawXX6Pq8p8/3tRuVSEiFesgipruo6dmWC9ValrjY6qCh
-	 S8xaIVu1Qixbayt1+8eeRHs1atEaHy6UfZfgMFzPtEvxFUK+ArbSOi3v/BolUVDxwWg==
+	bh=wECPynAaQV5ilB3SQKY5kTMEKGZ5tSTzbdGyZjTrNcM=;
+	b=uAymMI+vmBLmM/1ZXDLQL98qma4Eti6vIlGDQ5Y6AtaztPC5bzdQWJCzGoHnj4sXkvt/
+	 MRcyS+by4NqQy48Um4u4ph2Gq57yXSDjfkBLgyIAhy0YHdQexr2XJ01nTy2FZhgMAVBMW
+	 MVa2r/82vCbfP3y0YohRrRtavEL7ua08Fb6i6uTB+Ywrv74x+w4yzJW5G5ag2WDNDncUV
+	 kfQQ0SdRCbo4IVP+Rb3y/RuiB/zHkiCtcMzsUd+pbV3TQ32rEr+klY+NRq45odwwqIWJR
+	 SYjJZqctwbfjOYb+Bj6DwYmAJ5DYWZaf9VfR9Sf8GFm7HvK52fF3c5JMKMsd93Sy4WA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=0gmPPoec;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=fjV9eEPd;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D41B6606A321;
-	Wed, 25 Nov 2026 15:45:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F1303606A321;
+	Wed, 25 Nov 2026 15:45:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=0gmPPoec
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3994D1F000C4;
-	Wed, 25 Nov 2026 15:45:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=fjV9eEPd
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 08F3E1F000D2;
+	Wed, 25 Nov 2026 15:45:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795621532;
-	bh=SDev6d9vJ0fG7zfbOOzy307XaHSqaOTi0lwlWf0UYkM=;
+	s=korg; t=1795621535;
+	bh=wECPynAaQV5ilB3SQKY5kTMEKGZ5tSTzbdGyZjTrNcM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=0gmPPoecQPJc3Qb5gy7nafBEajmB+2bo1sfqVsr7lXdPwkYMgFpvLtmAlWrjbrK/p
-	 LebwnpatBA384U31Dt3dpq5GwU3Tjm2whR2oUXToJTdYWXv+pa2svQ3FGSaFHcKTzE
-	 6EeyBjZSB3nW/5j9glmuHK7XcEYajemI7tfNqj6E=
+	b=fjV9eEPdS/mQ6k8G6mx01SOQPdqR923CWZA8uM1gBiO3ndOLj2o2st5MiojTggM3i
+	 lTSRudH0rpAI64p1UMc2emr2+EZZDkgmOfLJ5BxwZwmobubnasqTXbT5gJVOQ9OoHu
+	 cLAyanqYEr2HjlJJ+MvlMPsmOo3sBaL/38kIfWaA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tom Williams <Tom.D.Williams@MorganStanley.com>,
-	Guillaume Nault <gnault@redhat.com>,
-	Kuniyuki Iwashima <kuniyu@google.com>,
-	Neal Cardwell <ncardwell@google.com>,
-	Eric Dumazet <edumazet@kernel.org>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Christian Loehle <christian.loehle@arm.com>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 253/990] tcp: Fix dup-ack detection on non-SACK bidirectional data transfer.
-Date: Wed, 25 Nov 2026 15:27:00 +0100
-Message-ID: <20261125143828.017408389@linuxfoundation.org>
+Subject: [PATCH 6.18 254/990] cpufreq: Hold the policy write lock when changing boost state
+Date: Wed, 25 Nov 2026 15:27:01 +0100
+Message-ID: <20261125143828.042011684@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143822.072087159@linuxfoundation.org>
 References: <20261125143822.072087159@linuxfoundation.org>
@@ -72,165 +68,62 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Guillaume Nault <gnault@redhat.com>
+From: Christian Loehle <christian.loehle@arm.com>
 
-[ Upstream commit 11140c51df12e594d6bf2c8d2af5dec63b0219ac ]
+[ Upstream commit e6f50e602e373583423654ec000cad8b8d08f7bc ]
 
-When receiving a pure ack from a peer that also sends data, we can
-have SEG.SEQ > SND.WL1, even though the segment contains no data. This
-makes tcp_may_update_window() return true (because of the
-"after(ack_seq, tp->snd_wl1)" condition), and tcp_ack_update_window()
-then adds FLAG_WIN_UPDATE to the segment set of flags, even when
-there's no window update.
+The per-policy boost sysfs handler calls policy_set_boost() under
+policy->rwsem, but the global boost handler and cpufreq_online() do not.
+Consequently, global and per-policy boost changes can concurrently
+update policy->boost_enabled, invoke the driver callback and update the
+boost frequency QoS request. The driver callbacks also access policy
+state, e.g. CPPC updates cpuinfo.max_freq that assumes policy->rw_sem
+held.
 
-Since FLAG_WIN_UPDATE prevents the segment from being considered as
-dup-ack (as it's part of FLAG_NOT_DUP), this can inhibit fast
-retransmit on non-SACK connections, making recovery very slow as it
-now entirely relies on RTO.
+Take policy->rwsem around policy_set_boost() in both unlocked
+callers. Keep locking at the call sites because the per-policy sysfs
+handler already holds the lock.
 
-The "DUPLICATE ACKNOWLEDGMENT" definition of RFC 5681, section 2,
-says that lack of window update is a necessary condition for a dup ack:
-"(e) the advertised window in the incoming acknowledgment equals the
-advertised window in the last incoming acknowledgment.". Spurious
-window updates can thus prevent dup ack detection and, in the end, fast
-retransmit.
-
-Avoid this scenario by setting FLAG_WIN_UPDATE only when a window
-update actually occurs. Pure acks with SEG.SEQ > SND.WL1 can now
-be detected as dup-ack and trigger fast retransmission.
-
-Also, stop setting FLAG_WIN_UPDATE in tcp_ack()'s header prediction
-path. One of the conditions for header prediction to happen is that
-received segments don't trigger a window update. This flag update was
-thus wrong to begin with. Now that tcp_ack_update_window() sets
-FLAG_WIN_UPDATE only if a window update actually occurred, we need the
-header prediction path to stop reporting spurious window updates too.
-Otherwise BPF programs would get inconsistent window update information
-(CA_ACK_WIN_UPDATE) between fast an slow paths.
-
-Finally, add FLAG_SND_UNA_ADVANCED to the definition of FLAG_NOT_DUP.
-This is necessary for the case where an incoming segment acknowledges
-less than a full segment of the retransmit queue. Such segments were
-not considered dubious by tcp_ack_is_dubious() because of the spurious
-FLAG_WIN_UPDATE flag, which prevented the segment from being seen as a
-duplicate ack. Now that FLAG_WIN_UPDATE doesn't cover this scenario
-anymore, we need another way to mark these acks as non-duplicate.
-Adding FLAG_SND_UNA_ADVANCED to FLAG_NOT_DUP is the natural way of
-doing this, since, by definition, a segment advancing SND.UNA, even by
-a small amount, cannot be a duplicate ack.
-
-A side effect of this patch is that repeated zero window acks received
-from peer can now be considered duplicate acks (because of the the
-"|| !win" condition in tcp_may_update_window()). Therefore, they can
-now trigger fast retransmission and fast recovery, including congestion
-window reduction, when the peer is stalled. This is RFC compliant and
-shouldn't have any negative effect.
-
-Add packetdrill selftest. Before this patch, the 1001:2001 segment was
-retransmitted upon RTO, now it's sent right after reception of the
-third duplicate ack.
-
-Thanks to Tom Williams for the investigation help and initial
-reproducer.
-
-Reported-by: Tom Williams <Tom.D.Williams@MorganStanley.com>
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Signed-off-by: Guillaume Nault <gnault@redhat.com>
-Reviewed-by: Kuniyuki Iwashima <kuniyu@google.com>
-Reviewed-by: Neal Cardwell <ncardwell@google.com>
-Reviewed-by: Eric Dumazet <edumazet@kernel.org>
-Link: https://patch.msgid.link/6426d558e45fc6ab724c40af62e4a8793215dd8a.1793219189.git.gnault@redhat.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Fixes: 218a06a79d9a ("cpufreq: Support per-policy performance boost")
+Signed-off-by: Christian Loehle <christian.loehle@arm.com>
+Link: https://patch.msgid.link/be3739f8-e668-4711-912c-91459d77ed35@arm.com
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv4/tcp_input.c                          |  6 +--
- .../tcp_bidir_fast_retransmit_nosack.pkt      | 42 +++++++++++++++++++
- 2 files changed, 45 insertions(+), 3 deletions(-)
- create mode 100644 tools/testing/selftests/net/packetdrill/tcp_bidir_fast_retransmit_nosack.pkt
+ drivers/cpufreq/cpufreq.c | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
-diff --git a/net/ipv4/tcp_input.c b/net/ipv4/tcp_input.c
-index 5d8da3c23e2c8..5e73232873fab 100644
---- a/net/ipv4/tcp_input.c
-+++ b/net/ipv4/tcp_input.c
-@@ -107,7 +107,8 @@ int sysctl_tcp_max_orphans __read_mostly = NR_FILE;
- #define FLAG_TS_PROGRESS	0x40000 /* Positive timestamp delta */
+diff --git a/drivers/cpufreq/cpufreq.c b/drivers/cpufreq/cpufreq.c
+index ec577a20567b1..002afd47d2d59 100644
+--- a/drivers/cpufreq/cpufreq.c
++++ b/drivers/cpufreq/cpufreq.c
+@@ -597,6 +597,8 @@ static int policy_set_boost(struct cpufreq_policy *policy, bool enable)
+ {
+ 	int ret;
  
- #define FLAG_ACKED		(FLAG_DATA_ACKED|FLAG_SYN_ACKED)
--#define FLAG_NOT_DUP		(FLAG_DATA|FLAG_WIN_UPDATE|FLAG_ACKED)
-+#define FLAG_NOT_DUP		(FLAG_DATA|FLAG_WIN_UPDATE|FLAG_ACKED|	\
-+				 FLAG_SND_UNA_ADVANCED)
- #define FLAG_CA_ALERT		(FLAG_DATA_SACKED|FLAG_ECE|FLAG_DSACKING_ACK)
- #define FLAG_FORWARD_PROGRESS	(FLAG_ACKED|FLAG_DATA_SACKED)
++	lockdep_assert_held_write(&policy->rwsem);
++
+ 	if (policy->boost_enabled == enable)
+ 		return 0;
  
-@@ -3741,11 +3742,11 @@ static int tcp_ack_update_window(struct sock *sk, const struct sk_buff *skb, u32
- 		nwin <<= tp->rx_opt.snd_wscale;
+@@ -1631,6 +1633,8 @@ static int cpufreq_online(unsigned int cpu)
+ 	 */
+ 	if (cpufreq_driver->set_boost && policy->boost_supported &&
+ 	    (new_policy || !cpufreq_boost_enabled())) {
++		guard(cpufreq_policy_write)(policy);
++
+ 		ret = policy_set_boost(policy, cpufreq_boost_enabled());
+ 		if (ret) {
+ 			/* If the set_boost fails, the online operation is not affected */
+@@ -2821,6 +2825,8 @@ static int cpufreq_boost_trigger_state(int state)
+ 		if (!policy->boost_supported)
+ 			continue;
  
- 	if (tcp_may_update_window(tp, ack, ack_seq, nwin)) {
--		flag |= FLAG_WIN_UPDATE;
- 		tcp_update_wl(tp, ack_seq);
- 
- 		if (tp->snd_wnd != nwin) {
- 			tp->snd_wnd = nwin;
-+			flag |= FLAG_WIN_UPDATE;
- 
- 			/* Note, it is the only place, where
- 			 * fast path is recovered for sending TCP.
-@@ -4093,7 +4094,6 @@ static int tcp_ack(struct sock *sk, const struct sk_buff *skb, int flag)
- 		 */
- 		tcp_update_wl(tp, ack_seq);
- 		tcp_snd_una_update(tp, ack);
--		flag |= FLAG_WIN_UPDATE;
- 
- 		NET_INC_STATS(sock_net(sk), LINUX_MIB_TCPHPACKS);
- 	} else {
-diff --git a/tools/testing/selftests/net/packetdrill/tcp_bidir_fast_retransmit_nosack.pkt b/tools/testing/selftests/net/packetdrill/tcp_bidir_fast_retransmit_nosack.pkt
-new file mode 100644
-index 0000000000000..5c66b7171d229
---- /dev/null
-+++ b/tools/testing/selftests/net/packetdrill/tcp_bidir_fast_retransmit_nosack.pkt
-@@ -0,0 +1,42 @@
-+// SPDX-License-Identifier: GPL-2.0
-+//
-+// Verify that non-SACK connections properly detect duplicate acks when mixed
-+// with other data segments from peer.
++		guard(cpufreq_policy_write)(policy);
 +
-+`./defaults.sh`
-+
-+    0     socket(..., SOCK_STREAM, IPPROTO_TCP) = 4
-+   +0...0 connect(4, ..., ...) = 0
-+
-+   // Three-way handshake, SACK not supported by peer
-+   +0 > S  0:0(0) <mss 1460,sackOK,TS val 0 ecr 0,nop,wscale 8>
-+   +0 < S. 0:0(0) ack 1 win 65535 <mss 1000>
-+   +0 > .  1:1(0) ack 1
-+
-+   // Send 1000 bytes, peer acks everything
-+   +0 send(4, ..., 1000, 0) = 1000
-+   +0 > P. 1:1001(1000) ack 1
-+   +0 < .  1:1(0) ack 1001 win 65535
-+
-+   // Send 4000 more bytes
-+   +0 send(4, ..., 4000, 0) = 4000
-+   +0 > P. 1001:5001(4000) ack 1
-+
-+   // Receive first dup-ack (considering segment 1001-2001 was lost)
-+   +0 < .  1:1(0) ack 1001 win 65535
-+
-+   // Receive unrelated data segment from peer and ack it
-+   +0 < P. 1:11(10) ack 1001 win 65535
-+   +0 > .  5001:5001(0) ack 11
-+
-+   // Receive second dup-ack
-+   +0 < .  11:11(0) ack 1001 win 65535
-+
-+   // Receive another data segment from peer and ack it
-+   +0 < P. 11:21(10) ack 1001 win 65535
-+   +0 > .  5001:5001(0) ack 21
-+
-+   // Receive third dup-ack, which should trigger fast retransmit (without
-+   // waiting for RTO)
-+   +0 < .  21:21(0) ack 1001 win 65535
-+   +0 > .  1001:2001(1000) ack 21
+ 		ret = policy_set_boost(policy, state);
+ 		if (ret)
+ 			goto err_reset_state;
 -- 
 2.53.0
 
