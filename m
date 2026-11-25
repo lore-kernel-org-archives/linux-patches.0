@@ -1,51 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795622868;
-	b=4QIg+DTnYzvVD99pouU3IygrWRqMn6u95/sLYhoKRJgMoJ/eka/Eylf2mWAo9ILlorWs
-	 LD4T5Fs6CVYjdeIFqtHdiFy5Nb7DyjzqtU6JA0s/6SwTNslegZ4S2LSpQUsLsgDrXRQMQ
-	 ghmTs9ziMbGAMJofIa2fFhpFw2YU/F5fmXUonhscP2ZwyOQI0y7aJnxKj0TE0J7Jnsp+X
-	 6Sz0lGTnGgnvBwNOWOQqGGm8XlEyYLDL8dRbi4zxu3BUfbvKswUUmox+GRzNX9vhZBVq/
-	 SyG/fs5MPZ5Xy1WCp1mApaXLEY2lwiK9Jbm7SMoW2hhIeb4S0CD+lOFFZKLi8AcjTCg==
+	t=1795622871;
+	b=bT+kmsAjT1Aqgi69qBSupUqWEacuQHXTKKjx0GkRY+uRY/5O//hHpmWLVGk10eEut2BU
+	 AK+vmC8oUvBCp1n6Skq81LJXQRpurZNuiUf4ORv01l0xrFwuyVKiewBIfSx130Zf0otJv
+	 XhHkpBKuQGGevu0NpppIb7btetnFRd2le1ZJ+rilL6EQb3bwEQiT++asMaqejzcJVt4Z0
+	 o+dT+c3Jwi0p/cDSgVsWKMhVCLlaMhfBMt7TpGTF2tZwxJskS6fo83GRVp2BDw+TXWkUU
+	 l7g2XW5E2Py4ycaNMv+E4UZ+13YJJw6yn0CfQzxVyOoyqKOjy/CTutqOSYIbiYpGQng==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795622868;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795622871;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=1K73wMi7/SYC/BDWZ6RRM6HaXXt3keXGqIlVUzKHANo=;
-	b=sO2cVCnu6eJ2L9C3rS8rfRiKk5xoMC3pr2scovGSIiQp8hxF09Lz42nTA5H9knn28P1N
-	 y7FMIOiZ8V0HCAZIZgri1aJgFHO3kbh7DNHTKRSA6B05U4kUQy1g4ZffAJIbnaFYxbMo4
-	 YcQqLwEQGrROpKnwTci/wgfx+0z+ZyF8eYVaJGLMyLHuyKq1GF38XJeTLwH7SF+0NW9wj
-	 wvAPUHHpn8KFH2EXq6mtQjVLEPP68010iKpunkJhqpRAILrgAGeJFBH//J6TvyJKbNTIs
-	 jryhGZCXpR3InPzd0rh1SGN1ftOxzkkLR84kPEbxTIhOQ3NixoqCxYqTtauV3O0GrvA==
+	bh=sRhj1bavBqJu0ytdJtiKN90kMhQvrnd3gyKFeNdVW8c=;
+	b=QVhoOANS4jfgSOkgkFaqc1Pu/6/MVo9lJ2Ddi/AHYLMvPTiepKCfRR31hdPELxhB2RNe
+	 qGQ+b5Z4z1jeHPU0wovTE3OMI3pPEH+bIqNzvGeB5vl+2NFbrH8vd1oG8eNqf1ZJzkUJK
+	 0tAl8IVAyRlTvD65ftOvzOOD+QWKdeD0HunY20ApQwCpastrA6uZ6D99zVksC8No5Gyj9
+	 QPoPUENqE1Eyw8sBok/ebQNf2AKxkBXs1BaVKv/dJx9eFjsmzyApDYzYOYr66l8pcW4hz
+	 MyFu+dG7BY39ZmZ7sVYhJEUm7euLfnv5EcKRnqnekJDhHEaGs9wgyaKUpDt6kcyeuwg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=hWJQgSoN;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=O+Nz5hZ2;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7E3FD606A321;
-	Wed, 25 Nov 2026 16:07:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5F938606A321;
+	Wed, 25 Nov 2026 16:07:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=hWJQgSoN
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CE5171F000C0;
-	Wed, 25 Nov 2026 16:07:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=O+Nz5hZ2
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A38571F000C0;
+	Wed, 25 Nov 2026 16:07:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795622868;
-	bh=1K73wMi7/SYC/BDWZ6RRM6HaXXt3keXGqIlVUzKHANo=;
+	s=korg; t=1795622871;
+	bh=sRhj1bavBqJu0ytdJtiKN90kMhQvrnd3gyKFeNdVW8c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=hWJQgSoNyKPavV4KMlPvJjTg+Dc00pUW7zLG2cIN7yJdld95sHAdy/1T/kqodwIvn
-	 64OE2skkaTbbBrRn3OxXrzcEqcbk6zCGl/Hg7m2DeW5GFdBZXEr0q9pO0N4FOoRpHC
-	 yukq50/viF8X+5atXnyWw15OyejCIiPqFVePX9gE=
+	b=O+Nz5hZ2IHx71WakakA4e0UrSAotvK6fCb2i9E+FQv3ff+THqn8n+rzH4ZMq6m/PA
+	 Ow/BHhtYvyldRi50Egistp5ifY41jp7RvUN06q7QVPa2UY66wWsIIVviBzInE21U1d
+	 zbZCfk4cPn5r6BJKTj2TVHpwEBF2KUucw92Xoi9w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jan Kara <jack@suse.cz>,
+	Avi Weiss <thnkslprpt@gmail.com>,
 	"Christian Brauner (Amutable)" <brauner@kernel.org>
-Subject: [PATCH 6.18 674/990] fs: fix the SEEK_CUR f_lock condition
-Date: Wed, 25 Nov 2026 15:34:01 +0100
-Message-ID: <20261125143837.873652434@linuxfoundation.org>
+Subject: [PATCH 6.18 675/990] splice, net: avoid MSG_MORE when the bvec array fills
+Date: Wed, 25 Nov 2026 15:34:02 +0100
+Message-ID: <20261125143837.897674046@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143822.072087159@linuxfoundation.org>
 References: <20261125143822.072087159@linuxfoundation.org>
@@ -67,57 +67,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Christian Brauner <brauner@kernel.org>
+From: Avi Weiss <thnkslprpt@gmail.com>
 
-commit 1448959fe3d013ffdb8302d17e4a8fdad2d2da95 upstream.
+commit 8eaa35c6c29ae669949f4b5b0814c3d34c8ed658 upstream.
 
-Commit da06e3c51794 ("fs: don't needlessly acquire f_lock") wanted to
-skip f_lock for SEEK_CUR on files that already serialize f_pos through
-f_pos_lock, i.e. FMODE_ATOMIC_POS files and directories, and keep it
-for everything else. The condition it added does the opposite:
-file_seek_cur_needs_f_lock() returns false exactly for the files that
-never take f_pos_lock and true for the ones that do.
+splice_to_socket() leaves tail at the last included pipe buffer when
+its 16-entry bvec array fills. If the requested length exceeds the
+available pipe data, pipe_occupancy() counts that buffer again and sets
+MSG_MORE even though the pipe is empty. Small TCP transfers can then be
+delayed until the cork timeout expires.
 
-So since v6.15 a SEEK_CUR on a shared block device or on a character
-device that uses fixed_size_llseek() updates f_pos without any lock and
-two concurrent calls can lose an update, while regular files and
-directories pay for a spinlock they don't need.
+Advance tail before checking the array limit so the occupancy test
+counts only pipe buffers that have not been included in the send.
 
-Invert the condition.
-
-Fixes: da06e3c51794 ("fs: don't needlessly acquire f_lock")
+Fixes: ca2d49f77ce4 ("splice, net: Fix splice_to_socket() to handle pipe bufs larger than a page")
 Cc: stable@vger.kernel.org
-Link: https://patch.msgid.link/20261106-work-file-seek_f_lock-v1-1-5b9a6c2928d4@kernel.org
-Reviewed-by: Jan Kara <jack@suse.cz>
+Signed-off-by: Avi Weiss <thnkslprpt@gmail.com>
+Link: https://patch.msgid.link/20261031095922.3577591-2-thnkslprpt@gmail.com
 Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/file.c |   10 +++++++---
- 1 file changed, 7 insertions(+), 3 deletions(-)
+ fs/splice.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/fs/file.c
-+++ b/fs/file.c
-@@ -1210,14 +1210,18 @@ static inline bool file_needs_f_pos_lock
+--- a/fs/splice.c
++++ b/fs/splice.c
+@@ -865,9 +865,9 @@ ssize_t splice_to_socket(struct pipe_ino
  
- bool file_seek_cur_needs_f_lock(struct file *file)
- {
--	if (!(file->f_mode & FMODE_ATOMIC_POS) && !file->f_op->iterate_shared)
--		return false;
--
- 	/*
-+	 * Files that go through f_pos_lock when they are shared, i.e.
-+	 * FMODE_ATOMIC_POS files and directories, don't need f_lock for a
-+	 * SEEK_CUR. Everything else does, since nothing else serializes
-+	 * the f_pos update.
-+	 *
- 	 * Note that we are not guaranteed to be called after fdget_pos() on
- 	 * this file obj, in which case the caller is expected to provide the
- 	 * appropriate locking.
- 	 */
-+	if ((file->f_mode & FMODE_ATOMIC_POS) || file->f_op->iterate_shared)
-+		return false;
+ 			bvec_set_page(&bvec[bc++], buf->page, seg, buf->offset);
+ 			remain -= seg;
++			tail++;
+ 			if (remain == 0 || bc >= ARRAY_SIZE(bvec))
+ 				break;
+-			tail++;
+ 		}
  
- 	return true;
- }
+ 		if (!bc)
 
 
