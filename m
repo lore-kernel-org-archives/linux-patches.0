@@ -1,50 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795620155;
-	b=VI20s3kHziDDqjRp0PeuHpqTgal7XRe2lnR1VPi76zoZ7LxfU2vDjB3cmuYWDEnlQgC4
-	 mRERCNclrM7AJgVhl3zB/cYNOp3rfMFUdNEYDPnabEuDIeX7ynbTfjilf4qHUpzY+lrNu
-	 PRvJgXTHOc8fxGO/MsQ4OOXPjCbCkj63BGrVUqxcsv8gRNzcSmRyTxzaQXX/vkYsdpAfu
-	 PN73Z3otOF9DWur2/9TildTIH959ih0k/MtMQ6xD1E1PbguauGHbuz/hgXU7/uaeHTjlM
-	 G2EKxVTFL+V1EqDzriquv0VRM4eVqMk2lKYBedZMiVZgd8rbl2lXzotHjQhALMKOEHQ==
+	t=1795620158;
+	b=YnI8Pxn+Q1Oe2biQwZEbL0w9gl/MXABviHpHkK9l9uE6enwQynKhBUmuCdNzUJNQlm4X
+	 m9xaUDx2ljMX3kEQBmnc0iLIMc/SALAm6Bsds4xRDjsASrAAa1JOgtojBls/YbjeD5zAb
+	 PWQEiztZJSO6cUORrIk6nVBcRGQvQ09N2JB4cWkQrpQrXJm9Do11ldTjYA+OqxlZHyxGl
+	 bWFco5VHcmROxgVNtxrVcplCP1H/WkMoZnPIFY8pExDgg2GH4HgxC58kQr5W3F9urh8KP
+	 U1RJ10SCTjJ8joCVHtGR9/dAm28WwSlwOaefwZhRq1bHMrb3Lzo5X2fQ7f5P9cqvJ2g==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795620155;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795620158;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=BC6wQ4XbIAeYfOKjQWD1dOod9luEHVohCP5fk4/B/iY=;
-	b=SmIqPQ7aWA+CILyLWVkBeK5obioMTezDaFDUfcD2noodUuAJ9wGw2nqqODsDXsanSApz
-	 dKdqQsk2p3xa+NLiG2JaATgCLU7+99IDRn9/fUDaR0QcyApjHE03T1eT6/goLO1t1o5lf
-	 9dT2pV+IFQdVfnow7UX/NHvhVv7Ou9voqMyJnmSLx0ZB1EYGKfhimKQALgbeu4jwjr0vX
-	 WbzDnSOzv2Zco5L5FwGWFfvEL89iXtXYiFW6zS4grNU44ssmo6t11mdFLkhfMA2MT2mtF
-	 R70QhgllA4hCEUX8zzxczw7BxtQylh1CdbX/Cl4Gxu7XfCbD7j9ETXYwskX9j/cnfow==
+	bh=DGZV4PzpB5FjbnV7D+uxeJPe0fLvJAtbuypyc4F30ow=;
+	b=BDVBHouJsDkOm6zJIh7ThZ8V391SmK9mHa3zkA/4dMd5oMyw3qpynUqjO52h3DPJkBTS
+	 Sx6fJ6Ux8LQpsPVCp2g4OYk9IbKVb1zdAZLh6KvEIvh9zKVoMct5Z0JylpbhM0KHtprlZ
+	 qSB8uM1lJ97BjzMyv/Xf6GklRkbOtoGD/HIS2awAK3KlV0F9HGDQyuB7Ic5uIgvAfAgAS
+	 5Dx5raWR+tib6xStnrI5SefxUV6G1Yc2zGg1oYbVvFf3t9by3Z/65yCYeY3wcZA9y08On
+	 DbzgTkkxSCA1r+9fU56xmjbdBoU4nVxeRUlqPxY51XCp2B12VDFR5XdeVSCa0390BZw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=1GFC0IGz;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=IH5BMaBL;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 59BF4606A32A;
-	Wed, 25 Nov 2026 15:22:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 891C5606A327;
+	Wed, 25 Nov 2026 15:22:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=1GFC0IGz
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A5EDC1F000C4;
-	Wed, 25 Nov 2026 15:22:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=IH5BMaBL
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CBD981F00A00;
+	Wed, 25 Nov 2026 15:22:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795620155;
-	bh=BC6wQ4XbIAeYfOKjQWD1dOod9luEHVohCP5fk4/B/iY=;
+	s=korg; t=1795620158;
+	bh=DGZV4PzpB5FjbnV7D+uxeJPe0fLvJAtbuypyc4F30ow=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=1GFC0IGzNduVlpWyXc3L8rhGRxFEFnqGQb4cEx2Av3Q4bDlp0BQtlDfRDaE6405y5
-	 Dife6KLS406MV8Z4JqyUGpkj03zg45ph6ZStZm/ldkSyR285Kg+TrG7gHPLC0/49s6
-	 Ozp66oj8c13o0PqF0RSTSlsfeIoFcrFiXiZrrNHE=
+	b=IH5BMaBL5Fopyy+ytMt5D15xMjvFuuhqIwOGfdEoNtwRu96RvqhLqkbYid/GM/LUy
+	 y4EDJYKyMskDWeZCitC7WRbTySCTCm21vnJKQMbdDajhFiQP7DuJ509e2Kr63w4je0
+	 jaoxx75HCWwDVag4qzz9yPi7A/OgYGhM4Pn9wVfY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Giuseppe Scrivano <giuseppe@scrivano.org>,
 	Amir Goldstein <amir73il@gmail.com>
-Subject: [PATCH 7.3 0826/1005] ovl: report the requested redirect_dir mode in conflicting options
-Date: Wed, 25 Nov 2026 15:36:04 +0100
-Message-ID: <20261125143841.073748256@linuxfoundation.org>
+Subject: [PATCH 7.3 0827/1005] ovl: return EIO if the lowerdata is missing
+Date: Wed, 25 Nov 2026 15:36:05 +0100
+Message-ID: <20261125143841.096097319@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143821.729802100@linuxfoundation.org>
 References: <20261125143821.729802100@linuxfoundation.org>
@@ -66,155 +67,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Amir Goldstein <amir73il@gmail.com>
+From: Giuseppe Scrivano <giuseppe@scrivano.org>
 
-commit 248503755b3cab89742edcc3cfd53adbcf7bfec2 upstream.
+commit 0d5e729c515f4ae4eacc179dbcf350d9b499a161 upstream.
 
-Since the redirect_dir mode is stored as an enum, "off" is translated to
-"follow" or "nofollow" when parsing the option and redirect_dir=follow is
-translated to "on" for a non-upper mount, so the errors about options
-that conflict with an explicit redirect_dir= report a mode that the user
-did not request.
+The data of a metacopy file that redirects to a data-only layer is
+looked up when the file is opened, and the error of the lookup is
+returned as is.  If the data file is missing, open() fails with ENOENT
+even though the file is there and stat() works.
 
-Translate "off" when verifying the mount options instead of when parsing
-them and report the requested mode in those errors.
+This can be an integrity problem when using composefs: a data file that
+is changed or has the wrong fs-verity digest is reported with EIO, but
+a missing one is not reported, the file just looks like it does not
+exist, e.g. a configuration file that overrides the defaults.
 
-Fixes: af5f2396b671 ("ovl: store enum redirect_mode in config instead of a string")
+Return EIO as it is already done in ovl_lookup() when no lower data is
+found for a metacopy file.  ENOMEM is not changed.
+
+Fixes: 42dd69ae1af4 ("ovl: implement lazy lookup of lowerdata in data-only layers")
 Cc: stable@vger.kernel.org
+Signed-off-by: Giuseppe Scrivano <giuseppe@scrivano.org>
 Signed-off-by: Amir Goldstein <amir73il@gmail.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/overlayfs/overlayfs.h |   10 +++++++---
- fs/overlayfs/params.c    |   43 ++++++++++++++++++++++++++++++-------------
- 2 files changed, 37 insertions(+), 16 deletions(-)
+ fs/overlayfs/namei.c |    8 ++++++++
+ 1 file changed, 8 insertions(+)
 
---- a/fs/overlayfs/overlayfs.h
-+++ b/fs/overlayfs/overlayfs.h
-@@ -74,9 +74,13 @@ enum ovl_entry_flag {
- };
- 
- enum {
--	OVL_REDIRECT_OFF,	/* "off" mode is never used. In effect	*/
--	OVL_REDIRECT_FOLLOW,	/* ...it translates to either "follow"	*/
--	OVL_REDIRECT_NOFOLLOW,	/* ...or "nofollow".			*/
+--- a/fs/overlayfs/namei.c
++++ b/fs/overlayfs/namei.c
+@@ -1046,6 +1046,14 @@ out:
+ out_err:
+ 	pr_warn_ratelimited("lazy lowerdata lookup failed (%pd2, err=%i)\n",
+ 			    dentry, err);
 +	/*
-+	 * "off" mode is never used after mount options are verified. In effect
-+	 * it translates to either "follow" or "nofollow".
++	 * The data of a metacopy file is missing or is not a regular file in
++	 * the data-only layers: the layers are corrupted.  Do not return the
++	 * error of the lookup (e.g. ENOENT) to the caller, it would make the
++	 * file look like it does not exist.
 +	 */
-+	OVL_REDIRECT_OFF,
-+	OVL_REDIRECT_FOLLOW,
-+	OVL_REDIRECT_NOFOLLOW,
- 	OVL_REDIRECT_ON,
- };
- 
---- a/fs/overlayfs/params.c
-+++ b/fs/overlayfs/params.c
-@@ -112,18 +112,28 @@ const struct constant_table ovl_paramete
- 	{}
- };
- 
-+static const char *ovl_redirect_mode_name(int redirect_mode)
-+{
-+	return ovl_parameter_redirect_dir[redirect_mode].name;
-+}
-+
- static const char *ovl_redirect_mode(struct ovl_config *config)
- {
--	return ovl_parameter_redirect_dir[config->redirect_mode].name;
-+	return ovl_redirect_mode_name(config->redirect_mode);
++	if (err != -ENOMEM)
++		err = -EIO;
+ 	goto out;
  }
  
--static int ovl_redirect_mode_def(void)
-+static int ovl_redirect_follow_mode(void)
- {
--	return ovl_redirect_dir_def	  ? OVL_REDIRECT_ON :
--	       ovl_redirect_always_follow ? OVL_REDIRECT_FOLLOW :
-+	return ovl_redirect_always_follow ? OVL_REDIRECT_FOLLOW :
- 					    OVL_REDIRECT_NOFOLLOW;
- }
- 
-+static int ovl_redirect_mode_def(void)
-+{
-+	return ovl_redirect_dir_def ? OVL_REDIRECT_ON :
-+				      ovl_redirect_follow_mode();
-+}
-+
- static const struct constant_table ovl_parameter_verity[] = {
- 	{ "off",	OVL_VERITY_OFF     },
- 	{ "on",		OVL_VERITY_ON      },
-@@ -659,11 +669,6 @@ static int ovl_parse_param(struct fs_con
- 		break;
- 	case Opt_redirect_dir:
- 		config->redirect_mode = result.uint_32;
--		if (config->redirect_mode == OVL_REDIRECT_OFF) {
--			config->redirect_mode = ovl_redirect_always_follow ?
--						OVL_REDIRECT_FOLLOW :
--						OVL_REDIRECT_NOFOLLOW;
--		}
- 		ctx->set.redirect = true;
- 		break;
- 	case Opt_index:
-@@ -819,7 +824,13 @@ int ovl_init_fs_context(struct fs_contex
- 	if (!ofs)
- 		goto out_err;
- 
--	ofs->config.redirect_mode	= ovl_redirect_mode_def();
-+	/*
-+	 * The module default determines only if new redirects are created in
-+	 * upper dir.  If they are not, the redirect follow mode will be
-+	 * determined after parsing mount options.
-+	 */
-+	ofs->config.redirect_mode	= ovl_redirect_dir_def ?
-+					  OVL_REDIRECT_ON : OVL_REDIRECT_OFF;
- 	ofs->config.index		= ovl_index_def;
- 	ofs->config.uuid		= ovl_uuid_def();
- 	ofs->config.nfs_export		= ovl_nfs_export_def;
-@@ -877,6 +888,8 @@ int ovl_fs_params_verify(const struct ov
- 			 struct ovl_config *config)
- {
- 	struct ovl_opt_set set = ctx->set;
-+	/* The requested redirect_dir=, for reporting conflicts with it */
-+	int redirect_opt = config->redirect_mode;
- 
- 	/* Workdir/index are useless in non-upper mount */
- 	if (!config->upperdir) {
-@@ -903,6 +916,10 @@ int ovl_fs_params_verify(const struct ov
- 		config->uuid = OVL_UUID_NULL;
- 	}
- 
-+	/* Resolve redirect_dir=off to the default redirect follow mode */
-+	if (config->redirect_mode == OVL_REDIRECT_OFF)
-+		config->redirect_mode = ovl_redirect_follow_mode();
-+
- 	/*
- 	 * This is to make the logic below simpler.  It doesn't make any other
- 	 * difference, since redirect_dir=on is only used for upper.
-@@ -914,7 +931,7 @@ int ovl_fs_params_verify(const struct ov
- 	if (config->metacopy && config->redirect_mode != OVL_REDIRECT_ON) {
- 		if (set.metacopy && set.redirect) {
- 			pr_err("conflicting options: metacopy=on,redirect_dir=%s\n",
--			       ovl_redirect_mode(config));
-+			       ovl_redirect_mode_name(redirect_opt));
- 			return -EINVAL;
- 		}
- 		if (set.redirect) {
-@@ -923,7 +940,7 @@ int ovl_fs_params_verify(const struct ov
- 			 * in this conflict.
- 			 */
- 			pr_info("disabling metacopy due to redirect_dir=%s\n",
--				ovl_redirect_mode(config));
-+				ovl_redirect_mode_name(redirect_opt));
- 			config->metacopy = false;
- 		} else {
- 			/* Automatically enable redirect otherwise. */
-@@ -990,7 +1007,7 @@ int ovl_fs_params_verify(const struct ov
- 		if (set.redirect &&
- 		    config->redirect_mode != OVL_REDIRECT_NOFOLLOW) {
- 			pr_err("conflicting options: userxattr,redirect_dir=%s\n",
--			       ovl_redirect_mode(config));
-+			       ovl_redirect_mode_name(redirect_opt));
- 			return -EINVAL;
- 		}
- 		if (config->metacopy && set.metacopy) {
 
 
