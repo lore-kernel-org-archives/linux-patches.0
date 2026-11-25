@@ -1,54 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795622381;
-	b=bbVlGEmqCacGLKVP2GHrcHCEuRHxv+B7lubbeV6Rp4TnEPPNr2kO0opeg6UIAX+IQVPu
-	 6w18mTebezdqhEqwuLVJaFULPYtt5Sd4HF5HgG7auuR7I0hiDthncNdwNXmGwuundEFnP
-	 oSPYlhXl3L/Idqbe5LNM+TTq5btO3E/V41oS/bXxWC6GaBcdFk7czWzStnFUFgg8fjsBG
-	 l9qcAYWMA29MugOZ6e7KFFg4t6O2QGPCpezGAVvkisMMve4Yz0mnu1A6RDH4k68dP3xry
-	 ljT4YeN6AqY25r0KeN+w5609DYuGFjkdD7nSly9bhIfgSEbwiVlJZaWkheWxOMwPyCw==
+	t=1795622384;
+	b=i6BetK1Bq5XY7lVdFqqKlufmpe/GXlOJp+LQaMRwe5qdD+cXyYoG2aZ58HknS52WRgbZ
+	 psQMe4rZF+ucm1SXnIBppfWPmZcRwOq16nkaOABdHKejnNtlqAm7J9++23vT+zOsIUTdj
+	 R6NAWZGgogsYKYtm66n9lDnmhcjiqkFioBIHVU3fFAUYFap7KNYznqBdjHyYX9+KBY9yN
+	 5cHoZ51QuPEG2GYoXpcYvVbtrkBUhx7hpB9onyde/gsK7anckY8+7wxFv23WM/EZK97cB
+	 CRUpfSJ63+maMaQH3uMuKrXT662mD6uAbmde+JFAG7lID/ZJ26w+olIj2Y069DNKqlg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795622381;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795622384;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=aV72Xcnl4Oh65WopZDQvzTJ9uK0CS1L/LwPTdmzDr60=;
-	b=kh0bnKO1AOLXokdxq0wcbIFkNbPZT6JqOrwfpdydcwKMfji8JQsmODGci1nef5WX9uJs
-	 jJ5VBXpViiTOd3EXF2dyhStBOfB5T9kA6+SOpIY1Jn8XESZuz4yBxfQhNUuAx67doTv42
-	 n3GGq45B9nvogiZu5h26hGNpNSyL4nplwvj6Nvm7eJ6LnMFy4mJWhSW6lT64Q85RBA96c
-	 63V69kcTZEBqzYN5wghhA2hZWwDmor1AA9NdTIQ767O64LhUHL4c/zr77xn3o1hdZMo00
-	 KSWCORxbgFYcGqPR9y3fN08OE7wkw2l16QyjgKTzEh4zD0ULrZ1sD4B3FUrBoT1F3nQ==
+	bh=jeOkO+Xu5B67TVCJC//Cj17OxSaqGgyzcXKxDZf075U=;
+	b=An0QeVbKP6kreKmiO4tZzkZG7LPtRsiIm1mX6fl09xOyU/5pYBKY+E+ks9khL6qh28qG
+	 11lry6WEa1Bf1wQLmpm6NuDVvaIKCsFBI52l3A1/DiZxH9W51StTtPVirNd1XHAae7E7L
+	 v4kqNDllwNe4mbEa9YuFw3qDrhoQyrUmmbWZAdjyiZJOYj/BcPCRplJaki9bHYCA+Y1we
+	 d41HSnaTT5dGqL9weVUymIZ97jSk3OM5ckp+cEaglm/1qz4/g6b4d+/sfUENIo4GPBkuW
+	 BVCKp9J8QQfXPxrQnQfKF/cy6hLQ44PGnJpb/4zqwAJtrix8fGphTtHi4xnJtuOKs2A==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=e5VJcIWq;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=FPytR15i;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D03FF606A31E;
-	Wed, 25 Nov 2026 15:59:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D4329606A321;
+	Wed, 25 Nov 2026 15:59:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=e5VJcIWq
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B17641F000C6;
-	Wed, 25 Nov 2026 15:59:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=FPytR15i
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F16421F000C0;
+	Wed, 25 Nov 2026 15:59:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795622381;
-	bh=aV72Xcnl4Oh65WopZDQvzTJ9uK0CS1L/LwPTdmzDr60=;
+	s=korg; t=1795622384;
+	bh=jeOkO+Xu5B67TVCJC//Cj17OxSaqGgyzcXKxDZf075U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=e5VJcIWqjwdDXtCNyuwNTB4iAlYSOFv2y3M2RM1h9h4IkOAYxkTejMeasTl53PWqk
-	 AWJGW0CBme8QsbRIucxcJcxfbF0QmePLnLMuuWTJ5LVtbioCx2hkvYEm2ttwV0BZWJ
-	 50uSdPe5sNXGQPNcDtOZQiawbUZmt2ChvhHNp5LI=
+	b=FPytR15iPrxB23uc6tvtmi/6Bhz4CNKUj8PEAKTrzvA4R8c4F1jq33SBTQzC20oEH
+	 qsoyK8azasEoGBLmzyiHr+w7j5H49rF7mDLdZu2yCctWipP/E/h3KmOG+dMY8tGNgJ
+	 7QQosKdDcXchga3hKHmGqYtyty5KNYFTOAbJlNLs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Guixin Liu <kanie@linux.alibaba.com>,
-	Richard Cheng <icheng@nvidia.com>,
-	Li Ming <ming.li@zohomail.com>,
-	Dave Jiang <dave.jiang@intel.com>,
+	Vitaliy Sochnev <sochnev.v.74@gmail.com>,
+	Daniel Lezcano <daniel.lezcano@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 519/990] cxl/region: Unregister the pmem region when the bridge is unbound
-Date: Wed, 25 Nov 2026 15:31:26 +0100
-Message-ID: <20261125143834.253594690@linuxfoundation.org>
+Subject: [PATCH 6.18 520/990] thermal/drivers/airoha: Request the EN7581 IRQ after zone registration
+Date: Wed, 25 Nov 2026 15:31:27 +0100
+Message-ID: <20261125143834.276699857@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143822.072087159@linuxfoundation.org>
 References: <20261125143822.072087159@linuxfoundation.org>
@@ -70,59 +68,72 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Guixin Liu <kanie@linux.alibaba.com>
+From: Vitaliy Sochnev <sochnev.v.74@gmail.com>
 
-[ Upstream commit bb26797c08d408ea7e8d3625045f0fe28714a425 ]
+[ Upstream commit 7efceedd23678cd58e98b2c64d4b2b7be03f6cf9 ]
 
-Removing cxl_acpi unbinds the nvdimm bridge before the regions it
-serves. A region probe can therefore register its cxl_pmem_region and
-only then find the bridge unbound, which leaves the new device with
-nothing to remove it.
+The EN7581 IRQ is requested before the thermal zone is registered, and
+the handler passes priv->tz to thermal_zone_device_update(). Unbind
+leaves the monitor interrupt enabled, so an interrupt pending on the
+next bind fires while priv->tz is NULL. On a Nokia XG-040G-MD this
+oopses in thermal_zone_device_update(). On unbind, devres also frees the
+zone before the IRQ.
 
-The orphan outlives the teardown and pins its region and its memdevs, so
-a later cxl_acpi bind renumbers the root port, ports, endpoints,
-decoders and the memdev.
+Request the IRQ in post_probe, after zone registration.
 
-Unregister the cxl_pmem_region when the bridge is unbound.
-
-Found by code inspection. Racing a cxl_region bind against a cxl_acpi
-unbind leaked a pmem_region device on 12 of 12 attempts, and none with
-this patch.
-
-Fixes: f17b558d6663 ("cxl/pmem: Refactor nvdimm device registration, delete the workqueue")
-Signed-off-by: Guixin Liu <kanie@linux.alibaba.com>
-Reviewed-by: Richard Cheng <icheng@nvidia.com>
-Reviewed-by: Li Ming <ming.li@zohomail.com>
-Reviewed-by: Dave Jiang <dave.jiang@intel.com>
-Link: https://patch.msgid.link/20260831061120.200790-1-kanie@linux.alibaba.com
-Signed-off-by: Dave Jiang <dave.jiang@intel.com>
-[ sashal: Relocated the hunk from the split-out pmem region file into the region file where the function still lives; the hunk content is otherwise unchanged. ]
+Fixes: 42de37f40e1b ("thermal/drivers: Add support for Airoha EN7581 thermal sensor")
+Signed-off-by: Vitaliy Sochnev <sochnev.v.74@gmail.com>
+Signed-off-by: Daniel Lezcano <daniel.lezcano@kernel.org>
+Link: https://patch.msgid.link/20260915194128.42508-1-sochnev.v.74@gmail.com
+[ sashal: Moved the IRQ request to after thermal zone registration in the single probe function, since this tree lacks the split post_probe and regmap code, keeping the local handler name and dev_err. ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/cxl/core/region.c | 6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ drivers/thermal/airoha_thermal.c | 25 +++++++++++++------------
+ 1 file changed, 13 insertions(+), 12 deletions(-)
 
-diff --git a/drivers/cxl/core/region.c b/drivers/cxl/core/region.c
-index 46fc6644c8a72..7df6139f83ef2 100644
---- a/drivers/cxl/core/region.c
-+++ b/drivers/cxl/core/region.c
-@@ -3306,12 +3306,14 @@ static int devm_cxl_add_pmem_region(struct cxl_region *cxlr)
- 		dev_name(dev));
+diff --git a/drivers/thermal/airoha_thermal.c b/drivers/thermal/airoha_thermal.c
+index 829a7327fc403..a971c0b986ac2 100644
+--- a/drivers/thermal/airoha_thermal.c
++++ b/drivers/thermal/airoha_thermal.c
+@@ -437,18 +437,6 @@ static int airoha_thermal_probe(struct platform_device *pdev)
+ 	of_address_to_resource(chip_scu_np, 0, &priv->scu_adc_res);
+ 	of_node_put(chip_scu_np);
  
- 	scoped_guard(device, &cxl_nvb->dev) {
--		if (cxl_nvb->dev.driver)
-+		if (cxl_nvb->dev.driver) {
- 			rc = devm_add_action_or_reset(&cxl_nvb->dev,
- 						      cxlr_pmem_unregister,
- 						      cxlr_pmem);
--		else
-+		} else {
- 			rc = -ENXIO;
-+			cxlr_pmem_unregister(cxlr_pmem);
-+		}
- 	}
+-	irq = platform_get_irq(pdev, 0);
+-	if (irq < 0)
+-		return irq;
+-
+-	ret = devm_request_threaded_irq(&pdev->dev, irq, NULL,
+-					airoha_thermal_irq, IRQF_ONESHOT,
+-					pdev->name, priv);
+-	if (ret) {
+-		dev_err(dev, "Can't get interrupt working.\n");
+-		return ret;
+-	}
+-
+ 	airoha_thermal_setup_monitor(priv);
+ 	airoha_thermal_setup_adc_val(dev, priv);
  
- 	if (rc)
+@@ -461,6 +449,19 @@ static int airoha_thermal_probe(struct platform_device *pdev)
+ 
+ 	platform_set_drvdata(pdev, priv);
+ 
++	/* After zone registration: the handler uses priv->tz */
++	irq = platform_get_irq(pdev, 0);
++	if (irq < 0)
++		return irq;
++
++	ret = devm_request_threaded_irq(&pdev->dev, irq, NULL,
++					airoha_thermal_irq, IRQF_ONESHOT,
++					pdev->name, priv);
++	if (ret) {
++		dev_err(dev, "Can't get interrupt working.\n");
++		return ret;
++	}
++
+ 	/* Enable LOW and HIGH interrupt */
+ 	writel(EN7581_HOFSINTEN0 | EN7581_LOFSINTEN0,
+ 	       priv->base + EN7581_TEMPMONINT);
 -- 
 2.53.0
 
