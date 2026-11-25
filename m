@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795621593;
-	b=m+dE1eRf/A476z6bfawO3k26igja/baWJ/GKRQ9cnRd6QgIZD2XO3t3y2eCkhC+5ufxF
-	 dZJXy+WeXT1O1Mom7TWqnoLWbz9Mx1rFyCA/yfxtkoQbH6QynkCGhrKY54bnoblM1ceHx
-	 6L+D/mlvUDRfPV2OGBnGridWDe/fBEVQEQUTIjXTwy0mVCBWzEJcssGDl9Yegb5j2TvRR
-	 qIj1tgwfpH89IvqeOxTSTQjJ6G82eY888MdJvlFBByMH1DpJoFq+SPIJ7dvRCQgRZjmoS
-	 0eyH2Rt8W/yobbI8UeSgyhjXzwindHj5841ZGvaR2IBONVHMVlSFbfq7HIp30dXlOqA==
+	t=1795621597;
+	b=abfWstnHHxTd5Th0p3mMSnZVaCud8ZUqqEmu5NF7mhz9p1NBpXzBcyD3P8QN46ah4tWp
+	 uIkneuW3NNO74ICtBKNrx72Xk2SoTahQH3zT3tZo1Gp4CCsGazs5+LmD0jA/3gprZ+Pxx
+	 i6gZ8CoEoMZufeCl6MzfdyKzpxJ9GZcH3QhswCMpLPLlA1wgRPsJ1EyOqj6KKNaMHWp6v
+	 28tNWmXVvS5OkY30wNKICjJEEi7J3aOZQhlIyQYMwskf9xE07zpVJEwAdozu4CmCd3gct
+	 E4D4Ie+RXR0Dx4Qe9rvzYpag7BF0rwwn6G4hyvDbYRxuGo4qAo7Rux8NxO+3ejc6nDQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795621593;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795621597;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=YnNz+GE+btGm8z7icOWgGPjZQ6xDJOp2Jc3yAlUZkmo=;
-	b=ayXm5MdKeAcTEcrNjjBEXAb5NpRDgFsrVbKXT/1G7uD1htzFCnIGf1MzORwc7E2SVnl2
-	 6tmIAAsnirE6hseBUQe0eUYaRQWu8fzcHhLvd1eLXMwhtYul+8EtyySGK946Hm8FM+X9W
-	 8Yqq2DPUyGgBu1xNBCs5c7xV/Zx7JBEZ13zeOsVWcASt+bFfacJS3EuTI6Okfchqn5hhc
-	 dx6LrMZkt3AqTIuVzNQzJV6MbTarFZahLZoOqORrNSiaM3nXwr1sSKjG9mSi+7chgZoyp
-	 klm9rCZp7sg3/tBJi0Jiq+KkBKK2ocx50TPG8eZlp3d/+7P4NP7wpqywV66D1wlw1wA==
+	bh=/4dTYLjAZ21u1drCREHWIxRR0tDDSawoe7cpfFLURhc=;
+	b=FsAM5lxlsOLRPeJMv7tdqEdVyq7aDSled3hqwWELSuB6zaraGoduVHEYM7pvz2GJuQRF
+	 GPclJr2GtcYnfgK41n9IUsq706GE3FpfHL3Hoij2P4nQPf/3+5Ftk3yFt5im9zgOtVXrb
+	 mSadVEquGsavdmSpTW9NI3P8Tv5xv45BE8YLQEB7hub1MxnFj5MXNG9lnYsZcN+HCHx9N
+	 a/uSsQNYvxW24Ow+UV/V92xE6cy9tgPB7+5BbogzF6LJ7W0BjEsqJzMLTboK8M+2fc9TR
+	 uJxoPXtFS5IX48DFh5/ZtTj+EbYERprrunVg9TftW/zLm32EzqC+9EAEoU5gRj31VZw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=jkHzcPuU;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=td6632Yh;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AC37C606A332;
-	Wed, 25 Nov 2026 15:46:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2C848606A339;
+	Wed, 25 Nov 2026 15:46:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=jkHzcPuU
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EB6CC1F000CA;
-	Wed, 25 Nov 2026 15:46:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=td6632Yh
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5ACF81F000C0;
+	Wed, 25 Nov 2026 15:46:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795621593;
-	bh=YnNz+GE+btGm8z7icOWgGPjZQ6xDJOp2Jc3yAlUZkmo=;
+	s=korg; t=1795621596;
+	bh=/4dTYLjAZ21u1drCREHWIxRR0tDDSawoe7cpfFLURhc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=jkHzcPuU5I3zxGW0jPqR5zxlQJmEbf8niloZ7uhQFML4qmKsXFPcGglnaVRHJ2uug
-	 Mgyhz6C3vmsijT6aKQ01e5GGnuAhrSHFC6cPL/u/QqR3/gdgBp/eZxJvt5iPsAzilj
-	 uhsJeBxGaSMsHzLrDUD7mfG7zFApPOGS6avvA2Q0=
+	b=td6632YhJFPS84d4QqLs2FdnZgRN7xJdmVUJQSaLB+OS4adS2lJQofuZC1d9vesHx
+	 CjgNwC8aR6tqJ+KSqUC+JBM53b5/iHN1neHAMEODgNuTPGB6i7ENqsX+JW7Fqe2pss
+	 w+6a0mh0TZqlwgt/J2GLSn5hL/WfyOM6HR996zyI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Richard Fitzgerald <rf@opensource.cirrus.com>,
-	Takashi Iwai <tiwai@suse.de>,
+	Colton Pawielski <colton.pawielski@gmail.com>,
+	Daniel Machon <daniel.machon@microchip.com>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 275/990] ALSA: hda: cs35l56: Stop cs_dsp before calling cs_dsp_power_down()
-Date: Wed, 25 Nov 2026 15:27:22 +0100
-Message-ID: <20261125143828.530547365@linuxfoundation.org>
+Subject: [PATCH 6.18 276/990] net: 8139cp: keep Rx masked while NAPI is scheduled
+Date: Wed, 25 Nov 2026 15:27:23 +0100
+Message-ID: <20261125143828.552923448@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143822.072087159@linuxfoundation.org>
 References: <20261125143822.072087159@linuxfoundation.org>
@@ -68,43 +69,58 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Richard Fitzgerald <rf@opensource.cirrus.com>
+From: Colton Pawielski <colton.pawielski@gmail.com>
 
-[ Upstream commit 8c63987ac7fe605c337edbf9052cf97e2a415558 ]
+[ Upstream commit 547b1ae5ec50b7d81b05b4219e0db7e56279d65f ]
 
-In cs35l56_hda_unbind() call cs_dsp_stop() before cs_dsp_power_down()
-if cs_dsp is in a running state.
+cp_rx_poll() calls napi_complete_done() and only then takes cp->lock
+with interrupts disabled to unmask the Rx interrupts. An interrupt
+that is not masked while polling (TxOK, TxErr, ...) can arrive in
+between. cp_interrupt() then sees the Rx status bits, which are still
+set, finds NAPI no longer scheduled, masks Rx and schedules NAPI again.
+cp_rx_poll() then carries on and unmasks Rx anyway.
 
-cs35l56_hda_runtime_resume() calls cs_dsp_run() if cs_dsp_power_up() has
-previously run successfully. If cs35l56_hda_unbind() is then called while
-in this runtime-resumed state cs_dsp will be running. The code wasn't
-checking for this and was calling cs_dsp_power_down() while still in a
-running state, which is illegal. This is currently fairly harmless for
-the cs35l56 driver. But it doesn't comply with the API, so potentially
-could break with any future changes that expect the correct API use.
+>From that point Rx interrupts are enabled while NAPI is scheduled:
+cp_interrupt() leaves the Rx bits for the poll routine, does not mask
+them because napi_schedule_prep() fails, and the level-triggered
+interrupt fires again as soon as it returns. On an SH7751 LANDISK
+under combined Tx/Rx load this interrupt storm was captured with a RAM
+trace right before the board locked up hard.
 
-Fixes: fb78d73dde2d4 ("ALSA: hda/cs35l56: Call cs_dsp_power_down() before calling cs_dsp_remove()")
-Signed-off-by: Richard Fitzgerald <rf@opensource.cirrus.com>
-Link: https://patch.msgid.link/20261104122337.1072468-1-rf@opensource.cirrus.com
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Mask Rx in cp_interrupt() whenever Rx status is pending, not only when
+NAPI gets scheduled. If the race leaves Rx unmasked, the next interrupt
+masks it again, and the pending poll unmasks it when it completes.
+
+Fixes: ab1e7e1d2666 ("8139cp: use napi_complete_done()")
+Signed-off-by: Colton Pawielski <colton.pawielski@gmail.com>
+Reviewed-by: Daniel Machon <daniel.machon@microchip.com>
+Link: https://patch.msgid.link/20261031-b4-8139cp-napi-v2-1-5824797c0fe6@gmail.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/hda/codecs/side-codecs/cs35l56_hda.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/net/ethernet/realtek/8139cp.c | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/sound/hda/codecs/side-codecs/cs35l56_hda.c b/sound/hda/codecs/side-codecs/cs35l56_hda.c
-index baf286bf7ec83..b55391fed61ac 100644
---- a/sound/hda/codecs/side-codecs/cs35l56_hda.c
-+++ b/sound/hda/codecs/side-codecs/cs35l56_hda.c
-@@ -738,6 +738,8 @@ static void cs35l56_hda_unbind(struct device *dev, struct device *master, void *
- 	cs_dsp_cleanup_debugfs(&cs35l56->cs_dsp);
- 	debugfs_remove_recursive(cs35l56->debugfs_root);
- #endif
-+	if (cs35l56->cs_dsp.running)
-+		cs_dsp_stop(&cs35l56->cs_dsp);
+diff --git a/drivers/net/ethernet/realtek/8139cp.c b/drivers/net/ethernet/realtek/8139cp.c
+index 9016527e229ac..8f81dc7deef1e 100644
+--- a/drivers/net/ethernet/realtek/8139cp.c
++++ b/drivers/net/ethernet/realtek/8139cp.c
+@@ -600,11 +600,11 @@ static irqreturn_t cp_interrupt (int irq, void *dev_instance)
+ 		goto out_unlock;
+ 	}
  
- 	if (cs35l56->base.fw_patched)
- 		cs_dsp_power_down(&cs35l56->cs_dsp);
+-	if (status & (RxOK | RxErr | RxEmpty | RxFIFOOvr))
+-		if (napi_schedule_prep(&cp->napi)) {
+-			cpw16_f(IntrMask, cp_norx_intr_mask);
++	if (status & (RxOK | RxErr | RxEmpty | RxFIFOOvr)) {
++		cpw16_f(IntrMask, cp_norx_intr_mask);
++		if (napi_schedule_prep(&cp->napi))
+ 			__napi_schedule(&cp->napi);
+-		}
++	}
+ 
+ 	if (status & (TxOK | TxErr | TxEmpty | SWInt))
+ 		cp_tx(cp);
 -- 
 2.53.0
 
