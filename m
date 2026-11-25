@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795619234;
-	b=yKX++NWzDXQR8DSci2ZSjRBMUSWnON7XcbyF+l1OyRA3cZ6XwD6m0/JTdypPvKKP8C3I
-	 z16g6d7Et33rU99Ijuuw0alGoffv54iEVxyUTSFT/MnVkE3kdxnfnmoCvSv+Vy/WvqlSZ
-	 ckgm1t9pWvxv/kWSj+meMXWSBefK+1O60q838XV0zoNcstg0PF/k7NWilMKECpgF40CzY
-	 bq1trSd/GQgio14Q2wkhZbSEIGmRSZRor0lfs0ZPSzk7eK1MD9bQr6RcJAocBc1mA4HDr
-	 wPHAVe2Us3JrWh3JVTLBV6XdK9ZOmyWFlajm8G4u2cqWkNj3n7vSSIfZSqvQr4t8Lug==
+	t=1795619237;
+	b=UA/eMd5JJUQ1A3EBo6hnsfgg8tPtOAnfO+tRyQPPHZf6bD3DMnmxvopTGkzGI36nD29C
+	 KemrYKxYO1WuXi+osKYHnse/mkkf7tlrMXDzeLtk9451I8l2lfJPjAhgLSAk5JxnL72xL
+	 eDIGbPgy7hRwpMGaYJghS1neCyiF0ftEEmUYsEZ0i/TJp59swR8UJalIgin/GNGoSspTq
+	 mb/SWr+zMu3BdIpP2/NUvugBTYv2ZN++s86ScV7PjpFOKhHxuM1/XpBJoX62ltCoOH0fT
+	 ERqtaL+uCg0XR+DB3hbwHqW3My2wK7lcUi+iJwidaR3UScoq30ByGiG29NzsUNG2jbA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795619234;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795619237;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=qRyc5cdWZdE3JlFnjM2MDtpVB9sI9t9FQSmOvG9QT6I=;
-	b=Iqkh4aEgv2spZY4tG+bAq31NxvsIY71T8ypMOxG40olmQ6MiZmtIE7vEl2Uf2SZJx/8S
-	 aPJqNZyWzqArq9WBUK6pt4ejWp5nu5lcS456uOhQxcCcqIAg2OBVEl1Du+Qn8ltyM/G69
-	 y/A4yrhnbUFfBqKfLZ6gqJtBoQvAvvDxdl/DSkLiQnhBRuEVZdm1Nzs+vBKBUI3+dCKwX
-	 n88+g1RpdCoV9GXuSbxt0HABiEnsJHM97kz83M52Ja2nmuta7Mo3WNqYiZYWZlRfz6yyu
-	 7KRT6P2VJ3LYC/ddhxhynPAepO3Fpw1Yj4edni8zAOhxvKbB5uHCCN0xGpedfoe6vFQ==
+	bh=p7S01Ml85bnKt+Gaa+/2FpPAgJ7ZoLX+XASI/WcvILQ=;
+	b=dWSoumsM5LApXi8y3QoLecje4zeFXZNsSyakfNiFEdjxKVCe/jipqikGuHHQpdZvoRdW
+	 rfGwmzAozOqfp4RRUFZ9vE9oS6Z1duvw/LlS8ZlrBs2amv0RJzxjKv/lsA3Fyrb5I78Sf
+	 xfGXfem+sO8e/nnSqGsFL5As7ksXYdyi2AcY0vSGDCoOyrRoeeOoINvB5ZYLdo54fiJQX
+	 r848f1DnFW9A2ciKCHcS2swprUL3QaqUSDH6K1HfVYusQEIqrU7yxYU12OgC/XDBEPWaD
+	 zZwN4E8kjgQTAVRcVqc2QCq0I3lTYJqd4eatev+f+DSgV6BTNCcWOQ3XyR9iVfskEUQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=eEOOyfZ5;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="ff4/wHwZ";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9284C606A31E;
-	Wed, 25 Nov 2026 15:07:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 82F6B606A321;
+	Wed, 25 Nov 2026 15:07:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=eEOOyfZ5
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3DCA11F000C4;
-	Wed, 25 Nov 2026 15:07:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ff4/wHwZ
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7F8501F000CF;
+	Wed, 25 Nov 2026 15:07:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795619233;
-	bh=qRyc5cdWZdE3JlFnjM2MDtpVB9sI9t9FQSmOvG9QT6I=;
+	s=korg; t=1795619237;
+	bh=p7S01Ml85bnKt+Gaa+/2FpPAgJ7ZoLX+XASI/WcvILQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=eEOOyfZ5Y/u0xmCrm0GbCEAv7mc9t1VpZmWelNtUFMhzOpYPgMOaUQ0wMEzTmRp2g
-	 1P3zb0Y/j28+eSAopEVxfiEclZl8eztvY+xG4z2jNtuk+q2Anh5UiUJaxM6xGr//eN
-	 oCGMHmFfbs94J0cLbe/0YsIq/nGz6zkdz4lX7Jws=
+	b=ff4/wHwZKZ8S7mcNvROd5+EsFSK/+4b3oJrwqsnFKq3MKl0Xz1JmapYY9KMz0Dhhn
+	 743W50qG2NA1Kl1QxGREyawTb+Y7KNd97In5qZtDlXFU6kPqZYtmuK6ev630zuGHzQ
+	 0uxe+WBcjk9/gFSEtvMBBIS5dSa7VoBQlxmJ+u6s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kailang Yang <kailang@realtek.com>,
+	Fa-Iz Faadhillah Ibrahim <faiz.faadhillah@gmail.com>,
 	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0531/1005] ALSA: hda/realtek - remove headphone MIC support for Dell Pro QC1255
-Date: Wed, 25 Nov 2026 15:31:09 +0100
-Message-ID: <20261125143834.186498627@linuxfoundation.org>
+Subject: [PATCH 7.3 0532/1005] ALSA: hda/realtek: Update quirk for Acer Predator PHN16-72
+Date: Wed, 25 Nov 2026 15:31:10 +0100
+Message-ID: <20261125143834.210108962@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143821.729802100@linuxfoundation.org>
 References: <20261125143821.729802100@linuxfoundation.org>
@@ -68,66 +68,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kailang Yang <kailang@realtek.com>
+From: Fa-Iz Faadhillah Ibrahim <faiz.faadhillah@gmail.com>
 
-[ Upstream commit 1da5e525f0526a0b8e3b6c8c3208e6fad920f126 ]
+[ Upstream commit a2dac609bfcc395a8c2e87d3ba1fc26ac50811d0 ]
 
-This unit don't support headphone MIC.
-The popping sound will disappear when you remove it.
+The Acer Predator PHN16-72 (1025:1731) uses the ALC245 codec, but its
+mic-mute LED is not enabled by default. Replace the existing quirk with
+ALC245_FIXUP_ACER_MICMUTE_LED quirk to enable the mic-mute LED chain the
+existing ALC2XX_FIXUP_HEADSET_MIC quirk.
 
-Fixes: 97272a5704bf ("ALSA: hda/realtek - Fixed Headphone noise issue for Dell QCM1255")
-Signed-off-by: Kailang Yang <kailang@realtek.com>
-Link: https://lore.kernel.org/3c8129fbfa6d4ee2b464735f2f31dffa@realtek.com
+Fixes: 34e08ad3a8da ("ALSA: hda/realtek: Add quirk for Acer Predator PHN16-72")
+Signed-off-by: Fa-Iz Faadhillah Ibrahim <faiz.faadhillah@gmail.com>
+Link: https://patch.msgid.link/20261111172108.30011-1-faiz.faadhillah@gmail.com
 Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/hda/codecs/realtek/alc269.c | 19 ++++++-------------
- 1 file changed, 6 insertions(+), 13 deletions(-)
+ sound/hda/codecs/realtek/alc269.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/sound/hda/codecs/realtek/alc269.c b/sound/hda/codecs/realtek/alc269.c
-index a54cd3ebaa5cd..6e62886795d8d 100644
+index 6e62886795d8d..c9b75def6732c 100644
 --- a/sound/hda/codecs/realtek/alc269.c
 +++ b/sound/hda/codecs/realtek/alc269.c
-@@ -4436,7 +4436,6 @@ enum {
- 	ALC256_FIXUP_HONOR_MRB_XXX_M1020_AUDIO,
- 	ALC245_FIXUP_HP_ENVY_X360_15_FH0XXX,
- 	ALC287_FIXUP_ACER_MICMUTE_LED,
--	ALC236_FIXUP_DELL_HP_POP_NOISE,
- 	ALC274_FIXUP_HP_89E9_GPIO,
- 	ALC274_FIXUP_HP_VERBS,
- 	ALC287_FIXUP_AW88399_I2C_2,
-@@ -7226,12 +7225,6 @@ static const struct hda_fixup alc269_fixups[] = {
- 		.chained = true,
- 		.chain_id = ALC2XX_FIXUP_HEADSET_MIC,
- 	},
--	[ALC236_FIXUP_DELL_HP_POP_NOISE] = {
--		.type = HDA_FIXUP_FUNC,
--		.v.func = alc285_fixup_invalidate_dacs,
--		.chained = true,
--		.chain_id = ALC255_FIXUP_DELL1_MIC_NO_PRESENCE
--	},
- 	[ALC274_FIXUP_HP_89E9_GPIO] = {
- 		.type = HDA_FIXUP_FUNC,
- 		.v.func = alc274_fixup_hp_89e9_amp,
-@@ -7469,12 +7462,12 @@ static const struct hda_quirk alc269_fixup_tbl[] = {
- 	SND_PCI_QUIRK(0x1028, 0x0cc3, "Dell Oasis 14 Low Weight MTL-U", ALC289_FIXUP_DELL_CS35L41_SPI_2),
- 	SND_PCI_QUIRK(0x1028, 0x0cc4, "Dell Oasis 16 MTL-H/U", ALC289_FIXUP_DELL_CS35L41_SPI_2),
- 	SND_PCI_QUIRK(0x1028, 0x0cc5, "Dell Oasis 14", ALC289_FIXUP_RTK_AMP_DUAL_SPK),
--	SND_PCI_QUIRK(0x1028, 0x0d56, "Dell Pro Tower QCT1255", ALC236_FIXUP_DELL_HP_POP_NOISE),
--	SND_PCI_QUIRK(0x1028, 0x0d58, "Dell Pro Micro QCM1255", ALC236_FIXUP_DELL_HP_POP_NOISE),
--	SND_PCI_QUIRK(0x1028, 0x0d5a, "Dell Pro Slim QCS1255", ALC236_FIXUP_DELL_HP_POP_NOISE),
--	SND_PCI_QUIRK(0x1028, 0x0e6b, "Dell Pro Tower QCT1255", ALC236_FIXUP_DELL_HP_POP_NOISE),
--	SND_PCI_QUIRK(0x1028, 0x0e6c, "Dell Pro Slim QCS1255", ALC236_FIXUP_DELL_HP_POP_NOISE),
--	SND_PCI_QUIRK(0x1028, 0x0e6d, "Dell Pro Micro QCM1255", ALC236_FIXUP_DELL_HP_POP_NOISE),
-+	SND_PCI_QUIRK(0x1028, 0x0d56, "Dell Pro Tower QCT1255", ALC255_FIXUP_DELL2_MIC_NO_PRESENCE),
-+	SND_PCI_QUIRK(0x1028, 0x0d58, "Dell Pro Micro QCM1255", ALC255_FIXUP_DELL2_MIC_NO_PRESENCE),
-+	SND_PCI_QUIRK(0x1028, 0x0d5a, "Dell Pro Slim QCS1255", ALC255_FIXUP_DELL2_MIC_NO_PRESENCE),
-+	SND_PCI_QUIRK(0x1028, 0x0e6b, "Dell Pro Tower QCT1255", ALC255_FIXUP_DELL2_MIC_NO_PRESENCE),
-+	SND_PCI_QUIRK(0x1028, 0x0e6c, "Dell Pro Slim QCS1255", ALC255_FIXUP_DELL2_MIC_NO_PRESENCE),
-+	SND_PCI_QUIRK(0x1028, 0x0e6d, "Dell Pro Micro QCM1255", ALC255_FIXUP_DELL2_MIC_NO_PRESENCE),
- 	SND_PCI_QUIRK(0x1028, 0x164a, "Dell", ALC293_FIXUP_DELL1_MIC_NO_PRESENCE),
- 	SND_PCI_QUIRK(0x1028, 0x164b, "Dell", ALC293_FIXUP_DELL1_MIC_NO_PRESENCE),
- 	SND_PCI_QUIRK(0x103c, 0x1586, "HP", ALC269_FIXUP_HP_MUTE_LED_MIC2),
+@@ -7363,7 +7363,7 @@ static const struct hda_quirk alc269_fixup_tbl[] = {
+ 	SND_PCI_QUIRK(0x1025, 0x169a, "Acer Swift SFG16", ALC256_FIXUP_ACER_SFG16_MICMUTE_LED),
+ 	SND_PCI_QUIRK(0x1025, 0x171e, "Acer Nitro ANV15-51", ALC245_FIXUP_ACER_MICMUTE_LED),
+ 	SND_PCI_QUIRK(0x1025, 0x172c, "Acer Nitro ANV16-41", ALC2XX_FIXUP_HEADSET_MIC),
+-	SND_PCI_QUIRK(0x1025, 0x1731, "Acer Predator PHN16-72", ALC2XX_FIXUP_HEADSET_MIC),
++	SND_PCI_QUIRK(0x1025, 0x1731, "Acer Predator PHN16-72", ALC245_FIXUP_ACER_MICMUTE_LED),
+ 	SND_PCI_QUIRK(0x1025, 0x173a, "Acer Swift SFG14-73", ALC245_FIXUP_ACER_MICMUTE_LED),
+ 	SND_PCI_QUIRK(0x1025, 0x173b, "Acer Swift SFG16-72", ALC245_FIXUP_ACER_MICMUTE_LED),
+ 	SND_PCI_QUIRK(0x1025, 0x1758, "Acer Nitro ANV15-41", ALC245_FIXUP_ACER_MICMUTE_LED),
 -- 
 2.53.0
 
