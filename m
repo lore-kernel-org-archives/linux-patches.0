@@ -1,52 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795623822;
-	b=vVCsomuyEYXt70lancgujteh4GecggVY8fsosOi2Vc8da7tpsf7LX5cYD3LhUptexc4L
-	 4Jb9iRzfq/J7KsBWEZQuFWzXqBGCHpMGWL2kflQY1eec3d9dYIAwWoNXA8zFp4zubXoTG
-	 30BCxUVsySxmmrrrnxzc8ZP1+RrjzRj2lWPkUuxbhDZ+BYaonOfpvvlownZrUv9u4UiZk
-	 wx88nacRTcdgm58wrE+bwvwFeN6jN6BE9NeHb86DoKTM7uCaxw6pCxcF46gGire1FEicJ
-	 MHOx4xuQvUgiePJwbIW9qBCrBPtnrtfnWv4GTz+KNwgLMoE6DGBN9GsHbPoMUP3JxyA==
+	t=1795623824;
+	b=zzBdJ4xXqP1tm18fXoTsXGFuWkYmCZbbc36/Rh2J7V7IJmNJ/Bm4i0OT1H92pq9rCU8P
+	 WQD2aynWV3ulef5W3W5+KN02u/TB/K7UxouYzN9AcskAH2LX3ZHxwI/LR6IP0JKKt6DXY
+	 RnIhULNnvGWlaOH6Blle78M1tcNsrz64Ro2VN5YdMxfRy32Rf2sLyIFD5/Z4579mFJMV+
+	 1Ow+sohH6HozMqetijB7zWP0fqnImphC5USL+WDkaUdZbxbtoAzAbO99tzL0XPedPvRkM
+	 +4YJTwWZY9jpvI6Pcfez2nF4XGBNYaOkPwAf3Xlmb+PRl9BTyVkJ9JWwc3Yvq5ez/4A==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795623822;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795623824;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=crQQgiqkuK9opdpR18A/K8PFOH/Fs9u2bEOLNh9QEMk=;
-	b=5cqAFrQwTusHeSTNitosLTp0bGG2KU/BX7FxQALVAfoKtxK0NCTgAWsZsyYNANtsf1rN
-	 Mda3ecfU6wKVNROPQiAj7s08RvfqWKyCETQ5MY/Q7nZSbB+AXk55yf9R7PP/Ma/SWtK+j
-	 UFwEOdNVzPA+RTxG1Son5xqna94Xqt5TKTAnb5+cqu4TG4gO0TdkPgvoSr8lKej9nIeRH
-	 WjsbOav0m4or0VxrSQ1CCQATo/6/HkdYEEui/SacuBIQaNMXCfnkEfVcYb8vSnW2cK+Lm
-	 0ABNEhASqwhajIMuuzm+R0viPzjNIJfE9vi61aYiYurIoCoeRvU4GhS/7VFw/AZ7E9g==
+	bh=WQEKMJKAkkXvI51g1h2lRoA7nM5WyB7pKJ7ODLiTQLA=;
+	b=sO4IaMcOZha4OW/msn3+gaiSXXT5dbHtAA2ddT+WFqr0ZvIpo6w4tle5LhEfc4DsvMT3
+	 tmCGsR3Ym2FG8DCYodByv9wowJIEDXfDpc7hL+o+3eIzAsrOHfhvg3XtOVR1FxTXh8zP5
+	 sSUrYBNnEOPRYzH2+elghBoFW80+w113c6K3qsjDY9OmMi/hMlBepV7Dt0XiWjCDwmDlQ
+	 of+9ELvYcAUXbCi9pD0dItHCOOcOrYJscbKhA+sR9PIuRertMzZsllZCHCdzJY0QiUc5T
+	 k8VH0d4+kQZIUR90EGQfYWB9xV1pEief3EJlxGYtUDvY5esH+Rriyq9rgxCsQ+JlBjQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=05B6TYx9;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=eaUyW3ws;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0C4BD606A321;
-	Wed, 25 Nov 2026 16:23:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D8B31606A323;
+	Wed, 25 Nov 2026 16:23:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=05B6TYx9
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B82CA1F000CF;
-	Wed, 25 Nov 2026 16:23:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=eaUyW3ws
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 23AFD1F000C0;
+	Wed, 25 Nov 2026 16:23:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795623821;
-	bh=crQQgiqkuK9opdpR18A/K8PFOH/Fs9u2bEOLNh9QEMk=;
+	s=korg; t=1795623824;
+	bh=WQEKMJKAkkXvI51g1h2lRoA7nM5WyB7pKJ7ODLiTQLA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=05B6TYx9No1zaq8h2FEsQWY/5iUsGJ6PKCMj0POnSCCiYbGeX6hMB5XFdiySbeUDy
-	 SBcherqJEAdyUt1haWnlaj1bm1ju02BMMx6ndD0T3M/5KmG3mb5X6MtzfCyUlD+Z1W
-	 Ta9GiS7/T++s2jrkEwzO1yJ9Zlz4kXJkvZInntTg=
+	b=eaUyW3wsMidDeXS+od2g6vJgz+rTSlPzYSvEsl/R78GtSuNXKaxVoGXLmJH1lTaRi
+	 eycj1Oo15MSl0ImhR41bGKT7D03C2NLg4Cc/i/JOCrbnCzsJnLxaweIwGiUkoD29g0
+	 XnhUDa1cLX/gIFeYvMtMB5YE5/b5TV62N7+dbQ9A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable <stable@kernel.org>,
-	Josef Bacik <josef@toxicpanda.com>,
-	Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
-Subject: [PATCH 6.18 926/990] w1: ds28e04: use the bus mutex to talk on the bus
-Date: Wed, 25 Nov 2026 15:38:13 +0100
-Message-ID: <20261125143843.690663151@linuxfoundation.org>
+	Sasha Levin <sashal@kernel.org>,
+	Dominique Martinet <asmadeus@codewreck.org>
+Subject: [PATCH 6.18 976/990] 9p: fix memory leak in v9fs_init_fs_context error path
+Date: Wed, 25 Nov 2026 15:39:03 +0100
+Message-ID: <20261125143844.845991855@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143822.072087159@linuxfoundation.org>
 References: <20261125143822.072087159@linuxfoundation.org>
@@ -68,106 +67,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Josef Bacik <josef@toxicpanda.com>
+From: Sasha Levin <sashal@kernel.org>
 
-commit 5bc51235d0ad4a4991e38f4e9dc3440738296850 upstream.
+commit 0fd76f1be20d19ac593138ceec502cb044c909bd upstream.
 
-Since commit b02f8bede217 ("W1: split master mutex to avoid deadlocks.")
-the slave drivers serialise their accesses to the bus with bus_mutex.
-This driver, which was merged shortly afterwards, takes the mutex of the
-master in the callbacks of its eeprom and pio files instead.
+Move the assignments of fc->ops and fc->fs_private to right after the
+kzalloc, before any fallible operations. Previously these were assigned
+at the end of the function, after the kstrdup calls for uname and aname.
+If either kstrdup failed, the error path would set fc->need_free but
+leave fc->ops NULL, so put_fs_context() would never call v9fs_free_fc()
+to free the allocated context and any already-duplicated strings.
 
-That mutex is held while a slave which has disappeared from the bus is
-removed, which waits for the sysfs callbacks of the slave to return.  A
-callback which is waiting for the mutex at that moment never does: both
-tasks are stuck, and with them the thread of the bus master.
-
-Besides, it does not keep the other slave drivers off the bus, so that two
-transactions can get mixed up on the wire.
-
-Fixes: fbf7f7b4e2ae ("w1: Add 1-wire slave device driver for DS28E04-100")
-Cc: stable <stable@kernel.org>
-Signed-off-by: Josef Bacik <josef@toxicpanda.com>
-Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
-Link: https://patch.msgid.link/20261027-llm-char-misc-w1-v1-4-d2e6bfafb6a4@linuxfoundation.org
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 1f3e4142c0eb ("9p: convert to the new mount API")
+Assisted-by: Claude:claude-opus-4-6
+Signed-off-by: Sasha Levin <sashal@kernel.org>
+Message-ID: <20260225135745.351984-1-sashal@kernel.org>
+Signed-off-by: Dominique Martinet <asmadeus@codewreck.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/w1/slaves/w1_ds28e04.c |   18 +++++++++---------
- 1 file changed, 9 insertions(+), 9 deletions(-)
+ fs/9p/vfs_super.c |    6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
---- a/drivers/w1/slaves/w1_ds28e04.c
-+++ b/drivers/w1/slaves/w1_ds28e04.c
-@@ -123,7 +123,7 @@ static ssize_t eeprom_read(struct file *
- 	if (count == 0)
- 		return 0;
+--- a/fs/9p/vfs_super.c
++++ b/fs/9p/vfs_super.c
+@@ -312,6 +312,9 @@ static int v9fs_init_fs_context(struct f
+ 	if (!ctx)
+ 		return -ENOMEM;
  
--	mutex_lock(&sl->master->mutex);
-+	mutex_lock(&sl->master->bus_mutex);
++	fc->ops = &v9fs_context_ops;
++	fc->fs_private = ctx;
++
+ 	/* initialize core options */
+ 	ctx->session_opts.afid = ~0;
+ 	ctx->session_opts.cache = CACHE_NONE;
+@@ -346,9 +349,6 @@ static int v9fs_init_fs_context(struct f
+ 	ctx->rdma_opts.timeout = P9_RDMA_TIMEOUT;
+ 	ctx->rdma_opts.privport = false;
  
- 	if (w1_enable_crccheck) {
- 		min_page = (off >> W1_PAGE_BITS);
-@@ -140,7 +140,7 @@ static ssize_t eeprom_read(struct file *
- 	}
- 
- out_up:
--	mutex_unlock(&sl->master->mutex);
-+	mutex_unlock(&sl->master->bus_mutex);
- 
- 	return count;
- }
-@@ -253,7 +253,7 @@ static ssize_t eeprom_write(struct file
- 		}
- 	}
- 
--	mutex_lock(&sl->master->mutex);
-+	mutex_lock(&sl->master->bus_mutex);
- 
- 	/* Can only write data to one page at a time */
- 	idx = 0;
-@@ -271,7 +271,7 @@ static ssize_t eeprom_write(struct file
- 	}
- 
- out_up:
--	mutex_unlock(&sl->master->mutex);
-+	mutex_unlock(&sl->master->bus_mutex);
- 
- 	return count;
- }
-@@ -290,9 +290,9 @@ static ssize_t pio_read(struct file *fil
- 	if (off != 0 || count != 1 || buf == NULL)
- 		return -EINVAL;
- 
--	mutex_lock(&sl->master->mutex);
-+	mutex_lock(&sl->master->bus_mutex);
- 	ret = w1_f1C_read(sl, W1_1C_REG_LOGIC_STATE, count, buf);
--	mutex_unlock(&sl->master->mutex);
-+	mutex_unlock(&sl->master->bus_mutex);
- 
- 	return ret;
- }
-@@ -310,11 +310,11 @@ static ssize_t pio_write(struct file *fi
- 	if (off != 0 || count != 1 || buf == NULL)
- 		return -EINVAL;
- 
--	mutex_lock(&sl->master->mutex);
-+	mutex_lock(&sl->master->bus_mutex);
- 
- 	/* Write the PIO data */
- 	if (w1_reset_select_slave(sl)) {
--		mutex_unlock(&sl->master->mutex);
-+		mutex_unlock(&sl->master->bus_mutex);
- 		return -1;
- 	}
- 
-@@ -328,7 +328,7 @@ static ssize_t pio_write(struct file *fi
- 
- 	w1_read_block(sl->master, &ack, sizeof(ack));
- 
--	mutex_unlock(&sl->master->mutex);
-+	mutex_unlock(&sl->master->bus_mutex);
- 
- 	/* check for acknowledgement */
- 	if (ack != 0xAA)
+-	fc->ops = &v9fs_context_ops;
+-	fc->fs_private = ctx;
+-
+ 	return 0;
+ error:
+ 	fc->need_free = 1;
 
 
