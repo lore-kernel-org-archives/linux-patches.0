@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795623418;
-	b=gNyNXi1E7i7fD/u5JrWdR6QB1W8uh6Af0apWsHbFJzCJpqIoAGsstgwZ5doJBS94i/8A
-	 ZgLflP6orud2+wt4V++NbuD4fMwTimmw28bCaBFOpjAlpRzRmIjg1g1Tug+pix8QZmOg3
-	 e+X+ek7B+K1QBwWBJdX7vyVagF8RztRkc0a4hL/ab3+od/uyb/yvVltL+YvvH94l17+uJ
-	 KR0iDuUkCxw1ovuG3oylicnOsayqHm/N10wBamvpLD7jMSb/lcv20bYdhsYBS33NBBv57
-	 EyDIB86Jcff/Uo3MifWzN3u5pNb67ZcULpTxSJA/VtrtsRWDoaCpTc2eqNzesXk1iFA==
+	t=1795623421;
+	b=kuV5QmmBdMJ8I7T5aIyXJCwu42HYsvEUZbuqIZaW0097MyibHeEmC0Xrl5HjwCrcNw4a
+	 P6lzUTX47It031WrkS/saV+ZfX72F7yDfqHmEfEj44yU70kFOP4OO7Tiy/VU2DMObGsgG
+	 ctSdeaV+dK2lophWE9dg62aqbQUh++oEiM4nrvRhqWb5z1U6a7Giq/1G1xMtMBpsqDegr
+	 Eg+CAmwhCJEoHAcgwgTKtqcnVNTYbuPFNRtopwB27UoaeP6404jM3ulP4oDGvI0AQa+0A
+	 NlNNC187Hg1a7DLfLMFLCTJyNqbC3yM/2XhBiauIw9nCBp3C7Zh0eL5bNI6Cq+m9Acw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795623418;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795623421;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=2DzLDKSRN6o1ba/Xa2pBgRh3M6cWURHfZOZOcyz0nfU=;
-	b=Q3m5APTs5UvmgOLHsb1HGqTdI7NjZs6MOcKBcZ5hwPT1InQ4dfLVPxOGuiXFo5tl5jUL
-	 X+YwnOgvlQlMxCqFQ0ziKld0wEruLEFxWaOJl4/l6R9xfnDygZaOBUvz0ey3+roW69d1j
-	 XVAegISqU3cDH3/wQzuddRbLFEMjKNHwCwYWCdLMog5Ab5+6/WSb1Dl4smjMEeinrC2n/
-	 sKr46/N/rPOoJ4kehAi2vmEnbYvBsaM6GU+NXXt1HdEDXkMW46IUyLF4ctI+WrNfyR4TC
-	 tcf9iKq5f4/DBkXlJ6Q6qEuNJAxgNCmZLI1CI6aVmgG9j6ppqznjbbQjW2rnSMmiAKA==
+	bh=Upjz++x9C/G70B/zthn1Gcp66hwafS72xIM3KB3+LsU=;
+	b=zv5b+qcyGuBrMu5AxkcWRASOdvhRYM8bpNoaQQEqLpJ9r8tsG8tVwM2Prfn6lfutBmDc
+	 iJgbYqTcLfsstUiCbDfVDWqEbc3+BhqMd95jvUfvU7HsxPeRyQD7O63je4EnCKs9USU/I
+	 N8bu68dVEtvSqhH8dASZabvVSJPigUhwnnTD+NmVAC9TtzHEFOFq9MyPi788LjCuVWc1Z
+	 ASHqfroOhC3o+aYiT3Hu0tqsc+6Titz3Gyri07xyhVw3zBdkLNkxdGDLEXEjW0YBRT95J
+	 t3CY37i8IFWEAQHVnDQXXJ811bTMlfVtgG8WNvZXhCUg2FwI/fXR/rVXz5HmdRwFRRQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=qi6fY3JL;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=DYViiwd8;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 78F28606A31E;
-	Wed, 25 Nov 2026 16:16:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BF7D9606A321;
+	Wed, 25 Nov 2026 16:17:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=qi6fY3JL
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C92131F000C6;
-	Wed, 25 Nov 2026 16:16:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=DYViiwd8
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A14B11F000C0;
+	Wed, 25 Nov 2026 16:17:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795623418;
-	bh=2DzLDKSRN6o1ba/Xa2pBgRh3M6cWURHfZOZOcyz0nfU=;
+	s=korg; t=1795623421;
+	bh=Upjz++x9C/G70B/zthn1Gcp66hwafS72xIM3KB3+LsU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=qi6fY3JL7i7GvhDqPuDZCd83syJz77TAham/rw8+c9caR5uJr3WXbc98+oLrqutLH
-	 sf7H54UgM24+Z6lLymzHS/PaIDGZ6YdVxYK94O21oBBOpSlr7+ssPyqWD+elX9uVDL
-	 M+n4MvxhSLnH5+0WItrvP/TfOz5AXrqVQ3i+GMww=
+	b=DYViiwd80litiR3C5c9PnX35IFFiG/Fw66srKWY0pX0Q9huJOlNIrqTFzgccWNvW4
+	 JoXgwgPm7WFQh9FaT100YYKxQYeChhpledEh6eUXyFY2mCMQg1K2pFJsWwaNw8h0eL
+	 CNzlitz0WEzGglB0qLcY4zUx1J6gbYhV6+egctG0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+5307e3bcacec2ce4c2f0@syzkaller.appspotmail.com,
-	Kirtikumar Anandrao Ramchandani <kirtiar15502@gmail.com>,
+	syzbot+a2626a25eb2595e3ec3c@syzkaller.appspotmail.com,
+	Edward Adam Davis <eadavis@sina.com>,
 	Mikulas Patocka <mpatocka@redhat.com>
-Subject: [PATCH 6.18 853/990] dm: Reject table setup after queue or disk teardown
-Date: Wed, 25 Nov 2026 15:37:00 +0100
-Message-ID: <20261125143842.009007921@linuxfoundation.org>
+Subject: [PATCH 6.18 854/990] dm cache: reject kcopyd client destory if it setup failed
+Date: Wed, 25 Nov 2026 15:37:01 +0100
+Message-ID: <20261125143842.032387620@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143822.072087159@linuxfoundation.org>
 References: <20261125143822.072087159@linuxfoundation.org>
@@ -68,53 +68,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kirtikumar Anandrao Ramchandani <kirtiar15502@gmail.com>
+From: Edward Adam Davis <eadavis@sina.com>
 
-commit ae310e4ad872a42f4707a596e66417f2aaa52826 upstream.
+commit 8b97b168eb4d3affcf23d2980a0c3f35ed9262e2 upstream.
 
-A failed table load can leave a mapped device in a state where its
-queue has already been initialized or its disk has been removed, while
-md->type is still DM_TYPE_NONE. A later table load then calls
-blk_mq_init_allocated_queue() on the same queue. If del_gendisk() exited
-the old hardware contexts, blk_mq_exit_hctx() dereferences their cleared
-flush queue pointer.
+The value of cache->copier is -EINTR when failed to create a rescuer
+kthread for wq kcopyd, in cache_create(), the code jumps directly to
+__destroy(cache), it merely performs a simple check to see whether copier
+is NULL, potentially hitting:
 
-Reject setup attempts after queue initialization or disk removal. A
-failed request queue initialization still leaves md->tag_set NULL and
-can be retried. Set the request-based disk operations only after that
-initialization succeeds, so an unsuccessful attempt cannot leave a
-bio-based retry with request-based operations.
+BUG: KASAN: null-ptr-deref in dm_kcopyd_client_destroy+0xae/0x480 drivers/md/dm-kcopyd.c:980
+Read of size 4 at addr 0000000000000174 by task syz.2.19/6560
+Call Trace:
+ dm_kcopyd_client_destroy+0xae/0x480 drivers/md/dm-kcopyd.c:980
+ __destroy+0x172/0x2f0 drivers/md/dm-cache-target.c:1973
+ cache_create drivers/md/dm-cache-target.c:2604 [inline]
+ cache_ctr+0x1674/0x2bf0 drivers/md/dm-cache-target.c:2649
+ dm_table_add_target+0x58d/0xc70 drivers/md/dm-table.c:749
+ populate_table drivers/md/dm-ioctl.c:1602 [inline]
+ table_load+0x325/0x8a0 drivers/md/dm-ioctl.c:1645
+ ctl_ioctl drivers/md/dm-ioctl.c:2221 [inline]
 
-Reported-by: syzbot+5307e3bcacec2ce4c2f0@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=5307e3bcacec2ce4c2f0
+Set copier to NULL to avoid destroying a invalid kcopy client.
+
 Cc: stable@vger.kernel.org
-Signed-off-by: Kirtikumar Anandrao Ramchandani <kirtiar15502@gmail.com>
+Fixes: c6b4fcbad044 ("dm: add cache target")
+Reported-by: syzbot+a2626a25eb2595e3ec3c@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=a2626a25eb2595e3ec3c
+Signed-off-by: Edward Adam Davis <eadavis@sina.com>
 Signed-off-by: Mikulas Patocka <mpatocka@redhat.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/md/dm.c |    6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+ drivers/md/dm-cache-target.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/drivers/md/dm.c
-+++ b/drivers/md/dm.c
-@@ -2596,13 +2596,17 @@ int dm_setup_md_queue(struct mapped_devi
- 
- 	WARN_ON_ONCE(type == DM_TYPE_NONE);
- 
-+	/* A failed setup may have left the queue initialized or the disk dead. */
-+	if (md->tag_set || test_bit(GD_DEAD, &md->disk->state))
-+		return -ENODEV;
-+
- 	if (type == DM_TYPE_REQUEST_BASED) {
--		md->disk->fops = &dm_rq_blk_dops;
- 		r = dm_mq_init_request_queue(md, t);
- 		if (r) {
- 			DMERR("Cannot initialize queue for request-based dm mapped device");
- 			return r;
- 		}
-+		md->disk->fops = &dm_rq_blk_dops;
+--- a/drivers/md/dm-cache-target.c
++++ b/drivers/md/dm-cache-target.c
+@@ -2550,6 +2550,7 @@ static int cache_create(struct cache_arg
+ 	if (IS_ERR(cache->copier)) {
+ 		*error = "could not create kcopyd client";
+ 		r = PTR_ERR(cache->copier);
++		cache->copier = NULL;
+ 		goto bad;
  	}
  
- 	r = dm_calculate_queue_limits(t, &limits);
 
 
