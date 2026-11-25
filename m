@@ -1,53 +1,55 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795621613;
-	b=se8KzZsBCnBR3SdpziF01ZkGYaq6sBPEzAE6qcJ8SLSmcHTJdF0XueWWf3eDMzDzdQlx
-	 l3YqPVS01h7s2V+O+dOzQz3fd/BqOTH//5vxuLXtyAZE+mqIG5WyO31kQgNImofVJEz7q
-	 ZI+LSpRbrtGGtP1JPvjl7f/zFdA+hpR9dw6iAAJlhM4a6VxbvCfxxIOOMXTlUZm9Eeu9n
-	 si/spn287H8XAStJuoQ9lpT23vfRA2ff//9PlMMr5yphU15sQNLMa2BOPnm7VTWPSXPYr
-	 om6Bb+X+RNdwwi/HIF+HfAbyWotjzHqaEJiznlNoG0cvgZupwIXyrm6vesbfuX81Dag==
+	t=1795621616;
+	b=lRZbCcuJSanxFxGnJwgHZBKc03WHZbyi1dBKqoIK6dVXqV7IXTNg6rBfqHLMJS9QZtsk
+	 bZIdyKA7lQtgIIJlrGGcMJMI2UY7RksfTF4UDiVapJTDNvHcbHn0AQqWaJcSswRLmiPFW
+	 jpfJp+PzIHRsvXHjuBBfxj8z8GHduS0YSBxAJ/owpYefJtpo6TTBcD7E+17bhdWnC99W2
+	 Sg/z1WWmwQsmvJzCv9Hu6FX2Ncwtkw/bWAFvrCEZtygVMIypEcTOA1sfAg3dTaXgPDVhI
+	 vT9BXC3d6kWin1cW6nmiHgMgP0zgHDoSNj44MRw95oYd1Rpz5hJ2yz5rGRWyl2AuL2Q==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795621613;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795621616;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=K86Ax1QAfyNscmGTeDOD2NOVAjmWdzTLAS7Dx1ySYu4=;
-	b=11BOafYwfhswWy2tnEEf/vJJEuebuZ8ohBhsfDZMqBqT7n6RtyP1JYbePjXblr/iwV7d
-	 csFxLRWeb+84VcRVhB0xDDRDgG3pAwY3nac/To3vFd1H3yTZIs1WETjm3vTouTXG8tIB3
-	 dL6v8GGIEGfWKZsKeCYvcrBva4qBtcjN44g44aMo8n/gmR+TerVbNDX006YALyp16s7t6
-	 VIXhixCtNGsCE3r02bmc9rfs5uF3AarwN41alyy3TvrLiufKGAss5TW5XDpYuoe2zG3RE
-	 OhijPJwubvp127VuYl5IX+4i2fdSTQSHM1OukskubIfR5x0gdve+aAoCzjpjzPuyr4g==
+	bh=mUDmoiR0t+YFPXy72xxsgWJmfBYAw1oGQX1+FooAC+k=;
+	b=yHM7sGJ9G2fEaGEKn45T2eWjhDUtCGc0IHCq/JYrsU2/y4O4ZjKDSXT7W1phBDEAI5sr
+	 vhPN0CYiL1a3vceLUH9ioOmHX1D0fzY7zISoQzuWMQOU+Z1RDWg/5nMno4ET4znQMHnA7
+	 xH/pwNAmDet2V6rtyblLFEjXKmcNVDv7gU1F5eIe2MSpoeeQ2hgwrx2cBJB0aydlE8npw
+	 E+zt3pu4LUCY3stfBFKRuRZX84LN4UT4hyAL78tRv3+oZMeq0A3vJGkTZkF2K85JeE9BR
+	 4KoG6h4VBNgJM+W4GthMCNRV4TZayQuYYaXb8G4rbWqY/tns4a5pe7aoIKbNqra/HvA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=NPHUy+7h;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=j78CJDTp;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 28499606A337;
-	Wed, 25 Nov 2026 15:46:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AE3E1606A68E;
+	Wed, 25 Nov 2026 15:46:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=NPHUy+7h
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 464DD1F000E6;
-	Wed, 25 Nov 2026 15:46:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=j78CJDTp
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 835C91F000D3;
+	Wed, 25 Nov 2026 15:46:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795621612;
-	bh=K86Ax1QAfyNscmGTeDOD2NOVAjmWdzTLAS7Dx1ySYu4=;
+	s=korg; t=1795621616;
+	bh=mUDmoiR0t+YFPXy72xxsgWJmfBYAw1oGQX1+FooAC+k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=NPHUy+7hHlbwku88ck1VkqMf7K6T7rMXuJjIdcq5zdBi+lFCbvJqsWzxSAe2TLc0d
-	 HK9jrNCQJgRSWSuaYw2f5i7m7vbu1cmcade0+gjiAtsMx6pAU5TKthiEysgUyVJ0KA
-	 MRMh1oIRs65BLOsbrSu40BkSRqStrnCHvARhNsNg=
+	b=j78CJDTprnDth3UU7yWGXPevTAfgcusGZe30XT98GW9Xt0exHf/gBx5a9T0Onbjbv
+	 T6t6wdXD//ZrZaRWWApeTM2c84iSc09kfkHbNak1WdpcDr98mY8fK+bwvDCwhUukAS
+	 7GSTGD6/g1edmxz35CDp8QTt0grNsMwEYvU9Npno=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Timur Stukan <timur.stukan.linux@gmail.com>,
-	Hangbin Liu <liuhangbin@kylinos.cn>,
+	Lorenzo Bianconi <lorenzo.bianconi@oss.qualcomm.com>,
+	Daniel Machon <daniel.machon@microchip.com>,
+	Nicolai Buchwitz <nb@tipi-net.de>,
+	Maxime Chevallier <maxime.chevallier@bootlin.com>,
 	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 281/990] bonding: fix missing down path on speed/duplex failure after FAIL->UP
-Date: Wed, 25 Nov 2026 15:27:28 +0100
-Message-ID: <20261125143828.666194322@linuxfoundation.org>
+Subject: [PATCH 6.18 282/990] net: stmmac: set XDP metadata length on the page_pool RX path
+Date: Wed, 25 Nov 2026 15:27:29 +0100
+Message-ID: <20261125143828.689382503@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143822.072087159@linuxfoundation.org>
 References: <20261125143822.072087159@linuxfoundation.org>
@@ -69,177 +71,71 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Timur Stukan <timur.stukan.linux@gmail.com>
+From: Lorenzo Bianconi <lorenzo.bianconi@oss.qualcomm.com>
 
-[ Upstream commit a76ab5e733b41dede6f238a691eefb4374f99f79 ]
+[ Upstream commit 6d9b7c85af57305ec2bd5907124478867edcc60b ]
 
-In bond_miimon_commit(), when a slave is proposed as BOND_LINK_UP but
-bond_update_speed_duplex() fails in bonding mode that needs speed/duplex
-(802.3ad, tlb, alb), the slave is set to BOND_LINK_DOWN directly. This
-bypasses bond_set_slave_link_state(), bond_miimon_link_change() and
-failover.
+stmmac_rx() initializes the XDP buffer with the metadata area valid, so
+an XDP program can reserve metadata with bpf_xdp_adjust_meta() and write
+it in [xdp->data_meta, xdp->data), for example to export the RX hardware
+timestamp obtained from the metadata kfunc. When such a frame is passed
+to the stack, the skb is built in place around the same page with
+napi_build_skb(), but skb_metadata_set() is never called.
 
-This is fine for slave that coming from BOND_LINK_BACK, which was never
-brought up and is not in use. But since commit 1899bb325149 ("bonding:
-fix state transition issue in link monitoring") the commit phase also
-handles BOND_LINK_FAIL -> BOND_LINK_UP which means a slave that is still
-in use and may be curr_active_slave.
+napi_build_skb() clears skb_shared_info up to dataref, which includes
+meta_len, so skb_metadata_len() stays zero. The stack and TC BPF then see
+an empty metadata range even though the bytes are present in the skb
+headroom. The AF_XDP zero-copy path already records the length in
+stmmac_construct_skb_zc().
 
-If the link recovers within downdelay and goes down again before the
-commit phase reads speed/duplex, the slave is silently marked down while
-remaining the active slave in worst cases. In alb/tlb the bond MAC stays
-on the dead port, no failover happens and TLB/RLB state is not cleaned,
-so the bond stops passing traffic until that link comes back even though
-other slaves are up. A non-active slave is affected too, in alb, RLB
-clients assigned to it are not reassigned and become unreachable.
+Record the metadata length after reserving the headroom and adding the
+frame data. No copy is needed because the skb is built over the buffer the
+XDP program wrote to. With the length recorded, the software VLAN
+stripping path can move the metadata together with the MAC header, as it
+already does for zero-copy frames.
 
-Reproduced in tlb and alb mode with miimon=100 and downdelay=10000 by
-flapping a slave within downdelay and dropping it again before commit
-(a longer delay was added between inspect and commit to make window
-wider and easier to test):
-  bond0: (slave enp0s3): link status down for interface, disabling it in 10000 ms
-  bond0: (slave enp0s3): link status up again after 3400 ms
-  bond0: (slave enp0s3): failed to get link speed/duplex
-
-procfs then shows the active slave with "MII Status: down" and "Link
-Failure Count: 0", and all traffic is lost.
-
-Fix this by dropping the loop in bond_mii_monitor() that applied all
-proposed link states before bond_miimon_commit(). bond_miimon_commit()
-now applies each state itself: UP after the speed/duplex check, as it
-already did, DOWN in the down path, and FAIL/BACK directly. So when the
-speed/duplex check runs, slave->link still holds the previous state. If
-the check fails for a slave that is FAIL or UP, take it through the
-regular down path, including failover. DOWN and BACK slaves were
-never brought up and are still just reverted to DOWN. The down path is
-moved into bond_miimon_slave_down() so both callers share it.
-
-After the fix:
-  bond0: (slave enp0s3): failed to get link speed/duplex
-  bond0: (slave enp0s3): link status definitely down, disabling slave
-  bond0: (slave enp0s4): making interface the new active one
-
-Fixes: 1899bb325149 ("bonding: fix state transition issue in link monitoring")
-Signed-off-by: Timur Stukan <timur.stukan.linux@gmail.com>
-Reviewed-by: Hangbin Liu <liuhangbin@kylinos.cn>
-Link: https://patch.msgid.link/20261101150240.66292-1-timur.stukan.linux@gmail.com
+Fixes: e3f9c3e34840 ("net: stmmac: add Rx HWTS metadata to XDP receive pkt")
+Signed-off-by: Lorenzo Bianconi <lorenzo.bianconi@oss.qualcomm.com>
+Reviewed-by: Daniel Machon <daniel.machon@microchip.com>
+Reviewed-by: Nicolai Buchwitz <nb@tipi-net.de>
+Reviewed-by: Maxime Chevallier <maxime.chevallier@bootlin.com>
+Link: https://patch.msgid.link/20261102-stmmac_meatada_pp_path-v1-1-d93cc4f9a864@oss.qualcomm.com
 Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/bonding/bond_main.c | 63 +++++++++++++++++++--------------
- 1 file changed, 37 insertions(+), 26 deletions(-)
+ drivers/net/ethernet/stmicro/stmmac/stmmac_main.c | 10 +++++++---
+ 1 file changed, 7 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/net/bonding/bond_main.c b/drivers/net/bonding/bond_main.c
-index 4e6a4350a6590..ca2ea493c81a3 100644
---- a/drivers/net/bonding/bond_main.c
-+++ b/drivers/net/bonding/bond_main.c
-@@ -2781,6 +2781,27 @@ static void bond_miimon_link_change(struct bonding *bond,
- 	}
- }
- 
-+static bool bond_miimon_slave_down(struct bonding *bond,
-+				   struct slave *slave)
-+{
-+	if (slave->link_failure_count < UINT_MAX)
-+		slave->link_failure_count++;
-+
-+	bond_set_slave_link_state(slave, BOND_LINK_DOWN,
-+				  BOND_SLAVE_NOTIFY_NOW);
-+
-+	if (BOND_MODE(bond) == BOND_MODE_ACTIVEBACKUP ||
-+	    BOND_MODE(bond) == BOND_MODE_8023AD)
-+		bond_set_slave_inactive_flags(slave,
-+					      BOND_SLAVE_NOTIFY_NOW);
-+
-+	slave_info(bond->dev, slave->dev, "link status definitely down, disabling slave\n");
-+
-+	bond_miimon_link_change(bond, slave, BOND_LINK_DOWN);
-+
-+	return slave == rcu_access_pointer(bond->curr_active_slave);
-+}
-+
- static void bond_miimon_commit(struct bonding *bond)
- {
- 	struct slave *slave, *primary, *active;
-@@ -2809,10 +2830,22 @@ static void bond_miimon_commit(struct bonding *bond)
- 			err = bond_update_speed_duplex(slave);
- 			netdev_unlock_ops(slave->dev);
- 			if (err && bond_needs_speed_duplex(bond)) {
--				slave->link = BOND_LINK_DOWN;
- 				if (net_ratelimit())
- 					slave_warn(bond->dev, slave->dev,
- 						   "failed to get link speed/duplex\n");
-+				/* Coming from FAIL/UP, the slave may still be
-+				 * in use and may be curr_active_slave, so take
-+				 * it through the full down path. Coming from
-+				 * DOWN/BACK, it was never brought up, so just
-+				 * revert it to DOWN.
-+				 */
-+				if (slave->link == BOND_LINK_FAIL ||
-+				    slave->link == BOND_LINK_UP) {
-+					if (bond_miimon_slave_down(bond, slave))
-+						do_failover = true;
-+					continue;
-+				}
-+				slave->link = BOND_LINK_DOWN;
- 				continue;
- 			}
- 			bond_set_slave_link_state(slave, BOND_LINK_UP,
-@@ -2841,28 +2874,13 @@ static void bond_miimon_commit(struct bonding *bond)
- 			continue;
- 
- 		case BOND_LINK_DOWN:
--			if (slave->link_failure_count < UINT_MAX)
--				slave->link_failure_count++;
--
--			bond_set_slave_link_state(slave, BOND_LINK_DOWN,
--						  BOND_SLAVE_NOTIFY_NOW);
--
--			if (BOND_MODE(bond) == BOND_MODE_ACTIVEBACKUP ||
--			    BOND_MODE(bond) == BOND_MODE_8023AD)
--				bond_set_slave_inactive_flags(slave,
--							      BOND_SLAVE_NOTIFY_NOW);
--
--			slave_info(bond->dev, slave->dev, "link status definitely down, disabling slave\n");
--
--			bond_miimon_link_change(bond, slave, BOND_LINK_DOWN);
--
--			if (slave == rcu_access_pointer(bond->curr_active_slave))
-+			if (bond_miimon_slave_down(bond, slave))
- 				do_failover = true;
--
- 			continue;
- 
- 		case BOND_LINK_FAIL:
- 		case BOND_LINK_BACK:
-+			bond_commit_link_state(slave, BOND_SLAVE_NOTIFY_LATER);
- 			slave_dbg(bond->dev, slave->dev, "link_new_state %d on slave\n",
- 				  slave->link_new_state);
- 			continue;
-@@ -2896,8 +2914,6 @@ static void bond_mii_monitor(struct work_struct *work)
- {
- 	struct bonding *bond = container_of(work, struct bonding,
- 					    mii_work.work);
--	struct list_head *iter;
--	struct slave *slave;
- 	unsigned long delay;
- 	bool commit;
- 
-@@ -2919,13 +2935,8 @@ static void bond_mii_monitor(struct work_struct *work)
- 			goto re_arm;
+diff --git a/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c b/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
+index 2e7b146895ba8..0e78c1d2fcf1d 100644
+--- a/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
++++ b/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
+@@ -5731,7 +5731,7 @@ static int stmmac_rx(struct stmmac_priv *priv, int limit, u32 queue)
  		}
  
--		if (commit) {
--			bond_for_each_slave(bond, slave, iter) {
--				bond_commit_link_state(slave,
--						       BOND_SLAVE_NOTIFY_LATER);
--			}
-+		if (commit)
- 			bond_miimon_commit(bond);
--		}
+ 		if (!skb) {
+-			unsigned int head_pad_len;
++			unsigned int metasize;
  
- 		if (bond->send_peer_notif)
- 			bond_peer_notify_may_events(bond, true);
+ 			/* XDP program may expand or reduce tail */
+ 			buf1_len = ctx.xdp.data_end - ctx.xdp.data;
+@@ -5748,10 +5748,14 @@ static int stmmac_rx(struct stmmac_priv *priv, int limit, u32 queue)
+ 			}
+ 
+ 			/* XDP program may adjust header */
+-			head_pad_len = ctx.xdp.data - ctx.xdp.data_hard_start;
+-			skb_reserve(skb, head_pad_len);
++			skb_reserve(skb,
++				    ctx.xdp.data - ctx.xdp.data_hard_start);
+ 			skb_put(skb, buf1_len);
+ 			skb_mark_for_recycle(skb);
++
++			metasize = ctx.xdp.data - ctx.xdp.data_meta;
++			if (metasize)
++				skb_metadata_set(skb, metasize);
+ 			buf->page = NULL;
+ 		} else if (buf1_len) {
+ 			dma_sync_single_for_cpu(priv->device, buf->addr,
 -- 
 2.53.0
 
