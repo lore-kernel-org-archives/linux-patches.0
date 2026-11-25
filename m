@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795621406;
-	b=QZVXQsVQTBOaDFZL/4TjEQmURYcqcYpR4UlWlgGWjT9K0v7Nw0JF1lKaYpXaSabAcR9N
-	 vJlgccK3Rt+hkk4JNlPwcxppEPd7gHWE6yf2qqqZsxl+hFjRwMfURTrb9PwVnQuFRc6PP
-	 l1ArIXrWSczjqkbDjnXQqFGc9Rboqpn2x1VESn2/0k0EFtP/uTNQNmUFUv1/z6TtPbVzN
-	 2XXg4BclBAzYJ2G6inKNR0lcf4YZztUGlMONJWSNykaNaFrhUyrvVE51IgZyD+UYYCOvb
-	 hFcIyclJETUMD+i6IjIEB5mTbP2m1uaC8EMQQzZL2P287XvMGgFWz1GfEPcL2MF+3zw==
+	t=1795621409;
+	b=VeZUgXAHBQTmUr1Ylld7OYmKBSuNFqGSBo82XrGh2zAaSN1pGjc7zHrz/PqpmrPZxeQ5
+	 hHZ1Rnkayxsv9F/x/0GzpWsBcibidPOP+IFszAANtiT/E1asMKJiyR2WqwAxn4a8Lw901
+	 xRU4Qp8xPd+YkSWCza6Ce5uyy2v2Po9rGuCie7h15GrY3u9sY1fIcZ7OVIxlxKeykXjyH
+	 rqqrrUeoeyC6i76MdD8lEpCsFQSd0BJrBjV+xvbssrSIMsrWhUKvBMnpfdl+lfgtSvRKW
+	 C/4VWSlw8WUln6G7O5SLMiGx5DKW22ir7tyGnRVgPw7ytQu0h5z7yEzgB+OGzMpUP/A==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795621406;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795621409;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=1lZxgEu1WQBSPTeywWNRwGKNcXYhfwNZut47tsU4aBM=;
-	b=i5/PVuNM/lJ/9ZhReo9IZFifRwFSjnVjp+eTrnLRDlPU2uJuRhHHvGP0oWXY/xWLm8gg
-	 pjjrwRkpnF6Y7aF3AKNfWLRn0bCT36qoayIwCf2hKkIh8VpCzGL1MqVfGT0LJIe2evH46
-	 fjswWyL2jTwjJ+YYdSU3r0Qj3OhUR0yrNCH1/KMyjjf5HCJcQKbOmHsQ5FNFjTDUyR5p4
-	 w3MoEGymSb3f17Qs44RV9N6ffVWtAzu72AIC4/uvRdMUN7dxZNIO9j+S1RWKcoJxvf+dK
-	 7EnzCyUsI1oF7xmcIwg4wQoGIn6dFy0LDAQrAB8xyge8P5Wh2cZFtxDHulpwLE4mDiA==
+	bh=JLaIIMEJ+S/tY6AuOUf/HrvBiHyHuEgnGwD3L+M82WU=;
+	b=41bS0jPGdl9s/9dmFH5VOfTEsMwwRSJh7d4wc0y4nUfqPxfjtMxuFP3hvFfHS3/3EgJG
+	 w1BCPbAMZDR1Se9SqEy1DGuF9zB0I2l7mRdrS5KNxoUcyWyHg2crYtYPMrizKZvQiWKab
+	 6Gi6rdcSBm+rv9II/teSylCHpZUkBLb6Vvq8Qu16OFRRJP3khLrdVu3bka58fjvJJGgrz
+	 p/oEgW1P/g08Xa+Q+R+J8dIyQAOheSBcyKvX/F0+pKYc3jNCDoZl6ATfm79lGChp2itPy
+	 7O4XGhgrckNafnm4Zz5Xt0Jj2AlTLZa8H0ya8g3bUwhvGFQsc3iS3yknXX3l2ioqpIQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=J1eVeBoH;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Iyy9aUqA;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 48BB1606A329;
-	Wed, 25 Nov 2026 15:43:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B0BF0606A688;
+	Wed, 25 Nov 2026 15:43:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=J1eVeBoH
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2B2DF1F000C6;
-	Wed, 25 Nov 2026 15:43:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Iyy9aUqA
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 950821F000C4;
+	Wed, 25 Nov 2026 15:43:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795621405;
-	bh=1lZxgEu1WQBSPTeywWNRwGKNcXYhfwNZut47tsU4aBM=;
+	s=korg; t=1795621409;
+	bh=JLaIIMEJ+S/tY6AuOUf/HrvBiHyHuEgnGwD3L+M82WU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=J1eVeBoHjpONcH1KZvIYqumd1UaVV9Obz38Ewtyqo9q8I/fjX4ICixzAxT4d1ypGZ
-	 IDCcVJ/NSTl4LUfkle6ER9r6FAOMY4llkHdOBYbDtP+YevWLkYzmQpkQKeqFGLD6vn
-	 p9PEOg0UPdbnZcW8xrhjDvn6p4AuIDmogUJ+5To4=
+	b=Iyy9aUqARX39+/lOvNn4oekJatkV9gPfEi0gfOwxY6B45rFXOs6Y/yGtrFa5oWBv6
+	 o/0GGgfVPNLR/gvG1VufNFOOBftsdD/C1Xi5bh4y/3h4dRLcbOOArWmdoyM4xCqtrm
+	 Z3xgRe+6FWx8I91mwr3NEn8Yute3Aa8zLLWv3Mos=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zizhi Wo <wozizhi@huawei.com>,
+	Avi Weiss <thnkslprpt@gmail.com>,
 	Christoph Hellwig <hch@lst.de>,
 	Jens Axboe <axboe@kernel.dk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 216/990] block: partitions: reject GPT entries with starting_lba > ending_lba
-Date: Wed, 25 Nov 2026 15:26:23 +0100
-Message-ID: <20261125143827.148552267@linuxfoundation.org>
+Subject: [PATCH 6.18 217/990] block: report the correct discard alignment in sysfs
+Date: Wed, 25 Nov 2026 15:26:24 +0100
+Message-ID: <20261125143827.172876473@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143822.072087159@linuxfoundation.org>
 References: <20261125143822.072087159@linuxfoundation.org>
@@ -69,49 +69,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zizhi Wo <wozizhi@huawei.com>
+From: Avi Weiss <thnkslprpt@gmail.com>
 
-[ Upstream commit 7e3801d12ebabaa3db6e2685ccc80b6e6f6d1ff7 ]
+[ Upstream commit 2516f0413f8704a7370ef8a2eeae26c9bc438978 ]
 
-A GPT entry whose starting_lba is greater than its ending_lba is accepted,
-and the kernel creates a partition with a bogus size. The bogus sector
-count defeats the end-of-device check, so I/O through that partition is not
-confined to it and can access sectors outside the partition on the same
-disk.
+disk_discard_alignment_show() reports the physical I/O alignment offset
+instead of the discard alignment. Devices can specify these offsets
+independently, so the discard_alignment sysfs attribute can report the
+wrong value.
 
-is_pte_valid() only rejects an entry when its type is NULL or when
-starting_lba or ending_lba is greater than lastlba; it never checks that
-starting_lba <= ending_lba. For a reversed entry both field checks still
-pass, but efi_partition() computes size = ending_lba - starting_lba + 1 in
-u64, which underflows to a huge value. That value also wraps in the
-end-of-device check in blk_add_partition() (from + size) and does not fit
-the signed i_size, which turns negative.
+Use bdev_discard_alignment() for the whole-disk attribute, as is already
+done for partitions.
 
-Reject entries with starting_lba > ending_lba in is_pte_valid(), matching
-the head-level check against last_usable_lba < first_usable_lba.
-
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Signed-off-by: Zizhi Wo <wozizhi@huawei.com>
+Fixes: 4e1462ffe899 ("block: remove queue_discard_alignment")
+Signed-off-by: Avi Weiss <thnkslprpt@gmail.com>
 Reviewed-by: Christoph Hellwig <hch@lst.de>
-Link: https://patch.msgid.link/20261102080442.3775061-1-wozizhi@huaweicloud.com
+Link: https://patch.msgid.link/20261031102023.3644494-2-thnkslprpt@gmail.com
 Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- block/partitions/efi.c | 1 +
- 1 file changed, 1 insertion(+)
+ block/genhd.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/block/partitions/efi.c b/block/partitions/efi.c
-index 7acba66eed481..d88321f6400ab 100644
---- a/block/partitions/efi.c
-+++ b/block/partitions/efi.c
-@@ -461,6 +461,7 @@ static inline int
- is_pte_valid(const gpt_entry *pte, const u64 lastlba)
+diff --git a/block/genhd.c b/block/genhd.c
+index 6ba0e22ce9dff..2bba931bd10aa 100644
+--- a/block/genhd.c
++++ b/block/genhd.c
+@@ -1146,7 +1146,7 @@ static ssize_t disk_discard_alignment_show(struct device *dev,
  {
- 	if ((!efi_guidcmp(pte->partition_type_guid, NULL_GUID)) ||
-+	    le64_to_cpu(pte->starting_lba) > le64_to_cpu(pte->ending_lba) ||
- 	    le64_to_cpu(pte->starting_lba) > lastlba         ||
- 	    le64_to_cpu(pte->ending_lba)   > lastlba)
- 		return 0;
+ 	struct gendisk *disk = dev_to_disk(dev);
+ 
+-	return sysfs_emit(buf, "%d\n", bdev_alignment_offset(disk->part0));
++	return sysfs_emit(buf, "%u\n", bdev_discard_alignment(disk->part0));
+ }
+ 
+ static ssize_t diskseq_show(struct device *dev,
 -- 
 2.53.0
 
