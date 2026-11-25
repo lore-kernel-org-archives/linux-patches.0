@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795625434;
-	b=B6ciR5ku7DA+TCG6dwXwBosZQ7QAXUZo6UOtvpoqz9cn/NtniCfFh/9Tf0yK2FXgxrzb
-	 rxDsEpoif1XwQ77nv6DCdXUvfY0rsuiyN1hsviTgep65oyuG+LEfR63ASthau+HKSNlOQ
-	 YgmN80zFhnLWHgce7QD1Bqp2rsZzjSHQfol61jQKfXJCD5V8lnYeI/DuSNDxRUFQL57lb
-	 +1FzbQots3hdMcnwI4TWUeUMkQXPdBEjxVyCmlf4Xr45wo+befDL+KecjRQLHVYwyldzp
-	 CejPFW4dAZBPwTxe5AFs01iHZDPiz5UubbrXVMOqjBwiZJL82dTq6C6vTKa+FrqiPGg==
+	t=1795625437;
+	b=gsTIYDU6+b7x6KoC4gM6ALpEULOf2ReYMl3hgLdVvzghL5Fd7I4wH1sMPKTwxw/1Wv4f
+	 CVSNPK4mnVkO9ZghIWxzzHt0UIvz4QXeU+qLDJmJHfVed+m3lFQ7K9k1i67ec5Yhu7aFP
+	 Yheo6e8xtux2KTH72z6SNmWc5mAYglt3hDstFJJCfA4kVhtr+wW5FOJWLDYzs5lecgiff
+	 FLQW5ZuKpbScFyXjI6XKCfxWpsotuA+xv7b6cq2XV/EfFLlEpM3Ae0OC8rqIdhvTGaYVy
+	 eGXyuB/ytV170Ecy20mZyfTQ81R4h5UYghOQ7r8r08XHxZRFGpWhrIssFOWl/HmrbCQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795625434;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795625437;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=r3UIN0X17gDqd7KlQVEf1AyYke9xfPUuyc+pQLHIyjs=;
-	b=JtRLMMm7cGizNim6Cnz1hY6JYjF8dInMtsh45ctR7ZrmoweAf5w0xqT8f5aQwBZPJA4V
-	 5MRQmOdnqXuWohFlxmZ8PoZEC4WH7FQ8a3peqKOFn9hnKGBpnLIZdHRDaiO+tpTlPSoaw
-	 L6/85LFXhHUmnYplgtET7PadFbpI37CY5cc5xlmWz8uJaH9fM0opw9HOMR53GeDWAeffs
-	 PbFC4UVv10GXZ5TMxj8awT+6OKEMXnfHZLKkYGWO/86N6AZ0uoLNK929nvMNLwHOuUih6
-	 7G8wNMT+27ih2+MV3+tbejjUkEFyDxt/K4VccuWXNhDNY0bIeO6pFO7gnfz0L0HetSg==
+	bh=L1ILNmzk7rxv0QPOJwMmm4Dm/8PBTptJhIbWsS3lrjk=;
+	b=GWu7K+t3xAvEtPxqdubx6tRx4qoruKtpCKbmkcrVeYKOLOssn5T7wqLcRslZ+35C4tOC
+	 PXsU56IZuIofKPOUcIfytsCzG/eynD06Th8Fvqy3cgBoqVipYZNT046uw0cHAObJ9HStr
+	 zX2K8NYurlTqU6ASuYT7cbMz9v4fmKRHiH8ihIFjhzX17prhJWwrr9Vh6HCKlvOeoDTbo
+	 U6Y0rQv2EZkvhT/Wszo1ksGZIcZDfonca3ICnV0hEhs04AZ3BKcf0dYhwZoUeGaV5rYLZ
+	 4lGOxA2f0qXQBaiHLyFvUk9Rx95dPFkl1Q5oz9r+l9+rsk+DNj+t0aJXiZ65m+32XCw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=zsFSxusv;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=myme2APg;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 02D39606A31E;
-	Wed, 25 Nov 2026 16:50:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 315B9606A321;
+	Wed, 25 Nov 2026 16:50:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=zsFSxusv
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0B3B41F000D2;
-	Wed, 25 Nov 2026 16:50:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=myme2APg
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 276D51F000C0;
+	Wed, 25 Nov 2026 16:50:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795625433;
-	bh=r3UIN0X17gDqd7KlQVEf1AyYke9xfPUuyc+pQLHIyjs=;
+	s=korg; t=1795625436;
+	bh=L1ILNmzk7rxv0QPOJwMmm4Dm/8PBTptJhIbWsS3lrjk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=zsFSxusvm4ycuadJc+m3ONT92mJG+qJjv0L/c2mApOSJTHX8emo0mzeWKMb/oG3W0
-	 nvsoC6n3hksGEVHZB2Z6Qb1yW6fClGujFALUOBq3dDE+ryPlHxwpLDL1XJZDFJj7YN
-	 TcGrhm3GCm+o2oLgx8nQmcStd/3XBgyRPDyvJAP4=
+	b=myme2APgOYLs+1yvVCVVgaajb3OmYgD1oSbrttZfQeFtD7TYxJpwHwBZewLh/OzGH
+	 OyTY/OZeYt32RuSP11ZTfAb19QrFfSJ5j2n7dKKCrKz0lLOdXd+/zBavr3TvWaKAvF
+	 LkWcTa+YMmHUgQL+4A2s9jam2RwKXkzSj1n/ePcg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lorenzo Bianconi <lorenzo.bianconi@oss.qualcomm.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Sashiko <sashiko-bot@kernel.org>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 470/816] net: stmmac: fix TX coalesce race and div-by-zero in XDP/legacy path
-Date: Wed, 25 Nov 2026 15:33:38 +0100
-Message-ID: <20261125143900.080888641@linuxfoundation.org>
+Subject: [PATCH 6.12 471/816] ALSA: pcmtest: Fix leak at probe error
+Date: Wed, 25 Nov 2026 15:33:39 +0100
+Message-ID: <20261125143900.103273849@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143849.205329330@linuxfoundation.org>
 References: <20261125143849.205329330@linuxfoundation.org>
@@ -68,193 +68,150 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Lorenzo Bianconi <lorenzo.bianconi@oss.qualcomm.com>
+From: Takashi Iwai <tiwai@suse.de>
 
-[ Upstream commit 237782c3d416b392a12642f32959e9d3c94e0c26 ]
+[ Upstream commit d0f2ca62e89f3c666d0ec203eaa23b8d965e5443 ]
 
-tx_coal_frames[] is written by ethtool (stmmac_set_coalesce) and read
-locklessly from the TX fast path (stmmac_xmit, stmmac_tso_xmit,
-stmmac_xdp_xmit_zc and stmmac_xdp_xmit_xdpf), so pair every access
-with READ_ONCE()/WRITE_ONCE() to mark the intentional data race and
-read a consistent value into a local variable.
+When an error happens at probe of pcmtest driver before
+snd_card_register() succeeds, we have to release the card explicitly,
+but it's not done, leading to a potential memory leak.
 
-Moreover, ethtool allows disabling TX coalescing by setting
-tx_max_coalesced_frames to 0: guard the modulo operation in
-stmmac_xdp_xmit_xdpf() against a zero tx_coal_frames[queue] to avoid
-a division by zero.
+Also, pcmtest driver manages struct pcmtst object unnecessarily
+complicatedly by a dynamic allocation and release.
 
-Both issues were found by code inspection while extending the XDP TX
-path with multi-buff support, and neither has ever been triggered, so
-they are only theoretical. Tested on the Qualcomm RB3-gen2 board.
+This patch fixes and cleans up the resource management:
+- Use card's private_data allocation for struct sndpcmtst at the card
+  creation, which is released automatically together with the card
+- Since the allocation of pcmtest is gone, snd_pcmtst_create() is
+  rather pointless, so just directly calling snd_pcmtst_new_pcm()
+- Use the new auto-clean mechanism to handle the error case at probe.
+- Many release handlers became superfluous and dropped
 
-Fixes: db2f2842e6f5 ("net: stmmac: add per-queue TX & RX coalesce ethtool support")
-Fixes: be8b38a722e6 ("net: stmmac: Add support for XDP_TX action")
-Signed-off-by: Lorenzo Bianconi <lorenzo.bianconi@oss.qualcomm.com>
-Link: https://patch.msgid.link/20261001-b4-stmmac-xmit-mb-v4-1-664e0c3eb289@oss.qualcomm.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-[ sashal: Dropped the unused sdu_len declaration and kept local declaration blocks as they were, adding only tx_coal, because the surrounding functions differ from upstream. ]
+In the end we got a good amount of code reduction.
+
+Fixes: 315a3d57c64c ("ALSA: Implement the new Virtual PCM Test Driver")
+Reported-by: Sashiko <sashiko-bot@kernel.org>
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Link: https://patch.msgid.link/20261007172533.14667-3-tiwai@suse.de
+[ sashal: Adjusted context in two hunks (kzalloc vs kzalloc_obj, .remove_new vs .remove), both on lines the patch deletes, so the final code matches upstream. ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../ethernet/stmicro/stmmac/stmmac_ethtool.c  | 11 ++---
- .../net/ethernet/stmicro/stmmac/stmmac_main.c | 41 ++++++++-----------
- 2 files changed, 24 insertions(+), 28 deletions(-)
+ sound/drivers/pcmtest.c | 66 +++++++----------------------------------
+ 1 file changed, 10 insertions(+), 56 deletions(-)
 
-diff --git a/drivers/net/ethernet/stmicro/stmmac/stmmac_ethtool.c b/drivers/net/ethernet/stmicro/stmmac/stmmac_ethtool.c
-index 5d94de4670557..4569b950e96b2 100644
---- a/drivers/net/ethernet/stmicro/stmmac/stmmac_ethtool.c
-+++ b/drivers/net/ethernet/stmicro/stmmac/stmmac_ethtool.c
-@@ -979,7 +979,8 @@ static int __stmmac_get_coalesce(struct net_device *dev,
+diff --git a/sound/drivers/pcmtest.c b/sound/drivers/pcmtest.c
+index 0376fe17365a8..0e325ae96371f 100644
+--- a/sound/drivers/pcmtest.c
++++ b/sound/drivers/pcmtest.c
+@@ -464,20 +464,6 @@ static snd_pcm_uframes_t snd_pcmtst_pcm_pointer(struct snd_pcm_substream *substr
+ 	return bytes_to_frames(substream->runtime, v_iter->buf_pos);
+ }
  
- 	if (queue < tx_cnt) {
- 		ec->tx_coalesce_usecs = priv->tx_coal_timer[queue];
--		ec->tx_max_coalesced_frames = priv->tx_coal_frames[queue];
-+		ec->tx_max_coalesced_frames =
-+			READ_ONCE(priv->tx_coal_frames[queue]);
- 	} else {
- 		ec->tx_coalesce_usecs = 0;
- 		ec->tx_max_coalesced_frames = 0;
-@@ -1068,14 +1069,14 @@ static int __stmmac_set_coalesce(struct net_device *dev,
- 		int i;
- 
- 		for (i = 0; i < tx_cnt; i++) {
--			priv->tx_coal_frames[i] =
--				ec->tx_max_coalesced_frames;
-+			WRITE_ONCE(priv->tx_coal_frames[i],
-+				   ec->tx_max_coalesced_frames);
- 			priv->tx_coal_timer[i] =
- 				ec->tx_coalesce_usecs;
- 		}
- 	} else if (queue < tx_cnt) {
--		priv->tx_coal_frames[queue] =
--			ec->tx_max_coalesced_frames;
-+		WRITE_ONCE(priv->tx_coal_frames[queue],
-+			   ec->tx_max_coalesced_frames);
- 		priv->tx_coal_timer[queue] =
- 			ec->tx_coalesce_usecs;
- 	}
-diff --git a/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c b/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
-index e17a203290552..81e97ab3178b4 100644
---- a/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
-+++ b/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
-@@ -2504,7 +2504,8 @@ static bool stmmac_xdp_xmit_zc(struct stmmac_priv *priv, u32 queue, u32 budget)
- 		struct stmmac_metadata_request meta_req;
- 		struct xsk_tx_metadata *meta = NULL;
- 		dma_addr_t dma_addr;
--		bool set_ic;
-+		bool set_ic = false;
-+		u32 tx_coal;
- 
- 		/* We are sharing with slow path and stop XSK TX desc submission when
- 		 * available TX ring is less than threshold.
-@@ -2555,12 +2556,9 @@ static bool stmmac_xdp_xmit_zc(struct stmmac_priv *priv, u32 queue, u32 budget)
- 
- 		tx_q->tx_count_frames++;
- 
--		if (!priv->tx_coal_frames[queue])
--			set_ic = false;
--		else if (tx_q->tx_count_frames % priv->tx_coal_frames[queue] == 0)
-+		tx_coal = READ_ONCE(priv->tx_coal_frames[queue]);
-+		if (tx_coal && !(tx_q->tx_count_frames % tx_coal))
- 			set_ic = true;
--		else
--			set_ic = false;
- 
- 		meta_req.priv = priv;
- 		meta_req.tx_desc = tx_desc;
-@@ -3161,7 +3159,7 @@ static void stmmac_init_coalesce(struct stmmac_priv *priv)
- 	for (chan = 0; chan < tx_channel_count; chan++) {
- 		struct stmmac_tx_queue *tx_q = &priv->dma_conf.tx_queue[chan];
- 
--		priv->tx_coal_frames[chan] = STMMAC_TX_FRAMES;
-+		WRITE_ONCE(priv->tx_coal_frames[chan], STMMAC_TX_FRAMES);
- 		priv->tx_coal_timer[chan] = STMMAC_COAL_TX_TIMER;
- 
- 		hrtimer_init(&tx_q->txtimer, CLOCK_MONOTONIC, HRTIMER_MODE_REL);
-@@ -4259,9 +4257,9 @@ static netdev_tx_t stmmac_tso_xmit(struct sk_buff *skb, struct net_device *dev)
- 	struct stmmac_priv *priv = netdev_priv(dev);
- 	unsigned int first_entry, entry, tx_packets;
- 	struct stmmac_txq_stats *txq_stats;
-+	u32 tx_coal, pay_len, mss, queue;
- 	int i, first_tx, nfrags, ndesc;
- 	struct stmmac_tx_queue *tx_q;
--	u32 pay_len, mss, queue;
- 	u8 proto_hdr_len, hdr;
- 	dma_addr_t des;
- 	bool set_ic;
-@@ -4399,16 +4397,16 @@ static netdev_tx_t stmmac_tso_xmit(struct sk_buff *skb, struct net_device *dev)
- 	tx_packets = (tx_q->cur_tx + 1) - first_tx;
- 	tx_q->tx_count_frames += tx_packets;
- 
-+	tx_coal = READ_ONCE(priv->tx_coal_frames[queue]);
- 	if ((skb_shinfo(skb)->tx_flags & SKBTX_HW_TSTAMP) && priv->hwts_tx_en)
- 		set_ic = true;
--	else if (!priv->tx_coal_frames[queue])
-+	else if (!tx_coal)
- 		set_ic = false;
- 	else if (!netdev_xmit_more())
- 		set_ic = true;
--	else if (tx_packets > priv->tx_coal_frames[queue])
-+	else if (tx_packets > tx_coal)
- 		set_ic = true;
--	else if ((tx_q->tx_count_frames %
--		  priv->tx_coal_frames[queue]) < tx_packets)
-+	else if ((tx_q->tx_count_frames % tx_coal) < tx_packets)
- 		set_ic = true;
- 	else
- 		set_ic = false;
-@@ -4552,6 +4550,7 @@ static netdev_tx_t stmmac_xmit(struct sk_buff *skb, struct net_device *dev)
- 	struct dma_desc *desc, *first;
- 	struct stmmac_tx_queue *tx_q;
- 	bool has_vlan, set_ic;
-+	u32 tx_coal;
- 	int entry, first_tx;
- 	dma_addr_t des;
- 
-@@ -4681,16 +4680,16 @@ static netdev_tx_t stmmac_xmit(struct sk_buff *skb, struct net_device *dev)
- 	tx_packets = (entry + 1) - first_tx;
- 	tx_q->tx_count_frames += tx_packets;
- 
-+	tx_coal = READ_ONCE(priv->tx_coal_frames[queue]);
- 	if ((skb_shinfo(skb)->tx_flags & SKBTX_HW_TSTAMP) && priv->hwts_tx_en)
- 		set_ic = true;
--	else if (!priv->tx_coal_frames[queue])
-+	else if (!tx_coal)
- 		set_ic = false;
- 	else if (!netdev_xmit_more())
- 		set_ic = true;
--	else if (tx_packets > priv->tx_coal_frames[queue])
-+	else if (tx_packets > tx_coal)
- 		set_ic = true;
--	else if ((tx_q->tx_count_frames %
--		  priv->tx_coal_frames[queue]) < tx_packets)
-+	else if ((tx_q->tx_count_frames % tx_coal) < tx_packets)
- 		set_ic = true;
- 	else
- 		set_ic = false;
-@@ -4977,7 +4976,7 @@ static int stmmac_xdp_xmit_xdpf(struct stmmac_priv *priv, int queue,
- 	unsigned int entry = tx_q->cur_tx;
- 	struct dma_desc *tx_desc;
- 	dma_addr_t dma_addr;
--	bool set_ic;
-+	u32 tx_coal;
- 
- 	if (stmmac_tx_avail(priv, queue) < STMMAC_TX_THRESH(priv))
- 		return STMMAC_XDP_CONSUMED;
-@@ -5030,12 +5029,8 @@ static int stmmac_xdp_xmit_xdpf(struct stmmac_priv *priv, int queue,
- 
- 	tx_q->tx_count_frames++;
- 
--	if (tx_q->tx_count_frames % priv->tx_coal_frames[queue] == 0)
--		set_ic = true;
--	else
--		set_ic = false;
+-static int snd_pcmtst_free(struct pcmtst *pcmtst)
+-{
+-	if (!pcmtst)
+-		return 0;
+-	kfree(pcmtst);
+-	return 0;
+-}
 -
--	if (set_ic) {
-+	tx_coal = READ_ONCE(priv->tx_coal_frames[queue]);
-+	if (tx_coal && !(tx_q->tx_count_frames % tx_coal)) {
- 		tx_q->tx_count_frames = 0;
- 		stmmac_set_tx_ic(priv, tx_desc);
- 		u64_stats_update_begin(&txq_stats->q_syncp);
+-// These callbacks are required, but empty - all freeing occurs in pdev_remove
+-static int snd_pcmtst_dev_free(struct snd_device *device)
+-{
+-	return 0;
+-}
+-
+ static void pcmtst_pdev_release(struct device *dev)
+ {
+ }
+@@ -581,40 +567,9 @@ static int snd_pcmtst_new_pcm(struct pcmtst *pcmtst)
+ 	return err;
+ }
+ 
+-static int snd_pcmtst_create(struct snd_card *card, struct platform_device *pdev,
+-			     struct pcmtst **r_pcmtst)
+-{
+-	struct pcmtst *pcmtst;
+-	int err;
+-	static const struct snd_device_ops ops = {
+-		.dev_free = snd_pcmtst_dev_free,
+-	};
+-
+-	pcmtst = kzalloc(sizeof(*pcmtst), GFP_KERNEL);
+-	if (!pcmtst)
+-		return -ENOMEM;
+-	pcmtst->card = card;
+-	pcmtst->pdev = pdev;
+-
+-	err = snd_device_new(card, SNDRV_DEV_LOWLEVEL, pcmtst, &ops);
+-	if (err < 0)
+-		goto _err_free_chip;
+-
+-	err = snd_pcmtst_new_pcm(pcmtst);
+-	if (err < 0)
+-		goto _err_free_chip;
+-
+-	*r_pcmtst = pcmtst;
+-	return 0;
+-
+-_err_free_chip:
+-	snd_pcmtst_free(pcmtst);
+-	return err;
+-}
+-
+ static int pcmtst_probe(struct platform_device *pdev)
+ {
+-	struct snd_card *card;
++	struct snd_card *card __free(snd_card_free) = NULL;
+ 	struct pcmtst *pcmtst;
+ 	int err;
+ 
+@@ -622,10 +577,16 @@ static int pcmtst_probe(struct platform_device *pdev)
+ 	if (err)
+ 		return err;
+ 
+-	err = snd_devm_card_new(&pdev->dev, index, id, THIS_MODULE, 0, &card);
++	err = snd_devm_card_new(&pdev->dev, index, id, THIS_MODULE,
++				sizeof(*pcmtst), &card);
+ 	if (err < 0)
+ 		return err;
+-	err = snd_pcmtst_create(card, pdev, &pcmtst);
++
++	pcmtst = card->private_data;
++	pcmtst->card = card;
++	pcmtst->pdev = pdev;
++
++	err = snd_pcmtst_new_pcm(pcmtst);
+ 	if (err < 0)
+ 		return err;
+ 
+@@ -638,17 +599,11 @@ static int pcmtst_probe(struct platform_device *pdev)
+ 		return err;
+ 
+ 	platform_set_drvdata(pdev, pcmtst);
++	card = NULL; /* probe succeeded, don't release as error */
+ 
+ 	return 0;
+ }
+ 
+-static void pdev_remove(struct platform_device *pdev)
+-{
+-	struct pcmtst *pcmtst = platform_get_drvdata(pdev);
+-
+-	snd_pcmtst_free(pcmtst);
+-}
+-
+ static struct platform_device pcmtst_pdev = {
+ 	.name =		"pcmtest",
+ 	.dev.release =	pcmtst_pdev_release,
+@@ -656,7 +611,6 @@ static struct platform_device pcmtst_pdev = {
+ 
+ static struct platform_driver pcmtst_pdrv = {
+ 	.probe =	pcmtst_probe,
+-	.remove_new =	pdev_remove,
+ 	.driver =	{
+ 		.name = "pcmtest",
+ 	},
 -- 
 2.53.0
 
