@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795624992;
-	b=EDNMuAK6mWv0eX+bhFpcCego6+tL1fTIwYi4Q7yW4jzKrjLLyGkhM9b04I0fVqvAvMMv
-	 nSbsylmkssziMFsMHlsqqtF8wXpgZrjgC3/bYHRD06OmU59wJ6c2DH9ha8+Tm1mc1tJ8P
-	 2zjdRR/dVF/gRm2ASyMk0RdoGslrw51WC+rdtH/ftqLEbJI0T/4N/bYapgJmEl74TtOb4
-	 NNGyvSaUkgnIra4IR8JRvVc3z3OFsIIDGBDN40OXc7F36C6Kibfq5Q0AdeuzJPonNWXTu
-	 QxHNjI91uslApSOAU4w+PFXOAqZLyZJ9IkQAGTVyG5iAhyoffqKyIfoOkBykeo0d9Vg==
+	t=1795624995;
+	b=TfwtneKrR4Erg92NrRO71jDC95VUeVpqMeb8XRe1CG/H5BMnd7xgb1RKHfxSqUo0VEnp
+	 adMJ5shrNRifXtmxkKiKuuokpstYRAvyJdxL77MHSMce+exeioJpQ5yrQX2nTpszv5mg6
+	 cCJUhkYjEcgUHFGPZnbKuIf0RYtWA/unJmCw5e4tT81OKH909KwWWDHplJlrifQdCrSWJ
+	 cbjXeBOsfwhQ+AKlEnwZyZOwnAk27Tfgq3W6u8K5KvQN0Uy/4c6LxKxOJMRfdwHWGlugT
+	 rxpi7DXPXBqn9CeE6B6IQHqqk54doTCj/BSFjlUXrdTHC0NZXN2I/xImSMa9HdOnmfg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795624992;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795624995;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=CgHSwefmNvmlqu5wPGfnBzGtfzFXjbjH4gHLyj79GM4=;
-	b=Y5wkwj/gjuoszIHvX4DCkbOX5iDRJcO8dWcc1MC200MokKb9gfxfp44RLqZI9dgII7PT
-	 lBp5E/tsmwaAl9DqaMIZJ/FSi+4nKCPuHsglhf2Q0YQseNMeVPFMAd9wiTNHgn1J02HVI
-	 j0rPoZ0v0MnaaH4nnnswMayxlaizqxP2gFNQD4viSt2RtJuDFhaMnCVX8CDtNmFjtx7ml
-	 VUIlCygiMoqP+Ow9JVKzfKQBpuy0tjYAi/P2QKDycs7edAAczdRAHkk4eXNRaf4s3V0SM
-	 hC4Lsyi9z5CSHsOBUiQrPhJw0UJhktvZqwhg+Y86dwv33LDcz1eZp+EaeJtxxNBkz+A==
+	bh=ncz8Fe/5Kk85A1OothaAv//e0FlcFKRPTzdrIpF+evo=;
+	b=JEo4taUPWIUGJJeU67+qdFwZ1p8jQRA76aMX80NQT0HPe3+0M/QqBfOWNW1GpLYdJs0g
+	 pvWoQyljWF7XwD61onFSJt6afH6eq16+bdwLZh2UHp21BkcuIKFv/oyvTo+NiBNx9CWPq
+	 dw8p2XPan1YKGNovlWmm7Cu37CcwuRTqY+q8cCTdTx2XSQc084bBaY/FLnREp3mj7iKL9
+	 bC8v9WQEfYB7g/gycrgY+zSEU/hbZiWDEYGSP9kDcXb8oCtGnaJinD0ENle+HMl8YuboZ
+	 v1yCffc3p3EsTyjZfgVfuKwL2zHfMlo0Izctnd8sShHhOIdUYlJANos/1pMYbUvIpPA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=hM+WHk7E;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=KGCymt3A;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A0F25606A321;
-	Wed, 25 Nov 2026 16:43:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D7222606A31E;
+	Wed, 25 Nov 2026 16:43:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=hM+WHk7E
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D63401F000C6;
-	Wed, 25 Nov 2026 16:43:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=KGCymt3A
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CC5BB1F000D1;
+	Wed, 25 Nov 2026 16:43:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795624992;
-	bh=CgHSwefmNvmlqu5wPGfnBzGtfzFXjbjH4gHLyj79GM4=;
+	s=korg; t=1795624995;
+	bh=ncz8Fe/5Kk85A1OothaAv//e0FlcFKRPTzdrIpF+evo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=hM+WHk7E71yPF4c2CfYTkVIRrKx0iwCRQHmsIlcn/Stcp+D1VSA1/Ocl+xCHUOxRl
-	 0gvPbJGBhXPYJEvNm4zjWHakI6OOWvayObysAJcnKDWnKvMYs/pJlWr+uFHFnGsFCn
-	 iBGDPpZsH4izJFZOqMPP1oS7y+1Zar7OEvRLIkLA=
+	b=KGCymt3Afs3/XxFo/fCjGCsFTBmk1TIsnQCV8XgJPjeOe5UgpSWtFdf4n9ZsgcZ78
+	 x9GoXgOB9xh9fqEbN88SWRjPbd8akH20pJbqxsj5tISu9PLg9+W10CffsuKm3lvirf
+	 5UMn3cEtWrfEeAowS5tXy5aFOvaoClGNJf0fwJa8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alexander Duyck <alexanderduyck@fb.com>,
-	Willem de Bruijn <willemb@google.com>,
+	Changyul Lee <lcy8047@gmail.com>,
+	Tariq Toukan <tariqt@nvidia.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 326/816] net: Segment CHECKSUM_UNNECESSARY GSO skbs other than fraglist
-Date: Wed, 25 Nov 2026 15:31:14 +0100
-Message-ID: <20261125143856.747322217@linuxfoundation.org>
+Subject: [PATCH 6.12 327/816] net/mlx5: macsec: Dont remove fs_id when adding a rule fails
+Date: Wed, 25 Nov 2026 15:31:15 +0100
+Message-ID: <20261125143856.770085181@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143849.205329330@linuxfoundation.org>
 References: <20261125143849.205329330@linuxfoundation.org>
@@ -69,75 +69,122 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alexander Duyck <alexanderduyck@fb.com>
+From: Changyul Lee <lcy8047@gmail.com>
 
-[ Upstream commit fdca4b030c78fa2773a94fda3a6dc3ce5558a727 ]
+[ Upstream commit 5175da73dd128520ad6d704d7fe54926ee5f658b ]
 
-The netif_needs_gso function lets a GSO skb reach the device unsegmented
-when it is CHECKSUM_PARTIAL or CHECKSUM_UNNECESSARY. The second case was
-added for FCoE, whose transmit path marked CRC offload that way at the
-time. Commit 253aab0597d9 ("fcoe: Use CHECKSUM_PARTIAL to indicate CRC
-offload") moved FCoE back to CHECKSUM_PARTIAL but left the exemption in
-place, with nothing left that needed it. Fraglist GSO, added later, is
-its only user today, as its segments already carry valid checksums.
+macsec_fs_tx_add_rule() and macsec_fs_rx_add_rule() clean up a failed
+rule with macsec_fs_{tx,rx}_del_rule(), which also calls
+macsec_fs_id_del(). The fs_id is never in the xarray at that point:
+macsec_fs_id_add() is the last step of adding a rule and removes its
+own entry when it fails.
 
-A TCP GSO skb can still arrive as CHECKSUM_UNNECESSARY without being
-fraglist. Hardware LRO builds its aggregates that way, for example mlx5
-sets SKB_GSO_TCPV4 or SKB_GSO_TCPV6 and CHECKSUM_UNNECESSARY, without
-SKB_GSO_DODGY. IP forwarding and bridging turn LRO off, but a tc mirred
-redirect does not, so such an skb can be sent out another device. It
-has no csum_start and its TCP checksum field is whatever the aggregate
-left there. Drivers that only set up TSO for CHECKSUM_PARTIAL, such as
-fbnic, i40e and ice, then send the whole skb as one oversized frame
-with a bad checksum.
+macsec_fs_id_del() then dereferences NULL, through macsec_device for
+the first SA of a MACsec netdev and through fs_id_found otherwise. On
+RX, the SAs of one SC share an fs_id, so a failure while adding another
+SA drops the reference that an existing SA holds.
 
-Have the validate_xmit_skb function mark any CHECKSUM_UNNECESSARY GSO
-skb other than fraglist as CHECKSUM_NONE, which means the same on
-transmit but is not exempt in the netif_needs_gso function. The
-__skb_gso_segment function then unshares the header and the TCP GSO
-code sets the skb up as CHECKSUM_PARTIAL, so a device with TSO segments
-it in hardware. Without TSO, and for UDP, it is segmented in software.
-The callers of the netif_needs_gso function that decide on segmentation
-for themselves, such as tap, are left as they are.
+Split the rule teardown from the fs_id removal and do only the teardown
+on the error paths.
 
-Found by code inspection. In QEMU with an emulated fbnic, TCPv4 and
-TCPv6 GSO skbs built this way each went out as a single 11 KB frame
-with a bad TCP checksum. With this change they are segmented into
-MSS-sized frames with valid checksums.
-
-Fixes: 253aab0597d9 ("fcoe: Use CHECKSUM_PARTIAL to indicate CRC offload")
-Signed-off-by: Alexander Duyck <alexanderduyck@fb.com>
-Reviewed-by: Willem de Bruijn <willemb@google.com>
-Link: https://patch.msgid.link/179372577673.49909.11253315483074546903.stgit@ahduyck-xeon-server.home.arpa
+Fixes: d4ece08f4b1d ("net/mlx5: Maintain fs_id xarray per MACsec device inside macsec steering")
+Signed-off-by: Changyul Lee <lcy8047@gmail.com>
+Reviewed-by: Tariq Toukan <tariqt@nvidia.com>
+Link: https://patch.msgid.link/20261105003419.4016283-1-lcy8047@gmail.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/core/dev.c | 12 ++++++++++++
- 1 file changed, 12 insertions(+)
+ .../mellanox/mlx5/core/lib/macsec_fs.c        | 38 ++++++++++++-------
+ 1 file changed, 24 insertions(+), 14 deletions(-)
 
-diff --git a/net/core/dev.c b/net/core/dev.c
-index b0e328fc8adf6..bd1b0f10d9374 100644
---- a/net/core/dev.c
-+++ b/net/core/dev.c
-@@ -3791,6 +3791,18 @@ static struct sk_buff *validate_xmit_skb(struct sk_buff *skb, struct net_device
- 	if (!skb_frags_readable(skb))
- 		goto out_kfree_skb;
+diff --git a/drivers/net/ethernet/mellanox/mlx5/core/lib/macsec_fs.c b/drivers/net/ethernet/mellanox/mlx5/core/lib/macsec_fs.c
+index 3d2473d9f3eac..41cf27867fa85 100644
+--- a/drivers/net/ethernet/mellanox/mlx5/core/lib/macsec_fs.c
++++ b/drivers/net/ethernet/mellanox/mlx5/core/lib/macsec_fs.c
+@@ -768,13 +768,9 @@ static int macsec_fs_id_add(struct list_head *macsec_devices_list, u32 fs_id,
+ 	return err;
+ }
  
-+	/* Only fraglist GSO, whose segments already carry valid checksums,
-+	 * can be handed to a device as CHECKSUM_UNNECESSARY. Any other GSO
-+	 * skb has no csum_start for the device to segment from. NONE means
-+	 * the same on transmit, but makes netif_needs_gso() send it to the
-+	 * GSO code, which turns TCP into CHECKSUM_PARTIAL for TSO and
-+	 * segments anything the device cannot offload in software.
-+	 */
-+	if (unlikely(skb->ip_summed == CHECKSUM_UNNECESSARY &&
-+		     skb_is_gso(skb) &&
-+		     !(skb_shinfo(skb)->gso_type & SKB_GSO_FRAGLIST)))
-+		skb->ip_summed = CHECKSUM_NONE;
+-static void macsec_fs_tx_del_rule(struct mlx5_macsec_fs *macsec_fs,
+-				  struct mlx5_macsec_tx_rule *tx_rule,
+-				  void *macdev)
++static void macsec_fs_tx_free_rule(struct mlx5_macsec_fs *macsec_fs,
++				   struct mlx5_macsec_tx_rule *tx_rule)
+ {
+-	macsec_fs_id_del(&macsec_fs->macsec_devices_list, tx_rule->fs_id, macdev,
+-			 &macsec_fs->sci_hash, true);
+-
+ 	if (tx_rule->rule) {
+ 		mlx5_del_flow_rules(tx_rule->rule);
+ 		tx_rule->rule = NULL;
+@@ -795,6 +791,15 @@ static void macsec_fs_tx_del_rule(struct mlx5_macsec_fs *macsec_fs,
+ 	macsec_fs_tx_ft_put(macsec_fs);
+ }
+ 
++static void macsec_fs_tx_del_rule(struct mlx5_macsec_fs *macsec_fs,
++				  struct mlx5_macsec_tx_rule *tx_rule,
++				  void *macdev)
++{
++	macsec_fs_id_del(&macsec_fs->macsec_devices_list, tx_rule->fs_id, macdev,
++			 &macsec_fs->sci_hash, true);
++	macsec_fs_tx_free_rule(macsec_fs, tx_rule);
++}
 +
- 	features = netif_skb_features(skb);
- 	skb = validate_xmit_vlan(skb, features);
- 	if (unlikely(!skb))
+ #define MLX5_REFORMAT_PARAM_ADD_MACSEC_OFFSET_4_BYTES 1
+ 
+ static union mlx5_macsec_rule *
+@@ -887,7 +892,7 @@ macsec_fs_tx_add_rule(struct mlx5_macsec_fs *macsec_fs,
+ 	goto out_spec;
+ 
+ err:
+-	macsec_fs_tx_del_rule(macsec_fs, tx_rule, macsec_ctx->secy->netdev);
++	macsec_fs_tx_free_rule(macsec_fs, tx_rule);
+ 	macsec_rule = NULL;
+ out_spec:
+ 	kvfree(spec);
+@@ -1652,15 +1657,11 @@ static void macsec_fs_rx_ft_put(struct mlx5_macsec_fs *macsec_fs)
+ 	macsec_fs_rx_destroy(macsec_fs);
+ }
+ 
+-static void macsec_fs_rx_del_rule(struct mlx5_macsec_fs *macsec_fs,
+-				  struct mlx5_macsec_rx_rule *rx_rule,
+-				  void *macdev, u32 fs_id)
++static void macsec_fs_rx_free_rule(struct mlx5_macsec_fs *macsec_fs,
++				   struct mlx5_macsec_rx_rule *rx_rule)
+ {
+ 	int i;
+ 
+-	macsec_fs_id_del(&macsec_fs->macsec_devices_list, fs_id, macdev,
+-			 &macsec_fs->fs_id_hash, false);
+-
+ 	for (i = 0; i < RX_NUM_OF_RULES_PER_SA; ++i) {
+ 		if (rx_rule->rule[i]) {
+ 			mlx5_del_flow_rules(rx_rule->rule[i]);
+@@ -1678,6 +1679,15 @@ static void macsec_fs_rx_del_rule(struct mlx5_macsec_fs *macsec_fs,
+ 	macsec_fs_rx_ft_put(macsec_fs);
+ }
+ 
++static void macsec_fs_rx_del_rule(struct mlx5_macsec_fs *macsec_fs,
++				  struct mlx5_macsec_rx_rule *rx_rule,
++				  void *macdev, u32 fs_id)
++{
++	macsec_fs_id_del(&macsec_fs->macsec_devices_list, fs_id, macdev,
++			 &macsec_fs->fs_id_hash, false);
++	macsec_fs_rx_free_rule(macsec_fs, rx_rule);
++}
++
+ static void macsec_fs_rx_setup_fte(struct mlx5_flow_spec *spec,
+ 				   struct mlx5_flow_act *flow_act,
+ 				   struct mlx5_macsec_rule_attrs *attrs,
+@@ -1837,7 +1847,7 @@ macsec_fs_rx_add_rule(struct mlx5_macsec_fs *macsec_fs,
+ 	return macsec_rule;
+ 
+ err:
+-	macsec_fs_rx_del_rule(macsec_fs, rx_rule, macsec_ctx->secy->netdev, fs_id);
++	macsec_fs_rx_free_rule(macsec_fs, rx_rule);
+ 	macsec_rule = NULL;
+ out_spec:
+ 	kvfree(spec);
 -- 
 2.53.0
 
