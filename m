@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795618291;
-	b=S7FD2jjLCWpoplJn1Si55+iPjvd5q1fL93bZ1qAaImql0NMMCQMzIBiNIkz9zZ2dJou4
-	 TpXlSo+1DiUubO0G6ucQy6KZHyPkwUatEL7qGLUz+/2+BxnMVOydE4Rs5V6jgZUqeeCti
-	 7Ou/xo+QD0uxiW/pHEepdidXTmImbvMmDxERQ7+aXCWsiIZCJl8agHMgMRlIv0QdF1lAt
-	 O5QHwG9QIhU0vMTsihpIeC9tdlcf9fz6NnzjhuRePMt0DB2EIFhv5aBX2cCpkLcfHS1oW
-	 DXDzIVrsgK4cCdQxPZWfbqz+VvUZ9t3y6q5Al68KmaGnPVB8kN+X5Ncy2qIIBIJiA3Q==
+	t=1795618294;
+	b=MMii6i/SBMTsBW0GqaMwKSMwSJAM1c071WXfvF/jSD40s9UAe6mBfNYJz/6KFRLdcilz
+	 wHM2v0PuuN+KWsNVft7mxFlon/aS66G3I/1YT5PzYQcpz/sQ+JcLx2g9EP0t6miyfZR2U
+	 BMHfFEY21n0JWXuZhcZxJ0w/l+NqrItklbkNT6qpR8zrHKDIICLsawNE2Z0CuvJLwPHJc
+	 1wOaEKZgAt0HSBmHwU+8Eo7V9L/WJiZuQfo47HHGyQlc5KIK6BbYxVDCvsX98cdsqfUv0
+	 nizajUABuFMDyW7illYsETC0FQ1Omimam1eri77LjG8aBhm3xzlC3nPMmWZrouqsxmA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795618291;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795618294;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=x8yI8nw7qnNB0/FQJEKBda82TezzvVIphRb1pgnqfaA=;
-	b=NjWgAYLS6b4rr5UdcQOaB/kJPw0z2B0D5hNoCJONVFNuEmt7Ws5bP6MK8OFVR1SVjvgf
-	 XztRZAKd0xwiylm9uxp9wSL9zGhzdyf2ai/qtNZcX+Fni+Av26VxKi1UVXBHmRdPa+ULp
-	 ix03T4XikWo5CUtj0pR0yIOnWxxYSMo9ItpCaZtRCA0Fx3vqMIB83ZOtlZI17/OR76azs
-	 uFRmPyDAltt6kQW+jrlAu8sIb5ZANmFc5rv39B8OBEN7c7PDsFfZ2VLjzPCo34E+l677l
-	 Qycd3CaP4dSWvxZTWJX25+6taSTwjsCAy3QqLhFO35Q3FH5KRtWec13He23LIq6qT4w==
+	bh=c8Pmhevn0oWPm8voDRpMAqFzzIRflyl2jFWAuTt8hZw=;
+	b=NOT2GQRcG1rkTj8WIhmF7cS+/RHXnQSfw99mVRHlkwR0Pkfn8t/trvMmDoGtB4JSbahq
+	 1skLrmMxR+LnR3k6vBYZULiQYtFu+Tgu0fM1u707ZyLpTcgLoltgZzBO8RhhfdZQWI2ok
+	 pOtB/3O+hvi6OsfoFi6/6hj0D8rSX1DtSFLWa7erleKfT9YtDdk198KOT32x61MaiiJ3H
+	 diZDjzQTwsyBzYbmw8lo/w3I+A7OJg1e5IA1AHyn4OQ4AIOjsM/z88ZcfPhQHk+RA/xPm
+	 npUxPOH6Jz5uWN5sj/Uh0VS2JqFbK7hniqcc9G+aTVFS77IEFAWf36YhS3opogzXCRw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=eVAmo6rq;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=VhL9paVm;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3B382606A327;
-	Wed, 25 Nov 2026 14:51:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1CEC6606A31E;
+	Wed, 25 Nov 2026 14:51:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=eVAmo6rq
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7C55A1F000C0;
-	Wed, 25 Nov 2026 14:51:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=VhL9paVm
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5E0EB1F000C0;
+	Wed, 25 Nov 2026 14:51:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795618291;
-	bh=x8yI8nw7qnNB0/FQJEKBda82TezzvVIphRb1pgnqfaA=;
+	s=korg; t=1795618293;
+	bh=c8Pmhevn0oWPm8voDRpMAqFzzIRflyl2jFWAuTt8hZw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=eVAmo6rqzgovzRZXD0a8pwYHx16+1KRgRSx3Mfpg2lszMERJIWOkDlxIVwT7SeNUh
-	 s2QCPjzRUMULxCitB+3CDox7M/ClNL7tvEZk4gm7/xm388nwEufv529qOGQQV+TljA
-	 qSbI3yDLrh3ft/audSQOvhtbvujVPivdrD+RDfy0=
+	b=VhL9paVmNSK0mV33R/N+HWUUGgtaIx1fWovyXnv+3LIty07F33p011Ll7nysAswrZ
+	 JNa8lk3NyxEJ4XqoNciAGIDyRK7lxyEMxBo/RmXsR80rFTk6KLLgLjyKC/aZFUvqsG
+	 gzLpaPObfBkKNoHi85LJ+YXtXiaO+apmmCcspPPM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Linfeng Sun <linfeng.sun.dev@gmail.com>,
+	syzbot+13df72e0dc4be5c62215@syzkaller.appspotmail.com,
+	Mingbing Zhai <zhaimingbing@cmss.chinamobile.com>,
 	"Michael S. Tsirkin" <mst@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0233/1005] vhost-vdpa: initialize state before publishing cdev
-Date: Wed, 25 Nov 2026 15:26:11 +0100
-Message-ID: <20261125143827.197473288@linuxfoundation.org>
+Subject: [PATCH 7.3 0234/1005] virtio_balloon: initialize wakeup_lock before virtqueues are set up
+Date: Wed, 25 Nov 2026 15:26:12 +0100
+Message-ID: <20261125143827.220102431@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143821.729802100@linuxfoundation.org>
 References: <20261125143821.729802100@linuxfoundation.org>
@@ -68,57 +69,74 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Linfeng Sun <linfeng.sun.dev@gmail.com>
+From: Mingbing Zhai <zhaimingbing@cmss.chinamobile.com>
 
-[ Upstream commit 4b03d1e7f13613af708441a061556de99891a516 ]
+[ Upstream commit 161aa708b02cc997a51701c342f3cebade0b5164 ]
 
-Initialize the completion and as hash buckets before cdev_device_add()
-makes the device accessible.
+Since c578123e63da ("virtio_balloon: Treat stats requests as wakeup
+events") the stats_request() virtqueue callback takes vb->wakeup_lock
+via start_wakeup_event().  init_vqs() registers that callback and even
+primes and kicks the stats queue, so the lock is reachable from irq
+context as soon as init_vqs() returns, long before the driver sets
+DRIVER_OK: vring_interrupt() dispatches to the callback without any
+DRIVER_OK check unless CONFIG_VIRTIO_HARDEN_NOTIFICATION is set, and
+that option depends on BROKEN.  syzbot hit it from a threaded irq:
 
-Fixes: 4c8cf31885f6 ("vhost: introduce vDPA-based backend")
-Assisted-by: OpenAI-Codex:GPT-5.6
-Signed-off-by: Linfeng Sun <linfeng.sun.dev@gmail.com>
+  INFO: trying to register non-static key in stats_request
+  ...
+  assign_lock_key
+  register_lock_class
+  lock_acquire
+  rt_spin_lock
+  start_wakeup_event drivers/virtio/virtio_balloon.c:150 [inline]
+  stats_request drivers/virtio/virtio_balloon.c:435
+
+The lock is only initialized near the end of virtballoon_probe(),
+after init_vqs() and several steps that can still fail and unwind
+through del_vqs(), where a racing interrupt still finds the callback
+registered.  Until then it is whatever kzalloc() left in vb: lockdep
+complains about the unregistered lock class, and wakeup_signal_mask
+and processing_wakeup_event get updated from irq context while probe
+is still running.
+
+The rt_spin_lock() in the report is just spin_lock() on PREEMPT_RT;
+any PROVE_LOCKING build takes the same path.
+
+stop_update_lock(), which the same callback also acquires, is already
+initialized before init_vqs(); do the same for wakeup_lock.
+
+Fixes: c578123e63da ("virtio_balloon: Treat stats requests as wakeup events")
+Reported-by: syzbot+13df72e0dc4be5c62215@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=13df72e0dc4be5c62215
+Signed-off-by: Mingbing Zhai <zhaimingbing@cmss.chinamobile.com>
 Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
-Message-ID: <20261011-fix-null-pointer-in-vhost_vdpa_release-v2-1-66ba929971ce@gmail.com>
+Message-ID: <20261016025429.901-1-zhaimingbing@cmss.chinamobile.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/vhost/vdpa.c | 9 +++++----
- 1 file changed, 5 insertions(+), 4 deletions(-)
+ drivers/virtio/virtio_balloon.c | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
-diff --git a/drivers/vhost/vdpa.c b/drivers/vhost/vdpa.c
-index 81a6fbab8c0d6..ad5d1dfd104d0 100644
---- a/drivers/vhost/vdpa.c
-+++ b/drivers/vhost/vdpa.c
-@@ -1707,7 +1707,7 @@ static int vhost_vdpa_probe(struct vdpa_device *vdpa)
- 		return minor;
+diff --git a/drivers/virtio/virtio_balloon.c b/drivers/virtio/virtio_balloon.c
+index ab3e3d887e00f..8c1b47ec17a29 100644
+--- a/drivers/virtio/virtio_balloon.c
++++ b/drivers/virtio/virtio_balloon.c
+@@ -942,6 +942,7 @@ static int virtballoon_probe(struct virtio_device *vdev)
+ 	INIT_WORK(&vb->update_balloon_stats_work, update_balloon_stats_func);
+ 	INIT_WORK(&vb->update_balloon_size_work, update_balloon_size_func);
+ 	spin_lock_init(&vb->stop_update_lock);
++	spin_lock_init(&vb->wakeup_lock);
+ 	mutex_init(&vb->balloon_lock);
+ 	init_waitqueue_head(&vb->acked);
+ 	vb->vdev = vdev;
+@@ -1049,8 +1050,6 @@ static int virtballoon_probe(struct virtio_device *vdev)
+ 			goto out_unregister_oom;
  	}
  
--	atomic_set(&v->opened, 0);
-+	atomic_set(&v->opened, 1);
- 	spin_lock_init(&v->config_lock);
- 	v->minor = minor;
- 	v->vdpa = vdpa;
-@@ -1730,16 +1730,17 @@ static int vhost_vdpa_probe(struct vdpa_device *vdpa)
- 
- 	cdev_init(&v->cdev, &vhost_vdpa_fops);
- 	v->cdev.owner = THIS_MODULE;
-+	init_completion(&v->completion);
-+	for (i = 0; i < VHOST_VDPA_IOTLB_BUCKETS; i++)
-+		INIT_HLIST_HEAD(&v->as[i]);
- 
- 	r = cdev_device_add(&v->cdev, &v->dev);
- 	if (r)
- 		goto err;
- 
--	init_completion(&v->completion);
- 	vdpa_set_drvdata(vdpa, v);
- 
--	for (i = 0; i < VHOST_VDPA_IOTLB_BUCKETS; i++)
--		INIT_HLIST_HEAD(&v->as[i]);
-+	atomic_set_release(&v->opened, 0);
- 
- 	return 0;
- 
+-	spin_lock_init(&vb->wakeup_lock);
+-
+ 	/*
+ 	 * The virtio balloon itself can't wake up the device, but it is
+ 	 * responsible for processing wakeup events passed up from the transport
 -- 
 2.53.0
 
