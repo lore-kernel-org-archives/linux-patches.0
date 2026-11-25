@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795624534;
-	b=TQq1GUNkckMc5E5L9NhrFbeeiaNvS/muTInW0Qv1ztyicd5QGUWpLb6M3kTClel2OmuW
-	 VUz9GzofHgFJEC9zqK82/HOHRPWdKAKf9JiPJbFQhpBl3+yRZKlSFgnQwavVw9hzem4rO
-	 GyeZAIhiy6eTjpOie0SUDPD+IqloOxdaaKJSJIXL+7lpMBg9T0XvyeRmcqnldrHKAwTJ+
-	 LMhKyyRGBvq6/oNS26/YmubJJ0yrTVv6vHkotyCwxaDC0ITw17V+Y9og6Ip59e4K3ktND
-	 VsC6srjL3vaubNJlyEvhQbzu9oKtWfusxVPNqdKpOl4ec+vemZWbjGpycZRHKh3u4rA==
+	t=1795624537;
+	b=e6I+ofRZpECZMDO5aKgrT9lhTkCJq82BqboiE7A24zE0HCpYN+f9351h2zbq3XxwLfsU
+	 6P/73MOO3ND94EI/FOB8+4Kxf8QSUoNP/USTLlux5smQ9cjA05miPVdMJaBGIhbTKtBiS
+	 +yz9s1Zc3tCNqvZ/j5Z4804deVaiMkty9J8MyMDm0yyrqPVvbmoryzUg/AguBcUrHWlrg
+	 3uOgIWzxAGg+8ESvW5Kc1ZnqKbbDR+grDEG3kEgUBfGJyPvrNnHnyj7Tmq8r7+8dzcado
+	 NNAg2Z3udJEAsBCWCjuBpFIATCDK4ZxUKtdvgqMkh7Bid/22Zpk0VksKmgPcos8B+Xw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795624534;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795624537;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=+wiRpsml4fQqWmmGnvwV8CBycIG6sZoV51YOPxM02rI=;
-	b=jfm+CgDA+3zb7+Fl3o3UroGxu5/RAjBGP76gyvx5xMm27oCZx6V0Jr0quwOjpqAc3au4
-	 J9hhy8eznS1EJ9/mgq2vfY8N4B6Asjt4UD8DWRlX3cMaGC2x61hE8RnzoXKdUCwa+KMHa
-	 unLxnhxZ03S0L3Itu6n4QjX5aDhHk7F7xayecQt167ZW1cTIQCDqygrASxcVnNfALQVmG
-	 4VfE9eguzp/5x1+yArdwPg2V+19gJZppulueGf6FTC7fOuYjY8yU5EWDjImbEvhynC8es
-	 mUrM1TSDbl4/zhapqzWTnD8xxlR51LuikCdbFfULRXrAllRTpYFEH0CKgOeioVGaOeg==
+	bh=zJj2kjs2uDRmbruADtIgIEx14GbeoeXtk6IvXAWaOHQ=;
+	b=RVmAq1L9VyMjQwhquS6M9PaNMjAsifbWdLHjXMc4iC6KXd5Ya1hcY+EYs+4OyE5EecCc
+	 To95K3E+6SzDkL/vXlgpdAaPuvzEB+UKSflsd1e0dzt7qtjzjSb4NcaCG3YcJYU5DN9q+
+	 sQfEETSkUu+FYmVZn8a5rKaVgD74Oe8LASn+/4zmeYBVOR1yxqHiQ0WGk6/CdN9etjzRY
+	 5txNEoLz96ZCyuKNNGwxrieiGQvWS1+6A0lVQhsnm7kBTnkdf0EXN6fumA8HiVjye06ei
+	 xhasOtIqiPuvpL9MIJSApjU8+wGS2KqK9FeVbciLxl8cDoJkQYq0+2mrNtDoa+ge4qQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=rSgzm7+t;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=lh2ghixx;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4F6B4606A33B;
-	Wed, 25 Nov 2026 16:35:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4C30D606A688;
+	Wed, 25 Nov 2026 16:35:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=rSgzm7+t
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A13791F000C0;
-	Wed, 25 Nov 2026 16:35:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=lh2ghixx
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7864D1F000CF;
+	Wed, 25 Nov 2026 16:35:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795624534;
-	bh=+wiRpsml4fQqWmmGnvwV8CBycIG6sZoV51YOPxM02rI=;
+	s=korg; t=1795624537;
+	bh=zJj2kjs2uDRmbruADtIgIEx14GbeoeXtk6IvXAWaOHQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=rSgzm7+tbXkL46s1qLE215JYpGcP5fVw5mI0sfccOytycoAFKbYnv+0P30U/IVdWF
-	 ZxL4DcmIK0cBcQDvaRdZXjL4liMdJMdF7MkV5IZeX0EKXfojD+EKatEy2dN4ypDg6q
-	 BF9siZYaxtpILogzMOQA1fmj4qy6em02udM+0gK0=
+	b=lh2ghixxu7/ShyzJTInr/Q+Z9p9ZfOZV1BtHYaXVCPCWBKKv9XP6Ub+j7inEXuKAp
+	 XNq2YL6KS04ZwTwZZqvYTsJmIOBJEIALLXwgY6s7KbbsWJiI9rE94QtaXpAiu9qEVl
+	 HRN/D/+xMwIACCL6ZQHKR9hvXdznUJwtZlQD/iYI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Munique Feitoza <muniquefeitoz4@gmail.com>,
-	Dave Airlie <airlied@redhat.com>,
+	Josef Bacik <josef@toxicpanda.com>,
+	Jan Kara <jack@suse.cz>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 222/816] drm/nouveau: Fix CE channel creation on pre-Kepler GPUs
-Date: Wed, 25 Nov 2026 15:29:30 +0100
-Message-ID: <20261125143854.344348407@linuxfoundation.org>
+Subject: [PATCH 6.12 180/816] ext2: only flush DIRSYNC directories on every change
+Date: Wed, 25 Nov 2026 15:28:48 +0100
+Message-ID: <20261125143853.358341512@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143849.205329330@linuxfoundation.org>
 References: <20261125143849.205329330@linuxfoundation.org>
@@ -68,60 +68,54 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Munique Feitoza <muniquefeitoz4@gmail.com>
+From: Josef Bacik <josef@toxicpanda.com>
 
-[ Upstream commit a2b7b707d75e605d31fb3d85a6b27f8bb2a01413 ]
+[ Upstream commit 3f57fc2c49ed05ccfc56e4dc9eda41be95925bbd ]
 
-Commit 04e0481526e3 ("nouveau/dmem: Fix privileged error in copy engine
-channel") changed nouveau_accel_ce_init() to unconditionally request a
-privileged channel (priv = true) when calling nouveau_channel_new().
+Every change of an ext2 directory is written to disk before the system call
+returns, whether the directory is DIRSYNC or not: its pages with
+filemap_write_and_wait() and its inode with sync_inode_metadata().
 
-However, privileged channels (func->ramfc->priv) are only supported on
-Kepler (gk104_chan_ramfc) and newer FIFO implementations. On pre-Kepler
-GPUs that expose a Copy Engine runlist, func->ramfc->priv is false,
-which causes nvkm_chan_new_() to reject the channel creation with
--EINVAL:
+Writes which reach the device for 2000 files, and 200 directories, in a
+directory without DIRSYNC, with the flusher turned off:
 
-  nouveau 0000:01:00.0: DRM: failed to create ce channel, -22
+            create   rename   unlink   mkdir
+    before    4000     8000     4000     800
+    after        0        0        0       0
 
-Only request a privileged CE channel when device->info.family >=
-NV_DEVICE_INFO_V0_KEPLER.
+In a directory with chattr +D the numbers are those of "before", before and
+after.
 
-Fixes: 04e0481526e3 ("nouveau/dmem: Fix privileged error in copy engine channel")
-Signed-off-by: Munique Feitoza <muniquefeitoz4@gmail.com>
-Reviewed-by: Dave Airlie <airlied@redhat.com>
-Signed-off-by: Dave Airlie <airlied@redhat.com>
-Link: https://patch.msgid.link/20261030202809.28723-1-muniquefeitoz4@gmail.com
+commit bc943f4872a7 ("ext2: Don't flush page immediately for DIRSYNC
+directories") moved the flush from ext2_commit_chunk() to the new
+ext2_handle_dirsync().  The IS_DIRSYNC() check which was around it didn't
+move along.
+
+Fix by putting the check into ext2_handle_dirsync().
+
+Fixes: bc943f4872a7 ("ext2: Don't flush page immediately for DIRSYNC directories")
+Signed-off-by: Josef Bacik <josef@toxicpanda.com>
+Link: https://patch.msgid.link/20261027-b4-ext2-dirsync-v1-1-3dcd012d518d@toxicpanda.com
+Signed-off-by: Jan Kara <jack@suse.cz>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/nouveau/nouveau_drm.c | 7 ++++++-
- 1 file changed, 6 insertions(+), 1 deletion(-)
+ fs/ext2/dir.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/drivers/gpu/drm/nouveau/nouveau_drm.c b/drivers/gpu/drm/nouveau/nouveau_drm.c
-index 904e236ed5104..38d01bd5f0c82 100644
---- a/drivers/gpu/drm/nouveau/nouveau_drm.c
-+++ b/drivers/gpu/drm/nouveau/nouveau_drm.c
-@@ -320,6 +320,7 @@ static void
- nouveau_accel_ce_init(struct nouveau_drm *drm)
+diff --git a/fs/ext2/dir.c b/fs/ext2/dir.c
+index 402fecf90a44b..9bb1c219c048e 100644
+--- a/fs/ext2/dir.c
++++ b/fs/ext2/dir.c
+@@ -441,6 +441,9 @@ static int ext2_handle_dirsync(struct inode *dir)
  {
- 	struct nvif_device *device = &drm->client.device;
-+	bool priv;
- 	u64 runm;
- 	int ret = 0;
+ 	int err;
  
-@@ -332,7 +333,11 @@ nouveau_accel_ce_init(struct nouveau_drm *drm)
- 		return;
- 	}
- 
--	ret = nouveau_channel_new(&drm->client, true, runm, NvDmaFB, NvDmaTT, &drm->cechan);
-+	/* priv copy engine only works on kepler and newer. */
-+	priv = device->info.family >= NV_DEVICE_INFO_V0_KEPLER;
++	if (!IS_DIRSYNC(dir))
++		return 0;
 +
-+	ret = nouveau_channel_new(&drm->client, priv, runm, NvDmaFB, NvDmaTT,
-+				  &drm->cechan);
- 	if (ret)
- 		NV_ERROR(drm, "failed to create ce channel, %d\n", ret);
- }
+ 	err = filemap_write_and_wait(dir->i_mapping);
+ 	if (!err)
+ 		err = sync_inode_metadata(dir, 1);
 -- 
 2.53.0
 
