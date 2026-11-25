@@ -1,51 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795619579;
-	b=k4PXGeaml9eNoURUNFdhD8W2uhNxFZANwy7FPv7IHumdpiBMtuvZz2iXRtbbA3FeIsrA
-	 JJD24+oYM7OuJD4VIeTvndlPwIMVOOP5Zw3msOS1G3GQ63o78DFVr/JUE5tmx6RyrRiGn
-	 sQPU8lpwTfjp4fkh2zJOVJiPjPOoUuOeVvz+G5RNOIYsYRD13W88rARGKGtI3FdVZ8hLi
-	 a8R3peovzvQFh2RVx9cwexlfmtPkmZa4R07/Y5pBH1tkktS5hR9bHwl6ViZFQW8lel72/
-	 ud1A0VCSpp4outUOpIJDvA1S6qOyJUzCxQUvwv8RP0W2jzm4ybgV+PnF35KNwvENeBg==
+	t=1795619581;
+	b=E1bJtgJKRxCRHBU8U+Kz3jsGJTdsKGXgWQeXATIc+1hhV2I9LvrBQw0wX1xsqBG7B1sq
+	 mXl0xiIAFo7Nj8cCOH5j9fqp6l6iXeG7W4Birnf1RfTNejVUIIyNTtGIa5IHkd3Yp9D/N
+	 GLB1XH33fWreLwKG/uVYeCknWVBM8mKW4Zy7EW9cU3GzyhmSecZ463LKfgBQMnenEujyT
+	 6e4IOnsc8nIzLUO38e2Be6NEi4s+28x+upXDwLddZOnOo5puw75ZTaJAzsAAfHSpvmtqf
+	 cstqcyuuljvMxsvDC/Aq+brk3A9ES2HMhEzO26o/ZO5DrUVT7hbszs+55qQq6FCvFjA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795619579;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795619581;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=Xxgg46EVrL9sWyd7CUcWemT+6MaGne+dASaCQDbs8UA=;
-	b=fr9UfwLMsqOR9iY6FVVgCSmZlDtEi9+h8oElxO5KV3E+L7/yQIXoraNzzzMRLRbes3ks
-	 TL85+EkhFvo7Y5FZ/FbTT+8xu6ypuYYj7SbqyvE7sXOMU13WkVZsatLSBhUKLeNQaRpB1
-	 GFLoavD/g3IwD5fz7usZcNYXtb3mtbBtdbKKxAnylgjv/VV0yL/Sfy42bY7TyRvXyI9X6
-	 2uH83h3tQvYV1byM08szbxjO6UqJRkakHDkalSV4SIZThCWy3qzk6Dm6f4GKF1Pjp1VwE
-	 xXXOpWhAOs41Q+IP/9TlRRB6myzLiRtsFE5kjQDGMRIDpzc9CMVmOv3PThraa2Rw1vw==
+	bh=JkaN6o63N/fMcCvO1SLf9F+dVq/NdCuniLZIZ/rHW0Q=;
+	b=2V3wPkScNguyImLXbgY1aVInaHVsY/z72W1ocRYq2WMHTourOC/6AYIdFD2OgoiI9TzY
+	 vyHbIyTqPYeqLYN8JFBg029nOn8i89eeYA/cNGAMX28gRg/xd3mtw9Q6TDvSA6zrUioeR
+	 BzPMLIACYlIAk2P/5oqBSS9DwLsdVc4K46j1R9stckDlQwRHskVHoSyX4v+I45ybwipA2
+	 nvRcE7SJLycFBXCCYFOKz1/L/gLwSUSwC24Gagf3sj3GYbvh86I5m20qpgCF147SpKA5P
+	 PS5tOE1jCpAIVNanoNdSNEytYub0YlV83FhOg4uWXaIVKuJS0fyrFVIBHihM4kA1lyA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=YYgCoyva;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=sb5ampf9;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EA632606A323;
-	Wed, 25 Nov 2026 15:12:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DE3A1606A323;
+	Wed, 25 Nov 2026 15:13:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=YYgCoyva
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 472D71F000C6;
-	Wed, 25 Nov 2026 15:12:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=sb5ampf9
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1F4291F000C0;
+	Wed, 25 Nov 2026 15:13:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795619578;
-	bh=Xxgg46EVrL9sWyd7CUcWemT+6MaGne+dASaCQDbs8UA=;
+	s=korg; t=1795619581;
+	bh=JkaN6o63N/fMcCvO1SLf9F+dVq/NdCuniLZIZ/rHW0Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=YYgCoyvaxmWuhErdGKO9tbWJmXjFcmUJztNqKYjgiAFv5A0xe2nqVf9ExMwy1Sq8o
-	 Bf6i2xXK7TuLoUgBPEQc/PJGVFf3scxPDQdxSHNFIKgzxOTSdtXVmfgH6xXNjya0IU
-	 LclcNG3d+HwfOMwEBEPoZ3aizS0grDLqVIWdiwGU=
+	b=sb5ampf9wImFPyUbB+jP6Dv6OvsWvJ+BWyui/EhngCUVgME3fUOHBI/LDVeUnYiVY
+	 ctyZDr9i+rKLnq6pZ9rCHiqF0BdojYE18v/IX8YWB4CGGtOuICHKXuxPv5ImuJ3rJX
+	 Lj/PRpqr9tB9sNg7Cg/BDG1Hd4PLt92h4J3B7Wck=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eduardo Mucelli Rezende Oliveira <edumucelli@gmail.com>,
-	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>
-Subject: [PATCH 7.3 0640/1005] tools/bootconfig: Close only opened braces in compact output
-Date: Wed, 25 Nov 2026 15:32:58 +0100
-Message-ID: <20261125143836.744904701@linuxfoundation.org>
+	Yingjie Wang <x-professor@outlook.com>,
+	Kuniyuki Iwashima <kuniyu@google.com>,
+	Eric Dumazet <edumazet@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 7.3 0641/1005] tcp: free saved_syn after an RCU grace period
+Date: Wed, 25 Nov 2026 15:32:59 +0100
+Message-ID: <20261125143836.768832782@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143821.729802100@linuxfoundation.org>
 References: <20261125143821.729802100@linuxfoundation.org>
@@ -67,104 +69,153 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eduardo Mucelli Rezende Oliveira <edumucelli@gmail.com>
+From: Yingjie Wang <x-professor@outlook.com>
 
-commit 26fa92f351d4993428268afebf6c60c987477af5 upstream.
+commit 2b9fd1a0abf0c1c7200be7a33cfeeca1c68089b6 upstream.
 
-A key may have both a value and subkeys. When it has only one subkey,
-xbc_show_compact_tree() can print that subkey using dotted notation
-without opening a brace. During backtracking, however, it treats the
-value node followed by a subkey as evidence that a brace was opened.
+tcp_reqsk_record_syn() allocates saved_syn separately from its request
+socket. bpf_sock_ops_get_syn() can load that pointer while processing a
+retransmitted SYN under RCU.
 
-For example, a.b=v, a.b.c=w and a.z=q are printed with the brace for a
-closed before z. Reading that output back changes a.z into the root key
-z, silently changing the configuration.
+There are two ownership transfers which can let another CPU reclaim the
+allocation while such a reader is still using it.
 
-Check the key children when deciding whether to close a brace. Skip the
-value child, and account for a sole subkey that itself has both a value
-and subkeys, since that combination is not compacted. This follows the
-conditions used to open braces without keeping a depth-indexed array.
-Extend the mixed-value/subkey sample to cover the lost sibling.
+First, tcp_move_syn() transfers req->saved_syn to a newly created child
+socket. The child can be closed and tcp_saved_syn_free() can reclaim the
+allocation before a reader of the old request finishes.
 
-Link: https://lore.kernel.org/all/6ad67e4cda05238cd173c99e820a85de2c13f5fc.1794337724.git.edumucelli@gmail.com/
+Second, inet_reqsk_clone() shallow-copies request_sock during request
+migration. After reqsk_migrate_reset() clears the old request pointer, the
+migrated clone owns it. However, a reader which already loaded the pointer
+from the old request can still be using it when the clone is released.
 
-Fixes: e5efaeb8a8f5 ("bootconfig: Support mixing a value and subkeys under a key")
+I found this through LLM-assisted concurrency fuzzing.
+
+Mark the request-socket saved_syn pointer as RCU protected and use RCU
+accessors for its reads and updates. Keep the full-socket pointer plain
+because all of its accesses hold the socket lock. Embed an rcu_head in
+struct saved_syn and use kfree_rcu() in both teardown paths. This lets a
+request-side reader which loaded the object before an ownership transfer
+finish.
+
+This follows commit e3f33b0a1d89 ("ipv4: free inet_opt and ireq_opt
+after an RCU grace period"), which fixed the same ownership-transfer
+pattern for IPv4 options.
+
+The issue was confirmed with KASAN on v7.3-16007-g36aad21d50d1 using
+temporary kernel instrumentation to widen the reader and request-migration
+window. KASAN reported a slab-use-after-free read in
+bpf_sock_ops_get_syn(), with the allocation freed by __reqsk_free() from
+reqsk_timer_handler(). The same explicit migration test completed without
+a report with deferred reclamation. A patched kernel without the delay
+instrumentation also completed a successful migration and seven saved-SYN
+reads without a KASAN report.
+
+Fixes: 0813a841566f ("bpf: tcp: Allow bpf prog to write and parse TCP header option")
+Fixes: c905dee62232 ("tcp: Migrate TCP_NEW_SYN_RECV requests at retransmitting SYN+ACKs.")
 Cc: stable@vger.kernel.org
-Signed-off-by: Eduardo Mucelli Rezende Oliveira <edumucelli@gmail.com>
-Signed-off-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
+Signed-off-by: Yingjie Wang <x-professor@outlook.com>
+Reviewed-by: Kuniyuki Iwashima <kuniyu@google.com>
+Reviewed-by: Eric Dumazet <edumazet@kernel.org>
+Link: https://patch.msgid.link/38fa9f2cc476502e9b1c1fef09ebba1df5dd5901.1793795528.git.x-professor@outlook.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- tools/bootconfig/main.c                           |   29 ++++++++++++++++------
- tools/bootconfig/samples/exp-good-mixed-kv1.bconf |    5 +++
- tools/bootconfig/samples/good-mixed-kv1.bconf     |    5 +++
- 3 files changed, 32 insertions(+), 7 deletions(-)
+ include/linux/tcp.h             |    6 +++---
+ include/net/request_sock.h      |    3 ++-
+ net/core/filter.c               |    2 +-
+ net/ipv4/inet_connection_sock.c |    6 +++---
+ net/ipv4/tcp_input.c            |    2 +-
+ 5 files changed, 10 insertions(+), 9 deletions(-)
 
---- a/tools/bootconfig/main.c
-+++ b/tools/bootconfig/main.c
-@@ -39,6 +39,23 @@ static int xbc_show_value(struct xbc_nod
- 	return i;
+--- a/include/linux/tcp.h
++++ b/include/linux/tcp.h
+@@ -612,13 +612,13 @@ static inline void fastopen_queue_tune(s
+ static inline void tcp_move_syn(struct tcp_sock *tp,
+ 				struct request_sock *req)
+ {
+-	tp->saved_syn = req->saved_syn;
+-	req->saved_syn = NULL;
++	tp->saved_syn = unrcu_pointer(req->saved_syn);
++	RCU_INIT_POINTER(req->saved_syn, NULL);
  }
  
-+/* Match the conditions under which the compact formatter opens braces. */
-+static bool xbc_node_needs_braces(struct xbc_node *node)
-+{
-+	struct xbc_node *child = xbc_node_get_child(node);
-+
-+	if (child && xbc_node_is_value(child))
-+		child = xbc_node_get_next(child);
-+	if (!child)
-+		return false;
-+	if (child->next)
-+		return true;
-+
-+	/* A single subkey with both a value and subkeys is not compacted. */
-+	child = xbc_node_get_child(child);
-+	return child && xbc_node_is_value(child) && child->next;
-+}
-+
- static void xbc_show_compact_tree(void)
+ static inline void tcp_saved_syn_free(struct tcp_sock *tp)
  {
- 	struct xbc_node *node, *cnode = NULL, *vnode;
-@@ -99,14 +116,12 @@ static void xbc_show_compact_tree(void)
- 			node = xbc_node_get_parent(node);
- 			if (!node)
- 				return;
--			if (!xbc_node_get_child(node)->next)
-+			if (!depth || !xbc_node_needs_braces(node))
- 				continue;
--			if (depth) {
--				depth--;
--				for (i = 0; i < depth; i++)
--					printf("\t");
--				printf("}\n");
--			}
-+			depth--;
-+			for (i = 0; i < depth; i++)
-+				printf("\t");
-+			printf("}\n");
+-	kfree(tp->saved_syn);
++	kfree_rcu(tp->saved_syn, rcu);
+ 	tp->saved_syn = NULL;
+ }
+ 
+--- a/include/net/request_sock.h
++++ b/include/net/request_sock.h
+@@ -39,6 +39,7 @@ struct request_sock_ops {
+ };
+ 
+ struct saved_syn {
++	struct rcu_head rcu;
+ 	u32 mac_hdrlen;
+ 	u32 network_hdrlen;
+ 	u32 tcp_hdrlen;
+@@ -68,7 +69,7 @@ struct request_sock {
+ 	struct timer_list		rsk_timer;
+ 	const struct request_sock_ops	*rsk_ops;
+ 	struct sock			*sk;
+-	struct saved_syn		*saved_syn;
++	struct saved_syn __rcu		*saved_syn;
+ 	u32				secid;
+ 	u32				peer_secid;
+ 	u32				timeout;
+--- a/net/core/filter.c
++++ b/net/core/filter.c
+@@ -6188,7 +6188,7 @@ static int bpf_sock_ops_get_syn(struct b
+ 			 * not be available.  It has to resort to
+ 			 * saved_syn (if it is saved).
+ 			 */
+-			saved_syn = inet_reqsk(sk)->saved_syn;
++			saved_syn = rcu_dereference(inet_reqsk(sk)->saved_syn);
+ 		else
+ 			saved_syn = tcp_sk(sk)->saved_syn;
+ 
+--- a/net/ipv4/inet_connection_sock.c
++++ b/net/ipv4/inet_connection_sock.c
+@@ -869,7 +869,7 @@ reqsk_alloc_noprof(const struct request_
+ 	req_to_sk(req)->sk_prot = sk_listener->sk_prot;
+ 	sk_node_init(&req_to_sk(req)->sk_node);
+ 	sk_tx_queue_clear(req_to_sk(req));
+-	req->saved_syn = NULL;
++	RCU_INIT_POINTER(req->saved_syn, NULL);
+ 	req->syncookie = 0;
+ 	req->num_timeout = 0;
+ 	req->num_retrans = 0;
+@@ -908,7 +908,7 @@ void __reqsk_free(struct request_sock *r
+ 	req->rsk_ops->destructor(req);
+ 	if (req->rsk_listener)
+ 		sock_put(req->rsk_listener);
+-	kfree(req->saved_syn);
++	kfree_rcu(unrcu_pointer(req->saved_syn), rcu);
+ 	kmem_cache_free(req->rsk_ops->slab, req);
+ }
+ 
+@@ -979,7 +979,7 @@ static void reqsk_queue_migrated(struct
+ 
+ static void reqsk_migrate_reset(struct request_sock *req)
+ {
+-	req->saved_syn = NULL;
++	RCU_INIT_POINTER(req->saved_syn, NULL);
+ #if IS_ENABLED(CONFIG_IPV6)
+ 	inet_rsk(req)->ipv6_opt = NULL;
+ 	inet_rsk(req)->pktopts = NULL;
+--- a/net/ipv4/tcp_input.c
++++ b/net/ipv4/tcp_input.c
+@@ -7636,7 +7636,7 @@ static void tcp_reqsk_record_syn(const s
+ 			saved_syn->network_hdrlen = skb_network_header_len(skb);
+ 			saved_syn->tcp_hdrlen = tcp_hdrlen(skb);
+ 			memcpy(saved_syn->data, base, len);
+-			req->saved_syn = saved_syn;
++			RCU_INIT_POINTER(req->saved_syn, saved_syn);
  		}
- 		node = xbc_node_get_next(node);
  	}
---- a/tools/bootconfig/samples/exp-good-mixed-kv1.bconf
-+++ b/tools/bootconfig/samples/exp-good-mixed-kv1.bconf
-@@ -1,2 +1,7 @@
- key = "value";
- key.subkey = "another-value";
-+a {
-+	b = "v";
-+	b.c = "w";
-+	z = "q";
-+}
---- a/tools/bootconfig/samples/good-mixed-kv1.bconf
-+++ b/tools/bootconfig/samples/good-mixed-kv1.bconf
-@@ -1,3 +1,8 @@
- # value -> subkey pattern
- key = value
- key.subkey = another-value
-+
-+# A valued parent with one subkey must not close its enclosing brace.
-+a.b = v
-+a.b.c = w
-+a.z = q
+ }
 
 
