@@ -1,55 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795621751;
-	b=fQQfWeULE+aQE4og4QP9ruU40WzFzOyymsSFmuMb9OlUSaakgHFpfeEnd6uHcHXUMJf5
-	 jXrtm0/CylbcihAWjS5J+i+YqxE3TEq0QtkOECx+OuKNMw1BEQPD3tWKAf9J2m73Uj7XQ
-	 tKTAsp8/V1qsRfO624/5WfKduN0mXkkJILJceEHuZG8omZWcdFMC3I/rTZCPS+OKDLwf3
-	 tTYA1WqEFBtjG38BYMJ7zHyGDXTx57GD4kd58kp5mIGljovKrSTB62xfnWMlVXsS5MWpd
-	 ufxK4jMSKce6gWpRMccNmF0dNZdY9vE5y41+5LZhjA0E4Eiyb9uYEEidOwjWq7+ReUA==
+	t=1795621754;
+	b=ywRoN2GOgWeNiFavP4OKCwFCn47UyF1lW0vA6yUsK0rlXal4KxRUr6xPMTAabxcSoB2i
+	 cuYO427Tr8bk5BXQqGIJFdZKuUILFGrWMcCpEr0tydBNuG2AV9eMF43drnFJYaxCUvBFz
+	 gh4/9NNiAM2zc3fhjmzxLi2HRGk3ZAx/yxr731u7NQzOhKgBmdsr4PhBbu9Dk3TRiRMEG
+	 w39E1M8Mkqa9mRn9SoUv1FSXXce7eQhoew27xc3SHUch/yknp5t0ZhZ5i/dmw57zEeU1s
+	 hiqR442jCcR25WPr7NVwAsg96HaZQlkSDs2ydzFLo+P/quNd4xwZXHXTktcqmHdzefQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795621751;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795621754;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=A931Av7NudmHTt82ux/u89qKW5KEr47XZ8PG6gSOHfw=;
-	b=L70yWLJdthf5URyhP9AAzV8lgiDNqEo/k9633Wnvkg4VmZcn2euM9wVRYFgPUt4xPLix
-	 z8KeeWLHrWTezsRyI8T1a+LzTfC3fFTH2jb0rz4sxRG6MLdPgeRLr7mqQOsRLwjT/sqtD
-	 gZBAlM394P4R0gFvtqtCvlUNwt7GO821LXgp/gHS7393wZuPpnehC36CZdYhpXT0oFd4b
-	 Iekr6I253rwfQuJfJ8uucKvOSahKH5M+VCBVt1uNU86GFVPIB4zyTk5Gfopl7YyUTSGiU
-	 V6LoZwJ3h5WfHSmZcTp8OPLiN4kg54yUtWexwLofGfDo0JqdwFJgOE3+g6X0RSVpqDA==
+	bh=qgjqbIfsToA6hgS/t8QULJbl200pjCC8Ks69SyaqJRo=;
+	b=1vEOhzULbHY3mi+6PNDqdZasj2zWk5spdmKUTNH4o13/abr90fuDABghEQVTWIKRM6Xs
+	 KshTgxzgV0GyRWuoSW+l39TwTjGBV4/wUM+XYvC3jzIGnZWwLlxxFOFpU15kO/1mnZcEH
+	 0IE3L0SDB+KZiULtljpfUnoikGfOo7WMq5JvYF78HhpuGWXP0rJ+y1SP/XItunGc0fjlW
+	 oTMeGGL4S/WU3LcLhKJH+jvCI1ksLXGuljFnExkHKQNMjQiSF9803dFycrTtjK+jiFTRn
+	 oe9Fg5Fwl2BosE1jP3HERQ8TyPNUe3feo8UTgDfRDSLf8Mu400nu2sEcAcQeUcGslpw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=bKMArbX+;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=CUHYIS9K;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 900F6606A334;
-	Wed, 25 Nov 2026 15:49:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 981A4606A327;
+	Wed, 25 Nov 2026 15:49:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=bKMArbX+
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 61F5C1F000D3;
-	Wed, 25 Nov 2026 15:49:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=CUHYIS9K
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B49181F000D2;
+	Wed, 25 Nov 2026 15:49:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795621750;
-	bh=A931Av7NudmHTt82ux/u89qKW5KEr47XZ8PG6gSOHfw=;
+	s=korg; t=1795621754;
+	bh=qgjqbIfsToA6hgS/t8QULJbl200pjCC8Ks69SyaqJRo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=bKMArbX+m25RqrXI9PFExw17FduGrdxjmSJkqTefypgj80Au98IuQuT0vQxcXrBBu
-	 cvvA+qNPUUi3+lMN6qrGnc/GP1jxuXFMEXs55wNcxq+7X0SwpfXYRccLi7gfZbGCJ5
-	 Sn4p6dVxD/oJQk+ZLzUUqWI8CW0QXVf1rneTFO0w=
+	b=CUHYIS9KZywZOTlcSU6iX9SSQ6M86t1LqLuP7dcwrkRzXp18YpXvQfXgY54YJBLNq
+	 9i8uPOzkQTB665qrBIR59Z2wUseC+rW2Y2eW/qXfIo60ZDs74Tukg56Yt3NtlmnKp+
+	 OEq8oAZv6IpQqP/ymeGaLWaHTCv9Yg0pZyapjoh0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christian Loehle <christian.loehle@arm.com>,
-	Pengjie Zhang <zhangpengjie2@huawei.com>,
-	Zhongqiu Han <zhongqiu.han@oss.qualcomm.com>,
-	Sumit Gupta <sumitg@nvidia.com>,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+	Kyle Pepper <cochcoder@proton.me>,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 325/990] cpufreq: Serialize global boost updates
-Date: Wed, 25 Nov 2026 15:28:12 +0100
-Message-ID: <20261125143829.700069758@linuxfoundation.org>
+Subject: [PATCH 6.18 326/990] Bluetooth: reject invalid LE supervision timeout relationships
+Date: Wed, 25 Nov 2026 15:28:13 +0100
+Message-ID: <20261125143829.723143398@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143822.072087159@linuxfoundation.org>
 References: <20261125143822.072087159@linuxfoundation.org>
@@ -71,53 +68,69 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Christian Loehle <christian.loehle@arm.com>
+From: Kyle Pepper <cochcoder@proton.me>
 
-[ Upstream commit 3d5720dff09f3b90d9ab2a6707e4bb8d69542f4a ]
+[ Upstream commit c1d50a71cdee90a0c68b7a67221d8aae96d14a0c ]
 
-Concurrent global boost sysfs writes can interleave their global flag
-and per-policy updates. An enabling write can set the global flag, then
-a disabling write can clear it and finish before the enabling write
-updates the policies. Both writes succeed, leaving boost enabled on
-the policies while the global flag is disabled.
+The LE parameter validator calculates an unsigned maximum latency by
+subtracting one from a truncated quotient. If the quotient is zero,
+this wraps and accepts invalid parameters. Exact quotient boundaries
+also accept equality where the supervision timeout must be greater.
 
-Serialize the complete global boost update, including rollback on
-failure, with a mutex.
+Compare the products directly after checking the field bounds. The
+validated interval and latency limits keep the products within int.
+This enforces the strict timeout relationship without division or
+unsigned subtraction.
 
-Fixes: 6f19efc0a1ca ("cpufreq: Add boost frequency support in core")
-Signed-off-by: Christian Loehle <christian.loehle@arm.com>
-Reviewed-by: Pengjie Zhang <zhangpengjie2@huawei.com>
-Reviewed-by: Zhongqiu Han <zhongqiu.han@oss.qualcomm.com>
-Reviewed-by: Sumit Gupta <sumitg@nvidia.com>
-Link: https://patch.msgid.link/20261105215223.1263415-3-christian.loehle@arm.com
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Sashiko identified the underflow while reviewing the soft interval
+preference RFC. The bug is already present in its unpatched base; keep
+this common-validator fix independent of that preference policy.
+
+Fixes: 8757825b128e ("Bluetooth: hci_check_conn_params() check proper range")
+Assisted-by: LLM
+Signed-off-by: Kyle Pepper <cochcoder@proton.me>
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/cpufreq/cpufreq.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ include/net/bluetooth/hci_core.h | 13 +++----------
+ 1 file changed, 3 insertions(+), 10 deletions(-)
 
-diff --git a/drivers/cpufreq/cpufreq.c b/drivers/cpufreq/cpufreq.c
-index a48dd423b8f98..0df5dbe968ea9 100644
---- a/drivers/cpufreq/cpufreq.c
-+++ b/drivers/cpufreq/cpufreq.c
-@@ -2805,6 +2805,8 @@ int cpufreq_boost_set_sw(struct cpufreq_policy *policy, int state)
- }
- EXPORT_SYMBOL_GPL(cpufreq_boost_set_sw);
- 
-+static DEFINE_MUTEX(cpufreq_boost_mutex);
-+
- static int cpufreq_boost_trigger_state(int state)
+diff --git a/include/net/bluetooth/hci_core.h b/include/net/bluetooth/hci_core.h
+index 37b3dc2b4c945..d244fd50345ec 100644
+--- a/include/net/bluetooth/hci_core.h
++++ b/include/net/bluetooth/hci_core.h
+@@ -2271,8 +2271,6 @@ static inline struct smp_irk *hci_get_irk(struct hci_dev *hdev,
+ static inline int hci_check_conn_params(u16 min, u16 max, u16 latency,
+ 					u16 to_multiplier)
  {
- 	struct cpufreq_policy *policy;
-@@ -2812,6 +2814,8 @@ static int cpufreq_boost_trigger_state(int state)
- 	bool boost_enabled;
- 	int ret = -EOPNOTSUPP;
+-	u16 max_latency;
+-
+ 	if (min > max) {
+ 		BT_WARN("min %d > max %d", min, max);
+ 		return -EINVAL;
+@@ -2298,19 +2296,14 @@ static inline int hci_check_conn_params(u16 min, u16 max, u16 latency,
+ 		return -EINVAL;
+ 	}
  
-+	guard(mutex)(&cpufreq_boost_mutex);
-+
- 	/*
- 	 * Don't compare 'cpufreq_driver->boost_enabled' with 'state' here to
- 	 * make sure all policies are in sync with global boost flag.
+-	if (max >= to_multiplier * 8) {
+-		BT_WARN("max %d >= to_multiplier %d * 8", max, to_multiplier);
+-		return -EINVAL;
+-	}
+-
+-	max_latency = (to_multiplier * 4 / max) - 1;
+ 	if (latency > 499) {
+ 		BT_WARN("latency %d > 499", latency);
+ 		return -EINVAL;
+ 	}
+ 
+-	if (latency > max_latency) {
+-		BT_WARN("latency %d > max_latency %d", latency, max_latency);
++	if ((latency + 1) * max >= to_multiplier * 4) {
++		BT_WARN("latency %d, max %d and timeout %d are incompatible",
++			latency, max, to_multiplier);
+ 		return -EINVAL;
+ 	}
+ 
 -- 
 2.53.0
 
