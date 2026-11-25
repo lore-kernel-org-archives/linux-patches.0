@@ -1,51 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795624130;
-	b=Rhvy+JbUpyPiCmjnQV87pIZFmRYt65IXt6RCZi2zXeKb8t1J4N1ZUX8smWUuBThaZbAQ
-	 LM46u/2IY3SEnvIXgDFvmw6KnJxmiokBfil0y8sKCL4AnOyFw/atE5qIenWoACuCguGER
-	 Am0biGesFcdNjGb59DUe7TMBM+r2u9uXrWHzpFSW/Jh8wWOtqaQACWcxpv06wUCM66xRq
-	 0umrmCd7ZU672davjj47aw+MkrlcdWhMtXIN90kIy9ieohobTllUKK5TeUDkADBgRk5RV
-	 7qIfk9m7v8OQXld8vUcttiDLaZbCDyoBfD8ugMpAPw+H5/CfXYDcoYqwby9IjCfG+Iw==
+	t=1795624133;
+	b=2BSgO9UJ4ZgigBAevwM5kVQsAHur8WHDadGUds/dmaL8j3nLkQYoS7fFwXF7PevH82VH
+	 EsgYQFpaDq/OaGwkrZ6i+XboVfJRAjof4OuaCSjzrxOd3xsTR2rkj8rcMoC0bjjM/hC1z
+	 9i2fzxbR5wkaNyW/BgUBNXEEvrq3RktAm9wP1nj6hRKCaVJFsxU6q0QcxwGBPrzRkb5pO
+	 fPrw3lJDJf6RtVuhVHPHnkfpXPrvx2ODk3kAGzrQIsDAXrCFUkspBSJWZFrC3usalTgJa
+	 RB7FSrKiz+M1FqufJmVIxDKsNoBZmgkLRDhmMoLGWOx7BarPksMPOjRvt4IF+u2Cxow==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795624130;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795624133;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=d1vzy3ST7twEJjdBbEG3lIcMbIRglIl7/8pqeAcJpSs=;
-	b=T63woG8En0xqI/Fln+EYv7EodrFFipf3K9Un7gpqQcZRWaerqQvxoO4+50TgNHk2+EhG
-	 zfSI6RKw0xgeoVARuJs3ZN7mIWzwcxBKhfeFkJRYheoTK+Y4VO/ZcdE0GglyZEpJZxgos
-	 pSzPsc2JNs9bndKI7aI6/xLMekxQ9ptKmUHlaiYjXYqrewRoiClX7dx8mCqga6q5HqbP5
-	 gMHRDYgxDCJUNdl+zVpZOnZrb1EcVmwp2YZ0uTHOr+GSBpOBJQLqbgbIUh6MOTj9jLTPW
-	 3dnWqSWeGMwV0oGQpqGa64sgj9s0/tRRVptm0Sj69JpuZ0Yf+7eMkGdmIUFopdPcz4g==
+	bh=uK89TDzv8zXJsf67QB15NJcZ/5rzgSAsK5ui9J1eCCw=;
+	b=qlGLrtCQJNYYZxVGS+NpndwYdmYGiCyOCxR1mSv9N/oSV32Wx2xZisv4tG9kkeu2Q11G
+	 zRDAW7UnRPXXBLWqkHqBK90DGHsZ2ySJaNdoHLgL5JFLesJFdFjm+EEwUT0LIWLEqrsC3
+	 5SWU1mrbwCn0yk7rV+NHJfPNfmKXShiU9LwlrAZVuKBRLqvIbvX70Jn9p3pXBlt9gqpDW
+	 9SJxa2mMLlYui4g1jYbMwUOf/HR3fzqg+UyRwgnpplxYY9vl/Np9Og9g8EQOJ1ZQZ5GWi
+	 NzvMEYEYmJeyLU8t5vCwMiYr+luey5QlvammfN9YGVfYIg/czxLMZTVVufk235QeSfQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=qemqXw4J;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Ih2tD4BI;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1BAB4606A32C;
-	Wed, 25 Nov 2026 16:28:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7B227606A337;
+	Wed, 25 Nov 2026 16:28:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=qemqXw4J
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4796F1F01803;
-	Wed, 25 Nov 2026 16:28:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Ih2tD4BI
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9D63F1F000C4;
+	Wed, 25 Nov 2026 16:28:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795624129;
-	bh=d1vzy3ST7twEJjdBbEG3lIcMbIRglIl7/8pqeAcJpSs=;
+	s=korg; t=1795624133;
+	bh=uK89TDzv8zXJsf67QB15NJcZ/5rzgSAsK5ui9J1eCCw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=qemqXw4JgaS2Lj1X265Vq4RKLejK4ZYe+kTkildgwUkvicsG+sS2Fvh16UrgH4e7K
-	 KLLBl/w6eU1zOolPQQDMSoL5vykDu7gOdkc/xioCtV4PJ9PINswpXN84pQSnyhengZ
-	 VYxs7NUwFED3gBYhnHfe2L4D5WNCPGlQVGhPOnvo=
+	b=Ih2tD4BIx+14JrOCeDod8cZSkF3TPsS7UAnsLMbzbD5soFIQgOUyaMQsjxjyWDXaQ
+	 s89Ts3iTkV2Tvybn0esIKw1WMLsTLRB7YEktbw0ssf6Er6FC6evhtq9xBZ9XWddeg7
+	 HqexZzF7PUNEBB5aecGzsjKEFPXcmb/tWuOvtnPo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Alexei Starovoitov <ast@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 096/816] bpf: Refuse to map an arena at address 0
-Date: Wed, 25 Nov 2026 15:27:24 +0100
-Message-ID: <20261125143851.441800970@linuxfoundation.org>
+Subject: [PATCH 6.12 097/816] bpf: Refuse an arena mmap() longer than max_entries pages
+Date: Wed, 25 Nov 2026 15:27:25 +0100
+Message-ID: <20261125143851.464612858@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143849.205329330@linuxfoundation.org>
 References: <20261125143849.205329330@linuxfoundation.org>
@@ -69,42 +69,49 @@ Content-Transfer-Encoding: 8bit
 
 From: Alexei Starovoitov <ast@kernel.org>
 
-[ Upstream commit ca580b034380fa9a69cc973637d1859ec4f5b344 ]
+[ Upstream commit 1e01345b87f13c354687360cb81ed2a521ff2b13 ]
 
-The first mmap() of an arena sets user_vm_start and user_vm_end. Each
-subsequent mmap() must use the same range. The value 0 in user_vm_start
-means that the range is not set, but a mapping can start at address 0. Then
-arena_map_mmap() does not check vm_start and sets user_vm_start again. The
-range tree counts pages from user_vm_start. With a new user_vm_start it
-reports allocated pages as free, and apply_range_set_cb() fails with
--EBUSY.
+arena_map_alloc() puts max_entries free pages in the range tree of an
+arena. But the arena kfuncs check their arguments against user_vm_start and
+user_vm_end. Without map_extra, arena_map_mmap() takes both from the first
+vma. This vma can be up to 4 GiB long. Then arena_free_pages() also marks
+pages as free that were never in the range tree. Thus max_entries does not
+limit the memory of the arena, but these pages are inside kern_vm.
 
-An arena at address 0 is not useful, because the verifier rejects all progs
-that refer to it. Return -EINVAL from arena_get_unmapped_area(). It runs
-before mmap() removes the old mappings in the range.
+Refuse an mmap() longer than max_entries pages with -E2BIG. With map_extra
+this limit exists already. libbpf always maps max_entries pages. Replace
+both SZ_4G checks with this limit, because it is at most 4 GiB.
 
 Fixes: 317460317a02 ("bpf: Introduce bpf_arena.")
 Signed-off-by: Alexei Starovoitov <ast@kernel.org>
-Link: https://patch.msgid.link/20261101190535.1454146-4-alexei.starovoitov@gmail.com
+Link: https://patch.msgid.link/20261101190535.1454146-6-alexei.starovoitov@gmail.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/bpf/arena.c | 3 +++
- 1 file changed, 3 insertions(+)
+ kernel/bpf/arena.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
 diff --git a/kernel/bpf/arena.c b/kernel/bpf/arena.c
-index c62c6f261ca07..598920ac256dc 100644
+index 598920ac256dc..345c77f7cd2b5 100644
 --- a/kernel/bpf/arena.c
 +++ b/kernel/bpf/arena.c
-@@ -341,6 +341,9 @@ static unsigned long arena_get_unmapped_area(struct file *filp, unsigned long ad
- 	ret = mm_get_unmapped_area(current->mm, filp, addr, len * 2, 0, flags);
- 	if (IS_ERR_VALUE(ret))
- 		return ret;
-+	if (!ret)
-+		/* user_vm_start == 0 means that the user range is not set yet */
-+		return -EINVAL;
- 	if ((ret >> 32) == ((ret + len - 1) >> 32))
- 		return ret;
- 	if (WARN_ON_ONCE(arena->user_vm_start))
+@@ -325,7 +325,7 @@ static unsigned long arena_get_unmapped_area(struct file *filp, unsigned long ad
+ 
+ 	if (pgoff)
+ 		return -EINVAL;
+-	if (len > SZ_4G)
++	if (len > (u64)map->max_entries * PAGE_SIZE)
+ 		return -E2BIG;
+ 
+ 	/* if user_vm_start was specified at arena creation time */
+@@ -373,7 +373,7 @@ static int arena_map_mmap(struct bpf_map *map, struct vm_area_struct *vma)
+ 		return -EBUSY;
+ 
+ 	/* Earlier checks should prevent this */
+-	if (WARN_ON_ONCE(vma->vm_end - vma->vm_start > SZ_4G || vma->vm_pgoff))
++	if (WARN_ON_ONCE(vma_pages(vma) > map->max_entries || vma->vm_pgoff))
+ 		return -EFAULT;
+ 
+ 	if (remember_vma(arena, vma))
 -- 
 2.53.0
 
