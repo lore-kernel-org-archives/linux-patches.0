@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795622082;
-	b=JGzpNJ2YEVJPOK/H9og4CkL1nUqrYQIjG3tJ68yd4uYp0WQ2xqxRHs5ugWx3paz3tmfj
-	 2iJVcl42Pz/Nysub0C1PRoQanT4wDYxlWEVvXzwvsH7Xp/sakljSkDYJ481bUQfuZ8/EK
-	 ZJIzv+LBDWYcjmGDP2ErHciToRCSskxPyh3mbzxNUwhJy4pBMSNnk5+qh8u2wx+EE0570
-	 hTAO5poIgR8dHcdNnDte9yLmIq/FVXiYWWWgrK1kycHwxxV3Enxypkz4ux25MiAoX5SxN
-	 gR6yuPX+elulJlGAXercVfh3+z4US35teTAoz++pf7rOF+VBSgxBGBrj6e4A7DNqCPQ==
+	t=1795622085;
+	b=xR0udpOTJ4qs2ngdwDhG9l4Bc3ZzfR75arwmlwNUrd8xro2rd+Ui3wDcQrc6q0mZDMm5
+	 hwi71deeUoX9l4wo0Aku8OalC5JLTlkJ9RJKWvtxUa7oF117HEM4AzYAERQQ5bjrGTsFj
+	 C/q2oqDxOy/B7fZzidHR4CbrzbWiJqc0Gpjz+ooof04g3ttYTsCng6I8sHEkXbn7H6NRy
+	 Kz1qC/B3RXweAO/MXgKDW5lvKTZtJVdXvkLHUEvFXD3u/NndV/g7PVjMKFaLvMEil9SsA
+	 RygVIsmEw5AcHO6WS5nolQ+Z2JuI07EJMONrYJEhklskh0vY8ZUd1RCz/BJ/o5iJQEg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795622082;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795622085;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=chve0hUpsKtifZz6ssq1+2D3OBP0SRfDwPCRrpn3TuY=;
-	b=k2M1aPyVJc54dtoZiW6S2YgiKgSMqCVdpqTraZODfTzj2NnkSnTJ7HjiiVxZm4Vj2sF9
-	 BzCgAzIeLKVOwM95p02tnGVxHVJEN8Rmp9CmiNtWRfs4j+NFaKHghBDiah75X4PrwGvi7
-	 7F4xiBzog0GBPPz1JNMflaqqkt9zRHefKhUlkifBrj7C4xXcEYxs09k5j4PiiKPPQHXjo
-	 c4VAhWVOG9255kXqDVorCmODC/dzGBVFGj/UAJb3kSQm2fnYYrqPRCk9kYxbg9E+n5FPP
-	 w+6WCI+lgIy96v86CaRB7ApWbO2pwvgveTSIeK1G5WiqrRdmIxumy19Xl+U2lQ+X8Vg==
+	bh=vDGysDBFYe+hcXP1dqEBjlTby3HiOmWFKzqgVOnCkEE=;
+	b=nTzT1J/diAfJxqfKHG/p/y1jINlweFUfOYieOLOOuIIoQXof1Z6CWMq80ONbkIKBPsal
+	 WVXC9NFzrZjra4RNPwKeu2sYxj0mq4hKcI0bszD+xi/qjyckeCVtxAwJ0bArZlunL0w0r
+	 DxqV+rCR7HauitS1NAC5PeaQaMG00a1C4KuDV0eaqmeHNLU9Dv5edIGqQgmVXBPaIVN8/
+	 Y5019Fj4arfn+u8ytQW/wFdbBiW/Zz3vwu4Ryx1VPk7XZ1YYWn7h02tuqSUElByhJ89Dc
+	 3bCodkSXugq5Ou4IHq2bNg6FligoPhJoelTFiAyatgAeSTnhq+n4CKcQv24rZgpO+lw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=L2uJZEx8;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=fVuz9WWt;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 957CC606A323;
-	Wed, 25 Nov 2026 15:54:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 80891606A31E;
+	Wed, 25 Nov 2026 15:54:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=L2uJZEx8
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 994241F000CA;
-	Wed, 25 Nov 2026 15:54:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=fVuz9WWt
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BEA871F000CA;
+	Wed, 25 Nov 2026 15:54:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795622082;
-	bh=chve0hUpsKtifZz6ssq1+2D3OBP0SRfDwPCRrpn3TuY=;
+	s=korg; t=1795622085;
+	bh=vDGysDBFYe+hcXP1dqEBjlTby3HiOmWFKzqgVOnCkEE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=L2uJZEx86Aujc8mt0BHZqsB3OeWJOsKhKUqnk8CSYxZHHO2aiAFvVcHoIdTznqpjd
-	 d9ClU0R4TAzWIEFSE3U/BiE2K2+imxOGxH5p2uItK91sPAqFUDyNCM3SQZeXqjU3L+
-	 pNnmw8mZRf5qodUIumEAsKLHG4D67Oka64M1kT7g=
+	b=fVuz9WWtMRhB/sHYJO1zijFa0X2KuArvvtn6JtD+DY5pWQB1cp0xBKBVUJ+6+zmIr
+	 fZnkGzmHwMHkteVSQQyozj0IksoPQM/Ve4imXc6YFdBQ39fmaWOuVFZiCM4WSngtBd
+	 T1GDTyh7mV4CTRTccgT2uIihJo/f189muzxbEzJw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Alexander Duyck <alexanderduyck@fb.com>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 424/990] fbnic: Add logic to track PMD state via MAC/PCS signals
-Date: Wed, 25 Nov 2026 15:29:51 +0100
-Message-ID: <20261125143832.028897661@linuxfoundation.org>
+Subject: [PATCH 6.18 425/990] fbnic: Fix service task races with ndo_stop and PM suspend
+Date: Wed, 25 Nov 2026 15:29:52 +0100
+Message-ID: <20261125143832.052466383@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143822.072087159@linuxfoundation.org>
 References: <20261125143822.072087159@linuxfoundation.org>
@@ -70,496 +70,148 @@ Content-Transfer-Encoding: 8bit
 
 From: Alexander Duyck <alexanderduyck@fb.com>
 
-[ Upstream commit 9963117a2b9b29074763ccb62fe8ee4d78ca46f2 ]
+[ Upstream commit 05ec5504ff69dac8867292c0e778fe79c3dde83c ]
 
-One complication with the design of our part is that the PMD doesn't
-provide a direct signal to the host. Instead we have visibility to signals
-that the PCS provides to the MAC that allow us to check the link state
-through that.
+The service task can run after the datapath has been torn down
+underneath it. ndo_stop stops the task with the cancel_delayed_work
+function, which does not wait for a pass already executing. It cannot
+use the cancel_delayed_work_sync function, as ndo_stop holds RTNL and
+the task takes RTNL itself, so a pass blocked on RTNL while ndo_stop
+runs carries on once ndo_stop returns.
 
-We will need to account for several things in the PMD and firmware when
-managing the link. Specifically when the link first starts to come up the
-PMD will cause the link to flap. This is due to the firmware starting a
-training cycle when the link is first detected. This will cause link
-flapping if we were to immediately report link up when the PCS first
-detects it.
+By then the fbnic_down function has demoted the host MACDA and action
+entries to UPDATE and disabled the host queues, and ndo_stop has handed
+ownership back to firmware, which clears fw_heartbeat_enabled. The late
+pass's health check reports a firmware crash that did not happen, and
+the fbnic_fw_config_after_crash function reclaims ownership and writes
+the host rules back to hardware. If the BMC raised
+FBNIC_FW_CAP_F_BMC_TCAM_REINIT in that window, the fbnic_bmc_rpc_check
+function does the same through the __fbnic_set_rx_mode function. Either
+way host traffic is steered at queues that are no longer running until
+the next open and close.
 
-To address that we are adding a pmd_state variable that is meant to be a
-countdown of sorts indicating the state of the PMD. If the link is down or
-has been reconfigured the PMD will start out in the initialize state. By
-default the link is assumed to be in the SEND_DATA state if it is available
-on initial link inspection. If link is detected while in the initialize
-state the PMD state will switch to training, and if after 4 seconds the
-link is still stable we will transition to link_ready, and finally the
-send_data state.  With this we can avoid link flapping when a cable is
-first connected to the NIC.
+The fbnic_pm_suspend function, which also serves shutdown and PCIe
+error recovery, has the same problem and a worse one. It calls ndo_stop
+directly with the device detached but __LINK_STATE_START still set, so
+a late pass there sees the interface running, restores the host state,
+and keeps re-arming itself every second after the mailbox, IRQs and
+MMIO are gone.
 
-One side effect of this is that we need to pull the link state away from
-the PCS. For now we use a union of the PCS link state register value and
-the pmd_state. The plan is to add a PMD register to report the pmd_state
-to the phylink interface. With that we can then look at switching over to
-the use of the XPCS driver for fbnic instead of having an internal one.
+Only run the health and BMC checks, and only re-arm, while the
+interface is running and the device is present. The __dev_close_many
+function clears __LINK_STATE_START under RTNL before it calls ndo_stop,
+and the suspend path detaches the device under RTNL, so a late pass now
+leaves the host state alone and stops. The BMC flags stay raised, and
+the __fbnic_open function reclaims ownership, restarts the heartbeat
+and rebuilds the BMC rules on the next open. The fbnic_pm_suspend
+function also cancels the task synchronously once it has dropped RTNL,
+so a pass already running cannot overlap the mailbox and IRQ teardown.
 
+On resume the __fbnic_pm_attach function called the fbnic_up function,
+which schedules the next pass, before attaching the device, all without
+RTNL. A pass that ran in between would now see the device detached and
+stop for good. Check for an init failure first, then hold RTNL and the
+instance lock across the stats reset, the fbnic_up call and the attach,
+as the suspend path does, so the pass blocks until the device is
+present. This also gives the fbnic_up function the instance lock it
+expects for the napi_enable_locked calls and the rx mode rewrite.
+
+A device that detaches itself on a failed register read likewise stops
+re-arming the task until recovery attaches it.
+
+The issue was found by code review. The change was tested on fbnic
+hardware with firmware 26.09.14-017_h7ab84d2ef68f by cycling the
+interface through DPC/AER recoveries for a day.
+
+Fixes: 04a230b27d8f ("fbnic: Add logic to repopulate RPC TCAM if BMC enables channel")
+Fixes: 6ae7da8e9e06 ("eth: fbnic: reprogram TCAMs after FW crash")
 Signed-off-by: Alexander Duyck <alexanderduyck@fb.com>
-Link: https://patch.msgid.link/176374323107.959489.14951134213387615059.stgit@ahduyck-xeon-server.home.arpa
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
-Stable-dep-of: 05ec5504ff69 ("fbnic: Fix service task races with ndo_stop and PM suspend")
+Link: https://patch.msgid.link/179381515284.9644.1846335740085170889.stgit@ahduyck-xeon-server.home.arpa
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/meta/fbnic/fbnic.h       |   4 +
- drivers/net/ethernet/meta/fbnic/fbnic_csr.h   |   2 +
- drivers/net/ethernet/meta/fbnic/fbnic_irq.c   |   4 +-
- drivers/net/ethernet/meta/fbnic/fbnic_mac.c   |  69 ++++++++----
- drivers/net/ethernet/meta/fbnic/fbnic_mac.h   |  36 +++++--
- .../net/ethernet/meta/fbnic/fbnic_netdev.c    |   2 +-
- .../net/ethernet/meta/fbnic/fbnic_netdev.h    |   2 +-
- drivers/net/ethernet/meta/fbnic/fbnic_pci.c   |   6 +-
- .../net/ethernet/meta/fbnic/fbnic_phylink.c   | 102 ++++++++++++++----
- 9 files changed, 175 insertions(+), 52 deletions(-)
+ drivers/net/ethernet/meta/fbnic/fbnic_pci.c | 38 ++++++++++++++++-----
+ 1 file changed, 29 insertions(+), 9 deletions(-)
 
-diff --git a/drivers/net/ethernet/meta/fbnic/fbnic.h b/drivers/net/ethernet/meta/fbnic/fbnic.h
-index 3799bb7f6630a..dbc3ff5659b4b 100644
---- a/drivers/net/ethernet/meta/fbnic/fbnic.h
-+++ b/drivers/net/ethernet/meta/fbnic/fbnic.h
-@@ -83,6 +83,10 @@ struct fbnic_dev {
- 	/* Last @time_high refresh time in jiffies (to catch stalls) */
- 	unsigned long last_read;
- 
-+	/* PMD specific data */
-+	unsigned long end_of_pmd_training;
-+	u8 pmd_state;
-+
- 	/* Local copy of hardware statistics */
- 	struct fbnic_hw_stats hw_stats;
- 
-diff --git a/drivers/net/ethernet/meta/fbnic/fbnic_csr.h b/drivers/net/ethernet/meta/fbnic/fbnic_csr.h
-index 00c76708f2335..cf659be3004b2 100644
---- a/drivers/net/ethernet/meta/fbnic/fbnic_csr.h
-+++ b/drivers/net/ethernet/meta/fbnic/fbnic_csr.h
-@@ -787,6 +787,8 @@ enum {
- 
- /* MAC PCS registers */
- #define FBNIC_CSR_START_PCS		0x10000 /* CSR section delimiter */
-+#define FBNIC_PCS_PAGE(n)	(0x10000 + 0x400 * (n))	/* 0x40000 + 1024*n */
-+#define FBNIC_PCS(reg, n)	((reg) + FBNIC_PCS_PAGE(n))
- #define FBNIC_CSR_END_PCS		0x10668 /* CSR section delimiter */
- 
- #define FBNIC_CSR_START_RSFEC		0x10800 /* CSR section delimiter */
-diff --git a/drivers/net/ethernet/meta/fbnic/fbnic_irq.c b/drivers/net/ethernet/meta/fbnic/fbnic_irq.c
-index 40947e142c5d0..9b068b82f30a0 100644
---- a/drivers/net/ethernet/meta/fbnic/fbnic_irq.c
-+++ b/drivers/net/ethernet/meta/fbnic/fbnic_irq.c
-@@ -131,7 +131,9 @@ static irqreturn_t fbnic_mac_msix_intr(int __always_unused irq, void *data)
- 
- 	fbn = netdev_priv(fbd->netdev);
- 
--	phylink_pcs_change(&fbn->phylink_pcs, false);
-+	/* Record link down events */
-+	if (!fbd->mac->get_link(fbd, fbn->aui, fbn->fec))
-+		phylink_pcs_change(&fbn->phylink_pcs, false);
- 
- 	return IRQ_HANDLED;
- }
-diff --git a/drivers/net/ethernet/meta/fbnic/fbnic_mac.c b/drivers/net/ethernet/meta/fbnic/fbnic_mac.c
-index 28a2e1fd3760a..fc7abea4ef5bf 100644
---- a/drivers/net/ethernet/meta/fbnic/fbnic_mac.c
-+++ b/drivers/net/ethernet/meta/fbnic/fbnic_mac.c
-@@ -466,9 +466,8 @@ static u32 __fbnic_mac_cmd_config_asic(struct fbnic_dev *fbd,
- 	return command_config;
- }
- 
--static bool fbnic_mac_get_pcs_link_status(struct fbnic_dev *fbd)
-+static bool fbnic_mac_get_link_status(struct fbnic_dev *fbd, u8 aui, u8 fec)
- {
--	struct fbnic_net *fbn = netdev_priv(fbd->netdev);
- 	u32 pcs_status, lane_mask = ~0;
- 
- 	pcs_status = rd32(fbd, FBNIC_SIG_PCS_OUT0);
-@@ -476,7 +475,7 @@ static bool fbnic_mac_get_pcs_link_status(struct fbnic_dev *fbd)
- 		return false;
- 
- 	/* Define the expected lane mask for the status bits we need to check */
--	switch (fbn->aui) {
-+	switch (aui) {
- 	case FBNIC_AUI_100GAUI2:
- 		lane_mask = 0xf;
- 		break;
-@@ -484,7 +483,7 @@ static bool fbnic_mac_get_pcs_link_status(struct fbnic_dev *fbd)
- 		lane_mask = 3;
- 		break;
- 	case FBNIC_AUI_LAUI2:
--		switch (fbn->fec) {
-+		switch (fec) {
- 		case FBNIC_FEC_OFF:
- 			lane_mask = 0x63;
- 			break;
-@@ -502,7 +501,7 @@ static bool fbnic_mac_get_pcs_link_status(struct fbnic_dev *fbd)
- 	}
- 
- 	/* Use an XOR to remove the bits we expect to see set */
--	switch (fbn->fec) {
-+	switch (fec) {
- 	case FBNIC_FEC_OFF:
- 		lane_mask ^= FIELD_GET(FBNIC_SIG_PCS_OUT0_BLOCK_LOCK,
- 				       pcs_status);
-@@ -521,7 +520,46 @@ static bool fbnic_mac_get_pcs_link_status(struct fbnic_dev *fbd)
- 	return !lane_mask;
- }
- 
--static bool fbnic_mac_get_link(struct fbnic_dev *fbd)
-+static bool fbnic_pmd_update_state(struct fbnic_dev *fbd, bool signal_detect)
-+{
-+	/* Delay link up for 4 seconds to allow for link training.
-+	 * The state transitions for this are as follows:
-+	 *
-+	 * All states have the following two transitions in common:
-+	 *	Loss of signal -> FBNIC_PMD_INITIALIZE
-+	 *		The condition handled below (!signal)
-+	 *	Reconfiguration -> FBNIC_PMD_INITIALIZE
-+	 *		Occurs when mac_prepare starts a PHY reconfig
-+	 * FBNIC_PMD_TRAINING:
-+	 *	signal still detected && 4s have passed -> Report link up
-+	 *	When link is brought up in link_up -> FBNIC_PMD_SEND_DATA
-+	 * FBNIC_PMD_INITIALIZE:
-+	 *	signal detected -> FBNIC_PMD_TRAINING
-+	 */
-+	if (!signal_detect) {
-+		fbd->pmd_state = FBNIC_PMD_INITIALIZE;
-+		return false;
-+	}
-+
-+	switch (fbd->pmd_state) {
-+	case FBNIC_PMD_TRAINING:
-+		return time_before(fbd->end_of_pmd_training, jiffies);
-+	case FBNIC_PMD_LINK_READY:
-+	case FBNIC_PMD_SEND_DATA:
-+		return true;
-+	}
-+
-+	fbd->end_of_pmd_training = jiffies + 4 * HZ;
-+
-+	/* Ensure end_of_training is visible before the state change */
-+	smp_wmb();
-+
-+	fbd->pmd_state = FBNIC_PMD_TRAINING;
-+
-+	return false;
-+}
-+
-+static bool fbnic_mac_get_link(struct fbnic_dev *fbd, u8 aui, u8 fec)
- {
- 	bool link;
- 
-@@ -538,7 +576,8 @@ static bool fbnic_mac_get_link(struct fbnic_dev *fbd)
- 	wr32(fbd, FBNIC_SIG_PCS_INTR_STS,
- 	     FBNIC_SIG_PCS_INTR_LINK_DOWN | FBNIC_SIG_PCS_INTR_LINK_UP);
- 
--	link = fbnic_mac_get_pcs_link_status(fbd);
-+	link = fbnic_mac_get_link_status(fbd, aui, fec);
-+	link = fbnic_pmd_update_state(fbd, link);
- 
- 	/* Enable interrupt to only capture changes in link state */
- 	wr32(fbd, FBNIC_SIG_PCS_INTR_MASK,
-@@ -586,20 +625,15 @@ void fbnic_mac_get_fw_settings(struct fbnic_dev *fbd, u8 *aui, u8 *fec)
- 	}
- }
- 
--static int fbnic_pcs_enable_asic(struct fbnic_dev *fbd)
-+static void fbnic_mac_prepare(struct fbnic_dev *fbd, u8 aui, u8 fec)
- {
- 	/* Mask and clear the PCS interrupt, will be enabled by link handler */
- 	wr32(fbd, FBNIC_SIG_PCS_INTR_MASK, ~0);
- 	wr32(fbd, FBNIC_SIG_PCS_INTR_STS, ~0);
- 
--	return 0;
--}
--
--static void fbnic_pcs_disable_asic(struct fbnic_dev *fbd)
--{
--	/* Mask and clear the PCS interrupt */
--	wr32(fbd, FBNIC_SIG_PCS_INTR_MASK, ~0);
--	wr32(fbd, FBNIC_SIG_PCS_INTR_STS, ~0);
-+	/* If we don't have link tear it all down and start over */
-+	if (!fbnic_mac_get_link_status(fbd, aui, fec))
-+		fbd->pmd_state = FBNIC_PMD_INITIALIZE;
- }
- 
- static void fbnic_mac_link_down_asic(struct fbnic_dev *fbd)
-@@ -867,10 +901,9 @@ static int fbnic_mac_get_sensor_asic(struct fbnic_dev *fbd, int id,
- 
- static const struct fbnic_mac fbnic_mac_asic = {
- 	.init_regs = fbnic_mac_init_regs,
--	.pcs_enable = fbnic_pcs_enable_asic,
--	.pcs_disable = fbnic_pcs_disable_asic,
- 	.get_link = fbnic_mac_get_link,
- 	.get_link_event = fbnic_mac_get_link_event,
-+	.prepare = fbnic_mac_prepare,
- 	.get_fec_stats = fbnic_mac_get_fec_stats,
- 	.get_pcs_stats = fbnic_mac_get_pcs_stats,
- 	.get_eth_mac_stats = fbnic_mac_get_eth_mac_stats,
-diff --git a/drivers/net/ethernet/meta/fbnic/fbnic_mac.h b/drivers/net/ethernet/meta/fbnic/fbnic_mac.h
-index 414c170abcba0..9b4fb0586dff1 100644
---- a/drivers/net/ethernet/meta/fbnic/fbnic_mac.h
-+++ b/drivers/net/ethernet/meta/fbnic/fbnic_mac.h
-@@ -10,6 +10,24 @@ struct fbnic_dev;
- 
- #define FBNIC_MAX_JUMBO_FRAME_SIZE	9742
- 
-+/* States loosely based on section 136.8.11.7.5 of IEEE 802.3-2022 Ethernet
-+ * Standard.  These are needed to track the state of the PHY as it has a delay
-+ * of several seconds from the time link comes up until it has completed
-+ * training that we need to wait to report the link.
-+ *
-+ * Currently we treat training as a single block as this is managed by the
-+ * firmware.
-+ *
-+ * We have FBNIC_PMD_SEND_DATA set to 0 as the expected default at driver load
-+ * and we initialize the structure containing it to zero at allocation.
-+ */
-+enum {
-+	FBNIC_PMD_SEND_DATA	= 0x0,
-+	FBNIC_PMD_INITIALIZE	= 0x1,
-+	FBNIC_PMD_TRAINING	= 0x2,
-+	FBNIC_PMD_LINK_READY	= 0x3,
-+};
-+
- enum {
- 	FBNIC_LINK_EVENT_NONE	= 0,
- 	FBNIC_LINK_EVENT_UP	= 1,
-@@ -55,15 +73,15 @@ enum fbnic_sensor_id {
-  * void (*init_regs)(struct fbnic_dev *fbd);
-  *	Initialize MAC registers to enable Tx/Rx paths and FIFOs.
-  *
-- * void (*pcs_enable)(struct fbnic_dev *fbd);
-- *	Configure and enable PCS to enable link if not already enabled
-- * void (*pcs_disable)(struct fbnic_dev *fbd);
-- *	Shutdown the link if we are the only consumer of it.
-- * bool (*get_link)(struct fbnic_dev *fbd);
-- *	Check PCS link status
-  * int (*get_link_event)(struct fbnic_dev *fbd)
-  *	Get the current link event status, reports true if link has
-  *	changed to either FBNIC_LINK_EVENT_DOWN or FBNIC_LINK_EVENT_UP
-+ * bool (*get_link)(struct fbnic_dev *fbd, u8 aui, u8 fec);
-+ *	Check link status
-+ *
-+ * void (*prepare)(struct fbnic_dev *fbd, u8 aui, u8 fec);
-+ *	Prepare PHY for init by fetching settings, disabling interrupts,
-+ *	and sending an updated PHY config to FW if needed.
-  *
-  * void (*link_down)(struct fbnic_dev *fbd);
-  *	Configure MAC for link down event
-@@ -74,10 +92,10 @@ enum fbnic_sensor_id {
- struct fbnic_mac {
- 	void (*init_regs)(struct fbnic_dev *fbd);
- 
--	int (*pcs_enable)(struct fbnic_dev *fbd);
--	void (*pcs_disable)(struct fbnic_dev *fbd);
--	bool (*get_link)(struct fbnic_dev *fbd);
- 	int (*get_link_event)(struct fbnic_dev *fbd);
-+	bool (*get_link)(struct fbnic_dev *fbd, u8 aui, u8 fec);
-+
-+	void (*prepare)(struct fbnic_dev *fbd, u8 aui, u8 fec);
- 
- 	void (*get_fec_stats)(struct fbnic_dev *fbd, bool reset,
- 			      struct fbnic_fec_stats *fec_stats);
-diff --git a/drivers/net/ethernet/meta/fbnic/fbnic_netdev.c b/drivers/net/ethernet/meta/fbnic/fbnic_netdev.c
-index 5c8077ee1fe3a..bd738155adb2d 100644
---- a/drivers/net/ethernet/meta/fbnic/fbnic_netdev.c
-+++ b/drivers/net/ethernet/meta/fbnic/fbnic_netdev.c
-@@ -86,10 +86,10 @@ static int fbnic_stop(struct net_device *netdev)
- {
- 	struct fbnic_net *fbn = netdev_priv(netdev);
- 
-+	fbnic_mac_free_irq(fbn->fbd);
- 	phylink_suspend(fbn->phylink, fbnic_bmc_present(fbn->fbd));
- 
- 	fbnic_down(fbn);
--	fbnic_mac_free_irq(fbn->fbd);
- 
- 	fbnic_time_stop(fbn);
- 	fbnic_fw_xmit_ownership_msg(fbn->fbd, false);
-diff --git a/drivers/net/ethernet/meta/fbnic/fbnic_netdev.h b/drivers/net/ethernet/meta/fbnic/fbnic_netdev.h
-index a05fc55221abd..6da8a37c27382 100644
---- a/drivers/net/ethernet/meta/fbnic/fbnic_netdev.h
-+++ b/drivers/net/ethernet/meta/fbnic/fbnic_netdev.h
-@@ -111,7 +111,7 @@ int fbnic_phylink_ethtool_ksettings_get(struct net_device *netdev,
- int fbnic_phylink_get_fecparam(struct net_device *netdev,
- 			       struct ethtool_fecparam *fecparam);
- int fbnic_phylink_init(struct net_device *netdev);
--
-+void fbnic_phylink_pmd_training_complete_notify(struct net_device *netdev);
- bool fbnic_check_split_frames(struct bpf_prog *prog,
- 			      unsigned int mtu, u32 hds_threshold);
- #endif /* _FBNIC_NETDEV_H_ */
 diff --git a/drivers/net/ethernet/meta/fbnic/fbnic_pci.c b/drivers/net/ethernet/meta/fbnic/fbnic_pci.c
-index 0ae0f0cf24ad0..df384a4b64517 100644
+index df384a4b64517..caa7cc1ddb6bd 100644
 --- a/drivers/net/ethernet/meta/fbnic/fbnic_pci.c
 +++ b/drivers/net/ethernet/meta/fbnic/fbnic_pci.c
-@@ -211,6 +211,10 @@ static void fbnic_service_task(struct work_struct *work)
- {
- 	struct fbnic_dev *fbd = container_of(to_delayed_work(work),
- 					     struct fbnic_dev, service_task);
-+	struct net_device *netdev = fbd->netdev;
-+
-+	if (netif_running(netdev))
-+		fbnic_phylink_pmd_training_complete_notify(netdev);
+@@ -222,18 +222,25 @@ static void fbnic_service_task(struct work_struct *work)
  
- 	rtnl_lock();
+ 	fbnic_fw_check_heartbeat(fbd);
  
-@@ -228,7 +232,7 @@ static void fbnic_service_task(struct work_struct *work)
+-	fbnic_health_check(fbd);
+-
+-	fbnic_bmc_rpc_check(fbd);
+-
+ 	if (netif_carrier_ok(fbd->netdev)) {
+ 		netdev_lock(fbd->netdev);
+ 		fbnic_napi_depletion_check(fbd->netdev);
  		netdev_unlock(fbd->netdev);
  	}
  
--	if (netif_running(fbd->netdev))
-+	if (netif_running(netdev))
+-	if (netif_running(netdev))
++	/* fbnic_service_task_stop() does not wait for a pass that is already
++	 * blocked on RTNL, so one can run after ndo_stop. Leave host state
++	 * alone in that case, and do not re-arm; __fbnic_open() reclaims and
++	 * rebuilds it. The PM path calls ndo_stop with the device detached but
++	 * still running; fbnic_up() starts the task again on resume.
++	 */
++	if (netif_running(netdev) && netif_device_present(netdev)) {
++		fbnic_health_check(fbd);
++
++		fbnic_bmc_rpc_check(fbd);
++
  		schedule_delayed_work(&fbd->service_task, HZ);
++	}
  
  	rtnl_unlock();
-diff --git a/drivers/net/ethernet/meta/fbnic/fbnic_phylink.c b/drivers/net/ethernet/meta/fbnic/fbnic_phylink.c
-index 99fa79acd2df6..20f88c8dcc79a 100644
---- a/drivers/net/ethernet/meta/fbnic/fbnic_phylink.c
-+++ b/drivers/net/ethernet/meta/fbnic/fbnic_phylink.c
-@@ -132,25 +132,9 @@ fbnic_phylink_pcs_get_state(struct phylink_pcs *pcs, unsigned int neg_mode,
- 
- 	state->duplex = DUPLEX_FULL;
- 
--	state->link = fbd->mac->get_link(fbd);
--}
--
--static int
--fbnic_phylink_pcs_enable(struct phylink_pcs *pcs)
--{
--	struct fbnic_net *fbn = fbnic_pcs_to_net(pcs);
--	struct fbnic_dev *fbd = fbn->fbd;
--
--	return fbd->mac->pcs_enable(fbd);
--}
--
--static void
--fbnic_phylink_pcs_disable(struct phylink_pcs *pcs)
--{
--	struct fbnic_net *fbn = fbnic_pcs_to_net(pcs);
--	struct fbnic_dev *fbd = fbn->fbd;
--
--	return fbd->mac->pcs_disable(fbd);
-+	state->link = (fbd->pmd_state == FBNIC_PMD_SEND_DATA) &&
-+		      (rd32(fbd, FBNIC_PCS(MDIO_STAT1, 0)) &
-+		       MDIO_STAT1_LSTATUS);
  }
+@@ -443,6 +450,12 @@ static int fbnic_pm_suspend(struct device *dev)
+ 	netdev_unlock(netdev);
+ 	rtnl_unlock();
  
- static int
-@@ -164,8 +148,6 @@ fbnic_phylink_pcs_config(struct phylink_pcs *pcs, unsigned int neg_mode,
- 
- static const struct phylink_pcs_ops fbnic_phylink_pcs_ops = {
- 	.pcs_config = fbnic_phylink_pcs_config,
--	.pcs_enable = fbnic_phylink_pcs_enable,
--	.pcs_disable = fbnic_phylink_pcs_disable,
- 	.pcs_get_state = fbnic_phylink_pcs_get_state,
- };
- 
-@@ -179,12 +161,39 @@ fbnic_phylink_mac_select_pcs(struct phylink_config *config,
- 	return &fbn->phylink_pcs;
- }
- 
-+static int
-+fbnic_phylink_mac_prepare(struct phylink_config *config, unsigned int mode,
-+			  phy_interface_t iface)
-+{
-+	struct net_device *netdev = to_net_dev(config->dev);
-+	struct fbnic_net *fbn = netdev_priv(netdev);
-+	struct fbnic_dev *fbd = fbn->fbd;
-+
-+	fbd->mac->prepare(fbd, fbn->aui, fbn->fec);
-+
-+	return 0;
-+}
-+
- static void
- fbnic_phylink_mac_config(struct phylink_config *config, unsigned int mode,
- 			 const struct phylink_link_state *state)
- {
- }
- 
-+static int
-+fbnic_phylink_mac_finish(struct phylink_config *config, unsigned int mode,
-+			 phy_interface_t iface)
-+{
-+	struct net_device *netdev = to_net_dev(config->dev);
-+	struct fbnic_net *fbn = netdev_priv(netdev);
-+	struct fbnic_dev *fbd = fbn->fbd;
-+
-+	/* Retest the link state and restart interrupts */
-+	fbd->mac->get_link(fbd, fbn->aui, fbn->fec);
-+
-+	return 0;
-+}
-+
- static void
- fbnic_phylink_mac_link_down(struct phylink_config *config, unsigned int mode,
- 			    phy_interface_t interface)
-@@ -216,7 +225,9 @@ fbnic_phylink_mac_link_up(struct phylink_config *config,
- 
- static const struct phylink_mac_ops fbnic_phylink_mac_ops = {
- 	.mac_select_pcs = fbnic_phylink_mac_select_pcs,
-+	.mac_prepare = fbnic_phylink_mac_prepare,
- 	.mac_config = fbnic_phylink_mac_config,
-+	.mac_finish = fbnic_phylink_mac_finish,
- 	.mac_link_down = fbnic_phylink_mac_link_down,
- 	.mac_link_up = fbnic_phylink_mac_link_up,
- };
-@@ -257,3 +268,52 @@ int fbnic_phylink_init(struct net_device *netdev)
- 
- 	return 0;
- }
-+
-+/**
-+ * fbnic_phylink_pmd_training_complete_notify - PMD training complete notifier
-+ * @netdev: Netdev struct phylink device attached to
-+ *
-+ * When the link first comes up the PMD will have a period of 2 to 3 seconds
-+ * where the link will flutter due to link training. To avoid spamming the
-+ * kernel log with messages about this we add a delay of 4 seconds from the
-+ * time of the last PCS report of link so that we can guarantee we are unlikely
-+ * to see any further link loss events due to link training.
-+ **/
-+void fbnic_phylink_pmd_training_complete_notify(struct net_device *netdev)
-+{
-+	struct fbnic_net *fbn = netdev_priv(netdev);
-+	struct fbnic_dev *fbd = fbn->fbd;
-+
-+	if (fbd->pmd_state != FBNIC_PMD_TRAINING)
-+		return;
-+
-+	/* Prevent reading end_of_pmd_training until we verified state */
-+	smp_rmb();
-+
-+	if (!time_before(READ_ONCE(fbd->end_of_pmd_training), jiffies))
-+		return;
-+
-+	/* At this point we have verified that the link has been up for
-+	 * the full training duration. As a first step we will try
-+	 * transitioning to link ready.
++	/* ndo_stop could not wait for a pass already blocked on RTNL. That
++	 * pass no longer re-arms, but wait for it to finish before the
++	 * mailbox, IRQs and MMIO go away.
 +	 */
-+	if (cmpxchg(&fbd->pmd_state, FBNIC_PMD_TRAINING,
-+		    FBNIC_PMD_LINK_READY) != FBNIC_PMD_TRAINING)
-+		return;
++	cancel_delayed_work_sync(&fbd->service_task);
 +
-+	/* Perform a follow-up check to verify that the link didn't flap
-+	 * just before our transition by rechecking the training timer.
+ null_uc_addr:
+ 	fbnic_fw_log_disable(fbd);
+ 
+@@ -543,19 +556,26 @@ static void __fbnic_pm_attach(struct device *dev)
+ 	struct net_device *netdev = fbd->netdev;
+ 	struct fbnic_net *fbn;
+ 
+-	rtnl_lock();
+-	fbnic_reset_hw_stats(fbd);
+-	rtnl_unlock();
+-
+ 	if (fbnic_init_failure(fbd))
+ 		return;
+ 
+ 	fbn = netdev_priv(netdev);
+ 
++	/* Hold RTNL until the device is attached, so the service task pass
++	 * fbnic_up() schedules cannot run until it will see it present.
 +	 */
-+	if (!time_before(READ_ONCE(fbd->end_of_pmd_training), jiffies))
-+		return;
++	rtnl_lock();
++	netdev_lock(netdev);
 +
-+	/* The training timeout has been completed. We are good to swap out
-+	 * link_ready for send_data assuming no other events have occurred
-+	 * that would have pulled us back into initialization or training.
-+	 */
-+	if (cmpxchg(&fbd->pmd_state, FBNIC_PMD_LINK_READY,
-+		    FBNIC_PMD_SEND_DATA) != FBNIC_PMD_LINK_READY)
-+		return;
++	fbnic_reset_hw_stats(fbd);
 +
-+	phylink_pcs_change(&fbn->phylink_pcs, false);
-+}
+ 	if (netif_running(netdev))
+ 		fbnic_up(fbn);
+ 
+ 	netif_device_attach(netdev);
++
++	netdev_unlock(netdev);
++	rtnl_unlock();
+ }
+ 
+ static int __maybe_unused fbnic_pm_resume(struct device *dev)
 -- 
 2.53.0
 
