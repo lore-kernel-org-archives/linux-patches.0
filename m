@@ -1,72 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795622433;
-	b=Hxj+dGpb2UWz5mJWNFHAwOt9w4SxN076AdPEzFsDXlvqO0sfxO5RDRtVasRa4ma6s5+1
-	 +Fc5/iZjDbF30G0xUaxKQrc2mSq+IojagdPldyNjeFI66ssKXeDZyrmy8A/Ny3DrX8n+G
-	 d1TVlOu2zgrJLxtWTz8voPMty2Bxu9jE4vI+oFc02uVwoorzeSy77Xt34lHXIEHztcauP
-	 QIZE28rQizyHgev1pGChnA7AsO7aaVswHeOzEKvxIQA0GNxFdQ3AHv7q8L4fMVfAHWVl8
-	 lB62L4R1vtZTwQmxvb24kRQrYOkcUhbZ3+1+Mktg/JMC1mGmrUitL7L8yjYVIchQuTQ==
+	t=1795622436;
+	b=AEbQG0VOIGCny29AU7s/e7lWrZjRwCcI2Oduk9VviVdeYrD79Fw8vcSEBk7m5I0mpIxo
+	 NkNJtUmwwrgHmPQi5bb8o42RZpkGwmT6kwipK8vAAA7zGvXlkWcLHWSJ4q4zSSrDSVP/2
+	 NtfA7oQ9rMpFpC9itGD7Q7Ln8H8bw2XJ9dEdlwgnhHrna53ETlC6DP9/ETM3HyFmsCPsF
+	 msqsw/bl9Orot9FI9L6lZDz4nCAIPSuSkTTnVNXSRynscj+nIooGDmmjt3mQhFPBcGSBh
+	 ccyefrTSUpMqBqkLs07P4duD1A3+rWbmJUQdbyrCTfLTS4o/TwGSaP4isAeKjasKYTg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795622433;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795622436;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=8JxLVvwWnztsJt912eE+AYRGj7ngvKkmOxEz9dNBpCU=;
-	b=ycZFLs2W38Yst7VsOMKqDFKqT/clFd76SPzC7P9zSt/Ts3Gjp5GA9HSvghrLEcGDy0jg
-	 0aIndeOGbsuRVPzScqLfQY8qIJFZYxmcZ96zLkHdE1uFDn0OrqlSeLEfOhMdftrmCOzFd
-	 3Vi5sFZidICIg4Nv/u5+xEVfvqTj4ceDY2SStHSYAmm//VS1hSkv6CQvgb9mFVlf3K8OC
-	 I/hWsKKQV2TGvMuZbD/s+gm/zt3sdKzhRfxBRluuAUGfhAI/p125ExVMbTivbgGCn4Ccw
-	 0X/FO0v0v20a3FPIXcPSWpYmuwEdlrV5BEb5eB9cuQYAo+Pnl/dnwZYNy7aiJjK5Tlw==
+	bh=sQUWP+bal7qrnA4fwQW1Mw1DiRQAjcvzs6clgLGhC7g=;
+	b=HWG8C62RVaOAdLerMRYEwepv1TmiVoWXgQj6gqEanS68w/myqaxlXqyjKFlQqXQUOqKq
+	 PyV6webCQl05a4rOWso42Ms0+MnbqRg0NRUyBjwhhtGQtDNwGHCHoovG636ZQgV16hq/K
+	 yiXkdvG0Uiwa9xaIBjZSQldlp38mCFbtCGxWfKLQCOMFlTC2ZmyQ9mwlTjFD4yDVkWpcg
+	 aTn8HKJJ14qsJ3ROjh/5fPcNC12dXLH9tAS/2GBriR5Hj2Ei4Gwlvxd4bQNYJZGv1KgCy
+	 CTmfVrweK2cLH8nyVJ4paYyzkdwpPLft+GXL74NLbtMIObEu7dffg41NqPw8LRMLWFQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Mcjg7gnr;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=0NaHBUvE;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 27958606A31E;
-	Wed, 25 Nov 2026 16:00:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E01B9606A327;
+	Wed, 25 Nov 2026 16:00:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Mcjg7gnr
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 06D991F000C0;
-	Wed, 25 Nov 2026 16:00:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=0NaHBUvE
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F0CB11F000C6;
+	Wed, 25 Nov 2026 16:00:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795622432;
-	bh=8JxLVvwWnztsJt912eE+AYRGj7ngvKkmOxEz9dNBpCU=;
+	s=korg; t=1795622435;
+	bh=sQUWP+bal7qrnA4fwQW1Mw1DiRQAjcvzs6clgLGhC7g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Mcjg7gnrL7RRB6DLT4oFQ04UE4n3ksKFaRu6xPRwYUHX6nz1CSQIY56tTGd53RXaU
-	 Ea8VO3tGyGTxwEexK0Ba0Xbuz0wkx4kz28pd5ck1QQUJ8ULIncAyhfVvPsN3rL67o8
-	 J9RSneBlXAFeJIJd0BCmNCp5OYdyX2uSlfFti3Hc=
+	b=0NaHBUvE4rtr2PHu4P5aOVLiCMcDTm1/Qq6842UbwNWtKuYkHoDM3vK0gSd8luxhy
+	 ORkS6CLppKkponIMZQFyreprN1y6KaYXdqDYSvdwS7iMgAEt3CqsRhSrglbEeMRIQU
+	 wh3QIGG171dfQgCPtuo+yBzFO+rMnemY49DS13Iw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Salvatore Dipietro <dipiets@amazon.it>,
-	Andrew Morton <akpm@linux-foundation.org>,
-	"Vlastimil Babka (SUSE)" <vbabka@kernel.org>,
-	Zi Yan <ziy@nvidia.com>,
-	Johannes Weiner <hannes@cmpxchg.org>,
-	Christoph Hellwig <hch@lst.de>,
-	David Hildenbrand <david@kernel.org>,
-	Michal Hocko <mhocko@suse.com>,
-	Matthew Wilcox <willy@infradead.org>,
-	Dave Chinner <dgc@kernel.org>,
-	Ritesh Harjani <ritesh.list@gmail.com>,
-	Dmitry Ilvokhin <d@ilvokhin.com>,
-	Hazem Mohamed Abuelfotoh <abuehaze@amazon.com>,
-	Ali Saidi <alisaidi@amazon.com>,
-	Geoff Blake <blakgeof@amazon.com>,
-	Christian Brauner <brauner@kernel.org>,
-	dipietro.salvatore@gmail.com,
-	"Darrick J. Wong" <djwong@kernel.org>,
-	Brendan Jackman <brendan.jackman@linux.dev>,
-	rvvandan@amazon.com,
-	Suren Baghdasaryan <surenb@google.com>,
-	"Garg, Shivank" <shivankg@amd.com>,
+	Alexei Starovoitov <ast@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 499/990] mm/page_alloc: avoid direct reclaim and compaction for costly __GFP_NORETRY allocations
-Date: Wed, 25 Nov 2026 15:31:06 +0100
-Message-ID: <20261125143833.784803344@linuxfoundation.org>
+Subject: [PATCH 6.18 535/990] bpf, x86: Fix timed may_goto with private stack
+Date: Wed, 25 Nov 2026 15:31:42 +0100
+Message-ID: <20261125143834.624014840@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143822.072087159@linuxfoundation.org>
 References: <20261125143822.072087159@linuxfoundation.org>
@@ -88,181 +67,91 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Salvatore Dipietro <dipiets@amazon.it>
+From: Alexei Starovoitov <ast@kernel.org>
 
-[ Upstream commit 0e05a469c29400eb6e35448ce7318581688a1806 ]
+[ Upstream commit bb83425b3cdcb7bb3c629598a4d5efad9cc80733 ]
 
-Commit 5d8edfb900d5 ("iomap: Copy larger chunks from userspace")
-introduced high-order folio allocations in the iomap buffered write path.
-When memory is fragmented, each failed costly-order allocation enters
-__alloc_pages_slowpath() which runs direct reclaim, direct compaction and
-drain_all_pages(), causing a 0.38x throughput drop on PostgreSQL pgbench
-(simple-update) with 1024 clients on a 96-vCPU arm64 system.
+arch_bpf_timed_may_goto() computes the address of count and timestamp
+as rbp + offset. When the prog uses private stack the JIT maps r10 to r9
+and nothing is reserved under rbp, so bpf_check_timed_may_goto() reads
+and writes the timestamp in the kernel stack, where
+arch_bpf_timed_may_goto() has just saved r0-r5 or further down.
+The following loop in fentry prog with r0-r5 set to zero:
 
-The root issue is that direct reclaim and direct compaction are too
-expensive for hot allocation paths that have fallbacks to smaller
-allocations.  __filemap_get_folio_mpol() already marks higher-order
-allocations with __GFP_NORETRY | __GFP_NOWARN, signalling that the caller
-can handle failure.  However, the page allocator still enters the full
-blocking slowpath for costly orders with __GFP_NORETRY, which is
-unnecessarily aggressive when the caller will simply retry at a lower
-order.
+  1: may_goto +2
+     r6 += 1
+     goto 1b
 
-For costly-order allocations with __GFP_NORETRY, clear
-__GFP_DIRECT_RECLAIM at the very start of the slowpath, before
-can_direct_reclaim, can_compact and the nofail checks are evaluated.  This
-makes the entire slowpath treat the request as non-blocking: no direct
-reclaim, no direct compaction and no drain_all_pages() IPI across every
-CPU.  Reclaim and compaction move to the background instead: kswapd is
-still woken for reclaim, and it wakes kcompactd for defragmentation.  The
-system keeps its long-term health while the latency-critical direct
-allocation path no longer stalls.
+leaves r3 with ktime in it when the prog has 64 bytes of stack and
+ends after 65535 iterations when it has 128.
 
-Allocations that also request __GFP_THISNODE are exempted.  That flag
-pairing identifies the local-node-first THP attempt issued by
-alloc_pages_mpol() (mempolicy.c), which relies on direct compaction to
-form transparent huge pages.
+Add the frame pointer to the offset in the JIT, where rbp vs r9 is
+known, and pass the pointer in AX.
 
-Clearing __GFP_DIRECT_RECLAIM makes these allocations reach the
-!can_direct_reclaim bailout, which since commit 4c0ed883e051
-("mm/page_alloc: fix defrag_mode for non-reclaimable allocations") drops
-ALLOC_NOFRAGMENT and retries instead of failing when defrag_mode is on.
-With vm.defrag_mode=1 a __GFP_NORETRY allocation could therefore succeed
-by fragmenting another migratetype's pageblock.  That is the wrong trade
-for a caller that has already communicated it can handle failure and has a
-cheap lower-order fallback, so exclude __GFP_NORETRY from the relaxation.
-The exclusion is not restricted to costly orders: any __GFP_NORETRY caller
-has said it can cope with failure, so failing is preferable to fragmenting
-for all of them.
+arm64 and powerpc JITs keep the address of private stack in BPF_REG_FP
+and are not affected.
 
-Test environment:
-  Hardware:  AWS EC2 m8g.24xlarge (96 vCPU, arm64)
-             12x 1TB IO2 32000 IOPS RAID0 XFS
-  OS:        AL2023
-  Kernel:    v7.3-rc1
-  Database:  PostgreSQL 18.4
-  Workload:  pgbench simple-update, 1024 clients, 96 threads, 1200s
-
-Results (average of 3 runs, TPS):
-
-  Config                                       Avg TPS   % vs baseline
-  v7.3-rc1 baseline (vm.defrag_mode=0)          58,602               -
-  v7.3-rc1 + this patch (vm.defrag_mode=0)     157,246         +168.3%
-  v7.3-rc1 baseline (vm.defrag_mode=1)         109,012               -
-  v7.3-rc1 + this patch (vm.defrag_mode=1)     157,778          +44.7%
-
-Link: https://lore.kernel.org/20261001082152.2879289-1-dipiets@amazon.it
-Link: https://lore.kernel.org/all/20260403193535.9970-1-dipiets@amazon.it/T/#t [v1]
-Link: https://lore.kernel.org/linux-mm/20260420161404.642-1-dipiets@amazon.it/T/#u [v2]
-Link: https://lore.kernel.org/all/20260710143437.12379-1-dipiets@amazon.it/T/#u [v3]
-Link: https://lore.kernel.org/all/20260904115629.3993331-1-dipiets@amazon.it/T/#u [v4]
-Link: https://lore.kernel.org/all/20260911142102.2294202-1-dipiets@amazon.it/T/#u [v5]
-Fixes: 5d8edfb900d5 ("iomap: Copy larger chunks from userspace")
-Signed-off-by: Salvatore Dipietro <dipiets@amazon.it>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Acked-by: Vlastimil Babka (SUSE) <vbabka@kernel.org>
-Acked-by: Zi Yan <ziy@nvidia.com>
-Reviewed-by: Johannes Weiner <hannes@cmpxchg.org>
-Reviewed-by: Christoph Hellwig <hch@lst.de>
-Cc: David Hildenbrand <david@kernel.org>
-Cc: Michal Hocko <mhocko@suse.com>
-Cc: Matthew Wilcox <willy@infradead.org>
-Cc: Dave Chinner <dgc@kernel.org>
-Cc: Ritesh Harjani <ritesh.list@gmail.com>
-Cc: Dmitry Ilvokhin <d@ilvokhin.com>
-Cc: Hazem Mohamed Abuelfotoh <abuehaze@amazon.com>
-Cc: Ali Saidi <alisaidi@amazon.com>
-Cc: Geoff Blake <blakgeof@amazon.com>
-Cc: Christian Brauner <brauner@kernel.org>
-Cc: <dipietro.salvatore@gmail.com>
-Cc: Darrick J. Wong <djwong@kernel.org>
-Cc: Brendan Jackman <brendan.jackman@linux.dev>
-Cc: <rvvandan@amazon.com>
-Cc: Suren Baghdasaryan <surenb@google.com>
-Cc: "Garg, Shivank" <shivankg@amd.com>
-
-introduced high-order folio allocations in the iomap buffered write path.
-When memory is fragmented, each failed costly-order allocation enters
-__alloc_pages_slowpath() which runs direct reclaim, direct compaction and
-drain_all_pages(), causing a 0.38x throughput drop on PostgreSQL pgbench
-(simple-update) with 1024 clients on a 96-vCPU arm64 system.
-
-The root issue is that direct reclaim and direct compaction are too
-expensive for hot allocation paths that have fallbacks to smaller
-allocations.  __filemap_get_folio_mpol() already marks higher-order
-allocations with __GFP_NORETRY | __GFP_NOWARN, signalling that the caller
-can handle failure.  However, the page allocator still enters the full
-blocking slowpath for costly orders with __GFP_NORETRY, which is
-unnecessarily aggressive when the caller will simply retry at a lower
-order.
-
-For costly-order allocations with __GFP_NORETRY, clear
-__GFP_DIRECT_RECLAIM at the very start of the slowpath, before
-can_direct_reclaim, can_compact and the nofail checks are evaluated.  This
-makes the entire slowpath treat the request as non-blocking: no direct
-reclaim, no direct compaction and no drain_all_pages() IPI across every
-CPU.  Reclaim and compaction move to the background instead: kswapd is
-still woken for reclaim, and it wakes kcompactd for defragmentation.  The
-system keeps its long-term health while the latency-critical direct
-allocation path no longer stalls.
-
-Allocations that also request __GFP_THISNODE are exempted.  That flag
-pairing identifies the local-node-first THP attempt issued by
-alloc_pages_mpol() (mempolicy.c), which relies on direct compaction to
-form transparent huge pages.
-
-Clearing __GFP_DIRECT_RECLAIM makes these allocations reach the
-!can_direct_reclaim bailout, which since commit 4c0ed883e051
-("mm/page_alloc: fix defrag_mode for non-reclaimable allocations") drops
-ALLOC_NOFRAGMENT and retries instead of failing when defrag_mode is on.
-With vm.defrag_mode=1 a __GFP_NORETRY allocation could therefore succeed
-by fragmenting another migratetype's pageblock.  That is the wrong trade
-for a caller that has already communicated it can handle failure and has a
-cheap lower-order fallback, so exclude __GFP_NORETRY from the relaxation.
-
-[ sashal: Kept this tree's existing can_compact expression and dropped the defrag_mode __GFP_NORETRY hunk, since the code it modifies isn't present here. ]
+Fixes: 2fb761823ead ("bpf, x86: Add x86 JIT support for timed may_goto")
+Signed-off-by: Alexei Starovoitov <ast@kernel.org>
+Link: https://patch.msgid.link/20260924233130.1213812-2-alexei.starovoitov@gmail.com
+[ sashal: Dropped the absent kfunc-argument block from the hunk's context, so the new timed may_goto add-frame-pointer code is inserted right after the !imm32 check. ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- mm/page_alloc.c | 18 +++++++++++++++---
- 1 file changed, 15 insertions(+), 3 deletions(-)
+ arch/x86/net/bpf_jit_comp.c       | 12 ++++++++++++
+ arch/x86/net/bpf_timed_may_goto.S | 10 ++--------
+ 2 files changed, 14 insertions(+), 8 deletions(-)
 
-diff --git a/mm/page_alloc.c b/mm/page_alloc.c
-index 2578475dd5d3f..867796dad0107 100644
---- a/mm/page_alloc.c
-+++ b/mm/page_alloc.c
-@@ -4738,10 +4738,10 @@ static inline struct page *
- __alloc_pages_slowpath(gfp_t gfp_mask, unsigned int order,
- 						struct alloc_context *ac)
- {
--	bool can_direct_reclaim = gfp_mask & __GFP_DIRECT_RECLAIM;
--	bool can_compact = gfp_compaction_allowed(gfp_mask);
--	bool nofail = gfp_mask & __GFP_NOFAIL;
- 	const bool costly_order = order > PAGE_ALLOC_COSTLY_ORDER;
-+	bool can_direct_reclaim;
-+	bool can_compact;
-+	bool nofail;
- 	struct page *page = NULL;
- 	unsigned int alloc_flags;
- 	unsigned long did_some_progress;
-@@ -4753,6 +4753,18 @@ __alloc_pages_slowpath(gfp_t gfp_mask, unsigned int order,
- 	unsigned int zonelist_iter_cookie;
- 	int reserve_flags;
+diff --git a/arch/x86/net/bpf_jit_comp.c b/arch/x86/net/bpf_jit_comp.c
+index 39cf6974e11e1..86f50102f8b7d 100644
+--- a/arch/x86/net/bpf_jit_comp.c
++++ b/arch/x86/net/bpf_jit_comp.c
+@@ -2421,6 +2421,18 @@ st:			if (is_imm8(insn->off))
+ 			}
+ 			if (!imm32)
+ 				return -EINVAL;
++			if (func == (u8 *)arch_bpf_timed_may_goto) {
++				u32 fp = priv_frame_ptr ? X86_REG_R9 : BPF_REG_FP;
++
++				/*
++				 * AX has the offset of count and timestamp
++				 * in the stack. Turn it into a pointer.
++				 * add r10, rbp or add r10, r9
++				 */
++				maybe_emit_mod(&prog, BPF_REG_AX, fp, true);
++				EMIT2(0x01, add_2reg(0xC0, BPF_REG_AX, fp));
++				ip += 3;
++			}
+ 			if (priv_frame_ptr) {
+ 				push_r9(&prog);
+ 				ip += 2;
+diff --git a/arch/x86/net/bpf_timed_may_goto.S b/arch/x86/net/bpf_timed_may_goto.S
+index 54c690cae1908..6c6e03f725a30 100644
+--- a/arch/x86/net/bpf_timed_may_goto.S
++++ b/arch/x86/net/bpf_timed_may_goto.S
+@@ -11,12 +11,6 @@
+ SYM_FUNC_START(arch_bpf_timed_may_goto)
+ 	ANNOTATE_NOENDBR
  
-+	/*
-+	 * Costly __GFP_NORETRY callers have a cheap fallback, so don't stall
-+	 * them in reclaim or compaction. __GFP_THISNODE callers are exempt.
-+	 */
-+	if (costly_order && (gfp_mask & __GFP_NORETRY) &&
-+	    !(gfp_mask & __GFP_THISNODE))
-+		gfp_mask &= ~__GFP_DIRECT_RECLAIM;
-+
-+	can_direct_reclaim = gfp_mask & __GFP_DIRECT_RECLAIM;
-+	can_compact = gfp_compaction_allowed(gfp_mask);
-+	nofail = gfp_mask & __GFP_NOFAIL;
-+
- 	if (unlikely(nofail)) {
- 		/*
- 		 * We most definitely don't want callers attempting to
+-	/*
+-	 * r10 passes us stack depth, load the pointer to count and timestamp
+-	 * into r10 by adding it to BPF frame pointer.
+-	 */
+-	leaq (%rbp, %r10, 1), %r10
+-
+ 	/* Setup frame. */
+ 	pushq %rbp
+ 	movq %rsp, %rbp
+@@ -30,8 +24,8 @@ SYM_FUNC_START(arch_bpf_timed_may_goto)
+ 	pushq %r8
+ 
+ 	/*
+-	 * r10 has the pointer to count and timestamp, pass it as first
+-	 * argument.
++	 * r10 has the pointer to count and timestamp. JIT added the frame
++	 * pointer to the offset. Pass it as first argument.
+ 	 */
+ 	movq %r10, %rdi
+ 
 -- 
 2.53.0
 
