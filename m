@@ -1,55 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795624546;
-	b=Cgk8N0I6B7D93q2Z1GsJ+W/nOoSqkNpGdUCBzs/7mUEhCHXqRu65IvlfbrT3MSOs5IUx
-	 mzk4N3APNo6GesMS4Ucq42E1W+iM/nz/JRyrYqskWSvT/pU7jFwSSCAJbaXT919c4bp6K
-	 CGbnukA83G950w/9oB/SdyQgyIueszEnApKP0L6eIFxQ1q4TcrhKT6VBf2K1va6ckgbqp
-	 VvbZstidEl579olwArPpXV2SuBdQSBreuRNYmuDWC1mgJYaRQSwWuN0hWeZCw4xBmCEVw
-	 0obFjVuPFHsLmeBaKY3s+GLcGrznyQoeRhiNYTiO5iG9v64Yz8/YufRGLmF4/ov9Q2g==
+	t=1795624549;
+	b=PMx7NfZVkYAJrOvaTaYwxoYB8B3lx32YcMW2Xv1aArAeTaLPWTEW3jHqoOBiiUa4sJav
+	 YjaiWnqR+FmWF4BtapDAg3RvBiRGLf+M+zrPtQq0NlwvgRR0ftzRCtbY1muZuvTR/szdm
+	 553Azfyo7naDGf+t6L4Ah4QzEHRmO2y4QBSAtU0nrYZaNfS+cItv2b5dRApcjAeYmYi2o
+	 kWtxX0uiHWUJdfnvGgUAd70ldqXHdy9HwTky11fjukI9jZuFJznYuPu8h0xwSRNZ5sMn0
+	 tesQ8EM84zXDnz9ZW+4WRdb6QLgXllhLGSBmHBtt2G5jHaTA2LjHTKXy4dW+LYg8j0A==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795624546;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795624549;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=aFf7XheE7c8a4gRrKxGA+Ncq31nUjHGZzANjZf/f5WM=;
-	b=Sgjn49j7q1H4RzGuO5xlMpDaKkMil+Umf8YzOOrYVg/om0/6fsGOXLRrXpVh9EYNs/sA
-	 E7C9mRhb2CfXCOLlMb/blEONFtBrydsRfWkhwxRBPdtJ5j1Z3SxMgXUIsuCBopFRSPxx3
-	 j0P7x0naOgeA2eTEJ4HLhUkEphlkcxrysUYXwCdVPuO7O9mrBvRe/qjNXiq8LIeYk/Hpi
-	 XmnC0p+3tFo9TXbcCK2I9KEg/OkBeApSVU0gAii1GKuWRHM/19HMDPrKKup9uSHe2qnHu
-	 xS7fyL9nJkk/WG73TAYgbJTg/q2DVVcGNwzvec6CCrpIlrFy5MNXnlCmgnnNI9t9Tgg==
+	bh=+R/VNMfYOxdSpN4AGz4fu84O6fkaa6DuROxkUtlVZ6w=;
+	b=uA8czdKbKSRFcF2fc9mQZS6Dt0oG9JcHUQpN7NHRGPsnhAcJFoN61NLm2pG+F/inB0Zu
+	 AK3JaGawBEhvwfw9taalW95LQoMrSS/gHd9bzzNsj5nD82dHq0eC6aiX3lpxzpgsn9D1S
+	 sePCUHnZoeKfjd9EXa/cyOA1HH0X01GtR9kDaxbV/XHi178Q1uCKhEFGD+De+iEE/qlOH
+	 wvUI39Ks6ijITc4OIVofgmVq2tp/t+fOW9zdG6Xbd6hYWAFGCf5YQ+GvIEpgpqGt1IqY6
+	 /CiBF0pg5uDmT+p+JheouAqsZRNl2vmq2N0+u2lb95Ya0unRBeXnKpwbv0IY6R4w86Q==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=rceGaHer;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=0m4gdvVG;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2FFFD606A338;
-	Wed, 25 Nov 2026 16:35:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 01C74606A339;
+	Wed, 25 Nov 2026 16:35:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=rceGaHer
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 89F8F1F000C4;
-	Wed, 25 Nov 2026 16:35:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=0m4gdvVG
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 53B051F000CF;
+	Wed, 25 Nov 2026 16:35:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795624546;
-	bh=aFf7XheE7c8a4gRrKxGA+Ncq31nUjHGZzANjZf/f5WM=;
+	s=korg; t=1795624548;
+	bh=+R/VNMfYOxdSpN4AGz4fu84O6fkaa6DuROxkUtlVZ6w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=rceGaHerZxwFNkkkIGNFUr8MjLrFsp++rhxk8V+cKWiUwG62zhFO78r7frPfYwi7I
-	 K6dAVw0VOAkXPdeT7h+BwOwYdfogMsKwuFTQ3NrHWyVpuVB1SO2Uy1VQPVDugTHZv4
-	 wYyYEKvJF/Kywbjxuz9a7rfJvXMc7MrICuq2VNlo=
+	b=0m4gdvVGbvVjN+WZwcDcOnszRClcOKBv39qnPz775qOjho0eh9VVPW4G5M/XWVtN3
+	 kxpYD+jslnFQMLWHm9ITrVj+jkivYqPbCGs9HETaWv8P/DLmuJrhqVN7C80ctGPB3G
+	 qgJSOG6uWwcSmYlZEXgPOYhydL9+lWftTadiAIy0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shao Mingyin <shao.mingyin@zte.com.cn>,
-	"Michael S. Tsirkin" <mst@redhat.com>,
-	Stefan Hajnoczi <stefanha@redhat.com>,
+	Zizhi Wo <wozizhi@huawei.com>,
 	Christoph Hellwig <hch@lst.de>,
 	Jens Axboe <axboe@kernel.dk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 183/816] virtio-blk: Fix zone append sector reporting in batched completion
-Date: Wed, 25 Nov 2026 15:28:51 +0100
-Message-ID: <20261125143853.429709492@linuxfoundation.org>
+Subject: [PATCH 6.12 184/816] block: partitions: reject GPT entries with starting_lba > ending_lba
+Date: Wed, 25 Nov 2026 15:28:52 +0100
+Message-ID: <20261125143853.456653357@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143849.205329330@linuxfoundation.org>
 References: <20261125143849.205329330@linuxfoundation.org>
@@ -71,83 +69,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Shao Mingyin <shao.mingyin@zte.com.cn>
+From: Zizhi Wo <wozizhi@huawei.com>
 
-[ Upstream commit 08a6572441a4e646c96c2b8d8ead9eea0e458332 ]
+[ Upstream commit 7e3801d12ebabaa3db6e2685ccc80b6e6f6d1ff7 ]
 
-For zone append, the block layer copies req->__sector back into the
-bio in blk_zone_append_update_request_bio(), so the driver must update
-req->__sector with the sector reported by the device.
-virtblk_request_done() does that, but the batched completion path used
-by virtblk_poll() only unmaps and cleans up the requests before calling
-blk_mq_end_request_batch().
+A GPT entry whose starting_lba is greater than its ending_lba is accepted,
+and the kernel creates a partition with a bogus size. The bogus sector
+count defeats the end-of-device check, so I/O through that partition is not
+confined to it and can access sectors outside the partition on the same
+disk.
 
-A zone append completed through polling therefore keeps the sector that
-was assigned at submission time, and the file system or application sees
-the wrong LBA for the written data.
+is_pte_valid() only rejects an entry when its type is NULL or when
+starting_lba or ending_lba is greater than lastlba; it never checks that
+starting_lba <= ending_lba. For a reversed entry both field checks still
+pass, but efi_partition() computes size = ending_lba - starting_lba + 1 in
+u64, which underflows to a huge value. That value also wraps in the
+end-of-device check in blk_add_partition() (from + size) and does not fit
+the signed i_size, which turns negative.
 
-Move the sector update into a helper and call it from both completion
-paths.
+Reject entries with starting_lba > ending_lba in is_pte_valid(), matching
+the head-level check against last_usable_lba < first_usable_lba.
 
-Fixes: 95bfec41bd3d ("virtio-blk: add support for zoned block devices")
-Signed-off-by: Shao Mingyin <shao.mingyin@zte.com.cn>
-Acked-by: Michael S. Tsirkin <mst@redhat.com>
-Reviewed-by: Stefan Hajnoczi <stefanha@redhat.com>
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Signed-off-by: Zizhi Wo <wozizhi@huawei.com>
 Reviewed-by: Christoph Hellwig <hch@lst.de>
-Link: https://patch.msgid.link/202610261955196384aSLGuy3_0MiTvlYXVdiC@zte.com.cn
+Link: https://patch.msgid.link/20261102080442.3775061-1-wozizhi@huaweicloud.com
 Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/block/virtio_blk.c | 20 +++++++++++++++-----
- 1 file changed, 15 insertions(+), 5 deletions(-)
+ block/partitions/efi.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/block/virtio_blk.c b/drivers/block/virtio_blk.c
-index 8b01011599a78..d4322992debef 100644
---- a/drivers/block/virtio_blk.c
-+++ b/drivers/block/virtio_blk.c
-@@ -332,18 +332,25 @@ static inline u8 virtblk_vbr_status(struct virtblk_req *vbr)
- 	return *((u8 *)&vbr->in_hdr + vbr->in_hdr_len - 1);
- }
- 
-+static inline void virtblk_update_zone_append_sector(struct request *req,
-+						     struct virtblk_req *vbr)
-+{
-+	struct virtio_blk *vblk = req->mq_hctx->queue->queuedata;
-+
-+	if (req_op(req) == REQ_OP_ZONE_APPEND)
-+		req->__sector = virtio64_to_cpu(vblk->vdev,
-+						vbr->in_hdr.zone_append.sector);
-+}
-+
- static inline void virtblk_request_done(struct request *req)
+diff --git a/block/partitions/efi.c b/block/partitions/efi.c
+index 7acba66eed481..d88321f6400ab 100644
+--- a/block/partitions/efi.c
++++ b/block/partitions/efi.c
+@@ -461,6 +461,7 @@ static inline int
+ is_pte_valid(const gpt_entry *pte, const u64 lastlba)
  {
- 	struct virtblk_req *vbr = blk_mq_rq_to_pdu(req);
- 	blk_status_t status = virtblk_result(virtblk_vbr_status(vbr));
--	struct virtio_blk *vblk = req->mq_hctx->queue->queuedata;
- 
- 	virtblk_unmap_data(req, vbr);
- 	virtblk_cleanup_cmd(req);
- 
--	if (req_op(req) == REQ_OP_ZONE_APPEND)
--		req->__sector = virtio64_to_cpu(vblk->vdev,
--						vbr->in_hdr.zone_append.sector);
-+	virtblk_update_zone_append_sector(req, vbr);
- 
- 	blk_mq_end_request(req, status);
- }
-@@ -1213,8 +1220,11 @@ static void virtblk_complete_batch(struct io_comp_batch *iob)
- 	struct request *req;
- 
- 	rq_list_for_each(&iob->req_list, req) {
--		virtblk_unmap_data(req, blk_mq_rq_to_pdu(req));
-+		struct virtblk_req *vbr = blk_mq_rq_to_pdu(req);
-+
-+		virtblk_unmap_data(req, vbr);
- 		virtblk_cleanup_cmd(req);
-+		virtblk_update_zone_append_sector(req, vbr);
- 	}
- 	blk_mq_end_request_batch(iob);
- }
+ 	if ((!efi_guidcmp(pte->partition_type_guid, NULL_GUID)) ||
++	    le64_to_cpu(pte->starting_lba) > le64_to_cpu(pte->ending_lba) ||
+ 	    le64_to_cpu(pte->starting_lba) > lastlba         ||
+ 	    le64_to_cpu(pte->ending_lba)   > lastlba)
+ 		return 0;
 -- 
 2.53.0
 
