@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795624743;
-	b=240XmjIZHu533g1a1IUicvgATCCjkPJzCnfpArJ8huYRQj8+mXAHkBDm5MtDDnfn/g7Z
-	 Uac821ABH1sQmDvCcYq68+4BvLjFr+lKvMXF3hd5wWupu7btvm/3sle68GGGFTaIAiHJe
-	 kOjJUN1K2oMt3+yxObrlOTtmoK9PONO2O1mR4O4AKnWDEH6c/mzvkEqcsAKtJljiTab3J
-	 7dKpyiKdlPLXw43IjByvSgYvc4NPN6X454TxNMxNgKTrOriJCZ0kNjUr6AoRjE+oTE6T2
-	 YA3dcHKxHV1M3q8UsxW0aq1CvMBZRRedMUTGv4zbo/Qj18kxFA4Fxeb/uRMcxhX2uNA==
+	t=1795624746;
+	b=XS1nWna63znUkaz/r4+ZBNc3OCRi0FZjesf/fGZbFVRVqSx3fObyafhfnM3VtPbVeAk9
+	 1eQ93iYuXXFREb++jtunjlWiJ+qFcPsCiSeKiQru41jjT8lxQFa8Nilbo7YAbFa+uRjzV
+	 1Sp37PsZNhHbR5xFSuSPEwr/mjEIHv5oSlqbduvRwMGU3ezan6K9OO1welz1Bs8qBpCnb
+	 yqUcKKYopg2nnKuN6mOL7zZpZ6wYep8v5vL7nSh14ltgDhbjda6SdnjwGPw2/eD5dCBn1
+	 Sxdc40gPOFImQtVUkbopdViJ6AfnYogUQpkYw33Izzn/ORfZXxkjlA+xInAG3ItO3dA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795624743;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795624746;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=946lSkNpwP8ZcGs8DAsOOOpMyoWr2+7IoBX6nfKzNCI=;
-	b=tF+QOrcrgliCiasD+IjsoStZ57txXbAiIVvYBzls/95gdGPS0adSU8stVdb34vs08ogI
-	 wMB2fhT/8pEv3DrpIkdfNo7tZdlECMBpnkp+KwdgEuSe1u5RruffU7ItVOtKd+8NEz3uW
-	 BqKnXSc/423fzUgTazYrCZ3oywK7wWs0Y3kxDE1i4qrwzJIeR0p6YDvs5YmeF2PwaikJS
-	 9AMoLudnvH1BnH16JGe7O1EtjI2X+X52jv7gRXg9XfsDgH3XU0PlXAzR/HO3XfpkrJRfc
-	 qjLWJNEELF070uw0WoODZptavpjoCLMbg3VvwIczUU3ieTivB4DeWeQEtOg6YxPFluA==
+	bh=9VM+jX9MgHy7nIHQKMR3LWIZEQ+p2+zPFOYFJ/+6gMc=;
+	b=1SZReGMLMe08HbKqlc46Q5knoOb2TKofFsSBesS49THA3BNtnVIrqqQXFGMOr2M43bM7
+	 0xb7aoKbNY6mbFeOt1GmVD1ptAnYxCS1DVUoZqNi7zX19MdSh7pCoIT9HaeCnNvOGCgwc
+	 GSSBge2VFwEcoAmCVUyiclXeAwD5Eb9tRpFCLXrgRtFBksaCPwC7uUE63wx9+O5eyGj8X
+	 ZQObAXVbzyyk+/PxRlnUoz5N1C5Y1FWc8XzAG0q37CRM0jX8fu/93tdwR1Puuj5f91lkC
+	 /gnRuMo3IaadXNFyHOEPvOGSBPkHUIM0f95zSFJi1zYiSEfAxuRZkrLcSojQeyxKHLA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=e3MgNhtn;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=bxdViOJE;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AC986606A33B;
-	Wed, 25 Nov 2026 16:39:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7DE78606A33B;
+	Wed, 25 Nov 2026 16:39:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=e3MgNhtn
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EE7F21F000C0;
-	Wed, 25 Nov 2026 16:39:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=bxdViOJE
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D17881F000C6;
+	Wed, 25 Nov 2026 16:39:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795624743;
-	bh=946lSkNpwP8ZcGs8DAsOOOpMyoWr2+7IoBX6nfKzNCI=;
+	s=korg; t=1795624746;
+	bh=9VM+jX9MgHy7nIHQKMR3LWIZEQ+p2+zPFOYFJ/+6gMc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=e3MgNhtnB97ZIp0PvkOtUY9zrW4zLaENYY5J+zImwaz/iBLsnrnroVkjSPhk0uYc7
-	 YLHgDY5LyD+sSj1AF5jggBq56KI/RcqRbRa3rZpZKTf/a0tdK8glCfl/QEmKW94fby
-	 o1L8AusK+Fs17TV/AKEe1JloZj8WKpOcOUIZvZxo=
+	b=bxdViOJE72T6cVFlFuDQB+p1QR3kVCBZBu3mESEESyTerKQu9BoLX5wy7hkDPQKyS
+	 hXSFu8SRq5I2cNMwBJKZgVYwtIMmQFUGPigvDN1aEsb0SQtiVtA92ZNs6j6bgC2TkW
+	 /J1MT3pUv69QEaUTrLSXSR0DUUYVoFmCGT93PZQk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Naohiro Aota <naohiro.aota@wdc.com>,
-	Johannes Thumshirn <johannes.thumshirn@wdc.com>,
-	David Sterba <dsterba@suse.com>,
+	Avi Weiss <thnkslprpt@gmail.com>,
+	Anna Schumaker <anna.schumaker@hammerspace.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 293/816] btrfs: zoned: dont wait for ordered extents in do_zone_finish()
-Date: Wed, 25 Nov 2026 15:30:41 +0100
-Message-ID: <20261125143855.988073012@linuxfoundation.org>
+Subject: [PATCH 6.12 294/816] NFSv4.1: retain MDS I/O until both thresholds are met
+Date: Wed, 25 Nov 2026 15:30:42 +0100
+Message-ID: <20261125143856.011967604@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143849.205329330@linuxfoundation.org>
 References: <20261125143849.205329330@linuxfoundation.org>
@@ -69,71 +68,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Johannes Thumshirn <johannes.thumshirn@wdc.com>
+From: Avi Weiss <thnkslprpt@gmail.com>
 
-[ Upstream commit bcad7df05237382237ad1517411721d839174009 ]
+[ Upstream commit eab627dcd18a18a44a2cbee47df3058d3637ba0d ]
 
-do_zone_finish() calls btrfs_wait_ordered_roots(), which holds
-fs_info->ordered_operations_mutex while waiting for writeback. It can be
-reached from writeback itself:
+When both size and I/O thresholds are configured,
+pnfs_within_mdsthreshold() uses size && io to decide whether to
+keep I/O on the MDS. Both variables indicate an unmet threshold,
+so reaching only one threshold returns false and may trigger
+pNFS layout acquisition while the other threshold remains unmet.
 
-  cow_file_range()
-  `-> btrfs_reserve_extent()
-    `-> find_free_extent()
-      `-> btrfs_zone_finish_one_bg()
-        `-> do_zone_finish()
+Use logical OR instead of AND to stay with MDS I/O until both
+thresholds are met, as recommended by RFC 8881 Section 5.12.6.
+The new RFC contains the same threshold selection rule as RFC
+5661 which is referenced in function comment.
 
-If another task holds the mutex and waits for that writeback, this
-deadlocks.
-
-In general, we want to ensure all writes in the block group to
-complete before finishing the zone, as relocation does. However, the
-current callers do not need the wait (or cannot wait) in do_zone_finish():
-
-- Relocation already waits for reservations and ordered extents itself
-  before calling btrfs_zone_finish().
-- btrfs_delete_unused_bgs() checks that ->reserved is zero and sets the
-  block group read-only while holding groups_sem, so there can be no
-  in-flight data write.
-- btrfs_zone_finish_one_bg() is called from the allocation path and
-  cannot wait.
-
-Dropping the wait is still safe. Once the block group is read-only,
-->reserved can only drop, and for data it only drops after the ordered
-extent's I/O has completed. So if ->reserved is zero, no data write is
-left in flight. If it is non-zero, do_zone_finish() returns -EAGAIN,
-which all callers handle.
-
-This makes btrfs_zone_finish_one_bg() fail with -EAGAIN when it races
-with an allocation in the selected block group.
-
-Fixes: 393f646e34c1 ("btrfs: zoned: finish least available block group on data bg allocation")
-Reviewed-by: Naohiro Aota <naohiro.aota@wdc.com>
-Signed-off-by: Johannes Thumshirn <johannes.thumshirn@wdc.com>
-Signed-off-by: David Sterba <dsterba@suse.com>
+Fixes: d23d61c8d351 ("NFSv4.1 test the mdsthreshold hint parameters")
+Signed-off-by: Avi Weiss <thnkslprpt@gmail.com>
+Signed-off-by: Anna Schumaker <anna.schumaker@hammerspace.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/btrfs/zoned.c | 7 ++++---
- 1 file changed, 4 insertions(+), 3 deletions(-)
+ fs/nfs/pnfs.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/fs/btrfs/zoned.c b/fs/btrfs/zoned.c
-index e0917a37e4cc6..ead999f072816 100644
---- a/fs/btrfs/zoned.c
-+++ b/fs/btrfs/zoned.c
-@@ -2535,9 +2535,10 @@ static int do_zone_finish(struct btrfs_block_group *block_group, bool fully_writ
- 
- 		/* Ensure all writes in this block group finish */
- 		btrfs_wait_block_group_reservations(block_group);
--		/* No need to wait for NOCOW writers. Zoned mode does not allow that */
--		btrfs_wait_ordered_roots(fs_info, U64_MAX, block_group);
--		/* Wait for extent buffers to be written. */
-+		/*
-+		 * No need to wait for NOCOW writers, as zoned mode does not
-+		 * allow that, only wait for extent buffers to be written.
-+		 */
- 		if (is_metadata)
- 			wait_eb_writebacks(block_group);
- 
+diff --git a/fs/nfs/pnfs.c b/fs/nfs/pnfs.c
+index 33e8f8e816bd5..b48be785ebd5a 100644
+--- a/fs/nfs/pnfs.c
++++ b/fs/nfs/pnfs.c
+@@ -2059,7 +2059,7 @@ static bool pnfs_within_mdsthreshold(struct nfs_open_context *ctx,
+ 		break;
+ 	}
+ 	if (size_set && io_set) {
+-		if (size && io)
++		if (size || io)
+ 			ret = true;
+ 	} else if (size || io)
+ 		ret = true;
 -- 
 2.53.0
 
