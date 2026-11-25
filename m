@@ -1,54 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795622309;
-	b=pXVQgyrsjZeWr5PzwTIOF82dvwoLOXbthDsVsJe2Ug23ontwTTCMAm4zTeTpZVEN8Tdp
-	 ndaF/XKdXhxGeNCZnZUh7tzu58JAnQGnR67+e4JxWvfJwRKdhFMYn1VhpE6wJGyXItoYh
-	 FA+RYeIBb+gOIQNN4dWq+n/0Kn03bAdpyM1E5PfPgFRWmtDgQsmMqcqJXuFMuDHDiylv1
-	 ah1rgbWLkGxsExBiqZKJx8+Ss1jHzSOg8lBY0Zkr3wbjU8pfhLEdmk+jB98Jc4Jos7Ri+
-	 aW3OejqZfXYXXVtE95z17u2XJjh4tKx2IZwoOmh91B6vbedDIK4SV3Ndayl76YD3AXA==
+	t=1795622313;
+	b=SuDCJuWA0/NbPAv/rv2HpjauUN4XGEZLi9fS3vjjQYesk7OhimLn6BpTz0W7XLr5JpNI
+	 SXpubd9C7s4fK3IIWMNkl04ITcowdsq5fGcqfWtYU0/slWZ1aPGr65mSWwi8upp0hgzPR
+	 QzwKKcqkKzvWoo6g4SOrenlz9EfVgk8TQ+ftE6kQafwhBEvQn0x9yNmqKU2W4wDoo+meb
+	 yEonsf0bYHResz5ivvBUuxNa863GabCRhGAypHB51/7AIcPc/vdP89MuLLoj5+PtE7834
+	 99Uy1xK1wqyFcA5FO5b0jvSf0UqTCVMgRtH06iET8yzNd9l1DxqnDO+VHSyaKWIcKqQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795622309;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795622313;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=s2N2d8fIvavLznSvbmqkI+0jgXgXUqV3PlLmopE7hio=;
-	b=UZJ8b3qn4SqtSVGUGdODfSiVlq7DiNZKRJbqbW8YdFhHJ5X1Lj53mva7SFBad5SCVIzR
-	 WlSEx7RwW+x08hJ+SuJ6Eo+JuyC9aV2EHvoEqghPZ6tCkFCUe1TdKWbUKFxiZI0aXqeZn
-	 mz1siXvAUmUG0FR2OEY1+4n+7K6xKNVKWHegIX2JDEqqQiiU8/FHDwvkX2DLVeZkrmj16
-	 GnCkIoisZokzO/kyFlOvRvCCOQYKtnHSc3BzJTZidUYHPHeQAXDGQDhIFsU92lhjuK7JK
-	 Az+ZGf5oQGAZdvSFAQPe37aKVHEMYDk4s+V4+U1CRG3FFV5SgAJAwUZT4hPLsA3sX7w==
+	bh=B9QCAzTi1XuGXIu8Tvth128Omtf51h52wpfOf4mi33g=;
+	b=uIZkgRwqwEyWErYoPHBuPOeFcDnPUaX1tZ9Zjk7FtuZtQDFp5rQxBX+s4OOhJBlOJL7W
+	 pP+P/gkl6zsh2i3DlVF9uL2ssQbEjX53Atp+knaOt0Pjzkqa/h4iD7JY7QlxEj3zRy/NC
+	 AtNvlJL1AHNeIinRwXk1vJczpCULQNjpVuoHrlUJd7ncbMQyMKyLC6uK67Bv/8Es8BcUT
+	 rUzLjifKOwxO+UKIU+nyffiAoot1dNt/Ij2NHzgmEM7bUONYwUEYiWY6mWEWRwu7OY0h6
+	 K5OAmpHIQeUSMFPgqg6xg3u6RCiRXAesMj4XEwEFcaEl9radefJARl1M92XSq+EwjSg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=0pnzjdbi;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="m/P7Dvir";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CF2A5606A32D;
-	Wed, 25 Nov 2026 15:58:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2E962606A689;
+	Wed, 25 Nov 2026 15:58:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=0pnzjdbi
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 24FA91F000CF;
-	Wed, 25 Nov 2026 15:58:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=m/P7Dvir
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7794D1F00A3C;
+	Wed, 25 Nov 2026 15:58:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795622309;
-	bh=s2N2d8fIvavLznSvbmqkI+0jgXgXUqV3PlLmopE7hio=;
+	s=korg; t=1795622313;
+	bh=B9QCAzTi1XuGXIu8Tvth128Omtf51h52wpfOf4mi33g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=0pnzjdbiMguMJE+IaODZ+EQ/4jOty9uLjHRc90U2cPJmNaFDDBT9QAQL1HGLaXzpO
-	 HcnDNMElDZLhIGsSGHy+kckuRaYzyn9ac4/fGIV5Q5SqHfEOOHzQka4vQNI7Y+w+8f
-	 7cD4CG0TbVvjJMYGoLT8eCzrRYCD3WXqtPxyV9j4=
+	b=m/P7DvirPIouapvug7d+neMZtpcWHd33bvkMrjYH00jGnITK9WYcYN6ASZns2J+jo
+	 /N9PXjdDy1SpPvYctUQdsNHCwnKdDrK/HBlJ5Jrp8UjVGMAIBAzyVSA1xtiPZwtnxu
+	 LutKjiJjxpAw2qGeYaU+aBUwKvroM1a073TOkmnk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+9ea34da5ca6100593c90@syzkaller.appspotmail.com,
-	Kalpesh Solanki <skalpesh942@gmail.com>,
-	Willem de Bruijn <willemb@google.com>,
+	Ofri Zangi <ofriz@xsightlabs.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 452/990] tun: disallow setting IEEE 802.15.4 and 6LoWPAN link types via TUNSETLINK
-Date: Wed, 25 Nov 2026 15:30:19 +0100
-Message-ID: <20261125143832.680940919@linuxfoundation.org>
+Subject: [PATCH 6.18 453/990] tls: fix async encryption race on weakly ordered architectures
+Date: Wed, 25 Nov 2026 15:30:20 +0100
+Message-ID: <20261125143832.704559657@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143822.072087159@linuxfoundation.org>
 References: <20261125143822.072087159@linuxfoundation.org>
@@ -70,69 +68,80 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kalpesh Solanki <skalpesh942@gmail.com>
+From: Ofri Zangi <ofriz@xsightlabs.com>
 
-[ Upstream commit 968f2b94a5964b75d9c0da84523e42530c1891f0 ]
+[ Upstream commit a2fd526d644233d6a892c28173f07c61e21e4c93 ]
 
-A userspace application can set the link type of a TUN/TAP interface
-to ARPHRD_IEEE802154, ARPHRD_IEEE802154_MONITOR, or ARPHRD_6LOWPAN
-via ioctl(fd, TUNSETLINK, arg) because tun_get_addr_len() explicitly
-recognized these types.
+With async encryption, a record can be transmitted without its TLS
+header on weakly ordered architectures such as arm64, because the
+consumer may observe rec->tx_ready set while still seeing the old
+scatterlist entry.
 
-However, TUN devices cannot function as genuine IEEE 802.15.4 or 6LoWPAN
-interfaces:
+tls_encrypt_done() restores the TLS header in the scatterlist entry
+(sge->offset -= prot->prepend_size, sge->length += prot->prepend_size)
+and then publishes the record with smp_store_mb(rec->tx_ready, true).
+On another CPU, tls_tx_records() checks rec->tx_ready with READ_ONCE()
+and then reads the entry in tls_push_sg().
 
-1. They lack wpan_phy, channels, PAN IDs, and MLME operations, and tun
-   never initializes dev->ieee802154_ptr or dev->ml_priv. When an
-   unprivileged user creates a TUN interface in a user+net namespace,
-   changes its link type to ARPHRD_IEEE802154, and issues a netlink dump
-   request (such as IEEE802154_LLSEC_LIST_KEY),
-   ieee802154_llsec_dump_table() unconditionally dereferences
-   dev->ieee802154_ptr / ieee802154_mlme_ops(dev), triggering a supervisor
-   null-pointer dereference / general protection fault. Similar
-   dereferences occur across net/ieee802154/nl-phy.c (ieee802154_del_iface)
-   and net/ieee802154/socket.c.
+Nothing orders these accesses. The barrier in smp_store_mb() comes
+after the tx_ready store, so it does not order the earlier scatterlist
+update before it. On the reader side, READ_ONCE() does not order the
+later loads of sge->offset and sge->length. The reader can therefore
+see tx_ready set together with the old offset and length, and pushes
+the record without its header.
 
-2. Similarly, the 6LoWPAN subsystem assumes via lowpan_dev(dev) that
-   netdev_priv(dev) is struct lowpan_dev. On a TUN device, netdev_priv(dev)
-   is struct tun_struct. On netdev events (such as NETDEV_DOWN in
-   net/6lowpan/core.c:lowpan_device_event), it clears bits in
-   lowpan_dev(dev)->ctx.table flags, which corrupts private memory inside
-   tun_struct.
+Publish tx_ready with smp_store_release() in tls_encrypt_done() and read
+it with smp_load_acquire() in tls_tx_records(), so that observing
+tx_ready guarantees the restored scatterlist entry is visible. Keep the
+full barrier that smp_store_mb() provided as an explicit smp_mb(), as
+it is still needed to order the tx_ready store before the tx_list head
+check.
 
-Rather than scattering checks across subsystems, fix the issue at the
-source: disallow setting ARPHRD_IEEE802154, ARPHRD_IEEE802154_MONITOR, and
-ARPHRD_6LOWPAN via TUNSETLINK by returning -EINVAL. Cast arg to unsigned
-short in the comparison to prevent upper-bit truncation bypasses (e.g.
-arg = ARPHRD_IEEE802154 | 0x10000).
+The issue was discovered during development on an arm64 system.
+A curl download test over kTLS failed with:
 
-Fixes: ff4cc3ac93e1 ("[TUNTAP]: Allow setting the linktype of the tap device from userspace")
-Reported-by: syzbot+9ea34da5ca6100593c90@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=9ea34da5ca6100593c90
-Signed-off-by: Kalpesh Solanki <skalpesh942@gmail.com>
-Reviewed-by: Willem de Bruijn <willemb@google.com>
-Link: https://patch.msgid.link/20261109083037.22337-1-skalpesh942@gmail.com
+  curl: (56) OpenSSL SSL_read: error:0A00010B:SSL routines::wrong version number, errno 0
+
+Fixes: a42055e8d2c3 ("net/tls: Add support for async encryption of records for performance")
+Signed-off-by: Ofri Zangi <ofriz@xsightlabs.com>
+Link: https://patch.msgid.link/20261108-tls-async-tx-ordering-v1-1-f9a1844ca88e@xsightlabs.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/tun.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ net/tls/tls_sw.c | 13 ++++++++++---
+ 1 file changed, 10 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/net/tun.c b/drivers/net/tun.c
-index d7780a0069218..b244ae7f4d5eb 100644
---- a/drivers/net/tun.c
-+++ b/drivers/net/tun.c
-@@ -3235,6 +3235,10 @@ static long __tun_chr_ioctl(struct file *file, unsigned int cmd,
- 			netif_info(tun, drv, tun->dev,
- 				   "Linktype set failed because interface is up\n");
- 			ret = -EBUSY;
-+		} else if ((unsigned short)arg == ARPHRD_IEEE802154 ||
-+			   (unsigned short)arg == ARPHRD_IEEE802154_MONITOR ||
-+			   (unsigned short)arg == ARPHRD_6LOWPAN) {
-+			ret = -EINVAL;
- 		} else {
- 			ret = call_netdevice_notifiers(NETDEV_PRE_TYPE_CHANGE,
- 						       tun->dev);
+diff --git a/net/tls/tls_sw.c b/net/tls/tls_sw.c
+index ad6c0d61d5474..4f982594f11d3 100644
+--- a/net/tls/tls_sw.c
++++ b/net/tls/tls_sw.c
+@@ -436,7 +436,8 @@ int tls_tx_records(struct sock *sk, int flags)
+ 
+ 	/* Tx all ready records */
+ 	list_for_each_entry_safe(rec, tmp, &ctx->tx_list, list) {
+-		if (READ_ONCE(rec->tx_ready)) {
++		/* Pairs with smp_store_release() in tls_encrypt_done() */
++		if (smp_load_acquire(&rec->tx_ready)) {
+ 			if (flags == -1)
+ 				tx_flags = rec->tx_flags;
+ 			else
+@@ -504,8 +505,14 @@ static void tls_encrypt_done(void *data, int err)
+ 	if (rec) {
+ 		struct tls_rec *first_rec;
+ 
+-		/* Mark the record as ready for transmission */
+-		smp_store_mb(rec->tx_ready, true);
++		/* Mark the record as ready for transmission. Pairs with
++		 * smp_load_acquire() in tls_tx_records(): the sge
++		 * offset/length update above must be visible before tx_ready.
++		 */
++		smp_store_release(&rec->tx_ready, true);
++
++		/* Order the tx_ready store before the tx_list head check */
++		smp_mb();
+ 
+ 		/* If received record is at head of tx_list, schedule tx */
+ 		first_rec = list_first_entry(&ctx->tx_list,
 -- 
 2.53.0
 
