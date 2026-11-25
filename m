@@ -1,50 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795623669;
-	b=iXZZyZGbOAItwFUoPeVygoBlbL3+vkIhOCHDjjwhMqV/iOcJx3p+7F2ZBMmhDC7w/14S
-	 HAK34DH6eU4Ww/kTnukj3nwGSx27jawtTuJyaB4q2HpOOzeRH2Osem/gZfit1cMixeSK4
-	 go8+JAdhZJ4In0FJVOvdmQfr8wzn0k++AcrsGNDG6qP/NayW92LZweH/1urLQ+ReHra5n
-	 Rjsn13wzAYR0O4QSz31kaG40DPvGmiFWVs3mWb/L83URc1Gpbkh7QfHrKlmraUJpKiCD0
-	 Q4YNgpjzuKHdSFSW4hRxuLW65NdD/sTPGqv/KQ7Aaw90N2Jo+pzv5S/HlKaDhgLrOYg==
+	t=1795623672;
+	b=qCZiD4gE+e91XyJqClr9XIFO7itbaqrDXTgGlctBUFLsUUDQ6iGXwMFfClwhTrA4+j39
+	 T+OJcySLGZ2mhs87MUZrQ1OuWJI6qzVbit5RKj/r8gnhpRaVIhMnvCYJRikHuUmuhF3dD
+	 a5zcDdF+tmrIf1qRR4wuyBu5daQd75Gb+2z37h6LOQnIXZ3KqJP14dqqhf9FEypwykiM3
+	 2B5DK5zwKj5nhjaflxYg42FfURexmjfbnooQaQDT4VI31K1yJUVeyAdH1XYBTs6cBm0Of
+	 5wC5W5WW2WkkYQc07YtsNZGqYj5MW9Y2J4ZJ90zsWUikToo97DaTCaSqP4d8+XyegLw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795623669;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795623672;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=FbgV9badz7z59x86EiwjaNHoH2lZxp8B6wvOnfTOGTU=;
-	b=BgYgkZE7IoTcTfK9zvywZRF+CUu+Atin/ftBxoe3s028E02LuMX0FRn9hdM0mERzxq4A
-	 6NxIeaNydc3fkp7BustWK3+K0hI470EuyQwbcgsxjnr6IXQXsyeokcJCNrbO+OOu567iV
-	 ny4idXnNIpwopHYJR229aPQWX91/ANc37ITSPXrozQcMEMO29HzUyq4V2m5ZGSFJ5Q7cZ
-	 y2XwUMWBovpGXBO69QnCgwUnYhm+MMmX1IBJn2hA+AbHpSuo5P+IHg83JKcSbqATq01gq
-	 PPgUj/6r6i9gvK7KXOfMikGTookO5YTkH2bc6P8yZfM1n2cyV5s8kWQgtVl0pXbn/fg==
+	bh=K5g0LB6ZB29jgqV2n88gRKWSezP3jMeOV1ZGjhVwy5o=;
+	b=I91tVr20fr8a+r1FyBGFYLhVzl63HzsQzCURLaR25f9HpzbdTldcowlJS1f4X0uki8em
+	 Ak1ZJRxFas9S8jT/mz0EL/R12w9YPAKo7JvtXbb1ALQHtT7wgHuYz6HwySUESHXa+oGkx
+	 gBcXXleBbG6HIX5BI/XqQMLQANHPVt40xFWFtdEEOThAIn4jHJ5pX0ehvGCHN5hC4kHFI
+	 jiuqxIJqZlhiT0QEi5+k/53zUSuyvVzj9JOVfPI9RPRMgd00NRt3RfmV7iKUc4JD2Ke6B
+	 gxxmVPmqPPTRPPwTspefCxnZIu13ZqZ+VUiJroQH0N4MmZNxJYS+6im8nxyeixlbwEA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Tx5SBiQw;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=yezauRCe;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 201D5606A333;
-	Wed, 25 Nov 2026 16:21:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 70523606A680;
+	Wed, 25 Nov 2026 16:21:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Tx5SBiQw
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E50A91F00A00;
-	Wed, 25 Nov 2026 16:21:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=yezauRCe
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6B3EB1F000C6;
+	Wed, 25 Nov 2026 16:21:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795623668;
-	bh=FbgV9badz7z59x86EiwjaNHoH2lZxp8B6wvOnfTOGTU=;
+	s=korg; t=1795623672;
+	bh=K5g0LB6ZB29jgqV2n88gRKWSezP3jMeOV1ZGjhVwy5o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Tx5SBiQwf7WNDcHjrck/XRCBBw69qCIbB2NQvUPuoW+HYRkPk4ySJu+11DvY/ohij
-	 kzT5TPdnmyu3rxVyJLVoHYi/qOZrVZchaHvUfysb34qRVhMqoo8F4jHkNp+wLFa6jL
-	 1xCDmyvpJt5tQ6m+bfZSHnc1o0Qu8qOlp9pl7q8E=
+	b=yezauRCeuwUqQ/cbpCJwXCvkbQi9evSuzlNECa7pRteDUFWl73m5oGxkLxXHi6CmG
+	 oXVfLeTSUAXVL3Ybn0IgAE9xpb2CnzcxLFHG3W57QJa62Pkc6ctPfsNf1iFCJGuTlO
+	 RefvmXTJdtxPEI8kp8U5qkgP2qiRQLGL9t5cnE1o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mikulas Patocka <mpatocka@redhat.com>
-Subject: [PATCH 6.18 879/990] dm-thin: fix leak if __set_snapshot_details fails
-Date: Wed, 25 Nov 2026 15:37:26 +0100
-Message-ID: <20261125143842.605765242@linuxfoundation.org>
+	stable <stable@kernel.org>,
+	Josef Bacik <josef@toxicpanda.com>,
+	Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
+Subject: [PATCH 6.18 927/990] w1: netlink: drop the slave after the bus is unlocked
+Date: Wed, 25 Nov 2026 15:38:14 +0100
+Message-ID: <20261125143843.713530161@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143822.072087159@linuxfoundation.org>
 References: <20261125143822.072087159@linuxfoundation.org>
@@ -66,40 +68,62 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mikulas Patocka <mpatocka@redhat.com>
+From: Josef Bacik <josef@toxicpanda.com>
 
-commit dfb95816cf6f2f2660af2ec64c65dc204c60b5e7 upstream.
+commit 847fa880a3e1b2fdbbf72d89e830566108457637 upstream.
 
-If __set_snapshot_details fails, the variable td is leaked - this
-prevents any other snapshot with the same id from being created.
+w1_process_cb() executes the commands of a netlink message with bus_mutex
+held, and drops the reference to the slave which the message was
+addressed to before it unlocks the mutex.  If the slave has been detached
+in the meantime, this is the last reference, and w1_unref_slave() tears
+the slave down on the spot.  That waits
 
-Fix this by removing it from the list and freeing it.
+- in device_unregister(), for the sysfs callbacks of the slave which are
+  running, and
 
-Signed-off-by: Mikulas Patocka <mpatocka@redhat.com>
-Assisted-by: Claude:claude-opus-5
-Cc: stable@vger.kernel.org
-Fixes: 991d9fa02da0 ("dm: add thin provisioning target")
+- in w1_therm_remove_slave(), for the readers which have taken a
+  reference to the family data,
+
+and both kinds take bus_mutex to talk to the slave.  Whoever is waiting
+for the mutex at that moment is never going to finish, and neither is the
+thread of the bus master.
+
+Unlock the bus first.  The reference keeps the slave, and with it the
+master, alive until then.
+
+Fixes: d3a8a9dbb903 ("w1: hold bus_mutex in netlink and search")
+Cc: stable <stable@kernel.org>
+Signed-off-by: Josef Bacik <josef@toxicpanda.com>
+Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
+Link: https://patch.msgid.link/20261027-llm-char-misc-w1-v1-6-d2e6bfafb6a4@linuxfoundation.org
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/md/dm-thin-metadata.c |    5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ drivers/w1/w1_netlink.c |    8 +++++---
+ 1 file changed, 5 insertions(+), 3 deletions(-)
 
---- a/drivers/md/dm-thin-metadata.c
-+++ b/drivers/md/dm-thin-metadata.c
-@@ -1225,10 +1225,13 @@ static int __create_snap(struct dm_pool_
- 	__close_device(td);
+--- a/drivers/w1/w1_netlink.c
++++ b/drivers/w1/w1_netlink.c
+@@ -478,15 +478,17 @@ static void w1_process_cb(struct w1_mast
+ 	if (!cmd || err)
+ 		w1_netlink_queue_status(node->block, node->msg, cmd, err);
  
- 	if (r)
--		goto bad;
-+		goto bad2;
++	dev->priv = NULL;
++	mutex_unlock(&dev->bus_mutex);
++
+ 	/* ref taken in w1_search_slave or w1_search_master_id when building
+-	 * the block
++	 * the block.  If it is the last one, the slave is removed, which waits
++	 * for users of the bus.
+ 	 */
+ 	if (sl)
+ 		w1_unref_slave(sl);
+ 	else
+ 		atomic_dec(&dev->refcnt);
+-	dev->priv = NULL;
+-	mutex_unlock(&dev->bus_mutex);
  
- 	return 0;
- 
-+bad2:
-+	list_del(&td->list);
-+	kfree(td);
- bad:
- 	dm_btree_remove(&pmd->tl_info, pmd->root, &key, &pmd->root);
- 	dm_btree_remove(&pmd->details_info, pmd->details_root,
+ 	mutex_lock(&dev->list_mutex);
+ 	list_del(&async_cmd->async_entry);
 
 
