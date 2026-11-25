@@ -1,54 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795625316;
-	b=43yk36VRmj4K5JAdeIM3FrBfNEFY+rb6Iadv9B6jA+7f/icT9OC421PxcpgmlTWrVJpT
-	 UpwYpp/U6V5eKPIcn0flBfa8cQjAbbc2MouiQ2CT4VjQ4dnBLKlYC/V3+Xduq7M8Ef6uI
-	 hYhOw0iGJimcRVfBPnMbs6qcBQOlyHsq+eft+e8h4ufVZve50u9rMHpuxNex7I5DJDvad
-	 P6kMFgBj3A22M1wdOGH2wlYnWV8bxbaQpe+qPeDUd64DZYcTsj1jzCj9onqpOI1ReoBbT
-	 xYKfQZxcZ7gjjdWAgXaFDZq9PdO+yLGXcBSLvZrXarYfzIImTUoBNCZZgC/hya7xSrw==
+	t=1795625319;
+	b=kA4XwUuuc7THhKHQpUjsxy9yMqcfO2K2D3N87y9/Dwi15CAR6LcrgVTHRsB/Z0NLeAPP
+	 PX2cVpsyS38Q99E1DemIgKUDy+G9Eji1hD17YLLQekqvEI4mStGTn1pe1fjbbqsASNJsK
+	 LnaYLM5jjGfHW3M+WrtRQc4zbnZeTTrgxRrqk+Xm4kGaulKk5db6sGdCqUffYwyxGfP/y
+	 s8X5Rrcro65sgocrvvWg5Evj2UEK5FYjtvxl8LL9Um+Dpgayz/eBVOtI6sVbgcoin0764
+	 +Vcy3T9lzFZXUSXmI3Us0zOiS3/Alcn/ippCXHUJWKnzKvKAi2/JVG2yDmZI146xoqw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795625316;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795625319;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=9pp9/ttHZiMDyN7kkwJ/YZzW6u353LcJ1s7sxh4oAlY=;
-	b=vhU9tEenTh5CXq6UdXrezaZ6wQNLOLUwFnSooYKvpiYOjn854mEBioyPqKt1Jok923VP
-	 uL3aDoQlACBFkBwncxxyqWPywnrRVfg564+mDLZQwztpfF2zl9e9TD7BIW3ng8u5mQuCr
-	 pqHrEnpz30f2tehE4V4/YxzNsFubBdGSmkLL/UNlDA/ykdtXhVeTpkoGKyv/S+0dY98EA
-	 vC6fb5jIOn1dY9AhZOg2j1h9kun/leqFUpU/3FUJamsCtrzmKKfRjKr9yYg9nfkMuZy5Q
-	 v+WUYlkVeYaOctc/9qHi/JRN4R29Ypuz9aQB3XJP/W3lVtFifTz8sNgXBbKh+hHGLUw==
+	bh=KUa/uN6H9P4oBU4uRtzNJ0CZDGbyOvNFK4Lq7fJQdeU=;
+	b=oTaAkA1TtjFqA+Krr0f7KnrUWXKmt2l/OpVgNByv0Rgb1EkAhApZsvv5+RXpQ/Gisan1
+	 jX9OkpYHMAE6+lSk6i0SMSMXoeu2Lc/5AIYrjLhKsu7wwYaCKJaplvTL7c/CjE6nQN+eH
+	 nEifaR8zQHFRVN97jQr+XoIIhYSfNKpGIthZkdZ/ORCSuEDMkpmp0G8VKetcu/2TAl/AW
+	 bePfE+8KJy7Kp5fbU3uL3Y/AZGvkvffbruiq0bKRHazUwATEuTO3+Zeve9EPd+l+jzmMg
+	 pToyv8I+VTpxb5Spx1pSucg2X5rFXnC9A+DgLziGUyVG4wIkOVBSMUWPIEffXkGikzg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=DbOzA72h;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=TLz5Nujf;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 84CF7606A31E;
-	Wed, 25 Nov 2026 16:48:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A5CB4606A31E;
+	Wed, 25 Nov 2026 16:48:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=DbOzA72h
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D5B0D1F000C0;
-	Wed, 25 Nov 2026 16:48:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=TLz5Nujf
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AC2D11F000C4;
+	Wed, 25 Nov 2026 16:48:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795625316;
-	bh=9pp9/ttHZiMDyN7kkwJ/YZzW6u353LcJ1s7sxh4oAlY=;
+	s=korg; t=1795625319;
+	bh=KUa/uN6H9P4oBU4uRtzNJ0CZDGbyOvNFK4Lq7fJQdeU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=DbOzA72hneIQzYn8Zb439mqnJuX9AnnuA5Bbq7AUD7nSix0/ARYhEScb8+DMQ0tQf
-	 0T9bhMHzxLjb2sUxv46QbUJaGfNnVl4W1tD1vK4U0wu3/QKxfUjXwyrqNf/X7PfbaE
-	 xcnbcA3CvHXWVe2LrOTGxA5s8zJ2Z2JQ4XF+xVeA=
+	b=TLz5Nujf/KXLq3ZqxVsn7YIJQqMxVYm1AuYxg5VwIYYgE5J8Gj9cLpLiVKtvBdIZk
+	 Zl+iW7ZnrtstqE+4cdAv2wkUqSdMXrof2biw8VfPJVs2607YZsts387VCYI7ACiDVC
+	 WdfI2ax6OP15wqOaPUYc02h+B4E54felzg//eA0M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sashiko <sashiko-bot@kernel.org>,
-	Tony Luck <tony.luck@intel.com>,
-	"Borislav Petkov (AMD)" <bp@alien8.de>,
-	Reinette Chatre <reinette.chatre@intel.com>,
+	Matthew Wood <thepacketgeek@gmail.com>,
+	Alexei Starovoitov <ast@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 477/816] fs/resctrl: Ensure default group reports tasks on monitor-only systems
-Date: Wed, 25 Nov 2026 15:33:45 +0100
-Message-ID: <20261125143900.240368808@linuxfoundation.org>
+Subject: [PATCH 6.12 478/816] bpf, arm64: Fix racy plt target update in bpf_arch_text_poke()
+Date: Wed, 25 Nov 2026 15:33:46 +0100
+Message-ID: <20261125143900.262577450@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143849.205329330@linuxfoundation.org>
 References: <20261125143849.205329330@linuxfoundation.org>
@@ -70,47 +68,122 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Tony Luck <tony.luck@intel.com>
+From: Matthew Wood <thepacketgeek@gmail.com>
 
-[ Upstream commit 2c10b3fa5bdf61e344bc522e6c2e00d870ce7ab8 ]
+[ Upstream commit 6335e6719fd323c345427b7cf2d5d17c28fdbc41 ]
 
-resctrl can be mounted on a system that supports monitoring but not allocation.
+When a long-jump trampoline is attached to or detached from a bpf prog,
+bpf_arch_text_poke() updates the plt target at the end of the prog by
+temporarily making the page writable:
 
-On such a system reading the "tasks" file in the default group reports no
-tasks, even when there are tasks assigned to the default group. This problem
-occurs because the check for whether a task belongs to a CTRL_MON group is
-gated by a check for whether the system supports allocation.
+	set_memory_rw(page);
+	WRITE_ONCE(plt->target, plt_target);
+	set_memory_ro(page);
 
-The resctrl_arch_alloc_capable() check in is_closid_match() breaks task
-reporting for the default group on monitor-only systems so remove this check.
-On systems that support allocation the check is redundant.
+Since commit 1dad391daef1 ("bpf, arm64: use bpf_prog_pack for memory
+management"), bpf progs are allocated from the bpf prog pack, so
+unrelated progs and their plts commonly share a page. The sequence
+above is not serialized against other pokers, it runs before text_mutex
+is taken and callers only hold the lock of the trampoline being
+updated. Two CPUs attaching to or detaching from different target progs
+in the same page can therefore race:
 
-Fixes: e6b2fac36fcc ("x86/resctrl: Use is_closid_match() in more places")
-Closes: https://sashiko.dev/#/patchset/20260831174421.13921-1-tony.luck%40intel.com?part=9
-Reported-by: Sashiko <sashiko-bot@kernel.org>
-Signed-off-by: Tony Luck <tony.luck@intel.com>
-Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
-Reviewed-by: Reinette Chatre <reinette.chatre@intel.com>
-Link: https://patch.msgid.link/20261009193923.15498-1-tony.luck@intel.com
-[ sashal: Changed the file path from fs/resctrl/rdtgroup.c to arch/x86/kernel/cpu/resctrl/rdtgroup.c, since resctrl hasn't been moved out of arch code yet; the one-line change itself is identical. ]
+	CPU A                           CPU B
+	set_memory_rw(page)
+	                                set_memory_rw(page)
+	                                WRITE_ONCE(plt_B->target, ...)
+	                                set_memory_ro(page)
+	WRITE_ONCE(plt_A->target, ...)  <- permission fault
+
+This was hit on an arm64 server with 64K pages while attaching fentry
+programs to bpf progs:
+
+  Unable to handle kernel write to read-only memory at virtual address ffff80008f46d5f8
+  ESR = 0x000000009600004f
+  FSC = 0x0f: level 3 permission fault
+  pte=00c00200ea5a0783
+  Internal error: Oops: 000000009600004f [#1]  SMP
+  pc : bpf_arch_text_poke+0x214/0x238
+  lr : bpf_arch_text_poke+0x200/0x238
+  Call trace:
+   bpf_arch_text_poke+0x214/0x238 (P)
+   __bpf_trampoline_link_prog+0x1c8/0x470
+   bpf_trampoline_link_prog+0x64/0x90
+   bpf_tracing_prog_attach+0x318/0x4a8
+   bpf_raw_tp_link_attach+0x104/0x258
+   bpf_raw_tracepoint_open+0x6c/0x90
+   __sys_bpf+0x134c/0x3e10
+
+Rather than serializing the permission changes, stop changing page
+permissions altogether and write the plt target with
+aarch64_insn_write_literal_u64(). It writes through the text patching
+fixmap under patch_lock, the same way the rest of the prog pack is
+written, and performs a single-copy atomic 64-bit store. The plt target
+is naturally aligned (see build_plt()), so CPUs concurrently executing
+the plt still observe either the old or the new target. This is the
+same helper ftrace and static calls use to update 64-bit literals that
+are loaded concurrently.
+
+Fixes: 1dad391daef1 ("bpf, arm64: use bpf_prog_pack for memory management")
+Signed-off-by: Matthew Wood <thepacketgeek@gmail.com>
+Signed-off-by: Alexei Starovoitov <ast@kernel.org>
+Link: https://patch.msgid.link/20261009173802.1248441-1-thepacketgeek@gmail.com
+[ sashal: Kept the local <asm/patching.h> include instead of upstream's <asm/text-patching.h> and dropped <asm/set_memory.h>; the hunk was otherwise identical, with only an offset shift. ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/kernel/cpu/resctrl/rdtgroup.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ arch/arm64/net/bpf_jit_comp.c | 32 ++++++++++++++++----------------
+ 1 file changed, 16 insertions(+), 16 deletions(-)
 
-diff --git a/arch/x86/kernel/cpu/resctrl/rdtgroup.c b/arch/x86/kernel/cpu/resctrl/rdtgroup.c
-index 868e260947a10..3db3af835471e 100644
---- a/arch/x86/kernel/cpu/resctrl/rdtgroup.c
-+++ b/arch/x86/kernel/cpu/resctrl/rdtgroup.c
-@@ -645,7 +645,7 @@ static int __rdtgroup_move_task(struct task_struct *tsk,
+diff --git a/arch/arm64/net/bpf_jit_comp.c b/arch/arm64/net/bpf_jit_comp.c
+index 9c28bb7b69ae6..6900a5ddb9439 100644
+--- a/arch/arm64/net/bpf_jit_comp.c
++++ b/arch/arm64/net/bpf_jit_comp.c
+@@ -22,7 +22,6 @@
+ #include <asm/debug-monitors.h>
+ #include <asm/insn.h>
+ #include <asm/patching.h>
+-#include <asm/set_memory.h>
  
- static bool is_closid_match(struct task_struct *t, struct rdtgroup *r)
- {
--	return (resctrl_arch_alloc_capable() && (r->type == RDTCTRL_GROUP) &&
-+	return (r->type == RDTCTRL_GROUP &&
- 		resctrl_arch_match_closid(t, r->closid));
- }
+ #include "bpf_jit.h"
  
+@@ -2631,21 +2630,22 @@ int bpf_arch_text_poke(void *ip, enum bpf_text_poke_type poke_type,
+ 		 */
+ 		plt_target = (u64)&dummy_tramp;
+ 
+-	if (plt_target) {
+-		/* non-zero plt_target indicates we're patching a bpf prog,
+-		 * which is read only.
+-		 */
+-		if (set_memory_rw(PAGE_MASK & ((uintptr_t)&plt->target), 1))
+-			return -EFAULT;
+-		WRITE_ONCE(plt->target, plt_target);
+-		set_memory_ro(PAGE_MASK & ((uintptr_t)&plt->target), 1);
+-		/* since plt target points to either the new trampoline
+-		 * or dummy_tramp, even if another CPU reads the old plt
+-		 * target value before fetching the bl instruction to plt,
+-		 * it will be brought back by dummy_tramp, so no barrier is
+-		 * required here.
+-		 */
+-	}
++	/*
++	 * non-zero plt_target indicates we're patching a bpf prog,
++	 * which is read only. The prog may share its page in the bpf
++	 * prog pack with other progs, so write the aligned target
++	 * through the text patching fixmap without flipping the
++	 * page permissions to avoid racing with concurrent pokers.
++	 *
++	 * since plt target points to either the new trampoline
++	 * or dummy_tramp, even if another CPU reads the old plt
++	 * target value before fetching the bl instruction to plt,
++	 * it will be brought back by dummy_tramp, so no barrier is
++	 * required here.
++	 */
++	if (plt_target &&
++	    aarch64_insn_write_literal_u64(&plt->target, plt_target))
++		return -EFAULT;
+ 
+ 	/* if the old target and the new target are both long jumps, no
+ 	 * patching is required
 -- 
 2.53.0
 
