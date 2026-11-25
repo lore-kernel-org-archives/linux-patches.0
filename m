@@ -1,42 +1,42 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795625437;
-	b=gsTIYDU6+b7x6KoC4gM6ALpEULOf2ReYMl3hgLdVvzghL5Fd7I4wH1sMPKTwxw/1Wv4f
-	 CVSNPK4mnVkO9ZghIWxzzHt0UIvz4QXeU+qLDJmJHfVed+m3lFQ7K9k1i67ec5Yhu7aFP
-	 Yheo6e8xtux2KTH72z6SNmWc5mAYglt3hDstFJJCfA4kVhtr+wW5FOJWLDYzs5lecgiff
-	 FLQW5ZuKpbScFyXjI6XKCfxWpsotuA+xv7b6cq2XV/EfFLlEpM3Ae0OC8rqIdhvTGaYVy
-	 eGXyuB/ytV170Ecy20mZyfTQ81R4h5UYghOQ7r8r08XHxZRFGpWhrIssFOWl/HmrbCQ==
+	t=1795625440;
+	b=tu5EW3G9EaUMzEtgbBOPNF55cZo/iT2PUZ2/NUXSvoD4aE32czpmC04j2s6md8Ic7Egq
+	 HHzreg4SluRdmcaTQniy0iU/+1y6qU60PuPuQRvP6eHhbW8/QwiqEkN+z6F0aIwo1ua7A
+	 eLU+xi0op8RlXZR5AJSuUK6Q3sDbsopG7wJjJyxkr/6yrGiH8ca45tnsR4qistC0qkuSQ
+	 NFf0u/hpmt36MhLd2WJUOIePS4DKXRgUdvH5AwDyaKSU0cmDirN3whfPo2lpPFhKBegvk
+	 aVkSxIxdvflfO1Pn4wNM2vpDijnamGDwxLUAyIfmj7xkyUu5pKUqzKexPgZ9dF6bEMw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795625437;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795625440;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=L1ILNmzk7rxv0QPOJwMmm4Dm/8PBTptJhIbWsS3lrjk=;
-	b=GWu7K+t3xAvEtPxqdubx6tRx4qoruKtpCKbmkcrVeYKOLOssn5T7wqLcRslZ+35C4tOC
-	 PXsU56IZuIofKPOUcIfytsCzG/eynD06Th8Fvqy3cgBoqVipYZNT046uw0cHAObJ9HStr
-	 zX2K8NYurlTqU6ASuYT7cbMz9v4fmKRHiH8ihIFjhzX17prhJWwrr9Vh6HCKlvOeoDTbo
-	 U6Y0rQv2EZkvhT/Wszo1ksGZIcZDfonca3ICnV0hEhs04AZ3BKcf0dYhwZoUeGaV5rYLZ
-	 4lGOxA2f0qXQBaiHLyFvUk9Rx95dPFkl1Q5oz9r+l9+rsk+DNj+t0aJXiZ65m+32XCw==
+	bh=4j/tFm68/NvqXxmeE1Wn0L9Yr6Oc7ClU8aFSUMf6/4c=;
+	b=2nPIinj3FZ7Dn1KmWPB3U+PsJAyc9KgEyZdmH2IcpKEoXkWHlKFjnAeA1X8QL0UuG0f/
+	 nLftDuCWpILHnpcrQQnuUb2SyLXA5cuWdhrjkp7Vu9wLqOwJNrYcJZu9z7naSgpzuzHwN
+	 VzUsYqvE2hMAi/f6ILcUU3PEseuwSv6CMzf7iyM9ttMsZpqCG0AYUSI9BKLzDJRKMoQ6f
+	 EbpjfIw49WhgCOpO7eYuRleWWt0uUiANWR/BDKXudqEcH2zuLXthD4qBbmHksI11wIoRM
+	 LT/KqHjDFo4h4pDrPtHJ0VTIKlUXQ4JgJM9hwQIRu61s1VYGmmw43ETMe26pyyBilCQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=myme2APg;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="CqeQR/Ls";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 315B9606A321;
-	Wed, 25 Nov 2026 16:50:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2130A606A31E;
+	Wed, 25 Nov 2026 16:50:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=myme2APg
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 276D51F000C0;
-	Wed, 25 Nov 2026 16:50:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=CqeQR/Ls
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4A34B1F000C4;
+	Wed, 25 Nov 2026 16:50:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795625436;
-	bh=L1ILNmzk7rxv0QPOJwMmm4Dm/8PBTptJhIbWsS3lrjk=;
+	s=korg; t=1795625439;
+	bh=4j/tFm68/NvqXxmeE1Wn0L9Yr6Oc7ClU8aFSUMf6/4c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=myme2APgOYLs+1yvVCVVgaajb3OmYgD1oSbrttZfQeFtD7TYxJpwHwBZewLh/OzGH
-	 OyTY/OZeYt32RuSP11ZTfAb19QrFfSJ5j2n7dKKCrKz0lLOdXd+/zBavr3TvWaKAvF
-	 LkWcTa+YMmHUgQL+4A2s9jam2RwKXkzSj1n/ePcg=
+	b=CqeQR/LsYHM54wfraPwP+drc1/QLC1cYxEYrvd3z9t3lOXqM72D2U4COktZjdWAtd
+	 cKJCPdAz0Z2NwOZAUSKQekIQ7GYVaqsboHWIe57Inm7Sc5MsVWf57nvthGrbHsmHCQ
+	 NLqGjIcaRcFdmDGqRH6kjM/3KcDZBTTfWfm+DvwI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -44,9 +44,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Sashiko <sashiko-bot@kernel.org>,
 	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 471/816] ALSA: pcmtest: Fix leak at probe error
-Date: Wed, 25 Nov 2026 15:33:39 +0100
-Message-ID: <20261125143900.103273849@linuxfoundation.org>
+Subject: [PATCH 6.12 472/816] ALSA: aloop: Avoid a bad mixure of guard() and goto
+Date: Wed, 25 Nov 2026 15:33:40 +0100
+Message-ID: <20261125143900.125691725@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143849.205329330@linuxfoundation.org>
 References: <20261125143849.205329330@linuxfoundation.org>
@@ -70,148 +70,61 @@ Content-Transfer-Encoding: 8bit
 
 From: Takashi Iwai <tiwai@suse.de>
 
-[ Upstream commit d0f2ca62e89f3c666d0ec203eaa23b8d965e5443 ]
+[ Upstream commit f7faf5d9b5668919cae84a6247f8f7b4e2c0227c ]
 
-When an error happens at probe of pcmtest driver before
-snd_card_register() succeeds, we have to release the card explicitly,
-but it's not done, leading to a potential memory leak.
+The rewrite of aloop driver code using guard() leaded to a mixture of
+guard() and some goto; although it currently works, it isn't really a
+good match.
 
-Also, pcmtest driver manages struct pcmtst object unnecessarily
-complicatedly by a dynamic allocation and release.
+For avoiding the bad match, just move the code using goto into a
+function and wrap it with guard().
 
-This patch fixes and cleans up the resource management:
-- Use card's private_data allocation for struct sndpcmtst at the card
-  creation, which is released automatically together with the card
-- Since the allocation of pcmtest is gone, snd_pcmtst_create() is
-  rather pointless, so just directly calling snd_pcmtst_new_pcm()
-- Use the new auto-clean mechanism to handle the error case at probe.
-- Many release handlers became superfluous and dropped
-
-In the end we got a good amount of code reduction.
-
-Fixes: 315a3d57c64c ("ALSA: Implement the new Virtual PCM Test Driver")
+Fixes: ebd9b6c91d4e ("ALSA: aloop: Use guard() for mutex locks")
 Reported-by: Sashiko <sashiko-bot@kernel.org>
 Signed-off-by: Takashi Iwai <tiwai@suse.de>
-Link: https://patch.msgid.link/20261007172533.14667-3-tiwai@suse.de
-[ sashal: Adjusted context in two hunks (kzalloc vs kzalloc_obj, .remove_new vs .remove), both on lines the patch deletes, so the final code matches upstream. ]
+Link: https://patch.msgid.link/20261007172533.14667-6-tiwai@suse.de
+[ sashal: Kept the local kzalloc(sizeof(*dpcm), GFP_KERNEL) call in place of upstream's kzalloc_obj(*dpcm) so the hunk applies; the rest matches upstream. ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/drivers/pcmtest.c | 66 +++++++----------------------------------
- 1 file changed, 10 insertions(+), 56 deletions(-)
+ sound/drivers/aloop.c | 11 +++++++++--
+ 1 file changed, 9 insertions(+), 2 deletions(-)
 
-diff --git a/sound/drivers/pcmtest.c b/sound/drivers/pcmtest.c
-index 0376fe17365a8..0e325ae96371f 100644
---- a/sound/drivers/pcmtest.c
-+++ b/sound/drivers/pcmtest.c
-@@ -464,20 +464,6 @@ static snd_pcm_uframes_t snd_pcmtst_pcm_pointer(struct snd_pcm_substream *substr
- 	return bytes_to_frames(substream->runtime, v_iter->buf_pos);
- }
+diff --git a/sound/drivers/aloop.c b/sound/drivers/aloop.c
+index d7857659a7313..fa8d2877516d9 100644
+--- a/sound/drivers/aloop.c
++++ b/sound/drivers/aloop.c
+@@ -1273,7 +1273,7 @@ static const struct loopback_ops loopback_snd_timer_ops = {
+ 	.dpcm_info = loopback_snd_timer_dpcm_info,
+ };
  
--static int snd_pcmtst_free(struct pcmtst *pcmtst)
--{
--	if (!pcmtst)
--		return 0;
--	kfree(pcmtst);
--	return 0;
--}
--
--// These callbacks are required, but empty - all freeing occurs in pdev_remove
--static int snd_pcmtst_dev_free(struct snd_device *device)
--{
--	return 0;
--}
--
- static void pcmtst_pdev_release(struct device *dev)
+-static int loopback_open(struct snd_pcm_substream *substream)
++static int __loopback_open(struct snd_pcm_substream *substream)
  {
- }
-@@ -581,40 +567,9 @@ static int snd_pcmtst_new_pcm(struct pcmtst *pcmtst)
+ 	struct snd_pcm_runtime *runtime = substream->runtime;
+ 	struct loopback *loopback = substream->private_data;
+@@ -1282,7 +1282,6 @@ static int loopback_open(struct snd_pcm_substream *substream)
+ 	int err = 0;
+ 	int dev = get_cable_index(substream);
+ 
+-	guard(mutex)(&loopback->cable_lock);
+ 	dpcm = kzalloc(sizeof(*dpcm), GFP_KERNEL);
+ 	if (!dpcm)
+ 		return -ENOMEM;
+@@ -1373,6 +1372,14 @@ static int loopback_open(struct snd_pcm_substream *substream)
  	return err;
  }
  
--static int snd_pcmtst_create(struct snd_card *card, struct platform_device *pdev,
--			     struct pcmtst **r_pcmtst)
--{
--	struct pcmtst *pcmtst;
--	int err;
--	static const struct snd_device_ops ops = {
--		.dev_free = snd_pcmtst_dev_free,
--	};
--
--	pcmtst = kzalloc(sizeof(*pcmtst), GFP_KERNEL);
--	if (!pcmtst)
--		return -ENOMEM;
--	pcmtst->card = card;
--	pcmtst->pdev = pdev;
--
--	err = snd_device_new(card, SNDRV_DEV_LOWLEVEL, pcmtst, &ops);
--	if (err < 0)
--		goto _err_free_chip;
--
--	err = snd_pcmtst_new_pcm(pcmtst);
--	if (err < 0)
--		goto _err_free_chip;
--
--	*r_pcmtst = pcmtst;
--	return 0;
--
--_err_free_chip:
--	snd_pcmtst_free(pcmtst);
--	return err;
--}
--
- static int pcmtst_probe(struct platform_device *pdev)
++static int loopback_open(struct snd_pcm_substream *substream)
++{
++	struct loopback *loopback = substream->private_data;
++
++	guard(mutex)(&loopback->cable_lock);
++	return __loopback_open(substream);
++}
++
+ static int loopback_close(struct snd_pcm_substream *substream)
  {
--	struct snd_card *card;
-+	struct snd_card *card __free(snd_card_free) = NULL;
- 	struct pcmtst *pcmtst;
- 	int err;
- 
-@@ -622,10 +577,16 @@ static int pcmtst_probe(struct platform_device *pdev)
- 	if (err)
- 		return err;
- 
--	err = snd_devm_card_new(&pdev->dev, index, id, THIS_MODULE, 0, &card);
-+	err = snd_devm_card_new(&pdev->dev, index, id, THIS_MODULE,
-+				sizeof(*pcmtst), &card);
- 	if (err < 0)
- 		return err;
--	err = snd_pcmtst_create(card, pdev, &pcmtst);
-+
-+	pcmtst = card->private_data;
-+	pcmtst->card = card;
-+	pcmtst->pdev = pdev;
-+
-+	err = snd_pcmtst_new_pcm(pcmtst);
- 	if (err < 0)
- 		return err;
- 
-@@ -638,17 +599,11 @@ static int pcmtst_probe(struct platform_device *pdev)
- 		return err;
- 
- 	platform_set_drvdata(pdev, pcmtst);
-+	card = NULL; /* probe succeeded, don't release as error */
- 
- 	return 0;
- }
- 
--static void pdev_remove(struct platform_device *pdev)
--{
--	struct pcmtst *pcmtst = platform_get_drvdata(pdev);
--
--	snd_pcmtst_free(pcmtst);
--}
--
- static struct platform_device pcmtst_pdev = {
- 	.name =		"pcmtest",
- 	.dev.release =	pcmtst_pdev_release,
-@@ -656,7 +611,6 @@ static struct platform_device pcmtst_pdev = {
- 
- static struct platform_driver pcmtst_pdrv = {
- 	.probe =	pcmtst_probe,
--	.remove_new =	pdev_remove,
- 	.driver =	{
- 		.name = "pcmtest",
- 	},
+ 	struct loopback *loopback = substream->private_data;
 -- 
 2.53.0
 
