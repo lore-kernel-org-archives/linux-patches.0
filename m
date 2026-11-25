@@ -1,53 +1,55 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795625095;
-	b=YsxiE9OHypXF4LgEpKJenMQ6cD6tqnM7XLnClhQz0aeQy083fVPHWLmHGZcPGrYt3CLs
-	 6dAsYLZJxxnurmyV6P0hh0ul17sbscne4Qx/RHaFt7TLTLYAbt/M4a9OtunJOSwmjlFTD
-	 zdE9jeoq9PUfq7Js08d4JRRtWoZOPnf7uy7CtV87TbGvaeHi0M4Js34iGK3ijA173FVsX
-	 qQ7mXjErqKg+NfQQdCDfuNbHZkbjcYKGbdNH+xi+KRbWjVJ55PkGZdJwMsB37jQkmOxSn
-	 L8mV2Q4OvFs4fuSMzBA5KrNrX8C1Tp9o+ps7u3pTAU+GO3LjfkvDi0czFFhW8O54p/w==
+	t=1795625098;
+	b=Z91RpRlLoW0UKwcg33akHmhvp75MVrIhhaeGS+uzcRb20bb0yrJIPR5InC2bsqBnBDLD
+	 SK3PvRJPb2C8OQr12l+zkfKuzInBrb61gXwB81tdVidktnstBjENzVVdcoHwLChQP89H0
+	 xCNtmvt+hyBWTBYS7+5foHE4G4WHj3kdT1YLBZUbNoXMjRqSgHzYlc8+1FVZ7P0NAHAr7
+	 CFh7pmm7+ClA7W+hJNrWtUBgWIB+cLkfdVvhtNN1VNDsYltIMT9di5VSCmaL+zUT56+X+
+	 KpfGwmg9CWdtqrIZU/dNVWdpMhN1B9vlX1EmL/4dI4y6SpO6oeOmn86Uh2OxEsqAIvQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795625095;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795625098;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=hSQSrstuLfcsHvoDBo3wCi7c7n6I/PfNCsuvQEScw+8=;
-	b=xqYtBZkYvSolI926NTgUsVVlHyxZuSVqpLHuFR29AB85aGkqumTnWY9ZhUuv6IRDCLCJ
-	 S6bR2wP//VlazVXvugnDCvtw15GCTlgqwiF/+qNHCZAxIqIIMDuRsHP3b+cEQLvfqifvE
-	 KXbvVAkvz46RUmdrqP7XgUYsjtHGXQ7VDWClQR048m3tEIgcW4UHhN9GTg8VtgjItyBKt
-	 nKEzBJfi3h6efZdyAFRn3gEA7kWHoidTlwZpuBRVl49K1FF82wo8+Sga9J5CWp/J5PSH0
-	 XbjxFTZoMvNwhOIU3v054bmNwJrDUlcimzfZrUz+NfscbDU3SlWkhTgQEzfoI0djJEw==
+	bh=2UWlazo5d4QJtaVRALEnwpPTQXPhnWSgJ+oOWaVwFzo=;
+	b=SEkEH4dGXy/mCYflCL6ldNPMDyMGQ7XpzligPgSmGdCG7FZiHqRB8k8YJWxP0/l/1PBM
+	 cx45eCFgbRjulD2fojWGWNVJGL+1SdySpz2U5+kiO5xgL2vR14S3OXbf7uIQzIg8uD5Z6
+	 6lHw5yRgrNW0T7SyqTZTTswFhgUoNXXFO0D3Fbot+q+/iVnoQ9QAHNAgpbkl7oYpA/tyF
+	 /JyEM59uhnZDAt3c1mMyWTooS2bgbyvSWPH4dmv74ey2AhmMb5RN01gn517SG+ya2PqFG
+	 wjGQlSilh+aczmUWGBwqw4p+KalqARXBWDXcnpL7JXI1wRYWd5OCDigwgakCUL6X+Bg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="t/9cvXRY";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=QDd12+dd;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A9D0A606A321;
-	Wed, 25 Nov 2026 16:44:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C3D05606A327;
+	Wed, 25 Nov 2026 16:44:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=t/9cvXRY
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 065111F000C4;
-	Wed, 25 Nov 2026 16:44:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=QDd12+dd
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E7A3D1F000C6;
+	Wed, 25 Nov 2026 16:44:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795625095;
-	bh=hSQSrstuLfcsHvoDBo3wCi7c7n6I/PfNCsuvQEScw+8=;
+	s=korg; t=1795625098;
+	bh=2UWlazo5d4QJtaVRALEnwpPTQXPhnWSgJ+oOWaVwFzo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=t/9cvXRYeBkBKnLitXp6bGY9ujqY9gtgnaj8H7B3CyTvUGNsIw7Z4CUHPTL63djlm
-	 mQEudjl0sTgl7KOGgnV2GUxYSfuhgYbHLA+V73GqnV1A6MlxnCJex7iPXu0mrGC8tK
-	 POuywfQcoY2ez2wC8HmQqki7MiJTlhw5VToYWujU=
+	b=QDd12+ddXvBKYolaVWacHS3bibmYYzyDJ1IK1KUSN6CVWQNTy8wdOY3egWEWluqkV
+	 U7H85kLZ/Eb6oQ2q1KgjsHfR9P3s7i+zOvQak5yH1ziIql3JIv3dLu2lst6HSILvVr
+	 fF3AQhLlktsppQquHlrhdcekUDkydv+3rQ3R/hSs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pengpeng Hou <pengpeng@iscas.ac.cn>,
-	Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>,
-	Vinod Koul <vkoul@kernel.org>,
+	Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>,
+	Dave Jiang <dave.jiang@intel.com>,
+	Li Ming <ming.li@zohomail.com>,
+	Richard Cheng <icheng@nvidia.com>,
+	Alison Schofield <alison.schofield@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 404/816] phy: samsung: usbdrd: propagate GS101 PIPE3 lock failures
-Date: Wed, 25 Nov 2026 15:32:32 +0100
-Message-ID: <20261125143858.548434299@linuxfoundation.org>
+Subject: [PATCH 6.12 405/816] cxl/hdm: Restore commit_end when decoder enumeration fails
+Date: Wed, 25 Nov 2026 15:32:33 +0100
+Message-ID: <20261125143858.570375660@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143849.205329330@linuxfoundation.org>
 References: <20261125143849.205329330@linuxfoundation.org>
@@ -69,204 +71,97 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pengpeng Hou <pengpeng@iscas.ac.cn>
+From: Alison Schofield <alison.schofield@intel.com>
 
-[ Upstream commit 2ef1e78ef7223eb16d9cf20814a1b2873456f671 ]
+[ Upstream commit 7dae18c39e99813461db6ef3fc13f077452109ce ]
 
-The GS101 PIPE3 initialization checks the PMA PLL lock and then checks
-the CDR lock. The PLL helper returns an error, but the GS101 PIPE3 init
-path dropped that result. The CDR helper only logged a timeout. PHY
-initialization could therefore still return success after either the PLL
-or the selected receive lane had not locked.
+commit_end tracks the highest committed decoder on a port. It gets
+advanced before decoder enumeration is complete, so a later failure
+leaves it pointing at a decoder that was never added. The next probe
+then rejects decoder0 as out of order and enumeration fails.
 
-Make the in-file SoC-specific phy_init hook return an int so helpers
-with real failure results can propagate them through the existing PHY
-init paths. Keep the register-only helpers returning success and use the
-new return path to report the GS101 CDR wait failure. Other SoC helper
-paths keep their previous success behavior.
+Reset commit_end to the uncommitted baseline once the decoders are
+torn down, so a subsequent probe rebuilds it from scratch. Register
+the reset before the decoders are added so that on unwind it runs
+after every decoder has been unregistered. This prevents commit_end
+from dropping below the highest committed decoder still registered and
+exposing an inconsistent value to a concurrent reader.
 
-Fixes: 32267c29bc7d ("phy: exynos5-usbdrd: support Exynos USBDRD 3.1 combo phy (HS & SS)")
-Signed-off-by: Pengpeng Hou <pengpeng@iscas.ac.cn>
-Reviewed-by: Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>
-Link: https://patch.msgid.link/20260623135349.42739-1-pengpeng@iscas.ac.cn
-Signed-off-by: Vinod Koul <vkoul@kernel.org>
-[ sashal: Dropped the exynos7870, exynos2200 and exynosautov920 phy_init conversions (SoCs not present), and adapted the CDR helper and exynos850 phy_init to the older code without phy_mutex or scoped_guard. ]
+Protect the commit_end advance in the DVSEC emulation path against
+concurrent readers, matching the register-programmed path.
+
+Fixes: 176baefb2eb5 ("cxl/hdm: Commit decoder state to hardware")
+Fixes: b777e9bec960 ("cxl/hdm: Emulate HDM decoder from DVSEC range registers")
+Reviewed-by: Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>
+Reviewed-by: Dave Jiang <dave.jiang@intel.com>
+Reviewed-by: Li Ming <ming.li@zohomail.com>
+Reviewed-by: Richard Cheng <icheng@nvidia.com>
+Signed-off-by: Alison Schofield <alison.schofield@intel.com>
+Link: https://patch.msgid.link/4802c5abc906b858a4754bfc4fa3e4c2c455d0c3.1786143520.git.alison.schofield@intel.com
+Signed-off-by: Dave Jiang <dave.jiang@intel.com>
+[ sashal: Replaced cxl_rwsem.region with the standalone cxl_region_rwsem lock in the two new write-guard sites, since the newer lock struct doesn't exist here. ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/phy/samsung/phy-exynos5-usbdrd.c | 51 +++++++++++++++++-------
- 1 file changed, 37 insertions(+), 14 deletions(-)
+ drivers/cxl/core/hdm.c | 23 ++++++++++++++++++++---
+ 1 file changed, 20 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/phy/samsung/phy-exynos5-usbdrd.c b/drivers/phy/samsung/phy-exynos5-usbdrd.c
-index 28d02ae60cc14..ad4a7dfa1ab32 100644
---- a/drivers/phy/samsung/phy-exynos5-usbdrd.c
-+++ b/drivers/phy/samsung/phy-exynos5-usbdrd.c
-@@ -355,7 +355,7 @@ struct exynos5_usbdrd_phy;
- struct exynos5_usbdrd_phy_config {
- 	u32 id;
- 	void (*phy_isol)(struct phy_usb_instance *inst, bool isolate);
--	void (*phy_init)(struct exynos5_usbdrd_phy *phy_drd);
-+	int (*phy_init)(struct exynos5_usbdrd_phy *phy_drd);
- 	unsigned int (*set_refclk)(struct phy_usb_instance *inst);
- };
- 
-@@ -579,7 +579,7 @@ exynos5_usbdrd_apply_phy_tunes(struct exynos5_usbdrd_phy *phy_drd,
- 	}
- }
- 
--static void exynos5_usbdrd_pipe3_init(struct exynos5_usbdrd_phy *phy_drd)
-+static int exynos5_usbdrd_pipe3_init(struct exynos5_usbdrd_phy *phy_drd)
- {
- 	u32 reg;
- 
-@@ -592,6 +592,8 @@ static void exynos5_usbdrd_pipe3_init(struct exynos5_usbdrd_phy *phy_drd)
- 	reg = readl(phy_drd->reg_phy + EXYNOS5_DRD_PHYTEST);
- 	reg &= ~PHYTEST_POWERDOWN_SSP;
- 	writel(reg, phy_drd->reg_phy + EXYNOS5_DRD_PHYTEST);
-+
-+	return 0;
- }
- 
- static void
-@@ -686,7 +688,7 @@ exynos5_usbdrd_usbdp_g2_v4_pma_check_pll_lock(struct exynos5_usbdrd_phy *phy_drd
- 	return err;
- }
- 
--static void
-+static int
- exynos5_usbdrd_usbdp_g2_v4_pma_check_cdr_lock(struct exynos5_usbdrd_phy *phy_drd)
- {
- 	static const unsigned int timeout_us = 40000;
-@@ -703,7 +705,7 @@ exynos5_usbdrd_usbdp_g2_v4_pma_check_cdr_lock(struct exynos5_usbdrd_phy *phy_drd
- 			phy_drd->reg_pma + EXYNOS9_PMA_USBDP_TRSV_REG03C3,
- 			reg, (reg & locked) == locked, sleep_us, timeout_us);
- 	if (!err)
--		return;
-+		return 0;
- 
- 	dev_err(phy_drd->dev,
- 		"timed out waiting for CDR lock (l0): %#.8x, retrying\n", reg);
-@@ -715,9 +717,11 @@ exynos5_usbdrd_usbdp_g2_v4_pma_check_cdr_lock(struct exynos5_usbdrd_phy *phy_drd
- 	if (err)
- 		dev_err(phy_drd->dev,
- 			"timed out waiting for CDR lock (l2): %#.8x\n", reg);
-+
-+	return err;
- }
- 
--static void exynos5_usbdrd_utmi_init(struct exynos5_usbdrd_phy *phy_drd)
-+static int exynos5_usbdrd_utmi_init(struct exynos5_usbdrd_phy *phy_drd)
- {
- 	u32 reg;
- 
-@@ -739,6 +743,8 @@ static void exynos5_usbdrd_utmi_init(struct exynos5_usbdrd_phy *phy_drd)
- 	reg = readl(phy_drd->reg_phy + EXYNOS5_DRD_PHYTEST);
- 	reg &= ~PHYTEST_POWERDOWN_HSP;
- 	writel(reg, phy_drd->reg_phy + EXYNOS5_DRD_PHYTEST);
-+
-+	return 0;
- }
- 
- static int exynos5_usbdrd_phy_init(struct phy *phy)
-@@ -775,7 +781,9 @@ static int exynos5_usbdrd_phy_init(struct phy *phy)
- 	writel(reg, phy_drd->reg_phy + EXYNOS5_DRD_PHYUTMICLKSEL);
- 
- 	/* UTMI or PIPE3 specific init */
--	inst->phy_cfg->phy_init(phy_drd);
-+	ret = inst->phy_cfg->phy_init(phy_drd);
-+	if (ret)
-+		goto disable_clks;
- 
- 	/* reference clock settings */
- 	reg = inst->phy_cfg->set_refclk(inst);
-@@ -798,9 +806,10 @@ static int exynos5_usbdrd_phy_init(struct phy *phy)
- 	reg &= ~PHYCLKRST_PORTRESET;
- 	writel(reg, phy_drd->reg_phy + EXYNOS5_DRD_PHYCLKRST);
- 
-+disable_clks:
- 	clk_bulk_disable_unprepare(phy_drd->drv_data->n_clks, phy_drd->clks);
- 
--	return 0;
-+	return ret;
- }
- 
- static int exynos5_usbdrd_phy_exit(struct phy *phy)
-@@ -1067,7 +1076,7 @@ exynos5_usbdrd_usb_v3p1_pipe_override(struct exynos5_usbdrd_phy *phy_drd)
- 	writel(reg, regs_base + EXYNOS850_DRD_SECPMACTL);
- }
- 
--static void exynos850_usbdrd_utmi_init(struct exynos5_usbdrd_phy *phy_drd)
-+static int exynos850_usbdrd_utmi_init(struct exynos5_usbdrd_phy *phy_drd)
- {
- 	void __iomem *regs_base = phy_drd->reg_phy;
- 	u32 reg;
-@@ -1171,6 +1180,8 @@ static void exynos850_usbdrd_utmi_init(struct exynos5_usbdrd_phy *phy_drd)
- 
- 	if (ss_ports)
- 		exynos5_usbdrd_usb_v3p1_pipe_override(phy_drd);
-+
-+	return 0;
- }
- 
- static int exynos850_usbdrd_phy_init(struct phy *phy)
-@@ -1184,11 +1195,11 @@ static int exynos850_usbdrd_phy_init(struct phy *phy)
- 		return ret;
- 
- 	/* UTMI or PIPE3 specific init */
--	inst->phy_cfg->phy_init(phy_drd);
-+	ret = inst->phy_cfg->phy_init(phy_drd);
- 
- 	clk_bulk_disable_unprepare(phy_drd->drv_data->n_clks, phy_drd->clks);
- 
--	return 0;
-+	return ret;
- }
- 
- static int exynos850_usbdrd_phy_exit(struct phy *phy)
-@@ -1235,11 +1246,12 @@ static const struct phy_ops exynos850_usbdrd_phy_ops = {
- 	.owner		= THIS_MODULE,
- };
- 
--static void exynos5_usbdrd_gs101_pipe3_init(struct exynos5_usbdrd_phy *phy_drd)
-+static int exynos5_usbdrd_gs101_pipe3_init(struct exynos5_usbdrd_phy *phy_drd)
- {
- 	void __iomem *regs_pma = phy_drd->reg_pma;
- 	void __iomem *regs_phy = phy_drd->reg_phy;
- 	u32 reg;
-+	int ret;
- 
- 	exynos5_usbdrd_usbdp_g2_v4_ctrl_pma_ready(phy_drd);
- 
-@@ -1261,8 +1273,11 @@ static void exynos5_usbdrd_gs101_pipe3_init(struct exynos5_usbdrd_phy *phy_drd)
- 		 SECPMACTL_PMA_INIT_SW_RST);
- 	writel(reg, regs_phy + EXYNOS850_DRD_SECPMACTL);
- 
--	if (!exynos5_usbdrd_usbdp_g2_v4_pma_check_pll_lock(phy_drd))
--		exynos5_usbdrd_usbdp_g2_v4_pma_check_cdr_lock(phy_drd);
-+	ret = exynos5_usbdrd_usbdp_g2_v4_pma_check_pll_lock(phy_drd);
-+	if (ret)
-+		return ret;
-+
-+	return exynos5_usbdrd_usbdp_g2_v4_pma_check_cdr_lock(phy_drd);
- }
- 
- static int exynos5_usbdrd_gs101_phy_init(struct phy *phy)
-@@ -1287,7 +1302,15 @@ static int exynos5_usbdrd_gs101_phy_init(struct phy *phy)
+diff --git a/drivers/cxl/core/hdm.c b/drivers/cxl/core/hdm.c
+index 24873dbb900c0..6fc4068d2566f 100644
+--- a/drivers/cxl/core/hdm.c
++++ b/drivers/cxl/core/hdm.c
+@@ -808,7 +808,8 @@ static int cxl_setup_hdm_decoder_from_dvsec(
+ 	 * change the range registers at run time.
  	 */
- 	exynos5_usbdrd_phy_isol(inst, false);
+ 	cxld->flags |= CXL_DECODER_F_ENABLE | CXL_DECODER_F_LOCK;
+-	port->commit_end = cxld->id;
++	scoped_guard(rwsem_write, &cxl_region_rwsem)
++		port->commit_end = cxld->id;
  
--	return exynos850_usbdrd_phy_init(phy);
-+	ret = exynos850_usbdrd_phy_init(phy);
-+	if (ret) {
-+		exynos5_usbdrd_phy_isol(inst, true);
-+		if (inst->phy_cfg->id == EXYNOS5_DRDPHY_UTMI)
-+			regulator_bulk_disable(phy_drd->drv_data->n_regulators,
-+					       phy_drd->regulators);
-+	}
-+
-+	return ret;
+ 	rc = devm_cxl_dpa_reserve(cxled, *dpa_base, len, 0);
+ 	if (rc) {
+@@ -1011,6 +1012,14 @@ static void cxl_settle_decoders(struct cxl_hdm *cxlhdm)
+ 		msleep(20);
  }
  
- static int exynos5_usbdrd_gs101_phy_exit(struct phy *phy)
++static void cxl_reset_commit_end(void *data)
++{
++	struct cxl_port *port = data;
++
++	guard(rwsem_write)(&cxl_region_rwsem);
++	port->commit_end = -1;
++}
++
+ /**
+  * devm_cxl_enumerate_decoders - add decoder objects per HDM register set
+  * @cxlhdm: Structure to populate with HDM capabilities
+@@ -1021,8 +1030,8 @@ int devm_cxl_enumerate_decoders(struct cxl_hdm *cxlhdm,
+ {
+ 	void __iomem *hdm = cxlhdm->regs.hdm_decoder;
+ 	struct cxl_port *port = cxlhdm->port;
+-	int i;
+ 	u64 dpa_base = 0;
++	int i, rc;
+ 
+ 	/*
+ 	 * Per CXL 4.0 8.2.4.20.1 Target Count is the number of target ports
+@@ -1038,8 +1047,16 @@ int devm_cxl_enumerate_decoders(struct cxl_hdm *cxlhdm,
+ 
+ 	cxl_settle_decoders(cxlhdm);
+ 
++	/*
++	 * Reset commit_end after all decoders have been torn down so a
++	 * subsequent probe rebuilds it from scratch.
++	 */
++	rc = devm_add_action(&port->dev, cxl_reset_commit_end, port);
++	if (rc)
++		return rc;
++
+ 	for (i = 0; i < cxlhdm->decoder_count; i++) {
+-		int rc, target_count = cxlhdm->target_count;
++		int target_count = cxlhdm->target_count;
+ 		struct cxl_decoder *cxld;
+ 
+ 		if (is_cxl_endpoint(port)) {
 -- 
 2.53.0
 
