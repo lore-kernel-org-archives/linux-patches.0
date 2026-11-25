@@ -1,52 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795620681;
-	b=sR96OSBL6Ckce4I4Tn6NjNNWI4UWq1T+zlvtkiqFBWYLWfKeaOQqrh28P5bHHga+dqYq
-	 MKMJvotnuLK8gQUXG2Abw8Sj8Glyhu9pB6ug5TriPq0j5YEEFRHGqAe1KZW49zBmIFRbs
-	 UEiRA36vqoMAqgQf5FbguZ+h6aepQpanrs1wuTN2g4bM51Tig3OvxJPFzMXVG0NQRBc1M
-	 JdOyayyphg8lXsj2Cz/k2SWguFpkLdrt+y4kh959G/IVol+yrt4QHP538dKtxWYhNVUEj
-	 54dq0VlfDYcly99DwYHxFgTZXn4fvrcljQ05/VWxbv5feUzqAluQkUelmlG3/Wkx75A==
+	t=1795620684;
+	b=RiwEzvb3bGQ99LrX6GvEjbYYZSPAgcHmRRuU5nMS9yjCRB13AS6PpbJ+yXk6rXea84VP
+	 MiDa8J10e/1mqe0Ef7hTvRj6XllnVQEGHyhZi8LPwI2okHcdTi7OnQ7E4Guhlfm+fbqzD
+	 H3HOGBVGvd+rICtGUw78SIguuPMCz0QOQlA3ZqoIjQPb9KfRvgM1owuuWcDdNKc/9cxjg
+	 SNOZGElNR81xyy8CYDErz/tBJwXiUoNRYkQBiLFyYowPaYv6QqhQDC9jwI8h5TjUOppI5
+	 5Fpv1Z275sgQccKu6JaiVmb0NjoBuzPzqUH6X8u0NsWhvo7XDuyW6NUqsS2evCbuhuw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795620681;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795620684;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=dIK4L8fMARnEMv2CBXSmTdbbU9Vm1SGD5ROaz5rEIPo=;
-	b=y3XctS2w/NXQEWLPFhj+t4y2HmnNsYr5iXIU1FJkgNEDDCD88QPWoBBX3LqPO1QsE4AV
-	 SK5jkcDUchy79q15YH8XGFNezwzy6qsoWZfU0vRTBLWIz+NwhDfYgKAQqAaCnhOl+kjgw
-	 C+9aFhmjmcJkJ1TmkDiCVkrZxnzyhyGbzVmfGLTZKapo/8+Bln+3/p8ipgRaKwO8QBfp3
-	 +qDlMw/D63fmvA401XtMQsl0x025OJY8bXLhB3bzvDsLyrBBT1GZDTJgEbhUHFOM1dGyP
-	 8GgqGn58v5LxYVkkP1+d72uJwbSGk6oasLMlRH32L6jgGIBzqY8G0og3hAjwt48169Q==
+	bh=9WI6ei2jBWj+aDV0POOi6n1Nt5D19STY5GLK2fcg57s=;
+	b=iejwEc/CMxoC67ZojGfZBsePCKT6EQZZauxBC84WgOFPa/Rhz88D8dEW802FC2WHalja
+	 kAJXPp/OFRiBM3pJ0qMIzIAJDUMk9pIOddBJp5CCTKpgOypHK+rBpFHypByzowygB6l1y
+	 cNTp6LZaiHvgw2E54NsIi8R+UGuSpxMnVtGKufugrRKQwhTFQdqbDDd9xttylp4u6uQeg
+	 KodXoybLrQeFoP6vIGdRQShqhJ2Mam0iErrx/wk4uPSFUz687TT1AM7Xf+2FG772oKXPM
+	 ImOXpVmC0+MxMePogOwdQepwgxfcN6e3lj4lJy9DbvszR2C+UO8r8FMyWR7mDsBZ7FQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=myxbp7Pd;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=iOL30lWK;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6ABF6606A321;
-	Wed, 25 Nov 2026 15:31:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B4408606A684;
+	Wed, 25 Nov 2026 15:31:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=myxbp7Pd
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A484F1F000CF;
-	Wed, 25 Nov 2026 15:31:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=iOL30lWK
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0F4291F000EC;
+	Wed, 25 Nov 2026 15:31:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795620681;
-	bh=dIK4L8fMARnEMv2CBXSmTdbbU9Vm1SGD5ROaz5rEIPo=;
+	s=korg; t=1795620684;
+	bh=9WI6ei2jBWj+aDV0POOi6n1Nt5D19STY5GLK2fcg57s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=myxbp7PdmgYDQUYbZhIYiSfd3x2J2WlcQ3PuEk0wpcfPUk659vep7XW7jvCEJg1YW
-	 2QsVoVZom1WJ+6skYHS2vrTse4LaMEwHBFsmCrODEGVkCeRp87Hyze60ZCHxS6CSv0
-	 aD5D/M/HLLR5FbSCUXhkln10PSO7E1/CUx3vFV/I=
+	b=iOL30lWKON4owswirnLh/M2YRUqb+57iGrNsYFUCC6cWp5PIqniBvE0VldeEXKvGx
+	 Zn95xTHAUCVFed8onxgCRQvU+rPL/U0DsCAf8/Vc8pKN1VKBxxWzhazaFCTO8lsYDR
+	 rgruJ6WFwSqvjJottZUQ1pgbX3gu2IiK5sEzEsv0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Daksh Sahni <swizzguy76@gmail.com>,
-	Jeff Hugo <jeff.hugo@oss.qualcomm.com>,
-	Karol Wachowski <karol.wachowski@linux.intel.com>
-Subject: [PATCH 7.3 0999/1005] accel/ivpu: Defer recovery until probe completes
-Date: Wed, 25 Nov 2026 15:38:57 +0100
-Message-ID: <20261125143845.054348875@linuxfoundation.org>
+	Jean-Baptiste Maneyrol <jean-baptiste.maneyrol@tdk.com>,
+	Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>
+Subject: [PATCH 7.3 0982/1005] iio: inv_sensors: prevent timestamps going back in time in transitions
+Date: Wed, 25 Nov 2026 15:38:40 +0100
+Message-ID: <20261125143844.662659872@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143821.729802100@linuxfoundation.org>
 References: <20261125143821.729802100@linuxfoundation.org>
@@ -68,81 +67,87 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Karol Wachowski <karol.wachowski@linux.intel.com>
+From: Jean-Baptiste Maneyrol <jean-baptiste.maneyrol@tdk.com>
 
-commit dc61b19db1f77deb4c15bb71e64f46071447837c upstream.
+commit 3785dffc7c68751a8429ae6dd75804c14a5a7c7a upstream.
 
-An error IRQ that fires after ivpu_boot() enables interrupts queues
-recovery_work during probe. If probe then fails, the device is torn
-down while the work runs, and the work faults on the unmapped BARs:
+Ensure when computing first timestamp and when applying odr change,
+that the next timestamp will not be lower than the previous one.
 
-  BUG: unable to handle page fault for address: ffffcfc6680200f4
-  Workqueue: events_unbound ivpu_pm_recovery_work [intel_vpu]
-  RIP: 0010:ivpu_hw_ip_ipc_rx_addr_get+0xc/0xb0 [intel_vpu]
-  Call Trace:
-   ivpu_wait_for_ready+0x155/0x220 [intel_vpu]
-   ivpu_boot+0x9e/0x270 [intel_vpu]
-   ivpu_resume+0xa4/0xd0 [intel_vpu]
-   ivpu_pm_reset_complete+0x2c/0x90 [intel_vpu]
-   ivpu_pm_recovery_work+0xf6/0x140 [intel_vpu]
+This way there is no risk to have a timestamp going back in time, meaning
+being lower than the previous one. It already can never happen without
+a transition because we are generating timestamps by adding the period
+to the last timestamp.
 
-If probe succeeds, the recovery runs concurrently with the rest of
-probe, and its pm_runtime_disable() discards the initial autosuspend
-request, leaving the NPU active until first use. Any recovery that
-starts while the NPU is idle loses the pending autosuspend the same way.
-
-Keep recovery_work disabled from ivpu_pm_init() until ivpu_pm_enable().
-A trigger during probe still runs diagnostics and masks interrupts, and
-ivpu_pm_enable() runs the deferred recovery before the initial
-autosuspend request. A trigger racing with ivpu_pm_enable() can cause
-a second, harmless recovery. Request autosuspend at the end of
-ivpu_pm_reset_complete() so the NPU suspends again after every reset.
-
-Fixes: 852be13f3bd3 ("accel/ivpu: Add PM support")
-Cc: stable@vger.kernel.org # v6.10+
-Reported-by: Daksh Sahni <swizzguy76@gmail.com>
-Closes: https://lore.kernel.org/r/20261107174215.15818-1-swizzguy76@gmail.com
-Tested-by: Daksh Sahni <swizzguy76@gmail.com>
-Reviewed-by: Jeff Hugo <jeff.hugo@oss.qualcomm.com>
-Signed-off-by: Karol Wachowski <karol.wachowski@linux.intel.com>
-Link: https://patch.msgid.link/20261110121534.3566028-1-karol.wachowski@linux.intel.com
+Fixes: 0ecc363ccea7 ("iio: make invensense timestamp module generic")
+Cc: stable@vger.kernel.org
+Signed-off-by: Jean-Baptiste Maneyrol <jean-baptiste.maneyrol@tdk.com>
+Signed-off-by: Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/accel/ivpu/ivpu_pm.c |    9 ++++++++-
- 1 file changed, 8 insertions(+), 1 deletion(-)
+ drivers/iio/common/inv_sensors/inv_sensors_timestamp.c |   16 ++++++++++++----
+ include/linux/iio/common/inv_sensors_timestamp.h       |    3 ++-
+ 2 files changed, 14 insertions(+), 5 deletions(-)
 
---- a/drivers/accel/ivpu/ivpu_pm.c
-+++ b/drivers/accel/ivpu/ivpu_pm.c
-@@ -151,8 +151,8 @@ static void ivpu_pm_reset_complete(struc
- 	up_write(&vdev->pm->reset_lock);
- 	atomic_set(&vdev->pm->reset_pending, 0);
+--- a/drivers/iio/common/inv_sensors/inv_sensors_timestamp.c
++++ b/drivers/iio/common/inv_sensors/inv_sensors_timestamp.c
+@@ -133,10 +133,15 @@ void inv_sensors_timestamp_interrupt(str
+ 		return;
  
--	pm_runtime_mark_last_busy(vdev->drm.dev);
- 	pm_runtime_enable(vdev->drm.dev);
-+	pm_request_autosuspend(vdev->drm.dev);
- }
- 
- static void ivpu_pm_recovery_work(struct work_struct *work)
-@@ -416,6 +416,7 @@ void ivpu_pm_init(struct ivpu_device *vd
- 	atomic_set(&pm->engine_reset_counter, 0);
- 
- 	INIT_WORK(&pm->recovery_work, ivpu_pm_recovery_work);
-+	disable_work(&pm->recovery_work);
- 	INIT_DELAYED_WORK(&pm->job_timeout_work, ivpu_job_timeout_work);
- 
- 	if (ivpu_disable_recovery)
-@@ -440,6 +441,12 @@ void ivpu_pm_enable(struct ivpu_device *
- {
- 	struct device *dev = vdev->drm.dev;
- 
-+	enable_work(&vdev->pm->recovery_work);
-+	if (atomic_read(&vdev->pm->reset_pending)) {
-+		queue_work(system_dfl_wq, &vdev->pm->recovery_work);
-+		flush_work(&vdev->pm->recovery_work);
-+	}
+ 	/* no previous data, compute theoretical value from interrupt */
+-	if (ts->timestamp == 0) {
++	if (!ts->init) {
+ 		/* elapsed time: sensor period * sensor samples number */
+ 		interval = (s64)ts->period * (s64)sample_nb;
+-		ts->timestamp = timestamp - interval;
++		delta = timestamp - interval;
++		/* prevent next timestamp to be lower than the last one */
++		if ((delta + ts->period) > ts->timestamp)
++			ts->timestamp = delta;
++		ts->init = true;
 +
- 	pm_runtime_allow(dev);
- 	pm_runtime_put_autosuspend(dev);
+ 	}
+ 
+ 	/* update delta timestamps and estimated period */
+@@ -190,7 +195,7 @@ void inv_sensors_timestamp_apply_odr(str
+ 				     u32 fifo_period, size_t fifo_nb,
+ 				     unsigned int fifo_no)
+ {
+-	s64 interval;
++	s64 interval, timestamp;
+ 	u32 fifo_mult;
+ 
+ 	if (ts->new_mult == 0)
+@@ -213,7 +218,10 @@ void inv_sensors_timestamp_apply_odr(str
+ 		fifo_period = fifo_mult * ts->chip_period.val;
+ 		/* computes time interval between interrupt and this sample */
+ 		interval = (s64)(fifo_nb - fifo_no) * (s64)fifo_period;
+-		ts->timestamp = ts->it.up - interval;
++		timestamp = ts->it.up - interval;
++		/* prevent next timestamp to be lower than current one */
++		if ((timestamp + ts->period) > ts->timestamp)
++			ts->timestamp = timestamp;
+ 	}
  }
+ EXPORT_SYMBOL_NS_GPL(inv_sensors_timestamp_apply_odr, "IIO_INV_SENSORS_TIMESTAMP");
+--- a/include/linux/iio/common/inv_sensors_timestamp.h
++++ b/include/linux/iio/common/inv_sensors_timestamp.h
+@@ -66,6 +66,7 @@ struct inv_sensors_timestamp {
+ 	u32 new_mult;
+ 	u32 period;
+ 	struct inv_sensors_timestamp_acc chip_period;
++	bool init;
+ };
+ 
+ void inv_sensors_timestamp_init(struct inv_sensors_timestamp *ts,
+@@ -94,7 +95,7 @@ static inline void inv_sensors_timestamp
+ 	ts->it = interval_init;
+ 	ts->delta = interval_init;
+ 	ts->delta_counter = 0;
+-	ts->timestamp = 0;
++	ts->init = false;
+ }
+ 
+ #endif
 
 
