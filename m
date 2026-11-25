@@ -1,54 +1,56 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795618800;
-	b=QpIeaLzl0Jdh74bnfOlE+iFbUYZxncN+CdAMAtLMAyU4tCHRRvSZsd7YSgn8ToI9ST9J
-	 vM+cIntraeyPVRHcB9igdmKm3SyimoQvUfRvn11IlTP/fV1d5TwrdSJ4MXGR1gUmhaaLr
-	 RH4rMVij41mr17SrcUK2S7qaSS2FabvZwknr4B92UjIjw81Ki8s8sBON7oaRhlorNvgpw
-	 GpLWe1nAn1eMQ/dMzMY1CFug81BSJxwoW9f/Jgjx4wqU1q4xAD9UR3KNZ1wyrWMbGQSPS
-	 Sd0guOnt3/c5bNmtmjMzW2dfwXHhCAd6KYIrCFp7xQ9Y5abcB5LCeoas3znZJnVctcw==
+	t=1795618804;
+	b=DjxGvLzaEK84hPepPR56EKQy8VmvSIvNCVZxxb2yxe8tMEM4bYC2X3bPrVDivh9gYh9Y
+	 ygfCiL+yfywvh98M7IEoiOYQoNszQPCPV2T9wirppIrDAhEVh+i7Q+s9IjcZbl20/3Eaw
+	 uSHyTDpyJnrw1ZgTyjcvhz0uy3s044IcPTlcsllMPmjVjOYnaDjAJtlqHRiYeETErwUXa
+	 IAxomBnsIKCa/fIe4l/qrZH4JAnTs5JpgiHwvHEsr7u0ZmGDsrrCTnFIiR8PTv47ffRzY
+	 xD2epHaMJLnHzQ8n8ajtiAMazzNe0YQznnq2T4FfFmBUFoXKo0mCXNL/XlvSPymJGog==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795618800;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795618804;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=JX0MYH9x65E9FbDtdDkRfudg6dLseKY/ij/WOc9o/co=;
-	b=tUqcQOZS6mOITseHfyYc3RNOGjmZTaBChJUphXDSWWnPJbmcrroE6RcJsqwhORs7Q45x
-	 +y07udSJSMYhVBfbxaGdFQtGORonNcwCZlA6z888/D/7gJlhaWZ+YIZO3ZYlHpSSNz13M
-	 BgWg8IM5CCJVgLMVBXBwp5Ff22ifMr0sluYEWV+wTUIjmdjSd8480u1pxhV09cR/rfo+5
-	 RUOOCYJvfRJXh4QqKtOS/tKeug12KcIt1/pzvCTyOJjkbRp/+kigJ/4RuJz2EK7NIh/+K
-	 DLpvrmXdrsHkkMxx4nQHj6ffIwxcJgWvvUrZZ6s9BXr6LJ0Bc5XQud4zM8omX4oaJKw==
+	bh=ly7sHevPuVdVZfxrOKdVfvoiXk6OdNaI9fBhGcaRtZs=;
+	b=UiLcaPTGUkU0V58wnlzabQXa81Ry7oSbX+8ICk8rHD1X48it3qdQHMqWAcQ5O/+nf+oD
+	 L6iy7R5uNlLIwJTXcpErJJ/D3fhFF9LkovpWby4VzzzK3igxehs5M3RqWYV+aLp1E6Hni
+	 yXVHyTxavV210KNn8McQdNT1ayUQRtIrzeb+6CPDmotJLl/Z33DL8U+Nk8gST4VHbidHM
+	 Wu9A+OUiBR/duJ6UQPS5i8BoUqN5YNdfVJmBY1ZdJVeXOHO+XG1iOgTt49nB7BKxwkpBV
+	 mKx8Ndsq30NVc08zEU6RpoBW7VkEp1yo4E7K2IMWDP9GrFlHz5xXzzGUALd3gKRKqzw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=EvcdZ4I3;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Cl2pMdm7;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3E69F606A31E;
-	Wed, 25 Nov 2026 15:00:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E4552606A323;
+	Wed, 25 Nov 2026 15:00:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=EvcdZ4I3
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4EB2C1F000E0;
-	Wed, 25 Nov 2026 14:59:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Cl2pMdm7
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 449861F000D3;
+	Wed, 25 Nov 2026 15:00:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795618799;
-	bh=JX0MYH9x65E9FbDtdDkRfudg6dLseKY/ij/WOc9o/co=;
+	s=korg; t=1795618803;
+	bh=ly7sHevPuVdVZfxrOKdVfvoiXk6OdNaI9fBhGcaRtZs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=EvcdZ4I3eFnDOnlQOptbOq2EJjfd4DcwQSBhx+5i1BDlY9ogylOYAbj7BnTLRV15f
-	 E7qBxYlXD9zpIUv+4C2h4nvL+imbsxprXuqmVFWTvy5fD7dsthNQXpmJ5XSav6D2u7
-	 3wUNaPHSt1OLxleHl5NkEj43ck37ecRfqqA2uYw0=
+	b=Cl2pMdm72OyltqkcecmI2AZBa/9mz/zS5d4wuG0mvXJZGDC9dnLZZG5lUKAIbS9Ki
+	 iY6A8A1A2VisV9mmYeAGF6W6mKzCwWgLEBHLnuP10FUHPZTSrhZO6K1nRvlEEQ6wXL
+	 w5W4PI+5Bg5r/ynLMdqO9z8WNOHGMaoARPzHxr7s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Matt Roper <matthew.d.roper@intel.com>,
-	Nitin Gote <nitin.r.gote@intel.com>,
+	Daniele Ceraolo Spurio <daniele.ceraolospurio@intel.com>,
+	Alan Previn <alan.previn.teres.alexis@intel.com>,
+	Julia Filipchuk <julia.filipchuk@intel.com>,
+	Rodrigo Vivi <rodrigo.vivi@intel.com>,
 	Matthew Brost <matthew.brost@intel.com>,
 	Dave Airlie <airlied@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0392/1005] drm/xe/tuning: Restrict Anyhit NULL-query tuning to render engines
-Date: Wed, 25 Nov 2026 15:28:50 +0100
-Message-ID: <20261125143830.926206212@linuxfoundation.org>
+Subject: [PATCH 7.3 0393/1005] drm/xe/gsc: Fix NVL-S GSC compatibility number
+Date: Wed, 25 Nov 2026 15:28:51 +0100
+Message-ID: <20261125143830.949157989@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143821.729802100@linuxfoundation.org>
 References: <20261125143821.729802100@linuxfoundation.org>
@@ -70,55 +72,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Nitin Gote <nitin.r.gote@intel.com>
+From: Daniele Ceraolo Spurio <daniele.ceraolospurio@intel.com>
 
-[ Upstream commit ddef200c67d445f978f323d947c8993570ae4756 ]
+[ Upstream commit f8795bced27bb00d74cef9de33e8a5e939c05e02 ]
 
-The "Disable NULL query for Anyhit Shader" tuning uses
-xe_rtp_match_first_render_or_compute to program RT_CTRL once per GT.
-On a GT with no render (RCS) engine, that match falls back to a
-compute (CCS) engine instead, so the tuning is still written even
-though RT_CTRL's ray-tracing logic has no hardware behind it there.
+The compatibility number for the published GSC number is 1.0. The binary
+is correctly named nvl_gsc_1.bin (matching the major compatibility
+version number), but the driver is instead looking for compatibility 0.0
+(which maps to nvl_gsc_0.bin), leading to the binary not being found.
 
-A CRI compute-only GT hits exactly this path, causing
-igt@xe_debugfs@check-gt-reg-sr to report a save-restore mismatch:
+The driver supports running without GSC so this is not fatal, but all
+content protection features will not work without the GSC FW.
 
-  Mismatch on 0xe530, expected 0x400 got 0x0
-
-Restrict the rule to ENGINE_CLASS(RENDER) so it only applies where
-ray-tracing hardware is actually present. Every other in-tree platform
-in this version range (BMG, LNL, PTL, NVL) always has a render engine,
-which xe_rtp_match_first_render_or_compute already resolves ahead of
-any compute engine, so this is a no-op for them.
-
-Assisted-by: LLM
-Cc: Matt Roper <matthew.d.roper@intel.com>
-Signed-off-by: Nitin Gote <nitin.r.gote@intel.com>
-Fixes: 8d8431298f69 ("drm/xe/xe3: Disable null query for anyhit shader")
-Reviewed-by: Matt Roper <matthew.d.roper@intel.com>
-Link: https://patch.msgid.link/20261012171901.19508-6-nitin.r.gote@intel.com
-Signed-off-by: Matt Roper <matthew.d.roper@intel.com>
-(cherry picked from commit 65e2e108e466a2def170797a6d1b4b7849cec3a1)
+Signed-off-by: Daniele Ceraolo Spurio <daniele.ceraolospurio@intel.com>
+Fixes: 8a90f0d1098f ("drm/xe/gsc: Define GSC for NVL-S")
+Cc: Alan Previn <alan.previn.teres.alexis@intel.com>
+Cc: Julia Filipchuk <julia.filipchuk@intel.com>
+Cc: Rodrigo Vivi <rodrigo.vivi@intel.com>
+Reviewed-by: Alan Previn <alan.previn.teres.alexis@intel.com>
+Link: https://patch.msgid.link/20261015204548.147348-1-daniele.ceraolospurio@intel.com
+(cherry picked from commit 11f8678d6a702ab9d6abb2f50c45e82a56974068)
 Signed-off-by: Matthew Brost <matthew.brost@intel.com>
 Signed-off-by: Dave Airlie <airlied@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/xe/xe_tuning.c | 2 +-
+ drivers/gpu/drm/xe/xe_uc_fw.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/xe/xe_tuning.c b/drivers/gpu/drm/xe/xe_tuning.c
-index bcec40ca2d35f..315221bcccb12 100644
---- a/drivers/gpu/drm/xe/xe_tuning.c
-+++ b/drivers/gpu/drm/xe/xe_tuning.c
-@@ -116,7 +116,7 @@ static const struct xe_rtp_table_sr engine_tunings = XE_RTP_TABLE_SR(
- 	},
- 	{ XE_RTP_NAME("Tuning: Disable NULL query for Anyhit Shader"),
- 	  XE_RTP_RULES(GRAPHICS_VERSION_RANGE(2000, XE_RTP_END_VERSION_UNDEFINED),
--		       FUNC(xe_rtp_match_first_render_or_compute)),
-+		       ENGINE_CLASS(RENDER)),
- 	  XE_RTP_ACTIONS(SET(RT_CTRL, DIS_NULL_QUERY))
- 	},
- 	{ XE_RTP_NAME("Tuning: disable HW reporting of ctx switch to GHWSP"),
+diff --git a/drivers/gpu/drm/xe/xe_uc_fw.c b/drivers/gpu/drm/xe/xe_uc_fw.c
+index f61910431cf25..78b8f104e5772 100644
+--- a/drivers/gpu/drm/xe/xe_uc_fw.c
++++ b/drivers/gpu/drm/xe/xe_uc_fw.c
+@@ -141,7 +141,7 @@ struct fw_blobs_by_type {
+ 
+ /* for the GSC FW we match the compatibility version and not the release one */
+ #define XE_GSC_FIRMWARE_DEFS(fw_def, major_ver)		\
+-	fw_def(NOVALAKE_S,	GT_TYPE_ANY,	major_ver(xe,	gsc,	nvl,	108, 0, 0))	\
++	fw_def(NOVALAKE_S,	GT_TYPE_ANY,	major_ver(xe,	gsc,	nvl,	108, 1, 0))	\
+ 	fw_def(PANTHERLAKE,	GT_TYPE_ANY,	major_ver(xe,	gsc,	ptl,	105, 1, 0))	\
+ 	fw_def(LUNARLAKE,	GT_TYPE_ANY,	major_ver(xe,	gsc,	lnl,	104, 1, 0))	\
+ 	fw_def(METEORLAKE,	GT_TYPE_ANY,	major_ver(i915,	gsc,	mtl,	102, 1, 0))
 -- 
 2.53.0
 
