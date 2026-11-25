@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795617794;
-	b=UK6SRc8opIjWwSDinuAEXilroFr28YNKi+6BmOsjOuGCZUQpS06jUqUOVHtJpf148gZw
-	 mBxcH2awM6mA72Op6XDjImXLE0wWXXZbPYd2KjA7ydGLPSYxHhZ5TxjjZkrn+hZN4EypU
-	 dhykVHreYTQIOoLaKsM4T7Fj8Xs1As7JkOYLFIjFEEULexzfAJSyjySNN4TGv0Sb8GtTR
-	 qAQaUgK7RUfCiDCcutq9lDBXzAvj4TnikAw05RJCN/uJrUK+uVjoZ6Oo9Bxbl+wKU3/up
-	 1pJZNluZqgPxDe/ptLfV/NFO5Iy3P2N/BfRwULzSHgwotxbpmsBrXj2XWdYvdMoo33A==
+	t=1795617797;
+	b=LbVEiTl3x/w0L+xn8iY4FSxprxGRqGRO4YA4NQGIMDhahfUSUy/fiD90w+2WFn/HjDY6
+	 N27pPhLIEq2Ybqym5+ESTRVUd/f8ounNR8p+H4Z/aaSP5funkxkTXrL0Dz20Jk3SPfN2l
+	 FrObpv9zpJ9QWk/eRrF9Midbw6qOwApN2wmcVIJey+mXqgWbahXj25vtJOPmXXhKeGh1R
+	 XZX8Q6zTtD2MPQ6ojt2G92C+zFROPFMEMvYfgMTByXzpAwtg3OklT8YvCw7gsZioDzaXI
+	 Bl5CzPMA9FIq1sZ1XpKOhilLFnkiDKrk092/62I/lr0o2eRnoz2j8Fr8wEF0iEy7HUQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795617794;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795617797;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=5UoYMpBojywVlfc1CwOPQ3fZ3p9iHSogaG0gnoC9DPc=;
-	b=r5Q1m0V7gSD01U+bwwXGkiFxAUXGa3auCLhWdXDY5ZldRXaKjYfxd79OfN+Bk0we3F0s
-	 u2RDPR7cgyho1mLsDIi+dJJKq1DwZ6ngBxrXnzOwrf8UvZtpqpZxxVXH8Cvem5L+clZKw
-	 aBPkmPkktITyiWdXSP7WE1NFXQS5keBbOrDerlpGOKdpNF+3M7f/QJ6dOMm+arwhljEhB
-	 93OYBFd/+bj/GElLQMeozYr9RFHWHBwL6dqwv2TVFpBAy7zf8lsB75fgZjjLren1D7XeB
-	 +qSPrOvXYnvMGs8RoXTcnZ+y3rd30tHjOnyKzbF9SMZ2/yWdSpap2hwXGxNe6qPn1gg==
+	bh=sfVRSLn1tEb9SB8VMlsvR9WHCw1R3IkxqB/Ix5dwdT0=;
+	b=CPmNbldLa8HudFbURO/PhKK+WyfUFIveoNUodZ71Y5HieymwSjNQ0ybGkghCgDthiE2K
+	 Ste9JkvBu9MQU1RpCfKiVbV3WS1I9wt+JK3UDR+byINRRlbx3bktSdFrd2y8UCxf50iss
+	 KkGCDd6gkLOrkuJV46hcmgVUwH4l+8xcI5gSOyvgfPpCGDkriipzKSvZEBNUdQG13BosB
+	 vx6k/xUEtX0YfXS6EQKlPXWp5+8YH1hh+u6vZQdBJKr7KSNF2Bhqs1ajsX5gMBOKSYNUW
+	 KHQjlgBjonMLlmd4tbxoBsf1+kvil5g0L7o5g8Krz5tI25Yo6Owwqjy9foImQsy9Qtw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=L+LbRBW5;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=AzO7oji3;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 38401606A321;
-	Wed, 25 Nov 2026 14:43:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 70620606A31E;
+	Wed, 25 Nov 2026 14:43:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=L+LbRBW5
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D28E11F000D1;
-	Wed, 25 Nov 2026 14:43:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=AzO7oji3
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3210A1F000C0;
+	Wed, 25 Nov 2026 14:43:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795617793;
-	bh=5UoYMpBojywVlfc1CwOPQ3fZ3p9iHSogaG0gnoC9DPc=;
+	s=korg; t=1795617796;
+	bh=sfVRSLn1tEb9SB8VMlsvR9WHCw1R3IkxqB/Ix5dwdT0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=L+LbRBW5Xde0NDQyTcUaAAPHusSdDOL+ofVZgDsdh1YmkEMXvhjCuZHUdSqtcwfUQ
-	 lGHKFGEId0PvWIQ1jgnJXKSFHdM5BvP9reFAAIxm2nuNkv5hDR1VhBj8mKaw56QVDw
-	 2ElG9EKS7SAG1WHhrG8FTlCgtlkryeNoZXsQTuJs=
+	b=AzO7oji3xUTWrByUCHTcL2OH/BX6iI4l1eJRPWZu0ERz23h0/eUPTE/H8v3QT7Kcn
+	 98+X2VMz+8OOc6jFk8g5PEiiwKN77CR6COYpqnIIGnt50NrbGzdmZMf+po8AK8kcA+
+	 GlXcrUZ5OTEwe22MPjWuNPuLtVZray5jEDiB2uD8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tejun Heo <tj@kernel.org>,
-	Andrea Righi <arighi@nvidia.com>,
+	Sashiko <sashiko-bot@kernel.org>,
+	Zhi-Jun You <hujy652@gmail.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0069/1005] sched_ext: Call ops.sub_attach() only while the cgroup is online
-Date: Wed, 25 Nov 2026 15:23:27 +0100
-Message-ID: <20261125143823.360773115@linuxfoundation.org>
+Subject: [PATCH 7.3 0078/1005] net: ethernet: mtk_wed: free up rings during detach
+Date: Wed, 25 Nov 2026 15:23:36 +0100
+Message-ID: <20261125143823.567625649@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143821.729802100@linuxfoundation.org>
 References: <20261125143821.729802100@linuxfoundation.org>
@@ -68,68 +69,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Tejun Heo <tj@kernel.org>
+From: Zhi-Jun You <hujy652@gmail.com>
 
-[ Upstream commit 0aba89317f386f43c946d91238af28250b4dbc60 ]
+[ Upstream commit 5b8d12512cbd3495dbd8c38e8047bb5d716f0f3f ]
 
-The parent's ops.sub_attach() runs before the enable work checks that the
-cgroup is still online, so the parent can get an attach for a cgroup whose
-rmdir already returned. That complicates parents where cgroup cleanup and
-sub-scheduler attach race.
+During __mtk_wed_detach, rx_ring and tx_wdma aren't freed up.
 
-Check CSS_ONLINE and call ops.sub_attach() under cgroup_lock(), so that the
-parent sees an attach only for a cgroup that is online.
+Fix this by add them to mtk_wed_free_rx_rings.
 
-Fixes: ebeca1f930ea ("sched_ext: Introduce cgroup sub-sched support")
-Signed-off-by: Tejun Heo <tj@kernel.org>
-Reviewed-by: Andrea Righi <arighi@nvidia.com>
+This patch is pulled from mtk-openwrt-feeds to address Sashiko's review
+and edit to rely on ring->desc instead of an extra flag.
+
+Link: https://github.com/mediatek/mtk-openwrt-feeds/blob/main/25.12/files/target/linux/mediatek/patches-6.12/999-wed-04-Fix-reinsert-wifi-module-cause-memory-leak-issue.patch
+Fixes: 4c5de09eb0d0 ("net: ethernet: mtk_wed: add configure wed wo support")
+Reported-by: Sashiko <sashiko-bot@kernel.org>
+Link: https://sashiko.dev/#/message/179000700034.2160803.10594281691384015089%40kernel.org
+Signed-off-by: Zhi-Jun You <hujy652@gmail.com>
+Link: https://patch.msgid.link/20261026-wedfix-v6-3-a52f6b15d2fc@gmail.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/sched/ext/internal.h |  4 ++++
- kernel/sched/ext/sub.c      | 13 +++++++++++++
- 2 files changed, 17 insertions(+)
+ drivers/net/ethernet/mediatek/mtk_wed.c | 8 ++++++++
+ 1 file changed, 8 insertions(+)
 
-diff --git a/kernel/sched/ext/internal.h b/kernel/sched/ext/internal.h
-index 68703b10d8998..2f35b98adb72b 100644
---- a/kernel/sched/ext/internal.h
-+++ b/kernel/sched/ext/internal.h
-@@ -839,6 +839,10 @@ struct sched_ext_ops {
- 	 * @sub_attach: Attach a sub-scheduler
- 	 * @args: argument container, see the struct definition
- 	 *
-+	 * The sub-scheduler's cgroup is online for the whole call. If it goes
-+	 * offline after the sub-scheduler is accepted, ops.sub_detach()
-+	 * follows.
-+	 *
- 	 * Return 0 to accept the sub-scheduler. -errno to reject.
- 	 */
- 	s32 (*sub_attach)(struct scx_sub_attach_args *args);
-diff --git a/kernel/sched/ext/sub.c b/kernel/sched/ext/sub.c
-index cb75d1912a7b8..4dc3bb12aca3a 100644
---- a/kernel/sched/ext/sub.c
-+++ b/kernel/sched/ext/sub.c
-@@ -2064,8 +2064,21 @@ void scx_sub_enable_workfn(struct kthread_work *work)
- 		.cgroup_path = sch->cgrp_path,
- 	};
- 
-+	/*
-+	 * The cgroup stays online across ops.sub_attach(), so the parent never
-+	 * sees an attach for a cgroup that rmdir already removed.
-+	 */
-+	cgroup_lock();
-+	if (!(cgrp->self.flags & CSS_ONLINE)) {
-+		cgroup_unlock();
-+		scx_error(sch, "cgroup is not online");
-+		ret = -ENODEV;
-+		goto err_disable;
-+	}
- 	ret = SCX_CALL_OP_RET(parent, sub_attach, NULL,
- 			      &sub_attach_args);
-+	cgroup_unlock();
+diff --git a/drivers/net/ethernet/mediatek/mtk_wed.c b/drivers/net/ethernet/mediatek/mtk_wed.c
+index 3f0be70c3f145..3044a7a8ea03e 100644
+--- a/drivers/net/ethernet/mediatek/mtk_wed.c
++++ b/drivers/net/ethernet/mediatek/mtk_wed.c
+@@ -949,6 +949,14 @@ mtk_wed_free_ring(struct mtk_wed_device *dev, struct mtk_wed_ring *ring)
+ static void
+ mtk_wed_free_rx_rings(struct mtk_wed_device *dev)
+ {
++	int i;
 +
- 	if (ret) {
- 		ret = scx_ops_sanitize_err(sch, "sub_attach", ret);
- 		scx_error(sch, "parent rejected (%d)", ret);
++	for (i = 0; i < ARRAY_SIZE(dev->rx_ring); i++)
++		mtk_wed_free_ring(dev, &dev->rx_ring[i]);
++
++	for (i = 0; i < ARRAY_SIZE(dev->tx_wdma); i++)
++		mtk_wed_free_ring(dev, &dev->tx_wdma[i]);
++
+ 	mtk_wed_free_rx_buffer(dev);
+ 	mtk_wed_free_ring(dev, &dev->rro.ring);
+ }
 -- 
 2.53.0
 
