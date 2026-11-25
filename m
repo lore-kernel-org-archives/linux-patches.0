@@ -1,51 +1,50 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795625956;
-	b=eFCzh3FBIc73S2uHoM/rvkHFNrbKkPLowvkOnSZr64KihUe1hRjMy72WVB0iZl8kin3y
-	 O3bRh02e14AcHEy2I+ujhYnJJqdS8v2n7yQaI0/ZBzU6pL5sCWZ343nZ9S7lxQDmajza7
-	 nFEHfTTs/q2Bzp2xOoV39IJh27afwJAXvJ30qjOrnB+3fVZx93zssMez4XMUNmTON0ZNc
-	 nUqO4P5QfSYjJHe8xUO9edqjeV7RRr0//ZkOoRn63rXsgoWgig052ccuhJB44qwKgoWX+
-	 01t8LUmoIxVIIZ7J7HTGsmbIHVekKdCOxAwNjs2J95sToNYjnHYv6qXsYs7qHj15Dxg==
+	t=1795625959;
+	b=4sA/XEODTkbeYGyeL3VKKdgL/q6kFHVSMG5DyEHWFgkJKEpGbMjXZiYbzEtcBLh4JrTr
+	 poy4h9JgAwOG3Jav0gJTRJu3mp8XEsIHLLTtP3UvqJ14fYIc3Wx4OTRWrIFjP3ednEXPW
+	 TazZ81jJEK9haArhJetwCNvQJJZEQfDvxoX7mzJofAX7/qq2nCzi7QXHgGfngphHQs2Ak
+	 FwSiqngOIUdAeUk1sXhpmOCohfTyu68gQHlMDhAaBGSSKs/GqnV/gEGSuUJH2xxat1QzU
+	 mEQunaI8OSJnmgf9jEQzok+rt1+//j/uOPhhXG4S9fCChL/QfFMer2Y9guxIYsZSvVw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795625956;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795625959;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=JZqSDE6DWEXeayMoUYU0CS9ZXynXItcwWKr60TLF1+Q=;
-	b=NL2O9x0JSYT2p/Ix+9EAN/XKLK8lGpa0hRqUDorJwYqeln+x/W30eUdxPRR2x8vFCper
-	 XFYgPwb8v+53yiN8mAEGOMWXBiYkxWLQvc3VIMkJIPVy7ZQ98bX9uZVxg+UoSJNzRsRrg
-	 /+n0+eqO6txdMrptTfGWOUuVLHx/ZsaUtwAwvooOxyedAm6EiJA2wn+weMDDrExC2f4mv
-	 3264zISJ3Y9Jb9fzvmQSUaFyrq954t1S0TcQDMEMQLcRDQ0aLKicSn5pNKkRBDjckcM/2
-	 D6zDSN/4Z6qmXWqi/I3V2UtlKyknNnsX1Uee+TW3uRC92GRraHhLhSNp6L891mvFfIg==
+	bh=ZnlRdWpouLYqK1g2T/uQQRBmJBMyXScp4LJctE6C2I4=;
+	b=ZVs+UWGexCT5yHfhr7HXEyhq+fm/tVFyWLeI7XGB+92tlocx4VwCPPNhJejjLtZoMIDh
+	 PgeIFCNblGMS/mXdnHnPZTlEjpIItBzl8I2zk/wmtwK0i9F0fdh9gec7ceeAoVpWxQtWP
+	 kg/cHc9BbGVEaTACFmjXwda28TvbWXbr+91K03ta2yYxgdUOE7B4qiwLFUn2Nusqc+elh
+	 odxtA0kRo2PMU7lVCBWosieJOLPrtEFfwGlAK9Za23tDAhrKGEnrIqUZ3sGbuETnZ/6kg
+	 p5lgsC5YqffjfcJKnm1RosvukxMUVmZDsto8tvaQ5kUwPtY+Gypl6OMs/uht0/CrEnw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="p3vkxvg/";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=GwFp3gLu;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 37D77606A323;
-	Wed, 25 Nov 2026 16:59:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F287F606A326;
+	Wed, 25 Nov 2026 16:59:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=p3vkxvg/
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 379C71F000E0;
-	Wed, 25 Nov 2026 16:59:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=GwFp3gLu
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3506A1F000C6;
+	Wed, 25 Nov 2026 16:59:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795625955;
-	bh=JZqSDE6DWEXeayMoUYU0CS9ZXynXItcwWKr60TLF1+Q=;
+	s=korg; t=1795625958;
+	bh=ZnlRdWpouLYqK1g2T/uQQRBmJBMyXScp4LJctE6C2I4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=p3vkxvg/vKs7gwO8Kt1fsJgDxXEW9ta0/LKb4+nqLJryofCcw5roEAO2Lic4DHK4i
-	 x9aUlI0b4R/GwnllVgmQb6uBq4VHNJEBSchLCzH5FaLA6crAcyB7wldDGDJonneB8v
-	 Tka0DHCdWwKSapjUzoWSd4SY7X1RDruHCvysFyRc=
+	b=GwFp3gLubX7FkySJyQL9ypAl5dhR/jzvEsoKgTiSMZ2K75R6wTbjOCS/6M729bt/y
+	 lDuozFPDDzDH9Ah7Ln4BCGbi89akmAfyDNDGM4QiamlBaoetGws7YfsK2izr+fJkdq
+	 lu+fHsGKAshJqFa+DN6bBHq7WSAx/fAwN/U3dkIo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Paulo Alcantara <pc@manguebit.org>,
-	David Howells <dhowells@redhat.com>
-Subject: [PATCH 6.12 684/816] smb: client: dont block dying tasks waiting for writeback on fsync
-Date: Wed, 25 Nov 2026 15:37:12 +0100
-Message-ID: <20261125143905.013545280@linuxfoundation.org>
+	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>
+Subject: [PATCH 6.12 658/816] tracing/probes: Reject array count on non-dereference string sources
+Date: Wed, 25 Nov 2026 15:36:46 +0100
+Message-ID: <20261125143904.411907119@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143849.205329330@linuxfoundation.org>
 References: <20261125143849.205329330@linuxfoundation.org>
@@ -67,127 +66,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Paulo Alcantara <pc@manguebit.org>
+From: Masami Hiramatsu (Google) <mhiramat@kernel.org>
 
-commit 0df0f24803061b6c2bef0d24de7c63c9cce46a49 upstream.
+commit 0941144ebeaf3ce46c80711f00e935921eb28b21 upstream.
 
-cifs_fsync() and cifs_strict_fsync() wait uninterruptibly for writeback
-through file_write_and_wait_range().  As with close, a task killed in
-fsync(2) on a hard mount with an unresponsive server is stuck in D state
-until the server comes back.
+The runtime array loop (FETCH_OP_LP_ARRAY) for string types requires a
+preceding memory dereference instruction so it can advance the pointer
+address on each iteration. Non-dereference string sources such as $comm,
+immediate strings, and eprobe event fields cannot be indexed as pointer
+arrays, but finalize_fetch_insn() still accepts an array count on them
+and emits an invalid FETCH_OP_LP_ARRAY sequence.
 
-Wait killably instead, using the same helper as cifs_flush().  The
-writeback keeps going and its errors stay in the mapping; only the dying
-caller stops waiting for it.
+Reject string array counts when the preceding operation is not a memory
+dereference.
 
-Signed-off-by: Paulo Alcantara <pc@manguebit.org>
-Reviewed-by: David Howells <dhowells@redhat.com>
+Link: https://lore.kernel.org/all/179455855309.403392.4197028577158545202.stgit@devnote2/
+
+Fixes: 40b53b771806 ("tracing: probeevent: Add array type support")
 Cc: stable@vger.kernel.org
+Signed-off-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/smb/client/file.c |   64 +++++++++++++++++++++++++++++++++------------------
- 1 file changed, 42 insertions(+), 22 deletions(-)
+ kernel/trace/trace_probe.c |    6 ++++++
+ 1 file changed, 6 insertions(+)
 
---- a/fs/smb/client/file.c
-+++ b/fs/smb/client/file.c
-@@ -2655,6 +2655,45 @@ cifs_get_readable_path(struct cifs_tcon
- 	return -ENOENT;
- }
- 
-+static int cifs_wait_writeback_killable(struct address_space *mapping,
-+					loff_t start, loff_t end)
-+{
-+	pgoff_t end_index = end >> PAGE_SHIFT;
-+	pgoff_t index = start >> PAGE_SHIFT;
-+	struct folio_batch fbatch;
-+	int rc = 0;
-+
-+	folio_batch_init(&fbatch);
-+	while (!rc &&
-+	       filemap_get_folios_tag(mapping, &index, end_index,
-+				      PAGECACHE_TAG_WRITEBACK, &fbatch)) {
-+		for (unsigned int i = 0;
-+		     !rc && i < folio_batch_count(&fbatch); i++)
-+			rc = folio_wait_writeback_killable(fbatch.folios[i]);
-+		folio_batch_release(&fbatch);
-+		cond_resched();
-+	}
-+	return rc;
-+}
-+
-+static int cifs_file_write_and_wait_killable(struct file *file,
-+					     loff_t start, loff_t end)
-+{
-+	struct address_space *mapping = file->f_mapping;
-+	int rc, rc2;
-+
-+	if (end < start)
-+		return 0;
-+
-+	rc = filemap_fdatawrite_range(mapping, start, end);
-+	if (cifs_wait_writeback_killable(mapping, start, end))
-+		return -EINTR;
-+	rc2 = file_check_and_advance_wb_err(file);
-+	if (!rc)
-+		rc = rc2;
-+	return rc;
-+}
-+
- /*
-  * Flush data on a strict file.
-  */
-@@ -2669,7 +2708,7 @@ int cifs_strict_fsync(struct file *file,
- 	struct inode *inode = file_inode(file);
- 	struct cifs_sb_info *cifs_sb = CIFS_SB(inode->i_sb);
- 
--	rc = file_write_and_wait_range(file, start, end);
-+	rc = cifs_file_write_and_wait_killable(file, start, end);
- 	if (rc) {
- 		trace_cifs_fsync_err(inode->i_ino, rc);
- 		return rc;
-@@ -2725,7 +2764,7 @@ int cifs_fsync(struct file *file, loff_t
- 	struct inode *inode = file_inode(file);
- 	struct cifs_sb_info *cifs_sb = CIFS_FILE_SB(file);
- 
--	rc = file_write_and_wait_range(file, start, end);
-+	rc = cifs_file_write_and_wait_killable(file, start, end);
- 	if (rc) {
- 		trace_cifs_fsync_err(file_inode(file)->i_ino, rc);
- 		return rc;
-@@ -2760,25 +2799,6 @@ fsync_exit:
- 	return rc;
- }
- 
--static int cifs_wait_writeback_killable(struct address_space *mapping)
--{
--	struct folio_batch fbatch;
--	pgoff_t index = 0;
--	int rc = 0;
--
--	folio_batch_init(&fbatch);
--	while (!rc &&
--	       filemap_get_folios_tag(mapping, &index, (pgoff_t)-1,
--				      PAGECACHE_TAG_WRITEBACK, &fbatch)) {
--		for (unsigned int i = 0;
--		     !rc && i < folio_batch_count(&fbatch); i++)
--			rc = folio_wait_writeback_killable(fbatch.folios[i]);
--		folio_batch_release(&fbatch);
--		cond_resched();
--	}
--	return rc;
--}
--
- /*
-  * As file closes, flush all cached write data for this inode checking
-  * for write behind errors.
-@@ -2792,7 +2812,7 @@ int cifs_flush(struct file *file, fl_own
- 	if (file->f_mode & FMODE_WRITE) {
- 		rc = filemap_fdatawrite(mapping);
- 		if (fatal_signal_pending(current) ||
--		    cifs_wait_writeback_killable(mapping))
-+		    cifs_wait_writeback_killable(mapping, 0, LLONG_MAX))
- 			return 0;
- 		rc2 = filemap_check_errors(mapping);
- 		if (!rc)
+--- a/kernel/trace/trace_probe.c
++++ b/kernel/trace/trace_probe.c
+@@ -1367,6 +1367,12 @@ static int finalize_fetch_insn(struct fe
+ 			 * For the symstr, it doesn't need to dereference, thus
+ 			 * it just get the value.
+ 			 */
++			if (parg->count && (code->op != FETCH_OP_DEREF &&
++					    code->op != FETCH_OP_UDEREF)) {
++				trace_probe_log_err(ctx->offset + type_offset,
++						    BAD_STRING);
++				return -EINVAL;
++			}
+ 			code++;
+ 			if (code->op != FETCH_OP_NOP) {
+ 				trace_probe_log_err(ctx->offset, TOO_MANY_OPS);
 
 
