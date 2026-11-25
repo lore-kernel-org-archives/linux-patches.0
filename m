@@ -1,55 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795622469;
-	b=KCHPpKmPTNpa5oGgj/yXVdXcs//9qbA7DiKvzR0PTHuGLU3vZVH8V/e19gmvG83YopDI
-	 lKNwBNmjsjnZecnpiCOral0adCvBTBnBT1uXHlKi63ia84+8uc2XwqPxcnh4z25xp25Ap
-	 m6HUL3vO9/rs0DA+BDKTxX4tAXbCh6D2zsPpLnGgZnMNFbFK7BYrz9W2sfjpUnRzvfZqS
-	 BpW6d4Vt4u1HtqMEZKxZ15O4tdXFlMnok4wae0rQlJFYrMjbhfsRYIA3foJ2ZKlNVthFw
-	 23n1YrhpxzVIKEUys9mq34bTvVfIlgxuBdXr0eePnaOTa7KA09E9O2ac3WkpXO616Ow==
+	t=1795622472;
+	b=R0uJunWV3+nk262+XInynVjBMOxrtcFQfLGUbrFcmCvhDmhC6SQzX8QzeCzTptjd2OLm
+	 JceUHxPZ3qMj+fD4qcnEYX3OzzmzvqJ8N72zbvgs2aWi2sySV2nnQHrEB8OxXvZBnPVG7
+	 vAK3UHQYYEBt6DGSj+0+4IDZ8NpL5M6qoX8kzDyq/DY9FVqjbBWqCli2v6aNvgbRnbDM4
+	 Bw2urXmP79Rel/bpJAWVxr+Yj1P8Aben8QxYBkmppO/qjcYcWheGPd3CTe71sVhdyeU2V
+	 RSivG53SSzCPGGg7Ha+MiRmNqmXIb3iPYxud9/bj6xjSP8sEbClTg2yp8FvwnY/d2aw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795622469;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795622472;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=pBw3eFZMIdFlpj6inv9HMO/BgxHcDI5Gm/o+siW6Y/Q=;
-	b=iCKkOm3pENgwVj4jyG42RWLqRkBfMximJYuvAoO+00k5UdKPo5XjzDJXQI7M+pE0QYne
-	 sfI/5Mky75oHAMc4rmg1g0TqL0QHOvemRlC3xGFxc6k3wEsRmTjQ0nEw7A+uNUHX39L9R
-	 Hjm/RKkdr2gf0IYa1skX56o8VyE4anYnt//P9MIAdVdIgkuRjVYv35uxtG/JjdGohCPBv
-	 bT/GuKeNB9FLToWq/olskYRNCvwq43HazcrElKxY1arf52Sk5KmUxgeRY39dCZcyO/ezO
-	 Omm71DZs8xcvFKX39Sn7cbnammR7qikn9Vr5rmq+eloV/RjmjEvAzHnhOjqSjAm+3vQ==
+	bh=4J5V0m8oWPX5NwCSI1oTxu2ATSO6Z/wN6x70N0Fmk7E=;
+	b=nDjc60/mZiO6wkRWLbvc7iM/SWbseARz/dzgcWULhFzxS7GJSWP2CdgBXHPfUKwBfM33
+	 gs6s/G4K/7oaaVd5XoGaJC1qo5MPMIlZu++/HWBjWNEs6HWxP8mbuZOHG2xr1VlBMCxOm
+	 He+Ew18TxohDfwHtLOpCHMoTiywKRHGCFDrVSSAhS+/D9h+gaYM2f+U8MiOa3CLvPUGEn
+	 V+CcY/m7AU7nr32b/N3fWpDpCd46IaUtZ/p4oFPLx609dD4sChDDLkvLnh9/38R4kxoOw
+	 jJt5D26akhwYxIrpUmEgSZYeQUTC9iOVh7FEO16ZEYh5YbagCEpkg6lIF3wwJVpyXvg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=IlQkeAM4;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="iBcg/Y2q";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E7BCC606A31E;
-	Wed, 25 Nov 2026 16:01:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 84DFE606A32C;
+	Wed, 25 Nov 2026 16:01:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=IlQkeAM4
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2D7061F000EB;
-	Wed, 25 Nov 2026 16:01:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=iBcg/Y2q
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 753D11F000D8;
+	Wed, 25 Nov 2026 16:01:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795622468;
-	bh=pBw3eFZMIdFlpj6inv9HMO/BgxHcDI5Gm/o+siW6Y/Q=;
+	s=korg; t=1795622472;
+	bh=4J5V0m8oWPX5NwCSI1oTxu2ATSO6Z/wN6x70N0Fmk7E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=IlQkeAM4URMTXy//szPzX/P5MKF0ECIBcOePXfcKVouXddsEwd2zHiA8doOKupPM/
-	 uoXtSBypK1Y1VmkyaT3hn6o4yVwNFquU3oe7K2s6RSK1s/bcQfaGsWAYg9p82BYZ1I
-	 u1TlDNF85BMBKjZd/topGnpEx5jgLHy93JGHsbFs=
+	b=iBcg/Y2qJ/HfoHOrXcTq0iQ2p24UlMfne/PsckZSgulh4n1xhdIpBOQQ8uTi9VAy6
+	 gRD8oGsH3iuIl2z0QLnLzGsdPomlP2QwMbY46GjqE9xQMNB5sFD7Z+cjDjr+rQuQsx
+	 0Z158JDKgEQYRylso+bDT7FlaVd4ZNHqeMcnDK6Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Davidlohr Bueso <dave@stgolabs.net>,
-	Dave Jiang <dave.jiang@intel.com>,
-	Alison Schofield <alison.schofield@intel.com>,
-	Shaikh Kamaluddin <shaikhkamal2012@gmail.com>,
-	"Gregory Price (Meta)" <gourry@gourry.net>,
+	Max Zhen <max.zhen@amd.com>,
+	Lizhi Hou <lizhi.hou@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 503/990] cxl/test: Map mock device nodes to an online node
-Date: Wed, 25 Nov 2026 15:31:10 +0100
-Message-ID: <20261125143833.883921159@linuxfoundation.org>
+Subject: [PATCH 6.18 504/990] accel/amdxdna: Fix unexpected wait when flushing notifier_wq
+Date: Wed, 25 Nov 2026 15:31:11 +0100
+Message-ID: <20261125143833.907571924@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143822.072087159@linuxfoundation.org>
 References: <20261125143822.072087159@linuxfoundation.org>
@@ -71,74 +68,159 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Davidlohr Bueso <dave@stgolabs.net>
+From: Lizhi Hou <lizhi.hou@amd.com>
 
-[ Upstream commit 6f057dea152574dd044382fd0ba5ed19e3ecba25 ]
+[ Upstream commit 445d20910429b41e88768624b914344658991a5b ]
 
-cxl_type3_mem_init() and cxl_type2_mem_init() assign alternating NUMA
-nodes to the mock memdevs to model multi-node topologies. On a
-single-node host node 1 has no pgdat, and the first node-aware
-allocation in an odd device's probe faults on a NULL zonelist:
+In amdxdna_gem_obj_free(), flush_workqueue(xdna->notifier_wq) waits for
+all pending work items on the device-global notifier workqueue, rather
+than only the work items associated with the BO being freed.
 
-  Oops: general protection fault, probably for non-canonical address 0xdffffc00000006e3
-  KASAN: probably user-memory-access in range [0x0000000000003718-0x000000000000371f]
-  Workqueue: async async_run_entry_fn
-  RIP: __alloc_frozen_pages_noprof+0x288
-   new_slab
-   ___slab_alloc
-   __kmalloc_node_track_caller_noprof
-   devm_kmalloc
-   cxl_mock_mem_probe
+If another BO has a pending hmm_unreg_work, freeing an unrelated BO can
+be unnecessarily blocked until that work completes.
 
-Map the requested node to an online one, as dax_hmem already does
-for its target node.
+mmu_interval_notifier_remove() is deferred to a workqueue because it
+cannot be called from the MMU notifier callback itself. The BO free path
+is not a notifier callback, so call mmu_interval_notifier_remove()
+directly there and avoid the workqueue.
 
-Fixes: cf1f6877b088 ("cxl/memdev: Add numa_node attribute")
-Signed-off-by: Davidlohr Bueso <dave@stgolabs.net>
-Reviewed-by: Dave Jiang <dave.jiang@intel.com>
-Reviewed-by: Alison Schofield <alison.schofield@intel.com>
-Tested-by: Alison Schofield <alison.schofield@intel.com>
-Tested-by: Shaikh Kamaluddin <shaikhkamal2012@gmail.com>
-Reviewed-by: Gregory Price (Meta) <gourry@gourry.net>
-Link: https://patch.msgid.link/20260831175119.3247915-1-dave@stgolabs.net
-Signed-off-by: Dave Jiang <dave.jiang@intel.com>
-[ sashal: Dropped the upstream hunk in the type-2 init function, which doesn't exist here, and applied the numa_map_to_online_node() wrapper to the three set_dev_node calls in cxl_mem_init(). ]
+Fixes: e486147c912f ("accel/amdxdna: Add BO import and export")
+Reviewed-by: Max Zhen <max.zhen@amd.com>
+Signed-off-by: Lizhi Hou <lizhi.hou@amd.com>
+Link: https://patch.msgid.link/20260813205016.941743-1-lizhi.hou@amd.com
+[ sashal: Replaced abo->mem.uva with abo->mem.userptr in the unreg work handler, and adjusted surrounding context in the BO free path to match this tree. ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/testing/cxl/test/cxl.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ drivers/accel/amdxdna/amdxdna_gem.c | 69 +++++++++++++++++++----------
+ drivers/accel/amdxdna/amdxdna_gem.h |  1 +
+ 2 files changed, 47 insertions(+), 23 deletions(-)
 
-diff --git a/tools/testing/cxl/test/cxl.c b/tools/testing/cxl/test/cxl.c
-index aadb90ec516e5..9663f183aa2c0 100644
---- a/tools/testing/cxl/test/cxl.c
-+++ b/tools/testing/cxl/test/cxl.c
-@@ -1369,7 +1369,7 @@ static int cxl_mem_init(void)
- 		if (!pdev)
- 			goto err_mem;
- 		pdev->dev.parent = &dport->dev;
--		set_dev_node(&pdev->dev, i % 2);
-+		set_dev_node(&pdev->dev, numa_map_to_online_node(i % 2));
+diff --git a/drivers/accel/amdxdna/amdxdna_gem.c b/drivers/accel/amdxdna/amdxdna_gem.c
+index 412b48f49fa20..69c9034fae78a 100644
+--- a/drivers/accel/amdxdna/amdxdna_gem.c
++++ b/drivers/accel/amdxdna/amdxdna_gem.c
+@@ -106,13 +106,16 @@ static bool amdxdna_hmm_invalidate(struct mmu_interval_notifier *mni,
+ 	struct amdxdna_gem_obj *abo = mapp->abo;
+ 	struct amdxdna_dev *xdna;
  
- 		rc = cxl_mock_platform_device_add(pdev, &cxl_mem[i]);
- 		if (rc)
-@@ -1384,7 +1384,7 @@ static int cxl_mem_init(void)
- 		if (!pdev)
- 			goto err_single;
- 		pdev->dev.parent = &dport->dev;
--		set_dev_node(&pdev->dev, i % 2);
-+		set_dev_node(&pdev->dev, numa_map_to_online_node(i % 2));
++	if (!mmu_notifier_range_blockable(range))
++		return false;
++
++	if (mapp->unmapped)
++		return true;
++
+ 	xdna = to_xdna_dev(to_gobj(abo)->dev);
+ 	XDNA_DBG(xdna, "Invalidating range 0x%lx, 0x%lx, type %d",
+ 		 mapp->range.start, mapp->range.end, abo->type);
  
- 		rc = cxl_mock_platform_device_add(pdev, &cxl_mem_single[i]);
- 		if (rc)
-@@ -1400,7 +1400,7 @@ static int cxl_mem_init(void)
- 		if (!pdev)
- 			goto err_rcd;
- 		pdev->dev.parent = &rch->dev;
--		set_dev_node(&pdev->dev, i % 2);
-+		set_dev_node(&pdev->dev, numa_map_to_online_node(i % 2));
+-	if (!mmu_notifier_range_blockable(range))
+-		return false;
+-
+ 	down_write(&xdna->notifier_lock);
+ 	abo->mem.map_invalid = true;
+ 	mapp->invalid = true;
+@@ -153,33 +156,40 @@ static void amdxdna_hmm_unregister(struct amdxdna_gem_obj *abo,
  
- 		rc = cxl_mock_platform_device_add(pdev, &cxl_rcd[i]);
- 		if (rc)
+ 	down_write(&xdna->notifier_lock);
+ 	list_for_each_entry(mapp, &abo->mem.umap_list, node) {
+-		if (!vma || compare_range(mapp, vma->vm_mm, vma->vm_start, vma->vm_end)) {
+-			if (!mapp->unmapped) {
+-				queue_work(xdna->notifier_wq, &mapp->hmm_unreg_work);
+-				mapp->unmapped = true;
+-			}
+-			if (vma)
+-				break;
+-		}
++		if (!compare_range(mapp, vma->vm_mm, vma->vm_start, vma->vm_end))
++			continue;
++
++		queue_work(xdna->notifier_wq, &mapp->hmm_unreg_work);
++		mapp->unmapped = true;
+ 	}
+ 	up_write(&xdna->notifier_lock);
+ }
+ 
+-static void amdxdna_umap_release(struct kref *ref)
++static void amdxdna_hmm_unregister_all(struct amdxdna_gem_obj *abo)
+ {
+-	struct amdxdna_umap *mapp = container_of(ref, struct amdxdna_umap, refcnt);
+-	struct amdxdna_gem_obj *abo = mapp->abo;
+-	struct amdxdna_dev *xdna;
+-
+-	mmu_interval_notifier_remove(&mapp->notifier);
++	struct amdxdna_dev *xdna = to_xdna_dev(to_gobj(abo)->dev);
++	struct amdxdna_umap *mapp, *tmp;
++	LIST_HEAD(dead);
+ 
+-	xdna = to_xdna_dev(to_gobj(mapp->abo)->dev);
+ 	down_write(&xdna->notifier_lock);
+-	list_del(&mapp->node);
+-	if (list_empty(&abo->mem.umap_list))
+-		abo->mem.userptr = AMDXDNA_INVALID_ADDR;
++	list_for_each_entry_safe(mapp, tmp, &abo->mem.umap_list, node) {
++		mapp->unmapped = true;
++		mapp->cleanup = true;
++		list_move(&mapp->node, &dead);
++	}
+ 	up_write(&xdna->notifier_lock);
+ 
++	list_for_each_entry_safe(mapp, tmp, &dead, node) {
++		cancel_work_sync(&mapp->hmm_unreg_work);
++		amdxdna_umap_put(mapp);
++	}
++}
++
++static void amdxdna_umap_release(struct kref *ref)
++{
++	struct amdxdna_umap *mapp = container_of(ref, struct amdxdna_umap, refcnt);
++
++	mmu_interval_notifier_remove(&mapp->notifier);
+ 	kvfree(mapp->range.hmm_pfns);
+ 	kfree(mapp);
+ }
+@@ -193,6 +203,20 @@ static void amdxdna_hmm_unreg_work(struct work_struct *work)
+ {
+ 	struct amdxdna_umap *mapp = container_of(work, struct amdxdna_umap,
+ 						 hmm_unreg_work);
++	struct amdxdna_gem_obj *abo = mapp->abo;
++	struct amdxdna_dev *xdna;
++
++	xdna = to_xdna_dev(to_gobj(mapp->abo)->dev);
++	down_write(&xdna->notifier_lock);
++	if (mapp->cleanup) {
++		up_write(&xdna->notifier_lock);
++		return;
++	}
++
++	list_del(&mapp->node);
++	if (list_empty(&abo->mem.umap_list))
++		abo->mem.userptr = AMDXDNA_INVALID_ADDR;
++	up_write(&xdna->notifier_lock);
+ 
+ 	amdxdna_umap_put(mapp);
+ }
+@@ -482,8 +506,7 @@ static void amdxdna_gem_obj_free(struct drm_gem_object *gobj)
+ 
+ 	XDNA_DBG(xdna, "BO type %d xdna_addr 0x%llx", abo->type, abo->mem.dev_addr);
+ 
+-	amdxdna_hmm_unregister(abo, NULL);
+-	flush_workqueue(xdna->notifier_wq);
++	amdxdna_hmm_unregister_all(abo);
+ 
+ 	if (abo->pinned)
+ 		amdxdna_gem_unpin(abo);
+diff --git a/drivers/accel/amdxdna/amdxdna_gem.h b/drivers/accel/amdxdna/amdxdna_gem.h
+index b3c814c0bb7e6..8d89874f1fca3 100644
+--- a/drivers/accel/amdxdna/amdxdna_gem.h
++++ b/drivers/accel/amdxdna/amdxdna_gem.h
+@@ -17,6 +17,7 @@ struct amdxdna_umap {
+ 	struct kref			refcnt;
+ 	bool				invalid;
+ 	bool				unmapped;
++	bool				cleanup;
+ };
+ 
+ struct amdxdna_mem {
 -- 
 2.53.0
 
