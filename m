@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795618022;
-	b=wEWnP7MQXwj1lY2LL9ZXMR0I7TnmWHTtkv3dJ1NmrJd5y45nWb3ZYRPeaFoFbet3w7Bj
-	 bgBSOzPRKgNn1gqYHsslxMcpFOioZM85t9Z3idmP5o1qEHuqCzIatBKIQlARAoYKrNYOF
-	 vptfQgEXJliki+KYF3lWvednijPrahRXsOjJp9eS3K5ENcXp2aZQbYwrbQIuyiFDCy612
-	 uNdu3sjHTU0G/UOnM9gONcYk/U9tYX0bbdaTN3NOMEysJ4IDWubySKGTExiyb/H0PBMCU
-	 lnyq77i3vHC8bR5KG+ynDbsda02OtKISJuehJmTuOJwwjx+8zA2RfvRIYl6OA7Wkvaw==
+	t=1795618026;
+	b=IPzru1zjPwrFQtzBwDi4LoHqTaJCmpnQgEbLN3jNr3Mp8oq8wSkRGBn+ra2GGE9WPeHc
+	 VLGBNAkxkclUApSDsBjJxUHGykMIlVejS/EBTJcb4EX+bo6XVftBkhMNl1xEInKH9svjR
+	 lND9N42TU5qca6MJgWXrwX1IBAZ6LmN+/FG6tEwvvhkRaPYh7pNkrfBbGhwpXyuCQm+5L
+	 qcn8vIQrXJ+7Qj5HkmlUczS5tvRrXrJiEblExI7JOm41oi430zFdbQ7bQLXG/lR6Y5Mtc
+	 fd0hM9lh3N9PIgMr+7iwCFm/oHz4Z2oyjdN+/adXLrfjWffqlCYbwSNgGrCc2ootebA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795618022;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795618026;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=tccT/uvn5r31QMw9NbXwQfdqsUSUXzCGOx7mqhCRuGY=;
-	b=vTyxAkXMQjXqVsS9wOdHW1rq74belUuIp92Gx1sYJWqS2UTwC2EBLcKrFGbC9Y/ZhKHk
-	 DqpfpfGgBaYM31q19jOEr0joJE/7DegcpT/kupBqjRr9kk+iDwF7hiDgGLOFY3E7SXhDd
-	 dop1/0gPUE04m1dEBQNSGHb9jlbSQSU4QYnwr3x8PJIJ1/SSz9n+b9eGSwc/81GuhCfr6
-	 sM0JetV92dKOZStUFwzqrP0yusnkFRdO31p5j6chKHj5HDpbmURGLfz8sApM9XZr3szfe
-	 C06dQCTbCnhGGr0Q2/XCC8Mk/pYcLRUCdVu331Z4oNb0s7euvpPo7tfzmxPn+IiZKZg==
+	bh=EVd0ZNVwEvDBXkJYZJD3pgLljbXrBirF4JWdkMvJMo0=;
+	b=4c5jQfmG4Mv5eK+mW53tWwHYcb8pvsnWMpKE3VUesuP6IsLntZYr2vRfXyr7QpUbZ67Q
+	 nBavAjYo9CUDINIYI3gxGkKIwo88mSAwnI6rRefScUygNLBfl95+EO++faa9jQdx15fcM
+	 n41nPuYvtLAVkU8f8QUF4EE1DSSw7dd3BGVMa29UW6YCnWB+UwpE9KzyTa2r8aVn0SmLE
+	 /+fnWknT1HADmSm/isWNNpyXVdRYf09AZqLiUL3hiDhKAzfSrq6lICdgYFG5VECTMFFcy
+	 hzWWB9wFpyjaswfqqVEOEIBCQ05FTBhEK8yvG/SeEnHASHGQWn3et1RJoi9XsJPPElQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ULbxitYW;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=XZ7swt+3;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7C354606A321;
-	Wed, 25 Nov 2026 14:47:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E9B6B606A321;
+	Wed, 25 Nov 2026 14:47:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ULbxitYW
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4F60B1F000CA;
-	Wed, 25 Nov 2026 14:47:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=XZ7swt+3
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A4F5C1F000CA;
+	Wed, 25 Nov 2026 14:47:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795618021;
-	bh=tccT/uvn5r31QMw9NbXwQfdqsUSUXzCGOx7mqhCRuGY=;
+	s=korg; t=1795618025;
+	bh=EVd0ZNVwEvDBXkJYZJD3pgLljbXrBirF4JWdkMvJMo0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ULbxitYWyOJN4uybN1WovDOtgPgAQzYiijrwIoy1eeClRnMlHFf5BGtXeGfwcQ86Y
-	 cCBkPRwzTVvsB73/OYmVH3OjnQBaZ2SyuS6LsfD68AMZZT1As0DMDA4gRBCXzwGfD4
-	 9dxSuoAYI4Ah4iXMBLL4kez9vsnhWXQqALzsTbbA=
+	b=XZ7swt+31AZAFN6LoLrWsUTwuhi6TnORL0TFMADbiMDiv2YTmOVDMpsLhwKsFRZ43
+	 K7UiTuLBIYAmtxn2Ego171QKXYwVlL6yrZseFgmBvzCMzIXDQHwn9FHTEoI3iQMKGy
+	 1srfiMajbjHF4kk8XuPXIgP5tJr0EhYFnPjEyBpE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Robert Morris <rtm@mit.edu>,
-	Namjae Jeon <linkinjeon@kernel.org>,
+	Alex Austin <alex.austin@amd.com>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0147/1005] ntfs: dont allow resident values to overlap the attribute header
-Date: Wed, 25 Nov 2026 15:24:45 +0100
-Message-ID: <20261125143825.180226819@linuxfoundation.org>
+Subject: [PATCH 7.3 0148/1005] sfc: ptp: drop the stale frequency reset in efx_ptp_start()
+Date: Wed, 25 Nov 2026 15:24:46 +0100
+Message-ID: <20261125143825.203190284@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143821.729802100@linuxfoundation.org>
 References: <20261125143821.729802100@linuxfoundation.org>
@@ -68,59 +68,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Namjae Jeon <linkinjeon@kernel.org>
+From: Alex Austin <alex.austin@amd.com>
 
-[ Upstream commit 99afbf38a5c571157526b7b1c6d8dd7ad1a234d5 ]
+[ Upstream commit 21d4917cfc8b6837c44d8aa186941a6a16ec17a0 ]
 
-The resident value bounds check allows value_offset to point inside the
-attribute header. The reported image has an unnamed $DATA attribute with
-a value_offset of zero and a value_length of two, which passes lookup.
+FW does not touch the clock frequency state on MC_CMD_PTP_OP_DISABLE or
+MC_CMD_PTP_OP_ENABLE, so the driver doesn't need to either. Doing so
+just desyncs the driver's cached current_adjfreq from what FW still has
+programmed.
 
-Appending to this file makes ntfs_resident_attr_value_resize() shrink the
-attribute record to eight bytes. Moving the following attributes then
-overwrites the resident header fields, so the subsequent memset() uses a
-corrupted value_offset and writes outside the MFT record buffer.
+Resetting current_adjfreq to 0 here means the first efx_phc_adjtime()
+call after efx_ptp_start() reprograms the NIC's clock frequency to 0,
+since efx_phc_adjtime() always sends current_adjfreq to FW alongside
+the time step. efx_ptp_start() runs on every SIOCSHWTSTAMP mode change,
+on ifup, and on the reset_required path in efx_ptp_worker(), so each of
+those silently drops any frequency correction the PTP servo had already
+applied.
 
-Require the resident value to start after the complete resident header.
-Both lookup paths then return -EIO for the corrupt record, before callers
-can resize or access its value.
+efx_ptp_start() is also reached from reset recovery, but that is fine:
+on an FLR or PCIe reset FW does not touch the NIC clock, and on a full
+MC reboot the clock is reset to 1970, so a stale current_adjfreq from
+before the reset is hardly consequential - especially as it is bound to
+MAX_PPB, 1000000 ppb.
 
-Fixes: 495e90fa3348 ("ntfs: update attrib operations")
-Reported-by: Robert Morris <rtm@mit.edu>
-Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
+Fixes: 7c236c43b838 ("sfc: Add support for IEEE-1588 PTP")
+Signed-off-by: Alex Austin <alex.austin@amd.com>
+Link: https://patch.msgid.link/20261026123023.3566549-2-alex.austin@amd.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ntfs/attrib.c | 9 ++++++---
- 1 file changed, 6 insertions(+), 3 deletions(-)
+ drivers/net/ethernet/sfc/ptp.c | 1 -
+ 1 file changed, 1 deletion(-)
 
-diff --git a/fs/ntfs/attrib.c b/fs/ntfs/attrib.c
-index ee54ebdeb7c71..0bd4b20132df9 100644
---- a/fs/ntfs/attrib.c
-+++ b/fs/ntfs/attrib.c
-@@ -704,17 +704,20 @@ static bool ntfs_resident_attr_value_get(const struct attr_record *a,
- 					 struct ntfs_resident_attr_value *value)
- {
- 	u32 attr_len;
-+	u32 min_len;
- 	u16 value_offset;
+diff --git a/drivers/net/ethernet/sfc/ptp.c b/drivers/net/ethernet/sfc/ptp.c
+index 6ca9a75af01d8..2247e5e3e25a8 100644
+--- a/drivers/net/ethernet/sfc/ptp.c
++++ b/drivers/net/ethernet/sfc/ptp.c
+@@ -1446,7 +1446,6 @@ static int efx_ptp_start(struct efx_nic *efx)
+ 		goto fail;
  
- 	attr_len = le32_to_cpu(a->length);
--	if (attr_len < offsetof(struct attr_record, data.resident.reserved) +
--			sizeof(a->data.resident.reserved))
-+	min_len = offsetof(struct attr_record, data.resident.reserved) +
-+		  sizeof(a->data.resident.reserved);
-+	if (attr_len < min_len)
- 		return false;
+ 	ptp->evt_frag_idx = 0;
+-	ptp->current_adjfreq = 0;
  
- 	value->len = le32_to_cpu(a->data.resident.value_length);
- 	value_offset = le16_to_cpu(a->data.resident.value_offset);
+ 	return 0;
  
--	if (value->len > attr_len || value_offset > attr_len - value->len)
-+	if (value_offset < min_len || value->len > attr_len ||
-+	    value_offset > attr_len - value->len)
- 		return false;
- 
- 	value->data = (const u8 *)a + value_offset;
 -- 
 2.53.0
 
