@@ -1,52 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795621780;
-	b=MgE6lJyI8K0yM06WajsCQ2z9hTUfAp6wGF1awkObcnrBFl3NiodTsrd1CKR7UfhNQDJl
-	 WJ8fvlak4u4iDSnCELz15qEyDTPdGydeXgjqHkEQ8ExlYX5yHBnJsQtCUyvuL8mbzs7BB
-	 sytRg0YkZNB64zGwelXGcgv0RSuEQO9cl+zX/1zgonHlC4yL9KT4QoMEfcD33euQ4YO/J
-	 IvtT2TTg4WxgvFS+pfd+DOQuNEhWVgbe81UUWqRBzGjqKGXboYpOwMqg6X7xcqTDhsths
-	 /+5LRPxMaUM3sBjkmY+yEgVo7oByQqVBMiJuHsKW0QzgSzynvmFr7G5WwfkCXTguW8A==
+	t=1795621783;
+	b=MLxxNAa9MEneGZkk7c5oib3r/8rjWYvKkt7tVVg/bxCW0ZdpYvLPxHE9V5ds8m0Z7OH6
+	 2RSUkh/ylqSNLSEg3+BtpJfrZWAiq+cqXBZjCWf+5uOsmtQh2SiWbVBQMesbS+zsXlQ8M
+	 JgC/hv53rD3H9DDSWJe1Q0zYmnzeKvmrLYua78F2WHy/V9HduAptSY1drPHXS0WlRIIGU
+	 vzB3KAGATms4S64nwTrnxEj69coPCZ4pno5PYO/Puuo326RoJJu68f1HnksfVx4g9r/eU
+	 VbnNkvh/iirkrJl3fuO2tUO6GnIB/xArki0ciAUMu7LLY623iv7Lfnlr57/iA/ZM5NA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795621780;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795621783;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=v6A989U8yegYQXuFCJN1DVA/S5VwSSqXtsSWpsu2Wwg=;
-	b=fvNEY9vkUKM2KCEj/UJLvyQjSFqJAGYSBi2+yNCWRCjoUVarxRuWkOG0q8esCORXpVbx
-	 9HuEE1fq4aDbZeQ3V/Sv8CJVGvYn2wBSkeuG/dEd/tv8cHMohYxP+Pz2P146bC2ft9dxk
-	 Y2Omr3e55yg1ex75+2ynypY++hZhpBYq4h8Prqrtqa5S30U/lfXc0qcI65XB7vxv0TZXM
-	 aJrDO5hRw1DayD24bmBZWKdz3b36J4vZoU8J2wN8xs943Jwu7qpWFnGydKiBULrACeHEC
-	 FF/6NqF1pQuMRH51KAr0lI2xEv38KsoDEqyZKzXTSPm9M7LCmn4hDMNto5mrA4z0QIw==
+	bh=2IOMv41ytW/EBZKtmajpNNnM2BewSf6SPm9Q+4/QkEY=;
+	b=I7dPPWsb6XlAf9Qh1YvA4ciW4B/CIfr9b42pg4O+48yNwmZ7LhP/ic3om7W+/haehN6H
+	 bgBC432PVPmLTnkXIgmn35Lpa7j8x5EdXvqgwOhbG1jBh8a/FT1QI4vhtfWUgphjrXktd
+	 w6Z0d/V+we9mRFHtJdH/syX2Q1PAR87nk1b/L+hAnDVaP8QN7vOQBYYicT15WN372e+AT
+	 Gp5VFmeQVTlaKeqpWhDv9TmZmUpZh9WcK77Dy6ffql8JuyBLjaP8yKw+RQkmmJZxHgR7r
+	 zGpuhrT24drYlUVuLmLTWQybPWc74mayup8nhf3fNhyPx264cYkNXVrblTMrdtJXHJg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=AssRFp+l;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=I7dq2oZT;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9394F606A326;
-	Wed, 25 Nov 2026 15:49:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D113D606A323;
+	Wed, 25 Nov 2026 15:49:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=AssRFp+l
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AA6921F000E0;
-	Wed, 25 Nov 2026 15:49:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=I7dq2oZT
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0028D1F000EF;
+	Wed, 25 Nov 2026 15:49:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795621780;
-	bh=v6A989U8yegYQXuFCJN1DVA/S5VwSSqXtsSWpsu2Wwg=;
+	s=korg; t=1795621783;
+	bh=2IOMv41ytW/EBZKtmajpNNnM2BewSf6SPm9Q+4/QkEY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=AssRFp+lf9sOY/kQ7+QsArYTRYt68QKAq55Ox6W8Tm6j+sixTreHoWOX9DnbtYi6E
-	 vSTtjvgU1ev2t8X3IKoyq19hgnEBWLy7wYGQ0IJhQChYGcylov+GrCfTuPnVly9Uch
-	 Qq9l6BGiaRvqLieeXUTWeSTvxrwk5N0AyCV6DPGI=
+	b=I7dq2oZT55X3mfcomQMvS7gW8dDdhaWyDzY1j42mUvP+jI4PvXU2XS+zFmvbRthWa
+	 op5eGbfxIZqimasCvak33tVOBMg9Ok/6NuaVsgmhy8lqeG1hCuCp6OJ1Xfs6ykSVm3
+	 mnr2YSiF61Y3owoWQ07AAlYRNKpvwLjxp00c6wEc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Damien Le Moal <dlemoal@kernel.org>,
 	Niklas Cassel <cassel@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 333/990] ata: libata-scsi: do not accept subpage code FFh in MODE SELECT
-Date: Wed, 25 Nov 2026 15:28:20 +0100
-Message-ID: <20261125143829.889704656@linuxfoundation.org>
+Subject: [PATCH 6.18 334/990] ata: libata-scsi: reject MODE SELECT mode pages with a wrong SPF bit
+Date: Wed, 25 Nov 2026 15:28:21 +0100
+Message-ID: <20261125143829.913664355@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143822.072087159@linuxfoundation.org>
 References: <20261125143822.072087159@linuxfoundation.org>
@@ -70,60 +69,60 @@ Content-Transfer-Encoding: 8bit
 
 From: Niklas Cassel <cassel@kernel.org>
 
-[ Upstream commit b29c40dc150b0b4218c4d6844770892eb6b2f6b5 ]
+[ Upstream commit a1eb72c477ec1320c540f27ce1e2f717d4518e62 ]
 
-When the SUBPAGE CODE of the mode page in a MODE SELECT parameter list
-is FFh, ata_scsi_mode_select_xlat() rejects it for the control mode
-page, but accepts it for all other mode pages, i.e. for the caching
-mode page, the only other mode page that it supports.
+ata_scsi_mode_select_xlat() accepts the caching and control mode pages
+both in page_0 format and in sub_page format with SUBPAGE CODE 00h.
 
-However, FFh is not the subpage code of an actual mode page: SPC-7
-(7.5.2) only defines it as the MODE SENSE request code for all
-subpages. SUBPAGE CODE FFh only means "all subpages" in requests, i.e.
-in the MODE SENSE CDB for mode pages and in the LOG SELECT CDB for log
-pages (see SPC-5, 6.8), while the SUBPAGE CODE of a mode page in a MODE
-SELECT parameter list identifies a specific mode page. Also, SAT-2 and
-later versions of SAT define the Caching mode page with the SPF bit set
-to zero (see SAT-6, 10.4.9), i.e. without a SUBPAGE CODE field.
+However, SAT-2 and later versions of SAT define the SPF bit of the
+Caching mode page and of the Control mode page as not changeable and
+set to zero (see SAT-6, 10.4.9 and 10.4.6), and SPC-7 (6.12, MODE
+SELECT(10) command) requires the device server to terminate a MODE
+SELECT command with INVALID FIELD IN PARAMETER LIST if the application
+client sets any field that is reported as not changeable to a value
+other than its current value.
 
-Remove the ALL_SUB_MPAGES case, so that SUBPAGE CODE FFh is rejected
-like any other unsupported subpage.
+Reject a mode page with the SPF bit set to one and SUBPAGE CODE 00h,
+with the FIELD POINTER set to the byte containing the SPF bit. The only
+mode page with the SPF bit set to one that remains accepted is the ATA
+Feature Control mode page (control mode page, sub-page f2h), for which
+SAT-6 (12.3.4) requires the SPF bit to be set to one. The opposite case
+does not need a check: a mode page in page_0 format always has subpage
+code 00h, so it can never be the ATA Feature Control mode page.
+
+This also allows the mode page handlers to rely on the format of their
+mode page, which a later patch will make use of.
 
 Fixes: 1b26d29ccd59 ("[libata] scsi: implement MODE SELECT command")
-Reviewed-by: Damien Le Moal <dlemoal@kernel.org>
-Link: https://lore.kernel.org/r/20261103205448.931471-12-cassel@kernel.org
+Link: https://lore.kernel.org/r/20261103205448.931471-13-cassel@kernel.org
 Signed-off-by: Niklas Cassel <cassel@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/ata/libata-scsi.c | 12 ++----------
- 1 file changed, 2 insertions(+), 10 deletions(-)
+ drivers/ata/libata-scsi.c | 10 ++++++++++
+ 1 file changed, 10 insertions(+)
 
 diff --git a/drivers/ata/libata-scsi.c b/drivers/ata/libata-scsi.c
-index ee0346de04744..b761cfd435f84 100644
+index b761cfd435f84..ff944a80e35c0 100644
 --- a/drivers/ata/libata-scsi.c
 +++ b/drivers/ata/libata-scsi.c
-@@ -4332,19 +4332,11 @@ static unsigned int ata_scsi_mode_select_xlat(struct ata_queued_cmd *qc)
- 	}
+@@ -4317,7 +4317,17 @@ static unsigned int ata_scsi_mode_select_xlat(struct ata_queued_cmd *qc)
+ 		if (len < 4)
+ 			goto invalid_param_len;
  
- 	/*
--	 * Supported subpages: all subpages and ATA feature sub-page f2h of
--	 * the control page.
-+	 * The only supported subpage is the ATA feature sub-page f2h of the
-+	 * control page.
- 	 */
- 	if (spg) {
- 		switch (spg) {
--		case ALL_SUB_MPAGES:
--			/* All subpages is not supported for the control page */
--			if (pg == CONTROL_MPAGE) {
--				fp = (p[0] & 0x40) ? 1 : 0;
--				fp += hdr_len + bd_len;
--				goto invalid_param;
--			}
--			break;
- 		case ATA_FEATURE_SUB_MPAGE:
- 			if (qc->dev->flags & ATA_DFLAG_CDL &&
- 			    pg == CONTROL_MPAGE)
++		/*
++		 * Mode pages with subpage code 00h use the page_0 format: SAT
++		 * defines the SPF bit of the Caching and Control mode pages,
++		 * for subpage code 00h, as not changeable and set to zero.
++		 */
+ 		spg = p[1];
++		if (!spg) {
++			fp = hdr_len + bd_len;
++			goto invalid_param;
++		}
++
+ 		pg_len = get_unaligned_be16(&p[2]);
+ 		p += 4;
+ 		len -= 4;
 -- 
 2.53.0
 
