@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795622574;
-	b=ozRYW9ufRmVvcqaaUx+L9aIWjm5J4jbhcFtRk0bRTlp3NaB5EoHRgJpR1URTeAH8NLYW
-	 tCOsMXOPoJnhiQrDaXy4m8LWreEye0OGaQlmoMZbbEcUDPl7Rans8+O4MyVIvQZDzeeKq
-	 ZVCZTxpbNOCpXjAlze2VdwxI4KEMdDzx5pqNVnE1G6VewIzm+h8DNJE/RNj+JkBCMFUl3
-	 LBAni9z06qgYRcm0JwW0Jx38cbefdLenQ0IouLRxqWd/U4Xdcxink0r0o+PDVK9CmqbDD
-	 o1cJyZBvIIDaN+nQRhfySc65d/U5tJP8Qlz1r1ud7scVnTErQS0+2N9IHG98wZc2lTA==
+	t=1795622577;
+	b=Y8PiNWtz5xR06LSHRbkeBx+fFkkBENzXENYUEvxZD9oGV767aX28/msVzk+1yoAaIKi+
+	 EoJJzLwJ1O3aAsqpRq9UcksqgrrtGhpUie6VX9GXh49ibh+vn+0GuHVKvJaYN9Eyc6jSy
+	 W3U2cQXTAFDlzdUuKpRKgd8BFydRboR2B4xKrHnf1ME55YrxPNfhT9H7KwqVh2B3XL6ds
+	 WFstdojbhP6yShfoN70A4Pe5NlUNBvqNBDtz/YnrWaC4ts+9Y87ONXmylZRX4AnGl3hio
+	 PBVZdgfeHtyn56sXLwjmKA3isZZgDlr1dII1AgjYK21kk+TeTzW6XuzpRsu8/Qs9f+w==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795622574;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795622577;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=ZYPU09dHAAMsVuvgUVUfJT0ysRNxNPdkI1zWR8WtIzE=;
-	b=wfqulxz9V9E1D0vL9UcijPYv/WkWdLWhXMUdShpaNYdUSgRyM/DETh3bcxrtCGmnuEpH
-	 tL80OwM9JFP77qKAzfZZxcM+SaGAY7GXS22H6sXjYieV267hGAJyMFV4l0L5R+RDechxC
-	 p/7sTkcD2C5ZSnO7VjDYoFmdweOeE5nbJR+R2NLnsSpAHF61UVo/vyvaGNmkVvfPVQ4zn
-	 GjPoSE/MBdnJQQeAUNrsXjQGNOBwYV8Tbf2GJTpTczBahVwIOHfMb913l+4f1rlc/m67g
-	 Pnl6AMuZ3en72W4WRkJ2glxANdmVn1KEKjPiM+rrzMFuQVhbqG53K8Oi91+2a2OhM2A==
+	bh=BlboHtRWp4yVBCBeY+5NAwCTc6jtSt8YBG0waP2XPc8=;
+	b=Ab2ToOldHVck0mxP982YmaOxoPMeAyilVVlaFtOoMxtDMBdU77AR86raeOlvtDtgts7i
+	 aGoQGgTDJMA/+9U6j2ZhLCOw5nKooAIoj80bu0guD5jGn6Hp1fK0o06SGw2FHJhag3CrD
+	 1OTh/wVrfudaumn6fABmKx/qxf+QEwQdiw2uaQDJ4Bn4N5NenOggAGC2JgyYlCvKGm8xL
+	 2rhkeAyso705+ybDUm3iWK7J3qeKk8S631l47F/DC+q5r49gZOh8U999IuKX3YXQljxxp
+	 +Wxy1gPMgbOrLqqhHyWj/AmSjVM7ZwwE+DvppCqiW/po7e0vGb1tIXOn6x3EiGvkO/A==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=bigV5T73;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=oNmKZjzs;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 45280606A33C;
-	Wed, 25 Nov 2026 16:02:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C72E1606A331;
+	Wed, 25 Nov 2026 16:02:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=bigV5T73
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 858741F000CA;
-	Wed, 25 Nov 2026 16:02:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=oNmKZjzs
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E2CD41F000C0;
+	Wed, 25 Nov 2026 16:02:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795622574;
-	bh=ZYPU09dHAAMsVuvgUVUfJT0ysRNxNPdkI1zWR8WtIzE=;
+	s=korg; t=1795622577;
+	bh=BlboHtRWp4yVBCBeY+5NAwCTc6jtSt8YBG0waP2XPc8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=bigV5T73uT9V3JXjq3dmQ3qAUGg7r8w4gFGxP+R3HXWcZgpexwM/NwBUC5/NeqBDd
-	 YOl43b7ycwIa8AEKsBC92MdC5iWsgFsr30t7BUA5O/z1m1qsguWGqiv3M/pn/Q01wu
-	 CZ6xrvO6lwTWOXzoTq4X8A/IhlCt6fpNMvjcv7yQ=
+	b=oNmKZjzsCCr7mufRnt4AULzRw6hRFopiuOt85Q2y+izq91HmHjPFjCIScWnGQQhz2
+	 7MI0dXgfNgS/JgZ4iudPKZx+wZLnpNMTOlytVJ/wxWA9FGxPMghoRVIBHQdNUt24qg
+	 9K2HG1SUc00C4JCwisUmYWZKODYGuJZ+z564MNgg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Aneesh Kumar K.V" <aneesh.kumar@kernel.org>,
-	Marek Szyprowski <m.szyprowski@samsung.com>,
-	Sasha Levin <sashal@kernel.org>,
-	"Claude Opus 5.5" <noreply@anthropic.com>
-Subject: [PATCH 6.18 580/990] dma-direct: Restore arch_dma_alloc() for the DMA_ATTR_NO_KERNEL_MAPPING case
-Date: Wed, 25 Nov 2026 15:32:27 +0100
-Message-ID: <20261125143835.676370837@linuxfoundation.org>
+	Li Ming <ming.li@zohomail.com>,
+	Alison Schofield <alison.schofield@intel.com>,
+	Dave Jiang <dave.jiang@intel.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.18 581/990] cxl/port: Attach endpoints to a dport under the lock that pins it
+Date: Wed, 25 Nov 2026 15:32:28 +0100
+Message-ID: <20261125143835.699921473@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143822.072087159@linuxfoundation.org>
 References: <20261125143822.072087159@linuxfoundation.org>
@@ -69,81 +69,260 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Marek Szyprowski <m.szyprowski@samsung.com>
+From: Dave Jiang <dave.jiang@intel.com>
 
-[ Upstream commit 5e3bc6b44c8853bcc7782eac122c5baf2d02f399 ]
+[ Upstream commit bcda00c78d075340fe30cb6c980507fac711e7d1 ]
 
-Commit 849facea92fa ("dma-direct: simplify the DMA_ATTR_NO_KERNEL_MAPPING
-handling") moved the DMA_ATTR_NO_KERNEL_MAPPING shortcut in
-dma_direct_alloc() in front of the arch_dma_alloc() call. Architectures
-providing their own DMA coherent allocator (CONFIG_ARCH_HAS_DMA_ALLOC)
-therefore no longer see such requests. ARM 32bit is one of such. Lack of
-the call to arch_dma_alloc() results in the lack of proper cache
-management on HighMem pages.
+devm_cxl_enumerate_ports() and add_port_attach_ep() look up or create a
+dport under its port's device lock, drop the lock, then pass the dport
+to cxl_add_ep(). add_ep() reads dport->port before taking the lock, and
+cxl_gpf_port_setup() reads and writes the dport with no lock held.
 
-Take the dma-direct shortcut only for coherent devices or when the
-architecture doesn't provide arch_dma_alloc(). While touching this,
-move that check into separate function to avoid duplication in alloc
-and free paths.
+A concurrent cxl_detach_ep() for another memdev below the same port can
+free the dport in that window: it calls del_dports() under the port lock
+when the last endpoint leaves. The enumerating memdev then dereferences
+freed memory.
 
-Fixes: 849facea92fa ("dma-direct: simplify the DMA_ATTR_NO_KERNEL_MAPPING handling")
-Reported-by: Aneesh Kumar K.V <aneesh.kumar@kernel.org>
-Closes: https://lore.kernel.org/all/yq5ams2akznl.fsf@kernel.org/
-Assisted-by: Claude Opus 5.5 <noreply@anthropic.com>
-Link: https://lore.kernel.org/r/20260930135734.1013905-1-m.szyprowski@samsung.com
-Signed-off-by: Marek Szyprowski <m.szyprowski@samsung.com>
-[ sashal: Adapted the helper's attribute check to use force_dma_unencrypted() instead of the newer __DMA_ATTR_ALLOC_CC_SHARED flag, which this tree lacks. ]
+Attach the endpoint and set up GPF while the port lock from the lookup
+is still held. Make add_ep() assert that lock instead of taking it.
+Under the lock, a dport found in port->dports is still live, since
+removal erases it from the xarray before freeing it.
+
+[ dj: Added kdoc update from Alison. ]
+
+Fixes: de516b40116e ("cxl/port: Record dport in endpoint references")
+Reported-by: Li Ming <ming.li@zohomail.com>
+Closes: https://lore.kernel.org/linux-cxl/0c68324c-cfc7-46b2-9344-24ae40e88923@zohomail.com/
+Assisted-by: LLM
+Reviewed-by: Li Ming <ming.li@zohomail.com>
+Reviewed-by: Alison Schofield <alison.schofield@intel.com>
+Link: https://patch.msgid.link/20261001154744.1095902-4-dave.jiang@intel.com
+Signed-off-by: Dave Jiang <dave.jiang@intel.com>
+[ sashal: Replaced the dport lookup's lock guard with a single guard(device)(&port->dev) in the helper because port_to_host() doesn't exist here, so upstream's two-lock scheme was dropped. ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/dma/direct.c | 21 +++++++++++++++++----
- 1 file changed, 17 insertions(+), 4 deletions(-)
+ drivers/cxl/core/port.c | 121 +++++++++++++++++++++-------------------
+ 1 file changed, 65 insertions(+), 56 deletions(-)
 
-diff --git a/kernel/dma/direct.c b/kernel/dma/direct.c
-index cc334eb94b33d..11960210266fb 100644
---- a/kernel/dma/direct.c
-+++ b/kernel/dma/direct.c
-@@ -181,6 +181,21 @@ static struct page *dma_direct_alloc_from_pool(struct device *dev, size_t size,
- 	return page;
+diff --git a/drivers/cxl/core/port.c b/drivers/cxl/core/port.c
+index b9a585f64b8ab..9c9fcea02816f 100644
+--- a/drivers/cxl/core/port.c
++++ b/drivers/cxl/core/port.c
+@@ -1383,7 +1383,7 @@ static int add_ep(struct cxl_ep *new)
+ {
+ 	struct cxl_port *port = new->dport->port;
+ 
+-	guard(device)(&port->dev);
++	device_lock_assert(&port->dev);
+ 	if (port->dead)
+ 		return -ENXIO;
+ 
+@@ -1399,6 +1399,11 @@ static int add_ep(struct cxl_ep *new)
+  * Intermediate CXL ports are scanned based on the arrival of endpoints.
+  * When those endpoints depart the port can be destroyed once all
+  * endpoints that care about that port have been removed.
++ *
++ * Context: Caller must hold the device lock of @dport->port, which pins
++ *          @dport, across the lookup of @dport and this call. @dport->port
++ *          is never the CXL root port, whose dports are pinned by its
++ *          uport_dev instead.
+  */
+ static int cxl_add_ep(struct cxl_dport *dport, struct device *ep_dev)
+ {
+@@ -1727,13 +1732,15 @@ static struct cxl_dport *probe_dport(struct cxl_port *port,
+ 	return drv->add_dport(port, dport_dev);
  }
  
-+/*
-+ * Check if the allocation can skip the kernel mapping and return the page
-+ * pointer as the cookie.
-+ */
-+static bool dma_direct_use_no_mapping(struct device *dev, unsigned long attrs)
-+{
-+	if (!(attrs & DMA_ATTR_NO_KERNEL_MAPPING))
-+		return false;
-+	if (force_dma_unencrypted(dev) || is_swiotlb_for_alloc(dev))
-+		return false;
-+	if (IS_ENABLED(CONFIG_ARCH_HAS_DMA_ALLOC) && !dev_is_dma_coherent(dev))
-+		return false;
-+	return true;
-+}
+-static struct cxl_dport *devm_cxl_create_port(struct device *ep_dev,
+-					      struct cxl_port *parent_port,
+-					      struct cxl_dport *parent_dport,
+-					      struct device *uport_dev,
+-					      struct device *dport_dev)
++static int devm_cxl_create_port(struct device *ep_dev,
++				struct cxl_port *parent_port,
++				struct cxl_dport *parent_dport,
++				struct device *uport_dev,
++				struct device *dport_dev)
+ {
+ 	resource_size_t component_reg_phys;
++	struct cxl_dport *dport;
++	int rc;
+ 
+ 	device_lock_assert(&parent_port->dev);
+ 	if (!parent_port->dev.driver) {
+@@ -1750,7 +1757,7 @@ static struct cxl_dport *devm_cxl_create_port(struct device *ep_dev,
+ 		port = devm_cxl_add_port(&parent_port->dev, uport_dev,
+ 					 component_reg_phys, parent_dport);
+ 		if (IS_ERR(port))
+-			return ERR_CAST(port);
++			return PTR_ERR(port);
+ 
+ 		/*
+ 		 * retry to make sure a port is found. a port device
+@@ -1758,7 +1765,7 @@ static struct cxl_dport *devm_cxl_create_port(struct device *ep_dev,
+ 		 */
+ 		port = find_cxl_port_by_uport(uport_dev);
+ 		if (!port)
+-			return ERR_PTR(-ENODEV);
++			return -ENODEV;
+ 
+ 		dev_dbg(ep_dev, "created port %s:%s\n",
+ 			dev_name(&port->dev), dev_name(port->uport_dev));
+@@ -1767,11 +1774,25 @@ static struct cxl_dport *devm_cxl_create_port(struct device *ep_dev,
+ 		 * Port was created before right before this function is
+ 		 * called. Signal the caller to deal with it.
+ 		 */
+-		return ERR_PTR(-EAGAIN);
++		return -EAGAIN;
+ 	}
+ 
++	/* @dport is only valid while @port's lock is held */
+ 	guard(device)(&port->dev);
+-	return probe_dport(port, dport_dev);
++	dport = probe_dport(port, dport_dev);
++	if (IS_ERR(dport))
++		return PTR_ERR(dport);
 +
- static void *dma_direct_alloc_no_mapping(struct device *dev, size_t size,
- 		dma_addr_t *dma_handle, gfp_t gfp)
++	rc = cxl_add_ep(dport, ep_dev);
++	if (rc == -EBUSY) {
++		/*
++		 * "can't" happen, but this error code means
++		 * something to the caller, so translate it.
++		 */
++		rc = -ENXIO;
++	}
++
++	return rc;
+ }
+ 
+ static int add_port_attach_ep(struct cxl_memdev *cxlmd,
+@@ -1779,7 +1800,7 @@ static int add_port_attach_ep(struct cxl_memdev *cxlmd,
+ 			      struct device *dport_dev)
  {
-@@ -210,8 +225,7 @@ void *dma_direct_alloc(struct device *dev, size_t size,
- 	if (attrs & DMA_ATTR_NO_WARN)
- 		gfp |= __GFP_NOWARN;
+ 	struct device *dparent = grandparent(dport_dev);
+-	struct cxl_dport *dport, *parent_dport;
++	struct cxl_dport *parent_dport;
+ 	int rc;
  
--	if ((attrs & DMA_ATTR_NO_KERNEL_MAPPING) &&
--	    !force_dma_unencrypted(dev) && !is_swiotlb_for_alloc(dev))
-+	if (dma_direct_use_no_mapping(dev, attrs))
- 		return dma_direct_alloc_no_mapping(dev, size, dma_handle, gfp);
+ 	if (is_cxl_host_bridge(dparent)) {
+@@ -1808,46 +1829,51 @@ static int add_port_attach_ep(struct cxl_memdev *cxlmd,
+ 				return PTR_ERR(parent_dport);
+ 		}
  
- 	if (!dev_is_dma_coherent(dev)) {
-@@ -314,8 +328,7 @@ void dma_direct_free(struct device *dev, size_t size,
+-		dport = devm_cxl_create_port(&cxlmd->dev, parent_port,
+-					     parent_dport, uport_dev,
+-					     dport_dev);
+-		if (IS_ERR(dport)) {
+-			/* Port or dport already exists, restart iteration */
+-			if (PTR_ERR(dport) == -EAGAIN || PTR_ERR(dport) == -EBUSY)
+-				return 0;
+-			return PTR_ERR(dport);
+-		}
++		rc = devm_cxl_create_port(&cxlmd->dev, parent_port,
++					  parent_dport, uport_dev, dport_dev);
+ 	}
+ 
+-	rc = cxl_add_ep(dport, &cxlmd->dev);
+-	if (rc == -EBUSY) {
+-		/*
+-		 * "can't" happen, but this error code means
+-		 * something to the caller, so translate it.
+-		 */
+-		rc = -ENXIO;
+-	}
++	/* Port or dport already exists, restart iteration */
++	if (rc == -EAGAIN || rc == -EBUSY)
++		return 0;
+ 
+ 	return rc;
+ }
+ 
+-static struct cxl_dport *find_or_add_dport(struct cxl_port *port,
+-					   struct device *dport_dev)
++static int find_or_add_dport_attach_ep(struct cxl_memdev *cxlmd,
++				       struct cxl_port *port,
++				       struct device *dport_dev)
  {
- 	unsigned int page_order = get_order(size);
+ 	struct cxl_dport *dport;
++	int rc;
  
--	if ((attrs & DMA_ATTR_NO_KERNEL_MAPPING) &&
--	    !force_dma_unencrypted(dev) && !is_swiotlb_for_alloc(dev)) {
-+	if (dma_direct_use_no_mapping(dev, attrs)) {
- 		/* cpu_addr is a struct page cookie, not a kernel address */
- 		dma_free_contiguous(dev, cpu_addr, size);
- 		return;
+-	device_lock_assert(&port->dev);
++	guard(device)(&port->dev);
+ 	dport = cxl_find_dport_by_dev(port, dport_dev);
+ 	if (!dport) {
+ 		dport = probe_dport(port, dport_dev);
+ 		if (IS_ERR(dport))
+-			return dport;
++			return PTR_ERR(dport);
+ 
+ 		/* New dport added, restart iteration */
+-		return ERR_PTR(-EAGAIN);
++		return -EAGAIN;
+ 	}
+ 
+-	return dport;
++	/* @dport is only valid while @port's lock is held */
++	rc = cxl_add_ep(dport, &cxlmd->dev);
++
++	/*
++	 * If the endpoint already exists in the port's list,
++	 * that's ok, it was added on a previous pass.
++	 * Otherwise, retry in add_port_attach_ep() after taking
++	 * the parent_port lock as the current port may be being
++	 * reaped.
++	 */
++	if (rc && rc != -EBUSY)
++		return rc;
++
++	cxl_gpf_port_setup(dport);
++
++	return 0;
+ }
+ 
+ int devm_cxl_enumerate_ports(struct cxl_memdev *cxlmd)
+@@ -1876,7 +1902,6 @@ int devm_cxl_enumerate_ports(struct cxl_memdev *cxlmd)
+ 	for (iter = dev; iter; iter = grandparent(iter)) {
+ 		struct device *dport_dev = grandparent(iter);
+ 		struct device *uport_dev;
+-		struct cxl_dport *dport;
+ 
+ 		if (is_cxl_host_bridge(dport_dev))
+ 			return 0;
+@@ -1903,29 +1928,13 @@ int devm_cxl_enumerate_ports(struct cxl_memdev *cxlmd)
+ 			 * RP port enumerated by cxl_acpi without dport will
+ 			 * have the dport added here.
+ 			 */
+-			scoped_guard(device, &port->dev) {
+-				dport = find_or_add_dport(port, dport_dev);
+-				if (IS_ERR(dport)) {
+-					if (PTR_ERR(dport) == -EAGAIN)
+-						goto retry;
+-					return PTR_ERR(dport);
+-				}
+-			}
+-
+-			rc = cxl_add_ep(dport, &cxlmd->dev);
+-
+-			/*
+-			 * If the endpoint already exists in the port's list,
+-			 * that's ok, it was added on a previous pass.
+-			 * Otherwise, retry in add_port_attach_ep() after taking
+-			 * the parent_port lock as the current port may be being
+-			 * reaped.
+-			 */
+-			if (rc && rc != -EBUSY)
++			rc = find_or_add_dport_attach_ep(cxlmd, port,
++							 dport_dev);
++			if (rc == -EAGAIN)
++				goto retry;
++			if (rc)
+ 				return rc;
+ 
+-			cxl_gpf_port_setup(dport);
+-
+ 			/* Any more ports to add between this one and the root? */
+ 			if (!dev_is_cxl_root_child(&port->dev))
+ 				continue;
 -- 
 2.53.0
 
