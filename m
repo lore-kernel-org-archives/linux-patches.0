@@ -1,54 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795620469;
-	b=F5lgOcyt2bGVrSWy96Cj+3qMsVm2eWUxddJeTDoPA0rC3DZtfWAELMvYNH6cQNt4IvRp
-	 oMUzZe2wKK4DpaAjJK8LIVTqOYpZsMnE88wiIhuuZ4V6TIuLjXSgy4G6G1ao6tgxRYzUv
-	 eu6wpitARxURDWk0TKsQo94p97Ic9oN5y8HGg5OLunwupdC33bXbq+vLAzRiMRMbMt6Bu
-	 sYNzibHcDIbIWae4M/5RgJGYmQr8aBhocTNr9edAf4DQ8HgbWEhucsD0Shr8ApB+e75SD
-	 cUF0yr/P04eCyi4ITHV6stI5ceyGeFLEMxHQaYaNXbdckgj1WULXBJ1pqibjkDJXz/Q==
+	t=1795620472;
+	b=LUq/cMdj1qalIXlzntW3A9iamVfvNuir1mD0J+qXgqT1q8d515Fd5CdoCh3fVYK+vJ68
+	 N5ZIRGCO4Hd5uyZW3hz8sdWIP6PF19jaXUMMG2TIQGolIP5AJ3Q8Dq8m0QPYj7SBDEZug
+	 MT6fI/jp9Ga19T+QJe5RbVnwWdBFQlHTiG5ZD1kj/RGsJ0Tqr8u2QcWyoDlWxm40I3LQm
+	 4S7Z3MH5W9miIZsiQLCyBPR+t+vqOI4voHOYoOv3xGiVfgG6i5oOWJ+lc/NQJeaIQMitd
+	 qwvA4CrSnnGOw0L5yIvfo6Q4zF3LeGa0AehrYwBO3lP15cPvkC5fXXB3QflmLMh729g==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795620469;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795620472;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=zoHkwpbwa9r8nc1vsf0CNZuVpMdgmer/6qlqZuTiRYI=;
-	b=vK3YUA83lHWbLduua9UphsI6+M/+RszD62z0VtueAhA//+xnsk/Yfjs2kGEefjpX2pLd
-	 BOoizomtZtY3uuUV4B1lfbJ4clrUsrXriydKECuZzO8fTXYs7ucF2+wl8IRAZLCINVt0K
-	 Ia/YbkJ/0LMsR6VCWq4B7I6n9terjZ9BGc3mzJnYSL65KhdGsirHYLnXrVdAaF/0RF3EK
-	 Ouw0BQpGcfoHBxuPvAcnndQ18zer17RVfKV2D6cdP+UTB8HSeyUrIQIeevdG6M3LHMG1j
-	 dllZ9W0ypBqziEdrD4w9z2giw4Stb1PysR6ew8aelIYjKEsfPlfhucp9G81t1SoHV+w==
+	bh=Ir+wEsdnH3GGg0NzMwcdmyfridqiRzwAF6cT/lYlZfg=;
+	b=hj78VHXw3EmhLlxo/72KqaYW8hqDGgdxp58LDClS6VpsY3wg5v6Rzl0VkmXzVYGFweav
+	 wubOmEfYrVOF5qSqwmaYrmxAFs5gnx4m2QrPfjjoXhsMJ8WZQdPFIwc+s7+Bh+yU1Qu2U
+	 XjEolyhMh0o4+B7UVD5VkL9G7nVbfje65DZQSgVzatZwkrECL3B2UA6PgrD3K1PrtTMiV
+	 7uFDE87hqfT2psFNnyNf41uVaZ5mJ5bVLO16mhYoQQtH1uUUsJxyAEt4Ndy9lJwbZAcz3
+	 otqYLc1/smPXz5kyqyB6ym8xk6eq9rosR9WzNZXOaw9jRsdB7Vu8ty830NjjxPYZ66A==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="rMI1/AkK";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=1NssSrnV;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 12793606A321;
-	Wed, 25 Nov 2026 15:27:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E8936606A31E;
+	Wed, 25 Nov 2026 15:27:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=rMI1/AkK
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 218671F000C0;
-	Wed, 25 Nov 2026 15:27:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=1NssSrnV
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ED0071F000C0;
+	Wed, 25 Nov 2026 15:27:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795620468;
-	bh=zoHkwpbwa9r8nc1vsf0CNZuVpMdgmer/6qlqZuTiRYI=;
+	s=korg; t=1795620471;
+	bh=Ir+wEsdnH3GGg0NzMwcdmyfridqiRzwAF6cT/lYlZfg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=rMI1/AkK0iLU2c60co6JPPPlBsZYr8a09YhYFTqbsnxdxiyd3DSyN/5OA6J3cgKjx
-	 r2HP3ipqjOGRCOTMSzm16YQyfQdO01034jjDG6mAFA481VggwWuXglHQDYvNBUOH8h
-	 Ft+FXCcps2ajx3iyYrfRdT/cV/Fq8a9QypOIFfdU=
+	b=1NssSrnVvhxrxiWipfcW9HKyAN8Qwq+hEM7x7Q2J2dFnE10Dp78+06eU245KZk2tX
+	 t3tKigHHSminxjFApswpaJb3A/s2hMNpkykiUhnIN3VnycKNWr+WpvvZ7isLpxE99m
+	 BVkTTziF+Nt0WndsIXwF6+rnfQNSwzhtYrBJTnZ8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Harald Judt <h.judt@gmx.at>,
-	Lovekesh Solanki <lovekeshsolanki00@gmail.com>,
 	stable <stable@kernel.org>,
-	Niklas Neronin <niklas.neronin@linux.intel.com>,
-	Mathias Nyman <mathias.nyman@linux.intel.com>
-Subject: [PATCH 7.3 0926/1005] usb: xhci: clear stale bandwidth data after hibernation
-Date: Wed, 25 Nov 2026 15:37:44 +0100
-Message-ID: <20261125143843.379470340@linuxfoundation.org>
+	Yu Zhang <yuz08559@gmail.com>,
+	Alan Stern <stern@rowland.harvard.edu>
+Subject: [PATCH 7.3 0927/1005] usb: gadget: f_mass_storage: take filesem in nofua store to fix backing-file UAF
+Date: Wed, 25 Nov 2026 15:37:45 +0100
+Message-ID: <20261125143843.402218562@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143821.729802100@linuxfoundation.org>
 References: <20261125143821.729802100@linuxfoundation.org>
@@ -70,106 +68,120 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Niklas Neronin <niklas.neronin@linux.intel.com>
+From: Yu Zhang <yuz08559@gmail.com>
 
-commit d1ec1859f3b8641e3e5c5953cc7dd8e63b54339f upstream.
+commit 450fa94d7ae9fc91c3df525f5d1322bf8fecf7b2 upstream.
 
-Controllers using software managed bandwidth accounting maintain
-periodic endpoint bandwidth information in struct 'xhci_interval_bw_table'.
+fsg_store_nofua() syncs the LUN's backing file when switching from async
+to sync mode:
 
-Each root hub port owns a bandwidth table and a list of TT bandwidth
-domains, where each TT has its own bandwidth table. Virtual devices
-reference the bandwidth table of their current bandwidth domain through
-'bw_table' or 'tt_info'.
+	if (!nofua && curlun->nofua)
+		fsg_lun_fsync_sub(curlun);
 
-Historically, resume from S4 reinitialized the entire xHCI driver state,
-which implicitly cleared all bandwidth accounting data. After the
-hibernation resume path was optimized to preserve parts of the driver
-state, virtual devices and TT bandwidth information were freed and
-recreated, but the root hub bandwidth tables were left intact.
+fsg_lun_fsync_sub() dereferences curlun->filp (vfs_fsync(filp)). Unlike
+every other store that touches the backing file -- fsg_store_ro() and
+fsg_store_cdrom() (down_read), fsg_store_file() (down_write) --
+fsg_store_nofua() holds no filesem while doing so.
 
-As a result, stale bandwidth accounting data could remain in the root
-hub bandwidth tables across hibernation resume, leading to incorrect
-bandwidth calculations after devices were rediscovered.
+A concurrent close of the backing file runs under down_write(filesem) and
+does fput(curlun->filp) in fsg_lun_close() (fsg_store_file() with an empty
+path, the SCSI START_STOP eject in do_start_stop(), or forced_eject), so
+it can free the file while fsg_store_nofua() is dereferencing it:
 
-Fix this by resetting all bandwidth accounting data in xhci_rh_bw_cleanup()
-so that resume starts with a clean bandwidth state, and resetting the total
-active endpoints count.
+	BUG: KASAN: slab-use-after-free in vfs_fsync+0x20/0xe0
+	 vfs_fsync+0x20/0xe0
+	 fsg_lun_fsync_sub+0xa0/0xd0
+	 fsg_store_nofua+0x138/0x160
+	 configfs_write_iter+0x1a7/0x250
+	 vfs_write+0x5df/0x940
+	Allocated by task 3459:
+	 fsg_store_file+0x150/0x1f0
+	 configfs_write_iter+0x1a7/0x250
+	Freed by task 3459:
+	 __fput+0x456/0x6c0
+	 __fput_deferred+0x10d/0x330
+	 fsg_store_file+0x9e/0x1f0
+	 configfs_write_iter+0x1a7/0x250
 
-Fixes: 2a70e5dc0301 ("usb: xhci: optimize resuming from S4 (suspend-to-disk)")
-Reported-by: Harald Judt <h.judt@gmx.at>
-Link: https://bugzilla.kernel.org/show_bug.cgi?id=222071
-Suggested-by: Lovekesh Solanki <lovekeshsolanki00@gmail.com>
-Tested-by: Harald Judt <h.judt@gmx.at>
+Hold filesem for read around the fsync in fsg_store_nofua() so the backing
+file cannot be closed underneath it. The lock is only needed when the
+fsync actually runs, so it is taken only in that branch.
+
+Reproduced on a mass_storage gadget over dummy_hcd by writing lun.N/nofua
+(1 then 0) from one task while another task rewrites and clears lun.N/file.
+
 Cc: stable <stable@kernel.org>
-Signed-off-by: Niklas Neronin <niklas.neronin@linux.intel.com>
-Signed-off-by: Mathias Nyman <mathias.nyman@linux.intel.com>
-Link: https://patch.msgid.link/20261105175106.241182-5-mathias.nyman@linux.intel.com
+Signed-off-by: Yu Zhang <yuz08559@gmail.com>
+Acked-by: Alan Stern <stern@rowland.harvard.edu>
+Link: https://patch.msgid.link/20261020023050.87701-1-yuz08559@gmail.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/host/xhci-mem.c | 16 +++++++++++++++-
- drivers/usb/host/xhci.c     |  1 +
- 2 files changed, 16 insertions(+), 1 deletion(-)
+ drivers/usb/gadget/function/f_mass_storage.c |    8 ++++++--
+ drivers/usb/gadget/function/storage_common.c |    7 +++++--
+ drivers/usb/gadget/function/storage_common.h |    3 ++-
+ 3 files changed, 13 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/usb/host/xhci-mem.c b/drivers/usb/host/xhci-mem.c
-index af8d4b74c4ba..75577f441cdd 100644
---- a/drivers/usb/host/xhci-mem.c
-+++ b/drivers/usb/host/xhci-mem.c
-@@ -1903,24 +1903,38 @@ EXPORT_SYMBOL_GPL(xhci_remove_secondary_interrupter);
- void xhci_rh_bw_cleanup(struct xhci_hcd *xhci)
+--- a/drivers/usb/gadget/function/f_mass_storage.c
++++ b/drivers/usb/gadget/function/f_mass_storage.c
+@@ -2667,8 +2667,9 @@ static ssize_t nofua_store(struct device
+ 			   const char *buf, size_t count)
  {
- 	struct xhci_root_port_bw_info *rh_bw;
-+	struct xhci_interval_bw_table *bw_table;
-+	struct xhci_interval_bw *interval_bw;
- 	struct xhci_tt_bw_info *tt_info, *tt_next;
- 	struct list_head *eps, *ep, *ep_next;
+ 	struct fsg_lun		*curlun = fsg_lun_from_dev(dev);
++	struct rw_semaphore	*filesem = dev_get_drvdata(dev);
  
- 	for (int i = 0; i < xhci->max_ports; i++) {
- 		rh_bw = &xhci->rh_bw[i];
- 
-+		rh_bw->num_active_tts = 0;
- 		/* Clear and free all TT bandwidth entries */
- 		list_for_each_entry_safe(tt_info, tt_next, &rh_bw->tts, tt_list) {
- 			list_del(&tt_info->tt_list);
- 			kfree(tt_info);
- 		}
- 
-+		bw_table = &rh_bw->bw_table;
-+		bw_table->interval0_esit_payload = 0;
-+		bw_table->bw_used = 0;
-+		bw_table->ss_bw_in = 0;
-+		bw_table->ss_bw_out = 0;
-+
- 		/* Clear per-interval endpoint lists */
- 		for (int j = 0; j < XHCI_MAX_INTERVAL; j++) {
--			eps = &rh_bw->bw_table.interval_bw[j].endpoints;
-+			interval_bw = &bw_table->interval_bw[j];
-+			eps = &interval_bw->endpoints;
- 
-+			interval_bw->num_packets = 0;
- 			list_for_each_safe(ep, ep_next, eps)
- 				list_del_init(ep);
-+			interval_bw->overhead[LS_OVERHEAD_TYPE] = 0;
-+			interval_bw->overhead[FS_OVERHEAD_TYPE] = 0;
-+			interval_bw->overhead[HS_OVERHEAD_TYPE] = 0;
- 		}
- 	}
+-	return fsg_store_nofua(curlun, buf, count);
++	return fsg_store_nofua(curlun, filesem, buf, count);
  }
-diff --git a/drivers/usb/host/xhci.c b/drivers/usb/host/xhci.c
-index 94da0268b7b3..a762dd010e8d 100644
---- a/drivers/usb/host/xhci.c
-+++ b/drivers/usb/host/xhci.c
-@@ -1185,6 +1185,7 @@ int xhci_resume(struct xhci_hcd *xhci, bool power_lost, bool is_auto_resume)
- 		for (int i = xhci->max_slots; i > 0; i--)
- 			xhci_free_virt_devices_depth_first(xhci, i);
  
-+		xhci->num_active_eps = 0;
- 		xhci_rh_bw_cleanup(xhci);
+ static ssize_t file_store(struct device *dev, struct device_attribute *attr,
+@@ -3246,7 +3247,10 @@ static ssize_t fsg_lun_opts_nofua_show(s
+ static ssize_t fsg_lun_opts_nofua_store(struct config_item *item,
+ 				       const char *page, size_t len)
+ {
+-	return fsg_store_nofua(to_fsg_lun_opts(item)->lun, page, len);
++	struct fsg_lun_opts *opts = to_fsg_lun_opts(item);
++	struct fsg_opts *fsg_opts = to_fsg_opts(opts->group.cg_item.ci_parent);
++
++	return fsg_store_nofua(opts->lun, &fsg_opts->common->filesem, page, len);
+ }
  
- 		xhci->cmd_ring_reserved_trbs = 0;
--- 
-2.56.1
-
+ CONFIGFS_ATTR(fsg_lun_opts_, nofua);
+--- a/drivers/usb/gadget/function/storage_common.c
++++ b/drivers/usb/gadget/function/storage_common.c
+@@ -415,7 +415,8 @@ ssize_t fsg_store_ro(struct fsg_lun *cur
+ }
+ EXPORT_SYMBOL_GPL(fsg_store_ro);
+ 
+-ssize_t fsg_store_nofua(struct fsg_lun *curlun, const char *buf, size_t count)
++ssize_t fsg_store_nofua(struct fsg_lun *curlun, struct rw_semaphore *filesem,
++			const char *buf, size_t count)
+ {
+ 	bool		nofua;
+ 	int		ret;
+@@ -425,8 +426,10 @@ ssize_t fsg_store_nofua(struct fsg_lun *
+ 		return ret;
+ 
+ 	/* Sync data when switching from async mode to sync */
+-	if (!nofua && curlun->nofua)
++	if (!nofua && curlun->nofua) {
++		guard(rwsem_read)(filesem);
+ 		fsg_lun_fsync_sub(curlun);
++	}
+ 
+ 	curlun->nofua = nofua;
+ 
+--- a/drivers/usb/gadget/function/storage_common.h
++++ b/drivers/usb/gadget/function/storage_common.h
+@@ -210,7 +210,8 @@ ssize_t fsg_show_cdrom(struct fsg_lun *c
+ ssize_t fsg_show_removable(struct fsg_lun *curlun, char *buf);
+ ssize_t fsg_store_ro(struct fsg_lun *curlun, struct rw_semaphore *filesem,
+ 		     const char *buf, size_t count);
+-ssize_t fsg_store_nofua(struct fsg_lun *curlun, const char *buf, size_t count);
++ssize_t fsg_store_nofua(struct fsg_lun *curlun, struct rw_semaphore *filesem,
++			const char *buf, size_t count);
+ ssize_t fsg_store_file(struct fsg_lun *curlun, struct rw_semaphore *filesem,
+ 		       const char *buf, size_t count);
+ ssize_t fsg_store_cdrom(struct fsg_lun *curlun, struct rw_semaphore *filesem,
 
 
