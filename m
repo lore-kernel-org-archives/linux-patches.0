@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795623338;
-	b=B398iTRA2wPHJ2kLGhFHmC6VtHlJYRsTgYDd/Qaia0kGDbSEPtyVx6dYJPUneuAFnHBM
-	 llTsg+H3lbeVXvhmQbc0D9aZk84KruPGXykZMplMovyqrE3FE4zu+OesOux15NMbey0xr
-	 rCd7rwUEVyUHIp16/g2CuWRJOGA3UfPmrB0aLO65ql8n9V67N/VAaQukBjEWYGYW1rLft
-	 JCSPzBpv/CirrRzuERhaLjvTsj5oyBxvwqSmjj4BpU/G7O6UEdxupVr6eAY4XSJovykpq
-	 47gIvYPIyiqLe/1M57gwhZLy7J9zTUBD17P1H4wNfcBTFRxyUOFoaJqdKN8PVjhcdNQ==
+	t=1795623341;
+	b=qrl9OBNhqaiJRb61leSXaMDshH3DoaYdzKTH1MOzEI5xlanvmumrQguNkJ8w0DpJm3WM
+	 4DzxSM+IaHNNzxt89ROqaqzsQgsoNsELe2qIIs6B1N9dX/n3Y7ieTNkcmArb3+veIR708
+	 j8DIP7XzYvZL/hTA6DfbUSxkFh0vejt2SQAbgVTbZmxHEFcD9xmKXZDUWMo4qsFsVbrOB
+	 6hIOqTryIgn0KZzy3JZu9w6/9N21BtOfoSqlqIhcA8elUu1OwnFsnEQl1V+/qFQBLF4vi
+	 f9d8St5jyJ320bZpvIUgixBraSTShIhmA//Tlky5OXP7yWM2TVNcuqbriPj51WkS22w==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795623338;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795623341;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=ppaaMH/tmVQfy6No/XlaR37RMp/LyeCpgxO/bxVZamg=;
-	b=egJmHsWkqt+cE5tRw9O/sgE5rIYqp12K9T5Bp1AKmm6Ebz9ulo31++7XxbtvEzmfX/5p
-	 dMEeQdpCpBxBU+4XqR7YpsV+O8wLbJF+rLyfWMCGaUHvtFW2jrUEKoMOZahFGSBxSJ92M
-	 WB94RUQ/Hj5rbswbFArrZ2pCf5FeKAM4UsW5iIpYZew46d8NTFY6DbUEn9OAuSClCamK6
-	 hsG4ndcQVCR9hm5wvl+CHBCZKL+FBJvIxGUsrWfczBGGGjHFlDGoo//EB+LsJcxLLfGNa
-	 9UNKVris5MiJ0/3MDrSxJhNED3YHeQF1Wh87v2U7nh2RBELQxhBJHRfk9eFazfRAyPA==
+	bh=3+8wo7dQlqYBLR/tx0saDq5I3eQpV/ibTs0P7tFJXic=;
+	b=zOQYmt6W/5rEvj4vQC17xwuBs9cZo+q79CBgsyLCB13lChh4WrK5YTYa0zhuG+TYZdfA
+	 cyvJkoxltvTry/bsxr9WwnlOTmbCOpB/jcNKUGmX998AM21JJm/asC+PL4BkyQwvJt9a7
+	 stf4koRHUEzIzwUYol7Mnu8g7EmxEJ2TvRmpZs8rYzUnTvl33eL4stJnuTHY7Z1nXsfRu
+	 O5JDHDRN36kvfcC3fQR/sfrkD0mvhC9VDsYcOSR8TzrUpnprJo++6YVXpLUmpNMGOFhsp
+	 TJth5aD78y0YDvd7OsiZGPoavaYQXraKtJCVKTMvwntNA6VmPg4ymEh/+IoL9B4s+tg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="UpBVMD/+";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=CWuWK5aA;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B32B8606A323;
-	Wed, 25 Nov 2026 16:15:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B8148606A321;
+	Wed, 25 Nov 2026 16:15:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=UpBVMD/+
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C06E61F000C0;
-	Wed, 25 Nov 2026 16:15:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=CWuWK5aA
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 12FDE1F000D0;
+	Wed, 25 Nov 2026 16:15:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795623338;
-	bh=ppaaMH/tmVQfy6No/XlaR37RMp/LyeCpgxO/bxVZamg=;
+	s=korg; t=1795623341;
+	bh=3+8wo7dQlqYBLR/tx0saDq5I3eQpV/ibTs0P7tFJXic=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=UpBVMD/+6XHvodyL5JuV04EPL5MBvIQBYgsACmA2+u5b9zrh6QfnRjM89P+7tB1UZ
-	 mzGrZ+HtaX8E3y+mKnBNHhhqqvgP2n5cwjxCax48ylke1v6wUCZc2L/zSufSrqHg59
-	 7vE/s7IDkgjd3c/M7uTBZ4oG1Tdi3lUFg43TNXac=
+	b=CWuWK5aAM8Dk+NRDFzaH56g3tRFJuvWQwGo5QJCCGd5f3nEEkcH+VnxHgq4a0oiV8
+	 pC443fr0YUmYfo1kfQC2ng7iLr7J6yprXYMbiq4gsw5mFDFbTOYzXcA5VgM7Z9hR9Y
+	 dijxizuFBrsVOV9NCCkksaY0FsimybkBwuyVtK/c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Aaron Antone <aae@amazon.com>,
 	Billy Tsai <billy_tsai@aspeedtech.com>,
 	Andrew Jeffery <andrew@codeconstruct.com.au>,
 	Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
-Subject: [PATCH 6.18 824/990] gpio: aspeed: Clear only the acked lines G4 interrupt status
-Date: Wed, 25 Nov 2026 15:36:31 +0100
-Message-ID: <20261125143841.337313197@linuxfoundation.org>
+Subject: [PATCH 6.18 825/990] gpio: aspeed: Preserve the pending G7 interrupt status on control writes
+Date: Wed, 25 Nov 2026 15:36:32 +0100
+Message-ID: <20261125143841.361180156@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143822.072087159@linuxfoundation.org>
 References: <20261125143822.072087159@linuxfoundation.org>
@@ -71,56 +70,47 @@ Content-Transfer-Encoding: 8bit
 
 From: Billy Tsai <billy_tsai@aspeedtech.com>
 
-commit 5d362564bd2982def7e80d7f1e756a97440c7adb upstream.
+commit 18cc1d1ad94df8a6760fff2617d3d6923550cba0 upstream.
 
-The G4 interrupt status registers are write-1-to-clear: writing 0 to a
-bit has no effect and writing 1 clears that line's status flag.
-aspeed_gpio_irq_ack() clears a line's status through
-aspeed_g4_reg_bit_set(), which reads the bank's status register, sets
-the line's bit and writes the whole value back. That write clears every
-interrupt pending in the 32-line bank, not just the acked one.
+On G7 each line has its own control register, and its interrupt status
+bit (bit 12) is write-1-to-clear. aspeed_g7_reg_bit_set() updates a
+field by reading the control register, replacing that field and writing
+the value back. When the line's interrupt is pending, the status bit
+reads as 1 and is written back as 1, so updating an unrelated field
+such as the interrupt enable, trigger type, direction or debounce
+selection also clears the pending interrupt.
 
-aspeed_gpio_irq_handler() reads each bank's status register once and
-dispatches the lines that were set. If another line in the same bank
-latches an edge after that read and before an ack in the bank, the ack
-clears its status and the handler is never called for it, so the edge
-is lost.
+Mask out the status bit when composing the value to write, so it is
+written as 1 only when the status field itself is being set to ack the
+interrupt.
 
-Write only the line's own bit when clearing the interrupt status on G4.
-
-Fixes: 79fc9a2fcc45 ("gpio: aspeed: Create llops to handle hardware access")
+Fixes: b2e861bd1eaf ("gpio: aspeed: Support G7 Aspeed gpio controller")
 Cc: stable@vger.kernel.org
-Reported-by: Aaron Antone <aae@amazon.com>
-Suggested-by: Aaron Antone <aae@amazon.com>
 Signed-off-by: Billy Tsai <billy_tsai@aspeedtech.com>
 Reviewed-by: Andrew Jeffery <andrew@codeconstruct.com.au>
-Tested-by: Andrew Jeffery <andrew@codeconstruct.com.au>
-Link: https://patch.msgid.link/20261104-gpio-aspeed-irq-status-v1-1-9805645f856d@aspeedtech.com
+Link: https://patch.msgid.link/20261104-gpio-aspeed-irq-status-v1-2-9805645f856d@aspeedtech.com
 Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpio/gpio-aspeed.c |   11 +++++++++++
- 1 file changed, 11 insertions(+)
+ drivers/gpio/gpio-aspeed.c |    8 +++++++-
+ 1 file changed, 7 insertions(+), 1 deletion(-)
 
 --- a/drivers/gpio/gpio-aspeed.c
 +++ b/drivers/gpio/gpio-aspeed.c
-@@ -1045,6 +1045,17 @@ static void aspeed_g4_reg_bit_set(struct
- 	void __iomem *addr = aspeed_gpio_g4_bank_reg(gpio, bank, reg);
- 	u32 temp;
+@@ -1172,7 +1172,13 @@ static void aspeed_g7_reg_bit_set(struct
+ 	u32 write_val;
  
-+	/*
-+	 * The interrupt status register is write-1-to-clear. Write only this
-+	 * line's bit so that interrupts pending on the other lines of the bank
-+	 * stay latched.
-+	 */
-+	if (reg == reg_irq_status) {
-+		if (val)
-+			iowrite32(GPIO_BIT(offset), addr);
-+		return;
-+	}
-+
- 	if (reg == reg_val)
- 		temp = gpio->dcache[GPIO_BANK(offset)];
- 	else
+ 	if (mask) {
+-		write_val = (ioread32(addr) & ~(mask)) | field_prep(mask, val);
++		/*
++		 * The interrupt status bit is write-1-to-clear. Keep it zero
++		 * unless it is the field being written, so that updating any
++		 * other field leaves a pending interrupt latched.
++		 */
++		write_val = ioread32(addr) & ~(mask | GPIO_G7_CTRL_IRQ_STS);
++		write_val |= field_prep(mask, val);
+ 		iowrite32(write_val, addr);
+ 	}
+ }
 
 
