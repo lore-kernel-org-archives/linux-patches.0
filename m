@@ -1,51 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795623196;
-	b=E/VvpQoPGuVABE79zJ4HewcGbiRTWHmvYwvStAYg20zYTz+gXC1cSIbwan+OFodzavUz
-	 Vd/xDrPlJx4LJyfybHRK/DlBdhRslZTyF4ONIdD7ApUb9JrLvcRSVxf2qfINTyd1/JIoo
-	 F91FyC1K2qa1hm810j2OWYvdw62MOMbSI8MK2PQGdueosaP0SDnFhu00VqJTvrfYmMrfc
-	 wdr3vzmnvbVO5pKfJtBzyVStHpzwlVG9PEQhUk9QqmL47/uJPY/hpgtU2Sg69luoF8aeR
-	 MGIVzgSJvq8zQGZKMcjtI5QEmvMrl2rHovK+hDmYTT3PXlby6oskqVqwJpROPr1ZcOA==
+	t=1795623199;
+	b=w3zFAi808STEbtcc5dnLIc3ndy4QHWl65Os6/KWtoH1MzmAjZ2LhOSuGc0g1FiaPabKf
+	 biXZQC1JCX4NJhZNU2vJbyITKFmrpphmEGjZW22RDeTn/Y1iv+OrLHJemTB1AAtyi05Ib
+	 wdlLyJY2ejQLt5Y4knGt8iDzSGIqWrIUbNCiLWeCH/9yWzBYAC3cXairvt8MHyWsIZuse
+	 dF43a/IcKw6xE0kmCYVdpFosVndup9qVD7SQGEA6TRlSHs+uyWIYOuvv2B09sXw3lDOnH
+	 KT2vL89mk1pH/4Sd0sqpWQdMuVmvBEGjGr9/ktUnQZlkyvAls6x8ogizT+R62emo+MA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795623196;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795623199;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=hquNXv14uotkvI2FceV6lu5xj3aZ2Xd81hFlnOnh0x4=;
-	b=cV3RttqPeDTd7QmWVS0xCrTnO57FOgL64fQCNYp/wypwE3swjfR1cEBRNfTFTyzfhB+b
-	 Mzwg00uOcbD028fsRgbUAe+/v+DRT4okx+9XAMoNpKxazxoXft23rgwXzeWYtsrVdMPDr
-	 RocgWfyAUY2sBbqtg0q7QsbavRuR9U1M6c3fX+loM8yscvs4Zhw4HPpT6NGgeE/7OKlcr
-	 qeld4Qty8c/+4LrgtFvFMa1U1iBL1vaQrj8FThg/4JAMP0faJUAnwtn5/T9sLgJ0M5SWu
-	 fkQnyVY/denknJt5KEmRWeUN8Lyfgz1kWS4K1DIm798YrtxZq8wg7Z20Od7PS4RT5ug==
+	bh=QzN7Fmv1yzVkqPOu0CDr4lBwd06GfC5eGIpwJ3Y1FfY=;
+	b=xluT5BhjaczlQMdVBoTSzhRPNj12jYgTmFj5aDzsSpuf6KAX1y0rF72HCDEeQa/XxVLc
+	 5rc1wSsIJJdksu04Smiq3N/fRmMm6x0HZKl31HcVralTjZ+M/+fA5CTM4ezkWCiQTwyJ3
+	 aHjNKStphnohxKgjREbtRykMfZrquISoZfx9fAqVzFJ/J6QTTPNVkNGO7d6U3Kx/zJgL9
+	 CuGwA8vCBlgu99LMjw6p/7H++lgxApp1FEIJ9ZkUOCWQMOeFBE5khUuQGuYFGbsiCfugq
+	 1hwHq4PeqGr7Fhzh7WCC99+e5hiKltK+GlozllE/Sqwd6z1xtx2Lf0I7xflzb+rT8LA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=mgrir0Nz;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=BDQBei0S;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4935F606A31E;
-	Wed, 25 Nov 2026 16:13:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E9C43606A321;
+	Wed, 25 Nov 2026 16:13:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=mgrir0Nz
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 12FAF1F000C4;
-	Wed, 25 Nov 2026 16:13:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=BDQBei0S
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3F6BA1F000C4;
+	Wed, 25 Nov 2026 16:13:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795623195;
-	bh=hquNXv14uotkvI2FceV6lu5xj3aZ2Xd81hFlnOnh0x4=;
+	s=korg; t=1795623198;
+	bh=QzN7Fmv1yzVkqPOu0CDr4lBwd06GfC5eGIpwJ3Y1FfY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=mgrir0Nzx1ZXlKnA2efZtIXU+UaAkWl6nRY4/IyeekO0TgPkY909/B/5by9wOkz/9
-	 rhl1ff0F5WLfXaY2twLoqhEx9wk809D9nuf/mLezInno6MHnF04qYRSFtR0G86D/MK
-	 a1SYjKcLnS6cWnSthZZAcKKpHFIMeY+AnZ2v8yYg=
+	b=BDQBei0S2Fpw/OwnWs+uKkymqT/RLokZkFLb96/FwdLsY6KQEra2r+eiVV8uS2fTA
+	 jpIPyxggf8+XAhp9UzN3E1yc6Co0cs2XffyGy5br1c5T0xmC038dtZHHCzpfEHthtK
+	 pcVeTwye+/nd5MeCSNmMh3VcF6DKNrHuCqmzl7a4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pablo Mazzini <pmazzini@gmail.com>,
+	Sashiko <sashiko-bot@kernel.org>,
+	Sudeep Holla <sudeep.holla@kernel.org>,
 	Guenter Roeck <linux@roeck-us.net>
-Subject: [PATCH 6.18 779/990] hwmon: (sy7636a) fix negative temperatures
-Date: Wed, 25 Nov 2026 15:35:46 +0100
-Message-ID: <20261125143840.297416859@linuxfoundation.org>
+Subject: [PATCH 6.18 780/990] hwmon: (scmi) Check channel config allocation
+Date: Wed, 25 Nov 2026 15:35:47 +0100
+Message-ID: <20261125143840.320434274@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143822.072087159@linuxfoundation.org>
 References: <20261125143822.072087159@linuxfoundation.org>
@@ -67,32 +68,64 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pablo Mazzini <pmazzini@gmail.com>
+From: Sudeep Holla <sudeep.holla@kernel.org>
 
-commit fc8519fab34e162b0c29dacccf73031820878917 upstream.
+commit a2996d892d0150d059d39c683d95d6fd7a37630a upstream.
 
-The thermistor readout is a signed 8-bit value in degrees Celsius.
+scmi_hwmon_add_chan_info() can fail to allocate a channel's config
+array. Ignoring that error leaves a channel with a NULL config pointer
+in the hwmon chip info, which hwmon dereferences while registering the
+device.
 
-Fixes: de34a4053250 ("hwmon: sy7636a: Add temperature driver for sy7636a")
+Check the helper's return value and abort probe on failure.
+
+Reported-by: Sashiko <sashiko-bot@kernel.org>
+Closes: https://sashiko.dev/#/bug/linux-d10ced6b-a6f0-403b-9619-f5a6573f9e7f
+Fixes: b23688aefb8b ("hwmon: add support for sensors exported via ARM SCMI")
 Cc: stable@vger.kernel.org
-Signed-off-by: Pablo Mazzini <pmazzini@gmail.com>
-Link: https://patch.msgid.link/20261108093602.329554-3-pmazzini@gmail.com
+Signed-off-by: Sudeep Holla <sudeep.holla@kernel.org>
+Link: https://patch.msgid.link/20261109151927.1672956-1-sudeep.holla@kernel.org
 Signed-off-by: Guenter Roeck <linux@roeck-us.net>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/hwmon/sy7636a-hwmon.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/hwmon/scmi-hwmon.c |   12 +++++++-----
+ 1 file changed, 7 insertions(+), 5 deletions(-)
 
---- a/drivers/hwmon/sy7636a-hwmon.c
-+++ b/drivers/hwmon/sy7636a-hwmon.c
-@@ -29,7 +29,7 @@ static int sy7636a_read(struct device *d
- 	if (ret)
- 		return ret;
+--- a/drivers/hwmon/scmi-hwmon.c
++++ b/drivers/hwmon/scmi-hwmon.c
+@@ -228,8 +228,8 @@ static int scmi_thermal_sensor_register(
  
--	*temp = reg_val * 1000;
-+	*temp = (s8)reg_val * 1000;
+ static int scmi_hwmon_probe(struct scmi_device *sdev)
+ {
+-	int i, idx;
+ 	u16 nr_sensors;
++	int i, idx, ret;
+ 	enum hwmon_sensor_types type;
+ 	struct scmi_sensors *scmi_sensors;
+ 	const struct scmi_sensor_info *sensor;
+@@ -297,8 +297,12 @@ static int scmi_hwmon_probe(struct scmi_
+ 		if (!nr_count[type])
+ 			continue;
  
- 	return 0;
- }
+-		scmi_hwmon_add_chan_info(scmi_hwmon_chan, dev, nr_count[type],
+-					 type, hwmon_attributes[type]);
++		ret = scmi_hwmon_add_chan_info(scmi_hwmon_chan, dev,
++					       nr_count[type], type,
++					       hwmon_attributes[type]);
++		if (ret)
++			return ret;
++
+ 		*ptr_scmi_ci++ = scmi_hwmon_chan++;
+ 
+ 		scmi_sensors->info[type] =
+@@ -333,8 +337,6 @@ static int scmi_hwmon_probe(struct scmi_
+ 		return PTR_ERR(hwdev);
+ 
+ 	for (i = 0; i < nr_count_temp; i++) {
+-		int ret;
+-
+ 		sensor = *(scmi_sensors->info[hwmon_temp] + i);
+ 		if (!sensor)
+ 			continue;
 
 
