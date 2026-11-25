@@ -1,51 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795619884;
-	b=uLKibhPdGXZx1tFZ9bjDuyBfIEF+UhTyzgPaAJrwBS7yi8BPcpSKPkE9Kdl5QWPLymQR
-	 wOBA484L0+rgURZHcglk9m1OuLSQ9HLJacvwoluyoUL7zmL/iXGBQtQ5u+NfdcYlIst14
-	 mqy8fAXQDGK0nL6ymJ8w5c9qlLBXf2YRobcDlwFasorRUxsrqtPCunBCWu3mrnxELtlZj
-	 ZxS/e3KctQxkM4TfJwKc6d9t4xZGVR4W/2a3HyrcmYY7nk9Z0i0RnQsf0p2xJZfBlprLS
-	 wAgWKmr9da5OUvx7x1/yEHBvAsn7qlde2w0pY5AjvtL44qkTROHDWhLjrbFiVo580uA==
+	t=1795619887;
+	b=wl+OBTz6kRYH2G/waYl20+ADRLiTNEOOI7U3rP+XwwwQ83AsZgHDYQiURHysii46Czdh
+	 odX5pP/nHYtSpMe1IzzOUyZsbR2KxJ65H/WGLqgiC79/PlB9sdCQWaAmq3f1WbZPcJLau
+	 IaX+KF/x4T0EvEPpHayz1FOQMCzZ15w3ddt0zHXAVvvNLDBT3IVd5BleiEjKPdBREiLxy
+	 J/QLiUOXxyRm1+DvqyUbFDCM8q/iQRBkbN+M340XuyinJH2eNHpCes1v/36bFJyakVwZY
+	 H578NOHO6A74kD82RBhB99oUoRj16f3Yy71+irxOLt5n5WmjPLj/zisoDm0xzfknMig==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795619884;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795619887;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=xyD4+vgKbm1UsHcUIRcxfeQQNi1ggiivgMdRJ7o4Z3k=;
-	b=titx4viS1DMJlcZod00R0H/75g7TPl8Urwu7WC4Oj6/X99CUFg/Bov6kDQ8/Xtrrxj7z
-	 AwDfsVXxaLO54EbavLejoVBqVXnr0XYBSZ7vAI9CGpXTfG8F1r8exY9gItbzIf5RbtkOE
-	 WVmL2Vsr/eRRLWpVbwb0T2dcMyKKA0sRR4k4aNZgcriR+mYReEBY8TyF1itIzfr7Vk5ky
-	 1+LsKQNh3qYD+NGO2UMavBXIPyi2MA2vIqFeZ4vewuqLv6bKiPVAStfrbtlRpH0CRARw1
-	 wQMTWVXMh6V+bDqrDHLzaMrMYW84yq2VNdAbt09WsF+nlfyKhHmyXGIxGMN1fqZzS/A==
+	bh=Ts/oAlZ34jaOmyUVh7umUme5hAz2xEhgwIpxwr0QCrU=;
+	b=kUVqeT3/kNcmOU6hIlF//ze3aNMr7IvWjHXTVcSHqIJs5h7Gv+O577FnkVixM14zXbtO
+	 g8TREE9P7iE6k4U45iqcOLm9HYQWY5O0grPv/FbSpTIukoxdyhuCJpBHPN/tEEjEC+q1e
+	 2IzSe3zWgEFHQ/A8KccFf3JL2ggXfcSgjptfKxKeepNsABlJvTvwqsW5na/nNbzKiT2yI
+	 O8xpy3RTDhFsKGQStSN0dUpisT8UY/txeKr8CPZRGaKHlj9lLp/NOtG9egGJUBWurzUK/
+	 GvynDyAEb7wm7VC1tt/M4ZcSpzD2pmwXEEZxutF8U1INdJNQs+euv6rjRbFhGSjI+Qg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=sd5FHpC2;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="achW/jf0";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B3E52606A321;
-	Wed, 25 Nov 2026 15:18:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 39FFE606A323;
+	Wed, 25 Nov 2026 15:18:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=sd5FHpC2
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5C3391F000C6;
-	Wed, 25 Nov 2026 15:18:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=achW/jf0
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 870AC1F000C4;
+	Wed, 25 Nov 2026 15:18:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795619883;
-	bh=xyD4+vgKbm1UsHcUIRcxfeQQNi1ggiivgMdRJ7o4Z3k=;
+	s=korg; t=1795619887;
+	bh=Ts/oAlZ34jaOmyUVh7umUme5hAz2xEhgwIpxwr0QCrU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=sd5FHpC2qOtc5ELWDhnmsh5npjD4mQZ1u3bkBW0p30S3N4Ofz5udZ1lkIhdn781BR
-	 h0lT0jATx8zgclOa7YEPa8RDeZkDIdYeMI6Ob/yeUMDRNQKzp0zmwSok64WX9H6Crv
-	 gly756Kh/x4zBSmLq3gxsSn0VgHoVxrMw+N6OEA4=
+	b=achW/jf0Fp6M3FKg+VnJdoiiBeWsAd47oJesVkeTQqhrMLGUv1e/o3fGkXpyAVcto
+	 R1S+0l/EULUu3AVWuX9NAQGvX7HZb7ZT5zJAK6mEkPhTLvl/vwmV+/tYrEmKzOhGyo
+	 5kJBbYvoMSl6SGv+LDaa7qL3Yy5PKD48709CmqTg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lad Prabhakar <prabhakar.mahadev-lad.rj@bp.renesas.com>,
-	Guenter Roeck <linux@roeck-us.net>
-Subject: [PATCH 7.3 0736/1005] watchdog: rzv2h: Drop runtime PM handling from WDTDCR init
-Date: Wed, 25 Nov 2026 15:34:34 +0100
-Message-ID: <20261125143838.999835069@linuxfoundation.org>
+	Borislav Petkov <bp@alien8.de>,
+	Jason Andryuk <jason.andryuk@amd.com>,
+	"Mario Limonciello (AMD)" <superm1@kernel.org>,
+	Yazen Ghannam <yazen.ghannam@amd.com>,
+	Juergen Gross <jgross@suse.com>
+Subject: [PATCH 7.3 0737/1005] x86/CPU/AMD: Dont print reset reason in VMs
+Date: Wed, 25 Nov 2026 15:34:35 +0100
+Message-ID: <20261125143839.022638083@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143821.729802100@linuxfoundation.org>
 References: <20261125143821.729802100@linuxfoundation.org>
@@ -67,48 +70,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Lad Prabhakar <prabhakar.mahadev-lad.rj@bp.renesas.com>
+From: Jason Andryuk <jason.andryuk@amd.com>
 
-commit f00afd5d8d5dc03994cb67246543d5c70571ebbe upstream.
+commit ea51d1a4c31fc8320c34f897dc5296a0bfc5c7ca upstream.
 
-WDTDCR is located in the CPG region, outside the watchdog module, and is
-accessible regardless of the watchdog's clocks and reset state.
+print_s5_reset_status_mmio() expects to read FCH MMIO on baremetal.  VMs don't
+have emulated FCH registers, so there is nothing to check.  Add an early exit
+when running on a hypervisor.
 
-Drop the unnecessary runtime PM handling from WDTDCR initialization and
-access the register directly.
+The real motivation is Xen PV domUs can't boot on Zen CPUs.  PV domUs PTEs
+contain system physical addresses - they don't have the concept of guest
+physical addresses.  domUs can only map physical addresses they are assigned, so
+a domU fails to map the FCH MMIO addresses.
 
-Fixes: f6febd0a30b6e ("watchdog: Add Watchdog Timer driver for RZ/V2H(P)")
+However set_pte() does not return failure, so ioremap() returns a pointer while
+the PTEs are unpopulated.  print_s5_reset_status_mmio() faults when reading
+through the pointer, breaking the boot.
+
+Limit the reset reason printing to baremetal only where it actually makes sense.
+
+  [ bp: Massage commit message. ]
+
+Fixes: ab8131028710 ("x86/CPU/AMD: Print the reason for the last reset")
+Suggested-by: Borislav Petkov <bp@alien8.de>
+Signed-off-by: Jason Andryuk <jason.andryuk@amd.com>
+Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
+Reviewed-by: Mario Limonciello (AMD) <superm1@kernel.org>
+Reviewed-by: Yazen Ghannam <yazen.ghannam@amd.com>
+Reviewed-by: Juergen Gross <jgross@suse.com>
 Cc: stable@vger.kernel.org
-Signed-off-by: Lad Prabhakar <prabhakar.mahadev-lad.rj@bp.renesas.com>
-Link: https://patch.msgid.link/20261001165201.763882-5-prabhakar.mahadev-lad.rj@bp.renesas.com
-Signed-off-by: Guenter Roeck <linux@roeck-us.net>
+Link: https://patch.msgid.link/20261104013026.185392-1-jason.andryuk@amd.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/watchdog/rzv2h_wdt.c |    8 --------
- 1 file changed, 8 deletions(-)
+ arch/x86/kernel/cpu/amd.c |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
---- a/drivers/watchdog/rzv2h_wdt.c
-+++ b/drivers/watchdog/rzv2h_wdt.c
-@@ -256,20 +256,12 @@ static const struct watchdog_ops rzv2h_w
- static int rzt2h_wdt_wdtdcr_init(struct platform_device *pdev,
- 				 struct rzv2h_wdt_priv *priv)
- {
--	int ret;
--
- 	priv->wdtdcr = devm_platform_ioremap_resource(pdev, 1);
- 	if (IS_ERR(priv->wdtdcr))
- 		return PTR_ERR(priv->wdtdcr);
+--- a/arch/x86/kernel/cpu/amd.c
++++ b/arch/x86/kernel/cpu/amd.c
+@@ -1362,7 +1362,8 @@ static __init int print_s5_reset_status_
+ 	u32 value;
+ 	int i;
  
--	ret = pm_runtime_resume_and_get(&pdev->dev);
--	if (ret)
--		return ret;
--
- 	rzt2h_wdt_wdtdcr_count_stop(priv);
+-	if (!cpu_feature_enabled(X86_FEATURE_ZEN))
++	if (!cpu_feature_enabled(X86_FEATURE_ZEN) ||
++	    cpu_feature_enabled(X86_FEATURE_HYPERVISOR))
+ 		return 0;
  
--	pm_runtime_put_sync(&pdev->dev);
--
- 	return 0;
- }
- 
+ 	addr = ioremap(FCH_PM_BASE + FCH_PM_S5_RESET_STATUS, sizeof(value));
 
 
