@@ -1,55 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795618658;
-	b=n+RRcknBKmRhvC5cXnRHA3/K2wgud0NhLx9OVhCUr/UELvp+TzH52Jahl55cnlU/JCVT
-	 ke+rdvIX1ukM89yKWpYfvQHHS8teRaPpXsZIfr/v8TAGb+eCajbX0Bta1j5gjTw2EZiHB
-	 dmu70ZvNqKcxzMPDDjzQCFt90nbwHQLQFvvUXtLvwDXf0mEQnooePqDSVeG7xRw5ZftcR
-	 /+fLfIvAexAttMM2Js13wchqS7vgXfaNuY4YyC41xJlg2HguNkgoThyvOcVUmE8QBuSa2
-	 NfABA0YAGF7gTyzFsVyExhd6jfAyiU8STyp49aofhj0rTBVE+KmCYn6qwnxXEjKt9gA==
+	t=1795618661;
+	b=oPZsoh97UPL8c51uDxGN8liHE8DWcLhpLDKFCKNPEam2nYEuTBshAOu9kVHrTJPfXWCX
+	 DZdAe4TI6pNxR9ZMfIy/pmhlrr/PSW8aLcjVi/zO6bJASpqoYyV3O7PCOFwogYrMuSBbe
+	 T/fwq0dnFiAaEECfy7Cn9fquA4RHuDsBUvz+1Tp8ZXg6UFcBYU32tD1GkPplnSbl4YAwH
+	 fn65uFbjbDrlkfpaZCdb8L26l4/gl200m/T28p3ybY3KSCmuaErDMDn9qv5ML6kypAavB
+	 YZWHetOwsxcL79+00xy2MsyvZv6D9VP829tuf27TecHoAIO8AtqfjmgkxutoQC2UaUQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795618658;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795618661;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=h2MYjWYviZSAV9e4K2oRc7SlY3Ohtp/o4CpO6O6NyYc=;
-	b=BqCcbmAlq5RuFZcpmH10zqfKPpyRP3eclm8kZAC6lw6mLlYPneQoDNY6rDbU1U93GuZW
-	 K3t25omrXj3XVTu4oQCWi8dqPfiebEBcuHubNlzEJAI4f6vwgC9hUXXC24/XI2thIUNkG
-	 TBKHszokL4HYgbf6F0m7e902JJ7aBlyiOzgc5KnZfHJX5B23rXSjjkTceAie6NBd1IY7H
-	 ukAcMIrtdtLIx5KkT+SxzZUhWUoLyHlT3VmX3KpVT088ipyguuPQfjnm7o/XVd0WEh/iP
-	 CAAw2vqLC+FKo/1nnyIE18I7Zu/olmBq4cV1eSsDR9YUfDkhCbKvKKks3777eVnKHfg==
+	bh=85JStO94+ir5ZceM3SmKT5Qr8Lti4ZZ4chbxrbIrv44=;
+	b=dnfAY+XmEPcE0YZDp0vRX7M5jtkoFrH5cfzhNHFW2PK3L/LGqRS+Ns3MTYSqW0uhiQLO
+	 RtuVgFTJOwW5mmNA/1AqwAg38PmKZig08La/UxtnS67tz+igB/VVMVm5/MSTA11xlJJye
+	 EOzloGupT36snVO+t5cUsgf1C/xVr1dAcX1mV4xiGZookEeXmzdwXxVGZX5kjL1Xfr8UH
+	 CiLY31AQ9mhIc/OXga2Vm0qq8H6/M6KKFIxnPfZulUyy50hx9Dyi+lJCX3/PQ5kfHewPh
+	 5S6zc6jNeHeHl0C46bHFNSxVmUse3hc3kvIleEhnz1hyj07vbX0vuG85i0k1SY188FQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=kW9WD9qi;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=iwdt5uEM;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5D938606A31E;
-	Wed, 25 Nov 2026 14:57:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 80994606A31E;
+	Wed, 25 Nov 2026 14:57:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=kW9WD9qi
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 55B651F000D1;
-	Wed, 25 Nov 2026 14:57:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=iwdt5uEM
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 813D11F000C6;
+	Wed, 25 Nov 2026 14:57:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795618657;
-	bh=h2MYjWYviZSAV9e4K2oRc7SlY3Ohtp/o4CpO6O6NyYc=;
+	s=korg; t=1795618661;
+	bh=85JStO94+ir5ZceM3SmKT5Qr8Lti4ZZ4chbxrbIrv44=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=kW9WD9qilXVRW/FtwyjvtD8fkG3q6UIV8mOM6ysv3Xlzs9nz4M+vo7AT500gKLu82
-	 WjWmsQG7uPxvz531JFGL2zsgW//Ywnuypfzba/7/UDB1pEVx4YOICGPc7JPMmt4KYL
-	 F9qXLBC58IcJDVSM8cugXiRUrFhDbnCGNY1beed8=
+	b=iwdt5uEMxhzLWvyyHNmtdr1fgutXlUZnmiEHDeaBOemMjIV317wJYUkX2/lCShyoA
+	 SqChwz9Tbrvm5uq9fkk6dZYixHU2KHpIyisddmclHr4Z4qO9py+sXb8CJ7n2GyoXEO
+	 /agIKspzc70rgMYKhNtdOCZ8X5dsv7bGm98zUuww=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hui Su <sh_def@163.com>,
-	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
-	Ingo Molnar <mingo@kernel.org>,
-	K Prateek Nayak <kprateek.nayak@amd.com>,
-	Kayra Cizmeci <kayracizmeci@gmail.com>,
+	Ido Schimmel <idosch@nvidia.com>,
+	Cheng Yongkang <teel4res@gmail.com>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0347/1005] sched/topology: Balance cluster static-key updates
-Date: Wed, 25 Nov 2026 15:28:05 +0100
-Message-ID: <20261125143829.864301522@linuxfoundation.org>
+Subject: [PATCH 7.3 0312/1005] net: bridge: disable MRP ports before the FDB flush in del_nbp()
+Date: Wed, 25 Nov 2026 15:27:30 +0100
+Message-ID: <20261125143829.046453661@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143821.729802100@linuxfoundation.org>
 References: <20261125143821.729802100@linuxfoundation.org>
@@ -71,72 +69,82 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hui Su <sh_def@163.com>
+From: Cheng Yongkang <teel4res@gmail.com>
 
-[ Upstream commit 5ebdfe12ab96368d0339593129d4ce0bc2bd06f5 ]
+[ Upstream commit 37dfd0efbfffc20a57e41c2eb349ac49b1ca1ff8 ]
 
-build_sched_domains() increments sched_cluster_active once per newly
-built partition that contains an SD_CLUSTER domain.
-detach_destroy_domains() instead tested the global static key before
-decrementing it, so destroying a cluster-less partition could drop a
-reference owned by another partition and disable cluster-aware
-scheduling while SD_CLUSTER domains remained installed.
+del_nbp() flushes the port's FDB entries before it unregisters the RX
+handler. For a normal port, br_stp_disable_port() moves the port to
+BR_STATE_DISABLED before this cleanup.
 
-Check the installed domains before detaching them, only while the key is
-enabled, and decrement only when the removed partition contains an
-SD_CLUSTER domain.
+That does not hold for an MRP ring port. br_set_state() ignores state
+changes while BR_MRP_AWARE_BIT is set, so br_stp_disable_port() leaves
+the port state alone. br_mrp_port_del() then restores forwarding when
+the bridge is up before clearing the bit. A frame received between
+br_fdb_cleanup_by_dst() and netdev_rx_handler_unregister() can therefore
+create a new FDB entry referencing the dying port. Nothing removes that
+entry before destroy_nbp_rcu() frees the port, so a later frame to the
+learned MAC can be forwarded through the freed port.
 
-With two cluster-bearing partitions installed, removing a singleton
-partition left the baseline count at 1 where 2 partitions still
-carried SD_CLUSTER; the fixed kernel correctly reports 2.  On an
-asymmetric cluster topology where the parent partition gains no
-cluster domain, the baseline count drops to 0 while a cluster
-partition remains installed; the fixed kernel keeps it at 1.
+Remove the MRP and CFM instances before disabling the port, so that
+br_stp_disable_port() actually transitions it to BR_STATE_DISABLED.
+With CONFIG_BRIDGE_VLAN_FILTERING=y, synchronize_net() in
+nbp_vlan_group_unpublish() also drains receive paths that could still
+learn with the old state before the final FDB cleanup.
 
-Fixes: 8881e1639f1f ("sched/fair: Scan cluster before scanning LLC in wake-up path")
-Signed-off-by: Hui Su <sh_def@163.com>
-Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
-Signed-off-by: Ingo Molnar <mingo@kernel.org>
-Reviewed-by: K Prateek Nayak <kprateek.nayak@amd.com>
-Reviewed-by: Kayra Cizmeci <kayracizmeci@gmail.com>
-Link: https://patch.msgid.link/20261021043834.1140951-1-sh_def@163.com
+Found through an LLM-assisted source code analysis workflow and
+reproduced on net with KASAN and CONFIG_BRIDGE_VLAN_FILTERING=y in QEMU.
+A diagnostic switchdev module accepts MRP objects and delays the
+NETDEV_CHANGEUPPER callback for 1.5 s, holding del_nbp() after the FDB
+cleanup and before RX handler removal. The reproducer floods the MRP
+port with rotating source MACs, waits for the port's RCU callback
+through the module's rcu_barrier(), then sends frames to those MACs
+from another port. The unpatched kernel reports:
+
+  BUG: KASAN: slab-use-after-free in br_forward+0xb1/0x820
+  Call Trace:
+   <IRQ>
+   br_forward+0xb1/0x820
+   br_handle_frame_finish+0x148b/0x1e50
+   br_handle_frame+0x90a/0x15c0
+
+With this patch, three runs of six cycles each reach the delay without
+a KASAN report.
+
+Fixes: 6536993371fa ("bridge: mrp: Integrate MRP into the bridge")
+Suggested-by: Ido Schimmel <idosch@nvidia.com>
+Link: https://lore.kernel.org/netdev/20261012123051.GA714215@shredder/
+Closes: https://lore.kernel.org/netdev/20261022090431.3641707-1-teel4res@gmail.com/
+Signed-off-by: Cheng Yongkang <teel4res@gmail.com>
+Reviewed-by: Ido Schimmel <idosch@nvidia.com>
+Link: https://patch.msgid.link/20261101044840.1595584-1-1020691186@qq.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/sched/topology.c | 16 ++++++++++++++--
- 1 file changed, 14 insertions(+), 2 deletions(-)
+ net/bridge/br_if.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/kernel/sched/topology.c b/kernel/sched/topology.c
-index 3dab0253976fb..21e3ab1af4c85 100644
---- a/kernel/sched/topology.c
-+++ b/kernel/sched/topology.c
-@@ -3314,13 +3314,25 @@ int __init sched_init_domains(const struct cpumask *cpu_map)
- static void detach_destroy_domains(const struct cpumask *cpu_map)
- {
- 	unsigned int cpu = cpumask_any(cpu_map);
-+	bool has_cluster = false;
- 	int i;
+diff --git a/net/bridge/br_if.c b/net/bridge/br_if.c
+index c52613431f886..45642b6a58666 100644
+--- a/net/bridge/br_if.c
++++ b/net/bridge/br_if.c
+@@ -340,13 +340,13 @@ static void del_nbp(struct net_bridge_port *p)
  
- 	if (rcu_access_pointer(per_cpu(sd_asym_cpucapacity, cpu)))
- 		static_branch_dec_cpuslocked(&sched_asym_cpucapacity);
+ 	nbp_delete_promisc(p);
  
--	if (static_branch_unlikely(&sched_cluster_active))
--		static_branch_dec_cpuslocked(&sched_cluster_active);
-+	if (static_branch_unlikely(&sched_cluster_active)) {
-+		rcu_read_lock();
-+		for_each_cpu(i, cpu_map) {
-+			if (lowest_flag_domain(i, SD_CLUSTER)) {
-+				has_cluster = true;
-+				break;
-+			}
-+		}
-+		rcu_read_unlock();
++	br_mrp_port_del(br, p);
++	br_cfm_port_del(br, p);
 +
-+		if (has_cluster)
-+			static_branch_dec_cpuslocked(&sched_cluster_active);
-+	}
+ 	spin_lock_bh(&br->lock);
+ 	br_stp_disable_port(p);
+ 	spin_unlock_bh(&br->lock);
  
- 	rcu_read_lock();
- 	for_each_cpu(i, cpu_map)
+-	br_mrp_port_del(br, p);
+-	br_cfm_port_del(br, p);
+-
+ 	br_ifinfo_notify(RTM_DELLINK, NULL, p);
+ 
+ 	list_del_rcu(&p->list);
 -- 
 2.53.0
 
