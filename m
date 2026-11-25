@@ -1,51 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795623862;
-	b=gnflkIh0yYhx3CV/6faM1fFZNHJlBKfVneA8hmsno7FhE90fV3QeMKQHFDrHQHwZL4b7
-	 UJEUan52QJ3UrkoDRn2z6lI7jOsDswKFiJf6wxKQ9LaJq7I9lxbSJnI3+GmLkp2y/roTv
-	 LESWCe2PXBfq+4SxSwTsqDvb9RyIRaVVJ+Pisu1p1s/D23eHQ/3kcc2xt3AIVXX0kGBJ9
-	 gyMf45rupPsC+BzzpF5++uOYSQ68swqm3dsm1Pu0hhPAxekPnU1cJ8ZnRAlJUY9z+ws8h
-	 DvH38Rxo1SOvgXYFyt+H+z2lfuyKP/NCUa9cQEzkdlEZzKYcguE0LTTTaEAJ/R6caKg==
+	t=1795623865;
+	b=KLPYUi2ZE75vngsq9mPMcNKR8D1fkyFLVCGZ1D14CkOPw+jVwKTx/6O5p0Bz11ribTge
+	 lOoGe1314XYc37KQIhH/9+6wsYwJHvr4aIU5Ep4jAkGmZ0ZftIBKUjjGRAIi3Tx6Zdqh7
+	 hX37csp70FgBwJ9GF1aNTgmLAfmGcxcSprodCAk65YEHvCIKibe9bDYga+nDi0FKEg5Mi
+	 OgkVnY3rdPnePsPtv/GqDISwhwd105gbPP6ep1OgQW3DldJJwsjq9N86upvpkiHb7j1Ti
+	 z6dIlFDXAgabf0wUp2PSnFP0OvTbMKa/dJtaIMYtX53E+KOcdPyGE+tzABO9m5LCB7w==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795623862;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795623865;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=Hv3iW5nGdTflw5O6jaiwI/YYr815rg35BGLDVYmifDc=;
-	b=r+N/kb3bH0PGR6I1V7ewNN0YXaI5/bQHjPPPA+/uTFA9FIBW/iPJkTqthTUMw4t0uEqS
-	 05pCltO/pbfsCw0rLPEzW14CHX0bYvksGDbboPPjtDuKwZ+r61uDnkraSd4HkE1jaVxrj
-	 fCGzVXzLz4AVkPHNyQqHQCvNV+GGVJCyirfONpJEWc9sv58RY93NA1k4u9aGXOZu8lyXe
-	 Oi1LqaxI95OxLjp6ix0l54FtYC1nW4jxRoyb19re908nkzc0ByQ8SQjokS9mAhj92PMC5
-	 Qf2W94hNKj07tdCsLubdAp7TtpuH4Y+wjIqKqr530DpxgMPEGtGyz9LyFDt16qkPpyA==
+	bh=zsMRqezp+5FLLU2zLi2BDBKgqtdzOdsLtzuO5dAEssk=;
+	b=kqQv89SNzJS6wb2nIBWYHlSB4PIsfXuFPRZ38c4c4QHIxTEmytlEWXe1xEBiXrkLxU+Z
+	 S0prxx6TUc7ZSNsDfzY9tW6s+h/FkcFWMihRNmWjjWsJpfYzA3fZ6E3ePFTutQH+FgYFh
+	 VPfms4i3+d4Y8UpEyD2JyP32IsjSCh/Z/Xyoa5yZQWZOKrCHeHtp+Pa8fRJhCej3yrug/
+	 aG+voSOPRjvWZWnkBrzCgsMg9ypHdWFksVZ3Vy9hqHMT3EbNSnq+khA+RJJPBZnbRvwVC
+	 e/8GSR1kSH4ZUprE9C9n64AnONU1I8mjQqhaFiWxbxA9muwQLXzIV2WbFynliA3w0ww==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="P/rtZrVU";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=e3QnNNGy;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5F2CD606A331;
-	Wed, 25 Nov 2026 16:24:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D78E6606A323;
+	Wed, 25 Nov 2026 16:24:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=P/rtZrVU
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4F9B81F000D3;
-	Wed, 25 Nov 2026 16:24:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=e3QnNNGy
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 90AAD1F000D0;
+	Wed, 25 Nov 2026 16:24:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795623861;
-	bh=Hv3iW5nGdTflw5O6jaiwI/YYr815rg35BGLDVYmifDc=;
+	s=korg; t=1795623865;
+	bh=zsMRqezp+5FLLU2zLi2BDBKgqtdzOdsLtzuO5dAEssk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=P/rtZrVU9OFj3xfK3R8p8VV1mO8SIuL7/g/1w+xzdsJXWmerCzwJ10/hvI+3Ah9I+
-	 El2b3Sa62JpfQxmzqcvkdgBW1j/XUt0qsLFhQ8IomKFdSlut8L3Jl2N+bCkmIBZTNi
-	 49BBrTiF69KLJH5y4i9xgwVTMOqXoASf3nOqvNVc=
+	b=e3QnNNGyza+lWUFauYv73uO7XUWIzpX932Em4+locqWDkmvb8hLW9PMmHDGSHhTzW
+	 8Ikx7TfRakGnJNqh7tm4+SWwO5akrv6HVFQTmPaA2mN3jugW6jRoZ5VEyg0IT94qF8
+	 fWxlLyT1L6Q57FE1rQfEJ90XHRdnQScvqDSORGRk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Riana Tauro <riana.tauro@intel.com>,
-	Vinay Belgaumkar <vinay.belgaumkar@intel.com>
-Subject: [PATCH 6.18 983/990] drm/xe: Dont disable GuCRC in suspend path
-Date: Wed, 25 Nov 2026 15:39:10 +0100
-Message-ID: <20261125143845.005313383@linuxfoundation.org>
+	Ido Schimmel <idosch@nvidia.com>,
+	Nikolay Aleksandrov <razor@blackwall.org>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 6.18 984/990] net: bridge: vlan: fix bugs caused by switchdev deletion errors
+Date: Wed, 25 Nov 2026 15:39:11 +0100
+Message-ID: <20261125143845.027958240@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143822.072087159@linuxfoundation.org>
 References: <20261125143822.072087159@linuxfoundation.org>
@@ -67,53 +68,121 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Vinay Belgaumkar <vinay.belgaumkar@intel.com>
+From: Nikolay Aleksandrov <razor@blackwall.org>
 
-commit b458597544c20c31cef9d907696e8b9652b0894e upstream.
+commit 2842ce397dd09882530b42f7fdb0c855767eb24e upstream.
 
-GuCRC should not be disabled in xe_guc_stop_prepare() as C6 is a
-prerequisite for s0ix and s2idle. This is a regression caused by
-the patch below.
+Allowing switchdev to prevent vlan deletion and error out in __vlan_del
+could cause multiple different issues - inconsistent state, memory leaks
+when flushing, NULL pointer dereference on bridge error when flushing.
+It doesn't make sense to allow it to stop __vlan_del, so log the error
+and continue with software vlan deletion. This is also consistent with
+8021q behaviour.
 
-Closes: https://gitlab.freedesktop.org/drm/xe/kernel/-/issues/7510
-Fixes: 40a684f91d26 ("drm/xe: Decouple GuC RC code from xe_guc_pc")
-Cc: Riana Tauro <riana.tauro@intel.com>
-Signed-off-by: Vinay Belgaumkar <vinay.belgaumkar@intel.com>
-Reviewed-by: Riana Tauro <riana.tauro@intel.com>
-Link: https://patch.msgid.link/20260303181416.3880937-1-vinay.belgaumkar@intel.com
+Suggested-by: Ido Schimmel <idosch@nvidia.com>
+Fixes: bf361ad38165 ("net: bridge: check __vlan_vid_del for error")
+Fixes: 5454f5c28eca ("net: bridge: vlan: check for errors from __vlan_del in __vlan_flush")
+Fixes: 2594e9064a57 ("bridge: vlan: add per-vlan struct and move to rhashtables")
+Fixes: 9c86ce2c1ae3 ("net: bridge: Notify about bridge VLANs")
+Signed-off-by: Nikolay Aleksandrov <razor@blackwall.org>
+Reviewed-by: Ido Schimmel <idosch@nvidia.com>
+Link: https://patch.msgid.link/20260914105258.3436918-1-razor@blackwall.org
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/xe/xe_gt.c  |    2 ++
- drivers/gpu/drm/xe/xe_guc.c |    1 -
- 2 files changed, 2 insertions(+), 1 deletion(-)
+ net/bridge/br_vlan.c |   31 ++++++++++++++-----------------
+ 1 file changed, 14 insertions(+), 17 deletions(-)
 
---- a/drivers/gpu/drm/xe/xe_gt.c
-+++ b/drivers/gpu/drm/xe/xe_gt.c
-@@ -40,6 +40,7 @@
- #include "xe_gt_topology.h"
- #include "xe_guc_exec_queue_types.h"
- #include "xe_guc_pc.h"
-+#include "xe_guc_rc.h"
- #include "xe_guc_submit.h"
- #include "xe_hw_fence.h"
- #include "xe_hw_engine_class_sysfs.h"
-@@ -889,6 +890,7 @@ static int gt_reset(struct xe_gt *gt)
- 	if (IS_SRIOV_PF(gt_to_xe(gt)))
- 		xe_gt_sriov_pf_stop_prepare(gt);
+--- a/net/bridge/br_vlan.c
++++ b/net/bridge/br_vlan.c
+@@ -387,12 +387,12 @@ out_filt:
+ 	goto out;
+ }
  
-+	xe_guc_rc_disable(&gt->uc.guc);
- 	xe_uc_stop_prepare(&gt->uc);
- 	xe_gt_pagefault_reset(gt);
+-static int __vlan_del(struct net_bridge_vlan *v)
++static void __vlan_del(struct net_bridge_vlan *v)
+ {
+ 	struct net_bridge_vlan *masterv = v;
+ 	struct net_bridge_vlan_group *vg;
+ 	struct net_bridge_port *p = NULL;
+-	int err = 0;
++	int err;
  
---- a/drivers/gpu/drm/xe/xe_guc.c
-+++ b/drivers/gpu/drm/xe/xe_guc.c
-@@ -1616,7 +1616,6 @@ void xe_guc_stop_prepare(struct xe_guc *
- 	if (!IS_SRIOV_VF(guc_to_xe(guc))) {
- 		int err;
+ 	if (br_vlan_is_master(v)) {
+ 		vg = br_vlan_group(v->br);
+@@ -406,12 +406,16 @@ static int __vlan_del(struct net_bridge_
+ 	if (p) {
+ 		err = __vlan_vid_del(p->dev, p->br, v);
+ 		if (err)
+-			goto out;
++			br_warn(p->br,
++				"port %u(%s) failed to delete vlan %u from switchdev: %pe\n",
++				(unsigned int)p->port_no, p->dev->name,
++				v->vid, ERR_PTR(err));
+ 	} else {
+ 		err = br_switchdev_port_vlan_del(v->br->dev, v->vid);
+ 		if (err && err != -EOPNOTSUPP)
+-			goto out;
+-		err = 0;
++			br_warn(v->br,
++				"failed to delete bridge vlan %u from switchdev: %pe\n",
++				v->vid, ERR_PTR(err));
+ 	}
  
--		xe_guc_rc_disable(guc);
- 		err = xe_guc_pc_stop(&guc->pc);
- 		xe_gt_WARN(guc_to_gt(guc), err, "Failed to stop GuC PC: %pe\n",
- 			   ERR_PTR(err));
+ 	if (br_vlan_should_use(v)) {
+@@ -431,8 +435,6 @@ static int __vlan_del(struct net_bridge_
+ 	}
+ 
+ 	br_vlan_put_master(masterv);
+-out:
+-	return err;
+ }
+ 
+ static void __vlan_group_free(struct net_bridge_vlan_group *vg)
+@@ -449,7 +451,6 @@ static void __vlan_flush(const struct ne
+ {
+ 	struct net_bridge_vlan *vlan, *tmp;
+ 	u16 v_start = 0, v_end = 0;
+-	int err;
+ 
+ 	__vlan_delete_pvid(vg, vg->pvid);
+ 	list_for_each_entry_safe(vlan, tmp, &vg->vlan_list, vlist) {
+@@ -463,13 +464,7 @@ static void __vlan_flush(const struct ne
+ 		}
+ 		v_end = vlan->vid;
+ 
+-		err = __vlan_del(vlan);
+-		if (err) {
+-			br_err(br,
+-			       "port %u(%s) failed to delete vlan %d: %pe\n",
+-			       (unsigned int) p->port_no, p->dev->name,
+-			       vlan->vid, ERR_PTR(err));
+-		}
++		__vlan_del(vlan);
+ 	}
+ 
+ 	/* notify about the last/whole vlan range */
+@@ -837,8 +832,9 @@ int br_vlan_delete(struct net_bridge *br
+ 	br_fdb_delete_by_port(br, NULL, vid, 0);
+ 
+ 	vlan_tunnel_info_del(vg, v);
++	__vlan_del(v);
+ 
+-	return __vlan_del(v);
++	return 0;
+ }
+ 
+ void br_vlan_flush(struct net_bridge *br)
+@@ -1368,8 +1364,9 @@ int nbp_vlan_delete(struct net_bridge_po
+ 		return -ENOENT;
+ 	br_fdb_find_delete_local(port->br, port, port->dev->dev_addr, vid);
+ 	br_fdb_delete_by_port(port->br, port, vid, 0);
++	__vlan_del(v);
+ 
+-	return __vlan_del(v);
++	return 0;
+ }
+ 
+ void nbp_vlan_flush(struct net_bridge_port *port)
 
 
