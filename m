@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795622091;
-	b=GWCawRvntHuaztCjlUfE+DOnr1Js7IOgzYuFfqk388Rr/85IUnT9X1119D4uJgfxtNnZ
-	 7P+LxdXpdKlhP2XtYNm7Rz/rLSdis07tErX02GlK9S+a7JW87HTBzQJymkeMYG5o1WnUq
-	 H7hhbiKUDPeQJJssvkFwYUScqrp+ffwqABC4K0Xvc9qbH4XzpjEgCm+sJxOcBHYqh9C0R
-	 vYQ7MNk3r3nso2mQMfQKnU2O6IcFlMsIjBteGqEfT5rUm+bGv21fEMgA+ay7gaQaTBKDq
-	 ph6FSCVVVyXr5UJH5wcKaF7l5189JEAdXkGmrYA2jCU9OKLH9nMqaiVCrdvkZEu7vig==
+	t=1795622094;
+	b=yBBjDOXFBuYFSYU08YzoIQPepdqPAhrO20NSii6y87Ykrpn60HzoHp/jL2SSDkVq9HWG
+	 HN2tGy68p/bAOOae2RwrquNWkA1XuKHrcpkj1mGN7DZHHJ4ETsVblB4/aLqUU9DLu2BXo
+	 GVhVS0l12o+Fy/CX7/YI75iBwbLieNIp1CbV0yWvNflUxtIhpiPMIrLJSTXgxd3DCt2ln
+	 fdkkFcCAoiEF0i8vdKKi//ZjIK2xpWAciksk8GmTv6bJV3fqy3dwyC6DIRPl5Xht+IkBu
+	 wr+ugnHLrV437OkF+MYwwznEqgviUF8d/NNxIIIKpRCAVQ8HMGyj1ZW8vQBiWq+yOVQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795622091;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795622094;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=x9g2AbPWdzMsBUqSg+ykvwcSJ659EuVPvapccYz5y08=;
-	b=o2TX6StrzsEEv0prvQZYUtmc59ANJkZqyX+9zo1U7fGM8vyS93wLx+68l/9oQ4rW12f3
-	 ekWrP8SAUDZ6c6IMUqrpRytv20HFcK3S+YHt2xZKJS/VuvOT2m2HudLkbMVaPE/UComqW
-	 9dshcxeRGS3Dh438w2BUbeyQe0lVmGXv42DFP6xqQYt5SaUTkcrHgpDjHR9EDcUmCDLZ6
-	 2HJax9gkYK8nIRm00LgDNlUi/puG280MWXUtl/lb0QIRKKI2xo3aG2rNdFzaXq+7PvJkE
-	 Wj+WW7gdyd6F7BXr40D5bTgvTI+vh7p2NVakG3EtAjA6zGG51aGQNz+4HccFvFPT5+A==
+	bh=/JRb/0vozzJ0wYFDZythCtpRkoPAX4AcBHsrSv1ys9g=;
+	b=40r0ukuZe3YJp1vbPR77jjxb80LAFez814xGgZ5kC2SsNcRCxHGzpfPZi+NPCJQtg+9o
+	 70wrNUYq7l6i94Ro/G2mUT+hcp3b6gbXpTUUFC4yoJ3Pwc5iA/SeLkg7hPYz6W5tqinMU
+	 mCEUg2MpRBIHqgB+o9cpblbeR0bgABCZLnqNiT3ds+Kp7Hr6hD0TQ3qA52zr8jN2Bs8Y8
+	 shNtiuPtLLa8um2TkiWshosc40TTQJYyckXKJdKsvCxAURSt8DVqfmoi41Ir3Jf/kWX53
+	 vFNpNqwQDARtUgfXpNcDmVd4uKwjb0WTPTftxcVQuHnrnQp8WX+75dyDG9owOgIA9fw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=I85lW6dz;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=OPHWZ2ib;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D45D5606A323;
-	Wed, 25 Nov 2026 15:54:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BF1B3606A321;
+	Wed, 25 Nov 2026 15:54:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=I85lW6dz
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CBDC71F000C4;
-	Wed, 25 Nov 2026 15:54:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=OPHWZ2ib
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 059EE1F000C4;
+	Wed, 25 Nov 2026 15:54:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795622091;
-	bh=x9g2AbPWdzMsBUqSg+ykvwcSJ659EuVPvapccYz5y08=;
+	s=korg; t=1795622094;
+	bh=/JRb/0vozzJ0wYFDZythCtpRkoPAX4AcBHsrSv1ys9g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=I85lW6dzFSD3O1mRpPSmnWY2a3Oe9H2i7NJgfa8k82BqWnfk8/FDP7ikW8X2WWzvF
-	 oDpZ6mRkCfLEWP3ARQmQZyr2qziW6rPZOxwL6OO25V3FFnouvu6z+sS4lbrEK2e3P2
-	 Jt67sThVAK8YVEeNkQUhgN4kR0WMT6ioiCmeU2Os=
+	b=OPHWZ2ibFBTasBYf6npZio/rkxz4L08nFux3LrHg/wFV6tnuX5zcWPc2xSFjIwQ+x
+	 WHmKHCA1OAcD6vvYb9TC8pdRtqU1npP5tSGxz+M/s0sa8fWVLnLYUPD6oByU3H2kvq
+	 0vek9o2QH/idOLCzHhtwCiqlKu99O2FWehdrniB0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alexander Duyck <alexanderduyck@fb.com>,
+	Jiayuan Chen <jiayuan.chen@linux.dev>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 427/990] fbnic: Suspend phylink after taking the datapath down in ndo_stop
-Date: Wed, 25 Nov 2026 15:29:54 +0100
-Message-ID: <20261125143832.098405621@linuxfoundation.org>
+Subject: [PATCH 6.18 402/990] net: raw: fix ICMP unreachable sent when receive queue is full
+Date: Wed, 25 Nov 2026 15:29:29 +0100
+Message-ID: <20261125143831.516139246@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143822.072087159@linuxfoundation.org>
 References: <20261125143822.072087159@linuxfoundation.org>
@@ -68,61 +68,104 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alexander Duyck <alexanderduyck@fb.com>
+From: Jiayuan Chen <jiayuan.chen@linux.dev>
 
-[ Upstream commit b45b9c6b83e7a5ac440d36b46ed9b466788b3e5c ]
+[ Upstream commit 45441a94d50200f1478c52857725e6df624bf2ad ]
 
-The fbnic_stop function calls the phylink_suspend function before the
-fbnic_down function. With no BMC present that stops phylink, and the
-fbnic_phylink_mac_link_down function disables the MAC and holds its Tx
-and Rx clocks and FIFOs in reset. Only then does the fbnic_down function
-stop the queues and wait for the Tx path to go idle, so anything still in
-flight has to drain into a MAC that is no longer passing traffic, and the
-fbnic_wait_all_queues_idle function can be left to time out and force a
-flush. With a BMC present phylink leaves the link up but turns the carrier
-off, which the phylink_suspend function notes assumes all packets have
-already been sent.
+It's found in a raw socket application. When the application doesn't
+read packets in time, the client receives ICMP Protocol Unreachable,
+which makes the client abort the session.
 
-It is also the reverse of how the interface comes up: the __fbnic_open
-function resumes phylink last, and the fbnic_up function then enables the
-queues and installs the host Rx filters.
+The reason is that the server hits the sk_rcvbuf limit, and
+raw_v4_input() skips the socket before setting 'delivered', so it
+returns 0. Then ip_protocol_deliver_rcu() sees 'raw' is 0, thinks no one
+handles this protocol and calls icmp_send() to send ICMP Protocol
+Unreachable.
 
-Call the fbnic_down function first. The Tx path then drains with the link
-still up, and Rx is still stopped first, as the fbnic_clear_rx_mode and
-fbnic_clear_rules functions remove the host as a destination for its MAC
-addresses in the RPC before the queues are disabled. The MAC IRQ is still
-freed before phylink is suspended, so no link interrupt runs while the
-link is taken down. The PM suspend path goes through ndo_stop and picks
-up the same order.
+IPv6 has the same issue, ip6_protocol_deliver_rcu() sends ICMPv6
+Parameter Problem instead.
 
-Fixes: 6ede14a2c636 ("fbnic: Move phylink resume out of service_task and into open/close")
-Signed-off-by: Alexander Duyck <alexanderduyck@fb.com>
-Fixes: 69684376eed5 ("eth: fbnic: Add link detection")
-Link: https://patch.msgid.link/179381516644.9644.9042901965231900737.stgit@ahduyck-xeon-server.home.arpa
+Also, we'd better run icmp_filter() and ip_mc_sf_allow() (icmpv6_filter()
+for IPv6) before we check sk_rcvbuf, otherwise packets rejected by
+ICMP_FILTER/ICMPV6_FILTER or the multicast filter are counted in
+sk_drops. So move the check right before skb_clone().
+
+Fixes: d721812aa875 ("ipv4: raw: check sk->sk_rcvbuf earlier")
+Fixes: 026763ece881 ("ipv6: raw: check sk->sk_rcvbuf earlier")
+Signed-off-by: Jiayuan Chen <jiayuan.chen@linux.dev>
+Link: https://patch.msgid.link/20261104115732.322151-1-jiayuan.chen@linux.dev
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/meta/fbnic/fbnic_netdev.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ net/ipv4/raw.c | 15 ++++++++-------
+ net/ipv6/raw.c | 15 ++++++++-------
+ 2 files changed, 16 insertions(+), 14 deletions(-)
 
-diff --git a/drivers/net/ethernet/meta/fbnic/fbnic_netdev.c b/drivers/net/ethernet/meta/fbnic/fbnic_netdev.c
-index bd738155adb2d..8e97c4e7f32b4 100644
---- a/drivers/net/ethernet/meta/fbnic/fbnic_netdev.c
-+++ b/drivers/net/ethernet/meta/fbnic/fbnic_netdev.c
-@@ -86,11 +86,11 @@ static int fbnic_stop(struct net_device *netdev)
- {
- 	struct fbnic_net *fbn = netdev_priv(netdev);
+diff --git a/net/ipv4/raw.c b/net/ipv4/raw.c
+index 5735ae7cba01a..076fb2226a0f8 100644
+--- a/net/ipv4/raw.c
++++ b/net/ipv4/raw.c
+@@ -184,18 +184,19 @@ static int raw_v4_input(struct net *net, struct sk_buff *skb,
+ 				  iph->saddr, iph->daddr, dif, sdif))
+ 			continue;
  
-+	fbnic_down(fbn);
-+
- 	fbnic_mac_free_irq(fbn->fbd);
- 	phylink_suspend(fbn->phylink, fbnic_bmc_present(fbn->fbd));
- 
--	fbnic_down(fbn);
+-		if (atomic_read(&sk->sk_rmem_alloc) >=
+-		    READ_ONCE(sk->sk_rcvbuf)) {
+-			sk_drops_inc(sk);
+-			continue;
+-		}
 -
- 	fbnic_time_stop(fbn);
- 	fbnic_fw_xmit_ownership_msg(fbn->fbd, false);
+ 		delivered = 1;
+ 		if ((iph->protocol != IPPROTO_ICMP || !icmp_filter(sk, skb)) &&
+ 		    ip_mc_sf_allow(sk, iph->daddr, iph->saddr,
+ 				   skb->dev->ifindex, sdif)) {
+-			struct sk_buff *clone = skb_clone(skb, GFP_ATOMIC);
++			struct sk_buff *clone;
++
++			if (atomic_read(&sk->sk_rmem_alloc) >=
++			    READ_ONCE(sk->sk_rcvbuf)) {
++				sk_drops_inc(sk);
++				continue;
++			}
  
++			clone = skb_clone(skb, GFP_ATOMIC);
+ 			/* Not releasing hash table! */
+ 			if (clone)
+ 				raw_rcv(sk, clone);
+diff --git a/net/ipv6/raw.c b/net/ipv6/raw.c
+index 5ecbb9c775be0..b69016d9a2638 100644
+--- a/net/ipv6/raw.c
++++ b/net/ipv6/raw.c
+@@ -161,12 +161,6 @@ static bool ipv6_raw_deliver(struct sk_buff *skb, int nexthdr)
+ 				  inet6_iif(skb), inet6_sdif(skb)))
+ 			continue;
+ 
+-		if (atomic_read(&sk->sk_rmem_alloc) >=
+-		    READ_ONCE(sk->sk_rcvbuf)) {
+-			sk_drops_inc(sk);
+-			continue;
+-		}
+-
+ 		delivered = true;
+ 		switch (nexthdr) {
+ 		case IPPROTO_ICMPV6:
+@@ -197,8 +191,15 @@ static bool ipv6_raw_deliver(struct sk_buff *skb, int nexthdr)
+ 		if (filtered < 0)
+ 			break;
+ 		if (filtered == 0) {
+-			struct sk_buff *clone = skb_clone(skb, GFP_ATOMIC);
++			struct sk_buff *clone;
++
++			if (atomic_read(&sk->sk_rmem_alloc) >=
++			    READ_ONCE(sk->sk_rcvbuf)) {
++				sk_drops_inc(sk);
++				continue;
++			}
+ 
++			clone = skb_clone(skb, GFP_ATOMIC);
+ 			/* Not releasing hash table! */
+ 			if (clone)
+ 				rawv6_rcv(sk, clone);
 -- 
 2.53.0
 
