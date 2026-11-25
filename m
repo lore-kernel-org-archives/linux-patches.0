@@ -1,50 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795620341;
-	b=B022pwShdk3GXJjAoewZ7hHyMGbEy9VlVLDnOT6wjVQdbBnQIIqvv9p1hT5i1dUBZlNZ
-	 9F5G+We84rNUgiXDo/l6mcWZjiAGUXFF0eYRqdXoD3GyHOGWNNybOSW+EQcmkvoR9YRgX
-	 YZzNaceI1Q8c3EG2+dYh4AOKhu5geNbrbKYS4C36cBN18b5HGnlHwrCcVE/1qmIoFGLrD
-	 JYXwNqm+h/e+tpnOUai+yRrrEav7Tgn0VdDtUJZNtwXoU8Csy8myc0i5QSijMFV6WDFeL
-	 OkdMkRre35ip/oNuueWeUnT7+S9qDfSKRUc1w1b6X8D+jShUQE+dfE5JCMBc4QF6tnQ==
+	t=1795620344;
+	b=BqmCobnFK0G+6opuu6l1QR5O+RsGKmSISkdSGH8+hXmyDg2oQMR/drTYFXb1tlR7FDmX
+	 ahfBhTkcd68ZXywBpNh5aMfGiDnBEIh/uWYine6xj2o/J8XzlZtuxAHr5m2hpT8DLjORP
+	 KB4rJN19gGAAh45STRu1faxgBBl0Uwy2h7j7VECdhJVgbQa0uD0SwRV4PVA4pXc/+f3lc
+	 gK8ELOsu+9CquIbCdCf4dI0UW6N7GOb2LLlEfAVE2YvujrgHu2RnozyOHEYHWUMxXOl6w
+	 zmhvQ8Fe6RJMyfDvFXN5ZAropV4fXVBAMMHrQRUZblghdfLyJTtQ//x76PTjihzhPHw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795620341;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795620344;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=5HyryQSyG/8wabaTrwQKjn+eIqeWL3DuOCKNDNamuuo=;
-	b=bNFPg4AwREonFE1xaWMECOV9m+mTet/qHcI6p0LIb0i3wH3Zi/Nclg03PV77xTv3nLIQ
-	 /oZvth/KNl0CVhuRWsIHwVzaA5mJd1wyl8900Jpizs7nckWc5OG8H7YVoDkt7OAdVC3dA
-	 N93786zP6cHh+PtlsHRVXU97Iw9HnfJl0wPb8r88CM8NXftVHQU3FGvrW1du/0s+9PHvz
-	 ZPXfN88m4EoJ1XuLJ5+1wtZhrUdfOysOmcPTm4zHi684NEipTWKO24v8pEXgeRdJzsEav
-	 Wa1IahiKx59nFSm4F8QV8aV+iIC9mWVl15fzWEm1naBOqkjsiV63DRo8BGs8E2PEtaQ==
+	bh=C8HunEYicyW/vY2iTNT1sZxJoeygMimx/KiqbxcCx3U=;
+	b=0rBv3el4QzJWeWDmqcTRlV5LsCbaW/G8nKsLRQW4Y1KIzvSooGapZDWSfdoe2HTunF7t
+	 rr77k/6yWruJohDJSHZlDVUsjJc2zKAnpLfGMuNJnws/QUwoEjlOXJH1JqNO/CWQVCa9k
+	 r6OJmSy1uKIqljFzxoJNv5rz6G4wLcJRQh34xjituWJE54uqanrjV2a/HGciEspcuq6p+
+	 QXy7DziOjxO24CJAdzVgtcC41qnp5htf19AZBhAEZKR3pBk/gzlwZiEvm6EP4gWAsZAV4
+	 zgRGFHue6c4FGrxRM18bbWPE7qeA2vJcTifrHyt2/B56ut+M5c+8fKON2f4aVAiFlrA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=c6dVNtCX;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=vE7WVZdZ;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A8472606A31E;
-	Wed, 25 Nov 2026 15:25:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 88DED606A321;
+	Wed, 25 Nov 2026 15:25:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=c6dVNtCX
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 982F71F000CF;
-	Wed, 25 Nov 2026 15:25:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=vE7WVZdZ
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CED161F000D4;
+	Wed, 25 Nov 2026 15:25:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795620341;
-	bh=5HyryQSyG/8wabaTrwQKjn+eIqeWL3DuOCKNDNamuuo=;
+	s=korg; t=1795620344;
+	bh=C8HunEYicyW/vY2iTNT1sZxJoeygMimx/KiqbxcCx3U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=c6dVNtCXZt8oyNPcKYvXBAYZrVeysWMdlSPoDm3Q/hcNFSnFC50OHgzHhplk19+1p
-	 pRmya2Ov8Irlmw0VICuCLvj/z9bUsDwPRMIV3zo190L0Dvqbh64RWvP6bA7/n0Z4xr
-	 ZAU7MUXzVvcfFLYDL21Ni7D5gbL/KeAx2zIhqMHE=
+	b=vE7WVZdZ051uJSkd85hr9WlszdvVoqdQcjuVSAEYd6+pyPaXt5M4qzEt6CwSld1dm
+	 O0/sAtgmVqzqlyLCd8xQ4jNy7XISlEozkNwlNzz30eOcHLf8POy7GzX76uAanv8Y8/
+	 BoeEqYQL9h/GqJ5oQPyz36txrxctVRqnHdiryT/c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mikulas Patocka <mpatocka@redhat.com>
-Subject: [PATCH 7.3 0883/1005] dm-thin: fix data corruption if discard races with regular I/O
-Date: Wed, 25 Nov 2026 15:37:01 +0100
-Message-ID: <20261125143842.387046590@linuxfoundation.org>
+	Joseph Qi <joseph.qi@linux.alibaba.com>,
+	Paulo Alcantara <pc@manguebit.org>
+Subject: [PATCH 7.3 0841/1005] smb: client: hold the inode across cifs_oplock_break()
+Date: Wed, 25 Nov 2026 15:36:19 +0100
+Message-ID: <20261125143841.416645763@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143821.729802100@linuxfoundation.org>
 References: <20261125143821.729802100@linuxfoundation.org>
@@ -66,39 +67,62 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mikulas Patocka <mpatocka@redhat.com>
+From: Joseph Qi <joseph.qi@linux.alibaba.com>
 
-commit 62ee9c09366cad69410330087d990e469dd92314 upstream.
+commit fce78321f1b59531cf6fc94860550db1db8dec55 upstream.
 
-In the function break_up_discard_bio, if a discard hits the same block as
-regular I/O, it was intended to skip the discard for the affected range.
-However, the skip code only advances "data_begin", it doesn't advance
-"virt_begin". So, the data_begin and virt_begin variables become
-unsynchronized.
+cifs_oplock_break() drops the handle reference in the middle of the
+handler and keeps using cinode afterwards, to send the break
+acknowledgment and again in cifs_done_oplock_break().  The reference
+cifs_queue_oplock_break() takes is the only pin: the handle holds the
+dentry and the dentry is what keeps the inode alive.
 
-process_prepared_discard_passdown_pt1 calculates "data_end =
-m->data_block + (m->virt_end - m->virt_begin);" - if m->data_block is
-incremented and m->virt_begin isn't, it will overshoot the intended
-discard range.
+When that put is the last reference, the dput() in
+cifsFileInfo_put_final() kills an unhashed dentry, drops the last
+i_count and evicts the inode, so the rest of the handler runs on an
+object whose free is only RCU-deferred.  An unhashed dentry that a
+handle still references is an ordinary state: unlinking an open file
+leaves the dentry that way, and so does the dcache teardown at unmount.
 
+Take a reference on the inode for the lifetime of the handler and drop
+it once the break has been reported.  This also covers the
+cifs_get_tlink() failure path, where the put is followed directly by
+the out label.
+
+Fixes: b98749cac4a6 ("CIFS: keep FileInfo handle live during oplock break")
+Fixes: 23b26f4408ac ("smb: client: avoid leaking refcount when cifs_sb_tlink() fails")
 Cc: stable@vger.kernel.org
-Fixes: e2dd8aca2d76 ("dm bio prison v1: improve concurrent IO performance")
-Signed-off-by: Mikulas Patocka <mpatocka@redhat.com>
-Assisted-by: Claude:claude-opus-5
+Signed-off-by: Joseph Qi <joseph.qi@linux.alibaba.com>
+Signed-off-by: Paulo Alcantara <pc@manguebit.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/md/dm-thin.c |    1 +
- 1 file changed, 1 insertion(+)
+ fs/smb/client/file.c |    9 +++++++++
+ 1 file changed, 9 insertions(+)
 
---- a/drivers/md/dm-thin.c
-+++ b/drivers/md/dm-thin.c
-@@ -1703,6 +1703,7 @@ static void break_up_discard_bio(struct
- 			(void) build_key(tc->td, PHYSICAL, data_begin, data_begin + len, &data_key);
- 			if (bio_detain(tc->pool, &data_key, NULL, &data_cell)) {
- 				/* contention, we'll give up with this range */
-+				virt_begin += len;
- 				data_begin += len;
- 				continue;
- 			}
+--- a/fs/smb/client/file.c
++++ b/fs/smb/client/file.c
+@@ -3401,6 +3401,14 @@ void cifs_oplock_break(struct work_struc
+ 	__u64 persistent_fid, volatile_fid;
+ 	__u16 net_fid;
+ 
++	/*
++	 * Dropping the handle reference below also drops the dentry
++	 * reference that pins this inode, and cinode is still needed to
++	 * acknowledge the break and to report it as complete.  Hold the inode
++	 * until that is done.
++	 */
++	ihold(inode);
++
+ 	wait_on_bit(&cinode->flags, CIFS_INODE_PENDING_WRITERS,
+ 			TASK_UNINTERRUPTIBLE);
+ 
+@@ -3488,6 +3496,7 @@ oplock_break_ack:
+ 	cifs_put_tlink(tlink);
+ out:
+ 	cifs_done_oplock_break(cinode);
++	iput(inode);
+ }
+ 
+ #ifdef CONFIG_SWAP
 
 
