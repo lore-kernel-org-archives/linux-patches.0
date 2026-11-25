@@ -1,52 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795623775;
-	b=pJkZviKS7OG1pj1ldILQBoKzQ3X3lurS7uHs552L8TkHFgD6vNLA+o3UQVW4rRXWjYFD
-	 TjAN1JY8QKCePjbHkXxPibxik/O8uwH6YAFabdDxjhqjirhj9Nd9gguwZ0q+UvLInQf7c
-	 btO5C5Wulpzr+sgqAEeLUYK+qAPixgXfcuGpTRD3AV4acugEj6SrU/7ofdxGhZIGifEgj
-	 48QOAquHipf+FpqSPc0hDbJhZh8KGi1a+G+5pNTNhYTlKIPcOjlQC765GwfoZwPoFozQO
-	 yVPHQoamjUTD7DdhXUrbV+gKxix0yk9eoex+SO41y0QN/8U7kOmoR/Ia6v/67K/ycBw==
+	t=1795623778;
+	b=SEmtU0rEq0xKB60RSS/YadYUA9VlTUZ7B36ns6gPF6aTUtG+7PCfnfXd6oOu5DSGlutP
+	 PQCDjJKQ/gw8K/eWGN79nC+Kfr+THxAR1yZGr2GyZPHJsup1TNlwItiXYoC+JrLp0UPzk
+	 IZKHXCCKT3kqJCReGVOtY47MKgTh0ufPVCAjxumm8znQB5VfifqE2HlCLzfZ0Vtx6zCom
+	 S3HSlNP3bAB89TIUkDU/rvshYk36lR2zqa7D63ym2mQroCabY4ccSll4pkAvBs8tu6FQz
+	 TLiLrPV9Y9TU34UnpqNePtk+ciOd/6F08gXZK/TJ/EmfqDCZjCvYqkjmAi96bj2f/ZA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795623775;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795623778;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=x20/UOZIHcbHQOTLIJA+RmTq3Py4B27caxHXQ6f/Ljw=;
-	b=yj493ns7co79suPVTkp1bUMgyFsBqLCmvCh2w66gL4RHnoBn3fBlmORjlvDga7lzkNo+
-	 ftcDAAOy9mhmpZwxftrDsOfqSdswxhaoaWKTkn/MVNSwsScOvkZf5khjseQCYpkxXriRl
-	 Yr0gz499P5DCPFtO3bh1Sfs3WAEKdGRjBVSZhdpa1WVbD2+nP2NV7pjgL5+QUp1H6LWd4
-	 1UAIEBDjkuNb/Qd457sm/8qMHpmGyDdAbogO4vooJHaDBz2lSZQZzIZ+rfnsdF1ajuL1u
-	 e68x2mZnmidyg1MKpw8TN9gjpbdQemgjAGwBOor4Swzijs/KNQydFHuQNDfZfSQClaA==
+	bh=3l5pzFBd/vxXqXG1v9DAZSuG9q3w5ARp7MUNA25Y6KA=;
+	b=ImgVCoPO2rt/ch6UQezm6A++huuwDiKxQ7TDjn1CrfmLMAaZAQwKN8TDyODkOkbSp4gC
+	 uh4mBp4fmpDlpzxedEKKkistzJHjjKdDrDmutXhv10tTBoQFmXnlvSxpR/JQdM0tintQL
+	 Aw7HVrd0rFHtwwlsmRranAOFBUa1bSsnQSsAbyOMR3ECGjwYDUhYJW4fSZInI9cLUtkRK
+	 Nu/6WVVkWt171o6VIvRycI+KRRfk47Yh6le9mbgwpTFmD9S1b0TGO2aguRKui6FY6uYyO
+	 DVlnvJOKBZBrUc5lL1GUc4jLSCYIoNTWkcM2lFgf0sQVf+F8umovAtXpe2Z3NPlKS6g==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=bNXQebYo;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=e1g9MIji;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7D754606A321;
-	Wed, 25 Nov 2026 16:22:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D908B606A323;
+	Wed, 25 Nov 2026 16:22:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=bNXQebYo
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6E7421F000C4;
-	Wed, 25 Nov 2026 16:22:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=e1g9MIji
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A57F71F000C0;
+	Wed, 25 Nov 2026 16:22:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795623775;
-	bh=x20/UOZIHcbHQOTLIJA+RmTq3Py4B27caxHXQ6f/Ljw=;
+	s=korg; t=1795623778;
+	bh=3l5pzFBd/vxXqXG1v9DAZSuG9q3w5ARp7MUNA25Y6KA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=bNXQebYoobUBeJ5IHCrAUaR9N3DPobFNC3sc6p2haVmbJ1HlTkS2PGrRJT88J/m3O
-	 8VsqY0FS8Ad03AKWUUVOaRNACLRvPELOrUR69lrKBiDKNMp58tLNWy/aGMQGpoWmZn
-	 uI7hB0Id1AmScL+ZbDz5qHT9Hs4DEh5VF4UgZacI=
+	b=e1g9MIjisKO2YWKCZbohp6wIrnriDZ3vn6DqE5koFsli859+7Y2D8CB9nxjIYROD3
+	 rTmkkJcp5f101A12dFiVnGrzMAAa/efdGFXt6C0WVOZLFeAA/3tJZf7gcMUWj9Ed7i
+	 gOhjUF+2dIUkctIxBeXw1JIVnKiiE1QFDtJkf+O0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable <stable@kernel.org>,
-	Josef Bacik <josef@toxicpanda.com>,
-	Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
-Subject: [PATCH 6.18 930/990] w1: w1_therm: leave the slaves of other families alone
-Date: Wed, 25 Nov 2026 15:38:17 +0100
-Message-ID: <20261125143843.781348747@linuxfoundation.org>
+	Changyul Lee <lcy8047@gmail.com>,
+	Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>
+Subject: [PATCH 6.18 966/990] iio: trigger: free the trigger ID after device_del()
+Date: Wed, 25 Nov 2026 15:38:53 +0100
+Message-ID: <20261125143844.611849277@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143822.072087159@linuxfoundation.org>
 References: <20261125143822.072087159@linuxfoundation.org>
@@ -68,114 +67,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Josef Bacik <josef@toxicpanda.com>
+From: Changyul Lee <lcy8047@gmail.com>
 
-commit c0eadd2e06e52563cae2b80491e56eb9712eb727 upstream.
+commit d32bf759801e6df23038dc834622a122ec76a4dd upstream.
 
-The file therm_bulk_read belongs to the bus master.  Its callbacks walk
-all the slaves of the bus and look at sl->family_data as if every slave
-were a temperature sensor.  A 1-wire bus can carry other devices too:
+iio_trigger_unregister() returns the trigger ID to iio_trigger_ida
+before device_del() removes the "trigger<N>" device. A trigger
+registered in between can get the same ID, and its device_add() fails:
 
-- The family data of a slave which is driven by another driver, such as
-  w1_ds2433, w1_ds250x, w1_ds28e04 or w1_ds28e17, is a structure of that
-  driver.  bulk_read_support() takes whatever is at the offset of
-  specific_functions for a pointer and dereferences it, and if the
-  result happens not to be 0, the callbacks write the state of the
-  conversion into that foreign structure.
+  sysfs: cannot create duplicate filename '/bus/iio/devices/trigger0'
 
-- For a slave without family data, which is the case for most of the
-  other drivers and for the default family, trigger_bulk_read() gives up
-  with -ENODEV.  A single serial number chip on the bus is enough to
-  make the bulk read unusable for all the sensors.
+For example, adding a sysfs trigger while an hrtimer trigger is being
+removed through configfs, or the other way around, hits this because the
+two paths do not share a lock.
 
-Only look at the slaves whose family is one of ours.  A bulk conversion
-now works on a bus with other devices.
+Free the ID after device_del(), as the error path of
+iio_trigger_register() already does, and drop the "Possible issue in
+here" comment.
 
-Fixes: 57c76221d5af ("w1_therm: adding bulk read support to trigger multiple conversion on bus")
-Cc: stable <stable@kernel.org>
-Signed-off-by: Josef Bacik <josef@toxicpanda.com>
-Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
-Link: https://patch.msgid.link/20261027-llm-char-misc-w1-v1-9-d2e6bfafb6a4@linuxfoundation.org
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 1637db44413e ("Staging: IIO: Trigger support added to core.")
+Signed-off-by: Changyul Lee <lcy8047@gmail.com>
+Cc: stable@vger.kernel.org
+Signed-off-by: Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/w1/slaves/w1_therm.c |   37 +++++++++++++++++++++++--------------
- 1 file changed, 23 insertions(+), 14 deletions(-)
+ drivers/iio/industrialio-trigger.c |    3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
---- a/drivers/w1/slaves/w1_therm.c
-+++ b/drivers/w1/slaves/w1_therm.c
-@@ -907,6 +907,19 @@ static inline bool bulk_read_support(str
+--- a/drivers/iio/industrialio-trigger.c
++++ b/drivers/iio/industrialio-trigger.c
+@@ -105,9 +105,8 @@ void iio_trigger_unregister(struct iio_t
+ 	scoped_guard(mutex, &iio_trigger_list_lock)
+ 		list_del(&trig_info->list);
+ 
+-	ida_free(&iio_trigger_ida, trig_info->id);
+-	/* Possible issue in here */
+ 	device_del(&trig_info->dev);
++	ida_free(&iio_trigger_ida, trig_info->id);
  }
+ EXPORT_SYMBOL(iio_trigger_unregister);
  
- /**
-+ * bulk_read_slave() - check if a slave of the bus takes part in a bulk read
-+ * @sl: any slave on the list of the master
-+ *
-+ * The family data of the slaves of other families is none of our business.
-+ *
-+ * Return: true if it is one of our devices and supports bulk read
-+ */
-+static bool bulk_read_slave(struct w1_slave *sl)
-+{
-+	return device_family(sl) && sl->family_data && bulk_read_support(sl);
-+}
-+
-+/**
-  * conversion_time() - get the Tconv for the slave
-  * @sl: device to get the conversion time
-  *
-@@ -1497,9 +1510,7 @@ static int trigger_bulk_read(struct w1_m
- 	 * so we can apply a strong pullup if required
- 	 */
- 	list_for_each_entry(sl, &dev_master->slist, w1_slave_entry) {
--		if (!sl->family_data)
--			goto error;
--		if (bulk_read_support(sl)) {
-+		if (bulk_read_slave(sl)) {
- 			int t_cur = conversion_time(sl);
- 
- 			t_conv = max(t_cur, t_conv);
-@@ -1537,7 +1548,7 @@ static int trigger_bulk_read(struct w1_m
- 			/* set a flag to instruct that converT pending */
- 			list_for_each_entry(sl,
- 				&dev_master->slist, w1_slave_entry) {
--				if (bulk_read_support(sl))
-+				if (bulk_read_slave(sl))
- 					SLAVE_CONVERT_TRIGGERED(sl) = -1;
- 			}
- 
-@@ -1566,7 +1577,7 @@ mt_unlock:
- set_flag:
- 	/* set a flag to register convsersion is done */
- 	list_for_each_entry(sl, &dev_master->slist, w1_slave_entry) {
--		if (bulk_read_support(sl))
-+		if (bulk_read_slave(sl))
- 			SLAVE_CONVERT_TRIGGERED(sl) = 1;
- 	}
- error:
-@@ -1934,16 +1945,14 @@ static ssize_t therm_bulk_read_show(stru
- 	int ret = 0;
- 
- 	list_for_each_entry(sl, &dev_master->slist, w1_slave_entry) {
--		if (sl->family_data) {
--			if (bulk_read_support(sl)) {
--				if (SLAVE_CONVERT_TRIGGERED(sl) == -1) {
--					ret = -1;
--					goto show_result;
--				}
--				if (SLAVE_CONVERT_TRIGGERED(sl) == 1)
--					/* continue to check other slaves */
--					ret = 1;
-+		if (bulk_read_slave(sl)) {
-+			if (SLAVE_CONVERT_TRIGGERED(sl) == -1) {
-+				ret = -1;
-+				goto show_result;
- 			}
-+			if (SLAVE_CONVERT_TRIGGERED(sl) == 1)
-+				/* continue to check other slaves */
-+				ret = 1;
- 		}
- 	}
- show_result:
 
 
