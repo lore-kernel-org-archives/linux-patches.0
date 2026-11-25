@@ -1,54 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795619684;
-	b=20NhQHp1sGoAVfpQY4iEPL9BaFOC8yTpxsImytiUhhFcUo118bII1tVs/Pmg9ea0YOFs
-	 qQk8PkJtKHovwObLqSO394At10FY+Y1B4HudDh0KOM/YlOq7OtaJZaEzfdqJa9P0B67Uy
-	 eSQuML6HaaxqITHCzHEt+DnB21ZYE4hIGImsOwoXaDqA26+/yL3iGUDrZpGO3+tpB2DZ/
-	 Pv6aj6gQFgwa/paceSrvzD44fCpAIE4z7VcG+zQJqrIRcgLsFZM5eLe/YWkKHyESJmyNT
-	 r7byHznSaVUYZiZ3ZLXP6RDysYDpl6Q8Rm9F+kZiiqA60EIvBnguAeMLhWZSmPKRM7g==
+	t=1795619687;
+	b=xYMtvbULg1uSG2Oz3psVr4oBBosMH2HjzwXh4cyFh4gGG5iQl9+6gFTN8/0HbhVNyW6A
+	 JaPVf9dk0qYV364iQeAGcYvxx7TIQK9PnqgS+9CHiMph58oKuw+A1NsUQpuPzFRNcp2g1
+	 Nal+3pGQGn6HpMCZz0GOHY22jhbVtN2pMKFwpyR9p52VWnuKnsicQChIJ6hUc5WyhBZk4
+	 pkGGrrSdEwZFlumyOpz3lBYkN2CAM0wt6OT9F9k1Y2Kw7NIAGqQSoBpJFJ1F4qXYsllyM
+	 0Uws1E0RPl63UR2uYToEtxuxWnxLh/rwqoXiIbGxEzwfapxMskDvnWj4QRyFTrHLEpA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795619684;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795619687;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=UwZzMy0wMhZZ8/vUquzgH4xTmC9RWG8Wc+GT+mTd0K4=;
-	b=j6FWMyUbxSK5kCYsvArb1v7mPV0ybVF2cQ3HbdcUXoNpf+XkP5M7CA8hqgrcMV8SuGMi
-	 qKI2QdKamMeKScxbzV4hCvI4c/rJ6WVhJEa5W2wWWIdTMO7tjhU0H1/PbCUzAplpYUpNC
-	 hzHYcnTjd1NwwY8+w6ZZF7JVzfoG6tCTjZA804D4Ywmq5JIFHN0aY6uSTj22OH34wq0UZ
-	 0uPOu6aV8msDW0HBz8XHrrXglkOE/7VcxafUijxPhw9bMLRBTDlRpMFSu5kCl4N4qvVkZ
-	 TgqI6/6L2Bi1xLxbRM+Beaq183x6Hfpge1e/7ZXa9/y02B/4iij7D/F1ZK8TMXhTIMg==
+	bh=I4Ym+PwQ15PdfegeLVOoPPw75U07A/q1hjJkILoYmUo=;
+	b=IdpV77x53OlrRUgqHuN6cb5QC4Q+hR4HjFM/rKDQ61vb4KF8Z4m4aEyHJKHbjQGObqUW
+	 Lj+dIQHS2gffjjPn+URiR/5/7zkLJuvY+ngh+fiWpDjaA4Ng7tlgrEybdCeTXk/2aiyp3
+	 pV4qvhs8DW7EW3G1SrJhlyrNdbQ/vMPbi4mNOR8G0xbLWNZ7kkDuCXckFMfCEVDSwoF5g
+	 Z0YQcMhLsTP0ouvxrz7CC3GFMwtkSeazygu/MTzXHoaI9VKvc0vL/29zyuZ4lJZ2lON2J
+	 fFNSgY2peL1EIFHWgFc9ZgfDb50NOlyHlGrfmsVI8CHddRQFlj+CnI4rWib+psJd50w==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=QyU0wiIT;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=JQYQmXFH;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 80699606A335;
-	Wed, 25 Nov 2026 15:14:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D7BA0606A327;
+	Wed, 25 Nov 2026 15:14:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=QyU0wiIT
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BEC641F00A00;
-	Wed, 25 Nov 2026 15:14:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=JQYQmXFH
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 301051F000EC;
+	Wed, 25 Nov 2026 15:14:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795619684;
-	bh=UwZzMy0wMhZZ8/vUquzgH4xTmC9RWG8Wc+GT+mTd0K4=;
+	s=korg; t=1795619687;
+	bh=I4Ym+PwQ15PdfegeLVOoPPw75U07A/q1hjJkILoYmUo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=QyU0wiITgLeh27FNkJM3zfX4T6yeZLz683df53SYidSlQGj190VrH5hoRmq+7pp1Z
-	 E9p9ol672VXkogc9vVuiNcLK2rIGHVySQu/AfFo7jnkvCtSOJJGcdvQ0K2xYHL083J
-	 NCicLB94yIJxqAQ9ZzUc4xrIxUbgdXODfR1bpGSA=
+	b=JQYQmXFHKiRUGrz8w3up1g+B0D3LCsR4KHGl8FR0Zv3scnU2keGI6+8284qqHAKIO
+	 6FugTHOV1oIhoKqMRi2ljn1B/N6elZQMqcv6S4TobPBKM+2MXtCghTwD6Pye7yiadE
+	 Yg5tL1HyaIHtVmqNmC4Rm1GDpbM7diJ+KTwIKBd8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Joas Antonio dos Santos <joasantonio108@gmail.com>,
-	Simon Horman <horms@kernel.org>,
-	Aaron Conole <aconole@redhat.com>,
-	Eelco Chaudron <echaudron@ovn.org>,
-	Paolo Abeni <pabeni@redhat.com>
-Subject: [PATCH 7.3 0675/1005] openvswitch: advance by the real header length in get_ipv6_ext_hdrs()
-Date: Wed, 25 Nov 2026 15:33:33 +0100
-Message-ID: <20261125143837.566294775@linuxfoundation.org>
+	Phat Dinh <phatdt1116@gmail.com>,
+	"Peter Zijlstra (Intel)" <peterz@infradead.org>
+Subject: [PATCH 7.3 0676/1005] perf/core: Do not resurrect cpuctx->cgrp after last cgroup event exit
+Date: Wed, 25 Nov 2026 15:33:34 +0100
+Message-ID: <20261125143837.590289837@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143821.729802100@linuxfoundation.org>
 References: <20261125143821.729802100@linuxfoundation.org>
@@ -70,85 +67,104 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Joas Antonio dos Santos <joasantonio108@gmail.com>
+From: Phat Dinh <phatdt1116@gmail.com>
 
-commit dbce972650ed6348e3d3856e49308aa5603e02a7 upstream.
+commit 59f1398140869432c7171b9a2a279ca315467c4e upstream.
 
-get_ipv6_ext_hdrs() walks the IPv6 extension header chain to fill
-key->ipv6.exthdrs, but advances to the next header with ipv6_optlen()
-whatever the current header is.  That is only right for Hop-by-Hop,
-Destination Options and Routing headers:
+perf_cgroup_switch() relies on:
 
- - an Authentication Header is ((hdrlen + 2) << 2) bytes long
-   (ipv6_authlen()), so with hdrlen = 4 the walk skips 40 bytes instead
-   of 24 and reads the next "header" from the ICV and payload;
+    /*
+     * cpuctx->cgrp is set when the first cgroup event enabled,
+     * and is cleared when the last cgroup event disabled.
+     */
 
- - a Fragment header is always 8 bytes, and the byte read as hdrlen is
-   its Reserved field, which the sender controls and receivers ignore,
-   so a non-zero value makes the walk skip up to 2048 bytes and miss
-   the headers that follow;
+It computes the next task's cgroup, schedules out the CPU context and
+then assigns cpuctx->cgrp unconditionally:
 
- - in a non-first fragment nothing after the Fragment header is a
-   header at all, it is the middle of the fragmentable part, yet the
-   walk keeps parsing it as an extension header chain.
+    ctx_sched_out(&cpuctx->ctx, NULL, EVENT_ALL|EVENT_CGROUP);
+    /*
+     * must not be done before ctxswout due
+     * to update_cgrp_time_from_cpuctx() in
+     * ctx_sched_out()
+     */
+    cpuctx->cgrp = cgrp;
 
-In all cases the OFPIEH12_* bits stored in key->ipv6.exthdrs depend on
-bytes chosen by the sender rather than on the headers that are actually
-present: payload bytes that look like another AH or a Hop-by-Hop header
-add OFPIEH12_UNREP/OFPIEH12_UNSEQ, and real headers after a Fragment
-header can go unreported.  Flows that match on OVS_KEY_ATTR_IPV6_EXTHDRS
-then classify such packets wrongly.  There is no memory safety issue,
-skb_header_pointer() bounds every read.
+However, ctx_sched_out() can disable events itself. If a cgroup event
+has a pending disable from perf_event_disable_inatomic() (e.g. its
+PERF_EVENT_IOC_REFRESH limit ran out) that the irq_work has not
+handled yet, event_sched_out() consumes it inline:
 
-Advance by sizeof(struct frag_hdr) for Fragment headers and by
-ipv6_authlen() for AH, and stop at the Fragment header if its offset is
-non-zero, as ipv6_find_hdr() does.
+    if (event->pending_disable) {
+        event->pending_disable = 0;
+        perf_cgroup_event_disable(event, ctx);
+        state = PERF_EVENT_STATE_OFF;
+    }
 
-Fixes: 28a3f0601727 ("net: openvswitch: IPv6: Add IPv6 extension header support")
-Link: https://lore.kernel.org/all/178905555085.219967.6617611783437228045@kernel.org/
+If that was the last cgroup event, perf_cgroup_event_disable() clears
+cpuctx->cgrp:
+
+    if (--ctx->nr_cgroups)
+        return;
+
+    cpuctx->cgrp = NULL;
+
+and perf_cgroup_switch() then sets it again. cpuctx->cgrp is left
+non-NULL with ctx.nr_cgroups == 0, so the NULL check in
+perf_cgroup_switch() no longer catches it and the next switch trips:
+
+    WARN_ON_ONCE(cpuctx->ctx.nr_cgroups == 0);
+
+cpuctx->cgrp does not hold a reference on the cgroup. Once that cgroup
+is removed, the next ctx_sched_in() dereferences the stale pointer:
+
+  BUG: KASAN: slab-use-after-free in ctx_sched_in+0xb1f/0xfa0
+  Read of size 8 at addr ffff8881008972d0 by task swapper/3/0
+
+  Tainted: [W]=WARN
+  Call Trace:
+   <IRQ>
+   ctx_sched_in+0xb1f/0xfa0
+   perf_event_sched_in+0x1a/0x70
+   ctx_resched+0x32b/0xac0
+   __perf_install_in_context+0x475/0xab0
+   remote_function+0x105/0x200
+   __flush_smp_call_function_queue+0x179/0x8d0
+   __sysvec_call_function_single+0x1b/0x1c0
+   sysvec_call_function_single+0x66/0x80
+   </IRQ>
+   <TASK>
+   asm_sysvec_call_function_single+0x1a/0x20
+
+Only assign cpuctx->cgrp when cgroup events remain after the context
+has been scheduled out, so that it stays NULL as the invariant
+requires.
+
+Fixes: e19cd0b6fa59 ("perf/core: Always set cpuctx cgrp when enable cgroup event")
+Signed-off-by: Phat Dinh <phatdt1116@gmail.com>
+Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
 Cc: stable@vger.kernel.org
-Signed-off-by: Joas Antonio dos Santos <joasantonio108@gmail.com>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Reviewed-by: Aaron Conole <aconole@redhat.com>
-Reviewed-by: Eelco Chaudron <echaudron@ovn.org>
-Link: https://patch.msgid.link/20261102-ovs-exthdrs-v2-1-21ceef6a243d@gmail.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Link: https://patch.msgid.link/20261106101642.494674-1-phatdt1116@gmail.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/openvswitch/flow.c |   19 ++++++++++++++++++-
- 1 file changed, 18 insertions(+), 1 deletion(-)
+ kernel/events/core.c |    7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
 
---- a/net/openvswitch/flow.c
-+++ b/net/openvswitch/flow.c
-@@ -370,11 +370,28 @@ static void get_ipv6_ext_hdrs(struct sk_
- 			return;
- 		}
- 
-+		if (next_type == IPPROTO_FRAGMENT) {
-+			struct frag_hdr _fh, *fh;
-+
-+			fh = skb_header_pointer(skb, start, sizeof(_fh), &_fh);
-+			if (!fh)
-+				break;
-+			/* Only the first fragment has the headers that follow. */
-+			if (fh->frag_off & htons(IP6_OFFSET))
-+				break;
-+			start += sizeof(_fh);
-+			next_type = fh->nexthdr;
-+			continue;
-+		}
-+
- 		hp = skb_header_pointer(skb, start, sizeof(_hdr), &_hdr);
- 		if (!hp)
- 			break;
-+		if (next_type == IPPROTO_AH)
-+			start += ipv6_authlen(hp);
-+		else
-+			start += ipv6_optlen(hp);
- 		next_type = hp->nexthdr;
--		start += ipv6_optlen(hp);
- 	}
- }
- 
+--- a/kernel/events/core.c
++++ b/kernel/events/core.c
+@@ -1072,8 +1072,13 @@ static void perf_cgroup_switch(struct ta
+ 	 * must not be done before ctxswout due
+ 	 * to update_cgrp_time_from_cpuctx() in
+ 	 * ctx_sched_out()
++	 *
++	 * ctx_sched_out() can consume a pending disable and drop the last cgroup
++	 * event, which clear the cpuctx->cgrp. Cgroup tracking follow active cgroup
++	 * event, so do not resurrect it
+ 	 */
+-	cpuctx->cgrp = cgrp;
++	if (cpuctx->ctx.nr_cgroups)
++		cpuctx->cgrp = cgrp;
+ 	/*
+ 	 * set cgrp before ctxsw in to allow
+ 	 * perf_cgroup_set_timestamp() in ctx_sched_in()
 
 
