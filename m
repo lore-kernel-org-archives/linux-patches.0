@@ -1,51 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795622789;
-	b=HM5hVFAmB1ai/05OchTBX2ZDVFSM/BBeS4DAJni4TaVWkj0Lev6IOnMFjq63qfACD5eQ
-	 LyXFj2KjL3XoKji7vG2dkU/mnfBmaPF7+TR9Zab01nAZHCydExGZk47NblE/rYRQLcUut
-	 KVZg1EyEbLv7osY2HN2lFVJ9ngjAOnC9t9Knz4qYA2DmC+a7ErZhzrDxWYSkzMQ90ayQA
-	 C6w0aCU4q0WKS7lRHZLJ8msrsac56+H5q1T4g5hTUuauw5V4shbVYqZalQKossnMBYLIb
-	 Ksqq5GDoMHKxL+pJ4y6OqmDO1R8PgzJG+jZ9ysHs+AdOejhrniBJzylYozVu2KCkeLA==
+	t=1795622792;
+	b=FLkKkK8LxR1iaF61TLzQfUDFghVd7oPA1Y6EwtiViYJpi3ZSz054IJIuTYqA2+uDYasB
+	 aU7/lLZ9/N4Qmvmms/MfsWK4SJCMbS0UocJ8obTueT/+6HYi5LKKB3voQ2VHsEtRq3VDD
+	 HRFyBUEzJrmA68romhXp+R3sEApQz+jSu8CGpl0PtIVIP+Rnpv5npiL3cg1vZWOrr9t+w
+	 f3pArABXOdSli7UD7KLaeTA5laEXcggfTZ9pHPpEDxpnhGBJvYbpyjUiS4vOSdLFIGGqI
+	 ZW1mkCRdWkE25WJDYz8iPBaAhFki+z7UFCJRCV7zBCplsHzl0UrHSV9fhXj+hcr443A==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795622789;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795622792;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=0K4venPjmVvuXREigx/aA1iLTkqgpIi93jFEvJzdTvg=;
-	b=bB1cKA749Ipl/aVD+XgCQoT+JRD3HMWtMjhFVcBogVx+YyMxRpCPLuw9KrRPSv87mgtr
-	 4E80CqDdigqIzOTjQ5t1lkPwWFkm5QxbhFbWG18OWOTWdRi+FH5l6DCnmyGLnqFTCYUk9
-	 L7+Cxg2BZ9ikNBRPtwsgci3WC5ms6kJUOZmqjrnZSHVcLJ4VXH2kXqILmYBABhE2VHihA
-	 uQQYogVvAXD5H5JxRLSiclaWxi8uJEQ9vVBxdNM0fcV80LIAJ85ckYVr1Fp4TL1uWV4D4
-	 H/CRbLO6GQqCmuC6wwoXMJ7PwWacHf5W/HUYJcK1aVSrq3JnjpDXT5DvSTKP9Nm6czA==
+	bh=mWY3tpquSCwtS5l3CxwwC5uNPh1YFAZaeMPpP8HrrC4=;
+	b=LS4/Du20sMox6PWxUZO1mMdpG0+FmFZKyzNS0fJLgRIEoTSnN91EKoUxW2NVXF5V1hVF
+	 6yDDEfNOjtyhER/yOABQNYvlEiaiSLU/bLj6RfgUDREhFVY+knQrAmNT1hKUZjJ1ywu0R
+	 vxB8F0Tc+DrulF03J/rOqW3sErpiPkSj9DAoILdpJKGVVRMKwT/ZuRyU5f5D4t1atqXh6
+	 2IocwViNPdMTIj7KZlKLCOO8j/i6Wyt7hdCcDSpQeiOJF+u0R1E6YrF2kiocjZMbAJQW5
+	 U3zQDNzjAmtkS20tk5ajptCMXN7/kiC2sG4kqCNN8X3Kc917cobckOycjeZYB3s3njA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ygP2KCmJ;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=d4vULveg;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 33808606A323;
-	Wed, 25 Nov 2026 16:06:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 087DD606A31E;
+	Wed, 25 Nov 2026 16:06:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ygP2KCmJ
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 857751F000C4;
-	Wed, 25 Nov 2026 16:06:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=d4vULveg
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5A55F1F000C6;
+	Wed, 25 Nov 2026 16:06:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795622789;
-	bh=0K4venPjmVvuXREigx/aA1iLTkqgpIi93jFEvJzdTvg=;
+	s=korg; t=1795622791;
+	bh=mWY3tpquSCwtS5l3CxwwC5uNPh1YFAZaeMPpP8HrrC4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ygP2KCmJhNTAUEeyjaXd7jND3FqUup/37izzZHm3qa2DwVylU1i5ZsCrG13G1DYjP
-	 mija0AjduTWQ2a7ojWLJk9q9bHEGFpu9DzUHDLVXd1TQKEoxzKG7J6t0WZdVvRObFR
-	 mjlL6HH3Vb67b181uD6NIlb+RlWri/XbTypbRiR8=
+	b=d4vULvegatp/+fyjvzgNAZGDOju/yNt/Vr2Hcn1CI9bDtmjnMvtnU9HaJTJ6Fazy7
+	 fpknPJdvJ8yMIWxKP1IeKF4DOKxAmF9Gy8RJ+/yWBGiJW9VdbVmd09MQXF2ls6yElp
+	 6JXuIVsNi5WHSw8nd8vA2cr4C6Rj5FQhF2gzoO9I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhiqi Zhang <zhiqizhangg@gmail.com>,
-	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>
-Subject: [PATCH 6.18 650/990] bootconfig: Allow keys with the maximum supported depth
-Date: Wed, 25 Nov 2026 15:33:37 +0100
-Message-ID: <20261125143837.317826639@linuxfoundation.org>
+	Sergei Nizovtsev <snizovtsev@cloudlinux.com>,
+	Takashi Iwai <tiwai@suse.de>
+Subject: [PATCH 6.18 651/990] ALSA: caiaq: Kill EP1 URB before unregistering the input device
+Date: Wed, 25 Nov 2026 15:33:38 +0100
+Message-ID: <20261125143837.341633639@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143822.072087159@linuxfoundation.org>
 References: <20261125143822.072087159@linuxfoundation.org>
@@ -67,52 +67,124 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zhiqi Zhang <zhiqizhangg@gmail.com>
+From: Sergei Nizovtsev <snizovtsev@cloudlinux.com>
 
-commit cab697164b47eecfa2f146024f5d661f99a1a1e7 upstream.
+commit 5d325345185015024a86abca4cc5fa6a3f75294e upstream.
 
-xbc_verify_tree() accepts keys with XBC_DEPTH_MAX (16) components,
-but xbc_node_compose_key_after() returns -ERANGE immediately after
-storing the sixteenth component. It rejects the key before discovering
-that there are no more ancestors to collect.
+snd_disconnect() unregisters the input device via
+snd_usb_caiaq_input_disconnect() and only afterwards kills the EP1
+command URB (cdev->ep1_in_urb). The EP1 completion handler
+usb_ep1_command_reply_dispatch() feeds snd_usb_caiaq_input_dispatch()
+for EP1_CMD_READ_{ERP,ANALOG,IO} replies, which report into
+cdev->input_dev. Since commit b04dcbb7f7b1 ("ALSA: caiaq: Use
+snd_card_free_when_closed() at disconnection") the input device is
+unregistered from snd_usb_caiaq_input_disconnect() but cdev->input_dev
+is cleared only later, in snd_usb_caiaq_input_free() from the card
+destructor. As the dispatch guard only tests cdev->input_dev for NULL,
+an EP1 reply that completes after input_unregister_device() but before
+cdev->ep1_in_urb is killed reports into an input device that has
+already been unregistered and, with no evdev client holding it open,
+freed.
 
-For example, a.b.c.d.e.f.g.h.i.j.k.l.m.n.o.p = value can be attached
-to an initrd successfully. However, bootconfig -l stops listing and
-prints "Failed to compose key -34". In the kernel, the same error
-propagates through copy_xbc_key_value_list() during its length probe,
-so proc_boot_config_init() returns before creating /proc/bootconfig.
+Normally the window is closed by the USB core: usb_unbind_interface()
+calls usb_disable_interface() before ->disconnect(), which flushes the
+EP1 URB as long as endpoint 0x81 belongs to the interface being
+unbound. But caiaq addresses EP1 through the device-wide pipe
+usb_rcvbulkpipe(usb_dev, 0x1) without checking which interface owns
+the endpoint. If a device declares it in another interface, the URB
+stays live across snd_disconnect() of the interface that owns the card.
 
-Check the array capacity before storing the next component. This lets
-exactly XBC_DEPTH_MAX components be composed while retaining the check
-before any out-of-bounds store.
+This needs a crafted device descriptor; a device that has EP1 in the
+interface caiaq is bound to is not affected.
 
-I found this issue while reviewing bootconfig's depth handling and used
-OpenAI Codex to verify the failure and develop the fix. I reviewed the
-change and wrote and ran the regression tests.
+Kill cdev->ep1_in_urb (and the paired midi_out_urb) before the input
+and audio disconnect helpers, so no EP1 completion can run once the
+input device has been unregistered.
 
-Link: https://lore.kernel.org/all/20261104073742.21202-2-zhiqizhangg@gmail.com/
+Reproduced under KASAN with raw-gadget + dummy_hcd emulating an Audio
+Kontrol 1 (17cc:0815) with the EP1 bulk pair in interface 1: only
+interface 0 was bound to snd-usb-caiaq and then unbound through sysfs
+while the gadget flooded EP1 with EP1_CMD_READ_ERP replies. With no PCM
+stream running the window is very short and was only hit by stalling
+the unbinding CPU with a kgdb breakpoint at
+snd_usb_caiaq_audio_disconnect(). With the fix applied, the same test
+runs clean.
 
-Fixes: 76db5a27a827 ("bootconfig: Add Extra Boot Config support")
+  BUG: KASAN: slab-use-after-free in input_event+0x3a/0xc0
+  Read of size 8 at addr ffff8880151a4028 by task sh/118
+
+  Call Trace:
+   <IRQ>
+   input_event+0x3a/0xc0
+   snd_usb_caiaq_input_dispatch+0xab2/0xf00
+   usb_ep1_command_reply_dispatch+0x1f3/0x580
+   __usb_hcd_giveback_urb+0x246/0x400
+   dummy_timer+0x1415/0x3380
+   __hrtimer_run_queues+0x39d/0x800
+   hrtimer_run_softirq+0x187/0x2d0
+   handle_softirqs+0x1ff/0x930
+   __irq_exit_rcu+0x15b/0x210
+   irq_exit_rcu+0xe/0x20
+   sysvec_apic_timer_interrupt+0x81/0xb0
+   </IRQ>
+   <TASK>
+   asm_sysvec_apic_timer_interrupt+0x1a/0x20
+  RIP: 0010:snd_usb_caiaq_audio_disconnect+0x0/0x70
+   snd_disconnect+0x81/0x110
+   usb_unbind_interface+0x1a0/0x860
+   device_release_driver_internal+0x2c5/0x470
+   unbind_store+0xde/0x100
+   </TASK>
+
+  Allocated by task 80:
+   input_allocate_device+0x47/0x340
+   snd_usb_caiaq_input_init+0x4c/0x1ac0
+   snd_probe+0xab3/0x1160
+   usb_probe_interface+0x2ea/0x810
+
+  Freed by task 118:
+   kfree+0x1ea/0x5c0
+   input_dev_release+0xab/0xd0
+   device_release+0xcf/0x250
+   kobject_put+0x169/0x320
+   snd_disconnect+0x79/0x110
+   usb_unbind_interface+0x1a0/0x860
+
+Fixes: b04dcbb7f7b1 ("ALSA: caiaq: Use snd_card_free_when_closed() at disconnection")
 Cc: stable@vger.kernel.org
-Signed-off-by: Zhiqi Zhang <zhiqizhangg@gmail.com>
-Signed-off-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
+Signed-off-by: Sergei Nizovtsev <snizovtsev@cloudlinux.com>
+Assisted-by: Claude:claude-opus-4-8
+Link: https://patch.msgid.link/20261112094904.2430318-1-snizovtsev@cloudlinux.com
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- lib/bootconfig.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ sound/usb/caiaq/device.c |   11 ++++++++---
+ 1 file changed, 8 insertions(+), 3 deletions(-)
 
---- a/lib/bootconfig.c
-+++ b/lib/bootconfig.c
-@@ -302,9 +302,9 @@ int __init xbc_node_compose_key_after(st
- 		node = xbc_node_get_parent(node);
+--- a/sound/usb/caiaq/device.c
++++ b/sound/usb/caiaq/device.c
+@@ -593,14 +593,19 @@ static void snd_disconnect(struct usb_in
  
- 	while (node && node != root) {
--		keys[depth++] = xbc_node_index(node);
- 		if (depth == XBC_DEPTH_MAX)
- 			return -ERANGE;
-+		keys[depth++] = xbc_node_index(node);
- 		node = xbc_node_get_parent(node);
- 	}
- 	if (!node && root)
+ 	snd_card_disconnect(card);
+ 
++	/*
++	 * Kill the EP1 URB before disconnecting the input device: its
++	 * completion reports into cdev->input_dev, which input_disconnect()
++	 * frees without clearing the pointer.
++	 */
++	usb_kill_urb(cdev->ep1_in_urb);
++	usb_kill_urb(cdev->midi_out_urb);
++
+ #ifdef CONFIG_SND_USB_CAIAQ_INPUT
+ 	snd_usb_caiaq_input_disconnect(cdev);
+ #endif
+ 	snd_usb_caiaq_audio_disconnect(cdev);
+ 
+-	usb_kill_urb(cdev->ep1_in_urb);
+-	usb_kill_urb(cdev->midi_out_urb);
+-
+ 	snd_card_free_when_closed(card);
+ }
+ 
 
 
