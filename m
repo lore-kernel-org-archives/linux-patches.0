@@ -1,54 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795622594;
-	b=HjN6YJ3Drk7+dmqEdi05GltT2JIiekow6TEB8dmu3tvmG+zBWPbtBWTLEKVA3JE473WM
-	 52ggvY9KSQ2F3zVuA7uFI7PTb88OhFk9Sy2jQZ917zromHdPX/vBj/1zf5FIdZqrrnJlJ
-	 8ZQ87jj/fAODMWnE2N90G0n3Nmfy4HGHb8KvsHPO1Sfhe6lUHy6aXc8Zp7MMQac0t1z7D
-	 P2vjoTrQpPIPSHgnIJ0j5D09b8tLjFGu9bwSPrIJMToGckftzk1aGV3+Ss+A5k7Vdg4B2
-	 hwtKrclPIRF2dSZIt8Pg+AlBL0c5ZVjVn2y0g3cKjuEx7ynHoLBA4t2Q3yBMJJxGyxw==
+	t=1795622597;
+	b=z9ELWKV/Ep1qlgJROEbHlxZOIjpLNn2EzNtiWl5PjNBOmP+LOumC3ChJJSvBeX7opzxv
+	 ONH04dfuTDIPvGMlLiJttrYgdq9x4yWVfliTQP2H1pyT8guSRKLY7i/DAnkH+yrp6Qh12
+	 7veRzqTAJFLRBy3cMGl6ljnRtgdCHwwus+Gxv/+m3+KY4H04wbbV/FWV2QPXEyohFTV60
+	 XosBBRPA4cbGdBCjLLFfTm0ThS5g1sv+08arIuDCH8ns+iK3AQjitg/Cbh8pul1o6Jfo1
+	 JHI/SsrCtpX/1PSaj4XO26qT0V5gvlEfRpoo+5HoSdxiMmou10X55FyaMpEVmhJjMeA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795622594;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795622597;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=Jb0Lu+l99Vw74deu2NPhDWCXnhk1ekG3zFtwI4LTniE=;
-	b=huK9N6S8nJeuIGNjrYpgpeSK9kXt7XyiDUFYlCua2CiISSB8ovp/0rAwf0M+5sMF7S9x
-	 Yluj7p2ICBIHu6raOBMMS00es6/L+miQ8Hc1XqM8PROd6aBt7IWb/XQX3YHwKkGe1EcId
-	 RfxojTwOFpU5Fghju/+7LQFnxnp250LsF3KrbKlnncKI89CGAetieU5aKN97D8h+oAZyn
-	 +RTOdLGzOYr08cRT/vY7nnn06ESgNNjr5smtft2PyLp3uNC3tjFlq9TyldRD88UPgDBBq
-	 +ZfWbw8xTJaCsdHDIBMGPRbBfV5wbqtnkSbq72EyAcEIVYt7SBPA36EEGVMlQcYppLg==
+	bh=edhWjIWqZFcS0+NQxsc/hwcwVddW6ROj1QQK3gHSzXA=;
+	b=oUgO+OkZNlJuLsZ7QybS4DWhCqORCErJPLaHAqdqcjXv4bEHXWGP7QP8P9QUg95I1qFj
+	 oPaSU6ggbRsIX+aTiZ8fTs6+HKtQXOKbjsdvVHPJHrLT2YjneqRlP7zWgrpd+HzPJ701I
+	 PWKhFLhfJeAP7pLx/XHL3E3hdPE/+FWU0reUrGWP2vO6GRWLb8xrM0oLAyhbxQhCaezhx
+	 lLDs/cjQPd9GZwow426efwL7zuXpEYN3SCxdN24I1v7iaDCvjv8SNvjRmjR445V0yBhl3
+	 0u+A++5LZFcTqFSFcAtBF+IgCsu/rxIoHF/8quYKSXvlQ57OrYOaQnQOmWP8247rOQw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=mN6TmPsS;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=WZGCeH4U;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5E7C0606A321;
-	Wed, 25 Nov 2026 16:03:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4272F606A321;
+	Wed, 25 Nov 2026 16:03:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=mN6TmPsS
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 163CC1F000C6;
-	Wed, 25 Nov 2026 16:03:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=WZGCeH4U
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6313D1F000CA;
+	Wed, 25 Nov 2026 16:03:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795622593;
-	bh=Jb0Lu+l99Vw74deu2NPhDWCXnhk1ekG3zFtwI4LTniE=;
+	s=korg; t=1795622596;
+	bh=edhWjIWqZFcS0+NQxsc/hwcwVddW6ROj1QQK3gHSzXA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=mN6TmPsSxJjctufYesF4dD8uUZuamIGKq0mxrtutmQB11JYN2nBsNlFeT8d503TBy
-	 uFDcOPM1mrJlAS7jJIzLwxl8/A+rgr+L6V84jYOqUpHGdjaLlImqc9vuR7fb4a68vf
-	 hsQoR8drUJb/5Mb7fyNZ7umnhTyBmpo3DJfnoSUs=
+	b=WZGCeH4Uu2YtrvoVcE6lFNaSazlxiUmatAXIxRXUmjZKtFDrSWc+OwijHEsOnS4l1
+	 vw0bNH1bQ2ouW7pE5cn2HekmqIYM74Ldd0h5q9qN/QncCVPGTwTiiYwaYA+ilvGTE9
+	 yDKeS+lk5dvVHeixsfTF3m9t1v3Pc2QO0uhQvqJM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	kernel test robot <lkp@intel.com>,
-	Linus Walleij <linusw@kernel.org>,
-	Frank Li <Frank.Li@nxp.com>,
-	Vinod Koul <vkoul@kernel.org>,
+	Kaifeng Wang <kaifengw@google.com>,
+	Stanislav Fomichev <sdf@fomichev.me>,
+	Bobby Eshleman <bobbyeshleman@meta.com>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 585/990] dmaengine: ste_dma40: Preserve the LCPA I/O address space
-Date: Wed, 25 Nov 2026 15:32:32 +0100
-Message-ID: <20261125143835.794364255@linuxfoundation.org>
+Subject: [PATCH 6.18 586/990] net: devmem: check uid and netns in net_devmem_get_binding()
+Date: Wed, 25 Nov 2026 15:32:33 +0100
+Message-ID: <20261125143835.818025786@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143822.072087159@linuxfoundation.org>
 References: <20261125143822.072087159@linuxfoundation.org>
@@ -70,89 +70,126 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Linus Walleij <linusw@kernel.org>
+From: Kaifeng Wang <kaifengw@google.com>
 
-[ Upstream commit 42c31fec1ca76b8b5f7759def122d418dff2cd4b ]
+[ Upstream commit 3a82195416fd71fdd6cb4ff80f611ec28073be16 ]
 
-The LCPA area is mapped with devm_ioremap(), but lcpa_base and the
-per-channel lcpa pointer lack __iomem annotations. This loses the I/O
-address space and makes sparse warn when d40_current_addr() assigns
-LCPA register addresses to its __iomem pointers.
+NETDEV_CMD_BIND_TX is unprivileged, and dmabuf binding IDs are allocated
+from a single global xarray. Currently net_devmem_get_binding() looks up
+the binding by ID without checking whether the sending socket belongs to
+the same user or network namespace that created the binding.
 
-Annotate both pointers and the LCPA argument of d40_log_lli_lcpa_write()
-to preserve the I/O address space from the mapping to the register
-accessors. This also fixes the existing LCPA read and write warnings
-without changing the generated code.
+Record the creating netlink socket's network namespace and UID on the
+binding, and verify both in net_devmem_get_binding() before checking the
+route destination device. Return -EINVAL on mismatch so callers cannot
+distinguish non-existent IDs from bindings owned by other users.
 
-Fixes: c80edceff29e ("dmaengine: ste_dma40: Fix cyclic transfer residue")
-Reported-by: kernel test robot <lkp@intel.com>
-Closes: https://lore.kernel.org/oe-kbuild-all/202610090216.pjMRxhRL-lkp@intel.com/
-Assisted-by: LLM
-Signed-off-by: Linus Walleij <linusw@kernel.org>
-Reviewed-by: Frank Li <Frank.Li@nxp.com>
-Link: https://patch.msgid.link/20261010-dma40-smatch-fix-v1-1-26ca10043957@kernel.org
-Signed-off-by: Vinod Koul <vkoul@kernel.org>
+Fixes: bd61848900bf ("net: devmem: Implement TX path")
+Signed-off-by: Kaifeng Wang <kaifengw@google.com>
+Acked-by: Stanislav Fomichev <sdf@fomichev.me>
+Reviewed-by: Bobby Eshleman <bobbyeshleman@meta.com>
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+[ sashal: Kept this branch's simpler net_devmem_bind_dmabuf() signature, adding nl_sk without the vdev/niov_shift parameters or the netkit bind-device logic, and adjusted the struct hunk context. ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/dma/ste_dma40.c    | 4 ++--
- drivers/dma/ste_dma40_ll.c | 8 ++++----
- drivers/dma/ste_dma40_ll.h | 2 +-
- 3 files changed, 7 insertions(+), 7 deletions(-)
+ net/core/devmem.c      | 7 ++++++-
+ net/core/devmem.h      | 5 +++++
+ net/core/netdev-genl.c | 6 ++++--
+ 3 files changed, 15 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/dma/ste_dma40.c b/drivers/dma/ste_dma40.c
-index 2c83eb05faa16..6699689deecae 100644
---- a/drivers/dma/ste_dma40.c
-+++ b/drivers/dma/ste_dma40.c
-@@ -509,7 +509,7 @@ struct d40_chan {
- 	u32				 src_def_cfg;
- 	u32				 dst_def_cfg;
- 	struct d40_def_lcsp		 log_def;
--	struct d40_log_lli_full		*lcpa;
-+	struct d40_log_lli_full __iomem	*lcpa;
- 	/* Runtime reconfiguration */
- 	dma_addr_t			runtime_addr;
- 	enum dma_transfer_direction	runtime_direction;
-@@ -617,7 +617,7 @@ struct d40_base {
- 	/* Physical half channels */
- 	struct d40_phy_res		 *phy_res;
- 	struct d40_lcla_pool		  lcla_pool;
--	void				 *lcpa_base;
-+	void __iomem			 *lcpa_base;
- 	dma_addr_t			  phy_lcpa;
- 	resource_size_t			  lcpa_size;
- 	struct kmem_cache		 *desc_slab;
-diff --git a/drivers/dma/ste_dma40_ll.c b/drivers/dma/ste_dma40_ll.c
-index 4c489b126cb27..3be7f5b1abb08 100644
---- a/drivers/dma/ste_dma40_ll.c
-+++ b/drivers/dma/ste_dma40_ll.c
-@@ -333,10 +333,10 @@ static void d40_log_lli_link(struct d40_log_lli *lli_dst,
- 		(dlos << D40_MEM_LCSP1_SLOS_POS);
- }
- 
--void d40_log_lli_lcpa_write(struct d40_log_lli_full *lcpa,
--			   struct d40_log_lli *lli_dst,
--			   struct d40_log_lli *lli_src,
--			   int next, unsigned int flags)
-+void d40_log_lli_lcpa_write(struct d40_log_lli_full __iomem *lcpa,
-+			    struct d40_log_lli *lli_dst,
-+			    struct d40_log_lli *lli_src,
-+			    int next, unsigned int flags)
+diff --git a/net/core/devmem.c b/net/core/devmem.c
+index 16ce197cb0faf..9b937d426cb9a 100644
+--- a/net/core/devmem.c
++++ b/net/core/devmem.c
+@@ -180,6 +180,7 @@ net_devmem_bind_dmabuf(struct net_device *dev,
+ 		       struct device *dma_dev,
+ 		       enum dma_data_direction direction,
+ 		       unsigned int dmabuf_fd, struct netdev_nl_sock *priv,
++		       const struct sock *nl_sk,
+ 		       struct netlink_ext_ack *extack)
  {
- 	d40_log_lli_link(lli_dst, lli_src, next, flags);
+ 	struct net_devmem_dmabuf_binding *binding;
+@@ -207,6 +208,8 @@ net_devmem_bind_dmabuf(struct net_device *dev,
+ 	}
  
-diff --git a/drivers/dma/ste_dma40_ll.h b/drivers/dma/ste_dma40_ll.h
-index 55090cb310579..ca9d076493610 100644
---- a/drivers/dma/ste_dma40_ll.h
-+++ b/drivers/dma/ste_dma40_ll.h
-@@ -455,7 +455,7 @@ int d40_log_sg_to_lli(struct scatterlist *sg,
- 		      u32 lcsp13, /* src or dst*/
- 		      u32 data_width1, u32 data_width2);
+ 	binding->dev = dev;
++	write_pnet(&binding->net, sock_net(nl_sk));
++	binding->uid = sk_uid(nl_sk);
+ 	xa_init_flags(&binding->bound_rxqs, XA_FLAGS_ALLOC);
  
--void d40_log_lli_lcpa_write(struct d40_log_lli_full *lcpa,
-+void d40_log_lli_lcpa_write(struct d40_log_lli_full __iomem *lcpa,
- 			    struct d40_log_lli *lli_dst,
- 			    struct d40_log_lli *lli_src,
- 			    int next, unsigned int flags);
+ 	refcount_set(&binding->ref, 1);
+@@ -374,7 +377,9 @@ struct net_devmem_dmabuf_binding *net_devmem_get_binding(struct sock *sk,
+ 	int err = 0;
+ 
+ 	binding = net_devmem_lookup_dmabuf(dmabuf_id);
+-	if (!binding || !binding->tx_vec) {
++	if (!binding || !binding->tx_vec ||
++	    !net_eq(sock_net(sk), read_pnet(&binding->net)) ||
++	    !uid_eq(sk_uid(sk), binding->uid)) {
+ 		err = -EINVAL;
+ 		goto out_err;
+ 	}
+diff --git a/net/core/devmem.h b/net/core/devmem.h
+index 101150d761af2..674279180dc8d 100644
+--- a/net/core/devmem.h
++++ b/net/core/devmem.h
+@@ -10,6 +10,7 @@
+ #ifndef _NET_DEVMEM_H
+ #define _NET_DEVMEM_H
+ 
++#include <net/net_namespace.h>
+ #include <net/netmem.h>
+ #include <net/netdev_netlink.h>
+ 
+@@ -21,6 +22,8 @@ struct net_devmem_dmabuf_binding {
+ 	struct sg_table *sgt;
+ 	struct net_device *dev;
+ 	struct gen_pool *chunk_pool;
++	possible_net_t net;
++	kuid_t uid;
+ 	/* Protect dev */
+ 	struct mutex lock;
+ 
+@@ -88,6 +91,7 @@ net_devmem_bind_dmabuf(struct net_device *dev,
+ 		       struct device *dma_dev,
+ 		       enum dma_data_direction direction,
+ 		       unsigned int dmabuf_fd, struct netdev_nl_sock *priv,
++		       const struct sock *nl_sk,
+ 		       struct netlink_ext_ack *extack);
+ struct net_devmem_dmabuf_binding *net_devmem_lookup_dmabuf(u32 id);
+ void net_devmem_unbind_dmabuf(struct net_devmem_dmabuf_binding *binding);
+@@ -175,6 +179,7 @@ net_devmem_bind_dmabuf(struct net_device *dev,
+ 		       enum dma_data_direction direction,
+ 		       unsigned int dmabuf_fd,
+ 		       struct netdev_nl_sock *priv,
++		       const struct sock *nl_sk,
+ 		       struct netlink_ext_ack *extack)
+ {
+ 	return ERR_PTR(-EOPNOTSUPP);
+diff --git a/net/core/netdev-genl.c b/net/core/netdev-genl.c
+index 77042ac6d0428..d42e4c4d7a7d3 100644
+--- a/net/core/netdev-genl.c
++++ b/net/core/netdev-genl.c
+@@ -1004,7 +1004,8 @@ int netdev_nl_bind_rx_doit(struct sk_buff *skb, struct genl_info *info)
+ 	}
+ 
+ 	binding = net_devmem_bind_dmabuf(netdev, dma_dev, DMA_FROM_DEVICE,
+-					 dmabuf_fd, priv, info->extack);
++					 dmabuf_fd, priv, NETLINK_CB(skb).sk,
++					 info->extack);
+ 	if (IS_ERR(binding)) {
+ 		err = PTR_ERR(binding);
+ 		goto err_rxq_bitmap;
+@@ -1097,7 +1098,8 @@ int netdev_nl_bind_tx_doit(struct sk_buff *skb, struct genl_info *info)
+ 
+ 	dma_dev = netdev_queue_get_dma_dev(netdev, 0);
+ 	binding = net_devmem_bind_dmabuf(netdev, dma_dev, DMA_TO_DEVICE,
+-					 dmabuf_fd, priv, info->extack);
++					 dmabuf_fd, priv, NETLINK_CB(skb).sk,
++					 info->extack);
+ 	if (IS_ERR(binding)) {
+ 		err = PTR_ERR(binding);
+ 		goto err_unlock_netdev;
 -- 
 2.53.0
 
