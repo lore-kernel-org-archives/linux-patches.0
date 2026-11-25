@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795620254;
-	b=SYcPPEh1ZLV+cmJ6XS5KCLpaWUynuO8ZHg/xogF8qopDK6MSTnc7/Ay3jW+FmKeCKa2Y
-	 V1VqHEYFO/BpNUUYS6zAlaGHSjuDp9owpZ7vZZrM31qj3YIVuSuEG5G5ZdO7DEz7gNi0f
-	 oBeM2vTvF4LlYnHmcINjF1B60XIvdK7V4m40yBdC1J4MS13HCXGI7kjZCAShReJzPMGfN
-	 ZM9QD57JsiCzA8I+s/j26FNpjSKPxL/ymGGXnxU47omuFC6/oQ0c7i3LnQT8/0CEl5enX
-	 Py9hyKFOFnCdygK7bTL0Y7dGEPEtFaNT2IYeYryDctDfVI+SWl521MoJQnlrYPJLsxw==
+	t=1795620257;
+	b=cl6mpT4sZgvLToyuCVNVfzHO9PLomt7Ade5qOjMCOEmRza6UxzOQY2XdI4Enooassewz
+	 /2NRSpqJzhU/TU2wJGAETsBv/825p3no+RDVeZYwQsEZind3kDNP5YM3Lst7hQGjPqFRn
+	 GidkKhXA7qMjoiKLg4ThQaqcvcG47n139+G6SUElGB9ASpiWLIoyafe/YRtSDKNF5Zgue
+	 C9Prq5vtwSNnCVjWOspnVyMUlVP6/mt+Q4pjNDJV6dFOaebaKPj8K/YE9gl4s6T+6T9LE
+	 S7Vt/cFzA1zmmeMmhG0mHMVkIRiTyr70ogyRCRO+1imXmUkZOnjODU+ppZew0jh/7Kg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795620254;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795620257;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=NIVELQ6bSE/pAE79FF7jIjYF9bQxrpNBgLeUUEkVX6Q=;
-	b=govQR700qEfl22IyAOpDnJLI7KV419NmVPGMDLUq4dXgIVZK87D3LjVeljTXvNlQDf1q
-	 BZ5IegwBuP/oInxt2mK3IjKjAwlqDJIU4jGXnlUme1yJHpwdwWOhMofyb/HRAoIeVrGbe
-	 MvQnQUjXPtdfQjm3hI6WSHZnqa/6g0Qvreq2HozuQZwPIOjG55VE+i5jzozB5uG/ovyMN
-	 xL8XzPggswjMnnU/xUDum9PoLXsYBqdpmal4NHn/pfqLnjTQx+WDiqy1GKgkfdjWV+KI1
-	 Qvdt3+tS/adqCuotfJJbvKZIutID+iUXcaKNS0RGEOqVFPWQMrhO47zrRl24g0oiG1g==
+	bh=4G50shR96MApUVVmjdSffuk06SYQlMAZlQHrIpml8Qk=;
+	b=E/n8YtrjpIgWW7KatNVjH8omVbItrFPHc3WNkAHDQaIAyvGsTI6c+Y1b17POavMydd46
+	 Z81mpdCxU/T2x73rmnEJe+GxPXQIcItchE8pEVlwCsK9xOofBO4jtgwc5+95iZ6fPKmmz
+	 q2kdnC6t7W943fv3JTB29WnMRYXUTj1M7irfL4Jp+qWiHGH99djVcCR65gQ8LKu21KjM1
+	 95In9skWta+fIISJg25i2w0IyyK2cz34wdLhrQjxcC4R9SrOA4Azw4MqAsrjgotWEhGR1
+	 pLJI05QW8nKDx7QPE9yp+i2Y/j4d5zh4XDQeKBdTal/jHH6w0964i1oJ8F2FRDv7yYQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=IilSMo+v;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=QPA3RH8z;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0F70D606A323;
-	Wed, 25 Nov 2026 15:24:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F0DBE606A31E;
+	Wed, 25 Nov 2026 15:24:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=IilSMo+v
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 09D241F000C6;
-	Wed, 25 Nov 2026 15:24:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=QPA3RH8z
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 303261F000C6;
+	Wed, 25 Nov 2026 15:24:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795620253;
-	bh=NIVELQ6bSE/pAE79FF7jIjYF9bQxrpNBgLeUUEkVX6Q=;
+	s=korg; t=1795620256;
+	bh=4G50shR96MApUVVmjdSffuk06SYQlMAZlQHrIpml8Qk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=IilSMo+vYYN/jl/E+ujPwVatrhlHF5+jC50ZPbohE9cpEEio3Uzyw/LdmBX/s+XEL
-	 SLB4WUiA+nLL1ebkiuaqS+/6YDfoqWZ0q3gEk0vHczlMM5EBw9ilZKeNSPbZJRvnWH
-	 PIExVi+E5VyMzjGFL0Z6cwSnwpN26IlDTHRtehko=
+	b=QPA3RH8zVifSLdUfLrk5liQLgDBQzztwyWoatpUDZRZJbIzNHMT3T/vxYS5/XoYmZ
+	 D5EIdwdfQmW0EpNO466IxhAqmajyuvWprX0tuqOYuZ13iW7kJFUDadInlE802Nm3dh
+	 lN4JUUTTtH91j3gtQXQJTcNVDx65HbC0Sud3l768=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+a2626a25eb2595e3ec3c@syzkaller.appspotmail.com,
-	Edward Adam Davis <eadavis@sina.com>,
+	syzbot+c8564fc0a96e3ecbe4d4@syzkaller.appspotmail.com,
+	Kirtikumar Anandrao Ramchandani <kirtiar15502@gmail.com>,
 	Mikulas Patocka <mpatocka@redhat.com>
-Subject: [PATCH 7.3 0858/1005] dm cache: reject kcopyd client destory if it setup failed
-Date: Wed, 25 Nov 2026 15:36:36 +0100
-Message-ID: <20261125143841.807382428@linuxfoundation.org>
+Subject: [PATCH 7.3 0859/1005] dm cache: validate the discard block size before narrowing
+Date: Wed, 25 Nov 2026 15:36:37 +0100
+Message-ID: <20261125143841.831232883@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143821.729802100@linuxfoundation.org>
 References: <20261125143821.729802100@linuxfoundation.org>
@@ -68,49 +68,80 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Edward Adam Davis <eadavis@sina.com>
+From: Kirtikumar Anandrao Ramchandani <kirtiar15502@gmail.com>
 
-commit 8b97b168eb4d3affcf23d2980a0c3f35ed9262e2 upstream.
+commit df8daa4d916c88ef7888c738e0eb3b6f11714a6f upstream.
 
-The value of cache->copier is -EINTR when failed to create a rescuer
-kthread for wq kcopyd, in cache_create(), the code jumps directly to
-__destroy(cache), it merely performs a simple check to see whether copier
-is NULL, potentially hitting:
+The discard block size doubles until the origin fits within the discard
+bitset limit. too_many_discard_blocks() passes this sector_t size to
+sector_div(), whose divisor is only 32 bits. Once the size exceeds that
+range, the division uses a truncated divisor, which can become zero.
 
-BUG: KASAN: null-ptr-deref in dm_kcopyd_client_destroy+0xae/0x480 drivers/md/dm-kcopyd.c:980
-Read of size 4 at addr 0000000000000174 by task syz.2.19/6560
-Call Trace:
- dm_kcopyd_client_destroy+0xae/0x480 drivers/md/dm-kcopyd.c:980
- __destroy+0x172/0x2f0 drivers/md/dm-cache-target.c:1973
- cache_create drivers/md/dm-cache-target.c:2604 [inline]
- cache_ctr+0x1674/0x2bf0 drivers/md/dm-cache-target.c:2649
- dm_table_add_target+0x58d/0xc70 drivers/md/dm-table.c:749
- populate_table drivers/md/dm-ioctl.c:1602 [inline]
- table_load+0x325/0x8a0 drivers/md/dm-ioctl.c:1645
- ctl_ioctl drivers/md/dm-ioctl.c:2221 [inline]
+Use a 64-bit divisor when checking the block count. The selected size is
+stored in a u32, so reject sizes that cannot be represented before the
+assignment and before calculating the bitset size. This prevents a
+truncated zero size from reaching dm_sector_div_up().
 
-Set copier to NULL to avoid destroying a invalid kcopy client.
+An earlier proposal checks whether the mapped length exceeds the origin
+device. This fix also covers an origin device whose valid size requires a
+discard block size beyond the field's range.
 
+Reported-by: syzbot+c8564fc0a96e3ecbe4d4@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=c8564fc0a96e3ecbe4d4
 Cc: stable@vger.kernel.org
-Fixes: c6b4fcbad044 ("dm: add cache target")
-Reported-by: syzbot+a2626a25eb2595e3ec3c@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=a2626a25eb2595e3ec3c
-Signed-off-by: Edward Adam Davis <eadavis@sina.com>
+Fixes: 08b184514f65 ("dm cache: revert 'prevent corruption caused by discard_block_size > cache_block_size'")
+Signed-off-by: Kirtikumar Anandrao Ramchandani <kirtiar15502@gmail.com>
 Signed-off-by: Mikulas Patocka <mpatocka@redhat.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/md/dm-cache-target.c |    1 +
- 1 file changed, 1 insertion(+)
+ drivers/md/dm-cache-target.c |   14 ++++++++++----
+ 1 file changed, 10 insertions(+), 4 deletions(-)
 
 --- a/drivers/md/dm-cache-target.c
 +++ b/drivers/md/dm-cache-target.c
-@@ -2544,6 +2544,7 @@ static int cache_create(struct cache_arg
- 	if (IS_ERR(cache->copier)) {
- 		*error = "could not create kcopyd client";
- 		r = PTR_ERR(cache->copier);
-+		cache->copier = NULL;
- 		goto bad;
- 	}
+@@ -17,6 +17,7 @@
+ #include <linux/jiffies.h>
+ #include <linux/init.h>
+ #include <linux/kstrtox.h>
++#include <linux/math64.h>
+ #include <linux/mempool.h>
+ #include <linux/module.h>
+ #include <linux/rwsem.h>
+@@ -2383,9 +2384,7 @@ static int create_cache_policy(struct ca
+ static bool too_many_discard_blocks(sector_t discard_block_size,
+ 				    sector_t origin_size)
+ {
+-	(void) sector_div(origin_size, discard_block_size);
+-
+-	return origin_size > MAX_DISCARD_BLOCKS;
++	return div64_u64(origin_size, discard_block_size) > MAX_DISCARD_BLOCKS;
+ }
  
+ static sector_t calculate_discard_block_size(sector_t cache_block_size,
+@@ -2422,6 +2421,7 @@ static int cache_create(struct cache_arg
+ 	struct cache *cache;
+ 	struct dm_target *ti = ca->ti;
+ 	dm_block_t origin_blocks;
++	sector_t discard_block_size;
+ 	struct dm_cache_metadata *cmd;
+ 	bool may_format = ca->features.mode == CM_WRITE;
+ 
+@@ -2521,9 +2521,15 @@ static int cache_create(struct cache_arg
+ 	}
+ 	clear_bitset(cache->dirty_bitset, from_cblock(cache->cache_size));
+ 
+-	cache->discard_block_size =
++	discard_block_size =
+ 		calculate_discard_block_size(cache->sectors_per_block,
+ 					     cache->origin_sectors);
++	if (discard_block_size > U32_MAX) {
++		*error = "Discard block size exceeds 32 bits";
++		r = -EOVERFLOW;
++		goto bad;
++	}
++	cache->discard_block_size = discard_block_size;
+ 	cache->discard_nr_blocks = to_dblock(dm_sector_div_up(cache->origin_sectors,
+ 							      cache->discard_block_size));
+ 	cache->discard_bitset = alloc_bitset(from_dblock(cache->discard_nr_blocks));
 
 
