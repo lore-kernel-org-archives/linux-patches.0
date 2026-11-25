@@ -1,53 +1,57 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795623878;
-	b=GHC28uvL6z7b8ESI1Ffp6/aDRTmqIprwjP42ghZG0OziQXLqw1YEALzJa8RhVJ3qI89N
-	 6G1D8/Ipa/Pv2D3QkiktzZGLkk3hlX8G2DtwOuG+TWJm0PD3ZUEvDU4kRzvmfUu66Oc7Y
-	 2WYbGvfS0ivWQRPArKwlIlWjOJiifq9i2Q5td1MMnEdNWWl+/pHzvoPxp6W7WDlbPmqCv
-	 Xda4/Q1pvST4uX3TOOE0D+SJenSlaMcvipSsHRJNTd5nJiZ21raqTM12pVVpJoTq7iRYw
-	 JxBwh5Y75nqrA6MbdIiCDh/G3eyIcG00IpRUNg95AVwyxpxqrMbRtYjQ+RquzmYnSjQ==
+	t=1795623881;
+	b=hG8+witM73gJY+IMReQ0ra36CHcTIO9xaHJutjqw0OFMp6pZDol7e8Tk0n//ng1XD8Fz
+	 oLS4Gqt9xC8dun8NJ4xy3lX7vBSzluWsYhN2RtxvvWuMPpM90wITqMTcY3VYUO+KP4xng
+	 3CAmP5FoV4E3bDft2txssP7BcoBpnwCZzOLz7KoPtTLNlxtCD7sBE9z39Y3+x7V39gq4o
+	 NuzHB8jO29fdO9wJ9vHK6DNBhirTjdm4WyXVv0qA+PUlzGFlS8p7bVQBnOYmb88IISQDR
+	 LjsarF4THvZFQjFmlURJOdeiQWbQhJ+uYGKTY7AGLvcT8lM+QBd5FSN4gCIdKRNSzHA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795623878;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795623881;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=ly41RzhNoReo48cAOvYeh7E7TsHN4i9fd1TON09BeE4=;
-	b=wecqAXTtLVj1nr0yafDxZt7BMi+Yd9F8DyHnU4crmDo2isBJwUssKwS5yzUjqlsUW1eh
-	 FMeylgUAjLgS/zK3RhHQJZREYsIuKV5KCxgay3TAGJhZz4s/pOOWWEayfB+3qMpLg5u8H
-	 qBQzy7ebK3fu9Shdoa6ECX3bcRub1XlV4TlD7BLwt0VRYPlIvJTuq10pcMPXPkksltxhO
-	 JkEQNIq6+4vlOU0j0qyzuS/XfT04fy0fBkC/ZSNOnvIs/kkRikV2oGTDss6nYhPNl5+Wb
-	 YMwPgT5aolLkBeCqHkaGrl8sW4AdSV/VWwpQccb0hWRIddiKjtwL+51jEx3lfSvSkXw==
+	bh=PKHXsGcYE+q24dJtoA1kgj6MeEvVpViUK9v3VoxMSY0=;
+	b=yVfBxKQP9T66utiRkKrLfG8nInTMllctIbKp4SeFvusJwU+4e8+EK5M29Kyh9OYINI0Q
+	 YqO9WzmbmaIdYgRyGlo0iG+kDFcYMusRoRulMZL2D0Knf1gqzkO+joxJ8w5P3PDEVkFYw
+	 dJRPhEcHjixRA2KX/XEsoaeOoPqAX6dcL+7OwN2rv4eUis+IvQos26oE1kfZpyLv0rMsf
+	 TmP+wrjLY94FnN3vOKEPFhN8NPp6jQDg0VmxwjrZIRwkC6DtUdJGcnsOrAOIAIsIAP44Y
+	 WbJVWj2rgQROs7vb4/l/uKWLUjfXQ88y/ROL+9jKUyLjRq371TwhHTNxT7QdRrCg8RQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=O5xEgkUh;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="C/uhe15w";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0FE3F606A326;
-	Wed, 25 Nov 2026 16:24:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3BE26606A326;
+	Wed, 25 Nov 2026 16:24:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=O5xEgkUh
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5F0931F000C6;
-	Wed, 25 Nov 2026 16:24:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=C/uhe15w
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 350FD1F000C0;
+	Wed, 25 Nov 2026 16:24:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795623877;
-	bh=ly41RzhNoReo48cAOvYeh7E7TsHN4i9fd1TON09BeE4=;
+	s=korg; t=1795623880;
+	bh=PKHXsGcYE+q24dJtoA1kgj6MeEvVpViUK9v3VoxMSY0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=O5xEgkUhjUysT8WInAB1Apvyh9CvFJEoq2Ah8ta+zuKBzMp/qCKml2Sel8l7GquAo
-	 q7NGbEOZODlG7zRQp5zPiTaqucgqpqSot5KjAbHrGby7yKMlH9T6wHPF+NukmhYP3o
-	 dypswdLQXx9LI+3c8qp5nMlAydP8an9UnxMvHymM=
+	b=C/uhe15wdejeXGRRsXOkQW7jFUHc6yy3z7eXbEEEVZxHrmRO2dMUt4KQFntMe45q0
+	 +fct0xR6jXL3lhlQL5PJ/qDcr4seFF21QpveHEAZeLfc6LfMqHj8yYCui27FBbOyK9
+	 GPnuMWjVadL7DcVyEH9XNReHIuws55ZkSsD3VZq0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zizhi Wo <wozizhi@huaweicloud.com>,
-	Jan Kara <jack@suse.cz>,
-	Christian Brauner <brauner@kernel.org>,
+	Xianrui Dong <dongxianrui1@gmail.com>,
+	KP Singh <kpsingh@kernel.org>,
+	Amery Hung <ameryhung@gmail.com>,
+	Song Liu <song@kernel.org>,
+	Daniel Borkmann <daniel@iogearbox.net>,
+	Kumar Kartikeya Dwivedi <memxor@gmail.com>,
+	Yingke Xiao <inkxiao12@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 014/816] fs: aio: reject partial mremap to avoid Null-pointer-dereference error
-Date: Wed, 25 Nov 2026 15:26:02 +0100
-Message-ID: <20261125143849.547194008@linuxfoundation.org>
+Subject: [PATCH 6.12 015/816] bpf: Reject NULL data/sig in bpf_verify_pkcs7_signature
+Date: Wed, 25 Nov 2026 15:26:03 +0100
+Message-ID: <20261125143849.569943682@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143849.205329330@linuxfoundation.org>
 References: <20261125143849.205329330@linuxfoundation.org>
@@ -69,96 +73,66 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zizhi Wo <wozizhi@huawei.com>
+From: KP Singh <kpsingh@kernel.org>
 
-[ Upstream commit 3adf7ae18bf42601246031002287c103a27df307 ]
+[ Upstream commit 49b18315be4eecfc36b75f4aecb4d40a87d68a20 ]
 
-[BUG]
-Recently, our internal syzkaller testing uncovered a null pointer
-dereference issue:
-BUG: kernel NULL pointer dereference, address: 0000000000000000
-...
-[   51.111664]  filemap_read_folio+0x25/0xe0
-[   51.112410]  filemap_fault+0xad7/0x1250
-[   51.113112]  __do_fault+0x4b/0x460
-[   51.113699]  do_pte_missing+0x5bc/0x1db0
-[   51.114250]  ? __pte_offset_map+0x23/0x170
-[   51.114822]  __handle_mm_fault+0x9f8/0x1680
-...
-Crash analysis showed the file involved was an AIO ring file. The
-phenomenon triggered is the same as the issue described in [1].
+__bpf_dynptr_data() can return NULL (FILE dynptrs, any non-contiguous
+backing). bpf_verify_pkcs7_signature() forwards the pointer to
+verify_pkcs7_signature() unchecked, causing a NULL deref in
+asn1_ber_decoder() reachable from a sleepable BPF LSM at lsm.s/bpf.
 
-[CAUSE]
-Consider the following scenario: userspace sets up an AIO context via
-io_setup(), which creates a VMA covering the entire ring buffer. Then
-userspace calls mremap() with the AIO ring address as the source, a smaller
-old_len (less than the full ring size), MREMAP_MAYMOVE set, and without
-MREMAP_DONTUNMAP. The kernel will relocate the requested portion to a new
-destination address.
+NULL-check both pointers and reject with -EINVAL. Mirrors the guards
+already in kernel/bpf/crypto.c.
 
-During this move, __split_vma() splits the original AIO ring VMA. The
-requested portion is unmapped from the source and re-established at the
-destination, while the remainder stays at the original source address as
-an orphan VMA. The aio_ring_mremap() callback fires on the new destination
-VMA, updating ctx->mmap_base to the destination address. But the callback
-is unaware that only a partial region was moved and that an orphan VMA
-still exists at the source:
-
-  source(AIO):
-  +-------------------+---------------------+
-  |  moved to dest    |  orphan VMA (AIO)   |
-  +-------------------+---------------------+
-  A                 A+partial_len        A+ctx->mmap_size
-
-  dest:
-  +-------------------+
-  |  moved VMA (AIO)  |
-  +-------------------+
-  B                 B+partial_len
-
-Later, io_destroy() calls vm_munmap(ctx->mmap_base, ctx->mmap_size), which
-unmaps the destination. This not only fails to unmap the orphan VMA at the
-source, but also overshoots the destination VMA and may unmap unrelated
-mappings adjacent to it! After put_aio_ring_file() calls truncate_setsize()
-to remove all pages from the pagecache, any subsequent access to the orphan
-VMA triggers filemap_fault(), which calls a_ops->read_folio(). Since aio
-does not implement read_folio, this results in a NULL pointer dereference.
-
-[FIX]
-Note that expanding mremap (new_len > old_len) is already rejected because
-AIO ring VMAs are created with VM_DONTEXPAND. The only problematic case is
-a partial move where "old_len == new_len" but both are smaller than the
-full ring size.
-
-Fix this by checking in aio_ring_mremap() that the new VMA covers the
-entire ring. This ensures the AIO ring is always moved as a whole,
-preventing orphan VMAs and the subsequent crash.
-
-[1]: https://lore.kernel.org/all/20260413010814.548568-1-wozizhi@huawei.com/
-
-Signed-off-by: Zizhi Wo <wozizhi@huaweicloud.com>
-Link: https://patch.msgid.link/20260418060634.3713620-1-wozizhi@huaweicloud.com
-Reviewed-by: Jan Kara <jack@suse.cz>
-Signed-off-by: Christian Brauner <brauner@kernel.org>
+Fixes: 865b0566d8f1 ("bpf: Add bpf_verify_pkcs7_signature() kfunc")
+Reported-by: Xianrui Dong <dongxianrui1@gmail.com>
+Signed-off-by: KP Singh <kpsingh@kernel.org>
+Reviewed-by: Amery Hung <ameryhung@gmail.com>
+Acked-by: Song Liu <song@kernel.org>
+Acked-by: Daniel Borkmann <daniel@iogearbox.net>
+Link: https://lore.kernel.org/bpf/20260520024059.313468-1-kpsingh@kernel.org
+Signed-off-by: Kumar Kartikeya Dwivedi <memxor@gmail.com>
+[ In 6.12.y, bpf_verify_pkcs7_signature() lives in kernel/trace/bpf_trace.c
+  instead of kernel/bpf/helpers.c. Adapt to kernel/trace/bpf_trace.c. ]
+Signed-off-by: Yingke Xiao <inkxiao12@gmail.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/aio.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ kernel/trace/bpf_trace.c                                    | 5 +++++
+ tools/testing/selftests/bpf/prog_tests/kfunc_dynptr_param.c | 2 +-
+ 2 files changed, 6 insertions(+), 1 deletion(-)
 
-diff --git a/fs/aio.c b/fs/aio.c
-index 44447e4af6286..eac137a3a2b30 100644
---- a/fs/aio.c
-+++ b/fs/aio.c
-@@ -369,7 +369,8 @@ static int aio_ring_mremap(struct vm_area_struct *vma)
+diff --git a/kernel/trace/bpf_trace.c b/kernel/trace/bpf_trace.c
+index 1d6709e261b8c..a174d4b27d662 100644
+--- a/kernel/trace/bpf_trace.c
++++ b/kernel/trace/bpf_trace.c
+@@ -1408,8 +1408,13 @@ __bpf_kfunc int bpf_verify_pkcs7_signature(struct bpf_dynptr *data_p,
  
- 		ctx = rcu_dereference(table->table[i]);
- 		if (ctx && ctx->aio_ring_file == file) {
--			if (!atomic_read(&ctx->dead)) {
-+			if (!atomic_read(&ctx->dead) &&
-+			    (ctx->mmap_size == (vma->vm_end - vma->vm_start))) {
- 				ctx->user_id = ctx->mmap_base = vma->vm_start;
- 				res = 0;
- 			}
+ 	data_len = __bpf_dynptr_size(data_ptr);
+ 	data = __bpf_dynptr_data(data_ptr, data_len);
++	if (!data)
++		return -EINVAL;
++
+ 	sig_len = __bpf_dynptr_size(sig_ptr);
+ 	sig = __bpf_dynptr_data(sig_ptr, sig_len);
++	if (!sig)
++		return -EINVAL;
+ 
+ 	return verify_pkcs7_signature(data, data_len, sig, sig_len,
+ 				      trusted_keyring->key,
+diff --git a/tools/testing/selftests/bpf/prog_tests/kfunc_dynptr_param.c b/tools/testing/selftests/bpf/prog_tests/kfunc_dynptr_param.c
+index 8cd298b78e44a..04aaf4c9cf5ee 100644
+--- a/tools/testing/selftests/bpf/prog_tests/kfunc_dynptr_param.c
++++ b/tools/testing/selftests/bpf/prog_tests/kfunc_dynptr_param.c
+@@ -14,7 +14,7 @@ static struct {
+ 	const char *prog_name;
+ 	int expected_runtime_err;
+ } kfunc_dynptr_tests[] = {
+-	{"dynptr_data_null", -EBADMSG},
++	{"dynptr_data_null", -EINVAL},
+ };
+ 
+ static bool kfunc_not_supported;
 -- 
 2.53.0
 
