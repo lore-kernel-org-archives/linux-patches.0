@@ -1,58 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795621009;
-	b=1GsW3mM7olFdxp6xyXas7TKMzTDsoPMK6+Zq2mnvALFEx3ttP+Ro5un1FnwTHF33aCJq
-	 XHBUlNMcGWu7ZPBym0+X6mE53bTJi2dwxThGGfAUKwpeeOHtKkvAqZg0NMx3FbmHxBg9k
-	 FqKyZTGyJsSy9w0h4zI1M9iZ+F646FunLkqVggir+bAF+1Zo8axDi9GsCtVcPjSuczUqw
-	 50No4L4G0I8I1IsIihG4g1g6TYUBTdVBuQKwJYVG5ptWznVecEss7zSDpP4WiV6KmgM8T
-	 L+n+vlWZ3I/TXzJ1YIqP/icUp5OSWZolC/q1EWUj27QShi39LIDlvPK0NOEV9OG0z7Q==
+	t=1795621013;
+	b=XRGgauMmfZmd60rn7zOoRFwFL+d0r5umNTOAMFsDNcYmD6nlK1wkGjUrI+kLtrQcqRfQ
+	 tUYj+PTw4YirWH0hEgSPG1dn1PJW46fYwhD9m4HgTn5wZVeSPjcR0NqI/m1RLaJ3aLxmT
+	 PdXBtmC9WuKMcQlUgE7TIFHWBMkNho9qBjnYOArBcoTgTL5fTdldIQ5A+DW8eTKD+ZpvM
+	 pB1uRXVc2nswIrFSKpl8D2uFBH48LgCiYLlh8TfxhLRPb3furoR2m7agoQKk8AK0Ax2/a
+	 +IaQJgCVfWhnRRbINc9JZ8B75KTR8rOrF5qCezBLPXmn0E/BmwwnZRTb46mpAgfuq9Q==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795621009;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795621013;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=sBp1dzzhjMDsn6C9tbQdolBv2gTKJmq8Ypa16MKjg3U=;
-	b=xb4UVuJ5UFy+SAEVP7TeyDxZnDzzDpWWnTNpKYv8T6YbVhIKEGkVBNIpLv6oWRCdUUWi
-	 Cjm269kpO2OSe3+DCNyC/+1tD4yOFaORSqYPo6EFWd0fiNPXKrccTO9LyO8GqsG4kpkMb
-	 mT/+aRs7nmX+UT2dyBfOybdFNI6FUiP8AMhO/YTzCzxra2tJVfEuaA6akWEq8zr+4wnlt
-	 rrV5R52m5m8WAs9ht8vJPhyai4ZyzTvshpUhPdgjisS8AoQLF9UyD1oRJDb4p7a+PA5Ma
-	 akILW/AYu3F0Mcs2WRl+l44EwSnPQJUiufNk52PEb+6GL2sBOgHIEMeGhbHC8RM2F+Q==
+	bh=1KJ+9FbLAcNkA+AfXap2lK20YaEXtiHVhdPhxrX4Ehc=;
+	b=bO/+M3ZUy8gBfqWEkAXfCracyhgEXg7K53B2R7hGKVs8Y2AZtM7rXPSWAPWYo5KKXfwn
+	 Cuc/m7I9QiDmTUAQ1T04s10zIr/sv4o6nxoztjcxHifoORmqVF7UX4fqHvwspLGiia/IR
+	 Cuir/GWnriKxR8uzYxAkJZmKoHR2UfjNxECILvg/DkFCI98zMG6Lfj/HmVrkzmC+rgrGn
+	 vaRRMhx+gok3a+lEBxG1Wzu3sl9YyxbDjONW0CqPV2INrFuxeDWuLUHV7gzAqEFhuciiB
+	 RHyCHFWlFQTNGpVZylrRu4+QuVjFuFPRCL5qLZa7QQ1luLGkjxYwAJBe719kfQnkOTQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=FknDH4mQ;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="iS8/HCwz";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B4966606A683;
-	Wed, 25 Nov 2026 15:36:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2DCC6606A330;
+	Wed, 25 Nov 2026 15:36:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=FknDH4mQ
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9AB421F0089F;
-	Wed, 25 Nov 2026 15:36:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=iS8/HCwz
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ED3361F000C0;
+	Wed, 25 Nov 2026 15:36:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795621009;
-	bh=sBp1dzzhjMDsn6C9tbQdolBv2gTKJmq8Ypa16MKjg3U=;
+	s=korg; t=1795621012;
+	bh=1KJ+9FbLAcNkA+AfXap2lK20YaEXtiHVhdPhxrX4Ehc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=FknDH4mQRe+SmBjidPOAUTlJSCnhVCwpubGSmC6tGaEQlLy3Ii0uM/4JqxvyNuU3y
-	 nnmxX7kpOnCiybHACPsFViRQeqn+6ig/FR+c95kvTxRongy7xzO5Ybigq2MKxxeC1K
-	 t4B+iR4M3jMU3dpu96aHCHSzzvPJNfysSDgam+v0=
+	b=iS8/HCwzdEBOawNeOAOdobOwrovLL6W0G/IjoIQ9OsJOh2lVqq3xxHGMB1AsxWICv
+	 gukWUTn/RBd4ACwb/cFC6MTId7eFwoXbIANp5JZnLPnCW6owUlqojXgyZZD+eKzVX5
+	 RmdbxEXWmPmpP5nUymZTS56H7IXzKPQpfepy99II=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yizhou Zhao <zhaoyz24@mails.tsinghua.edu.cn>,
-	Yuxiang Yang <yangyx22@mails.tsinghua.edu.cn>,
-	Ao Wang <wangao@seu.edu.cn>,
-	Xuewei Feng <fengxw06@126.com>,
-	Qi Li <qli01@tsinghua.edu.cn>,
-	Ke Xu <xuke@tsinghua.edu.cn>,
-	Michael Grzeschik <mgr@kernel.org>,
-	Dominique Martinet <asmadeus@codewreck.org>,
+	Alexei Starovoitov <ast@kernel.org>,
+	Puranjay Mohan <puranjay@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 065/990] net/9p/usbg: Fix use-after-free on usb9pfs_clear_tx
-Date: Wed, 25 Nov 2026 15:23:52 +0100
-Message-ID: <20261125143823.610964927@linuxfoundation.org>
+Subject: [PATCH 6.18 092/990] bpf: Drop percpu_counter from the htab element count
+Date: Wed, 25 Nov 2026 15:24:19 +0100
+Message-ID: <20261125143824.245610348@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143822.072087159@linuxfoundation.org>
 References: <20261125143822.072087159@linuxfoundation.org>
@@ -74,77 +68,196 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yizhou Zhao <zhaoyz24@mails.tsinghua.edu.cn>
+From: Puranjay Mohan <puranjay@kernel.org>
 
-[ Upstream commit 5c69297356bf6d04d8222f52717c6c4aa73e5d2c ]
+[ Upstream commit 1cd28b5354ab77c727ed87255bf289a87178b415 ]
 
-When p9_usbg_close() is called, it invokes usb9pfs_clear_tx() but does
-not clear usb9pfs->client nor usb9pfs->in_req->context afterwards.
-The 9p client core (p9_client_destroy) calls close() and then
-kfree(clnt), so after p9_usbg_close returns the client struct is freed.
+The element count of a large non-preallocated hash map is a
+percpu_counter, whose slow path takes fbc->lock with
+raw_spin_lock_irqsave(). That is not safe against BPF programs that run
+while the lock is held or contended: NMI programs and, as
+queued_spin_lock_slowpath() calls trace_contention_end() with the lock
+already held, programs attached to the contention_end tracepoint. If such
+a program updates the same map it spins on the lock its own CPU holds:
 
-If the USB gadget is later disabled (e.g., host disconnect),
-usb9pfs_disable calls usb9pfs_clear_tx again, which passes the dangling
-usb9pfs->client pointer to p9_client_cb. Inside p9_client_cb,
-p9_req_put(c, req) dereferences the freed client to access its reqs IDR,
-causing a use-after-free.
+  WARNING: possible recursive locking detected
+  cend/250 is trying to acquire lock:
+  (key#5){....}-{2:2}, at: _raw_spin_lock_irqsave+0x18/0x30
+  but task is already holding lock:
+  (key#5){....}-{2:2}, at: _raw_spin_lock_irqsave+0x18/0x30
+    percpu_counter_add_batch+0xd8/0x160
+    alloc_htab_elem+0x408/0x480
+    htab_map_update_elem+0x1e8/0x6a0
+    bpf_prog_7a29a1ae68aedf07_cend+0x14c/0x1f8
+    __bpf_trace_contention_end+0x14/0x20
+    queued_spin_lock_slowpath+0x2e8/0x468
+    percpu_counter_add_batch+0xd8/0x160
+    alloc_htab_elem+0x408/0x480
+    htab_map_update_elem+0x1e8/0x6a0
 
-Additionally, usb9pfs_clear_tx does not clear usb9pfs->in_req->context
-after calling p9_client_cb, so a second invocation finds a stale request
-pointer and attempts double-completion, further compounding the UAF risk.
+is_map_full() is affected too, as __percpu_counter_compare() falls back
+to percpu_counter_sum(), which takes the same lock.
 
-Fix by:
-1. Clearing usb9pfs->in_req->context to NULL in usb9pfs_clear_tx()
-   before checking usb9pfs->client, so that even if the client is gone
-   the stale request pointer is consumed and cannot cause
-   double-completion.
-2. Adding a NULL check on usb9pfs->client in usb9pfs_clear_tx() to skip
-   p9_client_cb() when the client has already been destroyed.
-3. Setting usb9pfs->client = NULL in p9_usbg_close() after calling
-   usb9pfs_clear_tx(), to prevent any subsequent call from dereferencing
-   the freed client pointer.
+map.elem_count already is a lockless per-cpu count of the same elements.
+Make htab->count follow it in steps of PERCPU_COUNTER_BATCH and let
+is_map_full() sum elem_count once count is within nr_cpu_ids * batch of
+max_entries. Each cpu's elem_count is ahead of count by less than the
+batch, so that is exact, in NMI as well.
 
-Fixes: a3be076dc174 ("net/9p/usbg: Add new usb gadget function transport")
-Reported-by: Yizhou Zhao <zhaoyz24@mails.tsinghua.edu.cn>
-Reported-by: Yuxiang Yang <yangyx22@mails.tsinghua.edu.cn>
-Reported-by: Ao Wang <wangao@seu.edu.cn>
-Reported-by: Xuewei Feng <fengxw06@126.com>
-Reported-by: Qi Li <qli01@tsinghua.edu.cn>
-Reported-by: Ke Xu <xuke@tsinghua.edu.cn>
-Assisted-by: GLM:GLM-5.1
-Signed-off-by: Yizhou Zhao <zhaoyz24@mails.tsinghua.edu.cn>
-Message-ID: <20260529081026.77732-1-zhaoyz24@mails.tsinghua.edu.cn>
-Acked-by: Michael Grzeschik <mgr@kernel.org>
-Signed-off-by: Dominique Martinet <asmadeus@codewreck.org>
+Fixes: 86fe28f7692d ("bpf: Optimize element count in non-preallocated hash map.")
+Suggested-by: Alexei Starovoitov <ast@kernel.org>
+Signed-off-by: Puranjay Mohan <puranjay@kernel.org>
+Signed-off-by: Alexei Starovoitov <ast@kernel.org>
+Link: https://patch.msgid.link/20261021185117.650403-1-puranjay@kernel.org
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/9p/trans_usbg.c | 6 ++++++
- 1 file changed, 6 insertions(+)
+ include/linux/bpf.h  |  2 ++
+ kernel/bpf/hashtab.c | 64 ++++++++++++++++++--------------------------
+ 2 files changed, 28 insertions(+), 38 deletions(-)
 
-diff --git a/net/9p/trans_usbg.c b/net/9p/trans_usbg.c
-index 1592b99ae00c7..79735bbe739ac 100644
---- a/net/9p/trans_usbg.c
-+++ b/net/9p/trans_usbg.c
-@@ -460,6 +460,11 @@ static void usb9pfs_clear_tx(struct f_usb9pfs *usb9pfs)
- 	if (!req || !client)
- 		return;
+diff --git a/include/linux/bpf.h b/include/linux/bpf.h
+index d840ec32d95ba..fc5af5a7f6a21 100644
+--- a/include/linux/bpf.h
++++ b/include/linux/bpf.h
+@@ -2546,6 +2546,8 @@ static inline void bpf_map_dec_elem_count(struct bpf_map *map)
+ 	this_cpu_dec(*map->elem_count);
+ }
  
-+	usb9pfs->in_req->context = NULL;
++s64 bpf_map_sum_elem_count(const struct bpf_map *map);
 +
-+	if (!usb9pfs->client)
-+		return;
+ extern int sysctl_unprivileged_bpf_disabled;
+ 
+ bool bpf_token_capable(const struct bpf_token *token, int cap);
+diff --git a/kernel/bpf/hashtab.c b/kernel/bpf/hashtab.c
+index 23c9e54f92e17..ffc534384f84d 100644
+--- a/kernel/bpf/hashtab.c
++++ b/kernel/bpf/hashtab.c
+@@ -96,10 +96,10 @@ struct bpf_htab {
+ 		struct bpf_lru lru;
+ 	};
+ 	struct htab_elem *__percpu *extra_elems;
+-	/* number of elements in non-preallocated hashtable are kept
+-	 * in either pcount or count
++	/* number of elements in non-preallocated hashtable. With
++	 * use_percpu_counter it only follows map.elem_count in steps of
++	 * PERCPU_COUNTER_BATCH, see is_map_full()
+ 	 */
+-	struct percpu_counter pcount;
+ 	atomic_t count;
+ 	bool use_percpu_counter;
+ 	u32 n_buckets;	/* number of hash buckets */
+@@ -628,29 +628,20 @@ static struct bpf_map *htab_map_alloc(union bpf_attr *attr)
+ 
+ 	htab_init_buckets(htab);
+ 
+-/* compute_batch_value() computes batch value as num_online_cpus() * 2
+- * and __percpu_counter_compare() needs
+- * htab->max_entries - cur_number_of_elems to be more than batch * num_online_cpus()
+- * for percpu_counter to be faster than atomic_t. In practice the average bpf
+- * hash map size is 10k, which means that a system with 64 cpus will fill
+- * hashmap to 20% of 10k before percpu_counter becomes ineffective. Therefore
+- * define our own batch count as 32 then 10k hash map can be filled up to 80%:
++/* is_map_full() needs htab->max_entries - cur_number_of_elems to be more than
++ * batch * nr_cpu_ids for the percpu counter to be faster than atomic_t. In
++ * practice the average bpf hash map size is 10k. With batch count of 32 a 10k
++ * hash map on a system with 64 cpus can be filled up to 80%:
+  * 10k - 8k > 32 _batch_ * 64 _cpus_
+- * and __percpu_counter_compare() will still be fast. At that point hash map
++ * and is_map_full() will still be fast. At that point hash map
+  * collisions will dominate its performance anyway. Assume that hash map filled
+  * to 50+% isn't going to be O(1) and use the following formula to choose
+- * between percpu_counter and atomic_t.
++ * between the percpu counter and atomic_t. The batch has to be a power of 2.
+  */
+ #define PERCPU_COUNTER_BATCH 32
+-	if (attr->max_entries / 2 > num_online_cpus() * PERCPU_COUNTER_BATCH)
++	if (attr->max_entries / 2 > nr_cpu_ids * PERCPU_COUNTER_BATCH)
+ 		htab->use_percpu_counter = true;
+ 
+-	if (htab->use_percpu_counter) {
+-		err = percpu_counter_init(&htab->pcount, 0, GFP_KERNEL);
+-		if (err)
+-			goto free_map_locked;
+-	}
+-
+ 	if (prealloc) {
+ 		err = prealloc_init(htab);
+ 		if (err)
+@@ -678,8 +669,6 @@ static struct bpf_map *htab_map_alloc(union bpf_attr *attr)
+ free_prealloc:
+ 	prealloc_destroy(htab);
+ free_map_locked:
+-	if (htab->use_percpu_counter)
+-		percpu_counter_destroy(&htab->pcount);
+ 	bpf_map_area_free(htab->buckets);
+ 	bpf_mem_alloc_destroy(&htab->pcpu_ma);
+ 	bpf_mem_alloc_destroy(&htab->ma);
+@@ -988,30 +977,33 @@ static void htab_put_fd_value(struct bpf_htab *htab, struct htab_elem *l)
+ 
+ static bool is_map_full(struct bpf_htab *htab)
+ {
+-	if (htab->use_percpu_counter)
+-		return __percpu_counter_compare(&htab->pcount, htab->map.max_entries,
+-						PERCPU_COUNTER_BATCH) >= 0;
+-	return atomic_read(&htab->count) >= htab->map.max_entries;
++	s64 count = atomic_read(&htab->count);
 +
- 	if (!req->t_err)
- 		req->t_err = -ECONNRESET;
++	/* each cpu's elem_count is ahead of count by less than the batch */
++	if (htab->use_percpu_counter &&
++	    count + nr_cpu_ids * PERCPU_COUNTER_BATCH >= htab->map.max_entries)
++		count = bpf_map_sum_elem_count(&htab->map);
++	return count >= htab->map.max_entries;
+ }
  
-@@ -483,6 +488,7 @@ static void p9_usbg_close(struct p9_client *client)
- 	client->status = Disconnected;
+ static void inc_elem_count(struct bpf_htab *htab)
+ {
+-	bpf_map_inc_elem_count(&htab->map);
++	s64 cnt = this_cpu_inc_return(*htab->map.elem_count);
  
- 	usb9pfs_clear_tx(usb9pfs);
-+	usb9pfs->client = NULL;
+-	if (htab->use_percpu_counter)
+-		percpu_counter_add_batch(&htab->pcount, 1, PERCPU_COUNTER_BATCH);
+-	else
++	if (!htab->use_percpu_counter)
+ 		atomic_inc(&htab->count);
++	else if (!(cnt & (PERCPU_COUNTER_BATCH - 1)))
++		atomic_add(PERCPU_COUNTER_BATCH, &htab->count);
+ }
  
- 	opts = container_of(usb9pfs->function.fi,
- 			    struct f_usb9pfs_opts, func_inst);
+ static void dec_elem_count(struct bpf_htab *htab)
+ {
+-	bpf_map_dec_elem_count(&htab->map);
++	s64 cnt = this_cpu_dec_return(*htab->map.elem_count);
+ 
+-	if (htab->use_percpu_counter)
+-		percpu_counter_add_batch(&htab->pcount, -1, PERCPU_COUNTER_BATCH);
+-	else
++	if (!htab->use_percpu_counter)
+ 		atomic_dec(&htab->count);
++	else if (!((cnt + 1) & (PERCPU_COUNTER_BATCH - 1)))
++		atomic_sub(PERCPU_COUNTER_BATCH, &htab->count);
+ }
+ 
+ 
+@@ -1641,8 +1633,6 @@ static void htab_map_free(struct bpf_map *map)
+ 	bpf_map_area_free(htab->buckets);
+ 	bpf_mem_alloc_destroy(&htab->pcpu_ma);
+ 	bpf_mem_alloc_destroy(&htab->ma);
+-	if (htab->use_percpu_counter)
+-		percpu_counter_destroy(&htab->pcount);
+ 	bpf_map_area_free(htab);
+ }
+ 
+@@ -2342,9 +2332,7 @@ static u64 htab_map_mem_usage(const struct bpf_map *map)
+ 	} else {
+ #define LLIST_NODE_SZ sizeof(struct llist_node)
+ 
+-		num_entries = htab->use_percpu_counter ?
+-					  percpu_counter_sum(&htab->pcount) :
+-					  atomic_read(&htab->count);
++		num_entries = bpf_map_sum_elem_count(map);
+ 		usage += (htab->elem_size + LLIST_NODE_SZ) * num_entries;
+ 		if (percpu) {
+ 			usage += (LLIST_NODE_SZ + sizeof(void *)) * num_entries;
 -- 
 2.53.0
 
