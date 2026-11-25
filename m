@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795625068;
-	b=WwJmpx4Wtj3AM1ZbPwIe5kp9/OijX1LOG4NfNYQlLkQF58ky+69QDlakZA7wjOOQ/nbl
-	 2zIGFO8KMeadx6joJ7dx2SaTjXph6nlCVnQy4XFBWmDcodu8yCUC8/oWJ5dDaf41k3VJr
-	 tQKvopvhmAn5SFrRMKrKhozR8xw3vcvgkhMeC1jyr4apGM2bu2SzIlrLFckt/Vlr1xtJf
-	 zzKy9HXdxNDD6LJSZAtTOJsmz9ne6U4S9kPe0NNr3+D6uySUL9BpdRBnERz5YR1skXuAY
-	 pLM4C1w/EC8RJkxqvjBQTCa3/SKjTs7Rmpz+SqV42G0b4CiKYbrg2K6S/eJVff5jmcQ==
+	t=1795625071;
+	b=Qa+irCyCJfXlNT5bgws6OUWOanOErEXtmTeRzlA6F5gFhnYGvV/ouLTVW4W/dnS+Wkt4
+	 kQsA2hrclRTJYcncql4mFzTsE8CvPoDvrBuELLeJP3WSIah3Rda0X01z+u5JeCEAMcM85
+	 FsfrOvwh+9Q/iuUVMX5WABoiqYOGt+XTw/NeCMNON2hTAkkywAqbD+qDctC7U+U1kcPIS
+	 tVVf5GhytIHXk6l715lF1IMhsEinmsEwB1iQsEJvz31lbWTQ+eC0WOTcoMerGdTzNwsE2
+	 YuecZ8OuVXF1mTsRN54T+IS4c+dRJHq2RgqGgDOIjo+XvsnuVvWEoZHg576pUxlhi9A==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795625068;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795625071;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=x4ENcWXzWvv9dZXeCYj0AckI2F2f+Xb1t/ArgaindOM=;
-	b=GHE/IUzTvwmFTFU3CrUfnIt4odaMskEZDVnlv7egEuqw4hDA5gxo/c0Ixk0Fdc12dLO8
-	 s4r1uwVKMb1vPjF88qqgKKvjM/r5NJUUu/H6xNx5aL6GhXUIMMfOXMxY9JBkeaueqJRmE
-	 BurS3/Ph6LhkGCRpnOZkWd3fzlGA/l2qet5P8FQrjh2hx4oOAerd2wKplEVQsA/pVB0RH
-	 uKKz9fS//RAIs3xD/6V6chRizFypR64tFIMUDZWeAaoGH2F+hELLkMlzFy9zZhGEogz3l
-	 AY2flLWwAnzzdOtqcGsRU6JQqYXci8sAfxi0KBWU3BSptx/AbgXDKOOIzOJDrZqYTig==
+	bh=/L68McXKMsTj18Fh5fx5mdm7L/pUtwqJBe1dLrZfLsM=;
+	b=XASjFnntVAlj+wiW+LBjiuNk0zEVHY8VfteuVPEuHrZJ4qjez4xONxC2rFuJLeIsnsUw
+	 A1djm6V7N0zY54LOnMN4l3vqRsN9WlQVaLm/fdcHUpWD82/t6gmDtVUQzG1bow7pno5f/
+	 RvOxtXxLgR1RNWEMeTT754hEtPw0Bdx5dnC6yalgaEJSHibUL6AVGccMhuHgBZfLBGIQG
+	 JiifWFKLC7rHo71CKQhGbmwxSdAc3dJeTEZOL+3vEaik15ZaJmZKUbPTZCGdZbOIYQq6B
+	 sfeQQImbV9IGSz+fpJZ3LAU/xwqC8u2jD9gwxcKHH1SR2TP+4vJT8K79VG9B0Roc0gg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Te9MNJNd;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="Z/ljLrc+";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 72D05606A323;
-	Wed, 25 Nov 2026 16:44:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 952EA606A321;
+	Wed, 25 Nov 2026 16:44:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Te9MNJNd
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 533FD1F000C4;
-	Wed, 25 Nov 2026 16:44:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Z/ljLrc+
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 933301F000C0;
+	Wed, 25 Nov 2026 16:44:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795625067;
-	bh=x4ENcWXzWvv9dZXeCYj0AckI2F2f+Xb1t/ArgaindOM=;
+	s=korg; t=1795625071;
+	bh=/L68McXKMsTj18Fh5fx5mdm7L/pUtwqJBe1dLrZfLsM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Te9MNJNdUCz+U4aWD23oJuq6QIYgOQEOZnrfejfEX53FfkEV4ztIJ0aqkiwaikgbk
-	 VwgF7b0NrCvjcPUR/B3ZVGoEYGryOMRHcihueLdvmY9uiVDtcQkyiKYIj6rVdTSmgw
-	 UsZUl0Zte24X/uQZ2lFBiFHO8zPiwC+YHg6tTEvc=
+	b=Z/ljLrc+FFMiI+7hDCDFzebH/b6cJRk86u/1uRz9zrScYdfAtEuQeSWWm//0VrVMD
+	 m+bsxzmffoIUrKZqoqcVNeKgXtQDZTBRzT5GKYRwuBRHc9quLKBIT0MQlryfJ347rk
+	 YU9x2hKJu1ycVLQzC+UBnkqqiX/GguBa9xeYqeRo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Golla Nagendra <nagendra.golla@amd.com>,
-	Frank Li <Frank.Li@nxp.com>,
-	Vinod Koul <vkoul@kernel.org>,
+	Rick Edgecombe <rick.p.edgecombe@intel.com>,
+	Sean Christopherson <seanjc@google.com>,
+	"Borislav Petkov (AMD)" <bp@alien8.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 396/816] dmaengine: zynqmp_dma: Free sw_desc_pool on desc_pool_v alloc failure
-Date: Wed, 25 Nov 2026 15:32:24 +0100
-Message-ID: <20261125143858.367181004@linuxfoundation.org>
+Subject: [PATCH 6.12 370/816] x86/cpuid: Mark CPUID function 0x23 as being indexed
+Date: Wed, 25 Nov 2026 15:31:58 +0100
+Message-ID: <20261125143857.761715821@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143849.205329330@linuxfoundation.org>
 References: <20261125143849.205329330@linuxfoundation.org>
@@ -69,59 +69,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Golla Nagendra <nagendra.golla@amd.com>
+From: Sean Christopherson <seanjc@google.com>
 
-[ Upstream commit 4ea99b14b3bd955d768666941e2e03ba186b52f5 ]
+[ Upstream commit 108775fa28fe04a16f19a828a779689f3d0ea9f0 ]
 
-In zynqmp_dma_alloc_chan_resources(), sw_desc_pool is allocated before
-desc_pool_v. If dma_alloc_coherent() for desc_pool_v fails, the function
-currently exits through the runtime PM rollback path but leaves the
-already allocated sw_desc_pool behind.
+Add function 0x23 to the set of CPUID functions that are indexed, as per
+the SDM and the many sub-leafs defined in leaf_types.h.
 
-Add a dedicated err_free_sw_desc_pool label for the desc_pool_v failure
-path, free sw_desc_pool there, then fall through to err_pm for
-pm_runtime_put_autosuspend().
-
-This keeps the error unwind symmetric and avoids leaking the software
-descriptor pool on coherent descriptor allocation failure.
-
-Fixes: b0cc417c1637 ("dmaengine: Add Xilinx zynqmp dma engine driver support")
-Signed-off-by: Golla Nagendra <nagendra.golla@amd.com>
-Reviewed-by: Frank Li <Frank.Li@nxp.com>
-Link: https://patch.msgid.link/20260814045616.1661199-3-nagendra.golla@amd.com
-Signed-off-by: Vinod Koul <vkoul@kernel.org>
+Closes: https://lore.kernel.org/all/213d614fe73e183a230c8f4e0c8fa1cc3d45df39.camel@intel.com
+Reported-by: Rick Edgecombe <rick.p.edgecombe@intel.com>
+Signed-off-by: Sean Christopherson <seanjc@google.com>
+Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
+Tested-by: Rick Edgecombe <rick.p.edgecombe@intel.com>
+Cc: stable@vger.kernel.org
+Link: https://patch.msgid.link/20261022210134.612848-2-seanjc@google.com
+[ sashal: Applied the new case to cpuid_function_is_indexed() in asm/cpuid.h, since the cpuid/api.h header from upstream does not exist in this tree. ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/dma/xilinx/zynqmp_dma.c | 9 +++++++--
- 1 file changed, 7 insertions(+), 2 deletions(-)
+ arch/x86/include/asm/cpuid.h | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/dma/xilinx/zynqmp_dma.c b/drivers/dma/xilinx/zynqmp_dma.c
-index 594086b264941..1d6a12c7b58ef 100644
---- a/drivers/dma/xilinx/zynqmp_dma.c
-+++ b/drivers/dma/xilinx/zynqmp_dma.c
-@@ -505,8 +505,10 @@ static int zynqmp_dma_alloc_chan_resources(struct dma_chan *dchan)
- 					       (2 * ZYNQMP_DMA_DESC_SIZE(chan) *
- 					       ZYNQMP_DMA_NUM_DESCS),
- 					       &chan->desc_pool_p, GFP_KERNEL);
--	if (!chan->desc_pool_v)
--		return -ENOMEM;
-+	if (!chan->desc_pool_v) {
-+		ret = -ENOMEM;
-+		goto err_free_sw_desc_pool;
-+	}
- 
- 	for (i = 0; i < ZYNQMP_DMA_NUM_DESCS; i++) {
- 		desc = chan->sw_desc_pool + i;
-@@ -520,6 +522,9 @@ static int zynqmp_dma_alloc_chan_resources(struct dma_chan *dchan)
- 
- 	return ZYNQMP_DMA_NUM_DESCS;
- 
-+err_free_sw_desc_pool:
-+	kfree(chan->sw_desc_pool);
-+	chan->sw_desc_pool = NULL;
- err_pm:
- 	pm_runtime_put_autosuspend(chan->dev);
- 	return ret;
+diff --git a/arch/x86/include/asm/cpuid.h b/arch/x86/include/asm/cpuid.h
+index ca4243318aadc..3d37bcf6ac2d3 100644
+--- a/arch/x86/include/asm/cpuid.h
++++ b/arch/x86/include/asm/cpuid.h
+@@ -179,6 +179,7 @@ static __always_inline bool cpuid_function_is_indexed(u32 function)
+ 	case 0x1d:
+ 	case 0x1e:
+ 	case 0x1f:
++	case 0x23:
+ 	case 0x24:
+ 	case 0x8000001d:
+ 		return true;
 -- 
 2.53.0
 
