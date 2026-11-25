@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795624280;
-	b=CS3sag5LAc2NeEydxurR/++beIvMECAbGegkfz6TQnJyWXKjJQiambnTeBThDQ5OD7+4
-	 qJgZbKtSu7VPdcgbuqa3eF308FMQgXRoJuZ2cddddnpOHTRlyXRBDFdCOitf30UpcRru+
-	 /LpmV5AVY9lMQo7Ja0Gf/2jaPLUKzceF6Qjl1L6cSbaaEhORjgVb17yYI0xLdWmBKmG5L
-	 wow04LU7tyULMdDtgp9Cuz9gztsaprsrOc/NTHMOerem6N0Qfntm/DdM6hy5nui1i4cMf
-	 6tJgqjM2RyU0oRLTQ+R8X0fzIOnOQnypTchUEGSZ0VMFSuz62Cv1c9cdGfBkvE/rlAQ==
+	t=1795624283;
+	b=f28TB73rtWLOt0YtH+mn4jr0KuExkayxh2BGeNOAdt/8cG0R7jMcyoZeFfqzQklECV5L
+	 donZ3wKIWBGeuxL6zWM4fOqLSt4imrkdLQ9nsE8A0qx/cH2I/1QPsk8ogckvVP6jE1ovb
+	 12JcX3bjS0voInr0jp/hLgVI2qmoBEaK3M0TPpXiNOK5ob+hmyD542vhJfrzsIJcy0lwR
+	 zgHDia36jKV2VYfBATQjSzP03iwrdjNmJMdAzkvOtV+74ADJgDg1czPbibOOvIaNFTJvo
+	 7xmQXJZM2woL8qJk4a+RJtmk7Cg5EXLZ5xHV9aPRn+euyWchaQ2d3UnCEfGGIXlQf1A==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795624280;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795624283;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=PO8iSxyOY+N0wxJixAcILQmlvyOm+Pl1Vt+p6OEqr08=;
-	b=YvuHsE/LqL5pdIEy+4d/xy/a4yaIHh68sjPZsc7l4IOFF1dDA9tPAgh1FU3wzqydYvpc
-	 zQbc4Pxp5U0YXaNQa3dBsWjNVSP8Nn0S6b7LRzAIwUn3sl12RN+TepuB6joZaphQwIyuo
-	 wK5rTfmks/gxr+fNxdf+t8gAIrDu3QStPImYBCeVjUFYzdJIZnYnBYHKjgZFBFWLahVKH
-	 cwwIWJE4XVDtQqnvI+hQkYiGPOKAtxF+26QeWRBH0UAxs5QTRNsRXt03tAsgEJfM5sg+0
-	 DkSzkMukOIsuGa7nsF8KK5M/dlypx/wQ+kW7u1c7Qj6p0XgHdyNARXrWOOvN/6odb7Q==
+	bh=J9A5rS2atXL5p2aEGwu3TGGkDJYlwLNxt0BsySazGos=;
+	b=hwTudxthVXKGCpI10Inujoe6pnGVZRWAPyfIQ1nzm5gylIlcB2qBwVJDTtgH4hfzvKZP
+	 1Ov6Qmf/Uls3Z822jpI1h+p7a0NZJS3Wv06VjkyXi9Fr2OKIXCMctew47Sey87jl0fZxg
+	 IVorOjxDdJYqWH6MzKwJIrJ7h5jRYrZ9UdIgCu+LHJREExksH10idSa3Bl9xZKRXXu0TB
+	 Y288M7XOm8wcAcExdu9FsTjyMO1zi9idjMF7eiy1JKLZNjUidHd9Y/qL+aXt1jZeAar1t
+	 f7izrpKWOY1dG54heXnTXF/nltVS4cfLVtB7n8B8ulbe4HsFQKh8JASXmndeNF/uwOA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=P9YIFSrB;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=W0QGfTMM;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 42B52606A697;
-	Wed, 25 Nov 2026 16:31:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1E660606A685;
+	Wed, 25 Nov 2026 16:31:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=P9YIFSrB
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8AA421F0089F;
-	Wed, 25 Nov 2026 16:31:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=W0QGfTMM
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6AAFA1F000E6;
+	Wed, 25 Nov 2026 16:31:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795624280;
-	bh=PO8iSxyOY+N0wxJixAcILQmlvyOm+Pl1Vt+p6OEqr08=;
+	s=korg; t=1795624283;
+	bh=J9A5rS2atXL5p2aEGwu3TGGkDJYlwLNxt0BsySazGos=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=P9YIFSrBFT1pqqLGd1K/Lm1b8BxGfDBV3d5tKOKCDPWLBWCQOrIjVYTvoLDoDKgQD
-	 f/tbJg9tM4gTBsSqZKYKO4uvyv60FsTbwZLDpKALd1jtNIITs0tX1PXWe0A2i4kUug
-	 BskJLQZftweUfYZFjSVxD5U7TSN3F8LrneOekNKQ=
+	b=W0QGfTMMBZ7BqlNd1c2QFSshMJpwiE/wLNYHtbnLGwUo0/EELr1FzkQY6BhDv2VOK
+	 kogou3h0mMhqljCRAvFqfvXrwkpZzSSGhxD1hw5jfeIytGmXihHKN0PLIooWS4RxY3
+	 gcf5A1JZIZfdSJN3NwIGpzTXARk0NwRYlffnV7bU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Daniel Machon <daniel.machon@microchip.com>,
-	Simon Horman <horms@kernel.org>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Linus Walleij <linus.walleij@linaro.org>,
+	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 143/816] net: sparx5/lan969x: release the in-flight slot of a stale TX skb
-Date: Wed, 25 Nov 2026 15:28:11 +0100
-Message-ID: <20261125143852.510695605@linuxfoundation.org>
+Subject: [PATCH 6.12 144/816] gpio: mpc8xxx: use a helper variable to store the address of pdev->dev
+Date: Wed, 25 Nov 2026 15:28:12 +0100
+Message-ID: <20261125143852.533259100@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143849.205329330@linuxfoundation.org>
 References: <20261125143849.205329330@linuxfoundation.org>
@@ -69,93 +68,136 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Daniel Machon <daniel.machon@microchip.com>
+From: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
 
-[ Upstream commit 873363ac591a1774aa3ced84f7ea3d93a3eb9b07 ]
+[ Upstream commit 2707a028c9b9c54a6dff22c9dcfebf3083ea095e ]
 
-sparx5_ptp_txtstamp_request() counts every two step TX skb waiting for
-its timestamp in sparx5->ptp_skbs, and refuses new ones once
-SPARX5_MAX_PTP_ID are in flight. sparx5_ptp_txtstamp_old_release()
-frees the skbs that have waited longer than SPARX5_PTP_TIMEOUT.
+Instead of repeatedly dereferencing pdev, just store the address of the
+embedded struct device in a local variable and use it instead for
+improved readability.
 
-Before this patch, old_release() does not decrement ptp_skbs, so every
-skb whose timestamp never arrives, for example because the switch
-discarded the frame, keeps its slot forever. Once SPARX5_MAX_PTP_ID
-slots are lost, two step frames fail to transmit on every port of the
-switch.
+While at it: rearrange variable declarations.
 
-Return the number of released skbs from old_release() and subtract it
-from ptp_skbs in txtstamp_request(), under the ptp_ts_id_lock it already
-takes.
-
-This fixes the accounting only. A port's stale skbs are still aged out
-only when that port sends a two step frame, so a port that stops sending
-them keeps its stale skbs, and their slots, until it sends one again.
-That behaviour is unchanged by this patch.
-
-Found by an AI code review agent. Reproduced on a lan9696 board with a
-modified kernel that drops the TX timestamps of two step frames, after
-which two step timestamping stopped working on the port. With the fix,
-timestamping keeps working on that board and on a sparx5 PCB135 board.
-
-Fixes: 70dfe25cd866 ("net: sparx5: Update extraction/injection for timestamping")
-Signed-off-by: Daniel Machon <daniel.machon@microchip.com>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Link: https://patch.msgid.link/20261029-sparx5-ptp-stale-tx-slot-v1-1-ec15f391bbb7@microchip.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Reviewed-by: Linus Walleij <linus.walleij@linaro.org>
+Link: https://lore.kernel.org/r/20241009162910.33477-1-brgl@bgdev.pl
+Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+Stable-dep-of: 9e4b35c95fed ("gpio: mpc8xxx: Fix potential use-after-free of IRQ domain")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/microchip/sparx5/sparx5_ptp.c | 10 ++++++++--
- 1 file changed, 8 insertions(+), 2 deletions(-)
+ drivers/gpio/gpio-mpc8xxx.c | 48 +++++++++++++++++--------------------
+ 1 file changed, 22 insertions(+), 26 deletions(-)
 
-diff --git a/drivers/net/ethernet/microchip/sparx5/sparx5_ptp.c b/drivers/net/ethernet/microchip/sparx5/sparx5_ptp.c
-index 6b2dbfbeef377..7e665e0892021 100644
---- a/drivers/net/ethernet/microchip/sparx5/sparx5_ptp.c
-+++ b/drivers/net/ethernet/microchip/sparx5/sparx5_ptp.c
-@@ -200,9 +200,10 @@ static void sparx5_ptp_classify(struct sparx5_port *port, struct sk_buff *skb,
- 	*rew_op = IFH_REW_OP_TWO_STEP_PTP;
- }
+diff --git a/drivers/gpio/gpio-mpc8xxx.c b/drivers/gpio/gpio-mpc8xxx.c
+index 685ec31db409d..30f36f94ba1b8 100644
+--- a/drivers/gpio/gpio-mpc8xxx.c
++++ b/drivers/gpio/gpio-mpc8xxx.c
+@@ -300,14 +300,15 @@ static const struct of_device_id mpc8xxx_gpio_ids[] = {
  
--static void sparx5_ptp_txtstamp_old_release(struct sparx5_port *port)
-+static unsigned int sparx5_ptp_txtstamp_old_release(struct sparx5_port *port)
+ static int mpc8xxx_probe(struct platform_device *pdev)
  {
- 	struct sk_buff *skb, *skb_tmp;
-+	unsigned int purged = 0;
- 	unsigned long flags;
++	const struct mpc8xxx_gpio_devtype *devtype = NULL;
+ 	struct device_node *np = pdev->dev.of_node;
+ 	struct mpc8xxx_gpio_chip *mpc8xxx_gc;
+-	struct gpio_chip	*gc;
+-	const struct mpc8xxx_gpio_devtype *devtype = NULL;
++	struct device *dev = &pdev->dev;
+ 	struct fwnode_handle *fwnode;
++	struct gpio_chip *gc;
+ 	int ret;
  
- 	spin_lock_irqsave(&port->tx_skbs.lock, flags);
-@@ -213,8 +214,11 @@ static void sparx5_ptp_txtstamp_old_release(struct sparx5_port *port)
+-	mpc8xxx_gc = devm_kzalloc(&pdev->dev, sizeof(*mpc8xxx_gc), GFP_KERNEL);
++	mpc8xxx_gc = devm_kzalloc(dev, sizeof(*mpc8xxx_gc), GFP_KERNEL);
+ 	if (!mpc8xxx_gc)
+ 		return -ENOMEM;
  
- 		__skb_unlink(skb, &port->tx_skbs);
- 		dev_kfree_skb_any(skb);
-+		purged++;
- 	}
- 	spin_unlock_irqrestore(&port->tx_skbs.lock, flags);
+@@ -320,32 +321,28 @@ static int mpc8xxx_probe(struct platform_device *pdev)
+ 		return PTR_ERR(mpc8xxx_gc->regs);
+ 
+ 	gc = &mpc8xxx_gc->gc;
+-	gc->parent = &pdev->dev;
+-
+-	if (device_property_read_bool(&pdev->dev, "little-endian")) {
+-		ret = bgpio_init(gc, &pdev->dev, 4,
+-				 mpc8xxx_gc->regs + GPIO_DAT,
+-				 NULL, NULL,
+-				 mpc8xxx_gc->regs + GPIO_DIR, NULL,
+-				 BGPIOF_BIG_ENDIAN);
++	gc->parent = dev;
 +
-+	return purged;
- }
++	if (device_property_read_bool(dev, "little-endian")) {
++		ret = bgpio_init(gc, dev, 4, mpc8xxx_gc->regs + GPIO_DAT,
++				 NULL, NULL, mpc8xxx_gc->regs + GPIO_DIR,
++				 NULL, BGPIOF_BIG_ENDIAN);
+ 		if (ret)
+ 			return ret;
+-		dev_dbg(&pdev->dev, "GPIO registers are LITTLE endian\n");
++		dev_dbg(dev, "GPIO registers are LITTLE endian\n");
+ 	} else {
+-		ret = bgpio_init(gc, &pdev->dev, 4,
+-				 mpc8xxx_gc->regs + GPIO_DAT,
+-				 NULL, NULL,
+-				 mpc8xxx_gc->regs + GPIO_DIR, NULL,
+-				 BGPIOF_BIG_ENDIAN
++		ret = bgpio_init(gc, dev, 4, mpc8xxx_gc->regs + GPIO_DAT,
++				 NULL, NULL, mpc8xxx_gc->regs + GPIO_DIR,
++				 NULL, BGPIOF_BIG_ENDIAN
+ 				 | BGPIOF_BIG_ENDIAN_BYTE_ORDER);
+ 		if (ret)
+ 			return ret;
+-		dev_dbg(&pdev->dev, "GPIO registers are BIG endian\n");
++		dev_dbg(dev, "GPIO registers are BIG endian\n");
+ 	}
  
- int sparx5_ptp_txtstamp_request(struct sparx5_port *port,
-@@ -222,6 +226,7 @@ int sparx5_ptp_txtstamp_request(struct sparx5_port *port,
- {
- 	struct sparx5 *sparx5 = port->sparx5;
- 	u8 rew_op, pdu_type, pdu_w16_offset;
-+	unsigned int purged;
- 	unsigned long flags;
+ 	mpc8xxx_gc->direction_output = gc->direction_output;
  
- 	sparx5_ptp_classify(port, skb, &rew_op, &pdu_type, &pdu_w16_offset);
-@@ -232,9 +237,10 @@ int sparx5_ptp_txtstamp_request(struct sparx5_port *port,
- 	if (rew_op != IFH_REW_OP_TWO_STEP_PTP)
- 		return 0;
+-	devtype = device_get_match_data(&pdev->dev);
++	devtype = device_get_match_data(dev);
+ 	if (!devtype)
+ 		devtype = &mpc8xxx_gpio_devtype_default;
  
--	sparx5_ptp_txtstamp_old_release(port);
-+	purged = sparx5_ptp_txtstamp_old_release(port);
+@@ -370,7 +367,7 @@ static int mpc8xxx_probe(struct platform_device *pdev)
+ 	 * associated input enable must be set (GPIOxGPIE[IEn]=1) to propagate
+ 	 * the port value to the GPIO Data Register.
+ 	 */
+-	fwnode = dev_fwnode(&pdev->dev);
++	fwnode = dev_fwnode(dev);
+ 	if (of_device_is_compatible(np, "fsl,qoriq-gpio") ||
+ 	    of_device_is_compatible(np, "fsl,ls1028a-gpio") ||
+ 	    of_device_is_compatible(np, "fsl,ls1088a-gpio") ||
+@@ -381,9 +378,9 @@ static int mpc8xxx_probe(struct platform_device *pdev)
+ 			gc->read_reg(mpc8xxx_gc->regs + GPIO_DIR);
+ 	}
  
- 	spin_lock_irqsave(&sparx5->ptp_ts_id_lock, flags);
-+	sparx5->ptp_skbs -= purged;
- 	if (sparx5->ptp_skbs == SPARX5_MAX_PTP_ID) {
- 		spin_unlock_irqrestore(&sparx5->ptp_ts_id_lock, flags);
- 		return -EBUSY;
+-	ret = devm_gpiochip_add_data(&pdev->dev, gc, mpc8xxx_gc);
++	ret = devm_gpiochip_add_data(dev, gc, mpc8xxx_gc);
+ 	if (ret) {
+-		dev_err(&pdev->dev,
++		dev_err(dev,
+ 			"GPIO chip registration failed with status %d\n", ret);
+ 		return ret;
+ 	}
+@@ -404,18 +401,17 @@ static int mpc8xxx_probe(struct platform_device *pdev)
+ 	gc->write_reg(mpc8xxx_gc->regs + GPIO_IER, 0xffffffff);
+ 	gc->write_reg(mpc8xxx_gc->regs + GPIO_IMR, 0);
+ 
+-	ret = devm_request_irq(&pdev->dev, mpc8xxx_gc->irqn,
++	ret = devm_request_irq(dev, mpc8xxx_gc->irqn,
+ 			       mpc8xxx_gpio_irq_cascade,
+ 			       IRQF_NO_THREAD | IRQF_SHARED, "gpio-cascade",
+ 			       mpc8xxx_gc);
+ 	if (ret) {
+-		dev_err(&pdev->dev,
+-			"failed to devm_request_irq(%d), ret = %d\n",
++		dev_err(dev, "failed to devm_request_irq(%d), ret = %d\n",
+ 			mpc8xxx_gc->irqn, ret);
+ 		goto err;
+ 	}
+ 
+-	device_init_wakeup(&pdev->dev, true);
++	device_init_wakeup(dev, true);
+ 
+ 	return 0;
+ err:
 -- 
 2.53.0
 
