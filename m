@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795622215;
-	b=xaz+0Ic9TiXDhj6bgpuEjwmp7UyvyyKf5vmLxtYrhDgPO4uM0bGGZytml7R6UKhglBsE
-	 +5HetaaoUMq/QTdB3odvUpMC1KzPw9yqdElJQbzBIkvuYjY189WS0vt8s0lOfOQ/iD7kU
-	 dkAT98oWNaO0/NmsjZpq+uW6iYQpThmBoEG4IA71/eS+ThV5b0jSG9o09nH392ENLe5q3
-	 pF+tag2DkJR0PiWfiGgjHWZzijFSmmesUKqbKUVMz0hVJV58GxKx7jPtmbpKY9tLggvtb
-	 2o2M0X3VhhCEAR+2SMzKVyxmDwvklKf33AcAEUDMi0QWPc1LAbIrZxCFkckXqUgDILQ==
+	t=1795622219;
+	b=M3nTOs/U5wfpV6PEYsL5rmEtL/7Nrs5v6qxhLMKkWnxqgW2tjC5SbQsnU9iy/C6ntYLh
+	 mekEuBNZh7BFchxAJSn6ba5TLhc+KN4lH/YOzy2fhDugnp6vRH8M+kOEfoJt/aQmj4JKi
+	 BAitrW3xunmsFte7iISitJRe1ZvkkY/bCBYTC14patmoYKYmLVKVQKe2TlyYFgpSvIlZ+
+	 vk6xDVdmxPSpH/7woEGsJ5v+sWkcgYTFzWhCCmDvhxNkx8nTDd0kH727y9oXu5ssMKTfQ
+	 VBuHeVDFgDQ2hWN8gabJ6ozCUWzt1iI/ri/0OGTipSIr/AWDwlQHfiox8nyI8OIaJdQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795622215;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795622219;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=bQ5612uw8PkRGkFYu50sj27XoBqNhqAsLvTks83zjnA=;
-	b=Ll9jVcUQG/S/wNp+diikA4cp90BJp620qT14UUvoJOkcer9qYqqA7yRIEHKPLb7+cFEl
-	 7oFHSoZ2KLJMusWdPtacgNfv1FRBja+XwNopKiMBZwAiz1+woIyfHhuiMYaDSy/A1vjDG
-	 gd6V08kOlkPTRhf0JfFPT/dUJ0rx7M1av1+fX+8f1Y8MWTqH7XwT1hxUh12riq+lw5OUM
-	 j+7DqcPD6J4JZHJUy4blJv4uwg9HaOcOl81iNJrP/wwtx4taWpXjSdYCt2+reKgkaoa6b
-	 jwOT2UY0Vr8ZUWAGT2Yrv9JZTmUTS+al9LEDAU5bo/1x6gLYkKuT0zT9JOFWKiZdyvg==
+	bh=yfPj42Gz+a1+NGRX62knUmFxuQayZqdNSQ5rgz/pO/I=;
+	b=AMWgul8cd3A3yqznIC5S6iu/tz4F8QkKxSRdDpp0hTnFmo/nIjQJMMXySd62LceJD8iD
+	 mKCdHRiCfzrB1gC5KchRmLiP3iq6qgt96P1oKz1o49DnYenGvOUkjpzG5AucJZZK9Uy0u
+	 dYZH9AExJB145AbM0mpIym8F4rcunw1zFNrcESDzyACOi4bIEkwa2GcMmUMhXS34IozMK
+	 4HUEQP14XEnwlVXp8NSrOLd6YmQYFhTPV3mPPQqDyQOw+jLJfcL4sfJPXFlTE8BrcQfsX
+	 XAs3YHRvfu7r2zLl2wXUS3W6e4R431s/x06njBC/rn6AV0C3lsCv95VlmS39kTUe04Q==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=peKBJEzb;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=DTYlAvLd;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 50480606A321;
-	Wed, 25 Nov 2026 15:56:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 690E8606A326;
+	Wed, 25 Nov 2026 15:56:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=peKBJEzb
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9142A1F000C4;
-	Wed, 25 Nov 2026 15:56:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=DTYlAvLd
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0DE571F000C0;
+	Wed, 25 Nov 2026 15:56:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795622215;
-	bh=bQ5612uw8PkRGkFYu50sj27XoBqNhqAsLvTks83zjnA=;
+	s=korg; t=1795622218;
+	bh=yfPj42Gz+a1+NGRX62knUmFxuQayZqdNSQ5rgz/pO/I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=peKBJEzbdhhYNOXKFdI1HtdEmvHmstgDqTL8XQSVpx5VAEo8vfN7hkxVh+Y4iAhuk
-	 PyCy/rO6z05miHRor6LytVww23gQjR5W6N5dcKuzYdBDi+vCr6l736JoOsSGdt0DE1
-	 Jcb4AeNbwHXba+4OSknDO1FaOr9aHCrohRQsNQyI=
+	b=DTYlAvLdvYXMw+eLrTo9dKuSw9aF9Qloye2ew6nKdIB2i+/EP67DnZeDiGGm95rlC
+	 o2/fe41o/1b7L3ZTVPlpKAPeDM5q29j/eX61qCZoXN87o/16zsJNaYLVUY48wfEFxi
+	 Qb+vAne3u2RNu3cB63b1tMODAyxbePI6yjy9SyR4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Omar Ramadan <omar@blockcast.net>,
-	Simon Horman <horms@kernel.org>,
+	Sashiko <sashiko-bot@kernel.org>,
+	Eric Dumazet <edumazet@kernel.org>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 449/990] amt: tear down every amt device on an unregistering lower
-Date: Wed, 25 Nov 2026 15:30:16 +0100
-Message-ID: <20261125143832.610252248@linuxfoundation.org>
+Subject: [PATCH 6.18 467/990] net: virtio: fix UDP tunnel GSO header of VLAN tagged packets
+Date: Wed, 25 Nov 2026 15:30:34 +0100
+Message-ID: <20261125143833.037088191@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143822.072087159@linuxfoundation.org>
 References: <20261125143822.072087159@linuxfoundation.org>
@@ -69,145 +69,86 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Omar Ramadan <omar@blockcast.net>
+From: Eric Dumazet <edumazet@kernel.org>
 
-[ Upstream commit 7262e999ebec0a10ecc97ba4739f12255b7c6da8 ]
+[ Upstream commit 9e244f94128a4b89004f0564b66e039e58318a34 ]
 
-amt_device_event() acts only on the amt device that
-amt_lookup_upper_dev() returns, which is the first amt device bound to
-the event's lower. Several amt devices can share one lower, for
-example two gateways.
+virtio_net_hdr_tnl_from_skb() builds a wrong header for VLAN tagged UDP
+tunnel GSO packets.
 
-On NETDEV_UNREGISTER, only the first device is unlinked and
-unregistered. The others stay upper-linked to the lower, and
-unregister_netdevice_many_notify() warns, because the notifier chain
-must detach every upper device. They also still hold a reference on
-the lower, so each is torn down only when netdev_wait_allrefs_any(),
-called from netdev_run_todo(), rebroadcasts NETDEV_UNREGISTER. By then
-the lower's sysfs directory is gone, so unlinking it trips a kernfs
-WARN, and unregistering it from inside the rebroadcast trips the WARN
-in __rtnl_unlock(). On NETDEV_CHANGEMTU, only the first device is
-resized.
+1) When the skb carries a hwaccel VLAN tag, tun_put_user() inserts the
+   802.1Q header in the frame it copies to user space or vhost-net, and
+   passes vlan_hlen = VLAN_HLEN. virtio_net_hdr_from_skb() adds
+   vlan_hlen to csum_start, but inner_nh_offset and outer_th_offset do
+   not account for it, and are 4 bytes short of the real inner L3 and
+   outer UDP headers in the emitted frame.
 
-Walk every amt device in the lower's netns and act on each one bound
-to the lower. On NETDEV_UNREGISTER, queue them all and unregister them
-in one batch. amt_dellink() unlinks each device but leaves it on the
-netns device list until unregister_netdevice_many(), so the walk stays
-valid under RTNL.
+   tun advertises NETIF_F_HW_VLAN_CTAG_TX and NETIF_F_HW_VLAN_STAG_TX
+   in hw_enc_features, and its vlan_features keep the UDP tunnel GSO
+   features, so this happens for example with a VLAN filtering bridge
+   with a tagged port, or with a vlan device on top of a tap.
 
-To reproduce:
+2) The outer family comes from skb->protocol, which is ETH_P_8021Q or
+   ETH_P_8021AD when the VLAN tag is in the packet data, so a packet
+   with an outer IPv6 header is reported as
+   VIRTIO_NET_HDR_GSO_UDP_TUNNEL_IPV4. This happens when
+   __vlan_hwaccel_push_inside() inserted the tag because the device does
+   not offload it: virtio_net never offloads VLAN insertion but keeps
+   UDP tunnel GSO in its vlan_features, and tun does the same with VLAN
+   TX offload disabled, or with QinQ (outer tag offloaded, inner tag in
+   the data).
 
-  ip link add lower0 type dummy
-  ip link add amtg1 type amt mode gateway local 192.0.2.1 \
-          discovery 192.0.2.2 dev lower0
-  ip link add amtg2 type amt mode gateway local 192.0.2.1 \
-          discovery 192.0.2.2 dev lower0
-  ip link del lower0
+The receiver sets inner_network_header and transport_header from these
+offsets, and checks them with the wrong outer family. A forwarded
+packet that gets segmented again uses the wrong inner headers, and a
+receiver checking the outer headers against the virtio header drops
+the packet.
 
-Without this patch, the last command logs:
+Add vlan_hlen to both offsets like csum_start, and take the outer
+family from vlan_get_protocol(), which skips VLAN tags in the data.
 
-  WARNING: net/core/dev.c:12773 at unregister_netdevice_many_notify+0x13e5/0x1940, CPU#3: ip/216
-  kernfs: can not remove 'upper_amtg2', no directory
-  WARNING: fs/kernfs/dir.c:1784 at kernfs_remove_by_name_ns+0xc9/0xd0, CPU#0: ip/216
-  WARNING: net/core/rtnetlink.c:141 at __rtnl_unlock+0xb2/0xf0, CPU#0: ip/216
-  WARNING: net/core/rtnetlink.c:141 at __rtnl_unlock+0xb2/0xf0, CPU#0: ip/216
-
-With it, the commands log nothing and remove both amt devices, and
-tools/testing/selftests/net/amt.sh passes on a KASAN and lockdep
-kernel.
-
-Found by a selftest for our upcoming AMT offload RFC, which deletes a
-lower carrying two amt gateways, on our 6.18-based driver. The
-commands above reproduce it on net.
-
-Fixes: b9022b53adad ("amt: add control plane of amt interface")
-Signed-off-by: Omar Ramadan <omar@blockcast.net>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Link: https://patch.msgid.link/20261105232302.494171-1-omar@blockcast.net
+Fixes: a2fb4bc4e2a6 ("net: implement virtio helpers to handle UDP GSO tunneling.")
+Reported-by: Sashiko <sashiko-bot@kernel.org>
+Closes: https://lore.kernel.org/netdev/179421814766.994134.3669228181251158303@kernel.org/
+Closes: https://lore.kernel.org/netdev/179433950084.994134.15100186606737698605@kernel.org/
+Signed-off-by: Eric Dumazet <edumazet@kernel.org>
+Link: https://patch.msgid.link/20261110213628.3476051-2-edumazet@kernel.org
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/amt.c | 56 ++++++++++++++++++++---------------------------
- 1 file changed, 24 insertions(+), 32 deletions(-)
+ include/linux/virtio_net.h | 12 +++++++++---
+ 1 file changed, 9 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/net/amt.c b/drivers/net/amt.c
-index 96cde820237d3..2a8a0c0e78993 100644
---- a/drivers/net/amt.c
-+++ b/drivers/net/amt.c
-@@ -3383,22 +3383,6 @@ static struct rtnl_link_ops amt_link_ops __read_mostly = {
- 	.fill_info      = amt_fill_info,
- };
+diff --git a/include/linux/virtio_net.h b/include/linux/virtio_net.h
+index b7b6b542f4763..fc9667176f23c 100644
+--- a/include/linux/virtio_net.h
++++ b/include/linux/virtio_net.h
+@@ -622,7 +622,10 @@ virtio_net_hdr_tnl_from_skb(const struct sk_buff *skb,
+ 	if (feature_hdrlen && hdr->hdr_len)
+ 		__virtio_net_set_tnl_hdrlen(skb, hdr);
  
--static struct net_device *amt_lookup_upper_dev(struct net_device *dev)
--{
--	struct net_device *upper_dev;
--	struct amt_dev *amt;
--
--	for_each_netdev(dev_net(dev), upper_dev) {
--		if (netif_is_amt(upper_dev)) {
--			amt = netdev_priv(upper_dev);
--			if (amt->stream_dev == dev)
--				return upper_dev;
--		}
--	}
--
--	return NULL;
--}
--
- static int amt_device_event(struct notifier_block *unused,
- 			    unsigned long event, void *ptr)
- {
-@@ -3408,26 +3392,34 @@ static int amt_device_event(struct notifier_block *unused,
- 	LIST_HEAD(list);
- 	int new_mtu;
- 
--	upper_dev = amt_lookup_upper_dev(dev);
--	if (!upper_dev)
--		return NOTIFY_DONE;
--	amt = netdev_priv(upper_dev);
-+	/* amt_dellink() leaves each device on the netns device list until
-+	 * unregister_netdevice_many(), so the walk stays valid.
+-	if (skb->protocol == htons(ETH_P_IPV6))
++	/* skb->protocol is the VLAN protocol when the tag is in the
++	 * packet data.
 +	 */
-+	for_each_netdev(dev_net(dev), upper_dev) {
-+		if (!netif_is_amt(upper_dev))
-+			continue;
-+		amt = netdev_priv(upper_dev);
-+		if (amt->stream_dev != dev)
-+			continue;
++	if (vlan_get_protocol(skb) == htons(ETH_P_IPV6))
+ 		hdr->gso_type |= VIRTIO_NET_HDR_GSO_UDP_TUNNEL_IPV6;
+ 	else
+ 		hdr->gso_type |= VIRTIO_NET_HDR_GSO_UDP_TUNNEL_IPV4;
+@@ -630,8 +633,11 @@ virtio_net_hdr_tnl_from_skb(const struct sk_buff *skb,
+ 	if (skb_shinfo(skb)->gso_type & SKB_GSO_UDP_TUNNEL_CSUM)
+ 		hdr->flags |= VIRTIO_NET_HDR_F_UDP_TUNNEL_CSUM;
  
--	switch (event) {
--	case NETDEV_UNREGISTER:
--		amt_dellink(amt->dev, &list);
--		unregister_netdevice_many(&list);
--		break;
--	case NETDEV_CHANGEMTU:
--		if (amt->mode == AMT_MODE_RELAY)
--			new_mtu = dev->mtu - AMT_RELAY_HLEN;
--		else
--			new_mtu = dev->mtu - AMT_GW_HLEN;
-+		switch (event) {
-+		case NETDEV_UNREGISTER:
-+			amt_dellink(amt->dev, &list);
-+			break;
-+		case NETDEV_CHANGEMTU:
-+			if (amt->mode == AMT_MODE_RELAY)
-+				new_mtu = dev->mtu - AMT_RELAY_HLEN;
-+			else
-+				new_mtu = dev->mtu - AMT_GW_HLEN;
- 
--		dev_set_mtu(amt->dev, new_mtu);
--		break;
-+			dev_set_mtu(amt->dev, new_mtu);
-+			break;
-+		}
- 	}
- 
-+	if (event == NETDEV_UNREGISTER)
-+		unregister_netdevice_many(&list);
-+
- 	return NOTIFY_DONE;
- }
- 
+-	inner_nh = skb->inner_network_header - skb_headroom(skb);
+-	outer_th = skb->transport_header - skb_headroom(skb);
++	/* Like csum_start, the offsets must account for a VLAN tag
++	 * the caller inserts in the frame.
++	 */
++	inner_nh = skb->inner_network_header - skb_headroom(skb) + vlan_hlen;
++	outer_th = skb->transport_header - skb_headroom(skb) + vlan_hlen;
+ 	vhdr->inner_nh_offset = cpu_to_le16(inner_nh);
+ 	vhdr->outer_th_offset = cpu_to_le16(outer_th);
+ 	return 0;
 -- 
 2.53.0
 
