@@ -1,54 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795618611;
-	b=AQEn8s8lVZ/XzsoyCF/+89blvtUyh9oD03Gi3M5dtVgq5qW2WB9HwTWogfLFvv165qqO
-	 nM4exDvTKUKJCWQt0Kt4tMHrDfTzQUUrJAM201tb1r70ZWz9TiWTT8IYstx0Tlyagi/4j
-	 2xk+s8SbSnDq9/pjjYUjwzlu4At03Ba7Uo+KzVbdkS+gIYwsaIkiMouvjr/NEcXJjCjR1
-	 va8J8s1+zo/lXrHwSkvHALzfK/LNuUa6WCBWxc0TxPYO1DrWq1Ob0Y4flhuuh3gGM6cmG
-	 0aYNdxPhqlwgr9wrJyraLL98E6wpg27DoNbCrle5quynKiQrPzjTtt12sDM8ZMGRdeg==
+	t=1795618615;
+	b=4VkVBzZMnNxlJg1t3Nf2efrfpdeDTBWoc3ZC+07/5crhfxFrCBBrhjEkYO4WOE0q4WUc
+	 fdINJZUxahmTPTStrlxVjy0bFLVHia49/++yCCY1Y5II0azSSpAbvP+LjA7aMlWnSMV5+
+	 ZqdUrr9g+jYK4R19b8yzKj9P+BnKnBUrkmqMIj2R2672+GRb02hWZwJVHqUQ5MJTU96AE
+	 K768mgTc2SpWTTkhcxhhyJf4sSEGB4APf6hYzK99g+WpXHa1O2zbXOW6FT4WpuBjCbXAi
+	 TjrWFh0tlZbFdQXNikCsEWRclCU8VGyiB4ztwMqRkUrTgxAD4AFUfkqrVRCjbwEHr1Q==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795618611;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795618615;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=77opuGQ/t4sZ0IdJGtmWkJ/B76C5ZOOSrlwPAwGR53o=;
-	b=tPBohhVY6ry7vV1epuHI1dzqAKNqj+qGOAnSXPAqsUIAtf3rvcP+AFy33g0pRR5HhJoy
-	 jEvSMwDtP1zzwFTIlYSmxZeSBWeXoaPP6CNXy/zeFR63DMEU8bGz5pcJbRB3RPsAfUzT5
-	 WdI7Kiy/r3gg0z1CpcArXgunSZC+knD3lNMBrrr5XO4A8Z5lADtv2Fpb7t4m4DFA6Qvbg
-	 28ZFFxnR26xe3vWulJM9jylnPhDL9+BxjPwxTr3FfzJ2pRj+UwNG22UtgGlq+HCf/B2cE
-	 VjXgulukqKgsw7BI2bt0yWG1KUywx0ZF09jiyIxy7k38wdDlJE47TKFBtiA1pRAnDsQ==
+	bh=sAp+N3rs1gP3iYC6Fm1WkwvXxs/7B1oJ68ND+Of0Gl4=;
+	b=SeTYfxtNVRQlDkHdqn7jn6n+eXz/+IYY5pEy5UCq7N06ikZtVmoKkgXsZg2/VzEqC2rI
+	 po6Nf3UnKKpHDQILQhN8Lm5Xidvrh4VUjyi2jcGcHWGIq/vPh3MSphXKvq7A/KPiZbA5F
+	 5O4r20iXFs2GnbnXUD6/AMTyJ+qk18eYml6WooBEEFts2SkgxjyKK1rrqE60NOWEyjcfq
+	 65hGNfVUOrUox2rNOwIpIf9Fs/wRG8dGPvvKtIHKhiGO2eBFjSMQpNAO3fLGmHpgyAsle
+	 MNltgaAMJzSDpPfnP1r2OLQ5DS8C0Rktb+Dgb9Kj5FHQmmyqR21fPZ+ZCDSWfAmiRSw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Ojxn1Iq6;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=dl2+mbgc;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DD3EE606A323;
-	Wed, 25 Nov 2026 14:56:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A32AB606A321;
+	Wed, 25 Nov 2026 14:56:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Ojxn1Iq6
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0B8191F000D2;
-	Wed, 25 Nov 2026 14:56:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=dl2+mbgc
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 91E991F000D1;
+	Wed, 25 Nov 2026 14:56:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795618611;
-	bh=77opuGQ/t4sZ0IdJGtmWkJ/B76C5ZOOSrlwPAwGR53o=;
+	s=korg; t=1795618615;
+	bh=sAp+N3rs1gP3iYC6Fm1WkwvXxs/7B1oJ68ND+Of0Gl4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Ojxn1Iq64qEhPP3Xk7qNXENra1tR6qc/wK66LLiHDM1O7OG3dHBNVL0nx7DlRD8Yi
-	 4aClM2tidF4tEWc8nSJr8BBKMJWTvKPdgaSPA2a5nQUcRcRybMlenH1bep8w7nbzAf
-	 6eV2aTHJ5iqE1kdU/NWpY2pOV64i8HLlDwtwIMjw=
+	b=dl2+mbgccyWz6f9cZoy6N5z33wuSoYFnhrpkir+Xm0PRzNexa20Gq5jeLUFCBosop
+	 M84kd1+xRspBJ9xAX/vo/EKRXhM5Oj4GaacKP0ijiFxmlqcOzqsas4fl4BPrFJ9g+o
+	 Vj1Ci1d8oQB4m7SXL/orPpjG25ZnZMnWaGbBwum0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Siddharth Chintamaneni <sidchintamaneni@gmail.com>,
 	Jan Kara <jack@suse.cz>,
-	Jeff Layton <jlayton@kernel.org>,
-	Christoph Hellwig <hch@lst.de>,
 	"Christian Brauner (Amutable)" <brauner@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0334/1005] statx: dont leak STATX_ATTR_CHANGE_MONOTONIC in stx_attributes_mask
-Date: Wed, 25 Nov 2026 15:27:52 +0100
-Message-ID: <20261125143829.557641960@linuxfoundation.org>
+Subject: [PATCH 7.3 0335/1005] fs: reject negative offsets for SEEK_DATA and SEEK_HOLE in default_llseek()
+Date: Wed, 25 Nov 2026 15:27:53 +0100
+Message-ID: <20261125143829.580490913@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143821.729802100@linuxfoundation.org>
 References: <20261125143821.729802100@linuxfoundation.org>
@@ -70,65 +69,89 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jeff Layton <jlayton@kernel.org>
+From: Siddharth Chintamaneni <sidchintamaneni@gmail.com>
 
-[ Upstream commit 925d238324c79bcb75ad0add1d1b9d31d5f48115 ]
+[ Upstream commit 7a5783cfac71b3c12e7fb1c2894dd4538d57d513 ]
 
-STATX_ATTR_CHANGE_MONOTONIC is kernel-internal. cp_statx() strips it
-from stx_attributes but copies attributes_mask verbatim, so it leaks to
-userland on filesystems that advertise it (nfs, ceph), e.g.
-stx_attributes_mask = 0x8000000000303000 on NFS.
+In default_llseek(), the range checks for SEEK_DATA and SEEK_HOLE compare
+the signed loff_t offset directly against inode->i_size:
 
-Add a new mask constant and apply it to both fields.
+	if (offset >= inode->i_size) {
+		retval = -ENXIO;
+		goto out;
+	}
 
-Fixes: a1175d6b1bda ("vfs: plumb i_version handling into struct kstat")
+When a negative offset is supplied to SEEK_HOLE (e.g. lseek(fd, -10,
+SEEK_HOLE) on a sysctl file in /proc/sys), the signed comparison evaluates
+to false and execution proceeds to:
+
+	offset = inode->i_size;
+
+This overwrites the negative offset with a non-negative value before the
+final `if (offset >= 0 || unsigned_offsets(file))` check, causing
+default_llseek() to update file->f_pos and return inode->i_size instead of
+failing with -ENXIO. Similarly, for SEEK_DATA on a file with
+FOP_UNSIGNED_OFFSET, a negative offset bypasses the range check and
+succeeds via unsigned_offsets(file).
+
+Read the inode size once via i_size_read(inode) after acquiring the inode
+lock and compare (unsigned long long)offset >= eof for both SEEK_DATA and
+SEEK_HOLE, matching must_set_pos().
+
+Fixes: 982d816581ee ("fs: add SEEK_HOLE and SEEK_DATA flags")
+Signed-off-by: Siddharth Chintamaneni <sidchintamaneni@gmail.com>
+Link: https://patch.msgid.link/20261101060049.81441-2-sidchintamaneni@gmail.com
 Reviewed-by: Jan Kara <jack@suse.cz>
-Signed-off-by: Jeff Layton <jlayton@kernel.org>
-Link: https://patch.msgid.link/20261103-statx-v2-1-8b09aa8118ab@kernel.org
-Reviewed-by: Christoph Hellwig <hch@lst.de>
 Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/stat.c            | 6 +++---
- include/linux/stat.h | 3 +++
- 2 files changed, 6 insertions(+), 3 deletions(-)
+ fs/read_write.c | 10 ++++++----
+ 1 file changed, 6 insertions(+), 4 deletions(-)
 
-diff --git a/fs/stat.c b/fs/stat.c
-index e03954c36b33e..689c610f36769 100644
---- a/fs/stat.c
-+++ b/fs/stat.c
-@@ -710,8 +710,7 @@ cp_statx(const struct kstat *stat, struct statx __user *buffer)
- 	/* STATX_CHANGE_COOKIE is kernel-only for now */
- 	tmp.stx_mask = stat->result_mask & ~STATX_CHANGE_COOKIE;
- 	tmp.stx_blksize = stat->blksize;
--	/* STATX_ATTR_CHANGE_MONOTONIC is kernel-only for now */
--	tmp.stx_attributes = stat->attributes & ~STATX_ATTR_CHANGE_MONOTONIC;
-+	tmp.stx_attributes = stat->attributes & ~STATX_ATTR_INTERNAL_MASK;
- 	tmp.stx_nlink = stat->nlink;
- 	tmp.stx_uid = from_kuid_munged(current_user_ns(), stat->uid);
- 	tmp.stx_gid = from_kgid_munged(current_user_ns(), stat->gid);
-@@ -719,7 +718,8 @@ cp_statx(const struct kstat *stat, struct statx __user *buffer)
- 	tmp.stx_ino = stat->ino;
- 	tmp.stx_size = stat->size;
- 	tmp.stx_blocks = stat->blocks;
--	tmp.stx_attributes_mask = stat->attributes_mask;
-+	tmp.stx_attributes_mask = stat->attributes_mask &
-+				  ~STATX_ATTR_INTERNAL_MASK;
- 	tmp.stx_atime.tv_sec = stat->atime.tv_sec;
- 	tmp.stx_atime.tv_nsec = stat->atime.tv_nsec;
- 	tmp.stx_btime.tv_sec = stat->btime.tv_sec;
-diff --git a/include/linux/stat.h b/include/linux/stat.h
-index 9c57091328622..4f0a4af7a0671 100644
---- a/include/linux/stat.h
-+++ b/include/linux/stat.h
-@@ -69,4 +69,7 @@ struct kstat {
- /* file attribute values */
- #define STATX_ATTR_CHANGE_MONOTONIC	0x8000000000000000ULL /* version monotonically increases */
+diff --git a/fs/read_write.c b/fs/read_write.c
+index ccaaa454dce02..a7043e234e2f6 100644
+--- a/fs/read_write.c
++++ b/fs/read_write.c
+@@ -333,13 +333,15 @@ loff_t default_llseek(struct file *file, loff_t offset, int whence)
+ {
+ 	struct inode *inode = file_inode(file);
+ 	loff_t retval;
++	loff_t eof;
  
-+/* mask of STATX_ATTR_* bits that is private to the kernel */
-+#define STATX_ATTR_INTERNAL_MASK	(STATX_ATTR_CHANGE_MONOTONIC)
-+
- #endif
+ 	retval = inode_lock_killable(inode);
+ 	if (retval)
+ 		return retval;
++	eof = i_size_read(inode);
+ 	switch (whence) {
+ 		case SEEK_END:
+-			offset += i_size_read(inode);
++			offset += eof;
+ 			break;
+ 		case SEEK_CUR:
+ 			if (offset == 0) {
+@@ -354,7 +356,7 @@ loff_t default_llseek(struct file *file, loff_t offset, int whence)
+ 			 * long as offset isn't at the end of the file then the
+ 			 * offset is data.
+ 			 */
+-			if (offset >= inode->i_size) {
++			if ((unsigned long long)offset >= eof) {
+ 				retval = -ENXIO;
+ 				goto out;
+ 			}
+@@ -365,11 +367,11 @@ loff_t default_llseek(struct file *file, loff_t offset, int whence)
+ 			 * as long as offset isn't i_size or larger, return
+ 			 * i_size.
+ 			 */
+-			if (offset >= inode->i_size) {
++			if ((unsigned long long)offset >= eof) {
+ 				retval = -ENXIO;
+ 				goto out;
+ 			}
+-			offset = inode->i_size;
++			offset = eof;
+ 			break;
+ 	}
+ 	retval = -EINVAL;
 -- 
 2.53.0
 
