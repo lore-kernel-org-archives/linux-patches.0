@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795624111;
-	b=3eV8rjECpjXYvrmvmLzlH2VCRb2wqTLCecOCIcyL8BOP0AEHVA2H7oZMT7m53R/gSvUC
-	 C2RpTfLwLQ+oRkGAFTuP18wRPvy7UKZaRno8GMAcS0ToB1f7J7E9Hi1E6Z787IiLHwJcv
-	 lboHCrxB9UKGv4hgAKtMqQAmtqX9pFU6pZ45OWaAIFBpZIlugPPWuU6y5VyIPPIZd5bd0
-	 lvslE2YLaIkjf2epZXXKwqGjeysP7G0cmo5vMCIiF33pf3GBEFef2pUDAF0AD5l9S/FeK
-	 iUVvrTmOLixFrcQk4I3yW4HJR7cyGO0Gl5T/YuaDSOh54AYzfq30EXfvn2S01N3uCtw==
+	t=1795624117;
+	b=VEn9MtRuGJ4sGrZCPiLbGixJF6OxXTb9KR5ByC5FpJub7nraZekTA2rMnNBsABdJay8L
+	 cTjAZajSat0PjYPO7YpR1WonZlZEmarArF8Y0ZzN/X3suT5B4o+/8Ioy22TI2p+DoP963
+	 PbNKOWlqj52fbZ40Qe9peqiX16vfiQBlPzODGrFRXo8PnfRa3CmHmnYujdFynxozdvpdW
+	 4zDOArqIS48gCeB1UOpJLnNHaBtrZDZoM7AMt31PmW8z0tBNRLVfceSpUGER40ftj8Fct
+	 uMNvN6KIGBpWEJyvB4lFfiAXyNErLS695OMbiIy7sPP4y9LzPPiojtlaZNNtUF8oT8w==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795624111;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795624117;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=a2q11BDhvFXiSl64k8G5DyoPWG9NZrHW271/1MccAcs=;
-	b=1DHRfGLRWegFlwF4Kuq7twNpVRwQPePFusAgTRHWxakp6+6PYS+tlPkG1VeggpfJfcTD
-	 V734TKwJmYSO8vcE1Kl0aGHbWEbIT+n0WSt0qbxq1JnEN7XA6osCK++tqkhP5cZNOzMqQ
-	 3nDhmnH1YQQ94ax9dF/cMSODgF5ATi9qKUWjyv7daqF44s5qiOMRWjORCrz+/1LtvCreI
-	 4hzvbPYX/WGqOGqDfaDazVv/ZpAPpdrlmadXtYgWNBv+fgYweN5rZKNlwBnH031v7mo7S
-	 FjomlPjblX32w36yDiSr4LWsUOq6KrCAxY2IJ3RccIztZ8bzaQhjqLyqWm4RA1DSw5A==
+	bh=UwTbqKsNBTZVqy3eG38N81mXrTJ1ZKd96AXj7fZPl/E=;
+	b=E9e0UOiTV7w2bPMW/K0Bs+rUADhoQFAlSP6oNUf5wVHez9YXstz8HGJYcHdaqt5jL6fo
+	 +lKCT8K8KDl/FK7KnVwiA9NdgCpxIXoeMlcpDSbv6edeE+1z/BZQb4gCWE+odJrXaNJug
+	 FskCrIlP6soekQvjrO43l1QkgEWk+57WUwVnN3Rb084miI/f01LcoZUv8kuYCepIOqPne
+	 ekdKyvre5hnPXQKoOvRCBPaSROHSbWf8P7V+boVamTg2hRs2xAa3DsNMmqeVSL1bfpl3O
+	 UPgClCUsawYJq4vqQQPIycAszEqzw/y9xdX4AtI+1El4cKas3F2EfR2jKkEZvv2ji2w==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="K5qmNQa/";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Uatx8Sy8;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AE415606A327;
-	Wed, 25 Nov 2026 16:28:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 690B2606A323;
+	Wed, 25 Nov 2026 16:28:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=K5qmNQa/
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B5BEA1F000C0;
-	Wed, 25 Nov 2026 16:28:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Uatx8Sy8
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BB0E31F000C4;
+	Wed, 25 Nov 2026 16:28:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795624111;
-	bh=a2q11BDhvFXiSl64k8G5DyoPWG9NZrHW271/1MccAcs=;
+	s=korg; t=1795624117;
+	bh=UwTbqKsNBTZVqy3eG38N81mXrTJ1ZKd96AXj7fZPl/E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=K5qmNQa/i3nszzjNWlBBRJIroS0ZIbPfKPu4gfqSIAdMFi33ozqk6f481Z4pClgqc
-	 ZIlboQhSAH0hQy+2hTCyBhmjpiv7om3ExC8mXKh6n3sDMd/ZyJgRzRyxFsMphqQBpz
-	 3/enrCaaAdVeTH3OUCwySkQKNJuo8xLg3Yc1a+PA=
+	b=Uatx8Sy8niwbSdxdwRssNaqGyaeSav1AwCMAIMzn2pEcJZb6Xd9OlnVlJwI+o56Pf
+	 mpNgoLZ2InS2u+zc8R32gUiUOoc1WGtA/KYwnDNO24d7LioBNGyHCSUHmA/CYqIlUP
+	 0lfZ7bFI4Hq16M1I3VV7FJi5J7gxW9WdyqAns8N4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yu Junzhe <junzheyu1@gmail.com>,
-	Fernando Fernandez Mancera <fmancera@suse.de>,
-	Pablo Neira Ayuso <pablo@netfilter.org>,
+	Jiri Olsa <jolsa@kernel.org>,
+	Andrii Nakryiko <andrii@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 090/816] netfilter: nft_reject: prevent unbounded recursion in output hooks
-Date: Wed, 25 Nov 2026 15:27:18 +0100
-Message-ID: <20261125143851.304906242@linuxfoundation.org>
+Subject: [PATCH 6.12 092/816] bpf: Avoid changing callchain in bpf_get_stack_pe
+Date: Wed, 25 Nov 2026 15:27:20 +0100
+Message-ID: <20261125143851.351650687@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143849.205329330@linuxfoundation.org>
 References: <20261125143849.205329330@linuxfoundation.org>
@@ -69,242 +68,131 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Fernando Fernandez Mancera <fmancera@suse.de>
+From: Jiri Olsa <jolsa@kernel.org>
 
-[ Upstream commit d6c18cadfc6c7a88e9e07e0a1b5ead37c0ddf866 ]
+[ Upstream commit 347c1d722e3ea4ffa2850585f5c76c6e551eac83 ]
 
-nftables payload-mangling rules can rewrite packet contents (such as TCP
-flags) before they are evaluated by reject targets. This defeats the
-content-based loop guards, allowing unbounded hook recursion that leads
-to kernel stack exhaustion and panics.
+There's no need to modify the trace object bpf_get_stack_pe, we just
+need to pass the needed callchain length in separate argument.
 
-Fix this by extracting the per-CPU xmit recursion limit previously used
-by the netdev duplication/forwarding paths into a shared header, and
-apply it to the inet and inet6 reject transmit functions. It disables BH
-while transmitting the skb to address a possible migration to different
-CPU leading to imbalanced decrementation of the recursion counters.
+This way we can have callchain pointers const and remove the trace->nr
+modification and restoration.
 
-Note that the dev_queue_xmit() path used when CONFIG_BRIDGE_NETFILTER is
-enabled does not require this recursion guard. In that scenario, the
-generated reset packet is transmitted directly at Layer 2. Because the
-packet egresses from a different hook, it cannot synchronously loop. In
-addition nf_send_unreach() and nf_send_unreach6() are safe as the ICMP
-transmit functions are protected against recursion by the
-icmp_xmit_lock() and icmpv6_xmit_lock() guards.
+Assisted-by: Codex:GPT-5.5
 
-Reported-by: Yu Junzhe <junzheyu1@gmail.com>
-Closes: https://lore.kernel.org/netfilter-devel/20260921061320.543-1-junzheyu1@gmail.com/
-Fixes: bee11dc78fc8 ("netfilter: nft_reject: support for IPv6 and TCP reset")
-Signed-off-by: Fernando Fernandez Mancera <fmancera@suse.de>
-Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
+Signed-off-by: Jiri Olsa <jolsa@kernel.org>
+Signed-off-by: Andrii Nakryiko <andrii@kernel.org>
+Link: https://lore.kernel.org/bpf/20260803210149.296496-12-jolsa@kernel.org
+Stable-dep-of: 007fd460798b ("bpf: Clamp the trace length in __bpf_get_stack() again")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/netdevice_xmit.h        |  4 +--
- include/net/netfilter/nf_dup_netdev.h | 35 ----------------------
- include/net/netfilter/nf_recursion.h  | 42 +++++++++++++++++++++++++++
- net/ipv4/netfilter/nf_reject_ipv4.c   | 12 ++++++++
- net/ipv6/netfilter/nf_reject_ipv6.c   | 13 +++++++++
- net/netfilter/nf_dup_netdev.c         |  1 +
- net/netfilter/nft_fwd_netdev.c        |  1 +
- 7 files changed, 71 insertions(+), 37 deletions(-)
- create mode 100644 include/net/netfilter/nf_recursion.h
+ kernel/bpf/stackmap.c | 36 +++++++++++++++---------------------
+ 1 file changed, 15 insertions(+), 21 deletions(-)
 
-diff --git a/include/linux/netdevice_xmit.h b/include/linux/netdevice_xmit.h
-index cc232508e695e..286ae5a6101e8 100644
---- a/include/linux/netdevice_xmit.h
-+++ b/include/linux/netdevice_xmit.h
-@@ -18,8 +18,8 @@ struct netdev_xmit {
- 	u8			sched_mirred_nest;
- 	struct net_device	*sched_mirred_dev[MIRRED_NEST_LIMIT];
- #endif
--#if IS_ENABLED(CONFIG_NF_DUP_NETDEV)
--	u8 nf_dup_skb_recursion;
-+#if IS_ENABLED(CONFIG_NETFILTER)
-+	u8 nf_xmit_skb_recursion;
- #endif
+diff --git a/kernel/bpf/stackmap.c b/kernel/bpf/stackmap.c
+index a43b2d8b13e04..e57f092437800 100644
+--- a/kernel/bpf/stackmap.c
++++ b/kernel/bpf/stackmap.c
+@@ -408,7 +408,7 @@ const struct bpf_func_proto bpf_get_stackid_proto = {
+ 	.arg3_type	= ARG_ANYTHING,
  };
  
-diff --git a/include/net/netfilter/nf_dup_netdev.h b/include/net/netfilter/nf_dup_netdev.h
-index f6b05bd80c3fe..a394112646144 100644
---- a/include/net/netfilter/nf_dup_netdev.h
-+++ b/include/net/netfilter/nf_dup_netdev.h
-@@ -9,41 +9,6 @@
- void nf_dup_netdev_egress(const struct nft_pktinfo *pkt, int oif);
- void nf_fwd_netdev_egress(const struct nft_pktinfo *pkt, int oif);
+-static __u64 count_kernel_ip(struct perf_callchain_entry *trace)
++static __u64 count_kernel_ip(const struct perf_callchain_entry *trace)
+ {
+ 	__u64 nr_kernel = 0;
  
--#define NF_RECURSION_LIMIT	2
--
--#ifndef CONFIG_PREEMPT_RT
--static inline bool nf_dev_xmit_recursion(void)
--{
--	return unlikely(__this_cpu_read(softnet_data.xmit.nf_dup_skb_recursion) >
--			NF_RECURSION_LIMIT);
--}
--
--static inline void nf_dev_xmit_recursion_inc(void)
--{
--	__this_cpu_inc(softnet_data.xmit.nf_dup_skb_recursion);
--}
--
--static inline void nf_dev_xmit_recursion_dec(void)
--{
--	__this_cpu_dec(softnet_data.xmit.nf_dup_skb_recursion);
--}
--#else
--static inline bool nf_dev_xmit_recursion(void)
--{
--	return unlikely(current->net_xmit.nf_dup_skb_recursion > NF_RECURSION_LIMIT);
--}
--
--static inline void nf_dev_xmit_recursion_inc(void)
--{
--	current->net_xmit.nf_dup_skb_recursion++;
--}
--
--static inline void nf_dev_xmit_recursion_dec(void)
--{
--	current->net_xmit.nf_dup_skb_recursion--;
--}
--#endif
--
- struct nft_offload_ctx;
- struct nft_flow_rule;
+@@ -488,15 +488,15 @@ const struct bpf_func_proto bpf_get_stackid_proto_pe = {
+ 	.arg3_type	= ARG_ANYTHING,
+ };
  
-diff --git a/include/net/netfilter/nf_recursion.h b/include/net/netfilter/nf_recursion.h
-new file mode 100644
-index 0000000000000..1ac65f7793f19
---- /dev/null
-+++ b/include/net/netfilter/nf_recursion.h
-@@ -0,0 +1,42 @@
-+/* SPDX-License-Identifier: GPL-2.0 */
-+#ifndef _NF_RECURSION_H_
-+#define _NF_RECURSION_H_
-+
-+#include <linux/netdevice.h>
-+
-+#define NF_RECURSION_LIMIT	2
-+
-+#ifndef CONFIG_PREEMPT_RT
-+static inline bool nf_dev_xmit_recursion(void)
-+{
-+	return unlikely(__this_cpu_read(softnet_data.xmit.nf_xmit_skb_recursion) >
-+			NF_RECURSION_LIMIT);
-+}
-+
-+static inline void nf_dev_xmit_recursion_inc(void)
-+{
-+	__this_cpu_inc(softnet_data.xmit.nf_xmit_skb_recursion);
-+}
-+
-+static inline void nf_dev_xmit_recursion_dec(void)
-+{
-+	__this_cpu_dec(softnet_data.xmit.nf_xmit_skb_recursion);
-+}
-+#else
-+static inline bool nf_dev_xmit_recursion(void)
-+{
-+	return unlikely(current->net_xmit.nf_xmit_skb_recursion > NF_RECURSION_LIMIT);
-+}
-+
-+static inline void nf_dev_xmit_recursion_inc(void)
-+{
-+	current->net_xmit.nf_xmit_skb_recursion++;
-+}
-+
-+static inline void nf_dev_xmit_recursion_dec(void)
-+{
-+	current->net_xmit.nf_xmit_skb_recursion--;
-+}
-+#endif
-+
-+#endif /* _NF_RECURSION_H_ */
-diff --git a/net/ipv4/netfilter/nf_reject_ipv4.c b/net/ipv4/netfilter/nf_reject_ipv4.c
-index 29c70e92a1722..ccdbbae6ff513 100644
---- a/net/ipv4/netfilter/nf_reject_ipv4.c
-+++ b/net/ipv4/netfilter/nf_reject_ipv4.c
-@@ -10,6 +10,7 @@
- #include <net/dst.h>
- #include <net/dst_metadata.h>
- #include <net/netfilter/ipv4/nf_reject.h>
-+#include <net/netfilter/nf_recursion.h>
- #include <linux/netfilter_ipv4.h>
- #include <linux/netfilter_bridge.h>
+-static u32 callchain_store(struct perf_callchain_entry *trace, void *buf,
+-			   u32 elem_size, u64 flags)
++static u32 callchain_store(const struct perf_callchain_entry *trace, u32 trace_nr,
++			   void *buf, u32 elem_size, u64 flags)
+ {
+ 	bool user_build_id = flags & BPF_F_USER_BUILD_ID;
+ 	u32 skip = flags & BPF_F_SKIP_FIELD_MASK;
+-	u32 trace_nr, copy_len;
+-	u64 *ips;
++	const u64 *ips;
++	u32 copy_len;
  
-@@ -329,7 +330,18 @@ void nf_send_reset(struct net *net, struct sock *sk, struct sk_buff *oldskb,
- 		dev_queue_xmit(nskb);
- 	} else
- #endif
-+	{
-+		local_bh_disable();
-+		if (nf_dev_xmit_recursion()) {
-+			local_bh_enable();
-+			goto free_nskb;
-+		}
-+
-+		nf_dev_xmit_recursion_inc();
- 		ip_local_out(net, nskb->sk, nskb);
-+		nf_dev_xmit_recursion_dec();
-+		local_bh_enable();
-+	}
+-	trace_nr = trace->nr - skip;
++	trace_nr = trace_nr - skip;
+ 	copy_len = trace_nr * elem_size;
  
- 	return;
+ 	ips = trace->ip + skip;
+@@ -580,7 +580,7 @@ static long __bpf_get_stack(struct pt_regs *regs, struct task_struct *task,
+ 		goto err_fault;
+ 	}
  
-diff --git a/net/ipv6/netfilter/nf_reject_ipv6.c b/net/ipv6/netfilter/nf_reject_ipv6.c
-index 7beb12046486f..6d897bf698abd 100644
---- a/net/ipv6/netfilter/nf_reject_ipv6.c
-+++ b/net/ipv6/netfilter/nf_reject_ipv6.c
-@@ -10,6 +10,7 @@
- #include <net/ip6_checksum.h>
- #include <net/dst_metadata.h>
- #include <net/netfilter/ipv6/nf_reject.h>
-+#include <net/netfilter/nf_recursion.h>
- #include <linux/netfilter_ipv6.h>
- #include <linux/netfilter_bridge.h>
+-	trace_nr = callchain_store(trace, buf, elem_size, flags);
++	trace_nr = callchain_store(trace, trace->nr, buf, elem_size, flags);
  
-@@ -396,7 +397,19 @@ void nf_send_reset6(struct net *net, struct sock *sk, struct sk_buff *oldskb,
- 		dev_queue_xmit(nskb);
- 	} else
- #endif
-+	{
-+		local_bh_disable();
-+		if (nf_dev_xmit_recursion()) {
-+			local_bh_enable();
-+			kfree_skb(nskb);
-+			return;
-+		}
-+
-+		nf_dev_xmit_recursion_inc();
- 		ip6_local_out(net, sk, nskb);
-+		nf_dev_xmit_recursion_dec();
-+		local_bh_enable();
-+	}
+ 	/* trace should not be dereferenced after this point */
+ 	if (may_fault)
+@@ -684,8 +684,8 @@ const struct bpf_func_proto bpf_get_task_stack_sleepable_proto = {
+ 	.arg4_type	= ARG_ANYTHING,
+ };
+ 
+-static int __bpf_get_stack_pe(struct perf_callchain_entry *trace, void *buf, u32 size,
+-			      u64 flags)
++static int __bpf_get_stack_pe(const struct perf_callchain_entry *trace, u32 trace_nr,
++			      void *buf, u32 size, u64 flags)
+ {
+ 	bool user_build_id = flags & BPF_F_USER_BUILD_ID;
+ 	u64 skip = flags & BPF_F_SKIP_FIELD_MASK;
+@@ -701,12 +701,12 @@ static int __bpf_get_stack_pe(struct perf_callchain_entry *trace, void *buf, u32
+ 		return -EINVAL;
+ 
+ 	max_depth = stack_map_calculate_max_depth(size, elem_size, flags);
+-	trace->nr = min_t(u32, trace->nr, max_depth);
++	trace_nr = min_t(u32, trace_nr, max_depth);
+ 
+-	if (trace->nr < skip)
++	if (trace_nr < skip)
+ 		return -EFAULT;
+ 
+-	nr_trace = callchain_store(trace, buf, elem_size, flags);
++	nr_trace = callchain_store(trace, trace_nr, buf, elem_size, flags);
+ 	return callchain_finalize(buf, size, nr_trace, elem_size, flags, false /* !may_fault */);
  }
- EXPORT_SYMBOL_GPL(nf_send_reset6);
  
-diff --git a/net/netfilter/nf_dup_netdev.c b/net/netfilter/nf_dup_netdev.c
-index 02d1880bab6b3..c47508b54ba9c 100644
---- a/net/netfilter/nf_dup_netdev.c
-+++ b/net/netfilter/nf_dup_netdev.c
-@@ -12,6 +12,7 @@
- #include <net/netfilter/nf_tables.h>
- #include <net/netfilter/nf_tables_offload.h>
- #include <net/netfilter/nf_dup_netdev.h>
-+#include <net/netfilter/nf_recursion.h>
+@@ -714,8 +714,8 @@ BPF_CALL_4(bpf_get_stack_pe, struct bpf_perf_event_data_kern *, ctx,
+ 	   void *, buf, u32, size, u64, flags)
+ {
+ 	struct pt_regs *regs = (struct pt_regs *)(ctx->regs);
++	const struct perf_callchain_entry *trace;
+ 	struct perf_event *event = ctx->event;
+-	struct perf_callchain_entry *trace;
+ 	bool kernel, user;
+ 	int err = -EINVAL;
+ 	__u64 nr_kernel;
+@@ -738,13 +738,7 @@ BPF_CALL_4(bpf_get_stack_pe, struct bpf_perf_event_data_kern *, ctx,
+ 	nr_kernel = count_kernel_ip(trace);
  
- static void nf_do_netdev_egress(struct sk_buff *skb, struct net_device *dev,
- 				enum nf_dev_hooks hook)
-diff --git a/net/netfilter/nft_fwd_netdev.c b/net/netfilter/nft_fwd_netdev.c
-index eceab479bd8c4..84ae30cd208b7 100644
---- a/net/netfilter/nft_fwd_netdev.c
-+++ b/net/netfilter/nft_fwd_netdev.c
-@@ -14,6 +14,7 @@
- #include <net/netfilter/nf_tables.h>
- #include <net/netfilter/nf_tables_offload.h>
- #include <net/netfilter/nf_dup_netdev.h>
-+#include <net/netfilter/nf_recursion.h>
- #include <net/neighbour.h>
- #include <net/ip.h>
+ 	if (kernel) {
+-		__u64 nr = trace->nr;
+-
+-		trace->nr = nr_kernel;
+-		err = __bpf_get_stack_pe(trace, buf, size, flags);
+-
+-		/* restore nr */
+-		trace->nr = nr;
++		err = __bpf_get_stack_pe(trace, nr_kernel, buf, size, flags);
+ 	} else { /* user */
+ 		u64 skip = flags & BPF_F_SKIP_FIELD_MASK;
  
+@@ -752,7 +746,7 @@ BPF_CALL_4(bpf_get_stack_pe, struct bpf_perf_event_data_kern *, ctx,
+ 		if (skip > BPF_F_SKIP_FIELD_MASK)
+ 			goto clear;
+ 		flags = (flags & ~BPF_F_SKIP_FIELD_MASK) | skip;
+-		err = __bpf_get_stack_pe(trace, buf, size, flags);
++		err = __bpf_get_stack_pe(trace, trace->nr, buf, size, flags);
+ 	}
+ 
+ clear:
 -- 
 2.53.0
 
