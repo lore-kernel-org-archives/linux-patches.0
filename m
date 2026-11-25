@@ -1,54 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795625272;
-	b=XogH0CjJL+d+l86194AAEvO2jxnU3SqQfz4L93uPozUjkqwhuMJzj0JDPoo99/PF1KYr
-	 I+lNLCfDDHbMRWgSdP5FZi4RZ3FRZYJCaqbw/0nhAHfnslk87SE9Byd9VfHZTIhY7skVJ
-	 lmGMuPZmBQNDvHT5YxlkgbaBXRlFwfyHpNmBuZNos0dydVC7492C6gqg5tKcw5nxyQUbf
-	 2GNVHshdImbbKqxwNr+TV2s25Fl5rFA8tSgL26CrohPxTaFRurgTDZs35q8vdECuXszVu
-	 8LawrrYa47UwnVFo78Px8wdAvSFAuxN9M2+V77BFpq+id3IeyN84PpI+A+wbqcGgA7A==
+	t=1795625275;
+	b=ns+2jW52bUu8gPMGXtmEN0KiHvmGdS0hGyYKBnf5mSPvw1aJhqqNVuC3NDjeaDmsjhp9
+	 ZUkLmLPTmyFxWD9sbe4ZJ/pHwrJI7ZwTp/AMD1GaMGfIxNA2jI3Yk7iMVFrkNFKdpJdmK
+	 Ca2n2W4AQ4bUukqOy1njIaX1JuQ25hexa3L+mvFYiY23JnyKsiO17UzM0jcTWZ6rYG5+L
+	 gyrgD64etTLw2aVtrELFOCI2VLEHGV66tA+jEuzN+p+gV3ID8gYtt/B+y6PbnYiH1Z+zv
+	 ZNbyitILlvhRq+bJeNnpH9zeUDPlBRJJpw0FP6yWox+hXfQcuuF6kWZpnl9aSLBfYpA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795625272;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795625275;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=jpaw04szNdRoliptqBvHXYurziX3FT5R6yNaYhEEkrU=;
-	b=bSuEoEv4JCa/fKoF9S6ipuCIDOnEDIJExro7mADdknG3GCXfkNAUiIwDaK4EZSoJ5Yr4
-	 TxHMKofA7PwcOC6jJlnDIXc+ZTEOh90uN8VNH2fALtgifxrTXVR4eHLPU48OLEGFw7n52
-	 +UUEBi004UlMOMWsev8e9Ob4yMCbaCpdogT1ydtlbwzauFGi6EeFPLmxTFoJ787bNlugk
-	 QESu1ETaDK//HbnudCRm5buowhROBuh7bM4Ts+5jBnOU5cG7gOQ/QekSWHWi6wTV/OE6P
-	 hng8EnTzufsd8RSju2JxGCNVgjcChQvTQU0YcZrGKm8PRUZPuNNCapvJggvN/GDHS4g==
+	bh=TTkfpT8FkDcX5JwRVhDg8uuXxmQtkDQBBM4OyTyXONA=;
+	b=CeOHl5dyIknEBJAvfrQNP5XTBT8NxV0vPnu8TS01zcgKA7N7bl/XVqkg9j26N8Ur3RxU
+	 IlHMih+Y9yOnbYikX3t10WWFFDtMd29jGS4lffkaUbBP9o5dTGrYXVYjjiIPi/BGsAw45
+	 Fwc6LOoNXRAu6VeAG+rCH5yj5st20SF7iRnC/axU/UyBgTYcYEp9la0KRvFvA4Ue7y11M
+	 vMGkn5l5uCyoPVPPnbF4Gp34SoDzr3uO6DziFOf2fw2LqFicGXjirJTNFleJaO6KqH8uJ
+	 0kg6HK6LgJBQd8030rKv4FBjgXi9NIgQXyz7wNlwFFRiayJPK4MmZ1XJIeZAnLbd1Cw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=K6QAXXxe;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=DfOFjpqK;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6E7BF606A32E;
-	Wed, 25 Nov 2026 16:47:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 15704606A32A;
+	Wed, 25 Nov 2026 16:47:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=K6QAXXxe
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 809181F00A19;
-	Wed, 25 Nov 2026 16:47:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=DfOFjpqK
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 555031F000CA;
+	Wed, 25 Nov 2026 16:47:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795625272;
-	bh=jpaw04szNdRoliptqBvHXYurziX3FT5R6yNaYhEEkrU=;
+	s=korg; t=1795625274;
+	bh=TTkfpT8FkDcX5JwRVhDg8uuXxmQtkDQBBM4OyTyXONA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=K6QAXXxeLl2S22ChsqTJJjf48Vq01qr+kWkmIJob6EYB71edhNLAcPHOsR3BTsGzT
-	 PFcmX/BKE+jyi2IuwPmvKzFz3508duw6nwvhxdOEWfdedolQsRjKNeLn/Nw6Q92D63
-	 KOi2uZu3RiJc6k4IBEFAw1jIjG5Ht1Y0ndrlTV0w=
+	b=DfOFjpqKKIyXD9OYs+0m1Cen8SCYwusHS7eqSW8bnAx/yfQErwX+5LoWDEGEjPIY3
+	 EelKnOZmmkwqOIujA2LrtgykjlrcR6u9F+rrJ/Z5IsnWfKyuAVh8Ms5FrXVyoXw6XQ
+	 XuzqzSPv4UrUujTX2iGPlPy0MfYRtb8znPoxY47o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Roman Demidov <roman.demidov.nn@gmail.com>,
-	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
-	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
-	Rob Clark <robin.clark@oss.qualcomm.com>,
+	Frank Li <Frank.li@oss.nxp.com>,
+	Frank Li <Frank.Li@nxp.com>,
+	Linus Walleij <linusw@kernel.org>,
+	Vinod Koul <vkoul@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 460/816] drm/msm/a6xx: check pm_runtime_resume_and_get during resume
-Date: Wed, 25 Nov 2026 15:33:28 +0100
-Message-ID: <20261125143859.841059524@linuxfoundation.org>
+Subject: [PATCH 6.12 461/816] dmaengine: ste_dma40: Fix cyclic transfer residue
+Date: Wed, 25 Nov 2026 15:33:29 +0100
+Message-ID: <20261125143859.863548877@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143849.205329330@linuxfoundation.org>
 References: <20261125143849.205329330@linuxfoundation.org>
@@ -70,92 +70,238 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Roman Demidov <roman.demidov.nn@gmail.com>
+From: Linus Walleij <linusw@kernel.org>
 
-[ Upstream commit e2f57c576f14f96449cfee840860cb9707501d23 ]
+[ Upstream commit c80edceff29ee212987c2d2c851b2cb2eb4b477a ]
 
-The return values of pm_runtime_resume_and_get() calls in a6xx_pm_resume()
-are not checked, which can lead to hardware access on suspended devices
-and PM reference underflows.
+DMA40 reads residue from the element count of the currently active LLI.
+For a cyclic transfer this reports at most one period, not the bytes
+remaining until the cyclic buffer wraps.
 
-Fix this by checking the return value of each pm_runtime_resume_and_get()
-call and properly unwinding the previously acquired resources on failure.
+Once DMA40 advertises burst granularity, DMAengine PCM uses this residue
+directly. For a four-period PCM buffer it consequently reports the
+hardware pointer near three periods after every period interrupt. ALSA
+eventually stops playback with -EIO although DMA period callbacks
+continue.
 
-Found by Linux Verification Center (linuxtesting.org) with SVACE.
+Calculate cyclic residue from the current memory-side hardware pointer
+instead. Read the destination pointer for capture and the source pointer
+for playback. Sample the split logical channel pointer coherently and
+retain the last valid residue during relink transitions.
 
-Fixes: 5a903a44a984 ("drm/msm/a6xx: Introduce GMU wrapper support")
-Signed-off-by: Roman Demidov <roman.demidov.nn@gmail.com>
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-Patchwork: https://patchwork.freedesktop.org/patch/757106/
-Message-ID: <20260929142103.81854-2-roman.demidov.nn@gmail.com>
-Signed-off-by: Rob Clark <robin.clark@oss.qualcomm.com>
-[ sashal: omitted the gmu->clocks bulk-enable error path and the a6xx_llc_activate() call because this tree's a6xx_pm_resume() lacks both, so only the PM resume return checks and unwind labels were applied. ]
+Make at most three residue sampling attempts: one initial read plus two
+retries. The retries let transient split-register updates or LLI relink
+windows settle, while the limit prevents unbounded polling if hardware does
+not yield a valid pointer.
+
+This avoids counting terminal-count interrupts, which races with hardware
+advancing to the next LLI and cannot account for coalesced interrupt
+status. Also reject cyclic periods that expand into multiple LLIs because
+logical cyclic LLIs each request a terminal-count interrupt and would
+generate more than one callback per period.
+
+Reject invalid cyclic geometries before dividing or constructing the
+scatterlist as well.
+
+Reported-by: Frank Li <Frank.li@oss.nxp.com>
+Closes: https://lore.kernel.org/dmaengine/aq2wIPJW6viUxyy9@SMW015318/
+Fixes: 15c606686541 ("dmaengine: ste_dma40: indicate granularity on channels")
+Assisted-by: LLM
+Reviewed-by: Frank Li <Frank.Li@nxp.com>
+Signed-off-by: Linus Walleij <linusw@kernel.org>
+Link: https://patch.msgid.link/20260927-dma40-fixes-v7-2-89f595e8851d@kernel.org
+Signed-off-by: Vinod Koul <vkoul@kernel.org>
+[ sashal: Replaced kzalloc_objs() with the older kcalloc() call for the scatterlist allocation, with the rest matching upstream. ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/msm/adreno/a6xx_gpu.c | 33 +++++++++++++++------------
- 1 file changed, 19 insertions(+), 14 deletions(-)
+ drivers/dma/ste_dma40.c | 106 ++++++++++++++++++++++++++++++++++++++--
+ 1 file changed, 101 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/gpu/drm/msm/adreno/a6xx_gpu.c b/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
-index 4dc095f74c32b..f924d633809a5 100644
---- a/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
-+++ b/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
-@@ -1877,36 +1877,41 @@ static int a6xx_pm_resume(struct msm_gpu *gpu)
- 	opp = dev_pm_opp_find_freq_ceil(&gpu->pdev->dev, &freq);
- 	if (IS_ERR(opp)) {
- 		ret = PTR_ERR(opp);
--		goto err_set_opp;
-+		goto err_unlock;
- 	}
+diff --git a/drivers/dma/ste_dma40.c b/drivers/dma/ste_dma40.c
+index 21469034495d7..53e56b4be3fca 100644
+--- a/drivers/dma/ste_dma40.c
++++ b/drivers/dma/ste_dma40.c
+@@ -69,6 +69,9 @@ struct stedma40_platform_data {
+ /* Maximum iterations taken before giving up suspending a channel */
+ #define D40_SUSPEND_MAX_IT 500
  
- 	/* Set the core clock and bus bw, having VDD scaling in mind */
- 	dev_pm_opp_set_opp(&gpu->pdev->dev, opp);
- 	dev_pm_opp_put(opp);
++/* Maximum attempts to sample a stable cyclic residue position */
++#define D40_RESIDUE_MAX_ATTEMPTS 3
++
+ /* Milliseconds */
+ #define DMA40_AUTOSUSPEND_DELAY	100
  
--	pm_runtime_resume_and_get(gmu->dev);
--	pm_runtime_resume_and_get(gmu->gxpd);
-+	ret = pm_runtime_resume_and_get(gmu->dev);
-+	if (ret < 0)
-+		goto err_opp_clear;
-+	ret = pm_runtime_resume_and_get(gmu->gxpd);
-+	if (ret < 0)
-+		goto err_put_dev;
+@@ -368,6 +371,9 @@ struct d40_lli_pool {
+  * @lli_len: Number of llis of current descriptor.
+  * @lli_current: Number of transferred llis.
+  * @lcla_alloc: Number of LCLA entries allocated.
++ * @cyclic_dma_addr: Start address of the cyclic buffer.
++ * @cyclic_buf_len: Length of the cyclic buffer.
++ * @cyclic_residue: Last valid cyclic residue sample.
+  * @txd: DMA engine struct. Used for among other things for communication
+  * during a transfer.
+  * @node: List entry.
+@@ -386,6 +392,9 @@ struct d40_desc {
+ 	int				 lli_len;
+ 	int				 lli_current;
+ 	int				 lcla_alloc;
++	dma_addr_t			 cyclic_dma_addr;
++	size_t				 cyclic_buf_len;
++	size_t				 cyclic_residue;
  
- 	ret = clk_bulk_prepare_enable(gpu->nr_clocks, gpu->grp_clks);
- 	if (ret)
--		goto err_bulk_clk;
-+		goto err_put_gxpd;
- 
- 	if (adreno_is_a619_holi(adreno_gpu))
- 		a6xx_sptprac_enable(gmu);
- 
--	/* If anything goes south, tear the GPU down piece by piece.. */
--	if (ret) {
--err_bulk_clk:
--		pm_runtime_put(gmu->gxpd);
--		pm_runtime_put(gmu->dev);
--		dev_pm_opp_set_opp(&gpu->pdev->dev, NULL);
--	}
--err_set_opp:
- 	mutex_unlock(&a6xx_gpu->gmu.lock);
-+	msm_devfreq_resume(gpu);
- 
--	if (!ret)
--		msm_devfreq_resume(gpu);
-+	return 0;
- 
-+	/* If anything goes south, tear the GPU down piece by piece.. */
-+err_put_gxpd:
-+	pm_runtime_put(gmu->gxpd);
-+err_put_dev:
-+	pm_runtime_put(gmu->dev);
-+err_opp_clear:
-+	dev_pm_opp_set_opp(&gpu->pdev->dev, NULL);
-+err_unlock:
-+	mutex_unlock(&a6xx_gpu->gmu.lock);
- 	return ret;
+ 	struct dma_async_tx_descriptor	 txd;
+ 	struct list_head		 node;
+@@ -1412,6 +1421,64 @@ static u32 d40_residue(struct d40_chan *d40c)
+ 	return num_elt * d40c->dma_cfg.dst_info.data_width;
  }
  
++static bool d40_current_addr(struct d40_chan *d40c, dma_addr_t *addr)
++{
++	bool dst = d40c->dma_cfg.dir == DMA_DEV_TO_MEM;
++	void __iomem *high_reg;
++	void __iomem *low_reg;
++	u32 low;
++	u32 high;
++	u32 check;
++	int i;
++
++	if (chan_is_physical(d40c)) {
++		*addr = readl(chan_base(d40c) +
++			      (dst ? D40_CHAN_REG_SDPTR : D40_CHAN_REG_SSPTR));
++		return true;
++	}
++
++	if (dst) {
++		low_reg = &d40c->lcpa->lcsp2;
++		high_reg = &d40c->lcpa->lcsp3;
++	} else {
++		low_reg = &d40c->lcpa->lcsp0;
++		high_reg = &d40c->lcpa->lcsp1;
++	}
++
++	for (i = 0; i < D40_RESIDUE_MAX_ATTEMPTS; i++) {
++		high = readl(high_reg) & D40_MEM_LCSP1_SPTR_MASK;
++		low = readl(low_reg) & D40_MEM_LCSP0_SPTR_MASK;
++		check = readl(high_reg) & D40_MEM_LCSP1_SPTR_MASK;
++		if (high == check) {
++			*addr = low | high;
++			return true;
++		}
++	}
++
++	return false;
++}
++
++static bool d40_cyclic_offset(struct d40_chan *d40c, struct d40_desc *d40d,
++			      size_t *offset)
++{
++	dma_addr_t current_addr;
++	dma_addr_t current_offset;
++	int i;
++
++	for (i = 0; i < D40_RESIDUE_MAX_ATTEMPTS; i++) {
++		if (!d40_current_addr(d40c, &current_addr))
++			continue;
++
++		current_offset = current_addr - d40d->cyclic_dma_addr;
++		if (current_offset <= d40d->cyclic_buf_len) {
++			*offset = current_offset;
++			return true;
++		}
++	}
++
++	return false;
++}
++
+ static bool d40_tx_is_linked(struct d40_chan *d40c)
+ {
+ 	bool is_link;
+@@ -2202,15 +2269,26 @@ static bool d40_is_paused(struct d40_chan *d40c)
+ 
+ }
+ 
+-static u32 stedma40_residue(struct dma_chan *chan)
++static u32 stedma40_residue(struct dma_chan *chan, dma_cookie_t cookie)
+ {
+ 	struct d40_chan *d40c =
+ 		container_of(chan, struct d40_chan, chan);
++	struct d40_desc *d40d;
++	size_t offset;
+ 	u32 bytes_left;
+ 	unsigned long flags;
+ 
+ 	spin_lock_irqsave(&d40c->lock, flags);
+-	bytes_left = d40_residue(d40c);
++	d40d = d40_first_active_get(d40c);
++	if (d40d && d40d->txd.cookie == cookie && d40d->cyclic &&
++	    d40d->cyclic_buf_len) {
++		if (d40_cyclic_offset(d40c, d40d, &offset))
++			d40d->cyclic_residue = d40d->cyclic_buf_len - offset;
++		bytes_left = d40d->cyclic_residue;
++	} else {
++		bytes_left = d40_residue(d40c);
++	}
++
+ 	spin_unlock_irqrestore(&d40c->lock, flags);
+ 
+ 	return bytes_left;
+@@ -2346,8 +2424,13 @@ d40_prep_sg(struct dma_chan *dchan, struct scatterlist *sg_src,
+ 	if (desc == NULL)
+ 		goto unlock;
+ 
+-	if (sg_next(&sg_src[sg_len - 1]) == sg_src)
++	if (sg_next(&sg_src[sg_len - 1]) == sg_src) {
+ 		desc->cyclic = true;
++		if (desc->lli_len != sg_len) {
++			chan_err(chan, "Cyclic periods must fit in one LLI\n");
++			goto free_desc;
++		}
++	}
+ 
+ 	src_dev_addr = 0;
+ 	dst_dev_addr = 0;
+@@ -2630,11 +2713,18 @@ dma40_prep_dma_cyclic(struct dma_chan *chan, dma_addr_t dma_addr,
+ 		     size_t buf_len, size_t period_len,
+ 		     enum dma_transfer_direction direction, unsigned long flags)
+ {
+-	unsigned int periods = buf_len / period_len;
++	unsigned int periods;
+ 	struct dma_async_tx_descriptor *txd;
++	struct d40_desc *desc;
+ 	struct scatterlist *sg;
++	dma_addr_t buf_addr = dma_addr;
+ 	int i;
+ 
++	if (!buf_len || !period_len || buf_len % period_len)
++		return NULL;
++
++	periods = buf_len / period_len;
++
+ 	sg = kcalloc(periods + 1, sizeof(struct scatterlist), GFP_NOWAIT);
+ 	if (!sg)
+ 		return NULL;
+@@ -2649,6 +2739,12 @@ dma40_prep_dma_cyclic(struct dma_chan *chan, dma_addr_t dma_addr,
+ 
+ 	txd = d40_prep_sg(chan, sg, sg, periods, direction,
+ 			  DMA_PREP_INTERRUPT);
++	if (txd) {
++		desc = container_of(txd, struct d40_desc, txd);
++		desc->cyclic_dma_addr = buf_addr;
++		desc->cyclic_buf_len = buf_len;
++		desc->cyclic_residue = buf_len;
++	}
+ 
+ 	kfree(sg);
+ 
+@@ -2669,7 +2765,7 @@ static enum dma_status d40_tx_status(struct dma_chan *chan,
+ 
+ 	ret = dma_cookie_status(chan, cookie, txstate);
+ 	if (ret != DMA_COMPLETE && txstate)
+-		dma_set_residue(txstate, stedma40_residue(chan));
++		dma_set_residue(txstate, stedma40_residue(chan, cookie));
+ 
+ 	if (d40_is_paused(d40c))
+ 		ret = DMA_PAUSED;
 -- 
 2.53.0
 
