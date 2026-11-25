@@ -1,50 +1,50 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795623688;
-	b=CKJgkPLR53h298D7N9xti2T0ZpY8YEDLLOpPFtu+tPnJa0m04Yvu0aXzX1FaUjDC1zFE
-	 k/wcWmLzMlrvCQ5fMTHgyH8iDClv+7ja3kADLfzk+m9dNMEppZRfnuXyvOb3KiFR3h6P2
-	 PL2lUfgWC0AY3+65Y+MW4rkB+S8QFq1JCWNpMjkiJ1wivuLGepZ80XDSpS/1hNdtQQjym
-	 YeFiGGnECl9U0stMDGgxc210AeZO5Wjl5t3u0zphLmUPIbbItybZoX4PJBmFDXfX/zVV5
-	 SGW/77oT5c/NObU4h3GDpksQvt5ztzkyVqSrHS2ML8rHn8/pfJrrT4cpbvRHtdahfSw==
+	t=1795623692;
+	b=OipbmXEooba6hGL+LwrsFWgp6j3DXzkJpDZQLn4gqGt453xFEOWUPQUONqpmoMQkAQrC
+	 WyiUULR/vLJ9c9qr274vJIVIrLyHLOvLFPGXpvLMOZ/Etl5GbnRI3vR1uMOsiE0pX8wtj
+	 C73ubshVl6qPBjzzkAsDuqRazwcc8VNInHj5jJJ/ZxGT8V/ax/dt1ywx1tFqWQeW7ANVW
+	 DuykXeWsg3zEjAIYDYtWNzMWFLc8MDStKPg4GMDa8sgTxLZDbT7RhJQNYqwjCurWCAc31
+	 6v9eqwyKsTKQBxMMsoATISmxp5Vd4NnIy3Z9HXE9gtyiKdCVhlMMNYWaKZ/5K9n/jTg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795623688;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795623692;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=1Al9h9DXG2fCWLDrwqs1DSJnVrMqWY7UUymshHj3+Zw=;
-	b=AV+6M3JZ2azjHq2xTeJ2mEJhhbgvcmyTWO1Wftj2wPSB/mJztMUv1oGu3UYFGVqaZ3iB
-	 y/fKvA0kd9qRQYTpf/5UKEZv4dvwss2ROMJ6z1iBMCjMTzg+x/VhLKIkLyNpgLZ7CN5ME
-	 5qMRvpbtCoy+6SBDUfxaPTqib3mW/RcJo4yMJmMvklUPq/OUttMdYdiRCe/xt7FqmdNfx
-	 hNngwtiEXQ9wm6cIXfeCMkgAywqQ8d/opDMBPdmssk09EoFECtYj4aH2ilqIoKGn5fkBh
-	 5ZNlZnve0ZwaZm0BByoRarmcd6NV8R/RuCDjIaDfyxVGu/ffpAQUFqjmBe523L6S03Q==
+	bh=V7TO5DxkLbTG/cBpLzQYi1SuR7/WT4xM850Rr37RvH0=;
+	b=AeaKYK7Xrfx5KPfbaZ2pjuiA5HLR2Bu8twVvEduatDrjaPrR+0V6TO6HiegkliYID4Zq
+	 WrOM1JsOgiBLksBqBHdfyE/fIMFV/wHKXoGxZtkCPG7SpQ4s5Mnu642H0AwsljYIC2a5M
+	 hjn3Wywl+nOAstLFNqsPakdjCxjVh9XR3yyqL/7994g0aciG51ySUMd8ymQZXOi96s24T
+	 5B9nXB2Py14Jbe2LbIo46QI5O1Lq8gjohanhqLOvX6JKpF0mGq3KvW6E0bBqYI6SAdV6F
+	 +osT1cKYv1vxCvetk1gpqcQ7eE0k7FdC+NcOLbDTT9ftkBY+d3Bl5Ucro976hzeN9/Q==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=HkzZjtac;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=0RrSVMls;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D9E3E606A684;
-	Wed, 25 Nov 2026 16:21:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6AD4A606A327;
+	Wed, 25 Nov 2026 16:21:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=HkzZjtac
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C6C5D1F000CF;
-	Wed, 25 Nov 2026 16:21:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=0RrSVMls
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ED41E1F000CF;
+	Wed, 25 Nov 2026 16:21:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795623688;
-	bh=1Al9h9DXG2fCWLDrwqs1DSJnVrMqWY7UUymshHj3+Zw=;
+	s=korg; t=1795623691;
+	bh=V7TO5DxkLbTG/cBpLzQYi1SuR7/WT4xM850Rr37RvH0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=HkzZjtacCKw31umJ9E6L0o5Gc2+k659hsFB1gfeMknT++BFzev3SGQPX8kXgcQhh/
-	 mSq2HtBNao+tSvYNmTRQFHgqRyu87Jwuz/MeGK6qzN4Qx26R4/xVVp381L8kQXOIxJ
-	 YXXRCwgqM2LIhSJ0hwUt8+LZ/kNJHn6Du7A81SW8=
+	b=0RrSVMls5NZxxcbEpHTnaZju6PxQqu+R3ZSoB//COEZrh87WRqbsgc6G8Y87P15x6
+	 l+OQvcZCliCl0vnEbwsAgSg7NmlJGDlJ16iC9AKKOI+kjAIuC0uD2iWfBj2Pf6E8F7
+	 WnnhIEhrfAkDLO6THTxItmvUOkn3H6CPmj6NgKpw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Johan Hovold <johan@kernel.org>
-Subject: [PATCH 6.18 940/990] USB: serial: io_edgeport: fix potential fifo corruption
-Date: Wed, 25 Nov 2026 15:38:27 +0100
-Message-ID: <20261125143844.010089343@linuxfoundation.org>
+Subject: [PATCH 6.18 941/990] USB: serial: io_edgeport: fix potential use-after-free on disconnect
+Date: Wed, 25 Nov 2026 15:38:28 +0100
+Message-ID: <20261125143844.033650173@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143822.072087159@linuxfoundation.org>
 References: <20261125143822.072087159@linuxfoundation.org>
@@ -68,76 +68,99 @@ Content-Transfer-Encoding: 8bit
 
 From: Johan Hovold <johan@kernel.org>
 
-commit 270f76c3b88c9cc3d6ca58c5c0c0f34c2373b27c upstream.
+commit 50613e6380db7a904ef15c60ed0c436baf308f0a upstream.
 
-The device buffer size is determined during open() and the driver
-allocates a TX FIFO of corresponding size.
+The driver submits command URBs asynchronously but fails to stop them on
+disconnect, something which could lead to a use-after-free when
+accessing driver data in the completion handler after a port has been
+unbound.
 
-Add the missing sanity check to prevent memory corruption in case a
-malicious device sends a second open response with a different buffer
-size.
-
-This issue was flagged by Sashiko when reviewing a related fix.
+Add an URB anchor to track and kill outstanding command URBs on
+disconnect.
 
 Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
 Cc: stable@vger.kernel.org
-Link: https://sashiko.dev/#/patchset/20260714101316.823942-1-shpark061104%40gmail.com?part=1
 Signed-off-by: Johan Hovold <johan@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/serial/io_edgeport.c |   15 ++++++++++++++-
- 1 file changed, 14 insertions(+), 1 deletion(-)
+ drivers/usb/serial/io_edgeport.c |   19 ++++++-------------
+ 1 file changed, 6 insertions(+), 13 deletions(-)
 
 --- a/drivers/usb/serial/io_edgeport.c
 +++ b/drivers/usb/serial/io_edgeport.c
-@@ -877,13 +877,17 @@ static int edge_open(struct tty_struct *
+@@ -225,6 +225,7 @@ struct edgeport_serial {
+ 	__u8			rxStatusParam;			/* the receive status parameter */
+ 	__s16			rxBytesRemaining;		/* the number of port bytes left to read */
+ 	struct usb_serial	*serial;			/* loop back to the owner of this object */
++	struct usb_anchor	cmd_anchor;
+ };
+ 
+ /* baud rate information */
+@@ -261,9 +262,6 @@ static const struct divisor_table_entry
+ 	{   230400,	1},
+ };
+ 
+-/* Number of outstanding Command Write Urbs */
+-static atomic_t CmdUrbs = ATOMIC_INIT(0);
+-
+ 
+ /* function prototypes */
+ 
+@@ -776,11 +774,6 @@ static void edge_bulk_out_cmd_callback(s
+ 	struct device *dev = &urb->dev->dev;
+ 	int status = urb->status;
+ 
+-	atomic_dec(&CmdUrbs);
+-	dev_dbg(dev, "%s - FREE URB %p (outstanding %d)\n", __func__, urb,
+-		atomic_read(&CmdUrbs));
+-
+-
+ 	/* clean up the transfer buffer */
+ 	kfree(urb->transfer_buffer);
+ 
+@@ -2127,24 +2120,21 @@ static int write_cmd_usb(struct edgeport
+ 	if (!urb)
+ 		return -ENOMEM;
+ 
+-	atomic_inc(&CmdUrbs);
+-	dev_dbg(dev, "%s - ALLOCATE URB %p (outstanding %d)\n",
+-		__func__, urb, atomic_read(&CmdUrbs));
+-
+ 	usb_fill_bulk_urb(urb, edge_serial->serial->dev,
+ 			usb_sndbulkpipe(edge_serial->serial->dev,
+ 					edge_serial->bulk_out_endpoint),
+ 			buffer, length, edge_bulk_out_cmd_callback, edge_port);
+ 
+ 	edge_port->commandPending = true;
++	usb_anchor_urb(urb, &edge_serial->cmd_anchor);
+ 	status = usb_submit_urb(urb, GFP_ATOMIC);
+ 
+ 	if (status) {
+ 		/* something went wrong */
+ 		dev_err(dev, "%s - usb_submit_urb(write command) failed, status = %d\n",
+ 			__func__, status);
++		usb_unanchor_urb(urb);
+ 		usb_free_urb(urb);
+-		atomic_dec(&CmdUrbs);
+ 		return status;
  	}
  
- 	/* initialize our port settings */
-+	spin_lock_irq(&edge_port->ep_lock);
- 	edge_port->txCredits = 0;	/* Can't send any data yet */
-+	edge_port->maxTxCredits = 0;
-+	edge_port->openPending = true;
-+	spin_unlock_irq(&edge_port->ep_lock);
+@@ -2696,6 +2686,7 @@ static int edge_startup(struct usb_seria
+ 
+ 	spin_lock_init(&edge_serial->es_lock);
+ 	edge_serial->serial = serial;
++	init_usb_anchor(&edge_serial->cmd_anchor);
+ 	usb_set_serial_data(serial, edge_serial);
+ 
+ 	/* get the name for the device from the device */
+@@ -2900,6 +2891,8 @@ static void edge_disconnect(struct usb_s
+ {
+ 	struct edgeport_serial *edge_serial = usb_get_serial_data(serial);
+ 
++	usb_kill_anchored_urbs(&edge_serial->cmd_anchor);
 +
- 	/* Must always set this bit to enable ints! */
- 	edge_port->shadowMCR = MCR_MASTER_IE;
- 	edge_port->chaseResponsePending = false;
- 
- 	/* send a open port command */
--	edge_port->openPending = true;
- 	response = send_iosp_ext_cmd(edge_port, IOSP_CMD_OPEN_PORT, 0);
- 	if (response < 0) {
- 		dev_err(dev, "%s - error sending open port command\n", __func__);
-@@ -1736,6 +1740,7 @@ static void process_rcvd_status(struct e
- 	struct edgeport_port *edge_port;
- 	struct device *dev;
- 	__u8 code = edge_serial->rxStatusCode;
-+	unsigned long flags;
- 
- 	/* switch the port pointer to the one being currently talked about */
- 	if (edge_serial->rxPort >= edge_serial->serial->num_ports)
-@@ -1779,6 +1784,12 @@ static void process_rcvd_status(struct e
- 	}
- 
- 	if (code == IOSP_STATUS_OPEN_RSP) {
-+		spin_lock_irqsave(&edge_port->ep_lock, flags);
-+		/* reject stray open responses to avoid FIFO corruption */
-+		if (!edge_port->openPending) {
-+			spin_unlock_irqrestore(&edge_port->ep_lock, flags);
-+			return;
-+		}
- 		edge_port->txCredits = GET_TX_BUFFER_SIZE(byte3);
- 		edge_port->maxTxCredits = edge_port->txCredits;
- 		dev_dbg(dev, "%s - Port %u Open Response Initial MSR = %02x TxBufferSize = %d\n",
-@@ -1787,6 +1798,8 @@ static void process_rcvd_status(struct e
- 
- 		/* we have completed the open */
- 		edge_port->openPending = false;
-+		spin_unlock_irqrestore(&edge_port->ep_lock, flags);
-+
- 		wake_up(&edge_port->wait_open);
- 		return;
- 	}
+ 	if (edge_serial->is_epic) {
+ 		usb_kill_urb(edge_serial->interrupt_read_urb);
+ 		usb_kill_urb(edge_serial->read_urb);
 
 
