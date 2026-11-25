@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795625219;
-	b=T8bN9nEyfXUId1ImgKhmlq9gae1iCxgoHh2VcH0ZPX2IIwasTBrga/9Gjd3QnD6AhwhH
-	 fQwCdYh71cMUpGxAv1/snjQzMIRRHkcxvAHg/hvmmrPDMUfiY0GmFdk4ArqMwYmMA/s6I
-	 l2M8HqDnZ5SYNeB6+6cyyrqyR8x+h4vUhF/E+hihP2dZ3gH5PSNNyKPMRVKEpOJ7+I4Bx
-	 3eg8GJLF78Lew78uHy0RQTmAalMNvcuHaXWQ1Iaa00kRcPilpjN5iX3W51W1k/hDTZbAC
-	 8XrLidpeGHPfmzDxQfYwL6hn82sqllcvgfsFbTt+YgCYUMrXaXQs99hvY7UUo5as2TQ==
+	t=1795625222;
+	b=iBcijIS7u1jq3v8pMjAsi8EoJ/sly9Na2GJysYZxM1vGVbWg22Nn29WcEMWeU3AQddFD
+	 +PUkE+hxritOo1jNClerSQQZRMW0qwoptV2A627856VbvM36Iee/lD4WqTtL4GlKxomc6
+	 fHIohmtORDkhzsujyiTCtqHCbhuHcj2Kqz8cy3PJllwdXIA3S30Ty/yzvQxH77orWKHC9
+	 gYp7Oa8cqNz/VqIvCH4YOh6zW+c3u0p5Jsc1jr8+zATk7pX0y4DqM1mIATvFGi5dZ50If
+	 8uZ0C0n0WRpZ7E8Fa4+73sZNO18S50NFNZZVJkZg9yS9HuCNulgXjA+tUP2pjY8/oQg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795625219;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795625222;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=lYxE/bXaEwhhnpNfkUVp/kOG9AHIqqebffbOBQk3l7o=;
-	b=ZFxXoNuZonjiZNB6WcL9OCVcJo3havRjnvxF6IaYciI5j1gtWWfrX0kYQKepPuITRiNS
-	 YdZWgukFT3qF6Pk6nnn6Z0t9ewTXeRU9wnR3EXKxCmnWyfFqdnjBkyGpPtnciemgxAUEI
-	 zpAvR0VokohQpYSo5d6NDTty26g90wNzTPN9isy1A5QapDrzxdU53R+wKO//TiZsmD7Wz
-	 ktfllxdVWYO32C4M2qnnKZUu6+iauAdVOehKA0Pdsg5o1o1WW5uNhOKZe7P+JzXulnUx1
-	 R6hKZIlNzoDIoILuDkFyhYiqbpAgMgpl+Q7cQ4pT967Xj5JzpojpWZlFAgjE7iRk8/w==
+	bh=4dPDKc2KTJE+ovsidbvvnABuPECwX0Ry41v/vaOk7AA=;
+	b=wTXLmArdmqvOV0nL0Vjakc10MFRRExQX539qGIGN1H2+1WqOTrL/2CuQRU09k2RNLXWF
+	 Vy/K3oYbP9J8yLAM7hRLYhBdTCy6dBidsbixKNskFu3NuqmJQ77P+5yiDMff9bNPNiFPE
+	 ya1orYE7sY4D/c9Vhh725uhwLceyWyPfA/gMdeo5VjxS8f62w4Z1//67Xdo+snHOJSgjQ
+	 AJLj8TBckhpT/yB3j1Kw8iMOnj9KTdUns0FogUl9YSYerQ/c+E5QBNkRDkuqbZwYnT8ih
+	 TOZxSwu4ttkE27QhWBpxEp5WZYCmoQ8wAWnkzec6wCywbYY86esocwRxGDgjCdFTVEQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=wDimayhD;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=G7tfgCIA;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7DFB9606A32A;
-	Wed, 25 Nov 2026 16:46:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 484AF606A321;
+	Wed, 25 Nov 2026 16:47:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=wDimayhD
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 47FF51F000CA;
-	Wed, 25 Nov 2026 16:46:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=G7tfgCIA
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B53C01F000CA;
+	Wed, 25 Nov 2026 16:47:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795625218;
-	bh=lYxE/bXaEwhhnpNfkUVp/kOG9AHIqqebffbOBQk3l7o=;
+	s=korg; t=1795625222;
+	bh=4dPDKc2KTJE+ovsidbvvnABuPECwX0Ry41v/vaOk7AA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=wDimayhDkN373cRWak4E8eBKgwlMHtOYa2bmNm3tVtVvuA2lc3Ziwx3pG47vqZPEJ
-	 nd2WDUtRP+NeJCM0bxmM5bkMG849a6PKxqXe2pwQ3nghAkTEvI7viSC/nSK2GKqYa8
-	 uai5tOIZrIoC3FwV8az0pSobBVKpnq8DuC/CBGQM=
+	b=G7tfgCIAKy//v7VgpB1a4I+ivIRSlWFP7ZFx7wClfZCMyK+wLsrr9RynT0JHhUTUH
+	 soh3Z2G6vg3t7cXT+/ALdZESPcUX6T1fZpjdZyAv+c/1tdTzNkD23s4vHKF5GJ/KYt
+	 CCZBeB9lUsI+P4YoPQHQgVZ8M+Uj2hXSofIhOWLg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ahsan Atta <ahsan.atta@intel.com>,
-	Giovanni Cabiddu <giovanni.cabiddu@intel.com>,
-	Herbert Xu <herbert@gondor.apana.org.au>,
+	Alexandra Winter <wintera@linux.ibm.com>,
+	Julian Ruess <julianr@linux.ibm.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 418/816] crypto: qat - hold cfg->lock when accessing config sections
-Date: Wed, 25 Nov 2026 15:32:46 +0100
-Message-ID: <20261125143858.872338467@linuxfoundation.org>
+Subject: [PATCH 6.12 445/816] s390/ism: Zerorize dmb at allocation
+Date: Wed, 25 Nov 2026 15:33:13 +0100
+Message-ID: <20261125143859.491712332@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143849.205329330@linuxfoundation.org>
 References: <20261125143849.205329330@linuxfoundation.org>
@@ -69,161 +69,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ahsan Atta <ahsan.atta@intel.com>
+From: Alexandra Winter <wintera@linux.ibm.com>
 
-[ Upstream commit cb3a1364fed9ea7b063e3ae026177a145abb5940 ]
+[ Upstream commit a0227fa24e8a2a0397cc4eb669731ff8d9161bbd ]
 
-adf_cfg_sec_find() walks the per-device section list without holding
-cfg->lock, and the returned section pointer is used later under the
-lock. A concurrent section deletion under cfg->lock
-(adf_cfg_del_all_except() on device down, or adf_cfg_dev_remove() on
-removal) can free the section first, leading to a use-after-free.
+Sashiko reported [1] that 'Missing __GFP_ZERO in folio_alloc() causes
+uninitialized kernel memory to be exposed in the receive message buffer'.
+An ism dmb is receive-only, so the data is not leaked to a remote peer.
+In general the smc kernel module (dibs client) will only push newly
+received data to userspace. We still should not have uninitialized data
+in a receive buffer.
 
-The debugfs dev_cfg reader has the same problem: qat_dev_cfg_show()
-walks both the section list and each section's param_head under the
-global qat_cfg_read_lock mutex, not the per-device cfg->lock used by the
-add and delete paths, so the two do not serialise. Updating an existing
-key frees the old key_val under cfg->lock, so even a config write
-concurrent with an open dev_cfg read can free an entry mid-walk, a wider
-window than section deletion alone.
+Since
+commit 750afb08ca71 ("cross-tree: phase out dma_zalloc_coherent()")
+dma_alloc_coherent no longer required the __GFP_ZERO flag, but when
+commit 83781384a96b ("s390/ism: Properly fix receive message buffer allocation")
+switched to folio_alloc(), it should have added back the __GFP_ZERO flag.
 
-Take cfg->lock around the section lookup in adf_cfg_add_key_value_param()
-and around the lookup and insert in adf_cfg_section_add(), and use
-down_read()/up_read(&cfg->lock) in the debugfs start/stop callbacks.
-Remove the now-unused qat_cfg_read_lock.
+Add __GFP_ZERO flag and state in dibs.h that register_dbm() provides
+a zerorized buffer (dibs_lo already does).
 
-While here, return -ENOENT rather than -EFAULT when the section is not
-found; EFAULT (bad userspace address) is not meaningful for this case.
-
-Fixes: d8cba25d2c68 ("crypto: qat - Intel(R) QAT driver framework")
-Signed-off-by: Ahsan Atta <ahsan.atta@intel.com>
-Reviewed-by: Giovanni Cabiddu <giovanni.cabiddu@intel.com>
-Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
-[ sashal: Used kzalloc(sizeof(*sec), GFP_KERNEL) and the three-argument strscpy instead of upstream's kzalloc_obj(*sec) and two-argument strscpy, since this branch lacks those helpers. ]
+Link: https://lore.kernel.org/linux-s390/20260903143746.A5CC41F00A3A@smtp.kernel.org/ [1]
+Fixes: 83781384a96b ("s390/ism: Properly fix receive message buffer allocation")
+Signed-off-by: Alexandra Winter <wintera@linux.ibm.com>
+Reviewed-by: Julian Ruess <julianr@linux.ibm.com>
+Link: https://patch.msgid.link/20260928151420.383105-1-wintera@linux.ibm.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+[ sashal: Dropped the include/linux/dibs.h comment hunk because that file doesn't exist here, and applied the __GFP_ZERO change to folio_alloc() at a different offset with older ISM context. ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/crypto/intel/qat/qat_common/adf_cfg.c | 49 +++++++++++--------
- 1 file changed, 29 insertions(+), 20 deletions(-)
+ drivers/s390/net/ism_drv.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/crypto/intel/qat/qat_common/adf_cfg.c b/drivers/crypto/intel/qat/qat_common/adf_cfg.c
-index 97273da40b438..8db87e4e4824b 100644
---- a/drivers/crypto/intel/qat/qat_common/adf_cfg.c
-+++ b/drivers/crypto/intel/qat/qat_common/adf_cfg.c
-@@ -1,6 +1,5 @@
- // SPDX-License-Identifier: (BSD-3-Clause OR GPL-2.0-only)
- /* Copyright(c) 2014 - 2020 Intel Corporation */
--#include <linux/mutex.h>
- #include <linux/slab.h>
- #include <linux/list.h>
- #include <linux/seq_file.h>
-@@ -8,13 +7,11 @@
- #include "adf_cfg.h"
- #include "adf_common_drv.h"
+diff --git a/drivers/s390/net/ism_drv.c b/drivers/s390/net/ism_drv.c
+index c728095fc5059..0125168a45cb7 100644
+--- a/drivers/s390/net/ism_drv.c
++++ b/drivers/s390/net/ism_drv.c
+@@ -328,7 +328,8 @@ static int ism_alloc_dmb(struct ism_dev *ism, struct ism_dmb *dmb)
+ 		return -EINVAL;
  
--static DEFINE_MUTEX(qat_cfg_read_lock);
--
- static void *qat_dev_cfg_start(struct seq_file *sfile, loff_t *pos)
- {
- 	struct adf_cfg_device_data *dev_cfg = sfile->private;
+ 	folio = folio_alloc(GFP_KERNEL | __GFP_NOWARN | __GFP_NOMEMALLOC |
+-			    __GFP_NORETRY, get_order(dmb->dmb_len));
++			    __GFP_NORETRY | __GFP_ZERO,
++			    get_order(dmb->dmb_len));
  
--	mutex_lock(&qat_cfg_read_lock);
-+	down_read(&dev_cfg->lock);
- 	return seq_list_start(&dev_cfg->sec_list, *pos);
- }
- 
-@@ -42,7 +39,9 @@ static void *qat_dev_cfg_next(struct seq_file *sfile, void *v, loff_t *pos)
- 
- static void qat_dev_cfg_stop(struct seq_file *sfile, void *v)
- {
--	mutex_unlock(&qat_cfg_read_lock);
-+	struct adf_cfg_device_data *dev_cfg = sfile->private;
-+
-+	up_read(&dev_cfg->lock);
- }
- 
- static const struct seq_operations qat_dev_cfg_sops = {
-@@ -271,13 +270,10 @@ int adf_cfg_add_key_value_param(struct adf_accel_dev *accel_dev,
- 				enum adf_cfg_val_type type)
- {
- 	struct adf_cfg_device_data *cfg = accel_dev->cfg;
-+	struct adf_cfg_section *section;
- 	struct adf_cfg_key_val *key_val;
--	struct adf_cfg_section *section = adf_cfg_sec_find(accel_dev,
--							   section_name);
- 	char temp_val[ADF_CFG_MAX_VAL_LEN_IN_BYTES];
--
--	if (!section)
--		return -EFAULT;
-+	int ret = 0;
- 
- 	key_val = kzalloc(sizeof(*key_val), GFP_KERNEL);
- 	if (!key_val)
-@@ -310,20 +306,28 @@ int adf_cfg_add_key_value_param(struct adf_accel_dev *accel_dev,
- 	 *    anything (the newly created key_val is freed).
- 	 */
- 	down_write(&cfg->lock);
-+
-+	section = adf_cfg_sec_find(accel_dev, section_name);
-+	if (!section) {
-+		kfree(key_val);
-+		ret = -ENOENT;
-+		goto unlock;
-+	}
-+
- 	if (!adf_cfg_key_val_get(accel_dev, section_name, key, temp_val)) {
- 		if (strncmp(temp_val, key_val->val, sizeof(temp_val))) {
- 			adf_cfg_keyval_remove(key, section);
- 		} else {
- 			kfree(key_val);
--			goto out;
-+			goto unlock;
- 		}
- 	}
- 
- 	adf_cfg_keyval_add(key_val, section);
- 
--out:
-+unlock:
- 	up_write(&cfg->lock);
--	return 0;
-+	return ret;
- }
- EXPORT_SYMBOL_GPL(adf_cfg_add_key_value_param);
- 
-@@ -341,21 +345,26 @@ EXPORT_SYMBOL_GPL(adf_cfg_add_key_value_param);
- int adf_cfg_section_add(struct adf_accel_dev *accel_dev, const char *name)
- {
- 	struct adf_cfg_device_data *cfg = accel_dev->cfg;
--	struct adf_cfg_section *sec = adf_cfg_sec_find(accel_dev, name);
-+	struct adf_cfg_section *sec;
-+	int ret = 0;
- 
--	if (sec)
--		return 0;
-+	down_write(&cfg->lock);
-+
-+	if (adf_cfg_sec_find(accel_dev, name))
-+		goto unlock;
- 
- 	sec = kzalloc(sizeof(*sec), GFP_KERNEL);
--	if (!sec)
--		return -ENOMEM;
-+	if (!sec) {
-+		ret = -ENOMEM;
-+		goto unlock;
-+	}
- 
- 	strscpy(sec->name, name, sizeof(sec->name));
- 	INIT_LIST_HEAD(&sec->param_head);
--	down_write(&cfg->lock);
- 	list_add_tail(&sec->list, &cfg->sec_list);
-+unlock:
- 	up_write(&cfg->lock);
--	return 0;
-+	return ret;
- }
- EXPORT_SYMBOL_GPL(adf_cfg_section_add);
- 
+ 	if (!folio) {
+ 		rc = -ENOMEM;
 -- 
 2.53.0
 
