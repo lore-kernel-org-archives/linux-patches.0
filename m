@@ -1,54 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795618344;
-	b=WNkAxuQ/hGjtBBegouUjqmVH44Xk3Sdd0ik28TwtYL62MTE7XYEcplOI/H2VXIncTZaE
-	 n+h6FR6a4ANEY5mIQZvJivVbvqfxAsKhrDodmF27OmQ4QmeRnCD7Di1YECs+dOQmxuEPM
-	 47Pm4Y9w2MyNmcUG4zh8G81wBH2Tm4ozaMsNcsd9NLm0BX0vZKklJPlO2BW+A2bI1fEac
-	 xMsz5ITm3T6sbI9N9y3AFXmq+ABI1EiRjM2lk8XRkykjZuaM+6ZGtwnEBzdjoKvVxacBE
-	 sTsfMA0DG5PAQxIXC4ouOxUL6XNrIu9vwM56dQhpUzu+PfX/CTmiduop6/QdxZbcK6g==
+	t=1795618347;
+	b=gXF5bhqmzFiehcxy7s8CgW4aEu9Llu00/VeXZcS/3QQ/+//6mGIIxAh0gpIS5OBhHB1m
+	 EHQRcr+PKGKXbfDHsta2KBkoFMyw912txlL/ggNdBLgOucdHEYGOzcrmt93zOFjRRL6Hp
+	 VvpF6iNb9nNh8O3mOfheLZnzM6tF0aptF6flvFp/voXxFEPhgmrPSSRPl2La2Ugts0mYy
+	 0S2stQ4otTS+VhIZptTvYurxsLgWp6dyExkh8PPxvAxCjaLZlJ7E3LKNoQ8O1eY3VxwlL
+	 eH8AanCNv6tZgLJqZL1N2c3SWYmghKYNaswtZuKj3ls2U1NfRn/zvlJjE4gF5SGQd4g==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795618344;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795618347;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=ZI7vx3hbJy2BRzco3mqny/WeS1PN/dehpiWvg4tigcs=;
-	b=T0YhsUp6RSTgn85WGDDTEU/9s9FSnUKqr1Qi2KHmXkKupF75ILIve20KmJOUiajY27vo
-	 IvHF5nOSXf+Vry8YhW4IoHZeY1G00EuJtDI3tdr+FZdn5liFvxWNUBYpAeNKaqYov/0uH
-	 I1qex87GEW28GLmmHh+E8L7YJnHBjBLnE/oP3DkZ34w4I+68vskn1uVb+WZxoy9gBc9mE
-	 cF5lQ8sHWYY2jqdAHf5kMv/F3cf+GskwjeHeAc1svE5MiiaHjUj1LSnoIOQJRAY5WmMoA
-	 KjzIY2JJKkVCp5aKkPywj6ILOs1DlDwPNGFe+EHyWFvh4oYy/LpQjqMUwBBmyAYTJZw==
+	bh=cKuiB13jBNXs2DkfFIwahlBML88U/ar98ymw0ObVork=;
+	b=P0l3Gb3vIK0qfyrshnOjN2NNoPOAzSDNJ7/sO+npQz0rRgkik0JRif++tse3lkKRLpPf
+	 Lmxv6uxSutegDMTowr7w9J268J+W6TjgEezUU9XToP6IRO4R4GekPKrL9hf8Yhbgo07/f
+	 f7IB3/+0AwyT9V3BBtYI2xx1mXucBJ1/cl1E8hzQ9qpFnTo3pJKcgNCd7HkA4lDcQpa/Y
+	 tN5aFEOd0xS3EPX4BsnWSlKGfcko25ONCvWAqBt/herhCFDPYPSgReoorBPFMJas4rQLx
+	 368z/Sq0yBfdpNwDz1tHumyZE/GgAl6/dOZtjBEmUGs4zc1JZSjYLkdHZsW/1XcgaRg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=FUXtEU9k;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=q7Ctp7ZN;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F1AE1606A32C;
-	Wed, 25 Nov 2026 14:52:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3181D606A31E;
+	Wed, 25 Nov 2026 14:52:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=FUXtEU9k
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 478681F000EC;
-	Wed, 25 Nov 2026 14:52:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=q7Ctp7ZN
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 26AB71F000F4;
+	Wed, 25 Nov 2026 14:52:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795618343;
-	bh=ZI7vx3hbJy2BRzco3mqny/WeS1PN/dehpiWvg4tigcs=;
+	s=korg; t=1795618346;
+	bh=cKuiB13jBNXs2DkfFIwahlBML88U/ar98ymw0ObVork=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=FUXtEU9klqvhjOZavVlaEhlmYgjbCFfshKKMxt+eQi5g2XK3C9iLuqW7AQ1oLelFa
-	 hEA9ACx2dpXGciGyTpfoWq6kb0Dx/8O3TOCpGXoa0O7JREqdMNc8y6b05HUYSFlkNN
-	 YoNyZ9IaehY215zyDmZjbzt1un8JqQ363lu5lkVY=
+	b=q7Ctp7ZNpmwBwRlcU/8L2jMJ0srT7rPEBiQwSVGt7ctZX+rLH8UTVaZ6+aJl9+muM
+	 S1vmhZNOdjhJ3dmlXN571V9BwwuoEtqZoU47e5CqnzaP8TtN8DrJs4W+ZxGK0tVo/T
+	 wEpXwblZwXjurd6s/50Bxg4vNxDUYEFsHEJbd8nk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christoph Hellwig <hch@lst.de>,
-	Damien Le Moal <dlemoal@kernel.org>,
-	James Fantin-Hardesty <james.fantin-hardesty@seagate.com>,
-	Keith Busch <kbusch@kernel.org>,
+	Cunhao Lu <1579567540@qq.com>,
+	Marc Kleine-Budde <mkl@pengutronix.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0249/1005] nvmet: fix arbitration burst field mask
-Date: Wed, 25 Nov 2026 15:26:27 +0100
-Message-ID: <20261125143827.570107650@linuxfoundation.org>
+Subject: [PATCH 7.3 0250/1005] can: skb: make CAN skb allocation failure paths IRQ-safe
+Date: Wed, 25 Nov 2026 15:26:28 +0100
+Message-ID: <20261125143827.594457113@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143821.729802100@linuxfoundation.org>
 References: <20261125143821.729802100@linuxfoundation.org>
@@ -70,46 +68,57 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: James Fantin-Hardesty <james.fantin-hardesty@seagate.com>
+From: Cunhao Lu <1579567540@qq.com>
 
-[ Upstream commit 6976a9b8dc71bb3b6e5dd563e35510461bea29d4 ]
+[ Upstream commit d4b616a38118e81cfb206babd052db260d7abf6c ]
 
-The Arbitration Burst (AB) field of the Arbitration feature is
-CDW11 bits 2:0 (NVMe Base Specification 2.1, Feature 01h), but
-nvmet incorrectly masks it with 0x3. Use 0x7 for both set and get.
+The CAN skb allocation helpers are used from hardware interrupt receive
+handlers. If can_skb_ext_add() fails, they release the newly allocated skb
+with kfree_skb(), which is not safe in hardware interrupt context.
 
-Fixes: a0ed77d4c9a7 ("nvmet: Implement arbitration feature support")
-Reviewed-by: Christoph Hellwig <hch@lst.de>
-Reviewed-by: Damien Le Moal <dlemoal@kernel.org>
-Signed-off-by: James Fantin-Hardesty <james.fantin-hardesty@seagate.com>
-Signed-off-by: Keith Busch <kbusch@kernel.org>
+Use dev_kfree_skb_any() for the allocation failure paths in
+alloc_can_skb(), alloc_canfd_skb(), and alloc_canxl_skb().
+
+Fixes: 96ea3a1e2d31 ("can: add CAN skb extension infrastructure")
+Signed-off-by: Cunhao Lu <1579567540@qq.com>
+Link: https://patch.msgid.link/tencent_C825C17D442F801351CE2FBC4984064B4605@qq.com
+Signed-off-by: Marc Kleine-Budde <mkl@pengutronix.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/nvme/target/admin-cmd.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/net/can/dev/skb.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/nvme/target/admin-cmd.c b/drivers/nvme/target/admin-cmd.c
-index 3704493dbec97..266a3618d81ab 100644
---- a/drivers/nvme/target/admin-cmd.c
-+++ b/drivers/nvme/target/admin-cmd.c
-@@ -1338,7 +1338,7 @@ static u16 nvmet_set_feat_arbitration(struct nvmet_req *req)
- 		.hpw = (cdw11 >> 24) & 0xff,
- 		.mpw = (cdw11 >> 16) & 0xff,
- 		.lpw = (cdw11 >> 8) & 0xff,
--		.ab = cdw11 & 0x3,
-+		.ab = cdw11 & 0x7,
- 	};
+diff --git a/drivers/net/can/dev/skb.c b/drivers/net/can/dev/skb.c
+index 9e274147ffe56..738d5968dfa68 100644
+--- a/drivers/net/can/dev/skb.c
++++ b/drivers/net/can/dev/skb.c
+@@ -229,7 +229,7 @@ struct sk_buff *alloc_can_skb(struct net_device *dev, struct can_frame **cf)
  
- 	if (!ctrl->ops->set_feature) {
-@@ -1493,7 +1493,7 @@ static u16 nvmet_get_feat_arbitration(struct nvmet_req *req)
- 			 ((u32)arb.hpw << 24) |
- 			 ((u32)arb.mpw << 16) |
- 			 ((u32)arb.lpw << 8) |
--			 (arb.ab & 0x3));
-+			 (arb.ab & 0x7));
+ 	csx = can_skb_ext_add(skb);
+ 	if (!csx) {
+-		kfree_skb(skb);
++		dev_kfree_skb_any(skb);
+ 		goto out_error_cc;
+ 	}
  
- 	return NVME_SC_SUCCESS;
- }
+@@ -260,7 +260,7 @@ struct sk_buff *alloc_canfd_skb(struct net_device *dev,
+ 
+ 	csx = can_skb_ext_add(skb);
+ 	if (!csx) {
+-		kfree_skb(skb);
++		dev_kfree_skb_any(skb);
+ 		goto out_error_fd;
+ 	}
+ 
+@@ -298,7 +298,7 @@ struct sk_buff *alloc_canxl_skb(struct net_device *dev,
+ 
+ 	csx = can_skb_ext_add(skb);
+ 	if (!csx) {
+-		kfree_skb(skb);
++		dev_kfree_skb_any(skb);
+ 		goto out_error_xl;
+ 	}
+ 
 -- 
 2.53.0
 
