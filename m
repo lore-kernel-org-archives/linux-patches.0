@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795622416;
-	b=GceoNbgeJguwX7SKyRJ/JcZ29phuVXJ5rb6nC/HNWUqFK/iyOtfLojUwetuXjQiyXkxk
-	 v1mUG9AgAcgIOldbbx6MOvHmdmw6M4WFm2/aZNEQ6Hv5VaLjk7YIDdn2xub2onk2PZoRu
-	 GXr/pNHFshYoDLVO3YkVOsY/6N7lrVqjES6M/80vhcarAWDou6VuUWC3xvYLVcccyxxy9
-	 NbSUHaZO+WxHRBGl3ncBHvW1E2Nba/IkSS/zB8v4/qjKyL0hFHH0dWct/NDqXzCqsb7IE
-	 PNdsw9q9qxdg9x9pl4yvepRmPanPL3B1iULZoM86SnkAm3YPnJ55XN/86zm6fWvxw+Q==
+	t=1795622418;
+	b=CsXY5d+zVVpgXwWh0ITw2c0dZvI1QZWn49yXqn9oQvhg5KIQc0gqXsIbILjca6etHa1+
+	 Qw9DaE44k+1x1vL67LB938cobcKNhXgw2BIjFn+IfCB2b+3Dro8+tUFA6vICV+PsKSiC8
+	 Ss7FUeB6+YYeFin0w+Yaao8dXaq/oe8a9Q7/f/RMx0G49kdu6jhlCAEudcv7i/gz+KSj3
+	 DfLsCN7VzKX9d6JHtZiZLGmN132ZkxoRZsVOtQGuu8QEV4e3IE02IsSQ9NCZPQooZxijj
+	 OZ5JTvF2VJScga0Kz34n1BdHGna8Gs7cEn4We+csne0LLxqnZfcHRjPUuilO/xsiYCg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795622416;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795622418;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=MMGek8h6eBVe85gKdi8Q189t0FmvgotCc3EHGUoOxgY=;
-	b=wBMr4Qc+aEj49vtj5/AyqnGPf14xl30Yoe1q9LfW4kSHujnsBrfcgQelhe+pNa/8fIV0
-	 oG/9Prrw1RelBU4Rpe1xJP/SF296Flx+Qo6QntzfaLOPci76dheqqKpXGrDYyBDOmowNP
-	 nN1eS2kVTDvezCrXLDd5rY089gDZK0Z5rf7eL0PE6IRAnkshskPBKkscNKbItq59K5tI0
-	 W5yOWFe/TuXS6I5krzqpfz7YSf0tmL4AFNQfTJx1V2V8rHsaKWqP2LSYmZeHtNvhDaAYx
-	 HwZG9OtTe2yebYLqn21U5o6OLs1LLjUdiaioCiEKR6jiNUr9n1DplmuPC14EhJgVrOQ==
+	bh=fzWJk4saKyubotROdLYQ9hB6s0w4lhVT7AnQiO+Uv6I=;
+	b=PDdBruRIUgvNDVrvQ9/ZAm2BqWfpnsq2AmFU4p4q9WWz86n0VHm7kWOuTBZwNrwFRwS+
+	 QyHwnBnGiQGP2Iy1l2h7NkJbpomNSEEEVP0T24Drv4awgOis/Wi4rJfRvVg+eN3DpPsTE
+	 Y5kStBi5kJicjzHJGv2xusv9YCq3A2vQ62WwCyEwtqhi5Z52oNzKrLQi5A2yD79DK6+ZG
+	 g17/WqxCZQNyeXWA61pLGfbJW8NimyqYnd5lgXqMbv/MMMab11bgGzDJbGnb1Vmk/BrSi
+	 ZGMPu6OFUmRXknDjSPIX21upfoYlQIOdhLibYSJhji838eyGQby21VbIVVdwUPNA5Ig==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=XlCMTXDV;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=14gSW+Ly;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F1B17606A334;
-	Wed, 25 Nov 2026 16:00:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BAD67606A32D;
+	Wed, 25 Nov 2026 16:00:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=XlCMTXDV
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CF6371F000C0;
-	Wed, 25 Nov 2026 16:00:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=14gSW+Ly
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 15E551F000EC;
+	Wed, 25 Nov 2026 16:00:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795622415;
-	bh=MMGek8h6eBVe85gKdi8Q189t0FmvgotCc3EHGUoOxgY=;
+	s=korg; t=1795622418;
+	bh=fzWJk4saKyubotROdLYQ9hB6s0w4lhVT7AnQiO+Uv6I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=XlCMTXDVJGPSv6ISmgFYhnsTdcUpf7Ga4Qe5Rsu+c0R3GQRmk6DI+6+l2NqJT1qrV
-	 H5+vdCpFUDRskTm7Ux01bzvsqYNcGxvHmUPW1pmHUBnY2d0enVTHzt3nfyfUeXCkIm
-	 oDMUHKFRkGQaXaGh3AEbf6x35yKS8HUyhLVs64I4=
+	b=14gSW+LyPhCQtXuA4MRxP9ErSPjUujJYU5kTx7UsQBigswR03ynDDFWU9st4DmyJp
+	 lJTPnKryoSB84HjwwLILpt9N3zPWLLF8IZPzgLqsBHgF6nXoaZcwBI4L37HRUv3bkr
+	 oAB4ldSxDS2+xNAf0+EZ3zJRiGvCFJrnFTbaMoHs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yuan Chen <chenyuan@kylinos.cn>,
-	Jiri Olsa <jolsa@kernel.org>,
-	Kumar Kartikeya Dwivedi <memxor@gmail.com>,
+	Charles Keepax <ckeepax@opensource.cirrus.com>,
+	Lee Jones <lee@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 529/990] bpf: Keep target extended until its last freplace link detaches
-Date: Wed, 25 Nov 2026 15:31:36 +0100
-Message-ID: <20261125143834.482736336@linuxfoundation.org>
+Subject: [PATCH 6.18 530/990] mfd: cs42l43: Move cancel_work_sync() into remove
+Date: Wed, 25 Nov 2026 15:31:37 +0100
+Message-ID: <20261125143834.507338319@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143822.072087159@linuxfoundation.org>
 References: <20261125143822.072087159@linuxfoundation.org>
@@ -69,122 +68,133 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yuan Chen <chenyuan@kylinos.cn>
+From: Charles Keepax <ckeepax@opensource.cirrus.com>
 
-[ Upstream commit c43c348a84460b003fa757dd43d8c89848ae220d ]
+[ Upstream commit 86bcfdc6f1e1f8943fbe12256b3c89a66ebbad03 ]
 
-The is_extended / prog_array_member_cnt protocol introduced by commit
-d6083f040d5d ("bpf: Prevent tailcall infinite loop caused by freplace")
-keeps a prog extended by a freplace program out of prog_array maps, and
-vice versa: once a tail call re-enters an extended subprogram, its
-tail_call_cnt resets on every execution and the loop never terminates.
+The cs42l43 driver kicks off a work item waiting for the device
+to appear on the SoundWire bus, once the device appears the
+MFD children are added and the clean up is then done through
+devres. As the work is synchronised in from the devres clean
+up this could lead to new devres items being added after the
+clean up has started, if the driver is removed before the work
+has fully completed. The work should be synchronised before any
+devres clean up is started.
 
-But is_extended is a plain boolean, while one target prog can carry
-several freplace links at the same time, one on its entry and one on a
-global subprogram.  __bpf_trampoline_unlink_prog() cleared is_extended
-whenever *any* freplace link detached, so detaching one of two links
-re-armed the unbounded loop through the remaining one.
-
-Replace the is_extended boolean with a count of the freplace links
-attached to each target prog, so the target stays extended until its
-last link detaches.  Also rename bpf_freplace_check_tgt_prog() to
-bpf_freplace_link_tgt_prog(), as the helper has never been a pure
-check: it reserves the target prog on success.
-
-Fixes: d6083f040d5d ("bpf: Prevent tailcall infinite loop caused by freplace")
-Signed-off-by: Yuan Chen <chenyuan@kylinos.cn>
-Acked-by: Jiri Olsa <jolsa@kernel.org>
-Link: https://lore.kernel.org/bpf/20260924023737.1140521-2-chenyuan_fl@163.com
-Signed-off-by: Kumar Kartikeya Dwivedi <memxor@gmail.com>
-[ sashal: adjusted context in include/linux/bpf.h, where neighboring struct members differ, and in the trampoline code, which still uses the older bpf_tramp_link layout. ]
+Fixes: 0f35dc4bd50d ("mfd: cs42l43: Use devres for remove as well")
+Signed-off-by: Charles Keepax <ckeepax@opensource.cirrus.com>
+Link: https://patch.msgid.link/20260904131243.755201-1-ckeepax@opensource.cirrus.com
+Signed-off-by: Lee Jones <lee@kernel.org>
+[ sashal: changed cs42l43_sdw_remove() to return int with return 0, since this tree's sdw_driver remove callback is not void. ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/bpf.h     | 4 ++--
- kernel/bpf/arraymap.c   | 2 +-
- kernel/bpf/trampoline.c | 8 ++++----
- 3 files changed, 7 insertions(+), 7 deletions(-)
+ drivers/mfd/cs42l43-i2c.c |  8 ++++++++
+ drivers/mfd/cs42l43-sdw.c | 10 ++++++++++
+ drivers/mfd/cs42l43.c     | 12 ++++++++----
+ drivers/mfd/cs42l43.h     |  1 +
+ 4 files changed, 27 insertions(+), 4 deletions(-)
 
-diff --git a/include/linux/bpf.h b/include/linux/bpf.h
-index fc5af5a7f6a21..f165743cd71f3 100644
---- a/include/linux/bpf.h
-+++ b/include/linux/bpf.h
-@@ -1624,14 +1624,13 @@ struct bpf_prog_aux {
- 	bool xdp_has_frags;
- 	bool exception_cb;
- 	bool exception_boundary;
--	bool is_extended; /* true if extended by freplace program */
- 	bool jits_use_priv_stack;
- 	bool priv_stack_requested;
- 	bool changes_pkt_data;
- 	bool might_sleep;
- 	bool kprobe_write_ctx;
- 	u64 prog_array_member_cnt; /* counts how many times as member of prog_array */
--	struct mutex ext_mutex; /* mutex for is_extended and prog_array_member_cnt */
-+	struct mutex ext_mutex; /* mutex for freplace_link_cnt and prog_array_member_cnt */
- 	struct bpf_arena *arena;
- 	void (*recursion_detected)(struct bpf_prog *prog); /* callback if recursion is detected */
- 	/* BTF_KIND_FUNC_PROTO for valid attach_btf_id */
-@@ -1662,6 +1661,7 @@ struct bpf_prog_aux {
- 	struct bpf_map *cgroup_storage[MAX_BPF_CGROUP_STORAGE_TYPE];
- 	char name[BPF_OBJ_NAME_LEN];
- 	u64 (*bpf_exception_cb)(u64 cookie, u64 sp, u64 bp, u64, u64);
-+	u16 freplace_link_cnt; /* counts freplace links extending this prog */
- #ifdef CONFIG_SECURITY
- 	void *security;
- #endif
-diff --git a/kernel/bpf/arraymap.c b/kernel/bpf/arraymap.c
-index 248ab6854cf24..859fb807ea899 100644
---- a/kernel/bpf/arraymap.c
-+++ b/kernel/bpf/arraymap.c
-@@ -967,7 +967,7 @@ static void *prog_fd_array_get_ptr(struct bpf_map *map,
- 	}
- 
- 	mutex_lock(&prog->aux->ext_mutex);
--	is_extended = prog->aux->is_extended;
-+	is_extended = prog->aux->freplace_link_cnt > 0;
- 	if (!is_extended)
- 		prog->aux->prog_array_member_cnt++;
- 	mutex_unlock(&prog->aux->ext_mutex);
-diff --git a/kernel/bpf/trampoline.c b/kernel/bpf/trampoline.c
-index ccb943b7ac2c1..478ea4ec3a801 100644
---- a/kernel/bpf/trampoline.c
-+++ b/kernel/bpf/trampoline.c
-@@ -532,7 +532,7 @@ static enum bpf_tramp_prog_type bpf_attach_type_to_tramp(struct bpf_prog *prog)
- 	}
+diff --git a/drivers/mfd/cs42l43-i2c.c b/drivers/mfd/cs42l43-i2c.c
+index a2ab001a600ae..f0ad4002652dc 100644
+--- a/drivers/mfd/cs42l43-i2c.c
++++ b/drivers/mfd/cs42l43-i2c.c
+@@ -56,6 +56,13 @@ static int cs42l43_i2c_probe(struct i2c_client *i2c)
+ 	return cs42l43_dev_probe(cs42l43);
  }
  
--static int bpf_freplace_check_tgt_prog(struct bpf_prog *tgt_prog)
-+static int bpf_freplace_link_tgt_prog(struct bpf_prog *tgt_prog)
- {
- 	struct bpf_prog_aux *aux = tgt_prog->aux;
++static void cs42l43_i2c_remove(struct i2c_client *i2c)
++{
++	struct cs42l43 *cs42l43 = dev_get_drvdata(&i2c->dev);
++
++	cs42l43_dev_remove(cs42l43);
++}
++
+ #if IS_ENABLED(CONFIG_OF)
+ static const struct of_device_id cs42l43_of_match[] = {
+ 	{ .compatible = "cirrus,cs42l43", },
+@@ -81,6 +88,7 @@ static struct i2c_driver cs42l43_i2c_driver = {
+ 	},
  
-@@ -546,7 +546,7 @@ static int bpf_freplace_check_tgt_prog(struct bpf_prog *tgt_prog)
- 		 */
- 		return -EBUSY;
+ 	.probe		= cs42l43_i2c_probe,
++	.remove		= cs42l43_i2c_remove,
+ };
+ module_i2c_driver(cs42l43_i2c_driver);
  
--	aux->is_extended = true;
-+	aux->freplace_link_cnt++;
+diff --git a/drivers/mfd/cs42l43-sdw.c b/drivers/mfd/cs42l43-sdw.c
+index 023f7e1a30f8c..3938d48039c48 100644
+--- a/drivers/mfd/cs42l43-sdw.c
++++ b/drivers/mfd/cs42l43-sdw.c
+@@ -187,6 +187,15 @@ static int cs42l43_sdw_probe(struct sdw_slave *sdw, const struct sdw_device_id *
+ 	return cs42l43_dev_probe(cs42l43);
+ }
+ 
++static int cs42l43_sdw_remove(struct sdw_slave *sdw)
++{
++	struct cs42l43 *cs42l43 = dev_get_drvdata(&sdw->dev);
++
++	cs42l43_dev_remove(cs42l43);
++
++	return 0;
++}
++
+ static const struct sdw_device_id cs42l43_sdw_id[] = {
+ 	SDW_SLAVE_ENTRY(0x01FA, 0x4243, 0),
+ 	{}
+@@ -200,6 +209,7 @@ static struct sdw_driver cs42l43_sdw_driver = {
+ 	},
+ 
+ 	.probe		= cs42l43_sdw_probe,
++	.remove		= cs42l43_sdw_remove,
+ 	.id_table	= cs42l43_sdw_id,
+ 	.ops		= &cs42l43_sdw_ops,
+ };
+diff --git a/drivers/mfd/cs42l43.c b/drivers/mfd/cs42l43.c
+index 13d446755fe20..e875154e8d813 100644
+--- a/drivers/mfd/cs42l43.c
++++ b/drivers/mfd/cs42l43.c
+@@ -1037,15 +1037,19 @@ static int cs42l43_power_down(struct cs42l43 *cs42l43)
  	return 0;
  }
  
-@@ -573,7 +573,7 @@ static int __bpf_trampoline_link_prog(struct bpf_tramp_link *link,
- 		/* Cannot attach extension if fentry/fexit are in use. */
- 		if (cnt)
- 			return -EBUSY;
--		err = bpf_freplace_check_tgt_prog(tgt_prog);
-+		err = bpf_freplace_link_tgt_prog(tgt_prog);
- 		if (err)
- 			return err;
- 		tr->extension_prog = link->link.prog;
-@@ -628,7 +628,7 @@ static int __bpf_trampoline_unlink_prog(struct bpf_tramp_link *link,
- 					 tr->extension_prog->bpf_func, NULL);
- 		tr->extension_prog = NULL;
- 		guard(mutex)(&tgt_prog->aux->ext_mutex);
--		tgt_prog->aux->is_extended = false;
-+		tgt_prog->aux->freplace_link_cnt--;
- 		return err;
- 	}
- 	hlist_del_init(&link->tramp_hlist);
+-static void cs42l43_dev_remove(void *data)
++static void cs42l43_dev_power_down(void *data)
+ {
+ 	struct cs42l43 *cs42l43 = data;
+ 
+-	cancel_work_sync(&cs42l43->boot_work);
+-
+ 	cs42l43_power_down(cs42l43);
+ }
+ 
++void cs42l43_dev_remove(struct cs42l43 *cs42l43)
++{
++	flush_work(&cs42l43->boot_work);
++}
++EXPORT_SYMBOL_NS_GPL(cs42l43_dev_remove, "MFD_CS42L43");
++
+ int cs42l43_dev_probe(struct cs42l43 *cs42l43)
+ {
+ 	int i, ret;
+@@ -1092,7 +1096,7 @@ int cs42l43_dev_probe(struct cs42l43 *cs42l43)
+ 	if (ret)
+ 		return ret;
+ 
+-	ret = devm_add_action_or_reset(cs42l43->dev, cs42l43_dev_remove, cs42l43);
++	ret = devm_add_action_or_reset(cs42l43->dev, cs42l43_dev_power_down, cs42l43);
+ 	if (ret)
+ 		return ret;
+ 
+diff --git a/drivers/mfd/cs42l43.h b/drivers/mfd/cs42l43.h
+index f3da783930f53..8d1b1b0f5a473 100644
+--- a/drivers/mfd/cs42l43.h
++++ b/drivers/mfd/cs42l43.h
+@@ -25,5 +25,6 @@ bool cs42l43_precious_register(struct device *dev, unsigned int reg);
+ bool cs42l43_volatile_register(struct device *dev, unsigned int reg);
+ 
+ int cs42l43_dev_probe(struct cs42l43 *cs42l43);
++void cs42l43_dev_remove(struct cs42l43 *cs42l43);
+ 
+ #endif /* CS42L43_CORE_INT_H */
 -- 
 2.53.0
 
