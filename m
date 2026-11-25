@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795622720;
-	b=FYIWA+KXx27pHKAOuAsAOC0gCcVIvz4uWBleAAq20G91UXDQ6FjZ9ree2bxij3gJ8VrG
-	 Qws1AkswIJVoB8flkGaiiHuBo9K9GvGPZofi+25D4Kwe7R2/XuvE4IPyQAl+q++frusRU
-	 OmHRO4cWx5HtHr46l81pI9EhWdh8jWaJVxpxQVS48dK+hfs7kOEx40J8MeF1C0C7GdHfz
-	 ac7FwZRMfkuoWYiL9gD+pdZTjgmTVOp0P/NgcQy+DFmyb4BJCx2a+ctYLjyIZrnq0yASn
-	 AtkusZqqE96+09cQtyWApmxysSnNq1T2L+5AnzCNzy1BCwtK5DeJHFzeG7dPvYMuswQ==
+	t=1795622723;
+	b=AiND38JdZt1qShcumqXA+yTpYgMb0LKPHGJBZQ70Z/P3V24qgYen6EI7Eq5L8g0dBNcz
+	 5XRi6l1c+UJQAEIomMEDUNQQ+uZSSyVFhPXfr8mjK+Awumq6at3vjoaRDvBGV+0FjP5+0
+	 jOoXyOUEtqUJ59BIqdlBjMP6Vj/WRdb/PRBbk9ktCJTVnVp78xKXwDz7s6OlCQ/BsnYUz
+	 4us3WNOisWvqjysd2uPlx3nzWD59eYSy1Us8tcKEEEgKBrY4wnyfMCAc1gXLKyfAlNNlD
+	 aIb4V+5s2anOYlm49H7l5R95JVWWsBACvj9smQsonZnH5dFiKQ+sZa5IAA6HvAWXurQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795622720;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795622723;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=dNMUfafYeqRvAeThKR6NP02zq/ivmnUUKQw7vAMF2M0=;
-	b=xZmVzy9pbC0zDW1l4x8uBJExdabjPRfk93w/Uyz+sHqQVwl5NRWLtyUhIGbTOJPLXpCS
-	 mfGYV4wnugx6eD0Vj1J5ZTOYlnTrsLkPkRQp+wSWzLxzGLoB8ZiNYlHMvzPrD8F1t1Uaq
-	 jOYZKp02HzTWmVrWhWeuMP53FFzck+twGOIke5DtA1E3VC7aYaG9hBKmlrK1pbx++/lxr
-	 RB0qsWcWowniZZhWH8BSdw+/7jSHpQ7Bjff8b3wYk0P2ZboaY86H74ZxmLiKaHu5MIzWM
-	 lp9nfT1dR3G8ppJ7wmR4TeSc2W4opbanqgGJPk2tEGTo+YFmDCWur/b4eje6H5PiA+g==
+	bh=7e11V9x56sbFKOdFjTlGOpp75Um8M+o0fNPWnHOFJ50=;
+	b=kVtgOx6XWkVNy1034L+eZQQ0WfAOlV6eP5XR4tyKGLPB2qaRl6YkpeYuEYEeFNBqnWUA
+	 G4e2Yy9fGu76MzpQgnhv8DdtYM+U80/5iH0KCIN0kfYs/ETRTg1cfR7c+/WkC0GD5DxJY
+	 kyRlPxPNgjneXETtGVbaHYgLoUttzBumIlwqxpXUxZ636LZ1u/d/b98eML9ZMd58rDBHb
+	 2QST3Vggvd+TBqB/PxTKHYb5q9TnNcFPGPZSFXcb7/sEZh0fQVkTrp6dq5ieDxJtLmILN
+	 q84YxxTpuEIQZDsG+3DMFRTSy8tsotbgB3Z3tZMG6bIrsaNixQ6EO07Ta5N52BijfUA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=AacHwEaT;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="uE0qGb/r";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 725B5606A31E;
-	Wed, 25 Nov 2026 16:05:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 75923606A323;
+	Wed, 25 Nov 2026 16:05:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=AacHwEaT
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0A4EF1F000C0;
-	Wed, 25 Nov 2026 16:05:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=uE0qGb/r
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6EB3C1F000C6;
+	Wed, 25 Nov 2026 16:05:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795622719;
-	bh=dNMUfafYeqRvAeThKR6NP02zq/ivmnUUKQw7vAMF2M0=;
+	s=korg; t=1795622723;
+	bh=7e11V9x56sbFKOdFjTlGOpp75Um8M+o0fNPWnHOFJ50=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=AacHwEaTE/48kAofFoHQLW0gYA2I+D28e2EaxxYNNU6SFdh/Wrp+fJ4B2eYzkUVxD
-	 hAji+mnvW1NribR3Kx8rry+mb0LHRuToYwp5TDhz3I+iN1onzTxqOfXwj0mbjqOb7t
-	 vD9SwCiiJBysabFoQms/eaU+CptxcBTvep8gBE6M=
+	b=uE0qGb/rz/zPNwiwsT80+nd+ryBKEiuUVOe+Lif+jPY3N8Gv4TpZHxqbaE3rH8YMe
+	 sGDe1qrZHQ4tMW2IdEY6JrCAw4LnbHLqjIqd35XFBTBw/J7OKQ71Jh6Ey6OnU13NtW
+	 mVqGoJw4/HkpTGzByme07BPkPfcKhHWgtNOSKaj0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ajanesh Lal <ajaneshlal3@gmail.com>,
-	Takashi Iwai <tiwai@suse.de>,
+	Namhyung Kim <namhyung@kernel.org>,
+	Ian Rogers <irogers@google.com>,
+	Arnaldo Carvalho de Melo <acme@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 625/990] ALSA: hda/realtek: Add mute and mic-mute LEDs for HP ENVY 16 (103c:8be5)
-Date: Wed, 25 Nov 2026 15:33:12 +0100
-Message-ID: <20261125143836.739603379@linuxfoundation.org>
+Subject: [PATCH 6.18 626/990] perf lock contention: Filter events before creating lock_stat
+Date: Wed, 25 Nov 2026 15:33:13 +0100
+Message-ID: <20261125143836.762294956@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143822.072087159@linuxfoundation.org>
 References: <20261125143822.072087159@linuxfoundation.org>
@@ -68,84 +69,129 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ajanesh Lal <ajaneshlal3@gmail.com>
+From: Ian Rogers <irogers@google.com>
 
-[ Upstream commit ed7995e4ec3789a90e37eb826bfccf43cc85d2fd ]
+[ Upstream commit c58d1598e79554cc8f587668ab2ebcaeb616b076 ]
 
-The HP ENVY Laptop 16-h1xxx (PCI SSID 103c:8be5) uses an ALC245 codec
-with CS35L41 I2C speaker amplifiers. No LED fixup is applied for this
-subsystem ID, so the speaker mute LED and the microphone mute LED are
-never driven and do not follow their keys.
+In report_lock_contention_begin_event(), lock_stat_findnew() was
+called before checking filters.nr_types (-Y), filters.nr_addrs (-L),
+and match_callstack_filter() (-S).
 
-Add a fixup that calls the existing ALC245 mute LED COEF helper and the
-GPIO mic-mute LED helper directly, then chains to the CS35L41 I2C
-amplifier setup so the speakers keep working. Use it for 103c:8be5.
+When a filtered-out lock event (such as a mutex contention when
+running with -Y spinlock) shared the same aggregation key as a
+subsequent matching event (for example, contention on the mutex's
+internal wait_lock spinlock from the same caller), the first event
+created the lock_stat entry with the filtered-out lock's flags and the
+second event reused that entry, causing non-spinlock entries to appear
+in -Y spinlock output.
 
-Tested on an HP ENVY Laptop 16-h1xxx running kernel 7.2.11: the
-hda::mute and hda::micmute LEDs appear and follow their keys, and the
-speaker amplifiers still bind (CS35L41 Bound in dmesg). The mic LED
-GPIO pin and polarity are not verified on other hardware.
+Check the type, address, and callstack filters before looking up or
+creating the lock_stat entry.
 
-Fixes: aa8e3ef4fe53 ("ALSA: hda/realtek: Add quirks for various HP ENVY models")
-Assisted-by: Claude:claude-haiku-5-5
-Signed-off-by: Ajanesh Lal <ajaneshlal3@gmail.com>
-Link: https://patch.msgid.link/20261021142453.177174-1-ajaneshlal3@gmail.com
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
-[ sashal: Added the new enum value and fixup table entry after the tree's last entries, since the context entries the upstream patch anchors on are missing, and left out the unneeded ALC245_FIXUP_CS35L41_I2C_2_MUTE_LED additions. ]
+Fixes: b4a7eff93c39f985 ("perf lock contention: Add -Y/--type-filter option")
+Reviewed-by: Namhyung Kim <namhyung@kernel.org>
+Signed-off-by: Ian Rogers <irogers@google.com>
+Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
+[ sashal: Used the tree's lock_contention_caller(evsel, sample, ...) signature, with the extra evsel argument, in the moved lock_stat lookup block instead of upstream's lock_contention_caller(sample, ...). ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/hda/codecs/realtek/alc269.c | 17 ++++++++++++++++-
- 1 file changed, 16 insertions(+), 1 deletion(-)
+ tools/perf/builtin-lock.c | 61 +++++++++++++++++++++------------------
+ 1 file changed, 33 insertions(+), 28 deletions(-)
 
-diff --git a/sound/hda/codecs/realtek/alc269.c b/sound/hda/codecs/realtek/alc269.c
-index 6ee95ae0e8f67..dbc7b56f4d42b 100644
---- a/sound/hda/codecs/realtek/alc269.c
-+++ b/sound/hda/codecs/realtek/alc269.c
-@@ -1585,6 +1585,14 @@ static void alc245_fixup_hp_mute_led_coefbit(struct hda_codec *codec,
- 	}
- }
+diff --git a/tools/perf/builtin-lock.c b/tools/perf/builtin-lock.c
+index 5585aeb97684d..66bfd9e4fe17f 100644
+--- a/tools/perf/builtin-lock.c
++++ b/tools/perf/builtin-lock.c
+@@ -977,6 +977,7 @@ static int report_lock_contention_begin_event(struct evsel *evsel,
+ 	struct machine *machine = &session->machines.host;
+ 	struct map *kmap;
+ 	struct symbol *sym;
++	u64 *callstack = NULL;
  
-+/* mute LED via COEF bit and mic-mute LED via GPIO, called directly */
-+static void alc245_fixup_cs35l41_mute_micmute(struct hda_codec *codec,
-+					      const struct hda_fixup *fix, int action)
-+{
-+	alc245_fixup_hp_mute_led_coefbit(codec, fix, action);
-+	alc245_fixup_hp_gpio_led(codec, fix, action);
-+}
+ 	ret = get_key_by_aggr_mode(&key, addr, evsel, sample);
+ 	if (ret < 0)
+@@ -1012,33 +1013,6 @@ static int report_lock_contention_begin_event(struct evsel *evsel,
+ 		}
+ 	}
+ 
+-	ls = lock_stat_find(key);
+-	if (!ls) {
+-		char buf[128];
+-		const char *name = "";
+-
+-		switch (aggr_mode) {
+-		case LOCK_AGGR_ADDR:
+-			sym = machine__find_kernel_symbol(machine, key, &kmap);
+-			if (sym)
+-				name = sym->name;
+-			break;
+-		case LOCK_AGGR_CALLER:
+-			name = buf;
+-			if (lock_contention_caller(evsel, sample, buf, sizeof(buf)) < 0)
+-				name = "Unknown";
+-			break;
+-		case LOCK_AGGR_CGROUP:
+-		case LOCK_AGGR_TASK:
+-		default:
+-			break;
+-		}
+-
+-		ls = lock_stat_findnew(key, name, flags);
+-		if (!ls)
+-			return -ENOMEM;
+-	}
+-
+ 	if (filters.nr_types) {
+ 		bool found = false;
+ 
+@@ -1068,7 +1042,7 @@ static int report_lock_contention_begin_event(struct evsel *evsel,
+ 	}
+ 
+ 	if (needs_callstack()) {
+-		u64 *callstack = get_callstack(sample, max_stack_depth);
++		callstack = get_callstack(sample, max_stack_depth);
+ 		if (callstack == NULL)
+ 			return -ENOMEM;
+ 
+@@ -1076,7 +1050,38 @@ static int report_lock_contention_begin_event(struct evsel *evsel,
+ 			free(callstack);
+ 			return 0;
+ 		}
++	}
 +
- static void alc245_fixup_hp_mute_led_v1_coefbit(struct hda_codec *codec,
- 					  const struct hda_fixup *fix,
- 					  int action)
-@@ -4045,6 +4053,7 @@ enum {
- 	ALC289_FIXUP_ASUS_ZEPHYRUS_DUAL_SPK,
- 	ALC256_FIXUP_VAIO_RPL_MIC_NO_PRESENCE,
- 	ALC245_FIXUP_ACER_MICMUTE_LED,
-+	ALC245_FIXUP_CS35L41_I2C_2_MUTE_MICMUTE_LED,
- };
++	ls = lock_stat_find(key);
++	if (!ls) {
++		char buf[128];
++		const char *name = "";
++
++		switch (aggr_mode) {
++		case LOCK_AGGR_ADDR:
++			sym = machine__find_kernel_symbol(machine, key, &kmap);
++			if (sym)
++				name = sym->name;
++			break;
++		case LOCK_AGGR_CALLER:
++			name = buf;
++			if (lock_contention_caller(evsel, sample, buf, sizeof(buf)) < 0)
++				name = "Unknown";
++			break;
++		case LOCK_AGGR_CGROUP:
++		case LOCK_AGGR_TASK:
++		default:
++			break;
++		}
++
++		ls = lock_stat_findnew(key, name, flags);
++		if (!ls) {
++			free(callstack);
++			return -ENOMEM;
++		}
++	}
  
- /* A special fixup for Lenovo C940 and Yoga Duet 7;
-@@ -6668,6 +6677,12 @@ static const struct hda_fixup alc269_fixups[] = {
- 		.v.func = alc285_fixup_hp_coef_micmute_led,
- 		.chained = true,
- 		.chain_id = ALC2XX_FIXUP_HEADSET_MIC,
-+	},
-+	[ALC245_FIXUP_CS35L41_I2C_2_MUTE_MICMUTE_LED] = {
-+		.type = HDA_FIXUP_FUNC,
-+		.v.func = alc245_fixup_cs35l41_mute_micmute,
-+		.chained = true,
-+		.chain_id = ALC287_FIXUP_CS35L41_I2C_2,
- 	}
- };
- 
-@@ -7103,7 +7118,7 @@ static const struct hda_quirk alc269_fixup_tbl[] = {
- 	SND_PCI_QUIRK(0x103c, 0x8be1, "HP Envy 15", ALC287_FIXUP_CS35L41_I2C_2),
- 	SND_PCI_QUIRK(0x103c, 0x8be2, "HP Envy 15", ALC287_FIXUP_CS35L41_I2C_2),
- 	SND_PCI_QUIRK(0x103c, 0x8be3, "HP Envy 15", ALC287_FIXUP_CS35L41_I2C_2),
--	SND_PCI_QUIRK(0x103c, 0x8be5, "HP Envy 16", ALC287_FIXUP_CS35L41_I2C_2),
-+	SND_PCI_QUIRK(0x103c, 0x8be5, "HP Envy 16", ALC245_FIXUP_CS35L41_I2C_2_MUTE_MICMUTE_LED),
- 	SND_PCI_QUIRK(0x103c, 0x8be6, "HP Envy 16", ALC287_FIXUP_CS35L41_I2C_2),
- 	SND_PCI_QUIRK(0x103c, 0x8be7, "HP Envy 17", ALC287_FIXUP_CS35L41_I2C_2),
- 	SND_PCI_QUIRK(0x103c, 0x8be8, "HP Envy 17", ALC287_FIXUP_CS35L41_I2C_2_HP_MUTE_LEDS),
++	if (callstack) {
+ 		if (ls->callstack == NULL)
+ 			ls->callstack = callstack;
+ 		else
 -- 
 2.53.0
 
