@@ -1,52 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795621346;
-	b=sQwpJUy6jvrWboHIzN4qYKYEDxhaCDDyZMcvXw+etPH2b12hZuroF9jfcu66a57AYVAC
-	 Y68Z7fmblIPV7A1+WVJGazCg6IzG3RyasfcA2lHzVzFC5uEwN4Ijs/rBdMfywaBO6qWBa
-	 X4ccfb8e8L1b1sFljZPPoP+o8XS2/RqRrA1y6KDh7u9xJWtNIbT/lUjoqY1qbv5+a0nwK
-	 7ZT1PRJB0Sb9T3bFTgHN0Ag4Zx1V9ZQ6bqJtzwpuOz0l+Fiw+LdCzUxLGlmujiIhon67A
-	 1LVMlBAqpzrW3vgpoFAMhb5gkZGAk2v2mX9vbGUdoa1ad0DD/9lSUBOEEuRyDqhKOhg==
+	t=1795621350;
+	b=4/Thdg0u1xIaLqo0JxP2jTm69tV2yyzwlSui5TLj7v7tQa+nRBmqT+GflOAb7Cv2XXn2
+	 jEICugKoF8cU3FNlV3V926+3Zf3+wHkXvhS2Rc7wAyzg8mia6hHgraTpDq1I3SZCGj/++
+	 Kt8w+GjOPGN0oZd8JNZd4VT9FI/kT/3335uC0ccYVJEBjbroBLlROPnfs/WHgXgEjEubA
+	 OfWD6kNDaxjVUN3hduwCkDlAeKLAW58sfpuOzRzkopAvacPtGSOqj1gHLwvdBT8UGK2M/
+	 N8huYa3GsXfJxNec7kDVGy74RcIllbb9qCtyqpBRDGvotzCgdbdaQJg1szCs9cStdug==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795621346;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795621350;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=df/djVT+1bthwR4fxUTjbIgv4XF9II/+bxZHvpwVj9E=;
-	b=qJcHPOUrIhFXmGxdmrUF/Z4mumXKWtk63Q4+VgwnREPg1ovlWR3j/lW74M+uh0ZrPwwu
-	 ZYhVEwBUnudgchaC8/KxjnykvTyc3W1x3UEFAfTXCWfFRugx7ZVOfAJa8XUC7jVmCpQRa
-	 LbmaGMDfaN2hbhpHbcawJ4IU9sPF5Jbzgh7Cvf9QmPqe4NuNjS6UyGDQDRV5qEECIv1s9
-	 hF4KxXv6olcPb26qCYlj2nnEgLvAVH++v/NUcZkAiOfCkjhmYc/XV52p0zRp+04wkkxFW
-	 bzYgg1JMYJErBgoKBQBqrY8TBFVr2Tic5aZvIkE4nx5zhO4PlGs2yz1wM0k6bHFjyUw==
+	bh=Y3ERGgpbE/6FSKVfN4LsRWtA3TrCLmLb8IjqC9069y8=;
+	b=Ryu9Rq1yxy4wx89vTGYRi1D2+ua/D91sxEy/lCXDZutFe0SuDtKbODBEbc3rvgijsjZh
+	 q5LTtRtFZzQ1vAWAcDX2yWLB6JKpuyWZLT23FG15HxX3RMjvunffAWSVvWDZRZ9/gG1sx
+	 g4HQVzK6Ub8bsKLDPQq7qSRfjE/VlbCsfUWGvQzT5vpwcrnC3OqAxRuyL2EP3uuFs+jEg
+	 e/cbmMuNfPpnOIguzdkC1tSLKWXg7bIRLHtKlyQQaWx6Qx/JiNyKiVhkI+fiVFuD7ZIl0
+	 50M5WZeTaQbvQxFaTvwVvWR87rfxxdHCbrn4V60m+E+R7Ydb9sS1kbCOtCAgGmB73yw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="fKf5z/U7";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=PHBNyQI7;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8797C606A69A;
-	Wed, 25 Nov 2026 15:42:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0337E606A69A;
+	Wed, 25 Nov 2026 15:42:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=fKf5z/U7
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 82EF51F000C6;
-	Wed, 25 Nov 2026 15:42:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=PHBNyQI7
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E75AA1F000CA;
+	Wed, 25 Nov 2026 15:42:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795621346;
-	bh=df/djVT+1bthwR4fxUTjbIgv4XF9II/+bxZHvpwVj9E=;
+	s=korg; t=1795621349;
+	bh=Y3ERGgpbE/6FSKVfN4LsRWtA3TrCLmLb8IjqC9069y8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=fKf5z/U7S4+ztPGor9eSd+ivgXSEoSeDAh8QA6PhzwK8YtUluaMc8vEMRC2cZ6vYg
-	 Q2chs4j7YuYQSpjprY5CcPiZCQVRKxKJQ3oh+KBGkRgPqcR/7657TEBnfpadkYo6Ni
-	 yjBq2JtSRvll4VRr7LqdVAV49nPw3KNXINOji1UQ=
+	b=PHBNyQI7hlMXY2Iv55OEqvj5tGRXMJPyzzUMiZLTun8EEo9Qi67vXHXf2o8p0EtiL
+	 ZopDm3tD6FBGvdisjVJlzoZ9Xz7TKkDUL8KXc1yo/mrpg7HvYh3ekOFXssD5eThv3j
+	 Ae+iLUaaM7ML0b6bvSmePADXbUGDZl02IFM35R4U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Namjae Jeon <linkinjeon@kernel.org>,
-	Yifan Zhang <yfzhang23@stu.pku.edu.cn>,
+	Kuniyuki Iwashima <kuniyu@google.com>,
+	Eric Dumazet <edumazet@kernel.org>,
+	Jiayuan Chen <jiayuan.chen@linux.dev>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 196/990] ksmbd: require NUL-terminated EA names
-Date: Wed, 25 Nov 2026 15:26:03 +0100
-Message-ID: <20261125143826.686176385@linuxfoundation.org>
+Subject: [PATCH 6.18 197/990] soreuseport: annotate data-races around reuse->socks[] and num_socks
+Date: Wed, 25 Nov 2026 15:26:04 +0100
+Message-ID: <20261125143826.709655643@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143822.072087159@linuxfoundation.org>
 References: <20261125143822.072087159@linuxfoundation.org>
@@ -68,72 +70,115 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yifan Zhang <yfzhang23@stu.pku.edu.cn>
+From: Eric Dumazet <edumazet@kernel.org>
 
-[ Upstream commit e49296d51ccbf2ad0ed0484db1382f1d7217bd6e ]
+[ Upstream commit 213d491308b99d026514c93980cf8dd572226b1b ]
 
-smb2_set_ea() verifies that the byte reserved for the declared EA-name
-terminator lies inside the request, but it does not verify that the byte is
-zero. With SMB debug logging enabled, the name is passed to %s and the
-diagnostic reads beyond the request allocation.
+reuseport_select_sock() and reuseport_migrate_sock() read
+reuse->num_socks and reuse->socks[] locklessly under RCU, while
+writers holding reuseport_lock can change them.
 
-KASAN reports:
+Readers snapshot num_socks once, then index socks[] with it.
+Meanwhile, writers can perform several operations, storing into
+slots below the reader's stale count:
 
-  BUG: KASAN: slab-out-of-bounds in string
-  Read of size 1
-  string
-  vsnprintf
-  _printk
-  smb2_set_ea
-  smb2_set_info
+- __reuseport_detach_sock() moves the last socket into slot i.
+- __reuseport_add_sock() then writes the new socket at the
+  (now smaller) num_socks index.
+- reuseport_stop_listen_sock() calls __reuseport_detach_sock()
+  then __reuseport_add_closed_sock(), which writes slot
+  max_socks - num_closed_socks - 1. This can be the slot a reader
+  still considers part of the listener region when the array is full.
+- __reuseport_detach_closed_sock() can then rewrite that slot.
 
-Reject an EA entry whose declared terminator byte is nonzero. Return
--EBADMSG for the malformed buffer, and map that error to
-STATUS_EA_LIST_INCONSISTENT for both SET_INFO and CREATE.
+All pointers stored in socks[] remain valid for the RCU grace period,
+but without annotations the compiler is allowed to tear or reload
+these accesses. For instance, reuseport_select_sock_by_hash() could
+reload reuse->socks[i] between the sk_state/sk_incoming_cpu checks
+and the return, returning a socket that did not pass them.
 
-Fixes: e2f34481b24d ("cifsd: add server-side procedures for SMB3")
-Suggested-by: Namjae Jeon <linkinjeon@kernel.org>
-Signed-off-by: Yifan Zhang <yfzhang23@stu.pku.edu.cn>
-Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
+Use WRITE_ONCE() for all socks[] stores done while the array is
+visible to readers, and for num_socks updates (readers already use
+READ_ONCE()). Use READ_ONCE() in the two lockless readers.
+
+Fixes: ef456144da8e ("soreuseport: define reuseport groups")
+Link: https://lore.kernel.org/netdev/20260902071900.395567-1-ruanjinjie@huawei.com/
+Cc: Kuniyuki Iwashima <kuniyu@google.com>
+Signed-off-by: Eric Dumazet <edumazet@kernel.org>
+Reviewed-by: Kuniyuki Iwashima <kuniyu@google.com>
+Reviewed-by: Jiayuan Chen <jiayuan.chen@linux.dev>
+Link: https://patch.msgid.link/20261030120956.3026324-1-edumazet@kernel.org
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/smb/server/smb2pdu.c | 9 +++++++++
- 1 file changed, 9 insertions(+)
+ net/core/sock_reuseport.c | 17 +++++++++--------
+ 1 file changed, 9 insertions(+), 8 deletions(-)
 
-diff --git a/fs/smb/server/smb2pdu.c b/fs/smb/server/smb2pdu.c
-index 56dc2134d8bac..53094243d456b 100644
---- a/fs/smb/server/smb2pdu.c
-+++ b/fs/smb/server/smb2pdu.c
-@@ -2453,6 +2453,11 @@ static int smb2_set_ea(struct smb2_ea_info *eabuf, unsigned int buf_len,
- 		if (!eabuf->EaNameLength)
- 			goto next;
+diff --git a/net/core/sock_reuseport.c b/net/core/sock_reuseport.c
+index 4211710393a8a..d4b7caf86eee3 100644
+--- a/net/core/sock_reuseport.c
++++ b/net/core/sock_reuseport.c
+@@ -124,10 +124,10 @@ static int reuseport_sock_index(struct sock *sk,
+ static void __reuseport_add_sock(struct sock *sk,
+ 				 struct sock_reuseport *reuse)
+ {
+-	reuse->socks[reuse->num_socks] = sk;
++	WRITE_ONCE(reuse->socks[reuse->num_socks], sk);
+ 	/* paired with smp_rmb() in reuseport_(select|migrate)_sock() */
+ 	smp_wmb();
+-	reuse->num_socks++;
++	WRITE_ONCE(reuse->num_socks, reuse->num_socks + 1);
+ 	reuseport_get_incoming_cpu(sk, reuse);
+ }
  
-+		if (eabuf->name[eabuf->EaNameLength]) {
-+			rc = -EBADMSG;
-+			break;
-+		}
-+
- 		ksmbd_debug(SMB,
- 			    "name : <%s>, name_len : %u, value_len : %u, next : %u\n",
- 			    eabuf->name, eabuf->EaNameLength,
-@@ -3935,6 +3940,8 @@ int smb2_open(struct ksmbd_work *work)
- 	if (rc) {
- 		if (rc == -EINVAL)
- 			rsp->hdr.Status = STATUS_INVALID_PARAMETER;
-+		else if (rc == -EBADMSG)
-+			rsp->hdr.Status = STATUS_EA_LIST_INCONSISTENT;
- 		else if (rc == -EOPNOTSUPP)
- 			rsp->hdr.Status = STATUS_NOT_SUPPORTED;
- 		else if (rc == -EACCES || rc == -ESTALE || rc == -EXDEV) {
-@@ -6967,6 +6974,8 @@ int smb2_set_info(struct ksmbd_work *work)
- 		rsp->hdr.Status = STATUS_ACCESS_DENIED;
- 	else if (rc == -EINVAL)
- 		rsp->hdr.Status = STATUS_INVALID_PARAMETER;
-+	else if (rc == -EBADMSG)
-+		rsp->hdr.Status = STATUS_EA_LIST_INCONSISTENT;
- 	else if (rc == -EMSGSIZE)
- 		rsp->hdr.Status = STATUS_INFO_LENGTH_MISMATCH;
- 	else if (rc == -ESHARE)
+@@ -139,8 +139,8 @@ static bool __reuseport_detach_sock(struct sock *sk,
+ 	if (i == -1)
+ 		return false;
+ 
+-	reuse->socks[i] = reuse->socks[reuse->num_socks - 1];
+-	reuse->num_socks--;
++	WRITE_ONCE(reuse->socks[i], reuse->socks[reuse->num_socks - 1]);
++	WRITE_ONCE(reuse->num_socks, reuse->num_socks - 1);
+ 	reuseport_put_incoming_cpu(sk, reuse);
+ 
+ 	return true;
+@@ -149,7 +149,7 @@ static bool __reuseport_detach_sock(struct sock *sk,
+ static void __reuseport_add_closed_sock(struct sock *sk,
+ 					struct sock_reuseport *reuse)
+ {
+-	reuse->socks[reuse->max_socks - reuse->num_closed_socks - 1] = sk;
++	WRITE_ONCE(reuse->socks[reuse->max_socks - reuse->num_closed_socks - 1], sk);
+ 	/* paired with READ_ONCE() in inet_csk_bind_conflict() */
+ 	WRITE_ONCE(reuse->num_closed_socks, reuse->num_closed_socks + 1);
+ 	reuseport_get_incoming_cpu(sk, reuse);
+@@ -163,7 +163,8 @@ static bool __reuseport_detach_closed_sock(struct sock *sk,
+ 	if (i == -1)
+ 		return false;
+ 
+-	reuse->socks[i] = reuse->socks[reuse->max_socks - reuse->num_closed_socks];
++	WRITE_ONCE(reuse->socks[i],
++		   reuse->socks[reuse->max_socks - reuse->num_closed_socks]);
+ 	/* paired with READ_ONCE() in inet_csk_bind_conflict() */
+ 	WRITE_ONCE(reuse->num_closed_socks, reuse->num_closed_socks - 1);
+ 	reuseport_put_incoming_cpu(sk, reuse);
+@@ -521,7 +522,7 @@ static struct sock *run_bpf_filter(struct sock_reuseport *reuse, u16 socks,
+ 	if (index >= socks)
+ 		return NULL;
+ 
+-	return reuse->socks[index];
++	return READ_ONCE(reuse->socks[index]);
+ }
+ 
+ static struct sock *reuseport_select_sock_by_hash(struct sock_reuseport *reuse,
+@@ -532,7 +533,7 @@ static struct sock *reuseport_select_sock_by_hash(struct sock_reuseport *reuse,
+ 
+ 	i = j = reciprocal_scale(hash, num_socks);
+ 	do {
+-		struct sock *sk = reuse->socks[i];
++		struct sock *sk = READ_ONCE(reuse->socks[i]);
+ 
+ 		if (sk->sk_state != TCP_ESTABLISHED) {
+ 			/* Paired with WRITE_ONCE() in __reuseport_(get|put)_incoming_cpu(). */
 -- 
 2.53.0
 
