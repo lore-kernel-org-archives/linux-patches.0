@@ -1,54 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795622065;
-	b=l+jPAxwx0HLLg5s++YJkGWJSbcRjasQTg5GawC7ayIYHyDSbIeWjLRZE/6qvuBdmdbol
-	 DJzgt219HtJCAqF6vB3wA8eKdFBB2aQtt0JQsJbQdJ8sbmSYsuy1COiqGRqgPsjZCAGMw
-	 IK55i5gxSsbs3Qdzr8Ba8oNCcCxG+VJESvW+cg14KhP5bHlYAGQsTR+hqnkjSOIZv3b/Y
-	 JTRdd4GLNdp/hMGJsi0hx5FYVxmFCjRgQK8qowP1PMg6/TKKG5CLV+C42I84yc6twLQZm
-	 dbI2JUMBXTUFj1OToYo2Z6cB5C+qBkBzam/6EApxWRe2wXptKohw14GDBtPyEWxmtbg==
+	t=1795622068;
+	b=X4Hl3tB7EiiIMVw+/NPZdpVbqfWfCG2URO9opPAR4KsYotDmcXPPG6iHgWl1/2cmlABC
+	 HKLIulf91v2/d1xE6+aOIU4salfCVCZHn8hOpcnrhFMtkmNYed89BNC2YdMUZb3w/Wpb/
+	 RCjkea+exImsddngu3kLIckoZJz6ncY1f8T4KOQH/ebAw/Sz6p1kqY3eM/SrIyLCToBsf
+	 zr25n8te3TErghXEeUfgKV2e5Rq4IAIefz1VVbMc5+okxA4ZkZevsf8nr1VQCVBeeK3j6
+	 UkcYtddOgfTpjoG0pp+LZTqgHyXn6kXQ72Qydcg22HI6/mRlSHFtWRb7wXPZyZtvjzQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795622065;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795622068;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=Dx3zT5FacfObAkg/R4tUXW3owfL9W7WM+lMOyY+ui8s=;
-	b=DzHfj3WL2OTI6DwE72d7HsT80yiIhoXe0PnJEx1Exs9oQGfWCjLb0V0HuAko65phMEI9
-	 g064r4R2szy210VxmbdhCE1bYgSBYNehq2AB/l3pRYqDl2T6LAfGmPgZkxp8CXOBBAS+f
-	 iRiZEj76/pZUsWZ+O6AMzaUdE16ntxrsnUygmqJK0FvaZ95oWDyRIcznSYSOof7Onta6F
-	 635aoAyXZcRDvIcuMKgIR01NYnZ/rfTWVyxdeu00kPzVC3n1t4IhE4VV8ByeZ23OEfBT3
-	 tB9WbkDNT5GRnpUqk5E916M3wiyMZ/aqnW2g46Q5jhIBsXUaDRalrjKYkyAnV3pBXhQ==
+	bh=h0WhiqxykS+/eMuyygik2M1RKddXvgAVogX/PfcsZhw=;
+	b=Msa5NOAF7GDSbdxg+mNj02dLEpO/Utx+cSZZ7uLWrJ56w59qeahy4f6jIZEEW6XR8k6x
+	 DvHjYGzLtQcJ/CxiCH4I6HpDGUuFYFk24KaMIB6TVMcKviemjdPtop3fCalPiyJtiHupu
+	 rth1GVym6rKP476md3PJaQzyMOFpWM/ZFeX0qdRjMkwHrBwrj1r/Lu7Far6SyysSF4rYd
+	 YOKcciljJCYPK2AsmERbEi2SMROlteGfER/3rRMROC7bgevXL4hwERqhXAsxtaSfjCjhH
+	 yGuwHTMT/CNuoLib/wi4eP+P3FeJKF2wAeunimMD/Evda9mI6lIGIOhAcPPq6NnovQg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=1RM5CrEX;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=OuRy5kcC;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5C649606A32D;
-	Wed, 25 Nov 2026 15:54:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A0F3D606A68E;
+	Wed, 25 Nov 2026 15:54:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=1RM5CrEX
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 81FA71F00A3D;
-	Wed, 25 Nov 2026 15:54:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=OuRy5kcC
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CD8761F01564;
+	Wed, 25 Nov 2026 15:54:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795622065;
-	bh=Dx3zT5FacfObAkg/R4tUXW3owfL9W7WM+lMOyY+ui8s=;
+	s=korg; t=1795622068;
+	bh=h0WhiqxykS+/eMuyygik2M1RKddXvgAVogX/PfcsZhw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=1RM5CrEXfOOK8NiJAeWyc2TeG12ErFewttt3Yer86jQPCVVXiLpeuxWXswIhxqRAo
-	 gNqajBlYbkYzvb/yI+ZPkLisIbKXGMWhZtAfUkH38ep2/dCVaIK9pSUHgaxezc7OKS
-	 lJmPeBphmTs9lzrx7Ur+No+ssy5VSQsZwmMGfVO0=
+	b=OuRy5kcCmpWMDKFML5KB9bp/6DMTcrsZGqPSJuPC09JJmMKabH4eZTeDLQQ9DvR1W
+	 asR0dvJ9COQnAwXov669VyulmQSVskpXRwTSFCMGP5JoEcoYa6ak643o3TXPWVWmzo
+	 VJmALL5r+z2R7GeSpHDVnikGZZnsXi+uOmn9IYNY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Miklos Szeredi <miklos@szeredi.hu>,
-	Amir Goldstein <amir73il@gmail.com>,
-	Pavel Tikhomirov <ptikhomirov@virtuozzo.com>,
-	"Denis V. Lunev" <den@openvz.org>,
+	Eric Dumazet <edumazet@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 419/990] ovl: release the upperdir/workdir in-use locks before the umount sync
-Date: Wed, 25 Nov 2026 15:29:46 +0100
-Message-ID: <20261125143831.913946477@linuxfoundation.org>
+Subject: [PATCH 6.18 420/990] bonding: fix slave_cnt leak on XDP enslave failure
+Date: Wed, 25 Nov 2026 15:29:47 +0100
+Message-ID: <20261125143831.937326256@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143822.072087159@linuxfoundation.org>
 References: <20261125143822.072087159@linuxfoundation.org>
@@ -70,140 +68,85 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Denis V. Lunev <den@openvz.org>
+From: Eric Dumazet <edumazet@kernel.org>
 
-[ Upstream commit cb6c084182d4c69b7eeff0bd519dd7e018749602 ]
+[ Upstream commit a978095699641d4f83a32b499a981c419c94abca ]
 
-The in-use locks on upperdir and workdir are released by ovl_free_fs()
-from ->put_super(). generic_shutdown_super() calls sync_filesystem()
-before that, and ovl_sync_fs() syncs the whole upper filesystem, so the
-locks stay held across a journal commit and a cache flush of the upper
-fs after the overlay is gone. With index=on a new overlay that uses the
-same upperdir, or uses it as a lowerdir, fails to mount in that window:
+bond_enslave() increments bond->slave_cnt before setting up XDP on the
+new slave. If that setup fails (slave has no XDP support, already has
+an XDP program, or dev_xdp_propagate() fails), the error path jumps to
+err_sysfs_del, which never decrements slave_cnt.
 
-  overlayfs: upperdir is in-use as upperdir/workdir of another mount,
-  mount with '-o index=off' to override exclusive upperdir protection.
+Each failed enslave therefore leaves slave_cnt one too high:
+- SIOCBONDINFOQUERY reports a wrong num_slaves,
+- balance-rr picks slave ids beyond the end of the slave list, so
+  bond_get_slave_by_id() falls back to the first usable slave and
+  transmit is skewed toward it.
 
-Userspace hits this when the last reference is not dropped by umount(2)
-itself. Docker with the containerd snapshotter mounts a snapshot on a
-thread with a private mount namespace for docker cp and for buildkit,
-and the superblock dies when that thread exits, after the reply to the
-client has gone out. The next request then gets EBUSY. The window grows
-with the flush latency of the upper fs and is there even if nothing was
-written through the overlay, as the mount itself dirties the upper.
+Reproducer:
 
-->kill_sb() is called once s_active drops to zero, with no mount and no
-open file left. Release the locks there, before generic_shutdown_super()
-runs. What the dying superblock still does to the upper fs, the sync and
-dropping its references to upper dentries and inodes, does not touch the
-contents of upperdir or workdir. ovl_free_fs() still releases the locks
-for a failed mount, so clear the *_locked flags to keep it from
-unlocking a second time and dropping the lock of a newer mount.
+  ip link add bond0 type bond mode balance-rr
+  ip link set bond0 xdpdrv obj xdp_dummy.bpf.o sec xdp
+  for i in 0 1 2; do
+    ip link add d$i type dummy
+    ip link set d$i master bond0   # fails: Slave does not support XDP
+  done
 
-This takes the sync out of the window but does not close it: the final
-mntput of a dying mount namespace runs from task_work, after the exiting
-thread may have reported completion. Userspace that needs the
-directories free should umount(2) before saying the job is done.
+num_slaves read via SIOCBONDINFOQUERY is 3 before this patch, 0 after.
 
-Fixes: 2cac0c00a6cd ("ovl: get exclusive ownership on upper/work dirs")
-Cc: Miklos Szeredi <miklos@szeredi.hu>
-Cc: Amir Goldstein <amir73il@gmail.com>
-Cc: Pavel Tikhomirov <ptikhomirov@virtuozzo.com>
-Signed-off-by: Denis V. Lunev <den@openvz.org>
-Signed-off-by: Amir Goldstein <amir73il@gmail.com>
+Add an err_dec_slave_cnt label ahead of err_sysfs_del and use it from
+the three XDP failure paths, which are the only failures after the
+increment.
+
+Fixes: 9e2ee5c7e7c3 ("net, bonding: Add XDP support to the bonding driver")
+Signed-off-by: Eric Dumazet <edumazet@kernel.org>
+Link: https://patch.msgid.link/20261104092851.688361-1-edumazet@kernel.org
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/overlayfs/overlayfs.h |  1 +
- fs/overlayfs/params.c    |  5 +----
- fs/overlayfs/super.c     | 12 +++++++++++-
- fs/overlayfs/util.c      | 12 ++++++++++++
- 4 files changed, 25 insertions(+), 5 deletions(-)
+ drivers/net/bonding/bond_main.c | 9 ++++++---
+ 1 file changed, 6 insertions(+), 3 deletions(-)
 
-diff --git a/fs/overlayfs/overlayfs.h b/fs/overlayfs/overlayfs.h
-index 7bd69773f33c9..a0a5f18b5f77d 100644
---- a/fs/overlayfs/overlayfs.h
-+++ b/fs/overlayfs/overlayfs.h
-@@ -575,6 +575,7 @@ static inline int ovl_set_impure_dir(struct dentry *dentry)
- bool ovl_inuse_trylock(struct dentry *dentry);
- void ovl_inuse_unlock(struct dentry *dentry);
- bool ovl_is_inuse(struct dentry *dentry);
-+void ovl_inuse_unlock_all(struct ovl_fs *ofs);
- bool ovl_need_index(struct dentry *dentry);
- int ovl_nlink_start(struct dentry *dentry);
- void ovl_nlink_end(struct dentry *dentry);
-diff --git a/fs/overlayfs/params.c b/fs/overlayfs/params.c
-index 7d8bc6d3863c1..fc39caf0e4993 100644
---- a/fs/overlayfs/params.c
-+++ b/fs/overlayfs/params.c
-@@ -842,15 +842,12 @@ void ovl_free_fs(struct ovl_fs *ofs)
- 	struct vfsmount **mounts;
- 	unsigned i;
+diff --git a/drivers/net/bonding/bond_main.c b/drivers/net/bonding/bond_main.c
+index ca2ea493c81a3..9b46eabf2ebaa 100644
+--- a/drivers/net/bonding/bond_main.c
++++ b/drivers/net/bonding/bond_main.c
+@@ -2307,7 +2307,7 @@ int bond_enslave(struct net_device *bond_dev, struct net_device *slave_dev,
+ 			SLAVE_NL_ERR(bond_dev, slave_dev, extack,
+ 				     "Slave does not support XDP");
+ 			res = -EOPNOTSUPP;
+-			goto err_sysfs_del;
++			goto err_dec_slave_cnt;
+ 		}
+ 	} else if (bond->xdp_prog) {
+ 		struct netdev_bpf xdp = {
+@@ -2321,14 +2321,14 @@ int bond_enslave(struct net_device *bond_dev, struct net_device *slave_dev,
+ 			SLAVE_NL_ERR(bond_dev, slave_dev, extack,
+ 				     "Slave has XDP program loaded, please unload before enslaving");
+ 			res = -EOPNOTSUPP;
+-			goto err_sysfs_del;
++			goto err_dec_slave_cnt;
+ 		}
  
-+	ovl_inuse_unlock_all(ofs);
- 	iput(ofs->workbasedir_trap);
- 	iput(ofs->workdir_trap);
- 	dput(ofs->whiteout);
- 	dput(ofs->workdir);
--	if (ofs->workdir_locked)
--		ovl_inuse_unlock(ofs->workbasedir);
- 	dput(ofs->workbasedir);
--	if (ofs->upperdir_locked)
--		ovl_inuse_unlock(ovl_upper_mnt(ofs)->mnt_root);
+ 		res = dev_xdp_propagate(slave_dev, &xdp);
+ 		if (res < 0) {
+ 			/* ndo_bpf() sets extack error message */
+ 			slave_dbg(bond_dev, slave_dev, "Error %d calling ndo_bpf\n", res);
+-			goto err_sysfs_del;
++			goto err_dec_slave_cnt;
+ 		}
+ 		if (bond->xdp_prog)
+ 			bpf_prog_inc(bond->xdp_prog);
+@@ -2350,6 +2350,9 @@ int bond_enslave(struct net_device *bond_dev, struct net_device *slave_dev,
+ 	return 0;
  
- 	/* Reuse ofs->config.lowerdirs as a vfsmount array before freeing it */
- 	mounts = (struct vfsmount **) ofs->config.lowerdirs;
-diff --git a/fs/overlayfs/super.c b/fs/overlayfs/super.c
-index 71ce12e203ea0..f3a0fc8e12c17 100644
---- a/fs/overlayfs/super.c
-+++ b/fs/overlayfs/super.c
-@@ -1606,13 +1606,23 @@ int ovl_fill_super(struct super_block *sb, struct fs_context *fc)
- 	return err;
- }
- 
-+static void ovl_kill_sb(struct super_block *sb)
-+{
-+	struct ovl_fs *ofs = OVL_FS(sb);
+ /* Undo stages on error */
++err_dec_slave_cnt:
++	WRITE_ONCE(bond->slave_cnt, bond->slave_cnt - 1);
 +
-+	/* Nothing can modify them now, do not hold them across the sync */
-+	if (ofs)
-+		ovl_inuse_unlock_all(ofs);
-+	kill_anon_super(sb);
-+}
-+
- struct file_system_type ovl_fs_type = {
- 	.owner			= THIS_MODULE,
- 	.name			= "overlay",
- 	.init_fs_context	= ovl_init_fs_context,
- 	.parameters		= ovl_parameter_spec,
- 	.fs_flags		= FS_USERNS_MOUNT | FS_ALLOW_IDMAP,
--	.kill_sb		= kill_anon_super,
-+	.kill_sb		= ovl_kill_sb,
- };
- MODULE_ALIAS_FS("overlay");
+ err_sysfs_del:
+ 	bond_sysfs_slave_del(new_slave);
  
-diff --git a/fs/overlayfs/util.c b/fs/overlayfs/util.c
-index f75e8009fb15f..27928c9ea0eb8 100644
---- a/fs/overlayfs/util.c
-+++ b/fs/overlayfs/util.c
-@@ -1064,6 +1064,18 @@ bool ovl_is_inuse(struct dentry *dentry)
- 	return inuse;
- }
- 
-+void ovl_inuse_unlock_all(struct ovl_fs *ofs)
-+{
-+	if (ofs->workdir_locked) {
-+		ovl_inuse_unlock(ofs->workbasedir);
-+		ofs->workdir_locked = false;
-+	}
-+	if (ofs->upperdir_locked) {
-+		ovl_inuse_unlock(ovl_upper_mnt(ofs)->mnt_root);
-+		ofs->upperdir_locked = false;
-+	}
-+}
-+
- /*
-  * Does this overlay dentry need to be indexed on copy up?
-  */
 -- 
 2.53.0
 
