@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795617602;
-	b=L4taBYMBwYw30aTh4ZrWmJ22r2HWx4qahujC+FpHEvMPmk9GdDXcisqE3UOb4GKFV53o
-	 sMcqr5XeXWYgopi5ySwKRrGB9stoS7uA5J4ecTAWdRqqsC6oNsx0KH/8m+kM84eDYpEe1
-	 v6iNk3jxWODtqENXihJIJ1GkFJBs2tLwQBnXQnMsnxueAUfMMLo6zZiGLkF1glHqjGmQC
-	 ryQXA5JjbpbS0tB3pePqvBOUSvilKIp5tY4SyxB8Sq+CX5won8y0G7fmEKFgMpLAVHAgU
-	 8Dbzl6gZX5/IfHGuNC2t7ieiTIxtla21ThRXtNbEoVX9EJQLNeXSxBJJKnlTRwxGGhA==
+	t=1795617605;
+	b=KNhd8Bhs/ounROPdnCPZido1SHVA9fhHyirhjrpK6hG82KU2bZ/e3ehLgJn6keCKa/PQ
+	 0RZp/PyF4HMaKzEv6S48wkQpgrwKe1kfCmQMy0urnPuZb8/GgWIzVLJsRYcfGIEKwTlRh
+	 G/5waPCotXa2RrfFhNT4xxWN/4F82RdeWDgLNe7qGfsaPSOlx1og+wNApFhKbJctuHkCm
+	 c3b+bcL12J/KI5i1qb0R2p9CnME+mbkPTpMmaY+nxVUW0/jZ7Jh15q4uvDBGFBVxkREoO
+	 f0fqDCPS3IcdFiOh7GRoCXxpYff85wgHtPiuO24/rQTVP+wlcdMt3McwpB9eIMd7NlA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795617602;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795617605;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=DTrF44VUnvKAx5fWKT602HBU7NPjZjhrZm0YL29DITY=;
-	b=dR/hEiIBxwy0nr5973o7+MUWiFQQBh+uaDxh9wfr3ybOlNEu/5zSFcDsfyIQkPRpUruZ
-	 SZGM+VOxN/2ha/aW9UqNTYrULLAdwK9vubiloHcNu5xukkpxktW4UCUewjgfOoPHp3bar
-	 LoDF1N2GWWLTOoGycRf/kz6L8fd4mvUP9MNKUGldz6rNH7fCaCy+svAH9xMsUnGEoH9Be
-	 6AeGhdpRuzqfJyWMeee5fUizmNhex0m4Towj7vnS0o9/8l36k/o7yZYv+bjh34ACLonqs
-	 vgW6eflwZ81Fw5CZSI7dxMmwI1TyaraT2c9enej9rALyNHcG4Q/HzEUOaUKCuzJhBPQ==
+	bh=bL4mHLSeM/G6/n0X5K/IW2eQDts75FcC/o4HYwiLJC4=;
+	b=ZWaBNcGORZO3A0pNzcvemVmvwcuEgJxMBBQFXPwsKoyfj1kUH4ziFkkcoNDyUVvZiIWd
+	 7jfqvt4pMgSH7CO5TVFwgA/O8t/nSGEHK9JLcuhTJpxwTFL1nxecQHg7vYPtUAYSrvezs
+	 p9Dtc1SbDBJLuYd11KZzbbkea9tkZCTZ3vLruDvyVz8hxb6GlfklNMjT/S7aOHWD4Brv8
+	 EQj6oM87sedm0NUH+q7j67QGJVH2Om7PhuJrYs7NvaaL2Sz/nIF/P+SElXDTjqDihJkUG
+	 FuiPxf3RI73CMCNObHgNuoNf0J9VwWK4LOOVeq6e1+4KWl2XkIW25PN12yEf3iHoZfw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=xB+TIxTy;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="yG/ugAZh";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A6734606A31E;
-	Wed, 25 Nov 2026 14:40:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DC9E7606A31E;
+	Wed, 25 Nov 2026 14:40:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=xB+TIxTy
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 82D251F000C0;
-	Wed, 25 Nov 2026 14:40:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=yG/ugAZh
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C838F1F000C0;
+	Wed, 25 Nov 2026 14:40:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795617602;
-	bh=DTrF44VUnvKAx5fWKT602HBU7NPjZjhrZm0YL29DITY=;
+	s=korg; t=1795617605;
+	bh=bL4mHLSeM/G6/n0X5K/IW2eQDts75FcC/o4HYwiLJC4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=xB+TIxTyL4o/mMLRqNg92S/QEwe//cJRVY3BwRTh/7107Z2N06bi2OqoLIVDyGXuu
-	 YdRD0ajEmg1zyNs0OeCA26v9/mOWW0QOLxMTPuv8h1/m6xL2OIn/b+ImhN8szGSbZE
-	 qg6KFZH1+550b8wTRMWXcR3qrDcJIvB35WawKRx8=
+	b=yG/ugAZh7U9uiQ5q/TccTaHnfTcK7fNqriAZSk3sNvDAL+YCvs2fONbCwzLhniI/g
+	 ktQdVVJELJOyveBq+zCRQztZVHyOJ04ULaqBkr8JpJNU/T6F7at3JXH9CszUZxpLrw
+	 1rZyDLH6acwS2erCzQfN8hSDK4joXfOLkNZv7wJQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+b0d54b9e81de55179e47@syzkaller.appspotmail.com,
+	Cheng Yongkang <teel4res@gmail.com>,
 	Jens Axboe <axboe@kernel.dk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0018/1005] io_uring/io-wq: show stuck workers rather than WARN on a slow exit
-Date: Wed, 25 Nov 2026 15:22:36 +0100
-Message-ID: <20261125143822.163412495@linuxfoundation.org>
+Subject: [PATCH 7.3 0019/1005] io_uring/timeout: dont rearm a multishot timeout on cancel
+Date: Wed, 25 Nov 2026 15:22:37 +0100
+Message-ID: <20261125143822.187105814@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143821.729802100@linuxfoundation.org>
 References: <20261125143821.729802100@linuxfoundation.org>
@@ -68,84 +68,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jens Axboe <axboe@kernel.dk>
+From: Cheng Yongkang <teel4res@gmail.com>
 
-Commit d4912d6440bf6d255e1fa1c360c8ddb39d0e01bd upstream.
+Commit 97d4a585db2b91d855f957be0a9f126068c5be93 upstream.
 
-io_wq_exit_workers() triggers a WARN_ON_ONCE() if it has waited more than
-IO_URING_EXIT_WAIT_MAX for the workers to exit. That can be triggered at
-will, for example with an open on a FUSE mount where the server never
-replies to the lookup. The worker can't be canceled, and the exit waits
-until the server goes away.
+io_timeout_complete() does not check tw.cancel. When it runs from
+io_cancel_local_task_work(), a multishot timeout that has not reached
+its count still posts an IORING_CQE_F_MORE completion and rearms its
+timer. With a zero interval the timer expires again right away and
+queues new task work, so the drain keeps running it until posting a
+CQE fails.
 
-The stack trace from the WARN isn't useful either, as it's that of the
-exiting task and that is always the task exit, exec, or SQPOLL thread
-exit path. Print a message and show the workers that are still around
-instead, that's where the interesting stack traces are.
+Normally the CQ fills up quickly and the request then completes. But
+if userspace moves the CQ head far ahead of the tail, for example to
+cq.tail + 0x7fffffff, posting keeps succeeding and ring teardown is
+delayed for a long time.
 
-Reported-by: syzbot+b0d54b9e81de55179e47@syzkaller.appspotmail.com
+Don't post another CQE or rearm the timer when tw.cancel is set, so
+the request completes through io_req_task_complete(), like the poll and
+linked timeout task work does when cancelled.
+
+Fixes: ea97f6c8558e ("io_uring: add support for multishot timeouts")
+Signed-off-by: Cheng Yongkang <teel4res@gmail.com>
+Link: https://patch.msgid.link/20261116044519.281756-1-teel4res@gmail.com
 Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- io_uring/io-wq.c | 24 +++++++++++++++++++++---
- 1 file changed, 21 insertions(+), 3 deletions(-)
+ io_uring/timeout.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/io_uring/io-wq.c b/io_uring/io-wq.c
-index 6b93950602621..358f32888a853 100644
---- a/io_uring/io-wq.c
-+++ b/io_uring/io-wq.c
-@@ -9,6 +9,7 @@
- #include <linux/init.h>
- #include <linux/errno.h>
- #include <linux/sched/signal.h>
-+#include <linux/sched/debug.h>
- #include <linux/percpu.h>
- #include <linux/slab.h>
- #include <linux/rculist_nulls.h>
-@@ -1444,6 +1445,22 @@ static void io_wq_cancel_tw_create(struct io_wq *wq)
- 	}
- }
+diff --git a/io_uring/timeout.c b/io_uring/timeout.c
+index 8e7a4bd7e5141..b46a50b395177 100644
+--- a/io_uring/timeout.c
++++ b/io_uring/timeout.c
+@@ -115,7 +115,8 @@ static void io_timeout_complete(struct io_tw_req tw_req, io_tw_token_t tw)
+ 	struct io_ring_ctx *ctx = req->ctx;
  
-+static bool io_wq_worker_show(struct io_worker *worker, void *data)
-+{
-+	sched_show_task(worker->task);
-+	return false;
-+}
-+
-+/* The exit path is always the same, show what the workers are stuck on */
-+static void io_wq_show_stuck_workers(struct io_wq *wq)
-+{
-+	pr_warn("io-wq: %s/%d stuck waiting for workers to exit\n",
-+		current->comm, task_pid_nr(current));
-+	rcu_read_lock();
-+	io_wq_for_each_worker(wq, io_wq_worker_show, NULL);
-+	rcu_read_unlock();
-+}
-+
- static void io_wq_exit_workers(struct io_wq *wq)
- {
- 	unsigned long timeout, warn_timeout;
-@@ -1465,8 +1482,8 @@ static void io_wq_exit_workers(struct io_wq *wq)
- 	 *
- 	 * where completely overloading the system with tons of long running
- 	 * io-wq items can easily trigger the hung task timeout. Only sleep
--	 * uninterruptibly for half that time, and warn if we exceeded end
--	 * up waiting more than IO_URING_EXIT_WAIT_MAX.
-+	 * uninterruptibly for half that time, and show the stuck workers if
-+	 * we end up waiting more than IO_URING_EXIT_WAIT_MAX.
- 	 */
- 	timeout = sysctl_hung_task_timeout_secs * HZ / 2;
- 	if (!timeout)
-@@ -1475,7 +1492,8 @@ static void io_wq_exit_workers(struct io_wq *wq)
- 	do {
- 		if (wait_for_completion_timeout(&wq->worker_done, timeout))
- 			break;
--		WARN_ON_ONCE(time_after(jiffies, warn_timeout));
-+		if (time_after(jiffies, warn_timeout))
-+			DO_ONCE_LITE(io_wq_show_stuck_workers, wq);
- 	} while (1);
- 
- 	spin_lock_irq(&wq->hash->wait.lock);
+ 	if (!io_timeout_finish(timeout, data)) {
+-		if (io_req_post_cqe(req, -ETIME, IORING_CQE_F_MORE)) {
++		if (!tw.cancel &&
++		    io_req_post_cqe(req, -ETIME, IORING_CQE_F_MORE)) {
+ 			/* re-arm timer */
+ 			raw_spin_lock_irq(&ctx->timeout_lock);
+ 			list_add(&timeout->list, ctx->timeout_list.prev);
 -- 
 2.53.0
 
