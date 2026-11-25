@@ -1,51 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795622862;
-	b=kYKbSLmp5yGLr42CGxNjJ7XTqLhGLZX3w+S/cQU/IDn5ZUKRrUn/b2lDvM9hTItauMKO
-	 7FaoaZITI/J82T4s/Cg9cTeouCrFom7WjSIorHwbcTyDC+jfCCfb1frB/spIiGCfJY4Ds
-	 ed1yI2ptUDTz1XaBAHX7DDa2ezVkjdbL0dJiKUteuSdRdt3nj9XCCTqTS9/LkjFp2++UO
-	 dJPYZBJJW+dOM542ezDGSIvJtTORlyLM5sNufDn4AQsjv72U9g87P2o2PjuYb9aDxbCxh
-	 ehYiwRWthLWmQtbJ4ui3rjDEzcZAiOLbLgPO4IxjxHQ4TnfXf/QhlaetlTF0CJPJlSQ==
+	t=1795622865;
+	b=ZXkoM4AntPTz1R9Flu3yAsCD4XxKN5VaqzGJSORmTyyGo5NmA9f/j3sU5oEQQade09LX
+	 WvopYhuIJVIpo1eBAOh//M73lscsQcYoCUyoZjCWqZ9j9OvFhj6MZIhHOdc+zd0wdGFTM
+	 C/cO6rmC5oOR3goOkPUy0j1VBgLrAT3+y/Qre4lfw9HJ6E9qOoxKKfzvUGKVcUXUw8c1n
+	 5SzAYhtGLrA3UTniQoY6RTn9fb5UV+w/TSxZhaB5cnUwWiSPVLRf1fglfViEteC0scb9b
+	 EPJ0GmY9fKlz3/OaN5cTmN9hYTEzxGVX+VnDdEP8GeiUsfiPVEr8HbL/vU/MNcWJMgw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795622862;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795622865;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=ENqo7mM2tCA6uauw4YMYDHFSV8wab42jFd1zJ7db/I4=;
-	b=rf0PnSYWF9gA+vFCOMi6BOkSxtlZ/haZVndck2sSDKPhxY1xQLzX4go6xn1zQzUgxDBx
-	 DJF/CP/SiyRuzdiuVw02sKMGJN91w99J3c10ifTHh81i6PnjzI//cGIBRXmfygU+IVdpX
-	 daMeCPe1En9byroMCMieCspXPdtyonfoSyXSk4BF97jArCxlQsRpxGjx8Zo0E+7WqjXLY
-	 5HDkLipNJiA2vhaACb6N46xWKDp7qw4iCBuSR9UBpOLNJhkuHdNoOVGvVk1ZJoslfBxbj
-	 Z37gF5njMQWDeBP1F90DCISMIV3L83Pg1BLmVUg3FNJX0zmwN/HYsBz1HaTkjYWnG8A==
+	bh=dbX2mwNZ6Cg2vkMGPBdkhWu7kwmQOYItvPyg/+cS8lI=;
+	b=n90Kz3spl5y2KXQm/k8xWKiWXR80HRPD8TWedM0KoJb+Qb/f6VtXoEwcvIbi5D/tPkgX
+	 Scs5FJu7My3ngCTmd9KRHPdYLt2fpOr8kBYCXFa9c6Fp98qi4YjqTE9vvOgfoTzTyLibz
+	 9xoomZ9gM2/WC/VhrCkgIyopglOfG6YxRmtw1OY2Mkb9h4PvmTUTXonFnU91ecKgHQPq+
+	 FOiBazqOzuX3CgYsY+dQcFM3iEIV7GYj+FTSLeDVqi4Nim7ZtMDtcKQ7sA0Hx+qwc4B8D
+	 21HhSW4tRMQiKkU3Hou0c8Wv5poGLr+66lCef07KdY+RGYilfh0MnVtAlcs/Bi/bDcg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=s1xYVQUE;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=aU6E2p7T;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B2FAB606A321;
-	Wed, 25 Nov 2026 16:07:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AA2EC606A321;
+	Wed, 25 Nov 2026 16:07:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=s1xYVQUE
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 10AC31F000C0;
-	Wed, 25 Nov 2026 16:07:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=aU6E2p7T
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D84561F000CA;
+	Wed, 25 Nov 2026 16:07:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795622862;
-	bh=ENqo7mM2tCA6uauw4YMYDHFSV8wab42jFd1zJ7db/I4=;
+	s=korg; t=1795622865;
+	bh=dbX2mwNZ6Cg2vkMGPBdkhWu7kwmQOYItvPyg/+cS8lI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=s1xYVQUE0Ez3QGomYHYO0R0stvIj2540Cg4yIUJ0+hV0FELLJMHdB014xewADLuLV
-	 53ZbRmwD6anGxLOygYVupAt4tjdSKJolFCK998HdBlZy1fkdBugRxT+g5jTEQOnD+F
-	 HGWX5XQpCkDA8bpFPzWoBDAUIm5/vFFSnQTrPK1c=
+	b=aU6E2p7T/iGwD3iSlKKxaM6BmGMyLXgXC/TvQbUbG6vz8p7WE1GIXhTwKZ0RJ/OCb
+	 If0Be1Hck2jcwVIrmbU+VOd8MDWLSVF3m3qZNDB3Hi6N6Rndj/F6HAU2bPTxdjREAi
+	 XeFu7jtjl4OOi44xfGE6WEDG2nvRNzOU4VRpusi4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mani Tofigh <mt4022@columbia.edu>,
+	Kyle Zeng <kylebot@openai.com>,
+	Jan Kara <jack@suse.cz>,
 	"Christian Brauner (Amutable)" <brauner@kernel.org>
-Subject: [PATCH 6.18 672/990] eventpoll: wake the next waiter when a woken waiter is killed
-Date: Wed, 25 Nov 2026 15:33:59 +0100
-Message-ID: <20261125143837.828939876@linuxfoundation.org>
+Subject: [PATCH 6.18 673/990] aio: dont let exit_aio() return before complete() is done
+Date: Wed, 25 Nov 2026 15:34:00 +0100
+Message-ID: <20261125143837.851026866@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143822.072087159@linuxfoundation.org>
 References: <20261125143822.072087159@linuxfoundation.org>
@@ -67,72 +68,65 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mani Tofigh <mt4022@columbia.edu>
+From: Christian Brauner <brauner@kernel.org>
 
-commit 9f4413e522faed76f4cf610098b2369eb3ba1f1c upstream.
+commit ac4b449b39e605123c12ea10042cafc9b6f39603 upstream.
 
-Processes sharing an epoll instance can sleep forever while an event is
-ready.  An event wakes only one waiter, which then wakes the next one in
-ep_done_scan() if events are still ready.  Since commit c257a340ede0
-("fs, epoll: short circuit fetching events if thread has been killed"),
-ep_send_events() returns before the scan when the waiter has a fatal
-signal.  If the woken waiter is killed before it runs, nobody wakes the
-next one:
+exit_aio() kills all contexts in one go and waits for them with a
+single on-stack struct ctx_rq_wait. The count starts at table->nr, each
+killed context drops one count in free_ioctx_reqs() and exit_aio()
+subtracts the empty slots afterwards. Whoever drops the last count
+either calls complete() or, if it is exit_aio(), skips the wait.
 
-  Task A                     Task B                 Task C
-  epoll_wait(ep, -1)         epoll_wait(ep, -1)
-                                                    write(efd)
-                                                      /* wakes A only */
-                                                    kill(A, SIGKILL)
-  ep_send_events()
-    return -EINTR
-      /* skips ep_done_scan() */
-                             /* still asleep */
+With a full table skipped is zero and atomic_sub_and_test(0, ...) only
+tells us whether the count already hit zero. free_ioctx_reqs() runs from
+the percpu_ref RCU callback, so if exit_aio() is off the CPU long enough
+the last callback can have done its atomic_dec_and_test() but not yet
+called complete():
 
-B then sleeps until another file on the instance becomes ready, if ever.
-This can hit eg a pre-fork server whose worker gets OOM killed.  Commit
-7fab29e35630 ("fs/epoll: restore waking from ep_done_scan()") fixed the
-same kind of hang when the wakeup in ep_done_scan() was removed.
+    free_ioctx_reqs()                    exit_aio()
+    atomic_dec_and_test() // 1 -> 0
+                                         atomic_sub_and_test(0) // true
+                                         kfree(table)
+                                         return
+    complete(&wait.comp)
 
-Keep the early return so that a dying task still doesn't take events
-nobody will see, but wake the next waiter there if events are ready, as
-ep_done_scan() would have.  With the fix, B gets the event.
+complete() then locks and writes a completion on a stack frame that is
+gone. So hold an extra count for exit_aio() itself. Then the last count
+is always dropped by exit_aio() after it waited, or by a callback while
+exit_aio() waits for it. An unprivileged user gets there with four
+io_setup() calls and an exit without io_destroy().
 
-This bug was identified and confirmed with the help of a deterministic
-hypervisor currently under development.  The C reproducer below however
-hits it within about 2s.
-
-Fixes: c257a340ede0 ("fs, epoll: short circuit fetching events if thread has been killed")
+Reported-by: Kyle Zeng <kylebot@openai.com>
+Fixes: dc48e56d7616 ("aio: fix serial draining in exit_aio()")
 Cc: stable@vger.kernel.org
-Signed-off-by: Mani Tofigh <mt4022@columbia.edu>
-Link: https://patch.msgid.link/20261103-epoll-killed-waiter-v1-1-36e08c16b8a2@columbia.edu
+Link: https://patch.msgid.link/20261030-work-aio-exit_aio-v1-1-83942022a4c4@kernel.org
+Reviewed-by: Jan Kara <jack@suse.cz>
 Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/eventpoll.c |   11 +++++++++--
- 1 file changed, 9 insertions(+), 2 deletions(-)
+ fs/aio.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/fs/eventpoll.c
-+++ b/fs/eventpoll.c
-@@ -2088,10 +2088,17 @@ static int ep_send_events(struct eventpo
- 	/*
- 	 * Always short-circuit for fatal signals to allow threads to make a
- 	 * timely exit without the chance of finding more events available and
--	 * fetching repeatedly.
-+	 * fetching repeatedly. The wakeup that got us here may have been the
-+	 * only one for the events on ->rdllist, so pass it on to the next
-+	 * waiter, as ep_done_scan() would have.
- 	 */
--	if (fatal_signal_pending(current))
-+	if (fatal_signal_pending(current)) {
-+		spin_lock_irq(&ep->lock);
-+		if (!list_empty(&ep->rdllist))
-+			wake_up(&ep->wq);
-+		spin_unlock_irq(&ep->lock);
- 		return -EINTR;
-+	}
+--- a/fs/aio.c
++++ b/fs/aio.c
+@@ -910,7 +910,7 @@ void exit_aio(struct mm_struct *mm)
+ 	if (!table)
+ 		return;
  
- 	init_poll_funcptr(&pt, NULL);
+-	atomic_set(&wait.count, table->nr);
++	atomic_set(&wait.count, table->nr + 1);
+ 	init_completion(&wait.comp);
  
+ 	skipped = 0;
+@@ -934,7 +934,7 @@ void exit_aio(struct mm_struct *mm)
+ 		kill_ioctx(mm, ctx, &wait);
+ 	}
+ 
+-	if (!atomic_sub_and_test(skipped, &wait.count)) {
++	if (!atomic_sub_and_test(skipped + 1, &wait.count)) {
+ 		/* Wait until all IO for the context are done. */
+ 		wait_for_completion(&wait.comp);
+ 	}
 
 
