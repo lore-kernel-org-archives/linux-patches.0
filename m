@@ -1,53 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795617895;
-	b=qyrIDAODUaRcsp/yANPIGE81qCi7mZ+SsDlSuWwUSw4tbj4iicbxAi04Igmfpz+mS68X
-	 lwoKg4h/8XsTHSEOmwSxn7rOMPeOHBXYc2puA6AsC3Bn4oWRsuURmRXF5KloU8fK/FKAn
-	 Y0ZuIRkWglWmf84o3mGqkoHwcCEY5tcM99r3CRiiiFFR0BlkViV1pIoBt4k4P52FKpPWe
-	 klnjXc8PFiEm0D6hibqpgt/K1sjtRSENoNXuNy7Z4sVdYCOcyx2d8AnwPgSxr0Za2wpql
-	 HSUppN8bQWQSKE9+Aem/F24nrtgY/pt8mJt8ogdqfgM/jFjGMB0jOMcGD/fU5Ic2Hsw==
+	t=1795617899;
+	b=udCPojp3kb5b0sKqXxFdNffQu2q0Ofjf56vi8dj4BomzlwTQjjgfpLU6hYgL+AwsHaoT
+	 ruzvQaP73MmIKWBSpW3ptfo0MM0sHDw+bnP2WFOO8YkTDSB69attpnyPGAWE0SulWGc7f
+	 PUKnED6U1YR1LqCP7YagQOtgpZX5XZWtfOEG6ms3DJL1o7viiSMAiPqmL0IB9Ql3lofEY
+	 puW3uyUDRR6vPipLgk+8tAhRNRaPYhCySS7tZetgYTTHLLfhRpeD8MCeVscVd2+xChVYL
+	 ishhxVmiB3VWFllqk+EJ80gpboONyu91crNA0btDXb2WsxLhlm8v1JQ14Knlu/lZOiA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795617895;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795617899;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=OkSJl2H8OYeEbbJVSUQjtUnW0XqRBw6/KI5ov44gWNc=;
-	b=pYmRYQ9nUq9jlPgRrFEvdXXOc2Lgi9pMo8WgOMNgJT3QJMyk8FbqazPse0RxBvtJiNQN
-	 9/oj5Qqk4xnfafmPgV4eVqRk9S2w1evAsvJQU1wkWW0dM83sarjVcD8kXH+YTpiMcNlm+
-	 4ij/LyDZnPRT5RU5pSychFeNbSWOrdgWghkC5HAqRv9ppe5zS94/yYtK+ROMEgvn8D3sM
-	 Mcf6CE4I/2gcDLvIywT18qAtGFBuxAOT0AE+sCnKF3RplLCaxpm1f/KKGdIW9tdzKOgQr
-	 Avo73nl6ZM0eoas1sWTP0M0mlmg5zx950tTMFV1PQSwFRyXUsRhwwvC85/sdfTuNpPw==
+	bh=vy0geyjgLdc8QtJYK6Lu5icg03P0jj8Ss2jVOK+gqPw=;
+	b=J9CtCF/pAZYZgQFLE/ZAHck4CPXySMWOx8WYkJpEpw/Cb02AMjdzDeM2X9E00vNCyHpo
+	 M+5ycAVb6QHrKlNZbE/GjmPZhMqOZ30MydNcg2/3FvQthZ9rJl4+mdHIgM53kKtfOboyu
+	 ayLgFde4A4HpuJZAtafudBCghiyJj0iDTy5mzqtEdZxKuYlRqGMy5Ih2E5mmhbUvpEb8T
+	 IrvMOYSji5ypRhynoRsDDWwvQ5Oyx8cVe2035S/jNIQgUgkWCUBgy9voVELg5Cji7W8Qh
+	 svEAeHmJVD2IuSY+Uf7GC/GSHg9P1Pq+ta84SRYcGMsf9X7XVhTqEqyvBx/ScPMYtkA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ieJONT3a;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=BzKHJnn9;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 80C76606A321;
-	Wed, 25 Nov 2026 14:44:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0CACB606A32D;
+	Wed, 25 Nov 2026 14:44:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ieJONT3a
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 794F81F000E0;
-	Wed, 25 Nov 2026 14:44:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=BzKHJnn9
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E14A91F000D3;
+	Wed, 25 Nov 2026 14:44:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795617895;
-	bh=OkSJl2H8OYeEbbJVSUQjtUnW0XqRBw6/KI5ov44gWNc=;
+	s=korg; t=1795617898;
+	bh=vy0geyjgLdc8QtJYK6Lu5icg03P0jj8Ss2jVOK+gqPw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ieJONT3aPo9Tw3YQ5rBwz+xjaOIQ0y2w+Kil0QMsvIJ1UJvRrNMr3MKDDGai677CM
-	 MmMVM5LvEeyJRUwLQxXfy6HJF2ySBMdDCCPsOunvJQdtHZv/8f6wGwX9i9lQ7Dn1Du
-	 z9cEn3tnHwTI9ZWZjKVQJwn02ouTqbGQjgc3e0OA=
+	b=BzKHJnn9Vr5d7ujJXhfLmaX44L4k7nZUvYgZ53SD1TyntXYV+YUNEt96P37vQqeuM
+	 sjhskD2S0yu5zSxmJ9btm4e5qRvziy1tIOb26hldVJbvg+RYHQ5LP3MN2+ZZSXRynM
+	 IcDzHA5RRChofmdmi08+CKaYSaN5VItj6zoyQHss=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Qu Wenruo <wqu@suse.com>,
-	Filipe Manana <fdmanana@suse.com>,
-	David Sterba <dsterba@suse.com>,
+	Alexei Starovoitov <ast@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0072/1005] btrfs: scrub: fix lost error return value when scrubbing raid56 parity stripe
-Date: Wed, 25 Nov 2026 15:23:30 +0100
-Message-ID: <20261125143823.428356779@linuxfoundation.org>
+Subject: [PATCH 7.3 0108/1005] bpf: Set a dst for test runs of lwt_in progs
+Date: Wed, 25 Nov 2026 15:24:06 +0100
+Message-ID: <20261125143824.276356817@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143821.729802100@linuxfoundation.org>
 References: <20261125143821.729802100@linuxfoundation.org>
@@ -69,36 +67,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Filipe Manana <fdmanana@suse.com>
+From: Alexei Starovoitov <ast@kernel.org>
 
-[ Upstream commit 387d5be169e6644a41dd5865e6a01c9489e996e2 ]
+[ Upstream commit c1ca06e48e8848743fd876a1dc6b0f57bc76d23e ]
 
-If we find errors we are returning the value of 'ret', which has a value
-of 0 from some previous function call that succeeded, instead of returning
-an -EIO error. Fix this by returning -EIO instead of 'ret'.
+When an lwt prog runs on a route, the skb always has a dst. To push an SRH,
+bpf_lwt_push_encap() reads the device from this dst. But
+bpf_prog_test_run_skb() sets a dst for lwt_xmit progs only. Thus the helper
+dereferences a NULL dst in a test run of an lwt_in prog.
 
-Fixes: fab0c0f03cfd ("btrfs: introduce BTRFS_PATH_AUTO_RELEASE() helper")
-Reviewed-by: Qu Wenruo <wqu@suse.com>
-Signed-off-by: Filipe Manana <fdmanana@suse.com>
-Signed-off-by: David Sterba <dsterba@suse.com>
+Set the same dst, ip6_null_entry, for lwt_in progs. When IPv6 is disabled
+or not built, their test run now fails with -EOPNOTSUPP too. An lwt_out
+prog cannot call this helper.
+
+Fixes: fe94cc290f53 ("bpf: Add IPv6 Segment Routing helpers")
+Signed-off-by: Alexei Starovoitov <ast@kernel.org>
+Link: https://patch.msgid.link/20261101190535.1454146-18-alexei.starovoitov@gmail.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/btrfs/scrub.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ net/bpf/test_run.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/fs/btrfs/scrub.c b/fs/btrfs/scrub.c
-index 479c0e037015a..ba2e27cc53519 100644
---- a/fs/btrfs/scrub.c
-+++ b/fs/btrfs/scrub.c
-@@ -2250,7 +2250,7 @@ static int scrub_raid56_parity_stripe(struct scrub_ctx *sctx,
- "scrub: unrepaired sectors detected, full stripe %llu data stripe %u errors %*pbl",
- 				  full_stripe_start, i, stripe->nr_sectors,
- 				  &error);
--			return ret;
-+			return -EIO;
- 		}
- 		bitmap_or(&extent_bitmap, &extent_bitmap, &has_extent,
- 			  stripe->nr_sectors);
+diff --git a/net/bpf/test_run.c b/net/bpf/test_run.c
+index 3043a7393c29c..d6c9dc62182ee 100644
+--- a/net/bpf/test_run.c
++++ b/net/bpf/test_run.c
+@@ -1210,7 +1210,8 @@ int bpf_prog_test_run_skb(struct bpf_prog *prog, const union bpf_attr *kattr,
+ 		skb->ip_summed = CHECKSUM_COMPLETE;
+ 	}
+ 
+-	if (prog->type == BPF_PROG_TYPE_LWT_XMIT) {
++	if (prog->type == BPF_PROG_TYPE_LWT_IN ||
++	    prog->type == BPF_PROG_TYPE_LWT_XMIT) {
+ 		if (!ipv6_mod_enabled()) {
+ 			pr_warn_once("Please test this program with IPv6 enabled kernel\n");
+ 			ret = -EOPNOTSUPP;
 -- 
 2.53.0
 
