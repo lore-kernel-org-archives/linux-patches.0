@@ -1,51 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795626002;
-	b=dZqwvbVZnFm6svAB87FpyChEpt/ri2smTvfhuci7NcQAaXTn8U4Xlvs0VF3ox8+NSKzG
-	 L4Kadjmkb0/AtcepTPHCIExyk6SHJSLzR8VXaut3/EPJxNa24GTTdcksrrXNpBQMGk5C4
-	 KaqRhYVCj9JoKVvIY3tnZ+dgDpxQ2ktf23PqUfuR4ViGiGHCPn3Z/I2WZGygiOLnzM5jk
-	 jqBKjsPChB+qF3ZzSTsfA1DEHSFtv0R2o9Haj+Og9/B2Te6wsvcIjyJYu2A60RmsSCVmS
-	 soSSTyKAkt7BAs9+2jyGDp7YmS2ZIXV4uzAN+CdBwHzxkJ+MBu5GXxpeJnkCWn8fsoA==
+	t=1795626005;
+	b=Qse/jWr3TsK9OtTfzRbN9iVcB2cOhiNT/b6hWMNRGMapghtNKMsOgDJ/xVZy9TA8xrN5
+	 3PzPvAWc74zyxx1r+1VZZMV37xpWL5ah4MAlMwVnZwONFmWt4v5HFgxCf6k3v0fY+8A4F
+	 V1JuaHfmaAz/TBHyKDiwAni8GuMUBmTK8KUiah7CCySAMLn9RL5b2T1VQECfxyVs5hRaB
+	 sMq1QebTwYSnWCJWoNK0rvnkVk4uY7gb1Y/9lfLsj6iQoKzLQ/KCo9P149bL3lUuvw5le
+	 OOZK9/ARsAL/ST3Ia4KFc9xf1Qz+nWkKaSebMNTGynQh+1l/nuapeUJkFC9XDH0eAQQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795626002;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795626005;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=w/xWa7OXokOtpslVO/CRhwb0JP1AA9hPYDR1o9jVkkg=;
-	b=N4U+s4tmb+I/VPhIZxDa64lrjC4ctoAcR/go1HUX1qQDx+ktfuiUMWU4DUp2C9QIHDlF
-	 2gsJlStTUBOzo3qEjhkrUGWv5M4F4gAv5C/Es3anFd4bAOnKiRNNAhzQ9XTbwnediYUfT
-	 JNlX4QgBwsMbgWI904q9ljJjdCbevwfO3MFh2bInU+2fj1WWAAW8khSKUHYAgfocC1nkZ
-	 wnsSoRfMYYsib3W3Sw8IwIWbnnGSgWoVrtEGIM27+T0xmq1e4gVKaFysMwvA8xEwudeRH
-	 3Tqd/nAffoZuyQRaV0XabZM2XMVRSAQUPmr5pgyhK+Dz3IdOo0kZ0QYFikpOxKPp+Ww==
+	bh=1cxeXMKEkwriYJh0DPuNJsAhV51gLozIYY9cTJhnFOQ=;
+	b=xTQK2BSC36YocGI6ilxM0uuBd5ybw9anvRpMcronE/UF710nY66HL3rLxdmARJSAHwcY
+	 Jp80AmIcqq2kVurTWw3TRlD2COcDFbxMMP/ZqIo8Tn3qalqzvi0cYBxyeWmM+4lTp6hb0
+	 HZdbwTYpF9aw+t0RvKENXHRx/iZRwWDCcLZqmgQg2+sc8hl8880L1JXp+djHnrZkR5/9d
+	 ULjq1+hkhregJHBa60z69VVSmiwMHKiT+/3+n1EFbBBwGXMFg54n9iAhPcGiefK78xRls
+	 f8tiyoHvLJWTtcECTXE1jyfIcMRgDQVDRd9ZDpTYiMTmnmXROnWft0hR8BlZ10cxD9Q==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="x/Qb2e6f";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=hVNgyNtz;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9B67B606A326;
-	Wed, 25 Nov 2026 17:00:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8516D606A32A;
+	Wed, 25 Nov 2026 17:00:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=x/Qb2e6f
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8F9081F000C6;
-	Wed, 25 Nov 2026 17:00:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=hVNgyNtz
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A3DF61F000C0;
+	Wed, 25 Nov 2026 17:00:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795626001;
-	bh=w/xWa7OXokOtpslVO/CRhwb0JP1AA9hPYDR1o9jVkkg=;
+	s=korg; t=1795626005;
+	bh=1cxeXMKEkwriYJh0DPuNJsAhV51gLozIYY9cTJhnFOQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=x/Qb2e6fW8Bx/hpz1Ug61wCoG0gJ/v/QrYGyWXjwpMcwOlN4VOPAhhoNt5CcoIypL
-	 wir02V2UzWgDdavrQJj5pIFIHWLNb0SjGe7V3m+S2VNbUScFPVzufyHJKMgscAaVBH
-	 +CzFeLfGYXiTnRpHQ1kMN313x+6wgNbUOlp6k0Ok=
+	b=hVNgyNtz+cfr1s/lE88BguPq8kfUXKadvqCME+x5zrXAq+2XclA0Zs9IR8hbiiDRt
+	 4Zkt9AkTZeKdTVW03r/jPuYOplE5RaEDVgVm+6WEBqv6WTHi+tmcgF5Su3l1kQu8C9
+	 2aEYk4XEBoLCbE/sRkTXuEvSgJnEyv79Kh8EFSgc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yingjie Wang <x-professor@outlook.com>,
+	Yingjie Wang <1075151112@qq.com>,
 	Mikulas Patocka <mpatocka@redhat.com>
-Subject: [PATCH 6.12 697/816] dm mpath: cap queue_if_no_path_timeout_secs
-Date: Wed, 25 Nov 2026 15:37:25 +0100
-Message-ID: <20261125143905.316396439@linuxfoundation.org>
+Subject: [PATCH 6.12 698/816] dm thin: avoid wrapping no_space_timeout
+Date: Wed, 25 Nov 2026 15:37:26 +0100
+Message-ID: <20261125143905.339537541@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143849.205329330@linuxfoundation.org>
 References: <20261125143849.205329330@linuxfoundation.org>
@@ -67,50 +67,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yingjie Wang <x-professor@outlook.com>
+From: Yingjie Wang <1075151112@qq.com>
 
-commit ae5b40accbc06f93e6a513e0e9a07fd32b197e49 upstream.
+commit bcb78d49620f666b4a9d62997691e8d031fd4ebc upstream.
 
-enable_nopath_timeout() arms the no-path timer with
-jiffies + queue_if_no_path_timeout_secs * HZ. The module parameter is an
-unbounded unsigned long, so the delay can exceed what mod_timer()
-handles: a delay above LONG_MAX is treated as already expired, and
-values above ULONG_MAX / HZ also wrap in the multiplication. The timer
-then clears queue_if_no_path right away, and I/O queued after the last
-path fails gets -EIO instead of waiting for the configured time.
+set_pool_mode() converts the no_space_timeout module parameter with
+READ_ONCE(no_space_timeout_secs) * HZ. The usual arithmetic conversions
+evaluate the product as unsigned int, so it can wrap before being stored
+in the unsigned long delay. With HZ=1000, 4294968 seconds becomes 704
+jiffies: a pool that runs out of data space switches to
+error_if_no_space and fails queued writes with -ENOSPC after about 0.7
+seconds.
 
-On x86-64 with HZ=1000, 9223372036854776 seconds failed a write after
-124 ms while one second less remained queued throughout a 4.2-second
-observation window. A value of 18446744073709552 seconds wrapped to 384
-jiffies and failed the write after 455 ms. On 32-bit kernels with
-HZ=1000 the delay passes LONG_MAX above 2147483 seconds, a little under
-25 days.
+Widen the value before the multiplication and cap it at
+MAX_JIFFY_OFFSET / HZ, so large timeouts no longer wrap into short
+delays. On 32-bit kernels, values beyond the supported jiffies range
+saturate at the largest whole-second delay not exceeding
+MAX_JIFFY_OFFSET. The timer wheel's existing handling of very long
+delays is unchanged.
 
-Cap the seconds value at the largest whole-second delay not exceeding
-MAX_JIFFY_OFFSET before multiplying by HZ. This prevents signed-delta
-overflow and multiplication wrap. The timer wheel's existing handling
-of very long delays is unchanged.
-
-Fixes: be240ff5e402 ("dm mpath: Add timeout mechanism for queue_if_no_path")
+Fixes: 80c578930ce7 ("dm thin: add 'no_space_timeout' dm-thin-pool module param")
 Cc: stable@vger.kernel.org
-Signed-off-by: Yingjie Wang <x-professor@outlook.com>
+Signed-off-by: Yingjie Wang <1075151112@qq.com>
 Signed-off-by: Mikulas Patocka <mpatocka@redhat.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/md/dm-mpath.c |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/md/dm-thin.c |    4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
---- a/drivers/md/dm-mpath.c
-+++ b/drivers/md/dm-mpath.c
-@@ -801,7 +801,8 @@ static void queue_if_no_path_timeout_wor
- static void enable_nopath_timeout(struct multipath *m)
- {
- 	unsigned long queue_if_no_path_timeout =
--		READ_ONCE(queue_if_no_path_timeout_secs) * HZ;
-+		min_t(unsigned long, READ_ONCE(queue_if_no_path_timeout_secs),
+--- a/drivers/md/dm-thin.c
++++ b/drivers/md/dm-thin.c
+@@ -2544,7 +2544,9 @@ static void set_pool_mode(struct pool *p
+ 	struct pool_c *pt = pool->ti->private;
+ 	bool needs_check = dm_pool_metadata_needs_check(pool->pmd);
+ 	enum pool_mode old_mode = get_pool_mode(pool);
+-	unsigned long no_space_timeout = READ_ONCE(no_space_timeout_secs) * HZ;
++	unsigned long no_space_timeout =
++		min_t(unsigned long, READ_ONCE(no_space_timeout_secs),
 +		      MAX_JIFFY_OFFSET / HZ) * HZ;
  
- 	lockdep_assert_held(&m->lock);
- 
+ 	/*
+ 	 * Never allow the pool to transition to PM_WRITE mode if user
 
 
