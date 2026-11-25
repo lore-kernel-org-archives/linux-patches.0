@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795622755;
-	b=NmXjXQWB53Dz6JmvyNfPrzLdBm62VXPbKEHInTJbcwmHuXffRKouWN9bcp64wFbKsw2F
-	 TVb75a02UM5UcC88hmvqXfQBdYPM4pDR0ohsenCAfTAMj60tI7Pmuj5Xge8zfjcpXepcG
-	 XOyKqa9FYcED8Nio4nO0oXYp4Umy6uz9C86eIaZwCxCCAahpI20mThdj7Uks31XEoFiH2
-	 VVXttJPUJRLd5kVP1/Mx7Ks5juEzF6vaXEUA5Tilbs3P7BXSgIddvTzY1tdzp+OxK3Bcx
-	 KMOGu3qoHCDX7AVEFvhnq1IWaEiC7NLsp0Bd0InGRHSYqvICey/DTTE4273j9wn3Xmg==
+	t=1795622758;
+	b=jP2EvUo3Dk5qz7jRcyNca3LjqZPO0ibAm7v81+v8Y3XsWgDpdsjtBQiU+ATSSOY2zwkc
+	 hfzT0Gltu827HU+lNJGPI2S0AboWRAUGjeNU7+VtvDB56EO/tgmhxvQxqwJ3bSI/oYXOL
+	 IEyAwRzFXMuADLFKV6pJXA1azoeAFFjkaGqFP2it7VaaOPmUQCT0y0P4BwW+AS30RHnrk
+	 K9syCpSkTpEk8cOeTylJSR6Dl/KvBpeMODw2/O/Xj2AHhhMAJA6PUkqifnZ1wp2DOxhfX
+	 gagbl4/WdFRka/Tg6NO4QQvu3CiJQmGS3u3VBDTNZ2q7qnzr4emhQYYGTv0FJf1iNfQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795622755;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795622758;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=mcIAHjYB9ry/SeH+4Iu26o6Z2V6/g+rylLqsMnqplLA=;
-	b=p6yhWUCNWnSrp/1Dhl/z+QUu3c07XEg/Q9ZhyMZt7Ho5gA2PCIeDTnyHW6ZdJnlNU18M
-	 ZvBFlQGWSzq9+DSqQyuIPyGrhoZKpWXY/i5RON0VrGHryDy/xqWGuiPuKQx0y328Bk6GC
-	 wTNXv3d/hW1kjtT/qwceYetYkM5rDs5PvM9SL4f+tAuaktOHhFkzSQ8TPeopmWCq64Ifr
-	 SGMOJw2Bcf3qKKx8eUaNHiICN6dWfydyfXsm5P2v4XEzP/3cfcb6leR2xglQigv277E4Y
-	 84X8WA7K8m+tXTeZ+CVBTuOCcfjvM4eoWO1wcvXUoOme+hpILSzQPcDKlYyjFbDXyeQ==
+	bh=mh9EBSoQb68f83g1fNNMXt7KE2DBZuzoF4MXsQZetIo=;
+	b=1Da2uJW3tquAJF6jqRgRAIL14DqDVttV/QYYt7gcWSiLpFny7wr2YYXYJxa0SoIRO7Ji
+	 Tv8Jl2VbeFs1aBqmaldQRQrM+me60O1fajXkn5brXg2Qat+Nom/sPqT3Ezxl8MZjEb+N/
+	 KacoCub6tmggagfMwbZZk9bAq9o1wP8/Fh8NX9caVQt6QjRor2AaO8I3dtSC4lPe2B5+T
+	 AXMd+xWOqoTybZpjCRFPl7hyvoXZPAPb6/R+KOaH5vlS7hoCpEloqZi2pvZBtTMKA9diG
+	 l+6LsBrKogAoUrNPShT3GcMuVdUsjl+S3ZlXQbZlmPjltHkZU9Sp6CKxrDeSpMGhQRg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=2IavpsZY;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=tC3KBU60;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 476D3606A323;
-	Wed, 25 Nov 2026 16:05:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1F685606A31E;
+	Wed, 25 Nov 2026 16:05:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=2IavpsZY
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 98B141F000C0;
-	Wed, 25 Nov 2026 16:05:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=tC3KBU60
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6AE0D1F000C4;
+	Wed, 25 Nov 2026 16:05:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795622755;
-	bh=mcIAHjYB9ry/SeH+4Iu26o6Z2V6/g+rylLqsMnqplLA=;
+	s=korg; t=1795622758;
+	bh=mh9EBSoQb68f83g1fNNMXt7KE2DBZuzoF4MXsQZetIo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=2IavpsZY1pzYbDfHRcCekvbHFPvTwGAqjpfViyefBn3h0G/JM9DP1qfxvFkPnyp46
-	 MSYEOGs8yJDh3htiNVAkAcsy7L5AYJxVi5f4/gSV9vTWUTZ6HryZucI3bJstVYLTt9
-	 uV/Dx6xRhi0V6XlsNdKNF8SJYFhzWbJNJdyPdeIE=
+	b=tC3KBU60+Ug151IbBtA25NxUAaMWnmNla3yPaeShee9fECSCDHC+pKg13u9F4kgtk
+	 nnsspKkFm6jmt8tAPk9qzMRydA/u7GtOw+qDW/xXLxptqqeoINrsmg18Kq/jE+J2st
+	 gEpQmOJ6tIKX+AXDiGsIV0q6FrqnsgH67+/Lc5UA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Junbin Zhang <sprooc69@gmail.com>,
-	Tejun Heo <tj@kernel.org>,
+	Dudu Lu <phx0fer@gmail.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 635/990] sched_ext: Reject rq-lock-taking kfuncs in tracing programs
-Date: Wed, 25 Nov 2026 15:33:22 +0100
-Message-ID: <20261125143836.969182161@linuxfoundation.org>
+Subject: [PATCH 6.18 636/990] net-sysfs: reject a one-entry RPS flow table
+Date: Wed, 25 Nov 2026 15:33:23 +0100
+Message-ID: <20261125143836.991983142@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143822.072087159@linuxfoundation.org>
 References: <20261125143822.072087159@linuxfoundation.org>
@@ -68,153 +68,59 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Junbin Zhang <sprooc69@gmail.com>
+From: Dudu Lu <phx0fer@gmail.com>
 
-[ Upstream commit b07a7450f6ef98c79ebd450a92fc4bb6b8f1e02e ]
+[ Upstream commit 24927bdf0f62f63470a065c21d80fff7e4e9f207 ]
 
-scx_bpf_cpuperf_set() and scx_bpf_cidperf_set() are members of
-scx_kfunc_ids_any, which is registered for BPF_PROG_TYPE_TRACING.
-A tracing program can run in a context which already holds the target
-rq lock, in which case scx_cpuperf_set() attempts to acquire the same
-lock again:
+store_rps_dev_flow_table_cnt() accepts rps_flow_cnt == 1.  For count == 1
+the round-up loop leaves mask == 0, which is stored as log == 0 in the
+tag (tag_ptr |= ilog2(mask) + 1).  get_rps_cpu() then calls
+rfs_slot() -> hash_32(hash, rps_tag_to_log(tag_ptr)) with log == 0:
 
-  __schedule()
-    rq_lock(rq);                          /* rq->__lock is held */
-    trace_sched_switch();
-      BPF tracing program
-        scx_bpf_cpuperf_set(smp_processor_id(), 1024);
-          scx_cpuperf_set();
-            locked_rq = scx_locked_rq(); /* NULL */
-            rq_lock_irqsave(rq, &rf);    /* same lock */
+  include/linux/hash.h:68
+	return __hash_32(val) >> (32 - bits);   /* bits == 0 -> shift by 32 */
 
-scx_locked_rq() only tracks rq locks held during SCX callback
-invocations, so it cannot detect an rq lock held by the surrounding
-kernel code.
+The shift by 32 is undefined and yields the full 32-bit hash, which is
+used to index the one-entry rps_dev_flow[] table unchecked:
 
-The deadlock can be reproduced with two BPF programs. The first is a
-minimal SCX scheduler, which only needs to be registered and enabled:
+  UBSAN: shift-out-of-bounds in ./include/linux/hash.h:68:24
+  shift exponent 32 is too large for 32-bit type 'unsigned int'
+   __ubsan_handle_shift_out_of_bounds+0x11c/0x208
+   get_rps_cpu+0x12fc/0x1344
+   netif_rx_internal+0x1e0/0x4d4
 
-  SEC(".struct_ops.link")
-  struct sched_ext_ops minimal_ops = {
-          .name = "minimal",
-  };
+rps_dev_flow[] is then read (rflow->cpu) and written (last_qtail) out of
+bounds on the packet path.  Require at least two entries.
 
-The second is a tracing program attached to tp_btf/sched_switch,
-which fires from __schedule() with rq->__lock already held:
-
-  SEC("tp_btf/sched_switch")
-  int BPF_PROG(on_sched_switch, bool preempt, struct task_struct *prev,
-               struct task_struct *next, unsigned int prev_state)
-  {
-          scx_bpf_cpuperf_set(bpf_get_smp_processor_id(), 1024);
-          return 0;
-  }
-
-With both programs attached, the next context switch on any CPU
-deadlocks that CPU. Lockdep reports:
-
-  WARNING: possible recursive locking detected
-  7.3.0-rc7 #3 Not tainted
-  swapper/3/0 is trying to acquire lock:
-   (&rq->__lock){-.-.}-{2:2}, at: raw_spin_rq_lock_nested+0x1e/0x30
-
-  but task is already holding lock:
-   (&rq->__lock){-.-.}-{2:2}, at: __schedule+0xeb/0x1430
-
-   Possible unsafe locking scenario:
-
-         CPU0
-         ----
-    lock(&rq->__lock);
-    lock(&rq->__lock);
-
-    *** DEADLOCK ***
-
-  Call Trace:
-   <TASK>
-   print_deadlock_bug.cold+0xc0/0xd0
-   __lock_acquire+0x12fa/0x1b80
-   lock_acquire+0xd1/0x2f0
-   _raw_spin_lock_nested+0x32/0x40
-   raw_spin_rq_lock_nested+0x1e/0x30
-   scx_cpuperf_set+0x1e9/0x310
-   scx_bpf_cpuperf_set+0x9b/0x230
-   bpf_prog_..._on_sched_switch+0x3d/0x41
-   bpf_trace_run4+0x125/0x450
-   __traceiter_sched_switch+0x4b/0x70
-   __schedule+0x94a/0x1430
-   schedule_idle+0x26/0x50
-   cpu_startup_entry+0x2d/0x30
-   start_secondary+0xfc/0x100
-   </TASK>
-
-The CPU remains locked up with interrupts disabled.
-scx_bpf_cidperf_set() is similarly affected, as it resolves the CID
-through scx_cid_to_cpu() before reaching the same rq-locking path.
-
-There is no reliable way for these kfuncs to determine whether the
-surrounding tracing context already holds an rq lock. Reject calls to
-both kfuncs from tracing programs at verification time, while
-preserving their availability to SCX struct_ops and syscall programs.
-
-Fixes: a11d6784d731 ("sched_ext: Fix missing rq lock in scx_bpf_cpuperf_set()")
-Signed-off-by: Junbin Zhang <sprooc69@gmail.com>
-Signed-off-by: Tejun Heo <tj@kernel.org>
-[ sashal: Replaced the tracing-visible scx_kfunc_context_filter() check with a separate BTF kfunc set for scx_bpf_cpuperf_set(), registered only for struct_ops and syscall programs, and dropped the cid variant. ]
+Fixes: f3483c8e1da6 ("net: rfs: hash function change")
+Signed-off-by: Dudu Lu <phx0fer@gmail.com>
+Link: https://patch.msgid.link/20261021155522.67521-1-phx0fer@gmail.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+[ sashal: Context lines adapted to the older overflow checks and vmalloc code; the added if (!mask) return -EINVAL; block is otherwise identical to upstream. ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/sched/ext.c | 24 +++++++++++++++++++++++-
- 1 file changed, 23 insertions(+), 1 deletion(-)
+ net/core/net-sysfs.c | 8 ++++++++
+ 1 file changed, 8 insertions(+)
 
-diff --git a/kernel/sched/ext.c b/kernel/sched/ext.c
-index af5828f093045..b3a6d60709403 100644
---- a/kernel/sched/ext.c
-+++ b/kernel/sched/ext.c
-@@ -7013,7 +7013,6 @@ BTF_ID_FLAGS(func, scx_bpf_error_bstr, KF_TRUSTED_ARGS)
- BTF_ID_FLAGS(func, scx_bpf_dump_bstr, KF_TRUSTED_ARGS)
- BTF_ID_FLAGS(func, scx_bpf_cpuperf_cap)
- BTF_ID_FLAGS(func, scx_bpf_cpuperf_cur)
--BTF_ID_FLAGS(func, scx_bpf_cpuperf_set)
- BTF_ID_FLAGS(func, scx_bpf_nr_node_ids)
- BTF_ID_FLAGS(func, scx_bpf_nr_cpu_ids)
- BTF_ID_FLAGS(func, scx_bpf_get_possible_cpumask, KF_ACQUIRE)
-@@ -7036,6 +7035,25 @@ static const struct btf_kfunc_id_set scx_kfunc_set_any = {
- 	.set			= &scx_kfunc_ids_any,
- };
- 
-+/*
-+ * Kfuncs which may take the rq lock on their unlocked path.
-+ *
-+ * A tracing program can execute in any kernel context, including ones which
-+ * already hold the rq lock (e.g. sched_switch). scx_locked_rq() only tracks
-+ * rq locks taken for SCX callbacks, so from such a context it returns NULL
-+ * and these kfuncs would acquire the already held rq lock again and deadlock
-+ * the CPU. They cannot be made safe for tracing programs, so keep them off
-+ * the tracing hook.
-+ */
-+BTF_KFUNCS_START(scx_kfunc_ids_no_tracing)
-+BTF_ID_FLAGS(func, scx_bpf_cpuperf_set)
-+BTF_KFUNCS_END(scx_kfunc_ids_no_tracing)
+diff --git a/net/core/net-sysfs.c b/net/core/net-sysfs.c
+index 3a3a92f3a314c..e408f0b6786b7 100644
+--- a/net/core/net-sysfs.c
++++ b/net/core/net-sysfs.c
+@@ -1101,6 +1101,14 @@ static ssize_t store_rps_dev_flow_table_cnt(struct netdev_rx_queue *queue,
+ 		 */
+ 		while ((mask | (mask >> 1)) != mask)
+ 			mask |= (mask >> 1);
 +
-+static const struct btf_kfunc_id_set scx_kfunc_set_no_tracing = {
-+	.owner			= THIS_MODULE,
-+	.set			= &scx_kfunc_ids_no_tracing,
-+};
++		/* Require at least two entries. A one-entry table rounds up
++		 * to mask == 0, which encodes log == 0 in the tag.
++		 * get_rps_cpu() then computes hash_32(hash, 0), a shift by 32.
++		 */
++		if (!mask)
++			return -EINVAL;
 +
- static int __init scx_init(void)
- {
- 	int ret;
-@@ -7065,6 +7083,10 @@ static int __init scx_init(void)
- 					     &scx_kfunc_set_any)) ||
- 	    (ret = register_btf_kfunc_id_set(BPF_PROG_TYPE_TRACING,
- 					     &scx_kfunc_set_any)) ||
-+	    (ret = register_btf_kfunc_id_set(BPF_PROG_TYPE_STRUCT_OPS,
-+					     &scx_kfunc_set_no_tracing)) ||
-+	    (ret = register_btf_kfunc_id_set(BPF_PROG_TYPE_SYSCALL,
-+					     &scx_kfunc_set_no_tracing)) ||
- 	    (ret = register_btf_kfunc_id_set(BPF_PROG_TYPE_SYSCALL,
- 					     &scx_kfunc_set_any))) {
- 		pr_err("sched_ext: Failed to register kfunc sets (%d)\n", ret);
+ 		/* On 64 bit arches, must check mask fits in table->mask (u32),
+ 		 * and on 32bit arches, must check
+ 		 * RPS_DEV_FLOW_TABLE_SIZE(mask + 1) doesn't overflow.
 -- 
 2.53.0
 
