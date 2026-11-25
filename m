@@ -1,52 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795620724;
-	b=i1vsOtj/oYkY14FPuDQxOeokpvFAZcRuXG/A+zhCvLcqWHg3ihOQpzyEINVf1EcqzzMM
-	 cJOLRdyQ/ZMIAvoeKHbNcAQDbW7NJSC/+MOTkMh15JIF4EToHVC8UIrRtt/l1ARkpuIGS
-	 E2656BbwhT4Ye3Amqw3MvrUUHa+2Xx9WSFiluJbXIiV1EsXwj35/2Yr+EoseKIsl+6E2k
-	 ajN93k+lr3BFSve4leG8nj23Q8MSKpqOE4TbHrz48i3RvTsyLT99aMs5SbV5LmPOOFweh
-	 XbDnIHwBDmTawWjU3KtBVf1BtdeA5/QljtBgZFMO91FftZVa+dduBipXLwOky8+8FjA==
+	t=1795620727;
+	b=YSBT/YfhiMi8K/2fInGgexBbh0VZC3abiAndDvTrvQyAIziPt/prbG/Il7t2KRnmQ6/P
+	 QqS9jgBVVI+tLv8eNKk8hcC8JuL5oJ57ISXWChSzC6Ldfw/GWNc07FZjKccGaTFvoHTEw
+	 JIXyoD4TrvJ+cEYT0PTdCutjZRgSyKH1ULJfkjqQkJ0WEH1pYmG+LOfwjTCR11RWWJe7V
+	 JkNmHlGbit/jSzAFMmkNlI5NuWFAYp3z8jzhjFVuuKiFZP/h05SgkOdwbtwhqob9XW6gL
+	 JOO06p+yNHJaP4/fgeFD5bIgJXz/eFOorhlrXJcqvYayPmbU7eJxHDnhjuCLwkSM8Kg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795620724;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795620727;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=e0hc4ZQKnDUJ60n6zChXE2A9rrhKbkywk7b9C3XQeLk=;
-	b=k4zxFR4TzgSqzVMsYTp7n/2XC8TZckOGgiolfVYqKOyoDwb9DR1ulKxCuRlq40L1tSzy
-	 z7eFGfpRX/sW+UTHKowT7e8LNIx+3X9N4B9HQ4JxHQnsLNdEz0xrmx2aWGzDLcM+zc/1d
-	 RPwx3wM6Vnwv0Yk8n0eEin/AtWjKfcgxOkWTyV862BjU7efSF7WzA26DNF+Ko3Wnv23wC
-	 vQYNQHXU46OjNfMy6pZNsMwWIPFXTmFO9wdF8+aRvAFOW+TCHmiJ2xrCKiHC0rt/v5erv
-	 uI+buqgZMH4Bqz2WlxRbemf54BegHWZfvVFXQb+0xJy76IUMUiN9ccR+0BxfrWWbISQ==
+	bh=S/DuZsO9oKvFuxNoW+N7iQ7kTu5xWJkmOJoqlksl88g=;
+	b=I3p4lWubknw40IP0CGcSiD6rduOxSWD5Wew8pt9VHP+LVZA8tnZYQkOSptLfop5B/hdx
+	 QCnHHmRFQpXhZBNptMr+gmww+DAZLLjfSS0JOcuHQlumZa/K3psGVwxecoIrs9u7ZWWuv
+	 /paBkMaYrTXKACh6TefvtNAxM1umP75Hxl8JwXzdevYiVPjXZe37x0FqAOcgg2NUX+clZ
+	 VZgWS1gQygr2CbJ5q+lyW8GaPRH/OoBjhdlqmkpmiH6bp1p5I5FBcpa6csAaSItF6BJ3L
+	 zG9u2zV5Mmf576uFgFmS3ptuJcDD1lFePsaeYsMuxiHbiPRIxJ0jB1mnKqcFRWSxklw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="Eex0/DIW";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=J+QBTuyH;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 00EF1606A323;
-	Wed, 25 Nov 2026 15:32:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5CBDE606A321;
+	Wed, 25 Nov 2026 15:32:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Eex0/DIW
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 513211F000D0;
-	Wed, 25 Nov 2026 15:32:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=J+QBTuyH
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4315E1F000CF;
+	Wed, 25 Nov 2026 15:32:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795620723;
-	bh=e0hc4ZQKnDUJ60n6zChXE2A9rrhKbkywk7b9C3XQeLk=;
+	s=korg; t=1795620726;
+	bh=S/DuZsO9oKvFuxNoW+N7iQ7kTu5xWJkmOJoqlksl88g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Eex0/DIWKWOnP8goyG9u7J8kzbSA9GUH7QMGeW14le+XAGdOGYgBvldB9AoPcBdIV
-	 HyrLsn7TDVedNAx0qAUoTejiPEU+eIZiIo2cYIdDcyS3n2DWnMnezF9HdQyBD0vVYH
-	 EHzec2osNgWnXGpArR3IYds/FYBqN7o+T1Eiu14I=
+	b=J+QBTuyHiYA/0/Zd6hjdBa/pCNkVxftmwrOOiujM87q9hMJfUTqkbrv89sx/bTaUh
+	 DwLaHHKiYXOQ9V3BtIkvymblxMOpXa9oDu17SiHVg4ElRp3aeR8qV9kkICtAmqOk2Q
+	 tSgnJRNPmZFgMyjSewmpnTtR7otk+BWl+S32AJp8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Arnav Kapoor <kapoorarnav43@gmail.com>,
-	Andy Shevchenko <andriy.shevchenko@intel.com>,
+	Jiale Yao <yaojiale02@163.com>,
 	Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>
-Subject: [PATCH 7.3 0989/1005] iio: proximity: sx9324: fix out-of-bounds read of scan period table
-Date: Wed, 25 Nov 2026 15:38:47 +0100
-Message-ID: <20261125143844.823833989@linuxfoundation.org>
+Subject: [PATCH 7.3 0980/1005] iio: imu: kmx61: reject duplicate event disable
+Date: Wed, 25 Nov 2026 15:38:38 +0100
+Message-ID: <20261125143844.617923939@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143821.729802100@linuxfoundation.org>
 References: <20261125143821.729802100@linuxfoundation.org>
@@ -68,63 +67,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Arnav Kapoor <kapoorarnav43@gmail.com>
+From: Jiale Yao <yaojiale02@163.com>
 
-commit 7b5f54280f8e6ef07664f6705dd005feefbe87d1 upstream.
+commit 9a60b35fe45801d45454e1efe90569c9cc6ea736 upstream.
 
-The scan period of the SX9324 is selected by the 5 bit wide
-SX9324_REG_GNRL_CTRL0_SCANPERIOD field, so it has 32 possible values.
-sx9324_scan_period_table[] however only has 16 entries, it was copied
-over from the SX9310 driver where the field is only 4 bits wide.
+The IIO core does not filter duplicate writes to the event enable
+attribute. kmx61_write_event_config() already ignores repeated enable
+requests, but a repeated disable request still calls
+kmx61_set_power_state(data, false, KMX61_ACC), dropping a runtime PM
+reference that was not acquired for this request. This can underflow the
+runtime PM usage count and trigger a "Runtime PM usage count underflow"
+warning.
 
-sx9324_wait_for_sample() indexes the table with the raw field value, so
-all the codes from 16 to 31 read past the end of the array. The default
-value of the register is SX9324_REG_GNRL_CTRL0_SCANPERIOD_100MS (0x16,
-i.e. 22), so the out-of-bounds read happens with the default
-configuration of the device. It is only avoided when the device has an
-interrupt line, as the wait is only done in the polling case.
+Return early when the requested state already matches ev_enable_state.
 
-The value read is then used as the duration of an msleep() call, so the
-sensor is polled with a completely random delay.
-
-Fill the table with the scan periods of all 32 codes, which are the
-periods documented for the corresponding sx9324_samp_freq_table[]
-entries, and add a static assertion to keep both tables in sync.
-
-Fixes: 4c18a890dff8 ("iio:proximity:sx9324: Add SX9324 support")
+Fixes: fd3ae7a9f21c ("iio: imu: kmx61: Add support for any motion trigger")
+Signed-off-by: Jiale Yao <yaojiale02@163.com>
 Cc: stable@vger.kernel.org
-Signed-off-by: Arnav Kapoor <kapoorarnav43@gmail.com>
-Reviewed-by: Andy Shevchenko <andriy.shevchenko@intel.com>
 Signed-off-by: Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/iio/proximity/sx9324.c |   13 +++++++++++--
- 1 file changed, 11 insertions(+), 2 deletions(-)
+ drivers/iio/imu/kmx61.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/iio/proximity/sx9324.c
-+++ b/drivers/iio/proximity/sx9324.c
-@@ -279,11 +279,20 @@ static const struct {
- 	{ 0, 250000 },  /* 11111: 4 s */
- };
+--- a/drivers/iio/imu/kmx61.c
++++ b/drivers/iio/imu/kmx61.c
+@@ -939,7 +939,7 @@ static int kmx61_write_event_config(stru
+ 	struct kmx61_data *data = kmx61_get_data(indio_dev);
+ 	int ret = 0;
  
-+/*
-+ * The scan period of the SX9324 is selected by the 5-bit wide
-+ * SX9324_REG_GNRL_CTRL0_SCANPERIOD field. The values below are the scan
-+ * periods in ms of the corresponding sx9324_samp_freq_table[] entries.
-+ */
- static const unsigned int sx9324_scan_period_table[] = {
--	2,   15,  30,  45,   60,   90,	 120,  200,
--	400, 600, 800, 1000, 2000, 3000, 4000, 5000,
-+	1, 2, 4, 6, 8, 10, 14, 18,			/* 0x00 - 0x07 */
-+	22, 26, 30, 34, 38, 42, 46, 50,			/* 0x08 - 0x0f */
-+	56, 62, 68, 74, 80, 90, 100, 200,		/* 0x10 - 0x17 */
-+	300, 400, 600, 800, 1000, 2000, 3000, 4000,	/* 0x18 - 0x1f */
- };
+-	if (state && data->ev_enable_state)
++	if (state == data->ev_enable_state)
+ 		return 0;
  
-+static_assert(ARRAY_SIZE(sx9324_scan_period_table) == ARRAY_SIZE(sx9324_samp_freq_table));
-+
- static const struct regmap_range sx9324_writable_reg_ranges[] = {
- 	/*
- 	 * To set COMPSTAT for compensation, even if datasheet says register is
+ 	guard(mutex)(&data->lock);
 
 
