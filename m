@@ -1,42 +1,42 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795620908;
-	b=tpv1LQB4MoNlxM3Ok9ZhRZcSfRJLrHtyqq+Wo736NvLttAwT1/MD0PDwXPjH9hnM6jBs
-	 i0kwIpmQQ0u05UG/dCg78jHj+1xY9DG4U9zkGru03FLuTatcDkz6Rra3ogXVa358tXvLp
-	 qLMLFbpaBgQFWExVgKGyy589v8rocjx2gGK8hymnzspdb9Sf3Oc0TZnyaDFPhsWx1KIXS
-	 +REOGrLIdB0kn7MYP6J7U7ihtlGIf6eOwVTvgzZ+q/cALUIjqWMZ41LpRN/mZ/6XM0oMK
-	 bTZ/BjEIZQd8joa4pVKUlSOMRq+iaLESOpoYHcsQpVRbAzbNCOCjcN57TGp4qQnbJzg==
+	t=1795620911;
+	b=2lNNafswsULe2geGFBohWKm7sa/CC18v9b7lqwbPugqZqiC9ZDnShYzYjwaDE6/MHWQm
+	 VAxyfT6DtvGj+zFgfmpHlLCh6+cOc9dQNZ9p5Ka6u6loy9DWXOIVLXlyU4LYWihQ7zg7h
+	 sHME9XZOk0fjN7UJIx1Ye0qWc15q93pw48GiaStSdA1spC+hG4ZWmmCi+JFpHYC/gsaNS
+	 PdQd3n5WON0VerBLYCCfaqQF73OcBIielBwQi84hA5UIoZW8yZmnneSnK5+LDb/JRbCyt
+	 ++FIz0kAQucbG17ElmArAk8BZMYsJkmzWpvapHW/qkXq2EBzRf0xsapouCPWiK1ou+g==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795620908;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795620911;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=Jftd0xBd7qBMaVSIDhFTJfXkEUr2TipRgS+S6DUzasQ=;
-	b=Zk8aF4LIcrH4qCMAU5RWO298Wi3qBq8wWf120koe0CV+UGFzo2FKH38qqli1WhXhmo3J
-	 3cLUIqRqbjaFJg2mgoRS+TAeeHQGHVDx56E5J8fJA2+Tj0hvnc6cibW0YjHEAvpTH1nzj
-	 +zQu95biJ5vVkvqrr6dKfj9VEARGHyP+8cfjC55DqWA/4dAaiXPdiUESyJRmGYUFREuGh
-	 Hjv/hxyiHoAtLzQJxjuaSsBw+O/wLOz7mmPcFAyfGh65tvCAwtu103ZqnItaDGPp78pXz
-	 gqPWLM2lR/Vrmp1/1e4gGILcKX5zSl7n1Km4PyIh7UuURUaugWFk4EokpFz9rniHAzg==
+	bh=0OSegVzH04E6leHpSRR0s6ETw/Aa31Rq0SQF2RcNWug=;
+	b=S1qfO7nPydG/CY2BvQwhZU30DbT1dCYIuneCmgdf4GZqtl3HbJGI1+Yc3SAEJYsS84Ru
+	 QYhLBiSrWKo5pNGqph1dCQkZllteS23G+Qhw2S3/pdUos0pP91v/RxNiKlr8Xz1W+BLyk
+	 rHzcIwQXvBklomY/44ED/hn4wOkoXoKjhYOELch0uUJ+rPQYUpgvRsFxaK/Qb0+TupJK3
+	 9T5W/tgDjsLH8FskECsBvE7nF9/Q/NONdlLu9Di8sqHJy96GY+K6eAYoiord4qvadZVv7
+	 Yts6u2HtMNBCTk0aSayrDAQGREcNfQO0IJdn02ygz5ddINQJ5KPebx0okY3je2ASfHA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=rJDp+5BH;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=d1MJtJ1H;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 92CBE606A321;
-	Wed, 25 Nov 2026 15:35:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DD2BF606A321;
+	Wed, 25 Nov 2026 15:35:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=rJDp+5BH
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 801DD1F000D1;
-	Wed, 25 Nov 2026 15:35:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=d1MJtJ1H
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C8A4E1F000C6;
+	Wed, 25 Nov 2026 15:35:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795620908;
-	bh=Jftd0xBd7qBMaVSIDhFTJfXkEUr2TipRgS+S6DUzasQ=;
+	s=korg; t=1795620911;
+	bh=0OSegVzH04E6leHpSRR0s6ETw/Aa31Rq0SQF2RcNWug=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=rJDp+5BHIGBVO9HQLXrNMCjviOfjEQXme9/MLJ9bhO9dQBOKOH39ACQiPuiGPrlnL
-	 rXesgjlPV6gQWaWBaplqyAZSK1xdO7ghBdruwzfRrcS4AXx3JesgR0BSKNNBxrPTWU
-	 HkkU3WGw/bpzGRTWsxXLkB5u3HXMtxhfv989TAAU=
+	b=d1MJtJ1HVm3TXBtAZWV6RKNSrTIl60u/5YapXZ+kLLjAfthHdNGjLCttHcGehB6dM
+	 cTVX1ODNFLK7Ry0g0jn/y333LuWWkx5ytOC0vs7h2ngNB3KUksSvSyVUFHBeCiV2pL
+	 nj5d7NUFJsO9YS81Xfa3csRGllt+qu5leBFvVDps=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -44,9 +44,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Eric Sandeen <sandeen@redhat.com>,
 	Dominique Martinet <asmadeus@codewreck.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 059/990] net/9p: move structures and macros to header files
-Date: Wed, 25 Nov 2026 15:23:46 +0100
-Message-ID: <20261125143823.468545191@linuxfoundation.org>
+Subject: [PATCH 6.18 060/990] 9p: create a v9fs_context structure to hold parsed options
+Date: Wed, 25 Nov 2026 15:23:47 +0100
+Message-ID: <20261125143823.491438410@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143822.072087159@linuxfoundation.org>
 References: <20261125143822.072087159@linuxfoundation.org>
@@ -70,57 +70,46 @@ Content-Transfer-Encoding: 8bit
 
 From: Eric Sandeen <sandeen@redhat.com>
 
-[ Upstream commit c44393d84149d6fc91d94fa39321c9657e91b388 ]
+[ Upstream commit 075e8bd4127f007910fc302ad5c3c471d0be4799 ]
 
-With the new mount API all option parsing will need to happen
-in fs/v9fs.c, so move some existing data structures and macros
-to header files to facilitate this. Rename some to reflect
-the transport they are used for (rdma, fd, etc), for clarity.
+This patch creates a new v9fs_context structure which includes
+new p9_session_opts and p9_client_opts structures, as well as
+re-using the existing p9_fd_opts and p9_rdma_opts to store options
+during parsing. The new structure will be used in the next
+commit to pass all parsed options to the appropriate transports.
 
 Signed-off-by: Eric Sandeen <sandeen@redhat.com>
-Message-ID: <20251010214222.1347785-3-sandeen@redhat.com>
+Message-ID: <20251010214222.1347785-4-sandeen@redhat.com>
 Signed-off-by: Dominique Martinet <asmadeus@codewreck.org>
 Stable-dep-of: 37dce65a0b43 ("9p: use fc->net_ns for network namespace in RDMA and socket transports")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/net/9p/client.h    |  6 ++++++
- include/net/9p/transport.h | 39 ++++++++++++++++++++++++++++++++++++++
- net/9p/client.c            |  6 ------
- net/9p/trans_fd.c          | 20 ++-----------------
- net/9p/trans_rdma.c        | 25 ++----------------------
- 5 files changed, 49 insertions(+), 47 deletions(-)
+ include/net/9p/client.h    | 90 ++++++++++++++++++++++++++++++++++++++
+ include/net/9p/transport.h | 32 --------------
+ 2 files changed, 90 insertions(+), 32 deletions(-)
 
 diff --git a/include/net/9p/client.h b/include/net/9p/client.h
-index 4f785098c67a1..2d46f8017bd57 100644
+index 2d46f8017bd57..cc18443f7d516 100644
 --- a/include/net/9p/client.h
 +++ b/include/net/9p/client.h
-@@ -16,6 +16,12 @@
- /* Number of requests per row */
- #define P9_ROW_MAXTAG 255
+@@ -132,6 +132,96 @@ struct p9_client {
+ 	char name[__NEW_UTS_LEN + 1];
+ };
  
-+/* DEFAULT MSIZE = 32 pages worth of payload + P9_HDRSZ +
-+ * room for write (16 extra) or read (11 extra) operands.
++/**
++ * struct p9_fd_opts - holds client options during parsing
++ * @msize: maximum data size negotiated by protocol
++ * @prot-Oversion: 9P protocol version to use
++ * @trans_mod: module API instantiated with this client
++ *
++ * These parsed options get transferred into client in
++ * apply_client_options()
 + */
-+
-+#define DEFAULT_MSIZE ((128 * 1024) + P9_IOHDRSZ)
-+
- /** enum p9_proto_versions - 9P protocol versions
-  * @p9_proto_legacy: 9P Legacy mode, pre-9P2000.u
-  * @p9_proto_2000u: 9P2000.u extension
-diff --git a/include/net/9p/transport.h b/include/net/9p/transport.h
-index 766ec07c95999..88702953b1ef2 100644
---- a/include/net/9p/transport.h
-+++ b/include/net/9p/transport.h
-@@ -14,6 +14,45 @@
- #define P9_DEF_MIN_RESVPORT	(665U)
- #define P9_DEF_MAX_RESVPORT	(1023U)
- 
-+#define P9_FD_PORT 564
-+
-+#define P9_RDMA_PORT		5640
-+#define P9_RDMA_SQ_DEPTH	32
-+#define P9_RDMA_RQ_DEPTH	32
-+#define P9_RDMA_TIMEOUT		30000		/* 30 seconds */
++struct p9_client_opts {
++	unsigned int msize;
++	unsigned char proto_version;
++	struct p9_trans_module *trans_mod;
++};
 +
 +/**
 + * struct p9_fd_opts - per-transport options for fd transport
@@ -129,7 +118,6 @@ index 766ec07c95999..88702953b1ef2 100644
 + * @port: port to connect to (trans=tcp)
 + * @privport: port is privileged
 + */
-+
 +struct p9_fd_opts {
 +	int rfd;
 +	int wfd;
@@ -154,43 +142,63 @@ index 766ec07c95999..88702953b1ef2 100644
 +	long timeout;
 +};
 +
++/**
++ * struct p9_session_opts - holds parsed options for v9fs_session_info
++ * @flags: session options of type &p9_session_flags
++ * @nodev: set to 1 to disable device mapping
++ * @debug: debug level
++ * @afid: authentication handle
++ * @cache: cache mode of type &p9_cache_bits
++ * @cachetag: the tag of the cache associated with this session
++ * @uname: string user name to mount hierarchy as
++ * @aname: mount specifier for remote hierarchy
++ * @dfltuid: default numeric userid to mount hierarchy as
++ * @dfltgid: default numeric groupid to mount hierarchy as
++ * @uid: if %V9FS_ACCESS_SINGLE, the numeric uid which mounted the hierarchy
++ * @session_lock_timeout: retry interval for blocking locks
++ *
++ * This strucure holds options which are parsed and will be transferred
++ * to the v9fs_session_info structure when mounted, and therefore largely
++ * duplicates struct v9fs_session_info.
++ */
++struct p9_session_opts {
++	unsigned int flags;
++	unsigned char nodev;
++	unsigned short debug;
++	unsigned int afid;
++	unsigned int cache;
++#ifdef CONFIG_9P_FSCACHE
++	char *cachetag;
++#endif
++	char *uname;
++	char *aname;
++	kuid_t dfltuid;
++	kgid_t dfltgid;
++	kuid_t uid;
++	long session_lock_timeout;
++};
++
++/* Used by mount API to store parsed mount options */
++struct v9fs_context {
++	struct p9_client_opts	client_opts;
++	struct p9_fd_opts	fd_opts;
++	struct p9_rdma_opts	rdma_opts;
++	struct p9_session_opts	session_opts;
++};
++
  /**
-  * struct p9_trans_module - transport module interface
-  * @list: used to maintain a list of currently available transports
-diff --git a/net/9p/client.c b/net/9p/client.c
-index 75aac636b20e7..8d4547d4b4872 100644
---- a/net/9p/client.c
-+++ b/net/9p/client.c
-@@ -29,12 +29,6 @@
- #define CREATE_TRACE_POINTS
- #include <trace/events/9p.h>
- 
--/* DEFAULT MSIZE = 32 pages worth of payload + P9_HDRSZ +
-- * room for write (16 extra) or read (11 extra) operands.
-- */
--
--#define DEFAULT_MSIZE ((128 * 1024) + P9_IOHDRSZ)
--
- /* Client Option Parsing (code inspired by NFS code)
-  *  - a little lazy - parse all client options
-  */
-diff --git a/net/9p/trans_fd.c b/net/9p/trans_fd.c
-index a516745f732f7..fdaebb549aa8f 100644
---- a/net/9p/trans_fd.c
-+++ b/net/9p/trans_fd.c
-@@ -31,28 +31,12 @@
- 
- #include <linux/syscalls.h> /* killme */
- 
--#define P9_PORT 564
- #define MAX_SOCK_BUF (1024*1024)
- #define MAXPOLLWADDR	2
- 
- static struct p9_trans_module p9_tcp_trans;
- static struct p9_trans_module p9_fd_trans;
+  * struct p9_fid - file system entity handle
+  * @clnt: back pointer to instantiating &p9_client
+diff --git a/include/net/9p/transport.h b/include/net/9p/transport.h
+index 88702953b1ef2..ebbb4b50ee205 100644
+--- a/include/net/9p/transport.h
++++ b/include/net/9p/transport.h
+@@ -21,38 +21,6 @@
+ #define P9_RDMA_RQ_DEPTH	32
+ #define P9_RDMA_TIMEOUT		30000		/* 30 seconds */
  
 -/**
-- * struct p9_fd_opts - per-transport options
+- * struct p9_fd_opts - per-transport options for fd transport
 - * @rfd: file descriptor for reading (trans=fd)
 - * @wfd: file descriptor for writing (trans=fd)
 - * @port: port to connect to (trans=tcp)
@@ -204,52 +212,8 @@ index a516745f732f7..fdaebb549aa8f 100644
 -	bool privport;
 -};
 -
- /*
-   * Option Parsing (code inspired by NFS code)
-   *  - a little lazy - parse all fd-transport options
-@@ -742,7 +726,7 @@ static int p9_fd_cancelled(struct p9_client *client, struct p9_req_t *req)
- static int p9_fd_show_options(struct seq_file *m, struct p9_client *clnt)
- {
- 	if (clnt->trans_mod == &p9_tcp_trans) {
--		if (clnt->trans_opts.tcp.port != P9_PORT)
-+		if (clnt->trans_opts.tcp.port != P9_FD_PORT)
- 			seq_printf(m, ",port=%u", clnt->trans_opts.tcp.port);
- 	} else if (clnt->trans_mod == &p9_fd_trans) {
- 		if (clnt->trans_opts.fd.rfd != ~0)
-@@ -768,7 +752,7 @@ static int parse_opts(char *params, struct p9_fd_opts *opts)
- 	int option;
- 	char *options, *tmp_options;
- 
--	opts->port = P9_PORT;
-+	opts->port = P9_FD_PORT;
- 	opts->rfd = ~0;
- 	opts->wfd = ~0;
- 	opts->privport = false;
-diff --git a/net/9p/trans_rdma.c b/net/9p/trans_rdma.c
-index d9f53f1da2c21..92b166a4a1e52 100644
---- a/net/9p/trans_rdma.c
-+++ b/net/9p/trans_rdma.c
-@@ -32,14 +32,10 @@
- #include <rdma/ib_verbs.h>
- #include <rdma/rdma_cm.h>
- 
--#define P9_PORT			5640
--#define P9_RDMA_SQ_DEPTH	32
--#define P9_RDMA_RQ_DEPTH	32
- #define P9_RDMA_SEND_SGE	4
- #define P9_RDMA_RECV_SGE	4
- #define P9_RDMA_IRD		0
- #define P9_RDMA_ORD		0
--#define P9_RDMA_TIMEOUT		30000		/* 30 seconds */
- #define P9_RDMA_MAXSIZE		(1024*1024)	/* 1MB */
- 
- /**
-@@ -110,23 +106,6 @@ struct p9_rdma_context {
- 	};
- };
- 
 -/**
-- * struct p9_rdma_opts - Collection of mount options
+- * struct p9_rdma_opts - Collection of mount options for rdma transport
 - * @port: port of connection
 - * @privport: Whether a privileged port may be used
 - * @sq_depth: The requested depth of the SQ. This really doesn't need
@@ -265,27 +229,9 @@ index d9f53f1da2c21..92b166a4a1e52 100644
 -	long timeout;
 -};
 -
- /*
-  * Option Parsing (code inspired by NFS code)
-  */
-@@ -151,7 +130,7 @@ static int p9_rdma_show_options(struct seq_file *m, struct p9_client *clnt)
- {
- 	struct p9_trans_rdma *rdma = clnt->trans;
- 
--	if (rdma->port != P9_PORT)
-+	if (rdma->port != P9_RDMA_PORT)
- 		seq_printf(m, ",port=%u", rdma->port);
- 	if (rdma->sq_depth != P9_RDMA_SQ_DEPTH)
- 		seq_printf(m, ",sq=%u", rdma->sq_depth);
-@@ -178,7 +157,7 @@ static int parse_opts(char *params, struct p9_rdma_opts *opts)
- 	int option;
- 	char *options, *tmp_options;
- 
--	opts->port = P9_PORT;
-+	opts->port = P9_RDMA_PORT;
- 	opts->sq_depth = P9_RDMA_SQ_DEPTH;
- 	opts->rq_depth = P9_RDMA_RQ_DEPTH;
- 	opts->timeout = P9_RDMA_TIMEOUT;
+ /**
+  * struct p9_trans_module - transport module interface
+  * @list: used to maintain a list of currently available transports
 -- 
 2.53.0
 
