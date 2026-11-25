@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795617827;
-	b=Cg8Ja+7KB6/iGxxt57MMNsn9k6nNd57+fWA3ys1SnhVyOStFOX7ETPNG2me546oeKVr1
-	 RkHjV7IAC3df8z8+9s3cPb+ft2WCOUTXYJZRGY0luAA/gOyMzcwGZ/5heUtdpJcbKTks6
-	 O3YMv7bb/37dkdVjsGiWnHvcqZeg+ABtAlq0HIqPMPwkF6uORv6rYdHJfdTqCFublI1Wb
-	 tDSLljeryvE+c3CjpfBsjh5yKxp0dqDpxR98x7sFWOpuoBw3ARvz9KUeekTgB8T2hIJb2
-	 ZQTrgAuhKiemhzYsQtfWqJPkcUz5Wk/k6fwGhw/UmHYNuR9EVtD9MJ2HzezAIIR2hJA==
+	t=1795617830;
+	b=puVv/F5ter0LcuilrEqvpOBLLKH5xYiVhpQqWHEe2rxAlZFpzR+OIbLPCes87dTgSctV
+	 WCE9Ra4nyZd+0R42muHdILjTCCud2a56yGXe45Bt4JpyCWvKUgBheskNNWnhPXGuwN0Tw
+	 7BQTA5m5CeeRCPr3nx99YyJSQFfe34maP30xiArJk127H7/grNDYENMdYK2N0vlW1w90+
+	 5m7yB3b+1fSgZEo99nJ0VVFb4LPHWzwxKPVd8rNyswP2mjda1z8pJ6FXoXHuP+FukR6So
+	 r0HGAm0x+3uNS84vAJfZy/txFdtqb+tCxo/aXkZsB9UNTCkaCVJIrQbkbpjaDt4Dfvw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795617827;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795617830;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=SJWiyNp0b1TC6hQE4lEKxRs8qB1ggt+Qo6py6ifJBNE=;
-	b=CbRK8CKCEgpIXf96j0Ik06Qn8mwvm9Q/4s+0RkrbgbBnyvrf1vTp7ASCAoMOt2tEE5l8
-	 XGB4xCxzutIY/FuxONfHdBOtIol5LuvNb6JLN8g1Sok6B76PJOmH1qPyC7ZpxPgvZryCf
-	 VLhb1mJ52Er5cg6B10a4eyiABNGrTDkNwJTIzMy0zs0KbAQw1l38e4kMWNcwiM+a6zSbu
-	 xJFhvGGwvRmCQZR/ESDYme8UiUIgSZcNsiSdDx1A+1/vmW/PiCtCPpriS0U/RfGax6Fic
-	 J2+odcItWCxMkyo7VfUvklLbjpyU65WzgPG7OnqLSRJ9lgyheoO7zZyw3VBNgzAevfg==
+	bh=RkW5xfrYLYuPq7GAb8flsRAB+nI38eM8M6API8invhQ=;
+	b=nlSe/7XAjpmCQJPjXtTJIUNxLS42xRUTY7MWq4X996HqPQ3RbDTFOTtH8vnSByJYs7iE
+	 RMFoCV7k2KDXtfOOVZsj+ERpqJcUECgj9JKd6md/aHU99fvpKZ25tjETU45du+sYSmM4V
+	 pivF4aWGbL14CzOtBmTCQZoU/y65EMYVQtErlsYLvd7/e4DxZl74PIxOndLXXhsA0KDl6
+	 ggQDu54gBg2x4TeXzLWSbo4EVMTO2QfgF0Gf1e/6mm5IghAXBQ2zJhOulZotOB/HpvwZK
+	 ReLwEygbAGPVPURTbcfYVOCImuJyt9YD6TzpdA3YqpaB/0oE+K8PqPcEXqy6R0isx1g==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=A+tHjaxg;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="PFnLkr/U";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BF201606A31E;
-	Wed, 25 Nov 2026 14:43:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 951B8606A31E;
+	Wed, 25 Nov 2026 14:43:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=A+tHjaxg
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E240A1F000C4;
-	Wed, 25 Nov 2026 14:43:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=PFnLkr/U
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E54C21F000C4;
+	Wed, 25 Nov 2026 14:43:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795617827;
-	bh=SJWiyNp0b1TC6hQE4lEKxRs8qB1ggt+Qo6py6ifJBNE=;
+	s=korg; t=1795617830;
+	bh=RkW5xfrYLYuPq7GAb8flsRAB+nI38eM8M6API8invhQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=A+tHjaxgPJzRp05uJqxOU5hGM/GYGeTRjRaWeI+ls0qglJdkDGsAKgaja654chzzj
-	 +b2o6DBh62EJkM6827o2U3rJopjpRt78ZbM0rZd+AjbxKn7b+AW7iQ1A5+nz+sLPq9
-	 gsWXYDMTYsAjg33igugj6Wx/U3HqLkSliACyY09s=
+	b=PFnLkr/UmXadlX2+noMSoTb06ldzhuB22yn9HYhsQODdL+FHKLC7daiI4+w8LacJ3
+	 GlqPH03LAMf2hf8EAaw3X+PWVK1BBbOK4e0u1Dsgm45TenjjOfEnNK+Uk7ZQBJzKVW
+	 3cWqdQ0QoOlo21g9uz8ivd4Pu1LIt2aLEptVefIc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	guolingxing <guolingxing@tju.edu.cn>,
-	Qu Wenruo <wqu@suse.com>,
-	David Sterba <dsterba@suse.com>,
+	Jia Jia <physicalmtea@gmail.com>,
+	"Martin K. Petersen (Oracle)" <mkp@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0070/1005] btrfs: verity: propagate orphan insertion errors when enabling verity
-Date: Wed, 25 Nov 2026 15:23:28 +0100
-Message-ID: <20261125143823.382919835@linuxfoundation.org>
+Subject: [PATCH 7.3 0088/1005] scsi: target: Validate REGISTER AND MOVE TransportID length
+Date: Wed, 25 Nov 2026 15:23:46 +0100
+Message-ID: <20261125143823.802431572@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143821.729802100@linuxfoundation.org>
 References: <20261125143821.729802100@linuxfoundation.org>
@@ -69,45 +68,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: guolingxing <guolingxing@tju.edu.cn>
+From: Jia Jia <physicalmtea@gmail.com>
 
-[ Upstream commit 45a686dff6b91c3667cd8188d3a02c69f62f4d00 ]
+[ Upstream commit 5d5913710c81eed6fa275b6a24773059d9dbfdfa ]
 
-btrfs_begin_enable_verity() ignores the return value of
-btrfs_orphan_add() and unconditionally returns 0. If orphan insertion
-fails, btrfs_orphan_add() aborts the transaction, but the generic
-fs-verity code still proceeds with Merkle tree construction because
-the begin_enable_verity callback reported success.
+REGISTER AND MOVE has a 24-byte parameter-list header followed by a
+TransportID.  A 24-byte parameter list with a zero TransportID length
+passes the existing tid_len + 24 check, then the handler reads buf[24] for
+the TransportID protocol identifier, one byte past the received parameter
+list.
 
-Return the error so that fs-verity stops immediately instead of
-continuing after the initialization failure.
+A TransportID is at least 24 bytes.  Reject shorter TransportIDs and
+compare the declared length with the bytes following the header before
+reading buf[24].
 
-The transaction is already aborted by btrfs_orphan_add() and the
-handle is released by btrfs_end_transaction(), so no additional
-cleanup is needed.
+A malformed PR OUT sent through vhost-scsi triggered this read on a KASAN
+kernel.  The command is now rejected with INVALID PARAMETER LIST before
+buf[24] is accessed.
 
-Fixes: 705242538ff3 ("btrfs: verity metadata orphan items")
-Signed-off-by: guolingxing <guolingxing@tju.edu.cn>
-Reviewed-by: Qu Wenruo <wqu@suse.com>
-Signed-off-by: David Sterba <dsterba@suse.com>
+Fixes: c66ac9db8d4a ("[SCSI] target: Add LIO target core v4.0.0-rc6")
+Signed-off-by: Jia Jia <physicalmtea@gmail.com>
+Link: https://patch.msgid.link/20261021094334.198599-1-physicalmtea@gmail.com
+Signed-off-by: Martin K. Petersen (Oracle) <mkp@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/btrfs/verity.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/target/target_core_pr.c | 9 +++++----
+ 1 file changed, 5 insertions(+), 4 deletions(-)
 
-diff --git a/fs/btrfs/verity.c b/fs/btrfs/verity.c
-index c29d92c3bbc3e..87722e5d41868 100644
---- a/fs/btrfs/verity.c
-+++ b/fs/btrfs/verity.c
-@@ -610,7 +610,7 @@ static int btrfs_begin_enable_verity(struct file *filp)
- 		set_bit(BTRFS_INODE_VERITY_IN_PROGRESS, &inode->runtime_flags);
- 	btrfs_end_transaction(trans);
+diff --git a/drivers/target/target_core_pr.c b/drivers/target/target_core_pr.c
+index 25b1bcacc0c8f..ca1a2802aa228 100644
+--- a/drivers/target/target_core_pr.c
++++ b/drivers/target/target_core_pr.c
+@@ -3226,10 +3226,11 @@ core_scsi3_emulate_pro_register_and_move(struct se_cmd *cmd, u64 res_key,
+ 	transport_kunmap_data_sg(cmd);
+ 	buf = NULL;
  
--	return 0;
-+	return ret;
- }
- 
- /*
+-	if ((tid_len + 24) != cmd->data_length) {
+-		pr_err("SPC-3 PR: Illegal tid_len: %u + 24 byte header"
+-			" does not equal CDB data_length: %u\n", tid_len,
+-			cmd->data_length);
++	/* TransportID is at least 24 bytes. buf[24] is its first byte. */
++	if (tid_len < 24 ||
++	    tid_len != cmd->data_length - 24) {
++		pr_err("SPC-3 PR: Illegal tid_len: %u for data_length: %u\n",
++		       tid_len, cmd->data_length);
+ 		ret = TCM_INVALID_PARAMETER_LIST;
+ 		goto out_put_pr_reg;
+ 	}
 -- 
 2.53.0
 
