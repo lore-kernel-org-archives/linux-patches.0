@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795625061;
-	b=J4Wvw0D4BdZp/HyMVf1ii2fYlBcVc1hftFLG1mgDfCRdR4Jw9yzlYb5EUFqQuggnffnw
-	 E+8sd9kz9Mj27OkjH31W60fy2RVaIBbMzk5liZkv55IIOwWTSE1UQWhy1KCYrd3wsSMJV
-	 /ZcDCxC/ULVJwdVIc+NDIVvg5plTYeio8MYgFscg+jh87ATG93+dDPJUF0tC+smLq+j6O
-	 jxfTkUFjPsEa5ThaggFDzh+V4wrmWV4dzhZIq/6aIldqy/O1t+JGOZOK+SiCLTKKl2cpi
-	 aZPYZFqG/0T40bgGL+PWPZfbgeNN2C0vG0pXynlMHh6Ghf/Lk5jec5et5kXAoQQkSJQ==
+	t=1795625064;
+	b=E/fLNuEiODK13y0wniArNJIeUd3bnOEiz1pUFZSkh5Q0/8sbeyUBRwt6WJSXhX+d9rdS
+	 /E/0xH+jqGoPesZXI4TxPWNnzY8ccAV6qlUJqQOyWV1PgFBq8UEVLT4vS0BzKzOxYyGxS
+	 apNSqOtxhfTEnx4q/hOgmqpCEYuzIG+cG5daIxsBt3gGzBqj2B2wfZYcJrFWmcB4SdDPU
+	 Yna1cf3N60wOkb7EbeLZepa4bdkJzeBMi4PyUS8tjIcccWzGjF3686n6rlIcMJNpwFlnc
+	 IHmYg7rhJTrlt160aQpPlm93hgE3VZrTjabi4YVEtP5oIJRuAuysbFR0uJQdDDNh3wg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795625061;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795625064;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=yimQGhoKVB2vjb4c9Uu6Rpv1CAx1LsILo+nPgnpFjis=;
-	b=Ct3R+FwBz9mqSBs9RPG3bUCgqlNTJg5JTXkTLyHqzGVXHwcfBQ2utDrQssQpJhrS9cXU
-	 ittVEi7Raa8MzuBDBDcE0Y7zRk7mD12F0PRYgw43hKccTdXupU51gyzwUgvYoe3qBvFrv
-	 zEqnYAM80ewmXsLrtJPK7t1szWyRLVqt8DATfxw28toFccRhYvLG76P+KkVRC36aOrELz
-	 WtynQWBhQhvj94TKkdUCysC77cWmVa9w0MaI6ACsRs8PIDaJ8lCv6EEG4b+sRjv8hoSNR
-	 FdrbWJt17R0B8UB+6zIxkDu79QrBA0GQMCXP9hY7Ow/Wwh+JeLH6RXmfLGGbj+hPjNw==
+	bh=X+OLY2iXAyhPrO5RNNQuz3aSwYvlBths6f5PMbVgyiw=;
+	b=lmMlavShIsawWKZpV2AMNdLX8aiSpHJ2WCh0cNabaEB1pR6YJq8fIlS0HFhex4N9TQf1
+	 x62FSr370smgy67L+14uDDVqsB61w2sFMT1JnSRX9sq6OMS6pv/QdrarSehkKUb7vVktp
+	 cXTMV7WJY2QfaKwAfDlofH/87qxqmOsJS6j5e3wJT/EsaoOtBXseo8zQhO+BkoktMBJRe
+	 /ZPgEn3j3jYTnH43u/hOqXznR6EGd9WFy2no/nD1fOhkx4VnVT8t8QZb2LUKregHie0VC
+	 czwxcbV2ndfZO6kJ6xeXV2s2U3twUH6tGBOIJ2y/lV8s+RSiOlnJZREAXb+d7XAKwmA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=uTB8tKHL;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=GggvLH8M;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D2B78606A331;
-	Wed, 25 Nov 2026 16:44:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C6A4C606A32D;
+	Wed, 25 Nov 2026 16:44:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=uTB8tKHL
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 276771F0093E;
-	Wed, 25 Nov 2026 16:44:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=GggvLH8M
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0E5BA1F000C4;
+	Wed, 25 Nov 2026 16:44:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795625061;
-	bh=yimQGhoKVB2vjb4c9Uu6Rpv1CAx1LsILo+nPgnpFjis=;
+	s=korg; t=1795625064;
+	bh=X+OLY2iXAyhPrO5RNNQuz3aSwYvlBths6f5PMbVgyiw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=uTB8tKHLNLXoCg5YSIDUs7FcElA+bNgoAsx1MisCXxqMEH83cjxV976VPkRU+m0H6
-	 rHLd8NOOFhpEr4LMV9/mF1srd8TJHJ6hj79tnelJ1lruwztjqiQe7Gx6s6/sGcgqOJ
-	 kAqZUfDyCWsu2he6Y2XDgQzOaKl91sASVDKC+b8Y=
+	b=GggvLH8MgdZaf92WY721+Kf559xgmvDmxFLegr4qbo6NesI75t45AxBnZU74LQvb8
+	 mH7qADWgRIdrYXnym1LLbucExutMLHDACZuI/tGw4GaRYoVSnEyOpG02TrP1BQ6U5c
+	 5uDnw5LjSWQACh9roNsbYN/P0PVjXCOFQ6U5dKyQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pengpeng Hou <pengpeng@iscas.ac.cn>,
-	Mark Brown <broonie@kernel.org>,
+	Golla Nagendra <nagendra.golla@amd.com>,
+	Frank Li <Frank.Li@nxp.com>,
+	Vinod Koul <vkoul@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 394/816] ASoC: sta32x: make power restoration transactional
-Date: Wed, 25 Nov 2026 15:32:22 +0100
-Message-ID: <20261125143858.320306753@linuxfoundation.org>
+Subject: [PATCH 6.12 395/816] dmaengine: zynqmp_dma: Fix PM rollback on sw_desc_pool alloc failure
+Date: Wed, 25 Nov 2026 15:32:23 +0100
+Message-ID: <20261125143858.343097389@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143849.205329330@linuxfoundation.org>
 References: <20261125143849.205329330@linuxfoundation.org>
@@ -68,190 +69,56 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pengpeng Hou <pengpeng@iscas.ac.cn>
+From: Golla Nagendra <nagendra.golla@amd.com>
 
-[ Upstream commit 3e71dc4508bc84862dc3644e3b6a5b966bff22ad ]
+[ Upstream commit f2f44b952ea6e0c600e92ea21fcaa83cafeedf6e ]
 
-sta32x_set_bias_level() enables the codec supplies, restores the
-coefficient and register state, and then starts the watchdog. Register
-access errors in the mute and coefficient helpers and the cache replay
-are discarded, allowing DAPM to publish STANDBY for a partially restored
-codec.
+If sw_desc_pool allocation fails after pm_runtime_resume_and_get()
+succeeds in zynqmp_dma_alloc_chan_resources(), the error path returns
+without dropping the runtime PM reference.
 
-Propagate every operation in the local restore transaction, including
-the final standby-state write. Start the watchdog only after that write
-succeeds. On failure, hold reset, mark the cache dirty, disable the
-supplies and report a cleanup failure while preserving the primary
-error. The DAPM bias callback consumes the returned error independently
-of component resume handling.
+Route that failure path through err_pm so the runtime PM reference is
+balanced before returning the error.
 
-Fixes: 54dc6cabe684 ("ASoC: sta32x: preserve coefficient RAM")
-Signed-off-by: Pengpeng Hou <pengpeng@iscas.ac.cn>
-Link: https://patch.msgid.link/20260830141521.33246-1-pengpeng@iscas.ac.cn
-Signed-off-by: Mark Brown <broonie@kernel.org>
-[ sashal: Adapted the hunks to this tree's offsets and dropped the dapm context line, since the function has no dapm local here. ]
+Fixes: 8982d48af36d ("dmaengine: zynqmp_dma: Fix PM reference leak in zynqmp_dma_alloc_chan_resourc()")
+Signed-off-by: Golla Nagendra <nagendra.golla@amd.com>
+Reviewed-by: Frank Li <Frank.Li@nxp.com>
+Link: https://patch.msgid.link/20260814045616.1661199-2-nagendra.golla@amd.com
+Signed-off-by: Vinod Koul <vkoul@kernel.org>
+[ sashal: Kept this branch's older kcalloc() call instead of upstream's kzalloc_objs() context line, and applied the err_pm rollback change unchanged. ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/codecs/sta32x.c | 101 +++++++++++++++++++++++++++++---------
- 1 file changed, 77 insertions(+), 24 deletions(-)
+ drivers/dma/xilinx/zynqmp_dma.c | 10 ++++++++--
+ 1 file changed, 8 insertions(+), 2 deletions(-)
 
-diff --git a/sound/soc/codecs/sta32x.c b/sound/soc/codecs/sta32x.c
-index 122f832d90e05..5a4afd79fc0c7 100644
---- a/sound/soc/codecs/sta32x.c
-+++ b/sound/soc/codecs/sta32x.c
-@@ -345,27 +345,48 @@ static int sta32x_sync_coef_shadow(struct snd_soc_component *component)
- {
- 	struct sta32x_priv *sta32x = snd_soc_component_get_drvdata(component);
- 	unsigned int cfud;
--	int i;
-+	int i, ret;
+diff --git a/drivers/dma/xilinx/zynqmp_dma.c b/drivers/dma/xilinx/zynqmp_dma.c
+index 235c60e1e320e..594086b264941 100644
+--- a/drivers/dma/xilinx/zynqmp_dma.c
++++ b/drivers/dma/xilinx/zynqmp_dma.c
+@@ -484,8 +484,10 @@ static int zynqmp_dma_alloc_chan_resources(struct dma_chan *dchan)
  
- 	/* preserve reserved bits in STA32X_CFUD */
--	regmap_read(sta32x->regmap, STA32X_CFUD, &cfud);
-+	ret = regmap_read(sta32x->regmap, STA32X_CFUD, &cfud);
-+	if (ret)
-+		return ret;
-+
- 	cfud &= 0xf0;
+ 	chan->sw_desc_pool = kcalloc(ZYNQMP_DMA_NUM_DESCS, sizeof(*desc),
+ 				     GFP_KERNEL);
+-	if (!chan->sw_desc_pool)
+-		return -ENOMEM;
++	if (!chan->sw_desc_pool) {
++		ret = -ENOMEM;
++		goto err_pm;
++	}
  
- 	for (i = 0; i < STA32X_COEF_COUNT; i++) {
--		regmap_write(sta32x->regmap, STA32X_CFADDR2, i);
--		regmap_write(sta32x->regmap, STA32X_B1CF1,
--			     (sta32x->coef_shadow[i] >> 16) & 0xff);
--		regmap_write(sta32x->regmap, STA32X_B1CF2,
--			     (sta32x->coef_shadow[i] >> 8) & 0xff);
--		regmap_write(sta32x->regmap, STA32X_B1CF3,
--			     (sta32x->coef_shadow[i]) & 0xff);
-+		ret = regmap_write(sta32x->regmap, STA32X_CFADDR2, i);
-+		if (ret)
-+			return ret;
-+
-+		ret = regmap_write(sta32x->regmap, STA32X_B1CF1,
-+				   (sta32x->coef_shadow[i] >> 16) & 0xff);
-+		if (ret)
-+			return ret;
-+
-+		ret = regmap_write(sta32x->regmap, STA32X_B1CF2,
-+				   (sta32x->coef_shadow[i] >> 8) & 0xff);
-+		if (ret)
-+			return ret;
-+
-+		ret = regmap_write(sta32x->regmap, STA32X_B1CF3,
-+				   sta32x->coef_shadow[i] & 0xff);
-+		if (ret)
-+			return ret;
-+
- 		/*
- 		 * chip documentation does not say if the bits are
- 		 * self-clearing, so do it explicitly
- 		 */
--		regmap_write(sta32x->regmap, STA32X_CFUD, cfud);
--		regmap_write(sta32x->regmap, STA32X_CFUD, cfud | 0x01);
-+		ret = regmap_write(sta32x->regmap, STA32X_CFUD, cfud);
-+		if (ret)
-+			return ret;
-+
-+		ret = regmap_write(sta32x->regmap, STA32X_CFUD, cfud | 0x01);
-+		if (ret)
-+			return ret;
+ 	chan->idle = true;
+ 	chan->desc_free_cnt = ZYNQMP_DMA_NUM_DESCS;
+@@ -517,6 +519,10 @@ static int zynqmp_dma_alloc_chan_resources(struct dma_chan *dchan)
  	}
+ 
+ 	return ZYNQMP_DMA_NUM_DESCS;
 +
- 	return 0;
- }
- 
-@@ -373,15 +394,24 @@ static int sta32x_cache_sync(struct snd_soc_component *component)
- {
- 	struct sta32x_priv *sta32x = snd_soc_component_get_drvdata(component);
- 	unsigned int mute;
--	int rc;
-+	int restore_ret, ret;
- 
- 	/* mute during register sync */
--	regmap_read(sta32x->regmap, STA32X_MMUTE, &mute);
--	regmap_write(sta32x->regmap, STA32X_MMUTE, mute | STA32X_MMUTE_MMUTE);
--	sta32x_sync_coef_shadow(component);
--	rc = regcache_sync(sta32x->regmap);
--	regmap_write(sta32x->regmap, STA32X_MMUTE, mute);
--	return rc;
-+	ret = regmap_read(sta32x->regmap, STA32X_MMUTE, &mute);
-+	if (ret)
-+		return ret;
-+
-+	ret = regmap_write(sta32x->regmap, STA32X_MMUTE,
-+			   mute | STA32X_MMUTE_MMUTE);
-+	if (ret)
-+		return ret;
-+
-+	ret = sta32x_sync_coef_shadow(component);
-+	if (!ret)
-+		ret = regcache_sync(sta32x->regmap);
-+
-+	restore_ret = regmap_write(sta32x->regmap, STA32X_MMUTE, mute);
-+	return ret ?: restore_ret;
- }
- 
- /* work around ESD issue where sta32x resets and loses all configuration */
-@@ -797,8 +827,8 @@ static int sta32x_startup_sequence(struct sta32x_priv *sta32x)
- static int sta32x_set_bias_level(struct snd_soc_component *component,
- 				 enum snd_soc_bias_level level)
- {
--	int ret;
- 	struct sta32x_priv *sta32x = snd_soc_component_get_drvdata(component);
-+	int cleanup_ret, ret;
- 
- 	dev_dbg(component->dev, "level = %d\n", level);
- 	switch (level) {
-@@ -822,15 +852,28 @@ static int sta32x_set_bias_level(struct snd_soc_component *component,
- 				return ret;
- 			}
- 
--			sta32x_startup_sequence(sta32x);
--			sta32x_cache_sync(component);
-+			ret = sta32x_startup_sequence(sta32x);
-+			if (!ret)
-+				ret = sta32x_cache_sync(component);
-+			if (ret)
-+				goto restore_failed;
-+
-+			ret = regmap_update_bits(sta32x->regmap, STA32X_CONFF,
-+						 STA32X_CONFF_PWDN | STA32X_CONFF_EAPD,
-+						 0);
-+			if (ret)
-+				goto restore_failed;
-+
- 			sta32x_watchdog_start(sta32x);
-+			break;
- 		}
- 
- 		/* Power down */
--		regmap_update_bits(sta32x->regmap, STA32X_CONFF,
--				   STA32X_CONFF_PWDN | STA32X_CONFF_EAPD,
--				   0);
-+		ret = regmap_update_bits(sta32x->regmap, STA32X_CONFF,
-+					 STA32X_CONFF_PWDN | STA32X_CONFF_EAPD,
-+					 0);
-+		if (ret)
-+			return ret;
- 
- 		break;
- 
-@@ -848,6 +891,16 @@ static int sta32x_set_bias_level(struct snd_soc_component *component,
- 		break;
- 	}
- 	return 0;
-+
-+restore_failed:
-+	gpiod_set_value(sta32x->gpiod_nreset, 0);
-+	regcache_mark_dirty(sta32x->regmap);
-+	cleanup_ret = regulator_bulk_disable(ARRAY_SIZE(sta32x->supplies),
-+					     sta32x->supplies);
-+	if (cleanup_ret)
-+		dev_warn(component->dev, "Failed to disable supplies: %d\n",
-+			 cleanup_ret);
++err_pm:
++	pm_runtime_put_autosuspend(chan->dev);
 +	return ret;
  }
  
- static const struct snd_soc_dai_ops sta32x_dai_ops = {
+ /**
 -- 
 2.53.0
 
