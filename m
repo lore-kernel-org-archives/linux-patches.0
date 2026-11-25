@@ -1,51 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795623812;
-	b=TyqDyJYrkQhncNdJz9TCFm2UWhUerxeeqRTQ6pMAjsfuT82QVqQE4Go1f90IDJGREgZ7
-	 T/nIqrBfVj31rDrx4WO4+TOk44RxDR3OGFsEUMRzMX+pR4VDkavxNi7YWcJoNR1YMVy6Y
-	 seGavZj1bqyI9AGXE2ptPneVx4GfW/YPqPaBf8OANCoT8AaMJGP6eIUyOSYlCP+2nyv1I
-	 +BViZbfbo1CLb6QtgOOQMnhF3ekwd8XHvDuhGmJ1o0nliLWEAdeGOwUyB14BPs+updtBk
-	 OBGtO204r/shvY91c6HjBAOdwMTzASmO9VkefFRdfwK9qs+wadNLfqRrCrYuhemxe+Q==
+	t=1795623815;
+	b=xj8e4SbehUbn+ouTQzp9C4YfomaauqS52JKMU6vWY+hC0yOxKmeyCGsKXsg4TCQvOIVP
+	 MMbw+X+TkEE459gwuWxJAEjQF861Fy1AVSCbUfFbplptgoXtTpDlYJa5SvbB36FLO+nDV
+	 oW7F2tIonwwwTyb6DORHGNVUli7cpIBTI9Pc9VIy8t+xQIXiuGxHrd77ndOTic7JnIPwL
+	 TApZtsg4huFmWHpq0d0dzVc6T98Sk1EGZUzoWpSam02/guwY0vkj1/tHPSrdJDelcOhMW
+	 uyDGDa0lO5yJC14JqjEg8KgHoeWRnwoY0QA6XjnyX4KcuewkBu4DZxgfqJMbAB47y6Q==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795623812;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795623815;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=UDn24deRpVFJt+Cy8KDAsF3XDHXDebD5ClQRBmBWqN0=;
-	b=FktCN7d93KBELgq/WVf9D+4BYKlOQwFBD/fjltwWvEfAkAsIkb+USTd/hZsIZV9zhFI6
-	 QqbSpiGvpX36vpIzyvFCCp5aWSM8XZXm7naJ0gaDfNvOhCoU7t/lVNehvZaXrMn78Zkp5
-	 8jH/ZMUbL4CIhqC/1TXx7Bm0GsWZ8rRdBNqJa81v2LwwuQMbkph3nDbIg57ZokgMwgDPu
-	 fdKlkPYQTpPm9sHGmYu9xw9AqEOQniaKgduOhlzf+YQ1HMSYbDFK+YFJAc0pXlJQPUk2G
-	 YLUgcGGV1HBc44swPhz98jJb7mkyj/DKRVxK2xNNQsbTCgpzfqPurJalttwmlaj0eFQ==
+	bh=Dat6xJCuOGUBBc4rkmQNlYujYOnjXFSPZwVOjiAhz9A=;
+	b=YAtTNioikKzGEXGJjkmof8hu02mgAdp9k3J8hI210Ltxq8E4+9mMdscI+ktpiyEbhtqZ
+	 oRsmaZLXHjprNhgoHVBPGXFRACVtf63Tw4PT8LUlJkqrfERnwL0Tkyr0TEzVq6YlPpXfb
+	 U+rSBYisv6wrkfyqCnCNtk2zQ3efRhAxje6+nie7JFLSH6ikCNLx12j+mT0u52rWkPmbp
+	 rzodEXqbNd689kuQXzFQfnEz39Fx2l7IKndq+lgvwHHXiJwEg0g9SF8nbFfW5AbXN5llW
+	 suyZwfExTbfShrGpxxCkSzBvM5tAdamwZIQwY+VfiZ/Kz9rgdA5R2sE11TU342WV90w==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=qyb95Rhp;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=DkaHVQCd;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A2D0B606A31E;
-	Wed, 25 Nov 2026 16:23:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 94B27606A323;
+	Wed, 25 Nov 2026 16:23:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=qyb95Rhp
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 653061F000C6;
-	Wed, 25 Nov 2026 16:23:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=DkaHVQCd
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 99F0B1F000D2;
+	Wed, 25 Nov 2026 16:23:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795623811;
-	bh=UDn24deRpVFJt+Cy8KDAsF3XDHXDebD5ClQRBmBWqN0=;
+	s=korg; t=1795623815;
+	bh=Dat6xJCuOGUBBc4rkmQNlYujYOnjXFSPZwVOjiAhz9A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=qyb95RhpxIuuluQMonwSQ9K07Rj20mxUPcwP5lTFfPw9roFixwM/8bl9e9kyK7Goa
-	 VEuBLkoPsBnAL2739hboXvtVhUshwO0hZw1JT7E07HaW6R9ZZN/E5xjOhjS7ieB6zv
-	 fsTc3LKBRz1Lno35HZ+suE/Xwc0Njoti4fXr0HYE=
+	b=DkaHVQCdLlCg4oq+SGwbnBvG1G6Mzr6UaLuhWZ95g8P3v82S3qom8vV6o4Coh8gEA
+	 FuEjO984d5qG5vbMNsS3q1ZUDVPOoKf2205QN/vlypi0GCELRhnvjeT1LlwXXn89X3
+	 xHHZPbclRYFaX+ac61jYsawZhk5gQBzLPTtocn7c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hui Peng <benquike@gmail.com>,
+	Tristan Madani <tristan@talencesecurity.com>,
 	Johan Hovold <johan@kernel.org>
-Subject: [PATCH 6.18 933/990] USB: serial: garmin_gps: validate packet data length in nat_receive()
-Date: Wed, 25 Nov 2026 15:38:20 +0100
-Message-ID: <20261125143843.849474795@linuxfoundation.org>
+Subject: [PATCH 6.18 934/990] USB: serial: sierra: validate URB length in instat callback
+Date: Wed, 25 Nov 2026 15:38:21 +0100
+Message-ID: <20261125143843.871902175@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143822.072087159@linuxfoundation.org>
 References: <20261125143822.072087159@linuxfoundation.org>
@@ -67,102 +67,60 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hui Peng <benquike@gmail.com>
+From: Tristan Madani <tristan@talencesecurity.com>
 
-commit ca783a2d55b3361493917ad4a3573715ba902503 upstream.
+commit a3d43b39032cc5565a5693a10c581844342372cd upstream.
 
-In nat_receive() (called from garmin_write() when userspace writes to
-/dev/ttyUSBn in MODE_NATIVE mode), while garmin_data_p->insize is less
-than GARMIN_PKTHDR_LENGTH (12), the loop copies up to 12 bytes into
-garmin_data_p->inbuffer. Once garmin_data_p->insize reaches
-GARMIN_PKTHDR_LENGTH, nat_receive() computes the total packet size as:
+sierra_instat_callback() reads request fields and one byte past the
+usb_ctrlrequest header without first checking that urb->actual_length
+is large enough.  A short USB interrupt transfer could cause an
+out-of-bounds read.
 
-  len = GARMIN_PKTHDR_LENGTH + getDataLength(garmin_data_p->inbuffer);
+Add two length checks matching the pattern already present in the
+option driver (option_instat_callback): one for the request header
+before accessing bRequestType, and one for the line-state data byte
+inside the serial-state notification handler.  Use dev_err() since
+failing these checks causes the interrupt URB not to be resubmitted.
 
-Because getDataLength() returns a signed int from __le32_to_cpup(), a
-12-byte header with a negative 32-bit length field (such as 0xfffffff5,
-i.e., -11) causes len to underflow to a small positive value (12 + (-11)
-= 1) without any bounds check at that point. Then garmin_data_p->insize
->= len (12 >= 1) evaluates to true and nat_receive() calls
-garmin_write_bulk(port, inbuffer, 1, 0), which allocates a 1-byte slab
-buffer via kmemdup() and immediately reads 4 bytes from it in
-getLayerId(buffer) (and again in garmin_write_bulk_callback() when the
-URB completes):
-
-  BUG: KASAN: slab-out-of-bounds in garmin_write_bulk.constprop.0+0x3eb/0x500
-  Read of size 4 at addr ffff888002cc0ba0 by task init/1
-  Call Trace:
-   <TASK>
-   dump_stack_lvl+0x70/0xa0
-   print_report+0x153/0x4c6
-   kasan_report+0xf1/0x120
-   garmin_write_bulk.constprop.0+0x3eb/0x500
-   garmin_write+0x60f/0x1450
-   serial_write+0x123/0x200
-   n_tty_write+0x8ea/0xeb0
-   file_tty_write.isra.0+0x44f/0x7a0
-   vfs_write+0x671/0xd20
-
-Validate the unsigned 32-bit data length (dlen >= GPS_IN_BUFSIZ -
-GARMIN_PKTHDR_LENGTH, matching the existing len >= GPS_IN_BUFSIZ bound)
-in nat_receive() as soon as the 12-byte header is present, resetting
-insize and returning -EINVPKT on invalid lengths so garmin_write_bulk()
-is only ever called with a full valid packet header (12 <= len <
-GPS_IN_BUFSIZ).
-
-Tested in QEMU against Linux 7.3.0-rc3 by emulating a Garmin USB GPS
-device (091e:0003) via dummy_hcd + raw-gadget, switching /dev/ttyUSB0
-to MODE_NATIVE via PRIV_PKTID_SET_MODE, and writing a 12-byte native
-packet with data length 0xfffffff5: on the unfixed kernel this triggers
-KASAN slab-out-of-bounds reads in garmin_write_bulk() and
-garmin_write_bulk_callback(), whereas on the fixed kernel nat_receive()
-rejects the packet with -EINVPKT and 0 KASAN faults.
-
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Fixes: 033a3fb980b041 ("USB: Sierra Wireless driver update")
 Cc: stable@vger.kernel.org
-Assisted-by: LLM
-Signed-off-by: Hui Peng <benquike@gmail.com>
-[ johan: move comment and dev_dbg(); add comment about redundant check ]
+Signed-off-by: Tristan Madani <tristan@talencesecurity.com>
+[ johan: use sizeof(*req_pkt) consistently ]
 Signed-off-by: Johan Hovold <johan@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/serial/garmin_gps.c |   19 ++++++++++++-------
- 1 file changed, 12 insertions(+), 7 deletions(-)
+ drivers/usb/serial/sierra.c |   18 +++++++++++++++---
+ 1 file changed, 15 insertions(+), 3 deletions(-)
 
---- a/drivers/usb/serial/garmin_gps.c
-+++ b/drivers/usb/serial/garmin_gps.c
-@@ -749,11 +749,7 @@ static int nat_receive(struct garmin_dat
- 			len = GARMIN_PKTHDR_LENGTH;
- 
- 		if (len >= GPS_IN_BUFSIZ) {
--			/* seems to be an invalid packet, ignore rest
--			   of input */
--			dev_dbg(&garmin_data_p->port->dev,
--				"%s - packet size too large: %d\n",
--				__func__, len);
-+			/* should never end up here given the dlen check below */
- 			garmin_data_p->insize = 0;
- 			count = 0;
- 			result = -EINVPKT;
-@@ -772,8 +768,17 @@ static int nat_receive(struct garmin_dat
- 
- 		/* do we have a complete packet ? */
- 		if (garmin_data_p->insize >= GARMIN_PKTHDR_LENGTH) {
--			len = GARMIN_PKTHDR_LENGTH+
--			   getDataLength(garmin_data_p->inbuffer);
-+			u32 dlen = getDataLength(garmin_data_p->inbuffer);
+--- a/drivers/usb/serial/sierra.c
++++ b/drivers/usb/serial/sierra.c
+@@ -575,12 +575,24 @@ static void sierra_instat_callback(struc
+ 				__func__);
+ 			return;
+ 		}
++		if (urb->actual_length < sizeof(*req_pkt)) {
++			dev_err(&port->dev, "%s: short transfer\n",
++				__func__);
++			return;
++		}
+ 		if ((req_pkt->bRequestType == 0xA1) &&
+ 				(req_pkt->bRequest == 0x20)) {
+ 			int old_dcd_state;
+-			unsigned char signals = *((unsigned char *)
+-					urb->transfer_buffer +
+-					sizeof(struct usb_ctrlrequest));
++			unsigned char signals;
 +
-+			if (dlen >= GPS_IN_BUFSIZ - GARMIN_PKTHDR_LENGTH) {
-+				/* invalid packet, ignore rest of input */
-+				dev_dbg(&garmin_data_p->port->dev, "%s - invalid length: %u\n",
-+					__func__, dlen);
-+				garmin_data_p->insize = 0;
-+				result = -EINVPKT;
-+				break;
++			if (urb->actual_length < sizeof(*req_pkt) + 1) {
++				dev_err(&port->dev,
++					"%s: short interrupt transfer\n",
++					__func__);
++				return;
 +			}
-+			len = GARMIN_PKTHDR_LENGTH + dlen;
- 			if (garmin_data_p->insize >= len) {
- 				garmin_write_bulk(garmin_data_p->port,
- 						   garmin_data_p->inbuffer,
++			signals = *((unsigned char *)urb->transfer_buffer +
++					sizeof(*req_pkt));
+ 
+ 			dev_dbg(&port->dev, "%s: signal x%x\n", __func__,
+ 				signals);
 
 
