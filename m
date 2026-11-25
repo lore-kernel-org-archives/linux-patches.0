@@ -1,54 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795622171;
-	b=A+cDU1KJgFIRw5mnQRBIX2flAAdl7iTJaWTKrZXOzCJuCrnf+l/QQ4175r0xnOig73LT
-	 ll1G+kSeM+Anxmyea6Mv32CZTx5mJHnYsjdDfLHvFlCf6Ym13DRAw8BLokTBVCLQhUao9
-	 zW/tbUTgXTapuBf+rcFdW2L0z2XWeOffErAhxFk+Uig+H7T8RTYsladdfYqmTRHmQRsin
-	 OtVF694hgjqX6QJlVDQhe9ut6qvnMvyDlxx/4SiPqiznsJS0ySIi3lf3zooXsn9dTPfZX
-	 NBXIPlshPJBL7sRyveRUaZLY8xwXdWtrJkf/n9G+ITQMW/qTStG/xqd8gIt6zu4U0Cw==
+	t=1795622174;
+	b=IEroRyXQKgxgaVgQRgPAb4Tv9GNusIXOMu0aqKcnbfDbJWdocDWjmve6NDCOJHYZx3mk
+	 tJt8b7JktnlahqYr7XwZeWOrt7JAVxJXzog0mGZtnPfcxGSSil9o4hflO19Pd5cfl7GOB
+	 QGP5aldmGF87iRDv1cdNb7inPRYB7kAAPpEuzZrPN7csSlaQn5dTGfnguWaTv7N5zVeky
+	 zqysZJiK+SICDD9+de9q0EtSzYg+D7JDGqAmaWBwWoDOuaXIMoSPgdm8cWroADbfYiVNY
+	 lSCWV//PUidGMoM03Fbnk8rl/FK5WzNnJ2x+uD0sCZANZZhT5JIvERyUmFnYN4k6NBQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795622171;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795622174;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=iJZzGDPA8Ptm2mq6fhxAfD6qQ7vnv1zZG3ZYdm38qXg=;
-	b=reF0ew7bY6Hz1v/vC2sVSQscdp7RnLGVdE4K1aLtnYIg5UDzh2x8TKsgLBqRSsklO18r
-	 xplmVippl0khyOnNuOA99Cpm1UAK+EqMTOs2X03E3UgfD15Wy69DcPdaAPeN/sd9cz20R
-	 XHCTOgzt+XBXLHeOjrbRpa+w2QE1xYMeOO9r0muaHc6w9fAHKBVGH26kwGAHP2dc/9rXK
-	 ue6eU/ppSaNVIqeDqRL3oGea6CBvRvfayuvbA6mT4s1UMfaZr4inzgAfGOaP7egwN+EBY
-	 zs6bXO6oeRFegGAqUBWVPdENHC4LjQCo+LXTSCYx1GQnBqRcd4E5ehfB293v8ZnJLAQ==
+	bh=ZDETL57rG/wGScxR9myzZTcdysg6GB7Lx4FX7BieyT8=;
+	b=ztF+NazlCaioT0K+G5+48fS+T5wVsMjAWaJyaO6Y31FumpMKh7FuJjjUJi6+BpBnF0fo
+	 PZGrQF79K+81BaHR5KNff5GY2e0xSPzsps+qRHLkdBlOvtNt9ZA8TTuUFclJUmpHTf0t5
+	 tVTHCanG7GCXqeynbzKLzamJtN6xVz8ajxasWlR5KD6538pbnmZsaok7WvysZfy+Y0+r6
+	 rCp3bg6sCcHSUYZdHpR3KPKxsqEp7EepIVRXfj5DAOSfK8L6ddsWfhdwbPT+xdilEICbf
+	 A5u3HEhZXiooSpb/qsXdSkhSKbMjoeOo3iF70m7iVXwwtye/fu3g0VGClzuQU3f6DMg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Udr5lRe7;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=S4mNv2ox;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 17A47606A321;
-	Wed, 25 Nov 2026 15:56:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 61388606A335;
+	Wed, 25 Nov 2026 15:56:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Udr5lRe7
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DBFB61F000D0;
-	Wed, 25 Nov 2026 15:56:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=S4mNv2ox
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3CF901F000D2;
+	Wed, 25 Nov 2026 15:56:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795622170;
-	bh=iJZzGDPA8Ptm2mq6fhxAfD6qQ7vnv1zZG3ZYdm38qXg=;
+	s=korg; t=1795622173;
+	bh=ZDETL57rG/wGScxR9myzZTcdysg6GB7Lx4FX7BieyT8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Udr5lRe7XULTfctRUpIHlJ1815hqPf+y5GSPrZqe9BWE+JQ9VRmTG6JmOtm7oeu1i
-	 bk75TCeMitSDF/oVCe9j+uYDWfViQgJJ8415Stk5x7ol6R5Aw7uliSr9oWZh0pZDyo
-	 AGKlTOoH6+0Fy7wUt3Ak1LvMIdExIciUqFN4dR/s=
+	b=S4mNv2oxnyehFE8YxQbXneg1dtTut7NYm91f+m9W36es27TN5QsUHvYmpjxYdQY6b
+	 6SeOSTRqvQXHrTL4SoBtyHOBSf3TOvHJge5zZPHgQCvsvmcQni0op7f9cXV5O35I6B
+	 pCMmPdY47/g1ETnsgO0cxms6fgZFRODuchaNyl5o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kyle Zeng <kylebot@openai.com>,
-	Eric Dumazet <edumazet@kernel.org>,
-	Willem de Bruijn <willemb@google.com>,
-	Dave Miller <davem@davem-thinkpadp1gen8.ibmlond.csb>,
+	Pengpeng Hou <hppiscas@163.com>,
+	Luca Ceresoli <luca.ceresoli@bootlin.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 444/990] udp: check frag_list IP family before using skb_segment_list()
-Date: Wed, 25 Nov 2026 15:30:11 +0100
-Message-ID: <20261125143832.493412842@linuxfoundation.org>
+Subject: [PATCH 6.18 445/990] drm/bridge: sii902x: validate I2S data lane values
+Date: Wed, 25 Nov 2026 15:30:12 +0100
+Message-ID: <20261125143832.516918500@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143822.072087159@linuxfoundation.org>
 References: <20261125143822.072087159@linuxfoundation.org>
@@ -70,61 +68,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kyle Zeng <kylebot@openai.com>
+From: Pengpeng Hou <hppiscas@163.com>
 
-[ Upstream commit 22b7cb932c6a0f7566d41072be6956cb6c8af4e1 ]
+[ Upstream commit 444b7116e7ef1fdb5f7db3bc1f74b20098d062d4 ]
 
-UDP fraglist GRO uses SKB_GSO_UDP_L4 for both IPv4 and IPv6.
+The sil,i2s-data-lanes property reader bounds the number of entries, but
+does not bound each entry's value. Those values index the four-entry
+i2s_lane_id table when the audio FIFO sequence is built.
 
-__udp_gso_segment() reuses the frag_list skbs when the geometry of
-the head skb was not modified. skb_segment_list() keeps the network
-header of each frag_list skb as it was at GRO time and only adjusts
-the transport header offset.
+Reject unsupported lane values before indexing that table. Report the
+property name and invalid value with dev_err_probe() so the diagnostic
+identifies the faulty configuration.
 
-Nothing guarantees that the head skb still has the IP family of the
-frag_list skbs: helpers like skb_mpls_pop() let the caller choose
-the new protocol. In that case __udpv6_gso_segment_list_csum()
-handles the 20 byte IPv4 header of each frag_list skb as a struct
-ipv6hdr, and can write IPv6 addresses beyond its linear part.
+The issue was found by our static-analysis tool.
 
-Check the IP version of the first frag_list skb. All skbs in the
-list belong to the same flow, so they share the same IP family.
-Use the skb_segment() fallback on a mismatch. Regular fraglist GRO
-traffic keeps the fast path.
-
-Fixes: b936a9b8d4a5 ("net: ipv6: fix UDPv6 GSO segmentation with NAT")
-Fixes: c3df39ac9b0e ("udp: ipv4: manipulate network header of NATed UDP GRO fraglist")
-Signed-off-by: Kyle Zeng <kylebot@openai.com>
-[edumazet: simplified the fix, rewrote the comment and the changelog]
-Signed-off-by: Eric Dumazet <edumazet@kernel.org>
-Reviewed-by: Willem de Bruijn <willemb@google.com>
-Signed-off-by: Dave Miller <davem@davem-thinkpadp1gen8.ibmlond.csb>
+Fixes: ff5781634c41 ("drm/bridge: sii902x: Implement HDMI audio support")
+Assisted-by: gpt 5
+Signed-off-by: Pengpeng Hou <hppiscas@163.com>
+Reviewed-by: Luca Ceresoli <luca.ceresoli@bootlin.com>
+Link: https://patch.msgid.link/20260920034833.18874-1-hppiscas@163.com
+Signed-off-by: Luca Ceresoli <luca.ceresoli@bootlin.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv4/udp_offload.c | 9 +++++++--
- 1 file changed, 7 insertions(+), 2 deletions(-)
+ drivers/gpu/drm/bridge/sii902x.c | 8 +++++++-
+ 1 file changed, 7 insertions(+), 1 deletion(-)
 
-diff --git a/net/ipv4/udp_offload.c b/net/ipv4/udp_offload.c
-index 4f7ae02df8d3a..2fd0d7c72b45e 100644
---- a/net/ipv4/udp_offload.c
-+++ b/net/ipv4/udp_offload.c
-@@ -515,9 +515,14 @@ struct sk_buff *__udp_gso_segment(struct sk_buff *gso_skb,
+diff --git a/drivers/gpu/drm/bridge/sii902x.c b/drivers/gpu/drm/bridge/sii902x.c
+index 1f0aba28ad1e1..9c1566263ed95 100644
+--- a/drivers/gpu/drm/bridge/sii902x.c
++++ b/drivers/gpu/drm/bridge/sii902x.c
+@@ -891,9 +891,15 @@ static int sii902x_audio_codec_init(struct sii902x *sii902x,
  	}
+ 	codec_data.max_i2s_channels = 2 * num_lanes;
  
- 	if (skb_shinfo(gso_skb)->gso_type & SKB_GSO_FRAGLIST) {
--		 /* Detect modified geometry and pass those to skb_segment. */
-+		/* Detect modified geometry and pass those to skb_segment.
-+		 * SKB_GSO_UDP_L4 is used by both IPv4 and IPv6: also make sure
-+		 * the frag_list skbs still have the IP family we segment for,
-+		 * as their network headers are not rebuilt.
-+		 */
- 		if ((skb_pagelen(gso_skb) - sizeof(*uh) == skb_shinfo(gso_skb)->gso_size) &&
--		    !(skb_shinfo(gso_skb)->gso_type & SKB_GSO_DODGY))
-+		    !(skb_shinfo(gso_skb)->gso_type & SKB_GSO_DODGY) &&
-+		    ip_hdr(skb_shinfo(gso_skb)->frag_list)->version == (is_ipv6 ? 6 : 4))
- 			return __udp_gso_segment_list(gso_skb, features, is_ipv6);
+-	for (i = 0; i < num_lanes; i++)
++	for (i = 0; i < num_lanes; i++) {
++		if (lanes[i] >= ARRAY_SIZE(i2s_lane_id))
++			return dev_err_probe(dev, -EINVAL,
++					     "invalid sil,i2s-data-lanes value %u\n",
++					     lanes[i]);
++
+ 		sii902x->audio.i2s_fifo_sequence[i] |= audio_fifo_id[i] |
+ 			i2s_lane_id[lanes[i]] |	SII902X_TPI_I2S_FIFO_ENABLE;
++	}
  
- 		ret = __skb_linearize(gso_skb);
+ 	sii902x->audio.mclk = devm_clk_get_optional(dev, "mclk");
+ 	if (IS_ERR(sii902x->audio.mclk)) {
 -- 
 2.53.0
 
