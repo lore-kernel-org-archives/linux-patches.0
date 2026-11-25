@@ -1,51 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795625092;
-	b=lGYlmmAsNnRaBu3w7UtFOuNEzVagPTDEOoDFrRQu36Ex3/GzMcH1FSuDiTP/Q02nepoI
-	 FXt1yIlmqKUEQdPYhty9T4TmYLUL0yyQXsylSn81oGaqh+sJJ4rnxMfrPpDqrQDBEuw/w
-	 eBqnFLAzoDuEM5xFdlAPKLd331VdEIezq3OF5rXmOAMS/CbihiKQOUF84JVxBfb+txGjC
-	 7pv6m/m9ryJkHMOF8MUu5MiOurE0d9drZaW1dMzx/1dXqyUURMmKZvF0OIaWbnyNxrfJd
-	 DBWv/C6PkGczjD3Qd07fBf7M3w73MlXihlRSdN5+wHGSyzQkU8x4PPwq8g2OXipAjkw==
+	t=1795625095;
+	b=YsxiE9OHypXF4LgEpKJenMQ6cD6tqnM7XLnClhQz0aeQy083fVPHWLmHGZcPGrYt3CLs
+	 6dAsYLZJxxnurmyV6P0hh0ul17sbscne4Qx/RHaFt7TLTLYAbt/M4a9OtunJOSwmjlFTD
+	 zdE9jeoq9PUfq7Js08d4JRRtWoZOPnf7uy7CtV87TbGvaeHi0M4Js34iGK3ijA173FVsX
+	 qQ7mXjErqKg+NfQQdCDfuNbHZkbjcYKGbdNH+xi+KRbWjVJ55PkGZdJwMsB37jQkmOxSn
+	 L8mV2Q4OvFs4fuSMzBA5KrNrX8C1Tp9o+ps7u3pTAU+GO3LjfkvDi0czFFhW8O54p/w==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795625092;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795625095;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=qt0uUcXCpifBr1Qr2uuOjutWPZbMj1z9Vx/cbqgXCZU=;
-	b=ItcctUQlMqIe0UDkd9KlSOLDQsw09Gs757ZvqBCxL6KNL/VvYXXZyRAQi9wYtTOg08I0
-	 lqts+PEuPFcVmX1gZf4UaWuXBSb2ZSxhkaSN7Mi5DIUtEOPKcX4ScGUyAWYQqTjreq5ZN
-	 k10JUOz5tba197plee+a7qKzOrfNP6UgMC/laCT+RiE3GfX3i+TuqUrLqvDDQAA7t6aqe
-	 7cunedpiBRH1cc4VB+UoIOhkm1IwUTefHi+hk7w6RJ+wo1PZTeYsxAdZjO1F2QRtxsnoX
-	 gb3VqovzfAaij5/45Vipv91p6e5/JtK2x6aerujeCKLgsudSERe7nwOg1hxz0jzz2tw==
+	bh=hSQSrstuLfcsHvoDBo3wCi7c7n6I/PfNCsuvQEScw+8=;
+	b=xqYtBZkYvSolI926NTgUsVVlHyxZuSVqpLHuFR29AB85aGkqumTnWY9ZhUuv6IRDCLCJ
+	 S6bR2wP//VlazVXvugnDCvtw15GCTlgqwiF/+qNHCZAxIqIIMDuRsHP3b+cEQLvfqifvE
+	 KXbvVAkvz46RUmdrqP7XgUYsjtHGXQ7VDWClQR048m3tEIgcW4UHhN9GTg8VtgjItyBKt
+	 nKEzBJfi3h6efZdyAFRn3gEA7kWHoidTlwZpuBRVl49K1FF82wo8+Sga9J5CWp/J5PSH0
+	 XbjxFTZoMvNwhOIU3v054bmNwJrDUlcimzfZrUz+NfscbDU3SlWkhTgQEzfoI0djJEw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=XB1pb+vJ;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="t/9cvXRY";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 64AD3606A32D;
-	Wed, 25 Nov 2026 16:44:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A9D0A606A321;
+	Wed, 25 Nov 2026 16:44:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=XB1pb+vJ
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ABB291F000D8;
-	Wed, 25 Nov 2026 16:44:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=t/9cvXRY
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 065111F000C4;
+	Wed, 25 Nov 2026 16:44:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795625092;
-	bh=qt0uUcXCpifBr1Qr2uuOjutWPZbMj1z9Vx/cbqgXCZU=;
+	s=korg; t=1795625095;
+	bh=hSQSrstuLfcsHvoDBo3wCi7c7n6I/PfNCsuvQEScw+8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=XB1pb+vJgxQbeviC/pHgKUR9kspJ+jGHjediTTwNafVPB+9vJGqZ9PSO9lqueL0fZ
-	 iXMehYhSx71A3/FDE1wV33ItWCN8wYW7gPf3DcsLWBHzu/9mVLAOl9zw28mmMhYMA8
-	 fNlE/DlROKX8MD68FsMVpxsgZDply0Bn1GuJso4A=
+	b=t/9cvXRYeBkBKnLitXp6bGY9ujqY9gtgnaj8H7B3CyTvUGNsIw7Z4CUHPTL63djlm
+	 mQEudjl0sTgl7KOGgnV2GUxYSfuhgYbHLA+V73GqnV1A6MlxnCJex7iPXu0mrGC8tK
+	 POuywfQcoY2ez2wC8HmQqki7MiJTlhw5VToYWujU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+	Pengpeng Hou <pengpeng@iscas.ac.cn>,
+	Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>,
+	Vinod Koul <vkoul@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 403/816] ACPI: glue: Rearrange acpi_bind_one() to avoid breakage
-Date: Wed, 25 Nov 2026 15:32:31 +0100
-Message-ID: <20261125143858.525921911@linuxfoundation.org>
+Subject: [PATCH 6.12 404/816] phy: samsung: usbdrd: propagate GS101 PIPE3 lock failures
+Date: Wed, 25 Nov 2026 15:32:32 +0100
+Message-ID: <20261125143858.548434299@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143849.205329330@linuxfoundation.org>
 References: <20261125143849.205329330@linuxfoundation.org>
@@ -67,135 +69,204 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+From: Pengpeng Hou <pengpeng@iscas.ac.cn>
 
-[ Upstream commit fcfb2b562115632e0a60a0928dca495f98eb335c ]
+[ Upstream commit 2ef1e78ef7223eb16d9cf20814a1b2873456f671 ]
 
-Rearange the code in acpi_bind_one() to avoid situations in which the
-existing ACPI companion of the given device would be replaced with NULL
-due to a memory allocation error or because somebody tries to bind a
-physical device with an ACPI companion to a different ACPI device
-erroneously.
+The GS101 PIPE3 initialization checks the PMA PLL lock and then checks
+the CDR lock. The PLL helper returns an error, but the GS101 PIPE3 init
+path dropped that result. The CDR helper only logged a timeout. PHY
+initialization could therefore still return success after either the PLL
+or the selected receive lane had not locked.
 
-Fixes: 7b1998116bbb ("ACPI / driver core: Store an ACPI device pointer in struct acpi_dev_node")
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
-[ rjw: Merged two conditionals to avoid redundant check ]
-Link: https://patch.msgid.link/3465482.44csPzL39Z@rafael.j.wysocki
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
-[ sashal: Adapted the context to this tree's kzalloc(sizeof(*physical_node), GFP_KERNEL) in place of kzalloc_obj(*physical_node), including the re-added allocation after the list walk. ]
+Make the in-file SoC-specific phy_init hook return an int so helpers
+with real failure results can propagate them through the existing PHY
+init paths. Keep the register-only helpers returning success and use the
+new return path to report the GS101 CDR wait failure. Other SoC helper
+paths keep their previous success behavior.
+
+Fixes: 32267c29bc7d ("phy: exynos5-usbdrd: support Exynos USBDRD 3.1 combo phy (HS & SS)")
+Signed-off-by: Pengpeng Hou <pengpeng@iscas.ac.cn>
+Reviewed-by: Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>
+Link: https://patch.msgid.link/20260623135349.42739-1-pengpeng@iscas.ac.cn
+Signed-off-by: Vinod Koul <vkoul@kernel.org>
+[ sashal: Dropped the exynos7870, exynos2200 and exynosautov920 phy_init conversions (SoCs not present), and adapted the CDR helper and exynos850 phy_init to the older code without phy_mutex or scoped_guard. ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/acpi/glue.c | 58 +++++++++++++++++++--------------------------
- 1 file changed, 24 insertions(+), 34 deletions(-)
+ drivers/phy/samsung/phy-exynos5-usbdrd.c | 51 +++++++++++++++++-------
+ 1 file changed, 37 insertions(+), 14 deletions(-)
 
-diff --git a/drivers/acpi/glue.c b/drivers/acpi/glue.c
-index e2a40847d24b6..f915a7c0e7cca 100644
---- a/drivers/acpi/glue.c
-+++ b/drivers/acpi/glue.c
-@@ -243,31 +243,25 @@ static void acpi_physnode_link_name(char *buf, unsigned int node_id)
- int acpi_bind_one(struct device *dev, struct acpi_device *acpi_dev)
- {
- 	struct acpi_device_physical_node *physical_node, *pn;
-+	struct acpi_device *comp_dev = ACPI_COMPANION(dev);
- 	char physical_node_name[PHYSICAL_NODE_NAME_SIZE];
- 	struct list_head *physnode_list;
- 	unsigned int node_id;
- 	int retval = -EINVAL;
+diff --git a/drivers/phy/samsung/phy-exynos5-usbdrd.c b/drivers/phy/samsung/phy-exynos5-usbdrd.c
+index 28d02ae60cc14..ad4a7dfa1ab32 100644
+--- a/drivers/phy/samsung/phy-exynos5-usbdrd.c
++++ b/drivers/phy/samsung/phy-exynos5-usbdrd.c
+@@ -355,7 +355,7 @@ struct exynos5_usbdrd_phy;
+ struct exynos5_usbdrd_phy_config {
+ 	u32 id;
+ 	void (*phy_isol)(struct phy_usb_instance *inst, bool isolate);
+-	void (*phy_init)(struct exynos5_usbdrd_phy *phy_drd);
++	int (*phy_init)(struct exynos5_usbdrd_phy *phy_drd);
+ 	unsigned int (*set_refclk)(struct phy_usb_instance *inst);
+ };
  
--	if (has_acpi_companion(dev)) {
--		if (acpi_dev) {
--			dev_warn(dev, "ACPI companion already set\n");
-+	if (!acpi_dev) {
-+		if (!comp_dev)
- 			return -EINVAL;
--		} else {
--			acpi_dev = ACPI_COMPANION(dev);
--		}
--	}
--	if (!acpi_dev)
--		return -EINVAL;
- 
--	acpi_dev_get(acpi_dev);
--	get_device(dev);
--	physical_node = kzalloc(sizeof(*physical_node), GFP_KERNEL);
--	if (!physical_node) {
--		retval = -ENOMEM;
--		goto err;
-+		/* If the companion has been set upfront, pick it up. */
-+		acpi_dev = comp_dev;
-+	} else if (comp_dev && acpi_dev != comp_dev) {
-+		dev_warn(dev, "ACPI companion already set to %s which is not %s\n",
-+			 acpi_dev_name(comp_dev), acpi_dev_name(acpi_dev));
-+		return -EEXIST;
+@@ -579,7 +579,7 @@ exynos5_usbdrd_apply_phy_tunes(struct exynos5_usbdrd_phy *phy_drd,
  	}
- 
--	mutex_lock(&acpi_dev->physical_node_lock);
-+	guard(mutex)(&acpi_dev->physical_node_lock);
- 
- 	/*
- 	 * Keep the list sorted by node_id so that the IDs of removed nodes can
-@@ -278,15 +272,12 @@ int acpi_bind_one(struct device *dev, struct acpi_device *acpi_dev)
- 	list_for_each_entry(pn, &acpi_dev->physical_node_list, node) {
- 		/* Sanity check. */
- 		if (pn->dev == dev) {
--			mutex_unlock(&acpi_dev->physical_node_lock);
--
--			dev_warn(dev, "Already associated with ACPI node\n");
--			kfree(physical_node);
--			if (ACPI_COMPANION(dev) != acpi_dev)
--				goto err;
--
--			put_device(dev);
--			acpi_dev_put(acpi_dev);
-+			if (!comp_dev) {
-+				/* Really unexpected. */
-+				ACPI_COMPANION_SET(dev, acpi_dev);
-+				dev_warn(&acpi_dev->dev,
-+					 "Physical device list corruption fixed up\n");
-+			}
- 			return 0;
- 		}
- 		if (pn->node_id == node_id) {
-@@ -295,12 +286,19 @@ int acpi_bind_one(struct device *dev, struct acpi_device *acpi_dev)
- 		}
- 	}
- 
-+	physical_node = kzalloc(sizeof(*physical_node), GFP_KERNEL);
-+	if (!physical_node)
-+		return -ENOMEM;
-+
-+	acpi_dev_get(acpi_dev);
-+	get_device(dev);
-+
- 	physical_node->node_id = node_id;
- 	physical_node->dev = dev;
- 	list_add(&physical_node->node, physnode_list);
- 	acpi_dev->physical_node_count++;
- 
--	if (!has_acpi_companion(dev))
-+	if (!comp_dev)
- 		ACPI_COMPANION_SET(dev, acpi_dev);
- 
- 	acpi_physnode_link_name(physical_node_name, node_id);
-@@ -316,18 +314,10 @@ int acpi_bind_one(struct device *dev, struct acpi_device *acpi_dev)
- 		dev_err(dev, "Failed to create link firmware_node (%d)\n",
- 			retval);
- 
--	mutex_unlock(&acpi_dev->physical_node_lock);
--
- 	if (acpi_dev->wakeup.flags.valid)
- 		device_set_wakeup_capable(dev, true);
- 
- 	return 0;
--
-- err:
--	ACPI_COMPANION_SET(dev, NULL);
--	put_device(dev);
--	acpi_dev_put(acpi_dev);
--	return retval;
  }
- EXPORT_SYMBOL_GPL(acpi_bind_one);
  
+-static void exynos5_usbdrd_pipe3_init(struct exynos5_usbdrd_phy *phy_drd)
++static int exynos5_usbdrd_pipe3_init(struct exynos5_usbdrd_phy *phy_drd)
+ {
+ 	u32 reg;
+ 
+@@ -592,6 +592,8 @@ static void exynos5_usbdrd_pipe3_init(struct exynos5_usbdrd_phy *phy_drd)
+ 	reg = readl(phy_drd->reg_phy + EXYNOS5_DRD_PHYTEST);
+ 	reg &= ~PHYTEST_POWERDOWN_SSP;
+ 	writel(reg, phy_drd->reg_phy + EXYNOS5_DRD_PHYTEST);
++
++	return 0;
+ }
+ 
+ static void
+@@ -686,7 +688,7 @@ exynos5_usbdrd_usbdp_g2_v4_pma_check_pll_lock(struct exynos5_usbdrd_phy *phy_drd
+ 	return err;
+ }
+ 
+-static void
++static int
+ exynos5_usbdrd_usbdp_g2_v4_pma_check_cdr_lock(struct exynos5_usbdrd_phy *phy_drd)
+ {
+ 	static const unsigned int timeout_us = 40000;
+@@ -703,7 +705,7 @@ exynos5_usbdrd_usbdp_g2_v4_pma_check_cdr_lock(struct exynos5_usbdrd_phy *phy_drd
+ 			phy_drd->reg_pma + EXYNOS9_PMA_USBDP_TRSV_REG03C3,
+ 			reg, (reg & locked) == locked, sleep_us, timeout_us);
+ 	if (!err)
+-		return;
++		return 0;
+ 
+ 	dev_err(phy_drd->dev,
+ 		"timed out waiting for CDR lock (l0): %#.8x, retrying\n", reg);
+@@ -715,9 +717,11 @@ exynos5_usbdrd_usbdp_g2_v4_pma_check_cdr_lock(struct exynos5_usbdrd_phy *phy_drd
+ 	if (err)
+ 		dev_err(phy_drd->dev,
+ 			"timed out waiting for CDR lock (l2): %#.8x\n", reg);
++
++	return err;
+ }
+ 
+-static void exynos5_usbdrd_utmi_init(struct exynos5_usbdrd_phy *phy_drd)
++static int exynos5_usbdrd_utmi_init(struct exynos5_usbdrd_phy *phy_drd)
+ {
+ 	u32 reg;
+ 
+@@ -739,6 +743,8 @@ static void exynos5_usbdrd_utmi_init(struct exynos5_usbdrd_phy *phy_drd)
+ 	reg = readl(phy_drd->reg_phy + EXYNOS5_DRD_PHYTEST);
+ 	reg &= ~PHYTEST_POWERDOWN_HSP;
+ 	writel(reg, phy_drd->reg_phy + EXYNOS5_DRD_PHYTEST);
++
++	return 0;
+ }
+ 
+ static int exynos5_usbdrd_phy_init(struct phy *phy)
+@@ -775,7 +781,9 @@ static int exynos5_usbdrd_phy_init(struct phy *phy)
+ 	writel(reg, phy_drd->reg_phy + EXYNOS5_DRD_PHYUTMICLKSEL);
+ 
+ 	/* UTMI or PIPE3 specific init */
+-	inst->phy_cfg->phy_init(phy_drd);
++	ret = inst->phy_cfg->phy_init(phy_drd);
++	if (ret)
++		goto disable_clks;
+ 
+ 	/* reference clock settings */
+ 	reg = inst->phy_cfg->set_refclk(inst);
+@@ -798,9 +806,10 @@ static int exynos5_usbdrd_phy_init(struct phy *phy)
+ 	reg &= ~PHYCLKRST_PORTRESET;
+ 	writel(reg, phy_drd->reg_phy + EXYNOS5_DRD_PHYCLKRST);
+ 
++disable_clks:
+ 	clk_bulk_disable_unprepare(phy_drd->drv_data->n_clks, phy_drd->clks);
+ 
+-	return 0;
++	return ret;
+ }
+ 
+ static int exynos5_usbdrd_phy_exit(struct phy *phy)
+@@ -1067,7 +1076,7 @@ exynos5_usbdrd_usb_v3p1_pipe_override(struct exynos5_usbdrd_phy *phy_drd)
+ 	writel(reg, regs_base + EXYNOS850_DRD_SECPMACTL);
+ }
+ 
+-static void exynos850_usbdrd_utmi_init(struct exynos5_usbdrd_phy *phy_drd)
++static int exynos850_usbdrd_utmi_init(struct exynos5_usbdrd_phy *phy_drd)
+ {
+ 	void __iomem *regs_base = phy_drd->reg_phy;
+ 	u32 reg;
+@@ -1171,6 +1180,8 @@ static void exynos850_usbdrd_utmi_init(struct exynos5_usbdrd_phy *phy_drd)
+ 
+ 	if (ss_ports)
+ 		exynos5_usbdrd_usb_v3p1_pipe_override(phy_drd);
++
++	return 0;
+ }
+ 
+ static int exynos850_usbdrd_phy_init(struct phy *phy)
+@@ -1184,11 +1195,11 @@ static int exynos850_usbdrd_phy_init(struct phy *phy)
+ 		return ret;
+ 
+ 	/* UTMI or PIPE3 specific init */
+-	inst->phy_cfg->phy_init(phy_drd);
++	ret = inst->phy_cfg->phy_init(phy_drd);
+ 
+ 	clk_bulk_disable_unprepare(phy_drd->drv_data->n_clks, phy_drd->clks);
+ 
+-	return 0;
++	return ret;
+ }
+ 
+ static int exynos850_usbdrd_phy_exit(struct phy *phy)
+@@ -1235,11 +1246,12 @@ static const struct phy_ops exynos850_usbdrd_phy_ops = {
+ 	.owner		= THIS_MODULE,
+ };
+ 
+-static void exynos5_usbdrd_gs101_pipe3_init(struct exynos5_usbdrd_phy *phy_drd)
++static int exynos5_usbdrd_gs101_pipe3_init(struct exynos5_usbdrd_phy *phy_drd)
+ {
+ 	void __iomem *regs_pma = phy_drd->reg_pma;
+ 	void __iomem *regs_phy = phy_drd->reg_phy;
+ 	u32 reg;
++	int ret;
+ 
+ 	exynos5_usbdrd_usbdp_g2_v4_ctrl_pma_ready(phy_drd);
+ 
+@@ -1261,8 +1273,11 @@ static void exynos5_usbdrd_gs101_pipe3_init(struct exynos5_usbdrd_phy *phy_drd)
+ 		 SECPMACTL_PMA_INIT_SW_RST);
+ 	writel(reg, regs_phy + EXYNOS850_DRD_SECPMACTL);
+ 
+-	if (!exynos5_usbdrd_usbdp_g2_v4_pma_check_pll_lock(phy_drd))
+-		exynos5_usbdrd_usbdp_g2_v4_pma_check_cdr_lock(phy_drd);
++	ret = exynos5_usbdrd_usbdp_g2_v4_pma_check_pll_lock(phy_drd);
++	if (ret)
++		return ret;
++
++	return exynos5_usbdrd_usbdp_g2_v4_pma_check_cdr_lock(phy_drd);
+ }
+ 
+ static int exynos5_usbdrd_gs101_phy_init(struct phy *phy)
+@@ -1287,7 +1302,15 @@ static int exynos5_usbdrd_gs101_phy_init(struct phy *phy)
+ 	 */
+ 	exynos5_usbdrd_phy_isol(inst, false);
+ 
+-	return exynos850_usbdrd_phy_init(phy);
++	ret = exynos850_usbdrd_phy_init(phy);
++	if (ret) {
++		exynos5_usbdrd_phy_isol(inst, true);
++		if (inst->phy_cfg->id == EXYNOS5_DRDPHY_UTMI)
++			regulator_bulk_disable(phy_drd->drv_data->n_regulators,
++					       phy_drd->regulators);
++	}
++
++	return ret;
+ }
+ 
+ static int exynos5_usbdrd_gs101_phy_exit(struct phy *phy)
 -- 
 2.53.0
 
