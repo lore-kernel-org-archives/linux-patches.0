@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795619973;
-	b=IidmvUTM7AO0WeAoTtWDDwfLW8ggUZhGfycunMuBCcnNz42G8F2C6ZqD+iCl27s9JOQU
-	 77hp+AxV3NeRniCScJFA+BjLG86esnQlUCabmkhaQV3WETuB9ouNFa/M6WAqJPUBT6Him
-	 0zxv7m1GCQK9scM+MfWX3EbFX1W/FdPjZDPEL6e9Jwt69Wcm9FU6OLT0UvtGbBpQP75i+
-	 UvCjeIJ6wU4e6QcX9e/zN3s0YsXSyY2jj1WYH9cye49Erjsdu3Wl5Wkd3Qa5OL03LcI1+
-	 JUvFAuboU8u8GbEnnxIJe4xC++GrXFiPU6ju+geLBVMbceFRTm7UiHpIgn74T7HGezg==
+	t=1795619976;
+	b=uANmHWbYzmZPQZ0zp9GYogaaHqcImR38zrQRLc2byuG570MZZWJmWUxu29+tw9S+I/56
+	 QdDDJI47wse/hJ7ePt6gdizL8HH9i/cG+kLykqbO1t/T4+EQMFbxrK7qCgPhUS0xsSlgo
+	 HrIg+rcC1LSsmowcc2K0IMPSucH9VQknJm/+MrkOuEoGLZ9CCncffxnHbdzHzYIbmPleY
+	 sPl6lpa01oeETE+3JKJlj9RXTqTdUn6AbDrcUkCDP2tpBubV5LI+CS2FSV/kTL06u3zHQ
+	 C2yABXtUfN4i0+ycl5tZ+eDZk2TEi7xnDsH/vyhyYYJCGeYbJgQ6AZh//yStuR3Ilxw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795619973;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795619976;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=2mHTOmSCao13xoRRGJWgTJThAwtB0n8sIdUasxnfo8w=;
-	b=BGxT0ce4cFf4x7ZkESi6XSyo+Uj1BWKylvL+hn5hBrWoxXnm/nOnMAswHfi87e/MNIIw
-	 APNZ9D23O94M6Uvydj0256lFiIEShag37+qtVeCiu4Nb0aKNpr7uwSalg7uVYpQt6l/PS
-	 vzaie5GxOjkiFqUDt2m9jqzHS5SojWNCZqTtVCnk7z/e0QK6kM8CQ3mCu5CLIFqlprgLo
-	 yJYMtQR9hrowdAKXUVXZS4/vqgsrcW+7WH8gpoMKTK46pN/rSFgPVvfsW5d/HC+nNZoRa
-	 Epi+O9ro6LoRXiikmSshne+dEjP1eAJrinYf49mNOQYZNHN9VLUGlt4uOj7pM3oOxdQ==
+	bh=CnFTUaQNATzBIml+7lLPfvLeS+L0unVXCwX6b2pIWFU=;
+	b=StOdOCZY7WunGGTbLx74L153olLPMj1u8gRNNAEbM2DAtNi7nuJ4X0YsaK42P3J4sypS
+	 cANzHiSmMNe3w0FJqYmaNvDo3pZj/gImMPDbwBZj3jl6LBdcOJspbNwBE+/P81I8g2xQT
+	 ZyY7Yf5GdwRK9jMzlc+uG5CUjrHckSJkjA0e4A/4SSrjIQhK5+14Hwzy4HUD6qnuGgRnK
+	 unMu4a/4og2JblbhOjS+0xRbCQ8fiKoS2+ynce4ZTuilsvaO66ByUi04oAOWfJo2dnly6
+	 b1MOP+44pVei8EX/7Wbef6KoOQplplMKR8GuXBlfzRCmrG9sWVkq3D9zCqZdmVEPJ0Q==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="xXMtk/OZ";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="1Y+/Ea7W";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3BE12606A31E;
-	Wed, 25 Nov 2026 15:19:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 48785606A321;
+	Wed, 25 Nov 2026 15:19:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=xXMtk/OZ
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 762821F000C0;
-	Wed, 25 Nov 2026 15:19:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=1Y+/Ea7W
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 997A41F000C4;
+	Wed, 25 Nov 2026 15:19:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795619973;
-	bh=2mHTOmSCao13xoRRGJWgTJThAwtB0n8sIdUasxnfo8w=;
+	s=korg; t=1795619976;
+	bh=CnFTUaQNATzBIml+7lLPfvLeS+L0unVXCwX6b2pIWFU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=xXMtk/OZrF3yQQ4KA40/Uka6HeJEqVlJBgKdobjoMHwEpoX7akEwc2ln86dgLKGxE
-	 KMPOlqrxwOPhyd8Ma5+OFee6bwGaXYRyZUjzoCfwVSBgN7OnLz27vZI4CwZo2LZbwF
-	 2H67awl+ijzwamuYJVzrDDs5kxYuCB5jni10OuqQ=
+	b=1Y+/Ea7WxhzrL+SUPtoX6x+P7NbcCgiCglQ9KB3umwHf3BJm9ufJ4Otiq66+zTiK2
+	 fHh8389UCNw2OJyRTWNv4/TxBBAlKs4uRJ9IYJahrQtTurC+xkCzxKjEghJQGhrCO0
+	 xYqtC5F0T8UY66kJL2CVDhTbS8oyFLRfEkdmOxNU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Sashiko <sashiko-bot@kernel.org>,
 	Tim Budding <tim.budding@gmail.com>,
 	Xin Long <lucien.xin@gmail.com>,
 	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 7.3 0767/1005] sctp: fix I-FORWARD-TSN handling of fragments on other streams
-Date: Wed, 25 Nov 2026 15:35:05 +0100
-Message-ID: <20261125143839.712909342@linuxfoundation.org>
+Subject: [PATCH 7.3 0768/1005] sctp: report the partially delivered MID in PARTIAL_DELIVERY_ABORTED
+Date: Wed, 25 Nov 2026 15:35:06 +0100
+Message-ID: <20261125143839.737098826@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143821.729802100@linuxfoundation.org>
 References: <20261125143821.729802100@linuxfoundation.org>
@@ -70,125 +71,54 @@ Content-Transfer-Encoding: 8bit
 
 From: Tim Budding <tim.budding@gmail.com>
 
-commit 5b9cfc6491a6e32e7315dc222992c7dbd5baa3e9 upstream.
+commit 3097fba868019924e92b8786ebd473992565f015 upstream.
 
-sctp_report_iftsn() incorrectly frees queued I-DATA fragments in two
-cases. First, it drops any queued fragments with TSN less than or equal
-to the New Cumulative TSN. This prevents reconstruction of messages
-still being received on other streams and can fully block an ordered
-stream. Second, it calls sctp_intl_abort_pd() if the New Cumulative TSN
-equals the highest TSN seen. This check exists for association resets
-but can be inadvertently triggered by any I-FORWARD-TSN that arrives
-before data with a higher TSN, causing data loss and, if a partial
-delivery is in progress on an ordered stream, an aborted association.
+When an I-FORWARD-TSN skips the message being partially delivered on a
+stream, sctp_intl_skip() passes the MID from the I-FORWARD-TSN to the
+PARTIAL_DELIVERY_ABORTED notification as pdapi_seq. That MID is the
+highest one skipped on the stream, so when more than one message is
+skipped, the notification names a later message instead of the one
+whose partial delivery was aborted.
 
-Fix the first by freeing fragments from sctp_intl_skip() based on
-stream, U bit, and MID instead of TSN. Fix the second by moving the call
-to sctp_intl_abort_pd() from sctp_report_iftsn() to the corresponding
-reset handlers.
+Report the MID being partially delivered, sin->mid_uo or sin->mid,
+instead.
 
-Observed in real use as unexpected message loss. Reproduced on an
-unmodified kernel with the sctp_ifwdtsn.sh selftest added later in this
-series, which passes with this fix. Reproduction and fix done with AI
-assistance.
+Reproduced on an unmodified kernel with the pdapi and pdapi_uo tests of
+the sctp_ifwdtsn.sh selftest added later in this series, which pass
+with this fix. Reproduction and fix done with AI assistance.
 
-Fixes: 47b20a88566f ("sctp: implement report_ftsn for sctp_stream_interleave")
+Fixes: de60fe910543 ("sctp: implement handle_ftsn for sctp_stream_interleave")
+Reported-by: Sashiko <sashiko-bot@kernel.org>
+Closes: https://lore.kernel.org/all/179293012867.3134.16497481637722705271@kernel.org/
 Cc: stable@vger.kernel.org
 Signed-off-by: Tim Budding <tim.budding@gmail.com>
 Acked-by: Xin Long <lucien.xin@gmail.com>
-Link: https://patch.msgid.link/20261105050225.49292-4-tim.budding@gmail.com
+Link: https://patch.msgid.link/20261105050225.49292-3-tim.budding@gmail.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/sctp/stream.c            |    2 ++
- net/sctp/stream_interleave.c |   32 +++++++++++---------------------
- 2 files changed, 13 insertions(+), 21 deletions(-)
+ net/sctp/stream_interleave.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/net/sctp/stream.c
-+++ b/net/sctp/stream.c
-@@ -749,6 +749,7 @@ struct sctp_chunk *sctp_process_strreset
- 	 */
- 	max_tsn_seen = sctp_tsnmap_get_max_tsn_seen(&asoc->peer.tsn_map);
- 	asoc->stream.si->report_ftsn(&asoc->ulpq, max_tsn_seen);
-+	asoc->stream.si->abort_pd(&asoc->ulpq, GFP_ATOMIC);
- 
- 	/* G1: Compute an appropriate value for the Receiver's Next TSN -- the
- 	 *     TSN that the peer should use to send the next DATA chunk.  The
-@@ -1028,6 +1029,7 @@ struct sctp_chunk *sctp_process_strreset
- 			LIST_HEAD(temp);
- 
- 			asoc->stream.si->report_ftsn(&asoc->ulpq, mtsn);
-+			asoc->stream.si->abort_pd(&asoc->ulpq, GFP_ATOMIC);
- 
- 			sctp_tsnmap_init(&asoc->peer.tsn_map,
- 					 SCTP_TSN_MAP_INITIAL,
 --- a/net/sctp/stream_interleave.c
 +++ b/net/sctp/stream_interleave.c
-@@ -1203,28 +1203,21 @@ static void sctp_report_fwdtsn(struct sc
- 	sctp_ulpq_abort_pd(ulpq, GFP_ATOMIC);
- }
- 
--static void sctp_intl_reasm_flushtsn(struct sctp_ulpq *ulpq, __u32 ftsn)
-+static void sctp_intl_reasm_flush_mid(struct sk_buff_head *reasm, __u16 sid,
-+				      __u32 mid)
- {
- 	struct sk_buff *pos, *tmp;
- 
--	skb_queue_walk_safe(&ulpq->reasm, pos, tmp) {
-+	skb_queue_walk_safe(reasm, pos, tmp) {
- 		struct sctp_ulpevent *event = sctp_skb2event(pos);
--		__u32 tsn = event->tsn;
- 
--		if (TSN_lte(tsn, ftsn)) {
--			__skb_unlink(pos, &ulpq->reasm);
--			sctp_ulpevent_free(event);
--		}
--	}
-+		if (event->stream < sid)
-+			continue;
-+		if (event->stream > sid || MID_lt(mid, event->mid))
-+			break;
- 
--	skb_queue_walk_safe(&ulpq->reasm_uo, pos, tmp) {
--		struct sctp_ulpevent *event = sctp_skb2event(pos);
--		__u32 tsn = event->tsn;
--
--		if (TSN_lte(tsn, ftsn)) {
--			__skb_unlink(pos, &ulpq->reasm_uo);
--			sctp_ulpevent_free(event);
--		}
-+		__skb_unlink(pos, reasm);
-+		sctp_ulpevent_free(event);
- 	}
- }
- 
-@@ -1232,11 +1225,6 @@ static void sctp_report_iftsn(struct sct
- {
- 	/* Move the Cumulattive TSN Ack ahead. */
- 	sctp_tsnmap_skip(&ulpq->asoc->peer.tsn_map, ftsn);
--	/* purge the fragmentation queue */
--	sctp_intl_reasm_flushtsn(ulpq, ftsn);
--	/* abort only when it's for all data */
--	if (ftsn == sctp_tsnmap_get_max_tsn_seen(&ulpq->asoc->peer.tsn_map))
--		sctp_intl_abort_pd(ulpq, GFP_ATOMIC);
- }
- 
- static void sctp_handle_fwdtsn(struct sctp_ulpq *ulpq, struct sctp_chunk *chunk)
-@@ -1260,6 +1248,7 @@ static void sctp_intl_skip(struct sctp_u
- 			sctp_intl_stream_abort_pd(ulpq, sid, mid, 0x1,
+@@ -1245,7 +1245,7 @@ static void sctp_intl_skip(struct sctp_u
+ 	if (flags & SCTP_FTSN_U_BIT) {
+ 		if (sin->pd_mode_uo && !MID_lt(mid, sin->mid_uo)) {
+ 			sin->pd_mode_uo = 0;
+-			sctp_intl_stream_abort_pd(ulpq, sid, mid, 0x1,
++			sctp_intl_stream_abort_pd(ulpq, sid, sin->mid_uo, 0x1,
  						  GFP_ATOMIC);
  		}
-+		sctp_intl_reasm_flush_mid(&ulpq->reasm_uo, sid, mid);
- 		return;
+ 		sctp_intl_reasm_flush_mid(&ulpq->reasm_uo, sid, mid);
+@@ -1257,7 +1257,7 @@ static void sctp_intl_skip(struct sctp_u
+ 
+ 	if (sin->pd_mode) {
+ 		sin->pd_mode = 0;
+-		sctp_intl_stream_abort_pd(ulpq, sid, mid, 0x0, GFP_ATOMIC);
++		sctp_intl_stream_abort_pd(ulpq, sid, sin->mid, 0x0, GFP_ATOMIC);
  	}
  
-@@ -1271,6 +1260,7 @@ static void sctp_intl_skip(struct sctp_u
- 		sctp_intl_stream_abort_pd(ulpq, sid, mid, 0x0, GFP_ATOMIC);
- 	}
- 
-+	sctp_intl_reasm_flush_mid(&ulpq->reasm, sid, mid);
- 	sctp_mid_skip(stream, in, sid, mid);
- 
- 	sctp_intl_reap_ordered(ulpq, sid);
+ 	sctp_intl_reasm_flush_mid(&ulpq->reasm, sid, mid);
 
 
