@@ -1,53 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795624678;
-	b=o+/PHrfYMESX73KvV3S0I1m17nLxGZrES12gbnB/ed96rDLAQSvjDfLNoId/wNK2bgsM
-	 hCJD7+2P3tEV0e3gHTrREZ77wIFoj7gTDz1ravBY40u2p4bENlBUqFR0MdR1tqxQrfNwV
-	 F6EIAfbqRbyLFxcJipSa52UHkUcPSbJmAzVsfjszBSzb26SV58i0mhpQ9CINzINEW672h
-	 fgMcQwqhqrjoOmFupeojkkihk3t9MX3Glv4p6o74T80HTGojyjMNg4iuLcoXcYiHgPuWE
-	 zWdpMCZ08ZOTZq7l6IfP/i/qXCDTQiM3A+1d2r/BP5GkZlnIqpYG+viNU0II0Xfzw9A==
+	t=1795624680;
+	b=WpSA7Qzc1nQbnANmyiYLamwWPUunh3XV83AklfzF51w2XpQsZhHkFKtHwkLwPnvDPE40
+	 CEXRVn5Pny7erdR3Q00WkVwuU4N8EH8v8p70wBIvgbSh+HrBJ5FQa+if4Rxyw+sd1Bt4j
+	 1/93mq5NCoNaSYsIzqvpBOstPa5TPsopBR0e2w8la6fI1mNFKJpTmoLwUt0IwHVCEh/ry
+	 kXpMbzjeu6nEJ1aoGkgU9KDhiPO+/NmYKYDJwmBjEsIPyJMIDD4D/4HmQoajjqUdwgdi4
+	 z3xCvl2e06E8rXKFuMUy7YwBYK7WtQKE4tQ2LaEUQLxNUtvBM80UxPplNpzAvDtYBcw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795624678;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795624680;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=ucCpX+QHAuG7EeW4+aY8fk0qGd5Frq2N3mJa18x/4yE=;
-	b=ybwDbQBat3FNeoZ396oyQnHxvTsOwkF963EizkwGb80PbUJm+9fI4+jmfxD1pZ+HgA0C
-	 J8EtgrRMwnMhwjAQxTHbpggw5lrDdKU1kVMT4yvb5/I5B3BCLJryfXYu8H6iNDfw1fRvR
-	 T4Zyy/8Z1vWASsapHSV8sR/sBbVhUVK2Dp4TE7h6+ph6U2oMHLwssGFil82eWQ5OUgOpb
-	 Kav+3JR1tJIA+SvGhSr9BnYOkNrbczGK6173JHssDpQ9G+jGTaRMRG22yrf9ldLYrFdy2
-	 3OkDFYz+8JqyGvt8gTEgK3LqOx8Nm5Fkf+B7IeI7nVXst2/rL8DMBjETOCzPQbGX1vQ==
+	bh=OTsxses0cUZqv3NlTYISD37VTzPNNCseXzFokBpWDFc=;
+	b=t6z+Jjp+vWFsDONuLC/VeBeuFsIMjA0fjVpQDq/W2aX8Luf06+cEuR6ueBmXub73UTBl
+	 X95IoZjuUeYIZQvnAuN+w/0SB/JqQd4ArF48cODv5eIeelS6RQiqD6xxL8tRAnTlAjAtl
+	 rccwgrg8xyp1wCB5Wt+M9p2UZoOFWSDfXE3zJZxcMf0rXusKcCGCl3QzbfeAlu0Sat1R3
+	 MXeKX+GrE4Tz/9mR2r0i78d9Pl4XsMr43duxiIJyxxWGUgEda//rWXUFnzQnRrOi7LW+5
+	 A5UKaDOH5um6OH62nl0S1eQcXGyJz9qENhuXMF0nZnI9NjVCh64ES96l1EnQzJn8fsQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=q5Ezzh8E;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=YJ8XKu6b;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0C7F6606A339;
-	Wed, 25 Nov 2026 16:37:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D4175606A33B;
+	Wed, 25 Nov 2026 16:38:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=q5Ezzh8E
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 40D531F000C0;
-	Wed, 25 Nov 2026 16:37:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=YJ8XKu6b
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 318061F000C0;
+	Wed, 25 Nov 2026 16:38:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795624677;
-	bh=ucCpX+QHAuG7EeW4+aY8fk0qGd5Frq2N3mJa18x/4yE=;
+	s=korg; t=1795624680;
+	bh=OTsxses0cUZqv3NlTYISD37VTzPNNCseXzFokBpWDFc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=q5Ezzh8EK6/E/f/eizKXK/0CADbwA4NOL0zt56jpQJ2j8iXX09uw3LvH0MtHi8Cv7
-	 Ku3h4bZxEZoK5Glf3asbgRjDpyjvkBP1Sk5PHtCY1ASHN/6ruQyCr5QmVe82wUnPBJ
-	 lPd0JkNOg6KOGn9LkXyiZm5xNyy7605ADZ+30EEw=
+	b=YJ8XKu6b0XAZ5PCS8S0kd5DLxudUqSZOzSqR5R6NTvwvgU2wSKmHjqy7H0DcmYfoU
+	 nlK9cP3Atv2yVo4+rthwZFGLs7Cew8F3HMwfwgOa6SjHxIK7qfcAj0vygHn0FWPE3h
+	 mV8Za3+FlEheAtu6JZWAd3n3RaOPTYvnpDh/0yHU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Anil Kaushik <anilkaushikwireless@gmail.com>,
-	Simon Horman <horms@kernel.org>,
+	Or Har-Toov <ohartoov@nvidia.com>,
+	Maher Sanalla <msanalla@nvidia.com>,
+	Tariq Toukan <tariqt@nvidia.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 269/816] netlink: Do not call the unbind callback with the table locked
-Date: Wed, 25 Nov 2026 15:30:17 +0100
-Message-ID: <20261125143855.435955991@linuxfoundation.org>
+Subject: [PATCH 6.12 270/816] net/mlx5e: Add missing Ethernet multicast octets to vport_rx_bytes sum
+Date: Wed, 25 Nov 2026 15:30:18 +0100
+Message-ID: <20261125143855.459735219@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143849.205329330@linuxfoundation.org>
 References: <20261125143849.205329330@linuxfoundation.org>
@@ -69,55 +70,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Anil Kaushik <anilkaushikwireless@gmail.com>
+From: Or Har-Toov <ohartoov@nvidia.com>
 
-[ Upstream commit a36b9e205cb3c452ab96cc783e63465d466fe615 ]
+[ Upstream commit 9c1adbe7fa6cbc02c25db2039532918acf846400 ]
 
-When netlink_bind() fails to insert the socket, it calls
-netlink_undo_bind() with the table locked. genl_unbind() then takes
-cb_lock, while genl_unregister_family() and genl_register_family() take
-cb_lock for writing and then wait in netlink_table_grab() for the table
-users to go away:
+mlx5e_rep_update_hw_counters() adds transmitted_eth_multicast.packets
+to vport_rx_packets but does not add transmitted_eth_multicast.octets
+to vport_rx_bytes. As a result, Ethernet multicast sent by a VF/SF is
+counted in its representor's rx_packets but not in rx_bytes.
 
-  netlink_bind()                 genl_unregister_family()
-    netlink_lock_table()           down_write(&cb_lock)
-    netlink_insert() fails
-    netlink_undo_bind()            netlink_table_grab()
-      genl_unbind()                  waits for nl_table_users == 0
-        down_read(&cb_lock)
+Fix by adding transmitted_eth_multicast.octets to the vport_rx_bytes
+sum.
 
-An unprivileged user can get here by binding to a port ID that is in
-use, with nl_groups set. Lockdep does not see it, as nl_table_users is a
-plain counter.
-
-Unlock the table first, as the comment in netlink_release() asks for.
-
-Link: https://netdev-ai.bots.linux.dev/sashiko/#/patchset/20261101101347.3910654-1-anilkaushikwireless@gmail.com
-Fixes: 3de21a8990d3 ("genetlink: Add per family bind/unbind callbacks")
-Signed-off-by: Anil Kaushik <anilkaushikwireless@gmail.com>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Link: https://patch.msgid.link/20261102120929.4077030-1-anilkaushikwireless@gmail.com
+Fixes: 64b68e369649 ("net/mlx5: Refactor and expand rep vport stat group")
+Signed-off-by: Or Har-Toov <ohartoov@nvidia.com>
+Reviewed-by: Maher Sanalla <msanalla@nvidia.com>
+Signed-off-by: Tariq Toukan <tariqt@nvidia.com>
+Link: https://patch.msgid.link/20261101065833.282261-1-tariqt@nvidia.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/netlink/af_netlink.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/net/ethernet/mellanox/mlx5/core/en_rep.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/net/netlink/af_netlink.c b/net/netlink/af_netlink.c
-index 8977798d42322..9cc71da6dd966 100644
---- a/net/netlink/af_netlink.c
-+++ b/net/netlink/af_netlink.c
-@@ -1031,8 +1031,9 @@ static int netlink_bind(struct socket *sock, struct sockaddr *addr,
- 			netlink_insert(sk, nladdr->nl_pid) :
- 			netlink_autobind(sock);
- 		if (err) {
-+			netlink_unlock_table();
- 			netlink_undo_bind(BITS_PER_TYPE(u32), groups, sk);
--			goto unlock;
-+			return err;
- 		}
- 	}
+diff --git a/drivers/net/ethernet/mellanox/mlx5/core/en_rep.c b/drivers/net/ethernet/mellanox/mlx5/core/en_rep.c
+index e07e2f5f84435..070a809dfa609 100644
+--- a/drivers/net/ethernet/mellanox/mlx5/core/en_rep.c
++++ b/drivers/net/ethernet/mellanox/mlx5/core/en_rep.c
+@@ -238,6 +238,7 @@ static MLX5E_DECLARE_STATS_GRP_OP_UPDATE_STATS(vport_rep)
+ 		MLX5_GET_CTR(out, transmitted_ib_unicast.octets) +
+ 		MLX5_GET_CTR(out, transmitted_eth_unicast.octets) +
+ 		MLX5_GET_CTR(out, transmitted_ib_multicast.octets) +
++		MLX5_GET_CTR(out, transmitted_eth_multicast.octets) +
+ 		MLX5_GET_CTR(out, transmitted_eth_broadcast.octets);
  
+ 	rep_stats->vport_tx_bytes =
 -- 
 2.53.0
 
