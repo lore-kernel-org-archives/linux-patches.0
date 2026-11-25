@@ -1,51 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795623739;
-	b=GD7rf3MLmATrKeo8reVP6lKwygmQuZLpUVbvBCIPvI+nG8o+Nsm6cGKc+nwB121eXj08
-	 wiRTAvkXTrFxGnakaj/Z0XvaO8JQTzDM5X3xKAkihc2IN3aVQUKN0hgOEK3/jlwlSd04R
-	 OppFlqK75JCtFnJo0MWLQWUHFuzcATEq3lvWh2CEIOFEheoKFlQeWQML1N3KrAUWhzOpQ
-	 rAqwA/duiJLkm8ueyD1NY9YUa91yxVJOu3ZDvTUbHpE44eQgbFc4jtz0FSbu3Gf3If556
-	 6hKEmVDKLVYYvhwGfrIZLxW3YC8pOeMBqxxFCCwIWYILTxQmOz1iBkjRU7vMb1mu7WA==
+	t=1795623741;
+	b=rC5Q9rfnwZsXUW45H7Z/3q2D9NeD1jOhE6RUBLKEKlQkJooxUAp6I9ZsjnD7MJj06B9R
+	 cvVAxQfLKpcV7oHOdkwqMqqZvPIv6iHqM7t7KmIuBdnPekPa/uXG1vfX+c5BSmITBkSBN
+	 W7QmC44Z7RCNzXltNkkRN7T4kGOpBb2LNdlFjTqA9Fy7LD6HIhA4w7UBqGcEClVRwnxu6
+	 w8vgogsGLwarWDAWzh6bl4KX+CCLUq1rbN6wa8YGMgzfxEnfPYXBJGNj+YNV7Y3BKLiRF
+	 r1DerUw2mE97m4vtSQh7ayTcEKTdcUW6WmMUR3Lz+xt/1ntvcLxF+gyBwXd/a7fw8nQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795623739;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795623741;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=KLAOPrlJ+yFpQa8g1fHSw69B6StkUPhuY+WJy7D7Ug0=;
-	b=CPZJRbTZ0JzlcooTJ1lj8QjwsaCX/+kooQEkKsSJIQov+xAIZipG74Ntgux8Z/McUl3r
-	 BNp4m8GSu/j5L2XoiONaasSmi8mQA6Jy2ct66XMI4qMbx0QhmYWgJvsC3qj8byJAubqjn
-	 OsCxPZARvWQFyaiO6kgqaSyI2zE8BnS2PlkarwuWIdSiHSAgWb/rfzvqTv1vFey88duzq
-	 cXBX+CV9PRrO/gDGiZmhfTk6DakJ3apkG4iT6QDqkZrBz9/voKFXGwe52KnH1hyrCZVya
-	 iY5OLFG+dIkPbAOH0kh0UTbNb1goq/ri2RgCpHXun5fbvC+Kh0+IjRlr1amWiT/zqrg==
+	bh=jj+HooBI/YHWnKQgaCXghjL+rFFbzxs0fkLtf/BmWiI=;
+	b=4gsIFpDdaMt6YupbLKn/Kg0pt2MwVmabE8xQNP2OmP9gz9+Z6E3Aa6IIzhKn/41nyFir
+	 uQxztPzj3mmyNA9ejXz/CTte8by9+YMwO4qxEPVKXfqYNIoSq48JvDID6MmMuFDt+ftA5
+	 NmxkTCEYhETHZxDH709ZNm6DJLOia1DQIjfW/ChmrDIpPnhQO6WDXxZFzFfiZ+7NccFI2
+	 Bl/gjwqAr5fvWPOhH9wzDD1VFiFKAQyRvvZwdiSgoZeFQ8Wx3Tiw/6OGENOuj88cG+my6
+	 79U4ogygnBN7MVOlzsb2m9dyfEnCzqx7UIlMIxNRqL2YGGhvWtJonbzIO4UqqZka8Iw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=XuHhyNHK;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=s2cu7VBa;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1F39C606A321;
-	Wed, 25 Nov 2026 16:22:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A9734606A321;
+	Wed, 25 Nov 2026 16:22:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=XuHhyNHK
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 99FB21F000C6;
-	Wed, 25 Nov 2026 16:22:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=s2cu7VBa
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 029521F0093C;
+	Wed, 25 Nov 2026 16:22:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795623738;
-	bh=KLAOPrlJ+yFpQa8g1fHSw69B6StkUPhuY+WJy7D7Ug0=;
+	s=korg; t=1795623741;
+	bh=jj+HooBI/YHWnKQgaCXghjL+rFFbzxs0fkLtf/BmWiI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=XuHhyNHK8uZIK+uqqiZvathEUqUecion704Q5xliLhrfGAKnL6Nb+T84L8a6viIc3
-	 j7O5GU4C6QOp1DSq9e29BF47jBU7gmWV2sJ7N3VjrVoywACwvr3EYOqfNVakwOTlX3
-	 l2GUpfcN/THQO17KOjG4KxA9bYddE54cghuBy3Ys=
+	b=s2cu7VBalSym/rFhnH0uVuhtNu6UduQAyB8yIFkKVRX0S2ctJgKmJfV5U8hxWo7ep
+	 CYHfcV8bvBJ3By383qnnUqUa4RbxVL/s4rVkGlA4GEJpMQiAYguglA7QlG6Sgt4bfJ
+	 yLgD43DMNy1hejli8M1kunxiwpzAOGqIAo5ZeNGs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jean-Baptiste Maneyrol <jean-baptiste.maneyrol@tdk.com>,
-	Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>
-Subject: [PATCH 6.18 955/990] iio: imu: inv_icm42600: fix parsing of all FIFO frames for odr change
-Date: Wed, 25 Nov 2026 15:38:42 +0100
-Message-ID: <20261125143844.358255473@linuxfoundation.org>
+	stable <stable@kernel.org>,
+	Josef Bacik <josef@toxicpanda.com>,
+	Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
+Subject: [PATCH 6.18 929/990] w1: use the bus mutex for the "rw" file
+Date: Wed, 25 Nov 2026 15:38:16 +0100
+Message-ID: <20261125143843.758944592@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143822.072087159@linuxfoundation.org>
 References: <20261125143822.072087159@linuxfoundation.org>
@@ -67,81 +68,80 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jean-Baptiste Maneyrol <jean-baptiste.maneyrol@tdk.com>
+From: Josef Bacik <josef@toxicpanda.com>
 
-commit 4a141623442888458d147f4e61fe47411c0e4e17 upstream.
+commit 8599e08648c0b4913ea7b202511f1294d176e793 upstream.
 
-For getting all odr change events, we need to parse all FIFO frames
-in each iio device. Fix this correctly by sending effectively all
-frames to all iio devices.
+Commit b02f8bede217 ("W1: split master mutex to avoid deadlocks.") gave
+the bus a mutex of its own, because the lock which protects the list of
+slaves is held while a slave is removed, which waits for the sysfs
+callbacks of the slave, so these must not take it.  It converted all the
+slave drivers, but not the "rw" file of the default family in w1.c,
+which still takes the mutex of the master to talk on the bus.  That has
+two consequences:
 
-Previously only batches of frames containing a matching sensor event
-were sent to the corresponding iio device.
+- A deadlock.  w1_process() holds the mutex of the master while it
+  searches the bus and detaches the slaves which have gone:
 
-Fixes: f670d4d34773 ("iio: imu: inv_icm42600: fix odr change not caught in certain cases")
-Cc: stable@vger.kernel.org
-Signed-off-by: Jean-Baptiste Maneyrol <jean-baptiste.maneyrol@tdk.com>
-Signed-off-by: Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>
+    w1_process()                        read() of .../rw
+      mutex_lock(&dev->mutex)             kernfs active reference
+      w1_search_process()                 rw_read()
+        w1_slave_detach()                   mutex_lock(&master->mutex)
+          w1_unref_slave()                    waits
+            device_unregister()
+              waits for the reference
+
+  The file is readable for everybody.
+
+- The accesses through this file are not serialised with those of the
+  slave drivers, which take bus_mutex, so that two transactions can get
+  mixed up on the wire.
+
+Take bus_mutex here as well.  It also excludes the search, which takes it
+for every pass.
+
+Fixes: b02f8bede217 ("W1: split master mutex to avoid deadlocks.")
+Cc: stable <stable@kernel.org>
+Signed-off-by: Josef Bacik <josef@toxicpanda.com>
+Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
+Link: https://patch.msgid.link/20261027-llm-char-misc-w1-v1-1-d2e6bfafb6a4@linuxfoundation.org
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/iio/imu/inv_icm42600/inv_icm42600_buffer.c |   24 ++++++++-------------
- 1 file changed, 10 insertions(+), 14 deletions(-)
+ drivers/w1/w1.c |    8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
---- a/drivers/iio/imu/inv_icm42600/inv_icm42600_buffer.c
-+++ b/drivers/iio/imu/inv_icm42600/inv_icm42600_buffer.c
-@@ -513,22 +513,20 @@ int inv_icm42600_buffer_fifo_parse(struc
- 		ts = &gyro_st->ts;
- 		inv_sensors_timestamp_interrupt(ts, st->fifo.watermark.eff_gyro,
- 						st->timestamp.gyro);
--		ret = inv_icm42600_gyro_parse_fifo(st->indio_gyro);
--		if (ret)
--			return ret;
- 	}
+--- a/drivers/w1/w1.c
++++ b/drivers/w1/w1.c
+@@ -116,7 +116,7 @@ static ssize_t rw_write(struct file *fil
+ {
+ 	struct w1_slave *sl = kobj_to_w1_slave(kobj);
  
-+	ret = inv_icm42600_gyro_parse_fifo(st->indio_gyro);
-+	if (ret)
-+		return ret;
-+
- 	/* handle accelerometer timestamp and FIFO data parsing */
- 	if (st->fifo.nb.accel > 0) {
- 		ts = &accel_st->ts;
- 		inv_sensors_timestamp_interrupt(ts, st->fifo.watermark.eff_accel,
- 						st->timestamp.accel);
--		ret = inv_icm42600_accel_parse_fifo(st->indio_accel);
--		if (ret)
--			return ret;
- 	}
+-	mutex_lock(&sl->master->mutex);
++	mutex_lock(&sl->master->bus_mutex);
+ 	if (w1_reset_select_slave(sl)) {
+ 		count = 0;
+ 		goto out_up;
+@@ -125,7 +125,7 @@ static ssize_t rw_write(struct file *fil
+ 	w1_write_block(sl->master, buf, count);
  
--	return 0;
-+	return inv_icm42600_accel_parse_fifo(st->indio_accel);
+ out_up:
+-	mutex_unlock(&sl->master->mutex);
++	mutex_unlock(&sl->master->bus_mutex);
+ 	return count;
  }
  
- int inv_icm42600_buffer_hwfifo_flush(struct inv_icm42600_state *st,
-@@ -553,20 +551,18 @@ int inv_icm42600_buffer_hwfifo_flush(str
- 	if (st->fifo.nb.gyro > 0) {
- 		ts = &gyro_st->ts;
- 		inv_sensors_timestamp_interrupt(ts, st->fifo.nb.gyro, gyro_ts);
--		ret = inv_icm42600_gyro_parse_fifo(st->indio_gyro);
--		if (ret)
--			return ret;
- 	}
+@@ -135,9 +135,9 @@ static ssize_t rw_read(struct file *filp
+ {
+ 	struct w1_slave *sl = kobj_to_w1_slave(kobj);
  
-+	ret = inv_icm42600_gyro_parse_fifo(st->indio_gyro);
-+	if (ret)
-+		return ret;
-+
- 	if (st->fifo.nb.accel > 0) {
- 		ts = &accel_st->ts;
- 		inv_sensors_timestamp_interrupt(ts, st->fifo.nb.accel, accel_ts);
--		ret = inv_icm42600_accel_parse_fifo(st->indio_accel);
--		if (ret)
--			return ret;
- 	}
- 
--	return 0;
-+	return inv_icm42600_accel_parse_fifo(st->indio_accel);
+-	mutex_lock(&sl->master->mutex);
++	mutex_lock(&sl->master->bus_mutex);
+ 	w1_read_block(sl->master, buf, count);
+-	mutex_unlock(&sl->master->mutex);
++	mutex_unlock(&sl->master->bus_mutex);
+ 	return count;
  }
  
- int inv_icm42600_buffer_init(struct inv_icm42600_state *st)
 
 
