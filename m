@@ -1,52 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795624163;
-	b=L9r1Hi5eaGmjPOTt60kAcVY6FplHqXGwbvopktWbl2zcOkIZ/LlczBgsokEJOMjia4oy
-	 RJvDxCPLDiDt/+bYHKg37TnqKR+KCtxzigZoVFiNb/gVc1c4xrWjfEJ0NPlpPefrt+NHX
-	 sBI70yILvR0RWTbznzzcilOydbw2Bm+1H8IZNwzyXYZwXG2RfHHS1VnTpwLonHiz4mIwN
-	 q9fO1QQDIglZDU+1ClLsurOzFzwYASCVrJMCLtfq+pUx57uFg3NRRE7E9eEktWRyEc409
-	 uL0dyOTrndwIVlvYw23zWQhSvqGq5V8mu4wmbUR3d6q2yE2G3MJlWIgCaexB4D7uG/Q==
+	t=1795624166;
+	b=jca5j6+z6w98YRU5P6jExzsSQ4mTasSV/lHWeMzHunPz/5TEUYNJFTXjdbu59KeKGc/T
+	 QOtE/voP6EfbWg6ryQ1BValoHYhPXq2gve59CE2708cl1c7kIiLIFo+kKiuiX1A7dpm0K
+	 BJjBbBmuVmWtLpMiZUCdn7FtAH/+tqSXY4GlF6ydx4imjP6/yrmutGomrQdbxUA/H1NPd
+	 l5vay/ceTXAFBff9ewIWP3hcOD+tHd9D2N4rhYyVs9Y/a4sQKukrux+OiZyt1UnRoi8JP
+	 pd8EPTisQ/NkyGwp0SM/NA5BPqV2HowRuVVz+pLzLiTotLm6aUlIYX01qKwj/g7ozDw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795624163;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795624166;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=VB82uaD+7tXX82cTr6Kcatyt7pwGskTGa9yOdsHIDUs=;
-	b=vKc4Ybpjywuq50r8Hi25/EWXl/RMxzV8PSKNgziOTMpo/2OMYfWZouruXbgKciGLjpnN
-	 z73uZRc02sOxSiuEs1L/kCo0z3EYP1BXXkLvBuG6ux6hlH5u4ZUAMaGY3F+6LJmj4G3oa
-	 2xYf2akCc4qbJG78xe0y0iW3JXwmJKjjovUkxhsGM1NIS+Dxoz17pE2Cbf20T3tQ1gdsj
-	 O83+QscJnythnCGLjO8l3Pojdm63DT5aw42EvCXYrB1aqUbM5bDTSSABDPap+b9JiSq4w
-	 nw4vPXqc+NPPk+3CApsKs3h2I5ueAbevmUd0iGPkQrY7lJcaRh5i5b3AQZZ9N8P/kIA==
+	bh=CZH2wT9vqabgS3h22RxQPZ/Hpap+6AR52tTQ+e75Lqs=;
+	b=CGP3ie/PBaWS3HHuY0enPsDh3qgZXmrR1YWhUpo0jzUoQyUXb5phW5e69cJhBrRLByQh
+	 pkn0Iu0vEjo0kcB6DAcD1S+XrA64P21x3QXI0crszKs+JApBtvF+kXRP/nSISdrM8MbMe
+	 c4lG1QXo6yOGJR6XjnhLrpWwr91uyiY4wBRBDkG/oEsAgTSZMfNU6ZjGwPfz0cFZlvrFu
+	 44VGZ2O4WxdLmRmuORBEVWxkmlQKUIk9tj67Ic6tc+V1IvWwGUtPVZPSPTWTpVCD3jM8B
+	 LfvFedpuhNtJQ+6DeXgriUBT5+lDxhOG9dMPhcwA9CYKOPP4vVMdrSwCuqXpump7jhw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="yaDb/hqB";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=jzDnCUs8;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EBB3C606A32D;
-	Wed, 25 Nov 2026 16:29:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2E465606A326;
+	Wed, 25 Nov 2026 16:29:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=yaDb/hqB
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2489A1F0093E;
-	Wed, 25 Nov 2026 16:29:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=jzDnCUs8
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 276E01F000D1;
+	Wed, 25 Nov 2026 16:29:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795624162;
-	bh=VB82uaD+7tXX82cTr6Kcatyt7pwGskTGa9yOdsHIDUs=;
+	s=korg; t=1795624165;
+	bh=CZH2wT9vqabgS3h22RxQPZ/Hpap+6AR52tTQ+e75Lqs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=yaDb/hqBmSTUFEmnz2IGr1b7ZKnlv+m3vkDHw/VZS85tzf/tjx3a7aG1qV20cEY69
-	 IpUz2Dpyuf/x/Mvh215lAPz08cOmypkEmoiGKNdrQ9hhK3j160y5ecInykeQBLkb9I
-	 hsHANgpNkx+U1a0ZDPW9cWhInK4UwWxAYOsKEQRc=
+	b=jzDnCUs8v7Rqq8feZNdnkBPHCn+Nr5THrqeYIKRMTyOuZchuDM5gmtXbV9pAyJMmw
+	 e5CeFipq1i2HaicQ+wRAQuHGbG6NL+JWiV/DI5kS/6a2bkoYrrNo8Ph0VQwqCLue48
+	 wVDm9L5k5RwTuNkDDVxukoYjiI1wKPhNT1cYcNtE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chris Mason <mason@kernel.org>,
 	Alexei Starovoitov <ast@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 105/816] bpf: Move the MAC header in bpf_lwt_seg6_adjust_srh()
-Date: Wed, 25 Nov 2026 15:27:33 +0100
-Message-ID: <20261125143851.645110399@linuxfoundation.org>
+Subject: [PATCH 6.12 106/816] bpf: Dont leave a stale MAC header in bpf_lwt_push_ip_encap()
+Date: Wed, 25 Nov 2026 15:27:34 +0100
+Message-ID: <20261125143851.667718541@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143849.205329330@linuxfoundation.org>
 References: <20261125143849.205329330@linuxfoundation.org>
@@ -68,92 +67,57 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chris Mason <mason@kernel.org>
+From: Alexei Starovoitov <ast@kernel.org>
 
-[ Upstream commit 0fcb3f11a93d740e7f9ae1aeb48fe4d25838be18 ]
+[ Upstream commit 701ffd202b9e32942c8cfc065c9fe76ceaccc302 ]
 
-bpf_skb_net_hdr_push() and bpf_skb_net_hdr_pop() change skb->data and
-skb->mac_header by len. That is correct in a tc prog, where skb->data is
-the MAC header. But bpf_lwt_seg6_adjust_srh() calls them in an End.BPF
-prog, where skb->data is the network header. The MAC header does not move:
+With BPF_LWT_ENCAP_IP, bpf_lwt_push_encap() pushes a new IP header. The new
+header overwrites the MAC header of a received skb. But skb->mac_header
+continues to point to the same bytes. Code that reads the MAC header after
+the push, for example netfilter, gets bytes of the new header.
 
-  before push  |       free       | MAC header   | IPv6 | SRH | payload
-               ^ head             ^ mac_header   ^ data
-  today        |       free       | MAC h| IPv6 | SRH   + len | payload
-               ^ head     ^ mac_header   ^ data
-  this patch   |   free   | MAC header   | IPv6 | SRH   + len | payload
-               ^ head     ^ mac_header   ^ data
+  before the push                        | MAC header  | old IP | payload
+                                         ^ mac_header  ^ network_header
+  today                            | new header        | old IP | payload
+                    network_header ^     ^ mac_header
+  this patch, lwt_in | MAC header  | new header        | old IP | payload
+                     ^ mac_header  ^ network_header
+  this patch, lwt_xmit             | new header        | old IP | payload
+                    network_header ^     mac_header is not set
 
-Users of skb_mac_header() get incorrect bytes until __dev_queue_xmit() sets
-skb->mac_header again. skb_cow_head() reserves only len bytes. Thus the
-16-bit offset skb->mac_header can wrap. A push also changes the "not set"
-value. In both cases skb_mac_header() points after the skb.
+For lwt_in, move the MAC header in front of the new header before the
+memcpy(), as __seg6_do_srh_encap() does. skb_cow_head() already reserves
+len + skb->mac_len bytes.
 
-Move the MAC header too. Pass len + skb->mac_len to skb_cow_head(). Keep
-the "not set" value. The second Fixes tag is for this case. Since that
-commit an End.BPF prog can get an skb with skb->mac_header not set.
+For lwt_xmit, the output path makes a new MAC header. Thus mark
+skb->mac_header as not set. This is the state of a locally generated skb.
 
-Fixes: fe94cc290f53 ("bpf: Add IPv6 Segment Routing helpers")
-Fixes: 20a081b7984c ("seg6: add VRF support for SRv6 End.DT6 behavior")
-Signed-off-by: Chris Mason <mason@kernel.org>
+Fixes: 52f278774e79 ("bpf: implement BPF_LWT_ENCAP_IP mode in bpf_lwt_push_encap")
 Signed-off-by: Alexei Starovoitov <ast@kernel.org>
-Link: https://patch.msgid.link/20261101190535.1454146-21-alexei.starovoitov@gmail.com
+Link: https://patch.msgid.link/20261101190535.1454146-22-alexei.starovoitov@gmail.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/core/filter.c | 21 ++++++++++++++++++++-
- 1 file changed, 20 insertions(+), 1 deletion(-)
+ net/core/lwt_bpf.c | 8 ++++++++
+ 1 file changed, 8 insertions(+)
 
-diff --git a/net/core/filter.c b/net/core/filter.c
-index 59db81c2438ba..1cebf5d12e81e 100644
---- a/net/core/filter.c
-+++ b/net/core/filter.c
-@@ -6756,6 +6756,7 @@ BPF_CALL_3(bpf_lwt_seg6_adjust_srh, struct sk_buff *, skb, u32, offset,
- {
- 	struct seg6_bpf_srh_state *srh_state =
- 		this_cpu_ptr(&seg6_bpf_srh_states);
-+	bool mac_set = skb_mac_header_was_set(skb);
- 	struct ipv6_sr_hdr *srh = srh_state->srh;
- 	void *srh_end, *srh_tlvs, *ptr;
- 	struct ipv6hdr *hdr;
-@@ -6781,20 +6782,38 @@ BPF_CALL_3(bpf_lwt_seg6_adjust_srh, struct sk_buff *, skb, u32, offset,
- 	if (unlikely(len > (U8_MAX << 3) - srh_state->hdrlen))
- 		return -EFAULT;
- 
+diff --git a/net/core/lwt_bpf.c b/net/core/lwt_bpf.c
+index d80899233441d..4978dcf6ffc1d 100644
+--- a/net/core/lwt_bpf.c
++++ b/net/core/lwt_bpf.c
+@@ -642,6 +642,14 @@ int bpf_lwt_push_ip_encap(struct sk_buff *skb, void *hdr, u32 len, bool ingress)
+ 	if (ingress)
+ 		skb_postpush_rcsum(skb, iph, len);
+ 	skb_reset_network_header(skb);
 +	/*
-+	 * skb->data is the network header here. The MAC header is in front of
-+	 * it, so bpf_skb_net_hdr_push() and bpf_skb_net_hdr_pop() do not move
-+	 * it with the other headers.
++	 * The new header goes over the MAC header. On ingress move it first.
++	 * On egress the packet gets a new one, so forget the old one.
 +	 */
- 	if (len > 0) {
--		ret = skb_cow_head(skb, len);
-+		ret = skb_cow_head(skb, len + skb->mac_len);
- 		if (unlikely(ret < 0))
- 			return ret;
- 
-+		/* The push can write over the MAC header, so move it first. */
-+		if (mac_set)
-+			memmove(skb->data - len - skb->mac_len,
-+				skb_mac_header(skb), skb->mac_len);
- 		ret = bpf_skb_net_hdr_push(skb, offset, len);
- 	} else {
- 		ret = bpf_skb_net_hdr_pop(skb, offset, -1 * len);
-+		/* The pop has added -len to skb->mac_header. */
-+		if (likely(!ret) && mac_set)
-+			memmove(skb->data - skb->mac_len,
-+				skb_mac_header(skb) + len, skb->mac_len);
- 	}
- 
- 	bpf_compute_data_pointers(skb);
- 	if (unlikely(ret < 0))
- 		return ret;
- 
-+	if (mac_set)
-+		skb_set_mac_header(skb, -skb->mac_len);
++	if (ingress)
++		skb_mac_header_rebuild(skb);
 +	else
 +		skb_unset_mac_header(skb);
-+
- 	hdr = (struct ipv6hdr *)skb->data;
- 	hdr->payload_len = htons(skb->len - sizeof(struct ipv6hdr));
+ 	if (is_udp_tunnel) {
+ 		size_t iph_sz = ipv4 ? iph->ihl * 4 : sizeof(struct ipv6hdr);
  
 -- 
 2.53.0
