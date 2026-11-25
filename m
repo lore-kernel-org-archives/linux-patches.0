@@ -1,52 +1,72 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795625026;
-	b=DBxircKGpPLiI08rZy9TnGLPxgHy90q2WRqoQLpAIawKfgiJpmAjuVVRrMfH+/hIy7mY
-	 yB21tucoGWnvdD6zUJcaWWrpwL+lFOM3M1WEhyv+D0OZDzVp9QBsKcWTtkOoXapSBosww
-	 ld1EHBCGJ+CiQ29kH8Y2ZopXww6zHZCYTxxBdmDedg/i2f0eheQ0wOzmOSzphV0TMlfYz
-	 M8oyhJ0kBjXZ0QRXNG4CmdfqAvCEFbOhhAlVTjOxMaddSErwh+s+j1uio4G58qoP6843B
-	 sIVRGvFcvOyFHFKQ3/nueswsHoLAI5BJrbrQjhf+Q9E7iKOq8LNkkQvHvqdR0TxF5Vw==
+	t=1795625029;
+	b=1Hx7vatyIrTOoxgwFCTgoUCjRT2dPJWLGsBReFwswPywoDb8JsXIgfDbr3zvxJ9z+MqG
+	 x8GMz3KvuUSZvnvV2z0vwyJKURkusZ2kjGHQTabrdvcyeFvmIrEt7V2r3zvzMH5nBCMiS
+	 /OmZnNMjPQtEkNHJO229S/Iiz5wf7ltUbJhaUCJPtZ8ooOoQszQaeLVAbgIAI+5yWoG5B
+	 OUXNzrKXZs5WYcy1v7rVESko+PxcSAlxUSM/Cblgpke18rS7k+PljIAtg9J099Dn34q50
+	 0FtkEnqbLi8JSkwWeWMYunLtnsAi2Q4+ye2vrYFEihi+dJtyeqqCwe/ypCKOPsy4ZIQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795625026;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795625029;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=bSJjW9s5SV55+D0VDHlgqJUQ8Bl+sBpEYOPfk7KANM8=;
-	b=Po3ktcDx3TSR061YX5ncMqK1NIzPIUIAYP4AQssz4IhZgJ1P8uacJiQv/QnYQm9k+sZS
-	 sk8dDgoVwTLGqUgYLwqu0PDEqsEy8sKEYLiMmhD6DmvlrFBh4ZC7A7bOrFcuKV/PK2Ikn
-	 Osc+EeLi0catdiU6TmKel62Vun6TeJxA7Vn5co/iEPaqpJ3en9Tz8YWB+MjwiC1SGH6Vj
-	 YownXsrWepWlSa4k6932VbAw0mNhHxEQtrAWyTShVKRLcr/NEv20+m5N8M9KOvs+GNdRR
-	 b7YlYAE5xXEEIA9Hz0+oJuRXjkk3+aCfTpya3esQD885zGBjhV2tX4T5beOiAkBaTzw==
+	bh=fA2HuY9ulj7KwzdIQAua8dniHNHoOhIJDFYcTrSWCKg=;
+	b=Yjya3yudprokKe18MnzOuCVBS5WDIaNSXKOykV6Z/jntE60XIs878S+SBQY8f0k6o71N
+	 mhXGdaJTs+LYTJc1Jpd67b0mY5rzgWG9mBseaaQte+A/d0Wlj29A+xTgCgLXzlxLknGoW
+	 LrZXSwYzAFXkPFnn2vJtAE6dIbVgeWsK2D1FuPhy9mnZes5GP7TmsJ5sG0rZDnRWeRuGV
+	 IEbCfoikTRQfkpwE0PuFVG6fTYRpRY5DWQl25+cie7o8jCIZydbcqclN5BZrQ6tS/fqEt
+	 NA2+p55sl0c590UAfcxwBDPNajnPqq6XOHmiv8TFIFmGuJicebZG5+PXbZfsnrTel1w==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=rW80EjwE;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Oj0A2fA+;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3CB18606A31E;
-	Wed, 25 Nov 2026 16:43:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 54DEC606A321;
+	Wed, 25 Nov 2026 16:43:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=rW80EjwE
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 852E71F000C4;
-	Wed, 25 Nov 2026 16:43:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Oj0A2fA+
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3D22F1F000C6;
+	Wed, 25 Nov 2026 16:43:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795625026;
-	bh=bSJjW9s5SV55+D0VDHlgqJUQ8Bl+sBpEYOPfk7KANM8=;
+	s=korg; t=1795625028;
+	bh=fA2HuY9ulj7KwzdIQAua8dniHNHoOhIJDFYcTrSWCKg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=rW80EjwEmsNfuF2hFRYe+l2mWKJdPOokygcVAkHQh9ch04S/cbp4+rkcqDnnR7L1H
-	 uBlHcToBsfGP/F2kqsi5SjmfeJ4IXthF9/DRzrKWogBaA+x28O3Wlj42+I9eInVXzz
-	 WOy2AaZ+KQrheWbnH+80DsqI6rV/Z3n5hNysDO8E=
+	b=Oj0A2fA+rcjUwTTG/gQh+ozoODRaMXloB5Br6nPyykS942epzsEbKU1Epgw9yDShF
+	 T7aoCy1ktzBlxQNvuhG7kgNrRfeHjcM3t1QlAvPMN/ofxPStVnO17B8c+4Vo3/1VzT
+	 U0fm7eE+QG4ZyXqiyvQtM95H4DD5teLwBdY2OvKw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alexandr <youdoit@mail.ru>,
-	Takashi Iwai <tiwai@suse.de>,
+	Salvatore Dipietro <dipiets@amazon.it>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	"Vlastimil Babka (SUSE)" <vbabka@kernel.org>,
+	Zi Yan <ziy@nvidia.com>,
+	Johannes Weiner <hannes@cmpxchg.org>,
+	Christoph Hellwig <hch@lst.de>,
+	David Hildenbrand <david@kernel.org>,
+	Michal Hocko <mhocko@suse.com>,
+	Matthew Wilcox <willy@infradead.org>,
+	Dave Chinner <dgc@kernel.org>,
+	Ritesh Harjani <ritesh.list@gmail.com>,
+	Dmitry Ilvokhin <d@ilvokhin.com>,
+	Hazem Mohamed Abuelfotoh <abuehaze@amazon.com>,
+	Ali Saidi <alisaidi@amazon.com>,
+	Geoff Blake <blakgeof@amazon.com>,
+	Christian Brauner <brauner@kernel.org>,
+	dipietro.salvatore@gmail.com,
+	"Darrick J. Wong" <djwong@kernel.org>,
+	Brendan Jackman <brendan.jackman@linux.dev>,
+	rvvandan@amazon.com,
+	Suren Baghdasaryan <surenb@google.com>,
+	"Garg, Shivank" <shivankg@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 383/816] ALSA: hda/realtek: Enable mute and mic-mute LEDs on HP ENVY 17-cr0xxx
-Date: Wed, 25 Nov 2026 15:32:11 +0100
-Message-ID: <20261125143858.071135162@linuxfoundation.org>
+Subject: [PATCH 6.12 384/816] mm/page_alloc: avoid direct reclaim and compaction for costly __GFP_NORETRY allocations
+Date: Wed, 25 Nov 2026 15:32:12 +0100
+Message-ID: <20261125143858.093324927@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143849.205329330@linuxfoundation.org>
 References: <20261125143849.205329330@linuxfoundation.org>
@@ -68,45 +88,181 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alexandr <youdoit@mail.ru>
+From: Salvatore Dipietro <dipiets@amazon.it>
 
-[ Upstream commit cf79cc4996bf936fe159af2a600519b3ebd4ccb7 ]
+[ Upstream commit 0e05a469c29400eb6e35448ce7318581688a1806 ]
 
-The HP ENVY Laptop 17-cr0xxx (subsystem ID 103c:8a2e) has mute and
-mic-mute LEDs on the F8 and F5 keys that never light up on Linux: the
-existing quirk entry only sets up the CS35L41 amplifiers.
+Commit 5d8edfb900d5 ("iomap: Copy larger chunks from userspace")
+introduced high-order folio allocations in the iomap buffered write path.
+When memory is fragmented, each failed costly-order allocation enters
+__alloc_pages_slowpath() which runs direct reclaim, direct compaction and
+drain_all_pages(), causing a 0.38x throughput drop on PostgreSQL pgbench
+(simple-update) with 1024 clients on a 96-vCPU arm64 system.
 
-The board uses the same LED wiring as the HP ENVY x360 15-ey0xxx
-(103c:8a31): the mute LED is driven by COEF 0x0b bits 3:2 and the
-mic-mute LED by GPIO2 with inverted polarity. Both were verified with
-hda-verb on the actual hardware. Switch the entry to
-ALC287_FIXUP_CS35L41_I2C_2_HP_MUTE_LEDS, which chains the amplifier
-setup with ALC245_FIXUP_HP_X360_MUTE_LEDS, and use the DMI product name
-of the board.
+The root issue is that direct reclaim and direct compaction are too
+expensive for hot allocation paths that have fallbacks to smaller
+allocations.  __filemap_get_folio_mpol() already marks higher-order
+allocations with __GFP_NORETRY | __GFP_NOWARN, signalling that the caller
+can handle failure.  However, the page allocator still enters the full
+blocking slowpath for costly orders with __GFP_NORETRY, which is
+unnecessarily aggressive when the caller will simply retry at a lower
+order.
 
-Fixes: aa8e3ef4fe53 ("ALSA: hda/realtek: Add quirks for various HP ENVY models")
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Alexandr <youdoit@mail.ru>
-Link: https://patch.msgid.link/20261103142121.74032-1-youdoit@mail.ru
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+For costly-order allocations with __GFP_NORETRY, clear
+__GFP_DIRECT_RECLAIM at the very start of the slowpath, before
+can_direct_reclaim, can_compact and the nofail checks are evaluated.  This
+makes the entire slowpath treat the request as non-blocking: no direct
+reclaim, no direct compaction and no drain_all_pages() IPI across every
+CPU.  Reclaim and compaction move to the background instead: kswapd is
+still woken for reclaim, and it wakes kcompactd for defragmentation.  The
+system keeps its long-term health while the latency-critical direct
+allocation path no longer stalls.
+
+Allocations that also request __GFP_THISNODE are exempted.  That flag
+pairing identifies the local-node-first THP attempt issued by
+alloc_pages_mpol() (mempolicy.c), which relies on direct compaction to
+form transparent huge pages.
+
+Clearing __GFP_DIRECT_RECLAIM makes these allocations reach the
+!can_direct_reclaim bailout, which since commit 4c0ed883e051
+("mm/page_alloc: fix defrag_mode for non-reclaimable allocations") drops
+ALLOC_NOFRAGMENT and retries instead of failing when defrag_mode is on.
+With vm.defrag_mode=1 a __GFP_NORETRY allocation could therefore succeed
+by fragmenting another migratetype's pageblock.  That is the wrong trade
+for a caller that has already communicated it can handle failure and has a
+cheap lower-order fallback, so exclude __GFP_NORETRY from the relaxation.
+The exclusion is not restricted to costly orders: any __GFP_NORETRY caller
+has said it can cope with failure, so failing is preferable to fragmenting
+for all of them.
+
+Test environment:
+  Hardware:  AWS EC2 m8g.24xlarge (96 vCPU, arm64)
+             12x 1TB IO2 32000 IOPS RAID0 XFS
+  OS:        AL2023
+  Kernel:    v7.3-rc1
+  Database:  PostgreSQL 18.4
+  Workload:  pgbench simple-update, 1024 clients, 96 threads, 1200s
+
+Results (average of 3 runs, TPS):
+
+  Config                                       Avg TPS   % vs baseline
+  v7.3-rc1 baseline (vm.defrag_mode=0)          58,602               -
+  v7.3-rc1 + this patch (vm.defrag_mode=0)     157,246         +168.3%
+  v7.3-rc1 baseline (vm.defrag_mode=1)         109,012               -
+  v7.3-rc1 + this patch (vm.defrag_mode=1)     157,778          +44.7%
+
+Link: https://lore.kernel.org/20261001082152.2879289-1-dipiets@amazon.it
+Link: https://lore.kernel.org/all/20260403193535.9970-1-dipiets@amazon.it/T/#t [v1]
+Link: https://lore.kernel.org/linux-mm/20260420161404.642-1-dipiets@amazon.it/T/#u [v2]
+Link: https://lore.kernel.org/all/20260710143437.12379-1-dipiets@amazon.it/T/#u [v3]
+Link: https://lore.kernel.org/all/20260904115629.3993331-1-dipiets@amazon.it/T/#u [v4]
+Link: https://lore.kernel.org/all/20260911142102.2294202-1-dipiets@amazon.it/T/#u [v5]
+Fixes: 5d8edfb900d5 ("iomap: Copy larger chunks from userspace")
+Signed-off-by: Salvatore Dipietro <dipiets@amazon.it>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Acked-by: Vlastimil Babka (SUSE) <vbabka@kernel.org>
+Acked-by: Zi Yan <ziy@nvidia.com>
+Reviewed-by: Johannes Weiner <hannes@cmpxchg.org>
+Reviewed-by: Christoph Hellwig <hch@lst.de>
+Cc: David Hildenbrand <david@kernel.org>
+Cc: Michal Hocko <mhocko@suse.com>
+Cc: Matthew Wilcox <willy@infradead.org>
+Cc: Dave Chinner <dgc@kernel.org>
+Cc: Ritesh Harjani <ritesh.list@gmail.com>
+Cc: Dmitry Ilvokhin <d@ilvokhin.com>
+Cc: Hazem Mohamed Abuelfotoh <abuehaze@amazon.com>
+Cc: Ali Saidi <alisaidi@amazon.com>
+Cc: Geoff Blake <blakgeof@amazon.com>
+Cc: Christian Brauner <brauner@kernel.org>
+Cc: <dipietro.salvatore@gmail.com>
+Cc: Darrick J. Wong <djwong@kernel.org>
+Cc: Brendan Jackman <brendan.jackman@linux.dev>
+Cc: <rvvandan@amazon.com>
+Cc: Suren Baghdasaryan <surenb@google.com>
+Cc: "Garg, Shivank" <shivankg@amd.com>
+
+introduced high-order folio allocations in the iomap buffered write path.
+When memory is fragmented, each failed costly-order allocation enters
+__alloc_pages_slowpath() which runs direct reclaim, direct compaction and
+drain_all_pages(), causing a 0.38x throughput drop on PostgreSQL pgbench
+(simple-update) with 1024 clients on a 96-vCPU arm64 system.
+
+The root issue is that direct reclaim and direct compaction are too
+expensive for hot allocation paths that have fallbacks to smaller
+allocations.  __filemap_get_folio_mpol() already marks higher-order
+allocations with __GFP_NORETRY | __GFP_NOWARN, signalling that the caller
+can handle failure.  However, the page allocator still enters the full
+blocking slowpath for costly orders with __GFP_NORETRY, which is
+unnecessarily aggressive when the caller will simply retry at a lower
+order.
+
+For costly-order allocations with __GFP_NORETRY, clear
+__GFP_DIRECT_RECLAIM at the very start of the slowpath, before
+can_direct_reclaim, can_compact and the nofail checks are evaluated.  This
+makes the entire slowpath treat the request as non-blocking: no direct
+reclaim, no direct compaction and no drain_all_pages() IPI across every
+CPU.  Reclaim and compaction move to the background instead: kswapd is
+still woken for reclaim, and it wakes kcompactd for defragmentation.  The
+system keeps its long-term health while the latency-critical direct
+allocation path no longer stalls.
+
+Allocations that also request __GFP_THISNODE are exempted.  That flag
+pairing identifies the local-node-first THP attempt issued by
+alloc_pages_mpol() (mempolicy.c), which relies on direct compaction to
+form transparent huge pages.
+
+Clearing __GFP_DIRECT_RECLAIM makes these allocations reach the
+!can_direct_reclaim bailout, which since commit 4c0ed883e051
+("mm/page_alloc: fix defrag_mode for non-reclaimable allocations") drops
+ALLOC_NOFRAGMENT and retries instead of failing when defrag_mode is on.
+With vm.defrag_mode=1 a __GFP_NORETRY allocation could therefore succeed
+by fragmenting another migratetype's pageblock.  That is the wrong trade
+for a caller that has already communicated it can handle failure and has a
+cheap lower-order fallback, so exclude __GFP_NORETRY from the relaxation.
+
+[ sashal: Dropped the defrag_mode hunk and kept can_compact = gfp_compaction_allowed(gfp_mask) without can_direct_reclaim &&, since this tree lacks the earlier defrag_mode change. ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/pci/hda/patch_realtek.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ mm/page_alloc.c | 18 +++++++++++++++---
+ 1 file changed, 15 insertions(+), 3 deletions(-)
 
-diff --git a/sound/pci/hda/patch_realtek.c b/sound/pci/hda/patch_realtek.c
-index 1a68e683801b1..bfc75a1733fb5 100644
---- a/sound/pci/hda/patch_realtek.c
-+++ b/sound/pci/hda/patch_realtek.c
-@@ -11089,7 +11089,7 @@ static const struct hda_quirk alc269_fixup_tbl[] = {
- 	SND_PCI_QUIRK(0x103c, 0x8a2b, "HP Envy 15", ALC287_FIXUP_CS35L41_I2C_2),
- 	SND_PCI_QUIRK(0x103c, 0x8a2c, "HP Envy 16", ALC287_FIXUP_CS35L41_I2C_2),
- 	SND_PCI_QUIRK(0x103c, 0x8a2d, "HP Envy 16", ALC287_FIXUP_CS35L41_I2C_2),
--	SND_PCI_QUIRK(0x103c, 0x8a2e, "HP Envy 16", ALC287_FIXUP_CS35L41_I2C_2),
-+	SND_PCI_QUIRK(0x103c, 0x8a2e, "HP ENVY Laptop 17-cr0xxx", ALC287_FIXUP_CS35L41_I2C_2_HP_MUTE_LEDS),
- 	SND_PCI_QUIRK(0x103c, 0x8a30, "HP Envy 17", ALC287_FIXUP_CS35L41_I2C_2),
- 	SND_PCI_QUIRK(0x103c, 0x8a31, "HP Envy 15", ALC287_FIXUP_CS35L41_I2C_2),
- 	SND_PCI_QUIRK(0x103c, 0x8a4f, "HP Victus 15-fa0xxx (MB 8A4F)", ALC245_FIXUP_HP_MUTE_LED_COEFBIT),
+diff --git a/mm/page_alloc.c b/mm/page_alloc.c
+index 51a1aad29d5a8..997d844ac0de0 100644
+--- a/mm/page_alloc.c
++++ b/mm/page_alloc.c
+@@ -4291,10 +4291,10 @@ static inline struct page *
+ __alloc_pages_slowpath(gfp_t gfp_mask, unsigned int order,
+ 						struct alloc_context *ac)
+ {
+-	bool can_direct_reclaim = gfp_mask & __GFP_DIRECT_RECLAIM;
+-	bool can_compact = gfp_compaction_allowed(gfp_mask);
+-	bool nofail = gfp_mask & __GFP_NOFAIL;
+ 	const bool costly_order = order > PAGE_ALLOC_COSTLY_ORDER;
++	bool can_direct_reclaim;
++	bool can_compact;
++	bool nofail;
+ 	struct page *page = NULL;
+ 	unsigned int alloc_flags;
+ 	unsigned long did_some_progress;
+@@ -4306,6 +4306,18 @@ __alloc_pages_slowpath(gfp_t gfp_mask, unsigned int order,
+ 	unsigned int zonelist_iter_cookie;
+ 	int reserve_flags;
+ 
++	/*
++	 * Costly __GFP_NORETRY callers have a cheap fallback, so don't stall
++	 * them in reclaim or compaction. __GFP_THISNODE callers are exempt.
++	 */
++	if (costly_order && (gfp_mask & __GFP_NORETRY) &&
++	    !(gfp_mask & __GFP_THISNODE))
++		gfp_mask &= ~__GFP_DIRECT_RECLAIM;
++
++	can_direct_reclaim = gfp_mask & __GFP_DIRECT_RECLAIM;
++	can_compact = gfp_compaction_allowed(gfp_mask);
++	nofail = gfp_mask & __GFP_NOFAIL;
++
+ 	if (unlikely(nofail)) {
+ 		/*
+ 		 * We most definitely don't want callers attempting to
 -- 
 2.53.0
 
