@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795620961;
-	b=UjT3drJiD2dJIuZpPrvItnjni51v5SXjrrsYEamUSFCVIiPWYj8pU7CeLpwPqmnLA4Yg
-	 L4S4PZe+YdshOqs8CgWo6X+WyCg1uDccQOaranqOr9hwszGF2f6Fs1jMKiOElntb3PiId
-	 AKisCwZgAexCnw/suc+uVczaVDd3brxe7A4u/iOtBlJuwNXZuUmQLBOF6/IZvllOru2zu
-	 1s6EVDoZglkIA+/CyNSUAr7rrpqNMd8OTWEkV/r+T3Q/jB032j6KVO7qTrjhzUREYfLCD
-	 6jbSeGKkax5wked24QvNBJ6apVaA36OoPEQb1UivQBynkg/OAJjApDWtdc5xKRBiICg==
+	t=1795620964;
+	b=lmxeK/fGPed/2clHkpJAcDwzth6mat5sQ+WdTzv11LT8OSeoKwpBY1sS6KfMCr42MuHG
+	 qaNamHCuo7lLv9GTRTQPU+n2piGDO7NR3iQPIgb6X43IF07kCiAxbue0nM/8PvxkHN9Ju
+	 CbtBQwWiySKKZ+iSYrpKns/e/P858cp/1aSJngJ0/ML8bKzpoadgzpVn5ftvvvPyXfFxj
+	 XBUoHTQTsHjDmNOrZwiyNofZo/fJHtMDAPzpfL896bOMUluqymEfTAbjHTV4kSuzAXnkB
+	 PssxS0joqsICDxuGrSoOKbpPNYyzn/LdBsnKEJ5Wfinnb3An5InmzjT9wfL7YbXVBwA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795620961;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795620964;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=WxxTHQamF4oJ+TNc8Wgaxrd/dsNlzshkSipRzSGPw9I=;
-	b=eAkfYDfd1/luQpXfjV0j/ZHQxN97+lAoO1kh6b8mnBKjKYOEsTeCl3+zzkhZhdSFo+p9
-	 9Qvm1rZc+iYLWlPr9M6XE6ihdJ5HDC58hTGCborM2TozhkYJYxe8xXKc/uZmowI1H06GR
-	 tWjPUW+RtFD9iAhXsaJ81SxWNv4ArxPvwe3DrncZgxXJZcueHrsj8L80wyG/JBXXe8kRD
-	 V20u5HzPcV7+cyAH47L3w/KhYz08OTA4VJZRkBwSulLWWN/vcmb7l9JRLI9J8Dh+bTUCw
-	 yMaNRGrfAp2CIo9VfC2shalS1OPiwxy0CfLjV7VWXTzZD2Ywfz0cJznCTir0e3nreUA==
+	bh=IanN1f2xWKQ52YX4O0G0M76A2oD3TrMjyArRGba8wt8=;
+	b=WbIXw+8HrwOGn2PsC6IelYFAl4WyOW/n60HGCTd9PLzwGdzFt0k9jF3BWMFdlSJe0Xhm
+	 qzDlCpxmhoW9yX9uuyjs7anHVjO8VgxxPEDaeD0XK53HYGXC+yFUzhw7aPt9l92QHvJkL
+	 371bePgADgnQHV5U+9TS/qPo5lGGjlHIqgV1nZBXeJiSz/d0KSF/yZiab+gqObEi8WqbI
+	 LrQS8UT7J7nM8UqSetosVTiwWb0T5WURYzM5bODytjq8lQE6sfW0x38vHndOhtNCStx4a
+	 U/wn23Bnv70TGjB1u9VwaK7vnhcrVlPcjUhU5dvmS1r8otDBXoHtEBOed4crEfnNH7g==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=TaVDTujk;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=OryiMrGw;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 82BE9606A697;
-	Wed, 25 Nov 2026 15:36:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6754F607DE4B;
+	Wed, 25 Nov 2026 15:36:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=TaVDTujk
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 96E681F000CF;
-	Wed, 25 Nov 2026 15:36:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=OryiMrGw
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8BF0F1F000CA;
+	Wed, 25 Nov 2026 15:36:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795620961;
-	bh=WxxTHQamF4oJ+TNc8Wgaxrd/dsNlzshkSipRzSGPw9I=;
+	s=korg; t=1795620964;
+	bh=IanN1f2xWKQ52YX4O0G0M76A2oD3TrMjyArRGba8wt8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=TaVDTujk8EgEP5T3rlBIvhKaYCz2LEXfF3CfWrgDzFNX4Q9n1LuSWO3Ln/2ThE57m
-	 qAzNzMzstgqvSHz1z1KaS0zafL+X/i/YXQKyT408ouFuhrNZxxJln4KCqw1tM3LigJ
-	 N/J7b7PoSLhZWOCIb1ZxQLBB8PSBxXuL60Uf90O0=
+	b=OryiMrGw/jP43Yo+UALiC4j7OJAQGOBXDKuCzQT0ZGmUmVJztNJVS+JWCFrBPRyO6
+	 hdeyqa7ZZnOuc02TndsvBYt6aVbvFsCbCuop4jRV7dhsROHEKCENrNlhCYbKlvxO2Q
+	 jWRVdoi4cXa+Hm2OXOthpGkQlTyj9vujDx7WQggs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Remi Pommarel <repk@triplefau.lt>,
+	Omokefe Emmanuel Onanaroghene <emmaonana18@gmail.com>,
 	Dominique Martinet <asmadeus@codewreck.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 078/990] 9p: Add mount option for negative dentry cache retention
-Date: Wed, 25 Nov 2026 15:24:05 +0100
-Message-ID: <20261125143823.915916176@linuxfoundation.org>
+Subject: [PATCH 6.18 079/990] 9p: fix kernel-doc warning for enum p9_session_flags
+Date: Wed, 25 Nov 2026 15:24:06 +0100
+Message-ID: <20261125143823.938668093@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143822.072087159@linuxfoundation.org>
 References: <20261125143822.072087159@linuxfoundation.org>
@@ -68,135 +68,98 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Remi Pommarel <repk@triplefau.lt>
+From: Omokefe Emmanuel Onanaroghene <emmaonana18@gmail.com>
 
-[ Upstream commit 5670a84b5cda6b82016282accfd61ef36aceafbf ]
+[ Upstream commit d037e9c1b40c28eb57ea10947141cad3781b91a7 ]
 
-Introduce a new mount option, negtimeout, for v9fs that allows users
-to specify how long negative dentries are retained in the cache. The
-retention time can be set in milliseconds (e.g. negtimeout=10000 for
-a 10secs retention time) or a negative value (e.g. negtimeout=-1) to
-keep negative entries until the buffer cache management removes them.
+kernel-doc cannot parse enum p9_session_flags, since its documentation
+comment is followed by #define lines instead of the enum declaration:
 
-For consistency reasons, this option should only be used in exclusive
-or read-only mount scenarios, aligning with the cache=loose usage.
+  fs/9p/v9fs.h:31 : error: Cannot parse enum!
 
-Signed-off-by: Remi Pommarel <repk@triplefau.lt>
-Message-ID: <b2d66500aa5a2f6540347c4aa46a4be10dd01bc6.1779355927.git.repk@triplefau.lt>
+Move the three #define lines below the enum whose values they are
+derived from, and give V9FS_ACCESS_ANY and V9FS_ACCESS_MASK their own
+kernel-doc comments with the descriptions they had in the enum comment.
+
+Also document the four enum members that had no description, using the
+corresponding mount option wording from
+Documentation/filesystems/9p.rst.
+
+Fixes: 76381a42e4a5 ("fs/9p: Add access = client option to opt in acl evaluation.")
+Assisted-by: LLM
+Signed-off-by: Omokefe Emmanuel Onanaroghene <emmaonana18@gmail.com>
+Message-ID: <20261002035837.39703-1-emmaonana18@gmail.com>
+[Dominique: slight reword, also fixed typo in Doc/ for access=client]
 Signed-off-by: Dominique Martinet <asmadeus@codewreck.org>
-Stable-dep-of: d037e9c1b40c ("9p: fix kernel-doc warning for enum p9_session_flags")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- Documentation/filesystems/9p.rst |  5 +++++
- fs/9p/v9fs.c                     | 16 +++++++++++++++-
- fs/9p/v9fs.h                     | 23 +++++++++++++----------
- 3 files changed, 33 insertions(+), 11 deletions(-)
+ Documentation/filesystems/9p.rst |  2 +-
+ fs/9p/v9fs.h                     | 26 ++++++++++++++++++--------
+ 2 files changed, 19 insertions(+), 9 deletions(-)
 
 diff --git a/Documentation/filesystems/9p.rst b/Documentation/filesystems/9p.rst
-index be3504ca034a8..b014c7aabba4e 100644
+index b014c7aabba4e..e80dae4dd62be 100644
 --- a/Documentation/filesystems/9p.rst
 +++ b/Documentation/filesystems/9p.rst
-@@ -238,6 +238,11 @@ Options
-   cachetag	cache tag to use the specified persistent cache.
- 		cache tags for existing cache sessions can be listed at
- 		/sys/fs/9p/caches. (applies only to cache=fscache)
-+
-+  negtimeout    the duration (in milliseconds) that negative dentries (paths
-+                that do not actually exist) are retained in the cache. If
-+                set to a negative value, those entries are kept indefinitely
-+                until evicted by the buffer cache management system
-   ============= ===============================================================
+@@ -231,7 +231,7 @@ Options
+ 			any
+ 				v9fs does single attach and performs all
+ 				operations as one user
+-			clien
++			client
+ 				 ACL based access check on the 9p client
+ 			         side for access validation
  
- Behavior
-diff --git a/fs/9p/v9fs.c b/fs/9p/v9fs.c
-index a2a01a2ac1fb1..4301e01b21c2e 100644
---- a/fs/9p/v9fs.c
-+++ b/fs/9p/v9fs.c
-@@ -40,7 +40,7 @@ enum {
- 	 * source if we rejected it as EINVAL */
- 	Opt_source,
- 	/* Options that take integer arguments */
--	Opt_debug, Opt_dfltuid, Opt_dfltgid, Opt_afid,
-+	Opt_debug, Opt_dfltuid, Opt_dfltgid, Opt_afid, Opt_negtimeout,
- 	/* String options */
- 	Opt_uname, Opt_remotename, Opt_cache, Opt_cachetag,
- 	/* Options that take no arguments */
-@@ -103,6 +103,7 @@ const struct fs_parameter_spec v9fs_param_spec[] = {
- 	fsparam_string	("access",	Opt_access),
- 	fsparam_flag	("posixacl",	Opt_posixacl),
- 	fsparam_u32	("locktimeout",	Opt_locktimeout),
-+	fsparam_s32	("negtimeout",	Opt_negtimeout),
- 
- 	/* client options */
- 	fsparam_u32	("msize",	Opt_msize),
-@@ -142,6 +143,9 @@ int v9fs_show_options(struct seq_file *m, struct dentry *root)
- 			   from_kgid_munged(&init_user_ns, v9ses->dfltgid));
- 	if (v9ses->afid != ~0)
- 		seq_printf(m, ",afid=%u", v9ses->afid);
-+	if (v9ses->flags & V9FS_NDENTRY_TIMEOUT_SET)
-+		seq_printf(m, ",negtimeout=%d",
-+			   (int)v9ses->ndentry_timeout_ms);
- 	if (strcmp(v9ses->uname, V9FS_DEFUSER) != 0)
- 		seq_printf(m, ",uname=%s", v9ses->uname);
- 	if (strcmp(v9ses->aname, V9FS_DEFANAME) != 0)
-@@ -318,6 +322,16 @@ int v9fs_parse_param(struct fs_context *fc, struct fs_parameter *param)
- 		session_opts->session_lock_timeout = (long)result.uint_32 * HZ;
- 		break;
- 
-+	case Opt_negtimeout:
-+		session_opts->flags |= V9FS_NDENTRY_TIMEOUT_SET;
-+		if (result.int_32 < 0) {
-+			session_opts->ndentry_timeout_ms =
-+				NDENTRY_TIMEOUT_NEVER;
-+		} else {
-+			session_opts->ndentry_timeout_ms = result.int_32;
-+		}
-+		break;
-+
- 	/* Options for client */
- 	case Opt_msize:
- 		if (result.uint_32 < 4096) {
 diff --git a/fs/9p/v9fs.h b/fs/9p/v9fs.h
-index e630c5111d749..a462bcbfc7da4 100644
+index a462bcbfc7da4..ea3cfdf2580f3 100644
 --- a/fs/9p/v9fs.h
 +++ b/fs/9p/v9fs.h
-@@ -24,6 +24,8 @@
-  * @V9FS_ACCESS_ANY: use a single attach for all users
-  * @V9FS_ACCESS_MASK: bit mask of different ACCESS options
+@@ -21,20 +21,16 @@
+  * @V9FS_ACCESS_SINGLE: only the mounting user can access the hierarchy
+  * @V9FS_ACCESS_USER: a new attach will be issued for every user (default)
+  * @V9FS_ACCESS_CLIENT: Just like user, but access check is performed on client.
+- * @V9FS_ACCESS_ANY: use a single attach for all users
+- * @V9FS_ACCESS_MASK: bit mask of different ACCESS options
   * @V9FS_POSIX_ACL: POSIX ACLs are enforced
-+ * @V9FS_NDENTRY_TIMEOUT_SET: Has negative dentry timeout retention time been
-+ *                            overridden by negtimeout mount option
++ * @V9FS_NO_XATTR: do not offer xattr functions on this mount
++ * @V9FS_IGNORE_QV: ignore qid.version==0 as a marker to disable data cache
++ * @V9FS_DIRECT_IO: disable data read/write cache
++ * @V9FS_SYNC: disable data write cache
+  * @V9FS_NDENTRY_TIMEOUT_SET: Has negative dentry timeout retention time been
+  *                            overridden by negtimeout mount option
   *
   * Session flags reflect options selected by users at mount time
   */
-@@ -34,16 +36,17 @@
- #define V9FS_ACL_MASK V9FS_POSIX_ACL
- 
+-#define	V9FS_ACCESS_ANY (V9FS_ACCESS_SINGLE | \
+-			 V9FS_ACCESS_USER |   \
+-			 V9FS_ACCESS_CLIENT)
+-#define V9FS_ACCESS_MASK V9FS_ACCESS_ANY
+-#define V9FS_ACL_MASK V9FS_POSIX_ACL
+-
  enum p9_session_flags {
--	V9FS_PROTO_2000U    = 0x01,
--	V9FS_PROTO_2000L    = 0x02,
--	V9FS_ACCESS_SINGLE  = 0x04,
--	V9FS_ACCESS_USER    = 0x08,
--	V9FS_ACCESS_CLIENT  = 0x10,
--	V9FS_POSIX_ACL      = 0x20,
--	V9FS_NO_XATTR       = 0x40,
--	V9FS_IGNORE_QV      = 0x80, /* ignore qid.version for cache hints */
--	V9FS_DIRECT_IO      = 0x100,
--	V9FS_SYNC           = 0x200
-+	V9FS_PROTO_2000U         = 0x01,
-+	V9FS_PROTO_2000L         = 0x02,
-+	V9FS_ACCESS_SINGLE       = 0x04,
-+	V9FS_ACCESS_USER         = 0x08,
-+	V9FS_ACCESS_CLIENT       = 0x10,
-+	V9FS_POSIX_ACL           = 0x20,
-+	V9FS_NO_XATTR            = 0x40,
-+	V9FS_IGNORE_QV           = 0x80, /* ignore qid.version for cache hints */
-+	V9FS_DIRECT_IO           = 0x100,
-+	V9FS_SYNC                = 0x200,
-+	V9FS_NDENTRY_TIMEOUT_SET = 0x400,
+ 	V9FS_PROTO_2000U         = 0x01,
+ 	V9FS_PROTO_2000L         = 0x02,
+@@ -49,6 +45,20 @@ enum p9_session_flags {
+ 	V9FS_NDENTRY_TIMEOUT_SET = 0x400,
  };
  
++/**
++ * V9FS_ACCESS_ANY - use a single attach for all users
++ */
++#define	V9FS_ACCESS_ANY (V9FS_ACCESS_SINGLE | \
++			 V9FS_ACCESS_USER |   \
++			 V9FS_ACCESS_CLIENT)
++
++/**
++ * V9FS_ACCESS_MASK - bit mask of different ACCESS options
++ */
++#define V9FS_ACCESS_MASK V9FS_ACCESS_ANY
++
++#define V9FS_ACL_MASK V9FS_POSIX_ACL
++
  /**
+  * enum p9_cache_shortcuts - human readable cache preferences
+  * @CACHE_SC_NONE: disable all caches
 -- 
 2.53.0
 
