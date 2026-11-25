@@ -1,55 +1,56 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795623868;
-	b=dNpTQmCDBiEfO8F2GlyKVUHVTXfIjic9sFp4h/PVVDwTsuTql8SSc/+0ylPbrrnB3tnQ
-	 FKqx7ULRU1LwgSkA+EbGvgJXzk/wy5vC+V4I1MCeIenVL5SUQXKXoe5Zvt8DGi/ymzELX
-	 fgj6jV9z3Uxuv3w/SJHPIo2G+ICXI0sYT7hFseODzZNc17quKrI7hdmzzE1ATzdVYB0p7
-	 DKycdebguLH/z6FMx0/+nkWJ+t/YpjUbdaAqn2hw0cRQ5BxExQpFLFCNPwcQ7Zp6YNoYF
-	 LlZltNJHE6qd688wOtGIH6BR5HdKsYJCNlVFJCF4RiylW9l3fC6t3d4jgCRX2FLsqtg==
+	t=1795623872;
+	b=SQ7nhtF6nf2eTand0yD2erCmDUcOvxu2e0YDmxHkE3Vao8ZXpm/IwNzwkCMXqqlXEErp
+	 9V4J1qjzRyUs5UDXMD/wW7TMpXpqIky9wItDTxMRlQBKi7pZM22K3ZHR6U3uSY+aebBiO
+	 GX12htqPm+FS7peh6kL9BmFsIRN2RARoUsLbwhaXYxvh/K5nvC5Sb+kBMkxtnaoVfpago
+	 AjcrIy23zUdhEHe0KZ4fd2TgvepzxOPPmJyRbKsu0RgyvYDhgNE8nbUyK+9trWnf84RWk
+	 yD6YzGHhoPbU07mds9fg5YQcxlTOkHCb9ghtnkdlH0Ug6wk5ZlmLH71wH/HyNB0xjtA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795623868;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795623872;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=Pq6RH/kA+aMb6DyNsaI4FIAZlzhC80e3xJTQjXZGX6M=;
-	b=a1+e/pqIqBwcunw6LQc8Eb/WVwVqgHQlHzsAoaTeUsG5UUWDZYVptcrFTjIzsM/TtFQN
-	 e2u64wGIriWeR4+WqwcUh6JhCg0+3tSroVnV3OP1eZNQiESLcEvuyL6/wwr4+Kfnuv8XN
-	 Yhqrhb833ytyn6FPPsyIp1PPQSBNOf/GZrdlRyWa5vcKEa3m4Tg2ebiydPfKnD4ad/KWq
-	 chECAFmv64spmL++FSGdR7Txy72x8JT5N6hff0OcRAyCwaz8gn4jj+CkGOwA4EDUyuhaU
-	 ZNh8x6SpUuhTnTub6nFnJC9tyMiHudwlB6tpKdcd8S7DW7iAUG6L1qyciaw3G1L8Geg==
+	bh=GTHpbR2fxAeaZz6BiSFa47Ni1l5eWqAGtDtS3VnIIFI=;
+	b=C0e5IfADW2HM/hJ8chuT0v+T5yrk2zXpHb8ZvGgYITRN+XaXb11WQuUcpbcf/+bfCtL8
+	 w0zjRYEX2ZzS1XTwXeAKqFnyZ8wPmciI/6x/mEEoChr2mzUY4PAver4yeTiu3PA72dewL
+	 +kdGAhYF9LFAfJOMaXozq/W5nnyL+BzW3Ek/IJB7/righEZm0L2PDUrAWhFNvS4TvBwiT
+	 rueelDfXhc9yd7yrUZ9vTHsBM16/cJbYi75PRjc2E5PS/8mRS7yzUbtzruMqJ/cF9szen
+	 +zpp4BjDRAo1QJ35K//rpWu84x4aXnvxJaPjGyggu+aEgvY5AR3WCKaTvFUzB0TZkWw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=0Sz9G4S1;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=at7iBbza;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8318C606A329;
-	Wed, 25 Nov 2026 16:24:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8BF0E606A32C;
+	Wed, 25 Nov 2026 16:24:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=0Sz9G4S1
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C7A771F008B2;
-	Wed, 25 Nov 2026 16:24:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=at7iBbza
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3CA751F000C4;
+	Wed, 25 Nov 2026 16:24:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795623868;
-	bh=Pq6RH/kA+aMb6DyNsaI4FIAZlzhC80e3xJTQjXZGX6M=;
+	s=korg; t=1795623871;
+	bh=GTHpbR2fxAeaZz6BiSFa47Ni1l5eWqAGtDtS3VnIIFI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=0Sz9G4S1LVkuL1/HM18bhYP+oAc1iIwdNGkMs/ju4lom7eRPmuh25hiA2fhrEvtVr
-	 i8Qp/4HnxP+vthknfVtlfGP0NMhYKldx1M0iH8Qu41qMl/H5qXJjG8mYtN5FV77+bO
-	 OzCzup3JNrObO03aFMg1Y5pALr8Pdf37t9rJIH4s=
+	b=at7iBbzaI4qukfyYWC7HagJ5OY99h9IikwkV5eHy42FJhZdtguvdsc7EzBychASET
+	 RK+7tbcfwEv+96QZMjZsfhqmR0HeABmE/J4t0x0LtfPLcAjPhL2kazzUu8JyCA9rDG
+	 2lexXt3vWdYooHZVTbPgYhE7ir1C/kcL7WMdLY+0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Luiz Capitulino (Red Hat)" <luiz.capitulino@linux.dev>,
-	Michael Ellerman <mpe@kernel.org>,
-	Madhavan Srinivasan <maddy@linux.ibm.com>
-Subject: [PATCH 6.18 975/990] powerpc/watchdog: disable watchdog when watchdog_thresh=0
-Date: Wed, 25 Nov 2026 15:39:02 +0100
-Message-ID: <20261125143844.822696743@linuxfoundation.org>
+	Bas Nieuwenhuizen <bas@basnieuwenhuizen.nl>,
+	Faith Ekstrand <faith.ekstrand@collabora.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.12 004/816] drm/amdgpu: Check cs flags.
+Date: Wed, 25 Nov 2026 15:25:52 +0100
+Message-ID: <20261125143849.317812101@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
-In-Reply-To: <20261125143822.072087159@linuxfoundation.org>
-References: <20261125143822.072087159@linuxfoundation.org>
+In-Reply-To: <20261125143849.205329330@linuxfoundation.org>
+References: <20261125143849.205329330@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -64,94 +65,47 @@ Precedence: list
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.18-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Luiz Capitulino (Red Hat) <luiz.capitulino@linux.dev>
+From: Bas Nieuwenhuizen <bas@basnieuwenhuizen.nl>
 
-commit d513ec3c907b067d4a32b14ec6f73c3e041cb136 upstream.
+[ Upstream commit f5ea64f9fcd921bc4e2307a262e19450b8a58524 ]
 
-On powerpc, trying to disable the hardlockup detector with:
+Had no validation before. libdrm_amdgpu memsets this, even
+for the raw/raw2 functions.
 
- # echo 0 > /proc/sys/kernel/watchdog_thresh
+We have a lot of functions touching the ioctl struct, no
+strong opinion on where this is placed, but I thought
+early would be good.
 
-causes an immediate and endless hardlockup detection, eventually leading
-to an unusable system (splat example below). This happens because
-watchdog_calc_timeouts() sets wd_timer_period_ms, wd_panic_timeout_tb
-and wd_smp_panic_timeout_tb to zero, but start_watchdog() still starts
-the timer (with expiry=0) in this code path:
-
-proc_watchdog_thresh()
-  proc_watchdog_update()
-    __lockup_detector_reconfigure()
-      watchdog_hardlockup_start()
-        start_watchdog_on_cpu()
-          start_watchdog()
-            hrtimer_start() /* wd_timer_period_ms=0 */
-
-However, according to Documentation/admin-guide/sysctl/kernel.rst,
-setting watchdog_thresh=0 should disable both the soft and hard lockup
-detectors.
-
-This condition is already checked in __lockup_detector_reconfigure() for
-the soft lockup detector and the arch-independent hardlockup detector,
-what's missing is powerpc performing the same check in start_watchdog().
-
-[  278.110085] watchdog: CPU 0 detected hard LOCKUP on other CPUs 1
-[  278.110086] watchdog: CPU 1 became unstuck TB:33050716089564575
-[  278.110097] CPU: 1 UID: 0 PID: 0 Comm: swapper/1 Kdump: loaded Tainted: G            E       7.4.0-rc1 #1 PREEMPT(full)
-[  278.110103] watchdog: CPU 0 TB:33050716089564185, last SMP heartbeat TB:33050716089563885 (0ms ago)
-[  278.110109] Tainted: [E]=UNSIGNED_MODULE
-[  278.110126] Hardware name: IBM,8375-42A POWER9 (architected) 0x4e0202 0xf000005 of:IBM,FW940.00 (VL940_027) hv:phyp pSeries
-[  278.110136] NIP:  c0000000001bd518 LR: c0000000014dedf8 CTR: 0000000000000000
-[  278.110145] REGS: c000000004b17a80 TRAP: 0900   Tainted: G            E        (7.4.0-rc1)
-[  278.110155] MSR:  800000000280b033 <SF,VEC,VSX,EE,FP,ME,IR,DR,RI,LE>  CR: 22000224  XER: 20040004
-[  278.110189] CFAR: 0000000000000000 IRQMASK: 0
-GPR00: 0000000000000000 c000000004b17d20 c000000001c38100 0000000000000000
-GPR04: 000000000000ffff 0000000000000000 0000000000000000 0000000000000000
-GPR08: 0000000000000000 0000000000000080 0000000000000080 ffffffffffffffff
-GPR12: 0000000000000000 c000000017fff300 0000000000000000 000000002ef3d820
-GPR16: 0000000000000000 0000000000000000 0000000000000000 0000000000000000
-GPR20: 0000000000000000 0000000000000000 0000000000000000 0000000000000001
-GPR24: 0000000000000001 00000040c0a6075e 0000000000000000 0000000000000001
-GPR28: c0000001fdb5b140 0000000000000001 c000000002291968 c000000002291970
-[  278.110306] NIP [c0000000001bd518] plpar_hcall_norets_notrace+0x18/0x2c
-[  278.110319] LR [c0000000014dedf8] check_and_cede_processor+0x48/0x60
-[  278.110333] Call Trace:
-[  278.110338] [c000000004b17d20] [c000000004b17dd0] 0xc000000004b17dd0 (unreliable)
-[  278.110354] [c000000004b17d80] [c0000000014df020] shared_cede_loop+0x70/0x170
-[  278.110367] [c000000004b17dc0] [c0000000014de460] cpuidle_enter_state+0x2f0/0x748
-[  278.110381] [c000000004b17e70] [c000000000fe43b8] cpuidle_enter+0x48/0x70
-[  278.110397] [c000000004b17eb0] [c0000000002cdcf8] call_cpuidle+0x48/0x90
-[  278.110409] [c000000004b17ed0] [c0000000002d6300] cpuidle_idle_call+0x160/0x2d0
-[  278.110422] [c000000004b17f20] [c0000000002d6578] do_idle+0x108/0x1f0
-[  278.110434] [c000000004b17f60] [c0000000002d6938] cpu_startup_entry+0x48/0x50
-[  278.110446] [c000000004b17f90] [c0000000000615c0] start_secondary+0x290/0x2a0
-[  278.110459] [c000000004b17fe0] [c00000000000e258] start_secondary_prolog+0x10/0x14
-
-Fixes: 2104180a5369 ("powerpc/64s: implement arch-specific hardlockup watchdog")
+Signed-off-by: Bas Nieuwenhuizen <bas@basnieuwenhuizen.nl>
+Reviewed-by: Faith Ekstrand <faith.ekstrand@collabora.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+(cherry picked from commit 4d01e15e76358f60ef6734462d2b6d9972b9dfbc)
 Cc: stable@vger.kernel.org
-Signed-off-by: Luiz Capitulino (Red Hat) <luiz.capitulino@linux.dev>
-Reviewed-by: Michael Ellerman <mpe@kernel.org>
-Signed-off-by: Madhavan Srinivasan <maddy@linux.ibm.com>
-Link: https://patch.msgid.link/20261104034018.2676750-1-luiz.capitulino@linux.dev
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/powerpc/kernel/watchdog.c |    3 +++
+ drivers/gpu/drm/amd/amdgpu/amdgpu_cs.c | 3 +++
  1 file changed, 3 insertions(+)
 
---- a/arch/powerpc/kernel/watchdog.c
-+++ b/arch/powerpc/kernel/watchdog.c
-@@ -482,6 +482,9 @@ static void start_watchdog(void *arg)
- 	if (!(watchdog_enabled & WATCHDOG_HARDLOCKUP_ENABLED))
- 		return;
+diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_cs.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_cs.c
+index 364fbaf4e0fa5..4ad34def4cd13 100644
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_cs.c
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_cs.c
+@@ -209,6 +209,9 @@ static int amdgpu_cs_pass1(struct amdgpu_cs_parser *p,
+ 	int ret;
+ 	int i;
  
-+	if (!watchdog_thresh)
-+		return;
++	if (cs->in.flags)
++		return -EINVAL;
 +
- 	if (!cpumask_test_cpu(cpu, &watchdog_cpumask))
- 		return;
- 
+ 	chunk_array = memdup_array_user(u64_to_user_ptr(cs->in.chunks),
+ 					cs->in.num_chunks,
+ 					sizeof(uint64_t));
+-- 
+2.53.0
+
 
 
