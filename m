@@ -1,42 +1,42 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795621499;
-	b=ffD/DmgwdDZQaz9/MRnS5FdUnSzt3+RihHMohWOFDT/b6MjCMmImYrVjp+FxqQIkLLSG
-	 /3JnkhEcZz1Q+sD1diyRVIvev8Ccc10Fmvvr5GNwp27XLQvRCM9mglFxobNzuGRDb6oIP
-	 DydW3KHrPUk0UpjgJqnVL/h9k5fl9/5u3MzYBwMEyZXjMev55Hj1yMcCCT9diBuO5Gx2X
-	 IxGP7Jo9l9HeVHLfxwfjMaUv0m6HbXVoRnol5gotd3y44/cniEcmoffQOTATQ2hygYjfN
-	 KVZdyqTAc6wSwEKk1R1+z54APj13TTUn567bt7vNnNhqqEh4c9VqKMswci/tL+2znMw==
+	t=1795621502;
+	b=wv12v/UYG7BSNc8+myxVS3+58MKI3Db2fWDP7owTuC5xbbcSk5lSIf0Kt78UUJv+FvZd
+	 Xn/rvgeQYMvvAggkxoZ5/cRmvT30Rk6mccz3Sq4+pwT5JuTFWeNxbkB0y2ZxenMVnfd1x
+	 UayMpryU8LTiSNu/osqbWQji1wvLdlllL+o/VW/CATGcE3mXy10baodNehPSX53vJcUII
+	 MQ6VmMqjHE3UVs407V9u33zqvZledEFPnDYz0puR8OxNwWh8BRGqfYJgcl2/l9NDK9a3d
+	 /lYH2TLey4ZGePYo6phIIVwVA2l9JTXM9hf31KjZYLOurkCVtYv7WHxdTSjmCeuVGqw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795621499;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795621502;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=VickcR66O6J/5C7q+DDwoivZtCxc7L+ZXp+DTi9Vewo=;
-	b=KBUWr1SskzQsQZM1/WenJGo0l04vkOCLNJaUXwbaWySxAMXHf/4k+oF7nzub+YMneitr
-	 cYGNUcqgXYfJKu7HIX/VcyhxnjYFmEiaII9n0R+8dG+vburooUM5NJL43GhVfLt+g2GNC
-	 UFx6iykk0ObIFGi5gjr/xVppcTuK7PUDTO9JcRhZq4bbjO1yG3aedvtGeSNagN0/8tCz4
-	 Vh89TC/bmGuOD8DkxIYwqyUcMTBfC4kWc03IMmAD6T+Jvs0zAxxzlmZL52JgLPx6F4fHd
-	 WbiS4OQmEv4/rNK+mNVjnzjVDA9ZRVCi5WzG5m2uJCVWRL3sPpsXQEwNcCqXPR1uYSA==
+	bh=3s4G+OHnDrxjN+LrF0hMgjt+mTmwyCdisrSo207qHnw=;
+	b=tMaErCWRlknsQF4OSeNQikGnOR5deLGMjLBw5edF6iQxFcgADqDxlkpWScZH7Ogko89e
+	 i5VzWilwdbYcDRoIQv88W59b0UM29nZC5gUlOyEC0veg9IhOqtkw8mgu+cuzEc1jJL9E4
+	 Xxs8X2eM7EOgnayi7C/L5HYhtdBqGDRTnIUmKEzOndMjwGSM/H5HQkt8XjnxX2HtMAxn5
+	 jTIC8s2ltOQVRu3nqbuvgYuMbN8K0viXYZ3yXUD0d01trhShdI2hKregoO309BLXDYPyh
+	 Ck+RP4us667uyt1MlJW6TBExN6tMsaAlQa0cQobO3YPOnMOch/HjlQ2Wq7DvV6Ee8pA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=xxst7MGI;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=mUx8hdfP;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E229E606A31E;
-	Wed, 25 Nov 2026 15:44:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0CB31606A321;
+	Wed, 25 Nov 2026 15:45:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=xxst7MGI
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DD70B1F000CA;
-	Wed, 25 Nov 2026 15:44:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=mUx8hdfP
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 117161F000C4;
+	Wed, 25 Nov 2026 15:45:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795621498;
-	bh=VickcR66O6J/5C7q+DDwoivZtCxc7L+ZXp+DTi9Vewo=;
+	s=korg; t=1795621501;
+	bh=3s4G+OHnDrxjN+LrF0hMgjt+mTmwyCdisrSo207qHnw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=xxst7MGIJxhEpNvXqpMU56QfoZZkXeIfd5u6PCpt6XfkYOzLiTyuk9XFmXR8eYqD2
-	 Ec/ZrKGEVsnAZ223xhC4nxmtdUTj3kP4qjmK+e4JuvuvcpCWuca7OOSE8rhmjBqgNR
-	 Nkf9FPLvQg/uTFINp1cSpkoMejDpvNa1leIozgX0=
+	b=mUx8hdfPrfwKhg8Nmpu/n3XiHiU9lzjBkkP7xzwyMDg0bkstxCSby6TGZI8DtMJiX
+	 Nuc71z2FgSh7h4ICm7/OcTPlxhdDfx2IuBQSk99nOTcvTdEPH9aKLj3eSNSTVetCZE
+	 QJSPgVHEhiOF9SM9ZL0iOj4ICh35tXEa8fI/z/cM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -44,9 +44,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Jude Gyimah <jude.gyimah87@gmail.com>,
 	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 243/990] ASoC: rockchip_i2s: select REGMAP_MMIO
-Date: Wed, 25 Nov 2026 15:26:50 +0100
-Message-ID: <20261125143827.782319983@linuxfoundation.org>
+Subject: [PATCH 6.18 244/990] ASoC: rockchip_i2s_tdm: select REGMAP_MMIO
+Date: Wed, 25 Nov 2026 15:26:51 +0100
+Message-ID: <20261125143827.805703868@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143822.072087159@linuxfoundation.org>
 References: <20261125143822.072087159@linuxfoundation.org>
@@ -70,12 +70,12 @@ Content-Transfer-Encoding: 8bit
 
 From: Jude Gyimah <jude.gyimah87@gmail.com>
 
-[ Upstream commit 1c57404bf9bad3e05d5686d91c208bf4e2b733d8 ]
+[ Upstream commit b8284f2b73f8de157be52b48d9968645f4ad6f7c ]
 
-rockchip_i2s calls __devm_regmap_init_mmio_clk, which
+rockchip_i2s_tdm calls __devm_regmap_init_mmio_clk, which
 drivers/base/regmap/regmap-mmio.c provides under REGMAP_MMIO.
 
-  rockchip_i2s.c:(.text+0x418): undefined reference to
+  rockchip_i2s_tdm.c:1304:(.text+0x14b1b6): undefined reference to
     `__devm_regmap_init_mmio_clk'
 
 The driver can be built into vmlinux while REGMAP_MMIO is a module, in
@@ -83,17 +83,17 @@ which case the symbol is not there at link time.
 
 Select rather than depend on: REGMAP_MMIO has no prompt of its own and is
 only ever enabled by a select, so a depends on would leave
-SND_SOC_ROCKCHIP_I2S unselectable.
+SND_SOC_ROCKCHIP_I2S_TDM unselectable.
 
-Reproduced on v7.3, x86_64, with CONFIG_SND_SOC_ROCKCHIP_I2S=y and
+Reproduced on v7.3, x86_64, with CONFIG_SND_SOC_ROCKCHIP_I2S_TDM=y and
 CONFIG_REGMAP_MMIO=m.
 
 Found with kreach, a static check that compares what Kconfig allows
 against the symbols the compiled objects actually reference.
 
-Fixes: 4495c89fcf26 ("ASoC: add driver for Rockchip RK3xxx I2S controller")
+Fixes: 081068fd6414 ("ASoC: rockchip: add support for i2s-tdm controller")
 Signed-off-by: Jude Gyimah <jude.gyimah87@gmail.com>
-Link: https://patch.msgid.link/20261103132537.3717496-2-jude.gyimah87@gmail.com
+Link: https://patch.msgid.link/20261103132537.3717496-3-jude.gyimah87@gmail.com
 Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
@@ -101,17 +101,17 @@ Signed-off-by: Sasha Levin <sashal@kernel.org>
  1 file changed, 1 insertion(+)
 
 diff --git a/sound/soc/rockchip/Kconfig b/sound/soc/rockchip/Kconfig
-index bd210fafe9fea..e09325aaba534 100644
+index e09325aaba534..4df880cc4b319 100644
 --- a/sound/soc/rockchip/Kconfig
 +++ b/sound/soc/rockchip/Kconfig
-@@ -5,6 +5,7 @@ menu "Rockchip"
+@@ -14,6 +14,7 @@ config SND_SOC_ROCKCHIP_I2S
  
- config SND_SOC_ROCKCHIP_I2S
- 	tristate "Rockchip I2S Device Driver"
+ config SND_SOC_ROCKCHIP_I2S_TDM
+ 	tristate "Rockchip I2S/TDM Device Driver"
 +	select REGMAP_MMIO
  	select SND_SOC_GENERIC_DMAENGINE_PCM
  	help
- 	  Say Y or M if you want to add support for I2S driver for
+ 	  Say Y or M if you want to add support for the I2S/TDM driver for
 -- 
 2.53.0
 
