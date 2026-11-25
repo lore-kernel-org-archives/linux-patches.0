@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795617726;
-	b=tWUE7DA//xTBMCYoinlHllDpGt43WNLtvApY7wdngDJaDsaMJ3wOpPpX2Avm9ZuhYt6l
-	 iQ9dyfq7Hv3iMAXGE2T3Xo9r/SxQtX2athPpIPbg424tn33raBEdEm/DvejLPi1FMtZEJ
-	 c2yF4cF2MugnXD3sq7gjxi0tQ0lL9EPJGjG+9vBSKI9pbiqppvQhBe5qv6QaCUSv4TIVs
-	 gMHM6DQYj/KkGMdrmMZIM3zCxpiyYq91fd0Xr2RH3rNa3hcnYPCgqzxMqqxoBBuKx2eFC
-	 qCusmLHpLjUBJqWEaEjJ59/0/dDsPljc8ZpREzAuzdSZ1VP7ySBvY4Eldz3vKhRiO8w==
+	t=1795617729;
+	b=mAgKFPNLtXD0uLstVfssfzJvjopwDAuYaHH9S3W4fj/a99ELj7FtT1v0cYxkSfr/dJ+G
+	 Ztn1+UpVHda7SLR5AVubyXW8SETA7UkJJXzZNM9q00huvaHJARvzoHZ/SapZRzKBHvXFz
+	 pjuUllTpn7jD2dtnSUS9ziig2PMLwV7EWAFczgc5QqwYXVhC0CZUAalSspHOT4rj2TVoS
+	 mgqRnZwGZawNOtw9og3KXcW5/61YZp2OgHaTXwj9n3Ffhmx+kjGKoUD8iY786hEHCyqAU
+	 BVQYHgNTX45ijrviHvFbcv9gXz0hWdthnUVpqnglJCTWFHuYYZ0/b9G9gikTmrRQpNQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795617726;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795617729;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=ciiJ2U2ubuE0aAkmLsUBKbOyAZKrDnZ1VmcGvPlnPtk=;
-	b=y7p2lTvJ+slTPfXV3tHpxY6AddBjqaV+68efOO7BIlupcbJOq0n0lOLZT36Ybq+4zBU5
-	 9wv1nea9aCSigVbUY5/oOOIK9M+V8JYUF6/VGZt/kjqhxARyumu7mAbW5OCZgPllR2RzN
-	 Ozkj3jUFKEydqS7TLSm/3cg7H71/SJ4AzAJnBJc8YOymhtBQbw2AnhgjvRvWv+awBgMRf
-	 rrvq8Df+W6N7d4yUEfLtpotKtwsp2eXll2r+cytK6mvbblkL/GGGxcCfHq6WdyfXlB/wo
-	 NSlUo3/huxnTPjG07TdNTTGctnPkluURN6Y9UABnQ4zveKcI8vQido9JUkvkEaTlL2Q==
+	bh=3YwKoPT73KGPzSQftHkUjHY4CEOOTzB0M1D4iAYeyKg=;
+	b=ywTW2fQteGcvwZ98bexERqMzkDuEXVCssIixM0SBDZkjPJcfzZO3jPo70LE19m1aC3SY
+	 hKkeOD3sMkOrrVnZtrFP4dct9GkSaH7C2GKSH6/jnf0a+56jajEzP9uKZouBsjbuSm1IN
+	 uZEY+EsYAwUz2gS2xHbBRcQYomgTsHPyG+GtXZNB1L5bA6balGDz3fccfSfQoQ/cMexct
+	 5Nrvqn4nrl7L7gbyqPR13T5p8iPzKsdLQcC+Nj6YPnGhRkXrRL2upMIhqywPPy1HTO2xR
+	 UE6e5J3KtrtiY/FVyhFGnn1CZi1RoOvPfatAk0Tp/EYhW9s1EAkZX+XNKybrMMdGxhA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Xa9q31MP;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="kB1/Ily8";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C6A1F606A329;
-	Wed, 25 Nov 2026 14:42:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D369F606A31E;
+	Wed, 25 Nov 2026 14:42:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Xa9q31MP
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 996181F000C6;
-	Wed, 25 Nov 2026 14:42:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=kB1/Ily8
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EF9951F000CA;
+	Wed, 25 Nov 2026 14:42:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795617726;
-	bh=ciiJ2U2ubuE0aAkmLsUBKbOyAZKrDnZ1VmcGvPlnPtk=;
+	s=korg; t=1795617729;
+	bh=3YwKoPT73KGPzSQftHkUjHY4CEOOTzB0M1D4iAYeyKg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Xa9q31MPV2xjqaQovZUMcLfwIZVaBMHx2fvRXnBkP4Sc+D2X+YhFVxjeeY64iQpqn
-	 MtDAyvHKexBaeidOzUlKh4ilCG2eL1YBQ6G5t5QsCThLEOCMq0QMvZSqBUb+TL2IRT
-	 CJ9OXtzDYvvra0PKYlFchVrzkEKEuC5OADZPjZ3Q=
+	b=kB1/Ily8inl/2VpEpydlNGi5wfU4KwvUGHveP+qGMZVQz7TP8E4NojAG+Su/uBHma
+	 R6cToiKw9jrgCK/pLGPV4m9uN1siZe68YN+YCi686lWhFtND5vGbpFowl4YmkuN/D0
+	 HgcoL+Rk2hl3TZgTYtZhyG+yKxl+ZqsMebAENVdg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Laurence Oberman <loberman@redhat.com>,
-	Matthew Whitehead <tedheadster@gmail.com>,
-	"Martin K. Petersen (Oracle)" <mkp@kernel.org>,
+	Barret Rhoden <brho@google.com>,
+	Dominique Martinet <asmadeus@codewreck.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0054/1005] scsi: aha1542: Remove unneeded scsi_dma_unmap() call
-Date: Wed, 25 Nov 2026 15:23:12 +0100
-Message-ID: <20261125143823.007623640@linuxfoundation.org>
+Subject: [PATCH 7.3 0055/1005] 9p: treat read return values of 0 as EOF
+Date: Wed, 25 Nov 2026 15:23:13 +0100
+Message-ID: <20261125143823.031030580@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143821.729802100@linuxfoundation.org>
 References: <20261125143821.729802100@linuxfoundation.org>
@@ -69,52 +68,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Matthew Whitehead <tedheadster@gmail.com>
+From: Barret Rhoden <brho@google.com>
 
-[ Upstream commit 9ec6671b137de06f0345962fb8091466b7d56a96 ]
+[ Upstream commit a3a6212c7d67baebebd0e4c2cf2ae1b75eb9231e ]
 
-aha1542 never DMA maps the command's scatterlist. Data is bounced
-through a per-command buffer allocated with dma_alloc_coherent() in
-aha1542_init_cmd_priv(), the adapter is programmed with
-acmd->data_buffer_handle, and the payload is copied to and from the
-request segments in aha1542_queuecommand() and aha1542_free_cmd().
+If your 9p server shares a synthetic file system such as sysfs, the file
+size from stat often disagrees with the actual file size.
 
-The scsi_dma_unmap() call left in aha1542_free_cmd() therefore unmaps
-a scatterlist that was never mapped. With CONFIG_DMA_API_DEBUG enabled
-this results in:
+Treat non-error reads of 0 as EOF, except in the case where the request
+was for 0 bytes.
 
-  device driver tries to free DMA memory it has not allocated
-    [device address=0x0000000000000000] [size=0 bytes]
+Tested:
+	git@github.com:hugelgupf/p9.git, served "/" on 10.0.2.2
 
-Remove the call.
+	bash-5.3# mount -t 9p -o trans=tcp,port=12345,cache=none 10.0.2.2 /tmp/foo
+	bash-5.3# cat /tmp/foo/sys/devices/system/cpu/online
+	0-47
 
-Verified by testing on real hardware.
-
-Fixes: 2f2fef022c3e ("aha1542: use a local bounce buffer")
-Suggested-by: Laurence Oberman <loberman@redhat.com>
-Assisted-by: LLM
-Signed-off-by: Matthew Whitehead <tedheadster@gmail.com>
-Reviewed-by: Laurence Oberman <loberman@redhat.com>
-Link: https://patch.msgid.link/20260929144528.7061-1-tedheadster@gmail.com
-Signed-off-by: Martin K. Petersen (Oracle) <mkp@kernel.org>
+Fixes: eb497943fa21 ("9p: Convert to using the netfs helper lib to do reads and caching")
+Signed-off-by: Barret Rhoden <brho@google.com>
+Message-ID: <20260702090941.1298188-1-brho@google.com>
+Signed-off-by: Dominique Martinet <asmadeus@codewreck.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/scsi/aha1542.c | 2 --
- 1 file changed, 2 deletions(-)
+ fs/9p/vfs_addr.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/drivers/scsi/aha1542.c b/drivers/scsi/aha1542.c
-index 93dab19c1cb95..1cd85da47cc9c 100644
---- a/drivers/scsi/aha1542.c
-+++ b/drivers/scsi/aha1542.c
-@@ -271,8 +271,6 @@ static void aha1542_free_cmd(struct scsi_cmnd *cmd)
- 			buf += bv.bv_len;
- 		}
- 	}
--
--	scsi_dma_unmap(cmd);
- }
+diff --git a/fs/9p/vfs_addr.c b/fs/9p/vfs_addr.c
+index 13cf87a5f90cb..a48cc34b9a23a 100644
+--- a/fs/9p/vfs_addr.c
++++ b/fs/9p/vfs_addr.c
+@@ -99,6 +99,7 @@ static void v9fs_issue_read(struct netfs_io_subrequest *subreq)
+ 	char *target;
+ 	unsigned long long pos = subreq->start + subreq->transferred;
+ 	int total = 0, err, len, n;
++	size_t to_read = iov_iter_count(&subreq->io_iter);
  
- static irqreturn_t aha1542_interrupt(int irq, void *dev_id)
+ 	if (S_ISLNK(rreq->inode->i_mode)) {
+ 		/* p9_client_readlink() must not be called for legacy protocols
+@@ -131,6 +132,8 @@ static void v9fs_issue_read(struct netfs_io_subrequest *subreq)
+ 		__set_bit(NETFS_SREQ_CLEAR_TAIL, &subreq->flags);
+ 	if (pos + total >= i_size_read(rreq->inode))
+ 		__set_bit(NETFS_SREQ_HIT_EOF, &subreq->flags);
++	if (!err && !total && to_read)
++		__set_bit(NETFS_SREQ_HIT_EOF, &subreq->flags);
+ 	if (!err && total) {
+ 		subreq->transferred += total;
+ 		__set_bit(NETFS_SREQ_MADE_PROGRESS, &subreq->flags);
 -- 
 2.53.0
 
