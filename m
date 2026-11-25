@@ -1,42 +1,42 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795617736;
-	b=BxbsqOL102yqB+/EVkQaBPUr6ONyFTZZrFuEBq33PmQx7vo3JVEjq45r5yqpWzzIYJJ5
-	 zyx+LLiaMumQBTw5Z1esccJEb9Kve6yINTtGPUjvh5dK1b5GZsKENJDgO8LJATyLc9mKQ
-	 vY2b5jnT4n/jiZLxQXr5pe6wEW4Ao2r+uOJuWArC9bp4HgVJdIl7zmlPI62JkJD295gSf
-	 P6Z0oVE8MwU8poHMfWsnPTCqeyFvP6NOI2fgAnuOLDWhXxZ74lqJ+BWLVPfe4HqjGppGA
-	 2wjovPcMeSMMGDj7qstd8ORrdDLAVxd5O+82CkgRP/a9YgilTYZV6nlg+UURtgc8kiw==
+	t=1795617739;
+	b=qlnjjU1IreRJ0M7ca+upTvVQWjfxtHb/Qmz5uSLNr1f8M7kWNDv4pmPlaaHXmEFiuFD2
+	 BYU9L7WSFUgtic1mRqs6h0kcsVOBbU4kmgBeU4GwTw3odf37Rh2qDgewHHZhOI4LzJkeF
+	 Aj3urK4h/dQ5GLkCfsc98RoUfAJQ6c5sEjqDjyYvnJMVEDAiADCObNtksWY8zUtbFEuFC
+	 MfvwOZfDp8y6j4pp2S+RDMkwx9WRTbclGK3ae42K8AptrUktYGTlJZB7ucKhRqRgE5e0n
+	 ohuwuPWlcaHG1lcVSqJk6M36PiblEBnMYAjBbjPI5CZ34Li+8zoCNxRVwvaWwckXV+w==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795617736;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795617739;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=7qLgWM9FmcMkYiyFDJGalaJ9wWKGTDgxqUGksugWA5A=;
-	b=z0tt7VnMbFozZo43ned10twaCh0MMG/i+tmduk5mQ51oxp4QwCuy5w0bUuhBR4h2NqAG
-	 KJ29YBqisj+LZ/HflifRGhqd6738kV/WwbGWYwyu2QmNyhOHwhryyNSd/kyeAn50Xomgy
-	 u5Ad58Ql/Td9NGHyBg3uVfhh/MZmKHMWn43X98ubCnwLacFU9NtDV+eqcgnE9Pkz9t8V9
-	 k+/dxt2UgYfwJGCH+IQRcAYLJz7AjXF82PiIay4T5t5R646+6YMZP04Ff4TsZRDjWbe58
-	 /U5UlbN/e9jjtCO0PyxMupzZg0WYuQdzwJTEB0LeCESkb2ceFbY635mWZPEWMdQ2lcw==
+	bh=oxQRfjfEhmuIxWCfZ6KK0wq4i2jsMV1AFCulGvJO8wE=;
+	b=J5/zCn205RtDiZzfAou1U5aRMtrD764eTwFjqi+NEF+pwPPaxHypFLSdSnRlX/5J5U3q
+	 Wo3YGTrAcHBeXpw0eRxg+ZnWZ38Q2byyPSoYmOrXZTLU9Qp/RN5PeXkj3NycGTHb/ZkWR
+	 n77gMC8ky+8ue0QZqlpm5ozxOC+QUqcgMSMnL9ic6LkUmN9emcM9VAk2xQWlwcuGbGDHG
+	 YSdq8GwEmlHOvD1dtSf3IcWtx7nC7iBazp+VZhW7zZTex68xKlYXeUh82ZGYD+qTmm3ta
+	 2zSFqsLxGovj8PTvN1MApvo2waNGIS8PhYjUPTUW1B5Oq2Sg/+/nZqNUCQmvgdGqafg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=kn0W1Rxi;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="nQQY/skP";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BC983606A31E;
-	Wed, 25 Nov 2026 14:42:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6F9F2606A323;
+	Wed, 25 Nov 2026 14:42:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=kn0W1Rxi
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9F63E1F000CF;
-	Wed, 25 Nov 2026 14:42:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=nQQY/skP
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BA1BB1F000CF;
+	Wed, 25 Nov 2026 14:42:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795617736;
-	bh=7qLgWM9FmcMkYiyFDJGalaJ9wWKGTDgxqUGksugWA5A=;
+	s=korg; t=1795617739;
+	bh=oxQRfjfEhmuIxWCfZ6KK0wq4i2jsMV1AFCulGvJO8wE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=kn0W1RxivsapgY3yELWkzXKSn+Lk8a8zeQQ4Egyck4aAvrfnNZ7PYGkz6eibZX3yj
-	 g+JynMsaSG3KqRnJLmprBR27LEqDwm6EyMPRMi8xTlLHrgJ4tdDqHoNwVxWqcJuM2Y
-	 UwvdfIJU7P+XaLQjuD4MTJ7xObeoZLIqycvTVCg0=
+	b=nQQY/skPl33BkXvbeudboH2o/YRrrau7KMKtelMLhzKufUg6+2iCOxL7q5PMrzs1M
+	 CwzqkgiSEKKxn1ux+bwK+yJDH73humWtoDSbgBIod6hJ2rS13/cSrn9k14Wvyyj0I7
+	 yPn5tfJQxRWuHdhX/Nd6wkOqQvRCcnTRxe4nJZzw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -44,9 +44,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Yuanfu Xie <yuanfuxie@stu.pku.edu.cn>,
 	Dominique Martinet <asmadeus@codewreck.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0057/1005] 9p: fall back to the normal open path for non-regular files
-Date: Wed, 25 Nov 2026 15:23:15 +0100
-Message-ID: <20261125143823.076519883@linuxfoundation.org>
+Subject: [PATCH 7.3 0058/1005] 9p: do not store the create fid on special files
+Date: Wed, 25 Nov 2026 15:23:16 +0100
+Message-ID: <20261125143823.100509386@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143821.729802100@linuxfoundation.org>
 References: <20261125143821.729802100@linuxfoundation.org>
@@ -70,109 +70,81 @@ Content-Transfer-Encoding: 8bit
 
 From: Yuanfu Xie <yuanfuxie@stu.pku.edu.cn>
 
-[ Upstream commit ff1baa01a6e1f24741f7428119e6f3a61b995604 ]
+[ Upstream commit 56894cadf21c34abbba7f74b8f5d78dabf69dd39 ]
 
-v9fs_vfs_atomic_open() and v9fs_vfs_atomic_open_dotl() call
-finish_open(file, dentry, generic_file_open) regardless of the file
-type the server reported for the created dentry.  The supplied
-callback replaces f_op->open in do_dentry_open(), so blkdev_open()
-never runs for a server-reported device node: an open() with O_CREAT
-succeeds with f_op = def_blk_fops while f_mapping still points at the
-9p inode, because the bdev mapping swap only happens inside
-blkdev_open().  The block file methods then derive their block_device
-from that inode with I_BDEV(); the loads land at the tail of a
-656-byte v9fs_inode_cache object (offsets +624 and +632), which KASAN
-reports as slab-out-of-bounds, and the garbage they read is then
-dereferenced, so the first read(), write(), ioctl() or close() ends
-in a NULL pointer write and a panic.  In the ioctl(BLKGETSIZE64)
-variant the value read this way is returned to userspace.
+v9fs_vfs_atomic_open_dotl() always stores the create fid in
+file->private_data after finish_open().  FIFO and device inodes
+already have type-specific file_operations that own that field.
+Overwriting it with the fid makes later read/write/close treat the
+p9_fid as a pipe_inode_info, which corrupts the fid and can use it
+after it has been clunked.  The non-dotl atomic_open path does not
+assign the fid this way.
 
-The server controls the file type reported for the create, so a
-malicious server can crash the client this way.  KASAN report of the
-read() variant, on a build of linux-stable 2709dd5ae32f:
+Only attach the fid for regular files and directories.  Special
+files do not need the create fid; leave it for the existing
+p9_fid_put() on the out path so it is clunked before return.
 
-BUG: KASAN: slab-out-of-bounds in blkdev_read_iter+0x3cd/0x440
-Read of size 8 at addr ffff88800828ceb0 by task repro/1
+KASAN report, linux-stable 4982d3552a3b:
+
+BUG: KASAN: slab-use-after-free in anon_pipe_prefill_and_lock+0x376/0x3f0
+Read of size 4 at addr ffff88800ab30538 by task repro/1
 
 Call Trace:
  <TASK>
- dump_stack_lvl+0x7b/0xa0
- print_report+0xd0/0x630
- kasan_report+0xe5/0x120
- blkdev_read_iter+0x3cd/0x440
- vfs_read+0x718/0xa50
- ksys_read+0x10f/0x200
+ anon_pipe_prefill_and_lock+0x376/0x3f0
+ anon_pipe_write+0x127/0x1600
+ fifo_pipe_write+0x24/0x300
+ vfs_write+0x659/0xd00
+ ksys_write+0x10f/0x200
  do_syscall_64+0xdd/0x4a0
- entry_SYSCALL_64_after_hwframe+0x77/0x7f
  </TASK>
 
-The buggy address belongs to the object at ffff88800828cc40
- which belongs to the cache v9fs_inode_cache of size 656
-The buggy address is located 624 bytes inside of
- allocated 656-byte region [ffff88800828cc40, ffff88800828ced0)
-
-A plain open() without O_CREAT is not affected: it runs blkdev_open()
-and either maps the device correctly or fails with -ENXIO for an rdev
-with no registered device.  When the created inode is not a regular
-file, clunk the fid the create opened.  The unopened fid is already
-on the dentry.  Set FMODE_CREATED and return finish_no_open(file, NULL)
-so the VFS keeps its dentry reference and calls the inode's ->open.
-Regular files still use finish_open() with generic_file_open.
-
-Fixes: be12af3ef5e6 ("getting rid of 'opened' argument of ->atomic_open() - part 1")
+Fixes: 30d904947459 ("kill struct opendata")
 Signed-off-by: Yuanfu Xie <yuanfuxie@stu.pku.edu.cn>
-Message-ID: <908FC420-EC1F-46FC-8526-698F646961A8@stu.pku.edu.cn>
+Message-ID: <92377346-29E9-46D3-96F5-AABA8A64CD57@stu.pku.edu.cn>
 Signed-off-by: Dominique Martinet <asmadeus@codewreck.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/9p/vfs_inode.c      | 10 ++++++++++
- fs/9p/vfs_inode_dotl.c | 12 ++++++++++++
- 2 files changed, 22 insertions(+)
+ fs/9p/vfs_inode_dotl.c | 24 ++++++++++++++++--------
+ 1 file changed, 16 insertions(+), 8 deletions(-)
 
-diff --git a/fs/9p/vfs_inode.c b/fs/9p/vfs_inode.c
-index 2d7e0c1a5353a..347739b81513f 100644
---- a/fs/9p/vfs_inode.c
-+++ b/fs/9p/vfs_inode.c
-@@ -810,6 +810,16 @@ v9fs_vfs_atomic_open(struct inode *dir, struct dentry *dentry,
- 	v9fs_invalidate_inode_attr(dir);
- 	inode = d_inode(dentry);
- 	v9inode = V9FS_I(inode);
-+	if (!S_ISREG(inode->i_mode)) {
-+		/*
-+		 * Not a regular file.  v9fs_create() already stored the
-+		 * unopened fid on the dentry.  Clunk the opened fid from
-+		 * the create and let the VFS call ->open.
-+		 */
-+		p9_fid_put(fid);
-+		file->f_mode |= FMODE_CREATED;
-+		return finish_no_open(file, NULL);
-+	}
- 	err = finish_open(file, dentry, generic_file_open);
- 	if (unlikely(err)) {
- 		p9_fid_put(fid);
 diff --git a/fs/9p/vfs_inode_dotl.c b/fs/9p/vfs_inode_dotl.c
-index 116b29e95f21e..1431549b1f4d8 100644
+index 1431549b1f4d8..d9156b2509aca 100644
 --- a/fs/9p/vfs_inode_dotl.c
 +++ b/fs/9p/vfs_inode_dotl.c
-@@ -312,6 +312,18 @@ v9fs_vfs_atomic_open_dotl(struct inode *dir, struct dentry *dentry,
- 	v9fs_fid_add(dentry, &fid);
- 	d_instantiate(dentry, inode);
- 
-+	if (!S_ISREG(inode->i_mode)) {
-+		/*
-+		 * Not a regular file.  The unopened fid is already on the
-+		 * dentry.  Clunk the opened create fid and let the VFS call
-+		 * ->open.
-+		 */
-+		p9_fid_put(ofid);
-+		ofid = NULL;
-+		file->f_mode |= FMODE_CREATED;
-+		err = finish_no_open(file, NULL);
-+		goto out;
-+	}
- 	/* Since we are opening a file, assign the open fid to the file */
+@@ -328,16 +328,24 @@ v9fs_vfs_atomic_open_dotl(struct inode *dir, struct dentry *dentry,
  	err = finish_open(file, dentry, generic_file_open);
  	if (err)
+ 		goto out;
+-	file->private_data = ofid;
++	/*
++	 * Special files have type-specific fops that own
++	 * file->private_data.  The create fid is unused
++	 * there: leave it for p9_fid_put() on the out
++	 * path so it is clunked before we return.
++	 */
++	if (S_ISREG(inode->i_mode) || S_ISDIR(inode->i_mode)) {
++		file->private_data = ofid;
+ #ifdef CONFIG_9P_FSCACHE
+-	if (v9ses->cache & CACHE_FSCACHE) {
+-		struct v9fs_inode *v9inode = V9FS_I(inode);
+-		fscache_use_cookie(v9fs_inode_cookie(v9inode),
+-				   file->f_mode & FMODE_WRITE);
+-	}
++		if (v9ses->cache & CACHE_FSCACHE) {
++			struct v9fs_inode *v9inode = V9FS_I(inode);
++			fscache_use_cookie(v9fs_inode_cookie(v9inode),
++					   file->f_mode & FMODE_WRITE);
++		}
+ #endif
+-	v9fs_fid_add_modes(ofid, v9ses->flags, v9ses->cache, flags);
+-	v9fs_open_fid_add(inode, &ofid);
++		v9fs_fid_add_modes(ofid, v9ses->flags, v9ses->cache, flags);
++		v9fs_open_fid_add(inode, &ofid);
++	}
+ 	file->f_mode |= FMODE_CREATED;
+ out:
+ 	p9_fid_put(dfid);
 -- 
 2.53.0
 
