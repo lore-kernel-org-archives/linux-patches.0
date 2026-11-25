@@ -1,51 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795625977;
-	b=Z+3p2RF3X4LOvMwAAMj0zCvhc7HX+hqdONMfn2XUUPd49ToWfGKLJQa/MT3XZ8IDwLFK
-	 W7Q43LNdRss0V0JZFuJj5IdOVt4mtAkMnwZDq5BVQbBrNcvbsWiJ0Hk/0yiYlXRU3IhHJ
-	 fqRtvapkuRxs6b+Scu6Af2L3kQ7r+GcQcmwte4mP0z2nt3inDPbK2FYMdNx1AJURr7PeZ
-	 xQmO9AgbCu14NOW8fOSgV2WeCmT2ApAu1Btdy6y8+/RJEYjvE8PazdlfhMGoRT5v7Lapt
-	 dmeENqoQja6nxm56yUN6viLQsHJ9WXBT8VgjozVnB3hrBQXpkKlyYOKtOW4vuYEskqg==
+	t=1795625981;
+	b=zIU6lE5BTuQFuSPbZNUeLLrFs+019DPC67uhr7uPmaB8EWrgDY7q++cibxzyefwGtgBD
+	 bp1qIaDH4nH2k6uVuxA+qWkyAFYQsrAJa264r2lO7mglSmlL7cKUuNCIo306Nnrhr5h4R
+	 +i6MHG/fGac4s0iWebS2wJsmNJTPaNUkTGSIq8X8ovN035A3cMaAtK5+sGld9tiN3DJsP
+	 9+pVeciyzUjQpwRK+r2793udedcbvGwSKRk8ictTa+XqVmS97wgSayO0BOtEFZeg9WYCx
+	 XvK+ppQCLaN2ze/ftHTYr0+24iv8+JMEObQPrNr6bMloQj+mnQDMmK/luO14rHr/XIg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795625977;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795625981;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=KtiCER01E2z8oGulq/oUChTHJSLimN3XqxRe+UnuEX0=;
-	b=SjY++7NRUws8c0NQDiAAYBdbFRbZ2/vBX3aYaKfIYRktFhKaAWzyJ/ViiVGQURqxBE7v
-	 cYs7+TuFynATk7qp+qDQuGCFiiQDww1LmKVrTfV5X5NIhxAIIhSb7dwrooeYUtC3Y7djP
-	 T+Bt5wPTdscbX1519qVSuJr3Ss3DZtoZN3Kj+d4aV/3kPG+ln+0ohUviLLaFFltZJzp3E
-	 f0uQsEy8dqPucfW8gJfrAj7IG4Z/sMODO9mDOCTs7MEjypKFrvsu2mIS7DT58jV4yxR5E
-	 bJRXYMSirKab990Ub4XpYSzXxBT7tO7nyJPxBYkGc04o2z9ty2XujfmOWs4tX8P69vw==
+	bh=pSC5nswjpSstnTnjfA0u8emZWVUT3jMv2x02BvUJrcU=;
+	b=xeRlnpUA5tlFkWUhlRdkfU8KZdk2Q3Iuk7LEnPQ0cP68STHxhGhgB9u1OB7/VDf+Hsmu
+	 EwWBNGQKcDsxg2bIyp/D4N9Tco79ioGh3p8Q6YdeIg8bbP6VQWoa8NBt5if0WNHde5nHk
+	 AdM725iMASnqPtYHFv08uofnkxW0wzIPkgeXHypR9uZE0jPRwBDozgWh0jRaKxeS/pJC8
+	 UnTh5FwHa66Umq4Pp3Elx0MObmI9vZeAEmZFXr5vG23ilhEt4oguSDyEWmQTZOFE/hffR
+	 W3PRhdKvuW5BgiZJBPMIOTJL0WvkZIMZOxbH6CdW51EsaLVXeTtvuuXI2PhW2wOpGYQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=yJ7HL4Ud;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=g1d8ecqI;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B1989606A321;
-	Wed, 25 Nov 2026 16:59:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 034A7606A31E;
+	Wed, 25 Nov 2026 16:59:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=yJ7HL4Ud
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DB78A1F000D8;
-	Wed, 25 Nov 2026 16:59:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=g1d8ecqI
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D70D51F000CF;
+	Wed, 25 Nov 2026 16:59:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795625977;
-	bh=KtiCER01E2z8oGulq/oUChTHJSLimN3XqxRe+UnuEX0=;
+	s=korg; t=1795625980;
+	bh=pSC5nswjpSstnTnjfA0u8emZWVUT3jMv2x02BvUJrcU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=yJ7HL4UdME3jTDBeCchyeiBjCznNryQ5DbJLGfk1CRCnd3/PlbtedjbaPkdmc+gr4
-	 6q8iCb5UdWbnAwb4NDCggC1GkFUVP+kZ/zf0PGQ4nohGBhF6W2TBhN3HMKEXtxMdxm
-	 IukOKLtykl+1dFESqooLz8z+r8BdezXPZh0S3N8c=
+	b=g1d8ecqIzHY45mV64ZOyVcc1NO52Us0WYFXDQiUgWspT7HfbVmIk9ftnpyQqQy0xj
+	 6vonQK1Z8vV08tVwqgxA6Hvo3amWGQ8AJNy0D5rPSBe055FMAWomkhxJbC5QGuKU8o
+	 4rTyqgKMlu+XKPnWs3BkXkdH8O5FPzdnq4tJ4rSk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Joseph Qi <joseph.qi@linux.alibaba.com>,
-	Paulo Alcantara <pc@manguebit.org>
-Subject: [PATCH 6.12 690/816] smb: client: skip NULL channel in __cifs_put_smb_ses()
-Date: Wed, 25 Nov 2026 15:37:18 +0100
-Message-ID: <20261125143905.155446358@linuxfoundation.org>
+	Shao Mingyin <shao.mingyin@zte.com.cn>,
+	Mikulas Patocka <mpatocka@redhat.com>
+Subject: [PATCH 6.12 691/816] dm log userspace: drop the device reference on error
+Date: Wed, 25 Nov 2026 15:37:19 +0100
+Message-ID: <20261125143905.180207880@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143849.205329330@linuxfoundation.org>
 References: <20261125143849.205329330@linuxfoundation.org>
@@ -67,50 +67,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Joseph Qi <joseph.qi@linux.alibaba.com>
+From: shao.mingyin@zte.com.cn <shao.mingyin@zte.com.cn>
 
-commit 8deaf64a59a263161dfc5128f8398fb3dcba4fac upstream.
+commit 0550d3b14e008b033b02cfce668008ec6addffe4 upstream.
 
-cifs_chan_skip_or_disable() clears a secondary channel's slot in the
-session (ses->chans[chan_index].server = NULL) without lowering
-chan_count when the server stops supporting multichannel.  When the
-session is later released, __cifs_put_smb_ses() walks every slot up to
-chan_count and calls cifs_put_tcp_session() on it, which dereferences
-the server pointer immediately, so a slot left NULL by the skip path
-makes the release crash with a NULL pointer dereference.
+userspace_ctr() takes a reference on the log device with
+dm_get_device().  When the integrated-flush workqueue allocation fails it
+jumps to the shared error path, which frees the log context without
+dropping that reference, so the device stays busy and cannot be removed.
 
-Clearing a slot without lowering chan_count is older than
-cifs_chan_skip_or_disable(): cifs_chan_update_iface() could already do
-the same since commit b54034a73baf9 ("cifs: during reconnect, update
-interface if necessary"), and the release loop has been unguarded
-since then.  Commit 12d1e301bdfd1 ("cifs: do not let
-cifs_chan_update_iface deallocate channels") later removed that
-trigger, but the crash is reachable through it on older kernels.
+userspace_dtr() drops the reference correctly; do the same here.
 
-cifs_decrease_secondary_channels() already guards the same put with
-if (server).  Add the same guard to the release loop so a skipped
-channel slot is left alone.
-
-Fixes: b54034a73baf9 ("cifs: during reconnect, update interface if necessary")
+Fixes: 5066a4df1f42 ("dm log userspace: allow mark requests to piggyback on flush requests")
 Cc: stable@vger.kernel.org
-Signed-off-by: Joseph Qi <joseph.qi@linux.alibaba.com>
-Signed-off-by: Paulo Alcantara <pc@manguebit.org>
+Signed-off-by: Shao Mingyin <shao.mingyin@zte.com.cn>
+Signed-off-by: Mikulas Patocka <mpatocka@redhat.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/smb/client/connect.c |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/md/dm-log-userspace-base.c |    6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
---- a/fs/smb/client/connect.c
-+++ b/fs/smb/client/connect.c
-@@ -2140,7 +2140,8 @@ void __cifs_put_smb_ses(struct cifs_ses
- 			kref_put(&ses->chans[i].iface->refcount, release_iface);
- 			ses->chans[i].iface = NULL;
+--- a/drivers/md/dm-log-userspace-base.c
++++ b/drivers/md/dm-log-userspace-base.c
+@@ -294,9 +294,11 @@ static int userspace_ctr(struct dm_dirty
  		}
--		cifs_put_tcp_session(ses->chans[i].server, 0);
-+		if (ses->chans[i].server)
-+			cifs_put_tcp_session(ses->chans[i].server, 0);
- 		ses->chans[i].server = NULL;
+ 		r = dm_get_device(ti, devices_rdata,
+ 				  dm_table_get_mode(ti->table), &lc->log_dev);
+-		if (r)
++		if (r) {
+ 			DMERR("Failed to register %s with device-mapper",
+ 			      devices_rdata);
++			goto out;
++		}
  	}
  
+ 	if (lc->integrated_flush) {
+@@ -314,6 +316,8 @@ static int userspace_ctr(struct dm_dirty
+ out:
+ 	kfree(devices_rdata);
+ 	if (r) {
++		if (lc->log_dev)
++			dm_put_device(lc->ti, lc->log_dev);
+ 		mempool_exit(&lc->flush_entry_pool);
+ 		kfree(lc);
+ 		kfree(ctr_str);
 
 
