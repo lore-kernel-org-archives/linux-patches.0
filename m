@@ -1,51 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795619846;
-	b=q94O1gEcT/VSdMU6RSRqHN9bdowZOTVmmWMM+O8RolYXX0nZn4ITdINbwvj/gkBndh73
-	 5MhXGE0fAUcj2OLh0oYY2MQBxjSu+pkLGw41oe9IcTSbyfZcUq/X5E7r+HdxZhfEjdRs0
-	 XCdvoMtJUSmlUa/d0tJ9kPMVzmidvhNiCA5dNXcqV3ce7jn+S8Cv0H/cikUmcg/e0UkKh
-	 bTxn+UPBoM7xcbD4cPskQtlweVvEcA0r0Gs1h6V+S/5C4m/hkkYOezRtePwW/6yHsdcCh
-	 x+eneNPuCtNrFuFtT/Ph9rcJFTsGDF3D4L4iIOOi/AWY2g1xF9b0KNMCLyNCrWWj/kg==
+	t=1795619849;
+	b=phMFHSgYC21qLtvDFsadZpIbfCILxzg5oPODAOPTE0S27+IZ/rLm/OBJm4znyYyvINza
+	 ZiBkdRoeYrGnVOL7XFEMgfM+n+hNcND+xK5fPfJZv9qGZNOLTXW+hLMyXe1/2MaNcXBwn
+	 n8tvQ9lFa4PaMZyxdVx1yopFdDysT4Cn0ONJH4IDsxJH016nkEDJpsVsELGE4rlF3ljbZ
+	 X6rIx2TRBDtibmc+9BfyyntgNRU5Lw2LwXNbYK+EwJLdLkhfLJXi0si+Lsj3nGGD2APES
+	 FXwFl/f8RJPMSJt0TnQJBiLIyJjcasDDUPDmhyOCS61Du/oIItCPDRjPiykIrDR0L9g==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795619846;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795619849;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=igNpSNNt9+b3aXSWmkggvEJs8/BKJ0rNedCkhTMqx6M=;
-	b=3ag2XZLvLS5815h04Yd3kM/Rf1E64ba6EmKP4TnBTQGA+cZGPcF/HXO7xb6VeTgi6tIA
-	 s9htovo9mygztgWH2Md/Dftbxs4r0v93ydmO7pH/VEkoShj9KlxzTGj2A5RlmuyuQW3+X
-	 wtOwjAc5RJHVcDQtgv2x28Gl+6giFjoRIh/6issuW0MWyic6eRW80gVxqEFt6Hbvlcmuh
-	 lx63Xc8dbxr+WW1TCf2iBEFUVEmmZtwx/2aLiNmV46yHVJr3ly/1L4Vq9K5ZM0VE4ZZyN
-	 CrTKf+nGmlQKYxiPZNM3/VFPqAsUe8Ohpfakspfb1K0ux8fTWl9SUUdvNDrpWeUUEVg==
+	bh=GuEJeBaPLumKB2L+TGbkbSPv0+sSU7xm+yavF/MNaZ0=;
+	b=0WedVwkR9YuvdjbKqC8Gg9yTFFfkp2rqMcwYT8hDOnBXHyM+ZAY8rSHzN1XGlzAFzZiF
+	 CgP8qec58aIL9w3iCAZvyPez0MMJJpazQ3D0qwq5pNnwk47uJO2+sd5XLAnYZ9tzND96V
+	 InpDWiQjEsOK0XxpuHngeqE+TDBXoXbomihSgM7/I+JAsMZXck1G0biYz+uUo3CyQRjou
+	 /Np63f1/HWwPR1vauyMQdPqvfYhRsTgUskDsUAUcp3h54mx4iGwmAmGGXZ8nIUH2WBGg1
+	 sSF7jXTOy+9XNYQ1gmvYEumtFSPWW+156HD1yQCfk8EdqfbCl3uac597jT4Gy3toPYg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=exPNQqZH;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=qYgmbdAp;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 70306606A323;
-	Wed, 25 Nov 2026 15:17:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BE5F4606A31E;
+	Wed, 25 Nov 2026 15:17:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=exPNQqZH
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A18F11F000C0;
-	Wed, 25 Nov 2026 15:17:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=qYgmbdAp
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D08281F000D0;
+	Wed, 25 Nov 2026 15:17:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795619846;
-	bh=igNpSNNt9+b3aXSWmkggvEJs8/BKJ0rNedCkhTMqx6M=;
+	s=korg; t=1795619849;
+	bh=GuEJeBaPLumKB2L+TGbkbSPv0+sSU7xm+yavF/MNaZ0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=exPNQqZHKh58OUUoEEDZrRyXIZZY1piqE37eSb1V6AGhmDSNNc2QzWamiRT6+QwWg
-	 jq3Wd10VNDiO+qnCApx0QSzMcXB3i+XXCmC+geCgWuulj5czuScEHlgv7KF0VrbqPt
-	 RLEe9LY+9JGDCb3rJnym/+oRxPwv3keyJhid9iK8=
+	b=qYgmbdApc4enmSWZ1aypMO4mIOZjAu3PlBz7ebDn9Ujm3IoVRqU+bsd9IbPmb5YBU
+	 uwaC69aPZQOzBpsJjFCkIyJ0VPCtJWIekkH8/3cVlYzOm0WVbxhtaXmWb1COplRem9
+	 8C4ATEjWtfqrXx1obymiuuLwEDrEr36HcMviD2IQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Avi Weiss <thnkslprpt@gmail.com>,
-	Thomas Gleixner <tglx@kernel.org>
-Subject: [PATCH 7.3 0725/1005] timekeeping: Refresh auxiliary base before offset validation
-Date: Wed, 25 Nov 2026 15:34:23 +0100
-Message-ID: <20261125143838.744707314@linuxfoundation.org>
+	Takashi Iwai <tiwai@suse.de>,
+	Paul Menzel <pmenzel@molgen.mpg.de>,
+	Jarkko Sakkinen <jarkko@kernel.org>
+Subject: [PATCH 7.3 0726/1005] tpm: acpi: Fix memory leak at tpm_read_log_acpi() error path
+Date: Wed, 25 Nov 2026 15:34:24 +0100
+Message-ID: <20261125143838.768236697@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143821.729802100@linuxfoundation.org>
 References: <20261125143821.729802100@linuxfoundation.org>
@@ -67,41 +68,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Avi Weiss <thnkslprpt@gmail.com>
+From: Takashi Iwai <tiwai@suse.de>
 
-commit c1b96ba87e3caaa701d6dba254e58db7cc3c99be upstream.
+commit 03fcb358249dc715124b3616f814ea0ecc6ec36c upstream.
 
-timekeeping_forward_now() can advance an auxiliary timekeeper across a
-second boundary without refreshing tkr_mono.base. The negative-time
-check in __timekeeping_inject_offset() then uses the stale base and
-rejects valid ADJ_SETOFFSET adjustments with -EINVAL.
+When devm_add_action() returns an error, tpm_read_log_acpi() clears
+log->bios_event_log unnecessarily to NULL before calling
+tpm_bios_log_free(), and it would lead to a memory leak of the
+allocated log buffer.
 
-Refresh the derived timekeeper data before calculating the current
-auxiliary time, as aux_clock_set() already does.
+Fix it by simply jumping to the err.
 
-On 7.4-rc1, a valid negative adjustment fails at the first second
-rollover. The patched kernel accepts all 12 tested rollover adjustments
-and continues to reject invalid negative offsets.
-
-Fixes: 2c8aea59c206 ("timekeeping: Add auxiliary clock support to __timekeeping_inject_offset()")
-Signed-off-by: Avi Weiss <thnkslprpt@gmail.com>
-Signed-off-by: Thomas Gleixner <tglx@kernel.org>
-Cc: stable@vger.kernel.org
-Link: https://patch.msgid.link/20261103090605.1292660-1-thnkslprpt@gmail.com
+Cc: stable@vger.kernel.org # v6.18+
+Fixes: a3a860bc0fd6 ("tpm: Change to kvalloc() in eventlog/acpi.c")
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Reviewed-by: Paul Menzel <pmenzel@molgen.mpg.de>
+Reviewed-by: Jarkko Sakkinen <jarkko@kernel.org>
+Link: https://lore.kernel.org/r/20261109173756.742248-1-tiwai@suse.de
+Signed-off-by: Jarkko Sakkinen <jarkko@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/time/timekeeping.c |    1 +
- 1 file changed, 1 insertion(+)
+ drivers/char/tpm/eventlog/acpi.c |    4 +---
+ 1 file changed, 1 insertion(+), 3 deletions(-)
 
---- a/kernel/time/timekeeping.c
-+++ b/kernel/time/timekeeping.c
-@@ -1776,6 +1776,7 @@ static int __timekeeping_inject_offset(s
- 		struct tk_read_base *tkr_mono = &tks->tkr_mono;
- 		ktime_t now, offs;
+--- a/drivers/char/tpm/eventlog/acpi.c
++++ b/drivers/char/tpm/eventlog/acpi.c
+@@ -167,10 +167,8 @@ int tpm_read_log_acpi(struct tpm_chip *c
+ 	}
  
-+		tk_update_ktime_data(tks);
- 		/* Get the current time */
- 		now = ktime_add_ns(tkr_mono->base, timekeeping_get_ns(tkr_mono));
- 		/* Add the relative offset change */
+ 	ret = devm_add_action(&chip->dev, tpm_bios_log_free, log->bios_event_log);
+-	if (ret) {
+-		log->bios_event_log = NULL;
++	if (ret)
+ 		goto err;
+-	}
+ 
+ 	return format;
+ 
 
 
