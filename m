@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795618100;
-	b=tvrndW5IQ/Y6ZACkI5UNp0eLGVUm1/KrGqBCZapBYyN+NqCbXlh9hG68/lS+LIn5xYpI
-	 gOEL363nEOJzEToDSj1nSDWJmlPZ3jzzKOTlZDOF6DjWA07emWj5+W7jrmjBCU6k9/v34
-	 OHCxjXEkf3B6HcNmWA7WSoAVbDScIT3Jii78A2R98OnszTser/Td1/qWw0PHPIhdX5Xmt
-	 E+ySOiOLMWosoZPx1xNeF1BRWufgggSjXJy/KWmezli4EnqoG61r8D3xmOP/H6BUWMu+i
-	 GtgeRRm+siRYk8MTIccElBu9GgOutAEpprqtJnIq22fmu99gLzBfGcH5VbX1PUndK+w==
+	t=1795618104;
+	b=XNgaLkJYZGFdIM9iw84RUTINlYMIQ1im7LMKZP7kVssURqXla/sayhbjJ0engnjMYlaX
+	 E7fMO7/bZhmg6zVuEJNNDmEgC25b0NXISueoDevRkYVI+W+SgWJWjE6ZVCNCjL2GpXl2e
+	 q6LDVRsPEJ8vv3YBFW4dCyO7pTO1Ytqc8EkCg3tkTdfUkATzOuL3Bz4ObtTfMjkF7WL4D
+	 YHZAODFnFbeL5wWhJcWfNhHhwxnY3FVJIlSOb/WLBoD7x15TD/ISX6pSlmUJfeXjvcbXv
+	 +1TClUXvBekeP51hDUS15SE/shrjh6LDCCvAoYVRft9I74Q6SPhRYi2KZIlhP3sv9QA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795618100;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795618104;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=bPiLwsL8rJiAPjNgJhYujMv6Ut61B9P9gKsbbkWgcDY=;
-	b=RmZGqK0EsNoks+PoP/NmO6VpXxXmUgnPgOxq+2S/Vv9tJD+gS2yoYFR20bs36oKxuc1Y
-	 dCQfJsRCiGCV7SZF+JriS4+mj1CB0P7caINKOuRAFMGBbMYkGJwbZKPNRQPL5x2jSCuOR
-	 a7pK/YQ/E1WnzcvhJXYkfAlwrHVvud8t50kBNpBUS93eoafar+DLno0vIpltOXN1k0o3+
-	 xC0CeKmEvZQ1mSLoy6sQwFc0/LWJT8cOXnnaK2Mt3AdLLuBzfY5o7cyhOeSmQboJbd5Z4
-	 AGfdT5NkM6OESuLqTd3YE5Rm4AxLdNpxj1t4YFOEeRzkZpguesc+hr5Laun/bYt0x2Q==
+	bh=n0W92DUCCB9hfohUUMOnBMKj1D7VH+0pXotuHJpMfRI=;
+	b=Z83zk3kftEbPCcxCFewHJTi0fCZ2p9booBgbaxCX+alVeJJNWz6c4kKrBWt+DjxTWsX4
+	 4VOccehaO7Hw4ESZnm9NsaT4AQv7JPqXbNU1ZElFscqak/b9i+mFxTQgePFoUZvBGakVn
+	 AXIJcRh5EdyOVkrv8xTqTaw5HIRsHn53mOC9uu++laKfud4ZFJPbXoZNiya+TR4c2ibYy
+	 oK7mQAkGvfUpCoZLkJtyuEeDeAZWvHrcBLaHLjVKt8LqfEcZD6BCR02Yd/kV0QQBgIZVr
+	 +QqlZJqaLYrLcBjWI3leq+v0clJma/N8xVLeXHfYqDaXGJHaizLw63Ql5c6OD6WuyZA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=SPc76WLH;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=HR0cgoUt;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 204D0606A321;
-	Wed, 25 Nov 2026 14:48:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E73DA606A31E;
+	Wed, 25 Nov 2026 14:48:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=SPc76WLH
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 641501F000C0;
-	Wed, 25 Nov 2026 14:48:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=HR0cgoUt
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B30B11F000D0;
+	Wed, 25 Nov 2026 14:48:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795618099;
-	bh=bPiLwsL8rJiAPjNgJhYujMv6Ut61B9P9gKsbbkWgcDY=;
+	s=korg; t=1795618103;
+	bh=n0W92DUCCB9hfohUUMOnBMKj1D7VH+0pXotuHJpMfRI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=SPc76WLHdwh3dg5jKGtCucY2t6ioRZ/nT2jmNLGtqQTnrwUKOu6dFbVAuBfqp2Dmp
-	 Q4lRVgFAWS/TCY0gnPN7i8vsO659Jv97F6oBXO4ohNhUrKHaWGiOZd3864TSZfbxRX
-	 VjkVe6RqgQ4P5pIs/vw/AGECjuVJHfkBSOx8Mies=
+	b=HR0cgoUtFOAjAWSAyM0GzZk3BKseVwQBAqAixNStZEYUC2CakHitjwUFJz5QI78vH
+	 AZAFfdWAFX6AEdA0UNs7MWtVhoqTKuhh1d/cGIGSd1ViQlCjugyxiRtVgmw7urqPKY
+	 /voS2/VLpvXv6oFwVwHy+qc2CjPaZCV4uopDjc7g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chris Mason <mason@kernel.org>,
-	Alexei Starovoitov <ast@kernel.org>,
+	Daniel Machon <daniel.machon@microchip.com>,
+	Simon Horman <horms@kernel.org>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0116/1005] bpf: Move the transport header with the moved headers
-Date: Wed, 25 Nov 2026 15:24:14 +0100
-Message-ID: <20261125143824.461869071@linuxfoundation.org>
+Subject: [PATCH 7.3 0166/1005] net: sparx5/lan969x: release the in-flight slot of a stale TX skb
+Date: Wed, 25 Nov 2026 15:25:04 +0100
+Message-ID: <20261125143825.631367929@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143821.729802100@linuxfoundation.org>
 References: <20261125143821.729802100@linuxfoundation.org>
@@ -68,112 +69,93 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chris Mason <mason@kernel.org>
+From: Daniel Machon <daniel.machon@microchip.com>
 
-[ Upstream commit a9d08fe60fa728ce0e3a99085241e8e790fb14c6 ]
+[ Upstream commit 873363ac591a1774aa3ced84f7ea3d93a3eb9b07 ]
 
-bpf_skb_net_hdr_pop() removes len bytes at offset off.
-bpf_skb_net_hdr_push() does the opposite.
+sparx5_ptp_txtstamp_request() counts every two step TX skb waiting for
+its timestamp in sparx5->ptp_skbs, and refuses new ones once
+SPARX5_MAX_PTP_ID are in flight. sparx5_ptp_txtstamp_old_release()
+frees the skbs that have waited longer than SPARX5_PTP_TIMEOUT.
 
-           skb->data       off
-  before   | A             | removed | B            |
-  after              | A             | B            |
-                     skb->data       off
+Before this patch, old_release() does not decrement ptp_skbs, so every
+skb whose timestamp never arrives, for example because the switch
+discarded the frame, keeps its slot forever. Once SPARX5_MAX_PTP_ID
+slots are lost, two step frames fail to transmit on every port of the
+switch.
 
-mac_header and network_header move with A. transport_header moves only when
-it is equal to network_header. inner_transport_header never moves. This is
-correct only for a header in B. In bpf_lwt_seg6_adjust_srh()
-transport_header is in A. bpf_skb_adjust_room() can remove both transport
-headers. With an incorrect header offset, the stack can drop the skb or
-read outside of it.
+Return the number of released skbs from old_release() and subtract it
+from ptp_skbs in txtstamp_request(), under the ptp_ts_id_lock it already
+takes.
 
-Also move transport_header with A when it is in A. Set it to offset off
-when it is in the removed bytes. In BPF_ADJ_ROOM_MAC mode it is then equal
-to network_header. Do not unset it, because skb_gso_validate_mac_len() uses
-it without a check. After a removal, set inner_transport_header to off when
-it is not in B and skb->encapsulation is set. A has only outer headers.
+This fixes the accounting only. A port's stale skbs are still aged out
+only when that port sends a two step frame, so a port that stops sending
+them keeps its stale skbs, and their slots, until it sends one again.
+That behaviour is unchanged by this patch.
 
-Fixes: fe94cc290f53 ("bpf: Add IPv6 Segment Routing helpers")
-Fixes: 868d523535c2 ("bpf: add bpf_skb_adjust_room encap flags")
-Signed-off-by: Chris Mason <mason@kernel.org>
-Signed-off-by: Alexei Starovoitov <ast@kernel.org>
-Link: https://patch.msgid.link/20261101190535.1454146-26-alexei.starovoitov@gmail.com
+Found by an AI code review agent. Reproduced on a lan9696 board with a
+modified kernel that drops the TX timestamps of two step frames, after
+which two step timestamping stopped working on the port. With the fix,
+timestamping keeps working on that board and on a sparx5 PCB135 board.
+
+Fixes: 70dfe25cd866 ("net: sparx5: Update extraction/injection for timestamping")
+Signed-off-by: Daniel Machon <daniel.machon@microchip.com>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Link: https://patch.msgid.link/20261029-sparx5-ptp-stale-tx-slot-v1-1-ec15f391bbb7@microchip.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/core/filter.c | 37 +++++++++++++++++++++++++++++++------
- 1 file changed, 31 insertions(+), 6 deletions(-)
+ drivers/net/ethernet/microchip/sparx5/sparx5_ptp.c | 10 ++++++++--
+ 1 file changed, 8 insertions(+), 2 deletions(-)
 
-diff --git a/net/core/filter.c b/net/core/filter.c
-index 2d539860684f5..475c9e06cf06b 100644
---- a/net/core/filter.c
-+++ b/net/core/filter.c
-@@ -3402,9 +3402,25 @@ static int bpf_skb_generic_pop(struct sk_buff *skb, u32 off, u32 len)
- 	return 0;
+diff --git a/drivers/net/ethernet/microchip/sparx5/sparx5_ptp.c b/drivers/net/ethernet/microchip/sparx5/sparx5_ptp.c
+index 2826e48af1033..9f61692b243b7 100644
+--- a/drivers/net/ethernet/microchip/sparx5/sparx5_ptp.c
++++ b/drivers/net/ethernet/microchip/sparx5/sparx5_ptp.c
+@@ -204,9 +204,10 @@ static void sparx5_ptp_classify(struct sparx5_port *port, struct sk_buff *skb,
+ 	*rew_op = IFH_REW_OP_TWO_STEP_PTP;
  }
  
-+/*
-+ * bpf_skb_net_hdr_push() inserts bytes at @off, bpf_skb_net_hdr_pop() removes
-+ * bytes at @off. Both move the bytes in front of @off together with skb->data,
-+ * and leave the rest of the packet where it is. Return true if the transport
-+ * header is in the part that moves. A transport header that is equal to the
-+ * network header stays equal to it.
-+ */
-+static bool bpf_skb_trans_hdr_moves(const struct sk_buff *skb, u32 off)
-+{
-+	if (skb->transport_header == skb->network_header)
-+		return true;
-+
-+	return skb_transport_header_was_set(skb) &&
-+	       (u32)skb_transport_offset(skb) < off;
-+}
-+
- static int bpf_skb_net_hdr_push(struct sk_buff *skb, u32 off, u32 len)
+-static void sparx5_ptp_txtstamp_old_release(struct sparx5_port *port)
++static unsigned int sparx5_ptp_txtstamp_old_release(struct sparx5_port *port)
  {
--	bool trans_same = skb->transport_header == skb->network_header;
-+	bool trans_moves = bpf_skb_trans_hdr_moves(skb, off);
- 	int ret;
+ 	struct sk_buff *skb, *skb_tmp;
++	unsigned int purged = 0;
+ 	unsigned long flags;
  
- 	/* There's no need for __skb_push()/__skb_pull() pair to
-@@ -3415,8 +3431,8 @@ static int bpf_skb_net_hdr_push(struct sk_buff *skb, u32 off, u32 len)
- 	if (likely(!ret)) {
- 		skb->mac_header -= len;
- 		skb->network_header -= len;
--		if (trans_same)
--			skb->transport_header = skb->network_header;
-+		if (trans_moves)
-+			skb->transport_header -= len;
+ 	spin_lock_irqsave(&port->tx_skbs.lock, flags);
+@@ -217,8 +218,11 @@ static void sparx5_ptp_txtstamp_old_release(struct sparx5_port *port)
+ 
+ 		__skb_unlink(skb, &port->tx_skbs);
+ 		dev_kfree_skb_any(skb);
++		purged++;
  	}
+ 	spin_unlock_irqrestore(&port->tx_skbs.lock, flags);
++
++	return purged;
+ }
  
- 	return ret;
-@@ -3424,7 +3440,7 @@ static int bpf_skb_net_hdr_push(struct sk_buff *skb, u32 off, u32 len)
- 
- static int bpf_skb_net_hdr_pop(struct sk_buff *skb, u32 off, u32 len)
+ int sparx5_ptp_txtstamp_request(struct sparx5_port *port,
+@@ -226,6 +230,7 @@ int sparx5_ptp_txtstamp_request(struct sparx5_port *port,
  {
--	bool trans_same = skb->transport_header == skb->network_header;
-+	bool trans_moves = bpf_skb_trans_hdr_moves(skb, off);
- 	int ret;
+ 	struct sparx5 *sparx5 = port->sparx5;
+ 	u8 rew_op, pdu_type, pdu_w16_offset;
++	unsigned int purged;
+ 	unsigned long flags;
  
- 	/* Same here, __skb_push()/__skb_pull() pair not needed. */
-@@ -3432,8 +3448,17 @@ static int bpf_skb_net_hdr_pop(struct sk_buff *skb, u32 off, u32 len)
- 	if (likely(!ret)) {
- 		skb->mac_header += len;
- 		skb->network_header += len;
--		if (trans_same)
--			skb->transport_header = skb->network_header;
-+		if (trans_moves) {
-+			skb->transport_header += len;
-+		} else if (skb_transport_header_was_set(skb) &&
-+			   skb_transport_offset(skb) < (int)off) {
-+			/* It was in the removed bytes or before skb->data. */
-+			skb_set_transport_header(skb, off);
-+		}
-+		/* Do not leave the inner transport header in front of @off. */
-+		if (skb->encapsulation &&
-+		    skb_inner_transport_offset(skb) < (int)off)
-+			skb_set_inner_transport_header(skb, off);
- 	}
+ 	sparx5_ptp_classify(port, skb, &rew_op, &pdu_type, &pdu_w16_offset);
+@@ -236,9 +241,10 @@ int sparx5_ptp_txtstamp_request(struct sparx5_port *port,
+ 	if (rew_op != IFH_REW_OP_TWO_STEP_PTP)
+ 		return 0;
  
- 	return ret;
+-	sparx5_ptp_txtstamp_old_release(port);
++	purged = sparx5_ptp_txtstamp_old_release(port);
+ 
+ 	spin_lock_irqsave(&sparx5->ptp_ts_id_lock, flags);
++	sparx5->ptp_skbs -= purged;
+ 	if (sparx5->ptp_skbs == SPARX5_MAX_PTP_ID) {
+ 		spin_unlock_irqrestore(&sparx5->ptp_ts_id_lock, flags);
+ 		return -EBUSY;
 -- 
 2.53.0
 
