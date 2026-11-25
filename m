@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795619001;
-	b=Bt0hVu+xEIv0JnyxQk0Sxl5/CCoyuYWNzxlGy/ELvb315PzP6SWIhBsBVLj4Pu9AV6/6
-	 EVkQ6F+qdUZUw2zWps1+nUbtvamUEzDS4W2c7xF2cp/vhP7z1F3TRMvdT3ruT5XXXDLe5
-	 hgoP21bhCpe7O7u9cas/99Q8r4POZPo1vhMlKhGY0wz39ndMBrI0g0LYcEhvvb4UEJf8C
-	 RtmPW+3SNb3ikIK82mAnLyKniEssfMNVr55hn1At/AwwdhxmxeuInoGPbccfWinuD3DQa
-	 Amj8u2jSP8Gyjd3Wl1foSgMET6NkTAfAf+4jpR128do7VMYmMr7IUv/Wg6Pa5Qxt1mQ==
+	t=1795619004;
+	b=xZ0VHBdqNe1PnJwh8cufywAnOmrf76ORtJPdMwzacRsJAwyVoHdW2QeLlRaB8CxC1vPl
+	 EieMXHhlG23Z0faQ9SmCpA+6kB2ryPppTR0iEbJZDs+ZqcqpJnzJInuPmAeR6SeKE19fo
+	 VYbnnXUJlit0tVF4hKVrVE7R3F0Gg613/muPDgdAYBB/AJrMbM5CMrf4sxgFhtgWtrYE8
+	 w3UQ0ovn+Aw7nvovpsrwMNoXuMCmAvMfo8PRsp4CeeNyIzNpOmEuK9yzCiRPWycKn/uEm
+	 2LwiMQfL9O/tuxD8N/RDRXMjJpCFf4EThpVI85myvPMdyj644w7ObBKr+V7ihN6gGHA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795619001;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795619004;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Transfer-Encoding;
-	bh=+NoNQKgG0E6HZDByHEjRXEmdsYfrFga8lTUJh4s0qOE=;
-	b=xPBH4IBscA1/a4HW0WBLebjx79AG+9bDvUpGQiIt8st4p/oVZV2axqneXTDfqRp+P7Bw
-	 8AlJea5j0waFyKPh0ylv/iJAvxeGhIos+YAWNCAZR6rbGLtXWQM8C99d6/QT0Av1llaic
-	 bTTDoquvNWSvUFFqo51I3TTmM2C8Cx+wF2e1Uns8f/11MJFiG9RICJHphy/KXiOcRMEWx
-	 2ysgC8wM1q/82l3sEREnW+1mkWONWy0MsqN0Cp2Lp+/LMokFdahb8qTeGUo90/OLf3Gr6
-	 22HxC7y3Y7ranqRSwohPU0qBULu9hacP6jP2JsLYJyNSqhviDlK7W1vIJs8yKk4dwAQ==
+	 MIME-Version:Content-Type:Content-Transfer-Encoding;
+	bh=icdt3bJfH5PlXAfZ3LQh2xFciHi+zSGGkt56RPjVJBQ=;
+	b=YGwJbKqrY60uTTSF+0wqH6DHsR5DntoJtIjyhWWRAYp8jev12X18Vg4rpJP4+PENWyBX
+	 JyltxfQ3B8IbkmrkDOYU+mCFper0FWDINuffRLfHyXbJHZl4hHnaaZlD7obF/l+6L37Cv
+	 54tw8U/NV+HaCCmuZLypNB37A8T1ntvmImgXnrHhfVMTIFLA/LonozxSFyPrmKUNNz06Q
+	 eMVVI4riCWbHqqmCQqPOb0SiDaVyqeRPiSkTfwcDIHwMO1w39AES044Y3g+KXiS0tacAT
+	 qrgzcVvuJjMhVPfq20X6Gjk9/WkmPxAbV/7SlqhWXlJn0h4l1HvcLJBECptgIwzID3Q==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=qpnCup1c;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="j/BN+gti";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 82E17606A327;
-	Wed, 25 Nov 2026 15:03:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 884B8606A31E;
+	Wed, 25 Nov 2026 15:03:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=qpnCup1c
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A015E1F000E0;
-	Wed, 25 Nov 2026 15:03:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=j/BN+gti
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AD23E1F01566;
+	Wed, 25 Nov 2026 15:03:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795619001;
-	bh=+NoNQKgG0E6HZDByHEjRXEmdsYfrFga8lTUJh4s0qOE=;
+	s=korg; t=1795619004;
+	bh=icdt3bJfH5PlXAfZ3LQh2xFciHi+zSGGkt56RPjVJBQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=qpnCup1c26BOUFYcqdQnJJ2oEMXnObLYgQcg3FGpfvZ8YSH5UeuJLjeM8sRSHYVGl
-	 3JW3wbKS1YmihHuhLqoy7dVqYfMQ4u6bR1anxkDizKz2yS8TqnAreEUYClzOyEYhW3
-	 Rgb3c7dK94KyIxUD0fWznG+tJQw/wu8a7AcMmxN0=
+	b=j/BN+gtithgpwwuSse5YhQyPBrwfMyZ8NkXQt0X5WIvW3qESnsyxFuEQLsfVVRZxA
+	 C3ixAA1m5o55+NRJz1ZfJEJE3CsP8JYFzzHlc+eoW5IlV1Y1QUGjTYMq6qg1hn4Xsb
+	 6McBJ6BdRGjaeVDqWJ0OQKB/YBA92jVUgWreVLpw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tyler Baker <tyler.baker@oss.qualcomm.com>,
-	Mark Brown <broonie@kernel.org>,
+	Boris Brezillon <boris.brezillon@collabora.com>,
+	Steven Price <steven.price@arm.com>,
+	=?UTF-8?q?Adri=C3=A1n=20Larumbe?= <adrian.larumbe@collabora.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0412/1005] ASoC: qcom: x1e80100: recreate the headset jack on card rebind
-Date: Wed, 25 Nov 2026 15:29:10 +0100
-Message-ID: <20261125143831.403314332@linuxfoundation.org>
+Subject: [PATCH 7.3 0413/1005] drm/panfrost: Enable cycle counting when perfcnt is enabled
+Date: Wed, 25 Nov 2026 15:29:11 +0100
+Message-ID: <20261125143831.427889444@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143821.729802100@linuxfoundation.org>
 References: <20261125143821.729802100@linuxfoundation.org>
@@ -62,67 +63,86 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 7.3-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Tyler Baker <tyler.baker@oss.qualcomm.com>
+From: Boris Brezillon <boris.brezillon@collabora.com>
 
-[ Upstream commit 704251f9dad3cb5f93ef64ff2d547868d42de319 ]
+[ Upstream commit 99a2e2b1690f48b074bf14a3b7d5d52f45d26ecc ]
 
-The headset jack is only created while jack_setup is false and nothing
-clears it, so after a card rebind it is not created again and the
-codecs keep a pointer to the freed jack.
+If we don't do that, we end up with invalid timestamps in the block
+headers.
 
-Clear it on link exit, as sc8280xp does.
+We also need to skip the warning on the cycle counter reference being
+other than 0 during device reset, because of perfcnt's lingering ref.
 
-Fixes: 6b9dc2da6657 ("ASoC: qcom: Add x1e80100 sound machine driver")
-Signed-off-by: Tyler Baker <tyler.baker@oss.qualcomm.com>
-Link: https://patch.msgid.link/20261106054333.2748248-3-tyler.baker@oss.qualcomm.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Ideally this would be dealt with by splitting the reset sequence into
+pre and post stages, so that a hypothetical panfrost_perfcnt_pre_reset()
+would release the cycle counter reference. In the absence thereof, we
+just make do.
+
+Fixes: 7786fd108777 ("drm/panfrost: Expose performance counters through unstable ioctls")
+Signed-off-by: Boris Brezillon <boris.brezillon@collabora.com>
+Reviewed-by: Steven Price <steven.price@arm.com>
+Link: https://patch.msgid.link/20261104-panfrost-reset-races-fixes-v3-1-09868a88c351@collabora.com
+Signed-off-by: Adrián Larumbe <adrian.larumbe@collabora.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/qcom/x1e80100.c | 18 ++++++++++++++++++
- 1 file changed, 18 insertions(+)
+ drivers/gpu/drm/panfrost/panfrost_gpu.c     | 7 +++----
+ drivers/gpu/drm/panfrost/panfrost_perfcnt.c | 3 +++
+ 2 files changed, 6 insertions(+), 4 deletions(-)
 
-diff --git a/sound/soc/qcom/x1e80100.c b/sound/soc/qcom/x1e80100.c
-index c81df41ace883..213d7f45198cb 100644
---- a/sound/soc/qcom/x1e80100.c
-+++ b/sound/soc/qcom/x1e80100.c
-@@ -68,6 +68,23 @@ static int x1e80100_snd_init(struct snd_soc_pcm_runtime *rtd)
- 	return qcom_snd_wcd_jack_setup(rtd, &data->jack, &data->jack_setup);
- }
+diff --git a/drivers/gpu/drm/panfrost/panfrost_gpu.c b/drivers/gpu/drm/panfrost/panfrost_gpu.c
+index 8a15ccce08e9b..5ef6897fc05ed 100644
+--- a/drivers/gpu/drm/panfrost/panfrost_gpu.c
++++ b/drivers/gpu/drm/panfrost/panfrost_gpu.c
+@@ -94,11 +94,10 @@ int panfrost_gpu_soft_reset(struct panfrost_device *pfdev)
+ 		  GPU_IRQ_CLEAN_CACHES_COMPLETED);
  
-+static void x1e80100_snd_exit(struct snd_soc_pcm_runtime *rtd)
-+{
-+	struct x1e80100_snd_data *data = snd_soc_card_get_drvdata(rtd->card);
-+	struct snd_soc_dai *cpu_dai = snd_soc_rtd_to_cpu(rtd, 0);
-+
-+	switch (cpu_dai->id) {
-+	case DISPLAY_PORT_RX_0:
-+	case DISPLAY_PORT_RX_1 ... DISPLAY_PORT_RX_7:
-+		return;
-+	default:
-+		break;
-+	}
-+
-+	qcom_snd_headset_jack_cleanup(rtd);
-+	data->jack_setup = false;
-+}
-+
- static int x1e80100_be_hw_params_fixup(struct snd_soc_pcm_runtime *rtd,
- 				     struct snd_pcm_hw_params *params)
- {
-@@ -172,6 +189,7 @@ static void x1e80100_add_be_ops(struct snd_soc_card *card)
- 	for_each_card_prelinks(card, i, link) {
- 		if (link->no_pcm == 1) {
- 			link->init = x1e80100_snd_init;
-+			link->exit = x1e80100_snd_exit;
- 			link->be_hw_params_fixup = x1e80100_be_hw_params_fixup;
- 			link->ops = &x1e80100_be_ops;
- 		}
+ 	/*
+-	 * All in-flight jobs should have released their cycle
+-	 * counter references upon reset, but let us make sure
++	 * Even though all in-flight jobs should have released their cycle counter
++	 * references upon reset, perfcnt's might still hang about.
+ 	 */
+-	if (drm_WARN_ON(&pfdev->base, atomic_read(&pfdev->cycle_counter.use_count) != 0))
+-		atomic_set(&pfdev->cycle_counter.use_count, 0);
++	atomic_set(&pfdev->cycle_counter.use_count, 0);
+ 
+ 	return 0;
+ }
+diff --git a/drivers/gpu/drm/panfrost/panfrost_perfcnt.c b/drivers/gpu/drm/panfrost/panfrost_perfcnt.c
+index 03a6dcd8da2f5..46b5141932ee8 100644
+--- a/drivers/gpu/drm/panfrost/panfrost_perfcnt.c
++++ b/drivers/gpu/drm/panfrost/panfrost_perfcnt.c
+@@ -17,6 +17,7 @@
+ #include "panfrost_device.h"
+ #include "panfrost_features.h"
+ #include "panfrost_gem.h"
++#include "panfrost_gpu.h"
+ #include "panfrost_issues.h"
+ #include "panfrost_job.h"
+ #include "panfrost_mmu.h"
+@@ -52,6 +53,7 @@ static void panfrost_perfcnt_hw_disable(struct panfrost_device *pfdev)
+ 	gpu_write(pfdev, GPU_PRFCNT_TILER_EN, 0);
+ 
+ 	if (perfcnt->owns_as_ref) {
++		panfrost_cycle_counter_put(pfdev);
+ 		panfrost_mmu_as_put(pfdev, perfcnt->mapping->mmu);
+ 		perfcnt->owns_as_ref = false;
+ 	}
+@@ -81,6 +83,7 @@ static int panfrost_perfcnt_hw_enable(struct panfrost_device *pfdev)
+ 		return ret;
+ 
+ 	perfcnt->owns_as_ref = true;
++	panfrost_cycle_counter_get(pfdev);
+ 
+ 	as = ret;
+ 	cfg = GPU_PERFCNT_CFG_AS(as) |
 -- 
 2.53.0
 
