@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795620700;
-	b=F3Wfd9TWi5rK0S0Rmio0FxZA18s0eBnkfcYN5cv9ybOfln96Sc9Kx+6imLVIxhB4IaqM
-	 mQbTtD2+m50LGU2udt/q04/+EqDapvtqRwNwvxEzaAcqcZUP2waZjICrRHIyOsKFYaRl2
-	 sOMF2hRdoGtLvAly6+RpBuLO5gLC/Soq/HWrNM/SKbBzcUVPZ9FfAB87sI5IkhuREDRdJ
-	 wMAZrHTVxXp3wZNUc5MPmr2G+y4oGb4c/Bnm0N7VjV1/AWDtzAgtIqSFympON+qG1/w1W
-	 +XUmNGPg8fv7zT61hRefpaOWnLLOyx5PeShIhge1NL6mPi/WhT84FpQHX8yfFcKk1LA==
+	t=1795620703;
+	b=CBU4fQ6loFyCzSiBMiYa+IZc0GYR3ouX+8BtkZ1Mnf3CGYCV9W8WRo9cDYoCmcGsvXBF
+	 ocaWPCK/JoXxReYa/2c454tNYSDUqDMqA6WA9nhAxULHG/xCTQCB1XwK6Tr+1kNb7wlec
+	 7gdg5fHHpUe+XF5PTzfaQ1gTVEM1HZRjkkNtSNNNa4dzDecENf0szl1f6Sfpr8CYV7Zmr
+	 bo+QGiw0NueAiXgNy9eFeTK9jHRkNJbQ29DCFHB9CKNU3gc+5qfQA41U/FrE7C18yzg/Z
+	 8CwEta7X/FIaNERaFqZPvABvUSjekQjhEyLa+gmKda+8WRz7EobVuZO7MF2V/Q+O7Xg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795620700;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795620703;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=otX5lhHgbHnpd9S+2vmRktPivRoiHETnl5BkFPvXK5s=;
-	b=YcgLaVw1ibB5RofYL0grN7pP+OehLHRLPJ2sILb0w76jtAeTVDHmo9e+g1Dzc7jjAwxJ
-	 qIsjujzVTj4aKklKVeWeyqpybSXJDSSf/EdW+fWQVWMewbpeOXLr7D4d6syd07IMKDgOO
-	 lWSogbUL1xGjhbPLpxb7eg9x8e+ei+Hn9tzYwbR6dgNNS8mhUxfR96B2XDej6DD2l8ow9
-	 zPMVBeCCdmKs0QbXCgmWil1UPb/UXtMnO67DaGewE5HuvF2MesDZ58SjpkzUhrOm4jWKZ
-	 ytLKQ3M5XbxtZQrlqv/Fbtl7GuQ8HKWwEpm5RScQIQ++4/mEZ5A358XBdH10QGtL/kg==
+	bh=Y/eZh36r2b2M/MV9kUnVPyReaneyongdcAiOZMPpEmw=;
+	b=lG+57aTXju96qiGUUky+lgdZMCj1zGeRaBvnKUaKL6ge4MUXyxRHhxB+lXEQIi+SvRRB
+	 OBSOSmx8FcKUmzfNj9HJuxFVegONqnFFyye9IHSaaw79mlLtM+KMdgTj6FPQbFHbiFcud
+	 LSkwcAUNxd680Z771ShW63dz/wNstV/zE4bTnA0eW6glKUzX3xaxqmMC8sTnzY2eSyB/G
+	 bBQpFxuMK0oYHTJBC8CKf1CTfZ03N9VJDSZ/MgDmLdmwOdmzj08j2v002lstVS7mY81s5
+	 aWv/JKtnbjZsjjx3in5ig/Ndjq3D2c3L1xFt72sPSc0R6MbQ/BBxE7I3kWzx/d8djRg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=j4UL2tBD;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=hLTGyM1q;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AF595606A31E;
-	Wed, 25 Nov 2026 15:31:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8C39E606A31E;
+	Wed, 25 Nov 2026 15:31:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=j4UL2tBD
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0D5FD1F000C0;
-	Wed, 25 Nov 2026 15:31:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=hLTGyM1q
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DD3971F000C6;
+	Wed, 25 Nov 2026 15:31:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795620700;
-	bh=otX5lhHgbHnpd9S+2vmRktPivRoiHETnl5BkFPvXK5s=;
+	s=korg; t=1795620703;
+	bh=Y/eZh36r2b2M/MV9kUnVPyReaneyongdcAiOZMPpEmw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=j4UL2tBDO9HgiNqwbKfDy0VHrQZvTcgBDxrMD7wdhXa0hUU/lP3EXdq4i+qTRFSTg
-	 HcK+99JSX8ztbf2xaSw4bT1V9cXcBGOmQpQwRWNFinD6epeQJT8MXDUzQyYdrtbvBU
-	 yV2+F+VnJaBIY25QI7gayvDzX5q3Bvr+QcUkWXZc=
+	b=hLTGyM1qDEHK4WQ5O1FGyuQaNyQiILeUl+J5LdwVb/gYzmRFD/l1ksLjvo2Dj/Ua0
+	 P59hN8RMaqkbjehqRbfJVTVuNSbGkaaNyWPpwELXcwRm//wFvcan0D2VzEAS1frVct
+	 Gn8QNuC+9DMLKFnsmlMeuZaG3mGyIlEsYK7tmG+U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Luiz Capitulino (Red Hat)" <luiz.capitulino@linux.dev>,
-	Michael Ellerman <mpe@kernel.org>,
-	Madhavan Srinivasan <maddy@linux.ibm.com>
-Subject: [PATCH 7.3 1004/1005] powerpc/watchdog: disable watchdog when watchdog_thresh=0
-Date: Wed, 25 Nov 2026 15:39:02 +0100
-Message-ID: <20261125143845.170920139@linuxfoundation.org>
+	Daniel Zahka <daniel.zahka@gmail.com>,
+	Kuniyuki Iwashima <kuniyu@google.com>,
+	"Matthieu Baerts (NGI0)" <matttbe@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 7.3 1005/1005] tcp: Set unhashed_state in inet_twsk_hashdance_schedule().
+Date: Wed, 25 Nov 2026 15:39:03 +0100
+Message-ID: <20261125143845.192780499@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143821.729802100@linuxfoundation.org>
 References: <20261125143821.729802100@linuxfoundation.org>
@@ -68,90 +69,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Luiz Capitulino (Red Hat) <luiz.capitulino@linux.dev>
+From: Kuniyuki Iwashima <kuniyu@google.com>
 
-commit d513ec3c907b067d4a32b14ec6f73c3e041cb136 upstream.
+commit 404381b4f1053a271a85679cc76a543b10ae043e upstream.
 
-On powerpc, trying to disable the hardlockup detector with:
+inet_unhash() sets inet_csk(sk)->unhashed_state only when the
+socket is hashed because tcp_set_state(sk, TCP_CLOSE) could be
+called multiple times, e.g. tcp_abort() calls it directly and
+tcp_done_with_error().
 
- # echo 0 > /proc/sys/kernel/watchdog_thresh
+However, inet_twsk_hashdance_schedule() also unhashes a socket
+when replacing it with twsk, allowing the socket to bypass
+checks for inet_csk(sk)->unhashed_state.
 
-causes an immediate and endless hardlockup detection, eventually leading
-to an unusable system (splat example below). This happens because
-watchdog_calc_timeouts() sets wd_timer_period_ms, wd_panic_timeout_tb
-and wd_smp_panic_timeout_tb to zero, but start_watchdog() still starts
-the timer (with expiry=0) in this code path:
+Let's update inet_csk(sk)->unhashed_state there as well.
 
-proc_watchdog_thresh()
-  proc_watchdog_update()
-    __lockup_detector_reconfigure()
-      watchdog_hardlockup_start()
-        start_watchdog_on_cpu()
-          start_watchdog()
-            hrtimer_start() /* wd_timer_period_ms=0 */
-
-However, according to Documentation/admin-guide/sysctl/kernel.rst,
-setting watchdog_thresh=0 should disable both the soft and hard lockup
-detectors.
-
-This condition is already checked in __lockup_detector_reconfigure() for
-the soft lockup detector and the arch-independent hardlockup detector,
-what's missing is powerpc performing the same check in start_watchdog().
-
-[  278.110085] watchdog: CPU 0 detected hard LOCKUP on other CPUs 1
-[  278.110086] watchdog: CPU 1 became unstuck TB:33050716089564575
-[  278.110097] CPU: 1 UID: 0 PID: 0 Comm: swapper/1 Kdump: loaded Tainted: G            E       7.4.0-rc1 #1 PREEMPT(full)
-[  278.110103] watchdog: CPU 0 TB:33050716089564185, last SMP heartbeat TB:33050716089563885 (0ms ago)
-[  278.110109] Tainted: [E]=UNSIGNED_MODULE
-[  278.110126] Hardware name: IBM,8375-42A POWER9 (architected) 0x4e0202 0xf000005 of:IBM,FW940.00 (VL940_027) hv:phyp pSeries
-[  278.110136] NIP:  c0000000001bd518 LR: c0000000014dedf8 CTR: 0000000000000000
-[  278.110145] REGS: c000000004b17a80 TRAP: 0900   Tainted: G            E        (7.4.0-rc1)
-[  278.110155] MSR:  800000000280b033 <SF,VEC,VSX,EE,FP,ME,IR,DR,RI,LE>  CR: 22000224  XER: 20040004
-[  278.110189] CFAR: 0000000000000000 IRQMASK: 0
-GPR00: 0000000000000000 c000000004b17d20 c000000001c38100 0000000000000000
-GPR04: 000000000000ffff 0000000000000000 0000000000000000 0000000000000000
-GPR08: 0000000000000000 0000000000000080 0000000000000080 ffffffffffffffff
-GPR12: 0000000000000000 c000000017fff300 0000000000000000 000000002ef3d820
-GPR16: 0000000000000000 0000000000000000 0000000000000000 0000000000000000
-GPR20: 0000000000000000 0000000000000000 0000000000000000 0000000000000001
-GPR24: 0000000000000001 00000040c0a6075e 0000000000000000 0000000000000001
-GPR28: c0000001fdb5b140 0000000000000001 c000000002291968 c000000002291970
-[  278.110306] NIP [c0000000001bd518] plpar_hcall_norets_notrace+0x18/0x2c
-[  278.110319] LR [c0000000014dedf8] check_and_cede_processor+0x48/0x60
-[  278.110333] Call Trace:
-[  278.110338] [c000000004b17d20] [c000000004b17dd0] 0xc000000004b17dd0 (unreliable)
-[  278.110354] [c000000004b17d80] [c0000000014df020] shared_cede_loop+0x70/0x170
-[  278.110367] [c000000004b17dc0] [c0000000014de460] cpuidle_enter_state+0x2f0/0x748
-[  278.110381] [c000000004b17e70] [c000000000fe43b8] cpuidle_enter+0x48/0x70
-[  278.110397] [c000000004b17eb0] [c0000000002cdcf8] call_cpuidle+0x48/0x90
-[  278.110409] [c000000004b17ed0] [c0000000002d6300] cpuidle_idle_call+0x160/0x2d0
-[  278.110422] [c000000004b17f20] [c0000000002d6578] do_idle+0x108/0x1f0
-[  278.110434] [c000000004b17f60] [c0000000002d6938] cpu_startup_entry+0x48/0x50
-[  278.110446] [c000000004b17f90] [c0000000000615c0] start_secondary+0x290/0x2a0
-[  278.110459] [c000000004b17fe0] [c00000000000e258] start_secondary_prolog+0x10/0x14
-
-Fixes: 2104180a5369 ("powerpc/64s: implement arch-specific hardlockup watchdog")
-Cc: stable@vger.kernel.org
-Signed-off-by: Luiz Capitulino (Red Hat) <luiz.capitulino@linux.dev>
-Reviewed-by: Michael Ellerman <mpe@kernel.org>
-Signed-off-by: Madhavan Srinivasan <maddy@linux.ibm.com>
-Link: https://patch.msgid.link/20261104034018.2676750-1-luiz.capitulino@linux.dev
+Fixes: 8cc3aef0cb19 ("tcp: Do not allow buggy transitions between ehash and lhash2.")
+Reported-by: Daniel Zahka <daniel.zahka@gmail.com>
+Closes: https://lore.kernel.org/netdev/DLHLRA8GVI5B.2Q1IRQG5BVJNZ@gmail.com/
+Signed-off-by: Kuniyuki Iwashima <kuniyu@google.com>
+Reviewed-by: Daniel Zahka <daniel.zahka@gmail.com>
+Reviewed-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
+Link: https://patch.msgid.link/20260917191554.1600494-1-kuniyu@google.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/powerpc/kernel/watchdog.c |    3 +++
- 1 file changed, 3 insertions(+)
+ net/ipv4/inet_timewait_sock.c |    6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
---- a/arch/powerpc/kernel/watchdog.c
-+++ b/arch/powerpc/kernel/watchdog.c
-@@ -487,6 +487,9 @@ static void start_watchdog(void *arg)
- 	if (!(watchdog_enabled & WATCHDOG_HARDLOCKUP_ENABLED))
- 		return;
- 
-+	if (!watchdog_thresh)
-+		return;
+--- a/net/ipv4/inet_timewait_sock.c
++++ b/net/ipv4/inet_timewait_sock.c
+@@ -105,10 +105,12 @@ void inet_twsk_hashdance_schedule(struct
+ 				  struct inet_hashinfo *hashinfo,
+ 				  int timeo)
+ {
+-	const struct inet_sock *inet = inet_sk(sk);
+-	const struct inet_connection_sock *icsk = inet_csk(sk);
+ 	spinlock_t *lock = inet_ehash_lockp(hashinfo, sk->sk_hash);
++	struct inet_connection_sock *icsk = inet_csk(sk);
+ 	struct inet_bind_hashbucket *bhead, *bhead2;
++	const struct inet_sock *inet = inet_sk(sk);
 +
- 	if (!cpumask_test_cpu(cpu, &watchdog_cpumask))
- 		return;
++	icsk->unhashed_state = sk->sk_state;
  
+ 	/* Put TW into bind hash. Original socket stays there too.
+ 	 * Note, that any socket with inet->num != 0 MUST be bound in
 
 
