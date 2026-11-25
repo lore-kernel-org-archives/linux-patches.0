@@ -1,54 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795621254;
-	b=UMSEJr8b1JONFwgYk8FTi59mITmRtanQRb+Bq9scKnmBWVp/Q7vbSFHaFAN1ZZZLQh9c
-	 A260MUN7AQrS+j3Cqm2tduQtLcN3Dy6DR+9hCVQLGEnXRNQJ9jQHEE6MVN94FWDERmvM/
-	 wFGEei97TjnhPPKRXkkB57G3fpen0PnysZdPMjC0uesFEKxx/Cf5MNJ0roLuGuw1vzMJu
-	 V3SG1UraU64OdXx6f7NuBMchCWm+tD1DsdzHb/nONg3BftgiFzOv3U182tkVloUZot4vW
-	 +3ZJ5vRBU4ls0d7H1vnOhMYusQTB2rO/vcp7cL7qrHBR76FpSn+wu0ANwb3051/zJaA==
+	t=1795621257;
+	b=pXOAE58qiu+qmXRtyRiaZocQvIxHMjaddinQ/xhqpRrHUNpaGXrPd6mW6t0QUd3Xj+/n
+	 I9QC/V7Xx7rn/rEFTzqyfHhCToRQbD7817qd0ObU16PR1z90LJQ0X/HiXpL5nPmIwxea5
+	 GcWdWNTK2Rhe4WTFScrdPTathnis9uUiJ2gaQlsmBS2K1XswANV7w7odT4W0ORTWu9KJD
+	 qkBgA09VYzFdpabP1zmJ+YUo7zh3KGb7+Qm3I2vVeqRQJEOp6+AEvRzm+xlaH9PEr0qwG
+	 GJiX1B1MuxbtfzAo7pZHC2vngnW2qiJm+09wZMNNmwib66Kd++wqcjlgK2m7wyDAJEQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795621254;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795621257;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=+aTifPswarImLDC03LK4nO8xKQn7uuCKms/UUbd0TIY=;
-	b=wb5Aj+n3ZzL43rcmI51s1uEtUksC/rUW8jXFAh7sHYzRRosSgOZKCRR+7kVYG28UVtc9
-	 7efBdTSD+7QXdXv9Yeu+H8L4K05h1YcnSfcA7JigCEZUHmW2Q0LVs+Hx3P5012ztmozYX
-	 t+zMapI7n6dwSFYPu/qdWYDqT7Pg555UZGyhnvh00wCQt1y7Wb33lB5kXC8X1jFntzll/
-	 tfvvFFAB//0zjaBrHhry/acFYkcPgDE+wgn6jS95YoI6ekS0Buz1FNNS3sgd7MglDrVbR
-	 rVgP2uUbW1reVeca/sjnSaU5bHUn20Vga00dJL+2gniz43ZYOWDYTzfRrpSYt1IALUA==
+	bh=Mnstw+GMYkqVWWendklFtVZymHYnkYuHKTJAh79+VQM=;
+	b=w50lvj9ik3yC48yxfsh6ckqr+tUFz/h79AiOKU3/VC53b4ZFL0exO+3QSCBamZ8sNrOL
+	 remb2jNb8/5QWoq/ZORTf/T/ny9kQDcTJXYjj9OenQaN7vHr1lwKdCZka44Xq7k/4bEx6
+	 7uTMaU7Dy5pBSLdBUgdSnZn4ipfdszaH26oScaL2ycJrKoG4HV//Kk5t3CNG+uh9bpuJF
+	 z+BPMis2GxomsOqUY3QijtRN13RMr/Fqqwoa9rb9aMAuFQA3Q71rDoxxd7KsDoEPxzwKv
+	 CtWIHpQ6ae/WLPrI/uxJRTxglDzv+MPSB6xHq2JX9m3NnCIoROorUeZBhLpcAYvaBog==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="tghZ/Ie6";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=QptjEmLc;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 15059606A695;
-	Wed, 25 Nov 2026 15:40:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7420F60A260E;
+	Wed, 25 Nov 2026 15:40:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=tghZ/Ie6
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 53CC51F01577;
-	Wed, 25 Nov 2026 15:40:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=QptjEmLc
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9763F1F00ACF;
+	Wed, 25 Nov 2026 15:40:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795621253;
-	bh=+aTifPswarImLDC03LK4nO8xKQn7uuCKms/UUbd0TIY=;
+	s=korg; t=1795621257;
+	bh=Mnstw+GMYkqVWWendklFtVZymHYnkYuHKTJAh79+VQM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=tghZ/Ie60PzznZY4KSvYVmC2mK5QzW+Bf78GAmbYUNREVQbOSXicC/2WjyJd/t2Mp
-	 B9Kvgdywokz0cZTNSkreyp3aA7lbvSSrQjw5UoWUQBuwqWqXn6fjSAWSCuBdRtBRMM
-	 odC2MnG6zVJ3CJm+4m23dRvvntayvNXzjSgfjlas=
+	b=QptjEmLcbQaicDeG2E9YoYASvI3go1M8GiIiV1yDFP+aro+17MNnlT/aFiEmQBrfw
+	 G85Tz9WQbrmdXdzZvSX78ByMrFZDVFz/p/WENoRx80jU9/jFFhE0cFt3cDGXOu9FTS
+	 qiputwG9fKpArpHZgEFXiAn5MxHzk/h+ts+TD74k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vladimir Petrzhikovskii <vladimir@dfb.sh>,
-	Baochen Qiang <baochen.qiang@oss.qualcomm.com>,
-	Vasanthakumar Thiagarajan <vasanthakumar.thiagarajan@oss.qualcomm.com>,
-	Jeff Johnson <jeff.johnson@oss.qualcomm.com>,
+	Sashiko <sashiko-bot@kernel.org>,
+	Jerome Brunet <jbrunet@baylibre.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 170/990] wifi: ath12k: dont advertise EHT-MCS15 to firmware unless we support it
-Date: Wed, 25 Nov 2026 15:25:37 +0100
-Message-ID: <20261125143826.076604603@linuxfoundation.org>
+Subject: [PATCH 6.18 171/990] ASoC: meson: axg-fifo: request the irq with the clock enabled
+Date: Wed, 25 Nov 2026 15:25:38 +0100
+Message-ID: <20261125143826.099467817@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143822.072087159@linuxfoundation.org>
 References: <20261125143822.072087159@linuxfoundation.org>
@@ -70,69 +69,95 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Baochen Qiang <baochen.qiang@oss.qualcomm.com>
+From: Jerome Brunet <jbrunet@baylibre.com>
 
-[ Upstream commit 83d689bbe8f90ce39961bcc3a64f2ca2ec184019 ]
+[ Upstream commit 82fa7bfab6b961a03d6575348334e0ec15fdc712 ]
 
-ath12k_peer_assoc_h_eht() copies the peer's EHT PHY capabilities into
-the WMI peer assoc command as is, including the EHT-MCS15 support bits.
-Firmware rate control enables EHT-MCS15 for TX whenever those bits are
-set, without checking whether the local PHY supports MCS15.
+The fifo irq handler accesses registers which need pclk, but the irq is
+requested before pclk is enabled on open and freed after it is disabled
+on close.
 
-Currently WCN7850 firmware does not support EHT-MCS15 for TX and does
-not advertise it in its own EHT PHY capabilities. When connected to an
-AP that advertises MCS15 support, rate control may still select
-EHT-MCS15, and every PPDU at that rate is aborted by the PHY before it
-goes on the air. TX then stops for minutes while the association stays
-up, and frames sit in the queue until the firmware releases them as aged.
+Request the irq after enabling pclk and masking the fifo irqs.
+Free it before disabling pclk.
 
-Keep only the peer's MCS15 support bits that we also support ourselves
-to fix it. Chips that support MCS15 are not affected.
-
-Tested-on: WCN7850 hw2.0 PCI WLAN.HMT.1.1.c7-00108-QCAHMTSWPL_V1.0_V2.0_SILICONZ_UPSTREAM-3
-
-Fixes: 17bbb8aa74fd ("wifi: ath12k: prepare EHT peer assoc parameters")
-Reported-by: Vladimir Petrzhikovskii <vladimir@dfb.sh>
-Closes: https://bugzilla.kernel.org/show_bug.cgi?id=222136
-Tested-by: Vladimir Petrzhikovskii <vladimir@dfb.sh>
-Signed-off-by: Baochen Qiang <baochen.qiang@oss.qualcomm.com>
-Reviewed-by: Vasanthakumar Thiagarajan <vasanthakumar.thiagarajan@oss.qualcomm.com>
-Link: https://patch.msgid.link/20261029-ath12k-mcs15-v1-1-3bcfab101f00@oss.qualcomm.com
-Signed-off-by: Jeff Johnson <jeff.johnson@oss.qualcomm.com>
+Fixes: 6dc4fa179fb8 ("ASoC: meson: add axg fifo base driver")
+Reported-by: Sashiko <sashiko-bot@kernel.org>
+Closes: https://sashiko.dev/#/bug/linux-30e88a8a-f33a-40f0-92aa-9ea62c5b7299
+Signed-off-by: Jerome Brunet <jbrunet@baylibre.com>
+Link: https://patch.msgid.link/20261030-asoc-axg-fifo-irq-clock-v1-1-f8c170ac8b0d@baylibre.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/ath/ath12k/mac.c | 11 +++++++++++
- 1 file changed, 11 insertions(+)
+ sound/soc/meson/axg-fifo.c | 28 ++++++++++++++--------------
+ 1 file changed, 14 insertions(+), 14 deletions(-)
 
-diff --git a/drivers/net/wireless/ath/ath12k/mac.c b/drivers/net/wireless/ath/ath12k/mac.c
-index 94e5af15cd618..c3f761cc35558 100644
---- a/drivers/net/wireless/ath/ath12k/mac.c
-+++ b/drivers/net/wireless/ath/ath12k/mac.c
-@@ -3239,6 +3239,7 @@ static void ath12k_peer_assoc_h_eht(struct ath12k *ar,
- 	u32 *rx_mcs, *tx_mcs;
- 	u16 *eht_mcs_mask;
- 	u8 max_nss = 0;
-+	u8 mcs15;
+diff --git a/sound/soc/meson/axg-fifo.c b/sound/soc/meson/axg-fifo.c
+index 75909196b7698..edf43b7fb5cf5 100644
+--- a/sound/soc/meson/axg-fifo.c
++++ b/sound/soc/meson/axg-fifo.c
+@@ -244,17 +244,10 @@ int axg_fifo_pcm_open(struct snd_soc_component *component,
+ 	if (ret)
+ 		return ret;
  
- 	lockdep_assert_wiphy(ath12k_ar_to_hw(ar)->wiphy);
+-	/* Use the threaded irq handler only with non-atomic links */
+-	ret = request_threaded_irq(fifo->irq, NULL,
+-				   axg_fifo_pcm_irq_block,
+-				   IRQF_ONESHOT, dev_name(dev), ss);
+-	if (ret)
+-		return ret;
+-
+ 	/* Enable pclk to access registers and clock the fifo ip */
+ 	ret = clk_prepare_enable(fifo->pclk);
+ 	if (ret)
+-		goto free_irq;
++		return ret;
  
-@@ -3289,6 +3290,16 @@ static void ath12k_peer_assoc_h_eht(struct ath12k *ar,
- 	memcpy(arg->peer_eht_cap_phy, eht_cap->eht_cap_elem.phy_cap_info,
- 	       sizeof(eht_cap->eht_cap_elem.phy_cap_info));
+ 	/* Setup status2 so it reports the memory pointer */
+ 	regmap_update_bits(fifo->map, FIFO_CTRL1,
+@@ -271,17 +264,24 @@ int axg_fifo_pcm_open(struct snd_soc_component *component,
+ 	/* Clear any pending interrupt */
+ 	axg_fifo_ack_irq(fifo, FIFO_INT_MASK);
  
-+	/*
-+	 * Firmware rate control enables EHT-MCS15 based only on the peer's
-+	 * MCS15 support bits, so keep only the ones we support ourselves.
-+	 */
-+	mcs15 = u8_get_bits(eht_cap->eht_cap_elem.phy_cap_info[6] &
-+			    own_eht_cap->eht_cap_elem.phy_cap_info[6],
-+			    IEEE80211_EHT_PHY_CAP6_MCS15_SUPP_MASK);
-+	u8p_replace_bits(&((u8 *)arg->peer_eht_cap_phy)[6], mcs15,
-+			 IEEE80211_EHT_PHY_CAP6_MCS15_SUPP_MASK);
++	/* Use the threaded irq handler only with non-atomic links */
++	ret = request_threaded_irq(fifo->irq, NULL,
++				   axg_fifo_pcm_irq_block,
++				   IRQF_ONESHOT, dev_name(dev), ss);
++	if (ret)
++		goto free_clk;
 +
- 	rx_mcs = arg->peer_eht_rx_mcs_set;
- 	tx_mcs = arg->peer_eht_tx_mcs_set;
+ 	/* Take memory arbitror out of reset */
+ 	ret = reset_control_deassert(fifo->arb);
+ 	if (ret)
+-		goto free_clk;
++		goto free_irq;
  
+ 	return 0;
+ 
+-free_clk:
+-	clk_disable_unprepare(fifo->pclk);
+ free_irq:
+ 	free_irq(fifo->irq, ss);
++free_clk:
++	clk_disable_unprepare(fifo->pclk);
+ 	return ret;
+ }
+ EXPORT_SYMBOL_GPL(axg_fifo_pcm_open);
+@@ -295,12 +295,12 @@ int axg_fifo_pcm_close(struct snd_soc_component *component,
+ 	/* Put the memory arbitror back in reset */
+ 	ret = reset_control_assert(fifo->arb);
+ 
+-	/* Disable fifo ip and register access */
+-	clk_disable_unprepare(fifo->pclk);
+-
+ 	/* remove IRQ */
+ 	free_irq(fifo->irq, ss);
+ 
++	/* Disable fifo ip and register access */
++	clk_disable_unprepare(fifo->pclk);
++
+ 	return ret;
+ }
+ EXPORT_SYMBOL_GPL(axg_fifo_pcm_close);
 -- 
 2.53.0
 
