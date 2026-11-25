@@ -1,53 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795620788;
-	b=n5/1+SersIAtrslnBcMSEqau5BiYqQ6ynw9xmD0neNJfKtPZXhyh7QbN3RktpJtnBDbk
-	 EA/DWlkOMpK7fuIhICBHv0IESF/cLPn0EhGWXZUJXKOE900x+isENNaa7f4ZPIJnMnbh1
-	 f0K7fKxFR5R9dpZ95ljh18Z8LUGPBQbvYC7d9dF/JALqBr0Zuo5TqAzkrp1hBVMgVio2J
-	 wVk7+8uWIZz+mNfOlImlOesdUQetv2/6XVEjOUXvVnnM/iL+Lk2TguChclo8jpNEqLE//
-	 TZZpdUB4xdNKCZmgIGCkTQ/kmDrx+YJIOaJ0BZCaI9X5J++XGlnxwSLOz1Ai3TYzlBg==
+	t=1795620792;
+	b=LXuBjFmj3szIxSVj8HX/YokJ+wxXgGLxCReZ0BxJ1Eo+XcLLYwlxBmSydRG0D87WMmjk
+	 ihhGQUj4sL4GWU266mgq+7WW6iYh3AmuDaeJbL7ddF6xKyvbQCe/eflouL22Zato9VKRN
+	 tLnJ9WoLCjCFXj1EiEXm8FBtqBx3hjWyJB5UiIunkO/cDwby4giRO7OZfuF7v5A4Jxfvv
+	 CzJvFVg6rVbnvcYMctN5OSqJmaspUz3TW6rljfcI4FoHZqZJGvR/UfT57Lp0Yafjrxh4y
+	 WE6RNj7binMtRSTrQ2rmgCh1iUkJEeHcjVhtyTkKEHj4HThyFYk/i8xL69O3E9HulQQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795620788;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795620792;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=YQyB8WJxvuAej6+SxLB4ntMG2IJDpek6oiae5A6ignA=;
-	b=1NkynvbKw/UhWKAj+3ExOl03bRCUVu64oUCGgxuk7nZgqq5BixPOCSLnINdkVbYsThpK
-	 HeKwil7VS0YcNjsLoUhHdOXzlQS02ZWI7b1ssXo3A+KzhoNnDKrQxnEyYJCu5iXWwRjuM
-	 2ZA+ob84lPz/Ht0JsJy9Oi5kcNWGieguE8CH63Z53XuqTP/KKVAtxvPAp8oT2Hf5riYjQ
-	 j3gjXf9zcqTFJ64QK0usftCDj6rLDKHrGS0BNVUaDKnyD3IyJoOSvCZLL6/Qh3E8QnRL7
-	 tE10lymQ0EyC6TnO0UexRcnuBecEt+A69z3C32hDqcmb3SHVa/DvXELlru5VmP5ZDFw==
+	bh=o7D73qdhthNutIh/1ZRJAn3zvk09DgCflc8pKlq7xas=;
+	b=0ILJSeivVlG8jo+QjIF1MmVnNjqEae3EbXZGwIte/keGx+ONJthqzQXV/aIuVnKxZ9Lr
+	 YjVqMLh7PHN3qEBvzc5yTYfWxr4fcuih3NlSpSdLQXCSXpMfd0ux0DL64jx7i9QgWZQkx
+	 MMkiGngmXH1X03hzsuNWOgJVdVmgBo7C99VPsrh7cXiQ1tcoLuZXrov9LEaGuFiUqYx0W
+	 SJPMD68MR5PFKt5zqgJmAZpFazNJFalat1UTInYCLmTaL5LPz7dZls4QzpTWVjLjVxbfL
+	 FD1xQTPQwu5UV6QPtkiHCcyc4l2AV3YovEI3w9C0QajV7+7TGff1mJXtmjApb1fQGLQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="w/2n+RiF";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=s41Fkvaj;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 298BB606A31E;
-	Wed, 25 Nov 2026 15:33:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2FAB4606A31E;
+	Wed, 25 Nov 2026 15:33:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=w/2n+RiF
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2EF421F000CF;
-	Wed, 25 Nov 2026 15:33:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=s41Fkvaj
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 81F081F000C4;
+	Wed, 25 Nov 2026 15:33:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795620787;
-	bh=YQyB8WJxvuAej6+SxLB4ntMG2IJDpek6oiae5A6ignA=;
+	s=korg; t=1795620791;
+	bh=o7D73qdhthNutIh/1ZRJAn3zvk09DgCflc8pKlq7xas=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=w/2n+RiFLXWkrUZJKVvMcaK+B+Lxd2rBIZjwWPZfgtrFTbJI+Jo7xLBSahZlV6s2l
-	 Jn83niud4Jzs4Ua+5nC7K8PuAOVXaNhZh00GDz1m6v/9tNcro9QqEae+INBDvuYSBZ
-	 0rFOMRhxz5j24lHqXMqFCyaV41xfU1jN/OJoxMRw=
+	b=s41FkvajJ/M6LLIoLXrZs4WfAry4uCGHiF4HCfucpEnyNBvR1K6MZLunwo/1yzvD2
+	 tKWNfjIyVX2gcMRK7NGHK44YDG7LGFlPkf6Cv/HRjdEA+kBEoJy50dcEA6Mh6brtJS
+	 dGV6xyr+aF3CqCwE9NdX+X/QkQVETSRIi1EKSyys=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Matthew Schwartz <matthew.schwartz@linux.dev>,
-	Antheas Kapenekakis <lkml@antheas.dev>,
-	Takashi Iwai <tiwai@suse.de>,
+	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 024/990] ALSA: hda/tas2781: Prevent throwing away custom calibration addresses
-Date: Wed, 25 Nov 2026 15:23:11 +0100
-Message-ID: <20261125143822.654407054@linuxfoundation.org>
+Subject: [PATCH 6.18 025/990] sched/deadline: Fix dl_server time accounting
+Date: Wed, 25 Nov 2026 15:23:12 +0100
+Message-ID: <20261125143822.677239352@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143822.072087159@linuxfoundation.org>
 References: <20261125143822.072087159@linuxfoundation.org>
@@ -69,70 +67,194 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Antheas Kapenekakis <lkml@antheas.dev>
+From: Peter Zijlstra <peterz@infradead.org>
 
-[ Upstream commit ba39a31448857da3b848174c9130b466b3ccddba ]
+[ Upstream commit e636ffb9e31b4f7dde7fef5358669266b9ce02ec ]
 
-The V2 UEFI spec for per-device calibration data in TAS allows for
-manufacturers to specify up to five custom calibration register
-addresses and values to optimize per-device in factory.
+The dl_server time accounting code is a little odd. The normal scheduler
+pattern is to update curr before doing something, such that the old state is
+fully accounted before changing state.
 
-A basic description of the spec is found in a comment in function
-tas2781_apply_calib(). However, currently, for the condition of
-p->dspbin_typ != TASDEV_BASIC, if custom calibration addresses have been
-provided by the manufacturer, they are ignored and the ones listed in
-firmware are used.
+Notably, the dl_server_timer() needs to propagate the current time accounting
+since the current task could be ran by dl_server and thus this can affect
+dl_se->runtime. Similarly for dl_server_start().
 
-In case the manufacturer chose to change different registers other than
-the default ones (r0, invr0, r0_low, pow, tlimit), this causes the
-UEFI calibration data to scratch different registers and cause the
-firmware to misbehave. This is true in the Xbox ROG Ally X, for one of
-the firmwares, where it pops and has audio dropouts after the
-calibration data is applied.
+And since the (deferred) dl_server wants idle time accounted, rework
+sched_idle_class time accounting to be more like all the others.
 
-Therefore, add a new bool to indicate that UEFI supplied custom
-calibration addresses, and if so, use them regardless of dspbin_typ.
-
-Closes: https://lore.kernel.org/all/179122346529.6.9250312386131579603.1671009695@8alias.com/
-Co-developed-by: Matthew Schwartz <matthew.schwartz@linux.dev>
-Signed-off-by: Matthew Schwartz <matthew.schwartz@linux.dev>
-Signed-off-by: Antheas Kapenekakis <lkml@antheas.dev>
-Link: https://patch.msgid.link/20261102174052.1216670-1-lkml@antheas.dev
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
+Link: https://patch.msgid.link/20251020141130.GJ3245006@noisy.programming.kicks-ass.net
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/hda/codecs/side-codecs/tas2781_hda.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ kernel/sched/deadline.c | 40 +++++++++++++++-------------------------
+ kernel/sched/fair.c     |  9 ++-------
+ kernel/sched/idle.c     | 16 +++++++++++++++-
+ kernel/sched/sched.h    |  3 +--
+ 4 files changed, 33 insertions(+), 35 deletions(-)
 
-diff --git a/sound/hda/codecs/side-codecs/tas2781_hda.c b/sound/hda/codecs/side-codecs/tas2781_hda.c
-index dc4e42fd88484..c44dfa2757b1a 100644
---- a/sound/hda/codecs/side-codecs/tas2781_hda.c
-+++ b/sound/hda/codecs/side-codecs/tas2781_hda.c
-@@ -89,6 +89,7 @@ static void tas2781_apply_calib(struct tasdevice_priv *p)
- 		TASDEVICE_REG(0, 0x18, 0x7c),
- 	};
- 	unsigned int crc, oft, node_num;
-+	bool custom_addr = false;
- 	unsigned char *buf;
- 	int i, j, k, l;
+diff --git a/kernel/sched/deadline.c b/kernel/sched/deadline.c
+index 0180758d90af8..cb048165ca537 100644
+--- a/kernel/sched/deadline.c
++++ b/kernel/sched/deadline.c
+@@ -1171,8 +1171,12 @@ static enum hrtimer_restart dl_server_timer(struct hrtimer *timer, struct sched_
+ 		sched_clock_tick();
+ 		update_rq_clock(rq);
  
-@@ -129,6 +130,7 @@ static void tas2781_apply_calib(struct tasdevice_priv *p)
- 		for (j = 0, k = 0; j < node_num; j++) {
- 			oft = j * 6 + 3;
- 			if (tmp_val[oft] == TASDEV_UEFI_CALI_REG_ADDR_FLG) {
-+				custom_addr = true;
- 				for (i = 0; i < TASDEV_CALIB_N; i++) {
- 					buf = &data[(oft + i + 1) * 4];
- 					cali_reg[i] = TASDEVICE_REG(buf[1],
-@@ -188,7 +190,7 @@ static void tas2781_apply_calib(struct tasdevice_priv *p)
- 		}
+-		if (!dl_se->dl_runtime)
+-			return HRTIMER_NORESTART;
++		/*
++		 * Make sure current has propagated its pending runtime into
++		 * any relevant server through calling dl_server_update() and
++		 * friends.
++		 */
++		rq->donor->sched_class->update_curr(rq);
+ 
+ 		if (dl_se->dl_defer_armed) {
+ 			/*
+@@ -1548,35 +1552,16 @@ static void update_curr_dl_se(struct rq *rq, struct sched_dl_entity *dl_se, s64
+  * as time available for the fair server, avoiding a penalty for the
+  * rt scheduler that did not consumed that time.
+  */
+-void dl_server_update_idle_time(struct rq *rq, struct task_struct *p)
++void dl_server_update_idle(struct sched_dl_entity *dl_se, s64 delta_exec)
+ {
+-	s64 delta_exec;
+-
+-	if (!rq->fair_server.dl_defer)
+-		return;
+-
+-	/* no need to discount more */
+-	if (rq->fair_server.runtime < 0)
+-		return;
+-
+-	delta_exec = rq_clock_task(rq) - p->se.exec_start;
+-	if (delta_exec < 0)
+-		return;
+-
+-	rq->fair_server.runtime -= delta_exec;
+-
+-	if (rq->fair_server.runtime < 0) {
+-		rq->fair_server.dl_defer_running = 0;
+-		rq->fair_server.runtime = 0;
+-	}
+-
+-	p->se.exec_start = rq_clock_task(rq);
++	if (dl_se->dl_server_active && dl_se->dl_runtime && dl_se->dl_defer)
++		update_curr_dl_se(dl_se->rq, dl_se, delta_exec);
+ }
+ 
+ void dl_server_update(struct sched_dl_entity *dl_se, s64 delta_exec)
+ {
+ 	/* 0 runtime = fair server disabled */
+-	if (dl_se->dl_runtime)
++	if (dl_se->dl_server_active && dl_se->dl_runtime)
+ 		update_curr_dl_se(dl_se->rq, dl_se, delta_exec);
+ }
+ 
+@@ -1787,6 +1772,11 @@ void dl_server_start(struct sched_dl_entity *dl_se)
+ 	if (!dl_server(dl_se) || dl_se->dl_server_active)
+ 		return;
+ 
++	/*
++	 * Update the current task to 'now'.
++	 */
++	rq->donor->sched_class->update_curr(rq);
++
+ 	if (WARN_ON_ONCE(!cpu_online(cpu_of(rq))))
+ 		return;
+ 
+diff --git a/kernel/sched/fair.c b/kernel/sched/fair.c
+index a063e302fbf8e..4052ed6e1330c 100644
+--- a/kernel/sched/fair.c
++++ b/kernel/sched/fair.c
+@@ -1325,8 +1325,7 @@ static void update_curr(struct cfs_rq *cfs_rq)
+ 		 *    against fair_server such that it can account for this time
+ 		 *    and possibly avoid running this period.
+ 		 */
+-		if (dl_server_active(&rq->fair_server))
+-			dl_server_update(&rq->fair_server, delta_exec);
++		dl_server_update(&rq->fair_server, delta_exec);
  	}
  
--	if (p->dspbin_typ == TASDEV_BASIC) {
-+	if (custom_addr || p->dspbin_typ == TASDEV_BASIC) {
- 		r->r0_reg = cali_reg[0];
- 		r->invr0_reg = cali_reg[1];
- 		r->r0_low_reg = cali_reg[2];
+ 	account_cfs_rq_runtime(cfs_rq, delta_exec);
+@@ -7176,12 +7175,8 @@ enqueue_task_fair(struct rq *rq, struct task_struct *p, int flags)
+ 			h_nr_idle = 1;
+ 	}
+ 
+-	if (!rq_h_nr_queued && rq->cfs.h_nr_queued) {
+-		/* Account for idle runtime */
+-		if (!rq->nr_running)
+-			dl_server_update_idle_time(rq, rq->curr);
++	if (!rq_h_nr_queued && rq->cfs.h_nr_queued)
+ 		dl_server_start(&rq->fair_server);
+-	}
+ 
+ 	/* At this point se is NULL and we are at root level*/
+ 	add_nr_running(rq, 1);
+diff --git a/kernel/sched/idle.c b/kernel/sched/idle.c
+index d5607b2150ba4..5dd4d1de1864e 100644
+--- a/kernel/sched/idle.c
++++ b/kernel/sched/idle.c
+@@ -473,9 +473,11 @@ static void wakeup_preempt_idle(struct rq *rq, struct task_struct *p, int flags)
+ 	resched_curr(rq);
+ }
+ 
++static void update_curr_idle(struct rq *rq);
++
+ static void put_prev_task_idle(struct rq *rq, struct task_struct *prev, struct task_struct *next)
+ {
+-	dl_server_update_idle_time(rq, prev);
++	update_curr_idle(rq);
+ 	scx_update_idle(rq, false, true);
+ }
+ 
+@@ -523,6 +525,7 @@ dequeue_task_idle(struct rq *rq, struct task_struct *p, int flags)
+  */
+ static void task_tick_idle(struct rq *rq, struct task_struct *curr, int queued)
+ {
++	update_curr_idle(rq);
+ }
+ 
+ static void switching_to_idle(struct rq *rq, struct task_struct *p)
+@@ -538,6 +541,17 @@ prio_changed_idle(struct rq *rq, struct task_struct *p, int oldprio)
+ 
+ static void update_curr_idle(struct rq *rq)
+ {
++	struct sched_entity *se = &rq->idle->se;
++	u64 now = rq_clock_task(rq);
++	s64 delta_exec;
++
++	delta_exec = now - se->exec_start;
++	if (unlikely(delta_exec <= 0))
++		return;
++
++	se->exec_start = now;
++
++	dl_server_update_idle(&rq->fair_server, delta_exec);
+ }
+ 
+ /*
+diff --git a/kernel/sched/sched.h b/kernel/sched/sched.h
+index 81ccbfbb81521..3a38b9a2c9bca 100644
+--- a/kernel/sched/sched.h
++++ b/kernel/sched/sched.h
+@@ -405,6 +405,7 @@ extern s64 dl_scaled_delta_exec(struct rq *rq, struct sched_dl_entity *dl_se, s6
+  * naturally thottled to once per period, avoiding high context switch
+  * workloads from spamming the hrtimer program/cancel paths.
+  */
++extern void dl_server_update_idle(struct sched_dl_entity *dl_se, s64 delta_exec);
+ extern void dl_server_update(struct sched_dl_entity *dl_se, s64 delta_exec);
+ extern void dl_server_start(struct sched_dl_entity *dl_se);
+ extern void dl_server_stop(struct sched_dl_entity *dl_se);
+@@ -412,8 +413,6 @@ extern void dl_server_init(struct sched_dl_entity *dl_se, struct rq *rq,
+ 		    dl_server_pick_f pick_task);
+ extern void sched_init_dl_servers(void);
+ 
+-extern void dl_server_update_idle_time(struct rq *rq,
+-		    struct task_struct *p);
+ extern void fair_server_init(struct rq *rq);
+ extern void __dl_server_attach_root(struct sched_dl_entity *dl_se, struct rq *rq);
+ extern int dl_server_apply_params(struct sched_dl_entity *dl_se,
 -- 
 2.53.0
 
