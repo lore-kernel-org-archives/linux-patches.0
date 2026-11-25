@@ -1,54 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795622597;
-	b=z9ELWKV/Ep1qlgJROEbHlxZOIjpLNn2EzNtiWl5PjNBOmP+LOumC3ChJJSvBeX7opzxv
-	 ONH04dfuTDIPvGMlLiJttrYgdq9x4yWVfliTQP2H1pyT8guSRKLY7i/DAnkH+yrp6Qh12
-	 7veRzqTAJFLRBy3cMGl6ljnRtgdCHwwus+Gxv/+m3+KY4H04wbbV/FWV2QPXEyohFTV60
-	 XosBBRPA4cbGdBCjLLFfTm0ThS5g1sv+08arIuDCH8ns+iK3AQjitg/Cbh8pul1o6Jfo1
-	 JHI/SsrCtpX/1PSaj4XO26qT0V5gvlEfRpoo+5HoSdxiMmou10X55FyaMpEVmhJjMeA==
+	t=1795622600;
+	b=Ra/C1V5IaJWTvEM2tTud3MCT1z0SBSAE0iXhs5VbRPVj0W/k33reCARERjH4nwWEP6Dc
+	 UfneSm40QCOFaXDzjHCq1jJYEpHLIMNYNqp+p/pMzZpTY0yziRoZJ5KcNxR9U/98WmY/0
+	 AicW51mu9a09GJDX8f1VY6Cb2AvaRpvzCIHLm+d6uFQFahygSymz7Kz9BhtiaqqmzzEu5
+	 zdT5as99A2bsn8UB5Il7VVL5/rGwihBQjD+mFIRGwgLL3TuTA7ltYaB72WGpBgIqP8JGQ
+	 OURjNr+lMs40E6Yb6EhpjsbkRkf8ZsDvHb1XumnpOLtKAuWDUnOKTLRWU4bvk6cm+rg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795622597;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795622600;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Transfer-Encoding;
-	bh=edhWjIWqZFcS0+NQxsc/hwcwVddW6ROj1QQK3gHSzXA=;
-	b=oUgO+OkZNlJuLsZ7QybS4DWhCqORCErJPLaHAqdqcjXv4bEHXWGP7QP8P9QUg95I1qFj
-	 oPaSU6ggbRsIX+aTiZ8fTs6+HKtQXOKbjsdvVHPJHrLT2YjneqRlP7zWgrpd+HzPJ701I
-	 PWKhFLhfJeAP7pLx/XHL3E3hdPE/+FWU0reUrGWP2vO6GRWLb8xrM0oLAyhbxQhCaezhx
-	 lLDs/cjQPd9GZwow426efwL7zuXpEYN3SCxdN24I1v7iaDCvjv8SNvjRmjR445V0yBhl3
-	 0u+A++5LZFcTqFSFcAtBF+IgCsu/rxIoHF/8quYKSXvlQ57OrYOaQnQOmWP8247rOQw==
+	 MIME-Version:Content-Type:Content-Transfer-Encoding;
+	bh=m9spgZZkLuiCc6/mr3x66TC2R9PDUrNXHUthwqBgzKg=;
+	b=nnr6wnJX6k3v4J7pc/vPL7gZebDl/1yQ9vH1cI/SDEy34wUt673hy2CuG6M68qY7lJtj
+	 SqiyvWDg5PuEz+uqi/rb3eoeKI6faQkV04HbiSloDVQGFW52n3A7QSKB/JoMRQUi+dLA4
+	 2V7L9h5U9yEjmLTqswjt5H3clJAzAv0opLrVQUYr75KKtj0kucDhyanEOGhRLi1PeIWmF
+	 uFhq+oHgD/CZdjOf7AoGU0eQ5zyHCNH158pWm9Nmk2RsMyq9VtW095Ukz0ZT9STTxWAL/
+	 uTnacH/sf3LJoBpCtR+evOOSoUrXCBvwdE6t0kqEZ7+UtsLZHBv/Rsgm5N+/sJXx/RA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=WZGCeH4U;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=F6RJMFyi;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4272F606A321;
-	Wed, 25 Nov 2026 16:03:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8F64C606A31E;
+	Wed, 25 Nov 2026 16:03:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=WZGCeH4U
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6313D1F000CA;
-	Wed, 25 Nov 2026 16:03:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=F6RJMFyi
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 696BE1F000CF;
+	Wed, 25 Nov 2026 16:03:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795622596;
-	bh=edhWjIWqZFcS0+NQxsc/hwcwVddW6ROj1QQK3gHSzXA=;
+	s=korg; t=1795622600;
+	bh=m9spgZZkLuiCc6/mr3x66TC2R9PDUrNXHUthwqBgzKg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=WZGCeH4Uu2YtrvoVcE6lFNaSazlxiUmatAXIxRXUmjZKtFDrSWc+OwijHEsOnS4l1
-	 vw0bNH1bQ2ouW7pE5cn2HekmqIYM74Ldd0h5q9qN/QncCVPGTwTiiYwaYA+ilvGTE9
-	 yDKeS+lk5dvVHeixsfTF3m9t1v3Pc2QO0uhQvqJM=
+	b=F6RJMFyi1eWnqi7F56RJCs1iSjII5GBKMd5ms8G1q9ifzrhzepVkSXQdZgDPh+wk9
+	 vjh8mH0dx0Q2I1BGbKl8v+gUmfCbl2ymkCZLCqb16ASxKY/hEQGbNEryAN6pSr8aGf
+	 eIdC9oEhyaC6ZKsZ+RBsEpHwBbeT8sS2Kk0hWE3w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kaifeng Wang <kaifengw@google.com>,
-	Stanislav Fomichev <sdf@fomichev.me>,
-	Bobby Eshleman <bobbyeshleman@meta.com>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Boris Brezillon <boris.brezillon@collabora.com>,
+	Steven Price <steven.price@arm.com>,
+	=?UTF-8?q?Adri=C3=A1n=20Larumbe?= <adrian.larumbe@collabora.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 586/990] net: devmem: check uid and netns in net_devmem_get_binding()
-Date: Wed, 25 Nov 2026 15:32:33 +0100
-Message-ID: <20261125143835.818025786@linuxfoundation.org>
+Subject: [PATCH 6.18 587/990] drm/panfrost: Fix PM refcnt and autosuspend issues at device probe/remove
+Date: Wed, 25 Nov 2026 15:32:34 +0100
+Message-ID: <20261125143835.840180938@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143822.072087159@linuxfoundation.org>
 References: <20261125143822.072087159@linuxfoundation.org>
@@ -64,132 +63,100 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Kaifeng Wang <kaifengw@google.com>
+From: Adrián Larumbe <adrian.larumbe@collabora.com>
 
-[ Upstream commit 3a82195416fd71fdd6cb4ff80f611ec28073be16 ]
+[ Upstream commit e9672bf9382ff80be21d586f88e50339b85f5766 ]
 
-NETDEV_CMD_BIND_TX is unprivileged, and dmabuf binding IDs are allocated
-from a single global xarray. Currently net_devmem_get_binding() looks up
-the binding by ID without checking whether the sending socket belongs to
-the same user or network namespace that created the binding.
+During device probe(), failure to do a PM get() will leave the usage_count
+set to 0, which is the value assigned at device creation time. That means
+when the autosuspend delay expires, runtime suspend callback won't be
+invoked, so the device will remain powered on forever.
 
-Record the creating netlink socket's network namespace and UID on the
-binding, and verify both in net_devmem_get_binding() before checking the
-route destination device. Return -EINVAL on mismatch so callers cannot
-distinguish non-existent IDs from bindings owned by other users.
+On top of that, failure to call PM put() during device unplug means
+Panfrost device's PM usage_count increases monotonically for every new
+module reload.
 
-Fixes: bd61848900bf ("net: devmem: Implement TX path")
-Signed-off-by: Kaifeng Wang <kaifengw@google.com>
-Acked-by: Stanislav Fomichev <sdf@fomichev.me>
-Reviewed-by: Bobby Eshleman <bobbyeshleman@meta.com>
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
-[ sashal: Kept this branch's simpler net_devmem_bind_dmabuf() signature, adding nl_sk without the vdev/niov_shift parameters or the netkit bind-device logic, and adjusted the struct hunk context. ]
+The outcome of both of the above meant that:
+
+- Devfreq OPP transition notifications would be printed all the time,
+  even when no jobs are being submitted. This quickly fills the kernel
+  ring buffer with junk.
+- Because MMU interrupts are only enabled when the device is reset,
+  the very first job targeting the tiler heap BO after device probe()
+  would always time out, since the driver's PM runtime resume callback
+  would not be invoked.
+
+To fix the above:
+- Manually adjust the PM refcnt at device probe and removal time.
+- Ensure pm_runtime_dont_use_autosuspend is called in the wind-down path.
+- Call pm_runtime_put_autosuspend() when device is ready to accept jobs
+
+Fixes: 635430797d3f ("drm/panfrost: Rework runtime PM initialization")
+Fixes: 876b15d2c88d ("drm/panfrost: Fix module unload")
+Reviewed-by: Boris Brezillon <boris.brezillon@collabora.com>
+Reviewed-by: Steven Price <steven.price@arm.com>
+Link: https://patch.msgid.link/20261012-claude-fixes-v15-6-bc0a6c498553@collabora.com
+Signed-off-by: Adrián Larumbe <adrian.larumbe@collabora.com>
+[ sashal: Replaced pfdev->base.dev with pfdev->dev, and placed pm_runtime_put_autosuspend() after panfrost_gem_shrinker_init() since this tree's probe has that extra step and error label. ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/core/devmem.c      | 7 ++++++-
- net/core/devmem.h      | 5 +++++
- net/core/netdev-genl.c | 6 ++++--
- 3 files changed, 15 insertions(+), 3 deletions(-)
+ drivers/gpu/drm/panfrost/panfrost_drv.c | 11 +++++++++++
+ 1 file changed, 11 insertions(+)
 
-diff --git a/net/core/devmem.c b/net/core/devmem.c
-index 16ce197cb0faf..9b937d426cb9a 100644
---- a/net/core/devmem.c
-+++ b/net/core/devmem.c
-@@ -180,6 +180,7 @@ net_devmem_bind_dmabuf(struct net_device *dev,
- 		       struct device *dma_dev,
- 		       enum dma_data_direction direction,
- 		       unsigned int dmabuf_fd, struct netdev_nl_sock *priv,
-+		       const struct sock *nl_sk,
- 		       struct netlink_ext_ack *extack)
- {
- 	struct net_devmem_dmabuf_binding *binding;
-@@ -207,6 +208,8 @@ net_devmem_bind_dmabuf(struct net_device *dev,
+diff --git a/drivers/gpu/drm/panfrost/panfrost_drv.c b/drivers/gpu/drm/panfrost/panfrost_drv.c
+index a31c5395de18c..2d49edaa9467d 100644
+--- a/drivers/gpu/drm/panfrost/panfrost_drv.c
++++ b/drivers/gpu/drm/panfrost/panfrost_drv.c
+@@ -761,6 +761,11 @@ static int panfrost_probe(struct platform_device *pdev)
+ 		goto err_out0;
  	}
  
- 	binding->dev = dev;
-+	write_pnet(&binding->net, sock_net(nl_sk));
-+	binding->uid = sk_uid(nl_sk);
- 	xa_init_flags(&binding->bound_rxqs, XA_FLAGS_ALLOC);
++	/* The reason we must manually set the PM status and usage counter is
++	 * we have just powered the device up but did not go through the PM
++	 * runtime resume callback, so we need to update these ourselves.
++	 */
++	pm_runtime_get_noresume(pfdev->dev);
+ 	pm_runtime_set_active(pfdev->dev);
+ 	pm_runtime_mark_last_busy(pfdev->dev);
+ 	pm_runtime_enable(pfdev->dev);
+@@ -779,14 +784,18 @@ static int panfrost_probe(struct platform_device *pdev)
+ 	if (err)
+ 		goto err_out2;
  
- 	refcount_set(&binding->ref, 1);
-@@ -374,7 +377,9 @@ struct net_devmem_dmabuf_binding *net_devmem_get_binding(struct sock *sk,
- 	int err = 0;
++	pm_runtime_put_autosuspend(pfdev->dev);
++
+ 	return 0;
  
- 	binding = net_devmem_lookup_dmabuf(dmabuf_id);
--	if (!binding || !binding->tx_vec) {
-+	if (!binding || !binding->tx_vec ||
-+	    !net_eq(sock_net(sk), read_pnet(&binding->net)) ||
-+	    !uid_eq(sk_uid(sk), binding->uid)) {
- 		err = -EINVAL;
- 		goto out_err;
- 	}
-diff --git a/net/core/devmem.h b/net/core/devmem.h
-index 101150d761af2..674279180dc8d 100644
---- a/net/core/devmem.h
-+++ b/net/core/devmem.h
-@@ -10,6 +10,7 @@
- #ifndef _NET_DEVMEM_H
- #define _NET_DEVMEM_H
+ err_out2:
+ 	drm_dev_unregister(ddev);
+ err_out1:
++	pm_runtime_dont_use_autosuspend(pfdev->dev);
+ 	pm_runtime_disable(pfdev->dev);
+ 	panfrost_device_fini(pfdev);
+ 	pm_runtime_set_suspended(pfdev->dev);
++	pm_runtime_put_noidle(pfdev->dev);
+ err_out0:
+ 	drm_dev_put(ddev);
+ 	return err;
+@@ -801,9 +810,11 @@ static void panfrost_remove(struct platform_device *pdev)
+ 	panfrost_gem_shrinker_cleanup(ddev);
  
-+#include <net/net_namespace.h>
- #include <net/netmem.h>
- #include <net/netdev_netlink.h>
+ 	pm_runtime_get_sync(pfdev->dev);
++	pm_runtime_dont_use_autosuspend(pfdev->dev);
+ 	pm_runtime_disable(pfdev->dev);
+ 	panfrost_device_fini(pfdev);
+ 	pm_runtime_set_suspended(pfdev->dev);
++	pm_runtime_put_noidle(pfdev->dev);
  
-@@ -21,6 +22,8 @@ struct net_devmem_dmabuf_binding {
- 	struct sg_table *sgt;
- 	struct net_device *dev;
- 	struct gen_pool *chunk_pool;
-+	possible_net_t net;
-+	kuid_t uid;
- 	/* Protect dev */
- 	struct mutex lock;
- 
-@@ -88,6 +91,7 @@ net_devmem_bind_dmabuf(struct net_device *dev,
- 		       struct device *dma_dev,
- 		       enum dma_data_direction direction,
- 		       unsigned int dmabuf_fd, struct netdev_nl_sock *priv,
-+		       const struct sock *nl_sk,
- 		       struct netlink_ext_ack *extack);
- struct net_devmem_dmabuf_binding *net_devmem_lookup_dmabuf(u32 id);
- void net_devmem_unbind_dmabuf(struct net_devmem_dmabuf_binding *binding);
-@@ -175,6 +179,7 @@ net_devmem_bind_dmabuf(struct net_device *dev,
- 		       enum dma_data_direction direction,
- 		       unsigned int dmabuf_fd,
- 		       struct netdev_nl_sock *priv,
-+		       const struct sock *nl_sk,
- 		       struct netlink_ext_ack *extack)
- {
- 	return ERR_PTR(-EOPNOTSUPP);
-diff --git a/net/core/netdev-genl.c b/net/core/netdev-genl.c
-index 77042ac6d0428..d42e4c4d7a7d3 100644
---- a/net/core/netdev-genl.c
-+++ b/net/core/netdev-genl.c
-@@ -1004,7 +1004,8 @@ int netdev_nl_bind_rx_doit(struct sk_buff *skb, struct genl_info *info)
- 	}
- 
- 	binding = net_devmem_bind_dmabuf(netdev, dma_dev, DMA_FROM_DEVICE,
--					 dmabuf_fd, priv, info->extack);
-+					 dmabuf_fd, priv, NETLINK_CB(skb).sk,
-+					 info->extack);
- 	if (IS_ERR(binding)) {
- 		err = PTR_ERR(binding);
- 		goto err_rxq_bitmap;
-@@ -1097,7 +1098,8 @@ int netdev_nl_bind_tx_doit(struct sk_buff *skb, struct genl_info *info)
- 
- 	dma_dev = netdev_queue_get_dma_dev(netdev, 0);
- 	binding = net_devmem_bind_dmabuf(netdev, dma_dev, DMA_TO_DEVICE,
--					 dmabuf_fd, priv, info->extack);
-+					 dmabuf_fd, priv, NETLINK_CB(skb).sk,
-+					 info->extack);
- 	if (IS_ERR(binding)) {
- 		err = PTR_ERR(binding);
- 		goto err_unlock_netdev;
+ 	drm_dev_put(ddev);
+ }
 -- 
 2.53.0
 
