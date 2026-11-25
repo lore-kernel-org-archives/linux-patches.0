@@ -1,51 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795622763;
-	b=KwsYW/IHqMo1HLLXVm6e1dK+6PwdWSvKUs8TctvE881lI0OhmGaHYo6sPGrGZrA+nbcM
-	 STYCWAKydUbpp/Ah+4t189aUWAPZ4m825jWegXTMmwiKyjPRcJ24fd1NxB0+8j01dT8DW
-	 rGkljIwvNWmnAFe4RuBEmMTwlJFGDKEG7FQ2a1WCZR5/Pw+w7yiQPSPbbQ4YEu996axLN
-	 ApuQ06fXuxu6Ln/UxW/vPTXnwF8UbaYhQ96rjWygfAk9TnNxBDXDt9xEom1jMgOgH8nzv
-	 LG3pLefSSkY70IvNhkGDeMDTVAaViquwwMmLxty0ABoIDe5vzRCf8+x4USaAkKhx+Og==
+	t=1795622766;
+	b=RdFpyRBWgkxO/eJ0lXGzLG1NVwJYwK+tvfdRT+/RW7fg6gkeziD21mxkFvMasoeS02P6
+	 wal42yQ7/J0VmN5iGjqODqZOrR6yd0rF8/aBwDV6n94tr2N0LooEQFVYczNAbYzyJHmKC
+	 5gKra9W/JiTVkmvn5DLCJOxejIoJDoSi+SVCyhrDfgj/5HR7RkgBffEGYO86rH/6dtNkv
+	 cszi207gHKn4MMGo1rZANHPtYb6XuDmMSc0DE1+/ajYGMAPUQMAyxwbr1QGSScqS5PO4L
+	 CLfoZf0aJcIyB4+D3/itUMcKOIo4cSntUz8eEv/m8VAZDx9StNwkHpv84fR5ZpQPAww==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795622763;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795622766;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=XRI1/j/MEUiGEQ0Y7EqziBsx7z5Eqo0KivxCfEK0LgE=;
-	b=HcwEgmmYkzzhwdoEOhVrng+lc+EWsHeNfdqJ3YjrsvbGBtVOLcqU1UEMy7fG/Zt1NjIt
-	 vK7z/itJAQr8xuJVTZtTEuncJCVM5d/PRLmQugQ8qREC9MCpxdQJOSNHsHOxH7VkrB8va
-	 cE6FVc6g1au+jop0MVSoAkhCmrYhqPvpIw7FQueSQdrXoazBt3AH+wYaN9YcjT9w4FbjS
-	 sDGy5NyAnaP+fbjyOVfVEGs9qqXOhyf7umXAHxTLCHhqaPt0kCdLQhr06ZPEgEwYlZQmK
-	 VHHHNfNGinM5zI5OJo3i7zlTPffXPt6Fxc6uOfr4NIGB72vs9GCA/xvUFhJhNzaEX9g==
+	bh=2vhngm7MsYm+gZuc/qUTwxbGB6G4MoWOXDkABUWEtAQ=;
+	b=JcmxOWj+65yofj9qarugI8D/ti5jbdyG6fCMgtdaZ5acHqkHoJoC4fV1X6KUR6YH/zz9
+	 EpOCMtmpTMsKYMA0RPFNTitYhTiELBxntmrix6QsfJJ8CeYniTy8RF1xbdrhr/O/qEODS
+	 3cruuZzWU+Vs3GqFnQ0H5EHuCGN8Q+8YeOXdqJ6ViUQg2HYs8SSBP5e3yIot/vhHrB915
+	 +G3NBGILsyzY8WQNSBuLtguGCEn6do/9y0VZbRjj3pGaloTVIw04Gd+Z+AqGfui9ZVkwq
+	 7ie+ClfLCWmFeoVLSl5fq/D6xG2dktl9RF/gtQdGbQhzVm73t0H0pivRDPEpyz6dKew==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=P70PYOah;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=yWWvbsYr;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AC0E6606A321;
-	Wed, 25 Nov 2026 16:06:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8DD23606A31E;
+	Wed, 25 Nov 2026 16:06:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=P70PYOah
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2259E1F000C4;
-	Wed, 25 Nov 2026 16:06:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=yWWvbsYr
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DD89C1F000C0;
+	Wed, 25 Nov 2026 16:06:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795622763;
-	bh=XRI1/j/MEUiGEQ0Y7EqziBsx7z5Eqo0KivxCfEK0LgE=;
+	s=korg; t=1795622766;
+	bh=2vhngm7MsYm+gZuc/qUTwxbGB6G4MoWOXDkABUWEtAQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=P70PYOahZSOpM4h6gLHfhROEMUYK9r2qtBJXveIjkukLm7JrfrNpEQaHzIV1Ifp9z
-	 hEPWzFQNEZ3CoEuNIVBHAee0mMdDdQ/g8D0b0BoqZx/4TcSmnGqoTr5nCYTUknItAy
-	 Tbg8eNPczknyUcWnn2Sl7bbC1DI6cunsuBtJ3JCQ=
+	b=yWWvbsYrCnmwkO/fLy+RQUM2ljAFCOf8WPICT+VTBLXw3Xjs3xBeJcSlxPJf2m+x+
+	 4bnjjWRoNzqkV5CkBXZogRKZfJDc0OyfwKpzO0NN2XEX5Ap4ArwBsOMnyxSzWqXNza
+	 6Artufw1Uxi01mwfTFvb43sr3s0Vcw1JnXI9RW3c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Namjae Jeon <linkinjeon@kernel.org>,
+	Tejun Heo <tj@kernel.org>,
+	Josef Bacik <josef@toxicpanda.com>,
+	Jens Axboe <axboe@kernel.dk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 638/990] ksmbd: return complete and aligned stream information
-Date: Wed, 25 Nov 2026 15:33:25 +0100
-Message-ID: <20261125143837.038881639@linuxfoundation.org>
+Subject: [PATCH 6.18 639/990] block: dont enter reclaim under rq_qos_mutex
+Date: Wed, 25 Nov 2026 15:33:26 +0100
+Message-ID: <20261125143837.061553937@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143822.072087159@linuxfoundation.org>
 References: <20261125143822.072087159@linuxfoundation.org>
@@ -67,281 +69,128 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Namjae Jeon <linkinjeon@kernel.org>
+From: Josef Bacik <josef@toxicpanda.com>
 
-[ Upstream commit 206fc30f71b005156085fd8523ccc84a2c67791b ]
+[ Upstream commit 045cbfc369f5929ed473f7c200dc2e8146569ce5 ]
 
-FILE_STREAM_INFORMATION responses are assembled without aligning entries
-and truncated to the client buffer length after the fact. A short query
-can therefore return STATUS_BUFFER_OVERFLOW with an incomplete entry and
-a nonzero NextEntryOffset, which clients may reject as an invalid
-network response. Standalone queries can also exhaust the server
-response buffer and silently omit streams while reporting success.
+ioc_qos_write() and the wbt_lat_usec writers take rq_qos_mutex with the
+queue frozen, blkcg_deactivate_policy() does the same with blkcg_mutex,
+so nothing holding either may wait for IO. blkg_conf_prep() got
+GFP_NOIO for the blkg in commit 5d726c4dbeed, but the
+radix_tree_preload() right after it, the policy init functions and the
+GFP_KERNEL fallback in blkcg_activate_policy() can still enter reclaim
+there. lockdep reports the cycle on the first write to io.max.
 
-Allocate the same large response buffer used by other variable-length
-QUERY_INFO classes for stream queries. Pack only complete entries within
-the requested output length and available response space, aligning each
-entry to eight bytes and sizing names after UTF-16 conversion. Return
-STATUS_BUFFER_OVERFLOW when more entries remain, using an SMB2 error
-response if no entry fits.
+Use GFP_NOIO for all of them.
 
-Fixes: e2f34481b24d ("cifsd: add server-side procedures for SMB3")
-Fixes: 6b8b79226bc3 ("ksmbd: fix partial file information responses")
-Link: https://github.com/namjaejeon/ksmbd/issues/522#issuecomment-6391152923
-Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
-[ sashal: Only the FILE_STREAM_INFORMATION case was added to the large-response-buffer list in smb2_allocate_rsp_buf(), because FILE_NORMALIZED_NAME_INFORMATION isn't in that list here. ]
+Fixes: 9730763f4756 ("block: correct locking order for protecting blk-wbt parameters")
+Fixes: 5d726c4dbeed ("blk-cgroup: fix possible deadlock while configuring policy")
+Cc: Tejun Heo <tj@kernel.org>
+Signed-off-by: Josef Bacik <josef@toxicpanda.com>
+Acked-by: Tejun Heo <tj@kernel.org>
+Link: https://patch.msgid.link/20261028164415.1262013-35-axboe@kernel.dk
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
+[ sashal: Replaced upstream's kzalloc_obj(*ptr) allocator calls with kzalloc(sizeof(*ptr), GFP_NOIO) in blk-iocost.c and blk-iolatency.c, since this tree lacks kzalloc_obj. ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/smb/server/smb2pdu.c | 183 +++++++++++++++++++++++++---------------
- 1 file changed, 115 insertions(+), 68 deletions(-)
+ block/blk-cgroup.c    | 13 +++++++++----
+ block/blk-iocost.c    |  5 +++--
+ block/blk-iolatency.c |  3 ++-
+ block/blk-throttle.c  |  3 ++-
+ 4 files changed, 16 insertions(+), 8 deletions(-)
 
-diff --git a/fs/smb/server/smb2pdu.c b/fs/smb/server/smb2pdu.c
-index 88f07ec22723a..aae6e9adf2e84 100644
---- a/fs/smb/server/smb2pdu.c
-+++ b/fs/smb/server/smb2pdu.c
-@@ -555,7 +555,8 @@ int smb2_allocate_rsp_buf(struct ksmbd_work *work)
- 		req = smb_get_msg(work->request_buf);
- 		if ((req->InfoType == SMB2_O_INFO_FILE &&
- 		     (req->FileInfoClass == FILE_FULL_EA_INFORMATION ||
--		     req->FileInfoClass == FILE_ALL_INFORMATION)) ||
-+		     req->FileInfoClass == FILE_ALL_INFORMATION ||
-+		     req->FileInfoClass == FILE_STREAM_INFORMATION)) ||
- 		    req->InfoType == SMB2_O_INFO_SECURITY)
- 			sz = large_sz;
- 	}
-@@ -5255,41 +5256,107 @@ static void get_file_alternate_info(struct ksmbd_work *work,
- 		cpu_to_le32(struct_size(file_info, FileName, conv_len));
- }
+diff --git a/block/blk-cgroup.c b/block/blk-cgroup.c
+index 610ea63ad3861..36e6fdad93bd6 100644
+--- a/block/blk-cgroup.c
++++ b/block/blk-cgroup.c
+@@ -917,7 +917,11 @@ int blkg_conf_prep(struct blkcg *blkcg, const struct blkcg_policy *pol,
+ 			parent = blkcg_parent(parent);
+ 		}
  
-+struct smb2_stream_info_buffer {
-+	struct smb2_query_info_rsp *rsp;
-+	struct smb2_file_stream_info *last;
-+	const struct nls_table *local_nls;
-+	unsigned int length;
-+	unsigned int capacity;
-+};
-+
-+static int smb2_add_stream_info(struct smb2_stream_info_buffer *buf,
-+				const char *name, loff_t size, u64 allocation_size)
-+{
-+	struct smb2_file_stream_info *file_info;
-+	__le16 *utf16_name;
-+	size_t name_len = strlen(name);
-+	unsigned int offset = ALIGN(buf->length, 8), name_bytes;
-+	int conv_len, ret = 0;
-+
-+	if (offset > buf->capacity ||
-+	    buf->capacity - offset < sizeof(*file_info))
-+		return -ENOSPC;
-+
-+	utf16_name = kmalloc_array(name_len + 1, sizeof(*utf16_name),
-+				   KSMBD_DEFAULT_GFP);
-+	if (!utf16_name)
-+		return -ENOMEM;
-+
-+	conv_len = smbConvertToUTF16(utf16_name, name, name_len,
-+				     buf->local_nls, 0);
-+	if (conv_len < 0) {
-+		ret = conv_len;
-+		goto out;
-+	}
-+
-+	name_bytes = conv_len * sizeof(*utf16_name);
-+	if (name_bytes > buf->capacity - offset - sizeof(*file_info)) {
-+		ret = -ENOSPC;
-+		goto out;
-+	}
-+
-+	file_info = (struct smb2_file_stream_info *)&buf->rsp->Buffer[offset];
-+	if (buf->last) {
-+		memset(&buf->rsp->Buffer[buf->length], 0, offset - buf->length);
-+		buf->last->NextEntryOffset =
-+			cpu_to_le32((char *)file_info - (char *)buf->last);
-+	}
-+	file_info->NextEntryOffset = 0;
-+	file_info->StreamNameLength = cpu_to_le32(name_bytes);
-+	file_info->StreamSize = cpu_to_le64(size);
-+	file_info->StreamAllocationSize = cpu_to_le64(allocation_size);
-+	memcpy(file_info->StreamName, utf16_name, name_bytes);
-+
-+	buf->last = file_info;
-+	buf->length = offset + sizeof(*file_info) + name_bytes;
-+out:
-+	kfree(utf16_name);
-+	return ret;
-+}
-+
- static int get_file_stream_info(struct ksmbd_work *work,
-+				struct smb2_query_info_req *req,
- 				struct smb2_query_info_rsp *rsp,
--				struct ksmbd_file *fp,
--				void *rsp_org)
-+				struct ksmbd_file *fp)
- {
--	struct ksmbd_conn *conn = work->conn;
--	struct smb2_file_stream_info *file_info;
-+	struct smb2_stream_info_buffer buf = {
-+		.rsp = rsp,
-+		.local_nls = work->conn->local_nls,
-+	};
- 	char *stream_name, *xattr_list = NULL, *stream_buf;
- 	struct kstat stat;
- 	const struct path *path = &fp->filp->f_path;
- 	ssize_t xattr_list_len;
- 	ssize_t slen;
- 	loff_t ssize;
--	int nbytes = 0, streamlen, stream_name_len, next, idx = 0;
-+	unsigned int req_output_len = le32_to_cpu(req->OutputBufferLength);
-+	int streamlen, idx = 0;
- 	int buf_free_len;
+-		/* Drop locks to do new blkg allocation with GFP_KERNEL. */
++		/*
++		 * Drop the spinlock to allocate the new blkg. rq_qos_mutex and
++		 * blkcg_mutex stay held, and both are taken with the queue
++		 * frozen elsewhere: GFP_NOIO.
++		 */
+ 		spin_unlock_irq(&q->queue_lock);
+ 
+ 		new_blkg = blkg_alloc(pos, disk, GFP_NOIO);
+@@ -926,7 +930,7 @@ int blkg_conf_prep(struct blkcg *blkcg, const struct blkcg_policy *pol,
+ 			goto fail_exit;
+ 		}
+ 
+-		if (radix_tree_preload(GFP_KERNEL)) {
++		if (radix_tree_preload(GFP_NOIO)) {
+ 			blkg_free(new_blkg);
+ 			ret = -ENOMEM;
+ 			goto fail_exit;
+@@ -1646,7 +1650,8 @@ int blkcg_activate_policy(struct gendisk *disk, const struct blkcg_policy *pol)
+ 		if (!pd) {
+ 			/*
+ 			 * GFP_NOWAIT failed.  Free the existing one and
+-			 * prealloc for @blkg w/ GFP_KERNEL.
++			 * prealloc for @blkg w/ GFP_NOIO: blkcg_mutex is held,
++			 * and a bio based queue has not been frozen above.
+ 			 */
+ 			if (pinned_blkg)
+ 				blkg_put(pinned_blkg);
+@@ -1658,7 +1663,7 @@ int blkcg_activate_policy(struct gendisk *disk, const struct blkcg_policy *pol)
+ 			if (pd_prealloc)
+ 				pol->pd_free_fn(pd_prealloc);
+ 			pd_prealloc = pol->pd_alloc_fn(disk, blkg->blkcg,
+-						       GFP_KERNEL);
++						       GFP_NOIO);
+ 			if (pd_prealloc)
+ 				goto retry;
+ 			else
+diff --git a/block/blk-iocost.c b/block/blk-iocost.c
+index a05e5cfd0ac0f..6c3ba62090477 100644
+--- a/block/blk-iocost.c
++++ b/block/blk-iocost.c
+@@ -2982,11 +2982,12 @@ static int blk_iocost_init(struct gendisk *disk)
+ 	struct ioc *ioc;
+ 	int i, cpu, ret;
+ 
+-	ioc = kzalloc(sizeof(*ioc), GFP_KERNEL);
++	/* The caller holds rq_qos_mutex, which is taken with the queue frozen */
++	ioc = kzalloc(sizeof(*ioc), GFP_NOIO);
+ 	if (!ioc)
+ 		return -ENOMEM;
+ 
+-	ioc->pcpu_stat = alloc_percpu(struct ioc_pcpu_stat);
++	ioc->pcpu_stat = alloc_percpu_gfp(struct ioc_pcpu_stat, GFP_NOIO);
+ 	if (!ioc->pcpu_stat) {
+ 		kfree(ioc);
+ 		return -ENOMEM;
+diff --git a/block/blk-iolatency.c b/block/blk-iolatency.c
+index 741c804c217bf..3e0c9ec5df367 100644
+--- a/block/blk-iolatency.c
++++ b/block/blk-iolatency.c
+@@ -761,7 +761,8 @@ static int blk_iolatency_init(struct gendisk *disk)
+ 	struct blk_iolatency *blkiolat;
  	int ret;
  
-+	if (req_output_len < FILE_STREAM_INFORMATION_SIZE) {
-+		rsp->hdr.Status = STATUS_INFO_LENGTH_MISMATCH;
-+		return -EINVAL;
-+	}
-+
-+	buf_free_len = smb2_calc_max_out_buf_len(work,
-+						 offsetof(struct smb2_query_info_rsp, Buffer),
-+						 req_output_len);
-+	if (buf_free_len < 0)
-+		return buf_free_len;
-+	buf.capacity = buf_free_len;
-+
- 	ret = vfs_getattr(&fp->filp->f_path, &stat, STATX_BASIC_STATS,
- 			  AT_STATX_SYNC_AS_STAT);
- 	if (ret)
- 		return ret;
+-	blkiolat = kzalloc(sizeof(*blkiolat), GFP_KERNEL);
++	/* The caller holds rq_qos_mutex, which is taken with the queue frozen */
++	blkiolat = kzalloc(sizeof(*blkiolat), GFP_NOIO);
+ 	if (!blkiolat)
+ 		return -ENOMEM;
  
--	file_info = (struct smb2_file_stream_info *)rsp->Buffer;
--
--	buf_free_len = smb2_resp_buf_len(work,
--			offsetof(struct smb2_query_info_rsp, Buffer));
--	if (buf_free_len < 0)
--		goto out;
--
- 	xattr_list_len = ksmbd_vfs_listxattr(path->dentry, &xattr_list);
- 	if (xattr_list_len < 0) {
--		goto out;
-+		goto default_stream;
- 	} else if (!xattr_list_len) {
- 		ksmbd_debug(SMB, "empty xattr in the file\n");
--		goto out;
-+		goto default_stream;
- 	}
+diff --git a/block/blk-throttle.c b/block/blk-throttle.c
+index 36f8dc324d79f..faf53bf759957 100644
+--- a/block/blk-throttle.c
++++ b/block/blk-throttle.c
+@@ -1327,7 +1327,8 @@ static int blk_throtl_init(struct gendisk *disk)
+ 	unsigned int memflags;
+ 	int ret;
  
- 	while (idx < xattr_list_len) {
-@@ -5299,69 +5366,49 @@ static int get_file_stream_info(struct ksmbd_work *work,
+-	td = kzalloc_node(sizeof(*td), GFP_KERNEL, q->node);
++	/* The caller holds rq_qos_mutex, which is taken with the queue frozen */
++	td = kzalloc_node(sizeof(*td), GFP_NOIO, q->node);
+ 	if (!td)
+ 		return -ENOMEM;
  
- 		ksmbd_debug(SMB, "%s, len %d\n", stream_name, streamlen);
- 
--		if (strncmp(&stream_name[XATTR_USER_PREFIX_LEN],
--			    STREAM_PREFIX, STREAM_PREFIX_LEN))
-+		if (strncmp(stream_name, XATTR_NAME_STREAM,
-+			    XATTR_NAME_STREAM_LEN))
- 			continue;
- 
--		stream_name_len = streamlen - (XATTR_USER_PREFIX_LEN +
--				STREAM_PREFIX_LEN);
--		streamlen = stream_name_len;
--
--		/* plus : size */
--		streamlen += 1;
--		stream_buf = kmalloc(streamlen + 1, KSMBD_DEFAULT_GFP);
--		if (!stream_buf)
--			break;
--
--		streamlen = snprintf(stream_buf, streamlen + 1,
--				     ":%s", &stream_name[XATTR_NAME_STREAM_LEN]);
--
--		next = sizeof(struct smb2_file_stream_info) + streamlen * 2;
--		/* smbConvertToUTF16() also writes a terminating UTF-16 unit. */
--		if (next + sizeof(__le16) > buf_free_len) {
--			kfree(stream_buf);
--			break;
-+		stream_buf = kasprintf(KSMBD_DEFAULT_GFP, ":%s",
-+				       &stream_name[XATTR_NAME_STREAM_LEN]);
-+		if (!stream_buf) {
-+			ret = -ENOMEM;
-+			goto out;
- 		}
--
--		file_info = (struct smb2_file_stream_info *)&rsp->Buffer[nbytes];
--		streamlen  = smbConvertToUTF16((__le16 *)file_info->StreamName,
--					       stream_buf, streamlen,
--					       conn->local_nls, 0);
--		streamlen *= 2;
--		kfree(stream_buf);
--		file_info->StreamNameLength = cpu_to_le32(streamlen);
- 		slen = ksmbd_vfs_xattr_len(file_mnt_idmap(fp->filp),
- 					   path->dentry, stream_name);
- 		ssize = slen < 0 ? 0 : (loff_t)slen;
--		file_info->StreamSize = cpu_to_le64(ssize);
--		file_info->StreamAllocationSize = cpu_to_le64(ssize);
-+		ret = smb2_add_stream_info(&buf, stream_buf, ssize, ssize);
-+		kfree(stream_buf);
-+		if (ret == -ENOSPC)
-+			goto overflow;
-+		if (ret)
-+			goto out;
-+	}
- 
--		nbytes += next;
--		buf_free_len -= next;
--		file_info->NextEntryOffset = cpu_to_le32(next);
-+default_stream:
-+	if (!S_ISDIR(stat.mode)) {
-+		ret = smb2_add_stream_info(&buf, "::$DATA", stat.size,
-+					   stat.blocks << 9);
-+		if (ret == -ENOSPC)
-+			goto overflow;
-+		if (ret)
-+			goto out;
- 	}
- 
-+	ret = 0;
-+	goto out;
-+
-+overflow:
-+	rsp->hdr.Status = STATUS_BUFFER_OVERFLOW;
-+	/* An empty overflow needs an SMB2 error response. */
-+	ret = buf.length ? 0 : -EOVERFLOW;
- out:
--	if (!S_ISDIR(stat.mode) &&
--	    buf_free_len >= sizeof(struct smb2_file_stream_info) + (7 + 1) * 2) {
--		file_info = (struct smb2_file_stream_info *)
--			&rsp->Buffer[nbytes];
--		streamlen = smbConvertToUTF16((__le16 *)file_info->StreamName,
--					      "::$DATA", 7, conn->local_nls, 0);
--		streamlen *= 2;
--		file_info->StreamNameLength = cpu_to_le32(streamlen);
--		file_info->StreamSize = cpu_to_le64(stat.size);
--		file_info->StreamAllocationSize = cpu_to_le64(stat.blocks << 9);
--		nbytes += sizeof(struct smb2_file_stream_info) + streamlen;
--	}
--
--	/* last entry offset should be 0 */
--	file_info->NextEntryOffset = 0;
-+	if (!ret)
-+		rsp->OutputBufferLength = cpu_to_le32(buf.length);
- 	kvfree(xattr_list);
--
--	rsp->OutputBufferLength = cpu_to_le32(nbytes);
--
--	return 0;
-+	return ret;
- }
- 
- static int get_file_internal_info(struct smb2_query_info_rsp *rsp,
-@@ -5646,7 +5693,7 @@ static int smb2_get_info_file(struct ksmbd_work *work,
- 		break;
- 
- 	case FILE_STREAM_INFORMATION:
--		rc = get_file_stream_info(work, rsp, fp, work->response_buf);
-+		rc = get_file_stream_info(work, req, rsp, fp);
- 		break;
- 
- 	case FILE_INTERNAL_INFORMATION:
 -- 
 2.53.0
 
