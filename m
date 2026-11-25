@@ -1,52 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795625207;
-	b=ICZESUOgD97f6WK/1cz9fS6thnZdsyRaIDnOp8dikAK4hj/AyMV8ZbkWdGItMl8IIyXu
-	 XpFJryoBpAHsjfwzpiYc/xfDEnQw2jwjPw9qUMTYcA9Ch+YcSgvaMGxZrdKQwaA+byhVB
-	 49aPxQ+J2QsuYMuBynnkn1ErPqm5UxqZVGDJixP3I3bkrzPQwYWBmQXyfpHJ0hfmmlOvZ
-	 ZqQUbIAWRTE7GD8eee++BZyoH36KThbyLAhJak26Cx187vxmhWHHCfgmoWFxYAcwgaKYQ
-	 yy5z0fmnFyM7m6V5Hxh5Q5QolkpItJDuKjU4wVVWMzM63cM78B9MFPM3A72PDVbOHrw==
+	t=1795625210;
+	b=bIzxgNxhKj4zxgnP4oFgo6wrS2AGmwQ7B5OU9rVepaHjpSrIVZ0xZq5kp2I2mmpy5Zd/
+	 mi0t/3ypsFEjaWkKU6NaPnEtiI5uW5XZwWBj3A24w7Xo4MW9OytnQ5+xBcwUBGJKqWGeg
+	 VGIQw/UG+uN6LnHVaFiSqWVBKlOpv+I0WLyrEjZWY/tgCIOTMe/RgE+2z8RnY2AQMzv0y
+	 xcrUDjxLjApjLDRQcBJISUk4X0nYSV8XKVDpJWJADjxfWZbiFdf3W4HCvAx1vCncsbqrY
+	 aczF0JfvjtHQWR1ze7gCkW4m3sLChET+8u32OG+fKqgu7W5ptiWLq/CT/3K88LtePkQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795625207;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795625210;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=0XsaEDWr9q7b9yWmAnyRxO3KhlQjSwvqn/4CfvpnstU=;
-	b=3+nHbdFlQR4I78jCy5wgWY0QmpG39n3V+au9L/PCWk0un9XGxcAyQk74iKnojgG0qJas
-	 Zk5G8+3o7I3PnhnI60heNsd9YRMSc4D+HBptW5P8hTuJpk0K2Ip3Yg4PMp3ZeU4aMvxLW
-	 aJanLRH2uteB8Yr5olKuzLaT+YFGItKfC94NRfny9JpBVeQd3n3RFjDXicebTLPCPpN/S
-	 cduKvIGiZqlqWD8JVwsxA/XpyPQa0Fa9ZigIYesG2aPnTuZLbgOi27LUXMZeCRE+rp7fU
-	 MYAGBvBiO33X+wkN837496w2wVHo8hztmyOiWQ0D9tVj5Iph5oHwy79zT1uES8h4rBA==
+	bh=VnotZzpvHyJMTMKvT52qivvGZm1oy56beyj5jokOAxA=;
+	b=cBGPuQM9uX8Xt/h+OzLDn03124Chbm3JXaYV8E0IGVlZyvmfABlmOMVQiD4cVZU2X2TB
+	 1oJdtmMcrYKRBMNC8Ul8ulX2HnegfIumwKpM88OFNMX6i2ly0J+rcoO8aSxVcQhUreowC
+	 Cc6qAvs/yHbT7UR8cAne85lUSYQmRVSEmtewSJeSWRjrctZfYqH6ta3Sd/d1/obRNy+xB
+	 IspN2iCnuWj29jZEcHxInYujpmBECe0kv6tn3fLh+rC0kbXFF/F5e107/K5/xuupjwfIC
+	 qr+LbfmnrMd6TIC9V7/6seOk6jqlmW/a7dxXu49ed7UB0ZSCg554v5GqGhKmCXfClSA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=kprV2d2H;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=FLhuCZBx;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B527A606A323;
-	Wed, 25 Nov 2026 16:46:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8EAF6606A329;
+	Wed, 25 Nov 2026 16:46:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=kprV2d2H
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 08E481F000CF;
-	Wed, 25 Nov 2026 16:46:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=FLhuCZBx
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D34741F000C0;
+	Wed, 25 Nov 2026 16:46:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795625207;
-	bh=0XsaEDWr9q7b9yWmAnyRxO3KhlQjSwvqn/4CfvpnstU=;
+	s=korg; t=1795625210;
+	bh=VnotZzpvHyJMTMKvT52qivvGZm1oy56beyj5jokOAxA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=kprV2d2HuMPQ3pwQABQWqMd7Hf5OrZ9XXFr4CMYh5ZOWa+UWdBJk+D/of4MqwIcfa
-	 W3Z/WtuXtlCz+tQzS6teUYZP2BLtqgz60I+jhFxhKPibLMFlirrj5Ez1LD0ixxHSbR
-	 NQukWmWa2EJN/GzGxVUvwsXxoBuY60SFkufdUwrY=
+	b=FLhuCZBx810NGYQTRrXy2x/eImuAnbLz3/zDKvLfgT/dlx48hlrSxQkm/xwKGwn/3
+	 mV2DiXokLPUSY9w1H3U0oMmsj8HyhyW9Mw72NOdy/NPXgvldg0jq+ud+p88Ba3BTgP
+	 eKAF8lwHYyLHU8DeEZCu3yqWVeUYYSOBlej3n9E8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yishai Hadas <yishaih@nvidia.com>,
-	Leon Romanovsky <leon@kernel.org>,
+	Venkat Rao Bagalkote <venkat88@linux.ibm.com>,
+	Mukesh Kumar Chaurasiya <mkchauras@gmail.com>,
+	Shrikanth Hegde <sshegde@linux.ibm.com>,
+	Madhavan Srinivasan <maddy@linux.ibm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 441/816] RDMA/mlx5: Set QP event handler before firmware QPC insertion
-Date: Wed, 25 Nov 2026 15:33:09 +0100
-Message-ID: <20261125143859.397633306@linuxfoundation.org>
+Subject: [PATCH 6.12 442/816] powerpc/interrupt: Use early_radix_enabled() in NMI real-mode guard
+Date: Wed, 25 Nov 2026 15:33:10 +0100
+Message-ID: <20261125143859.420654437@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143849.205329330@linuxfoundation.org>
 References: <20261125143849.205329330@linuxfoundation.org>
@@ -68,154 +70,93 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yishai Hadas <yishaih@nvidia.com>
+From: Venkat Rao Bagalkote <venkat88@linux.ibm.com>
 
-[ Upstream commit 05a078c97eb0bb7158526dae414b853737692485 ]
+[ Upstream commit 644ffb02746690c0ebfe143e066f81c9bde2975e ]
 
-Four QP creation paths assigned base->container_mibqp and
-base->mqp.event after the firmware create call that inserts the QP into
-dev->qp_table.tree. A firmware error EQE in that window reaches
-qp->event() with a NULL pointer.
+radix_enabled() uses a jump label which is only valid after
+setup_feature_keys() is called. Before that point, on a pSeries
+hash guest, early_check_vec5() clears MMU_FTR_TYPE_RADIX in
+cur_cpu_spec->mmu_features, but the jump label has not yet been patched,
+so radix_enabled() incorrectly returns true.
 
-Move both assignments before the firmware call.
+The dangerous usage window where it goes wrong in early_setup():
 
-Also set ibqp.qp_num inside mlx5_qpc_create_qp() before
-create_resource_common() so an EQE arriving early does not observe
-qp_num==0.
+    early_setup:
+        configure_exceptions();
+        <exceptions can happen now, and handler enter/exit can be invoked>
+        <those could use radix_enabled(), which returns stale true>
+        setup_feature_keys();
+        <jump labels set up; post this it is safe to use radix_enabled()>
 
-In addition, add a WARN_ON_ONCE(!qp->event) guard in
-rsc_event_notifier() as a safeguard for future regressions.
+If an NMI occurs in this window, !radix_enabled() evaluates to false in
+DEFINE_INTERRUPT_HANDLER_NMI. The handler fails to skip NMI entry in real
+mode and attempts to access memory outside the Real Mode Area (RMA),
+hanging the boot.
 
-Fixes: e126ba97dba9 ("mlx5: Add driver for Mellanox Connect-IB adapters")
-Signed-off-by: Yishai Hadas <yishaih@nvidia.com>
-Link: https://patch.msgid.link/20260915140933.40580-14-yishaih@nvidia.com
-Signed-off-by: Leon Romanovsky <leon@kernel.org>
-[ sashal: adjusted one context line in create_raw_packet_qp() to match this branch's create_raw_packet_qp_sq() call, which has no attrs argument; the inserted lines are unchanged. ]
+Since common interrupt wrappers do not have the context of early or late,
+using early_radix_enabled() is the safer option. It does a plain bitmask
+check against cur_cpu_spec->mmu_features and is correct at all times.
+
+Console logs from a pSeries HASH guest showing values across boot stages:
+
+[    0.000000] DEBUG: after early_init_devtree: early_radix_enabled=0 radix_enabled=1 (mismatch means NMI real-mode check is unsafe!)
+[    0.000000] DEBUG: after configure_exceptions (DANGEROUS WINDOW): early_radix_enabled=0 radix_enabled=1
+[    0.000000] DEBUG: after setup_feature_keys (jump labels initialized): early_radix_enabled=0 radix_enabled=0 (should now match!)
+[    0.057124] DEBUG: post secondary CPU bringup: early_radix_enabled=0 radix_enabled=0 (should match!)
+
+Console logs from a RADIX guest showing values across boot stages:
+
+[    0.000000] DEBUG: after early_init_devtree: early_radix_enabled=1 radix_enabled=1 (mismatch means NMI real-mode check is unsafe!)
+[    0.000000] DEBUG: after configure_exceptions (DANGEROUS WINDOW): early_radix_enabled=1 radix_enabled=1
+[    0.000000] DEBUG: after setup_feature_keys (jump labels initialized): early_radix_enabled=1 radix_enabled=1 (should now match!)
+[    0.057016] DEBUG: post secondary CPU bringup: early_radix_enabled=1 radix_enabled=1 (should match!)
+
+Add the missing #include <asm/mmu.h> in alphabetical order since
+early_radix_enabled() is declared there.
+
+Fixes: 8d0e21012743 ("powerpc/mce: Avoid nmi_enter/exit in real mode on pseries hash")
+Signed-off-by: Venkat Rao Bagalkote <venkat88@linux.ibm.com>
+Reviewed-by: Mukesh Kumar Chaurasiya <mkchauras@gmail.com>
+Reviewed-by: Shrikanth Hegde <sshegde@linux.ibm.com>
+Signed-off-by: Madhavan Srinivasan <maddy@linux.ibm.com>
+Link: https://patch.msgid.link/20260909123240.58786-1-venkat88@linux.ibm.com
+[ sashal: Moved the pseries-hash real-mode NMI guards from the upstream DEFINE_INTERRUPT_HANDLER_NMI macro to the two static inline functions interrupt_nmi_enter_prepare() and interrupt_nmi_exit_prepare(), with the include context adjusted. ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/hw/mlx5/qp.c  | 22 ++++++++++------------
- drivers/infiniband/hw/mlx5/qpc.c | 10 ++++++++++
- 2 files changed, 20 insertions(+), 12 deletions(-)
+ arch/powerpc/include/asm/interrupt.h | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/infiniband/hw/mlx5/qp.c b/drivers/infiniband/hw/mlx5/qp.c
-index 2a71aed3b25ac..62e1302c7cd58 100644
---- a/drivers/infiniband/hw/mlx5/qp.c
-+++ b/drivers/infiniband/hw/mlx5/qp.c
-@@ -1599,6 +1599,8 @@ static int create_raw_packet_qp(struct mlx5_ib_dev *dev, struct mlx5_ib_qp *qp,
- 		if (err)
- 			return err;
+diff --git a/arch/powerpc/include/asm/interrupt.h b/arch/powerpc/include/asm/interrupt.h
+index 23638d4e73ac0..bf25db6848ce8 100644
+--- a/arch/powerpc/include/asm/interrupt.h
++++ b/arch/powerpc/include/asm/interrupt.h
+@@ -72,6 +72,7 @@
+ #include <asm/firmware.h>
+ #include <asm/ftrace.h>
+ #include <asm/kprobes.h>
++#include <asm/mmu.h>
+ #include <asm/runlatch.h>
  
-+		sq->base.container_mibqp = qp;
-+		sq->base.mqp.event = mlx5_ib_qp_event;
- 		err = create_raw_packet_qp_sq(dev, udata, sq, in, pd,
- 					      to_mcq(init_attr->send_cq));
- 		if (err)
-@@ -1610,9 +1612,6 @@ static int create_raw_packet_qp(struct mlx5_ib_dev *dev, struct mlx5_ib_qp *qp,
- 			resp->sqn = sq->base.mqp.qpn;
- 			resp->comp_mask |= MLX5_IB_CREATE_QP_RESP_MASK_SQN;
- 		}
--
--		sq->base.container_mibqp = qp;
--		sq->base.mqp.event = mlx5_ib_qp_event;
- 	}
+ #ifdef CONFIG_PPC_IRQ_SOFT_MASK_DEBUG
+@@ -326,7 +327,7 @@ static inline void interrupt_nmi_enter_prepare(struct pt_regs *regs, struct inte
+ 	 */
+ 	if (IS_ENABLED(CONFIG_PPC_BOOK3S_64) &&
+ 	    firmware_has_feature(FW_FEATURE_LPAR) &&
+-	    !radix_enabled())
++	    !early_radix_enabled())
+ 		return;
  
- 	if (qp->rq.wqe_cnt) {
-@@ -2058,13 +2057,13 @@ static int create_xrc_tgt_qp(struct mlx5_ib_dev *dev, struct mlx5_ib_qp *qp,
- 	}
- 
- 	base = &qp->trans_qp.base;
-+	base->container_mibqp = qp;
-+	base->mqp.event = mlx5_ib_qp_event;
- 	err = mlx5_qpc_create_qp(dev, &base->mqp, in, inlen, out);
- 	kvfree(in);
- 	if (err)
- 		return err;
- 
--	base->container_mibqp = qp;
--	base->mqp.event = mlx5_ib_qp_event;
- 	if (MLX5_CAP_GEN(mdev, ece_support))
- 		params->resp.ece_options = MLX5_GET(create_qp_out, out, ece);
- 
-@@ -2202,14 +2201,14 @@ static int create_dci(struct mlx5_ib_dev *dev, struct ib_pd *pd,
- 		qp->flags &= ~IB_QP_CREATE_PCI_WRITE_END_PADDING;
- 	}
- 
-+	base->container_mibqp = qp;
-+	base->mqp.event = mlx5_ib_qp_event;
- 	err = mlx5_qpc_create_qp(dev, &base->mqp, in, inlen, out);
- 
- 	kvfree(in);
- 	if (err)
- 		goto err_create;
- 
--	base->container_mibqp = qp;
--	base->mqp.event = mlx5_ib_qp_event;
- 	if (MLX5_CAP_GEN(mdev, ece_support))
- 		params->resp.ece_options = MLX5_GET(create_qp_out, out, ece);
- 
-@@ -2398,6 +2397,8 @@ static int create_user_qp(struct mlx5_ib_dev *dev, struct ib_pd *pd,
- 		qp->flags &= ~IB_QP_CREATE_PCI_WRITE_END_PADDING;
- 	}
- 
-+	base->container_mibqp = qp;
-+	base->mqp.event = mlx5_ib_qp_event;
- 	if (init_attr->qp_type == IB_QPT_RAW_PACKET ||
- 	    qp->flags & IB_QP_CREATE_SOURCE_QPN) {
- 		qp->raw_packet_qp.sq.ubuffer.buf_addr = ucmd->sq_buf_addr;
-@@ -2411,8 +2412,6 @@ static int create_user_qp(struct mlx5_ib_dev *dev, struct ib_pd *pd,
- 	if (err)
- 		goto err_create;
- 
--	base->container_mibqp = qp;
--	base->mqp.event = mlx5_ib_qp_event;
- 	if (MLX5_CAP_GEN(mdev, ece_support))
- 		params->resp.ece_options = MLX5_GET(create_qp_out, out, ece);
- 
-@@ -2541,14 +2540,13 @@ static int create_kernel_qp(struct mlx5_ib_dev *dev, struct ib_pd *pd,
- 	    MLX5_CAP_GEN(mdev, go_back_n))
- 		MLX5_SET(qpc, qpc, retry_mode, MLX5_QP_RM_GO_BACK_N);
- 
-+	base->container_mibqp = qp;
-+	base->mqp.event = mlx5_ib_qp_event;
- 	err = mlx5_qpc_create_qp(dev, &base->mqp, in, inlen, out);
- 	kvfree(in);
- 	if (err)
- 		goto err_create;
- 
--	base->container_mibqp = qp;
--	base->mqp.event = mlx5_ib_qp_event;
--
- 	get_cqs(qp->type, attr->send_cq, attr->recv_cq,
- 		&send_cq, &recv_cq);
- 	spin_lock_irqsave(&dev->reset_flow_resource_lock, flags);
-diff --git a/drivers/infiniband/hw/mlx5/qpc.c b/drivers/infiniband/hw/mlx5/qpc.c
-index 67ed45f3ae17f..9272e1ef81135 100644
---- a/drivers/infiniband/hw/mlx5/qpc.c
-+++ b/drivers/infiniband/hw/mlx5/qpc.c
-@@ -146,6 +146,8 @@ static int rsc_event_notifier(struct notifier_block *nb,
- 	case MLX5_RES_RQ:
- 	case MLX5_RES_SQ:
- 		qp = (struct mlx5_core_qp *)common;
-+		if (WARN_ON_ONCE(!qp->event))
-+			goto out;
- 		qp->event(qp, event_type);
- 		/* Need to put resource in event handler */
- 		return NOTIFY_OK;
-@@ -258,6 +260,14 @@ int mlx5_qpc_create_qp(struct mlx5_ib_dev *dev, struct mlx5_core_qp *qp,
- 
- 	qp->uid = MLX5_GET(create_qp_in, in, uid);
- 	qp->qpn = MLX5_GET(create_qp_out, out, qpn);
-+	/* Set ibqp.qp_num before create_resource_common() inserts the QP into
-+	 * the radix tree and makes it visible to EQE processing.  The
-+	 * assignment in create_qp() happens only after this function returns,
-+	 * leaving a window where an arriving EQE would observe qp_num == 0.
-+	 * create_qp() still overrides this with 0/1 for QP0/QP1, and sets it
-+	 * independently for DCT (which does not go through this function).
-+	 */
-+	to_mibqp(qp)->ibqp.qp_num = qp->qpn;
- 
- 	err = create_resource_common(dev, qp, MLX5_RES_QP);
- 	if (err)
+ 	/*
+@@ -355,7 +356,7 @@ static inline void interrupt_nmi_exit_prepare(struct pt_regs *regs, struct inter
+ 		nmi_exit();
+ 	} else if (IS_ENABLED(CONFIG_PPC_BOOK3S_64) &&
+ 		   firmware_has_feature(FW_FEATURE_LPAR) &&
+-		   !radix_enabled()) {
++		   !early_radix_enabled()) {
+ 		// no nmi_exit for a pseries hash guest taking a real mode exception
+ 	} else if (IS_ENABLED(CONFIG_KASAN)) {
+ 		// no nmi_exit for KASAN in real mode
 -- 
 2.53.0
 
