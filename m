@@ -1,53 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795622167;
-	b=Zb/3ZXxoVl3+k7lp9dj5/burCp+heNipaqjmjoRSrq8cBPCOxwOQZ5JM9kj0K6NmSDtw
-	 hsPRZ6aBE1UVF/hxtPXHv3Yi6bYSCZo1ffR04Uh2jaarsBsUcKIiltoIHPmYml8Ap37UM
-	 Qn9VhE8UDUVxp5AtG5RYXIirgM+m2Wp4X8s8+YblydiOB7eCzIO+BGJKoI34/FGEWKw9C
-	 pliRB9qUXUeY0eA7G69peM1fyq/FGkjTlQ2tUTFsNgAopfSGeUaCFLpv47vTTQ5HWSUK1
-	 75zFRjbyajob3ra0iWgUXg0z1BEEEdBBfFuzM3Gb46k1kM3hygVFCl2mTCMLHOD5CKA==
+	t=1795622171;
+	b=A+cDU1KJgFIRw5mnQRBIX2flAAdl7iTJaWTKrZXOzCJuCrnf+l/QQ4175r0xnOig73LT
+	 ll1G+kSeM+Anxmyea6Mv32CZTx5mJHnYsjdDfLHvFlCf6Ym13DRAw8BLokTBVCLQhUao9
+	 zW/tbUTgXTapuBf+rcFdW2L0z2XWeOffErAhxFk+Uig+H7T8RTYsladdfYqmTRHmQRsin
+	 OtVF694hgjqX6QJlVDQhe9ut6qvnMvyDlxx/4SiPqiznsJS0ySIi3lf3zooXsn9dTPfZX
+	 NBXIPlshPJBL7sRyveRUaZLY8xwXdWtrJkf/n9G+ITQMW/qTStG/xqd8gIt6zu4U0Cw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795622167;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795622171;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=+7oZcoCwTpPueU7rMdUj1DmXI06wrO1KmXX9omnnMhM=;
-	b=jtMUKXCap0lzd2HWHxvP0PD6oToTSMhkZQtE9oTpGut0PYoTVuQSRFmVhNk86MYUMY7n
-	 MO+eiYPJn2nK/CyqHHhFluQb8dUepFBWrFvM9kuGc6jF3iDe5nuBKfNM52xJ/4pPe8R2b
-	 mMoHesXv5lL4HxUbtmZfns2iDVdsTx+sf/svCobXo8jJblWYqPHfeRHc1eCO8cpTVHLaF
-	 uMHk8qBzctJs40yuRBz/xpXLdALGg5Uoyv3+fX9yASHnFpRyPY6rdzUHAQpbXI3TpABJA
-	 xYohQd1mvaeu/hKv8nFqckHmmyFLWMr810GaYjl4ZJ1IGrfO0c1M5wzEtpN2eW4oTGg==
+	bh=iJZzGDPA8Ptm2mq6fhxAfD6qQ7vnv1zZG3ZYdm38qXg=;
+	b=reF0ew7bY6Hz1v/vC2sVSQscdp7RnLGVdE4K1aLtnYIg5UDzh2x8TKsgLBqRSsklO18r
+	 xplmVippl0khyOnNuOA99Cpm1UAK+EqMTOs2X03E3UgfD15Wy69DcPdaAPeN/sd9cz20R
+	 XHCTOgzt+XBXLHeOjrbRpa+w2QE1xYMeOO9r0muaHc6w9fAHKBVGH26kwGAHP2dc/9rXK
+	 ue6eU/ppSaNVIqeDqRL3oGea6CBvRvfayuvbA6mT4s1UMfaZr4inzgAfGOaP7egwN+EBY
+	 zs6bXO6oeRFegGAqUBWVPdENHC4LjQCo+LXTSCYx1GQnBqRcd4E5ehfB293v8ZnJLAQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="Fv/p2CO9";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Udr5lRe7;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C9DDA606A332;
-	Wed, 25 Nov 2026 15:56:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 17A47606A321;
+	Wed, 25 Nov 2026 15:56:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Fv/p2CO9
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7C3661F000F0;
-	Wed, 25 Nov 2026 15:56:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Udr5lRe7
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DBFB61F000D0;
+	Wed, 25 Nov 2026 15:56:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795622167;
-	bh=+7oZcoCwTpPueU7rMdUj1DmXI06wrO1KmXX9omnnMhM=;
+	s=korg; t=1795622170;
+	bh=iJZzGDPA8Ptm2mq6fhxAfD6qQ7vnv1zZG3ZYdm38qXg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Fv/p2CO9j7MaxqW9Oiez6+4QnAmsYht+gzlaHfPiAIq1UBEqw6i9OfyAkadNh1JUM
-	 HaWYP12XPNc7hUTUKmVXac8xYTeMUgP+Bvv9MjbrxS3Pdf6NejCDBveRL4VLZ3WWrp
-	 z/lC5bxb4S84zvb7lHSc0/ueDyqO+VifSt0ZqfRg=
+	b=Udr5lRe7XULTfctRUpIHlJ1815hqPf+y5GSPrZqe9BWE+JQ9VRmTG6JmOtm7oeu1i
+	 bk75TCeMitSDF/oVCe9j+uYDWfViQgJJ8415Stk5x7ol6R5Aw7uliSr9oWZh0pZDyo
+	 AGKlTOoH6+0Fy7wUt3Ak1LvMIdExIciUqFN4dR/s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Anandu Padinhare <Anandu.Padinhare@electrifex.com>,
-	Lorenzo Bianconi <lorenzo.bianconi@oss.qualcomm.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Kyle Zeng <kylebot@openai.com>,
+	Eric Dumazet <edumazet@kernel.org>,
+	Willem de Bruijn <willemb@google.com>,
+	Dave Miller <davem@davem-thinkpadp1gen8.ibmlond.csb>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 443/990] net: stmmac: count XDP_PASS frames in rx_packets on the XSK zero-copy path
-Date: Wed, 25 Nov 2026 15:30:10 +0100
-Message-ID: <20261125143832.470889968@linuxfoundation.org>
+Subject: [PATCH 6.18 444/990] udp: check frag_list IP family before using skb_segment_list()
+Date: Wed, 25 Nov 2026 15:30:11 +0100
+Message-ID: <20261125143832.493412842@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143822.072087159@linuxfoundation.org>
 References: <20261125143822.072087159@linuxfoundation.org>
@@ -69,59 +70,61 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Anandu Padinhare <Anandu.Padinhare@electrifex.com>
+From: Kyle Zeng <kylebot@openai.com>
 
-[ Upstream commit 070411c1590c8172eb4d86f045d99c372f22fe23 ]
+[ Upstream commit 22b7cb932c6a0f7566d41072be6956cb6c8af4e1 ]
 
-In the AF_XDP zero-copy RX path, frames that the XDP program passes to
-the stack are handed over by stmmac_dispatch_skb_zc(). That function
-increments rx_pkt_n instead of rx_packets since
-commit 133466c3bbe1 ("net: stmmac: use per-queue 64 bit statistics where necessary").
+UDP fraglist GRO uses SKB_GSO_UDP_L4 for both IPv4 and IPv6.
 
-stmmac_rx_zc() already adds every processed frame to rx_pkt_n, so each
-XDP_PASS frame is counted twice there, and rx_packets, which
-ndo_get_stats64() reports, never counts them: on a zero-copy queue
-rx_bytes grows with the passed frames while rx_packets stays still.
+__udp_gso_segment() reuses the frag_list skbs when the geometry of
+the head skb was not modified. skb_segment_list() keeps the network
+header of each frag_list skb as it was at GRO time and only adjusts
+the transport header offset.
 
-Count the frame in rx_packets, as the regular RX path and the code
-before that commit did.
+Nothing guarantees that the head skb still has the IP family of the
+frag_list skbs: helpers like skb_mpls_pop() let the caller choose
+the new protocol. In that case __udpv6_gso_segment_list_csum()
+handles the 20 byte IPv4 header of each frag_list skb as a struct
+ipv6hdr, and can write IPv6 addresses beyond its linear part.
 
-Found while testing AF_XDP zero-copy on an ADSP-SC598 (adi-dwmac,
-100 Mbit/s link): rx_pkt_n grew almost twice as fast as the frames the
-MAC delivered, while "ip -s link" counted almost none.
+Check the IP version of the first frag_list skb. All skbs in the
+list belong to the same flow, so they share the same IP family.
+Use the skb_segment() fallback on a mismatch. Regular fraglist GRO
+traffic keeps the fast path.
 
-Tested on that board with a 6.18-based kernel, whose zero-copy RX
-accounting matches net. An AF_XDP zero-copy socket on queue 0 received
-frames of one EtherType while UDP traffic was passed to the stack. In a
-run with 60 s of traffic before the change, rx_pkt_n was 1.88 times the
-frames that reached the driver (MAC frames minus RX FIFO overflows) and
-"ip -s link" counted 55 RX packets. In the same test with the change,
-rx_pkt_n equals the frames that reached the driver and rx_packets equals
-the frames passed to the stack.
-
-Fixes: 133466c3bbe1 ("net: stmmac: use per-queue 64 bit statistics where necessary")
-Signed-off-by: Anandu Padinhare <Anandu.Padinhare@electrifex.com>
-Reviewed-by: Lorenzo Bianconi <lorenzo.bianconi@oss.qualcomm.com>
-Link: https://patch.msgid.link/PNYPR01MB11444552E41C2B17A992492C0FD762@PNYPR01MB11444.INDPRD01.PROD.OUTLOOK.COM
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: b936a9b8d4a5 ("net: ipv6: fix UDPv6 GSO segmentation with NAT")
+Fixes: c3df39ac9b0e ("udp: ipv4: manipulate network header of NATed UDP GRO fraglist")
+Signed-off-by: Kyle Zeng <kylebot@openai.com>
+[edumazet: simplified the fix, rewrote the comment and the changelog]
+Signed-off-by: Eric Dumazet <edumazet@kernel.org>
+Reviewed-by: Willem de Bruijn <willemb@google.com>
+Signed-off-by: Dave Miller <davem@davem-thinkpadp1gen8.ibmlond.csb>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/stmicro/stmmac/stmmac_main.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ net/ipv4/udp_offload.c | 9 +++++++--
+ 1 file changed, 7 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c b/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
-index 0e78c1d2fcf1d..c2b975ac8b566 100644
---- a/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
-+++ b/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
-@@ -5264,7 +5264,7 @@ static void stmmac_dispatch_skb_zc(struct stmmac_priv *priv, u32 queue,
- 	napi_gro_receive(&ch->rxtx_napi, skb);
+diff --git a/net/ipv4/udp_offload.c b/net/ipv4/udp_offload.c
+index 4f7ae02df8d3a..2fd0d7c72b45e 100644
+--- a/net/ipv4/udp_offload.c
++++ b/net/ipv4/udp_offload.c
+@@ -515,9 +515,14 @@ struct sk_buff *__udp_gso_segment(struct sk_buff *gso_skb,
+ 	}
  
- 	u64_stats_update_begin(&rxq_stats->napi_syncp);
--	u64_stats_inc(&rxq_stats->napi.rx_pkt_n);
-+	u64_stats_inc(&rxq_stats->napi.rx_packets);
- 	u64_stats_add(&rxq_stats->napi.rx_bytes, len);
- 	u64_stats_update_end(&rxq_stats->napi_syncp);
- }
+ 	if (skb_shinfo(gso_skb)->gso_type & SKB_GSO_FRAGLIST) {
+-		 /* Detect modified geometry and pass those to skb_segment. */
++		/* Detect modified geometry and pass those to skb_segment.
++		 * SKB_GSO_UDP_L4 is used by both IPv4 and IPv6: also make sure
++		 * the frag_list skbs still have the IP family we segment for,
++		 * as their network headers are not rebuilt.
++		 */
+ 		if ((skb_pagelen(gso_skb) - sizeof(*uh) == skb_shinfo(gso_skb)->gso_size) &&
+-		    !(skb_shinfo(gso_skb)->gso_type & SKB_GSO_DODGY))
++		    !(skb_shinfo(gso_skb)->gso_type & SKB_GSO_DODGY) &&
++		    ip_hdr(skb_shinfo(gso_skb)->frag_list)->version == (is_ipv6 ? 6 : 4))
+ 			return __udp_gso_segment_list(gso_skb, features, is_ipv6);
+ 
+ 		ret = __skb_linearize(gso_skb);
 -- 
 2.53.0
 
