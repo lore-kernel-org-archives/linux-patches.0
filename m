@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795618067;
-	b=pxmndlIOmjQ8OT9rFwsWhn7PDWCoG/tNhIKrTw/eBrHr5P0BcPsC5VbycuUiqDh2jb0z
-	 mbAzA8JbXoY3lk52nnsNN1cNMWPaDuASSYJVKqj+ZUQtPq/zt2SUnH/TUuBSshZaLuPxj
-	 uNS52Jg5OdDRuklRGFeoLiN8pFkHsdDU7gYyLN89NRmPepqnaMwL9WkobC2tmsBOanUC+
-	 vZ5LOAtiNTaKUMR+2IShFw8bEPiiPnK+s0VZ1wfdYFmxlDEMGggODTwm4E+PRkcy1zdRo
-	 0Vay40WRJL1HPGAi1k7b2AVykuL/28JpPUxB+uvq1rtP85SX43aS9ZCTIkjCA90OmZg==
+	t=1795618071;
+	b=G8+dFv4DKwkgpms2NVuQpm2Cgm+9k5LR/1eWYr3IJbZKHCxr4PE6i1TfcV7TL6TLWTuZ
+	 DcixiK68kmk/HDYBaG0Bq9dxEzs8UKgHlCQJKBGc9W8MEGdFnthI2ER1h03oMVLj38y0N
+	 Ub+KXVY9PpLL29xEe9mno4sNp45m6a4GzJ5C0MduSm0GC7z94Yq5L6TUYRLSbFF+E9gnn
+	 0jsXpaE6rlPqv0dL7eIA0WcMhkyLFgywhODqX7etB6sp3IUZpzElDlfIe9AjM0B8tN/iD
+	 PK8syAjFk9GaHaIJrgppzpqopLcYv8ivMra2hwIOJIhF4B6tBtuLkh8Bcye3Suyi6gQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795618067;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795618071;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=dB6YfCfhe1RVK9QyhV8S9X0EwPuq1bA2AIErUP6kw0I=;
-	b=1wbJAHUCLrtftdje8OvVzAXngO0IQHWNymt1hFr1yyIf5o8gXh2GgCqkS9wr9JnkQqcd
-	 S8KQCtAvc9NwBbdVipSR3ZNIrPH/0MgJreqnE8WpRTOX3naJJ8bL+exRO8g0m+H7nENMZ
-	 5ImbbNfcFu3mBZILehzCHU/y9NKQZTHWShalwUPfYYwd9CSaHRagFyyImMQrz5iOIgokp
-	 8DvclfD1FLw+uPHnNr6FeoQsw2YHqj8vquV+1bwbTjXJ0i1EawfkR5cGLd6psh8h5pd60
-	 OKGTK8wV9suE+rrpC1OXTdQDmqA5qT+0UW3ygA9yrbXTInstF7V42Yd+14z3bXLKYUQ==
+	bh=BURYVf4SDKQbT70doFUxuZ2uHoM7KZ7KFqtwWenvm2Y=;
+	b=yGZ6bIvaWMODQydTFhm0ifuHhmRemnQmuO+FUVndArmjeuCUhm8K8noeCIzS4GtAKYcE
+	 QS395lT617p0stgBjkEFTGXGIXeGsRczvE0ZuyEl03ZGsVpEQsz9wXSsdrB2/WRht7X5V
+	 1Sa1CmcKvpPqIMCWYPtlCQzvC/nIoQEA1yYsG3hCqrVQ69HlhZhZRYekUN0CAOfjiMdXM
+	 VKS0tGo6UcAqt8abciGfitVSMo4OUI4ju7lpD0OxWNqBk31nYoG202uEG+nMvwMNZtkfs
+	 KjpmaKKKgBVV2quOGoWiod7/mKKbdHUW12dXysvLcximgeR1PR0shiGPafMVl+iVbfg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=z1tJPGp3;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=V8ObIAJ5;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BDC61606A31E;
-	Wed, 25 Nov 2026 14:47:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 40714606A326;
+	Wed, 25 Nov 2026 14:47:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=z1tJPGp3
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DDF951F000D1;
-	Wed, 25 Nov 2026 14:47:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=V8ObIAJ5
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2B8B11F000CF;
+	Wed, 25 Nov 2026 14:47:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795618067;
-	bh=dB6YfCfhe1RVK9QyhV8S9X0EwPuq1bA2AIErUP6kw0I=;
+	s=korg; t=1795618070;
+	bh=BURYVf4SDKQbT70doFUxuZ2uHoM7KZ7KFqtwWenvm2Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=z1tJPGp3vWd+smAxX5IQZXsmACGlObpgvAh573BRQnVjWwqwbG/CckKQb+bYYidOH
-	 8n7vol1SwD4XMNkHRK6O7RpX+pCX9Me36xrVbsQf/b1GxdSwBn2ukHvRMCRsUTBYPB
-	 62Eswc4mYz9BJ1hPDACctC5aQvk82y954IFYFcuU=
+	b=V8ObIAJ5zbS3rsHcEt3LPwFzSYXgGSTaRTiRG+EhXCS5NQTJpj1dKGuZHdLw43IBS
+	 75ShvtDMx8QU4bEe3qmcEjbWtCVtzrR7tVjp3U3IfYwsRAm30Abku/HofbN5tcdrYQ
+	 0aIG2hq9oeDzGgy9SgqyHmC53DTd1Q57orE0m67A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Linfeng Sun <linfeng.sun.dev@gmail.com>,
+	Yu Zhang <yuz08559@gmail.com>,
 	"Michael S. Tsirkin" <mst@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0160/1005] vhost: reject invalid IOTLB update permissions
-Date: Wed, 25 Nov 2026 15:24:58 +0100
-Message-ID: <20261125143825.488252600@linuxfoundation.org>
+Subject: [PATCH 7.3 0161/1005] vhost-vdpa: drop the parents vq callback before the call fd is released
+Date: Wed, 25 Nov 2026 15:24:59 +0100
+Message-ID: <20261125143825.511418118@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143821.729802100@linuxfoundation.org>
 References: <20261125143821.729802100@linuxfoundation.org>
@@ -68,40 +68,129 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Linfeng Sun <linfeng.sun.dev@gmail.com>
+From: Yu Zhang <yuz08559@gmail.com>
 
-[ Upstream commit b179f21d2d8a60ede29a00472bffdefb0284ef39 ]
+[ Upstream commit c9c1c1b7b31fc8b9a5d6c04f5f0ae647d081a39d ]
 
-vhost_chr_write_iter() validates the type and size of an IOTLB update, but
-does not validate its permission field. An invalid permission can therefore
-reach perm_to_iommu_flags() and trigger its warning in vhost_vdpa_map().
+VHOST_SET_VRING_CALL releases the previous call eventfd inside
+vhost_vring_ioctl() -- it swaps the new context into vq->call_ctx.ctx
+and then eventfd_ctx_put()s the old one, which is a synchronous
+kfree(). The parent vdpa device is only told about the change
+afterwards, when vhost_vdpa_vring_ioctl() reaches ops->set_vq_cb().
 
-Reject IOTLB UPDATE messages whose permission field is empty or contains
-bits outside VHOST_ACCESS_RW before dispatching them to a backend.
+Parent drivers cache the pointer handed to them in
+vdpa_callback::trigger and do not take a reference on it, so
+throughout that window the parent holds a dangling eventfd_ctx and may
+signal it. The documentation added with the field describes what
+signalling it means but says nothing about how long it stays valid.
 
-Fixes: 4c8cf31885f6 ("vhost: introduce vDPA-based backend")
-Signed-off-by: Linfeng Sun <linfeng.sun.dev@gmail.com>
+This is the same hazard that "vhost_vdpa: assign irq bypass producer
+token correctly" addressed for the irq bypass producer token, by
+moving vhost_vdpa_unsetup_vq_irq() ahead of the vhost_vring_ioctl()
+call. The producer token was only one of the two consumers of that
+pointer; the one the parent keeps via ->set_vq_cb() was left behind
+the free.
+
+With VDUSE the window is directly reachable from userspace, because
+the device emulation daemon can inject an interrupt at any time from a
+different fd, and neither side shares a lock with the other: VDUSE
+takes vq->irq_lock, vhost takes vhost_dev.mutex + vq->mutex.
+
+  BUG: KASAN: slab-use-after-free in _raw_spin_lock_irqsave+0x76/0xe0
+  Write of size 4 at addr ffff8881084e8788 by task vduse_uaf/2987
+
+  _raw_spin_lock_irqsave+0x76/0xe0
+  eventfd_signal_mask+0x69/0x120
+  vduse_dev_ioctl+0x337/0x1a60     <- vduse_vq_signal_irqfd(), inlined
+  __x64_sys_ioctl+0x120/0x170      <- VDUSE_VQ_INJECT_IRQ
+
+  Allocated by task 2986:
+   do_eventfd+0x50/0x200
+   __x64_sys_eventfd2+0x2e/0x40
+
+  kmalloc-64, freed 64-byte region [ffff8881084e8780, ffff8881084e87c0)
+
+One thread loops VHOST_SET_VRING_CALL on /dev/vhost-vdpa-N with a
+fresh eventfd and then unbinds it, while another loops
+VDUSE_VQ_INJECT_IRQ on /dev/vduse/<name>. This reproduces in 5 out of
+5 ten-second runs on v7.1.6 and 3 out of 3 on v7.2-rc6. With the patch
+there are no reports in 3 out of 3 runs on either, while the same
+workload still gets ~30000 interrupts per run delivered into live
+eventfds, so the path is still being exercised.
+
+Tell the parent to drop the callback before vhost_vring_ioctl() can
+free the eventfd, mirroring what is already done for the bypass
+producer, and restore it if the ioctl fails -- on failure the swap
+never happened, the old context is still installed, and leaving the
+parent without a callback would silently drop that vq's interrupts.
+
+Clearing the callback only stops a parent from starting to use the
+context; a handler that already loaded it can still be running. For
+parents with a real interrupt, wait for it with synchronize_irq() on
+the vq's irq. VDUSE does not implement get_vq_irq, so that case stays
+covered by the teardown above.
+
+Fixes: 5e68470f4e80 ("vdpa: Add eventfd for the vdpa callback")
+Signed-off-by: Yu Zhang <yuz08559@gmail.com>
 Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
-Message-ID: <20260913-fix-vhost_chr_write_iter-v1-1-76bf1f436cfe@gmail.com>
+Message-ID: <20260918040436.47982-1-yuz08559@gmail.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/vhost/vhost.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/vhost/vdpa.c | 35 ++++++++++++++++++++++++++++++++++-
+ 1 file changed, 34 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/vhost/vhost.c b/drivers/vhost/vhost.c
-index 86126e2ea8cbc..8afdd43d313c1 100644
---- a/drivers/vhost/vhost.c
-+++ b/drivers/vhost/vhost.c
-@@ -1750,7 +1750,8 @@ ssize_t vhost_chr_write_iter(struct vhost_dev *dev,
- 		goto done;
+diff --git a/drivers/vhost/vdpa.c b/drivers/vhost/vdpa.c
+index 5a8216f601ef1..81a6fbab8c0d6 100644
+--- a/drivers/vhost/vdpa.c
++++ b/drivers/vhost/vdpa.c
+@@ -767,13 +767,46 @@ static long vhost_vdpa_vring_ioctl(struct vhost_vdpa *v, unsigned int cmd,
+ 			if (ops->get_status(vdpa) &
+ 			    VIRTIO_CONFIG_S_DRIVER_OK)
+ 				vhost_vdpa_unsetup_vq_irq(v, idx);
++			/*
++			 * The parent caches call_ctx.ctx in cb.trigger without
++			 * holding a reference, so it has to stop using it
++			 * before vhost_vring_ioctl() drops the last one.
++			 */
++			cb.callback = NULL;
++			cb.private = NULL;
++			cb.trigger = NULL;
++			ops->set_vq_cb(vdpa, idx, &cb);
++
++			/*
++			 * A parent interrupt handler that loaded the callback
++			 * before that store can still be running, so wait for
++			 * it to finish with the context too.
++			 */
++			if (ops->get_vq_irq) {
++				int irq = ops->get_vq_irq(vdpa, idx);
++
++				if (irq >= 0)
++					synchronize_irq(irq);
++			}
+ 		}
+ 		break;
  	}
  
--	if (msg.type == VHOST_IOTLB_UPDATE && msg.size == 0) {
-+	if (msg.type == VHOST_IOTLB_UPDATE &&
-+	    (!msg.size || !msg.perm || (msg.perm & ~VHOST_ACCESS_RW))) {
- 		ret = -EINVAL;
- 		goto done;
- 	}
+ 	r = vhost_vring_ioctl(&v->vdev, cmd, argp);
+-	if (r)
++	if (r) {
++		/*
++		 * A failure here means the swap never happened and the old
++		 * context is still installed, so give the parent back the
++		 * callback that was torn down above.
++		 */
++		if (cmd == VHOST_SET_VRING_CALL && vq->call_ctx.ctx) {
++			cb.callback = vhost_vdpa_virtqueue_cb;
++			cb.private = vq;
++			cb.trigger = vq->call_ctx.ctx;
++			ops->set_vq_cb(vdpa, idx, &cb);
++		}
+ 		return r;
++	}
+ 
+ 	switch (cmd) {
+ 	case VHOST_SET_VRING_ADDR:
 -- 
 2.53.0
 
