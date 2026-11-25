@@ -1,52 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795618127;
-	b=5nx1FBlAozT6eVA8sLWLK/MX09r4Jy+eTz66ugVY2eip+lYXecJW2gwCi3FrsPpNtnZD
-	 MkHmdoIKfqb60XztcKaiVOF4hw5fFlTV4NZhkQjKymWZymETGaHDoCNVU41SF7ws11z3r
-	 2MvQbmN8hfJYy7PKNzdxgTvwY5HuQrNyMsSNvMCVMnoutC3bTVZDqNKTiGw0N7bkUvwu7
-	 Dxzo+li1kkw/O7VhsSXxDHN2wZ0pj+V0XIN0BQ+2qPpadnaWSC5GxvtPIiekRhq0wxSSe
-	 NlR30moYc9/WCdZ8g6JtvOOoG8U6GNnOCEEC4s1wDaxH9YmrYnh72wQUnMUyn9Bmzrw==
+	t=1795618130;
+	b=q3+rrQ9WMGCy0bYwj3X3JmGr9pfkM8VSDtxD2/YFu+o+K5GKT8ly58z09CGEsknU6gvN
+	 So7oUfJqyPdlZWq8sTwOiVSNw1gKGoMXfgdUUUcA4Fa7N6OvQReMWk84jMw2gvwWUDGgw
+	 lGf70rP1TAkDOJqboFWbpEuuVrfV2HXacXij0xi6m2H1IfjxSf391B+/rDun8HJzd7hlz
+	 1a87Lh7X91w413dXRqvLzTCleTSlu8GXFVitedJ7fUuULB8+xjWBVFmUre8mFsB8i4uZB
+	 9Wnq64RHg6WJmagNb6Vsh7kG3RuE6etNKAo4aSz/llqcgaRvjugqupaav/osXDTS0KA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795618127;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795618130;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Transfer-Encoding;
-	bh=u9MPwhoXgDdbAYm324U8I/OIcNk6n4E/B/ByP9RVUDg=;
-	b=gGnPk/EmIvxlZaa5BfFZg8KlmFml1NB8B0eYIaHn9oxCtStsxuRhYgXpT5zuvNLr+5wr
-	 FC8cknlhIhwaoOqQP4Sysd9dE1wTunAJL8OZ9UJoN1kvN+oW+CsdXWkLFLhLsxJbWCbpO
-	 bFU2znC8ZpxszBKUfOwhAoPlDVZLGFmm5NUgDINQgzIkLiE3keqT317/Ynf3m1IwraMSf
-	 WyZeMgn5NZ2XMbrGYG5Ek4pgXc7TRtrkbFYN3aOpGkrEisZvf6Ro0c8DIR8mncxWF3ib4
-	 y080pobQmsJHq2tVfddxEb10sCmEGgtzLIYV84ek5p6SqJ+as3p0cYO+FmkUOlczuVQ==
+	 MIME-Version:Content-Type:Content-Transfer-Encoding;
+	bh=SrBvaaicH8frQAib6PVKUhNebOfyrp1XuM+L3xR25kw=;
+	b=tAECn5QUmQC4CrZn3RLu2DQeCkmtYUMDSqJZM0LHTPDeHESt7CK/FSO/yk7MXnWt8EmB
+	 zWSJt1vXcmvUkT12om+jGmIw704fF6g8xzpIH9C32nV4K4pWJ3IW9kQxMozzELOl2pGRX
+	 TMA1hiMVrS+Y7SFfDvKXv86zfvOl4LDjJCNUERiZPU5NKA+rgOI1GniChH0iyg8Svaasj
+	 4bXfg5KvbiXeIjXitRr20K2ZOaAqEJUkEhukMkcRsHKEJKBR28yrinrpMvyLDsDE/PTR6
+	 eDoghYpu6M5RJmn2V2LgWKNrVdx5J9RHTpL26w0NvI7aYw9fNRrgH/Be9ftXDODViMg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=jdqS3MXh;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=05cc6t33;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6AF56606A31E;
-	Wed, 25 Nov 2026 14:48:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 41CD5606A32C;
+	Wed, 25 Nov 2026 14:48:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=jdqS3MXh
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BE1931F000C4;
-	Wed, 25 Nov 2026 14:48:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=05cc6t33
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 92C691F000C6;
+	Wed, 25 Nov 2026 14:48:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795618127;
-	bh=u9MPwhoXgDdbAYm324U8I/OIcNk6n4E/B/ByP9RVUDg=;
+	s=korg; t=1795618130;
+	bh=SrBvaaicH8frQAib6PVKUhNebOfyrp1XuM+L3xR25kw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=jdqS3MXhcOSfFA75dtX/VQaDiiSLU8xi+6vQ5czJTJmWMAV9dYIqI8NkDuyh7iz7x
-	 uodKmEIwq5LkCpR6fpvaWps6651ukKNxAKqNdyZeD1TlBzagnyvidC3FUJLf0HxOXA
-	 /Un6eKHc7cRLwNmgyq+gEtKq4RSJe/W2C/sdhjes=
+	b=05cc6t333f39yqmsvX6xp12V8rH7YBJNuSpv94CRWGqRQEHuGuWp8NGzcEchUbpw4
+	 oFfV+MuBwjzDmEB61ZxqIcr34U1ungzgV487vMusc+D2Th8gLeXMpALRFLMHTeqxig
+	 lRc9MvsWGjw2V/1cWfA7Bhie6LwIXesDy6u0acnQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Alexei Starovoitov <ast@kernel.org>,
-	Eduard Zingerman <eddyz87@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0182/1005] bpf: Prepare static analysis passes for callx instruction
-Date: Wed, 25 Nov 2026 15:25:20 +0100
-Message-ID: <20261125143826.004988521@linuxfoundation.org>
+Subject: [PATCH 7.3 0183/1005] bpf: Dont trust pointers spilled in slots that a callee can write
+Date: Wed, 25 Nov 2026 15:25:21 +0100
+Message-ID: <20261125143826.028506918@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143821.729802100@linuxfoundation.org>
 References: <20261125143821.729802100@linuxfoundation.org>
@@ -62,6 +61,7 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 7.3-stable review patch.  If anyone has any objections, please let me know.
@@ -70,203 +70,166 @@ Content-Transfer-Encoding: 8bit
 
 From: Alexei Starovoitov <ast@kernel.org>
 
-[ Upstream commit 373e3fd0bff0e276fd76c86c830cdb16a3457776 ]
+[ Upstream commit cdefba74b53fb9b482355ebde1654800aea45dae ]
 
-BPF_JMP | BPF_CALL | BPF_X (callx) will be an indirect call of static
-subprog with address in dst_reg. The passes that run before the main
-verifier pass don't know which subprog callx calls.
-Teach them to treat callx as a call with unknown callee:
+arg_track follows pointers to the stack through registers and spills.
+Scalar evolution and the removal of dead slots rely on it to know which
+slots an insn reads and writes.
 
-- const_fold: callx clobbers R0-R5 like any other call. Otherwise
-  bpf_prune_dead_branches() could rewrite a live conditional jump.
+arg_track assumes that a call does not change the pointers that are spilled
+in the frame of the caller. But a static subprog or a callback can store
+a pointer to other memory there, and the caller can use it:
 
-- live regs: callx uses R1-R5 and dst_reg, defines R0-R5.
+  *(u64 *)(r10 - 16) = fp-8
+  r1 = fp-16, r2 = map_value
+  call sub                        ; *(u64 *)(r1 + 0) = r2
+  r7 = *(u64 *)(r10 - 16)         ; verifier: map_value. arg_track: fp-8
+  *(u64 *)(r10 - 8) = fp-24
+  *(u64 *)(r7 + 0) = 0            ; arg_track: fp-8 is overwritten
+  r8 = *(u64 *)(r10 - 8)          ; verifier: fp-24. arg_track: none
+  loop:
+    r1 = *(u64 *)(r10 - 24)       ; the counter of the loop
+    ...
+    *(u64 *)(r8 + 0) = 4096       ; arg_track: not a write to fp-24
 
-- stack liveness: func instances are keyed by (callsite, depth) and
-  cannot describe a callsite with multiple callees. Don't create
-  instances for callees of callx. If any callx argument is derived
-  from fp mark stack of all frames as read at callx insn and keep slots
-  of outer frames alive 'before' the callsite while the callee is
-  verified. Same as for callbacks that are not known statically.
-  The callee is analyzed as standalone instance.
+Scalar evolution does not see the last store. It gives the counter the
+range of a loop that only increments it. The prog loads, and it accesses
+a map value out of bounds.
 
-- backtracking: treat callx as a call of static subprog, same as
-  BPF_PSEUDO_CALL.
+Valid progs are rejected as well. The store through r7 makes fp-8 dead, and
+a later read of fp-8 fails with "slot poisoned by dead code elimination".
 
-callx is still rejected as unknown opcode. No functional change.
+When a static subprog or a callback can get a pointer to the frame of its
+caller, join every slot of that frame with "not a pointer to the stack".
+Reads and possible writes through a filled pointer are still seen, but no
+store through it is a certain write. It has to be every slot: the callee
+reaches the whole frame from one pointer, and callees are analyzed after
+the caller. The price is precision: an 8-byte load through a filled
+pointer gives a value that can point to any frame.
 
+For a spilled copy of r10 this needs "bpf: Fix the join of fp+0 with
+a value that is not a pointer to stack".
+
+In selftests, Cilium and sched_ext the stack marks change in 4 of 12522
+progs. Verdicts, insns and states do not change in any prog.
+
+one_fp_clear_stack_threshold and two_fp_clear_stack_threshold expect the
+fake offset fp+0 in the log now.
+
+Fixes: bf0c571f7feb ("bpf: introduce forward arg-tracking dataflow analysis")
 Signed-off-by: Alexei Starovoitov <ast@kernel.org>
-Acked-by: Eduard Zingerman <eddyz87@gmail.com>
-Link: https://patch.msgid.link/20260924031042.1690890-5-alexei.starovoitov@gmail.com
-Stable-dep-of: cdefba74b53f ("bpf: Don't trust pointers spilled in slots that a callee can write")
+Link: https://patch.msgid.link/20261102055913.3598414-4-alexei.starovoitov@gmail.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/bpf_verifier.h |  6 ++++++
- kernel/bpf/backtrack.c       | 20 +++++++++++--------
- kernel/bpf/const_fold.c      |  3 ++-
- kernel/bpf/liveness.c        | 38 +++++++++++++++++++++++++++++++-----
- 4 files changed, 53 insertions(+), 14 deletions(-)
+ kernel/bpf/liveness.c                         | 52 ++++++++++++++-----
+ .../selftests/bpf/progs/verifier_live_stack.c | 12 +++--
+ 2 files changed, 47 insertions(+), 17 deletions(-)
 
-diff --git a/include/linux/bpf_verifier.h b/include/linux/bpf_verifier.h
-index baf390c86406c..a253ca2c6e5d3 100644
---- a/include/linux/bpf_verifier.h
-+++ b/include/linux/bpf_verifier.h
-@@ -1076,6 +1076,12 @@ static inline bool bpf_pseudo_kfunc_call(const struct bpf_insn *insn)
- 	       insn->src_reg == BPF_PSEUDO_KFUNC_CALL;
- }
- 
-+/* callx: indirect call of a bpf subprog whose address is in insn->dst_reg */
-+static inline bool bpf_is_callx(const struct bpf_insn *insn)
-+{
-+	return insn->code == (BPF_JMP | BPF_CALL | BPF_X);
-+}
-+
- __printf(2, 0) void bpf_verifier_vlog(struct bpf_verifier_log *log,
- 				      const char *fmt, va_list args);
- __printf(2, 3) void bpf_verifier_log_write(struct bpf_verifier_env *env,
-diff --git a/kernel/bpf/backtrack.c b/kernel/bpf/backtrack.c
-index 44d107fd96c4d..50c66115ab45e 100644
---- a/kernel/bpf/backtrack.c
-+++ b/kernel/bpf/backtrack.c
-@@ -406,15 +406,18 @@ static int backtrack_insn(struct bpf_verifier_env *env, int idx, int subseq_idx,
- 		if (class == BPF_STX)
- 			bt_set_reg(bt, sreg);
- 	} else if (class == BPF_JMP || class == BPF_JMP32) {
--		if (bpf_pseudo_call(insn)) {
--			int subprog_insn_idx, subprog;
-+		if (bpf_pseudo_call(insn) || bpf_is_callx(insn)) {
-+			int subprog_insn_idx, subprog = -1;
- 
--			subprog_insn_idx = idx + insn->imm + 1;
--			subprog = bpf_find_subprog(env, subprog_insn_idx);
--			if (subprog < 0)
--				return -EFAULT;
-+			if (bpf_pseudo_call(insn)) {
-+				subprog_insn_idx = idx + insn->imm + 1;
-+				subprog = bpf_find_subprog(env, subprog_insn_idx);
-+				if (subprog < 0)
-+					return -EFAULT;
-+			}
- 
--			if (bpf_subprog_is_global(env, subprog)) {
-+			/* callx calls static subprogs only */
-+			if (subprog >= 0 && bpf_subprog_is_global(env, subprog)) {
- 				/* check that jump history doesn't have any
- 				 * extra instructions from subprog; the next
- 				 * instruction after call to global subprog
-@@ -531,7 +534,8 @@ static int backtrack_insn(struct bpf_verifier_env *env, int idx, int subseq_idx,
- 			 * necessary. In the former we never do that.
- 			 */
- 			from_subprog_call = subseq_idx - 1 >= 0 &&
--					    bpf_pseudo_call(&env->prog->insnsi[subseq_idx - 1]);
-+					    (bpf_pseudo_call(&env->prog->insnsi[subseq_idx - 1]) ||
-+					     bpf_is_callx(&env->prog->insnsi[subseq_idx - 1]));
- 
- 			r0_precise = from_subprog_call && bt_is_reg_set(bt, BPF_REG_0);
- 
-diff --git a/kernel/bpf/const_fold.c b/kernel/bpf/const_fold.c
-index d8d2d00380aef..e090f368e9256 100644
---- a/kernel/bpf/const_fold.c
-+++ b/kernel/bpf/const_fold.c
-@@ -191,7 +191,8 @@ static void const_reg_xfer(struct bpf_verifier_env *env, struct const_arg_info *
- 		dst->val = val;
- 		break;
- 	case BPF_JMP:
--		if (opcode != BPF_CALL)
-+		/* both 'call imm' and 'callx reg' clobber caller saved registers */
-+		if (BPF_OP(insn->code) != BPF_CALL)
- 			break;
- process_call:
- 		for (r = BPF_REG_0; r <= BPF_REG_5; r++)
 diff --git a/kernel/bpf/liveness.c b/kernel/bpf/liveness.c
-index c7aa5c8fc34cf..b01cdabaf3bf5 100644
+index b01cdabaf3bf5..8980e2aa25738 100644
 --- a/kernel/bpf/liveness.c
 +++ b/kernel/bpf/liveness.c
-@@ -464,12 +464,29 @@ int bpf_live_stack_query_init(struct bpf_verifier_env *env, struct bpf_verifier_
- 	return 0;
+@@ -1282,6 +1282,31 @@ static struct arg_track arg_track_deref(struct bpf_verifier_env *env, struct bpf
+ 	return (struct arg_track){ .frame = ARG_NONE };
  }
  
 +/*
-+ * Stack slots of outer frames that the callee may read are accounted as read
-+ * by the @callsite insn itself, i.e. they are live before @callsite and may be
-+ * dead after it, when:
-+ * - @callsite calls a callback, which may be called several times;
-+ * - @callsite is callx. Its callee is not known when stack liveness is
-+ *   computed, so there is no func instance for it at @callsite. While
-+ *   the verifier is in the callee lookup_instance() finds its standalone
-+ *   instance that knows nothing about outer frames. What the callee may read
-+ *   there is recorded by record_call_access().
++ * True if the call at @insn_idx can pass a pointer to the frame at @depth to a static subprog
++ * or to a callback. They use it as a pointer to stack, a global subprog gets plain memory.
++ * It errs on the safe side: it looks at all argument registers and stack args, also at those
++ * that this callee doesn't take.
 + */
-+static bool callee_stack_access_at_callsite(struct bpf_verifier_env *env, u32 callsite)
++static bool subprog_gets_local_fp(struct bpf_verifier_env *env, struct bpf_insn *insn, int insn_idx,
++				  struct arg_track *at, int depth)
 +{
-+	return bpf_calls_callback(env, callsite) ||
-+	       bpf_is_callx(&env->prog->insnsi[callsite]);
++	int r;
++
++	if (bpf_pseudo_call(insn)) {
++		r = bpf_find_subprog(env, insn_idx + insn->imm + 1);
++		if (r >= 0 && bpf_subprog_is_global(env, r))
++			return false;
++	} else if (!bpf_is_callx(insn) && !bpf_calls_callback(env, insn_idx)) {
++		return false;
++	}
++	/* R1-R5 and stack args */
++	for (r = BPF_REG_1; r < MAX_AT_TRACK_REGS; r++)
++		if ((r <= BPF_REG_5 || r >= MAX_BPF_REG) && can_be_local_fp(depth, r, &at[r]))
++			return true;
++	return false;
 +}
 +
- bool bpf_stack_slot_alive(struct bpf_verifier_env *env, u32 frameno, u32 half_spi)
- {
- 	/*
- 	 * Slot is alive if it is read before q->insn_idx in current func instance,
- 	 * or if for some outer func instance:
--	 * - alive before callsite if callsite calls callback, otherwise
-+	 * - alive before callsite if callsite calls callback or is callx, otherwise
- 	 * - alive after callsite
- 	 */
- 	struct live_stack_query *q = &env->liveness->live_stack_query;
-@@ -502,7 +519,7 @@ bool bpf_stack_slot_alive(struct bpf_verifier_env *env, u32 frameno, u32 half_sp
- 		/* Get callsite from verifier state, not from instance callchain */
- 		callsite = q->callsites[i];
+ /*
+  * Pure dataflow transfer function for arg_track state.
+  * Updates at_out[] based on how the instruction modifies registers.
+@@ -1345,21 +1370,22 @@ static void arg_track_xfer(struct bpf_verifier_env *env, struct bpf_insn *insn,
+ 		*dst = none;
+ 	} else if (class == BPF_JMP && code == BPF_CALL) {
+ 		/*
+-		 * at_stack_out[slot] is not cleared by the helper and subprog calls.
+-		 * The fill_from_stack() may return the stale spill — which is an FP-derived arg_track
+-		 * (the value that was originally spilled there). The loaded register then carries
+-		 * a phantom FP-derived identity that doesn't correspond to what's actually in the slot.
+-		 * This phantom FP pointer propagates forward, and wherever it's subsequently used
+-		 * (as a helper argument, another store, etc.), it sets stack liveness bits.
+-		 * Those bits correspond to stack accesses that don't actually happen.
+-		 * So the effect is over-reporting stack liveness — marking slots as live that aren't
+-		 * actually accessed. The verifier preserves more state than necessary across calls,
+-		 * which is conservative.
++		 * Helpers, kfuncs and global subprogs can scratch stack slots. The verifier reads
++		 * a scalar from a scratched slot, but at_stack_out[slot] is not cleared, and
++		 * fill_from_stack() returns the stale spill: an FP-derived arg_track for a scalar.
++		 * A scalar can't be dereferenced, so the stale value can only set liveness bits
++		 * for stack accesses that don't happen. That is conservative.
+ 		 *
+-		 * helpers can scratch stack slots, but they won't make a valid pointer out of it.
+-		 * subprogs are allowed to write into parent slots, but they cannot write
+-		 * _any_ FP-derived pointer into it (either their own or parent's FP).
++		 * Static subprogs and callbacks can't store an FP-derived pointer into the frame of
++		 * the caller, but they can store any other pointer there. The caller can fill it
++		 * and store through it. With the stale spill that store would be a definite write
++		 * to a stack slot, and it doesn't touch the stack. Callees are analyzed after the
++		 * caller, and they reach the whole frame from one pointer to it. So after the call
++		 * every slot holds what it held before or a value that is not FP-derived.
+ 		 */
++		if (subprog_gets_local_fp(env, insn, insn_idx, at_out, depth))
++			for (slot = 0; slot < nslots; slot++)
++				at_stack_out[slot] = __arg_track_join(at_stack_out[slot], none);
+ 		for (r = BPF_REG_0; r <= BPF_REG_5; r++)
+ 			at_out[r] = none;
+ 	} else if (class == BPF_LDX) {
+diff --git a/tools/testing/selftests/bpf/progs/verifier_live_stack.c b/tools/testing/selftests/bpf/progs/verifier_live_stack.c
+index 401152b2b64fc..ec2f25df3d4da 100644
+--- a/tools/testing/selftests/bpf/progs/verifier_live_stack.c
++++ b/tools/testing/selftests/bpf/progs/verifier_live_stack.c
+@@ -1763,11 +1763,15 @@ static __used __naked void grandchild_deref(void)
+ 	::: __clobber_all);
+ }
  
--		alive = bpf_calls_callback(env, callsite)
-+		alive = callee_stack_access_at_callsite(env, callsite)
- 			? is_live_before(instance, callsite, rel, half_spi)
- 			: is_live_before(instance, callsite + 1, rel, half_spi);
- 		if (alive)
-@@ -1601,7 +1618,15 @@ static int record_call_access(struct bpf_verifier_env *env,
- 	if (bpf_pseudo_call(insn))
- 		return 0;
- 
--	if (bpf_get_call_summary(env, insn, &cs))
-+	if (bpf_is_callx(insn))
-+		/*
-+		 * The callee is not known statically. Assume that all arg
-+		 * slots are passed and let record_arg_access() conservatively
-+		 * mark the stack of all frames as read if any of them is
-+		 * derived from a frame pointer.
-+		 */
-+		arg_slot_cnt = MAX_BPF_FUNC_REG_ARGS + MAX_STACK_ARG_SLOTS;
-+	else if (bpf_get_call_summary(env, insn, &cs))
- 		arg_slot_cnt = cs.arg_slot_cnt;
- 
- 	for (r = BPF_REG_1; r < BPF_REG_1 + min(arg_slot_cnt, MAX_BPF_FUNC_REG_ARGS); r++) {
-@@ -1695,7 +1720,7 @@ static void print_subprog_arg_access(struct bpf_verifier_env *env,
- 		bool has_extra = false;
- 		u8 cls = BPF_CLASS(insns[idx].code);
- 		bool is_ldx_stx_call = cls == BPF_LDX || cls == BPF_STX ||
--				       insns[idx].code == (BPF_JMP | BPF_CALL);
-+				       (cls == BPF_JMP && BPF_OP(insns[idx].code) == BPF_CALL);
- 
- 		verbose(env, "%3d: ", idx);
- 		bpf_verbose_insn(env, &insns[idx]);
-@@ -1887,7 +1912,7 @@ static int compute_subprog_args(struct bpf_verifier_env *env,
- 		if (err)
- 			goto err_free;
- 
--		if (insn->code == (BPF_JMP | BPF_CALL)) {
-+		if (BPF_CLASS(insn->code) == BPF_JMP && BPF_OP(insn->code) == BPF_CALL) {
- 			err = record_call_access(env, instance, at_in[i], idx);
- 			if (err)
- 				goto err_free;
-@@ -2389,6 +2414,9 @@ static void compute_insn_live_regs(struct bpf_verifier_env *env,
- 				use = GENMASK(min_t(u8, cs.arg_slot_cnt, MAX_BPF_FUNC_REG_ARGS), 1);
- 			def = mask_widen(def);
- 			use = mask_widen(use);
-+			/* callx reads the address of the callee from dst_reg */
-+			if (bpf_is_callx(insn))
-+				use |= dst;
- 			break;
- 		default:
- 			def = 0;
++/*
++ * The callee gets a pointer to the frame that holds the spills. It can store a pointer
++ * that is not FP-derived over them: after the call each of them is "fp-N or not FP-derived".
++ */
+ SEC("socket")
+ __log_level(2)
+ __success
+-__msg("14: (79) r1 = *(u64 *)(r10 -8) // r6=fp0-8 r7=fp1-16 fp-8=fp1-16 fp-16=fp0-8")
+-__msg("15: (79) r0 = *(u64 *)(r1 +0) // r1=fp1-16 r6=fp0-8 r7=fp1-16 fp-8=fp1-16 fp-16=fp0-8")
++__msg("14: (79) r1 = *(u64 *)(r10 -8) // r6=fp0-8 r7=fp1-16 fp-8=fp1-16|fp1+0 fp-16=fp0-8|fp0+0")
++__msg("15: (79) r0 = *(u64 *)(r1 +0) // r1=fp1-16|fp1+0 r6=fp0-8 r7=fp1-16 fp-8=fp1-16|fp1+0")
+ __msg("stack use/def subprog#1 mid_two_fp_threshold (d1,cs2):")
+ __msg("14: (79) r1 = *(u64 *)(r10 -8)        ; use: fp1-8")
+ __msg("15: (79) r0 = *(u64 *)(r1 +0)         ; use: fp1-16")
+@@ -1812,8 +1816,8 @@ static __used __naked void inner_nop_fptest(void)
+ SEC("socket")
+ __log_level(2)
+ __success
+-__msg("13: (79) r1 = *(u64 *)(r10 -8) // r6=fp0-8 r7=fp1-16 fp-8=fp1-16 fp-16=fp0-8")
+-__msg("14: (79) r0 = *(u64 *)(r1 +0) // r1=fp1-16 r6=fp0-8 r7=fp1-16 fp-8=fp1-16 fp-16=fp0-8")
++__msg("13: (79) r1 = *(u64 *)(r10 -8) // r6=fp0-8 r7=fp1-16 fp-8=fp1-16|fp1+0 fp-16=fp0-8|fp0+0")
++__msg("14: (79) r0 = *(u64 *)(r1 +0) // r1=fp1-16|fp1+0 r6=fp0-8 r7=fp1-16 fp-8=fp1-16|fp1+0")
+ __msg("stack use/def subprog#1 mid_one_fp_threshold (d1,cs2):")
+ __msg("13: (79) r1 = *(u64 *)(r10 -8)        ; use: fp1-8")
+ __msg("14: (79) r0 = *(u64 *)(r1 +0)         ; use: fp1-16")
 -- 
 2.53.0
 
