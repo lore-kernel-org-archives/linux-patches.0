@@ -1,54 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795618645;
-	b=gcMngf13VewG750t1sEBkCzSjaW6GndBQXKWyvVaAFaGYzKXI/f2wInKoMxmqL65US78
-	 BsjW2HZL8+ZHfn00yMjJf4SY9hEcwuwV9oX4TwunTgywzf7L+nvkEpAr45SvPM2wOsHRu
-	 lL/eYSinP90tQtzkk6pcu9fpk/2Rb9qxH5ac3cwLlB0i/KkF10Wd4Td3s3UBIaInk2eQx
-	 BINIpv6IiurBLA0LUQInbSSItCKk+DscqZNtGEQScRyE1CEfYO067sv0W9jGXjnmO+ffG
-	 MNps7qcUT3FvHPLMP/nB099ThzLqtEoPDMLevqw7mHl4m/1V99hq2diQaqsjtZpQPOA==
+	t=1795618648;
+	b=Z/Snj+wJxCHykLCuwhd8sQ8mYp7km8KQef9cSFefAIKKPcaczpgc8+HR4qjqbcLWMLdy
+	 JEvU66ER39+HhyfbAlMBL5OjeW701DOoN1G0Xc25GtLvgjyOkwGBtD+lCGY07RYn38s8L
+	 u45Qpe1CuNuNTnD8PYF3HuQvSFkpQLJWn/4K8+LKQdXxLujmy7QwUd9ws/mOyGpkEYDxr
+	 +mh5ktXrDGdi4spB6zFU1fvw0hF9cQlC5JgQyLBhE4jAHWbWY+tSxzk/wbkYf9Xc9MCoS
+	 9OQ4CZ7QVj4DgF90o1Brrje/FqGnzj2q9WaYV4ZhtFXyCirmBi6W7suLMaTWRSQgifg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795618645;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795618648;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=9KNxO0F3LrEmsvSfmelWtnqSx8uBjYyimOceQtCPemA=;
-	b=MQLkIhtMgH5thdC/0DX94RIFKJ8irMZkpU2SrR86YEzg/p/7w/vLrBC7ksTZkNzoTX2J
-	 YpQF4fc66OgRHA7q1eODrHbvk4/z7hMwl0s+7jbaQ1hPNN6G/EO+UAiuszv+qawSPMkhd
-	 QeNgeD0zWRtM7Mlp7y/pwMGANYP50UbRM7fjVJKkxyBYUSFtEPnPO32EBej5ABZp2OjLk
-	 sOswXdeNi30Qak1yOpNLsA5Uhu7cR2IY6pF5zzhlgvc83PmjbGM3CfXr07vOLfqPX1Ofh
-	 uvVIXEH0Ec1bjIBj1wdyjn34w6F4hVgoR3Ua4nLbvmTygFsXYkm+lthPuB7uwMDO8Sg==
+	bh=Z1EGev7dxQHOGlVTSWEmdcrirFzwgwQ+isMeIlYqZ1A=;
+	b=1dgYvIW9H17wdYAcrYlOs+Q79fpYiAo+qboMahkYXyAd7bz9rHzgDo8zI0Y54tfwxwH0
+	 GLxR6+izfGU7l7gVbJEkwn46ynEXDA5U1t717im7lyszgp8zUGU4mk7iJvAWQ4QwNlK4l
+	 C4C5qX+nhDEwyDuhXwLQ8QAprAr564zgxEA5LBU8QhHPDybknhzVZ7TIGo0n0NTJtHm1J
+	 JiV1OfW5mfhiLfpyBQk41gUWSxus6+0tiOwrZGPtdkfp95Av+R7990K/5Sy5ZTdxnX+9w
+	 68HLysxuyJT3XyKuTg73o/M882iEHh1H0RxaerDRIfLDVLpft2kOb9gsXaT1uB1yQLA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=xCmnJN1v;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=aq3DKfiO;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 411C3606A31E;
-	Wed, 25 Nov 2026 14:57:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 54429606A323;
+	Wed, 25 Nov 2026 14:57:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=xCmnJN1v
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1C6FD1F00A03;
-	Wed, 25 Nov 2026 14:57:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=aq3DKfiO
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 681A61F000C4;
+	Wed, 25 Nov 2026 14:57:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795618644;
-	bh=9KNxO0F3LrEmsvSfmelWtnqSx8uBjYyimOceQtCPemA=;
+	s=korg; t=1795618647;
+	bh=Z1EGev7dxQHOGlVTSWEmdcrirFzwgwQ+isMeIlYqZ1A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=xCmnJN1vOA4YukxI1GTOZ8ziL5IuvdHsM8TqLKVW9tyMhEuL+CM0BRJZ4w3dQ+ZAg
-	 iLQshUBeuI8sX6RMUW7xCkQSaX0NHDI9bN0PJ9m08Ysttqpij93Menh6ybaVsYh1S9
-	 luszlDbhwPEotnFnqOTWPR0lDA9XX1NIlxHsaj0c=
+	b=aq3DKfiOhTTRmOl8dMLgZk97Cca3ONwEmsedt8yni4DreCmIcitwwCpyJPQWlx3Q1
+	 afikiiYybnaiWruzFvLK9TU2KJpLPFpFHXNVizQ1VfdIjLt7b4Q3Q6FT9EBpQTGi6U
+	 9QtdycoCVqQKUPd57ORnh5r+JT9HiH1fPIjR7l1M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jim Mattson <jmattson@google.com>,
-	Ravi Bangoria <ravi.bangoria@amd.com>,
+	Nickolai Zeldovich <nickolai@csail.mit.edu>,
 	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
 	Ingo Molnar <mingo@kernel.org>,
+	Juri Lelli <juri.lelli@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0343/1005] perf/amd/ibs: Simplify event state handling with IBS_CAPS_DIS
-Date: Wed, 25 Nov 2026 15:28:01 +0100
-Message-ID: <20261125143829.769567413@linuxfoundation.org>
+Subject: [PATCH 7.3 0344/1005] sched/deadline: Fix this_bw on class change of a dying task
+Date: Wed, 25 Nov 2026 15:28:02 +0100
+Message-ID: <20261125143829.793832390@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143821.729802100@linuxfoundation.org>
 References: <20261125143821.729802100@linuxfoundation.org>
@@ -70,235 +70,54 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ravi Bangoria <ravi.bangoria@amd.com>
+From: Nickolai Zeldovich <nickolai@csail.mit.edu>
 
-[ Upstream commit 927f9c5cdadbc4ac6973bcd1690107fcb392612c ]
+[ Upstream commit 0c93e25ef11a9dee43f6076bd1f09771dc2b167e ]
 
-The IBS_{FETCH|OP}_CTL2[Dis] bit allows IBS sampling to be stopped without
-a RMW of IBS_{FETCH,OP}_CTL. Systems providing this bit therefore do not
-require the IBS_STARTED and IBS_STOPPED states used to coordinate control
-MSR updates with late NMIs.
+Moving a SCHED_DEADLINE task out of the class with sched_setscheduler(2)
+after it stored TASK_DEAD in do_task_dead(), but before __schedule()
+dequeued it, subtracts its bandwidth from the runqueue's this_bw twice.
+this_bw then stays short until reboot: __sub_rq_bw() warns about the
+underflow or about running_bw > this_bw, and GRUB reclaim for
+SCHED_FLAG_RECLAIM tasks on that CPU is miscomputed.
 
-Add a separate stop path for these systems. Preserve the Val bit while
-disabling the event so that a delayed NMI can be identified and consumed,
-and wait briefly for such an NMI before restarting the event.
+The class change dequeues the still queued task with DEQUEUE_SAVE, which
+removes its bandwidth from running_bw and this_bw. switched_from_dl()
+then calls task_non_contending(), which, if the 0-lag time has passed,
+removes it from this_bw again because the task is TASK_DEAD. That
+removal is meant for the dying task's own DEQUEUE_SLEEP dequeue, which
+has removed nothing before it.
 
-Leave the existing handling unchanged on systems without IBS_CAPS_DIS.
+Do the TASK_DEAD removal only on that dequeue path.
 
-Closes: https://lore.kernel.org/r/20261007234815.4026028-1-jmattson@google.com
-Fixes: efa5700ec0da ("perf/amd/ibs: Support IBS_{FETCH|OP}_CTL2[Dis] to eliminate RMW race")
-Reported-by: Jim Mattson <jmattson@google.com>
-Signed-off-by: Ravi Bangoria <ravi.bangoria@amd.com>
+Reproduced under QEMU on x86_64 and riscv64 by moving exiting deadline
+tasks to SCHED_OTHER in a loop; with this patch there is no warning.
+
+Fixes: 8fd27231c330 ("sched/deadline: Track the "total rq utilization" too")
+Signed-off-by: Nickolai Zeldovich <nickolai@csail.mit.edu>
 Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
 Signed-off-by: Ingo Molnar <mingo@kernel.org>
-Reviewed-by: Jim Mattson <jmattson@google.com>
-Link: https://lore.kernel.org/r/20261007234815.4026028-1-jmattson@google.com
-Link: https://patch.msgid.link/20261026041838.941-4-ravi.bangoria@amd.com
+Acked-by: Juri Lelli <juri.lelli@redhat.com>
+Tested-by: Juri Lelli <juri.lelli@redhat.com>
+Link: https://patch.msgid.link/20261025124657.836229-1-nickolai@csail.mit.edu
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/events/amd/ibs.c | 145 ++++++++++++++++++++++++++++++++------
- 1 file changed, 122 insertions(+), 23 deletions(-)
+ kernel/sched/deadline.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/arch/x86/events/amd/ibs.c b/arch/x86/events/amd/ibs.c
-index 010d14d2357bc..66e67e27224f1 100644
---- a/arch/x86/events/amd/ibs.c
-+++ b/arch/x86/events/amd/ibs.c
-@@ -28,6 +28,7 @@ static u32 ibs_caps;
- #include <linux/hardirq.h>
+diff --git a/kernel/sched/deadline.c b/kernel/sched/deadline.c
+index 1502a45d76aaf..4d502ca884485 100644
+--- a/kernel/sched/deadline.c
++++ b/kernel/sched/deadline.c
+@@ -444,7 +444,7 @@ static void task_non_contending(struct sched_dl_entity *dl_se, bool dl_task)
+ 			if (!dl_task || READ_ONCE(p->__state) == TASK_DEAD) {
+ 				struct dl_bw *dl_b = dl_bw_of(task_cpu(p));
  
- #include <asm/nmi.h>
-+#include <asm/delay.h>
- #include <asm/amd/ibs.h>
- 
- /* attr.config2 */
-@@ -73,7 +74,12 @@ static u32 ibs_caps;
-  *
-  * XXX: we could probably be using !atomic bitops for all this.
-  */
--
-+/*
-+ * NOTE: IBS_CAPS_DIS eliminates the RMW race on the IBS_{FETCH|OP}_CTL, making
-+ * IBS_STARTED and IBS_STOPPED states unnecessary. We use only IBS_ENABLED and
-+ * IBS_STOPPING states when IBS_CAPS_DIS is present. Semantics of IBS_STOPPING
-+ * changes a bit as well.
-+ */
- enum ibs_states {
- 	IBS_ENABLED	= 0,
- 	IBS_STARTED	= 1,
-@@ -557,7 +563,9 @@ static void perf_ibs_start(struct perf_event *event, int flags)
- 	struct hw_perf_event *hwc = &event->hw;
- 	struct perf_ibs *perf_ibs = container_of(event->pmu, struct perf_ibs, pmu);
- 	struct cpu_perf_ibs *pcpu = this_cpu_ptr(perf_ibs->pcpu);
-+	unsigned int delay = 50;
- 	u64 period, config = 0;
-+	u64 ctl;
- 
- 	if (WARN_ON_ONCE(!(hwc->state & PERF_HES_STOPPED)))
- 		return;
-@@ -575,23 +583,87 @@ static void perf_ibs_start(struct perf_event *event, int flags)
- 	}
- 	config |= period >> 4;
- 
--	/*
--	 * Reset the IBS_{FETCH|OP}_CTL MSR before updating pcpu->state.
--	 * Doing so prevents a race condition in which an NMI due to other
--	 * source might accidentally activate the event before we enable
--	 * it ourselves.
--	 */
--	perf_ibs_disable_event(perf_ibs, hwc, 0);
-+	if (ibs_caps & IBS_CAPS_DIS) {
-+		/*
-+		 *      IBS HW                     SW
-+		 *
-+		 *  o Capture sample       o ->stop()
-+		 *  o Set VAL bit            CTL2[Dis] = 1
-+		 *  o Raise NMI --.        o ...
-+		 *                 \       o ->start()
-+		 *                  \        wrmsr(IBS_{FETCH|OP}_CTL, new value);
-+		 *                   \       (wrmsr clears the VAL bit)
-+		 *                    `--> o Receives delayed NMI
-+		 *                           (Unknown NMI since VAL bit is cleared)
-+		 *
-+		 * Handle this with induced delay.
-+		 */
-+		rdmsrq(hwc->config_base, ctl);
-+		while ((ctl & perf_ibs->valid_mask) && delay--) {
-+			udelay(1);
-+			rdmsrq(hwc->config_base, ctl);
-+		}
-+	} else {
-+		/*
-+		 * Reset the IBS_{FETCH|OP}_CTL MSR before updating pcpu->state.
-+		 * Doing so prevents a race condition in which an NMI due to
-+		 * other source might accidentally activate the event before we
-+		 * enable it ourselves.
-+		 */
-+		perf_ibs_disable_event(perf_ibs, hwc, 0);
-+		/*
-+		 * Set STARTED before enabling the hardware, such that a
-+		 * subsequent NMI must observe it.
-+		 */
-+		set_bit(IBS_STARTED,    pcpu->state);
-+		clear_bit(IBS_STOPPING, pcpu->state);
-+	}
-+	perf_ibs_enable_event(perf_ibs, hwc, config);
-+
-+	perf_event_update_userpage(event);
-+}
-+
-+/* ->stop() for platforms with additional CTL2[Dis] bit. */
-+static void perf_ibs_stop_dis(struct perf_event *event, int flags)
-+{
-+	struct hw_perf_event *hwc = &event->hw;
-+	struct perf_ibs *perf_ibs = container_of(event->pmu, struct perf_ibs, pmu);
-+	struct cpu_perf_ibs *pcpu = this_cpu_ptr(perf_ibs->pcpu);
-+	u64 config;
-+	u64 ctl2;
-+
-+	WARN_ON_ONCE(test_bit(IBS_STOPPING, pcpu->state));
-+
-+	set_bit(IBS_STOPPING, pcpu->state);
-+
-+	rdmsrq(hwc->extra_reg.reg, ctl2);
-+	if (ctl2 & perf_ibs->disable_mask)
-+		goto reset_state;
-+
-+	wrmsrq(hwc->extra_reg.reg, perf_ibs->disable_mask);
-+
-+	WARN_ON_ONCE(hwc->state & PERF_HES_STOPPED);
-+	hwc->state |= PERF_HES_STOPPED;
-+
-+	if (hwc->state & PERF_HES_UPTODATE)
-+		goto reset_state;
-+
-+	rdmsrq(hwc->config_base, config);
-+
-+	config &= ~perf_ibs->valid_mask;
- 
- 	/*
--	 * Set STARTED before enabling the hardware, such that a subsequent NMI
--	 * must observe it.
-+	 * Clear the Val bit otherwise ->start() will unnecessarily
-+	 * wait for 50us.
- 	 */
--	set_bit(IBS_STARTED,    pcpu->state);
--	clear_bit(IBS_STOPPING, pcpu->state);
--	perf_ibs_enable_event(perf_ibs, hwc, config);
-+	if (in_nmi())
-+		wrmsrq(hwc->config_base, config);
- 
--	perf_event_update_userpage(event);
-+	perf_ibs_event_update(perf_ibs, event, &config);
-+	hwc->state |= PERF_HES_UPTODATE;
-+
-+reset_state:
-+	clear_bit(IBS_STOPPING, pcpu->state);
- }
- 
- static void perf_ibs_stop(struct perf_event *event, int flags)
-@@ -602,6 +674,9 @@ static void perf_ibs_stop(struct perf_event *event, int flags)
- 	u64 config;
- 	int stopping;
- 
-+	if (ibs_caps & IBS_CAPS_DIS)
-+		return perf_ibs_stop_dis(event, flags);
-+
- 	if (test_and_set_bit(IBS_STOPPING, pcpu->state))
- 		return;
- 
-@@ -1416,19 +1491,43 @@ static int perf_ibs_handle_irq(struct perf_ibs *perf_ibs, struct pt_regs *iregs)
- 	unsigned int msr;
- 	u64 *buf, *config, period, new_config = 0;
- 	int br_target_idx = -1;
-+	u64 ctl2, ctl;
- 
--	if (!test_bit(IBS_STARTED, pcpu->state)) {
--fail:
-+	if (ibs_caps & IBS_CAPS_DIS) {
- 		/*
--		 * Catch spurious interrupts after stopping IBS: After
--		 * disabling IBS there could be still incoming NMIs
--		 * with samples that even have the valid bit cleared.
--		 * Mark all this NMIs as handled.
-+		 * ->stop() {
-+		 *     set_bit(IBS_STOPPING);
-+		 *                               <-- NMI (race 1)
-+		 *     CTL2[Dis]=1;
-+		 *     ...                       <-- NMI (race 2)
-+		 * }
- 		 */
--		if (test_and_clear_bit(IBS_STOPPED, pcpu->state))
--			return 1;
-+		rdmsrq(perf_ibs->msr2, ctl2);
-+		if (test_bit(IBS_STOPPING, pcpu->state) /* race 1 */ ||
-+		    (ctl2 & perf_ibs->disable_mask) /* race 2 */) {
-+			rdmsrq(perf_ibs->msr, ctl);
-+			if (ctl & perf_ibs->valid_mask) {
-+				ctl &= ~(perf_ibs->enable_mask |
-+					 perf_ibs->valid_mask);
-+				wrmsrq(perf_ibs->msr, ctl);
-+				return 1;
-+			}
-+			return 0;
-+		}
-+	} else {
-+		if (!test_bit(IBS_STARTED, pcpu->state)) {
-+fail:
-+			/*
-+			 * Catch spurious interrupts after stopping IBS: After
-+			 * disabling IBS there could be still incoming NMIs
-+			 * with samples that even have the valid bit cleared.
-+			 * Mark all this NMIs as handled.
-+			 */
-+			if (test_and_clear_bit(IBS_STOPPED, pcpu->state))
-+				return 1;
- 
--		return 0;
-+			return 0;
-+		}
- 	}
- 
- 	if (WARN_ON_ONCE(!event))
+-				if (READ_ONCE(p->__state) == TASK_DEAD)
++				if (dl_task && READ_ONCE(p->__state) == TASK_DEAD)
+ 					sub_rq_bw(dl_se, &rq->dl);
+ 				raw_spin_lock(&dl_b->lock);
+ 				__dl_sub(dl_b, dl_se->dl_bw, dl_bw_cpus(task_cpu(p)));
 -- 
 2.53.0
 
