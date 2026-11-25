@@ -1,55 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795626180;
-	b=nfS2INm6ezXzYkohuZ1ipmzyallVL5fCGb3gcjc/pqzbKCsMrB9yDYfUdA+KXUBJen5a
-	 AAmHJX5fRylKIWS6muYm+POYDEUOGPSCrQRbalBGuhH5pVuxT34m5t3pjCMF3OLerZlhu
-	 ShFJFrgT8I/maj+8WZ5m79GRl2VHHHFUd3c2LOZ7fqCww+E6eUSbv414YjZubD7v5zZWQ
-	 Se95GGiixNN8Sqv/squ4C29BVfSHI2kiQu8PqkaqEtR7MJvdSuP5YAtWZ8OXRyTxqwybc
-	 V8TZzRDWRaJAQwuA0rVCsz0qcZ3yhAn7Ore1Qaq+7vZkMpUJnHneaNiOcM/1kmmhKQA==
+	t=1795626183;
+	b=C3kWl+rgt6ftM5gjFxNVahjkKwKe0NVvV6o5LZzLKpRhYYAJ/Sh5fIs9Hrvd3wBVS9kA
+	 3lngVyChbA/JlqWdT5dzPMOJdpb1r/clmqznkw7Dd3OdAVqMz6/f7fj5DCWe7+zBwnhxK
+	 0Nz4iO7QSn10UsMKnV/QhoIqBKjwP2nU3Ra9+7M3edghWD5QOM7e9ds7XTmHibXfb6mY5
+	 LOb1i82CDxOnj9Rgi2J3zPdTxaYAvsy2zhx2SkljbDQOVX8IgeMGPZ3vmEAu9C4D1gZJ+
+	 ZIk9jzeGvas2gtPBBii7bUHllhfepi6UvVprsW14aFzTIRZq1UIcFc858t0AjNE5QHQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795626180;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795626183;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=VpyJZvL1jH9u/b4FxUdhJ7j9x51qcD1DR5V8UTPwwas=;
-	b=QIzGBt30Wfaf3HatVRiWm7OUJS9YEAzEFo+hYYMGEX+bYzV2zr64cJKE83H7rQXa6X2w
-	 5FZJppJKQj1xdQXcN4fUnk448YVS3e+tQ1HfdhKqsgysU5F1moyuDhFDX22DHwD8SYVyN
-	 K6cQD4cA3TBe8rnVl93/+OaPyriPrj+d7tfzCRdbwFl04AiQOwwuswxGTy8P9smem4e/v
-	 L4Q1APoNgyBaDQGlyeagx8XGgVYvY175wFmz7NXaFO9zcDaF6R2JV7IfMO5UpnC7sFuxg
-	 1FuvXdbYUrXSgWNTRDTg5B09CpqLkY49pvTR9gKxSBtbzxHi5xE4VUnd35t0a+vITFw==
+	bh=qtN7bAZE/OYvCCW86N8zmVbRo9x5hym6G80F3CB3tD4=;
+	b=qv3IFyCIZmcTz7XfRkY69F3VuPWHEET/vfFP/X0IPnc2nf8ejuXTHu7wP4HD/Kx7YwAb
+	 wFUs4gLvGNEIhNqeKOd/5jHRq8n45lvZ1GZ2FSHCClOeCUKLrKp1I61uYJa/XLucaqXun
+	 TG74+OPH7YzNYaxaN5ombFPOmNCK3QADhHfuhhkuFABwX+k6KZDvwtyZiGwIL8GgVwg94
+	 zAFcknUMqYvl8lOVXtJWw9+NKhZJSYQos4LoFiZ1NJ1T0lXSFso1mT59oNM7rdbcj0+oD
+	 e3wZUjRnd7vzlkYdXKwgavkoGibg8ZvvO6p6p51TXpTglZ3AzLMy3W3AYFVriPKI/nw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=CPCyAZf8;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Xanhrt6V;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1CD0B606A326;
-	Wed, 25 Nov 2026 17:03:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3DDAF606A31E;
+	Wed, 25 Nov 2026 17:03:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=CPCyAZf8
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 701741F000C0;
-	Wed, 25 Nov 2026 17:02:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Xanhrt6V
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 460F41F000C4;
+	Wed, 25 Nov 2026 17:03:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795626180;
-	bh=VpyJZvL1jH9u/b4FxUdhJ7j9x51qcD1DR5V8UTPwwas=;
+	s=korg; t=1795626182;
+	bh=qtN7bAZE/OYvCCW86N8zmVbRo9x5hym6G80F3CB3tD4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=CPCyAZf8x5EtOFJWiGR4+xF+F6RAZOaWiKIr9fhtNwi1fGTc4T+9BrR2SzO7mqya+
-	 yYNoyycuYosk1w9w0i1M/9ThFk3RhUFCmOBUwpmw4RQg8QBF+Gb+cpdlVvcqRbcnuK
-	 3YjE16rP63JJkY2ePWKXPnCic+zr/7Dk4+jDNOlM=
+	b=Xanhrt6Vx/F8YfErg+sDI0xuXxIBuHUdE5tb2QL3jcLSCZBmzyQBT4q++sigLM1L3
+	 0ADbn6Zb0LqjMETYqo53VxvX0eZrQzhLv86p0JKiY+dgtLc/zOxZNwfeRIS7Me2TeQ
+	 ZWazkH2cPUem1grqJJVUb/TfJMWhgZ4YP3DBsCr4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+fe63e4d633540f230624@syzkaller.appspotmail.com,
 	stable <stable@kernel.org>,
-	Krystian Kaniewski <krystianmkaniewski@gmail.com>,
-	syzbot@syzkaller.appspotmail.com,
-	Mehmet Fide <mehmet.fide@screeningeagle.com>,
-	syzbot+bca09f5d8b843bbf7571@syzkaller.appspotmail.com
-Subject: [PATCH 6.12 751/816] usb: gadget: u_serial: pin ports while TTYs are installed
-Date: Wed, 25 Nov 2026 15:38:19 +0100
-Message-ID: <20261125143906.555087915@linuxfoundation.org>
+	Josef Bacik <josef@toxicpanda.com>,
+	Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
+Subject: [PATCH 6.12 760/816] w1: dont hold list_mutex while a slave is torn down
+Date: Wed, 25 Nov 2026 15:38:28 +0100
+Message-ID: <20261125143906.764930243@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143849.205329330@linuxfoundation.org>
 References: <20261125143849.205329330@linuxfoundation.org>
@@ -71,371 +68,82 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Krystian Kaniewski <krystianmkaniewski@gmail.com>
+From: Josef Bacik <josef@toxicpanda.com>
 
-commit 1981b53c2b52a00f0f4b9eb87183c9aedc8dac5d upstream.
+commit 7ef382cb0ae0b2d6df4fbc5c822cd80394308839 upstream.
 
-A slab-use-after-free can occur when gserial_free_line() frees struct
-gs_port while it is still reachable through an installed TTY. The
-port->port.count value tracks successful opens, but it is zero before
-gs_open() and again after gs_close(), before TTY cleanup has finished.
-Teardown can therefore free gs_port while tty_init_dev() or release_tty()
-still accesses its tty_port.
+When the last reference to a slave is dropped, w1_unref_slave() holds
+list_mutex of the master until the slave has been freed.  In between it
+calls the ->remove_slave() callback of the family driver and
+device_unregister().  Both wait for others: for the sysfs callbacks
+which are running, and in the case of w1_therm also for the file
+therm_bulk_read of the master and for everybody who is talking to the
+sensor.  None of those can therefore take list_mutex, although the
+callbacks of therm_bulk_read walk the list which it protects.
 
-Manage gs_port lifetime with tty_port references. Take a reference in
-gs_install(), drop it in gs_cleanup(), and move the final free to
-gs_port_destruct(). Unregister the TTY device before dropping the owner
-reference.
+The mutex is only needed to make the decrement of the reference count and
+the removal from the list one step for w1_search_slave() and
+w1_slave_search_device(), which look the slave up in the list and, in the
+first case, take a reference.  Once the slave is off the list, nobody can
+find it any more.  Drop the mutex at that point.
 
-Keep each minor reserved until the old port is destroyed so an installed
-TTY for one generation cannot overlap a replacement at the same minor.
-Publish the new port before device registration so the cdev and add uevent
-never expose a TTY before gs_install() can pin it. Since commit
-8df07fe93573 ("tty: fix saved termios reset race"), u_serial registration
-no longer frees saved termios. On registration failure, unpublish the port
-before dropping its owner reference.
+The callers which hold the mutex of the master, which serialises
+attaching and detaching, are not affected.  The one which does not is
+w1_process_cb(), when it drops the last reference to a slave which has
+been detached while a netlink command for it was queued.  Somebody who
+attaches a slave with the same ID through sysfs or netlink at that very
+moment used to wait until the old device was gone.  Now the registration
+of the new device may fail because the name is still in use.
 
-Check in gs_open() that the installed port is still the published
-generation. Track failures after a successful install so close callbacks
-issued by the TTY core do not decrement port->port.count for opens that
-never incremented it.
+This is a preparation for "w1: w1_therm: lock the list of slaves for the
+bulk read".
 
-Fixes: 19b10a8828a6 ("usb: gadget: allocate & giveback serial ports instead hard code them")
-Assisted-by: Gemini:gemini-3.8-flash syzbot
-Reported-by: syzbot+fe63e4d633540f230624@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=fe63e4d633540f230624
-Link: https://syzkaller.appspot.com/ai_job?id=ec789387-2e7b-4a8f-a7a1-a47bf7fa57f5
 Cc: stable <stable@kernel.org>
-Signed-off-by: Krystian Kaniewski <krystianmkaniewski@gmail.com>
-Tested-by: syzbot@syzkaller.appspotmail.com
-Tested-by: Mehmet Fide <mehmet.fide@screeningeagle.com>
-Reported-by: syzbot+bca09f5d8b843bbf7571@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=bca09f5d8b843bbf7571
-Link: https://patch.msgid.link/20261022091359.1187468-1-krystianmkaniewski@gmail.com
+Signed-off-by: Josef Bacik <josef@toxicpanda.com>
+Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
+Link: https://patch.msgid.link/20261027-llm-char-misc-w1-v1-7-d2e6bfafb6a4@linuxfoundation.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/gadget/function/u_serial.c |  167 ++++++++++++++++++++++++++-------
- 1 file changed, 134 insertions(+), 33 deletions(-)
+ drivers/w1/w1.c |   13 ++++++++++---
+ 1 file changed, 10 insertions(+), 3 deletions(-)
 
---- a/drivers/usb/gadget/function/u_serial.c
-+++ b/drivers/usb/gadget/function/u_serial.c
-@@ -70,10 +70,28 @@
-  *	gserial->ioport == usb_ep->driver_data ... gs_port
-  *	gs_port->port_usb ... gserial
-  *
-- * gs_port <---> tty_struct ... links will be null when the TTY file
-- * isn't opened; managed by gs_open()/gs_close()
-- *	gserial->port_tty ... tty_struct
-- *	tty_struct->driver_data ... gserial
-+ * gs_port <---> tty_struct:
-+ *	tty->driver_data refers to gs_port from install through cleanup,
-+ *	pinning the port via tty_port reference counting.
-+ *	gs_port->port.tty exists only while the port is open.
-+ *
-+ * Each entry in ports[] is guarded by ports[i].lock and models three states:
-+ *   - Free:      !port && !reserved
-+ *   - Published:  port &&  reserved
-+ *   - Retiring:   !port &&  reserved
-+ *
-+ * A minor remains reserved until gs_port_destruct() runs upon final tty_port
-+ * release, preventing minor reuse while cleanup of the installed TTY is still
-+ * underway. The owner reference is retained through device unregister so the
-+ * destructor releases the reservation only after device teardown is complete.
-+ *
-+ * open_close_failures tracks failed gs_open() calls where port->port.count
-+ * was not incremented. The TTY core calls gs_close() on open failure to tear
-+ * down the tty; tracking failures as aggregate credits allows gs_close() to
-+ * consume a credit and exit without decrementing port->port.count. Credits
-+ * are aggregate rather than paired with individual files (another gs_close()
-+ * can consume a failed open's credit before that file's own close runs).
-+ * It is protected by tty_lock.
-  */
- 
- /* RX and TX queues can buffer QUEUE_SIZE packets before they hit the
-@@ -128,6 +146,7 @@ struct gs_port {
- 	wait_queue_head_t	close_wait;
- 	bool			suspended;	/* port suspended */
- 	bool			start_delayed;	/* delay start when suspended */
-+	unsigned int		open_close_failures; /* protected by tty_lock */
- 	struct async_icount	icount;
- 
- 	/* REVISIT this state ... */
-@@ -135,8 +154,9 @@ struct gs_port {
- };
- 
- static struct portmaster {
--	struct mutex	lock;			/* protect open/close */
-+	struct mutex	lock;			/* protect open/close and port slot */
- 	struct gs_port	*port;
-+	bool		reserved;
- } ports[MAX_U_SERIAL_PORTS];
- 
- #define GS_CLOSE_TIMEOUT		15		/* seconds */
-@@ -592,22 +612,60 @@ static int gs_start_io(struct gs_port *p
- 
- /* TTY Driver */
- 
-+static int gs_install(struct tty_driver *driver, struct tty_struct *tty)
-+{
-+	struct gs_port *port;
-+	struct tty_port *tport;
-+	int ret;
-+
-+	mutex_lock(&ports[tty->index].lock);
-+	port = ports[tty->index].port;
-+	if (!port) {
-+		mutex_unlock(&ports[tty->index].lock);
-+		return -ENODEV;
-+	}
-+
-+	tport = tty_port_get(&port->port);
-+	if (!tport) {
-+		mutex_unlock(&ports[tty->index].lock);
-+		return -ENODEV;
-+	}
-+
-+	ret = tty_port_install(tport, driver, tty);
-+	if (ret) {
-+		mutex_unlock(&ports[tty->index].lock);
-+		tty_port_put(tport);
-+		return ret;
-+	}
-+
-+	tty->driver_data = port;
-+	mutex_unlock(&ports[tty->index].lock);
-+
-+	return 0;
-+}
-+
-+static void gs_cleanup(struct tty_struct *tty)
-+{
-+	tty_port_put(tty->port);
-+}
-+
- /*
-- * gs_open sets up the link between a gs_port and its associated TTY.
-- * That link is broken *only* by TTY close(), and all driver methods
-- * know that.
-+ * gs_open associates an open TTY with its gs_port.
-+ *
-+ * There are two TTY-to-port relationships: port->port.tty exists from the
-+ * first successful open until final close, while tty->driver_data is assigned
-+ * during gs_install() and remains valid through gs_cleanup().
-  */
- static int gs_open(struct tty_struct *tty, struct file *file)
+--- a/drivers/w1/w1.c
++++ b/drivers/w1/w1.c
+@@ -776,16 +776,24 @@ int w1_unref_slave(struct w1_slave *sl)
  {
- 	int		port_num = tty->index;
--	struct gs_port	*port;
-+	struct gs_port	*port = tty->driver_data;
- 	int		status = 0;
+ 	struct w1_master *dev = sl->master;
+ 	int refcnt;
++
++	/*
++	 * Once it is off the list nobody can find the slave and take a new
++	 * reference.  The lock must not be held any longer than that: the rest
++	 * waits for sysfs callbacks and for users of the family data.
++	 */
+ 	mutex_lock(&dev->list_mutex);
+ 	refcnt = atomic_sub_return(1, &sl->refcnt);
++	if (refcnt == 0)
++		list_del(&sl->w1_slave_entry);
++	mutex_unlock(&dev->list_mutex);
++
+ 	if (refcnt == 0) {
+ 		struct w1_netlink_msg msg;
  
- 	mutex_lock(&ports[port_num].lock);
--	port = ports[port_num].port;
--	if (!port) {
-+	if (ports[port_num].port != port) {
- 		status = -ENODEV;
--		goto out;
-+		goto fail_unlock;
+ 		dev_dbg(&sl->dev, "%s: detaching %s [%p].\n", __func__,
+ 			sl->name, sl);
+ 
+-		list_del(&sl->w1_slave_entry);
+-
+ 		memset(&msg, 0, sizeof(msg));
+ 		memcpy(msg.id.id, &sl->reg_num, sizeof(msg.id));
+ 		msg.type = W1_SLAVE_REMOVE;
+@@ -799,7 +807,6 @@ int w1_unref_slave(struct w1_slave *sl)
+ 		kfree(sl);
  	}
- 
- 	spin_lock_irq(&port->port_lock);
-@@ -627,7 +685,7 @@ static int gs_open(struct tty_struct *tt
- 		if (status) {
- 			pr_debug("gs_open: ttyGS%d (%p,%p) no buffer\n",
- 				 port_num, tty, file);
--			goto out;
-+			goto fail_unlock;
- 		}
- 
- 		spin_lock_irq(&port->port_lock);
-@@ -637,7 +695,6 @@ static int gs_open(struct tty_struct *tt
- 	if (port->port.count++)
- 		goto exit_unlock_port;
- 
--	tty->driver_data = port;
- 	port->port.tty = tty;
- 
- 	/* if connected, start the I/O stream */
-@@ -661,7 +718,11 @@ static int gs_open(struct tty_struct *tt
- 
- exit_unlock_port:
- 	spin_unlock_irq(&port->port_lock);
--out:
-+	mutex_unlock(&ports[port_num].lock);
-+	return status;
-+
-+fail_unlock:
-+	port->open_close_failures++;
- 	mutex_unlock(&ports[port_num].lock);
- 	return status;
+ 	atomic_dec(&dev->refcnt);
+-	mutex_unlock(&dev->list_mutex);
+ 	return refcnt;
  }
-@@ -687,6 +748,11 @@ static void gs_close(struct tty_struct *
- 	if (!port)
- 		return;
- 
-+	if (port->open_close_failures > 0) {
-+		port->open_close_failures--;
-+		return;
-+	}
-+
- 	spin_lock_irq(&port->port_lock);
- 
- 	if (port->port.count != 1) {
-@@ -876,8 +942,10 @@ static int gs_get_icount(struct tty_stru
- }
- 
- static const struct tty_operations gs_tty_ops = {
-+	.install =		gs_install,
- 	.open =			gs_open,
- 	.close =		gs_close,
-+	.cleanup =		gs_cleanup,
- 	.write =		gs_write,
- 	.put_char =		gs_put_char,
- 	.flush_chars =		gs_flush_chars,
-@@ -1170,14 +1238,41 @@ static void gs_console_exit(struct gs_po
- 
- #endif
- 
--static int
-+static void gs_port_destruct(struct tty_port *tport)
-+{
-+	struct gs_port *port = container_of(tport, struct gs_port, port);
-+	unsigned int port_num = port->port_num;
-+
-+	mutex_lock(&ports[port_num].lock);
-+	if (WARN_ON(ports[port_num].port))
-+		ports[port_num].port = NULL;
-+	WARN_ON(!ports[port_num].reserved);
-+	if (gs_tty_driver)
-+		gs_tty_driver->ports[port_num] = NULL;
-+	ports[port_num].reserved = false;
-+	mutex_unlock(&ports[port_num].lock);
-+
-+	kfifo_free(&port->port_write_buf);
-+	kfree(port);
-+}
-+
-+static const struct tty_port_operations gs_port_ops = {
-+	.destruct = gs_port_destruct,
-+};
-+
-+static struct gs_port *
- gs_port_alloc(unsigned port_num, struct usb_cdc_line_coding *coding)
- {
- 	struct gs_port	*port;
- 	int		ret = 0;
- 
- 	mutex_lock(&ports[port_num].lock);
--	if (ports[port_num].port) {
-+	if (WARN_ON_ONCE(ports[port_num].port && !ports[port_num].reserved)) {
-+		ret = -EBUSY;
-+		goto out;
-+	}
-+
-+	if (ports[port_num].reserved) {
- 		ret = -EBUSY;
- 		goto out;
- 	}
-@@ -1189,6 +1284,7 @@ gs_port_alloc(unsigned port_num, struct
- 	}
- 
- 	tty_port_init(&port->port);
-+	port->port.ops = &gs_port_ops;
- 	spin_lock_init(&port->port_lock);
- 	init_waitqueue_head(&port->drain_wait);
- 	init_waitqueue_head(&port->close_wait);
-@@ -1202,10 +1298,14 @@ gs_port_alloc(unsigned port_num, struct
- 	port->port_num = port_num;
- 	port->port_line_coding = *coding;
- 
-+	ports[port_num].reserved = true;
- 	ports[port_num].port = port;
-+	mutex_unlock(&ports[port_num].lock);
-+	return port;
-+
- out:
- 	mutex_unlock(&ports[port_num].lock);
--	return ret;
-+	return ERR_PTR(ret);
- }
- 
- static int gs_closed(struct gs_port *port)
-@@ -1225,8 +1325,7 @@ static void gserial_free_port(struct gs_
- 	/* wait for old opens to finish */
- 	wait_event(port->close_wait, gs_closed(port));
- 	WARN_ON(port->port_usb != NULL);
--	tty_port_destroy(&port->port);
--	kfree(port);
-+	tty_port_put(&port->port);
- }
- 
- void gserial_free_line(unsigned char port_num)
-@@ -1243,15 +1342,15 @@ void gserial_free_line(unsigned char por
- 	ports[port_num].port = NULL;
- 	mutex_unlock(&ports[port_num].lock);
- 
--	gserial_free_port(port);
- 	tty_unregister_device(gs_tty_driver, port_num);
-+	gserial_free_port(port);
- }
- EXPORT_SYMBOL_GPL(gserial_free_line);
- 
- int gserial_alloc_line_no_console(unsigned char *line_num)
- {
- 	struct usb_cdc_line_coding	coding;
--	struct gs_port			*port;
-+	struct gs_port			*port = ERR_PTR(-EBUSY);
- 	struct device			*tty_dev;
- 	int				ret;
- 	int				port_num;
-@@ -1262,19 +1361,20 @@ int gserial_alloc_line_no_console(unsign
- 	coding.bDataBits = USB_CDC_1_STOP_BITS;
- 
- 	for (port_num = 0; port_num < MAX_U_SERIAL_PORTS; port_num++) {
--		ret = gs_port_alloc(port_num, &coding);
--		if (ret == -EBUSY)
--			continue;
--		if (ret)
-+		port = gs_port_alloc(port_num, &coding);
-+		if (IS_ERR(port)) {
-+			ret = PTR_ERR(port);
-+			if (ret == -EBUSY)
-+				continue;
- 			return ret;
-+		}
- 		break;
- 	}
--	if (ret)
--		return ret;
-+	if (IS_ERR(port))
-+		return PTR_ERR(port);
- 
- 	/* ... and sysfs class devices, so mdev/udev make /dev/ttyGS* */
- 
--	port = ports[port_num].port;
- 	tty_dev = tty_port_register_device(&port->port,
- 			gs_tty_driver, port_num, NULL);
- 	if (IS_ERR(tty_dev)) {
-@@ -1283,14 +1383,15 @@ int gserial_alloc_line_no_console(unsign
- 
- 		ret = PTR_ERR(tty_dev);
- 		mutex_lock(&ports[port_num].lock);
-+		WARN_ON(ports[port_num].port != port);
- 		ports[port_num].port = NULL;
- 		mutex_unlock(&ports[port_num].lock);
--		gserial_free_port(port);
--		goto err;
-+		tty_port_put(&port->port);
-+		return ret;
- 	}
-+
- 	*line_num = port_num;
--err:
--	return ret;
-+	return 0;
- }
- EXPORT_SYMBOL_GPL(gserial_alloc_line_no_console);
  
 
 
