@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795621314;
-	b=GyeNleOOX99lOeqrvoItRjayVWXdIgBF7V6c+uZR+RF+K7ww5HakXDMVnpWHn5pxMMVN
-	 oD6VU1SD6+xwNzkn9F80XpGZEuyv1KqYU/v8vNGl3CYt8NPv+0pHmccB2sZgtaf2XFc4Z
-	 VFTnf4mI/5AnJusI0eGQTC8GhrLhorsKCjbp5ZhbCtq11hVEYtLzQcy8TLdYCfdwe97D5
-	 B/3M8EFiYJ2d0lEExlR3/BWH7bxezM8oQosZdNkhgOofx7do1IXg4cYyIJawV5eO64Irs
-	 oK0vEHafaeFCEGcCasfV2Ls+IQEUKitE4h9RutDUgFO9fHOwjEiEDMD03S8n/G1okvA==
+	t=1795621317;
+	b=4MohY3+pgnNZGJYGQqGMVn9Ejmv5I4p+lRfesrFNL+X95yXMWXLAuXTT6GfzE1zNsbSy
+	 npVBW1Npj7Kpm1vADulJ/6JgDZRqEmyujgj4zbbuKBDqSo4OFgeXcvAkmQhWSUIq7wPip
+	 /rFIAHkQaSb/RIsKCVuLsJbxW1DkVo/oA6KRleyODyG8KbYlOEef5ecMNrU5BNgviIZsB
+	 w7v2/WNrCPeFNNR1VSToxLUb50RRF2WoV0BwSU6H+JrKBaoW7vv5/ClSHqPBN9L/LBg5Y
+	 rayAuKl9PxbpVTWpK2H7im1E3LNpPK1YeI94awxJ6aAcbM46N5timhgabQgK3qXx7eA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795621314;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795621317;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=oO4KuqE08ptrFVutCz48fjEk28ywatznkgRs5TDEz6A=;
-	b=f5qjOecCh8EyH7MG0dG7f7jn4Kxr/sqKneqHfCXfwfixvWpPSUADZh7ZhCG1LnqK72Af
-	 NcLNX+rvJE3piKJUdJgDpyVmiaJSlUXqWA/GT2X4DOpDlQJAMlt1pJG7YroWSBxoivwo3
-	 hxG1zUxoAovCYKFLQ6xusDQExtEDXR1+1Tx0081Y12glg79AO3KD+CbEi0oH6AumgJDgO
-	 g+vYH71HWaC2E/Ra2ux8TI03E1rSeHwSOvtz+QpqM7/5bEKz7fht95BNJqk4pjQFcwvMY
-	 i4ACdemp0vIOC+tjqRE3RRgM8f1aaonlr2zftz50GlK6NM1hhYiaRN7bkolyZ3clQtw==
+	bh=BOuIVO2p9dtULNCfGJdBxH9d/+r24NXjTfHK1k1QwNE=;
+	b=MVqooj91EoP38ZS/9gr7WxpcN5tAYFOcbaw5alRzb3jYh1KwgmrI9tWtyaiRYD1HDH6G
+	 B2uhKe/IZd/Ah6RaP5E2lKNQvYwcjgSKojObWcdzT6Vk+aI8sndBZUUeuaAQmCYduEl+T
+	 2UdY3JKr38i/4/iLTgSafLHkZJd7xIdeKLC2zNFXrzTXIW2yg1QLp/eFuwbHLcuCX1IJN
+	 xMSCBCL4Ccb+n1unbp8UDK+VmG6OpuYYBWLYPx0OQvakune6lBhPztxd4JhVLWQpmT7wx
+	 u7wcATbCZwsUWfaeEkCgyE4c+9FtC7pEIg2S5OVo3oWxpLS24WrK+bSkszfIJ43CBsw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=WUWFUYN0;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=B5veBgX3;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2AAB3606B386;
-	Wed, 25 Nov 2026 15:41:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 78013606A338;
+	Wed, 25 Nov 2026 15:41:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=WUWFUYN0
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EF0FF1F000D2;
-	Wed, 25 Nov 2026 15:41:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=B5veBgX3
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 36D001F000D0;
+	Wed, 25 Nov 2026 15:41:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795621313;
-	bh=oO4KuqE08ptrFVutCz48fjEk28ywatznkgRs5TDEz6A=;
+	s=korg; t=1795621316;
+	bh=BOuIVO2p9dtULNCfGJdBxH9d/+r24NXjTfHK1k1QwNE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=WUWFUYN0vLLADbkX5ChoLWT0SkYIQafOmaP14vqy+eFBx7kbsjQqkiH7zL5wi3Fcn
-	 xiBahUsJD82+HG7wQSEyf7cO42IZeMhvUaM4JK8cNrvwyaT+9c2walapnAXBPv34ol
-	 ce8HAS9oJufD4n1JwvEG6aKkV3gZHwrEqp+V9BRg=
+	b=B5veBgX3Zz4A8mGqCzyg/fmEGhZ2TtB1pyOaDz7Ou2S5nPHw8Mb6k+hJCPq7StmJR
+	 tjjOakpbrg9qamdqE+mMXkHjwtAV0mxbGrypc+iEH2d1mEuEpG+tHj71SSzD96Uxaq
+	 lqPwlV+TR7Fn/EFBO01PcZ3YhAGG2UGT0AX3FgyQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Cen Zhang <zzzccc427@gmail.com>,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
+	Jia Jia <physicalmtea@gmail.com>,
+	"Michael S. Tsirkin" <mst@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 187/990] Bluetooth: hci_sync: Copy the resolving-list IRK under RCU
-Date: Wed, 25 Nov 2026 15:25:54 +0100
-Message-ID: <20261125143826.473937082@linuxfoundation.org>
+Subject: [PATCH 6.18 161/990] vduse: avoid infinite loop when no affinity CPU is online
+Date: Wed, 25 Nov 2026 15:25:28 +0100
+Message-ID: <20261125143825.865351509@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143822.072087159@linuxfoundation.org>
 References: <20261125143822.072087159@linuxfoundation.org>
@@ -68,187 +68,77 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Cen Zhang <zzzccc427@gmail.com>
+From: Jia Jia <physicalmtea@gmail.com>
 
-[ Upstream commit 9ff737119177a6c1ce6083ef8c0fc06355f11869 ]
+[ Upstream commit cf0a5805d43236e308f14188f9737ddcf83fb53a ]
 
-hci_le_add_resolve_list_sync() copies the peer IRK into the LE Add
-Device To Resolving List command after hci_find_irk_by_addr() has
-returned. The finder ends its RCU read-side section before returning
-the borrowed entry, and neither the request worker nor
-interleave_scan_work() holds hdev->lock here. The resolving-list
-membership check between the lookup and the copy takes hdev->lock and
-may sleep on it, which widens the window.
+If all CPUs in vq->irq_affinity are offline, cpumask_next() walks to the
+end of the mask, and the loop then resets the cursor to IRQ_UNBOUND and
+restarts the scan. When VDUSE_VQ_INJECT_IRQ is issued, the intersection of
+vq->irq_affinity and cpu_online_mask is empty, so the caller busy-loops in
+kernel context on its current CPU (e.g. CPU2).
 
-When LL privacy programs a peer with address resolution enabled,
-MGMT_OP_LOAD_IRKS can free its IRK before the copy:
+Replace the while loop in vduse_vq_update_effective_cpu() with
+cpumask_next_and_wrap() to find the intersection of vq->irq_affinity and
+cpu_online_mask in a single wrapped scan. If the intersection is empty, set
+curr_cpu to IRQ_UNBOUND and let the existing unbound workqueue handle
+injection, avoiding repeated rescans when all CPUs in the affinity are
+offline. Use cpus_read_lock()/cpus_read_unlock() to keep the selected CPU
+online.
 
-  Request worker                   Management / RCU reclamation
-  hci_le_add_resolve_list_sync()
-    irk = hci_find_irk_by_addr()
-                                   load_irks()
-                                     hci_dev_lock(hdev)
-                                     hci_smp_irks_clear(hdev)
-                                       list_del_rcu(), kfree_rcu()
-                                     hci_dev_unlock(hdev)
-                                   grace period ends, irk is freed
-    resolving-list membership check
-    memcpy(cp.peer_irk, irk->val, 16)
-
-Copy the IRK value in an RCU read-side section right after the lookup,
-as hci_le_set_privacy_mode_sync() does for the identity address. The
-section ends before hdev->lock is taken and before the synchronous HCI
-command is sent.
-
-KASAN reported this on a test kernel with scheduling hooks, whose
-frames appear in the trace. The report predates the hdev->lock taken
-by the membership check.
-
-KASAN report as below:
-
-    ==================================================================
-    BUG: KASAN: slab-use-after-free in hci_le_add_resolve_list_sync+0x8d9/0x910
-    Read of size 16 at addr ffff88810d21452d by task kworker/u17:0/504
-
-    CPU: 2 UID: 0 PID: 504 Comm: kworker/u17:0 Not tainted 7.2.0-rc6-pmb-bt-functional-v1+ #2 PREEMPT(lazy)
-    Hardware name: QEMU Ubuntu 24.04 PC v2 (i440FX + PIIX, arch_caps fix, 1996), BIOS 1.16.3-debian-1.16.3-2 04/01/2014
-    Workqueue: hci0 interleave_scan_work
-    Call Trace:
-     <TASK>
-     dump_stack_lvl+0x93/0xd0
-     print_report+0xce/0x630
-     ? hci_le_add_resolve_list_sync+0x8d9/0x910
-     ? srso_alias_return_thunk+0x5/0xfbef5
-     ? __virt_addr_valid+0x20d/0x410
-     ? hci_le_add_resolve_list_sync+0x8d9/0x910
-     kasan_report+0xe0/0x110
-     ? hci_le_add_resolve_list_sync+0x8d9/0x910
-     hci_le_add_resolve_list_sync+0x8d9/0x910
-     ? __pfx_hci_le_add_resolve_list_sync+0x10/0x10
-     ? pmbd_probe_hit_cookie+0xe7/0x1c0
-     ? srso_alias_return_thunk+0x5/0xfbef5
-     ? pmbd_probe_hit_cookie+0xee/0x1c0
-     ? __pfx_pmbd_probe_hit_cookie+0x10/0x10
-     hci_le_add_accept_list_sync+0x18e/0x820
-     ? conn_params_copy+0x36e/0x650
-     ? __pfx_hci_le_add_accept_list_sync+0x10/0x10
-     ? srso_alias_return_thunk+0x5/0xfbef5
-     ? conn_params_copy+0x3a0/0x650
-     hci_passive_scan_sync+0x95f/0x1f10
-     ? __pfx_hci_passive_scan_sync+0x10/0x10
-     ? debug_object_deactivate+0x2f8/0x3c0
-     ? pwq_dec_nr_in_flight+0x880/0xdf0
-     ? srso_alias_return_thunk+0x5/0xfbef5
-     ? lock_acquire+0x17b/0x2f0
-     ? process_one_work+0x895/0x19c0
-     interleave_scan_work+0x11b/0x470
-     process_one_work+0x908/0x19c0
-     ? __pfx_process_one_work+0x10/0x10
-     ? srso_alias_return_thunk+0x5/0xfbef5
-     ? lock_is_held_type+0x8f/0x100
-     ? srso_alias_return_thunk+0x5/0xfbef5
-     worker_thread+0x65c/0xe40
-     ? __pfx_worker_thread+0x10/0x10
-     kthread+0x34f/0x460
-     ? srso_alias_return_thunk+0x5/0xfbef5
-     ? __pfx_kthread+0x10/0x10
-     ret_from_fork+0x659/0x940
-     ? __pfx_ret_from_fork+0x10/0x10
-     ? srso_alias_return_thunk+0x5/0xfbef5
-     ? __switch_to+0x74f/0xf80
-     ? __pfx_kthread+0x10/0x10
-     ret_from_fork_asm+0x1a/0x30
-     </TASK>
-
-    Allocated by task 535:
-     kasan_save_stack+0x33/0x60
-     kasan_save_track+0x14/0x30
-     __kasan_kmalloc+0xaa/0xb0
-     __kmalloc_cache_noprof+0x251/0x610
-     hci_add_irk+0xb6/0x220
-     load_irks+0x5f9/0x840
-     hci_sock_sendmsg+0x128b/0x22e0
-     __sys_sendto+0x425/0x470
-     __x64_sys_sendto+0xe5/0x1c0
-     do_syscall_64+0x115/0x6a0
-     entry_SYSCALL_64_after_hwframe+0x77/0x7f
-
-    Freed by task 0:
-     kasan_save_stack+0x33/0x60
-     kasan_save_track+0x14/0x30
-     kasan_save_free_info+0x3b/0x60
-     __kasan_slab_free+0x5f/0x80
-     __rcu_free_sheaf_prepare+0x65/0x2a0
-     rcu_free_sheaf+0x1f/0xe0
-     rcu_core+0x661/0x1d10
-     handle_softirqs+0x201/0x930
-     __irq_exit_rcu+0x110/0x1e0
-     irq_exit_rcu+0xe/0x20
-     sysvec_apic_timer_interrupt+0x6c/0x80
-     asm_sysvec_apic_timer_interrupt+0x1a/0x20
-
-    The buggy address belongs to the object at ffff88810d214500
-     which belongs to the cache kmalloc-64 of size 64
-    The buggy address is located 45 bytes inside of
-     freed 64-byte region [ffff88810d214500, ffff88810d214540)
-
-    The buggy address belongs to the physical page:
-    page: refcount:0 mapcount:0 mapping:0000000000000000 index:0x0 pfn:0x10d214
-    flags: 0x200000000000000(node=0|zone=2)
-    page_type: f5(slab)
-    raw: 0200000000000000 ffff8881000428c0 dead000000000100 dead000000000122
-    raw: 0000000000000000 0000000000200020 00000000f5000000 0000000000000000
-    page dumped because: kasan: bad access detected
-
-    Memory state around the buggy address:
-     ffff88810d214400: fa fb fb fb fb fb fb fb fc fc fc fc fc fc fc fc
-     ffff88810d214480: fa fb fb fb fb fb fb fb fc fc fc fc fc fc fc fc
-    >ffff88810d214500: fa fb fb fb fb fb fb fb fc fc fc fc fc fc fc fc
-                                      ^
-     ffff88810d214580: fa fb fb fb fb fb fb fb fc fc fc fc fc fc fc fc
-     ffff88810d214600: fa fb fb fb fb fb fb fb fc fc fc fc fc fc fc fc
-    ==================================================================
-
-Fixes: e8907f76544f ("Bluetooth: hci_sync: Make use of hci_cmd_sync_queue set 3")
-Assisted-by: LLM
-Signed-off-by: Cen Zhang <zzzccc427@gmail.com>
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Fixes: 28f6288eb63d ("vduse: Support set_vq_affinity callback")
+Signed-off-by: Jia Jia <physicalmtea@gmail.com>
+Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
+Message-ID: <20260919083933.104437-1-physicalmtea@gmail.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/bluetooth/hci_sync.c | 11 +++++++++--
- 1 file changed, 9 insertions(+), 2 deletions(-)
+ drivers/vdpa/vdpa_user/vduse_dev.c | 15 +++++++--------
+ 1 file changed, 7 insertions(+), 8 deletions(-)
 
-diff --git a/net/bluetooth/hci_sync.c b/net/bluetooth/hci_sync.c
-index 9ba61c1bcd129..e5f29558f1468 100644
---- a/net/bluetooth/hci_sync.c
-+++ b/net/bluetooth/hci_sync.c
-@@ -2554,9 +2554,17 @@ static int hci_le_add_resolve_list_sync(struct hci_dev *hdev,
- 	} else if (!(params->flags & HCI_CONN_FLAG_ADDRESS_RESOLUTION))
- 		return 0;
+diff --git a/drivers/vdpa/vdpa_user/vduse_dev.c b/drivers/vdpa/vdpa_user/vduse_dev.c
+index f9547ede71be7..d68858acc5d9c 100644
+--- a/drivers/vdpa/vdpa_user/vduse_dev.c
++++ b/drivers/vdpa/vdpa_user/vduse_dev.c
+@@ -13,6 +13,7 @@
+ #include <linux/module.h>
+ #include <linux/cdev.h>
+ #include <linux/device.h>
++#include <linux/cpu.h>
+ #include <linux/eventfd.h>
+ #include <linux/slab.h>
+ #include <linux/wait.h>
+@@ -1239,14 +1240,10 @@ static void vduse_vq_update_effective_cpu(struct vduse_virtqueue *vq)
+ {
+ 	int curr_cpu = vq->irq_effective_cpu;
  
-+	rcu_read_lock();
-+
- 	irk = hci_find_irk_by_addr(hdev, &params->addr, params->addr_type);
--	if (!irk)
-+	if (!irk) {
-+		rcu_read_unlock();
- 		return 0;
-+	}
-+
-+	memcpy(cp.peer_irk, irk->val, 16);
-+
-+	rcu_read_unlock();
+-	while (true) {
+-		curr_cpu = cpumask_next(curr_cpu, &vq->irq_affinity);
+-		if (cpu_online(curr_cpu))
+-			break;
+-
+-		if (curr_cpu >= nr_cpu_ids)
+-			curr_cpu = IRQ_UNBOUND;
+-	}
++	curr_cpu = cpumask_next_and_wrap(curr_cpu, &vq->irq_affinity,
++					 cpu_online_mask);
++	if (curr_cpu >= nr_cpu_ids)
++		curr_cpu = IRQ_UNBOUND;
  
- 	/* Check if the IK has _not_ been programmed yet. */
- 	hci_dev_lock(hdev);
-@@ -2568,7 +2576,6 @@ static int hci_le_add_resolve_list_sync(struct hci_dev *hdev,
- 
- 	cp.bdaddr_type = params->addr_type;
- 	bacpy(&cp.bdaddr, &params->addr);
--	memcpy(cp.peer_irk, irk->val, 16);
- 
- 	/* Default privacy mode is always Network */
- 	params->privacy_mode = HCI_NETWORK_PRIVACY;
+ 	vq->irq_effective_cpu = curr_cpu;
+ }
+@@ -1427,10 +1424,12 @@ static long vduse_dev_ioctl(struct file *file, unsigned int cmd,
+ 		ret = 0;
+ 		index = array_index_nospec(index, dev->vq_num);
+ 		if (!vduse_vq_signal_irqfd(dev->vqs[index])) {
++			cpus_read_lock();
+ 			vduse_vq_update_effective_cpu(dev->vqs[index]);
+ 			ret = vduse_dev_queue_irq_work(dev,
+ 						&dev->vqs[index]->inject,
+ 						dev->vqs[index]->irq_effective_cpu);
++			cpus_read_unlock();
+ 		}
+ 		break;
+ 	}
 -- 
 2.53.0
 
