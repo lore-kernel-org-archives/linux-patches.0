@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795625262;
-	b=N4HBFH3WhlP1LKLgDpd5CHKnrys9rsYU3r5wrOHTLrlXml8Bcb1eH5e6BbyRiG7go5TG
-	 WlLaZ2+alrmNpiMi7ULbJ/dMmIbAc2VklhEXXoj6jTcWmu2/a39BRF6aWW4Ebv4hVYk7O
-	 dkWfED8quWrapYfG5BQcyrDDBZRubU4klMnoDXEg2yfF6+YDaF/6ZpisCZT72DvTwaI0Q
-	 ppvuFLWR6t81s0uJavUCaR43F2jBKkrx1/7a0v5e9KtOCYYPA2gle/oCH9yA+C/kdcSIS
-	 nsZXeeZ7qwGnALqmpfSfG6LjGUIqLUSs0jltRHinqgjTI2QMiITV0K7mGwCEb18utVQ==
+	t=1795625266;
+	b=VFDAXsD30/Op6EiLshvJDN26SrQnLqHEwr3gVYtxTktsynThUNCZZJ3fvPwBqiAXod2h
+	 nY/Fk/sb55bvu1hTrWayaYGl6qAl612TfDbv7nIFiKh0b9t8fXa4qpOjAg9f9YzDs7dTS
+	 JuBbhmL/wtTvseejx5/WtieX9q+PyTUSi58rFNJMZNYo2EzBrEVDBcpxnpeAYiRhDp39V
+	 9AFugOpR0sIwE1ZSkEtEImpWWb8gVXzgeQvPs/wgvolmO86od8uZnXaqoFf4SOeZbUO4g
+	 /E+pW5k+GgYpgpCUEGWuFpdQS2xaS9V48NIANrQ/3WtWl3gTaLKZxytQm8asKVsPd5A==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795625262;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795625266;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=9EgYzxtYiLN0vDmCYVSFMQKtkYCU8DSAa7SdGU1vdoM=;
-	b=ULgNRjUVYad3r8b8+w2DKp4ocgE/qNquEZdAHfyl+ETiNIxjju/NjZ5cGxPnUjKR9h/S
-	 Ntm1ijJ+oWfz2NrJMDS0Qu0uF8VOM6TEG8374FqLjtY22YntMxgrLJsfp4ynH0RFqQ86/
-	 yuXEUKUEAkBESF5X56tyaG2PkTTTPf4XsEp+ajk7sHDuyLq9glPnpdNZ5aFtzzRItQoOB
-	 M8aqzCBmnWVuOQmP7J7Bx4TV1l7QOmw/gG4Bno5Lq7RlDw9rTqrGkthpg9aH/xwAZ/iXb
-	 Fo1+fukgMKZnx1sbz+oECXynjoL5DiBV1O+A/koin6CBjSjQpxdiOs4tV3msOQ+8DPw==
+	bh=VV+AeFdvZVqyZD6qr/1E2+VmLVtQCxPQbPRGSNACkgI=;
+	b=Dyvje1WdDGG6wMgwdx/Qd8ysuZ+ttOTqzvQWMHhiODV1cGeazqLdImYYB8PXdaw0ySt1
+	 mSpRYwJS4mSEAoGi9DtI9MVFIh19ksBSG+Qpp9xPUndBrNBx92k7+x8vL3A1GyCh40qYX
+	 va66BdqkuvKnlfoqKo5t1np8OV3wMSLm5ufnyEo+WTZ4pQx0BPnO0So3RTkXMSvaRBM23
+	 r4/7QFmkzkFUfrax76FLt0infhVigbxF5tXjZJGJ05j6m7zWY7Z0f1qXvg2lCtFXVfS2U
+	 mvtdZKOIGXXClm5fn+GQGmC9WDACRiijq8fUb5FK4A+aqXdoozfQlY24wOpUFQzLaXA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ueAeJMAQ;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=rpL6bVXf;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8BE2D606A32C;
-	Wed, 25 Nov 2026 16:47:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4A38E606A321;
+	Wed, 25 Nov 2026 16:47:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ueAeJMAQ
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D72DF1F000EC;
-	Wed, 25 Nov 2026 16:47:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=rpL6bVXf
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 23BF61F000C4;
+	Wed, 25 Nov 2026 16:47:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795625262;
-	bh=9EgYzxtYiLN0vDmCYVSFMQKtkYCU8DSAa7SdGU1vdoM=;
+	s=korg; t=1795625265;
+	bh=VV+AeFdvZVqyZD6qr/1E2+VmLVtQCxPQbPRGSNACkgI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ueAeJMAQGwaN7M0PFCO0NPsDEtS3zeF5z+D7omPs0BpbkFpJZRD+3218+SgoSMbZ+
-	 4VC2nddMPgpcWsIzSq4RSfOlNtREiWJAMIOKqc4+/7cHF5Q3kXOUxQLFUXI1KKbYpk
-	 UBzOQL1EFNQZZVcjTxyIfPtUK0qIeqQwi4dO1lng=
+	b=rpL6bVXfshyhGrtroGlmoPzrzQal9heTP4WblvbQE8B1g38WTKq0F5mmDqw/W84eQ
+	 DBn7r3zPRb4aqSePH+efJcB1JC11ppZ+d9608YzsqPlPf9l+Lm40bGuT7f34TrAGMr
+	 CxNAVaY+fIL0eVPMwz5aytS5Gua6lDgPPMNnhyxc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Marco Giunta <marco_giunta@outlook.it>,
-	Mark Brown <broonie@kernel.org>,
+	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
+	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
+	Rob Clark <robin.clark@oss.qualcomm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 457/816] ASoC: aw88399: skip BSTS check when boost converter is bypassed
-Date: Wed, 25 Nov 2026 15:33:25 +0100
-Message-ID: <20261125143859.769238073@linuxfoundation.org>
+Subject: [PATCH 6.12 458/816] drm/msm/a5xx: dont read the GPMU registers on GPUs without a GPMU
+Date: Wed, 25 Nov 2026 15:33:26 +0100
+Message-ID: <20261125143859.793111553@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143849.205329330@linuxfoundation.org>
 References: <20261125143849.205329330@linuxfoundation.org>
@@ -68,73 +69,127 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Marco Giunta <marco_giunta@outlook.it>
+From: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
 
-[ Upstream commit 664824782df63013ba8686b649c625cac4793248 ]
+[ Upstream commit 77e3ffcf69065c4ce92c725540e0b4db14f43ad7 ]
 
-The sysst check in aw_dev_check_sysst() requires BSTS (boost finished)
-to assert, but on hardware where the boost converter is bypassed via
-external power supply (BSTCTRL10 register 0x69, EN_HVBAT bit 2 set),
-BSTS (SYSST register 0x01, bit 9) will never assert.
+Only a530/a540 have a GPMU.  On the other a5xx parts, reading the
+0xa800-0xac60 GPMU aperture during a crashdump resets the board -- on
+sda660 (a512) a GPU hang thus reboots the SoC instead of recovering.
 
-The vendor's generic driver (aw883xx) handles this by reading EN_HVBAT and
-conditionally masking out BSTS from the sysst check. The in-tree driver
-missed this logic when the original code was ported upstream.
+Split the GPMU block into its own array and collect it only when a GPMU
+is present.
 
-Add the same conditional check, matching the vendor driver's
-aw_dev_sysst_check() implementation.
-
-Fixes: 8ade6cc7e261 ("ASoC: codecs: Add aw88399 amplifier driver")
-Signed-off-by: Marco Giunta <marco_giunta@outlook.it>
-Link: https://patch.msgid.link/SN6PR19MB2303FF1922BF5F876378066FFC8F2@SN6PR19MB2303.namprd19.prod.outlook.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
-[ sashal: Ported to the single-file driver layout: the EPS_EN defines went into the local header and the BSTS-skip check into aw_dev_check_sysst(), since the upstream bsts_unreliable context is absent. ]
+Fixes: e20c9284c8f2 ("drm/msm/adreno: Add support for Adreno 510 GPU")
+Assisted-by: LLM
+Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+Patchwork: https://patchwork.freedesktop.org/patch/754867/
+Message-ID: <20260920-a5xx-no-gpmu-v1-1-714200254f76@oss.qualcomm.com>
+Signed-off-by: Rob Clark <robin.clark@oss.qualcomm.com>
+[ sashal: Kept the older kzalloc(sizeof(*a5xx_state), GFP_KERNEL) allocation as context and added the new adreno_gpu declaration above it, instead of upstream's kzalloc_obj() form. ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/codecs/aw88399.c | 13 +++++++++++++
- sound/soc/codecs/aw88399.h |  5 +++++
- 2 files changed, 18 insertions(+)
+ drivers/gpu/drm/msm/adreno/a5xx_gpu.c | 49 +++++++++++++++++++++++++--
+ 1 file changed, 46 insertions(+), 3 deletions(-)
 
-diff --git a/sound/soc/codecs/aw88399.c b/sound/soc/codecs/aw88399.c
-index bba59885242d0..63c849a19da72 100644
---- a/sound/soc/codecs/aw88399.c
-+++ b/sound/soc/codecs/aw88399.c
-@@ -285,6 +285,19 @@ static int aw_dev_check_sysst(struct aw_device *aw_dev)
- 	else
- 		check_val = AW88399_BIT_SYSST_SWS_CHECK;
+diff --git a/drivers/gpu/drm/msm/adreno/a5xx_gpu.c b/drivers/gpu/drm/msm/adreno/a5xx_gpu.c
+index e09044930547f..65c6d14d54248 100644
+--- a/drivers/gpu/drm/msm/adreno/a5xx_gpu.c
++++ b/drivers/gpu/drm/msm/adreno/a5xx_gpu.c
+@@ -1336,9 +1336,14 @@ static const u32 a5xx_registers[] = {
+ 	0xE800, 0xE806, 0xE810, 0xE89A, 0xE8A0, 0xE8A4, 0xE8AA, 0xE8EB,
+ 	0xE900, 0xE905, 0xEB80, 0xEB8F, 0xEBB0, 0xEBB0, 0xEC00, 0xEC05,
+ 	0xEC08, 0xECE9, 0xECF0, 0xECF0, 0xEA80, 0xEA80, 0xEA82, 0xEAA3,
+-	0xEAA5, 0xEAC2, 0xA800, 0xA800, 0xA820, 0xA828, 0xA840, 0xA87D,
+-	0XA880, 0xA88D, 0xA890, 0xA8A3, 0xA8D0, 0xA8D8, 0xA8E0, 0xA8F5,
+-	0xAC60, 0xAC60, ~0,
++	0xEAA5, 0xEAC2, ~0,
++};
++
++/* GPMU registers, only valid on parts with a GPMU (a530/a540) */
++static const u32 a5xx_gpmu_registers[] = {
++	0xA800, 0xA800, 0xA820, 0xA828, 0xA840, 0xA87D, 0xA880, 0xA88D,
++	0xA890, 0xA8A3, 0xA8D0, 0xA8D8, 0xA8E0, 0xA8F5, 0xAC60, 0xAC60,
++	~0,
+ };
  
-+	/*
-+	 * When an external power supply (EPS) is used to feed the amplifier
-+	 * (EN_HVBAT bit in BSTCTRL10 set), the boost converter is bypassed,
-+	 * and BSTS (boost finished) will never assert. Skip the BSTS check in
-+	 * this case, matching the vendor driver's behavior.
-+	 */
-+	ret = regmap_read(aw_dev->regmap, AW88399_BSTCTRL10_REG, &reg_val);
-+	if (ret)
-+		return ret;
-+
-+	if (reg_val & (~AW88399_EPS_EN_MASK))
-+		check_val &= ~AW88399_BSTS_FINISHED_VALUE;
-+
- 	for (i = 0; i < AW88399_DEV_SYSST_CHECK_MAX; i++) {
- 		ret = regmap_read(aw_dev->regmap, AW88399_SYSST_REG, &reg_val);
- 		if (ret)
-diff --git a/sound/soc/codecs/aw88399.h b/sound/soc/codecs/aw88399.h
-index 5e9cdf725d3dd..1e9fab17f28c3 100644
---- a/sound/soc/codecs/aw88399.h
-+++ b/sound/soc/codecs/aw88399.h
-@@ -446,6 +446,11 @@
- #define AW88399_NOISE_GATE_EN_MASK	\
- 	(~(((1<<AW88399_NOISE_GATE_EN_BITS_LEN)-1) << AW88399_NOISE_GATE_EN_START_BIT))
+ static void a5xx_dump(struct msm_gpu *gpu)
+@@ -1449,6 +1454,7 @@ struct a5xx_crashdumper {
+ struct a5xx_gpu_state {
+ 	struct msm_gpu_state base;
+ 	u32 *hlsqregs;
++	u32 *gpmuregs;
+ };
  
-+#define AW88399_EPS_EN_START_BIT	(2)
-+#define AW88399_EPS_EN_BITS_LEN		(1)
-+#define AW88399_EPS_EN_MASK		\
-+	(~(((1 << AW88399_EPS_EN_BITS_LEN) - 1) << AW88399_EPS_EN_START_BIT))
+ static int a5xx_crashdumper_init(struct msm_gpu *gpu,
+@@ -1566,8 +1572,30 @@ static void a5xx_gpu_state_get_hlsq_regs(struct msm_gpu *gpu,
+ 	msm_gem_kernel_put(dumper.bo, gpu->aspace);
+ }
+ 
++static void a5xx_gpu_state_get_gpmu_regs(struct msm_gpu *gpu,
++		struct a5xx_gpu_state *a5xx_state)
++{
++	u32 count = 0, pos = 0;
++	int i;
 +
- #define AW88399_WDT_CNT_START_BIT	(0)
- #define AW88399_WDT_CNT_BITS_LEN	(8)
- #define AW88399_WDT_CNT_MASK		\
++	for (i = 0; a5xx_gpmu_registers[i] != ~0; i += 2)
++		count += a5xx_gpmu_registers[i + 1] - a5xx_gpmu_registers[i] + 1;
++
++	a5xx_state->gpmuregs = kcalloc(count, sizeof(u32), GFP_KERNEL);
++	if (!a5xx_state->gpmuregs)
++		return;
++
++	for (i = 0; a5xx_gpmu_registers[i] != ~0; i += 2) {
++		u32 addr;
++
++		for (addr = a5xx_gpmu_registers[i]; addr <= a5xx_gpmu_registers[i + 1]; addr++)
++			a5xx_state->gpmuregs[pos++] = gpu_read(gpu, addr);
++	}
++}
++
+ static struct msm_gpu_state *a5xx_gpu_state_get(struct msm_gpu *gpu)
+ {
++	struct adreno_gpu *adreno_gpu = to_adreno_gpu(gpu);
+ 	struct a5xx_gpu_state *a5xx_state = kzalloc(sizeof(*a5xx_state),
+ 			GFP_KERNEL);
+ 	bool stalled = !!(gpu_read(gpu, REG_A5XX_RBBM_STATUS3) & BIT(24));
+@@ -1583,6 +1611,9 @@ static struct msm_gpu_state *a5xx_gpu_state_get(struct msm_gpu *gpu)
+ 
+ 	a5xx_state->base.rbbm_status = gpu_read(gpu, REG_A5XX_RBBM_STATUS);
+ 
++	if (adreno_is_a530(adreno_gpu) || adreno_is_a540(adreno_gpu))
++		a5xx_gpu_state_get_gpmu_regs(gpu, a5xx_state);
++
+ 	/*
+ 	 * Get the HLSQ regs with the help of the crashdumper, but only if
+ 	 * we are not stalled in an iommu fault (in which case the crashdumper
+@@ -1604,6 +1635,7 @@ static void a5xx_gpu_state_destroy(struct kref *kref)
+ 		struct a5xx_gpu_state, base);
+ 
+ 	kfree(a5xx_state->hlsqregs);
++	kfree(a5xx_state->gpmuregs);
+ 
+ 	adreno_gpu_state_destroy(state);
+ 	kfree(a5xx_state);
+@@ -1632,6 +1664,17 @@ static void a5xx_show(struct msm_gpu *gpu, struct msm_gpu_state *state,
+ 
+ 	adreno_show(gpu, state, p);
+ 
++	if (a5xx_state->gpmuregs) {
++		u32 o, pos = 0;
++
++		drm_printf(p, "registers-gpmu:\n");
++
++		for (i = 0; a5xx_gpmu_registers[i] != ~0; i += 2)
++			for (o = a5xx_gpmu_registers[i]; o <= a5xx_gpmu_registers[i + 1]; o++)
++				drm_printf(p, "  - { offset: 0x%04x, value: 0x%08x }\n",
++					o << 2, a5xx_state->gpmuregs[pos++]);
++	}
++
+ 	/* Dump the additional a5xx HLSQ registers */
+ 	if (!a5xx_state->hlsqregs)
+ 		return;
 -- 
 2.53.0
 
