@@ -1,55 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795621467;
-	b=QkM4S37FV3xqC5D9v9XRHq3AyEwblfvbjUmEAfPJf/N/LexVPBZ5bhq/reQXWENip1GP
-	 CKHMlms3lohS7QQgaHEr/rgkOl4hHddo8hJ5vQWwnXNvYoEVA774bTbfk+ftQ+4RaJ0xJ
-	 yr5Iy5lOq0s8s+ZdcUG+ux0oD5xXJrU5dE+Uckf440alH2r8OIyb1BsPk7XvOtG07A4YG
-	 gIp+s50TyfshjzNpkHngH4uvoptG5pVtkaJJKOjuG0DVocurXwTkWpncYxMDvnOmXrcyA
-	 T6pprp8c64uAAZ+PIUfNZcvr5PDinEMYekdgwfpJPk88G38MCwW1zRlIdTbk397liOA==
+	t=1795621471;
+	b=L6K9D6iQn9XiEx/QlN9WFPxUMn6h622pDTyFAswT4MWzYMc/3BXldw7RrfehS5ycUxy9
+	 vaDh47G/jVGi4tahJFg9LcsZLNQft0fSCBF4s6sJDZ5U82goS4SsROkx0JyWUk3qoZEwz
+	 K+rbuuLtSYPT4JjF6Tp6SkMSWrq8NTx3VmS/GXOgMiaKdU+mTdczB1JZCBgy5FdfaCiYf
+	 5iCEcBRNsIRp4Undzltb2qvf/hZIjxfVOkn48GcvFI9o/R8B2aTx9YIpymsPjTqS3n1jQ
+	 ZO5zbAylkHhFtQBV3rV3Ao0eH00x7LdFHw6WCrlhXCnvq/fIsIkYhraChEVr5lIM+Ig==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795621467;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795621471;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=vssCX4GAPu3KFjevKt82YaLoZYzi57ztRs1J2yB7akM=;
-	b=iSnRqeFbA0PVfGJDxi6JharNpb46nfoMV3Ihvyl5R980h0mBfyQ0G/MnOh0+j9fP1dSH
-	 USqcwMqXOOAKMpVcAqqmkgcL517hI0WoPDrK7n+9lQxTLL9Q+JkB1oSK77Ap/ncF1zv2J
-	 S/bmN7nqb0O8ZhmEo9vUA9AXCcxrtMJbcnN6CQ3NbFNtkEEHRGcuS6Pb4m0+8OosvJlL+
-	 4iMhJrxD9Khx0bV7vKWlENGDOeYddTzjSqEIEKzU3TSU+bqm22xy+0YawVb5LaiLZKLMR
-	 6p5mTyKSvRXs57rJ5STsuhERk497Kk7MamU7TNXfgcwWLtsDt5UaetUmQl3P0Qe48gQ==
+	bh=XmJEqcD0vnl6LYTLfOr+r4k+Cj2GIC1AFcdst+uUu7A=;
+	b=T6nzDlw5g20ySpUi7gCdhlVPk5MlsxPey6rlBu5EncLLUUoz0aTEUvCJwgOK79ItxBot
+	 iSD84ppenzo3z36fGeHaEtPB1LippmiRoxIUJDAFIgIhjfqLZV5F3QDEnCFNyqVmhRvLS
+	 JO1V8OlXzIUToQWzVCCjY1+fhZ0pTfjpJod36b+4qBcLShfsDFIRyBmRqqBheGB2BlxNL
+	 SQoUuPgxKlr+RtDAe/GF9CwqmKCdj/VMsHnEVy3OUnh/q90n8x9cPE3uthTQk0cj0PDiE
+	 xKOH3jl4ZY9p/eS1ScUwLPpFdBwGq+9rupxssxUv9CpHo+zhiCiNYvZAjFNvbPqnHEg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=QTj7O4jE;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=oVuODpI1;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8BFD2606A329;
-	Wed, 25 Nov 2026 15:44:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EC9AA606A31E;
+	Wed, 25 Nov 2026 15:44:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=QTj7O4jE
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5D0B31F000CA;
-	Wed, 25 Nov 2026 15:44:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=oVuODpI1
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AFFF71F000CF;
+	Wed, 25 Nov 2026 15:44:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795621466;
-	bh=vssCX4GAPu3KFjevKt82YaLoZYzi57ztRs1J2yB7akM=;
+	s=korg; t=1795621470;
+	bh=XmJEqcD0vnl6LYTLfOr+r4k+Cj2GIC1AFcdst+uUu7A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=QTj7O4jEig3oL+WBOidXO7CMVBNtlw3qrJlt6GpuworAePsW59lOJ4PiK45jQyzXA
-	 eC320+JJhIa8L028OO29JLVJu/gOuHNFz1iXal+OkdEmDkaXisqH9mT+TCxzJ6PZaH
-	 BPC+huH2ko7bjUKkXCuFG3BQmex53SvdUr0QngAQ=
+	b=oVuODpI1eOtncJbTGVTJOtcnfvMI+8TbrkTRptkI4K3B9DBum58xAtNToG1rB3jLm
+	 Y8xfvU6wYXSoJRavb3eJYbX+vQIR0w6CZiLikoLLwKxsUhAF0ajc9yJeaMOdVFXKji
+	 RkZuwDuTUhbrYZPDH5dH9i0gZ7ynhpRM4lDIEIeo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ard Biesheuvel <ardb@kernel.org>,
-	Christoph Hellwig <hch@lst.de>,
 	Hannes Reinecke <hare@suse.de>,
 	Eric Biggers <ebiggers@kernel.org>,
+	Chris Leech <cleech@redhat.com>,
 	Keith Busch <kbusch@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 234/990] nvme-auth: common: use crypto library in nvme_auth_augmented_challenge()
-Date: Wed, 25 Nov 2026 15:26:41 +0100
-Message-ID: <20261125143827.569546448@linuxfoundation.org>
+Subject: [PATCH 6.18 235/990] nvme-auth: Hash DH shared secret to create session key
+Date: Wed, 25 Nov 2026 15:26:42 +0100
+Message-ID: <20261125143827.594358095@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143822.072087159@linuxfoundation.org>
 References: <20261125143822.072087159@linuxfoundation.org>
@@ -71,146 +70,271 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eric Biggers <ebiggers@kernel.org>
+From: Chris Leech <cleech@redhat.com>
 
-[ Upstream commit a67d096fe9761e3e503f40643228bca6d69c7c4e ]
+[ Upstream commit bd7b7ce96db4487bb77692a85ee4489fd2c395df ]
 
-For the hash and HMAC computations in nvme_auth_augmented_challenge(),
-use the crypto library instead of crypto_shash.  This is simpler,
-faster, and more reliable.  Notably, this eliminates two crypto
-transformation object allocations for every call, which was very slow.
+The NVMe Base Specification 8.3.5.5.9 states that the session key Ks
+shall be computed from the ephemeral DH key by applying the hash
+function selected by the HashID parameter.
 
-Acked-by: Ard Biesheuvel <ardb@kernel.org>
-Acked-by: Christoph Hellwig <hch@lst.de>
+The current implementation stores the raw DH shared secret as the
+session key without hashing it. This causes redundant hash operations:
+
+1. Augmented challenge computation (section 8.3.5.5.4) requires
+   Ca = HMAC(H(g^xy mod p), C). The code compensates by hashing the
+   unhashed session key in nvme_auth_augmented_challenge() to produce
+   the correct result.
+
+2. PSK generation (section 8.3.5.5.9) requires PSK = HMAC(Ks, C1 || C2)
+   where Ks should already be H(g^xy mod p). As the DH shared secret
+   is always larger than the HMAC block size, HMAC internally hashes
+   it before use, accidentally producing the correct result.
+
+When using secure channel concatenation with bidirectional
+authentication, this results in hashing the DH value three times: twice
+for augmented challenge calculations and once during PSK generation.
+
+Fix this by:
+- Modifying nvme_auth_gen_shared_secret() to hash the DH shared secret
+  once after computation: Ks = H(g^xy mod p)
+- Removing the hash operation from nvme_auth_augmented_challenge()
+  as the session key is now already hashed
+- Updating session key buffer size from DH key size to hash output size
+- Adding specification references in comments
+
+This avoid storing the raw DH shared secret and reduces the number of
+hash operations from three to one when using secure channel
+concatenation.
+
 Reviewed-by: Hannes Reinecke <hare@suse.de>
-Signed-off-by: Eric Biggers <ebiggers@kernel.org>
+Reviewed-by: Eric Biggers <ebiggers@kernel.org>
+Signed-off-by: Chris Leech <cleech@redhat.com>
 Signed-off-by: Keith Busch <kbusch@kernel.org>
 Stable-dep-of: 41ad4af45ac9 ("nvmet-auth: keep the old keys if the new ones fail")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/nvme/common/auth.c | 96 ++++++++++++++------------------------
- 1 file changed, 36 insertions(+), 60 deletions(-)
+ drivers/nvme/common/auth.c | 94 ++++++++++++++++++++++++++++++--------
+ drivers/nvme/host/auth.c   | 13 +++---
+ drivers/nvme/target/auth.c | 15 +++---
+ include/linux/nvme-auth.h  |  6 +--
+ 4 files changed, 92 insertions(+), 36 deletions(-)
 
 diff --git a/drivers/nvme/common/auth.c b/drivers/nvme/common/auth.c
-index a8e205b0411bf..28e3de1584611 100644
+index 28e3de1584611..1fdceba737f7d 100644
 --- a/drivers/nvme/common/auth.c
 +++ b/drivers/nvme/common/auth.c
-@@ -300,6 +300,37 @@ void nvme_auth_hmac_final(struct nvme_auth_hmac_ctx *hmac, u8 *out)
- }
- EXPORT_SYMBOL_GPL(nvme_auth_hmac_final);
- 
-+static int nvme_auth_hmac(u8 hmac_id, const u8 *key, size_t key_len,
-+			  const u8 *data, size_t data_len, u8 *out)
-+{
-+	struct nvme_auth_hmac_ctx hmac;
-+	int ret;
-+
-+	ret = nvme_auth_hmac_init(&hmac, hmac_id, key, key_len);
-+	if (ret == 0) {
-+		nvme_auth_hmac_update(&hmac, data, data_len);
-+		nvme_auth_hmac_final(&hmac, out);
-+	}
-+	return ret;
-+}
-+
-+static int nvme_auth_hash(u8 hmac_id, const u8 *data, size_t data_len, u8 *out)
-+{
-+	switch (hmac_id) {
-+	case NVME_AUTH_HASH_SHA256:
-+		sha256(data, data_len, out);
-+		return 0;
-+	case NVME_AUTH_HASH_SHA384:
-+		sha384(data, data_len, out);
-+		return 0;
-+	case NVME_AUTH_HASH_SHA512:
-+		sha512(data, data_len, out);
-+		return 0;
-+	}
-+	pr_warn("%s: invalid hash algorithm %d\n", __func__, hmac_id);
-+	return -EINVAL;
-+}
-+
- struct nvme_dhchap_key *nvme_auth_transform_key(
- 		const struct nvme_dhchap_key *key, const char *nqn)
- {
-@@ -367,72 +398,17 @@ struct nvme_dhchap_key *nvme_auth_transform_key(
+@@ -398,18 +398,29 @@ struct nvme_dhchap_key *nvme_auth_transform_key(
  }
  EXPORT_SYMBOL_GPL(nvme_auth_transform_key);
  
--static int nvme_auth_hash_skey(int hmac_id, const u8 *skey, size_t skey_len,
--			       u8 *hkey)
--{
--	const char *digest_name;
--	struct crypto_shash *tfm;
--	int ret;
--
--	digest_name = nvme_auth_digest_name(hmac_id);
--	if (!digest_name) {
--		pr_debug("%s: failed to get digest for %d\n", __func__,
--			 hmac_id);
--		return -EINVAL;
--	}
--	tfm = crypto_alloc_shash(digest_name, 0, 0);
--	if (IS_ERR(tfm))
--		return -ENOMEM;
--
--	ret = crypto_shash_tfm_digest(tfm, skey, skey_len, hkey);
--	if (ret < 0)
--		pr_debug("%s: Failed to hash digest len %zu\n", __func__,
--			 skey_len);
--
--	crypto_free_shash(tfm);
--	return ret;
--}
--
++/**
++ * nvme_auth_augmented_challenge() - Compute the augmented DH-HMAC-CHAP challenge
++ * @hmac_id: Hash algorithm identifier
++ * @skey: Session key
++ * @skey_len: Length of @skey
++ * @challenge: Challenge value
++ * @aug: Output buffer for the augmented challenge
++ * @hlen: Hash output length (length of @challenge and @aug)
++ *
++ * NVMe base specification 8.3.5.5.4: The augmented challenge is computed
++ * applying the HMAC function using the hash function H() selected by the
++ * HashID parameter ... with the hash of the ephemeral DH key ... as HMAC key
++ * to the challenge C (i.e., Ca = HMAC(H(g^xy mod p), C)).
++ *
++ * As the session key skey is already H(g^xy mod p) per section 8.3.5.5.9, use
++ * it directly as the HMAC key without additional hashing.
++ *
++ * Return: 0 on success, negative errno on failure.
++ */
  int nvme_auth_augmented_challenge(u8 hmac_id, const u8 *skey, size_t skey_len,
  				  const u8 *challenge, u8 *aug, size_t hlen)
  {
--	struct crypto_shash *tfm;
--	u8 *hashed_key;
--	const char *hmac_name;
-+	u8 hashed_key[NVME_AUTH_MAX_DIGEST_SIZE];
- 	int ret;
- 
--	hashed_key = kmalloc(hlen, GFP_KERNEL);
--	if (!hashed_key)
--		return -ENOMEM;
+-	u8 hashed_key[NVME_AUTH_MAX_DIGEST_SIZE];
+-	int ret;
 -
--	ret = nvme_auth_hash_skey(hmac_id, skey,
--				  skey_len, hashed_key);
--	if (ret < 0)
--		goto out_free_key;
--
--	hmac_name = nvme_auth_hmac_name(hmac_id);
--	if (!hmac_name) {
--		pr_warn("%s: invalid hash algorithm %d\n",
--			__func__, hmac_id);
--		ret = -EINVAL;
--		goto out_free_key;
--	}
--
--	tfm = crypto_alloc_shash(hmac_name, 0, 0);
--	if (IS_ERR(tfm)) {
--		ret = PTR_ERR(tfm);
--		goto out_free_key;
--	}
--
--	ret = crypto_shash_setkey(tfm, hashed_key, hlen);
-+	ret = nvme_auth_hash(hmac_id, skey, skey_len, hashed_key);
- 	if (ret)
--		goto out_free_hash;
--
--	ret = crypto_shash_tfm_digest(tfm, challenge, hlen, aug);
--out_free_hash:
--	crypto_free_shash(tfm);
--out_free_key:
--	kfree_sensitive(hashed_key);
-+		return ret;
-+	ret = nvme_auth_hmac(hmac_id, hashed_key, hlen, challenge, hlen, aug);
-+	memzero_explicit(hashed_key, sizeof(hashed_key));
- 	return ret;
+-	ret = nvme_auth_hash(hmac_id, skey, skey_len, hashed_key);
+-	if (ret)
+-		return ret;
+-	ret = nvme_auth_hmac(hmac_id, hashed_key, hlen, challenge, hlen, aug);
+-	memzero_explicit(hashed_key, sizeof(hashed_key));
+-	return ret;
++	return nvme_auth_hmac(hmac_id, skey, skey_len, challenge, hlen, aug);
  }
  EXPORT_SYMBOL_GPL(nvme_auth_augmented_challenge);
+ 
+@@ -450,33 +461,76 @@ int nvme_auth_gen_pubkey(struct crypto_kpp *dh_tfm,
+ }
+ EXPORT_SYMBOL_GPL(nvme_auth_gen_pubkey);
+ 
+-int nvme_auth_gen_shared_secret(struct crypto_kpp *dh_tfm,
+-		const u8 *ctrl_key, size_t ctrl_key_len,
+-		u8 *sess_key, size_t sess_key_len)
++/**
++ * nvme_auth_gen_session_key() - Generate an ephemeral session key
++ * @dh_tfm: Diffie-Hellman transform with local private key already set
++ * @public_key: Peer's public key
++ * @public_key_len: Length of @public_key
++ * @sess_key: Output buffer for the session key
++ * @sess_key_len: Size of @sess_key buffer
++ * @hash_id: Hash algorithm identifier
++ *
++ * NVMe base specification 8.3.5.5.9: The session key Ks shall be computed from
++ * the ephemeral DH key (i.e., g^xy mod p) ... by applying the hash function
++ * H() selected by the HashID parameter ... (i.e., Ks = H(g^xy mod p)).
++ *
++ * Return: 0 on success, negative errno on failure.
++ */
++int nvme_auth_gen_session_key(struct crypto_kpp *dh_tfm,
++		const u8 *public_key, size_t public_key_len,
++		u8 *sess_key, size_t sess_key_len, u8 hash_id)
+ {
+ 	struct kpp_request *req;
+ 	struct crypto_wait wait;
+ 	struct scatterlist src, dst;
++	u8 *dh_secret;
++	size_t dh_secret_len, hash_len;
+ 	int ret;
+ 
+-	req = kpp_request_alloc(dh_tfm, GFP_KERNEL);
+-	if (!req)
++	hash_len = nvme_auth_hmac_hash_len(hash_id);
++	if (!hash_len) {
++		pr_warn("%s: invalid hash algorithm %d\n", __func__, hash_id);
++		return -EINVAL;
++	}
++
++	if (sess_key_len != hash_len) {
++		pr_warn("%s: sess_key buffer missized (%zu != %zu)\n",
++			__func__, sess_key_len, hash_len);
++		return -EINVAL;
++	}
++
++	dh_secret_len = crypto_kpp_maxsize(dh_tfm);
++	dh_secret = kzalloc(dh_secret_len, GFP_KERNEL);
++	if (!dh_secret)
+ 		return -ENOMEM;
+ 
++	req = kpp_request_alloc(dh_tfm, GFP_KERNEL);
++	if (!req) {
++		ret = -ENOMEM;
++		goto out_free_secret;
++	}
++
+ 	crypto_init_wait(&wait);
+-	sg_init_one(&src, ctrl_key, ctrl_key_len);
+-	kpp_request_set_input(req, &src, ctrl_key_len);
+-	sg_init_one(&dst, sess_key, sess_key_len);
+-	kpp_request_set_output(req, &dst, sess_key_len);
++	sg_init_one(&src, public_key, public_key_len);
++	kpp_request_set_input(req, &src, public_key_len);
++	sg_init_one(&dst, dh_secret, dh_secret_len);
++	kpp_request_set_output(req, &dst, dh_secret_len);
+ 	kpp_request_set_callback(req, CRYPTO_TFM_REQ_MAY_BACKLOG,
+ 				 crypto_req_done, &wait);
+ 
+ 	ret = crypto_wait_req(crypto_kpp_compute_shared_secret(req), &wait);
+-
+ 	kpp_request_free(req);
++
++	if (ret)
++		goto out_free_secret;
++
++	ret = nvme_auth_hash(hash_id, dh_secret, dh_secret_len, sess_key);
++
++out_free_secret:
++	kfree_sensitive(dh_secret);
+ 	return ret;
+ }
+-EXPORT_SYMBOL_GPL(nvme_auth_gen_shared_secret);
++EXPORT_SYMBOL_GPL(nvme_auth_gen_session_key);
+ 
+ int nvme_auth_generate_key(const char *secret, struct nvme_dhchap_key **ret_key)
+ {
+diff --git a/drivers/nvme/host/auth.c b/drivers/nvme/host/auth.c
+index d0c3679acdc19..a64ca50e925fa 100644
+--- a/drivers/nvme/host/auth.c
++++ b/drivers/nvme/host/auth.c
+@@ -652,7 +652,7 @@ static int nvme_auth_dhchap_exponential(struct nvme_ctrl *ctrl,
+ 	}
+ 
+ gen_sesskey:
+-	chap->sess_key_len = chap->host_key_len;
++	chap->sess_key_len = chap->hash_len;
+ 	chap->sess_key = kmalloc(chap->sess_key_len, GFP_KERNEL);
+ 	if (!chap->sess_key) {
+ 		chap->sess_key_len = 0;
+@@ -660,16 +660,17 @@ static int nvme_auth_dhchap_exponential(struct nvme_ctrl *ctrl,
+ 		return -ENOMEM;
+ 	}
+ 
+-	ret = nvme_auth_gen_shared_secret(chap->dh_tfm,
+-					  chap->ctrl_key, chap->ctrl_key_len,
+-					  chap->sess_key, chap->sess_key_len);
++	ret = nvme_auth_gen_session_key(chap->dh_tfm,
++					chap->ctrl_key, chap->ctrl_key_len,
++					chap->sess_key, chap->sess_key_len,
++					chap->hash_id);
+ 	if (ret) {
+ 		dev_dbg(ctrl->device,
+-			"failed to generate shared secret, error %d\n", ret);
++			"failed to generate session key, error %d\n", ret);
+ 		chap->status = NVME_AUTH_DHCHAP_FAILURE_INCORRECT_PAYLOAD;
+ 		return ret;
+ 	}
+-	dev_dbg(ctrl->device, "shared secret %*ph\n",
++	dev_dbg(ctrl->device, "session key %*ph\n",
+ 		(int)chap->sess_key_len, chap->sess_key);
+ 	return 0;
+ }
+diff --git a/drivers/nvme/target/auth.c b/drivers/nvme/target/auth.c
+index 99f16b1a7e886..d36cb3c0fd11d 100644
+--- a/drivers/nvme/target/auth.c
++++ b/drivers/nvme/target/auth.c
+@@ -544,18 +544,19 @@ int nvmet_auth_ctrl_sesskey(struct nvmet_req *req,
+ 	struct nvmet_ctrl *ctrl = req->sq->ctrl;
+ 	int ret;
+ 
+-	req->sq->dhchap_skey_len = ctrl->dh_keysize;
++	req->sq->dhchap_skey_len = nvme_auth_hmac_hash_len(ctrl->shash_id);
+ 	req->sq->dhchap_skey = kzalloc(req->sq->dhchap_skey_len, GFP_KERNEL);
+ 	if (!req->sq->dhchap_skey)
+ 		return -ENOMEM;
+-	ret = nvme_auth_gen_shared_secret(ctrl->dh_tfm,
+-					  pkey, pkey_size,
+-					  req->sq->dhchap_skey,
+-					  req->sq->dhchap_skey_len);
++	ret = nvme_auth_gen_session_key(ctrl->dh_tfm,
++					pkey, pkey_size,
++					req->sq->dhchap_skey,
++					req->sq->dhchap_skey_len,
++					ctrl->shash_id);
+ 	if (ret)
+-		pr_debug("failed to compute shared secret, err %d\n", ret);
++		pr_debug("failed to compute session key, err %d\n", ret);
+ 	else
+-		pr_debug("%s: shared secret %*ph\n", __func__,
++		pr_debug("%s: session key %*ph\n", __func__,
+ 			 (int)req->sq->dhchap_skey_len,
+ 			 req->sq->dhchap_skey);
+ 
+diff --git a/include/linux/nvme-auth.h b/include/linux/nvme-auth.h
+index 4f9a6599077cc..ef6d0b79e6a0e 100644
+--- a/include/linux/nvme-auth.h
++++ b/include/linux/nvme-auth.h
+@@ -50,9 +50,9 @@ int nvme_auth_augmented_challenge(u8 hmac_id, const u8 *skey, size_t skey_len,
+ int nvme_auth_gen_privkey(struct crypto_kpp *dh_tfm, u8 dh_gid);
+ int nvme_auth_gen_pubkey(struct crypto_kpp *dh_tfm,
+ 			 u8 *host_key, size_t host_key_len);
+-int nvme_auth_gen_shared_secret(struct crypto_kpp *dh_tfm,
+-				const u8 *ctrl_key, size_t ctrl_key_len,
+-				u8 *sess_key, size_t sess_key_len);
++int nvme_auth_gen_session_key(struct crypto_kpp *dh_tfm,
++			      const u8 *public_key, size_t public_key_len,
++			      u8 *sess_key, size_t sess_key_len, u8 hash_id);
+ int nvme_auth_generate_psk(u8 hmac_id, const u8 *skey, size_t skey_len,
+ 			   const u8 *c1, const u8 *c2, size_t hash_len,
+ 			   u8 **ret_psk, size_t *ret_len);
 -- 
 2.53.0
 
