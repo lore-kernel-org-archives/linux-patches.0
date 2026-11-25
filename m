@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795622521;
-	b=GTmJhRiNGFRlcuaYiUJOtU/XBPhAc94cg1dTDoBI1Y8WdfSQDwBsTE0nLS8ihgWMT42H
-	 qyGqIoKgRlGuFovrHYdrcXXqH9y2gu24bUW/RUp9EScCC11TUB7wgTS+7wcETl5QZtfcx
-	 cR470j8iaLHzwMKHpGNIp25QXrcLAUrc/4tPvQeX+IeBT243DlJ33WQFhtF6cWr7AwEbP
-	 AijnJbfDEaXCw59otIUktwANWwcJ4p/kIB6ict2hCvcMXV7O8M3cMqkCzzOz8G1Zp0U3i
-	 YDr0klSyBJI0AoV8+OD/FGCHUZ6EL9oNU7457sbvxq3zsJiBiuft8/edi9Owagr50xw==
+	t=1795622524;
+	b=2Kpd85mzpsjA//297jH2gVwSOVowNKfcba+EQBp2Rqj+A56T/MebBHsqXFWy1LwiySOi
+	 bkagW6DyPrtfHppJ4txqcD7k7EOgvYbWFQ1+tz3WuVFyjiFNJOutpqhkTZQ3HT4XdTXvO
+	 dbsaEffpULKJCA/IKztJV2cvOf+uuJR4xmCsVmkiUyv6vzu/h/smOZA0Vo365BojOIn47
+	 T1TgeMo+66FxFEGl2n+GqGW9JP84L5IwKeZLPfIqFmx89gDdkcJzuVLULHgA+tQKN3rf3
+	 +CZd8ur9ABPsaE3f7arRpMdT3ul6ThpmmIfflCJSrWVyGW3miyIDWJ/B52lx6pTiv1Q==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795622521;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795622524;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=BapOA45WCzkdTjlvetZYxnRyfvME6CVQwX7b8KQHrio=;
-	b=xIyAOlmZx7LdfXOwkh/cmZL2PiumW1Mp1NP+ugt60THoe0MH5bz3SU0Qi2Wr5NCZOf6L
-	 B6kQ+tUApP0AgykcI5fyPsd57qJbTG2Ahv0itMidejqQfo7++UxvFYAi3JfIert4wm3I5
-	 hYw5ATFWop6n29Y4iGgCBpvgVZ+s5d9z77RxaFvTrqbY3++LoLTiVFVCEfDJf7WIUDyjm
-	 Al5gIMer2w71BVlygZUTn/uJozHKzgT8eARd8p4bqb212D7qzkP7niGHOWc2hEngwUJv2
-	 Cbr/2UXW3SJisUt6hAteJW916yfjS3ooBJDhWYu80kcBbQb7SrDWZ3EJK0dPkFJPYCQ==
+	bh=Xb3A5MTlXi2ejTDfbjfFRa5KMeYyuUtm/EC0nhWosVo=;
+	b=sVN3ZAsyr+oAVAzquy1I2nkem2zBVL6xpJepaxQecQ2fIUSw+B+ozXHVrWCFdMDOPJ84
+	 +6Iw90Brpklwurpie2Nr6Hpowv+rmsOiaM6vAZ9vWHZeXGbbWt/RnTq30Ttt+Wuwx5iRF
+	 1BJzB5LSjUr1vjhIGI+see8yYPq68BgEh0D5GwLo569Z+G2kSKu5rkMv4T4o+d8pR3IOL
+	 3bszrkX3KWthmylnKoFGvLPd63gz7K2uvIp/fxz+bpy5fbW9db6g4RDITsE1/CwaKl7BM
+	 k1IsHtdXQLabV9hSRynCCLrizDH4eSkzXDADzIdza8qnVSbA5Xxl+27uqAhjijwS6iw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=MtPHTSiv;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="stP/dalf";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 84E1E606A323;
-	Wed, 25 Nov 2026 16:02:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B5C49606A326;
+	Wed, 25 Nov 2026 16:02:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=MtPHTSiv
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9A1B81F000C4;
-	Wed, 25 Nov 2026 16:02:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=stP/dalf
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B41831F000C4;
+	Wed, 25 Nov 2026 16:02:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795622521;
-	bh=BapOA45WCzkdTjlvetZYxnRyfvME6CVQwX7b8KQHrio=;
+	s=korg; t=1795622524;
+	bh=Xb3A5MTlXi2ejTDfbjfFRa5KMeYyuUtm/EC0nhWosVo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=MtPHTSivMTjJDi3PuV3Wxon5PsfuvElqOKtvC5vOKrMeW/UMlDCtUe+oeoqDu0W7f
-	 vi/fcGQMfutsfhwSe/Aa97H6H2kQ1QO4Ktgzdn2YPowIVr7q/GJRp5rL+90agQIO+E
-	 K5pW5jEwG3uMHFEUD/VfbYRMa9uvlO28nrbqraac=
+	b=stP/dalfNpvRVdid7wDlWF5T2h5UeT2SMc6MbLEM2n1GIfmtlEKqG4pW0Dcyz6jG6
+	 C6jXIaCmcQtUkVwsZJ4dmw3fCSU5If0w5unBfoPo0SN3mzpE7Ny5x4cZ3ZBy9YYUlp
+	 depy2Ozx71hZUdB4UA0MgrF6c7y6Nr5DuZQin/t4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Leon Hwang <leon.hwang@linux.dev>,
-	Yuan Chen <chenyuan@kylinos.cn>,
-	Alexei Starovoitov <ast@kernel.org>,
+	Damien Le Moal <dlemoal@kernel.org>,
+	Niklas Cassel <cassel@kernel.org>,
+	"Martin K. Petersen (Oracle)" <mkp@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 564/990] bpf: Roll back freplace link state when bpf_arch_text_poke() fails
-Date: Wed, 25 Nov 2026 15:32:11 +0100
-Message-ID: <20261125143835.308509114@linuxfoundation.org>
+Subject: [PATCH 6.18 565/990] scsi: scsi_debug: Enforce physical block alignment of zoned writes
+Date: Wed, 25 Nov 2026 15:32:12 +0100
+Message-ID: <20261125143835.331558958@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143822.072087159@linuxfoundation.org>
 References: <20261125143822.072087159@linuxfoundation.org>
@@ -69,58 +69,65 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yuan Chen <chenyuan@kylinos.cn>
+From: Niklas Cassel <cassel@kernel.org>
 
-[ Upstream commit 5ec398d9ec8fe13f8058af9a2e5f5e8f46e0a35a ]
+[ Upstream commit 63cb3900be261fccc05cadcf3402058418a5fada ]
 
-A freplace attach claims the target prog by bumping
-tgt_prog->aux->freplace_link_cnt and setting tr->extension_prog.
-bpf_arch_text_poke() then makes the extension take effect.  If the
-poke fails, the claims are never released: the attach unwinds
-through bpf_link_cleanup(), which clears link->prog, so
-bpf_trampoline_unlink_prog() never runs.
+ZBC-3 r06 (T10/BSR INCITS 579), 4.5.3.3.2, requires a write to a sequential
+write required zone to be terminated with ILLEGAL REQUEST / UNALIGNED WRITE
+COMMAND both when it does not start at the write pointer and when it does
+not end on a physical block boundary. That is why sd_zbc_read_zones() sets
+the zone_write_granularity queue limit to the physical block size of a
+host-managed device.
 
-Drop the link count under ext_mutex on the error path, and set
-tr->extension_prog only after the poke succeeded.  The count is
-still bumped before the poke: it blocks prog_array updates while
-the entry is patched.
+check_zbc_access_params() implements the first condition but not the
+second. So with zbc=managed sector_size=512 physblk_exp=3, a write of a
+single logical block at the write pointer is accepted and advances the
+write pointer by one logical block, leaving it off the granularity that was
+advertised: nothing can write at it any more, and the zone can only be used
+again after being reset.
 
-Fixes: d6083f040d5d ("bpf: Prevent tailcall infinite loop caused by freplace")
-Fixes: be8704ff07d2 ("bpf: Introduce dynamic program extensions")
-Suggested-by: Leon Hwang <leon.hwang@linux.dev>
-Signed-off-by: Yuan Chen <chenyuan@kylinos.cn>
-Signed-off-by: Alexei Starovoitov <ast@kernel.org>
-Acked-by: Leon Hwang <leon.hwang@linux.dev>
-Link: https://patch.msgid.link/20260928091121.219333-1-chenyuan_fl@163.com
-[ sashal: Adapted the freplace fix to the older bpf_arch_text_poke() four-argument form and link->link.prog, instead of the newer BPF_MOD_NOP call and node->link->prog. ]
+Check the ending LBA as well, with the same sense data, as the standard
+gives both conditions the same. An entire medium write same command, which
+the standard excludes, needs no special case: the preceding check already
+terminates it with WRITE BOUNDARY VIOLATION. Sequential write preferred
+zones are left alone, as writes to them need not be sequential, and with
+the default physblk_exp=0 the check is a no-op.
+
+Assisted-by: LLM
+Fixes: f0d1cf9378bd ("scsi: scsi_debug: Add ZBC zone commands")
+Reviewed-by: Damien Le Moal <dlemoal@kernel.org>
+Signed-off-by: Niklas Cassel <cassel@kernel.org>
+Link: https://patch.msgid.link/20260929082456.857423-23-cassel@kernel.org
+Signed-off-by: Martin K. Petersen (Oracle) <mkp@kernel.org>
+[ sashal: changed the mk_sense_buffer() call to the older four-argument form (LBA_OUT_OF_RANGE, UNALIGNED_WRITE_ASCQ) used by neighbouring code, since the combined UNALIGNED_WRITE_COMMAND form is not used here. ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/bpf/trampoline.c | 11 +++++++++--
- 1 file changed, 9 insertions(+), 2 deletions(-)
+ drivers/scsi/scsi_debug.c | 11 +++++++++++
+ 1 file changed, 11 insertions(+)
 
-diff --git a/kernel/bpf/trampoline.c b/kernel/bpf/trampoline.c
-index 478ea4ec3a801..98704c030a20b 100644
---- a/kernel/bpf/trampoline.c
-+++ b/kernel/bpf/trampoline.c
-@@ -576,9 +576,16 @@ static int __bpf_trampoline_link_prog(struct bpf_tramp_link *link,
- 		err = bpf_freplace_link_tgt_prog(tgt_prog);
- 		if (err)
- 			return err;
-+		err = bpf_arch_text_poke(tr->func.addr, BPF_MOD_JUMP, NULL,
-+					 link->link.prog->bpf_func);
-+		if (err) {
-+			/* Undo the claim from bpf_freplace_link_tgt_prog(). */
-+			guard(mutex)(&tgt_prog->aux->ext_mutex);
-+			tgt_prog->aux->freplace_link_cnt--;
-+			return err;
+diff --git a/drivers/scsi/scsi_debug.c b/drivers/scsi/scsi_debug.c
+index 524e0fa457a83..60baa3a3ccbd0 100644
+--- a/drivers/scsi/scsi_debug.c
++++ b/drivers/scsi/scsi_debug.c
+@@ -3904,6 +3904,17 @@ static int check_zbc_access_params(struct scsi_cmnd *scp,
+ 					UNALIGNED_WRITE_ASCQ);
+ 			return check_condition_result;
+ 		}
++		/*
++		 * Writes must end on a physical block boundary, that is, the
++		 * transfer length must be a multiple of the physical block
++		 * size.
++		 */
++		if (!IS_ALIGNED(lba + num, 1U << sdebug_physblk_exp)) {
++			mk_sense_buffer(scp, ILLEGAL_REQUEST,
++					LBA_OUT_OF_RANGE,
++					UNALIGNED_WRITE_ASCQ);
++			return check_condition_result;
 +		}
- 		tr->extension_prog = link->link.prog;
--		return bpf_arch_text_poke(tr->func.addr, BPF_MOD_JUMP, NULL,
--					  link->link.prog->bpf_func);
-+		return 0;
  	}
- 	if (cnt >= BPF_MAX_TRAMP_LINKS)
- 		return -E2BIG;
+ 
+ 	/* Handle implicit open of closed and empty zones */
 -- 
 2.53.0
 
