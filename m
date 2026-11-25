@@ -1,52 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795620120;
-	b=1JvZlxw+Srt85YekdshS/yljeAIp0itELJZXx4OLF3Dc2RsXSvXin28oci5FUjzz2OFM
-	 9modd9lhz5gA9VvZCoCWiknVzRqY+D/R6ZtgvtTLaVud15piCJ0SL1ExN9O3KGxANMWio
-	 bpnnSMOsZnGQPbnuJSlr8JH5/p3088Wt3VX5OdtCBS+sQ+UF3PmesA28uJ19G7KNZrGHj
-	 YRF2rzIdO3bJpBFOKRavpvjd9zbZphHKNhI7jQgzEPtJqmgBLxxUleQEbZNXnGJGLqoIM
-	 /TP2X1go9WLSJHHEuy/pvlptvM6NUmRO8gikB1aWnHodXpgKPsBC4HxIITq9eTfthSQ==
+	t=1795620122;
+	b=EbgmM0rq6lEhdaI4Gbk4ZowGx+lpSf4x5v5HUckbidw+21og0qlImFNbdt/p9TF1nGaJ
+	 Io0iE67M2IalhL3xn2ZRSAbaJlC+VRufeZALtPzLdqiMoTmiRm/O23GldieFfNcekIVfB
+	 sdw8L+5ZDRHqH+m6lBSyv5x6XJa2OTLhVRtYnbn0M4Hy5kPWtg7Y1mR/4iRYDdoTqlpZa
+	 mh7YOcmh0lbviQ+F5cmHa3suNJONE0bpcARtwn1zZPzd3uI6gM9XjJe4bHoAmqSDra/V7
+	 aJm3qbHidbHzwk0LTkAZ3yypQTO9ZIwmXFJ1Hu6fq8TJpmZ4hSL/NeGgWujFTjlyDnw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795620120;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795620122;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=gPgpM6alAsldYITZqkFBjJAY8GUOoiYXKD+hKndY5AY=;
-	b=2euExOrZ7XRxzTXqMqzQuwpwscgjsdgdDLy1eGVJdro4trWXHycR4nxTY49xJnOLOxig
-	 vwa6SlChgZot8L7bm2xAQKUHjAqO9MHZbBZXNAV991NCJ3SMEQ0aggVNL53Lek5iBbVFF
-	 uKynG5JLyhVU3gaWEDzb2LaCcZSoB1Hgh3eXm8yfO2IehnDCyY2XhrmYy6qY+erqdj0xn
-	 Fm1dXNwnweOTrDZs/z+yEEqdqvSRtoY80MuYLlE7YTApTX4eM8s5KOtzcFwPOqTTmpE8E
-	 dGVvoAE3OMkKwmVrbWh6h5OaP7FJAnSNaiW3u/ZkzoIGu3N/5/4612zSkZ+DdawIXcw==
+	bh=b+FfTsS0GclwNbEe+j7a9XnO9U+OvqPNYnc8oPPExg0=;
+	b=dXYYwGIwrGInWA+ctt3cLzPHB2vIq/OgykIQFip4owkeHb2PWaPbBIjX/vCn44iOVMv3
+	 OBT22wJuKofnJxfAEY9Tlquetqs9pUI7ORCMTI7O0thFIwyTs8RFolU8N/jTlay4YZfLF
+	 JYJhbgVGUW9WAz+09sG0Smp9FnR+OkaXWymJaawgexSXGyDyrqR1kuB6vOnrwLNeMFOmD
+	 qr5sfIwg68ZWfy90QnMbuWn+wCSszzCF6A7O+i95SLYpNw3Y2nvLO84M6AMKf+1WPILZJ
+	 1LajCndA51h4PZG+MI90LRbuysq375roypxqsIAdbedVMcQcLmcdsNgHPioRmwICpxg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=MBULpMmF;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=fTtLHU7A;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 25316606A31E;
-	Wed, 25 Nov 2026 15:21:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B6EC5606A326;
+	Wed, 25 Nov 2026 15:22:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=MBULpMmF
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3A50F1F000C4;
-	Wed, 25 Nov 2026 15:21:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=fTtLHU7A
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 149D91F000C6;
+	Wed, 25 Nov 2026 15:22:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795620119;
-	bh=gPgpM6alAsldYITZqkFBjJAY8GUOoiYXKD+hKndY5AY=;
+	s=korg; t=1795620122;
+	bh=b+FfTsS0GclwNbEe+j7a9XnO9U+OvqPNYnc8oPPExg0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=MBULpMmFRhfmUfpIEyRGSi6S5FiOSWvJjWh53aV+eVi3QMy1ARrPsRenWbmcf/z/H
-	 sB3jgx3pcmmsJkyw7DLYHSpDNw1lkXTCYMoxq9ltXh9yFzAPwKw+nCFMAD8LjqKwjM
-	 oShRkqB3F1eRB28gU054S/OLPr2Din9BHb2lcSVk=
+	b=fTtLHU7AMYIJS2f3XBOSy22HZT30zxzkVHLJH2tqfBqgoF/2gcYDj/pa2mLKjupic
+	 kN9edW8GReuuNpssjE773bizkhQy9mtt2R2gQQjyAKjzPBPoz1D6H6Eszt2VyTCH2b
+	 pq51kwJTw3hjjNFGg5NH7tTZLD6l1R9xAHUVjfP4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Guenter Roeck <linux@roeck-us.net>,
-	Dmitry Torokhov <dmitry.torokhov@gmail.com>,
+	Linus Walleij <linusw@kernel.org>,
 	Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
-Subject: [PATCH 7.3 0815/1005] gpio: sa1100: defer GPIO chip registration to postcore_initcall
-Date: Wed, 25 Nov 2026 15:35:53 +0100
-Message-ID: <20261125143840.820763585@linuxfoundation.org>
+Subject: [PATCH 7.3 0816/1005] gpio: shared: fix a race in shared desc release path
+Date: Wed, 25 Nov 2026 15:35:54 +0100
+Message-ID: <20261125143840.842991477@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143821.729802100@linuxfoundation.org>
 References: <20261125143821.729802100@linuxfoundation.org>
@@ -68,98 +67,83 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dmitry Torokhov <dmitry.torokhov@gmail.com>
+From: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
 
-commit 32c89e32b3fef2ee0aa5c4d0b0fb089bb20b3223 upstream.
+commit 53043b9e83cc7f4e30e70161b67ae93c4c9fdb87 upstream.
 
-Registering the software node and the GPIO chip for the SA-1100 GPIO
-controller during early IRQ initialization causes boot hangs on
-SA-1100 platforms because the software node subsystem has not yet
-been initialized. At that early boot stage, attempting to register
-software nodes dereferences a NULL kset pointer before console or
-driver model initialization.
+gpiod_shared_put() races with concurrent calls to
+devm_gpiod_shared_get() like so:
 
-Nothing on SA-1100 platforms requests GPIO lines via gpiolib during
-early boot before initcalls run; only the GPIO IRQ controller and
-domain must be initialized during init_IRQ(). Defer registering the
-software node, assigning its firmware node, and registering the GPIO
-chip with gpiolib to postcore_initcall, running after driver and
-gpiolib device initialization and before board consumers register.
+CPU 0 (unbind / probe failure)      CPU 1 (concurrent proxy probe)
+==============================      ==============================
+gpiod_shared_put()
+  kref_put(&entry->ref, ...)
+    refcount_dec_and_test() // -> 0
+                                    devm_gpiod_shared_get()
+                                      mutex_lock(&entry->lock);
+                                      if (entry->shared_desc) {
+                                        kref_get(&entry->ref); // on 0!
+                                        shared_desc = entry->shared_desc;
+                                      }
+                                      mutex_unlock(&entry->lock);
+    gpio_shared_release()
+      mutex_lock(&entry->lock);
+      kfree(shared_desc);
+      entry->shared_desc = NULL;
+      mutex_unlock(&entry->lock);
+                                      // uses freed shared_desc
 
-Fixes: e4671f292ebb ("gpio: sa1100: register software node for GPIO controller")
+Because gpiod_shared_put() decrements entry->ref without holding
+entry->lock and gpio_shared_release() only acquires entry->lock after the
+reference count has already reached zero, a concurrent call to
+devm_gpiod_shared_get() can acquire entry->lock in the intermediate window
+and observe a non-NULL entry->shared_desc. This can result in a
+use-after-free and a double-free when the second consumer releases its
+reference.
+
+Use kref_put_mutex() to ensure the entry lock is taken without a window
+in which a concurrent user can see a non-NULL entry->shared_desc while
+it's being released.
+
 Cc: stable@vger.kernel.org
-Reported-by: Guenter Roeck <linux@roeck-us.net>
-Closes: https://lore.kernel.org/r/2a561a27-a3bf-4cac-a4dc-bfbc5c859f45@roeck-us.net
-Signed-off-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
-Tested-by: Guenter Roeck <linux@roeck-us.net>
-Link: https://patch.msgid.link/20261029-sa1100-swnode-fix-v1-1-112f4d83d191@gmail.com
+Closes: https://sashiko.dev/#/bug/linux-30e071e4-4e4a-4b63-bd83-df1147055d35
+Fixes: a060b8c511ab ("gpiolib: implement low-level, shared GPIO support")
+Reviewed-by: Linus Walleij <linusw@kernel.org>
+Link: https://patch.msgid.link/20261110-gpio-shared-refcnt-race-v2-1-8a0b76e01714@oss.qualcomm.com
 Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpio/gpio-sa1100.c | 32 +++++++++++++++++++++++++++-----
- 1 file changed, 27 insertions(+), 5 deletions(-)
+ drivers/gpio/gpiolib-shared.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/gpio/gpio-sa1100.c b/drivers/gpio/gpio-sa1100.c
-index e4f3bf949b87..1916200ebbd5 100644
---- a/drivers/gpio/gpio-sa1100.c
-+++ b/drivers/gpio/gpio-sa1100.c
-@@ -8,6 +8,7 @@
- #include <linux/init.h>
- #include <linux/module.h>
- #include <linux/io.h>
-+#include <linux/printk.h>
- #include <linux/syscore_ops.h>
- #include <soc/sa1100/pwer.h>
- #include <mach/hardware.h>
-@@ -322,7 +323,6 @@ static const int sa1100_gpio_irqs[] __initconst = {
- void __init sa1100_init_gpio(void)
- {
- 	struct sa1100_gpio_chip *sgc = &sa1100_gpio_chip;
--	struct gpio_chip *gc = &sgc->chip;
- 	int i;
+diff --git a/drivers/gpio/gpiolib-shared.c b/drivers/gpio/gpiolib-shared.c
+index 8c9ac9d93304..edb04a5bb987 100644
+--- a/drivers/gpio/gpiolib-shared.c
++++ b/drivers/gpio/gpiolib-shared.c
+@@ -635,20 +635,20 @@ static void gpio_shared_release(struct kref *kref)
+ 		container_of(kref, struct gpio_shared_entry, ref);
+ 	struct gpio_shared_desc *shared_desc;
  
- 	/* clear all GPIO edge detects */
-@@ -330,10 +330,6 @@ void __init sa1100_init_gpio(void)
- 	writel_relaxed(0, sgc->membase + R_GRER);
- 	writel_relaxed(-1, sgc->membase + R_GEDR);
- 
--	software_node_register(&sa1100_gpiochip_node);
--	gc->fwnode = software_node_fwnode(&sa1100_gpiochip_node);
--	gpiochip_add_data(gc, NULL);
+-	guard(mutex)(&entry->lock);
 -
- 	sa1100_gpio_irqdomain = irq_domain_create_simple(NULL,
- 			28, IRQ_GPIO0,
- 			&sa1100_gpio_irqdomain_ops, sgc);
-@@ -342,3 +338,29 @@ void __init sa1100_init_gpio(void)
- 		irq_set_chained_handler_and_data(sa1100_gpio_irqs[i],
- 						 sa1100_gpio_handler, sgc);
+ 	shared_desc = entry->shared_desc;
+ 	gpio_device_put(shared_desc->desc->gdev);
+ 	mutex_destroy(&shared_desc->mutex);
+ 	kfree(shared_desc);
+ 	entry->shared_desc = NULL;
++
++	mutex_unlock(&entry->lock);
  }
-+
-+static int __init sa1100_gpio_init_chip(void)
-+{
-+	struct gpio_chip *gc = &sa1100_gpio_chip.chip;
-+	int error;
-+
-+	error = software_node_register(&sa1100_gpiochip_node);
-+	if (error) {
-+		pr_err("failed to register sa1100 gpiochip software node: %d\n",
-+		       error);
-+		return error;
-+	}
-+
-+	gc->fwnode = software_node_fwnode(&sa1100_gpiochip_node);
-+
-+	error = gpiochip_add_data(gc, NULL);
-+	if (error) {
-+		pr_err("failed to add sa1100 gpiochip: %d\n", error);
-+		gc->fwnode = NULL;
-+		software_node_unregister(&sa1100_gpiochip_node);
-+		return error;
-+	}
-+
-+	return 0;
-+}
-+postcore_initcall(sa1100_gpio_init_chip);
+ 
+ static void gpiod_shared_put(void *data)
+ {
+ 	struct gpio_shared_entry *entry = data;
+ 
+-	kref_put(&entry->ref, gpio_shared_release);
++	kref_put_mutex(&entry->ref, gpio_shared_release, &entry->lock);
+ }
+ 
+ static struct gpio_shared_desc *
 -- 
 2.56.1
 
