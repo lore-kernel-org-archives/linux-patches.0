@@ -1,51 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795619801;
-	b=Hve9nbPfeGI0XgCKROnFBKF8hJ5eX/6yQ5WfIr+fv/l0GXxIx9Feyu96c8o035z/z65r
-	 TwK8lozQRduw/0b4hUYx45woUREukohHmcClRtkFegss3s/K5EPPPdADmBSz8wQHymIpy
-	 32ub8WG34XXDe7BT8J5nFOfTV00koPCQu5JUSgkuQmiEfl7GmuPNAlVao1wZLNsB/PqBk
-	 EDZ6Ug3ISxwBnIaZ38UyUBiTwJxzWSfFsM6W2DMJNzar4Df/HZuJNjPJKc5IjFMBvX8GU
-	 qtHXUMp86ye7IFiSyam0AsH3d7ch7HBFKf32e9A5GnH/mVcMk5C5pFeLz28K51z98JQ==
+	t=1795619805;
+	b=KU78Ue8W4fWJC67hJXtCPVoalTo6wrRPtqlCfFrTO25zRXkZOYmPCxNzN5GlVYRPuDqK
+	 YCJmXJOsn80qZVFsyYhiXaz0zEKaTu6d4oTry5Sp4WHtO3+0n3YUCqyuwhpT5iPZMiIOm
+	 I0Pvj2PK5G/faL6Gngeob5N9UycmaHtuLa0y1ZN4YvuR7mAJemd1vUXuD/WBbN+UWhXfP
+	 O04qTbpGWIJ/xyW55Bu3guXHqPL+SPy8IXIYTXdndMXSdLR5mmXxASs2tX/nX/oQYorc+
+	 jgRFgx6G+/Lk9wpQ7V5rr0+795YBYdsm+USoS4AZw48moETbwNgd6n59OgwOViTx27A==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795619801;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795619805;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=KYU68j+3u6BA+GleF5BPBt+lHoTsCBEqGi1CRm+l0js=;
-	b=nhmaP7z3I/1v7rCi/SSr8IMfo5RMg05CHuIe5A38NEEzyeyMZ5iO/+wVxWeYpx1DDBw8
-	 H96sSQUCv8rd7ZeQldObAfRsISXfVH0qdYd/1zQ7ZxZEUQXYXqtvNujHr1VN8yv7Lx0mu
-	 vRTSo1dXtlaT+fqHnD3rWkOuDAXyqmOCGypodES61EAwDyaMO3+ALIH1+7EtbrFitqUVq
-	 d0TuZgxGZJI0H8CIaFj4bc2GnOy4tZ8aMV1FZkQ1VZ8GpW+jhib+4R3FQbQcoq5JxxcGK
-	 wDC5kEFy2LafH9AaIIMwzoR7BvSkZQhViFqWtadYkPT1sWUB3wjJHxE1YplCMdvL5/w==
+	bh=ApRbGyIsZ93gmc4CBiMzBzcXLeKg/9EmimGrWbURp74=;
+	b=hGTCv1m8gcTw1Terh5qHmFrdIwvuF80hlqMW1Ktp5PYbCv9bAMZ799OsaI8TI4BJaGJH
+	 acV/ci8lLj++gsdI9XTAeEaboduq/CdprjamK/erym2U/hJBOXt04rvO1ooKYn6sR7RS9
+	 tNK1cvtVbLjZFcQUVTbdK9ChEzw4x7eP7hON/PqnNFlziT79y+kx8J4sREuc/OuspAMwC
+	 JXgCD52UOpX6hw5XyI8SN0z9MeAobOz31RPoE/oEOMwou18nfSpRAQi/9AN7F/uTQOjQj
+	 s1iLi5hv/AK7pt5I9Sekj2uYdAogUEIUt+Gm13lFDxkGlb+ywvCRqR4tK01fpMlpjAA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ToiT0vTl;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=RUy2ZxA3;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 25F6F606A321;
-	Wed, 25 Nov 2026 15:16:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 29522606A31E;
+	Wed, 25 Nov 2026 15:16:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ToiT0vTl
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7728C1F000D4;
-	Wed, 25 Nov 2026 15:16:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=RUy2ZxA3
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D744D1F000C4;
+	Wed, 25 Nov 2026 15:16:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795619801;
-	bh=KYU68j+3u6BA+GleF5BPBt+lHoTsCBEqGi1CRm+l0js=;
+	s=korg; t=1795619804;
+	bh=ApRbGyIsZ93gmc4CBiMzBzcXLeKg/9EmimGrWbURp74=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ToiT0vTlU2eWfKi+5cKsmZ5c2jyRFaN4uaq6bFeBR3LBbr45eWOe/Fq0b8G4UVO2I
-	 7VXZXxQOM83eVTQlg/4Mw19L9hf5YKeeIOQop3Z/yOKAdO/MJVeod+TXXpTrMBtUoo
-	 vymcYVZ9vIvDpSIHz2X5FTOlGgGywKrU0mwR2o5U=
+	b=RUy2ZxA3N7JfNBhmUaSmQy/KFmtAaebnoaR4/Ok2dy4Pu4cjbWOqJc/YvIF3Q+LIK
+	 bgiMf0GkOl3E0bHdiAc1q8T46W9CtbQaFMLjPqRzxtAZP6u6Lj4np2g1Hfmgp8ED1I
+	 +shiPfeSL4v1NCtosSboI3BnrG4xlQYhujuK0lWQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mark Brown <broonie@kernel.org>,
+	syzbot+79883955da3a62652a80@syzkaller.appspotmail.com,
+	Uladzislau Zhauniarovich <uladzislau.zhauniarovich@gmail.com>,
 	Catalin Marinas <catalin.marinas@arm.com>
-Subject: [PATCH 7.3 0712/1005] arm64: suspend: Save GCS state over suspend
-Date: Wed, 25 Nov 2026 15:34:10 +0100
-Message-ID: <20261125143838.437526080@linuxfoundation.org>
+Subject: [PATCH 7.3 0713/1005] arm64: suspend: Only track cpuidle context for idle tasks
+Date: Wed, 25 Nov 2026 15:34:11 +0100
+Message-ID: <20261125143838.461013340@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143821.729802100@linuxfoundation.org>
 References: <20261125143821.729802100@linuxfoundation.org>
@@ -67,69 +68,106 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mark Brown <broonie@kernel.org>
+From: Uladzislau Zhauniarovich <uladzislau.zhauniarovich@gmail.com>
 
-commit 7ca488055c69eed71219546deb805811854aca35 upstream.
+commit ad3fc05c7e65009355effeea06aa629a687acef2 upstream.
 
-GCSCRE0_EL1 and GCSPR_EL0 are live registers for EL0 on systems with GCS
-but are not saved and restored by cpu_do_suspend()/cpu_do_resume(). This
-means that the task that initiated suspend can return to userspace with
-UNKNOWN or incorrect values for GCSPR_EL0 and GCSCRE0_EL1 (many fields
-in GCSCRE0_EL1 reset to 0).  This will in turn lead to ongoing
-corruption, including not restoring mode until a task with a different
-GCS mode is run.  Fix this by saving and restoring the values over
-suspend.
+Commit 19235e472798 ("cpuidle, arm64: Fix the ARM64 cpuidle logic") moved
+the calls to ct_cpuidle_enter() and ct_cpuidle_exit() into cpu_suspend() so
+that arm64 cpuidle could keep RCU watching longer and manage context
+tracking internally. However, cpu_suspend() is called not only by cpuidle
+via psci_cpu_suspend_enter() (which runs in the context of the idle task),
+but also during system suspend via psci_system_suspend_enter() (which runs
+in the context of the task initiating suspend, such as a process writing to
+/sys/power/state).
 
-This increases the size of struct cpu_suspend_ctx by 16 bytes.
+When entering system suspend, current is a non-idle task. Calling
+ct_cpuidle_enter() invokes ct_kernel_exit() from kernel space (!user) on a
+non-idle task. With CONFIG_RCU_EQS_DEBUG enabled, this violates context
+tracking invariants and triggers a warning:
 
-Fixes: 5d8b172e7005 ("arm64: Add Kconfig for Guarded Control Stack (GCS)")
-Signed-off-by: Mark Brown <broonie@kernel.org>
-Cc: stable@vger.kernel.org
+WARNING: kernel/context_tracking.c:120 at ct_kernel_exit+0x1b4/0x1f4
+kernel/context_tracking.c:118
+Call trace:
+ ct_kernel_exit+0x1b4/0x1f4 kernel/context_tracking.c:118
+ ct_idle_enter+0x20/0x34 kernel/context_tracking.c:299
+ ct_cpuidle_enter include/linux/cpuidle.h:134 [inline]
+ cpu_suspend+0x264/0x474 arch/arm64/kernel/suspend.c:136
+ psci_system_suspend_enter+0x4c/0x80 drivers/firmware/psci/psci.c:544
+ suspend_enter kernel/power/suspend.c:468 [inline]
+ suspend_devices_and_enter+0x88c/0xd0c kernel/power/suspend.c:533
+ enter_state kernel/power/suspend.c:618 [inline]
+ pm_suspend+0x498/0x698 kernel/power/suspend.c:644
+ state_store+0x14c/0x1fc kernel/power/main.c:819
+ kobj_attr_store+0x6c/0x90 lib/kobject.c:842
+ sysfs_kf_write+0xe0/0x108 fs/sysfs/file.c:145
+ kernfs_fop_write_iter+0x260/0x3b8 fs/kernfs/file.c:345
+ vfs_write+0x51c/0xa0c fs/read_write.c:687
+ ksys_write+0x12c/0x228 fs/read_write.c:739
+
+A corresponding warning is subsequently triggered in ct_kernel_enter() via
+ct_cpuidle_exit() upon resume.
+
+Fix this by checking is_idle_task(current) in cpu_suspend() and only
+invoking ct_cpuidle_enter() and ct_cpuidle_exit() when executing in the
+context of an idle task.
+
+Fixes: 19235e472798 ("cpuidle, arm64: Fix the ARM64 cpuidle logic")
+Cc: <stable@vger.kernel.org>
+Assisted-by: Gemini:gemini-3.8-flash Gemini:gemini-3.1-pro-preview syzbot
+Reported-by: syzbot+79883955da3a62652a80@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=79883955da3a62652a80
+Link: https://syzkaller.appspot.com/ai_job?id=5359e16f-013b-4850-9cbc-ddfb3bac95e5
+Signed-off-by: Uladzislau Zhauniarovich <uladzislau.zhauniarovich@gmail.com>
+Tested-by: Uladzislau Zhauniarovich <uladzislau.zhauniarovich@gmail.com>
+Link: https://lore.kernel.org/r/3e92ccb0-2952-4317-af4c-45457c15efae@gmail.com
 Signed-off-by: Catalin Marinas <catalin.marinas@arm.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/arm64/include/asm/suspend.h |    2 +-
- arch/arm64/mm/proc.S             |   12 ++++++++++++
- 2 files changed, 13 insertions(+), 1 deletion(-)
+ arch/arm64/kernel/suspend.c |   11 ++++++++---
+ 1 file changed, 8 insertions(+), 3 deletions(-)
 
---- a/arch/arm64/include/asm/suspend.h
-+++ b/arch/arm64/include/asm/suspend.h
-@@ -2,7 +2,7 @@
- #ifndef __ASM_SUSPEND_H
- #define __ASM_SUSPEND_H
+--- a/arch/arm64/kernel/suspend.c
++++ b/arch/arm64/kernel/suspend.c
+@@ -5,6 +5,7 @@
+ #include <linux/uaccess.h>
+ #include <linux/pgtable.h>
+ #include <linux/cpuidle.h>
++#include <linux/sched.h>
+ #include <asm/alternative.h>
+ #include <asm/cacheflush.h>
+ #include <asm/cpufeature.h>
+@@ -99,6 +100,7 @@ int cpu_suspend(unsigned long arg, int (
+ 	int ret = 0;
+ 	unsigned long flags;
+ 	struct sleep_stack_data state;
++	bool idle = is_idle_task(current);
  
--#define NR_CTX_REGS 16
-+#define NR_CTX_REGS 18
- #define NR_CALLEE_SAVED_REGS 12
+ 	/*
+ 	 * Some portions of CPU state (e.g. PSTATE.{PAN,DIT}) are initialized
+@@ -133,7 +135,8 @@ int cpu_suspend(unsigned long arg, int (
+ 	 */
+ 	pause_graph_tracing();
  
- /*
---- a/arch/arm64/mm/proc.S
-+++ b/arch/arm64/mm/proc.S
-@@ -122,6 +122,12 @@ alternative_if ARM64_HAS_S1POE
- 	mrs	x2, REG_POR_EL0
- 	str	x2, [x0, #120]
- alternative_else_nop_endif
-+alternative_if ARM64_HAS_GCS
-+	mrs	x2, REG_GCSPR_EL0
-+	str	x2, [x0, #128]
-+	mrs	x2, REG_GCSCRE0_EL1
-+	str	x2, [x0, #136]
-+alternative_else_nop_endif
- 	ret
- SYM_FUNC_END(cpu_do_suspend)
+-	ct_cpuidle_enter();
++	if (idle)
++		ct_cpuidle_enter();
  
-@@ -168,6 +174,12 @@ alternative_if ARM64_HAS_S1POE
- 	ldr	x2, [x0, #120]
- 	msr	REG_POR_EL0, x2
- alternative_else_nop_endif
-+alternative_if ARM64_HAS_GCS
-+	ldr	x2, [x0, #128]
-+	msr	REG_GCSPR_EL0, x2
-+	ldr	x2, [x0, #136]
-+	msr	REG_GCSCRE0_EL1, x2
-+alternative_else_nop_endif
+ 	if (__cpu_suspend_enter(&state)) {
+ 		/* Call the suspend finisher */
+@@ -149,9 +152,11 @@ int cpu_suspend(unsigned long arg, int (
+ 		if (!ret)
+ 			ret = -EOPNOTSUPP;
  
- 	msr	sctlr_el1, x12
- 	set_this_cpu_offset x13
+-		ct_cpuidle_exit();
++		if (idle)
++			ct_cpuidle_exit();
+ 	} else {
+-		ct_cpuidle_exit();
++		if (idle)
++			ct_cpuidle_exit();
+ 		__cpu_suspend_exit();
+ 	}
+ 
 
 
