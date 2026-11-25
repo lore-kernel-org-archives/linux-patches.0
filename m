@@ -1,54 +1,55 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795622466;
-	b=VhOO4WjZ0epi+5kxj5fQBWhPEQeefHzyqGLZkVbbW+6st97rhOuf69lrLLCppg4RdFl6
-	 IUmo/eufL/UVTMEq0Mpv5R7gwvqd47TLhsJuD74zHsGonuXMANtuPS6PqkzLp5Bg/aInY
-	 A6xTx5fWT5Prs6y3qu3lUH2hbmr1JGxtV1XfKzvVaxRPAa/JnS1Ub2/1YlVloXjR+89BT
-	 3rqceuVEsgx2IDWwLjGK5y46h2iI+HlYJ2IJnEBQ52dwSGhWUTH7qX2pOUrNhIVMto+ur
-	 hx4R/Zdo1CuChqXLx1Yw/OvRi8KuwAQD6xo1Dgj7x85Yx8EEYXRX5WRNTbSS5lK2ojA==
+	t=1795622469;
+	b=KCHPpKmPTNpa5oGgj/yXVdXcs//9qbA7DiKvzR0PTHuGLU3vZVH8V/e19gmvG83YopDI
+	 lKNwBNmjsjnZecnpiCOral0adCvBTBnBT1uXHlKi63ia84+8uc2XwqPxcnh4z25xp25Ap
+	 m6HUL3vO9/rs0DA+BDKTxX4tAXbCh6D2zsPpLnGgZnMNFbFK7BYrz9W2sfjpUnRzvfZqS
+	 BpW6d4Vt4u1HtqMEZKxZ15O4tdXFlMnok4wae0rQlJFYrMjbhfsRYIA3foJ2ZKlNVthFw
+	 23n1YrhpxzVIKEUys9mq34bTvVfIlgxuBdXr0eePnaOTa7KA09E9O2ac3WkpXO616Ow==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795622466;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795622469;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=ebsvlVhD0WiOJzzWV8my9To6ZENy9EY5tB5nmqb0ano=;
-	b=sP3QD1oIowzHXuPwLqNBKE1okeRA/5zE2WcxPPaFTX1W16IgBWshj20fRHzs+Fw6QwcR
-	 rO5l9HXh3lyVQCd5gGpTij9QCmnp1sEiD4lbd7PJ6/rZ28RZPLaN+8pLBWIBwRZs1BMCQ
-	 WukTgqMCU94yyDcQA4TacqNR+kzItcbXylGSGtaufEKYiTTQrUjGQXgR2mbKnBAmEJnf3
-	 acs00t9zF/AlBTeANHBFAhQF2e6UF963EEhYVWVv28qJGv6veWQ/EWQbfFF7o0/PDh9Xz
-	 aemedd5ys4w7rx9/ug0JE/Xsj7bM2onW4DY9J3gBe/YVjSN89EGLhjKhID3KM+kFBQQ==
+	bh=pBw3eFZMIdFlpj6inv9HMO/BgxHcDI5Gm/o+siW6Y/Q=;
+	b=iCKkOm3pENgwVj4jyG42RWLqRkBfMximJYuvAoO+00k5UdKPo5XjzDJXQI7M+pE0QYne
+	 sfI/5Mky75oHAMc4rmg1g0TqL0QHOvemRlC3xGFxc6k3wEsRmTjQ0nEw7A+uNUHX39L9R
+	 Hjm/RKkdr2gf0IYa1skX56o8VyE4anYnt//P9MIAdVdIgkuRjVYv35uxtG/JjdGohCPBv
+	 bT/GuKeNB9FLToWq/olskYRNCvwq43HazcrElKxY1arf52Sk5KmUxgeRY39dCZcyO/ezO
+	 Omm71DZs8xcvFKX39Sn7cbnammR7qikn9Vr5rmq+eloV/RjmjEvAzHnhOjqSjAm+3vQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=oCk8YTZy;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=IlQkeAM4;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 03FA3606A696;
-	Wed, 25 Nov 2026 16:01:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E7BCC606A31E;
+	Wed, 25 Nov 2026 16:01:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=oCk8YTZy
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F3ED91F000C4;
-	Wed, 25 Nov 2026 16:01:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=IlQkeAM4
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2D7061F000EB;
+	Wed, 25 Nov 2026 16:01:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795622465;
-	bh=ebsvlVhD0WiOJzzWV8my9To6ZENy9EY5tB5nmqb0ano=;
+	s=korg; t=1795622468;
+	bh=pBw3eFZMIdFlpj6inv9HMO/BgxHcDI5Gm/o+siW6Y/Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=oCk8YTZyffD55uGjxaDw7O5ouk7f0mr6CnlWvKhFDbL9cp2JyhAsDItJwzBFHZIBb
-	 pPNwDsgKuCsEu0N8ncACC6nEU/TXE578ctXcww9pUyA2OBjTXYKTw6XO+wl6wpK+HB
-	 x13W7UKTs3bLwbFfU/e9kl+c129Kj5KernXb8dZ4=
+	b=IlQkeAM4URMTXy//szPzX/P5MKF0ECIBcOePXfcKVouXddsEwd2zHiA8doOKupPM/
+	 uoXtSBypK1Y1VmkyaT3hn6o4yVwNFquU3oe7K2s6RSK1s/bcQfaGsWAYg9p82BYZ1I
+	 u1TlDNF85BMBKjZd/topGnpEx5jgLHy93JGHsbFs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Boris Brezillon <boris.brezillon@collabora.com>,
-	Nicolas Frattaroli <nicolas.frattaroli@collabora.com>,
-	Liviu Dudau <liviu.dudau@arm.com>,
-	Steven Price <steven.price@arm.com>,
+	Davidlohr Bueso <dave@stgolabs.net>,
+	Dave Jiang <dave.jiang@intel.com>,
+	Alison Schofield <alison.schofield@intel.com>,
+	Shaikh Kamaluddin <shaikhkamal2012@gmail.com>,
+	"Gregory Price (Meta)" <gourry@gourry.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 502/990] drm/panthor: Revisit reqs_lock handling in flush/reset paths
-Date: Wed, 25 Nov 2026 15:31:09 +0100
-Message-ID: <20261125143833.858541640@linuxfoundation.org>
+Subject: [PATCH 6.18 503/990] cxl/test: Map mock device nodes to an online node
+Date: Wed, 25 Nov 2026 15:31:10 +0100
+Message-ID: <20261125143833.883921159@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143822.072087159@linuxfoundation.org>
 References: <20261125143822.072087159@linuxfoundation.org>
@@ -70,133 +71,74 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Nicolas Frattaroli <nicolas.frattaroli@collabora.com>
+From: Davidlohr Bueso <dave@stgolabs.net>
 
-[ Upstream commit 4fd08b3d1da78e33cb5939f0086e61f9d660cd6c ]
+[ Upstream commit 6f057dea152574dd044382fd0ba5ed19e3ecba25 ]
 
-panthor_gpu_flush_caches() and panthor_gpu_soft_reset() acquire their
-reqs_lock spinlock with the IRQ-disabling variants of the spinlocking
-functions. This isn't necessary, as the lock is never taken from an
-atomic context, as Panthor uses threaded interrupt handlers. The result
-of this overly strict locking is that IRQs may be disabled more
-frequently and for longer than they should be, resulting in increased
-system latency.
+cxl_type3_mem_init() and cxl_type2_mem_init() assign alternating NUMA
+nodes to the mock memdevs to model multi-node topologies. On a
+single-node host node 1 has no pgdat, and the first node-aware
+allocation in an odd device's probe faults on a NULL zonelist:
 
-Switch the locking to use non-IRQ-disabling scoped_guard statements for
-locking. The wait_event_timeout read of pending_reqs outside of the
-spinlock is fine as wait_event_timeout is a memory barrier according to
-the Linux Memory Model.
+  Oops: general protection fault, probably for non-canonical address 0xdffffc00000006e3
+  KASAN: probably user-memory-access in range [0x0000000000003718-0x000000000000371f]
+  Workqueue: async async_run_entry_fn
+  RIP: __alloc_frozen_pages_noprof+0x288
+   new_slab
+   ___slab_alloc
+   __kmalloc_node_track_caller_noprof
+   devm_kmalloc
+   cxl_mock_mem_probe
 
-Fixes: 5cd894e258c4 ("drm/panthor: Add the GPU logical block")
-Reviewed-by: Boris Brezillon <boris.brezillon@collabora.com>
-Signed-off-by: Nicolas Frattaroli <nicolas.frattaroli@collabora.com>
-Reviewed-by: Liviu Dudau <liviu.dudau@arm.com>
-Reviewed-by: Steven Price <steven.price@arm.com>
-Signed-off-by: Liviu Dudau <liviu.dudau@arm.com>
-Link: https://patch.msgid.link/20260812-panthor-cache-flush-fix-v4-2-751e32901898@collabora.com
+Map the requested node to an online one, as dax_hmem already does
+for its target node.
 
-[ sashal: Dropped the cache flush tracepoint calls, which this tree lacks. ]
-
+Fixes: cf1f6877b088 ("cxl/memdev: Add numa_node attribute")
+Signed-off-by: Davidlohr Bueso <dave@stgolabs.net>
+Reviewed-by: Dave Jiang <dave.jiang@intel.com>
+Reviewed-by: Alison Schofield <alison.schofield@intel.com>
+Tested-by: Alison Schofield <alison.schofield@intel.com>
+Tested-by: Shaikh Kamaluddin <shaikhkamal2012@gmail.com>
+Reviewed-by: Gregory Price (Meta) <gourry@gourry.net>
+Link: https://patch.msgid.link/20260831175119.3247915-1-dave@stgolabs.net
+Signed-off-by: Dave Jiang <dave.jiang@intel.com>
+[ sashal: Dropped the upstream hunk in the type-2 init function, which doesn't exist here, and applied the numa_map_to_online_node() wrapper to the three set_dev_node calls in cxl_mem_init(). ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/panthor/panthor_gpu.c | 61 ++++++++++++---------------
- 1 file changed, 28 insertions(+), 33 deletions(-)
+ tools/testing/cxl/test/cxl.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/gpu/drm/panthor/panthor_gpu.c b/drivers/gpu/drm/panthor/panthor_gpu.c
-index 7f2dc65386fd4..6be62672a3be8 100644
---- a/drivers/gpu/drm/panthor/panthor_gpu.c
-+++ b/drivers/gpu/drm/panthor/panthor_gpu.c
-@@ -259,34 +259,30 @@ int panthor_gpu_l2_power_on(struct panthor_device *ptdev)
- int panthor_gpu_flush_caches(struct panthor_device *ptdev,
- 			     u32 l2, u32 lsc, u32 other)
- {
--	unsigned long flags;
- 	int ret = 0;
+diff --git a/tools/testing/cxl/test/cxl.c b/tools/testing/cxl/test/cxl.c
+index aadb90ec516e5..9663f183aa2c0 100644
+--- a/tools/testing/cxl/test/cxl.c
++++ b/tools/testing/cxl/test/cxl.c
+@@ -1369,7 +1369,7 @@ static int cxl_mem_init(void)
+ 		if (!pdev)
+ 			goto err_mem;
+ 		pdev->dev.parent = &dport->dev;
+-		set_dev_node(&pdev->dev, i % 2);
++		set_dev_node(&pdev->dev, numa_map_to_online_node(i % 2));
  
- 	/* Serialize cache flush operations. */
- 	guard(mutex)(&ptdev->gpu->cache_flush_lock);
+ 		rc = cxl_mock_platform_device_add(pdev, &cxl_mem[i]);
+ 		if (rc)
+@@ -1384,7 +1384,7 @@ static int cxl_mem_init(void)
+ 		if (!pdev)
+ 			goto err_single;
+ 		pdev->dev.parent = &dport->dev;
+-		set_dev_node(&pdev->dev, i % 2);
++		set_dev_node(&pdev->dev, numa_map_to_online_node(i % 2));
  
--	spin_lock_irqsave(&ptdev->gpu->reqs_lock, flags);
--	if (!(ptdev->gpu->pending_reqs & GPU_IRQ_CLEAN_CACHES_COMPLETED)) {
--		ptdev->gpu->pending_reqs |= GPU_IRQ_CLEAN_CACHES_COMPLETED;
--		gpu_write(ptdev, GPU_CMD, GPU_FLUSH_CACHES(l2, lsc, other));
--	} else {
--		ret = -EIO;
-+	scoped_guard(spinlock, &ptdev->gpu->reqs_lock) {
-+		if (!(ptdev->gpu->pending_reqs & GPU_IRQ_CLEAN_CACHES_COMPLETED)) {
-+			ptdev->gpu->pending_reqs |= GPU_IRQ_CLEAN_CACHES_COMPLETED;
-+			gpu_write(ptdev, GPU_CMD, GPU_FLUSH_CACHES(l2, lsc, other));
-+		} else {
-+			return -EIO;
-+		}
- 	}
--	spin_unlock_irqrestore(&ptdev->gpu->reqs_lock, flags);
--
--	if (ret)
--		return ret;
+ 		rc = cxl_mock_platform_device_add(pdev, &cxl_mem_single[i]);
+ 		if (rc)
+@@ -1400,7 +1400,7 @@ static int cxl_mem_init(void)
+ 		if (!pdev)
+ 			goto err_rcd;
+ 		pdev->dev.parent = &rch->dev;
+-		set_dev_node(&pdev->dev, i % 2);
++		set_dev_node(&pdev->dev, numa_map_to_online_node(i % 2));
  
- 	if (!wait_event_timeout(ptdev->gpu->reqs_acked,
- 				!(ptdev->gpu->pending_reqs & GPU_IRQ_CLEAN_CACHES_COMPLETED),
- 				msecs_to_jiffies(100))) {
--		spin_lock_irqsave(&ptdev->gpu->reqs_lock, flags);
--		if ((ptdev->gpu->pending_reqs & GPU_IRQ_CLEAN_CACHES_COMPLETED) != 0 &&
--		    !(gpu_read(ptdev, GPU_INT_RAWSTAT) & GPU_IRQ_CLEAN_CACHES_COMPLETED))
--			ret = -ETIMEDOUT;
--		else
--			ptdev->gpu->pending_reqs &= ~GPU_IRQ_CLEAN_CACHES_COMPLETED;
--		spin_unlock_irqrestore(&ptdev->gpu->reqs_lock, flags);
-+		scoped_guard(spinlock, &ptdev->gpu->reqs_lock) {
-+			if ((ptdev->gpu->pending_reqs & GPU_IRQ_CLEAN_CACHES_COMPLETED) != 0 &&
-+			    !(gpu_read(ptdev, GPU_INT_RAWSTAT) & GPU_IRQ_CLEAN_CACHES_COMPLETED))
-+				ret = -ETIMEDOUT;
-+			else
-+				ptdev->gpu->pending_reqs &= ~GPU_IRQ_CLEAN_CACHES_COMPLETED;
-+		}
- 	}
- 
- 	if (ret) {
-@@ -306,27 +302,26 @@ int panthor_gpu_flush_caches(struct panthor_device *ptdev,
- int panthor_gpu_soft_reset(struct panthor_device *ptdev)
- {
- 	bool timedout = false;
--	unsigned long flags;
- 
--	spin_lock_irqsave(&ptdev->gpu->reqs_lock, flags);
--	if (!drm_WARN_ON(&ptdev->base,
--			 ptdev->gpu->pending_reqs & GPU_IRQ_RESET_COMPLETED)) {
--		ptdev->gpu->pending_reqs |= GPU_IRQ_RESET_COMPLETED;
--		gpu_write(ptdev, GPU_INT_CLEAR, GPU_IRQ_RESET_COMPLETED);
--		gpu_write(ptdev, GPU_CMD, GPU_SOFT_RESET);
-+	scoped_guard(spinlock, &ptdev->gpu->reqs_lock) {
-+		if (!drm_WARN_ON(&ptdev->base,
-+				ptdev->gpu->pending_reqs & GPU_IRQ_RESET_COMPLETED)) {
-+			ptdev->gpu->pending_reqs |= GPU_IRQ_RESET_COMPLETED;
-+			gpu_write(ptdev, GPU_INT_CLEAR, GPU_IRQ_RESET_COMPLETED);
-+			gpu_write(ptdev, GPU_CMD, GPU_SOFT_RESET);
-+		}
- 	}
--	spin_unlock_irqrestore(&ptdev->gpu->reqs_lock, flags);
- 
- 	if (!wait_event_timeout(ptdev->gpu->reqs_acked,
- 				!(ptdev->gpu->pending_reqs & GPU_IRQ_RESET_COMPLETED),
- 				msecs_to_jiffies(100))) {
--		spin_lock_irqsave(&ptdev->gpu->reqs_lock, flags);
--		if ((ptdev->gpu->pending_reqs & GPU_IRQ_RESET_COMPLETED) != 0 &&
--		    !(gpu_read(ptdev, GPU_INT_RAWSTAT) & GPU_IRQ_RESET_COMPLETED))
--			timedout = true;
--		else
--			ptdev->gpu->pending_reqs &= ~GPU_IRQ_RESET_COMPLETED;
--		spin_unlock_irqrestore(&ptdev->gpu->reqs_lock, flags);
-+		scoped_guard(spinlock, &ptdev->gpu->reqs_lock) {
-+			if ((ptdev->gpu->pending_reqs & GPU_IRQ_RESET_COMPLETED) != 0 &&
-+			    !(gpu_read(ptdev, GPU_INT_RAWSTAT) & GPU_IRQ_RESET_COMPLETED))
-+				timedout = true;
-+			else
-+				ptdev->gpu->pending_reqs &= ~GPU_IRQ_RESET_COMPLETED;
-+		}
- 	}
- 
- 	if (timedout) {
+ 		rc = cxl_mock_platform_device_add(pdev, &cxl_rcd[i]);
+ 		if (rc)
 -- 
 2.53.0
 
