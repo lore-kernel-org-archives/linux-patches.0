@@ -1,54 +1,55 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795624871;
-	b=CXb26WRrWH6kwObF3/u59S4am2cs93W9Y5qJHPUe+DwdEJI8Z92BVqrbJhRdblHxeF+X
-	 4ZXKYyikgCCz8LNi+SsGyPwTI6d40WvY6NnZBUBfidYXP/OzvF0dlDT/qyJiJ3T3Pjdcl
-	 onpIm5LD8ELS9+RuSfoAklCBn5ABlcDFYP6cUvM2vMcjtg/we53pllsyz5N+GP5d3KMMD
-	 bR2rtzqsK/Pwx9KpBqnpSOkS1JyoawB4Tko2Q99OsllG480n+SsFWTbrxC8y0ilsW8pQk
-	 5WlQ/Xne/arCEWbouT63cYS4V4ETjf5kxUMM51FdeRUtsunBQR9bzQUB/L5uhn0ZBNQ==
+	t=1795624874;
+	b=tw9URg4yj1G4yAHFuQst9vXwQEsxX+6+53Y1OLvuQ01Jf9+FpsOXqHiGbrh7fShqQXZ1
+	 kKq7o216K+iX0/r9+ubJpsQbbtuKfAA6MvctkVahEFxzMmn6jgrzPWI+7n+yliI5ZsM7H
+	 iMl+LV3fR7NXM0RD0Yww0eTP3xFRObDp712XBOM+NG6VwuGwNQMpq/KrpNIqPVORVCRz3
+	 X0eIWa8Q3nHn186ScPczPgrdCwAe8NOLAHns4WbgnPdq50iNzxypyrUzm0pRylaeBug9g
+	 b5IySpEGXAyNYxeYMZR469snMQl35j+6ACMfTuLw/zmW7gbSrdlDIihHCNhNjq5HD2Q==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795624871;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795624874;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=bdRrp6VsYYHoK4QGew9/mcQlGV0PIv1/k9p6By8yp1c=;
-	b=znKcL8xM7TnNVg0C4ebAUIefil28uFGKwUWsAoLXb6+NQaPp0J6rA5LECA0wND8ocTaa
-	 BMXkmM2An26prWwBw9Igcf9SD00+1JAIuN1LScXbMEboj6mDHHsAC7lM00SStaufcwOqc
-	 PBhQZjq+cUXwhslYPXSlCJO31cQqVsJRchvrwS7kvLpW+kypyvGUchrqKIKzraKv08xxt
-	 o/ZgVpIcLzg6IlbVdw9/0sKT3wzMs81arQbJrgfsTFcEZ+aQtarvFsi++0w+qYmPr8B/Q
-	 6mgaFvhrxI75Vlj/qRw2UWIEl97JvbIhqgS0epiBfGDcpTqek7rPVn/F4I9oq12zfjg==
+	bh=2Nchz3vM/023FbTH5xhQAfcsSXgaaYDETo17JO2tUSs=;
+	b=2glsur4eJ6JYAzpZx5+V/p4Oo9+A19df9Wkax63qqegTJK7r0Bfu6Wfnf3Ru6YCosBDP
+	 IunbZCdd6egEcJ+I4nTbSJpL7vxPCIfKIIlV6V05jkobfGd2LKc1pgTWKRnQpAMz35l+5
+	 GNKUdwXX6dx7PCUuOMq+7bAeyeaCJ+mz78riBy31J2XW5nQtyQV6lfdFi0POvkCRCD5L9
+	 FutrEnzpOxQ9lJtZAfGK0oZTm0mu7phMw+YwQOyrs5omMB2ge+E6YNHjHiwHfBSqILeK1
+	 FDtLKIj9tZaQp0cuZj2HKPreW2+sG25pX8ADl5Z7dplz3D9y0rtUlJq3bN5TC+eHqYA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=0MKtdHS1;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=MeKNd4U0;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B1768606A327;
-	Wed, 25 Nov 2026 16:41:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A4100606A31E;
+	Wed, 25 Nov 2026 16:41:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=0MKtdHS1
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8406C1F000CF;
-	Wed, 25 Nov 2026 16:41:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=MeKNd4U0
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D73A21F000D0;
+	Wed, 25 Nov 2026 16:41:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795624871;
-	bh=bdRrp6VsYYHoK4QGew9/mcQlGV0PIv1/k9p6By8yp1c=;
+	s=korg; t=1795624874;
+	bh=2Nchz3vM/023FbTH5xhQAfcsSXgaaYDETo17JO2tUSs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=0MKtdHS1nSqwAlO3NP3VHAHgO6TLKGO9/raZScwuaeILzE6Ubo0pIglS9Jf8PFemD
-	 vF4m9l3E3au7oRCrqPxi9Oa1Jiw57yZxkFs31MQ18pjCh7yfRNxJICWJL7LFLWE6sZ
-	 6ZLN3ZHFjyvip1e6gYHCj/vanKtLuFtgRiDP/gvM=
+	b=MeKNd4U0qc0Zmh8UmYd46034JBi4sQlqcer5v7/H7dhA4AP8SyDxS3khi5UFkNaYD
+	 C3WrmpDssFHgDx8BjBSE9Nw3esqITfqnErZL0S7x3u0pNRGO7eCVCyAUakp8WnyZOI
+	 5CAI6KySfwhGT/X2aT7/sZz2uwDLFf/+boyBFHtY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eric Dumazet <edumazet@google.com>,
-	Octavian Purdila <tavip@google.com>,
-	Neal Cardwell <ncardwell@google.com>,
+	Kyle Zeng <kylebot@openai.com>,
+	Michal Luczaj <mhal@rbox.co>,
+	Hyunwoo Kim <imv4bel@gmail.com>,
+	Kuniyuki Iwashima <kuniyu@google.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 334/816] net: rfs: add sock_rps_delete_flow() helper
-Date: Wed, 25 Nov 2026 15:31:22 +0100
-Message-ID: <20261125143856.930727961@linuxfoundation.org>
+Subject: [PATCH 6.12 335/816] tcp: Do not allow buggy transitions between ehash and lhash2.
+Date: Wed, 25 Nov 2026 15:31:23 +0100
+Message-ID: <20261125143856.952502692@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143849.205329330@linuxfoundation.org>
 References: <20261125143849.205329330@linuxfoundation.org>
@@ -70,139 +71,110 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eric Dumazet <edumazet@google.com>
+From: Kuniyuki Iwashima <kuniyu@google.com>
 
-[ Upstream commit 9cd5ef0b8c04c46a15c8f5d002f02ea0d0477790 ]
+[ Upstream commit 8cc3aef0cb198049805ecc061a2cc7b79b0ae43e ]
 
-RFS can exhibit lower performance for workloads using short-lived
-flows and a small set of 4-tuple.
+The following state transitions have long been a playground for
+syzbot, and recently AI joined in, reporting a lot more bugs.
 
-This is often the case for load-testers, using a pair of hosts,
-if the server has a single listener port.
+  * listen() + shutdown() + connect()
+  * connect() + connect(AF_UNSPEC) + listen()
 
-Typical use case :
+All the fix attempts would add more code to the fast path, which
+is not worth it.
 
-Server : tcp_crr -T128 -F1000 -6 -U -l30 -R 14250
-Client : tcp_crr -T128 -F1000 -6 -U -l30 -c -H server | grep local_throughput
+Instead of playing whack-a-mole with these edge-case bugs,
+let's disallow these transitions.
 
-This is because RFS global hash table contains stale information,
-when the same RSS key is recycled for another socket and another cpu.
+Note that unhashed_state is placed in the 4-byte hole after
+icsk_pmtu_cookie.
 
-Make sure to undo the changes and go back to initial state when
-a flow is disconnected.
+  $ pahole -C inet_connection_sock vmlinux
+  struct inet_connection_sock {
+  ...
+	__u32                      icsk_pmtu_cookie;     /*  1208     4 */
+	unsigned char              unhashed_state;       /*  1212     1 */
 
-Performance of the above test is increased by 22 %,
-going from 372604 transactions per second to 457773.
+	/* XXX 3 bytes hole, try to pack */
 
-Signed-off-by: Eric Dumazet <edumazet@google.com>
-Reported-by: Octavian Purdila <tavip@google.com>
-Reviewed-by: Neal Cardwell <ncardwell@google.com>
-Link: https://patch.msgid.link/20250515100354.3339920-1-edumazet@google.com
+Reported-by: Kyle Zeng <kylebot@openai.com>
+Closes: https://lore.kernel.org/netdev/20260731140512.566464-1-david.lee@trailofbits.com/
+Reported-by: Michal Luczaj <mhal@rbox.co>
+Closes: https://lore.kernel.org/netdev/20260803-sockmap-lookup-tcp-leak-v2-0-306e025bfe66@rbox.co/
+Reported-by: Hyunwoo Kim <imv4bel@gmail.com>
+Closes: https://lore.kernel.org/netdev/20260824033331.1084971-1-imv4bel@gmail.com/
+Signed-off-by: Kuniyuki Iwashima <kuniyu@google.com>
+Link: https://patch.msgid.link/20260904033543.2635540-2-kuniyu@google.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Stable-dep-of: 8c011697f76a ("tcp: do not resurrect a former listener with SO_ATTACH_REUSEPORT_[CE]BPF")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/net/rps.h          | 24 ++++++++++++++++++++++++
- net/ipv4/inet_hashtables.c |  6 ++++--
- net/ipv4/udp.c             |  2 ++
- net/sctp/socket.c          |  2 +-
- 4 files changed, 31 insertions(+), 3 deletions(-)
+ include/net/inet_connection_sock.h |  1 +
+ net/ipv4/inet_connection_sock.c    |  1 +
+ net/ipv4/inet_hashtables.c         | 11 +++++++++++
+ 3 files changed, 13 insertions(+)
 
-diff --git a/include/net/rps.h b/include/net/rps.h
-index a93401d23d66e..6e98aa7655afe 100644
---- a/include/net/rps.h
-+++ b/include/net/rps.h
-@@ -122,6 +122,30 @@ static inline void sock_rps_record_flow(const struct sock *sk)
- #endif
- }
+diff --git a/include/net/inet_connection_sock.h b/include/net/inet_connection_sock.h
+index e8ee9164ec5ac..2ff01a8fbef2b 100644
+--- a/include/net/inet_connection_sock.h
++++ b/include/net/inet_connection_sock.h
+@@ -101,6 +101,7 @@ struct inet_connection_sock {
+ 	__u32                     icsk_rto_min;
+ 	__u32                     icsk_delack_max;
+ 	__u32			  icsk_pmtu_cookie;
++	unsigned char		  unhashed_state;
+ 	const struct tcp_congestion_ops *icsk_ca_ops;
+ 	const struct inet_connection_sock_af_ops *icsk_af_ops;
+ 	const struct tcp_ulp_ops  *icsk_ulp_ops;
+diff --git a/net/ipv4/inet_connection_sock.c b/net/ipv4/inet_connection_sock.c
+index 64093410f6d52..5b6436e6f242c 100644
+--- a/net/ipv4/inet_connection_sock.c
++++ b/net/ipv4/inet_connection_sock.c
+@@ -1304,6 +1304,7 @@ struct sock *inet_csk_clone_lock(const struct sock *sk,
+ 	memset(&newicsk->icsk_accept_queue, 0,
+ 	       sizeof(newicsk->icsk_accept_queue));
  
-+static inline void sock_rps_delete_flow(const struct sock *sk)
-+{
-+#ifdef CONFIG_RPS
-+	struct rps_sock_flow_table *table;
-+	u32 hash, index;
-+
-+	if (!static_branch_unlikely(&rfs_needed))
-+		return;
-+
-+	hash = READ_ONCE(sk->sk_rxhash);
-+	if (!hash)
-+		return;
-+
-+	rcu_read_lock();
-+	table = rcu_dereference(net_hotdata.rps_sock_flow_table);
-+	if (table) {
-+		index = hash & table->mask;
-+		if (READ_ONCE(table->ents[index]) != RPS_NO_CPU)
-+			WRITE_ONCE(table->ents[index], RPS_NO_CPU);
-+	}
-+	rcu_read_unlock();
-+#endif
-+}
-+
- static inline u32 rps_input_queue_tail_incr(struct softnet_data *sd)
- {
- #ifdef CONFIG_RPS
++	newicsk->unhashed_state = 0;
+ 	inet_sk_set_state(newsk, TCP_SYN_RECV);
+ 
+ 	inet_clone_ulp(req, newsk, priority);
 diff --git a/net/ipv4/inet_hashtables.c b/net/ipv4/inet_hashtables.c
-index e7b312f7cd98f..7035e35bea5e1 100644
+index 7035e35bea5e1..a597c176a5e45 100644
 --- a/net/ipv4/inet_hashtables.c
 +++ b/net/ipv4/inet_hashtables.c
-@@ -23,11 +23,12 @@
- #if IS_ENABLED(CONFIG_IPV6)
- #include <net/inet6_hashtables.h>
- #endif
--#include <net/secure_seq.h>
- #include <net/hotdata.h>
- #include <net/ip.h>
--#include <net/tcp.h>
-+#include <net/rps.h>
-+#include <net/secure_seq.h>
- #include <net/sock_reuseport.h>
-+#include <net/tcp.h>
+@@ -744,6 +744,11 @@ int __inet_hash(struct sock *sk, struct sock *osk)
+ 		return 0;
+ 	}
+ 	WARN_ON(!sk_unhashed(sk));
++
++	if (unlikely(inet_csk(sk)->unhashed_state &&
++		     inet_csk(sk)->unhashed_state != TCP_LISTEN))
++		return -EINVAL;
++
+ 	ilb2 = inet_lhash2_bucket_sk(hashinfo, sk);
  
- u32 inet_ehashfn(const struct net *net, const __be32 laddr,
- 		 const __u16 lport, const __be32 faddr,
-@@ -783,6 +784,7 @@ void inet_unhash(struct sock *sk)
- 	if (sk_unhashed(sk))
+ 	spin_lock(&ilb2->lock);
+@@ -785,6 +790,9 @@ void inet_unhash(struct sock *sk)
  		return;
  
-+	sock_rps_delete_flow(sk);
+ 	sock_rps_delete_flow(sk);
++
++	inet_csk(sk)->unhashed_state = sk->sk_state;
++
  	if (sk->sk_state == TCP_LISTEN) {
  		struct inet_listen_hashbucket *ilb2;
  
-diff --git a/net/ipv4/udp.c b/net/ipv4/udp.c
-index 22eee4fdd5d8d..4fc8263286f2e 100644
---- a/net/ipv4/udp.c
-+++ b/net/ipv4/udp.c
-@@ -119,6 +119,7 @@
- #if IS_ENABLED(CONFIG_IPV6)
- #include <net/ipv6_stubs.h>
- #endif
-+#include <net/rps.h>
+@@ -1017,6 +1025,9 @@ int __inet_hash_connect(struct inet_timewait_death_row *death_row,
+ 	int step, l3mdev;
+ 	u32 index;
  
- struct udp_table udp_table __read_mostly;
- EXPORT_SYMBOL(udp_table);
-@@ -2050,6 +2051,7 @@ void udp_lib_unhash(struct sock *sk)
- 		struct udp_table *udptable = udp_get_table_prot(sk);
- 		struct udp_hslot *hslot, *hslot2;
- 
-+		sock_rps_delete_flow(sk);
- 		hslot  = udp_hashslot(udptable, sock_net(sk),
- 				      udp_sk(sk)->udp_port_hash);
- 		hslot2 = udp_hashslot2(udptable, udp_sk(sk)->udp_portaddr_hash);
-diff --git a/net/sctp/socket.c b/net/sctp/socket.c
-index 7734ca92335aa..3c8b9b8b07e03 100644
---- a/net/sctp/socket.c
-+++ b/net/sctp/socket.c
-@@ -8390,7 +8390,7 @@ static int sctp_hash(struct sock *sk)
- 
- static void sctp_unhash(struct sock *sk)
- {
--	/* STUB */
-+	sock_rps_delete_flow(sk);
- }
- 
- /* Check if port is acceptable.  Possibly find first available port.
++	if (unlikely(inet_csk(sk)->unhashed_state == TCP_LISTEN))
++		return -EINVAL;
++
+ 	if (port) {
+ 		local_bh_disable();
+ 		ret = check_established(death_row, sk, port, NULL);
 -- 
 2.53.0
 
