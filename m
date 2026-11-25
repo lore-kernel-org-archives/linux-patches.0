@@ -1,55 +1,55 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795621844;
-	b=dJfMaUe9XvLQrhRX6uPpz2o9fyMEXJSCrkn9U69h/tQYR+XcmOkmJGnPDLCorp7/ZX4k
-	 vK8bj4BKJfhNqp5CsoxODsV8tvcrXVuaClG9MshUOandP3aXDdaaHzn6+zeH8VEAbFAv1
-	 SUjtnbii9UfztSVYwRxNTslQOdbgJt4RxoPF2SV8FCM5fNuW2JT/rLjHn55oVdRy0HIsS
-	 J/YGWqvVRXk0veQcDmjJvmgDA9AG5mz27O43M4khZI88alYkRPAIvJx+ixxprFOqr7VDz
-	 lHpLz7HmU1TqqU0Y4TZby8hnfkfBa83mZe6yRw/YmCa82sckGn+E1ZXTLL2pT24ZUlQ==
+	t=1795621848;
+	b=ZUXyU1rzbPs19+vY3voMPHcWoTfZt2uheOJ0rJHoiEBIXBFmZeGmTsmdE3lTv80qu/qI
+	 VNEHcMbYxRw9L8DdA62KuxzyVdO60abPxYscjKA4xU8fuuNc5AYmBnied6Q/Hta7f3cH7
+	 jK97jSlPDLlPdY3aQE3wLzSEio4rvywz+/h3a55jEN5Ifz0qJsuEC2KUIzMJ9l/+EQaGz
+	 Trgfd+O3fxLZX2I4GcWLovfMkJmr2nWd0il3AVFVWnYLvJthTKlSiWWjy25uup+4adGmG
+	 bjBmXxJLzRTOe3B7yBaLuYohOf73HykGnFYYJeonT7wSVdQVrX2a6A9F3ntSt5e4j0Q==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795621844;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795621848;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=VQVeupLPQdZmb/ffHKxy9XNdjodPYODf1bbGx5H1iHo=;
-	b=AiTbU+/+chYkifvJ0sVADu5g3BhYilw6jaeci11JwDMruv0z+XLEaH5k2mYMfIDXuYrB
-	 m4wYm5N/pz+4yLdAm6OAgFE3Q24l5/vJW0rZba3Rr6SSRt03Fv5Bc8MZ3trMUVuPlF7RX
-	 9+4MINc/KXq2nhS0UnRet/x+Z+TmfRV4hBtrPcd+W19da7ZVnA0i+LA/m7dd3WVhxyQRV
-	 LeMCGRT0AymVmXIVtfYJ0iUfDxWzYIhV9N5I7TePQc05VsLiVquRs8KMGoUt+ENYGXe5t
-	 yjOzEBGRrddMXMFvQkSQI5pj4N9MccEEuC8IOhalqLXpoILnqTKT8rshKvQotKa+6SA==
+	bh=yOJ0kMaGqTkPc/r33xPyEhC2N1dCzpndcMPrEj+xdTk=;
+	b=MX27Jon90LTrXbvJklifBOZUFUsYJiXADSJd3vR2kycP8YlwXY7RFce8kvJ3suH2nbp2
+	 Gl8Kp+KKFlnQVTjRw7B3Tmy2vb41bPvtnvHbaZioYfuAnUifsxtYskuEeyMM9MN9eXOj4
+	 lCusaumsMnYVo6ri6WS7+oB8e+/xusZ/mvxdwmPuRvb63C8TabVC9JDqBv01H7OxXPE6/
+	 z9HZPNABNxMXzzd9fHaaLF2Q3r+tWZt2B3Kg4Df/cGItoB8YoFdDlGzOTgALWoUiZvSLC
+	 vF5bG5SZJ4dmbEdsggA8r1cY78+o374YBDAvPm93sOwwQWOjOwt7Av54z5SpMohmvzw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=sTJ9Lpue;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=RgP+G76w;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 32834606A32C;
-	Wed, 25 Nov 2026 15:50:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0120F606A31E;
+	Wed, 25 Nov 2026 15:50:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=sTJ9Lpue
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 547781F000CA;
-	Wed, 25 Nov 2026 15:50:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=RgP+G76w
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A07B81F000C0;
+	Wed, 25 Nov 2026 15:50:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795621843;
-	bh=VQVeupLPQdZmb/ffHKxy9XNdjodPYODf1bbGx5H1iHo=;
+	s=korg; t=1795621847;
+	bh=yOJ0kMaGqTkPc/r33xPyEhC2N1dCzpndcMPrEj+xdTk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=sTJ9Lpuew5c297mt/afRZv4KdWJZyWHASQHqxrlclK9v/4USZOkCT6rrYRQISod+Q
-	 srcOW87EYfRmqd10Kabb/bA7OfXfvQqpYAfOUKk9dyoczwnByF4DgjpxDZcsmQSM9C
-	 Lcy53VM/V+FPmCnREA4sbSzjqiRpLT1bo2e2mH/A=
+	b=RgP+G76wbZpFqUGnZL1K0+fMBTEslOGvKp/0VXzRlv0ev4Rv2vlw0xVF3xvcDRT8E
+	 o1p3X0YuIxVLY70KiufFgW59qHR0zxlochI2m9/rd1bXnM+JY0gXl5kE6vY+uP3chU
+	 lrDCwibCjyGevwW0rSq86fccko9xBejOjxMdEJyQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Matthew Auld <matthew.auld@intel.com>,
-	Karthik Poosa <karthik.poosa@intel.com>,
-	Vinay Belgaumkar <vinay.belgaumkar@intel.com>,
-	Matthew Brost <matthew.brost@intel.com>,
-	Dave Airlie <airlied@redhat.com>,
+	Sean Christopherson <seanjc@google.com>,
+	Kan Liang <kan.liang@linux.intel.com>,
+	Mingwei Zhang <mizhang@google.com>,
+	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
+	Xudong Hao <xudong.hao@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 350/990] drm/xe: Toggle the D3Cold enable flag at runtime resume
-Date: Wed, 25 Nov 2026 15:28:37 +0100
-Message-ID: <20261125143830.291030845@linuxfoundation.org>
+Subject: [PATCH 6.18 308/990] perf: Add APIs to create/release mediated guest vPMUs
+Date: Wed, 25 Nov 2026 15:27:55 +0100
+Message-ID: <20261125143829.305462688@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143822.072087159@linuxfoundation.org>
 References: <20261125143822.072087159@linuxfoundation.org>
@@ -71,48 +71,233 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Vinay Belgaumkar <vinay.belgaumkar@intel.com>
+From: Kan Liang <kan.liang@linux.intel.com>
 
-[ Upstream commit e42459b16cbf1cbcebfc1ab406140cca204fd831 ]
+[ Upstream commit eff95e170275d9e80b968f335cd03d0ac250d2d1 ]
 
-We enable this flag during runtime suspend, need to set it back to
-false early during resume to maintain consistency in pci driver's
-internal state. d3cold_toggle() updates the root port's ability
-to go into d3cold via the dev->no_d3cold flag. With this patch, we
-are ensuring this internal state remains consistent with that of
-the endpoint.
+Currently, exposing PMU capabilities to a KVM guest is done by emulating
+guest PMCs via host perf events, i.e. by having KVM be "just" another user
+of perf.  As a result, the guest and host are effectively competing for
+resources, and emulating guest accesses to vPMU resources requires
+expensive actions (expensive relative to the native instruction).  The
+overhead and resource competition results in degraded guest performance
+and ultimately very poor vPMU accuracy.
 
-v2: Clarify the commit message (Matt Auld)
-v3: Add fixes (Karthik Poosa)
+To address the issues with the perf-emulated vPMU, introduce a "mediated
+vPMU", where the data plane (PMCs and enable/disable knobs) is exposed
+directly to the guest, but the control plane (event selectors and access
+to fixed counters) is managed by KVM (via MSR interceptions).  To allow
+host perf usage of the PMU to (partially) co-exist with KVM/guest usage
+of the PMU, KVM and perf will coordinate to a world switch between host
+perf context and guest vPMU context near VM-Enter/VM-Exit.
 
-Fixes: f026520367be ("drm/xe: Only set PCI d3cold_allowed when we are really allowing.")
-Cc: Matthew Auld <matthew.auld@intel.com>
-Acked-by: Karthik Poosa <karthik.poosa@intel.com>
-Signed-off-by: Vinay Belgaumkar <vinay.belgaumkar@intel.com>
-Reviewed-by: Karthik Poosa <karthik.poosa@intel.com>
-Link: https://patch.msgid.link/20261027174351.619929-6-vinay.belgaumkar@intel.com
-(cherry picked from commit e994e0f1ba52e4be3607ba7f952a8d835f1f6563)
-Signed-off-by: Matthew Brost <matthew.brost@intel.com>
-Signed-off-by: Dave Airlie <airlied@redhat.com>
+Add two exported APIs, perf_{create,release}_mediated_pmu(), to allow KVM
+to create and release a mediated PMU instance (per VM).  Because host perf
+context will be deactivated while the guest is running, mediated PMU usage
+will be mutually exclusive with perf analysis of the guest, i.e. perf
+events that do NOT exclude the guest will not behave as expected.
+
+To avoid silent failure of !exclude_guest perf events, disallow creating a
+mediated PMU if there are active !exclude_guest events, and on the perf
+side, disallowing creating new !exclude_guest perf events while there is
+at least one active mediated PMU.
+
+Exempt PMU resources that do not support mediated PMU usage, i.e. that are
+outside the scope/view of KVM's vPMU and will not be swapped out while the
+guest is running.
+
+Guard mediated PMU with a new kconfig to help readers identify code paths
+that are unique to mediated PMU support, and to allow for adding arch-
+specific hooks without stubs.  KVM x86 is expected to be the only KVM
+architecture to support a mediated PMU in the near future (e.g. arm64 is
+trending toward a partitioned PMU implementation), and KVM x86 will select
+PERF_GUEST_MEDIATED_PMU unconditionally, i.e. won't need stubs.
+
+Immediately select PERF_GUEST_MEDIATED_PMU when KVM x86 is enabled so that
+all paths are compile tested.  Full KVM support is on its way...
+
+[sean: add kconfig and WARNing, rewrite changelog, swizzle patch ordering]
+Suggested-by: Sean Christopherson <seanjc@google.com>
+Signed-off-by: Kan Liang <kan.liang@linux.intel.com>
+Signed-off-by: Mingwei Zhang <mizhang@google.com>
+Signed-off-by: Sean Christopherson <seanjc@google.com>
+Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
+Tested-by: Xudong Hao <xudong.hao@intel.com>
+Link: https://patch.msgid.link/20251206001720.468579-5-seanjc@google.com
+Stable-dep-of: b61c12527223 ("perf/amd/ibs: Fix kernel address leak via REGS_USER and REGS_INTR")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/xe/xe_pci.c | 3 +++
- 1 file changed, 3 insertions(+)
+ arch/x86/kvm/Kconfig       |  1 +
+ include/linux/perf_event.h |  6 +++
+ init/Kconfig               |  4 ++
+ kernel/events/core.c       | 82 ++++++++++++++++++++++++++++++++++++++
+ 4 files changed, 93 insertions(+)
 
-diff --git a/drivers/gpu/drm/xe/xe_pci.c b/drivers/gpu/drm/xe/xe_pci.c
-index 10c5d852cf2b9..75334fc1ac66a 100644
---- a/drivers/gpu/drm/xe/xe_pci.c
-+++ b/drivers/gpu/drm/xe/xe_pci.c
-@@ -1057,6 +1057,9 @@ static int xe_pci_runtime_resume(struct device *dev)
- 	struct xe_device *xe = pdev_to_xe_device(pdev);
- 	int err;
+diff --git a/arch/x86/kvm/Kconfig b/arch/x86/kvm/Kconfig
+index 278f08194ec87..d916bd766c94d 100644
+--- a/arch/x86/kvm/Kconfig
++++ b/arch/x86/kvm/Kconfig
+@@ -37,6 +37,7 @@ config KVM_X86
+ 	select SCHED_INFO
+ 	select PERF_EVENTS
+ 	select GUEST_PERF_EVENTS
++	select PERF_GUEST_MEDIATED_PMU
+ 	select HAVE_KVM_MSI
+ 	select HAVE_KVM_CPU_RELAX_INTERCEPT
+ 	select HAVE_KVM_NO_POLL
+diff --git a/include/linux/perf_event.h b/include/linux/perf_event.h
+index c8acdb026c627..5fb17c4f52f12 100644
+--- a/include/linux/perf_event.h
++++ b/include/linux/perf_event.h
+@@ -305,6 +305,7 @@ struct perf_event_pmu_context;
+ #define PERF_PMU_CAP_EXTENDED_HW_TYPE	0x0100
+ #define PERF_PMU_CAP_AUX_PAUSE		0x0200
+ #define PERF_PMU_CAP_AUX_PREFER_LARGE	0x0400
++#define PERF_PMU_CAP_MEDIATED_VPMU	0x0800
  
-+	if (xe->d3cold.allowed)
-+		d3cold_toggle(pdev, D3COLD_DISABLE);
+ /**
+  * pmu::scope
+@@ -1915,6 +1916,11 @@ extern int perf_event_account_interrupt(struct perf_event *event);
+ extern int perf_event_period(struct perf_event *event, u64 value);
+ extern u64 perf_event_pause(struct perf_event *event, bool reset);
+ 
++#ifdef CONFIG_PERF_GUEST_MEDIATED_PMU
++int perf_create_mediated_pmu(void);
++void perf_release_mediated_pmu(void);
++#endif
 +
- 	err = pci_set_power_state(pdev, PCI_D0);
+ #else /* !CONFIG_PERF_EVENTS: */
+ 
+ static inline void *
+diff --git a/init/Kconfig b/init/Kconfig
+index 1858e55bfd7cd..78d4277990e94 100644
+--- a/init/Kconfig
++++ b/init/Kconfig
+@@ -2018,6 +2018,10 @@ config GUEST_PERF_EVENTS
+ 	bool
+ 	depends on HAVE_PERF_EVENTS
+ 
++config PERF_GUEST_MEDIATED_PMU
++	bool
++	depends on GUEST_PERF_EVENTS
++
+ config PERF_USE_VMALLOC
+ 	bool
+ 	help
+diff --git a/kernel/events/core.c b/kernel/events/core.c
+index f6045a7f83283..6e194e4ce4a03 100644
+--- a/kernel/events/core.c
++++ b/kernel/events/core.c
+@@ -5674,6 +5674,8 @@ static void __free_event(struct perf_event *event)
+ 	call_rcu(&event->rcu_head, free_event_rcu);
+ }
+ 
++static void mediated_pmu_unaccount_event(struct perf_event *event);
++
+ DEFINE_FREE(__free_event, struct perf_event *, if (_T) __free_event(_T))
+ 
+ /* vs perf_event_alloc() success */
+@@ -5683,6 +5685,7 @@ static void _free_event(struct perf_event *event)
+ 	irq_work_sync(&event->pending_disable_irq);
+ 
+ 	unaccount_event(event);
++	mediated_pmu_unaccount_event(event);
+ 
+ 	security_perf_event_free(event);
+ 
+@@ -6207,6 +6210,81 @@ u64 perf_event_pause(struct perf_event *event, bool reset)
+ }
+ EXPORT_SYMBOL_GPL(perf_event_pause);
+ 
++#ifdef CONFIG_PERF_GUEST_MEDIATED_PMU
++static atomic_t nr_include_guest_events __read_mostly;
++
++static atomic_t nr_mediated_pmu_vms __read_mostly;
++static DEFINE_MUTEX(perf_mediated_pmu_mutex);
++
++/* !exclude_guest event of PMU with PERF_PMU_CAP_MEDIATED_VPMU */
++static inline bool is_include_guest_event(struct perf_event *event)
++{
++	if ((event->pmu->capabilities & PERF_PMU_CAP_MEDIATED_VPMU) &&
++	    !event->attr.exclude_guest)
++		return true;
++
++	return false;
++}
++
++static int mediated_pmu_account_event(struct perf_event *event)
++{
++	if (!is_include_guest_event(event))
++		return 0;
++
++	guard(mutex)(&perf_mediated_pmu_mutex);
++
++	if (atomic_read(&nr_mediated_pmu_vms))
++		return -EOPNOTSUPP;
++
++	atomic_inc(&nr_include_guest_events);
++	return 0;
++}
++
++static void mediated_pmu_unaccount_event(struct perf_event *event)
++{
++	if (!is_include_guest_event(event))
++		return;
++
++	atomic_dec(&nr_include_guest_events);
++}
++
++/*
++ * Currently invoked at VM creation to
++ * - Check whether there are existing !exclude_guest events of PMU with
++ *   PERF_PMU_CAP_MEDIATED_VPMU
++ * - Set nr_mediated_pmu_vms to prevent !exclude_guest event creation on
++ *   PMUs with PERF_PMU_CAP_MEDIATED_VPMU
++ *
++ * No impact for the PMU without PERF_PMU_CAP_MEDIATED_VPMU. The perf
++ * still owns all the PMU resources.
++ */
++int perf_create_mediated_pmu(void)
++{
++	guard(mutex)(&perf_mediated_pmu_mutex);
++	if (atomic_inc_not_zero(&nr_mediated_pmu_vms))
++		return 0;
++
++	if (atomic_read(&nr_include_guest_events))
++		return -EBUSY;
++
++	atomic_inc(&nr_mediated_pmu_vms);
++	return 0;
++}
++EXPORT_SYMBOL_GPL(perf_create_mediated_pmu);
++
++void perf_release_mediated_pmu(void)
++{
++	if (WARN_ON_ONCE(!atomic_read(&nr_mediated_pmu_vms)))
++		return;
++
++	atomic_dec(&nr_mediated_pmu_vms);
++}
++EXPORT_SYMBOL_GPL(perf_release_mediated_pmu);
++#else
++static int mediated_pmu_account_event(struct perf_event *event) { return 0; }
++static void mediated_pmu_unaccount_event(struct perf_event *event) {}
++#endif
++
+ /*
+  * Holding the top-level event's child_mutex means that any
+  * descendant process that has inherited this event will block
+@@ -13182,6 +13260,10 @@ perf_event_alloc(struct perf_event_attr *attr, int cpu,
  	if (err)
- 		return err;
+ 		return ERR_PTR(err);
+ 
++	err = mediated_pmu_account_event(event);
++	if (err)
++		return ERR_PTR(err);
++
+ 	/* symmetric to unaccount_event() in _free_event() */
+ 	account_event(event);
+ 
 -- 
 2.53.0
 
