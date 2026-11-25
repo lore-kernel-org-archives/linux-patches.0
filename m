@@ -1,51 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795623325;
-	b=og/hpWu83umh5TnGEOZFp0dVHvOxwBCPMIrBpIaqUdNmIbZjZ7CjIkdqAy8DnRL0rX75
-	 DtpYsFN/9GPvywqN6k8paBsmFaEX8Fpj+4+U7X13QpaesCfyhaTbsuaIW8CxMTt8+Ykzh
-	 WokmE1Fiztp+y8alnOzByTy+MO5/8LBSGiBjXMOpSXy3RXzdDM+jVdAmRQdhLojAxP/IA
-	 rrDAnl4nqgxJ64z8Tm6L5TYkzBfJ6i05vMDkwbEGnxFosmD6Tn7proNkag1lYpUOnkBae
-	 sS/AUmmW3X+QBSAH+MZLBrn1YqdkdZszpY/74q/hDAmHFVAvWdFA1aaGtTvtmhbzBnQ==
+	t=1795623329;
+	b=m2TDnl6BS+dCY32y3j1vc11Fqf07L0K8y+eSkzMaG6kGf0jtebSpOf9odTvOKgV4SkaN
+	 54dw9+lxOjrgF1c72/G5uAdyBL2io2bHtuofWUZq00NEBpBl93UH8v0s8smxBVdkp8/nm
+	 yoNfpTAn0mkpPJWyT2ztjimSRwF7icsZbqIJ1eKuN0Y9V1x+0hdo1S1RomWVjx+Th42q5
+	 bB9Ur4tfKfibCQlLsLjV5dRTKqDAA9D9Ug+3+OMsQZ4UzP8ycRy1LxUuwn0SanbSPk8cC
+	 e6uyr0vbjztFwgDhMghLAc3fdNeLYmZJZ0RHRq0H6abqPjbYXOovdTTK/YJAkorZr1A==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795623325;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795623329;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=gHHvgQg/hB2srbst7861bNdof+fKvEnrmewM/eRtm28=;
-	b=u4bXx4dhiBeZPZFKKEslbZfFpMHMFHi7dyWOEzVUxAw3vxgKdpgHyMlIygt2GijvDVOA
-	 TUcAxHnxJ69nL9ZohLoo6kFKjjdR9PbJalRY0Km+7oJwy/HChrUeTPZyPdsE7KJp/Sn8G
-	 u44FKz3jwUsHp70le1ATRLc7wJIFZHIOgha3vLqaSMv6kLD9abDn6JrO/kJ2EumHgHBpu
-	 iJU8amd79AMv26yqw3VjDkKyVAqhHWv4KOHqJZtlBPNEFirscHGbAfGS3aQ8g4QaVl1ZH
-	 pvQWOsYYoimNuGhbIKEtBDL4J9nTOjTK4GAh8bkXicqeDuJO7Gpcl5BlBUE+ouy5kPA==
+	bh=tOFjByPAcQxnFZJfB+P11QGYBjFARYv5hZQLHgaqMwc=;
+	b=KS24qAOpf+dKo3ecKYqwZ6kK94B/alzo88P24O3Jt+rtVMX5yINKlKDEkXSy1Q4Njx2y
+	 0sOU5Ut1ABl0Vlqwa2wjzD49dybv4YGUMplB+oY2Hktx6qvZQMyvnqlHvNc7u5uSzvu8J
+	 vdhbCQyDuNFDtTGXPwDcTUzYKJgHHLP8/fZvFIxPAlypfzowp0FKzFqnFpFMi2y/bKX0c
+	 N/5P51amM4kTT0CiO0joNtiZAPzMg8ik8tcLj/cfHvDWSFl0VqEmFNc7pCmLI+uSe5YJL
+	 LyithhP7LIgrqOG6kX3P1gEwoPn6w9wTq0+RpzzcD84qRDQbdGoYCDECtRxHkFQxxEA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=fWeDy3oH;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Fb2taaAT;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9C5AE606A336;
-	Wed, 25 Nov 2026 16:15:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0FDD1606A321;
+	Wed, 25 Nov 2026 16:15:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=fWeDy3oH
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D1C711F000C4;
-	Wed, 25 Nov 2026 16:15:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Fb2taaAT
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1C9691F000C6;
+	Wed, 25 Nov 2026 16:15:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795623325;
-	bh=gHHvgQg/hB2srbst7861bNdof+fKvEnrmewM/eRtm28=;
+	s=korg; t=1795623328;
+	bh=tOFjByPAcQxnFZJfB+P11QGYBjFARYv5hZQLHgaqMwc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=fWeDy3oHLoJy4JY0CulkFOsuwLX/EP1DmL2A0WHxJwVckrQi1JFDwoV+zycbZn2QI
-	 rQyTtUAKnNI50J8EhogIkQLZM/FWzyKK+7m/P5n/yYmhmA8cMAGK1yqrC3IBkzv4Gt
-	 2wWyIGcJkXc/z75MOrqBwyt/dwerJqUDfqhzZvFY=
+	b=Fb2taaATFryKf6Yamh2Ea2l8Y0E8OIamxgKnhq+orfubWflR58vae4XDpmsniE7Ec
+	 P4/pN6NGC0Hmd7Gn3gSDl7UywQCe+xp57AB1nOmfdhZl2txBV97SOWa8Rul3kUMGD6
+	 fFtIa6rvu0AwFy6Iqy23Ravj+3V+QRyFF0XWlSkE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Benjamin Berg <benjamin.berg@intel.com>,
+	Zhao Li <enderaoelyther@gmail.com>,
 	Johannes Berg <johannes.berg@intel.com>
-Subject: [PATCH 6.18 821/990] wifi: mac80211: fix use-after-free on TTLM disconnect
-Date: Wed, 25 Nov 2026 15:36:28 +0100
-Message-ID: <20261125143841.270460730@linuxfoundation.org>
+Subject: [PATCH 6.18 822/990] wifi: mac80211: bound pending IBSS station allocations
+Date: Wed, 25 Nov 2026 15:36:29 +0100
+Message-ID: <20261125143841.292658626@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143822.072087159@linuxfoundation.org>
 References: <20261125143822.072087159@linuxfoundation.org>
@@ -67,107 +67,81 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Johannes Berg <johannes.berg@intel.com>
+From: Zhao Li <enderaoelyther@gmail.com>
 
-commit 4af2b71495a3f12196cbea1c9a502c62ada867be upstream.
+commit 3029ca2112d7bee4d3e3eadd02decdb3eddb9485 upstream.
 
-If ieee80211_process_adv_ttlm() disconnects, and some other
-changes were also detected in the beacon, the link update
-to the driver is still done, leading to use-after-free. Fix
-this by returning, like other functions, whether or not the
-update was accepted by the function.
+Delaying the IBSS station worker while frames arrive from new peers can
+retain an unbounded number of station allocations.
 
+The receive-side limit counts installed stations, while new allocations
+wait on incomplete_stations until process context inserts them. The list
+lock does not cover the interval between allocation and list insertion.
+
+Reserve one of 128 pending slots per interface before allocation. Release
+the reservation on allocation failure, after the worker inserts or frees
+the station, and when disconnect frees the pending list.
+
+LLM assistance was used to find the bug and review.
+
+Fixes: 8bf11d8d0811 ("mac80211: delay IBSS station insertion")
 Cc: stable@vger.kernel.org
-Fixes: 702e80470a33 ("wifi: mac80211: support handling of advertised TID-to-link mapping")
-Reviewed-by: Benjamin Berg <benjamin.berg@intel.com>
-Link: https://patch.msgid.link/20261102220313.3cf5e709417b.I339967c7e614057253aa68c005d9ae220577f99a@changeid
+Signed-off-by: Zhao Li <enderaoelyther@gmail.com>
+Link: https://patch.msgid.link/20261028142235.15428-3-enderaoelyther@gmail.com
 Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/mac80211/mlme.c |   25 ++++++++++++++-----------
- 1 file changed, 14 insertions(+), 11 deletions(-)
+ net/mac80211/ibss.c        |   13 ++++++++++++-
+ net/mac80211/ieee80211_i.h |    1 +
+ 2 files changed, 13 insertions(+), 1 deletion(-)
 
---- a/net/mac80211/mlme.c
-+++ b/net/mac80211/mlme.c
-@@ -7127,15 +7127,15 @@ static void ieee80211_tid_to_link_map_wo
- 	sdata->u.mgd.ttlm_info.switch_time = 0;
- }
+--- a/net/mac80211/ibss.c
++++ b/net/mac80211/ibss.c
+@@ -691,6 +691,7 @@ static void ieee80211_ibss_disconnect(st
+ 		spin_unlock_bh(&ifibss->incomplete_lock);
  
--static void ieee80211_process_adv_ttlm(struct ieee80211_sub_if_data *sdata,
--					  struct ieee802_11_elems *elems,
--					  u64 beacon_ts)
-+static bool ieee80211_process_adv_ttlm(struct ieee80211_sub_if_data *sdata,
-+				       struct ieee802_11_elems *elems,
-+				       u64 beacon_ts)
- {
- 	u8 i;
- 	int ret;
- 
- 	if (!ieee80211_vif_is_mld(&sdata->vif))
--		return;
-+		return true;
- 
- 	if (!elems->ttlm_num) {
- 		if (sdata->u.mgd.ttlm_info.switch_time) {
-@@ -7153,14 +7153,14 @@ static void ieee80211_process_adv_ttlm(s
- 						      0);
- 			if (ret) {
- 				sdata_info(sdata, "Failed setting valid/dormant links\n");
--				return;
-+				return true;
- 			}
- 			ieee80211_vif_cfg_change_notify(sdata,
- 							BSS_CHANGED_MLD_VALID_LINKS);
- 		}
- 		memset(&sdata->u.mgd.ttlm_info, 0,
- 		       sizeof(sdata->u.mgd.ttlm_info));
--		return;
-+		return true;
+ 		sta_info_free(local, sta);
++		atomic_dec(&ifibss->incomplete_sta_count);
+ 		spin_lock_bh(&ifibss->incomplete_lock);
  	}
+ 	spin_unlock_bh(&ifibss->incomplete_lock);
+@@ -1207,9 +1208,18 @@ void ieee80211_ibss_rx_no_sta(struct iee
+ 	band = chanctx_conf->def.chan->band;
+ 	rcu_read_unlock();
  
- 	for (i = 0; i < elems->ttlm_num; i++) {
-@@ -7172,7 +7172,7 @@ static void ieee80211_process_adv_ttlm(s
- 
- 		if (res) {
- 			__ieee80211_disconnect(sdata);
--			return;
-+			return false;
- 		}
- 
- 		if (ttlm_info.switch_time) {
-@@ -7197,7 +7197,7 @@ static void ieee80211_process_adv_ttlm(s
- 			 * switch the AP will continue to announce it anyway.
- 			 */
- 			if (delay > IEEE80211_ADV_TTLM_ST_UNDERFLOW)
--				return;
-+				return true;
- 
- 			delay_usec = ieee80211_tu_to_usec(delay);
- 
-@@ -7216,9 +7216,11 @@ static void ieee80211_process_adv_ttlm(s
- 			wiphy_hrtimer_work_queue(sdata->local->hw.wiphy,
- 						 &sdata->u.mgd.ttlm_work,
- 						 us_to_ktime(delay_usec));
--			return;
-+			return true;
- 		}
- 	}
++	if (!atomic_add_unless(&ifibss->incomplete_sta_count, 1,
++			       IEEE80211_IBSS_MAX_STA_ENTRIES)) {
++		net_info_ratelimited("%s: No room for a new IBSS STA entry %pM\n",
++				     sdata->name, addr);
++		return;
++	}
 +
-+	return true;
- }
+ 	sta = sta_info_alloc(sdata, addr, GFP_ATOMIC);
+-	if (!sta)
++	if (!sta) {
++		atomic_dec(&ifibss->incomplete_sta_count);
+ 		return;
++	}
  
- static void
-@@ -7738,8 +7740,9 @@ static void ieee80211_rx_mgmt_beacon(str
- 					       elems->cisco_dtpc_elem);
+ 	/* make sure mandatory rates are always added */
+ 	sband = local->hw.wiphy->bands[band];
+@@ -1662,6 +1672,7 @@ void ieee80211_ibss_work(struct ieee8021
+ 			ieee80211_ibss_finish_sta(sta);
+ 			rcu_read_unlock();
+ 		}
++		atomic_dec(&ifibss->incomplete_sta_count);
+ 		spin_lock_bh(&ifibss->incomplete_lock);
+ 	}
+ 	spin_unlock_bh(&ifibss->incomplete_lock);
+--- a/net/mac80211/ieee80211_i.h
++++ b/net/mac80211/ieee80211_i.h
+@@ -668,6 +668,7 @@ struct ieee80211_if_ibss {
  
- 	ieee80211_ml_reconfiguration(sdata, elems);
--	ieee80211_process_adv_ttlm(sdata, elems,
--				      le64_to_cpu(mgmt->u.beacon.timestamp));
-+	if (!ieee80211_process_adv_ttlm(sdata, elems,
-+					le64_to_cpu(mgmt->u.beacon.timestamp)))
-+		goto free;
+ 	spinlock_t incomplete_lock;
+ 	struct list_head incomplete_stations;
++	atomic_t incomplete_sta_count;
  
- apply:
- 	ieee80211_link_info_change_notify(sdata, link, changed);
+ 	enum {
+ 		IEEE80211_IBSS_MLME_SEARCH,
 
 
