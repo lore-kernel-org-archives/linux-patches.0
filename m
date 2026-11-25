@@ -1,51 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795624803;
-	b=XwTlx7kpZsVcWbI2a36iFSrIbG/xJp742fdGY9l1SRuk8svOFw4a01hn8ZxB2mgmaOpZ
-	 i/ALQVDR750e1ECJ0XUkdvY9k6SVKtVhaL7aNJiRr/m4zyqMPQM1oSJhgDX6jRGh+p9ZB
-	 ciO6ZchWex5ZV9914XYhyjudtEWS1Mk3n2NFkUkjWnhlUg2ehF6iQe0+k6q9cBrHObnC1
-	 oSz/tI+rARFzeKdDpPOBMy5UuST1Gr5MxxI7h6U9kbFnkijTXb7jJ102fOWhXXJcGrSWB
-	 3CmKhaHXXscngBtQNUF1DPcZraNdJU9Dzs7ra+OJ9cNyAgkmFm7bZ2LnGPe/I1gS6nA==
+	t=1795624806;
+	b=YotI4ohDnLQwd3x9+yXqgugPgjy8gNUihb1iSRhxYaHCnj58LwAyB34L2Ksb6ocIffY/
+	 hY2qTHJmcefpPivciENU6K8cjdy5V3A3uR4zAKkjJcNC2fJ/fUPceEjt9I5IEZRU5KUF6
+	 1Ra0RRXulGpebioOt49tlQMT6TxymCw9yZlQjES4cOil4PZ/wJkC2++QbfasTg7xhOINg
+	 q4lWG+i9W+yeeLgQ4/tmns+jlqYEHlfflyz0VEMxX4nbuLYI9TpXYxfaFv/UIsXlANBs+
+	 b2TO/fXlvzQbdmJd+ZwmoEvlVk69wXTf4VaKR4hOiRp1bMoWapBdGG4Z6g+AWQxHv4A==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795624803;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795624806;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=b/S+8zQmEEIirb1U9G6MsbuWFrTvryLT0UypFNuo+9I=;
-	b=YCo9nNrNvdMgThN/4lMeMJXGgSujewTo5r6xkKCDci8fcito3eleCxyUYkjubp8Bf31n
-	 W8EklYjliVdGdULyfrtUHHsv9Ut1myKq6K7fFW0EYINdPmFy5BkkmWs/xY4AimeExq+kn
-	 kMm9BV7XJTP5iF7ZGjn8xtCP5TYQgqWvcRuSBJz404UAQy4t40sDr3U/ihpi5rVPpH70Q
-	 4z3UaxfmxxGYXfCBSLeL26RIiBBA5sLdL6f5J6PP1opDBUTG/sj8Ao8ADkrNRUP4BlJ2B
-	 Dl98mcT8sVMQ89mQHzJYk6XbiVgpfV7CEmc7vy0myL54vpI9TpBJ05Odneb1qh5riIw==
+	bh=ZSlkTjjrjO+RT5t7/e8DKA5L38BfLcahlWLDA8gSVcM=;
+	b=D5blAd1NEtyOCTtg3/jpdtl3qxA2V6XAufdEDjgl7bf/cVfms3dABSRIYhpmRmPDt3lN
+	 gmdfUMFV41/seUAZ6VnWaqt9ItizMFk33AFMm6IbHOYiAUba+jb0Pd++sRZnZTR7Ock1p
+	 Y0qLn0VNPjoLmMb2f7A70wWNZ8coLXa/5Y4/DiHnQQJiywIaYmsuL1fUWI9hNsdPRdmXe
+	 CtZqq4u/84pcBOGbkSeFiEVVKUT6s379ZJL3NWcrnmdN8i9Rj+grFBsus+r2NxWK4lRX2
+	 BDv/yPUVS8cIhRcn93kBxXWO00g7sMKLx0HGjnbM1J2apiRmBxNa+ifzoN4Iiv+9sTw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=auqg5qCc;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=DFhYfiLB;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 83996606A332;
-	Wed, 25 Nov 2026 16:40:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 666EE606A334;
+	Wed, 25 Nov 2026 16:40:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=auqg5qCc
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 85BF61F000E6;
-	Wed, 25 Nov 2026 16:40:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=DFhYfiLB
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 668131F000D2;
+	Wed, 25 Nov 2026 16:40:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795624803;
-	bh=b/S+8zQmEEIirb1U9G6MsbuWFrTvryLT0UypFNuo+9I=;
+	s=korg; t=1795624805;
+	bh=ZSlkTjjrjO+RT5t7/e8DKA5L38BfLcahlWLDA8gSVcM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=auqg5qCcLvTJg3ITTyGQjHi1gPM4Wpz37nhdQSW15zFOp/bNjS4GF7t/NCTpoXkqS
-	 ynv1YmfRQt1wxIU9JVY0EKHEVnIeATrdUF7nQVzgcKoVnlmghjVkRIK/iloabp2bMx
-	 M28ZbzYZnhfAp/GKxtNx2QQeyXNJ0zp8d6S1WYFc=
+	b=DFhYfiLBeTMnPG+8QFh6sXjWsiAQ7v75wP7qIJAVhub4TVnT46DxVu2aRhFZCNe2y
+	 6QqRp2UAi3z1hjOrn/4UGoq4MwRhFtlxsZNYlDel+vv5TbRr7bqavgI1jq7AgH5CMi
+	 5gEqpeI1G5LpmNdedG9YXWlQld9lw+Ar6ZNQwnPY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Niklas Cassel <cassel@kernel.org>,
+	"Nikola Z. Ivanov" <zlatistiv@gmail.com>,
+	Simon Horman <horms@kernel.org>,
+	Jiri Pirko <jiri@nvidia.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 275/816] ata: libata-scsi: reject MODE SELECT mode pages with a wrong SPF bit
-Date: Wed, 25 Nov 2026 15:30:23 +0100
-Message-ID: <20261125143855.576098581@linuxfoundation.org>
+Subject: [PATCH 6.12 311/816] team: Add matching error label for failed action
+Date: Wed, 25 Nov 2026 15:30:59 +0100
+Message-ID: <20261125143856.398939762@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143849.205329330@linuxfoundation.org>
 References: <20261125143849.205329330@linuxfoundation.org>
@@ -67,62 +70,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Niklas Cassel <cassel@kernel.org>
+From: Nikola Z. Ivanov <zlatistiv@gmail.com>
 
-[ Upstream commit a1eb72c477ec1320c540f27ce1e2f717d4518e62 ]
+[ Upstream commit aee0f01b4f118844cb126a5f27e91c2adf087c59 ]
 
-ata_scsi_mode_select_xlat() accepts the caching and control mode pages
-both in page_0 format and in sub_page format with SUBPAGE CODE 00h.
+Follow the "action" - "err_action" pairing of labels
+found across the source code of team net device.
 
-However, SAT-2 and later versions of SAT define the SPF bit of the
-Caching mode page and of the Control mode page as not changeable and
-set to zero (see SAT-6, 10.4.9 and 10.4.6), and SPC-7 (6.12, MODE
-SELECT(10) command) requires the device server to terminate a MODE
-SELECT command with INVALID FIELD IN PARAMETER LIST if the application
-client sets any field that is reported as not changeable to a value
-other than its current value.
+Currently in team_port_add the err_set_slave_promisc
+label is reused for exiting on error when setting
+allmulti level of the new slave.
 
-Reject a mode page with the SPF bit set to one and SUBPAGE CODE 00h,
-with the FIELD POINTER set to the byte containing the SPF bit. The only
-mode page with the SPF bit set to one that remains accepted is the ATA
-Feature Control mode page (control mode page, sub-page f2h), for which
-SAT-6 (12.3.4) requires the SPF bit to be set to one. The opposite case
-does not need a check: a mode page in page_0 format always has subpage
-code 00h, so it can never be the ATA Feature Control mode page.
-
-This also allows the mode page handlers to rely on the format of their
-mode page, which a later patch will make use of.
-
-Fixes: 1b26d29ccd59 ("[libata] scsi: implement MODE SELECT command")
-Link: https://lore.kernel.org/r/20261103205448.931471-13-cassel@kernel.org
-Signed-off-by: Niklas Cassel <cassel@kernel.org>
+Signed-off-by: Nikola Z. Ivanov <zlatistiv@gmail.com>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Reviewed-by: Jiri Pirko <jiri@nvidia.com>
+Link: https://patch.msgid.link/20251128072544.223645-1-zlatistiv@gmail.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Stable-dep-of: ff618cb00a64 ("team: fix promisc/allmulti leak in team_port_add error path")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/ata/libata-scsi.c | 10 ++++++++++
- 1 file changed, 10 insertions(+)
+ drivers/net/team/team_core.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/ata/libata-scsi.c b/drivers/ata/libata-scsi.c
-index 2f70f1c228945..442f45099f0da 100644
---- a/drivers/ata/libata-scsi.c
-+++ b/drivers/ata/libata-scsi.c
-@@ -4329,7 +4329,17 @@ static unsigned int ata_scsi_mode_select_xlat(struct ata_queued_cmd *qc)
- 		if (len < 4)
- 			goto invalid_param_len;
+diff --git a/drivers/net/team/team_core.c b/drivers/net/team/team_core.c
+index 479d5a51152ef..a688f122661d2 100644
+--- a/drivers/net/team/team_core.c
++++ b/drivers/net/team/team_core.c
+@@ -1316,7 +1316,7 @@ static int team_port_add(struct team *team, struct net_device *port_dev,
+ 		if (err) {
+ 			if (dev->flags & IFF_PROMISC)
+ 				dev_set_promiscuity(port_dev, -1);
+-			goto err_set_slave_promisc;
++			goto err_set_slave_allmulti;
+ 		}
+ 	}
  
-+		/*
-+		 * Mode pages with subpage code 00h use the page_0 format: SAT
-+		 * defines the SPF bit of the Caching and Control mode pages,
-+		 * for subpage code 00h, as not changeable and set to zero.
-+		 */
- 		spg = p[1];
-+		if (!spg) {
-+			fp = hdr_len + bd_len;
-+			goto invalid_param;
-+		}
-+
- 		pg_len = get_unaligned_be16(&p[2]);
- 		p += 4;
- 		len -= 4;
+@@ -1343,6 +1343,7 @@ static int team_port_add(struct team *team, struct net_device *port_dev,
+ 	return 0;
+ 
+ err_set_dev_type:
++err_set_slave_allmulti:
+ err_set_slave_promisc:
+ 	__team_option_inst_del_port(team, port);
+ 
 -- 
 2.53.0
 
