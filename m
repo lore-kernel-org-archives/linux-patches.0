@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795623362;
-	b=tnGABhAO7rsNtfwuKAPzQc0Vfx0N3IHmBesT2xmJHlXS/kyQye3NfvWVnd+sSbq7V9yg
-	 hkmqzfTJbJ0CKc1ckOWWwGYvDR6ARVtcTwycJjdgSGiCo11n0+rLoEa7hCFdkjZZIN0r1
-	 0O4zALNszjf4U6HbncOEgmaVnGN/p9gde6n8oRh3vRmOBXm4sBB+pNlIAEq4nqEjTuNW9
-	 Nlu1fielRXM+QTHSCni2ST2ChEZZA/vtjmUqPFQvY+N1nu90jCUpymkDEAEMj3bWxqyI5
-	 lN+rvyEQGSOFQxHCpIZ9JW/JlhDslwNxw639UrGOU8lSU80p38ZdzDsRtQHKDrN/k6Q==
+	t=1795623364;
+	b=loQD0CC5PxZJCFCUJaOjxs/5bqCqpiJl2hRcNrwIWGQNq2VFpqbLmbNf8A2A4v1FmSSq
+	 HvmUrfOjRwSKIf+SArzgLJp+KA4yJhY/Ooal+lAh+ltPVeNmIItjjjTW6ZdeT9LtJKOnV
+	 r8x5tDcZJNdsZykOd48LBz2+rxztO2iPocI89LSIvU5aTbGGDLBpp6ZrqsL7Aw1o7xuhL
+	 KrIGAun29bog0j1dpxULzfK9ArEVy6QwMLOf+8aN20oeD0Ojd84hFnX/2JaD2E4W6ptTc
+	 aI5m9Sl7/5UeUTIcoWhIX54/fWkaz8fvJS8fZZZecQEHCglgDppOq3qLGdbiNzrDMUA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795623362;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795623364;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=E1bzttuUgLVUXUSBpWq2LJ3y5JaxjMm31rKX6TIl17k=;
-	b=1Orz5+5YVZ9SmBjQClu+XfScA0EL1UQm6cMmw4Wx0CoJjmnwgNvSGymbqFX2KP8eur56
-	 UfW30D4UUUgcrVVqYx+X2wCDwSMUYjzWgHrKRpn9d6+ZJgC4JgtE9weWOG1jD7OgAeqPc
-	 8SbQ7YtYPviXis+8PiNKVDRqr2RaA0c37nooXnyegUtQugSixXYug6nO1g08u49ertk5o
-	 +yWe/Mez+2eCRN2AZyF/mAJeFhEvChKYP1jJGwF4l05pp7i0pbetFbptXdKoKFb3EDHNV
-	 F5F0/UBUJRfywf4vYNnsy9xmSulN6hlZ9LdGZJNe79nVYoahMcUn7LUGoRPePVhld+g==
+	bh=d3yKq4GlyOOSSbJkH159KQjalf/etPZOl3NRLnj985o=;
+	b=zSatAS0W2lpGsCe8o9EBwDfHJaEMR2GTAEiRAj7c6L3ubQvzY3EY/t/NVVhO5pbir9ys
+	 saaDMnfLSMvfPat7CFTl4nCxbMYrjr+qRb9OHzODtJCtSYhWMlwdctDoqD6pWUyTTyfnD
+	 F6cxmK5EmVs8t0JQ3YcZd+wcH5gJUpC6qYB3wZgY+DH2xJex0RXY33Op90OSmNIM6c6O9
+	 zCpmtphL076CoHEAIg/8jB2O0FTFU3aqlI+q20J+tdeMFFVrnMvekUv6MoXaqH2LRzifH
+	 yqfToOkd1Ke74CRdYlrgYAGRXZ7qpZfa3+UG6oy3mCy7AO6ei7TFQDFSMk/pGgkSnrA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=O3RPLr2N;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=RcKWQHaj;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E49E3606A321;
-	Wed, 25 Nov 2026 16:16:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D9210606A31E;
+	Wed, 25 Nov 2026 16:16:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=O3RPLr2N
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2B3BA1F000C0;
-	Wed, 25 Nov 2026 16:16:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=RcKWQHaj
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 056781F000C4;
+	Wed, 25 Nov 2026 16:16:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795623361;
-	bh=E1bzttuUgLVUXUSBpWq2LJ3y5JaxjMm31rKX6TIl17k=;
+	s=korg; t=1795623364;
+	bh=d3yKq4GlyOOSSbJkH159KQjalf/etPZOl3NRLnj985o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=O3RPLr2NTnzH90v59QlLWLk8n0N2/5HrgJnmGLlcOvEIJbuemH+F/weq7xyrmBUET
-	 zOgawAwp4XPXvsYeYGcSAAgTO88zPWyjMuK9YEe/Ey9I4uIYZJn2wwNfF7PxCKw/D0
-	 WOJWvhfnuSDJwpNYwAAQ3yBHwEzm1pCT0sG8gTYQ=
+	b=RcKWQHajLedC6kdvmEWeKSSckqgohUKoRLyJLHJtpuumzEsnq+P7P5AeSCqLrKm/C
+	 89W5d4m1gITJRrb+gUOX8xga3goTRVVPaQi3cs+9GFSjjVYWNxPfYzLCJqmBa4ulCu
+	 V41sUp9/sUaHhNiii95gtLxz2GAvY067QHUP+2YA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tim Budding <tim.budding@gmail.com>,
+	stable@kernel.org,
 	Xin Long <lucien.xin@gmail.com>,
+	Kyle Zeng <kylebot@openai.com>,
 	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.18 789/990] sctp: abort unordered partial delivery when its message is skipped
-Date: Wed, 25 Nov 2026 15:35:56 +0100
-Message-ID: <20261125143840.527387569@linuxfoundation.org>
+Subject: [PATCH 6.18 790/990] sctp: avoid requeueing pending control chunks
+Date: Wed, 25 Nov 2026 15:35:57 +0100
+Message-ID: <20261125143840.549440327@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143822.072087159@linuxfoundation.org>
 References: <20261125143822.072087159@linuxfoundation.org>
@@ -68,46 +69,76 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Tim Budding <tim.budding@gmail.com>
+From: Kyle Zeng <kylebot@openai.com>
 
-commit 05852c8b70f2291a50bb3f740a66ce9caf9cb98d upstream.
+commit 665b4149e91b781a71bce8637c3a4d7d64dba05f upstream.
 
-When an I-FORWARD-TSN skips unordered messages on a stream,
-sctp_intl_skip() only aborts the stream's unordered partial delivery if
-the MID being delivered is lower than the skipped MID. If the skipped
-message is the one being partially delivered, partial delivery stays in
-progress: no PARTIAL_DELIVERY_ABORTED is sent, and the next unordered
-message on the stream is delivered as the rest of the abandoned one.
+The T4 and RE-CONFIG timeout handlers take a reference to their cached
+control chunk and submit it through SCTP_CMD_REPLY. A previous
+transmission can still be on the control outqueue when output is corked
+or suppressed, or when sctp_packet_transmit_chunk() could not append the
+chunk.
 
-Abort the partial delivery when the MID being delivered is at or below
-the skipped MID, as the ordered case already does.
+sctp_outq_tail() then adds the same list node a second time. Re-adding a
+non-tail entry can corrupt the list without being caught by the
+insertion-time list checks. A subsequent flush or association teardown
+can access an already freed chunk. The ASCONF path is reproducible by an
+unprivileged SCTP socket owner in a user/network namespace, with KASAN
+reporting a use-after-free in __sctp_outq_teardown().
 
-Reproduced on an unmodified kernel with the uo_pd test of the
-sctp_ifwdtsn.sh selftest added later in this series; its partial
-delivery checks pass with this fix. Reproduction and fix done with AI
-assistance.
+Check sctp_chunk_pending() in both timeout handlers before taking the
+extra reference and issuing SCTP_CMD_REPLY. If the chunk is already
+linked, leave the existing entry for normal output processing. Keep
+the remaining timer and error-handling commands unchanged. This also
+covers RE-CONFIG retransmission after sctp_assoc_rm_peer() moves the
+request to another transport and starts its timer.
 
-Fixes: de60fe910543 ("sctp: implement handle_ftsn for sctp_stream_interleave")
-Cc: stable@vger.kernel.org
-Signed-off-by: Tim Budding <tim.budding@gmail.com>
+The issue was found by an LLM.
+
+Fixes: 2e3216cd54b1 ("sctp: Follow security requirement of responding with 1 packet")
+Fixes: 7b9438de0cd4 ("sctp: add stream reconf timer")
+Cc: stable@kernel.org
+Suggested-by: Xin Long <lucien.xin@gmail.com>
+Signed-off-by: Kyle Zeng <kylebot@openai.com>
 Acked-by: Xin Long <lucien.xin@gmail.com>
-Link: https://patch.msgid.link/20261105050225.49292-2-tim.budding@gmail.com
+Link: https://patch.msgid.link/20261107030532.32310-1-kylebot@openai.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/sctp/stream_interleave.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ net/sctp/sm_statefuns.c |   16 ++++++++++------
+ 1 file changed, 10 insertions(+), 6 deletions(-)
 
---- a/net/sctp/stream_interleave.c
-+++ b/net/sctp/stream_interleave.c
-@@ -1255,7 +1255,7 @@ static void sctp_intl_skip(struct sctp_u
- 	struct sctp_stream *stream  = &ulpq->asoc->stream;
+--- a/net/sctp/sm_statefuns.c
++++ b/net/sctp/sm_statefuns.c
+@@ -1122,9 +1122,11 @@ enum sctp_disposition sctp_sf_send_recon
+ 		return SCTP_DISPOSITION_DELETE_TCB;
+ 	}
  
- 	if (flags & SCTP_FTSN_U_BIT) {
--		if (sin->pd_mode_uo && MID_lt(sin->mid_uo, mid)) {
-+		if (sin->pd_mode_uo && !MID_lt(mid, sin->mid_uo)) {
- 			sin->pd_mode_uo = 0;
- 			sctp_intl_stream_abort_pd(ulpq, sid, mid, 0x1,
- 						  GFP_ATOMIC);
+-	sctp_chunk_hold(asoc->strreset_chunk);
+-	sctp_add_cmd_sf(commands, SCTP_CMD_REPLY,
+-			SCTP_CHUNK(asoc->strreset_chunk));
++	if (!sctp_chunk_pending(asoc->strreset_chunk)) {
++		sctp_chunk_hold(asoc->strreset_chunk);
++		sctp_add_cmd_sf(commands, SCTP_CMD_REPLY,
++				SCTP_CHUNK(asoc->strreset_chunk));
++	}
+ 	sctp_add_cmd_sf(commands, SCTP_CMD_STRIKE, SCTP_TRANSPORT(transport));
+ 
+ 	return SCTP_DISPOSITION_CONSUME;
+@@ -6194,9 +6196,11 @@ enum sctp_disposition sctp_sf_t4_timer_e
+ 	 * chunk, it MUST be the same (including its serial number) as the last
+ 	 * ASCONF sent.
+ 	 */
+-	sctp_chunk_hold(asoc->addip_last_asconf);
+-	sctp_add_cmd_sf(commands, SCTP_CMD_REPLY,
+-			SCTP_CHUNK(asoc->addip_last_asconf));
++	if (!sctp_chunk_pending(asoc->addip_last_asconf)) {
++		sctp_chunk_hold(asoc->addip_last_asconf);
++		sctp_add_cmd_sf(commands, SCTP_CMD_REPLY,
++				SCTP_CHUNK(asoc->addip_last_asconf));
++	}
+ 
+ 	/* ADDIP 4.1 B5) Restart the T-4 RTO timer. Note that if a different
+ 	 * destination is selected, then the RTO used will be that of the new
 
 
