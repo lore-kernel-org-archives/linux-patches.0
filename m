@@ -1,51 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795623490;
-	b=L6oZFfoygUO9pZH2M7ZprzERaljATo/+mH6M9DtTibeacn83mg2SPVDPH78nYTI4DX47
-	 B3C5xKxb+LUMR6SJ9mO+4Pem6hY4xt0cQip0UO34Zf+8zTv5FJY5hI+qRiSlaDRi1nHdb
-	 kur9LbPT4EMV+IepGz1kpMSZl5N953ko6bWCXRQxrwTFjM4sdssIowouQqkJE+P3+TqZI
-	 tn72tI0zCvn64Q9KORjExWkc6U8inZ6dSd+lHAZPHFxmVVYQJgcGlxCm/J6PEQAQoM3Ns
-	 yMo/GQfRJlPsLyfRxkOFcVMpBhvP2oY6OZaXVo1BibUjCghzss1Hw/z0KHpgwjLKlJA==
+	t=1795623494;
+	b=b3JmN7Kyk4+kIKrmNKhjyGS8D/s9gccb9dRiPEx7M8UShftgSQZZkNVjf3A+SBkOPWAl
+	 2k5EW6+mMPElttthmdPVD4WEwu6HGwy44FPN+/7gLcOEcxdYWpVU7jaOgiMQIHm+h4Snl
+	 cZ42hwxv26A3o9kWCk/Ntwp5x+k0OmMZIEPlfFrulyVkxmUtEA70sTB4bi6O7lDHKNGEE
+	 hMPAfbhKPAxWIA9qRTnqp8H28XUmz3lUINl55/OSAAgkOy0BtgSpYl5O655+Wyvx4Gbfm
+	 3p8Z2SSu6UrNG42NQLyv7yBbSa7M1oackSK2k7Qqc3kb6rvucuqVe0d2iB4fVYVF1Kw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795623490;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795623494;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=4MU82XKyrqkzVjuxknFd8bTnOHlmx3RCZUVtCVzgzkg=;
-	b=t1wiNDf2eS8TjZGvE4eMoxGZb+pigucApskB11xmZRSTo3VRfDLHyGy6xWvUUZryKcdQ
-	 1F5Wz+8+jTinKop9rXx5JcKgAWcfBjZAovb8FeTLskn5K8TtQNTro+WVR7Xtf7TSMW+O6
-	 eWwgU5Poms5I6eXnJHzurajW3WKahXiwtFZMDHuHtoF/bHn7rnEBkigz6eiV9+6P9QSTz
-	 Qa8A2EPSbG0iTIaHiPwaahbp2d3DRVQtTBFY2TsbWKldOHxB1jND5qcAiOj+eqN1iHWIz
-	 R+T01FTSHTXPr5TTPbwzemf6cRIq2doS8MSmI99g94P+8jMwOG9kARq/wIwUHThGspQ==
+	bh=tl4cGn5RvUG6Tv+HE/S6hJC4X/61+xeOR6ZJdBx0x6E=;
+	b=VEteXJSigsSDoqoQhftGltH9LVAy6Jlp6b+73/ktb8bXWqWaj7Pcxq7PYQk43qCTCRZC
+	 iLpUv+bYrBoH84oBu1TVv9L+xu33jlTG7WV+hHqneWHhNuD0K2/LGCYhr1Kv52B3iFXsI
+	 LqaChMdz24F+tiIr7zo7efvTy1ree+w/D8372xsdh/h68s+dkT6SAwNntye3h+FUCRt0v
+	 pH9dLW66yRluVQnIx7xBV761MpUvws+eYS0ARJNtury+RshNmkzUUFCNc2J83aZMCAVAk
+	 PTyPEB/H6e+UtQSZk7As+gOUinl9dgo5cHNq6a8hwWIJ8lq8hUh0RuY70gqzwSkjxZg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=tdBfx5iS;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=YvPfht1q;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B7E49606A335;
-	Wed, 25 Nov 2026 16:18:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0E98D606A339;
+	Wed, 25 Nov 2026 16:18:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=tdBfx5iS
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9C7971F000CF;
-	Wed, 25 Nov 2026 16:18:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=YvPfht1q
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E13B71F000D2;
+	Wed, 25 Nov 2026 16:18:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795623490;
-	bh=4MU82XKyrqkzVjuxknFd8bTnOHlmx3RCZUVtCVzgzkg=;
+	s=korg; t=1795623493;
+	bh=tl4cGn5RvUG6Tv+HE/S6hJC4X/61+xeOR6ZJdBx0x6E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=tdBfx5iSKaQ4DjTKx5iRCRd5jUnhHAtY89Xbk98OSMwOfqzUns0btucnRlQQyPXbT
-	 E7NGdUG7xH4puT5PNkEpG3xFnfYfEJC+G6XUoraiC54A+1FLQvbUsU6z60e40ssJ1f
-	 u+WjKUOha5ehD3cpglxWYVara05sZUnZCG4jtlQ4=
+	b=YvPfht1qgAfu8ZUeqShXBAkTFZjbdkyqFAJMWHBHWoHGEv93OMCuFIVtUit5tgj2i
+	 OWXeZSxPfMOpX5Hd1MftXUIB/0w6G1lAGL25WKRdbIpDoug1TVrQ1jBA0cPO78i+/u
+	 jEZxnmvyJF+V/IYhy5JO+6kiTSqyK644H5N5avzE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+94dac3c75477e184f0b0@syzkaller.appspotmail.com,
+	Jay Vadayath <jay@artiphishell.com>,
 	Mikulas Patocka <mpatocka@redhat.com>
-Subject: [PATCH 6.18 875/990] dm-integrity: dont attempt to commit journal on disabled device
-Date: Wed, 25 Nov 2026 15:37:22 +0100
-Message-ID: <20261125143842.514522300@linuxfoundation.org>
+Subject: [PATCH 6.18 876/990] dm-raid: bound array_position before indexing failed_devices
+Date: Wed, 25 Nov 2026 15:37:23 +0100
+Message-ID: <20261125143842.537085484@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143822.072087159@linuxfoundation.org>
 References: <20261125143822.072087159@linuxfoundation.org>
@@ -67,48 +67,77 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mikulas Patocka <mpatocka@redhat.com>
+From: Jay Vadayath <jay@artiphishell.com>
 
-commit e5e03918fbec31f0c896f4f43c2bd2aadf35d43d upstream.
+commit 11b5cd14c0eecae458cecbe53d21a3dbc10190f5 upstream.
 
-If the device is disabled due to an error, we shouldn't attempt to flush
-the journal. We jump straight to the label release_flush_bios, that will
-call do_endio on all queued bios. do_endio will terminate the bios with
-the error.
+super_init_validation() reads role = le32_to_cpu(sb2->array_position)
+out of an on-disk dm_raid_superblock and then uses it as a bit index into
+the failed_devices bitmap via test_bit(role, (void *)failed_devices).
+failed_devices is a uint64_t[DISKS_ARRAY_ELEMS] (DISKS_ARRAY_ELEMS == 4,
+i.e. 256 bits) living on the stack. The only guard is role < 0, so any
+on-disk array_position >= 256 makes test_bit() read past the end of the
+stack array (array_position == 256 reads failed_devices[4], 8 bytes past
+the object). For a raid1 set the role != raid_disk reorder branch falls
+through to the same test_bit().
 
-This fixes WARN_ON in the function pad_uncommitted reported by syzkaller.
+A crafted dm-raid superblock therefore causes a stack out-of-bounds read
+during table load. Reachable by anyone able to issue a dmsetup create
+with attacker-controlled metadata (CAP_SYS_ADMIN in the target
+namespace); the crash fires in the constructor / analyse_superblocks
+path, before any md_run or array sizing.
 
-Reported-by: syzbot+94dac3c75477e184f0b0@syzkaller.appspotmail.com
-Closes: https://syzbot.org/bug?extid=94dac3c75477e184f0b0
-Fixes: 7eada909bfd7 ("dm: add integrity target")
-Cc: stable@vger.kernel.org
+  BUG: KASAN: stack-out-of-bounds in super_validate+0x1cd0/0x3390
+  Read of size 8 at addr ffff888007b17828 by task poc/152
+  Call Trace:
+   dump_stack_lvl+0x64/0x80
+   print_report+0xd0/0x630
+   kasan_report+0xe5/0x120
+   kasan_check_range+0x105/0x1b0
+   super_validate+0x1cd0/0x3390        (super_init_validation, inlined)
+   raid_ctr+0x2c4b/0xa0f0
+   dm_table_add_target+0x66f/0xf80
+   table_load+0x2ee/0x780
+   ctl_ioctl+0x362/0x9f0
+   dm_ctl_ioctl+0x9/0x10
+   __x64_sys_ioctl+0x134/0x1c0
+   do_syscall_64+0xe2/0x4b0
+   entry_SYSCALL_64_after_hwframe+0x77/0x7f
+
+role is a device position that must refer to an actual member of the
+array, so reject anything outside [0, rs->raid_disks) instead of only the
+negative case. rs->raid_disks is always <= the 256-bit capacity of
+failed_devices, so this both closes the out-of-bounds access and matches
+the intended semantics.
+
+This bug was discovered by Artiphishell's vTriage pipeline, which
+generated a crafted raid1 superblock (magic "DmRd", compat_features=1,
+num_devices=2, array_position=256, level=1) and a dmsetup-create
+reproducer that reliably triggers the KASAN report on an unpatched kernel
+(the precursor DMINFO "raid device #256 now at position #0" is visible in
+the serial log just before the splat). The fix below was drafted with the
+Claude coding assistant; a userspace reproducer is available on request.
+
+Assisted-by: Claude:claude-opus-4-8
+Signed-off-by: Jay Vadayath <jay@artiphishell.com>
 Signed-off-by: Mikulas Patocka <mpatocka@redhat.com>
+Cc: stable@vger.kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/md/dm-integrity.c |    6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+ drivers/md/dm-raid.c |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
---- a/drivers/md/dm-integrity.c
-+++ b/drivers/md/dm-integrity.c
-@@ -2906,6 +2906,11 @@ static void integrity_commit(struct work
+--- a/drivers/md/dm-raid.c
++++ b/drivers/md/dm-raid.c
+@@ -2420,7 +2420,8 @@ static int super_init_validation(struct
+ 		 */
+ 		if (!test_bit(FirstUse, &r->flags) && (r->raid_disk >= 0)) {
+ 			role = le32_to_cpu(sb2->array_position);
+-			if (role < 0)
++			/* Bound @role before it indexes the failed_devices stack bitmap. */
++			if (role < 0 || role >= rs->raid_disks)
+ 				continue;
  
- 	spin_lock_irq(&ic->endio_wait.lock);
- 	flushes = bio_list_get(&ic->flush_bio_list);
-+	if (unlikely(dm_integrity_failed(ic))) {
-+		wake_up_locked(&ic->endio_wait);
-+		spin_unlock_irq(&ic->endio_wait.lock);
-+		goto release_flush_bios;
-+	}
- 	if (unlikely(ic->mode != 'J')) {
- 		spin_unlock_irq(&ic->endio_wait.lock);
- 		dm_integrity_flush_buffers(ic, true);
-@@ -5418,7 +5423,6 @@ try_smaller_buffer:
- 		r = create_journal(ic, &ti->error);
- 		if (r)
- 			goto bad;
--
- 	}
- 
- 	if (ic->mode == 'B') {
+ 			if (role != r->raid_disk) {
 
 
