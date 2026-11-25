@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795621085;
-	b=IZUFsoi9FFPF4FfPycfGG1QMMXwYSZIvO50h3cWOCLhYyLg+bUUpzNlZj7DCXfdzj3yi
-	 DgfPZpTtSuewkhJetSigWvvC1HHXTYR+whH4G8YDuKB8XVfJqMvkDqHi4TDUQ97AOG4Fz
-	 B2WeeJQ3A3PLoDBCU7TnSu6b0dZ10BCLOemZ39uQZkojB1VHY4hxabrzUOdBPfEXewsOH
-	 YpqCVJTsYSA4Tsx5ufh5pUqdq3EL+bwMU4ZE+nWjnLc11pYQXDIqPrj9FPqVGRwjgDVQq
-	 /HWBE3nkDoi4nY8AeMaXIU2VdtqBRBZOc7Pjw3MjPQEDHpP9tD6hcGfT8JFSB/SUhKQ==
+	t=1795621088;
+	b=sVRHX9/At2DrBN0EYBUnptDwr07IyZGyU0dxalK5zFO0UuzvJR6HEJmHmONBu7zwXj6p
+	 HEO7VzpqzLhpRCdf6VRduR0MahR2kCGcYmQCusNVajWR85k6wSlTjw8JpkVZ9du0B656i
+	 3Kn5vjzEEJ6YlvCoU093e67lTyWk8oKyiDpLDRGk5RdvhAd2mqiXgdYCsL6+cktevHmn3
+	 bhhKls0hXIiIqyu2/eY0QsSiZLdoADqrcwafeYF4NA8aB8oarYr7rLSe7wynPDxvcmR4K
+	 /VQasmFiMvGVIunkwbwarCaceCaYeC6S6m1LQvBWNxCNLvtrPJ+pbe5Vzu3PBUM8H+Q==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795621085;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795621088;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Type:Content-Transfer-Encoding;
-	bh=HDRRL7Cbd6B3W2zON1shDDk0LmxiVSWSZt1sZZ9B6CQ=;
-	b=BrRUzU1HzC1tuQrahWX5i8MZWq5O6LmJxevD3Vmwt3XTMOQKMpoFxx7hMDqe0UZCv6Lp
-	 h/F0Yfo0fYMqstMaaGI7pAlwaQBxfafdvIlllSoCmXVOsrclTBIXNfOi2SVFXuRtGmlbq
-	 aHyNbhC/CIPSZdqyVK0IsJKUZ5/lOBiEyygH42qNm9nLQykzRcK01Z5GtYen7BeMANh/d
-	 m6RLIdf6hP6dPhjojtghkMWeslPTn7kiMuFBYzpIF/lyG5yKU/fuI1JVzyXfLIDZ8uLpt
-	 08+zsvi3ElrM+Ac8+4dc02qNMCiJGFfmU5cEC+Lp2Dik18X8nO3/0yDD187QyFaoP+g==
+	 MIME-Version:Content-Transfer-Encoding;
+	bh=4zOgljytyRZT4eTbW7aYoNaRSAXqRAKMwQrBruLwixc=;
+	b=tCx8qbvBfRThE7lTuuoDK++wmLtv9j8zQfVyAF6ByxWLh3lnIXudcJL4vBCRmkTeUhKO
+	 cG+sJSZHmJYTYkflGFHPigKpOo0jB20eTspY+WrGtFXQQowbzUYt+cON45juRSOSy1xVe
+	 RV4b9MVaLncWDC+LJ0jnf7wnwJ5nrRQl1en4eQXyzl4S1e2E5xWIcxMkTys0Uy3lN0H+7
+	 dRth8eIYTKKCiSk0z7fT2ZhaRuDjEFAzFcRVg4h5fVwqjr/WlUfurc8Na5wpGdIDaQliK
+	 wGL25Nd4nTQ57aAfbzodJpbll2BaM2EHUNpEk18Oz3iwAZzOwOsIh/BOIjJ+OoNRvFQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=NK1e9DOQ;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=uyuY746T;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 30240606A31E;
-	Wed, 25 Nov 2026 15:38:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EC14E606A31E;
+	Wed, 25 Nov 2026 15:38:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=NK1e9DOQ
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 82ABE1F000C4;
-	Wed, 25 Nov 2026 15:38:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=uyuY746T
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 49E471F000C6;
+	Wed, 25 Nov 2026 15:38:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795621085;
-	bh=HDRRL7Cbd6B3W2zON1shDDk0LmxiVSWSZt1sZZ9B6CQ=;
+	s=korg; t=1795621087;
+	bh=4zOgljytyRZT4eTbW7aYoNaRSAXqRAKMwQrBruLwixc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=NK1e9DOQp73L2IRB+KchGf1pOVLUlHll/fMCDIE6Vx5BZPBTucpYpTlfliwv2WX/H
-	 24YbkFavKN8um6HS3mmsvUBEsxZ9W7mvSZh6eTLpSIB9tRLXVgdnEL9+QcZMx+SEGG
-	 OxJJTGJ0fFuMOLWzTUrnsuhUrHkUyfvhf6WRsy9o=
+	b=uyuY746TKF/QrVelZ1d46EIMN2QJ1dUAeYeJo7gbT6JhroCUBg6sZ4t58LG3hikBT
+	 htdsoArUexFYlXAZjZn/ksUwGJr2w1bOo0P9s8709PV06pNLAFb6WcmpM89YCSZjE7
+	 2roDuk25tRQc7oorqbX+6qxCyq4H2I0MRIm1xemM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mehmet Fide <mehmet.fide@screeningeagle.com>,
-	=?UTF-8?q?Toke=20H=C3=B8iland-J=C3=B8rgensen?= <toke@toke.dk>,
-	Jeff Johnson <jeff.johnson@oss.qualcomm.com>,
+	David Laight <david.laight.linux@gmail.com>,
+	Dominique Martinet <asmadeus@codewreck.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 071/990] wifi: ath9k_htc: start ANI when an AP interface begins to beacon
-Date: Wed, 25 Nov 2026 15:23:58 +0100
-Message-ID: <20261125143823.750959194@linuxfoundation.org>
+Subject: [PATCH 6.18 062/990] net/9p: Replace strlen() strcpy() pair with strscpy()
+Date: Wed, 25 Nov 2026 15:23:49 +0100
+Message-ID: <20261125143823.539511478@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143822.072087159@linuxfoundation.org>
 References: <20261125143822.072087159@linuxfoundation.org>
@@ -63,54 +62,48 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Mehmet Fide <mehmet.fide@screeningeagle.com>
+From: David Laight <david.laight.linux@gmail.com>
 
-[ Upstream commit 5c1b202d67a212c87e7389aaa093ce77828fa98f ]
+[ Upstream commit cc8b15a2c435bd1caf19741ba85286846a115764 ]
 
-ath9k_htc_vif_reconfig() re-arms ANI after a channel change when an AP
-interface beacons. mac80211 configures the channel before it enables
-the beacon, so during a normal AP start that never triggers, and the
-start from add_interface that the previous patch removed was cancelled
-by the same channel configuration: with hostapd, ANI and the periodic
-calibration it drives did not run in AP mode until a later channel
-change.
+Use the result of strscpy() for the overflow check.
 
-Start ANI when the beacon is enabled. The channel and its calibration
-data are in place by then, which is the state vif_reconfig() re-arms
-it in, and remove_interface() already stops it with the last AP
-interface.
-
-Fixes: a236254c35f0 ("ath9k_htc: Add ANI for AP mode")
-Signed-off-by: Mehmet Fide <mehmet.fide@screeningeagle.com>
-Acked-by: Toke Høiland-Jørgensen <toke@toke.dk>
-Link: https://patch.msgid.link/20261005072209.4101009-3-mehmet.fide@gmail.com
-Signed-off-by: Jeff Johnson <jeff.johnson@oss.qualcomm.com>
+Signed-off-by: David Laight <david.laight.linux@gmail.com>
+Message-ID: <20260606202744.5113-3-david.laight.linux@gmail.com>
+Signed-off-by: Dominique Martinet <asmadeus@codewreck.org>
+Stable-dep-of: 37dce65a0b43 ("9p: use fc->net_ns for network namespace in RDMA and socket transports")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/ath/ath9k/htc_drv_main.c | 3 +++
- 1 file changed, 3 insertions(+)
+ net/9p/trans_fd.c | 6 ++----
+ 1 file changed, 2 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/net/wireless/ath/ath9k/htc_drv_main.c b/drivers/net/wireless/ath/ath9k/htc_drv_main.c
-index 0d6272ac0dac8..611d17202eba2 100644
---- a/drivers/net/wireless/ath/ath9k/htc_drv_main.c
-+++ b/drivers/net/wireless/ath/ath9k/htc_drv_main.c
-@@ -1554,6 +1554,9 @@ static void ath9k_htc_bss_info_changed(struct ieee80211_hw *hw,
- 		ath9k_htc_set_tsfadjust(priv, vif);
- 		priv->cur_beacon_conf.enable_beacon = 1;
- 		ath9k_htc_beacon_config(priv, vif);
-+		if (priv->ah->opmode == NL80211_IFTYPE_AP &&
-+		    !test_bit(ATH_OP_ANI_RUN, &common->op_flags))
-+			ath9k_htc_start_ani(priv);
- 	}
+diff --git a/net/9p/trans_fd.c b/net/9p/trans_fd.c
+index 8a03e62992508..f31b2a81ef8bd 100644
+--- a/net/9p/trans_fd.c
++++ b/net/9p/trans_fd.c
+@@ -941,14 +941,12 @@ p9_fd_create_unix(struct p9_client *client, struct fs_context *fc)
+ 	if (!addr || !strlen(addr))
+ 		return -EINVAL;
  
- 	if ((changed & BSS_CHANGED_BEACON_ENABLED) && !bss_conf->enable_beacon) {
+-	if (strlen(addr) >= UNIX_PATH_MAX) {
++	sun_server.sun_family = PF_UNIX;
++	if (strscpy(sun_server.sun_path, addr) < 0) {
+ 		pr_err("%s (%d): address too long: %s\n",
+ 		       __func__, task_pid_nr(current), addr);
+ 		return -ENAMETOOLONG;
+ 	}
+-
+-	sun_server.sun_family = PF_UNIX;
+-	strcpy(sun_server.sun_path, addr);
+ 	err = __sock_create(current->nsproxy->net_ns, PF_UNIX,
+ 			    SOCK_STREAM, 0, &csocket, 1);
+ 	if (err < 0) {
 -- 
 2.53.0
 
