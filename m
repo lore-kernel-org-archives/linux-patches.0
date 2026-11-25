@@ -1,55 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795625125;
-	b=fxr+pYMxqa0QKBm7cB7pKtGmojTc8zF0V5g+zyAB8iZuZWRaC8BH/VK0tH9Wzb3eMSlw
-	 usipfoTvDmOY1Zhz0xfShpOmFN47EJbVOqqpT+OkELRjERWd5OllnAWT4IozEOsrSPnXQ
-	 tp/yj2cDwnLwvUzZlEvb+qA7b/WDi8QA8ZW2Sf/UdqgypVMVQhMvZ1GZDKwlsQemI6uwB
-	 Kkg0cuwxUQJRlQ6IcrZD8hgJA0z5p0d8uIZ/mI8tR8z0a4TMlkH5SgLL/OVRAQ9wrW5d1
-	 1/3UDHRyOsmhfVE5Z7X/39HpLsUkq25Hmab7U7c3RZl8tUF3lITXDS1KoKMphxToMzA==
+	t=1795625128;
+	b=BUC8SmjdwS6W1x38I6l4SAOFwCPk5fKom/R1o+qt93XYfnGsiD8BhV1FO3APTHwmL+XN
+	 qiJZoGphwbpVNlsTKarY7MPUy4hL4cC0brLObIiOizBsG5TGJ7GuSy1rIVckIK7iYEpjc
+	 vXsscGoRhQ4qFURS7FNAhEnf0085ABmhedHtMw4uGtlsZrNvvaBvZij4iplEjkJp9qBru
+	 aTnfikMBtbXrRIxbcOtIwLAuyY5x8zxQrlVLhxeKlnMwS/JnxaLtAKUSgYQC5TSCoG21/
+	 KOOzJ+355XZ9Xb+8uvFy8i6XiBiyfa5zJBecxMX9Qzb5Z4kkmwH+lguLSS0oarKBmXw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795625125;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795625128;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Type:Content-Transfer-Encoding;
-	bh=LOF+kp51zA8+GxCLTidDd55huwo1JaOGeSzDBzPyirQ=;
-	b=zTB0U2bNvjVuGeSbruJwSJ9uAJi+HEhsU/+xjBvRyU7Nvp8DI6Sy6US28wMnhDThWVc4
-	 HgJPQR+sEDukzLBCkbNR9r7DOEQUKn1tVAspU9qPEuTLdypdzFisYv6kyrLe0b9Oh/mvV
-	 16Khfg5yd7kBURkpCj2FAAiWA3VQagK+CtDeNOmhrUWH1dXuv/2Ok4LTH40HNuoUwEgsJ
-	 cR0j/YGaoJopIb6tGeZHX/bc06rahsh7ydhEiQafF35AYXEDsW8CAD0a0Nyyjkiybazg3
-	 pgXGsEzExwT7kwT1STr8kAzBunzkG93xrpmM81BqERlrdIO7fgCsAKBh+p9N81cHWCw==
+	 MIME-Version:Content-Transfer-Encoding;
+	bh=xiXe+KyAL5+dRnmb/uLZBFpwBnLTELMIiwiZaznwXG8=;
+	b=f/aVXyzoMqJGz1a/vc8mD5iAsgqPNkeSx2IDgfzooLs9Wz5kBT9MU1AVhePPxvfykyDa
+	 P+2o8OXxYIgqFrjC8XibbckVTbqYRlcDLGKauD6GeCpH6KYaLXVCyKS5y25kErU+HtLfA
+	 N4T9GOtF7kmQ/fSg+kIPfdWGTSilE+2dHuXKGYHbH2edjJlR9Qh/fzYuDW6QYxIAjjbci
+	 jX11xJoESWJzrg47nzyod7f6byJBroJnyVamSejgDp8bWbT9UJIwP9WjKYJKb0SeArKZF
+	 hLyfdRgBCvPscYrjoGwnxoEUCXwA/aPZV5gVBDeII7vWP8t/p8QDZEwcCC8+r1otJgA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=cC1BcJa0;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=MN2RQ7jG;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AB475606A327;
-	Wed, 25 Nov 2026 16:45:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B9310606A32E;
+	Wed, 25 Nov 2026 16:45:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=cC1BcJa0
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ED48A1F000C6;
-	Wed, 25 Nov 2026 16:45:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=MN2RQ7jG
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D45491F000C6;
+	Wed, 25 Nov 2026 16:45:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795625125;
-	bh=LOF+kp51zA8+GxCLTidDd55huwo1JaOGeSzDBzPyirQ=;
+	s=korg; t=1795625128;
+	bh=xiXe+KyAL5+dRnmb/uLZBFpwBnLTELMIiwiZaznwXG8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=cC1BcJa0hfvtHFRm34Ki4EWIjv1ZbiB8X2q0eZrDolStcjDR7ABAB6So0X5/4wXMk
-	 EFmC0dT5UT1hoQsUTE1cveMrOpPGyRKXe4x8BkQBhQqPTfbQghKNv/xSNwARRmB/Dl
-	 mG2swUdD41wwJqVKsJnpIdixTsBUH2Xjbe2nY570=
+	b=MN2RQ7jGh5SMJkjPLJP1qbUInGGamOauNTtRgzN7dH+R9g8+VvEkDE0BvIvl63Wcx
+	 BM1rRpN5ycco+gQyuCwoYP+CdnPHnXfuAhXPjMKqBhj9Wj3eDPhA8LRzHFU7qoNxb3
+	 ZJf08uuVUY62DQKP1x55+6j+5ymMKIGgsW7fX/4I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sashiko <sashiko-bot@kernel.org>,
-	Maxime Ripard <mripard@kernel.org>,
-	=?UTF-8?q?Robin=20R=C3=A4ber?= <robin.raebi@gmail.com>,
-	Cristian Ciocaltea <cristian.ciocaltea@collabora.com>,
-	Sasha Levin <sashal@kernel.org>,
-	Igor Paunovic <royalnet026@gmail.com>
-Subject: [PATCH 6.12 413/816] drm/connector: hdmi: Handle reset() state allocation failure
-Date: Wed, 25 Nov 2026 15:32:41 +0100
-Message-ID: <20261125143858.755045521@linuxfoundation.org>
+	Adrian Hunter <adrian.hunter@intel.com>,
+	Frank Li <Frank.Li@nxp.com>,
+	Alexandre Belloni <alexandre.belloni@bootlin.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.12 414/816] i3c: mipi-i3c-hci: Process multiple IBIs per interrupt
+Date: Wed, 25 Nov 2026 15:32:42 +0100
+Message-ID: <20261125143858.779308094@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143849.205329330@linuxfoundation.org>
 References: <20261125143849.205329330@linuxfoundation.org>
@@ -65,58 +63,131 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Cristian Ciocaltea <cristian.ciocaltea@collabora.com>
+From: Adrian Hunter <adrian.hunter@intel.com>
 
-[ Upstream commit 54acd0c74eba2a2c9a726856f5fdc6f9e74ea2e1 ]
+[ Upstream commit 5fbd0790af9484c251341e3ba2ebbb2887c570c8 ]
 
-In drmm_connector_hdmi_init(), if the reset callback fails to allocate
-memory, e.g. inside drm_atomic_helper_connector_reset(),
-connector->state will remain NULL.  This is unconditionally passed to
-drm_connector_attach_max_bpc_property(), leading to a NULL pointer
-dereference.
+INTR_IBI_READY indicates that one or more IBI Status Descriptors are
+present in the IBI ring.  After clearing interrupt status, the interrupt
+handler processes only a single IBI even though additional IBIs may
+already be queued.
 
-Bail out with -ENOMEM if the reset callback leaves connector->state
-unset.
+The controller does not reassert INTR_IBI_READY solely because entries
+remain in the ring after interrupt status has been cleared.  Consequently,
+the remaining IBIs are not processed until some later interrupt occurs,
+and can accumulate if IBIs arrive more often than the interrupt handler
+runs.
 
-Fixes: aadb3e16b8f3 ("drm/connector: hdmi: Add output BPC to the connector state")
-Reported-by: Sashiko <sashiko-bot@kernel.org>
-Closes: https://lore.kernel.org/all/20260723015306.C94241F000E9@smtp.kernel.org/
-Link: https://lore.kernel.org/all/20260723015306.C94241F000E9@smtp.kernel.org/
-Reviewed-by: Maxime Ripard <mripard@kernel.org>
-Tested-by: Igor Paunovic <royalnet026@gmail.com> # RK3588 Orange Pi 5 Plus, dual HDMI
-Tested-by: Robin Räber <robin.raebi@gmail.com>
-Link: https://patch.msgid.link/20260901-dw-hdmi-qp-scramb-v11-2-bc12954a0688@collabora.com
-Signed-off-by: Cristian Ciocaltea <cristian.ciocaltea@collabora.com>
-[ sashal: Added a NULL check after reset() returning -ENOMEM, with braces added around the single reset() call because the older code lacks the newer state-allocation structure. ]
+Process all IBIs that are pending when the handler runs: capture the IBI
+enqueue pointer up front and continue until the dequeue pointer reaches
+that position.
+
+Fixes: 9ad9a52cce28 ("i3c/master: introduce the mipi-i3c-hci driver")
+Signed-off-by: Adrian Hunter <adrian.hunter@intel.com>
+Reviewed-by: Frank Li <Frank.Li@nxp.com>
+Link: https://patch.msgid.link/20260920151248.46936-10-adrian.hunter@intel.com
+Signed-off-by: Alexandre Belloni <alexandre.belloni@bootlin.com>
+[ sashal: Kept the tree's DBG() and the rh->lock around the IBI dequeue-pointer update, re-reading RING_OPERATION1 under the lock instead of writing back the cached value. ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/drm_connector.c | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ drivers/i3c/master/mipi-i3c-hci/dma.c | 40 +++++++++++++++++----------
+ 1 file changed, 26 insertions(+), 14 deletions(-)
 
-diff --git a/drivers/gpu/drm/drm_connector.c b/drivers/gpu/drm/drm_connector.c
-index 6c1a49fe9fc66..8814c9b6907a3 100644
---- a/drivers/gpu/drm/drm_connector.c
-+++ b/drivers/gpu/drm/drm_connector.c
-@@ -526,8 +526,11 @@ int drmm_connector_hdmi_init(struct drm_device *dev,
- 	 * drm_connector_attach_max_bpc_property() requires the
- 	 * connector to have a state.
- 	 */
--	if (connector->funcs->reset)
-+	if (connector->funcs->reset) {
- 		connector->funcs->reset(connector);
-+		if (!connector->state)
-+			return -ENOMEM;
-+	}
+diff --git a/drivers/i3c/master/mipi-i3c-hci/dma.c b/drivers/i3c/master/mipi-i3c-hci/dma.c
+index d61d88b3a47a6..90bc62bacbebe 100644
+--- a/drivers/i3c/master/mipi-i3c-hci/dma.c
++++ b/drivers/i3c/master/mipi-i3c-hci/dma.c
+@@ -603,24 +603,23 @@ static void hci_dma_recycle_ibi_slot(struct i3c_hci *hci,
+ 	i3c_generic_ibi_recycle_slot(dev_ibi->pool, slot);
+ }
  
- 	drm_connector_attach_max_bpc_property(connector, 8, max_bpc);
- 	connector->max_bpc = max_bpc;
+-static void hci_dma_process_ibi(struct i3c_hci *hci, struct hci_rh_data *rh)
++static bool hci_dma_process_ibi(struct i3c_hci *hci, struct hci_rh_data *rh,
++				u32 *op1_val, unsigned int enq_ptr)
+ {
+ 	struct i3c_dev_desc *dev;
+ 	struct i3c_hci_dev_data *dev_data;
+ 	struct hci_dma_dev_ibi_data *dev_ibi;
+ 	struct i3c_ibi_slot *slot;
+-	u32 op1_val, op2_val, ibi_status_error;
+-	unsigned int ptr, enq_ptr, deq_ptr;
++	u32 ibi_status_error;
++	unsigned int ptr, deq_ptr;
+ 	unsigned int ibi_size, ibi_chunks, ibi_data_offset, first_part;
+ 	int ibi_addr, last_ptr;
+ 	void *ring_ibi_data;
+ 	dma_addr_t ring_ibi_data_dma;
+ 
+-	op1_val = rh_reg_read(RING_OPERATION1);
+-	deq_ptr = FIELD_GET(RING_OP1_IBI_DEQ_PTR, op1_val);
+-
+-	op2_val = rh_reg_read(RING_OPERATION2);
+-	enq_ptr = FIELD_GET(RING_OP2_IBI_ENQ_PTR, op2_val);
++	deq_ptr = FIELD_GET(RING_OP1_IBI_DEQ_PTR, *op1_val);
++	if (deq_ptr == enq_ptr)
++		return false;
+ 
+ 	ibi_status_error = 0;
+ 	ibi_addr = -1;
+@@ -668,7 +667,7 @@ static void hci_dma_process_ibi(struct i3c_hci *hci, struct hci_rh_data *rh)
+ 	if (last_ptr == -1) {
+ 		/* this IBI sequence is not yet complete */
+ 		DBG("no LAST_STATUS available (e=%d d=%d)", enq_ptr, deq_ptr);
+-		return;
++		return false;
+ 	}
+ 	deq_ptr = last_ptr + 1;
+ 	deq_ptr %= rh->ibi_status_entries;
+@@ -741,10 +740,10 @@ static void hci_dma_process_ibi(struct i3c_hci *hci, struct hci_rh_data *rh)
+ done:
+ 	/* take care to update the ibi dequeue pointer atomically */
+ 	spin_lock(&rh->lock);
+-	op1_val = rh_reg_read(RING_OPERATION1);
+-	op1_val &= ~RING_OP1_IBI_DEQ_PTR;
+-	op1_val |= FIELD_PREP(RING_OP1_IBI_DEQ_PTR, deq_ptr);
+-	rh_reg_write(RING_OPERATION1, op1_val);
++	*op1_val = rh_reg_read(RING_OPERATION1);
++	*op1_val &= ~RING_OP1_IBI_DEQ_PTR;
++	*op1_val |= FIELD_PREP(RING_OP1_IBI_DEQ_PTR, deq_ptr);
++	rh_reg_write(RING_OPERATION1, *op1_val);
+ 	spin_unlock(&rh->lock);
+ 
+ 	/* update the chunk pointer */
+@@ -753,6 +752,19 @@ static void hci_dma_process_ibi(struct i3c_hci *hci, struct hci_rh_data *rh)
+ 
+ 	/* and tell the hardware about freed chunks */
+ 	rh_reg_write(CHUNK_CONTROL, rh_reg_read(CHUNK_CONTROL) + ibi_chunks);
++
++	return true;
++}
++
++static void hci_dma_drain_ibi_ring(struct i3c_hci *hci, struct hci_rh_data *rh)
++{
++	u32 op1_val = rh_reg_read(RING_OPERATION1);
++	u32 op2_val = rh_reg_read(RING_OPERATION2);
++	unsigned int enq_ptr = FIELD_GET(RING_OP2_IBI_ENQ_PTR, op2_val);
++
++	/* Loop is bounded by enq_ptr. Further IBIs will re-assert INTR_IBI_READY */
++	while (hci_dma_process_ibi(hci, rh, &op1_val, enq_ptr))
++		;
+ }
+ 
+ static bool hci_dma_irq_handler(struct i3c_hci *hci, unsigned int mask)
+@@ -777,7 +789,7 @@ static bool hci_dma_irq_handler(struct i3c_hci *hci, unsigned int mask)
+ 		rh_reg_write(INTR_STATUS, status);
+ 
+ 		if (status & INTR_IBI_READY)
+-			hci_dma_process_ibi(hci, rh);
++			hci_dma_drain_ibi_ring(hci, rh);
+ 		if (status & (INTR_TRANSFER_COMPLETION | INTR_TRANSFER_ERR))
+ 			hci_dma_xfer_done(hci, rh);
+ 		if (status & INTR_RING_OP)
 -- 
 2.53.0
 
