@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795620257;
-	b=cl6mpT4sZgvLToyuCVNVfzHO9PLomt7Ade5qOjMCOEmRza6UxzOQY2XdI4Enooassewz
-	 /2NRSpqJzhU/TU2wJGAETsBv/825p3no+RDVeZYwQsEZind3kDNP5YM3Lst7hQGjPqFRn
-	 GidkKhXA7qMjoiKLg4ThQaqcvcG47n139+G6SUElGB9ASpiWLIoyafe/YRtSDKNF5Zgue
-	 C9Prq5vtwSNnCVjWOspnVyMUlVP6/mt+Q4pjNDJV6dFOaebaKPj8K/YE9gl4s6T+6T9LE
-	 S7Vt/cFzA1zmmeMmhG0mHMVkIRiTyr70ogyRCRO+1imXmUkZOnjODU+ppZew0jh/7Kg==
+	t=1795620260;
+	b=RJjBV4zy0AJSBWqzIrwbU56223qQCXwoUfsFS9SXH42lMoXzV/e+ykaUuHA3ULSPTTiN
+	 haOOcgaQr8Nl/xEY10qrhvzWQUjo6kBy9QO2Vlu/ipJL3ypjXkxfbfvFaksBE+Gw5M0QZ
+	 8QPDXEaK77D4Cgg9tXf+k/1VRnpNeBjQyVMdaHpnO3lMeZhGhbPhrNwaVPzHlqzmThNL7
+	 NJEsSi2u/zA270LvN/aYV4umpfjjmGTdVHUI8RyWOFfgeQUtJliPahOTVnphsacyxgpbY
+	 NixArAljoiZOoO/yySnexaeStoPDAI7n4jN8jDJvpUp7iREu9BmPV7LTE4WcwAR7i7g==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795620257;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795620260;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=4G50shR96MApUVVmjdSffuk06SYQlMAZlQHrIpml8Qk=;
-	b=E/n8YtrjpIgWW7KatNVjH8omVbItrFPHc3WNkAHDQaIAyvGsTI6c+Y1b17POavMydd46
-	 Z81mpdCxU/T2x73rmnEJe+GxPXQIcItchE8pEVlwCsK9xOofBO4jtgwc5+95iZ6fPKmmz
-	 q2kdnC6t7W943fv3JTB29WnMRYXUTj1M7irfL4Jp+qWiHGH99djVcCR65gQ8LKu21KjM1
-	 95In9skWta+fIISJg25i2w0IyyK2cz34wdLhrQjxcC4R9SrOA4Azw4MqAsrjgotWEhGR1
-	 pLJI05QW8nKDx7QPE9yp+i2Y/j4d5zh4XDQeKBdTal/jHH6w0964i1oJ8F2FRDv7yYQ==
+	bh=3xtn19WLmJAiK8GuxIhdGGQw4BG/JH7Vry9wrkSIxF8=;
+	b=km2DkUfMSXL3CEoJhGUre+xIZuGZeIfgK/GcNloOljAudvBXbqloos1xvB/EGDqJpQzB
+	 HgLShc3h3o7TPDmUmVF1rbqBti8WddqlHuW6ZXH34/A+P5tDivTd1jDtj0dndbPSMkqCX
+	 A1SSxOL5ZZezeaErfZEH42emzVKOzCYFs23rwXxg512NXeFF32ioFIbxqZ6YXjyVSR2Mp
+	 Z5uMp6h0j5ohrXh2ps5PEmggBpZlxcaBcd3GQ1QzHpADgzzb4DmKtkyu52DqZ1sXKLrne
+	 1PqfFRciRXBWqftvAHnvpOk/9A6Wyy3hOVt8PVnTd7xoN+ythZ5MCnuQk2+4iZ+9vYQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=QPA3RH8z;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=jm461UMT;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F0DBE606A31E;
-	Wed, 25 Nov 2026 15:24:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 757AF606A31E;
+	Wed, 25 Nov 2026 15:24:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=QPA3RH8z
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 303261F000C6;
-	Wed, 25 Nov 2026 15:24:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=jm461UMT
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6ED861F000CA;
+	Wed, 25 Nov 2026 15:24:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795620256;
-	bh=4G50shR96MApUVVmjdSffuk06SYQlMAZlQHrIpml8Qk=;
+	s=korg; t=1795620260;
+	bh=3xtn19WLmJAiK8GuxIhdGGQw4BG/JH7Vry9wrkSIxF8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=QPA3RH8zVifSLdUfLrk5liQLgDBQzztwyWoatpUDZRZJbIzNHMT3T/vxYS5/XoYmZ
-	 D5EIdwdfQmW0EpNO466IxhAqmajyuvWprX0tuqOYuZ13iW7kJFUDadInlE802Nm3dh
-	 lN4JUUTTtH91j3gtQXQJTcNVDx65HbC0Sud3l768=
+	b=jm461UMTWbN6bo5cuOxZWTu+4oGNP1hGqi9k4TwHa5aWQvXBFPidX7Iy4UvsNTDJf
+	 JlDTj9JbmAmB4XdSMXXFoFKhblMZzraZG44wWM28oRwXvb9JX2EHyU2rlRJC3Ng3Ko
+	 VOrj4PLgF8htJihWxFwbinwxN7uTXikOJLmXcMTM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+c8564fc0a96e3ecbe4d4@syzkaller.appspotmail.com,
-	Kirtikumar Anandrao Ramchandani <kirtiar15502@gmail.com>,
+	syzbot+4b232570d625662eaab4@syzkaller.appspotmail.com,
+	Zhao Feng <zhaofeng2@cmss.chinamobile.com>,
 	Mikulas Patocka <mpatocka@redhat.com>
-Subject: [PATCH 7.3 0859/1005] dm cache: validate the discard block size before narrowing
-Date: Wed, 25 Nov 2026 15:36:37 +0100
-Message-ID: <20261125143841.831232883@linuxfoundation.org>
+Subject: [PATCH 7.3 0860/1005] dm crypt: fix use of uninitialized percpu_counter in ctr error path
+Date: Wed, 25 Nov 2026 15:36:38 +0100
+Message-ID: <20261125143841.855829548@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143821.729802100@linuxfoundation.org>
 References: <20261125143821.729802100@linuxfoundation.org>
@@ -68,80 +68,67 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kirtikumar Anandrao Ramchandani <kirtiar15502@gmail.com>
+From: Zhao Feng <zhaofeng2@cmss.chinamobile.com>
 
-commit df8daa4d916c88ef7888c738e0eb3b6f11714a6f upstream.
+commit 8ba1ade3e6b595b9091040feaa3341d7e45ba95d upstream.
 
-The discard block size doubles until the origin fits within the discard
-bitset limit. too_many_discard_blocks() passes this sector_t size to
-sector_div(), whose divisor is only 32 bits. Once the size exceeds that
-range, the division uses a truncated divisor, which can become zero.
+If percpu_counter_init() fails in crypt_ctr() (e.g. when the
+underlying percpu allocation fails under memory pressure or fault
+injection), the error path jumps to "bad", which calls
+crypt_dtr().  crypt_dtr() then evaluates
+WARN_ON(percpu_counter_sum(&cc->n_allocated_pages) != 0) and calls
+percpu_counter_destroy() on a counter that was never initialized,
+because __percpu_counter_init_many() returns -ENOMEM before
+calling raw_spin_lock_init() on fbc->lock.
 
-Use a 64-bit divisor when checking the block count. The selected size is
-stored in a u32, so reject sizes that cannot be represented before the
-assignment and before calculating the bitset size. This prevents a
-truncated zero size from reaching dm_sector_div_up().
+With lockdep enabled this triggers "INFO: trying to register
+non-static key" in __percpu_counter_sum(), as reported by syzbot.
+The console additionally shows "crypt: Unknown error (-ENOMEM)"
+because this failure path sets no ti->error.
 
-An earlier proposal checks whether the mapped length exceeds the origin
-device. This fix also covers an origin device whose valid size requires a
-discard block size beyond the field's range.
+Move percpu_counter_init() to right after the allocation of cc,
+before ti->private is set and before any "goto bad" can happen.
+On failure, set ti->error and free cc directly, so that
+crypt_dtr() is only ever called with an initialized counter.
 
-Reported-by: syzbot+c8564fc0a96e3ecbe4d4@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=c8564fc0a96e3ecbe4d4
+Reported-by: syzbot+4b232570d625662eaab4@syzkaller.appspotmail.com
+Closes: https://syzbot.org/bug?extid=4b232570d625662eaab4
+Fixes: 5059353df86e ("dm crypt: limit the number of allocated pages")
 Cc: stable@vger.kernel.org
-Fixes: 08b184514f65 ("dm cache: revert 'prevent corruption caused by discard_block_size > cache_block_size'")
-Signed-off-by: Kirtikumar Anandrao Ramchandani <kirtiar15502@gmail.com>
+Signed-off-by: Zhao Feng <zhaofeng2@cmss.chinamobile.com>
 Signed-off-by: Mikulas Patocka <mpatocka@redhat.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/md/dm-cache-target.c |   14 ++++++++++----
- 1 file changed, 10 insertions(+), 4 deletions(-)
+ drivers/md/dm-crypt.c |   12 ++++++++----
+ 1 file changed, 8 insertions(+), 4 deletions(-)
 
---- a/drivers/md/dm-cache-target.c
-+++ b/drivers/md/dm-cache-target.c
-@@ -17,6 +17,7 @@
- #include <linux/jiffies.h>
- #include <linux/init.h>
- #include <linux/kstrtox.h>
-+#include <linux/math64.h>
- #include <linux/mempool.h>
- #include <linux/module.h>
- #include <linux/rwsem.h>
-@@ -2383,9 +2384,7 @@ static int create_cache_policy(struct ca
- static bool too_many_discard_blocks(sector_t discard_block_size,
- 				    sector_t origin_size)
- {
--	(void) sector_div(origin_size, discard_block_size);
--
--	return origin_size > MAX_DISCARD_BLOCKS;
-+	return div64_u64(origin_size, discard_block_size) > MAX_DISCARD_BLOCKS;
- }
- 
- static sector_t calculate_discard_block_size(sector_t cache_block_size,
-@@ -2422,6 +2421,7 @@ static int cache_create(struct cache_arg
- 	struct cache *cache;
- 	struct dm_target *ti = ca->ti;
- 	dm_block_t origin_blocks;
-+	sector_t discard_block_size;
- 	struct dm_cache_metadata *cmd;
- 	bool may_format = ca->features.mode == CM_WRITE;
- 
-@@ -2521,9 +2521,15 @@ static int cache_create(struct cache_arg
+--- a/drivers/md/dm-crypt.c
++++ b/drivers/md/dm-crypt.c
+@@ -3208,6 +3208,14 @@ static int crypt_ctr(struct dm_target *t
+ 		ti->error = "Cannot allocate encryption context";
+ 		return -ENOMEM;
  	}
- 	clear_bitset(cache->dirty_bitset, from_cblock(cache->cache_size));
- 
--	cache->discard_block_size =
-+	discard_block_size =
- 		calculate_discard_block_size(cache->sectors_per_block,
- 					     cache->origin_sectors);
-+	if (discard_block_size > U32_MAX) {
-+		*error = "Discard block size exceeds 32 bits";
-+		r = -EOVERFLOW;
-+		goto bad;
++
++	ret = percpu_counter_init(&cc->n_allocated_pages, 0, GFP_KERNEL);
++	if (ret < 0) {
++		ti->error = "Cannot initialize page counter";
++		kfree_sensitive(cc);
++		return ret;
 +	}
-+	cache->discard_block_size = discard_block_size;
- 	cache->discard_nr_blocks = to_dblock(dm_sector_div_up(cache->origin_sectors,
- 							      cache->discard_block_size));
- 	cache->discard_bitset = alloc_bitset(from_dblock(cache->discard_nr_blocks));
++
+ 	cc->key_size = key_size;
+ 	cc->sector_size = (1 << SECTOR_SHIFT);
+ 	cc->sector_shift = 0;
+@@ -3219,10 +3227,6 @@ static int crypt_ctr(struct dm_target *t
+ 	crypt_calculate_pages_per_client();
+ 	spin_unlock(&dm_crypt_clients_lock);
+ 
+-	ret = percpu_counter_init(&cc->n_allocated_pages, 0, GFP_KERNEL);
+-	if (ret < 0)
+-		goto bad;
+-
+ 	/* Optional parameters need to be read before cipher constructor */
+ 	if (argc > 5) {
+ 		ret = crypt_ctr_optional(ti, argc - 5, &argv[5]);
 
 
