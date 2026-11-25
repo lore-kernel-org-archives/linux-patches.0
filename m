@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795619004;
-	b=xZ0VHBdqNe1PnJwh8cufywAnOmrf76ORtJPdMwzacRsJAwyVoHdW2QeLlRaB8CxC1vPl
-	 EieMXHhlG23Z0faQ9SmCpA+6kB2ryPppTR0iEbJZDs+ZqcqpJnzJInuPmAeR6SeKE19fo
-	 VYbnnXUJlit0tVF4hKVrVE7R3F0Gg613/muPDgdAYBB/AJrMbM5CMrf4sxgFhtgWtrYE8
-	 w3UQ0ovn+Aw7nvovpsrwMNoXuMCmAvMfo8PRsp4CeeNyIzNpOmEuK9yzCiRPWycKn/uEm
-	 2LwiMQfL9O/tuxD8N/RDRXMjJpCFf4EThpVI85myvPMdyj644w7ObBKr+V7ihN6gGHA==
+	t=1795619007;
+	b=NItou8E+ryy9QJHGL9noTy1pO9UIakOsd5k3g+IvPBJa0iCeBMLeCrZixq33/NVq+9cD
+	 sh+b/86+PMCLFcv+44ciGsd/OBQj+R27q3TPxaxNdx4IQRpU+RxAm163FvwJ1uR59HimX
+	 rYAlsIyq/K1Srm0qTwyVyGnI+Ffzks7nx0X+2vdtv92uV7smw5sKYTXu3qv218Eh+lSBz
+	 N5HQ/3QCNIM2jyA55MqNtTxYwKFDoUE0GM0i89g6uRI6g6//vGzQyRpjaPWsNhmOwpUoN
+	 IcpB9t7tv/3SFgMUf6z3ZJc4xK4BZjUfqgS+AIzj63rItt2k8fFUDmeYUp7U0HRO+jg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795619004;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795619007;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Type:Content-Transfer-Encoding;
-	bh=icdt3bJfH5PlXAfZ3LQh2xFciHi+zSGGkt56RPjVJBQ=;
-	b=YGwJbKqrY60uTTSF+0wqH6DHsR5DntoJtIjyhWWRAYp8jev12X18Vg4rpJP4+PENWyBX
-	 JyltxfQ3B8IbkmrkDOYU+mCFper0FWDINuffRLfHyXbJHZl4hHnaaZlD7obF/l+6L37Cv
-	 54tw8U/NV+HaCCmuZLypNB37A8T1ntvmImgXnrHhfVMTIFLA/LonozxSFyPrmKUNNz06Q
-	 eMVVI4riCWbHqqmCQqPOb0SiDaVyqeRPiSkTfwcDIHwMO1w39AES044Y3g+KXiS0tacAT
-	 qrgzcVvuJjMhVPfq20X6Gjk9/WkmPxAbV/7SlqhWXlJn0h4l1HvcLJBECptgIwzID3Q==
+	 MIME-Version:Content-Transfer-Encoding;
+	bh=7Nwq+oPJSPXdhaXt+hwSuNddLfbblngR/IzrNnuDnig=;
+	b=trXrDirSE0YcSHVoQPHqL23vpMv4mmjtcOTk/CX3mqWs94+rrRk2qifwK1iqjxngPx12
+	 XMtve1aQrlUJ+veepayX7krUjRyPjiQULmLZG+Hh7++BOke03cTsYXCWiqdCzRFSo6z7j
+	 JBZfBTCAx2HAVShIVqW2rnENPP00CwluFN0o+WccR44QGLuu2DysYAMmOOm0UucifAHuG
+	 aYP/2gYriDw2MGpP/d/UeEKFUuyOOhOg5lSLnxysIXCE1JfRjenhmlFGzdPxpooEp4/7+
+	 3ACPwsdzBfJPPk6fIQMqU6dgXgM7I9j2T7xeZA4NSuiYnBPk1xPhvIeKUYRKJQUINFw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="j/BN+gti";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=YNL96TzN;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 884B8606A31E;
-	Wed, 25 Nov 2026 15:03:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A842C606A334;
+	Wed, 25 Nov 2026 15:03:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=j/BN+gti
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AD23E1F01566;
-	Wed, 25 Nov 2026 15:03:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=YNL96TzN
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BEC951F000CF;
+	Wed, 25 Nov 2026 15:03:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795619004;
-	bh=icdt3bJfH5PlXAfZ3LQh2xFciHi+zSGGkt56RPjVJBQ=;
+	s=korg; t=1795619007;
+	bh=7Nwq+oPJSPXdhaXt+hwSuNddLfbblngR/IzrNnuDnig=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=j/BN+gtithgpwwuSse5YhQyPBrwfMyZ8NkXQt0X5WIvW3qESnsyxFuEQLsfVVRZxA
-	 C3ixAA1m5o55+NRJz1ZfJEJE3CsP8JYFzzHlc+eoW5IlV1Y1QUGjTYMq6qg1hn4Xsb
-	 6McBJ6BdRGjaeVDqWJ0OQKB/YBA92jVUgWreVLpw=
+	b=YNL96TzNnTGlX2BQjAZUSxGrXsIr+1swypudbfbHfw7t51vgkN6uC17MYG7/VEL5R
+	 JxZ8aL4Vcll4u0EWKbZR3Jt2HB2L50zAuoAMGCf/ebeQq19agi0e4KMdjRkjgcKJID
+	 Eun9wkSDhyZRVKqcke5Wrr/yXtfuYLmsoNcjCJwY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Boris Brezillon <boris.brezillon@collabora.com>,
-	Steven Price <steven.price@arm.com>,
-	=?UTF-8?q?Adri=C3=A1n=20Larumbe?= <adrian.larumbe@collabora.com>,
+	Vijendar Mukunda <Vijendar.Mukunda@amd.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0413/1005] drm/panfrost: Enable cycle counting when perfcnt is enabled
-Date: Wed, 25 Nov 2026 15:29:11 +0100
-Message-ID: <20261125143831.427889444@linuxfoundation.org>
+Subject: [PATCH 7.3 0414/1005] ASoC: amd: ps: guard adata->sdw dereferences with NULL check in IRQ handler
+Date: Wed, 25 Nov 2026 15:29:12 +0100
+Message-ID: <20261125143831.451725067@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143821.729802100@linuxfoundation.org>
 References: <20261125143821.729802100@linuxfoundation.org>
@@ -63,86 +62,98 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 7.3-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Boris Brezillon <boris.brezillon@collabora.com>
+From: Vijendar Mukunda <Vijendar.Mukunda@amd.com>
 
-[ Upstream commit 99a2e2b1690f48b074bf14a3b7d5d52f45d26ecc ]
+[ Upstream commit 41e06aaef9c000c1bb52d8a6f73ae66c9bd36d83 ]
 
-If we don't do that, we end up with invalid timestamps in the block
-headers.
+The ACP external IRQ handler is registered before sdw_amd_probe() assigns
+adata->sdw, so a stray interrupt in the probe window could reach the
+adata->sdw->pdev[i] dereference with adata->sdw still NULL.
 
-We also need to skip the warning on the cycle counter reference being
-other than 0 during device reset, because of perfcnt's lingering ref.
+The same window exists on the teardown side: after sdw_amd_exit() frees
+the context but before adata->sdw is cleared by the caller.
 
-Ideally this would be dealt with by splitting the reset sequence into
-pre and post stages, so that a hypothetical panfrost_perfcnt_pre_reset()
-would release the cycle counter reference. In the absence thereof, we
-just make do.
+Add NULL checks for adata->sdw in acp63_irq_handler() before dereferencing
+->pdev[0] and ->pdev[1], and in handle_acp70_sdw_wake_event() for the same
+reason.  The interrupt-status register write that acknowledges the IRQ is
+kept outside the guard so the hardware bit is always cleared regardless of
+whether the SoundWire context is live.
 
-Fixes: 7786fd108777 ("drm/panfrost: Expose performance counters through unstable ioctls")
-Signed-off-by: Boris Brezillon <boris.brezillon@collabora.com>
-Reviewed-by: Steven Price <steven.price@arm.com>
-Link: https://patch.msgid.link/20261104-panfrost-reset-races-fixes-v3-1-09868a88c351@collabora.com
-Signed-off-by: Adrián Larumbe <adrian.larumbe@collabora.com>
+Fixes: e1cb350610ce ("ASoC: amd: ps: handle SoundWire interrupts in acp pci driver")
+Signed-off-by: Vijendar Mukunda <Vijendar.Mukunda@amd.com>
+Link: https://patch.msgid.link/20261107175339.3547918-2-Vijendar.Mukunda@amd.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/panfrost/panfrost_gpu.c     | 7 +++----
- drivers/gpu/drm/panfrost/panfrost_perfcnt.c | 3 +++
- 2 files changed, 6 insertions(+), 4 deletions(-)
+ sound/soc/amd/ps/pci-ps.c | 32 ++++++++++++++++++++------------
+ 1 file changed, 20 insertions(+), 12 deletions(-)
 
-diff --git a/drivers/gpu/drm/panfrost/panfrost_gpu.c b/drivers/gpu/drm/panfrost/panfrost_gpu.c
-index 8a15ccce08e9b..5ef6897fc05ed 100644
---- a/drivers/gpu/drm/panfrost/panfrost_gpu.c
-+++ b/drivers/gpu/drm/panfrost/panfrost_gpu.c
-@@ -94,11 +94,10 @@ int panfrost_gpu_soft_reset(struct panfrost_device *pfdev)
- 		  GPU_IRQ_CLEAN_CACHES_COMPLETED);
+diff --git a/sound/soc/amd/ps/pci-ps.c b/sound/soc/amd/ps/pci-ps.c
+index b604db4942dd6..d0b66df101579 100644
+--- a/sound/soc/amd/ps/pci-ps.c
++++ b/sound/soc/amd/ps/pci-ps.c
+@@ -26,16 +26,20 @@ static void handle_acp70_sdw_wake_event(struct acp63_dev_data *adata)
+ 	struct amd_sdw_manager *amd_manager;
  
- 	/*
--	 * All in-flight jobs should have released their cycle
--	 * counter references upon reset, but let us make sure
-+	 * Even though all in-flight jobs should have released their cycle counter
-+	 * references upon reset, perfcnt's might still hang about.
- 	 */
--	if (drm_WARN_ON(&pfdev->base, atomic_read(&pfdev->cycle_counter.use_count) != 0))
--		atomic_set(&pfdev->cycle_counter.use_count, 0);
-+	atomic_set(&pfdev->cycle_counter.use_count, 0);
- 
- 	return 0;
- }
-diff --git a/drivers/gpu/drm/panfrost/panfrost_perfcnt.c b/drivers/gpu/drm/panfrost/panfrost_perfcnt.c
-index 03a6dcd8da2f5..46b5141932ee8 100644
---- a/drivers/gpu/drm/panfrost/panfrost_perfcnt.c
-+++ b/drivers/gpu/drm/panfrost/panfrost_perfcnt.c
-@@ -17,6 +17,7 @@
- #include "panfrost_device.h"
- #include "panfrost_features.h"
- #include "panfrost_gem.h"
-+#include "panfrost_gpu.h"
- #include "panfrost_issues.h"
- #include "panfrost_job.h"
- #include "panfrost_mmu.h"
-@@ -52,6 +53,7 @@ static void panfrost_perfcnt_hw_disable(struct panfrost_device *pfdev)
- 	gpu_write(pfdev, GPU_PRFCNT_TILER_EN, 0);
- 
- 	if (perfcnt->owns_as_ref) {
-+		panfrost_cycle_counter_put(pfdev);
- 		panfrost_mmu_as_put(pfdev, perfcnt->mapping->mmu);
- 		perfcnt->owns_as_ref = false;
+ 	if (adata->acp70_sdw0_wake_event) {
+-		amd_manager = dev_get_drvdata(&adata->sdw->pdev[0]->dev);
+-		if (amd_manager)
+-			pm_request_resume(amd_manager->dev);
++		if (adata->sdw) {
++			amd_manager = dev_get_drvdata(&adata->sdw->pdev[0]->dev);
++			if (amd_manager)
++				pm_request_resume(amd_manager->dev);
++		}
+ 		adata->acp70_sdw0_wake_event = 0;
  	}
-@@ -81,6 +83,7 @@ static int panfrost_perfcnt_hw_enable(struct panfrost_device *pfdev)
- 		return ret;
  
- 	perfcnt->owns_as_ref = true;
-+	panfrost_cycle_counter_get(pfdev);
+ 	if (adata->acp70_sdw1_wake_event) {
+-		amd_manager = dev_get_drvdata(&adata->sdw->pdev[1]->dev);
+-		if (amd_manager)
+-			pm_request_resume(amd_manager->dev);
++		if (adata->sdw) {
++			amd_manager = dev_get_drvdata(&adata->sdw->pdev[1]->dev);
++			if (amd_manager)
++				pm_request_resume(amd_manager->dev);
++		}
+ 		adata->acp70_sdw1_wake_event = 0;
+ 	}
+ }
+@@ -209,18 +213,22 @@ static irqreturn_t acp63_irq_handler(int irq, void *dev_id)
+ 	ext_intr_stat = readl(adata->acp63_base + ACP_EXTERNAL_INTR_STAT);
+ 	if (ext_intr_stat & ACP_SDW0_STAT) {
+ 		writel(ACP_SDW0_STAT, adata->acp63_base + ACP_EXTERNAL_INTR_STAT);
+-		amd_manager = dev_get_drvdata(&adata->sdw->pdev[0]->dev);
+-		if (amd_manager)
+-			schedule_work(&amd_manager->amd_sdw_irq_thread);
++		if (adata->sdw) {
++			amd_manager = dev_get_drvdata(&adata->sdw->pdev[0]->dev);
++			if (amd_manager)
++				schedule_work(&amd_manager->amd_sdw_irq_thread);
++		}
+ 		irq_flag = 1;
+ 	}
  
- 	as = ret;
- 	cfg = GPU_PERFCNT_CFG_AS(as) |
+ 	ext_intr_stat1 = readl(adata->acp63_base + ACP_EXTERNAL_INTR_STAT1);
+ 	if (ext_intr_stat1 & ACP_SDW1_STAT) {
+ 		writel(ACP_SDW1_STAT, adata->acp63_base + ACP_EXTERNAL_INTR_STAT1);
+-		amd_manager = dev_get_drvdata(&adata->sdw->pdev[1]->dev);
+-		if (amd_manager)
+-			schedule_work(&amd_manager->amd_sdw_irq_thread);
++		if (adata->sdw) {
++			amd_manager = dev_get_drvdata(&adata->sdw->pdev[1]->dev);
++			if (amd_manager)
++				schedule_work(&amd_manager->amd_sdw_irq_thread);
++		}
+ 		irq_flag = 1;
+ 	}
+ 
 -- 
 2.53.0
 
