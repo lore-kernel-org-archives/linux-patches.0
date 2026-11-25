@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795624089;
-	b=bTMhwjEodvTSj56jCuDq5mk6ghk3S6GZ5xI5W9zqrEe+27sy5gLliLOS/pdKBir5gXHg
-	 5Un49N+OtGX2lfrwhNgGIFXcsTMOxKDrtDpCVCyTAZnMEqZr1vVbx/dSUJXRpeUgUu+5a
-	 Id+0q5dCxMKzYJL+v0yX9Ty3mGInWUGaVL2kphWdPgAbYdb0OViBZLI38E7eFQXoswBH+
-	 CZ2SFBE+YGIujbszupyENCIWOgDP0tFyhemM270bPHaZidTIubXyioBDz9DP05b1T20Mv
-	 DytTigH/Cl1om/kXar2OsMQyoTD7kC0Wb90Pxyt5QSaH51YBuwrdHRurNCF5lLZ4d4Q==
+	t=1795624092;
+	b=35rNqkUxg4Z/5ze0yXC8e0ejGk39MkYBnsltmfVVc+KMLNlhg+4n8ROZgNEnklmP4zni
+	 sZmd6n3DABwir3PvncrgZwv4aq2PkxbdLKhSw3Vy+Z587hMuZEebjC1ZGaF5KxnOb0/VI
+	 o8Xrlx8W1fG2im1mgArwi2tdnk99lCNB8356eBfErZDBykKOs92n2nOjS1TNLzadILDmn
+	 xjCwdjKmC2OPvVdDC9EE1vOkojGHnd9fdDVnefxdlV6reBqDoz3Vc9uwBnTz8T3RpcQm+
+	 agoFkujWxbnZ5mAW6/rOGo5br3X/mp3Q11KViqMZpbsNz5Q4BkeDX7qFSmCMCIQvx1Q==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795624089;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795624092;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=86xJVhXRsKXW+11N/YNiwPs9wlGQAcTTa0g9MFUgvmo=;
-	b=FWTrBBWHPSXOwoNFC6yAwXT2AXulyOE8gRZIoM/c8uOaPWnT5+zjF/FvEr8onnZzizZv
-	 E7ka3Pc0JrdXn2Wo9vCfdjEgBv5m1MsuaT6yYitmTFNAzs+fBWrPFtYDgsBsK2lWkvxLN
-	 atilkVCXBDdMs7OQb2hhl6Jh+n03gxGVawtGRtKGsSSTWYwbjdOklIfDLrJIpR8LDxVqy
-	 bDxyPrvNGe8L1i32slvcdus2kaioFp/nhzZx6KHlaqsqrh9C/aq1CV3xFZ81iOvkLpJ4x
-	 M9/id7SFDuVwNvghqP6GjyuDX/Vi4p2kA+8NARbXDa9w2O3P15pFfiLs4PAoS+iElFA==
+	bh=EFDuU2Un8gA5RqZMEaCUNvq/CtTT9vF2vLHP1lMD+/Q=;
+	b=qy3l69n38t/IffyoKqjyWdpkAWS46cAa/kyjROOIYtDBFnpVncXMyKkVnkKxkI1lEJpV
+	 hqVkLbZgRBz3UGAW7tUPp3g23mK0Py7o8xzIpvwnlNjHFuBhpQNr6ljfMn67RqTn7T73V
+	 rXixVtQafdacJTw0Jb1gX7a+HYCiNkxrcr1vfrouAQXcZguvjvvNsv2pK0RbLeKi0ooFF
+	 iyHboGxlDaQEopsLfB6TWa/jprCRcAA5GOVo/6Xj6zxuJnIKzx88tKY9e1jPk8FSGvIYG
+	 0EAQbx6YjV/XAxP2lH+QBbZvA93U3ruvTsUqCKDZy5kwmLntUKBxjBKp3v8qe6dqOPA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=N1sPvzgx;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Q2o0o80b;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8A01E606A686;
-	Wed, 25 Nov 2026 16:28:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 98CD0606A31E;
+	Wed, 25 Nov 2026 16:28:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=N1sPvzgx
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5C1041F000D8;
-	Wed, 25 Nov 2026 16:28:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Q2o0o80b
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B35B91F000ED;
+	Wed, 25 Nov 2026 16:28:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795624088;
-	bh=86xJVhXRsKXW+11N/YNiwPs9wlGQAcTTa0g9MFUgvmo=;
+	s=korg; t=1795624092;
+	bh=EFDuU2Un8gA5RqZMEaCUNvq/CtTT9vF2vLHP1lMD+/Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=N1sPvzgxAMycBLDfNczl5CYKNwFJpe4hm7Jv6y9YrjRRUjytKSMDOO4JnjU/N9Ryw
-	 vcmPcMI7lI3J6VbmWnP+0Em7/mDpST7mC9Xw1NdcjITsxFyfiOSMzJ3PKOQ3SVHGmf
-	 zqkweuQJk9e8BdP2CQ0/FwQU9tzelpi76PrZ8B5E=
+	b=Q2o0o80b33jywYOhD0n4nh4q/BqgPu8zCLePzegr3wI6wfWhrC+v1318e4/PICxGh
+	 2d4V3fzvqjNcufDtJXybCKfd5SdmS7tnFGcm21IFlXsZMLpJ94Mj+l36trO3skaTAP
+	 05prBXJZQUSfvlo1uTfWvhBnEViDMtuaKDCf1nhI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Cheng Yongkang <teel4res@gmail.com>,
+	Siddharth Chintamaneni <sidchintamaneni@gmail.com>,
 	Jens Axboe <axboe@kernel.dk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 037/816] io_uring/rsrc: keep the old file when a file update fails
-Date: Wed, 25 Nov 2026 15:26:25 +0100
-Message-ID: <20261125143850.081343769@linuxfoundation.org>
+Subject: [PATCH 6.12 038/816] io_uring/kbuf: initialize arg->out_len from arg->max_len in io_buffers_select()
+Date: Wed, 25 Nov 2026 15:26:26 +0100
+Message-ID: <20261125143850.104157790@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143849.205329330@linuxfoundation.org>
 References: <20261125143849.205329330@linuxfoundation.org>
@@ -68,85 +68,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Cheng Yongkang <teel4res@gmail.com>
+From: Siddharth Chintamaneni <sidchintamaneni@gmail.com>
 
-Commit e5a346e4309d720c47fe8331a00068608fad47dd upstream.
+Commit b7322810d1870ccc0d293ad383d94ef583d5057b upstream.
 
-__io_sqe_files_update() resets the slot before it calls fget() on the
-new fd. If fget() fails, the fd is an io_uring file, or the node
-allocation fails, the update stops and reports that entry as not done,
-but the old file has already been removed. Later requests that use the
-slot fail with -EBADF, and if the old file was registered with a tag,
-its tag CQE is posted as if it had been removed on purpose.
+io_buffers_select() passes &arg->out_len to io_provided_buffers_select()
+on the legacy provided-buffer path. Because callers initialize
+arg->max_len (from sqe->len) while leaving arg->out_len as 0,
+io_provided_buffers_select() sees *len == 0 and always selects the full
+buffer size buf->len, ignoring the user-specified sqe->len limit.
 
-Reset the slot only after the new file has been checked and its node
-allocated, as io_install_fixed_file() does. Removal with fd == -1 still
-resets the slot right away.
+Initialize arg->out_len = arg->max_len before calling
+io_provided_buffers_select().
 
-Fixes: c3a31e605620 ("io_uring: add support for IORING_REGISTER_FILES_UPDATE")
-Cc: stable@vger.kernel.org
-Signed-off-by: Cheng Yongkang <teel4res@gmail.com>
-Link: https://patch.msgid.link/20261116044531.281978-1-teel4res@gmail.com
+Fixes: 35c8711c8fc4 ("io_uring/kbuf: add helpers for getting/peeking multiple buffers")
+Signed-off-by: Siddharth Chintamaneni <sidchintamaneni@gmail.com>
+Link: https://patch.msgid.link/20261116193146.65315-1-sidchintamaneni@gmail.com
 Signed-off-by: Jens Axboe <axboe@kernel.dk>
-[axboe: 6.12 has no rsrc nodes for files, the old file is queued for
-removal with io_queue_rsrc_removal(), which can fail. Get and check the
-new file first, and only remove the old one once that has succeeded]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- io_uring/rsrc.c | 25 +++++++++++++++----------
- 1 file changed, 15 insertions(+), 10 deletions(-)
+ io_uring/kbuf.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/io_uring/rsrc.c b/io_uring/rsrc.c
-index 168c6987435ed..5a3f3e4e3fa11 100644
---- a/io_uring/rsrc.c
-+++ b/io_uring/rsrc.c
-@@ -348,6 +348,7 @@ static int __io_sqe_files_update(struct io_ring_ctx *ctx,
- 		return -EINVAL;
- 
- 	for (done = 0; done < nr_args; done++) {
-+		struct file *file = NULL;
- 		u64 tag = 0;
- 
- 		if ((tags && copy_from_user(&tag, &tags[done], sizeof(tag))) ||
-@@ -365,17 +366,8 @@ static int __io_sqe_files_update(struct io_ring_ctx *ctx,
- 		i = array_index_nospec(up->offset + done, ctx->nr_user_files);
- 		file_slot = io_fixed_file_slot(&ctx->file_table, i);
- 
--		if (file_slot->file_ptr) {
--			err = io_queue_rsrc_removal(data, i,
--						    io_slot_file(file_slot));
--			if (err)
--				break;
--			file_slot->file_ptr = 0;
--			io_file_bitmap_clear(&ctx->file_table, i);
--		}
- 		if (fd != -1) {
--			struct file *file = fget(fd);
--
-+			file = fget(fd);
- 			if (!file) {
- 				err = -EBADF;
- 				break;
-@@ -388,6 +380,19 @@ static int __io_sqe_files_update(struct io_ring_ctx *ctx,
- 				err = -EBADF;
- 				break;
- 			}
-+		}
-+		if (file_slot->file_ptr) {
-+			err = io_queue_rsrc_removal(data, i,
-+						    io_slot_file(file_slot));
-+			if (err) {
-+				if (file)
-+					fput(file);
-+				break;
-+			}
-+			file_slot->file_ptr = 0;
-+			io_file_bitmap_clear(&ctx->file_table, i);
-+		}
-+		if (file) {
- 			*io_get_tag_slot(data, i) = tag;
- 			io_fixed_file_set(file_slot, file);
- 			io_file_bitmap_set(&ctx->file_table, i);
+diff --git a/io_uring/kbuf.c b/io_uring/kbuf.c
+index da6b46244e6de..9d6b7c433eeaf 100644
+--- a/io_uring/kbuf.c
++++ b/io_uring/kbuf.c
+@@ -343,6 +343,7 @@ int io_buffers_select(struct io_kiocb *req, struct buf_sel_arg *arg,
+ 				req->flags |= REQ_F_BUF_MORE;
+ 		}
+ 	} else {
++		arg->out_len = arg->max_len;
+ 		ret = io_provided_buffers_select(req, &arg->out_len, sel->buf_list, arg->iovs);
+ 	}
+ out_unlock:
 -- 
 2.53.0
 
