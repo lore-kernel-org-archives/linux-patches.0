@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795618480;
-	b=0N+x8RYQ339GIu8AswLlYGEHRDaUKgtSd6Ybe3ki2fyzm9DqJl4lwojCQzKBB+vu89Ct
-	 cAdn90SUZPloYKTb33QLGHWyqjNwI6ZJR6wbNCcTy4w5CBhB7dJMM7p+v459K/B7mpzTz
-	 FFDGt3N1LwCzsHpnxIm0S14QEvAPkNNUSnCSp5gEsl0vPzjNZdZviQkSKnJm4ge0TebnW
-	 KuV/jfvwKvxc4z8OcpkZf7aM58oY81RBPY7muhgIkmpHxLHpS8ApurqEYab9h1lUxtBbd
-	 S40FZeCba6WzxdQ+OzgH/wD16rMisVyG+gDzBhvuxjSCeiO2K9tCT9uKeccj/c0+gzw==
+	t=1795618483;
+	b=bcUDTMWzxhRzTZoWY4GX3CGG+lrKaMJb8FdBq4jJXLSzZAGNZCqx+PujbTG508JtCDZ3
+	 cVs0YryC43h5Wj0z9O5IEgvsVWLeQTm+qka2F+rMoXM+0uW80ebb0kOi8M/lSSB5KBEfO
+	 rf5dKl592alCB2OPnSCI0e2OJEKFz+muR+MUZKafpBj/Y/EHenbyyESSSfSDmV7h4R+yl
+	 7uIa4aCt4XBmQfYlz9ExPTRB/p/b9vVQvCSctLl/1IMqX1zOJUwMJGH0nZfoOOgu7ASPi
+	 Agi+Gro/0UFwCHgCn4apxm0voQX2yXMBRJg9vqTLMyRaTFYkGBx9gIZmAlvGrD7HcXg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795618480;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795618483;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=6UkWdwPpJlFtA0j1XZDt0ffnZSLyxh0bb718g8uU5fw=;
-	b=eB1ryWdG16noHaWvRaiCtMAk1Qrr1EIhkPfUI0wO6GrPYoffeAomZrKe2FGyWoNGe4dX
-	 +GTrGjX3jc0tSVVDdDCImk2vIM02cEDRmd9fTiwfiy4/xl6C9VjMTKJpV3NotpuogepkG
-	 Jx4mExnBbpcUJdLIsSAx/5JsxcrNRKeqiq+YME6whwRmuYWQSiGSXX9g8A7ix6GQkyRQJ
-	 YhIIUTUMrpMW+9Y700ODsUg7mIJj1bNQzAynVSTs7Km1PfcI0WgpdQeX2i7jnWvDwavYx
-	 r42i2avIUSWRY2u/+iWtYfEd7OHx4ZF06EkRVQ8jXW4BWiAWywivFNyL5iZvmRXiYUA==
+	bh=Z1Uip50HGOCVF9opeJMTSBOcSxhLz7V/zO3Er54OOuU=;
+	b=jCW1vwpu3GUHNvHBskFOOlkIyqBEPsah21j0T6a1c/2x88HjfSoQJqJ/aMaaLv7ZimR4
+	 FD7IjOD13vdWFoo41AOhw+qbU5f9YwG1H8Kmd/dMdLtgErlhDnYPuNta6Ir/2jGD+96Tq
+	 6jAReH/X58X0pH0FHV8r76yBtilBz/D5rBLzajB+oinQ/HD8rdSx2x9CIJs25wQIO7seK
+	 baMQ+S4JQkogsOU+HAIgcw1x4lP5brCiSPBW9Y1+u+fafZXSAp7C1ap8sysJD8ElCHfUx
+	 d0YF+N3VMLfZ8Fj68bRs9ZuS+JO+AbVfTphLrceY8btRsVQpUtKV6mx8esNuyJ/MoGw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=UqnBqNAH;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=GNTJy+fk;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2AB1B606A321;
-	Wed, 25 Nov 2026 14:54:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5185F606A321;
+	Wed, 25 Nov 2026 14:54:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=UqnBqNAH
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 056EB1F000D3;
-	Wed, 25 Nov 2026 14:54:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=GNTJy+fk
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 57D4A1F000C0;
+	Wed, 25 Nov 2026 14:54:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795618479;
-	bh=6UkWdwPpJlFtA0j1XZDt0ffnZSLyxh0bb718g8uU5fw=;
+	s=korg; t=1795618482;
+	bh=Z1Uip50HGOCVF9opeJMTSBOcSxhLz7V/zO3Er54OOuU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=UqnBqNAHZMp1jCwIQu0ixXowqhvYCM9QOQLE9dXwJE1f9hctDmU/L9410gqf/1C96
-	 fuk+C7Ww/PYEHMVYNlDju4q8RRQ9PJ1B8Bf7n0VnRqPMQSkPZA175iWMkqLy9dmF4n
-	 HbG0QSEHmjK8Plrp4lauE5anSNP2V/M3KK1jJVl0=
+	b=GNTJy+fkmMUX6+G5wVa/shR0VfPtoCeLuG1NxG+69w3sXi2q4+Zo3jeKkGGrMWk16
+	 WgJRizQiI2An7vEC9QdNE4jv4x1BmuSjzE1gxJYYN7yg0CCgzYRNORLqNPsga1PEwD
+	 HPT//ONnW2A12pII93IoM2VJDzcPXm2+xRg0Aye8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhao Li <enderaoelyther@gmail.com>,
+	Stanislavs Nilovs <valorcool@gmail.com>,
+	Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>,
 	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0292/1005] Bluetooth: L2CAP: Clear request identifiers on incoming LE connections
-Date: Wed, 25 Nov 2026 15:27:10 +0100
-Message-ID: <20261125143828.578426783@linuxfoundation.org>
+Subject: [PATCH 7.3 0293/1005] Bluetooth: qca: Disable SoC debug logging for WCN3950
+Date: Wed, 25 Nov 2026 15:27:11 +0100
+Message-ID: <20261125143828.600442455@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143821.729802100@linuxfoundation.org>
 References: <20261125143821.729802100@linuxfoundation.org>
@@ -68,73 +69,33 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zhao Li <enderaoelyther@gmail.com>
+From: Stanislavs Nilovs <valorcool@gmail.com>
 
-[ Upstream commit 15a80cc8263abd50132a05d1b06824de8e28abcb ]
+[ Upstream commit d97b618b6675516d63d55b8f31ee6cb3b164bd6b ]
 
-Incoming LE and ECRED channels retain the peer's request identifier
-after an immediate response. The deferred LE response also leaves the
-identifier set, unlike the deferred ECRED response.
+Added WCN3950 module to the switch-case to disable SoC debug packets.
 
-A later ECRED request can reuse that identifier and include an unrelated
-channel in its shared-response handling. That walk matches on the
-identifier alone, so an LE channel is selected too. If the old channel is
-closing, the checks can refuse the new connection. The check at request
-receipt rejects it with L2CAP_CR_LE_INVALID_PARAMS; the check before a
-deferred response returns L2CAP_CR_LE_AUTHORIZATION.
-
-Store the identifier only when deferring the response, and clear it
-after sending the deferred LE response. Keep deferred ECRED identifiers
-until the shared response is sent, since a partially accepted group
-still needs them.
-
-AI assistance was used.
-
-Fixes: 27e2d4c8d28b ("Bluetooth: Add basic LE L2CAP connect request receiving support")
-Fixes: 15f02b910562 ("Bluetooth: L2CAP: Add initial code for Enhanced Credit Based Mode")
-Signed-off-by: Zhao Li <enderaoelyther@gmail.com>
+Fixes: 590deccf4c06 ("Bluetooth: hci_qca: Disable SoC debug logging for WCN3991")
+Signed-off-by: Stanislavs Nilovs <valorcool@gmail.com>
+Reviewed-by: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
 Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/bluetooth/l2cap_core.c | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ drivers/bluetooth/btqca.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/net/bluetooth/l2cap_core.c b/net/bluetooth/l2cap_core.c
-index 01d3fa02c7502..fdf92a3d57455 100644
---- a/net/bluetooth/l2cap_core.c
-+++ b/net/bluetooth/l2cap_core.c
-@@ -3958,6 +3958,7 @@ void __l2cap_le_connect_rsp_defer(struct l2cap_chan *chan)
- 
- 	l2cap_send_cmd(conn, chan->ident, L2CAP_LE_CONN_RSP, sizeof(rsp),
- 		       &rsp);
-+	chan->ident = 0;
- }
- 
- static void l2cap_ecred_list_defer(struct l2cap_chan *chan, void *data)
-@@ -5207,10 +5208,10 @@ static int l2cap_le_connect_req(struct l2cap_conn *conn,
- 
- 	__set_chan_timer(chan, chan->ops->get_sndtimeo(chan));
- 
--	chan->ident = cmd->ident;
- 	chan->mode = L2CAP_MODE_LE_FLOWCTL;
- 
- 	if (test_bit(FLAG_DEFER_SETUP, &chan->flags)) {
-+		chan->ident = cmd->ident;
- 		l2cap_state_change(chan, BT_CONNECT2);
- 		/* The following result value is actually not defined
- 		 * for LE CoC but we use it to let the function know
-@@ -5442,10 +5443,10 @@ static inline int l2cap_ecred_conn_req(struct l2cap_conn *conn,
- 
- 		__set_chan_timer(chan, chan->ops->get_sndtimeo(chan));
- 
--		chan->ident = cmd->ident;
- 		chan->mode = L2CAP_MODE_EXT_FLOWCTL;
- 
- 		if (test_bit(FLAG_DEFER_SETUP, &chan->flags)) {
-+			chan->ident = cmd->ident;
- 			l2cap_state_change(chan, BT_CONNECT2);
- 			defer = true;
- 			chan->ops->defer(chan);
+diff --git a/drivers/bluetooth/btqca.c b/drivers/bluetooth/btqca.c
+index 002307000d3cd..60735b70d89ad 100644
+--- a/drivers/bluetooth/btqca.c
++++ b/drivers/bluetooth/btqca.c
+@@ -943,6 +943,7 @@ int qca_uart_setup(struct hci_dev *hdev, uint8_t baudrate,
+ 	switch (soc_type) {
+ 	case QCA_QCA2066:
+ 	case QCA_QCA6390:
++	case QCA_WCN3950:
+ 	case QCA_WCN3991:
+ 	case QCA_WCN6750:
+ 	case QCA_WCN6855:
 -- 
 2.53.0
 
