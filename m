@@ -1,53 +1,50 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795623896;
-	b=mHMm4dlms9O0N7GHBK15rBFhXQ2m6XTPr4X/Mj6anV333FrfQOc2P+qIePwNjty3PR/d
-	 frZffWJ5N5aBYxIP3CJ6QtKNHpeUKUe3gTYDnJM1MrK0gZWqYtZzizUh7TNmtECG/ybFt
-	 to8HuqkMdyDhCczCBEif0fs9jIMkHjDd8RoZuwAxhEpTIbR6LDL5dzJ99LgOFGD08/5oZ
-	 gbcac6HEYllPKvqqCapPMf2zM1Dyu0VinmDp40QBWcbfN+fZfhaLDiM55rJEwQbrrObPb
-	 pMdMtiFDYcdyZDyzksrVw63gMZrfeyuIVS4KienFokJsZXJdalSwR/3FuefGmtnTNow==
+	t=1795623899;
+	b=QulhKmRBouFa7V2RoLC740fFcHcznfmJFqSSkQKjwqE3Mc8RzuQebwjnIb/tHYzZrFEN
+	 Jf8+EQhZi0Ighc6RZMdBQt1UHpd7+A++5jrNiCbxvb1ewLYoLgFqDSCnpJLK0ddJpMig4
+	 uPR0/gXpoCUwBpVXdO/13ODdQeX6KzaY2lj0yNYKiejO1ZD0pQpuW5hEutoHlRZpDaBCj
+	 0C5iQVdyMK2+WqxF6x+/4C4S5xmS1T9r2UXt3hkD/lswj/RzxpaGrTlctrxUXHKBQZz0m
+	 K4j94f5ro7wMg9dHWlZpsVwHQ1gRj50NoFzBWvMHijMoCEgwJlh5UH/3xAu3BMgwm9g==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795623896;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795623899;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=FABBogl4Fvhwa7wHeUs2QYzbxLwgcSe4pRC87J673Ys=;
-	b=eD4kCKopJawmKihioCexG5QRjapX7TzE8CTZrum8EMH+FAzUdKbM0NoMF7cJ7fBf4vMa
-	 374iJD9F8BI9JP1EjRsijkol0XLAUB9pO9vUPqDUXMfsbm2zx/TEdgxJcaafr6r97Ib1f
-	 Jcdb+S7vTCGYHntDV7cotLGtLjD8TFhNBWhZCgKIEienHL5uXgIh0dRPLweI5sC2XguXm
-	 gk47Q/1aSX97r7KAj1QCN5tel+/OCAmnR3fUoZ2IoSh4XvTHM7txpN/rxbKCu6OqMrdxS
-	 RXd4RzMMKSbwc8FP+Vrwz1lCi3T7WEqaCV1J5z/m4bVP68F1pWrhHPP5qeJxAyv87Gg==
+	bh=O5BltV3HlIS7YRMoRfL/TBqpzq63q0wmq+sGKurfrbw=;
+	b=fWVLZJW2h9qek/hpmvIx8hvXgzKkEaIwpiyymzyvBy3u3Xk6v+/KUGSDwlEgm2gKEDX7
+	 8F1HcN4Kx1ffjzCgdZsMs4n4l+rNBPBkzSKtVQHNFRs7f8vOBKbqv9mBisLmzPS15IBDl
+	 YO80Kq83gvLcCjXCxHFOZ9EmUhcEla7csBg5VFD0cJm4l1LyeV7PUcREKlROdJwgaLlcI
+	 uQ/dPA44zogaGXr7ooE5ToL1cBMVHscindM7LsASq3HNu0Vn99ZBudmgw6nTD2UoalobJ
+	 s94iPw/TJ4tQjNXFYVLRygWn+rcWviN/sBpv9HCvu6GW9MF38BIV65ycmAZNq9/geog==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=HPOId3B0;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="R7/TX8Wi";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C3367606A31E;
-	Wed, 25 Nov 2026 16:24:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5BB16606A31E;
+	Wed, 25 Nov 2026 16:24:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=HPOId3B0
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DD8BC1F000C4;
-	Wed, 25 Nov 2026 16:24:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=R7/TX8Wi
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AEC5A1F000C4;
+	Wed, 25 Nov 2026 16:24:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795623896;
-	bh=FABBogl4Fvhwa7wHeUs2QYzbxLwgcSe4pRC87J673Ys=;
+	s=korg; t=1795623899;
+	bh=O5BltV3HlIS7YRMoRfL/TBqpzq63q0wmq+sGKurfrbw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=HPOId3B0wBCqWu+Gi2Lp/t8r1zM95zEMAq5ZXofh7h7Nc6CwFMSZ04cOHSu8o8HrG
-	 rOO5xbpBXL/lapztFfeKyMx2QvEdMaEtUez3qCM6RCfSfO6RrXBTabXHVuNuiGEXP2
-	 en3xCxLpYM3jleBuFGog+FHNPE+wh+USeuAJwvd0=
+	b=R7/TX8Wi8z+VsrwjxvfU7OKHe9utxyHW0P+hEIKVbgS9jmi9f8d4QaPlh5GmYKb3p
+	 ZEGcG2AXu1mmRkMlEStQM+lX4XhYVGYL4dM3GvBVzjlwvZ1qAAz3XFmn0HamILBRUm
+	 nHTTiIjtlg9nJMTGr68Xo70O9+ToF/X4r8+OPMgs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Darrick J. Wong" <djwong@kernel.org>,
-	Long Li <leo.lilong@huawei.com>,
-	Carlos Maiolino <cem@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 020/816] xfs: only assert new size for datafork during truncate extents
-Date: Wed, 25 Nov 2026 15:26:08 +0100
-Message-ID: <20261125143849.683738712@linuxfoundation.org>
+Subject: [PATCH 6.12 021/816] Revert "drm/nouveau/devinit/gf100-: try to avoid double-running vbios scripts"
+Date: Wed, 25 Nov 2026 15:26:09 +0100
+Message-ID: <20261125143849.707228616@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143849.205329330@linuxfoundation.org>
 References: <20261125143849.205329330@linuxfoundation.org>
@@ -69,37 +66,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Long Li <leo.lilong@huawei.com>
+This reverts commit 3bc8829ce42925dc384b4d5c4fb355e380ad1cb7.
 
-[ Upstream commit e942498385bf80f4d6d075b47174035545eb6a2e ]
-
-The assertion functions properly because we currently only truncate the
-attr to a zero size. Any other new size of the attr is not preempted.
-Make this assertion is specific to the datafork, preparing for
-subsequent patches to truncate the attribute to a non-zero size.
-
-Reviewed-by: Darrick J. Wong <djwong@kernel.org>
-Signed-off-by: Long Li <leo.lilong@huawei.com>
-Signed-off-by: Carlos Maiolino <cem@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/xfs/xfs_inode.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ .../drm/nouveau/nvkm/subdev/devinit/gf100.c   | 20 -------------------
+ 1 file changed, 20 deletions(-)
 
-diff --git a/fs/xfs/xfs_inode.c b/fs/xfs/xfs_inode.c
-index 3b487341348a0..5abdcf1f46c96 100644
---- a/fs/xfs/xfs_inode.c
-+++ b/fs/xfs/xfs_inode.c
-@@ -1025,7 +1025,8 @@ xfs_itruncate_extents_flags(
- 	xfs_assert_ilocked(ip, XFS_ILOCK_EXCL);
- 	if (atomic_read(&VFS_I(ip)->i_count))
- 		xfs_assert_ilocked(ip, XFS_IOLOCK_EXCL);
--	ASSERT(new_size <= XFS_ISIZE(ip));
-+	if (whichfork == XFS_DATA_FORK)
-+		ASSERT(new_size <= XFS_ISIZE(ip));
- 	ASSERT(tp->t_flags & XFS_TRANS_PERM_LOG_RES);
- 	ASSERT(ip->i_itemp != NULL);
- 	ASSERT(ip->i_itemp->ili_lock_flags == 0);
+diff --git a/drivers/gpu/drm/nouveau/nvkm/subdev/devinit/gf100.c b/drivers/gpu/drm/nouveau/nvkm/subdev/devinit/gf100.c
+index 186e09ea0cb10..5368e705e7fd6 100644
+--- a/drivers/gpu/drm/nouveau/nvkm/subdev/devinit/gf100.c
++++ b/drivers/gpu/drm/nouveau/nvkm/subdev/devinit/gf100.c
+@@ -27,7 +27,6 @@
+ #include <subdev/bios/init.h>
+ #include <subdev/bios/pll.h>
+ #include <subdev/clk/pll.h>
+-#include <subdev/vga.h>
+ 
+ int
+ gf100_devinit_pll_set(struct nvkm_devinit *init, u32 type, u32 freq)
+@@ -100,25 +99,6 @@ gf100_devinit_preinit(struct nvkm_devinit *base)
+ 	 * can use it as a reliable way to know whether we should run devinit.
+ 	 */
+ 	base->post = ((nvkm_rd32(device, 0x2240c) & BIT(1)) == 0);
+-
+-	/*
+-	 * However some VBIOS init sequences miss this bit. So fall back to
+-	 * the nv50 method of checking if the bit is not set. Running the
+-	 * VBIOS multiple times may have detrimental effects.
+-	 */
+-	if (base->post) {
+-		u64 disable = nvkm_devinit_disable(base);
+-		/* magic to detect whether or not x86 vbios code has
+-		 * executed the devinit scripts to initialise the
+-		 * board. only works if there's a display engine.
+-		 */
+-		if (!(disable & (1ULL << NVKM_ENGINE_DISP))) {
+-			if (nvkm_rdvgac(device, 0, 0x00) ||
+-			    nvkm_rdvgac(device, 0, 0x1a)) {
+-				base->post = false;
+-			}
+-		}
+-	}
+ }
+ 
+ static const struct nvkm_devinit_func
 -- 
 2.53.0
 
