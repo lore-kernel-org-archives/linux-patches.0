@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795625993;
-	b=F7z/afu3nZb46TOGmedJ1fJgizDwPLFZCdMoKoIBRzUAz3zLznNpxqEZb0N9WXAiekt9
-	 ay3Z5SSJfCji4CUKZgULILlM1qK+G/4esZeQEfr8GWjhY5bKtwzW8Iq3EXgD433iJzSQd
-	 Z/onh68bxcY6s7Qfvk2JdoIBL8OnW9tUrQt3qC30t+Z4esbB6o+hwC0Y0T2o19G8Y+TK3
-	 fQBUWce48ZKYlm7+Qx4fjHyt9xsqy+dkvLxXWSgO6tkKQJ9E+V4aJxscYTOj5Flg9bHJ9
-	 8k+ZC2uYuMvqn4tY9Qety/vMZM/nVt/MJcLIhvoBnkUb5qnGct44VdVxBvuMMbPuBhg==
+	t=1795625996;
+	b=sDLM6dPm4/OKWq6LajIJdG0zR/qEtHcGvHbT/WIlNPsq/2EunIho9KZzgEcjCGNecxoQ
+	 W+kUV6EST8aeYlPjGVTDM1bQyfrT5iGRBKxPbq6ehzB23AdKQVeQFo7YGI/r/FeMJEn99
+	 aIw1QebQMhwQHZZH4qeRStgeXzlBND0V5WG3nk3xE20HW4Y3ShWkPYY6bTEwBljdrgYvq
+	 Em+q4s9HwXx6OIB0Zgnb6sCoidgQz8oqibwsmU3EXffqFTh7AePJH8mRN7cPeq5nc8JQt
+	 yb1Yf+gwOp50c/XzhSXSArr5mw9W5PXQMGvxlF8tp88aJB+O4FeL2nlaTQdiZnd2xBw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795625993;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795625996;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Type:Content-Transfer-Encoding;
-	bh=Vs5Ifh3CyBT9ddZMSy4IMupd9fnkt2dUXMn1hk00mB0=;
-	b=inm6jVxZ1yTz6Q+mX2lm30oQYr0g/dzMOHT6kja4Ybtt4prWaBVZMgO5QHeLwkmIDRm3
-	 GbOtDitPtzCYm45D8aSrbI0nh0gAobc8HciHEVxX4UBBjAFyRg8kPt2f16aHE9vpme8x3
-	 PCVf6fxbDYPOhbI6u43NUtEh2d5S55h5riiJQoAZLimNKQ+3D1HxZ+g2wFTbWfgelzrw+
-	 VLxnGKJbhnUTMzqqcd1tyKMZkUe8UN77yHpAMvmq3N6RsZZLjrjG65Trosofd5lJJM3Pi
-	 9aBMqxfYSGqn1z0keobgqqO+FJg/PtQEqGfGZEozZO3r7Hs9XpYSlP6V4ZRpnyW9Ycg==
+	 MIME-Version:Content-Transfer-Encoding;
+	bh=3oxZSPzCIQUQOffrcVR9ibl9E9jh2Mcnl1o5Mv9ZNTc=;
+	b=OYNAh9EPEuznYOYukw7M7qodgOrGyP+Ib4UZmT9nIAwjqNbNO71Fyv2p4rnjarAwiUqc
+	 HC4Cs4wxVOds5SdpdSIQKDrnQqg6Nj8mvQOJNYQg2XXbUkno014CaXRACw6mb61HKfy1b
+	 gRi2cmsTMLOCvSOyUVwFqvpCSlurPbK03lP1t4ZAvBMDzucKAzf2ZZ9cbdQAD8lm6N+yG
+	 gXEBw1dLRdPlbZXBw61d1E1hIb104czU2F9rM0ZIpKGcM7r7Fjwa1c45zKpT4Yjn+Sped
+	 E2LqpOQTnSHZgZXFJ9ltN0yw2fa3nxP+hiK1m7duJwqkp7Wdn5+oB7tnnEzxWmmh0iw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=pE82X5r2;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=VQb98RWo;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 318D4606A32C;
-	Wed, 25 Nov 2026 16:59:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E8583606A339;
+	Wed, 25 Nov 2026 16:59:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=pE82X5r2
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7B41C1F000C6;
-	Wed, 25 Nov 2026 16:59:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=VQb98RWo
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4622E1F000C0;
+	Wed, 25 Nov 2026 16:59:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795625993;
-	bh=Vs5Ifh3CyBT9ddZMSy4IMupd9fnkt2dUXMn1hk00mB0=;
+	s=korg; t=1795625995;
+	bh=3oxZSPzCIQUQOffrcVR9ibl9E9jh2Mcnl1o5Mv9ZNTc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=pE82X5r2rtfQWmY6Cki/UNyQ0dtVS1Hd6IK5f7BPWvgMWT21RZR8+U5JQktOdwOtv
-	 koVhdtLeyec+Pg5lTybHGz3/2IKCiNdEkeIn5GusFFNnykVgNwMRS7WC7hCKLp/+2K
-	 TAtRlPTHOckbCH4hGHDPs6sGk1fzzVsYCoalkNOc=
+	b=VQb98RWooMJtJjEVM2aEE+bnBm2mQwyG9Ex9hgkfJg82awILALrfvd/LdyL+rDk1E
+	 irCrxzS1UWTY3AWz+Esrm8EpA/EZmDvrArBsZrKul/dNZuf1ZD+3+cTEp9dBMPSFp3
+	 ZVtqNyFBVOmOUz10IzHa8tPlJkDqMHNaDx5fANjQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mehmet Fide <mehmet.fide@screeningeagle.com>,
-	=?UTF-8?q?Toke=20H=C3=B8iland-J=C3=B8rgensen?= <toke@toke.dk>,
-	Jeff Johnson <jeff.johnson@oss.qualcomm.com>
-Subject: [PATCH 6.12 659/816] wifi: ath9k_htc: do not start ANI before the first channel is set
-Date: Wed, 25 Nov 2026 15:36:47 +0100
-Message-ID: <20261125143904.433474139@linuxfoundation.org>
+	syzbot+4b232570d625662eaab4@syzkaller.appspotmail.com,
+	Zhao Feng <zhaofeng2@cmss.chinamobile.com>,
+	Mikulas Patocka <mpatocka@redhat.com>
+Subject: [PATCH 6.12 695/816] dm crypt: fix use of uninitialized percpu_counter in ctr error path
+Date: Wed, 25 Nov 2026 15:37:23 +0100
+Message-ID: <20261125143905.271064573@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143849.205329330@linuxfoundation.org>
 References: <20261125143849.205329330@linuxfoundation.org>
@@ -62,67 +62,73 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Mehmet Fide <mehmet.fide@screeningeagle.com>
+From: Zhao Feng <zhaofeng2@cmss.chinamobile.com>
 
-commit dda63dd136ba2bc3b297079b190ac81a0aea40ae upstream.
+commit 8ba1ade3e6b595b9091040feaa3341d7e45ba95d upstream.
 
-ath9k_htc_add_interface() starts ANI for the first AP interface, before
-any channel is configured. The per-channel calibration data only gets
-attached by the first ath9k_htc_set_channel() that is not a fast
-channel change, and that same call cancels the ANI work a few
-milliseconds after add_interface, so normally the work never runs.
+If percpu_counter_init() fails in crypt_ctr() (e.g. when the
+underlying percpu allocation fails under memory pressure or fault
+injection), the error path jumps to "bad", which calls
+crypt_dtr().  crypt_dtr() then evaluates
+WARN_ON(percpu_counter_sum(&cc->n_allocated_pages) != 0) and calls
+percpu_counter_destroy() on a counter that was never initialized,
+because __percpu_counter_init_many() returns -ENOMEM before
+calling raw_spin_lock_init() on fbc->lock.
 
-When the bring-up stalls for more than the 100 ms ANI poll interval in
-between, it does run, and ar9002_hw_per_calibration() records the IQ
-calibration result in the calibration data that does not exist yet:
+With lockdep enabled this triggers "INFO: trying to register
+non-static key" in __percpu_counter_sum(), as reported by syzbot.
+The console additionally shows "crypt: Unknown error (-ENOMEM)"
+because this failure path sets no ti->error.
 
-  Unable to handle kernel NULL pointer dereference at virtual address
-  00000008
-  PC is at ar9002_hw_calibrate+0x1f8/0x570 [ath9k_hw]
-  Workqueue: phy0 ath9k_htc_ani_work [ath9k_htc]
+Move percpu_counter_init() to right after the allocation of cc,
+before ti->private is set and before any "goto bad" can happen.
+On failure, set ti->error and free cc directly, so that
+crypt_dtr() is only ever called with an initialized counter.
 
-Seen about once per thousand AP starts with an AR9271 on a Cortex-A5
-board that starts hostapd while still booting; a 500 ms delay after
-add_interface reproduces it on every start. The crashed work never
-completes, so the next cancel_delayed_work_sync() blocks for good.
-
-Drop the start; it has nothing to calibrate against and is cancelled
-anyway. The TSF adjust bit that shared its condition is now set for
-every AP interface, which is harmless: the next reset applies it. The
-next patch starts ANI once the interface beacons.
-
-Fixes: a236254c35f0 ("ath9k_htc: Add ANI for AP mode")
+Reported-by: syzbot+4b232570d625662eaab4@syzkaller.appspotmail.com
+Closes: https://syzbot.org/bug?extid=4b232570d625662eaab4
+Fixes: 5059353df86e ("dm crypt: limit the number of allocated pages")
 Cc: stable@vger.kernel.org
-Signed-off-by: Mehmet Fide <mehmet.fide@screeningeagle.com>
-Acked-by: Toke Høiland-Jørgensen <toke@toke.dk>
-Link: https://patch.msgid.link/20261005072209.4101009-2-mehmet.fide@gmail.com
-Signed-off-by: Jeff Johnson <jeff.johnson@oss.qualcomm.com>
+Signed-off-by: Zhao Feng <zhaofeng2@cmss.chinamobile.com>
+Signed-off-by: Mikulas Patocka <mpatocka@redhat.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/wireless/ath/ath9k/htc_drv_main.c |    5 +----
- 1 file changed, 1 insertion(+), 4 deletions(-)
+ drivers/md/dm-crypt.c |   12 ++++++++----
+ 1 file changed, 8 insertions(+), 4 deletions(-)
 
---- a/drivers/net/wireless/ath/ath9k/htc_drv_main.c
-+++ b/drivers/net/wireless/ath/ath9k/htc_drv_main.c
-@@ -1098,11 +1098,8 @@ static int ath9k_htc_add_interface(struc
+--- a/drivers/md/dm-crypt.c
++++ b/drivers/md/dm-crypt.c
+@@ -3308,6 +3308,14 @@ static int crypt_ctr(struct dm_target *t
+ 		ti->error = "Cannot allocate encryption context";
+ 		return -ENOMEM;
+ 	}
++
++	ret = percpu_counter_init(&cc->n_allocated_pages, 0, GFP_KERNEL);
++	if (ret < 0) {
++		ti->error = "Cannot initialize page counter";
++		kfree_sensitive(cc);
++		return ret;
++	}
++
+ 	cc->key_size = key_size;
+ 	cc->sector_size = (1 << SECTOR_SHIFT);
+ 	cc->sector_shift = 0;
+@@ -3319,10 +3327,6 @@ static int crypt_ctr(struct dm_target *t
+ 	crypt_calculate_pages_per_client();
+ 	spin_unlock(&dm_crypt_clients_lock);
  
- 	ath9k_htc_set_opmode(priv);
- 
--	if ((priv->ah->opmode == NL80211_IFTYPE_AP) &&
--	    !test_bit(ATH_OP_ANI_RUN, &common->op_flags)) {
-+	if (priv->ah->opmode == NL80211_IFTYPE_AP)
- 		ath9k_hw_set_tsfadjust(priv->ah, true);
--		ath9k_htc_start_ani(priv);
--	}
- 
- 	ath_dbg(common, CONFIG, "Attach a VIF of type: %d at idx: %d\n",
- 		vif->type, avp->index);
+-	ret = percpu_counter_init(&cc->n_allocated_pages, 0, GFP_KERNEL);
+-	if (ret < 0)
+-		goto bad;
+-
+ 	/* Optional parameters need to be read before cipher constructor */
+ 	if (argc > 5) {
+ 		ret = crypt_ctr_optional(ti, argc - 5, &argv[5]);
 
 
