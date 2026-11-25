@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795625128;
-	b=BUC8SmjdwS6W1x38I6l4SAOFwCPk5fKom/R1o+qt93XYfnGsiD8BhV1FO3APTHwmL+XN
-	 qiJZoGphwbpVNlsTKarY7MPUy4hL4cC0brLObIiOizBsG5TGJ7GuSy1rIVckIK7iYEpjc
-	 vXsscGoRhQ4qFURS7FNAhEnf0085ABmhedHtMw4uGtlsZrNvvaBvZij4iplEjkJp9qBru
-	 aTnfikMBtbXrRIxbcOtIwLAuyY5x8zxQrlVLhxeKlnMwS/JnxaLtAKUSgYQC5TSCoG21/
-	 KOOzJ+355XZ9Xb+8uvFy8i6XiBiyfa5zJBecxMX9Qzb5Z4kkmwH+lguLSS0oarKBmXw==
+	t=1795625132;
+	b=Fy/lEUloGm7ZLf6YgzJsHURePvq0stWoFZplk8h06ZosKPntRnE3L9ZFnrnUlpNkeKPO
+	 L9Sd9B6toTlNJLEFQzJDqf6T3rzGk7miRUmb+XUB6u1IXvTVX6X3pMNHidUjjCrd9A6Vd
+	 SxXXT/4Hol5Y3rfuIdTKlnKRd46bHiODP+hmDMyBqQbINCmc41jerRuVKmBgz8a7n/PCt
+	 HtfTkllhZs6D0x7kaJ8kvDw00NoWLUdCbjIoJUrlBAXtg5P4Wf46Hl41WvbJaVXNe1V/k
+	 LchDe9lRUxBTpob09G1fUy6V+Kk5dgaZLWcSWkDfR+ScxXWOmVzVRpfQWf2e0jLARww==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795625128;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795625132;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=xiXe+KyAL5+dRnmb/uLZBFpwBnLTELMIiwiZaznwXG8=;
-	b=f/aVXyzoMqJGz1a/vc8mD5iAsgqPNkeSx2IDgfzooLs9Wz5kBT9MU1AVhePPxvfykyDa
-	 P+2o8OXxYIgqFrjC8XibbckVTbqYRlcDLGKauD6GeCpH6KYaLXVCyKS5y25kErU+HtLfA
-	 N4T9GOtF7kmQ/fSg+kIPfdWGTSilE+2dHuXKGYHbH2edjJlR9Qh/fzYuDW6QYxIAjjbci
-	 jX11xJoESWJzrg47nzyod7f6byJBroJnyVamSejgDp8bWbT9UJIwP9WjKYJKb0SeArKZF
-	 hLyfdRgBCvPscYrjoGwnxoEUCXwA/aPZV5gVBDeII7vWP8t/p8QDZEwcCC8+r1otJgA==
+	bh=8SBG4xe25hZisLoM+5XE/5niOhio8KAxUx8E0VfIu04=;
+	b=fDTko3h9NaL8C3IfdV8ynEfLBolGPoeDHYIOGH4tjKqJ9CvPUCbL6sLGaskld3kxM5AZ
+	 vYpT0EIbA6SSPd0Bp9IKypolwCCSIdRgGdgZfxrlSfH4vhx11rztnE1V3csNzxNNBjuK4
+	 Nl8FCErQKrMQwApVmU/kIZvnOjH2JrCKFrUycYzYYONDay23Vwp8WNsFCINuJw947gYoO
+	 2/Vt3yZx30Uy+UmyzzM2ZjLc9BJixQfMz4RM46zh+GM/WM3Qt5NWxsZHG23+sjyRsHtxS
+	 FHOa/rqKBaQbBQ3sFHLVOJPo9kwU+OoAw6Z6LXA51HxHP5JbR/IAVwP8FtntKVolDxg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=MN2RQ7jG;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=FUF17wt2;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B9310606A32E;
-	Wed, 25 Nov 2026 16:45:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 27F02606A327;
+	Wed, 25 Nov 2026 16:45:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=MN2RQ7jG
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D45491F000C6;
-	Wed, 25 Nov 2026 16:45:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=FUF17wt2
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EEC811F000C4;
+	Wed, 25 Nov 2026 16:45:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795625128;
-	bh=xiXe+KyAL5+dRnmb/uLZBFpwBnLTELMIiwiZaznwXG8=;
+	s=korg; t=1795625131;
+	bh=8SBG4xe25hZisLoM+5XE/5niOhio8KAxUx8E0VfIu04=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=MN2RQ7jGh5SMJkjPLJP1qbUInGGamOauNTtRgzN7dH+R9g8+VvEkDE0BvIvl63Wcx
-	 BM1rRpN5ycco+gQyuCwoYP+CdnPHnXfuAhXPjMKqBhj9Wj3eDPhA8LRzHFU7qoNxb3
-	 ZJf08uuVUY62DQKP1x55+6j+5ymMKIGgsW7fX/4I=
+	b=FUF17wt2K0leWH4D4qTx3kBYVYYsCqzoacnNVStLCXw9VRAeM/Tti4eeyBCUJyvG5
+	 mvNUD+9KZN6n6FOYMZWT3ePhYkoKehJL+LBJ8lYaQ89HuEDwSPZmZD7adV5ANFeLCp
+	 hn2MJ3BbPhO66oGwWP514kC4xxUzP7zFXBDRyQ6A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Adrian Hunter <adrian.hunter@intel.com>,
-	Frank Li <Frank.Li@nxp.com>,
-	Alexandre Belloni <alexandre.belloni@bootlin.com>,
+	Sean Young <sean@mess.org>,
+	Hans Verkuil <hverkuil+cisco@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 414/816] i3c: mipi-i3c-hci: Process multiple IBIs per interrupt
-Date: Wed, 25 Nov 2026 15:32:42 +0100
-Message-ID: <20261125143858.779308094@linuxfoundation.org>
+Subject: [PATCH 6.12 372/816] media: rc: Add missing locking for keymap
+Date: Wed, 25 Nov 2026 15:32:00 +0100
+Message-ID: <20261125143857.807702340@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143849.205329330@linuxfoundation.org>
 References: <20261125143849.205329330@linuxfoundation.org>
@@ -69,125 +68,208 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Adrian Hunter <adrian.hunter@intel.com>
+From: Sean Young <sean@mess.org>
 
-[ Upstream commit 5fbd0790af9484c251341e3ba2ebbb2887c570c8 ]
+[ Upstream commit ab9567336171e46ce9e03ee126902b3fd7901baa ]
 
-INTR_IBI_READY indicates that one or more IBI Status Descriptors are
-present in the IBI ring.  After clearing interrupt status, the interrupt
-handler processes only a single IBI even though additional IBIs may
-already be queued.
+When the rc_map for an rc_dev gets updated, locking is required but is
+missing in places. A concurrent scancode lookup and a call to
+rc_{register,unregistered}_device() could result in a use-after-free;
+this could happen if IR is decoded during those function calls.
 
-The controller does not reassert INTR_IBI_READY solely because entries
-remain in the ring after interrupt status has been cleared.  Consequently,
-the remaining IBIs are not processed until some later interrupt occurs,
-and can accumulate if IBIs arrive more often than the interrupt handler
-runs.
+Add lockdep assertions where locks are required.
 
-Process all IBIs that are pending when the handler runs: capture the IBI
-enqueue pointer up front and continue until the dequeue pointer reaches
-that position.
+ir_free_table() should only be called for non-TX devices else we will
+use a spinlock without iniitializing it.
 
-Fixes: 9ad9a52cce28 ("i3c/master: introduce the mipi-i3c-hci driver")
-Signed-off-by: Adrian Hunter <adrian.hunter@intel.com>
-Reviewed-by: Frank Li <Frank.Li@nxp.com>
-Link: https://patch.msgid.link/20260920151248.46936-10-adrian.hunter@intel.com
-Signed-off-by: Alexandre Belloni <alexandre.belloni@bootlin.com>
-[ sashal: Kept the tree's DBG() and the rh->lock around the IBI dequeue-pointer update, re-reading RING_OPERATION1 under the lock instead of writing back the cached value. ]
+Fixes: dccc0c3ddf8f ("media: rc: fix race between unregister and urb/irq callbacks")
+Signed-off-by: Sean Young <sean@mess.org>
+Cc: stable@vger.kernel.org
+Acked-by: Hans Verkuil <hverkuil+cisco@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/i3c/master/mipi-i3c-hci/dma.c | 40 +++++++++++++++++----------
- 1 file changed, 26 insertions(+), 14 deletions(-)
+ drivers/media/rc/rc-main.c | 86 +++++++++++++++++++++++++-------------
+ 1 file changed, 57 insertions(+), 29 deletions(-)
 
-diff --git a/drivers/i3c/master/mipi-i3c-hci/dma.c b/drivers/i3c/master/mipi-i3c-hci/dma.c
-index d61d88b3a47a6..90bc62bacbebe 100644
---- a/drivers/i3c/master/mipi-i3c-hci/dma.c
-+++ b/drivers/i3c/master/mipi-i3c-hci/dma.c
-@@ -603,24 +603,23 @@ static void hci_dma_recycle_ibi_slot(struct i3c_hci *hci,
- 	i3c_generic_ibi_recycle_slot(dev_ibi->pool, slot);
- }
+diff --git a/drivers/media/rc/rc-main.c b/drivers/media/rc/rc-main.c
+index 63b536571d442..22848d7d3e4f0 100644
+--- a/drivers/media/rc/rc-main.c
++++ b/drivers/media/rc/rc-main.c
+@@ -104,7 +104,6 @@ static struct rc_map_list *seek_rc_map(const char *name)
  
--static void hci_dma_process_ibi(struct i3c_hci *hci, struct hci_rh_data *rh)
-+static bool hci_dma_process_ibi(struct i3c_hci *hci, struct hci_rh_data *rh,
-+				u32 *op1_val, unsigned int enq_ptr)
+ struct rc_map *rc_map_get(const char *name)
  {
- 	struct i3c_dev_desc *dev;
- 	struct i3c_hci_dev_data *dev_data;
- 	struct hci_dma_dev_ibi_data *dev_ibi;
- 	struct i3c_ibi_slot *slot;
--	u32 op1_val, op2_val, ibi_status_error;
--	unsigned int ptr, enq_ptr, deq_ptr;
-+	u32 ibi_status_error;
-+	unsigned int ptr, deq_ptr;
- 	unsigned int ibi_size, ibi_chunks, ibi_data_offset, first_part;
- 	int ibi_addr, last_ptr;
- 	void *ring_ibi_data;
- 	dma_addr_t ring_ibi_data_dma;
- 
--	op1_val = rh_reg_read(RING_OPERATION1);
--	deq_ptr = FIELD_GET(RING_OP1_IBI_DEQ_PTR, op1_val);
 -
--	op2_val = rh_reg_read(RING_OPERATION2);
--	enq_ptr = FIELD_GET(RING_OP2_IBI_ENQ_PTR, op2_val);
-+	deq_ptr = FIELD_GET(RING_OP1_IBI_DEQ_PTR, *op1_val);
-+	if (deq_ptr == enq_ptr)
-+		return false;
+ 	struct rc_map_list *map;
  
- 	ibi_status_error = 0;
- 	ibi_addr = -1;
-@@ -668,7 +667,7 @@ static void hci_dma_process_ibi(struct i3c_hci *hci, struct hci_rh_data *rh)
- 	if (last_ptr == -1) {
- 		/* this IBI sequence is not yet complete */
- 		DBG("no LAST_STATUS available (e=%d d=%d)", enq_ptr, deq_ptr);
--		return;
-+		return false;
+ 	map = seek_rc_map(name);
+@@ -201,7 +200,7 @@ static int scancode_to_u64(const struct input_keymap_entry *ke, u64 *scancode)
+  * ir_create_table() - initializes a scancode table
+  * @dev:	the rc_dev device
+  * @rc_map:	the rc_map to initialize
+- * @name:	name to assign to the table
++ * @map_name:	name to assign to the table
+  * @rc_proto:	ir type to assign to the new table
+  * @size:	initial size of the table
+  *
+@@ -211,23 +210,31 @@ static int scancode_to_u64(const struct input_keymap_entry *ke, u64 *scancode)
+  * return:	zero on success or a negative error code
+  */
+ static int ir_create_table(struct rc_dev *dev, struct rc_map *rc_map,
+-			   const char *name, u64 rc_proto, size_t size)
++			   const char *map_name, u64 rc_proto, size_t size)
+ {
++	struct rc_map_table *scan;
+ 	unsigned int alloc;
+-	rc_map->name = kstrdup(name, GFP_KERNEL);
+-	if (!rc_map->name)
++	char *name;
++
++	name = kstrdup(map_name, GFP_KERNEL);
++	if (!name)
+ 		return -ENOMEM;
++
+ 	alloc = roundup_pow_of_two(size);
+-	rc_map->rc_proto = rc_proto;
+-	rc_map->len = 0;
+-	rc_map->size = alloc;
+-	rc_map->scan = kmalloc_objs(struct rc_map_table, alloc, GFP_KERNEL);
+-	if (!rc_map->scan) {
+-		kfree(rc_map->name);
+-		rc_map->name = NULL;
++	scan = kmalloc_objs(struct rc_map_table, alloc, GFP_KERNEL);
++	if (!scan) {
++		kfree(name);
+ 		return -ENOMEM;
  	}
- 	deq_ptr = last_ptr + 1;
- 	deq_ptr %= rh->ibi_status_entries;
-@@ -741,10 +740,10 @@ static void hci_dma_process_ibi(struct i3c_hci *hci, struct hci_rh_data *rh)
- done:
- 	/* take care to update the ibi dequeue pointer atomically */
- 	spin_lock(&rh->lock);
--	op1_val = rh_reg_read(RING_OPERATION1);
--	op1_val &= ~RING_OP1_IBI_DEQ_PTR;
--	op1_val |= FIELD_PREP(RING_OP1_IBI_DEQ_PTR, deq_ptr);
--	rh_reg_write(RING_OPERATION1, op1_val);
-+	*op1_val = rh_reg_read(RING_OPERATION1);
-+	*op1_val &= ~RING_OP1_IBI_DEQ_PTR;
-+	*op1_val |= FIELD_PREP(RING_OP1_IBI_DEQ_PTR, deq_ptr);
-+	rh_reg_write(RING_OPERATION1, *op1_val);
- 	spin_unlock(&rh->lock);
  
- 	/* update the chunk pointer */
-@@ -753,6 +752,19 @@ static void hci_dma_process_ibi(struct i3c_hci *hci, struct hci_rh_data *rh)
- 
- 	/* and tell the hardware about freed chunks */
- 	rh_reg_write(CHUNK_CONTROL, rh_reg_read(CHUNK_CONTROL) + ibi_chunks);
++	scoped_guard(spinlock_irqsave, &rc_map->lock) {
++		rc_map->name = name;
++		rc_map->scan = scan;
++		rc_map->rc_proto = rc_proto;
++		rc_map->len = 0;
++		rc_map->size = alloc;
++	}
 +
-+	return true;
-+}
+ 	dev_dbg(&dev->dev, "Allocated space for %u keycode entries (%zu bytes)\n",
+ 		alloc, alloc * sizeof(struct rc_map_table));
+ 	return 0;
+@@ -237,16 +244,26 @@ static int ir_create_table(struct rc_dev *dev, struct rc_map *rc_map,
+  * ir_free_table() - frees memory allocated by a scancode table
+  * @rc_map:	the table whose mappings need to be freed
+  *
+- * This routine will free memory alloctaed for key mappings used by given
++ * This routine will free memory allocated for key mappings used by given
+  * scancode table.
+  */
+ static void ir_free_table(struct rc_map *rc_map)
+ {
+-	rc_map->size = 0;
+-	kfree(rc_map->name);
+-	rc_map->name = NULL;
+-	kfree(rc_map->scan);
+-	rc_map->scan = NULL;
++	struct rc_map_table *scan;
++	const char *name;
 +
-+static void hci_dma_drain_ibi_ring(struct i3c_hci *hci, struct hci_rh_data *rh)
-+{
-+	u32 op1_val = rh_reg_read(RING_OPERATION1);
-+	u32 op2_val = rh_reg_read(RING_OPERATION2);
-+	unsigned int enq_ptr = FIELD_GET(RING_OP2_IBI_ENQ_PTR, op2_val);
++	scoped_guard(spinlock_irqsave, &rc_map->lock) {
++		name = rc_map->name;
++		scan = rc_map->scan;
 +
-+	/* Loop is bounded by enq_ptr. Further IBIs will re-assert INTR_IBI_READY */
-+	while (hci_dma_process_ibi(hci, rh, &op1_val, enq_ptr))
-+		;
++		rc_map->size = 0;
++		rc_map->len = 0;
++		rc_map->name = NULL;
++		rc_map->scan = NULL;
++	}
++
++	kfree(name);
++	kfree(scan);
  }
  
- static bool hci_dma_irq_handler(struct i3c_hci *hci, unsigned int mask)
-@@ -777,7 +789,7 @@ static bool hci_dma_irq_handler(struct i3c_hci *hci, unsigned int mask)
- 		rh_reg_write(INTR_STATUS, status);
+ /**
+@@ -266,6 +283,8 @@ static int ir_resize_table(struct rc_dev *dev, struct rc_map *rc_map,
+ 	unsigned int newsize = rc_map->size;
+ 	struct rc_map_table *newscan;
  
- 		if (status & INTR_IBI_READY)
--			hci_dma_process_ibi(hci, rh);
-+			hci_dma_drain_ibi_ring(hci, rh);
- 		if (status & (INTR_TRANSFER_COMPLETION | INTR_TRANSFER_ERR))
- 			hci_dma_xfer_done(hci, rh);
- 		if (status & INTR_RING_OP)
++	lockdep_assert_held(&rc_map->lock);
++
+ 	if (rc_map->size == rc_map->len) {
+ 		/* All entries in use -> grow keytable */
+ 		if (newsize >= IR_TAB_MAX_ENTRIES)
+@@ -317,6 +336,8 @@ static unsigned int ir_update_mapping(struct rc_dev *dev,
+ 	int old_keycode = rc_map->scan[index].keycode;
+ 	int i;
+ 
++	lockdep_assert_held(&rc_map->lock);
++
+ 	/* Did the user wish to remove the mapping? */
+ 	if (new_keycode == KEY_RESERVED || new_keycode == KEY_UNKNOWN) {
+ 		dev_dbg(&dev->dev, "#%d: Deleting scan 0x%04llx\n",
+@@ -372,6 +393,8 @@ static unsigned int ir_establish_scancode(struct rc_dev *dev,
+ {
+ 	unsigned int i;
+ 
++	lockdep_assert_held(&rc_map->lock);
++
+ 	/*
+ 	 * Unfortunately, some hardware-based IR decoders don't provide
+ 	 * all bits for the complete IR code. In general, they provide only
+@@ -396,7 +419,7 @@ static unsigned int ir_establish_scancode(struct rc_dev *dev,
+ 	/* No previous mapping found, we might need to grow the table */
+ 	if (rc_map->size == rc_map->len) {
+ 		if (!resize || ir_resize_table(dev, rc_map, GFP_ATOMIC))
+-			return -1U;
++			return UINT_MAX;
+ 	}
+ 
+ 	/* i is the proper index to insert our new keycode */
+@@ -478,16 +501,18 @@ static int ir_setkeytable(struct rc_dev *dev, const struct rc_map *from)
+ 	if (rc)
+ 		return rc;
+ 
+-	for (i = 0; i < from->size; i++) {
+-		index = ir_establish_scancode(dev, rc_map,
+-					      from->scan[i].scancode, false);
+-		if (index >= rc_map->len) {
+-			rc = -ENOMEM;
+-			break;
+-		}
++	scoped_guard(spinlock_irqsave, &rc_map->lock) {
++		for (i = 0; i < from->size; i++) {
++			index = ir_establish_scancode(dev, rc_map,
++						      from->scan[i].scancode, false);
++			if (index >= rc_map->len) {
++				rc = -ENOMEM;
++				break;
++			}
+ 
+-		ir_update_mapping(dev, rc_map, index,
+-				  from->scan[i].keycode);
++			ir_update_mapping(dev, rc_map, index,
++					  from->scan[i].keycode);
++		}
+ 	}
+ 
+ 	if (rc)
+@@ -523,6 +548,8 @@ static unsigned int ir_lookup_by_scancode(const struct rc_map *rc_map,
+ {
+ 	struct rc_map_table *res;
+ 
++	lockdep_assert_held(&rc_map->lock);
++
+ 	res = bsearch(&scancode, rc_map->scan, rc_map->len,
+ 		      sizeof(struct rc_map_table), rc_map_cmp);
+ 	if (!res)
+@@ -1988,7 +2015,8 @@ int rc_register_device(struct rc_dev *dev)
+ 	scoped_guard(mutex, &dev->lock)
+ 		dev->registered = false;
+ out_free_table:
+-	ir_free_table(&dev->rc_map);
++	if (dev->driver_type != RC_DRIVER_IR_RAW_TX)
++		ir_free_table(&dev->rc_map);
+ out_raw:
+ 	ir_raw_event_free(dev);
+ out_minor:
 -- 
 2.53.0
 
