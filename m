@@ -1,53 +1,57 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795625651;
-	b=bq1vH+JX2GRYGNn/eVwQSuIQnFdswKQa5t31y/YsWPqCV6Q4jGizdvj9tyoTN3c1IkX9
-	 BlME7chQlCekc7coSq0TO69841qEUg+Xfu+W6ZSpDsiGgyWEyTXaeoHpdxln9LvTLUJdR
-	 w7ghTGt9Fg5wDc8jY6qtT4ktHosL6Fb5I6uLWFt2VBbv8jM9fhjoHAGbSAXp7SOQo8hFO
-	 87ScirxS2BNTxQHUzIWIfr7Lvv/tYO70zYYK2Vw5C39W0Jt2oe7zw/PyTQQSs6Bp+ZqP1
-	 PnAcNtA1cRTXVgkBMf3fqTn5uVhurqqhUSN3OemDgZyRfU7x8Lm8GlLwURFESYdIEag==
+	t=1795625655;
+	b=OhnLXuJp7QWMvGXqZZ67iFIltEj0tlSHIL1zbj2wOy5qhrH13tGIIz1mqIczQ8F23j/B
+	 JZcNwCDeWXXJqFZotafi99iGctSG9SD4vobSV3b+4ZL0F58WaLpwLSs2xWrxFRftYAhF2
+	 AqIhV2HngMJMfkRV8hHv66rMpcJF6/e84FoJrJi9oTx7tPG3ZFrelZtnaxFXZZSCoUmR8
+	 itmRc9BjxZSReL2XTeHCLRR4E+Tcn7HxE5ykiY19Nq3XXanf7lLxxXQAAhDdzUGI1ynzo
+	 tVfEYiWMn99VYeJED7CVkbd6sVo+BrWCP/kzW8sMrluEB7HOFH9AuULHCxy/Rp5WtpQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795625651;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795625655;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Type:Content-Transfer-Encoding;
-	bh=eiPXrrbv4sRBvs7S9E+nQvcoKwSxwxNXTBORiSJnMgo=;
-	b=aIYSFM7FonYhB/CKt9oNXOHLrDvqsNv5JySeu80NFXCnGhIvsgu/vm8jpu120ZOhXp9O
-	 Lbdk6TurKmb+PjdCxRLkK6HMvVxGJB2zcbuvgMO8ilzZRbhmmsaCcPYBeQg7UjHlfx+AC
-	 RKge5bjTNEUbGlOVPDhKb4CFfPJC1dgSM6yt6s9gfQMti2XCNI6iX7ccvtc7ke+qF3Bll
-	 iwCsCF3Af//09huuG1+Kvk5C2saX41YPTd5W6euYTuMOVCh0/ugMNtDDLJTcpraR16Jaw
-	 6Tr9v5A5q7vM9Hx/B6kNQLbmndrlID/GKiGir9JeV24qE9FeDxkNacg9YGTELtsdI1g==
+	 MIME-Version:Content-Transfer-Encoding;
+	bh=ynax06NJnj67JedT6YOr2/IHfcimQuFuxsynJ1mFiME=;
+	b=E4InPTKU9A2Be5wvHiVjm4MnqBDP13zKkGNjj0z4VlvZMFLh0s5hhu4iMGLGNl3xhUL/
+	 DxPzErpUba9EifY1JyfpJ72ZrzKDAuVN1/xzMPDe1ub+OcMvU5QYRHzvIFJxmNCBYb8aB
+	 jmPT7qjwuTM3VZcb8XhlevpSjmHVk4MBhWTzlQEZ72OFH3vtWf13dl66/cugnHYOgAFka
+	 tQrZYFqLgHU/8nC9XOe6buypCYyAr2CR1oV6P3G0ivcPOk2SbDLYOuRqjMzs1zOe3P5Q8
+	 dQXVq/jV91LxEdAEYKIXGEBzivH3eb0kkruUbh9IBziGRZGKVzM+8kc7pyDviP5bGyw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=bNP1PkFz;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=drGOI7Fv;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D850C606A323;
-	Wed, 25 Nov 2026 16:54:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0D54F606A327;
+	Wed, 25 Nov 2026 16:54:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=bNP1PkFz
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3489B1F000C4;
-	Wed, 25 Nov 2026 16:54:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=drGOI7Fv
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F32D61F000D4;
+	Wed, 25 Nov 2026 16:54:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795625651;
-	bh=eiPXrrbv4sRBvs7S9E+nQvcoKwSxwxNXTBORiSJnMgo=;
+	s=korg; t=1795625654;
+	bh=ynax06NJnj67JedT6YOr2/IHfcimQuFuxsynJ1mFiME=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=bNP1PkFznD3QkchMWvlXqyNqclyhwYmiZb5WUpI86iDVLPT5YU3ehzW2L9RvRoYe/
-	 16xkI/FSoacldQnkT+KcwoZ0Z8c2zV9BHpKxTpxGuVMUMuau2Y8i2YS2HCWVCeo71Q
-	 nTD0Bko21EsbpbKVtA24wIzNev1CA4EqGw/T10IU=
+	b=drGOI7FvEdeyDUKIn+lG7OgqnxHaXU++miXNaDaMS4IVaEzXrnUysf1RfBoAK++Co
+	 GukEWvYAC4UXd1i2DspJXEMjWN1ZGvsZQuBjCIgWvCmtt4xbo9R1grGou0JYjzNEzQ
+	 Lwd0fOPJaD1y7psSQzQO73BXFUFW3MS0n+SlwFMM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?J=C3=A9r=C3=A9my=20Jean?= <Jeremy.Jean@oss.cyber.gouv.fr>,
-	Kuniyuki Iwashima <kuniyu@google.com>,
-	Dmitry Safonov <dima@arista.com>,
+	Vega <vega@nebusec.ai>,
+	Sashiko <sashiko-bot@kernel.org>,
+	Zixuan Chai <petalzu987@gmail.com>,
+	Ren Wei <weir@nebusec.ai>,
+	Hangbin Liu <liuhangbin@kylinos.cn>,
+	Pablo Neira Ayuso <pablo@netfilter.org>,
+	Andrea Mayer <andrea.mayer@uniroma2.it>,
 	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.12 587/816] tcp: fix authentication bypass via unsupported TCP auth options
-Date: Wed, 25 Nov 2026 15:35:35 +0100
-Message-ID: <20261125143902.766150856@linuxfoundation.org>
+Subject: [PATCH 6.12 588/816] seg6: validate state in netfilter continuations
+Date: Wed, 25 Nov 2026 15:35:36 +0100
+Message-ID: <20261125143902.789229984@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143849.205329330@linuxfoundation.org>
 References: <20261125143849.205329330@linuxfoundation.org>
@@ -63,74 +67,261 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Jérémy Jean <Jeremy.Jean@oss.cyber.gouv.fr>
+From: Zixuan Chai <petalzu987@gmail.com>
 
-commit 7cc235fb1251fec1183e3158c60d2e504c2a8e8b upstream.
+commit 549484dd3e80a721d51bd695f22a800d2e05bea1 upstream.
 
-tcp_inbound_hash() parses both TCP-MD5 and TCP-AO options when at
-least one of the two features is enabled. With TCP_MD5SIG=y and
-TCP_AO=n, a packet carrying an AO option reaches the disabled
-tcp_inbound_ao_hash() stub. That stub returns success, so sockets
-configured to require MD5 authentication end up accepting
-unauthenticated data. A forged AO option skips the unsigned fast
-path, which is the only place where tcp_inbound_hash() can return
-SKB_DROP_REASON_TCP_MD5NOTFOUND.
+When nf_hooks_lwtunnel is enabled, End.DX4 sends decapsulated packets
+through NF_INET_PRE_ROUTING. If DNAT changes the inner destination,
+nf_nat_ipv4_pre_routing() drops skb_dst(), and the continuation then
+dereferences the missing dst's lwtstate. This causes a KASAN NULL
+pointer dereference and fatal exception panic.
 
-The inverse configuration with TCP_MD5SIG=n and TCP_AO=y has the same
-problem for an MD5 option on AO sockets.
+End.DX6 has the same issue with IPv6 DNAT. In seg6_iptunnel,
+POST_ROUTING SNAT with an outbound XFRM policy can replace the dst before
+the continuation resumes.
 
-Note that TCP-AO depends on 64BIT: therefore, every 32-bit kernel with
-TCP_MD5SIG=y is in the vulnerable configuration.
+Validate the current dst and expected lwtstate type in each NF_HOOK()
+continuation before calling the existing handler. Drop packets with
+missing or incompatible state while preserving direct no-hook paths.
+The helpers return bool because callers only need a validity check.
 
-Make the disabled stubs reject options for the unsupported
-authentication scheme. This matches the real helpers' behavior for
-sockets without keys. It also means that kernels with TCP_MD5SIG=n and
-TCP_AO=y now drop segments carrying an MD5 option on unkeyed sockets,
-as kernels configured with TCP_MD5SIG=y already do.
+Testing shows that the End.DX4 DNAT reproducer triggers a KASAN NULL
+pointer dereference without this change and no longer does so with the
+fix. The SNAT+ESP/XFRM reproducer also completes without the reported
+fault. The in-tree End.DX4 netfilter forwarding selftest passes all four
+bidirectional checks with nf_hooks_lwtunnel disabled and enabled.
 
-Fixes: 0a3a809089eb ("net/tcp: Verify inbound TCP-AO signed segments")
+Fixes: 7a3f5b0de364 ("netfilter: add netfilter hooks to SRv6 data plane")
 Cc: stable@vger.kernel.org
-Signed-off-by: Jérémy Jean <Jeremy.Jean@oss.cyber.gouv.fr>
-Reviewed-by: Kuniyuki Iwashima <kuniyu@google.com>
-Acked-by: Dmitry Safonov <dima@arista.com>
-Link: https://patch.msgid.link/20261107224733.1104094-2-Jeremy.Jean@oss.cyber.gouv.fr
+Reported-by: Vega <vega@nebusec.ai>
+Reported-by: Sashiko <sashiko-bot@kernel.org>
+Closes: https://sashiko.dev/#/patchset/20260720204430.1886091-1-xmei5@asu.edu
+Signed-off-by: Zixuan Chai <petalzu987@gmail.com>
+Signed-off-by: Ren Wei <weir@nebusec.ai>
+Reviewed-by: Hangbin Liu <liuhangbin@kylinos.cn>
+Acked-by: Pablo Neira Ayuso <pablo@netfilter.org>
+Reviewed-by: Andrea Mayer <andrea.mayer@uniroma2.it>
+Link: https://patch.msgid.link/8574739acd6f5d9eb0a5640e893122619e9f79ef.1793726355.git.petalzu987@gmail.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- include/net/tcp_ao.h |    3 ++-
- net/ipv4/tcp.c       |    3 ++-
- 2 files changed, 4 insertions(+), 2 deletions(-)
+ net/ipv6/seg6_iptunnel.c |   46 +++++++++++++++++++++++++++++++++++----
+ net/ipv6/seg6_local.c    |   55 ++++++++++++++++++++++++++++++++++++++++++++---
+ 2 files changed, 94 insertions(+), 7 deletions(-)
 
---- a/include/net/tcp_ao.h
-+++ b/include/net/tcp_ao.h
-@@ -287,7 +287,8 @@ static inline enum skb_drop_reason tcp_i
- 		const struct request_sock *req, int l3index,
- 		const struct tcp_ao_hdr *aoh)
- {
--	return SKB_NOT_DROPPED_YET;
-+	NET_INC_STATS(sock_net(sk), LINUX_MIB_TCPAOKEYNOTFOUND);
-+	return SKB_DROP_REASON_TCP_AOUNEXPECTED;
+--- a/net/ipv6/seg6_iptunnel.c
++++ b/net/ipv6/seg6_iptunnel.c
+@@ -18,6 +18,7 @@
+ #include <net/ip6_fib.h>
+ #include <net/route.h>
+ #include <net/seg6.h>
++#include <net/dst_metadata.h>
+ #include <linux/seg6.h>
+ #include <linux/seg6_iptunnel.h>
+ #include <net/addrconf.h>
+@@ -58,6 +59,21 @@ static inline struct seg6_lwt *seg6_lwt_
+ 	return (struct seg6_lwt *)lwt->data;
  }
  
- static inline struct tcp_ao_key *tcp_ao_do_lookup(const struct sock *sk,
---- a/net/ipv4/tcp.c
-+++ b/net/ipv4/tcp.c
-@@ -4809,7 +4809,8 @@ tcp_inbound_md5_hash(const struct sock *
- 		     const void *saddr, const void *daddr,
- 		     int family, int l3index, const __u8 *hash_location)
++static bool seg6_skb_has_lwtstate(struct sk_buff *skb)
++{
++	struct dst_entry *dst;
++
++	if (unlikely(!skb_valid_dst(skb)))
++		return false;
++
++	dst = skb_dst(skb);
++	if (unlikely(!dst->lwtstate ||
++		     dst->lwtstate->type != LWTUNNEL_ENCAP_SEG6))
++		return false;
++
++	return true;
++}
++
+ static inline struct seg6_iptunnel_encap *
+ seg6_encap_lwtunnel(struct lwtunnel_state *lwt)
  {
--	return SKB_NOT_DROPPED_YET;
-+	NET_INC_STATS(sock_net(sk), LINUX_MIB_TCPMD5UNEXPECTED);
-+	return SKB_DROP_REASON_TCP_MD5UNEXPECTED;
+@@ -538,6 +554,17 @@ drop:
+ 	return err;
  }
  
- #endif
++static int seg6_input_core_nf(struct net *net, struct sock *sk,
++			      struct sk_buff *skb)
++{
++	if (unlikely(!seg6_skb_has_lwtstate(skb))) {
++		kfree_skb(skb);
++		return -EINVAL;
++	}
++
++	return seg6_input_core(net, sk, skb);
++}
++
+ static int seg6_input_nf(struct sk_buff *skb)
+ {
+ 	struct net_device *dev = skb_dst_dev(skb);
+@@ -546,10 +573,10 @@ static int seg6_input_nf(struct sk_buff
+ 	switch (skb->protocol) {
+ 	case htons(ETH_P_IP):
+ 		return NF_HOOK(NFPROTO_IPV4, NF_INET_POST_ROUTING, net, NULL,
+-			       skb, NULL, dev, seg6_input_core);
++			       skb, NULL, dev, seg6_input_core_nf);
+ 	case htons(ETH_P_IPV6):
+ 		return NF_HOOK(NFPROTO_IPV6, NF_INET_POST_ROUTING, net, NULL,
+-			       skb, NULL, dev, seg6_input_core);
++			       skb, NULL, dev, seg6_input_core_nf);
+ 	}
+ 
+ 	return -EINVAL;
+@@ -624,6 +651,17 @@ drop:
+ 	return err;
+ }
+ 
++static int seg6_output_core_nf(struct net *net, struct sock *sk,
++			       struct sk_buff *skb)
++{
++	if (unlikely(!seg6_skb_has_lwtstate(skb))) {
++		kfree_skb(skb);
++		return -EINVAL;
++	}
++
++	return seg6_output_core(net, sk, skb);
++}
++
+ static int seg6_output_nf(struct net *net, struct sock *sk, struct sk_buff *skb)
+ {
+ 	struct net_device *dev = skb_dst_dev(skb);
+@@ -631,10 +669,10 @@ static int seg6_output_nf(struct net *ne
+ 	switch (skb->protocol) {
+ 	case htons(ETH_P_IP):
+ 		return NF_HOOK(NFPROTO_IPV4, NF_INET_POST_ROUTING, net, sk, skb,
+-			       NULL, dev, seg6_output_core);
++			       NULL, dev, seg6_output_core_nf);
+ 	case htons(ETH_P_IPV6):
+ 		return NF_HOOK(NFPROTO_IPV6, NF_INET_POST_ROUTING, net, sk, skb,
+-			       NULL, dev, seg6_output_core);
++			       NULL, dev, seg6_output_core_nf);
+ 	}
+ 
+ 	return -EINVAL;
+--- a/net/ipv6/seg6_local.c
++++ b/net/ipv6/seg6_local.c
+@@ -24,6 +24,7 @@
+ #include <net/addrconf.h>
+ #include <net/ip6_route.h>
+ #include <net/dst_cache.h>
++#include <net/dst_metadata.h>
+ #include <net/ip_tunnels.h>
+ #ifdef CONFIG_IPV6_SEG6_HMAC
+ #include <net/seg6_hmac.h>
+@@ -211,6 +212,21 @@ static struct seg6_local_lwt *seg6_local
+ 	return (struct seg6_local_lwt *)lwt->data;
+ }
+ 
++static bool seg6_local_skb_has_lwtstate(struct sk_buff *skb)
++{
++	struct dst_entry *dst;
++
++	if (unlikely(!skb_valid_dst(skb)))
++		return false;
++
++	dst = skb_dst(skb);
++	if (unlikely(!dst->lwtstate ||
++		     dst->lwtstate->type != LWTUNNEL_ENCAP_SEG6_LOCAL))
++		return false;
++
++	return true;
++}
++
+ static struct ipv6_sr_hdr *get_and_validate_srh(struct sk_buff *skb)
+ {
+ 	struct ipv6_sr_hdr *srh;
+@@ -939,6 +955,17 @@ static int input_action_end_dx6_finish(s
+ 	return dst_input(skb);
+ }
+ 
++static int input_action_end_dx6_finish_nf(struct net *net, struct sock *sk,
++					  struct sk_buff *skb)
++{
++	if (unlikely(!seg6_local_skb_has_lwtstate(skb))) {
++		kfree_skb(skb);
++		return -EINVAL;
++	}
++
++	return input_action_end_dx6_finish(net, sk, skb);
++}
++
+ /* decapsulate and forward to specified nexthop */
+ static int input_action_end_dx6(struct sk_buff *skb,
+ 				struct seg6_local_lwt *slwt)
+@@ -959,7 +986,7 @@ static int input_action_end_dx6(struct s
+ 	if (static_branch_unlikely(&nf_hooks_lwtunnel_enabled))
+ 		return NF_HOOK(NFPROTO_IPV6, NF_INET_PRE_ROUTING,
+ 			       dev_net(skb->dev), NULL, skb, skb->dev,
+-			       NULL, input_action_end_dx6_finish);
++			       NULL, input_action_end_dx6_finish_nf);
+ 
+ 	return input_action_end_dx6_finish(dev_net(skb->dev), NULL, skb);
+ drop:
+@@ -1027,6 +1054,17 @@ static int input_action_end_dx4_finish(s
+ 	return dst_input(skb);
+ }
+ 
++static int input_action_end_dx4_finish_nf(struct net *net, struct sock *sk,
++					  struct sk_buff *skb)
++{
++	if (unlikely(!seg6_local_skb_has_lwtstate(skb))) {
++		kfree_skb(skb);
++		return -EINVAL;
++	}
++
++	return input_action_end_dx4_finish(net, sk, skb);
++}
++
+ static int input_action_end_dx4(struct sk_buff *skb,
+ 				struct seg6_local_lwt *slwt)
+ {
+@@ -1047,7 +1085,7 @@ static int input_action_end_dx4(struct s
+ 	if (static_branch_unlikely(&nf_hooks_lwtunnel_enabled))
+ 		return NF_HOOK(NFPROTO_IPV4, NF_INET_PRE_ROUTING,
+ 			       dev_net(skb->dev), NULL, skb, skb->dev,
+-			       NULL, input_action_end_dx4_finish);
++			       NULL, input_action_end_dx4_finish_nf);
+ 
+ 	return input_action_end_dx4_finish(dev_net(skb->dev), NULL, skb);
+ drop:
+@@ -1680,6 +1718,17 @@ static int seg6_local_input_core(struct
+ 	return rc;
+ }
+ 
++static int seg6_local_input_core_nf(struct net *net, struct sock *sk,
++				    struct sk_buff *skb)
++{
++	if (unlikely(!seg6_local_skb_has_lwtstate(skb))) {
++		kfree_skb(skb);
++		return -EINVAL;
++	}
++
++	return seg6_local_input_core(net, sk, skb);
++}
++
+ static int seg6_local_input(struct sk_buff *skb)
+ {
+ 	if (skb->protocol != htons(ETH_P_IPV6)) {
+@@ -1690,7 +1739,7 @@ static int seg6_local_input(struct sk_bu
+ 	if (static_branch_unlikely(&nf_hooks_lwtunnel_enabled))
+ 		return NF_HOOK(NFPROTO_IPV6, NF_INET_LOCAL_IN,
+ 			       dev_net(skb->dev), NULL, skb, skb->dev, NULL,
+-			       seg6_local_input_core);
++			       seg6_local_input_core_nf);
+ 
+ 	return seg6_local_input_core(dev_net(skb->dev), NULL, skb);
+ }
 
 
