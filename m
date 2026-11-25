@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795617977;
-	b=yhjv+HTX6wxG5JQ5aLfMkhzrHGIqM+OLqSFud2zKCgFqggoQ2PLwRg6jDtjIWPqr9F5T
-	 VpJqWciyXaaXFvd908K9YelJjEQS4+mVlu/ZjedqxkZ8MNHDNzW2OTx8ZeEcTIKIIhSgG
-	 Wo/tzbU7iGnXQxABGH8OYcPEUu1YutBzBUzYVKv6P6SAyhgRItrhoehFQAD9s1lfMx57b
-	 X0yiOd0IaWZw67buoyse4cINLmhzI6zq7Fbd5AodhU4wLkXkW3JWXTSFDA2dG+VN429Ne
-	 5gCL9apQem/8QLd3KPEWsgocEKg4iIqYcAaSx9iJvLG1RjKSK5ewOTTgY3T4r/Q2vvQ==
+	t=1795617980;
+	b=NYooZns1FJDSxrs3+eo+f0IG+vmobKVZDVj2M3KeZL4/XZuFJoJb4HNnGO5zMKZ22Dcs
+	 B4Rg//3cDzh2Q7Zbila2i+tjCRdzF7GAohaiyUDSVMxMHbTGriPDgogo1UtAaI9JgKst2
+	 E8oeiR0UBw2IIbImI21gjYMnGTwrqC/NxUI215vlpLlzJ/zbCzRQCQ4gczNMQNBeAdv7r
+	 dM3ZHOPFpsjzvmrkjRwXh6u+VDa6BKY9RzbpED9hIaqMuWtcL9n1SZxVeTFkNF0fVn2st
+	 BN2ctGOs1s64Wyb1nym4cuR1W6xmMVw2M/Y14ZjEhajFlHc5m15Z5MFFJ1g+xjUVPFg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795617977;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795617980;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=zvSHpjjfl8ITzkIkKLHi3u1SA/4izlGVRZAng28xctg=;
-	b=QD3HGrgymW7HIUdh4ymkXHc127Hmz2Dm63gLKStYcXVTaB/KJ8W085zDIrGILFML9knc
-	 nHdX8ednMj4DUullxMb55HbRNn1DuE4KLJYyJaZ1cjC9nb3BzoXqzybr3ehGEOMyb36J7
-	 xqJHmOwLYAYAcO7HegqCIjURZN0rDhM3w5cBJcrp4iqLywes2tb8eadrJf5aW0WMwjlHg
-	 YrEE/iO2wSDGD9djs4wDVA52sUJUXO4ey9M1TCvilScEZLDQmAbtvrm6VgFps8eDkfBQk
-	 QU/TgA2Kw+Hzg3E+xs2vzWEhBt+zc5CA12hg44z/kfN9IRTYYSfpvz13qWyP1DNx2Tg==
+	bh=rGGUuhkEGwopQsEpY1oUDdMRviYfAlQk7gybIUYEkgc=;
+	b=3vBMi5wY7z301raOZu86ilSu+ONADZ2Hgm84no5ebFU6ZJyj4l9Qu2u0TXxNF7RGws4w
+	 4NHx/j3UM5o9Hvdtt7U5ae714+i7jg6HFWhCJx7p8sW++d84WvemmL2HwWSuEPyI4P/ws
+	 VChtfwX58x5Iitqo7RUPvSDT7E88bvwWssQWcyQRVH79xPPrVq85qNszbwP0XYfIesS32
+	 qcL5mFOZt98vLfZQbeOfom1QFkloLFPm/Al2Jg2Yw3V5AqIeafwoDFvfSvWiRiQPZ/To6
+	 2lLLaZIy2qLzCfF6AGTjiCT7YPrvo8zLYLepqW1GG6uYA4NQnJCjpB/Y9g0QYTaEHvw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=pBQXq68Y;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ywun+crl;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 87267606A31E;
-	Wed, 25 Nov 2026 14:46:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 61D20606A321;
+	Wed, 25 Nov 2026 14:46:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=pBQXq68Y
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2B3D91F000CA;
-	Wed, 25 Nov 2026 14:46:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ywun+crl
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9E58E1F000CA;
+	Wed, 25 Nov 2026 14:46:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795617976;
-	bh=zvSHpjjfl8ITzkIkKLHi3u1SA/4izlGVRZAng28xctg=;
+	s=korg; t=1795617980;
+	bh=rGGUuhkEGwopQsEpY1oUDdMRviYfAlQk7gybIUYEkgc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=pBQXq68Y0HZrFGx8NK1n+CG1Wmj0E2SkFeK1iafCAoKOaZngR9jfig18gHbdvLTug
-	 QkjasZmO4Xz4ikx0d0Pvjv4jfKPCGeQTEmCm9OotO3uKUlxpV4ys+8N4hjzNihfodb
-	 AvFO4lA1/jzk+BVKeJBCgmGPuL5X88kEBodlpZMU=
+	b=ywun+crlI0FqnzN6sTAKP+n2PDx2EK3FHuGwgyAvZ8Fed+MJnEEcTzuN/4MDPtB5W
+	 vkOD5W68Rd45PD9GNw8OV/aVW5/xZ5atSIpxep+GcidSC7WQ52Oz9YoMGpNhKHyPqZ
+	 9KD0xfNpfJ7hms/y6S3krl+0JCw28deUy4Cl9Lgc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Igor Pylypiv <ipylypiv@google.com>,
-	Niklas Cassel <cassel@kernel.org>,
+	Chris Mason <mason@kernel.org>,
+	Alexei Starovoitov <ast@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0135/1005] ata: libata-eh: Retry non-NCQ commands when their sense data asks for it
-Date: Wed, 25 Nov 2026 15:24:33 +0100
-Message-ID: <20261125143824.901179275@linuxfoundation.org>
+Subject: [PATCH 7.3 0118/1005] bpf: Check the offset in bpf_skb_generic_{push,pop}()
+Date: Wed, 25 Nov 2026 15:24:16 +0100
+Message-ID: <20261125143824.507433256@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143821.729802100@linuxfoundation.org>
 References: <20261125143821.729802100@linuxfoundation.org>
@@ -68,67 +68,66 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Niklas Cassel <cassel@kernel.org>
+From: Chris Mason <mason@kernel.org>
 
-[ Upstream commit 597be4104c4045d73979c05307fa5fc778d1dbde ]
+[ Upstream commit ee36c9aa44ef300cd651074bd97552b229337f85 ]
 
-When a failed command has valid sense data, ata_eh_analyze_tf() asks
-scsi_check_sense() whether the command should be retried, and sets
-ATA_QCFLAG_RETRY if it should. ata_eh_link_autopsy() then clears
-AC_ERR_DEV and AC_ERR_OTHER from qc->err_mask, relying on that decision.
+To make room for len bytes at offset off, bpf_skb_generic_push() moves the
+first off bytes and clears len bytes after them. It assumes that the first
+off bytes are in the linear part. But in bpf_skb_adjust_room() off can be
+the end of the IP header, and this header can be in a frag. Then the
+function reads and writes after skb->tail, and can damage skb_shared_info.
 
-For an NCQ command, qc->err_mask still has AC_ERR_NCQ, so
-ata_eh_finish() honors ATA_QCFLAG_RETRY. For a non-NCQ command, whose
-sense data comes from REQUEST SENSE DATA EXT, qc->err_mask is now zero,
-and ata_eh_finish() completes the command with scmd->retries set to
-scmd->allowed, without looking at ATA_QCFLAG_RETRY. Such a command is
-thus never retried, even when its sense data asks for a retry, e.g. a
-transient error reported as ABORTED COMMAND.
+bpf_skb_generic_pop() checks off + len, but this u32 sum can wrap to a
+small value. bpf_skb_adjust_room() and bpf_skb_change_proto() calculate off
+from skb_mac_header_len(). This length is a very large u32 when
+network_header < mac_header. Then the check can pass, and memmove() reads
+and writes far outside the skb.
 
-Make ata_eh_finish() honor ATA_QCFLAG_RETRY for commands with valid
-sense data. ata_eh_qc_retry() cannot be used for this: as qc->err_mask
-is zero, it increments scmd->allowed, so every retry would allow one
-more, and a persistent error would be retried forever. Instead,
-complete the command without touching scmd->allowed or scmd->retries,
-so that the SCSI midlayer retries it at most scmd->allowed times, like
-any other failed command.
+Return -ENOMEM from both functions, like the present check, when
+off > skb->len. Thus the sum cannot wrap. In bpf_skb_generic_push() also
+pull the first off bytes into the linear part. Now bpf_skb_adjust_room()
+fails when a prog grows an skb that ends before off. network_header stays
+wrong.
 
-Fixes: 3852e3738266 ("libata: evaluate SCSI sense code")
-Reviewed-by: Igor Pylypiv <ipylypiv@google.com>
-Link: https://lore.kernel.org/r/20261030090047.407906-2-cassel@kernel.org
-Signed-off-by: Niklas Cassel <cassel@kernel.org>
+Fixes: 6578171a7ff0 ("bpf: add bpf_skb_change_proto helper")
+Fixes: 2be7e212d541 ("bpf: add bpf_skb_adjust_room helper")
+Signed-off-by: Chris Mason <mason@kernel.org>
+Signed-off-by: Alexei Starovoitov <ast@kernel.org>
+Link: https://patch.msgid.link/20261101190535.1454146-28-alexei.starovoitov@gmail.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/ata/libata-eh.c | 16 ++++++++++++++--
- 1 file changed, 14 insertions(+), 2 deletions(-)
+ net/core/filter.c | 9 +++++++--
+ 1 file changed, 7 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/ata/libata-eh.c b/drivers/ata/libata-eh.c
-index c93c24b22d9ca..fd7ce2abfbcfd 100644
---- a/drivers/ata/libata-eh.c
-+++ b/drivers/ata/libata-eh.c
-@@ -4077,8 +4077,20 @@ void ata_eh_finish(struct ata_port *ap)
- 				ata_eh_qc_complete(qc);
- 			}
- 		} else {
--			if (qc->flags & ATA_QCFLAG_SENSE_VALID ||
--			    qc->flags & ATA_QCFLAG_EH_SUCCESS_CMD) {
-+			if (qc->flags & ATA_QCFLAG_SENSE_VALID &&
-+			    qc->flags & ATA_QCFLAG_RETRY) {
-+				/*
-+				 * The sense data asks for a retry, see
-+				 * ata_eh_analyze_tf(). ata_eh_link_autopsy()
-+				 * cleared qc->err_mask, so ata_eh_qc_retry()
-+				 * would increment scmd->allowed. Leave
-+				 * scmd->allowed alone, so that upper layer
-+				 * only retries the command if it has not
-+				 * already been retried too many times.
-+				 */
-+				__ata_eh_qc_complete(qc);
-+			} else if (qc->flags & ATA_QCFLAG_SENSE_VALID ||
-+				   qc->flags & ATA_QCFLAG_EH_SUCCESS_CMD) {
- 				ata_eh_qc_complete(qc);
- 			} else {
- 				/* feed zero TF to sense generation */
+diff --git a/net/core/filter.c b/net/core/filter.c
+index d27e73647a8df..7129e7c920a64 100644
+--- a/net/core/filter.c
++++ b/net/core/filter.c
+@@ -3369,6 +3369,10 @@ static const struct bpf_func_proto bpf_skb_vlan_pop_proto = {
+ 
+ static int bpf_skb_generic_push(struct sk_buff *skb, u32 off, u32 len)
+ {
++	/* The bytes in front of @off are moved with skb->data. */
++	if (unlikely(off > skb->len || !pskb_may_pull(skb, off)))
++		return -ENOMEM;
++
+ 	/* Caller already did skb_cow() with meta_len+len as headroom,
+ 	 * so no need to do it here.
+ 	 */
+@@ -3389,9 +3393,10 @@ static int bpf_skb_generic_pop(struct sk_buff *skb, u32 off, u32 len)
+ 	void *old_data;
+ 
+ 	/* skb_ensure_writable() is not needed here, as we're
+-	 * already working on an uncloned skb.
++	 * already working on an uncloned skb. The first test
++	 * keeps off + len from wrapping.
+ 	 */
+-	if (unlikely(!pskb_may_pull(skb, off + len)))
++	if (unlikely(off > skb->len || !pskb_may_pull(skb, off + len)))
+ 		return -ENOMEM;
+ 
+ 	old_data = skb->data;
 -- 
 2.53.0
 
