@@ -1,55 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795622107;
-	b=yKITYpXasFC3lIOIUoeQs+O20DD5CQHdv6M+FQMxRPg5cMnpMaeXa2tTq+xr2cEcWRPJ
-	 M13rK1LAdC0K+F82Hl+hwDypp0e29+q43j2RR7SLqaG8uiTmCP+ORJYsbnR/7X/8ytWlY
-	 E+RtJbsW6hM9iZ2PuxHhcWpTQnuVE8gngkKMZlzeg52ROlE1PP6zsZFWXZNN5UGolA6Kl
-	 +H5mSXDQVApEgmrW++zb/pmNkob7Z/iumgiNR6m++xFRTVpFjbj/jQuB0C5tDJ0MY65eh
-	 xL7WI2Km+KfPTbCeMvkLTNPVd1ui3jlapXQtJRoIH++EeB3ANLtjmFnBaNji7ALMhDQ==
+	t=1795622109;
+	b=MuYsILu0lL/Busmcz/uHbXo5CAFAMdRB5hIf8aueLc4Ytw/WHovyKrFBT83s9X9wjmPI
+	 bgv+/KEnD6Wbx5NJ+V4m9q2Kf6eX8B4HRShZUh9JDnFbkThwBvhhqoIHpZ4B06FMyjBs2
+	 tqvJBhKneBTGhOCcBY9OzsRmugTv133LXhmT/6oNXjFFEPgbw1GzDb8TjV2lqpnQg+k4k
+	 fLGwOr9rC+M7KIAfnpOuKftzYNs/CEvEq7NR/EtQFv92FWO941OOQhwibhmiEnDeKoSu8
+	 9EaOf2FFuLl6hmegCrvopKKe1gcpoBR982YGa/DpA8Q9KWiJfw9RUJH7LZfdTCb4VrQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795622107;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795622109;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=ia21RlystOr+SRtohvcZHFCaA6tVUNk/9eK6Mc4opUU=;
-	b=cb+rl0h6RTnEKD/wztjZzyI0lAO61tnSKkitOQqlTH63rv0CL2Je78p8VqQEFfvYbdc1
-	 Py2HP/n1TEUcm8RVF4C1IF2GzLSypS5o9vbrJO9lAnHTkEBhqJV0naw+1Va2h/he/6kZk
-	 DqDpdmSl0YwM/LMb+XmafYkOjsfpPypDrFIdfE5cARS3U+LbXylg6iTkHtNQlrGiJ6fUF
-	 DzS90GPURDqvrJsvLIkeUaACvdNThkJ0o5T9rfNmkmicsw/5jTjfaOFNjj2pbaQcJgOQ1
-	 brwInoOq6FF8KByR3sbJtCQUQvUz2ZZvgXQsx+5emGq6xON7Whe4FSqHmOGtEwn+UDA==
+	bh=x/oazUc2s1c8c64wnG6hFymCUSAz6l5IAjCgWvanrXM=;
+	b=J0ldmH6JsSG5JrKqVUBM9iTeifQErfWqvW1wckBosdfR2bAg9z21+B6OGEjjHuRkefsN
+	 wa0MBaVfTDxsFmq+duUL8EcnHlfX0a5Upve7nfw7h/uJ/tz02jyF9/knnHQGMyeZ3Yej4
+	 tUIbZhXE5fTvq5CeNhOFPuwJ3FoRJLUvHjFIEI+SXNCLT/wxpR9wN4AKBElHVpli/EjO7
+	 Y4YITjXWW1GONGA7hJRaUDor5qnK7I2gwCwDz8mHWf9nR/gKPXcnYB6vw5Nq1Z1A7dZoS
+	 jqragSt+xRM0jNkoF5E+hCpc6FT3K+kpaDR2bNVc5OPoX4JpvqdqdVYSb1pB6BD1dQw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="zX/q3sUs";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=wzH71dss;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1CCBB606A31E;
-	Wed, 25 Nov 2026 15:55:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C9AC0606A323;
+	Wed, 25 Nov 2026 15:55:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=zX/q3sUs
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3A5EA1F000C4;
-	Wed, 25 Nov 2026 15:55:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=wzH71dss
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 09DF91F000C4;
+	Wed, 25 Nov 2026 15:55:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795622106;
-	bh=ia21RlystOr+SRtohvcZHFCaA6tVUNk/9eK6Mc4opUU=;
+	s=korg; t=1795622109;
+	bh=x/oazUc2s1c8c64wnG6hFymCUSAz6l5IAjCgWvanrXM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=zX/q3sUsE/iFWbPg7SY+LlZf3YfckokV0otCzuhxTJbNryEwupD6rXv9QO+Dxkz3e
-	 h6DjeBDx882QBuXRI6KjGYMoL6l39w7pyb6LYdM6HoJg3jg2Uh+X3gD2QLwzKodCDK
-	 iC3PDCa3Fv2D11esstyQiUGF/lagrD5Pp201KX5o=
+	b=wzH71dss3E2UJwsmfKqDzVEFuxMsZrXspgBI9AXiTX9rFYcY78P6CkkVc4UHvozoC
+	 cu4/71gNiG3tU4ewNLCFOZriXyMrpbH36RNTHkc3j+Lcfi9qcwLdN++RlunnugcBjL
+	 isSMKn9oYz07kwYTaE0qBSeAfNudjq0IZP8FZLng=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Gal Pressman <gal@nvidia.com>,
-	Jianbo Liu <jianbol@nvidia.com>,
-	Cosmin Ratiu <cratiu@nvidia.com>,
-	Tariq Toukan <tariqt@nvidia.com>,
+	Yaroslav Dudkov <aroslavdudkov622@gmail.com>,
+	Hangbin Liu <liuhangbin@kylinos.cn>,
+	Ido Schimmel <idosch@nvidia.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 406/990] net/mlx5: Bridge, fix bogus MDB offload errors
-Date: Wed, 25 Nov 2026 15:29:33 +0100
-Message-ID: <20261125143831.609926625@linuxfoundation.org>
+Subject: [PATCH 6.18 407/990] ipv6: ignore link state in gateway check
+Date: Wed, 25 Nov 2026 15:29:34 +0100
+Message-ID: <20261125143831.634147345@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143822.072087159@linuxfoundation.org>
 References: <20261125143822.072087159@linuxfoundation.org>
@@ -71,100 +70,82 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Gal Pressman <gal@nvidia.com>
+From: Yaroslav Dudkov <aroslavdudkov622@gmail.com>
 
-[ Upstream commit c714f324eac17b2df03419b5cd5368687efd8e27 ]
+[ Upstream commit b76bcf3fff9332076d92de47a80d12fd3d5268e2 ]
 
-MDB add operations are queued on the switchdev deferred queue
-(SWITCHDEV_F_DEFER), while vlan object deletions are handled
-synchronously.
-A 'bridge vlan del' can overtake an MDB add that is still queued, and
-the vlan is already gone by the time the driver is called.
+IPv6 route cannot be added in table when all
+following conditions are true:
+- gateway is not link-local address
+- ignore_routes_with_linkdown=1 on device
+- nexthop has no carrier
+- gateway is not present or covered by any route in table already
+Also multipath routes addition is invalidated by kernel even
+if only one of added nexthops satisfies all above conditions.
 
-The two operations are independent in practice: in my test, the MDB add
-is triggered by assigning the VF an IPv6 address (hence joining a
-solicited-node multicast group), while another process deletes the vlan
-from its representor.
+Reproducer:
 
-Racing 'bridge mdb add' against concurrent 'bridge vlan del' could
-result in:
+  ip netns add t
+  ip -n t link add va type veth peer name vb
+  ip -n t link set va up
+  ip -n t addr add fd00::1/64 dev va nodad
+  ip netns exec t sysctl -w \
+    net.ipv6.conf.va.ignore_routes_with_linkdown=1
+  ip -n t -6 route add 2001:db8::/64 via fd00::2 dev va
+  # added
+  ip -n t -6 route add 2001:db8::/64 table 100 via fd00::2 dev va
+  # RTNETLINK answers: No route to host
+  ip -n t -6 route show table all
+  ip netns del t
 
-[ 5390.967651] mlx5_core 0000:08:00.0: E-Switch: Failed to lookup bridge port vlan metadata (vport=1)
-[ 5390.969120] mlx5_core 0000:08:00.1: E-Switch: Failed to lookup bridge port vlan metadata to create MDB (MAC=33:33:ff:12:00:05,vid=2204,vport=1)
-[ 5390.971676] mlx5_core 0000:08:00.1 eth4: Failed to add Port Multicast Database entry (object id=2) with error: -EINVAL (-22).
-               Failure in updating the port's Multicast Database could lead to
-               multicast forwarding issues.
+Route should be added because:
+- RT6_LOOKUP_F_IGNORE_LINKSTATE in commit d5d32e4b7668
+("net: ipv6: Do not consider link state for nexthop validation")
+was added for this
+- the same route is valid in main table (when no specifying table id
+while adding route)
+- fib6_nh_init() initializes nexthops with no carrier
+- IPv4 already does this (fib_check_nh_v4_gw() ignores link state
+using the FIB_LOOKUP_IGNORE_LINKSTATE flag)
 
-The error cannot reach anyone that could do anything with it, switchdev
-returned success to the bridge as soon as the MDB object was queued, and
-the errno only flags the entry as offload failed.
-The end result is correct either way, if the MDB has been offloaded
-before the vlan was deleted, mlx5_esw_bridge_port_mdb_vlan_flush() would
-have removed it.
+Before commit b2c709cce682 ("ipv6: Convert gateway validation to
+use fib6_info") rt6_lookup() was used for checking if nexthop is
+valid, rt6_lookup called rt6_device_match() which does not check the
+link state. After change rt6_lookup() to fib6_lookup()
+find_match() under fib6_lookup() started to invalidate linkdown
+devices, because RT6_LOOKUP_F_IGNORE_LINKSTATE is not passed to it.
 
-The FDB path already treats this as a harmless race,
-mlx5_esw_bridge_port_vlan_lookup() reports it on 'info' logging level
-and skips the offload. mlxsw did the same in [1].
+Adding RT6_LOOKUP_F_IGNORE_LINKSTATE to flags for ip6_route_check_nh()
+solves the problem. RT6_LOOKUP_F_IGNORE_LINKSTATE is already used
+inside the first search ip6_nh_lookup_table() and fixes the
+bug in second search fib6_lookup(). Also RT6_LOOKUP_F_IGNORE_LINKSTATE
+isn't read inside fib6_select_path().
 
-Skip the MDB offload, report on 'info' logging level and return
--EOPNOTSUPP: switchdev_port_obj_add_deferred() does not log it, and
-br_switchdev_mdb_complete() skips the port group flag update.
-
-[1] Commit 17b334a876fe ("mlxsw: spectrum_switchdev: Don't warn about valid situations")
-
-Fixes: 70f0302b3f20 ("net/mlx5: Bridge, implement mdb offload")
-Signed-off-by: Gal Pressman <gal@nvidia.com>
-Signed-off-by: Jianbo Liu <jianbol@nvidia.com>
-Reviewed-by: Cosmin Ratiu <cratiu@nvidia.com>
-Signed-off-by: Tariq Toukan <tariqt@nvidia.com>
-Link: https://patch.msgid.link/20261104183715.771390-1-tariqt@nvidia.com
+Fixes: b2c709cce682 ("ipv6: Convert gateway validation to use fib6_info")
+Signed-off-by: Yaroslav Dudkov <aroslavdudkov622@gmail.com>
+Reviewed-by: Hangbin Liu <liuhangbin@kylinos.cn>
+Reviewed-by: Ido Schimmel <idosch@nvidia.com>
+Link: https://patch.msgid.link/20261104195655.1406837-2-aroslavdudkov622@gmail.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../ethernet/mellanox/mlx5/core/esw/bridge.c  | 21 ++++++++++---------
- 1 file changed, 11 insertions(+), 10 deletions(-)
+ net/ipv6/route.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/net/ethernet/mellanox/mlx5/core/esw/bridge.c b/drivers/net/ethernet/mellanox/mlx5/core/esw/bridge.c
-index 88487e1a58878..744f5cf9eb780 100644
---- a/drivers/net/ethernet/mellanox/mlx5/core/esw/bridge.c
-+++ b/drivers/net/ethernet/mellanox/mlx5/core/esw/bridge.c
-@@ -1867,26 +1867,27 @@ int mlx5_esw_bridge_port_mdb_add(struct net_device *dev, u16 vport_num, u16 esw_
- 
- 	port = mlx5_esw_bridge_port_lookup(vport_num, esw_owner_vhca_id, br_offloads);
- 	if (!port) {
--		esw_warn(br_offloads->esw->dev,
-+		/* MDB is added asynchronously from the switchdev deferred
-+		 * queue while port might have been deleted concurrently.
-+		 */
-+		esw_info(br_offloads->esw->dev,
- 			 "Failed to lookup bridge port to add MDB (MAC=%pM,vport=%u)\n",
- 			 addr, vport_num);
--		NL_SET_ERR_MSG_FMT_MOD(extack,
--				       "Failed to lookup bridge port to add MDB (MAC=%pM,vport=%u)",
--				       addr, vport_num);
--		return -EINVAL;
-+		return -EOPNOTSUPP;
- 	}
- 
- 	bridge = port->bridge;
- 	if (bridge->flags & MLX5_ESW_BRIDGE_VLAN_FILTERING_FLAG && vid) {
- 		vlan = mlx5_esw_bridge_vlan_lookup(vid, port);
- 		if (!vlan) {
--			esw_warn(br_offloads->esw->dev,
-+			/* MDB is added asynchronously from the switchdev
-+			 * deferred queue while vlan might have been deleted
-+			 * concurrently.
-+			 */
-+			esw_info(br_offloads->esw->dev,
- 				 "Failed to lookup bridge port vlan metadata to create MDB (MAC=%pM,vid=%u,vport=%u)\n",
- 				 addr, vid, vport_num);
--			NL_SET_ERR_MSG_FMT_MOD(extack,
--					       "Failed to lookup vlan metadata for MDB (MAC=%pM,vid=%u,vport=%u)",
--					       addr, vid, vport_num);
--			return -EINVAL;
-+			return -EOPNOTSUPP;
- 		}
- 	}
+diff --git a/net/ipv6/route.c b/net/ipv6/route.c
+index c11cf3c65c9f7..ac27f815d497c 100644
+--- a/net/ipv6/route.c
++++ b/net/ipv6/route.c
+@@ -3461,9 +3461,9 @@ static int ip6_route_check_nh(struct net *net,
+ 			      netdevice_tracker *dev_tracker,
+ 			      struct inet6_dev **idev)
+ {
++	int flags = RT6_LOOKUP_F_IFACE | RT6_LOOKUP_F_IGNORE_LINKSTATE;
+ 	const struct in6_addr *gw_addr = &cfg->fc_gateway;
+ 	struct net_device *dev = _dev ? *_dev : NULL;
+-	int flags = RT6_LOOKUP_F_IFACE;
+ 	struct fib6_result res = {};
+ 	int err = -EHOSTUNREACH;
  
 -- 
 2.53.0
