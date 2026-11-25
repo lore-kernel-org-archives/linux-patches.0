@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795625569;
-	b=iNqnz2JItBm0E3QVK3/9VMnSXzPOQzsv+oTmg0Vj/ijySmtCEKY/hJ8v3PXNpvVu0Wo/
-	 VEI4WvSZmOLbYWNi+ODY5rXlT4UdMgUyNCdxhzOIpWD4tfWPQn050tyRZIGniboqt0ln2
-	 UGJYwkMKWVueHTcVpsFF9CKb5OeMQ0z7bjxcNJH6XjFriN7Fcrv8mB2Y8L+5tMI0xE+MJ
-	 AUTTqOJ/CpHQmIWSJGe3eSvL9Y67QW51+YJKWSuKETFD+OEAgDGhPF5ae4IuyjvFgqrZb
-	 v893q2Djr6zLNfs9kYBJRV/4ZPZwFOg4TIOT5XqcCtGRSXGfuA3ESKa1WzGd45WPzYA==
+	t=1795625572;
+	b=xkf5Qbj9f4M8i5LrPW3lLlQhYBAHjzmstUONzzXY6ZFYZQ98LQuWTDhi2L8pHpqgDW8l
+	 icN01iPI3w1TG2Jwn3HK3S1p0+SwyYIcIkuX2JufS8ntkOvYsLuRdbUBcRCiVsIvksQtt
+	 rKoowcQFld8gXGQ2KGFcmFAYN6H2/JFRFOU91HgIMCs78JWjvFiKu15J5fQQz1sjyt97l
+	 aXnY1IIBpDmQEzmI2Vw1XX1gIZZyqRUKzEOmgYRkeXa+6glDNShnLze0R68sB5TIy0x44
+	 VruAiyUAiSsWagotKuF/kpEny/b9odKEtjmlfeipPd3NXF9FpEgmoHB1ScbZgoU82yg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795625569;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795625572;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=qtf9OxMifHu/LHeWVlUgKchzhQVs74NBAe6iqwCod8Y=;
-	b=fzI0jrDr7VkSmaUHLARx+/q3UFSZ3nYFB0goOQVbu+oYkqBAafnEnyZTzsaRL1N8cmEu
-	 7QZA9JI+pqV2WEDcg2iiF3EnFR6NGAgcPfiZSawJ0CWWfTDdfO51Fh4SH81IAtfAtk8uN
-	 CKHyk4jkdPMzKJKIr2MZl5L+a3s0DJd6OrL83Rhosd8HDBkIbn1MskEE+LEygvreGkpL9
-	 DVVgaxc2AGjLnLJAfM6Ti6/WGjMG5uaC9YAhP/luH7yKmJgHHbZ3EogjO1JypbJpZPUYU
-	 J8QkOgzkUyfiC5vFmNl6oDzuGTJv9xeYq53f72yt7abt4nF1jnc4Ukl5q7p3XUp3fkQ==
+	bh=/BOrpr2iXhnQO5IPygfHQR7vju5B/g/XWHh+Xzul0vI=;
+	b=QE8pau87Zueg7aQPwvE+yccM5ceFGDVP1ZkFBT5eDIu6ICPF1qWHLrnLJfKSTC1lx5kp
+	 4fNSyt/OfrF2lc/riCIEztG94RFAD7mE59xqdlvOJlrihbX9prlqxeyS0HUXY5dFHwc8X
+	 DXWB6meUcRpE/lsmfa7BO0Mt80+0cQbjFAQn/xKb6MWy6NUqinnmh8tYKi1+JxAOmbNhw
+	 scuA20ITS3HLNqOMS9c2NNiWi5sMxVIcBSIwAqhDeuHxYy8B9zTT+fZ9FBeRpJzAkX1Pb
+	 joDFyjQLr/DZjs/hVm8Xeai+ntwuX/5FR3BlpHKQYIgyZgHgD8SCyO+VaboKlFaB50w==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=HrKqLDx6;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=USV8NODN;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3F9CC606A33A;
-	Wed, 25 Nov 2026 16:52:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 62008606A331;
+	Wed, 25 Nov 2026 16:52:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=HrKqLDx6
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6AD241F000EC;
-	Wed, 25 Nov 2026 16:52:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=USV8NODN
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9FD701F000D3;
+	Wed, 25 Nov 2026 16:52:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795625569;
-	bh=qtf9OxMifHu/LHeWVlUgKchzhQVs74NBAe6iqwCod8Y=;
+	s=korg; t=1795625572;
+	bh=/BOrpr2iXhnQO5IPygfHQR7vju5B/g/XWHh+Xzul0vI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=HrKqLDx6j1HmLZFTpZ5QVhFIPYhXIJxXK0EZ62nl8SWV4riy3UrDeg8+pbmd7CFGi
-	 /FGd4Leh54vqgcZ4yvkLlAxn1i4wuZKyw/Me1hQzZ25HEHx/Z49wU+vPg4OfAdZ0xp
-	 w1eQAq9Idx6t9RUikqa8eSiujhscARrGGvZxflBE=
+	b=USV8NODNo2IWty75RAb+tGtMpNkkgnOkPlJYJ09q/+e3/4uaLbnbKvqZH3fiLc6Wh
+	 rVIntv60lsjVQ1gjVeJnNjhWMw1v8pa42aHtayuxFsxHeuCSv/DBsh/gXuWWSfJvzH
+	 wBm5ZPikY2RCSDLSEpKdWjLl6qTbhqpFWNOteSXM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Adrian Hunter <adrian.hunter@intel.com>,
-	Ian Ray <ian.ray@gehealthcare.com>,
-	Haibo Chen <haibo.chen@nxp.com>,
-	Ulf Hansson <ulfh@kernel.org>
-Subject: [PATCH 6.12 558/816] mmc: sdhci-esdhc-imx: map unsupported driver type to Type B
-Date: Wed, 25 Nov 2026 15:35:06 +0100
-Message-ID: <20261125143902.101963242@linuxfoundation.org>
+	"kernelci.org bot" <bot@kernelci.org>,
+	kernel test robot <lkp@intel.com>,
+	Sasha Levin <sashal@kernel.org>,
+	Alexei Starovoitov <ast@kernel.org>
+Subject: [PATCH 6.12 516/816] locking/atomic: arc, hexagon, openrisc: Define arch_cmpxchg_local()
+Date: Wed, 25 Nov 2026 15:34:24 +0100
+Message-ID: <20261125143901.129800673@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143849.205329330@linuxfoundation.org>
 References: <20261125143849.205329330@linuxfoundation.org>
@@ -69,71 +69,103 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ian Ray <ian.ray@gehealthcare.com>
+[ Upstream commit 8cebaa3be829c88a59957900f8de98fed09daefe ]
 
-commit d35d93c2902592a84347a15deac4d67a323694c9 upstream.
+Commit ccb88db8dac8 ("bpf: Don't hand out a linked element as extra
+element") made alloc_htab_elem() take the per-cpu spare element with
+try_cmpxchg_local(), the first caller of cmpxchg_local() outside of
+architecture code. It doesn't build on arc, hexagon and openrisc:
 
-Since commit 5a52c5701a67 ("mmc: core: Fix host controller programming
-for fixed driver type"), the eMMC driver strength is passed directly to
-mmc_set_driver_type(), which propagates the value through ios.drv_type
-all the way to sdhci_set_ios().  For value 4, SDHCI correctly warns:
+  include/linux/atomic/atomic-arch-fallback.h:384:27: error: implicit declaration of function 'arch_cmpxchg_local'; did you mean 'raw_cmpxchg_local'? [-Werror=implicit-function-declaration]
 
-  mmc2: invalid driver type, default to driver type B
+raw_cmpxchg_local() maps to arch_cmpxchg_local() unconditionally, but
+these three architectures don't define it, and unlike nios2 and
+microblaze they don't get it from asm-generic/cmpxchg.h either.
 
-The host driver type has no effect on this controller: esdhc_writew_le()
-never programs the driver-type field of SDHCI_HOST_CONTROL2.  Hook
-set_ios() and force drv_type to the always-valid Type B, so that SDHCI
-never sees an unsupported value.
+cmpxchg_local() only has to be atomic with respect to the local CPU, so
+an architecture's own arch_cmpxchg() can serve for the sizes it
+supports. arc uses its relaxed LLOCK/SCOND variant when ARC_HAS_LLSC is
+set and its atomic_ops_lock() variant otherwise, and openrisc uses its
+LL/SC arch_cmpxchg(), the way arm64, riscv and s390 alias theirs. The
+hexagon arch_cmpxchg() only handles 32-bit words, so hexagon uses the
+generic version that disables interrupts, like sh, sparc32 and xtensa
+do. Linux has no NMIs on hexagon, so that is sufficient there.
 
-Tested on i.MX8MP (usdhc3, eMMC in HS400) with
-`fixed-emmc-driver-type = <4>`: the warning is gone and the HS_TIMING
-register contains 0x43 as expected.
-
-Fixes: 5a52c5701a67 ("mmc: core: Fix host controller programming for fixed driver type")
-Link: https://lore.kernel.org/all/20260926122908.866-1-ian.ray@gehealthcare.com/
-Cc: stable@vger.kernel.org
-Suggested-by: Adrian Hunter <adrian.hunter@intel.com>
-Signed-off-by: Ian Ray <ian.ray@gehealthcare.com>
-Acked-by: Adrian Hunter <adrian.hunter@intel.com>
-Reviewed-by: Haibo Chen <haibo.chen@nxp.com>
-Signed-off-by: Ulf Hansson <ulfh@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: ccb88db8dac8 ("bpf: Don't hand out a linked element as extra element")
+Reported-by: kernelci.org bot <bot@kernelci.org>
+Reported-by: kernel test robot <lkp@intel.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
+Signed-off-by: Alexei Starovoitov <ast@kernel.org>
+Link: https://patch.msgid.link/20261018132907.3823160-1-sashal@kernel.org
+Closes: https://d.kernelci.org/i/maestro:78b65519ee4561df1fbf1e72f1dec9da7e5b153e
+Closes: https://lore.kernel.org/oe-kbuild-all/202610181750.BoqAddaF-lkp@intel.com/
+Closes: https://lore.kernel.org/oe-kbuild-all/202610182048.aEaiBP8W-lkp@intel.com/
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/mmc/host/sdhci-esdhc-imx.c |   17 +++++++++++++++++
- 1 file changed, 17 insertions(+)
+ arch/arc/include/asm/cmpxchg.h      | 4 ++++
+ arch/hexagon/include/asm/cmpxchg.h  | 6 ++++++
+ arch/openrisc/include/asm/cmpxchg.h | 2 ++
+ 3 files changed, 12 insertions(+)
 
---- a/drivers/mmc/host/sdhci-esdhc-imx.c
-+++ b/drivers/mmc/host/sdhci-esdhc-imx.c
-@@ -1092,6 +1092,20 @@ static void esdhc_reset_tuning(struct sd
- 	}
- }
+diff --git a/arch/arc/include/asm/cmpxchg.h b/arch/arc/include/asm/cmpxchg.h
+index 76f43db0890fc..07d7a01d26de0 100644
+--- a/arch/arc/include/asm/cmpxchg.h
++++ b/arch/arc/include/asm/cmpxchg.h
+@@ -59,6 +59,8 @@
+ 	_prev_;								\
+ })
  
-+static void sdhci_esdhc_imx_set_ios(struct mmc_host *mmc, struct mmc_ios *ios)
-+{
-+	/*
-+	 * This controller has no driver-type control: esdhc_writew_le()
-+	 * discards the driver-type field when writing SDHCI_HOST_CONTROL2.
-+	 * The programmed value is therefore irrelevant, but SDHCI rejects
-+	 * non-SD values such as 4 (eMMC 40 ohm, from fixed-emmc-driver-type).
-+	 * Force an always-valid Type B.
-+	 */
-+	ios->drv_type = MMC_SET_DRIVER_TYPE_B;
++#define arch_cmpxchg_local	arch_cmpxchg_relaxed
 +
-+	sdhci_set_ios(mmc, ios);
-+}
-+
- static void usdhc_init_card(struct mmc_host *mmc, struct mmc_card *card)
- {
- 	struct sdhci_host *host = mmc_priv(mmc);
-@@ -1766,6 +1780,9 @@ static int sdhci_esdhc_imx_probe(struct
- 		host->mmc_host_ops.init_card = usdhc_init_card;
- 	}
+ #else
  
-+	/* No SDHCI driver type control */
-+	host->mmc_host_ops.set_ios = sdhci_esdhc_imx_set_ios;
+ #define arch_cmpxchg(ptr, old, new)				        \
+@@ -80,6 +82,8 @@
+ 	_prev_;								\
+ })
+ 
++#define arch_cmpxchg_local	arch_cmpxchg
 +
- 	if (imx_data->socdata->flags & ESDHC_FLAG_MAN_TUNING)
- 		sdhci_esdhc_ops.platform_execute_tuning =
- 					esdhc_executing_tuning;
+ #endif
+ 
+ /*
+diff --git a/arch/hexagon/include/asm/cmpxchg.h b/arch/hexagon/include/asm/cmpxchg.h
+index 9c58fb81f7fd6..e6114e713db9f 100644
+--- a/arch/hexagon/include/asm/cmpxchg.h
++++ b/arch/hexagon/include/asm/cmpxchg.h
+@@ -8,6 +8,8 @@
+ #ifndef _ASM_CMPXCHG_H
+ #define _ASM_CMPXCHG_H
+ 
++#include <asm-generic/cmpxchg-local.h>
++
+ /*
+  * __arch_xchg - atomically exchange a register and a memory location
+  * @x: value to swap
+@@ -72,4 +74,8 @@ __arch_xchg(unsigned long x, volatile void *ptr, int size)
+ 	__oldval;						\
+ })
+ 
++#define arch_cmpxchg_local(ptr, o, n)					\
++	((__typeof__(*(ptr)))__generic_cmpxchg_local((ptr),		\
++			(unsigned long)(o), (unsigned long)(n), sizeof(*(ptr))))
++
+ #endif /* _ASM_CMPXCHG_H */
+diff --git a/arch/openrisc/include/asm/cmpxchg.h b/arch/openrisc/include/asm/cmpxchg.h
+index 8ee151c072e41..fcf1bc8db8fe9 100644
+--- a/arch/openrisc/include/asm/cmpxchg.h
++++ b/arch/openrisc/include/asm/cmpxchg.h
+@@ -140,6 +140,8 @@ static inline unsigned long __cmpxchg(volatile void *ptr, unsigned long old,
+ 					       sizeof(*(ptr)));		\
+ 	})
+ 
++#define arch_cmpxchg_local	arch_cmpxchg
++
+ /*
+  * This function doesn't exist, so you'll get a linker error if
+  * something tries to do an invalidly-sized xchg().
+-- 
+2.53.0
+
 
 
