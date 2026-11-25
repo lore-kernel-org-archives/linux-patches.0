@@ -1,51 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795623295;
-	b=yOF5Le3vL5GgvvKG4E0aHAU/Mw438pDKyNvBnPgWPH6J1i9VRpN8m23/JgyrjotZLtif
-	 0ACTcR/0vLZgq3mAev7PcBiQU5K+Bx2dz+c3xv1wVP0xSZbdMtaKZ7jIIdspeCYL6nzIx
-	 nOn2E1u8X9Yvrg4TKCFii1jnGd2E59EXJXIfQwutqpjFe1g1hL35AZa6CbwLbIN+J5Lsf
-	 zzqE87dyNwUoipElnoEtuVIsksMNe5P/iXP/il3B+nO7WW5u+hA/IfosHlQ+hfmyIkvRl
-	 JKvEUiU1XJKvYOknpUNob0KcTZWV9ReStY00HTNjMoMHGPi7+CaYlZS0Lp/cIum3fwA==
+	t=1795623298;
+	b=Af9UYxlHOyuXNt3RBfn4QcIk/PLiYES9PrFyaoGJMfABSAPcS9oFyM1f2gkNJMaUTa3y
+	 PI5Sd+72N4tLg+6TIIUL3OIOpsvkcftV3O65+SwTz5udqmiKJymKg1rjbnYMSESfBSGxF
+	 kbuAJukTlcwKVzEN7Fp+hIIauX5O692caI/HbZZL6tJCxXR+siaHsdi7BaWo6CPH+RlPI
+	 JJrtnrME4FW7C8iEr9qWzKosgaDhmRyqZd3jDeFDU/DhlfjdTRjeuCvSZ+gvncvd7VrmL
+	 BeGKyTStGytn564doDyTW5/ZbbjRZMXXiy2ufglYIIbJmYMlLuNIxst3fAxGYTh6Hag==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795623295;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795623298;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=wnY4PtuWatHbQ80+ohk1D+xPkidBVjWkpfaHRx/seJw=;
-	b=AUeEEWEGd0SEu6h/IOAJTGYaCQb/9GVkcPZOfi0+Rw1p2tcf2FY6SnfEJto8QBj/RFdZ
-	 k6D7NUCswqBuLBcNKU90vUbyqd4dLf6D8ssq+b9TuP28+F3pES+/6jHYkr4dVkS8Vb/Za
-	 6NkdiwyOrRlUZZlm9nF7sc1NkdJd+COz6Nydsjnx6C7mzGTcn3SSE7yCsJ1m6gMS/nVNV
-	 gheQYXvwyhONUxGnmfpA2ELB+N0Q71v/OQ8aSLC5xU+r07Xnxv7nqI5oxexxHlPB0DeIQ
-	 1yyf/7/d2ab2UPJN+0Gko2YqvNPZugpkmqyww+6fs2qm/FL4CbKChsFHtuaFzQG1fyA==
+	bh=HeAO7qw7h7fmHj1RS5yGPTt6KoX+KLJ7F4qyi2juGKA=;
+	b=CYL5I36yJ9wSvmZgfwM4eR3P1AU+AieA/Ld2Fp2BiOLMPX2qaSJGz84FWrI6dBwsCUUP
+	 5BlmZRy5UIreThbMTlSQ/mr1KD+egGetIcjkldHo2sTvxydUygx/+2TkYJGjf4V5lOWrC
+	 NBTpL7/2E4I/OlavjrAlPRteM6Pu8Sa/tYw3yZV1P/UpZi5O+//cg4s0PYJf+E4pe5BUw
+	 VMBlhinmFPi1RqxS1oZTOGxJx0NmaJnd7j8C19k/nJ8BQHU/BOWMp7rLjIlFg/c/ApmyX
+	 KBCmqel5hjbccH70KaIpjaOkqO/glJZTZEUbTlqll6s9j6suBxwz01oQhtKsFWd1z0A==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="yNkTYU/c";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=E0YvPhK1;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 78643606A321;
-	Wed, 25 Nov 2026 16:14:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9C094606A31E;
+	Wed, 25 Nov 2026 16:14:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=yNkTYU/c
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 54BE91F000C0;
-	Wed, 25 Nov 2026 16:14:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=E0YvPhK1
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9C0861F000C0;
+	Wed, 25 Nov 2026 16:14:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795623294;
-	bh=wnY4PtuWatHbQ80+ohk1D+xPkidBVjWkpfaHRx/seJw=;
+	s=korg; t=1795623298;
+	bh=HeAO7qw7h7fmHj1RS5yGPTt6KoX+KLJ7F4qyi2juGKA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=yNkTYU/c+dvPvEpeONBS/6VKmXRz7KG1QT6KGoWHLVKrAymdxpZaZXd8003tg8Dj0
-	 zoynlGgK6qCEG6kx3IbUPXFWGlcj79P+ByRX8p5wz/9e6hj5nFLuE+j23QTUJLe3iG
-	 ++lSCyx4KNl94KPy8niHZCpxQN0hw/hUyAQnJy0Q=
+	b=E0YvPhK1grnjSzODbkl4VNC0h3G01pURHHa2UANl3r/qOMhyPzd+dn7zkLMzPWBtN
+	 V2Ej8udVTZ5jDkkBvAV6SX7vkWHcMBr++V4gsC56j0htP1ISvCiITC8+5b03ro9y9k
+	 ngqN357P9qAdaGflLcWCztM0VH5Zt2f4+/adk9AE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhao Li <enderaoelyther@gmail.com>,
-	Johannes Berg <johannes.berg@intel.com>
-Subject: [PATCH 6.18 812/990] wifi: cfg80211: preserve mesh A-MSDU lengths when adding mesh headers
-Date: Wed, 25 Nov 2026 15:36:19 +0100
-Message-ID: <20261125143841.064308386@linuxfoundation.org>
+	Andrea Parri <parri.andrea@gmail.com>,
+	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
+	Ingo Molnar <mingo@kernel.org>,
+	Sebastian Andrzej Siewior <bigeasy@linutronix.de>,
+	Juri Lelli <juri.lelli@redhat.com>
+Subject: [PATCH 6.18 786/990] sched/deadline: Fix spurious -EPERM for migration-disabled tasks
+Date: Wed, 25 Nov 2026 15:35:53 +0100
+Message-ID: <20261125143840.458351166@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143822.072087159@linuxfoundation.org>
 References: <20261125143822.072087159@linuxfoundation.org>
@@ -67,60 +70,141 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zhao Li <enderaoelyther@gmail.com>
+From: Andrea Parri <parri.andrea@gmail.com>
 
-commit 9083da9dd3223068237395432323b407012aec1f upstream.
+commit 6616bffa9b52da1338cf8bff9882404e02b9e361 upstream.
 
-A malformed mesh A-MSDU subframe with a declared payload length near
-65535 bytes can pass validation against a much shorter aggregate.
+sched_setattr() can refuse to make a task SCHED_DEADLINE with -EPERM,
+even though the task's affinity covers the whole root domain. A retry
+can succeed, but the error blames an affinity the task does not have.
 
-ieee80211_amsdu_subframe_length() adds the mesh control length to the
-declared length in a u16, and ieee80211_is_valid_amsdu() stores the
-result in a u16 local. The sum therefore wraps before either walker
-compares it with the remaining aggregate length. The decomposer then
-splits and delivers the malformed aggregate instead of rejecting it.
+__sched_setscheduler() tests p->cpus_ptr, which is not always the task's
+affinity. When a task is scheduled out inside a migrate_disable() section,
+migrate_disable_switch() points p->cpus_ptr at the current CPU until
+migrate_enable(). On PREEMPT_RT every spinlock_t holder is in such a
+section, so ordinary kernel work opens the window. Elsewhere, seccomp
+filters run in one.
 
-Keep the computed length in unsigned int in both the helper and the
-validator so oversized subframes cannot wrap.
+Test p->cpus_mask instead, which keeps the task's affinity and is what
+sched_getaffinity() reports. This should be safe because an admitted
+task's cpus_mask covers the root domain, so set_cpus_allowed_dl() moves
+no bandwidth when migrate_enable() restores p->cpus_ptr.
 
-LLM assistance was used to find the bug and review.
+The following program, run as root, had 553679, 453720 and 424623 of its
+1000000 requests refused on three boots of a 4-CPU PREEMPT_RT guest, and
+236182, 217174 and 237183 without PREEMPT_RT. With this applied the count
+is 0, also with lockdep, and a task pinned to one CPU is still refused:
 
-Fixes: 6e4c0d0460bd ("wifi: mac80211: add a workaround for receiving non-standard mesh A-MSDU")
-Fixes: fe4a6d2db3ba ("wifi: mac80211: implement support for yet another mesh A-MSDU format")
+  #define _GNU_SOURCE
+  #include <errno.h>
+  #include <linux/filter.h>
+  #include <linux/seccomp.h>
+  #include <pthread.h>
+  #include <stddef.h>
+  #include <stdint.h>
+  #include <stdio.h>
+  #include <sys/syscall.h>
+  #include <unistd.h>
+
+  #define REQUESTS 1000000
+  #define INSNS 300
+
+  struct attr {
+      uint32_t size, policy;
+      uint64_t flags;
+      int32_t nice;
+      uint32_t prio;
+      uint64_t runtime, deadline, period;
+  };
+
+  static volatile int stop;
+  static volatile pid_t target;
+
+  static long set(struct attr a)
+  {
+      a.size = sizeof(a);
+      return syscall(SYS_sched_setattr, target, &a, 0);
+  }
+
+  static void *worker(void *arg)
+  {
+      struct sock_filter f[INSNS + 1];
+      struct sock_fprog prog = { .len = INSNS + 1, .filter = f };
+      int i;
+
+      /* Reading the arguments keeps seccomp from caching the result */
+      for (i = 0; i < INSNS; i++)
+          f[i] = (struct sock_filter)
+              BPF_STMT(BPF_LD | BPF_W | BPF_ABS,
+                       offsetof(struct seccomp_data, args));
+      f[INSNS] = (struct sock_filter)
+          BPF_STMT(BPF_RET | BPF_K, SECCOMP_RET_ALLOW);
+      syscall(SYS_seccomp, SECCOMP_SET_MODE_FILTER, 0, &prog);
+
+      target = syscall(SYS_gettid);
+      while (!stop)
+          syscall(SYS_getppid);
+      return arg;
+  }
+
+  static void *hog(void *arg)
+  {
+      while (!stop)
+          ;
+      return arg;
+  }
+
+  int main(void)
+  {
+      pthread_t t[9];
+      long refused = 0;
+      int i;
+
+      pthread_create(&t[0], NULL, worker, NULL);
+      while (!target)
+          usleep(100);
+      for (i = 1; i < 9; i++)
+          pthread_create(&t[i], NULL, hog, NULL);
+      for (i = 0; i < REQUESTS; i++) {
+          /* SCHED_DEADLINE, 2us every 1s */
+          if (set((struct attr){ .policy = 6, .runtime = 2000,
+                                 .deadline = 1000000000,
+                                 .period = 1000000000 }) && errno == EPERM)
+              refused++;
+          set((struct attr){ .policy = 0 }); /* SCHED_OTHER */
+      }
+      stop = 1;
+      for (i = 0; i < 9; i++)
+          pthread_join(t[i], NULL);
+      printf("%ld of %d requests refused\n", refused, REQUESTS);
+      return 0;
+  }
+
+An LLM helped find this bug and write this patch and its test.
+
+Fixes: af449901b84c ("sched: Add migrate_disable()")
+Signed-off-by: Andrea Parri <parri.andrea@gmail.com>
+Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
+Signed-off-by: Ingo Molnar <mingo@kernel.org>
+Reviewed-by: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
+Acked-by: Juri Lelli <juri.lelli@redhat.com>
 Cc: stable@vger.kernel.org
-Signed-off-by: Zhao Li <enderaoelyther@gmail.com>
-Link: https://patch.msgid.link/20261028142149.13834-1-enderaoelyther@gmail.com
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+Link: https://patch.msgid.link/20261102135420.244745-1-parri.andrea@gmail.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/wireless/util.c |    6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ kernel/sched/syscalls.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/net/wireless/util.c
-+++ b/net/wireless/util.c
-@@ -745,12 +745,12 @@ __ieee80211_amsdu_copy(struct sk_buff *s
- 	return frame;
- }
- 
--static u16
-+static unsigned int
- ieee80211_amsdu_subframe_length(void *field, u8 mesh_flags, u8 hdr_type)
- {
- 	__le16 *field_le = field;
- 	__be16 *field_be = field;
--	u16 len;
-+	unsigned int len;
- 
- 	if (hdr_type >= 2)
- 		len = le16_to_cpu(*field_le);
-@@ -772,7 +772,7 @@ bool ieee80211_is_valid_amsdu(struct sk_
- 		    __be16 len;
- 		    u8 mesh_flags;
- 		} hdr;
--		u16 len;
-+		unsigned int len;
- 
- 		if (sizeof(hdr) > remaining)
- 			return false;
+--- a/kernel/sched/syscalls.c
++++ b/kernel/sched/syscalls.c
+@@ -638,7 +638,7 @@ change:
+ 			 * the entire root_domain to become SCHED_DEADLINE. We
+ 			 * will also fail if there's no bandwidth available.
+ 			 */
+-			if (!cpumask_subset(span, p->cpus_ptr) ||
++			if (!cpumask_subset(span, &p->cpus_mask) ||
+ 			    rq->rd->dl_bw.bw == 0) {
+ 				retval = -EPERM;
+ 				goto unlock;
 
 
