@@ -1,72 +1,59 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795617945;
-	b=aQqA5xLiS5ZKboiDffFfv/ijqQxKdquk/jglKYbM7ImjmTcHqQibZstv+um3vDbhpA9E
-	 H9OV3pK3yrFnQoullae8Nay1hc8nzbO/KZHaNZvieexuOAvQ4TGWRRX6MIy9+X8tOBNcV
-	 noKkp1b5OgbGWEeSKrq5sUgozdWkPGmYJAQw1fCbyPeZk1ThMDFibE3otYxnODCEf3pNJ
-	 /xze2i06qCtpI1pihoWYG3DX0Hi77tvyMzyHDK5dwYCTlgDCag1yDKbJYvmj9S9GKKE4X
-	 BNI6nk9CGoyriMZB1TNny1VJ8kScids64SxfXXu12rrlmZgWsWs+aOMSwHE47gkUZjQ==
+	t=1795617947;
+	b=ZZX8dDx7jdkIGP/CIXfVIMkj4CsPw9QZsWQbr3KOZGGTEgxQ1UMCSL383dwqdvS945MQ
+	 38BZkMbCRrQHunNR9hAF5LFqkbj30ajqT15LBBjCVyx7ltZxuLvZvKbpsxq4R2kQF52R9
+	 XHuIxyzl9Ys9PaywIX5PKBiYCMGNa79P944nNYCK7itRsJJqIrJXqbyXmRWWHq0h7bgU0
+	 BYSuRSxZFvRMtsWrANkTCf0whFIoV1PB0+KvLOmlbpn/UQ6dDEBIJVcGc3jExRSrqYgi4
+	 W5hObsU0P4qZbuMG62awVZLIIMlums6lguZuRl7PTvy7yU2KSGu6aAqz0xhkeI/ltlQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795617945;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795617947;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
-	 In-Reply-To:References:MIME-Version:Content-Transfer-Encoding;
-	bh=z8PHSX1qp510J1VwsmvP1fwtXZT9J4eSYikYFBir3fA=;
-	b=tRKhSkDRaVRXllWrrV5t+DwDWgy2wOJNO5F033fHkNBJnK/GaAfnlze81Oupo1+ZTcq7
-	 ioRGyGgZRSN3Q8tm+ljzUHG6aidBLJ+rvaccFtF3vR1AmEPoT6GoDnbXR+2OGe4tor14b
-	 P4HUYBfov4uOT5QKr+ALEoV2/yRmbFLawlDbjoGIa76pHsh9N6IB18S/KNm9RWYBWosUY
-	 aK01+SJYZTuDtHZy7gH1IzObEg2/VHMGViRfqwt5DdfQoqAo2+ZnuRW6f680DoyFJHZv9
-	 IP0LAIW/2Uq4bg1HYRHQOug2LiLD3gcf3fVIZEY6+6wUHOmr8h0qwHw8oqfXitEwSPg==
+	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
+	 MIME-Version:Content-Transfer-Encoding;
+	bh=KqWUfGYkhOWZ97g7LM2CsCOGaNM/T/qSeplZ8fzh/aI=;
+	b=phmWA828nfJ+APT/SjkNEktq6AvEsi3Q7vwflMOM4fHd2B+n0Q7hqcitb5iGcoyNUvSM
+	 ocy/Ab9kD2Sc3p5UWa0XgUcXEErdB9TlOBrALc9wobDcOGU1lazn/O7y2rI/kw2+GOgC/
+	 O2zI/a3XOFDMmeEPCw07MGAKOfPjSEms8VkefnDDemhRab9l1odGFrzGpSQq9uic0Rp2E
+	 Cmy2A5OoNxJSqyRM/pS+k1ETba4OSWPOxTMbHd2F/7uLIIB9cR3DD47Ph51XahdiY3ZEI
+	 r1zZT0QhONaVB+8eVOG8bb3xa7W4+acrioQ6XFkXd4r9OyGhG7th7J4qBiMLB1YG0CQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=RBSYnCKI;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=aUhL9fW6;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 74D87606A321;
-	Wed, 25 Nov 2026 14:45:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 851FC606A327;
+	Wed, 25 Nov 2026 14:45:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=RBSYnCKI
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 53F4E1F000C4;
-	Wed, 25 Nov 2026 14:45:44 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1795617945;
-	bh=z8PHSX1qp510J1VwsmvP1fwtXZT9J4eSYikYFBir3fA=;
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=aUhL9fW6
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 620031F000F0;
+	Wed, 25 Nov 2026 14:45:46 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
+	s=korg; t=1795617946;
+	bh=KqWUfGYkhOWZ97g7LM2CsCOGaNM/T/qSeplZ8fzh/aI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=RBSYnCKIRh55LgWVywJ9Q9E9Ki+4JJEpI/OxpAc3hPOq0OgAh7FFz6XadUtyk6LRy
-	 3hv4Ppd987Fy3xavzDX/p/kgNLsuEw5PsIN76yqOSbsl0UC4OE/EMaC0ELWyEKfQQ+
-	 H5UUM3AA7iN562qFOjngIAmNUN0FUTp8/TZD+weYn7KiEZGZ3sk67ncVDwKrnlCCvj
-	 39TfPNM7QtF3ZHhwnGaDkAhSVuXcQZeLdJzZN7EUZS9gShT4OYvTKv7NKnY6DL1cqy
-	 L4ZREjOOJLA9SbJZMHQed6UrpnwPxFCXoLHYuoImJxF7pgU+FdnHFijHZvars5TmhD
-	 rM9EoAnoK/KPw==
-From: SJ Park <sj@kernel.org>
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: SJ Park <sj@kernel.org>,
-	stable@vger.kernel.org,
+	b=aUhL9fW6ICjzrwFXyu17TEPjSgzoXec/QcNW9JXqmh2zre0BxMra7leBTs31mA9Y4
+	 nb/+bMQ80uwpaGJBsiG+NASuv10+OfBs3kDD6cNm2/3rJPnLjFClFcAFWs81UZICts
+	 gCntvsnDZpn7NRNaceufKuEHjEBc9f4rlw37v8sc=
+From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+To: stable@vger.kernel.org
+Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	linux-kernel@vger.kernel.org,
-	torvalds@linux-foundation.org,
-	akpm@linux-foundation.org,
-	linux@roeck-us.net,
-	shuah@kernel.org,
-	patches@kernelci.org,
-	lkft-triage@lists.linaro.org,
-	pavel@nabladev.com,
-	jonathanh@nvidia.com,
-	f.fainelli@gmail.com,
-	sudipm.mukherjee@gmail.com,
-	rwarsow@gmx.de,
-	conor@kernel.org,
-	hargar@microsoft.com,
-	broonie@kernel.org,
-	achill@achill.org,
-	sr@sladewatkins.com
-Subject: Re: [PATCH 7.3 0000/1005] 7.3.7-rc1 review
-Date: Wed, 25 Nov 2026 06:45:36 -0800
-Message-ID: <20261125144537.89279-1-sj@kernel.org>
-X-Mailer: git-send-email 2.47.3
+	Joas Antonio dos Santos <joasantonio108@gmail.com>,
+	Simon Horman <horms@kernel.org>,
+	Dave Miller <davem@davem-thinkpadp1gen8.ibmlond.csb>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 7.3 0126/1005] net/mlx5: macsec: free struct mlx5_fs_id after an RCU grace period
+Date: Wed, 25 Nov 2026 15:24:24 +0100
+Message-ID: <20261125143824.690105590@linuxfoundation.org>
+X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143821.729802100@linuxfoundation.org>
-References: 
+References: <20261125143821.729802100@linuxfoundation.org>
+User-Agent: quilt/0.69
+X-stable: review
+X-Patchwork-Hint: ignore
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Post: <mailto:patches@lists.linux.dev>
@@ -78,21 +65,69 @@ Precedence: list
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-On Wed, 25 Nov 2026 15:22:18 +0100 Greg Kroah-Hartman <gregkh@linuxfoundation.org> wrote:
+7.3-stable review patch.  If anyone has any objections, please let me know.
 
-> This is the start of the stable review cycle for the 7.3.7 release.
-> There are 1005 patches in this series, all will be posted as a response
-> to this one.  If anyone has any issues with these being applied, please
-> let me know.
+------------------
 
-This rc kernel passes DAMON functionality test [1] on my test machine.
+From: Joas Antonio dos Santos <joasantonio108@gmail.com>
 
-Tested-by: SJ Park <sj@kernel.org>
+[ Upstream commit 902407bc588575af0ceae5de4f635fe1e024f258 ]
 
-[1] https://github.com/damonitor/damon-tests/tree/next/corr
+macsec_fs_id_del() removes a struct mlx5_fs_id from its rhashtable with
+rhashtable_remove_fast() and then frees it with kfree() right away.
+
+The TX (SCI) table is read locklessly from the transmit path:
+mlx5e_macsec_handle_tx_skb() and mlx5e_macsec_tx_build_eseg() call
+mlx5_macsec_fs_get_fs_id_from_hashtable(), which does
+rhashtable_lookup() under rcu_read_lock() and then reads
+mlx5_fs_id->id. A transmit that looked the entry up just before it was
+removed reads freed memory.
+
+Before commit d4ece08f4b1d ("net/mlx5: Maintain fs_id xarray per MACsec
+device inside macsec steering") the SCI table held struct
+mlx5e_macsec_sa directly, and mlx5e_macsec_del_txsa() freed it with
+kfree_rcu_mightsleep(). That commit moved the table into macsec_fs.c
+with the new struct mlx5_fs_id, but frees it with a plain kfree().
+
+Add an rcu_head to struct mlx5_fs_id and free it with kfree_rcu().
+
+The same issue was flagged by the Sashiko AI review as a pre-existing
+problem while reviewing the HW-GRO for PSP series.
+
+Fixes: d4ece08f4b1d ("net/mlx5: Maintain fs_id xarray per MACsec device inside macsec steering")
+Link: https://lore.kernel.org/all/20260909065542.4B80D1F00ACA@smtp.kernel.org/
+Signed-off-by: Joas Antonio dos Santos <joasantonio108@gmail.com>
+Assisted-by: Yaga Agent HackerSec Claude:claude-opus-5-5
+Reviewed-by: Simon Horman <horms@kernel.org>
+Signed-off-by: Dave Miller <davem@davem-thinkpadp1gen8.ibmlond.csb>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
+---
+ drivers/net/ethernet/mellanox/mlx5/core/lib/macsec_fs.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
+
+diff --git a/drivers/net/ethernet/mellanox/mlx5/core/lib/macsec_fs.c b/drivers/net/ethernet/mellanox/mlx5/core/lib/macsec_fs.c
+index efc5167493c12..7d785c937d43d 100644
+--- a/drivers/net/ethernet/mellanox/mlx5/core/lib/macsec_fs.c
++++ b/drivers/net/ethernet/mellanox/mlx5/core/lib/macsec_fs.c
+@@ -94,6 +94,7 @@ struct mlx5_fs_id {
+ 	refcount_t refcnt;
+ 	sci_t sci;
+ 	struct rhash_head hash;
++	struct rcu_head rcu;
+ };
+ 
+ struct mlx5_macsec_device {
+@@ -684,7 +685,7 @@ static void macsec_fs_id_del(struct list_head *macsec_devices_list, u32 fs_id,
+ 
+ 	xa_erase(fs_id_xa, fs_id);
+ 
+-	kfree(fs_id_found);
++	kfree_rcu(fs_id_found, rcu);
+ 
+ 	if (macsec_fs_is_macsec_device_empty(macsec_device)) {
+ 		list_del(&macsec_device->macsec_devices_list_entry);
+-- 
+2.53.0
 
 
-Thanks,
-SJ
 
-[...]
