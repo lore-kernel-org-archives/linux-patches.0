@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795617682;
-	b=ojnz4hCg+N8b9emjR94BzivFq4ZT/tjD1Z1PL5MrRzJ3Evl8lMSPHRywt55KJp4n/NuB
-	 CtVMNGg5xAgMbIQPr71VWq8eXZ9zJeiRPaM0ZowRUwgpaptNOeDml9xWqica0m0cq+zsY
-	 2FyiI3rQ5kpe3idACyFVyo7xSNshjRCSAYCVHA0io5Oy82imC+e1XscJ7ZLvquJNKxHpu
-	 3zuVbIg6buSVwkByK53NSQ2qi8Lx/44Htbmky+w3xoAmg5Y9Unpf6ePDewtjV6XY2wbsI
-	 r/M6yEI3oeGiTqez1Qn4unkKHkRC740nIh2S8GnqZc8INo4uKW3Fv876o/y35owrCsQ==
+	t=1795617685;
+	b=tOcaDuiJawGMDY8LKuSD2L7O/5rJJ3bOeaOYERIUT4myFGlutp+lKQmBoMj4xHaUxUfJ
+	 eXggClqwV9GqzVQUkQuwMo0nmhEB2VlW2sBpCB6JSAzGzOTf+LG+qBx2iO7D8LGa/9g+w
+	 gjmZjMVZLmPKzDOuzvLB+/5SiLa4Eonus/1aOdh/rZM/ZVJ9J13tfqBTwNPoXb0/7J8WG
+	 G/uL6JhAqwG++EE9NDkHpDGE8TkuDaIrKaZ4lJL8oAtOazA+d7nx9LELn1ya5YL3ERREj
+	 sPuTHA90uF6IokleE02ed2oHpetF60/FfV1cqgoGM7OAJx+5EHn8XUgTIdmKPyCOOyg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795617682;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795617685;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=hpEqAaVy4fQkgfp7tvimQQHsRFDlef7VygLPpj4LCUQ=;
-	b=CTcXVF5jMdchaz6KFWLakxGFl8tAtEDdvpZkzsiY83re9gTDQtM0pmlO3kocV5wgPqAJ
-	 7BNHZfbv+Jv7FONk3E72DuCq41/vyrYNwOyk9LXksIWjf3TulEmeOEqEkDXuJtq7qkaRo
-	 Q/ElLBb6wml8OKP10T1dKormLJaOmyPTB9VlHIXTH2aCI69/1Xflv3DDNfjTiaGKKe6qe
-	 mi4Syn5H6jt737xSyGte8CZi2+cQYoBiWK5CjqP8V+Fm33JP4TRoDXQFCYqh2tqZu/5YE
-	 W8SIAfSOPEDqyfuYxKdIz5xSNdjidZn/CLgPMabFa1soWf+rjIIlWH0jvu7qcDrJixw==
+	bh=DyqgWdK64+daNw/pCcSOmfy6oTPPJZ5goyetM9S9FhE=;
+	b=Ul7aNQdtaTRhBh3RibvLUbJbJCGngRILC/K1oReIs92DFONwsB7tIIPEDAyG36NfmP+o
+	 1tJQz2rgVfNzV1nKn1qHxbqQ/jIX6GCFxTkJc6AuvTJXtckbLoumcw3KWpGFvfUr5biqE
+	 a4CsRG3CS/pIvz1Iuof5Fkzo1cwdJqQYpSibVyLXnG+H9NJFaqEerZhcZa9YuIYsYuNZ8
+	 Fj/Ze0w5jLk3eQHpSvd9OGr+b6kVwSUZZAWsTOQZetO/JeVZ4amWJmZefQwYarAmKIFAj
+	 ikjAZklA58O9iSZkODg3FWWllHTzWZLdCOKQFnqo5ntpAqoBPUo9Iv48VLsi+i3rdMg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=hLUkb5VP;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ipexwJRG;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2ADE0606A31E;
-	Wed, 25 Nov 2026 14:41:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1242F606A31E;
+	Wed, 25 Nov 2026 14:41:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=hLUkb5VP
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1532D1F000D2;
-	Wed, 25 Nov 2026 14:41:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ipexwJRG
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1BAED1F000D2;
+	Wed, 25 Nov 2026 14:41:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795617681;
-	bh=hpEqAaVy4fQkgfp7tvimQQHsRFDlef7VygLPpj4LCUQ=;
+	s=korg; t=1795617684;
+	bh=DyqgWdK64+daNw/pCcSOmfy6oTPPJZ5goyetM9S9FhE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=hLUkb5VPMg4uqMnhvMh+xJH4kyA3Q+ChFKTSdbtv16dN1cSaPO/Y/u+/sTlltYi3H
-	 uJ2Fhzd5f6xwx1tAY0I10XfveYemqipN6XBqU7QlscLp6d9QPuMNu4Oe8m0ImrG9R/
-	 8YNnVHHh7fermr6rTu+qlK4W3AD7blHNQwZJB3QI=
+	b=ipexwJRG+jRjb7XJ9RE5+c4nqLK2swBbZ5KDVSTZNcPrFfDSMdv3ym/Wj/9Y3mzXM
+	 /OPuB2aIeLOOkqAYBvyMbpkfzq/8MYba3TXzgdl7TwDTpOYmnJo+RpnomgjQnRI7pn
+	 rSxOqoNyZu90B2mxr0sQO5K5ZTWKGeqbG7EI0D3o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Cosmin Ratiu <cratiu@nvidia.com>,
-	Johannes Berg <johannes.berg@intel.com>,
+	Avi Weiss <thnkslprpt@gmail.com>,
+	Jan Kara <jack@suse.cz>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0041/1005] wifi: wext: Limit notifier event flushes to the devices netns
-Date: Wed, 25 Nov 2026 15:22:59 +0100
-Message-ID: <20261125143822.701811550@linuxfoundation.org>
+Subject: [PATCH 7.3 0042/1005] fsnotify: preserve 64-bit pre-content ranges
+Date: Wed, 25 Nov 2026 15:23:00 +0100
+Message-ID: <20261125143822.725246602@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143821.729802100@linuxfoundation.org>
 References: <20261125143821.729802100@linuxfoundation.org>
@@ -68,152 +68,106 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Cosmin Ratiu <cratiu@nvidia.com>
+From: Avi Weiss <thnkslprpt@gmail.com>
 
-[ Upstream commit 48c0045366bec142d053f7cf76fb9dd7127cd231 ]
+[ Upstream commit 1dcf2be94b9be2d366a0d2b70c2b1c7ebccf1443 ]
 
-With mlx5 netdev instance locking enabled, registering an IPoIB netdev
-calls the WEXT notifier while holding the instance mutex. Its call to
-wireless_nlevent_flush() takes net_rwsem to walk every namespace,
-completing the following lockdep dependency cycle:
+vfs_fallocate() and remap_verify_area() pass 64-bit lengths to
+fsnotify_file_area_perm(), which truncates them to size_t on
+32-bit systems.
 
-  netdev instance mutex -> net_rwsem (read) -> GID table mutex
-    -> event_handler_rwsem (read) -> netdev instance mutex
+Use 64 bit (unsigned) types throughout the entire pre-content
+notification chain to keep the full range. The userspace range
+field is already 64-bits.
 
-RoCE GID enumeration takes the GID table mutex under net_rwsem. GID
-updates dispatch events under the table mutex, taking event_handler_rwsem.
-The IPoIB event handler takes the netdev instance mutex in
-ipoib_queue_work() to traverse child interfaces.
-
-The all-namespace walk originated in the single global worker servicing
-per-namespace WEXT queues. The ordering fixes later reused that routine
-in netdevice notifiers to prevent delayed WEXT RTM_NEWLINK messages from
-following RTM_DELLINK or reporting stale interface flags. A notifier only
-needs to drain the affected device's namespace; there is no reason for it
-to walk and flush all namespaces.
-
-Pass dev_net(dev) from both notifier callers and make the flush helper
-operate on that namespace. Keep the all-namespace walk and net_rwsem in
-the existing worker. This removes the instance-mutex -> net_rwsem
-dependency while retaining synchronous flushing from the notifiers.
-
-It may seem strange that the fix for a lock cycle across multiple
-subsystems lies in a completely unrelated part of the code, but this
-seemed the most justified lock cycle edge to break.
-
-Fixes: 8f7b00307bf1 ("net/mlx5e: Convert mlx5 netdevs to instance locking")
-Signed-off-by: Cosmin Ratiu <cratiu@nvidia.com>
-Link: https://patch.msgid.link/20261021144111.611840-1-cratiu@nvidia.com
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+Fixes: 9740d17162de ("fsnotify: pass optional file access range in pre-content event")
+Signed-off-by: Avi Weiss <thnkslprpt@gmail.com>
+Link: https://patch.msgid.link/20261015175701.3674449-1-thnkslprpt@gmail.com
+Signed-off-by: Jan Kara <jack@suse.cz>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/net/iw_handler.h |  8 +++++---
- net/wireless/core.c      |  2 +-
- net/wireless/wext-core.c | 33 +++++++++++++++++----------------
- 3 files changed, 23 insertions(+), 20 deletions(-)
+ fs/notify/fanotify/fanotify.h    | 2 +-
+ fs/notify/fsnotify.c             | 2 +-
+ include/linux/fsnotify.h         | 4 ++--
+ include/linux/fsnotify_backend.h | 6 +++---
+ 4 files changed, 7 insertions(+), 7 deletions(-)
 
-diff --git a/include/net/iw_handler.h b/include/net/iw_handler.h
-index b80e474cb0aa9..632618d9ff937 100644
---- a/include/net/iw_handler.h
-+++ b/include/net/iw_handler.h
-@@ -201,6 +201,8 @@
- #include <linux/wireless.h>		/* IOCTL user space API */
- #include <linux/if_ether.h>
+diff --git a/fs/notify/fanotify/fanotify.h b/fs/notify/fanotify/fanotify.h
+index 87ba788574bff..c25cf5c1fc70f 100644
+--- a/fs/notify/fanotify/fanotify.h
++++ b/fs/notify/fanotify/fanotify.h
+@@ -444,7 +444,7 @@ struct fanotify_perm_event {
+ 	struct fanotify_event fae;
+ 	struct path path;
+ 	loff_t pos;			/* FANOTIFY_NO_RANGE if unavailable */
+-	size_t count;
++	u64 count;
+ 	u32 response;			/* userspace answer to the event */
+ 	unsigned short state;		/* state of the event */
+ 	unsigned short watchdog_cnt;	/* already scanned by watchdog? */
+diff --git a/fs/notify/fsnotify.c b/fs/notify/fsnotify.c
+index 7e2f330fd2837..8657bb94dfa8b 100644
+--- a/fs/notify/fsnotify.c
++++ b/fs/notify/fsnotify.c
+@@ -157,7 +157,7 @@ static inline __u32 fsnotify_object_watched(struct inode *inode, __u32 mnt_mask,
  
-+struct net;
-+
- /***************************** VERSION *****************************/
- /*
-  * This constant is used to know which version of the driver API is
-@@ -411,10 +413,10 @@ struct iw_spy_data {
- void wireless_send_event(struct net_device *dev, unsigned int cmd,
- 			 union iwreq_data *wrqu, const char *extra);
- #ifdef CONFIG_WEXT_CORE
--/* flush all previous wext events - if work is done from netdev notifiers */
--void wireless_nlevent_flush(void);
-+/* Flush previous wext events in this netns from netdev notifiers. */
-+void wireless_nlevent_flush(struct net *net);
- #else
--static inline void wireless_nlevent_flush(void) {}
-+static inline void wireless_nlevent_flush(struct net *net) {}
- #endif
- 
- /* We may need a function to send a stream of events to user space.
-diff --git a/net/wireless/core.c b/net/wireless/core.c
-index 3ac3b2a67a9c9..625cb2c2a05a5 100644
---- a/net/wireless/core.c
-+++ b/net/wireless/core.c
-@@ -1913,7 +1913,7 @@ static int cfg80211_netdev_notifier_call(struct notifier_block *nb,
- 		return NOTIFY_DONE;
- 	}
- 
--	wireless_nlevent_flush();
-+	wireless_nlevent_flush(dev_net(dev));
- 
- 	return NOTIFY_OK;
- }
-diff --git a/net/wireless/wext-core.c b/net/wireless/wext-core.c
-index db77912b3994b..f09c589ff94cd 100644
---- a/net/wireless/wext-core.c
-+++ b/net/wireless/wext-core.c
-@@ -342,32 +342,28 @@ static const int compat_event_type_size[] = {
- 
- /* IW event code */
- 
--void wireless_nlevent_flush(void)
-+void wireless_nlevent_flush(struct net *net)
+ /* Report pre-content event with optional range info */
+ int fsnotify_pre_content(const struct path *path, const loff_t *ppos,
+-			 size_t count)
++			 u64 count)
  {
- 	struct sk_buff *skb;
--	struct net *net;
+ 	struct file_range range;
  
--	down_read(&net_rwsem);
--	for_each_net(net) {
--		while ((skb = skb_dequeue(&net->wext_nlevents)))
--			rtnl_notify(skb, net, 0, RTNLGRP_LINK, NULL,
--				    GFP_KERNEL);
--	}
--	up_read(&net_rwsem);
-+	while ((skb = skb_dequeue(&net->wext_nlevents)))
-+		rtnl_notify(skb, net, 0, RTNLGRP_LINK, NULL, GFP_KERNEL);
- }
- EXPORT_SYMBOL_GPL(wireless_nlevent_flush);
- 
- static int wext_netdev_notifier_call(struct notifier_block *nb,
- 				     unsigned long state, void *ptr)
+diff --git a/include/linux/fsnotify.h b/include/linux/fsnotify.h
+index bda798bc67bc5..a4a29b3650080 100644
+--- a/include/linux/fsnotify.h
++++ b/include/linux/fsnotify.h
+@@ -135,7 +135,7 @@ int fsnotify_open_perm_and_set_mode(struct file *file);
+  * fsnotify_file_area_perm - permission hook before access to file range
+  */
+ static inline int fsnotify_file_area_perm(struct file *file, int perm_mask,
+-					  const loff_t *ppos, size_t count)
++					  const loff_t *ppos, u64 count)
  {
-+	struct net_device *dev = netdev_notifier_info_to_dev(ptr);
-+
  	/*
--	 * When a netdev changes state in any way, flush all pending messages
--	 * to avoid them going out in a strange order, e.g. RTM_NEWLINK after
--	 * RTM_DELLINK, or with IFF_UP after without IFF_UP during dev_close()
--	 * or similar - all of which could otherwise happen due to delays from
--	 * schedule_work().
-+	 * When a netdev changes state in any way, flush all pending messages in
-+	 * its network namespace to avoid them going out in a strange order,
-+	 * e.g. RTM_NEWLINK after RTM_DELLINK, or with IFF_UP after without
-+	 * IFF_UP during dev_close() or similar - all of which could otherwise
-+	 * happen due to delays from schedule_work().
- 	 */
--	wireless_nlevent_flush();
-+	wireless_nlevent_flush(dev_net(dev));
- 
- 	return NOTIFY_OK;
+ 	 * filesystem may be modified in the context of permission events
+@@ -213,7 +213,7 @@ static inline int fsnotify_open_perm_and_set_mode(struct file *file)
  }
-@@ -410,7 +406,12 @@ subsys_initcall(wireless_nlevent_init);
- /* Process events generated by the wireless layer or the driver. */
- static void wireless_nlevent_process(struct work_struct *work)
+ 
+ static inline int fsnotify_file_area_perm(struct file *file, int perm_mask,
+-					  const loff_t *ppos, size_t count)
++					  const loff_t *ppos, u64 count)
  {
--	wireless_nlevent_flush();
-+	struct net *net;
-+
-+	down_read(&net_rwsem);
-+	for_each_net(net)
-+		wireless_nlevent_flush(net);
-+	up_read(&net_rwsem);
+ 	return 0;
  }
+diff --git a/include/linux/fsnotify_backend.h b/include/linux/fsnotify_backend.h
+index a6d5c1a89cffa..faf21564380d9 100644
+--- a/include/linux/fsnotify_backend.h
++++ b/include/linux/fsnotify_backend.h
+@@ -323,7 +323,7 @@ struct fs_error_report {
+ struct file_range {
+ 	const struct path *path;
+ 	loff_t pos;
+-	size_t count;
++	u64 count;
+ };
  
- static DECLARE_WORK(wireless_nlevent_work, wireless_nlevent_process);
+ static inline const struct path *file_range_path(const struct file_range *range)
+@@ -946,12 +946,12 @@ static inline void fsnotify_init_event(struct fsnotify_event *event)
+ 	INIT_LIST_HEAD(&event->list);
+ }
+ int fsnotify_pre_content(const struct path *path, const loff_t *ppos,
+-			 size_t count);
++			 u64 count);
+ 
+ #else
+ 
+ static inline int fsnotify_pre_content(const struct path *path,
+-				       const loff_t *ppos, size_t count)
++				       const loff_t *ppos, u64 count)
+ {
+ 	return 0;
+ }
 -- 
 2.53.0
 
