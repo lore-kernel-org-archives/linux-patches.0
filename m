@@ -1,54 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795622378;
-	b=hzfY7OoEQS3f6vjJY85QUoSWqNeVAqE6oaGCel9rT5IeYLVjTax9bFdoka543yrQFj8q
-	 EOLMzqlV39ERkPUaHyCUvzJw0e5cAxa9FA6jwwoJWkES5va/cWvQuG/Dlnw8lUwSuInPk
-	 li2IeOfFvr43tqGXkL3WKwXkA49Kaxzj0LQEswfjMOF6UMRmaDIVRCqJJcwTMtVtOpo/R
-	 ER87V/Mo4x+UCbXFYKHpTQrW4BsrSqa77ijcEnfvlrsv7dfeWzDXNYrBXxNBLtZ1/SHLb
-	 5YtEkjYaeZNXbe0OjT9zqe5Ys/nHaJdqPhF7QV4eVhVLMzd0CAI2FKv3V4CSbeCwQ7w==
+	t=1795622381;
+	b=bbVlGEmqCacGLKVP2GHrcHCEuRHxv+B7lubbeV6Rp4TnEPPNr2kO0opeg6UIAX+IQVPu
+	 6w18mTebezdqhEqwuLVJaFULPYtt5Sd4HF5HgG7auuR7I0hiDthncNdwNXmGwuundEFnP
+	 oSPYlhXl3L/Idqbe5LNM+TTq5btO3E/V41oS/bXxWC6GaBcdFk7czWzStnFUFgg8fjsBG
+	 l9qcAYWMA29MugOZ6e7KFFg4t6O2QGPCpezGAVvkisMMve4Yz0mnu1A6RDH4k68dP3xry
+	 ljT4YeN6AqY25r0KeN+w5609DYuGFjkdD7nSly9bhIfgSEbwiVlJZaWkheWxOMwPyCw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795622378;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795622381;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=8xUs+v/YvR0jmqrJJ6gKXKXeBUM7PdBuc/2DaV1ZOwY=;
-	b=NCRFrNMNKm9YDQ+TrBQYwdFseh7TaZGJ/f29hSvo+LtwXe8XFl0Cg3IR4QjElYTWkxgH
-	 fLus4FAedl+Do6s/7EbaF3dvvO5m9wL7dMglYM3eDuHfS39vAIsLESnnrOCs88ZWJOY/g
-	 ezVWaacDBCn3C4RVXMJCvHwfzdbmEYls4CK+F9k6ydTMnWjSuWs61nZtMaUNtysoqspHi
-	 MOjI0dZUe/vqC+Cu4mcg0dXMG39gd0UlNy6doZEyQhCqgkptEfoMdeEGbgJpnrMWOQyzK
-	 LuyOh6y1Kh4xJuSqvRVR05KBGY38RbGH69kwqB/WDfMeuG3hgJqmy3VZFl38le/m2uQ==
+	bh=aV72Xcnl4Oh65WopZDQvzTJ9uK0CS1L/LwPTdmzDr60=;
+	b=kh0bnKO1AOLXokdxq0wcbIFkNbPZT6JqOrwfpdydcwKMfji8JQsmODGci1nef5WX9uJs
+	 jJ5VBXpViiTOd3EXF2dyhStBOfB5T9kA6+SOpIY1Jn8XESZuz4yBxfQhNUuAx67doTv42
+	 n3GGq45B9nvogiZu5h26hGNpNSyL4nplwvj6Nvm7eJ6LnMFy4mJWhSW6lT64Q85RBA96c
+	 63V69kcTZEBqzYN5wghhA2hZWwDmor1AA9NdTIQ767O64LhUHL4c/zr77xn3o1hdZMo00
+	 KSWCORxbgFYcGqPR9y3fN08OE7wkw2l16QyjgKTzEh4zD0ULrZ1sD4B3FUrBoT1F3nQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="oxN/hSgb";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=e5VJcIWq;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 93107606A321;
-	Wed, 25 Nov 2026 15:59:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D03FF606A31E;
+	Wed, 25 Nov 2026 15:59:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=oxN/hSgb
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7D7DF1F000C0;
-	Wed, 25 Nov 2026 15:59:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=e5VJcIWq
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B17641F000C6;
+	Wed, 25 Nov 2026 15:59:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795622378;
-	bh=8xUs+v/YvR0jmqrJJ6gKXKXeBUM7PdBuc/2DaV1ZOwY=;
+	s=korg; t=1795622381;
+	bh=aV72Xcnl4Oh65WopZDQvzTJ9uK0CS1L/LwPTdmzDr60=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=oxN/hSgbj2Mf5iT5giqKOdRUJghLMHxt2lM/sOMLHLFaOBosAgC3yONSarMhUADMI
-	 MZiUc/qy5nCq5wD57fAqEfMiIJU/TfHQ00z34fq+Pqfy1Ch4Ecql2iz2jLSeheEcJm
-	 1ANKfCA04Ky1AdUaQHMJC/WxOwhBCeEPdL12nkx8=
+	b=e5VJcIWqjwdDXtCNyuwNTB4iAlYSOFv2y3M2RM1h9h4IkOAYxkTejMeasTl53PWqk
+	 AWJGW0CBme8QsbRIucxcJcxfbF0QmePLnLMuuWTJ5LVtbioCx2hkvYEm2ttwV0BZWJ
+	 50uSdPe5sNXGQPNcDtOZQiawbUZmt2ChvhHNp5LI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Guixin Liu <kanie@linux.alibaba.com>,
 	Richard Cheng <icheng@nvidia.com>,
+	Li Ming <ming.li@zohomail.com>,
 	Dave Jiang <dave.jiang@intel.com>,
-	Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 518/990] cxl/cdat: Fix uninitialized stack use in bandwidth gathering
-Date: Wed, 25 Nov 2026 15:31:25 +0100
-Message-ID: <20261125143834.229386508@linuxfoundation.org>
+Subject: [PATCH 6.18 519/990] cxl/region: Unregister the pmem region when the bridge is unbound
+Date: Wed, 25 Nov 2026 15:31:26 +0100
+Message-ID: <20261125143834.253594690@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143822.072087159@linuxfoundation.org>
 References: <20261125143822.072087159@linuxfoundation.org>
@@ -72,66 +72,57 @@ Content-Transfer-Encoding: 8bit
 
 From: Guixin Liu <kanie@linux.alibaba.com>
 
-[ Upstream commit 97b74de26c81885a6447f5fe87641a2a136f8c7c ]
+[ Upstream commit bb26797c08d408ea7e8d3625045f0fe28714a425 ]
 
-cxl_endpoint_gather_bandwidth() and cxl_switch_gather_bandwidth() declare
-access_coordinate arrays on the stack and rely on their helpers to fill
-them. The helpers assign only the bandwidth members, and the combine step
-assigns even those only when both inputs are non-zero. The latency members
-are summed from stack residue on every call, and the bandwidth members
-keep that residue into the region access coordinate sysfs attributes when
-the endpoint CDAT reports no bandwidth.
+Removing cxl_acpi unbinds the nvdimm bridge before the regions it
+serves. A region probe can therefore register its cxl_pmem_region and
+only then find the bridge unbound, which leaves the new device with
+nothing to remove it.
 
-Zero initialize the arrays. Zero is the value this code already uses for
-"not reported", so an unset member now reads back as unknown rather than as
-a plausible number.
+The orphan outlives the teardown and pins its region and its memdevs, so
+a later cxl_acpi bind renumbers the root port, ports, endpoints,
+decoders and the memdev.
 
-Found by code inspection. Tested on a QEMU CXL topology with two endpoints
-sharing a switch upstream link and HMAT generic-port coordinates for the
-host bridge, which the calculation requires to run at all: with temporary
-printk at the combine sites, the unpatched kernel summed 0xfefefefe, the
-CONFIG_INIT_STACK_ALL_PATTERN stack filler, into the latency members, while
-the patched kernel reports the CDAT latency values there.
+Unregister the cxl_pmem_region when the bridge is unbound.
 
-Fixes: a5ab0de0ebaa ("cxl: Calculate region bandwidth of targets with shared upstream link")
+Found by code inspection. Racing a cxl_region bind against a cxl_acpi
+unbind leaked a pmem_region device on 12 of 12 attempts, and none with
+this patch.
+
+Fixes: f17b558d6663 ("cxl/pmem: Refactor nvdimm device registration, delete the workqueue")
 Signed-off-by: Guixin Liu <kanie@linux.alibaba.com>
 Reviewed-by: Richard Cheng <icheng@nvidia.com>
+Reviewed-by: Li Ming <ming.li@zohomail.com>
 Reviewed-by: Dave Jiang <dave.jiang@intel.com>
-Reviewed-by: Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>
-Link: https://patch.msgid.link/20260831092216.540644-2-kanie@linux.alibaba.com
+Link: https://patch.msgid.link/20260831061120.200790-1-kanie@linux.alibaba.com
 Signed-off-by: Dave Jiang <dave.jiang@intel.com>
-[ sashal: Context lines differ because kzalloc_obj(*res_xa) isn't available here, so the existing kzalloc(sizeof(*res_xa), GFP_KERNEL) line was kept while applying the same coords initializer change. ]
+[ sashal: Relocated the hunk from the split-out pmem region file into the region file where the function still lives; the hunk content is otherwise unchanged. ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/cxl/core/cdat.c | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ drivers/cxl/core/region.c | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/cxl/core/cdat.c b/drivers/cxl/core/cdat.c
-index c4bd6e8a0cf03..abb12d45af111 100644
---- a/drivers/cxl/core/cdat.c
-+++ b/drivers/cxl/core/cdat.c
-@@ -633,9 +633,9 @@ static int cxl_endpoint_gather_bandwidth(struct cxl_region *cxlr,
- 	struct cxl_port *endpoint = to_cxl_port(cxled->cxld.dev.parent);
- 	struct cxl_port *parent_port = to_cxl_port(endpoint->dev.parent);
- 	struct cxl_port *gp_port = to_cxl_port(parent_port->dev.parent);
--	struct access_coordinate pci_coord[ACCESS_COORDINATE_MAX];
--	struct access_coordinate sw_coord[ACCESS_COORDINATE_MAX];
--	struct access_coordinate ep_coord[ACCESS_COORDINATE_MAX];
-+	struct access_coordinate pci_coord[ACCESS_COORDINATE_MAX] = { };
-+	struct access_coordinate sw_coord[ACCESS_COORDINATE_MAX] = { };
-+	struct access_coordinate ep_coord[ACCESS_COORDINATE_MAX] = { };
- 	struct cxl_memdev *cxlmd = cxled_to_memdev(cxled);
- 	struct cxl_dev_state *cxlds = cxlmd->cxlds;
- 	struct pci_dev *pdev = to_pci_dev(cxlds->dev);
-@@ -757,7 +757,7 @@ static struct xarray *cxl_switch_gather_bandwidth(struct cxl_region *cxlr,
- {
- 	struct xarray *res_xa __free(free_perf_xa) =
- 		kzalloc(sizeof(*res_xa), GFP_KERNEL);
--	struct access_coordinate coords[ACCESS_COORDINATE_MAX];
-+	struct access_coordinate coords[ACCESS_COORDINATE_MAX] = { };
- 	struct cxl_perf_ctx *ctx, *us_ctx;
- 	unsigned long index, us_index;
- 	int dev_count = 0;
+diff --git a/drivers/cxl/core/region.c b/drivers/cxl/core/region.c
+index 46fc6644c8a72..7df6139f83ef2 100644
+--- a/drivers/cxl/core/region.c
++++ b/drivers/cxl/core/region.c
+@@ -3306,12 +3306,14 @@ static int devm_cxl_add_pmem_region(struct cxl_region *cxlr)
+ 		dev_name(dev));
+ 
+ 	scoped_guard(device, &cxl_nvb->dev) {
+-		if (cxl_nvb->dev.driver)
++		if (cxl_nvb->dev.driver) {
+ 			rc = devm_add_action_or_reset(&cxl_nvb->dev,
+ 						      cxlr_pmem_unregister,
+ 						      cxlr_pmem);
+-		else
++		} else {
+ 			rc = -ENXIO;
++			cxlr_pmem_unregister(cxlr_pmem);
++		}
+ 	}
+ 
+ 	if (rc)
 -- 
 2.53.0
 
