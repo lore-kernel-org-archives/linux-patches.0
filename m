@@ -1,51 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795620833;
-	b=uW22tZJrwL2yNDcFFGDZ2bGVdfsfeOiM0n2+pnFRFeEqYsEwOroe+qVXTEkNAuvNRXcO
-	 GoWWDQt1EAyDAcvg66skT8WT+CyVT3y/Z021heStM+DvIRzKpJT7Ans+eVGVP5L/pRciA
-	 fEnXDPXgQDiWSI26E/kC67bJb/eGejhfhduTEKZ3J0vZiMZzij3vvoLE+teXpzrX015QG
-	 HvTb/2Nod1NkUtm48MhTaU2W07DV71losmFeARRacIETy0F+tT6RkKQpLmQcm5U2bklmZ
-	 4LRmiY5DM7uJfSQlWYH4uijH0GVWQWNEo8zu6ytT7y+ngLOsOO3KQ3DzoBg0NVtqpyg==
+	t=1795620837;
+	b=vRds/03TwaNrxeO7SpqHWaNSD3jCRoKvBghawWBxobonKbtKXfCCLqhjgWc9TVMKQzE+
+	 OXKAzPumG4QZwp+t9GVtkG43DPLTIZYs+y3Tv644sJsyTgnDaz2MaO0oi3uepc7PNgeRX
+	 oW60j8S7QRtKE6lMcx7h04e8vUeFIX7koOVe41GiHzITqAwRm4gqKQFQSAHmfcMrzy1j8
+	 lJWGMDmjbn9MGfZktQA2+HOUiPhg5u2cmzogvlSt3uAAxqVR9uq3qtqKhkHedMAYxnxP2
+	 KhJ0FoBuGZfovAZVF6l8opNdETIKIq39LoleMOCbkEUGpm8i6Sqb+iUma64KgLdwT6Q==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795620833;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795620837;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=Rv7NpDdGs7CTCM9w5N3eY1sFrxJvbAYoH8su9OU+up4=;
-	b=qaVeO+7bxBXcrndx3IJC8KzGmcSZl0MyPA4x8bMUKHELXgP3cVmHwyDgDY4pOAXKw92W
-	 v4wNwA9lXgmty00FioQoR/Blghh5ZZ7B1JTJkcktqpXrccK42b7lgT9EB1P7cHEaIqojM
-	 iATvQ+GekXBq+rYdP6f3fHlY2VSY8ukG0YfEvEoHQCsx3wOwtAZpphfoytQG2VT8v2EV1
-	 BHZB/9B4Sb9TrCVsDd95hF9rf7o/zPPvB+Z/xyo0OulCGg4bfkBzQ83beBWwtHL5Rc0Z1
-	 8NZFE8StTJGrZJozjIkaaOIM7FVIiG7ERfq4vS8949V3R31hD4hVh5b3bgQJAJrO/eQ==
+	bh=I95tmY3nng6SC62ztDazEth6cMm4Qhfs7Mnr/MyAoBo=;
+	b=nK36CEHxkK96BqH/23pN13oqu3dNea5qvLI338HjfB+CNMCSblevsFbtSFCLb/poSnq/
+	 swBgVnD797ExKdgG4MbVRKl1n8GrIsGXts6Rnnfqhsm5dUzgmFzsRbx0cNV3ZemzUc+3i
+	 TW6cCNlaGRmB9f2sM66pW94moiDqBYoqj5yXh930pHnu5PwNNxvJnrzsevcc8LKhMJOIw
+	 6cKaBkQxC6CSpQxVM7lglwDB3UVcjXO3OV3zNPmP0SLc7WrnS9yz9xfPG88q1ZpS5X0iD
+	 Rg93zG1zsAmhAl9MYKXVwX/jfHOlJ5ySOxpTf3m7EdtK6SyFqO1O28JfCM4+Tg39SFw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=PIEAdUWZ;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=dyx871e7;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B0CB6606A31E;
-	Wed, 25 Nov 2026 15:33:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E2885606A329;
+	Wed, 25 Nov 2026 15:33:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=PIEAdUWZ
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CC3F41F000C0;
-	Wed, 25 Nov 2026 15:33:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=dyx871e7
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 00F191F000C0;
+	Wed, 25 Nov 2026 15:33:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795620833;
-	bh=Rv7NpDdGs7CTCM9w5N3eY1sFrxJvbAYoH8su9OU+up4=;
+	s=korg; t=1795620836;
+	bh=I95tmY3nng6SC62ztDazEth6cMm4Qhfs7Mnr/MyAoBo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=PIEAdUWZEojsvEJToiOwrm5ivlKqtUJHIQYk9d715adHJ1TQqXHi2cKmaizJE2Bnw
-	 5LRI7m6Co+FCWt98jRjcwACdHlvn7shkKsLFllHgATTqfbS3bEZx2nDrce3wp3Jkwp
-	 B6zxYBVYjZoBLoUhek8wXx+m+NsHgmZUGXaBp/oo=
+	b=dyx871e7WYhgZPnj+/b5FM1N/3rlWH0UQ0tbgjevOqSyfedN9i7j1/oAONG8yGm8t
+	 cMuXUOiWhbwgu4QwEPPJM8s0kUmQrUWKBIAOHHgUze8T4sNky40xsnWefTufAKcopF
+	 4Nrcaj5DAtJmkfm8cWsno+A45Lu86dSOSEgGOClo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Bernard Pidoux <bernard.f6bvp@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 037/990] ax25: end a REJ recovery count once frames are acknowledged
-Date: Wed, 25 Nov 2026 15:23:24 +0100
-Message-ID: <20261125143822.957833646@linuxfoundation.org>
+Subject: [PATCH 6.18 038/990] netrom: keep T1 running after answering a NAK
+Date: Wed, 25 Nov 2026 15:23:25 +0100
+Message-ID: <20261125143822.980902589@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143822.072087159@linuxfoundation.org>
 References: <20261125143822.072087159@linuxfoundation.org>
@@ -69,87 +69,44 @@ Content-Transfer-Encoding: 8bit
 
 From: Bernard Pidoux <bernard.f6bvp@gmail.com>
 
-Commit a3aa611e37d4 ("ax25: bound REJ-driven fast retransmits with the
-existing N2 counter") counts REJ-driven retransmits in n2count and
-relies on an I frame received in sequence to reset it. A station that
-only sends, such as a BBS forwarding mail, never receives I frames:
-the peer acknowledges with RR. After a single REJ, n2count then stays
-above zero for the rest of the connection, with two effects:
+When an INFO or INFOACK frame carries the NAK flag, nr_send_nak_frame()
+sends the frame at V(A) again and then stops T1, although that frame,
+and any sent after it, are still waiting for an acknowledgment.
 
- - ax25_calculate_rtt() no longer updates the round trip time (it
-   requires n2count == 0), and with the default linear backoff
-   ax25_calculate_t1() keeps T1 at (2 + 2 * n2count) * rtt instead of
-   2 * rtt;
+If this copy is lost too, no timer is left: nothing is sent again, and
+the circuit is not cleared after N2 tries either. It stays stuck until
+the peer sends something or the idle timer, if set, closes it.
 
- - isolated REJs, even hours apart, add up, and the N2-th one sends
-   a healthy link into the state 4 enquiry.
+Restart T1 instead, as nr_check_iframes_acked() does when part of the
+window is acknowledged.
 
-An RR, RNR or REJ whose N(R) acknowledges new frames shows the link
-is getting data through, so reset n2count when it moves V(A). A REJ
-storm that makes no progress keeps the same N(R) and is still bounded
-by N2. The reset is done after the acknowledgment is processed, so
-the round trip of retransmitted frames is still not measured.
-
-Fixes: a3aa611e37d4 ("ax25: bound REJ-driven fast retransmits with the existing N2 counter")
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
 Signed-off-by: Bernard Pidoux <bernard.f6bvp@gmail.com>
 Assisted-by: Claude:claude-opus-5-5
-(cherry picked from commit 6f10bf991bc130b56339200965d87512b443954a)
+(cherry picked from commit e18a382a74b93a3c0ab52e0fedc8343d9d4facc9)
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ax25/ax25_std_in.c | 23 +++++++++++++++++++----
- 1 file changed, 19 insertions(+), 4 deletions(-)
+ net/netrom/nr_out.c | 7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
 
-diff --git a/net/ax25/ax25_std_in.c b/net/ax25/ax25_std_in.c
-index d0269ece4fc58..92d89d4df0f83 100644
---- a/net/ax25/ax25_std_in.c
-+++ b/net/ax25/ax25_std_in.c
-@@ -190,7 +190,12 @@ static int ax25_std_state3_machine(ax25_cb *ax25, struct sk_buff *skb, int frame
- 		if (type == AX25_COMMAND && pf)
- 			ax25_std_enquiry_response(ax25);
- 		if (ax25_validate_nr(ax25, nr)) {
-+			int progress = nr != ax25->va;
-+
- 			ax25_check_iframes_acked(ax25, nr);
-+			/* Frames got through: end any REJ recovery count. */
-+			if (progress)
-+				ax25->n2count = 0;
- 		} else {
- 			ax25_std_nr_error_recovery(ax25);
- 			ax25->state = AX25_STATE_1;
-@@ -202,8 +207,17 @@ static int ax25_std_state3_machine(ax25_cb *ax25, struct sk_buff *skb, int frame
- 		if (type == AX25_COMMAND && pf)
- 			ax25_std_enquiry_response(ax25);
- 		if (ax25_validate_nr(ax25, nr)) {
-+			int progress = nr != ax25->va;
-+
- 			ax25_frames_acked(ax25, nr);
- 			ax25_calculate_rtt(ax25);
-+			/*
-+			 * Only REJs that make no progress count towards N2:
-+			 * a REJ whose N(R) acknowledges new frames shows the
-+			 * link is getting data through.
-+			 */
-+			if (progress)
-+				ax25->n2count = 0;
- 			/*
- 			 * REJ triggers an immediate go-back-N retransmit,
- 			 * deliberately bypassing the T1/N2 backoff that
-@@ -224,10 +238,11 @@ static int ax25_std_state3_machine(ax25_cb *ax25, struct sk_buff *skb, int frame
- 			 * once N2 of them have failed to make it through,
- 			 * fall back to the normal paced state 4 enquiry
- 			 * (which will genuinely give up and disconnect after
--			 * N2 further tries if the link stays bad). A single
--			 * frame accepted in sequence resets the counter (see
--			 * the AX25_I case below), so an isolated REJ during
--			 * otherwise healthy traffic never gets close to N2.
-+			 * N2 further tries if the link stays bad). A frame
-+			 * accepted in sequence (see the AX25_I case below) or
-+			 * an RR/RNR/REJ that acknowledges new frames resets
-+			 * the counter, so an isolated REJ during otherwise
-+			 * healthy traffic never gets close to N2.
- 			 */
- 			if (ax25->n2count == ax25->n2) {
- 				ax25->n2count = 1;
+diff --git a/net/netrom/nr_out.c b/net/netrom/nr_out.c
+index 150cb4263d314..1c6b4386c86b4 100644
+--- a/net/netrom/nr_out.c
++++ b/net/netrom/nr_out.c
+@@ -135,7 +135,12 @@ void nr_send_nak_frame(struct sock *sk)
+ 	nr->condition &= ~NR_COND_ACK_PENDING;
+ 	nr->vl         = nr->vr;
+ 
+-	nr_stop_t1timer(sk);
++	/*
++	 * The frame just sent again, and any sent after it, still wait for
++	 * an acknowledgment: keep T1 running so that losing this copy too
++	 * is noticed.
++	 */
++	nr_start_t1timer(sk);
+ }
+ 
+ void nr_kick(struct sock *sk)
 -- 
 2.53.0
 
