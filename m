@@ -1,59 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795619503;
-	b=Mw0akEJRHfi7c5gfrnbWHpVVNGF/PN6AE0qJE4fuk0SFpHkccE48pvdCDEkuD4fcgO4z
-	 zqfklzmPbsGytNv89zdmVm1BLn4ZZF4yb26HTC+iYFeuZVQGTmwYyP6tyIPJ1shBee6oc
-	 ykHsmsAQ/VkYj84L7rJ/9v5v22DaL4BcMjwcZFV1kgMVg87EFBXCEzjVfwpSILys9DBfT
-	 ymM5yBY3SAsMuqeb41FE84dQ6nKVXHIVcW9W2KmKeIh7kAPpiaqbdsjAJw2bkANqjyQ37
-	 mAU1iDYjwf1+8vhGimLW49mL+OxAoPDFeYoAPQEYtUIVPoGMFWhG85ZC+Uz37yvBaLQ==
+	t=1795619506;
+	b=STJGXhPdynchXoUAnkyn6qbDRXDiqDaQzwDfR8X3FOIu1LkQstYOer0ZsWHpJqMuIHBb
+	 CeLgIEwU9F68/Eb8cEuMadxETEUT4uq6i4UV+UowGWIjGpYfVV3AKMshUA1s33/q3P16P
+	 CEz123p4G3+95cYtDf9aKiqv8hOFVNC3mz9kl7OhS71+n4bt3Uucu9Gb7Bw3Ojktp2dd5
+	 V7JinYIbbang256LrgCXWlUvZ/9ynz1F7xVkfiJrCYkajdfzn560whBEQCQ8FyqjkUshv
+	 MDEix65u5tglkPeALX4lIplM31Qcb3+Ap5Dk4/MsI40v4w2x/NqhI6L3vRIYpFVAfYQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795619503;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795619506;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=ZlfU88TscNqVcA2aEQcwVO3HjypJU6KIg0FnuhOKO6M=;
-	b=YBOk51ieml6/sTEZ2AwWhFVv7FYA36Zp1hEg0Mlqe7rs5nW8aO0amhRRPBMmiLxlgewe
-	 sZ0Puy4SWwrTIpaMeCZA+E+qOxIxIKnsJk8dLGkGpwr3K4r/L0ELps9YQwlojSEcuGJ9j
-	 Nn6m0uusnViUaad+ZdOOz9MAvBuACpKYFVOBWaEhzy6DIgAkS+jwkwlBn79tVAr/z83bL
-	 EumOuhjjg6p+gwyFj+N/hw9HUm/D1yg3wpWX1ixAalk8Mh+vUd9BoIfRg5KGUS5OjBwSz
-	 dIKFK3CusDZDhga2Z06fF+RpKrXquCu1DspD7jTbhkPOVpaYzB+EZXYhv4YYd/RI88w==
+	bh=AX78zzMlb+Dhu3mMe2FjYD7OxBaAijzUjosYAFpAeU4=;
+	b=RDkk1C7SnKi0TwDneCQYfShtB6VuttVAUO7A9X5mk/u8OttzbhQXAO5D6dGb/rpi4Wkd
+	 393oo8gFbUTQubjibhb8/NxWPiNdoxSh0gFftZsUq0yIaVBhuNMQGO2+5yh9dl83O78dm
+	 g3IksAf7pNbvicrLVpIDo2qKpW5be276/J95gxcTY9JaPDw1I2W7Q+kjDG/Xeu7FyHrfo
+	 ed3wBMkTdGgibwoLwoqmH5KAopWD0PXNTvNk2V3zQnwJ8yHsiZ6DC8tz+2KaCQaiaBrN9
+	 fRJijZPHTtsCNtM3Wx78lMmYaB2EUTE4bWiHitFBpouFWhm7xHf06I3xkV3vms2TSFA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=0tacdu5E;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=yx7gzr62;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4819D606A31E;
-	Wed, 25 Nov 2026 15:11:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1CF52606A321;
+	Wed, 25 Nov 2026 15:11:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=0tacdu5E
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9C3581F000C0;
-	Wed, 25 Nov 2026 15:11:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=yx7gzr62
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6E1941F000C6;
+	Wed, 25 Nov 2026 15:11:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795619503;
-	bh=ZlfU88TscNqVcA2aEQcwVO3HjypJU6KIg0FnuhOKO6M=;
+	s=korg; t=1795619506;
+	bh=AX78zzMlb+Dhu3mMe2FjYD7OxBaAijzUjosYAFpAeU4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=0tacdu5E+RMEfedA/ahrGfDqUjywblPPH38TqZbvWU90auVwB+kZAxKgY3iTdlpAr
-	 3cRq4jVQXTs7itihmgSPf5YcA+YjruJlL1hnZGOdUA7x/JU7O93NYK+vq6F7Ekf9in
-	 FozcnQzRiEfPtJ5M8XskahIIE/u0UJiR8k8fgN0I=
+	b=yx7gzr62Ju/9Uwopz8Q/g0V9FjeRKB3qC+vatE3ZYCzmUBY/GYgpLE5FLcgJShO1Q
+	 UIoe5YvfdJu+tkXISX6NnpmnsN5HaH/p9W5xcpeMTGpW+eqjXgh/RhCLo3f+19+ESW
+	 U3svjuS3ScJfTaCNzMcCxYZRdOpJEXUMX7aozA9s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ilya Maximets <i.maximets@ovn.org>,
-	Sasha Levin <sashal@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>,
-	"David S. Miller" <davem@davemloft.net>,
-	Eric Dumazet <edumazet@kernel.org>,
-	Paolo Abeni <pabeni@redhat.com>,
-	Simon Horman <horms@kernel.org>,
-	Sridhar Samudrala <sridhar.samudrala@intel.com>,
-	Kees Cook <kees@kernel.org>,
-	Jean-Paul Sergent <jpsergent@gmail.com>
-Subject: [PATCH 7.3 0617/1005] net: dst_metadata: fix memcmp overread in skb_metadata_dst_cmp
-Date: Wed, 25 Nov 2026 15:32:35 +0100
-Message-ID: <20261125143836.200721250@linuxfoundation.org>
+	Christian Aurich Zanettini Martins <christian.aurichzm@gmail.com>,
+	"Pratyush Yadav (Google)" <pratyush@kernel.org>,
+	Pasha Tatashin <pasha.tatashin@soleen.com>,
+	"Mike Rapoport (Microsoft)" <rppt@kernel.org>
+Subject: [PATCH 7.3 0618/1005] liveupdate: check for duplicate session before growing block set
+Date: Wed, 25 Nov 2026 15:32:36 +0100
+Message-ID: <20261125143836.224211484@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143821.729802100@linuxfoundation.org>
 References: <20261125143821.729802100@linuxfoundation.org>
@@ -75,59 +69,71 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jean-Paul Sergent <jpsergent@gmail.com>
+From: Christian Aurich Zanettini Martins <christian.aurichzm@gmail.com>
 
-commit 74a7db839308dd7d1c3f72dd1e3299784df3affb upstream.
+commit cc448e44f6e9fc83f1527f926f52ebfa5a3d1ce9 upstream.
 
-Commit 3fcece12bc1b6 ("net: store port/representator id in
-metadata_dst") dropped the options_len equality check when converting
-skb_metadata_dst_cmp() to a type switch, so the memcmp length is taken
-from skb a alone.  When skb b carries fewer options than a, the
-comparison reads past b's allocation.
+luo_session_insert() grows the outgoing block set before checking for a
+duplicate session name. On -EEXIST the new block stays in the set.
 
-Hit in practice with Cilium geneve GRO aggregation, comparing an skb
-carrying 12 bytes of tunnel options against one carrying none:
+If the session count is an exact multiple of the per-block capacity (51
+with 4K pages), that block stays empty. It is serialized with count 0,
+which kho_block_set_restore() rejects in the next kernel:
 
-  memcmp: detected buffer overflow: 108 byte read of buffer size 96
-  WARNING: CPU: 0 PID: 15 at lib/string_helpers.c:1036 __fortify_report
-   __fortify_panic+0x9/0x10
-   skb_metadata_dst_cmp+0x11b/0x120
-   dev_gro_receive+0x303/0x620
-   gro_cell_poll+0x67/0xa0
+  luo: Block contains invalid entry count: 0
+  Kernel panic - not syncing: The incoming tree failed to initialize properly [-EINVAL], disabling live update
 
-Restore the check: unequal options_len means different metadata and no
-aggregation; the memcmp only runs when both sides carry the same
-options length.
+Check for the duplicate before growing the block set, as
+luo_preserve_file() does with the token.
 
-Fixes: 3fcece12bc1b6 ("net: store port/representator id in metadata_dst")
+Fixes: 2a441a14c2c0 ("liveupdate: Remove limit on the number of sessions")
 Cc: stable@vger.kernel.org
-Cc: Ilya Maximets <i.maximets@ovn.org>
-Cc: Sasha Levin <sashal@kernel.org>
-Cc: Jakub Kicinski <kuba@kernel.org>
-Cc: "David S. Miller" <davem@davemloft.net>
-Cc: Eric Dumazet <edumazet@kernel.org>
-Cc: Paolo Abeni <pabeni@redhat.com>
-Cc: Simon Horman <horms@kernel.org>
-Cc: Sridhar Samudrala <sridhar.samudrala@intel.com>
-Cc: Kees Cook <kees@kernel.org>
-Signed-off-by: Jean-Paul Sergent <jpsergent@gmail.com>
-Link: https://patch.msgid.link/20261109082410.206140-1-jpsergent@gmail.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Signed-off-by: Christian Aurich Zanettini Martins <christian.aurichzm@gmail.com>
+Reviewed-by: Pratyush Yadav (Google) <pratyush@kernel.org>
+Link: https://patch.msgid.link/20261103153928.716753-1-christian.aurichzm@gmail.com
+Reviewed-by: Pasha Tatashin <pasha.tatashin@soleen.com>
+Signed-off-by: Mike Rapoport (Microsoft) <rppt@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- include/net/dst_metadata.h |    2 ++
- 1 file changed, 2 insertions(+)
+ kernel/liveupdate/luo_session.c |   21 +++++++++++----------
+ 1 file changed, 11 insertions(+), 10 deletions(-)
 
---- a/include/net/dst_metadata.h
-+++ b/include/net/dst_metadata.h
-@@ -116,6 +116,8 @@ static inline int skb_metadata_dst_cmp(c
- 		return memcmp(&a->u.port_info, &b->u.port_info,
- 			      sizeof(a->u.port_info));
- 	case METADATA_IP_TUNNEL:
-+		if (a->u.tun_info.options_len != b->u.tun_info.options_len)
-+			return 1;
- 		return memcmp(&a->u.tun_info, &b->u.tun_info,
- 			      sizeof(a->u.tun_info) +
- 					 a->u.tun_info.options_len);
+--- a/kernel/liveupdate/luo_session.c
++++ b/kernel/liveupdate/luo_session.c
+@@ -177,16 +177,6 @@ static int luo_session_insert(struct luo
+ 	guard(rwsem_write)(&sh->rwsem);
+ 
+ 	/*
+-	 * For outgoing we should make sure there is room in serialization array
+-	 * for new session.
+-	 */
+-	if (sh == &luo_session_global.outgoing) {
+-		err = kho_block_set_grow(&sh->block_set, sh->count + 1);
+-		if (err)
+-			return err;
+-	}
+-
+-	/*
+ 	 * For small number of sessions this loop won't hurt performance
+ 	 * but if we ever start using a lot of sessions, this might
+ 	 * become a bottle neck during deserialization time, as it would
+@@ -196,6 +186,17 @@ static int luo_session_insert(struct luo
+ 		if (!strncmp(it->name, session->name, sizeof(it->name)))
+ 			return -EEXIST;
+ 	}
++
++	/*
++	 * For outgoing we should make sure there is room in serialization array
++	 * for new session.
++	 */
++	if (sh == &luo_session_global.outgoing) {
++		err = kho_block_set_grow(&sh->block_set, sh->count + 1);
++		if (err)
++			return err;
++	}
++
+ 	list_add_tail(&session->list, &sh->list);
+ 	sh->count++;
+ 
 
 
