@@ -1,53 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795619894;
-	b=DfQhAxGRcp3JGgNas2OAGtvB11y4zfgZXN7KGwNyyUDsxJqAE1kF1PKiPi1y7JdenXlK
-	 TZfeHWEJri5mmAYCt9cy1EmMsWIqHcdW3L5IX1n6LlPBW4+kr0ESLpomca67KTyUjI9Di
-	 67Q283I/N3VtIztZnWwRyGtllfHFwHhyCUovc1M47UtjaLHBViQzdPnWKvUl5NNauWsoY
-	 HoUocEo4vyFKYGPqZkZ2BYHpos/4zWNLc4WzaSKfSOmre5B98TUK1Ejci+UVsDscQLDm3
-	 /EUnQ9vKcaJRRRYraoFLSq+gVe2vtHYF6JEWIa5/XN33BBGQsGlUuJlUfmTYptU4c/Q==
+	t=1795619897;
+	b=WCzvuIt9VOD1/8mwIZU5nrd4z15vgi/AD34pEQAO74Eo/Y9qUCFEemCyZ8b/pwZED49Y
+	 bQAEKBNEPP/DyyfA1xa1Eq1SkIP//sl847MjqvgU+vkyF01F/mwrLdu23wuedsfkq7+dP
+	 /jJdkdoFRGUYBhNunmWUhlFRxzq45CYyGP0zJS3A6yWPvd7q8a0JxKro5pmZSDdEoWMBE
+	 OaRBoYZwLNRp4H9HBrhy/LPzdpyXibVsTbDKL/9ZRwENS3FBbFvoLVpKHx3NcGlnTZ7NK
+	 3vlo0rlzLR82DGLoeupms6N7mRmlJjtQ+g0nAjhE8pWCjj9LR19L5XhFf4CqghzTsEw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795619894;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795619897;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=Om7BDLDWY+28kd5s8wV1BR+lGXEVf3yBHJkB35X8EPw=;
-	b=YCw0eL2BfV3l8RozLJSxKcBktM0kMU5levcxrnrIoO7BLslgWU5oOJOCEK5qC6s7NOrf
-	 abQ0rFXyrqY1emvhj1fUrsem1NWq6q5pWQum2xXwcVThUYTX9QhOnv/HsuQKe3LMpC30z
-	 UIhNdY4U8npu6tQfUzxWp2+RSXa2MmCE3p2aMh80PkHf1Jkmb9nfb5JqKrSU+qXsio/ch
-	 i2PbftlAIwZ3kVlDm97FYquwzAmFIeWrTqQ2FlKITLD0x5Swx9+VN2giKcGyVo/bqSKmj
-	 v1xbisP9JqAZ32XiW2Y7yKa2WMfWllYqidCqmqnYB41fIcWFfZJCWr5iSOwYvwpiNIg==
+	bh=/eO5qqBnWePh0pHRXSYKQypMgvQFWjknnw3iD/Vs4TI=;
+	b=T1L/tWGAYwMthA1TKr9X0olMeM8mPoRi10TNtE6+pjc3gBVTVoSZ13VuAeX+FJiSPqTF
+	 6N/kyGAkdDS+THO3W5z+/2vCKF4SPF2b++sl6Ar+D4m+dsEXcu8y78TKPxM8Nfu7ya4oF
+	 6v7uZbz14oSSc6ZI84BwK2HGiZRH34IQgmBHs89oJXF7Vcy1H7vNVRt1P6gJtcFl8gXE9
+	 cKt1NhHlC53MfcKEpyE3WUypVsIR94fgtTwMxiV1CcbaxCHQxWpIwuTM0i/2TSdXZUZCq
+	 lfovdSaV/vyKsV52pljjCFQSetNqj+YcVFnzwEJn9lm/VkVSlHTzw/zbNF0uSdgN6jw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=eAyyZgv+;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=g6Z75Vha;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0B3F1606A321;
-	Wed, 25 Nov 2026 15:18:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 21254606A31E;
+	Wed, 25 Nov 2026 15:18:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=eAyyZgv+
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2DE961F000C0;
-	Wed, 25 Nov 2026 15:18:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=g6Z75Vha
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ECB4A1F000C6;
+	Wed, 25 Nov 2026 15:18:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795619893;
-	bh=Om7BDLDWY+28kd5s8wV1BR+lGXEVf3yBHJkB35X8EPw=;
+	s=korg; t=1795619896;
+	bh=/eO5qqBnWePh0pHRXSYKQypMgvQFWjknnw3iD/Vs4TI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=eAyyZgv+vkrczFrWUcFEqNnsedUtAqd5oJu855hPspBxwL5wRQ1TgYtl6mgHo8aVJ
-	 wAETHwQ+W1cpVac+zGd22cHSYdgSbg1qrGYhis7YHFbiVGnzV0txAgm8bqhC6SmoOg
-	 qIr/CJr6QhiItlNQ4L2CKF4qkdr7pN87ye0GKB34=
+	b=g6Z75VhajfcwMJF1kae3wXxfjGL1P43TficRN/P4hARXcEsCGxidzvbZgIaTBKYGJ
+	 fyf6VolTPunyDNmYq7fjlu7GZ78PtOq1EsEhrDP9TZ6wyZZfsF3QB6c8whv7CJOEPB
+	 rO6E2u04sY1G6gv5uRrkiWbj5supYhc2L859vAB0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hengyu Liang <hengyul@cs.unc.edu>,
-	"Borislav Petkov (AMD)" <bp@alien8.de>,
-	"Mario Limonciello (AMD)" <superm1@kernel.org>,
-	Thomas Zimmermann <tzimmermann@suse.de>
-Subject: [PATCH 7.3 0739/1005] x86/video: Preserve the default VGA fallback for legacy modes
-Date: Wed, 25 Nov 2026 15:34:37 +0100
-Message-ID: <20261125143839.067880686@linuxfoundation.org>
+	Jan Kara <jack@suse.cz>,
+	"Christian Brauner (Amutable)" <brauner@kernel.org>
+Subject: [PATCH 7.3 0697/1005] ext2: add ext2_inode_block() helper
+Date: Wed, 25 Nov 2026 15:33:55 +0100
+Message-ID: <20261125143838.083095493@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143821.729802100@linuxfoundation.org>
 References: <20261125143821.729802100@linuxfoundation.org>
@@ -69,62 +67,104 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hengyu Liang <hengyul@cs.unc.edu>
+From: Christian Brauner <brauner@kernel.org>
 
-commit 3b4c98b47ba7c3c57bcf54fb85f54a854622041c upstream.
+commit 57a84ef0520b0d17e930ff15cbd13af687e6d233 upstream.
 
-Commit
+Move the lookup of the inode table block that holds an inode out of
+ext2_get_inode() into a helper. ext2_sync_inode_metadata() is going to
+use it to find the block without reading it from disk.
 
-  596b3678326d ("x86/video: Only fall back to vga_default_device() without screen info")
+No functional changes.
 
-made video_is_primary_device() rely exclusively on screen_info resources
-whenever any are available.
-
-However, screen_info_resources() also returns legacy I/O and memory ranges for
-VGA text modes. These ranges are not PCI BARs, so pci_find_resource() does not
-find them and the default VGA fallback is skipped. As a result, no device is
-primary in VGA text mode.
-
-On a SeaBIOS QEMU guest with bochs and VKMS, the boot VGA (bochs) loses its
-DRM boot_display attribute. VKMS registers fb0 and bochs registers fb1. VKMS
-is not a PCI device, so it is not primary either. With no primary device,
-fbcon keeps the console on fb0 and never remaps it to bochs. This can be
-checked with:
-
-  cat /sys/class/drm/card1/boot_display
-  stty -F /dev/tty1 size
-
-Without the fix, boot_display is missing and tty1 is 48 rows by 128 columns.
-With it, boot_display contains 1 and tty1 is 50 rows by 160 columns. VKMS only
-makes the console part visible. Without VKMS, tty1 has the same size with and
-without the fix, but boot_display is still missing without it.
-
-Use resource-based selection only for linear framebuffers. Fall back to
-vga_default_device() for legacy display modes, while keeping EFI and VESA
-framebuffer ownership authoritative.
-
-Fixes: 596b3678326d ("x86/video: Only fall back to vga_default_device() without screen info")
-Signed-off-by: Hengyu Liang <hengyul@cs.unc.edu>
-Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
-Reviewed-by: Mario Limonciello (AMD) <superm1@kernel.org>
-Reviewed-by: Thomas Zimmermann <tzimmermann@suse.de>
-Cc: stable@vger.kernel.org
-Link: https://patch.msgid.link/20261103031630.2085194-1-hengyul@cs.unc.edu
+Cc: stable@vger.kernel.org # v7.3
+Reviewed-by: Jan Kara <jack@suse.cz>
+Link: https://patch.msgid.link/20261109-work-inode-metadata_writeback-v3-1-91ac6c024018@kernel.org
+Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/video/video-common.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ fs/ext2/inode.c |   49 +++++++++++++++++++++++++++++++------------------
+ 1 file changed, 31 insertions(+), 18 deletions(-)
 
---- a/arch/x86/video/video-common.c
-+++ b/arch/x86/video/video-common.c
-@@ -45,7 +45,7 @@ bool video_is_primary_device(struct devi
+--- a/fs/ext2/inode.c
++++ b/fs/ext2/inode.c
+@@ -1264,46 +1264,59 @@ static int ext2_setsize(struct inode *in
+ 	return 0;
+ }
  
- #ifdef CONFIG_SCREEN_INFO
- 	numres = screen_info_resources(si, res, ARRAY_SIZE(res));
--	if (numres > 0) {
-+	if (numres > 0 && __screen_info_has_lfb(screen_info_video_type(si))) {
- 		for (i = 0; i < numres; ++i) {
- 			if (!(res[i].flags & IORESOURCE_MEM))
- 				continue;
+-static struct ext2_inode *ext2_get_inode(struct super_block *sb, ino_t ino,
+-					struct buffer_head **p)
++/*
++ * Find the inode table block that holds inode @ino and the offset of the
++ * inode in that block.
++ */
++static int ext2_inode_block(struct super_block *sb, ino_t ino,
++			    unsigned long *block, unsigned long *offset)
+ {
+-	struct buffer_head * bh;
+ 	unsigned long block_group;
+-	unsigned long block;
+-	unsigned long offset;
+ 	struct ext2_group_desc * gdp;
+ 
+-	*p = NULL;
+ 	if ((ino != EXT2_ROOT_INO && ino < EXT2_FIRST_INO(sb)) ||
+-	    ino > le32_to_cpu(EXT2_SB(sb)->s_es->s_inodes_count))
+-		goto Einval;
++	    ino > le32_to_cpu(EXT2_SB(sb)->s_es->s_inodes_count)) {
++		ext2_error(sb, __func__, "bad inode number: %lu",
++			   (unsigned long) ino);
++		return -EINVAL;
++	}
+ 
+ 	block_group = (ino - 1) / EXT2_INODES_PER_GROUP(sb);
+ 	gdp = ext2_get_group_desc(sb, block_group, NULL);
+ 	if (!gdp)
+-		goto Egdp;
++		return -EIO;
+ 	/*
+ 	 * Figure out the offset within the block group inode table
+ 	 */
+-	offset = ((ino - 1) % EXT2_INODES_PER_GROUP(sb)) * EXT2_INODE_SIZE(sb);
+-	block = le32_to_cpu(gdp->bg_inode_table) +
+-		(offset >> EXT2_BLOCK_SIZE_BITS(sb));
++	*offset = ((ino - 1) % EXT2_INODES_PER_GROUP(sb)) * EXT2_INODE_SIZE(sb);
++	*block = le32_to_cpu(gdp->bg_inode_table) +
++		(*offset >> EXT2_BLOCK_SIZE_BITS(sb));
++	*offset &= (EXT2_BLOCK_SIZE(sb) - 1);
++	return 0;
++}
++
++static struct ext2_inode *ext2_get_inode(struct super_block *sb, ino_t ino,
++					struct buffer_head **p)
++{
++	struct buffer_head *bh;
++	unsigned long block;
++	unsigned long offset;
++	int err;
++
++	*p = NULL;
++	err = ext2_inode_block(sb, ino, &block, &offset);
++	if (err)
++		return ERR_PTR(err);
+ 	if (!(bh = sb_bread(sb, block)))
+ 		goto Eio;
+ 
+ 	*p = bh;
+-	offset &= (EXT2_BLOCK_SIZE(sb) - 1);
+ 	return (struct ext2_inode *) (bh->b_data + offset);
+ 
+-Einval:
+-	ext2_error(sb, "ext2_get_inode", "bad inode number: %lu",
+-		   (unsigned long) ino);
+-	return ERR_PTR(-EINVAL);
+ Eio:
+ 	ext2_error(sb, "ext2_get_inode",
+ 		   "unable to read inode block - inode=%lu, block=%lu",
+ 		   (unsigned long) ino, block);
+-Egdp:
+ 	return ERR_PTR(-EIO);
+ }
+ 
 
 
