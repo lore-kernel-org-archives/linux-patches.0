@@ -1,51 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795619576;
-	b=J/auDdopBHldPC48nRAyzpZTgd3Fz0RModz4rQHZpGIinUi2mKbfpvSaKPmqUGDIyMhm
-	 +Eo1hCtqxSq9m7M+QACl46UmTYeAEda9cE/T28DGRViZ4qFvv0Xp1AZdofZ85FHWwkRUB
-	 BCMVkk2I5Wk2gYEQERZkmHsKkjzA69KOmnqM423h/C2AypfQ6TZMbbiFpm+Za98Hq+D1f
-	 rQihR7t7PgMxAHG/lcRcI1Kr+rsR42Gj4IHXBZLVNfS5LcYwKElIMtXq8GuMZGX6nsZrt
-	 MMDpOEpf66GsNWCPOCDoExaYzrDJyHxE+0AWgLXuXKlgd94yaydTOwOyu7qqI2Ve7HQ==
+	t=1795619579;
+	b=k4PXGeaml9eNoURUNFdhD8W2uhNxFZANwy7FPv7IHumdpiBMtuvZz2iXRtbbA3FeIsrA
+	 JJD24+oYM7OuJD4VIeTvndlPwIMVOOP5Zw3msOS1G3GQ63o78DFVr/JUE5tmx6RyrRiGn
+	 sQPU8lpwTfjp4fkh2zJOVJiPjPOoUuOeVvz+G5RNOIYsYRD13W88rARGKGtI3FdVZ8hLi
+	 a8R3peovzvQFh2RVx9cwexlfmtPkmZa4R07/Y5pBH1tkktS5hR9bHwl6ViZFQW8lel72/
+	 ud1A0VCSpp4outUOpIJDvA1S6qOyJUzCxQUvwv8RP0W2jzm4ybgV+PnF35KNwvENeBg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795619576;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795619579;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=kSU7aC5eFaYpGkaIv82iG/Tk4ujoRCgCrzB5gxiFElk=;
-	b=zsplGuRnN/ObRsWb1LldKR5GQTkmskO6/UX1dbxZopMfuT2Sb1qAf7DsC5eM4Fe8+JaW
-	 Sf0tODBmVA71GHSQOuZoeJ37hhpbrNlLtcksOPslwTNpwBYplGa62dV7rnDyt1dj3QZ/R
-	 Fet9XiIMDUxCNBSv6SqpbWc9WvsN+UhTKSR5/tmcE9INEepraFQCakl1KYQd5UBA+gjCT
-	 eVJJcGh/gzwePuv66gh+lgMohzis7EwfTKRWkk68ozlkvkCm6O52oLjuNQBfAq4sZzW/a
-	 chjDuCknqvuPx2D8uGAY1P4sSLYJ/YZV1ynDG+C3+LvPVFGVC/dPHNXOjhtBiPwfQrw==
+	bh=Xxgg46EVrL9sWyd7CUcWemT+6MaGne+dASaCQDbs8UA=;
+	b=fr9UfwLMsqOR9iY6FVVgCSmZlDtEi9+h8oElxO5KV3E+L7/yQIXoraNzzzMRLRbes3ks
+	 TL85+EkhFvo7Y5FZ/FbTT+8xu6ypuYYj7SbqyvE7sXOMU13WkVZsatLSBhUKLeNQaRpB1
+	 GFLoavD/g3IwD5fz7usZcNYXtb3mtbBtdbKKxAnylgjv/VV0yL/Sfy42bY7TyRvXyI9X6
+	 2uH83h3tQvYV1byM08szbxjO6UqJRkakHDkalSV4SIZThCWy3qzk6Dm6f4GKF1Pjp1VwE
+	 xXXOpWhAOs41Q+IP/9TlRRB6myzLiRtsFE5kjQDGMRIDpzc9CMVmOv3PThraa2Rw1vw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=VL7HCaSf;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=YYgCoyva;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 03951606A31E;
-	Wed, 25 Nov 2026 15:12:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EA632606A323;
+	Wed, 25 Nov 2026 15:12:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=VL7HCaSf
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 04CA41F000CA;
-	Wed, 25 Nov 2026 15:12:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=YYgCoyva
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 472D71F000C6;
+	Wed, 25 Nov 2026 15:12:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795619575;
-	bh=kSU7aC5eFaYpGkaIv82iG/Tk4ujoRCgCrzB5gxiFElk=;
+	s=korg; t=1795619578;
+	bh=Xxgg46EVrL9sWyd7CUcWemT+6MaGne+dASaCQDbs8UA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=VL7HCaSfoacYYqEKKj07rbtDpwCJ0RyDxZ8ia7JstS1mhC+OhjgSIpOT5DtOj6hdu
-	 stC0i7mkY/N2Da+td5RgIUnbwPZ1WpQs5tk1/kMHtZCyWTD8S2zoUxkfS70trRw+YZ
-	 /OA363/4YCUO2YM4Zv+o/E+DcihFdZA6vOON4F+s=
+	b=YYgCoyvaxmWuhErdGKO9tbWJmXjFcmUJztNqKYjgiAFv5A0xe2nqVf9ExMwy1Sq8o
+	 Bf6i2xXK7TuLoUgBPEQc/PJGVFf3scxPDQdxSHNFIKgzxOTSdtXVmfgH6xXNjya0IU
+	 LclcNG3d+HwfOMwEBEPoZ3aizS0grDLqVIWdiwGU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Rishikesh Jethwani <rjethwani@purestorage.com>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 7.3 0639/1005] tls: only install push_pending_record for a TX context
-Date: Wed, 25 Nov 2026 15:32:57 +0100
-Message-ID: <20261125143836.722238482@linuxfoundation.org>
+	Eduardo Mucelli Rezende Oliveira <edumucelli@gmail.com>,
+	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>
+Subject: [PATCH 7.3 0640/1005] tools/bootconfig: Close only opened braces in compact output
+Date: Wed, 25 Nov 2026 15:32:58 +0100
+Message-ID: <20261125143836.744904701@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143821.729802100@linuxfoundation.org>
 References: <20261125143821.729802100@linuxfoundation.org>
@@ -67,67 +67,104 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Rishikesh Jethwani <rjethwani@purestorage.com>
+From: Eduardo Mucelli Rezende Oliveira <edumucelli@gmail.com>
 
-commit c47e766c5307c06a78304582b2b5b5ab01ee1358 upstream.
+commit 26fa92f351d4993428268afebf6c60c987477af5 upstream.
 
-tls_set_sw_offload() assigns ctx->push_pending_record for both
-directions, but the hook is a TX-side dispatcher. On a socket whose TX
-side is HW offloaded, tls_set_device_offload() installs
-tls_device_push_pending_record(); any later TLS_RX setsockopt
-overwrites it with tls_sw_push_pending_record(), because
-tls_set_device_offload_rx() itself calls tls_set_sw_offload(sk, 0, NULL)
-for the software half of a successful HW RX offload, and so does the
-fallback when the RX offload is declined (NIC with TX-only offload,
-tls_dev_add() failure).
+A key may have both a value and subkeys. When it has only one subkey,
+xbc_show_compact_tree() can print that subkey using dotted notation
+without opening a brace. During backtracking, however, it treats the
+value node followed by a subkey as evidence that a brace was opened.
 
->From then on tls_handle_open_record() (a TLS_SET_RECORD_TYPE cmsg after
-a MSG_MORE send, or the close path with a pending writer) runs
-tls_sw_push_pending_record() against priv_ctx_tx, which is a
-struct tls_offload_context_tx, not a struct tls_sw_context_tx, and
-reads open_rec from inside the offload context. On x86_64 without lock
-debugging that field overlays sg_tx_data[2].dma_address, which is never
-set, so the push is silently skipped and the data buffered by the
-MSG_MORE send is later sent under the cmsg's record type, e.g.
-application data in a handshake or alert record. Enabling
-CONFIG_DEBUG_SPINLOCK, CONFIG_DEBUG_LOCK_ALLOC and CONFIG_LOCKDEP, but
-not CONFIG_LOCK_STAT, in the tested x86_64 configuration moves open_rec
-over sg_tx_data[5].page_link. Once populated, its page pointer and
-scatterlist flags are interpreted as a tls_rec pointer and dereferenced
-while reading msg_plaintext.sg.size.
+For example, a.b=v, a.b.c=w and a.z=q are printed with the brace for a
+closed before z. Reading that output back changes a.z into the root key
+z, silently changing the configuration.
 
-Only set the hook when initialising the TX side.
+Check the key children when deciding whether to close a brace. Skip the
+value child, and account for a sole subkey that itself has both a value
+and subkeys, since that combination is not compacted. This follows the
+conditions used to open braces without keeping a depth-indexed array.
+Extend the mixed-value/subkey sample to cover the lost sibling.
 
-Found by code review while developing TLS 1.3 HW offload rekey support.
+Link: https://lore.kernel.org/all/6ad67e4cda05238cd173c99e820a85de2c13f5fc.1794337724.git.edumucelli@gmail.com/
 
-Tested with HW TLS TX and RX offload on Mellanox ConnectX-6 Dx (Crypto
-Enabled): after setting TLS_RX, send() "AAAA" with MSG_MORE, then
-sendmsg() "BBBB" with a TLS_SET_RECORD_TYPE cmsg for a handshake
-record. Without this patch the peer receives a single handshake record
-"AAAABBBB"; with it, an application data record "AAAA" followed by a
-handshake record "BBBB".
-
-Fixes: e8f69799810c ("net/tls: Add generic NIC offload infrastructure")
+Fixes: e5efaeb8a8f5 ("bootconfig: Support mixing a value and subkeys under a key")
 Cc: stable@vger.kernel.org
-Signed-off-by: Rishikesh Jethwani <rjethwani@purestorage.com>
-Link: https://patch.msgid.link/20261102213011.4191020-1-rjethwani@purestorage.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Eduardo Mucelli Rezende Oliveira <edumucelli@gmail.com>
+Signed-off-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/tls/tls_sw.c |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ tools/bootconfig/main.c                           |   29 ++++++++++++++++------
+ tools/bootconfig/samples/exp-good-mixed-kv1.bconf |    5 +++
+ tools/bootconfig/samples/good-mixed-kv1.bconf     |    5 +++
+ 3 files changed, 32 insertions(+), 7 deletions(-)
 
---- a/net/tls/tls_sw.c
-+++ b/net/tls/tls_sw.c
-@@ -2630,7 +2630,8 @@ int tls_set_sw_offload(struct sock *sk,
+--- a/tools/bootconfig/main.c
++++ b/tools/bootconfig/main.c
+@@ -39,6 +39,23 @@ static int xbc_show_value(struct xbc_nod
+ 	return i;
+ }
+ 
++/* Match the conditions under which the compact formatter opens braces. */
++static bool xbc_node_needs_braces(struct xbc_node *node)
++{
++	struct xbc_node *child = xbc_node_get_child(node);
++
++	if (child && xbc_node_is_value(child))
++		child = xbc_node_get_next(child);
++	if (!child)
++		return false;
++	if (child->next)
++		return true;
++
++	/* A single subkey with both a value and subkeys is not compacted. */
++	child = xbc_node_get_child(child);
++	return child && xbc_node_is_value(child) && child->next;
++}
++
+ static void xbc_show_compact_tree(void)
+ {
+ 	struct xbc_node *node, *cnode = NULL, *vnode;
+@@ -99,14 +116,12 @@ static void xbc_show_compact_tree(void)
+ 			node = xbc_node_get_parent(node);
+ 			if (!node)
+ 				return;
+-			if (!xbc_node_get_child(node)->next)
++			if (!depth || !xbc_node_needs_braces(node))
+ 				continue;
+-			if (depth) {
+-				depth--;
+-				for (i = 0; i < depth; i++)
+-					printf("\t");
+-				printf("}\n");
+-			}
++			depth--;
++			for (i = 0; i < depth; i++)
++				printf("\t");
++			printf("}\n");
  		}
+ 		node = xbc_node_get_next(node);
  	}
- 
--	ctx->push_pending_record = tls_sw_push_pending_record;
-+	if (tx)
-+		ctx->push_pending_record = tls_sw_push_pending_record;
- 
- 	/* setkey is the last operation that could fail during a
- 	 * rekey. if it succeeds, we can start modifying the
+--- a/tools/bootconfig/samples/exp-good-mixed-kv1.bconf
++++ b/tools/bootconfig/samples/exp-good-mixed-kv1.bconf
+@@ -1,2 +1,7 @@
+ key = "value";
+ key.subkey = "another-value";
++a {
++	b = "v";
++	b.c = "w";
++	z = "q";
++}
+--- a/tools/bootconfig/samples/good-mixed-kv1.bconf
++++ b/tools/bootconfig/samples/good-mixed-kv1.bconf
+@@ -1,3 +1,8 @@
+ # value -> subkey pattern
+ key = value
+ key.subkey = another-value
++
++# A valued parent with one subkey must not close its enclosing brace.
++a.b = v
++a.b.c = w
++a.z = q
 
 
