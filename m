@@ -1,51 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795620328;
-	b=JJMXsJzvN3jM9BU7OTqT5UkP3nBBZ1R2pqm+d6St4RMBur7T5MKF7Kt+IfMs84SC95E2
-	 wbPHCJ9aVCb0IdIeFZtuv74bkVKhtTwWCRMDYy9iAnAdpCyW8onZjn6iAxuMkwAeBl/K7
-	 MUlVLwAYsFTsC0xpI4+BNQTtNdc+l8mZKbV0ObadCP4rpTHJhvIyeUGi30oOhP6nWrgsF
-	 lYlq3GeeoaEfzQjFrrtg4lOfrN7ooCixTXxLP+Pg+tooUh59Tfj/gZqL+VXf2/90BS9XT
-	 eAMC+YNpFBmYz8R3TIVe2HmZK0C82Ewws8JVcBSbuUzE2DMy5QOxm/PbrfGK/SQiRbw==
+	t=1795620331;
+	b=sMqyWMkJP/xB35zonHfZXHQg0xeXPtdNoHQNCi0TWDcIy4ymAOrnwr373XOOv60Cb5bH
+	 22kMjDmQYJCIYBMjhHUuXvmJbkz5fbd4VgHsdNzot5jddKLYtq5Q093hVLC3Wug3DN+ZN
+	 Uz0Yx4HJFSUSrGs3U2wUrK50SCQs4d92cydVqzw9Srj0wyXcFbC3l8FQHDW3vhm+bG499
+	 rajbAaRuTb1HKhy1WilqFRwk1aqV/42HAhqieGpKrq/wgas8/WKEbx4MWKoAEfUpoSABX
+	 KgE4O8aCW5+ocsCN6tE9UlpdzuGuRBmGAXdNS6f69S4HCTDioSRt3ZiFXgYMJ23wX7w==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795620328;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795620331;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=wxzRtkY3dP2uxTZVaQPILNDnRxyaQNNoiAwBQyi7myw=;
-	b=NZ6WiLliQC3J7QlAohNSleYyJMM6FB1vEHrw8dofHoZGQ1gAi0bgwSJyrCz9vfdHA5ot
-	 JyrCGUfcT+4fbfuvX1uI9ptT/QX604CGjFaM27ISCGVen+2EsWvQFTzAXcFkMzPPHCDDo
-	 kHn4b/v9/xXrpysMeWPHcyjEYnbPmAYhehi5qt6TyLCuSQHM7vPHglveCE9Hh0XFE8gDS
-	 HcDBY1gg3ZrPewsaT2Np/z7jSoAP4bQ5iGal6zigkkf9HyShw71GdnUHDncGI9MZPEExd
-	 GfAtooIgf48SSe/+mvxWTedVkXTnOuJlr8b1vWyT5QDJc8Gz5Na/pjY/483rSylwnDA==
+	bh=FhoJTf9iHPngsjk/ITpRxcnUbCX8ez0IVobdDlSaK2I=;
+	b=GfI2O3Zb8+ltu2PSbf1OD0OaNyVN955qGg2lUGKWi6vhlCqVw+CTCULp3SNfoksjYl57
+	 ZiP5XJKPQ2ln2/erocotyjOEOT9i9zKE9fTuWpb6pdXgylqFxYsNQDU0zqH1M5Xr3WkrL
+	 ZACtCEa51HuDexZc8GjUrOoL86bWx1hqaAVloOTycVUHMV8tYK05/oxFJuBsnr3WncDKc
+	 Vk/lIa54huzqsaqJ2jyvyqbXqidGg1Awy5DGatvLxKN+wYBiV8yb/OtbDm+jHdr+dPGeB
+	 6ugJm3g+dGncbikCMtL29wbWakxf0jERXfSAYr0mUV09PJ5yTzmD/c9QQHBHBfVNfBw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=N3YVzT1y;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=F+nASFDk;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D84A7606A31E;
-	Wed, 25 Nov 2026 15:25:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C28BC606A31E;
+	Wed, 25 Nov 2026 15:25:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=N3YVzT1y
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AE9641F000C6;
-	Wed, 25 Nov 2026 15:25:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=F+nASFDk
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0A2651F000C6;
+	Wed, 25 Nov 2026 15:25:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795620328;
-	bh=wxzRtkY3dP2uxTZVaQPILNDnRxyaQNNoiAwBQyi7myw=;
+	s=korg; t=1795620331;
+	bh=FhoJTf9iHPngsjk/ITpRxcnUbCX8ez0IVobdDlSaK2I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=N3YVzT1y3n/bZ+M6pgOsL+SDpWANuTihyfzH1wseEUsj9JTDEGoxBl7AkSiuERmnt
-	 P1LFCgC6MOXNBbVWX8rPXLRCMaKfizk45NMZGJ3c6KI6IO2brXXlq+na3T6Em6a+U1
-	 Ir95/1h+StzzFQwnVraMSFSHN/DbTMQRdcGAvktI=
+	b=F+nASFDkdQRT9Q/eqqReq1FFT38TbfBBjZ9yrPt1Tnj8QrVU32xhBNCsToEa9qca3
+	 0f8Vm0t9zROjqvsj31hcHdII8mxxTfFvI+f4tIEQdYk21/CH9q19i8L3vN1F7ZBBJo
+	 r1cOqplGnYKHapJhNYO83HIFV62VR5fkt5h1n2BM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sinan Polat <sinan86polat@gmail.com>,
+	syzbot+94dac3c75477e184f0b0@syzkaller.appspotmail.com,
 	Mikulas Patocka <mpatocka@redhat.com>
-Subject: [PATCH 7.3 0879/1005] dm-integrity: dont recalculate with HMAC because of a dirty bitmap
-Date: Wed, 25 Nov 2026 15:36:57 +0100
-Message-ID: <20261125143842.295139902@linuxfoundation.org>
+Subject: [PATCH 7.3 0880/1005] dm-integrity: dont attempt to commit journal on disabled device
+Date: Wed, 25 Nov 2026 15:36:58 +0100
+Message-ID: <20261125143842.317788755@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143821.729802100@linuxfoundation.org>
 References: <20261125143821.729802100@linuxfoundation.org>
@@ -67,77 +67,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sinan Polat <sinan86polat@gmail.com>
+From: Mikulas Patocka <mpatocka@redhat.com>
 
-commit 875a7161fe1574205293c36f7bbd0815023e48a1 upstream.
+commit e5e03918fbec31f0c896f4f43c2bd2aadf35d43d upstream.
 
-Commit 5c02406428d5 ("dm integrity: conditionally disable "recalculate"
-feature") refuses a superblock with SB_FLAG_RECALCULATING if a keyed
-hash is used without "legacy_recalculate". Otherwise someone who can
-write to the device, but does not know the key, could modify data and
-have the kernel compute valid tags for it.
+If the device is disabled due to an error, we shouldn't attempt to flush
+the journal. We jump straight to the label release_flush_bios, that will
+call do_endio on all queued bios. do_endio will terminate the bios with
+the error.
 
-dm_integrity_resume() can still start the same recalculation in J or D
-mode: if SB_FLAG_DIRTY_BITMAP is set and the bitmap is not clear, or
-log2_blocks_per_bitmap_bit does not match, it sets
-SB_FLAG_RECALCULATING and recalc_sector = 0. The superblock is not
-authenticated unless fix_hmac and journal_mac are both used, so the
-flag can be set offline. Resume also runs on the first activation.
+This fixes WARN_ON in the function pad_uncommitted reported by syzkaller.
 
-Apply the constructor's policy there. If recalculation is not allowed,
-log an error and keep the existing tags, so modified blocks fail
-verification. This also avoids queueing recalc_work on a NULL
-recalc_wq when internal_hash is not used.
-
-Fixes: 5c02406428d5 ("dm integrity: conditionally disable "recalculate" feature")
+Reported-by: syzbot+94dac3c75477e184f0b0@syzkaller.appspotmail.com
+Closes: https://syzbot.org/bug?extid=94dac3c75477e184f0b0
+Fixes: 7eada909bfd7 ("dm: add integrity target")
 Cc: stable@vger.kernel.org
-Assisted-by: Claude:claude-opus-5-5
-Signed-off-by: Sinan Polat <sinan86polat@gmail.com>
 Signed-off-by: Mikulas Patocka <mpatocka@redhat.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/md/dm-integrity.c |   24 ++++++++++++++++++++++--
- 1 file changed, 22 insertions(+), 2 deletions(-)
+ drivers/md/dm-integrity.c |    6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
 --- a/drivers/md/dm-integrity.c
 +++ b/drivers/md/dm-integrity.c
-@@ -3888,6 +3888,24 @@ static bool superblock_changed(struct dm
- 	       memcmp(ic->sb->salt, ic->sb_copy->salt, SALT_SIZE) != 0;
- }
+@@ -2908,6 +2908,11 @@ static void integrity_commit(struct work
  
-+/*
-+ * The superblock is authenticated only if fix_hmac and journal_mac are used,
-+ * so SB_FLAG_DIRTY_BITMAP may have been set by someone who doesn't know the
-+ * key. Apply the policy that the constructor applies to SB_FLAG_RECALCULATING.
-+ */
-+static bool dm_integrity_may_recalc_dirty_bitmap(struct dm_integrity_c *ic)
-+{
-+	if (!ic->internal_hash) {
-+		DMERR("Dirty bitmap found, but internal_hash is not used");
-+		return false;
+ 	spin_lock_irq(&ic->endio_wait.lock);
+ 	flushes = bio_list_get(&ic->flush_bio_list);
++	if (unlikely(dm_integrity_failed(ic))) {
++		wake_up_locked(&ic->endio_wait);
++		spin_unlock_irq(&ic->endio_wait.lock);
++		goto release_flush_bios;
 +	}
-+	if (dm_integrity_disable_recalculate(ic)) {
-+		DMERR("Dirty bitmap found, but HMAC recalculation requires \"legacy_recalculate\"");
-+		return false;
-+	}
-+	return true;
-+}
-+
- static void dm_integrity_resume(struct dm_target *ti)
- {
- 	struct dm_integrity_c *ic = ti->private;
-@@ -3977,8 +3995,10 @@ static void dm_integrity_resume(struct d
- 			if (!(ic->sb->log2_blocks_per_bitmap_bit == ic->log2_blocks_per_bitmap_bit &&
- 			      block_bitmap_op(ic, ic->journal, 0, ic->provided_data_sectors, BITMAP_OP_TEST_ALL_CLEAR)) ||
- 			    ic->reset_recalculate_flag) {
--				ic->sb->flags |= cpu_to_le32(SB_FLAG_RECALCULATING);
--				ic->sb->recalc_sector = cpu_to_le64(0);
-+				if (dm_integrity_may_recalc_dirty_bitmap(ic)) {
-+					ic->sb->flags |= cpu_to_le32(SB_FLAG_RECALCULATING);
-+					ic->sb->recalc_sector = cpu_to_le64(0);
-+				}
- 			}
- 			init_journal(ic, 0, ic->journal_sections, 0);
- 			replay_journal(ic);
+ 	if (unlikely(ic->mode != 'J')) {
+ 		spin_unlock_irq(&ic->endio_wait.lock);
+ 		dm_integrity_flush_buffers(ic, true);
+@@ -5429,7 +5434,6 @@ try_smaller_buffer:
+ 		r = create_journal(ic, &ti->error);
+ 		if (r)
+ 			goto bad;
+-
+ 	}
+ 
+ 	if (ic->mode == 'B') {
 
 
