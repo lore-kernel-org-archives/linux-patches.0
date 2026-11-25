@@ -1,52 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795620852;
-	b=jctejlAhOe3dspJy9kwAUCBUYgTUWj8t5cp+1CE4FutXGs/aO+Vlf7RZ2Eoj/uYHVyun
-	 XIbnMBBU08rZKwIhaPsWr3KnOM1v7hYB+gha3J/NL1R0okMfnAa0d2MABV4qqo8Obi8aG
-	 VGP24KQGC7QEk6m73urH6DHWaa4jbPOpdi4Pvnppa/JSxju45o+LRSeO7FQOq9dPZnIjK
-	 XECsoo5I3sygHAsCRBXC/gwwxXKliYa6an0vaXKYtHgqSRZFrlq2sEcXzTHuwvKZPcQ66
-	 KkhQi5ns2Psqr90k9+zxcya244n/2ssl9kwXHLBfW+bKf2s4mWM4aBXxeDNiCWisF2w==
+	t=1795620855;
+	b=5r5Z0oXlxSrb6wl/zi3cGy3J6r/IUSV6CRaqikaSsofVeIVhzHXz6n83HtzgTLv5H+W5
+	 i66UCx6UozMS7Wq4RxG6WONmgPWkkoNULKbPiY3iUSrPbmTPg0lgwGbwcCYfBMBdUeT/c
+	 EmhrK2AQPa+vOj3mygvIYVuLvRaO1nd+x2eLaN4oUr7oKRlMACJy/dNdgXBocZNipqZp6
+	 x7+/qmAeqe/Wm8YgAn1fRT+BU+8d2wGqY5IN8ILoGtmufN2wRe36120CPF4SIeG5nLwtP
+	 6+TTrIHjyNkRWQQbZUyBBizo18zv992CHHFZyLxK5fT9SwnqbMNXsJPfWtah9doEw+A==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795620852;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795620855;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=zzft8QgA/hwDztw3yjetDXc1K/tCIz6HmsrIbHqXpdk=;
-	b=BnnQPb2UsFa57fJm3Nnbuq8ax7Fm1COSRvvexQmkUnuWMGJ/bKBbi3spHRSHUN6xrEZn
-	 6/iD8ZbhVd/LFDfyjS/0llMyZrf2mNftrDEq/9a+9gUSY32Rm/uBTOegRj04r8eg3NWN+
-	 kdWXih7YfWmBKqQRBses5+k9z37MpvdNjJLKNJNWLV3FQHJ9OXsnAMpF7OFb4DT85NMy/
-	 P9hcbwO3FtWXCdmBqVdLvvE7KmtBNkT1dbYbSsVbqwNa7cAWcvPyYhblWMDm4TxcZaFki
-	 OOT7z6IHY7yPKKtlZjUY0iqEHW5ACAlHtIrI+CPNrjf4H1tk/l9nk/ZoOyJBadZKyrw==
+	bh=uYuni5kYCbtWaXDD8YYMLOz7emAw21TZNQFY2Qdbk+I=;
+	b=EY6xfkP00QVSXNRCGW3xRI0/jpmM0G3bs3EO1SI1US1COyc6DT2jqbo+KggAehTDM80M
+	 yZoR768EUtdRuU3HcUlBOcyC3qf0z3D/KfcFBFDjSrKHStVM0zow1vM9PZ94w2KokgcPX
+	 39DtRUX7REh09x5ZY77dq4C/heDWg4gIYsZZX9dpSwVuashx5x/lyOsQaNkvTfKJYLp/L
+	 8j6JJr/sFOReofix3eowQKx7Eri0/TwVmXmhxD43BYeEfRP6FTo2dOvvvPhpJSEs//fYS
+	 4g30kiV9SLN+IfiSNwwv/PcmwLdUvnfuyfFaT76WddlkDUMCiqNGmknwMSupIQbI83Q==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=l9utZPhF;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=umiQPRgV;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5D7C3606A31E;
-	Wed, 25 Nov 2026 15:34:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 34570606A321;
+	Wed, 25 Nov 2026 15:34:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=l9utZPhF
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A23BC1F000CA;
-	Wed, 25 Nov 2026 15:34:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=umiQPRgV
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 82C1F1F000C0;
+	Wed, 25 Nov 2026 15:34:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795620852;
-	bh=zzft8QgA/hwDztw3yjetDXc1K/tCIz6HmsrIbHqXpdk=;
+	s=korg; t=1795620855;
+	bh=uYuni5kYCbtWaXDD8YYMLOz7emAw21TZNQFY2Qdbk+I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=l9utZPhFRufS1Caq8STwZj/ku40aDanjhW7Jitx/cnKwREdsf609ey+Lkt6xBAMRR
-	 350UezO4WpKufmF5ZAjhUGnnernof5eYPJCndohsdwJls2v/06Le2vpN7r3OHKsW60
-	 xxDVTb2J9XhXvpaCbTShtY9GNSQysWvuuUtDyYYg=
+	b=umiQPRgVkaVr0FCwKxnLE/Q81cmXs43ytpbCUY8QxllOI72uuA/7EYgxPjLquJs1F
+	 7hZn1+fzER/gFS4YJ2Ktko+n8t81AtJymPr8zv958fxx5yepnYnrM0B1tvOLCQFOGI
+	 4hiVnAzvx5X/Kn7mZbZfwTJwYQfQfrNEuWsDtWjQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Cinq Prairie <notprairie@gmail.com>,
-	Jens Axboe <axboe@kernel.dk>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 043/990] io_uring/napi: dont end the single NAPI busy poll early on need_resched()
-Date: Wed, 25 Nov 2026 15:23:30 +0100
-Message-ID: <20261125143823.100022366@linuxfoundation.org>
+	Xiaoyao Li <xiaoyao.li@intel.com>,
+	Nikolay Borisov <nik.borisov@suse.com>,
+	Sean Christopherson <seanjc@google.com>,
+	Sasha Levin <sashal@kernel.org>,
+	Chenyi Qiang <chenyi.qiang@intel.com>
+Subject: [PATCH 6.18 017/990] KVM: TDX: Enable Bus Lock VM exit
+Date: Wed, 25 Nov 2026 15:23:04 +0100
+Message-ID: <20261125143822.489879918@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143822.072087159@linuxfoundation.org>
 References: <20261125143822.072087159@linuxfoundation.org>
@@ -68,139 +70,96 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Cinq Prairie <notprairie@gmail.com>
+From: Xiaoyao Li <xiaoyao.li@intel.com>
 
-Commit 39c7210e970200f8b17de3767c73efe64173a95f upstream.
+[ Upstream commit 63d196e2e20429de5ba501f1b6059d9b93140007 ]
 
-With a single registered NAPI, io_napi_blocking_busy_loop() hands
-io_napi_busy_loop_should_end() to napi_busy_loop_rcu() as loop_end and
-runs its own loop once, relying on __napi_busy_loop() to spin until
-that predicate fires. napi_busy_loop_rcu() sets NAPI_F_END_ON_RESCHED,
-so __napi_busy_loop() also returns on the first need_resched(). io_uring
-treats the return as the end of the busy poll period and sleeps in
-schedule_hrtimeout() for the rest of the wait timeout.
+Enable Bus Lock VM exit functionality for TDX guests.
 
-With two or more NAPIs the inner loop is single-shot and io_uring's own
-loop runs until its predicate is met, so busy_poll_to is honoured. The
-same registration therefore behaves differently for one NAPI than for
-several.
+Bus Lock VM exit is an existing feature supported by KVM.  Userspace can
+enable Bus Lock VM exit through KVM_BUS_LOCK_DETECTION_EXIT when it's
+reported as supported.  However, KVM reports the support of this CAP
+just based on the hardware capability but doesn't differentiate between
+VMX and TDX.  This leads to the issue that userspace can enable this cap
+for TDX guests without getting an error, but the feature is not actually
+enabled because KVM doesn't call the TDX module API to program the
+relevant TD VMCS fields.
 
-Make the busy poll deadline absolute, stored in io_wait_queue, so that
-io_napi_busy_loop_should_end() no longer depends on the start_time the
-napi loop snapshots on every entry. The single NAPI loop can then be
-re-entered after an early need_resched() exit if there is budget left,
-and the loop condition drops the "run once" special case. The fast path
-that holds the NAPI across polls is kept.
+Enable Bus Lock VM exit for TDX guests by programming the
+BUS_LOCK_DETECTION control in the TD VMCS and by adding the exit handler.
 
-Measured on io_uring-7.4 at 9c207aa58e54, x86-64, HZ=1000,
-PREEMPT_DYNAMIC (lazy), no CPU isolation, low RX traffic, r8169 with one
-RX queue, prefer_busy_poll, busy_poll_to = wait timeout = 10 ms.
-"waker" is a SCHED_FIFO task pinned to the polling CPU waking every 1 ms:
+Note, there is no enumeration bit for this feature by TDX module because
+all TDX modules support it and allow to set the TD VMCS as long as the
+hardware supports the feature.
 
-  1 NAPI, waker, before:  busy 0.5-1.5 ms per 10 ms wait, ~0.8M polls/s
-  1 NAPI, waker, after:   busy 10 ms per 10 ms wait,      ~16.2M polls/s
-  1 NAPI, idle, before:   busy 10 ms per 10 ms wait,      ~15.3M polls/s
-  1 NAPI, idle, after:    busy 10 ms per 10 ms wait,      ~16.2M polls/s
-  2 NAPIs, waker, before: busy 10 ms per 10 ms wait,      ~7.2M polls/s
-  2 NAPIs, waker, after:  busy 10 ms per 10 ms wait,      ~7.1M polls/s
-
-The held-NAPI fast path polls about twice as often as the single-shot
-path used for several NAPIs, which is why it is kept.
-
-Fixes: 8d0c12a80cde ("io-uring: add napi busy poll support")
+Fixes: 161d34609f9b ("KVM: TDX: Make TDX VM type supported")
 Cc: stable@vger.kernel.org
-Signed-off-by: Cinq Prairie <notprairie@gmail.com>
-Link: https://patch.msgid.link/20261027204840.7823-1-notprairie@gmail.com
-[axboe: trim comments, drop __always_unused]
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Originally-by: Chenyi Qiang <chenyi.qiang@intel.com>
+Signed-off-by: Xiaoyao Li <xiaoyao.li@intel.com>
+Reviewed-by: Nikolay Borisov <nik.borisov@suse.com>
+Link: https://patch.msgid.link/20260819094903.3060020-9-xiaoyao.li@intel.com
+Signed-off-by: Sean Christopherson <seanjc@google.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- io_uring/io_uring.h |  1 +
- io_uring/napi.c     | 31 ++++++++++++++-----------------
- 2 files changed, 15 insertions(+), 17 deletions(-)
+ arch/x86/kvm/vmx/tdx.c | 24 +++++++++++++++++++++++-
+ 1 file changed, 23 insertions(+), 1 deletion(-)
 
-diff --git a/io_uring/io_uring.h b/io_uring/io_uring.h
-index 922bdf68aec8c..4f1d20d28f727 100644
---- a/io_uring/io_uring.h
-+++ b/io_uring/io_uring.h
-@@ -113,6 +113,7 @@ struct io_wait_queue {
- 
- #ifdef CONFIG_NET_RX_BUSY_POLL
- 	ktime_t napi_busy_poll_dt;
-+	ktime_t napi_busy_poll_end;
- 	bool napi_prefer_busy_poll;
- #endif
- };
-diff --git a/io_uring/napi.c b/io_uring/napi.c
-index 45180b172bec7..46f5854f05efa 100644
---- a/io_uring/napi.c
-+++ b/io_uring/napi.c
-@@ -128,19 +128,15 @@ static inline void io_napi_remove_stale(struct io_ring_ctx *ctx, bool is_stale)
- 		__io_napi_remove_stale(ctx);
+diff --git a/arch/x86/kvm/vmx/tdx.c b/arch/x86/kvm/vmx/tdx.c
+index 43d6b20dfbb16..0a0fd87fd53e9 100644
+--- a/arch/x86/kvm/vmx/tdx.c
++++ b/arch/x86/kvm/vmx/tdx.c
+@@ -2058,7 +2058,7 @@ int tdx_complete_emulated_msr(struct kvm_vcpu *vcpu, int err)
  }
  
--static inline bool io_napi_busy_loop_timeout(ktime_t start_time,
--					     ktime_t bp)
-+static inline bool io_napi_busy_loop_timeout(struct io_wait_queue *iowq)
+ 
+-int tdx_handle_exit(struct kvm_vcpu *vcpu, fastpath_t fastpath)
++static int __tdx_handle_exit(struct kvm_vcpu *vcpu, fastpath_t fastpath)
  {
--	if (bp) {
--		ktime_t end_time = ktime_add(start_time, bp);
--		ktime_t now = net_to_ktime(busy_loop_current_time());
--
--		return ktime_after(now, end_time);
--	}
--
--	return true;
-+	if (!iowq->napi_busy_poll_dt)
-+		return true;
-+	return ktime_after(net_to_ktime(busy_loop_current_time()),
-+			   iowq->napi_busy_poll_end);
+ 	struct vcpu_tdx *tdx = to_tdx(vcpu);
+ 	u64 vp_enter_ret = tdx->vp_enter_ret;
+@@ -2159,6 +2159,8 @@ int tdx_handle_exit(struct kvm_vcpu *vcpu, fastpath_t fastpath)
+ 	case EXIT_REASON_NOTIFY:
+ 		/* NMI blocking state is handled by TDX module */
+ 		return __vt_handle_notify(vcpu, vmx_get_exit_qual(vcpu));
++	case EXIT_REASON_BUS_LOCK:
++		return vt_handle_bus_lock_vmexit(vcpu);
+ 	default:
+ 		break;
+ 	}
+@@ -2172,6 +2174,22 @@ int tdx_handle_exit(struct kvm_vcpu *vcpu, fastpath_t fastpath)
+ 	return 0;
  }
  
-+/* Uses an absolute deadline, so the napi loop can be re-entered */
- static bool io_napi_busy_loop_should_end(void *data,
- 					 unsigned long start_time)
- {
-@@ -150,8 +146,7 @@ static bool io_napi_busy_loop_should_end(void *data,
- 		return true;
- 	if (io_should_wake(iowq) || io_has_work(iowq->ctx))
- 		return true;
--	if (io_napi_busy_loop_timeout(net_to_ktime(start_time),
--				      iowq->napi_busy_poll_dt))
-+	if (io_napi_busy_loop_timeout(iowq))
- 		return true;
- 
- 	return false;
-@@ -204,13 +199,16 @@ __io_napi_do_busy_loop(struct io_ring_ctx *ctx,
- static void io_napi_blocking_busy_loop(struct io_ring_ctx *ctx,
- 				       struct io_wait_queue *iowq)
- {
--	unsigned long start_time = busy_loop_current_time();
-+	ktime_t now = net_to_ktime(busy_loop_current_time());
- 	bool (*loop_end)(void *, unsigned long) = NULL;
- 	void *loop_end_arg = NULL;
- 	bool is_stale = false;
- 
--	/* Singular lists use a different napi loop end check function and are
--	 * only executed once.
-+	iowq->napi_busy_poll_end = ktime_add(now, iowq->napi_busy_poll_dt);
++int tdx_handle_exit(struct kvm_vcpu *vcpu, fastpath_t fastpath)
++{
++	int ret = __tdx_handle_exit(vcpu, fastpath);
 +
-+	/*
-+	 * A single NAPI is held by __napi_busy_loop() for the whole spin. It
-+	 * may return early on need_resched(), loop until our own deadline.
- 	 */
- 	if (list_is_singular(&ctx->napi_list)) {
- 		loop_end = io_napi_busy_loop_should_end;
-@@ -221,8 +219,7 @@ static void io_napi_blocking_busy_loop(struct io_ring_ctx *ctx,
- 		do {
- 			is_stale = __io_napi_do_busy_loop(ctx, loop_end,
- 							  loop_end_arg);
--		} while (!io_napi_busy_loop_should_end(iowq, start_time) &&
--			 !loop_end_arg);
-+		} while (!io_napi_busy_loop_should_end(iowq, 0));
++	/* Exit to user space when bus lock was detected */
++	if (vmx_get_exit_reason(vcpu).bus_lock_detected) {
++		if (ret > 0) {
++			vcpu->run->exit_reason = KVM_EXIT_X86_BUS_LOCK;
++			ret = 0;
++		}
++
++		vcpu->run->flags |= KVM_RUN_X86_BUS_LOCK;
++	}
++	return ret;
++}
++
+ void tdx_get_exit_info(struct kvm_vcpu *vcpu, u32 *reason,
+ 		u64 *info1, u64 *info2, u32 *intr_info, u32 *error_code)
+ {
+@@ -3167,6 +3185,10 @@ static int tdx_vcpu_init(struct kvm_vcpu *vcpu, struct kvm_tdx_cmd *cmd)
+ 				vcpu->kvm->arch.notify_window);
  	}
  
- 	io_napi_remove_stale(ctx, is_stale);
++	if (vcpu->kvm->arch.bus_lock_detection_enabled)
++		td_vmcs_setbit32(tdx, SECONDARY_VM_EXEC_CONTROL,
++				 SECONDARY_EXEC_BUS_LOCK_DETECTION);
++
+ 	tdx->state = VCPU_TD_STATE_INITIALIZED;
+ 
+ 	return 0;
 -- 
 2.53.0
 
