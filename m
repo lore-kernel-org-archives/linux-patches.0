@@ -1,53 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795617947;
-	b=ZZX8dDx7jdkIGP/CIXfVIMkj4CsPw9QZsWQbr3KOZGGTEgxQ1UMCSL383dwqdvS945MQ
-	 38BZkMbCRrQHunNR9hAF5LFqkbj30ajqT15LBBjCVyx7ltZxuLvZvKbpsxq4R2kQF52R9
-	 XHuIxyzl9Ys9PaywIX5PKBiYCMGNa79P944nNYCK7itRsJJqIrJXqbyXmRWWHq0h7bgU0
-	 BYSuRSxZFvRMtsWrANkTCf0whFIoV1PB0+KvLOmlbpn/UQ6dDEBIJVcGc3jExRSrqYgi4
-	 W5hObsU0P4qZbuMG62awVZLIIMlums6lguZuRl7PTvy7yU2KSGu6aAqz0xhkeI/ltlQ==
+	t=1795617950;
+	b=Z+kZBeEUc3ex/9KdNiDNUoBjVkq5eGgRZgntG/WrcscInwZQQIxjOn+rMMc8s7AqNaZm
+	 mqdN2UWASnlcZ3t++dkm9XEbSgrc0v7C5yJSGFi5BiFbe+Pfwa9LbAyAglyA5ZrnWNArb
+	 SYR9aQlDXHjfrGK5RAm7DKF7xGdpV2WAwmn02lMSf4vxigM2J3/Zfqv7PLC6i5THiVlfP
+	 /RR/eoQDLT1lWlHcdLPBgd9FrSzhnJlBZLlachaRt5UD4th75iC6G9SjXihcAriqXGLFh
+	 ASJVCuZyLY7kTVLZNBQF16gjVhouTYWyNlqjUiNhVr47C+OhTU2OGKxKXVqpoxJO4CA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795617947;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795617950;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=KqWUfGYkhOWZ97g7LM2CsCOGaNM/T/qSeplZ8fzh/aI=;
-	b=phmWA828nfJ+APT/SjkNEktq6AvEsi3Q7vwflMOM4fHd2B+n0Q7hqcitb5iGcoyNUvSM
-	 ocy/Ab9kD2Sc3p5UWa0XgUcXEErdB9TlOBrALc9wobDcOGU1lazn/O7y2rI/kw2+GOgC/
-	 O2zI/a3XOFDMmeEPCw07MGAKOfPjSEms8VkefnDDemhRab9l1odGFrzGpSQq9uic0Rp2E
-	 Cmy2A5OoNxJSqyRM/pS+k1ETba4OSWPOxTMbHd2F/7uLIIB9cR3DD47Ph51XahdiY3ZEI
-	 r1zZT0QhONaVB+8eVOG8bb3xa7W4+acrioQ6XFkXd4r9OyGhG7th7J4qBiMLB1YG0CQ==
+	bh=Y8GWS5bsG5aBfjxwNVIxeAEEINmrOPgXgAfcl7eYCN4=;
+	b=cL5aCZ4jVM79DnZxs1CPXhrEUS6KCqS96+NJstVu/x7X0GVmJDndkJ87eQ98HntwqsGF
+	 uKBWYVAwysPxkr+NawO0xDPk2BMAW7Z3av8It1eQIf0Xn2gLptll7P97vs8QKhggZl/v5
+	 WTBeS2c6pUO34xH/RVtqe6K8Iou9OJegvFML3FU1rmkkgrFPDqKWF5sv0Jle1IaGXd7oG
+	 JhpQvdJHi9m13X030cZuBsEH+M8qcSxExcm26xSs5D3Dkqu7qj+GqGx90HZTNVBhmTjNn
+	 3txvbXa608exV3tS3a5GeL0a5ou2ipemkssVyDOaREBdvggI/eHK9Gdwa43AHk1gyHg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=aUhL9fW6;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="O0rM/uMD";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 851FC606A327;
-	Wed, 25 Nov 2026 14:45:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 85DAB606A323;
+	Wed, 25 Nov 2026 14:45:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=aUhL9fW6
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 620031F000F0;
-	Wed, 25 Nov 2026 14:45:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=O0rM/uMD
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AB1151F000C4;
+	Wed, 25 Nov 2026 14:45:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795617946;
-	bh=KqWUfGYkhOWZ97g7LM2CsCOGaNM/T/qSeplZ8fzh/aI=;
+	s=korg; t=1795617950;
+	bh=Y8GWS5bsG5aBfjxwNVIxeAEEINmrOPgXgAfcl7eYCN4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=aUhL9fW6ICjzrwFXyu17TEPjSgzoXec/QcNW9JXqmh2zre0BxMra7leBTs31mA9Y4
-	 nb/+bMQ80uwpaGJBsiG+NASuv10+OfBs3kDD6cNm2/3rJPnLjFClFcAFWs81UZICts
-	 gCntvsnDZpn7NRNaceufKuEHjEBc9f4rlw37v8sc=
+	b=O0rM/uMDDEChr9bhbnb4Z1c0Yrjk9X+h6x1RGi497IGYC8A86BfGHaG6oTrfz7Y9I
+	 SD7SaPQEbCcsfG9kqMliB6joaNsBIUXdAfCxJKewyMGniLDS4DFImBhLnXNwhwz19Y
+	 k0MUjUi/dkPOcvHXgi6AwLXDlWy7Fpyuk6iYFm4s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Joas Antonio dos Santos <joasantonio108@gmail.com>,
-	Simon Horman <horms@kernel.org>,
+	Andrew Preece <apreece@meta.com>,
+	Vlad Poenaru <vlad.wing@gmail.com>,
+	Michael Chan <michael.chan@broadcom.com>,
 	Dave Miller <davem@davem-thinkpadp1gen8.ibmlond.csb>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0126/1005] net/mlx5: macsec: free struct mlx5_fs_id after an RCU grace period
-Date: Wed, 25 Nov 2026 15:24:24 +0100
-Message-ID: <20261125143824.690105590@linuxfoundation.org>
+Subject: [PATCH 7.3 0127/1005] bnxt_en: Dont keep MSI-X vectors added before FW reserves them
+Date: Wed, 25 Nov 2026 15:24:25 +0100
+Message-ID: <20261125143824.714306641@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143821.729802100@linuxfoundation.org>
 References: <20261125143821.729802100@linuxfoundation.org>
@@ -69,63 +70,140 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Joas Antonio dos Santos <joasantonio108@gmail.com>
+From: Vlad Poenaru <vlad.wing@gmail.com>
 
-[ Upstream commit 902407bc588575af0ceae5de4f635fe1e024f258 ]
+[ Upstream commit af449230bd8de936d6e4f759240e787b9aad7cc0 ]
 
-macsec_fs_id_del() removes a struct mlx5_fs_id from its rhashtable with
-rhashtable_remove_fast() and then frees it with kfree() right away.
+When dynamic MSI-X is supported, bnxt_check_rings() grows the MSI-X
+vectors with bnxt_change_msix() once FW says the new rings would fit,
+and keeps them.  FW only reserves the extra IRQs later, when
+bnxt_reserve_rings() calls __bnxt_reserve_rings().  The MSI-X table
+entries beyond the function's reserved IRQs are not backed until then:
+the MSI message written when the new vectors are activated is lost, and
+the entries read back as zero.  After FW reserves them they are live but
+still zero, so the NQ rings bound to them signal address 0 and every
+completion on those rings is lost.  The next ring change (for example
+ethtool -G) then times out freeing each of those rings and the TX
+watchdog fires:
 
-The TX (SCI) table is read locklessly from the transmit path:
-mlx5e_macsec_handle_tx_skb() and mlx5e_macsec_tx_build_eseg() call
-mlx5_macsec_fs_get_fs_id_from_hashtable(), which does
-rhashtable_lookup() under rcu_read_lock() and then reads
-mlx5_fs_id->id. A transmit that looked the entry up just before it was
-removed reads freed memory.
+  bnxt_en 0002:01:00.0 eth0: Resp cmpl intr err msg: 0x51
+  bnxt_en 0002:01:00.0 eth0: hwrm_ring_free type 1 failed. rc:fffffff0 err:0
+  ...
+  bnxt_en 0002:01:00.0 eth0: NETDEV WATCHDOG: CPU: 17: transmit queue 18 timed out 5716 ms
 
-Before commit d4ece08f4b1d ("net/mlx5: Maintain fs_id xarray per MACsec
-device inside macsec steering") the SCI table held struct
-mlx5e_macsec_sa directly, and mlx5e_macsec_del_txsa() freed it with
-kfree_rcu_mightsleep(). That commit moved the table into macsec_fs.c
-with the new struct mlx5_fs_id, but frees it with a plain kfree().
+On x86 this is hidden: GENERIC_IRQ_RESERVATION_MODE makes the PCI MSI
+domains MSI_FLAG_MUST_REACTIVATE, so the message is composed and written
+again when the IRQ is requested, after FW has reserved the vector.
+Since commit 0d6a7c417983 ("irqchip/gic-v3-its: Enable dynamic MSI-X
+allocation"), arm64 GICv3 systems take the dynamic path as well, but
+write the message only once, at allocation.  On an NVIDIA Grace system
+with a BCM57508, raising the channel count from 18 to 32 left MSI-X
+entries 18-31 all zero, and the 14 rings using them lost their
+interrupts.
 
-Add an rcu_head to struct mlx5_fs_id and free it with kfree_rcu().
+Keep the allocation in bnxt_check_rings() as a check that enough vectors
+are available, but free the new vectors again right away when FW manages
+IRQ reservations (BNXT_NEW_RM).  bnxt_reserve_rings() then allocates
+them after __bnxt_reserve_rings() has reserved them.  Without
+BNXT_NEW_RM there is no IRQ reservation and bnxt_reserve_rings() does
+not grow the vectors, so keep the current behaviour there.
 
-The same issue was flagged by the Sashiko AI review as a pre-existing
-problem while reviewing the HW-GRO for PSP series.
+In bnxt_reserve_rings(), size that allocation from the rings FW actually
+reserved (bnxt_get_num_msix()) instead of the count computed before the
+reservation, so that a partial grant does not activate unreserved
+entries either, at least while no RoCE driver is registered.
 
-Fixes: d4ece08f4b1d ("net/mlx5: Maintain fs_id xarray per MACsec device inside macsec steering")
-Link: https://lore.kernel.org/all/20260909065542.4B80D1F00ACA@smtp.kernel.org/
-Signed-off-by: Joas Antonio dos Santos <joasantonio108@gmail.com>
-Assisted-by: Yaga Agent HackerSec Claude:claude-opus-5-5
-Reviewed-by: Simon Horman <horms@kernel.org>
+The allocation can now fail after FW has committed the reservation.  A
+later open would then find nothing to reserve and return before growing
+the vectors, and bnxt_request_irq() would use irq_tbl[] entries past
+bp->total_irqs, which still hold the freed virqs.  Grow the vectors in
+that case as well, and clear irq_tbl[].vector when trimming.
+
+Fixes: 2d51eb0bd81c ("bnxt_en: Add MSIX check in bnxt_check_rings()")
+Reported-by: Andrew Preece <apreece@meta.com>
+Closes: https://lore.kernel.org/all/20261022193620.2152038-1-vlad.wing@gmail.com/
+Signed-off-by: Vlad Poenaru <vlad.wing@gmail.com>
+Reviewed-by: Michael Chan <michael.chan@broadcom.com>
 Signed-off-by: Dave Miller <davem@davem-thinkpadp1gen8.ibmlond.csb>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/mellanox/mlx5/core/lib/macsec_fs.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/net/ethernet/broadcom/bnxt/bnxt.c | 34 ++++++++++++++++++++++-
+ 1 file changed, 33 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/net/ethernet/mellanox/mlx5/core/lib/macsec_fs.c b/drivers/net/ethernet/mellanox/mlx5/core/lib/macsec_fs.c
-index efc5167493c12..7d785c937d43d 100644
---- a/drivers/net/ethernet/mellanox/mlx5/core/lib/macsec_fs.c
-+++ b/drivers/net/ethernet/mellanox/mlx5/core/lib/macsec_fs.c
-@@ -94,6 +94,7 @@ struct mlx5_fs_id {
- 	refcount_t refcnt;
- 	sci_t sci;
- 	struct rhash_head hash;
-+	struct rcu_head rcu;
- };
+diff --git a/drivers/net/ethernet/broadcom/bnxt/bnxt.c b/drivers/net/ethernet/broadcom/bnxt/bnxt.c
+index 94d764230e47d..ab932f7d0d76a 100644
+--- a/drivers/net/ethernet/broadcom/bnxt/bnxt.c
++++ b/drivers/net/ethernet/broadcom/bnxt/bnxt.c
+@@ -11544,6 +11544,7 @@ static int bnxt_change_msix(struct bnxt *bp, int total)
+ 		map.index = i - 1;
+ 		map.virq = bp->irq_tbl[i - 1].vector;
+ 		pci_msix_free_irq(bp->pdev, map);
++		bp->irq_tbl[i - 1].vector = 0;
+ 		bp->total_irqs--;
+ 	}
+ 	return bp->total_irqs;
+@@ -11721,8 +11722,23 @@ int bnxt_reserve_rings(struct bnxt *bp, bool irq_re_init)
+ 	int irqs_required;
+ 	int rc;
  
- struct mlx5_macsec_device {
-@@ -684,7 +685,7 @@ static void macsec_fs_id_del(struct list_head *macsec_devices_list, u32 fs_id,
+-	if (!bnxt_need_reserve_rings(bp))
++	if (!bnxt_need_reserve_rings(bp)) {
++		/* FW may already hold the reservation from an earlier
++		 * reservation that was not followed by growing the dynamic
++		 * MSI-X vectors, e.g. because the allocation failed.
++		 */
++		if (irq_re_init && BNXT_NEW_RM(bp) && bp->irq_tbl &&
++		    pci_msix_can_alloc_dyn(bp->pdev)) {
++			irqs_required = bnxt_get_num_msix(bp);
++			if (irqs_required > bp->total_irqs &&
++			    bnxt_change_msix(bp, irqs_required) != irqs_required) {
++				netdev_err(bp->dev, "Unable to allocate %d MSIX vectors, maximum available %d\n",
++					   irqs_required, bp->total_irqs);
++				return -ENOSPC;
++			}
++		}
+ 		return 0;
++	}
  
- 	xa_erase(fs_id_xa, fs_id);
+ 	if (BNXT_NEW_RM(bp) && !bnxt_ulp_registered(edev)) {
+ 		int ulp_msix = bnxt_get_avail_msix(bp, bp->ulp_num_msix_want);
+@@ -11748,6 +11764,10 @@ int bnxt_reserve_rings(struct bnxt *bp, bool irq_re_init)
+ 			rc = bnxt_init_int_mode(bp);
+ 		bnxt_ulp_irq_restart(bp, rc);
+ 	} else if (irq_change && !rc) {
++		/* Size the vectors from what FW actually reserved, which
++		 * can be less than what was requested.
++		 */
++		irqs_required = bnxt_get_num_msix(bp);
+ 		if (bnxt_change_msix(bp, irqs_required) != irqs_required)
+ 			rc = -ENOSPC;
+ 	}
+@@ -15107,6 +15127,7 @@ int bnxt_check_rings(struct bnxt *bp, int tx, int rx, bool sh, int tcs,
+ 			hwr.cp = min_t(int, hwr.cp, bnxt_get_max_func_irqs(bp));
+ 		}
+ 		if (hwr.cp > bp->total_irqs) {
++			int old_total = bp->total_irqs;
+ 			int total_msix = bnxt_change_msix(bp, hwr.cp);
  
--	kfree(fs_id_found);
-+	kfree_rcu(fs_id_found, rcu);
- 
- 	if (macsec_fs_is_macsec_device_empty(macsec_device)) {
- 		list_del(&macsec_device->macsec_devices_list_entry);
+ 			if (total_msix < hwr.cp) {
+@@ -15114,6 +15135,17 @@ int bnxt_check_rings(struct bnxt *bp, int tx, int rx, bool sh, int tcs,
+ 					    hwr.cp, total_msix);
+ 				rc = -ENOSPC;
+ 			}
++			/* FW has not reserved the new vectors yet, and writes to
++			 * MSI-X table entries beyond the reserved IRQs don't
++			 * stick (seen on BCM57508).  Free them again;
++			 * bnxt_reserve_rings() allocates them after
++			 * __bnxt_reserve_rings().  Without the new resource
++			 * manager there is no IRQ reservation and
++			 * bnxt_reserve_rings() does not grow the vectors, so
++			 * keep them.
++			 */
++			if (BNXT_NEW_RM(bp))
++				bnxt_change_msix(bp, old_total);
+ 		}
+ 	}
+ 	return rc;
 -- 
 2.53.0
 
