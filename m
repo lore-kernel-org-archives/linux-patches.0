@@ -1,42 +1,42 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795618334;
-	b=wnb6TknjNWhrtkxTQKdagke5ZjWMcyKWMcfdaG3AhvQXeTQ8AoeL3mA8mK4By9ndvAZZ
-	 /5dZxet1STWiZaXKoFk0I5coFwFMZa5eVQseXXXH381TbC7caaQvI/d6NyXybTf+cqHBJ
-	 wZRhr/aW6nvq2tNvDSQxFGMUHh5e2vXHhrFmeXbJEJ5kaB/KRyGsDs0s9zectJ0mvRHXK
-	 VDdsgJS9lHZh9YBEdBendonxAqw6oV+V77Zo3q6AhBSK657m11zKTHb/7TaCcHnwbRmFB
-	 q8t44YbE9mzflaiQ8fNlpQf8A0KpdQtV+w0uhZ/BpkeZ+6fyiqxnk6TW382yLXJcsXg==
+	t=1795618338;
+	b=uhXI12GgbqXWi8CMPsartnGHXAPD2uS/zj/zSjsVoZ1yXRilxxwzI29IK+8c6MaX+bLu
+	 /hfa4BPO0PL99FKUcecC1k+LYhwdUJ7Z55QjhUkk/HCP3OaE6pHuEfEMNMsxDlxGcm2Tp
+	 qEQbVj3cDpNJMWgHWRMG8xM/epBFbYozBRs1qOWWoSp93mO8dI7xrKihFRqB+7/1jnK6U
+	 xwxFUFboBRCyMkriRDbG0F6SB+K3LnVCaK1Euz1atnvlph4JyGzTYZX33LCjbRI5iyx85
+	 vYeVOnNCkFOwyT7WMPBi/5seFU/vvKHzTbZnQV+vAcqkokQ1pxFr9HXgvSHiuxoOAQQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795618334;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795618338;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=ow5D6YqQX9rixTVlwJJ4te59x72ZMuGtiFxlf+jT6FI=;
-	b=HOeYvAVGXEVbFGGDW4llWGR5WpF1fv0fA/ZY8GBvqjrX1kF2N7Vq4QxG7OjuTYWfBNa/
-	 f7eVbZojuAaOWgK10tiHko1yJH9UqqlclQmLqLRwjSzR9BNzL5LTtrLGsUDLWbjywFILL
-	 yIHsap2Mur+JLNxQhHeh/V70skluIPbYVEc6rzB4woW3lnsX8X1GnlreOq3DtKd+VSXsb
-	 xrb0GY4T2mtSGWsouTJFsNdgF5kGy8GAwxKcu44e8Wn78T+idj7aDil3m8mAM9eoReBUo
-	 DLkDf6P3eBfOdNz8EjL+i6PEB19TkrWrvSAfNRFzcffdX1h7NJY0ohYBICkEgQ0iMxQ==
+	bh=vP+lZm2hznDlu8E/Zdi/PDcqjvGNWs1IVT5y3kkLdsg=;
+	b=LYA/EIjnUyIdX2JhafqY/Os3yP2DjTkcVlG5uAKmFy5ZnrzADaHfaee1OIlCAU3QLx/r
+	 h5GNmmwro2sDqL1ILtqsLEO6f1u91bxIAh1JA3LgevevDV7t/u6G1/aiOie1LwBcnUwDS
+	 tYjA6qZTk8JKI5UkdZYnqbKjfz31+PsNrUVfOtnXtQrabx1jVEafCy4jh+J7Ekf47chN3
+	 ff/ALpc/YUIr7DNutPPJO0wfpv+vuV2iJgYRZxz58YR2KPPkY/H3r86UfzqDMvIPNHvCa
+	 mqLJ+td7GrwutMljz3LgxI35i2fmDkkHsKUQnvPf0Vrje4tcPLKWr5hjjb2FU31Yc4A==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=biMwJNbh;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=YbbzLcKn;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3614C606A321;
-	Wed, 25 Nov 2026 14:52:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 055D7606A33E;
+	Wed, 25 Nov 2026 14:52:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=biMwJNbh
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7E07E1F000C4;
-	Wed, 25 Nov 2026 14:52:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=YbbzLcKn
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D3DA71F000CF;
+	Wed, 25 Nov 2026 14:52:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795618334;
-	bh=ow5D6YqQX9rixTVlwJJ4te59x72ZMuGtiFxlf+jT6FI=;
+	s=korg; t=1795618337;
+	bh=vP+lZm2hznDlu8E/Zdi/PDcqjvGNWs1IVT5y3kkLdsg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=biMwJNbh3JOC0vvkAlwmyV+eBRGGguH214ZB9y6tXD4Z55r7SmZ1Z5lfY8M8CzaKh
-	 S5CQLKI/E/HubMpiJQMLmZE6pQwDD1QTx3V0rI2u6wDuxBGl4KmEZ/mSC+I4UBu/be
-	 t4JoriNO9GjcIBtcoMfADa4rj8iFYX2oiQl7UyR0=
+	b=YbbzLcKn5yBzS+r9WL2600XiXIUKK2Ppj8vAHAO6FB3eXCCLG/WXk10HX1QxTc8pu
+	 UTfpJ29gbjwOCS7UJuiCSnmvXNpyv/irf/1KwItSKssmF7aeEnAxElr2HMdUtYbwRY
+	 +Lu7ZRk9J2QowEDt3dSMmA/VY6Og2D9OGw87HvKU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -45,9 +45,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Niklas Cassel <cassel@kernel.org>,
 	Jens Axboe <axboe@kernel.dk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0246/1005] null_blk: fix opening closed zones at the active zone limit
-Date: Wed, 25 Nov 2026 15:26:24 +0100
-Message-ID: <20261125143827.499789634@linuxfoundation.org>
+Subject: [PATCH 7.3 0247/1005] null_blk: dont finish zones to set them read-only or offline
+Date: Wed, 25 Nov 2026 15:26:25 +0100
+Message-ID: <20261125143827.523490976@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143821.729802100@linuxfoundation.org>
 References: <20261125143821.729802100@linuxfoundation.org>
@@ -71,63 +71,90 @@ Content-Transfer-Encoding: 8bit
 
 From: Niklas Cassel <cassel@kernel.org>
 
-[ Upstream commit 6f2b59737bf9cf3623719857ac149f0d431db109 ]
+[ Upstream commit 973bf587d79f061beffdd392e77012a07f25fcd6 ]
 
-When the open zone limit is reached, null_check_open() closes an
-implicitly open zone only if the active zone limit is not reached.
+null_set_zone_cond() calls null_finish_zone() to release the zone
+resources held by a zone before setting it read-only or offline.
 
-Closing an implicitly open zone does not change the number of active
-zones, so this check is wrong. For an empty zone, the active zone limit
-was already checked by null_check_zone_resources(). For a closed zone,
-the check makes writing to, opening or finishing the zone fail with
-BLK_STS_ZONE_OPEN_RESOURCE at the active zone limit, whereas ZBC-3
-(4.5.3.2.7.2) and NVMe ZNS (2.1.1.4.1) require closing an implicitly
-open zone instead.
+For an empty or closed zone, null_finish_zone() first runs the zone
+resource checks, which can close an unrelated implicitly open zone, or
+fail. As the error is ignored, a failure for a closed zone leaks
+nr_zones_closed, permanently lowering the effective active zone limit.
 
-Remove the check, and update the comment above
-null_check_zone_resources() accordingly.
+Setting a zone read-only or offline requires no zone resources, so
+release the zone resources held by the zone directly instead, using a
+new helper, null_release_zone_resources().
 
-Fixes: dc4d137ee3b7 ("null_blk: add support for max open/active zone limit for zoned devices")
+Fixes: d3a5738849e0 ("null_blk: support read-only and offline zone conditions")
 Reviewed-by: Damien Le Moal <dlemoal@kernel.org>
 Signed-off-by: Niklas Cassel <cassel@kernel.org>
-Link: https://patch.msgid.link/20261022092158.2248831-6-cassel@kernel.org
+Link: https://patch.msgid.link/20261022092158.2248831-7-cassel@kernel.org
 Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/block/null_blk/zoned.c | 13 +++++++------
- 1 file changed, 7 insertions(+), 6 deletions(-)
+ drivers/block/null_blk/zoned.c | 35 +++++++++++++++++++++++++++++-----
+ 1 file changed, 30 insertions(+), 5 deletions(-)
 
 diff --git a/drivers/block/null_blk/zoned.c b/drivers/block/null_blk/zoned.c
-index 7e9b5ffb9e841..ecdc8d68ca2a9 100644
+index ecdc8d68ca2a9..015f5d304c7ce 100644
 --- a/drivers/block/null_blk/zoned.c
 +++ b/drivers/block/null_blk/zoned.c
-@@ -311,10 +311,8 @@ static blk_status_t null_check_open(struct nullb_device *dev)
- 		return BLK_STS_OK;
- 
- 	if (dev->nr_zones_imp_open) {
--		if (null_check_active(dev) == BLK_STS_OK) {
--			null_close_imp_open_zone(dev);
--			return BLK_STS_OK;
--		}
-+		null_close_imp_open_zone(dev);
-+		return BLK_STS_OK;
+@@ -743,6 +743,33 @@ blk_status_t null_process_zoned_cmd(struct nullb_cmd *cmd, enum req_op op,
  	}
+ }
  
- 	return BLK_STS_ZONE_OPEN_RESOURCE;
-@@ -330,8 +328,11 @@ static blk_status_t null_check_open(struct nullb_device *dev)
-  *
-  * ZBC states that an implicit open zone shall be closed only if there is not
-  * room within the open limit. However, with the addition of an active limit,
-- * it is not certain that closing an implicit open zone will allow a new zone
-- * to be opened, since we might already be at the active limit capacity.
-+ * it is not certain that closing an implicit open zone will allow an empty
-+ * zone to be opened, since we might already be at the active limit capacity.
-+ * Therefore, the active limit is checked first for an empty zone. A closed
-+ * zone already holds an active zone resource, so only the open limit has to
-+ * be checked for a closed zone.
++/*
++ * Release the zone resources held by a zone, before changing the condition of
++ * the zone to a condition that does not hold any zone resources.
++ */
++static void null_release_zone_resources(struct nullb_device *dev,
++					struct nullb_zone *zone)
++{
++	if (!dev->need_zone_res_mgmt)
++		return;
++
++	spin_lock(&dev->zone_res_lock);
++	switch (zone->cond) {
++	case BLK_ZONE_COND_IMP_OPEN:
++		dev->nr_zones_imp_open--;
++		break;
++	case BLK_ZONE_COND_EXP_OPEN:
++		dev->nr_zones_exp_open--;
++		break;
++	case BLK_ZONE_COND_CLOSED:
++		dev->nr_zones_closed--;
++		break;
++	default:
++		break;
++	}
++	spin_unlock(&dev->zone_res_lock);
++}
++
+ /*
+  * Set a zone in the read-only or offline condition.
   */
- static blk_status_t null_check_zone_resources(struct nullb_device *dev,
- 					      struct nullb_zone *zone)
+@@ -759,8 +786,8 @@ static void null_set_zone_cond(struct nullb_device *dev,
+ 	 * If the read-only condition is requested again to zones already in
+ 	 * read-only condition, restore back normal empty condition. Do the same
+ 	 * if the offline condition is requested for offline zones. Otherwise,
+-	 * set the specified zone condition to the zones. Finish the zones
+-	 * beforehand to free up zone resources.
++	 * set the specified zone condition to the zones. Release the zone
++	 * resources held by the zones beforehand.
+ 	 */
+ 	if (zone->cond == cond) {
+ 		zone->cond = BLK_ZONE_COND_EMPTY;
+@@ -768,9 +795,7 @@ static void null_set_zone_cond(struct nullb_device *dev,
+ 		if (dev->memory_backed)
+ 			null_handle_discard(dev, zone->start, zone->len);
+ 	} else {
+-		if (zone->cond != BLK_ZONE_COND_READONLY &&
+-		    zone->cond != BLK_ZONE_COND_OFFLINE)
+-			null_finish_zone(dev, zone);
++		null_release_zone_resources(dev, zone);
+ 		zone->cond = cond;
+ 		zone->wp = NULL_ZONE_INVALID_WP;
+ 	}
 -- 
 2.53.0
 
