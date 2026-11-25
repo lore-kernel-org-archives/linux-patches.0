@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795621670;
-	b=ZLZNWOqGD1KDCaSDUEYer23UdZUgnMlgzmmp8mmNFlAR4gsm1CthLtg1px4dr8jbgrVh
-	 Su69spSW/zolWDZg7f6rfEbrzpk07uWFv/vXkDr1Qbj/9aVoWZJbyMZdAAnCPa+DLr8+T
-	 JSPj4glhQyRnVm9jQi/GsU8QaWom3P5sohtBxvGPez4D+3zH/q2udovjMJb7VpMuvVAeV
-	 adgW+8ipOKXy7MK0oAQuaAbQdFyitGBf87iOwccWvWMUGuwLPZBj96l7Kj/6YhzZNoPXL
-	 ++x+LUKuS9baYfD7FjSQSCnzXTTSLRUjExV9Z4ceaCOFUedbTXp6erDxw1nF0+RxZrg==
+	t=1795621673;
+	b=i//lzjecUHHg2Ep9HrgftQ9mbw4u66E49zBBvLTH2o35XOLQyC2dHwKZu35IM+aApDOQ
+	 GSBp2z67gDHzHzzH5pMgjzW4V5YFgzLTm3zKJdyVNgDhsY8koDTBsOpnmnWsV2ZN86A+t
+	 pdD2n+s18uggqfl1HU3mZaq+81JpkHsr4XxoBDtvd7b3qkkrVA0fuF/nA4cqOTm9yiQk2
+	 MuSgaRjsKDGZhJkU8T1tvbLWoeQ5j/7j4Ve8unYpjW4YnQQyEd+tee8pH3Kr2/gJC2D1T
+	 DY3ZtlUkgZ9dBT6w5Gjt3wqTzB5Gfjq6ryg9PMbBY8JBFMXHqXT6ZPjDwikhCxnkY+A==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795621670;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795621673;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=rslYCmR5RUe3WDGYCLIBTeTgCIYdVTUCJRPlAVOTiuw=;
-	b=SGQ0g1SZt7L/Ewri6OHoXzM762uAwiwT0fD35im54kspozh1FCS6dQ7gkmml1hkG/UMF
-	 LP/PB45rY8nE3DTvkbdkkVWsV9l4SPqxZ7mlYk2LXlLapwlRnx47SMrGVccUk7mFpkqVh
-	 xHceNHW2EhKe0fEVpzyr/Xq8hqRBCXCYSQrOLwiTo32h9oKosp5Rwq4YI9zcp5iH4M96k
-	 btqo2KQliH8XJxAfnMH14rQYeiknhGdFR+a5HB2W9irtkzY8vkijI8+RH4BNGedMN/8HG
-	 FAKucYeul2h6PbN1XTfw3rzlSpff+VvTK0c85IeCOFkRtPJ6WLoFIm5kg5HjdjR8kNA==
+	bh=kd+CAJRrmXu7FKmt55NG18VaHiGfGc79p+WQQrpz3Lw=;
+	b=HDPkS/750puz73Wl0W0FD39qNkXzBy5FReoPtt29eRZXktE3ltDfnNXoGlM3Hfal5eJj
+	 vzuSIapAwKewsEBvymFpJyhVb1FQubPZ5DQMVQJidpw/8QybfB8GIR6EV7n8zOZFjRYbN
+	 rFg41GbpfeTfFVzWIDMlzuqkZdjBUVz9vuPAikAHe7Lmz48PCboEG8QwR/aXmSon8Z7ja
+	 G3KAvouKGfkSPGlHFJv2kjX8WSTgM6H3N39LPUc0WcUA0/LQNdnaUS9wq0G07fswB8gxb
+	 h6dLRc3cavnGarecpvGcFsDMgQPkAN/YTIgh7M/3U2Bo4x06TfspBhhZf7L7RPCENMA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Ob5yTib+;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=BipcSdGp;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DBA04606A685;
-	Wed, 25 Nov 2026 15:47:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DC611606A338;
+	Wed, 25 Nov 2026 15:47:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Ob5yTib+
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CCF401F000C6;
-	Wed, 25 Nov 2026 15:47:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=BipcSdGp
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1E5921F000D8;
+	Wed, 25 Nov 2026 15:47:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795621670;
-	bh=rslYCmR5RUe3WDGYCLIBTeTgCIYdVTUCJRPlAVOTiuw=;
+	s=korg; t=1795621673;
+	bh=kd+CAJRrmXu7FKmt55NG18VaHiGfGc79p+WQQrpz3Lw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Ob5yTib+YnKmwegHc+6mHvnjImV4uVNxh5iH2W+XnU368u+8nuDm4aa77HRJ8W+ri
-	 UPAkzY8GbLBfU4dzSZJCgeFJDsdnczAqlIDJ9vwhH6jHyo5EuJf1IRsIcRaGXHOque
-	 eetNo/fT39p/jdt1D8TnVFxYes3JhTyfHnVI9GH4=
+	b=BipcSdGpW/f+gEc03GyF/3cN+qhepAdTsqYzaMzEFFLLf52G7IRYvV960wklv1CkK
+	 mhUGFdl3QcMHye8N+1vq8wyOWQrJlSlisnjgpBw+AoQETxhPSgmSUwD1lEKFtMOZdL
+	 abRyHiZvmMLVx/LoaV+ggFRHwhBvKUWKUoDDWr8w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Florian Fainelli <f.fainelli@gmail.com>,
-	"Maciej W. Rozycki" <macro@orcam.me.uk>,
 	Thomas Bogendoerfer <tsbogend@alpha.franken.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 297/990] MIPS: Cobalt: Include legacy IDE ports in the PCI I/O window
-Date: Wed, 25 Nov 2026 15:27:44 +0100
-Message-ID: <20261125143829.049686230@linuxfoundation.org>
+Subject: [PATCH 6.18 298/990] MIPS: SB1250: Validate and update IRQ affinity
+Date: Wed, 25 Nov 2026 15:27:45 +0100
+Message-ID: <20261125143829.072681071@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143822.072087159@linuxfoundation.org>
 References: <20261125143822.072087159@linuxfoundation.org>
@@ -71,105 +70,48 @@ Content-Transfer-Encoding: 8bit
 
 From: Florian Fainelli <f.fainelli@gmail.com>
 
-[ Upstream commit ff209a7294988aac52b2522b1d0d7349da4541ec ]
+[ Upstream commit 456c965ca46c59a4a241c755e6565fd883a522f4 ]
 
-The Cobalt PCI I/O window starts at 0x1000, excluding the VIA IDE
-controller's fixed compatibility-mode ports at 0x170, 0x1f0, 0x376 and
-0x3f6. Since pcibios_enable_device() was converted to
-pci_enable_resources(), these unclaimed resources cause pata_via to
-fail to probe with -EINVAL.
+sb1250_set_affinity() selects the first online CPU in the requested
+affinity mask without checking whether such a CPU exists. If the
+intersection is empty, the resulting CPU index is invalid and must
+not be passed to cpu_logical_map().
 
-Start the PCI I/O window at zero to cover the southbridge legacy ports,
-retaining 0x1000 as the allocation minimum via PCIBIOS_MIN_IO. Register
-the PCI controller from plat_mem_setup(), before the VIA reservations
-and i8259 initialization, so the legacy resources do not conflict with
-the host bridge window and prevent PCI bus scanning.
+Reject affinity masks containing no online CPU with -EINVAL before
+accessing the CPU mapping or interrupt mapper registers.
 
-Keep the VIA resource reservations in plat_mem_setup() after the PCI
-controller registration and use insert_resource() to nest them beneath
-the PCI window. The i8259 and RTC resources are also claimed beneath it.
+Also update the effective affinity mask to reflect the single logical
+CPU selected as the interrupt target.
 
-Boot-tested on a Qube2 with a MIPS64 kernel. All seven PCI functions
-enumerate, both tulip devices bind, and pata_via initializes both ATA
-hosts and detects the ST380012A 80 GB disk. All 18 boot checks pass,
-including a read-only disk test and Ethernet ping.
-
-Fixes: ae81aad5c2e1 ("MIPS: PCI: Use pci_enable_resources()")
+Fixes: 421d1563c662 ("mips: Validate online cpus in irq_set_affinity() callbacks")
 Signed-off-by: Florian Fainelli <f.fainelli@gmail.com>
-Reviewed-by: Maciej W. Rozycki <macro@orcam.me.uk>
 Signed-off-by: Thomas Bogendoerfer <tsbogend@alpha.franken.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/mips/cobalt/pci.c                     | 11 +++++------
- arch/mips/cobalt/setup.c                   |  4 +++-
- arch/mips/include/asm/mach-cobalt/cobalt.h |  1 +
- 3 files changed, 9 insertions(+), 7 deletions(-)
+ arch/mips/sibyte/sb1250/irq.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/arch/mips/cobalt/pci.c b/arch/mips/cobalt/pci.c
-index 85ec9cc31d666..29fd052766b2a 100644
---- a/arch/mips/cobalt/pci.c
-+++ b/arch/mips/cobalt/pci.c
-@@ -14,6 +14,8 @@
+diff --git a/arch/mips/sibyte/sb1250/irq.c b/arch/mips/sibyte/sb1250/irq.c
+index 2f08ad267a11e..d7a656cd7ec0c 100644
+--- a/arch/mips/sibyte/sb1250/irq.c
++++ b/arch/mips/sibyte/sb1250/irq.c
+@@ -76,6 +76,8 @@ static int sb1250_set_affinity(struct irq_data *d, const struct cpumask *mask,
+ 	unsigned long flags;
  
- #include <asm/gt64120.h>
+ 	i = cpumask_first_and(mask, cpu_online_mask);
++	if (i >= nr_cpu_ids)
++		return -EINVAL;
  
-+#include <cobalt.h>
-+
- extern struct pci_ops gt64xxx_pci0_ops;
+ 	/* Convert logical CPU to physical CPU */
+ 	cpu = cpu_logical_map(i);
+@@ -103,6 +105,7 @@ static int sb1250_set_affinity(struct irq_data *d, const struct cpumask *mask,
+ 		____raw_writeq(cur_ints, IOADDR(A_IMR_MAPPER(cpu) +
+ 					R_IMR_INTERRUPT_MASK));
+ 	}
++	irq_data_update_effective_affinity(d, cpumask_of(i));
+ 	raw_spin_unlock_irqrestore(&sb1250_imr_lock, flags);
  
- static struct resource cobalt_mem_resource = {
-@@ -24,7 +26,7 @@ static struct resource cobalt_mem_resource = {
- };
- 
- static struct resource cobalt_io_resource = {
--	.start	= 0x1000,
-+	.start	= 0,
- 	.end	= 0xffffffUL,
- 	.name	= "PCI I/O",
- 	.flags	= IORESOURCE_IO,
-@@ -38,11 +40,8 @@ static struct pci_controller cobalt_pci_controller = {
- 	.io_map_base	= CKSEG1ADDR(GT_DEF_PCI0_IO_BASE),
- };
- 
--static int __init cobalt_pci_init(void)
-+void __init cobalt_pci_init(void)
- {
-+	PCIBIOS_MIN_IO = 0x1000;
- 	register_pci_controller(&cobalt_pci_controller);
--
--	return 0;
- }
--
--arch_initcall(cobalt_pci_init);
-diff --git a/arch/mips/cobalt/setup.c b/arch/mips/cobalt/setup.c
-index 9a266bf783399..502acc92969b8 100644
---- a/arch/mips/cobalt/setup.c
-+++ b/arch/mips/cobalt/setup.c
-@@ -83,9 +83,11 @@ void __init plat_mem_setup(void)
- 	/* I/O port resource */
- 	ioport_resource.end = 0x01ffffff;
- 
-+	cobalt_pci_init();
-+
- 	/* These resources have been reserved by VIA SuperI/O chip. */
- 	for (i = 0; i < ARRAY_SIZE(cobalt_reserved_resources); i++)
--		request_resource(&ioport_resource, cobalt_reserved_resources + i);
-+		insert_resource(&ioport_resource, cobalt_reserved_resources + i);
- }
- 
- /*
-diff --git a/arch/mips/include/asm/mach-cobalt/cobalt.h b/arch/mips/include/asm/mach-cobalt/cobalt.h
-index 97f9d5e9446d2..c7a8607cd651a 100644
---- a/arch/mips/include/asm/mach-cobalt/cobalt.h
-+++ b/arch/mips/include/asm/mach-cobalt/cobalt.h
-@@ -19,6 +19,7 @@ extern int cobalt_board_id;
- #define COBALT_BRD_ID_QUBE2    0x5
- #define COBALT_BRD_ID_RAQ2     0x6
- 
-+void cobalt_pci_init(void);
- void cobalt_machine_halt(void);
- void cobalt_machine_restart(char *command);
- 
+ 	return 0;
 -- 
 2.53.0
 
