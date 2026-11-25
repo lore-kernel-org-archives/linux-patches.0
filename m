@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795618988;
-	b=uz348DxXeYVpwFfTVX87FFA+GezaD73JxdWGzm6+ldueOa4w5aM2V1aKUrGwgAj9LiXp
-	 3XsSbMae92sNIFpXq1ol4W1Zh+1nWjJ7q5l6JO4LCNBXA5ctHrI2CIVNAN8DPUV7QwJX1
-	 Z9pYuKaGyLEaBhDraAGQnQAt7sySRu1xe5/NUnZFWjX98Gp9saAmF3Kowu93S06RxcIDw
-	 xHAbice+8i/k1kKegwaHFDsLwDANUGYp1pMCHe/Xlr+S23plFAtska5VOjv2NVHMaI75g
-	 RZGj4pvQUl1ojHySyCgYzUTdlvCYnWv+YZhq3zztH0XklFr+mZgbkzkiAYENJ6JyNbA==
+	t=1795618992;
+	b=xB6lZQlAyINsctisXwSDSUR4kENCAaavgw6fsVKeIF74u0d+PJOJThiElp+ow4n7Tjxk
+	 CllYvPtei6yAMGmpFhykjK8EC83v14L2wWl68lHuKddQRKdLKgaLodOxjbppHli3wB6Lw
+	 WPpbqRJQbTcgd3PMdyTeqNeFyJj4QrkFRlouJrDf38eyaNsteA0S4G4rROmbLX3Nbv+G/
+	 /XOGhC7l6ArUN+v3fNUSgAFU0DO9e2mqS0n+bcZs8MRvEyxrpGjQErSVt6Uj94G8o42xk
+	 uAxaas1UyZUDXsb2et7vbToW6EusoIjQgxcvXCwiR5sIjvCEg1pGToiLQ4H0djfrSRA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795618988;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795618992;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=PdwPCy5OoWYoxIJl/Mg6a8mFv0U9BziFbOwajEql+lo=;
-	b=NFFyK4L0AdiiLjUUd0j3WEIBrcs1M6Bc7yAxTgX9hrSpbQn0APBpJ72ZEUrNGEs5hNfB
-	 tt8sSIKHQjDKD/kWGHJjw+YlF4wwdS/dbCI9mXRFj64ZxVpCw9Ghux7r4HqfexFz+6kv7
-	 L4R+CXwVuRNTGwmQxMF3S7FbzkbhUg8WiiauLTSiu2beDQETTBhDxxv3GE5h+z9ZtStL2
-	 HTySNul8unS4hfyJ5dVvYmjvhAHl6guBQA7El+vv66gfY2hWewLMWCPE+ea9Fwifr5PUX
-	 jTRfCs7DETK3cpbJJULbuPYRLJ18RfTblWyJRrHRwOwPVcxEsXC8UQIdatEb8n42dIA==
+	bh=D0oObxqExa4qOLhtfn8R4q3uq5OLorOi5UZS/kvizqY=;
+	b=AFVaBH9L+t2Pc5v9M9/DlgMh05jPIbgRsCOKUZyrzewy2pv+lEAl/Y4/1xLNb+377fkm
+	 BqypHZs7bVAvlWvngA8SqhmULMbMVUwPazqnIXX/7utH/ZRoDlCkXHKLDUFezxD4xKNgA
+	 cDJVpkzIG29RcNLcatq8ennx8juv4zAZyZtDkWiQppjXO+s6RC3ONqhVAK120Sj8Pq7St
+	 nmVyjDfrxJmCUAROHFU+cU18UgDgoW8IaA2YfuaOutxvFGR+i7XFCNAghCTQJgYMQ0qHv
+	 wTgseG5XvjBzm8Lc3EtYLXOOlqjMYpRjnMxS2RkW0uQeK0+NvRTA0aIVWekuUr5bSrw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="mwC9Rn+/";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=InTQ3pzy;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 94B67606A321;
-	Wed, 25 Nov 2026 15:03:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 05B24606A31E;
+	Wed, 25 Nov 2026 15:03:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=mwC9Rn+/
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E41511F000C6;
-	Wed, 25 Nov 2026 15:03:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=InTQ3pzy
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BA0521F000C4;
+	Wed, 25 Nov 2026 15:03:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795618988;
-	bh=PdwPCy5OoWYoxIJl/Mg6a8mFv0U9BziFbOwajEql+lo=;
+	s=korg; t=1795618991;
+	bh=D0oObxqExa4qOLhtfn8R4q3uq5OLorOi5UZS/kvizqY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=mwC9Rn+/q87iS0kJk/Da86xZQFIWBOFfG+BYqMG9x6bU2HRUtsLgCkju9RKdrJcm9
-	 pAu4c+VeGr2RZtLU6rZZKntYUBfPOugmuw5I5pc7N2tjH/dyIhYPmBJhJ1dGn/eBmA
-	 HkK/wgHMEvraGiU6LWUTGPeBPlV1nm7cp09OiV0I=
+	b=InTQ3pzy4tJ50etc7nx62Pvo4lrJOlFcyi32pU695lN8OEjQ3WFjq4tF+wMMjMsCE
+	 LgfJTQgwmzcHJLFdzw8bcgGMZxzFOZC7Dqr7b4qN2+udAzgeY7PekdRJ/LvNw5dpNd
+	 NAZZh0V/c0WfT/PGI945EpKjf6ciNeWmYr+l4VEA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jiayuan Chen <jiayuan.chen@linux.dev>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Francesco Valla <francesco@valla.it>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0451/1005] net: raw: fix ICMP unreachable sent when receive queue is full
-Date: Wed, 25 Nov 2026 15:29:49 +0100
-Message-ID: <20261125143832.312541529@linuxfoundation.org>
+Subject: [PATCH 7.3 0452/1005] spi: virtio: move teardown to .remove()
+Date: Wed, 25 Nov 2026 15:29:50 +0100
+Message-ID: <20261125143832.336951253@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143821.729802100@linuxfoundation.org>
 References: <20261125143821.729802100@linuxfoundation.org>
@@ -68,104 +68,89 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jiayuan Chen <jiayuan.chen@linux.dev>
+From: Francesco Valla <francesco@valla.it>
 
-[ Upstream commit 45441a94d50200f1478c52857725e6df624bf2ad ]
+[ Upstream commit 9060f5ba658c9b0a7332be55b3d8abfc2b08618b ]
 
-It's found in a raw socket application. When the application doesn't
-read packets in time, the client receives ICMP Protocol Unreachable,
-which makes the client abort the session.
+The .remove() callback is not marked as optional for a virtio_driver,
+and thus a missing one is a bug. Moreover, the virtio framework expects
+a driver to reset the device it controls during teardown and explicitly
+checks for this reading the device status and WARNing in case it is
+still running. Any devm cleanup action gets however called after that
+check, leading to the WARN_ON condition to always be true for
+spi-virtio; thus, an empty remove() is not an option.
 
-The reason is that the server hits the sk_rcvbuf limit, and
-raw_v4_input() skips the socket before setting 'delivered', so it
-returns 0. Then ip_protocol_deliver_rcu() sees 'raw' is 0, thinks no one
-handles this protocol and calls icmp_send() to send ICMP Protocol
-Unreachable.
+Move the cleanup actions to the .remove() callback of the driver and
+adapt the surrounding code to the new behavior.
 
-IPv6 has the same issue, ip6_protocol_deliver_rcu() sends ICMPv6
-Parameter Problem instead.
-
-Also, we'd better run icmp_filter() and ip_mc_sf_allow() (icmpv6_filter()
-for IPv6) before we check sk_rcvbuf, otherwise packets rejected by
-ICMP_FILTER/ICMPV6_FILTER or the multicast filter are counted in
-sk_drops. So move the check right before skb_clone().
-
-Fixes: d721812aa875 ("ipv4: raw: check sk->sk_rcvbuf earlier")
-Fixes: 026763ece881 ("ipv6: raw: check sk->sk_rcvbuf earlier")
-Signed-off-by: Jiayuan Chen <jiayuan.chen@linux.dev>
-Link: https://patch.msgid.link/20261104115732.322151-1-jiayuan.chen@linux.dev
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: f98cabe3f6cf ("SPI: Add virtio SPI driver")
+Signed-off-by: Francesco Valla <francesco@valla.it>
+Link: https://patch.msgid.link/20261108-spi_virtio_remove-v1-1-fda5f0996290@valla.it
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv4/raw.c | 15 ++++++++-------
- net/ipv6/raw.c | 15 ++++++++-------
- 2 files changed, 16 insertions(+), 14 deletions(-)
+ drivers/spi/spi-virtio.c | 26 +++++++++++++++-----------
+ 1 file changed, 15 insertions(+), 11 deletions(-)
 
-diff --git a/net/ipv4/raw.c b/net/ipv4/raw.c
-index d756e5e31b90d..f0035f8da3cf2 100644
---- a/net/ipv4/raw.c
-+++ b/net/ipv4/raw.c
-@@ -182,18 +182,19 @@ static int raw_v4_input(struct net *net, struct sk_buff *skb,
- 				  iph->saddr, iph->daddr, dif, sdif))
- 			continue;
+diff --git a/drivers/spi/spi-virtio.c b/drivers/spi/spi-virtio.c
+index 96cdaf1b3697b..bbc1edbd3b006 100644
+--- a/drivers/spi/spi-virtio.c
++++ b/drivers/spi/spi-virtio.c
+@@ -319,10 +319,8 @@ static int virtio_spi_find_vqs(struct virtio_spi_priv *priv)
+ }
  
--		if (atomic_read(&sk->sk_rmem_alloc) >=
--		    READ_ONCE(sk->sk_rcvbuf)) {
--			sk_drops_inc(sk);
--			continue;
--		}
+ /* Function must not be called before virtio_spi_find_vqs() has been run */
+-static void virtio_spi_del_vq(void *data)
++static void virtio_spi_del_vq(struct virtio_device *vdev)
+ {
+-	struct virtio_device *vdev = data;
 -
- 		delivered = 1;
- 		if ((iph->protocol != IPPROTO_ICMP || !icmp_filter(sk, skb)) &&
- 		    ip_mc_sf_allow(sk, iph->daddr, iph->saddr,
- 				   skb->dev->ifindex, sdif)) {
--			struct sk_buff *clone = skb_clone(skb, GFP_ATOMIC);
-+			struct sk_buff *clone;
-+
-+			if (atomic_read(&sk->sk_rmem_alloc) >=
-+			    READ_ONCE(sk->sk_rcvbuf)) {
-+				sk_drops_inc(sk);
-+				continue;
-+			}
+ 	virtio_reset_device(vdev);
+ 	vdev->config->del_vqs(vdev);
+ }
+@@ -351,21 +349,26 @@ static int virtio_spi_probe(struct virtio_device *vdev)
+ 	if (ret)
+ 		return dev_err_probe(&vdev->dev, ret, "Cannot setup virtqueues\n");
  
-+			clone = skb_clone(skb, GFP_ATOMIC);
- 			/* Not releasing hash table! */
- 			if (clone)
- 				raw_rcv(sk, clone);
-diff --git a/net/ipv6/raw.c b/net/ipv6/raw.c
-index bdea825434ea7..00d832c7cdae9 100644
---- a/net/ipv6/raw.c
-+++ b/net/ipv6/raw.c
-@@ -160,12 +160,6 @@ static bool ipv6_raw_deliver(struct sk_buff *skb, int nexthdr)
- 				  inet6_iif(skb), inet6_sdif(skb)))
- 			continue;
- 
--		if (atomic_read(&sk->sk_rmem_alloc) >=
--		    READ_ONCE(sk->sk_rcvbuf)) {
--			sk_drops_inc(sk);
--			continue;
--		}
+-	/* Register cleanup for virtqueues using devm */
+-	ret = devm_add_action_or_reset(&vdev->dev, virtio_spi_del_vq, vdev);
+-	if (ret)
+-		return dev_err_probe(&vdev->dev, ret, "Cannot register virtqueue cleanup\n");
 -
- 		delivered = true;
- 		switch (nexthdr) {
- 		case IPPROTO_ICMPV6:
-@@ -197,8 +191,15 @@ static bool ipv6_raw_deliver(struct sk_buff *skb, int nexthdr)
- 		if (filtered < 0)
- 			break;
- 		if (filtered == 0) {
--			struct sk_buff *clone = skb_clone(skb, GFP_ATOMIC);
-+			struct sk_buff *clone;
-+
-+			if (atomic_read(&sk->sk_rmem_alloc) >=
-+			    READ_ONCE(sk->sk_rcvbuf)) {
-+				sk_drops_inc(sk);
-+				continue;
-+			}
+ 	virtio_device_ready(vdev);
  
-+			clone = skb_clone(skb, GFP_ATOMIC);
- 			/* Not releasing hash table! */
- 			if (clone)
- 				rawv6_rcv(sk, clone);
+-	/* Use devm version to register controller */
+-	ret = devm_spi_register_controller(&vdev->dev, ctrl);
+-	if (ret)
++	ret = spi_register_controller(ctrl);
++	if (ret) {
++		virtio_spi_del_vq(vdev);
+ 		return dev_err_probe(&vdev->dev, ret, "Cannot register controller\n");
++	}
+ 
+ 	return 0;
+ }
+ 
++static void virtio_spi_remove(struct virtio_device *vdev)
++{
++	struct spi_controller *ctrl = dev_get_drvdata(&vdev->dev);
++
++	spi_unregister_controller(ctrl);
++
++	virtio_spi_del_vq(vdev);
++}
++
+ static int virtio_spi_freeze(struct device *dev)
+ {
+ 	struct spi_controller *ctrl = dev_get_drvdata(dev);
+@@ -419,6 +422,7 @@ static struct virtio_driver virtio_spi_driver = {
+ 	},
+ 	.id_table = virtio_spi_id_table,
+ 	.probe = virtio_spi_probe,
++	.remove = virtio_spi_remove,
+ };
+ module_virtio_driver(virtio_spi_driver);
+ 
 -- 
 2.53.0
 
