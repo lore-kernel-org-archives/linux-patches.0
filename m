@@ -1,56 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795620782;
-	b=XuHk0gGKAyeTtgJ3vY/42G9Ul9ovb7dv1/MESBxQ82Q26pTqa41RDpwmVB+gw5/SddxG
-	 hXryUyUQHgy8pd1IaNAtxqPvz2wfQofbK3ZKrOrTUBjYnkEi9KXqnUCh5BYXTd5lljutb
-	 /H9JNUpKkdl0LyLnI5FDABIE9fpk95nGT/O/iqatHXNszGosMkKamH86XsiXdG8TJxyJi
-	 rQh2UkcSXtpTXjnEVUh1gClSLJMUjnT+6bCAZHgcQvYj2+ND4aTuKSbbOCWL1drqz67U3
-	 V18ui+p74V4FijrAVhQPegc1myOKZyq8pbrBnFTUYDxeMVwELlxFyyBdwhACsS/Ps1g==
+	t=1795620785;
+	b=S4lgOed4cY+0UUMSjnlqr4Z9LC5wFk8tEpmzwz9Yf8Co7R06AHMdabs8zKEQj6PHfti4
+	 Wedx8HmhW+ZWOje4b463ZbtijVBbwMuxBZ/Ip7AGyhu7mqXKFW/AL2zZPojYPDJ/aH4X2
+	 mgzbazfCdcs9LEssUPi1sWJiJ/CtxK2G4y3tenVSpys9MqX10nLopQD390BV+4s+Y/jTY
+	 aozaFybjgbn2ZnPSJGpRFBeBjGLdOQke8DmgeRhM5WbkPE8OzaexoKXU/zgGDMe2M4bti
+	 s6kDLhmzMLxkvTliAFfYP7lHTW4Cl1V20bgPq+7mH2XrZu2bQ8y5eMy8ET4mx6yY6Jg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795620782;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795620785;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Transfer-Encoding;
-	bh=hkDVFD8OzSAHPa9wPSHMmvgGfDJG14QVZvTTjSDcEGw=;
-	b=V8iU8kAwxmRhAZEJJxgqmDx8q3GCQiAhf3kbJrJTbOnATUsvnY/LNoqlSgaWpVN8fdz1
-	 ZIcC9l6oJK2N/CS/O45SpQ38fcXWYhqP2ATvc065P+vyLalG2lYwqB23w3NAN3D+H4X9V
-	 rl6cPa+WdHCVtt0DqF35dpubIb+d8/Ge8Z0wyQDRoqF8Vnrefd7sVDJo0FpDGN+Rzp6C2
-	 ym4EGnN8gr1uQQdxV0iK5E4SrBcxHC31+vjDe54rembjZTTZ5NGxHcbYFdP6XJI56v8Sn
-	 LbnVJARfQ+hvVRpVG1AQhpd//4ggJXcNDmXq98HCwAO3PMmY7zGAOm3s3tEAFYIbqMQ==
+	 MIME-Version:Content-Type:Content-Transfer-Encoding;
+	bh=CzjONJJuLjlS0fnbumGgOcRZqqkDAwYse5fGxtaGrWw=;
+	b=lRLWg+tPTpgn7mcPpzPZc1+U3/MqkMyyc9KfpgcnZSDcU2iGEoN+cAnyvford0PvkQ8z
+	 EMq2mQoI+Erm/zbufOqqfS2PrEqTuGxVTM8mQrYQnzEvCEV6k871+Nagkl8b4ei2Ot1dV
+	 kODuEBURkRqdP+2DLJLrhatjCMpEB0eXOCp0DsSPhU5q/grd0bhpwalN5W8wdDfyfe/pe
+	 Y9zLChgQlkobVrg15+OWF+uGqllXkLzN5ZYFvvMsh7Cg69dnzhb18AxLb/Zgel0J1ao0z
+	 DQXYfAAc2fDuSf6NmzK9Ay6y7kbGE67Z65PEJHZqmDcLHPDDsrsVGPdlYiQi3X6SwLw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=wjdaCgil;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=pLnFP3TQ;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 92510606A329;
-	Wed, 25 Nov 2026 15:33:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 12CD2606A321;
+	Wed, 25 Nov 2026 15:33:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=wjdaCgil
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1B4621F000C0;
-	Wed, 25 Nov 2026 15:33:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=pLnFP3TQ
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 646351F000C0;
+	Wed, 25 Nov 2026 15:33:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795620781;
-	bh=hkDVFD8OzSAHPa9wPSHMmvgGfDJG14QVZvTTjSDcEGw=;
+	s=korg; t=1795620784;
+	bh=CzjONJJuLjlS0fnbumGgOcRZqqkDAwYse5fGxtaGrWw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=wjdaCgil5wLqbRPLkbyEZSu7EBFVrvTm13YTsChdgXbZP49dIqu9C+DtE5uEycHPW
-	 S46Ijl0SyrFnsNnTHbNTGeZC1mOdhWsZL90uY4qf/KiRXR98EiM+sCM7PeQDkuq35M
-	 WIbs4HYkDkdcVyYeXsQ7YrjEoFL8zzcbiuUOGF5k=
+	b=pLnFP3TQEaUa4r+6ycTmrmSkXQFqPKiKDdy67P3XaPJwETr9BkCzEbKhgFGFRLGfo
+	 liM0cAKDfp3//TXydEKNIgLtwHvdUlCsOf7zR/5Q1FQHxLZ5XHiVXFFsg6ANWA3qGH
+	 ps55lSBB4FMFVEp7p6sEUU6biFywk4/6Vc7rn9i4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xianrui Dong <dongxianrui1@gmail.com>,
-	KP Singh <kpsingh@kernel.org>,
-	Amery Hung <ameryhung@gmail.com>,
-	Song Liu <song@kernel.org>,
-	Daniel Borkmann <daniel@iogearbox.net>,
-	Kumar Kartikeya Dwivedi <memxor@gmail.com>,
+	Ilya Dryomov <idryomov@gmail.com>,
+	=?UTF-8?q?Jordan=20DESNO=C3=8BS?= <jordan.desnoes@francetv.fr>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 003/990] bpf: Reject NULL data/sig in bpf_verify_pkcs7_signature
-Date: Wed, 25 Nov 2026 15:22:50 +0100
-Message-ID: <20261125143822.161164022@linuxfoundation.org>
+Subject: [PATCH 6.18 015/990] libceph: adapt ceph_x_challenge_blob hashing and msgr1 message signing
+Date: Wed, 25 Nov 2026 15:23:02 +0100
+Message-ID: <20261125143822.443682823@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143822.072087159@linuxfoundation.org>
 References: <20261125143822.072087159@linuxfoundation.org>
@@ -66,69 +62,249 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: KP Singh <kpsingh@kernel.org>
+From: Ilya Dryomov <idryomov@gmail.com>
 
-[ Upstream commit 49b18315be4eecfc36b75f4aecb4d40a87d68a20 ]
+commit 8356b4b1103b8c970648c94bab724aa30e42d869 upstream.
 
-__bpf_dynptr_data() can return NULL (FILE dynptrs, any non-contiguous
-backing). bpf_verify_pkcs7_signature() forwards the pointer to
-verify_pkcs7_signature() unchecked, causing a NULL deref in
-asn1_ber_decoder() reachable from a sleepable BPF LSM at lsm.s/bpf.
+The existing approach where ceph_x_challenge_blob is encrypted with the
+client's secret key and then the digest derived from the ciphertext is
+used for the test doesn't work with CEPH_CRYPTO_AES256KRB5 because the
+confounder randomizes the ciphertext: the client and the server get two
+different ciphertexts and therefore two different digests.
 
-NULL-check both pointers and reject with -EINVAL. Mirrors the guards
-already in kernel/bpf/crypto.c.
+msgr1 signatures are affected the same way: a digest derived from the
+ciphertext for the message's "sigblock" is what becomes a signature and
+the two sides disagree on the expected value.
 
-Fixes: 865b0566d8f1 ("bpf: Add bpf_verify_pkcs7_signature() kfunc")
-Reported-by: Xianrui Dong <dongxianrui1@gmail.com>
-Signed-off-by: KP Singh <kpsingh@kernel.org>
-Reviewed-by: Amery Hung <ameryhung@gmail.com>
-Acked-by: Song Liu <song@kernel.org>
-Acked-by: Daniel Borkmann <daniel@iogearbox.net>
-Link: https://lore.kernel.org/bpf/20260520024059.313468-1-kpsingh@kernel.org
-Signed-off-by: Kumar Kartikeya Dwivedi <memxor@gmail.com>
+For CEPH_CRYPTO_AES256KRB5 (and potential future encryption schemes),
+switch to HMAC-SHA256 function keyed in the same way as the existing
+encryption.  For CEPH_CRYPTO_AES, everything is preserved as is.
+
+Signed-off-by: Ilya Dryomov <idryomov@gmail.com>
+Signed-off-by: Jordan DESNOËS <jordan.desnoes@francetv.fr>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/bpf/helpers.c                                        | 5 +++++
- tools/testing/selftests/bpf/prog_tests/kfunc_dynptr_param.c | 2 +-
- 2 files changed, 6 insertions(+), 1 deletion(-)
+ net/ceph/auth_x.c       | 59 ++++++++++++++++++++++++++++++-----------
+ net/ceph/crypto.c       | 18 +++++++++++++
+ net/ceph/crypto.h       |  4 +++
+ net/ceph/messenger_v2.c | 14 +++++-----
+ 4 files changed, 72 insertions(+), 23 deletions(-)
 
-diff --git a/kernel/bpf/helpers.c b/kernel/bpf/helpers.c
-index 31afbb74a0523..89cb7e38be764 100644
---- a/kernel/bpf/helpers.c
-+++ b/kernel/bpf/helpers.c
-@@ -3915,8 +3915,13 @@ __bpf_kfunc int bpf_verify_pkcs7_signature(struct bpf_dynptr *data_p,
+diff --git a/net/ceph/auth_x.c b/net/ceph/auth_x.c
+index 966a38264254e..9350e1a9daf8f 100644
+--- a/net/ceph/auth_x.c
++++ b/net/ceph/auth_x.c
+@@ -558,8 +558,7 @@ static int ceph_x_build_request(struct ceph_auth_client *ac,
+ 	if (need & CEPH_ENTITY_TYPE_AUTH) {
+ 		struct ceph_x_authenticate *auth = (void *)(head + 1);
+ 		void *enc_buf = xi->auth_authorizer.enc_buf;
+-		struct ceph_x_challenge_blob *blob = enc_buf +
+-					     ceph_x_encrypt_offset(&xi->secret);
++		struct ceph_x_challenge_blob *blob;
+ 		u64 *u;
  
- 	data_len = __bpf_dynptr_size(data_ptr);
- 	data = __bpf_dynptr_data(data_ptr, data_len);
-+	if (!data)
-+		return -EINVAL;
+ 		p = auth + 1;
+@@ -569,15 +568,29 @@ static int ceph_x_build_request(struct ceph_auth_client *ac,
+ 		dout(" get_auth_session_key\n");
+ 		head->op = cpu_to_le16(CEPHX_GET_AUTH_SESSION_KEY);
+ 
+-		/* encrypt and hash */
++		if (xi->secret.type == CEPH_CRYPTO_AES) {
++			blob = enc_buf + ceph_x_encrypt_offset(&xi->secret);
++		} else {
++			BUILD_BUG_ON(SHA256_DIGEST_SIZE + sizeof(*blob) >
++				     CEPHX_AU_ENC_BUF_LEN);
++			blob = enc_buf + SHA256_DIGEST_SIZE;
++		}
 +
- 	sig_len = __bpf_dynptr_size(sig_ptr);
- 	sig = __bpf_dynptr_data(sig_ptr, sig_len);
-+	if (!sig)
-+		return -EINVAL;
+ 		get_random_bytes(&auth->client_challenge, sizeof(u64));
+ 		blob->client_challenge = auth->client_challenge;
+ 		blob->server_challenge = cpu_to_le64(xi->server_challenge);
+-		ret = ceph_x_encrypt(&xi->secret, 0 /* dummy */,
+-				     enc_buf, CEPHX_AU_ENC_BUF_LEN,
+-				     sizeof(*blob));
+-		if (ret < 0)
+-			return ret;
++
++		if (xi->secret.type == CEPH_CRYPTO_AES) {
++			ret = ceph_x_encrypt(&xi->secret, 0 /* dummy */,
++					     enc_buf, CEPHX_AU_ENC_BUF_LEN,
++					     sizeof(*blob));
++			if (ret < 0)
++				return ret;
++		} else {
++			ceph_hmac_sha256(&xi->secret, blob, sizeof(*blob),
++					 enc_buf);
++			ret = SHA256_DIGEST_SIZE;
++		}
  
- 	return verify_pkcs7_signature(data, data_len, sig, sig_len,
- 				      trusted_keyring->key,
-diff --git a/tools/testing/selftests/bpf/prog_tests/kfunc_dynptr_param.c b/tools/testing/selftests/bpf/prog_tests/kfunc_dynptr_param.c
-index 8cd298b78e44a..04aaf4c9cf5ee 100644
---- a/tools/testing/selftests/bpf/prog_tests/kfunc_dynptr_param.c
-+++ b/tools/testing/selftests/bpf/prog_tests/kfunc_dynptr_param.c
-@@ -14,7 +14,7 @@ static struct {
- 	const char *prog_name;
- 	int expected_runtime_err;
- } kfunc_dynptr_tests[] = {
--	{"dynptr_data_null", -EBADMSG},
-+	{"dynptr_data_null", -EINVAL},
- };
+ 		auth->struct_v = 3;  /* nautilus+ */
+ 		auth->key = 0;
+@@ -1065,11 +1078,19 @@ static int calc_signature(struct ceph_x_authorizer *au, struct ceph_msg *msg,
+ 			__le32 data_crc;
+ 			__le32 data_len;
+ 			__le32 seq_lower_word;
+-		} __packed *sigblock = enc_buf;
++		} __packed *sigblock;
+ 		struct {
+ 			__le64 a, b, c, d;
+ 		} __packed *penc = enc_buf;
+-		int ciphertext_len;
++
++		if (au->session_key.type == CEPH_CRYPTO_AES) {
++			/* no leading len, no ceph_x_encrypt_header */
++			sigblock = enc_buf;
++		} else {
++			BUILD_BUG_ON(SHA256_DIGEST_SIZE + sizeof(*sigblock) >
++				     CEPHX_AU_ENC_BUF_LEN);
++			sigblock = enc_buf + SHA256_DIGEST_SIZE;
++		}
  
- static bool kfunc_not_supported;
+ 		sigblock->header_crc = msg->hdr.crc;
+ 		sigblock->front_crc = msg->footer.front_crc;
+@@ -1080,12 +1101,18 @@ static int calc_signature(struct ceph_x_authorizer *au, struct ceph_msg *msg,
+ 		sigblock->data_len = msg->hdr.data_len;
+ 		sigblock->seq_lower_word = *(__le32 *)&msg->hdr.seq;
+ 
+-		/* no leading len, no ceph_x_encrypt_header */
+-		ret = ceph_crypt(&au->session_key, 0 /* dummy */,
+-				 true, enc_buf, CEPHX_AU_ENC_BUF_LEN,
+-				 sizeof(*sigblock), &ciphertext_len);
+-		if (ret)
+-			return ret;
++		if (au->session_key.type == CEPH_CRYPTO_AES) {
++			int ciphertext_len; /* unused */
++
++			ret = ceph_crypt(&au->session_key, 0 /* dummy */,
++					 true, enc_buf, CEPHX_AU_ENC_BUF_LEN,
++					 sizeof(*sigblock), &ciphertext_len);
++			if (ret)
++				return ret;
++		} else {
++			ceph_hmac_sha256(&au->session_key, sigblock,
++					 sizeof(*sigblock), enc_buf);
++		}
+ 
+ 		*psig = penc->a ^ penc->b ^ penc->c ^ penc->d;
+ 	}
+diff --git a/net/ceph/crypto.c b/net/ceph/crypto.c
+index b54085d8d5f0f..b2067ea6c38ad 100644
+--- a/net/ceph/crypto.c
++++ b/net/ceph/crypto.c
+@@ -84,6 +84,7 @@ int ceph_crypto_key_prepare(struct ceph_crypto_key *key,
+ 	case CEPH_CRYPTO_AES:
+ 		return set_aes_tfm(key);
+ 	case CEPH_CRYPTO_AES256KRB5:
++		hmac_sha256_preparekey(&key->hmac_key, key->key, key->len);
+ 		return set_krb5_tfms(key, key_usages, key_usage_cnt);
+ 	default:
+ 		return -ENOTSUPP;
+@@ -178,6 +179,7 @@ void ceph_crypto_key_destroy(struct ceph_crypto_key *key)
+ 			key->aes_tfm = NULL;
+ 		}
+ 	} else if (key->type == CEPH_CRYPTO_AES256KRB5) {
++		memzero_explicit(&key->hmac_key, sizeof(key->hmac_key));
+ 		for (i = 0; i < ARRAY_SIZE(key->krb5_tfms); i++) {
+ 			if (key->krb5_tfms[i]) {
+ 				crypto_free_aead(key->krb5_tfms[i]);
+@@ -436,6 +438,22 @@ int ceph_crypt_buflen(const struct ceph_crypto_key *key, int data_len)
+ 	}
+ }
+ 
++void ceph_hmac_sha256(const struct ceph_crypto_key *key, const void *buf,
++		      int buf_len, u8 hmac[SHA256_DIGEST_SIZE])
++{
++	switch (key->type) {
++	case CEPH_CRYPTO_NONE:
++	case CEPH_CRYPTO_AES:
++		memset(hmac, 0, SHA256_DIGEST_SIZE);
++		return;
++	case CEPH_CRYPTO_AES256KRB5:
++		hmac_sha256(&key->hmac_key, buf, buf_len, hmac);
++		return;
++	default:
++		BUG();
++	}
++}
++
+ static int ceph_key_preparse(struct key_preparsed_payload *prep)
+ {
+ 	struct ceph_crypto_key *ckey;
+diff --git a/net/ceph/crypto.h b/net/ceph/crypto.h
+index 2c37c54d0f560..3a2ade15abbcc 100644
+--- a/net/ceph/crypto.h
++++ b/net/ceph/crypto.h
+@@ -2,6 +2,7 @@
+ #ifndef _FS_CEPH_CRYPTO_H
+ #define _FS_CEPH_CRYPTO_H
+ 
++#include <crypto/sha2.h>
+ #include <linux/ceph/types.h>
+ #include <linux/ceph/buffer.h>
+ 
+@@ -20,6 +21,7 @@ struct ceph_crypto_key {
+ 	union {
+ 		struct crypto_sync_skcipher *aes_tfm;
+ 		struct {
++			struct hmac_sha256_key hmac_key;
+ 			const struct krb5_enctype *krb5_type;
+ 			struct crypto_aead *krb5_tfms[3];
+ 		};
+@@ -39,6 +41,8 @@ int ceph_crypt(const struct ceph_crypto_key *key, int usage_slot, bool encrypt,
+ 	       void *buf, int buf_len, int in_len, int *pout_len);
+ int ceph_crypt_data_offset(const struct ceph_crypto_key *key);
+ int ceph_crypt_buflen(const struct ceph_crypto_key *key, int data_len);
++void ceph_hmac_sha256(const struct ceph_crypto_key *key, const void *buf,
++		      int buf_len, u8 hmac[SHA256_DIGEST_SIZE]);
+ int ceph_crypto_init(void);
+ void ceph_crypto_shutdown(void);
+ 
+diff --git a/net/ceph/messenger_v2.c b/net/ceph/messenger_v2.c
+index 4bb238eb8606e..d5300c66258d9 100644
+--- a/net/ceph/messenger_v2.c
++++ b/net/ceph/messenger_v2.c
+@@ -778,9 +778,9 @@ static int setup_crypto(struct ceph_connection *con,
+ 	return 0;  /* auth_x, secure mode */
+ }
+ 
+-static void ceph_hmac_sha256(struct ceph_connection *con,
+-			     const struct kvec *kvecs, int kvec_cnt,
+-			     u8 hmac[SHA256_DIGEST_SIZE])
++static void con_hmac_sha256(struct ceph_connection *con,
++			    const struct kvec *kvecs, int kvec_cnt,
++			    u8 hmac[SHA256_DIGEST_SIZE])
+ {
+ 	struct hmac_sha256_ctx ctx;
+ 	int i;
+@@ -1437,8 +1437,8 @@ static int prepare_auth_signature(struct ceph_connection *con)
+ 	if (!buf)
+ 		return -ENOMEM;
+ 
+-	ceph_hmac_sha256(con, con->v2.in_sign_kvecs, con->v2.in_sign_kvec_cnt,
+-			 CTRL_BODY(buf));
++	con_hmac_sha256(con, con->v2.in_sign_kvecs, con->v2.in_sign_kvec_cnt,
++			CTRL_BODY(buf));
+ 
+ 	return prepare_control(con, FRAME_TAG_AUTH_SIGNATURE, buf,
+ 			       SHA256_DIGEST_SIZE);
+@@ -2441,8 +2441,8 @@ static int process_auth_signature(struct ceph_connection *con,
+ 		return -EINVAL;
+ 	}
+ 
+-	ceph_hmac_sha256(con, con->v2.out_sign_kvecs, con->v2.out_sign_kvec_cnt,
+-			 hmac);
++	con_hmac_sha256(con, con->v2.out_sign_kvecs, con->v2.out_sign_kvec_cnt,
++			hmac);
+ 
+ 	ceph_decode_need(&p, end, SHA256_DIGEST_SIZE, bad);
+ 	if (crypto_memneq(p, hmac, SHA256_DIGEST_SIZE)) {
 -- 
 2.53.0
 
