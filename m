@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795622972;
-	b=swt2QsQc1H2d+VIFkMokUuOglEV+OoIeTCQCUGGdfkNvZD+vHpM+kiEvf1ju/Gk1kYGS
-	 za3fXHqbCgXkz9ciUD0lulSEbPgvYxZCm3FCrjA9ThaQ6d6w9mn2jDORhglV6Qspfctcq
-	 R5fJ83IOeXpTBsbZ4hWdW0rhkIrUsSDVIqqu4s/TTO3fUPWnjO+yfMFrTWuQuWd0W9+P4
-	 E/9dsRi8f9tBwwKeZb/DzOzIejkf4NaE2vhpK9C3zwTAjPsLsduIhKOilTJKQZyssjIhB
-	 2TWRby8U+uWfb3+T/YhFN3r71RQFdCQCAAyQAvbSPjTho6oUAw+a4Tuh2IBvb+NQgqg==
+	t=1795622974;
+	b=j1xjo5hoUsgPfNUOWvsG2PIeub7gkbfjtTeETG6BocO6Ge8t1HmMySUVn+ZxN02ureYq
+	 wEZCyxd8Tn5wBaZDp5Z39sAlRwclnuycirLYCmotRMSpEcqE9Y0+FoiX3Nh3/Cq+PAGjk
+	 0e6R98KtHtDON19LXjlkcC/yXy9KM2xV4nT0ucVllqlK5O9FodbknppPpIpFVId4NSx82
+	 rudS3FWOuhOt/GTt52V+EzmwlqthaShmgPcUSQ84GysqxSZg1M95jHwpdhjYbDDTw84sK
+	 iX6OJRMe1y03n0edZ0MIC2cECRjDRJ7fTe57UUFpUox5GQpH0BVegfUVMIYvyrFTe+g==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795622972;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795622974;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Type:Content-Transfer-Encoding;
-	bh=F80LKjOOH9cuIG5pn1rqdRFx04jNcgVI6SPtswRu7QI=;
-	b=42udgCiUk5T37WR0M1lEmPVLLSjjLy996wVCDqLlSOjqpLzxNpHA9hLQRYmdEyZK7P7B
-	 dvn3oyc1tC/ouEbnXd8Oa2hDVo9f5S9qbt6iFbliZ+oUxFgDr7wZ9pZSO8S+xjU7OB8d6
-	 welW7Z8pdTnPiYXYav1e3XO4yO44RIwQJOP+KthBjMVOzPrAHnzH/bYp6NIWK4h7yCeqH
-	 eZsTa2QCvGcsF8XG5Z2/7VflCOA6umO6/LKmvq3JOI6FatuKhJt5E7H5FmFkS/We2m8vx
-	 lWHdSrl4K/w4NNoPJ9M3mL0ESaemVSCt28lwZchE1RzOJFPQ2e0RwqZNylyOY95Da9w==
+	 MIME-Version:Content-Transfer-Encoding;
+	bh=mPjOQIDkKIacdgfJu2FNYg7RLodT3197PcmNkQdU1yA=;
+	b=dgYdnZyJQvRMvEf6zm7+aiqY2M3ucA/f3Rl6xS+VKSlZMD8kn6/Osvm5fjFeZHrm1QCE
+	 mRWVj18+oMfmghIYhMCLbNHWSbpz8V76DnFjiKc0dN6ezOnduf+sVp0weaLR7fsgwdyAK
+	 ZDwNpTuKZE/nuD78B2Vc+5k2S/5oF0YjI4YOiZPF/ykWYsIJYPVyuVh8lAlMsy2ZnRhPp
+	 GkwEUZ1kJGhNKe+pA3zQ33jCv7kCZTEuGKVr5erIqX8GzKMb0Zo2QNIhWv25m2LKwbHSK
+	 hggMhqMBqAoJELm3StEMtXdtM6dVDPQJMkJTfGBLQF7VewrluB3R4y/62ormLVzp60g==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="FHaq/xIx";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=AsxqUkJZ;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F2C54606A327;
-	Wed, 25 Nov 2026 16:09:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 89C6E606A31E;
+	Wed, 25 Nov 2026 16:09:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=FHaq/xIx
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AB7241F000E6;
-	Wed, 25 Nov 2026 16:09:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=AsxqUkJZ
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DBE671F000F0;
+	Wed, 25 Nov 2026 16:09:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795622971;
-	bh=F80LKjOOH9cuIG5pn1rqdRFx04jNcgVI6SPtswRu7QI=;
+	s=korg; t=1795622974;
+	bh=mPjOQIDkKIacdgfJu2FNYg7RLodT3197PcmNkQdU1yA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=FHaq/xIxB0/r38LVHole4Lx8c3Y73WrScEJGbwJ34ZxQrYI5OqzNOMyyGxdVi5s3N
-	 Pt2IGzf32drnzBmdLouuPAvldmjX6ciixsoMtQItdxDDs1bkcaVXD8zOc0ztAGzdlX
-	 BSML553U1tHZZH6+5mspsKY6OCtcQP4JP1HNP6s8=
+	b=AsxqUkJZgKyz0GL9Xsrb6/xG4AoxTMIBHhmIJzbUQYLuGjbVifleWm+DDkfOzryIT
+	 NlQY8xPj4+MV9K2N+pR/L5CC+8YzRQBAhEgtMCX2HkA+f4/W9a9cwxzfCNY6O74W5t
+	 EdfZ8pIUluNe1IItFw+ljf1gm9UPkRzFuJZ+250g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?J=C3=A9r=C3=A9my=20Jean?= <Jeremy.Jean@oss.cyber.gouv.fr>,
+	Hyunwoo Kim <imv4bel@gmail.com>,
 	Kuniyuki Iwashima <kuniyu@google.com>,
-	Dmitry Safonov <dima@arista.com>,
 	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.18 708/990] tcp: fix authentication bypass via unsupported TCP auth options
-Date: Wed, 25 Nov 2026 15:34:35 +0100
-Message-ID: <20261125143838.666481036@linuxfoundation.org>
+Subject: [PATCH 6.18 709/990] tcp: fix request_sock use-after-free during Fast Open accept()
+Date: Wed, 25 Nov 2026 15:34:36 +0100
+Message-ID: <20261125143838.690358182@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143822.072087159@linuxfoundation.org>
 References: <20261125143822.072087159@linuxfoundation.org>
@@ -63,74 +62,94 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Jérémy Jean <Jeremy.Jean@oss.cyber.gouv.fr>
+From: Hyunwoo Kim <imv4bel@gmail.com>
 
-commit 7cc235fb1251fec1183e3158c60d2e504c2a8e8b upstream.
+commit 62754aad50d0b30938bd8ce30b43474ce502a2af upstream.
 
-tcp_inbound_hash() parses both TCP-MD5 and TCP-AO options when at
-least one of the two features is enabled. With TCP_MD5SIG=y and
-TCP_AO=n, a packet carrying an AO option reaches the disabled
-tcp_inbound_ao_hash() stub. That stub returns success, so sockets
-configured to require MD5 authentication end up accepting
-unauthenticated data. A forged AO option skips the unsigned fast
-path, which is the only place where tcp_inbound_hash() can return
-SKB_DROP_REASON_TCP_MD5NOTFOUND.
+Commit e3d95ad7da4f ("inet: avoid fastopen lock for regular accept()")
+made inet_csk_accept() check tfo_listener before taking fastopenq.lock
+to avoid taking the lock for connections that did not use Fast Open.
 
-The inverse configuration with TCP_MD5SIG=n and TCP_AO=y has the same
-problem for an MD5 option on AO sockets.
+reqsk_fastopen_remove() clears tfo_listener while holding fastopenq.lock,
+then reads req->sk. If inet_csk_accept() concurrently observes
+tfo_listener after it has been cleared, it skips fastopenq.lock and
+drops the last reference to the request_sock. This can free the
+request_sock while reqsk_fastopen_remove() is still using it.
 
-Note that TCP-AO depends on 64BIT: therefore, every 32-bit kernel with
-TCP_MD5SIG=y is in the vulnerable configuration.
+If the freed memory is reused for a new request_sock with req->sk ==
+NULL, the reset path in reqsk_fastopen_remove() can append the new
+request_sock to the original listener's list of requests that caused an
+RST. After the new request_sock is freed, the next append writes through
+the stale rskq_rst_tail into freed memory.
 
-Make the disabled stubs reject options for the unsupported
-authentication scheme. This matches the real helpers' behavior for
-sockets without keys. It also means that kernels with TCP_MD5SIG=n and
-TCP_AO=y now drop segments carrying an MD5 option on unkeyed sockets,
-as kernels configured with TCP_MD5SIG=y already do.
+KASAN reported the following use-after-free when writing
+fastopenq->rskq_rst_tail->dl_next = req:
 
-Fixes: 0a3a809089eb ("net/tcp: Verify inbound TCP-AO signed segments")
+  BUG: KASAN: slab-use-after-free in reqsk_fastopen_remove+0x142/0x210
+  Write of size 8 at addr ffff888108230688 by task swapper/5/0
+  ...
+  Call Trace:
+   <IRQ>
+   ...
+   reqsk_fastopen_remove+0x142/0x210
+   tcp_check_req+0x96f/0xdd0
+   ...
+   tcp_rcv_state_process+0x19c/0x26b0
+   ...
+   tcp_v4_do_rcv+0x16e/0x490
+   tcp_v4_rcv+0x14a0/0x1af0
+   ...
+   ip_protocol_deliver_rcu+0x39/0x1e0
+   ip_local_deliver_finish+0x124/0x1e0
+   ip_local_deliver+0xfb/0x1e0
+   ...
+   </IRQ>
+
+To widen the race windows, mdelay(5) was added after newsk = req->sk,
+mdelay(20) after the if (req) reqsk_put(req) block, and mdelay(100)
+after tcp_rsk(req)->tfo_listener = false. The KASAN report above was
+reproduced with this kernel.
+
+For the lockless check, use tcp_sk(newsk)->syn_fastopen_child instead of
+tfo_listener, which reqsk_fastopen_remove() clears.
+
+syn_fastopen_child is a field of the Fast Open child TCP socket
+referenced by newsk, not of the request_sock. It is set before the child
+socket is added to the accept queue. The paths that call
+reqsk_fastopen_remove() in response to a remote ACK or RST do not clear
+this field.
+
+inet_csk_accept() uses this field to take fastopenq.lock only for Fast
+Open child sockets and rechecks tfo_listener while holding the lock.
+Connections that did not use Fast Open continue to avoid the lock.
+
+Fixes: e3d95ad7da4f ("inet: avoid fastopen lock for regular accept()")
 Cc: stable@vger.kernel.org
-Signed-off-by: Jérémy Jean <Jeremy.Jean@oss.cyber.gouv.fr>
+Signed-off-by: Hyunwoo Kim <imv4bel@gmail.com>
 Reviewed-by: Kuniyuki Iwashima <kuniyu@google.com>
-Acked-by: Dmitry Safonov <dima@arista.com>
-Link: https://patch.msgid.link/20261107224733.1104094-2-Jeremy.Jean@oss.cyber.gouv.fr
+Link: https://patch.msgid.link/avQKA_YTAThtbsYU@v4bel
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- include/net/tcp_ao.h |    3 ++-
- net/ipv4/tcp.c       |    3 ++-
- 2 files changed, 4 insertions(+), 2 deletions(-)
+ net/ipv4/inet_connection_sock.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/include/net/tcp_ao.h
-+++ b/include/net/tcp_ao.h
-@@ -287,7 +287,8 @@ static inline enum skb_drop_reason tcp_i
- 		const struct request_sock *req, int l3index,
- 		const struct tcp_ao_hdr *aoh)
- {
--	return SKB_NOT_DROPPED_YET;
-+	NET_INC_STATS(sock_net(sk), LINUX_MIB_TCPAOKEYNOTFOUND);
-+	return SKB_DROP_REASON_TCP_AOUNEXPECTED;
- }
+--- a/net/ipv4/inet_connection_sock.c
++++ b/net/ipv4/inet_connection_sock.c
+@@ -684,7 +684,7 @@ struct sock *inet_csk_accept(struct sock
+ 	newsk = req->sk;
  
- static inline struct tcp_ao_key *tcp_ao_do_lookup(const struct sock *sk,
---- a/net/ipv4/tcp.c
-+++ b/net/ipv4/tcp.c
-@@ -4965,7 +4965,8 @@ tcp_inbound_md5_hash(const struct sock *
- 		     const void *saddr, const void *daddr,
- 		     int family, int l3index, const __u8 *hash_location)
- {
--	return SKB_NOT_DROPPED_YET;
-+	NET_INC_STATS(sock_net(sk), LINUX_MIB_TCPMD5UNEXPECTED);
-+	return SKB_DROP_REASON_TCP_MD5UNEXPECTED;
- }
- 
- #endif
+ 	if (sk->sk_protocol == IPPROTO_TCP &&
+-	    tcp_rsk(req)->tfo_listener) {
++	    tcp_sk(newsk)->syn_fastopen_child) {
+ 		spin_lock_bh(&queue->fastopenq.lock);
+ 		if (tcp_rsk(req)->tfo_listener) {
+ 			/* We are still waiting for the final ACK from 3WHS
 
 
