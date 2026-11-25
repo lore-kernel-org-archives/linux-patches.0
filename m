@@ -1,51 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795625917;
-	b=qAeyvt7TXApOVW5ejmjQe5t3IL1u0JarUboYPLar1xT5AblMh4zOYIMqVGiQjf/gvtMo
-	 a4d+InKIlqyQxMdY3679hM659rGvyg1e6sO1qRXAPNWUM4OuI72laQ1ddyKk4ZO7rOsLx
-	 cwWONrybQpcwUounM1aQFB878oYRbB/CYmufl8hd/7bWnmZGfSQYQ+ot2q692STMxKXpz
-	 u3Qtrsa6XR5/zj5o7FFtdO6CWpcpahK2zucSpJ9QpBRCBNqNRnGaIaWNvSk7JQxdZb29F
-	 IZKW/D5x6khgoBBwg/EFhgJVG0yC+zogY8TqCUusR8GySapI4FmffamXyoGN857/7gg==
+	t=1795625921;
+	b=jPHc0Li8Gs7nKMvGD6P8qnhSp7H1pSCrYTqEJIaKbpHDGqEJbcz+hVBY03LS/L25xm/z
+	 ISBUXRkztQHxLXIiTGVovrMrRZT9IxMO1ZCJVUwhDJJ0U5NYbwMjXly9MttfxwhaFH2Os
+	 SxgxsD8PZAq3a57w2UUmf+WW8PtSWedhm5HH8BYrTrfaosl80so4exQrO0+o4LPI/VB9S
+	 Ib5wOLTEpeas/pYht9IqZiafGsRBDZm9fkkNiI2ViM0zuH987aluUuw10OWByEdRvV6sm
+	 tKajgQYqqbi9Hlb89NABPeseIzPH34FYvjNO+h8UX6WktWHsjhalTXL4kUeNfDQ3JSA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795625917;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795625921;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=K0KhQU50sa4o5FkyLIgX1ZkCQWeEY1nPod/Xjtcg2nA=;
-	b=zSb4Q1CC+GsY3BDB+bY+DLanCq9BuQ5LRNhEqpk24A84wp3yBc7rrUfY55vZ3fil7/F0
-	 Kt6/OYeHcEtanZS+Dg1Ozh7umnYbG+skiRveyyushyCKA7iOnoMrHIRvqjPwxY7OawPKJ
-	 0/h/2yGelU/riXjy4RPJ/hjJp6xUrrzPqG9h+oq4VXcuvxFdUxdUX/DuWF9/edNC7P32Y
-	 NdwOFn1bhkSTvQ35WYOhRQt9TR65iIifbSDnBI4hEGfCTyUtnKUBvi6DIZ/6ZtpVqY2hN
-	 4HDg+GKeuMEF+qLJiNQTVnEjl8QTnxxmMqtOPa65YWqW5LnP2W+sxa1YbEAgJMJsgsg==
+	bh=GKI3YqaMmrLzxqOLVw0WQaWWv85rzq4TZ/eGPShX/3c=;
+	b=XIjEJMRM/ZlTJaUnFrtagyYON4Pg/uVccbNbmA1s+hWNqLW3XyxwF/kiYWwRQiLy1sj7
+	 wZdvBUzb75hJJgb4j0hGn4WJjE6Qm2WkzCLotorH8eTfr9ROx53GWsDGkhZnzb2i1yphH
+	 XmtLBO6u3XbiJwuGxYmiCnSLuhgMxOLrUlskyzf4T+JAjJCEdS1mQsvSKCAez4NxPV1aH
+	 OCmRZJnpRlYv4cJ1VZapDFXtoJSMgqdYb8DZ9KxOvQ3idZEj6cQmOdxvqKyaN3z5NlJ6r
+	 Ev9M7OObJ6u71YbK1NLTzYx8zxeTDj9dyOJsk3d6jZIgWguuNk6R8WW9u6FEhMXQmOA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=HrRcqdPh;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="AD/U59Wv";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D2200606A330;
-	Wed, 25 Nov 2026 16:58:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 11E3B606A321;
+	Wed, 25 Nov 2026 16:58:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=HrRcqdPh
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C24761F000CA;
-	Wed, 25 Nov 2026 16:58:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=AD/U59Wv
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 064721F000CA;
+	Wed, 25 Nov 2026 16:58:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795625917;
-	bh=K0KhQU50sa4o5FkyLIgX1ZkCQWeEY1nPod/Xjtcg2nA=;
+	s=korg; t=1795625920;
+	bh=GKI3YqaMmrLzxqOLVw0WQaWWv85rzq4TZ/eGPShX/3c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=HrRcqdPh6s8sN1LAU0pwMn6olbZ22q82FgjNAfCeTTxPxAkK0HlpYt25I3PjLNpy+
-	 DwmZxZ1OfESBve3egviCov7I9SlDRXuUGzjogpPg7iog7WWiiow+j06/6ZSISjWkQ6
-	 A6BIRY5DSqHzNZhrm8KebML2reNSbVC5AZD3iy4M=
+	b=AD/U59WvX6lZb1Qoc1KMlKmkiUtWdM1FK7w56hZKS9a44c38WCUY7LVuQURqGTGIq
+	 wA0/1/mga/wR9sPlTWlwKTkYLHNEGDm/HjbYMFCxGE5HkJAT+pEVcnYBZYhwMlLMx+
+	 wAoYNk2256AFYA5rmseLFWevBvDRlCT9Acz8B/cA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Cunhao Lu <1579567540@qq.com>,
+	Linus Walleij <linusw@kernel.org>,
 	Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
-Subject: [PATCH 6.12 673/816] gpio: rockchip: Fix debounce arithmetic for GPIO v2
-Date: Wed, 25 Nov 2026 15:37:01 +0100
-Message-ID: <20261125143904.757745217@linuxfoundation.org>
+Subject: [PATCH 6.12 674/816] gpio: sodaville: fix use-after-free bug when registering the irqchip
+Date: Wed, 25 Nov 2026 15:37:02 +0100
+Message-ID: <20261125143904.780208872@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143849.205329330@linuxfoundation.org>
 References: <20261125143849.205329330@linuxfoundation.org>
@@ -67,66 +67,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Cunhao Lu <1579567540@qq.com>
+From: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
 
-commit 13467fd6998f5da4f5b4f172f1af3d9c48d5de8f upstream.
+commit ab9102375b7c77e0c4d33c7594e514454dc9f2b3 upstream.
 
-The debounce interval calculations use unsigned long operands. On 32-bit
-systems, the numerator used to calculate the maximum interval overflows
-before division, while multiplying the requested interval by the clock
-rate overflows before it is assigned to a u64. A zero debounce clock rate
-also causes division by zero.
+In sdv_register_irqsupport(), if irq_domain_create_legacy() fails during
+device probing, a generic IRQ chip is left registered in the global gc_list
+while its underlying memory is freed, leading to a use-after-free. Use
+the managed variant of irq_setup_generic_chip() to ensure that the chip
+gets unregistered before the memory it uses is freed.
 
-Use 64-bit arithmetic for both calculations and reject a zero clock rate
-before division.
-
-At 32768 Hz, a 1 us request rounds to zero divider periods. Subtracting
-one then wraps the divider value to ULONG_MAX. Decrement only a nonzero
-rounded period count so that such requests use the smallest divider
-value.
-
-Fixes: 3bcbd1a85b68 ("gpio/rockchip: support next version gpio controller")
 Cc: stable@vger.kernel.org
-Signed-off-by: Cunhao Lu <1579567540@qq.com>
-Link: https://patch.msgid.link/20261023-fix-rockchip-gpio-v2-debounce-v1-1-f1141bd5b58f@qq.com
+Fixes: 9381fc5d655d ("gpio: sodaville: Convert to use managed functions pcim_* and devm_*")
+Closes: https://sashiko.dev/#/bug/linux-2f7ac8b6-5034-4ff1-9afa-5700ff44e3e9
+Reviewed-by: Linus Walleij <linusw@kernel.org>
+Link: https://patch.msgid.link/20261105-gpio-sodaville-use-after-free-v1-1-f572f40feedd@oss.qualcomm.com
 Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpio/gpio-rockchip.c |   15 ++++++++++-----
- 1 file changed, 10 insertions(+), 5 deletions(-)
+ drivers/gpio/gpio-sodaville.c |    9 ++++++---
+ 1 file changed, 6 insertions(+), 3 deletions(-)
 
---- a/drivers/gpio/gpio-rockchip.c
-+++ b/drivers/gpio/gpio-rockchip.c
-@@ -192,20 +192,25 @@ static int rockchip_gpio_set_debounce(st
- {
- 	struct rockchip_pin_bank *bank = gpiochip_get_data(gc);
- 	const struct rockchip_gpio_regs	*reg = bank->gpio_regs;
--	unsigned long flags, div_reg, freq, max_debounce;
-+	unsigned long flags, div_reg, freq;
- 	bool div_debounce_support;
- 	unsigned int cur_div_reg;
--	u64 div;
-+	u64 div, max_debounce;
+--- a/drivers/gpio/gpio-sodaville.c
++++ b/drivers/gpio/gpio-sodaville.c
+@@ -165,9 +165,12 @@ static int sdv_register_irqsupport(struc
+ 	ct->chip.irq_eoi = irq_gc_eoi;
+ 	ct->chip.irq_set_type = sdv_gpio_pub_set_type;
  
- 	if (bank->gpio_type == GPIO_TYPE_V2 && !IS_ERR(bank->db_clk)) {
- 		div_debounce_support = true;
- 		freq = clk_get_rate(bank->db_clk);
--		max_debounce = (GENMASK(23, 0) + 1) * 2 * 1000000 / freq;
-+		if (!freq)
-+			return -EINVAL;
-+
-+		div = (u64)(GENMASK(23, 0) + 1) * 2 * USEC_PER_SEC;
-+		max_debounce = div64_u64(div, freq);
- 		if (debounce > max_debounce)
- 			return -EINVAL;
+-	irq_setup_generic_chip(sd->gc, IRQ_MSK(SDV_NUM_PUB_GPIOS),
+-			IRQ_GC_INIT_MASK_CACHE, IRQ_NOREQUEST,
+-			IRQ_LEVEL | IRQ_NOPROBE);
++	ret = devm_irq_setup_generic_chip(&pdev->dev, sd->gc,
++					  IRQ_MSK(SDV_NUM_PUB_GPIOS),
++					  IRQ_GC_INIT_MASK_CACHE, IRQ_NOREQUEST,
++					  IRQ_LEVEL | IRQ_NOPROBE);
++	if (ret)
++		return ret;
  
--		div = debounce * freq;
--		div_reg = DIV_ROUND_CLOSEST_ULL(div, 2 * USEC_PER_SEC) - 1;
-+		div = (u64)debounce * freq;
-+		div_reg = DIV_ROUND_CLOSEST_ULL(div, 2 * USEC_PER_SEC);
-+		div_reg = div_reg ? div_reg - 1 : 0;
- 	} else {
- 		div_debounce_support = false;
- 	}
+ 	sd->id = irq_domain_add_legacy(pdev->dev.of_node, SDV_NUM_PUB_GPIOS,
+ 				sd->irq_base, 0, &irq_domain_sdv_ops, sd);
 
 
