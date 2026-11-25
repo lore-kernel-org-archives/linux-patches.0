@@ -1,51 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795622571;
-	b=EDZURBArC4pUGDXXdvceewsWIgQkncoP6nal5sSehZrw+Ni8GYdzTslTJ5VldlLNaYeN
-	 +l4/xYHHpAmk0Sm7mXdFvvbPHYVoPBjQbVFI7CkQTl7dkhgg4V37RRBfHdPS/OKyOPJ18
-	 QzSkoW9ibUOoph4o676WNWwFZL2Ode94CIVW+ovUeb2tIK5aJBYt2E60BnWlZ2xLyYwQG
-	 eaY15Eo7sm4caS1/w3GUvVWb8GJP/5z+h6nZbxXUPybC3mKeo9ucchQfoLeCQNKeG4wdZ
-	 +dryDBfJ6uTBYYNwW5wKOSzqrZjzymUF0m36i1Q+sbTmoRhwlnR3MGMUmYgtSByGwTA==
+	t=1795622574;
+	b=ozRYW9ufRmVvcqaaUx+L9aIWjm5J4jbhcFtRk0bRTlp3NaB5EoHRgJpR1URTeAH8NLYW
+	 tCOsMXOPoJnhiQrDaXy4m8LWreEye0OGaQlmoMZbbEcUDPl7Rans8+O4MyVIvQZDzeeKq
+	 ZVCZTxpbNOCpXjAlze2VdwxI4KEMdDzx5pqNVnE1G6VewIzm+h8DNJE/RNj+JkBCMFUl3
+	 LBAni9z06qgYRcm0JwW0Jx38cbefdLenQ0IouLRxqWd/U4Xdcxink0r0o+PDVK9CmqbDD
+	 o1cJyZBvIIDaN+nQRhfySc65d/U5tJP8Qlz1r1ud7scVnTErQS0+2N9IHG98wZc2lTA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795622571;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795622574;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=Xs4yfV8UTWG1XTz1S507KNErVQ7ULQsoJ1itBj1cy1E=;
-	b=yb/S7+jYZCUwHP+8iSYSuqtJIYVBaz2jz7Wdvmyx5oxEO+KP8xfDQy8CQlgSuvBeAV7K
-	 Tw9nfmOoKf8jdyWBGeNubqb7YadvXhE+883TwstrwrzowczwYA3ZVjvCXp0w5jh5QNjJy
-	 ZrptKB1xQoj2u+2yGkY6Vj8e7IVuNKflCYro+BtVef+f7/8PDG3Yaj073QNOxrNlwA7dE
-	 B5Rg9LycWcvF7CljWsLBtLW3DKjKxJmcQQptfakcWQ0csm4Uz578E2xJVh7kLfVn8ObYr
-	 UwjB+OugRuYXwn5FN+ydJsWXd+ia3xb3HmPneZAgzFhtjMVf8S9n3lBb6OI/SnY9onw==
+	bh=ZYPU09dHAAMsVuvgUVUfJT0ysRNxNPdkI1zWR8WtIzE=;
+	b=wfqulxz9V9E1D0vL9UcijPYv/WkWdLWhXMUdShpaNYdUSgRyM/DETh3bcxrtCGmnuEpH
+	 tL80OwM9JFP77qKAzfZZxcM+SaGAY7GXS22H6sXjYieV267hGAJyMFV4l0L5R+RDechxC
+	 p/7sTkcD2C5ZSnO7VjDYoFmdweOeE5nbJR+R2NLnsSpAHF61UVo/vyvaGNmkVvfPVQ4zn
+	 GjPoSE/MBdnJQQeAUNrsXjQGNOBwYV8Tbf2GJTpTczBahVwIOHfMb913l+4f1rlc/m67g
+	 Pnl6AMuZ3en72W4WRkJ2glxANdmVn1KEKjPiM+rrzMFuQVhbqG53K8Oi91+2a2OhM2A==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=nL3U2KM0;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=bigV5T73;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 31367606A321;
-	Wed, 25 Nov 2026 16:02:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 45280606A33C;
+	Wed, 25 Nov 2026 16:02:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=nL3U2KM0
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 358221F000C6;
-	Wed, 25 Nov 2026 16:02:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=bigV5T73
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 858741F000CA;
+	Wed, 25 Nov 2026 16:02:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795622570;
-	bh=Xs4yfV8UTWG1XTz1S507KNErVQ7ULQsoJ1itBj1cy1E=;
+	s=korg; t=1795622574;
+	bh=ZYPU09dHAAMsVuvgUVUfJT0ysRNxNPdkI1zWR8WtIzE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=nL3U2KM06wr/7dSRCJvrjwvYSoNLT5DxPzhoOKxOQBnP7mic+INiasmdOxESRkUeq
-	 QH7GG1vO7NrRj8F+U83De3ytjm7tOIAQC3K5NhqM7gw8JHS3GhJqgDcBFUfbUcaKUw
-	 0NMY5S4VbCrDD0BzXoqm/ej1uGAD5Kf+g2PDPFks=
+	b=bigV5T73uT9V3JXjq3dmQ3qAUGg7r8w4gFGxP+R3HXWcZgpexwM/NwBUC5/NeqBDd
+	 YOl43b7ycwIa8AEKsBC92MdC5iWsgFsr30t7BUA5O/z1m1qsguWGqiv3M/pn/Q01wu
+	 CZ6xrvO6lwTWOXzoTq4X8A/IhlCt6fpNMvjcv7yQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Johannes Berg <johannes.berg@intel.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 579/990] wifi: nl80211: reject zero RNR/MBSSID elements
-Date: Wed, 25 Nov 2026 15:32:26 +0100
-Message-ID: <20261125143835.653392450@linuxfoundation.org>
+	"Aneesh Kumar K.V" <aneesh.kumar@kernel.org>,
+	Marek Szyprowski <m.szyprowski@samsung.com>,
+	Sasha Levin <sashal@kernel.org>,
+	"Claude Opus 5.5" <noreply@anthropic.com>
+Subject: [PATCH 6.18 580/990] dma-direct: Restore arch_dma_alloc() for the DMA_ATTR_NO_KERNEL_MAPPING case
+Date: Wed, 25 Nov 2026 15:32:27 +0100
+Message-ID: <20261125143835.676370837@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143822.072087159@linuxfoundation.org>
 References: <20261125143822.072087159@linuxfoundation.org>
@@ -67,61 +69,81 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Johannes Berg <johannes.berg@intel.com>
+From: Marek Szyprowski <m.szyprowski@samsung.com>
 
-[ Upstream commit c767e1173aeab7825a8dfb197041d3996db84e39 ]
+[ Upstream commit 5e3bc6b44c8853bcc7782eac122c5baf2d02f399 ]
 
-That's a nonsensical configuration, and we get errors
-reported further down in mac80211 for it; hostapd has
-code that only adds the nested element if it'll not be
-an empty list.
+Commit 849facea92fa ("dma-direct: simplify the DMA_ATTR_NO_KERNEL_MAPPING
+handling") moved the DMA_ATTR_NO_KERNEL_MAPPING shortcut in
+dma_direct_alloc() in front of the arch_dma_alloc() call. Architectures
+providing their own DMA coherent allocator (CONFIG_ARCH_HAS_DMA_ALLOC)
+therefore no longer see such requests. ARM 32bit is one of such. Lack of
+the call to arch_dma_alloc() results in the lack of proper cache
+management on HighMem pages.
 
-Remove an unnecessary NULL check while at it.
+Take the dma-direct shortcut only for coherent devices or when the
+architecture doesn't provide arch_dma_alloc(). While touching this,
+move that check into separate function to avoid duplication in alloc
+and free paths.
 
-Fixes: dbbb27e183b1 ("cfg80211: support RNR for EMA AP")
-Assisted-by: LLM
-Link: https://patch.msgid.link/20261005224950.97db49d9d104.I5765a3310528b3d1cb1673dc90ad5ab5fc3ea571@changeid
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
-[ sashal: Kept the existing kzalloc(struct_size(...), GFP_KERNEL) allocation instead of upstream's kzalloc_flex(), adding the zero-element guard above it in both parse functions. ]
+Fixes: 849facea92fa ("dma-direct: simplify the DMA_ATTR_NO_KERNEL_MAPPING handling")
+Reported-by: Aneesh Kumar K.V <aneesh.kumar@kernel.org>
+Closes: https://lore.kernel.org/all/yq5ams2akznl.fsf@kernel.org/
+Assisted-by: Claude Opus 5.5 <noreply@anthropic.com>
+Link: https://lore.kernel.org/r/20260930135734.1013905-1-m.szyprowski@samsung.com
+Signed-off-by: Marek Szyprowski <m.szyprowski@samsung.com>
+[ sashal: Adapted the helper's attribute check to use force_dma_unencrypted() instead of the newer __DMA_ATTR_ALLOC_CC_SHARED flag, which this tree lacks. ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/wireless/nl80211.c | 9 ++++++++-
- 1 file changed, 8 insertions(+), 1 deletion(-)
+ kernel/dma/direct.c | 21 +++++++++++++++++----
+ 1 file changed, 17 insertions(+), 4 deletions(-)
 
-diff --git a/net/wireless/nl80211.c b/net/wireless/nl80211.c
-index d4b1e5dc5eb4f..429dba541cb88 100644
---- a/net/wireless/nl80211.c
-+++ b/net/wireless/nl80211.c
-@@ -6152,6 +6152,9 @@ nl80211_parse_mbssid_elems(struct wiphy *wiphy, struct nlattr *attrs,
- 		num_elems++;
- 	}
+diff --git a/kernel/dma/direct.c b/kernel/dma/direct.c
+index cc334eb94b33d..11960210266fb 100644
+--- a/kernel/dma/direct.c
++++ b/kernel/dma/direct.c
+@@ -181,6 +181,21 @@ static struct page *dma_direct_alloc_from_pool(struct device *dev, size_t size,
+ 	return page;
+ }
  
-+	if (!num_elems)
-+		return ERR_PTR(-EINVAL);
++/*
++ * Check if the allocation can skip the kernel mapping and return the page
++ * pointer as the cookie.
++ */
++static bool dma_direct_use_no_mapping(struct device *dev, unsigned long attrs)
++{
++	if (!(attrs & DMA_ATTR_NO_KERNEL_MAPPING))
++		return false;
++	if (force_dma_unencrypted(dev) || is_swiotlb_for_alloc(dev))
++		return false;
++	if (IS_ENABLED(CONFIG_ARCH_HAS_DMA_ALLOC) && !dev_is_dma_coherent(dev))
++		return false;
++	return true;
++}
 +
- 	elems = kzalloc(struct_size(elems, elem, num_elems), GFP_KERNEL);
- 	if (!elems)
- 		return ERR_PTR(-ENOMEM);
-@@ -6187,6 +6190,9 @@ nl80211_parse_rnr_elems(struct wiphy *wiphy, struct nlattr *attrs,
- 		num_elems++;
- 	}
+ static void *dma_direct_alloc_no_mapping(struct device *dev, size_t size,
+ 		dma_addr_t *dma_handle, gfp_t gfp)
+ {
+@@ -210,8 +225,7 @@ void *dma_direct_alloc(struct device *dev, size_t size,
+ 	if (attrs & DMA_ATTR_NO_WARN)
+ 		gfp |= __GFP_NOWARN;
  
-+	if (!num_elems)
-+		return ERR_PTR(-EINVAL);
-+
- 	elems = kzalloc(struct_size(elems, elem, num_elems), GFP_KERNEL);
- 	if (!elems)
- 		return ERR_PTR(-ENOMEM);
-@@ -6335,7 +6341,8 @@ static int nl80211_parse_beacon(struct cfg80211_registered_device *rdev,
- 			if (IS_ERR(rnr))
- 				return PTR_ERR(rnr);
+-	if ((attrs & DMA_ATTR_NO_KERNEL_MAPPING) &&
+-	    !force_dma_unencrypted(dev) && !is_swiotlb_for_alloc(dev))
++	if (dma_direct_use_no_mapping(dev, attrs))
+ 		return dma_direct_alloc_no_mapping(dev, size, dma_handle, gfp);
  
--			if (rnr && rnr->cnt < bcn->mbssid_ies->cnt) {
-+			/* RNR elements are only used with MBSSID elements */
-+			if (rnr->cnt < bcn->mbssid_ies->cnt) {
- 				kfree(rnr);
- 				return -EINVAL;
- 			}
+ 	if (!dev_is_dma_coherent(dev)) {
+@@ -314,8 +328,7 @@ void dma_direct_free(struct device *dev, size_t size,
+ {
+ 	unsigned int page_order = get_order(size);
+ 
+-	if ((attrs & DMA_ATTR_NO_KERNEL_MAPPING) &&
+-	    !force_dma_unencrypted(dev) && !is_swiotlb_for_alloc(dev)) {
++	if (dma_direct_use_no_mapping(dev, attrs)) {
+ 		/* cpu_addr is a struct page cookie, not a kernel address */
+ 		dma_free_contiguous(dev, cpu_addr, size);
+ 		return;
 -- 
 2.53.0
 
