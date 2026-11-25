@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795623872;
-	b=SQ7nhtF6nf2eTand0yD2erCmDUcOvxu2e0YDmxHkE3Vao8ZXpm/IwNzwkCMXqqlXEErp
-	 9V4J1qjzRyUs5UDXMD/wW7TMpXpqIky9wItDTxMRlQBKi7pZM22K3ZHR6U3uSY+aebBiO
-	 GX12htqPm+FS7peh6kL9BmFsIRN2RARoUsLbwhaXYxvh/K5nvC5Sb+kBMkxtnaoVfpago
-	 AjcrIy23zUdhEHe0KZ4fd2TgvepzxOPPmJyRbKsu0RgyvYDhgNE8nbUyK+9trWnf84RWk
-	 yD6YzGHhoPbU07mds9fg5YQcxlTOkHCb9ghtnkdlH0Ug6wk5ZlmLH71wH/HyNB0xjtA==
+	t=1795623875;
+	b=r/yKm2Dk2QHRgPdgOffQmXnia1OiVW9Roe3ovqFk1NIFo+CgOuvytYzrfLa8hQp3iBxg
+	 f2UD9SXtaoUeXsv0aq8yaIsTQF82z4zfybvu/R8867jMza9nmmeo4KVP0BW84/Le6qXV9
+	 550kH0Rp8f2a6N0mRsnEbzop3hsBoVKWmLYofZ9iB2WYnqskXaeozrSHQ01vau5PLLoeN
+	 s2uEtlgn51vO1xi9YG9kRFuXplmMv3xLTadM06Td9WBGk4/k5624ZWWnIzKMHEVcrZSwn
+	 OzPN/5DhtgTqtqgqsH+rXcyIwYvhoM8h52Bu3+RV0TO2QrdN8YMnoD1twn85iQpup7Q==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795623872;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795623875;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=GTHpbR2fxAeaZz6BiSFa47Ni1l5eWqAGtDtS3VnIIFI=;
-	b=C0e5IfADW2HM/hJ8chuT0v+T5yrk2zXpHb8ZvGgYITRN+XaXb11WQuUcpbcf/+bfCtL8
-	 w0zjRYEX2ZzS1XTwXeAKqFnyZ8wPmciI/6x/mEEoChr2mzUY4PAver4yeTiu3PA72dewL
-	 +kdGAhYF9LFAfJOMaXozq/W5nnyL+BzW3Ek/IJB7/righEZm0L2PDUrAWhFNvS4TvBwiT
-	 rueelDfXhc9yd7yrUZ9vTHsBM16/cJbYi75PRjc2E5PS/8mRS7yzUbtzruMqJ/cF9szen
-	 +zpp4BjDRAo1QJ35K//rpWu84x4aXnvxJaPjGyggu+aEgvY5AR3WCKaTvFUzB0TZkWw==
+	bh=kkCh1t6laxPHhpHX2WIMFbZ6xXCzotlafQu+yAz2SNg=;
+	b=KcSDBw9tUCffT6hKMs08DJfQjNkQrPKV3r89Y/zenqPHGV0RB7h8ryoBxFVj5UseEcdF
+	 zi6Vtc3WdDp2GqWtY6y6IBvEkm3aK22WftqU45gWMPiGi5OmXMeudDp30e/eFbTL4014F
+	 orXk/Ld8Ulj958h5/v+7ux4SVIlwz4397pE/wVMG1cpsDINQpIs0e/bTET0GivE7PwL0C
+	 MuI1TK8/ID9kW1DjNX4vuyRAbwCFiM1EKi912XO46wqqUCmI92SuR5YbHcPrAFsLStASy
+	 VpiapR2ArhMTdIAKP3L0p7k2C2ji5TZLA/XLmqFJlk1QFzqTeuYSipLRFZq2wt7blXw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=at7iBbza;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=0d3jzcFr;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8BF0E606A32C;
-	Wed, 25 Nov 2026 16:24:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 342E4606A31E;
+	Wed, 25 Nov 2026 16:24:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=at7iBbza
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3CA751F000C4;
-	Wed, 25 Nov 2026 16:24:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=0d3jzcFr
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7BEDB1F000C4;
+	Wed, 25 Nov 2026 16:24:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795623871;
-	bh=GTHpbR2fxAeaZz6BiSFa47Ni1l5eWqAGtDtS3VnIIFI=;
+	s=korg; t=1795623875;
+	bh=kkCh1t6laxPHhpHX2WIMFbZ6xXCzotlafQu+yAz2SNg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=at7iBbzaI4qukfyYWC7HagJ5OY99h9IikwkV5eHy42FJhZdtguvdsc7EzBychASET
-	 RK+7tbcfwEv+96QZMjZsfhqmR0HeABmE/J4t0x0LtfPLcAjPhL2kazzUu8JyCA9rDG
-	 2lexXt3vWdYooHZVTbPgYhE7ir1C/kcL7WMdLY+0=
+	b=0d3jzcFrg2no+a01qDwO1g95US3EnHi9AzrBKdlZLH9e6fJLQhNgmjpf6dP4u+s1J
+	 y/u7Eb4W3cIImihSDI8cry1LPtXN8cQd9So+NNV2rOKRT7KmjkW3FjcucUWGvH9oxq
+	 vE2L/0PVWze7xn2VS78hgjt4DkWp5FyzPeVlQ+js=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bas Nieuwenhuizen <bas@basnieuwenhuizen.nl>,
-	Faith Ekstrand <faith.ekstrand@collabora.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
+	Krittikun Wongnin <krittikunwongnin@gmail.com>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 004/816] drm/amdgpu: Check cs flags.
-Date: Wed, 25 Nov 2026 15:25:52 +0100
-Message-ID: <20261125143849.317812101@linuxfoundation.org>
+Subject: [PATCH 6.12 013/816] ACPI: PM: Add Acer Aspire A515-53G to dmi_leave_unused_power_resources_on[]
+Date: Wed, 25 Nov 2026 15:26:01 +0100
+Message-ID: <20261125143849.523686458@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143849.205329330@linuxfoundation.org>
 References: <20261125143849.205329330@linuxfoundation.org>
@@ -69,41 +68,80 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Bas Nieuwenhuizen <bas@basnieuwenhuizen.nl>
+From: Krittikun Wongnin <krittikunwongnin@gmail.com>
 
-[ Upstream commit f5ea64f9fcd921bc4e2307a262e19450b8a58524 ]
+[ Upstream commit 8eb2754ef96d77d870d6b1ef1e0e8470c892b6b4 ]
 
-Had no validation before. libdrm_amdgpu memsets this, even
-for the raw/raw2 functions.
+On the Acer Aspire A515-53G (Whiskey Lake + NVIDIA GeForce MX230), the
+dGPU behind root port RP05 (00:1c.4) falls off the bus during boot and
+is unusable until the next power cycle:
 
-We have a lot of functions touching the ioctl struct, no
-strong opinion on where this is placed, but I thought
-early would be good.
+  nvidia 0000:02:00.0: Unable to change power state from D3cold to D0, device inaccessible
+  NVRM: The NVIDIA GPU 0000:02:00.0 ... has fallen off the bus
 
-Signed-off-by: Bas Nieuwenhuizen <bas@basnieuwenhuizen.nl>
-Reviewed-by: Faith Ekstrand <faith.ekstrand@collabora.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-(cherry picked from commit 4d01e15e76358f60ef6734462d2b6d9972b9dfbc)
-Cc: stable@vger.kernel.org
+The firmware ships two SSDTs which both provide power management for
+the dGPU:
+
+ - One SSDT defines \_SB.PCI0.RP05.PC01 together with
+   RP05._PR0/_PR2/_PR3 = { PC01 }.
+
+ - A second SSDT defines \_SB.PCI0.RP05.PCRP (_STA initially One,
+   _OFF calls \_SB.PCI0.HGOF, which puts the link into L2/L3 and drops
+   the dGPU power enable GPIO) and its own RP05._PR0/_PR2/_PR3/_S0W.
+   The latter fail to load:
+
+     ACPI BIOS Error (bug): Failure creating named object [\_SB.PCI0.RP05._PR0], AE_ALREADY_EXISTS
+
+As a result PCRP is not referenced by any device and
+acpi_turn_off_unused_power_resources() turns it off right after the
+ACPI namespace scan. This cuts power to the dGPU, but PC01 still
+believes it is on, so its _ON method is a no-op when the PCI core later
+tries to bring the GPU back to D0.
+
+Windows does not turn off unused power resources, so the dGPU works
+there.
+
+Add the machine to dmi_leave_unused_power_resources_on[], like the
+THUNDEROBOT ZERO which has a similar SSDT bug. With this change the
+dGPU stays on the bus and the nvidia driver binds. Runtime PM of the
+dGPU is unaffected, as it is handled through PC01: with no driver
+bound and power/control set to auto, RP05 reaches D3cold and the GPU
+comes back to D0 on resume.
+
+Link: https://lore.kernel.org/r/CADS-TgDQ1G8vrTQLJeQ3RTBVFTyMe0C+5p2=UBKS=EFCDFuaxw@mail.gmail.com/
+Signed-off-by: Krittikun Wongnin <krittikunwongnin@gmail.com>
+[ rjw: Subject and changelog tweaks ]
+Link: https://patch.msgid.link/20261013074245.4327-1-krittikunwongnin@gmail.com
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/amdgpu/amdgpu_cs.c | 3 +++
- 1 file changed, 3 insertions(+)
+ drivers/acpi/power.c | 13 +++++++++++++
+ 1 file changed, 13 insertions(+)
 
-diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_cs.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_cs.c
-index 364fbaf4e0fa5..4ad34def4cd13 100644
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_cs.c
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_cs.c
-@@ -209,6 +209,9 @@ static int amdgpu_cs_pass1(struct amdgpu_cs_parser *p,
- 	int ret;
- 	int i;
+diff --git a/drivers/acpi/power.c b/drivers/acpi/power.c
+index aaa07997fdf31..d2c3ec958e4aa 100644
+--- a/drivers/acpi/power.c
++++ b/drivers/acpi/power.c
+@@ -1073,6 +1073,19 @@ static const struct dmi_system_id dmi_leave_unused_power_resources_on[] = {
+ 			DMI_MATCH(DMI_BOARD_NAME, "NLCC 001"),
+ 		},
+ 	},
++	{
++		/*
++		 * Acer Aspire A515-53G: Two SSDTs both define power resources
++		 * for the dGPU root port RP05 ('PC01' and 'PCRP'). Only PC01 ends
++		 * up in RP05's _PR0/_PR3, so 'PCRP' is shut down on
++		 * initialization, cutting power to the NVIDIA dGPU behind the
++		 * back of 'PC01' and making the dGPU unavailable.
++		 */
++		.matches = {
++			DMI_MATCH(DMI_SYS_VENDOR, "Acer"),
++			DMI_MATCH(DMI_PRODUCT_NAME, "Aspire A515-53G"),
++		},
++	},
+ 	{}
+ };
  
-+	if (cs->in.flags)
-+		return -EINVAL;
-+
- 	chunk_array = memdup_array_user(u64_to_user_ptr(cs->in.chunks),
- 					cs->in.num_chunks,
- 					sizeof(uint64_t));
 -- 
 2.53.0
 
