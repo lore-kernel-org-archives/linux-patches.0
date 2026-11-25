@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795621380;
-	b=1BTFHjgT6NyOCtGhbNRrxS4zs0O7mxqjUMae9PVDa4039IkyRk239e7O1MbFt7+tRQYD
-	 TGOL2Fr5rz6eZ/ny6mIIRX8TbXXgdouYoStuRVdG7GW6OhmcPlZD2RIsGJ1h/wQwOsp1K
-	 XMcvlunSjZeFoa+o0ntJDFdcVtatznQtKXPwBEACW0E8wTkceM8Bi/88AhYzCZ6yD/ZVf
-	 PCfxDcWMHCL/EHywJiah9Q4088eZNC1pafipt/POogKKU/YHewNadXY4b0/NJo7iS38ip
-	 wFg5RBJ02FhRKmCDp4WoQKXx10RpFfNXa+cmSXxQAW/fVP20kxje7iRMeO3y+mh5dYQ==
+	t=1795621383;
+	b=1mKm/NNm8Vz8qUACb01fGROBRRnFZQPPyCyUJB+1lnu+pN7QKKcc/Z+U+CdVP/FX/kMR
+	 iSa/DE9fyIlWxw8MJ5ClfULEjkhwLwgKS3aPBe4nJsCKXs+VIOvPXu0SbEMigval/bnP1
+	 IbjTPtW71vIYk+jJCzzTvEKsOsnhdF0ELmnDhB+FOo4O6LFHuIix+RE7KOubjQxtpOWUG
+	 K728CyizfvqKoA8tjFLmOtOhRO4tiYigcQ9jCTYJ+LwzfkC/jKDWfx4geYMC7VCdndgUD
+	 EPtUXGcdbccfRYWkOrtITeY5KCp7VJqhXLmvYyPbH4WNgP62JB57LJKiR4uXZhu+VTw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795621380;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795621383;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=3RQTcLIAlXOexf0eY+ClqUrbMqj6mh7DHf5pzsMjqCc=;
-	b=3NLP+8U+KvTtQw0Xd+IppK9beLY7AQymgNPUyDdcB0PJNgS3gP4TOgfzFZPPMP9XKL7l
-	 3aJ/IkJYp/nmCKJUBS3O3uyLyzXytD20RgbZ2sGHIoZJFZ7aVojBLQXhMO8gsCFyvmywE
-	 nYzlFh7FhbSCpBZZKgsm6CJTToktioXMfCkOCXg5K4yk+vrPvpcMI+sPvxeKhw4kmpwmH
-	 JGAl2OjAvhuSHgTXlyMlG2CkWCYUNMi1J4v+bcojjpINlzdRigMZMg2OUveS1q0B6wwFP
-	 U54isbR8PnkdLkrAe3agzIj6nNaUf1Mkp2bw4COOhwOAUEFyZou4/0RjVlUVfdjchTw==
+	bh=C/IIwo4IS67A3HIENnDFwCmWrjIeYVXsBoW/fsm/I9M=;
+	b=2FrfLhV8vjP8lmgjXlYuHwYAIzu3aogwTDgWD234s+feIcAwtfGD/Ifa2FzCvKA3+veB
+	 EdClV04bSsEBl5ox/Vzh488iDuOKdlSM7VBe4i+bXfsz22w7xkeZGGjn7v632JBaWby86
+	 nMNwWEAFu1vyDLwDhvFS4EUYebTETU+QKGsPn0ukUARqKBDxzsgCygzAgp7ntv0wbHImR
+	 Q96FWrw9cmpLWxZHvFevQVO5LAG6qvNnMg/Yc2cL6wX/zrn+8BSzrPifMNpuBohkCYIrQ
+	 uZ9G3FA3e4JOFQWpqibPJhu1jcMgj7agVksItprBXVaOiKELNubfm3JKNeN8eKdwMyg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=GMKNIEJC;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="r/sVejAU";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 59FB7606BF77;
-	Wed, 25 Nov 2026 15:43:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 771C7606A6A7;
+	Wed, 25 Nov 2026 15:43:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=GMKNIEJC
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4EBA51F00A3E;
-	Wed, 25 Nov 2026 15:42:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=r/sVejAU
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6FF8C1F000C0;
+	Wed, 25 Nov 2026 15:43:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795621379;
-	bh=3RQTcLIAlXOexf0eY+ClqUrbMqj6mh7DHf5pzsMjqCc=;
+	s=korg; t=1795621383;
+	bh=C/IIwo4IS67A3HIENnDFwCmWrjIeYVXsBoW/fsm/I9M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=GMKNIEJCKrNImjilMZtVvssVw9j7c3KW+ep/gdRu1t2MlTYUq+hsOzalWY025OXkj
-	 cLrGwLtaTaydn5QPA/HL3JDl1yMPeYZcnQMCm1i4t2PRjpznZU6FNVDgwYz3KmR+hK
-	 XxBxImnSGllmyBpiozWsjNtdVGcHoulg4yUKnUGk=
+	b=r/sVejAUT8UMcTf5LmRDHg/77KjP88jmE6gENYsjcatte45VQtAKfOEYeFiWKMVMB
+	 2M7g8cFjMXQIHJ6T//JBgZyIKo9khu7/vDxL/Tpuj4+ISB6CmWn/DmN9umElcAosZA
+	 dT/dAj3MihlYukxnLPI/oER4h+vVPJbYluyF77ig=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Linfeng Sun <linfeng.sun.dev@gmail.com>,
-	"Michael S. Tsirkin" <mst@redhat.com>,
+	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
+	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 205/990] vhost-scsi: reject delayed virtqueue setup
-Date: Wed, 25 Nov 2026 15:26:12 +0100
-Message-ID: <20261125143826.894862840@linuxfoundation.org>
+Subject: [PATCH 6.18 163/990] regulator: qcom_spmi: dont take a sleeping lock in the SAW IPI
+Date: Wed, 25 Nov 2026 15:25:30 +0100
+Message-ID: <20261125143825.912527442@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143822.072087159@linuxfoundation.org>
 References: <20261125143822.072087159@linuxfoundation.org>
@@ -68,67 +69,122 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Linfeng Sun <linfeng.sun.dev@gmail.com>
+From: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
 
-[ Upstream commit a543346b96a174fcee6812ac2764acc8dc993358 ]
+[ Upstream commit 053c50a7052549aab0d310ad505947db3e211592 ]
 
-vhost_scsi_set_endpoint() allocates command pools only for I/O
-virtqueues that are already set up, but publishes the backend for every
-virtqueue. Userspace can complete a skipped queue after attaching the
-endpoint, then kick it with scsi_tags uninitialized and trigger the
-alloc_hint warning in sbitmap_get().
+The SAW voltage change runs on CPU 0 from an IPI, but it reaches the SAW
+registers through the syscon regmap, which is protected by a spinlock_t.
+That is a sleeping lock on PREEMPT_RT, and lockdep complains as soon as
+VDD_APCC actually changes voltage:
 
-Delayed virtqueue setup is not supported. Leave skipped I/O virtqueues
-inactive and reject changes to the vring size or addresses while an
-endpoint is attached. Userspace must clear the endpoint before changing
-the vring configuration.
+  BUG: Invalid wait context
+  ...
+  regmap_lock_spinlock+0x18/0x30
+  regmap_read+0x3c/0x78
+  spmi_saw_set_vdd+0x50/0x1ac
+  __flush_smp_call_function_queue+0x1ac/0x334
 
-I found this bug myself, though the patch was written with AI assistance.
+Map the SAW with a regmap of our own that uses a raw spinlock, and fail
+the probe when that cannot be done instead of carrying an error pointer
+around as the SAW regmap.
 
-Fixes: 25b98b64e284 ("vhost scsi: alloc cmds per vq instead of session")
-Assisted-by: OpenAI-Codex:GPT-5.6
-Signed-off-by: Linfeng Sun <linfeng.sun.dev@gmail.com>
-Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
-Message-ID: <20261010-fix-warning-in-sbitmap_get-v3-1-33de562d1359@gmail.com>
+Fixes: 0caecaa87202 ("regulator: qcom_spmi: Add support for SAW")
+Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+Link: https://patch.msgid.link/20261019-fix-qcom-saw-v1-3-9c7ba3fc2493@oss.qualcomm.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/vhost/scsi.c | 15 ++++++++++++---
- 1 file changed, 12 insertions(+), 3 deletions(-)
+ drivers/regulator/Kconfig               |  1 +
+ drivers/regulator/qcom_spmi-regulator.c | 35 +++++++++++++++++++------
+ 2 files changed, 28 insertions(+), 8 deletions(-)
 
-diff --git a/drivers/vhost/scsi.c b/drivers/vhost/scsi.c
-index ba5e454ef2667..cec46ed853572 100644
---- a/drivers/vhost/scsi.c
-+++ b/drivers/vhost/scsi.c
-@@ -2109,6 +2109,9 @@ vhost_scsi_set_endpoint(struct vhost_scsi *vs,
+diff --git a/drivers/regulator/Kconfig b/drivers/regulator/Kconfig
+index d84f3d054c59d..a504a20f994fa 100644
+--- a/drivers/regulator/Kconfig
++++ b/drivers/regulator/Kconfig
+@@ -1149,6 +1149,7 @@ config REGULATOR_QCOM_SMD_RPM
+ config REGULATOR_QCOM_SPMI
+ 	tristate "Qualcomm SPMI regulator driver"
+ 	depends on SPMI || COMPILE_TEST
++	select REGMAP_MMIO
+ 	help
+ 	  If you say yes to this option, support will be included for the
+ 	  regulators found in Qualcomm SPMI PMICs.
+diff --git a/drivers/regulator/qcom_spmi-regulator.c b/drivers/regulator/qcom_spmi-regulator.c
+index c1a41ce70b363..a04ddb1eac940 100644
+--- a/drivers/regulator/qcom_spmi-regulator.c
++++ b/drivers/regulator/qcom_spmi-regulator.c
+@@ -12,13 +12,13 @@
+ #include <linux/bitops.h>
+ #include <linux/slab.h>
+ #include <linux/of.h>
++#include <linux/of_address.h>
+ #include <linux/of_device.h>
+ #include <linux/platform_device.h>
+ #include <linux/ktime.h>
+ #include <linux/regulator/driver.h>
+ #include <linux/regmap.h>
+ #include <linux/list.h>
+-#include <linux/mfd/syscon.h>
+ #include <linux/io.h>
  
- 		for (i = 0; i < vs->dev.nvqs; i++) {
- 			vq = &vs->vqs[i].vq;
-+			if (i >= VHOST_SCSI_VQ_IO && !vs->vqs[i].scsi_cmds)
-+				continue;
+ /* Pin control enable input pins. */
+@@ -1335,6 +1335,14 @@ static irqreturn_t spmi_regulator_vs_ocp_isr(int irq, void *data)
+ 
+ static struct regmap *saw_regmap;
+ 
++static const struct regmap_config saw_regmap_config = {
++	.name = "saw",
++	.reg_bits = 32,
++	.val_bits = 32,
++	.reg_stride = 4,
++	.use_raw_spinlock = true,
++};
 +
- 			mutex_lock(&vq->mutex);
- 			vhost_vq_set_backend(vq, vs_tpg);
- 			vhost_vq_init_access(vq);
-@@ -2478,10 +2481,16 @@ vhost_scsi_ioctl(struct file *f,
- 	default:
- 		mutex_lock(&vs->dev.mutex);
- 		r = vhost_dev_ioctl(&vs->dev, ioctl, argp);
--		if (r == -ENOIOCTLCMD)
--			r = vhost_vring_ioctl(&vs->dev, ioctl, argp);
--		else
-+		if (r == -ENOIOCTLCMD) {
-+			if (vs->vs_tpg &&
-+			    (ioctl == VHOST_SET_VRING_NUM ||
-+			     ioctl == VHOST_SET_VRING_ADDR))
-+				r = -EBUSY;
-+			else
-+				r = vhost_vring_ioctl(&vs->dev, ioctl, argp);
-+		} else {
- 			vhost_scsi_flush(vs);
+ static void spmi_saw_set_vdd(void *data)
+ {
+ 	u32 vctl, data3, avs_ctl, pmic_sts;
+@@ -2504,7 +2512,8 @@ static int qcom_spmi_regulator_probe(struct platform_device *pdev)
+ 	const char *name;
+ 	struct device *dev = &pdev->dev;
+ 	struct device_node *node = pdev->dev.of_node;
+-	struct device_node *syscon, *reg_node;
++	struct device_node *saw, *reg_node;
++	void __iomem *saw_base;
+ 	struct property *reg_prop;
+ 	int ret, lenp;
+ 	struct list_head *vreg_list;
+@@ -2523,12 +2532,22 @@ static int qcom_spmi_regulator_probe(struct platform_device *pdev)
+ 	if (!reg)
+ 		return -ENODEV;
+ 
+-	syscon = of_parse_phandle(node, "qcom,saw-reg", 0);
+-	if (syscon) {
+-		saw_regmap = syscon_node_to_regmap(syscon);
+-		of_node_put(syscon);
+-		if (IS_ERR(saw_regmap))
+-			dev_err(dev, "ERROR reading SAW regmap\n");
++	saw = of_parse_phandle(node, "qcom,saw-reg", 0);
++	if (saw) {
++		saw_base = devm_of_iomap(dev, saw, 0, NULL);
++		of_node_put(saw);
++		if (IS_ERR(saw_base))
++			return dev_err_probe(dev, PTR_ERR(saw_base),
++					     "failed to map the SAW\n");
++
++		saw_regmap = devm_regmap_init_mmio(dev, saw_base,
++						   &saw_regmap_config);
++		if (IS_ERR(saw_regmap)) {
++			ret = PTR_ERR(saw_regmap);
++			saw_regmap = NULL;
++			return dev_err_probe(dev, ret,
++					     "failed to set the SAW regmap up\n");
 +		}
- 		mutex_unlock(&vs->dev.mutex);
- 		return r;
  	}
+ 
+ 	for (; reg->name; reg++) {
 -- 
 2.53.0
 
