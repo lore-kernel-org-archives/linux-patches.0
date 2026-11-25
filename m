@@ -1,54 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795625530;
-	b=Z7/zlt2jVUX9bkXXoR5LfdfWu8g7Osz+1SUgacarBrLOIQ3Nf3jHtB7LjLa3GQblUkm5
-	 kyzkzicJjIIlQxRxAXc7cXm/QMP5Bbcw2+QqH8Gnlzz/pdNm3SZwLlthVRGMvp+aSrZfA
-	 AvLYLd2sSv/vtl0ecV4r6FEfbAVmWdTXuWNXRFcQx4zA06UUhBvaOQ2CVEr3RQCS/IYEW
-	 edNzeeDFQ39pJJAYQTWbRKLeLlxBMTkpuIBse0FhLKhQbbnq+wNmCz/AMTvQrLMaPnq1r
-	 6oFazyDqKytmFTePIbOgEU9K0RC9y+zkPCzPhpIRL6XAwRmAcoUwyIHOp/hadtDpp2g==
+	t=1795625533;
+	b=ZM/Y3KWxOVD7eI1qct4SYwF5JrDFSl1Kgn2NNPtrVgfUCw5mPA923fg8x09UcmH55Wjz
+	 o4bp8iAu0ZoAG6yK9VKYCypxkJ/jcTfvt5pkyGQ/LzmigHFp34fB+4nVKrtZlAcgO3GMD
+	 vv0j5HDNqAT7kPe9eiqxLShnYbTYD5UXyxzT6tQAxuW8u3iiLrOzVDv9+s1a/Z3VpSnY+
+	 ZXP8LsH3/EcOcKEtkt5GH2wRe/15p8Bj6K+tU6If3XzH4umPXsDJK4ruVvsTumExXVYsb
+	 wSpXn3RQxsJAbZk+IOwQRP1FyB8d6N7vvcXkVRhjsqiBpfAOce1qmu2Rom/gCHA+JUw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795625530;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795625533;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=fW0l/Xb4/Pj4Hs9QTEHxqIxAVvr14XFRaLm4q/Rk12w=;
-	b=4729PdbJLLquwmubpHOWDnrAQpx+L98vsi5Pq8TmcYy2LWOGTvT3nb6j5K/ApzNc821F
-	 5b4R3QAYFIYDske97R9mmYTdTTMaONXxNBN2LwEur6sqzNtMFtApcconcFtGLVMOpNg9v
-	 Sia7ftyPtm5v5rvU7fawqPDCFQUxrtQXPEi+uOghtUH0xYJ0cm5KypHQ+WuYelzD1MliL
-	 55l4waUzoTKsBEOxmCsSIygRgrbASoI5ORIpTNY8Ds8XZnGPafFdPTfnHMRW+WcwLgfXe
-	 jG4aLOCBbBXZs5x7MY8smCzFYP6jct0xcMW02je7D7Yl/orgqKMEuJgmaIKEvoObD3Q==
+	bh=v0ySe8rQVFZjfVMjBKYJeZfPyutTO9aCsZvq51mpp4A=;
+	b=5Vwzuf8oSsWEFEVLwVPrKYEKJIC90u5kIQ+HP2lwrZAc3cgZ7ao5g7aCNnHqzHitGG1e
+	 wIPExONl7eeT/fU1AsZ0rcXqve3wnbzXNX3hHswTC7MBA9f8xa/Bear/mEycyqKw9Fe9u
+	 FNRHVBnfKiZ1drEmwfblYBvyxETvNLHQeg/oL2m4wafYouJmZpyu2AIRTNkf9wT6/K8VB
+	 +Gp8CALYYBoVCQ628xMUocMTDvQvcQqiSAmSRYKvd57pYb8ytOsjZgEzbg2woCyoNE1yD
+	 pjKapGU4RG6XR+8PKBt5d+d7FoiKb/0+DZAyDFDdQX/1UEUZiTq+JDAVLlLPZk46d/g==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=DjBHi+E7;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Z5BlH8n7;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E41AC606A321;
-	Wed, 25 Nov 2026 16:52:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EC3B7606A31E;
+	Wed, 25 Nov 2026 16:52:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=DjBHi+E7
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 206731F000C6;
-	Wed, 25 Nov 2026 16:52:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Z5BlH8n7
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0C2901F000C4;
+	Wed, 25 Nov 2026 16:52:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795625529;
-	bh=fW0l/Xb4/Pj4Hs9QTEHxqIxAVvr14XFRaLm4q/Rk12w=;
+	s=korg; t=1795625532;
+	bh=v0ySe8rQVFZjfVMjBKYJeZfPyutTO9aCsZvq51mpp4A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=DjBHi+E7asjxh3GPakf2pG/nFzmE4o7rgzwDPdAhwiNsHevmMfaiogoL0VBNItQB3
-	 kO6+LcK6HVr8tJWNByTElpM4oyhAuDz2ND4UajpeVmeVFc0GtpAjSqMMSQsMmOIrlm
-	 rRMneonExWIukLksdBgXh4+rYK+XNCe5uDioxJRI=
+	b=Z5BlH8n7JYBtyqFx2nXkiRxAir2Ur6mSlwPnnutzZwkvgwtg5LqyB7W6VdGxEEQnN
+	 yAq6PXlxF9YrOib/sgIqtScSCx2mVSRE1xCJqjIvEVQoFA9BQlMpFWq8DfYoXM4Qwd
+	 8sQDKzncAMtNzREYtso+gwrkmWLdyznWTDrsJQwE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+1269fe6cc2016008124e@syzkaller.appspotmail.com,
-	Kuniyuki Iwashima <kuniyu@google.com>,
-	Naman Gulati <namangulati@google.com>,
+	Michael Chan <michael.chan@broadcom.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 546/816] netdev-genl: ignore NETDEV_UNREGISTER rebroadcasts
-Date: Wed, 25 Nov 2026 15:34:54 +0100
-Message-ID: <20261125143901.823820194@linuxfoundation.org>
+Subject: [PATCH 6.12 547/816] eth: bnxt: dont leak buffers when XDP agg buffer allocation fails
+Date: Wed, 25 Nov 2026 15:34:55 +0100
+Message-ID: <20261125143901.847435346@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143849.205329330@linuxfoundation.org>
 References: <20261125143849.205329330@linuxfoundation.org>
@@ -70,104 +68,82 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Naman Gulati <namangulati@google.com>
+From: Jakub Kicinski <kuba@kernel.org>
 
-[ Upstream commit fd0909e963ed8f36967bd072ed484be7babe46de ]
+[ Upstream commit 1b2f02fb4ba92d01603c8261c94be8d348de65b0 ]
 
-netdev_wait_allrefs_any() re-sends NETDEV_UNREGISTER every second while
-it waits for the last references on a device to be dropped. By then
-netdev_run_todo() has already marked the device NETREG_UNREGISTERED and
-RTNL has been dropped at least once since the initial notification sent
-by unregister_netdevice_many_notify().
+If a replacement agg buffer can't be allocated for a packet received
+with XDP attached, bnxt_rx_pkt() drops the packet without returning
+its head buffer to the ring. The head buffer leaks, and since rx_prod
+still advances, the device gets a BD with a stale DMA address which
+points at a buffer the driver no longer owns. When that BD completes
+the driver finds no buffer in the slot.
 
-netdev_genl_netdevice_event() does not tell these rebroadcasts apart
-from the initial notification and sends a NETDEV_CMD_DEV_DEL_NTF
-multicast for each of them. At best this spams NETDEV_NLGRP_MGMT
-listeners with duplicate notifications; at worst the pernet state of
-the netns the device belongs to is already gone and the handler
-dereferences a NULL pointer.
+The agg buffers consumed before the failing one have already been
+replaced on the agg ring, they are referenced only by the frags of
+the xdp_buff, which nobody frees. bnxt_xdp_buff_frags_free() would
+skip them since the frags flag is set only on success, so set it
+upfront.
 
-default_device_exit_batch() only unregisters the devices still listed
-in the exiting netns; it does not wait for in-flight unregistrations of
-devices that were already unlisted (the barrier doing that was removed
-by commit 8a4fc54b07d7 ("net: get rid of rtnl_lock_unregistering()")).
-So when a device is unregistered by something other than the
-cleanup_net() of its own netns while references on it are still held,
-e.g. a veth whose peer in another netns gets deleted, and that netns
-exits while the device is stuck in netdev_wait_allrefs_any(), the
-remaining pernet exit handlers run and genl_pernet_exit() sets
-net->genl_sock to NULL. The next rebroadcast then crashes in
-genl_has_listeners():
+Pointed out in LLM review of the first patch of the series.
+Tested on a BCM57504 at MTU 9000 with a frags-capable XDP_PASS
+program, receiving 8000B ICMPv6 echo requests (a head and two agg
+buffers each) while page_pool_alloc_netmems() called from
+bnxt_rx_agg_netmems_xdp() failed half of the time (bpftrace
+override()). 44.7k packets were dropped, the page pools' inflight
+count stayed flat and there were no KASAN or DEBUG_PAGEALLOC splats.
 
-  BUG: KASAN: null-ptr-deref in netlink_has_listeners+0x3d/0x3f0 net/netlink/af_netlink.c:1388
-  Read of size 8 at addr 0000000000000578 by task syz.0.0/5325
-  Call Trace:
-   <TASK>
-   netlink_has_listeners+0x3d/0x3f0 net/netlink/af_netlink.c:1388
-   genl_has_listeners include/net/genetlink.h:644 [inline]
-   netdev_genl_dev_notify+0x161/0x450 net/core/netdev-genl.c:93
-   netdev_genl_netdevice_event+0x98/0x3c0 net/core/netdev-genl.c:1491
-   notifier_call_chain+0x1a5/0x3d0 kernel/notifier.c:85
-   netdev_wait_allrefs_any net/core/dev.c:11690 [inline]
-   netdev_run_todo+0x731/0x1060 net/core/dev.c:11808
-   rtnl_unlock net/core/rtnetlink.c:157 [inline]
-   rtnl_dellink+0x68f/0x810 net/core/rtnetlink.c:3707
-
-syzbot hit this by moving one end of a veth pair into a short-lived
-netns while netdevsim's deferred FIB event processing still held a
-reference on it, and then deleting the other end (repro [1]). While the
-source of this bug is netdevsim deferring FIB processing for and holding
-onto the device reference for O(seconds) which is being fixed
-separately [2], any driver may introduce such a delay and trigger the
-null-ptr-deref.
-
-Skip the rebroadcasts, which are the only NETDEV_UNREGISTER events
-delivered with reg_state == NETREG_UNREGISTERED. The notifications sent
-by unregister_netdevice_many_notify() and, for a device leaving a netns,
-by __dev_change_net_namespace() are issued under RTNL in the same
-critical section that unlists the device, before its netns can be torn
-down, and keep being handled. This mirrors what ip6_route_dev_notify()
-already does to cope with the rebroadcasts.
-
-This change should not break the UAPI spec as it defines dev-del-ntf as
-a "Notification about device disappearing." which is a single event. The
-rebroadcast in netdev_wait_allrefs_any() exists to re-kick in-kernel
-subsystems holding references; netdev-genl happens to be on the notifier
-chain and forwards it.
-
-[1] https://gist.github.com/NamanGulati/2d1b49b8757f9a88b0bd6e55018c02ae
-[2] https://lore.kernel.org/r/20261023191517.607834-1-kuniyu@google.com
-
-Fixes: d3d854fd6a1d ("netdev-genl: create a simple family for netdev stuff")
-Reported-by: syzbot+1269fe6cc2016008124e@syzkaller.appspotmail.com
-Closes: https://lore.kernel.org/netdev/6adf9f64.6200f071.51519.0ed1.GAE@google.com/
-Reviewed-by: Kuniyuki Iwashima <kuniyu@google.com>
-Signed-off-by: Naman Gulati <namangulati@google.com>
-Link: https://patch.msgid.link/20261026221306.3151025-1-namangulati@google.com
+Fixes: 4c6c123c9af9 ("bnxt: adding bnxt_rx_agg_pages_xdp for aggregated xdp")
+Reviewed-by: Michael Chan <michael.chan@broadcom.com>
+Link: https://patch.msgid.link/20261027234940.1267225-4-kuba@kernel.org
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-[ sashal: Added the upstream guard and comment to the NETDEV_UNREGISTER case, but without the netdev_lock()/netdev_unlock() context lines, which this tree lacks. ]
+[ sashal: Replaced netmem-based helper names and &bnxt_xdp.xdp with the page-based __bnxt_rx_agg_pages()/bnxt_rx_agg_pages_xdp() calls and the local &xdp variable. ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/core/netdev-genl.c | 6 ++++++
- 1 file changed, 6 insertions(+)
+ drivers/net/ethernet/broadcom/bnxt/bnxt.c | 17 +++++++++++------
+ 1 file changed, 11 insertions(+), 6 deletions(-)
 
-diff --git a/net/core/netdev-genl.c b/net/core/netdev-genl.c
-index 12c6f7d5add09..7578686165515 100644
---- a/net/core/netdev-genl.c
-+++ b/net/core/netdev-genl.c
-@@ -897,6 +897,12 @@ static int netdev_genl_netdevice_event(struct notifier_block *nb,
- 		netdev_genl_dev_notify(netdev, NETDEV_CMD_DEV_ADD_NTF);
- 		break;
- 	case NETDEV_UNREGISTER:
-+		/* netdev_wait_allrefs_any() rebroadcasts NETDEV_UNREGISTER
-+		 * while waiting for the last references to be dropped; the
-+		 * netns may already be torn down by then. Notify only once.
-+		 */
-+		if (READ_ONCE(netdev->reg_state) == NETREG_UNREGISTERED)
-+			break;
- 		netdev_genl_dev_notify(netdev, NETDEV_CMD_DEV_DEL_NTF);
- 		break;
- 	case NETDEV_XDP_FEAT_CHANGE:
+diff --git a/drivers/net/ethernet/broadcom/bnxt/bnxt.c b/drivers/net/ethernet/broadcom/bnxt/bnxt.c
+index 5d6f24044fb63..51272fb72dca6 100644
+--- a/drivers/net/ethernet/broadcom/bnxt/bnxt.c
++++ b/drivers/net/ethernet/broadcom/bnxt/bnxt.c
+@@ -1297,16 +1297,19 @@ static u32 bnxt_rx_agg_pages_xdp(struct bnxt *bp,
+ 	struct skb_shared_info *shinfo = xdp_get_shared_info_from_buff(xdp);
+ 	u32 total_frag_len = 0;
+ 
+-	if (!xdp_buff_has_frags(xdp))
++	if (!xdp_buff_has_frags(xdp)) {
++		xdp_buff_set_frags_flag(xdp);
+ 		shinfo->nr_frags = 0;
++	}
+ 
+ 	total_frag_len = __bnxt_rx_agg_pages(bp, cpr, shinfo,
+ 					     idx, agg_bufs, tpa, xdp);
+-	if (total_frag_len) {
+-		xdp_buff_set_frags_flag(xdp);
+-		shinfo->nr_frags = agg_bufs;
+-		shinfo->xdp_frags_size = total_frag_len;
++	if (!total_frag_len) {
++		bnxt_xdp_buff_frags_free(cpr->bnapi->rx_ring, xdp);
++		return 0;
+ 	}
++	shinfo->nr_frags = agg_bufs;
++	shinfo->xdp_frags_size = total_frag_len;
+ 	return total_frag_len;
+ }
+ 
+@@ -2179,8 +2182,10 @@ static int bnxt_rx_pkt(struct bnxt *bp, struct bnxt_cp_ring_info *cpr,
+ 			u32 frag_len = bnxt_rx_agg_pages_xdp(bp, cpr, &xdp,
+ 							     cp_cons, agg_bufs,
+ 							     false);
+-			if (!frag_len)
++			if (!frag_len) {
++				bnxt_reuse_rx_data(rxr, cons, data);
+ 				goto oom_next_rx;
++			}
+ 
+ 		}
+ 		xdp_active = true;
 -- 
 2.53.0
 
