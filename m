@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795621757;
-	b=2d/+UhwCIMOcQfV4NoJj/d8WbIUujd02kGdCUyABqDISHurD815C7z/teW+69OBwMyQ6
-	 PcnxAt+NJKEZCaPInI5VUYXp5RN2rotJ8EzjirhH7gXMRHcI6lKijHE/bmqn/5UNNs8Nf
-	 Yl3CIV53PMyqhb8MoPLvgQGQpnh0LUBAGSe8i/WgGnMwXNhWUgQoHNdR5uxz5RU0xkl3X
-	 ArOuISOllpcK+vpeNmpQQOhg8oPASuc7+KaTuZL184jwxuMNQ2cCB/FI0zeOVUbkoyu61
-	 8iOSjWaxDRaSsDdB/5kQl0k1TLk5GWM3hhPMvg9YdOJu3BuuI07zaNDlkALybfJpxug==
+	t=1795621761;
+	b=3avmDCW3ASBjNNiRW2k3uo/8uIwDNLyWYFewYVJ1yqSmVDdmodjm1P7MgajXCy6naViV
+	 t+tFxVts+mbgHQ2fXN5zmYleM5gXOsQ4X+d4+kTkHghBbWkHfcA6W2yCFCN8GRIeydHks
+	 KFpRC5vYuA4JwO5nL8VGpVVywWRfiyZBV2qY0HL2bLtH6ZQ3bulplgPVxFsBiivY/UMVR
+	 IiNqnyx9CXhWOfatk9n0lylVRQ4SpXJWOUL2IHHWHRoN4yLahTYvP3GTQFk0XVGPPqHn0
+	 YOhlywhWvEOZNtocoPTfVWlDdz2j/Q4ATyW+FhXDz46M6GN64sXw698i2Zwcrk+VMRg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795621757;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795621761;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=dHlUmh3pOgQLcq2eu/yguJQexZrSoJFB26XGTReAPrc=;
-	b=CjMQYQW5Vc9zjvneHZzTI/nkdVmWM8doNxXWTLGB5lFBVL6fRQ+2o8VS+wpY2Zpw0Qig
-	 tT/5UEw5k9BV0lqepGGX6alL7nSG8YD/+PyEP4I/guQqXKhW58aflpDHUNirvju6+xRUu
-	 6ZfeSHNY092U6W1q7X/S33z+jipxDDSGOdnDxvBdr4TFTSaJkH51SbaUbeM5yiBCkk+7r
-	 9GZuj7t4mcnfzihJP/b2wAlwm+YtNiD8o2kMeUEjcUHbqV40roiLgF7fNzbnHYgrfAjob
-	 /YjuNh8QwwaajIHgT1/ezaWXPAfaj9A6VjG89m8ysF5BqK8FmoYB7/ra7WRVo5hFYOA==
+	bh=SLfT3XM8X+xZDR/3fxwolxXnXCVE46VRd2BEbUnwV2k=;
+	b=Wt+iWzflYHzJXwyjr1LoyZYi3swr0z2jsJqpoQolYkpAqChGgrWK7ZmgNv+Z02vIqrRm
+	 WCrDopex9qjbVBM0oZG1gaFHj1ADSqfWkf15A0HGgdARpiBU2plwT+wfqDi4qJaKKrvD8
+	 M+Fy6fYKfJ437jl1TnjjpMnxu/dKxptyShaJvg1rf4VFzQD+CWymREZ8QKhSa5bS5Y+x5
+	 O1+sp/+XSY2XAz7Rfoi7RXLpqwpWpdR59Z72XCdG6fPf6DqVX3YznO+zngqsvQZBGpQnq
+	 KqIZWB3dxAbO/pgENhhpqhIAWkrY8+QQX6qHYrDbZBTD3rK7Ak3OLDVrijM8XGhabVg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=yTt1z7sW;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=z0nPAv2j;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C72AF606A329;
-	Wed, 25 Nov 2026 15:49:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EA64B606A336;
+	Wed, 25 Nov 2026 15:49:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=yTt1z7sW
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 09B391F000C0;
-	Wed, 25 Nov 2026 15:49:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=z0nPAv2j
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F3F621F000ED;
+	Wed, 25 Nov 2026 15:49:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795621757;
-	bh=dHlUmh3pOgQLcq2eu/yguJQexZrSoJFB26XGTReAPrc=;
+	s=korg; t=1795621760;
+	bh=SLfT3XM8X+xZDR/3fxwolxXnXCVE46VRd2BEbUnwV2k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=yTt1z7sWhcTIY2apvsy/ArmAmYNN7Afy0XZkhqGaC7tpCbEv03Mw0x785aiU23ZzX
-	 l+S3vB5hGjaCts6AfVspDfsK4lGjiIrJdYBxNv82NZNIC9IYq7sUB/Gja0xbBWdER7
-	 w4zPCAnbMVwniFhQNlQTkudHccuhj+Ttjfl9K8To=
+	b=z0nPAv2jKeUFTECFXjkC7P3cmGaWYZHRuV/XQOz2sLbO1KhP1z6V/LKRqEltg8tEg
+	 KZQvBKFTNS+QMt0sGjjr7LfD5QJfJukg+kl4ewOChbGzBqZncRHXM2GS6rK9TpzLN1
+	 GqXI10zPXYDTKTs6m7qPO67sykKYf/3wjkAnmspI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Prathamesh Deshpande <prathameshdeshpande7@gmail.com>,
-	Tariq Toukan <tariqt@nvidia.com>,
+	Anil Kaushik <anilkaushikwireless@gmail.com>,
+	Simon Horman <horms@kernel.org>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 327/990] net/mlx5e: IPoIB, Fix QPN lookup race
-Date: Wed, 25 Nov 2026 15:28:14 +0100
-Message-ID: <20261125143829.748059722@linuxfoundation.org>
+Subject: [PATCH 6.18 328/990] netlink: Do not call the unbind callback with the table locked
+Date: Wed, 25 Nov 2026 15:28:15 +0100
+Message-ID: <20261125143829.771249606@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143822.072087159@linuxfoundation.org>
 References: <20261125143822.072087159@linuxfoundation.org>
@@ -69,125 +69,54 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Prathamesh Deshpande <prathameshdeshpande7@gmail.com>
+From: Anil Kaushik <anilkaushikwireless@gmail.com>
 
-[ Upstream commit 29066b0fc046a2965129a74325b98d9abb4647a9 ]
+[ Upstream commit a36b9e205cb3c452ab96cc783e63465d466fe615 ]
 
-The parent RX completion path can load a QPN hash entry before
-mlx5i_pkey_del_qpn() unlinks and frees it, then dereference freed memory.
+When netlink_bind() fails to insert the socket, it calls
+netlink_undo_bind() with the table locked. genl_unbind() then takes
+cb_lock, while genl_unregister_family() and genl_register_family() take
+cb_lock for writing and then wait in netlink_table_grab() for the table
+users to go away:
 
-Use RCU hlist operations and defer freeing with kfree_rcu(). The existing
-RCU read-side section in mlx5e_napi_poll() covers the lookup. Keep ht_lock
-for writers and acquire it before looking up the entry to delete.
+  netlink_bind()                 genl_unregister_family()
+    netlink_lock_table()           down_write(&cb_lock)
+    netlink_insert() fails
+    netlink_undo_bind()            netlink_table_grab()
+      genl_unbind()                  waits for nl_table_users == 0
+        down_read(&cb_lock)
 
-Fixes: 7e7f4780c340 ("net/mlx5e: IPoIB, Use hash-table to map between QPN to child netdev")
-Signed-off-by: Prathamesh Deshpande <prathameshdeshpande7@gmail.com>
-Reviewed-by: Tariq Toukan <tariqt@nvidia.com>
-Link: https://patch.msgid.link/20261031225749.14214-1-prathameshdeshpande7@gmail.com
+An unprivileged user can get here by binding to a port ID that is in
+use, with nl_groups set. Lockdep does not see it, as nl_table_users is a
+plain counter.
+
+Unlock the table first, as the comment in netlink_release() asks for.
+
+Link: https://netdev-ai.bots.linux.dev/sashiko/#/patchset/20261101101347.3910654-1-anilkaushikwireless@gmail.com
+Fixes: 3de21a8990d3 ("genetlink: Add per family bind/unbind callbacks")
+Signed-off-by: Anil Kaushik <anilkaushikwireless@gmail.com>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Link: https://patch.msgid.link/20261102120929.4077030-1-anilkaushikwireless@gmail.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../ethernet/mellanox/mlx5/core/ipoib/ipoib.h |  2 +-
- .../mellanox/mlx5/core/ipoib/ipoib_vlan.c     | 26 +++++++++++--------
- 2 files changed, 16 insertions(+), 12 deletions(-)
+ net/netlink/af_netlink.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/net/ethernet/mellanox/mlx5/core/ipoib/ipoib.h b/drivers/net/ethernet/mellanox/mlx5/core/ipoib/ipoib.h
-index 2ab6437a1c49f..944549f8c2f60 100644
---- a/drivers/net/ethernet/mellanox/mlx5/core/ipoib/ipoib.h
-+++ b/drivers/net/ethernet/mellanox/mlx5/core/ipoib/ipoib.h
-@@ -82,7 +82,7 @@ void mlx5i_pkey_qpn_ht_cleanup(struct net_device *netdev);
- int mlx5i_pkey_add_qpn(struct net_device *netdev, u32 qpn);
- int mlx5i_pkey_del_qpn(struct net_device *netdev, u32 qpn);
- 
--/* Get the net-device corresponding to the given underlay QPN */
-+/* Get the net-device for a QPN. Caller must hold rcu_read_lock(). */
- struct net_device *mlx5i_pkey_get_netdev(struct net_device *netdev, u32 qpn);
- 
- /* Shared ndo functions */
-diff --git a/drivers/net/ethernet/mellanox/mlx5/core/ipoib/ipoib_vlan.c b/drivers/net/ethernet/mellanox/mlx5/core/ipoib/ipoib_vlan.c
-index 028a76944d82d..dd42633c52301 100644
---- a/drivers/net/ethernet/mellanox/mlx5/core/ipoib/ipoib_vlan.c
-+++ b/drivers/net/ethernet/mellanox/mlx5/core/ipoib/ipoib_vlan.c
-@@ -31,6 +31,7 @@
-  */
- 
- #include <linux/hash.h>
-+#include <linux/rculist.h>
- #include "ipoib.h"
- 
- #define MLX5I_MAX_LOG_PKEY_SUP 7
-@@ -39,11 +40,12 @@ struct qpn_to_netdev {
- 	struct net_device *netdev;
- 	struct hlist_node hlist;
- 	u32 underlay_qpn;
-+	struct rcu_head rcu;
- };
- 
- struct mlx5i_pkey_qpn_ht {
- 	struct hlist_head buckets[1 << MLX5I_MAX_LOG_PKEY_SUP];
--	spinlock_t ht_lock; /* Synchronise with NAPI */
-+	spinlock_t ht_lock; /* Serialize hash table updates */
- };
- 
- int mlx5i_pkey_qpn_ht_init(struct net_device *netdev)
-@@ -68,13 +70,14 @@ void mlx5i_pkey_qpn_ht_cleanup(struct net_device *netdev)
- 	kfree(ipriv->qpn_htbl);
- }
- 
--static struct qpn_to_netdev *mlx5i_find_qpn_to_netdev_node(struct hlist_head *buckets,
--							   u32 qpn)
-+static struct qpn_to_netdev *
-+mlx5i_find_qpn_to_netdev_node(struct mlx5i_pkey_qpn_ht *ht, u32 qpn)
- {
--	struct hlist_head *h = &buckets[hash_32(qpn, MLX5I_MAX_LOG_PKEY_SUP)];
-+	struct hlist_head *h = &ht->buckets[hash_32(qpn, MLX5I_MAX_LOG_PKEY_SUP)];
- 	struct qpn_to_netdev *node;
- 
--	hlist_for_each_entry(node, h, hlist) {
-+	hlist_for_each_entry_rcu(node, h, hlist,
-+				 lockdep_is_held(&ht->ht_lock)) {
- 		if (node->underlay_qpn == qpn)
- 			return node;
+diff --git a/net/netlink/af_netlink.c b/net/netlink/af_netlink.c
+index fb7785a59af59..9e1f64f18e3f8 100644
+--- a/net/netlink/af_netlink.c
++++ b/net/netlink/af_netlink.c
+@@ -1032,8 +1032,9 @@ static int netlink_bind(struct socket *sock, struct sockaddr *addr,
+ 			netlink_insert(sk, nladdr->nl_pid) :
+ 			netlink_autobind(sock);
+ 		if (err) {
++			netlink_unlock_table();
+ 			netlink_undo_bind(BITS_PER_TYPE(u32), groups, sk);
+-			goto unlock;
++			return err;
+ 		}
  	}
-@@ -96,7 +99,7 @@ int mlx5i_pkey_add_qpn(struct net_device *netdev, u32 qpn)
- 	new_node->netdev = netdev;
- 	new_node->underlay_qpn = qpn;
- 	spin_lock_bh(&ht->ht_lock);
--	hlist_add_head(&new_node->hlist, &ht->buckets[key]);
-+	hlist_add_head_rcu(&new_node->hlist, &ht->buckets[key]);
- 	spin_unlock_bh(&ht->ht_lock);
- 
- 	return 0;
-@@ -109,16 +112,17 @@ int mlx5i_pkey_del_qpn(struct net_device *netdev, u32 qpn)
- 	struct mlx5i_pkey_qpn_ht *ht = ipriv->qpn_htbl;
- 	struct qpn_to_netdev *node;
- 
--	node = mlx5i_find_qpn_to_netdev_node(ht->buckets, qpn);
-+	spin_lock_bh(&ht->ht_lock);
-+	node = mlx5i_find_qpn_to_netdev_node(ht, qpn);
- 	if (!node) {
-+		spin_unlock_bh(&ht->ht_lock);
- 		mlx5_core_warn(epriv->mdev, "QPN to netdev delete from HT failed\n");
- 		return -EINVAL;
- 	}
- 
--	spin_lock_bh(&ht->ht_lock);
--	hlist_del_init(&node->hlist);
-+	hlist_del_rcu(&node->hlist);
- 	spin_unlock_bh(&ht->ht_lock);
--	kfree(node);
-+	kfree_rcu(node, rcu);
- 
- 	return 0;
- }
-@@ -128,7 +132,7 @@ struct net_device *mlx5i_pkey_get_netdev(struct net_device *netdev, u32 qpn)
- 	struct mlx5i_priv *ipriv = netdev_priv(netdev);
- 	struct qpn_to_netdev *node;
- 
--	node = mlx5i_find_qpn_to_netdev_node(ipriv->qpn_htbl->buckets, qpn);
-+	node = mlx5i_find_qpn_to_netdev_node(ipriv->qpn_htbl, qpn);
- 	if (!node)
- 		return NULL;
  
 -- 
 2.53.0
