@@ -1,52 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795624123;
-	b=Tc4bgBK3o6yRQZWSv4u/dvvthZpZ3EXT8pXlFkXD36iM04INgsoYQ7Ye1F3JPMaVvnzv
-	 WEB+syAhaaiPgdH5uOjrDLXrsZie8vv3AAIZUpMaUJ2hJ5sEXUEt2PZPE55Qij3HtMeYZ
-	 LYTtrx59QlKE3DnPapzwnOr5kcH5xmJDdCIkX+DUkYsl6RxIz2OuytB5Qj26zCd6X/8+V
-	 mLAf1tTItBFfuJEhfWgW9qE+h0m2qdNPQEYmoDeg+ofob0Cp+iiIATfSG2bKH+kY3QWOV
-	 fL35LOi+kXduZ0YoqhpyyPOcf47abS7bHd53YE4cRHmtNkLXr7iYeloc64gVzPdRWtw==
+	t=1795624127;
+	b=gnC4agwLrpX/R0h++gPM69HAi+9oO/0Bs9zZLTclOxG9P0VcVbOo4+hJrSkqE4cH/Cvh
+	 ahDF/yjcnntN6GMjc+1YgWi1tjdFgUvQMZejLr/0+lIxZ/v/G6Qbk4yWfMwencF7Ukgur
+	 hsYjW0lrBtdDaYpmFsvx86NZeBf2CxehrhOE+SK1OKT6SkK3Rc2gOTWPf03JOKsQKJexH
+	 BTIAc19nGE7pSiwEFFf4BukRFIFhwoi33L9bIk6dcHovYyJScI9os0YLAY4nVDpArs/et
+	 Ds7Gi2hWYV/nl1zGcd3pYMLP9gZkgIuVhb0H/Kc4SmSx586extOlvGvRSC4frBploDw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795624123;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795624127;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=/k1PQClvERW+s95AohSFXsWxn1EOaLZfdFRUljcoIhc=;
-	b=vBKyBwKwprDluVfC25wc3T+vKsvTVrfj2vkeEFlUmHM++0PPAsLz3NeEvnP1QytffnQy
-	 ff5AUGgcjt5IJuuFllwQOKkM8Fw+vCA2F91pt7+Dc7udbgS4Fxcj9+4Wv7qUIW9T/j57s
-	 kRSOt9gohK6F76p2XNXTGeDGsakvgHKD2wDEovBRC1hoXzwXBZvECmihTVE5QLAOhEBdN
-	 Xq+Nw5HnR9pEfQpm5wy/2649+r0RMudiWdZghB6a7/U1LvdiD8LwNktO7AKS6CLrp8VD6
-	 Tz4ljWKDcfgtrLwHXITHEqGSMFcQT/UgHsDmT5CG33DvlyKHToja+pk9XU0yDp5WMAg==
+	bh=ImKP4v9OL5IlaANIOiV3Sqg70j6nYQC9WTnI7gHtn9A=;
+	b=4Bv/6eKn1gsh6pqg0zhi8p5aUpBgVwh6i6+1t0G+g5/38g2pBNEzE8qtP4phWQjXWGo4
+	 4+2stHLm+vPUGXF4yEs/Z/Q4tMBCmJIbW1bV+nw4F2oP5bWUO3ZaIP/xfouuaGRY5iQHJ
+	 6mFLyiwS+bCkxEBW7LIXDO2C9cTqBD++iXfVcNHzXNKlxNhPj6EXEN5tN8OVwuLGyGzVq
+	 2S8BLyaYFF3PN6dWEw/LjMo7WdmpIM8cTc801JbyJydmGSEAjjXNy2GBRLwQN7hOmgxdW
+	 CqOGvMxSzyLMVHGRZ3RnkKJWOloM45yTjOQdVNF1zugUnB+KSZ3WbtxQc9nmzXp5IWQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=XvJIGwvj;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="j/VAE+62";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BA249606A33C;
-	Wed, 25 Nov 2026 16:28:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0DEC4606A32E;
+	Wed, 25 Nov 2026 16:28:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=XvJIGwvj
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E23BB1F000ED;
-	Wed, 25 Nov 2026 16:28:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=j/VAE+62
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5E6BA1F01561;
+	Wed, 25 Nov 2026 16:28:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795624123;
-	bh=/k1PQClvERW+s95AohSFXsWxn1EOaLZfdFRUljcoIhc=;
+	s=korg; t=1795624126;
+	bh=ImKP4v9OL5IlaANIOiV3Sqg70j6nYQC9WTnI7gHtn9A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=XvJIGwvjIYvmwVEw866FMelT62zLQyfmzo55aoWYLbwu+gII3CmEJENLzPKn2ZJsh
-	 sxD9qFHjZ6w5LjudZukDtRSlXk/d/op193KwwjpWNt+X9ksJOLl9oVH9VaorqGd/8D
-	 3rY9ZO7incT1+QlBpb+zt0JBmBC65lh20ogNBVnk=
+	b=j/VAE+62MiWqzZpYMbBrkKZBBjb+bqTabnpqNf/k2YKk8tjFWHYpxioqbclP1wEIB
+	 OyxfPaZ3ztWqKDFebXmfEBD2pwXwIKVbbHnAZ7ghkGXQTImRor2gvNlxG+R/Slfmfq
+	 CsZJ6PNZks2MFafjb/oJOZ1fb37sY8EFpFQLB2B8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jiri Olsa <jolsa@kernel.org>,
-	Andrii Nakryiko <andrii@kernel.org>,
+	Alexei Starovoitov <ast@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 094/816] bpf: Avoid changing callchain in bpf_get_stackid_pe
-Date: Wed, 25 Nov 2026 15:27:22 +0100
-Message-ID: <20261125143851.397572649@linuxfoundation.org>
+Subject: [PATCH 6.12 095/816] bpf: Clamp the trace length before the skip test in stackid_init()
+Date: Wed, 25 Nov 2026 15:27:23 +0100
+Message-ID: <20261125143851.419489363@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143849.205329330@linuxfoundation.org>
 References: <20261125143849.205329330@linuxfoundation.org>
@@ -68,147 +67,63 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jiri Olsa <jolsa@kernel.org>
+From: Alexei Starovoitov <ast@kernel.org>
 
-[ Upstream commit a74594607a0b310c1533e713b9097cc1cbbb85bf ]
+[ Upstream commit a08ba2ab79dffd92c32d3f2dadfc7eba03625a2b ]
 
-There's no need to modify the trace object bpf_get_stackid_pe, we just
-need to pass the needed callchain length in separate argument.
+stackid_init() gives a bucket of the stack map
+min(trace_nr - skip, max_depth - skip) trace entries. Here max_depth is the
+size of a bucket plus skip, but at most perf_event_max_stack. Context
+markers can make trace_nr larger than that, so the skip test can pass when
+max_depth < skip. Then 'max_depth - skip' wraps, and the kernel can write
+after the bucket.
 
-This way we can have callchain pointers const and remove the trace->nr
-modification and restoration.
+Clamp trace_nr to max_depth before the skip test, as __bpf_get_stack_pe()
+does. The result changes only when skip >= max_depth. Then it is -EFAULT.
+Until now skip == max_depth could give the id of an empty trace.
 
-Assisted-by: Codex:GPT-5.5
+get_perf_callchain() releases the trace, so an NMI can change trace->nr.
+Use READ_ONCE() in bpf_get_stackid(), so the compiler reads it one time.
 
-Signed-off-by: Jiri Olsa <jolsa@kernel.org>
-Signed-off-by: Andrii Nakryiko <andrii@kernel.org>
-Link: https://lore.kernel.org/bpf/20260803210149.296496-13-jolsa@kernel.org
-Stable-dep-of: a08ba2ab79df ("bpf: Clamp the trace length before the skip test in stackid_init()")
+Fixes: 23f852daa4ba ("bpf: Fix stackmap overflow check in __bpf_get_stackid()")
+Signed-off-by: Alexei Starovoitov <ast@kernel.org>
+Link: https://patch.msgid.link/20261101190535.1454146-3-alexei.starovoitov@gmail.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/bpf/stackmap.c | 39 +++++++++++++++++----------------------
- 1 file changed, 17 insertions(+), 22 deletions(-)
+ kernel/bpf/stackmap.c | 9 ++++++---
+ 1 file changed, 6 insertions(+), 3 deletions(-)
 
 diff --git a/kernel/bpf/stackmap.c b/kernel/bpf/stackmap.c
-index d38d8e49a789d..43e27cd278c4a 100644
+index 43e27cd278c4a..5baf657ccb785 100644
 --- a/kernel/bpf/stackmap.c
 +++ b/kernel/bpf/stackmap.c
-@@ -253,7 +253,7 @@ get_callchain_entry_for_task(struct task_struct *task, u32 max_depth)
- 
- struct stackid {
- 	struct stack_map_bucket *bucket;
--	u64 *ips;
-+	const u64 *ips;
- 	u32  nr;
- 	u32  len;
- 	u32  hash;
-@@ -262,21 +262,21 @@ struct stackid {
- };
- 
- static int stackid_init(struct stackid *stackid, struct bpf_map *map,
--			struct perf_callchain_entry *trace, u64 flags)
-+			const struct perf_callchain_entry *trace, u32 trace_nr, u64 flags)
- {
- 	struct bpf_stack_map *smap = container_of(map, struct bpf_stack_map, map);
+@@ -268,12 +268,14 @@ static int stackid_init(struct stackid *stackid, struct bpf_map *map,
  	u32 skip = flags & BPF_F_SKIP_FIELD_MASK;
  	u32 max_depth;
  
--	if (trace->nr <= skip)
-+	if (trace_nr <= skip)
++	max_depth = stack_map_calculate_max_depth(map->value_size, stack_map_data_size(map), flags);
++	/* trace_nr can be above max_depth and max_depth below skip: clamp first */
++	trace_nr = min_t(u32, trace_nr, max_depth);
+ 	if (trace_nr <= skip)
  		/* skipping more than usable stack trace */
  		return -EFAULT;
  
- 	max_depth = stack_map_calculate_max_depth(map->value_size, stack_map_data_size(map), flags);
--	stackid->nr = min_t(u32, trace->nr - skip, max_depth - skip);
-+	stackid->nr = min_t(u32, trace_nr - skip, max_depth - skip);
+-	max_depth = stack_map_calculate_max_depth(map->value_size, stack_map_data_size(map), flags);
+-	stackid->nr = min_t(u32, trace_nr - skip, max_depth - skip);
++	stackid->nr = trace_nr - skip;
  	stackid->len = stackid->nr * sizeof(u64);
  	stackid->ips = trace->ip + skip;
--	stackid->hash = jhash2((u32 *)stackid->ips, stackid->len / sizeof(u32), 0);
-+	stackid->hash = jhash2((const u32 *)stackid->ips, stackid->len / sizeof(u32), 0);
- 	stackid->id = stackid->hash & (smap->n_buckets - 1);
- 	stackid->bucket = READ_ONCE(smap->buckets[stackid->id]);
- 	stackid->hash_matches = stackid->bucket && stackid->bucket->hash == stackid->hash;
-@@ -284,11 +284,12 @@ static int stackid_init(struct stackid *stackid, struct bpf_map *map,
- }
- 
- static int stackid_fastpath(struct stackid *stackid, struct bpf_map *map,
--			    struct perf_callchain_entry *trace, u64 flags)
-+			    const struct perf_callchain_entry *trace, u32 trace_nr,
-+			    u64 flags)
- {
- 	int err;
- 
--	err = stackid_init(stackid, map, trace, flags);
-+	err = stackid_init(stackid, map, trace, trace_nr, flags);
- 	if (err)
- 		return err;
- 
-@@ -387,7 +388,7 @@ BPF_CALL_3(bpf_get_stackid, struct pt_regs *, regs, struct bpf_map *, map,
+ 	stackid->hash = jhash2((const u32 *)stackid->ips, stackid->len / sizeof(u32), 0);
+@@ -388,7 +390,8 @@ BPF_CALL_3(bpf_get_stackid, struct pt_regs *, regs, struct bpf_map *, map,
  			/* couldn't fetch the stack trace */
  			return -EFAULT;
  
--		err = stackid_fastpath(&stackid, map, trace, flags);
-+		err = stackid_fastpath(&stackid, map, trace, trace->nr, flags);
+-		err = stackid_fastpath(&stackid, map, trace, trace->nr, flags);
++		/* the entry is released already, an NMI can change trace->nr */
++		err = stackid_fastpath(&stackid, map, trace, READ_ONCE(trace->nr), flags);
  		if (err != -ENOENT)
  			return err;
  
-@@ -423,12 +424,13 @@ static __u64 count_kernel_ip(const struct perf_callchain_entry *trace)
- BPF_CALL_3(bpf_get_stackid_pe, struct bpf_perf_event_data_kern *, ctx,
- 	   struct bpf_map *, map, u64, flags)
- {
-+	const struct perf_callchain_entry *trace;
- 	struct perf_event *event = ctx->event;
- 	struct stack_map_bucket *new_bucket;
--	struct perf_callchain_entry *trace;
- 	struct stackid stackid;
- 	bool kernel, user;
- 	__u64 nr_kernel;
-+	u32 trace_nr;
- 	int ret;
- 
- 	/* perf_sample_data doesn't have callchain, use bpf_get_stackid */
-@@ -448,13 +450,13 @@ BPF_CALL_3(bpf_get_stackid_pe, struct bpf_perf_event_data_kern *, ctx,
- 		return -EFAULT;
- 
- 	nr_kernel = count_kernel_ip(trace);
--	__u64 nr = trace->nr; /* save original */
- 
- 	if (kernel) {
--		trace->nr = nr_kernel;
-+		trace_nr = nr_kernel;
- 	} else { /* user */
- 		u64 skip = flags & BPF_F_SKIP_FIELD_MASK;
- 
-+		trace_nr = trace->nr;
- 		skip += nr_kernel;
- 		if (skip > BPF_F_SKIP_FIELD_MASK)
- 			return -EFAULT;
-@@ -462,21 +464,14 @@ BPF_CALL_3(bpf_get_stackid_pe, struct bpf_perf_event_data_kern *, ctx,
- 		flags = (flags & ~BPF_F_SKIP_FIELD_MASK) | skip;
- 	}
- 
--	ret = stackid_fastpath(&stackid, map, trace, flags);
-+	ret = stackid_fastpath(&stackid, map, trace, trace_nr, flags);
- 	if (ret != -ENOENT)
--		goto out;
-+		return ret;
- 
- 	new_bucket = stackid_new_bucket(&stackid, map);
--	if (new_bucket) {
--		trace->nr = nr;
-+	if (new_bucket)
- 		return stackid_install(&stackid, map, new_bucket, flags);
--	}
--	ret = -ENOMEM;
--
--out:
--	/* restore nr */
--	trace->nr = nr;
--	return ret;
-+	return -ENOMEM;
- }
- 
- const struct bpf_func_proto bpf_get_stackid_proto_pe = {
 -- 
 2.53.0
 
