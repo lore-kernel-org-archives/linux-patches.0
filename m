@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795626203;
-	b=cYPq8rZXsmPZiEL/eyhrokieYwzIMKmJ3hdfCzo7OQrJxY3PliUt5fUyQ8TqPaSZ65Az
-	 IL13jdOnOyZsGuYotH0ms3a+7ft1lWEHp2vJtfYndIxm+moUnZWSWaeg4jhZDLsAi1Env
-	 XOR+YFQVpLeOZPj8qcoVcajLx+4puc4H0DzVCuDarrocpupn+cLnxCsN9m+oILodl7p7L
-	 ygb3PXB+hjAUWyQGanQ63UzqV1EYIo4eY/Lpt/MbbZlCLKtrlodFfg4FOyPMmc/IabjqX
-	 mG7ioDHpdPE9AkcMNeArvcZVziLj+eHxmZs+3RmIuNwY26C0rwimONxYP8CyjjFgEcA==
+	t=1795626206;
+	b=jtYr0Pjs2RZ+25fxUWa8UfI6jFs0mTRzxMYrbZeY4AO6X56Huz3kpPRehNriYue8w3sj
+	 1Js7JgLluxurmId8GrMlI4oJhdsN1C8BJWMOim6MJctZuOlxjd/lcBMpT36Xfp8m3BCLy
+	 Yhq7RtJ8ikOaJXArIt3J3FV94GAFS50oarJ+fNRf4Hi0YfKvCxRtMsPWusQl183rXzvKZ
+	 5Lc4d4Zzzpdb0WnLYwUEGyxVAgcYfNvoLo9sDEg5RHs6KyNz23huojWTQloLd84CbJbb+
+	 yYuL+b9gQ2sHq+h0/WVEOiZiK3xcvpMwnmYZ+4kJhMIPWtG3RtNp+gkgf9SdIpdT9DQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795626203;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795626206;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=BraTdAHwtjmqAETYrRtomwFwVNIvdmh5vTw9SPz2BT0=;
-	b=ygZaGLrZrYHI20nQAQvEkiaVHujvsRFwDjlbETidsTBPwAH3zBDyPlZgHyGnX6akTh7e
-	 SIMqKWIt5Zi1+DMQfMnHVOnUIAXPqnU+v6Dtg9JcuW6IYTCv5sQXknD8CUwNYifkn+ccb
-	 pIoGhqu31nmyZ9URVCJWdyc3l/dSNvc47sFVVzaNrSFuzv/XewJdiSN1LVzB8jZMKNh13
-	 mdCdMCvqn1eD6RHkLhRlM4rXuM/9j8UgHxtq9OcwJCtBIPluw+vjP+G7pzxO9W0ip73wt
-	 11wSjd5yXf4a1yLVXTW8zbphQTwAY+XdOjNyVHuoej4wYvc0v9+lflyswh5wFdkweXQ==
+	bh=cWBH4CNLryW5PuT6osJ8fb7YI7Rcg+4Qk0a/ayh/0uU=;
+	b=PWHy7pwbtd7DpnedTf1Knj1a95pzUDjAcqhGQEIs3mDL3O3Gg+14bFk3zbCI5PYgsIr8
+	 ZVTT/SyKbJzKy1ix+Fp18jrImM2Mg+riEXw6tysSdhQv+H94azqP5V/FeUkU0egFqNcOh
+	 oR5z9mbx4eCgBqL+Wa+Krp/mXOG5AY83nNKDOAfBVq4fi3qGrwFkwmJF+a297/ywbQsxn
+	 5x+Dhst+bDNvu/7+vZ32aPF39ma4dEU3FF3t8tUIBXjXEXsEFDiTDyJ1gyEAMUoPcNj6U
+	 gVAtf3DZafZGZhdrU5ObBC6HpHQyUwVj5WiB5mM/J/NOK19L61i3+xfCEv6TrAZRdog==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Sz15+PU7;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ggMoMtYL;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A4BC9606A31E;
-	Wed, 25 Nov 2026 17:03:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 42AE6606A321;
+	Wed, 25 Nov 2026 17:03:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Sz15+PU7
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 397271F000C6;
-	Wed, 25 Nov 2026 17:03:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ggMoMtYL
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8F6471F000C4;
+	Wed, 25 Nov 2026 17:03:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795626202;
-	bh=BraTdAHwtjmqAETYrRtomwFwVNIvdmh5vTw9SPz2BT0=;
+	s=korg; t=1795626206;
+	bh=cWBH4CNLryW5PuT6osJ8fb7YI7Rcg+4Qk0a/ayh/0uU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Sz15+PU71L5OpeDxcizc6XOt7zdfNEY054lv9zB76v/9s+Krq2xKTqK0ob0wnbaYH
-	 cbe/UoNtnYNNeWu8iZ1u84iyURis8rmLF66WqmCiF4x9DO9lJr5W6GvRa47mffkE52
-	 IRzSwXLpGI+DmFdDSV+GrMtIaMBh9C/PvOGRsZQk=
+	b=ggMoMtYL1+rfqVoFJmrh4McUyS35WLHscMyDWBxs9J/NqKQgMYqR7XOIPDNuficVC
+	 bmRDwPM3gNt4bRE7bdqzWyWY7qtcwOQAh9u2lGqz+CQKTqHCqPN4qmGF0sQ149olcJ
+	 o/VUo54fY8lxBgUKhhugswMx0ItkUa27kGyMul6k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable <stable@kernel.org>,
-	Josef Bacik <josef@toxicpanda.com>,
-	Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
-Subject: [PATCH 6.12 767/816] w1: w1_therm: leave the slaves of other families alone
-Date: Wed, 25 Nov 2026 15:38:35 +0100
-Message-ID: <20261125143906.926851090@linuxfoundation.org>
+	Felix Kuehling <felix.kuehling@amd.com>,
+	Jesse Zhang <Jesse.Zhang@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>
+Subject: [PATCH 6.12 768/816] drm/amdkfd: skip GPUs without a VM when checkpointing the BO mappings
+Date: Wed, 25 Nov 2026 15:38:36 +0100
+Message-ID: <20261125143906.949421996@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143849.205329330@linuxfoundation.org>
 References: <20261125143849.205329330@linuxfoundation.org>
@@ -68,114 +68,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Josef Bacik <josef@toxicpanda.com>
+From: Jesse Zhang <Jesse.Zhang@amd.com>
 
-commit c0eadd2e06e52563cae2b80491e56eb9712eb727 upstream.
+commit 1a5ca15b558bf0e6621602c84e0a633d237dd052 upstream.
 
-The file therm_bulk_read belongs to the bus master.  Its callbacks walk
-all the slaves of the bus and look at sl->family_data as if every slave
-were a temperature sensor.  A 1-wire bus can carry other devices too:
+criu_checkpoint_bos() asks every device of the process whether a BO is
+mapped there, passing its drm_priv, which is NULL for the devices the
+process never acquired a VM on. On navi48 with its iGPU, checkpointing a
+process which acquired the VM of the dGPU only:
 
-- The family data of a slave which is driven by another driver, such as
-  w1_ds2433, w1_ds250x, w1_ds28e04 or w1_ds28e17, is a structure of that
-  driver.  bulk_read_support() takes whatever is at the offset of
-  specific_functions for a pointer and dereferences it, and if the
-  result happens not to be 0, the callbacks write the state of the
-  conversion into that foreign structure.
+  Oops: general protection fault, probably for non-canonical address 0xdffffc000000002f: 0000 [#1] SMP KASAN NOPTI
+  KASAN: null-ptr-deref in range [0x0000000000000178-0x000000000000017f]
+  RIP: 0010:amdgpu_amdkfd_bo_mapped_to_dev+0x35/0x160 [amdgpu]
+   kfd_ioctl_criu+0x30d1/0x4aa0 [amdgpu]
+   kfd_ioctl+0x767/0xb10 [amdgpu]
 
-- For a slave without family data, which is the case for most of the
-  other drivers and for the default family, trigger_bulk_read() gives up
-  with -ENODEV.  A single serial number chip on the bus is enough to
-  make the bulk read unusable for all the sensors.
+Nothing can be mapped on such a device, skip it.
 
-Only look at the slaves whose family is one of ours.  A bulk conversion
-now works on a bus with other devices.
-
-Fixes: 57c76221d5af ("w1_therm: adding bulk read support to trigger multiple conversion on bus")
-Cc: stable <stable@kernel.org>
-Signed-off-by: Josef Bacik <josef@toxicpanda.com>
-Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
-Link: https://patch.msgid.link/20261027-llm-char-misc-w1-v1-9-d2e6bfafb6a4@linuxfoundation.org
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: f9e292cbba21 ("drm/amdkfd: kfd_bo_mapped_dev support partition")
+Reviewed-by: Felix Kuehling <felix.kuehling@amd.com>
+Signed-off-by: Jesse Zhang <Jesse.Zhang@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+(cherry picked from commit 794381c358d344d8fcf8b9e6426aa2bac0a7d1f7)
+Cc: stable@vger.kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/w1/slaves/w1_therm.c |   37 +++++++++++++++++++++++--------------
- 1 file changed, 23 insertions(+), 14 deletions(-)
+ drivers/gpu/drm/amd/amdkfd/kfd_chardev.c |    4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
---- a/drivers/w1/slaves/w1_therm.c
-+++ b/drivers/w1/slaves/w1_therm.c
-@@ -917,6 +917,19 @@ static inline bool bulk_read_support(str
- }
+--- a/drivers/gpu/drm/amd/amdkfd/kfd_chardev.c
++++ b/drivers/gpu/drm/amd/amdkfd/kfd_chardev.c
+@@ -1993,7 +1993,9 @@ static int criu_checkpoint_bos(struct kf
+ 				bo_bucket->offset = amdgpu_bo_mmap_offset(dumper_bo);
  
- /**
-+ * bulk_read_slave() - check if a slave of the bus takes part in a bulk read
-+ * @sl: any slave on the list of the master
-+ *
-+ * The family data of the slaves of other families is none of our business.
-+ *
-+ * Return: true if it is one of our devices and supports bulk read
-+ */
-+static bool bulk_read_slave(struct w1_slave *sl)
-+{
-+	return device_family(sl) && sl->family_data && bulk_read_support(sl);
-+}
-+
-+/**
-  * conversion_time() - get the Tconv for the slave
-  * @sl: device to get the conversion time
-  *
-@@ -1507,9 +1520,7 @@ static int trigger_bulk_read(struct w1_m
- 	 * so we can apply a strong pullup if required
- 	 */
- 	list_for_each_entry(sl, &dev_master->slist, w1_slave_entry) {
--		if (!sl->family_data)
--			goto error;
--		if (bulk_read_support(sl)) {
-+		if (bulk_read_slave(sl)) {
- 			int t_cur = conversion_time(sl);
- 
- 			t_conv = max(t_cur, t_conv);
-@@ -1547,7 +1558,7 @@ static int trigger_bulk_read(struct w1_m
- 			/* set a flag to instruct that converT pending */
- 			list_for_each_entry(sl,
- 				&dev_master->slist, w1_slave_entry) {
--				if (bulk_read_support(sl))
-+				if (bulk_read_slave(sl))
- 					SLAVE_CONVERT_TRIGGERED(sl) = -1;
+ 			for (i = 0; i < p->n_pdds; i++) {
+-				if (amdgpu_amdkfd_bo_mapped_to_dev(p->pdds[i]->drm_priv, kgd_mem))
++				/* nothing is mapped on a GPU without a VM */
++				if (p->pdds[i]->drm_priv &&
++				    amdgpu_amdkfd_bo_mapped_to_dev(p->pdds[i]->drm_priv, kgd_mem))
+ 					bo_priv->mapped_gpuids[dev_idx++] = p->pdds[i]->user_gpu_id;
  			}
  
-@@ -1576,7 +1587,7 @@ mt_unlock:
- set_flag:
- 	/* set a flag to register convsersion is done */
- 	list_for_each_entry(sl, &dev_master->slist, w1_slave_entry) {
--		if (bulk_read_support(sl))
-+		if (bulk_read_slave(sl))
- 			SLAVE_CONVERT_TRIGGERED(sl) = 1;
- 	}
- error:
-@@ -1944,16 +1955,14 @@ static ssize_t therm_bulk_read_show(stru
- 	int ret = 0;
- 
- 	list_for_each_entry(sl, &dev_master->slist, w1_slave_entry) {
--		if (sl->family_data) {
--			if (bulk_read_support(sl)) {
--				if (SLAVE_CONVERT_TRIGGERED(sl) == -1) {
--					ret = -1;
--					goto show_result;
--				}
--				if (SLAVE_CONVERT_TRIGGERED(sl) == 1)
--					/* continue to check other slaves */
--					ret = 1;
-+		if (bulk_read_slave(sl)) {
-+			if (SLAVE_CONVERT_TRIGGERED(sl) == -1) {
-+				ret = -1;
-+				goto show_result;
- 			}
-+			if (SLAVE_CONVERT_TRIGGERED(sl) == 1)
-+				/* continue to check other slaves */
-+				ret = 1;
- 		}
- 	}
- show_result:
 
 
