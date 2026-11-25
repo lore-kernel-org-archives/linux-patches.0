@@ -1,51 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795621677;
-	b=4dRmo2dR5hIVJBUR0loTTRcW3lYx8l2+k10UdlaleMAyxhdnHs5HQaUPveq4eAShDR8l
-	 ujcXoySwg5ETjbUt2Kbbi9BJDFWtTyrnqpvfGxH9BtOiaTnhmB4tnassgjMb7yPQp5EzA
-	 DJXS8BEa2spMaHpGZZz6K6aLy77GsrwopYX/UaUbkDEzvUlOV+SGDlzarvgBc0VUkMg7F
-	 bs1JvVUvsEZlA7Kdhwzzwu1wsqAlL2Rx7AxlKSJuolCPb6sfMJZjdBpfuPpclu3kJwS2D
-	 /dCPFwbHvjDKS3wXMPdhe+21z9AFCzvVD4b4G6T1052g+PUOdMGYkengS0C7vD3sxrw==
+	t=1795621680;
+	b=ZpbOIWHpiBdp46eBZSEnmK7DkwVx+gi7jp50hdFU1n+Jsk6s6FQBZmfK4lTLU/JjsyHj
+	 ajNhQkV18NYFfbivWfxNwhJ+S7ZRy5G2jWodcLrn3eEkZjB3aCISFF8MwXkkv2qVMxiFG
+	 Yt3TE0ldomCgidqSz+WO4uMVHVzCfZ6hZpSyr4/L5aPGXPyxJ8ZYYhc+FGFxvam+iHPmf
+	 cfNaK9jZFsvSG86JsrIg4YYK7r1WAs3nXvlmjCHSiPnt9cy7or7zIGylYL4zhbTg0P17H
+	 udy+uX6tLo/iWsZfdh2pxl5zob/FwM+yLBwq1PqXVUpvkOEqfYwRrzIkVBiaGh4Pqgg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795621677;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795621680;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=bBohO+LNYH9y/pRp48vwiyPQFzxCLjClWZuzvRG7Ksg=;
-	b=hyVGbX1EZoyKXJGor1iK4ng5fnv7tJGNYy3awhkto08zg0mAdzeNMNWNR4UC+DdvyQ90
-	 CCWdfqKcO7d4hbexZ5V6ll3hxM03VnNvxNbmgfPxCHp0F8RDDDfjmQHPFQ4c743CATwkc
-	 4VDAADlBZs7QMWDaG9Qx3m7fXSiD6zKaIBxS3VOfqBHamsF3dkljAeo19ccOUHGVT0Je6
-	 3Dz0bnJjvfIYFDyKmSUNYt5fI5D04OgfGAaMNHyD1gr8y84kTHUy0iFR39dKrnsO+VHWP
-	 wGhviP/wiWkuvYCew/+GIHPMJbu4nmNL2WzxxVAIfpGncf0dHddmxm5LlKh9GCpk+xw==
+	bh=UF3fCLq/jTbdMVpmKxv0Lec97zUL448HQjzIS+TF160=;
+	b=DUzRtXgu3ckGYJZDVnotb2gtXYjeqEmicZXrRRpep9rbSCKIatqrB58r7ZZLn2ai9YeG
+	 8HjILmAeHYCy4f06ktJYJyFbmh5iYiHDn7swZPwTouggG6M+UV5skkr1CIkUXaFV8upAt
+	 ls+TIY3jueEFEUF5JuMCG+VSXxCFWKK+G1IzbEMXHGyZx017PbaUSaRbY7OF7GzaW/66C
+	 ZJlqIK8lp3GRu0B6MW+jC8Xm+rpPvfjE/XrDGB9dpJSGPLiz3x4YFUGOn+M0AAOKX8XrG
+	 4NyJwZxEi4/HQKqivzdbI3YiVaGVIDZYLTTTbMHkhc61wxv9RzbuZrHjlWn+qmDYt8Q==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=nQE2EbOe;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=QFtfYQ7n;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F10F6606A336;
-	Wed, 25 Nov 2026 15:47:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9CDF3606A331;
+	Wed, 25 Nov 2026 15:48:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=nQE2EbOe
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 423E61F000EE;
-	Wed, 25 Nov 2026 15:47:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=QFtfYQ7n
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BF9EA1F000C0;
+	Wed, 25 Nov 2026 15:47:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795621676;
-	bh=bBohO+LNYH9y/pRp48vwiyPQFzxCLjClWZuzvRG7Ksg=;
+	s=korg; t=1795621680;
+	bh=UF3fCLq/jTbdMVpmKxv0Lec97zUL448HQjzIS+TF160=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=nQE2EbOeVnKn1gkGM5vNxylgU9vw/5qEuz0afMkhMJzPWP7Vhw8c8Whko/URkWeMk
-	 uPkKVs/h8KGmVEzq7Y3UnQzGRCJrQmObRprPlazvnfa68X1SsoPxi4+27MxWH4dSVu
-	 vFGlgwTyRjDbshYvy5sLZ5PK6P1lVB4EfjdLRMlM=
+	b=QFtfYQ7nUmAPCnlQ2ZJ8omjyB0rpH/JgeTgv0qt5thJj+bld/Z1NfIc3PFsnTJh09
+	 3w+jUJKbSMuOj0wotcfsSLT7q2x/17tPdExsQqdzK/QyuGJGjI526Cs4j1pDK4c51B
+	 +C/PfZLf4WBJsAicLC7ZvuhLMfJ0gi0qq/h7gigk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Al Viro <viro@zeniv.linux.org.uk>,
+	Nickolai Zeldovich <nickolai@csail.mit.edu>,
+	Chuck Lever <cel@kernel.org>,
+	"Christian Brauner (Amutable)" <brauner@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 299/990] introduce a flag for explicitly marking persistently pinned dentries
-Date: Wed, 25 Nov 2026 15:27:46 +0100
-Message-ID: <20261125143829.096024035@linuxfoundation.org>
+Subject: [PATCH 6.18 300/990] libfs: walk offset directories in offset order
+Date: Wed, 25 Nov 2026 15:27:47 +0100
+Message-ID: <20261125143829.119219117@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143822.072087159@linuxfoundation.org>
 References: <20261125143822.072087159@linuxfoundation.org>
@@ -67,147 +69,203 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Al Viro <viro@zeniv.linux.org.uk>
+From: Christian Brauner <brauner@kernel.org>
 
-[ Upstream commit 8a210cacf5dc2a6210ee42aeca5cd03b2400876f ]
+[ Upstream commit 309f7a5585aeaf77d3d7c27304ac97e515447dac ]
 
-Some filesystems use a kinda-sorta controlled dentry refcount leak to pin
-dentries of created objects in dcache (and undo it when removing those).
-Reference is grabbed and not released, but it's not actually _stored_
-anywhere.  That works, but it's hard to follow and verify; among other
-things, we have no way to tell _which_ of the increments is intended
-to be an unpaired one.  Worse, on removal we need to decide whether
-the reference had already been dropped, which can be non-trivial if
-that removal is on umount and we need to figure out if this dentry is
-pinned due to e.g. unlink() not done.  Usually that is handled by using
-kill_litter_super() as ->kill_sb(), but there are open-coded special
-cases of the same (consider e.g. /proc/self).
+offset_iterate_dir() walks d_children from the head and only uses the
+maple tree to map ctx->pos back to a dentry when a getdents64() call
+resumes. offset_dir_lookup() finds the entry at ctx->pos, or the one
+with the next lower offset if it is gone, and the list walk continues
+from there.
 
-Things get simpler if we introduce a new dentry flag (DCACHE_PERSISTENT)
-marking those "leaked" dentries.  Having it set claims responsibility
-for +1 in refcount.
+That only works if list order and offset order agree and quite often
+they don't. A rename over an existing name gives the moved dentry the
+offset of the name it replaced but __d_move() puts it at the head of
+d_children. RENAME_EXCHANGE does the same to both dentries. And once
+the cyclic offset allocator wraps new entries get low offsets at the
+head of the list.
 
-The end result this series is aiming for:
+So if the entry at ctx->pos is unlinked between two getdents64() calls
+we resume at the entry with the next lower offset and that one can sit
+anywhere in the list:
 
-* get these unbalanced dget() and dput() replaced with new primitives that
-  would, in addition to adjusting refcount, set and clear persistency flag.
-* instead of having kill_litter_super() mess with removing the remaining
-  "leaked" references (e.g. for all tmpfs files that hadn't been removed
-  prior to umount), have the regular shrink_dcache_for_umount() strip
-  DCACHE_PERSISTENT of all dentries, dropping the corresponding
-  reference if it had been set.  After that kill_litter_super() becomes
-  an equivalent of kill_anon_super().
+(1) If it sits further down the list everything in between is skipped.
+    Create y, t, a, b and rename b over t. The list is now t(4) a(5)
+    y(3). Stop the listing at t and unlink t. The next call resumes at
+    y and a is never returned although nobody touched it.
 
-Doing that in a single step is not feasible - it would affect too many places
-in too many filesystems.  It has to be split into a series.
+(2) If there is no lower entry we restart at the head and return the
+    whole directory again. Nickolai reported this for the simple case
+    of unlinking the oldest entry while a listing is about to reach it.
+    Ending the walk there instead turns this into (1): create a, b, c,
+    rename c over a, stop the listing at the renamed entry, unlink it,
+    and b is lost.
 
-Here we
-	* introduce the new flag
-	* teach shrink_dcache_for_umount() to handle it (i.e. remove
-and drop refcount on anything that survives to umount with that flag
-still set)
-	* teach kill_litter_super() that anything with that flag does
-*not* need to be unpinned.
+Instead of the list let's walk the maple tree itself in descending
+offset order. Then ctx->pos really means that everything above it has
+been emitted and resuming at the highest offset at or below it is right
+no matter where the dentry sits in d_children. Entries created or
+renamed to a new name after the listing started get an offset above
+ctx->pos and aren't returned, same as with the list walk which never
+went back to the head. So a readdir loop that renames or creates an
+entry for each one it reads still terminates.
 
-Next commits will add primitives for maintaing that flag and convert the
-common helpers to those.  After that - a long series of per-filesystem
-patches converting to those primitives.
+The maple tree can't change under us as all modifications happen with
+the directory's i_rwsem held exclusive and offset_readdir() holds it
+shared. That also covers the dentries in the tree. They are all
+persistent and only unlink, rmdir and rename remove or rename them. And
+since the previous patch i_rwsem is the lock of the tree. So keep a
+single ma_state across the walk and emit directly from the dentry
+without taking rcu_read_lock(), a reference or d_lock.
 
-Signed-off-by: Al Viro <viro@zeniv.linux.org.uk>
-Stable-dep-of: 309f7a5585ae ("libfs: walk offset directories in offset order")
+This also makes the walk cheaper than the list walk was. With a million
+entries on tmpfs a getdents64() listing goes from 146ms to 114ms. With
+four processes listing the directory at the same time it goes from
+470ms to 113ms per listing as they don't bounce the parent's d_lock and
+the dentries' lockrefs between them anymore.
+
+                                                base     v2       this
+      1M entries, getdents64 32k buffer (ms)    146      127      114
+      1M entries, getdents64 1k buffer (ms)     184      156      141
+      1M entries, getdents64 128b buffer (ms)   429      364      335
+      1M entries, ls -f (s)                     0.259    0.239    0.228
+      1M entries, LC_ALL=C ls (s)               0.482    0.467    0.455
+      1M entries, 4 parallel listers (ms)       470      125      113
+      18 entries, rewind and list (ns)          4107     3594     3323
+      250k of 1M left, getdents64 32k (ms)      58.8     57.8     53.8
+      250k of 1M left, getdents64 128b (ms)     128      114      108
+
+Fixes: b9b588f22a0c ("libfs: Use d_children list to iterate simple_offset directories")
+Fixes: f70681e9e606 ("libfs: Fix duplicate directory entry in offset_dir_lookup")
+Reported-by: Nickolai Zeldovich <nickolai@csail.mit.edu>
+Link: https://patch.msgid.link/20261018024549.798968-1-nickolai@csail.mit.edu
+Link: https://patch.msgid.link/20261101-work-libfs-offset_readdir-v2-2-c621125b56d1@kernel.org
+Reviewed-by: Chuck Lever <cel@kernel.org>
+Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/dcache.c            | 27 ++++++++++++++++++++++-----
- include/linux/dcache.h |  1 +
- 2 files changed, 23 insertions(+), 5 deletions(-)
+ fs/libfs.c | 85 ++++++++++++++----------------------------------------
+ 1 file changed, 22 insertions(+), 63 deletions(-)
 
-diff --git a/fs/dcache.c b/fs/dcache.c
-index 77792a9e86737..467095024991b 100644
---- a/fs/dcache.c
-+++ b/fs/dcache.c
-@@ -1526,6 +1526,15 @@ static enum d_walk_ret select_collect(void *_data, struct dentry *dentry)
- 	return ret;
- }
- 
-+static enum d_walk_ret select_collect_umount(void *_data, struct dentry *dentry)
-+{
-+	if (dentry->d_flags & DCACHE_PERSISTENT) {
-+		dentry->d_flags &= ~DCACHE_PERSISTENT;
-+		dentry->d_lockref.count--;
-+	}
-+	return select_collect(_data, dentry);
-+}
-+
- static enum d_walk_ret select_collect2(void *_data, struct dentry *dentry)
- {
- 	struct select_data *data = _data;
-@@ -1554,18 +1563,20 @@ static enum d_walk_ret select_collect2(void *_data, struct dentry *dentry)
- }
- 
- /**
-- * shrink_dcache_parent - prune dcache
-+ * shrink_dcache_tree - prune dcache
-  * @parent: parent of entries to prune
-+ * @for_umount: true if we want to unpin the persistent ones
+diff --git a/fs/libfs.c b/fs/libfs.c
+index 52f00bfc8f7ba..cb37a117c8e5c 100644
+--- a/fs/libfs.c
++++ b/fs/libfs.c
+@@ -283,6 +283,12 @@ void simple_offset_init(struct offset_ctx *octx)
+  * @octx: directory offset ctx to be updated
+  * @dentry: new dentry being added
   *
-  * Prune the dcache to remove unused children of the parent dentry.
++ * The offset map holds no reference to @dentry. Once positive, @dentry
++ * must be pinned with d_make_persistent() for as long as it is in the
++ * map, and entries may only be added, removed or renamed with the
++ * directory's i_rwsem held exclusive: offset_readdir() emits straight
++ * from the map under the shared lock.
++ *
+  * Returns zero on success. @octx and the dentry's offset are updated.
+  * Otherwise, a negative errno value is returned.
   */
--void shrink_dcache_parent(struct dentry *parent)
-+static void shrink_dcache_tree(struct dentry *parent, bool for_umount)
- {
- 	for (;;) {
- 		struct select_data data = {.start = parent};
- 
- 		INIT_LIST_HEAD(&data.dispose);
--		d_walk(parent, &data, select_collect);
-+		d_walk(parent, &data,
-+			for_umount ? select_collect_umount : select_collect);
- 
- 		if (!list_empty(&data.dispose)) {
- 			shrink_dentry_list(&data.dispose);
-@@ -1590,6 +1601,11 @@ void shrink_dcache_parent(struct dentry *parent)
- 			shrink_dentry_list(&data.dispose);
- 	}
+@@ -447,51 +453,6 @@ static loff_t offset_dir_llseek(struct file *file, loff_t offset, int whence)
+ 	return vfs_setpos(file, offset, LONG_MAX);
  }
-+
-+void shrink_dcache_parent(struct dentry *parent)
-+{
-+	shrink_dcache_tree(parent, false);
-+}
- EXPORT_SYMBOL(shrink_dcache_parent);
  
- static enum d_walk_ret umount_check(void *_data, struct dentry *dentry)
-@@ -1616,7 +1632,7 @@ static enum d_walk_ret umount_check(void *_data, struct dentry *dentry)
- 
- static void do_one_tree(struct dentry *dentry)
+-static struct dentry *find_positive_dentry(struct dentry *parent,
+-					   struct dentry *dentry,
+-					   bool next)
+-{
+-	struct dentry *found = NULL;
+-
+-	spin_lock(&parent->d_lock);
+-	if (next)
+-		dentry = d_next_sibling(dentry);
+-	else if (!dentry)
+-		dentry = d_first_child(parent);
+-	hlist_for_each_entry_from(dentry, d_sib) {
+-		if (!simple_positive(dentry))
+-			continue;
+-		spin_lock_nested(&dentry->d_lock, DENTRY_D_LOCK_NESTED);
+-		if (simple_positive(dentry))
+-			found = dget_dlock(dentry);
+-		spin_unlock(&dentry->d_lock);
+-		if (likely(found))
+-			break;
+-	}
+-	spin_unlock(&parent->d_lock);
+-	return found;
+-}
+-
+-static noinline_for_stack struct dentry *
+-offset_dir_lookup(struct dentry *parent, loff_t offset)
+-{
+-	struct inode *inode = d_inode(parent);
+-	struct offset_ctx *octx = inode->i_op->get_offset_ctx(inode);
+-	struct dentry *child, *found = NULL;
+-
+-	MA_STATE(mas, &octx->mt, offset, offset);
+-
+-	if (offset == DIR_OFFSET_FIRST)
+-		found = find_positive_dentry(parent, NULL, false);
+-	else {
+-		rcu_read_lock();
+-		child = mas_find_rev(&mas, DIR_OFFSET_MIN);
+-		found = find_positive_dentry(parent, child, false);
+-		rcu_read_unlock();
+-	}
+-	return found;
+-}
+-
+ static bool offset_dir_emit(struct dir_context *ctx, struct dentry *dentry)
  {
--	shrink_dcache_parent(dentry);
-+	shrink_dcache_tree(dentry, true);
- 	d_walk(dentry, dentry, umount_check);
- 	d_drop(dentry);
- 	dput(dentry);
-@@ -3130,7 +3146,8 @@ static enum d_walk_ret d_genocide_kill(void *data, struct dentry *dentry)
+ 	struct inode *inode = d_inode(dentry);
+@@ -500,32 +461,30 @@ static bool offset_dir_emit(struct dir_context *ctx, struct dentry *dentry)
+ 			inode->i_ino, fs_umode_to_dtype(inode->i_mode));
+ }
+ 
++/*
++ * Emit entries in descending offset order. The directory's i_rwsem is the
++ * lock of the offset tree and the persistent dentries in it only change
++ * with it held exclusive. We hold it shared, so @mas stays valid across
++ * dir_emit() and the dentries need no references.
++ */
+ static void offset_iterate_dir(struct file *file, struct dir_context *ctx)
  {
- 	struct dentry *root = data;
- 	if (dentry != root) {
--		if (d_unhashed(dentry) || !dentry->d_inode)
-+		if (d_unhashed(dentry) || !dentry->d_inode ||
-+		    dentry->d_flags & DCACHE_PERSISTENT)
- 			return D_WALK_SKIP;
+-	struct dentry *dir = file->f_path.dentry;
++	struct inode *inode = file_inode(file);
++	struct offset_ctx *octx = inode->i_op->get_offset_ctx(inode);
++	loff_t start = ctx->pos == DIR_OFFSET_FIRST ? DIR_OFFSET_MAX : ctx->pos;
+ 	struct dentry *dentry;
  
- 		if (!(dentry->d_flags & DCACHE_GENOCIDE)) {
-diff --git a/include/linux/dcache.h b/include/linux/dcache.h
-index c83e02b943894..94b58655322a0 100644
---- a/include/linux/dcache.h
-+++ b/include/linux/dcache.h
-@@ -225,6 +225,7 @@ enum dentry_flags {
- 	DCACHE_PAR_LOOKUP		= BIT(24),	/* being looked up (with parent locked shared) */
- 	DCACHE_DENTRY_CURSOR		= BIT(25),
- 	DCACHE_NORCU			= BIT(26),	/* No RCU delay for freeing */
-+	DCACHE_PERSISTENT		= BIT(27)
- };
+-	dentry = offset_dir_lookup(dir, ctx->pos);
+-	if (!dentry)
+-		goto out_eod;
+-	while (true) {
+-		struct dentry *next;
++	MA_STATE(mas, &octx->mt, start, start);
  
- #define DCACHE_MANAGED_DENTRY \
++	for (;;) {
++		dentry = mas_find_rev(&mas, DIR_OFFSET_MIN);
++		if (!dentry)
++			break;
++		VFS_WARN_ON_ONCE(!(dentry->d_flags & DCACHE_PERSISTENT));
+ 		ctx->pos = dentry2offset(dentry);
+ 		if (!offset_dir_emit(ctx, dentry))
+-			break;
+-
+-		next = find_positive_dentry(dir, dentry, true);
+-		dput(dentry);
+-
+-		if (!next)
+-			goto out_eod;
+-		dentry = next;
++			return;
+ 	}
+-	dput(dentry);
+-	return;
+-
+-out_eod:
+ 	ctx->pos = DIR_OFFSET_EOD;
+ }
+ 
 -- 
 2.53.0
 
