@@ -1,54 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795617688;
-	b=Ml2w20HuqCkBL7vQe+GZ+e14N+nVkX1W3kow2InRdjKjabTzmeyf1QKX/Cq6c4H09Pmw
-	 1OYNfJtylc1wwCCIOINkiXzFUNE3dNc/0D8a+y5hiAz159QyAQscukHNs8RLOtaSoPUW7
-	 VlDL1YsMA//eDWKekEcsVLh4gDiPFqqtrLox+XfrK6VtS/TwqjmJtNl22dL2SDEKV+PrN
-	 1Sp7cAn5teHvGoB+rwk9i/1k1uV4088N/IcPi7xadinjB1hkCNLg5pjaTIgLfPmDiIF5b
-	 TsAh2FHDP+1sBJLwQySG5+GbmXZUTNWZQxwFpFeQJyLeVwpXzQs5VIXNxU33p0270vw==
+	t=1795617691;
+	b=w2/ld1mkVt1jYIW4livZEzkKwuK/ypvILOtqupiPNdIdWIUd7HKiWptZ5rOhdsLJaRmz
+	 eiomO+Ro2NVMGkI1QHZZDdOi5olmfzCKJQQSKFo+kLAB+o0LV3gwdBOOOUF5U5x2i9/3X
+	 +nIoTitllBgKeN1fGat+2QbpBFI6su7KMM+urrvptwFFZiwP6rTnZUlT/XOg2z03kSX+U
+	 TNHCcoG5mfNeQ/qkjLQtQo++OUapY7fLyTA/bWxXsyTGk0niSrHcUoW5Gtb490FBUsGuW
+	 +iHQvUY56qjZ14GlTH8PkoeZmjI6mYMyjhGdZforI4mNwUpi4RQWDEgqgcVpBDUNreA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795617688;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795617691;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=NuX2ZEhQ3c19K2DIDSKDYasHydnmFg0qDTzoGVSdogE=;
-	b=gMFyhyNFO6GVZEEbGZ3ShFjjF64ESLPY7J9ypzxJUhasZLbaOeu7gO3VnuaiU+dvWWcf
-	 m0QTAbHelR5HIKXmqffhf7Ms+wInbDdCYKGYJdEwK5w+dCErK7NxFubH2bT4jxMI5HXOV
-	 yCRedP+y+nAXbTe7qPUz6yVUnkEg9RsT1Z8Ibc8PK/pQisYDVmYYcA2+PshMl/VN0z16g
-	 KMIJrpjfAzZ2aPYv0VeYiSw0ggC1FBPhFIQo1fGscZE0Y87+nWAwubx6si2TGPpEip7iR
-	 hUXOInyFSz7KzsLPsWjadzr9Q+gjspAjRP9hPrKYAdeuzZfOH3wL1HFr2jnw5bvZ9Qw==
+	bh=DmSUOVJ4rpVVOhCosPpiaREc6kQwlZGaw7SPFBe17C8=;
+	b=wc3xzAeTB5x/TjRx/8ZI38ZlmqwDGMQ2zeZWYO280XEJpvVEW5/Nb/B6+3eeOmEf7Ua+
+	 /ewV7dop7KoaHvAo+nmYWq7U7dGUNzcdX+hdnGXDkp+pW6WUtfcnxf0HgNsbYancrGvMJ
+	 XTdyNVmL2xjCSqFpsglukEot48T6kpce1Pv1MEC5RsXfsVX7IleKVjrbRzCZMSls8Ozti
+	 7pRnsABKgZNn0CL8/kHsWZOEusAkfeNtOal1fZVygGlas3gs5EIuwiAb14kEwIJf5otY5
+	 4FzCZOFnAym8rEVVy8k33HkFvY6vYaAo1kfZAvtNFgsm2Xlzv4JsEG184rAk9yEpwQQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="w/LbHkTG";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Jsa5ZI5Q;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 61347606A31E;
-	Wed, 25 Nov 2026 14:41:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4E95A606A326;
+	Wed, 25 Nov 2026 14:41:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=w/LbHkTG
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7EA9B1F000C4;
-	Wed, 25 Nov 2026 14:41:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Jsa5ZI5Q
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 872511F000C6;
+	Wed, 25 Nov 2026 14:41:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795617688;
-	bh=NuX2ZEhQ3c19K2DIDSKDYasHydnmFg0qDTzoGVSdogE=;
+	s=korg; t=1795617691;
+	bh=DmSUOVJ4rpVVOhCosPpiaREc6kQwlZGaw7SPFBe17C8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=w/LbHkTG/ifBMxhMVxVdg/NJ9a6XMqsrMdnvZgWpBK31AWrBShg8em2fG7UsAFHY/
-	 6souTfITsRHthLwAy5TCDfZRAo4v0fqlJPyaa361xkuHFUamJK4bb7G3oppqfLEx2o
-	 +kb81PUdZxhXq3EzwzujzF1ASV+8PHwOEEl1HhS4=
+	b=Jsa5ZI5QpgkPijjVvfB9nEPVemXOhQuL+8JZPtXtkB2G43y/kRZ9lfzH1JIrjsdP8
+	 CiW6tYWe27U6tTWzI6UGZ6tMEygRk6nIll1HFyVJXoPe0BYfZWBEvkCW3pEE0RXuaR
+	 RZ97ThZBI5Tiiev4Jy+AyuwPiOeXPW+vDhLhNFKc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vasanthakumar Thiagarajan <vasanthakumar.thiagarajan@oss.qualcomm.com>,
+	Miaoqing Pan <miaoqing.pan@oss.qualcomm.com>,
+	Rameshkumar Sundaram <rameshkumar.sundaram@oss.qualcomm.com>,
 	Baochen Qiang <baochen.qiang@oss.qualcomm.com>,
-	Lorenzo Bianconi <lorenzo.bianconi@oss.qualcomm.com>,
 	Jeff Johnson <jeff.johnson@oss.qualcomm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0043/1005] wifi: ath12k: fix decap of MSDUs spanning multiple RX buffers
-Date: Wed, 25 Nov 2026 15:23:01 +0100
-Message-ID: <20261125143822.749457257@linuxfoundation.org>
+Subject: [PATCH 7.3 0044/1005] wifi: ath12k: Fix failure to create ath12k_dp_peer on MLO reconnect
+Date: Wed, 25 Nov 2026 15:23:02 +0100
+Message-ID: <20261125143822.772663025@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143821.729802100@linuxfoundation.org>
 References: <20261125143821.729802100@linuxfoundation.org>
@@ -70,204 +70,76 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Lorenzo Bianconi <lorenzo.bianconi@oss.qualcomm.com>
+From: Miaoqing Pan <miaoqing.pan@oss.qualcomm.com>
 
-[ Upstream commit 1e678e37ff13e45f22d78d802fcefa8f9a0d9395 ]
+[ Upstream commit 843a011534b007a609ae25a91581c5c535e78741 ]
 
-When a MSDU is split across multiple RX buffers, the msdu_end TLV is
-populated only in the last buffer. Since commit e8a1e49c6328
-("wifi: ath12k: Add new infra for the rx path"), the RX info
-extraction in ath12k_hal_extract_rx_desc_data_*() helpers runs before
-the MSDU is coalesced, so the msdu_end-derived fields (decap_type,
-mesh_ctrl_present, is_from_ds, is_to_ds, is_mcbc, is_decrypted, sgi,
-rate_mcs, bw, phy_meta_data, pkt_type, nss, checksum flags and
-err_bitmap, plus tid on QCN9274) were read from the first buffer, where
-that TLV is not valid.
+In ath12k_mac_op_sta_state(), when transitioning an MLO station from
+IEEE80211_STA_NOTEXIST to IEEE80211_STA_NONE, after ath12k_dp_peer_create()
+succeeds, on is_sta_assoc_link verification failure, it takes the
+'goto exit' path instead of 'goto peer_delete', leaving a stale dp_peer on
+the dp_peers_list.
 
-As a result decap_type was reported as DP_RX_DECAP_TYPE_RAW and the
-frame was handed to mac80211 with a raw 802.11 header instead of being
-converted to an ethernet frame, breaking reception of any frame larger
-than the single RX buffer.
+On the next connection attempt, ath12k_dp_peer_create() finds the stale
+entry and returns -EEXIST (-17):
 
-Fix it by parsing the msdu_end fields from the last buffer (ldesc) in
-ath12k_hal_extract_rx_desc_data_{wcn7850,qcn9274,qcc2072}(), keeping the
-mpdu_start fields (enctype, seq_no, peer_id and addr2) on the first
-buffer (rx_desc). The tid field is read from mpdu_start on WCN7850 and
-QCC2072, and from msdu_end on QCN9274. For single-buffer MSDUs rx_desc
-and ldesc point to the same descriptor so the behavior is unchanged.
+    wlP4p1s0: failed to insert STA entry for the AP (error -17)
+
+Fix it by changing 'goto exit' to 'goto free_unassign_link'.
+
+Also, there is another error path in ath12k_mac_op_sta_state() that
+jumps to peer_delete after ath12k_mac_assign_link_sta() succeeds, without
+undoing the assignment through ath12k_mac_free_unassign_link_sta().
+As a result, the link RCU pointer remains assigned and a stale bit is
+left in ahsta->links_map, which can trigger the same -EEXIST failure
+on subsequent reconnect attempts. Fix this by redirecting that error
+path to free_unassign_link instead.
 
 Tested-on: WCN7850 hw2.0 PCI WLAN.HMT.1.1.c7-00108-QCAHMTSWPL_V1.0_V2.0_SILICONZ_UPSTREAM-3
 
-Fixes: e8a1e49c6328 ("wifi: ath12k: Add new infra for the rx path")
-Reviewed-by: Vasanthakumar Thiagarajan <vasanthakumar.thiagarajan@oss.qualcomm.com>
+Fixes: 0cd46d1f36ce ("wifi: ath12k: identify assoc link vif in station mode")
+Fixes: ee16dcf573d5 ("wifi: ath12k: Define ath12k_dp_peer structure & APIs for create & delete")
+Signed-off-by: Miaoqing Pan <miaoqing.pan@oss.qualcomm.com>
+Reviewed-by: Rameshkumar Sundaram <rameshkumar.sundaram@oss.qualcomm.com>
 Reviewed-by: Baochen Qiang <baochen.qiang@oss.qualcomm.com>
-Signed-off-by: Lorenzo Bianconi <lorenzo.bianconi@oss.qualcomm.com>
-Link: https://patch.msgid.link/20261015-ath12k-fix-descap-multiple-rx-buf-v2-1-4cde055677ed@oss.qualcomm.com
+Link: https://patch.msgid.link/20260915080053.918500-1-miaoqing.pan@oss.qualcomm.com
 Signed-off-by: Jeff Johnson <jeff.johnson@oss.qualcomm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../wireless/ath/ath12k/wifi7/hal_qcc2072.c   | 30 ++++++++---------
- .../wireless/ath/ath12k/wifi7/hal_qcn9274.c   | 32 +++++++++----------
- .../wireless/ath/ath12k/wifi7/hal_wcn7850.c   | 30 ++++++++---------
- 3 files changed, 46 insertions(+), 46 deletions(-)
+ drivers/net/wireless/ath/ath12k/mac.c | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/net/wireless/ath/ath12k/wifi7/hal_qcc2072.c b/drivers/net/wireless/ath/ath12k/wifi7/hal_qcc2072.c
-index 7cf00fda996f3..7ea7559e882c2 100644
---- a/drivers/net/wireless/ath/ath12k/wifi7/hal_qcc2072.c
-+++ b/drivers/net/wireless/ath/ath12k/wifi7/hal_qcc2072.c
-@@ -402,32 +402,32 @@ static void ath12k_hal_extract_rx_desc_data_qcc2072(struct hal_rx_desc_data *rx_
- 	rx_desc_data->is_last_msdu = ath12k_hal_rx_desc_get_last_msdu_qcc2072(ldesc);
- 	rx_desc_data->l3_pad_bytes = ath12k_hal_rx_desc_get_l3_pad_bytes_qcc2072(ldesc);
- 	rx_desc_data->enctype = ath12k_hal_rx_desc_get_encrypt_type_qcc2072(rx_desc);
--	rx_desc_data->decap_type = ath12k_hal_rx_desc_get_decap_type_qcc2072(rx_desc);
-+	rx_desc_data->decap_type = ath12k_hal_rx_desc_get_decap_type_qcc2072(ldesc);
- 	rx_desc_data->mesh_ctrl_present =
--				ath12k_hal_rx_desc_get_mesh_ctl_qcc2072(rx_desc);
-+				ath12k_hal_rx_desc_get_mesh_ctl_qcc2072(ldesc);
- 	rx_desc_data->seq_ctl_valid =
- 				ath12k_hal_rx_desc_get_mpdu_seq_ctl_vld_qcc2072(rx_desc);
- 	rx_desc_data->fc_valid = ath12k_hal_rx_desc_get_mpdu_fc_valid_qcc2072(rx_desc);
- 	rx_desc_data->seq_no = ath12k_hal_rx_desc_get_mpdu_start_seq_no_qcc2072(rx_desc);
- 	rx_desc_data->msdu_len = ath12k_hal_rx_desc_get_msdu_len_qcc2072(ldesc);
--	rx_desc_data->sgi = ath12k_hal_rx_desc_get_msdu_sgi_qcc2072(rx_desc);
--	rx_desc_data->is_from_ds = ath12k_wifi7_hal_rx_h_from_ds_qcc2072(rx_desc);
--	rx_desc_data->is_to_ds = ath12k_wifi7_hal_rx_h_to_ds_qcc2072(rx_desc);
--	rx_desc_data->rate_mcs = ath12k_hal_rx_desc_get_msdu_rate_mcs_qcc2072(rx_desc);
--	rx_desc_data->bw = ath12k_hal_rx_desc_get_msdu_rx_bw_qcc2072(rx_desc);
--	rx_desc_data->phy_meta_data = ath12k_hal_rx_desc_get_msdu_freq_qcc2072(rx_desc);
--	rx_desc_data->pkt_type = ath12k_hal_rx_desc_get_msdu_pkt_type_qcc2072(rx_desc);
--	rx_desc_data->nss = hweight8(ath12k_hal_rx_desc_get_msdu_nss_qcc2072(rx_desc));
-+	rx_desc_data->sgi = ath12k_hal_rx_desc_get_msdu_sgi_qcc2072(ldesc);
-+	rx_desc_data->is_from_ds = ath12k_wifi7_hal_rx_h_from_ds_qcc2072(ldesc);
-+	rx_desc_data->is_to_ds = ath12k_wifi7_hal_rx_h_to_ds_qcc2072(ldesc);
-+	rx_desc_data->rate_mcs = ath12k_hal_rx_desc_get_msdu_rate_mcs_qcc2072(ldesc);
-+	rx_desc_data->bw = ath12k_hal_rx_desc_get_msdu_rx_bw_qcc2072(ldesc);
-+	rx_desc_data->phy_meta_data = ath12k_hal_rx_desc_get_msdu_freq_qcc2072(ldesc);
-+	rx_desc_data->pkt_type = ath12k_hal_rx_desc_get_msdu_pkt_type_qcc2072(ldesc);
-+	rx_desc_data->nss = hweight8(ath12k_hal_rx_desc_get_msdu_nss_qcc2072(ldesc));
- 	rx_desc_data->tid = ath12k_hal_rx_desc_get_mpdu_tid_qcc2072(rx_desc);
- 	rx_desc_data->peer_id = ath12k_hal_rx_desc_get_mpdu_peer_id_qcc2072(rx_desc);
- 	rx_desc_data->addr2_present = ath12k_hal_rx_desc_mac_addr2_valid_qcc2072(rx_desc);
- 	rx_desc_data->addr2 = ath12k_hal_rx_desc_mpdu_start_addr2_qcc2072(rx_desc);
--	rx_desc_data->is_mcbc = ath12k_hal_rx_desc_is_da_mcbc_qcc2072(rx_desc);
-+	rx_desc_data->is_mcbc = ath12k_hal_rx_desc_is_da_mcbc_qcc2072(ldesc);
- 	rx_desc_data->msdu_done = ath12k_hal_rx_h_msdu_done_qcc2072(ldesc);
--	rx_desc_data->l4_csum_fail = ath12k_hal_rx_h_l4_cksum_fail_qcc2072(rx_desc);
--	rx_desc_data->ip_csum_fail = ath12k_hal_rx_h_ip_cksum_fail_qcc2072(rx_desc);
--	rx_desc_data->is_decrypted = ath12k_hal_rx_h_is_decrypted_qcc2072(rx_desc);
--	rx_desc_data->err_bitmap = ath12k_hal_rx_h_mpdu_err_qcc2072(rx_desc);
-+	rx_desc_data->l4_csum_fail = ath12k_hal_rx_h_l4_cksum_fail_qcc2072(ldesc);
-+	rx_desc_data->ip_csum_fail = ath12k_hal_rx_h_ip_cksum_fail_qcc2072(ldesc);
-+	rx_desc_data->is_decrypted = ath12k_hal_rx_h_is_decrypted_qcc2072(ldesc);
-+	rx_desc_data->err_bitmap = ath12k_hal_rx_h_mpdu_err_qcc2072(ldesc);
- }
+diff --git a/drivers/net/wireless/ath/ath12k/mac.c b/drivers/net/wireless/ath/ath12k/mac.c
+index 56578321e88c6..b5c3519065a2a 100644
+--- a/drivers/net/wireless/ath/ath12k/mac.c
++++ b/drivers/net/wireless/ath/ath12k/mac.c
+@@ -7845,7 +7845,7 @@ int ath12k_mac_op_sta_state(struct ieee80211_hw *hw,
+ 				ath12k_hw_warn(ah, "failed to verify assoc link setting with link id %u\n",
+ 					       link_id);
+ 				ret = -EINVAL;
+-				goto exit;
++				goto free_unassign_link;
+ 			}
  
- static int ath12k_hal_srng_create_config_qcc2072(struct ath12k_hal *hal)
-diff --git a/drivers/net/wireless/ath/ath12k/wifi7/hal_qcn9274.c b/drivers/net/wireless/ath/ath12k/wifi7/hal_qcn9274.c
-index 052b59265af85..355cf50d2785f 100644
---- a/drivers/net/wireless/ath/ath12k/wifi7/hal_qcn9274.c
-+++ b/drivers/net/wireless/ath/ath12k/wifi7/hal_qcn9274.c
-@@ -922,32 +922,32 @@ void ath12k_hal_extract_rx_desc_data_qcn9274(struct hal_rx_desc_data *rx_desc_da
- 	rx_desc_data->is_last_msdu = ath12k_hal_rx_desc_get_last_msdu_qcn9274(ldesc);
- 	rx_desc_data->l3_pad_bytes = ath12k_hal_rx_desc_get_l3_pad_bytes_qcn9274(ldesc);
- 	rx_desc_data->enctype = ath12k_hal_rx_desc_get_encrypt_type_qcn9274(rx_desc);
--	rx_desc_data->decap_type = ath12k_hal_rx_desc_get_decap_type_qcn9274(rx_desc);
-+	rx_desc_data->decap_type = ath12k_hal_rx_desc_get_decap_type_qcn9274(ldesc);
- 	rx_desc_data->mesh_ctrl_present =
--		ath12k_hal_rx_desc_get_mesh_ctl_qcn9274(rx_desc);
-+		ath12k_hal_rx_desc_get_mesh_ctl_qcn9274(ldesc);
- 	rx_desc_data->seq_ctl_valid =
- 		ath12k_hal_rx_desc_get_mpdu_seq_ctl_vld_qcn9274(rx_desc);
- 	rx_desc_data->fc_valid = ath12k_hal_rx_desc_get_mpdu_fc_valid_qcn9274(rx_desc);
--	rx_desc_data->is_from_ds = ath12k_wifi7_hal_rx_h_from_ds_qcn9274(rx_desc);
--	rx_desc_data->is_to_ds = ath12k_wifi7_hal_rx_h_to_ds_qcn9274(rx_desc);
-+	rx_desc_data->is_from_ds = ath12k_wifi7_hal_rx_h_from_ds_qcn9274(ldesc);
-+	rx_desc_data->is_to_ds = ath12k_wifi7_hal_rx_h_to_ds_qcn9274(ldesc);
- 	rx_desc_data->seq_no = ath12k_hal_rx_desc_get_mpdu_start_seq_no_qcn9274(rx_desc);
- 	rx_desc_data->msdu_len = ath12k_hal_rx_desc_get_msdu_len_qcn9274(ldesc);
--	rx_desc_data->sgi = ath12k_hal_rx_desc_get_msdu_sgi_qcn9274(rx_desc);
--	rx_desc_data->rate_mcs = ath12k_hal_rx_desc_get_msdu_rate_mcs_qcn9274(rx_desc);
--	rx_desc_data->bw = ath12k_hal_rx_desc_get_msdu_rx_bw_qcn9274(rx_desc);
--	rx_desc_data->phy_meta_data = ath12k_hal_rx_desc_get_msdu_freq_qcn9274(rx_desc);
--	rx_desc_data->pkt_type = ath12k_hal_rx_desc_get_msdu_pkt_type_qcn9274(rx_desc);
--	rx_desc_data->nss = hweight8(ath12k_hal_rx_desc_get_msdu_nss_qcn9274(rx_desc));
--	rx_desc_data->tid = ath12k_hal_rx_desc_get_mpdu_tid_qcn9274(rx_desc);
-+	rx_desc_data->sgi = ath12k_hal_rx_desc_get_msdu_sgi_qcn9274(ldesc);
-+	rx_desc_data->rate_mcs = ath12k_hal_rx_desc_get_msdu_rate_mcs_qcn9274(ldesc);
-+	rx_desc_data->bw = ath12k_hal_rx_desc_get_msdu_rx_bw_qcn9274(ldesc);
-+	rx_desc_data->phy_meta_data = ath12k_hal_rx_desc_get_msdu_freq_qcn9274(ldesc);
-+	rx_desc_data->pkt_type = ath12k_hal_rx_desc_get_msdu_pkt_type_qcn9274(ldesc);
-+	rx_desc_data->nss = hweight8(ath12k_hal_rx_desc_get_msdu_nss_qcn9274(ldesc));
-+	rx_desc_data->tid = ath12k_hal_rx_desc_get_mpdu_tid_qcn9274(ldesc);
- 	rx_desc_data->peer_id = ath12k_hal_rx_desc_get_mpdu_peer_id_qcn9274(rx_desc);
- 	rx_desc_data->addr2_present = ath12k_hal_rx_desc_mac_addr2_valid_qcn9274(rx_desc);
- 	rx_desc_data->addr2 = ath12k_hal_rx_desc_mpdu_start_addr2_qcn9274(rx_desc);
--	rx_desc_data->is_mcbc = ath12k_hal_rx_desc_is_da_mcbc_qcn9274(rx_desc);
-+	rx_desc_data->is_mcbc = ath12k_hal_rx_desc_is_da_mcbc_qcn9274(ldesc);
- 	rx_desc_data->msdu_done = ath12k_hal_rx_h_msdu_done_qcn9274(ldesc);
--	rx_desc_data->l4_csum_fail = ath12k_hal_rx_h_l4_cksum_fail_qcn9274(rx_desc);
--	rx_desc_data->ip_csum_fail = ath12k_hal_rx_h_ip_cksum_fail_qcn9274(rx_desc);
--	rx_desc_data->is_decrypted = ath12k_hal_rx_h_is_decrypted_qcn9274(rx_desc);
--	rx_desc_data->err_bitmap = ath12k_hal_rx_h_mpdu_err_qcn9274(rx_desc);
-+	rx_desc_data->l4_csum_fail = ath12k_hal_rx_h_l4_cksum_fail_qcn9274(ldesc);
-+	rx_desc_data->ip_csum_fail = ath12k_hal_rx_h_ip_cksum_fail_qcn9274(ldesc);
-+	rx_desc_data->is_decrypted = ath12k_hal_rx_h_is_decrypted_qcn9274(ldesc);
-+	rx_desc_data->err_bitmap = ath12k_hal_rx_h_mpdu_err_qcn9274(ldesc);
- }
+ 			arsta->is_assoc_link = true;
+@@ -7903,7 +7903,7 @@ int ath12k_mac_op_sta_state(struct ieee80211_hw *hw,
  
- static u16 ath12k_hal_reo_status_dec_tlv_hdr_qcn9274(void *tlv, void **desc)
-diff --git a/drivers/net/wireless/ath/ath12k/wifi7/hal_wcn7850.c b/drivers/net/wireless/ath/ath12k/wifi7/hal_wcn7850.c
-index 61be8443e46ee..abe982faeb2b7 100644
---- a/drivers/net/wireless/ath/ath12k/wifi7/hal_wcn7850.c
-+++ b/drivers/net/wireless/ath/ath12k/wifi7/hal_wcn7850.c
-@@ -604,32 +604,32 @@ void ath12k_hal_extract_rx_desc_data_wcn7850(struct hal_rx_desc_data *rx_desc_da
- 	rx_desc_data->is_last_msdu = ath12k_hal_rx_desc_get_last_msdu_wcn7850(ldesc);
- 	rx_desc_data->l3_pad_bytes = ath12k_hal_rx_desc_get_l3_pad_bytes_wcn7850(ldesc);
- 	rx_desc_data->enctype = ath12k_hal_rx_desc_get_encrypt_type_wcn7850(rx_desc);
--	rx_desc_data->decap_type = ath12k_hal_rx_desc_get_decap_type_wcn7850(rx_desc);
-+	rx_desc_data->decap_type = ath12k_hal_rx_desc_get_decap_type_wcn7850(ldesc);
- 	rx_desc_data->mesh_ctrl_present =
--		ath12k_hal_rx_desc_get_mesh_ctl_wcn7850(rx_desc);
-+		ath12k_hal_rx_desc_get_mesh_ctl_wcn7850(ldesc);
- 	rx_desc_data->seq_ctl_valid =
- 		ath12k_hal_rx_desc_get_mpdu_seq_ctl_vld_wcn7850(rx_desc);
- 	rx_desc_data->fc_valid = ath12k_hal_rx_desc_get_mpdu_fc_valid_wcn7850(rx_desc);
- 	rx_desc_data->seq_no = ath12k_hal_rx_desc_get_mpdu_start_seq_no_wcn7850(rx_desc);
- 	rx_desc_data->msdu_len = ath12k_hal_rx_desc_get_msdu_len_wcn7850(ldesc);
--	rx_desc_data->sgi = ath12k_hal_rx_desc_get_msdu_sgi_wcn7850(rx_desc);
--	rx_desc_data->is_from_ds = ath12k_wifi7_hal_rx_h_from_ds_wcn7850(rx_desc);
--	rx_desc_data->is_to_ds = ath12k_wifi7_hal_rx_h_to_ds_wcn7850(rx_desc);
--	rx_desc_data->rate_mcs = ath12k_hal_rx_desc_get_msdu_rate_mcs_wcn7850(rx_desc);
--	rx_desc_data->bw = ath12k_hal_rx_desc_get_msdu_rx_bw_wcn7850(rx_desc);
--	rx_desc_data->phy_meta_data = ath12k_hal_rx_desc_get_msdu_freq_wcn7850(rx_desc);
--	rx_desc_data->pkt_type = ath12k_hal_rx_desc_get_msdu_pkt_type_wcn7850(rx_desc);
--	rx_desc_data->nss = hweight8(ath12k_hal_rx_desc_get_msdu_nss_wcn7850(rx_desc));
-+	rx_desc_data->sgi = ath12k_hal_rx_desc_get_msdu_sgi_wcn7850(ldesc);
-+	rx_desc_data->is_from_ds = ath12k_wifi7_hal_rx_h_from_ds_wcn7850(ldesc);
-+	rx_desc_data->is_to_ds = ath12k_wifi7_hal_rx_h_to_ds_wcn7850(ldesc);
-+	rx_desc_data->rate_mcs = ath12k_hal_rx_desc_get_msdu_rate_mcs_wcn7850(ldesc);
-+	rx_desc_data->bw = ath12k_hal_rx_desc_get_msdu_rx_bw_wcn7850(ldesc);
-+	rx_desc_data->phy_meta_data = ath12k_hal_rx_desc_get_msdu_freq_wcn7850(ldesc);
-+	rx_desc_data->pkt_type = ath12k_hal_rx_desc_get_msdu_pkt_type_wcn7850(ldesc);
-+	rx_desc_data->nss = hweight8(ath12k_hal_rx_desc_get_msdu_nss_wcn7850(ldesc));
- 	rx_desc_data->tid = ath12k_hal_rx_desc_get_mpdu_tid_wcn7850(rx_desc);
- 	rx_desc_data->peer_id = ath12k_hal_rx_desc_get_mpdu_peer_id_wcn7850(rx_desc);
- 	rx_desc_data->addr2_present = ath12k_hal_rx_desc_mac_addr2_valid_wcn7850(rx_desc);
- 	rx_desc_data->addr2 = ath12k_hal_rx_desc_mpdu_start_addr2_wcn7850(rx_desc);
--	rx_desc_data->is_mcbc = ath12k_hal_rx_desc_is_da_mcbc_wcn7850(rx_desc);
-+	rx_desc_data->is_mcbc = ath12k_hal_rx_desc_is_da_mcbc_wcn7850(ldesc);
- 	rx_desc_data->msdu_done = ath12k_hal_rx_h_msdu_done_wcn7850(ldesc);
--	rx_desc_data->l4_csum_fail = ath12k_hal_rx_h_l4_cksum_fail_wcn7850(rx_desc);
--	rx_desc_data->ip_csum_fail = ath12k_hal_rx_h_ip_cksum_fail_wcn7850(rx_desc);
--	rx_desc_data->is_decrypted = ath12k_hal_rx_h_is_decrypted_wcn7850(rx_desc);
--	rx_desc_data->err_bitmap = ath12k_hal_rx_h_mpdu_err_wcn7850(rx_desc);
-+	rx_desc_data->l4_csum_fail = ath12k_hal_rx_h_l4_cksum_fail_wcn7850(ldesc);
-+	rx_desc_data->ip_csum_fail = ath12k_hal_rx_h_ip_cksum_fail_wcn7850(ldesc);
-+	rx_desc_data->is_decrypted = ath12k_hal_rx_h_is_decrypted_wcn7850(ldesc);
-+	rx_desc_data->err_bitmap = ath12k_hal_rx_h_mpdu_err_wcn7850(ldesc);
- }
+ 			if (old_state == IEEE80211_STA_NOTEXIST &&
+ 			    new_state == IEEE80211_STA_NONE)
+-				goto peer_delete;
++				goto free_unassign_link;
+ 			else
+ 				goto exit;
+ 		}
+@@ -7943,6 +7943,8 @@ int ath12k_mac_op_sta_state(struct ieee80211_hw *hw,
+ 	ret = 0;
+ 	goto exit;
  
- int ath12k_hal_srng_create_config_wcn7850(struct ath12k_hal *hal)
++free_unassign_link:
++	ath12k_mac_free_unassign_link_sta(ah, ahsta, link_id);
+ peer_delete:
+ 	ath12k_dp_peer_delete(&ah->dp_hw, sta->addr, sta);
+ ml_peer_id_clear:
 -- 
 2.53.0
 
