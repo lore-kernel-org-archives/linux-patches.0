@@ -1,53 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795622913;
-	b=27x2/QdnOS9KcEuUirLG51i6llUsgijB8Wv8K7F2fPTzP89Ly0WBjoEb3LoW4QCS1Rfu
-	 Hgma4CVst7AID80jg0w9sBkORUUCamU8cozMbpGDxGRdqvStni2sfOh+UDlzXQb+pf8Rg
-	 ON9L7eCiAk9kVWdnN9+L05VDCu4jRiyDGb4EJ3w60zlm5Q7Zpqk9+9LNEGkTPntIgqXp3
-	 AxhT1XXhJtTv3Ni8trQeO4Ec8734oCfuRaX3pPmazhM3bWz7Z47rEmyK/ATasewjBHoL5
-	 ze/S343sXDKGOMhm7+vTFbUWZOO4o8srRRLu0EdrgbiSDYLpjcOdiSxaoYlq2eklSEA==
+	t=1795622916;
+	b=rVvIDfFDI85pUk0tLQkg2BFawsTZ9/b/TDxO5eOFXUOVxR4AI6YIIKh+pGt34KOEyNAQ
+	 dYa9TZB2G//UbaThiYOL5d5MAuKsTlrVAGbKUDCHlvABo3VwuH9Bx8ExMRza9R9gtDOgH
+	 Wdk6CQVmZMTrGvcMo/FsD7DAbrdsGvh4cw9Gvr7y2duyEVs7pgz4JMq5Fw+Wa4H7ICjjR
+	 CjL/ojbjWahjCR8IUe25fyq+IVAAAXlmZiYKhEBn2P3QuEsxb5m2I8I6k4Cy240+Gj0m1
+	 Q8PKqSe4T30okpqO9r59oerr6jwb6jaDyiFpsRRe/mV89QgNTJCC5gJOigc1lVgBmWQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795622913;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795622916;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=MhTZxV/a663lBYGW/KlDxrLAvPWgCBA5djKyx1qzsYM=;
-	b=MNe1pnemxRwH48WK6dh4rbqKCLLm8GuPk2gPW7SXO4K0B+zmtdb7qklRjlB5IABRSIId
-	 9IfSz6tPUs0LuoZCT09kcUTGwnq25jNuV1KLuaIeHHQ19QNu7YpUpqFcRKXGHiFacQ0lo
-	 XU9Ho+6K5snSqqgoKglqOjurOvvR5EfgPRbQs7USurqORdwlCkxcGI1tBgUX6Ya0vghCy
-	 Ahte34XgFgdHPKmlnUuofZK8eLZBHG8/H7WdZ16yXdNFe7E/vNSww2YRtO+iSEGduVQ95
-	 izLQ4GIu87HbAHiKr40rQonGLZR9jr41BWoFD+mafGOQ4eRGzgKOEvP14h4otkJllgA==
+	bh=hzieLIdbOuQxBIvw2MqRfissNgUAKyD+x3onWLvVrJg=;
+	b=OmcBFWD54+OdiVtXarVWgMDDkVKV4oP8m46g2PKiT4MIOYLXaKYR8OFqF3496HXJgFBZ
+	 Vij7qivb8fn6gXjvV19zqHA173RCevrFZYhbfgSTaZ2HzKqaqiPiZwAzP4yqGZ62a8NIY
+	 AVq0ABgMbeGe3ZyJyGUFDq+B32C6Z+oKHR1SSKlCIn4TA1CfEaDu13BMxu9MhKTTpdD9x
+	 ULzjBYFfnC6FKCPm9+t/7gBLcD7s1k14a1CdpW4wShMYfhJ0HZ1E+NuspAyNGqcH/5Zir
+	 L39irbI+969T7USr7XKUroZBHi0k1/Pi/9Lj1Jozan1BK0qhX8uf7JZ8qPw1Orlz9vg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Tos6Y2PD;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=AzXKttEe;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 80E8D606A31E;
-	Wed, 25 Nov 2026 16:08:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CC174606A31E;
+	Wed, 25 Nov 2026 16:08:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Tos6Y2PD
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 611391F000E0;
-	Wed, 25 Nov 2026 16:08:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=AzXKttEe
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AB73A1F000E0;
+	Wed, 25 Nov 2026 16:08:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795622912;
-	bh=MhTZxV/a663lBYGW/KlDxrLAvPWgCBA5djKyx1qzsYM=;
+	s=korg; t=1795622916;
+	bh=hzieLIdbOuQxBIvw2MqRfissNgUAKyD+x3onWLvVrJg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Tos6Y2PDIkQdqLmdE5b5Rp00n7422KjIIFRNsvg8E3BV75T7Oz3EXlZPL7pzxLlnB
-	 OdUZmaYlKCt1c/aqir0TToZ4zOt/NkKs+vcbRWTFbn4Uv6VRp4iIudxtH4tc6RMnu7
-	 gW7hBMsi6HmXIpArOm+FgYrQxWTCrnd1Ic6A7vM8=
+	b=AzXKttEegsQtec6mXwZfEgSNH3BgCqARm2xFHZcipxypVqxxFG3D1d+fPuwrZDmrC
+	 d+2kyZ5u6/AMnSAZcuB2b4NOBx4XUQL/36djybF1GkyuFUU8fUCznabghUlRASvuE+
+	 wDU7WpLVB/XrYDtoreDzwIu2jp993LZlEgrsCnaQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hao Li <hao.li@linux.dev>,
-	"Harry Yoo (Meta)" <harry@kernel.org>,
-	"Vlastimil Babka (SUSE)" <vbabka@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 646/990] mm/slub: refill prefilled sheaves from the barn
-Date: Wed, 25 Nov 2026 15:33:33 +0100
-Message-ID: <20261125143837.223277408@linuxfoundation.org>
+	David Carlier <devnexen@gmail.com>,
+	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>
+Subject: [PATCH 6.18 647/990] tracing/eprobe: Install the trigger for every instance that enables the eprobe
+Date: Wed, 25 Nov 2026 15:33:34 +0100
+Message-ID: <20261125143837.247052850@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143822.072087159@linuxfoundation.org>
 References: <20261125143822.072087159@linuxfoundation.org>
@@ -69,257 +67,133 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hao Li <hao.li@linux.dev>
+From: David Carlier <devnexen@gmail.com>
 
-[ Upstream commit 1b87ea06a34b213e45e3e0c4effd5043f15046ed ]
+commit be94710b1f6ba1bea33e73129c110af80e999b2d upstream.
 
-Currently, when the prefill API refills a non-full sheaf, it takes the
-objects from partial slabs and never from the full sheaves in the barn,
-so once the barn's full list becomes saturated, it stays saturated.
+The eprobe trigger lives in the instance of the enabling file, but it is
+only added when the eprobe is first enabled and only removed when the
+last file goes away. A second instance then records nothing, and the
+first instance's trigger is left behind once the eprobe is disabled
+there, so the eprobe can be deleted while that trigger still uses it.
 
-For objects freed via kfree_rcu(), every RCU sheaf then has to be
-flushed to slabs because the barn's full list has no room.
+Add and remove the trigger for each file. The file is never NULL here,
+so warn if it is and drop the dead perf paths.
 
-To fix this, let the sheaf refill from the barn first, and introduce a
-partial sheaf in the barn, which holds the leftover objects [1].
+Link: https://lore.kernel.org/all/20261107101233.151434-1-devnexen@gmail.com/
 
-Only the prefill path needs the partial sheaf. The generic allocation
-path (__pcs_replace_empty_main()) exchanges an empty sheaf for a full
-one from the barn, so nothing is left over. The prefill path refills a
-sheaf that is not necessarily empty, so taking objects from the barn
-usually leaves leftovers, and the partial sheaf is where they are
-kept. refill_sheaf() only takes objects from partial slabs and never
-involves the partial sheaf.
-
-The sheaf is refilled by copying objects from the partial sheaf, and
-then from a full sheaf taken from the barn if it is still not full. A
-sheaf that objects were copied from stays in the barn as the partial
-sheaf if it still holds objects, or goes on the empty list if it is
-empty. The sheaf being refilled is never replaced.
-
-The gain comes from two sides: every full sheaf taken out makes room on
-the barn's full list for a future RCU sheaf, and refilling from the
-barn is cheaper than refilling from partial slabs under list_lock.
-
-Note that putting the sheaf with the leftover objects on the full list
-instead would not work: it would occupy room on the full list, so the
-list would stay saturated and rcu_free_sheaf() would still keep
-flushing.
-
-An earlier version of this patch swapped sheaves instead, to minimize
-the memcpy overhead. As Harry Yoo pointed out [2], replacing the
-caller's sheaf loses cache affinity, filling it directly is more
-straightforward, and testing showed no measurable difference between
-the two approaches, so the approach he suggested is used.
-
-Tested with will-it-scale mmap1 (192 processes, one-minute runs) on the
-maple_node cache.
-
-throughput: 27778727 -> 34500556 (+24.2%)
-
-metric                       baseline           patched        change
-=====================================================================
-alloc_fastpath                 54,124            56,696        +4.75%
-alloc_slab                  7,100,651           159,739       -97.75%
-barn_get                          849       194,460,392    +22904539.81%
-barn_get_fail                       2               217    +10750.00%
-barn_put                          851       182,306,701    +21422544.07%
-barn_put_fail             260,400,484       145,522,675       -44.12%
-cmpxchg_double_fail         1,029,204           334,228       -67.53%
-free_add_partial          326,694,687       181,935,790       -44.31%
-free_fastpath                  13,297            15,611       +17.40%
-free_rcu_sheaf          8,332,839,104    10,490,535,227       +25.89%
-free_remove_partial         7,099,788           158,297       -97.77%
-free_slab                   7,099,788           158,297       -97.77%
-free_slowpath              10,969,156           782,851       -92.86%
-objects                        15,295            14,849        -2.92%
-objects_partial                15,295            14,849        -2.92%
-partial                         1,604             2,336       +45.64%
-sheaf_alloc               137,757,895       141,208,076        +2.50%
-sheaf_flush             8,332,823,922     4,656,725,764       -44.12%
-sheaf_free                137,757,883       141,208,072        +2.50%
-sheaf_prefill_fast      3,337,502,163     4,196,506,116       +25.74%
-sheaf_prefill_slow                685               400       -41.61%
-sheaf_refill            8,343,794,364     4,657,509,724       -44.18%
-sheaf_return_fast       3,337,502,411     4,196,506,382       +25.74%
-sheaf_return_slow                 437               134       -69.34%
-slabs                           1,604             2,336       +45.64%
-total_objects                 102,656           149,504       +45.64%
-
-Here is what the important metric changes mean.
-
-barn_get and barn_put: refills now take full sheaves out of the barn,
-and RCU sheaves are put into the barn again. Before, the barn's full
-list was saturated once and hardly ever consumed.
-
-barn_put_fail: more than half of the RCU sheaves are now put into the
-barn instead of being flushed. The rest are still flushed because they
-arrive while the barn's full list is at its limit.
-
-sheaf_refill and free_add_partial: fewer objects are taken from partial
-slabs to refill sheaves, and fewer slabs are added to the partial list,
-by the same percentage.
-
-alloc_slab and free_slab: the partial list is almost never empty when a
-refill looks at it, so slabs are almost never allocated and freed again
-only to serve refills.
-
-After the test, the maple_node cache holds 1604 slabs without the patch
-and 2336 with it. After a manual shrink
-(echo 1 > /sys/kernel/slab/maple_node/shrink), it holds 485 without
-the patch and 563 with it. So most of the extra slabs are held only by
-objects sitting in sheaves and are returned by a shrink, and what
-remains is a small difference, because objects handed out from the barn
-come from many more slabs than a refill from partial slabs would use.
-
-Link: https://lore.kernel.org/linux-mm/aqPlMzUIw-4g2iOX@fedora/ [1]
-Link: https://lore.kernel.org/linux-mm/aq0ylDidEHa2kg4X@thinkstation/ [2]
-Signed-off-by: Hao Li <hao.li@linux.dev>
-Reviewed-by: Harry Yoo (Meta) <harry@kernel.org>
-Link: https://patch.msgid.link/20260921094521.141665-1-hao.li@linux.dev
-Reviewed-by: Vlastimil Babka (SUSE) <vbabka@kernel.org>
-Signed-off-by: Harry Yoo (Meta) <harry@kernel.org>
-[ sashal: Adapted by calling refill_sheaf_from_barn() directly in the two prefill/refill functions, since the upstream pfmemalloc prefill helper doesn't exist here. ]
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: 7491e2c44278 ("tracing: Add a probe that attaches to trace events")
+Cc: stable@vger.kernel.org
+Signed-off-by: David Carlier <devnexen@gmail.com>
+Signed-off-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- mm/slub.c | 86 +++++++++++++++++++++++++++++++++++++++++++++++++++++--
- 1 file changed, 84 insertions(+), 2 deletions(-)
+ kernel/trace/trace_eprobe.c |   58 ++++++++++++++------------------------------
+ 1 file changed, 19 insertions(+), 39 deletions(-)
 
-diff --git a/mm/slub.c b/mm/slub.c
-index 8fdbe531a0cba..d49b6f69136c5 100644
---- a/mm/slub.c
-+++ b/mm/slub.c
-@@ -462,6 +462,7 @@ struct node_barn {
- 	spinlock_t lock;
- 	struct list_head sheaves_full;
- 	struct list_head sheaves_empty;
-+	struct slab_sheaf *sheaf_partial;
- 	unsigned int nr_full;
- 	unsigned int nr_empty;
- };
-@@ -3047,6 +3048,7 @@ static void barn_init(struct node_barn *barn)
- 	spin_lock_init(&barn->lock);
- 	INIT_LIST_HEAD(&barn->sheaves_full);
- 	INIT_LIST_HEAD(&barn->sheaves_empty);
-+	barn->sheaf_partial = NULL;
- 	barn->nr_full = 0;
- 	barn->nr_empty = 0;
+--- a/kernel/trace/trace_eprobe.c
++++ b/kernel/trace/trace_eprobe.c
+@@ -642,37 +642,32 @@ static int enable_trace_eprobe(struct tr
+ {
+ 	struct trace_probe *tp;
+ 	struct trace_eprobe *ep;
+-	bool enabled;
+ 	int ret = 0;
+ 	int cnt = 0;
+ 
++	if (WARN_ON_ONCE(!file))
++		return -EINVAL;
++
+ 	tp = trace_probe_primary_from_call(call);
+ 	if (WARN_ON_ONCE(!tp))
+ 		return -ENODEV;
+-	enabled = trace_probe_is_enabled(tp);
+ 
+ 	/* This also changes "enabled" state */
+-	if (file) {
+-		ret = trace_probe_add_file(tp, file);
+-		if (ret)
+-			return ret;
+-	} else
+-		trace_probe_set_flag(tp, TP_FLAG_PROFILE);
+-
+-	if (enabled)
+-		return 0;
++	ret = trace_probe_add_file(tp, file);
++	if (ret)
++		return ret;
+ 
++	/* The trigger lives in the instance of the file, add it for each file */
+ 	for_each_trace_eprobe_tp(ep, tp) {
+ 		ret = enable_eprobe(ep, file);
+ 		if (ret)
+ 			break;
+-		enabled = true;
+ 		cnt++;
+ 	}
+ 
+ 	if (ret) {
+ 		/* Failed to enable one of them. Roll back all */
+-		if (enabled) {
++		if (cnt) {
+ 			/*
+ 			 * It's a bug if one failed for something other than memory
+ 			 * not being available but another eprobe succeeded.
+@@ -685,10 +680,7 @@ static int enable_trace_eprobe(struct tr
+ 					break;
+ 			}
+ 		}
+-		if (file)
+-			trace_probe_remove_file(tp, file);
+-		else
+-			trace_probe_clear_flag(tp, TP_FLAG_PROFILE);
++		trace_probe_remove_file(tp, file);
+ 	}
+ 
+ 	return ret;
+@@ -700,33 +692,21 @@ static int disable_trace_eprobe(struct t
+ 	struct trace_probe *tp;
+ 	struct trace_eprobe *ep;
+ 
++	if (WARN_ON_ONCE(!file))
++		return -EINVAL;
++
+ 	tp = trace_probe_primary_from_call(call);
+ 	if (WARN_ON_ONCE(!tp))
+ 		return -ENODEV;
+ 
+-	if (file) {
+-		if (!trace_probe_get_file_link(tp, file))
+-			return -ENOENT;
+-		if (!trace_probe_has_single_file(tp))
+-			goto out;
+-		trace_probe_clear_flag(tp, TP_FLAG_TRACE);
+-	} else
+-		trace_probe_clear_flag(tp, TP_FLAG_PROFILE);
+-
+-	if (!trace_probe_is_enabled(tp)) {
+-		for_each_trace_eprobe_tp(ep, tp)
+-			disable_eprobe(ep, file->tr);
+-	}
++	if (!trace_probe_get_file_link(tp, file))
++		return -ENOENT;
+ 
+- out:
+-	if (file)
+-		/*
+-		 * Synchronization is done in below function. For perf event,
+-		 * file == NULL and perf_trace_event_unreg() calls
+-		 * tracepoint_synchronize_unregister() to ensure synchronize
+-		 * event. We don't need to care about it.
+-		 */
+-		trace_probe_remove_file(tp, file);
++	for_each_trace_eprobe_tp(ep, tp)
++		disable_eprobe(ep, file->tr);
++
++	/* Synchronization is done in below function. */
++	trace_probe_remove_file(tp, file);
+ 
+ 	return 0;
  }
-@@ -3067,6 +3069,10 @@ static void barn_shrink(struct kmem_cache *s, struct node_barn *barn)
- 	barn->nr_full = 0;
- 	list_splice_init(&barn->sheaves_empty, &empty_list);
- 	barn->nr_empty = 0;
-+	if (barn->sheaf_partial) {
-+		list_add(&barn->sheaf_partial->barn_list, &full_list);
-+		barn->sheaf_partial = NULL;
-+	}
- 
- 	spin_unlock_irqrestore(&barn->lock, flags);
- 
-@@ -5381,6 +5387,78 @@ void *kmem_cache_alloc_node_noprof(struct kmem_cache *s, gfp_t gfpflags, int nod
- }
- EXPORT_SYMBOL(kmem_cache_alloc_node_noprof);
- 
-+/*
-+ * Refill @sheaf from the barn: from its partial sheaf first, then from its full
-+ * sheaves. A sheaf that objects were copied from stays in the barn as the
-+ * partial sheaf if it still holds objects, or goes on the empty list if it is
-+ * empty.
-+ *
-+ * Returns true if the sheaf is now full, at s->sheaf_capacity.
-+ * Returns false if the sheaf is still not full.
-+ */
-+static bool refill_sheaf_from_barn(struct kmem_cache *s,
-+				   struct slab_sheaf *sheaf)
-+{
-+	struct node_barn *barn = get_barn(s);
-+	struct slab_sheaf *src;
-+	unsigned int to_move;
-+	unsigned long flags;
-+
-+	if (!barn)
-+		return false;
-+
-+	if (!data_race(barn->nr_full) && !data_race(barn->sheaf_partial))
-+		return false;
-+
-+	spin_lock_irqsave(&barn->lock, flags);
-+
-+	/*
-+	 * The partial sheaf can hold fewer objects than @sheaf needs to
-+	 * reach capacity, and a sheaf on the full list is not necessarily
-+	 * full (see the comment in rcu_free_sheaf()), so keep taking from
-+	 * the barn until @sheaf is full or nothing is left.
-+	 */
-+	while (sheaf->size < s->sheaf_capacity) {
-+		src = barn->sheaf_partial;
-+		barn->sheaf_partial = NULL;
-+		if (!src) {
-+			if (!barn->nr_full)
-+				break;
-+			src = list_first_entry(&barn->sheaves_full,
-+					       struct slab_sheaf, barn_list);
-+			list_del(&src->barn_list);
-+			barn->nr_full--;
-+		}
-+
-+		to_move = min(s->sheaf_capacity - sheaf->size, src->size);
-+		src->size -= to_move;
-+		memcpy(&sheaf->objects[sheaf->size], &src->objects[src->size],
-+		       to_move * sizeof(void *));
-+		sheaf->size += to_move;
-+
-+		if (src->size) {
-+			barn->sheaf_partial = src;
-+		} else {
-+			/*
-+			 * No empty-limit check: the sheaf put on the empty list
-+			 * was already in the barn, so the barn holds no more
-+			 * sheaves than before. barn_replace_empty_sheaf() skips
-+			 * the check for the same reason.
-+			 */
-+			list_add(&src->barn_list, &barn->sheaves_empty);
-+			barn->nr_empty++;
-+		}
-+	}
-+
-+	spin_unlock_irqrestore(&barn->lock, flags);
-+
-+	if (sheaf->size < s->sheaf_capacity)
-+		return false;
-+
-+	stat(s, BARN_GET);
-+	return true;
-+}
-+
- /*
-  * returns a sheaf that has at least the requested size
-  * when prefilling is needed, do so with given gfp flags
-@@ -5452,7 +5530,8 @@ kmem_cache_prefill_sheaf(struct kmem_cache *s, gfp_t gfp, unsigned int size)
- 		sheaf = alloc_empty_sheaf(s, gfp);
- 
- 	if (sheaf && sheaf->size < size) {
--		if (refill_sheaf(s, sheaf, gfp)) {
-+		if (!refill_sheaf_from_barn(s, sheaf) &&
-+		    refill_sheaf(s, sheaf, gfp)) {
- 			sheaf_flush_unused(s, sheaf);
- 			free_empty_sheaf(s, sheaf);
- 			sheaf = NULL;
-@@ -5546,8 +5625,11 @@ int kmem_cache_refill_sheaf(struct kmem_cache *s, gfp_t gfp,
- 		return 0;
- 
- 	if (likely(sheaf->capacity >= size)) {
--		if (likely(sheaf->capacity == s->sheaf_capacity))
-+		if (likely(sheaf->capacity == s->sheaf_capacity)) {
-+			if (refill_sheaf_from_barn(s, sheaf))
-+				return 0;
- 			return refill_sheaf(s, sheaf, gfp);
-+		}
- 
- 		if (!__kmem_cache_alloc_bulk(s, gfp, sheaf->capacity - sheaf->size,
- 					     &sheaf->objects[sheaf->size])) {
--- 
-2.53.0
-
 
 
