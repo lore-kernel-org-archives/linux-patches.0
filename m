@@ -1,42 +1,42 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795620415;
-	b=LeBcOBNE1/Bq733+8FRgOtf0LA/+VPqVFBvzrIOi4TlvCAvBP/IO5vrc/A4mPir8f1s6
-	 RqKUO0kus9D6dEH311dVS2VIfRfPckHERj+lrHhf3uGb/O977nZ1npxmm0G1HzHHMxG4h
-	 256zkK+zyFhH8fHSO2XpasDLfe5IR85EiIgyr2mhWpAZ6Tpe3DvQUI5irk+FMMLUNpgX9
-	 uCn58p9oxskIr/PO7nfLKHGoZXQryvNFyjCNulPBbRVbrgpZWSgNTohCGe1WTfr09agWc
-	 YB5++32+qzeRx+Oe1bi6beqDudDK0sHe6Q+EABz4XxtWuQtUWckAzT5p7Qbp00ouAAQ==
+	t=1795620418;
+	b=PRyxd/g7fBYvQSRAV+sFGc2JMu6J3te/keWUipjEeFlOwW8iBWQ5syaku7aEscwqMkoR
+	 q+rVSNxtQn53ZLnUv70O2b+bEF5exMIBQkVFxIfL3aqGqN2rpbyEhC6Ffi7ZKNz8u3Weu
+	 XLPHWXYHGzrf3lajWhV6MO9pS5fRuturDBoMLFzdWY5FTn6SyCzq+cJ8N2OXtmx4CcOR/
+	 EL95TifaEfxN+zp08fN+MtvO+1/4bNsr6ZB8I13D9F2qnSz6Iq26WTFSkY5rLRtGhhGoP
+	 JastAvzSoNizon7usOQeGZGKYSYC9+3+OvLb7Mk4sDJWjqRUwUoO06cOkkaThd1cvrw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795620415;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795620418;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=sBo7L9t3my2ztiIgPv9wUZ5f2zs5Hiy1RZCVjKdL48c=;
-	b=bRm3vd605gZebcWD1dAWaFxPToZHeas7nGeQaooMFjceRxlXx32rrSwsZkVQ+BkaaUR2
-	 O/xo+KnnpEAfkFcYjF2RxdCCpOjNt8+EyrY4x2tOeX3D65im6DRIajRkgDHhy1fEEBnH1
-	 5fn8Zztl4wLM7v6QY/Z76F+mWNBfx90j/9eBwsQ4NVkG8yCLYipAexOkEZ9P8qVYMsdzF
-	 st7E0/4qFey3X5aNPyRca1XklnrMZZLbI2wjeeXAJfmj0FHXc1rwW9T5SHoH8DnXAHilU
-	 aPQIp1/tp9xiU3TcwT0tem9J1f/fHzL2tU6Xo/Ku0GW7e/OfnFLGr/MkHVARcloIz/A==
+	bh=qK7KEjysv134WDqM+yYiv6RL5M8t+zjAXvaYSrFmPkQ=;
+	b=dS/zsy6u9mIiD7Ei5oJydzrX8EpWiWCv7gSLFALeGGPxDnsVmv5zm482fL4S2za6IFHL
+	 jlghQd4AvikIyCeHjkh30F80uVwHo/eHaRku9PQCzEVLPdbapP8OkxSnpX8ATHN3kpwsY
+	 zjN1MpqSXpI/DM07vG8jPORL8nSAbGUIOkJP0DpWYbgbtCi3e5XDFRxm7o4sG4U66EL/N
+	 swfBCNllCMwWepTiE2roGgAkBmALRw0KdGWOX0tf6eaODDQg/LNLBEomZ7SxqmMlatr3c
+	 MaocKMW9VMwSRzyEfX76tQCwykwNoF4RlddDdZN9O4qJr8fHJu1kIiXHa3MTmjOcuhg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=yA7YmRXZ;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=cUhxqBPQ;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A886B606A321;
-	Wed, 25 Nov 2026 15:26:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 81018606A326;
+	Wed, 25 Nov 2026 15:26:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=yA7YmRXZ
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 07F861F000C0;
-	Wed, 25 Nov 2026 15:26:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=cUhxqBPQ
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D4D941F000C6;
+	Wed, 25 Nov 2026 15:26:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795620415;
-	bh=sBo7L9t3my2ztiIgPv9wUZ5f2zs5Hiy1RZCVjKdL48c=;
+	s=korg; t=1795620418;
+	bh=qK7KEjysv134WDqM+yYiv6RL5M8t+zjAXvaYSrFmPkQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=yA7YmRXZThvc33XRUtxMaY+pgtmFMQ7IXly8XNN+1frmBbWHiJNQH9PM2SrAM3ILU
-	 qkIjjzanFbtFgYAlCJf2hpwTpX28TkDlPA2O5fgXfLFbQsh9K/eoays2auw75ewG8d
-	 9q62ou9KDJ43klmURFE8aASaBHi37RSKie0tXoR0=
+	b=cUhxqBPQ1QslWQWzjWjBHlmRKx0gjiOrjUMU/popWpR9SF46EvhXdHBENb5sOMbzl
+	 DLor260chYZCg8H5dvQr2nQtD1I+msr6mIuUPlxwPzZpWkXq/FHC8LvV94iP3vuSbH
+	 5p54I1xUYConm6ig/p4sLzA+bPSl6zs8U1nwG5sQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -46,11 +46,12 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Peter Griffin <peter.griffin@linaro.org>,
 	Alim Akhtar <alim.akhtar@samsung.com>,
 	Jiri Slaby <jirislaby@kernel.org>,
-	Robert Baldyga <r.baldyga@samsung.com>,
+	Kukjin Kim <kgene.kim@samsung.com>,
+	Thomas Abraham <thomas.abraham@linaro.org>,
 	Josef Bacik <josef@toxicpanda.com>
-Subject: [PATCH 7.3 0910/1005] serial: samsung: dont leak the tty on an RX IRQ
-Date: Wed, 25 Nov 2026 15:37:28 +0100
-Message-ID: <20261125143843.010667666@linuxfoundation.org>
+Subject: [PATCH 7.3 0911/1005] serial: samsung: put the previous baud clock
+Date: Wed, 25 Nov 2026 15:37:29 +0100
+Message-ID: <20261125143843.033652402@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143821.729802100@linuxfoundation.org>
 References: <20261125143821.729802100@linuxfoundation.org>
@@ -74,55 +75,54 @@ Content-Transfer-Encoding: 8bit
 
 From: Josef Bacik <josef@toxicpanda.com>
 
-commit 7ada442f5ef77f8d53f608a0141a5e88a888ca9f upstream.
+commit eedf2cf3505c1562a2fb24f8b997056f023d242b upstream.
 
-s3c24xx_serial_rx_chars_dma() starts by taking a reference to the tty.
-If the interrupt is not a receive timeout, it switches the port from PIO
-back to DMA and leaves through the "finish" label, which does not drop
-the reference.
+s3c24xx_serial_getclk() returns the best baud clock with the reference
+which clk_get() has taken.  s3c24xx_serial_set_termios() stores it in
+ourport->baudclk and disables the clock which was there before, but does
+not put it.
 
-A port with RX DMA changes to PIO on every receive timeout, that is at
-the end of every burst of data, and comes back this way when the next
-burst starts.  So each burst takes a reference which is never dropped,
-and the tty structure is not freed when the port is closed for the last
-time.
+clk_get() hands out a new handle on every call, so the new clock never
+equals the old one, and every call of ->set_termios() leaks a handle: a
+struct clk and a copy of the connection name.  Whoever has the port open
+can repeat that at will with tcsetattr().
 
-Drop the reference on both paths.
+Put the old clock when it is replaced, and the new one in case it is not
+stored.
 
-Fixes: b543c301c2c5 ("serial: samsung: add DMA support for RX")
+Fixes: 5f5a7a5578c5 ("serial: samsung: switch to clkdev based clock lookup")
 Cc: stable <stable@kernel.org>
 Cc: Krzysztof Kozlowski <krzk@kernel.org>
 Cc: Peter Griffin <peter.griffin@linaro.org>
 Cc: Alim Akhtar <alim.akhtar@samsung.com>
 Cc: Jiri Slaby <jirislaby@kernel.org>
-Cc: Robert Baldyga <r.baldyga@samsung.com>
+Cc: Kukjin Kim <kgene.kim@samsung.com>
+Cc: Thomas Abraham <thomas.abraham@linaro.org>
 Signed-off-by: Josef Bacik <josef@toxicpanda.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Link: https://patch.msgid.link/20261027-tty-llm-v1-21-99b0202ae546@linuxfoundation.org
+Link: https://patch.msgid.link/20261027-tty-llm-v1-22-99b0202ae546@linuxfoundation.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/tty/serial/samsung_tty.c |    5 ++---
- 1 file changed, 2 insertions(+), 3 deletions(-)
+ drivers/tty/serial/samsung_tty.c |    3 +++
+ 1 file changed, 3 insertions(+)
 
 --- a/drivers/tty/serial/samsung_tty.c
 +++ b/drivers/tty/serial/samsung_tty.c
-@@ -736,14 +736,13 @@ static irqreturn_t s3c24xx_serial_rx_cha
+@@ -1498,11 +1498,14 @@ static void s3c24xx_serial_set_termios(s
  
- 	s3c24xx_serial_rx_drain_fifo(ourport);
+ 		if (!IS_ERR(ourport->baudclk)) {
+ 			clk_disable_unprepare(ourport->baudclk);
++			clk_put(ourport->baudclk);
+ 			ourport->baudclk = ERR_PTR(-EINVAL);
+ 		}
  
--	if (tty) {
-+	if (tty)
- 		tty_flip_buffer_push(t);
--		tty_kref_put(tty);
--	}
+ 		ourport->baudclk = clk;
+ 		ourport->baudclk_rate = clk ? clk_get_rate(clk) : 0;
++	} else {
++		clk_put(clk);
+ 	}
  
- 	wr_regl(port, S3C2410_UTRSTAT, S3C2410_UTRSTAT_TIMEOUT);
- 
- finish:
-+	tty_kref_put(tty);
- 	uart_port_unlock(port);
- 
- 	return IRQ_HANDLED;
+ 	if (ourport->info->has_divslot) {
 
 
