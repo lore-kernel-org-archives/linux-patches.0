@@ -1,53 +1,55 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795624692;
-	b=fGoJcm6/4UEugyUw9y9+ZlDMyJQ36DhRXYvl7ConR4CPYY4QI4RjO+vk8VR0Wlv0M8aj
-	 MqFRg4X3RNVbl8ZXvXV0xKuD4HRr8HgJ5XQwJv63CpIz6Qq6/7Ful/dh7eXPdK9VppyUa
-	 rCtIBKs/vQrDFOGyhMz7v+hvOXLbIGN50tVMo2WatuKjMOE+8UiNKNjloxlEdS0vgYxTi
-	 ZISjcorWwPsreJeg8iT1+ZQ+g1T1Gwuw+Ov60gw24bzCpNpZxa4LMC+0H+VZY+RVreyoF
-	 47uYVBa8FvOTCTkx9LSpnghbYKDs59w+yjECTC5sb3+WwsgjX5ZhdirIgK9CuSAqMVA==
+	t=1795624695;
+	b=wtkqtSK2Yh6AtsZS9FN0sdxpMHdC4gnnNAZd8+T02U29Nhsycg786a1mkvlFxSmigp/O
+	 k0HRBcz/sLtp/4B/2V52Yra/jMfFmGVZF3yZE4NytWf+WrcS0m0ZthBZW3sBYT+XNqXig
+	 p9TPlDhq3a53E7pGPlGrLMZVtNHWSY5m1ZxhWh/PRDIjOzDKZBWbPJdsVxhqbBVKzryg6
+	 N7lEVrooyrb8L12I4BMhqnAs3Wvx3otzzR5fg+bRQpLf9DRaZXh7FMdgrc94k8vqFPudv
+	 Mk3HiERBprJbZDF/E17n4pgACy/DjHq5thLavsgNe1GttKrFJubzpfTREr1v4Mdd2pw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795624692;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795624695;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=ysSwtAp4Egsm0YqhJPGdxPfITTEvmgTw5MBlXzIQM6E=;
-	b=VTWsxtTCTU1dzRt0yEgpIxOtzv/AgOjAoKcQxwiwDgSryv6NAN3Pn6/sov4IldW734ZB
-	 P7zmwfuLuoqAyZNLiQ1NP4PNqzIloTtLTs9Bzt8oo9M1hbF+mQEWvBXiItl+Luh/AwgRq
-	 FFnMRZE2VjJHGxplQojX5nXkxpTJsOgkuqjAy1v29D1HqELi5Wn99YtO86LUH746Nb80k
-	 1mGL+WDezg45QdZTcY8/hdBwJV1X/Ml9N2jQ5L1Xq2k5xMl89YIPb0VlGReYpBpYfxCXA
-	 mQsrfY/JGINyPO/13EdqIB7MyOU9KL/O/imGJ0DIGBQ+L5Vp4AhJfsdHNdQxI7uu5pQ==
+	bh=Roaxm81J4+fQB4eebeAnU/yq0ub4wGo3zdhurn60RHo=;
+	b=whkYCJvPfU1mnBlThHjgatT7eMfz+BfD3xcSO5d1tiAf3vlSa4e8GIc2m9PlCkJKoJG1
+	 s08p7TomsSutV9St9AJ+y2TSeLVr+DiW+taXk25cgZQ17n9NLK/q7/mmXq8FcqhQhy5dQ
+	 WjhllIMjwCc5bXdiw3zwl62/dHiJFqx8oXeUMscrOKaKFFLgx+0TkH1oAWWZRcvgcUCjg
+	 chSVY1pXd4xoa3741xeJg5KudbOXMWezZRlqOxyCslATh7I6xvuVYQF6tbc0b+6obDFTi
+	 W5HkXCaOdtrSadUomt+W41S8SxDKWXA8NEwaKHxInnUxdoZSAZcd7mzWVYfeGxzlncA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=1q9xxXxy;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=NAnhVjor;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 679FD606A33A;
-	Wed, 25 Nov 2026 16:38:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9F9DF606A321;
+	Wed, 25 Nov 2026 16:38:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=1q9xxXxy
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BA1941F000C4;
-	Wed, 25 Nov 2026 16:38:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=NAnhVjor
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8C4E71F000C6;
+	Wed, 25 Nov 2026 16:38:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795624692;
-	bh=ysSwtAp4Egsm0YqhJPGdxPfITTEvmgTw5MBlXzIQM6E=;
+	s=korg; t=1795624695;
+	bh=Roaxm81J4+fQB4eebeAnU/yq0ub4wGo3zdhurn60RHo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=1q9xxXxygds2C8gcjHNbwwgXiA8IKxDNJK/sopIS6SSOSL8hTZOMS4S9Fp/wRM1PN
-	 yB+hMY5YWFDot6pLN1C8uOz0HYbMdFIMJhcDNtiES3/oTOvwAIKeWyj0PxC8H7t79m
-	 NwkReg/zJMgxZpx2KpRZwb/42nsf1jvoCSnDH1RQ=
+	b=NAnhVjorM7jZkugIIJU2YEAS2cs40uVHaXuy+EC1djZ9BjWARks9vIgv0DcIqXQzk
+	 aLkM9rOOewbqrjF09k8DdVu/gza3qVyNILavvkBnMt8znOEh+xoVz/psfLk3VWfRd6
+	 Yop9Q2pw2Qi6RWLK8UJBqfKda7raKgRvBETbTrfc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ido Schimmel <idosch@nvidia.com>,
-	Cheng Yongkang <teel4res@gmail.com>,
+	Qingfang Deng <qingfang.deng@linux.dev>,
+	Eric Dumazet <edumazet@kernel.org>,
+	Kuniyuki Iwashima <kuniyu@google.com>,
+	Neal Cardwell <ncardwell@google.com>,
 	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 231/816] net: bridge: disable MRP ports before the FDB flush in del_nbp()
-Date: Wed, 25 Nov 2026 15:29:39 +0100
-Message-ID: <20261125143854.556042303@linuxfoundation.org>
+Subject: [PATCH 6.12 232/816] tcp: initialize send sequence numbers before deferring TFO
+Date: Wed, 25 Nov 2026 15:29:40 +0100
+Message-ID: <20261125143854.579335572@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143849.205329330@linuxfoundation.org>
 References: <20261125143849.205329330@linuxfoundation.org>
@@ -69,82 +71,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Cheng Yongkang <teel4res@gmail.com>
+From: Qingfang Deng <qingfang.deng@linux.dev>
 
-[ Upstream commit 37dfd0efbfffc20a57e41c2eb349ac49b1ca1ff8 ]
+[ Upstream commit 57889a8f6d49fc153aa0017d13086ab736567f8a ]
 
-del_nbp() flushes the port's FDB entries before it unregisters the RX
-handler. For a normal port, br_stp_disable_port() moves the port to
-BR_STATE_DISABLED before this cleanup.
+TCP_FASTOPEN_CONNECT can return from connect() before tcp_connect_init()
+when a cached cookie or cookieless Fast Open allows deferring the SYN.
+At this point write_seq contains the initial sequence number, while
+snd_una and snd_nxt have not been initialized to that sequence number.
 
-That does not hold for an MRP ring port. br_set_state() ignores state
-changes while BR_MRP_AWARE_BIT is set, so br_stp_disable_port() leaves
-the port state alone. br_mrp_port_del() then restores forwarding when
-the bridge is up before clearing the bit. A frame received between
-br_fdb_cleanup_by_dst() and netdev_rx_handler_unregister() can therefore
-create a new FDB entry referencing the dying port. Nothing removes that
-entry before destroy_nbp_rcu() frees the port, so a later frame to the
-learned MAC can be forwarded through the freed port.
+Consequently, inet_diag and /proc/net/tcp{,6} report the initial
+sequence number as the send queue length despite no SYN or payload being
+queued.
 
-Remove the MRP and CFM instances before disabling the port, so that
-br_stp_disable_port() actually transitions it to BR_STATE_DISABLED.
-With CONFIG_BRIDGE_VLAN_FILTERING=y, synchronize_net() in
-nbp_vlan_group_unpublish() also drains receive paths that could still
-learn with the old state before the final FDB cleanup.
+Initialize snd_una and snd_nxt to write_seq before marking the
+connection as deferred. Both sequence-based queue lengths then remain
+zero until the first write starts the connection and runs
+tcp_connect_init().
 
-Found through an LLM-assisted source code analysis workflow and
-reproduced on net with KASAN and CONFIG_BRIDGE_VLAN_FILTERING=y in QEMU.
-A diagnostic switchdev module accepts MRP objects and delays the
-NETDEV_CHANGEUPPER callback for 1.5 s, holding del_nbp() after the FDB
-cleanup and before RX handler removal. The reproducer floods the MRP
-port with rotating source MACs, waits for the port's RCU callback
-through the module's rcu_barrier(), then sends frames to those MACs
-from another port. The unpatched kernel reports:
-
-  BUG: KASAN: slab-use-after-free in br_forward+0xb1/0x820
-  Call Trace:
-   <IRQ>
-   br_forward+0xb1/0x820
-   br_handle_frame_finish+0x148b/0x1e50
-   br_handle_frame+0x90a/0x15c0
-
-With this patch, three runs of six cycles each reach the delay without
-a KASAN report.
-
-Fixes: 6536993371fa ("bridge: mrp: Integrate MRP into the bridge")
-Suggested-by: Ido Schimmel <idosch@nvidia.com>
-Link: https://lore.kernel.org/netdev/20261012123051.GA714215@shredder/
-Closes: https://lore.kernel.org/netdev/20261022090431.3641707-1-teel4res@gmail.com/
-Signed-off-by: Cheng Yongkang <teel4res@gmail.com>
-Reviewed-by: Ido Schimmel <idosch@nvidia.com>
-Link: https://patch.msgid.link/20261101044840.1595584-1-1020691186@qq.com
+Fixes: 19f6d3f3c842 ("net/tcp-fastopen: Add new API support")
+Signed-off-by: Qingfang Deng <qingfang.deng@linux.dev>
+Reviewed-by: Eric Dumazet <edumazet@kernel.org>
+Reviewed-by: Kuniyuki Iwashima <kuniyu@google.com>
+Reviewed-by: Kuniyuki Iwashima <kuniyu@google.com>
+Reviewed-by: Neal Cardwell <ncardwell@google.com>
+Link: https://patch.msgid.link/20261102035943.9700-1-qingfang.deng@linux.dev
 Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/bridge/br_if.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ net/ipv4/tcp_fastopen.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/net/bridge/br_if.c b/net/bridge/br_if.c
-index eee6ceb7cddab..82447f7071312 100644
---- a/net/bridge/br_if.c
-+++ b/net/bridge/br_if.c
-@@ -339,13 +339,13 @@ static void del_nbp(struct net_bridge_port *p)
+diff --git a/net/ipv4/tcp_fastopen.c b/net/ipv4/tcp_fastopen.c
+index fbcd7d8c8d99e..ac4fa51240290 100644
+--- a/net/ipv4/tcp_fastopen.c
++++ b/net/ipv4/tcp_fastopen.c
+@@ -455,6 +455,8 @@ bool tcp_fastopen_defer_connect(struct sock *sk, int *err)
  
- 	nbp_delete_promisc(p);
- 
-+	br_mrp_port_del(br, p);
-+	br_cfm_port_del(br, p);
-+
- 	spin_lock_bh(&br->lock);
- 	br_stp_disable_port(p);
- 	spin_unlock_bh(&br->lock);
- 
--	br_mrp_port_del(br, p);
--	br_cfm_port_del(br, p);
--
- 	br_ifinfo_notify(RTM_DELLINK, NULL, p);
- 
- 	list_del_rcu(&p->list);
+ 	if (tp->fastopen_connect && !tp->fastopen_req) {
+ 		if (tcp_fastopen_cookie_check(sk, &mss, &cookie)) {
++			WRITE_ONCE(tp->snd_una, tp->write_seq);
++			WRITE_ONCE(tp->snd_nxt, tp->write_seq);
+ 			inet_set_bit(DEFER_CONNECT, sk);
+ 			return true;
+ 		}
 -- 
 2.53.0
 
