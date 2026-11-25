@@ -1,54 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795621719;
-	b=ui59w31PcUS9hgh6mKJOCV3Vb495/wCH7XGwMZ4Ur6IlVmdIHP1FBq28rHfShtquIITK
-	 /cWj2cHC1uin84WApEWtKYUsahvpSlB5fUOliQVYSx4E0EXpn1S1eVwZhL5j2IDephlvP
-	 YJKY2dZbvQlXPaM00mGemMofoyCYYBptna94PMGVzR1UllILBKfWmM0C9hvJCEy5Li7//
-	 ZBvXFCaxAZyr+gGYTBQeVOV+4dTLbyaWbVeYeXZA7FJICk/vx3qeSok8h+JwBbJIIJRq1
-	 bq0QDFQl1hDtiIlHsCR3do0Wl3wI8+LmGSCw7sRX++Lv2+3D+EkhggvGv/bxY61BVGA==
+	t=1795621722;
+	b=5pI4XKrbN/zFaEgilRmr1SSzHyHjDW/GhszN6qZ61Y2PHlzTCEvVugeojQxJB4xyd+oS
+	 sczdNB6plCpFga0LyHLJhPfT2d4N7Wp9j7+00NxNQbPCIgD2E1Xjjxulf3IARViH5XC5A
+	 f+xwi8SsBGM/gWRkFYVIOxlFS5eWCtio8PRcJeMv1/sYxrKF12C18GrpwF1bWW7bHGDMl
+	 lL3Z2wJedZYKDFJuTff2x/azj2PDuqrqLOkdyxJu26Z1EpnuMbdK7ICrI4js6srrcikIu
+	 WG7LKxCxIJroPurAVou3/sKXdldwT2CWRmXM/CBO244W3slc11tlwlj2qs8zPlNQnCA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795621719;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795621722;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=GLfo6Y8B6mJlsnQwfPVT6MDhrpSBqknviga8Z/SluNI=;
-	b=gWc8hpo+lnXc76GQbO1xBuB7nqkalWmj+TJIF/DyV1xw9fg7U3qlWFNKnw5UtUljOE7y
-	 qgz/kiZEyLoKssVRI4b4tObI1xpwy0xlVk18vRwDFUi4ancOUtP0Mqkk6b3UPWKK3iqrX
-	 M8oHXNWLgr87moiPMy950p9lzYzxFHI8PBp0H343CCMEYsxuVTEf1VJVwJN3jFKu3hH/O
-	 V9EoDltdSLlK1ht9w0SBHPuj/aHzWIMnBjrWJsFGbxYFudKCxONNkCMHtIBrKEdL3oyr9
-	 1dhmYNHhFeWaBAIeSm7BiVYVvZZ//7XU8/uOWo20ovjfKLVvZz//886lnC4F7vFlrJg==
+	bh=EuAtlF32S6kx1w7yZd9KGD7lCYe17j968ziYFaD9wSY=;
+	b=LFgT0opD50CHY0kA4gTzBfo7B7eC+c3gwddO5wCSZm65sPA4mUDX/wkA2UmT1ITfldOE
+	 o08q3Y2Wc5pZD/ibBvYxGnjt++Xn5Ccl2asJeBFLVYCncS0FjlxMd9D6278luU1f8JXYp
+	 2RGffI8EXZrKTPE7zCIDuVqBNMbkjIUSUmQK9elW+UtPeZBNaDWPx/UV1T130dmlKkzKm
+	 BWBsRm/L+OhlkIq+nElfuosc2fmNXvZc3spZMLCqzk5pqi0tEP7gH2vnIIW8pNz44h/0A
+	 xfQfr9yrmZpwr0R7S6g695DN+mgyRjGU8mVHsc5XVQCNy8UwuUZi9HGHsTemtQjo2dw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Uyd3r7+Y;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=BjPNtx6g;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A2F98606A32A;
-	Wed, 25 Nov 2026 15:48:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 95CEE606A331;
+	Wed, 25 Nov 2026 15:48:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Uyd3r7+Y
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 011931F000C4;
-	Wed, 25 Nov 2026 15:48:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=BjPNtx6g
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C84831F000C4;
+	Wed, 25 Nov 2026 15:48:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795621719;
-	bh=GLfo6Y8B6mJlsnQwfPVT6MDhrpSBqknviga8Z/SluNI=;
+	s=korg; t=1795621722;
+	bh=EuAtlF32S6kx1w7yZd9KGD7lCYe17j968ziYFaD9wSY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Uyd3r7+YtE/0UJVov7oa+mu52fMFBfTgMGVe82HUKSU6fkqX8t5CXu51uMxrEI/a1
-	 0PBjTlEKUvS3zhKgPo2eNwu3bXBbx5TdjSt+z+oIux73zqaDvp0whosnEtCn9vU5xD
-	 ECTHSYA+E3nesSEVbI/BrTqWfhrgWAjaBLBi0YyI=
+	b=BjPNtx6guBK4hKTFgus2rthnvIKZw5khJdzVg3WtP8QEMrwmgBygNtJsD6C6BYqag
+	 W2Yjr0kxlnASGR1T/4N/kZoZyjnGzDbQti9g9ot3vCiZnxLf/6jgkfac9L9VLnrcGY
+	 lxYmqvCncRHBVYEiT7cXcMWr64dbwB1IDWyBJRuk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ridge Lomont <cyridge@proton.me>,
-	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
-	Ingo Molnar <mingo@kernel.org>,
-	Nathan Chancellor <nathan@kernel.org>,
+	Thomas Fourier <fourier.thomas@gmail.com>,
+	Tariq Toukan <tariqt@nvidia.com>,
+	Dave Miller <davem@davem-thinkpadp1gen8.ibmlond.csb>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 316/990] x86/kcfi: Dont emit KCFI_REFERENCE() in modules
-Date: Wed, 25 Nov 2026 15:28:03 +0100
-Message-ID: <20261125143829.493198717@linuxfoundation.org>
+Subject: [PATCH 6.18 317/990] net/mlx5e: TC, Fix double free of branch in failure
+Date: Wed, 25 Nov 2026 15:28:04 +0100
+Message-ID: <20261125143829.516395512@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143822.072087159@linuxfoundation.org>
 References: <20261125143822.072087159@linuxfoundation.org>
@@ -70,80 +69,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ridge Lomont <cyridge@proton.me>
+From: Thomas Fourier <fourier.thomas@gmail.com>
 
-[ Upstream commit fb685de78e6bf79e49854e7d149f69b125583de5 ]
+[ Upstream commit 31f9b43a3bb3d2201eadd147440252d0912dab21 ]
 
-KCFI_REFERENCE() takes the address of a symbol so that the compiler
-emits its __kcfi_typeid_ symbol, which the SYM_TYPED_FUNC_START()
-assembly implementing it needs. It is used from arch/x86 headers for
-__clear_pages_unrolled(), copy_page(), __memset() and __memmove(), and
-all of that assembly is built into vmlinux.
+When allocating the false branch fails in parse_branch_ctrl(), the
+already allocated true branch is freed but attr->branch_true is left
+pointing to it. The caller parse_tc_actions() fails the flow, and
+free_flow_post_acts(), mlx5_free_flow_attr_actions() which calls again
+free_branch_attr() on attr->branch_true.
 
-Modules include the same headers, so with CONFIG_CFI=y every module
-also gets an __ADDRESSABLE() reference to each of these symbols in
-.discard.addressable. This serves no purpose there, and since
-__clear_pages_unrolled() is EXPORT_SYMBOL_GPL, modpost now rejects any
-GPL-incompatible module that includes <linux/mm.h>:
+Clear the pointer after freeing it.
 
-  ERROR: modpost: GPL-incompatible module repro.ko uses GPL-only
-  symbol '__clear_pages_unrolled'
+This bug is theoretical and was compile tested only.
 
-even though the module never uses the symbol. This makes OpenZFS
-impossible to build against CFI kernels; its configure checks fail
-in the same way and are misreported as CONFIG_DEBUG_LOCK_ALLOC.
-
-scripts/module.lds.S does not help here: modpost checks <module>.o
-before the final link, and even after it the discarded section only
-loses its relocations, the undefined symbols stay in .symtab, where
-the module loader resolves them with the same license check.
-
-Only emit the reference when building vmlinux.
-
-Tested on x86_64 with clang 23.1.3 and CONFIG_CFI=y, with both
-CONFIG_LTO_CLANG_FULL=y (the configuration from the Fixes: commit) and
-CONFIG_LTO_CLANG_THIN=y: vmlinux links without warnings and still contains
-__kcfi_typeid___clear_pages_unrolled, __kcfi_typeid_copy_page,
-__kcfi_typeid___memset and __kcfi_typeid___memmove. It boots in QEMU
-with no CFI failures. A minimal module with MODULE_LICENSE("Proprietary")
-including <linux/mm.h> fails modpost before this change and builds and
-loads after it. OpenZFS builds against a CFI kernel with this change,
-and its pool, encryption, checksum and send/recv operations run
-without CFI failures, in QEMU and on a desktop with CFI enforcing.
-
-Fixes: 9b041a4b66b3 ("x86/mm: Ensure clear_page() variants always have __kcfi_typeid_ symbols")
-Assisted-by: LLM
-Signed-off-by: Ridge Lomont <cyridge@proton.me>
-Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
-Signed-off-by: Ingo Molnar <mingo@kernel.org>
-Acked-by: Nathan Chancellor <nathan@kernel.org>
-Link: https://github.com/openzfs/zfs/issues/18092
-Link: https://patch.msgid.link/20261027-kcfi-reference-modules-v2-1-3a3247f15806@proton.me
+Fixes: f86488cb4685 ("net/mlx5e: TC, initialize branch flow attributes")
+Signed-off-by: Thomas Fourier <fourier.thomas@gmail.com>
+Reviewed-by: Tariq Toukan <tariqt@nvidia.com>
+Tested-by: Tariq Toukan <tariqt@nvidia.com>
+Signed-off-by: Dave Miller <davem@davem-thinkpadp1gen8.ibmlond.csb>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/compiler.h | 7 +++++--
- 1 file changed, 5 insertions(+), 2 deletions(-)
+ drivers/net/ethernet/mellanox/mlx5/core/en_tc.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/include/linux/compiler.h b/include/linux/compiler.h
-index 5b45ea7dff3e5..2911b9e622929 100644
---- a/include/linux/compiler.h
-+++ b/include/linux/compiler.h
-@@ -248,10 +248,13 @@ void ftrace_likely_update(struct ftrace_likely_data *f, int val,
+diff --git a/drivers/net/ethernet/mellanox/mlx5/core/en_tc.c b/drivers/net/ethernet/mellanox/mlx5/core/en_tc.c
+index e2de3a9a647c3..83e3e51420afc 100644
+--- a/drivers/net/ethernet/mellanox/mlx5/core/en_tc.c
++++ b/drivers/net/ethernet/mellanox/mlx5/core/en_tc.c
+@@ -4013,6 +4013,7 @@ parse_branch_ctrl(struct flow_action_entry *act, struct mlx5e_tc_act *tc_act,
  
- #endif /* __KERNEL__ */
- 
--#if defined(CONFIG_CFI) && !defined(__DISABLE_EXPORTS) && !defined(BUILD_VDSO)
-+#if defined(CONFIG_CFI) && !defined(__DISABLE_EXPORTS) && !defined(BUILD_VDSO) && \
-+	!defined(MODULE)
- /*
-  * Force a reference to the external symbol so the compiler generates
-- * __kcfi_typid.
-+ * __kcfi_typid. Only vmlinux needs it, as that is where the assembly
-+ * using the typeid lives; in a module it would only add a reference to
-+ * the symbol, which fails modpost if the symbol is GPL-only.
-  */
- #define KCFI_REFERENCE(sym) __ADDRESSABLE(sym)
- #else
+ err_branch_false:
+ 	free_branch_attr(flow, attr->branch_true);
++	attr->branch_true = NULL;
+ out_err:
+ 	return err;
+ }
 -- 
 2.53.0
 
