@@ -1,42 +1,42 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795623997;
-	b=Ex0a/lYAiYbL2G+ASW7jQWXiNQ1QAFTm+/ASipw8kNoOrGrUwhkClVHbsavf4GSOZpXU
-	 /ghIo3yf5fhKD9mGwbOKTW5C8p9/tPhQG64jYw6p6ClC1GpRqgyOFPF03CMXvTu0IaZ9F
-	 ogrmw1lplFH9kGtjsdxltLOd84FB+96W/BSDWMPqms6CJ4YXBVWeenYnnzlTDFIvJ+CIt
-	 BbNyD587Hyp6UvFoLN55YsbAQ8O/p+JLi5iucAtU1FBXrSk1aZIOiVsYPDekI0a3jhJKL
-	 LbDo1fBoBgNbxPGTop2Yz836Go2G8x3DqDrL/73es/FCyiOZd1wdkIjqXWvrqYxBcsg==
+	t=1795624000;
+	b=0KxPbdgk4csBuYSYtc+nuSuV0Yshqrr1AuKmyumMEZ8FQCskAhqP/9GgrB6l0btLvgK+
+	 UXf7OPCC96JwI6wmkbQnFwoeiesHkqWA9xELGy9nGr4npkxAbh0bJWchmcC4qB6tBhEci
+	 /oJuQSzDKTJ9N6hLE1eRxY4vwZwPVfEk/dq9o2pZS69/cqIS2CoR2Ae9VRUICB+WXwkLB
+	 b7dUe7HT3lpqIWRU5JF2ui0A+VejytJdFgR4VsaquBWpo1S/tS2+9F4NOz9GxcRjbAxPs
+	 FgfyHb2NI8ps+dvCmj7OnVvhwF1s2FWfvTG/H7/C2p/i2Uc529lugFTakIJrI7b1CPw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795623997;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795624000;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=cpzb92d7LANbrzhPYqC8Lya9C0jHPdsAfABH+Nq7ExM=;
-	b=Fcnk8a4rFYcgYxrGBIUc6eQeylP+ixJRTfxPXEI6LzyxTmXP8qiF6iG9HTiPxEP/HKEQ
-	 xliOViE1K9LPr55zyeU33pNTAZAhzZkObn0C3nl9OFVrXlEbnZ6FfdsNzlpM+NFIcoyDV
-	 4gqy09i5AlsvjH3BI5YDL8qShQKD26cskl+Tzy+A/3I8iKTJCHP2ZjlvXyfutFk/eyN/o
-	 Nqm0aKrgEhvlduMHd9S+gHyggmfddxe6PRKnsECYaQ1/IJX+RsBwfm+LLdNpAN7UJ8s6Q
-	 T+oXz6mQXkiouxo6kzDH8EhGy6Ex9kQZpYj2sNrR5cmpq/h+9OKfMlRts6vmtMz/uWg==
+	bh=d8elkd3dXkPUGNA0W29cplaqK28520o94AXnZv175Bc=;
+	b=GyxYQ7Xs0bIc6hppjFPr/dKcwTOVg6UXBfZ/FHf9DHBXf8GK0hdHhotla2GJdI0arg3Z
+	 JXjI0ZY+tlTlbWui/DIGzqup1Cg6RshgveAZLMDR4MZkkIzDv1VMOVYsQtUfU6CNT0e8b
+	 Il0qk3c50D1mIZTSuRX+cgAT2PtNyn/I9qlcKqseuqWeitRcHj3YtrToMJUm1Ciq/QTOO
+	 7C2G1sCyxe6ETngelmOeZxGs81roiZ8DznFKrREhqM1ek5V9I2qnEYTgNWeOfIseeu5+I
+	 9Ny3JcahMsbUsBLMtfLuj8QUruizyLEzrtPyo+aO0aDyip7E8GaU5oW5q4vCyi3oqIQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="vin/E5A8";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=thIST2w2;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0E566606A31E;
-	Wed, 25 Nov 2026 16:26:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 458CF606A321;
+	Wed, 25 Nov 2026 16:26:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=vin/E5A8
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3EEDD1F000C4;
-	Wed, 25 Nov 2026 16:26:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=thIST2w2
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2BD181F000C0;
+	Wed, 25 Nov 2026 16:26:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795623996;
-	bh=cpzb92d7LANbrzhPYqC8Lya9C0jHPdsAfABH+Nq7ExM=;
+	s=korg; t=1795623999;
+	bh=d8elkd3dXkPUGNA0W29cplaqK28520o94AXnZv175Bc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=vin/E5A84KkkmmydynDpnBQSjbDA/PrpHSE5ftvSWQWTOM4qa57NQagLcfX9sICoG
-	 Vwdiy5i91yKtnqdqnFHMf9G23wsYzOvp9/6T2jeafUGoSgklf249nDPWavrKg0iqgD
-	 Plz3gWQ3Merrp65WK7fWlCR0fwHaUOXa42JBAgkQ=
+	b=thIST2w2HlKxibj/A18sudsU8rI+FZOW26fB0AVHt46dWiyLAYCdESP4j6eQVuNJ+
+	 0RYJfd/xw9REGU5IU/U58oLLTBJoeR3StPZD6PK0M41smVU4eueUJUHvSLA2T143fo
+	 hcenr7ptJEdWpL8+y87RxHRQLLaBElVyEz46h2g0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -47,13 +47,12 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Xuewei Feng <fengxw06@126.com>,
 	Qi Li <qli01@tsinghua.edu.cn>,
 	Ke Xu <xuke@tsinghua.edu.cn>,
-	Chengfeng Ye <nicoyip.dev@gmail.com>,
 	Michael Grzeschik <mgr@kernel.org>,
 	Dominique Martinet <asmadeus@codewreck.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 053/816] net/9p/usbg: fix descriptor cleanup use-after-free
-Date: Wed, 25 Nov 2026 15:26:41 +0100
-Message-ID: <20261125143850.447611021@linuxfoundation.org>
+Subject: [PATCH 6.12 054/816] net/9p/usbg: Fix use-after-free on usb9pfs_clear_tx
+Date: Wed, 25 Nov 2026 15:26:42 +0100
+Message-ID: <20261125143850.470313003@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143849.205329330@linuxfoundation.org>
 References: <20261125143849.205329330@linuxfoundation.org>
@@ -77,31 +76,33 @@ Content-Transfer-Encoding: 8bit
 
 From: Yizhou Zhao <zhaoyz24@mails.tsinghua.edu.cn>
 
-[ Upstream commit 0955472fff1e9f9e410a0300136924ebc8bd7a16 ]
+[ Upstream commit 5c69297356bf6d04d8222f52717c6c4aa73e5d2c ]
 
-usb9pfs_free_func() frees the f_usb9pfs object before calling
-usb_free_all_descriptors().  The usb_function passed to the latter is
-embedded in the freed object, so removing the function from a gadget
-dereferences freed memory.
+When p9_usbg_close() is called, it invokes usb9pfs_clear_tx() but does
+not clear usb9pfs->client nor usb9pfs->in_req->context afterwards.
+The 9p client core (p9_client_destroy) calls close() and then
+kfree(clnt), so after p9_usbg_close returns the client struct is freed.
 
-The failing teardown sequence is:
+If the USB gadget is later disabled (e.g., host disconnect),
+usb9pfs_disable calls usb9pfs_clear_tx again, which passes the dangling
+usb9pfs->client pointer to p9_client_cb. Inside p9_client_cb,
+p9_req_put(c, req) dereferences the freed client to access its reqs IDR,
+causing a use-after-free.
 
-  configfs unlink
-    usb9pfs_free_func()
-      kfree(usb9pfs)
-      usb_free_all_descriptors(f)
-        dereference the embedded usb_function
+Additionally, usb9pfs_clear_tx does not clear usb9pfs->in_req->context
+after calling p9_client_cb, so a second invocation finds a stale request
+pointer and attempts double-completion, further compounding the UAF risk.
 
-KASAN reported:
-
-  BUG: KASAN: slab-use-after-free in usb_free_all_descriptors+0x138/0x190
-  Read of size 8 at addr ffff888106a73088 by task poc/95
-  Call Trace:
-   usb_free_all_descriptors+0x138/0x190
-   config_usb_cfg_unlink+0x1f0/0x2f0
-   configfs_unlink+0x321/0x6f0
-
-Free the descriptors before freeing their containing object.
+Fix by:
+1. Clearing usb9pfs->in_req->context to NULL in usb9pfs_clear_tx()
+   before checking usb9pfs->client, so that even if the client is gone
+   the stale request pointer is consumed and cannot cause
+   double-completion.
+2. Adding a NULL check on usb9pfs->client in usb9pfs_clear_tx() to skip
+   p9_client_cb() when the client has already been destroyed.
+3. Setting usb9pfs->client = NULL in p9_usbg_close() after calling
+   usb9pfs_clear_tx(), to prevent any subsequent call from dereferencing
+   the freed client pointer.
 
 Fixes: a3be076dc174 ("net/9p/usbg: Add new usb gadget function transport")
 Reported-by: Yizhou Zhao <zhaoyz24@mails.tsinghua.edu.cn>
@@ -112,39 +113,38 @@ Reported-by: Qi Li <qli01@tsinghua.edu.cn>
 Reported-by: Ke Xu <xuke@tsinghua.edu.cn>
 Assisted-by: GLM:GLM-5.1
 Signed-off-by: Yizhou Zhao <zhaoyz24@mails.tsinghua.edu.cn>
-Co-developed-by: Chengfeng Ye <nicoyip.dev@gmail.com>
-Signed-off-by: Chengfeng Ye <nicoyip.dev@gmail.com>
+Message-ID: <20260529081026.77732-1-zhaoyz24@mails.tsinghua.edu.cn>
 Acked-by: Michael Grzeschik <mgr@kernel.org>
-Message-ID: <20260529081817.77898-1-zhaoyz24@mails.tsinghua.edu.cn>
-Message-ID: <20260731150414.3135662-1-nicoyip.dev@gmail.com>
 Signed-off-by: Dominique Martinet <asmadeus@codewreck.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/9p/trans_usbg.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ net/9p/trans_usbg.c | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
 diff --git a/net/9p/trans_usbg.c b/net/9p/trans_usbg.c
-index dd5d833f2c827..1592b99ae00c7 100644
+index 1592b99ae00c7..79735bbe739ac 100644
 --- a/net/9p/trans_usbg.c
 +++ b/net/9p/trans_usbg.c
-@@ -753,8 +753,6 @@ static void usb9pfs_free_func(struct usb_function *f)
- 	struct f_usb9pfs *usb9pfs = func_to_usb9pfs(f);
- 	struct f_usb9pfs_opts *opts;
+@@ -460,6 +460,11 @@ static void usb9pfs_clear_tx(struct f_usb9pfs *usb9pfs)
+ 	if (!req || !client)
+ 		return;
  
--	kfree(usb9pfs);
--
- 	opts = container_of(f->fi, struct f_usb9pfs_opts, func_inst);
- 
- 	mutex_lock(&opts->lock);
-@@ -762,6 +760,8 @@ static void usb9pfs_free_func(struct usb_function *f)
- 	mutex_unlock(&opts->lock);
- 
- 	usb_free_all_descriptors(f);
++	usb9pfs->in_req->context = NULL;
 +
-+	kfree(usb9pfs);
- }
++	if (!usb9pfs->client)
++		return;
++
+ 	if (!req->t_err)
+ 		req->t_err = -ECONNRESET;
  
- static int usb9pfs_set_alt(struct usb_function *f,
+@@ -483,6 +488,7 @@ static void p9_usbg_close(struct p9_client *client)
+ 	client->status = Disconnected;
+ 
+ 	usb9pfs_clear_tx(usb9pfs);
++	usb9pfs->client = NULL;
+ 
+ 	opts = container_of(usb9pfs->function.fi,
+ 			    struct f_usb9pfs_opts, func_inst);
 -- 
 2.53.0
 
