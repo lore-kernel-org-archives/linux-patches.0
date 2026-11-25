@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795624580;
-	b=VoqKU3nJYX3V1VG0n4cWvhTABdTAJ8XeXB7gCXW5wLvQRNXGuWrF+zJz3nuQytdR1+MM
-	 bBqEl5PoQBL4HCLxO1ekcGmufU9gSgOKRpeWU118fuo1UWJBElZLbYB4N6NLB0V5OX6Lo
-	 Zi+8eTnvuZlOFMzKeDSS4w2ETF4VcR8XzG2oU9m08gKyxiaf/GldFGWh3gNdFkRsEjrBI
-	 nQnaeC7ZT5GhHswuR2EbbTEcPoWZ2D/Woj+9E61BsboeH4VSVNdAI7+PIiZWYHfx2TjOk
-	 eduYFJGRj881W6g8ZF149n0d5XLGqQTqoEjsq+u4PMAutyKdpitJbCvXhI/RRhBYkmQ==
+	t=1795624583;
+	b=A34uqqcCeQuaJWfcJfL9+KZEX2pbPCfmnR7P57ZoUW/+RmLTDY14lfTSSUuE6zHjrLEL
+	 FB3tUyXSeWtRUiTzARgw0sF2MVIuTG1Fo4GW3JHGyhxPBUdTeukOAl/zO9mOqG2/nfH9f
+	 RprNLGahB0WuivRexZ8f7PbhYJCAE4Icqm0iWv6HsblkfwzdZtZhBT2Y0icsRygEkBT/f
+	 Ef0/XYqQmASrDkRK9Uc0wYzRTBsDE8vjDVj+mLuTPxPJ5Fg0gQrNraB179Q49XK2ebFlS
+	 QPXCZjbCusNMzzOpd/cV3rCcrw/L2QGz+yhlm1cmk98YYK39ReWORvfDaRxLiiAE+mw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795624580;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795624583;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=17r3VEYXXCn7jTmjZ07L3IoodondJdspPBzL70TZ9mc=;
-	b=aQzkJIQu5DH3Rkr7cKVyXPQEsVHYJ8AHAQ84w7m0g4+W2+je/FD3+GF7fRPAtfhlj25h
-	 obvyjtjjucy6L3UXAG3EK9H4QWjD1J+1hCvSCiCbE83tt92DVzCxwHb0Vb4+mgfRIzrqN
-	 J3YEM6chBOJSZrHRMXJmDK4OOJGAwbyOUpLKtMmNpLWted+3+sKCLkqNl6vcJEE/ubre8
-	 QUfiUY8R/JBIFImEvWyKwhSwKchuSBgFOfXAsOvIrpzL35vyxNyjtUiqJ4syzvZE9NoPA
-	 Ly8bwavVWe5EDmXnV3WHKJ8KSdoQTfxmBHITYbUkrOkbmRII/F10Z3Pd44hht4ljPWw==
+	bh=qdkPAqbpKgNXwhlAz77V9M717CfzIWxmoBrlzJd92LI=;
+	b=gmt+2O4VcytiVPU/e/eDapIRXXyO84N7dx7kYobR3isDBuu7C8GkRkzWfoZu9RSDggzX
+	 Xzz5lnQ911Ye0gY/nv8/iBSkdVKSznDSLknUj3vG+4d3GJusuB1hsM1QlPe4um/IpanH/
+	 BZuddfEpUCERYty7Qz/8I/F4P/TT5MQ7v1ynYVzn7oQh2ssxjJcPYkQ6wNGisbmzF1b30
+	 N7159y8Jo9dFdUd0vOWJtqN3SV6LrmBAWO++tQ2N+UIzJynnCjtOoquQ+UyeM1oT7TjzP
+	 Va98cZwVIbB8hik42Z60MApWDaamNojPZMBLjYA6frfBxRE55vwScPKL76TCL7Fv9PA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=D0ujlWgI;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=vSlfaKPn;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5F59C606A338;
-	Wed, 25 Nov 2026 16:36:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9825A606A33D;
+	Wed, 25 Nov 2026 16:36:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=D0ujlWgI
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 792C71F000C0;
-	Wed, 25 Nov 2026 16:36:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=vSlfaKPn
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8399A1F000C4;
+	Wed, 25 Nov 2026 16:36:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795624580;
-	bh=17r3VEYXXCn7jTmjZ07L3IoodondJdspPBzL70TZ9mc=;
+	s=korg; t=1795624583;
+	bh=qdkPAqbpKgNXwhlAz77V9M717CfzIWxmoBrlzJd92LI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=D0ujlWgIPEAsTEpUqVLe3w0vm77heMteKpNPIVOyiYjUdorPOf/KDwT3cco8Eh2II
-	 e5m1Mvx3A7Uli3lE/1gJS6mB6Q1q0QI+Xnc/DowG5ZCjlC0nQ2XhFJq13PSjYJpb7p
-	 bcu7UihNj2LoZ8dfT+MJ9W8a0UPvwVpVb0qq4dPE=
+	b=vSlfaKPnafosglvU2oc+ZxjROESGO+9VOXhqugZjGQyUyEpN8Rwob6JCs2JyrTQcU
+	 2XpyuSeX6qBqimsBK44f4PQoWev04ki21Qsw5WTVbr+8fTpWfu8VngU7BUzPfCDemO
+	 oMw7bPajV6ReqWwTXL8ldACmMhng1FIsrtk1wDyQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Imre Kaloz <kaloz@kernel.org>,
+	Florian Fainelli <f.fainelli@gmail.com>,
 	Thomas Bogendoerfer <tsbogend@alpha.franken.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 240/816] MIPS: SGI-IP30: fix the defconfig defaults for the Bridge PROM and RTC
-Date: Wed, 25 Nov 2026 15:29:48 +0100
-Message-ID: <20261125143854.766633034@linuxfoundation.org>
+Subject: [PATCH 6.12 241/816] MIPS: Alchemy: Save the Ethernet address before reusing PROM memory
+Date: Wed, 25 Nov 2026 15:29:49 +0100
+Message-ID: <20261125143854.789238071@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143849.205329330@linuxfoundation.org>
 References: <20261125143849.205329330@linuxfoundation.org>
@@ -68,77 +68,93 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Imre Kaloz <kaloz@kernel.org>
+From: Florian Fainelli <f.fainelli@gmail.com>
 
-[ Upstream commit c9c0d267002029a5bf97ee50e6b11b4d16808aca ]
+[ Upstream commit 792ac17faa0503448f3ef85b49f16456ac54ab84 ]
 
-The Bridge probe reads its part number from the 1-wire PROM and defers
-until the SGI 1-wire master and DS250x slave are present, so without
-them there is no PCI bus and no serial console.
+Alchemy keeps pointers into the firmware environment and looks up ethaddr
+when initializing the Ethernet devices. By that point, memory allocation
+can have overwritten the environment, causing prom_getenv() to pass an
+invalid pointer to strchr() and panic during boot.
 
-The IP30 RTC is a DS1685-family part, but the defconfig, derived from
-ip27_defconfig, has the M48T35 driver, so there is no RTC.
+On the MTX-1, the struct page layout change in 9ddb3c14afba reduces struct
+page from 40 to 32 bytes and exposes this unreserved firmware memory.
+Bisection and boot tests confirmed that the parent boots while the change
+reproduces the panic.
 
-Enable the 1-wire drivers and select the DS1685 family.
+Parse the Ethernet address during prom_init(), before registering RAM
+with memblock, and keep the six bytes in kernel-owned init data. Return
+the saved address during device initialization, preserving the existing
+YAMON formats and command-line fallback without reserving a fixed
+low-memory region.
 
-Also drop four lines that savedefconfig removes, as CRYPTO_CAMELLIA,
-CRYPTO_CTS and CRYPTO_HMAC are selected built-in and IPV6_SIT=m is the
-default.
-
-Fixes: bb2d63500b5c ("MIPS: config: Add ip30_defconfig")
-Signed-off-by: Imre Kaloz <kaloz@kernel.org>
+Fixes: b93ddc4f9156 ("mips: Reserve memory for the kernel image resources")
+Signed-off-by: Florian Fainelli <f.fainelli@gmail.com>
 Signed-off-by: Thomas Bogendoerfer <tsbogend@alpha.franken.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/mips/configs/ip30_defconfig | 9 ++++-----
- 1 file changed, 4 insertions(+), 5 deletions(-)
+ arch/mips/alchemy/common/prom.c | 23 ++++++++++++++++++++---
+ 1 file changed, 20 insertions(+), 3 deletions(-)
 
-diff --git a/arch/mips/configs/ip30_defconfig b/arch/mips/configs/ip30_defconfig
-index 178d61645ceaf..83f49711437cb 100644
---- a/arch/mips/configs/ip30_defconfig
-+++ b/arch/mips/configs/ip30_defconfig
-@@ -40,7 +40,6 @@ CONFIG_INET6_AH=m
- CONFIG_INET6_ESP=m
- CONFIG_INET6_IPCOMP=m
- CONFIG_IPV6_MIP6=m
--CONFIG_IPV6_SIT=m
- CONFIG_IPV6_SIT_6RD=y
- CONFIG_IPV6_TUNNEL=m
- CONFIG_IPV6_MULTIPLE_TABLES=y
-@@ -130,11 +129,14 @@ CONFIG_SERIAL_8250_IOC3=y
- CONFIG_NOZOMI=m
- CONFIG_HW_RANDOM_TIMERIOMEM=m
- # CONFIG_PTP_1588_CLOCK is not set
-+CONFIG_W1=y
-+CONFIG_W1_MASTER_SGI=y
-+CONFIG_W1_SLAVE_DS250X=y
- # CONFIG_HWMON is not set
- CONFIG_THERMAL=y
- CONFIG_SGI_MFD_IOC3=y
- CONFIG_RTC_CLASS=y
--CONFIG_RTC_DRV_M48T35=y
-+CONFIG_RTC_DRV_DS1685_FAMILY=y
- CONFIG_UIO=y
- CONFIG_UIO_AEC=m
- CONFIG_UIO_SERCOS3=m
-@@ -163,17 +165,14 @@ CONFIG_NFS_FS=y
- CONFIG_SECURITYFS=y
- CONFIG_CRYPTO_CRYPTD=m
- CONFIG_CRYPTO_BLOWFISH=m
--CONFIG_CRYPTO_CAMELLIA=m
- CONFIG_CRYPTO_CAST5=m
- CONFIG_CRYPTO_CAST6=m
- CONFIG_CRYPTO_FCRYPT=m
- CONFIG_CRYPTO_SERPENT=m
- CONFIG_CRYPTO_TWOFISH=m
--CONFIG_CRYPTO_CTS=m
- CONFIG_CRYPTO_LRW=m
- CONFIG_CRYPTO_PCBC=m
- CONFIG_CRYPTO_XTS=m
--CONFIG_CRYPTO_HMAC=y
- CONFIG_CRYPTO_MD4=m
- CONFIG_CRYPTO_RMD160=m
- CONFIG_CRYPTO_VMAC=m
+diff --git a/arch/mips/alchemy/common/prom.c b/arch/mips/alchemy/common/prom.c
+index 20d30f6265cdc..c4aefeb788715 100644
+--- a/arch/mips/alchemy/common/prom.c
++++ b/arch/mips/alchemy/common/prom.c
+@@ -46,6 +46,11 @@ int prom_argc;
+ char **prom_argv;
+ char **prom_envp;
+ 
++static char prom_ethaddr[6] __initdata;
++static bool prom_ethaddr_valid __initdata;
++
++static void __init prom_init_ethernet_addr(void);
++
+ void __init prom_init_cmdline(void)
+ {
+ 	int i;
+@@ -95,6 +100,9 @@ void __init prom_init(void)
+ 	if (!memsize_str || kstrtoul(memsize_str, 0, &memsize))
+ 		memsize = SZ_64M; /* minimum memsize is 64MB RAM */
+ 
++	/* Save the MAC before the allocator can reuse the PROM environment. */
++	prom_init_ethernet_addr();
++
+ 	memblock_add(0, memsize);
+ }
+ 
+@@ -125,7 +133,7 @@ static inline void str2eaddr(unsigned char *ea, unsigned char *str)
+ 	}
+ }
+ 
+-int __init prom_get_ethernet_addr(char *ethernet_addr)
++static void __init prom_init_ethernet_addr(void)
+ {
+ 	char *ethaddr_str;
+ 
+@@ -135,12 +143,21 @@ int __init prom_get_ethernet_addr(char *ethernet_addr)
+ 		/* Check command line */
+ 		ethaddr_str = strstr(arcs_cmdline, "ethaddr=");
+ 		if (!ethaddr_str)
+-			return -1;
++			return;
+ 
+ 		ethaddr_str += strlen("ethaddr=");
+ 	}
+ 
+-	str2eaddr(ethernet_addr, ethaddr_str);
++	str2eaddr(prom_ethaddr, ethaddr_str);
++	prom_ethaddr_valid = true;
++}
++
++int __init prom_get_ethernet_addr(char *ethernet_addr)
++{
++	if (!prom_ethaddr_valid)
++		return -1;
++
++	memcpy(ethernet_addr, prom_ethaddr, sizeof(prom_ethaddr));
+ 
+ 	return 0;
+ }
 -- 
 2.53.0
 
