@@ -1,53 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795625671;
-	b=5GP4498gaTknkymQmjah5QRLvk9uayCg2+EmgC+DUfQght2bYTCH/pUIVJtceTMRKCn+
-	 hrpJTLKtj7wGpjSrdDRyX7kN/4tA66PUIxsS+B3yrDX1qOY/e8k3sF8WW2MhrCk3GpnQb
-	 LnlFhz6aeomuVvmSy3IImvEIComMreeXu6WSkNqmf+zQTIQQ0l5LDoR7OlQ2pc5qthyVu
-	 e+AC6CJQ7HHWVXYMJziIefz3wl3yjnqeC7RRSpeF/vRHaa6J4MMIzdPf/Xs4T6G0mJMzT
-	 zPIlAM7aZ1RL3MT0hU/JDW2N+ug7kVDx42PUBFyMmZ5oq5hAN4e17J1csXUrm31zIYA==
+	t=1795625674;
+	b=jK3z9YF+RD26w5TXgULgOU1Faj9bzCADed6c2cuX6zpQg/h2by1l2AGRWxd9b3g6fXyM
+	 T/V3ET0R8osk2gIvXEkaslL8HyL/r3x/RYvpqu55xmR1HcOqXeFSeWKHwjXNnjhEFxJVs
+	 pJp/3cCTfZUs5f4jyDzW7aR+3Vo3R5Aty2M/H1HbvpY/dnYNgrFITqamFiAMNZljhpFNP
+	 XDqXffpB/XQdQKfCKCuOe85NrmiJdH5lJT6wR+QlCtCEizD21KGuYxLMIcrJJuQU3B4pc
+	 y6zbHATtUTT2GvNDqNih9pHekDAS+HLSJBZj9eaKNUqmsp3DQm86ljiNaI6DJM9ySQQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795625671;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795625674;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=+n21Soh9DdvXD/LKSUMAEa3TTVCKf9ltWBdzVJY8Otg=;
-	b=LjyGpARIOUGXV0Qdr0emW8iDQzONjNw/MAgrtUYHLYdMpJW5HWR3ZIaoVCxkCv/Df5JV
-	 2XODhzFIMwQEiwh8KW2uxskX7sV7X3TRnhGr8z+Dqqze+gw5RBbJg2f6lFFAUqetnECZS
-	 5DjYJx+PvYwHcfaaxvAN4s3+lMFWcseJIPNDVpgfZXJLZZ2COJV0KJ6+DBbUIMWjM6GwZ
-	 yYPdtaRrlvUfnLSDBJDp6EzIZrt95NjZKtMy9I5tEBv+BQb9mK4PkULcbHvadNfGNdaVf
-	 I7K2zTucR/4HUtHAOFbXAc4yyg/upjP52M84nwjqPLHK7FFvHWQda8f5CZWz82iggCA==
+	bh=km8unLrFZIKFkFCQLCI7mje2TH9IZn7AQtmrSBR1kf8=;
+	b=CBQnb/0jbiCSP0SUpeCQfjQraVCGyti9TPK0aebaOXqtiiP851JiFMH7CPuMtxUs5xUv
+	 MuWfWd1cbGQnhhK5lC2jqkGFDSaoLnHtU7fqDIJ/RNY9KeDW0z1hZZHRaMPLWywKzhVfh
+	 06BWvWpo63EvUfLyTvHfgx1MP2IRYm8747qrHvnzcebYDfBmQ+wfSfbR4vMbRseBL/kUf
+	 yApBxp1Byexr32y+A/qnAfw8Mpa88sMqoYa5wP1meouOtRyZ3gwAVmnw4qBXxShCW/M8J
+	 uzohuf7vuS3vNZ4+RBa/Tfl0naP13H2cDTYkeGhb7CCuHivj2EvsW7lhje0nr4/5Frw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=iIoHfJv9;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ex2Qo+e1;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3C6FB606A326;
-	Wed, 25 Nov 2026 16:54:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 055AE606A31E;
+	Wed, 25 Nov 2026 16:54:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=iIoHfJv9
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 06C101F000D2;
-	Wed, 25 Nov 2026 16:54:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ex2Qo+e1
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 549E11F000C0;
+	Wed, 25 Nov 2026 16:54:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795625670;
-	bh=+n21Soh9DdvXD/LKSUMAEa3TTVCKf9ltWBdzVJY8Otg=;
+	s=korg; t=1795625673;
+	bh=km8unLrFZIKFkFCQLCI7mje2TH9IZn7AQtmrSBR1kf8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=iIoHfJv9iGLJH2/TpWJkAmJ5gHaMdh8AUmX3yArFyIwyiPysNtD4to7yLuiavsV/H
-	 uB4i7dP6EYSlPWoU41rbLXu2a7t1qZdsQZHEEjWCfB2YS6/R1UHn/S9CPnFTFgBiuB
-	 Y4yTqQR1tPrAwKliJKI7V5lKefd5G2eur6GNTV+I=
+	b=ex2Qo+e1YRn58iHPPIlaL7ykXads9GUUsPBb0Gv4J6CaiYdowaWfFhvXbRT34iSb7
+	 wd79S9iQfXZrNxkJXW9xh8S9Ed/lk4U1CLtb4U5u3GClvh+b4yGRm3mNihFHrP1j4k
+	 c0LKro3NUW83qChCillvGxiTgL5EuxuZQLLvDq5k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Willem de Bruijn <willemdebruijn.kernel@gmail.com>,
-	Xia Yan <yanxia@cmss.chinamobile.com>,
-	Willem de Bruijn <willemb@google.com>,
+	Alexei Starovoitov <ast@kernel.org>,
+	Hangbin Liu <liuhangbin@kylinos.cn>,
+	Yingjie Wang <1075151112@qq.com>,
+	Ido Schimmel <idosch@nvidia.com>,
 	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.12 592/816] ipv6: fix cached route reuse for control messages
-Date: Wed, 25 Nov 2026 15:35:40 +0100
-Message-ID: <20261125143902.880919206@linuxfoundation.org>
+Subject: [PATCH 6.12 593/816] ipv6: reject routes without an inet6_dev
+Date: Wed, 25 Nov 2026 15:35:41 +0100
+Message-ID: <20261125143902.904547037@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143849.205329330@linuxfoundation.org>
 References: <20261125143849.205329330@linuxfoundation.org>
@@ -69,67 +70,87 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Xia Yan <yanxia@cmss.chinamobile.com>
+From: Yingjie Wang <1075151112@qq.com>
 
-commit f778e80b3daf5033fb996f45c2b5d0ce1e82c0a7 upstream.
+commit 08a1eb7a634f665718ebe74e0960e242f597135e upstream.
 
-A connected IPv6 UDP or ping socket can reuse its cached route when an
-SO_MARK cmsg requests another mark. A packet can then bypass a prohibit
-rule instead of failing with EACCES.
+ip6_route_output() and ip6_route_lookup() can return an error-free route
+whose rt6i_idev is NULL.  Lowering an external nexthop device's MTU below
+IPV6_MIN_MTU tears down its inet6_dev, while fib6_ifdown() leaves routes
+using nexthop objects in the FIB.
 
-ip6_sk_dst_lookup_flow() reads the cache even when connected is false.
-UDP clears connected after parsing IP or socket control messages. Ping
-always passes false.
+An unprivileged user with CAP_NET_ADMIN in a private user and network
+namespace can construct this state.  Consumers which treat a route without
+an error as usable can then dereference the NULL rt6i_idev.  This was
+reproduced as a KASAN NULL pointer dereference in ip6_tnl_xmit().
 
-Only read the cache when connected is true. Ordinary connected UDP
-sends keep using the cache. Ping sends do a fresh lookup.
+An audit of IPv6 route and tunnel users found this unchecked
+ip6_dst_idev() dereference.
 
-Found during code review of IPv6 UDP route caching. On UML, the same
-connected-socket selftest fails four IPv6 cases before the fix and
-passes all 54 with it.
+A similar missing inet6_dev check was fixed in commit 1b9b5323725e
+("netfilter: ip6t_rpfilter: reject routes without inet6_dev").  However,
+the route construction path still marks routes without an inet6_dev as
+successful, leaving every consumer responsible for the same check.
 
-Fixes: c6af0c227a22 ("ip: support SO_MARK cmsg")
-Suggested-by: Willem de Bruijn <willemdebruijn.kernel@gmail.com>
-Link: https://lore.kernel.org/netdev/willemdebruijn.kernel.1e0038bcc3ef8@gmail.com/
+Acquire the inet6_dev reference before initializing the destination.  If a
+non-reject route has no inet6_dev, initialize it as RTN_UNREACHABLE instead
+of a successful route.  Explicit reject routes keep their original type and
+error.  This establishes that ordinary error-free IPv6 routes have an
+inet6_dev while retaining the existing defensive checks at callers.
+
+The modified route object builds cleanly with W=1.  A full x86_64 KASAN
+bzImage build completes; it reports two pre-existing kernel-doc warnings
+outside this change.
+
+Tests:
+  - `make W=1 net/ipv6/route.o`
+  - full x86_64 KASAN `bzImage` build with `W=1`
+  - KASAN QEMU with an unprivileged user and network namespace: after
+    lowering the MTU, the stale route returned `No route to host`, a normal
+    route still resolved, and the collect_md trigger completed without
+    KASAN, oops, or panic
+  - `tools/testing/selftests/net/ip6_tunnel.sh` in the same KASAN QEMU
+
+Fixes: 5b98324ebe29 ("ipv6: Allow routes to use nexthop objects")
+Closes: https://lore.kernel.org/netdev/DMP4WRIOGMBX.3VW2KNLBGDZ0K@gmail.com/
+Suggested-by: Alexei Starovoitov <ast@kernel.org>
+Reviewed-by: Hangbin Liu <liuhangbin@kylinos.cn>
 Cc: stable@vger.kernel.org
-Signed-off-by: Xia Yan <yanxia@cmss.chinamobile.com>
-Reviewed-by: Willem de Bruijn <willemb@google.com>
-Link: https://patch.msgid.link/20261109014400.9025-1-yanxia@cmss.chinamobile.com
+Signed-off-by: Yingjie Wang <1075151112@qq.com>
+Reviewed-by: Ido Schimmel <idosch@nvidia.com>
+Link: https://patch.msgid.link/tencent_91DA7FD8277B509C55906702D1E425FBC906@qq.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/ipv6/ip6_output.c |   13 ++++++++-----
- 1 file changed, 8 insertions(+), 5 deletions(-)
+ net/ipv6/route.c |    8 +++++++-
+ 1 file changed, 7 insertions(+), 1 deletion(-)
 
---- a/net/ipv6/ip6_output.c
-+++ b/net/ipv6/ip6_output.c
-@@ -1285,7 +1285,7 @@ EXPORT_SYMBOL_GPL(ip6_dst_lookup_flow);
-  *	@sk: socket which provides the dst cache and route info
-  *	@fl6: flow to lookup
-  *	@final_dst: final destination address for ipsec lookup
-- *	@connected: whether @sk is connected or not
-+ *	@connected: whether the flow can use and update the socket dst cache
-  *
-  *	This function performs a route lookup on the given flow with the
-  *	possibility of using the cached route in the socket if it is valid.
-@@ -1302,11 +1302,14 @@ struct dst_entry *ip6_sk_dst_lookup_flow
- 					 const struct in6_addr *final_dst,
- 					 bool connected)
- {
--	struct dst_entry *dst = sk_dst_check(sk, inet6_sk(sk)->dst_cookie);
-+	struct dst_entry *dst;
+--- a/net/ipv6/route.c
++++ b/net/ipv6/route.c
+@@ -1144,6 +1144,12 @@ static void ip6_rt_init_dst(struct rt6_i
+ 		return;
+ 	}
  
--	dst = ip6_sk_dst_check(sk, dst, fl6);
--	if (dst)
--		return dst;
-+	if (connected) {
-+		dst = sk_dst_check(sk, inet6_sk(sk)->dst_cookie);
-+		dst = ip6_sk_dst_check(sk, dst, fl6);
-+		if (dst)
-+			return dst;
++	/* addrconf_ifdown() removed inet6_dev. The device can't do IPv6. */
++	if (!rt->rt6i_idev) {
++		ip6_rt_init_dst_reject(rt, RTN_UNREACHABLE);
++		return;
 +	}
++
+ 	rt->dst.error = 0;
+ 	rt->dst.output = ip6_output;
  
- 	dst = ip6_dst_lookup_flow(sock_net(sk), sk, fl6, final_dst);
- 	if (connected && !IS_ERR(dst))
+@@ -1178,10 +1184,10 @@ static void ip6_rt_copy_init(struct rt6_
+ 	const struct net_device *dev = nh->fib_nh_dev;
+ 	struct fib6_info *f6i = res->f6i;
+ 
++	rt->rt6i_idev = dev ? in6_dev_get(dev) : NULL;
+ 	ip6_rt_init_dst(rt, res);
+ 
+ 	rt->rt6i_dst = f6i->fib6_dst;
+-	rt->rt6i_idev = dev ? in6_dev_get(dev) : NULL;
+ 	rt->rt6i_flags = res->fib6_flags;
+ 	if (nh->fib_nh_gw_family) {
+ 		rt->rt6i_gateway = nh->fib_nh_gw6;
 
 
