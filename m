@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795620877;
-	b=5tNIz3gkEsmzFomOI66sI6Zu2GZihUAZvp762qu5t7bwvQD2ZH7MQiVdK941J2z9ZIbC
-	 ibP3Yt6WuydoYXmhUsF73onwoj0VCNQWSo/o3E7Fo//g+FOrZ4CAZUSBaDmcGAUPWowz5
-	 ksjVj/AtBTOQIpj1/YhTzH4YL8vKNNvQJReRLSL1Cf/hHLLqq/Q9RrbgK0RpGnIC//VTQ
-	 Q+MoQK+WsXizVTY+7BqlIT4HZBjxRJAdeJYgRs0hxgFMU15AA3ml/nRlS4XOckpOR5fS+
-	 z1kZI7rWLHLkRtqE1RnQ/gVpVIMsjTs5z5if4SmIfp0EB+GBFehqIO3GAqxAfw9/rcw==
+	t=1795620880;
+	b=4SUE5xdTIozsJFJ8lJQB3bnLcuoxqBpzI1mdueBpVnPS5NLByUMG3yrwUUyC0uk3ysvL
+	 1u3KRaKDpDqr6qZXvZl3a/D9gIMJlLfkOOQrdfOID9LMfcuMUFXToYG0KATMKmH5jB54k
+	 Ve9raYWYQQEqw7JU+CulvLnOZ4YPaj0CT5pE2FpnW7Hl9KbbqwXzUXlx2J8sqMxHJu6mC
+	 jargskgeV+oUJ/fjidh2Q9lDurtaU6N6THrciezdtfbHAVbKCpEBg4QdGJAXV2IHGOPLv
+	 clnx5v5EQe8EbSb+T70gqC7ir42IonxyLInJqWR/fHZidxyEx/TPNfHLaVT6oFO+ZyA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795620877;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795620880;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=Cp33RBCkAyhtmALzdvFFu7etrqgFG5qgkI1DU9aQsFU=;
-	b=zUDJiRB+W8w4XXpRwRBDGKRZzL6CN0nPDSRiV51pXqRf46q3YUE2Ri/IgLeORuoV2F6H
-	 GwzVb4PaeECLGGscN8nVR8lf2n3KlKmFWgX/8KfJZP2Swo+e81s8kLojv4PBRiIw8BZF/
-	 F/xe1hI9WOXv9A9ZwHj5mEEkH2WPah60+0g3Ff0ULDNeg2dmWiyoWP9olZnOoxFHsfQ4j
-	 8Gn51kccuenX1t1PauZA/tuh6NIWnBDCa2UQCIAOhhEgxeabzccuJMdHyEmyspcoDDxKK
-	 p+kvaKs6qurtn3xULspzT/v8eILvZ+yxzflZlrUz5FIyMi9PlEVNpUaG4GT0wtKq9PQ==
+	bh=1s5o4XK23CrRAEfjNzoDzFHv3EdSFU7A8jVXgtBCPm8=;
+	b=4eAWUh4XrzMllakKUes4KTjBmDWGDyYLO/FPvk4dNsh7u2lungKwY+lhnODUhOvCelrZ
+	 qG5HiUwJi2Mi7yCUniSzOUk0DrbtNuFeAX9Di7rHbHFvnYZhkoklon7fKxpcI85Xi2L6W
+	 rqluIOToB8opr5XMQkp6mvTiqFqasRMZ77wCb4X4CgfpZlS5SkTpT5CfM+/WTIcvwqANR
+	 WL8QooNLj864/dEWS1v0ILlR8V4wR1Z8eU1vOMvyLgpdJ/WiX6uu5fJDTsj79L+nnqlEV
+	 K6CFN+XA1jItjW9SDkP6wzBPBUXhpisb8Hqy/Y+4NtGqyfEKE63SVw++EtHNm3cXVPQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=PjgatllY;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=LQe9Oxr8;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 282D0606A323;
-	Wed, 25 Nov 2026 15:34:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 41259606A31E;
+	Wed, 25 Nov 2026 15:34:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=PjgatllY
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3D8681F000C6;
-	Wed, 25 Nov 2026 15:34:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=LQe9Oxr8
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 85EFD1F000C6;
+	Wed, 25 Nov 2026 15:34:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795620876;
-	bh=Cp33RBCkAyhtmALzdvFFu7etrqgFG5qgkI1DU9aQsFU=;
+	s=korg; t=1795620880;
+	bh=1s5o4XK23CrRAEfjNzoDzFHv3EdSFU7A8jVXgtBCPm8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=PjgatllYhHoEMPH0LlP0stsywI9It9gDKijxbC5Qwim8u+kbLyio9TUyGEb6Wr1BD
-	 NUOPPiyyJAhFYhxhNQOwSahGCyi8q02UCq7IR3kgSmBnyHU0Pz5pvn07FxKyIjpqqh
-	 r/AtE6P4ty8KrJ8RCMS+Q4GIp72DU2iAQDUQtC6I=
+	b=LQe9Oxr8v3Z7uvGMQhjgnPaSRdIB8rIMuRVPSRsrjpJPXp/F0zLo9M5oBK6ujNYR6
+	 IgvxNYsQuFLc8VfEE8hKg5SfsU/o0RiI88zyEoxUj84dxZ1MogrVfoYrrE8mKRMPt2
+	 RmgOSmf3syxwimV7U01Q/n5VNQp5nfNIVgXyscxk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mikhail Malyshev <mike.malyshev@gmail.com>,
-	Jens Axboe <axboe@kernel.dk>,
+	Bryan Cochrane <bcochrane@google.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 050/990] io_uring/io-wq: apply the current cpuset to new workers
-Date: Wed, 25 Nov 2026 15:23:37 +0100
-Message-ID: <20261125143823.262205807@linuxfoundation.org>
+Subject: [PATCH 6.18 051/990] bnxt_en: Take RTNL before netif_close() when aborting FW reset
+Date: Wed, 25 Nov 2026 15:23:38 +0100
+Message-ID: <20261125143823.285026277@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143822.072087159@linuxfoundation.org>
 References: <20261125143822.072087159@linuxfoundation.org>
@@ -68,122 +68,143 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mikhail Malyshev <mike.malyshev@gmail.com>
+From: Bryan Cochrane <bcochrane@google.com>
 
-Commit 0659e44ce739ecd856164c75a5325b7959a2921d upstream.
+commit bf83b257423bb557b970df3d7ece32fbd85f3bd4 upstream.
 
-Since commit 84eacf177faa ("io_uring/io-wq: inherit cpuset of cgroup in
-io worker"), io_wq_create() copies the cpuset of the creating task into
-wq->cpu_mask, and io_init_new_worker() gives each new worker that copy.
-A cpuset change, or a move of the task to another cgroup, updates the
-workers that exist but not the copy, so workers started later run on
-the CPUs the cgroup had when the io-wq was created, which may since
-have been given to other tasks. Workers come and go for the life of the
-io-wq, and a worker that cpuset moved is also retired at its next idle
-timeout and replaced on the old CPUs.
+netif_close() must be called with RTNL held in addition to the netdev
+instance lock: __dev_close_many() asserts it, and the NETDEV_GOING_DOWN
+and NETDEV_DOWN notifier chains it runs rely on it for serialization.
 
-Keep wq->cpu_mask for the affinity of the io-wq itself, all CPUs or the
-mask set with IORING_REGISTER_IOWQ_AFF, and intersect it with the cpuset
-of the worker when the worker starts, falling back to the cpuset if the
-two do not intersect, as __set_cpus_allowed_ptr() does. Use the same
-mask in the idle exit test, and go back to all CPUs when the registered
-affinity is removed.
+Commit 004b5008016a ("eth: bnxt: remove most dependencies on RTNL")
+replaced rtnl_lock() with netdev_lock() in bnxt_fw_reset_task() and
+bnxt_fw_reset(). That is sufficient for the paths that only tear the
+NIC down internally with __bnxt_close_nic(), but the abort paths close
+the netdev via bnxt_fw_reset_abort() -> netif_close(), and the error
+path in bnxt_fw_reset() calls netif_close() directly. Those now run
+without RTNL and trigger a WARN_ONCE() cascade when a firmware reset is
+aborted:
 
-Fixes: 84eacf177faa ("io_uring/io-wq: inherit cpuset of cgroup in io worker")
+  RTNL: assertion failed at net/core/dev.c (1740)
+  WARNING: net/core/dev.c:1740 at __dev_close_many+0x1be/0x1f0
+  Workqueue: bnxt_pf_wq bnxt_fw_reset_task [bnxt_en]
+  Call Trace:
+   netif_close_many+0xb5/0x190
+   netif_close+0xa2/0xd0
+   bnxt_fw_reset_task.cold+0x8d/0x213 [bnxt_en]
+   process_one_work+0x19d/0x3a0
+   worker_thread+0x1af/0x320
+   kthread+0xe3/0x120
+
+followed by the same assertion from call_netdevice_notifiers_info(),
+fib_rules_event(), inetdev_event(), rtnl_fill_ifinfo(),
+devlink_compat_phys_port_name_get() and ip_mc_down().
+
+This was observed on a machine in real use with a BCM57504 (4 PFs,
+FW 236.1.153.0) running v7.1.6: the firmware crashed, announced a
+"Fatal firmware reset event" and then failed to come back within the
+advertised max wait, so bnxt_fw_reset_task() aborted the reset on all
+ports:
+
+  bnxt_en 0000:c1:00.1 eno16905np1: Firmware reset aborted
+  bnxt_en 0000:c1:00.1 eno16905np1: fw_health_status 0x448100
+
+Take RTNL (before the netdev instance lock, matching the OPENING state
+which already uses rtnl_trylock()) in the fw_reset_abort path of
+bnxt_fw_reset_task() and route the POLL_VF abort through that same
+path.
+
+In bnxt_fw_reset(), only a PF can reach the bnxt_get_registered_vfs()
+error path that calls netif_close(), so take RTNL up front via
+bnxt_rtnl_lock_sp() when BNXT_PF(bp) is true and keep bnxt_lock_sp() on
+VFs. That avoids dropping the instance lock mid-reset (which would
+expose a transient BNXT_STATE_IN_FW_RESET and let a concurrent devlink
+health recover set BNXT_STATE_IN_SP_TASK), avoids racing with
+bnxt_sriov_configure() updating active_vfs outside RTNL, and keeps VFs
+from contending on RTNL during recovery while PFs already run on the
+single-threaded bnxt_pf_wq.
+
+The bug was found by inspecting the kernel log of the affected machine
+and the driver source; the fix was prepared with the help of an AI
+coding assistant (Gemini based) and reviewed by the submitter. It is
+build tested (allmodconfig with W=1, plus the same change on top of
+v7.1.6 built as a module for the affected BCM57504 host). The aborted
+reset path itself only runs when the firmware fails to return from a
+reset, which could not be reproduced on demand.
+
+Fixes: 004b5008016a ("eth: bnxt: remove most dependencies on RTNL")
 Cc: stable@vger.kernel.org
-Signed-off-by: Mikhail Malyshev <mike.malyshev@gmail.com>
-Link: https://patch.msgid.link/20261111162705.1150983-1-mike.malyshev@gmail.com
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Signed-off-by: Bryan Cochrane <bcochrane@google.com>
+Link: https://patch.msgid.link/20261110044235.204386-1-bcochrane@google.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+[ bcochrane: backport to 6.18.y: 6.18 lacks bnxt_lock_sp() and
+  bnxt_unlock_sp(), so keep the existing inline BNXT_STATE_IN_SP_TASK +
+  netdev_lock()/netdev_unlock() on the VF branch of bnxt_fw_reset()
+  while using the existing bnxt_rtnl_lock_sp() / bnxt_rtnl_unlock_sp()
+  on PFs. ]
+Signed-off-by: Bryan Cochrane <bcochrane@google.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- io_uring/io-wq.c | 44 +++++++++++++++++++++++++++++++++++++++-----
- 1 file changed, 39 insertions(+), 5 deletions(-)
+ drivers/net/ethernet/broadcom/bnxt/bnxt.c | 21 +++++++++++++++------
+ 1 file changed, 15 insertions(+), 6 deletions(-)
 
-diff --git a/io_uring/io-wq.c b/io_uring/io-wq.c
-index fd53297af26ec..0d74e365d54a1 100644
---- a/io_uring/io-wq.c
-+++ b/io_uring/io-wq.c
-@@ -731,6 +731,34 @@ static bool io_worker_retire(struct io_wq_acct *acct, struct io_worker *worker)
- 	return false;
+diff --git a/drivers/net/ethernet/broadcom/bnxt/bnxt.c b/drivers/net/ethernet/broadcom/bnxt/bnxt.c
+index 414da981a3e5b..51c144584d240 100644
+--- a/drivers/net/ethernet/broadcom/bnxt/bnxt.c
++++ b/drivers/net/ethernet/broadcom/bnxt/bnxt.c
+@@ -14567,8 +14567,12 @@ static int bnxt_get_registered_vfs(struct bnxt *bp)
+ void bnxt_fw_reset(struct bnxt *bp)
+ {
+ 	bnxt_ulp_stop(bp);
+-	clear_bit(BNXT_STATE_IN_SP_TASK, &bp->state);
+-	netdev_lock(bp->dev);
++	if (BNXT_PF(bp)) {
++		bnxt_rtnl_lock_sp(bp);
++	} else {
++		clear_bit(BNXT_STATE_IN_SP_TASK, &bp->state);
++		netdev_lock(bp->dev);
++	}
+ 	if (test_bit(BNXT_STATE_OPEN, &bp->state) &&
+ 	    !test_bit(BNXT_STATE_IN_FW_RESET, &bp->state)) {
+ 		struct bnxt_ptp_cfg *ptp = bp->ptp_cfg;
+@@ -14614,8 +14618,12 @@ void bnxt_fw_reset(struct bnxt *bp)
+ 		bnxt_queue_fw_reset_work(bp, tmo);
+ 	}
+ fw_reset_exit:
+-	set_bit(BNXT_STATE_IN_SP_TASK, &bp->state);
+-	netdev_unlock(bp->dev);
++	if (BNXT_PF(bp)) {
++		bnxt_rtnl_unlock_sp(bp);
++	} else {
++		set_bit(BNXT_STATE_IN_SP_TASK, &bp->state);
++		netdev_unlock(bp->dev);
++	}
  }
  
-+/*
-+ * The CPUs a worker of @wq runs on: those of the io-wq affinity that the
-+ * worker's cpuset allows, or the cpuset if they have none in common, as the
-+ * scheduler does with a task's requested affinity when its cpuset changes.
-+ * Read the cpuset each time: it can change while the io-wq exists.
-+ */
-+static void io_wq_worker_cpus(struct io_wq *wq, struct task_struct *tsk,
-+			      struct cpumask *cpus)
-+{
-+	cpuset_cpus_allowed(tsk, cpus);
-+	if (cpumask_intersects(cpus, wq->cpu_mask))
-+		cpumask_and(cpus, cpus, wq->cpu_mask);
-+}
-+
-+/* Is the current worker on a CPU that a new worker would not get? */
-+static bool io_wq_worker_off_cpus(struct io_wq *wq)
-+{
-+	cpumask_var_t cpus;
-+	bool off;
-+
-+	if (!alloc_cpumask_var(&cpus, GFP_KERNEL))
-+		return false;
-+	io_wq_worker_cpus(wq, current, cpus);
-+	off = !cpumask_test_cpu(raw_smp_processor_id(), cpus);
-+	free_cpumask_var(cpus);
-+	return off;
-+}
-+
- static int io_wq_worker(void *data)
- {
- 	struct io_worker *worker = data;
-@@ -809,8 +837,7 @@ static int io_wq_worker(void *data)
+ static void bnxt_chk_missed_irq(struct bnxt *bp)
+@@ -15268,9 +15276,8 @@ static void bnxt_fw_reset_task(struct work_struct *work)
+ 		bp->fw_reset_timestamp = jiffies;
+ 		netdev_lock(bp->dev);
+ 		if (test_bit(BNXT_STATE_ABORT_ERR, &bp->state)) {
+-			bnxt_fw_reset_abort(bp, rc);
+ 			netdev_unlock(bp->dev);
+-			goto ulp_start;
++			goto fw_reset_abort;
  		}
- 		if (!ret) {
- 			last_timeout = true;
--			exit_mask = !cpumask_test_cpu(raw_smp_processor_id(),
--							wq->cpu_mask);
-+			exit_mask = io_wq_worker_off_cpus(wq);
- 		}
+ 		bnxt_fw_reset_close(bp);
+ 		if (bp->fw_cap & BNXT_FW_CAP_ERR_RECOVER_RELOAD) {
+@@ -15403,9 +15410,11 @@ static void bnxt_fw_reset_task(struct work_struct *work)
+ 		netdev_err(bp->dev, "fw_health_status 0x%x\n", sts);
  	}
- 
-@@ -860,9 +887,16 @@ void io_wq_worker_sleeping(struct task_struct *tsk)
- static void io_init_new_worker(struct io_wq *wq, struct io_wq_acct *acct, struct io_worker *worker,
- 			       struct task_struct *tsk)
- {
-+	cpumask_var_t cpus;
-+
- 	tsk->worker_private = worker;
- 	worker->task = tsk;
--	set_cpus_allowed_ptr(tsk, wq->cpu_mask);
-+	/* Without a mask, the worker keeps its creator's CPUs. */
-+	if (alloc_cpumask_var(&cpus, GFP_KERNEL)) {
-+		io_wq_worker_cpus(wq, tsk, cpus);
-+		set_cpus_allowed_ptr(tsk, cpus);
-+		free_cpumask_var(cpus);
-+	}
- 
- 	raw_spin_lock(&acct->workers_lock);
- 	hlist_nulls_add_head_rcu(&worker->nulls_node, &acct->free_list);
-@@ -1361,7 +1395,7 @@ struct io_wq *io_wq_create(unsigned bounded, struct io_wq_data *data)
- 
- 	if (!alloc_cpumask_var(&wq->cpu_mask, GFP_KERNEL))
- 		goto err;
--	cpuset_cpus_allowed(data->task, wq->cpu_mask);
-+	cpumask_copy(wq->cpu_mask, cpu_possible_mask);
- 	wq->acct[IO_WQ_ACCT_BOUND].max_workers = bounded;
- 	wq->acct[IO_WQ_ACCT_UNBOUND].max_workers =
- 				task_rlimit(current, RLIMIT_NPROC);
-@@ -1545,7 +1579,7 @@ int io_wq_cpu_affinity(struct io_uring_task *tctx, cpumask_var_t mask)
- 		else
- 			ret = -EINVAL;
- 	} else {
--		cpumask_copy(tctx->io_wq->cpu_mask, allowed_mask);
-+		cpumask_copy(tctx->io_wq->cpu_mask, cpu_possible_mask);
- 	}
- 	rcu_read_unlock();
- 
+ fw_reset_abort:
++	rtnl_lock();
+ 	netdev_lock(bp->dev);
+ 	bnxt_fw_reset_abort(bp, rc);
+ 	netdev_unlock(bp->dev);
++	rtnl_unlock();
+ ulp_start:
+ 	if (!rc)
+ 		bnxt_ulp_start(bp);
 -- 
 2.53.0
 
