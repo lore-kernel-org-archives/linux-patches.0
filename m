@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795618470;
-	b=Xn44Ml02vENHEsHrivFCDZmiES1w5Z+iqBql9xMv9r12aS/AjAAUVc8Em+KU0WLyl6RZ
-	 16NuMRYwK7n9zxx256tPcFA/TIosQl9boNDoEmiwvoYnGOFFLDqEvMr05C5GYq2fTFbWZ
-	 UDi8NoJVn3cRkKbfPYwQPmg1HLdKsMfHV7CeAeWgdMt4LtdfjdmM2tpy0I5FlCa49fo+v
-	 UFBmWDPT6VaCW3ziNX5dbqtwuTRD5IDSKg3bVgtDHkAjH5fNEO0jpl5DOls1mWHSilrYq
-	 ixPmxV2qpf9YLoBzQkjVD71pr16d4iZD9W/Vxf43UdjpejHjVkQtCaTw/57PXktJTvg==
+	t=1795618473;
+	b=gmy6K8JPCif1MvK3+7OZo1A1dmKNRg/Xiek+etKm4AYaGqMamC9XtaNNfR7UxJtUMpQy
+	 4vI38xF/22byS5Y0l186ZKYGzmDasOc5EMCKohB0kwEvzQqcQZbP4yVNwiryFuoz2u8Rz
+	 n1ShuXyu90x6KNNuaZAPuitUo4+xCiJVa53V9sZmWr2yciJ/tN7W4vUCqrhJ6G012R467
+	 ct2xfrKnfNwLn6AJRh/g9FmfdlJ9Tz5wut43estdTxmtPAxU+iMJBd7KujM0ZCnb7SAov
+	 Ch0Ro/0LnCrGJX/gJSCkgo2IMYQtGtPPqa9CD6gEc1KFeL8NP2rRdYjlC9KLQael1qQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795618470;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795618473;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=uLgp6FG4sJomUdtObuBybUVpY+ojkovYYnOmbmIvRVw=;
-	b=nWZm/nCWui28YyTgsZazblKW+6LYe0wkfzGGOkxPjqJ3ioBSq9f80N4vKwzr64+BHWsT
-	 zt1X4q/dsrQ8Ot7xs1EmVdI0TIWAPXticxOy8fIGMExkzHtPnn8oLvV84RTGlSk0UQaoH
-	 4akQbw9oK08QKHd/pbypkjNYruTPcwUvG2rRjp9KY6VCh67bsT4vMhYeyP6FzKi4j/NQD
-	 hilIWITKg2XY4X3aUbEmWX5DqtO9FN72SASuxMHWEIxntXyCS5eJ/K0x22WolkGXy9I3B
-	 BLJrD1OUnq5DSjvc7qmbScfeEw+ScaOROXTj1hCWg5wB2/nzlHbmBvUJwAvBAUnRgxw==
+	bh=Wo7ZamULx7v/aXW70PQ5E+u0lW60VH5N3l3yl8KetOQ=;
+	b=VhE96Hg9aR4MbynnsLTyzktUFZS+ZHjj5LU+zmUuKTMY/jI2QuE3AJnH4nZM5xiNCLem
+	 pQeJGK1xjsu1mVSM3230/Jz2d4o5MZ1XXwmdQqwFxH7At2XuTBRTcDLJDNUaAXoK4ITWy
+	 StH12qAUgW8L9RPIvL0BRE3UFXvNjkwg1SZ+duYptejDYZ8swYrqt/xN5orMGAyTzF4XU
+	 yd6B4dpGVkC2GJf426vKJIYB4XyN3qdubybqAXgFUpFopF9ZanaEOWTIKFMNqLH3Q3/wg
+	 SpyMKEx+LcNA/YgkkdUTO4TPDrDvvS1nbLZaBr4lacrSRpdRjHLLH88528ieo1ATNwg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="lsy/9MOj";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=kdVVaOjQ;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 36469606A33B;
-	Wed, 25 Nov 2026 14:54:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A2BC8606A32E;
+	Wed, 25 Nov 2026 14:54:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=lsy/9MOj
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7DDA01F000ED;
-	Wed, 25 Nov 2026 14:54:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=kdVVaOjQ
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D66611F000C4;
+	Wed, 25 Nov 2026 14:54:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795618470;
-	bh=uLgp6FG4sJomUdtObuBybUVpY+ojkovYYnOmbmIvRVw=;
+	s=korg; t=1795618473;
+	bh=Wo7ZamULx7v/aXW70PQ5E+u0lW60VH5N3l3yl8KetOQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=lsy/9MOj5qwXWHx1J98VpARXa4sC6TZSWOBQD17ohkXo+gB0P7QOyobp+b+uYhqDV
-	 IkYuh+LT4oA8jsg6TBMkep9xkv/zavIz1Hs2r+lMtsZFG77Z6Pxt4V52pgH37UVYMa
-	 /BlRnsvs/RYWLNJiTYU2aGLaZ6MJwr6mYoczM7+c=
+	b=kdVVaOjQsGL8eZwnhvx1lE5B4A+jXgbrGu8aT27N28d25jMeL5V0/Q9kn04mwhYJi
+	 9Mbkpe+atUhyYg4Q9YIdCuIA0u88duo+Aj2Rd/c3udnKEdH9iCfjFEOY3rRfLk7iz+
+	 pGpTZhdmDGbi5soCRBRXx/Llx+Xc8v7+PxKryVno=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jude Gyimah <jude.gyimah87@gmail.com>,
+	Richard Fitzgerald <rf@opensource.cirrus.com>,
 	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0263/1005] ASoC: rockchip_i2s: select REGMAP_MMIO
-Date: Wed, 25 Nov 2026 15:26:41 +0100
-Message-ID: <20261125143827.899303405@linuxfoundation.org>
+Subject: [PATCH 7.3 0290/1005] ASoC: wm_adsp: Prevent negative string length in wm_adsp_control_add()
+Date: Wed, 25 Nov 2026 15:27:08 +0100
+Message-ID: <20261125143828.531551100@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143821.729802100@linuxfoundation.org>
 References: <20261125143821.729802100@linuxfoundation.org>
@@ -68,50 +68,54 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jude Gyimah <jude.gyimah87@gmail.com>
+From: Richard Fitzgerald <rf@opensource.cirrus.com>
 
-[ Upstream commit 1c57404bf9bad3e05d5686d91c208bf4e2b733d8 ]
+[ Upstream commit 4d07af76ca41cc1a03240cd3b5f44dc428856214 ]
 
-rockchip_i2s calls __devm_regmap_init_mmio_clk, which
-drivers/base/regmap/regmap-mmio.c provides under REGMAP_MMIO.
+Check that avail does not become < 1 in wm_adsp_control_add(). This
+prevents overflows during subsequent operations.
 
-  rockchip_i2s.c:(.text+0x418): undefined reference to
-    `__devm_regmap_init_mmio_clk'
+The main aim is to trap a negative value in avail, but a zero length
+would mean that the control ends up without a name, so 1 is the smallest
+valid value.
 
-The driver can be built into vmlinux while REGMAP_MMIO is a module, in
-which case the symbol is not there at link time.
-
-Select rather than depend on: REGMAP_MMIO has no prompt of its own and is
-only ever enabled by a select, so a depends on would leave
-SND_SOC_ROCKCHIP_I2S unselectable.
-
-Reproduced on v7.3, x86_64, with CONFIG_SND_SOC_ROCKCHIP_I2S=y and
-CONFIG_REGMAP_MMIO=m.
-
-Found with kreach, a static check that compares what Kconfig allows
-against the symbols the compiled objects actually reference.
-
-Fixes: 4495c89fcf26 ("ASoC: add driver for Rockchip RK3xxx I2S controller")
-Signed-off-by: Jude Gyimah <jude.gyimah87@gmail.com>
-Link: https://patch.msgid.link/20261103132537.3717496-2-jude.gyimah87@gmail.com
+Fixes: b7ede5af62ab6 ("ASoC: wm_adsp: Take prefix into account in control name length")
+Signed-off-by: Richard Fitzgerald <rf@opensource.cirrus.com>
+Link: https://patch.msgid.link/20261104133322.1085061-1-rf@opensource.cirrus.com
 Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/rockchip/Kconfig | 1 +
- 1 file changed, 1 insertion(+)
+ sound/soc/codecs/wm_adsp.c | 10 ++++++++++
+ 1 file changed, 10 insertions(+)
 
-diff --git a/sound/soc/rockchip/Kconfig b/sound/soc/rockchip/Kconfig
-index 391ce2225fde0..d7ec1fbe17a57 100644
---- a/sound/soc/rockchip/Kconfig
-+++ b/sound/soc/rockchip/Kconfig
-@@ -5,6 +5,7 @@ menu "Rockchip"
+diff --git a/sound/soc/codecs/wm_adsp.c b/sound/soc/codecs/wm_adsp.c
+index b8f3035af3ba1..7740a9c8ced32 100644
+--- a/sound/soc/codecs/wm_adsp.c
++++ b/sound/soc/codecs/wm_adsp.c
+@@ -46,6 +46,9 @@
+ #define adsp_dbg(_dsp, fmt, ...) \
+ 	dev_dbg(_dsp->cs_dsp.dev, "%s: " fmt, _dsp->cs_dsp.name, ##__VA_ARGS__)
  
- config SND_SOC_ROCKCHIP_I2S
- 	tristate "Rockchip I2S Device Driver"
-+	select REGMAP_MMIO
- 	select SND_SOC_GENERIC_DMAENGINE_PCM
- 	help
- 	  Say Y or M if you want to add support for I2S driver for
++#define adsp_warn_once(_dsp, fmt, ...) \
++	dev_warn_once(_dsp->cs_dsp.dev, "%s: " fmt, _dsp->cs_dsp.name, ##__VA_ARGS__)
++
+ #define compr_err(_obj, fmt, ...) \
+ 	adsp_err(_obj->dsp, "%s: " fmt, _obj->name ? _obj->name : "legacy", \
+ 		 ##__VA_ARGS__)
+@@ -625,6 +628,13 @@ int wm_adsp_control_add(struct cs_dsp_coeff_ctl *cs_ctl)
+ 		if (dsp->component->name_prefix)
+ 			avail -= strlen(dsp->component->name_prefix) + 1;
+ 
++		if (avail < 1) {
++			adsp_warn_once(dsp,
++				       "%.*s: ALSA prefix too long: control not created\n",
++				       cs_ctl->subname_len, cs_ctl->subname);
++			return -EINVAL;
++		}
++
+ 		/* Truncate the subname from the start if it is too long */
+ 		if (cs_ctl->subname_len > avail)
+ 			skip = cs_ctl->subname_len - avail;
 -- 
 2.53.0
 
