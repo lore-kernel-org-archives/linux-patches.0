@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795621881;
-	b=PTR7Ww4xjQAA+ZgiXhTqiQ0wfo/aTjzfgRXjLOQ1/igmVBU3zJ78wAi4UjAsjoz3F+5O
-	 mll5kwJkvEAqNNzvgSIGqluQjAqCdopKZs+YfmCv95Ja2uS0FB1ow/N3zHn3JUCalKEkZ
-	 lG5Q30hCa94RWG/k3FGUnMrvjUznZculO7oAkFeZUusKKXmJz/UUTKXkHaZX5YVKXnL7T
-	 53NfDsKnICmWlHHOATLY8v1OErrWnWLlOBwKem+5v2lol352f91ob2UCJn435L9OVfhtY
-	 dyBsuznuKNsbtGsrtLjUx52d9q5/DcBgF2/U2GMRRcVOaoYlDwRBm/MkjoFTsCYp65g==
+	t=1795621885;
+	b=JFofZ9apMLj+6DHoqcakYD0g/wPkW6UlL+Lm4ux4AJO8nkRbYJ98ypnhfcHHOQ6S/uSx
+	 K83zDGBdLXZf8Th6L4DJTg+ILFQae8zOmVhP1V3czY+9kfgLp1my+P/EqNyqlUZfPzzsc
+	 yjN+kV5fMPobL9DR0euYrHrz5G7wqXI/5oBHvNFFkq7rXUPbFZsie7L5aLrUZOYbbxHqd
+	 bH3ZrrooKN33nSTSqzCeiHKbh1sTsPleUtaS0yAC4R8IUAnjACx8dtG2yLNhW6ntNcpVT
+	 prcUfgTcHcbBI2bSjH7JnVotQBKM0lpD7QUEbFMX6XNrdGaK7iuLXsQtiFJgjMOSuwg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795621881;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795621885;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=5FbhTB+uwX7hy7Ur08O5LlbachdvCM8XgbZcpdB6+ps=;
-	b=rPaqJEiwR0GczakauYYFDVV7wMcguWSYejPCSo9YP5xHU5b3W1Oktt3Po83jXTS++Rwt
-	 cOGgA7gN6lsmznWO4LszbyN/fCZhg8HAuBngQV4a9HNRkl7+zcXAUett5BBu8h7YcZyXv
-	 MoAw2Os8qulL4r0lMUoMUC6xo5aMNDR3IHn54WdyAiAwinAIeJQY/tez05kdSvB4LOzvq
-	 pbPLzZL0MdZSzywBsl3WAqZ163jKmkWhix+aYo7L/OnlE+no/jXKZ/mrRYNrenpSvJpLs
-	 v3i8XGykQe1BVzIslF/MfB8R0UbxQ3ZMwfhhvqRs8poMGsaHMoxA43Xrt/ujkNR3AIg==
+	bh=rbciyg4PgozQ53GSsB6+w5lTXsgxz8FXKoJKbUGoOpw=;
+	b=wvIPUbWafxO2vmC+lWnV2MJYaZ8uUS7pmNDlq3OCHpPRWuuHRNTFmETtlfXQO2ZuDxMo
+	 q3fMjcQmeEryXbvX2FCfrDml8WgR9Yf2Meg+ik+qI7Cbx1Vfh0bFF8Imw7qebKkUOincw
+	 T7TUnLMXNKxsRuHGCZYyThkxHFXZ7XSfbAFsgKIcMCAs/pjWWKQeHq4vP1yHAsoe/+e41
+	 tFHBwAotGn1TnD9Fzn32giF54nGEOM37CLygD6YOtm2If7oIV+Y8//AczRHzTtnPXxl5c
+	 YqDTYUXeU30FpEsZNCWnhF2IsTazP945EbTjSQKHdrfZXr8EHB5uv6DmLwFLbvGH81A==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=C+XIPjGP;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=JKEkUk2l;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 59520606A323;
-	Wed, 25 Nov 2026 15:51:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E95D1606A32D;
+	Wed, 25 Nov 2026 15:51:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=C+XIPjGP
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 562E51F000C4;
-	Wed, 25 Nov 2026 15:51:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=JKEkUk2l
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E34001F000D1;
+	Wed, 25 Nov 2026 15:51:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795621880;
-	bh=5FbhTB+uwX7hy7Ur08O5LlbachdvCM8XgbZcpdB6+ps=;
+	s=korg; t=1795621884;
+	bh=rbciyg4PgozQ53GSsB6+w5lTXsgxz8FXKoJKbUGoOpw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=C+XIPjGPlcA+Hqv83oYaL0SWFh/2yHmANyur7vDJCntqU3rFeQJao40gEOT6Q+5yQ
-	 7N86uyMqGNEojFqSbQ02e0Ogm2tFwtrBm/+eU5kmswliK8FYLSk42qDFjIToLhvpPd
-	 IuUHqRwPW6bZEb/TsfpT8LBmbsfqQjQAY5kdHBTA=
+	b=JKEkUk2luAvqbyhlTOwB4YFTYaxpDG9bHGSB8kpSRU/UmQQMwm8dEXp9CH6Bg8S4o
+	 fb9icsZlMJx+7KX65KF2q73kg088qrBNd5mzDinL4CIOqaXWbLajTXLaEZsY0SXt0A
+	 0zNuV9WEzpRZrHXw7vSiRFf8Tst2UGIWfuykTT1U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Samuel Leyva <samuelslg03idk@gmail.com>,
-	Mark Brown <broonie@kernel.org>,
+	Daniel Vacek <neelx@suse.com>,
+	Johannes Thumshirn <johannes.thumshirn@wdc.com>,
+	David Sterba <dsterba@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 364/990] ASoC: amd: acp: es83xx: Enable speaker amplifier after the codec output
-Date: Wed, 25 Nov 2026 15:28:51 +0100
-Message-ID: <20261125143830.618049635@linuxfoundation.org>
+Subject: [PATCH 6.18 365/990] btrfs: zoned: only change active zone counter on successful (de)activation
+Date: Wed, 25 Nov 2026 15:28:52 +0100
+Message-ID: <20261125143830.642554812@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143822.072087159@linuxfoundation.org>
 References: <20261125143822.072087159@linuxfoundation.org>
@@ -68,97 +69,127 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Samuel Leyva <samuelslg03idk@gmail.com>
+From: Johannes Thumshirn <johannes.thumshirn@wdc.com>
 
-[ Upstream commit f392763d73356760eac3e4ab7c87b0855be0d4bb ]
+[ Upstream commit 5e79f39fbeea78703ac389c67a810406fa09bc94 ]
 
-The speaker amplifier GPIO is driven from a SUPPLY widget. DAPM powers
-supplies before the rest of the path, so the amplifier is enabled while
-the ES8316 headphone driver and charge pump, which also feed the
-speakers, are still powering up. This results in an audible pop every
-time the speaker output is powered on.
+btrfs_zone_activate() unconditionally decrements the reserved_active_zones
+counter regardless if btrfs_dev_set_active_zone() fails to set the zone
+active, i.e. because it raced with another call that already set the bit
+in the bitmask, or not.
 
-Move the speaker GPIO handling to the Speaker endpoint widget, which
-DAPM powers up last and powers down first, and give the codec output a
-short time to settle before enabling the amplifier.
+This can lead to a double decrement of the counter in case the bit has
+already been set.
 
-The headphone path is left unchanged: the Headphone endpoint widget
-shares its power-up rank with the codec output drivers, so moving it
-would not guarantee the same ordering, and it could not be tested.
+Only decrement the counter *iff* btrfs_dev_set_active_zone() successfully
+marked the zone in the bitmap.
 
-Fixes: 54fcd9dd44b2 ("ASoC: amd: acp: Add machine driver that enables sound for systems with a ES8336 codec")
-Signed-off-by: Samuel Leyva <samuelslg03idk@gmail.com>
-Link: https://patch.msgid.link/20261107232225.3838-3-samuelslg03idk@gmail.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Mirror this behaviour when clearing the bit again.
+
+Fixes: a7e1ac7bdc5a ("btrfs: zoned: reserve zones for an active metadata/system block group")
+Reviewed-by: Daniel Vacek <neelx@suse.com>
+Signed-off-by: Johannes Thumshirn <johannes.thumshirn@wdc.com>
+Signed-off-by: David Sterba <dsterba@suse.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/amd/acp/acp3x-es83xx/acp3x-es83xx.c | 16 +++++++++-------
- 1 file changed, 9 insertions(+), 7 deletions(-)
+ fs/btrfs/zoned.c | 26 ++++++++++++++++++--------
+ 1 file changed, 18 insertions(+), 8 deletions(-)
 
-diff --git a/sound/soc/amd/acp/acp3x-es83xx/acp3x-es83xx.c b/sound/soc/amd/acp/acp3x-es83xx/acp3x-es83xx.c
-index 8f65720b153f4..56a733a1ba9be 100644
---- a/sound/soc/amd/acp/acp3x-es83xx/acp3x-es83xx.c
-+++ b/sound/soc/amd/acp/acp3x-es83xx/acp3x-es83xx.c
-@@ -19,6 +19,7 @@
- #include <linux/input.h>
- #include <linux/io.h>
- #include <linux/acpi.h>
-+#include <linux/delay.h>
- #include <linux/dmi.h>
- #include <linux/string_choices.h>
- #include "../acp-mach.h"
-@@ -61,6 +62,8 @@ static const struct snd_pcm_hw_constraint_list constraints_channels = {
- #define ES83xx_12288_KHZ_MCLK_FREQ   (48000 * 256)
- #define ES83xx_48_MHZ_MCLK_FREQ      (48000 * 1000)
+diff --git a/fs/btrfs/zoned.c b/fs/btrfs/zoned.c
+index 69ede4e4d0c20..0ff693fea47c3 100644
+--- a/fs/btrfs/zoned.c
++++ b/fs/btrfs/zoned.c
+@@ -1126,11 +1126,13 @@ u64 btrfs_find_allocatable_zones(struct btrfs_device *device, u64 hole_start,
+ 	return pos;
+ }
  
-+#define ES83XX_AMP_ON_DELAY_MS	50
+-static bool btrfs_dev_set_active_zone(struct btrfs_device *device, u64 pos)
++static bool btrfs_dev_set_active_zone(struct btrfs_device *device, u64 pos, bool *new)
+ {
+ 	struct btrfs_zoned_device_info *zone_info = device->zone_info;
+ 	unsigned int zno = (pos >> zone_info->zone_size_shift);
+ 
++	*new = false;
 +
- static int acp3x_es83xx_headphone_power_event(struct snd_soc_dapm_widget *w,
- 					    struct snd_kcontrol *kcontrol, int event);
- static int acp3x_es83xx_speaker_power_event(struct snd_soc_dapm_widget *w,
-@@ -115,7 +118,7 @@ static struct snd_soc_jack_pin es83xx_jack_pins[] = {
- };
+ 	/* We can use any number of zones */
+ 	if (zone_info->max_active_zones == 0)
+ 		return true;
+@@ -1142,23 +1144,29 @@ static bool btrfs_dev_set_active_zone(struct btrfs_device *device, u64 pos)
+ 		if (test_and_set_bit(zno, zone_info->active_zones)) {
+ 			/* Someone already set the bit */
+ 			atomic_inc(&zone_info->active_zones_left);
++		} else {
++			*new = true;
+ 		}
+ 	}
  
- static const struct snd_soc_dapm_widget acp3x_es83xx_widgets[] = {
--	SND_SOC_DAPM_SPK("Speaker", NULL),
-+	SND_SOC_DAPM_SPK("Speaker", acp3x_es83xx_speaker_power_event),
- 	SND_SOC_DAPM_HP("Headphone", NULL),
- 	SND_SOC_DAPM_MIC("Headset Mic", NULL),
- 	SND_SOC_DAPM_MIC("Internal Mic", NULL),
-@@ -123,9 +126,6 @@ static const struct snd_soc_dapm_widget acp3x_es83xx_widgets[] = {
- 	SND_SOC_DAPM_SUPPLY("Headphone Power", SND_SOC_NOPM, 0, 0,
- 			    acp3x_es83xx_headphone_power_event,
- 			    SND_SOC_DAPM_PRE_PMD | SND_SOC_DAPM_POST_PMU),
--	SND_SOC_DAPM_SUPPLY("Speaker Power", SND_SOC_NOPM, 0, 0,
--			    acp3x_es83xx_speaker_power_event,
--			    SND_SOC_DAPM_PRE_PMD | SND_SOC_DAPM_POST_PMU),
- };
+ 	return true;
+ }
  
- static const struct snd_soc_dapm_route acp3x_es83xx_audio_map[] = {
-@@ -139,7 +139,6 @@ static const struct snd_soc_dapm_route acp3x_es83xx_audio_map[] = {
- 	 */
- 	{"Speaker", NULL, "HPOL"},
- 	{"Speaker", NULL, "HPOR"},
--	{"Speaker", NULL, "Speaker Power"},
- };
+-static void btrfs_dev_clear_active_zone(struct btrfs_device *device, u64 pos)
++static bool btrfs_dev_clear_active_zone(struct btrfs_device *device, u64 pos)
+ {
+ 	struct btrfs_zoned_device_info *zone_info = device->zone_info;
+ 	unsigned int zno = (pos >> zone_info->zone_size_shift);
  
+ 	/* We can use any number of zones */
+ 	if (zone_info->max_active_zones == 0)
+-		return;
++		return false;
  
-@@ -185,10 +184,13 @@ static int acp3x_es83xx_speaker_power_event(struct snd_soc_dapm_widget *w,
- 	struct acp3x_es83xx_private *priv = get_mach_priv(w->dapm->card);
- 
- 	dev_dbg(priv->codec_dev, "speaker power event: %d\n", event);
--	if (SND_SOC_DAPM_EVENT_ON(event))
-+	if (SND_SOC_DAPM_EVENT_ON(event)) {
-+		/* Let the codec output settle before enabling the amplifier */
-+		msleep(ES83XX_AMP_ON_DELAY_MS);
- 		priv->speaker_on = true;
--	else
-+	} else {
- 		priv->speaker_on = false;
+-	if (test_and_clear_bit(zno, zone_info->active_zones))
++	if (test_and_clear_bit(zno, zone_info->active_zones)) {
+ 		atomic_inc(&zone_info->active_zones_left);
++		return true;
 +	}
++
++	return false;
+ }
  
- 	gpiod_set_value_cansleep(priv->gpio_speakers, priv->speaker_on);
- 	gpiod_set_value_cansleep(priv->gpio_headphone, priv->headphone_on);
+ int btrfs_reset_device_zone(struct btrfs_device *device, u64 physical,
+@@ -2384,6 +2392,7 @@ bool btrfs_zone_activate(struct btrfs_block_group *block_group)
+ 	u64 physical;
+ 	const bool is_data = (block_group->flags & BTRFS_BLOCK_GROUP_DATA);
+ 	bool ret;
++	bool new;
+ 	int i;
+ 
+ 	if (!btrfs_is_zoned(block_group->fs_info))
+@@ -2434,12 +2443,12 @@ bool btrfs_zone_activate(struct btrfs_block_group *block_group)
+ 			goto out_unlock;
+ 		}
+ 
+-		if (!btrfs_dev_set_active_zone(device, physical)) {
++		if (!btrfs_dev_set_active_zone(device, physical, &new)) {
+ 			/* Cannot activate the zone */
+ 			ret = false;
+ 			goto out_unlock;
+ 		}
+-		if (!is_data)
++		if (!is_data && new)
+ 			zinfo->reserved_active_zones--;
+ 	}
+ 
+@@ -2486,6 +2495,7 @@ static int call_zone_finish(struct btrfs_block_group *block_group,
+ 	struct btrfs_device *device = stripe->dev;
+ 	const u64 physical = stripe->physical;
+ 	struct btrfs_zoned_device_info *zinfo = device->zone_info;
++	bool cleared;
+ 	int ret;
+ 
+ 	if (!device->bdev)
+@@ -2507,9 +2517,9 @@ static int call_zone_finish(struct btrfs_block_group *block_group,
+ 			return ret;
+ 	}
+ 
+-	if (!(block_group->flags & BTRFS_BLOCK_GROUP_DATA))
++	cleared = btrfs_dev_clear_active_zone(device, physical);
++	if (!(block_group->flags & BTRFS_BLOCK_GROUP_DATA) && cleared)
+ 		zinfo->reserved_active_zones++;
+-	btrfs_dev_clear_active_zone(device, physical);
+ 
+ 	return 0;
+ }
 -- 
 2.53.0
 
