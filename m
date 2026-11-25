@@ -1,42 +1,42 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795618224;
-	b=2r2OlBG5j2+Kd3ta0tB8P242VeKTWyNntffKawdlig/8p+2gYu49g9mEfzs5zAGDL0Zq
-	 v+mKgkgQDnzf0be42dLmNPfbtRpYB60hepvVeN4XpmXl/s7/UKpBdfgpQGM4eRRA/BgwF
-	 JSwosRTBrA8KSJ81645ihFPGJ34TkuaW37AAF4GgNZtC7zesW4dYGz1rzitM9hqqwVb1o
-	 0ia0sa3bk8WyalFuZYsJUnJ0bXsmH3IJAARuvemEy8jEdhPeV0rQvm95BO+yn/Ghngps5
-	 Cvn/9789rxmApflmL0we1pgU65Fq9cUXY9PoulZLvyoQG1nmL5DksbfB/ShOOWV0hlA==
+	t=1795618227;
+	b=2O0HWsNKBwFifiwBJA/oUolCXS+9pIUZQo7TYCE9shNRq3Guhln1prf7cpWPx0XEmO5J
+	 297PI8JrtVGTvaNMB+tj3w4dxitdnk5nZZD+SufiYtt8pzqSAOe09oM/yUDc/mEM3zDji
+	 8zw/CkE03eieO9/DhU/mdpgoTigkdA387ZUIoScBhY13ceoDp0vWAKC4UAWSBIp9KUnbF
+	 jBRERMBsnJvGQNzKnRqwnomJWTF/e7EPuTeWu5bxHVF0TtHntK0ytzljZhxSBm2DzACX5
+	 pgOGJoSO2R0BTmjV57rsEQaZ6yt4V4dHOkig+D1ZwCPavdBKBehLWobTlX02CELv6Ng==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795618224;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795618227;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=jC87emFLJ79PdZa8k5ARE5x90HdyZ5HDjeJ0hvXZPzQ=;
-	b=LmRPG35USoN4lef4xNeeGZBdEj8Vry4wcYsAHqqHg3YXfuBAfMOFtOuUpyX1AUPrAo3w
-	 NK9pskdf98WPjAYo6t6XjElk6uE4DqguK/Sg4YqgazhEKqxcWvQvMHUG+Wjm6LyVwzv4C
-	 lh3c9zdg8dWgNA3MLlcfWv6rqUzdJHXKLA5WvbjxDozJt+XxJcahot0w4Ni452ImJMmop
-	 pCubi8VnpC1t1Rjc9z70LckQRj7Ss+ySeaQPm96Y7KQN2RVUsbegsdCVk7Fp23drNk+/I
-	 46RbQu0Hh99kIiKRE6Y4x/NAcuCR9gmQnXF6x0Z351t2E7FJRDrGpeWBc1xIdwKsYmA==
+	bh=s9HcPv/qLZ9zxGgiq2L3jbCoP3ExDMdrcFIImpi+4y8=;
+	b=mpSpnys85jsRVLLhxJ8FPrCQWNnH3GJhEwnyPU2Bn1J2yeWXu+ecQ3iNfuBx5j30QpMs
+	 ip5GuOQUyPAtxCSUKDIq40Suv61ObmIy6NSParB6YRo14PATLzV4aVycuHxMMqkjyt3J8
+	 nOPk/rQFXdYFkxT2rKjxnyOtVjf7JQ6Ulj3ogHV2GUwq8Yk1Fo0vnLireJh7IXu+icCTQ
+	 ii1T98puQPMj5cTp74vo4aLxmNftc3xCOvfOYSN8hArC7GG1dOVZIOsIO2f4FwcI58yFk
+	 8naFt4BRZch3z/3L//T0pB0LejieRvNG+oSpHbr7zC/KE9tgGtjHhhzD7udP+BJ1xvQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=rihJdQon;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=sTCJbNlo;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 37187606A31E;
-	Wed, 25 Nov 2026 14:50:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 611D7606A31E;
+	Wed, 25 Nov 2026 14:50:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=rihJdQon
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7DE041F000E6;
-	Wed, 25 Nov 2026 14:50:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=sTCJbNlo
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 62A891F000C0;
+	Wed, 25 Nov 2026 14:50:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795618224;
-	bh=jC87emFLJ79PdZa8k5ARE5x90HdyZ5HDjeJ0hvXZPzQ=;
+	s=korg; t=1795618226;
+	bh=s9HcPv/qLZ9zxGgiq2L3jbCoP3ExDMdrcFIImpi+4y8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=rihJdQongy/1xmes2u3J35RTQAvXSuHlswULFf+r5tMe96saThXheb7W1IvOT4Fvh
-	 scXKy3KTF+jr2j+R3UlPC++4AUSgiPLDOs5xV0IQN1mzXP0BM7MUJk2Dql7NoeeWhy
-	 6amJKUX5CZV2gRkwTEgBrtvpNwU3jz0lP0lqcPG4=
+	b=sTCJbNlo1yKHyNVWdGzVRO7drZOAN1t1DBGQt17oiPEtI7btfF1gMHehM7mzU/FFs
+	 O6GZru/dizsc/0PIp6e02C8CIJz/ruvYpHoFNsuX5srCTwboGOExvnAWo3UpjLqQ9K
+	 2AspjFiyeJxON/Ek0kBHJrcbdjiDvmythVXJereE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -44,9 +44,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Cen Zhang <zzzccc427@gmail.com>,
 	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0209/1005] Bluetooth: SMP: Protect LTK encryption with RCU
-Date: Wed, 25 Nov 2026 15:25:47 +0100
-Message-ID: <20261125143826.637860262@linuxfoundation.org>
+Subject: [PATCH 7.3 0210/1005] Bluetooth: hci_sync: Copy the resolving-list IRK under RCU
+Date: Wed, 25 Nov 2026 15:25:48 +0100
+Message-ID: <20261125143826.660556586@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143821.729802100@linuxfoundation.org>
 References: <20261125143821.729802100@linuxfoundation.org>
@@ -70,137 +70,185 @@ Content-Transfer-Encoding: 8bit
 
 From: Cen Zhang <zzzccc427@gmail.com>
 
-[ Upstream commit add463a65802bb117e4a17b8c00d747fa70399fc ]
+[ Upstream commit 9ff737119177a6c1ce6083ef8c0fc06355f11869 ]
 
-smp_ltk_encrypt() checks the security level of the LTK returned by
-hci_find_ltk() and then starts encryption with its EDIV, Rand, value
-and key size. The finder ends its RCU read-side section before
-returning the borrowed entry, and neither caller holds hdev->lock: the
-SMP Security Request handler runs from the receive path, and
-setsockopt(BT_SECURITY) reaches smp_conn_security() with only the
-socket and channel locks held.
+hci_le_add_resolve_list_sync() copies the peer IRK into the LE Add
+Device To Resolving List command after hci_find_irk_by_addr() has
+returned. The finder ends its RCU read-side section before returning
+the borrowed entry, and neither the request worker nor
+interleave_scan_work() holds hdev->lock here. The resolving-list
+membership check between the lookup and the copy takes hdev->lock and
+may sleep on it, which widens the window.
 
-MGMT_OP_LOAD_LONG_TERM_KEYS can therefore free the LTK in between:
+When LL privacy programs a peer with address resolution enabled,
+MGMT_OP_LOAD_IRKS can free its IRK before the copy:
 
-  Socket security request          Management / RCU reclamation
-  smp_ltk_encrypt()
-    key = hci_find_ltk()
-                                   load_long_term_keys()
+  Request worker                   Management / RCU reclamation
+  hci_le_add_resolve_list_sync()
+    irk = hci_find_irk_by_addr()
+                                   load_irks()
                                      hci_dev_lock(hdev)
-                                     hci_smp_ltks_clear(hdev)
+                                     hci_smp_irks_clear(hdev)
                                        list_del_rcu(), kfree_rcu()
                                      hci_dev_unlock(hdev)
-                                   grace period ends, key is freed
-    smp_ltk_sec_level(key)
-    hci_le_start_enc(hcon, key->ediv, key->rand, key->val, ...)
+                                   grace period ends, irk is freed
+    resolving-list membership check
+    memcpy(cp.peer_irk, irk->val, 16)
 
-Keep an RCU read-side section across the lookup and every use of the
-key. hci_le_start_enc() copies the key into the command and queues it
-with a GFP_ATOMIC allocation, so the whole sequence can stay inside the
-section.
+Copy the IRK value in an RCU read-side section right after the lookup,
+as hci_le_set_privacy_mode_sync() does for the identity address. The
+section ends before hdev->lock is taken and before the synchronous HCI
+command is sent.
 
-KFENCE reported this on a test kernel where the socket thread was
-paused after the lookup until the RCU callback had freed the key.
+KASAN reported this on a test kernel with scheduling hooks, whose
+frames appear in the trace. The report predates the hdev->lock taken
+by the membership check.
 
-KFENCE report as below:
+KASAN report as below:
 
     ==================================================================
-    BUG: KFENCE: use-after-free read in smp_ltk_encrypt.isra.0+0xf3/0x370
+    BUG: KASAN: slab-use-after-free in hci_le_add_resolve_list_sync+0x8d9/0x910
+    Read of size 16 at addr ffff88810d21452d by task kworker/u17:0/504
 
-    Use-after-free read at 0x00000000c45332eb (in kfence-#128):
-     smp_ltk_encrypt.isra.0+0xf3/0x370
-     smp_conn_security+0x489/0x9d0
-     l2cap_sock_setsockopt+0x1bbe/0x2300
-     do_sock_setsockopt+0x1fb/0x430
-     __sys_setsockopt+0x106/0x180
-     __x64_sys_setsockopt+0xc2/0x160
-     do_syscall_64+0x115/0x6a0
-     entry_SYSCALL_64_after_hwframe+0x77/0x7f
+    CPU: 2 UID: 0 PID: 504 Comm: kworker/u17:0 Not tainted 7.2.0-rc6-pmb-bt-functional-v1+ #2 PREEMPT(lazy)
+    Hardware name: QEMU Ubuntu 24.04 PC v2 (i440FX + PIIX, arch_caps fix, 1996), BIOS 1.16.3-debian-1.16.3-2 04/01/2014
+    Workqueue: hci0 interleave_scan_work
+    Call Trace:
+     <TASK>
+     dump_stack_lvl+0x93/0xd0
+     print_report+0xce/0x630
+     ? hci_le_add_resolve_list_sync+0x8d9/0x910
+     ? srso_alias_return_thunk+0x5/0xfbef5
+     ? __virt_addr_valid+0x20d/0x410
+     ? hci_le_add_resolve_list_sync+0x8d9/0x910
+     kasan_report+0xe0/0x110
+     ? hci_le_add_resolve_list_sync+0x8d9/0x910
+     hci_le_add_resolve_list_sync+0x8d9/0x910
+     ? __pfx_hci_le_add_resolve_list_sync+0x10/0x10
+     ? pmbd_probe_hit_cookie+0xe7/0x1c0
+     ? srso_alias_return_thunk+0x5/0xfbef5
+     ? pmbd_probe_hit_cookie+0xee/0x1c0
+     ? __pfx_pmbd_probe_hit_cookie+0x10/0x10
+     hci_le_add_accept_list_sync+0x18e/0x820
+     ? conn_params_copy+0x36e/0x650
+     ? __pfx_hci_le_add_accept_list_sync+0x10/0x10
+     ? srso_alias_return_thunk+0x5/0xfbef5
+     ? conn_params_copy+0x3a0/0x650
+     hci_passive_scan_sync+0x95f/0x1f10
+     ? __pfx_hci_passive_scan_sync+0x10/0x10
+     ? debug_object_deactivate+0x2f8/0x3c0
+     ? pwq_dec_nr_in_flight+0x880/0xdf0
+     ? srso_alias_return_thunk+0x5/0xfbef5
+     ? lock_acquire+0x17b/0x2f0
+     ? process_one_work+0x895/0x19c0
+     interleave_scan_work+0x11b/0x470
+     process_one_work+0x908/0x19c0
+     ? __pfx_process_one_work+0x10/0x10
+     ? srso_alias_return_thunk+0x5/0xfbef5
+     ? lock_is_held_type+0x8f/0x100
+     ? srso_alias_return_thunk+0x5/0xfbef5
+     worker_thread+0x65c/0xe40
+     ? __pfx_worker_thread+0x10/0x10
+     kthread+0x34f/0x460
+     ? srso_alias_return_thunk+0x5/0xfbef5
+     ? __pfx_kthread+0x10/0x10
+     ret_from_fork+0x659/0x940
+     ? __pfx_ret_from_fork+0x10/0x10
+     ? srso_alias_return_thunk+0x5/0xfbef5
+     ? __switch_to+0x74f/0xf80
+     ? __pfx_kthread+0x10/0x10
+     ret_from_fork_asm+0x1a/0x30
+     </TASK>
 
-    kfence-#128: 0x00000000d45af9b0-0x0000000053c1365e, size=72, cache=kmalloc-96
-
-    allocated by task 533 on cpu 0 at 50.484258s (0.449177s ago):
-     hci_add_ltk+0x1f5/0x3a0
-     load_long_term_keys+0x6ea/0x930
+    Allocated by task 535:
+     kasan_save_stack+0x33/0x60
+     kasan_save_track+0x14/0x30
+     __kasan_kmalloc+0xaa/0xb0
+     __kmalloc_cache_noprof+0x251/0x610
+     hci_add_irk+0xb6/0x220
+     load_irks+0x5f9/0x840
      hci_sock_sendmsg+0x128b/0x22e0
-     sock_write_iter+0x4c0/0x550
-     vfs_write+0x637/0x1010
-     ksys_write+0x1b7/0x200
+     __sys_sendto+0x425/0x470
+     __x64_sys_sendto+0xe5/0x1c0
      do_syscall_64+0x115/0x6a0
      entry_SYSCALL_64_after_hwframe+0x77/0x7f
 
-    freed by task 0 on cpu 0 at 50.846944s (0.093664s ago):
-     __rcu_free_sheaf_prepare+0x261/0x2a0
-     rcu_free_sheaf_nobarn+0x1d/0x50
+    Freed by task 0:
+     kasan_save_stack+0x33/0x60
+     kasan_save_track+0x14/0x30
+     kasan_save_free_info+0x3b/0x60
+     __kasan_slab_free+0x5f/0x80
+     __rcu_free_sheaf_prepare+0x65/0x2a0
+     rcu_free_sheaf+0x1f/0xe0
      rcu_core+0x661/0x1d10
      handle_softirqs+0x201/0x930
      __irq_exit_rcu+0x110/0x1e0
      irq_exit_rcu+0xe/0x20
      sysvec_apic_timer_interrupt+0x6c/0x80
      asm_sysvec_apic_timer_interrupt+0x1a/0x20
-     pv_native_safe_halt+0xf/0x20
-     default_idle+0x9/0x10
-     default_idle_call+0x6c/0xb0
-     do_idle+0x3a7/0x650
-     cpu_startup_entry+0x54/0x60
-     rest_init+0x15e/0x2b0
-     start_kernel+0x412/0x4b0
-     x86_64_start_reservations+0x18/0x30
-     x86_64_start_kernel+0x111/0x120
-     common_startup_64+0x13e/0x158
 
-    CPU: 2 UID: 0 PID: 534 Comm: l2cap-ltk-actor Not tainted 7.2.0-rc6-pmb-bt-functional-v1+ #5 PREEMPT(lazy)
-    Hardware name: QEMU Ubuntu 24.04 PC v2 (i440FX + PIIX, arch_caps fix, 1996), BIOS 1.16.3-debian-1.16.3-2 04/01/2014
+    The buggy address belongs to the object at ffff88810d214500
+     which belongs to the cache kmalloc-64 of size 64
+    The buggy address is located 45 bytes inside of
+     freed 64-byte region [ffff88810d214500, ffff88810d214540)
+
+    The buggy address belongs to the physical page:
+    page: refcount:0 mapcount:0 mapping:0000000000000000 index:0x0 pfn:0x10d214
+    flags: 0x200000000000000(node=0|zone=2)
+    page_type: f5(slab)
+    raw: 0200000000000000 ffff8881000428c0 dead000000000100 dead000000000122
+    raw: 0000000000000000 0000000000200020 00000000f5000000 0000000000000000
+    page dumped because: kasan: bad access detected
+
+    Memory state around the buggy address:
+     ffff88810d214400: fa fb fb fb fb fb fb fb fc fc fc fc fc fc fc fc
+     ffff88810d214480: fa fb fb fb fb fb fb fb fc fc fc fc fc fc fc fc
+    >ffff88810d214500: fa fb fb fb fb fb fb fb fc fc fc fc fc fc fc fc
+                                      ^
+     ffff88810d214580: fa fb fb fb fb fb fb fb fc fc fc fc fc fc fc fc
+     ffff88810d214600: fa fb fb fb fb fb fb fb fc fc fc fc fc fc fc fc
     ==================================================================
 
-Fixes: 988c5997d320 ("Bluetooth: Use the LTK after receiving a LE Security Request")
+Fixes: e8907f76544f ("Bluetooth: hci_sync: Make use of hci_cmd_sync_queue set 3")
 Assisted-by: LLM
 Signed-off-by: Cen Zhang <zzzccc427@gmail.com>
 Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/bluetooth/smp.c | 14 ++++++++++----
- 1 file changed, 10 insertions(+), 4 deletions(-)
+ net/bluetooth/hci_sync.c | 11 +++++++++--
+ 1 file changed, 9 insertions(+), 2 deletions(-)
 
-diff --git a/net/bluetooth/smp.c b/net/bluetooth/smp.c
-index d783126076ee7..4af7fa7f4a8e1 100644
---- a/net/bluetooth/smp.c
-+++ b/net/bluetooth/smp.c
-@@ -2207,16 +2207,20 @@ static bool smp_ltk_encrypt(struct l2cap_conn *conn, u8 sec_level)
- {
- 	struct smp_ltk *key;
- 	struct hci_conn *hcon = conn->hcon;
-+	bool ret = false;
-+
+diff --git a/net/bluetooth/hci_sync.c b/net/bluetooth/hci_sync.c
+index baa42e06900d3..22d32b9c59780 100644
+--- a/net/bluetooth/hci_sync.c
++++ b/net/bluetooth/hci_sync.c
+@@ -2533,9 +2533,17 @@ static int hci_le_add_resolve_list_sync(struct hci_dev *hdev,
+ 	} else if (!(params->flags & HCI_CONN_FLAG_ADDRESS_RESOLUTION))
+ 		return 0;
+ 
 +	rcu_read_lock();
- 
- 	key = hci_find_ltk(hcon->hdev, &hcon->dst, hcon->dst_type, hcon->role);
- 	if (!key)
--		return false;
-+		goto unlock;
- 
- 	if (smp_ltk_sec_level(key) < sec_level)
--		return false;
-+		goto unlock;
- 
-+	ret = true;
- 	if (test_and_set_bit(HCI_CONN_ENCRYPT_PEND, hcon->flags))
--		return true;
-+		goto unlock;
- 
- 	hci_le_start_enc(hcon, key->ediv, key->rand, key->val, key->enc_size);
- 	hcon->enc_key_size = key->enc_size;
-@@ -2224,7 +2228,9 @@ static bool smp_ltk_encrypt(struct l2cap_conn *conn, u8 sec_level)
- 	/* We never store STKs for initiator role, so clear this flag */
- 	clear_bit(HCI_CONN_STK_ENCRYPT, hcon->flags);
- 
--	return true;
-+unlock:
++
+ 	irk = hci_find_irk_by_addr(hdev, &params->addr, params->addr_type);
+-	if (!irk)
++	if (!irk) {
++		rcu_read_unlock();
+ 		return 0;
++	}
++
++	memcpy(cp.peer_irk, irk->val, 16);
++
 +	rcu_read_unlock();
-+	return ret;
- }
  
- bool smp_sufficient_security(struct hci_conn *hcon, u8 sec_level,
+ 	/* Check if the IK has _not_ been programmed yet. */
+ 	hci_dev_lock(hdev);
+@@ -2547,7 +2555,6 @@ static int hci_le_add_resolve_list_sync(struct hci_dev *hdev,
+ 
+ 	cp.bdaddr_type = params->addr_type;
+ 	bacpy(&cp.bdaddr, &params->addr);
+-	memcpy(cp.peer_irk, irk->val, 16);
+ 
+ 	/* Default privacy mode is always Network */
+ 	params->privacy_mode = HCI_NETWORK_PRIVACY;
 -- 
 2.53.0
 
