@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795622657;
-	b=XDNt7RQ3+x1nihbqFZ/AP2vT0GzkgwaynD4xrH87wBAh24kT/cks8ZGiglvYOuaQRXje
-	 Swrygg8Adk0a6gzLUL3wmD+3si2I/iAlg8GQH2c2P1LupyLhzbUNfvGa8u1nRWlwXBGJo
-	 PUN901r3lpD42dGwzN6K2XFCrVlYtYZzai3WSBR+gVaeyaB+XbNjsC1KnWubw3DiRILYd
-	 hju542XGFFR4tMy+mNNeYlVE1jSjRBlIlfiONrGycZihIRXLSXWHeKjPzzVrsJ/cj1CeH
-	 o0Sr8isjq0B4dU93ZOMw+nFVUJs+fBLJzgeAoowUgdU1e9nCaw6ZiSO4ovHVotr995w==
+	t=1795622660;
+	b=XR9nvL+SZtQCiDZDLtwW93px+yBQl7/zay5R5kgJwCdCKeKGq7m8GeOKGsviNW1RGdvR
+	 7efG8C4iAdxnEFIIRVY0urRz0HSVbu0Zyf2KHI7GodlolDyI3xyQkvFeszzivNrbVNwvh
+	 qlCCIbE+XlS9SA0C7yfsK8arAo6w2iTWphUnE2TNIPPKA0LVCZo0isAn02VqEZRgAas/4
+	 OSp2kaTA8FvjRZStqkPaARH1sdPJ1kGmLZpWGL8H86iZiW0NN7PxjoThuiGJnwiSz/S+j
+	 Odyxfxya33MykznF81AJvhVaQnaIypqFhnZT5bYJLkE0/JivMgNsrdlP2DUwCnAdPpg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795622657;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795622660;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=NnGg9wdkAWy0EQlkcMkbeP6rNWFwT/M7wWXrOK7CeY4=;
-	b=PfNO2s2wimJwVQ5Gc0hWK+eo/SzHLd298ghgLLbumXddrTU3vBsN4DdvDPUI0asOXTds
-	 XXEvaVP8gZ48jkM242BAMf+hYjRFjAQslR0cLNzAFiPMGrFZk56xbVpGiEbQOPGn3dc48
-	 oVGEMQ2pklWOZEq5L/sxPEJxahCIxvi2si/rH7d92iT3goHQumuoKAAhE0Lrw1L7A9ght
-	 W5RVsx5m1lYCAY+oo4P8k+6rLD2U4oBBeaUeLSNhgzUPIGbwfe2oPm4zrItsFwSSw0ROn
-	 6CUkgmV7MmoK6f9rqiK2wBcvxHW075K2uug4zWDRm6SQksyn1y3Lk5J8TgSLqfXC6tg==
+	bh=+VY+0HZfyufsJy7xnJwny+tXQ+Va5TAdOFzJsoINN50=;
+	b=iXpGxyUfIYmmVYTmmXHSoxZjpbPmOK57dc2LSzku5Iwi5J0C3rmcGvyCK3oImGFVafyp
+	 wdLAWmAVaLKF6IM9vtHfue3Imqhkob8ks5yDzS4ceV+7r78QBEl3FojaQOgLTWD5dNqeo
+	 IF0RYn+zSqCLw7pdK0rCkJ89j7lrxo5+feSg+PokK95e8ixxSZjznLSgOUgSrmja2IACm
+	 nI9+B6uZnQNGHNfRtKZYDxuZEWxSYjfzELLbPxpoKKgs4SJ3e8bsufLXrdtMSPrqYa0ie
+	 D3p4GsZgMtkj7RHNyVduLA88DgFVVL5b4n8QeVWU8wtVeg/f7I3mOYKjqjHlWzIeShQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Y6JiNe42;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=sS5I2p6u;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CB692606A323;
-	Wed, 25 Nov 2026 16:04:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AACEC606A33D;
+	Wed, 25 Nov 2026 16:04:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Y6JiNe42
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2A09F1F000CF;
-	Wed, 25 Nov 2026 16:04:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=sS5I2p6u
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EE96A1F008B2;
+	Wed, 25 Nov 2026 16:04:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795622657;
-	bh=NnGg9wdkAWy0EQlkcMkbeP6rNWFwT/M7wWXrOK7CeY4=;
+	s=korg; t=1795622660;
+	bh=+VY+0HZfyufsJy7xnJwny+tXQ+Va5TAdOFzJsoINN50=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Y6JiNe42vxBF7dInjzfviwt7cWI8VLmxA0OHjsKF54oV80kMpsK64yf6AxG+084pM
-	 b/ayvQ8UtMOCASVtG+m4jd1FEYtK3N+GnxvYuCCMse7sk163KtudGSZKtMbOM4maGy
-	 hT9EXUq7MqGG08XNefHxA2/Ro3vyP7w8oAZpEqxY=
+	b=sS5I2p6u/V8NYPnf8HlZe9l53Lk+2UAjWm39A/nf37q7SXC8DbpopMya0wCf8KqPD
+	 mjz2FanIikzP1b5r5ObsHwPBn7plzbKDwdP2+zs9qktxpWpH+2QY5ozxYTFCcYp2TG
+	 68mmGLpVZCHvS6Ydn0NUdhGgCs4XzjCgxYMwU1Xw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Josef Bacik <josef@toxicpanda.com>,
-	Alexei Starovoitov <ast@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 608/990] bpf: Dont take a dynptr argument for a local dynptr
-Date: Wed, 25 Nov 2026 15:32:55 +0100
-Message-ID: <20261125143836.334541116@linuxfoundation.org>
+	"kernelci.org bot" <bot@kernelci.org>,
+	kernel test robot <lkp@intel.com>,
+	Sasha Levin <sashal@kernel.org>,
+	Alexei Starovoitov <ast@kernel.org>
+Subject: [PATCH 6.18 609/990] locking/atomic: arc, hexagon, openrisc: Define arch_cmpxchg_local()
+Date: Wed, 25 Nov 2026 15:32:56 +0100
+Message-ID: <20261125143836.358978381@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143822.072087159@linuxfoundation.org>
 References: <20261125143822.072087159@linuxfoundation.org>
@@ -68,55 +69,101 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Josef Bacik <josef@toxicpanda.com>
+[ Upstream commit 8cebaa3be829c88a59957900f8de98fed09daefe ]
 
-[ Upstream commit b7f97db88948aa511bcd989978f181e1367e0e8b ]
+Commit ccb88db8dac8 ("bpf: Don't hand out a linked element as extra
+element") made alloc_htab_elem() take the per-cpu spare element with
+try_cmpxchg_local(), the first caller of cmpxchg_local() outside of
+architecture code. It doesn't build on arc, hexagon and openrisc:
 
-A global function is verified on its own. A dynptr which it gets as an
-argument is assumed to be of type BPF_DYNPTR_TYPE_LOCAL, but the callers
-may pass one of any type, that of an skb for example.
+  include/linux/atomic/atomic-arch-fallback.h:384:27: error: implicit declaration of function 'arch_cmpxchg_local'; did you mean 'raw_cmpxchg_local'? [-Werror=implicit-function-declaration]
 
-The type decides whether a write through the dynptr invalidates packet
-pointers, and whether a slice of it is invalidated together with them.
-Inside of the function neither happens. It can take a packet pointer from
-its context argument, or a slice from the dynptr, write through the dynptr
-and go on using the pointer, although the write may have reallocated the
-head of the skb.
+raw_cmpxchg_local() maps to arch_cmpxchg_local() unconditionally, but
+these three architectures don't define it, and unlike nios2 and
+microblaze they don't get it from asm-generic/cmpxchg.h either.
 
-Assume the type of an skb dynptr instead. Nothing becomes forbidden for the
-dynptr itself, and a clone inherits the caution. The dynptr which the
-callback of bpf_user_ringbuf_drain() gets is known to be local, and stays
-so.
+cmpxchg_local() only has to be atomic with respect to the local CPU, so
+an architecture's own arch_cmpxchg() can serve for the sizes it
+supports. arc uses its relaxed LLOCK/SCOND variant when ARC_HAS_LLSC is
+set and its atomic_ops_lock() variant otherwise, and openrisc uses its
+LL/SC arch_cmpxchg(), the way arm64, riscv and s390 alias theirs. The
+hexagon arch_cmpxchg() only handles 32-bit words, so hexagon uses the
+generic version that disables interrupts, like sh, sparc32 and xtensa
+do. Linux has no NMIs on hexagon, so that is sufficient there.
 
-Fixes: a64bfe618665 ("bpf: add support for passing dynptr pointer to global subprog")
-Signed-off-by: Josef Bacik <josef@toxicpanda.com>
+Fixes: ccb88db8dac8 ("bpf: Don't hand out a linked element as extra element")
+Reported-by: kernelci.org bot <bot@kernelci.org>
+Reported-by: kernel test robot <lkp@intel.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Alexei Starovoitov <ast@kernel.org>
-Link: https://patch.msgid.link/20261017230950.802052-11-alexei.starovoitov@gmail.com
-[ sashal: Kept this branch's ARG_PTR_TO_DYNPTR | MEM_RDONLY condition and dropped the extra 0 argument to the four-argument __mark_dynptr_reg(), changing the type to BPF_DYNPTR_TYPE_SKB. ]
+Link: https://patch.msgid.link/20261018132907.3823160-1-sashal@kernel.org
+Closes: https://d.kernelci.org/i/maestro:78b65519ee4561df1fbf1e72f1dec9da7e5b153e
+Closes: https://lore.kernel.org/oe-kbuild-all/202610181750.BoqAddaF-lkp@intel.com/
+Closes: https://lore.kernel.org/oe-kbuild-all/202610182048.aEaiBP8W-lkp@intel.com/
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/bpf/verifier.c | 8 ++++++--
- 1 file changed, 6 insertions(+), 2 deletions(-)
+ arch/arc/include/asm/cmpxchg.h      | 4 ++++
+ arch/hexagon/include/asm/cmpxchg.h  | 6 ++++++
+ arch/openrisc/include/asm/cmpxchg.h | 2 ++
+ 3 files changed, 12 insertions(+)
 
-diff --git a/kernel/bpf/verifier.c b/kernel/bpf/verifier.c
-index 1890c0ba642ab..0d93bcdcef81a 100644
---- a/kernel/bpf/verifier.c
-+++ b/kernel/bpf/verifier.c
-@@ -24006,8 +24006,12 @@ static int do_check_common(struct bpf_verifier_env *env, int subprog)
- 				reg->type = SCALAR_VALUE;
- 				mark_reg_unknown(env, regs, i);
- 			} else if (arg->arg_type == (ARG_PTR_TO_DYNPTR | MEM_RDONLY)) {
--				/* assume unspecial LOCAL dynptr type */
--				__mark_dynptr_reg(reg, BPF_DYNPTR_TYPE_LOCAL, true, ++env->id_gen);
-+				/*
-+				 * The callers may hand in a dynptr of any type.
-+				 * Take it for that of an skb, so that a write
-+				 * through it and its slices are treated with care.
-+				 */
-+				__mark_dynptr_reg(reg, BPF_DYNPTR_TYPE_SKB, true, ++env->id_gen);
- 			} else if (base_type(arg->arg_type) == ARG_PTR_TO_MEM) {
- 				reg->type = PTR_TO_MEM;
- 				reg->type |= arg->arg_type &
+diff --git a/arch/arc/include/asm/cmpxchg.h b/arch/arc/include/asm/cmpxchg.h
+index 66b3743c94008..93f7153eb267a 100644
+--- a/arch/arc/include/asm/cmpxchg.h
++++ b/arch/arc/include/asm/cmpxchg.h
+@@ -59,6 +59,8 @@
+ 	_prev_;								\
+ })
+ 
++#define arch_cmpxchg_local	arch_cmpxchg_relaxed
++
+ #else
+ 
+ #define arch_cmpxchg(ptr, old, new)				        \
+@@ -80,6 +82,8 @@
+ 	_prev_;								\
+ })
+ 
++#define arch_cmpxchg_local	arch_cmpxchg
++
+ #endif
+ 
+ /*
+diff --git a/arch/hexagon/include/asm/cmpxchg.h b/arch/hexagon/include/asm/cmpxchg.h
+index 9c58fb81f7fd6..e6114e713db9f 100644
+--- a/arch/hexagon/include/asm/cmpxchg.h
++++ b/arch/hexagon/include/asm/cmpxchg.h
+@@ -8,6 +8,8 @@
+ #ifndef _ASM_CMPXCHG_H
+ #define _ASM_CMPXCHG_H
+ 
++#include <asm-generic/cmpxchg-local.h>
++
+ /*
+  * __arch_xchg - atomically exchange a register and a memory location
+  * @x: value to swap
+@@ -72,4 +74,8 @@ __arch_xchg(unsigned long x, volatile void *ptr, int size)
+ 	__oldval;						\
+ })
+ 
++#define arch_cmpxchg_local(ptr, o, n)					\
++	((__typeof__(*(ptr)))__generic_cmpxchg_local((ptr),		\
++			(unsigned long)(o), (unsigned long)(n), sizeof(*(ptr))))
++
+ #endif /* _ASM_CMPXCHG_H */
+diff --git a/arch/openrisc/include/asm/cmpxchg.h b/arch/openrisc/include/asm/cmpxchg.h
+index 8ee151c072e41..fcf1bc8db8fe9 100644
+--- a/arch/openrisc/include/asm/cmpxchg.h
++++ b/arch/openrisc/include/asm/cmpxchg.h
+@@ -140,6 +140,8 @@ static inline unsigned long __cmpxchg(volatile void *ptr, unsigned long old,
+ 					       sizeof(*(ptr)));		\
+ 	})
+ 
++#define arch_cmpxchg_local	arch_cmpxchg
++
+ /*
+  * This function doesn't exist, so you'll get a linker error if
+  * something tries to do an invalidly-sized xchg().
 -- 
 2.53.0
 
