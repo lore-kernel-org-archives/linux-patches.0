@@ -1,51 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795623319;
-	b=YdmhIG0GMC1xREPfIMPXjTua4TRsj1Ye4B6ePT4FDCXCmUWCd6KmmReL8uknjRseFFeX
-	 baDNjJPQ8AqMrvZecGzK0DSuXRL4Wp5AUfAQfFezIwm30ZykuDdDM6WCXXzP+7ihmT+4m
-	 6+FQHR8bh7fdolEZRFd7NK6iBt7jdWNQwHF0ly6LPbNEgD6KTeIge57OHm4ulQpheuUGq
-	 zTTBRttpJp8eqA/8uY8yq5Sr4t5qK0tRQMDDAjdVLSjyB0JHPFLTqFnOGPxqasoCM6QAj
-	 QPVz7M9blae/4mZxHbJrRplIbz7adoyaUb8P+qMgVkpf+M/bgS1qSwlqduuIUfp77MQ==
+	t=1795623322;
+	b=K4Zd6VP5eYLZZImnisla8G50ZTLwjlxaAeUZp0D21a+S0JzNpHyVkPjF4Pz0+z8vDzZJ
+	 IGwdFakcCXli+LAJK3fXQRLSTc6rJBgjwd/Lo0/2PLkq0lYMKg40ofYy7V/FjIB01bn28
+	 Gc3bELpWRQiJ67nJqqXI9mQthuCW0Q5mPGWkfVbhpe/rw32tcexUnwAdBV7kbjY95ZsPM
+	 60cFUFBafenv/Qa11GKHQelZCXr9QqM88JqTXdmo8uoO+50Y+GvRjawr0RNHOmkWDeclP
+	 LMo6DxD46d/SExDH7evwNpgdXlFeSM/7mv1aXtzPAH8eqohz5BeTCHqa1AuRSRg2+Qw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795623319;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795623322;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=DxaLuTpiYuI4QJPN82LaRyb3MeZwnnh6G6i75J3P8X0=;
-	b=cgMSjc7T6bGJtFaXc3R8glGO5dqOs6OTGfUmGNfdzuXx7jytWkoYSd+cqkKxb7LmHaOZ
-	 SCGlAlObdem8/jCHQD745lK3UjtPv9LwxrFTi729gIEsbNE8CQ/qqDP73xskqnsrUvFy8
-	 /HfJTwwKdZuaBIfIQ+X4sctL19tdv8fUWdfgpQKRCAe7ad66n+fFUiQ+07P1ScrQto0N5
-	 Fm23AHQ1DqV0dZ1XEg+BWyMSZ0gDWP+L1DNwNyCSCgZCR2aEZ95oK1UO3lG4rtB9QfVhm
-	 JFg5Pem3FkC53EoMXRxMzR5HFTCDeucS0d8muB5ejKFoKpoojNxV8TDRo0LpSLTG5KA==
+	bh=kwuF0eprlx/FEX9IkMdh+7CJaBb/O2pnQKsVu/7c/a8=;
+	b=oBg0RFwdkeKfQXNijUTCNZx8NqHOFCiw4zmw7b0XjA7UvHBjPE6ks30CU3gqgQMam9QA
+	 wc0CBg+piTFDQysaK+aqDaQ91Jz/0ZKseK5XffY0zQvIiPa0iQZ5OwY6byt092+ev42dY
+	 cFRkx4c4BMQBhGM4mhJzpHKmClZcpSC/q3ucO8ECDPrf/KfOJPwzHTOrrYSRz17iB4lgV
+	 EQsOEMJxYBGjs5SSNc/qmA0KNfiHO84e/7u9/srqw0vnzHNdfH7mxUbi9rvI2DgtFvagy
+	 BPmy1zmrDlQPtF5dkzzkeNijIkXkVVFKfrRYw9cFLv4jH0Jk8bgGKk1w9nI9QucOk+g==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=D6O5b5ii;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=j5X449wr;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4E7CE606A337;
-	Wed, 25 Nov 2026 16:15:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A9655606A323;
+	Wed, 25 Nov 2026 16:15:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=D6O5b5ii
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 885EA1F000E0;
-	Wed, 25 Nov 2026 16:15:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=j5X449wr
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E1B921F000E6;
+	Wed, 25 Nov 2026 16:15:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795623319;
-	bh=DxaLuTpiYuI4QJPN82LaRyb3MeZwnnh6G6i75J3P8X0=;
+	s=korg; t=1795623322;
+	bh=kwuF0eprlx/FEX9IkMdh+7CJaBb/O2pnQKsVu/7c/a8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=D6O5b5ii9lR8Os2ASD7WaVE2NsXpFJXTXuNu2K5sRfQKIBG2/YnlKv+AGFSiTsj1N
-	 quH/UyDaCi7nBPHFlFYgwPBzGyAZbkfteeBkOOQvFuqUnKIL2sXc3oYWQYuulCThgt
-	 KmmgJG33uJDYFdIA9MwfqaaZmUbfPphj68hnHB7w=
+	b=j5X449wr1z48gIqRJJWxCO4O0i9ofuSZyYYKB1q8B9dseNtyALoQ4QTtyq0x86790
+	 vjXlztOZ28MNBym7ZeHp9p0IwarH6ApVt9R1cjXaRwivbfxK7xUX4JgIEjaINuh4py
+	 F/zSRvNu13nGwTvxWb3VBE9VxYOfAcJ2ymFS/4lA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Zhao Li <enderaoelyther@gmail.com>,
 	Johannes Berg <johannes.berg@intel.com>
-Subject: [PATCH 6.18 819/990] wifi: mac80211: reject invalid EHT guard intervals in airtime estimates
-Date: Wed, 25 Nov 2026 15:36:26 +0100
-Message-ID: <20261125143841.224377085@linuxfoundation.org>
+Subject: [PATCH 6.18 820/990] wifi: mac80211: restore dormant links when link updates fail
+Date: Wed, 25 Nov 2026 15:36:27 +0100
+Message-ID: <20261125143841.246895372@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143822.072087159@linuxfoundation.org>
 References: <20261125143822.072087159@linuxfoundation.org>
@@ -69,43 +69,48 @@ Content-Transfer-Encoding: 8bit
 
 From: Zhao Li <enderaoelyther@gmail.com>
 
-commit 582edbdbc5d288bd128b54935738fe38f15c8c29 upstream.
+commit bb22f3b2d8f8a2f883944f24678cf84e18b162e8 upstream.
 
-An invalid EHT guard interval can select the wrong airtime group and, at
-320 MHz, read beyond airtime_mcs_groups.
+A failed MLO link update can leave the interface with the requested
+dormant-links bitmap instead of its previous one. This can disable active
+links or trigger a bitmap warning during rollback.
 
-Guard interval 3 advances EHT_GROUP_IDX() into the next bandwidth group
-at narrower widths. With one spatial stream and 320 MHz, it evaluates to
-264, one past the 264-entry table. RX rate parsing rejects the value, but
-the common TX-status validator has no EHT check and last_rate_info can
-carry it to the airtime helper.
+The error path restores the old valid-links bitmap but passes the new
+dormant_links argument to ieee80211_set_vif_links_bitmaps().
 
-Reject values above NL80211_RATE_INFO_EHT_GI_3_2 in the helper. This also
-protects exported ieee80211_calc_rx_airtime() callers that do not pass
-through the TX-status validator.
+Save the old dormant bitmap before changing link state and use it when
+restoring the old configuration.
 
 LLM assistance was used to find the bug and review.
 
-Fixes: 3702a33216e6 ("wifi: mac80211: introduce EHT rate support in AQL airtime")
+Fixes: 6d543b34dbcf ("wifi: mac80211: Support disabled links during association")
 Cc: stable@vger.kernel.org
 Signed-off-by: Zhao Li <enderaoelyther@gmail.com>
-Link: https://patch.msgid.link/20261028142212.14523-1-enderaoelyther@gmail.com
+Link: https://patch.msgid.link/20261028142123.13072-1-enderaoelyther@gmail.com
 Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/mac80211/airtime.c |    2 ++
- 1 file changed, 2 insertions(+)
+ net/mac80211/link.c |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
---- a/net/mac80211/airtime.c
-+++ b/net/mac80211/airtime.c
-@@ -550,6 +550,8 @@ static u32 ieee80211_get_rate_duration(s
- 		group = HE_GROUP_IDX(streams, status->he_gi, bw);
- 		break;
- 	case RX_ENC_EHT:
-+		if (status->eht.gi > NL80211_RATE_INFO_EHT_GI_3_2)
-+			return 0;
- 		streams = status->nss;
- 		idx = status->rate_idx;
- 		group = EHT_GROUP_IDX(streams, status->eht.gi, bw);
+--- a/net/mac80211/link.c
++++ b/net/mac80211/link.c
+@@ -284,6 +284,7 @@ static int ieee80211_vif_update_links(st
+ {
+ 	u16 old_links = sdata->vif.valid_links;
+ 	u16 old_active = sdata->vif.active_links;
++	u16 old_dormant = sdata->vif.dormant_links;
+ 	unsigned long add = new_links & ~old_links;
+ 	unsigned long rem = old_links & ~new_links;
+ 	unsigned long sta_rem = rem;
+@@ -390,7 +391,7 @@ static int ieee80211_vif_update_links(st
+ 		/* restore config */
+ 		memcpy(sdata->link, old_data, sizeof(old_data));
+ 		memcpy(sdata->vif.link_conf, old, sizeof(old));
+-		ieee80211_set_vif_links_bitmaps(sdata, old_links, dormant_links);
++		ieee80211_set_vif_links_bitmaps(sdata, old_links, old_dormant);
+ 		/* drain RCU readers before cancelling work they may queue */
+ 		synchronize_rcu();
+ 		for_each_set_bit(link_id, &add, IEEE80211_MLD_MAX_NUM_LINKS) {
 
 
