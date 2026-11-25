@@ -1,42 +1,42 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795620867;
-	b=u5wHNZul+LJLmrU3xDftRaMTyIl6wM6r+qh1sKG5Rvz7vtSDuXfh7WuZEkBHxWPjS3A4
-	 zu0e2UoD5SHmIQw+fRj2LMJlhwnaCfINF+APk/+akKYJ1tZLskcdK+FX8oijCWCkVe8xp
-	 QSfzDoQ07YJl2PGkABw0Xe9d9VFqLnZExiWmBpj3Nm94vThv9YYmDkC3R/EynzYkNZRqU
-	 cbFls93OygSNR5JF4p0FKen0s0DYLsxJcYuwX8mAGXJpgsTOb2Zq1c5x8ajVmWbMfoheI
-	 99C01wKSJfdfTE0aKWJDzI0PEuL53k68K94uOUEoAevrSmTRBsnnWSLNDETfO5TlSpA==
+	t=1795620870;
+	b=otcVztTBFJEtZJ5j9JUJ1X64qGVI1Wu1fFqzcnGciy7P7RFX4XjCBQX1k3e8wPH+PHLv
+	 OIGmdL8SNalUA1Ep61GtD2d0jFYVKQfAUkrfCRUDW1COMzMW7XNcpS564hB9eRXuOJiGM
+	 uuHRVDpLHniUTaYSQi4AvyItlnGvs9At+uiHudUmNPvhfngz7ERsf3j+kAEjk0HQ7uaeX
+	 nBy1G5Cs0SmCLN5i0fE9e4yqvuX+rF/SJYRGI0szKBi+YfiZb3aErvL3vTkDgmrpL42jD
+	 JBc4TNTUYW3DIMbE3wzQPq/cUgFUoqfRjgusKIV8R3OJnlbGrA2E/3DswQBTT+nAmaA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795620867;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795620870;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=5OLNQd4GdVVAgNjoFVDKG8ZWiBpoHh5W6uzL5ijMlFc=;
-	b=j+EJ4pnELiy9HxDNcRzW22J/6RJt32gKdckYgogNsjzdNNFsXLnwXrufKW46HBjfTJet
-	 EcpM+pOEBCbsR+fEqAxXu/V3smPW6sOw+YI37beaxdC2YDmgP9mSmwo7LQsGiMxCzk1zJ
-	 GF/mHjmHfn31lRi9pPdsdj+cC/odPev4g8Iw5J6CUq9nULtJeFUIUkzEIf79GTau1ibGe
-	 t8QmBcUgpBKedMaW5TPHj34mvi4ZX0Ng+c2Pe7IdMQmTr86lUkBAvBrbdL3OFF/69thu/
-	 nc7vNP6lPsVJMzIizeflIVlzmd8QmbcBvwrWbEmXuEMEkQDzi4sMX8OkUu1g+yk7sEQ==
+	bh=6FXe83TWZDatYcw80DPSriNWP5URA7rMaJf4dLVG0rA=;
+	b=fYbsxOawaM0A3G85+O+hlJEr4gcyvP3ha8Xa8daAkTKgptklibhaJK2KaNhrVZzMXEQR
+	 pV9h1YohgHeL1rcyzPTKZ7HBTCfnU8yKt9jqHDvmpxzUrQNQ/PtDnDaEb73I2SRl/JyCV
+	 tp7Ak7zepsyUew+Af+GCmCZnHAqGsdfd+XS+iCIGOxSUdMol/SVsVV3BDpViMRGwBWvSd
+	 j1fcBKC9iKc8TIeyVpsscE626VGziZamdhU7EglB2/S76hK9KTTfc2icUj020cxk+kbgT
+	 qeUbniDe05qYxEBwDAXIGFYLSLRnd2RotChO9F7hvPw56B+GjnuqyDcoUB3Qd32BQiQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=sElCpANs;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="Vw4/CpK6";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 295CA606A32C;
-	Wed, 25 Nov 2026 15:34:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5B89E606A323;
+	Wed, 25 Nov 2026 15:34:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=sElCpANs
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7B6461F000E1;
-	Wed, 25 Nov 2026 15:34:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Vw4/CpK6
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 827431F000E1;
+	Wed, 25 Nov 2026 15:34:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795620867;
-	bh=5OLNQd4GdVVAgNjoFVDKG8ZWiBpoHh5W6uzL5ijMlFc=;
+	s=korg; t=1795620870;
+	bh=6FXe83TWZDatYcw80DPSriNWP5URA7rMaJf4dLVG0rA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=sElCpANsFEWnHewtf4diHbldPmIhuhp7DYy/wQmM8YC17xZ9WrJJiqB1/nfG5qMZN
-	 1zEEQlk6sNlGG9XjvpxbbUpux/RcehcOxLgPN2fQWZV3XU9596qHzk99WteW9wKddC
-	 VsZsdH3urjAQXR72xcR6FoEr97oUpbhGqMppCLDQ=
+	b=Vw4/CpK6i67jDQYsdCgnT9NoA41W5sP4HiRdreX0qIXeE2GShIvlq9/kdKKgEd2LN
+	 7XW4WAOy9XsspSDjwIe+y5m/6Je+pHe/ro6Z+74e9WIqzg+LfPV2LLXNuRrRNQW9rA
+	 57txydzvRiNYGjUffuy1dF7RlxwBUZGRR7SEMlWk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -44,9 +44,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Cheng Yongkang <teel4res@gmail.com>,
 	Jens Axboe <axboe@kernel.dk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 047/990] io_uring/timeout: dont rearm a multishot timeout on cancel
-Date: Wed, 25 Nov 2026 15:23:34 +0100
-Message-ID: <20261125143823.193049204@linuxfoundation.org>
+Subject: [PATCH 6.18 048/990] io_uring/rsrc: keep the old file when a file update fails
+Date: Wed, 25 Nov 2026 15:23:35 +0100
+Message-ID: <20261125143823.217262283@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143822.072087159@linuxfoundation.org>
 References: <20261125143822.072087159@linuxfoundation.org>
@@ -70,47 +70,61 @@ Content-Transfer-Encoding: 8bit
 
 From: Cheng Yongkang <teel4res@gmail.com>
 
-Commit 97d4a585db2b91d855f957be0a9f126068c5be93 upstream.
+Commit e5a346e4309d720c47fe8331a00068608fad47dd upstream.
 
-io_timeout_complete() does not check tw.cancel. When it runs from
-io_cancel_local_task_work(), a multishot timeout that has not reached
-its count still posts an IORING_CQE_F_MORE completion and rearms its
-timer. With a zero interval the timer expires again right away and
-queues new task work, so the drain keeps running it until posting a
-CQE fails.
+__io_sqe_files_update() resets the slot before it calls fget() on the
+new fd. If fget() fails, the fd is an io_uring file, or the node
+allocation fails, the update stops and reports that entry as not done,
+but the old file has already been removed. Later requests that use the
+slot fail with -EBADF, and if the old file was registered with a tag,
+its tag CQE is posted as if it had been removed on purpose.
 
-Normally the CQ fills up quickly and the request then completes. But
-if userspace moves the CQ head far ahead of the tail, for example to
-cq.tail + 0x7fffffff, posting keeps succeeding and ring teardown is
-delayed for a long time.
+Reset the slot only after the new file has been checked and its node
+allocated, as io_install_fixed_file() does. Removal with fd == -1 still
+resets the slot right away.
 
-Don't post another CQE or rearm the timer when tw.cancel is set, so
-the request completes through io_req_task_complete(), like the poll and
-linked timeout task work does when cancelled.
-
-Fixes: ea97f6c8558e ("io_uring: add support for multishot timeouts")
+Fixes: c3a31e605620 ("io_uring: add support for IORING_REGISTER_FILES_UPDATE")
+Cc: stable@vger.kernel.org
 Signed-off-by: Cheng Yongkang <teel4res@gmail.com>
-Link: https://patch.msgid.link/20261116044519.281756-1-teel4res@gmail.com
+Link: https://patch.msgid.link/20261116044531.281978-1-teel4res@gmail.com
 Signed-off-by: Jens Axboe <axboe@kernel.dk>
+[axboe: 6.18 doesn't clamp the slot index with array_index_nospec() in
+this function]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- io_uring/timeout.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ io_uring/rsrc.c | 7 ++++---
+ 1 file changed, 4 insertions(+), 3 deletions(-)
 
-diff --git a/io_uring/timeout.c b/io_uring/timeout.c
-index 2637c8bb61a08..36c8f3dae27a5 100644
---- a/io_uring/timeout.c
-+++ b/io_uring/timeout.c
-@@ -76,7 +76,8 @@ static void io_timeout_complete(struct io_tw_req tw_req, io_tw_token_t tw)
- 	struct io_ring_ctx *ctx = req->ctx;
+diff --git a/io_uring/rsrc.c b/io_uring/rsrc.c
+index 7170b3f001d41..36a9bc279e74e 100644
+--- a/io_uring/rsrc.c
++++ b/io_uring/rsrc.c
+@@ -237,9 +237,6 @@ static int __io_sqe_files_update(struct io_ring_ctx *ctx,
+ 			continue;
  
- 	if (!io_timeout_finish(timeout, data)) {
--		if (io_req_post_cqe(req, -ETIME, IORING_CQE_F_MORE)) {
-+		if (!tw.cancel &&
-+		    io_req_post_cqe(req, -ETIME, IORING_CQE_F_MORE)) {
- 			/* re-arm timer */
- 			raw_spin_lock_irq(&ctx->timeout_lock);
- 			list_add(&timeout->list, ctx->timeout_list.prev);
+ 		i = up->offset + done;
+-		if (io_reset_rsrc_node(ctx, &ctx->file_table.data, i))
+-			io_file_bitmap_clear(&ctx->file_table, i);
+-
+ 		if (fd != -1) {
+ 			struct file *file = fget(fd);
+ 			struct io_rsrc_node *node;
+@@ -262,11 +259,15 @@ static int __io_sqe_files_update(struct io_ring_ctx *ctx,
+ 				fput(file);
+ 				break;
+ 			}
++			if (io_reset_rsrc_node(ctx, &ctx->file_table.data, i))
++				io_file_bitmap_clear(&ctx->file_table, i);
+ 			ctx->file_table.data.nodes[i] = node;
+ 			if (tag)
+ 				node->tag = tag;
+ 			io_fixed_file_set(node, file);
+ 			io_file_bitmap_set(&ctx->file_table, i);
++		} else if (io_reset_rsrc_node(ctx, &ctx->file_table.data, i)) {
++			io_file_bitmap_clear(&ctx->file_table, i);
+ 		}
+ 	}
+ 	return done ? done : err;
 -- 
 2.53.0
 
