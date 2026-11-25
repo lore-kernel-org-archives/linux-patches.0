@@ -1,50 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795626242;
-	b=4zJVKm+kDW7eE0A996GxdhQA1a7RHEbIFM36EppqYFBXLwJLgsg/pgBVfor6co7YJeUt
-	 p9mcCh2YQ4baa3wl1YpP1uGYN6KOYmn0XE6c2NpnAzA14U1EhqOzdI8HR9/vgnxTrz8TO
-	 rT5FthLJeIdwOYoU8WTM7JI3Mv/ioX0dGEAWTqzmy0GVMs26ltgWuNlfT+wnwk4uMRs0W
-	 sFJcPbTRgT88UPPTtLD3pGl3SU54I4gtahtpIe8wAqjhxaRdriTmEPKYbP4DluuRU7/sI
-	 gJaEJW4fNuMs56e0oi3vz7C3e6TMfm7w6NhHZ4xRejaxDYNaBtJHEgnaKsAZpkn/FEw==
+	t=1795626245;
+	b=de741yuW0MzQ3IuLBi1g3SGel7ELqC1kIDr3Bc0IHZMU8hTYbttmJbZjOPrZwKQMCfqE
+	 7/++nXqeu8Olx9I42Ny5OlHItHfWZH2zkjGQR9VwwPB78xwLz9V8BULvm7lnARkXH9gIQ
+	 Fxew/LF5zsRISL8IkX1RRjZzzuGgGtmO+VFVAXBA59jg+xpOiMkpYsCoYZ6no6iJJpH6A
+	 HPbTdHuSg6ba8EjPZtGoFdqk0iuF5zCLatrqy6H2w6+8wqT+JUqQJayahFN69eOw0j/uR
+	 tjWeW8wQ9zK3Mr8Hnm+i7/6/HghijPl4vXd309S8J2dvBjCBwcTbf9SCO9drPgyRSWg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795626242;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795626245;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=eLFhdDm5xNWFkE2GGie+vOJw1OYCQ1eom6rn7Mtx0Q8=;
-	b=xOPdyA/AYaVqyjtrSwnWawA79VN3fJ5cjob3T275+2mS5DoFjW9pfvkZ07ZBxF+JtGUs
-	 M4f1JYmMR6qBWR7t7h4DVB+sgkRca5EcJCqpbvWb/sr0rdQRo4+yXKh8lGedXK2jhq7jS
-	 SF5x95pi/dUudx90/GLFbTEttOswSp5TlkYF1ZeklC7nowrBWDryrw4Z+T7cuF8380vKm
-	 favwl6DImYbxQRjYVffZ0hX8yJry7+75ebQImPGJFfecOAHDQTBDT0vg8QJCin+CVhf34
-	 fiXwOE1r5iPXU/INuaxTsBHTESSA3npkFh4WoVh8tLMlhEowpiQBj+M8Hq0GW3ncOVw==
+	bh=eqEBoLo9Dr1kGMurvFX6l/tKiFQjnRpAV0lww5CDCo8=;
+	b=VSjU6zX2CnWq8SmcWgCXPHzb2hU+RCTtqrKZvCtxUo+N4e36q1Nh+7sR7iRRasqxinIK
+	 ZGitaOP8gvgJDqEEF08wzG0R23IDjONPi4SW5k11E8r2Icc/2budR1CVJ1f/547qaeEUm
+	 +rTEFGDW33thWQ77HlbjG/qSUxPO1IOPMZTJZAWyUlRgbgHqLgnkJ+7q0q6UiWFQDtTEn
+	 JvfKFbVg0Oznxxc6bjZ7++jxbL1PuxATEfiw2LtZlGALlNqvW+9vFGq9RPhk9yYX6IZB1
+	 Xrozk9Qs1tCNGghEkHsJ/bfw1yS06C9r+oZIbq3p1V86j5Rsi9fI9iLclHX5D5TNPjg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=cegRBx3P;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=1+fPeIe+;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1D900606A331;
-	Wed, 25 Nov 2026 17:04:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 807CE606A326;
+	Wed, 25 Nov 2026 17:04:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=cegRBx3P
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2499C1F000D3;
-	Wed, 25 Nov 2026 17:04:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=1+fPeIe+
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 829FF1F000C6;
+	Wed, 25 Nov 2026 17:04:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795626241;
-	bh=eLFhdDm5xNWFkE2GGie+vOJw1OYCQ1eom6rn7Mtx0Q8=;
+	s=korg; t=1795626245;
+	bh=eqEBoLo9Dr1kGMurvFX6l/tKiFQjnRpAV0lww5CDCo8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=cegRBx3PgEWBLHWQj7jB+q/GodPPRSViXya8/CiNnaR9gFDC5+JSPl5eAHq2IJ0X7
-	 6DHdmMF5qhf6F2wgvgvxd0uuD2tH3E8Euu4QShfUSMzMb+EsWGdR6gNWex6mcYirsN
-	 dlqTNMYKP98JScltzBE25YKlbr1w3Kb+zdvvc1mE=
+	b=1+fPeIe+vBJzhZhWk7znaAVDoYNLlfAXe9W3emKJeyAN7NnPJz3uI5oIMbgSBx/Sy
+	 JmaxeROU8v0EwfPSI7dbNUzQ7B/3j15LECpTTadf4SHsf6tTDdVhhTsiUwRs2DLem2
+	 5KehsW5mZnwzZmgb926AjSMVXWWc5kUuSgGfJrqQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Johan Hovold <johan@kernel.org>
-Subject: [PATCH 6.12 779/816] USB: serial: io_edgeport: serialise MCR accesses
-Date: Wed, 25 Nov 2026 15:38:47 +0100
-Message-ID: <20261125143907.205977212@linuxfoundation.org>
+	stable <stable@kernel.org>,
+	Selvarasu Ganesan <selvarasu.g@samsung.com>,
+	Thinh Nguyen <Thinh.Nguyen@synopsys.com>
+Subject: [PATCH 6.12 753/816] usb: dwc3: gadget: Issue no-op Start Transfer only for stream endpoints
+Date: Wed, 25 Nov 2026 15:38:21 +0100
+Message-ID: <20261125143906.602149927@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143849.205329330@linuxfoundation.org>
 References: <20261125143849.205329330@linuxfoundation.org>
@@ -66,123 +68,145 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Johan Hovold <johan@kernel.org>
+From: Thinh Nguyen <Thinh.Nguyen@synopsys.com>
 
-commit 6e4629504d7e5a22dd26f3b262f0a0f80e3cad6a upstream.
+commit e616d91e02881983e5dadf6980c4aa08123800b3 upstream.
 
-Add a mutex to serialise modem control register updates to prevent
-concurrent tasks from interfering with each other.
+The function driver may re-enable an endpoint before the End Transfer
+command issued on ep disable completes. The no-op Start Transfer issued
+on ep enable then fails with "No Resource".
 
-Note that the register updates are currently asynchronous so a task may
-read back a value which has not yet taken effect.
+Only stream endpoints need the no-op Start Transfer to initiate a
+stream. Other bulk and interrupt endpoints start their transfer when a
+request is queued. Skip it for those endpoints, and move it to a helper
+to be reused.
 
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Cc: stable@vger.kernel.org
-Signed-off-by: Johan Hovold <johan@kernel.org>
+Fixes: a97ea994605e ("usb: dwc3: gadget: offset Start Transfer latency for bulk EPs")
+Cc: stable <stable@kernel.org>
+Reported-by: Selvarasu Ganesan <selvarasu.g@samsung.com>
+Closes: https://lore.kernel.org/linux-usb/20260227121236.963-1-selvarasu.g@samsung.com/
+Signed-off-by: Thinh Nguyen <Thinh.Nguyen@synopsys.com>
+Link: https://patch.msgid.link/227e97e30d26a017c92d7008a8633c01f955d088.1792542945.git.Thinh.Nguyen@synopsys.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/serial/io_edgeport.c |   15 +++++++++++++++
- 1 file changed, 15 insertions(+)
+ drivers/usb/dwc3/gadget.c |   97 +++++++++++++++++++++++-----------------------
+ 1 file changed, 50 insertions(+), 47 deletions(-)
 
---- a/drivers/usb/serial/io_edgeport.c
-+++ b/drivers/usb/serial/io_edgeport.c
-@@ -168,6 +168,7 @@ struct edgeport_port {
- 	struct urb		*write_urb;		/* write URB for this port */
- 	bool			write_in_progress;	/* 'true' while a write URB is outstanding */
- 	spinlock_t		ep_lock;
-+	struct mutex		mutex;
- 
- 	__u8			shadowLCR;		/* last LCR value received */
- 	__u8			shadowMCR;		/* last MCR value received */
-@@ -877,7 +878,10 @@ static int edge_open(struct tty_struct *
- 	spin_unlock_irq(&edge_port->ep_lock);
- 
- 	/* Must always set this bit to enable ints! */
-+	mutex_lock(&edge_port->mutex);
- 	edge_port->shadowMCR = MCR_MASTER_IE;
-+	mutex_unlock(&edge_port->mutex);
-+
- 	edge_port->chaseResponsePending = false;
- 
- 	/* send a open port command */
-@@ -1398,9 +1402,11 @@ static void edge_throttle(struct tty_str
- 
- 	/* if we are implementing RTS/CTS, toggle that line */
- 	if (C_CRTSCTS(tty)) {
-+		mutex_lock(&edge_port->mutex);
- 		edge_port->shadowMCR &= ~MCR_RTS;
- 		status = send_cmd_write_uart_register(edge_port, MCR,
- 							edge_port->shadowMCR);
-+		mutex_unlock(&edge_port->mutex);
- 		if (status != 0)
- 			return;
- 	}
-@@ -1435,9 +1441,11 @@ static void edge_unthrottle(struct tty_s
- 	}
- 	/* if we are implementing RTS/CTS, toggle that line */
- 	if (C_CRTSCTS(tty)) {
-+		mutex_lock(&edge_port->mutex);
- 		edge_port->shadowMCR |= MCR_RTS;
- 		send_cmd_write_uart_register(edge_port, MCR,
- 						edge_port->shadowMCR);
-+		mutex_unlock(&edge_port->mutex);
- 	}
- }
- 
-@@ -1478,6 +1486,7 @@ static int edge_tiocmset(struct tty_stru
- 	struct edgeport_port *edge_port = usb_get_serial_port_data(port);
- 	unsigned int mcr;
- 
-+	mutex_lock(&edge_port->mutex);
- 	mcr = edge_port->shadowMCR;
- 	if (set & TIOCM_RTS)
- 		mcr |= MCR_RTS;
-@@ -1496,6 +1505,7 @@ static int edge_tiocmset(struct tty_stru
- 	edge_port->shadowMCR = mcr;
- 
- 	send_cmd_write_uart_register(edge_port, MCR, edge_port->shadowMCR);
-+	mutex_unlock(&edge_port->mutex);
- 
+--- a/drivers/usb/dwc3/gadget.c
++++ b/drivers/usb/dwc3/gadget.c
+@@ -891,6 +891,54 @@ static int dwc3_gadget_resize_tx_fifos(s
  	return 0;
  }
-@@ -1509,6 +1519,7 @@ static int edge_tiocmget(struct tty_stru
- 	unsigned int mcr;
  
- 	msr = edge_port->shadowMSR;
-+	mutex_lock(&edge_port->mutex);
- 	mcr = edge_port->shadowMCR;
- 	result = ((mcr & MCR_DTR)	? TIOCM_DTR: 0)	  /* 0x002 */
- 		  | ((mcr & MCR_RTS)	? TIOCM_RTS: 0)   /* 0x004 */
-@@ -1516,6 +1527,7 @@ static int edge_tiocmget(struct tty_stru
- 		  | ((msr & EDGEPORT_MSR_CD)	? TIOCM_CAR: 0)   /* 0x040 */
- 		  | ((msr & EDGEPORT_MSR_RI)	? TIOCM_RI:  0)   /* 0x080 */
- 		  | ((msr & EDGEPORT_MSR_DSR)	? TIOCM_DSR: 0);  /* 0x100 */
-+	mutex_unlock(&edge_port->mutex);
++static int dwc3_gadget_ep_start_noop_transfer(struct dwc3_ep *dep)
++{
++	struct dwc3_gadget_ep_cmd_params params;
++	struct dwc3		*dwc = dep->dwc;
++	struct dwc3_trb		*trb;
++	dma_addr_t		trb_dma;
++	u32			cmd;
++	int			ret;
++
++	memset(&params, 0, sizeof(params));
++	trb = &dep->trb_pool[0];
++	trb_dma = dwc3_trb_dma_offset(dep, trb);
++
++	params.param0 = upper_32_bits(trb_dma);
++	params.param1 = lower_32_bits(trb_dma);
++
++	cmd = DWC3_DEPCMD_STARTTRANSFER;
++
++	ret = dwc3_send_gadget_ep_cmd(dep, cmd, &params);
++	if (ret < 0)
++		return ret;
++
++	/*
++	 * For streams, at start, there maybe a race where the host primes the
++	 * endpoint before the function driver queues a request to initiate a
++	 * stream. In that case, the controller will not see the prime to
++	 * generate the ERDY and start stream. To workaround this, issue a
++	 * no-op TRB as normal, but end it immediately. As a result, when the
++	 * function driver queues the request, the next START_TRANSFER command
++	 * will cause the controller to generate an ERDY to initiate the
++	 * stream.
++	 */
++	dwc3_stop_active_transfer(dep, false, true);
++
++	/*
++	 * All stream eps will reinitiate stream on NoStream rejection.
++	 *
++	 * However, if the controller is capable of TXF_FLUSH_BYPASS, then IN
++	 * direction endpoints will automatically restart the stream without
++	 * the driver initiation.
++	 */
++	if (!dep->direction ||
++	    !(dwc->hwparams.hwparams9 & DWC3_GHWPARAMS9_DEV_TXF_FLUSH_BYPASS))
++		dep->flags |= DWC3_EP_FORCE_RESTART_STREAM;
++
++	return 0;
++}
++
+ /**
+  * __dwc3_gadget_ep_enable - initializes a hw endpoint
+  * @dep: endpoint to be initialized
+@@ -958,55 +1006,10 @@ static int __dwc3_gadget_ep_enable(struc
+ 	 * Issue StartTransfer here with no-op TRB so we can always rely on No
+ 	 * Response Update Transfer command.
+ 	 */
+-	if (usb_endpoint_xfer_bulk(desc) ||
+-			usb_endpoint_xfer_int(desc)) {
+-		struct dwc3_gadget_ep_cmd_params params;
+-		struct dwc3_trb	*trb;
+-		dma_addr_t trb_dma;
+-		u32 cmd;
+-
+-		memset(&params, 0, sizeof(params));
+-		trb = &dep->trb_pool[0];
+-		trb_dma = dwc3_trb_dma_offset(dep, trb);
+-
+-		params.param0 = upper_32_bits(trb_dma);
+-		params.param1 = lower_32_bits(trb_dma);
+-
+-		cmd = DWC3_DEPCMD_STARTTRANSFER;
+-
+-		ret = dwc3_send_gadget_ep_cmd(dep, cmd, &params);
++	if (dep->stream_capable) {
++		ret = dwc3_gadget_ep_start_noop_transfer(dep);
+ 		if (ret < 0)
+ 			return ret;
+-
+-		if (dep->stream_capable) {
+-			/*
+-			 * For streams, at start, there maybe a race where the
+-			 * host primes the endpoint before the function driver
+-			 * queues a request to initiate a stream. In that case,
+-			 * the controller will not see the prime to generate the
+-			 * ERDY and start stream. To workaround this, issue a
+-			 * no-op TRB as normal, but end it immediately. As a
+-			 * result, when the function driver queues the request,
+-			 * the next START_TRANSFER command will cause the
+-			 * controller to generate an ERDY to initiate the
+-			 * stream.
+-			 */
+-			dwc3_stop_active_transfer(dep, false, true);
+-
+-			/*
+-			 * All stream eps will reinitiate stream on NoStream
+-			 * rejection.
+-			 *
+-			 * However, if the controller is capable of
+-			 * TXF_FLUSH_BYPASS, then IN direction endpoints will
+-			 * automatically restart the stream without the driver
+-			 * initiation.
+-			 */
+-			if (!dep->direction ||
+-			    !(dwc->hwparams.hwparams9 &
+-			      DWC3_GHWPARAMS9_DEV_TXF_FLUSH_BYPASS))
+-				dep->flags |= DWC3_EP_FORCE_RESTART_STREAM;
+-		}
+ 	}
  
- 	return result;
- }
-@@ -2430,12 +2442,14 @@ static void edge_set_termios(struct tty_
- 		return;
- 
- 	/* set up the MCR register and send it to the EdgePort */
-+	mutex_lock(&edge_port->mutex);
- 	edge_port->shadowMCR = MCR_MASTER_IE;
- 	if (cflag & CBAUD)
- 		edge_port->shadowMCR |= (MCR_DTR | MCR_RTS);
- 
- 	status = send_cmd_write_uart_register(edge_port, MCR,
- 						edge_port->shadowMCR);
-+	mutex_unlock(&edge_port->mutex);
- 	if (status != 0)
- 		return;
- 
-@@ -2930,6 +2944,7 @@ static int edge_port_probe(struct usb_se
- 		return -ENOMEM;
- 
- 	spin_lock_init(&edge_port->ep_lock);
-+	mutex_init(&edge_port->mutex);
- 
- 	init_waitqueue_head(&edge_port->wait_open);
- 	init_waitqueue_head(&edge_port->wait_chase);
+ out:
 
 
