@@ -1,53 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795625049;
-	b=ypN2VS67NnIyNPfqFwOrur8Kf2/U1C8JS9lu+C17zxwhlxXk8XiV9vrxVlIddYxQ61JR
-	 AsUSayW/eLzkTDqXiE7/vgCgKpADzX95NALSaOL4t1y14Y/3M57cOem0MNY5HbvRT7lCk
-	 MzUvhvj/QAKq93vbWUVtQVThw7O+D7uCSQzPzPzOCL+eAUPX5HanEXIOwLp00fVhyJYud
-	 GRe9q9nrODGRirUomwOmv/KMkVAEbbsPhz/egF0l5DBYFlFYNPR+ETO+lFrEdlSaPMgiv
-	 /vUCIxSC/WFlyX+xja5uoj/QABoaqM+x1TnF5GxCu7HEfSzsDJlJiLzQ8rHhlbMdp9Q==
+	t=1795625053;
+	b=kjr6d7RWByjqu8mxOYl0FGThTVngGT59qlhC2M6tbh0KARF7NVx/PrdYt4/aPDJvkpvU
+	 ik/5iUnlY6J+At5JLsMK2Gl86pXFBQpDy+Z4kml88doDBi6aGfyRazEt0FxpDj+UoqVkX
+	 6GAIpjMDIj3/ma28dVJFxGe2V3ys7X1yepk/wypgIcPlBMNLneveztlb2wpzbCwoTwaWN
+	 7eQH3BIqYcUzhIWiImghocHr1l/7PlnhSY4pLfxOvD9AxL+aodWVM1Jbg4nSqZHeJ1Jh8
+	 asY0v2o9XNekgpz0X5rAdYEUEB+LwjF93UuWuHf6/CYglTpfi8OWbYLE1Z/4VvJJgDQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795625049;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795625053;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=54zAwcoKceQzRMjVlqgYCC+M14Pfvrc2iR1V1AZMVi8=;
-	b=LiaMjNs53fr1KqIuez8oDB+UY58B6kyg2Iz9rn9SlbU0y1euOUTOdT4u9qAF5qxK4zTh
-	 mg0cEx6f8a/Fw6Dpwx/UJNbA0tl7/unoIPEPOz/g8CdTtXfKps1MBU3/52AfR8d0YjSET
-	 I6XWDTXKN3DwLwMEvop9JQ3i6zPONppvoRusZxxPdOQ7uTb4PFRrQhyKhDLxwTaqVyOPM
-	 6Fr3mBtPzsG08CZBVGgXFyrwI8322l784VtvTQ66K2M2VwhpCbwMqM9H7Hl9ZPI+nM7Ob
-	 gDqgzm8BSk6XfE4N/h4WFYBI5IoTvEUPYAT7Z+WG1VeyCnxFT8AJLdgZu8gziDi0L9w==
+	bh=b3qQakLLB0KTfmi4NhdqWxjjmRGcuWLuSBwoUeMnfOg=;
+	b=RnoFjlOAlW1nCcn5oMQydkgZ/1DUrzOvPLryPcx5tFuaCCaThQLT4VQAmvOiMlkwFk/+
+	 dvHFbF67x3TOAg3KQ3Rlko+Gv81ALO3N+YqXFrwDc3QbV49XMVlpDXLSu6NRVhfAWDWMB
+	 LjDbJnmWEDpPCJWzvAVTj1IMlY37Dd/DjQLYi77hY7rg4Gcfr7rU7KctKed9CKt131W/Y
+	 Ysta1mttaNzLaK+wd62ys/+yCYDufY4FTOXZ7g5QrZDHYrEDSSuZ9HSIro/kOSMJEESCy
+	 lMldgWW6W7/dx/iuEbJVQA1FqRj1qaQr+FwR9YzL2RCkeCDkVR3RQ7tg8SQW6YBc35Q==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=e1NghXZi;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=cJ4KDLEb;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B35DA606A32C;
-	Wed, 25 Nov 2026 16:44:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EA3B8606A321;
+	Wed, 25 Nov 2026 16:44:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=e1NghXZi
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E390E1F000C6;
-	Wed, 25 Nov 2026 16:44:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=cJ4KDLEb
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 468121F000C0;
+	Wed, 25 Nov 2026 16:44:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795625049;
-	bh=54zAwcoKceQzRMjVlqgYCC+M14Pfvrc2iR1V1AZMVi8=;
+	s=korg; t=1795625052;
+	bh=b3qQakLLB0KTfmi4NhdqWxjjmRGcuWLuSBwoUeMnfOg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=e1NghXZi8Qp6qaywnchH7cYq9ch8QFjUqlb2f8eCoSTRUqXV5Dbmw8Ff00diRsMk1
-	 ZE7BJbUUzFf887w4u4k7oX/bogcvBOEkl4CaTpw5SIqnMUjg2wreF+Uc+qKNOkNHwQ
-	 Lat1wHdHYWAc+50rhiXUTny/z22nipCToOQ9++u8=
+	b=cJ4KDLEbcRoKO9p1NNpumJJJd+6zowGgEfJ18nZh8HYCt82Q1cYetY41Mpkf4GfRi
+	 PEiOH7Mf8zWWb7jWl5hoBKHxDvu0evZsyHfXpSsvYR78Q3O9jSNPi3tOye4FGYZE2T
+	 BZo67pn6ILRRoO+HcAYZe/YSuje3f+521azESCcc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Horst Birthelmer <hbirthelmer@ddn.com>,
-	Jingbo Xu <jefflexu@linux.alibaba.com>,
-	Miklos Szeredi <mszeredi@redhat.com>,
+	Miaoqing Pan <miaoqing.pan@oss.qualcomm.com>,
+	Baochen Qiang <baochen.qiang@oss.qualcomm.com>,
+	Rameshkumar Sundaram <rameshkumar.sundaram@oss.qualcomm.com>,
+	Jeff Johnson <jeff.johnson@oss.qualcomm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 390/816] fuse: dont bump attr_version for async direct read completion
-Date: Wed, 25 Nov 2026 15:32:18 +0100
-Message-ID: <20261125143858.228535499@linuxfoundation.org>
+Subject: [PATCH 6.12 391/816] wifi: ath11k: fix NULL dereference in ahb remove when QMI init incomplete
+Date: Wed, 25 Nov 2026 15:32:19 +0100
+Message-ID: <20261125143858.252930741@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143849.205329330@linuxfoundation.org>
 References: <20261125143849.205329330@linuxfoundation.org>
@@ -69,52 +70,67 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jingbo Xu <jefflexu@linux.alibaba.com>
+From: Miaoqing Pan <miaoqing.pan@oss.qualcomm.com>
 
-[ Upstream commit fc60668db85584da911e5d0a65c8698628f98bba ]
+[ Upstream commit 1a7bcf5324c8e2de6512eca5b028b6b283181d3f ]
 
-The attr_version counter should only be incremented when cached
-attributes are actually modified (as documented in commit 1fb69e781729
-("fuse: fix race between getattr and write")).  Async direct reads do not
-modify any cached inode attributes (size, mtime, ctime), so bumping
-attr_version in fuse_aio_complete() for reads is incorrect.
+On WCN6750, if QMI messages never arrive (for example when qrtr_smd
+is not ready), WLAN initialization stops before the device is fully
+registered. In this case ATH11K_FLAG_QMI_FAIL is not set because no
+QMI event handler is executed.
 
-This unconditional bump causes a livelock when auto_inval_data is
-enabled together with writeback_cache: fuse_cache_read_iter() issues a
-FUSE_GETATTR before every read, but by the time the response arrives,
-an async DIO read completion has already incremented fi->attr_version
-past the snapshot taken before the request.  The GETATTR result is then
-discarded (attr_version race), fi->i_time is never refreshed, and every
-subsequent read triggers yet another GETATTR -- creating an infinite
-loop of useless round-trips.
+When the driver is removed, ath11k_ahb_remove() still calls
+ath11k_core_deinit(), which eventually triggers
+ath11k_ce_cleanup_pipes() on uninitialized CE pipes and results in a
+NULL pointer dereference in ath11k_hal_srng_access_begin():
 
-Fix this by only bumping attr_version for write completions, consistent
-with the synchronous DIO write path (fuse_write_update_attr) and the
-cached write path.
+  ath11k_hal_srng_access_begin+0x14/0x68 [ath11k]
+  ath11k_ce_cleanup_pipes+0x184/0x190 [ath11k]
+  ath11k_pcic_stop+0x24/0x38 [ath11k]
+  ath11k_core_deinit+0xfc/0x1c0 [ath11k]
+  ath11k_ahb_remove+0x38/0xa0 [ath11k_ahb]
 
-Fixes: 01e9d11a3e79 ("fuse: add support of async IO")
-Reviewed-by: Horst Birthelmer <hbirthelmer@ddn.com>
-Signed-off-by: Jingbo Xu <jefflexu@linux.alibaba.com>
-Signed-off-by: Miklos Szeredi <mszeredi@redhat.com>
-[ sashal: Only the if condition line differs in context: inode is declared inside the if (res >= 0) block and there is no mapping variable, so the one-line condition change was applied to that layout. ]
+Fix this by invoking ath11k_ahb_remove_prepare() before the state
+check and skipping ath11k_core_deinit() if ATH11K_FLAG_REGISTERED
+is not set, core initialization did not complete and CE pipes may
+remain uninitialized, making ath11k_core_deinit() unsafe.
+
+Tested-on: WCN6750 hw1.0 AHB WLAN.MSL.2.0.c2-00204-QCAMSLSWPLZ-1
+
+Fixes: 00402f49d26f ("ath11k: Add support for WCN6750 device")
+Signed-off-by: Miaoqing Pan <miaoqing.pan@oss.qualcomm.com>
+Reviewed-by: Baochen Qiang <baochen.qiang@oss.qualcomm.com>
+Reviewed-by: Rameshkumar Sundaram <rameshkumar.sundaram@oss.qualcomm.com>
+Link: https://patch.msgid.link/20260806101331.484063-3-miaoqing.pan@oss.qualcomm.com
+Signed-off-by: Jeff Johnson <jeff.johnson@oss.qualcomm.com>
+[ sashal: Changed the ath11k_ahb_power_down(ab, false) call to ath11k_ahb_power_down(ab), since the function takes no second argument here. ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/fuse/file.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/net/wireless/ath/ath11k/ahb.c | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
-diff --git a/fs/fuse/file.c b/fs/fuse/file.c
-index f733a0f781146..89b6021a428eb 100644
---- a/fs/fuse/file.c
-+++ b/fs/fuse/file.c
-@@ -735,7 +735,7 @@ static void fuse_aio_complete(struct fuse_io_priv *io, int err, ssize_t pos)
- 	if (!left && !io->blocking) {
- 		ssize_t res = fuse_get_res_by_io(io);
+diff --git a/drivers/net/wireless/ath/ath11k/ahb.c b/drivers/net/wireless/ath/ath11k/ahb.c
+index b9bf1c5a934cd..e701eadcf1dda 100644
+--- a/drivers/net/wireless/ath/ath11k/ahb.c
++++ b/drivers/net/wireless/ath/ath11k/ahb.c
+@@ -1310,14 +1310,15 @@ static void ath11k_ahb_remove(struct platform_device *pdev)
+ {
+ 	struct ath11k_base *ab = platform_get_drvdata(pdev);
  
--		if (res >= 0) {
-+		if (res >= 0 && io->write) {
- 			struct inode *inode = file_inode(io->iocb->ki_filp);
- 			struct fuse_conn *fc = get_fuse_conn(inode);
- 			struct fuse_inode *fi = get_fuse_inode(inode);
+-	if (test_bit(ATH11K_FLAG_QMI_FAIL, &ab->dev_flags)) {
++	ath11k_ahb_remove_prepare(ab);
++
++	if (!test_bit(ATH11K_FLAG_REGISTERED, &ab->dev_flags)) {
+ 		ath11k_ahb_power_down(ab);
+ 		ath11k_debugfs_soc_destroy(ab);
+ 		ath11k_qmi_deinit_service(ab);
+ 		goto qmi_fail;
+ 	}
+ 
+-	ath11k_ahb_remove_prepare(ab);
+ 	ath11k_core_deinit(ab);
+ 
+ qmi_fail:
 -- 
 2.53.0
 
