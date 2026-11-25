@@ -1,52 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795626284;
-	b=YZMijz1cvE+FOsJLT0b3lzi8v/c/23xcrbIPXRTeO8OwHQnTMiXxyzem4yXRlxXOO0yx
-	 Dlc0N4sQu3XZKNviufRbDZHfOXttik1t+s1HchNEr+x8El6vHp4EckQvwQC98XYjhVfEE
-	 B4Owy7I+W/Lr9VlZTgUTobfGZa8rbi94h2SetxJVTkh/QiruvBkxi3JwSRD43X8tzuIAH
-	 /koXT0ZGVmpqYczTLMy5dFR3MP1oOErtfuuwf/Lxcy7Q/wri2brkP5RHJG7UNT6wzWAPh
-	 I4WE8zKSCgvlVNoRzgyyEInqihHQwUYy7HDe9tF92E+ZnrZ/zP6CRFFb1G+pVRIqp3Q==
+	t=1795626287;
+	b=gQZYivEoHjjEppZLL+P0JYYmg7RWPQjaNPSoacjOEUcfGcvalg1YR51+5Zvs0JhQ7ND7
+	 3BIefyE3gzc9l0iIH3hcDjh7TifzZnF9CLEMwt0I8g56lmzH5kbSnVAaVNN6GZidCuRLo
+	 ofxpD4hzL7lsxj6ZgzFiZolKDbfifp05KN4uqOFusHXw3g9Cc1lTUVVtH8/Dll26Xgf4W
+	 hm1ABujKGjoisH4DrVb4eykKrWT9Jj7YhDNMFE0FnzfJeJzxh3QEWMVbUfJCKwVnnd2NZ
+	 UJlVvHHqsQVUTMpkxebbZr1IJkpAHY8m0B8jNRcwrxb61NEdY7m2pO2RmiPx7/191lw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795626284;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795626287;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=o4Z0HKX0S+ESxb6Sc+1S5qIEtknRY23zXKq+lgmgxhI=;
-	b=VH+xEdgfph5vOg+pXocifxLLlktxweu55YOKPaJvccRyYY00z623OOH7gss4owh4/mvN
-	 wWoA9AdYhBb3hWZJTPzBR0Czjl+w87uScoLVQaau5iumf4Ofc76wDhmo3KOaVYWIneSAz
-	 qZNzJCMCQ0t7JXKjE0dO8HM/0ZAyl+N6EmPVRIpMliHEVrOK8CcQt4kOy2wDbL7/2/Ddo
-	 9w/5P/hpICyv8tHLSNQEkz4QR6BMLkh9UqZIbcU4ZJHVlBL8ss29N0/bMFSfg1mo4+cIK
-	 xKrR08Uuigre75TdBxFBYAHZW4Y6fGNlQ9IcBu+cV7VQb0cFYHk7lP1gYggdHVh4Klg==
+	bh=jrFdrEs9BjpkTVaDoUSvezaGfKtFb1hNcDYoG2Hca28=;
+	b=uu//vfnltT+3B7/G2/nQMpbGG+qAy0PpF5i0nBLUy44NYhBXGSNQQgLDKJgq1KFYOGzr
+	 VNXt+Yhe2PTDlCOoBfVXsf9CzB1pii+xbIhrUfEJ3wEWDulrlZnoEwjONZdfReHrGtOSv
+	 jYKdxf/wHtlD0byu1zlttOP9Ld8jEllP0V7zPDNfwSc0dGxE11P/YTWWWhA2HE2DBRVxv
+	 mP0rdLKrDJT+EWFOWvxSw3a0ItrZywzWTCveND8uSItniKsEXSXai7o3bt9UFcQnCMG8x
+	 +6exOZ6D98Gw4XyvKXp8rDJ1D6fgzm9ayYNeTjyU7q4XrrjZX5KSnlN4ygwKp1FG1oA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ps7hsVu8;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=DopcJnvd;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 54425606A31E;
-	Wed, 25 Nov 2026 17:04:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 61176606A31E;
+	Wed, 25 Nov 2026 17:04:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ps7hsVu8
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A4E0F1F000C4;
-	Wed, 25 Nov 2026 17:04:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=DopcJnvd
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7BD551F000C6;
+	Wed, 25 Nov 2026 17:04:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795626284;
-	bh=o4Z0HKX0S+ESxb6Sc+1S5qIEtknRY23zXKq+lgmgxhI=;
+	s=korg; t=1795626287;
+	bh=jrFdrEs9BjpkTVaDoUSvezaGfKtFb1hNcDYoG2Hca28=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ps7hsVu8Jrlwa4oar7JHUnM3E/4O9u8y4o3EP7lmnHb9jeQH0meBmiXg9gi8bF6AJ
-	 ur5vDkL239uBBFCdAOcHqzrLmBmX3fXMB3WlBqjbTLY7RS+Vle6eSMBSRymQZ9EqcA
-	 unk08IPD5BnzJuEAJ34AW/a9qWaqOL3TkkQB+xDY=
+	b=DopcJnvd3QK6Bw71wXY7yVI7nH5YgsVxapDJG1PhR9iyGxPbpGX1DPgL0t0yEhk3c
+	 s0gFFcWiUbxWd7P9jWYUvgCm6kCzJdYnBo18mRe93U9aR+fHUCWlmkeNiz1TiQOtTS
+	 Q5+RlVPYHgJwsG1/OtvxRg1r6onlPD1vi059Xtk4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Arnav Kapoor <kapoorarnav43@gmail.com>,
-	Jean-Baptiste Maneyrol <jean-baptiste.maneyrol@tdk.com>,
+	Jiale Yao <yaojiale02@163.com>,
 	Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>
-Subject: [PATCH 6.12 791/816] iio: imu: inv_mpu6050: fix magnetometer scale of Y and Z axes
-Date: Wed, 25 Nov 2026 15:38:59 +0100
-Message-ID: <20261125143907.481102623@linuxfoundation.org>
+Subject: [PATCH 6.12 792/816] iio: imu: kmx61: reject duplicate event disable
+Date: Wed, 25 Nov 2026 15:39:00 +0100
+Message-ID: <20261125143907.504370715@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143849.205329330@linuxfoundation.org>
 References: <20261125143849.205329330@linuxfoundation.org>
@@ -68,43 +67,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Arnav Kapoor <kapoorarnav43@gmail.com>
+From: Jiale Yao <yaojiale02@163.com>
 
-commit e5f7a6684a23d9b20184a81b4ebded3b3504ccdc upstream.
+commit 9a60b35fe45801d45454e1efe90569c9cc6ea736 upstream.
 
-inv_mpu_magn_get_scale() returns st->magn_raw_to_gauss[chan->address],
-where magn_raw_to_gauss[] holds one coefficient per axis, computed in
-inv_magn_init() from the per-axis factory sensitivity adjustment values
-(ASAX, ASAY, ASAZ) of the AK8975/AK8963 magnetometer.
+The IIO core does not filter duplicate writes to the event enable
+attribute. kmx61_write_event_config() already ignores repeated enable
+requests, but a repeated disable request still calls
+kmx61_set_power_state(data, false, KMX61_ACC), dropping a runtime PM
+reference that was not acquired for this request. This can underflow the
+runtime PM usage count and trigger a "Runtime PM usage count underflow"
+warning.
 
-However INV_MPU9X50_MAGN_CHAN() never sets .address, so it is 0 for all
-three magnetometer channels. As a result the Y and Z channels report the
-scale computed from the X axis adjustment value, and userspace scales
-the Y and Z readings with the wrong per-axis calibration.
+Return early when the requested state already matches ev_enable_state.
 
-Set .address to the axis index (0 for X, 1 for Y, 2 for Z) in the
-channel macro, matching the order used to fill magn_raw_to_gauss[].
-
-Fixes: b1392de06184 ("iio: imu: inv_mpu6050: add MPU925x magnetometer support")
-Signed-off-by: Arnav Kapoor <kapoorarnav43@gmail.com>
-Acked-by: Jean-Baptiste Maneyrol <jean-baptiste.maneyrol@tdk.com>
+Fixes: fd3ae7a9f21c ("iio: imu: kmx61: Add support for any motion trigger")
+Signed-off-by: Jiale Yao <yaojiale02@163.com>
 Cc: stable@vger.kernel.org
 Signed-off-by: Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/iio/imu/inv_mpu6050/inv_mpu_core.c |    2 ++
- 1 file changed, 2 insertions(+)
+ drivers/iio/imu/kmx61.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/iio/imu/inv_mpu6050/inv_mpu_core.c
-+++ b/drivers/iio/imu/inv_mpu6050/inv_mpu_core.c
-@@ -1550,6 +1550,8 @@ static const unsigned long inv_mpu_scan_
- 		.type = IIO_MAGN,					\
- 		.modified = 1,						\
- 		.channel2 = _chan2,					\
-+		/* index of the axis in magn_raw_to_gauss[] */		\
-+		.address = (_chan2) - IIO_MOD_X,			\
- 		.info_mask_separate = BIT(IIO_CHAN_INFO_SCALE) |	\
- 				      BIT(IIO_CHAN_INFO_RAW),		\
- 		.scan_index = _index,					\
+--- a/drivers/iio/imu/kmx61.c
++++ b/drivers/iio/imu/kmx61.c
+@@ -946,7 +946,7 @@ static int kmx61_write_event_config(stru
+ 	struct kmx61_data *data = kmx61_get_data(indio_dev);
+ 	int ret = 0;
+ 
+-	if (state && data->ev_enable_state)
++	if (state == data->ev_enable_state)
+ 		return 0;
+ 
+ 	mutex_lock(&data->lock);
 
 
