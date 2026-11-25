@@ -1,51 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795623433;
-	b=tmd/S5dLBdrSphOhFedOQK22vaVy37zOenO6JOAZMNi+QajmAUlnWo/7xF4QBQpOzWrt
-	 ggCpyf5qqW2J99U6pGV6wQ48+PixTKLcr0WdGQ5pjSJAg+AMXJs2iPfLdfAWwMPYuS7DG
-	 z/o7edx6MZuUWR59XKrS8QKjzETptcq4O4OZWkbqAJVxzmF+gGEinKQlIIXLk7+Jbyo5P
-	 ZiEjkR1RA8YSKzHzxjl8s77r10+5cJXZPPk3t6NJ2I+XNnWgV/a7R9Def/q4S+ng7YDjP
-	 Xs5/6IKr102LwZZLIZgy5wkSl+xoWOTM7m6j7I97tpz74jZE6lAoBzdMWu4fmakm7dw==
+	t=1795623436;
+	b=rSMBPncdAYxp4szOqHYRWnc7NJPSel+c3ZxjnVUFnBQYQwwq1IolRetLU1T4ICLryUkZ
+	 WcgYSaW9pImWgP2Kp3l2IHuY2f6fcgEKwluHaQD81m8ocJjADWHmF8UqaQTORWK8saMKu
+	 Y1lJkgkzOxd9rdiW9P1ouei4srAiQxjXAGIwuWE/yvraCr9F7JFonl3splfICyfHkWH8/
+	 gZD416L7w4h7SFFk7Zx085tHDxgZokFw//1M8lqKh65neM05SMh8cwqpS8ceqL9k5bxTW
+	 znc/vt/bFgdxFDG2t5l9xi0HFRE9RZ3l73dXisWwbHiFV8vnb/Axa/IIGasqT2zvCSw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795623433;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795623436;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=M6u3jid3bzjwyVcBq4ERQysMI4aFjwOpOZdtxWZ5M5M=;
-	b=foP1JkPuyseVj07IgLuA6OZmuluhqH/E1vmR/xMw4leYzkz/FROfhr/NgHU6onfd4/z/
-	 bTwkK+uNwW40PKbupKJ3E9yT38Mi3NLAH5TeiL3gey02yfM130Y4BHAGbbA0WFdqlaxHu
-	 Iw3okHY8Vd9JYSS3jIg2L9uJOVpET8jMRi5BByPJuf/KqV1Nk9ojvz05s0WY5T4+KDFEK
-	 UE4COxNOUPtclHxLwmnwRliyFAy0E3xSp7Oat4l6LlZscCQsAC1P3wKAMMlawgNIhCSqD
-	 E833M6CVxLtiT6fjG7efkh6r9xwyGRMm8VLMonCHuBy9Cq2qsCwfGJeNDBtp2eMFNig==
+	bh=8M9OEL3SX4j1XX/faNoawIjoQGENEWBViCWIgFS2Jt4=;
+	b=eI3eMHgbqfT18QAuy5aACabqHEQcHJ77HiueuJVnrVaaXDAylarTHoy61wPn6lybtQ5K
+	 fESSn5VwtBXRFfideNpSJXNbmP+4JXSa0LvkwI8vUaxhkKOidgh1P7BUKy57fDfx9CY03
+	 XWwEXki3hTU2TQ4jo16TiG/sRO+sDdsB9/1D9gsFz0sURgKhqDWQQjfaQvlkF4wlZWmnC
+	 OZLxOAlpI7mFdSmh5JLg4l+dlFD/TrH1QXSnmd9iIpPIAMDrnoEaukHxyA/kzBG6d5ECM
+	 61GrFmT6Op78i2xMsgEQtYRCARYbzuo4GVdO/JDGCHaUpxJJ6VBodvK7/n6SfM+Ir5Q==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=tNRPnq5u;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=qh440RuH;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 083FD606A31E;
-	Wed, 25 Nov 2026 16:17:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1B935606A323;
+	Wed, 25 Nov 2026 16:17:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=tNRPnq5u
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 590861F000CA;
-	Wed, 25 Nov 2026 16:17:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=qh440RuH
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 30A7A1F000CA;
+	Wed, 25 Nov 2026 16:17:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795623432;
-	bh=M6u3jid3bzjwyVcBq4ERQysMI4aFjwOpOZdtxWZ5M5M=;
+	s=korg; t=1795623435;
+	bh=8M9OEL3SX4j1XX/faNoawIjoQGENEWBViCWIgFS2Jt4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=tNRPnq5uWVdeJy9txwQSglNgaa05EnsflWdj4bHB4ccrTmSC8NB96We1YkbiIA4fK
-	 BCKgCI2d7FkVhzsQPBDBYWE0sRk0Dhcshyx3yo7TxnidZrFd6EiNnbPfGaDGLEzUfl
-	 xNnOUKiMP/BYisB3Rl5dQqP4IN8lm6OA0vg/M66w=
+	b=qh440RuHSrv4NdJURKLHoCG6+zgwyneBwb4vBkQVA611yh4MPbXlgDN818TSN9xyS
+	 qmiET5z+4QBfIR8MfHGwTlXJTl2SvK+pjx6H39TGyrWjv/3txrzrunqmkhNENehVij
+	 XpYIRdl43pddJ40nGlaOkc0LDO5kZT+SNirWlMEg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yingjie Wang <1075151112@qq.com>,
-	Mikulas Patocka <mpatocka@redhat.com>
-Subject: [PATCH 6.18 858/990] dm thin: avoid wrapping no_space_timeout
-Date: Wed, 25 Nov 2026 15:37:05 +0100
-Message-ID: <20261125143842.123867488@linuxfoundation.org>
+	guolingxing <guolingxing@tju.edu.cn>,
+	Mikulas Patocka <mpatocka@redhat.com>,
+	Dongsheng Yang <dongsheng.yang@linux.dev>
+Subject: [PATCH 6.18 859/990] dm-pcache: do not advance dirty_tail after backing flush failure
+Date: Wed, 25 Nov 2026 15:37:06 +0100
+Message-ID: <20261125143842.148222750@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143822.072087159@linuxfoundation.org>
 References: <20261125143822.072087159@linuxfoundation.org>
@@ -67,46 +68,116 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yingjie Wang <1075151112@qq.com>
+From: guolingxing <guolingxing@tju.edu.cn>
 
-commit bcb78d49620f666b4a9d62997691e8d031fd4ebc upstream.
+commit b1310cb291935c788f34ed6eb1e7e9b42cfac045 upstream.
 
-set_pool_mode() converts the no_space_timeout module parameter with
-READ_ONCE(no_space_timeout_secs) * HZ. The usual arithmetic conversions
-evaluate the product as unsigned int, so it can wrap before being stored
-in the unsigned long delay. With HZ=1000, 4294968 seconds becomes 704
-jiffies: a pool that runs out of data space switches to
-error_if_no_space and fails queued writes with -ENOSPC after about 0.7
-seconds.
+After all writeback bios for a kset complete, writeback_ctx_end()
+flushes the backing device and then advances the persistent dirty_tail.
+However, backing_dev_flush() discards the error returned by
+blkdev_issue_flush(), so dirty_tail is advanced even when the written
+data is not known to be durable.
 
-Widen the value before the multiplication and cap it at
-MAX_JIFFY_OFFSET / HZ, so large timeouts no longer wrap into short
-delays. On 32-bit kernels, values beyond the supported jiffies range
-saturate at the largest whole-second delay not exceeding
-MAX_JIFFY_OFFSET. The timer wheel's existing handling of very long
-delays is unchanged.
+dirty_tail points to the first kset that still requires writeback.
+Advancing it causes recovery to treat the preceding kset as clean and
+allows its cache copy to eventually be reclaimed by garbage collection.
+If the backing device flush failed, a subsequent power failure may
+therefore result in data loss.
 
-Fixes: 80c578930ce7 ("dm thin: add 'no_space_timeout' dm-thin-pool module param")
+Make backing_dev_flush() return the flush status and handle a flush
+failure like a writeback I/O failure. Leave dirty_tail unchanged so
+that the same kset will be retried.
+
+Fixes: 1d57628ff95b ("dm-pcache: add persistent cache target in device-mapper")
 Cc: stable@vger.kernel.org
-Signed-off-by: Yingjie Wang <1075151112@qq.com>
+Signed-off-by: guolingxing <guolingxing@tju.edu.cn>
 Signed-off-by: Mikulas Patocka <mpatocka@redhat.com>
+Reviewed-by: Dongsheng Yang <dongsheng.yang@linux.dev>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/md/dm-thin.c |    4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/md/dm-pcache/backing_dev.c     |  4 ++--
+ drivers/md/dm-pcache/backing_dev.h     |  2 +-
+ drivers/md/dm-pcache/cache_writeback.c | 28 +++++++++++++++++++-------
+ 3 files changed, 24 insertions(+), 10 deletions(-)
 
---- a/drivers/md/dm-thin.c
-+++ b/drivers/md/dm-thin.c
-@@ -2544,7 +2544,9 @@ static void set_pool_mode(struct pool *p
- 	struct pool_c *pt = pool->ti->private;
- 	bool needs_check = dm_pool_metadata_needs_check(pool->pmd);
- 	enum pool_mode old_mode = get_pool_mode(pool);
--	unsigned long no_space_timeout = READ_ONCE(no_space_timeout_secs) * HZ;
-+	unsigned long no_space_timeout =
-+		min_t(unsigned long, READ_ONCE(no_space_timeout_secs),
-+		      MAX_JIFFY_OFFSET / HZ) * HZ;
+diff --git a/drivers/md/dm-pcache/backing_dev.c b/drivers/md/dm-pcache/backing_dev.c
+index 23002beb192a..84b4e76367fa 100644
+--- a/drivers/md/dm-pcache/backing_dev.c
++++ b/drivers/md/dm-pcache/backing_dev.c
+@@ -336,9 +336,9 @@ struct pcache_backing_dev_req *backing_dev_req_create(struct pcache_backing_dev
+ 	return backing_req;
+ }
  
- 	/*
- 	 * Never allow the pool to transition to PM_WRITE mode if user
+-void backing_dev_flush(struct pcache_backing_dev *backing_dev)
++int backing_dev_flush(struct pcache_backing_dev *backing_dev)
+ {
+-	blkdev_issue_flush(backing_dev->dm_dev->bdev);
++	return blkdev_issue_flush(backing_dev->dm_dev->bdev);
+ }
+ 
+ int pcache_backing_init(void)
+diff --git a/drivers/md/dm-pcache/backing_dev.h b/drivers/md/dm-pcache/backing_dev.h
+index b371cba483b9..8422e5e76e29 100644
+--- a/drivers/md/dm-pcache/backing_dev.h
++++ b/drivers/md/dm-pcache/backing_dev.h
+@@ -120,7 +120,7 @@ struct pcache_backing_dev_req *backing_dev_req_alloc(struct pcache_backing_dev *
+ 						struct pcache_backing_dev_req_opts *opts);
+ void backing_dev_req_init(struct pcache_backing_dev_req *backing_req,
+ 			struct pcache_backing_dev_req_opts *opts);
+-void backing_dev_flush(struct pcache_backing_dev *backing_dev);
++int backing_dev_flush(struct pcache_backing_dev *backing_dev);
+ 
+ int pcache_backing_init(void);
+ void pcache_backing_exit(void);
+diff --git a/drivers/md/dm-pcache/cache_writeback.c b/drivers/md/dm-pcache/cache_writeback.c
+index c8a4c8110a58..e09560f172dd 100644
+--- a/drivers/md/dm-pcache/cache_writeback.c
++++ b/drivers/md/dm-pcache/cache_writeback.c
+@@ -18,12 +18,18 @@ static void writeback_ctx_end(struct pcache_cache *cache, int ret)
+ 		return;
+ 
+ 	if (!cache->writeback_ctx.ret) {
+-		backing_dev_flush(cache->backing_dev);
+-
+-		mutex_lock(&cache->dirty_tail_lock);
+-		cache_pos_advance(&cache->dirty_tail, cache->writeback_ctx.advance);
+-		cache_encode_dirty_tail(cache);
+-		mutex_unlock(&cache->dirty_tail_lock);
++		ret = backing_dev_flush(cache->backing_dev);
++		if (ret) {
++			pcache_dev_err(CACHE_TO_PCACHE(cache),
++				       "failed to flush backing device: %d", ret);
++			cache->writeback_ctx.ret = ret;
++		} else {
++			mutex_lock(&cache->dirty_tail_lock);
++			cache_pos_advance(&cache->dirty_tail,
++					  cache->writeback_ctx.advance);
++			cache_encode_dirty_tail(cache);
++			mutex_unlock(&cache->dirty_tail_lock);
++		}
+ 	}
+ 	queue_delayed_work(cache_get_wq(cache), &cache->writeback_work, 0);
+ }
+@@ -76,8 +82,16 @@ static inline bool is_cache_clean(struct pcache_cache *cache, struct pcache_cach
+ 
+ void cache_writeback_exit(struct pcache_cache *cache)
+ {
++	int ret;
++
+ 	cancel_delayed_work_sync(&cache->writeback_work);
+-	backing_dev_flush(cache->backing_dev);
++
++	ret = backing_dev_flush(cache->backing_dev);
++	if (ret)
++		pcache_dev_err(CACHE_TO_PCACHE(cache),
++			       "failed to flush backing device during exit: %d",
++			       ret);
++
+ 	cache_tree_exit(&cache->writeback_key_tree);
+ }
+ 
+-- 
+2.56.1
+
 
 
