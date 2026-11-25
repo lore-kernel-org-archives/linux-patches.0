@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795618583;
-	b=C/dGYmQAHjS4SNZLPTxgs4QPJ/E8uG4fLS3j4j7t0ZLlj/Yhyd5aFyp10uAJJrwkCdXE
-	 V611uYy8N3Lbhind2XtKulX+EkrJ3FX3fmfbnbGumAo/zHRdr3zCuPsGExjblmc6BjF3I
-	 ceiNcjOGrFm4aFzja4HrmyoTQ+F6kRoNypTPFcunBi3xshFFh7sWiWN2pAhldrsTuuCHS
-	 CsQKvWVMQRIWVcY5VUzUGqDc7ep3bjOvfrXOmO3xZp1Ut4d3swm3zudkGTbSFI20pZ8po
-	 Hqjx7GrARqFqHVs0u4rBQqlx6/Ruba3AvTZsbyGO8gL9kl52zqdigVWKgW5i1Y/H2Vw==
+	t=1795618586;
+	b=v1YZxnZ2EpMbdztVbevcX0Aobqp31fr8DXk+WedrTxvew4pEuxaDM6Bu4/36SYk4zlrV
+	 99cqV0VL4U3YYOiXjz9N/EaiY3LeqPJYXxSsYLy1mb/vAhbG9SseESfyLbj8c3gPP2hpx
+	 2d7PWJ6S7G+wvneajxYK9fWcOncXsiD+fz5gBoWq1mmeeuTOONaFmpDKE+TyfvQEWbshY
+	 ShC0YUgjVT5WaOdT1z5tqnSY8vvlZnBeKoQOSA/FiiagcN95mUEx8iMUNW76BhBxTMDAH
+	 hSAyuuYOI8ElQcacmRjbMUlNLCJAJaW2cQOI8lOEu/BKhu7FMjtM0ecN3AfDE84ahYA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795618583;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795618586;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=/EcmE73oUVogz6Dyt9a4wtXJQsSgEPtXYRojTD9v6Wo=;
-	b=PgbVKu5ffv8zXMiz+5PMvwUs/mW9yNK+h7u5RYeH6DYNfHJ9iAM/Is0mSlkrOdLdZWIn
-	 q5eHr2hG/b+pep3mFJr5z/0ajrWdmqACFOYiKZJeIL6Zw1z3HXn42YwGvqeVasJUK/ujk
-	 L2UGd7IY2WRUIFPMNJV0FdAHgc4k0C6G3B0ouq3Qt7AHoOaDDmJtrliTRqFBRfxtxdfPe
-	 BRL+nd6aexmKU6jQcMZKm7/oYSw2XV/wXKI4PX2V3hYls2keJ/5HOvw1/w+ihCwYAjxum
-	 1oVNI5r4A6lv0DXKPO+O/x5Dzc1zlq+3cqTzkkXMy+cr3PeZO8gpRgH678yvCyx4eQA==
+	bh=eCaFoSJAtunOua815AxX2J/cTwyx3+aXq5peWYGdXIA=;
+	b=3TX1Q0x4cBpIVjwA6sHpYlCEVAdZ1W4Xq/9nSRf6pJPTolgwJOpbgvAaoVKHtkngAVmr
+	 6aMpqI9AQjrDDNUuHGbcOh9GsUH+MUqHDipcLjXqPZBe0i1ASfOLGC4F/nzmxAeC3i71R
+	 hGafRDHXi6ULDRpkuWboFJD4HrAXhYLJgJwRcuogETQgyBjUAXEkGXEFg2xkTpDJ1NC6l
+	 wtlWiAp3YR3uOCBnW2/tptxFqr+41SBgCfYnK6YfjZwrXAqqnA4SFA/Mw3Zjyfm1kpJT/
+	 ZOhzMdr6ofEunYNpYiISD9QM5hG51M3rAKWTVWKwS61LvATa6eujXRJNt757v5askIw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="C/gWPwg7";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=oJ78WBXg;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0FF69606A321;
-	Wed, 25 Nov 2026 14:56:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 05CE4606A321;
+	Wed, 25 Nov 2026 14:56:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=C/gWPwg7
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2629B1F000C6;
-	Wed, 25 Nov 2026 14:56:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=oJ78WBXg
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 516BB1F000E1;
+	Wed, 25 Nov 2026 14:56:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795618582;
-	bh=/EcmE73oUVogz6Dyt9a4wtXJQsSgEPtXYRojTD9v6Wo=;
+	s=korg; t=1795618585;
+	bh=eCaFoSJAtunOua815AxX2J/cTwyx3+aXq5peWYGdXIA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=C/gWPwg7f0lBrX4SyVMWaNlfao4KlrGoCk0iy+PwkohWox09qWN3Dyfwhs56jRM47
-	 oqNsnLeSKIIv2xp1hCw7qrnFkj8zJNUuoxYy9HPH0hVqqshS3l6N7qUgcxcrohPFhy
-	 RgUkFlbwsDfisIfcMR9z6aN80ag/AHjykU6/nwn4=
+	b=oJ78WBXgX6HD2P0NHFnKcqyb1TI+3DixusAuDyQVRMU4RYR2bwbCDE/UmyY/ytb8j
+	 q5fR5tYQ8ztM/Wq6D9TAyRwH6O9Neq4vBnYSg9SGVbIVzBnDH+UzL09m1JuOi1Ai/S
+	 LP7V/YYKnuI4EXVLzouddS0lTNw2Y+xUzlsDUsFU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Florian Fainelli <f.fainelli@gmail.com>,
+	"Maciej W. Rozycki" <macro@orcam.me.uk>,
 	Thomas Bogendoerfer <tsbogend@alpha.franken.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0326/1005] MIPS: Alchemy: Save the Ethernet address before reusing PROM memory
-Date: Wed, 25 Nov 2026 15:27:44 +0100
-Message-ID: <20261125143829.369725410@linuxfoundation.org>
+Subject: [PATCH 7.3 0327/1005] MIPS: Cobalt: Include legacy IDE ports in the PCI I/O window
+Date: Wed, 25 Nov 2026 15:27:45 +0100
+Message-ID: <20261125143829.394175284@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143821.729802100@linuxfoundation.org>
 References: <20261125143821.729802100@linuxfoundation.org>
@@ -70,91 +71,105 @@ Content-Transfer-Encoding: 8bit
 
 From: Florian Fainelli <f.fainelli@gmail.com>
 
-[ Upstream commit 792ac17faa0503448f3ef85b49f16456ac54ab84 ]
+[ Upstream commit ff209a7294988aac52b2522b1d0d7349da4541ec ]
 
-Alchemy keeps pointers into the firmware environment and looks up ethaddr
-when initializing the Ethernet devices. By that point, memory allocation
-can have overwritten the environment, causing prom_getenv() to pass an
-invalid pointer to strchr() and panic during boot.
+The Cobalt PCI I/O window starts at 0x1000, excluding the VIA IDE
+controller's fixed compatibility-mode ports at 0x170, 0x1f0, 0x376 and
+0x3f6. Since pcibios_enable_device() was converted to
+pci_enable_resources(), these unclaimed resources cause pata_via to
+fail to probe with -EINVAL.
 
-On the MTX-1, the struct page layout change in 9ddb3c14afba reduces struct
-page from 40 to 32 bytes and exposes this unreserved firmware memory.
-Bisection and boot tests confirmed that the parent boots while the change
-reproduces the panic.
+Start the PCI I/O window at zero to cover the southbridge legacy ports,
+retaining 0x1000 as the allocation minimum via PCIBIOS_MIN_IO. Register
+the PCI controller from plat_mem_setup(), before the VIA reservations
+and i8259 initialization, so the legacy resources do not conflict with
+the host bridge window and prevent PCI bus scanning.
 
-Parse the Ethernet address during prom_init(), before registering RAM
-with memblock, and keep the six bytes in kernel-owned init data. Return
-the saved address during device initialization, preserving the existing
-YAMON formats and command-line fallback without reserving a fixed
-low-memory region.
+Keep the VIA resource reservations in plat_mem_setup() after the PCI
+controller registration and use insert_resource() to nest them beneath
+the PCI window. The i8259 and RTC resources are also claimed beneath it.
 
-Fixes: b93ddc4f9156 ("mips: Reserve memory for the kernel image resources")
+Boot-tested on a Qube2 with a MIPS64 kernel. All seven PCI functions
+enumerate, both tulip devices bind, and pata_via initializes both ATA
+hosts and detects the ST380012A 80 GB disk. All 18 boot checks pass,
+including a read-only disk test and Ethernet ping.
+
+Fixes: ae81aad5c2e1 ("MIPS: PCI: Use pci_enable_resources()")
 Signed-off-by: Florian Fainelli <f.fainelli@gmail.com>
+Reviewed-by: Maciej W. Rozycki <macro@orcam.me.uk>
 Signed-off-by: Thomas Bogendoerfer <tsbogend@alpha.franken.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/mips/alchemy/common/prom.c | 23 ++++++++++++++++++++---
- 1 file changed, 20 insertions(+), 3 deletions(-)
+ arch/mips/cobalt/pci.c                     | 11 +++++------
+ arch/mips/cobalt/setup.c                   |  4 +++-
+ arch/mips/include/asm/mach-cobalt/cobalt.h |  1 +
+ 3 files changed, 9 insertions(+), 7 deletions(-)
 
-diff --git a/arch/mips/alchemy/common/prom.c b/arch/mips/alchemy/common/prom.c
-index 20d30f6265cdc..c4aefeb788715 100644
---- a/arch/mips/alchemy/common/prom.c
-+++ b/arch/mips/alchemy/common/prom.c
-@@ -46,6 +46,11 @@ int prom_argc;
- char **prom_argv;
- char **prom_envp;
+diff --git a/arch/mips/cobalt/pci.c b/arch/mips/cobalt/pci.c
+index 85ec9cc31d666..29fd052766b2a 100644
+--- a/arch/mips/cobalt/pci.c
++++ b/arch/mips/cobalt/pci.c
+@@ -14,6 +14,8 @@
  
-+static char prom_ethaddr[6] __initdata;
-+static bool prom_ethaddr_valid __initdata;
+ #include <asm/gt64120.h>
+ 
++#include <cobalt.h>
 +
-+static void __init prom_init_ethernet_addr(void);
-+
- void __init prom_init_cmdline(void)
+ extern struct pci_ops gt64xxx_pci0_ops;
+ 
+ static struct resource cobalt_mem_resource = {
+@@ -24,7 +26,7 @@ static struct resource cobalt_mem_resource = {
+ };
+ 
+ static struct resource cobalt_io_resource = {
+-	.start	= 0x1000,
++	.start	= 0,
+ 	.end	= 0xffffffUL,
+ 	.name	= "PCI I/O",
+ 	.flags	= IORESOURCE_IO,
+@@ -38,11 +40,8 @@ static struct pci_controller cobalt_pci_controller = {
+ 	.io_map_base	= CKSEG1ADDR(GT_DEF_PCI0_IO_BASE),
+ };
+ 
+-static int __init cobalt_pci_init(void)
++void __init cobalt_pci_init(void)
  {
- 	int i;
-@@ -95,6 +100,9 @@ void __init prom_init(void)
- 	if (!memsize_str || kstrtoul(memsize_str, 0, &memsize))
- 		memsize = SZ_64M; /* minimum memsize is 64MB RAM */
++	PCIBIOS_MIN_IO = 0x1000;
+ 	register_pci_controller(&cobalt_pci_controller);
+-
+-	return 0;
+ }
+-
+-arch_initcall(cobalt_pci_init);
+diff --git a/arch/mips/cobalt/setup.c b/arch/mips/cobalt/setup.c
+index 9a266bf783399..502acc92969b8 100644
+--- a/arch/mips/cobalt/setup.c
++++ b/arch/mips/cobalt/setup.c
+@@ -83,9 +83,11 @@ void __init plat_mem_setup(void)
+ 	/* I/O port resource */
+ 	ioport_resource.end = 0x01ffffff;
  
-+	/* Save the MAC before the allocator can reuse the PROM environment. */
-+	prom_init_ethernet_addr();
++	cobalt_pci_init();
 +
- 	memblock_add(0, memsize);
+ 	/* These resources have been reserved by VIA SuperI/O chip. */
+ 	for (i = 0; i < ARRAY_SIZE(cobalt_reserved_resources); i++)
+-		request_resource(&ioport_resource, cobalt_reserved_resources + i);
++		insert_resource(&ioport_resource, cobalt_reserved_resources + i);
  }
  
-@@ -125,7 +133,7 @@ static inline void str2eaddr(unsigned char *ea, unsigned char *str)
- 	}
- }
+ /*
+diff --git a/arch/mips/include/asm/mach-cobalt/cobalt.h b/arch/mips/include/asm/mach-cobalt/cobalt.h
+index 97f9d5e9446d2..c7a8607cd651a 100644
+--- a/arch/mips/include/asm/mach-cobalt/cobalt.h
++++ b/arch/mips/include/asm/mach-cobalt/cobalt.h
+@@ -19,6 +19,7 @@ extern int cobalt_board_id;
+ #define COBALT_BRD_ID_QUBE2    0x5
+ #define COBALT_BRD_ID_RAQ2     0x6
  
--int __init prom_get_ethernet_addr(char *ethernet_addr)
-+static void __init prom_init_ethernet_addr(void)
- {
- 	char *ethaddr_str;
++void cobalt_pci_init(void);
+ void cobalt_machine_halt(void);
+ void cobalt_machine_restart(char *command);
  
-@@ -135,12 +143,21 @@ int __init prom_get_ethernet_addr(char *ethernet_addr)
- 		/* Check command line */
- 		ethaddr_str = strstr(arcs_cmdline, "ethaddr=");
- 		if (!ethaddr_str)
--			return -1;
-+			return;
- 
- 		ethaddr_str += strlen("ethaddr=");
- 	}
- 
--	str2eaddr(ethernet_addr, ethaddr_str);
-+	str2eaddr(prom_ethaddr, ethaddr_str);
-+	prom_ethaddr_valid = true;
-+}
-+
-+int __init prom_get_ethernet_addr(char *ethernet_addr)
-+{
-+	if (!prom_ethaddr_valid)
-+		return -1;
-+
-+	memcpy(ethernet_addr, prom_ethaddr, sizeof(prom_ethaddr));
- 
- 	return 0;
- }
 -- 
 2.53.0
 
