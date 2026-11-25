@@ -1,52 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795618559;
-	b=uBydFU5l4nM5+sSrLfK5/pOpLtgytUe7EIJr2NZhg0O4vOE0sDjy/QZAub6sH0g7A21T
-	 BTdU9MoM++HZU/H0pC+WcPI7BDzFYgdmb5eLVov6XtwLTjGRrMuRZC7FKs2c1t9cJcnwA
-	 3wgpHV2Ef30v2JS8uIHsynCaZ4fUQXBxjk4APPq15oHDTvc92WqvouK4DPwe/6kgXZIY9
-	 yGYhmIHJr2iwxuFWFr94qmsXnf+WFQijvJp3SUvEguxdJoDmtw35JXqXnjiQVGTxzOznE
-	 uN2K9bQZcJm07ConkytW0kHws4Nb0+B9tftWoY5uJbPuOrKVX8UITbAe4cKScoxP4lg==
+	t=1795618562;
+	b=YF6L47tuVTslaWE75LdaFDtC7CzULYiL8JWmVKDpQmtgk2uzyBsA8sVeQ1l4mmIqC3cm
+	 pgaQZQnAPoPHJIOGypnkIFtlrPmxXvEQk/IwqDPX2YyAveu6f1PSHk/FMqH/LWyLmyam9
+	 ebd3Bl8DyMc18RiGRjdu0v5+DwLTMwkbKsZChkb9jp+1SrWxStrdKpbR21atvHvNWb0YD
+	 /Q35iT62RmxOLb6s9rce9zt0RBXvQM32XU+LMgnt+Y4T9t4RHZpIqjxbGFZc1Z0vhckP+
+	 r6JbAXud5cIQ0U2lcjk3Gx1gmhDkwQRgwNgCpFqLCKq8UHOUT/iY2ZLO2FdQmJsFZ4w==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795618559;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795618562;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=GBOUSwlyBi8h7S40n/AfmvfnMbkAXo+PSIwx72JJnSA=;
-	b=MSXvDsIjMpA6IUplZGPHLJqovqMYYMaO+gj0xohNKN3y6TlpoJCPG3FII7rB0WfUk6NQ
-	 VN/3TrBxrgTcXpDSgiG8/zJmcXFdwSthz8omTFmvQinEf4Xe9HRKi5ZLxNWn3+JnKPGYZ
-	 Jsox7AIycUu6e+YVfiwLEq+0pMVtwVrZP4c/yICvtrkFRuvWeJlWz89l5FqylnayNJb/y
-	 7HlItVTv6iCfxjMIBAU86QkCQrbly8a9bjpRnh1ypzm/zxve3xiovEogcqRKnNObOYrjS
-	 F8LRnPZGrRhxx3y63KK5iK2VIdpFy2TTRx0YcfQkj8PNLrqsVZpU+D2o7bV7SGwlglQ==
+	bh=c7/5CSR2jEdLGldzpcl/bXAcyjVxb7RfYuSs2Upu7IU=;
+	b=H3FIQf0UxA4Um0ovOBMLHi94XxATNSvlRt/IrvyvFItr5Fx/VfVIA5jOpFWWB7Gdecrt
+	 9uCb34+MiIGzbToP6/yJ7zHMNRrXDa/Rkou08IwnExoMUQ61E208eFJvCs+RYBKq9IZmT
+	 uBiPoZd/jA9lQDhmL+facSjfHMibwFCDKV0t7sWf36gKeO+TCzzMS/b1G5sO7MLo8cVxV
+	 yG7Qvjj4OeLgn0UMgb8PzxkqVzsaF9bgDNwW0vY/VsUnvggueFaDjftyIWwI1bzAQIdDR
+	 gAENHD3PttjHT3/1J3VRPeWEgGYBgjZfiq7kiknbz/x6Z/CvzlUAGHUJRR75PZ1/6NQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=gGZh2reo;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=GcvBcCtT;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 42301606A32C;
-	Wed, 25 Nov 2026 14:55:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BE173606A321;
+	Wed, 25 Nov 2026 14:56:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=gGZh2reo
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9385F1F000CF;
-	Wed, 25 Nov 2026 14:55:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=GcvBcCtT
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E8D171F000C0;
+	Wed, 25 Nov 2026 14:56:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795618559;
-	bh=GBOUSwlyBi8h7S40n/AfmvfnMbkAXo+PSIwx72JJnSA=;
+	s=korg; t=1795618562;
+	bh=c7/5CSR2jEdLGldzpcl/bXAcyjVxb7RfYuSs2Upu7IU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=gGZh2reo1Te6+3dP0Y/11Iokiu8Y2tbbvxlrHkDREilu/q8mU6xefcej/EUDhgknM
-	 1JGpczQGyE8dY87XpudYRD8FAylpKeX7/ZaoBrRym8/8DwZfQ4i5MojUTCreKPERR2
-	 ubFhhslQfYXr3IbueyQhRhh1XaGwG2EZJhHbL6nk=
+	b=GcvBcCtTNXHUf8ZsiE8eOgVfwrB9/Yl84Un9EpTnhEYs4RX5RUtMAqjeC+3TYhRVr
+	 7/ZjcArgtBePj8Naj2FMERc67u71tvpliuP8ZI5/egGasJCrfJnCLloRBIzoeJX/bq
+	 ocTaLD+ebtNC4cbTOuHaDj8yz7kcCmbDQfv9jXtI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Florian Westphal <fw@strlen.de>,
-	Pablo Neira Ayuso <pablo@netfilter.org>,
+	Michael Walle <mwalle@kernel.org>,
+	Long Zhao <longzhao@ambarella.com>,
+	Linus Walleij <linusw@kernel.org>,
+	Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0319/1005] netfilter: nat: zero newrange before filling it in
-Date: Wed, 25 Nov 2026 15:27:37 +0100
-Message-ID: <20261125143829.209629500@linuxfoundation.org>
+Subject: [PATCH 7.3 0320/1005] gpio: regmap: free the irqchip if adding the irq domain fails
+Date: Wed, 25 Nov 2026 15:27:38 +0100
+Message-ID: <20261125143829.232616971@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143821.729802100@linuxfoundation.org>
 References: <20261125143821.729802100@linuxfoundation.org>
@@ -68,90 +70,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Florian Westphal <fw@strlen.de>
+From: Long Zhao <longzhao@ambarella.com>
 
-[ Upstream commit d1bb235aa409a4e5aeba6c748d953d948625b1e9 ]
+[ Upstream commit 80415a6ff295b03dab98ef55598c72be66945d82 ]
 
-nf_nat_masquerade_ipv4(), nf_nat_masquerade_ipv6(), netmap_tg4() and
-netmap_tg6() each build a stack-local struct nf_nat_range2 from the
-caller-supplied range, inheriting range->flags unmodified. Two of them
-only memset() the min_addr/max_addr members, the other two don't
-memset() anything at all, so newrange.base_proto is left as stack
-garbage.
+gpio_regmap_register() creates a regmap irqchip and then calls
+gpiochip_irqchip_add_domain(). If that call fails, the error path
+only removes the gpiochip, so the irqchip and its domain leak.
 
-If the inherited flags include NF_NAT_RANGE_PROTO_OFFSET,
-nf_nat_l4proto_unique_tuple() reads range->base_proto.all to compute
-the NAT port offset. Neither the NETMAP nor the MASQUERADE targets
-mask the flags field in their checkentry callback, so this
-uninitialized stack value can end up feeding the NAT port selection.
+Free the irqchip there when this function allocated it. An external
+irq domain is not affected: irq_chip_data stays NULL and the caller
+owns that domain.
 
-The per-member memset()s are not enough: they have to enumerate every
-field that must be cleared, and base_proto was missed when
-NF_NAT_RANGE_PROTO_OFFSET/base_proto was added to the struct. memset()
-the whole struct instead, so every member is covered regardless of
-which ones get explicitly assigned afterwards.
-
-There are other places that miss this, but those hardcode .flags so
-nat core won't read from the uninitialized fields.
-
-C99 initializers would be preferrable, but this is a more intrusive
-change.  Lets followup in nf-next and convert others as well.
-
-This is an LLM finding.
-
-Fixes: 2eb0f624b709 ("netfilter: add NAT support for shifted portmap ranges")
-Signed-off-by: Florian Westphal <fw@strlen.de>
-Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
+Fixes: 553b75d4bfe9 ("gpio: regmap: Allow to allocate regmap-irq device")
+Cc: Michael Walle <mwalle@kernel.org>
+Signed-off-by: Long Zhao <longzhao@ambarella.com>
+Reviewed-by: Michael Walle <mwalle@kernel.org>
+Reviewed-by: Linus Walleij <linusw@kernel.org>
+Link: https://patch.msgid.link/20261103-gpio-regmap-irqchip-leak-v1-1-d038a20840f7@ambarella.com
+Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/netfilter/nf_nat_masquerade.c | 4 ++--
- net/netfilter/xt_NETMAP.c         | 4 ++--
- 2 files changed, 4 insertions(+), 4 deletions(-)
+ drivers/gpio/gpio-regmap.c | 5 +++++
+ 1 file changed, 5 insertions(+)
 
-diff --git a/net/netfilter/nf_nat_masquerade.c b/net/netfilter/nf_nat_masquerade.c
-index 4de6e0a517015..c2a85bd84af13 100644
---- a/net/netfilter/nf_nat_masquerade.c
-+++ b/net/netfilter/nf_nat_masquerade.c
-@@ -62,8 +62,7 @@ nf_nat_masquerade_ipv4(struct sk_buff *skb, unsigned int hooknum,
- 		nat->masq_index = out->ifindex;
+diff --git a/drivers/gpio/gpio-regmap.c b/drivers/gpio/gpio-regmap.c
+index fb21396e1d024..3b9ce1ac55564 100644
+--- a/drivers/gpio/gpio-regmap.c
++++ b/drivers/gpio/gpio-regmap.c
+@@ -504,6 +504,11 @@ struct gpio_regmap *gpio_regmap_register(const struct gpio_regmap_config *config
  
- 	/* Transfer from original range. */
--	memset(&newrange.min_addr, 0, sizeof(newrange.min_addr));
--	memset(&newrange.max_addr, 0, sizeof(newrange.max_addr));
-+	memset(&newrange, 0, sizeof(newrange));
- 	newrange.flags       = range->flags | NF_NAT_RANGE_MAP_IPS;
- 	newrange.min_addr.ip = newsrc;
- 	newrange.max_addr.ip = newsrc;
-@@ -242,6 +241,7 @@ nf_nat_masquerade_ipv6(struct sk_buff *skb, const struct nf_nat_range2 *range,
- 	if (nat)
- 		nat->masq_index = out->ifindex;
- 
-+	memset(&newrange, 0, sizeof(newrange));
- 	newrange.flags		= range->flags | NF_NAT_RANGE_MAP_IPS;
- 	newrange.min_addr.in6	= src;
- 	newrange.max_addr.in6	= src;
-diff --git a/net/netfilter/xt_NETMAP.c b/net/netfilter/xt_NETMAP.c
-index 7da065a472e0e..8bcb3f716d68a 100644
---- a/net/netfilter/xt_NETMAP.c
-+++ b/net/netfilter/xt_NETMAP.c
-@@ -44,6 +44,7 @@ netmap_tg6(struct sk_buff *skb, const struct xt_action_param *par)
- 				   netmask.ip6[i];
- 	}
- 
-+	memset(&newrange, 0, sizeof(newrange));
- 	newrange.flags	= range->flags | NF_NAT_RANGE_MAP_IPS;
- 	newrange.min_addr	= new_addr;
- 	newrange.max_addr	= new_addr;
-@@ -91,8 +92,7 @@ netmap_tg4(struct sk_buff *skb, const struct xt_action_param *par)
- 		new_ip = ip_hdr(skb)->saddr & ~netmask;
- 	new_ip |= mr->range[0].min_ip & netmask;
- 
--	memset(&newrange.min_addr, 0, sizeof(newrange.min_addr));
--	memset(&newrange.max_addr, 0, sizeof(newrange.max_addr));
-+	memset(&newrange, 0, sizeof(newrange));
- 	newrange.flags	     = mr->range[0].flags | NF_NAT_RANGE_MAP_IPS;
- 	newrange.min_addr.ip = new_ip;
- 	newrange.max_addr.ip = new_ip;
+ err_remove_gpiochip:
+ 	gpiochip_remove(chip);
++
++#ifdef CONFIG_REGMAP_IRQ
++	if (gpio->irq_chip_data)
++		regmap_del_irq_chip(gpio->regmap_irq_line, gpio->irq_chip_data);
++#endif
+ err_free_bitmap_output:
+ 	bitmap_free(gpio->fixed_direction_output);
+ err_free_bitmap_dirmask:
 -- 
 2.53.0
 
