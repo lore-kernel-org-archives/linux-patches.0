@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795624286;
-	b=ufcDJqeuzG5/iLfRO1AgzJIthOwRfaJFEK43K9rc/bcGC0wdRKgdBC3Gu2Pkas+GU/Ai
-	 H1HyfI2C4uF12dvGYHe7UJ73iQcUubVsxvAspw+kglkMRXpoTrN3qSVWYTwHRpTMhoISp
-	 EZe+ltO7yVkrNm522hLRRpRH+5whf1lmy6uf9zxFZmw+SZlHPoSD4soE7GAlzDWWiNI6y
-	 z0ZDzgN0b9gkQVe6Eczp9VHqIhuK2/VmRGqJ/fzO0Jg+e5K31CrF0B9diRUrS2FiyWUNq
-	 pqWrRDJMKwMkwDAI4nCBSD7OxhlmDk6Otn+tUt9UaJ0oKI2cTwyP7Lm5zK05VxsPbbw==
+	t=1795624290;
+	b=aw/UgGcoKFxKOwKqO3pt+v44C/E6tnUzcJZ/n/tqJrr14PMTf2jD03eOj7s3V6hjABWK
+	 hIhve8oTh3owu7UZ7pXmuLa7dKZLHbOWyU070VRxZLfzKeSvw7/9dVOhiBK/jZZ9K34h/
+	 85hkqp/Uk025rDIJoUK//COzPSAjSyK38wZbi1z/MmiZohYu09lWTtBel2b1vla9YuWDB
+	 H83ryjy0ol6mol3lx63Ao/XzlKbCxz75rv/Am86j0LsbYkWFcPLZSC3+FFvPVrzO9ZOmQ
+	 qqCMYIoWWWvx+NbQZPRIZCcESpxDVfP+30asPmB5fNlDhojJ2dg1cyW9dQwxvDr2DPw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795624286;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795624290;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=H+xbWsFoXgfChor2U8s54KJXMh/8j3tCTNazQcN+89g=;
-	b=ible9lyDJn/usl3308GUv1HG88j18/S+uwRtify8fIqhO2HbioIIzegMKKBeAYaao1dk
-	 QOXTysRUeV92kMmAUqflCJUMB4XwOXe6eRNPieGSgoyTFNz0aAeVWEsmYdaRvewsHRAWg
-	 WysKump4+sWenj+DmceE1LIU3T7R0SRmVObMcT6Qre216Mt9yngx9Gc0RUt6j8dr/+Mtl
-	 d5CEme+edqUEgub2d0CmgTS+6vSr9ylpjaWp0JolDTxBrESHpYkMf1rwHX9DoMXGquQml
-	 LikomQ/RGBamig8K49i8C0dCdhASOWYxMj3dpqO557kyiZIqoSbQPknlpIkA0BJXKsw==
+	bh=1+Iei4d26zrviS/2LTOhHmIp4bEg/eHtw18snSBSQwk=;
+	b=P3snbXgxRPkZTMyP9aIcdvdG30uqDMahM6IjHqWW8WnBInVeQjbuO/lDb02PwZQu/kqH
+	 u6ato4vOMblp95Gb3DBRde6iREEZ8Kqe8hchCqKtbFUP0/XejSwkFS6cJbuQeGsrY7+p9
+	 zItDV4wkRd8Pkp2nZxs6qpZIRV70UcYJHemOI28N2iYvQi56ssoG8wctE10euK7+lhNmd
+	 JkiD1XHcBhRM04JMKvW53Yavyjc7I/M/K2ZN7p4MCn7ax3V6ZqS8xH/NPtMq+q+lmvk5A
+	 IKrHwtWj1i3c99d+jyAoYqHglw2FMWzOz65uK+s5U+UO83CEbpSnWK+jkPmSrRoOaKQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=LMdTYmF0;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=VMEVa5id;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 54580606A326;
-	Wed, 25 Nov 2026 16:31:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EAB02606A68F;
+	Wed, 25 Nov 2026 16:31:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=LMdTYmF0
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9D1F21F000C0;
-	Wed, 25 Nov 2026 16:31:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=VMEVa5id
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C25B91F000CF;
+	Wed, 25 Nov 2026 16:31:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795624286;
-	bh=H+xbWsFoXgfChor2U8s54KJXMh/8j3tCTNazQcN+89g=;
+	s=korg; t=1795624289;
+	bh=1+Iei4d26zrviS/2LTOhHmIp4bEg/eHtw18snSBSQwk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=LMdTYmF0QcLckk+hjtAwDDXAdaVGNJuqvSF/gcdC3sjtoWDdJE/5yestqmkVGnxii
-	 wJW9vSKlDtKOgzKLxafC/yNuJZvZkVlSpsh9IcF/h/AEBJT4i4MkjtdNisTp1hDuxL
-	 HtxDOVZyRu/ulZsU3K61Jmn/H2aitjrpc42j1P2g=
+	b=VMEVa5idDGkqUAZEsrEA5XxBD7USJssJZyIBfV38kYPjgKRGxX50kKuSMQIB5OOUK
+	 x2EHMVlb4bd5unMGnkhaWQGZtXHG8MfArUaixQ6fiwqsCiSStjYvmeKtkKv2LzzQz9
+	 3977zMFwdqMdn/4g65dZbAZKUHT/Ruxi8e6mQZtk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Guangshuo Li <liguangshuo@mail.sdu.edu.cn>,
-	Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>,
+	Bryam Vargas <hexlabsecurity@proton.me>,
+	Simon Horman <horms@kernel.org>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 145/816] gpio: mpc8xxx: Fix potential use-after-free of IRQ domain
-Date: Wed, 25 Nov 2026 15:28:13 +0100
-Message-ID: <20261125143852.555163686@linuxfoundation.org>
+Subject: [PATCH 6.12 146/816] net/iucv: take a private, writable frame before rewriting it in place
+Date: Wed, 25 Nov 2026 15:28:14 +0100
+Message-ID: <20261125143852.577757686@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143849.205329330@linuxfoundation.org>
 References: <20261125143849.205329330@linuxfoundation.org>
@@ -68,87 +69,62 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Guangshuo Li <liguangshuo@mail.sdu.edu.cn>
+From: Bryam Vargas <hexlabsecurity@proton.me>
 
-[ Upstream commit 9e4b35c95fede87bad36f68b7ff1eae94ea6b910 ]
+[ Upstream commit f38bce9af9e2a3cced7d303a1476f21c1f42bcb7 ]
 
-GPIO chip cleanup can call the to_irq callback while releasing requested
-GPIOs. Removing the IRQ domain first leaves that callback using a freed
-domain, both on removal and after an IRQ request failure.
+afiucv_hs_rcv() rewrites the frame in place -- EBCASC() on four name
+fields, then afiucv_swap_src_dest() swaps them and pushes an Ethernet
+header -- and can hand the same skb to dev_queue_xmit(), without making
+it private first, so a packet socket that also gets the frame reads the
+rewritten names. An ETH_P_ALL tap runs first and leaves af_iucv a
+cloned skb; a socket opened for ETH_P_AF_IUCV sits on a ptype_specific
+list, walked after ptype_base[], so deliver_skb() takes a reference and
+af_iucv runs on an skb that is shared but not cloned.
 
-Register domain cleanup before GPIO chip registration so devres removes
-the chip before freeing the domain.
+Unshare, then cow, in that order: skb_cow() can reach
+pskb_expand_head(), which has BUG_ON(skb_shared()). skb_cow() tests
+skb_cloned(), which is what a rewrite of the data needs; skb_cow_head()
+tests only the header. Asking for ETH_HLEN also covers the unchecked
+push in afiucv_swap_src_dest(); on the ordinary path eth_type_trans()
+has already pulled that much, so it only compares.
 
-This issue was found by our static analysis tool under development.
-
-Fixes: 257e10752c13 ("gpio: mpc8xxx: Use of_mm_gpiochip_remove")
-Signed-off-by: Guangshuo Li <liguangshuo@mail.sdu.edu.cn>
-Link: https://patch.msgid.link/a4fec7fe970d6fc9135b488f57ba7e145b809359.1793377433.git.liguangshuo@mail.sdu.edu.cn
-Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
+Fixes: 3881ac441f64 ("af_iucv: add HiperSockets transport")
+Closes: https://sashiko.dev/#/patchset/20260813-b4-disp-60433a46-v1-1-509e1200533e@proton.me?part=1
+Signed-off-by: Bryam Vargas <hexlabsecurity@proton.me>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Link: https://patch.msgid.link/20261028-b4-disp-1edbbc34-v3-1-13495411f5b9@proton.me
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpio/gpio-mpc8xxx.c | 22 +++++++++++++++-------
- 1 file changed, 15 insertions(+), 7 deletions(-)
+ net/iucv/af_iucv.c | 9 +++++++++
+ 1 file changed, 9 insertions(+)
 
-diff --git a/drivers/gpio/gpio-mpc8xxx.c b/drivers/gpio/gpio-mpc8xxx.c
-index 30f36f94ba1b8..b99917d834d6a 100644
---- a/drivers/gpio/gpio-mpc8xxx.c
-+++ b/drivers/gpio/gpio-mpc8xxx.c
-@@ -298,6 +298,14 @@ static const struct of_device_id mpc8xxx_gpio_ids[] = {
- 	{}
- };
+diff --git a/net/iucv/af_iucv.c b/net/iucv/af_iucv.c
+index c7017ab56b1e7..39f82cdbd1bb8 100644
+--- a/net/iucv/af_iucv.c
++++ b/net/iucv/af_iucv.c
+@@ -2071,11 +2071,20 @@ static int afiucv_hs_rcv(struct sk_buff *skb, struct net_device *dev,
+ 	int err = NET_RX_SUCCESS;
+ 	char nullstring[8];
  
-+static void mpc8xxx_irq_domain_remove(void *data)
-+{
-+	struct mpc8xxx_gpio_chip *mpc8xxx_gc = data;
++	skb = skb_share_check(skb, GFP_ATOMIC);
++	if (!skb)
++		return NET_RX_SUCCESS;
 +
-+	if (mpc8xxx_gc->irq)
-+		irq_domain_remove(mpc8xxx_gc->irq);
-+}
-+
- static int mpc8xxx_probe(struct platform_device *pdev)
- {
- 	const struct mpc8xxx_gpio_devtype *devtype = NULL;
-@@ -378,6 +386,11 @@ static int mpc8xxx_probe(struct platform_device *pdev)
- 			gc->read_reg(mpc8xxx_gc->regs + GPIO_DIR);
+ 	if (!pskb_may_pull(skb, sizeof(*trans_hdr))) {
+ 		kfree_skb(skb);
+ 		return NET_RX_SUCCESS;
  	}
  
-+	/* GPIO chip cleanup still needs the IRQ domain. */
-+	ret = devm_add_action_or_reset(dev, mpc8xxx_irq_domain_remove, mpc8xxx_gc);
-+	if (ret)
-+		return ret;
++	if (skb_cow(skb, ETH_HLEN)) {
++		kfree_skb(skb);
++		return NET_RX_SUCCESS;
++	}
 +
- 	ret = devm_gpiochip_add_data(dev, gc, mpc8xxx_gc);
- 	if (ret) {
- 		dev_err(dev,
-@@ -408,25 +421,20 @@ static int mpc8xxx_probe(struct platform_device *pdev)
- 	if (ret) {
- 		dev_err(dev, "failed to devm_request_irq(%d), ret = %d\n",
- 			mpc8xxx_gc->irqn, ret);
--		goto err;
-+		return ret;
- 	}
- 
- 	device_init_wakeup(dev, true);
- 
- 	return 0;
--err:
--	irq_domain_remove(mpc8xxx_gc->irq);
--	return ret;
- }
- 
- static void mpc8xxx_remove(struct platform_device *pdev)
- {
- 	struct mpc8xxx_gpio_chip *mpc8xxx_gc = platform_get_drvdata(pdev);
- 
--	if (mpc8xxx_gc->irq) {
-+	if (mpc8xxx_gc->irq)
- 		irq_set_chained_handler_and_data(mpc8xxx_gc->irqn, NULL, NULL);
--		irq_domain_remove(mpc8xxx_gc->irq);
--	}
- }
- 
- static int mpc8xxx_suspend(struct device *dev)
+ 	trans_hdr = iucv_trans_hdr(skb);
+ 	EBCASC(trans_hdr->destAppName, sizeof(trans_hdr->destAppName));
+ 	EBCASC(trans_hdr->destUserID, sizeof(trans_hdr->destUserID));
 -- 
 2.53.0
 
