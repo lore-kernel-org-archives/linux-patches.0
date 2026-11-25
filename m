@@ -1,50 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795626116;
-	b=rFxP84mU0a2LbrvC4ZNfU5y+kvrQL9vWx0lOl7JkvNT5sB693+kIrFXEaRQDRL4nKY8X
-	 RNDtjn35ZK54fAmnwznAsuf1gniuilW0bIlLj3cpH1WACP4vhaM0uqyY2rsc/YNY+9PAz
-	 tIp/GMbhIfmOA0R1lHLDq98O1BI3+rol+2PFW4kHODnBg3cZViiMwH6VlUGCGBE16A8Il
-	 t4JR1DPkmKLApQM6IoP3R4cv33WqT2JUrJxoh1xLQVkCwt5T/6LxDKQdg5rfiq24DUD07
-	 Y7HoBGxNGrBUs2t6YnEXJS4a/6ZLTVo7N+EFqPuucRWEQB1rUJCh2gwcl6HqwQLtXEw==
+	t=1795626119;
+	b=3HkVGrB08EDnmQNPCz+UwQhxICbi62L2YJIOmVALNP9fP5ZdqOeU+oKZSHMq1kJrbVfX
+	 3AxI1IG/DqQdcHUERrcrdleBF7uCSWj749V6Tox+s/De+4wBt30WkN2HHkxDoTMBg++nW
+	 wXaCCp7A9MNGTThIdj2+8UiFpnezxUiFZeMVLVIx2nzI31u0t4Ma+nfC8nd0omvDmUHde
+	 HoYq3x0U+PMZXNTKUY0Di0G4bLe8y8hW3U3e/auwhs1oHj3BJETXbY+8DPeekxwIyFRx3
+	 OJ7+Yc7z5jq8wAU6aRXpL0vEluUmuxvRnaw795mxy6QEKaHhlmq17gTshODhH3KoBUw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795626116;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795626119;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=aneNIa/XrkoyHGBSuVydtNbm+vdJfR0H8eC+14hMIDA=;
-	b=AoWX7W4Ld2OpDkQ7E4p0Pf3y39obI4V49RKaQnfOV9yemPnfUJEMj2MpGhq6ogdZzEgj
-	 fiCk/5/jyYZJ9e64DE4cSMVAI1NqjgHLV5g4czGXNY1V816JlMVyBLWqsrOynX7qbAasP
-	 FMrkOeNty/PW4Zl9gM3H8Or4oRjAjrA1Kg8S/L4x8FwoJ3T9txDQf8bBEJZm5xfF5os8l
-	 01KNOcbx2OHmjwkXp+EjEq6rUhaFoUZhCRuV2XXJLGJCEPpYz0q+fuw8IgkDWiqU41Qiw
-	 dryk0pgFeAxeIzIi1Wj4NW8/TTReo4xkofz5I9nJ9R/KVe4Q/y0xHWEoFjUHVDTBvzA==
+	bh=dOd13ECX+zIwaNSV5EQA+KF1P8Fiv0DSZK+vzvY9tsg=;
+	b=ECYRS9bi34YxhvO9jL/1Yj6+DvlKN8lZSlfawLGxnTGzyk6es9IwJmySOCjeuKDBeLr9
+	 7HjMu9CccwFEet8fZabHE72bp4uuUmxCl/UwIp/TsS/CTD1LWmmjSdqZsf/RdaAK5BBIO
+	 EYSZJ3wAkxrt47yrlzdUmk/W5FvEoPVAco5EONda6tHSFBJFYPlzqLvYHUoqkruo+sFkA
+	 fhCGiZYhMLSJlH2znorzE/TfxVVPHVsCCKohlxLkaditZEZtXsr4Uolgv+LhK5w5V9e41
+	 gcMjELpdzNb8fzWNmTDVAmW+XdTtxmjP34YM9Apq539IFzZQxY5mgZ4IqpkkzaqBc5w==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=zQaeUvbg;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=gRzSEY15;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6BBC8606A31E;
-	Wed, 25 Nov 2026 17:01:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 66B98606A321;
+	Wed, 25 Nov 2026 17:01:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=zQaeUvbg
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6E7CE1F000C4;
-	Wed, 25 Nov 2026 17:01:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=gRzSEY15
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B71091F000C0;
+	Wed, 25 Nov 2026 17:01:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795626116;
-	bh=aneNIa/XrkoyHGBSuVydtNbm+vdJfR0H8eC+14hMIDA=;
+	s=korg; t=1795626119;
+	bh=dOd13ECX+zIwaNSV5EQA+KF1P8Fiv0DSZK+vzvY9tsg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=zQaeUvbghM4mgbd2H0vX+q0EPnKEAap0OD4Pj4xwZhy7u0dH5a7n/QaUvpsJeni/n
-	 UeJ2B7sHO3phU/oCKvVTLhjFqVVhpic51JG5/DOrlf1d7ZDuMmeqdixRPtW7IEBP1+
-	 iI2VXuccSMO3cQVYU4RTOHSDMVilZp7h2xtQq/nc=
+	b=gRzSEY15Uvlbq56j1CrRD0m7IBInR8F5z0AMW9u4jAqVETh469Sizdh+PNyaQtpBI
+	 bsG8Bya/1P9IMU21+ZMM3T9RKVCbJlTvHWjR1Bya4Ro8HAyX3dqDQOSbZou/sfZXoN
+	 qAVtswD8LUHG6vjMdocLTPjpwZO39gmVHdzjhsH4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Jiri Slaby (SUSE)" <jirislaby@kernel.org>
-Subject: [PATCH 6.12 736/816] tty: fix misapplied compat_ptr() in tty_compat_ioctl()
-Date: Wed, 25 Nov 2026 15:38:04 +0100
-Message-ID: <20261125143906.214911749@linuxfoundation.org>
+	stable <stable@kernel.org>,
+	Dan Drown <dan-netdev@drown.org>,
+	Johan Hovold <johan@kernel.org>
+Subject: [PATCH 6.12 737/816] USB: cdc-acm: fix NULL-deref on hangup
+Date: Wed, 25 Nov 2026 15:38:05 +0100
+Message-ID: <20261125143906.239137668@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143849.205329330@linuxfoundation.org>
 References: <20261125143849.205329330@linuxfoundation.org>
@@ -66,44 +68,58 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jiri Slaby (SUSE) <jirislaby@kernel.org>
+From: Johan Hovold <johan@kernel.org>
 
-commit 895dc0eaa2779ff46a0b2a20b5ce9eb0b1125cb2 upstream.
+commit bc9dd21ec61acd152d9e7c12cb07db37c63ad41a upstream.
 
-Since commit f0193d3ea73b below, `cmd` was converted with compat_ptr(),
-while `arg` was passed to ld->ops->ioctl() unmodified. Fix it so `cmd`
-stays `cmd` and `arg` gets converted through compat_ptr() as intended.
+Make sure to take a reference to the port tty when processing carrier
+detect changes to avoid dereferencing a NULL pointer when the port is
+being hung up.
 
-Notes:
-2) compat_ptr() did nothing to `cmd`, provided it is uint,
-1) compat_ptr() is no-op everywhere (was different on s390 before
-   8e0b986c59c6 ("s390: Remove compat support")),
-3) `arg` might not have been chopped correctly until 8e0b986c59c6. But I
-   am not sure why noone noticed all those (7) years (from f0193d3ea73b
-   to 8e0b986c59c6)?
-
-Fixes: f0193d3ea73b ("change semantics of ldisc ->compat_ioctl()")
-Signed-off-by: Jiri Slaby (SUSE) <jirislaby@kernel.org>
-Cc: stable@vger.kernel.org # applicable from 4.20 to 6.18 incl
-Assisted-by: LLM
-Link: https://patch.msgid.link/63e9d84a1e8e23852423206cf3f8907aafc88f17.1793704520.git.jirislaby@kernel.org
+Fixes: 3b563b901eef ("usb: cdc-acm: add PPS support")
+Cc: stable <stable@kernel.org>
+Cc: Dan Drown <dan-netdev@drown.org>
+Signed-off-by: Johan Hovold <johan@kernel.org>
+Link: https://patch.msgid.link/20261019123755.2008384-1-johan@kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/tty/tty_io.c |    3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+ drivers/usb/class/cdc-acm.c |   18 ++++++++++++------
+ 1 file changed, 12 insertions(+), 6 deletions(-)
 
---- a/drivers/tty/tty_io.c
-+++ b/drivers/tty/tty_io.c
-@@ -3007,8 +3007,7 @@ static long tty_compat_ioctl(struct file
- 	if (ld->ops->compat_ioctl)
- 		retval = ld->ops->compat_ioctl(tty, cmd, arg);
- 	if (retval == -ENOIOCTLCMD && ld->ops->ioctl)
--		retval = ld->ops->ioctl(tty, (unsigned long)compat_ptr(cmd),
--				arg);
-+		retval = ld->ops->ioctl(tty, cmd, (unsigned long)compat_ptr(arg));
- 	tty_ldisc_deref(ld);
+--- a/drivers/usb/class/cdc-acm.c
++++ b/drivers/usb/class/cdc-acm.c
+@@ -294,6 +294,7 @@ static void acm_process_notification(str
+ 	unsigned long flags;
+ 	struct usb_cdc_notification *dr = (struct usb_cdc_notification *)buf;
+ 	unsigned char *data = buf + sizeof(struct usb_cdc_notification);
++	struct tty_struct *tty;
  
- 	return retval;
+ 	switch (dr->bNotificationType) {
+ 	case USB_CDC_NOTIFY_NETWORK_CONNECTION:
+@@ -320,12 +321,17 @@ static void acm_process_notification(str
+ 
+ 		difference = acm->ctrlin ^ newctrl;
+ 
+-		if ((difference & USB_CDC_SERIAL_STATE_DCD) && acm->port.tty) {
+-			struct tty_ldisc *ld = tty_ldisc_ref(acm->port.tty);
+-			if (ld) {
+-				if (ld->ops->dcd_change)
+-					ld->ops->dcd_change(acm->port.tty, newctrl & USB_CDC_SERIAL_STATE_DCD);
+-				tty_ldisc_deref(ld);
++		if (difference & USB_CDC_SERIAL_STATE_DCD) {
++			tty = tty_port_tty_get(&acm->port);
++			if (tty) {
++				struct tty_ldisc *ld = tty_ldisc_ref(tty);
++
++				if (ld) {
++					if (ld->ops->dcd_change)
++						ld->ops->dcd_change(tty, newctrl & USB_CDC_SERIAL_STATE_DCD);
++					tty_ldisc_deref(ld);
++				}
++				tty_kref_put(tty);
+ 			}
+ 		}
+ 
 
 
