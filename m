@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795621976;
-	b=V6ECDhb8gec/ilLcLD3eC1nRRCkI+BeI0qwca455E692Oo74b2AJWyL0fEjl9+mKzhzl
-	 P+wAaTlLMi1OZCx7qU0fWuzus56bjcuMMXGp01wyB68eAVj9vLnYS9UaUUhxvH6d/uk8i
-	 vfATk7eqTIN2Hl53HqAOB2wR/EBAqQyminT2CKtTkF0bGPJ+VCFlNMvNAsaDmjlT7S/Wv
-	 7nHMeRbZFHC/adGLZqLp9IVW61UR9jz0tpVjCHLIeH+F6Gd4l/FD2Z2N7E1Qe7ahwrvYx
-	 AED6czlY8ShRo3v+sEoZDriAsmQv+5s7s0UBI7p8Q6ovquG0IEMzSuFm8Iz939/oF1w==
+	t=1795621980;
+	b=OBlXFbR5V4fW7YmCnYa0ZSPLnJKhjZdH3Pq18gUWwRtCbu37+uVngWMdj76t6YDZqPzL
+	 83wW1az7dkZM1ihlF/Z7m07cVp52wV1GRf3TWO53lFMah4yWSrCf345hfZEvFzCVGIZyO
+	 YDG1eA8q7t/ViC08KH0sXh5lu21NGdyVjulSjFRy8jVPeXQmDaUzBUblWYQFgqTx7MF8M
+	 G2OgCB4ypTzDqSIoQYWe2LZCBvLABHi1kBPkDKJAM4NdZUoWhLX15P5gLs7A1Hisl5jrM
+	 7LTv+CthSgKTR0RqnM8u5hEKwsPfL5/arFqSdNj1/zb3//o+BXJPL6zHzcP3Va/+vyA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795621976;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795621980;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=bPtVaq2DWv+bcMnyEscIUPQMzTR31McOmP3ksUa6PSQ=;
-	b=HzPWpqHLCTF1WfIX7tzV8iOG7W7pqO/FCmldqqO/z9JpNd+E2puT4nR/nlHCJWRoVWJj
-	 jkqo2bRoANCHJiIEy2ejWBSSjgKsd0Ldjk8vzIrYv8zs1va6Jv/uPSh54Jg9y4lb0XfzZ
-	 7GsrobGQMIHW1yeez37C32MIfr0JbqKdnI5owlVd/WAvSjwmhcYz13MoOnvjj9L0hdDEw
-	 ecvhmv08ZE8SunTYq6cvd9sNl/ccPTfen/7lktdaElgmL0buyfgbit+YKj4WKjBruSrol
-	 EuT+vmXDTIv66pbiW2Hh6SJOIWTjGtkpUu8+//7j5ASljUiU61t12G+0dLVyfEJMR5A==
+	bh=GxCJFU9sLhLfSmItODrIxB0/0n0vQLkPfw6HO2RXfUI=;
+	b=339ntSIhe79/2ArAQfrPsaQGyHB7MdNqtCcdATIiHuoJTfkB+6G+tTKOARKubiOaVAAu
+	 BYePcDe4egU6vesX2fJA956wLn4g0nx353H9dnPLe/moZNWPjVQVplNzPMHx3Ve+tRaLl
+	 5cY5d3/zxMJzDtfigRkRlAvFlLFSXPbHsnotceyC8m2UaSIWXUqSo1tG1PZlnZA+ZcWZ3
+	 5b0lRefQYD40nBB4TlQ1BjAmwbTpd4X6NJBn94MKQlJaG1GIPIx78sAdk57WP3AYH1fOy
+	 nOOqtpzdFim7Zdg8Iwh6b3ekI/RwqlSV5FQGBJNMHp9loB0ovWCPJXhu1Uc6ViQ4DIQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=CfTWVR8w;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=0FCcvCHt;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CDA44606A31E;
-	Wed, 25 Nov 2026 15:52:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6A180606A321;
+	Wed, 25 Nov 2026 15:53:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=CfTWVR8w
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E289E1F000CF;
-	Wed, 25 Nov 2026 15:52:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=0FCcvCHt
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 28ED71F000C4;
+	Wed, 25 Nov 2026 15:52:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795621976;
-	bh=bPtVaq2DWv+bcMnyEscIUPQMzTR31McOmP3ksUa6PSQ=;
+	s=korg; t=1795621979;
+	bh=GxCJFU9sLhLfSmItODrIxB0/0n0vQLkPfw6HO2RXfUI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=CfTWVR8wF6JD0BCbD/kvOcIdF0lqmnuM60EnO+DHeDOleR8sB5EOSAnuq1NmHZ4t0
-	 L/N0+K4HoRXy+uubMs5UhZS+4YnLD0cvBYOCWqQhYiVGXANjts8gAXr9POI13KjsBo
-	 VU4V0Oe0rhjhG3uf2a2KYoFnR+CNgi6JXjbri+Lo=
+	b=0FCcvCHtsIqiG0I1JJAryuYzRoY4FUwZjfMEFMWrqw13Ztaqxz8y3aOE+S7VXoSHe
+	 /BTh82kZyxDZFkj7gZbcibilvwO1VLT5gPe/G1pKWzzweO/68fRUPysguSuzFYDPb0
+	 OSR1JpGgHcB4U2z4YAWo7Qlq/UhBqO1xcjkzGK0s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mike Snitzer <snitzer@kernel.org>,
-	Anna Schumaker <anna.schumaker@hammerspace.com>,
+	Tyler Baker <tyler.baker@oss.qualcomm.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 390/990] NFS/localio: hold the client across an asynchronous LOCALIO probe
-Date: Wed, 25 Nov 2026 15:29:17 +0100
-Message-ID: <20261125143831.232012674@linuxfoundation.org>
+Subject: [PATCH 6.18 355/990] ASoC: soc-core: copy the DAI link names into the card
+Date: Wed, 25 Nov 2026 15:28:42 +0100
+Message-ID: <20261125143830.407880416@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143822.072087159@linuxfoundation.org>
 References: <20261125143822.072087159@linuxfoundation.org>
@@ -68,59 +68,69 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mike Snitzer <snitzer@kernel.org>
+From: Tyler Baker <tyler.baker@oss.qualcomm.com>
 
-[ Upstream commit 000a87910213562ff09f5bc38cd366ce34fccf71 ]
+[ Upstream commit 33a130f6ed8c75ed59b12889a417a57fb80d0abf ]
 
-nfs_local_probe_async() queues the client's own cl_local_probe_work
-without a reference on the client, and nfs_free_client() does not cancel
-it.  The work takes a reference only once it runs.  If the last
-nfs_put_client() comes first, for example at umount after an NFSv3 I/O
-queued a throttled probe, the client is freed with its work queued, and
-the work then runs on freed memory.
+snd_soc_of_get_dai_link_codecs() and snd_soc_of_get_dai_link_cpus()
+keep a DAI name owned by the component, which is freed when the
+component unbinds, so the card cannot bind again afterwards.
 
-Take the reference when the work is queued, and drop it when the work
-has run.  If the work is already queued, it already holds a reference,
-and the one just taken is dropped.
+Copy the name onto the card device, as simple-card and audio-graph-card
+do since commit aa173b70d372 ("ASoC: generic: keep fallback dai_name
+stable across rebind").
 
-Fixes: 76d4cb6345da ("nfs: probe for LOCALIO when v4 client reconnects to server")
-Signed-off-by: Mike Snitzer <snitzer@kernel.org>
-Signed-off-by: Anna Schumaker <anna.schumaker@hammerspace.com>
+Fixes: e894efef9ac7 ("ASoC: core: add support to card rebind")
+Fixes: 900dedd7e47c ("ASoC: Introduce snd_soc_of_get_dai_link_cpus")
+Signed-off-by: Tyler Baker <tyler.baker@oss.qualcomm.com>
+Link: https://patch.msgid.link/20261106054333.2748248-2-tyler.baker@oss.qualcomm.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/nfs/localio.c | 13 ++++++++++---
- 1 file changed, 10 insertions(+), 3 deletions(-)
+ sound/soc/soc-core.c | 16 ++++++++++++++++
+ 1 file changed, 16 insertions(+)
 
-diff --git a/fs/nfs/localio.c b/fs/nfs/localio.c
-index 3138439d19109..f4bd5922e6ba6 100644
---- a/fs/nfs/localio.c
-+++ b/fs/nfs/localio.c
-@@ -204,15 +204,22 @@ void nfs_local_probe_async_work(struct work_struct *work)
- 	struct nfs_client *clp =
- 		container_of(work, struct nfs_client, cl_local_probe_work);
- 
--	if (!refcount_inc_not_zero(&clp->cl_count))
--		return;
- 	nfs_local_probe(clp);
-+	/* The reference nfs_local_probe_async() took for this work */
- 	nfs_put_client(clp);
+diff --git a/sound/soc/soc-core.c b/sound/soc/soc-core.c
+index feecf3e4e38b4..34f350b75b18c 100644
+--- a/sound/soc/soc-core.c
++++ b/sound/soc/soc-core.c
+@@ -3701,6 +3701,18 @@ void snd_soc_of_put_dai_link_codecs(struct snd_soc_dai_link *dai_link)
  }
+ EXPORT_SYMBOL_GPL(snd_soc_of_put_dai_link_codecs);
  
-+/*
-+ * The work is part of the client, so it holds a reference on the client
-+ * from when it is queued until it has run: the last nfs_put_client()
-+ * cannot free the client under a queued probe.
-+ */
- void nfs_local_probe_async(struct nfs_client *clp)
- {
--	queue_work(nfsiod_workqueue, &clp->cl_local_probe_work);
-+	if (!refcount_inc_not_zero(&clp->cl_count))
-+		return;
-+	if (!queue_work(nfsiod_workqueue, &clp->cl_local_probe_work))
-+		nfs_put_client(clp);	/* already queued, with its reference */
- }
- EXPORT_SYMBOL_GPL(nfs_local_probe_async);
- 
++/* dai_name belongs to the component, which can unbind before the card. */
++static int snd_soc_of_dup_dai_name(struct device *dev,
++				   struct snd_soc_dai_link_component *dlc)
++{
++	if (!dlc->dai_name)
++		return 0;
++
++	dlc->dai_name = devm_kstrdup_const(dev, dlc->dai_name, GFP_KERNEL);
++
++	return dlc->dai_name ? 0 : -ENOMEM;
++}
++
+ /*
+  * snd_soc_of_get_dai_link_codecs - Parse a list of CODECs in the devicetree
+  * @dev: Card device
+@@ -3730,6 +3742,8 @@ int snd_soc_of_get_dai_link_codecs(struct device *dev,
+ 	/* Parse the list */
+ 	for_each_link_codecs(dai_link, index, component) {
+ 		ret = snd_soc_of_get_dlc(of_node, NULL, component, index);
++		if (!ret)
++			ret = snd_soc_of_dup_dai_name(dev, component);
+ 		if (ret)
+ 			goto err;
+ 	}
+@@ -3785,6 +3799,8 @@ int snd_soc_of_get_dai_link_cpus(struct device *dev,
+ 	/* Parse the list */
+ 	for_each_link_cpus(dai_link, index, component) {
+ 		ret = snd_soc_of_get_dlc(of_node, NULL, component, index);
++		if (!ret)
++			ret = snd_soc_of_dup_dai_name(dev, component);
+ 		if (ret)
+ 			goto err;
+ 	}
 -- 
 2.53.0
 
