@@ -1,52 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795622565;
-	b=e8JijigxYRfkAYRxFkU1KfYH4fKOa9298N8aGrhOslES2hr/v2uZSml657B91Aem2XW+
-	 f084hUeyxJxzplzjqTpF+ZJyqkR/pTQpemJqzfZnKhPiOGzXIJkNIVL6LEGlDUJiWc/qt
-	 eMdw4lE7YXLdu2I8vs7br0RUW4Mn2ny5VVmcKCs8K5/5LpL+te+BDeMf4rsck0NYtx+AC
-	 biL+poJIBIzhNkCf6TOsBTRgRe7hOpOhfaCBJrKjhXdCSx4vc9HS0lTAYTFZv0LSt8Xa9
-	 TGqDQoESFViO9SBbd1Eer3OO/WRg3iGFwfW2yEgbYbgEJDGEh/3Im1FmmS+xUg7AkaQ==
+	t=1795622568;
+	b=2NUf1zrmxOnuyRgBqG+fc818rXvOB/PUlpIf1uptFvY7mTqI+KB2VrZe4SyDoV0qA6kI
+	 b2QQGb0AxfFcwv4Pn2/8m9gvAoYBmoc+rA0GhE1sZLYVf8l3Dm7uMGxlYxn1BNN7CSXyM
+	 iinNgP/Ql9G0sQp61urmbWQnkXqlZUKdh4jlQHa3jCGTYEYkvYoeJKd9dGO6U/SOAJXkV
+	 UxfCU55Z0l1tIxV1J2szXaLilT4tsdOX+mBitlWtubEiMgbky7ohL9NwXuOjEWQ3+2P4u
+	 rdh/ghQC8S4kNCk3ELP/vLHBLZP4o3p8HwoOpKLuYJNGHf3fnWi09M6rzI4sFpAMiig==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795622565;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795622568;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Transfer-Encoding;
-	bh=mvXVbmZJ0v+SxmdB4p5/uRUHjCd56cKFsFzWQm2OWzM=;
-	b=U780Pv+c37MDlAWCmFbvATIjqaFz9bmN6aGhT7h16z0slUdU5h0fthKBWRzZ7ht3M+or
-	 xqHkMSFP8s27d7U2vMyVkVuUJU7DeolpDnAVdRPKRAiqNujd2qVQZDlXvuGLZkji3sQLp
-	 zWZnRbjBPzfR45Y/B4a0n7lrSzwo0Jhy6Fp3z6lbjkyXehQK+ROGw1LYdUe15wcGDgvGB
-	 I6po8bARC5x6DT/DEclVf0yAOv2UEwX40kKYI7+MB1Q9y8N55bgArreE6uA2QMwNblIfb
-	 InMuCheaaVwYMuXs4i9h/oSjdSpVEv9kxcQS9rOPTO//PkUf/Fk3SuDEPNPih251Bug==
+	 MIME-Version:Content-Type:Content-Transfer-Encoding;
+	bh=Xyc4QST2RP8mOXGSVyO8OUvdRyYD43mfI6ogt8JB5ho=;
+	b=l/h3vRTxftTuZuMXSkUvy+441xha9gi31wMZYfIZNzXTMSjx6hGRkazHs8u/u5upqTfc
+	 LC/GyVrlmTChh8gvwiGS+mrvDLwzjv/aGDyhRhb17OUa2D2c3paUydKhZpdenhojPS5fr
+	 1LpZFdZhbYZ80K4kiAGhIhetQIpvj9cfPQ/yeWIMP0ICYXlMIDiYon1XT9uYq+pc0An/F
+	 SsweL/p8/IAvYVN0c/ExDHgPwRopFY2mMlpYKVcv5zCOSqDt1LSw5E8egk7hZ1QZJ9vGZ
+	 XRxXELucvKSBYShYJKpJmsSj9fWctvnXnC08Ju48hG3EsX/P75zcnmdS9nweZRNBgEw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=K48j+OFU;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=nSqeTjtC;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 56935606A326;
-	Wed, 25 Nov 2026 16:02:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 12909606A32A;
+	Wed, 25 Nov 2026 16:02:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=K48j+OFU
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9202B1F000C4;
-	Wed, 25 Nov 2026 16:02:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=nSqeTjtC
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 602C81F000C4;
+	Wed, 25 Nov 2026 16:02:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795622565;
-	bh=mvXVbmZJ0v+SxmdB4p5/uRUHjCd56cKFsFzWQm2OWzM=;
+	s=korg; t=1795622567;
+	bh=Xyc4QST2RP8mOXGSVyO8OUvdRyYD43mfI6ogt8JB5ho=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=K48j+OFUug6lp+cJc4CSa0hb+72yNb80W6Or7SHf/ntlP4wW0wBtZDgrexJ3l7bu+
-	 pwJCQCFV2FH2470UswbaXJqezxBGPiEmem+ps573NwIvLtg0XtW/Ta7UcZWEI6k7eS
-	 S2CGy4qG6x0lX5lMhEWWlDhkL1nWhSF3ByeriV5w=
+	b=nSqeTjtCjDxBGpEwRMbDwiqbRL6kPNI2Wux4JPusk6cWlUNN8wC53YvnoS0m3uPgN
+	 SMcyVyIsNP4pwlxXX6wpv/AqqtHpjY7R82w4CRIbnFlJdEh9BWw9Sats3HS87rRJRi
+	 /beYEuAqdVRrYhxNJSH90PGGY37KUfl8luCizLlI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sashiko <sashiko-bot@kernel.org>,
-	Takashi Iwai <tiwai@suse.de>,
+	=?UTF-8?q?Th=C3=A9o=20Lebrun?= <theo.lebrun@bootlin.com>,
+	Vineeth Karumanchi <vineeth.karumanchi@amd.com>,
+	Jacob Keller <jacob.e.keller@intel.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 577/990] ALSA: aloop: Avoid a bad mixure of guard() and goto
-Date: Wed, 25 Nov 2026 15:32:24 +0100
-Message-ID: <20261125143835.607857059@linuxfoundation.org>
+Subject: [PATCH 6.18 578/990] net: macb: configure ENST registers for all queues
+Date: Wed, 25 Nov 2026 15:32:25 +0100
+Message-ID: <20261125143835.631021364@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143822.072087159@linuxfoundation.org>
 References: <20261125143822.072087159@linuxfoundation.org>
@@ -62,69 +64,149 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Takashi Iwai <tiwai@suse.de>
+From: Vineeth Karumanchi <vineeth.karumanchi@amd.com>
 
-[ Upstream commit f7faf5d9b5668919cae84a6247f8f7b4e2c0227c ]
+[ Upstream commit 04a943067baa670fef3c1424ea616a2ed87d3d19 ]
 
-The rewrite of aloop driver code using guard() leaded to a mixture of
-guard() and some goto; although it currently works, it isn't really a
-good match.
+When a taprio config only covered a subset of queues, the driver
+programmed the ENST registers only for the queues named in the config
+and left the remaining queues holding stale register values. This
+produced an inconsistent hardware setup that affected the scheduling
+of the configured queues.
 
-For avoiding the bad match, just move the code using goto into a
-function and wrap it with guard().
+This was observed on a GEM instance with four hardware queues, all
+enabled:
 
-Fixes: ebd9b6c91d4e ("ALSA: aloop: Use guard() for mutex locks")
-Reported-by: Sashiko <sashiko-bot@kernel.org>
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
-Link: https://patch.msgid.link/20261007172533.14667-6-tiwai@suse.de
-[ sashal: Kept the existing kzalloc(sizeof(*dpcm), GFP_KERNEL) call in the context instead of upstream's kzalloc_obj(*dpcm), since the file still uses plain kzalloc. ]
+Initial configuration:
+- All four queues are enabled.
+- enst_on_time_qX registers are left at their reset value (0x0001FFFF).
+- Only q0 and q1 are configured with valid, non-overlapping ENST
+  schedules (T0 and T1 respectively).
+- Traffic streams p0 and p1 are bound to q0 and q1.
+- ENST is enabled only on q0 and q1.
+
+Observed behavior:
+- During T0 on-time, both p0 and p1 packets are transmitted.
+- During T1 on-time, both p0 and p1 packets are transmitted.
+
+With the unused queues (q2 and q3) explicitly programmed with
+enst_on_time = 0x0:
+- During T0 on-time, only p0 packets are transmitted.
+- During T1 on-time, only p1 packets are transmitted.
+
+Leaving the ENST on-time registers of unused queues at their reset
+value (0x0001FFFF) disrupts the scheduling of the configured queues,
+whereas programming them with 0x0 yields the expected ENST operation.
+
+Program the ENST registers for every queue unconditionally. The
+per-queue configuration array is now allocated for bp->num_queues and
+indexed directly by queue_id; unconfigured queues are left
+zero-initialized by kzalloc_objs(), so their registers are cleared.
+Indexing the array by queue_id also makes the queue_id field in
+struct macb_queue_enst_config redundant, so drop it.
+
+Fixes: 89934dbf169e ("net: macb: Add TAPRIO traffic scheduling support")
+Reviewed-by: Théo Lebrun <theo.lebrun@bootlin.com>
+Signed-off-by: Vineeth Karumanchi <vineeth.karumanchi@amd.com>
+Reviewed-by: Jacob Keller <jacob.e.keller@intel.com>
+Link: https://patch.msgid.link/20261005110855.1669249-1-vineeth.karumanchi@amd.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+[ sashal: Queue index is computed with hweight32(bp->queue_mask & (gate_mask - 1)) instead of upstream's order_base_2(gate_mask), since sparse queue masks are possible here, and kcalloc replaces kzalloc_objs. ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/drivers/aloop.c | 11 +++++++++--
- 1 file changed, 9 insertions(+), 2 deletions(-)
+ drivers/net/ethernet/cadence/macb.h      |  2 --
+ drivers/net/ethernet/cadence/macb_main.c | 23 ++++++++++++-----------
+ 2 files changed, 12 insertions(+), 13 deletions(-)
 
-diff --git a/sound/drivers/aloop.c b/sound/drivers/aloop.c
-index 93ac63edfb975..c11648f431096 100644
---- a/sound/drivers/aloop.c
-+++ b/sound/drivers/aloop.c
-@@ -1276,7 +1276,7 @@ static const struct loopback_ops loopback_snd_timer_ops = {
- 	.dpcm_info = loopback_snd_timer_dpcm_info,
+diff --git a/drivers/net/ethernet/cadence/macb.h b/drivers/net/ethernet/cadence/macb.h
+index a6602aae3f9d3..008d7dc670099 100644
+--- a/drivers/net/ethernet/cadence/macb.h
++++ b/drivers/net/ethernet/cadence/macb.h
+@@ -1458,7 +1458,6 @@ struct macb_platform_data {
+  * @start_time_mask:  Bitmask representing the start time for the queue
+  * @on_time_bytes:    "on" time nsec expressed in bytes
+  * @off_time_bytes:   "off" time nsec expressed in bytes
+- * @queue_id:         Identifier for the queue
+  *
+  * This structure holds the configuration parameters for an ENST queue,
+  * used to control time-based transmission scheduling in the MACB driver.
+@@ -1467,7 +1466,6 @@ struct macb_queue_enst_config {
+ 	u32 start_time_mask;
+ 	u32 on_time_bytes;
+ 	u32 off_time_bytes;
+-	u8 queue_id;
  };
  
--static int loopback_open(struct snd_pcm_substream *substream)
-+static int __loopback_open(struct snd_pcm_substream *substream)
- {
- 	struct snd_pcm_runtime *runtime = substream->runtime;
- 	struct loopback *loopback = substream->private_data;
-@@ -1285,7 +1285,6 @@ static int loopback_open(struct snd_pcm_substream *substream)
- 	int err = 0;
- 	int dev = get_cable_index(substream);
+ #endif /* _MACB_H */
+diff --git a/drivers/net/ethernet/cadence/macb_main.c b/drivers/net/ethernet/cadence/macb_main.c
+index 1eaf9be483153..112b1785e817e 100644
+--- a/drivers/net/ethernet/cadence/macb_main.c
++++ b/drivers/net/ethernet/cadence/macb_main.c
+@@ -4232,7 +4232,8 @@ static int macb_taprio_setup_replace(struct net_device *ndev,
+ 	struct macb *bp = netdev_priv(ndev);
+ 	struct ethtool_link_ksettings kset;
+ 	struct macb_queue *queue;
+-	size_t i;
++	size_t i, q;
++	u8 queue_id;
+ 	int err;
  
--	guard(mutex)(&loopback->cable_lock);
- 	dpcm = kzalloc(sizeof(*dpcm), GFP_KERNEL);
- 	if (!dpcm)
+ 	if (conf->num_entries > bp->num_queues) {
+@@ -4260,7 +4261,7 @@ static int macb_taprio_setup_replace(struct net_device *ndev,
+ 		return -EINVAL;
+ 	}
+ 
+-	enst_queue = kcalloc(conf->num_entries, sizeof(*enst_queue), GFP_KERNEL);
++	enst_queue = kcalloc(bp->num_queues, sizeof(*enst_queue), GFP_KERNEL);
+ 	if (unlikely(!enst_queue))
  		return -ENOMEM;
-@@ -1375,6 +1374,14 @@ static int loopback_open(struct snd_pcm_substream *substream)
- 	return err;
- }
  
-+static int loopback_open(struct snd_pcm_substream *substream)
-+{
-+	struct loopback *loopback = substream->private_data;
-+
-+	guard(mutex)(&loopback->cable_lock);
-+	return __loopback_open(substream);
-+}
-+
- static int loopback_close(struct snd_pcm_substream *substream)
- {
- 	struct loopback *loopback = substream->private_data;
+@@ -4318,13 +4319,14 @@ static int macb_taprio_setup_replace(struct net_device *ndev,
+ 			goto cleanup;
+ 		}
+ 
+-		enst_queue[i].queue_id = order_base_2(entry->gate_mask);
+-		enst_queue[i].start_time_mask =
++		/* Map the hardware queue to its index in bp->queues (the mask may be sparse) */
++		queue_id = hweight32(bp->queue_mask & (entry->gate_mask - 1));
++		enst_queue[queue_id].start_time_mask =
+ 			(start_time_sec << GEM_START_TIME_SEC_OFFSET) |
+ 			start_time_nsec;
+-		enst_queue[i].on_time_bytes =
++		enst_queue[queue_id].on_time_bytes =
+ 			enst_ns_to_hw_units(entry->interval, speed);
+-		enst_queue[i].off_time_bytes =
++		enst_queue[queue_id].off_time_bytes =
+ 			enst_ns_to_hw_units(conf->cycle_time - entry->interval, speed);
+ 
+ 		configured_queues |= entry->gate_mask;
+@@ -4349,15 +4351,14 @@ static int macb_taprio_setup_replace(struct net_device *ndev,
+ 		gem_writel(bp, ENST_CONTROL,
+ 			   bp->queue_mask << GEM_ENST_DISABLE_QUEUE_OFFSET);
+ 
+-		for (i = 0; i < conf->num_entries; i++) {
+-			queue = &bp->queues[enst_queue[i].queue_id];
++		for (q = 0, queue = bp->queues; q < bp->num_queues; ++q, ++queue) {
+ 			/* Configure queue timing registers */
+ 			queue_writel(queue, ENST_START_TIME,
+-				     enst_queue[i].start_time_mask);
++				     enst_queue[q].start_time_mask);
+ 			queue_writel(queue, ENST_ON_TIME,
+-				     enst_queue[i].on_time_bytes);
++				     enst_queue[q].on_time_bytes);
+ 			queue_writel(queue, ENST_OFF_TIME,
+-				     enst_queue[i].off_time_bytes);
++				     enst_queue[q].off_time_bytes);
+ 		}
+ 
+ 		/* Enable ENST for all configured queues in one write */
 -- 
 2.53.0
 
