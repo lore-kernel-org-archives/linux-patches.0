@@ -1,55 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795622726;
-	b=BvSDDzmAvHay9ELh9Y7TD4NY6rJ0RHXQ5Bw9+PHzRuxRZNXo6BzgasCUXm2G5Env1UpS
-	 ZBmFBAu9XozrFm+aOBDfwbdmlc06yLPrlGUO0PNGWiOLIk4Gb+dczNyGuSyj1I9xnhc7U
-	 PcUOmfSqcuxS5ORj2JHYqw+qY+lQkAAb8G9bPGtgffhD0YY6FlBfYfacX1/TjtylIwon2
-	 We+COPBzir7gTQJ3ctUuRMA2ewf1JVoHz+6pCO8LNlej974pF2BzbBctfsydTKiiSTSoI
-	 Yu1xQQ8ZB88ppZCyRA2buZxupbFxojaHt/EiLjRCtWuaU7PhsIXDE3MGShn03WKkdGA==
+	t=1795622729;
+	b=MaQZFDyIVY7SwNHhjbAAfqhhQar+77VIV8QO928q20cTdOSbkdIlwjUwsuD0qW3MoQWD
+	 0gm2FcNaBxiZprOqv/83InJdfC+2wGAF1ZSin/9KweBFAVAzOx29mudTNifcdqzgPB9kF
+	 Wydrb2OL/2IQhdRGVCOVk1FqJCVybimCNNTfGAEQaJw4TX4MpclFtDQIacwIcLgRRdDG2
+	 z0MAw2+3zBTVMlsKLsEIPoF2xSQntpLWkEOtq1FKXW2QaifiFwjlXNtDKjL6Qrm2nw0xL
+	 vpu9Xi1V9oFdT/eDbA/4XHiNEqSiVsTIHqrre7fIO+ZtV5z66HEK3xqFnXF07J3OriQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795622726;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795622729;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=y5g/MozCIPSdF0Ys8cHgv+ZlpAWewfupzhCNXpp5yMU=;
-	b=Jch/KQoSOr4OG5EORWL8ILI+UsM+X8kXjkZVSYiqCqGTFqlYswN+88+dZxIfKah7404g
-	 A/MP/5EOyWVwJJodNlhTPRlHY1kdATeWfAvtA539MosnsUpy7rxzEUBg7+dwb5f3W3wUZ
-	 aHBo4F74focmQSLOeoID4/R411CMHEQOFoavwDgCmglKMeF5sZjv0L9dNGJ6oWLnvqI73
-	 UHiEcWwwDMg9KLHlRodABL3gmf1bOXwi+15TWWh773zGLDurR5t6zsNpvKIfowVP+ZjmK
-	 9T/n1XibUgEUWInnbK2p0fCX5LMFWBF6RrOq8hqd2tRxi1JbB++shfOEdr/n+cRGw3A==
+	bh=ocJFE65424RBkYhq7IYhmYTHJX/v8QmnCVL2QkS1FFk=;
+	b=YGwrRLvE8dryOXE+hxjor/F1fa/6XHqjeq7DFEm0+QF+BvVNies04GtljutGEZ6tkaxT
+	 g96V9X4IEsXXHFNyhBN3o+VfS4S66/JfVXlllVXp2Zp5Zx5m57vAFbt19XEK1zr/1KecO
+	 +GKHSO7Le4NC+dDswXya6AdxK+McDCdq3rahsza1Nnj/Qf5OTT/d6Ivx7l5jCnVQYvdHv
+	 5gsTJR3tCxUykyGE95llS3q85uhKp38xY8sHlEccWzVG8eQHBbxUVOj2bdFPJs9sIJDOB
+	 0hvB9ueZw8fbiqFYNIj7DqJr0PJgvhppHMmJD7PMTSKr7GgVxug7FXBXZ/7ENOC+a1A==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=wS8OMGB5;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=pn1to5IJ;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 589A8606A321;
-	Wed, 25 Nov 2026 16:05:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4030F606A321;
+	Wed, 25 Nov 2026 16:05:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=wS8OMGB5
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9D6511F000CF;
-	Wed, 25 Nov 2026 16:05:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=pn1to5IJ
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 780E51F000C4;
+	Wed, 25 Nov 2026 16:05:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795622726;
-	bh=y5g/MozCIPSdF0Ys8cHgv+ZlpAWewfupzhCNXpp5yMU=;
+	s=korg; t=1795622729;
+	bh=ocJFE65424RBkYhq7IYhmYTHJX/v8QmnCVL2QkS1FFk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=wS8OMGB50PkH82UPV2+DGM6F66dpjUq99eBX2blgg8MfYPXd1yEt424KVBJNe62C/
-	 COz0J/oNclb6CLtyzn3KiDdbZWbRTfOcX5SgrUdlA22HDEwfEbtdi125ud0DYjOgSZ
-	 6f7YgJBMuVS86EvSWB1cJuPxorQzxOK4UOYS1RCE=
+	b=pn1to5IJU0DzT9WmNdXKK9btjKr2d6J0Ninc2XJp3BeDj9P/iDv/CeCpb+UJQBBiz
+	 XYqMe3kv20OtlBGgalJ4dQguPcWvcJH1ucdsKlx1u/rk3zXX5/0iPhs11ixHj826dC
+	 6IdpAjC6XF1oAubtsFbI23osA+AMFqd5EdaRKIjE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pooyan Azad <pooyan.azadparvar@gmail.com>,
-	Andrew Morton <akpm@linux-foundation.org>,
-	Sergey Senozhatsky <senozhatsky@chromium.org>,
-	Minchan Kim <minchan@kernel.org>,
-	Jens Axboe <axboe@kernel.dk>,
+	Waiman Long <longman@redhat.com>,
+	Guopeng Zhang <zhangguopeng@kylinos.cn>,
+	Tejun Heo <tj@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 627/990] zram: fix short reads from block_state
-Date: Wed, 25 Nov 2026 15:33:14 +0100
-Message-ID: <20261125143836.785113012@linuxfoundation.org>
+Subject: [PATCH 6.18 628/990] cgroup/cpuset: Find furthest isolated ancestor for invalidated isolated partition
+Date: Wed, 25 Nov 2026 15:33:15 +0100
+Message-ID: <20261125143836.808158490@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143822.072087159@linuxfoundation.org>
 References: <20261125143822.072087159@linuxfoundation.org>
@@ -71,175 +69,207 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pooyan Azad <pooyan.azadparvar@gmail.com>
+From: Waiman Long <longman@redhat.com>
 
-[ Upstream commit 372012202260db088b489ed00059c4571a602552 ]
+[ Upstream commit 0bce85ff2cc0f7f7d8de16f5fdfc0ae7d29f21f1 ]
 
-read_block_state() formats each entry directly into the buffer supplied by
-read().  If the remaining buffer is too small for one complete record,
-snprintf() returns the full record length and the function stops without
-copying data or advancing the file position.  A read from this debugfs
-file which is smaller than a record therefore returns zero at a non-EOF
-position and cannot make progress.
+Commit 46b885416c27 ("cgroup/cpuset: Fix a missing isolated_cpus
+update in update_cpumasks_hier()") searches for the closet partition
+root ancestor to determine if the isolated CPUs in a to be invalidated
+isolation partition should be removed from isolated_cpus or not.
 
-Convert block_state to seq_file so formatted records are buffered
-independently of the userspace read size.  Keep dev_lock held across each
-seq_file iteration and continue to protect individual entries with their
-slot locks.
+As reported by sashiko, this method may not work when there is a deeply
+nested isolated partition hierarchy. For instance, Consider a nested
+hierarchy A0 -> A1 -> A2 -> A3 where all four are PRS_ISOLATED:
 
-Link: https://lore.kernel.org/20260929071846.24829-1-pooyan.azadparvar@gmail.com
-Fixes: c0265342bff4 ("zram: introduce zram memory tracking")
-Signed-off-by: Pooyan Azad <pooyan.azadparvar@gmail.com>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Closes: https://lore.kernel.org/r/CANC3H+LdtoydSp+o2ecErAw7k6R2+gRf9LyxcaoHv_mGhJmyQQ@mail.gmail.com/
-Reviewed-by: Sergey Senozhatsky <senozhatsky@chromium.org>
-Tested-by: Sergey Senozhatsky <senozhatsky@chromium.org>
-Cc: Minchan Kim <minchan@kernel.org>
-Cc: Jens Axboe <axboe@kernel.dk>
-[ sashal: Renamed this tree's older helpers and lock (init_lock, zram_slot_lock, zram_allocated, etc.) in place of upstream's, and kept the ktime_t-based timestamp formatting instead of upstream's integer ac_time print. ]
+  A0: effective_xcpus = 0-4
+  A1: effective_xcpus = 1-4
+  A2: effective_xcpus = 2-4
+  A3: effective_xcpus = 3-4
+
+When A1 shrinks its exclusive_cpus from 1-4 to 1-2, A2 will update it
+effective_xcpus to 2. A3 will find its closet partition root ancestor
+A2 and decides that its effective_xcpus 3-4 should be removed from
+isolated_cpus which is incorrect.
+
+Address this corner case by adding a new isolated_cpus_release() helper
+to replace the existing ancestor_partition() helper. This new helper
+will search for the furthest isolated partition root ancestor to decide
+if some or all of its isolated CPUs should be removed from isolated_cpus
+and also perform the removal when appropriate.
+
+The is_remote_partition() and is_local_partition() helpers are also
+moved up so they can be used in earlier functions.
+
+There are other pre-existing problems that will still prevent the
+above test case to work correctly. These problems will be addressed in
+subsequent patches.
+
+Fixes: 46b885416c27 ("cgroup/cpuset: Fix a missing isolated_cpus update in update_cpumasks_hier()")
+Signed-off-by: Waiman Long <longman@redhat.com>
+Reviewed-by: Guopeng Zhang <zhangguopeng@kylinos.cn>
+Signed-off-by: Tejun Heo <tj@kernel.org>
+[ sashal: Replaced the upstream cs->remote_partition check in is_remote_partition() with this tree's remote_sibling list test, and adjusted context around the plain isolated_cpus_update(). ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/block/zram/zram_drv.c | 105 +++++++++++++++++-----------------
- 1 file changed, 53 insertions(+), 52 deletions(-)
+ kernel/cgroup/cpuset.c | 104 +++++++++++++++++++++--------------------
+ 1 file changed, 53 insertions(+), 51 deletions(-)
 
-diff --git a/drivers/block/zram/zram_drv.c b/drivers/block/zram/zram_drv.c
-index ea5a9b81a310e..1ef4a15947683 100644
---- a/drivers/block/zram/zram_drv.c
-+++ b/drivers/block/zram/zram_drv.c
-@@ -1134,72 +1134,73 @@ static void zram_debugfs_destroy(void)
- 	debugfs_remove_recursive(zram_debugfs_root);
+diff --git a/kernel/cgroup/cpuset.c b/kernel/cgroup/cpuset.c
+index 751ea3d6dcc0a..54ee036020e05 100644
+--- a/kernel/cgroup/cpuset.c
++++ b/kernel/cgroup/cpuset.c
+@@ -1348,6 +1348,16 @@ static void reset_partition_data(struct cpuset *cs)
+ 		cpumask_copy(cs->effective_cpus, parent->effective_cpus);
  }
  
--static ssize_t read_block_state(struct file *file, char __user *buf,
--				size_t count, loff_t *ppos)
-+static void *zram_block_state_start(struct seq_file *seq, loff_t *pos)
- {
--	char *kbuf;
--	ssize_t index, written = 0;
--	struct zram *zram = file->private_data;
-+	struct zram *zram = seq->private;
- 	unsigned long nr_pages;
- 
--	kbuf = kvmalloc(count, GFP_KERNEL);
--	if (!kbuf)
--		return -ENOMEM;
--
- 	down_read(&zram->init_lock);
--	if (!init_done(zram)) {
--		up_read(&zram->init_lock);
--		kvfree(kbuf);
--		return -EINVAL;
--	}
-+	if (!init_done(zram))
-+		return ERR_PTR(-EINVAL);
- 
- 	nr_pages = zram->disksize >> PAGE_SHIFT;
-+	if (*pos >= nr_pages)
-+		return NULL;
- 
--	for (index = *ppos; index < nr_pages; index++) {
--		int copied;
--		struct timespec64 ts;
-+	return pos;
-+}
- 
--		zram_slot_lock(zram, index);
--		if (!zram_allocated(zram, index))
--			goto next;
-+static void *zram_block_state_next(struct seq_file *seq, void *v, loff_t *pos)
++static inline bool is_remote_partition(struct cpuset *cs)
 +{
-+	struct zram *zram = seq->private;
-+	unsigned long nr_pages = zram->disksize >> PAGE_SHIFT;
- 
--		ts = ktime_to_timespec64(zram->table[index].ac_time);
--		copied = snprintf(kbuf + written, count,
--			"%12zd %12lld.%06lu %c%c%c%c%c%c\n",
--			index, (s64)ts.tv_sec,
--			ts.tv_nsec / NSEC_PER_USEC,
--			zram_test_flag(zram, index, ZRAM_SAME) ? 's' : '.',
--			zram_test_flag(zram, index, ZRAM_WB) ? 'w' : '.',
--			zram_test_flag(zram, index, ZRAM_HUGE) ? 'h' : '.',
--			zram_test_flag(zram, index, ZRAM_IDLE) ? 'i' : '.',
--			zram_get_priority(zram, index) ? 'r' : '.',
--			zram_test_flag(zram, index,
--				       ZRAM_INCOMPRESSIBLE) ? 'n' : '.');
--
--		if (count <= copied) {
--			zram_slot_unlock(zram, index);
--			break;
--		}
--		written += copied;
--		count -= copied;
--next:
--		zram_slot_unlock(zram, index);
--		*ppos += 1;
--	}
-+	++*pos;
-+	if (*pos >= nr_pages)
-+		return NULL;
-+
-+	return pos;
++	return !list_empty(&cs->remote_sibling);
 +}
 +
-+static void zram_block_state_stop(struct seq_file *seq, void *v)
++static inline bool is_local_partition(struct cpuset *cs)
 +{
-+	struct zram *zram = seq->private;
- 
- 	up_read(&zram->init_lock);
--	if (copy_to_user(buf, kbuf, written))
--		written = -EFAULT;
--	kvfree(kbuf);
++	return is_partition_valid(cs) && !is_remote_partition(cs);
 +}
- 
--	return written;
-+static int zram_block_state_show(struct seq_file *seq, void *v)
-+{
-+	struct zram *zram = seq->private;
-+	unsigned long index = *(loff_t *)v;
-+	struct timespec64 ts;
 +
-+	zram_slot_lock(zram, index);
-+	if (zram_allocated(zram, index)) {
-+		ts = ktime_to_timespec64(zram->table[index].ac_time);
-+		seq_printf(seq, "%12lu %12lld.%06lu %c%c%c%c%c%c\n",
-+			   index, (s64)ts.tv_sec,
-+			   ts.tv_nsec / NSEC_PER_USEC,
-+			   zram_test_flag(zram, index, ZRAM_SAME) ? 's' : '.',
-+			   zram_test_flag(zram, index, ZRAM_WB) ? 'w' : '.',
-+			   zram_test_flag(zram, index, ZRAM_HUGE) ? 'h' : '.',
-+			   zram_test_flag(zram, index, ZRAM_IDLE) ? 'i' : '.',
-+			   zram_get_priority(zram, index) ? 'r' : '.',
-+			   zram_test_flag(zram, index,
-+					  ZRAM_INCOMPRESSIBLE) ? 'n' : '.');
+ /*
+  * isolated_cpus_update - Update the isolated_cpus mask
+  * @old_prs: old partition_root_state
+@@ -1363,6 +1373,45 @@ static void isolated_cpus_update(int old_prs, int new_prs, struct cpumask *xcpus
+ 		cpumask_andnot(isolated_cpus, isolated_cpus, xcpus);
+ }
+ 
++/*
++ * isolated_cpus_release - Remove the relevant CPUs in @xcpus from isolated_cpus
++ * @cs: the current cpuset
++ * @xcpus: the set of effective xcpus to be considered for removal
++ *
++ * This function is called when an isolated partition is invalidated or when
++ * some of its effective xcpus are to be removed from isolated_cpus due to
++ * changes in parent cpuset. The given @xcpus must be modifiable as the function
++ * will update its value to determine the right set of CPUs to be removed.
++ */
++static void isolated_cpus_release(struct cpuset *cs, struct cpumask *xcpus)
++{
++	struct cpuset *ancestor = parent_cs(cs);
++	struct cpuset *iancestor = NULL;
++
++	/*
++	 * Search the furthest isolated partition root ancestor available
++	 * until top_cpuset or a remote partition root is hit.
++	 */
++	for (; ancestor; ancestor = parent_cs(ancestor)) {
++		if (ancestor->partition_root_state == PRS_ISOLATED)
++			iancestor = ancestor;
++		if (is_remote_partition(ancestor))
++			break;
 +	}
-+	zram_slot_unlock(zram, index);
 +
-+	return 0;
++	/*
++	 * If a furthest isolated partition acnestor is found, use it to
++	 * determine which of the CPUs in @xcpus should be removed from
++	 * isolated_cpus. Otherwise, all of them will be removed.
++	 */
++	if (iancestor && !cpumask_andnot(xcpus, xcpus, iancestor->effective_xcpus))
++		return; /* No CPU should be removed from isolated_cpus */
++
++	spin_lock_irq(&callback_lock);
++	isolated_cpus_update(PRS_ISOLATED, PRS_ROOT, xcpus);
++	spin_unlock_irq(&callback_lock);
++}
++
+ /*
+  * partition_xcpus_add - Add new exclusive CPUs to partition
+  * @new_prs: new partition_root_state
+@@ -1621,16 +1670,6 @@ static int compute_trialcs_excpus(struct cpuset *trialcs, struct cpuset *cs)
+ 	return rm_siblings_excl_cpus(parent, cs, excpus);
  }
  
--static const struct file_operations proc_zram_block_state_op = {
--	.open = simple_open,
--	.read = read_block_state,
--	.llseek = default_llseek,
-+static const struct seq_operations zram_block_state_sops = {
-+	.start = zram_block_state_start,
-+	.next = zram_block_state_next,
-+	.stop = zram_block_state_stop,
-+	.show = zram_block_state_show,
- };
-+DEFINE_SEQ_ATTRIBUTE(zram_block_state);
- 
- static void zram_debugfs_register(struct zram *zram)
- {
-@@ -1209,7 +1210,7 @@ static void zram_debugfs_register(struct zram *zram)
- 	zram->debugfs_dir = debugfs_create_dir(zram->disk->disk_name,
- 						zram_debugfs_root);
- 	debugfs_create_file("block_state", 0400, zram->debugfs_dir,
--				zram, &proc_zram_block_state_op);
-+				zram, &zram_block_state_fops);
+-static inline bool is_remote_partition(struct cpuset *cs)
+-{
+-	return !list_empty(&cs->remote_sibling);
+-}
+-
+-static inline bool is_local_partition(struct cpuset *cs)
+-{
+-	return is_partition_valid(cs) && !is_remote_partition(cs);
+-}
+-
+ /*
+  * remote_partition_enable - Enable current cpuset as a remote partition root
+  * @cs: the cpuset to update
+@@ -2239,25 +2278,6 @@ static void compute_partition_effective_cpumask(struct cpuset *cs,
+ 	rcu_read_unlock();
  }
  
- static void zram_debugfs_unregister(struct zram *zram)
+-/*
+- * ancestor_partition - Find and return the closest valid partition root ancestor
+- * @cs: the current cpuset
+- *
+- * Return: The closet partition root ancestor cpuset
+- */
+-static struct cpuset *ancestor_partition(struct cpuset *cs)
+-{
+-	struct cpuset *ancestor = parent_cs(cs);
+-
+-	/*
+-	 * The top_cpuset is always a valid partition root which will stop
+-	 * the loop if it is reached.
+-	 */
+-	while (!is_partition_valid(ancestor))
+-		ancestor = parent_cs(ancestor);
+-	return ancestor;
+-}
+-
+ /*
+  * update_cpumasks_hier - Update effective cpumasks and tasks in the subtree
+  * @cs:  the cpuset to consider
+@@ -2361,7 +2381,6 @@ static void update_cpumasks_hier(struct cpuset *cs, struct tmpmasks *tmp,
+ 		 */
+ 		if ((cp != cs) && old_prs) {
+ 			int parent_prs = parent->partition_root_state;
+-			struct cpumask *del_cpus = NULL;
+ 
+ 			switch (parent_prs) {
+ 			case PRS_ROOT:
+@@ -2375,32 +2394,15 @@ static void update_cpumasks_hier(struct cpuset *cs, struct tmpmasks *tmp,
+ 				 * child partition roots become invalid too.
+ 				 *
+ 				 * For a to be invalidated isolated partition,
+-				 * its isolated CPUs may or may not need to be
+-				 * removed from isolated_cpus depending on if
+-				 * its closest partition root ancestor is a root
+-				 * or isolated partition. With a PRS_ISOLATED
+-				 * ancestor, the CPUs are checked against its
+-				 * effective xcpus to see if any of them needed
+-				 * to be removed.
++				 * call return_isolated_cpus() to remove the
++				 * relevant CPUs from isolated_cpus.
+ 				 */
+ 				if (is_partition_valid(cp))
+ 					new_prs = -old_prs;
+ 
+ 				if (old_prs == PRS_ISOLATED) {
+-					struct cpuset *ancestor = ancestor_partition(cp);
+-
+-					if (ancestor->partition_root_state == PRS_ROOT)
+-						del_cpus = cp->effective_xcpus;
+-					else if (cpumask_andnot(tmp->delmask,
+-								cp->effective_xcpus,
+-								ancestor->effective_xcpus))
+-						del_cpus = tmp->delmask;
+-
+-					if (del_cpus) {
+-						spin_lock_irq(&callback_lock);
+-						isolated_cpus_update(old_prs, new_prs, del_cpus);
+-						spin_unlock_irq(&callback_lock);
+-					}
++					cpumask_copy(tmp->delmask, cp->effective_xcpus);
++					isolated_cpus_release(cp, tmp->delmask);
+ 				}
+ 				WRITE_ONCE(cp->prs_err,
+ 					   is_partition_invalid(parent)
 -- 
 2.53.0
 
