@@ -1,54 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795618860;
-	b=HhhQqx7N6m+f6sfRU1bPHSdrROq1TiQN2bXqiI6GO+e+/rY/boCsVX/Aphcxp8rMa7Yw
-	 TuYqP0xjE/iOZCpCprAHQtE+WSgJkH1LCSe1ZD58gobHBWWkoW+YhaW+TnswqwfVvijuG
-	 8zUG4/FOBdFl3QIBFXWZB57gNWYIi6YfQ2XzhHgq9cZQv8muZBXVva/Z3ocUCN9tTTVGN
-	 7PLEPle5BWS9BpayAgQwlb8DUl2p9nkzW8qcwvf8c8eRJxJkv88LdlnsIUO3AxdqarSfM
-	 PnlCFk43zy8Abe3AQZbIYwRj5DepFBhDtWy/eCK0ou+KbzIGSRHFQuDLBHYDhbw0GGQ==
+	t=1795618862;
+	b=l34D78L813jQk7GSsvxDm5Ej3+gNmsYLjNSBVLTJWEPboKOzZm29OL89wIlKYsc3+xO4
+	 FucDdH/NHDdtacCxCVjyD5ddaGfy4j+gXCQpMn+s7YFrXAbQ/+WfOJa2CeZg9aH86oZl/
+	 Pofxynjkc+LL9lw64ZJAIc6TY4+Ma9LMta4yjcJrZ8DlJF+ip3q31nJxR7TPGEa0OYyUl
+	 YIak2/lZYuDkmR/RqkJfrIJma9Fj9gBDzvydZxrpHS/F8kr2O/Us39kfMWSTJqksraKti
+	 cPbKbNa3nbqHMVpVRiCcK4AR+RfC/n6liDmDx/5l8KU0Up40WfdZMwdxEOmY4qr/mOw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795618860;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795618862;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=iZ0oCcjsHYN77crJNPhVhFamAfG8b7ZU292V9MvQ69k=;
-	b=BPEDZIbmXQANwamcWEYa30eFM6MpyZZvDC259cS79qaO7nr/t2z3u6WbIXv6oADV02q1
-	 /BGDdBOCV4+o+tyVxrk4saKD1n5vO837HNHNY+JenQJxt4Gmb2p3eSedCAZZzogf5X8Ra
-	 BBh2D85x3qFe0iMfz6FejEt7tD/gfC3UjLjEX3zEgaaoZhJcv/LbKATz4XNsE4BP7AoKX
-	 no2xBpy7W7b8/0iic08/AIT2p6QG4S4aLny293GY9eRb2fnB2Bx3xEKn0ehFKlGTHXlKK
-	 LmlJ/V9Fl6uDoM7/0FfU2uZSUn+WNkXOVRVWOYybA0513H6uBKEGnynt5jk8kO5dw+Q==
+	bh=bySdQj1dSDSQLcopFzs+V+t4Is2TXcZ/VDt319hQ6Cg=;
+	b=TjiQiq07nlRdD/C4GpMC48Mf5Ng0IZJY0RvhcmHpsX5/PT6CBTZ07nnRdE7gEvKRSvi8
+	 33Ib60seqE8MrMZ5b0lECfg9A9gXr5mftH2LPCZB192LJFl57ED/QuELn6JC/VBn2MMQ8
+	 Vh5yfTjpXPQWyD/8lBUJVLPOqdjClC5vo/irlE8Cg+pL73kphctlQ33Mb6ahnJy7Gw+R5
+	 30h2/Rvz8GfXmfmJYBsQk7kahfhXfhuiBmyRXSySmw0KTaE4aYNDellWfS2u01+DSr2it
+	 6RDUEdThH32j5bUqo1wTItQAlJ/UfRZ4uKOfW4DJDO2ehriNdty5hlOm/J564GEXEUA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="ksiS/wvy";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=iC75MoJZ;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EFB65606A326;
-	Wed, 25 Nov 2026 15:00:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3B685606A321;
+	Wed, 25 Nov 2026 15:01:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ksiS/wvy
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B0D661F000C0;
-	Wed, 25 Nov 2026 15:00:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=iC75MoJZ
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8DCF11F000C4;
+	Wed, 25 Nov 2026 15:01:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795618859;
-	bh=iZ0oCcjsHYN77crJNPhVhFamAfG8b7ZU292V9MvQ69k=;
+	s=korg; t=1795618862;
+	bh=bySdQj1dSDSQLcopFzs+V+t4Is2TXcZ/VDt319hQ6Cg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ksiS/wvydqa2lEAdGcv5Ah/5inPsIkRZKoN5APiUEA+5WZ4RRNCjASbWbwr3LgSGl
-	 0a7is/5n/L+IpfmA7tKqnV/aKSEjNZsiFP00U/LjDfVFGfGXH9eZu6FGo8nJ3JDDVT
-	 8NABxhxkFDPm675iyGyEKUtqI3rbrdPmX5C8+9uI=
+	b=iC75MoJZGQnoHnsh8FOepwWublKEwfhI00f+m7cZ+6C0RBKRwv+4xB7gxTmIHDeYJ
+	 hrrmjI4ft8bUgVPLGzi9g2wqlaBxKYMT/1kX2+BclBwOzJKpTid+6r0rIXQ0Pm7f+v
+	 DU97faDq8OhJwi/bVIex14Wf5N6Dn6ylE50j/dbw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Or Har-Toov <ohartoov@nvidia.com>,
-	Maher Sanalla <msanalla@nvidia.com>,
-	Tariq Toukan <tariqt@nvidia.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Sashiko <sashiko-bot@kernel.org>,
+	Ben Segall <bsegall@google.com>,
+	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0366/1005] net/mlx5e: Add missing Ethernet multicast octets to vport_rx_bytes sum
-Date: Wed, 25 Nov 2026 15:28:24 +0100
-Message-ID: <20261125143830.306257354@linuxfoundation.org>
+Subject: [PATCH 7.3 0357/1005] perf: Fix racy update of cpc->hrtimer_interval
+Date: Wed, 25 Nov 2026 15:28:15 +0100
+Message-ID: <20261125143830.096732292@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143821.729802100@linuxfoundation.org>
 References: <20261125143821.729802100@linuxfoundation.org>
@@ -70,41 +69,73 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Or Har-Toov <ohartoov@nvidia.com>
+From: Benjamin Segall <bsegall@google.com>
 
-[ Upstream commit 9c1adbe7fa6cbc02c25db2039532918acf846400 ]
+[ Upstream commit 3bbd85b2f67aff58f2cbec9a7fb705677b94473b ]
 
-mlx5e_rep_update_hw_counters() adds transmitted_eth_multicast.packets
-to vport_rx_packets but does not add transmitted_eth_multicast.octets
-to vport_rx_bytes. As a result, Ethernet multicast sent by a VF/SF is
-counted in its representor's rx_packets but not in rx_bytes.
+Updates to cpc->hrtimer_interval can race with reads either in the
+hrtimer itself, or other calls to perf_mux_hrtimer_restart. This is not
+exactly expected to be a common config change, but it's easy enough to
+fix.
 
-Fix by adding transmitted_eth_multicast.octets to the vport_rx_bytes
-sum.
+Since there's already an IPI to each cpu to restart the timer, and all
+reads are with irqs disabled, just move the update onto the target cpu.
 
-Fixes: 64b68e369649 ("net/mlx5: Refactor and expand rep vport stat group")
-Signed-off-by: Or Har-Toov <ohartoov@nvidia.com>
-Reviewed-by: Maher Sanalla <msanalla@nvidia.com>
-Signed-off-by: Tariq Toukan <tariqt@nvidia.com>
-Link: https://patch.msgid.link/20261101065833.282261-1-tariqt@nvidia.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: 62b856397927 ("perf: Add sysfs entry to adjust multiplexing interval per PMU")
+Reported-by: Sashiko <sashiko-bot@kernel.org>
+Signed-off-by: Ben Segall <bsegall@google.com>
+Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
+Link: https://sashiko.dev/#/patchset/xm265wykhyrv.fsf%40google.com
+Link: https://patch.msgid.link/xm26se1ihlqb.fsf@google.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/mellanox/mlx5/core/en_rep.c | 1 +
- 1 file changed, 1 insertion(+)
+ kernel/events/core.c | 22 +++++++++++-----------
+ 1 file changed, 11 insertions(+), 11 deletions(-)
 
-diff --git a/drivers/net/ethernet/mellanox/mlx5/core/en_rep.c b/drivers/net/ethernet/mellanox/mlx5/core/en_rep.c
-index 88a170e40bd93..a50a42581528a 100644
---- a/drivers/net/ethernet/mellanox/mlx5/core/en_rep.c
-+++ b/drivers/net/ethernet/mellanox/mlx5/core/en_rep.c
-@@ -238,6 +238,7 @@ static MLX5E_DECLARE_STATS_GRP_OP_UPDATE_STATS(vport_rep)
- 		MLX5_GET_CTR(out, transmitted_ib_unicast.octets) +
- 		MLX5_GET_CTR(out, transmitted_eth_unicast.octets) +
- 		MLX5_GET_CTR(out, transmitted_ib_multicast.octets) +
-+		MLX5_GET_CTR(out, transmitted_eth_multicast.octets) +
- 		MLX5_GET_CTR(out, transmitted_eth_broadcast.octets);
+diff --git a/kernel/events/core.c b/kernel/events/core.c
+index 9c45f9d584d67..4239cc173e356 100644
+--- a/kernel/events/core.c
++++ b/kernel/events/core.c
+@@ -1332,14 +1332,19 @@ static int perf_mux_hrtimer_restart(struct perf_cpu_pmu_context *cpc)
+ 	return 0;
+ }
  
- 	rep_stats->vport_tx_bytes =
+-static int perf_mux_hrtimer_restart_ipi(void *arg)
++static __always_inline struct perf_cpu_pmu_context *this_cpc(struct pmu *pmu)
+ {
+-	return perf_mux_hrtimer_restart(arg);
++	return *this_cpu_ptr(pmu->cpu_pmu_context);
+ }
+ 
+-static __always_inline struct perf_cpu_pmu_context *this_cpc(struct pmu *pmu)
++static int perf_mux_hrtimer_interval_ipi(void *arg)
+ {
+-	return *this_cpu_ptr(pmu->cpu_pmu_context);
++	struct pmu *pmu = arg;
++	struct perf_cpu_pmu_context *cpc = this_cpc(pmu);
++	int ms = pmu->hrtimer_interval_ms;
++
++	cpc->hrtimer_interval = ns_to_ktime(NSEC_PER_MSEC * ms);
++	return perf_mux_hrtimer_restart(cpc);
+ }
+ 
+ void perf_pmu_disable(struct pmu *pmu)
+@@ -12770,13 +12775,8 @@ perf_event_mux_interval_ms_store(struct device *dev,
+ 
+ 	/* update all cpuctx for this PMU */
+ 	cpus_read_lock();
+-	for_each_online_cpu(cpu) {
+-		struct perf_cpu_pmu_context *cpc;
+-		cpc = *per_cpu_ptr(pmu->cpu_pmu_context, cpu);
+-		cpc->hrtimer_interval = ns_to_ktime(NSEC_PER_MSEC * timer);
+-
+-		cpu_function_call(cpu, perf_mux_hrtimer_restart_ipi, cpc);
+-	}
++	for_each_online_cpu(cpu)
++		cpu_function_call(cpu, perf_mux_hrtimer_interval_ipi, pmu);
+ 	cpus_read_unlock();
+ 	mutex_unlock(&mux_interval_mutex);
+ 
 -- 
 2.53.0
 
