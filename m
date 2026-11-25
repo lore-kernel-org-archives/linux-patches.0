@@ -1,51 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795623629;
-	b=VxI7Vy35tQoRRpUWpyV1Uyya0cl8opveT441WQrOP9Ol75X6SsO1BJhdB0Ya9IWB+59L
-	 8kSeHogwDQZaHB8FJOOSOHDjETIdj8ybykS7sC+4Ca2mU+oyqVeHaZZ7V1O9lsShTSdEu
-	 ujsAkZoZ0yJadM4pKzyeVYFcAMrxntm5+oUcx+PPxr/3eJI1G2nyY1/hpjUwy35So1qPY
-	 /MhnxtvMLIfaj0F3tPF6j2RHje/VAYEp8eebXpudDY2bTZAxqI5NYFN9KlV1VdMawD6md
-	 WQI8BsLBL2pKMQxRWZYMOIp/Qgqrmyvrpz41cLkfj8k0VuC6BfZI+nHVb1EzVVKx2vg==
+	t=1795623632;
+	b=BKlxNxpJR73gpVJ9xbIl6tHM6cdrIweWjUv0+TW7kVWtt9W+4PZyS++YDtnAE/aZGKrd
+	 UKTnoTX6+gkNeTUNi/YqCj8TCq/5J9jRgzRrlT57RgrxaLvM4oFR/mAcbEnMK3wJWPy/s
+	 ngLm0Y/1vN2SNR7XGFBQB4t09syWmXciX0peB8dbdMOvpGLEXbilPv48UkXGPgwo0EO5i
+	 h9huOUVsJmL21skNhWsxlwrb6VktHBAeLYkatkbRNydvHzQWzlNfLbdHT4ov7VzbBPgdP
+	 n8P0DImXw58TBSBetYcBr5+4vvvv4cOXacuAjFTO4pCZ2CIbrz8VCL9W7fo5rAQODpQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795623629;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795623632;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=G40r61dyAgbEf4BA2ibvX+vXHQOfUUnjSPgBzKhL64A=;
-	b=KuDEbnFS6yZ3g01K3dyQj9f9m1JnA079GUuEy4ewjgoM77Ig7JiBUKETb49QiM2oVYse
-	 Hh46y/DFZLJXeVzlAJWzY/bkPd4187oL5qNUGzvlmaGd4+kW4doOn7l8NhA3OPmjHFt84
-	 6fnAfOjfXyXWjVFbnCtue81E7/FOc43Ia+3ooV/JLjLQBYayAPuzXRaQo1vqVak1pW3WA
-	 e18ew4aC3B/SAohuXYuQ79FkZ4wsUFEJ5+nboZgwHKhykC0iYHfNSKWgGa4qPulDPLzt/
-	 3DHzlUT+dXzu/TucCJ/aCQFmvJOK0CfQBdSXf5ezxHtYtZJuhB/an3mYlntEVGu2iFQ==
+	bh=1zhrRXs6ledTyerWNGgVVP0UKOFSqLWos0Qq83Onodo=;
+	b=ZI1xsyjxFhG5AOvURg8ikXNRdRU+uEYyH0q8ZgR1RYLDo9AGs416gBBbKwi7PUE5XUVq
+	 fXifScxydQfI5hPm0TIFtnPSSv9+WGT0Qb+0ik7d7zWjcRaVL/cdKT4bG4hNDw4aLvmc9
+	 t2StzfcoMb/zvI3Vysp8iE5oZcKNrBolNfMJXm8w/7HMwjdTI8nFW39yNNHQ7wCplqXmT
+	 W4RpriuG62M8J3roCCs0S2qH/tPJOgoKsU2bxUwM0hV36KFSBRptnvIFu9eJEy8yX9ieT
+	 IBJem/xz5X0kxuWU0re/75TjdfEjHOGonWO0q5UFetxvyOPQp/ARKPOfhvugopspYnw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=j6hrT2UF;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=NLny114k;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AE8DB606A332;
-	Wed, 25 Nov 2026 16:20:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C673F606A337;
+	Wed, 25 Nov 2026 16:20:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=j6hrT2UF
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B3ADA1F000D2;
-	Wed, 25 Nov 2026 16:20:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=NLny114k
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D4DB61F000C4;
+	Wed, 25 Nov 2026 16:20:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795623629;
-	bh=G40r61dyAgbEf4BA2ibvX+vXHQOfUUnjSPgBzKhL64A=;
+	s=korg; t=1795623632;
+	bh=1zhrRXs6ledTyerWNGgVVP0UKOFSqLWos0Qq83Onodo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=j6hrT2UFWg0ytcubSvOGwaid7/V/9id1Q0pIyoEVq2ganDKH/YlO+QvhgB2xtDf4Z
-	 xDREx7WhJYvuV1jp3vLIg5iiD6XVdYusg7E8lFIAtFsFGlcIsVbyDZ3N9QG4y7Y1nm
-	 XO16yFRbcxPRdxQJbVCvvM5wFMZTRSj5xRvEsSmY=
+	b=NLny114k44VGxvpsr6f7bYaL9XVhbaUUmn95b+By8VgIu5UUuz0IovvvdnZkYgLuD
+	 jvL2cSHO7zNf/oVTidXsb+z/RBErdELiNn/Wx+n5Kr8lkI3c1//UApllwrhAGph7w+
+	 JhTsTTPj+Em0OyEbtat9GaTraQ3PVdlxYuMZOt4U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	stable <stable@kernel.org>,
+	Selvarasu Ganesan <selvarasu.g@samsung.com>,
 	Thinh Nguyen <Thinh.Nguyen@synopsys.com>
-Subject: [PATCH 6.18 919/990] usb: dwc3: gadget: Reset endpoint flags on controller start
-Date: Wed, 25 Nov 2026 15:38:06 +0100
-Message-ID: <20261125143843.527968113@linuxfoundation.org>
+Subject: [PATCH 6.18 920/990] usb: dwc3: gadget: Track a timed out End Transfer
+Date: Wed, 25 Nov 2026 15:38:07 +0100
+Message-ID: <20261125143843.551678688@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143822.072087159@linuxfoundation.org>
 References: <20261125143822.072087159@linuxfoundation.org>
@@ -69,51 +70,43 @@ Content-Transfer-Encoding: 8bit
 
 From: Thinh Nguyen <Thinh.Nguyen@synopsys.com>
 
-commit 7c9bc134e5b3315e0456cda9e8e59c752309ea78 upstream.
+commit af91c6322e633504aa45de278f5d520f39d127be upstream.
 
-The flags of a disabled endpoint may be preserved while its End
-Transfer command is pending. If the command never completes, the stale
-flags persist across a soft disconnect or an error recovery, and the
-endpoint can't be used again.
+If an End Transfer command with CMDIOC times out, the driver clears the
+resource index but keeps DWC3_EP_TRANSFER_STARTED without setting
+DWC3_EP_END_TRANSFER_PENDING. The command is still outstanding, but a
+later stop issues another End Transfer with resource index 0, and the
+next Start Transfer fails with "No Resource".
 
-Reset the flags of all non-control endpoints when starting the
-controller.
+Mark the timed out End Transfer as pending so that no other command is
+issued to the endpoint until it completes. For any other failure, there
+is no outstanding command, so clear DWC3_EP_TRANSFER_STARTED.
 
-Fixes: 76bff31c7fba ("usb: dwc3: gadget: Do not clear ep delayed stop flag during ep disable")
+Fixes: e192cc7b5239 ("usb: dwc3: gadget: move cmd_endtransfer to extra function")
 Cc: stable <stable@kernel.org>
+Reported-by: Selvarasu Ganesan <selvarasu.g@samsung.com>
+Closes: https://lore.kernel.org/linux-usb/3fdda532-8181-48e9-b58d-cad7289408e7@samsung.com/
 Signed-off-by: Thinh Nguyen <Thinh.Nguyen@synopsys.com>
-Link: https://patch.msgid.link/21cd189962b9d32a4f9df381df4947d35341d5a9.1792542945.git.Thinh.Nguyen@synopsys.com
+Link: https://patch.msgid.link/5815c41a7e7923edb114741f29697cf0161f523c.1792542945.git.Thinh.Nguyen@synopsys.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/dwc3/gadget.c |   10 ++++++++++
- 1 file changed, 10 insertions(+)
+ drivers/usb/dwc3/gadget.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
 --- a/drivers/usb/dwc3/gadget.c
 +++ b/drivers/usb/dwc3/gadget.c
-@@ -2958,6 +2958,7 @@ static int __dwc3_gadget_start(struct dw
- {
- 	struct dwc3_ep		*dep;
- 	int			ret = 0;
-+	u32			epnum;
- 	u32			reg;
+@@ -1806,9 +1806,9 @@ static int __dwc3_stop_active_transfer(s
  
- 	/*
-@@ -3015,6 +3016,15 @@ static int __dwc3_gadget_start(struct dw
- 		return ret;
- 	}
+ 	dep->resource_index = 0;
  
-+	for (epnum = 2; epnum < dwc->num_eps; epnum++) {
-+		dep = dwc->eps[epnum];
-+		if (!dep)
-+			continue;
-+
-+		dep->flags &= (DWC3_EP_TXFIFO_RESIZED |
-+			       DWC3_EP_RESOURCE_ALLOCATED);
-+	}
-+
- 	dep = dwc->eps[0];
- 	dep->flags = 0;
- 	ret = __dwc3_gadget_ep_enable(dep, DWC3_DEPCFG_ACTION_INIT);
+-	if (!interrupt)
++	if (!interrupt || (ret && ret != -ETIMEDOUT))
+ 		dep->flags &= ~DWC3_EP_TRANSFER_STARTED;
+-	else if (!ret)
++	else
+ 		dep->flags |= DWC3_EP_END_TRANSFER_PENDING;
+ 
+ 	dep->flags &= ~DWC3_EP_DELAY_STOP;
 
 
