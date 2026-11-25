@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795625281;
-	b=2HwIMJl0bB8FsJtNcrpTpg+7fgJmQHXqM9mpkuxjdafLgjVYlKefmprcV2VS6icBjJc5
-	 y/AZhvz7ZsrGARu6ZYResK18AD0Zy6ZmS9u4ELvNHc4RpysG2kQ7PsDqIqoLG08vw6rb3
-	 cvT8aVZmO8pA2xFoe1FdLGSBke2lqMm1GPvk6lfjxDvtJE6hMIifj5me3lgLQpL04/Awb
-	 McOdeBxfwxr8lbNoKRAaubhwUso06Eb3O/qev553EqtmCJa3K0vCWV5zhW/qWBpoLLEu1
-	 VLm/Jvs8myiOjwpO7D7Tf9TmgWAXhREtXBJlEa8W/Eceune4LD4i7DseOfTerD5x10w==
+	t=1795625285;
+	b=yI/fEEzWjV3M+oUkRzULtvqf4ERRz+zG7lv6CpRbxAgTLk1Qru6zHEMUzlXY/xf+cf3N
+	 WOg5cuvPEWEPhM9vcNfjFUUiW7HdPoGvTDkALmyKISYdL4EiEHaBKs/0IFY3NiqxWfqgN
+	 +oHd/twCK2+FO+1SQfQnO6I6lRmcYy6GI244YfM6UbHTOUZQy/9ERMkHcQz3nc6IP+E9j
+	 COcJC2Xu6BlTjp721CuPA0ATTyCGRfsvQGgD3eL15fpZQUn+3MhHBEfMf9cwH60jdTID4
+	 resDfm91dwmxdi8LBmW9+n+HD48Wq3o492fRJgJ04KUc72V79SZF88YqNwELaMlQqhw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795625281;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795625285;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=NI/F7PRsgCEAref+5xbDTrZEjMLGTueKJ11sYrathOM=;
-	b=InSaTTuXT5fllNxkmqi1KBibsO2XaMna3l4OSyckeB7JhICK4nDttESei/am1geP2Xqr
-	 MSFwv93dqaDoQhikNJdia63ZNDVUgY+86hjlvhzHWPEF7sk6Nt8+eRBzNRcYgXgGYb8eF
-	 o01SN97/BqfU8TfirlOhUuOUIryBKV0GY53n5hAz+bxA+5SQF+9FSvQP1h6i/fZloH5HR
-	 M+jBLpzQX7y/+IJprJWJvwwCDQa122L+DEoIUYoc26NU3jj1XgcJu7eYV3GAILG7Gv2Is
-	 8210msigyUcnides5b1ZHn6Qu0PleCMmPhcXaOMGvOHTPUFmfMA8I/mXuG9bA/a1R0Q==
+	bh=UGJ3AQs3KaK6/9JxSEAGOF3b+aGVmNmUlUqyKv4aJMQ=;
+	b=smz2QG3+Bsn52JvJu9KlzSi9B2w9zU0ii5dJp6T5hG2IMFzLHHxOgMhqeg3pJpPefxe2
+	 5JtVvdXowFf0lBsrq7kwF2CZg/9EOY5fbHov1+uqzBCPdGU5FwayflXqITZIAdDCGDKUL
+	 uyAtooI8y2cSk/MiopQooc83uwM3HCByC8qm4dQyzVlunuVWliN3Z1tehrkSUAbgDZv5M
+	 T86wDhZo2S68hCMFNvOoae+52WfpMN1oOLMRgF0Zrbtlp2bb3EKfDyMZZ4Iu7eKWhtkMn
+	 NaOyA/eS0elrqFFlPklGpVa8A5vQyg9UT0awVxhKuKde9XHV5x4x4Yl2EKVqtMTn27g==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="FrCn/kV2";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=x5pqq4+s;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9E3D8606A31E;
-	Wed, 25 Nov 2026 16:48:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2CE4B606A336;
+	Wed, 25 Nov 2026 16:48:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=FrCn/kV2
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CDE831F000E0;
-	Wed, 25 Nov 2026 16:48:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=x5pqq4+s
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 089001F000D1;
+	Wed, 25 Nov 2026 16:48:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795625281;
-	bh=NI/F7PRsgCEAref+5xbDTrZEjMLGTueKJ11sYrathOM=;
+	s=korg; t=1795625284;
+	bh=UGJ3AQs3KaK6/9JxSEAGOF3b+aGVmNmUlUqyKv4aJMQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=FrCn/kV2YnCBZVRHq4NHjsmvMR9i7pggpjIVOyzOXPXeT887VLOVudDtrBZm3a424
-	 xTJIi1M0YffQPK2xJSAEnqKBI4i99weM+1TsW1+nDzHtP+HeLacb2jx5TmINCFi1kB
-	 AytBX0RhBfKHPFbhusB00acRp+niDTD4fzWOrGYY=
+	b=x5pqq4+sAxozDyhLlQIV9ze8gBaYMLn6+pOI7KzmBnguhSma1HUgamzqTpq+6qTA3
+	 vhNu4sHFbJWU4ul4APvpC3gKIUzXUTqhdieSQbmidnn1bHv3qNJkZpISTfeZWBfW3L
+	 TpG6nKroGWUxUgq2YVhjvk5brRQSITRm4/KZtrC8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yuan Chen <chenyuan@kylinos.cn>,
-	Jiri Olsa <jolsa@kernel.org>,
 	Kumar Kartikeya Dwivedi <memxor@gmail.com>,
+	Alexei Starovoitov <ast@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 420/816] bpf: Keep target extended until its last freplace link detaches
-Date: Wed, 25 Nov 2026 15:32:48 +0100
-Message-ID: <20261125143858.919849452@linuxfoundation.org>
+Subject: [PATCH 6.12 421/816] bpf: Check fastcall stack contract once for all stack accesses
+Date: Wed, 25 Nov 2026 15:32:49 +0100
+Message-ID: <20261125143858.941951815@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143849.205329330@linuxfoundation.org>
 References: <20261125143849.205329330@linuxfoundation.org>
@@ -69,118 +68,143 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yuan Chen <chenyuan@kylinos.cn>
+From: Kumar Kartikeya Dwivedi <memxor@gmail.com>
 
-[ Upstream commit c43c348a84460b003fa757dd43d8c89848ae220d ]
+[ Upstream commit ec3a69e7c021cd826be8886ba6af4ee3147788fb ]
 
-The is_extended / prog_array_member_cnt protocol introduced by commit
-d6083f040d5d ("bpf: Prevent tailcall infinite loop caused by freplace")
-keeps a prog extended by a freplace program out of prog_array maps, and
-vice versa: once a tail call re-enters an extended subprogram, its
-tail_call_cnt resets on every execution and the loop never terminates.
+When the verifier inlines a bpf_fastcall helper or kfunc, it removes the
+spill/fill pairs that clang emitted around the call and lowers the
+subprogram's stack depth so that their slots are no longer part of the
+frame. This is only safe if nothing else accesses those slots or any slot
+below them. check_fastcall_stack_contract() enforces this: an access to
+that region from outside a fastcall pattern disables the rewrite for the
+subprogram. It is called from the four stack load and store paths, and
+two kinds of access escape it.
 
-But is_extended is a plain boolean, while one target prog can carry
-several freplace links at the same time, one on its entry and one on a
-global subprogram.  __bpf_trampoline_unlink_prog() cleared is_extended
-whenever *any* freplace link detached, so detaching one of two links
-re-armed the unbounded loop through the remaining one.
+Stack buffers passed to helpers and kfuncs are validated by
+check_stack_range_initialized(), which does not call it. If such a buffer
+is the only other access to the region, the rewrite is still applied, the
+JIT reserves a frame that does not contain the buffer, and the helper
+reads or writes live kernel stack below the program's frame. For example,
+without CAP_PERFMON:
 
-Replace the is_extended boolean with a count of the freplace links
-attached to each target prog, so the target stays extended until its
-last link detaches.  Also rename bpf_freplace_check_tgt_prog() to
-bpf_freplace_link_tgt_prog(), as the helper has never been a pure
-check: it reserves the target prog on success.
+	*(u64 *)(r10 - 8) = r1;
+	call bpf_get_smp_processor_id;
+	r1 = *(u64 *)(r10 - 8);
+	r2 = 0;
+	r3 = r10;
+	r3 += -64;
+	r4 = 8;
+	call bpf_skb_load_bytes;
 
-Fixes: d6083f040d5d ("bpf: Prevent tailcall infinite loop caused by freplace")
-Signed-off-by: Yuan Chen <chenyuan@kylinos.cn>
-Acked-by: Jiri Olsa <jolsa@kernel.org>
-Link: https://lore.kernel.org/bpf/20260924023737.1140521-2-chenyuan_fl@163.com
+is accepted with a stack depth of 0 instead of 64.
+
+Some buffers got the check indirectly. For constant-sized outputs in raw
+mode, mark_raw_stack() marks the buffer initialized through ordinary
+byte stores, which call the check. Commit 5da4a9f26fca ("bpf: Preserve
+stack initialization for generic output buffers") limited raw mode to
+programs that may read uninitialized stack, so outputs of programs
+without CAP_PERFMON lost the check, as in the example above. Buffers
+that never used raw mode have lacked the check since fastcall support
+was added: helper inputs such as a map key whose only store is a fastcall
+spill, variable-sized outputs, and buffers at a variable stack offset.
+
+check_stack_read_fixed_off() applies the check to the current frame,
+even when the pointer targets a caller's stack. A callee can therefore
+read a caller's fastcall spill slot without disabling the caller's
+rewrite:
+
+	caller:
+	r1 = 1;
+	*(u64 *)(r10 - 8) = r1;
+	call bpf_get_smp_processor_id;
+	r1 = *(u64 *)(r10 - 8);
+	r1 = r10;
+	r1 += -8;
+	call callee;
+
+	callee:
+	r0 = *(u64 *)(r1 + 0);
+
+The caller's spill and fill are removed and its stack depth drops to 0,
+but the verifier still tracks the slot as holding the spilled constant.
+The callee's load then reads kernel stack outside the caller's frame,
+while the verifier assumes r0 is 1.
+
+Every stack access first goes through check_stack_access_within_bounds():
+loads and stores from check_mem_access(), helper and kfunc buffers from
+check_stack_range_initialized(), and the dynptr, iterator and irq flag
+slots that kfuncs initialize, whose handlers use check_mem_access(). It
+resolves the frame that owns the slots and the lowest offset the access
+can touch, and it is the only place where a frame's stack depth grows.
+Check the contract there, once for every access, and drop the calls from
+the stack read and write paths. Zero-sized buffers touch no stack and
+leave the rewrite enabled.
+
+Fixes: 5b5f51bff1b6 ("bpf: no_caller_saved_registers attribute for helper calls")
+Fixes: 5da4a9f26fca ("bpf: Preserve stack initialization for generic output buffers")
 Signed-off-by: Kumar Kartikeya Dwivedi <memxor@gmail.com>
-[ sashal: adjusted bpf.h context for the older struct layout and changed bpf_tramp_node usage to the older bpf_tramp_link API in the trampoline context, with the changed lines identical. ]
+Signed-off-by: Alexei Starovoitov <ast@kernel.org>
+Link: https://lore.kernel.org/bpf/85f9995a43edb70c76615280e103dc5325742e88330f36c97962ee35f17e3e32@mail.kernel.org
+Link: https://patch.msgid.link/20260924075352.2343553-2-memxor@gmail.com
+[ sashal: Removed the four per-path fastcall stack contract calls and added one check in the stack bounds function, with context adjusted since the surrounding verifier code differs. ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/bpf.h     | 4 ++--
- kernel/bpf/arraymap.c   | 2 +-
- kernel/bpf/trampoline.c | 8 ++++----
- 3 files changed, 7 insertions(+), 7 deletions(-)
+ kernel/bpf/verifier.c | 13 +++++++++----
+ 1 file changed, 9 insertions(+), 4 deletions(-)
 
-diff --git a/include/linux/bpf.h b/include/linux/bpf.h
-index 16fe36438173a..59661363d08f6 100644
---- a/include/linux/bpf.h
-+++ b/include/linux/bpf.h
-@@ -1513,10 +1513,9 @@ struct bpf_prog_aux {
- 	bool xdp_has_frags;
- 	bool exception_cb;
- 	bool exception_boundary;
--	bool is_extended; /* true if extended by freplace program */
- 	bool changes_pkt_data;
- 	u64 prog_array_member_cnt; /* counts how many times as member of prog_array */
--	struct mutex ext_mutex; /* mutex for is_extended and prog_array_member_cnt */
-+	struct mutex ext_mutex; /* mutex for freplace_link_cnt and prog_array_member_cnt */
- 	struct bpf_arena *arena;
- 	/* BTF_KIND_FUNC_PROTO for valid attach_btf_id */
- 	const struct btf_type *attach_func_proto;
-@@ -1544,6 +1543,7 @@ struct bpf_prog_aux {
- 	struct bpf_map *cgroup_storage[MAX_BPF_CGROUP_STORAGE_TYPE];
- 	char name[BPF_OBJ_NAME_LEN];
- 	u64 (*bpf_exception_cb)(u64 cookie, u64 sp, u64 bp, u64, u64);
-+	u16 freplace_link_cnt; /* counts freplace links extending this prog */
- #ifdef CONFIG_SECURITY
- 	void *security;
- #endif
-diff --git a/kernel/bpf/arraymap.c b/kernel/bpf/arraymap.c
-index fcc0ca7ee8831..5c70ff1e7d4ac 100644
---- a/kernel/bpf/arraymap.c
-+++ b/kernel/bpf/arraymap.c
-@@ -957,7 +957,7 @@ static void *prog_fd_array_get_ptr(struct bpf_map *map,
+diff --git a/kernel/bpf/verifier.c b/kernel/bpf/verifier.c
+index e6e31bddb56a6..85f6f6b121dd6 100644
+--- a/kernel/bpf/verifier.c
++++ b/kernel/bpf/verifier.c
+@@ -4853,7 +4853,6 @@ static int check_stack_write_fixed_off(struct bpf_verifier_env *env,
+ 	if (err)
+ 		return err;
+ 
+-	check_fastcall_stack_contract(env, state, insn_idx, off);
+ 	mark_stack_slot_scratched(env, spi);
+ 	if (reg && !(off % BPF_REG_SIZE) && reg->type == SCALAR_VALUE && env->bpf_capable) {
+ 		bool reg_value_fits;
+@@ -4983,7 +4982,6 @@ static int check_stack_write_var_off(struct bpf_verifier_env *env,
+ 			return err;
  	}
  
- 	mutex_lock(&prog->aux->ext_mutex);
--	is_extended = prog->aux->is_extended;
-+	is_extended = prog->aux->freplace_link_cnt > 0;
- 	if (!is_extended)
- 		prog->aux->prog_array_member_cnt++;
- 	mutex_unlock(&prog->aux->ext_mutex);
-diff --git a/kernel/bpf/trampoline.c b/kernel/bpf/trampoline.c
-index 76fdd4ee9225a..a85e6491fbd1b 100644
---- a/kernel/bpf/trampoline.c
-+++ b/kernel/bpf/trampoline.c
-@@ -532,7 +532,7 @@ static enum bpf_tramp_prog_type bpf_attach_type_to_tramp(struct bpf_prog *prog)
- 	}
- }
+-	check_fastcall_stack_contract(env, state, insn_idx, min_off);
+ 	/* Variable offset writes destroy any spilled pointers in range. */
+ 	for (i = min_off; i < max_off; i++) {
+ 		u8 new_type, *stype;
+@@ -5127,7 +5125,6 @@ static int check_stack_read_fixed_off(struct bpf_verifier_env *env,
+ 	reg = &reg_state->stack[spi].spilled_ptr;
  
--static int bpf_freplace_check_tgt_prog(struct bpf_prog *tgt_prog)
-+static int bpf_freplace_link_tgt_prog(struct bpf_prog *tgt_prog)
- {
- 	struct bpf_prog_aux *aux = tgt_prog->aux;
+ 	mark_stack_slot_scratched(env, spi);
+-	check_fastcall_stack_contract(env, state, env->insn_idx, off);
  
-@@ -546,7 +546,7 @@ static int bpf_freplace_check_tgt_prog(struct bpf_prog *tgt_prog)
- 		 */
- 		return -EBUSY;
- 
--	aux->is_extended = true;
-+	aux->freplace_link_cnt++;
+ 	if (is_spilled_reg(&reg_state->stack[spi])) {
+ 		u8 spill_size = 1;
+@@ -5288,7 +5285,6 @@ static int check_stack_read_var_off(struct bpf_verifier_env *env,
+ 	min_off = reg->smin_value + off;
+ 	max_off = reg->smax_value + off;
+ 	mark_reg_stack_read(env, ptr_state, min_off, max_off + size, dst_regno);
+-	check_fastcall_stack_contract(env, ptr_state, env->insn_idx, min_off);
  	return 0;
  }
  
-@@ -573,7 +573,7 @@ static int __bpf_trampoline_link_prog(struct bpf_tramp_link *link,
- 		/* Cannot attach extension if fentry/fexit are in use. */
- 		if (cnt)
- 			return -EBUSY;
--		err = bpf_freplace_check_tgt_prog(tgt_prog);
-+		err = bpf_freplace_link_tgt_prog(tgt_prog);
- 		if (err)
- 			return err;
- 		tr->extension_prog = link->link.prog;
-@@ -628,7 +628,7 @@ static int __bpf_trampoline_unlink_prog(struct bpf_tramp_link *link,
- 					 tr->extension_prog->bpf_func, NULL);
- 		tr->extension_prog = NULL;
- 		guard(mutex)(&tgt_prog->aux->ext_mutex);
--		tgt_prog->aux->is_extended = false;
-+		tgt_prog->aux->freplace_link_cnt--;
+@@ -7228,6 +7224,15 @@ static int check_stack_access_within_bounds(
  		return err;
  	}
- 	hlist_del_init(&link->tramp_hlist);
+ 
++	/*
++	 * Every stack access passes through here, including buffers passed to
++	 * helpers and kfuncs and accesses into a caller's frame, so check the
++	 * fastcall contract of the frame that owns the slots once for all of
++	 * them. Zero-sized accesses touch no stack and keep the rewrite enabled.
++	 */
++	if (access_size)
++		check_fastcall_stack_contract(env, state, env->insn_idx, min_off);
++
+ 	/* Note that there is no stack access with offset zero, so the needed stack
+ 	 * size is -min_off, not -min_off+1.
+ 	 */
 -- 
 2.53.0
 
