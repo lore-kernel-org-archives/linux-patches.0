@@ -1,42 +1,42 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795617592;
-	b=r30Z8vZ4hedlup46mlFmrYe7QJuLrO4+VnnTVAWrZldKdBi0LpKYY9iXolKIZxcM1wLU
-	 WnSAc+DPR8W5AAGECR2US3WyZ/gu52qQymX1w09PNL5a8yi6oghqGc7jpe64qhLw2Nln/
-	 RCxI01BOZqXKbMYSr4qEq14Wvec5P9KbZxICmu7ebTRYxGu8JC2rhSYWvJzfYCh3jmFfk
-	 YWs4G036SkRE+vbpDVbjcftqawMu7P4J9n0uByOSSxPRXBHIf24diLDNzJH2gPBHnnIYI
-	 KmMPoSucWkZ8sJ2bMuHe6viQjQPEamdJDYvks2YGhAyFi928qAIIYkNwX/0Sf/JqI/w==
+	t=1795617596;
+	b=altQ6kfEM0PFOiC7/vndpgf7mKXbsl3eqMElcVm7122kpcABoNRX5EJwmI8yIOTh8HNx
+	 eR85UGWbaHxrg2xaXcd/06V8poWjr5i0YXdDllbi/ToBeC/9MxWdNaL7z7kT3G/nF13KC
+	 VqqXabhKoLRiwEFS8aOCpc32Bwt9dL+MqXGc8J5DP6lnbriNmL3Erg+ftXK1Nu9iCRNqS
+	 w4XLmwHx8bK1s74/c5BvNN7RKT2xdrDwwEI2YO2PuII6czA4N2XwK9drn3ba/lHj+lXpR
+	 ipcdpBHsgEcJrj6X9X+Tp5Ck2Mh1pabaF6U9CshsQxTjK7PfNEHlU+KRWbRZmGybroQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795617592;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795617596;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=TZicrDgNkC0R14z1B2VfTEsRuUDHoG771fy5b8CjARk=;
-	b=RbzdnEqMWJ4rGyGDgH3CiaIvH1nZln5dUzdRKdx+xvvKKWPA902bjf+JxstrkGVPGwrk
-	 K+aIu24rKLn4mM6DDdhYX7Aek2yZQ0OH3V06AUPfqMuuruJYY3RXST3cJlvW7ZWOTgWh4
-	 Db+DRmyw9zbgYFOCO8zq1PnmR2aIXAs/xACY4/JGZg2vt6Mz4mBaAnBHj8/VaQr28wREI
-	 aJ5KM4WgyfZJLZR2B1aKLW1QNdtaOhC/8bsoh3QG7AFHkRAmpfpfokLcG5DEBwa4qRul9
-	 f+z898WX2HsKBH9F3PteLKsAn0pvGxp50/axm/NjALooZWGOQVLC/UKN8S0DyYt9Pxg==
+	bh=khwp+rgZdLnr0PbalgjpWBidOfDlSU5uuuMRone0wjw=;
+	b=BIrGW7BM6cRNB+rKlmdH/bMbXSaCPrQC4bLHv+NXk1Jfg3mjDrGmJjwzDrE+MkxTJaU+
+	 NvLpDBiS7Z/nUyxRfd5VOrbXBdXGH+aqnAnK8N9K9jXxzYwrOwyUfAwYkg7DtkLhKwyKw
+	 /G/UABk9itiqJd2kPf3a2D8AthPgERrOEBI3FsXHBnhUR0QIFDGDDvFNPnwRoS2q/jd2G
+	 PKL4gmqj69GHJOIBXrN+OownIDKoLnfUU4ruKXovU9tSyEUsJzR5ekFyN3IANZoN6133c
+	 zbSXpAklA9vp0ApQX5dBerw0YKgWl3H4fFk0Nit4xIjN+SyNRFV4Z5RyH6fsK04xuvw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=HGc+KbmN;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=CD4FOnri;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AE38D606A31E;
-	Wed, 25 Nov 2026 14:39:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 29C4D606A321;
+	Wed, 25 Nov 2026 14:39:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=HGc+KbmN
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 903251F000C6;
-	Wed, 25 Nov 2026 14:39:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=CD4FOnri
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D83401F000C6;
+	Wed, 25 Nov 2026 14:39:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795617592;
-	bh=TZicrDgNkC0R14z1B2VfTEsRuUDHoG771fy5b8CjARk=;
+	s=korg; t=1795617595;
+	bh=khwp+rgZdLnr0PbalgjpWBidOfDlSU5uuuMRone0wjw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=HGc+KbmNl5FLv+6yn6cthTtiGyC29VyOOOKrJi8VvrWXDBIHQbOblFztt+KXVvPiF
-	 /7mZP3m+mDl9KGKH3Wqw2WIWPLdghoaV5it20+vVFBBDTbG0qFXV7o5ApIxZAFjoxw
-	 T5AQEk7LZeL1+lXA5ZlkgC9nkOgjbfxStyUb2gv8=
+	b=CD4FOnri8yFQZh2ZAXhPiNr04NMBFEQC0sQn+VEHOQY1Tu3uPbdor/BLCscPcHIqU
+	 C64r8WIco9q4XODN7ywJC4sntOzBMQzNtZg6ckkgqTTdc+YreI/zTHqgfojYBoVfqo
+	 itWKQLHwW608fm+yZ+v4ge9rIVeGPSQvAZMeohbo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -44,9 +44,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Yang Xiuwei <yangxiuwei@kylinos.cn>,
 	Jens Axboe <axboe@kernel.dk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0015/1005] io_uring: fail soft links on negative IOU_COMPLETE results
-Date: Wed, 25 Nov 2026 15:22:33 +0100
-Message-ID: <20261125143822.092173759@linuxfoundation.org>
+Subject: [PATCH 7.3 0016/1005] io_uring/futex: fail soft links when cancelling a wait
+Date: Wed, 25 Nov 2026 15:22:34 +0100
+Message-ID: <20261125143822.117359747@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143821.729802100@linuxfoundation.org>
 References: <20261125143821.729802100@linuxfoundation.org>
@@ -70,41 +70,32 @@ Content-Transfer-Encoding: 8bit
 
 From: Yang Xiuwei <yangxiuwei@kylinos.cn>
 
-Commit 9ed19503a7b34e1ffb2b81236843204c473b0ae0 upstream.
+Commit 9a7cbe50dd95594d6fb3c57b8454ace58d8d8d0a upstream.
 
-Handlers such as fsync return IOU_COMPLETE with a negative cqe.res.
-The old io_req_complete() path called req_set_fail() for res < 0.
-After completions moved into the core, that check was dropped,
-so IOSQE_IO_LINK dependents kept running after the head failed.
+__io_futex_cancel() completes the request with -ECANCELED but does
+not call req_set_fail(). IOSQE_IO_LINK dependents then still run.
 
-Fixes: 97b388d70b53 ("io_uring: handle completions in the core")
+Fixes: 194bb58c6090 ("io_uring: add support for futex wake and wait")
 Signed-off-by: Yang Xiuwei <yangxiuwei@kylinos.cn>
-Link: https://patch.msgid.link/20261114041123.109163-1-yangxiuwei@kylinos.cn
+Link: https://patch.msgid.link/20261114072246.741950-2-yangxiuwei@kylinos.cn
 Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- io_uring/io_uring.c | 8 +++++---
- 1 file changed, 5 insertions(+), 3 deletions(-)
+ io_uring/futex.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/io_uring/io_uring.c b/io_uring/io_uring.c
-index 41a03979cb8bb..c6bd17cca45f2 100644
---- a/io_uring/io_uring.c
-+++ b/io_uring/io_uring.c
-@@ -1498,9 +1498,11 @@ static int io_issue_sqe(struct io_kiocb *req, unsigned int issue_flags)
- 	ret = __io_issue_sqe(req, issue_flags, def);
+diff --git a/io_uring/futex.c b/io_uring/futex.c
+index 9203998654ffb..8a85ae20964b3 100644
+--- a/io_uring/futex.c
++++ b/io_uring/futex.c
+@@ -107,6 +107,7 @@ static bool __io_futex_cancel(struct io_kiocb *req)
+ 	}
  
- 	if (ret == IOU_COMPLETE) {
--		/* not all handlers take care of the internal restart codes */
--		if (unlikely(req->cqe.res <= -ERESTARTSYS))
--			req->cqe.res = io_fixup_restart_res(req->cqe.res);
-+		if (unlikely(req->cqe.res < 0)) {
-+			if (req->cqe.res <= -ERESTARTSYS)
-+				req->cqe.res = io_fixup_restart_res(req->cqe.res);
-+			req_set_fail(req);
-+		}
- 		if (issue_flags & IO_URING_F_COMPLETE_DEFER)
- 			io_req_complete_defer(req);
- 		else
+ 	hlist_del_init(&req->hash_node);
++	req_set_fail(req);
+ 	io_req_set_res(req, -ECANCELED, 0);
+ 	io_req_task_work_add(req);
+ 	return true;
 -- 
 2.53.0
 
