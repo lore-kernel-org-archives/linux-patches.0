@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795620997;
-	b=j7avEEMXbmTuqk7jTn2jOcOGRLjOTtiJYe9pyLNFMy0NerbVZP0waC84sesEcG7XR/6j
-	 Dgblc1zcdcd//JMwSY8Ec17pwHsoGOlM/eTTaCE2DrGF6dsfHgauALTwHE4KN4qZFeaUG
-	 /KRML1Lq2aBzewBhe8hNTBGOxe7959bMJcpY09TtJN2DOl/QSs6yhjKECiSLrGyE1RMUL
-	 BRUBhuEDKhVxc18KQuDQhDRX5GzCkGon/TSRXHwzvdhSFTrlknR6oicjUvQ1CdD/zVbUd
-	 1v5pg/w7czHys4t7LC/5qxudaK0SMD5siw4GvcKkO8JddFoL2unXbLQsEGR3sO6TF/g==
+	t=1795621000;
+	b=qOnAsK79qBOMnaQ1ySpjRdDiusNqO1i9d5UhbG/dhOy162VmTlmpZCU8ggrkWD9hsjj8
+	 16YxLmX1IT3tpNz47/PFhcEerKTNF/3nmFENKztxNuekCNxAG3EeuyAz0l8KKLdszmx8J
+	 J3MQXv8UKAE5ziKxpEGJTQ1C4YhhnBfnzmLUvMJg9ado71Et4Qo4wlwp6BAawKfVoB9e4
+	 96Zz9wnU0v5Ox2lPsSDyM8BhiKbIxZgnvLSYJWRpqQP31JFb8QBpFINt18Z4ZbjXQifHk
+	 8hgAhm+XEEGvXFcV+DFy56KNYcTj9LvxY+26nUMp5sNEtlUdOWIHMaDJ1jEE7vh6FRQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795620997;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795621000;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=cUoqcvHEgczn0p1pL9L58AK89dGT8YhUn35jNUV1EM4=;
-	b=3AMcW6tEXEHrx3E90ZTGepYADmZgERhDaDbqrKeZ3tCMobfmPeoz/KDuTR+2+sT5ruH0
-	 fP/F4hlr3JjM0u6KgOyqQu7lQD3PF50eKF0MO1RD87TtSrgrrg0xDMi9oDHQNLX32Ftq+
-	 xBKgn3623AlLFR8vJtfqVATyzN7sKM+uQiUqrnlbWRGObWQOIIkhftSURgCWd0M4LVbce
-	 vNTNIJftqIgYPTk9CpGmAr0t4sY4HNb7qXFX9znjEFm3++kQwZ3bR1Qkw/dbmYzZT9zSW
-	 Y5sqh50MV0M5f/pHovvqiAwHD+wq+uiXApDEPeuuzAkN6t3PgVv/D3QbLZGFX0aIB1w==
+	bh=1zB6geM+uF6mgO7V0FSyXD+oPySKsxOKIr3CMc++Wyk=;
+	b=yKupdLOegtnpFAJOS6HovAtD6djVF/MpHx3LoEhBpNhg7cDGWrwgFNwAtNGdlNS/9fjG
+	 RJj1dicKAySCF64RRlAxCIiSySmZYelTRLPYajZqYchudAv77BrlzHn8mBbSFF1ppnQ84
+	 8Ajjz4gydHCGWYKF7zsX2CM8OHB7f5oWlaeNsWLcPJcry6mCkTgMryvlkE10L4fqhpPVj
+	 nsK+DG3PQALvTR8r7x+WGl7G1xch6T8gnaea4r3n4He5Cwks66XNZzRxsBlfv1xca6m36
+	 4IenpbiGvVnVdEWleiRKVnRpTTX6+hcMpNjbpwMOferzEbG/DpmCS923DQ3iHc6NJFg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Hr0btFAN;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=hxV92y3F;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E5C27606A33A;
-	Wed, 25 Nov 2026 15:36:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1E3A7606A33A;
+	Wed, 25 Nov 2026 15:36:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Hr0btFAN
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A619D1F000D8;
-	Wed, 25 Nov 2026 15:36:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=hxV92y3F
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EF06F1F000D1;
+	Wed, 25 Nov 2026 15:36:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795620996;
-	bh=cUoqcvHEgczn0p1pL9L58AK89dGT8YhUn35jNUV1EM4=;
+	s=korg; t=1795620999;
+	bh=1zB6geM+uF6mgO7V0FSyXD+oPySKsxOKIr3CMc++Wyk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Hr0btFAN7o41p0jg1h1KX298zF9V++TyxlV4zLqC+gBapuLPIrtEXYjOc4nqt5IDl
-	 mbbw0Jo8mrzl5nf04hZm1eRddelZVjMSX7gr6fDM7i99Ht4fxrZG8sNdq40Vo5Lenf
-	 gyLOuBpLLgXe2UtDSqRbDBjpGicMtsb3odd3VL90=
+	b=hxV92y3FuN81aQMigKsYbf3V1o4TP6BXNck6Wt6Ojt7BXzagziwVzKi+uQlBrUGMt
+	 Z/PWxSQrvWO4qmCgTfxqpxaEQu1wNHv60o2XSELnuJPx8/4owpO5Q+bX8O+9UB2zEA
+	 newiCzumaGp8yUm2K1opZUm9VrkiI2SEKg1/dKgc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	guolingxing <guolingxing@tju.edu.cn>,
 	Qu Wenruo <wqu@suse.com>,
+	Filipe Manana <fdmanana@suse.com>,
 	David Sterba <dsterba@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 088/990] btrfs: verity: propagate orphan insertion errors when enabling verity
-Date: Wed, 25 Nov 2026 15:24:15 +0100
-Message-ID: <20261125143824.153255348@linuxfoundation.org>
+Subject: [PATCH 6.18 089/990] btrfs: fix fiemap merging compressed extents
+Date: Wed, 25 Nov 2026 15:24:16 +0100
+Message-ID: <20261125143824.176353104@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143822.072087159@linuxfoundation.org>
 References: <20261125143822.072087159@linuxfoundation.org>
@@ -69,45 +69,84 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: guolingxing <guolingxing@tju.edu.cn>
+From: Filipe Manana <fdmanana@suse.com>
 
-[ Upstream commit 45a686dff6b91c3667cd8188d3a02c69f62f4d00 ]
+[ Upstream commit 980fbbd041ac2538fdbe7cfda4253dfc28fdcad1 ]
 
-btrfs_begin_enable_verity() ignores the return value of
-btrfs_orphan_add() and unconditionally returns 0. If orphan insertion
-fails, btrfs_orphan_add() aborts the transaction, but the generic
-fs-verity code still proceeds with Merkle tree construction because
-the begin_enable_verity callback reported success.
+Compressed extents are never supposed to be merged by the fiemap code and
+reported as a single extent, as each extent's content comes from a
+different compression stream and has its own header and context.
 
-Return the error so that fs-verity stops immediately instead of
-continuing after the initialization failure.
+We currently rely on checking the logical and physical address adjacency
+to prevent merging compressed extents but that is broken. Consider the
+following reproducer which explains why the merging happens:
 
-The transaction is already aborted by btrfs_orphan_add() and the
-handle is released by btrfs_end_transaction(), so no additional
-cleanup is needed.
+  $ cat test.sh
+  #!/bin/bash
 
-Fixes: 705242538ff3 ("btrfs: verity metadata orphan items")
-Signed-off-by: guolingxing <guolingxing@tju.edu.cn>
+  DEV=/dev/sdi
+  MNT=/mnt/sdi
+
+  mkfs.btrfs -s 4K -f $DEV
+  mount -o compress $DEV $MNT
+
+  # Do a write that compresses to a single 4K extent and represents the
+  # maximum compressed chunk size (128K).
+  xfs_io -f -c "pwrite 0 128K" $MNT/foo
+
+  # Sync to flush delalloc and allocate the 4K extent.
+  sync -f $MNT
+
+  # Now allocate a 124K extent in some other file, which will be adjacent
+  # (to the right) of the 4K extent previously allocated.
+  xfs_io -f -c "falloc 0 124K" $MNT/filler
+
+  # Do another write to the main file at its current EOF that is
+  # compressible and fits in a 4K extent.
+  xfs_io -c "pwrite 128K 128K" $MNT/foo
+  # Sync to flush delalloc and allocate the 4K extent.
+  sync -f $MNT
+
+  # Run fiemap which should report 2 encoded extents, each with a
+  # logical size of 128K.
+  xfs_io -c "fiemap -v" $MNT/foo
+
+  umount $MNT
+
+Running this, fiemap will report a single extent:
+
+  $ ./test.sh
+  (...)
+  /mnt/sdi/foo:
+   EXT: FILE-OFFSET      BLOCK-RANGE      TOTAL FLAGS
+     0: [0..511]:        26624..27135       512   0x9
+
+Fix this by never attempting to merge extents if the flags contain
+FIEMAP_EXTENT_ENCODED.
+
+Fixes: 4751832da990 ("btrfs: fiemap: Cache and merge fiemap extent before submit it to user")
 Reviewed-by: Qu Wenruo <wqu@suse.com>
+Signed-off-by: Filipe Manana <fdmanana@suse.com>
 Signed-off-by: David Sterba <dsterba@suse.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/btrfs/verity.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ fs/btrfs/fiemap.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/fs/btrfs/verity.c b/fs/btrfs/verity.c
-index bb2d2fc47ee91..0a8df39e82e49 100644
---- a/fs/btrfs/verity.c
-+++ b/fs/btrfs/verity.c
-@@ -609,7 +609,7 @@ static int btrfs_begin_enable_verity(struct file *filp)
- 		set_bit(BTRFS_INODE_VERITY_IN_PROGRESS, &inode->runtime_flags);
- 	btrfs_end_transaction(trans);
- 
--	return 0;
-+	return ret;
- }
- 
- /*
+diff --git a/fs/btrfs/fiemap.c b/fs/btrfs/fiemap.c
+index 30a0f66c9c9ef..5fb7342a616d1 100644
+--- a/fs/btrfs/fiemap.c
++++ b/fs/btrfs/fiemap.c
+@@ -228,7 +228,8 @@ static int emit_fiemap_extent(struct fiemap_extent_info *fieinfo,
+ 	 *
+ 	 * 3) Share same flags
+ 	 */
+-	if (cache->offset + cache->len  == offset &&
++	if (!(flags & FIEMAP_EXTENT_ENCODED) &&
++	    cache->offset + cache->len == offset &&
+ 	    cache->phys + cache->len == phys  &&
+ 	    cache->flags == flags) {
+ 		cache->len += len;
 -- 
 2.53.0
 
