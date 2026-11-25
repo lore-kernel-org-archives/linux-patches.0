@@ -1,51 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795618183;
-	b=KCzO1mCXWqT3MbQ/szL3rwkIFXvj2Z4hAsFOXBBjXE0GPNlmRQYF02pGQdmUnBsdA0bA
-	 AcPN8feMmPFm43tIV2/4I9zs0zP6XdXogRpjy9T1/RWSknUUbreWhhXzkHgUGhcTqW1qD
-	 aEv5XIHM+RjWcGMu1C2Xk80hR4NhOsAopUnmE3xkIFcx92sOydqiFE8Y7hUxAVQlNYRha
-	 P87VlOgcnzmDvQa07riYAbQH2AUrBhT54TAMcSUlb2W0Cvjyu8ijIYmOT/w0YXnsp5y8R
-	 rvY68pRSxBLdrsY1XeHe/yfXP7FKVisY4jMwkWWJzUMmAwpS/p7WV4TXFlBYGGBsTYQ==
+	t=1795618186;
+	b=4YhHmBSkVIdSCYi/FxOAsm4kMbnvsThm27NIi4roF/UYkUJIV8JKptHjGThQ1O0hn3+s
+	 zgl8iMKIvRwPV6pv3R/kTh0/prk/smjaoRX5q1MaKr1f4XszYfG1BV4VSXjioEqLx+t7k
+	 yABk3WG9zBPVqwFBHB2AI8Ro8mav6ifIxnZbeeBewIuFtUjT5lZapNuSTwTLSvfioQkPf
+	 sXP3PK3AOoTH7CHZoOb7zzp+3ZpNudBAgVTVUPLngDbDbytCPSxvxAZhxssA6541KGZjk
+	 F4XH2uhrVkyNztWmT2u88/3CthfpAR5h4U5gKO/DMEzNr39Zvm7C+MsNnX5Rn1PdZgQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795618183;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795618186;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=XpOom2LMooUxPTH5JhUqjIZdk8S5dDqjItBtehsv/NA=;
-	b=bO9+K8jpx8Qrn6MHXjXoFdj2E0hhu9I4QDzhuzQ3q9XPwh4dVODQCsSjUGmQESNk5iXd
-	 ECFEf1hGIBZRIflqbigyvd11LUpTvk++oC+dmeGtSQtCYALiLFvcDOaZZXHqxpysLJ7X/
-	 Y+z/fHTXhea9CKcmc7ByfBjbrW26kh+rGWnTgN8zeC+0cQtYNTj1ZaKClO5fiTtaGY85/
-	 NeXqixJZZyCTU2JGtqUjpDH5nCswgOgW3c1/J5izZBu6CKmfUmdbiapcRRO8wkRW5Y9j0
-	 3pPF9uy1U5FoqCeWMWbLBXEwP0vD1T4f0XjDSiEiFOxcUEH0MLdrBGXbCj9IeH+SMUg==
+	bh=yD/Rct9/FhSrgHOyjUXQ2/nR6QNxZkR97K2NiVjp3TI=;
+	b=cdHA6Qg/wtELT6ueWoTo8nu+g3LHUS7gPMH+TDF7665Oiwo6RPcYGJ7gibMCj8Q9eVBX
+	 Tk37fxaCXBE4mYX63dqJlfS/5LXu6iiFAWWExjy7tFbRgF7rcwx9ShqB+8pcmL80BkIr4
+	 G7mVk7lO45g88/fOHs5rc+7eEaSEEJL1PiIH+BbDQHiuiO3rxAAsHdWyqTsukssJwkd8f
+	 sfS7/N2UZNyvBQxizWVym0FH1GlgpGjueFWUkhhH5kjIUiNrd9K5utoyy0C9k4sbBLrV3
+	 /mf0FhMHIO2194myRdmNPyMbOzKRHDcfmYJh4GZeli/K70o7gr1/v+amAjHHMH+l5Kw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=jkR7Lfl4;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=dYo5+Lc1;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AE652606A31E;
-	Wed, 25 Nov 2026 14:49:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C3EAB606A323;
+	Wed, 25 Nov 2026 14:49:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=jkR7Lfl4
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 94D5D1F000C6;
-	Wed, 25 Nov 2026 14:49:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=dYo5+Lc1
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 15CC51F000C0;
+	Wed, 25 Nov 2026 14:49:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795618183;
-	bh=XpOom2LMooUxPTH5JhUqjIZdk8S5dDqjItBtehsv/NA=;
+	s=korg; t=1795618186;
+	bh=yD/Rct9/FhSrgHOyjUXQ2/nR6QNxZkR97K2NiVjp3TI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=jkR7Lfl4mfy4vTrt2fhdyJGnPPrmYzTd/wSA3kXBNCQ+hFBIfSEl2wRwovQ+b4qdd
-	 zjjQLwnP5x3AFHGpxcpVLIjT88CD+fy7iMqsw1v9gfGq8oGwSyavGBye7VWlRcDYTJ
-	 TxgeruGWlWobtfTk0UgXLPhNzP2YSq4kE08S8pUM=
+	b=dYo5+Lc1qymGHoA6TBioXvojuzEZsCYnZXXBTns9QgP5SJgeZ55eX7YYv4m5hjRE4
+	 joU/GApfq9Ar/R1rkwE13qh/oPBTxOdydY9ozs5qiMdCaqP1vVcj7qqBhWobvm80Ou
+	 yj3aOTwfyA8EoIHmWQrStVJi02qz23+75PgeLKqc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Hao Qin <hao.qin@mediatek.com>,
+	Wenlong Tian <ot_wenlong.tian@mediatek.com>,
+	Chris Lu <chris.lu@mediatek.com>,
 	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0198/1005] Bluetooth: hci_sync: Update the CIS host feature when enabling LE
-Date: Wed, 25 Nov 2026 15:25:36 +0100
-Message-ID: <20261125143826.379149282@linuxfoundation.org>
+Subject: [PATCH 7.3 0199/1005] Bluetooth: btmtk: drop zero-length ISO packets from endpoint padding
+Date: Wed, 25 Nov 2026 15:25:37 +0100
+Message-ID: <20261125143826.402388771@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143821.729802100@linuxfoundation.org>
 References: <20261125143821.729802100@linuxfoundation.org>
@@ -67,65 +70,91 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+From: Chris Lu <chris.lu@mediatek.com>
 
-[ Upstream commit e24bfbc5e20711dafa0cdc2b3325c69de1cff068 ]
+[ Upstream commit 8524c3588fbb9d5c1b876e6f908c42926845650d ]
 
-The Connected Isochronous Stream (Host Support) feature bit is only set
-during init, based on LE being enabled at that time. If LE is enabled
-afterwards without the init being repeated, as happens when the
-controller is still auto powered on after registration, the bit stays
-cleared and controllers enforcing it reject LE Create CIS with Command
-Disallowed.
+The ISO interrupt IN endpoint delivers a fixed-size transfer that holds
+one HCI ISO packet and zero-fills the remainder. That padding belongs to
+the transfer rather than to the stream, so it has to be dropped instead of
+reported to the host.
 
-Update the bit whenever LE Host Supported is written, so it follows the
-LE state.
+btmtk_recv_isopkt() keeps parsing it: the zero bytes read as an ISO header
+with handle 0 and a Data_Total_Length of zero, and each one is passed to
+hci_recv_frame() as a complete frame. A single transfer yields a long run
+of them, which is what fills the HCI log with malformed ISO packets, and
+iso_recv() drops the SDU it is reassembling whenever handle 0 belongs to a
+live CIS/BIS.
 
-Fixes: 709788b154ca ("Bluetooth: hci_core: Fix using {cis,bis}_capable for current settings")
-Assisted-by: OpenCode:claude-opus-5.5
+A zero Data_Total_Length carries no ISO Data Load, so such a packet is
+never part of the stream. Check for the zero-filled remainder before
+starting to parse the next frame, rather than after assembling a 4-byte
+header: a remainder shorter than HCI_ISO_HDR_SIZE would otherwise be held
+across calls as a partial header, corrupting the next transfer's framing.
+This also means a fully zero-filled remainder no longer costs an skb
+allocation that gets immediately freed. Reaching a zero Data_Total_Length
+any other way is then a genuine error, not padding.
+
+This was observed on MT7925, but btmtk_recv_isopkt() is shared by every
+MediaTek USB controller that supports ISO data.
+
+Fixes: ceac1cb0259d ("Bluetooth: btusb: mediatek: add ISO data transmission functions")
+Co-developed-by: Hao Qin <hao.qin@mediatek.com>
+Signed-off-by: Hao Qin <hao.qin@mediatek.com>
+Co-developed-by: Wenlong Tian <ot_wenlong.tian@mediatek.com>
+Signed-off-by: Wenlong Tian <ot_wenlong.tian@mediatek.com>
+Signed-off-by: Chris Lu <chris.lu@mediatek.com>
 Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/bluetooth/hci_sync.c | 16 ++++++++++++++--
- 1 file changed, 14 insertions(+), 2 deletions(-)
+ drivers/bluetooth/btmtk.c | 20 ++++++++++++++++++++
+ 1 file changed, 20 insertions(+)
 
-diff --git a/net/bluetooth/hci_sync.c b/net/bluetooth/hci_sync.c
-index 0e93dc1b47f53..b0536742a48ee 100644
---- a/net/bluetooth/hci_sync.c
-+++ b/net/bluetooth/hci_sync.c
-@@ -3511,9 +3511,13 @@ int hci_write_ssp_mode_sync(struct hci_dev *hdev, u8 mode)
- 	return hci_write_sc_support_sync(hdev, 0x01);
- }
+diff --git a/drivers/bluetooth/btmtk.c b/drivers/bluetooth/btmtk.c
+index 56296d142187b..1745e0421ca6b 100644
+--- a/drivers/bluetooth/btmtk.c
++++ b/drivers/bluetooth/btmtk.c
+@@ -7,6 +7,7 @@
+ #include <linux/usb.h>
+ #include <linux/iopoll.h>
+ #include <linux/overflow.h>
++#include <linux/string.h>
+ #include <linux/unaligned.h>
  
-+static int hci_le_set_host_feature_sync(struct hci_dev *hdev, u16 bit,
-+					u8 value);
+ #include <net/bluetooth/bluetooth.h>
+@@ -1170,6 +1171,14 @@ static int btmtk_recv_isopkt(struct hci_dev *hdev, void *buffer, int count)
+ 		int len;
+ 
+ 		if (!skb) {
++			/* Drop the endpoint's zero-filled padding before
++			 * allocating an skb for it; a zero Data_Total_Length
++			 * check below would miss a padding remainder
++			 * shorter than an ISO header.
++			 */
++			if (mem_is_zero(buffer, count))
++				break;
 +
- int hci_write_le_host_supported_sync(struct hci_dev *hdev, u8 le, u8 simul)
- {
- 	struct hci_cp_write_le_host_supported cp;
-+	int err;
+ 			skb = bt_skb_alloc(HCI_MAX_ISO_SIZE, GFP_ATOMIC);
+ 			if (!skb) {
+ 				err = -ENOMEM;
+@@ -1193,6 +1202,17 @@ static int btmtk_recv_isopkt(struct hci_dev *hdev, void *buffer, int count)
+ 			/* Complete ISO header */
+ 			hci_skb_expect(skb) = __le16_to_cpu(dlen);
  
- 	if (!hci_dev_test_flag(hdev, HCI_LE_ENABLED) ||
- 	    !lmp_bredr_capable(hdev))
-@@ -3531,8 +3535,16 @@ int hci_write_le_host_supported_sync(struct hci_dev *hdev, u8 le, u8 simul)
- 	cp.le = le;
- 	cp.simul = simul;
- 
--	return __hci_cmd_sync_status(hdev, HCI_OP_WRITE_LE_HOST_SUPPORTED,
--				     sizeof(cp), &cp, HCI_CMD_TIMEOUT);
-+	err = __hci_cmd_sync_status(hdev, HCI_OP_WRITE_LE_HOST_SUPPORTED,
-+				    sizeof(cp), &cp, HCI_CMD_TIMEOUT);
-+	if (err || !cis_capable(hdev))
-+		return err;
++			if (!hci_skb_expect(skb)) {
++				/* Zero padding was ruled out above, so a
++				 * zero Data_Total_Length here is invalid.
++				 */
++				kfree_skb(skb);
++				skb = NULL;
 +
-+	/* The CIS host feature is set during init based on LE being enabled,
-+	 * which is not repeated when LE is enabled afterwards, e.g. while the
-+	 * controller is still auto powered on, so update it here.
-+	 */
-+	return hci_le_set_host_feature_sync(hdev, 32, iso_enabled(hdev));
- }
- 
- static int hci_powered_update_adv_sync(struct hci_dev *hdev)
++				err = -EILSEQ;
++				break;
++			}
++
+ 			if (skb_tailroom(skb) < hci_skb_expect(skb)) {
+ 				kfree_skb(skb);
+ 				skb = NULL;
 -- 
 2.53.0
 
