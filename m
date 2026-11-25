@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795624923;
-	b=ZiF2Ppbv62GrXHBKnDI/dEq1J0aiJRioumMFGiNn+lgzEdGZ+DfsgxinropoRhEzUOuP
-	 9cpjIwpWVyzQTufqkeXHQL3p1LOiQGl668C7UKrHk7SP4irm+Lz/4elK4AwZuwWB1ugus
-	 ozKIUv/tyb2OcuWIWxAw25PaKqYGP741g3OAgIk+sWQgMaBvJk8DtnnCmYDYojAcC17li
-	 /g+0YprKmxIUuZzBMvLqHLIDaLhrQJfD1WUBtvB7X4puRmlB0O7UP4kF/9nLB4FFn745Z
-	 ya3m0YoADiYtJ9kjlqE3OCRwvglpC+t6+Mgyu8gfHcqLQzOrIZ+jJgRDCa2ZGFrR88w==
+	t=1795624926;
+	b=KJxzYIrov4yeN/h+B6YFVc912PgIaBIIYG8FIMlzhsJ2pZflUdTIj5lCdJ50NlllMccA
+	 TjT54LnBHyK2VrqMvLpHfDnGNZILqacrwx4c84a1Dr9e0qHlxVuu9quXE6GhBNeKbJCaY
+	 xybR+jlblgoujNkdG5+r7m6eWzghwjwRNwYRj0y4r0Dh4C4LBk05jKs81KatpXpAGn3nP
+	 NJeALCCbJGmWPFkE0TeDfxZHsvQUeilWm1HonqoLur95uJHW977EAtvaltjJAHS/5fKMT
+	 yZsCrHkmYBAMFpuYXk83xSfEJ+6VwOiFtTXKrQwmg9eiGPVR6/wdr+YkfmqbTFjX8eQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795624923;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795624926;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=hj5zgoJzDpygYpk9fTWBGbvnEVz7Ll9tbSoanIYZDYM=;
-	b=cKw/47FCaEQAGudZv+oajkUx3oLhLIU7NDQCzI0NBs+wx0psx1sI7/ob/8ZLqcHmHHIv
-	 ExFYcK2s1ri+dfyU6Hy9BoiU0uGfMqWEbpGnpSezW21fyIfmqQNo+SxGrV87We4G5e+CT
-	 +fBszPsiwmIfLZ+2qmh940aonJYI7s6zV5FvOV4TLVHoRBXSgq0O3Sn47aGT8zSBastKJ
-	 WTXNaAldYI8xBmjGWWjMzZSpS3eLaCJI4rxgjOVXJL9rtzMvnHFw7uCXo4yHqMlsUKpzy
-	 nv8kMaN/zu5/1DakzdBETKBwR26r4Wq2GjpGGwQHvSWAVDlRCzl/vUeD1njx4whNBpw==
+	bh=v5We2SkNJjilgafPgizA0QhzHZUunJyTF6eT1U/jOlo=;
+	b=CxJb8jirTrMuiEeAvbcHzeYkEGy3nYwuFQR0dZgxwGAAwQy0vwHrITZCPBpMcGtH9APs
+	 IBCgSB0msS8vQPrZoXDDMWKy2voGFDk3luINPu4K/QuTRpYjQNyaEwIzqyikz36YDBdIv
+	 Zb14wKRZwiSwGt8Ubzb46znejfWGqMRgVlzKxDbDjarj7TD1aaq/DhJGqs3Uzs+mvEsPi
+	 wKI7/ZXC3eC79QTNQaSBN6H28EPV+o4h2U/qnq3p3/DYHaum0wdClIfy5BT0W2yf39+fn
+	 ANY1koGv0Kam4BNq8jS9CMfIA6EM7c8lmZCzYIyGR5fwCIt6VzKAiy9cX8aaE7mlbww==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=jLRg41c2;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=jpBiwtbv;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5E117606A323;
-	Wed, 25 Nov 2026 16:42:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4D2E2606A31E;
+	Wed, 25 Nov 2026 16:42:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=jLRg41c2
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 507C41F000F0;
-	Wed, 25 Nov 2026 16:42:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=jpBiwtbv
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8B1DE1F000F0;
+	Wed, 25 Nov 2026 16:42:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795624922;
-	bh=hj5zgoJzDpygYpk9fTWBGbvnEVz7Ll9tbSoanIYZDYM=;
+	s=korg; t=1795624926;
+	bh=v5We2SkNJjilgafPgizA0QhzHZUunJyTF6eT1U/jOlo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=jLRg41c2YMbRC5xGkGqmXB4r2+HHADs7iUXTtzFEIAYhsycp5owpp6t9grRruYnJq
-	 CA/aP/aeRrUxl81mWCnOacgEZio35nxZ9TW8nOZ+mRtAvHY3KK7B/edyvFXRYKEW+u
-	 EvQwUwWTDEJjzUmtZ8ds5/egfiTy/Lc3Pvy62Rrg=
+	b=jpBiwtbv4lzCSuPcaqDab5mQEvhlrBLqRYT8wBaAOooUbS7IzcxDdCtgqV/+UuANr
+	 jxzJ8TYTPhLF9LxxHm3/lkz9Dc3+MpvYVho/8rTUwYl49QyfmxMIjWsaMVTXtD8ojE
+	 9LH9LhrqrD6n8ngxRM6Ew/A+b+K2X8mPV5Px8ICk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eric Dumazet <edumazet@kernel.org>,
+	Ofri Zangi <ofriz@xsightlabs.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 322/816] bonding: fix slave_cnt leak on XDP enslave failure
-Date: Wed, 25 Nov 2026 15:31:10 +0100
-Message-ID: <20261125143856.655716010@linuxfoundation.org>
+Subject: [PATCH 6.12 349/816] tls: fix async encryption race on weakly ordered architectures
+Date: Wed, 25 Nov 2026 15:31:37 +0100
+Message-ID: <20261125143857.275587171@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143849.205329330@linuxfoundation.org>
 References: <20261125143849.205329330@linuxfoundation.org>
@@ -68,85 +68,80 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eric Dumazet <edumazet@kernel.org>
+From: Ofri Zangi <ofriz@xsightlabs.com>
 
-[ Upstream commit a978095699641d4f83a32b499a981c419c94abca ]
+[ Upstream commit a2fd526d644233d6a892c28173f07c61e21e4c93 ]
 
-bond_enslave() increments bond->slave_cnt before setting up XDP on the
-new slave. If that setup fails (slave has no XDP support, already has
-an XDP program, or dev_xdp_propagate() fails), the error path jumps to
-err_sysfs_del, which never decrements slave_cnt.
+With async encryption, a record can be transmitted without its TLS
+header on weakly ordered architectures such as arm64, because the
+consumer may observe rec->tx_ready set while still seeing the old
+scatterlist entry.
 
-Each failed enslave therefore leaves slave_cnt one too high:
-- SIOCBONDINFOQUERY reports a wrong num_slaves,
-- balance-rr picks slave ids beyond the end of the slave list, so
-  bond_get_slave_by_id() falls back to the first usable slave and
-  transmit is skewed toward it.
+tls_encrypt_done() restores the TLS header in the scatterlist entry
+(sge->offset -= prot->prepend_size, sge->length += prot->prepend_size)
+and then publishes the record with smp_store_mb(rec->tx_ready, true).
+On another CPU, tls_tx_records() checks rec->tx_ready with READ_ONCE()
+and then reads the entry in tls_push_sg().
 
-Reproducer:
+Nothing orders these accesses. The barrier in smp_store_mb() comes
+after the tx_ready store, so it does not order the earlier scatterlist
+update before it. On the reader side, READ_ONCE() does not order the
+later loads of sge->offset and sge->length. The reader can therefore
+see tx_ready set together with the old offset and length, and pushes
+the record without its header.
 
-  ip link add bond0 type bond mode balance-rr
-  ip link set bond0 xdpdrv obj xdp_dummy.bpf.o sec xdp
-  for i in 0 1 2; do
-    ip link add d$i type dummy
-    ip link set d$i master bond0   # fails: Slave does not support XDP
-  done
+Publish tx_ready with smp_store_release() in tls_encrypt_done() and read
+it with smp_load_acquire() in tls_tx_records(), so that observing
+tx_ready guarantees the restored scatterlist entry is visible. Keep the
+full barrier that smp_store_mb() provided as an explicit smp_mb(), as
+it is still needed to order the tx_ready store before the tx_list head
+check.
 
-num_slaves read via SIOCBONDINFOQUERY is 3 before this patch, 0 after.
+The issue was discovered during development on an arm64 system.
+A curl download test over kTLS failed with:
 
-Add an err_dec_slave_cnt label ahead of err_sysfs_del and use it from
-the three XDP failure paths, which are the only failures after the
-increment.
+  curl: (56) OpenSSL SSL_read: error:0A00010B:SSL routines::wrong version number, errno 0
 
-Fixes: 9e2ee5c7e7c3 ("net, bonding: Add XDP support to the bonding driver")
-Signed-off-by: Eric Dumazet <edumazet@kernel.org>
-Link: https://patch.msgid.link/20261104092851.688361-1-edumazet@kernel.org
+Fixes: a42055e8d2c3 ("net/tls: Add support for async encryption of records for performance")
+Signed-off-by: Ofri Zangi <ofriz@xsightlabs.com>
+Link: https://patch.msgid.link/20261108-tls-async-tx-ordering-v1-1-f9a1844ca88e@xsightlabs.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/bonding/bond_main.c | 9 ++++++---
- 1 file changed, 6 insertions(+), 3 deletions(-)
+ net/tls/tls_sw.c | 13 ++++++++++---
+ 1 file changed, 10 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/net/bonding/bond_main.c b/drivers/net/bonding/bond_main.c
-index 75332e50fcc51..ee95b5a9fb8ec 100644
---- a/drivers/net/bonding/bond_main.c
-+++ b/drivers/net/bonding/bond_main.c
-@@ -2363,7 +2363,7 @@ int bond_enslave(struct net_device *bond_dev, struct net_device *slave_dev,
- 			SLAVE_NL_ERR(bond_dev, slave_dev, extack,
- 				     "Slave does not support XDP");
- 			res = -EOPNOTSUPP;
--			goto err_sysfs_del;
-+			goto err_dec_slave_cnt;
- 		}
- 	} else if (bond->xdp_prog) {
- 		struct netdev_bpf xdp = {
-@@ -2377,14 +2377,14 @@ int bond_enslave(struct net_device *bond_dev, struct net_device *slave_dev,
- 			SLAVE_NL_ERR(bond_dev, slave_dev, extack,
- 				     "Slave has XDP program loaded, please unload before enslaving");
- 			res = -EOPNOTSUPP;
--			goto err_sysfs_del;
-+			goto err_dec_slave_cnt;
- 		}
+diff --git a/net/tls/tls_sw.c b/net/tls/tls_sw.c
+index dad093a3a793d..bc2848d79c7d8 100644
+--- a/net/tls/tls_sw.c
++++ b/net/tls/tls_sw.c
+@@ -436,7 +436,8 @@ int tls_tx_records(struct sock *sk, int flags)
  
- 		res = dev_xdp_propagate(slave_dev, &xdp);
- 		if (res < 0) {
- 			/* ndo_bpf() sets extack error message */
- 			slave_dbg(bond_dev, slave_dev, "Error %d calling ndo_bpf\n", res);
--			goto err_sysfs_del;
-+			goto err_dec_slave_cnt;
- 		}
- 		if (bond->xdp_prog)
- 			bpf_prog_inc(bond->xdp_prog);
-@@ -2406,6 +2406,9 @@ int bond_enslave(struct net_device *bond_dev, struct net_device *slave_dev,
- 	return 0;
+ 	/* Tx all ready records */
+ 	list_for_each_entry_safe(rec, tmp, &ctx->tx_list, list) {
+-		if (READ_ONCE(rec->tx_ready)) {
++		/* Pairs with smp_store_release() in tls_encrypt_done() */
++		if (smp_load_acquire(&rec->tx_ready)) {
+ 			if (flags == -1)
+ 				tx_flags = rec->tx_flags;
+ 			else
+@@ -504,8 +505,14 @@ static void tls_encrypt_done(void *data, int err)
+ 	if (rec) {
+ 		struct tls_rec *first_rec;
  
- /* Undo stages on error */
-+err_dec_slave_cnt:
-+	WRITE_ONCE(bond->slave_cnt, bond->slave_cnt - 1);
+-		/* Mark the record as ready for transmission */
+-		smp_store_mb(rec->tx_ready, true);
++		/* Mark the record as ready for transmission. Pairs with
++		 * smp_load_acquire() in tls_tx_records(): the sge
++		 * offset/length update above must be visible before tx_ready.
++		 */
++		smp_store_release(&rec->tx_ready, true);
 +
- err_sysfs_del:
- 	bond_sysfs_slave_del(new_slave);
++		/* Order the tx_ready store before the tx_list head check */
++		smp_mb();
  
+ 		/* If received record is at head of tx_list, schedule tx */
+ 		first_rec = list_first_entry(&ctx->tx_list,
 -- 
 2.53.0
 
