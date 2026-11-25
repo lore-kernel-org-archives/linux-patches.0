@@ -1,54 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795621191;
-	b=LesB6aHrrABHK3Y8UsbUfSwjj6OGV7Ui21Yb25dr5R7ua4bwC2uayJP8MgCzXOBMFgHO
-	 qOxGDK3PvslZP6QY7cnhSTZT/Jqt9Ad7S9+nCmUiKVFh2r5MyURFwA0VRQciRyf+5Ky1o
-	 8Dmbk65MjJxXFeVQ4nYD7fW6JoE9YF+7C6WY+swDZeWAeGWgHYnR3eggK8DwsVIt3OgXH
-	 Oo931veY2KNDQFXr+pBSG3JCjGLv9IVrXc3mMUq9Bhx2z0AcYTzEjqrGJ3ja/+0fpho48
-	 ksqLAhYmR0WeC7wYByJAb8FSkfGpkCJ6KWkoM4IpdP1TL+4n4QC26UBumCUQFS5Cl0Q==
+	t=1795621194;
+	b=aHdiTD5aKnG1YWvA09PSL1DTs4YC0/u0XnmZFuv075jSgvyYxghQgfNAHQApMgFVz2TB
+	 Z7F+SnPMJIgR4cBqGs29/0q1qA5PJxpUnIRx6R6T443WWNBWm+aygKm7HGLcWya7xoQMo
+	 rNOSkhbzUoykoEsZlIdP48AeGoQzeCQQ3HYncJ0m1F/45h62JwgKl/Zp7OXkRjZZsd6Lw
+	 VbPEAk5CjizL8Vt+vmYjbQ/6aP98/FzntaEoivEoV63qaEMI0DX75SzbHqCnwHu88RlCB
+	 jXh68FDorCIGH5yE5kCSPC3A/VgQx/3+Qg0rw85q0pxkb3H2hMnIdoj46NIAorkAsvg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795621191;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795621194;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=jF+Y6maFfrDyBEF/uC345WS4/Qoci+s41FWb9hTuf3c=;
-	b=VYweoxhwEqWR5VVwYUw+64RIaF6kitzbHudEmtC/mjpzhhCpBFeTqLFwrVNEzZolQvzH
-	 Sw7NuZb9bnrPYf+qpaXvj+jnNtFMBLdxUI2ZiBZsTJ/HwiwKMQcznEr0EZvcAkLx/CQ6Y
-	 uFrc5tJcPoFAqaY9oISeZruZTri1SzsVAUFH/K0IG3ctmqoPiU65M/FccVdYN30FxbTjV
-	 iBSWn2t5EOgpWJUVHLuvrALfwXkCe6s2R+5Aih8LbgBRnhk5sNtoWuaC0dnFsXxHW9k8s
-	 +eCtl3X28e8VyCQ3mPm9i54TGSPjoq2NaJ2s6nRr7X2sr0FhbZYrimdy6Xa5V00bmqA==
+	bh=2OXStm23vrsC8S0ldMgVwq91wnmhDGMovozHuG3uvNY=;
+	b=Z3kfQ/02mJZjxPQCtwTQFxenCR5UB3EgcG5UHVuGNmhYUsntiQScZI5qgC4Vz1LSQOrl
+	 GGEDL1kjGQjhPM68RTPHykaYGu9MAgRtRGH+plPRPiyJvQ3DnGCQeFLMRdDILKDdCSHia
+	 pr1fOazV9zNbnK9rWmMvsdssEczjffBWOpQ3u8KW2D9pLGquVetTlAgvOImFQ8QerrgdV
+	 F7dqkMVtADdHKtLns5e+evLF4ZgMWeXB95TvKR6dAO0Xe/ua22d03VCBBuPdbdr636RfB
+	 0TBbgagMPuweqp0BuV6Rxb4AIdXLRT6rFa4WFEDQIlFkC3BuVzqF4UplwHyI+cjVKBQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=hk7F90Ph;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=AYz7l1Mr;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1E178606A6AB;
-	Wed, 25 Nov 2026 15:39:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B7276606A69D;
+	Wed, 25 Nov 2026 15:39:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=hk7F90Ph
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 362681F000C6;
-	Wed, 25 Nov 2026 15:39:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=AYz7l1Mr
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 98FED1F000ED;
+	Wed, 25 Nov 2026 15:39:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795621190;
-	bh=jF+Y6maFfrDyBEF/uC345WS4/Qoci+s41FWb9hTuf3c=;
+	s=korg; t=1795621194;
+	bh=2OXStm23vrsC8S0ldMgVwq91wnmhDGMovozHuG3uvNY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=hk7F90PhLkPkw8OeEBzPmAD3tWJY4DCAPBP6DM2OHV/zH1Ne+ElUA+BN2OztTFVlc
-	 l5k4Ui2aM7lTe36YL8QkAIkm5GJtAM24nNQjlWqHysN1iTpmp/xcUlV+JxWyYuspMF
-	 Q9uDcSiFafHYerZFBEYyM+iOl0CMQjOitQ+Fk2Qg=
+	b=AYz7l1Mr3lK5+69S1hjpkI1T/sjkMyVHcz1kgWEscOLsIkKC81tYrLDKetFuQ/qF+
+	 zF72Ei1lBIUJCS0tbM9J5D4pPMx8MXWqDVCLqQo/r8by2uDEUciURs3xsEm3UqcFCk
+	 9AFv0gOTFAI2RargJLGcAiYSBZiLRSxaKuYuQLbU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alex Austin <alex.austin@amd.com>,
-	Alejandro Lucero <alucerop@amd.com>,
-	Pieter Jansen van Vuuren <pieter.jansen-van-vuuren@amd.com>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Alexei Starovoitov <ast@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 149/990] sfc: ptp: avoid racing PPS timestamp updates
-Date: Wed, 25 Nov 2026 15:25:16 +0100
-Message-ID: <20261125143825.581841611@linuxfoundation.org>
+Subject: [PATCH 6.18 114/990] bpf: Refuse an arena mmap() longer than max_entries pages
+Date: Wed, 25 Nov 2026 15:24:41 +0100
+Message-ID: <20261125143824.757819469@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143822.072087159@linuxfoundation.org>
 References: <20261125143822.072087159@linuxfoundation.org>
@@ -70,131 +67,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alex Austin <alex.austin@amd.com>
+From: Alexei Starovoitov <ast@kernel.org>
 
-[ Upstream commit 23d23e6c6517d0fea4f64340a23e33c89f82c03c ]
+[ Upstream commit 1e01345b87f13c354687360cb81ed2a521ff2b13 ]
 
-efx_ptp_pps_worker() can race with SIOCHWTSTAMP via
-efx_ptp_change_mode(). After the worker completes synchronization, the
-ioctl can start another synchronization and update host_time_pps while
-the worker copies it into the PPS event. This can report a partially
-updated timestamp. Serializing synchronization transactions alone does
-not protect this copy, which happens after phc_lock is released.
+arena_map_alloc() puts max_entries free pages in the range tree of an
+arena. But the arena kfuncs check their arguments against user_vm_start and
+user_vm_end. Without map_extra, arena_map_mmap() takes both from the first
+vma. This vma can be up to 4 GiB long. Then arena_free_pages() also marks
+pages as free that were never in the range tree. Thus max_entries does not
+limit the memory of the arena, but these pages are inside kern_vm.
 
-Return the timestamp through the caller's own pps_event_time rather
-than the shared field in efx_ptp_data, so the worker reads storage no
-one else can write.
+Refuse an mmap() longer than max_entries pages with -E2BIG. With map_extra
+this limit exists already. libbpf always maps max_entries pages. Replace
+both SZ_4G checks with this limit, because it is at most 4 GiB.
 
-Fixes: 7c236c43b838 ("sfc: Add support for IEEE-1588 PTP")
-Signed-off-by: Alex Austin <alex.austin@amd.com>
-Reviewed-by: Alejandro Lucero <alucerop@amd.com>
-Reviewed-by: Pieter Jansen van Vuuren <pieter.jansen-van-vuuren@amd.com>
-Link: https://patch.msgid.link/20261026123023.3566549-4-alex.austin@amd.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Fixes: 317460317a02 ("bpf: Introduce bpf_arena.")
+Signed-off-by: Alexei Starovoitov <ast@kernel.org>
+Link: https://patch.msgid.link/20261101190535.1454146-6-alexei.starovoitov@gmail.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/sfc/ptp.c | 26 ++++++++++++++++----------
- 1 file changed, 16 insertions(+), 10 deletions(-)
+ kernel/bpf/arena.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/net/ethernet/sfc/ptp.c b/drivers/net/ethernet/sfc/ptp.c
-index f8a88133b15b1..66a5342660a8e 100644
---- a/drivers/net/ethernet/sfc/ptp.c
-+++ b/drivers/net/ethernet/sfc/ptp.c
-@@ -268,7 +268,6 @@ struct efx_ptp_rxfilter {
-  * @evt_frag_idx: Current fragment number
-  * @evt_code: Last event code
-  * @start: Address at which MC indicates ready for synchronisation
-- * @host_time_pps: Host time at last PPS
-  * @adjfreq_ppb_shift: Shift required to convert scaled parts-per-billion
-  * frequency adjustment into a fixed point fractional nanosecond format.
-  * @current_adjfreq: Current ppb adjustment.
-@@ -330,7 +329,6 @@ struct efx_ptp_data {
- 	int evt_frag_idx;
- 	int evt_code;
- 	struct efx_buffer start;
--	struct pps_event_time host_time_pps;
- 	unsigned int adjfreq_ppb_shift;
- 	s64 current_adjfreq;
- 	struct ptp_clock *phc_clock;
-@@ -912,7 +910,8 @@ static void efx_ptp_read_timeset(MCDI_DECLARE_STRUCT_PTR(data),
- static int
- efx_ptp_process_times(struct efx_nic *efx, MCDI_DECLARE_STRUCT_PTR(synch_buf),
- 		      size_t response_length,
--		      const struct pps_event_time *last_time)
-+		      const struct pps_event_time *last_time,
-+		      struct pps_event_time *host_time_pps)
- {
- 	unsigned number_readings =
- 		MCDI_VAR_ARRAY_LEN(response_length,
-@@ -990,6 +989,10 @@ efx_ptp_process_times(struct efx_nic *efx, MCDI_DECLARE_STRUCT_PTR(synch_buf),
- 			   "PTP bad synchronisation seconds\n");
- 		return -EAGAIN;
- 	}
-+
-+	if (!host_time_pps)
-+		return 0;
-+
- 	delta.tv_sec = (last_sec - start_sec) & 1;
- 	delta.tv_nsec =
- 		last_time->ts_real.tv_nsec -
-@@ -1006,8 +1009,8 @@ efx_ptp_process_times(struct efx_nic *efx, MCDI_DECLARE_STRUCT_PTR(synch_buf),
- 	delta.tv_nsec += ktime_to_timespec64(mc_time).tv_nsec;
+diff --git a/kernel/bpf/arena.c b/kernel/bpf/arena.c
+index d1f0a7222d941..b3c70596c576e 100644
+--- a/kernel/bpf/arena.c
++++ b/kernel/bpf/arena.c
+@@ -333,7 +333,7 @@ static unsigned long arena_get_unmapped_area(struct file *filp, unsigned long ad
  
- 	/* Set PPS timestamp to match NIC top of second */
--	ptp->host_time_pps = *last_time;
--	pps_sub_ts(&ptp->host_time_pps, delta);
-+	*host_time_pps = *last_time;
-+	pps_sub_ts(host_time_pps, delta);
+ 	if (pgoff)
+ 		return -EINVAL;
+-	if (len > SZ_4G)
++	if (len > (u64)map->max_entries * PAGE_SIZE)
+ 		return -E2BIG;
  
- 	return 0;
- }
-@@ -1020,7 +1023,8 @@ efx_ptp_process_times(struct efx_nic *efx, MCDI_DECLARE_STRUCT_PTR(synch_buf),
-  * the function that registered it, so a secondary function can capture here
-  * without serializing against the primary.
-  */
--static int efx_ptp_synchronize(struct efx_nic *efx, unsigned int num_readings)
-+static int efx_ptp_synchronize(struct efx_nic *efx, unsigned int num_readings,
-+			       struct pps_event_time *host_time_pps)
- {
- 	struct efx_ptp_data *ptp = efx->ptp_data;
- 	MCDI_DECLARE_BUF(synch_buf, MC_CMD_PTP_OUT_SYNCHRONIZE_LENMAX);
-@@ -1069,7 +1073,7 @@ static int efx_ptp_synchronize(struct efx_nic *efx, unsigned int num_readings)
- 				 &response_length);
- 	if (rc == 0) {
- 		rc = efx_ptp_process_times(efx, synch_buf, response_length,
--					   &last_time);
-+					   &last_time, host_time_pps);
- 		if (rc == 0)
- 			++ptp->good_syncs;
- 		else
-@@ -1501,14 +1505,15 @@ static void efx_ptp_pps_worker(struct work_struct *work)
- {
- 	struct efx_ptp_data *ptp =
- 		container_of(work, struct efx_ptp_data, pps_work);
-+	struct pps_event_time host_time_pps = {};
- 	struct efx_nic *efx = ptp->efx;
- 	struct ptp_clock_event ptp_evt;
+ 	/* if user_vm_start was specified at arena creation time */
+@@ -381,7 +381,7 @@ static int arena_map_mmap(struct bpf_map *map, struct vm_area_struct *vma)
+ 		return -EBUSY;
  
--	if (efx_ptp_synchronize(efx, PTP_SYNC_ATTEMPTS))
-+	if (efx_ptp_synchronize(efx, PTP_SYNC_ATTEMPTS, &host_time_pps))
- 		return;
+ 	/* Earlier checks should prevent this */
+-	if (WARN_ON_ONCE(vma->vm_end - vma->vm_start > SZ_4G || vma->vm_pgoff))
++	if (WARN_ON_ONCE(vma_pages(vma) > map->max_entries || vma->vm_pgoff))
+ 		return -EFAULT;
  
- 	ptp_evt.type = PTP_CLOCK_PPSUSR;
--	ptp_evt.pps_times = ptp->host_time_pps;
-+	ptp_evt.pps_times = host_time_pps;
- 	ptp_clock_event(ptp->phc_clock, &ptp_evt);
- }
- 
-@@ -1844,7 +1849,8 @@ int efx_ptp_change_mode(struct efx_nic *efx, bool enable_wanted,
- 				rc = efx_ptp_start(efx);
- 			if (rc == 0) {
- 				rc = efx_ptp_synchronize(efx,
--							 PTP_SYNC_ATTEMPTS * 2);
-+							 PTP_SYNC_ATTEMPTS * 2,
-+							 NULL);
- 				if (rc != 0)
- 					efx_ptp_stop(efx);
- 			}
+ 	if (remember_vma(arena, vma))
 -- 
 2.53.0
 
