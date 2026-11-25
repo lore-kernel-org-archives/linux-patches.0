@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795619194;
-	b=kk0ulMTx/5AiIyn/jpipLu5YoKglp8P25r+Wq6CAbyBWnbS70Dy/ZlWSk9y3ZIw/y73C
-	 Sz71f8BRfyH+GbpyizTo509i1ImHC3UOmqjcwUVwjvPW2zKoM2c6zHgMG9sKaaqlotzhb
-	 oT7vGRDQH2fpowLnxsWfE3DarLipJS7OUaDN83JK3VYDS+7oG7Kul0mjscPoW3gYgsns1
-	 RmkMRZ/IWuYiAyzsIOoaCQC30boViLGZdDvgdfKo7nQKa0oncYw40DJLANO2ZIdg+BRA+
-	 1Ai8VYqn/sQ062sIQ9m3//dMPMEfLluEADH3Ck0bTp2huvZSlIH3/oPPEygH67uE6hA==
+	t=1795619198;
+	b=bjWRAuiLniMEpdpbxH59y69JWtQ/RK9iqDmH1YoXCRm91L7ycEXluGd002Fx1MEvrL3X
+	 f/ber1YQLQlCvrffRV4sQTYRUSwK6tQBqefHgGdQAC3EJyxekL3QqhH7mWXRbEmj51Hju
+	 si4W7DXqV/szXMScZ80xDjXhdGToUu6x01raAvYJyysvL/ZOXxFsQaiBw7rxqC/dAsVcZ
+	 V3sPg+wSE2mVWnGkwaVoeGvYviGUH0pCGBdGJTNpKQuW1fQaRCLN3mFZlSnW7pSzDLDNu
+	 UAvq+W6aVm01HDgU3LvXSM+bzk3ARfX0qD93kYdWiRyriy7rt6NnvGO/vfe823xPmWw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795619194;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795619198;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=w2AFm7HOd7WjZXp/yineGvT1hyVnnGfJpzO4ALJEVyI=;
-	b=wCa6FFH1nQ0pJNygMYL4XHvDPiyc7arawPffHVVSOC40Xl3uQCIayq/cd5VrezJjXSTo
-	 8hUNS8XirSvs0iCuAAYS5K/6yqICOVxUtVAnpAO+HV0TfLnCrUym008pn31+kojRDjANv
-	 x+z5bzDYEGR7UcvoVxMCMgQEcIdNCStz9zZgSe28VaCYi31Z3dHz60hIuRc7GNWWq1BDF
-	 iJwf5a2WCVImrROtHfiTjCJo847xgl+AoNUFUKT/FBBKPBN7frNV7U05NA5vFE5rrUy53
-	 ZFySmoOqt4d3USfNf+rUH3NshnKBsLOaSXJXyjEAb04R8Q7pSDy5ZE9Juj9OatvqzCw==
+	bh=IViBlzPOHhRV3abtaEnifkT6Nzx/Vr1aqmjQ2c3PrnA=;
+	b=D02hJB7a43wV9phf/TVqZS96/N2xdTMjo5LzhroVPE3rpLM5PtlVwzcxToJnBD9LfpsR
+	 L4vsx6L9w/i/xjfJUciHRlmM4LtsrV+IAzMO7aXyMdEwsCcp9adcKM2ViDEUmiVv51fGi
+	 2Kq+heoLlEcM55nBZLbcWHyZeW2iZDN7BqBmNeBy6W+BD3FBJUqQEsUPkq65UKUn7/78M
+	 0/MZ87iB7fQV1rWYRLlxO5U+1b0A2pqIbcVv31SFSLtFAT3yfdq3zc2WLKh46WV2DeIiQ
+	 9coiVUTwXJfnM0eRM4gBtv7JKCoxA2oXVhp04sWMjJCUjwBHw9cjiHW72TLLiD4YzeQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=0FXDfnMx;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=M77dIitj;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CE30C606A689;
-	Wed, 25 Nov 2026 15:06:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8360B606A329;
+	Wed, 25 Nov 2026 15:06:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=0FXDfnMx
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F345D1F000D3;
-	Wed, 25 Nov 2026 15:06:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=M77dIitj
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6A0B81F000E1;
+	Wed, 25 Nov 2026 15:06:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795619194;
-	bh=w2AFm7HOd7WjZXp/yineGvT1hyVnnGfJpzO4ALJEVyI=;
+	s=korg; t=1795619198;
+	bh=IViBlzPOHhRV3abtaEnifkT6Nzx/Vr1aqmjQ2c3PrnA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=0FXDfnMxrzRYqmKosZvOptI0y0mWsnEWuPhPRMmuTleub/KqunDBaoJAikkF7SNZB
-	 OUwslOdzQT1mev6UqwNUlc2FWk23cG/yRrxuuh4Q0ptokKP2fR+Bi/AK94BLohqJfK
-	 /OkRdNqJIeXcnD9kHeEepkLVjD674L5l5mL1WGGA=
+	b=M77dIitjOBbA7Lew9ZPHgDTgGHjMtOXgPnrw06J0wI2aeEYFJ3+wUviQN5C3KqYWL
+	 lo3+UhGR4a7EFhqHTwraHcDmOuZFe/PJLxJe2A/KRJBKuNCyTI5eT2bc9JT7JtGXWd
+	 7IISIM/P0rYw7Xqfcx0E5nzEcDysE7VNRQJ660y4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chris Mason <mason@kernel.org>,
-	Kuniyuki Iwashima <kuniyu@google.com>,
+	Omar Ramadan <omar@blockcast.net>,
+	Simon Horman <horms@kernel.org>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0520/1005] tcp: Drop any segments if DEFER_CONNECT is set.
-Date: Wed, 25 Nov 2026 15:30:58 +0100
-Message-ID: <20261125143833.926583181@linuxfoundation.org>
+Subject: [PATCH 7.3 0521/1005] amt: tear down every amt device on an unregistering lower
+Date: Wed, 25 Nov 2026 15:30:59 +0100
+Message-ID: <20261125143833.949717281@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143821.729802100@linuxfoundation.org>
 References: <20261125143821.729802100@linuxfoundation.org>
@@ -69,91 +69,145 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chris Mason <mason@kernel.org>
+From: Omar Ramadan <omar@blockcast.net>
 
-[ Upstream commit 44809e49177992b15708a150437d9aebc5beea9c ]
+[ Upstream commit 7262e999ebec0a10ecc97ba4739f12255b7c6da8 ]
 
-TCP Fast Open lets a client send data in its SYN. With
-TCP_FASTOPEN_CONNECT and a cached Fast Open cookie, which the server
-sent in the SYN-ACK of an earlier connection, the connection is set up
-in two steps:
+amt_device_event() acts only on the amt device that
+amt_lookup_upper_dev() returns, which is the first amt device bound to
+the event's lower. Several amt devices can share one lower, for
+example two gateways.
 
-- connect() sends nothing, so that the SYN can carry the data of the
-  first write(). It only sets DEFER_CONNECT and inserts the socket into
-  the hash table in SYN_SENT.
-- The first write() calls tcp_connect(), which runs tcp_connect_init()
-  and sends the SYN.
+On NETDEV_UNREGISTER, only the first device is unlinked and
+unregistered. The others stay upper-linked to the lower, and
+unregister_netdevice_many_notify() warns, because the notifier chain
+must detach every upper device. They also still hold a reference on
+the lower, so each is torn down only when netdev_wait_allrefs_any(),
+called from netdev_run_todo(), rebroadcasts NETDEV_UNREGISTER. By then
+the lower's sysfs directory is gone, so unlinking it trips a kernfs
+WARN, and unregistering it from inside the rebroadcast trips the WARN
+in __rtnl_unlock(). On NETDEV_CHANGEMTU, only the first device is
+resized.
 
-A socket must not accept any segment before it has sent its SYN. But
-nothing on the receive path checks DEFER_CONNECT. So until the write(),
-the half-initialised socket processes segments like any socket in
-SYN_SENT, and a forged SYN is accepted.
+Walk every amt device in the lower's netns and act on each one bound
+to the lower. On NETDEV_UNREGISTER, queue them all and unregister them
+in one batch. amt_dellink() unlinks each device but leaves it on the
+netns device list until unregister_netdevice_many(), so the walk stays
+valid under RTNL.
 
-Similarly, ICMP with seq matching ISN is accepted in the state.
-Before commit 57889a8f6d49 ("tcp: initialize send sequence numbers
-before deferring TFO"), even seq 0 message was accepted.
+To reproduce:
 
-Drop any segments if DEFER_CONNECT is set.
+  ip link add lower0 type dummy
+  ip link add amtg1 type amt mode gateway local 192.0.2.1 \
+          discovery 192.0.2.2 dev lower0
+  ip link add amtg2 type amt mode gateway local 192.0.2.1 \
+          discovery 192.0.2.2 dev lower0
+  ip link del lower0
 
-Fixes: 19f6d3f3c842 ("net/tcp-fastopen: Add new API support")
-Signed-off-by: Chris Mason <mason@kernel.org>
-[kuniyu: revised DEFER_CONNECT tests and the commit message]
-Signed-off-by: Kuniyuki Iwashima <kuniyu@google.com>
-Link: https://patch.msgid.link/20261107235720.3129212-3-kuniyu@google.com
+Without this patch, the last command logs:
+
+  WARNING: net/core/dev.c:12773 at unregister_netdevice_many_notify+0x13e5/0x1940, CPU#3: ip/216
+  kernfs: can not remove 'upper_amtg2', no directory
+  WARNING: fs/kernfs/dir.c:1784 at kernfs_remove_by_name_ns+0xc9/0xd0, CPU#0: ip/216
+  WARNING: net/core/rtnetlink.c:141 at __rtnl_unlock+0xb2/0xf0, CPU#0: ip/216
+  WARNING: net/core/rtnetlink.c:141 at __rtnl_unlock+0xb2/0xf0, CPU#0: ip/216
+
+With it, the commands log nothing and remove both amt devices, and
+tools/testing/selftests/net/amt.sh passes on a KASAN and lockdep
+kernel.
+
+Found by a selftest for our upcoming AMT offload RFC, which deletes a
+lower carrying two amt gateways, on our 6.18-based driver. The
+commands above reproduce it on net.
+
+Fixes: b9022b53adad ("amt: add control plane of amt interface")
+Signed-off-by: Omar Ramadan <omar@blockcast.net>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Link: https://patch.msgid.link/20261105232302.494171-1-omar@blockcast.net
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv4/tcp_input.c | 9 +++++++++
- net/ipv4/tcp_ipv4.c  | 2 +-
- net/ipv6/tcp_ipv6.c  | 2 +-
- 3 files changed, 11 insertions(+), 2 deletions(-)
+ drivers/net/amt.c | 56 ++++++++++++++++++++---------------------------
+ 1 file changed, 24 insertions(+), 32 deletions(-)
 
-diff --git a/net/ipv4/tcp_input.c b/net/ipv4/tcp_input.c
-index ce8ac1d1cd0c7..4465ecba26140 100644
---- a/net/ipv4/tcp_input.c
-+++ b/net/ipv4/tcp_input.c
-@@ -7236,6 +7236,15 @@ tcp_rcv_state_process(struct sock *sk, struct sk_buff *skb)
- 		goto discard;
+diff --git a/drivers/net/amt.c b/drivers/net/amt.c
+index faa21015b34de..1b6759dc846d7 100644
+--- a/drivers/net/amt.c
++++ b/drivers/net/amt.c
+@@ -3394,22 +3394,6 @@ static struct rtnl_link_ops amt_link_ops __read_mostly = {
+ 	.fill_info      = amt_fill_info,
+ };
  
- 	case TCP_SYN_SENT:
-+		/* We sent nothing yet, so no segment belongs to this connection.
-+		 * Send no RST: it would be built from this socket, whose TCP-AO
-+		 * keys are not set up either.
-+		 */
-+		if (unlikely(inet_test_bit(DEFER_CONNECT, sk))) {
-+			SKB_DR_SET(reason, NOT_SPECIFIED);
-+			goto discard;
+-static struct net_device *amt_lookup_upper_dev(struct net_device *dev)
+-{
+-	struct net_device *upper_dev;
+-	struct amt_dev *amt;
+-
+-	for_each_netdev(dev_net(dev), upper_dev) {
+-		if (netif_is_amt(upper_dev)) {
+-			amt = netdev_priv(upper_dev);
+-			if (amt->stream_dev == dev)
+-				return upper_dev;
+-		}
+-	}
+-
+-	return NULL;
+-}
+-
+ static int amt_device_event(struct notifier_block *unused,
+ 			    unsigned long event, void *ptr)
+ {
+@@ -3419,26 +3403,34 @@ static int amt_device_event(struct notifier_block *unused,
+ 	LIST_HEAD(list);
+ 	int new_mtu;
+ 
+-	upper_dev = amt_lookup_upper_dev(dev);
+-	if (!upper_dev)
+-		return NOTIFY_DONE;
+-	amt = netdev_priv(upper_dev);
++	/* amt_dellink() leaves each device on the netns device list until
++	 * unregister_netdevice_many(), so the walk stays valid.
++	 */
++	for_each_netdev(dev_net(dev), upper_dev) {
++		if (!netif_is_amt(upper_dev))
++			continue;
++		amt = netdev_priv(upper_dev);
++		if (amt->stream_dev != dev)
++			continue;
+ 
+-	switch (event) {
+-	case NETDEV_UNREGISTER:
+-		amt_dellink(amt->dev, &list);
+-		unregister_netdevice_many(&list);
+-		break;
+-	case NETDEV_CHANGEMTU:
+-		if (amt->mode == AMT_MODE_RELAY)
+-			new_mtu = dev->mtu - AMT_RELAY_HLEN;
+-		else
+-			new_mtu = dev->mtu - AMT_GW_HLEN;
++		switch (event) {
++		case NETDEV_UNREGISTER:
++			amt_dellink(amt->dev, &list);
++			break;
++		case NETDEV_CHANGEMTU:
++			if (amt->mode == AMT_MODE_RELAY)
++				new_mtu = dev->mtu - AMT_RELAY_HLEN;
++			else
++				new_mtu = dev->mtu - AMT_GW_HLEN;
+ 
+-		dev_set_mtu(amt->dev, new_mtu);
+-		break;
++			dev_set_mtu(amt->dev, new_mtu);
++			break;
 +		}
-+
- 		tp->rx_opt.saw_tstamp = 0;
- 		tcp_mstamp_refresh(tp);
- 		queued = tcp_rcv_synsent_state_process(sk, skb, th);
-diff --git a/net/ipv4/tcp_ipv4.c b/net/ipv4/tcp_ipv4.c
-index df2763f31dde6..c5567dd8c7126 100644
---- a/net/ipv4/tcp_ipv4.c
-+++ b/net/ipv4/tcp_ipv4.c
-@@ -541,7 +541,7 @@ int tcp_v4_err(struct sk_buff *skb, u32 info)
- 		if (!(type == ICMP_DEST_UNREACH && code == ICMP_FRAG_NEEDED))
- 			__NET_INC_STATS(net, LINUX_MIB_LOCKDROPPEDICMPS);
  	}
--	if (sk->sk_state == TCP_CLOSE)
-+	if (sk->sk_state == TCP_CLOSE || inet_test_bit(DEFER_CONNECT, sk))
- 		goto out;
  
- 	if (static_branch_unlikely(&ip4_min_ttl)) {
-diff --git a/net/ipv6/tcp_ipv6.c b/net/ipv6/tcp_ipv6.c
-index ff2a7ce78073e..ef5928885cc6b 100644
---- a/net/ipv6/tcp_ipv6.c
-+++ b/net/ipv6/tcp_ipv6.c
-@@ -449,7 +449,7 @@ static int tcp_v6_err(struct sk_buff *skb, struct inet6_skb_parm *opt,
- 	if (sock_owned_by_user(sk) && type != ICMPV6_PKT_TOOBIG)
- 		__NET_INC_STATS(net, LINUX_MIB_LOCKDROPPEDICMPS);
++	if (event == NETDEV_UNREGISTER)
++		unregister_netdevice_many(&list);
++
+ 	return NOTIFY_DONE;
+ }
  
--	if (sk->sk_state == TCP_CLOSE)
-+	if (sk->sk_state == TCP_CLOSE || inet_test_bit(DEFER_CONNECT, sk))
- 		goto out;
- 
- 	if (static_branch_unlikely(&ip6_min_hopcount)) {
 -- 
 2.53.0
 
