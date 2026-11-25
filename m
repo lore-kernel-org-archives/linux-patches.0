@@ -1,51 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795619843;
-	b=uUgwh8P/US11P+JdL7USJVVaKGOA0umYtLc6l3O3UHy5569YHZg8YswRq8S9dB5c58XA
-	 fnZym3Jfb0i5JbiqBL1cjyt6OGXPRQnnpvFkB0VV+1ioakroDh626ycZsWLB27oWJrmi7
-	 7FiQcu2+yO7WPxS/ObYPsXqt31fXxlxM5ZmLUjcPPP/xA1orJ43kqJtlT0x/Pgi+5DrHG
-	 BlyTunSEdhuDB4XmPdqV8pSy5xefUJnCg8ZJQGNCLbojKJ6l6K3oetyHL9WAvyjdpdrP1
-	 HZvsbuoU6dZSJZjCcxuVKJmIhsrrGAoRbM7YRzlECAvRRmlIhVwBvd3NcrFKDemZFGQ==
+	t=1795619846;
+	b=q94O1gEcT/VSdMU6RSRqHN9bdowZOTVmmWMM+O8RolYXX0nZn4ITdINbwvj/gkBndh73
+	 5MhXGE0fAUcj2OLh0oYY2MQBxjSu+pkLGw41oe9IcTSbyfZcUq/X5E7r+HdxZhfEjdRs0
+	 XCdvoMtJUSmlUa/d0tJ9kPMVzmidvhNiCA5dNXcqV3ce7jn+S8Cv0H/cikUmcg/e0UkKh
+	 bTxn+UPBoM7xcbD4cPskQtlweVvEcA0r0Gs1h6V+S/5C4m/hkkYOezRtePwW/6yHsdcCh
+	 x+eneNPuCtNrFuFtT/Ph9rcJFTsGDF3D4L4iIOOi/AWY2g1xF9b0KNMCLyNCrWWj/kg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795619843;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795619846;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=53JW6oYLBI3Mx9JVvvfHoBEupxHJYAKEU5StXZSKNTI=;
-	b=EwaYHfImMpr+v13/osCUh/50DrmRu2y28TS9F4LF6A4g6vEnLbj7x2hHRYQf+xA+qRyb
-	 d2COfxm5MQSY9fj3kmNkkLazD53XMt5aMNF+txhv6VAaU3i4r7qzcsgKyDxF00q86vNv3
-	 j0SA8VsujVQ4s4I8EFi9Vzd7Uq7D6ptj/gZaieoN+Z7debGVDcJOu1zzKnz2Y1TGRyBXY
-	 mqAuDeBu/KxGgnnU1mGMfLtW7mBpwaCeWPqclQeqDO5yxXXA/FLSzTLKvA/fks8ZLmqwQ
-	 PZC0QhPwEpZrp8gsr2G3l/zxeZ33j+yNUDo3HV27k6d69iSrwbKTD52/iWQfmZHqoYA==
+	bh=igNpSNNt9+b3aXSWmkggvEJs8/BKJ0rNedCkhTMqx6M=;
+	b=3ag2XZLvLS5815h04Yd3kM/Rf1E64ba6EmKP4TnBTQGA+cZGPcF/HXO7xb6VeTgi6tIA
+	 s9htovo9mygztgWH2Md/Dftbxs4r0v93ydmO7pH/VEkoShj9KlxzTGj2A5RlmuyuQW3+X
+	 wtOwjAc5RJHVcDQtgv2x28Gl+6giFjoRIh/6issuW0MWyic6eRW80gVxqEFt6Hbvlcmuh
+	 lx63Xc8dbxr+WW1TCf2iBEFUVEmmZtwx/2aLiNmV46yHVJr3ly/1L4Vq9K5ZM0VE4ZZyN
+	 CrTKf+nGmlQKYxiPZNM3/VFPqAsUe8Ohpfakspfb1K0ux8fTWl9SUUdvNDrpWeUUEVg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=A872NNMl;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=exPNQqZH;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A77F4606A321;
-	Wed, 25 Nov 2026 15:17:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 70306606A323;
+	Wed, 25 Nov 2026 15:17:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=A872NNMl
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A18411F000E6;
-	Wed, 25 Nov 2026 15:17:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=exPNQqZH
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A18F11F000C0;
+	Wed, 25 Nov 2026 15:17:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795619843;
-	bh=53JW6oYLBI3Mx9JVvvfHoBEupxHJYAKEU5StXZSKNTI=;
+	s=korg; t=1795619846;
+	bh=igNpSNNt9+b3aXSWmkggvEJs8/BKJ0rNedCkhTMqx6M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=A872NNMlRPfC8p0KiiLlqIths5wgBbuyLqzqqWqXRRHBEpci1ZFtAiAMb8nDm/9DG
-	 iSGP4VDtqcTJxCCTYgAHaPQMG+JhAJOKnbXf+UGA4b7e4NY9wxddQ7Y8CU5Ee+BL2j
-	 0iKK64Wezqg7WOvYZGiY7fD5memtige+6PRursYs=
+	b=exPNQqZHKh58OUUoEEDZrRyXIZZY1piqE37eSb1V6AGhmDSNNc2QzWamiRT6+QwWg
+	 jq3Wd10VNDiO+qnCApx0QSzMcXB3i+XXCmC+geCgWuulj5czuScEHlgv7KF0VrbqPt
+	 RLEe9LY+9JGDCb3rJnym/+oRxPwv3keyJhid9iK8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Avi Weiss <thnkslprpt@gmail.com>,
 	Thomas Gleixner <tglx@kernel.org>
-Subject: [PATCH 7.3 0724/1005] timekeeping: Reject cross timestamps for invalid AUX clocks
-Date: Wed, 25 Nov 2026 15:34:22 +0100
-Message-ID: <20261125143838.719525892@linuxfoundation.org>
+Subject: [PATCH 7.3 0725/1005] timekeeping: Refresh auxiliary base before offset validation
+Date: Wed, 25 Nov 2026 15:34:23 +0100
+Message-ID: <20261125143838.744707314@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143821.729802100@linuxfoundation.org>
 References: <20261125143821.729802100@linuxfoundation.org>
@@ -69,37 +69,39 @@ Content-Transfer-Encoding: 8bit
 
 From: Avi Weiss <thnkslprpt@gmail.com>
 
-commit 67f1969e29b692ab3cfcc97ba175b9109212de00 upstream.
+commit c1b96ba87e3caaa701d6dba254e58db7cc3c99be upstream.
 
-get_device_system_crosststamp() accepts AUX clock IDs even when the
-corresponding timekeeper is disabled. A never-enabled AUX timekeeper
-has no initialized clocksource, and a previously enabled one can
-retain stale timekeeping data.
+timekeeping_forward_now() can advance an auxiliary timekeeper across a
+second boundary without refreshing tkr_mono.base. The negative-time
+check in __timekeeping_inject_offset() then uses the stale base and
+rejects valid ADJ_SETOFFSET adjustments with -EINVAL.
 
-Return -ENODEV before calling the device timestamp callback when the
-selected timekeeper is invalid.
+Refresh the derived timekeeper data before calculating the current
+auxiliary time, as aux_clock_set() already does.
 
-Fixes: 9aebde8af6fe ("timekeeping: Add support for AUX clock cross timestamping")
+On 7.4-rc1, a valid negative adjustment fails at the first second
+rollover. The patched kernel accepts all 12 tested rollover adjustments
+and continues to reject invalid negative offsets.
+
+Fixes: 2c8aea59c206 ("timekeeping: Add auxiliary clock support to __timekeeping_inject_offset()")
 Signed-off-by: Avi Weiss <thnkslprpt@gmail.com>
 Signed-off-by: Thomas Gleixner <tglx@kernel.org>
 Cc: stable@vger.kernel.org
-Link: https://patch.msgid.link/20261031122218.118921-1-thnkslprpt@gmail.com
+Link: https://patch.msgid.link/20261103090605.1292660-1-thnkslprpt@gmail.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/time/timekeeping.c |    3 +++
- 1 file changed, 3 insertions(+)
+ kernel/time/timekeeping.c |    1 +
+ 1 file changed, 1 insertion(+)
 
 --- a/kernel/time/timekeeping.c
 +++ b/kernel/time/timekeeping.c
-@@ -1598,6 +1598,9 @@ int get_device_system_crosststamp(int (*
+@@ -1776,6 +1776,7 @@ static int __timekeeping_inject_offset(s
+ 		struct tk_read_base *tkr_mono = &tks->tkr_mono;
+ 		ktime_t now, offs;
  
- 	do {
- 		seq = read_seqcount_begin(&tkd->seq);
-+		if (!tk->clock_valid)
-+			return -ENODEV;
-+
- 		/*
- 		 * Try to synchronously capture device time and a system
- 		 * counter value calling back into the device driver
++		tk_update_ktime_data(tks);
+ 		/* Get the current time */
+ 		now = ktime_add_ns(tkr_mono->base, timekeeping_get_ns(tkr_mono));
+ 		/* Add the relative offset change */
 
 
