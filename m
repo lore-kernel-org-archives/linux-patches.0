@@ -1,52 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795619988;
-	b=1/xm87efa1pSgQfV6/OCYnAu6UbMI4j/dgTKhUoCKMtyJw6MTGtUa9mMiGz63R328As1
-	 nRAPonE6P3OG2jlvtMJM5blm/bAmvlKKYyROMvEyK/AtMnQYwfeehwqVX7kpw+WBHUzEA
-	 RoMBsuFNgxaaX69DQtaPKBnTLPIb/W+IDK1pXjoXlvU5cinUXo/RTckTUuxhWaKxdaflA
-	 KGiuF9RldcWhLR1aW+jUawTctBgkdjdTAS1vJaNmXxeseIUoayCmPgpHOBbZ0MvdXXx6V
-	 IaoKRM+aQcEkqpgiFFXcGaHZN99DfnAd8qCmZrWCVhaSbB4yTT/gwHoH28MEG95rxXA==
+	t=1795619992;
+	b=I0cnClHVues2nY3rlL6S8EpSQJjKwJMR+e38VASAtRcRtnHPOOg3HqahLfFn9MNUUsG8
+	 3XK8hyqpQ4J7KqYuCokfhM6P+WmZ/pzN4DTjnpDAwHYzVw1vdNQkTIeckDxlnrTvEWDfT
+	 0wj4tFUz6cKQhgHKJyXqx12mORq0FHwXqvgRF4PCFSQksUjBMXwUTi+MiuAy95dysSlPX
+	 qoA6NvE6LBXUWpcE2pts9eR7hzAgTm6xV2uDPHS3rFer+0+rVyT5AEsN3z1UBJyDgYyzk
+	 YWW5o3Baph01CN98KAWRgFoSaszIXCDOKeAuZL0mwC5RAWNX6XUSe/cB7KX0VBB2XNw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795619988;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795619992;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=Gtn7dr7zWCQSBcXvoOMvPEtqkWFUB75/nIsNERQeLTU=;
-	b=Q3dbDwVzj3v0bnKKiuyQL4w21qkJqgQgLnubu6BeS91T1EmiLnovzEobWJ42+2T0jCPJ
-	 fENWgqe6Rur2eMQrsSxPVmt9qy3p6mopHtkWFPhlhiyCwKRkC8Role/fMd4Id0or/+877
-	 PmuPAE1ReUwry2T4pd+9QRx7NNowXC18unBWTnnBK6Jxp15ZRZaf9ZmhO/l6uQnUoORRX
-	 XUKvEJRt3U08guQPXb6m2Y5XNT+92HylMYkOZvBiAs9jFZgja4oMIXDZwHl089TqUbp3A
-	 U49S30pxhIat+QUEKLqSZTMZvlY5PNeB+ta23dWbr3fmoDjnJDb4sW1ay0T03OsdsbQ==
+	bh=/7kcyyPdXqIsMGMqxTm4rbRWazQCRzzXAB6nGjWcBLg=;
+	b=Ii8gzZ1CXJn/VgC7NB+4iPCzZpEZERglgexmBj69A/cJVx0lpPdsmYpopVD5cErZs8IK
+	 NtqR5w9DfsHUmakQgP/ODQ8eKbhP8yR3L4NRXiUadR6urp5xYVe0VEMiW5hWTAnVojd6s
+	 PCyLFYB/xQ0swtLx6r0XtiNUjv6FjixGBQ303IzWFenWs2Tk4Hw6b+NUQ8MiEnVYrNzTb
+	 hHz+CN3VBkH3MLlsubTXGhdmD8K7G0P/V8h157TbySvug7g8F4SKqitHYdAWkvOhlnUjJ
+	 p6VsOpSF3XmY0pw5LRbrzL3ue+FOtkGJBCKOVtFC69T6aamMj6FFjVxbJ6Q4LsyCiXA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Qa4EjZ8d;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=MMoCCgmI;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6ED8B606A31E;
-	Wed, 25 Nov 2026 15:19:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 44B7E606A31E;
+	Wed, 25 Nov 2026 15:19:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Qa4EjZ8d
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BD3B01F000C4;
-	Wed, 25 Nov 2026 15:19:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=MMoCCgmI
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E68241F000C4;
+	Wed, 25 Nov 2026 15:19:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795619988;
-	bh=Gtn7dr7zWCQSBcXvoOMvPEtqkWFUB75/nIsNERQeLTU=;
+	s=korg; t=1795619991;
+	bh=/7kcyyPdXqIsMGMqxTm4rbRWazQCRzzXAB6nGjWcBLg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Qa4EjZ8dznSnGtrudxhvTJ5NYsiB2dpTjCMolGRDQkU9sToGJO4I8Wx8F0X/dc4EQ
-	 wX6q3O8QWVtVzSJg+3rJX9SIXZA48WBVAAyqVyY8k8GL0HbYNc2GOvrxr7s+eQofF1
-	 mMUy5nc2o30Drn78P432f2lt2f29vT87eSVN5edI=
+	b=MMoCCgmIDTqWFrlgJD2ETu2Ags9l037yKukBVUjYQalzYNB7UVrlOLU9ghXwqWI2w
+	 +SWlg6diyKQL12h44Enfo8KOOP75aag6gu3ao88yCiCAb4kEB6lpWyDc+ge4u+9lqX
+	 x0ibWIa3JGMmCrHDxyNs4N5K4D+pRVe1FyECZals=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sashiko <sashiko-bot@kernel.org>,
-	Ian Bridges <icb@fastmail.org>,
+	Michail Andreas Michalopoulos <mike.michalo@gmail.com>,
 	Namjae Jeon <linkinjeon@kernel.org>
-Subject: [PATCH 7.3 0771/1005] ksmbd: keep group denials when a POSIX ACL entry decides access
-Date: Wed, 25 Nov 2026 15:35:09 +0100
-Message-ID: <20261125143839.805879255@linuxfoundation.org>
+Subject: [PATCH 7.3 0772/1005] ksmbd: refuse reauthentication of an expired session as another user
+Date: Wed, 25 Nov 2026 15:35:10 +0100
+Message-ID: <20261125143839.829371022@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143821.729802100@linuxfoundation.org>
 References: <20261125143821.729802100@linuxfoundation.org>
@@ -68,55 +67,58 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ian Bridges <icb@fastmail.org>
+From: Michail Andreas Michalopoulos <mike.michalo@gmail.com>
 
-commit b0af9a3e6b1534d353ca6ac23caaf46127f62e4a upstream.
+commit 265709f9dc271693d1a261a62242db652fcc471d upstream.
 
-When no ACE names the caller, Everyone or Authenticated Users,
-smb_check_perm_dacl() lets a POSIX ACL entry for the caller decide
-access. The entry's rights replace the result of the DACL walk. Deny
-ACEs for the caller's groups, and OWNER RIGHTS for the owner, are then
-lost.
+When a Kerberos session expires, its owner can reauthenticate it. For an
+NTLM reauthentication, ntlm_authenticate() only compares the new user with
+sess->user when the session is still valid. An expired session is in
+SMB2_SESSION_IN_PROGRESS during the reauthentication, so it takes the
+other branch and simply sets sess->user to the new user:
 
-For example, a deny of FILE_WRITE_DATA for one of the caller's groups
-should refuse writes. A POSIX ACL entry that gives the caller write
-access still lets the caller write.
+- the session's open files, tree connects and other state, created under
+  the original user's identity, now belong to whichever user just
+  authenticated, and a later Kerberos reauthentication is compared
+  against that user rather than the original one;
+- the original struct ksmbd_user is overwritten without being freed.
 
-Remove the requested rights that those ACEs deny from the entry's
-rights. The DACL walk already records them in grp_denied.
+krb5_authenticate() already refuses a different user in this case, and
+the valid-session branch of ntlm_authenticate() does too. Do the same for
+an expired session: compare with the existing user and refuse a different
+one with -EKEYREJECTED, freeing the newly looked-up user either way.
 
-Fixes: 42ac1f1917ae ("ksmbd: grant a caller what its groups and OWNER RIGHTS ACEs allow")
-Reported-by: Sashiko <sashiko-bot@kernel.org>
-Link: https://sashiko.dev/#/patchset/20261102200353.884509-1-icb%40fastmail.org
-Link: https://sashiko.dev/#/patchset/20261103150458.11591-1-icb%40fastmail.org
-Link: https://sashiko.dev/#/patchset/20261107062233.1579198-1-icb%40fastmail.org?part=1
-Link: https://sashiko.dev/#/patchset/20261107231941.1824289-1-icb%40fastmail.org?part=1
-Link: https://sashiko.dev/#/patchset/20261108182011.1888520-1-icb%40fastmail.org?part=1
+An AI assistant was used to find and fix this and as an independent
+reviewer.
+
+Fixes: a47634cd729b ("ksmbd: expire SMB sessions when Kerberos tickets expire")
 Cc: stable@vger.kernel.org
-Signed-off-by: Ian Bridges <icb@fastmail.org>
+Signed-off-by: Michail Andreas Michalopoulos <mike.michalo@gmail.com>
 Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/smb/server/smbacl.c |    9 +++++++++
- 1 file changed, 9 insertions(+)
+ fs/smb/server/smb2pdu.c |   11 +++++++++++
+ 1 file changed, 11 insertions(+)
 
---- a/fs/smb/server/smbacl.c
-+++ b/fs/smb/server/smbacl.c
-@@ -1703,6 +1703,15 @@ next_ace:
- 					if (!access_bits)
- 						access_bits =
- 							SET_MINIMUM_RIGHTS;
-+					/*
-+					 * Only ACEs for the caller's groups,
-+					 * or OWNER RIGHTS for the owner, apply
-+					 * here. The POSIX ACL entry does not
-+					 * grant an explicitly requested right
-+					 * that they deny first in DACL order.
-+					 */
-+					access_bits &= ~(grp_denied &
-+							 requested);
- 					posix_acl_release(posix_acls);
- 					goto check_access_bits;
- 				}
+--- a/fs/smb/server/smb2pdu.c
++++ b/fs/smb/server/smb2pdu.c
+@@ -2358,6 +2358,17 @@ static int ntlm_authenticate(struct ksmb
+ 			return -EKEYREJECTED;
+ 		}
+ 		ksmbd_free_user(user);
++	} else if (sess->user) {
++		/*
++		 * Reauthentication of an expired session: as for a valid
++		 * session, and as krb5_authenticate() does, it must be by the
++		 * same user. Replacing sess->user would also leak the old one.
++		 */
++		if (!ksmbd_compare_user(sess->user, user)) {
++			ksmbd_free_user(user);
++			return -EKEYREJECTED;
++		}
++		ksmbd_free_user(user);
+ 	} else {
+ 		sess->user = user;
+ 	}
 
 
