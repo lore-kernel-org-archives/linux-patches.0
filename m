@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795618602;
-	b=WsQ2XkhAQAtzVFQ8hYueDjPa7neqOiY7Udj3zmtVc5fsBH02cFBNBgHr+GaRodTKmCzp
-	 jYGxvP0txalK+6hfyeofAVjiVOPwNXziG0KM7B0/XjsNrciqMzQK6+iHXvp+Zi/JIY1MD
-	 TXdY/PJvAGD7ybwrvfJcmX4ah36oV7dGChoPuB0HNeUA74UcU8w0PuLP5uiX7Gqm2xTth
-	 2Tw9emMHopIU+/kxJlQtWV54V2ZtT6k7RBEW2xdi8AE/435Hazts9k4l8LUocjM7+DrdH
-	 Ct4jO85PyEemtKvKm++hV1B0zCWONRVjnFG8BStoNGj/El9OKobkobC1XZQExsZ/gPQ==
+	t=1795618605;
+	b=LihjkgHtKbWDxsmTZVWcIIjw+npJ/93d4MaXZSdDbomIt0EUOiS4/1isP23/Kkn4zKBV
+	 fgmeb9pintq/Q+O5Y1EYEYRgIC54GDkMSQEyuAfjgf9K3gR2r7zppN9GnDFECvUGjFkk2
+	 F3IyCAlt1ziL9Dg7XpW4K3LGE4SO6r7kGB6t8bcZ2k2ln8dYEjscV+DiSGk/mHcskuj4l
+	 776YHPAZmzkhJAWiGehlWiejU8hiamuNNrknA1TCmjyIvTmvvxPTkNHMZnJCfIKLra6/o
+	 7XtoR/rUvq2AMVAJkmAE8NjVWI1Z03Il7IPyB9vYuyv8TiHrGaIPkLYhRke0Ra/vRyw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795618602;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795618605;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=omaEUZKCwdXK8BdjcbPHqZzLyFJ7Ru9IZS/0zYvn6hc=;
-	b=Zicl42fTY01E4Rvm6F7fXAKP862yqNw1NeIiA0GlnkUPKv6tRI/08LfbiqHQBrUqEaqG
-	 ATe5YEEAw6+q5EeviC3M+0/uSidqhzKhRqeqHRclmzwAj3FQC7RbDBdL+DDekOSASc6Sv
-	 FVDeQ2Sxv7Hi1F40gG19HKrOhUYfS0Z2Hfml7UC5S7u/eEx/m7KY+qOJ4vsnjvGHY1GUe
-	 QylMyr/DCoCOvGGgAxnbweloK4+N7UyFTpxnilaWeEF8dchpuFy5idwcNYmVcV80rsddi
-	 h00Sm/TEh+6S7ax6+4SXjJIYcERkeClPWyPuFocg/B5iEZ6dY2u8y5chgkKxMD7XI/w==
+	bh=v/5Au3wmejWVdelUl4cNscNy8l5C0YlGHshNzNXcGOY=;
+	b=SSh3nsPB0WVjArQ6PgLItiF8sucLrKSiOTQOWchUwz78xUCj1DsBNhHYJ318JprWeifI
+	 RkEiVwaBTemRvzz2/h0Z4s2w0tYl5NB8UGMQ8YorQKmKG0BW17W35kEF6w34BPg+ql+EU
+	 PFyzJoaJSjNhi+ItVty07jejbUXdAdK9pBAI6RvdmbN+Vxixu3i4EQB6LsczN962bjoPQ
+	 7911aK4grz1y+vW7OnvtWhx1ah8HTllc/aEMRaqKA53Ri4qsjopQtsh+qxWusIn4r07GS
+	 Gy/z09BvRVhfHHB1QqHouMwnwMz1Ka67bGfRczqq7+yFnloE8BiCdglCF3O9aZKRSig==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=U5iogYg6;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ivaXz9LG;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8D2C0606A326;
-	Wed, 25 Nov 2026 14:56:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 59B21606A321;
+	Wed, 25 Nov 2026 14:56:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=U5iogYg6
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9C17E1F000F0;
-	Wed, 25 Nov 2026 14:56:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ivaXz9LG
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7C8701F000F0;
+	Wed, 25 Nov 2026 14:56:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795618602;
-	bh=omaEUZKCwdXK8BdjcbPHqZzLyFJ7Ru9IZS/0zYvn6hc=;
+	s=korg; t=1795618605;
+	bh=v/5Au3wmejWVdelUl4cNscNy8l5C0YlGHshNzNXcGOY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=U5iogYg6TXYYl+4m1d9sIfK7XTaQad6Btq+xsYgEo6DQwQ2FdJa+rpn9wlgJseSDA
-	 PGfI1rshsmxkk1Fct5wlBcw14DhKKf/lKy1JM0tNzSx5UVciGLyhI9haYMQKHq7Oe0
-	 Wwnmqsr7Nmc9HCjBIKKKT2ZoxZlvt/UmQOjzXWUo=
+	b=ivaXz9LGwRLZ+ujxJJmTcVr7hMBollwjynGXnt0Z+dChhjn/9J648Hktkq5dhyC1Q
+	 2tk7FQmLT2OK156tJ6ntiaPxIMPoJIrHcIHDekJp5rQi1gpEeQVpe+513HRxzJGg9y
+	 rlQ2+0bYLNyt0TBOs5frL4EWahu0TuQ3ExmqOYIc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Abbott Liu <liuwenliang@huawei.com>,
+	Andrea Parri <parri.andrea@gmail.com>,
+	Jan Kara <jack@suse.cz>,
 	"Christian Brauner (Amutable)" <brauner@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0331/1005] initrd: flush deferred fput() before mounting root
-Date: Wed, 25 Nov 2026 15:27:49 +0100
-Message-ID: <20261125143829.489037135@linuxfoundation.org>
+Subject: [PATCH 7.3 0332/1005] iov_iter: take an unsigned long segment count in import_iovec()
+Date: Wed, 25 Nov 2026 15:27:50 +0100
+Message-ID: <20261125143829.511728041@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143821.729802100@linuxfoundation.org>
 References: <20261125143821.729802100@linuxfoundation.org>
@@ -68,82 +69,90 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Abbott Liu <liuwenliang@huawei.com>
+From: Andrea Parri <parri.andrea@gmail.com>
 
-[ Upstream commit 807c1d7125a2b3ca5705a803aa2e19f9d53d1ea3 ]
+[ Upstream commit 965e5e451146a19f69523fbcbc73d07e401a3775 ]
 
-Booting an old-style initrd, i.e. a filesystem image instead of a cpio
-archive, with "root=/dev/ram rootfstype=squashfs" can fail to mount the
-root filesystem:
+readv(), writev() and their positional variants, process_vm_readv(),
+process_vm_writev(), vmsplice(), process_madvise(), vectored aio and
+the btrfs encoded I/O ioctls all take a full-width segment count, and
+all of them hand it to import_iovec() or __import_iovec().  Those take
+an unsigned int count, so on 64-bit kernels the upper 32 bits are
+dropped before iovec_from_user() checks the count against UIO_MAXIOV.
 
-    RAMDISK: squashfs filesystem found at block 0
-    RAMDISK: Loading 68449KiB [1 disk] into ram disk... done.
-    No filesystem could mount root, tried:
-     squashfs
-    Kernel panic - not syncing: VFS: Unable to mount root fs on
-    "/dev/ram" or unknown-block(1,0)
+A count of 0x100000001 is therefore imported as one segment: writev()
+on a pipe writes a byte and readv() reads it back, instead of both
+failing with EINVAL.  A count of 0x100000000 returns 0 as an empty
+vector.
 
-rd_load_image() copies the image into /dev/ram with kernel_write() and
-then drops the file with fput(). The data only reaches the ramdisk once
-the final __fput() releases the block device and bdev_release() calls
-sync_blockdev(). But that __fput() is deferred. Since commit
-343f4c49f243 ("kthread: Don't allocate kthread_struct for init and
-umh") init is a user mode task, so the __fput() is queued as task work
-and only runs once init returns to userspace, i.e. long after
-mount_root(). Before that it ran as delayed fput work at least a jiffy
-later, which doesn't help either.
+import_iovec() was added with an unsigned int count, but the helper it
+wrapped, rw_copy_check_uvector(), took an unsigned long, as does
+iovec_from_user() today.  Until v4.1, readv(), writev(), preadv(),
+pwritev(), process_vm_readv(), process_vm_writev() and vectored aio
+therefore failed these counts with EINVAL, as did vmsplice() until
+v4.18.
 
-Whether the mount survives this depends on the block size. Squashfs
-calls sb_min_blocksize() first and set_blocksize() syncs and drops the
-page cache when the requested block size differs from the current one.
-That hides the problem for most configurations. With
-CONFIG_SQUASHFS_4K_DEVBLK_SIZE=y and 4K pages both block sizes are 4K
-because set_init_blocksize() gives a page-aligned ramdisk a PAGE_SIZE
-block size on the first open. So set_blocksize() does nothing and
-squashfs reads the superblock with bios that bypass the page cache. brd
-has no page for that range yet and returns zeroes, so the magic check
-fails and the mount returns -EINVAL. With rootfstype= naming a single
-filesystem there is nothing left to retry and mount_root_generic()
-panics.
+Widen nr_segs in both import helpers so the UIO_MAXIOV check sees the
+count the caller passed.  Callers with 32-bit counts are unaffected.
 
-Fixing this in squashfs would be the wrong end. Most block-backed
-filesystems read their superblock or their file data with bios that
-bypass the block device page cache, so they are exposed to the same
-race, just less loudly.
+AI assistance was used to find the bug, develop the fix, and run the
+reproducers.
 
-So flush the deferred fput() in rd_load_image() right after dropping the
-ramdisk file, the same way mount_root_generic() already does before it
-retries with another filesystem type. All deferred closes at this point
-belong to files the boot itself created.
-
-Verified on arm64 QEMU with an openEuler Embedded rootfs image packed as
-squashfs.
-
-Fixes: 93e72b3c612a ("squashfs: migrate from ll_rw_block usage to BIO")
-Signed-off-by: Abbott Liu <liuwenliang@huawei.com>
-Link: https://patch.msgid.link/20260930084632.2965573-1-liuwenliang@huawei.com
+Fixes: bc917be81059 ("saner iov_iter initialization primitives")
+Signed-off-by: Andrea Parri <parri.andrea@gmail.com>
+Link: https://patch.msgid.link/20261026180619.4147910-1-parri.andrea@gmail.com
+Reviewed-by: Jan Kara <jack@suse.cz>
 Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- init/do_mounts_rd.c | 5 +++++
- 1 file changed, 5 insertions(+)
+ include/linux/uio.h | 8 ++++----
+ lib/iov_iter.c      | 6 +++---
+ 2 files changed, 7 insertions(+), 7 deletions(-)
 
-diff --git a/init/do_mounts_rd.c b/init/do_mounts_rd.c
-index 48bfab2fc62f9..448a734a0f625 100644
---- a/init/do_mounts_rd.c
-+++ b/init/do_mounts_rd.c
-@@ -258,6 +258,11 @@ int __init rd_load_image(void)
- 	fput(in_file);
- noclose_input:
- 	fput(out_file);
-+	/*
-+	 * The image only reaches the ramdisk when the deferred __fput()
-+	 * syncs the block device. Flush it before mount_root() reads it.
-+	 */
-+	init_flush_fput();
- out:
- 	kfree(buf);
- 	init_unlink("/dev/ram");
+diff --git a/include/linux/uio.h b/include/linux/uio.h
+index fe2e985d74d24..529c6cd53df7a 100644
+--- a/include/linux/uio.h
++++ b/include/linux/uio.h
+@@ -362,11 +362,11 @@ struct iovec *iovec_from_user(const struct iovec __user *uvector,
+ 		unsigned long nr_segs, unsigned long fast_segs,
+ 		struct iovec *fast_iov, bool compat);
+ ssize_t import_iovec(int type, const struct iovec __user *uvec,
+-		 unsigned nr_segs, unsigned fast_segs, struct iovec **iovp,
+-		 struct iov_iter *i);
++		 unsigned long nr_segs, unsigned int fast_segs,
++		 struct iovec **iovp, struct iov_iter *i);
+ ssize_t __import_iovec(int type, const struct iovec __user *uvec,
+-		 unsigned nr_segs, unsigned fast_segs, struct iovec **iovp,
+-		 struct iov_iter *i, bool compat);
++		 unsigned long nr_segs, unsigned int fast_segs,
++		 struct iovec **iovp, struct iov_iter *i, bool compat);
+ int import_ubuf(int type, void __user *buf, size_t len, struct iov_iter *i);
+ 
+ static inline void iov_iter_ubuf(struct iov_iter *i, unsigned int direction,
+diff --git a/lib/iov_iter.c b/lib/iov_iter.c
+index 56c59a2b589d3..55c0dc7e10741 100644
+--- a/lib/iov_iter.c
++++ b/lib/iov_iter.c
+@@ -1366,8 +1366,8 @@ static ssize_t __import_iovec_ubuf(int type, const struct iovec __user *uvec,
+ }
+ 
+ ssize_t __import_iovec(int type, const struct iovec __user *uvec,
+-		 unsigned nr_segs, unsigned fast_segs, struct iovec **iovp,
+-		 struct iov_iter *i, bool compat)
++		 unsigned long nr_segs, unsigned int fast_segs,
++		 struct iovec **iovp, struct iov_iter *i, bool compat)
+ {
+ 	ssize_t total_len = 0;
+ 	unsigned long seg;
+@@ -1438,7 +1438,7 @@ ssize_t __import_iovec(int type, const struct iovec __user *uvec,
+  * Return: Negative error code on error, bytes imported on success
+  */
+ ssize_t import_iovec(int type, const struct iovec __user *uvec,
+-		 unsigned nr_segs, unsigned fast_segs,
++		 unsigned long nr_segs, unsigned int fast_segs,
+ 		 struct iovec **iovp, struct iov_iter *i)
+ {
+ 	return __import_iovec(type, uvec, nr_segs, fast_segs, iovp, i,
 -- 
 2.53.0
 
