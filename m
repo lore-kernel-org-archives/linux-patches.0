@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795622177;
-	b=CedzZQgSDB33/+0wIfbAMN4jIgByKQYiKZnu1uhhJpch26dQi59t2pN8zix/yB76BD4i
-	 UaYoLH4iQijQPilTmCAzPkWhGUWGbbClDb5+0iKU2tRh6lyBxvzD5zPwi9rqyI+8LZK7d
-	 P8uS3QhOjYOfQtyeW2SHOhWvO7Cnjv9OHHjSH+0h/9Ocxz9rdpROIRdUspXVhyTZ0ajzB
-	 yC73CMl0SqeyPHAMedvf+G2vVhvBM+AkcYBkXp7Uik1eRmYypfw7uKC2HAQmBEfw5aF0T
-	 8wGs3d5NhEORbFD0o2TO3jJ7ElnHi06HEICU/LXr50sJTgwCYb+Fp8Zx4w9nes+sPew==
+	t=1795622180;
+	b=zDWSZByNh60bAHA3Qd0krSNEgomkNtlHk47yMqACotMUFyMW7BBa8n/uDQ8kk1XIg2Pz
+	 x2Omkri3NEJBe+MqGsRH3oyw4A+NAtAh9k9mxLv8H0CtLnzWyDIjmNJLOriUPJlPshuKi
+	 +syBlrWFqzeXp+MLQJJAPIo77tuSvb60Ms1Opj8oZVXME4FaGpGS7ebZUYsu/MQE8eZam
+	 53XgA735o0wbkH2VzcofXgCyVopOYeFegWbpqgGErXfR6n7OBFf+N4UL+Ts6IENWXk7hI
+	 OORvUDyO+8SfOmwT/wu0GF9NL5tH2y/wvZjE3gjfb83Yt7q0zGmv6wniKfKYIU77WgQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795622177;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795622180;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=ZGEO9UA+BgytRj+n2yzi7F/7EuuKBX2IzqYx226cAvc=;
-	b=gEGbi+Oskdq3pVyqhsEWwcZBNISDN6XWmd0FELDybR4UpizQYpUUHfu/rzdoKJZH45zF
-	 FUGJx0G5615iGFYAeH4SI/rNWPOSSpZi3iyBOuMS5bY2SwFK9U0yKSYEp0gAXo6RQdQyv
-	 mPw7Vdxk1AhcxOW2lzL5ntAe3psAnt52ZjB31ovBOcsb5n+CPqFAuM+c46LhUY2LV/H1c
-	 zjK3Xm8BJUAyjpcTLJEFlFFwciU9AJkVT0fiP+lwxMPteOg01hA2+zoGzKQV048pXHSoR
-	 uAu9b+/xUlZcLYLeKMFeueqsFr0wTDu6zGACZIPQh/XCUa0O0l9+Fhws+w41qzF935A==
+	bh=73KIqV4wRVEr99VbPz5fjMLJQGAbCbZJhYOrbnMAOy4=;
+	b=zZsURe4ZHG4d2jnF0TtQyfF/8AuWks+DsR2qv9WUbD88rlii7dk+5DVlOg4v1kqx5Jhd
+	 McssVI7e+QjIQfuw6mTHduqqgcqchL+SLTY4pu5DUhn4xSvUexXDfAQeQnbpGrIaqjcCs
+	 AcPqiIJBm2/LBgzkQn++T0qmhAfAKqudIv4sOh9iDB52qHdsRO8iOUvFlJj8LNIYU7Ut3
+	 iy8SYom0MYa1Hbft7OTOLwOLQEmND5SMAsuJLX0sa3VY2E7mo0q+Yd4EWtPfmfepom+23
+	 duSBqypQuHDyEl7yj7BC27kHnXEWVPeMf6Il+Rx+RPlyHtQVKl3Ot3lQ4xf9eOwslNw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="w/Wn8ETg";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=YN9wRPBu;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BDDBB606A337;
-	Wed, 25 Nov 2026 15:56:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A6B0D606A32C;
+	Wed, 25 Nov 2026 15:56:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=w/Wn8ETg
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8717B1F00A03;
-	Wed, 25 Nov 2026 15:56:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=YN9wRPBu
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E35BF1F000EB;
+	Wed, 25 Nov 2026 15:56:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795622177;
-	bh=ZGEO9UA+BgytRj+n2yzi7F/7EuuKBX2IzqYx226cAvc=;
+	s=korg; t=1795622180;
+	bh=73KIqV4wRVEr99VbPz5fjMLJQGAbCbZJhYOrbnMAOy4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=w/Wn8ETgKKw5osXKg5sUasWcbVrRIEmBJbJmtwFAAUpwfbyEuhkJTnIDg8TLn5PoC
-	 oAmYvujxEF4eRRfSt+bqrzB5leL4xKl+JD+NO3wWjxbYNr6qJGOboEEBX/CLfLBTrB
-	 W/fGfNU13Qoe8zCAOv4ha5iTjWz7zVIMguKk2VI8=
+	b=YN9wRPBujH4mdPINnC6K1bEkZqW3Q5LcHU1v7DQe7NWGBOuhYXKj3KF9NnG8BEttc
+	 6rs6UC1R+TNtaU32lppsc4YwTVY+ftDI2Q1x9ahC+0LkrXKriI/6kncl0g6BDyGYXU
+	 VqJhpBNMo4g69LQqdrvB6zHkG7zv6laPXvcfmwzo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kavitha Daula <kavi@edera.dev>,
-	Juergen Gross <jgross@suse.com>,
+	Chris Mason <mason@kernel.org>,
+	Kuniyuki Iwashima <kuniyu@google.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 446/990] xen/grant-table: annotate on-stack work in gnttab_unmap_refs_sync()
-Date: Wed, 25 Nov 2026 15:30:13 +0100
-Message-ID: <20261125143832.540645570@linuxfoundation.org>
+Subject: [PATCH 6.18 448/990] tcp: Drop any segments if DEFER_CONNECT is set.
+Date: Wed, 25 Nov 2026 15:30:15 +0100
+Message-ID: <20261125143832.587097136@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143822.072087159@linuxfoundation.org>
 References: <20261125143822.072087159@linuxfoundation.org>
@@ -68,90 +69,91 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kavitha Daula <kavi@edera.dev>
+From: Chris Mason <mason@kernel.org>
 
-[ Upstream commit 704f812cdab8bbf30987653c1c76c0d2c1e135e7 ]
+[ Upstream commit 44809e49177992b15708a150437d9aebc5beea9c ]
 
-Both callers of gnttab_unmap_refs_sync(), free_persistent_gnts() and
-xen_blkbk_unmap_purged_grants() in blkback, keep their struct
-gntab_unmap_queue_data on the stack. gnttab_unmap_refs_async() sets up
-the delayed work inside it with INIT_DELAYED_WORK(), so with
-CONFIG_DEBUG_OBJECTS_WORK and CONFIG_DEBUG_OBJECTS_TIMERS every
-persistent grant teardown warns twice, once for the work and once for
-its timer:
+TCP Fast Open lets a client send data in its SYN. With
+TCP_FASTOPEN_CONNECT and a cached Fast Open cookie, which the server
+sent in the SYN-ACK of an earlier connection, the connection is set up
+in two steps:
 
-  [  104.366085] ODEBUG: object ffffc9004020fad8 is on stack ffffc9004020c000, but NOT annotated.
-  [  104.371551] WARNING: CPU: 1 PID: 48 at lib/debugobjects.c:672 lookup_object_or_alloc.part.0+0x12b/0x1f0
-  Call Trace:
-   <TASK>
-   __debug_object_init+0xfe/0x1a0
-   debug_object_init+0x38/0x50
-   __init_work+0x28/0x30
-   gnttab_unmap_refs_async+0x18/0xa0
-   gnttab_unmap_refs_sync+0x61/0x90
-   free_persistent_gnts+0x179/0x280
-   xen_blkbk_free_caches+0x16/0x30
-   xen_blkif_disconnect+0xfa/0x2d0
-   frontend_changed+0x90/0x680
-   xenbus_otherend_changed+0x80/0xb0
-   frontend_changed+0x14/0x20
-   xenwatch_thread+0x96/0x1a0
-   kthread+0x11d/0x250
-   ret_from_fork+0x29f/0x2d0
-   ret_from_fork_asm+0x1a/0x30
-   </TASK>
+- connect() sends nothing, so that the SYN can carry the data of the
+  first write(). It only sets DEFER_CONNECT and inserts the socket into
+  the hash table in SYN_SENT.
+- The first write() calls tcp_connect(), which runs tcp_connect_init()
+  and sends the SYN.
 
-gnttab_unmap_refs_sync() waits for the unmap to complete before it
-returns, so the work never outlives the caller's frame. Initialise it
-with INIT_DELAYED_WORK_ONSTACK() when the item is on the stack and
-destroy it before returning. The function is exported, so an item that
-is not on the stack keeps INIT_DELAYED_WORK().
+A socket must not accept any segment before it has sent its SYN. But
+nothing on the receive path checks DEFER_CONNECT. So until the write(),
+the half-initialised socket processes segments like any socket in
+SYN_SENT, and a forged SYN is accepted.
 
-Fixes: b44166cd46e2 ("xen/grant: introduce func gnttab_unmap_refs_sync()")
-Signed-off-by: Kavitha Daula <kavi@edera.dev>
-Reviewed-by: Juergen Gross <jgross@suse.com>
-Signed-off-by: Juergen Gross <jgross@suse.com>
-Message-ID: <20261105000137.82224-1-kavithadaula@Kavithas-MacBook-Pro.local>
+Similarly, ICMP with seq matching ISN is accepted in the state.
+Before commit 57889a8f6d49 ("tcp: initialize send sequence numbers
+before deferring TFO"), even seq 0 message was accepted.
+
+Drop any segments if DEFER_CONNECT is set.
+
+Fixes: 19f6d3f3c842 ("net/tcp-fastopen: Add new API support")
+Signed-off-by: Chris Mason <mason@kernel.org>
+[kuniyu: revised DEFER_CONNECT tests and the commit message]
+Signed-off-by: Kuniyuki Iwashima <kuniyu@google.com>
+Link: https://patch.msgid.link/20261107235720.3129212-3-kuniyu@google.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/xen/grant-table.c | 12 +++++++++++-
- 1 file changed, 11 insertions(+), 1 deletion(-)
+ net/ipv4/tcp_input.c | 9 +++++++++
+ net/ipv4/tcp_ipv4.c  | 2 +-
+ net/ipv6/tcp_ipv6.c  | 2 +-
+ 3 files changed, 11 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/xen/grant-table.c b/drivers/xen/grant-table.c
-index 478d2ad725ac6..261020f6b7776 100644
---- a/drivers/xen/grant-table.c
-+++ b/drivers/xen/grant-table.c
-@@ -38,6 +38,7 @@
- #include <linux/sched.h>
- #include <linux/mm.h>
- #include <linux/slab.h>
-+#include <linux/sched/task_stack.h>
- #include <linux/vmalloc.h>
- #include <linux/uaccess.h>
- #include <linux/io.h>
-@@ -1360,12 +1361,21 @@ static void unmap_refs_callback(int result,
- int gnttab_unmap_refs_sync(struct gntab_unmap_queue_data *item)
- {
- 	struct unmap_refs_callback_data data;
-+	bool on_stack = object_is_on_stack(item);
+diff --git a/net/ipv4/tcp_input.c b/net/ipv4/tcp_input.c
+index 7b5839236f77c..e72eb30d165c2 100644
+--- a/net/ipv4/tcp_input.c
++++ b/net/ipv4/tcp_input.c
+@@ -7048,6 +7048,15 @@ tcp_rcv_state_process(struct sock *sk, struct sk_buff *skb)
+ 		goto discard;
  
- 	init_completion(&data.completion);
- 	item->data = &data;
- 	item->done = &unmap_refs_callback;
--	gnttab_unmap_refs_async(item);
-+	/* blkback keeps @item, and so its retry work, on the stack. */
-+	if (on_stack)
-+		INIT_DELAYED_WORK_ONSTACK(&item->gnttab_work, gnttab_unmap_work);
-+	else
-+		INIT_DELAYED_WORK(&item->gnttab_work, gnttab_unmap_work);
-+	item->age = 0;
-+	__gnttab_unmap_refs_async(item);
- 	wait_for_completion(&data.completion);
-+	if (on_stack)
-+		destroy_delayed_work_on_stack(&item->gnttab_work);
+ 	case TCP_SYN_SENT:
++		/* We sent nothing yet, so no segment belongs to this connection.
++		 * Send no RST: it would be built from this socket, whose TCP-AO
++		 * keys are not set up either.
++		 */
++		if (unlikely(inet_test_bit(DEFER_CONNECT, sk))) {
++			SKB_DR_SET(reason, NOT_SPECIFIED);
++			goto discard;
++		}
++
+ 		tp->rx_opt.saw_tstamp = 0;
+ 		tcp_mstamp_refresh(tp);
+ 		queued = tcp_rcv_synsent_state_process(sk, skb, th);
+diff --git a/net/ipv4/tcp_ipv4.c b/net/ipv4/tcp_ipv4.c
+index fa5437b405207..f8e91616d9bd8 100644
+--- a/net/ipv4/tcp_ipv4.c
++++ b/net/ipv4/tcp_ipv4.c
+@@ -546,7 +546,7 @@ int tcp_v4_err(struct sk_buff *skb, u32 info)
+ 		if (!(type == ICMP_DEST_UNREACH && code == ICMP_FRAG_NEEDED))
+ 			__NET_INC_STATS(net, LINUX_MIB_LOCKDROPPEDICMPS);
+ 	}
+-	if (sk->sk_state == TCP_CLOSE)
++	if (sk->sk_state == TCP_CLOSE || inet_test_bit(DEFER_CONNECT, sk))
+ 		goto out;
  
- 	return data.result;
- }
+ 	if (static_branch_unlikely(&ip4_min_ttl)) {
+diff --git a/net/ipv6/tcp_ipv6.c b/net/ipv6/tcp_ipv6.c
+index b07e8d22edcfb..490fc17a782c9 100644
+--- a/net/ipv6/tcp_ipv6.c
++++ b/net/ipv6/tcp_ipv6.c
+@@ -425,7 +425,7 @@ static int tcp_v6_err(struct sk_buff *skb, struct inet6_skb_parm *opt,
+ 	if (sock_owned_by_user(sk) && type != ICMPV6_PKT_TOOBIG)
+ 		__NET_INC_STATS(net, LINUX_MIB_LOCKDROPPEDICMPS);
+ 
+-	if (sk->sk_state == TCP_CLOSE)
++	if (sk->sk_state == TCP_CLOSE || inet_test_bit(DEFER_CONNECT, sk))
+ 		goto out;
+ 
+ 	if (static_branch_unlikely(&ip6_min_hopcount)) {
 -- 
 2.53.0
 
