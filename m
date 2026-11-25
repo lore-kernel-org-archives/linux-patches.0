@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795622697;
-	b=inYR4oHXd7xk0QIkIzib9tqajAY+7RmwFeRh3M6CzgiWVTr/Osx91BXRTjbxfrmHfvJ8
-	 LsrbyUxT9F4R0Be0h36GAa+ZKaHM1kPjdNWf1haKMiCB/hXWBphbCfBUjtDgJY0Z9QsgU
-	 q1oxg4PVRzxeIe8ARwTCcXCxtCz2GTqyk7OWe42S6E2KQWxRDZ+3NCN13WC8bB7ylU0YU
-	 1o6gyRTlminXsMgWvz4dNw6GyNixKP0oMxah7s0GUUskxYHS4w1hDARpamXO0wYF0aseU
-	 YrSZd8FG+5cGDW3TUaX5NHQTWkkZqoHE4NnVSlQ07Ccrka0FVPpbUt6pX/J9Ayo8tmw==
+	t=1795622700;
+	b=ofBQtuHqPL/wLGpDLOQwlU/JbEW0w+e99qHpO9Fw0F+MjkZaDiQAlbWql93U5dakhY5K
+	 Vyc94qwsywLK6VgcvNjQvLdmDnwdlROeWErgTE/FaLGkcy4hL7bQ960SqHG1WYBuTJsiB
+	 w/ZxklBhAPD0NyOzXq/TJZx7Y17t15lkYrb0OfoHAtaqvmCl52O57ygoWP/GZMN5blKX4
+	 Z1PLU+qOjZw7Ie/XSib12Iot4HQRquJTF+uWBlqCcZ0N0JDUYP8cffudQqxj65X0Hz2rw
+	 zLFmhI449xhULFzHSVHBVLwmduDaTDgWlFzani/ZqvMzhuB7ZHDoCkrXM9xuek7wPvw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795622697;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795622700;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=+QV0vgPPWLnAgHIrd8Fq5o4VbPIZS7wszZua1EXiW40=;
-	b=lLYeaOrIrpN/LZH7PtWq51xX38AtGIsouIctuvR3/qfkewmihRzg+1S09/S9n5BRxdym
-	 p9kv1YFNR6xKxQvdc4UkmkhlQHVrJLn+jHD3xFIF8IJcwYuQk28KfBsdgFyX6mZRBuT71
-	 7Nsr184MXzjv9pRkGFs2pipwcDCkawNzVd/AGNGanJsndOml4fqx672bpks6U+DI3UFi0
-	 UB8+9pYc+R6FGyo3i7ZD880gXMvZ8jdtz2y5VF8ThvDQnEudal2gd9i7oi79FujkvJzOl
-	 uX1UIUwmUFbhvBvBo0vZ9/Ryf+gN9Pj9Z8G4yYV61BTSYm3dwfngxPC+7ZarxTZho8Q==
+	bh=2jfprxTdcKKgQv14BENag4jGBYH4v+laOHmjZQ8jURA=;
+	b=REw9O1/1EZmz6FsH5zerbAJTD6SWbh5NY2Hm7bjWEgg3Sl+NLdKG0lxK+AyaKroWT7NN
+	 mhMLdJeKgvCZ1mU+6vF9y22zl5spwvVv+Fe8coCqXSHjW/Ddda98E1aHJt2aZm8YBvuGT
+	 MPofhLwk22n6YMh8eP9AS8wOFRI1VPN3STT7o/QkOXKwNsREoJ//RxeGn+h6ALc2p2oQ5
+	 kVh49p20EE/2LLp9RdzngsIlVRuk67cyoreA+cSNlhzDP9qLh/z+zHvt+tKRKXD5I121y
+	 XZJaVjxblfjelCBtzfyEymOVm/2gZqpSPExlgfqvr5Ia8gZNaiJyCXv5BjjWm1kM+aA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=RZwaXQlv;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=XclyehVE;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 83AF4606A323;
-	Wed, 25 Nov 2026 16:04:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7A75C606A327;
+	Wed, 25 Nov 2026 16:05:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=RZwaXQlv
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 477371F000CA;
-	Wed, 25 Nov 2026 16:04:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=XclyehVE
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9D9ED1F000D1;
+	Wed, 25 Nov 2026 16:04:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795622696;
-	bh=+QV0vgPPWLnAgHIrd8Fq5o4VbPIZS7wszZua1EXiW40=;
+	s=korg; t=1795622700;
+	bh=2jfprxTdcKKgQv14BENag4jGBYH4v+laOHmjZQ8jURA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=RZwaXQlvfIVMXjjWhHIaYB7JSCQTunZdoEh/9tCsbq13qolIiTElNzhj15FsbMJYC
-	 f7KCOn594B15lyWMjsy4pAwQF0UKTPp7bdHKoxOQ5/LJR+Y/qO5LgwnUcQFXMCUkIW
-	 IrbXZLZDXzWej8syRIRm5yTfNx4LCuOOWls/LLMg=
+	b=XclyehVEUQaClTQroIqzr44m4+C9umw5knWhanoh8QqNnpcFn0qQjBBBSdtK4/Y/q
+	 S+uFVqHenaYWvsGl0fLKaa0mj/OBZSoWFkjoDwXQLsTf4CpHGlXA9OfX7sz0rmchyn
+	 klZLPuP78+kEO4m07MGt6TdH5WBXGYT0lk/6YCZc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eric Dumazet <edumazet@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Chi Zhiling <chizhiling@kylinos.cn>,
+	Namjae Jeon <linkinjeon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 619/990] ip6mr: clear skb->cb[] in reg_vif_xmit()
-Date: Wed, 25 Nov 2026 15:33:06 +0100
-Message-ID: <20261125143836.599064004@linuxfoundation.org>
+Subject: [PATCH 6.18 620/990] exfat: fix used_clusters accounting during cluster allocation
+Date: Wed, 25 Nov 2026 15:33:07 +0100
+Message-ID: <20261125143836.623783863@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143822.072087159@linuxfoundation.org>
 References: <20261125143822.072087159@linuxfoundation.org>
@@ -68,56 +68,67 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eric Dumazet <edumazet@kernel.org>
+From: Chi Zhiling <chizhiling@kylinos.cn>
 
-[ Upstream commit 238164201431a425e48dfcb8e9a59de63caf175b ]
+[ Upstream commit cb9dbf8a4e34b4fdf311598835ab4d76ed7e07c1 ]
 
-reg_vif_xmit() hands the skb to ip6mr_cache_report() as an
-MRT6MSG_WHOLEPKT report. skb_realloc_headroom() copies skb->cb[]
-into the report, which is queued to the mroute socket, where
-rawv6_recvmsg() reads it as IP6CB.
+In the current exfat_alloc_cluster(), p_chain->size is incremented as
+each cluster is allocated so that the partially allocated chain can
+be freed by __exfat_free_cluster() on the error path.
 
-By the time the pim6reg device transmits the packet, skb->cb[] is
-not IP6CB anymore: qdisc_pkt_len_init() overwrites iif and ra,
-and any qdisc installed on the device (fq, fq_codel, pie, cake...)
-or a tc BPF program writing skb->cb[] fills the area holding
-dst0, srcrt, dst1, lastopt and flags.
+However, sbi->used_clusters is still updated only after all clusters
+have been allocated, while __exfat_free_cluster() unconditionally
+subtracts the number of freed clusters from sbi->used_clusters.
+Therefore, when allocation fails partway through, the partially
+allocated clusters are subtracted from sbi->used_clusters even
+though they were never added to it. This corrupts the free-space
+accounting and can cause sbi->used_clusters to underflow.
 
-Since commit dd433671fef3 ("ipv6: validate extension header length
-before copying to cmsg") these stale offsets can no longer cause
-out-of-bounds reads, but the mroute socket can still receive bogus
-IPV6_PKTINFO ifindex and extension header ancillary data.
+Increment sbi->used_clusters together with p_chain->size as each
+cluster is allocated. This keeps the accounting consistent with
+__exfat_free_cluster() on both the success and error paths.
 
-Clear IP6CB before building the report. The skb is freed right
-after, so nothing else depends on its control block.
+This issue is caught by generic/476 with 256k cluster size:
 
-Fixes: 14fb64e1f449 ("[IPV6] MROUTE: Support PIM-SM (SSM).")
-Signed-off-by: Eric Dumazet <edumazet@kernel.org>
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-[ sashal: Kept the branch's rcu_read_lock(); line as context and inserted the upstream memset and comment after it. ]
+    Ran: generic/476
+    Failures: generic/476
+    Failed 1 of 1 tests
+
+    *** fsck.exfat output ***
+    ERROR: <path>: more clusters are allocated. truncate to N bytes
+    ...
+    /dev/vdc: corrupted. directories 331, files 526
+    /dev/vdc: files corrupted 9, files fixed 0
+    *** end fsck.exfat output ***
+
+Fixes: d5c514b6a0c0 ("exfat: fix the newly allocated clusters are not freed in error handling")
+Signed-off-by: Chi Zhiling <chizhiling@kylinos.cn>
+Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
+[ sashal: Dropped the blank line after the removed sbi->used_clusters += num_alloc; because this tree's success block lacks the done: label and uses num_alloc instead of p_chain->size. ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv6/ip6mr.c | 7 +++++++
- 1 file changed, 7 insertions(+)
+ fs/exfat/fatent.c | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
-diff --git a/net/ipv6/ip6mr.c b/net/ipv6/ip6mr.c
-index 53837248498a6..5a49fb4ae4513 100644
---- a/net/ipv6/ip6mr.c
-+++ b/net/ipv6/ip6mr.c
-@@ -629,6 +629,13 @@ static netdev_tx_t reg_vif_xmit(struct sk_buff *skb,
- 	DEV_STATS_ADD(dev, tx_bytes, skb->len);
- 	DEV_STATS_INC(dev, tx_packets);
- 	rcu_read_lock();
-+
-+	/* skb->cb[] holds qdisc/tc state at this point, not IP6CB.
-+	 * ip6mr_cache_report() copies it to the report delivered to
-+	 * the mroute socket, where it is read as IP6CB.
-+	 */
-+	memset(IP6CB(skb), 0, sizeof(*IP6CB(skb)));
-+
- 	ip6mr_cache_report(mrt, skb, READ_ONCE(mrt->mroute_reg_vif_num),
- 			   MRT6MSG_WHOLEPKT);
- 	rcu_read_unlock();
+diff --git a/fs/exfat/fatent.c b/fs/exfat/fatent.c
+index 825083634ba2d..13a79845be016 100644
+--- a/fs/exfat/fatent.c
++++ b/fs/exfat/fatent.c
+@@ -431,13 +431,12 @@ int exfat_alloc_cluster(struct inode *inode, unsigned int num_alloc,
+ 			}
+ 		}
+ 		p_chain->size++;
++		sbi->used_clusters++;
+ 
+ 		last_clu = new_clu;
+ 
+ 		if (p_chain->size == num_alloc) {
+ 			sbi->clu_srch_ptr = hint_clu;
+-			sbi->used_clusters += num_alloc;
+-
+ 			mutex_unlock(&sbi->bitmap_lock);
+ 			return 0;
+ 		}
 -- 
 2.53.0
 
