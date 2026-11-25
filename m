@@ -1,54 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795619032;
-	b=0cWj4b/Peg7ES1gckyapA3COEY4dSuo7hhqMyJ1g4V6B3u1K6N6MreH17tWmBuVMs+W3
-	 GETd1Pjslxmh8Szw1nLCtAjDI4E2j0NIG5HFukXt7yVxwJfq+VO3PeA6BKrNrz+3HKl/w
-	 EuJGWGEObNuFA1e9zLEL9L4wzviFEeHV0MxX5kUc9vebwUrhHhmn0G9VA/5d6c9R5MALw
-	 cl8EgO0J7uUxT+VA8yoDDt3RXb/G0MaWZ0mDGLkRJQ9yQOjK3bRTSWIUeewEiIJVRVZo8
-	 V6PLeqXnjck01pFRHryRSPt0xHH94qYNzp9hmZy5w0GKsQwwRXvH0uF+e4mBYq/YVjw==
+	t=1795619036;
+	b=1Abl37Op0xSL4YPCbNcmX8XFN52yhLPyMg5oVNz4rZECbMDMW19TgUMrHkf5LODUD2be
+	 5ov76BZux7QCPUikqce081XXZzdfRm8Z39fIMZQnogIuRv2OgpdrNNAwMUVJgViqJljO+
+	 /7u1YrmzR2pLkxPmUWvGMhq1aYsQCNUgH+6SdvbG5ou/8lnnkSB5wQoUM41ILlRVyBYOV
+	 Sjd1dDgn6Zugw0N0tLDHCJ21sToumnAS8PgzTmeZpOccAsTJZ8NxvqUUSsdDqb2fZZEBr
+	 gZi4p1y058ju0EuOmYkPkCWt8e60wAg2zsyPNw16AZ3MBnMCVesHbgypr55JMQrZiyQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795619032;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795619036;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=B4byOSN1hUqWipCPNOgxHZDSzRxAUDTr2ak55Fm5z8I=;
-	b=jFGrzcolhQYWL8tC4W0zW4+KImulIxXNXpSJI9+VcXFWo0p91B5RPXr9FS1iWCtI0EEJ
-	 7ZAj+GOCAlFSlObZ0BpenujJv4JNI5oLI0AujlTzPklVpUZ7fX0jKJC34TWhv7w96WbNt
-	 xiwd5u+nr46wOMvdiTCTe816yjZtGvQjyYN1zddj+l3iWeSAizFBg0RE9qCMFka68XZv8
-	 TpeW8t/A6FWrVGZDrFt5EtTybs80l7D0MBWHz+Qh5Sq9+KYsnwNrn2mtdb4/Td2rIx/Bj
-	 feYiYw3zg04ph9kbABTlDLizXOLcfAKp3gn8sdGAb6q4qRniKix6cuXw96G1l6bLq4A==
+	bh=hvQXIw5y/htP6VUtWuqMDP5z3ozddR8dyiKeLzMKQME=;
+	b=04blfZqT/+H3yTzC/oak29wZE7L2bh2t1IUYVLNEkcvl+3C0O3ApjAmF/Q4HIwh3BqXW
+	 Npmw5s4IhWrrOK0pwfTez1K5sKBNvFhMJXHLuIiq23IDaY4vNXlvTkt1SOTCrPD35JMPF
+	 bR9L+R36PRCxhQxczmSkKDBIU1LtyMo7ZU2+EzWMDDwPwIUagzjFIrFXJ0j267zWiIi1T
+	 2aT+eOu3qRkVXFS0RaXC8dImgrRx7x7/DymlS1qOy/aOkxfY/b2Ua46u5j9UppDf3SCCf
+	 mHx0yTizHoTSV/cyXxquk2eOlOj02icaAPALSmYVJYZZvI0T/SXdQxzH3edgDVeKLWQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=T2dDwxGO;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=YSkjeSCs;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C1708606A326;
-	Wed, 25 Nov 2026 15:03:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6FD07606A321;
+	Wed, 25 Nov 2026 15:03:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=T2dDwxGO
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1DE321F000CA;
-	Wed, 25 Nov 2026 15:03:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=YSkjeSCs
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6869F1F000CA;
+	Wed, 25 Nov 2026 15:03:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795619032;
-	bh=B4byOSN1hUqWipCPNOgxHZDSzRxAUDTr2ak55Fm5z8I=;
+	s=korg; t=1795619035;
+	bh=hvQXIw5y/htP6VUtWuqMDP5z3ozddR8dyiKeLzMKQME=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=T2dDwxGOiL0BzNHyDJLNFg0at5Rd58gc1SlBmvLRZmNgUcqapQHpMaRDfx2iBkAHu
-	 gCf6DLx/XPQ0ZiR5GdaAlUoDeSxhNFRCFHkX+/zvmyxbj8U9pv8RX0sknD35yQFnqT
-	 27TyAtBSL4xUG2Flx5HJ0jmpY/VyQqHrq4E8GZrI=
+	b=YSkjeSCsHp6sRHxRKNS1uqK2lFkht8hR7sWDYRFr54bNau2TwwjUSvRxKtzErw73V
+	 p4boVwrwRX7kLMD5QKxCZG6V5cQ/UgkYjiOkJTqujOyXd9mvWfe7C91MnuJGxpxIOE
+	 lux85J5XrUKyX/D03/6idE2DIAYjTpok+AZZLav8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Miklos Szeredi <miklos@szeredi.hu>,
-	Amir Goldstein <amir73il@gmail.com>,
-	Pavel Tikhomirov <ptikhomirov@virtuozzo.com>,
-	"Denis V. Lunev" <den@openvz.org>,
+	Orgad Shaneh <orgads@gmail.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0468/1005] ovl: release the upperdir/workdir in-use locks before the umount sync
-Date: Wed, 25 Nov 2026 15:30:06 +0100
-Message-ID: <20261125143832.708208880@linuxfoundation.org>
+Subject: [PATCH 7.3 0469/1005] net: mana: fix XDP_REDIRECT of pre-allocated RX buffers
+Date: Wed, 25 Nov 2026 15:30:07 +0100
+Message-ID: <20261125143832.732244223@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143821.729802100@linuxfoundation.org>
 References: <20261125143821.729802100@linuxfoundation.org>
@@ -70,140 +68,141 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Denis V. Lunev <den@openvz.org>
+From: Orgad Shaneh <orgads@gmail.com>
 
-[ Upstream commit cb6c084182d4c69b7eeff0bd519dd7e018749602 ]
+[ Upstream commit 67869597fab06abaa5b977cb7004532269fc960b ]
 
-The in-use locks on upperdir and workdir are released by ovl_free_fs()
-from ->put_super(). generic_shutdown_super() calls sync_filesystem()
-before that, and ovl_sync_fs() syncs the whole upper filesystem, so the
-locks stay held across a journal commit and a cache flush of the upper
-fs after the overlay is gone. With index=on a new overlay that uses the
-same upperdir, or uses it as a lowerdir, fails to mount in that window:
+mana_pre_alloc_rxbufs() fills the RX rings with plain pages from
+dev_alloc_pages() (from_pool == false), but the rxq is registered with
+MEM_TYPE_PAGE_POOL and mana_run_xdp() builds every xdp_buff with that
+rxq info. mana_rx_skb() frees a !from_pool buffer correctly on
+XDP_PASS, XDP_TX and XDP_DROP, but a redirected buffer is freed through
+its memory model: __xdp_return() hands the plain page to
+page_pool_put_full_netmem(). This triggers the WARN in
+include/net/page_pool/helpers.h, breaks the page refcount, RX refills
+fail and the queue stops receiving.
 
-  overlayfs: upperdir is in-use as upperdir/workdir of another mount,
-  mount with '-o index=off' to override exclusive upperdir protection.
+The pre-allocated buffers fill the whole ring of every rxq created by
+an MTU change, by ethtool -L / -G and, since
+commit 730ff06d3f5c ("net: mana: Use page pool fragments for RX buffers
+instead of full pages to improve memory efficiency."), by every XDP
+attach and detach. So on current kernels the first ring of redirected
+packets after attaching an XDP program always hits this.
 
-Userspace hits this when the last reference is not dropped by umount(2)
-itself. Docker with the containerd snapshotter mounts a snapshot on a
-thread with a private mount namespace for docker cp and for buildkit,
-and the superblock dies when that thread exits, after the reply to the
-client has gone out. The next request then gets EBUSY. The window grows
-with the flush latency of the upper fs and is there even if nothing was
-written through the overlay, as the mount itself dirties the upper.
+Reproduced on 7.2.11, and on 6.12.113 after ethtool -L, on an Azure
+MANA VF: an XDP program that redirects UDP to an XSKMAP with an AF_XDP
+socket in copy mode gives WARNINGs at __xdp_return+0x249 (stack
+__xsk_map_redirect, xdp_do_redirect, mana_run_xdp, mana_poll), then
+the queue stops.
 
-->kill_sb() is called once s_active drops to zero, with no mount and no
-open file left. Release the locks there, before generic_shutdown_super()
-runs. What the dying superblock still does to the upper fs, the sync and
-dropping its references to upper dentries and inodes, does not touch the
-contents of upperdir or workdir. ovl_free_fs() still releases the locks
-for a failed mount, so clear the *_locked flags to keep it from
-unlocking a second time and dropping the lock of a newer mount.
+Give each rxq a second xdp_rxq_info registered with
+MEM_TYPE_PAGE_SHARED, the model these buffers had before the page pool
+was added, and use it for buffers that are not from the pool. Those
+buffers are already DMA-unmapped by mana_refill_rx_oob() before XDP
+runs, and page_frag_free() frees them whatever their order. Allocating
+the pre-allocated buffers from the page pool instead would need the
+pools to exist before the rxqs and to outlive them, a much larger
+change.
 
-This takes the sync out of the window but does not close it: the final
-mntput of a dying mount namespace runs from task_work, after the exiting
-thread may have reported completion. Userspace that needs the
-directories free should umount(2) before saying the job is done.
+Found, fixed and tested with an AI coding assistant (Claude Code).
 
-Fixes: 2cac0c00a6cd ("ovl: get exclusive ownership on upper/work dirs")
-Cc: Miklos Szeredi <miklos@szeredi.hu>
-Cc: Amir Goldstein <amir73il@gmail.com>
-Cc: Pavel Tikhomirov <ptikhomirov@virtuozzo.com>
-Signed-off-by: Denis V. Lunev <den@openvz.org>
-Signed-off-by: Amir Goldstein <amir73il@gmail.com>
+Fixes: b1d13f7a3b53 ("net: mana: Add page pool for RX buffers")
+Signed-off-by: Orgad Shaneh <orgads@gmail.com>
+Link: https://patch.msgid.link/20261102064324.806414-1-orgads@gmail.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/overlayfs/overlayfs.h |  1 +
- fs/overlayfs/params.c    |  5 +----
- fs/overlayfs/super.c     | 12 +++++++++++-
- fs/overlayfs/util.c      | 12 ++++++++++++
- 4 files changed, 25 insertions(+), 5 deletions(-)
+ drivers/net/ethernet/microsoft/mana/mana_bpf.c |  9 +++++++--
+ drivers/net/ethernet/microsoft/mana/mana_en.c  | 11 ++++++++++-
+ include/net/mana/mana.h                        |  5 ++++-
+ 3 files changed, 21 insertions(+), 4 deletions(-)
 
-diff --git a/fs/overlayfs/overlayfs.h b/fs/overlayfs/overlayfs.h
-index a5aa22cc79a83..5966d46e09d6a 100644
---- a/fs/overlayfs/overlayfs.h
-+++ b/fs/overlayfs/overlayfs.h
-@@ -580,6 +580,7 @@ static inline int ovl_set_impure_dir(struct dentry *dentry)
- bool ovl_inuse_trylock(struct dentry *dentry);
- void ovl_inuse_unlock(struct dentry *dentry);
- bool ovl_is_inuse(struct dentry *dentry);
-+void ovl_inuse_unlock_all(struct ovl_fs *ofs);
- bool ovl_need_index(struct dentry *dentry);
- int ovl_nlink_start(struct dentry *dentry);
- void ovl_nlink_end(struct dentry *dentry);
-diff --git a/fs/overlayfs/params.c b/fs/overlayfs/params.c
-index 5a15e5478a6b8..ad7f30177ef4c 100644
---- a/fs/overlayfs/params.c
-+++ b/fs/overlayfs/params.c
-@@ -845,15 +845,12 @@ void ovl_free_fs(struct ovl_fs *ofs)
- 	struct vfsmount **mounts;
- 	unsigned i;
- 
-+	ovl_inuse_unlock_all(ofs);
- 	iput(ofs->workbasedir_trap);
- 	iput(ofs->workdir_trap);
- 	dput(ofs->whiteout);
- 	dput(ofs->workdir);
--	if (ofs->workdir_locked)
--		ovl_inuse_unlock(ofs->workbasedir);
- 	dput(ofs->workbasedir);
--	if (ofs->upperdir_locked)
--		ovl_inuse_unlock(ovl_upper_mnt(ofs)->mnt_root);
- 
- 	/* Reuse ofs->config.lowerdirs as a vfsmount array before freeing it */
- 	mounts = (struct vfsmount **) ofs->config.lowerdirs;
-diff --git a/fs/overlayfs/super.c b/fs/overlayfs/super.c
-index c06bfe9765e25..0a923ae126964 100644
---- a/fs/overlayfs/super.c
-+++ b/fs/overlayfs/super.c
-@@ -1598,13 +1598,23 @@ int ovl_fill_super(struct super_block *sb, struct fs_context *fc)
- 	return err;
+diff --git a/drivers/net/ethernet/microsoft/mana/mana_bpf.c b/drivers/net/ethernet/microsoft/mana/mana_bpf.c
+index b27fd9b8c4f6d..3b6f756119445 100644
+--- a/drivers/net/ethernet/microsoft/mana/mana_bpf.c
++++ b/drivers/net/ethernet/microsoft/mana/mana_bpf.c
+@@ -78,7 +78,8 @@ int mana_xdp_xmit(struct net_device *ndev, int n, struct xdp_frame **frames,
  }
  
-+static void ovl_kill_sb(struct super_block *sb)
-+{
-+	struct ovl_fs *ofs = OVL_FS(sb);
-+
-+	/* Nothing can modify them now, do not hold them across the sync */
-+	if (ofs)
-+		ovl_inuse_unlock_all(ofs);
-+	kill_anon_super(sb);
-+}
-+
- struct file_system_type ovl_fs_type = {
- 	.owner			= THIS_MODULE,
- 	.name			= "overlay",
- 	.init_fs_context	= ovl_init_fs_context,
- 	.parameters		= ovl_parameter_spec,
- 	.fs_flags		= FS_USERNS_MOUNT | FS_ALLOW_IDMAP,
--	.kill_sb		= kill_anon_super,
-+	.kill_sb		= ovl_kill_sb,
- };
- MODULE_ALIAS_FS("overlay");
+ u32 mana_run_xdp(struct net_device *ndev, struct mana_rxq *rxq,
+-		 struct xdp_buff *xdp, void *buf_va, uint pkt_len)
++		 struct xdp_buff *xdp, void *buf_va, bool from_pool,
++		 uint pkt_len)
+ {
+ 	struct mana_stats_rx *rx_stats;
+ 	struct bpf_prog *prog;
+@@ -90,7 +91,11 @@ u32 mana_run_xdp(struct net_device *ndev, struct mana_rxq *rxq,
+ 	if (!prog)
+ 		goto out;
  
-diff --git a/fs/overlayfs/util.c b/fs/overlayfs/util.c
-index 04103a6741ba0..b31b8f7d7ce0f 100644
---- a/fs/overlayfs/util.c
-+++ b/fs/overlayfs/util.c
-@@ -1059,6 +1059,18 @@ bool ovl_is_inuse(struct dentry *dentry)
- 	return inuse;
- }
+-	xdp_init_buff(xdp, PAGE_SIZE, &rxq->xdp_rxq);
++	/* A redirected buffer is freed by its memory model, so a buffer not
++	 * from the page pool must not claim MEM_TYPE_PAGE_POOL.
++	 */
++	xdp_init_buff(xdp, PAGE_SIZE,
++		      from_pool ? &rxq->xdp_rxq : &rxq->xdp_rxq_shared);
+ 	xdp_prepare_buff(xdp, buf_va, rxq->headroom, pkt_len, true);
  
-+void ovl_inuse_unlock_all(struct ovl_fs *ofs)
-+{
-+	if (ofs->workdir_locked) {
-+		ovl_inuse_unlock(ofs->workbasedir);
-+		ofs->workdir_locked = false;
-+	}
-+	if (ofs->upperdir_locked) {
-+		ovl_inuse_unlock(ovl_upper_mnt(ofs)->mnt_root);
-+		ofs->upperdir_locked = false;
-+	}
-+}
+ 	act = bpf_prog_run_xdp(prog, xdp);
+diff --git a/drivers/net/ethernet/microsoft/mana/mana_en.c b/drivers/net/ethernet/microsoft/mana/mana_en.c
+index 89af8bf6758b7..428e53d91f8db 100644
+--- a/drivers/net/ethernet/microsoft/mana/mana_en.c
++++ b/drivers/net/ethernet/microsoft/mana/mana_en.c
+@@ -2126,7 +2126,7 @@ static void mana_rx_skb(void *buf_va, bool from_pool,
+ 		return;
+ 	}
+ 
+-	act = mana_run_xdp(ndev, rxq, &xdp, buf_va, pkt_len);
++	act = mana_run_xdp(ndev, rxq, &xdp, buf_va, from_pool, pkt_len);
+ 
+ 	if (act == XDP_REDIRECT && !rxq->xdp_rc)
+ 		return;
+@@ -2919,6 +2919,9 @@ static void mana_destroy_rxq(struct mana_port_context *apc,
+ 	if (xdp_rxq_info_is_reg(&rxq->xdp_rxq))
+ 		xdp_rxq_info_unreg(&rxq->xdp_rxq);
+ 
++	if (xdp_rxq_info_is_reg(&rxq->xdp_rxq_shared))
++		xdp_rxq_info_unreg(&rxq->xdp_rxq_shared);
 +
- /*
-  * Does this overlay dentry need to be indexed on copy up?
-  */
+ 	if (rxq->rxobj != INVALID_MANA_HANDLE)
+ 		mana_destroy_wq_obj(apc, GDMA_RQ, rxq->rxobj);
+ 
+@@ -3203,6 +3206,12 @@ static struct mana_rxq *mana_create_rxq(struct mana_port_context *apc,
+ 	WARN_ON(xdp_rxq_info_reg_mem_model(&rxq->xdp_rxq, MEM_TYPE_PAGE_POOL,
+ 					   rxq->page_pool));
+ 
++	/* The pre-allocated buffers (mana_pre_alloc_rxbufs) are plain pages */
++	WARN_ON(xdp_rxq_info_reg(&rxq->xdp_rxq_shared, ndev, rxq_idx,
++				 cq->napi.napi_id));
++	WARN_ON(xdp_rxq_info_reg_mem_model(&rxq->xdp_rxq_shared,
++					   MEM_TYPE_PAGE_SHARED, NULL));
++
+ 	/* Initialize the DIM work before enabling NAPI, so that a poll
+ 	 * cannot reach net_dim() with an uninitialized cq->dim.work.
+ 	 */
+diff --git a/include/net/mana/mana.h b/include/net/mana/mana.h
+index e46ba02529c29..6a761672bd5bb 100644
+--- a/include/net/mana/mana.h
++++ b/include/net/mana/mana.h
+@@ -421,6 +421,8 @@ struct mana_rxq {
+ 
+ 	struct bpf_prog __rcu *bpf_prog;
+ 	struct xdp_rxq_info xdp_rxq;
++	/* For buffers not from the page pool (from_pool == false) */
++	struct xdp_rxq_info xdp_rxq_shared;
+ 	void *xdp_save_va; /* for reusing */
+ 	bool xdp_flush;
+ 	int xdp_rc; /* XDP redirect return code */
+@@ -694,7 +696,8 @@ void mana_xdp_tx(struct sk_buff *skb, struct net_device *ndev);
+ int mana_xdp_xmit(struct net_device *ndev, int n, struct xdp_frame **frames,
+ 		  u32 flags);
+ u32 mana_run_xdp(struct net_device *ndev, struct mana_rxq *rxq,
+-		 struct xdp_buff *xdp, void *buf_va, uint pkt_len);
++		 struct xdp_buff *xdp, void *buf_va, bool from_pool,
++		 uint pkt_len);
+ struct bpf_prog *mana_xdp_get(struct mana_port_context *apc);
+ void mana_chn_setxdp(struct mana_port_context *apc, struct bpf_prog *prog);
+ int mana_bpf(struct net_device *ndev, struct netdev_bpf *bpf);
 -- 
 2.53.0
 
