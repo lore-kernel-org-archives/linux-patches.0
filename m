@@ -1,55 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795623051;
-	b=jEJb9A4hvu2h4kButPO+IQaKT08RK9uBOo3dVBJv5f3NDnZBtgpUeZ4x8I8z29FJ3H7a
-	 kvrQPqZ87oqMlZXWVFN5ZIN634zl928S5Ia7aWHGYvw/ZQ+Hwy2DWmIiLtUCFn+C1HUvY
-	 WfBtrqrg4wVA5pl0S8zje0vzUxVS6zgSxtIjT5Ic/nh5I7VdXAfqvG4/qFDEoYkqy+8mo
-	 /mEBb0w/orh2U09xDVS4Kjzfod9BUXDRoqQWmp80wIUcvVjs02RlCo0FfgQ6+Mzita5Sw
-	 emw5ijzcjMtoQKnplG1BIXRqblyHNJ4MpCWzgRqPYMH/Ld4LGcAGyvkA88hCliY29AQ==
+	t=1795623054;
+	b=ANq91XvKyFTpFE3pokJ9rP3uSohT6YBwS/RbEfPkdhjAD1Bl9bzcYyfSvN5v1dCc9ClP
+	 +PI8LJ0GKKyvP8FUGK70YJvtSbUvgofoVfeCoPrRDeIrthSfIYzOTQUY0x9ODad259KUR
+	 Bb3QbMOw3Wb04SL+Hr+sx0IKPjKYyYBf7jku7yBuZSOSZ9vg+a0SrSlrJu2HQquykqbLh
+	 U92tgo/tggEoaSRiGDO4oS5tL6rFJHY1an1R/kvzh2d7qCaRzD8rOLDe8QorAf1B+GzL7
+	 Qf7s2/9gnaWz2XttIOxW1yX7qIT9yJ4UUUrffgy27QDt90A3rHt8TUv/sC+yFlQ2tSA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795623051;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795623054;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=so2u2ERFHx+kbkBrS+zcPMGdeyjDhylAU4F8b/XlSq4=;
-	b=QYPDqpQA/yG1l6cVUxcLthO0xyvEGfr2O9Xm9E7+DM6EpGraPywxrwuiZa2CjizCuf+s
-	 oShrovvAxAyROaoWAEOhw4oA0dNEVTIXq+ailv3J+WchXeXiHJiwcF+FDI2mGTEXkDWh9
-	 gL/3SaftZFW2NgetAMQ7+KHoKps75K1Zy99B/wCQXMH0jDZN+N8+NXzPCAOxURvh2aGRg
-	 sZIfNNSGQUGngI8st3KpHQo7AqyQb+KafdAag5/aZW14+rUW2AkGgxFgycu1j7W2yqm0/
-	 alUFyGtvpTm2MtuT3C/C/r5VoXkLXFwcxQHEGj88iGlGW8WQcBVd4093zwU6vVCGNKg==
+	bh=UuRCskjsDApie3OEUBzNmjTEARf5CVCASNMZ1x/UEcY=;
+	b=nT6Vet/SqpOByNYw+7VT+rM8ai3QOYkJQqgC9eH/tVtgBWt+lFR8zhcD81sTj5IYcgFJ
+	 tfHougBVdIUmGxFC4zgmweUWwhTY8f9b2Hd9dll//P5EYUii8KwmHRY+U9UEPpK0sfem8
+	 xlPG6yFKz4+LJQL4VIDPIPNbYy1FgjmZUre9Xcp2tz4fBIJAltBnJhZcolu5p0m7vYNjo
+	 pwITtdG7aX0LyUcUAdjGHUrR1BAm+tT9l0kP6qkqD5iEklMY3za2aOn97/L7v+Vdf6yQx
+	 Dr309y89ZoJQ9v8Lj1RH8mCHrCIzF/ClSDDWoVWbgw2a3HUKj5I0xO6bnQZ1oa65vAw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=GrFjWnQd;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=mlvb2lpC;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D4190606A31E;
-	Wed, 25 Nov 2026 16:10:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 837CC606A31E;
+	Wed, 25 Nov 2026 16:10:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=GrFjWnQd
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DEF0B1F000C0;
-	Wed, 25 Nov 2026 16:10:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=mlvb2lpC
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A41AB1F000C0;
+	Wed, 25 Nov 2026 16:10:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795623051;
-	bh=so2u2ERFHx+kbkBrS+zcPMGdeyjDhylAU4F8b/XlSq4=;
+	s=korg; t=1795623054;
+	bh=UuRCskjsDApie3OEUBzNmjTEARf5CVCASNMZ1x/UEcY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=GrFjWnQd/ZUSwy1L+9tzTaxwdhNvHQW1sRJvMNZZX0vewl9OVE3Xtrghn/x5VcWfH
-	 pEZBzHr/rS2hPdkOyu/RqOKzcJ5BjuZltAYyuZpcBjxvIxSxr4xvrKDcj0O8OvmKZk
-	 eLOpBhFZdm/usGwTftbbtuxNrMLbRaFWGY7SvTlU=
+	b=mlvb2lpCCWj0EnAJCgAgF3DncfZoqGBM6frVkk51ha9Hc076+5KjbgumY31R7lAmw
+	 HK/D05uOX8d2TVDuNCg+21owi5pNpE7nntCPNB/u8bBGVfrN3sCQgQKzeHcenqytVN
+	 zQibVIs+KxodtugQhEm/2GFIzzd3VcqBipya0sWQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Sashiko (nipa)" <sashiko-bot@kernel.org>,
-	shaos <shawnq1@163.com>,
-	Victor Nogueira <victor@mojatatu.com>,
-	Jamal Hadi Salim <jhs@mojatatu.com>,
-	Simon Horman <horms@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.18 732/990] net/sched: act_ife: require a full Ethernet header on egress
-Date: Wed, 25 Nov 2026 15:34:59 +0100
-Message-ID: <20261125143839.215239911@linuxfoundation.org>
+	Tim Menninger <tmenninger@everpuredata.com>,
+	Anna Schumaker <anna.schumaker@hammerspace.com>
+Subject: [PATCH 6.18 733/990] NFSv4: Prevent indefinite waits for out-of-order OPEN stateids
+Date: Wed, 25 Nov 2026 15:35:00 +0100
+Message-ID: <20261125143839.237068303@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143822.072087159@linuxfoundation.org>
 References: <20261125143822.072087159@linuxfoundation.org>
@@ -71,107 +67,64 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jamal Hadi Salim <jhs@mojatatu.com>
+From: Tim Menninger <tmenninger@everpuredata.com>
 
-commit 11dbce09083473249c3843ff31bf8d8fa01bdeef upstream.
+commit 151d95a1e696979a7d54b23c96338754be2fcc1f upstream.
 
-This is a followup of commit 5b483f7791b0 ("net/sched: act_ife: Only
-operate on Ethernet frames") as reported by Sashiko.
+When processing an out-of-order OPEN stateid on an NFSv4.1 or later
+mount, nfs_set_open_stateid_locked() waits for stateid updates to be
+processed in order. A five-second timeout is intended to prevent
+indefinite waits when preceding updates never arrive.
 
-The finding was raised by both Sashiko providers (nipa and gemini)
-while reviewing the parent patchset. shaos <shawnq1@163.com>
-independently reported the same undersized-egress path with a
-reproducer, which was reproduced and verified in our test environment.
+However, each iteration calls schedule_timeout() with a fresh
+five-second timeout. An update to the shared open state can wake the
+caller without satisfying its ordering check. The remaining timeout
+is then discarded, and the next iteration starts another full wait.
 
-The issue:
-On egress tcf_ife_is_eth_skb() only checks the device type; it does not
-check that the skb carries a full Ethernet header. For an Ethernet or
-loopback device it returns true even when the skb has no Ethernet
-header. tcf_ife_encode() then calls ife_encode(), which copies ETH_HLEN
-bytes from skb->data. A short skb therefore reads past its linear data
-and the copied bytes, including stale kernel memory, are emitted in the
-outer Ethernet header.
+Under sustained concurrent OPEN/CLOSE activity on the same open state,
+repeated wakeups can prevent the timeout from ever expiring. Some
+tasks can remain stuck in update_open_stateid() while others continue
+making progress.
 
-The parent commit fixed the reported ingress mac_len case but left the
-egress path without a length check.
+Compute a single deadline on entry and pass only the remaining time
+to schedule_timeout(). Once the deadline expires, take the existing
+timeout path rather than starting another wait. This prevents
+wakeups from extending the wait indefinitely.
 
-A total-length test is not sufficient: a non-GSO TUN skb can have a
-large total length while only a single byte sits in the linear area, so
-ife_encode() still reads past the linear header. Require instead that
-the Ethernet header the encoder copies is present in the linear part of
-the skb.
+Observed on Linux 6.8.0 and reproduced on 7.3.0 with 96 concurrent
+O_RDWR|O_TRUNC open/close loops on one NFSv4.1/TCP file (nconnect=16).
+Ten workers made no progress for over 300 seconds while others ran.
+With the fix, all workers resumed after transient stalls.
 
-The Fix:
-On egress require pskb_may_pull(skb, ETH_HLEN) before encoding, which
-ensures the Ethernet header is present in the linear data ife_encode()
-copies from; the ingress mac_len check is unchanged. A short egress skb
-is now dropped instead of being encoded.
-
-Conditions to recreate the bug:
-CONFIG_NET_ACT_IFE=y, CONFIG_NET_CLS_MATCHALL=y, CONFIG_NET_SCH_INGRESS=y,
-CONFIG_TUN=y, CONFIG_NET_ACT_MIRRED=y. In two user and network
-namespaces (a victim and an attacker), open a TUN device in IFF_TUN mode
-and attach clsact to it and to lo. Redirect ingress traffic from the TUN
-device to lo egress with mirred, and install an ife encode action on lo
-egress:
-
-  tc qdisc add dev <tun> clsact
-  tc qdisc add dev lo clsact
-  tc filter add dev <tun> ingress matchall action mirred egress \
-      redirect dev lo
-  tc filter add dev lo egress matchall action ife encode use mark 1 \
-      action ok
-
-Send a TUN packet shorter than ETH_HLEN (a one-byte payload is enough)
-and receive the emitted frame on the other side. Without the fix the
-outer Ethernet header contains bytes copied past the short packet; with
-the fix the short skb is dropped. The attacker needs CAP_NET_ADMIN in
-its user namespace; no init-net privilege is required.
-
-The same path is reachable when the total length is large but the
-Ethernet header is not linear: write a non-GSO virtio header with
-hdr_len=1 followed by an 8192-byte packet so that only one byte stays
-linear. Without the fix the copied header reads past the linear data;
-with the fix the header is pulled into the linear area before the copy.
-
-Fixes: 295a6e06d21e ("net/sched: act_ife: Change to use ife module")
-Reported-by: Sashiko (nipa) <sashiko-bot@kernel.org>
-Reported-by: Sashiko (gemini) <sashiko-bot@kernel.org>
-Reported-by: shaos <shawnq1@163.com>
-Link: https://netdev-ai.bots.linux.dev/sashiko/#/patchset/20260821164031.32824-1-victor%40mojatatu.com
-Link: https://sashiko.dev/#/patchset/20260821164031.32824-1-victor@mojatatu.com
-Link: https://lore.kernel.org/netdev/20261022144736.61227-1-shawnq1@163.com/
+Fixes: c9399f21c215 ("NFSv4: Fix OPEN / CLOSE race")
 Cc: stable@vger.kernel.org
-Reviewed-by: Victor Nogueira <victor@mojatatu.com>
-Signed-off-by: Jamal Hadi Salim <jhs@mojatatu.com>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Link: https://patch.msgid.link/SER-NSBD.v3.r0.20261103064310-2@mojatatu.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Tim Menninger <tmenninger@everpuredata.com>
+Signed-off-by: Anna Schumaker <anna.schumaker@hammerspace.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/sched/act_ife.c |    7 +++++--
- 1 file changed, 5 insertions(+), 2 deletions(-)
+ fs/nfs/nfs4proc.c |    5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
---- a/net/sched/act_ife.c
-+++ b/net/sched/act_ife.c
-@@ -871,13 +871,16 @@ drop:
-  * is an Ethernet header because the skb could've been redirected with mirred
-  * from a non-Ethernet device.
-  */
--static bool tcf_ife_is_eth_skb(const struct sk_buff *skb)
-+static bool tcf_ife_is_eth_skb(struct sk_buff *skb)
+--- a/fs/nfs/nfs4proc.c
++++ b/fs/nfs/nfs4proc.c
+@@ -1775,6 +1775,8 @@ static void nfs_set_open_stateid_locked(
  {
- 	if (skb->dev->type != ARPHRD_ETHER &&
- 	    skb->dev->type != ARPHRD_LOOPBACK)
- 		return false;
+ 	DEFINE_WAIT(wait);
+ 	int status = 0;
++	unsigned long deadline = jiffies + 5 * HZ;
++	signed long remaining;
+ 	for (;;) {
  
--	return !skb_at_tc_ingress(skb) || skb->mac_len == ETH_HLEN;
-+	if (skb_at_tc_ingress(skb))
-+		return skb->mac_len == ETH_HLEN;
-+
-+	return pskb_may_pull(skb, ETH_HLEN);
- }
+ 		if (nfs_stateid_is_sequential(state, stateid))
+@@ -1809,7 +1811,8 @@ static void nfs_set_open_stateid_locked(
  
- TC_INDIRECT_SCOPE int tcf_ife_act(struct sk_buff *skb,
+ 		if (!fatal_signal_pending(current) &&
+ 		    !nfs_current_task_exiting()) {
+-			if (schedule_timeout(5*HZ) == 0)
++			remaining = (long)(deadline - jiffies);
++			if (remaining <= 0 || schedule_timeout(remaining) == 0)
+ 				status = -EAGAIN;
+ 			else
+ 				status = 0;
 
 
