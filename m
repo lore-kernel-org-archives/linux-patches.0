@@ -1,52 +1,56 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795622295;
-	b=Syqb55IiNyoTthzmKk5oxcvC+ob8ObSCm2PP4eg/FbUDdOLVWDskK1KAOAIpevFdbhCI
-	 taegV+FTg8/kzkoBDNoQItJQV9SsBlq6fSgvIuiuePezpcW3eGq/bpzcTIaDrhhPo7A/G
-	 ODeNxxArycWGDFtulB3r0PgcLCVwX9b5UVGFwO37LXuZJSctTRR2bUFBaJ4R8jVEgjpNR
-	 dniBN6+IPSUn4tw3ihZ5p1K0gAFTI/hugT9Sw3tn4A86EbVNc8w+EgGhWD7zypSY2xHKP
-	 q7l37Zy2L2LCjjJHEHo3oqIIDjOFK2OkOX3cuGPEidgrCoG803skC//kFTTmap/GDfg==
+	t=1795622298;
+	b=nbyddsaE6ZwHLyPWb3ZJQD5AiS1UdFJjXrndeUqimFc24c2Tq6kvc2XzM5tND12kt6VT
+	 DwiCRoNrEPpyT8uxoAak8gqVNXldAh7Rg2lb07ZWS1NfZySEMhRDgid6uP5dva5RNx4H0
+	 9SI8ccnSQxhJWBcqCfcmRItQVyUnMj6TM7OkEeUQJkt1PcpYYL7Qmgk05Ex8axHjgXhBT
+	 Hhlt0WuVpwu9G44DjK8qKDUsK9vTg1xVGTJ9IeZioWvTzoUcl6v90X4L7WXvmd4KEEAPK
+	 ztVZnHO1cihgHXgljF/HrsbetOjzihAhf5o8MSDlnpY64uqlheAqZLRwIBumglL1eQQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795622295;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795622298;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=nP2tb9+2Fke2vzLuV3eKGFFfmzkN5BK0MdREY5h0ZMc=;
-	b=p2f68fB4uUc30+iU+uMez/+dGqlVz5vQX+nyQ3RQXIZlhhTQCL7yxfkV8H/1r4O3ny4F
-	 ZPRjpCcnzUXcUP90ah9+Rh4Emls6g6eTbqGXnuTczzJUrHtWkKaIywbjSdl3UgUbFddEu
-	 j8qBYrlh1p37sIulInAfH/MfsgBQVwP3lNejr9Kv9O2p0MuumxrIV5xU117kh3wn+EABx
-	 zX79IL+Vyvo/F3U3OLHPu3mbJT3r8+Ux3Ovz393KZkXqUbUHcPG+8EsfVwK5lI5s6vIhf
-	 zVYtMUmcTToNgbQqgHqg1kVvB1BLwAA9uk+CbIMcnEnq8393nXPrDimvOQAmh3R1J1Q==
+	bh=TpG1a8bZPXNAW+vd9BllqGc9aM9MMJHcAv/SXyGC4LY=;
+	b=qvlqF5Jw/QXbZPMFmNBOtVhWd/6ArMiiJXZxc1pt9d62/Ek7VOwFHUYb0U637M437pcw
+	 O7KIyBvHxG9JDNrGOrA3FsqWnZv/lhC2m+5ZMYjRar0DtRsmqHL5stkHtvfQcVhy7itnS
+	 UR6MkOhtjoZKXLsqFErWNLMRUm4A5CllyVz43GuYQTEfmVPC/fbbDPdFCH3gfiPf+SIOZ
+	 16XYj/wlTh6AAkzPwWc07YB2r5yfXTVi0BNQ6p1gx2RURMFZ9J11Q9l9ZtCGlIOQqNKvm
+	 0LE9wLZB3gdORHMBm/k7w4tWoGZE+0TXbUQJ5xcFBQaq1GpwepH4vLvDzHdVoPLiQBw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=CefKB6sB;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="jtYMF+/t";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2D01B606A31E;
-	Wed, 25 Nov 2026 15:58:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 03A70606A321;
+	Wed, 25 Nov 2026 15:58:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=CefKB6sB
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7C4B61F000C6;
-	Wed, 25 Nov 2026 15:58:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=jtYMF+/t
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4F5ED1F000C0;
+	Wed, 25 Nov 2026 15:58:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795622295;
-	bh=nP2tb9+2Fke2vzLuV3eKGFFfmzkN5BK0MdREY5h0ZMc=;
+	s=korg; t=1795622297;
+	bh=TpG1a8bZPXNAW+vd9BllqGc9aM9MMJHcAv/SXyGC4LY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=CefKB6sB0nv2lRuYKohmKi41IThImpdccf8M0Og7S+ItFSQDI6zZdoca6S7CyHx+k
-	 FjNsd3sGMBN3QY9B8ChoMxNEXbBSnAj4urzwLVnproPJxwx12aFJ2kLxLB96kWe8xv
-	 FwyxNKhNo261BlxKAuNogIDzMtWSZdOh/3JijkWA=
+	b=jtYMF+/tvqMVj2umUVQpYug6HXGw7SRPiCcMa2tXIdn/NQ2TXWV/OTBLbmyR0pIjz
+	 tqSlvOWS622M73jVIX4J1W01rci2UC+UJ0cRJOdPMqcxFgRFDiiTOfWbwZgVo9V5KE
+	 glnivC0r/IQcdMEejSl5iG7+kQjrgVmoi55t2HCY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sean Young <sean@mess.org>,
-	Hans Verkuil <hverkuil+cisco@kernel.org>,
+	Hari Bathini <hbathini@linux.ibm.com>,
+	Abhishek Dubey <adubey@linux.ibm.com>,
+	Saket Kumar Bhaskar <skb99@linux.ibm.com>,
+	Yeswanth Krishna Tellakula <yeswanth@linux.ibm.com>,
+	R Nageswara Sastry <rnsastry@linux.ibm.com>,
+	Madhavan Srinivasan <maddy@linux.ibm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 490/990] media: rc: Add missing locking for keymap
-Date: Wed, 25 Nov 2026 15:30:57 +0100
-Message-ID: <20261125143833.572719043@linuxfoundation.org>
+Subject: [PATCH 6.18 491/990] powerpc/bpf: fix alignment of long branch trampoline address
+Date: Wed, 25 Nov 2026 15:30:58 +0100
+Message-ID: <20261125143833.596997420@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143822.072087159@linuxfoundation.org>
 References: <20261125143822.072087159@linuxfoundation.org>
@@ -68,208 +72,211 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sean Young <sean@mess.org>
+From: Abhishek Dubey <adubey@linux.ibm.com>
 
-[ Upstream commit ab9567336171e46ce9e03ee126902b3fd7901baa ]
+[ Upstream commit 04001e8ddb979f463f1c3ca8ac4d6ac59fb48921 ]
 
-When the rc_map for an rc_dev gets updated, locking is required but is
-missing in places. A concurrent scancode lookup and a call to
-rc_{register,unregistered}_device() could result in a use-after-free;
-this could happen if IR is decoded during those function calls.
+Ensure the dummy trampoline address field present between the OOL stub
+and the long branch stub is 4/8-byte aligned, for memory compatibility
+when content loaded to a register.
 
-Add lockdep assertions where locks are required.
-
-ir_free_table() should only be called for non-TX devices else we will
-use a spinlock without iniitializing it.
-
-Fixes: dccc0c3ddf8f ("media: rc: fix race between unregister and urb/irq callbacks")
-Signed-off-by: Sean Young <sean@mess.org>
+Reported-by: Hari Bathini <hbathini@linux.ibm.com>
+Fixes: d243b62b7bd3 ("powerpc64/bpf: Add support for bpf trampolines")
 Cc: stable@vger.kernel.org
-Acked-by: Hans Verkuil <hverkuil+cisco@kernel.org>
+Signed-off-by: Abhishek Dubey <adubey@linux.ibm.com>
+Signed-off-by: Saket Kumar Bhaskar <skb99@linux.ibm.com>
+Tested-by: Yeswanth Krishna Tellakula <yeswanth@linux.ibm.com>
+Tested-by: R Nageswara Sastry <rnsastry@linux.ibm.com>
+Reviewed-by: Hari Bathini <hbathini@linux.ibm.com>
+Signed-off-by: Madhavan Srinivasan <maddy@linux.ibm.com>
+Link: https://patch.msgid.link/a8257022057cbb71928c960be589e10b89fc0899.1789982239.git.skb99@linux.ibm.com
+[ sashal: Dropped the two fsession prototypes (prepare_for_fsession_fentry() and store_func_meta()) from the context of the bpf_jit.h hunk, since those functions don't exist in this tree. ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/rc/rc-main.c | 86 +++++++++++++++++++++++++-------------
- 1 file changed, 57 insertions(+), 29 deletions(-)
+ arch/powerpc/net/bpf_jit.h        |  7 +++---
+ arch/powerpc/net/bpf_jit_comp.c   | 38 ++++++++++++++++++++++++++-----
+ arch/powerpc/net/bpf_jit_comp32.c |  7 +++---
+ arch/powerpc/net/bpf_jit_comp64.c |  7 +++---
+ 4 files changed, 44 insertions(+), 15 deletions(-)
 
-diff --git a/drivers/media/rc/rc-main.c b/drivers/media/rc/rc-main.c
-index 6b14ccfc3080a..be53f1bdc9c77 100644
---- a/drivers/media/rc/rc-main.c
-+++ b/drivers/media/rc/rc-main.c
-@@ -104,7 +104,6 @@ static struct rc_map_list *seek_rc_map(const char *name)
+diff --git a/arch/powerpc/net/bpf_jit.h b/arch/powerpc/net/bpf_jit.h
+index ae2c92a8b6e77..4d9cd21510571 100644
+--- a/arch/powerpc/net/bpf_jit.h
++++ b/arch/powerpc/net/bpf_jit.h
+@@ -203,10 +203,11 @@ int bpf_jit_emit_func_call_rel(u32 *image, u32 *fimage, struct codegen_context *
+ int bpf_jit_build_body(struct bpf_prog *fp, u32 *image, u32 *fimage, struct codegen_context *ctx,
+ 		       u32 *addrs, int pass, bool extra_pass);
+ void bpf_jit_build_prologue(u32 *image, struct codegen_context *ctx);
+-void bpf_jit_build_epilogue(u32 *image, struct codegen_context *ctx);
+-void bpf_jit_build_fentry_stubs(u32 *image, struct codegen_context *ctx);
++void bpf_jit_build_epilogue(u32 *image, u32 *fimage, struct codegen_context *ctx);
++void bpf_jit_build_fentry_stubs(u32 *image, u32 *fimage, struct codegen_context *ctx);
+ void bpf_jit_realloc_regs(struct codegen_context *ctx);
+-int bpf_jit_emit_exit_insn(u32 *image, struct codegen_context *ctx, int tmp_reg, long exit_addr);
++int bpf_jit_emit_exit_insn(u32 *image, u32 *fimage, struct codegen_context *ctx, int tmp_reg,
++										long exit_addr);
  
- struct rc_map *rc_map_get(const char *name)
- {
--
- 	struct rc_map_list *map;
+ int bpf_add_extable_entry(struct bpf_prog *fp, u32 *image, u32 *fimage, int pass,
+ 			  struct codegen_context *ctx, int insn_idx,
+diff --git a/arch/powerpc/net/bpf_jit_comp.c b/arch/powerpc/net/bpf_jit_comp.c
+index 829b60ae485ff..4a7f5108fe0fd 100644
+--- a/arch/powerpc/net/bpf_jit_comp.c
++++ b/arch/powerpc/net/bpf_jit_comp.c
+@@ -49,11 +49,35 @@ asm (
+ "	.popsection				;"
+ );
  
- 	map = seek_rc_map(name);
-@@ -201,7 +200,7 @@ static int scancode_to_u64(const struct input_keymap_entry *ke, u64 *scancode)
-  * ir_create_table() - initializes a scancode table
-  * @dev:	the rc_dev device
-  * @rc_map:	the rc_map to initialize
-- * @name:	name to assign to the table
-+ * @map_name:	name to assign to the table
-  * @rc_proto:	ir type to assign to the new table
-  * @size:	initial size of the table
-  *
-@@ -211,23 +210,31 @@ static int scancode_to_u64(const struct input_keymap_entry *ke, u64 *scancode)
-  * return:	zero on success or a negative error code
-  */
- static int ir_create_table(struct rc_dev *dev, struct rc_map *rc_map,
--			   const char *name, u64 rc_proto, size_t size)
-+			   const char *map_name, u64 rc_proto, size_t size)
+-void bpf_jit_build_fentry_stubs(u32 *image, struct codegen_context *ctx)
++void bpf_jit_build_fentry_stubs(u32 *image, u32 *fimage, struct codegen_context *ctx)
  {
-+	struct rc_map_table *scan;
- 	unsigned int alloc;
--	rc_map->name = kstrdup(name, GFP_KERNEL);
--	if (!rc_map->name)
-+	char *name;
+ 	int ool_stub_idx, long_branch_stub_idx;
++	int ool_stub_sz;
+ 
+ 	/*
++	 * Align the mis-aligned dummy_tramp_addr field in the fimage.
++	 * The alignment NOP must appear before OOL stub, to make
++	 * ool_stub_idx & long_branch_stub_idx constant from end.
++	 *
++	 * The fimage can be non 8-byte aligned, so final alignment depends
++	 * on start of fimage and the stub's instruction count offset. The
++	 * OOL stub size is 4 instructions (with CONFIG_PPC_FTRACE_OUT_OF_LINE)
++	 * or 3 instructions (without) before dummy_tramp_addr.
++	 *
++	 * Emit a NOP here if address is not SZL aligned.
++	 *
++	 * In pass=0 when image==NULL, conservatively account for space
++	 * required to accommodate alignment NOP. In case final pass skips
++	 * emitting alignment NOP, the image buffer have 4 spare bytes and
++	 * jited_len signifies correct program size.
++	 */
 +
-+	name = kstrdup(map_name, GFP_KERNEL);
-+	if (!name)
- 		return -ENOMEM;
++	ool_stub_sz = IS_ENABLED(CONFIG_PPC_FTRACE_OUT_OF_LINE) ? 16 : 12;
++	if (!image || !IS_ALIGNED((unsigned long)fimage + ctx->idx*4 + ool_stub_sz, SZL))
++		EMIT(PPC_RAW_NOP());
 +
- 	alloc = roundup_pow_of_two(size);
--	rc_map->rc_proto = rc_proto;
--	rc_map->len = 0;
--	rc_map->size = alloc;
--	rc_map->scan = kmalloc_objs(struct rc_map_table, alloc, GFP_KERNEL);
--	if (!rc_map->scan) {
--		kfree(rc_map->name);
--		rc_map->name = NULL;
-+	scan = kmalloc_objs(struct rc_map_table, alloc, GFP_KERNEL);
-+	if (!scan) {
-+		kfree(name);
- 		return -ENOMEM;
++	/*
++	 *	nop     // optional, for alignment of dummy_tramp_addr
+ 	 * Out-of-line stub:
+ 	 *	mflr	r0
+ 	 *	[b|bl]	tramp
+@@ -70,7 +94,7 @@ void bpf_jit_build_fentry_stubs(u32 *image, struct codegen_context *ctx)
+ 
+ 	/*
+ 	 * Long branch stub:
+-	 *	.long	<dummy_tramp_addr>
++	 *	.long	<dummy_tramp_addr>  // 8-byte aligned
+ 	 *	mflr	r11
+ 	 *	bcl	20,31,$+4
+ 	 *	mflr	r12
+@@ -81,6 +105,7 @@ void bpf_jit_build_fentry_stubs(u32 *image, struct codegen_context *ctx)
+ 	 */
+ 	if (image)
+ 		*((unsigned long *)&image[ctx->idx]) = (unsigned long)dummy_tramp;
++
+ 	ctx->idx += SZL / 4;
+ 	long_branch_stub_idx = ctx->idx;
+ 	EMIT(PPC_RAW_MFLR(_R11));
+@@ -97,7 +122,8 @@ void bpf_jit_build_fentry_stubs(u32 *image, struct codegen_context *ctx)
  	}
- 
-+	scoped_guard(spinlock_irqsave, &rc_map->lock) {
-+		rc_map->name = name;
-+		rc_map->scan = scan;
-+		rc_map->rc_proto = rc_proto;
-+		rc_map->len = 0;
-+		rc_map->size = alloc;
-+	}
-+
- 	dev_dbg(&dev->dev, "Allocated space for %u keycode entries (%zu bytes)\n",
- 		alloc, alloc * sizeof(struct rc_map_table));
- 	return 0;
-@@ -237,16 +244,26 @@ static int ir_create_table(struct rc_dev *dev, struct rc_map *rc_map,
-  * ir_free_table() - frees memory allocated by a scancode table
-  * @rc_map:	the table whose mappings need to be freed
-  *
-- * This routine will free memory alloctaed for key mappings used by given
-+ * This routine will free memory allocated for key mappings used by given
-  * scancode table.
-  */
- static void ir_free_table(struct rc_map *rc_map)
- {
--	rc_map->size = 0;
--	kfree(rc_map->name);
--	rc_map->name = NULL;
--	kfree(rc_map->scan);
--	rc_map->scan = NULL;
-+	struct rc_map_table *scan;
-+	const char *name;
-+
-+	scoped_guard(spinlock_irqsave, &rc_map->lock) {
-+		name = rc_map->name;
-+		scan = rc_map->scan;
-+
-+		rc_map->size = 0;
-+		rc_map->len = 0;
-+		rc_map->name = NULL;
-+		rc_map->scan = NULL;
-+	}
-+
-+	kfree(name);
-+	kfree(scan);
  }
  
- /**
-@@ -266,6 +283,8 @@ static int ir_resize_table(struct rc_dev *dev, struct rc_map *rc_map,
- 	unsigned int newsize = rc_map->size;
- 	struct rc_map_table *newscan;
- 
-+	lockdep_assert_held(&rc_map->lock);
-+
- 	if (rc_map->size == rc_map->len) {
- 		/* All entries in use -> grow keytable */
- 		if (newsize >= IR_TAB_MAX_ENTRIES)
-@@ -317,6 +336,8 @@ static unsigned int ir_update_mapping(struct rc_dev *dev,
- 	int old_keycode = rc_map->scan[index].keycode;
- 	int i;
- 
-+	lockdep_assert_held(&rc_map->lock);
-+
- 	/* Did the user wish to remove the mapping? */
- 	if (new_keycode == KEY_RESERVED || new_keycode == KEY_UNKNOWN) {
- 		dev_dbg(&dev->dev, "#%d: Deleting scan 0x%04llx\n",
-@@ -372,6 +393,8 @@ static unsigned int ir_establish_scancode(struct rc_dev *dev,
+-int bpf_jit_emit_exit_insn(u32 *image, struct codegen_context *ctx, int tmp_reg, long exit_addr)
++int bpf_jit_emit_exit_insn(u32 *image, u32 *fimage, struct codegen_context *ctx,
++							int tmp_reg, long exit_addr)
  {
- 	unsigned int i;
- 
-+	lockdep_assert_held(&rc_map->lock);
-+
- 	/*
- 	 * Unfortunately, some hardware-based IR decoders don't provide
- 	 * all bits for the complete IR code. In general, they provide only
-@@ -396,7 +419,7 @@ static unsigned int ir_establish_scancode(struct rc_dev *dev,
- 	/* No previous mapping found, we might need to grow the table */
- 	if (rc_map->size == rc_map->len) {
- 		if (!resize || ir_resize_table(dev, rc_map, GFP_ATOMIC))
--			return -1U;
-+			return UINT_MAX;
+ 	if (exit_addr && is_offset_in_branch_range(exit_addr - (long)(ctx->idx * 4))) {
+ 		PPC_JMP(exit_addr);
+@@ -106,7 +132,7 @@ int bpf_jit_emit_exit_insn(u32 *image, struct codegen_context *ctx, int tmp_reg,
+ 		PPC_JMP(ctx->alt_exit_addr);
+ 	} else {
+ 		ctx->alt_exit_addr = ctx->idx * 4;
+-		bpf_jit_build_epilogue(image, ctx);
++		bpf_jit_build_epilogue(image, fimage, ctx);
  	}
  
- 	/* i is the proper index to insert our new keycode */
-@@ -478,16 +501,18 @@ static int ir_setkeytable(struct rc_dev *dev, const struct rc_map *from)
- 	if (rc)
- 		return rc;
+ 	return 0;
+@@ -237,7 +263,7 @@ struct bpf_prog *bpf_int_jit_compile(struct bpf_prog *fp)
+ 	 */
+ 	bpf_jit_build_prologue(NULL, &cgctx);
+ 	addrs[fp->len] = cgctx.idx * 4;
+-	bpf_jit_build_epilogue(NULL, &cgctx);
++	bpf_jit_build_epilogue(NULL, NULL, &cgctx);
  
--	for (i = 0; i < from->size; i++) {
--		index = ir_establish_scancode(dev, rc_map,
--					      from->scan[i].scancode, false);
--		if (index >= rc_map->len) {
--			rc = -ENOMEM;
--			break;
--		}
-+	scoped_guard(spinlock_irqsave, &rc_map->lock) {
-+		for (i = 0; i < from->size; i++) {
-+			index = ir_establish_scancode(dev, rc_map,
-+						      from->scan[i].scancode, false);
-+			if (index >= rc_map->len) {
-+				rc = -ENOMEM;
-+				break;
-+			}
+ 	fixup_len = fp->aux->num_exentries * BPF_FIXUP_LEN * 4;
+ 	extable_len = fp->aux->num_exentries * sizeof(struct exception_table_entry);
+@@ -276,7 +302,7 @@ struct bpf_prog *bpf_int_jit_compile(struct bpf_prog *fp)
+ 			goto out_addrs;
+ 		}
+ 		addrs[fp->len] = cgctx.idx * 4;
+-		bpf_jit_build_epilogue(code_base, &cgctx);
++		bpf_jit_build_epilogue(code_base, fcode_base, &cgctx);
  
--		ir_update_mapping(dev, rc_map, index,
--				  from->scan[i].keycode);
-+			ir_update_mapping(dev, rc_map, index,
-+					  from->scan[i].keycode);
-+		}
- 	}
+ 		proglen = cgctx.idx * 4;
  
- 	if (rc)
-@@ -523,6 +548,8 @@ static unsigned int ir_lookup_by_scancode(const struct rc_map *rc_map,
+diff --git a/arch/powerpc/net/bpf_jit_comp32.c b/arch/powerpc/net/bpf_jit_comp32.c
+index 3087e744fb250..4b78dd8cfb45e 100644
+--- a/arch/powerpc/net/bpf_jit_comp32.c
++++ b/arch/powerpc/net/bpf_jit_comp32.c
+@@ -194,7 +194,7 @@ static void bpf_jit_emit_common_epilogue(u32 *image, struct codegen_context *ctx
+ 
+ }
+ 
+-void bpf_jit_build_epilogue(u32 *image, struct codegen_context *ctx)
++void bpf_jit_build_epilogue(u32 *image, u32 *fimage, struct codegen_context *ctx)
  {
- 	struct rc_map_table *res;
+ 	EMIT(PPC_RAW_MR(_R3, bpf_to_ppc(BPF_REG_0)));
  
-+	lockdep_assert_held(&rc_map->lock);
-+
- 	res = bsearch(&scancode, rc_map->scan, rc_map->len,
- 		      sizeof(struct rc_map_table), rc_map_cmp);
- 	if (!res)
-@@ -1988,7 +2015,8 @@ int rc_register_device(struct rc_dev *dev)
- 	scoped_guard(mutex, &dev->lock)
- 		dev->registered = false;
- out_free_table:
--	ir_free_table(&dev->rc_map);
-+	if (dev->driver_type != RC_DRIVER_IR_RAW_TX)
-+		ir_free_table(&dev->rc_map);
- out_raw:
- 	ir_raw_event_free(dev);
- out_minor:
+@@ -202,7 +202,7 @@ void bpf_jit_build_epilogue(u32 *image, struct codegen_context *ctx)
+ 
+ 	EMIT(PPC_RAW_BLR());
+ 
+-	bpf_jit_build_fentry_stubs(image, ctx);
++	bpf_jit_build_fentry_stubs(image, fimage, ctx);
+ }
+ 
+ /* Relative offset needs to be calculated based on final image location */
+@@ -1114,7 +1114,8 @@ int bpf_jit_build_body(struct bpf_prog *fp, u32 *image, u32 *fimage, struct code
+ 			 * we'll just fall through to the epilogue.
+ 			 */
+ 			if (i != flen - 1) {
+-				ret = bpf_jit_emit_exit_insn(image, ctx, _R0, exit_addr);
++				ret = bpf_jit_emit_exit_insn(image, fimage,
++								ctx, _R0, exit_addr);
+ 				if (ret)
+ 					return ret;
+ 			}
+diff --git a/arch/powerpc/net/bpf_jit_comp64.c b/arch/powerpc/net/bpf_jit_comp64.c
+index 94f3f031d039b..be79bd555e217 100644
+--- a/arch/powerpc/net/bpf_jit_comp64.c
++++ b/arch/powerpc/net/bpf_jit_comp64.c
+@@ -209,7 +209,7 @@ static void bpf_jit_emit_common_epilogue(u32 *image, struct codegen_context *ctx
+ 	}
+ }
+ 
+-void bpf_jit_build_epilogue(u32 *image, struct codegen_context *ctx)
++void bpf_jit_build_epilogue(u32 *image, u32 *fimage, struct codegen_context *ctx)
+ {
+ 	bpf_jit_emit_common_epilogue(image, ctx);
+ 
+@@ -218,7 +218,7 @@ void bpf_jit_build_epilogue(u32 *image, struct codegen_context *ctx)
+ 
+ 	EMIT(PPC_RAW_BLR());
+ 
+-	bpf_jit_build_fentry_stubs(image, ctx);
++	bpf_jit_build_fentry_stubs(image, fimage, ctx);
+ }
+ 
+ int bpf_jit_emit_func_call_rel(u32 *image, u32 *fimage, struct codegen_context *ctx, u64 func)
+@@ -1461,7 +1461,8 @@ int bpf_jit_build_body(struct bpf_prog *fp, u32 *image, u32 *fimage, struct code
+ 			 * we'll just fall through to the epilogue.
+ 			 */
+ 			if (i != flen - 1) {
+-				ret = bpf_jit_emit_exit_insn(image, ctx, tmp1_reg, exit_addr);
++				ret = bpf_jit_emit_exit_insn(image, fimage, ctx,
++								tmp1_reg, exit_addr);
+ 				if (ret)
+ 					return ret;
+ 			}
 -- 
 2.53.0
 
