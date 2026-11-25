@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795625545;
-	b=Cs8U7EhBxjQ6aagGIbyqrS70ZlU9XxRtbrpeMW0ekA8N/LMXm8k+1vI/Vua8Sdt/OsGa
-	 XlNSpLSnU/ncnxSCEV+RrpN5JwbSPbkGRsykzXdv+9Wcdmk48BNzZ8j56QRKjSEVO4xPP
-	 QptDULsFS6JkLVVYFOW90cOpj30dKpz6wHfldy2Uuzhn1cFPB/kVdS9xzggQWTiSd8Hgw
-	 9VXO0QPlOOsO5M6JdvNIUeYF08w5LqHpcTw+WFLqjLTDQlGrEExRvoHSGdOQgHo16gFSl
-	 ThOKbNTUEocBAbZoIGxG3q665adxvSIrYdC0qGsfdTeB6J/9f6P44TUK+DoX3EexZKA==
+	t=1795625548;
+	b=iYRx3MCXZj7rkUJ9TW+mN5lkzlK0o5undSTldtRSlDn/x6WJxyVEYH3E3+e5G4ZR57mC
+	 PF2r4uPn0FWwNqCfJGZc7o7pKDdPBYUeeX1vDroxfr/5RuAAi+Q4+L59NyZCfRkdWVHwf
+	 /FwhMdD5AFcTvFJdToBnGfqlTMJTFu87N85iLxFZC4YyoILYBdt9MaO2I82R0vchcGVrC
+	 D4njdAlFCFLquyLcJtCm9gdXpB/76/uEM48DbIuP/rJParklrmtSoM8Dy93NEfIisgFZp
+	 bsWrfDdzq8e4loaussHcPHn9JxYe/Kndnwir8YE2ucigcgi8942NNz72rXPHguA7AaQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795625545;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795625548;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=rg5WYJsd7Z5ik0k6MlnTDt96nPSjkS0eS28oV2LcDGk=;
-	b=H0iuiyJKH948uT9QZV98PQk+w31BiJmi8h32PqkvzNXrH96qkPIFsRYXfyyVshOq7/nl
-	 DjIdPwimECcrlGlzS5JcMyXmovSG0jw/68iHUdmDg9YpL0J/M/e/103FiiQ3k9YQUwZx1
-	 NeSOraIwfacJFloAzfyn235TJjHctaF9ugd8bidpvYohGp+Ydsk4JOIgn2PJY3D6VNcm3
-	 L5FxxOuVTi+lM3qE65ur8Pjwl1jsl0QXuyAo0RV9Me5o2G7IRIYAyjwClYsDGa5noayzr
-	 ugUXOlgTEbX+Tj4L88KWasK8ZahExkTmk6snqwh1ScaBJeArcwndj+RDyIloxOImZDQ==
+	bh=H0RQFGhe9NNkC4uvceHLqHpQwio0/pVyGJfqte1hTCM=;
+	b=TN/8WS7etxRSFBd+SS3LzYSOzpoBL1gh8bA9EhK17wh63KHLGKbnfRJiJ5BfZB/Zw1dF
+	 9gwusO67IM0A945PY+UkKDZGrsvcKR8PqYgHRZrvWMlVemYnDLsD/HdwRiVkKhfBzsRE+
+	 VX1BZrPzGJV0Ilot9Y7lFxa0so9YV5+Ivd6p0CUx4mmfKEg+yKptsUuejXNI2tEVzABK7
+	 K6gL2pTTLU4hULwqMHfNWOgEQhsKvXhKTcy5eqZ5dxZejivVIdakal8ArZ+ABSH3mvv1e
+	 XtrcWjezVyIUmr6Q8Vf3BO3eKRMxlu2UhGEz3nHs+Fn62sgmDeChngNq3/ntygLDBsw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=xKaaPUP4;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=wX3wLC4W;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 59FA5606A31E;
-	Wed, 25 Nov 2026 16:52:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2E9F7606A321;
+	Wed, 25 Nov 2026 16:52:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=xKaaPUP4
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A9E451F000C6;
-	Wed, 25 Nov 2026 16:52:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=wX3wLC4W
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7F5FA1F000C4;
+	Wed, 25 Nov 2026 16:52:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795625545;
-	bh=rg5WYJsd7Z5ik0k6MlnTDt96nPSjkS0eS28oV2LcDGk=;
+	s=korg; t=1795625548;
+	bh=H0RQFGhe9NNkC4uvceHLqHpQwio0/pVyGJfqte1hTCM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=xKaaPUP4X9kNe0zQKrMtJ5H9+L9lBzvHiHg/qfQNeG8K9edZuzXDKlXM9wv1zjiG6
-	 O6QZh03v8fOytflhNUQc3CJwuQeWiC88G6jsU7jz1P178wBllo7Jqn8hoEvAtd0tYr
-	 LnPspETSutVaXJLCrPFF4TjAr2I6Zd0Tz79quiBM=
+	b=wX3wLC4WbMvvtebye6IycL1utnC6i/ewfCXjmjTVBlsdPtgw+PBAG7ZMJxvWb0UR7
+	 i6U5nyt6aAQDEtKNpoTV0hk3wA+wkDZnZ0N5mo+BXhI2ZXhr4glm9YmH0vh2CztU+1
+	 4dEl0gzZfp+dotj8yg7xDR3sxyNpaFVddWlRFiMI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Josef Bacik <josef@toxicpanda.com>,
-	Alexei Starovoitov <ast@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 515/816] bpf: Follow the head if an skb is written from a slice
-Date: Wed, 25 Nov 2026 15:34:23 +0100
-Message-ID: <20261125143901.107497819@linuxfoundation.org>
+	David Howells <dhowells@redhat.com>,
+	Eric Biggers <ebiggers@kernel.org>,
+	Jarkko Sakkinen <jarkko@kernel.org>
+Subject: [PATCH 6.12 551/816] KEYS: Verify the key identity in __key_unlink_begin
+Date: Wed, 25 Nov 2026 15:34:59 +0100
+Message-ID: <20261125143901.937955434@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143849.205329330@linuxfoundation.org>
 References: <20261125143849.205329330@linuxfoundation.org>
@@ -68,73 +68,62 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Josef Bacik <josef@toxicpanda.com>
+From: Jarkko Sakkinen <jarkko@kernel.org>
 
-[ Upstream commit 1c19f2b3b2f3b55c8017092257634cb8229b7d97 ]
+commit 7a7f70ff7b26519c98b339a3e0cd9ee3c8d17f77 upstream.
 
-The source of bpf_dynptr_write() may be a slice of the skb which is
-written to, that is a pointer into its head. bpf_dynptr_copy() does it by
-itself for a copy inside of one skb, if the source is linear and the
-destination is not.
+When two keys have identical type and description, linking the second key
+replaces the first in a keyring. However, attempting to unlink the first
+key (no longer in the keyring) unlinks the second key.
 
-__bpf_skb_store_bytes() and __bpf_skb_meta_store_bytes() make the skb
-writable first. If that reallocates the head, the source points to the old
-one, and freed memory is copied into the packet.
+This happens because __key_unlink_begin() calls assoc_array_delete() with
+&key->index_key, matching only on type and description rather than the
+key's identity.
 
-The offsets in the head do not change when it is reallocated here. Move
-the source along with the head.
+Example:
 
-Fixes: 2012c867c800 ("bpf: verifier: Accept dynptr mem as mem in helpers")
-Fixes: f38499ff45f5 ("bpf: Unclone skb head on bpf_dynptr_write to skb metadata")
-Signed-off-by: Josef Bacik <josef@toxicpanda.com>
-Signed-off-by: Alexei Starovoitov <ast@kernel.org>
-Link: https://patch.msgid.link/20261017230950.802052-14-alexei.starovoitov@gmail.com
-[ sashal: Dropped the hunk that modifies __bpf_skb_meta_store_bytes() because that function doesn't exist here, and kept the helper and the bpf_skb_store_bytes() change. ]
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+  keyctl new_session >/dev/null
+  keyctl newring ring_a @s
+  keyctl newring ring_b @s
+  A=$(keyctl add user A ss %:ring_a)
+  B=$(keyctl add user A qq %:ring_b)
+  keyctl newring R @s
+  keyctl link $A %:R
+  keyctl link $B %:R
+  keyctl unlink $A %:R
+  keyctl show
+
+Verify the key identity before unlinking, and return -ENOENT on mismatch,
+instead of unlinking the key with the wrong identity.
+
+Cc: stable@vger.kernel.org
+Fixes: b2a4df200d57 ("KEYS: Expand the capacity of a keyring")
+Reviewed-by: David Howells <dhowells@redhat.com>
+Reviewed-by: Eric Biggers <ebiggers@kernel.org>
+Link: https://lore.kernel.org/r/20261020174325.2229448-4-jarkko@kernel.org
+Signed-off-by: Jarkko Sakkinen <jarkko@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/core/filter.c | 20 +++++++++++++++++++-
- 1 file changed, 19 insertions(+), 1 deletion(-)
+ security/keys/keyring.c |    6 ++++++
+ 1 file changed, 6 insertions(+)
 
-diff --git a/net/core/filter.c b/net/core/filter.c
-index 9c53e79d87501..3b8ea2ba5c312 100644
---- a/net/core/filter.c
-+++ b/net/core/filter.c
-@@ -1720,6 +1720,24 @@ static inline void bpf_pull_mac_rcsum(struct sk_buff *skb)
- 		skb_postpull_rcsum(skb, skb_mac_header(skb), skb->mac_len);
- }
- 
-+/*
-+ * The source of a write through a dynptr may be a slice of the same skb.
-+ * Making the skb writable can move its head: follow the move.
-+ */
-+static int bpf_try_make_writable_from(struct sk_buff *skb, u32 write_len,
-+				      const void **from)
-+{
-+	const void *head = skb->head;
-+	bool in_head = *from >= head &&
-+		       *from < (const void *)skb_end_pointer(skb);
-+	int err;
-+
-+	err = bpf_try_make_writable(skb, write_len);
-+	if (!err && in_head)
-+		*from = skb->head + (*from - head);
-+	return err;
-+}
-+
- BPF_CALL_5(bpf_skb_store_bytes, struct sk_buff *, skb, u32, offset,
- 	   const void *, from, u32, len, u64, flags)
+--- a/security/keys/keyring.c
++++ b/security/keys/keyring.c
+@@ -1506,9 +1506,15 @@ static int __key_unlink_begin(struct key
+ 			      struct assoc_array_edit **_edit)
  {
-@@ -1729,7 +1747,7 @@ BPF_CALL_5(bpf_skb_store_bytes, struct sk_buff *, skb, u32, offset,
- 		return -EINVAL;
- 	if (unlikely(offset > INT_MAX))
- 		return -EFAULT;
--	if (unlikely(bpf_try_make_writable(skb, offset + len)))
-+	if (unlikely(bpf_try_make_writable_from(skb, offset + len, &from)))
- 		return -EFAULT;
+ 	struct assoc_array_edit *edit;
++	const void *object;
  
- 	ptr = skb->data + offset;
--- 
-2.53.0
-
+ 	BUG_ON(*_edit != NULL);
+ 
++	object = assoc_array_find(&keyring->keys, &keyring_assoc_array_ops,
++				  &key->index_key);
++	if (!object || keyring_ptr_to_key(object) != key)
++		return -ENOENT;
++
+ 	edit = assoc_array_delete(&keyring->keys, &keyring_assoc_array_ops,
+ 				  &key->index_key);
+ 	if (IS_ERR(edit))
 
 
