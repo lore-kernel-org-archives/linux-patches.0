@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795625256;
-	b=Oq/dp/kSuWRIhaSgv+tn7hO3XD1WIGs/M9fJy5UaIsj1cC5rEV8qw8fnYD2tTms01Anm
-	 jcBnBCK4vD4sMT70j9CPAtfqpeGnE6tpFR5snA0oC6FRICsE1zH1mrnS78Bvbdow2t/ou
-	 saU35BnYNEHFXf9X0730d7pdceHuzv9MSpRfVNvu7QsFOfZfQwiPe71ofeGCgE6xmQNiV
-	 7Y+NEYJs4WMh+CTaUPVRc3DlSogtd/WSiH+WgWat+7p2BvhyeZ6/DwnzdlgwyMokUz55n
-	 GeJKk/+FN/CSyIdaBlLz++1Ii5QTJY6j2tMNU+aN3UUr5HegSrmHe6tvwVfVOg5nCAw==
+	t=1795625259;
+	b=kKE5D/8sf9CwTqje01PELlcKLFi7MWDKoJiqKf5nzziDFjlFuTpptp2lpQLX5tYJYewY
+	 kelbDKEgxFBQRbv9MawMLMYEfh3Ux6P94DJQRE2OS7Mg9zK5YvqblrJRAoPVFCq2AdPnb
+	 jki5MeD1KKE6yNPVY3qGmP4s3dZwcJrwVE1IF23X8YrPX8gNOV005tB0bKn8eY8x14z61
+	 cMDAGNKHC0Avk5DMTxguihgLT0RAM5HD8Mw6dR/0/CUmgTGT0mCSoWj+mxMMXU0bUbZNU
+	 WVJle2QAYRn+fR/QIwqxewboWp75KSuWegkCbmlMJASA9T/nCDW2Nb11MQEeV9pXlZg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795625256;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795625259;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=d/qmDYJpl2nXhBURLJYadFHaZiLMPIcH40Cwbo7OfgM=;
-	b=x+VYgsHWRz14mMeAJFBcBkc5EENiKkknZI3Ru5DiMbaMPqW8HwsRfTTXz4GZgzBvKLmq
-	 HhIXeC1zpNwggVq4SGIqmwhTYM3AKV7IiY2XPb1dX+9ie4XNHyF+Xu6YYOGoHm5t2heBD
-	 WuydVxSj7Cegmb3ev3yetJxnyLCeZ3PRgOV6AjYGzD0KhLgkqfmg8rbg3aK8FRHKu4DLt
-	 yloTwnOvKX6C0+NK8vumBSqZiMaZgGEUptSB43wR/ObdQiGvQKDcKngXulbOGGKc+OsUw
-	 Pa7U9NIROgyluWlCRpzhsjB53FEuW+R+mfms0jdyHXl6UDYujIe9hwZAyr6CH44E99A==
+	bh=pWSasSQx6mNqQsjp0BqdPJCtKJw+tssrCwAAAql2Xmk=;
+	b=gZlviZiBCTRLuE+0+S4uaSyeQ+JPweJAKlAdbezBzCL/Tc3xHZ9yXQX9cGr5wiQVF0Kt
+	 JbvymaU1qh044A4/d0mNKuSjh8QYS6BRpH35hOQuU17logZBq5RdUW8ElFHxsClq4crJF
+	 3MBHeU9yOqrSKmBkVQuMsw/KxsTtAVCRODwLZBzziaxvlihcWb1lUvY6deFjCcBUIozNs
+	 uqEhbULcyi5DeFmycxY2PYrSGQXDLQMAHjXQZpBf7kzhIbR9qM16/YN6U8G09U1conWqn
+	 tl39izH91S02a35/dIBShO0Hp1FSB0GhxSOXNQbOi2P7GAhB95dFtF078Lo+vfukdfw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=MRiVXDsb;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=zabXI6fA;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C41CA606A31E;
-	Wed, 25 Nov 2026 16:47:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AF324606A323;
+	Wed, 25 Nov 2026 16:47:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=MRiVXDsb
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 03C421F000E6;
-	Wed, 25 Nov 2026 16:47:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=zabXI6fA
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EC1371F000E6;
+	Wed, 25 Nov 2026 16:47:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795625256;
-	bh=d/qmDYJpl2nXhBURLJYadFHaZiLMPIcH40Cwbo7OfgM=;
+	s=korg; t=1795625259;
+	bh=pWSasSQx6mNqQsjp0BqdPJCtKJw+tssrCwAAAql2Xmk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=MRiVXDsb8N6LXuYhXPdV8BO7SjsDxk4cbaU2Qci+nJr9yT2oYjc948D/b+V9iw0Ll
-	 MBU7Fg1aYnfk9Y1PsvjU35jwsvnAPjCWpXejz2gU3x/22qBrnjT8UlJIFaHEurKy43
-	 FoEotIhRotDqKsw4BRQKU8i8w/vQc4AI7EELfJeA=
+	b=zabXI6fAn9I5KAi+9bUw2Su7vXyzi1H7M9o4yx8BAGNn50n6cUc0SGIGPOplSgLRx
+	 Ve3QWZgT+OkGf8x5PydhA9k7HW5dTr0RyYBf7riQ7fzoU4amehxEl05Y6mwomogiay
+	 48CBtsczu+oWdm4tDv9a//KSVQ/uqIfknEPlsMv8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shawn Lin <shawn.lin@rock-chips.com>,
-	Vinod Koul <vkoul@kernel.org>,
+	Nicolin Chen <nicolinc@nvidia.com>,
+	Mostafa Saleh <smostafa@google.com>,
+	Will Deacon <will@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 455/816] phy: rockchip: naneng-combphy: Fix TX detect RX termination errata
-Date: Wed, 25 Nov 2026 15:33:23 +0100
-Message-ID: <20261125143859.722523182@linuxfoundation.org>
+Subject: [PATCH 6.12 456/816] iommu/arm-smmu-v3: Dont rb_erase() a never-inserted stream node
+Date: Wed, 25 Nov 2026 15:33:24 +0100
+Message-ID: <20261125143859.745989321@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143849.205329330@linuxfoundation.org>
 References: <20261125143849.205329330@linuxfoundation.org>
@@ -68,90 +69,73 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Shawn Lin <shawn.lin@rock-chips.com>
+From: Nicolin Chen <nicolinc@nvidia.com>
 
-[ Upstream commit d68e47a06c5cdc90cbd29ce2e74fa61eab5d47cc ]
+[ Upstream commit 2888520bdcbe0599cfc77b2fad8dc6c95505a3cb ]
 
-Some PHY revisions may fail to detect the peer RX's termination
-resistor (RTERM) under certain critical temperature conditions.
-This causes TX detection failures on PCIe links.
+arm_smmu_insert_master() skips inserting a stream whose StreamID duplicates
+one the same master already owns (bridged PCI devices can present duplicate
+IDs), leaving that master->streams[i].node zeroed and unlinked from the
+smmu->streams rb-tree.
 
-Add a workaround to force the RTERM detection ready signal for
-affected PHY revisions. This ensures reliable TX-to-RX termination
-detection across all operating temperature ranges.
+Both the insert error-rollback loop and arm_smmu_remove_master() then call
+rb_erase() on every master->streams[i].node unconditionally. rb_erase() on
+a zeroed node sees a NULL parent, treats the node as the tree root and sets
+root->rb_node = NULL, silently emptying the whole SID tree and breaking SID
+lookups (and DMA) for every other master on the SMMU.
 
-The fix applies to RK3562, RK3568, RK3576 and RK3588 SoCs which share
-the same PHY IP with this hardware errata.
+Mark each node with RB_CLEAR_NODE() after sort_nonatomic() reorders the
+array, since sorting relocates the entries and would leave the earlier
+self-referential RB_CLEAR_NODE() pointer stale. An un-inserted node then
+stays RB_EMPTY_NODE() and is skipped in both erase loops; inserted nodes
+are linked by rb_find_add() and erased as before.
 
-Fixes: 7160820d742a ("phy: rockchip: add naneng combo phy for RK3568")
-Fixes: f13bff25161b ("phy: rockchip-naneng-combo: Support rk3562")
-Fixes: ba8ad7eece66 ("phy: rockchip-naneng-combo: add rk3576 support")
-Fixes: a03c44277253 ("phy: rockchip: Add naneng combo phy support for RK3588")
-Signed-off-by: Shawn Lin <shawn.lin@rock-chips.com>
-Link: https://patch.msgid.link/1788158204-161347-1-git-send-email-shawn.lin@rock-chips.com
-Signed-off-by: Vinod Koul <vkoul@kernel.org>
-[ sashal: Dropped the RK3562 and RK3576 .force_rxterm_det_rdy hunks since those SoC configs don't exist here, and adjusted the context lines for the prefixed register-define layout. ]
+Fixes: b00d24997a11 ("iommu/arm-smmu-v3: Fix iommu_device_probe bug due to duplicated stream ids")
+Assisted-by: LLM
+Signed-off-by: Nicolin Chen <nicolinc@nvidia.com>
+Reviewed-by: Mostafa Saleh <smostafa@google.com>
+Signed-off-by: Will Deacon <will@kernel.org>
+[ sashal: Dropped the upstream ordering comment and placed the RB_CLEAR_NODE() loop before mutex_lock(), since this tree has no build_invs allocation or sort step. ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../phy/rockchip/phy-rockchip-naneng-combphy.c  | 17 +++++++++++++++++
- 1 file changed, 17 insertions(+)
+ drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c | 10 ++++++++--
+ 1 file changed, 8 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/phy/rockchip/phy-rockchip-naneng-combphy.c b/drivers/phy/rockchip/phy-rockchip-naneng-combphy.c
-index 11b5e43993fea..0fd9b5463f0ab 100644
---- a/drivers/phy/rockchip/phy-rockchip-naneng-combphy.c
-+++ b/drivers/phy/rockchip/phy-rockchip-naneng-combphy.c
-@@ -64,6 +64,9 @@
- #define RK3568_PHYREG18			0x44
- #define RK3568_PHYREG18_PLL_LOOP	0x32
+diff --git a/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c b/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c
+index af3070db47460..5e19fce65e2ba 100644
+--- a/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c
++++ b/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c
+@@ -3242,6 +3242,9 @@ static int arm_smmu_insert_master(struct arm_smmu_device *smmu,
+ 		return -ENOMEM;
+ 	master->num_streams = fwspec->num_ids;
  
-+#define RK3568_PHYREG26			0x64
-+#define RK3568_PHYREG26_FORCE_RTERM_DET_RDY	BIT(5)
++	for (i = 0; i < fwspec->num_ids; i++)
++		RB_CLEAR_NODE(&master->streams[i].node);
 +
- #define RK3568_PHYREG32			0x7C
- #define RK3568_PHYREG32_SSC_MASK	GENMASK(7, 4)
- #define RK3568_PHYREG32_SSC_DIR_SHIFT	4
-@@ -131,6 +134,7 @@ struct rockchip_combphy_cfg {
- 	unsigned int num_phys;
- 	unsigned int phy_ids[3];
- 	const struct rockchip_combphy_grfcfg *grfcfg;
-+	bool force_rxterm_det_rdy;
- 	int (*combphy_cfg)(struct rockchip_combphy_priv *priv);
- };
+ 	mutex_lock(&smmu->streams_mutex);
+ 	for (i = 0; i < fwspec->num_ids; i++) {
+ 		struct arm_smmu_stream *new_stream = &master->streams[i];
+@@ -3277,7 +3280,9 @@ static int arm_smmu_insert_master(struct arm_smmu_device *smmu,
  
-@@ -202,6 +206,17 @@ static int rockchip_combphy_init(struct phy *phy)
+ 	if (ret) {
+ 		for (i--; i >= 0; i--)
+-			rb_erase(&master->streams[i].node, &smmu->streams);
++			if (!RB_EMPTY_NODE(&master->streams[i].node))
++				rb_erase(&master->streams[i].node,
++					 &smmu->streams);
+ 		kfree(master->streams);
+ 	}
+ 	mutex_unlock(&smmu->streams_mutex);
+@@ -3296,7 +3301,8 @@ static void arm_smmu_remove_master(struct arm_smmu_master *master)
  
- 	switch (priv->type) {
- 	case PHY_TYPE_PCIE:
-+		/*
-+		 * Hardware Errata: TX fails to detect peer RX termination.
-+		 * Some PHY revisions may fail to detect remote RX's RTERM
-+		 * (receiver termination resistor) under certain critical
-+		 * temperature conditions. Set force rterm detect ready to
-+		 * fix it.
-+		 */
-+		if (priv->cfg->force_rxterm_det_rdy)
-+			rockchip_combphy_updatel(priv, RK3568_PHYREG26_FORCE_RTERM_DET_RDY,
-+					RK3568_PHYREG26_FORCE_RTERM_DET_RDY, RK3568_PHYREG26);
-+		fallthrough;
- 	case PHY_TYPE_USB3:
- 	case PHY_TYPE_SATA:
- 	case PHY_TYPE_SGMII:
-@@ -598,6 +613,7 @@ static const struct rockchip_combphy_cfg rk3568_combphy_cfgs = {
- 	},
- 	.grfcfg		= &rk3568_combphy_grfcfgs,
- 	.combphy_cfg	= rk3568_combphy_cfg,
-+	.force_rxterm_det_rdy  = true,
- };
+ 	mutex_lock(&smmu->streams_mutex);
+ 	for (i = 0; i < fwspec->num_ids; i++)
+-		rb_erase(&master->streams[i].node, &smmu->streams);
++		if (!RB_EMPTY_NODE(&master->streams[i].node))
++			rb_erase(&master->streams[i].node, &smmu->streams);
+ 	mutex_unlock(&smmu->streams_mutex);
  
- static int rk3588_combphy_cfg(struct rockchip_combphy_priv *priv)
-@@ -784,6 +800,7 @@ static const struct rockchip_combphy_cfg rk3588_combphy_cfgs = {
- 	},
- 	.grfcfg		= &rk3588_combphy_grfcfgs,
- 	.combphy_cfg	= rk3588_combphy_cfg,
-+	.force_rxterm_det_rdy  = true,
- };
- 
- static const struct of_device_id rockchip_combphy_of_match[] = {
+ 	kfree(master->streams);
 -- 
 2.53.0
 
