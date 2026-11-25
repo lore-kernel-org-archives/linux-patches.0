@@ -1,55 +1,58 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795620401;
-	b=QqeOMvz1BEVoUKRqtw+vwzjxuFb8whSyYagm9V7NUgwuc8JqZY0KPcxs62VAhPukpn3d
-	 RmFYkhIKGOO2QnxbVagwZF1DgHocVNzMr6MdtI+/Hd3HQ7iKOAwlo1/0SxPMmWfR0D+gn
-	 7Zgv8deAXuFwCevQuTzt4NpoTa1Rs/gOeX1opVe2pOs2HkFbniaKeAb5IkoeF3AnLFQiJ
-	 uE/k8MwP2WST44nvgBRzo4pLa/e3aC0fypaogTY2o5lDpVegeMK/Ti/3a6F5WLVhW6hcB
-	 OveUQ2NJ0/BEBF8z/vvTvN3KxFobhu7loyiWtDzYScEijdR0vVhYSD3FEj7aQvbXRQQ==
+	t=1795620404;
+	b=UEiQ9oD7Uh2WBa3ZpfMpKr0pDv18CRqEW6sqKB7zch36bVh60EhkuTxxTllbnuebk6bz
+	 YI0WPEw9q6uJpJvTD4Eem6zYHtanEIOg3WqTb9TtrKzu50b4N1D+rvcZ7Itvyggv2MkJu
+	 380Z54noGgfK9qslYW2st8gti0X29DrX471JsQBft/a6sAJmqfieFtjnKd9sxNfqadUoV
+	 Ikpk6PI/kba3vWsYVa4XobIZpK3BnMtrdrITqEqwcmz+aKy6K3lbszBdUKpe284jyyLRt
+	 TzZ9wWyiofjBPt4VpKoOhrBF1lvEqhWeszNrpHNGPv4k7DKKCMB1Ks/bfzvW+O7gcPg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795620401;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795620404;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Transfer-Encoding;
-	bh=HEHSuxStyd+M0iGJD14feKPPtk3nfc0x9AsCj8zgVII=;
-	b=yzW8NKBlFX0AuViydcgVD9qkJwWGTP6ecz/XWLZRT+XnfdC9zmc+tNFeyH10khaOBYzA
-	 ealOEewrmw5hB0Zr3+jpJpLnpTJ22DQSy4FCukZ74iPu3/7uYmnZghrja/hm7SVgWUPQe
-	 1V2grMkfEqL+8BC2tjKHBJtCsLMq6KBuzXbyF+gdX3eC1JjVO7abs9C8iyV55Y44jpD4A
-	 slqtmyutmdbWrKp+kINkoTPSprS4V+9mrURqm2PIIjcsldyr+bzIe7hZ9lJnusiqR21kb
-	 eaYeyVtQJ3yk/gV/RNvAZPNQCGZGgXYLX0HThFa9f0bx1ONKSkiOxjLuVtW5lr3NfZw==
+	 MIME-Version:Content-Type:Content-Transfer-Encoding;
+	bh=r7ygzsHtPJxrFM5o2m3c0Pbv7fOyvKnHDmaEIDtag8M=;
+	b=tYhN/pjB8Kc75GpR57Qqi0gjU7ZKgbpamYotJW5qhU1oZcMgt2CJbxP10rmNMhnDRt/5
+	 mIjLkUW7RViPevdHtyQhP5uHwvCFAx+EJnmFyHwcWNAvWuvpy3lon93DLiF2BeFn6pWjE
+	 yMV/lFYLMixlL5CwxbTGg30qq9QWvBn2r47PG7NKez0+qcnFd+S11h69fH4t/a/xnjG2K
+	 81KknOomNOIHV/tMLa/0mytMWBhZc3p//jKqWEpX6ESG8RRx9zidf2m/9ggQIkFeFi10G
+	 xteuZvmQ+3jbD62uiDd22bHt4VKkihfTrd/rz0eCiYxWG1CVBZY16ldHrN0aau286HQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ueX5tDuQ;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="UjA/VBXh";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C577D606A323;
-	Wed, 25 Nov 2026 15:26:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9674A606A31E;
+	Wed, 25 Nov 2026 15:26:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ueX5tDuQ
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 02D3F1F000C6;
-	Wed, 25 Nov 2026 15:26:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=UjA/VBXh
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ECC891F000C0;
+	Wed, 25 Nov 2026 15:26:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795620401;
-	bh=HEHSuxStyd+M0iGJD14feKPPtk3nfc0x9AsCj8zgVII=;
+	s=korg; t=1795620404;
+	bh=r7ygzsHtPJxrFM5o2m3c0Pbv7fOyvKnHDmaEIDtag8M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ueX5tDuQRRnFp39qw9bec5ct+l0DZFd7vaVbdv1d9NfSHvXTIBLx/21qzzjl4mc+5
-	 dLV2bpSNX3g33k8W+GmTQnjVKnoAU6Vwb8LTubeWSeJRekxMWOQtPABx9cKtAHXuDd
-	 z9dfreN4+BzbPas3nnNpvI8/krrl9STdlAQmZAHk=
+	b=UjA/VBXhlCL66BqAib1JLLtMNmNjdjFFuyj1jUEdQWovYpoNGYCfujj59dNHutx+A
+	 Lx117t11hBkHlPK555eYf6iHsC6+3iiUirCHCe4AM17N83afzUGljh7xQirAAPeTKl
+	 EUKJ9NwCbvMgb03L6em8zbi/I5dRAZVJCqOpKuhU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	stable <stable@kernel.org>,
 	Jiri Slaby <jirislaby@kernel.org>,
-	Crescent Hsieh <crescentcy.hsieh@moxa.com>,
-	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
-	Linmao Li <lilinmao@kylinos.cn>,
+	Hugo Villeneuve <hvilleneuve@dimonoff.com>,
+	Johan Hovold <johan@kernel.org>,
+	Karl Mehltretter <kmehltretter@gmail.com>,
+	John Ogness <john.ogness@linutronix.de>,
+	=?UTF-8?q?Uwe=20Kleine-K=C3=B6nig=20 ?= <u.kleine-koenig@baylibre.com>,
+	Tony Lindgren <tony.lindgren@linux.intel.com>,
 	Josef Bacik <josef@toxicpanda.com>
-Subject: [PATCH 7.3 0905/1005] serial: 8250_mxpcie: handle hangup during break
-Date: Wed, 25 Nov 2026 15:37:23 +0100
-Message-ID: <20261125143842.890750813@linuxfoundation.org>
+Subject: [PATCH 7.3 0906/1005] serial: core: respect runtime PM when sending x_char
+Date: Wed, 25 Nov 2026 15:37:24 +0100
+Message-ID: <20261125143842.917480327@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143821.729802100@linuxfoundation.org>
 References: <20261125143821.729802100@linuxfoundation.org>
@@ -65,6 +68,7 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 7.3-stable review patch.  If anyone has any objections, please let me know.
@@ -73,76 +77,106 @@ Content-Transfer-Encoding: 8bit
 
 From: Josef Bacik <josef@toxicpanda.com>
 
-commit 899e3c6e30ff34cf7a260b806fdedb56749e36e9 upstream.
+commit 84da8238f7bd3025fc16da32c4cd9992c95a783b upstream.
 
-Ending a software break on a Moxa PCIe port in RS-485 2-wire mode
-dereferences a NULL tty pointer if the port was hung up while the break
-was being sent.
+__uart_start() calls the start_tx operation only if the port is runtime
+active.  Otherwise it asks for a resume, and
+serial_port_runtime_resume() starts the transmitter.
 
-send_break() calls ->break_ctl(tty, -1), sleeps for the break duration
-and then calls ->break_ctl(tty, 0), without excluding a concurrent
-hangup. A hangup (a modem DCD drop, or the session leader exiting while
-another process of the session is in TCSBRK/TCSBRKP) runs uart_hangup(),
-which shuts the port down and clears port->state->port.tty. The second
-call still reaches mxpcie8250_software_break_ctl() through
-uart_break_ctl(), which then does:
+uart_send_xchar() calls start_tx at once, under the port lock, whatever
+the state of the device.  With 8250_omap, serial8250_start_tx() then
+calls pm_runtime_get_sync() for a suspended device: that sleeps, and
+omap8250_runtime_resume() takes the port lock again.  A tcflow(TCIOFF)
+on an idle port is enough, if autosuspend has been enabled.  It was
+allowed as long as that driver used pm_runtime_irq_safe().
 
-    struct tty_struct *tty = port->state->port.tty;
-    ...
-    baud = tty_get_baud_rate(tty);
+Share the part of __uart_start() that deals with runtime PM.  A stopped
+transmission still does not hold up an XON or XOFF character.  Let a
+pending x_char count as work for serial_port_runtime_resume(), and keep
+the port from being suspended with it.
 
-with tty == NULL.
-
-The bug was found by code inspection and has not been reproduced.
-
-Fix by taking a reference to the port's tty with tty_port_tty_get() and
-only restoring the divisor when a tty is still attached; a hung up port
-is shut down, and the next open programs the divisor again through
-set_termios().
-
-Fixes: ade78d3d253c ("serial: 8250_mxpcie: add break support for RS485 using MUEx50 features")
+Fixes: 8700a7ea5519 ("serial: 8250_omap: Drop pm_runtime_irq_safe()")
 Cc: stable <stable@kernel.org>
 Cc: Jiri Slaby <jirislaby@kernel.org>
-Cc: Crescent Hsieh <crescentcy.hsieh@moxa.com>
-Cc: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-Cc: Linmao Li <lilinmao@kylinos.cn>
+Cc: Hugo Villeneuve <hvilleneuve@dimonoff.com>
+Cc: Johan Hovold <johan@kernel.org>
+Cc: Karl Mehltretter <kmehltretter@gmail.com>
+Cc: John Ogness <john.ogness@linutronix.de>
+Cc: "Uwe Kleine-König (The Capable Hub)" <u.kleine-koenig@baylibre.com>
+Cc: Tony Lindgren <tony.lindgren@linux.intel.com>
 Signed-off-by: Josef Bacik <josef@toxicpanda.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Link: https://patch.msgid.link/20261027-tty-llm-v1-17-99b0202ae546@linuxfoundation.org
+Link: https://patch.msgid.link/20261027-tty-llm-v1-2-99b0202ae546@linuxfoundation.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/tty/serial/8250/8250_mxpcie.c |   13 +++++++++----
- 1 file changed, 9 insertions(+), 4 deletions(-)
+ drivers/tty/serial/serial_core.c |   25 +++++++++++++++----------
+ drivers/tty/serial/serial_port.c |    4 ++--
+ 2 files changed, 17 insertions(+), 12 deletions(-)
 
---- a/drivers/tty/serial/8250/8250_mxpcie.c
-+++ b/drivers/tty/serial/8250/8250_mxpcie.c
-@@ -411,7 +411,7 @@ static int mxpcie8250_handle_irq(struct
- static void mxpcie8250_software_break_ctl(struct uart_port *port, int break_state)
- {
- 	struct uart_8250_port *up = up_to_u8250p(port);
--	struct tty_struct *tty = port->state->port.tty;
-+	struct tty_struct *tty;
- 	unsigned int baud, quot;
- 	u8 sfr, tx_byte = 0x01;
- 
-@@ -438,9 +438,14 @@ static void mxpcie8250_software_break_ct
- 
- 		serial_out(up, UART_FCR, UART_FCR_CLEAR_XMIT);
- 
--		baud = tty_get_baud_rate(tty);
--		quot = uart_get_divisor(port, baud);
--		serial8250_do_set_divisor(port, baud, quot);
-+		/* A hangup during the break detaches the tty */
-+		tty = tty_port_tty_get(&port->state->port);
-+		if (tty) {
-+			baud = tty_get_baud_rate(tty);
-+			quot = uart_get_divisor(port, baud);
-+			serial8250_do_set_divisor(port, baud, quot);
-+			tty_kref_put(tty);
-+		}
- 		serial_out(up, UART_LCR, up->lcr);
- 	}
+--- a/drivers/tty/serial/serial_core.c
++++ b/drivers/tty/serial/serial_core.c
+@@ -135,17 +135,11 @@ static void uart_stop(struct tty_struct
+ 	uart_port_unlock_deref(port, flags);
  }
+ 
+-static void __uart_start(struct uart_state *state)
++static void uart_port_start_tx(struct uart_port *port)
+ {
+-	struct uart_port *port = state->uart_port;
+-	struct serial_port_device *port_dev;
++	struct serial_port_device *port_dev = port->port_dev;
+ 	int err;
+ 
+-	if (!port || port->flags & UPF_DEAD || uart_tx_stopped(port))
+-		return;
+-
+-	port_dev = port->port_dev;
+-
+ 	/* Increment the runtime PM usage count for the active check below */
+ 	err = pm_runtime_get(&port_dev->dev);
+ 	if (err < 0 && err != -EINPROGRESS) {
+@@ -164,6 +158,16 @@ static void __uart_start(struct uart_sta
+ 	pm_runtime_put_autosuspend(&port_dev->dev);
+ }
+ 
++static void __uart_start(struct uart_state *state)
++{
++	struct uart_port *port = state->uart_port;
++
++	if (!port || port->flags & UPF_DEAD || uart_tx_stopped(port))
++		return;
++
++	uart_port_start_tx(port);
++}
++
+ static void uart_start(struct tty_struct *tty)
+ {
+ 	struct uart_state *state = tty->driver_data;
+@@ -718,8 +722,9 @@ static void uart_send_xchar(struct tty_s
+ 	else {
+ 		guard(uart_port_lock_irqsave)(port);
+ 		port->x_char = ch;
+-		if (ch)
+-			port->ops->start_tx(port);
++		/* It goes out even if the transmission is stopped */
++		if (ch && !(port->flags & UPF_DEAD))
++			uart_port_start_tx(port);
+ 	}
+ 	uart_port_deref(port);
+ }
+--- a/drivers/tty/serial/serial_port.c
++++ b/drivers/tty/serial/serial_port.c
+@@ -23,8 +23,8 @@
+ /* Only considers pending TX for now. Caller must take care of locking */
+ static int __serial_port_busy(struct uart_port *port)
+ {
+-	return !uart_tx_stopped(port) &&
+-		!kfifo_is_empty(&port->state->port.xmit_fifo);
++	return port->x_char || (!uart_tx_stopped(port) &&
++		!kfifo_is_empty(&port->state->port.xmit_fifo));
+ }
+ 
+ static int serial_port_runtime_resume(struct device *dev)
 
 
