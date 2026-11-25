@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795625962;
-	b=aUF9m9eSdDPTy0G/5U/V8PYWR777LiUiwJdWVYHrepbyuEyqyHW3p/y47ekEkayKmKEJ
-	 Z7Chr0D39Vu6FWeYuCgDJDAL6cr8cizte+ogM8zrSjznfI5nG8F6AXpfnzR8fcR9Y//ev
-	 8vZCk82rz0TKXDlizZERQOcESiSum+lux94TFLJ9oyazQ8ZC0GlHCOMkd8rN2jZaDVXG7
-	 VadZydQDG1rEnwLOeSulWStSzD5NEK4dAzHZndhXC5tAQl6/GMVfzbIC6pd0f3pNYKwtc
-	 vWOKll/8BO9DnjOf2TpkOOUCC6/kNra8K0mkoTVjEYpXpRfDXRzymrOfcyWX+vbDjMQ==
+	t=1795625965;
+	b=HGqUyh8MnbdYsAagjhFmr0CSdzG893fW2WTvmkQ0Xq9xvB+hX4sBI5UJ43iVU9QeuaI9
+	 sZTK7xCJwq8MTsKdUcURCBnTwA9PHYBSiRpj9SQhZy7fU96UKiTrA0wEGzvInPl8HZ1ZJ
+	 z9SdEXT0UMkApjtFa4FOByDqmI5omo4u1+X1+a6Ped0vibxuQJG7NCeKLg0+4+zeIkjJL
+	 a8QGVmYT6726f9l8SMNg1POAlPSSL2uAVTG40R5o7bduTji59X7AX+Mf4pKgjYV70EaZ3
+	 c3DfKFcIM8l0Jk2trh6fD7Li6yZKuqv5ox0ru/AvnhF/hWJN3rEkasTfjd6mGF18lTQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795625962;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795625965;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Transfer-Encoding;
-	bh=5glqF6ptB1fZ68sgWMqE18+RTzKcWo803SHdPTvB9VY=;
-	b=gp+8WEitjVyOsbEfwgTm2k6n4/dQ09PUbxRco1GwkzjV3YQN78WARD6KAcHmbgTu137H
-	 8aM45e/1+zW873bltYyVkOMEeBc7StF0UGWeWIAI03fZ17sBYlxWmuTWaBdUlndIskSEU
-	 990NUVTAQD1/4q1iNNg49+ZqEf66eljY4G/GPjXRSqignuWPNMUV30BxjV88+bj6bqoDY
-	 6OUnHgD4ruzJ8YTpYVqr+UExkM/nlUE+xHJm5aotdN8UZUClmRowTm4EY3WzHFA1bfzP2
-	 yEkM1R8XAwl4gOzUHPxGHLo4KHNJnaqcjm///YNNOgw8ZjmJJGPpmo9Brrrhpy2kS9A==
+	 MIME-Version:Content-Type:Content-Transfer-Encoding;
+	bh=fDJEkc3d9G93nkEXY+P5i1/huyvxWWlzkhEpOiJo2UQ=;
+	b=Kqp6wHdRiF5YwqHzQ3RTB4UBderp5rhqtKmLihuWk+x52fAc4vH2XLlBAjtm8QriRmvT
+	 6/iZSbtpbdN6yTS+E2PuLe22VRO5L1tNJFNxoyRht4X6Zuvu7X+khPQ48mghl9doJ5+mU
+	 Rq5wRfBnUWS51wRMsCPMs/oMysqACkqUockXxj6Mls5uRjWqklcRV+Zc95JHNXKCxNamA
+	 TKfL79GEWxDB6uHQatRCQaNyrsM9dyOXGou0xfeBx0Jxs3+58HZ9hfJjlsgCB4UAHTuSD
+	 I9Q+9FwzWok8y7iIof9APdkY3aEIX1HQ3+vpAA6ijCQC3JAqg54huiEEF5TPQz8ViNg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=2q+DMryb;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=dV1Jis34;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E0942606A31E;
-	Wed, 25 Nov 2026 16:59:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4A8DE606A31E;
+	Wed, 25 Nov 2026 16:59:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=2q+DMryb
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3A7B01F000EB;
-	Wed, 25 Nov 2026 16:59:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=dV1Jis34
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 93CBC1F000D3;
+	Wed, 25 Nov 2026 16:59:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795625961;
-	bh=5glqF6ptB1fZ68sgWMqE18+RTzKcWo803SHdPTvB9VY=;
+	s=korg; t=1795625965;
+	bh=fDJEkc3d9G93nkEXY+P5i1/huyvxWWlzkhEpOiJo2UQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=2q+DMrybC0i5pkHyWO8hSsvDSzVIm9Sacq7CbduePw8djIZn97C93yvin4CzVE/pJ
-	 rHbCUbeWadk4BE5IzOJKrgx5YsY/NwUXWp6XmPeNhXR5/X0tfaYiNCyj7QXFWGEyRC
-	 H3N2vcpn5wfUVvSRNtu083ytuSKuLtgGK90b5WVI=
+	b=dV1Jis34atOhP2jzU/mkc+Dh7vIOhdXnX5kWzne4VZm0Wpf7cHDvjpLknurz26Vjx
+	 +nTonQYJRqnQXW6DJDOpIId7Z7jfdXjmBINQjYcWSmM7DgvHIEA/c7qbwXqblykEwg
+	 1L+FQ9nJ9FCSWVRPUXNGO6ez3b25uwDgTU/s9WXA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andrey Misiurov <andrey.misyrov@gmail.com>,
+	Fredric Cover <fredric.cover.lkernel@gmail.com>,
 	Namjae Jeon <linkinjeon@kernel.org>,
 	Paulo Alcantara <pc@manguebit.org>
-Subject: [PATCH 6.12 685/816] smb: client: fix OOB write when compounding SMB2_IOCTL with encryption
-Date: Wed, 25 Nov 2026 15:37:13 +0100
-Message-ID: <20261125143905.037417618@linuxfoundation.org>
+Subject: [PATCH 6.12 686/816] smb: client: fix out-of-bounds read in dfs_parse_target_referral()
+Date: Wed, 25 Nov 2026 15:37:14 +0100
+Message-ID: <20261125143905.060881463@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143849.205329330@linuxfoundation.org>
 References: <20261125143849.205329330@linuxfoundation.org>
@@ -62,111 +62,76 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Andrey Misiurov <andrey.misyrov@gmail.com>
+From: Fredric Cover <fredric.cover.lkernel@gmail.com>
 
-commit 73a0060cb22a1d2bd8bff364c18a4259ec0cb528 upstream.
+commit 86aacc2f3f6ba18e1d87feee24f37c94b3ce863a upstream.
 
-On an encrypted ("seal") mount, SMB2_ioctl_init() keeps the IOCTL input
-in a separate iov (iov[1]); iov[0] is a 448-byte buffer from
-cifs_small_buf_get().  When such an IOCTL is not the last request of a
-compound, smb2_set_next_command() pads it for alignment by copying the
-whole request into iov[0].  A large enough input overflows that 448-byte
-buffer and corrupts the slab; the copy also sets rq_nvec to 1, so the
-input buffer is leaked too.
+dfs_parse_target_referral() decides whether a prefix path remains after
+the consumed part of full_path with:
 
-An unprivileged user can trigger it by creating a symlink with a long
-target on such a mount: the native symlink is sent as
-FSCTL_SET_REPARSE_POINT + QUERY_INFO + CLOSE in one compound, so the
-IOCTL is not the last request.
+	if (strlen(full_path) - ref->path_consumed)
 
-With slub_debug red zones on the cifs_small_rq cache, the overflow is
-caught on the next allocation from that cache in the same compound (the
-0x61 bytes are the 'a' characters of the symlink target):
+strlen() returns size_t, so if path_consumed is larger than the length
+of full_path, the subtraction wraps around to a huge non-zero value.
+The branch is then taken, prepath is set to a pointer past the
+terminating NUL of full_path, and *prepath reads out of bounds.
 
-  BUG cifs_small_rq (Not tainted): Object corrupt
-  [Left Redzone overwritten] 0xffff8a59c7790500-0xffff8a59c779053f
-  First byte 0x61 instead of 0xbb
-  Call Trace:
-   check_object+0x1a8/0x350
-   alloc_debug_processing+0xab/0x110
-   ___slab_alloc+0x7e/0x2f0
-   kmem_cache_alloc_noprof+0x28d/0x4b0
-   mempool_alloc_slab+0x16/0x30
-   cifs_small_buf_get+0x1a/0x30 [cifs]
-   SMB2_close_init+0x8a/0x100 [cifs]
-   smb2_compound_op+0x2571/0x2b50 [cifs]
-   smb2_create_reparse_inode+0x27e/0x490 [cifs]
-   mknod_nfs+0x1ce/0x2e0 [cifs]
-   create_reparse_symlink+0x119/0x180 [cifs]
-   cifs_symlink+0x19f/0x8e0 [cifs]
-   vfs_symlink+0xa3/0x1b0
-   __x64_sys_symlink+0x41/0x70
+path_consumed can exceed strlen(full_path) when the mount charset is
+not utf8.  The referral code derives path_consumed from the canonical
+path, which is in the DFS cache charset (utf8), but it is applied here
+to full_path, which is in the mount charset.  Each non-ASCII character
+in the consumed part of the path that is longer in utf8 than in the
+mount charset makes the count too large by the difference.
 
-Pad the input to a multiple of 8 bytes when encryption is required.  The
-request is then already aligned and smb2_set_next_command() no longer
-copies it; InputCount still carries the real length.
+This was reproduced with iocharset=iso8859-1 against a Samba DFS root
+containing a link named "café", mounting with the single Latin-1 byte
+0xe9 in the path.  On an unmodified tree such a mount fails earlier
+with -ENOENT because the path is converted to utf8 twice in
+setup_dfs_ref(); with that fixed ("smb: client: fix double conversion
+of DFS path in setup_dfs_ref()"), the mount reaches this code.
+full_path was 29 bytes while path_consumed was 30:
 
-Fixes: 90f7c100d2dd ("smb: client: fix compound alignment with encryption")
+  BUG: KASAN: slab-out-of-bounds in dfs_parse_target_referral+0x26a/0x270
+  Read of size 1 at addr ffff88810db89d5f by task mount/1743
+  ...
+  The buggy address is located 0 bytes to the right of
+   allocated 31-byte region [ffff88810db89d40, ffff88810db89d5f)
+
+Compare path_consumed against the string length instead of subtracting,
+so that no prefix path is used when the consumed count covers the whole
+string.  With the bounds check in place the same mount succeeds and no
+KASAN report is produced.
+
+This only prevents the out-of-bounds access.  path_consumed is still in
+the wrong units, so a non-ASCII link followed by a path component can
+still produce a wrong prefix path.  That needs a separate fix.
+
+Signed-off-by: Fredric Cover <fredric.cover.lkernel@gmail.com>
 Cc: stable@vger.kernel.org
-Signed-off-by: Andrey Misiurov <andrey.misyrov@gmail.com>
 Reviewed-by: Namjae Jeon <linkinjeon@kernel.org>
 Signed-off-by: Paulo Alcantara <pc@manguebit.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/smb/client/smb2pdu.c |   12 ++++++++----
- 1 file changed, 8 insertions(+), 4 deletions(-)
+ fs/smb/client/dfs.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/fs/smb/client/smb2pdu.c
-+++ b/fs/smb/client/smb2pdu.c
-@@ -3357,11 +3357,12 @@ SMB2_ioctl_init(struct cifs_tcon *tcon,
- 		char *in_data, u32 indatalen,
- 		__u32 max_response_size)
- {
--	struct smb2_ioctl_req *req;
- 	struct kvec *iov = rqst->rq_iov;
-+	struct smb2_ioctl_req *req;
-+	u32 in_buf_len = indatalen;
- 	unsigned int total_len;
--	int rc;
- 	char *in_data_buf;
-+	int rc;
+--- a/fs/smb/client/dfs.c
++++ b/fs/smb/client/dfs.c
+@@ -31,7 +31,7 @@ int dfs_parse_target_referral(const char
+ 	if (WARN_ON_ONCE(!ref->node_name || ref->path_consumed < 0))
+ 		return -EINVAL;
  
- 	rc = smb2_ioctl_req_init(opcode, tcon, server,
- 				 (void **) &req, &total_len);
-@@ -3369,15 +3370,18 @@ SMB2_ioctl_init(struct cifs_tcon *tcon,
- 		return rc;
- 
- 	if (indatalen) {
-+		if (smb3_encryption_required(tcon))
-+			in_buf_len = ALIGN(indatalen, 8);
- 		/*
- 		 * indatalen is usually small at a couple of bytes max, so
- 		 * just allocate through generic pool
- 		 */
--		in_data_buf = kmemdup(in_data, indatalen, GFP_NOFS);
-+		in_data_buf = kzalloc(in_buf_len, GFP_NOFS);
- 		if (!in_data_buf) {
- 			cifs_small_buf_release(req);
- 			return -ENOMEM;
- 		}
-+		memcpy(in_data_buf, in_data, indatalen);
- 	}
- 
- 	req->CtlCode = cpu_to_le32(opcode);
-@@ -3401,7 +3405,7 @@ SMB2_ioctl_init(struct cifs_tcon *tcon,
- 		rqst->rq_nvec = 2;
- 		iov[0].iov_len = total_len - 1;
- 		iov[1].iov_base = in_data_buf;
--		iov[1].iov_len = indatalen;
-+		iov[1].iov_len = in_buf_len;
- 	} else {
- 		rqst->rq_nvec = 1;
- 		iov[0].iov_len = total_len;
+-	if (strlen(full_path) - ref->path_consumed) {
++	if ((size_t)ref->path_consumed < strlen(full_path)) {
+ 		prepath = full_path + ref->path_consumed;
+ 		/* skip initial delimiter */
+ 		if (*prepath == '/' || *prepath == '\\')
 
 
