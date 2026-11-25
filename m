@@ -1,52 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795623037;
-	b=JgvMH7QRjRf/fnb9Y6CxxxBhUSLMC25Ro+1Cy/buJFst1GUlT7UK1IlA3tQ0EXWk7bO4
-	 WPwILHePpvCnw43EmvVNT9aC+gyYrk2c7vX1fVQucgQ3MjmLgA5UErkLnoQe112m4d2cs
-	 YKgt/pk6GZBrdnLvx6ETc9d96blQcL9Jr/hYXmFRA83rvGv7t9seBSlACMRAthi3uQSTn
-	 Cr56K++lCHxPMmcHQpq597H2DLwzftp6Gyczy6AiL26MzKWZM2Cgd9bjEZKJPHZqIlngU
-	 9TrwZjG8S4c5i4XUfB5nlP2h/toSp80Co9q+zorWBAfoetVAH3fpJLfbCFf9UL/U7og==
+	t=1795623039;
+	b=WQvK2Ex9jE8a8iLDzSpzxKoeKqBG75jYo24fuKelmTWXhd1TCZfq9AYcsiIRD7G7Omln
+	 mqabeDtm7T/V41KNnk7B80BwmO4ZTlA5YOjETngjZI7Vpk+V+cXQtx9ErPJfoyFydA4DX
+	 bQbpzY6if556vu2tIavDvv1uuAUNTmhOM0keeUGqprXn7ARmjx/2emxAkgsVP3xSD8F2n
+	 qIuDJrxAQXHMM+Yrves6WZ5B8clueLoare7YF+E2E92sL/pfxe+P+I5ZouOEnjG57FZER
+	 pyVUZBXGnxp27GsaFrLoQFvIKhDlGTBZadTcsPyk3TBvIhuuejKUvSd8+RCSimy9ePA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795623037;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795623039;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Type:Content-Transfer-Encoding;
-	bh=48e9GXF7nIvz+22kj0F9nRgz7nRgUzNulpiXqDhL9/8=;
-	b=DZOrlT/eVxph07q2KdKXGZST/kaARD/vfiakn78Bn6TqLWEawfVmmAa17IuL0fG30jQU
-	 TuDj/yTeW7LOhPifSnJ5+XRy9w0ypfgMF8/bbhD0GzTdnxkCLV+A6ZxM3J4/ZXbMCsMI0
-	 qtBGqtbjpqj+H8Vsz5sBDHzEhEIJeMrics4fNQcCrf6So3duAn2P0ZjaK964uh22r58PO
-	 p6HAD8xu+6R/8vC+LfAcL3o51YVM34GvBI6Sp4zr4QR2WOGeu7qm4BlHybspZHE8Mkd5u
-	 //7SyV1rd7mKMww/qX6/buD9Kwz4Llig9nfYJjcIeVd0FK/raoKvgTIYWph8Svmlf7Q==
+	 MIME-Version:Content-Transfer-Encoding;
+	bh=OVLHUR2oe+zY757bTpwE6aWTaywvUFhdWuZzEuEOJ6k=;
+	b=KVqIFrhirtgsHsrEPJsPwqdHj4DI766DhrCPLoNUusn9vtmZRDjTN/AT4yUa9qcZeII5
+	 3TuYbwn5F3wOEmagHE6yd1dE5lyzKIcBvZ6UeZ78UFITv5W7seYpH6c+KummGqTgasgbS
+	 xl+xE8TGYnQH1qFe5yAWn0vWu9dy/lf+BqMITqlatPts1ckUdm79atI9eKmtO2ITsrKda
+	 iwxrCD4sekn9COsq3b7g9jOgnsMl0I3+n6cYXLiowWHgraARYOAoYAQI6y3EVmiwzwFnm
+	 xCcaK0zI9wsCK0ABwDV99G0yPbi4NixgFGE7jJvI1sxi+lDXP8aQY3DSw0uhqz7vT4Q==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=triJvMo9;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Ohw+Tr22;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EF17F606A323;
-	Wed, 25 Nov 2026 16:10:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CF68D606A32E;
+	Wed, 25 Nov 2026 16:10:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=triJvMo9
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4AAF61F000C6;
-	Wed, 25 Nov 2026 16:10:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Ohw+Tr22
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1F3081F000CA;
+	Wed, 25 Nov 2026 16:10:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795623036;
-	bh=48e9GXF7nIvz+22kj0F9nRgz7nRgUzNulpiXqDhL9/8=;
+	s=korg; t=1795623039;
+	bh=OVLHUR2oe+zY757bTpwE6aWTaywvUFhdWuZzEuEOJ6k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=triJvMo9K3xJfUrUNIbumG+75jVjJLsu8u3XCm3MzlEi+r0GmuUtW4eSfvOfGWMrC
-	 K5Gb8Ead+nXwNOyD75xjsJ5a+4tx9JfP5YbR1K0wpNFTo6SMkhDlmZViXInq1FVrGM
-	 aKrvRo7ykCMpcrnMGOR4dhCihQhX1SrP4tz+bml0=
+	b=Ohw+Tr22Ubw8CQ4S8zXPrjGeAQiYugAyv1cKk5f5bD1huoq9wS0D+JPpQUa/brvt1
+	 dMoqu8gpnYxd/PysDt1goSZZHJUEeYz/yplqZBGx1d4GpfBZdH0GFhinhe3l7cG5Bn
+	 9d8bb+z2w8OpSL4wB+rMnR8RQ2NvXyiFTahZJXqg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Iv=C3=A1n=20Ezequiel=20Rodriguez?= <ivanrwcm25@gmail.com>,
 	David Howells <dhowells@redhat.com>,
 	Paulo Alcantara <pc@manguebit.org>
-Subject: [PATCH 6.18 727/990] netfs: preserve prepare_write errno on reissue
-Date: Wed, 25 Nov 2026 15:34:54 +0100
-Message-ID: <20261125143839.103564801@linuxfoundation.org>
+Subject: [PATCH 6.18 728/990] netfs: keep the prepare_read errno when abandoning read retries
+Date: Wed, 25 Nov 2026 15:34:55 +0100
+Message-ID: <20261125143839.125574004@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143822.072087159@linuxfoundation.org>
 References: <20261125143822.072087159@linuxfoundation.org>
@@ -62,49 +61,82 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Iván Ezequiel Rodriguez <ivanrwcm25@gmail.com>
+From: Paulo Alcantara <pc@manguebit.org>
 
-commit 62869ecb3aeca670b86058387e7533a33524b95b upstream.
+commit d88a0c3a96fd6d7228d04532cecb23f23676aa2d upstream.
 
-prepare_write() may call netfs_prepare_write_failed() (FAILED + errno)
-before write_retry calls netfs_reissue_write().  Clearing subreq->error
-to 0 for a clean I/O reissue (82e8885bd763) then makes
-netfs_do_issue_write() terminate with 0.  The collector copies
-front->error into stream->error and mapping_set_error(), which ignores
-0, so writeback failure is silent.
+When ->prepare_read() fails while retrying a read,
+netfs_retry_read_subrequests() marks the subrequest failed and abandons
+the rest, which overwrites the error of every failed subrequest with
+-ENOMEM.  The reader then gets -ENOMEM for e.g. a handle that couldn't be
+reopened (-EHOSTDOWN, -ENOENT), a credit wait interrupted by a signal
+(-ERESTARTSYS) or umount -f (-EIO).  The first pass doesn't have this
+problem, as netfs_cancel_read() keeps the errno.
 
-Skip clearing error when NETFS_SREQ_FAILED is already set;
-do_issue_write() already terminates FAILED subrequests.
+Record the errno of ->prepare_read() in the subrequest and keep the error
+of subrequests that already failed, using -ENOMEM only for those
+abandoned while still waiting for a retry.
 
-Fixes: 82e8885bd763 ("netfs: when subreq is marked for retry, do not check if it faced an error")
-Signed-off-by: Iván Ezequiel Rodriguez <ivanrwcm25@gmail.com>
+Fixes: ee4cdf7ba857 ("netfs: Speed up buffered reading")
 Reviewed-by: David Howells <dhowells@redhat.com>
 Signed-off-by: Paulo Alcantara <pc@manguebit.org>
 Cc: stable@vger.kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/netfs/write_issue.c |    4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ fs/netfs/read_retry.c |   16 ++++++++++++----
+ 1 file changed, 12 insertions(+), 4 deletions(-)
 
---- a/fs/netfs/write_issue.c
-+++ b/fs/netfs/write_issue.c
-@@ -252,7 +252,9 @@ void netfs_reissue_write(struct netfs_io
- 	iov_iter_truncate(&subreq->io_iter, size);
+--- a/fs/netfs/read_retry.c
++++ b/fs/netfs/read_retry.c
+@@ -28,6 +28,7 @@ static void netfs_retry_read_subrequests
+ 	struct netfs_io_subrequest *subreq;
+ 	struct netfs_io_stream *stream = &rreq->io_streams[0];
+ 	struct list_head *next;
++	int ret;
  
- 	subreq->retry_count++;
--	subreq->error = 0;
-+	/* Keep prepare_write() errno; do_issue_write() terminates FAILED. */
-+	if (!test_bit(NETFS_SREQ_FAILED, &subreq->flags))
-+		subreq->error = 0;
- 	__clear_bit(NETFS_SREQ_MADE_PROGRESS, &subreq->flags);
- 	__set_bit(NETFS_SREQ_IN_PROGRESS, &subreq->flags);
- 	netfs_stat(&netfs_n_wh_retry_write_subreq);
+ 	_enter("R=%x", rreq->debug_id);
+ 
+@@ -140,8 +141,11 @@ static void netfs_retry_read_subrequests
+ 
+ 			/* Renegotiate max_len (rsize) */
+ 			stream->sreq_max_len = subreq->len;
+-			if (rreq->netfs_ops->prepare_read &&
+-			    rreq->netfs_ops->prepare_read(subreq) < 0) {
++			ret = 0;
++			if (rreq->netfs_ops->prepare_read)
++				ret = rreq->netfs_ops->prepare_read(subreq);
++			if (ret < 0) {
++				subreq->error = ret;
+ 				trace_netfs_sreq(subreq, netfs_sreq_trace_reprep_failed);
+ 				__set_bit(NETFS_SREQ_FAILED, &subreq->flags);
+ 				goto abandon;
+@@ -222,7 +226,9 @@ static void netfs_retry_read_subrequests
+ 				part = netfs_limit_iter(&source, 0, part, stream->sreq_max_segs);
+ 
+ 			netfs_stat(&netfs_n_rh_download);
+-			if (rreq->netfs_ops->prepare_read(subreq) < 0) {
++			ret = rreq->netfs_ops->prepare_read(subreq);
++			if (ret < 0) {
++				subreq->error = ret;
+ 				trace_netfs_sreq(subreq, netfs_sreq_trace_reprep_failed);
+ 				__set_bit(NETFS_SREQ_FAILED, &subreq->flags);
+ 				goto abandon;
+@@ -258,7 +264,9 @@ abandon:
+ 		if (!test_bit(NETFS_SREQ_FAILED, &subreq->flags) &&
+ 		    !test_bit(NETFS_SREQ_NEED_RETRY, &subreq->flags))
+ 			continue;
+-		subreq->error = -ENOMEM;
++		if (!subreq->error ||
++		    !test_bit(NETFS_SREQ_FAILED, &subreq->flags))
++			subreq->error = -ENOMEM;
+ 		__set_bit(NETFS_SREQ_FAILED, &subreq->flags);
+ 		__clear_bit(NETFS_SREQ_NEED_RETRY, &subreq->flags);
+ 	}
 
 
