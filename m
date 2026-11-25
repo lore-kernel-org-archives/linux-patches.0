@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795621353;
-	b=eOJm5Yc393utEHNUbQdH7UY/K3xXYjH1tJxVQwFhmxppOCaCuCXkdlT43La6aGRgr6mw
-	 XteIVkjSdNKANgcnWCA5IcaOzSKoACEjVSCOhU/oYzmgT8kEoIRPuREl03VuqUNbm5TDY
-	 T61G+0Lw+/JiE3nSYxLNOLEUg6199OyjDJnmL3tFr4qUpU2rvHQ2eZo3abw8eOCPBAfjq
-	 CqxcUqiDx+yOaMxe7hee4OQFkK6BL5Mz6LJLM1ESjMTxPL6V+6zFbZyfVVL/P6qhJp8Ei
-	 TmfiFYU1CHck72grgX98mWrDXnTBV9H8osTew+Miw8KIXnGzdBNpDBGwjXo3+vZQ7Nw==
+	t=1795621357;
+	b=PDtvv7qDlT9gcOwtntRRxWeWu5A62gO1d3sKlkbIgtknPU9Wh3KRLkYfhlkDh8Cx5BCy
+	 N8X58CuDbwcITpfqxOWOlZTcFxMN4kOX/5PjbZK9wN/GzPoYWJbcdZJ4nfYUDqzjl21zb
+	 SBeMG6QKS937ySxhhHRhw6QiVRCG5Eq/g+EIsQGURKnA0+If2ll5MeUBWVUZCUR6oBd0+
+	 nvPxKbbve0ugiI8g1RHRo4tekLbgSnY1xI/dlNP9zQZKCgihLTcxlVE/kxJhqoF/dwlXO
+	 YlpGwQJxI5qpjqRVV5r3nyo/YAPybxH7gmTAGZIKDfYzRt148SJaUEl/qSlTdts6P6A==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795621353;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795621357;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=k/sqQsMFKJZTr7t48/+cJIcfbXt1fYLstZTvty60Wf8=;
-	b=Zrq4lJ9jKXB6dHNUW6FYVPazb3v/W47ClVLq77NdV5OWFlSHMwNpbaEtO+2yhMWPLS+j
-	 nfx4P4BTzdayPyl6+hUCDNis2Eva7tWtq6fWBYDwJS/MfbXrT/F/+g7qIdjd4ZSeWdAqy
-	 uGvi270WSsz3FJ9WyT8ed+Ytb8uGBkpY13pg93HePGvpNUYEMVZ3clMAQpQ9A1e+RKvKy
-	 4IFAL7g7/5w0XbvvSndhhdV8nyeo9jtqzlWPpigaFbxTCX5mcWQ5GX9JlQuc5iD0xUQHt
-	 /o5ektzkE5yJ5t4Uf3E8OUxMher69vkqI6R93wciqUmTTeRvYGFouZxl6K13W9xesfQ==
+	bh=yIsGrY+3NA62oB4rCLzUZysw4mRhp7YRlx+5Bj3ytEs=;
+	b=r7PRm3l2qSrhk+im4h7pfOpkCpD0SAtQe1MU3Q2js+RMMif6Mh4fsCnifVSyy0L8vyid
+	 FlGuXuVe7tL2fPDnE61HKPE3WwuVBeOoe42ia616WKZ5m5hQ8fQPnQBdbZDPQ1+lGpBPj
+	 az3CqmEeiLvvYOF8tnZ2JGbZRsoKX3lqnWGjyvyBCMVglWIXkJgOPUmaz8uXU64KyCgbL
+	 KyRbQhLU7OlewqANzYha4N+dpYjDhFD09Nz+1yB6oQDR1cuTFfQESmLidi0Ennyeuf9PX
+	 oeikh6hzDSSCi0HK4nEQ9HBoWPSjJX1uvDTjIQxWjnqBYeUlHXP1Sj4QkaF9Mz+v9Tg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=w2M8uOxM;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=xxGiormm;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2A160606A6A4;
-	Wed, 25 Nov 2026 15:42:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E2196606B395;
+	Wed, 25 Nov 2026 15:42:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=w2M8uOxM
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6852F1F000C6;
-	Wed, 25 Nov 2026 15:42:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=xxGiormm
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E78441F000D8;
+	Wed, 25 Nov 2026 15:42:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795621352;
-	bh=k/sqQsMFKJZTr7t48/+cJIcfbXt1fYLstZTvty60Wf8=;
+	s=korg; t=1795621356;
+	bh=yIsGrY+3NA62oB4rCLzUZysw4mRhp7YRlx+5Bj3ytEs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=w2M8uOxM0gwc93K+AVCKeC+RC4SSznzSON4PbqUHXqyT5OyiZyjJbTaK6ZC2mZIL7
-	 d92QD9w/Wrq81tTz1RihZZvFNJRLMh9y6x5KevZyCRSxYHsJ9KDqFI+zlyvvoQCcDQ
-	 9z8QwBBtqwO0PMUaJuitlrTDA3/80eJs/LGEwtrg=
+	b=xxGiormmWvaHYL4ECCPwyAwFH6Hbl0oK7KTfmX1EclEEXC8aiR0fnaRJKRWOoOXXq
+	 ct7sgeLNQlp8S4iQd/abN4UO/vRamoM6eUmDZXUl4o0inT42EbWoOA2a2QXHb/7vCm
+	 A2MEQuzLTG8Jh/EZ8Dop7TQFTlp/LfdXrBxB2vR4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yuho Choi <oss.patchbox@gmail.com>,
-	Stefan Hajnoczi <stefanha@redhat.com>,
+	Jia Jia <physicalmtea@gmail.com>,
 	"Michael S. Tsirkin" <mst@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 162/990] virtio_blk: Reset device on probe error paths after DRIVER_OK
-Date: Wed, 25 Nov 2026 15:25:29 +0100
-Message-ID: <20261125143825.888178549@linuxfoundation.org>
+Subject: [PATCH 6.18 198/990] vhost-scsi: do not count PI bytes in the data length
+Date: Wed, 25 Nov 2026 15:26:05 +0100
+Message-ID: <20261125143826.732598738@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143822.072087159@linuxfoundation.org>
 References: <20261125143822.072087159@linuxfoundation.org>
@@ -69,41 +68,80 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yuho Choi <oss.patchbox@gmail.com>
+From: Jia Jia <physicalmtea@gmail.com>
 
-[ Upstream commit f4f6e9a9cb349003d333f0776de94f12ac95b8d2 ]
+[ Upstream commit 1f5bc40e33d8b3e5e3b89047956099b0c19f1d3d ]
 
-virtblk_probe() marks the device ready before revalidating zones and
-adding the disk, and either of those can fail.  The out_cleanup_disk path
-they take goes on to delete the virtqueues, but nothing tells the device
-to stop first, so it is still live when the rings are freed.
+vhost_scsi_handle_vq() moves pi_bytesout or pi_bytesin into the
+protection sgl and subtracts those bytes from exp_data_len.  The length
+passed to TCM is still exp_data_len + prot_bytes.
 
-Reset the device at out_cleanup_disk, which is only reachable after
-virtio_device_ready().  virtblk_remove() and virtblk_freeze_priv() both
-reset before deleting the virtqueues for the same reason.
+prot_bytes comes from virtio_scsi_cmd_req_pi.  With
+VIRTIO_SCSI_F_T10_PI negotiated, vhost reads that header and does not
+check that the CDB is a READ or WRITE.  sbc_check_prot() replaces
+data_length from the CDB only when the protect field is non-zero.
+target_cmd_size_check() leaves a write's data_length unchanged when the
+CDB size is smaller, so a command that does not get that replacement
+keeps a data_length larger than the data sgl.
 
-Fixes: dbb301f91fc8 ("virtio_blk: add error handling support for add_disk()")
-Signed-off-by: Yuho Choi <oss.patchbox@gmail.com>
-Reviewed-by: Stefan Hajnoczi <stefanha@redhat.com>
+The KASAN report is a MODE SELECT whose header had pi_bytesout set.
+The data sgl held only the parameter list.  spc_emulate_modeselect()
+walked data_length and read the next physical page.
+
+Pass the data sgl length.  Protected READ and WRITE still take their
+length from the CDB in sbc_check_prot().
+
+KASAN reports:
+
+  BUG: KASAN: use-after-free in spc_emulate_modeselect+0x145/0x380 [target_core_mod]
+  Read of size 1
+
+  spc_emulate_modeselect
+  __target_execute_cmd
+  target_execute_cmd
+  vhost_scsi_write_pending
+  transport_generic_new_cmd
+  __target_submit
+  target_queued_submit_work
+  process_one_work
+  worker_thread
+  kthread
+  ret_from_fork
+  ret_from_fork_asm
+
+Fixes: 9f977ef7b671 ("vhost-scsi: Include prot_bytes into expected data transfer length")
+Signed-off-by: Jia Jia <physicalmtea@gmail.com>
 Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
-Message-ID: <20260922211207.523999-1-oss.patchbox@gmail.com>
+Message-ID: <20261012103954.136698-1-physicalmtea@gmail.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/block/virtio_blk.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/vhost/scsi.c | 12 ++++++++++--
+ 1 file changed, 10 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/block/virtio_blk.c b/drivers/block/virtio_blk.c
-index 6cfad73bf47df..29317945a7c00 100644
---- a/drivers/block/virtio_blk.c
-+++ b/drivers/block/virtio_blk.c
-@@ -1583,6 +1583,7 @@ static int virtblk_probe(struct virtio_device *vdev)
- 	return 0;
- 
- out_cleanup_disk:
-+	virtio_reset_device(vdev);
- 	put_disk(vblk->disk);
- out_free_tags:
- 	blk_mq_free_tag_set(&vblk->tag_set);
+diff --git a/drivers/vhost/scsi.c b/drivers/vhost/scsi.c
+index d39dc7d215c09..4c2964dcb78c8 100644
+--- a/drivers/vhost/scsi.c
++++ b/drivers/vhost/scsi.c
+@@ -1516,9 +1516,17 @@ vhost_scsi_handle_vq(struct vhost_scsi *vs, struct vhost_virtqueue *vq)
+ 		 * vhost_scsi_queue_data_in() and vhost_scsi_queue_status()
+ 		 */
+ 		cmd->tvc_vq_desc = vc.head;
++		/*
++		 * vhost_scsi_mapal() maps the PI bytes into cmd->prot_table.
++		 * It maps the remaining exp_data_len bytes into cmd->table,
++		 * which is the data SGL passed to the target core.  Its
++		 * expected length must therefore exclude prot_bytes.
++		 *
++		 * sbc_check_prot() derives the data length for protected READ
++		 * and WRITE commands from the CDB.
++		 */
+ 		vhost_scsi_target_queue_cmd(nexus, cmd, cdb, lun, task_attr,
+-					    data_direction,
+-					    exp_data_len + prot_bytes);
++					    data_direction, exp_data_len);
+ 		ret = 0;
+ err:
+ 		/*
 -- 
 2.53.0
 
