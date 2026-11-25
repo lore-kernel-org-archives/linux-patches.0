@@ -1,52 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795620880;
-	b=4SUE5xdTIozsJFJ8lJQB3bnLcuoxqBpzI1mdueBpVnPS5NLByUMG3yrwUUyC0uk3ysvL
-	 1u3KRaKDpDqr6qZXvZl3a/D9gIMJlLfkOOQrdfOID9LMfcuMUFXToYG0KATMKmH5jB54k
-	 Ve9raYWYQQEqw7JU+CulvLnOZ4YPaj0CT5pE2FpnW7Hl9KbbqwXzUXlx2J8sqMxHJu6mC
-	 jargskgeV+oUJ/fjidh2Q9lDurtaU6N6THrciezdtfbHAVbKCpEBg4QdGJAXV2IHGOPLv
-	 clnx5v5EQe8EbSb+T70gqC7ir42IonxyLInJqWR/fHZidxyEx/TPNfHLaVT6oFO+ZyA==
+	t=1795620883;
+	b=UvfvIcjcgDKYCUUvNQ7tvgrWLyufGpr3483kQk/zZqjat7YeQGyrUhvF1QLMu+8OP4Es
+	 +v9NqUwzVsKRQtb8ob/6fKyZTjBBQNrLIHlH2T1mQw/bEdmzPIDt1ullBWYgF6+2/VzSD
+	 8okg/3J3sd0NGhf0zCCHjNULLybQlZYzuw0XkyRKg2J3wqkJM+DObiZWsoxSYdg5/U1cR
+	 sUF+Jbj4B2d4sjKCY5BecJJks5rAs9KdexHlHKgk3tHbP3eYyHb3X5mj3XglcN75rj1LI
+	 6+urvelARzEXr69qYafeA525BkDRHYx17ggzKM2ymy1/50HswwDC2rl8SsdUKdakdgA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795620880;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795620883;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=1s5o4XK23CrRAEfjNzoDzFHv3EdSFU7A8jVXgtBCPm8=;
-	b=4eAWUh4XrzMllakKUes4KTjBmDWGDyYLO/FPvk4dNsh7u2lungKwY+lhnODUhOvCelrZ
-	 qG5HiUwJi2Mi7yCUniSzOUk0DrbtNuFeAX9Di7rHbHFvnYZhkoklon7fKxpcI85Xi2L6W
-	 rqluIOToB8opr5XMQkp6mvTiqFqasRMZ77wCb4X4CgfpZlS5SkTpT5CfM+/WTIcvwqANR
-	 WL8QooNLj864/dEWS1v0ILlR8V4wR1Z8eU1vOMvyLgpdJ/WiX6uu5fJDTsj79L+nnqlEV
-	 K6CFN+XA1jItjW9SDkP6wzBPBUXhpisb8Hqy/Y+4NtGqyfEKE63SVw++EtHNm3cXVPQ==
+	bh=T307mGp6lJdsfDw/lO4TQjonBgsu3Va5899VLjEHes4=;
+	b=sO0RCWvnxsnRWnaOHvrr+X1d+MRYlMnWBrGqnP+WwXOltOVovwNMr9hkofBImULSXYMr
+	 l+MbN5QfE9U77/KVdZw4AnWE/xarHgyyuDEJCnA/AsABNvRieKzUARUwgfoSinSjW4l0f
+	 NdG4i//vmXfKE+ogZpauexzr3ykAgUNJOrZbHcxiMOygoOVhJWORK0yYvdpjfNKtNU5JT
+	 5jqYe705TGf4nb2FGJSbvgzNAbZJ6/Ac4BGluJ7UY/3dEmWPHrdLp03mdolFeUDlT2WQ9
+	 AOGVZ2ukaQm/2hOB+4hvsZpg9yKzGRalzhQQO3ybotDsF4KYehvBfnwNfPyhe2FwSBw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=LQe9Oxr8;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=lnFwhmCp;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 41259606A31E;
-	Wed, 25 Nov 2026 15:34:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A8F84606A31E;
+	Wed, 25 Nov 2026 15:34:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=LQe9Oxr8
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 85EFD1F000C6;
-	Wed, 25 Nov 2026 15:34:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=lnFwhmCp
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 03C361F000C6;
+	Wed, 25 Nov 2026 15:34:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795620880;
-	bh=1s5o4XK23CrRAEfjNzoDzFHv3EdSFU7A8jVXgtBCPm8=;
+	s=korg; t=1795620883;
+	bh=T307mGp6lJdsfDw/lO4TQjonBgsu3Va5899VLjEHes4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=LQe9Oxr8v3Z7uvGMQhjgnPaSRdIB8rIMuRVPSRsrjpJPXp/F0zLo9M5oBK6ujNYR6
-	 IgvxNYsQuFLc8VfEE8hKg5SfsU/o0RiI88zyEoxUj84dxZ1MogrVfoYrrE8mKRMPt2
-	 RmgOSmf3syxwimV7U01Q/n5VNQp5nfNIVgXyscxk=
+	b=lnFwhmCpEGJoGr/tH2Hzw4mystV9ItJ5CigGVqj6ejeTSNvzilUNO55AOplb6fX3o
+	 Q3efJngpewB41gv9i7RCO2MCLeNz1vzdQI9bZ6QRfnIJQPOBWBTNLXLnUZZdLK4f0I
+	 UzoC8MMTNc8baOeFUdeZxcz8yj2ysjL7B3HC6zC0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bryan Cochrane <bcochrane@google.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Bernard Pidoux <bernard.f6bvp@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 051/990] bnxt_en: Take RTNL before netif_close() when aborting FW reset
-Date: Wed, 25 Nov 2026 15:23:38 +0100
-Message-ID: <20261125143823.285026277@linuxfoundation.org>
+Subject: [PATCH 6.18 052/990] bpqether: reserve the Ethernet devices own header room on transmit
+Date: Wed, 25 Nov 2026 15:23:39 +0100
+Message-ID: <20261125143823.308823122@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143822.072087159@linuxfoundation.org>
 References: <20261125143822.072087159@linuxfoundation.org>
@@ -68,143 +67,100 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Bryan Cochrane <bcochrane@google.com>
+From: Bernard Pidoux <bernard.f6bvp@gmail.com>
 
-commit bf83b257423bb557b970df3d7ece32fbd85f3bd4 upstream.
+bpq_xmit() makes sure the frame has AX25_BPQ_HEADER_LEN (16) bytes of
+headroom, then pushes the two length bytes and lets dev_hard_header()
+of the underlying device build the link layer header. That covers a
+plain Ethernet header, but not a longer one.
 
-netif_close() must be called with RTNL held in addition to the netdev
-instance lock: __dev_close_many() asserts it, and the NETDEV_GOING_DOWN
-and NETDEV_DOWN notifier chains it runs rely on it for serialization.
+A VLAN device on top of an Ethernet device that cannot insert the tag
+in hardware, with reorder_hdr turned off, pushes an 18 byte header
+(VLAN tag, then the Ethernet header). A UI frame sent from an AX.25
+datagram socket with 8 digipeaters reaches bpq_xmit() with 17 bytes of
+headroom once the KISS byte is dropped: skb_cow() leaves it alone, 15
+bytes remain after the length bytes, and eth_header() underflows the
+skb:
 
-Commit 004b5008016a ("eth: bnxt: remove most dependencies on RTNL")
-replaced rtnl_lock() with netdev_lock() in bnxt_fw_reset_task() and
-bnxt_fw_reset(). That is sufficient for the paths that only tear the
-NIC down internally with __bnxt_close_nic(), but the abort paths close
-the netdev via bnxt_fw_reset_abort() -> netif_close(), and the error
-path in bnxt_fw_reset() calls netif_close() directly. Those now run
-without RTNL and trigger a WARN_ONCE() cascade when a firmware reset is
-aborted:
-
-  RTNL: assertion failed at net/core/dev.c (1740)
-  WARNING: net/core/dev.c:1740 at __dev_close_many+0x1be/0x1f0
-  Workqueue: bnxt_pf_wq bnxt_fw_reset_task [bnxt_en]
+  skbuff: skb_under_panic: ... len:101 put:14 ... dev:eth0.5
+  kernel BUG at net/core/skbuff.c:209!
   Call Trace:
-   netif_close_many+0xb5/0x190
-   netif_close+0xa2/0xd0
-   bnxt_fw_reset_task.cold+0x8d/0x213 [bnxt_en]
-   process_one_work+0x19d/0x3a0
-   worker_thread+0x1af/0x320
-   kthread+0xe3/0x120
+   eth_header
+   vlan_dev_hard_header
+   dev_hard_start_xmit
+   __dev_queue_xmit
+   ax25_sendmsg
+   __sys_sendto
 
-followed by the same assertion from call_netdevice_notifiers_info(),
-fib_rules_event(), inetdev_event(), rtnl_fill_ifinfo(),
-devlink_compat_phys_port_name_get() and ip_mc_down().
+No privilege is needed to open and bind such a socket, so any local
+user can crash a host that runs bpqether over this kind of VLAN.
 
-This was observed on a machine in real use with a BCM57504 (4 PFs,
-FW 236.1.153.0) running v7.1.6: the firmware crashed, announced a
-"Fatal firmware reset event" and then failed to come back within the
-advertised max wait, so bnxt_fw_reset_task() aborted the reset on all
-ports:
+Look up the Ethernet device first and ask skb_cow() for
+LL_RESERVED_SPACE() of that device plus the two length bytes.
 
-  bnxt_en 0000:c1:00.1 eno16905np1: Firmware reset aborted
-  bnxt_en 0000:c1:00.1 eno16905np1: fw_health_status 0x448100
+Tested in a QEMU guest (6.12.94, KASAN) with bpq devices on eth0, on
+eth0.6 (reorder_hdr on) and on eth0.5 (reorder_hdr off), eth0 being a
+virtio-net port without VLAN tag insertion: UI frames with 0, 7 and 8
+digipeaters on each. Before the change the 8 digipeater frame on
+eth0.5 panicked the guest with 15 bytes of headroom left; after it,
+79 bytes are left and all frames are sent, with no kernel report.
 
-Take RTNL (before the netdev instance lock, matching the OPENING state
-which already uses rtnl_trylock()) in the fw_reset_abort path of
-bnxt_fw_reset_task() and route the POLL_VF abort through that same
-path.
-
-In bnxt_fw_reset(), only a PF can reach the bnxt_get_registered_vfs()
-error path that calls netif_close(), so take RTNL up front via
-bnxt_rtnl_lock_sp() when BNXT_PF(bp) is true and keep bnxt_lock_sp() on
-VFs. That avoids dropping the instance lock mid-reset (which would
-expose a transient BNXT_STATE_IN_FW_RESET and let a concurrent devlink
-health recover set BNXT_STATE_IN_SP_TASK), avoids racing with
-bnxt_sriov_configure() updating active_vfs outside RTNL, and keeps VFs
-from contending on RTNL during recovery while PFs already run on the
-single-threaded bnxt_pf_wq.
-
-The bug was found by inspecting the kernel log of the affected machine
-and the driver source; the fix was prepared with the help of an AI
-coding assistant (Gemini based) and reviewed by the submitter. It is
-build tested (allmodconfig with W=1, plus the same change on top of
-v7.1.6 built as a module for the affected BCM57504 host). The aborted
-reset path itself only runs when the firmware fails to return from a
-reset, which could not be reproduced on demand.
-
-Fixes: 004b5008016a ("eth: bnxt: remove most dependencies on RTNL")
-Cc: stable@vger.kernel.org
-Signed-off-by: Bryan Cochrane <bcochrane@google.com>
-Link: https://patch.msgid.link/20261110044235.204386-1-bcochrane@google.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-[ bcochrane: backport to 6.18.y: 6.18 lacks bnxt_lock_sp() and
-  bnxt_unlock_sp(), so keep the existing inline BNXT_STATE_IN_SP_TASK +
-  netdev_lock()/netdev_unlock() on the VF branch of bnxt_fw_reset()
-  while using the existing bnxt_rtnl_lock_sp() / bnxt_rtnl_unlock_sp()
-  on PFs. ]
-Signed-off-by: Bryan Cochrane <bcochrane@google.com>
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Signed-off-by: Bernard Pidoux <bernard.f6bvp@gmail.com>
+Assisted-by: Claude:claude-opus-5-5
+(cherry picked from commit 6b7e0767b46d918b5c8a5a2fbb8a9c8a2531d698)
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/broadcom/bnxt/bnxt.c | 21 +++++++++++++++------
- 1 file changed, 15 insertions(+), 6 deletions(-)
+ drivers/net/hamradio/bpqether.c | 25 ++++++++++++++-----------
+ 1 file changed, 14 insertions(+), 11 deletions(-)
 
-diff --git a/drivers/net/ethernet/broadcom/bnxt/bnxt.c b/drivers/net/ethernet/broadcom/bnxt/bnxt.c
-index 414da981a3e5b..51c144584d240 100644
---- a/drivers/net/ethernet/broadcom/bnxt/bnxt.c
-+++ b/drivers/net/ethernet/broadcom/bnxt/bnxt.c
-@@ -14567,8 +14567,12 @@ static int bnxt_get_registered_vfs(struct bnxt *bp)
- void bnxt_fw_reset(struct bnxt *bp)
- {
- 	bnxt_ulp_stop(bp);
--	clear_bit(BNXT_STATE_IN_SP_TASK, &bp->state);
--	netdev_lock(bp->dev);
-+	if (BNXT_PF(bp)) {
-+		bnxt_rtnl_lock_sp(bp);
-+	} else {
-+		clear_bit(BNXT_STATE_IN_SP_TASK, &bp->state);
-+		netdev_lock(bp->dev);
-+	}
- 	if (test_bit(BNXT_STATE_OPEN, &bp->state) &&
- 	    !test_bit(BNXT_STATE_IN_FW_RESET, &bp->state)) {
- 		struct bnxt_ptp_cfg *ptp = bp->ptp_cfg;
-@@ -14614,8 +14618,12 @@ void bnxt_fw_reset(struct bnxt *bp)
- 		bnxt_queue_fw_reset_work(bp, tmo);
- 	}
- fw_reset_exit:
--	set_bit(BNXT_STATE_IN_SP_TASK, &bp->state);
--	netdev_unlock(bp->dev);
-+	if (BNXT_PF(bp)) {
-+		bnxt_rtnl_unlock_sp(bp);
-+	} else {
-+		set_bit(BNXT_STATE_IN_SP_TASK, &bp->state);
-+		netdev_unlock(bp->dev);
-+	}
- }
+diff --git a/drivers/net/hamradio/bpqether.c b/drivers/net/hamradio/bpqether.c
+index f30616d915fd3..1adb56a5d4b86 100644
+--- a/drivers/net/hamradio/bpqether.c
++++ b/drivers/net/hamradio/bpqether.c
+@@ -237,12 +237,24 @@ static netdev_tx_t bpq_xmit(struct sk_buff *skb, struct net_device *dev)
+ 	skb_pull(skb, 1);			/* Drop KISS byte */
+ 	size = skb->len;
  
- static void bnxt_chk_missed_irq(struct bnxt *bp)
-@@ -15268,9 +15276,8 @@ static void bnxt_fw_reset_task(struct work_struct *work)
- 		bp->fw_reset_timestamp = jiffies;
- 		netdev_lock(bp->dev);
- 		if (test_bit(BNXT_STATE_ABORT_ERR, &bp->state)) {
--			bnxt_fw_reset_abort(bp, rc);
- 			netdev_unlock(bp->dev);
--			goto ulp_start;
-+			goto fw_reset_abort;
- 		}
- 		bnxt_fw_reset_close(bp);
- 		if (bp->fw_cap & BNXT_FW_CAP_ERR_RECOVER_RELOAD) {
-@@ -15403,9 +15410,11 @@ static void bnxt_fw_reset_task(struct work_struct *work)
- 		netdev_err(bp->dev, "fw_health_status 0x%x\n", sts);
- 	}
- fw_reset_abort:
-+	rtnl_lock();
- 	netdev_lock(bp->dev);
- 	bnxt_fw_reset_abort(bp, rc);
- 	netdev_unlock(bp->dev);
-+	rtnl_unlock();
- ulp_start:
- 	if (!rc)
- 		bnxt_ulp_start(bp);
++	bpq = netdev_priv(dev);
++
++	orig_dev = dev;
++	dev = bpq_get_ether_dev(dev);
++	if (!dev) {
++		orig_dev->stats.tx_dropped++;
++		kfree_skb(skb);
++		return NETDEV_TX_OK;
++	}
++
+ 	/*
+ 	 * We're about to mess with the skb which may still shared with the
+ 	 * generic networking code so unshare and ensure it's got enough
+-	 * space for the BPQ headers.
++	 * space for the length bytes and for the link layer header of the
++	 * Ethernet device. That header can be longer than an Ethernet
++	 * header, e.g. on a VLAN device that inserts the tag itself.
+ 	 */
+-	if (skb_cow(skb, AX25_BPQ_HEADER_LEN)) {
++	if (skb_cow(skb, LL_RESERVED_SPACE(dev) + 2)) {
+ 		if (net_ratelimit())
+ 			pr_err("bpqether: out of memory\n");
+ 		kfree_skb(skb);
+@@ -255,15 +267,6 @@ static netdev_tx_t bpq_xmit(struct sk_buff *skb, struct net_device *dev)
+ 	*ptr++ = (size + 5) % 256;
+ 	*ptr++ = (size + 5) / 256;
+ 
+-	bpq = netdev_priv(dev);
+-
+-	orig_dev = dev;
+-	if ((dev = bpq_get_ether_dev(dev)) == NULL) {
+-		orig_dev->stats.tx_dropped++;
+-		kfree_skb(skb);
+-		return NETDEV_TX_OK;
+-	}
+-
+ 	skb->protocol = ax25_type_trans(skb, dev);
+ 	skb_reset_network_header(skb);
+ 	dev_hard_header(skb, dev, ETH_P_BPQ, bpq->dest_addr, NULL, 0);
 -- 
 2.53.0
 
