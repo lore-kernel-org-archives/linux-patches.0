@@ -1,54 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795625331;
-	b=as16lntukfP+7YEdYXqN0Wa5sp/Ar19HllifmnFlrBtlfY2pW2F3sdUy2nEZYQY3WSw1
-	 Cp5HZDq4WTjdpLrIoDgq29IPsbbz18t4u3dp/8Ui/skw8FpOh8ZL8HIyjCHR1mZJ1Va0e
-	 1231ElPK9boiC6yN6n/9Byse7CVIFrx/RC0ld+mlH3imSXHB4NGHoK6OVHyITDGidChQ3
-	 UNiE/JkQPr9sC+OwbTv27US7XZpx4sHZDh36nvWJMd6fHmtdR4Y45kJ93c8OF5Qxf96QB
-	 z9ks5Qijent3J1e1S/eY8UNOFcB/VVk+GslbfgDb1zVqt2+i6Fu4MftBeanAAGzLJTQ==
+	t=1795625334;
+	b=HZAk7LSqJWAV9OoQgRS+aRCYxbTCeVBuZkpCR7X31+dWeW2qgnd9z+R4bWFl+dws0j0C
+	 /+CSNvukzCz6OcJIqH5leUEM+sMA0wc/AQzO3VilJOY+HW3LEqK7rjEdJcXqqWmNew02B
+	 Mn0dUNaeZVrixcMXXPiF6G+GMqGA3DpYPaVmuP6QJfF7ShGSCcqoCSWxNGpeUk2HyAzzQ
+	 j5DB2ETt54n8sILdw9OOq7BYHaaXDDdWaf+5I6x/HRccrK5JmV0YkYKbwp5Pf5VN+hFNa
+	 TuaHDVZ6S26CdLkk5kH7vvysVdWYBOiV66clrBrvvcbmwGvtP+cmeTpDr2F1x5DHzsQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795625331;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795625334;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=7m9sUEDd6+ImqsGYjmH2hBD8DK+2vjT7NyqMdpgxqdg=;
-	b=r3r0FjzT7ATO6Xh2x6+4Mt+Bm2Vi8qqYqaHdIkLOfQoxrND1cGjJ90YJ0Uq7JkKbMeNO
-	 +x5+UVceTOHMqLmXY2+HpPh6rf4A4hLSZ40reioP930ba3yzSNTyyJ5qna83HnpefLXrV
-	 FyQTG8s3wSwDXvoPIR8iuWJaBqfG4+peJ0jvCYK9YozhAw0XrNCW7Ey2rEbdUegaM3Rh3
-	 D49/dm2iJ6+/Qp7HloUgN72LpH21Hf0DKrDvB96ZhdpHIEj5tPM+MO33ivHlYDGfaFMn/
-	 yS8+QH5mKf0ophjEm25xxTt2RBYSGESfPoZL56iJ/6Ed2dqzEvowqpMe0i6Z+0TlJPA==
+	bh=RWc0wfOPy+rWZ+EdRd3hYUMeD9jzHdXo7PGWBJZ1gzY=;
+	b=EVbjIvtra4A/AbGLqyh5BJnVA5LrbpnC/9nDVa825BjPuT0zO60ClIEjdvzEMYjKi3LX
+	 8LGoJE+ouvRWv1NZobjAV0dQGPILlgM//jkz28Wj9EiTvb5daO3BuaJ2BEcAe2iq05ZgX
+	 qkk+p6FazbWWhtfWEzK2C62Sg4LLoc+Y9iEZoV5b/tSv7LQ9SHu4b9ik5TVhLJkhpn68C
+	 aDajuV5I/6IvVPN+BuGMkYpCf6zo58MMkuiw0zbzCaozPtKnTl0JRituDjKJcMOA6YAxn
+	 hzj6+PvYnPaeNhV8jnd2BeSbNILBAkU1GdXIzdsmw0v2lzdUXYe2XGy3OXfsieC5Qkg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=s60PX4ZM;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=FnK4gIE9;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 96752606A31E;
-	Wed, 25 Nov 2026 16:48:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 32116606A31E;
+	Wed, 25 Nov 2026 16:48:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=s60PX4ZM
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A9A281F000C6;
-	Wed, 25 Nov 2026 16:48:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=FnK4gIE9
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 81D121F000C4;
+	Wed, 25 Nov 2026 16:48:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795625331;
-	bh=7m9sUEDd6+ImqsGYjmH2hBD8DK+2vjT7NyqMdpgxqdg=;
+	s=korg; t=1795625334;
+	bh=RWc0wfOPy+rWZ+EdRd3hYUMeD9jzHdXo7PGWBJZ1gzY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=s60PX4ZMIVfmXLT5gjmhvdnpRfUQejZnxxdjtGFnOZyVSh3YBuPIeMkXYcgr2h1zQ
-	 bf/wBGU3mvDPXtAqZbE3LRh9sfhaStSeIOTpZFKIjf6BNgJIb7yyWz1uzTKrjE5C/9
-	 oXLqxbCj1AgUrNbwATt10C7sWRW+Cg8F0p4j8uhE=
+	b=FnK4gIE9p8gYfz/8N3JHh7tfaVe+9nyC6MeHLpMvla/p99uWZ7qBOS75/PbzQPDAD
+	 YWHX47Lf4RnFDRqXUDftqNDyiiElj/IKbAN9nnV0Q9AVKJsYg3MofmiP7uyR8U78CC
+	 WV0uZEKpS8YeGoMBzqIKf7+evifE3IDNFrpX1jpw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	kernel test robot <lkp@intel.com>,
-	Linus Walleij <linusw@kernel.org>,
-	Frank Li <Frank.Li@nxp.com>,
-	Vinod Koul <vkoul@kernel.org>,
+	Felix Fietkau <nbd@nbd.name>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 482/816] dmaengine: ste_dma40: Preserve the LCPA I/O address space
-Date: Wed, 25 Nov 2026 15:33:50 +0100
-Message-ID: <20261125143900.352553021@linuxfoundation.org>
+Subject: [PATCH 6.12 465/816] wifi: mt76: mt7996: enable the SKU power limit table
+Date: Wed, 25 Nov 2026 15:33:33 +0100
+Message-ID: <20261125143859.966069005@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143849.205329330@linuxfoundation.org>
 References: <20261125143849.205329330@linuxfoundation.org>
@@ -70,89 +67,143 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Linus Walleij <linusw@kernel.org>
+From: Felix Fietkau <nbd@nbd.name>
 
-[ Upstream commit 42c31fec1ca76b8b5f7759def122d418dff2cd4b ]
+[ Upstream commit 267424ac63aa65fb28b7f3cff1e1a7d0098c4d6f ]
 
-The LCPA area is mapped with devm_ioremap(), but lcpa_base and the
-per-channel lcpa pointer lack __iomem annotations. This loses the I/O
-address space and makes sparse warn when d40_current_addr() assigns
-LCPA register addresses to its __iomem pointers.
+mt7996_mcu_set_txpower_sku() uploads the per-rate power limit table, but
+the firmware applies it only after the driver enables the SKU power
+limit. mt7915 does that in mt7915_mcu_set_sku_en(); mt7996 never does,
+so the radio keeps the EEPROM target power and the configured tx power
+has no effect.
 
-Annotate both pointers and the LCPA argument of d40_log_lli_lcpa_write()
-to preserve the I/O address space from the mapping to the register
-accessors. This also fixes the existing LCPA read and write warnings
-without changing the generated code.
+Add the power control command and enable the table per band in
+mt7996_run(), as the MediaTek vendor driver does.
 
-Fixes: c80edceff29e ("dmaengine: ste_dma40: Fix cyclic transfer residue")
-Reported-by: kernel test robot <lkp@intel.com>
-Closes: https://lore.kernel.org/oe-kbuild-all/202610090216.pjMRxhRL-lkp@intel.com/
-Assisted-by: LLM
-Signed-off-by: Linus Walleij <linusw@kernel.org>
-Reviewed-by: Frank Li <Frank.Li@nxp.com>
-Link: https://patch.msgid.link/20261010-dma40-smatch-fix-v1-1-26ca10043957@kernel.org
-Signed-off-by: Vinod Koul <vkoul@kernel.org>
+The backoff table stays disabled. This driver does not build the
+per-path limits; it pads that part of the message with zeros.
+
+Fixes: f75e4779d215 ("wifi: mt76: mt7996: add txpower setting support")
+Link: https://patch.msgid.link/20261006205936.669125-2-nbd@nbd.name
+Signed-off-by: Felix Fietkau <nbd@nbd.name>
+[ sashal: Changed the return ret; in mt7996_run() to goto out;, and dropped the missing sniffer-mode and rdd_resume_tx context from the mcu.c and mt7996.h hunks. ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/dma/ste_dma40.c    | 4 ++--
- drivers/dma/ste_dma40_ll.c | 8 ++++----
- drivers/dma/ste_dma40_ll.h | 2 +-
- 3 files changed, 7 insertions(+), 7 deletions(-)
+ .../net/wireless/mediatek/mt76/mt7996/main.c  |  5 +++
+ .../net/wireless/mediatek/mt76/mt7996/mcu.c   | 34 +++++++++++++++++++
+ .../net/wireless/mediatek/mt76/mt7996/mcu.h   | 23 +++++++++++++
+ .../wireless/mediatek/mt76/mt7996/mt7996.h    |  1 +
+ 4 files changed, 63 insertions(+)
 
-diff --git a/drivers/dma/ste_dma40.c b/drivers/dma/ste_dma40.c
-index 2c83eb05faa16..6699689deecae 100644
---- a/drivers/dma/ste_dma40.c
-+++ b/drivers/dma/ste_dma40.c
-@@ -509,7 +509,7 @@ struct d40_chan {
- 	u32				 src_def_cfg;
- 	u32				 dst_def_cfg;
- 	struct d40_def_lcsp		 log_def;
--	struct d40_log_lli_full		*lcpa;
-+	struct d40_log_lli_full __iomem	*lcpa;
- 	/* Runtime reconfiguration */
- 	dma_addr_t			runtime_addr;
- 	enum dma_transfer_direction	runtime_direction;
-@@ -617,7 +617,7 @@ struct d40_base {
- 	/* Physical half channels */
- 	struct d40_phy_res		 *phy_res;
- 	struct d40_lcla_pool		  lcla_pool;
--	void				 *lcpa_base;
-+	void __iomem			 *lcpa_base;
- 	dma_addr_t			  phy_lcpa;
- 	resource_size_t			  lcpa_size;
- 	struct kmem_cache		 *desc_slab;
-diff --git a/drivers/dma/ste_dma40_ll.c b/drivers/dma/ste_dma40_ll.c
-index 4c489b126cb27..3be7f5b1abb08 100644
---- a/drivers/dma/ste_dma40_ll.c
-+++ b/drivers/dma/ste_dma40_ll.c
-@@ -333,10 +333,10 @@ static void d40_log_lli_link(struct d40_log_lli *lli_dst,
- 		(dlos << D40_MEM_LCSP1_SLOS_POS);
+diff --git a/drivers/net/wireless/mediatek/mt76/mt7996/main.c b/drivers/net/wireless/mediatek/mt76/mt7996/main.c
+index bdb5e82d9f4e7..1074b677ebd81 100644
+--- a/drivers/net/wireless/mediatek/mt76/mt7996/main.c
++++ b/drivers/net/wireless/mediatek/mt76/mt7996/main.c
+@@ -67,6 +67,11 @@ int mt7996_run(struct ieee80211_hw *hw)
+ 	if (ret)
+ 		goto out;
+ 
++	ret = mt7996_mcu_set_tx_power_ctrl(phy, UNI_TXPOWER_SKU_POWER_LIMIT_CTRL,
++					   true);
++	if (ret)
++		goto out;
++
+ 	set_bit(MT76_STATE_RUNNING, &phy->mt76->state);
+ 
+ 	ieee80211_queue_delayed_work(hw, &phy->mt76->mac_work,
+diff --git a/drivers/net/wireless/mediatek/mt76/mt7996/mcu.c b/drivers/net/wireless/mediatek/mt76/mt7996/mcu.c
+index edb825675408c..67fa3db3171f8 100644
+--- a/drivers/net/wireless/mediatek/mt76/mt7996/mcu.c
++++ b/drivers/net/wireless/mediatek/mt76/mt7996/mcu.c
+@@ -4566,6 +4566,40 @@ int mt7996_mcu_wed_rro_reset_sessions(struct mt7996_dev *dev, u16 id)
+ 				 sizeof(req), true);
  }
  
--void d40_log_lli_lcpa_write(struct d40_log_lli_full *lcpa,
--			   struct d40_log_lli *lli_dst,
--			   struct d40_log_lli *lli_src,
--			   int next, unsigned int flags)
-+void d40_log_lli_lcpa_write(struct d40_log_lli_full __iomem *lcpa,
-+			    struct d40_log_lli *lli_dst,
-+			    struct d40_log_lli *lli_src,
-+			    int next, unsigned int flags)
++int mt7996_mcu_set_tx_power_ctrl(struct mt7996_phy *phy, u8 power_ctrl_id, u8 data)
++{
++	struct mt7996_dev *dev = phy->dev;
++	struct tx_power_ctrl req = {
++		.tag = cpu_to_le16(power_ctrl_id),
++		.len = cpu_to_le16(sizeof(req) - 4),
++		.power_ctrl_id = power_ctrl_id,
++		.band_idx = phy->mt76->band_idx,
++	};
++
++	switch (power_ctrl_id) {
++	case UNI_TXPOWER_SKU_POWER_LIMIT_CTRL:
++		req.sku_enable = !!data;
++		break;
++	case UNI_TXPOWER_PERCENTAGE_CTRL:
++		req.percentage_ctrl_enable = !!data;
++		break;
++	case UNI_TXPOWER_PERCENTAGE_DROP_CTRL:
++		req.power_drop_level = data;
++		break;
++	case UNI_TXPOWER_BACKOFF_POWER_LIMIT_CTRL:
++		req.bf_backoff_enable = !!data;
++		break;
++	case UNI_TXPOWER_ATE_MODE_CTRL:
++		req.ate_mode_enable = !!data;
++		break;
++	default:
++		return -EINVAL;
++	}
++
++	return mt76_mcu_send_msg(&dev->mt76, MCU_WM_UNI_CMD(TXPOWER),
++				 &req, sizeof(req), false);
++}
++
+ int mt7996_mcu_set_txpower_sku(struct mt7996_phy *phy)
  {
- 	d40_log_lli_link(lli_dst, lli_src, next, flags);
+ #define TX_POWER_LIMIT_TABLE_RATE	0
+diff --git a/drivers/net/wireless/mediatek/mt76/mt7996/mcu.h b/drivers/net/wireless/mediatek/mt76/mt7996/mcu.h
+index dd5b168c71f06..d56fdabd959af 100644
+--- a/drivers/net/wireless/mediatek/mt76/mt7996/mcu.h
++++ b/drivers/net/wireless/mediatek/mt76/mt7996/mcu.h
+@@ -892,8 +892,31 @@ enum {
+ 	UNI_CMD_THERMAL_PROTECT_DUTY_CONFIG,
+ };
  
-diff --git a/drivers/dma/ste_dma40_ll.h b/drivers/dma/ste_dma40_ll.h
-index 55090cb310579..ca9d076493610 100644
---- a/drivers/dma/ste_dma40_ll.h
-+++ b/drivers/dma/ste_dma40_ll.h
-@@ -455,7 +455,7 @@ int d40_log_sg_to_lli(struct scatterlist *sg,
- 		      u32 lcsp13, /* src or dst*/
- 		      u32 data_width1, u32 data_width2);
++struct tx_power_ctrl {
++	u8 _rsv[4];
++
++	__le16 tag;
++	__le16 len;
++
++	u8 power_ctrl_id;
++	union {
++		bool sku_enable;
++		bool ate_mode_enable;
++		bool percentage_ctrl_enable;
++		bool bf_backoff_enable;
++		u8 power_drop_level;
++	};
++	u8 band_idx;
++	u8 rsv[1];
++} __packed;
++
+ enum {
++	UNI_TXPOWER_SKU_POWER_LIMIT_CTRL = 0,
++	UNI_TXPOWER_PERCENTAGE_CTRL = 1,
++	UNI_TXPOWER_PERCENTAGE_DROP_CTRL = 2,
++	UNI_TXPOWER_BACKOFF_POWER_LIMIT_CTRL = 3,
+ 	UNI_TXPOWER_POWER_LIMIT_TABLE_CTRL = 4,
++	UNI_TXPOWER_ATE_MODE_CTRL = 6,
+ };
  
--void d40_log_lli_lcpa_write(struct d40_log_lli_full *lcpa,
-+void d40_log_lli_lcpa_write(struct d40_log_lli_full __iomem *lcpa,
- 			    struct d40_log_lli *lli_dst,
- 			    struct d40_log_lli *lli_src,
- 			    int next, unsigned int flags);
+ enum {
+diff --git a/drivers/net/wireless/mediatek/mt76/mt7996/mt7996.h b/drivers/net/wireless/mediatek/mt76/mt7996/mt7996.h
+index 29e7289c3a169..6f7a10d6659e2 100644
+--- a/drivers/net/wireless/mediatek/mt76/mt7996/mt7996.h
++++ b/drivers/net/wireless/mediatek/mt76/mt7996/mt7996.h
+@@ -496,6 +496,7 @@ int mt7996_mcu_get_temperature(struct mt7996_phy *phy);
+ int mt7996_mcu_set_thermal_throttling(struct mt7996_phy *phy, u8 state);
+ int mt7996_mcu_set_thermal_protect(struct mt7996_phy *phy, bool enable);
+ int mt7996_mcu_set_txpower_sku(struct mt7996_phy *phy);
++int mt7996_mcu_set_tx_power_ctrl(struct mt7996_phy *phy, u8 power_ctrl_id, u8 data);
+ int mt7996_mcu_rdd_cmd(struct mt7996_dev *dev, int cmd, u8 index,
+ 		       u8 rx_sel, u8 val);
+ int mt7996_mcu_rdd_background_enable(struct mt7996_phy *phy,
 -- 
 2.53.0
 
