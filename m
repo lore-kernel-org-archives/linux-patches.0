@@ -1,54 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795619940;
-	b=uI95AN4OOeFU53nba5rQNgtNDP2FLuYohbBpl3Bx00d1FI3L4OjHCZ7PxkH9Wd+4Ed8q
-	 LatdkJWTmQmc2IEGtAKPCBNRAV2Ml9WM5YSce9VvBGATZs7Br7lKK5eCWu2DqNmnFpi8P
-	 iWk9JdRWyaNZ6uEdcko2VoH85pP19xqUqNCcK5TDvtQ52XcCyYmAW/qr6Jwbp3cqGcsIl
-	 eB/6iEFz4vUEEmYVywgY6bc7cHTVtgGQmqW33k2eIH2w2u4m2xPVeXbDxhxyBbPF6MZxE
-	 DRSmnSDKd4dH+MKJZ2liFfobDMfPrVpprpmPtdkiGYJrKid/PhHu/kzL6tuqbIw2PKQ==
+	t=1795619943;
+	b=vmpIujYdnbD85S1nIqIygn1kDNfJsL89UUkGlZTzxGe1mnmUmiRglzpoofnZVWxI4atM
+	 yriuJrMYrHu0ambUToiwro6WHQwrqIRt2jeZxD+axGQDRleyn0ZcZaldgXSaizhzN2q8G
+	 IQxhHiSFiXr2He5dL1InZLOrPPrBY5AqaM20nP+llzntCmMBXOap+lqee2vDOPiGjLvj+
+	 qmC8oj77fV7JKmg356HAZ7gOtINNK2F8b4i0+2PwBJ82XFSPaa5WjyDA3L0BesakZZDG2
+	 03nwHllBMQqB6FatXm4HetNANL03TBJK0Xye0UKumUXY+5znfsgcdKDESQo7WJ1WZBg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795619940;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795619943;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=zlabb8lzS78XrLxuQu2kfpLcKe4qjLMPPW4ZyLIbd7A=;
-	b=znGTrNOrycuNPc7ZvqPP9Cbi29aSubktmmky1AAq+0NAa/fIPb6szoSBy+powafo0guA
-	 b1XXyW7Z0WfiLwfXWuSbYgzkc8erm6vJ5krYtF0bOZTcHd0AwQmWD/LB1SWn7AMSPuek5
-	 w7X1s/cu+eeqov+brH5K9apCsEqqDYPSYEFxXzYnNMYNL7hqGNx/6nYbymomWgK79hILS
-	 IBrPw6VFEoJu23+QEt1IrQF6vab2yoBjd84D0Es79o8/rGZAvVjiU9ccr8iqofBSg31Bo
-	 8WMvgFTdCm5fUZCpEpsR89l+pNJEnUfaPccndLpiCOToRrA8ddkx1hr7HvgnNJI6vWw==
+	bh=eSHuSKQVRiVnBt6mLM2/p4OX79KR0RG8A4zpkvk+FmQ=;
+	b=H4oDIJnwdt+Sz0Imihy8KFJ+pn1ectTgPIEKcvJ+0CjCjyHGBqcKJNNPgGv74aAjQQXf
+	 UEw2q4uS3X1pAl1hbp+VEXEoaUsadAz4FXp4GVQt4b+T2QTD7NX04z/XoUol5J5TUQ1T/
+	 mFAPCUJItpjuKYk0OeTyNScWx3MC7ytSTEIPwVl+AHkYSDsvSvkCvw9g9PLMBIP3SXLje
+	 PAsTdv1W0gQmcrIv3nd1Ju+hFDiAc/LfbtRjcEHXsgKUqHXy065luKHTSm7NXhzpN+ZeE
+	 bLWOuThJZTsGKX37hiFECGOX5RMUQGNA0Gx7ixXZ4e6hcJqVotNW8OTHDRSRctWGc2g==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=q9AJmJ+S;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=lMH8EAek;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 79266606A323;
-	Wed, 25 Nov 2026 15:19:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 58BA5606A31E;
+	Wed, 25 Nov 2026 15:19:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=q9AJmJ+S
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C958F1F000C4;
-	Wed, 25 Nov 2026 15:18:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=lMH8EAek
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A18BA1F000C6;
+	Wed, 25 Nov 2026 15:19:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795619940;
-	bh=zlabb8lzS78XrLxuQu2kfpLcKe4qjLMPPW4ZyLIbd7A=;
+	s=korg; t=1795619943;
+	bh=eSHuSKQVRiVnBt6mLM2/p4OX79KR0RG8A4zpkvk+FmQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=q9AJmJ+SuzRgAwi2EXHhLNDaY4lrzUEWYWDl1GV+Qq3beYPs+TqezmERZYcWfzEY/
-	 X+9ufc980FRWKAxMINLQh/RXmtx8yBfYHNhi7oUfwRnRJspOI5zt0DSuOLcyqjyWuG
-	 zDV+fBhj8Kcbv1gIX31l8XkVJgCWR1pna7mjrISU=
+	b=lMH8EAekxe2Tf2+9GKxnVKHoBMVmTdxPW1ulnV/M+NwTbZrO6d0DZTrWfFS+PLVzC
+	 wunECFo90qZSoSRZq58G8D8u5ysmJ6JVwU/eKn/4Ylan1gmy7UROxDbH+dUvyD96LO
+	 eVMzVy48LwvmLYWp/S7+EqR6NJt0Qpi9sJVguKTc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Sashiko <sashiko-bot@kernel.org>,
 	Andrea Parri <parri.andrea@gmail.com>,
 	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
 	Ingo Molnar <mingo@kernel.org>,
-	Sebastian Andrzej Siewior <bigeasy@linutronix.de>,
-	Juri Lelli <juri.lelli@redhat.com>
-Subject: [PATCH 7.3 0757/1005] sched/deadline: Fix spurious -EPERM for migration-disabled tasks
-Date: Wed, 25 Nov 2026 15:34:55 +0100
-Message-ID: <20261125143839.480888917@linuxfoundation.org>
+	Vincent Guittot <vincent.guittot@linaro.org>
+Subject: [PATCH 7.3 0758/1005] sched/uclamp: Reject clamp values above SCHED_CAPACITY_SCALE
+Date: Wed, 25 Nov 2026 15:34:56 +0100
+Message-ID: <20261125143839.503922978@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143821.729802100@linuxfoundation.org>
 References: <20261125143821.729802100@linuxfoundation.org>
@@ -72,42 +72,59 @@ Content-Transfer-Encoding: 8bit
 
 From: Andrea Parri <parri.andrea@gmail.com>
 
-commit 6616bffa9b52da1338cf8bff9882404e02b9e361 upstream.
+commit 8127ec8458df29bd702db602473042ccb9e619b9 upstream.
 
-sched_setattr() can refuse to make a task SCHED_DEADLINE with -EPERM,
-even though the task's affinity covers the whole root domain. A retry
-can succeed, but the error blames an affinity the task does not have.
+sched_setattr() accepts sched_util_min and sched_util_max values that do
+not fit in uclamp_se::value. A single thread can do:
 
-__sched_setscheduler() tests p->cpus_ptr, which is not always the task's
-affinity. When a task is scheduled out inside a migrate_disable() section,
-migrate_disable_switch() points p->cpus_ptr at the current CPU until
-migrate_enable(). On PREEMPT_RT every spinlock_t holder is in such a
-section, so ordinary kernel work opens the window. Elsewhere, seccomp
-filters run in one.
+  sched_setattr(max = 800)		returns 0
+  sched_setattr(min = 0xfffffffe)	returns 0
+  sched_getattr()			min=2046 max=800
 
-Test p->cpus_mask instead, which keeps the task's affinity and is what
-sched_getaffinity() reports. This should be safe because an admitted
-task's cpus_mask covers the root domain, so set_cpus_allowed_dl() moves
-no bandwidth when migrate_enable() restores p->cpus_ptr.
+which leaves the minimum above both SCHED_CAPACITY_SCALE and the task's own
+maximum.
 
-The following program, run as root, had 553679, 453720 and 424623 of its
-1000000 requests refused on three boots of a 4-CPU PREEMPT_RT guest, and
-236182, 217174 and 237183 without PREEMPT_RT. With this applied the count
-is 0, also with lockdep, and a task pinned to one CPU is still refused:
+The range check in uclamp_validate() relies on the + 1 wrapping -1, the
+reset value, to 0:
+
+	if (util_min + 1 > SCHED_CAPACITY_SCALE + 1)
+
+That only works for an unsigned type. util_min and util_max are int and
+SCHED_CAPACITY_SCALE is a long, so every negative value passes the check,
+and so does INT_MAX, whose + 1 wraps.
+
+uclamp_se_set() then truncates what got through to the 11 bits of
+uclamp_se::value, but computes the bucket from the full value. A minimum
+of 0xfffff800 is stored as 0 in the top bucket, where uclamp_rq_max_value()
+takes it for the highest active clamp once a higher value leaves the rq.
+The rq clamp falls below what the remaining tasks requested, and emptying
+their bucket trips the WARN_ON_ONCE() in uclamp_rq_dec_id(), without any
+privilege:
+
+  WARNING: kernel/sched/core.c:1862 at dequeue_task+0x2a3/0x2b0, CPU#0: repro/126
+  Call Trace:
+   __schedule+0x933/0x1320
+   schedule+0x36/0x100
+   do_nanosleep+0x61/0x190
+   hrtimer_nanosleep+0xb5/0x1d0
+
+Make util_min and util_max unsigned int, so that -1 is the only value that
+wraps. The pair check below is unaffected, since it skips -1 explicitly and
+anything else is at most SCHED_CAPACITY_SCALE by then.
+
+Requests that were only accepted because of this now fail with -EINVAL.
+
+The following program triggers the warning when run by any user outside
+a child cpu cgroup. With this applied, its 0xfffff800 request fails with
+-EINVAL and the warning no longer appears:
 
   #define _GNU_SOURCE
-  #include <errno.h>
-  #include <linux/filter.h>
-  #include <linux/seccomp.h>
   #include <pthread.h>
-  #include <stddef.h>
+  #include <sched.h>
   #include <stdint.h>
-  #include <stdio.h>
   #include <sys/syscall.h>
+  #include <time.h>
   #include <unistd.h>
-
-  #define REQUESTS 1000000
-  #define INSNS 300
 
   struct attr {
       uint32_t size, policy;
@@ -115,96 +132,98 @@ is 0, also with lockdep, and a task pinned to one CPU is still refused:
       int32_t nice;
       uint32_t prio;
       uint64_t runtime, deadline, period;
+      uint32_t util_min, util_max;
   };
 
   static volatile int stop;
-  static volatile pid_t target;
 
-  static long set(struct attr a)
+  static void set_min(uint32_t v)
   {
-      a.size = sizeof(a);
-      return syscall(SYS_sched_setattr, target, &a, 0);
+      /* KEEP_POLICY | KEEP_PARAMS | UTIL_CLAMP_MIN */
+      struct attr a = { .size = sizeof(a), .flags = 0x38, .util_min = v };
+
+      syscall(SYS_sched_setattr, 0, &a, 0);
+  }
+
+  static void burn(long us)
+  {
+      struct timespec s, n;
+
+      clock_gettime(CLOCK_MONOTONIC, &s);
+      do
+          clock_gettime(CLOCK_MONOTONIC, &n);
+      while ((n.tv_sec - s.tv_sec) * 1000000 +
+             (n.tv_nsec - s.tv_nsec) / 1000 < us);
+  }
+
+  static void *bogus(void *arg)
+  {
+      set_min(0xfffff800);
+      while (!stop)
+          burn(1000);
+      return arg;
   }
 
   static void *worker(void *arg)
   {
-      struct sock_filter f[INSNS + 1];
-      struct sock_fprog prog = { .len = INSNS + 1, .filter = f };
-      int i;
+      long v = (long)arg;
 
-      /* Reading the arguments keeps seccomp from caching the result */
-      for (i = 0; i < INSNS; i++)
-          f[i] = (struct sock_filter)
-              BPF_STMT(BPF_LD | BPF_W | BPF_ABS,
-                       offsetof(struct seccomp_data, args));
-      f[INSNS] = (struct sock_filter)
-          BPF_STMT(BPF_RET | BPF_K, SECCOMP_RET_ALLOW);
-      syscall(SYS_seccomp, SECCOMP_SET_MODE_FILTER, 0, &prog);
-
-      target = syscall(SYS_gettid);
-      while (!stop)
-          syscall(SYS_getppid);
-      return arg;
-  }
-
-  static void *hog(void *arg)
-  {
-      while (!stop)
-          ;
+      set_min(v);
+      while (!stop) {
+          burn(v == 800 ? 300 : 1500);
+          usleep(100);
+      }
       return arg;
   }
 
   int main(void)
   {
-      pthread_t t[9];
-      long refused = 0;
+      pthread_t t[3];
+      cpu_set_t c;
       int i;
 
-      pthread_create(&t[0], NULL, worker, NULL);
-      while (!target)
-          usleep(100);
-      for (i = 1; i < 9; i++)
-          pthread_create(&t[i], NULL, hog, NULL);
-      for (i = 0; i < REQUESTS; i++) {
-          /* SCHED_DEADLINE, 2us every 1s */
-          if (set((struct attr){ .policy = 6, .runtime = 2000,
-                                 .deadline = 1000000000,
-                                 .period = 1000000000 }) && errno == EPERM)
-              refused++;
-          set((struct attr){ .policy = 0 }); /* SCHED_OTHER */
-      }
+      CPU_ZERO(&c);
+      CPU_SET(0, &c);
+      sched_setaffinity(0, sizeof(c), &c);
+      pthread_create(&t[0], NULL, bogus, NULL);
+      usleep(50000);
+      pthread_create(&t[1], NULL, worker, (void *)500L);
+      pthread_create(&t[2], NULL, worker, (void *)800L);
+      sleep(15);
       stop = 1;
-      for (i = 0; i < 9; i++)
+      for (i = 0; i < 3; i++)
           pthread_join(t[i], NULL);
-      printf("%ld of %d requests refused\n", refused, REQUESTS);
       return 0;
   }
 
-An LLM helped find this bug and write this patch and its test.
+An LLM helped find the warning and write this patch and its tests.
 
-Fixes: af449901b84c ("sched: Add migrate_disable()")
+Fixes: 480a6ca2dc6e ("sched/uclamp: Allow to reset a task uclamp constraint value")
+Reported-by: Sashiko <sashiko-bot@kernel.org>
 Signed-off-by: Andrea Parri <parri.andrea@gmail.com>
 Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
 Signed-off-by: Ingo Molnar <mingo@kernel.org>
-Reviewed-by: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
-Acked-by: Juri Lelli <juri.lelli@redhat.com>
+Reviewed-by: Vincent Guittot <vincent.guittot@linaro.org>
 Cc: stable@vger.kernel.org
-Link: https://patch.msgid.link/20261102135420.244745-1-parri.andrea@gmail.com
+Link: https://sashiko.dev/#/patchset/20261016062629.2102883-1-sh_def%40163.com
+Link: https://patch.msgid.link/20261102134831.243255-1-parri.andrea@gmail.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/sched/syscalls.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ kernel/sched/syscalls.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
 --- a/kernel/sched/syscalls.c
 +++ b/kernel/sched/syscalls.c
-@@ -628,7 +628,7 @@ change:
- 			 * the entire root_domain to become SCHED_DEADLINE. We
- 			 * will also fail if there's no bandwidth available.
- 			 */
--			if (!cpumask_subset(span, p->cpus_ptr) ||
-+			if (!cpumask_subset(span, &p->cpus_mask) ||
- 			    rq->rd->dl_bw.bw == 0) {
- 				retval = -EPERM;
- 				goto unlock;
+@@ -318,8 +318,8 @@ static inline void __setscheduler_dl_pi(
+ static int uclamp_validate(struct task_struct *p,
+ 			   const struct sched_attr *attr)
+ {
+-	int util_min = p->uclamp_req[UCLAMP_MIN].value;
+-	int util_max = p->uclamp_req[UCLAMP_MAX].value;
++	unsigned int util_min = p->uclamp_req[UCLAMP_MIN].value;
++	unsigned int util_max = p->uclamp_req[UCLAMP_MAX].value;
+ 
+ 	if (attr->sched_flags & SCHED_FLAG_UTIL_CLAMP_MIN) {
+ 		util_min = attr->sched_util_min;
 
 
