@@ -1,51 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795617921;
-	b=rnD4HRFndnQRSTZR3C1K9MmRNl13wIktj6XbfjI1tKtQScUGTYScubtB5YNUTSE/tJot
-	 +F51b8fWZzaIuEf0IIykK7M+IGKMON0iRuRIUqDNNMVEMmIlMF0zsfqttsRT9iSUOTjvU
-	 4koIu26BAN6Eb1CmxKgkDEPxO5KAp634RV8JsqhEZnfgwZKfokfB8swNK0s5P1c3CFWPJ
-	 X0WpMduh3zer0juNPptoiqGSRKvGc6WGCXMjPFKKwEVNHSqWmfyY2QB8pzkzKhOBZD19z
-	 JnTgIOx3vBmyExRZN1HPocMeR5NxC9bcMbFJ2iUe3az/KQ286e+27slzu5DltLVOamQ==
+	t=1795617924;
+	b=D47Z2vm4TBll6+L0HRyY3Q01KPKLg20YHmDtrBIhJYOzLj4mPmfK+45e9vJ+m/VjUl3d
+	 EnJ5XdqNbJbRDMxYsdXqOH36bKSFuCMaZnM1L+nNIMEJ+8XlCHB6D7S5RL1+/ubFWKD92
+	 zIsX1MJPnQeq4d2E0S4Zy4TUrHjSaAG/GAnLSAYJzeUPmBS36/vEtHJRchJMNLnJhpm2C
+	 HSIODxcs4eqtHQHZI/6y0rE/uzEZ9EfX3s9at/fkilacTbrniIvoXUX8iWUv9CxwIcTdn
+	 vRZnZVUbdDE5oTXMHi6G1nD2y+kZGEYXfLfVZm4hsLXh//s84hcU0IaVGiN8MMAq9nA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795617921;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795617924;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=Q1yyHczV+TH4F72j7hOXz5HAY++T5/cZEDrV9SqWuuY=;
-	b=CKTjS2nbFsT9ltu6V1kktwO81GFhqDQ4IZBOavqy8bvco8ZfFdT3Q+JzgcOx0CfWnv0z
-	 z3skhHuypBtCVn5FuSYbuU0+iAHRYhHTQbYcTN0gTOddH0zpVdGv5E6pnOloM6PdcxIEj
-	 g8CGfKl2obcn+z2A9QHfiZjpTN2w8Mfi1A0TKwbdSqdnkPd4gt0EEhdta5vQ3huA7onYO
-	 zn32VA3NXT4mvymtvN7qW8LMLg4L6yW7L5lfHcOl/4fvlqZT2rkBaWe8/PzovbTXmJxcD
-	 7ke6tmCTHAuAWdS3Bw8Z2CU7tko86EDNjLk7TTuIrGCbx+LuRGIGTEbwnPgaXmWO/nw==
+	bh=u4ZOalLTudERd9ZwTUzdjiavIppCJHxJz/VBOU8NyXU=;
+	b=UNbstEyEL4yjAgeoBoKHtAipo0/5Bct5Avbj7yrEn9jY4ePJ9jvV8LL84SeJk1i32Tpu
+	 +7A6yCni1TlhhiV9/nV23yjZqmLKwWYwphPfyplKDmZojsFBRuWqQTUHsjNXWYLR0Z7Ef
+	 w+C5ItBkSSjTIPrOS7zzuEPD/ARCF6Xp56PL3CYwyqRXj5/UPOH0y9hS5j/w2Q/EXT64v
+	 fPU+Ivo/c32Ybf1BVDZJb3LRI3R52zWFe14RcpZ/qAPX6QTpH4yTLVF09sr4U0Wj/onfn
+	 AjLtxeOCEDwZtSzrdCJ0JC8mhtdhBl0K+mj2pRZpvxDg9dmv8ZQEId+kZZEZB62VRsQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=xx8XyOOX;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=S59EeYno;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1643E606A31E;
-	Wed, 25 Nov 2026 14:45:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 23933606A32C;
+	Wed, 25 Nov 2026 14:45:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=xx8XyOOX
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2F7CE1F000D2;
-	Wed, 25 Nov 2026 14:45:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=S59EeYno
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 31A5A1F000CA;
+	Wed, 25 Nov 2026 14:45:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795617920;
-	bh=Q1yyHczV+TH4F72j7hOXz5HAY++T5/cZEDrV9SqWuuY=;
+	s=korg; t=1795617923;
+	bh=u4ZOalLTudERd9ZwTUzdjiavIppCJHxJz/VBOU8NyXU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=xx8XyOOXQKRcUmHQUxtkanES/qPfWI/twzioAVZNqwQ2T0FftIE9cdQyHVDBj1CN0
-	 XyKaxv4VNvIYrdbxnpp7N6AXKhFb9yMMySWvbGCh9STomRi7yl4o4SWemuYSEYJamn
-	 xoNsJE6onqQw5a7/gOvW43+ReHZLBKOaK2EtA4Mo=
+	b=S59EeYnovaj7wgRrrKZGVl4eCoS7rBjTK9b8xV+6R8e4X0j+s9u50OQ+jgNLRsQGh
+	 kKUkujVa9IIUzwkLNeITjKe/IPUemkotJeWOWydN978JiBkwgRxqAoRI34wH4tZ19m
+	 BmnmD0Yc0UPAxK3MjZvuJwEL+zq07TRCnIAl074A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alexei Starovoitov <ast@kernel.org>,
+	Qu Wenruo <wqu@suse.com>,
+	Filipe Manana <fdmanana@suse.com>,
+	David Sterba <dsterba@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0115/1005] bpf: Dont let lwt_in progs call into IPv6 when it is disabled
-Date: Wed, 25 Nov 2026 15:24:13 +0100
-Message-ID: <20261125143824.439007910@linuxfoundation.org>
+Subject: [PATCH 7.3 0073/1005] btrfs: scrub: fix lost wakeup and hang when cancelling a scrub that is finishing
+Date: Wed, 25 Nov 2026 15:23:31 +0100
+Message-ID: <20261125143823.451167895@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143821.729802100@linuxfoundation.org>
 References: <20261125143821.729802100@linuxfoundation.org>
@@ -67,63 +69,55 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alexei Starovoitov <ast@kernel.org>
+From: Filipe Manana <fdmanana@suse.com>
 
-[ Upstream commit 95f1d5e4abb79fe85a54f7a46b41f297ce533c31 ]
+[ Upstream commit bda65e5115fe66ee0d8cf4ade11807f9fca4f0e1 ]
 
-With ipv6.disable=1, inet6_init() returns before it registers any pernet
-subsystem. Thus net->ipv6.devconf_all and net->ipv6.seg6_data stay NULL.
-IS_ENABLED(CONFIG_IPV6) only says that the code is built in.
-bpf_lwt_input_reroute() and bpf_push_seg6_encap() call into IPv6, but do
-not test ipv6_mod_enabled(). An lwt_in prog also runs with ipv6.disable=1,
-and skb->protocol == htons(ETH_P_IPV6) does not prove that IPv6 is enabled.
-Thus the kernel dereferences NULL and crashes.
+When scrub finishes, it does a wakeup on the fs_info->scrub_pause_wait
+wait queue and then sets dev->scrub_sctx to NULL. On the other hand the
+scrub cancel code (btrfs_scrub_cancel_dev()) waits on that wait queue
+for dev->scrub_sctx to be NULL. So this means if btrfs_scrub_cancel_dev()
+is called right when scrub is finishing and sees the wakeup before the
+NULL is assigned to dev->scrub_sctx by btrfs_scrub_dev(), it hangs.
 
-Return -EAFNOSUPPORT before these calls if ipv6_mod_enabled() is false.
-BPF_LWT_REROUTE then drops an IPv6 skb. With IPv6 enabled nothing changes.
+Fix this by doing the wakeup in btrfs_scrub_dev() after setting
+dev->scrub_sctx to NULL.
 
-The first Fixes tag is for bpf_push_seg6_encap(), which never had this
-test. The second tag is for bpf_lwt_input_reroute(). Until that commit it
-used ipv6_stub, which returned -EAFNOSUPPORT with ipv6.disable=1.
-
-Fixes: fe94cc290f53 ("bpf: Add IPv6 Segment Routing helpers")
-Fixes: ad84b1eefe28 ("bpf: remove ipv6_bpf_stub completely and use direct function calls")
-Signed-off-by: Alexei Starovoitov <ast@kernel.org>
-Link: https://patch.msgid.link/20261101190535.1454146-25-alexei.starovoitov@gmail.com
+Fixes: a2de733c78fa ("btrfs: scrub")
+Reviewed-by: Qu Wenruo <wqu@suse.com>
+Signed-off-by: Filipe Manana <fdmanana@suse.com>
+Signed-off-by: David Sterba <dsterba@suse.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/core/filter.c  | 4 ++++
- net/core/lwt_bpf.c | 2 +-
- 2 files changed, 5 insertions(+), 1 deletion(-)
+ fs/btrfs/scrub.c | 8 +++++++-
+ 1 file changed, 7 insertions(+), 1 deletion(-)
 
-diff --git a/net/core/filter.c b/net/core/filter.c
-index f5931e8964232..2d539860684f5 100644
---- a/net/core/filter.c
-+++ b/net/core/filter.c
-@@ -6924,6 +6924,10 @@ static int bpf_push_seg6_encap(struct sk_buff *skb, u32 type, void *hdr, u32 len
- 	int err;
- 	struct ipv6_sr_hdr *srh = (struct ipv6_sr_hdr *)hdr;
+diff --git a/fs/btrfs/scrub.c b/fs/btrfs/scrub.c
+index ba2e27cc53519..91e441d0ff3cb 100644
+--- a/fs/btrfs/scrub.c
++++ b/fs/btrfs/scrub.c
+@@ -3171,7 +3171,6 @@ int btrfs_scrub_dev(struct btrfs_fs_info *fs_info, u64 devid, u64 start,
+ 	memalloc_nofs_restore(nofs_flag);
  
-+	/* With ipv6.disable=1 the netns has no seg6 data and no IPv6 tables. */
-+	if (!ipv6_mod_enabled())
-+		return -EAFNOSUPPORT;
+ 	atomic_dec(&fs_info->scrubs_running);
+-	wake_up(&fs_info->scrub_pause_wait);
+ 
+ 	if (progress)
+ 		memcpy(progress, &sctx->stat, sizeof(*progress));
+@@ -3184,6 +3183,13 @@ int btrfs_scrub_dev(struct btrfs_fs_info *fs_info, u64 devid, u64 start,
+ 	dev->scrub_ctx = NULL;
+ 	mutex_unlock(&fs_info->scrub_lock);
+ 
++	/*
++	 * We have set dev->scrub_ctx to NULL, now do the wakeup as a concurrent
++	 * scrub cancel (btrfs_scrub_cancel_dev()) waits for dev->scrub_ctx to
++	 * be set to NULL.
++	 */
++	wake_up(&fs_info->scrub_pause_wait);
 +
- 	if (!seg6_validate_srh(srh, len, false))
- 		return -EINVAL;
+ 	scrub_workers_put(fs_info);
+ 	scrub_put_ctx(sctx);
  
-diff --git a/net/core/lwt_bpf.c b/net/core/lwt_bpf.c
-index 60f4eda7dae9a..774fad4e9fbf7 100644
---- a/net/core/lwt_bpf.c
-+++ b/net/core/lwt_bpf.c
-@@ -128,7 +128,7 @@ static int bpf_lwt_input_reroute(struct sk_buff *skb)
- 		dev_put(dev);
- 	} else if (skb->protocol == htons(ETH_P_IPV6)) {
- 		skb_dst_drop(skb);
--		if (IS_ENABLED(CONFIG_IPV6)) {
-+		if (ipv6_mod_enabled()) {
- 			ip6_route_input(skb);
- 			err = skb_dst(skb)->error;
- 		} else {
 -- 
 2.53.0
 
