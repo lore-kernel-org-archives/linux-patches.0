@@ -1,53 +1,57 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795624488;
-	b=lHCDtW1J8f79IaKoXz8BveOqdbpNQLW0hLWXA7zqjRmcCN24kXVbXT3cFlqixqNKgSBL
-	 czzUpI8FrMtQCbkkYiOgJUge36aQiss5XA3n7zyoWKMPCwGp1vBUflQQ8v6j+OeENlBaS
-	 Rcl6Echo04ULchCFWgLQ/xUAqtv9U0117P/bQaFpjS9sqmUb8r5KMjTCaTCFgg73Xgavc
-	 t7Rgt91Hdo5qY2FIj2vZQ/O5ZbHhX3usKtn+7ovKgc7RZoSC6mMzoPpT07Uv24b+XMb+E
-	 DWmjTAF+UPFSga8jabOlg3Ah/vpapM/FLmuiT5fqHtR3AsT1EykWuMNTITMcOKXgH9Q==
+	t=1795624491;
+	b=rr/8KPImQRq14O2q9zP4XkRdyUN/KSncCUc8BJLjzxE7weVgevNokDX0S0Y8HrJK19Y6
+	 8V1DF8Ih3PnSH6pUKy6c+Yjkm0w7f1X5n592jGYuntTm3jmZSaMOcbQtDjPAhaVERo5vA
+	 hHGDk61OOTE8uiYeohSWfl0FdEFk3KLaG6JWCMggUF1PYW7Ex31OEabjY0ry7YyOzLQH8
+	 IBJRpnZoYA299hKUv1pTaJW3bNUfowIdyItzSKs+Ac9Vyglf1AyVuWO7CxlHo577znJ2o
+	 BwhkSfci7hFmNeFMKF5ZrZlNmpOjCArQ/tQMmWWOwQFPkDXFYu+29m9rlzjcimZOZ3g==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795624488;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795624491;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=S+qZkEd+HqSJ64xQobGoRx0q18y9H4ljCIfuTZyK4g8=;
-	b=MdJAmuq8+SW8d2vwB1HaS6cOawMoc0dcDI4TWyadKQTaEi1qjjqizkdS5e12hoh8EQPp
-	 Azo/xcgF+W1BZvcJ3nTetvFD5YFLDm50ekkIALt/uaIgF3fRgc+h0pCBptjBAThBzIlyb
-	 2rIQpnRbVg5FgwiqcBNVrO+TwEBTJgzzNfsYiGUvPkdD4zwmjnlaWT+2uYeT1y++AxNeB
-	 og/LxW/SF0bhKS/jrwFtKG9aVdxClFeRTdaXRvkFj+7Pg4Ionyz9V42BkGKOsXFAnL6PX
-	 3Jfyvapug033EmUKR4K8QVpI2vhSYX863DtaRZ9hXx0Nh03/qk9VRPNLmA6f1mD+rsg==
+	bh=MKZ6mDAUU2RW+aWI0Ji/Pt9dVV+fix9BdkQ/k/kdpD4=;
+	b=BJO0XB8DiWQDkteBuVADow+867k1M0FbJ1FKuONXLClyqx2eUQodDiUOD4U1Btsa1BWz
+	 IGmF8jhpiKXSHDfOZuhAmVbIVg2X87uidFpRnjNc0DBbo14c3o1hkk2Hk8vAaIKRpxS+S
+	 3dWqUCFudUOn02g3GhNULvzjk8Aw6z/65rY6I79L20TnMExRyZAQPiaYziln0KsZvsjRu
+	 JaJNg5Kl599vFDrHPvPDs8z9wAxeXBHOfZHeEUWs5GepsCkm3hPORAAGrjRZ80zx18oG8
+	 VYHeJ1qU8xKYMFt8G1/3W9C4dMm20xXwODwgugX4Y1uXy5eAEb3pxhQBLdlJOBmd25g==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=QRxy4i3n;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="1/3KExvU";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5B026606A33A;
-	Wed, 25 Nov 2026 16:34:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 29A2A606A33D;
+	Wed, 25 Nov 2026 16:34:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=QRxy4i3n
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AA6F51F000C4;
-	Wed, 25 Nov 2026 16:34:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=1/3KExvU
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 811D61F000C0;
+	Wed, 25 Nov 2026 16:34:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795624488;
-	bh=S+qZkEd+HqSJ64xQobGoRx0q18y9H4ljCIfuTZyK4g8=;
+	s=korg; t=1795624491;
+	bh=MKZ6mDAUU2RW+aWI0Ji/Pt9dVV+fix9BdkQ/k/kdpD4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=QRxy4i3nUzOyEPVhEsPptMnPUhdU1+mTJe7wmYH55a8zme043YL3EFIDRzXM4JaAl
-	 aNXqmeGeH1+vSEA48Er8XhFBZtpxUWag0M0cbnjmAdLnDlO3vrfLx0syvEZb4gvUca
-	 il3Lv/yZ9xxruEquCLUgo14rWCQm5G7Kxa2XNGSM=
+	b=1/3KExvUSr4A68ibybhgJyEWtgwj3XWcvl0zG2otOIj9XOn34HQSMB1GVsW/WZ9eJ
+	 ztPcrUCOYqVQ3QrH21i4J074N6V5UfAscoUMNZqoRL/4/ONp5GjgebROj0Ye4POs1L
+	 fOC8o504Au7liPGGud1Qiowgfgu3agcR2nyKVOUM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eric Dumazet <edumazet@google.com>,
-	Kuniyuki Iwashima <kuniyu@amazon.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Anvik Loitongbam <permissiontogallop@gmail.com>,
+	Yingjie Wang <x-professor@outlook.com>,
+	Eric Dumazet <edumazet@kernel.org>,
+	Jiayuan Chen <jiayuan.chen@linux.dev>,
+	Neal Cardwell <ncardwell@google.com>,
+	Kuniyuki Iwashima <kuniyu@google.com>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 208/816] inet: consolidate inet_csk_clone_lock()
-Date: Wed, 25 Nov 2026 15:29:16 +0100
-Message-ID: <20261125143854.013229518@linuxfoundation.org>
+Subject: [PATCH 6.12 209/816] tcp: ipv6: do not read ireq->pktopts from tcp_v6_send_synack()
+Date: Wed, 25 Nov 2026 15:29:17 +0100
+Message-ID: <20261125143854.038015576@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143849.205329330@linuxfoundation.org>
 References: <20261125143849.205329330@linuxfoundation.org>
@@ -69,195 +73,114 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eric Dumazet <edumazet@google.com>
+From: Eric Dumazet <edumazet@kernel.org>
 
-[ Upstream commit a3a128f611a965fddf8a02dd45716f96e0738e00 ]
+[ Upstream commit 8e069fd3fd396b89af417e50b359bc9892dd41cd ]
 
-Current inet_sock_set_state trace from inet_csk_clone_lock() is missing
-many details :
+When IPV6_FL_F_REFLECT is set on a listener, or the
+net.ipv6.flowlabel_reflect sysctl has FLOWLABEL_REFLECT_ESTABLISHED,
+tcp_v6_send_synack() reflects the flowlabel of the SYN packet,
+reading it from the skb stored in ireq->pktopts.
 
-... sock:inet_sock_set_state: family=AF_INET6 protocol=IPPROTO_TCP \
-    sport=4901 dport=0 \
-    saddr=127.0.0.6 daddr=0.0.0.0 \
-    saddrv6=:: daddrv6=:: \
-    oldstate=TCP_LISTEN newstate=TCP_SYN_RECV
+Since commit 079096f103fa ("tcp/dccp: install syn_recv requests
+into ehash table"), request sockets are processed without holding
+the listener lock. A cpu can then process a retransmitted SYN for a
+request socket, and send a SYNACK from tcp_check_req(), while another
+cpu receives the ACK completing the 3WHS. tcp_v6_syn_recv_sock()
+consumes ireq->pktopts when it wins the hashdance, and the first cpu
+reads a freed skb:
 
-Only the sport gives the listener port, no other parts of the n-tuple are correct.
+  BUG: KASAN: slab-use-after-free in tcp_v6_send_synack (include/linux/skbuff.h:3152 include/linux/ipv6.h:110 net/ipv6/tcp_ipv6.c:582)
+  Read of size 8 at addr ffff88802b08b608 by task poc-ipv6-pktopt/5076
 
-In this patch, I initialize relevant fields of the new socket before
-calling inet_sk_set_state(newsk, TCP_SYN_RECV).
+  Call Trace:
+   <IRQ>
+   tcp_v6_send_synack (include/linux/skbuff.h:3152 include/linux/ipv6.h:110 net/ipv6/tcp_ipv6.c:582)
+   tcp_rtx_synack (net/ipv4/tcp_output.c:4719)
+   tcp_check_req (net/ipv4/tcp_minisocks.c:762)
+   tcp_v6_rcv (net/ipv6/tcp_ipv6.c:1826)
+   ip6_protocol_deliver_rcu (net/ipv6/ip6_input.c:479)
+   ip6_input_finish (net/ipv6/ip6_input.c:534)
+   ip6_input (include/linux/netfilter.h:325 include/linux/netfilter.h:319 net/ipv6/ip6_input.c:545)
+   ipv6_rcv (include/net/dst.h:481 net/ipv6/ip6_input.c:119 include/linux/netfilter.h:325 include/linux/netfilter.h:319 net/ipv6/ip6_input.c:351)
 
-We now have a trace including all the source/destination bits.
+  Freed by task 5074 on cpu 0 at 15.412249s:
+   kmem_cache_free (include/linux/kasan.h:235 mm/slub.c:2780 mm/slub.c:6630 mm/slub.c:6757)
+   tcp_v6_syn_recv_sock (net/ipv6/tcp_ipv6.c:1528)
+   tcp_check_req (net/ipv4/tcp_minisocks.c:934)
+   tcp_v6_rcv (net/ipv6/tcp_ipv6.c:1826)
+   ip6_protocol_deliver_rcu (net/ipv6/ip6_input.c:479)
+   ip6_input_finish (net/ipv6/ip6_input.c:534)
 
-... sock:inet_sock_set_state: family=AF_INET6 protocol=IPPROTO_TCP \
-    sport=4901 dport=47648 \
-    saddr=127.0.0.6 daddr=127.0.0.6 \
-    saddrv6=2002:a05:6830:1f85:: daddrv6=2001:4860:f803:65::3 \
-    oldstate=TCP_LISTEN newstate=TCP_SYN_RECV
+Request socket migration has the same issue: reqsk_migrate_reset()
+transfers ireq->pktopts to the clone, which can be freed while
+another cpu holding a reference on the old request socket is still
+sending a SYNACK.
 
-Signed-off-by: Eric Dumazet <edumazet@google.com>
-Reviewed-by: Kuniyuki Iwashima <kuniyu@amazon.com>
-Link: https://patch.msgid.link/20250212131328.1514243-3-edumazet@google.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Stable-dep-of: 8e069fd3fd39 ("tcp: ipv6: do not read ireq->pktopts from tcp_v6_send_synack()")
+The SYNACK timer itself is not an issue, because
+inet_csk_reqsk_queue_drop() calls timer_delete_sync().
+
+Save the flowlabel of the SYN in the request socket instead, so that
+tcp_v6_send_synack() no longer needs ireq->pktopts.
+
+As a side effect, the flowlabel is also reflected for SYN packets
+reusing a TIME_WAIT socket, as ireq->pktopts is not set in this case.
+
+Fixes: e994b2f0fb92 ("tcp: do not lock listener to process SYN packets")
+Fixes: 079096f103fa ("tcp/dccp: install syn_recv requests into ehash table")
+Fixes: c905dee62232 ("tcp: Migrate TCP_NEW_SYN_RECV requests at retransmitting SYN+ACKs.")
+Reported-by: Anvik Loitongbam <permissiontogallop@gmail.com>
+Reported-by: Yingjie Wang <x-professor@outlook.com>
+Closes: https://lore.kernel.org/netdev/82c31e4d5043f3dbd11b44177cfba779d335aae3.1793599929.git.x-professor@outlook.com/
+Signed-off-by: Eric Dumazet <edumazet@kernel.org>
+Reviewed-by: Jiayuan Chen <jiayuan.chen@linux.dev>
+Reviewed-by: Neal Cardwell <ncardwell@google.com>
+Reviewed-by: Kuniyuki Iwashima <kuniyu@google.com>
+Link: https://patch.msgid.link/20261102075441.3771550-1-edumazet@kernel.org
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/dccp/ipv4.c                 |  3 ---
- net/dccp/ipv6.c                 |  9 +++------
- net/ipv4/inet_connection_sock.c | 24 ++++++++++++++++++++----
- net/ipv4/tcp_ipv4.c             |  4 ----
- net/ipv6/tcp_ipv6.c             |  8 ++------
- 5 files changed, 25 insertions(+), 23 deletions(-)
+ include/linux/tcp.h | 3 +++
+ net/ipv6/tcp_ipv6.c | 5 +++--
+ 2 files changed, 6 insertions(+), 2 deletions(-)
 
-diff --git a/net/dccp/ipv4.c b/net/dccp/ipv4.c
-index b8f5e20368ec5..bf1ac878009d5 100644
---- a/net/dccp/ipv4.c
-+++ b/net/dccp/ipv4.c
-@@ -427,9 +427,6 @@ struct sock *dccp_v4_request_recv_sock(const struct sock *sk,
- 
- 	newinet		   = inet_sk(newsk);
- 	ireq		   = inet_rsk(req);
--	sk_daddr_set(newsk, ireq->ir_rmt_addr);
--	sk_rcv_saddr_set(newsk, ireq->ir_loc_addr);
--	newinet->inet_saddr	= ireq->ir_loc_addr;
- 	RCU_INIT_POINTER(newinet->inet_opt, rcu_dereference(ireq->ireq_opt));
- 	newinet->mc_index  = inet_iif(skb);
- 	newinet->mc_ttl	   = ip_hdr(skb)->ttl;
-diff --git a/net/dccp/ipv6.c b/net/dccp/ipv6.c
-index 3c43dd8561f8e..b4c30bc2431c7 100644
---- a/net/dccp/ipv6.c
-+++ b/net/dccp/ipv6.c
-@@ -365,6 +365,9 @@ static int dccp_v6_conn_request(struct sock *sk, struct sk_buff *skb)
- 	ireq = inet_rsk(req);
- 	ireq->ir_v6_rmt_addr = ipv6_hdr(skb)->saddr;
- 	ireq->ir_v6_loc_addr = ipv6_hdr(skb)->daddr;
-+	ireq->ir_rmt_addr = LOOPBACK4_IPV6;
-+	ireq->ir_loc_addr = LOOPBACK4_IPV6;
-+
- 	ireq->ireq_family = AF_INET6;
- 	ireq->ir_mark = inet_request_mark(sk, skb);
- 
-@@ -507,10 +510,7 @@ static struct sock *dccp_v6_request_recv_sock(const struct sock *sk,
- 
- 	memcpy(newnp, np, sizeof(struct ipv6_pinfo));
- 
--	newsk->sk_v6_daddr	= ireq->ir_v6_rmt_addr;
- 	newnp->saddr		= ireq->ir_v6_loc_addr;
--	newsk->sk_v6_rcv_saddr	= ireq->ir_v6_loc_addr;
--	newsk->sk_bound_dev_if	= ireq->ir_iif;
- 
- 	/* Now IPv6 options...
- 
-@@ -549,9 +549,6 @@ static struct sock *dccp_v6_request_recv_sock(const struct sock *sk,
- 
- 	dccp_sync_mss(newsk, dst_mtu(dst));
- 
--	newinet->inet_daddr = newinet->inet_saddr = LOOPBACK4_IPV6;
--	newinet->inet_rcv_saddr = LOOPBACK4_IPV6;
--
- 	if (__inet_inherit_port(sk, newsk) < 0) {
- 		inet_csk_prepare_forced_close(newsk);
- 		dccp_done(newsk);
-diff --git a/net/ipv4/inet_connection_sock.c b/net/ipv4/inet_connection_sock.c
-index c78291ea4ff6f..64093410f6d52 100644
---- a/net/ipv4/inet_connection_sock.c
-+++ b/net/ipv4/inet_connection_sock.c
-@@ -1258,19 +1258,33 @@ struct sock *inet_csk_clone_lock(const struct sock *sk,
- {
- 	struct sock *newsk = sk_clone_lock(sk, priority);
- 	struct inet_connection_sock *newicsk;
-+	struct inet_request_sock *ireq;
-+	struct inet_sock *newinet;
- 
- 	if (!newsk)
- 		return NULL;
- 
- 	newicsk = inet_csk(newsk);
-+	newinet = inet_sk(newsk);
-+	ireq = inet_rsk(req);
- 
--	inet_sk_set_state(newsk, TCP_SYN_RECV);
- 	newicsk->icsk_bind_hash = NULL;
- 	newicsk->icsk_bind2_hash = NULL;
- 
--	inet_sk(newsk)->inet_dport = inet_rsk(req)->ir_rmt_port;
--	inet_sk(newsk)->inet_num = inet_rsk(req)->ir_num;
--	inet_sk(newsk)->inet_sport = htons(inet_rsk(req)->ir_num);
-+	newinet->inet_dport = ireq->ir_rmt_port;
-+	newinet->inet_num = ireq->ir_num;
-+	newinet->inet_sport = htons(ireq->ir_num);
-+
-+	newsk->sk_bound_dev_if = ireq->ir_iif;
-+
-+	newsk->sk_daddr = ireq->ir_rmt_addr;
-+	newsk->sk_rcv_saddr = ireq->ir_loc_addr;
-+	newinet->inet_saddr = ireq->ir_loc_addr;
-+
+diff --git a/include/linux/tcp.h b/include/linux/tcp.h
+index eb7e36a130cad..00ea96fec2273 100644
+--- a/include/linux/tcp.h
++++ b/include/linux/tcp.h
+@@ -171,6 +171,9 @@ struct tcp_request_sock {
+ 	u8				ao_rcv_next;
+ 	bool				used_tcp_ao;
+ #endif
 +#if IS_ENABLED(CONFIG_IPV6)
-+	newsk->sk_v6_daddr = ireq->ir_v6_rmt_addr;
-+	newsk->sk_v6_rcv_saddr = ireq->ir_v6_loc_addr;
++	__be32				syn_flowlabel;
 +#endif
+ };
  
- 	/* listeners have SOCK_RCU_FREE, not the children */
- 	sock_reset_flag(newsk, SOCK_RCU_FREE);
-@@ -1290,6 +1304,8 @@ struct sock *inet_csk_clone_lock(const struct sock *sk,
- 	memset(&newicsk->icsk_accept_queue, 0,
- 	       sizeof(newicsk->icsk_accept_queue));
- 
-+	inet_sk_set_state(newsk, TCP_SYN_RECV);
-+
- 	inet_clone_ulp(req, newsk, priority);
- 
- 	security_inet_csk_clone(newsk, req);
-diff --git a/net/ipv4/tcp_ipv4.c b/net/ipv4/tcp_ipv4.c
-index b92f040a3eaab..4d1b3c4602a36 100644
---- a/net/ipv4/tcp_ipv4.c
-+++ b/net/ipv4/tcp_ipv4.c
-@@ -1770,10 +1770,6 @@ struct sock *tcp_v4_syn_recv_sock(const struct sock *sk, struct sk_buff *skb,
- 	newtp		      = tcp_sk(newsk);
- 	newinet		      = inet_sk(newsk);
- 	ireq		      = inet_rsk(req);
--	sk_daddr_set(newsk, ireq->ir_rmt_addr);
--	sk_rcv_saddr_set(newsk, ireq->ir_loc_addr);
--	newsk->sk_bound_dev_if = ireq->ir_iif;
--	newinet->inet_saddr   = ireq->ir_loc_addr;
- 	inet_opt	      = rcu_dereference(ireq->ireq_opt);
- 	RCU_INIT_POINTER(newinet->inet_opt, inet_opt);
- 	newinet->mc_index     = inet_iif(skb);
+ static inline struct tcp_request_sock *tcp_rsk(const struct request_sock *req)
 diff --git a/net/ipv6/tcp_ipv6.c b/net/ipv6/tcp_ipv6.c
-index ae2a91e3f15c9..ee4712f7d9708 100644
+index ee4712f7d9708..5bd82a5d87960 100644
 --- a/net/ipv6/tcp_ipv6.c
 +++ b/net/ipv6/tcp_ipv6.c
-@@ -798,6 +798,8 @@ static void tcp_v6_init_req(struct request_sock *req,
+@@ -546,8 +546,8 @@ static int tcp_v6_send_synack(const struct sock *sk, struct dst_entry *dst,
+ 				    &ireq->ir_v6_rmt_addr);
  
- 	ireq->ir_v6_rmt_addr = ipv6_hdr(skb)->saddr;
+ 		fl6->daddr = ireq->ir_v6_rmt_addr;
+-		if (inet6_test_bit(REPFLOW, sk) && ireq->pktopts)
+-			fl6->flowlabel = ip6_flowlabel(ipv6_hdr(ireq->pktopts));
++		if (inet6_test_bit(REPFLOW, sk))
++			fl6->flowlabel = tcp_rsk(req)->syn_flowlabel;
+ 
+ 		tclass = READ_ONCE(sock_net(sk)->ipv4.sysctl_tcp_reflect_tos) ?
+ 				(tcp_rsk(req)->syn_tos & ~INET_ECN_MASK) |
+@@ -800,6 +800,7 @@ static void tcp_v6_init_req(struct request_sock *req,
  	ireq->ir_v6_loc_addr = ipv6_hdr(skb)->daddr;
-+	ireq->ir_rmt_addr = LOOPBACK4_IPV6;
-+	ireq->ir_loc_addr = LOOPBACK4_IPV6;
+ 	ireq->ir_rmt_addr = LOOPBACK4_IPV6;
+ 	ireq->ir_loc_addr = LOOPBACK4_IPV6;
++	tcp_rsk(req)->syn_flowlabel = ip6_flowlabel(ipv6_hdr(skb));
  
  	/* So that link locals have meaning */
  	if ((!sk_listener->sk_bound_dev_if || l3_slave) &&
-@@ -1439,10 +1441,7 @@ static struct sock *tcp_v6_syn_recv_sock(const struct sock *sk, struct sk_buff *
- 
- 	ip6_dst_store(newsk, dst, NULL, false);
- 
--	newsk->sk_v6_daddr = ireq->ir_v6_rmt_addr;
- 	newnp->saddr = ireq->ir_v6_loc_addr;
--	newsk->sk_v6_rcv_saddr = ireq->ir_v6_loc_addr;
--	newsk->sk_bound_dev_if = ireq->ir_iif;
- 
- 	/* Now IPv6 options...
- 
-@@ -1493,9 +1492,6 @@ static struct sock *tcp_v6_syn_recv_sock(const struct sock *sk, struct sk_buff *
- 
- 	tcp_initialize_rcv_mss(newsk);
- 
--	newinet->inet_daddr = newinet->inet_saddr = LOOPBACK4_IPV6;
--	newinet->inet_rcv_saddr = LOOPBACK4_IPV6;
--
- #ifdef CONFIG_TCP_MD5SIG
- 	l3index = l3mdev_master_ifindex_by_index(sock_net(sk), ireq->ir_iif);
- 
 -- 
 2.53.0
 
