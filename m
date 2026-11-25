@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795618946;
-	b=V1BA7wOTirOeL6ZsIrHqIOUlQn/OWARR7L7/ycTHll7VAFORCZX+QRDSiCV4Y/ox5Tuq
-	 oGYeFUzfu2wvwHzlU0jRN/JtMYpFXwB+2F2GuKyOH5Txli37VcSY8JJ+1z98P1PJckLD2
-	 3DE4VLi4GsKJAsWx87mB+gYUNj8Dd/Iu0TRQwby/xlO39pyzSJZQjXSjCdRTpjibOBzM4
-	 Ky2VlMbQdsSWgqF6apPc1cmxMgkTpOmMOjCJGq09M02gxw0mBt+e0kUcF0sA/Z77j3H1e
-	 1sXsQN95RbfVbfnGKVmDFe0VcIB0VF21yqNZ7LpMLRPhs/AH4dIwF2QKFHs3Lk+MV1w==
+	t=1795618950;
+	b=X2RaLcDD1iMVX7VYmcj5dNcXoozKaP6EciGo0Y10tDbBEcwPA3A1TBn6+WcSHJgGcgio
+	 EUJ4y7GZLgD3dMAxc4ZyIIywbPeJcYw+bC83EB8afTQyuIEYvXLUea0ABnfqV+TVFLpSe
+	 ywu2C7rocSy2bXaOtMTOONdDxI1FJZGqsvTTFBIfiEmryUhpAI2R47Lzoif92kdBmsK24
+	 Vx617bJe25Yt+AJEOiP20E9tbF2iv189Fl0UYtMNXaNzAeGqRt1dXXZFsOjNepj+kC/8f
+	 v9P9ArIp8bhC5aCLNivPDlzOVnEM6oGzFFg6JfiCvTEnKSdW7lgj1QtLJ0qshklynjw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795618946;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795618950;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=g9qgTFLdYHZ+/pn47fQRqVN4amMrloF/GCOSIPYFxJw=;
-	b=oOOhfY/f5lszGSSCOQrnzKZJddKpOQR+wG+P7Lrp1WtvWUUl7dxh3EmJMiHn8iMP1+D+
-	 UHo60SNbkEMJGYXzzhZxafudTlkKz8544+70aC+/XjXhtjxiqHpbv0OpLb2EKNp5DKhyj
-	 yi1iy45bGybS0eBPE3Bj3aOW0YSIUw4jgIpBRoGnYNRjE6Kil08w/RKyHLu9uY5pq1+St
-	 d2ieJNjPvqVPrBoWY9d2/7dX0n7ac937z5cASs8cAc0/FZgw0pVmzpoQiImGNL25j1QbG
-	 LkUJKvu+fzsoQY62jazDoYtSGSK29wH/8HdZxufjqCYKQcOZTQtHmeyO6eeIjrJw5mA==
+	bh=FMyY2pJDZyxVYAgAY9K5bMws9+7pWOoKzQ2x6S7KkUY=;
+	b=ViDug/f4kGZ3QxAqOYAxopH98+P1rN9JNRPcNxbdDmUM1fs7vaVezW/zLWLXsHBUYzIB
+	 whzV2eNnga0n462hElZbkFmGWxWRkHUsi5rS49fvgZ1y0Oyu77YrTlNBHhkbq4Ck4IO3N
+	 YpH41WnBCO7sdxWAlRrJ6hCXajMAYV7DQYMPhFI5uMBLFKezLJ2ifJIxTyJ20n8/Dnxxl
+	 mcrF6kSr86Ddh2OquJu7pyzxjHPtazgFt4vz3duf7ryed1EMwOmsjYp3hbajk1cWe8ppb
+	 WXRBWFAd3cKMH/BL9Z+mG5eD/Eo+orGxZRyEzqNN2xCuIqbPwKQwiTChyZxiPqoUjRA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=0QeU7VXz;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=m0iYP+fL;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A1017606A321;
-	Wed, 25 Nov 2026 15:02:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1B983606A321;
+	Wed, 25 Nov 2026 15:02:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=0QeU7VXz
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BAFEA1F000C0;
-	Wed, 25 Nov 2026 15:02:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=m0iYP+fL
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 95C3B1F000C0;
+	Wed, 25 Nov 2026 15:02:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795618946;
-	bh=g9qgTFLdYHZ+/pn47fQRqVN4amMrloF/GCOSIPYFxJw=;
+	s=korg; t=1795618949;
+	bh=FMyY2pJDZyxVYAgAY9K5bMws9+7pWOoKzQ2x6S7KkUY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=0QeU7VXzRlfklYONPMZ4EqXRt/xfUD4Rerqj7ztTI4h+YEfxTCvC/9AdLn8Q+ETYK
-	 TkKYIg4EDI57nFO1ig6VK9LL4TFkJga4ZDx/z1Vvr6yu6h2hpcHqe729FQDPSJ21Os
-	 YojdI+43RlymUUmuaJ8bwmwoKwp1vZdGPzjUqyFk=
+	b=m0iYP+fLxTjma2rdJFdaQysEa5jM9l0xlcyC3xoo3VjxSH+VaW6dCo/LrUGmQtM5m
+	 FmC8uqtYOF/O2a5KysX4Rks0b5vE/yCYtmuYcTLDbERSZMpIuvJGpX82Exx8pp4FbL
+	 KfUPMEdjJwwDM23GcPciLiNAPFiu1Xv+dGYyoNOE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Avi Weiss <thnkslprpt@gmail.com>,
+	Mike Snitzer <snitzer@kernel.org>,
 	Anna Schumaker <anna.schumaker@hammerspace.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0438/1005] SUNRPC: Balance queue accounting when relocating a task
-Date: Wed, 25 Nov 2026 15:29:36 +0100
-Message-ID: <20261125143832.009843270@linuxfoundation.org>
+Subject: [PATCH 7.3 0439/1005] NFS/localio: hold the client across an asynchronous LOCALIO probe
+Date: Wed, 25 Nov 2026 15:29:37 +0100
+Message-ID: <20261125143832.034046434@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143821.729802100@linuxfoundation.org>
 References: <20261125143821.729802100@linuxfoundation.org>
@@ -68,45 +68,59 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Avi Weiss <thnkslprpt@gmail.com>
+From: Mike Snitzer <snitzer@kernel.org>
 
-[ Upstream commit f14b157168ac106cfac6d577e08726488b1b886c ]
+[ Upstream commit 000a87910213562ff09f5bc38cd366ce34fccf71 ]
 
-When rpc_task_set_transport() relocates a movable task from an
-offline transport, it releases the request and drops the
-transport reference without decrementing the old transport's
-queuelen or the switch's xps_queuelen. Releasing the task
-later only accounts for the replacement transport.
+nfs_local_probe_async() queues the client's own cl_local_probe_work
+without a reference on the client, and nfs_free_client() does not cancel
+it.  The work takes a reference only once it runs.  If the last
+nfs_put_client() comes first, for example at umount after an NFSv3 I/O
+queued a throttled probe, the client is freed with its work queued, and
+the work then runs on freed memory.
 
-The stale counts affect transport selection and can prevent
-xprt_delete_locked() from removing an otherwise idle transport.
+Take the reference when the work is queued, and drop it when the work
+has run.  If the work is already queued, it already holds a reference,
+and the one just taken is dropped.
 
-Use rpc_task_release_xprt() to balance the previous assignment
-before selecting a replacement. Pass clnt explicitly because
-rpc_task_set_client() can assign a transport before tk_client
-is initialized.
-
-Fixes: 82ee41b85cef ("SUNRPC don't resend a task on an offlined transport")
-Signed-off-by: Avi Weiss <thnkslprpt@gmail.com>
+Fixes: 76d4cb6345da ("nfs: probe for LOCALIO when v4 client reconnects to server")
+Signed-off-by: Mike Snitzer <snitzer@kernel.org>
 Signed-off-by: Anna Schumaker <anna.schumaker@hammerspace.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/sunrpc/clnt.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ fs/nfs/localio.c | 13 ++++++++++---
+ 1 file changed, 10 insertions(+), 3 deletions(-)
 
-diff --git a/net/sunrpc/clnt.c b/net/sunrpc/clnt.c
-index 6fc36e516c1c6..33e64c0225f37 100644
---- a/net/sunrpc/clnt.c
-+++ b/net/sunrpc/clnt.c
-@@ -1197,7 +1197,7 @@ void rpc_task_set_transport(struct rpc_task *task, struct rpc_clnt *clnt)
- 		      (task->tk_flags & RPC_TASK_MOVEABLE)))
- 			return;
- 		xprt_release(task);
--		xprt_put(task->tk_xprt);
-+		rpc_task_release_xprt(clnt, task->tk_xprt);
- 	}
- 	if (task->tk_flags & RPC_TASK_NO_ROUND_ROBIN)
- 		task->tk_xprt = rpc_task_get_first_xprt(clnt);
+diff --git a/fs/nfs/localio.c b/fs/nfs/localio.c
+index cdada6cbb13bf..d5859e8c2a2a8 100644
+--- a/fs/nfs/localio.c
++++ b/fs/nfs/localio.c
+@@ -203,15 +203,22 @@ void nfs_local_probe_async_work(struct work_struct *work)
+ 	struct nfs_client *clp =
+ 		container_of(work, struct nfs_client, cl_local_probe_work);
+ 
+-	if (!refcount_inc_not_zero(&clp->cl_count))
+-		return;
+ 	nfs_local_probe(clp);
++	/* The reference nfs_local_probe_async() took for this work */
+ 	nfs_put_client(clp);
+ }
+ 
++/*
++ * The work is part of the client, so it holds a reference on the client
++ * from when it is queued until it has run: the last nfs_put_client()
++ * cannot free the client under a queued probe.
++ */
+ void nfs_local_probe_async(struct nfs_client *clp)
+ {
+-	queue_work(nfsiod_workqueue, &clp->cl_local_probe_work);
++	if (!refcount_inc_not_zero(&clp->cl_count))
++		return;
++	if (!queue_work(nfsiod_workqueue, &clp->cl_local_probe_work))
++		nfs_put_client(clp);	/* already queued, with its reference */
+ }
+ EXPORT_SYMBOL_GPL(nfs_local_probe_async);
+ 
 -- 
 2.53.0
 
