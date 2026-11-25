@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795622402;
-	b=znz8p+NbStNidz7Pm/6cXAcZsOeqjC4fenVWVqkIZWeUU8dEJU1tCorx/iKZ2+1VmW+J
-	 nKHyzwb+PdBpICsWbThO0vTmojj7DaET2wFK4GmNd26Iau3Wd0O9DwoYZtiQ8izRMTrC6
-	 aWPShFukioyhlR7vSi6eMCmfKIc4AJpRNuu41+tTFllp0CZIVtfp+Fd20DsQa4neymFm2
-	 rWRSxx1W72vCyYcs/k0yRVKohxu5PBbb9E8j5e1yLti1cadAjcerCOcVLEah9J75qs8vR
-	 2qj4jKTNwQef74Ipo2un4/qPdxsPWBocl+osncT3IdSuHHDwzPO66jL5U8EIAtBPjSg==
+	t=1795622406;
+	b=aDRDT7b3hGPSl6ojoLW/IXaRUmAFvR+7Oh1fkXS4mYv3/PAQKLDZokFJw4FnygfuAeSC
+	 geyPud8L0/TdpcZ36fExfnhlPZqFUNH/Tr4UkpU+pEhk9nVSfAYq0OLQnfBQoFDwbM4NR
+	 BPJZ3OEpN1P95yfZIm4M+sgi1EbhPiknH4xmPWS86Mj819HZfCKlzYzVWaQsMAkyHGPdS
+	 pbeG85e9mPiLgH3mGt/QRm75cWmkOhtrK5onycWDufseOXO016RRB+lhT+9sj3swjSI48
+	 a1UrRMgyLd0Vn4FwGqulPEZvA82qCaPfQLHQ22thmWQALo2A0w+N3Cy7JoHPDpiDYWQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795622402;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795622406;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=tDATisK3fdQ0mhuXIeqed+rQvdoh5I0kx+t7H9hjmRI=;
-	b=IR6kTTTMz6Tard13ee2y2mb7CgjV6Uwl2YXCLNFL/VeFFjUb8Vw5HBi+Q3T06CjpStFr
-	 a+PW2UuARtJH7HiCgGg94l4pxK8bRk5zjh9dKkQtuLXwaucUB+qPkkQ2H7HZJwDi0XUTY
-	 XkXVBbyqAORp4YVO9DN/Sy5vcA+CR3ob+XBoNFzkNYFBE4mAtVlFwRFEhqzQYEgdqkcsO
-	 LAUIgZdcMzUysiQ8817mInX+l5bNkOeBqh1CRL33i/FeFTNYwuWtuD71U32w0hzk6EmQh
-	 4rI3H+eI971uFpNCVgzKYjb86X9BwhbMIJNwn62ye7fB9ehvlKHwVrofTHdGyWvwYaA==
+	bh=HXbXflOsoHf2SPyAnuMerd6oNwHAVv6ibzz4q9/znmk=;
+	b=rTZBPUF8G1PbosgX3zSUDEOAGnJjvfvcDlNZAj60WfA9ZoMo4TMULIVlMcD21kQdiO1n
+	 kGQSHR0aXFWG9CRDT0GcgHMYgx08EYkQrMCesE+vZMw2ME5zK2CbODexeosGy7TH5hD32
+	 loKzR/P7kIcf451P8QY6T3Gt01RV+iG4zwCa64OEjP3XtwoT9I/mRKK2R+2J9SyLLqtxz
+	 qdqsXKc7GBRqyd6reuCDoZzrOQWtFpf4DDGoKMwptiq0YUaSCedq03tpuJvuwnW5rsXRV
+	 TsORUcdN5Tpy0t27U8lcmRuzdKrAIIvBESvKkKmehYvu/s/8azsK5l9mPWeOoRhtqxQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=AujiGLdG;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=12fSWdYA;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CA9EB606A329;
-	Wed, 25 Nov 2026 16:00:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4F6D3606A326;
+	Wed, 25 Nov 2026 16:00:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=AujiGLdG
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C9CAA1F000C0;
-	Wed, 25 Nov 2026 16:00:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=12fSWdYA
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1F08C1F000ED;
+	Wed, 25 Nov 2026 16:00:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795622402;
-	bh=tDATisK3fdQ0mhuXIeqed+rQvdoh5I0kx+t7H9hjmRI=;
+	s=korg; t=1795622405;
+	bh=HXbXflOsoHf2SPyAnuMerd6oNwHAVv6ibzz4q9/znmk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=AujiGLdGzHt4SvkcoE/8liiBD+etkG8gtiMMalrKvUEkAZJWmXjtzugBpdpBgLiFz
-	 PQz/rx3EPHbvkOhwxhBnn6rSKs3cWexPmXzMGhFH9qJNr9ld8IiHMdHHnV4Fmhs8f/
-	 0N/dS1d9traCHKkcvsw+Mb+euLUBMG4LrYLsXt+s=
+	b=12fSWdYADXzzXV6dzl1960Fn5KvvPrJfYimdCZrj61WWB8pkjYXMHs/y30QQ+yWiM
+	 LlUwwQ4EzROALCxx8kojWhql4U6tgTPS7BAheo+8APqsQnMozgdp2y4iWO4+RgUuXu
+	 frK1HVcw9rLb5h10aH7xRwQzIWzWr1XQhuJNMc/s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kim Wooseok <5mghybrid@khu.ac.kr>,
-	Ping-Ke Shih <pkshih@realtek.com>,
+	Ahsan Atta <ahsan.atta@intel.com>,
+	Giovanni Cabiddu <giovanni.cabiddu@intel.com>,
+	Herbert Xu <herbert@gondor.apana.org.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 525/990] wifi: rtl8xxxu: preserve RX requests across recoverable transfer errors
-Date: Wed, 25 Nov 2026 15:31:32 +0100
-Message-ID: <20261125143834.392317580@linuxfoundation.org>
+Subject: [PATCH 6.18 526/990] crypto: qat - hold cfg->lock when accessing config sections
+Date: Wed, 25 Nov 2026 15:31:33 +0100
+Message-ID: <20261125143834.414963429@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143822.072087159@linuxfoundation.org>
 References: <20261125143822.072087159@linuxfoundation.org>
@@ -68,171 +69,161 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kim Wooseok <5mghybrid@khu.ac.kr>
+From: Ahsan Atta <ahsan.atta@intel.com>
 
-[ Upstream commit 2f77c66694108785a1f6ae6c5de06453e7f7a91f ]
+[ Upstream commit cb3a1364fed9ea7b063e3ae026177a145abb5940 ]
 
-rtl8xxxu resubmits completed RX requests when more than eight URBs are
-waiting on the pending list. It starts with 32 URBs, but frees them on
-completion errors. After enough errors, the remaining pool can no longer
-reach the submission threshold. Reception then stays stopped even after
-the errors end. Temporary submission failures can leave a small batch
-waiting with no further work scheduled, too.
+adf_cfg_sec_find() walks the per-device section list without holding
+cfg->lock, and the returned section pointer is used later under the
+lock. A concurrent section deletion under cfg->lock
+(adf_cfg_del_all_except() on device down, or adf_cfg_dev_remove() on
+removal) can free the section first, leading to a use-after-free.
 
-Keep the URB when a completion reports EPROTO, EILSEQ, ETIME, EOVERFLOW,
-ECOMM or ENOSR. Free its receive buffer and return the request to the
-same pending list used by normal completions. ENOMEM/EAGAIN from startup
-or worker submission uses this path as well, so a submission failure
-cannot strand a request during recovery.
+The debugfs dev_cfg reader has the same problem: qat_dev_cfg_show()
+walks both the section list and each section's param_head under the
+global qat_cfg_read_lock mutex, not the per-device cfg->lock used by the
+add and delete paths, so the two do not serialise. Updating an existing
+key frees the old key_val under cfg->lock, so even a config write
+concurrent with an open dev_cfg read can free an entry mid-walk, a wider
+window than section deletion alone.
 
-Use one delayed work item to submit the pending requests. An error
-queues a retry after 100 ms without moving an existing reservation back.
-If a normal completion takes the pending count above eight,
-mod_delayed_work(..., 0) brings the work forward. This limits repeated
-retries when reception is not progressing, while allowing normal traffic
-to replenish the pool promptly. The 100 ms delay is therefore not a
-minimum wait for each failed URB.
+Take cfg->lock around the section lookup in adf_cfg_add_key_value_param()
+and around the lookup and insert in adf_cfg_section_add(), and use
+down_read()/up_read(&cfg->lock) in the debugfs start/stop callbacks.
+Remove the now-unused qat_cfg_read_lock.
 
-Keep the shutdown check, queue insertion and scheduling under the RX
-lock. Stop sets shutdown under that lock, cancels the delayed work
-synchronously, then drains active and pending requests. Cancellation and
-device removal continue to free their URBs.
+While here, return -ENOENT rather than -EFAULT when the section is not
+found; EFAULT (bad userspace address) is not meaningful for this case.
 
-Fixes: 26f1fad29ad9 ("New driver: rtl8xxxu (mac80211)")
-Assisted-by: GPT-6 Astra
-Signed-off-by: Kim Wooseok <5mghybrid@khu.ac.kr>
-Reviewed-by: Ping-Ke Shih <pkshih@realtek.com>
-Signed-off-by: Ping-Ke Shih <pkshih@realtek.com>
-Link: https://patch.msgid.link/20260921-codex-rtl-rx-v3-submit-v4-3-eeb09fe8f791@khu.ac.kr
+Fixes: d8cba25d2c68 ("crypto: qat - Intel(R) QAT driver framework")
+Signed-off-by: Ahsan Atta <ahsan.atta@intel.com>
+Reviewed-by: Giovanni Cabiddu <giovanni.cabiddu@intel.com>
+Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
+[ sashal: Replaced the new kzalloc_obj(*sec) allocator call with this tree's existing kzalloc(sizeof(*sec), GFP_KERNEL) in adf_cfg_section_add(). ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/realtek/rtl8xxxu/core.c  | 46 ++++++++++++-------
- .../net/wireless/realtek/rtl8xxxu/rtl8xxxu.h  |  2 +-
- 2 files changed, 30 insertions(+), 18 deletions(-)
+ drivers/crypto/intel/qat/qat_common/adf_cfg.c | 49 +++++++++++--------
+ 1 file changed, 29 insertions(+), 20 deletions(-)
 
-diff --git a/drivers/net/wireless/realtek/rtl8xxxu/core.c b/drivers/net/wireless/realtek/rtl8xxxu/core.c
-index c7e46445545af..5ba4a72f86be6 100644
---- a/drivers/net/wireless/realtek/rtl8xxxu/core.c
-+++ b/drivers/net/wireless/realtek/rtl8xxxu/core.c
-@@ -57,6 +57,7 @@ MODULE_PARM_DESC(dma_agg_pages, "Set DMA aggregation pages (range 1-127, 0 to di
- #define USB_VENDOR_ID_REALTEK		0x0bda
- #define RTL8XXXU_RX_URBS		32
- #define RTL8XXXU_RX_URB_PENDING_WATER	8
-+#define RTL8XXXU_RX_URB_RETRY_DELAY_MS	100
- #define RTL8XXXU_TX_URBS		64
- #define RTL8XXXU_TX_URB_LOW_WATER	25
- #define RTL8XXXU_TX_URB_HIGH_WATER	32
-@@ -5904,9 +5905,8 @@ static int rtl8xxxu_alloc_rx_urbs(struct rtl8xxxu_priv *priv)
+diff --git a/drivers/crypto/intel/qat/qat_common/adf_cfg.c b/drivers/crypto/intel/qat/qat_common/adf_cfg.c
+index 7180dd2b504a1..f60034387fd55 100644
+--- a/drivers/crypto/intel/qat/qat_common/adf_cfg.c
++++ b/drivers/crypto/intel/qat/qat_common/adf_cfg.c
+@@ -1,6 +1,5 @@
+ // SPDX-License-Identifier: (BSD-3-Clause OR GPL-2.0-only)
+ /* Copyright(c) 2014 - 2020 Intel Corporation */
+-#include <linux/mutex.h>
+ #include <linux/slab.h>
+ #include <linux/string.h>
+ #include <linux/list.h>
+@@ -9,13 +8,11 @@
+ #include "adf_cfg.h"
+ #include "adf_common_drv.h"
+ 
+-static DEFINE_MUTEX(qat_cfg_read_lock);
+-
+ static void *qat_dev_cfg_start(struct seq_file *sfile, loff_t *pos)
+ {
+ 	struct adf_cfg_device_data *dev_cfg = sfile->private;
+ 
+-	mutex_lock(&qat_cfg_read_lock);
++	down_read(&dev_cfg->lock);
+ 	return seq_list_start(&dev_cfg->sec_list, *pos);
  }
  
- static void rtl8xxxu_queue_rx_urb(struct rtl8xxxu_priv *priv,
--				  struct rtl8xxxu_rx_urb *rx_urb)
-+				  struct rtl8xxxu_rx_urb *rx_urb, bool defer_schedule)
+@@ -43,7 +40,9 @@ static void *qat_dev_cfg_next(struct seq_file *sfile, void *v, loff_t *pos)
+ 
+ static void qat_dev_cfg_stop(struct seq_file *sfile, void *v)
  {
--	struct sk_buff *skb;
- 	unsigned long flags;
- 
- 	spin_lock_irqsave(&priv->rx_urb_lock, flags);
-@@ -5914,16 +5914,13 @@ static void rtl8xxxu_queue_rx_urb(struct rtl8xxxu_priv *priv,
- 	if (!priv->shutdown) {
- 		list_add_tail(&rx_urb->list, &priv->rx_urb_pending_list);
- 		priv->rx_urb_pending_count++;
--		/*
--		 * Arm the worker under rx_urb_lock so this is atomic with the
--		 * shutdown check: moving it out of the lock would let a
--		 * completion arm the work after rtl8xxxu_stop() canceled it.
--		 */
--		if (priv->rx_urb_pending_count > RTL8XXXU_RX_URB_PENDING_WATER)
--			schedule_work(&priv->rx_urb_wq);
-+		/* Serialize scheduling with the shutdown check and cancellation. */
-+		if (defer_schedule)
-+			schedule_delayed_work(&priv->rx_urb_wq,
-+					      msecs_to_jiffies(RTL8XXXU_RX_URB_RETRY_DELAY_MS));
-+		else if (priv->rx_urb_pending_count > RTL8XXXU_RX_URB_PENDING_WATER)
-+			mod_delayed_work(system_percpu_wq, &priv->rx_urb_wq, 0);
- 	} else {
--		skb = (struct sk_buff *)rx_urb->urb.context;
--		dev_kfree_skb_irq(skb);
- 		usb_free_urb(&rx_urb->urb);
- 	}
- 
-@@ -5950,7 +5947,7 @@ static int rtl8xxxu_submit_rx_urbs(struct rtl8xxxu_priv *priv, bool startup)
- 			break;
- 		case -ENOMEM:
- 		case -EAGAIN:
--			rtl8xxxu_queue_rx_urb(priv, rx_urb);
-+			rtl8xxxu_queue_rx_urb(priv, rx_urb, true);
- 			break;
- 		default:
- 			usb_free_urb(&rx_urb->urb);
-@@ -5973,7 +5970,8 @@ static int rtl8xxxu_submit_rx_urbs(struct rtl8xxxu_priv *priv, bool startup)
- 
- static void rtl8xxxu_rx_urb_work(struct work_struct *work)
- {
--	struct rtl8xxxu_priv *priv = container_of(work, struct rtl8xxxu_priv, rx_urb_wq);
-+	struct rtl8xxxu_priv *priv = container_of(to_delayed_work(work),
-+					       struct rtl8xxxu_priv, rx_urb_wq);
- 
- 	rtl8xxxu_submit_rx_urbs(priv, false);
- }
-@@ -6629,10 +6627,24 @@ static void rtl8xxxu_rx_complete(struct urb *urb)
- 
- 		skb = NULL;
- 		rx_urb->urb.context = NULL;
--		rtl8xxxu_queue_rx_urb(priv, rx_urb);
-+		rtl8xxxu_queue_rx_urb(priv, rx_urb, false);
- 	} else {
- 		dev_dbg(dev, "%s: status %i\n",	__func__, urb->status);
--		goto cleanup;
+-	mutex_unlock(&qat_cfg_read_lock);
++	struct adf_cfg_device_data *dev_cfg = sfile->private;
 +
-+		switch (urb->status) {
-+		case -EPROTO:
-+		case -EILSEQ:
-+		case -ETIME:
-+		case -EOVERFLOW:
-+		case -ECOMM:
-+		case -ENOSR:
-+			dev_kfree_skb(skb);
-+			urb->context = NULL;
-+			rtl8xxxu_queue_rx_urb(priv, rx_urb, true);
-+			return;
-+		default:
-+			goto cleanup;
-+		}
- 	}
- 	return;
++	up_read(&dev_cfg->lock);
+ }
  
-@@ -7563,7 +7575,7 @@ static void rtl8xxxu_stop(struct ieee80211_hw *hw, bool suspend)
- 	 * it drained via rtl8xxxu_submit_rx_urb(), so a worker still running
- 	 * after the kill could submit a URB that escapes it.
+ static const struct seq_operations qat_dev_cfg_sops = {
+@@ -272,13 +271,10 @@ int adf_cfg_add_key_value_param(struct adf_accel_dev *accel_dev,
+ 				enum adf_cfg_val_type type)
+ {
+ 	struct adf_cfg_device_data *cfg = accel_dev->cfg;
++	struct adf_cfg_section *section;
+ 	struct adf_cfg_key_val *key_val;
+-	struct adf_cfg_section *section = adf_cfg_sec_find(accel_dev,
+-							   section_name);
+ 	char temp_val[ADF_CFG_MAX_VAL_LEN_IN_BYTES];
+-
+-	if (!section)
+-		return -EFAULT;
++	int ret = 0;
+ 
+ 	key_val = kzalloc(sizeof(*key_val), GFP_KERNEL);
+ 	if (!key_val)
+@@ -308,20 +304,28 @@ int adf_cfg_add_key_value_param(struct adf_accel_dev *accel_dev,
+ 	 *    anything (the newly created key_val is freed).
  	 */
--	cancel_work_sync(&priv->rx_urb_wq);
-+	cancel_delayed_work_sync(&priv->rx_urb_wq);
+ 	down_write(&cfg->lock);
++
++	section = adf_cfg_sec_find(accel_dev, section_name);
++	if (!section) {
++		kfree(key_val);
++		ret = -ENOENT;
++		goto unlock;
++	}
++
+ 	if (!adf_cfg_key_val_get(accel_dev, section_name, key, temp_val)) {
+ 		if (strncmp(temp_val, key_val->val, sizeof(temp_val))) {
+ 			adf_cfg_keyval_remove(key, section);
+ 		} else {
+ 			kfree(key_val);
+-			goto out;
++			goto unlock;
+ 		}
+ 	}
  
- 	usb_kill_anchored_urbs(&priv->rx_anchor);
- 	usb_kill_anchored_urbs(&priv->tx_anchor);
-@@ -7877,7 +7889,7 @@ static int rtl8xxxu_probe(struct usb_interface *interface,
- 	spin_lock_init(&priv->tx_urb_lock);
- 	INIT_LIST_HEAD(&priv->rx_urb_pending_list);
- 	spin_lock_init(&priv->rx_urb_lock);
--	INIT_WORK(&priv->rx_urb_wq, rtl8xxxu_rx_urb_work);
-+	INIT_DELAYED_WORK(&priv->rx_urb_wq, rtl8xxxu_rx_urb_work);
- 	INIT_DELAYED_WORK(&priv->ra_watchdog, rtl8xxxu_watchdog_callback);
- 	INIT_DELAYED_WORK(&priv->update_beacon_work, rtl8xxxu_update_beacon_work_callback);
- 	skb_queue_head_init(&priv->c2hcmd_queue);
-diff --git a/drivers/net/wireless/realtek/rtl8xxxu/rtl8xxxu.h b/drivers/net/wireless/realtek/rtl8xxxu/rtl8xxxu.h
-index f42463e595cc2..c6a4a58a92512 100644
---- a/drivers/net/wireless/realtek/rtl8xxxu/rtl8xxxu.h
-+++ b/drivers/net/wireless/realtek/rtl8xxxu/rtl8xxxu.h
-@@ -1803,7 +1803,7 @@ struct rtl8xxxu_priv {
- 	struct list_head rx_urb_pending_list;
- 	int rx_urb_pending_count;
- 	bool shutdown;
--	struct work_struct rx_urb_wq;
-+	struct delayed_work rx_urb_wq;
+ 	adf_cfg_keyval_add(key_val, section);
  
- 	u8 mac_addr[ETH_ALEN];
- 	char chip_name[8];
+-out:
++unlock:
+ 	up_write(&cfg->lock);
+-	return 0;
++	return ret;
+ }
+ EXPORT_SYMBOL_GPL(adf_cfg_add_key_value_param);
+ 
+@@ -339,21 +343,26 @@ EXPORT_SYMBOL_GPL(adf_cfg_add_key_value_param);
+ int adf_cfg_section_add(struct adf_accel_dev *accel_dev, const char *name)
+ {
+ 	struct adf_cfg_device_data *cfg = accel_dev->cfg;
+-	struct adf_cfg_section *sec = adf_cfg_sec_find(accel_dev, name);
++	struct adf_cfg_section *sec;
++	int ret = 0;
+ 
+-	if (sec)
+-		return 0;
++	down_write(&cfg->lock);
++
++	if (adf_cfg_sec_find(accel_dev, name))
++		goto unlock;
+ 
+ 	sec = kzalloc(sizeof(*sec), GFP_KERNEL);
+-	if (!sec)
+-		return -ENOMEM;
++	if (!sec) {
++		ret = -ENOMEM;
++		goto unlock;
++	}
+ 
+ 	strscpy(sec->name, name);
+ 	INIT_LIST_HEAD(&sec->param_head);
+-	down_write(&cfg->lock);
+ 	list_add_tail(&sec->list, &cfg->sec_list);
++unlock:
+ 	up_write(&cfg->lock);
+-	return 0;
++	return ret;
+ }
+ EXPORT_SYMBOL_GPL(adf_cfg_section_add);
+ 
 -- 
 2.53.0
 
