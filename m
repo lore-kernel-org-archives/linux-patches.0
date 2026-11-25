@@ -1,58 +1,56 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795626379;
-	b=gYKUMXdjQHorTB3YH9zUGHRshsl9TPo4buNannuOURGVvOIK8qAZhCuiezcCL2eD1CBm
-	 oS4qhxhYg+jHzxuHv9+fLZPDB5e+oMJfv6C4ZRDhqCFJSgx+sUr1TxHu1oVQyky+bQTxq
-	 oVRH2MD5VsMPq+Hl07GKSo97uMnFn9JcD6T5rOACiCRJlTj4avz3UygqX+ENcXpJg7Mbq
-	 e0sX8611M64QeyfQ3hfVeVQCX9cWJ5aa/dqEIkKeFLLkM8lJCCfk+R1Ffs802X5lW8bZl
-	 s2UKXkw9K+F9eAUau4musoz40EQpbH3NUndrgoHrlogiRaO1CEda3UDKMTJahxsG+Jg==
+	t=1795626598;
+	b=RVRR2LE4XTrLitf8hsLlTJxtuiTDdeci/UeDBDyefqWo6xyrbzzhGr3k+EhhhbNdDHHb
+	 3pYKzwti2cL+LO198jvI9o6+ebXLkC/9vPXLtUEMQNh3pY4q+dhrR4hd0jhN87MWWgY8p
+	 GHCq+E5oDmOkGJ+gsnboP90AWnkkCwfogys8N3Fwdl+ePDgkAr07xCyrfAplokA/QmiOl
+	 FcHq59fgrbpooX8dQoABON4yPQ6FCSi4TjHV7RKkfw+hQY3VUSivHK9iPGkeFrETGImP1
+	 FKJhtIxoHszvXT1A/QWdAUMQj53Bdxj7fQGEIlX+sz9R0U/PRaD7nAxJGp25zPudmOQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795626379;
-	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
-	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Transfer-Encoding;
-	bh=CShp1yipgGG2IlA5x6oIwsNQlfND9Vdb+MoLnHG12Xs=;
-	b=noIJ9zD0pCZuEv5dpiE2qPJl2k6/qetgb1rEsgPYnuJX+BagZzMSwOiSAg12GU0HBrTL
-	 KVyWysBdqwhZ+Bhp+o9FuqFWBj9W7cj2NOTISuz7lt9rF5pX44/DJfdllYf3wcVNpFWug
-	 e6dRMdVwuXLCpkqUUfc0N6osaiaXPA9pNhC1n6DvdfkK0X9KlOkaBF9cRER7PMYJ0SJ5v
-	 tEtbB9GtMXktO7nqra12ikLU+epyI6feSTqcBbYrnK1pSO+khXrccjM3J/WUoRWdxhcmM
-	 V8/s8DzR0BmnUwDGlOvt37X/22F0i7z4OomqqSQK8X6vscEXY+l0RpeZ+0YMVLcQ4Kw==
+	a=rsa-sha256; c=relaxed/relaxed; t=1795626598;
+	h=Received:DKIM-Signature:Date:From:To:Cc:Subject:Message-ID:
+	 References:MIME-Version:Content-Type:Content-Disposition:In-Reply-To;
+	bh=ePo+Ledew1ZwL+OVO5VdpgmIG0C7z3WKpnLXeb65pgQ=;
+	b=MZaNJ4c1+Xb2TETM0UykVIHLwvOeduy9b8cFvrhEAXvQFoRmARrEjGjRpkQZNaTvLF14
+	 cLMDw7bohDj4WhaDqlgQrkVIfsCjfrPVZohzFlTS/+b42RENorZX9eYV9y9MkteIJlYYu
+	 iFtXiHeyaTMQ7lH8wu1qJ/BwWBO3Axr2acOsEmOmGTLY6r0S1mqXSRs4vFto34INWX/aN
+	 i5GbSHASn/bjaRgDckHD/hu8jdbAosqdL81TtMYAH/Q+l8B8/zErQdII7Dr/LbqnAfgdN
+	 2tpSYvr2ooT5hxe399/xxzr0Udvz/CUoed1zqL/PRt9aCKcnCsbOQEzvRj1l82JhG3Q==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="rVfFn/UQ";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=HgdlhlgV;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AE30D606A31E;
-	Wed, 25 Nov 2026 17:06:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AC7EE606A330;
+	Wed, 25 Nov 2026 17:09:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=rVfFn/UQ
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D98021F000C6;
-	Wed, 25 Nov 2026 17:06:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=HgdlhlgV
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D72351F000C0;
+	Wed, 25 Nov 2026 17:09:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795626379;
-	bh=CShp1yipgGG2IlA5x6oIwsNQlfND9Vdb+MoLnHG12Xs=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=rVfFn/UQGEO9YNOFLFZ1viHcdsvaa1bvAreKtBdnYStz+kMn07U7kVB0PR7E8YTbh
-	 pVsI7rE4kUchginlm6gyT6EjYGqEhg4sukADV5pti0vUxJcbNklHeeLOYeAR6qdpTm
-	 T9PZmUXnsxwA5Qcc4maUr5V7fpRPp6KvHWDoAtS0=
+	s=korg; t=1795626598;
+	bh=ePo+Ledew1ZwL+OVO5VdpgmIG0C7z3WKpnLXeb65pgQ=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To;
+	b=HgdlhlgV63j/YpsbfGcbEd1OUfk3K3F/r+fsMyeKeym+k0xa5HGYkjPbW4sGlkX+r
+	 jlRmvfsjwLTDN8zfJr9oAP+O8XdlNW9SV5TcWB5dSen7+dzVMILULx0ov/pMsl4sk/
+	 gi0x6nUEbPYAAh+mNj1wfKea+85z/c27HRQXrUa0=
+Date: Wed, 25 Nov 2026 18:10:18 +0100
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-To: stable@vger.kernel.org
-Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-	patches@lists.linux.dev,
-	Karl Mehltretter <kmehltretter@gmail.com>,
-	Joshua Crofts <joshua.crofts1@gmail.com>,
-	Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>
-Subject: [PATCH 6.12 799/816] iio: trigger: Return an error when the trigger has no free irq
-Date: Wed, 25 Nov 2026 15:39:07 +0100
-Message-ID: <20261125143907.666260195@linuxfoundation.org>
-X-Mailer: git-send-email 2.56.1
-In-Reply-To: <20261125143849.205329330@linuxfoundation.org>
+To: Brett A C Sheffield <bacs@librecast.net>
+Cc: stable@vger.kernel.org, patches@lists.linux.dev,
+	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org,
+	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org,
+	patches@kernelci.org, lkft-triage@lists.linaro.org,
+	pavel@nabladev.com, jonathanh@nvidia.com, f.fainelli@gmail.com,
+	sudipm.mukherjee@gmail.com, rwarsow@gmx.de, conor@kernel.org,
+	hargar@microsoft.com, broonie@kernel.org, achill@achill.org,
+	sr@sladewatkins.com
+Subject: Re: [PATCH 6.12 000/816] 6.12.120-rc1 review
+Message-ID: <2026112507-among-disclose-3713@gregkh>
 References: <20261125143849.205329330@linuxfoundation.org>
-User-Agent: quilt/0.69
-X-stable: review
-X-Patchwork-Hint: ignore
+ <awcMgK7ss_gQtDs9@karahi.librecast.net>
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Post: <mailto:patches@lists.linux.dev>
@@ -62,48 +60,34 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <awcMgK7ss_gQtDs9@karahi.librecast.net>
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+On Wed, Nov 25, 2026 at 05:27:44PM +0100, Brett A C Sheffield wrote:
+> On 2026-11-25 15:25, Greg Kroah-Hartman wrote:
+> > This is the start of the stable review cycle for the 6.12.120 release.
+> > There are 816 patches in this series, all will be posted as a response
+> > to this one.  If anyone has any issues with these being applied, please
+> > let me know.
+> > 
+> > Responses should be made by Fri, 27 Nov 2026 14:37:39 +0000.
+> > Anything received after that time might be too late.
+> > 
+> > The whole patch series can be found in one patch at:
+> > 	https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.12.120-rc1.gz
+> > or in the git tree and branch at:
+> > 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.12.y
+> > and the diffstat can be found below.
+> 
+> Build failure:
+> 
+>   CC [M]  drivers/gpu/drm/amd/amdgpu/../display/modules/hdcp/hdcp2_transition.o
+>   LD [M]  drivers/gpu/drm/amd/amdgpu/amdgpu.o
+>   AR      drivers/gpu/built-in.a
+>   AR      drivers/built-in.a
+> make[1]: *** [/usr/src/linux-stable-rc/Makefile:1983: .] Error 2
+> make: *** [Makefile:224: __sub-make] Error 2
 
-------------------
-
-From: Karl Mehltretter <kmehltretter@gmail.com>
-
-commit dff701806ab6252f6a0fccba880c47cd09602625 upstream.
-
-iio_trigger_attach_poll_func() prints an error when all
-CONFIG_IIO_CONSUMERS_PER_TRIGGER irqs of the trigger are in use, but
-returns 0. The buffer of the extra consumer is enabled without a poll
-function.
-
-Disabling that buffer calls clear_bit() with a negative bit number and
-drops a module reference for the second time. On arm and arm64 the
-clear_bit() goes about 512 MB past the pool bitmap. That is an oops if
-the address is not mapped, and a bit cleared in unrelated memory if it
-is.
-
-Return the error from iio_trigger_get_irq().
-
-Fixes: 995438233579 ("iio: Fix error handling in iio_trigger_attach_poll_func")
-Cc: stable@vger.kernel.org
-Signed-off-by: Karl Mehltretter <kmehltretter@gmail.com>
-Reviewed-by: Joshua Crofts <joshua.crofts1@gmail.com>
-Signed-off-by: Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
----
- drivers/iio/industrialio-trigger.c |    1 +
- 1 file changed, 1 insertion(+)
-
---- a/drivers/iio/industrialio-trigger.c
-+++ b/drivers/iio/industrialio-trigger.c
-@@ -292,6 +292,7 @@ int iio_trigger_attach_poll_func(struct
- 	if (pf->irq < 0) {
- 		pr_err("Could not find an available irq for trigger %s, CONFIG_IIO_CONSUMERS_PER_TRIGGER=%d limit might be exceeded\n",
- 			trig->name, CONFIG_IIO_CONSUMERS_PER_TRIGGER);
-+		ret = pf->irq;
- 		goto out_put_module;
- 	}
- 
-
+That doesn't show the actual build error :(
 
