@@ -1,51 +1,50 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795623496;
-	b=F/7GHVXiKJ5t0Aec46BRzKSiTIk3/7UTRlzbMWrwH+46rUikOP0E1xUuwdQwDvZxGBje
-	 rvldJNZAs5hmi42dSG6FIS6mgQiEgYV3lEA/TG/MhXH4BLOw85pT2itR63CD43y3bD2BP
-	 9a++9tIieK2vEbkZc/9XCvejjyuiwZWT+I1Ywz9HRWDj+WyzdPGHSLljia2lXFWqrbXPe
-	 mZ/xXslZof5SQP7EV3CyTC7lR6O9CeaS46duHZgex7cBsdUz7QeaVAPnvQ3hu7mOkAJ6O
-	 Jlsaw0nPKMqI5t7Bsa+5eGeCuh2rWT1+ZS7LCPLyDRn6ahdl2/E5Ft+QJYpD6g0quow==
+	t=1795623500;
+	b=AekaGDv9aHUr4fgEtLL5cvYMOhDScVcIQYITGQpn8MmDn53etOoLMv8wGkj4extBnhQe
+	 9ciZ/lVENmHUx6Ac8u51hJ85gNkla+GwFbb6OP5x3PZMop0orv/TzvOL78D3aGU9gWnAD
+	 dSDcnthbSJ9nLSEhiHjqJrr+Ii87SLbB1+J/L49QxfDWEpKOSyX/+T9dxdJeyUZG65//R
+	 IGCz7uHXci0xtcuItOKONglZJsPRS/+5nt8IfUM3MCG1YcpCDGq2Nzo0agwETQ4HZOFxA
+	 uWrDokDBvo1yjdRFHKAvBSMvhimKXsw8xo0X//KMC1cixJ8LQlcUDa8M7OUCrUT8Izg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795623496;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795623500;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=qVYQsWIENs8Prkn4O82Rwdr2wdU0rYD2Swlj85mxgz8=;
-	b=AL0U8JM3kRxeFScocANfLf9/MR2YrhkIIHAhssc8weI/NsriqLfiL0i8ofphklhcCgoy
-	 zL32JaDPF5Gfv23hIf6jgifJoVwLR1/GE0DF0Y0olYcZ9lQl5KXnPafFTLkcFJEzSflRr
-	 /acPvUe2Ea+xfaDxl7GywPOrtN6qBdxnLcQIgR+lukjcbgU7u9Z+UKklTrZ3vCu3sIFvn
-	 2mrRa7ciwz8Nr07S9bbiC7UduFPhksinvO7o1RUkkS7dzskooCM2zMPtBZZVHvZm/zqVB
-	 v6lguWPHbohovdGaKbAzjzTjMhKgAMQUF8OZJ5U8lu0uQ/lxAFzW/l2VeUkEIRHwmQg==
+	bh=V8sXjnhD3tL2V4wPP35if+Mq46qtoMaHrzmqWatXd3I=;
+	b=KWypFVUBlGdLVnWh8VoOeQJD7Z/LcXUKZrIJmpfXNMKAc8or7ykOdK+ecHP58Qd8758q
+	 nRxLTWGkNDsF1f0cV3WxShmPmHKlCovazfnV5NzS85kn5EjennR8W7Dd9hzYRibncOViw
+	 3SjP/Lzf8vwF65/At1+oH3XUJduKnY1OVYLHo+mRM3BpBUfguRZisXj3S7uocri9VyHCi
+	 SFsmYHwHFFeh2mZb05pERNroYkuLCvC28FMh7Es+sryUTbhBbleu1A0X/1O4JfEYB8rWY
+	 fg1fbkXrB/xyM3EmnYgMZZzFd9QevFqjWw6wp4Jnv7o73PNHXtiAJ96sQMi8D3O3J/A==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=USVg6tpv;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=GZOdXbY5;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DD16E606A321;
-	Wed, 25 Nov 2026 16:18:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 56595606A31E;
+	Wed, 25 Nov 2026 16:18:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=USVg6tpv
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3063F1F000F4;
-	Wed, 25 Nov 2026 16:18:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=GZOdXbY5
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 83A341F000D0;
+	Wed, 25 Nov 2026 16:18:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795623496;
-	bh=qVYQsWIENs8Prkn4O82Rwdr2wdU0rYD2Swlj85mxgz8=;
+	s=korg; t=1795623500;
+	bh=V8sXjnhD3tL2V4wPP35if+Mq46qtoMaHrzmqWatXd3I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=USVg6tpv/QFoQ7DpLUkcFuB/+02tnBoLDiXLeOhzywJZK0TjSKlF1U1O96TFnJTRm
-	 sRzS+medDD4jusEBcCVb/2slV+G3G4w/dyDV8mCRkDGQCK7y8YfrOfuhVHlFEOLRuE
-	 kZxBS8OHn93IziStdAb1X7GSXk9D9IB7k9SOa0xM=
+	b=GZOdXbY5B71FmrMRZPlQSG74LKylH69jDInx//LMLTpWuJW7ahRfy3fyXFKudoLZb
+	 1+WWVClttuWrMw7lmGkDARMu5Cr+XTaWA+B3QxCTJbJDa9j9JSCI3o+kQE9UHZD3n+
+	 rMZvA7IFvRmB5aC9fZH1L6yG4TW+IvC2se6DR08c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Li Youhong <liyouhong@kylinos.cn>,
 	Mikulas Patocka <mpatocka@redhat.com>
-Subject: [PATCH 6.18 877/990] dm-raid: fix use-after-free in raid_dtr()
-Date: Wed, 25 Nov 2026 15:37:24 +0100
-Message-ID: <20261125143842.560436891@linuxfoundation.org>
+Subject: [PATCH 6.18 878/990] dm-thin: fix data corruption if discard races with regular I/O
+Date: Wed, 25 Nov 2026 15:37:25 +0100
+Message-ID: <20261125143842.583495688@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143822.072087159@linuxfoundation.org>
 References: <20261125143822.072087159@linuxfoundation.org>
@@ -67,39 +66,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Li Youhong <liyouhong@kylinos.cn>
+From: Mikulas Patocka <mpatocka@redhat.com>
 
-commit 46af2c975958119290ddcd984a98491966123a7b upstream.
+commit 62ee9c09366cad69410330087d990e469dd92314 upstream.
 
-raid_dtr() currently flushes event_work only if work_pending() is true.
-This is insufficient because once a worker has dequeued the work, the
-PENDING bit is cleared while do_table_event() is still running. In that
-window raid_set_free() can free the raid_set, leading to a
-use-after-free when do_table_event() accesses rs->ti->table.
+In the function break_up_discard_bio, if a discard hits the same block as
+regular I/O, it was intended to skip the discard for the affected range.
+However, the skip code only advances "data_begin", it doesn't advance
+"virt_begin". So, the data_begin and virt_begin variables become
+unsynchronized.
 
-Flush event_work whenever it has been initialized, so raid_set is not
-freed while the event handler is still running. The .func guard skips the
-flush for mddev instances where INIT_WORK has not run yet.
+process_prepared_discard_passdown_pt1 calculates "data_end =
+m->data_block + (m->virt_end - m->virt_begin);" - if m->data_block is
+incremented and m->virt_begin isn't, it will overshoot the intended
+discard range.
 
-Fixes: db29d79b34d9 ("dm-raid: delay flushing event_work() after reconfig_mutex is released")
 Cc: stable@vger.kernel.org
-Signed-off-by: Li Youhong <liyouhong@kylinos.cn>
+Fixes: e2dd8aca2d76 ("dm bio prison v1: improve concurrent IO performance")
 Signed-off-by: Mikulas Patocka <mpatocka@redhat.com>
+Assisted-by: Claude:claude-opus-5
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/md/dm-raid.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/md/dm-thin.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/drivers/md/dm-raid.c
-+++ b/drivers/md/dm-raid.c
-@@ -3334,7 +3334,7 @@ static void raid_dtr(struct dm_target *t
- 	rs->md.dm_gendisk = NULL;
- 	mddev_unlock(&rs->md);
- 
--	if (work_pending(&rs->md.event_work))
-+	if (rs->md.event_work.func)
- 		flush_work(&rs->md.event_work);
- 	raid_set_free(rs);
- }
+--- a/drivers/md/dm-thin.c
++++ b/drivers/md/dm-thin.c
+@@ -1705,6 +1705,7 @@ static void break_up_discard_bio(struct
+ 			(void) build_key(tc->td, PHYSICAL, data_begin, data_begin + len, &data_key);
+ 			if (bio_detain(tc->pool, &data_key, NULL, &data_cell)) {
+ 				/* contention, we'll give up with this range */
++				virt_begin += len;
+ 				data_begin += len;
+ 				continue;
+ 			}
 
 
