@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795624672;
-	b=qlEY4j/3vkcfdnjMpfyxssblV7v8ZqD6dH/UHZZb5QLZV0sbqkdwhSMtSK1ROtjmOG02
-	 Dosam/gIryXb7NNlAZ5yG6Qof81SNso6jTu1eU3Mkf6XLAie/JBlVHFjoAmJShFudfnqU
-	 8kbiXspm33fS3CQp2Ztg5AinBbE3jnEJkerGDx3UgJdQtSc4xD7KVrQp9K7n8BQyZRngV
-	 RwUMC0PMOav/sBSLPV2pk3MgG++iTWgwza+SD8G3NmpNF9y/pK3I0RGNZtVX5LOa5V0hF
-	 GzqWVTZb5JbxGcqzz8e3lw4a6XR61SK0jqzf6+wT6183yVEji01F5CBcuIgsdgZcwrg==
+	t=1795624675;
+	b=MNbxzkDwVtRsvN+EJ6eJvZ3soJzneAVGNQo1UrGKL3XFONGBmgyXuvaBGA/w+RtLEb77
+	 484uVxaZrJZPp5XQkfbSaJ5M2icPGmnrtT5+hOJ7py5V6+C3ZcSjxAPa34C7WtiPxkxLw
+	 N2mWaTeh/GSoAVjzxflOd7P5+LWStXVj7xwExadJdUkWlcM1Q3zWkNxGV82uF3Q2uybtL
+	 PLnW0oNJb4dApgz6s1JSGUFjKrqmgbt/d0XBwYL94J2ey+Lrl5g+OqtZ+hgDM93TQACmQ
+	 dchwUqTCNuw5KCgmR7SvVTPDO+8e0U1gmz79kFfCgUYM+sqYJnt1icrGqmT8IyChnQA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795624672;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795624675;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=KLBdABLttaNvz0XPLvMaWNkmn5gltMWVnghJsh4XjR8=;
-	b=V9CCy3RvV113Stey7ldVVaxGNaV41jEY+D5LU4HwOD90VvWE2vPW1Ro7vAeyESBdnBZd
-	 sgr5cnMtWl86F1uboxGVDU4ay1dZZFVunccWGSGmx6HyAfu78lYU5lkVvqrQVnuzYQKY9
-	 2SRzgoGbPTIAoyAJZZM85700FQd9dlULbu1xFZUnsA9Bjzg8jKc57i7RR9otiblfIb+s5
-	 03nPUQL11+hrEXJ7rtDYwqyDMPJCYVJBdIY0uJyUpqjh1ujEnf4rym9wZtLhVz7z0G3sw
-	 bbAz1Fi/rI48mDUxJtuJpIr5qdYcxx76Zw74SrLAJqp7mYQgFkeb0MJMO8eNclchwQQ==
+	bh=bYrkhXfj+LjL+iPH4zOO3ZR5aOYVjAsiUL3gJQHfp0w=;
+	b=DU4p2CVCHKr3YQ51y7e+yyjQETph9xy1993btn3/PpZ5VZXSP4saAs/KooL1WXqOeibY
+	 9nyqn2PBCZvVkz4j+mKnUJym0PrUzyGKxUr25hh6O6V5LqMQR644jb/ie+sDNs/iP6p+u
+	 nNjJCEZeAEXp2oy437DsExrDWhqX4vUJrYtrgx0RcFuyUV6+jDMiEB70GSw+fSJBPeokH
+	 pmXhvWokdjHFfCEo0HqOlMJBW1gmriMU/f5bBd4PRK1KwOFT1DBNaXeMxevL2LNvWo1yT
+	 4OInCLNuviLKR8Ni9YHCMTI1i9zYKgmiFcoGXP5vBUabbWNqfzzQz5P4ZksZEjChwzQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=oo01GKob;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=gJYgNBLZ;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3902E606A33A;
-	Wed, 25 Nov 2026 16:37:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1707E606A33E;
+	Wed, 25 Nov 2026 16:37:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=oo01GKob
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8A0661F000C4;
-	Wed, 25 Nov 2026 16:37:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=gJYgNBLZ
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6029F1F000D2;
+	Wed, 25 Nov 2026 16:37:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795624672;
-	bh=KLBdABLttaNvz0XPLvMaWNkmn5gltMWVnghJsh4XjR8=;
+	s=korg; t=1795624674;
+	bh=bYrkhXfj+LjL+iPH4zOO3ZR5aOYVjAsiUL3gJQHfp0w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=oo01GKobQDgZjTS0UB+UelSq7ImnRlh79eRSPBFI3GRTKVaedKWUxoQY+YiTg30kc
-	 2Aaa8evH7G3KxczJ3sHaXUuYyV0pRbsQ6tk/IA60lMRmmNUJsmsansHxhHEOLTXE8k
-	 y0SQY+qklvwoxArZ/Fwk6KXBOuAO5Q0Mfo2s6Ngg=
+	b=gJYgNBLZzz308cq4Ai349oZFfwTP/4bWFav2PS+iBYdnuHj2BR1AOHkc9y2zqIz3Z
+	 oGnmC/c6nmU8v7dvJe8vZAL72HpwDEWdX48tCLhkPoVWfwo4inOnzDhB66Zf/9zMyQ
+	 81uIP/igo/PyrUUEkgB/aDf8DPRPKMkNTlabRy2Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kyle Pepper <cochcoder@proton.me>,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
+	Prathamesh Deshpande <prathameshdeshpande7@gmail.com>,
+	Tariq Toukan <tariqt@nvidia.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 267/816] Bluetooth: reject invalid LE supervision timeout relationships
-Date: Wed, 25 Nov 2026 15:30:15 +0100
-Message-ID: <20261125143855.390151495@linuxfoundation.org>
+Subject: [PATCH 6.12 268/816] net/mlx5e: IPoIB, Fix QPN lookup race
+Date: Wed, 25 Nov 2026 15:30:16 +0100
+Message-ID: <20261125143855.413129251@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143849.205329330@linuxfoundation.org>
 References: <20261125143849.205329330@linuxfoundation.org>
@@ -68,68 +69,125 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kyle Pepper <cochcoder@proton.me>
+From: Prathamesh Deshpande <prathameshdeshpande7@gmail.com>
 
-[ Upstream commit c1d50a71cdee90a0c68b7a67221d8aae96d14a0c ]
+[ Upstream commit 29066b0fc046a2965129a74325b98d9abb4647a9 ]
 
-The LE parameter validator calculates an unsigned maximum latency by
-subtracting one from a truncated quotient. If the quotient is zero,
-this wraps and accepts invalid parameters. Exact quotient boundaries
-also accept equality where the supervision timeout must be greater.
+The parent RX completion path can load a QPN hash entry before
+mlx5i_pkey_del_qpn() unlinks and frees it, then dereference freed memory.
 
-Compare the products directly after checking the field bounds. The
-validated interval and latency limits keep the products within int.
-This enforces the strict timeout relationship without division or
-unsigned subtraction.
+Use RCU hlist operations and defer freeing with kfree_rcu(). The existing
+RCU read-side section in mlx5e_napi_poll() covers the lookup. Keep ht_lock
+for writers and acquire it before looking up the entry to delete.
 
-Sashiko identified the underflow while reviewing the soft interval
-preference RFC. The bug is already present in its unpatched base; keep
-this common-validator fix independent of that preference policy.
-
-Fixes: 8757825b128e ("Bluetooth: hci_check_conn_params() check proper range")
-Assisted-by: LLM
-Signed-off-by: Kyle Pepper <cochcoder@proton.me>
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Fixes: 7e7f4780c340 ("net/mlx5e: IPoIB, Use hash-table to map between QPN to child netdev")
+Signed-off-by: Prathamesh Deshpande <prathameshdeshpande7@gmail.com>
+Reviewed-by: Tariq Toukan <tariqt@nvidia.com>
+Link: https://patch.msgid.link/20261031225749.14214-1-prathameshdeshpande7@gmail.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/net/bluetooth/hci_core.h | 13 +++----------
- 1 file changed, 3 insertions(+), 10 deletions(-)
+ .../ethernet/mellanox/mlx5/core/ipoib/ipoib.h |  2 +-
+ .../mellanox/mlx5/core/ipoib/ipoib_vlan.c     | 26 +++++++++++--------
+ 2 files changed, 16 insertions(+), 12 deletions(-)
 
-diff --git a/include/net/bluetooth/hci_core.h b/include/net/bluetooth/hci_core.h
-index b023f0870efaa..d247e088ebd01 100644
---- a/include/net/bluetooth/hci_core.h
-+++ b/include/net/bluetooth/hci_core.h
-@@ -2233,8 +2233,6 @@ static inline struct smp_irk *hci_get_irk(struct hci_dev *hdev,
- static inline int hci_check_conn_params(u16 min, u16 max, u16 latency,
- 					u16 to_multiplier)
+diff --git a/drivers/net/ethernet/mellanox/mlx5/core/ipoib/ipoib.h b/drivers/net/ethernet/mellanox/mlx5/core/ipoib/ipoib.h
+index 2ab6437a1c49f..944549f8c2f60 100644
+--- a/drivers/net/ethernet/mellanox/mlx5/core/ipoib/ipoib.h
++++ b/drivers/net/ethernet/mellanox/mlx5/core/ipoib/ipoib.h
+@@ -82,7 +82,7 @@ void mlx5i_pkey_qpn_ht_cleanup(struct net_device *netdev);
+ int mlx5i_pkey_add_qpn(struct net_device *netdev, u32 qpn);
+ int mlx5i_pkey_del_qpn(struct net_device *netdev, u32 qpn);
+ 
+-/* Get the net-device corresponding to the given underlay QPN */
++/* Get the net-device for a QPN. Caller must hold rcu_read_lock(). */
+ struct net_device *mlx5i_pkey_get_netdev(struct net_device *netdev, u32 qpn);
+ 
+ /* Shared ndo functions */
+diff --git a/drivers/net/ethernet/mellanox/mlx5/core/ipoib/ipoib_vlan.c b/drivers/net/ethernet/mellanox/mlx5/core/ipoib/ipoib_vlan.c
+index 028a76944d82d..dd42633c52301 100644
+--- a/drivers/net/ethernet/mellanox/mlx5/core/ipoib/ipoib_vlan.c
++++ b/drivers/net/ethernet/mellanox/mlx5/core/ipoib/ipoib_vlan.c
+@@ -31,6 +31,7 @@
+  */
+ 
+ #include <linux/hash.h>
++#include <linux/rculist.h>
+ #include "ipoib.h"
+ 
+ #define MLX5I_MAX_LOG_PKEY_SUP 7
+@@ -39,11 +40,12 @@ struct qpn_to_netdev {
+ 	struct net_device *netdev;
+ 	struct hlist_node hlist;
+ 	u32 underlay_qpn;
++	struct rcu_head rcu;
+ };
+ 
+ struct mlx5i_pkey_qpn_ht {
+ 	struct hlist_head buckets[1 << MLX5I_MAX_LOG_PKEY_SUP];
+-	spinlock_t ht_lock; /* Synchronise with NAPI */
++	spinlock_t ht_lock; /* Serialize hash table updates */
+ };
+ 
+ int mlx5i_pkey_qpn_ht_init(struct net_device *netdev)
+@@ -68,13 +70,14 @@ void mlx5i_pkey_qpn_ht_cleanup(struct net_device *netdev)
+ 	kfree(ipriv->qpn_htbl);
+ }
+ 
+-static struct qpn_to_netdev *mlx5i_find_qpn_to_netdev_node(struct hlist_head *buckets,
+-							   u32 qpn)
++static struct qpn_to_netdev *
++mlx5i_find_qpn_to_netdev_node(struct mlx5i_pkey_qpn_ht *ht, u32 qpn)
  {
--	u16 max_latency;
--
- 	if (min > max) {
- 		BT_WARN("min %d > max %d", min, max);
- 		return -EINVAL;
-@@ -2260,19 +2258,14 @@ static inline int hci_check_conn_params(u16 min, u16 max, u16 latency,
+-	struct hlist_head *h = &buckets[hash_32(qpn, MLX5I_MAX_LOG_PKEY_SUP)];
++	struct hlist_head *h = &ht->buckets[hash_32(qpn, MLX5I_MAX_LOG_PKEY_SUP)];
+ 	struct qpn_to_netdev *node;
+ 
+-	hlist_for_each_entry(node, h, hlist) {
++	hlist_for_each_entry_rcu(node, h, hlist,
++				 lockdep_is_held(&ht->ht_lock)) {
+ 		if (node->underlay_qpn == qpn)
+ 			return node;
+ 	}
+@@ -96,7 +99,7 @@ int mlx5i_pkey_add_qpn(struct net_device *netdev, u32 qpn)
+ 	new_node->netdev = netdev;
+ 	new_node->underlay_qpn = qpn;
+ 	spin_lock_bh(&ht->ht_lock);
+-	hlist_add_head(&new_node->hlist, &ht->buckets[key]);
++	hlist_add_head_rcu(&new_node->hlist, &ht->buckets[key]);
+ 	spin_unlock_bh(&ht->ht_lock);
+ 
+ 	return 0;
+@@ -109,16 +112,17 @@ int mlx5i_pkey_del_qpn(struct net_device *netdev, u32 qpn)
+ 	struct mlx5i_pkey_qpn_ht *ht = ipriv->qpn_htbl;
+ 	struct qpn_to_netdev *node;
+ 
+-	node = mlx5i_find_qpn_to_netdev_node(ht->buckets, qpn);
++	spin_lock_bh(&ht->ht_lock);
++	node = mlx5i_find_qpn_to_netdev_node(ht, qpn);
+ 	if (!node) {
++		spin_unlock_bh(&ht->ht_lock);
+ 		mlx5_core_warn(epriv->mdev, "QPN to netdev delete from HT failed\n");
  		return -EINVAL;
  	}
  
--	if (max >= to_multiplier * 8) {
--		BT_WARN("max %d >= to_multiplier %d * 8", max, to_multiplier);
--		return -EINVAL;
--	}
--
--	max_latency = (to_multiplier * 4 / max) - 1;
- 	if (latency > 499) {
- 		BT_WARN("latency %d > 499", latency);
- 		return -EINVAL;
- 	}
+-	spin_lock_bh(&ht->ht_lock);
+-	hlist_del_init(&node->hlist);
++	hlist_del_rcu(&node->hlist);
+ 	spin_unlock_bh(&ht->ht_lock);
+-	kfree(node);
++	kfree_rcu(node, rcu);
  
--	if (latency > max_latency) {
--		BT_WARN("latency %d > max_latency %d", latency, max_latency);
-+	if ((latency + 1) * max >= to_multiplier * 4) {
-+		BT_WARN("latency %d, max %d and timeout %d are incompatible",
-+			latency, max, to_multiplier);
- 		return -EINVAL;
- 	}
+ 	return 0;
+ }
+@@ -128,7 +132,7 @@ struct net_device *mlx5i_pkey_get_netdev(struct net_device *netdev, u32 qpn)
+ 	struct mlx5i_priv *ipriv = netdev_priv(netdev);
+ 	struct qpn_to_netdev *node;
+ 
+-	node = mlx5i_find_qpn_to_netdev_node(ipriv->qpn_htbl->buckets, qpn);
++	node = mlx5i_find_qpn_to_netdev_node(ipriv->qpn_htbl, qpn);
+ 	if (!node)
+ 		return NULL;
  
 -- 
 2.53.0
