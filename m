@@ -1,53 +1,56 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795624701;
-	b=xhsMjLXERKJqhcFfHz58LNmbLza4xDL6q1XnrweqsTyizb6eUST25XdtHzFSxVsuQogD
-	 XMo9sspcZK4BxD1TW3GjgdL9BghR86YSBfHPDfsVRwaYuIg+tXLL7pXJCx8rj4cdhQDBJ
-	 g+o3zEU5Gl/Q+FPbY7sPaW/AJBnHfw4gjb3MSQnr6nZd0WCpzAPPMmZsYSMnYPqWgxgFO
-	 I2ekwBft/TcozXtopC9oit8cFyFIVeWqCV1p9R4ry1ktQRvlJ+LLf+YJbLo/KlaULX9y1
-	 JfpZq7Edy8H7efaslnTuifqKemPUuivN5ilGkvz1v4CthyV9fZ5Ppm6i/8ejyxUla9w==
+	t=1795624704;
+	b=Lk7KhQ/BcixOrMOvtGWmdW3Mn3NuSePRtJGW8gVqt3YFJdVAxNQBngpHlFZd7Rp69r1y
+	 cNEpADyt0c40YLJXdYzJM/iG3Gx5SoakuYk4+yORzGzLUaeX2rl52Ezym1wTixfkR/hs0
+	 alBeQQQ2h3msABAze2ggEzuRrjfyR8fpWveVHHVRtX/g4CGyqULvkxAw1jPgVUbeaxE1p
+	 1DhOszRaucaDjgPWeMRCTgeeWqLqOMmuQzHDr6Xcg1AslC1TMzi+Fj7TbxRzVHVDuOdBX
+	 m1RM68VzWpEt8OUb2e9fyYAUQU4vsKU57WIuwtBoRqocMJu44JrqtOa+0fbLYs5It1Q==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795624701;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795624704;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Transfer-Encoding;
-	bh=GjXRqf4DOBEvWrqM+e3IztIvS5Lz5yRAnAPaiaLByIQ=;
-	b=YPMVYcLMU6pks4u1hcLiiO+HT2fTLKvLUC0PnJ82n6C5Co7G0NJF12m9b1XGKeJIfWSS
-	 c+sV1yQ05fMtDPSq5BwTy4DigaJQGhMDxdVKYQrzIol5Ed+noZ2ZX6/98HtD0bjYFv4Ky
-	 xguAxL6A4l5SD2ampQnjaa/HVvg8g5CAIrWIpuEE/0WNrA9svBYPI6zWn6zyfjd1ieSmi
-	 upWr+1Kb+LU26esuKLjNz+f7vyS9ks+vP9g/o8D/e04q9i78p4fgdApj38g03t8IqxeBn
-	 wzvMF0gYL1ZQOIKQKZH5uXfHyTw13bMcn9AnaW2+CW2DHWZWNDfnMYk3YzJQzcctiXw==
+	 MIME-Version:Content-Type:Content-Transfer-Encoding;
+	bh=I3HFMTeZDC/dxfdIjgtrwB5aCpS6Rv/YKdTQXhevIXw=;
+	b=4idnFFXBAaVlbJDgyb2q4iX9hHArwt12YaxnZZnTtGMN+R8yEeq0NCPFk0lsjCnOIvJK
+	 38YCF9GV8MkNky7DkJdHtfYLyTmjaxWrBPZFZ/oSZHKiG1xZ1sWu4WqpFZTY0ecwJTPez
+	 7U3pHhWaIYy3pvr7bFr9InfLjKRkFaLkyR9WvK889Tl15+lu2u295YcPL0vd1CzieJNXb
+	 9JQUiW4OFywVrApTpagwy13ntzTJWCsEf8Vd7SWccEnrt318SUIjmJpDolhAEXXRWjrFV
+	 ++3xsiCrBlPJr6FnV8/ttoAhwlAFzku2xtCe1c33RfPDTiX4VDlwRapBBCehb5TVnPQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Eks5aUVx;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=p9A11gG0;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5E49F606A33B;
-	Wed, 25 Nov 2026 16:38:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2E0BA606A33A;
+	Wed, 25 Nov 2026 16:38:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Eks5aUVx
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B0B761F000C0;
-	Wed, 25 Nov 2026 16:38:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=p9A11gG0
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8671A1F000C4;
+	Wed, 25 Nov 2026 16:38:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795624701;
-	bh=GjXRqf4DOBEvWrqM+e3IztIvS5Lz5yRAnAPaiaLByIQ=;
+	s=korg; t=1795624704;
+	bh=I3HFMTeZDC/dxfdIjgtrwB5aCpS6Rv/YKdTQXhevIXw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Eks5aUVxJK/SLseVe+pzOy0PTP9FbVQGxXXJUxDuMcJDIRcMslw2z39e95tjwAsRv
-	 wwfIO9+QKSCKshjnTLs50SiJDWH6+1x+OCairnUbSPGlr+BNkjLsMkJGwgPcbj4xFa
-	 vCQy2i1hTybCB9LKBs5fFFHkse8M7kK1lnbPLKf0=
+	b=p9A11gG0qWC5khwTjxmq/fCPVLl/8TQFS+fcOHYXLIuXWgqIYYlGPhJyvSjpsnFfi
+	 NyttNVB8sNx3AM4C3ADx0HO78A0vBQx6d9LyB9UcxMTvQT6jCw4u858ZDEBQbT54nU
+	 59yQoPtfflsIv7wchyInI+ac1EzVloZ7YmHqaZdQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alexei Starovoitov <ast@kernel.org>,
-	Ido Schimmel <idosch@nvidia.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Matthew Brost <matthew.brost@intel.com>,
+	=?UTF-8?q?Thomas=20Hellstr=C3=B6m?= <thomas.hellstrom@linux.intel.com>,
+	Himal Prasad Ghimiray <himal.prasad.ghimiray@intel.com>,
+	Arvind Yadav <arvind.yadav@intel.com>,
+	Tejas Upadhyay <tejas.upadhyay@intel.com>,
+	Dave Airlie <airlied@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 272/816] ipv6: Check the Home Address option again before its address is used
-Date: Wed, 25 Nov 2026 15:30:20 +0100
-Message-ID: <20261125143855.507933766@linuxfoundation.org>
+Subject: [PATCH 6.12 281/816] drm/xe: Rebind BOs evicted before the first LR queue
+Date: Wed, 25 Nov 2026 15:30:29 +0100
+Message-ID: <20261125143855.712778417@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143849.205329330@linuxfoundation.org>
 References: <20261125143849.205329330@linuxfoundation.org>
@@ -63,130 +66,67 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Alexei Starovoitov <ast@kernel.org>
+From: Arvind Yadav <arvind.yadav@intel.com>
 
-[ Upstream commit 30c71476d842b094651bd7712f6c8ee8716147d0 ]
+[ Upstream commit b52dcc698250e08eabdc4554a6fdb4d6f909133f ]
 
-ipv6_dest_hao() checks the Home Address option and sets IP6CB(skb)->dsthao
-to the offset of the destination options header. Later mip6_addr_swap() and
-mip6_destopt_reject() call ipv6_find_tlv() with that offset and use the 16
-address bytes. They assume that the same header is still there.
+A VM bind can evict BOs before the first LR exec queue is added.
+There is no preempt fence to trigger at that point.
 
-But the seg6 and ioam6 lwtunnels, the End.B6 actions, ipv6_rpl_srh_rcv()
-and BPF lwt progs move or rewrite the IPv6 headers and keep IP6CB(skb).
-Then ipv6_find_tlv() parses other bytes. It returns when the type matches,
-before it checks that the option is inside the header. Nobody checks the
-length of the option again. Thus mip6_addr_swap() can write after the data
-of the skb. mip6_destopt_reject() can copy that memory to an xfrm report.
+When the queue is added later, its new preempt fence is not triggered.
+The exec IOCTL does not validate or rebind BOs in preempt fence mode,
+and the rebind worker skips that work because no preempt fence is
+waiting. The first exec can then use stale mappings.
 
-In ipv6_find_tlv(), check the length of an option before its type. The
-returned option is then inside the header, and the header is inside the
-linear data. In both callers, ignore an option with a length other than 16,
-as if ipv6_find_tlv() found none. Then the ICMPv6 error goes to the source
-address of the IPv6 header, and the xfrm report has no XFRMA_COADDR
-attribute. Nothing changes for a header that ip6_parse_tlv() accepted and
-that is still in its place. For the other callers an incomplete option is
-now absent:
+Trigger the new preempt fence in xe_vm_add_compute_exec_queue() when
+the VM has evicted BOs or pending rebinds. This keeps the queue
+suspended until the rebind worker validates the BOs and restores
+their mappings.
 
- - ip6_find_1stfragopt() and mip6_rthdr_offset() can return another offset
-   for the fragment header or the xfrm header, also in a forwarded packet.
- - calipso_skbuff_optptr() returns NULL. netlbl_skbuff_getattr() and
-   netlbl_cache_add() then see no option. calipso_skbuff_delattr() returns
-   0 and the packet continues unchanged. Today it returns -EINVAL and
-   SELinux drops the packet. It already returns 0 when an earlier option is
-   incomplete. The receiver drops such a header in ip6_parse_tlv().
-
-The code that moves the headers still does not reset the offset or the
-other fields of IP6CB(skb). If the bytes there look like a header with a
-Home Address option of length 16, both callers still use its address.
-
-The first tag also covers ipv6_find_tlv(), because its early return did no
-harm before mip6_addr_swap(). The second tag is for mip6_destopt_reject().
-
-Fixes: 793832361fe7 ("[IPV6] MIP6: Revert address to send ICMPv6 error.")
-Fixes: 70182ed23d25 ("[IPV6] MIP6: Report to user-space when home address option is rejected.")
-Signed-off-by: Alexei Starovoitov <ast@kernel.org>
-Reviewed-by: Ido Schimmel <idosch@nvidia.com>
-Link: https://patch.msgid.link/20261102064922.2636027-1-alexei.starovoitov@gmail.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: dd08ebf6c352 ("drm/xe: Introduce a new DRM driver for Intel GPUs")
+Cc: Matthew Brost <matthew.brost@intel.com>
+Cc: Thomas Hellström <thomas.hellstrom@linux.intel.com>
+Cc: Himal Prasad Ghimiray <himal.prasad.ghimiray@intel.com>
+Reviewed-by: Matthew Brost <matthew.brost@intel.com>
+Signed-off-by: Arvind Yadav <arvind.yadav@intel.com>
+Link: https://patch.msgid.link/20261015162639.3528278-1-arvind.yadav@intel.com
+Signed-off-by: Tejas Upadhyay <tejas.upadhyay@intel.com>
+(cherry picked from commit 928ee5d4fb1f211aa361524801c15b54603fae52)
+Signed-off-by: Matthew Brost <matthew.brost@intel.com>
+Signed-off-by: Dave Airlie <airlied@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv6/exthdrs_core.c | 7 ++++---
- net/ipv6/icmp.c         | 7 ++++++-
- net/ipv6/mip6.c         | 9 ++++++++-
- 3 files changed, 18 insertions(+), 5 deletions(-)
+ drivers/gpu/drm/xe/xe_vm.c | 9 ++++++++-
+ 1 file changed, 8 insertions(+), 1 deletion(-)
 
-diff --git a/net/ipv6/exthdrs_core.c b/net/ipv6/exthdrs_core.c
-index ce3724f49e33a..f5b6e25580e83 100644
---- a/net/ipv6/exthdrs_core.c
-+++ b/net/ipv6/exthdrs_core.c
-@@ -135,9 +135,6 @@ int ipv6_find_tlv(const struct sk_buff *skb, int offset, int type)
- 		int opttype = nh[offset];
- 		int optlen;
+diff --git a/drivers/gpu/drm/xe/xe_vm.c b/drivers/gpu/drm/xe/xe_vm.c
+index 310178a5652a3..7fb407d9e9caf 100644
+--- a/drivers/gpu/drm/xe/xe_vm.c
++++ b/drivers/gpu/drm/xe/xe_vm.c
+@@ -273,8 +273,15 @@ int xe_vm_add_compute_exec_queue(struct xe_vm *vm, struct xe_exec_queue *q)
+ 	 * Check to see if a preemption on VM is in flight or userptr
+ 	 * invalidation, if so trigger this preempt fence to sync state with
+ 	 * other preempt fences on the VM.
++	 *
++	 * Also trigger it if eviction or rebinding is pending. BOs evicted
++	 * before the first exec queue was added had no preempt fence to
++	 * trigger. Suspend this queue until the rebind worker restores
++	 * the mappings.
+ 	 */
+-	wait = __xe_vm_userptr_needs_repin(vm) || preempt_fences_waiting(vm);
++	wait = __xe_vm_userptr_needs_repin(vm) || preempt_fences_waiting(vm) ||
++		!list_empty(&vm->gpuvm.evict.list) ||
++		!list_empty(&vm->rebind_list);
+ 	if (wait)
+ 		dma_fence_enable_sw_signaling(pfence);
  
--		if (opttype == type)
--			return offset;
--
- 		switch (opttype) {
- 		case IPV6_TLV_PAD1:
- 			optlen = 1;
-@@ -150,6 +147,10 @@ int ipv6_find_tlv(const struct sk_buff *skb, int offset, int type)
- 				goto bad;
- 			break;
- 		}
-+		/* Some callers read the option, so it must be in the header. */
-+		if (opttype == type)
-+			return offset;
-+
- 		offset += optlen;
- 		len -= optlen;
- 	}
-diff --git a/net/ipv6/icmp.c b/net/ipv6/icmp.c
-index 229ae205450d3..91fd25cff0ac0 100644
---- a/net/ipv6/icmp.c
-+++ b/net/ipv6/icmp.c
-@@ -345,7 +345,12 @@ static void mip6_addr_swap(struct sk_buff *skb, const struct inet6_skb_parm *opt
- 		if (likely(off >= 0)) {
- 			hao = (struct ipv6_destopt_hao *)
- 					(skb_network_header(skb) + off);
--			swap(iph->saddr, hao->addr);
-+			/*
-+			 * The header can have moved or changed after
-+			 * ipv6_dest_hao() checked the length.
-+			 */
-+			if (hao->length == 16)
-+				swap(iph->saddr, hao->addr);
- 		}
- 	}
- }
-diff --git a/net/ipv6/mip6.c b/net/ipv6/mip6.c
-index 6a16a5bd0d910..9615679724114 100644
---- a/net/ipv6/mip6.c
-+++ b/net/ipv6/mip6.c
-@@ -211,9 +211,16 @@ static int mip6_destopt_reject(struct xfrm_state *x, struct sk_buff *skb,
- 
- 	if (likely(opt->dsthao)) {
- 		offset = ipv6_find_tlv(skb, opt->dsthao, IPV6_TLV_HAO);
--		if (likely(offset >= 0))
-+		if (likely(offset >= 0)) {
- 			hao = (struct ipv6_destopt_hao *)
- 					(skb_network_header(skb) + offset);
-+			/*
-+			 * The header can have moved or changed after
-+			 * ipv6_dest_hao() checked the length.
-+			 */
-+			if (hao->length != 16)
-+				hao = NULL;
-+		}
- 	}
- 
- 	stamp = skb_get_ktime(skb);
 -- 
 2.53.0
 
