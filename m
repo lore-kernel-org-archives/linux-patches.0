@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795623794;
-	b=b4eJ3Hzcz3mBXJQzT6lMdwl7SfZTFNFqcHbD5A66ZMrLwOwMEwjcGaytNUS7vHFNNrG6
-	 GY1eQHCL8yRpTrx/knmMhGU6gnj85Ok7TkMBneDQcW4e/wC0MbcbOloW4ic+x37RH1q0s
-	 7Xvazu3h7/u9+F8SXqpmFJMtyPdLdBALmFXDGmGZb2HubewwD3Z9H7pu1c2lwXuemwa1R
-	 0tclCWntCL2duBlgwXYIRdUs+PzDnLXPncKtZkt6Ro0i79eoyl/Bs1qfqXhLi7g3RJi2N
-	 EgZ+DcUp5E2tHsw6IweXVI7iQiWHOirxoOgjYaWh3644d2KQYMVCFthsEaToo2MmEdQ==
+	t=1795623797;
+	b=NyJADdZaeJ6zsQcxVSDZrZSPBq2oaqnmgreBHcMGkdihcKDRnTKwQWTBVKvG1XMo+z7C
+	 fqqFtj8e1fzycUkBzm2NYVyOUkUZ3UQb7sU5ikj8jmzFMjlRBCuDYM9OLOvVTqZVODSDx
+	 a+zOQw4HiUAA1qn0FuI9Os7NVDOteHgPLf7Q1+4d9UDupJYvXXrsj00mIqguJ6uv3zb53
+	 MdRw6l6Vb75nywususuBfablFoPwVUXL71ojsHKczRWvHxtyCIqQjjaU4hC2nB4F0GuNV
+	 uX3ryzoM63ZYFtvi4GPNnk0X7MguKXzKTXq1/RSgGisBw/l6wzp4nU4lSpXOUwQypPQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795623794;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795623797;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=hk8LX8GlTn8jQyxkpjeP72gQNfyM+gklQyfVo73H0A0=;
-	b=VKSgQ+qq2wiadmiXMLpBdlq4nO4/ku2okOJm84WOPxV154W5z62019rSO/5JWuyXRv+F
-	 dpmTDbrhIs9XFy0tUVE8SSeOJhhXLLScgUuSOzC5I4Pm/Yg7HnFbxTMpBljTtaXfL3tYo
-	 WBy+ItVKmrIfBGSVlEkhl6KarzCWaFs5763vvopudjvWHImSvSypq6Dya182F313xbzT8
-	 /nRkEpX7N1Q30RHqHbDaZXHR71c71vkWhpExEbcWQszjYT+vc+tb84Wv3IeuXHDxA88Qt
-	 EWKCPd+FjexlBy8GKbHXGKBotQrfrsou5bBOkbYc5xvofOne9f5vG3yKtVwzwFXe5sw==
+	bh=EGAy+jtvaMdz6r+VaolasRkPAjVKzBfVz4q35xYjYB8=;
+	b=kTIjJTgluaSYkQRE2gY6sfJQ68lGDfy8o+tmvyQO25nqoyQ64gpOQ2yIXEE8KPDEhuJo
+	 WLjGuzdMSsfHbwUz2ghxXbfcBrypjnzbF6kfqQmk5bxe9qTokbf8fPXTRZ+1PLoyjixxt
+	 Yz5Fx89bkFGj3/VyYEpnqvLInwVV6c1INuytdXAgix8M7QOciyPXxpbx8UJoghY361bBB
+	 pOaXkyDyjbqQsV5lks3DBDLgc/zI6dJCpxxE2aTryfA7U7jQjnyfjRFoDIH97zKnB/Vvn
+	 lPF1FzQ07cR+/DZrGWBOCQzRv9lrhHIpBKwsAhJkBwci9MFdlResGPJMHHST2j8NIFw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=bdZPz1Mv;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=rZ4oj3aQ;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 335BC606A338;
-	Wed, 25 Nov 2026 16:23:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 46C1B606A33C;
+	Wed, 25 Nov 2026 16:23:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=bdZPz1Mv
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2D56B1F000ED;
-	Wed, 25 Nov 2026 16:23:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=rZ4oj3aQ
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 58ECB1F000D0;
+	Wed, 25 Nov 2026 16:23:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795623793;
-	bh=hk8LX8GlTn8jQyxkpjeP72gQNfyM+gklQyfVo73H0A0=;
+	s=korg; t=1795623796;
+	bh=EGAy+jtvaMdz6r+VaolasRkPAjVKzBfVz4q35xYjYB8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=bdZPz1MvgWU4j2SRpuC9Pqo9E1CPzOAwvMffX8VCBL9zdN40FOf/3Xov6vgEWOusw
-	 p9XrAba1MXwud0uVRQBWILBkbPJqtVuw7s2FdXTeFqf5POj/iwbRU6FfeogwtF71T4
-	 n2OHathakQS46dbNaMVyaZOZTUTFmuaQGQbdpRLQ=
+	b=rZ4oj3aQ2nHf4k6RNRa+o+TxjygRFuCcCAXE2Y/KSw85fsXc72fSoXbcUrMm1B+en
+	 gkUyxKju1migLUECTwXB51rmuu58z8hcfpt+u5hU3R0nBu10RtvuY15qHh19Ulweu8
+	 hJVJbkd5I9C1HL7VsxohY53lGF5mI0ZgQG3A6D1w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Daksh Sahni <swizzguy76@gmail.com>,
-	Jeff Hugo <jeff.hugo@oss.qualcomm.com>,
-	Karol Wachowski <karol.wachowski@linux.intel.com>
-Subject: [PATCH 6.18 971/990] accel/ivpu: Defer recovery until probe completes
-Date: Wed, 25 Nov 2026 15:38:58 +0100
-Message-ID: <20261125143844.728890917@linuxfoundation.org>
+	Henry Martin <bsdhenrymartin@gmail.com>,
+	Xin Long <lucien.xin@gmail.com>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 6.18 972/990] sctp: fix skb_over_panic when adding addresses with a pending delete of another family
+Date: Wed, 25 Nov 2026 15:38:59 +0100
+Message-ID: <20261125143844.752161512@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143822.072087159@linuxfoundation.org>
 References: <20261125143822.072087159@linuxfoundation.org>
@@ -68,81 +68,99 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Karol Wachowski <karol.wachowski@linux.intel.com>
+From: Henry Martin <bsdhenrymartin@gmail.com>
 
-commit dc61b19db1f77deb4c15bb71e64f46071447837c upstream.
+commit ce09d8c13a15fe881d0a04c91979dcdf45ed9543 upstream.
 
-An error IRQ that fires after ivpu_boot() enables interrupts queues
-recovery_work during probe. If probe then fails, the device is torn
-down while the work runs, and the work faults on the unmapped BARs:
+sctp_make_asconf_update_ip() accounts for a pending DEL_IP
+parameter by reusing the length of the address being added. The
+write-back side instead serializes the pending address itself,
+with its own address family. If the pending delete is IPv6
+(20-byte parameter) while the added addresses are IPv4 (8-byte),
+the chunk is allocated 12 bytes short and sctp_addto_chunk()
+writes past the end of the skb. E.g. on mainline (05441d697f7f):
 
-  BUG: unable to handle page fault for address: ffffcfc6680200f4
-  Workqueue: events_unbound ivpu_pm_recovery_work [intel_vpu]
-  RIP: 0010:ivpu_hw_ip_ipc_rx_addr_get+0xc/0xb0 [intel_vpu]
-  Call Trace:
-   ivpu_wait_for_ready+0x155/0x220 [intel_vpu]
-   ivpu_boot+0x9e/0x270 [intel_vpu]
-   ivpu_resume+0xa4/0xd0 [intel_vpu]
-   ivpu_pm_reset_complete+0x2c/0x90 [intel_vpu]
-   ivpu_pm_recovery_work+0xf6/0x140 [intel_vpu]
+    skbuff: skb_over_panic: text:ffffffff84859c77 len:392 put:20
+        tail:0x188 end:0x180 dev:<NULL>
+    kernel BUG at net/core/skbuff.c:215!
+    CPU: 0 UID: 1000 PID: 379 Comm: poc_sctp
+    Call Trace:
+     skb_panic
+     skb_put
+     sctp_addto_chunk
+     sctp_make_asconf_update_ip
+     sctp_send_asconf_add_ip
+     sctp_setsockopt_bindx
+     __x64_sys_setsockopt
 
-If probe succeeds, the recovery runs concurrently with the rest of
-probe, and its pm_runtime_disable() discards the initial autosuspend
-request, leaving the NPU active until first use. Any recovery that
-starts while the NPU is idle loses the pending autosuspend the same way.
+Requires addip enabled on the endpoint (net.sctp.addip_enable=1).
 
-Keep recovery_work disabled from ivpu_pm_init() until ivpu_pm_enable().
-A trigger during probe still runs diagnostics and masks interrupts, and
-ivpu_pm_enable() runs the deferred recovery before the initial
-autosuspend request. A trigger racing with ivpu_pm_enable() can cause
-a second, harmless recovery. Request autosuspend at the end of
-ivpu_pm_reset_complete() so the NPU suspends again after every reset.
+Account for the pending delete with its own address family, as the
+write-back side already does.
 
-Fixes: 852be13f3bd3 ("accel/ivpu: Add PM support")
-Cc: stable@vger.kernel.org # v6.10+
-Reported-by: Daksh Sahni <swizzguy76@gmail.com>
-Closes: https://lore.kernel.org/r/20261107174215.15818-1-swizzguy76@gmail.com
-Tested-by: Daksh Sahni <swizzguy76@gmail.com>
-Reviewed-by: Jeff Hugo <jeff.hugo@oss.qualcomm.com>
-Signed-off-by: Karol Wachowski <karol.wachowski@linux.intel.com>
-Link: https://patch.msgid.link/20261110121534.3566028-1-karol.wachowski@linux.intel.com
+This issue was discovered by an LLM code scanner.
+
+Cc: stable@vger.kernel.org
+Fixes: 8a07eb0a50ae ("sctp: Add ASCONF operation on the single-homed host")
+Signed-off-by: Henry Martin <bsdhenrymartin@gmail.com>
+Acked-by: Xin Long <lucien.xin@gmail.com>
+Link: https://patch.msgid.link/20261111082313.1606366-1-bsdhenrymartin@gmail.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/accel/ivpu/ivpu_pm.c |    9 ++++++++-
- 1 file changed, 8 insertions(+), 1 deletion(-)
+ net/sctp/sm_make_chunk.c |   28 ++++++++++++++++------------
+ 1 file changed, 16 insertions(+), 12 deletions(-)
 
---- a/drivers/accel/ivpu/ivpu_pm.c
-+++ b/drivers/accel/ivpu/ivpu_pm.c
-@@ -148,8 +148,8 @@ static void ivpu_pm_reset_complete(struc
- 	up_write(&vdev->pm->reset_lock);
- 	atomic_set(&vdev->pm->reset_pending, 0);
+--- a/net/sctp/sm_make_chunk.c
++++ b/net/sctp/sm_make_chunk.c
+@@ -2867,7 +2867,6 @@ struct sctp_chunk *sctp_make_asconf_upda
+ 	int addr_param_len = 0;
+ 	union sctp_addr *addr;
+ 	int totallen = 0, i;
+-	int del_pickup = 0;
+ 	struct sctp_af *af;
+ 	void *addr_buf;
  
--	pm_runtime_mark_last_busy(vdev->drm.dev);
- 	pm_runtime_enable(vdev->drm.dev);
-+	pm_request_autosuspend(vdev->drm.dev);
- }
+@@ -2882,16 +2881,21 @@ struct sctp_chunk *sctp_make_asconf_upda
+ 		totallen += addr_param_len;
  
- static void ivpu_pm_recovery_work(struct work_struct *work)
-@@ -403,6 +403,7 @@ void ivpu_pm_init(struct ivpu_device *vd
- 	atomic_set(&pm->reset_counter, 0);
- 
- 	INIT_WORK(&pm->recovery_work, ivpu_pm_recovery_work);
-+	disable_work(&pm->recovery_work);
- 	INIT_DELAYED_WORK(&pm->job_timeout_work, ivpu_job_timeout_work);
- 
- 	if (ivpu_disable_recovery)
-@@ -427,6 +428,12 @@ void ivpu_pm_enable(struct ivpu_device *
- {
- 	struct device *dev = vdev->drm.dev;
- 
-+	enable_work(&vdev->pm->recovery_work);
-+	if (atomic_read(&vdev->pm->reset_pending)) {
-+		queue_work(system_dfl_wq, &vdev->pm->recovery_work);
-+		flush_work(&vdev->pm->recovery_work);
+ 		addr_buf += af->sockaddr_len;
+-		if (asoc->asconf_addr_del_pending && !del_pickup) {
+-			/* reuse the parameter length from the same scope one */
+-			totallen += paramlen;
+-			totallen += addr_param_len;
+-			del_pickup = 1;
+-
+-			pr_debug("%s: picked same-scope del_pending addr, "
+-				 "totallen for all addresses is %d\n",
+-				 __func__, totallen);
+-		}
 +	}
 +
- 	pm_runtime_allow(dev);
- 	pm_runtime_mark_last_busy(dev);
- 	pm_runtime_put_autosuspend(dev);
++	if (asoc->asconf_addr_del_pending) {
++		/* The DEL_IP parameter is serialized from the pending address
++		 * itself below; account for its own address family, which may
++		 * differ from the added ones.
++		 */
++		addr = asoc->asconf_addr_del_pending;
++		af = sctp_get_af_specific(addr->v4.sin_family);
++		totallen += paramlen;
++		totallen += af->to_addr_param(addr, &addr_param);
++
++		pr_debug("%s: picked del_pending addr, "
++			 "totallen for all addresses is %d\n",
++			 __func__, totallen);
+ 	}
+ 
+ 	/* Create an asconf chunk with the required length. */
+@@ -2914,7 +2918,7 @@ struct sctp_chunk *sctp_make_asconf_upda
+ 
+ 		addr_buf += af->sockaddr_len;
+ 	}
+-	if (flags == SCTP_PARAM_ADD_IP && del_pickup) {
++	if (flags == SCTP_PARAM_ADD_IP && asoc->asconf_addr_del_pending) {
+ 		addr = asoc->asconf_addr_del_pending;
+ 		af = sctp_get_af_specific(addr->v4.sin_family);
+ 		addr_param_len = af->to_addr_param(addr, &addr_param);
 
 
