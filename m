@@ -1,52 +1,55 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795618817;
-	b=XOTGJCioOrNhtyYwTjhrs/jRKEHdIUa+zHq2sNEAg/+t4tHX8iKYIsBAuNDqlklY4Bda
-	 SenKvyicX47mHjp23WMcTH2K5LfsH3QOxmJC/1V/FQz4bu/A4jgwWJFSL2AXRUeGmtzW+
-	 8q0VmzTlPnIGI4Tws6ieZMzmhlAZNAZLjRWbd3m26WdfA96EkRckSLz5yW6xkHW6QwFFI
-	 vD07mnENE7pHkDr9NyWK3YhaxrPTVOI2CVdFEWTVR1afpFqmlQS8kwTkFhsKttM2s5Mp5
-	 XuLaywNsx/7vR6qSEDUq1vzYvekFHC/MmVcBBByBQy9oaojFNuEa4STX9FfLQ0k+HZw==
+	t=1795618820;
+	b=OBbaRu81PCXOJ8h2Uparx7+uQd2PkeYrL5Z4HpUOzmUXozu9th4oF/KLJCYF/UVgHws8
+	 1veexhPVOebXnz+lGC/CWdjZ0Hb8zXBomca9Vf0VGZ6fsipTuLx2+vjcFHosyfdgG1wp8
+	 f8oj3fitES8CnhwOTz1WbAp0Y/q4vRJiBeJNiIYuB2yfWmpEPd595tWLHU/cmRqMHjZsv
+	 6fkp7VhbVSCDBfWZ306RZJG7kSuQ4Fi3Dq6E/wL8cBG46t+d1uFKnKOen6jZq28JuSIGQ
+	 hqFi5O1OwUQ6G9ac26tL+CKVfR74i0g1HsOZgLzL/AkP75HB4srgiOGs/804hC6sC1w==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795618817;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795618820;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=rxiyo+JK8+AZKqTLOXwWFRREPl4Cw7PkTdK1AACdh8s=;
-	b=Fo27wQ5Niig8zJrNKfW5XvUmTvtI9spnZHGqGwcab8igF6BwScWD7Su+Nz0B22K6gsWR
-	 JkxrNYf2ywx2rOKtKmPmCVx+4O01m4O24VmRp2OThKwgHmzAWHNF+Zfc1Rnm+keiX/JB/
-	 kuoZJNB3INY5ExhH228yUu0T8p5SfP2eVMe2nKbVXWZiFFwjRKb3g/tVKFioI7v24/ZCV
-	 8bvyLmF3zgNKDMtwMWEf2qpiulrbt+bCLRAGBdVYGS/k02Cv5GKhdV5p9tEZJXkYutvg0
-	 nPqSiVWRqYShgoSmppmiPDTdF5QZfnvlNr7Xf0XygvNIDTDFLBWZeMuCcRUEryKRGMA==
+	bh=C9lMdwpSlMFGwUP3rx+jryDtZS4UAWQxevr3dqoGQjo=;
+	b=k3RxYJ2/bL8I1xbtSlMHo/3TqjqPY9/f0QTwUUuBJqvf7oaJt9Ec3TWXQPv3jkSyZ8B9
+	 rocGPjlubvRWt67S/3emAkT+8EQfk2Ww/199lRMk8cqYds9uMMRSvZrJqKI/ZyRWrEP1g
+	 PIvDdAVur+Dr5RTXaK+zql+JHebYTFoBCsDLQ51qFwv3oiZt2+ky0ExiESbpOUaaX1SlB
+	 9I2iaZJiRhATxamIpaEV6lyKU361eIo2fdcEiIciZCqMxJ4pCybo2Uon1+VAaDoagKBwW
+	 E8zWRFzXivDFuhfB3vvNwGkkJoo3rJH52ZIU8Ogt3o2NvIGNJV13F6mfTpBiRexk5sg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=L8Uv1YTv;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=aLkTnZCJ;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 312DC606A323;
-	Wed, 25 Nov 2026 15:00:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6BDB8606A321;
+	Wed, 25 Nov 2026 15:00:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=L8Uv1YTv
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 251371F000C0;
-	Wed, 25 Nov 2026 15:00:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=aLkTnZCJ
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5B3ED1F000C0;
+	Wed, 25 Nov 2026 15:00:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795618816;
-	bh=rxiyo+JK8+AZKqTLOXwWFRREPl4Cw7PkTdK1AACdh8s=;
+	s=korg; t=1795618819;
+	bh=C9lMdwpSlMFGwUP3rx+jryDtZS4UAWQxevr3dqoGQjo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=L8Uv1YTvMAYjG+z7OJK3+s8CPukbuCCgsxMm2R/ekoZtxKAgddGorfKzdtpkz3YIW
-	 HMKjMLeoy+zwNvSv3VAqqkHG4q2WssuBtLkHSM5+gL0lLVIX7uPvl5OPkWe10GsrY/
-	 I5+E1Adn3FDfWesMUV2BaIEqgwmVe8r5WX+e7JJg=
+	b=aLkTnZCJ1YZEUi2TFELE0xHrH9IrDQ+c0c9NKMyaqmqQMxQ0kutYHufs2f0edTV9f
+	 BmbKSZfhD4HD/6RNSP0fNzVN9z0BFeBQ+YlJblyO+ailc2qr22iL3OtM3VEScSfD9w
+	 eswkti/JElzx/zzjsb6Ab1O7mIiBiq9D9xTjMdzQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Rahad Bhuiya <rahadbhuiya2021@gmail.com>,
-	Tejun Heo <tj@kernel.org>,
+	Raag Jadav <raag.jadav@intel.com>,
+	Riana Tauro <riana.tauro@intel.com>,
+	Matt Roper <matthew.d.roper@intel.com>,
+	Matthew Brost <matthew.brost@intel.com>,
+	Dave Airlie <airlied@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0361/1005] sched_ext: Reset task fields on exit of an SCX_TASK_READY task
-Date: Wed, 25 Nov 2026 15:28:19 +0100
-Message-ID: <20261125143830.189554233@linuxfoundation.org>
+Subject: [PATCH 7.3 0397/1005] drm/xe/hw_error: Guard csc_hw_error_work() with runtime PM
+Date: Wed, 25 Nov 2026 15:28:55 +0100
+Message-ID: <20261125143831.045445207@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143821.729802100@linuxfoundation.org>
 References: <20261125143821.729802100@linuxfoundation.org>
@@ -68,46 +71,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Rahad Bhuiya <rahadbhuiya2021@gmail.com>
+From: Raag Jadav <raag.jadav@intel.com>
 
-[ Upstream commit 564405c424f49d70b13debe7fe5b550234ad6b84 ]
+[ Upstream commit a890a885b982f73e6e984e828ffda06b5121c4b6 ]
 
-Tasks in SCX_TASK_READY are attached to a scheduler but outside the ext
-class, such as RT/DL tasks, or non-SCHED_EXT tasks under a partial switch.
-The scheduler's BPF code can still update their dsq_vtime and slice (for
-instance, via ops.cgroup_move() as done by scx_flatcg).
+xe_device_declare_wedged() callers are expected to hold a runtime PM
+reference. Fix it.
 
-Because __scx_disable_and_exit_task() currently breaks out of the state
-switch for SCX_TASK_READY without calling scx_reset_task_fields(), these
-fields are not cleared when the task leaves the scheduler. If the task is
-subsequently moved to another cgroup/sub-scheduler and later switches to
-SCHED_NORMAL, the new scheduler's ops.enable() sees stale dsq_vtime from
-the previous scheduler's clock.
-
-Call scx_reset_task_fields() in the SCX_TASK_READY case of
-__scx_disable_and_exit_task() to ensure SCX-managed fields are properly
-reset when leaving the scheduler.
-
-Fixes: 5771e79e461e ("sched_ext: Reset dsq_vtime and slice when a task leaves SCX")
-Signed-off-by: Rahad Bhuiya <rahadbhuiya2021@gmail.com>
-Signed-off-by: Tejun Heo <tj@kernel.org>
+Fixes: a7df563b45b0 ("drm/xe/xe_hw_error: Handle CSC Firmware reported Hardware errors")
+Signed-off-by: Raag Jadav <raag.jadav@intel.com>
+Reviewed-by: Riana Tauro <riana.tauro@intel.com>
+Link: https://patch.msgid.link/20261022051303.282805-4-raag.jadav@intel.com
+Signed-off-by: Matt Roper <matthew.d.roper@intel.com>
+(cherry picked from commit fc8d229d76102489b6f56538a818c285a87db1e9)
+Signed-off-by: Matthew Brost <matthew.brost@intel.com>
+Signed-off-by: Dave Airlie <airlied@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/sched/ext/ext.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/gpu/drm/xe/xe_hw_error.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/kernel/sched/ext/ext.c b/kernel/sched/ext/ext.c
-index 50d5185bcd548..fd9f949f3647f 100644
---- a/kernel/sched/ext/ext.c
-+++ b/kernel/sched/ext/ext.c
-@@ -4198,6 +4198,7 @@ void __scx_disable_and_exit_task(struct scx_sched *sch, struct task_struct *p)
- 		args.cancelled = true;
- 		break;
- 	case SCX_TASK_READY:
-+		scx_reset_task_fields(task_rq(p), p);
- 		break;
- 	case SCX_TASK_ENABLED:
- 		scx_disable_task(sch, p);
+diff --git a/drivers/gpu/drm/xe/xe_hw_error.c b/drivers/gpu/drm/xe/xe_hw_error.c
+index 5f2abc9485ff5..f726179c22e38 100644
+--- a/drivers/gpu/drm/xe/xe_hw_error.c
++++ b/drivers/gpu/drm/xe/xe_hw_error.c
+@@ -14,6 +14,7 @@
+ #include "xe_drm_ras.h"
+ #include "xe_hw_error.h"
+ #include "xe_mmio.h"
++#include "xe_pm.h"
+ #include "xe_survivability_mode.h"
+ 
+ #define GT_HW_ERROR_MAX_ERR_BITS		16
+@@ -170,6 +171,7 @@ static void csc_hw_error_work(struct work_struct *work)
+ 	struct xe_tile *tile = container_of(work, typeof(*tile), csc_hw_error_work);
+ 	struct xe_device *xe = tile_to_xe(tile);
+ 
++	guard(xe_pm_runtime)(xe);
+ 	xe_survivability_mode_runtime_enable(xe);
+ }
+ 
 -- 
 2.53.0
 
