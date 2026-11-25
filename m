@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795620898;
-	b=Pp9lX49QW7FNDZGMlADKW74sZgwwSZc04yAOZgrpC0dUsJwcRpzU17jzWW9gV0uNR9Yv
-	 zq8Q6PZKUXaqJAHJkSfnPJ+1RHurWYuT+v/MrrXuO9PYzFIM9aW9dxNGu9Fu8VdpQDEdk
-	 4jILziDs+DFZAuB3L5+UItOf1PthS6Ff7tJ9KIeQXP3toG6pgrFZ4oH9Mzr2XW2Ki3PhY
-	 UV2/5FDzsNzdcp0aztifXf3K0RiQFPsiUn8ifM+Yqb3q4aOsPvy9MW041VFU1TH4mjeMO
-	 oDShuZrpUhqhIePS46PBgfVc6ReFyn67nvfixC+JFFRkeNU8YqeGUK7/9mBf9RBUGkA==
+	t=1795620902;
+	b=WJQPL+eIn2sTeVKoO9t2sVOeY9atOTy4XJyeQLGGGA7BWEPZoY8wVhS48WVdE3J/JKxE
+	 KxJu5yPyL5u2LUPM2mkigMpSvAQfntL3VnJGgiGvHe9qK3JKCbBs/0w7clG7fcGBMsLNz
+	 cgalLlX3x9XiIgvHAkR6W5vLfZ/HMPXc3NNW6Jul/RPeajFmedE0x8B7w04J1Y6gU0HgY
+	 11vH3JgqlvErFJGFeMDcgC81GWS9CIanCdF82W/ZrXup+xU92xfOkPBbSfbWJuaM2yeKe
+	 /ZnYyq9CiwGR3iwPQM4WmMT5dFswqS7FK4AcEKWRU/z4v58GA+dACqT1EqZrOWGGVAQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795620898;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795620902;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=3r7kPA+R+yxbHgixpPUwnrVZRMCCZoQ+zc7wV22jYzc=;
-	b=N0exRig0lwVXwT6IrWuWVDq2f9Zu3cFlKAuzWexDm4f5U9UUsnmslZeRhr8DZXqnM87v
-	 lbuyxRq6eFnUH37pnqOEnKxDYbdz6iFPbP22KRz/Y5boqeUjHFgUIS+/lLOrb4heVQ+HH
-	 vV1dD4IqEdHo+hKWwqT7POUIfB/Kc5eQgJMM7itrftqbuLjpH35bCUpJV0preF0e/K0WK
-	 L9iDgOzTNSl8UC/9WDXNTfYHCQu0BiLSc1jM6C3DRGOBhEG7mDH1nDKZx/kLlYy7vD0+G
-	 YtQu5ZPy8B8ZpOl8j5q5FnkQK0uW4Eq+aoAr+TLoTpxC1Xs0wDPs8snjNcRjs1fGk/A==
+	bh=0F57NnWc1mk+X8cvwFG6eLmYzqv0VoFylcA6m7ZBuD0=;
+	b=0WdM32ha8P2uIGBtYykzYkKZTQczMcNXbxFxV4mAuSLfQv8eg7DIHf9ib/KXj4Zz2Pxm
+	 pVKlaEuRNnW10N9s+wxn90Njgbg5kUgQs/lutWKbPzZHVIEEHK9DRkIduU8ra6bMDkUAo
+	 zoI25gpWVplMB2JhjXoV/6LtRQzbe5yYZsc/o8zu7u/Kud4B4rizb2EZt7SGeS5mH+Bz7
+	 fKgRWYpddJu33ZslHCYhAiN4XdA7CqcWlhu+CS4P5TRZOC2jnHgyGm/HtzqpsMPu4YFOI
+	 4voyrnxJY3UotA1zXg6eX6Dtav7IPHIiEzZ1sBcx31JjScd1XaHmBzT+U9EBh9F7PDQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=maKaPAOS;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=r5QMvLM4;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D8ED9606A327;
-	Wed, 25 Nov 2026 15:34:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 141AB606A31E;
+	Wed, 25 Nov 2026 15:35:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=maKaPAOS
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DF5E81F000E1;
-	Wed, 25 Nov 2026 15:34:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=r5QMvLM4
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 12CC81F000D0;
+	Wed, 25 Nov 2026 15:35:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795620898;
-	bh=3r7kPA+R+yxbHgixpPUwnrVZRMCCZoQ+zc7wV22jYzc=;
+	s=korg; t=1795620901;
+	bh=0F57NnWc1mk+X8cvwFG6eLmYzqv0VoFylcA6m7ZBuD0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=maKaPAOS7y+O3VafCBm8YXsv/u0omufHeMj1WQowe28uLjx1WujYKbtvCVlIPbcj7
-	 aCE61d2AMyOd4HRdPRezlMwY3qXWK2PNelDeAC9anRSP4vj906oL/QRnwqJ/yoDf+4
-	 eBeoeMlWYMTnULD5A2oy2n4pFlpPYHEetI+agBj8=
+	b=r5QMvLM4Nsy6wgZpbXwWnpOqzAR3S/vTJcJyab7reNBucwsu0zSW53A9TXgT5g1Xu
+	 A87gIfbTxFWK6aQ6FYf+89hF5R1Sm62H9+MpoPCfylaguPItvDicvqVZaD/CvEAZ/u
+	 uWA2bPjsMnJPlRXV3/TlhX2+jqcxYUyhQvLPgXBg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Feng Ning <feng@innora.ai>,
-	Sakari Ailus <sakari.ailus@linux.intel.com>,
+	Bitterblue Smith <rtl8821cerfe2@gmail.com>,
+	Ping-Ke Shih <pkshih@realtek.com>,
+	Josef Schlehofer <pepe.schlehofer@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 056/990] staging: media: atomisp: use array3_size() for overflow-safe allocation
-Date: Wed, 25 Nov 2026 15:23:43 +0100
-Message-ID: <20261125143823.399694677@linuxfoundation.org>
+Subject: [PATCH 6.18 057/990] wifi: rtw89: usb: Avoid crash with dynamically added device ID
+Date: Wed, 25 Nov 2026 15:23:44 +0100
+Message-ID: <20261125143823.422400975@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143822.072087159@linuxfoundation.org>
 References: <20261125143822.072087159@linuxfoundation.org>
@@ -68,185 +69,112 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Feng Ning <feng@innora.ai>
+From: Bitterblue Smith <rtl8821cerfe2@gmail.com>
 
-commit d178c7ca8fefc28115d35b94c3b1f4d653e34182 upstream.
+[ Upstream commit b1827227176821af9bba0cb643728d23328f3660 ]
 
-Replace open-coded width * height * sizeof() multiplications with
-array3_size() to prevent integer overflow in buffer allocations.
+Adding a device ID via sysfs causes a crash when the device is plugged
+in, because the driver_info pointer is null.
 
-The atomisp driver computes DVS, morphing table, shading table and
-statistics buffer sizes using unchecked arithmetic.  When dimensions
-are attacker-controlled or simply large, the product can silently wrap,
-causing kvmalloc() to allocate an undersized buffer.
+Check for null driver_info in rtw89_usb_probe() and add a wrapper in
+each driver to pass it a reasonable default value.
 
-array3_size() saturates to SIZE_MAX on overflow, so kvmalloc() returns
-NULL instead of succeeding with too few bytes.
-
-Signed-off-by: Feng Ning <feng@innora.ai>
-Signed-off-by: Sakari Ailus <sakari.ailus@linux.intel.com>
+Signed-off-by: Bitterblue Smith <rtl8821cerfe2@gmail.com>
+Acked-by: Ping-Ke Shih <pkshih@realtek.com>
+Signed-off-by: Ping-Ke Shih <pkshih@realtek.com>
+Link: https://patch.msgid.link/7a537b2e-67d2-40fb-8ef2-fcbc7bbc93af@gmail.com
+[ Dropped the hunks for rtw8852au.c, rtw8852cu.c and rtw8922au.c,
+  these drivers are not in 6.18. ]
+Signed-off-by: Josef Schlehofer <pepe.schlehofer@gmail.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../media/atomisp/pci/sh_css_param_dvs.c      | 11 +++---
- .../media/atomisp/pci/sh_css_param_shading.c  |  4 ++-
- .../staging/media/atomisp/pci/sh_css_params.c | 35 +++++++++++--------
- 3 files changed, 31 insertions(+), 19 deletions(-)
+ drivers/net/wireless/realtek/rtw89/rtw8851bu.c | 8 +++++++-
+ drivers/net/wireless/realtek/rtw89/rtw8852bu.c | 8 +++++++-
+ drivers/net/wireless/realtek/rtw89/usb.c       | 5 ++++-
+ drivers/net/wireless/realtek/rtw89/usb.h       | 3 ++-
+ 4 files changed, 20 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/staging/media/atomisp/pci/sh_css_param_dvs.c b/drivers/staging/media/atomisp/pci/sh_css_param_dvs.c
-index 7fa4aab35b061..19c82464b6867 100644
---- a/drivers/staging/media/atomisp/pci/sh_css_param_dvs.c
-+++ b/drivers/staging/media/atomisp/pci/sh_css_param_dvs.c
-@@ -4,6 +4,7 @@
-  * Copyright (c) 2015, Intel Corporation.
-  */
+diff --git a/drivers/net/wireless/realtek/rtw89/rtw8851bu.c b/drivers/net/wireless/realtek/rtw89/rtw8851bu.c
+index 10fcfade6151e..f9078923bbaa1 100644
+--- a/drivers/net/wireless/realtek/rtw89/rtw8851bu.c
++++ b/drivers/net/wireless/realtek/rtw89/rtw8851bu.c
+@@ -32,10 +32,16 @@ static const struct usb_device_id rtw_8851bu_id_table[] = {
+ };
+ MODULE_DEVICE_TABLE(usb, rtw_8851bu_id_table);
  
-+#include <linux/overflow.h>
- #include "sh_css_param_dvs.h"
- #include <assert_support.h>
- #include <type_support.h>
-@@ -49,7 +50,7 @@ alloc_dvs_6axis_table(const struct ia_css_resolution *frame_res,
- 		}
++static int rtw8851bu_probe(struct usb_interface *intf,
++			   const struct usb_device_id *id)
++{
++	return rtw89_usb_probe(intf, id, &rtw89_8851bu_info);
++}
++
+ static struct usb_driver rtw_8851bu_driver = {
+ 	.name = KBUILD_MODNAME,
+ 	.id_table = rtw_8851bu_id_table,
+-	.probe = rtw89_usb_probe,
++	.probe = rtw8851bu_probe,
+ 	.disconnect = rtw89_usb_disconnect,
+ };
+ module_usb_driver(rtw_8851bu_driver);
+diff --git a/drivers/net/wireless/realtek/rtw89/rtw8852bu.c b/drivers/net/wireless/realtek/rtw89/rtw8852bu.c
+index add5987110b33..fbeb3f5b7375d 100644
+--- a/drivers/net/wireless/realtek/rtw89/rtw8852bu.c
++++ b/drivers/net/wireless/realtek/rtw89/rtw8852bu.c
+@@ -46,10 +46,16 @@ static const struct usb_device_id rtw_8852bu_id_table[] = {
+ };
+ MODULE_DEVICE_TABLE(usb, rtw_8852bu_id_table);
  
- 		/* Generate Y buffers  */
--		dvs_config->xcoords_y = kvmalloc(width_y * height_y * sizeof(uint32_t),
-+		dvs_config->xcoords_y = kvmalloc(array3_size(width_y, height_y, sizeof(uint32_t)),
- 						 GFP_KERNEL);
- 		if (!dvs_config->xcoords_y) {
- 			IA_CSS_ERROR("out of memory");
-@@ -57,7 +58,7 @@ alloc_dvs_6axis_table(const struct ia_css_resolution *frame_res,
- 			goto exit;
- 		}
++static int rtw8852bu_probe(struct usb_interface *intf,
++			   const struct usb_device_id *id)
++{
++	return rtw89_usb_probe(intf, id, &rtw89_8852bu_info);
++}
++
+ static struct usb_driver rtw_8852bu_driver = {
+ 	.name = KBUILD_MODNAME,
+ 	.id_table = rtw_8852bu_id_table,
+-	.probe = rtw89_usb_probe,
++	.probe = rtw8852bu_probe,
+ 	.disconnect = rtw89_usb_disconnect,
+ };
+ module_usb_driver(rtw_8852bu_driver);
+diff --git a/drivers/net/wireless/realtek/rtw89/usb.c b/drivers/net/wireless/realtek/rtw89/usb.c
+index 512a46dd9d06a..faf1e471e3040 100644
+--- a/drivers/net/wireless/realtek/rtw89/usb.c
++++ b/drivers/net/wireless/realtek/rtw89/usb.c
+@@ -931,7 +931,8 @@ static void rtw89_usb_intf_deinit(struct rtw89_dev *rtwdev,
+ }
  
--		dvs_config->ycoords_y = kvmalloc(width_y * height_y * sizeof(uint32_t),
-+		dvs_config->ycoords_y = kvmalloc(array3_size(width_y, height_y, sizeof(uint32_t)),
- 						 GFP_KERNEL);
- 		if (!dvs_config->ycoords_y) {
- 			IA_CSS_ERROR("out of memory");
-@@ -68,7 +69,8 @@ alloc_dvs_6axis_table(const struct ia_css_resolution *frame_res,
- 		/* Generate UV buffers  */
- 		IA_CSS_LOG("UV W %d H %d", width_uv, height_uv);
+ int rtw89_usb_probe(struct usb_interface *intf,
+-		    const struct usb_device_id *id)
++		    const struct usb_device_id *id,
++		    const struct rtw89_driver_info *default_info)
+ {
+ 	const struct rtw89_driver_info *info;
+ 	struct rtw89_dev *rtwdev;
+@@ -939,6 +940,8 @@ int rtw89_usb_probe(struct usb_interface *intf,
+ 	int ret;
  
--		dvs_config->xcoords_uv = kvmalloc(width_uv * height_uv * sizeof(uint32_t),
-+		dvs_config->xcoords_uv = kvmalloc(array3_size(width_uv, height_uv,
-+							      sizeof(uint32_t)),
- 						  GFP_KERNEL);
- 		if (!dvs_config->xcoords_uv) {
- 			IA_CSS_ERROR("out of memory");
-@@ -76,7 +78,8 @@ alloc_dvs_6axis_table(const struct ia_css_resolution *frame_res,
- 			goto exit;
- 		}
+ 	info = (const struct rtw89_driver_info *)id->driver_info;
++	if (!info)
++		info = default_info;
  
--		dvs_config->ycoords_uv = kvmalloc(width_uv * height_uv * sizeof(uint32_t),
-+		dvs_config->ycoords_uv = kvmalloc(array3_size(width_uv, height_uv,
-+							      sizeof(uint32_t)),
- 						  GFP_KERNEL);
- 		if (!dvs_config->ycoords_uv) {
- 			IA_CSS_ERROR("out of memory");
-diff --git a/drivers/staging/media/atomisp/pci/sh_css_param_shading.c b/drivers/staging/media/atomisp/pci/sh_css_param_shading.c
-index 513e272f2fdc0..cbe703f0f7bef 100644
---- a/drivers/staging/media/atomisp/pci/sh_css_param_shading.c
-+++ b/drivers/staging/media/atomisp/pci/sh_css_param_shading.c
-@@ -4,6 +4,7 @@
-  * Copyright (c) 2015, Intel Corporation.
-  */
+ 	rtwdev = rtw89_alloc_ieee80211_hw(&intf->dev,
+ 					  sizeof(struct rtw89_usb),
+diff --git a/drivers/net/wireless/realtek/rtw89/usb.h b/drivers/net/wireless/realtek/rtw89/usb.h
+index c1b4bfa209795..fe0f86dc7794f 100644
+--- a/drivers/net/wireless/realtek/rtw89/usb.h
++++ b/drivers/net/wireless/realtek/rtw89/usb.h
+@@ -59,7 +59,8 @@ static inline struct rtw89_usb *rtw89_usb_priv(struct rtw89_dev *rtwdev)
+ }
  
-+#include <linux/overflow.h>
- #include <linux/math.h>
- #include <linux/slab.h>
+ int rtw89_usb_probe(struct usb_interface *intf,
+-		    const struct usb_device_id *id);
++		    const struct usb_device_id *id,
++		    const struct rtw89_driver_info *default_info);
+ void rtw89_usb_disconnect(struct usb_interface *intf);
  
-@@ -339,7 +340,8 @@ ia_css_shading_table_alloc(
- 	me->fraction_bits = 0;
- 	for (i = 0; i < IA_CSS_SC_NUM_COLORS; i++) {
- 		me->data[i] =
--		    kvmalloc(width * height * sizeof(*me->data[0]),
-+		    kvmalloc(array3_size(width, height,
-+					 sizeof(*me->data[0])),
- 			     GFP_KERNEL);
- 		if (!me->data[i]) {
- 			unsigned int j;
-diff --git a/drivers/staging/media/atomisp/pci/sh_css_params.c b/drivers/staging/media/atomisp/pci/sh_css_params.c
-index 11d62313c9086..dda55369b5bb4 100644
---- a/drivers/staging/media/atomisp/pci/sh_css_params.c
-+++ b/drivers/staging/media/atomisp/pci/sh_css_params.c
-@@ -4,6 +4,7 @@
-  * Copyright (c) 2015, Intel Corporation.
-  */
- 
-+#include <linux/overflow.h>
- #include <linux/math.h>
- 
- #include "gdc_device.h"		/* gdc_lut_store(), ... */
-@@ -1381,11 +1382,11 @@ struct ia_css_morph_table *ia_css_morph_table_allocate(
- 	}
- 
- 	for (i = 0; i < IA_CSS_MORPH_TABLE_NUM_PLANES; i++) {
--		me->coordinates_x[i] = kvmalloc(height * width *
--						sizeof(*me->coordinates_x[i]),
-+		me->coordinates_x[i] = kvmalloc(array3_size(height, width,
-+							    sizeof(*me->coordinates_x[i])),
- 						GFP_KERNEL);
--		me->coordinates_y[i] = kvmalloc(height * width *
--						sizeof(*me->coordinates_y[i]),
-+		me->coordinates_y[i] = kvmalloc(array3_size(height, width,
-+							    sizeof(*me->coordinates_y[i])),
- 						GFP_KERNEL);
- 
- 		if ((!me->coordinates_x[i]) ||
-@@ -4206,13 +4207,17 @@ ia_css_dvs_statistics_allocate(const struct ia_css_dvs_grid_info *grid)
- 		goto err;
- 
- 	me->grid = *grid;
--	me->hor_proj = kvmalloc(grid->height * IA_CSS_DVS_NUM_COEF_TYPES *
--				sizeof(*me->hor_proj), GFP_KERNEL);
-+	me->hor_proj = kvmalloc(array3_size(grid->height,
-+					    IA_CSS_DVS_NUM_COEF_TYPES,
-+						sizeof(*me->hor_proj)),
-+				GFP_KERNEL);
- 	if (!me->hor_proj)
- 		goto err;
- 
--	me->ver_proj = kvmalloc(grid->width * IA_CSS_DVS_NUM_COEF_TYPES *
--				sizeof(*me->ver_proj), GFP_KERNEL);
-+	me->ver_proj = kvmalloc(array3_size(grid->width,
-+					    IA_CSS_DVS_NUM_COEF_TYPES,
-+						sizeof(*me->ver_proj)),
-+				GFP_KERNEL);
- 	if (!me->ver_proj)
- 		goto err;
- 
-@@ -4479,24 +4484,26 @@ ia_css_dvs2_6axis_config_allocate(const struct ia_css_stream *stream)
- 				    params->pipe_dvs_6axis_config[IA_CSS_PIPE_ID_VIDEO]->height_uv;
- 	IA_CSS_LOG("table Y: W %d H %d", width_y, height_y);
- 	IA_CSS_LOG("table UV: W %d H %d", width_uv, height_uv);
--	dvs_config->xcoords_y = kvmalloc(width_y * height_y * sizeof(uint32_t),
-+	dvs_config->xcoords_y = kvmalloc(array3_size(width_y, height_y,
-+						     sizeof(uint32_t)),
- 					 GFP_KERNEL);
- 	if (!dvs_config->xcoords_y)
- 		goto err;
- 
--	dvs_config->ycoords_y = kvmalloc(width_y * height_y * sizeof(uint32_t),
-+	dvs_config->ycoords_y = kvmalloc(array3_size(width_y, height_y,
-+						     sizeof(uint32_t)),
- 					 GFP_KERNEL);
- 	if (!dvs_config->ycoords_y)
- 		goto err;
- 
--	dvs_config->xcoords_uv = kvmalloc(width_uv * height_uv *
--					  sizeof(uint32_t),
-+	dvs_config->xcoords_uv = kvmalloc(array3_size(width_uv, height_uv,
-+						      sizeof(uint32_t)),
- 					  GFP_KERNEL);
- 	if (!dvs_config->xcoords_uv)
- 		goto err;
- 
--	dvs_config->ycoords_uv = kvmalloc(width_uv * height_uv *
--					  sizeof(uint32_t),
-+	dvs_config->ycoords_uv = kvmalloc(array3_size(width_uv, height_uv,
-+						      sizeof(uint32_t)),
- 					  GFP_KERNEL);
- 	if (!dvs_config->ycoords_uv)
- 		goto err;
+ #endif
 -- 
 2.53.0
 
