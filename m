@@ -1,53 +1,55 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795619188;
-	b=sMs8OZuwj2Hn2JwWb/p9zMJMrkpM4yYlJN3Ak4rv/b454VHOf7QPeJRgi79PB/IzA4vX
-	 gvOTF8YBngHRWStHaYwsV76QJfpfK/yGB/fmZpBDLXb2tq0S1g7+VcPDCq1Q9pk3R3UMJ
-	 ZzvCmlAZ2lNPEr9VXsJQDv4+tRKIMzaGbx0lPSkanW48y7rH2x/IWRXh1JCamCABwe9vk
-	 R+tokLDva69b+8HOAG0FCUTjzK7leNJB322L/IL1nQCsU0Irl4DTyuXzEZhaXC2k6lAJ+
-	 nBYLFTkqcourdCZa+1RaHU0pnljIJ8RRO+LLChVMY5DNKKdYop6Lqs2nEkPHdVFexbw==
+	t=1795619191;
+	b=Q8/kgkmPj8ELbTorrxLKRZlqNsL2TipOwduWZfNMA6fMf/vcevI49nwWiqoMACf7OjR2
+	 5GaJlDOgMU5J1y+50281nXJaCzYEBJeheWzFkVxugy2qRCmkW7MvTDCrnGHVaetr2V0+L
+	 UXFNO9LgecaEFUkxixmxdDGOXwqJiIkFbkROxQ1wXKGUrPtKYM7bSEcNs7MmGo6vWEmcM
+	 gxmPSPSQLGlMhyhltGQiObjddG9RPQXeLWXp8x2/iK2zzKCBZTOn04DQMssjtzNfSDvH5
+	 Rx/mShoLlYuN6xwqpHMuDBD3uh/DitFolmF+/vTvS0Ctd491SynbgHrJUq19lc1plMw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795619188;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795619191;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=SpY6boO6vsl5BtDxZbsL5rNEMAl02yzRn9HtJW84aNs=;
-	b=qSZYxAGwrjn3UZzoxeTwD3XMvo+zYjFkFlyLeI0JIixx++Fo5d35WwgorJUQF/e3A090
-	 Lb4xy85OyHbJJNMK67NsU7OocE/AY/Ho2idp9Kd8ep2C0cSLkDQFzcAAorBxrec4i913A
-	 xR1OpR/8LP8KMPMh3NWh+IClHJQpfaLckBTttSU4xnCPHSwGgqxvcC/NGuAYXkmZQrBKP
-	 3XvnZdzAu/Tn/mQAmlW89uoQY9jiJCUId/FAzJ6gd/35jlkBAIKGpd+VBwRLCA4w/foXX
-	 pN4CSgPvDEx9Z+M5czyzJA11YhK7N3eDGRbkzC2fbjOhUUxcYdwf2JgUhUWVjN87qLA==
+	bh=1TzEsMaw94zp75fD79UK+pDanQp1PVHgHynVTUnj9KI=;
+	b=t0D4EEBSBKIN/UP95v99Y9QzmvSsMgov1xyZyR2MZz/mKhTE8ad4TO0tj54YbnOSDSJ5
+	 TOpgk/3k1akaC29bevRbhbqdtGws3srJHuZgkmbRxiDOrZ6lsv6FRS/Tb+TyYsfwlThwW
+	 hPg9YqX455glazfWDalg0Bu9GAwfCrshgtezxiarDuSwdLZSL/vOk8r4o2DN11mAH8+It
+	 moSMP5kc2QhdHB5G9kDNzjUsKb/gewxiX5Prk2sFhrKAH46u82tfLVAprRL/OQ7Q5PwrR
+	 ytArMP//ZkkbruD+00WnFzRyAjLfHGIehvZCwkjnnvIKdLX0gX26pNU/aQcQzviJ9gw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=yJZB90V+;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=r8qxmXZ2;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DC6C9606A31E;
-	Wed, 25 Nov 2026 15:06:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D9EF4606A321;
+	Wed, 25 Nov 2026 15:06:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=yJZB90V+
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E0C781F000C0;
-	Wed, 25 Nov 2026 15:06:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=r8qxmXZ2
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 13CDF1F000C4;
+	Wed, 25 Nov 2026 15:06:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795619188;
-	bh=SpY6boO6vsl5BtDxZbsL5rNEMAl02yzRn9HtJW84aNs=;
+	s=korg; t=1795619191;
+	bh=1TzEsMaw94zp75fD79UK+pDanQp1PVHgHynVTUnj9KI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=yJZB90V+/M0s/dKHes2Q4qKMpxHwheIURFzmJgHZSrzG/qwqehDMjyOwtKQpIJk+9
-	 aaf/lnrjvbxwejiZ9OGzGYCgp24b1vnOmyMupe4l46LJlqLClg8CwjBm08dGvUsKSs
-	 1TtGGyG33Ea/jO7cpfYK3ZT5QN0Y8uFTPfi+ilP8=
+	b=r8qxmXZ2KaC8UT1jWCRBAD2LERmOwS6cgvxp4Mw7UrozKrsqo+1vQXfOxrerlYH7Q
+	 xEqAIIR4uO7eA4TIblVAFZCA3R93l4kwPa3BXT7LBVyWpAXGahCh1WE41LLHkaMSrr
+	 RYmobtOgfzRhtiR/rfUdS/4ucFzrXyyKMUemPu+I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kuniyuki Iwashima <kuniyu@google.com>,
-	"Matthieu Baerts (NGI0)" <matttbe@kernel.org>,
+	Cosmin Ratiu <cratiu@nvidia.com>,
+	Jianbo Liu <jianbol@nvidia.com>,
+	Dragos Tatulea <dtatulea@nvidia.com>,
+	Tariq Toukan <tariqt@nvidia.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0519/1005] tcp: Clear DEFER_CONNECT before tcp_connect() and in tcp_abort().
-Date: Wed, 25 Nov 2026 15:30:57 +0100
-Message-ID: <20261125143833.904115279@linuxfoundation.org>
+Subject: [PATCH 7.3 0502/1005] net/mlx5e: Block E-Switch mode changes during IPsec policy creation
+Date: Wed, 25 Nov 2026 15:30:40 +0100
+Message-ID: <20261125143833.504981829@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143821.729802100@linuxfoundation.org>
 References: <20261125143821.729802100@linuxfoundation.org>
@@ -69,170 +71,193 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kuniyuki Iwashima <kuniyu@google.com>
+From: Cosmin Ratiu <cratiu@nvidia.com>
 
-[ Upstream commit 93723db43e5185404e7d637357d07ffbb38e8b65 ]
+[ Upstream commit d9e4ac08ea892da54c5aa7ae4a368f2d09db589c ]
 
-When TFO is enabled, tcp_v[46]_connect() sets sk->sk_state to
-TCP_SYN_SENT and puts the socket into ehash without calling
-tcp_connect().
+Eswitch mode changes can tear down the IPsec context while policy
+creation is accessing it. The mode-blocking reference acquired when
+creating a flow table comes too late: the table lookup already accesses
+the IPsec context before taking that reference.
 
-Then, tcp_fastopen_defer_connect() sets DEFER_CONNECT, and
-the first write()/sendmsg() will call tcp_connect() and send
-SYN with data if possible.
+Take a temporary mode-blocking reference before checking the IPsec
+context and validating the policy. This gets dropped after successful
+setup, when the flow table holds its own reference.
 
-If tcp_abort() kills a socket before the first write()/sendmsg(),
-the unhashed socket can still call it and send SYN in TCP_CLOSE.
+The temporary reservation must allow reuse of existing IPsec tables.
+For example:
+1. An offloaded inbound IPsec policy is added on the uplink.
+2. A TC flower rule is added on a VF representor.
+3. Another uplink policy is added using the same RX tables.
 
-Also, DEFER_CONNECT is cleared after __inet_stream_connect().
+The third policy reuses the first policy's tables, so it must not be
+rejected merely because esw->user_count is nonzero. Add a check_users
+argument to mlx5_eswitch_block_mode(). Pass false for temporary policy
+reservations and true when creating the first table (rx_get()/tx_get()).
 
-So, blocking write()/sendmsg() can release lock_sock() in
-inet_wait_for_connect() while DEFER_CONNECT is set, and
-tcp_poll() could set EPOLLOUT even after SYN is sent.
+Temporary reservations take mode_lock and check operation ownership
+without requiring eswitch user_count to be zero.
 
-Let's clear DEFER_CONNECT in tcp_abort() and right before
-tcp_connect() in tcp_sendmsg_fastopen().
+mlx5e_xfrm_add_state() needs the same early mode reservation and is
+handled in the next patch.
 
-Note that the last argument of __inet_stream_connect() is
-changed from is_sendmsg to defer_connect as DEFER_CONNECT
-is already cleared when __inet_stream_connect() is called.
+This was found by Sashiko, during review of the last patch in the
+series. No reproduction attempted, as it seems quite a tricky race to
+successfully trigger.
 
-This change is also needed for the next patch.
-
-Fixes: 19f6d3f3c842 ("net/tcp-fastopen: Add new API support")
-Signed-off-by: Kuniyuki Iwashima <kuniyu@google.com>
-Acked-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
-Link: https://patch.msgid.link/20261107235720.3129212-2-kuniyu@google.com
+Fixes: a5b8ca9471d3 ("net/mlx5e: Add XFRM policy offload logic")
+Signed-off-by: Cosmin Ratiu <cratiu@nvidia.com>
+Reviewed-by: Jianbo Liu <jianbol@nvidia.com>
+Reviewed-by: Dragos Tatulea <dtatulea@nvidia.com>
+Signed-off-by: Tariq Toukan <tariqt@nvidia.com>
+Link: https://patch.msgid.link/20261105211637.1083978-7-tariqt@nvidia.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/net/inet_common.h |  2 +-
- net/ipv4/af_inet.c        | 10 ++++++----
- net/ipv4/tcp.c            |  9 +++++++--
- net/mptcp/protocol.c      |  5 +++--
- 4 files changed, 17 insertions(+), 9 deletions(-)
+ .../mellanox/mlx5/core/en_accel/ipsec.c       | 23 +++++++++++++++----
+ .../mellanox/mlx5/core/en_accel/ipsec_fs.c    |  4 ++--
+ .../net/ethernet/mellanox/mlx5/core/eswitch.h |  8 +++++--
+ .../mellanox/mlx5/core/eswitch_offloads.c     |  9 +++++---
+ 4 files changed, 32 insertions(+), 12 deletions(-)
 
-diff --git a/include/net/inet_common.h b/include/net/inet_common.h
-index 3d747896be300..0f088a213c381 100644
---- a/include/net/inet_common.h
-+++ b/include/net/inet_common.h
-@@ -25,7 +25,7 @@ int inet_release(struct socket *sock);
- int inet_stream_connect(struct socket *sock, struct sockaddr_unsized *uaddr,
- 			int addr_len, int flags);
- int __inet_stream_connect(struct socket *sock, struct sockaddr_unsized *uaddr,
--			  int addr_len, int flags, int is_sendmsg);
-+			  int addr_len, int flags, bool defer_connect);
- int inet_dgram_connect(struct socket *sock, struct sockaddr_unsized *uaddr,
- 		       int addr_len, int flags);
- int inet_accept(struct socket *sock, struct socket *newsock,
-diff --git a/net/ipv4/af_inet.c b/net/ipv4/af_inet.c
-index 14ce01092fda6..bc3bbb2366d81 100644
---- a/net/ipv4/af_inet.c
-+++ b/net/ipv4/af_inet.c
-@@ -629,7 +629,7 @@ static long inet_wait_for_connect(struct sock *sk, long timeo, int writebias)
-  *	TCP 'magic' in here.
-  */
- int __inet_stream_connect(struct socket *sock, struct sockaddr_unsized *uaddr,
--			  int addr_len, int flags, int is_sendmsg)
-+			  int addr_len, int flags, bool defer_connect)
+diff --git a/drivers/net/ethernet/mellanox/mlx5/core/en_accel/ipsec.c b/drivers/net/ethernet/mellanox/mlx5/core/en_accel/ipsec.c
+index c8c103b0a879a..09f51f6fa8675 100644
+--- a/drivers/net/ethernet/mellanox/mlx5/core/en_accel/ipsec.c
++++ b/drivers/net/ethernet/mellanox/mlx5/core/en_accel/ipsec.c
+@@ -814,7 +814,7 @@ static int mlx5e_xfrm_add_state(struct net_device *dev,
+ 		goto err_xfrm;
+ 	}
+ 
+-	err = mlx5_eswitch_block_mode(mdev);
++	err = mlx5_eswitch_block_mode(mdev, true);
+ 	if (err)
+ 		goto unblock_ipsec;
+ 
+@@ -1288,18 +1288,28 @@ static int mlx5e_xfrm_add_policy(struct xfrm_policy *x,
+ 		return -EBUSY;
+ 	}
+ 
++	/* Block esw mode changes until the policy holds its own block. */
++	err = mlx5_eswitch_block_mode(mdev, false);
++	if (err) {
++		NL_SET_ERR_MSG_MOD(extack, "Eswitch busy, can't add policy");
++		return err;
++	}
++
+ 	if (!priv->ipsec) {
+ 		NL_SET_ERR_MSG_MOD(extack, "Device doesn't support IPsec packet offload");
+-		return -EOPNOTSUPP;
++		err = -EOPNOTSUPP;
++		goto unblock_mode;
+ 	}
+ 
+ 	err = mlx5e_xfrm_validate_policy(mdev, x, extack);
+ 	if (err)
+-		return err;
++		goto unblock_mode;
+ 
+ 	pol_entry = kzalloc_obj(*pol_entry);
+-	if (!pol_entry)
+-		return -ENOMEM;
++	if (!pol_entry) {
++		err = -ENOMEM;
++		goto unblock_mode;
++	}
+ 
+ 	pol_entry->x = x;
+ 	pol_entry->ipsec = priv->ipsec;
+@@ -1315,6 +1325,7 @@ static int mlx5e_xfrm_add_policy(struct xfrm_policy *x,
+ 		goto err_fs;
+ 
+ 	x->xdo.offload_handle = (unsigned long)pol_entry;
++	mlx5_eswitch_unblock_mode(mdev);
+ 	return 0;
+ 
+ err_fs:
+@@ -1322,6 +1333,8 @@ static int mlx5e_xfrm_add_policy(struct xfrm_policy *x,
+ ipsec_busy:
+ 	kfree(pol_entry);
+ 	NL_SET_ERR_MSG_MOD(extack, "Device failed to offload this policy");
++unblock_mode:
++	mlx5_eswitch_unblock_mode(mdev);
+ 	return err;
+ }
+ 
+diff --git a/drivers/net/ethernet/mellanox/mlx5/core/en_accel/ipsec_fs.c b/drivers/net/ethernet/mellanox/mlx5/core/en_accel/ipsec_fs.c
+index 1529d47303234..dbe5547d7a498 100644
+--- a/drivers/net/ethernet/mellanox/mlx5/core/en_accel/ipsec_fs.c
++++ b/drivers/net/ethernet/mellanox/mlx5/core/en_accel/ipsec_fs.c
+@@ -1134,7 +1134,7 @@ static int rx_get(struct mlx5_core_dev *mdev, struct mlx5e_ipsec *ipsec,
+ 	if (rx->ft.refcnt)
+ 		goto skip;
+ 
+-	err = mlx5_eswitch_block_mode(mdev);
++	err = mlx5_eswitch_block_mode(mdev, true);
+ 	if (err)
+ 		return err;
+ 
+@@ -1427,7 +1427,7 @@ static int tx_get(struct mlx5_core_dev *mdev, struct mlx5e_ipsec *ipsec,
+ 	if (tx->ft.refcnt)
+ 		goto skip;
+ 
+-	err = mlx5_eswitch_block_mode(mdev);
++	err = mlx5_eswitch_block_mode(mdev, true);
+ 	if (err)
+ 		return err;
+ 
+diff --git a/drivers/net/ethernet/mellanox/mlx5/core/eswitch.h b/drivers/net/ethernet/mellanox/mlx5/core/eswitch.h
+index c0f2af86a9342..176940a20b756 100644
+--- a/drivers/net/ethernet/mellanox/mlx5/core/eswitch.h
++++ b/drivers/net/ethernet/mellanox/mlx5/core/eswitch.h
+@@ -971,7 +971,7 @@ bool mlx5_eswitch_is_peer(struct mlx5_eswitch *esw,
+ int mlx5_eswitch_block_encap(struct mlx5_core_dev *dev, bool from_fdb);
+ void mlx5_eswitch_unblock_encap(struct mlx5_core_dev *dev);
+ 
+-int mlx5_eswitch_block_mode(struct mlx5_core_dev *dev);
++int mlx5_eswitch_block_mode(struct mlx5_core_dev *dev, bool check_users);
+ void mlx5_eswitch_unblock_mode(struct mlx5_core_dev *dev);
+ 
+ static inline int mlx5_eswitch_num_vfs(struct mlx5_eswitch *esw)
+@@ -1082,7 +1082,11 @@ static inline void mlx5_eswitch_unblock_encap(struct mlx5_core_dev *dev)
  {
- 	struct sock *sk = sock->sk;
+ }
+ 
+-static inline int mlx5_eswitch_block_mode(struct mlx5_core_dev *dev) { return 0; }
++static inline int mlx5_eswitch_block_mode(struct mlx5_core_dev *dev,
++					  bool check_users)
++{
++	return 0;
++}
+ static inline void mlx5_eswitch_unblock_mode(struct mlx5_core_dev *dev) {}
+ static inline bool mlx5_eswitch_block_ipsec(struct mlx5_core_dev *dev)
+ {
+diff --git a/drivers/net/ethernet/mellanox/mlx5/core/eswitch_offloads.c b/drivers/net/ethernet/mellanox/mlx5/core/eswitch_offloads.c
+index 0debb02fea268..023d87f17e90b 100644
+--- a/drivers/net/ethernet/mellanox/mlx5/core/eswitch_offloads.c
++++ b/drivers/net/ethernet/mellanox/mlx5/core/eswitch_offloads.c
+@@ -4342,7 +4342,7 @@ static int esw_inline_mode_to_devlink(u8 mlx5_mode, u8 *mode)
+ 	return 0;
+ }
+ 
+-int mlx5_eswitch_block_mode(struct mlx5_core_dev *dev)
++int mlx5_eswitch_block_mode(struct mlx5_core_dev *dev, bool check_users)
+ {
+ 	struct mlx5_eswitch *esw = dev->priv.eswitch;
  	int err;
-@@ -664,8 +664,10 @@ int __inet_stream_connect(struct socket *sock, struct sockaddr_unsized *uaddr,
- 		err = -EISCONN;
- 		goto out;
- 	case SS_CONNECTING:
--		if (inet_test_bit(DEFER_CONNECT, sk))
--			err = is_sendmsg ? -EINPROGRESS : -EISCONN;
-+		if (defer_connect)
-+			err = -EINPROGRESS;
-+		else if (inet_test_bit(DEFER_CONNECT, sk))
-+			err = -EISCONN;
- 		else
- 			err = -EALREADY;
- 		/* Fall out of switch with err, set for this state */
-@@ -752,7 +754,7 @@ int inet_stream_connect(struct socket *sock, struct sockaddr_unsized *uaddr,
- 	int err;
+@@ -4350,8 +4350,11 @@ int mlx5_eswitch_block_mode(struct mlx5_core_dev *dev)
+ 	if (!mlx5_esw_allowed(esw))
+ 		return 0;
  
- 	lock_sock(sock->sk);
--	err = __inet_stream_connect(sock, uaddr, addr_len, flags, 0);
-+	err = __inet_stream_connect(sock, uaddr, addr_len, flags, false);
- 	release_sock(sock->sk);
- 	return err;
- }
-diff --git a/net/ipv4/tcp.c b/net/ipv4/tcp.c
-index f88548e10f2a8..be772a67b05d6 100644
---- a/net/ipv4/tcp.c
-+++ b/net/ipv4/tcp.c
-@@ -1054,6 +1054,7 @@ int tcp_sendmsg_fastopen(struct sock *sk, struct msghdr *msg, int *copied,
- 	struct tcp_sock *tp = tcp_sk(sk);
- 	struct inet_sock *inet = inet_sk(sk);
- 	struct sockaddr *uaddr = msg->msg_name;
-+	bool defer_connect = false;
- 	int err, flags;
+-	/* Take TC into account */
+-	err = mlx5_esw_try_lock(esw);
++	/* Temporary reservations may reuse tables while TC users exist. */
++	if (check_users)
++		err = mlx5_esw_try_lock(esw);
++	else
++		err = mlx5_esw_lock(esw);
+ 	if (err < 0)
+ 		return err;
  
- 	if (!(READ_ONCE(sock_net(sk)->ipv4.sysctl_tcp_fastopen) &
-@@ -1073,6 +1074,9 @@ int tcp_sendmsg_fastopen(struct sock *sk, struct msghdr *msg, int *copied,
- 	tp->fastopen_req->uarg = uarg;
- 
- 	if (inet_test_bit(DEFER_CONNECT, sk)) {
-+		inet_clear_bit(DEFER_CONNECT, sk);
-+		defer_connect = true;
-+
- 		err = tcp_connect(sk);
- 		/* Same failure procedure as in tcp_v4/6_connect */
- 		if (err) {
-@@ -1083,14 +1087,13 @@ int tcp_sendmsg_fastopen(struct sock *sk, struct msghdr *msg, int *copied,
- 	}
- 	flags = (msg->msg_flags & MSG_DONTWAIT) ? O_NONBLOCK : 0;
- 	err = __inet_stream_connect(sk->sk_socket, (struct sockaddr_unsized *)uaddr,
--				    msg->msg_namelen, flags, 1);
-+				    msg->msg_namelen, flags, defer_connect);
- 	/* fastopen_req could already be freed in __inet_stream_connect
- 	 * if the connection times out or gets rst
- 	 */
- 	if (tp->fastopen_req) {
- 		*copied = tp->fastopen_req->copied;
- 		tcp_free_fastopen_req(tp);
--		inet_clear_bit(DEFER_CONNECT, sk);
- 	}
- 	return err;
- }
-@@ -5151,6 +5154,8 @@ int tcp_abort(struct sock *sk, int err)
- 		/* Don't race with userspace socket closes such as tcp_close. */
- 		lock_sock(sk);
- 
-+	inet_clear_bit(DEFER_CONNECT, sk);
-+
- 	/* Avoid closing the same socket twice. */
- 	if (sk->sk_state == TCP_CLOSE) {
- 		if (!has_current_bpf_ctx())
-diff --git a/net/mptcp/protocol.c b/net/mptcp/protocol.c
-index 05c38564e8fdf..8e08feb676f78 100644
---- a/net/mptcp/protocol.c
-+++ b/net/mptcp/protocol.c
-@@ -1920,10 +1920,12 @@ static int mptcp_sendmsg_fastopen(struct sock *sk, struct msghdr *msg,
- 	msg->msg_flags = saved_flags;
- 	release_sock(ssk);
- 
-+	inet_clear_bit(DEFER_CONNECT, sk);
-+
- 	/* do the blocking bits of inet_stream_connect outside the ssk socket lock */
- 	if (ret == -EINPROGRESS && !(msg->msg_flags & MSG_DONTWAIT)) {
- 		ret = __inet_stream_connect(sk->sk_socket, msg->msg_name,
--					    msg->msg_namelen, msg->msg_flags, 1);
-+					    msg->msg_namelen, msg->msg_flags, true);
- 
- 		/* Keep the same behaviour of plain TCP: zero the copied bytes in
- 		 * case of any error, except timeout or signal
-@@ -1941,7 +1943,6 @@ static int mptcp_sendmsg_fastopen(struct sock *sk, struct msghdr *msg,
- 			sk->sk_socket->state = SS_UNCONNECTED;
- 		}
- 	}
--	inet_clear_bit(DEFER_CONNECT, sk);
- 
- 	return ret;
- }
 -- 
 2.53.0
 
