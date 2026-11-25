@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795618483;
-	b=bcUDTMWzxhRzTZoWY4GX3CGG+lrKaMJb8FdBq4jJXLSzZAGNZCqx+PujbTG508JtCDZ3
-	 cVs0YryC43h5Wj0z9O5IEgvsVWLeQTm+qka2F+rMoXM+0uW80ebb0kOi8M/lSSB5KBEfO
-	 rf5dKl592alCB2OPnSCI0e2OJEKFz+muR+MUZKafpBj/Y/EHenbyyESSSfSDmV7h4R+yl
-	 7uIa4aCt4XBmQfYlz9ExPTRB/p/b9vVQvCSctLl/1IMqX1zOJUwMJGH0nZfoOOgu7ASPi
-	 Agi+Gro/0UFwCHgCn4apxm0voQX2yXMBRJg9vqTLMyRaTFYkGBx9gIZmAlvGrD7HcXg==
+	t=1795618486;
+	b=Dap+m+tsm73OjXax8H/p4jYhhvSdObWhw0QWkP//AEseJnxGAka2OwjT0sr98803J5d4
+	 ObGd1TLIWiADxiRRm2MyXn/YPE6rOkCXCxTrJuEvCaklK+dOeUXQYXMn4u0W+ZkfqTLet
+	 12yS5hhCCC9k8maesmSz30JNkFa1ktLcDP9LkBoPBq8/ExXrdA/eFJwzNZg0cJHLLdLE0
+	 0DtkR2hLeOPiqN4YCNfmepe2xFOHvmICB5M8bL3G88G6cG+17c37R/V0ikaQg2SNocFSF
+	 dqYZazEsLQFpRc2Yg3BKuzY+l0uvMPJJBYfnZGmpZpWFFUKIXItiPIO9MdFV7VROfMw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795618483;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795618486;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=Z1Uip50HGOCVF9opeJMTSBOcSxhLz7V/zO3Er54OOuU=;
-	b=jCW1vwpu3GUHNvHBskFOOlkIyqBEPsah21j0T6a1c/2x88HjfSoQJqJ/aMaaLv7ZimR4
-	 FD7IjOD13vdWFoo41AOhw+qbU5f9YwG1H8Kmd/dMdLtgErlhDnYPuNta6Ir/2jGD+96Tq
-	 6jAReH/X58X0pH0FHV8r76yBtilBz/D5rBLzajB+oinQ/HD8rdSx2x9CIJs25wQIO7seK
-	 baMQ+S4JQkogsOU+HAIgcw1x4lP5brCiSPBW9Y1+u+fafZXSAp7C1ap8sysJD8ElCHfUx
-	 d0YF+N3VMLfZ8Fj68bRs9ZuS+JO+AbVfTphLrceY8btRsVQpUtKV6mx8esNuyJ/MoGw==
+	bh=7Fe5cKBEEkvr6fhfQeXUG71kEQSG8QEscYR6eZ/KO3A=;
+	b=GCjTpKtLxTEzjjD+bWpr8nJNuzVgcne5TF6RQEnvqWoQaYLvXpp1L2f6Nja7EnBh+sX8
+	 pT+NjpBQ2aXLM7gtPzrMcDpJ+aWkLmBXfekO1dolN7u6mp0JFbX6rPYDwF0AfnPui2C3G
+	 k2LcwZaytQnVlYVYB01JrYetkaIPsPZtQofsw54AsroRaKEKXvRBHMdxlrmU8lP7h+JHZ
+	 82QsJWB68V0duyGNThYJQZXwWdG5/x5sBnE4kKFl9CVk+xnZyaeDFAw1WdozcK1otDpsf
+	 lADX5qY708H70Zd3HYT0mPrRdRqGDgikY0TayujcofL3ouJddloQ9N+EjDXxfk0kG2g==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=GNTJy+fk;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=fH4Vjf6A;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5185F606A321;
-	Wed, 25 Nov 2026 14:54:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6C775606A321;
+	Wed, 25 Nov 2026 14:54:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=GNTJy+fk
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 57D4A1F000C0;
-	Wed, 25 Nov 2026 14:54:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=fH4Vjf6A
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A8F321F000C6;
+	Wed, 25 Nov 2026 14:54:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795618482;
-	bh=Z1Uip50HGOCVF9opeJMTSBOcSxhLz7V/zO3Er54OOuU=;
+	s=korg; t=1795618486;
+	bh=7Fe5cKBEEkvr6fhfQeXUG71kEQSG8QEscYR6eZ/KO3A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=GNTJy+fkmMUX6+G5wVa/shR0VfPtoCeLuG1NxG+69w3sXi2q4+Zo3jeKkGGrMWk16
-	 WgJRizQiI2An7vEC9QdNE4jv4x1BmuSjzE1gxJYYN7yg0CCgzYRNORLqNPsga1PEwD
-	 HPT//ONnW2A12pII93IoM2VJDzcPXm2+xRg0Aye8=
+	b=fH4Vjf6AYk/JtHqsYAdAQBBkQ45Bh2UPvlGgNiNMqdTvQ+li2dsHm+bhfIKk+Ixwd
+	 CQzghj5kA50o/ylqeiCRnmQqmDma1F7XX3mfuzxF8W3stNwZSKF5HIe3MtSo/IpLTO
+	 DwATBHXnhYvcB0wgNHzz7ADP15N2eeGrJ44kMcP8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Stanislavs Nilovs <valorcool@gmail.com>,
-	Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
+	Florian Fainelli <florian.fainelli@broadcom.com>,
+	Simon Horman <horms@kernel.org>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0293/1005] Bluetooth: qca: Disable SoC debug logging for WCN3950
-Date: Wed, 25 Nov 2026 15:27:11 +0100
-Message-ID: <20261125143828.600442455@linuxfoundation.org>
+Subject: [PATCH 7.3 0294/1005] net: ethernet: bgmac: preserve forced 2.5 Gbps link speed
+Date: Wed, 25 Nov 2026 15:27:12 +0100
+Message-ID: <20261125143828.622841974@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143821.729802100@linuxfoundation.org>
 References: <20261125143821.729802100@linuxfoundation.org>
@@ -69,33 +69,72 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Stanislavs Nilovs <valorcool@gmail.com>
+From: Florian Fainelli <florian.fainelli@broadcom.com>
 
-[ Upstream commit d97b618b6675516d63d55b8f31ee6cb3b164bd6b ]
+[ Upstream commit d4f3d2c04624854d27aa948cd7bfc9d946faaac5 ]
 
-Added WCN3950 module to the switch-case to disable SoC debug packets.
+Northstar and Northstar Plus use a 2.5 Gbps internal link between the
+AMAC and the switch.  BGMAC_FEAT_FORCE_SPEED_2500 makes bgmac_miiconfig()
+configure that speed, but bgmac_adjust_link() subsequently replaces it
+with the synthetic fixed PHY's 1 Gbps speed.
 
-Fixes: 590deccf4c06 ("Bluetooth: hci_qca: Disable SoC debug logging for WCN3991")
-Signed-off-by: Stanislavs Nilovs <valorcool@gmail.com>
-Reviewed-by: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Use the forced speed when processing link changes so the MAC remains at
+2.5 Gbps.  Together with configuring the switch IMP port for its 2 Gbps
+mode, this eliminates the output queue discards that caused approximately
+1000 TCP retransmissions per second during an iperf3 transmit test.
+
+Restrict the platform forced-speed flag to Northstar Plus using the SoC
+compatible, since Hurricane2 shares the AMAC compatible. Other platform
+AMACs without a phy-handle must continue following the fixed PHY speed.
+The BCMA path already selects the flag only for the Northstar family.
+
+Fixes: f6a95a24957a ("net: ethernet: bgmac: Add platform device support")
+Signed-off-by: Florian Fainelli <florian.fainelli@broadcom.com>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Link: https://patch.msgid.link/20261029211540.4123250-2-florian.fainelli@broadcom.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/bluetooth/btqca.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/net/ethernet/broadcom/bgmac-platform.c | 3 ++-
+ drivers/net/ethernet/broadcom/bgmac.c          | 8 ++++++--
+ 2 files changed, 8 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/bluetooth/btqca.c b/drivers/bluetooth/btqca.c
-index 002307000d3cd..60735b70d89ad 100644
---- a/drivers/bluetooth/btqca.c
-+++ b/drivers/bluetooth/btqca.c
-@@ -943,6 +943,7 @@ int qca_uart_setup(struct hci_dev *hdev, uint8_t baudrate,
- 	switch (soc_type) {
- 	case QCA_QCA2066:
- 	case QCA_QCA6390:
-+	case QCA_WCN3950:
- 	case QCA_WCN3991:
- 	case QCA_WCN6750:
- 	case QCA_WCN6855:
+diff --git a/drivers/net/ethernet/broadcom/bgmac-platform.c b/drivers/net/ethernet/broadcom/bgmac-platform.c
+index 4e266ce41180b..4880b18904812 100644
+--- a/drivers/net/ethernet/broadcom/bgmac-platform.c
++++ b/drivers/net/ethernet/broadcom/bgmac-platform.c
+@@ -243,7 +243,8 @@ static int bgmac_probe(struct platform_device *pdev)
+ 		bgmac->phy_connect = platform_phy_connect;
+ 	} else {
+ 		bgmac->phy_connect = bgmac_phy_connect_direct;
+-		bgmac->feature_flags |= BGMAC_FEAT_FORCE_SPEED_2500;
++		if (of_machine_is_compatible("brcm,nsp"))
++			bgmac->feature_flags |= BGMAC_FEAT_FORCE_SPEED_2500;
+ 	}
+ 
+ 	return bgmac_enet_probe(bgmac);
+diff --git a/drivers/net/ethernet/broadcom/bgmac.c b/drivers/net/ethernet/broadcom/bgmac.c
+index b3f0ecc583fd5..409155fe8df0d 100644
+--- a/drivers/net/ethernet/broadcom/bgmac.c
++++ b/drivers/net/ethernet/broadcom/bgmac.c
+@@ -1428,11 +1428,15 @@ void bgmac_adjust_link(struct net_device *net_dev)
+ {
+ 	struct bgmac *bgmac = netdev_priv(net_dev);
+ 	struct phy_device *phy_dev = net_dev->phydev;
++	int speed = phy_dev->speed;
+ 	bool update = false;
+ 
++	if (bgmac->feature_flags & BGMAC_FEAT_FORCE_SPEED_2500)
++		speed = SPEED_2500;
++
+ 	if (phy_dev->link) {
+-		if (phy_dev->speed != bgmac->mac_speed) {
+-			bgmac->mac_speed = phy_dev->speed;
++		if (speed != bgmac->mac_speed) {
++			bgmac->mac_speed = speed;
+ 			update = true;
+ 		}
+ 
 -- 
 2.53.0
 
