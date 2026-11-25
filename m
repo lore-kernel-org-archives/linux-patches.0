@@ -1,51 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795623623;
-	b=fXREBugUskbFRqWoNoxaRCX7HsQ+GU6tITgarzDnkeZltt+Gb8Qjb6y0rvdg0Tfu0FTu
-	 Xn6jZKWTYOdCJZ80ml8UrCJfXw5LyilMQw408o0XIYZmk+qXrX2MCBWLL1+7O42NPkpvM
-	 DbcfNYcaM9WbS81wSFo9E3gH47gNfaOydnuqqdqBV+2h06QCvi5wOcei28Zodus3KHKdJ
-	 ivCa6xs4wHHcT3F0IC2aS9NLOLlheJq9HFkdDFseILVEjV++AG/bAlMMG6iWxw4V9vwyD
-	 RrkgDKjYqylVzEwO4TdQzwUNFDIh9XRoS5X/pGNK5JhrewiEeUMMe5omV99DOEkM1PA==
+	t=1795623626;
+	b=n4ZqI6dmWJz4miQhrdyjFyQnKltIiieLH847vrhzPIi51aYuXVQOur713jz2u+WmHn5G
+	 +A4ZxIajrtzzZOLbSL8jPwrPWsfABP52YCB+0VhaQDshZd1A6rZp0+96d5TaAV6Y/VpmL
+	 YLd7DKx++vpQbvl1iyRYqt0CA+I9xcpFBprGCOBftnNFfS974pIkh8mi54sYVW44nkUMq
+	 6RmmtIXMiHk2JMvE7nTzqoDmLxxm1Og4GxBYfmUEYinZ5XJL5blVL1YhWcB76OGaxS80a
+	 4yHMjSJ4DxJ8YZH2rSnL1LN4IJfsv7XfWOjy0L1UdSzJumod/qmRv4PSKFS2VbHsHFw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795623623;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795623626;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=PMrW6KH+Cl482WQ+OLL0YigBVzRIRc0Ebc4XcKqwRy4=;
-	b=4TJrWzNjFUsArDU/wXUlhErlGr212MSyHqEZgVjPiitsOX53tb/NkZBEhVvxhIWeqZ5j
-	 5aC79F9WS9FL7BAoXH53agOVoAVL+I4VadkjXrU7yLrUU0yns4lpTx7HCYtZTa/rFFPJk
-	 ZBE7bwrVPLgKm0BOoPx/wtNjKiS01p+WGqqDgnKQHm+2OLjxGlu1XzmsGBRCRU3wLvfB0
-	 Y26UV3Rdv3eamBWQvAaFYYcTdlFcCP1LIhLFmxps+fiq7BxymqO0NJDMZz0uUNypod89G
-	 WjUd6/UaZZAW+ypi0+tecQPRzqH3gMMb8sS1Ps5001alg9Kj24HrSyxg/1dnK7/RQdA==
+	bh=Go+rKGzJ5UEXpglZLRhEQMmyHB8SptwwZIYZmKkF3YA=;
+	b=uFUG49ai/kwAjH9ro10pCItfqVkWSe8QNkTEI1MhvKLhPF5de+TYMTDSMXm0jGBaA68o
+	 o85HoCmC1RGgyhmWg6Zk2Ez+VFSYzeYykFNGwow9UyS13Uar/JEomJSnTy94M03Q+OFiO
+	 6NgJ9+Gdu/+6v5hgXExmvpsM0uQfVu/j2cwU2H6erxFW6Wrw43AgQUYosN2SZfCiXRrh0
+	 xQh7ninz3lSBy9qXpSb6kQokaAvDEjlnkaZhSRxT8hohKaQknogEwBAyfjkaAVNQMzgDD
+	 5MyU+OYd2iYMrBRtxzatC0+6pSkbgw8eMHfhKxavQ8SBfqyq4ulBq+gFi7MYrkr23Aw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=QEKPZ38j;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="eK/BdEaR";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B89EE606A31E;
-	Wed, 25 Nov 2026 16:20:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 91A02606A31E;
+	Wed, 25 Nov 2026 16:20:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=QEKPZ38j
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 99FA61F000D2;
-	Wed, 25 Nov 2026 16:20:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=eK/BdEaR
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E18BC1F000CF;
+	Wed, 25 Nov 2026 16:20:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795623623;
-	bh=PMrW6KH+Cl482WQ+OLL0YigBVzRIRc0Ebc4XcKqwRy4=;
+	s=korg; t=1795623626;
+	bh=Go+rKGzJ5UEXpglZLRhEQMmyHB8SptwwZIYZmKkF3YA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=QEKPZ38j4kB7YwhnStdxtFQjmJylXXGUGQUvUwB5hAeo1V+ZcgzvHwHfPOzof7AJh
-	 spAbB1OjjjZLFEePncxVhqqeRxcCWM5YuU/0JFpgW4G+cfGqdH9q/WFojcjNE41Ey7
-	 WXbllU6fsMrXKx/ZticLIveacZ3pMZGZN3oFl4X0=
+	b=eK/BdEaRf/g2dNuA9gHCiFb1q3dRdv9NwJ45ANy4pelkgBzZZ8mTp+BMqqMdF+SaF
+	 P9eUp7jXfsNhVw/m6Ba3b/HeEsPaiyrdfGR+rbXGr118y7GeOhe44yVdue2UZpkG81
+	 vqF1rF9rPV/ws0mL/Z9G2a6FgXZdYuMT0dZAJUhM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	stable <stable@kernel.org>,
-	Thinh Nguyen <Thinh.Nguyen@synopsys.com>
-Subject: [PATCH 6.18 918/990] usb: dwc3: gadget: Reject requests to a disabled endpoint
-Date: Wed, 25 Nov 2026 15:38:05 +0100
-Message-ID: <20261125143843.506105590@linuxfoundation.org>
+	Josef Bacik <josef@toxicpanda.com>
+Subject: [PATCH 6.18 883/990] comedi: ni_660x: dont poll without a DMA channel
+Date: Wed, 25 Nov 2026 15:37:30 +0100
+Message-ID: <20261125143842.698606211@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143822.072087159@linuxfoundation.org>
 References: <20261125143822.072087159@linuxfoundation.org>
@@ -67,48 +67,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Thinh Nguyen <Thinh.Nguyen@synopsys.com>
+From: Josef Bacik <josef@toxicpanda.com>
 
-commit 5eb11b1647b0534b3a61a21473d77ebf4ffbed7c upstream.
+commit 5a0c88567a5ebbe24ecb7828e200f63ed972718f upstream.
 
-__dwc3_gadget_ep_disable() releases the lock while giving back requests,
-and DWC3_EP_ENABLED is only cleared afterward. A function driver can
-queue a new request in this window, and the driver would start a
-transfer on an endpoint that is already disabled in hardware.
+A counter command owns a MITE DMA channel from ni_660x_cmd() to
+ni_660x_cancel(). A command does not only end by COMEDI_CANCEL: when the
+reader is too slow mite_sync_input_dma() sets COMEDI_CB_OVERFLOW, and
+counter errors set COMEDI_CB_ERROR, and comedi_handle_events() then calls
+->cancel() from the interrupt handler. That releases the channel and
+clears counter->mite_chan, but s->busy stays set until the owner has read
+the rest of the data and seen the end of the acquisition.
 
-Clear DWC3_EP_ENABLED before giving back the requests, and reject
-requests queued to an endpoint that is not enabled.
+do_poll_ioctl() only looks at s->busy, so a COMEDI_POLL in that state
+ends in mite_sync_dma(NULL, s), which dereferences the channel.
 
-Fixes: 72246da40f37 ("usb: Introduce DesignWare USB3 DRD Driver")
+Test the channel like ni_pcidio_poll() and ni_sync_ai_dma() do. The
+pointer only changes under dev->mutex, which the ioctl holds, or in the
+interrupt handler under interrupt_lock, which is taken here.
+
+Fixes: 894db1197347 ("Staging: Comedi: ni_600x: Added support for comedi_poll.")
 Cc: stable <stable@kernel.org>
-Signed-off-by: Thinh Nguyen <Thinh.Nguyen@synopsys.com>
-Link: https://patch.msgid.link/4ceab6aa5d6af0e4780f9d3a964fd5d8168a0a02.1792542945.git.Thinh.Nguyen@synopsys.com
+Signed-off-by: Josef Bacik <josef@toxicpanda.com>
+Link: https://patch.msgid.link/20261027-llm-char-misc-comedi-v1-3-1899771ee15b@linuxfoundation.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/dwc3/gadget.c |    5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ drivers/comedi/drivers/ni_660x.c |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
---- a/drivers/usb/dwc3/gadget.c
-+++ b/drivers/usb/dwc3/gadget.c
-@@ -1087,6 +1087,8 @@ static int __dwc3_gadget_ep_disable(stru
- 	reg &= ~DWC3_DALEPENA_EP(dep->number);
- 	dwc3_writel(dwc, DWC3_DALEPENA, reg);
+--- a/drivers/comedi/drivers/ni_660x.c
++++ b/drivers/comedi/drivers/ni_660x.c
+@@ -459,7 +459,8 @@ static int ni_660x_input_poll(struct com
  
-+	dep->flags &= ~DWC3_EP_ENABLED;
-+
- 	dwc3_remove_requests(dwc, dep, -ESHUTDOWN);
- 
- 	dep->stream_capable = false;
-@@ -1998,7 +2000,8 @@ static int __dwc3_gadget_ep_queue(struct
- {
- 	struct dwc3		*dwc = dep->dwc;
- 
--	if (!dep->endpoint.desc || !dwc->pullups_connected || !dwc->connected) {
-+	if (!(dep->flags & DWC3_EP_ENABLED) || !dep->endpoint.desc ||
-+	    !dwc->pullups_connected || !dwc->connected) {
- 		dev_dbg(dwc->dev, "%s: can't queue to disabled endpoint\n",
- 				dep->name);
- 		return -ESHUTDOWN;
+ 	/* lock to avoid race with comedi_poll */
+ 	spin_lock_irqsave(&devpriv->interrupt_lock, flags);
+-	mite_sync_dma(counter->mite_chan, s);
++	if (counter->mite_chan)
++		mite_sync_dma(counter->mite_chan, s);
+ 	spin_unlock_irqrestore(&devpriv->interrupt_lock, flags);
+ 	return comedi_buf_read_n_available(s);
+ }
 
 
