@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795622667;
-	b=kqHp0zKvCvWMJWO5Chvsp1ePYNEUabDqmj9yHLhPOJeh8Tz9pF5byJ1zfXWb7j3p2p47
-	 4SOoHCMHUHsH38ucMlYoqpW52/Ej/qmKgfWkEI3X6graI4cq0Aq1Xe2qQ0/TwPKdQ7owW
-	 atjKZp6BBkY6PmCFJxnz2ppyAxUmFGHaDBXitmgyYpDdMhORGxlB6+lPPl20J2SBxYTeE
-	 ZaSvVeYztQwmaruxDGp8e0sXDQXUb/+TQVkNXPhD72DdKMOlU5yuFpkmzzuENZvtnlBvl
-	 VhjbvnfVUORDtrQbw3+UBA6xu7Vf/N8G7VDijg6t5M4wNKJOhuBkEFu+BtKg8P4/7bg==
+	t=1795622670;
+	b=UEiv44WTWNPDsPW5vUbhIrn+LxdJwMojuUBW0bF8sF1KmKiO3eHTiVAEBTEdpEGh2EIM
+	 T1YEYc35pYRQSnBqWfYOx2zfhenysBe4s446XvkUT7AOyo95vhrxlaC6nNoOzD971WxJ1
+	 lmI1Ce3WNJAhy8r1XOtj7N+n7SlvKyPlJCjaWfz8YvW2KPhzMiUtW+V4cYzCzIPbYklwo
+	 FjIJ1neyeRV6NxK7dvyEjY9SQK8FVJiOgEmVfWCWRU+BCnbIwX7zXcVrmuhTqn81rdaW9
+	 AkIddV7Up5uwAWHSthRVUWuZOumMJf34lc7cfBl838e+wRaFNtSOcYwUuVx70+FxVdQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795622667;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795622670;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=nwAHAzATcYAj5sIcZ4FrZcAgtmjV24yAb2+VBlM13U4=;
-	b=KFo8zm4NEVL5HPu1y3lnVnPAHbmrdikQkXQi5w6sqCKnyhdMfnQMgK43jiJc+A/+ltri
-	 M8YB9XpP4YSdvqckzvkZMQpZIiPaEkLqhFk0Qg1eiHk8Q5uJNn1cFUamkyk1Z+a9Ir8O3
-	 6cJWmGkK3jaz3eqM14nrizXKLj3MeB6tkWFL1MgWFElsVWfg4pYvJIepCeWosBbKEFyGx
-	 0MK1tPId5TWX/9pG1GRjrWhwu8uHq6Kt42j5ZVnKV6XHZcqe+J9uwOJwsYKpl7U5uht1d
-	 VG/gXFqkWuBGzSw1Lf4axAAuI438j+CyoMcqeQNq4oGM6qd7aGDXm2a3KjEiORe1/WQ==
+	bh=NOYQeVkbuA2NrTLZBdt9H+RyDDSDS50Tclnf+umhYP4=;
+	b=P1MBhzyNW5J03zbQ0aQKmPFn1XU3ZdIdP24eAgWO9E92hu7pkgeeUdl3SVfnjNwjs2vT
+	 89gE3XIKos0fnaZ4KpTvmuC5znhN8P/16cDOfFj/6UQ3Bj37Q+7FYxXT5N4HOPDjrSzXk
+	 i2PYjcOlyer9UL7NgnYOTnwk8rH0D+EFjQHihzVibouasUeObaJPFHHXpNTMvBlnJxoZI
+	 LFG1BEW9yZezQMwRZZ+hHaZx1ekAmjLTvBICHEFtGahDpB8IrxdjTMgYfh4Hx3sH1eXCC
+	 EpeZHVjDfltADD4wVr2y2ydVwkJQRKt3cwPEUyYJGECJ/rNYqkRZqi6TVFtFjWU3e5w==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=euvK0TaM;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=RYbuVvRU;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 00DEE606A31E;
-	Wed, 25 Nov 2026 16:04:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C7BF4606A321;
+	Wed, 25 Nov 2026 16:04:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=euvK0TaM
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3AFC61F000C0;
-	Wed, 25 Nov 2026 16:04:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=RYbuVvRU
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BCE031F000D1;
+	Wed, 25 Nov 2026 16:04:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795622666;
-	bh=nwAHAzATcYAj5sIcZ4FrZcAgtmjV24yAb2+VBlM13U4=;
+	s=korg; t=1795622670;
+	bh=NOYQeVkbuA2NrTLZBdt9H+RyDDSDS50Tclnf+umhYP4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=euvK0TaMvkG+PUQan3ct1oxMg3q8FaQlaB33TttJ01L9MP2Z4z+wldf0AMu2LQEr4
-	 P6qvYdfaprbTDX/KkFPJ7xHj45lVEizu3ET34vp8B19AVEypzEY3hn3Wymcd5GKWcZ
-	 /WIZc25jvFT7L3kh8RPhdEYVJ3noNFAgNp2hwKrk=
+	b=RYbuVvRUV+AJJu8coGDGDdWmv2GXV/99MazpZJnvncfOMPGCFJBfsJX0deJmlJ29q
+	 r9mr8fkxGBjh3sgmUNFukbFXfPj0kLeL+qUqhH1/ETJ33lqf6hfEcUsMCeJ1DZAGLo
+	 iklk9x7PdQttnlB9nXCwkQLsS1Xfkh6nsiDkE3Cg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Abhishek Mohapatra <abhishek.mohapatra@broadcom.com>,
-	Selvin Xavier <selvin.xavier@broadcom.com>,
-	Leon Romanovsky <leon@kernel.org>,
+	Lorenzo Bianconi <lorenzo.bianconi@oss.qualcomm.com>,
+	Pablo Neira Ayuso <pablo@netfilter.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 593/990] RDMA/bnxt_re: Use kvzalloc for QP table allocation
-Date: Wed, 25 Nov 2026 15:32:40 +0100
-Message-ID: <20261125143835.982775527@linuxfoundation.org>
+Subject: [PATCH 6.18 611/990] netfilter: flowtable: reset transport header after nf_flow_encap_pop()
+Date: Wed, 25 Nov 2026 15:32:58 +0100
+Message-ID: <20261125143836.404230989@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143822.072087159@linuxfoundation.org>
 References: <20261125143822.072087159@linuxfoundation.org>
@@ -69,49 +68,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Abhishek Mohapatra <abhishek.mohapatra@broadcom.com>
+From: Lorenzo Bianconi <lorenzo.bianconi@oss.qualcomm.com>
 
-[ Upstream commit 724a39b36af94787d32094da87729f24a28888b7 ]
+[ Upstream commit 08f7882637f2db5b98f521498eeaf94770383a6e ]
 
-The QP table size depends on the firmware reported max_qp, so it can
-be large and a physically contiguous kzalloc may fail. Use kvzalloc_objs()
-and free it with kvfree().
+nf_flow_encap_pop() pulls vlan/pppoe or ip tunnel headers and resets the
+network header, but leaves the transport header pointing into the removed
+outer header. Reset the transport header to the inner L4 header, otherwise
+later consumers (e.g. GSO segmentation) parse a bogus header.
 
-Fixes: 82f1f575aa13 ("RDMA/bnxt_re: Fix allocation of QP table")
-Signed-off-by: Abhishek Mohapatra <abhishek.mohapatra@broadcom.com>
-Signed-off-by: Selvin Xavier <selvin.xavier@broadcom.com>
-Link: https://patch.msgid.link/20261013140427.256612-2-selvin.xavier@broadcom.com
-Signed-off-by: Leon Romanovsky <leon@kernel.org>
-[ sashal: Replaced kzalloc_objs() with kvcalloc() for the QP table allocation, since the older kcalloc() form is what this branch had and kvzalloc_objs() doesn't exist here. ]
+Fixes: 4cd91f7c290f ("netfilter: flowtable: add vlan support")
+Signed-off-by: Lorenzo Bianconi <lorenzo.bianconi@oss.qualcomm.com>
+Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
+[ sashal: adjusted nf_flow_encap_pop() call context to the older two-argument form (skb, tuplehash) in the IPv6 hunk, since this tree's helper lacks the ctx parameter. ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/hw/bnxt_re/qplib_res.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ net/netfilter/nf_flow_table_ip.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/infiniband/hw/bnxt_re/qplib_res.c b/drivers/infiniband/hw/bnxt_re/qplib_res.c
-index d92db77e7ed50..ad0ba952eb48d 100644
---- a/drivers/infiniband/hw/bnxt_re/qplib_res.c
-+++ b/drivers/infiniband/hw/bnxt_re/qplib_res.c
-@@ -867,7 +867,7 @@ int bnxt_qplib_init_res(struct bnxt_qplib_res *res)
+diff --git a/net/netfilter/nf_flow_table_ip.c b/net/netfilter/nf_flow_table_ip.c
+index 041d928b0bee0..aa22d8fd39fc1 100644
+--- a/net/netfilter/nf_flow_table_ip.c
++++ b/net/netfilter/nf_flow_table_ip.c
+@@ -410,6 +410,7 @@ static int nf_flow_offload_forward(struct nf_flowtable_ctx *ctx,
  
- void bnxt_qplib_free_res(struct bnxt_qplib_res *res)
- {
--	kfree(res->rcfw->qp_tbl);
-+	kvfree(res->rcfw->qp_tbl);
- 	bnxt_qplib_free_sgid_tbl(res, &res->sgid_tbl);
- 	bnxt_qplib_free_pd_tbl(&res->pd_tbl);
- 	bnxt_qplib_free_dpi_tbl(res, &res->dpi_tbl);
-@@ -884,8 +884,8 @@ int bnxt_qplib_alloc_res(struct bnxt_qplib_res *res, struct net_device *netdev)
+ 	nf_flow_encap_pop(skb, tuplehash);
+ 	thoff -= ctx->offset;
++	skb_set_transport_header(skb, thoff);
  
- 	/* Allocate one extra to hold the QP1 entries */
- 	rcfw->qp_tbl_size = max_t(u32, BNXT_RE_MAX_QPC_COUNT + 1, dev_attr->max_qp);
--	rcfw->qp_tbl = kcalloc(rcfw->qp_tbl_size, sizeof(struct bnxt_qplib_qp_node),
--			       GFP_KERNEL);
-+	rcfw->qp_tbl = kvcalloc(rcfw->qp_tbl_size, sizeof(struct bnxt_qplib_qp_node),
-+				GFP_KERNEL);
- 	if (!rcfw->qp_tbl)
- 		return -ENOMEM;
+ 	iph = ip_hdr(skb);
+ 	nf_flow_nat_ip(flow, skb, thoff, dir, iph);
+@@ -698,6 +699,7 @@ static int nf_flow_offload_ipv6_forward(struct nf_flowtable_ctx *ctx,
+ 	flow_offload_refresh(flow_table, flow, false);
  
+ 	nf_flow_encap_pop(skb, tuplehash);
++	skb_set_transport_header(skb, sizeof(*ip6h));
+ 
+ 	ip6h = ipv6_hdr(skb);
+ 	nf_flow_nat_ipv6(flow, skb, dir, ip6h);
 -- 
 2.53.0
 
