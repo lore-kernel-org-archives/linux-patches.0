@@ -1,54 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795620451;
-	b=vSRPuhuUSht+qDcxpPIrcVsrgwqvFdFRNZ0duOcDAIpnCKazvWktDtrj+WGZaXzbxWt2
-	 47fpbkP+HSLqQ918HLKwIAkegKKa0ea0MPSn8ykNegN6YGE4Oai+O3hnyfBPCKgNkYL25
-	 CKV7antnYdiA9pwH64sMb4+4RGo1wwetPPw8Y9KZvefW3VsGgmdruSBxVhruoNwxEPOnW
-	 L9DR2NqwXWxo47f/AMNSawZQJsv2Paf6YueXmSJUG7OE90oka+q4UgAIvJp8+TgdRRlAe
-	 fSkuICOJjUTW6mu1pXlGcjV3MpSySj4zEf7w/vAWTHujs3glfDQYBLUBTm4YzoKg6fA==
+	t=1795620454;
+	b=2Ez3VkUaTn42auxTrLvhohYRfwSpB7IqadPgHJgbnds1DetDRJvJm/syuJ8rPcro/JV7
+	 AJECxCc4RTGlwg+YPli11G5PjuuFM6Gi0BiMNofwSpTebvqL3LgT9jbDpBcXeNawsfAEb
+	 k0Az4di081U2lp2YaCA2woZLeO/Y2OrnQCe14Vwpd/zxUr+1L9o9QrDOhvNnnLWWme7PA
+	 g1JVdgwgcOZ0opuAyPE8m8FRF4p/ZtFzK5+6sRvaWOl2MPrLwnx5joZ3ZSB2tOvGjyZbT
+	 M/lt58DC3xL8xy+XoC7H2jWsOyMvXcbAaxAtPLbCr+OeZFkAIsrC8kya9DMUtLVxXtQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795620451;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795620454;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=sib0akZi2S074DdG+yHhQVzSsFgVzGWSINwcgcbNbw4=;
-	b=Do4U+ojzUzCgt1UVTvFFP8aBNVR+Y+uyWJbkRRDvWZIwRvVFAhm3qW1r5plsQE+v535c
-	 b4kLl0Sj9aBPdjSu3F1mwtrVv4FwXy0PAc/pqWXfnM7zbVoUAoBoyBt9QQcSwK0eKL75F
-	 4WS8fHADpzJsIz+1zUdyLhF9E8T6XHsrNS2Uo0autUiWNtYVqAL2yHm3hsi1VMb+6CSc3
-	 rC1ClLCEmyeRNGSsmyU1puaoy2JvPj3l4srIwlt1cllEYgonvgz9jbKOiOveZ5dFWnJuF
-	 iwvcSaX1Ml9Yw+2VL/ShSYlHcs6fkyTMXw0wtoZ0xwnqdQakprNyIdp7fQ3rx9b1a4A==
+	bh=xUjTsk0kYUCnvemRaypQn9ZtRdYq77itRy2ibNprVwo=;
+	b=4G2MAax72kPaQ2U0RrWLLaP+Q/ujEoyQvldKpx3q+Kwbh7EIpZX5fF3cs9dPQbYCXXeo
+	 9W9AvhberktUk9ky0cA4wFbjwygWTDeibPNXAE4Fm/yf2MYeRJuwXbz761ZQvmQcnJz2B
+	 rsJEmQTOgJG3twFBeU1POADzFdOLoku5iXtFLos5rI2xVJ6j36uX06395XTLBo0Ys+Oi5
+	 e5cXMvo8aJxNBGEAX3h42vmnTAj39d9v0LKFosOtk/SnYOkcvHiVlWQU0Ga0BE51818zP
+	 HdYUAU3b9MGSqPEIu84FXwcCocY5T2U8WdrZnqA6F5NRPDx4gQAMCReiEMiTSayZUbA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=pN0gxMKG;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=wJfRCMwt;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 14822606A32A;
-	Wed, 25 Nov 2026 15:27:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5EF6B606A321;
+	Wed, 25 Nov 2026 15:27:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=pN0gxMKG
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 25DBC1F000D1;
-	Wed, 25 Nov 2026 15:27:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=wJfRCMwt
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 252DA1F000D3;
+	Wed, 25 Nov 2026 15:27:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795620450;
-	bh=sib0akZi2S074DdG+yHhQVzSsFgVzGWSINwcgcbNbw4=;
+	s=korg; t=1795620453;
+	bh=xUjTsk0kYUCnvemRaypQn9ZtRdYq77itRy2ibNprVwo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=pN0gxMKGRCrA0KWQtxBD46paJ2AgrT/45u/ZFM7biZgKdi4iGg7h0IZFM7wNRUvbr
-	 iuZYcC9JM04rIQ2cFP2mhfHJIsP+eHmzTmq+f3JLVWNPPoP4ru0BR44s0DntOthNmV
-	 kDTY4lOzrg4RyzNEV8iqAc8BUBSQRZqO/2d4VISw=
+	b=wJfRCMwtAoyphd8CpvD7rxHwfYceviC/sGF0uCBnziP0+3Hz1pFOgrtBaOtLMpY8o
+	 zhpsEaGAXR76HzjwyBLUBEcsHQoBbBQHSJMeCw9S7OJtJPlIDHLA7PLjCJlil5SEsP
+	 ieT8+74iFmYrzrndujooIsKWoi9LqxyllkHOUItI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	stable <stable@kernel.org>,
-	Bin Yu <byu@xidian.edu.cn>,
-	Cheng Wen <wencheng@xidian.edu.cn>,
-	YuanZhe Liu <25031212351@stu.xidian.edu.cn>,
-	Alan Stern <stern@rowland.harvard.edu>
-Subject: [PATCH 7.3 0921/1005] usb: usbtest: prevent divide by zero in simple_io() with zero length
-Date: Wed, 25 Nov 2026 15:37:39 +0100
-Message-ID: <20261125143843.262978135@linuxfoundation.org>
+	Francesco Orro <ncesco@interstellar.eu>,
+	Ihor Urazov <z0rc3r@gmail.com>,
+	Heikki Krogerus <heikki.krogerus@linux.intel.com>,
+	Huang Wei <huangwei@kylinos.cn>
+Subject: [PATCH 7.3 0922/1005] usb: typec: ucsi: acpi: Assume UCSI 1.0 on HP ZBook 8 G2i 14
+Date: Wed, 25 Nov 2026 15:37:40 +0100
+Message-ID: <20261125143843.286171915@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143821.729802100@linuxfoundation.org>
 References: <20261125143821.729802100@linuxfoundation.org>
@@ -70,58 +70,102 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: YuanZhe Liu <25031212351@stu.xidian.edu.cn>
+From: Ihor Urazov <z0rc3r@gmail.com>
 
-commit fdaca138694111153f96c7d76877734b9dbf0e01 upstream.
+commit 3ee1e1c3fca6fb5d0abbe0fc91539951ffa60aa7 upstream.
 
-A divide error oops was observed in simple_io():
+The HP ZBook 8 G2i 14 (board 8ED9) exposes a working UCSI ACPI PPM, but
+its UCSI VERSION field reads zero until the first command completes.
+ucsi_register() rejects a zero version with -ENODEV, so no Type-C ports
+are registered.
 
-	usbtest 1-1:1.0: TEST 3:  write/1 0..0 bytes 16307 times
-	Oops: divide error: 0000 [#1] SMP KASAN
-	RIP: 0010:simple_io+0x2c4/0x540 drivers/usb/misc/usbtest.c:497
+The firmware's _DSM READ function (2) is a stub. The mailbox VERSION
+field is written only by the EC response handler, after a command
+completes, after which it reads 0x0100 (UCSI 1.0). The mailbox is
+48 bytes with 16-byte MESSAGE_IN/MESSAGE_OUT fields, the UCSI 1.x
+layout, and _DSM function 5 is not implemented.
 
-The variable-length tests (test 3 and test 4) compute the next URB
-size with "len %= max", where max is the original
-urb->transfer_buffer_length. However, when a zero-length transfer is
-requested (param->length == 0), simple_alloc_urb() still returns a valid
-URB with transfer_buffer_length set to 0. On the first vary update,
-"len %= max" divides by zero and the kernel oopses.
+Add a DMI-specific read_version for this board that substitutes the
+version the firmware itself reports, UCSI 1.0, only when VERSION reads
+zero. A non-zero firmware version is used as is.
 
-Commit 564e69893c63 ("USB: usbtest: prevent a divide by zero bug") added
-the equivalent zero check to alloc_sglist(), which covers the
-scatterlist tests (test 7/8), but the single-URB variable-length path in
-simple_io() was left unprotected.
+The same firmware defect on the HP ZBook Fury G1i 16 was discussed in
+"[RFC PATCH] usb: typec: ucsi: acpi: bootstrap PPM on HP systems with
+empty _DSM func 2" [1]. The defect was reported to HP as case
+5166176673.
 
-Fix this by returning -EINVAL early from simple_io() when vary is
-requested but max is zero, so the divide by zero never occurs.
-Zero-length transfers without vary remain valid for the other callers of
-simple_io().
+Tested on an HP ZBook 8 G2i 14 with BIOS Y70 01.02.08, from a fresh
+boot where VERSION reads zero: three connectors register, the PD
+contract and alternate modes of a Thunderbolt dock are reported, and
+its DisplayPort output stays up across the PPM reset in ucsi_init().
+Dock unplug/replug and s2idle suspend/resume update the connector
+state without errors.
 
+Link: https://lore.kernel.org/linux-usb/f3M_fpjtt8FxDqGKcA84vqXmRbKzCBfpCrIK4-jCWvIscER51zkD8qD8FYpz75qZw51rMDRSkUyYlrBvLvdM8CGRY2l8TFVvr4MC1LdTzbc=@interstellar.eu/ [1]
+Fixes: c1b0bc2dabfa ("usb: typec: Add support for UCSI interface")
 Cc: stable <stable@kernel.org>
-Co-developed-by: Bin Yu <byu@xidian.edu.cn>
-Signed-off-by: Bin Yu <byu@xidian.edu.cn>
-Co-developed-by: Cheng Wen <wencheng@xidian.edu.cn>
-Signed-off-by: Cheng Wen <wencheng@xidian.edu.cn>
-Signed-off-by: YuanZhe Liu <25031212351@stu.xidian.edu.cn>
-Reviewed-by: Alan Stern <stern@rowland.harvard.edu>
-Link: https://patch.msgid.link/20261016072750.34256-1-25031212351@stu.xidian.edu.cn
+Cc: Francesco Orro <ncesco@interstellar.eu>
+Assisted-by: Claude:claude-opus-5-5
+Signed-off-by: Ihor Urazov <z0rc3r@gmail.com>
+Reviewed-by: Heikki Krogerus <heikki.krogerus@linux.intel.com>
+Reviewed-by: Huang Wei <huangwei@kylinos.cn>
+Link: https://patch.msgid.link/20261026-ucsi-hp-zbook-8-g2i-v1-1-91002e9ef073@gmail.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/misc/usbtest.c |    3 +++
- 1 file changed, 3 insertions(+)
+ drivers/usb/typec/ucsi/ucsi_acpi.c |   35 +++++++++++++++++++++++++++++++++++
+ 1 file changed, 35 insertions(+)
 
---- a/drivers/usb/misc/usbtest.c
-+++ b/drivers/usb/misc/usbtest.c
-@@ -466,6 +466,9 @@ static int simple_io(
- 	int			retval = 0;
- 	unsigned long		expire;
+--- a/drivers/usb/typec/ucsi/ucsi_acpi.c
++++ b/drivers/usb/typec/ucsi/ucsi_acpi.c
+@@ -148,6 +148,34 @@ static const struct ucsi_operations ucsi
+ 	.async_control = ucsi_acpi_async_control
+ };
  
-+	if (vary && !max)
-+		return -EINVAL;
++static int ucsi_hp_read_version(struct ucsi *ucsi, u16 *version)
++{
++	struct ucsi_acpi *ua = ucsi_get_drvdata(ucsi);
++	int ret;
 +
- 	urb->context = &completion;
- 	while (retval == 0 && iterations-- > 0) {
- 		init_completion(&completion);
++	ret = ucsi_acpi_read_version(ucsi, version);
++	if (ret)
++		return ret;
++
++	/* Firmware fills in VERSION (1.0) only after the first command completes */
++	if (!*version) {
++		dev_warn(ua->dev, "UCSI version is zero, assuming 1.0\n");
++		*version = UCSI_VERSION_1_0;
++	}
++
++	return 0;
++}
++
++static const struct ucsi_operations ucsi_hp_ops = {
++	.read_version = ucsi_hp_read_version,
++	.read_cci = ucsi_acpi_read_cci,
++	.poll_cci = ucsi_acpi_poll_cci,
++	.read_message_in = ucsi_acpi_read_message_in,
++	.write_message_out = ucsi_acpi_write_message_out,
++	.sync_control = ucsi_sync_control_common,
++	.async_control = ucsi_acpi_async_control
++};
++
+ static int ucsi_gram_sync_control(struct ucsi *ucsi, u64 command, u32 *cci,
+ 				  void *val, size_t len, void *msg_out,
+ 				  size_t msg_out_size)
+@@ -198,6 +226,13 @@ static const struct dmi_system_id ucsi_a
+ 	},
+ 	{
+ 		.matches = {
++			DMI_MATCH(DMI_SYS_VENDOR, "HP"),
++			DMI_MATCH(DMI_BOARD_NAME, "8ED9"),
++		},
++		.driver_data = (void *)&ucsi_hp_ops,
++	},
++	{
++		.matches = {
+ 			DMI_MATCH(DMI_SYS_VENDOR, "LG Electronics"),
+ 			DMI_MATCH(DMI_PRODUCT_FAMILY, "LG gram PC"),
+ 			DMI_MATCH(DMI_PRODUCT_NAME, "90Q"),
 
 
