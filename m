@@ -1,42 +1,42 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795624069;
-	b=qOgLZ49dYfeQ2WnRvGGjkunR7FmMxiV6GItHsjvqeSPV6Q8JxNn5TdMbcIz/K2odgcCB
-	 NON5TkQGo2ZWi8AvcJUwVorZyTO+10YafLkRZ2tGx4DkVkKsNpRa39hH35r6GX/8jc1tW
-	 ViJOWrcZ/JCL5xabN3gsQB1/SiRZ6xJRp6ibQgeBwsTJqFR+s97jHEVxwLIVfxosxqzDp
-	 l8DRspz7Ntnt834Q1F0FTUZnFHks3LBVqaqg/VNc95FO/pqoKsiqftmsRvCNh0o03Vpuc
-	 tB2qkEqGqWvePxSi5dvCtNQ8Sdx+ae6M8lRWW7rMjfpCd7IYIhWqsbelwPMP8Wzcrdw==
+	t=1795624072;
+	b=dUYf8AY5KbLgp/OOQeohqtI9ngZ81bo9UePDX2ue1fqBbUjzzZfeCnR7qYhyJwVTsr5A
+	 Qs6PoPnh/OsLTiNTIDfNamivjK5ks1qR8f+yhzuXyKBhgw6qU0/GVJvFBCpETxpKPiLj5
+	 F7BtJ/DkmEMiHO3ec0aUz2tizwZpafZpaJ/4gGrjBvI83RkHmcCyhahfpQV3h5P9V36Ve
+	 UtlqyI4yOfZ/d3uMYkIjtcBK+UECXQEMzBRXISWqLdOI+VFAzZJexaQRX75LUjR3Mpt05
+	 dgmFiOEIRNgouIP1TVaXicLZBlHr7BqF1Ac5FHPAU8YwrlUqcNnx2sKS4yuRz993lfQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795624069;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795624072;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=hkOVhEITHgkSlMRx1sIIlE0t4xk/izdRi2Gi84mH4X8=;
-	b=En27pXjz364LnXMj0QMLc9eGfYyQd3GU9j3EEY1NgJZEBk5sjof/YnyCC5x44hd7+/Ta
-	 0gHzvVi7PEaDyGiFE4heCAft34dq+yt93l1xrSbx9MkQpL5CMlZ8AW0JPVWHaY55wTUk+
-	 H9TKx1oBgLSLPOuc9e1V4tNlcicwuNT3AIwE62k5eTlEGCwRb3DzBvCETF4DAMldM5sX0
-	 /k9Q06aaB/RP3B9/7RNXkWw3b5qNCaq7AST/cmUi5WalzRkelTlGQLKMvzGXfyh81xybK
-	 kvYK9l/YRfggdV2FO1BzUM47ZDb+m9e6lUvgZ8hZQCTCQDMcUDov1A5b+qyrYuNV32Q==
+	bh=d7YP/JoEvP8B4qHIsd+6H8YL3SsoC9Ndux/grht1O04=;
+	b=N6ww5f9W/lxWk+OstP39aQiJTbPJ+kldure5Mq1MxNcxNb/Io4KYO5PQa2o+3zDszoxR
+	 r6RBvj3cp/BKb+MoQU+qIaNOYK8Cuir7M9NRt+/6L7lKMzxqy5/yGuwyw3Nwiw1dhYZOj
+	 fHctDxTkzQC+MVJdto1H23+34Ld0pt4nzEfwT5AVqLI4qb5KCqx05vOz4NGn0cxEjQrCo
+	 v0KntTt6o2QFximUKcaPGil25Ch14uM8ioiHQ3m1EU/vwew2O7C1hHH9DyoUrDJnzhJMq
+	 +fsHKhVRQquG4dB6w8tiuLyktlPdHl2y8b34gKVAz2gOItFA6H8ROLyKIy+soR1gCSQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=kVvfqyVx;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=fig0j71V;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A5029606A31E;
-	Wed, 25 Nov 2026 16:27:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CCD9A606A321;
+	Wed, 25 Nov 2026 16:27:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=kVvfqyVx
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 92AB71F000C0;
-	Wed, 25 Nov 2026 16:27:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=fig0j71V
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 158ED1F000D0;
+	Wed, 25 Nov 2026 16:27:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795624069;
-	bh=hkOVhEITHgkSlMRx1sIIlE0t4xk/izdRi2Gi84mH4X8=;
+	s=korg; t=1795624072;
+	bh=d7YP/JoEvP8B4qHIsd+6H8YL3SsoC9Ndux/grht1O04=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=kVvfqyVxNmJs+2QZZM3Iz4v92Lfa3FL+xRcMe+4oa12wacnniUeo0eAXy+Uq+dS2i
-	 M39d0LSgMS8pvDcPorHbd0Arw1U4FViRcacSj/jj9rDEDquFfsavtXg064FHgctLbG
-	 kJqYxbGZ6KLj1JQaIGx0+CuX/5VFYL4l1NPIJKTw=
+	b=fig0j71VZMNTFD6F7CN0FJs31hiGZ1g8p+EoWW6zI0iuiTcEznthQsCvftvW1oJM5
+	 sHWzcIjmmGgsel7xpfgqPtf6HMOPI6Bm8asWXkiubt8mM7sOQlGMzQLh+5QG+WZJhh
+	 VUT+kRkOM/KVRN0dPS7guIWfEox8ecoJQCZJ/d4g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -45,9 +45,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Zhi-Jun You <hujy652@gmail.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 074/816] net: ethernet: mtk_wed: fix reset condition for rx wdma
-Date: Wed, 25 Nov 2026 15:27:02 +0100
-Message-ID: <20261125143850.934433402@linuxfoundation.org>
+Subject: [PATCH 6.12 075/816] net: ethernet: mtk_wed: free up rings during detach
+Date: Wed, 25 Nov 2026 15:27:03 +0100
+Message-ID: <20261125143850.958173241@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143849.205329330@linuxfoundation.org>
 References: <20261125143849.205329330@linuxfoundation.org>
@@ -71,42 +71,46 @@ Content-Transfer-Encoding: 8bit
 
 From: Zhi-Jun You <hujy652@gmail.com>
 
-[ Upstream commit 7180a42d8e616f919dcff4b90a13b9a5ecea665b ]
+[ Upstream commit 5b8d12512cbd3495dbd8c38e8047bb5d716f0f3f ]
 
-In mtk_wdma_rx_reset, currently only resets the CPU index of the rings
-that doesn't have a descriptor. This is wrong because no descriptor
-means the ring is not configured.
+During __mtk_wed_detach, rx_ring and tx_wdma aren't freed up.
 
-Also mtk_wed_start makes sure that all rx_wdma rings are set up this
-would lead to no ring getting their CPU index reset.
+Fix this by add them to mtk_wed_free_rx_rings.
 
-Fix this by inverting the reset condition so allocated rings will be
-reset.
+This patch is pulled from mtk-openwrt-feeds to address Sashiko's review
+and edit to rely on ring->desc instead of an extra flag.
 
+Link: https://github.com/mediatek/mtk-openwrt-feeds/blob/main/25.12/files/target/linux/mediatek/patches-6.12/999-wed-04-Fix-reinsert-wifi-module-cause-memory-leak-issue.patch
 Fixes: 4c5de09eb0d0 ("net: ethernet: mtk_wed: add configure wed wo support")
 Reported-by: Sashiko <sashiko-bot@kernel.org>
-Link: https://sashiko.dev/#/patchset/20260724172040.1653-1-hujy652%40gmail.com
+Link: https://sashiko.dev/#/message/179000700034.2160803.10594281691384015089%40kernel.org
 Signed-off-by: Zhi-Jun You <hujy652@gmail.com>
-Link: https://patch.msgid.link/20261026-wedfix-v6-2-a52f6b15d2fc@gmail.com
+Link: https://patch.msgid.link/20261026-wedfix-v6-3-a52f6b15d2fc@gmail.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/mediatek/mtk_wed.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/net/ethernet/mediatek/mtk_wed.c | 8 ++++++++
+ 1 file changed, 8 insertions(+)
 
 diff --git a/drivers/net/ethernet/mediatek/mtk_wed.c b/drivers/net/ethernet/mediatek/mtk_wed.c
-index 544bf35990c17..c2c684fbbb164 100644
+index c2c684fbbb164..005b653a7e3a9 100644
 --- a/drivers/net/ethernet/mediatek/mtk_wed.c
 +++ b/drivers/net/ethernet/mediatek/mtk_wed.c
-@@ -250,7 +250,7 @@ mtk_wdma_rx_reset(struct mtk_wed_device *dev)
- 	wdma_w32(dev, MTK_WDMA_RESET_IDX, 0);
- 
- 	for (i = 0; i < ARRAY_SIZE(dev->rx_wdma); i++) {
--		if (dev->rx_wdma[i].desc)
-+		if (!dev->rx_wdma[i].desc)
- 			continue;
- 
- 		wdma_w32(dev,
+@@ -942,6 +942,14 @@ mtk_wed_free_ring(struct mtk_wed_device *dev, struct mtk_wed_ring *ring)
+ static void
+ mtk_wed_free_rx_rings(struct mtk_wed_device *dev)
+ {
++	int i;
++
++	for (i = 0; i < ARRAY_SIZE(dev->rx_ring); i++)
++		mtk_wed_free_ring(dev, &dev->rx_ring[i]);
++
++	for (i = 0; i < ARRAY_SIZE(dev->tx_wdma); i++)
++		mtk_wed_free_ring(dev, &dev->tx_wdma[i]);
++
+ 	mtk_wed_free_rx_buffer(dev);
+ 	mtk_wed_free_ring(dev, &dev->rro.ring);
+ }
 -- 
 2.53.0
 
