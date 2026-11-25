@@ -1,56 +1,56 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795618804;
-	b=DjxGvLzaEK84hPepPR56EKQy8VmvSIvNCVZxxb2yxe8tMEM4bYC2X3bPrVDivh9gYh9Y
-	 ygfCiL+yfywvh98M7IEoiOYQoNszQPCPV2T9wirppIrDAhEVh+i7Q+s9IjcZbl20/3Eaw
-	 uSHyTDpyJnrw1ZgTyjcvhz0uy3s044IcPTlcsllMPmjVjOYnaDjAJtlqHRiYeETErwUXa
-	 IAxomBnsIKCa/fIe4l/qrZH4JAnTs5JpgiHwvHEsr7u0ZmGDsrrCTnFIiR8PTv47ffRzY
-	 xD2epHaMJLnHzQ8n8ajtiAMazzNe0YQznnq2T4FfFmBUFoXKo0mCXNL/XlvSPymJGog==
+	t=1795618807;
+	b=ZpzIgaDsjMZobOnI5UBF3HfBhMCERQO5WnNLVZK/8PT5riA06bq6LONanI3HEgdWz3wc
+	 pySAIkZIus75WWnBf0MNyVSR9CUeHDmSZMbWoN4btgtRHqp9OI4YxQTb+shWtA2+6dvxu
+	 kc1k4xGoNfD9UQZHDgV0lbtpLbamy1Gf4JqoTBYTOAsCTXInta5MXZz/2dlq6snEV+qWQ
+	 qVM5OxYTtdC7iMXHybxTX2T103UdJSFf2jiLQDySJiDjZ26waXjdxY08LCFoL7G3P7HBn
+	 0EXOJfL+ur4ULg+gPCFqpS4LNovvQ/F+W5GS+eVd+xMPR2rCo2fNShuoHbyoZQmzldg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795618804;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795618807;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=ly7sHevPuVdVZfxrOKdVfvoiXk6OdNaI9fBhGcaRtZs=;
-	b=UiLcaPTGUkU0V58wnlzabQXa81Ry7oSbX+8ICk8rHD1X48it3qdQHMqWAcQ5O/+nf+oD
-	 L6iy7R5uNlLIwJTXcpErJJ/D3fhFF9LkovpWby4VzzzK3igxehs5M3RqWYV+aLp1E6Hni
-	 yXVHyTxavV210KNn8McQdNT1ayUQRtIrzeb+6CPDmotJLl/Z33DL8U+Nk8gST4VHbidHM
-	 Wu9A+OUiBR/duJ6UQPS5i8BoUqN5YNdfVJmBY1ZdJVeXOHO+XG1iOgTt49nB7BKxwkpBV
-	 mKx8Ndsq30NVc08zEU6RpoBW7VkEp1yo4E7K2IMWDP9GrFlHz5xXzzGUALd3gKRKqzw==
+	bh=enW6Fn+98HDNpkqdb1HfUlFx4H/NqaHAkj0zZOH0O3A=;
+	b=5g3S8Z8yIeq6DdD8mTM14n0Qzu4XSCDTYYC+7WGhZ4tQ+3Y5I4oVx5fhl37S2tz93Ghe
+	 AhtbIZeORNSASILfNZCUVPgpb2xdyWECVwLV3JQOfHsmQ4idV12CJ6dvGMb77QhS/93+L
+	 Fj0S5ByeADuIZdmRu1v6jotWA8jrCJ34O7ijTg2PwsP3+YGHfywDZUFMoVqFT8yKpoORP
+	 rinkwsJGzr8+Z4GbUatiB4TVh0IEHG3FNpJWOzSoRIHlL9/K66HxkP6/cl1pwfH0QWruq
+	 mKIWURb/G+jn/BSkfrdtBp1dZpWk13GeRUdiog6BhPORcG0+fyqaHabrCVBf8K8l4UA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Cl2pMdm7;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=MzESNtOt;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E4552606A323;
-	Wed, 25 Nov 2026 15:00:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 22920606A323;
+	Wed, 25 Nov 2026 15:00:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Cl2pMdm7
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 449861F000D3;
-	Wed, 25 Nov 2026 15:00:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=MzESNtOt
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 77AE21F000CA;
+	Wed, 25 Nov 2026 15:00:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795618803;
-	bh=ly7sHevPuVdVZfxrOKdVfvoiXk6OdNaI9fBhGcaRtZs=;
+	s=korg; t=1795618807;
+	bh=enW6Fn+98HDNpkqdb1HfUlFx4H/NqaHAkj0zZOH0O3A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Cl2pMdm72OyltqkcecmI2AZBa/9mz/zS5d4wuG0mvXJZGDC9dnLZZG5lUKAIbS9Ki
-	 iY6A8A1A2VisV9mmYeAGF6W6mKzCwWgLEBHLnuP10FUHPZTSrhZO6K1nRvlEEQ6wXL
-	 w5W4PI+5Bg5r/ynLMdqO9z8WNOHGMaoARPzHxr7s=
+	b=MzESNtOtWOjvSYaNRqjl2GU+WPBtjqBYhZ5Y9Wmy+FWyA61jNaV7irhSCBNMJsRUB
+	 dPm/RRR9fO3mU0tvWzMiI2uH9n6EQQiXZpYk+QpJLRpTeiL6o1OS4WSYTlIBkfXfwS
+	 5N93w+aV4ad1XG7SH825aDj+Y+iDx1aps/lKGarA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Daniele Ceraolo Spurio <daniele.ceraolospurio@intel.com>,
-	Alan Previn <alan.previn.teres.alexis@intel.com>,
-	Julia Filipchuk <julia.filipchuk@intel.com>,
+	Tvrtko Ursulin <tvrtko.ursulin@igalia.com>,
+	Helen Koike <koike@igalia.com>,
+	Matt Roper <matthew.d.roper@intel.com>,
 	Rodrigo Vivi <rodrigo.vivi@intel.com>,
 	Matthew Brost <matthew.brost@intel.com>,
 	Dave Airlie <airlied@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0393/1005] drm/xe/gsc: Fix NVL-S GSC compatibility number
-Date: Wed, 25 Nov 2026 15:28:51 +0100
-Message-ID: <20261125143830.949157989@linuxfoundation.org>
+Subject: [PATCH 7.3 0394/1005] drm/xe/lrc: Restore CTX_CS_INDIRECT_CTX_OFFSET programming for pre-Xe2
+Date: Wed, 25 Nov 2026 15:28:52 +0100
+Message-ID: <20261125143830.973289305@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143821.729802100@linuxfoundation.org>
 References: <20261125143821.729802100@linuxfoundation.org>
@@ -72,46 +72,75 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Daniele Ceraolo Spurio <daniele.ceraolospurio@intel.com>
+From: Helen Koike <koike@igalia.com>
 
-[ Upstream commit f8795bced27bb00d74cef9de33e8a5e939c05e02 ]
+[ Upstream commit badac1974e098dba1a0a7f413e53f5b6ae24ab10 ]
 
-The compatibility number for the published GSC number is 1.0. The binary
-is correctly named nvl_gsc_1.bin (matching the major compatibility
-version number), but the driver is instead looking for compatibility 0.0
-(which maps to nvl_gsc_0.bin), leading to the binary not being found.
+CTX_CS_INDIRECT_CTX_OFFSET default value is not retrieved from the GPU
+by inhibit+context save mechanism since it is not part of the Engine
+Context. Thus, at restore, 0x0 is programmed back to the GPU, which is
+an invalid value according to the PRM.
 
-The driver supports running without GSC so this is not fatal, but all
-content protection features will not work without the GSC FW.
+This causes sporadic hangs on Alder Lake when executing test
+IntelAngleEnd2EndTestCases (error VK_DEVICE_LOST).
 
-Signed-off-by: Daniele Ceraolo Spurio <daniele.ceraolospurio@intel.com>
-Fixes: 8a90f0d1098f ("drm/xe/gsc: Define GSC for NVL-S")
-Cc: Alan Previn <alan.previn.teres.alexis@intel.com>
-Cc: Julia Filipchuk <julia.filipchuk@intel.com>
-Cc: Rodrigo Vivi <rodrigo.vivi@intel.com>
-Reviewed-by: Alan Previn <alan.previn.teres.alexis@intel.com>
-Link: https://patch.msgid.link/20261015204548.147348-1-daniele.ceraolospurio@intel.com
-(cherry picked from commit 11f8678d6a702ab9d6abb2f50c45e82a56974068)
+Fix it by partially reverting commit c9dfd66cb91e ("drm/xe/lrc: Allow
+INDIRECT_CTX for more engine classes"). Re-add the programming of
+CTX_CS_INDIRECT_CTX_OFFSET for pre-Xe2 (in theory it should apply to all
+platforms, but we got an unexpected behaviour on Xe2 that still requires
+investigation).
+
+Fixes: c9dfd66cb91e ("drm/xe/lrc: Allow INDIRECT_CTX for more engine classes")
+Suggested-by: Tvrtko Ursulin <tvrtko.ursulin@igalia.com>
+Signed-off-by: Helen Koike <koike@igalia.com>
+Reviewed-by: Matt Roper <matthew.d.roper@intel.com>
+Link: https://patch.msgid.link/20261016214112.1647202-1-koike@igalia.com
+Signed-off-by: Rodrigo Vivi <rodrigo.vivi@intel.com>
+(cherry picked from commit b99292acb2dce61ce50d37f54a66d84b768b8927)
 Signed-off-by: Matthew Brost <matthew.brost@intel.com>
 Signed-off-by: Dave Airlie <airlied@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/xe/xe_uc_fw.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/gpu/drm/xe/regs/xe_lrc_layout.h | 3 +++
+ drivers/gpu/drm/xe/xe_lrc.c             | 8 ++++----
+ 2 files changed, 7 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/gpu/drm/xe/xe_uc_fw.c b/drivers/gpu/drm/xe/xe_uc_fw.c
-index f61910431cf25..78b8f104e5772 100644
---- a/drivers/gpu/drm/xe/xe_uc_fw.c
-+++ b/drivers/gpu/drm/xe/xe_uc_fw.c
-@@ -141,7 +141,7 @@ struct fw_blobs_by_type {
+diff --git a/drivers/gpu/drm/xe/regs/xe_lrc_layout.h b/drivers/gpu/drm/xe/regs/xe_lrc_layout.h
+index 4ab86fc369fdf..e4c7c35497354 100644
+--- a/drivers/gpu/drm/xe/regs/xe_lrc_layout.h
++++ b/drivers/gpu/drm/xe/regs/xe_lrc_layout.h
+@@ -43,4 +43,7 @@
+ #define INDIRECT_CTX_RING_START_UDW	(0x08 + 1)
+ #define INDIRECT_CTX_RING_CTL		(0x0a + 1)
  
- /* for the GSC FW we match the compatibility version and not the release one */
- #define XE_GSC_FIRMWARE_DEFS(fw_def, major_ver)		\
--	fw_def(NOVALAKE_S,	GT_TYPE_ANY,	major_ver(xe,	gsc,	nvl,	108, 0, 0))	\
-+	fw_def(NOVALAKE_S,	GT_TYPE_ANY,	major_ver(xe,	gsc,	nvl,	108, 1, 0))	\
- 	fw_def(PANTHERLAKE,	GT_TYPE_ANY,	major_ver(xe,	gsc,	ptl,	105, 1, 0))	\
- 	fw_def(LUNARLAKE,	GT_TYPE_ANY,	major_ver(xe,	gsc,	lnl,	104, 1, 0))	\
- 	fw_def(METEORLAKE,	GT_TYPE_ANY,	major_ver(i915,	gsc,	mtl,	102, 1, 0))
++#define CTX_INDIRECT_CTX_OFFSET_MASK	REG_GENMASK(15, 6)
++#define CTX_INDIRECT_CTX_OFFSET_DEFAULT	REG_FIELD_PREP(CTX_INDIRECT_CTX_OFFSET_MASK, 0xd)
++
+ #endif
+diff --git a/drivers/gpu/drm/xe/xe_lrc.c b/drivers/gpu/drm/xe/xe_lrc.c
+index e4388a9604909..2e44a7000d955 100644
+--- a/drivers/gpu/drm/xe/xe_lrc.c
++++ b/drivers/gpu/drm/xe/xe_lrc.c
+@@ -1461,15 +1461,15 @@ setup_indirect_ctx(struct xe_lrc *lrc, struct xe_hw_engine *hwe)
+ 	finish_bo(&state);
+ 	kfree(state.buffer);
+ 
+-	/*
+-	 * Enable INDIRECT_CTX leaving INDIRECT_CTX_OFFSET at its default: it
+-	 * varies per engine class, but the default is good enough
+-	 */
+ 	xe_lrc_write_ctx_reg(lrc,
+ 			     CTX_CS_INDIRECT_CTX,
+ 			     (xe_bo_ggtt_addr(lrc->bo) + state.offset) |
+ 			     /* Size in CLs. */
+ 			     (state.written * sizeof(u32) / 64));
++	if (GRAPHICS_VER(lrc_to_xe(lrc)) < 20)
++		xe_lrc_write_ctx_reg(lrc,
++				     CTX_CS_INDIRECT_CTX_OFFSET,
++				     CTX_INDIRECT_CTX_OFFSET_DEFAULT);
+ 
+ 	return 0;
+ }
 -- 
 2.53.0
 
