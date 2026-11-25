@@ -1,52 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795620322;
-	b=daHMMq2DrxyzqudD7SSQSvEDujgvR5RRR21f7dQxfM7+L4FlSOaDq/kv7MDAjdX2rIlC
-	 TAhrugInbiGY3c44NgVuFnr78E+2zO0oXj+zebqOv6UQ4j2YzvwG9xGK+oO4sUIaCiQ1w
-	 D41rDpWW8B3bRGiFOgtcJOzM5Fp+zmVQXbVOXEIzSY00iwED84z4XIIWapVVxso08sSlx
-	 ABUxaTlC+ofBg7o2ObUI1AwLvomm6BsrQ2KALTIXc0OtarDDl97bwa66OcuF8Rs7QxHU6
-	 QggMkEL3ydhGRlnHiHGoTqc/RvhfhgxHXEmM4UoPZaxuD4N6Y3TEW59sHP71dtLwXPQ==
+	t=1795620325;
+	b=B+iy5w/vnVISZHFD7wnYY/0hFS41j5RThGD8Fspavra0mb8Ya89TExJs43dGSrKgY7ju
+	 VdPJvC9wIJT2+PvYDLBHoXey7zVMUXIinhEfvzAWjHHJYEAcSkI/k/k2r9lUKqbXALwFq
+	 8R021oj+DwZ8pJG6C9TcXCom8bWGTfzIS/D9piZk16I7J5tnurOEyiZzpu0iN2Mxv1tM+
+	 d1v3x2Dzh/ZeUSMgZahrcTvLcNr+ZYZq1rGkMPYCQs6yR0QF5MRpt1hYYn9UtrmXbShsu
+	 2s2ntGq++77ZPMXH3q5HIX1cSGrDp3dPJewFZe7LgXbgCsCoR144J1185n+zdJUjbxA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795620322;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795620325;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=Lc/+2KR4DIFGu6HP+UshTDpLnFsHpUPWQZ+IlyBZsRA=;
-	b=RGP0afBJjnnoQLD7jHIVMPKK32B++LaF95LSwPlb1rsFUtSjQqvXkb9Pazq3SOd0dT/n
-	 HRDQ84p0x2jPwFDR/K29UxHNfSwA/oYtdHtHgafydSOy2gSs2waigPPkzhthsXAp0Y1r9
-	 34TOvhQi8POQ5j8t8PvNJoA9698JpEwmVnOlMEbq7IDWZ1RF6rd2I+f4FYIpqVfX4SOOM
-	 Hhjy89i/mKHkkLl2jbiNPHLwOSj2aTXUoCGyQlKnWeHoB1tivwhz3DjC82TS09euBvYQg
-	 tw3N5+5eMHt3g9AIu2zU6C2TcIoDbNKpmQsgffPqgT+F0+sbb3eI7pk8lG8wtSiP41Q==
+	bh=J34phrA6g2ZA+J3JVvleoaRen3e34DkTBGhSFiyQMPc=;
+	b=NXOlIGSNmBsLSSQilL0Fiw+SapIx+MR/cyJk4i3wkzdx3mQqYejYJeAfUZefYKXCCWeX
+	 aLkciE+az1guUjtktGLVHMWNP7oiCJ8DZBlhoySDkSeKMf6lbWxF4nFlFlTc0EAsOZUZ6
+	 N6ZlcXDG9iwaXLGHCqeixqZPt3tocJ1rR6qmrP0hI+Sl/zbQsl/PI4xK/uTyb7lyDqxnj
+	 RvuFthy95XLFhXAHSJ53uHllXHv4+lyBc63kQJT5EAdhao6XpdoKXK9e0pZCvP45qUUaO
+	 iyr+RgKT4EG2+gjyUuvGc+I1RhY7QsXMmbdUKyHXoRTAoWkLI5P/KNnIIJeartEiEoQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=uuJPQi8f;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=PVQ0GndS;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5080B606A31E;
-	Wed, 25 Nov 2026 15:25:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 875AC606A31E;
+	Wed, 25 Nov 2026 15:25:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=uuJPQi8f
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4FAF81F000C0;
-	Wed, 25 Nov 2026 15:25:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=PVQ0GndS
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 778911F000C6;
+	Wed, 25 Nov 2026 15:25:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795620321;
-	bh=Lc/+2KR4DIFGu6HP+UshTDpLnFsHpUPWQZ+IlyBZsRA=;
+	s=korg; t=1795620325;
+	bh=J34phrA6g2ZA+J3JVvleoaRen3e34DkTBGhSFiyQMPc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=uuJPQi8fV1SQy4O0XtmxVX9ocZP1zXXrxEtQml6oBwOOB6In8QCaBxXUDdyhBzDAD
-	 8QvwYEfrkVjItg1Ds9uQXkAYp5eITZXoZsg7zw18vFW4xj7DNS4cIJ4Ox9HHF894zR
-	 JrcEnKtw1PfUggAqelO90mLvnyz0ao29jBQ1ZZjE=
+	b=PVQ0GndSY1qRaorU7j+ItNRXYHmWiQ3xwwFUNtSQpy8eJSRJoWcfPDcE7lgA1iat8
+	 cBUI4yhbpzBsV0K2SEvhNVv5Riu6D8gvR/JiWXBr+3jMW9eUyYJsqYCdDq5Ov2InXb
+	 76nlGNvjbpoc2NiyoGXZw6mSKEEfS93EasQGjS4g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+ff132cb52bce4f44ecc9@syzkaller.appspotmail.com,
-	xietangxin <xietangxin@h-partners.com>,
+	Josef Schlehofer <pepe.schlehofer@gmail.com>,
 	Mikulas Patocka <mpatocka@redhat.com>
-Subject: [PATCH 7.3 0877/1005] dm-crypt: reject integrity_key_size with non-authenc AEAD ciphers
-Date: Wed, 25 Nov 2026 15:36:55 +0100
-Message-ID: <20261125143842.249416017@linuxfoundation.org>
+Subject: [PATCH 7.3 0878/1005] dm-crypt: defer async write submission to write thread
+Date: Wed, 25 Nov 2026 15:36:56 +0100
+Message-ID: <20261125143842.271955436@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143821.729802100@linuxfoundation.org>
 References: <20261125143821.729802100@linuxfoundation.org>
@@ -68,45 +67,55 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: xietangxin <xietangxin@h-partners.com>
+From: Josef Schlehofer <pepe.schlehofer@gmail.com>
 
-commit bd93c4e59c5132282c01f142806e307c7380e7ea upstream.
+commit 6fed9e26810f0b466dbcebe35a73d1fd48793ff5 upstream.
 
-When integrity_key_size parameter is paired with a pure AEAD cipher that
-is not an authenc composite, crypt_ctr_auth_cipher() returns 0 early
-without allocating cc->authenc_key, but cc->key_mac_size remains
-non-zero because CRYPT_KEY_MAC_SIZE_SET was set during option parsing.
-As a result crypt_copy_authenckey() dereferences NULL crashes the kernel.
+With no_write_workqueue, kcryptd_crypt_write_io_submit() submits the
+bio directly, even when called from kcryptd_async_done(). An async
+cipher may run this callback in softirq or with BH disabled, where
+submit_bio_noacct() must not be called because it can sleep.
 
-Reject the contradictory configuration explicitly instead of silently
-returning 0, so userspace gets a clear -EINVAL.
+Submit inline only when async is false. Async completions are sent to
+the write thread, as is already done for submit_from_crypt_cpus. Use
+the async flag rather than in_interrupt(), since callback context
+depends on the cipher driver. Sync ciphers still submit inline.
 
-Fixes: 4441686b24a1 ("dm-crypt: Allow to specify the integrity key size as option")
+Tested with cryptd in QEMU (x86_64 and arm64) with
+CONFIG_DEBUG_ATOMIC_SLEEP, and on a P2020 running 6.18.55 without it.
+
+In QEMU:
+
+- 4k writes logging "sleeping function called from invalid context":
+  100/100 unpatched, 0/155 patched.
+- nr_requests=4 on a loop device: 0/6 unpatched runs completed,
+  4/4 patched runs completed.
+
+On the P2020, a warning in blk_mq_run_hw_queue() appeared in the
+6th unpatched run and did not appear in 30 patched runs.
+
+Fixes: 39d42fa96ba1 ("dm crypt: add flags to optionally bypass kcryptd workqueues")
 Cc: stable@vger.kernel.org
-Reported-by: syzbot+ff132cb52bce4f44ecc9@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=ff132cb52bce4f44ecc9
-Assisted-by: LLM
-Signed-off-by: xietangxin <xietangxin@h-partners.com>
+Signed-off-by: Josef Schlehofer <pepe.schlehofer@gmail.com>
 Signed-off-by: Mikulas Patocka <mpatocka@redhat.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/md/dm-crypt.c |    5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ drivers/md/dm-crypt.c |    5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
 --- a/drivers/md/dm-crypt.c
 +++ b/drivers/md/dm-crypt.c
-@@ -2826,8 +2826,11 @@ static int crypt_ctr_auth_cipher(struct
- 	char *start, *end, *mac_alg = NULL;
- 	struct crypto_ahash *mac;
+@@ -1964,8 +1964,9 @@ static void kcryptd_crypt_write_io_submi
+ 	/* crypt_convert should have filled the clone bio */
+ 	BUG_ON(io->ctx.iter_out.bi_size);
  
--	if (!strstarts(cipher_api, "authenc("))
-+	if (!strstarts(cipher_api, "authenc(")) {
-+		if (test_bit(CRYPT_KEY_MAC_SIZE_SET, &cc->cipher_flags))
-+			return -EINVAL;
- 		return 0;
-+	}
- 
- 	start = strchr(cipher_api, '(');
- 	end = strchr(cipher_api, ',');
+-	if ((likely(!async) && test_bit(DM_CRYPT_NO_OFFLOAD, &cc->flags)) ||
+-	    test_bit(DM_CRYPT_NO_WRITE_WORKQUEUE, &cc->flags)) {
++	if (likely(!async) &&
++	    (test_bit(DM_CRYPT_NO_OFFLOAD, &cc->flags) ||
++	     test_bit(DM_CRYPT_NO_WRITE_WORKQUEUE, &cc->flags))) {
+ 		dm_submit_bio_remap(io->base_bio, clone);
+ 		return;
+ 	}
 
 
