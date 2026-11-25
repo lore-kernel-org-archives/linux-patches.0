@@ -1,53 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795624948;
-	b=mxKj6k0KVU/spac9RHorMFYCuIGqO+m/rLtvJGAvaePPHmeQyqpfGMkOLMAmmRcpiw9w
-	 xfKUxDeq94dLe8Yj2ODZmtx0gIZouOtcXr9JkABV2PWuQ8Thsxc/CBrmCOdJ1PFDxvgju
-	 DRrwGkIOQJP2yL/n9JVAQESD7g6WOUlrwkzHHKZy933cbjuHgBv5q/qGEAdzUp3ricpZr
-	 U7qBZt6fLBVi1snUJ6VRRUqyLFTkrxV34nJHvVJOHtMRIEJletkqOvWVcoLwRZNXO25Dk
-	 YvBQlhONoEbVB2nkzZTcYrkhjjPL5vKDJg1DCPZ37GZxvS4edgJVPqDcIgKiUAQuFgA==
+	t=1795624952;
+	b=OelNwx+K2cEOGNXe+XvPRFlcWInJrav3cEmbjXJgClrecdMhEyKYFKNIAJfcEgw2z8s7
+	 sPZSKbO+U/fvPZ6mbpgYylRIx0PQ13NLGnj4lAnfSPB2V3C9FmOMhW9mKgtlzPIxIEbix
+	 6/WjY3RP0HWvtjYs0REacJKNL2Wxltegg4mcjHl83I0G94f8v6zHlT/d8lKA9/5/PvOCo
+	 7qPadlPx0iUprYSCrZZipiJIb8rOade9mP6jIm9Ry75HupNRDyCQxtxVJ9YtRzX5gY/BQ
+	 qc1+ASqWsT2gZc/CdoTpUcmBr9ctW3w3PjcQAFuNqURqxxZK53spLc0bpFGErCUUcJQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795624948;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795624952;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=UTODvJLQsEXMoS66KkriTgc+AQFkvB+OP8woSjyXe/s=;
-	b=TNTnXkDtki+EanOPjLp4ClanGaTi2E98uKLSlewvyORcE1ShF6y9AgLPLyrOKtJlyZMU
-	 9G6lvXrUsI7aLbYI5lVX6mBHlCo2NJEMJu1Rl9PH1JXxDjWZ+NFv9g1+Cq66S2OqJ5xpp
-	 lxxVU9Q8JEEJ0tqjrtDwZwBsR3uMF6bfDFA+MPGsY6tvHJIhf6onuzu80UyXuOv3VOcB1
-	 DclMi6IMYNWlrq2n6iC4dSuuUb56O+iL1+UQDY8nrYcdmqnSetqlwKm4Uqf9zfEmYmfWm
-	 E0t0kplUBaQvwgEL8ETtPHbKu1emdBV1aYACQlloipt9NJf10ws/9MnPfkwiPCo/RKw==
+	bh=4njji7eOQbpQrqC6enwA3dO5JbwYBQ8l6UcviUMBVP8=;
+	b=DNGJvVl5xBo/cRmVocPXmnOpMnRoprztRC24rE3AtTlAyZGgkwqkxYcoNkX0ZMRS/a8j
+	 hDM8yzgainzFtC+aPla/A2CUpC+ZaWHsZUqtq3blX2QxNsclQTppJOYHkxcydcYJe791e
+	 R/yDSuIAHTKQiaSS48qZ/Vi+1OCPyM6TWca0Jl+1T7jcmxE31Rm1BHzZ0rVtfVsE78JQK
+	 Hl+Gfnd/n0eVLpoRkg9GDfSNe+L5APOrz18ZhT0ulOUR/ubFFfi+dk7slbQD1BwMxMrl2
+	 KrnvJww1mts3e/x1FXoQ4ZmrUVCsMvHePnY68XbKclQe60UI3Ob+ydPE6z7X8RBlesg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ZdWjMa5b;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=igHNzpLB;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BB69D606A321;
-	Wed, 25 Nov 2026 16:42:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 456D0606A32D;
+	Wed, 25 Nov 2026 16:42:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ZdWjMa5b
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 163AA1F000F2;
-	Wed, 25 Nov 2026 16:42:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=igHNzpLB
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 861271F000C0;
+	Wed, 25 Nov 2026 16:42:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795624948;
-	bh=UTODvJLQsEXMoS66KkriTgc+AQFkvB+OP8woSjyXe/s=;
+	s=korg; t=1795624952;
+	bh=4njji7eOQbpQrqC6enwA3dO5JbwYBQ8l6UcviUMBVP8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ZdWjMa5bzrXnmlg2FYbguROWX1YbCT2Y0Mt++zsKFTD69DNDYcD/BtaMRN3VKP+MU
-	 qPv6gmRN+TWP4pdeSjyemHLoFVKNvQ5H2QNIAwdAkAlppwFue0MFhcRtQ3yHVtdyMv
-	 DbDbqsNgdYOJSF7ru9SrEhBinjsm9VsgdhtQ7my4=
+	b=igHNzpLBPlYJMyO+gbjaAewfEHVWO7ad8HdU41MIJNrxljR5KJNR6UkCUBkX3jTEe
+	 wU+UUclPsXMZGrFPBorOABewIWdJyJUnbymIO/BpOohN21QaHNpcuTN05satCToHsW
+	 8bvZAAzg4dpW8fyOV+i4BRJi4Laf4I52eW+X+hBs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Iustin Stolniceanu <iustin.stolniceanu@analog.com>,
-	Andrew Lunn <andrew@lunn.ch>,
+	Sashiko <sashiko-bot@kernel.org>,
+	Jiri Benc <jbenc@redhat.com>,
+	Eric Dumazet <edumazet@kernel.org>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 356/816] net: phy: c45: select BASE-T1 type for the forced speed
-Date: Wed, 25 Nov 2026 15:31:44 +0100
-Message-ID: <20261125143857.440082500@linuxfoundation.org>
+Subject: [PATCH 6.12 357/816] nsh: limit recursion in nsh_gso_segment()
+Date: Wed, 25 Nov 2026 15:31:45 +0100
+Message-ID: <20261125143857.462724372@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143849.205329330@linuxfoundation.org>
 References: <20261125143849.205329330@linuxfoundation.org>
@@ -69,145 +70,106 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Iustin Stolniceanu <iustin.stolniceanu@analog.com>
+From: Eric Dumazet <edumazet@kernel.org>
 
-[ Upstream commit df501db9b18fae4d3edd534b992675f4673a938e ]
+[ Upstream commit 3921fb102d78a6d7aa61b8d273e097a1a8026b90 ]
 
-Commit 25108a834e14 ("net: phy: c45: add support for 1000BASE-T1 forced
-setup") made genphy_c45_pma_setup_forced() write the type selection
-field (bits 3:0) of the BASE-T1 PMA/PMD control register (1.2100) on
-every forced setup: 1000BASE-T1 for SPEED_1000, and 0 for everything
-else. 0 selects 100BASE-T1, so forcing a 10BASE-T1L PHY to 10 Mbit/s
-now also switches its PMA to 100BASE-T1, a mode it does not implement.
+nsh_gso_segment() calls skb_mac_gso_segment() for the inner packet,
+which calls nsh_gso_segment() again when the next protocol is NSH,
+either directly or behind an inner Ethernet header (ETH_P_TEB).
 
-Seen on an ADIN1110 (internal ADIN1100 PHY): after
+Nothing limits the depth: a GSO packet made of stacked 8-byte NSH
+headers recurses once per header, and a 64KB packet can hold about
+8000 of them, overflowing the kernel stack.
 
-  ethtool -s ethX autoneg off speed 10 master-slave forced-master
+Such a packet can be injected with a packet socket using
+PACKET_VNET_HDR, or with tun/tap or virtio_net, as nothing checks
+that a GSO packet with VIRTIO_NET_HDR_F_NEEDS_CSUM carries the
+protocol it claims. It is then segmented in software if the output
+device does not support the GSO type:
 
-1.2100 reads 0xc000 instead of the 0xc002. Since the field is not
-restored by re-enabling autoneg, the PHY keeps the wrong type until
-the next forced setup or reset.
+BUG: TASK stack guard page was hit at ffffcad5c0ab3ff8 (stack is ffffcad5c0ab4000..ffffcad5c0ab8000)
+Oops: stack guard page: 0000 [#1] SMP NOPTI
+CPU: 3 UID: 0 PID: 337 Comm: nsh_gso Tainted: G            E       7.4.0-rc1+ #118 PREEMPT(lazy)
+RIP: 0010:lock_acquire (kernel/locking/lockdep.c:5902)
+Call Trace:
+ <TASK>
+ skb_mac_gso_segment (include/linux/rcupdate.h:309 include/linux/rcupdate.h:849 net/core/gso.c:50)
+ nsh_gso_segment (net/nsh/nsh.c:110) nsh
+ skb_mac_gso_segment (net/core/gso.c:53)
+ nsh_gso_segment (net/nsh/nsh.c:110) nsh
+ [...]
+ skb_mac_gso_segment (net/core/gso.c:53)
+ __skb_gso_segment (net/core/gso.c:129)
+ validate_xmit_skb (net/core/dev.c:4238)
+ __dev_queue_xmit (net/core/dev.c:5087)
+ packet_sendmsg (net/packet/af_packet.c:3157 net/packet/af_packet.c:3189)
+ __sys_sendto (net/socket.c:800 net/socket.c:818 net/socket.c:2283)
+ __x64_sys_sendto (net/socket.c:2290 net/socket.c:2286 net/socket.c:2286)
+ do_syscall_64 (arch/x86/entry/syscall_64.c:61 arch/x86/entry/syscall_64.c:84)
+ entry_SYSCALL_64_after_hwframe (arch/x86/entry/entry_64.S:121)
 
-Add a helper that returns the type selection value for the forced speed
-and the supported link modes: 100BASE-T1, 1000BASE-T1, and 10BASE-T1L or
-10BASE-T1S for SPEED_10 depending on the supported 10 Mbit/s modes. Fail
-with -EINVAL when no type matches instead of writing 100BASE-T1. This
-also applies to forced 2.5G, 5G and 10G on BASE-T1 capable PHYs, for
-which there are no link modes yet.
+Use gso_recursion_inc_test(), added in commit 006c8b834aed ("net: gso:
+limit recursive IP-in-IP segmentation"), with the same limit as IPv4
+and IPv6. The counter is shared with them: a packet with four NSH
+headers in front of an IPv4 header is still segmented, one more NSH
+header and it is dropped.
 
-The field is called "type selection" in IEEE 802.3-2022 (45.2.1.214,
-Table 45-178). Keep the old STRAP names as aliases.
+The NSH -> ETH_P_TEB -> NSH route is covered as well, as each round
+goes through nsh_gso_segment().
 
-Tested on EVAL-ADIN1110EBZ: with this change, forcing 10 Mbit/s writes
-1.2100 = 0xc002 (10BASE-T1L) instead of the invalid 0xc000.
-
-Fixes: 25108a834e14 ("net: phy: c45: add support for 1000BASE-T1 forced setup")
-Signed-off-by: Iustin Stolniceanu <iustin.stolniceanu@analog.com>
-Reviewed-by: Andrew Lunn <andrew@lunn.ch>
-Link: https://patch.msgid.link/20261111100053.345196-1-iustin.stolniceanu@analog.com
+Fixes: c411ed854584 ("nsh: add GSO support")
+Reported-by: Sashiko <sashiko-bot@kernel.org>
+Closes: https://lore.kernel.org/netdev/179443691180.2199510.148246238688217560@kernel.org/
+Cc: Jiri Benc <jbenc@redhat.com>
+Signed-off-by: Eric Dumazet <edumazet@kernel.org>
+Reviewed-by: Jiri Benc <jbenc@redhat.com>
+Link: https://patch.msgid.link/20261112102001.3744643-2-edumazet@kernel.org
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/phy/phy-c45.c | 46 ++++++++++++++++++++++++++++++++++-----
- include/uapi/linux/mdio.h | 13 +++++++++--
- 2 files changed, 52 insertions(+), 7 deletions(-)
+ include/net/gso.h | 2 +-
+ net/nsh/nsh.c     | 7 +++++++
+ 2 files changed, 8 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/net/phy/phy-c45.c b/drivers/net/phy/phy-c45.c
-index 5695935fdce97..a5415c81a92ec 100644
---- a/drivers/net/phy/phy-c45.c
-+++ b/drivers/net/phy/phy-c45.c
-@@ -102,6 +102,36 @@ int genphy_c45_pma_baset1_setup_master_slave(struct phy_device *phydev)
- }
- EXPORT_SYMBOL_GPL(genphy_c45_pma_baset1_setup_master_slave);
+diff --git a/include/net/gso.h b/include/net/gso.h
+index 0749230d414ec..e311a8f5b5a72 100644
+--- a/include/net/gso.h
++++ b/include/net/gso.h
+@@ -19,7 +19,7 @@ struct skb_gso_cb {
+ 	int	encap_level;
+ 	__wsum	csum;
+ 	__u16	csum_start;
+-	/* Number of IPv4/IPv6 GSO handler entries for this packet. */
++	/* Number of IPv4/IPv6/NSH GSO handler entries for this packet. */
+ 	u8	recursion_counter;
+ };
+ #define SKB_GSO_CB_OFFSET	32
+diff --git a/net/nsh/nsh.c b/net/nsh/nsh.c
+index bfb7758063f31..dd4de50fc38c3 100644
+--- a/net/nsh/nsh.c
++++ b/net/nsh/nsh.c
+@@ -9,6 +9,7 @@
+ #include <linux/netdevice.h>
+ #include <linux/skbuff.h>
+ #include <net/gso.h>
++#include <net/ip_tunnels.h>
+ #include <net/nsh.h>
+ #include <net/tun_proto.h>
  
-+/* Type selection value for the BASE-T1 PMA/PMD control register (1.2100,
-+ * 802.3-2022 Table 45-178) matching the forced speed. 10 Mbit/s is ambiguous
-+ * between 10BASE-T1L and 10BASE-T1S, so the supported link modes decide.
-+ * 2.5G, 5G and 10GBASE-T1 are not handled as there are no link modes for them
-+ * yet.
-+ */
-+static int genphy_c45_baset1_type_sel(struct phy_device *phydev)
-+{
-+	switch (phydev->speed) {
-+	case SPEED_10:
-+		if (linkmode_test_bit(ETHTOOL_LINK_MODE_10baseT1L_Full_BIT,
-+				      phydev->supported))
-+			return MDIO_PMA_PMD_BT1_CTRL_TYPE_SEL_10BT1L;
-+		if (linkmode_test_bit(ETHTOOL_LINK_MODE_10baseT1S_Full_BIT,
-+				      phydev->supported) ||
-+		    linkmode_test_bit(ETHTOOL_LINK_MODE_10baseT1S_Half_BIT,
-+				      phydev->supported) ||
-+		    linkmode_test_bit(ETHTOOL_LINK_MODE_10baseT1S_P2MP_Half_BIT,
-+				      phydev->supported))
-+			return MDIO_PMA_PMD_BT1_CTRL_TYPE_SEL_10BT1S;
-+		return -EINVAL;
-+	case SPEED_100:
-+		return MDIO_PMA_PMD_BT1_CTRL_TYPE_SEL_100BT1;
-+	case SPEED_1000:
-+		return MDIO_PMA_PMD_BT1_CTRL_TYPE_SEL_1000BT1;
-+	default:
-+		return -EINVAL;
-+	}
-+}
-+
- /**
-  * genphy_c45_pma_setup_forced - configures a forced speed
-  * @phydev: target phy_device struct
-@@ -164,6 +194,16 @@ int genphy_c45_pma_setup_forced(struct phy_device *phydev)
- 		return -EINVAL;
- 	}
+@@ -84,6 +85,12 @@ static struct sk_buff *nsh_gso_segment(struct sk_buff *skb,
  
-+	/* Resolve the type before the first write, so a speed without a
-+	 * matching type leaves the PHY untouched.
+ 	skb_reset_network_header(skb);
+ 
++	/* NSH can carry NSH (directly, or in an inner Ethernet frame):
++	 * limit the recursion, as IPv4 and IPv6 do.
 +	 */
-+	bt1_ctrl = 0;
-+	if (genphy_c45_baset1_able(phydev)) {
-+		bt1_ctrl = genphy_c45_baset1_type_sel(phydev);
-+		if (bt1_ctrl < 0)
-+			return bt1_ctrl;
-+	}
++	if (unlikely(gso_recursion_inc_test(skb, IP_TUNNEL_RECURSION_LIMIT)))
++		goto out;
 +
- 	ret = phy_write_mmd(phydev, MDIO_MMD_PMAPMD, MDIO_CTRL1, ctrl1);
- 	if (ret < 0)
- 		return ret;
-@@ -177,12 +217,8 @@ int genphy_c45_pma_setup_forced(struct phy_device *phydev)
- 		if (ret < 0)
- 			return ret;
- 
--		bt1_ctrl = 0;
--		if (phydev->speed == SPEED_1000)
--			bt1_ctrl = MDIO_PMA_PMD_BT1_CTRL_STRAP_B1000;
--
- 		ret = phy_modify_mmd(phydev, MDIO_MMD_PMAPMD, MDIO_PMA_PMD_BT1_CTRL,
--				     MDIO_PMA_PMD_BT1_CTRL_STRAP, bt1_ctrl);
-+				     MDIO_PMA_PMD_BT1_CTRL_TYPE_SEL, bt1_ctrl);
- 		if (ret < 0)
- 			return ret;
- 	}
-diff --git a/include/uapi/linux/mdio.h b/include/uapi/linux/mdio.h
-index f0d3f268240d8..4ccd50ec9fd54 100644
---- a/include/uapi/linux/mdio.h
-+++ b/include/uapi/linux/mdio.h
-@@ -382,8 +382,17 @@
- #define MDIO_AN_10BT1_AN_STAT_LPA_EEE_T1L	0x4000 /* 10BASE-T1L LP EEE ability advertisement */
- 
- /* BASE-T1 PMA/PMD control register */
--#define MDIO_PMA_PMD_BT1_CTRL_STRAP		0x000F /* Type selection (Strap) */
--#define MDIO_PMA_PMD_BT1_CTRL_STRAP_B1000	0x0001 /* Select 1000BASE-T1 */
-+#define MDIO_PMA_PMD_BT1_CTRL_TYPE_SEL		0x000F /* Type selection */
-+#define MDIO_PMA_PMD_BT1_CTRL_TYPE_SEL_100BT1	0x0000 /* Select 100BASE-T1 */
-+#define MDIO_PMA_PMD_BT1_CTRL_TYPE_SEL_1000BT1	0x0001 /* Select 1000BASE-T1 */
-+#define MDIO_PMA_PMD_BT1_CTRL_TYPE_SEL_10BT1L	0x0002 /* Select 10BASE-T1L */
-+#define MDIO_PMA_PMD_BT1_CTRL_TYPE_SEL_10BT1S	0x0003 /* Select 10BASE-T1S */
-+#define MDIO_PMA_PMD_BT1_CTRL_TYPE_SEL_2P5GBT1	0x0004 /* Select 2.5GBASE-T1 */
-+#define MDIO_PMA_PMD_BT1_CTRL_TYPE_SEL_5GBT1	0x0005 /* Select 5GBASE-T1 */
-+#define MDIO_PMA_PMD_BT1_CTRL_TYPE_SEL_10GBT1	0x0006 /* Select 10GBASE-T1 */
-+/* Legacy names, kept for userspace */
-+#define MDIO_PMA_PMD_BT1_CTRL_STRAP		MDIO_PMA_PMD_BT1_CTRL_TYPE_SEL
-+#define MDIO_PMA_PMD_BT1_CTRL_STRAP_B1000	MDIO_PMA_PMD_BT1_CTRL_TYPE_SEL_1000BT1
- #define MDIO_PMA_PMD_BT1_CTRL_CFG_MST		0x4000 /* MASTER-SLAVE config value */
- 
- /* 1000BASE-T1 PCS control register */
+ 	outer_proto = skb->protocol;
+ 	outer_hlen = skb_mac_header_len(skb);
+ 	mac_len = skb->mac_len;
 -- 
 2.53.0
 
