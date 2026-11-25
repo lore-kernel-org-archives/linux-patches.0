@@ -1,55 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795621861;
-	b=fckFxrDp5EtPnhXW5FLFNXmv5+lERkCiIrk7Bi/tBXxjuoOdczmEc6f6iBxBoMjq3Xgi
-	 PNFJCx6bNkMZEwLQibrRcS4u4Pphs0iMxxGRtHwjlp//bS2jFgcei2G0AU0+Q1FzEUIXp
-	 CmTI/pQrqlcwNzcOoDFnLVHE5OXrl2sMc8hxW+cUibHkz7s1iL54L8KE4e8WDwntup0yt
-	 UfsuGKPfU5cQWrtIvR1GvyPjQYTEw8ig6ZNI91Dn69oMuLlnFWcHAlfomHyO5w0Vnprya
-	 f/HRdhGzgEgw3Hm6fbce/8iVywzVata1HOlRvIXpOwh+XOXSjMsdP8mnotpXb8nkUKg==
+	t=1795621864;
+	b=Bd/1qVez7OXmKaE8V68MG089K1VWMJwTkQBaAYKgxJGmCR9amA/Txry3SkJXkHCHqdWK
+	 CWCFVUKnDNrKCcMETZbbcdHM0LIMOBBdULorPyQdmfFUrP9M2RVQqQHNM6XU4K6lcOqJB
+	 6tBVNUVJd3/mrBYRwqBUathl0m8uQA9bnyHlRLlnWHXB9PoQ6te6/USQE7Wr/1ofNdjtw
+	 BLm/h2UNp1GHCUBa+gqloTMbPE1anXGMu0C5VMVMJ3SmYqkcZUqgR0Rtgv0qIS+jhEfOq
+	 UGQkMgdkJ9k7ia8Akonxy5auR28tLNLrkKzQgBO8BjUEcRhJi31QiPVid0JWNX9Vwfw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795621861;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795621864;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=xFCp+56scIQ0knbZh2o8d70z8M2jQ+v6rG1RU0CKrAM=;
-	b=ZpRQVlFWxkbybD45bK2slLHgOhpCNNRUEKbPxgs1Wd89z9HReFhHS7odAFzYFcwB1Ltz
-	 icc+RIxOVG2UMl5bRAaJ9ZNKkTaVOTTVgs6louJZxo9hVAOmD8UHvMKRsh5k6gexccAzJ
-	 ngt//nPFyngfl/FQ96JAYYxQjGWPoItBvIXt6gT19NVL8ymhzJXqUEZ29Z2VQYNLIyvy9
-	 AHVsT8eAaNcLkRr7jtCuIudgMRUg3HG3WmMFKbibwu0MavMlJkhK9UqCjHfsqeHSYjzca
-	 N0DAwfsAR9bxCUlrGn/IuZRh6suIO7woSSbjrQ6zd8qolufxb9V2F/mRraFZ1rZTPtw==
+	bh=6irtLqr6hhm26tflcWfIo57BMH+XiY/X3iul4CUnQmI=;
+	b=F7ZoioGJzEhFh6tYLnYpyj3mNf3YC2xQFEazqfydAbQGIyBoCdauVi3QotO4ZNcrAIQH
+	 WD8hPCcspP9BoFpTvmV30HO128ddubHUtTw7dD7lyScdXsDuQVrnOIULQKQvWZ/N8CLEL
+	 dbBoQmOdzPPcv61jElpSOXYqC1RK5I/qYAAn44zvl44P9K1Vw36iHfa5lOOGFLvSkdZBa
+	 59Ji1nJXF+28m4GDAliaBZJG3I/8B2im6fvp1W7lm2Z02tnMXCcaEJcl/h2kUwNN9O1Ae
+	 +H7akTl5ZOwd2PbkOhzkkD1xW3R74PbketfB8ZuSJViSKJIGfgUIIUdQr8qWU7JI4FQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=lelePx7e;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=bdEdcoIO;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F1CE9606A31E;
-	Wed, 25 Nov 2026 15:51:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 800C5606A321;
+	Wed, 25 Nov 2026 15:51:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=lelePx7e
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BC1681F000CF;
-	Wed, 25 Nov 2026 15:50:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=bdEdcoIO
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2F0771F000CA;
+	Wed, 25 Nov 2026 15:51:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795621860;
-	bh=xFCp+56scIQ0knbZh2o8d70z8M2jQ+v6rG1RU0CKrAM=;
+	s=korg; t=1795621863;
+	bh=6irtLqr6hhm26tflcWfIo57BMH+XiY/X3iul4CUnQmI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=lelePx7enh2HDrbGtgQM8zpInCXIRto+5gyNWdYgF9Hd7C2tu4BvKRuVUpacCqMfe
-	 8Iq7596lQX63Raca846BlJ4OlWBVn6fb3W9fScFJXTQCqdYRiFsin/I1B7oR58V6qL
-	 ktNVi3vSIZ774jPvH4ASlolqVRa1J6uE4og7YlZM=
+	b=bdEdcoIODkr6ce/KRBrYH7rTupiF1fx3YcL7TiMl+Y6e7g6Q7BaZ+DrbJAiz1sy1G
+	 WZlo6oDppiCV390hvfD2hry95zAFT0IVkN2pYUZBPUMkVFRuGPPAp49FkRMYRXPpHN
+	 T4Eq56KiTBD9LEBO7Nq9s5YhCx/bcO8y7TqWeKX4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Gennady Kupava <gennady.kupava@gmail.com>,
-	Jayapal Ashwin Nair <janair@amd.com>,
-	Ravi Bangoria <ravi.bangoria@amd.com>,
-	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
-	Ingo Molnar <mingo@kernel.org>,
+	Andrea Parri <parri.andrea@gmail.com>,
+	Jan Kara <jack@suse.cz>,
+	"Christian Brauner (Amutable)" <brauner@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 312/990] perf/amd/ibs: Fix kernel address leak via REGS_USER and REGS_INTR
-Date: Wed, 25 Nov 2026 15:27:59 +0100
-Message-ID: <20261125143829.399188124@linuxfoundation.org>
+Subject: [PATCH 6.18 303/990] iov_iter: take an unsigned long segment count in import_iovec()
+Date: Wed, 25 Nov 2026 15:27:50 +0100
+Message-ID: <20261125143829.189636612@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143822.072087159@linuxfoundation.org>
 References: <20261125143822.072087159@linuxfoundation.org>
@@ -71,149 +69,90 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ravi Bangoria <ravi.bangoria@amd.com>
+From: Andrea Parri <parri.andrea@gmail.com>
 
-[ Upstream commit b61c12527223423ab66891b2e8131da0d66537c4 ]
+[ Upstream commit 965e5e451146a19f69523fbcbc73d07e401a3775 ]
 
-IBS hardware captures a sample and raises an NMI. Since the NMI can be
-delivered with a delay, a privilege change may occur between sample
-capture and NMI delivery. Because IBS only provides the sample RIP, the
-kernel records GPRs from the NMI pt_regs, which may reflect kernel mode
-if a privilege switch occurred in the interim. This can leak kernel
-addresses to unprivileged users through PERF_SAMPLE_REGS_USER and/or
-PERF_SAMPLE_REGS_INTR.
+readv(), writev() and their positional variants, process_vm_readv(),
+process_vm_writev(), vmsplice(), process_madvise(), vectored aio and
+the btrfs encoded I/O ioctls all take a full-width segment count, and
+all of them hand it to import_iovec() or __import_iovec().  Those take
+an unsigned int count, so on 64-bit kernels the upper 32 bits are
+dropped before iovec_from_user() checks the count against UIO_MAXIOV.
 
-Fix this by using interrupt regs while preparing PERF_SAMPLE_REGS_USER
-and PERF_SAMPLE_REGS_INTR. With the change, when IBS samples a user mode
-instruction but the NMI is delivered in kernel mode, PERF_SAMPLE_REGS_USER
-will source its register state from task_pt_regs(current) and
-PERF_SAMPLE_REGS_INTR will be omitted from the data sent to userspace.
+A count of 0x100000001 is therefore imported as one segment: writev()
+on a pipe writes a byte and readv() reads it back, instead of both
+failing with EINVAL.  A count of 0x100000000 returns 0 as an empty
+vector.
 
-In addition to fixing the kernel address leak, this change also ensures
-GPR snapshot consistency, which resolves the DWARF unwinding issue with
-IBS.
+import_iovec() was added with an unsigned int count, but the helper it
+wrapped, rw_copy_check_uvector(), took an unsigned long, as does
+iovec_from_user() today.  Until v4.1, readv(), writev(), preadv(),
+pwritev(), process_vm_readv(), process_vm_writev() and vectored aio
+therefore failed these counts with EINVAL, as did vmsplice() until
+v4.18.
 
-Closes: https://lore.kernel.org/r/CAPu-DQqF0aF6=GS8Z6KKWeeX_V5LiXeKU_rJQZC+uGg8zuTPNw@mail.gmail.com
-Fixes: d29e744c7167 ("perf/x86: Relax privilege filter restriction on AMD IBS")
-Reported-by: Gennady Kupava <gennady.kupava@gmail.com>
-Reported-by: Jayapal Ashwin Nair <janair@amd.com>
-Signed-off-by: Ravi Bangoria <ravi.bangoria@amd.com>
-Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
-Signed-off-by: Ingo Molnar <mingo@kernel.org>
-Link: https://patch.msgid.link/20261026041838.941-3-ravi.bangoria@amd.com
+Widen nr_segs in both import helpers so the UIO_MAXIOV check sees the
+count the caller passed.  Callers with 32-bit counts are unaffected.
+
+AI assistance was used to find the bug, develop the fix, and run the
+reproducers.
+
+Fixes: bc917be81059 ("saner iov_iter initialization primitives")
+Signed-off-by: Andrea Parri <parri.andrea@gmail.com>
+Link: https://patch.msgid.link/20261026180619.4147910-1-parri.andrea@gmail.com
+Reviewed-by: Jan Kara <jack@suse.cz>
+Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/events/amd/ibs.c  | 50 ++++++++++++++++++++++++++++++++++++++
- include/linux/perf_event.h |  6 +++++
- kernel/events/core.c       | 10 ++++----
- 3 files changed, 61 insertions(+), 5 deletions(-)
+ include/linux/uio.h | 8 ++++----
+ lib/iov_iter.c      | 6 +++---
+ 2 files changed, 7 insertions(+), 7 deletions(-)
 
-diff --git a/arch/x86/events/amd/ibs.c b/arch/x86/events/amd/ibs.c
-index 23d834e7b565e..d57b34a72dddf 100644
---- a/arch/x86/events/amd/ibs.c
-+++ b/arch/x86/events/amd/ibs.c
-@@ -1339,6 +1339,56 @@ static int perf_ibs_handle_irq(struct perf_ibs *perf_ibs, struct pt_regs *iregs)
- 		throttle = perf_event_account_interrupt(event);
- 		goto out;
- 	}
-+
-+	/*
-+	 * IBS captured RIP is out of sync with NMI pt_regs due to NMI
-+	 * delivery latency. Use NMI pt_regs for PERF_SAMPLE_REGS_USER.
-+	 *
-+	 * Note: Valid user regs are required for PERF_SAMPLE_STACK_USER.
-+	 */
-+	if (event->attr.sample_type & (PERF_SAMPLE_REGS_USER |
-+				       PERF_SAMPLE_STACK_USER)) {
-+		perf_sample_regs_user(&data.regs_user, iregs);
-+
-+		/*
-+		 * Don't update dyn_size if user has not requested for
-+		 * PERF_SAMPLE_REGS_USER.
-+		 */
-+		if (event->attr.sample_type & PERF_SAMPLE_REGS_USER) {
-+			/* regs dump ABI info */
-+			int size = sizeof(u64);
-+
-+			if (data.regs_user.regs) {
-+				u64 mask = event->attr.sample_regs_user;
-+				size += hweight64(mask) * sizeof(u64);
-+			}
-+
-+			data.dyn_size += size;
-+		}
-+
-+		data.sample_flags |= PERF_SAMPLE_REGS_USER;
-+	}
-+
-+	/*
-+	 * IBS captured RIP is out of sync with NMI pt_regs due to NMI
-+	 * delivery latency. Use NMI pt_regs for PERF_SAMPLE_REGS_INTR.
-+	 */
-+	if (event->attr.sample_type & PERF_SAMPLE_REGS_INTR) {
-+		/* regs dump ABI info */
-+		int size = sizeof(u64);
-+
-+		perf_sample_regs_intr(&data.regs_intr, iregs,
-+				      event->attr.exclude_kernel);
-+
-+		if (data.regs_intr.regs) {
-+			u64 mask = event->attr.sample_regs_intr;
-+			size += hweight64(mask) * sizeof(u64);
-+		}
-+
-+		data.dyn_size += size;
-+		data.sample_flags |= PERF_SAMPLE_REGS_INTR;
-+	}
-+
- 	/*
- 	 * Prevent leaking physical addresses to unprivileged users. Skip
- 	 * PERF_SAMPLE_PHYS_ADDR check since generic code prevents it for
-diff --git a/include/linux/perf_event.h b/include/linux/perf_event.h
-index d698a232df114..23444b1b2503b 100644
---- a/include/linux/perf_event.h
-+++ b/include/linux/perf_event.h
-@@ -1829,6 +1829,12 @@ extern unsigned long perf_misc_flags(struct perf_event *event, struct pt_regs *r
- extern unsigned long perf_instruction_pointer(struct perf_event *event,
- 					      struct pt_regs *regs);
+diff --git a/include/linux/uio.h b/include/linux/uio.h
+index 5b127043a1519..5678520f0bfb6 100644
+--- a/include/linux/uio.h
++++ b/include/linux/uio.h
+@@ -362,11 +362,11 @@ struct iovec *iovec_from_user(const struct iovec __user *uvector,
+ 		unsigned long nr_segs, unsigned long fast_segs,
+ 		struct iovec *fast_iov, bool compat);
+ ssize_t import_iovec(int type, const struct iovec __user *uvec,
+-		 unsigned nr_segs, unsigned fast_segs, struct iovec **iovp,
+-		 struct iov_iter *i);
++		 unsigned long nr_segs, unsigned int fast_segs,
++		 struct iovec **iovp, struct iov_iter *i);
+ ssize_t __import_iovec(int type, const struct iovec __user *uvec,
+-		 unsigned nr_segs, unsigned fast_segs, struct iovec **iovp,
+-		 struct iov_iter *i, bool compat);
++		 unsigned long nr_segs, unsigned int fast_segs,
++		 struct iovec **iovp, struct iov_iter *i, bool compat);
+ int import_ubuf(int type, void __user *buf, size_t len, struct iov_iter *i);
  
-+extern void perf_sample_regs_user(struct perf_regs *regs_user,
-+				  struct pt_regs *regs);
-+extern void perf_sample_regs_intr(struct perf_regs *regs_intr,
-+				  struct pt_regs *regs,
-+				  bool exclude_kernel);
-+
- #ifndef perf_arch_misc_flags
- # define perf_arch_misc_flags(regs) \
- 		(user_mode(regs) ? PERF_RECORD_MISC_USER : PERF_RECORD_MISC_KERNEL)
-diff --git a/kernel/events/core.c b/kernel/events/core.c
-index 42057df334af3..6d3fe508b7406 100644
---- a/kernel/events/core.c
-+++ b/kernel/events/core.c
-@@ -7682,8 +7682,8 @@ perf_output_sample_simd_regs(struct perf_output_handle *handle,
- 	}
+ static inline void iov_iter_ubuf(struct iov_iter *i, unsigned int direction,
+diff --git a/lib/iov_iter.c b/lib/iov_iter.c
+index b2eb629497a92..a9918931055a8 100644
+--- a/lib/iov_iter.c
++++ b/lib/iov_iter.c
+@@ -1354,8 +1354,8 @@ static ssize_t __import_iovec_ubuf(int type, const struct iovec __user *uvec,
  }
  
--static void perf_sample_regs_user(struct perf_regs *regs_user,
--				  struct pt_regs *regs)
-+void perf_sample_regs_user(struct perf_regs *regs_user,
-+			   struct pt_regs *regs)
+ ssize_t __import_iovec(int type, const struct iovec __user *uvec,
+-		 unsigned nr_segs, unsigned fast_segs, struct iovec **iovp,
+-		 struct iov_iter *i, bool compat)
++		 unsigned long nr_segs, unsigned int fast_segs,
++		 struct iovec **iovp, struct iov_iter *i, bool compat)
  {
- 	if (user_mode(regs)) {
- 		regs_user->abi = perf_reg_abi(current);
-@@ -7696,9 +7696,9 @@ static void perf_sample_regs_user(struct perf_regs *regs_user,
- 	}
- }
- 
--static void perf_sample_regs_intr(struct perf_regs *regs_intr,
--				  struct pt_regs *regs,
--				  bool exclude_kernel)
-+void perf_sample_regs_intr(struct perf_regs *regs_intr,
-+			   struct pt_regs *regs,
-+			   bool exclude_kernel)
+ 	ssize_t total_len = 0;
+ 	unsigned long seg;
+@@ -1426,7 +1426,7 @@ ssize_t __import_iovec(int type, const struct iovec __user *uvec,
+  * Return: Negative error code on error, bytes imported on success
+  */
+ ssize_t import_iovec(int type, const struct iovec __user *uvec,
+-		 unsigned nr_segs, unsigned fast_segs,
++		 unsigned long nr_segs, unsigned int fast_segs,
+ 		 struct iovec **iovp, struct iov_iter *i)
  {
- 	/*
- 	 * Hardware skid can lead to a scenario where a PMI is
+ 	return __import_iovec(type, uvec, nr_segs, fast_segs, iovp, i,
 -- 
 2.53.0
 
