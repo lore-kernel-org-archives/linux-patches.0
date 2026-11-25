@@ -1,50 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795620293;
-	b=XIrJo/3uA+1SI4MjGh+dbfWcNak+1YyLi1oTol7wf0YgfTVPIip4tOsBSySBc5n3NLW+
-	 X7+1k0bqzYEH1cog1yKuu4hyZX5vmnx/zEDqRlTEg37p7++IhZ63KoWq02Q/9SSuJDNKp
-	 8sg+/C4yKAczImZy6Hjz85H6YEhw/JJsYbTY8AIjuXIsHqPS0ct/M9qCF1QpBXlItu83U
-	 ZOxReS5JQXz65yD/em2TLaoCxkLZSOxhMiv8naavqJntVq2E3G9RpXWhZ89XLRKj+h6T0
-	 IzISTT0iodWh/v5HP2c3+zJKOxyO56nAeBUeCbk56pxiryZ0e+DMdpAR3yEswFA8rUg==
+	t=1795620296;
+	b=J2wq3AnuQF1pjkgF/UNtDui6La4I+8Bb59p5M7HuRktY+P4xMsq7RsbyL1idMOieymmI
+	 kBCHncLhQZUOxT2wuoQQIL/UU7jjtC/JefcrAvwDEzGTEIEQ+zGYZ6WlpNnGKsBYM/+UJ
+	 yhhWRJ1TVn93aVOWXscMmSrB9VbtWek8CCgEpuUtKOAikc3HYJa5CGX4ifbFgcnjWbsEM
+	 p4DjuMMfQPfB8l6+OEOBtsKfwl0QyP+8bx+VimSL8+M5m1souBErRypMWdf9ifUFfNQjw
+	 o1WqvunPVx/40BJ1faHbseG0Aqa5DJSM3FNho2OvJZqd9V8G4jtXt2dLY8OSQDv4/Kg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795620293;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795620296;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=7QnETkf51Sim4sJ40SUPib8moi+JMRJdvVk7ee1z9YM=;
-	b=nD9XKy/nRHaiVMsBRepja2tqzdHVulwhuaEFC1utM/thH8hrLPBeq8wlv8vGsoaEVd/O
-	 ld5m35Lk2v+pC+Fc6agjzYrPELtmE8pCj/V5GeUrOWhLNHDklpwtR48Yc+538soJpc53f
-	 q5k3uXYvvNqIUdhP6R5qGNLN3Tymi1zxu6goUjA/s8Y3+UHmDf/3H7tacZBZ04Y7RLyvs
-	 JlFtgSexnZhPclSpWidIojq9OpvGyBzYU5jGyez1lQXcaMMjpaYvEOGjCUJShL2eGzvQK
-	 jaEMXKuX+VSUvdIq4cx3B6Fn8Iag0ZRw91s4/d3Mmx8bXnfcjRGCBwIH8wFuQYTb8ng==
+	bh=GhxaZjG1j7HL18hOTEZvlKdrOp1h/E+JuWcsSwGjvSc=;
+	b=KI1jCEB5A0C+ZvZOkTdkr11jDMA79ijz4zgEzthi3YSwBdU/BtMV98+iBkcDgPPiQLT8
+	 YdBj2WjntV5Ot1XtK3++CjFZqXCD4+esDyXyPfV6SgqNmHhnAEGsqYPAywdrit2pau1lm
+	 dM/khhNsbdzM8C/vxBogfO/ZHPpAmyecvtS0DExSM6tj2q2HaBC5c7rESswtmeZzU6otq
+	 4EEX/1N5peWK2NJDwOVxUVU6En62SN8DBwB7gjMG4lBqau8rlUEkuO8NU3i3yCSYyHUa6
+	 0CHeHdhFQt3wZZn/UZhUfkow+SU9/5qYG7zjRWmzV1ECMZqLJ+4IXSFhUYYiKVKwT1w==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ojvuqKaO;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=zFGLGxKD;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 70E2A606A323;
-	Wed, 25 Nov 2026 15:24:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7A3CA606A323;
+	Wed, 25 Nov 2026 15:24:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ojvuqKaO
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5F5FC1F000D3;
-	Wed, 25 Nov 2026 15:24:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=zFGLGxKD
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 976E91F000E0;
+	Wed, 25 Nov 2026 15:24:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795620292;
-	bh=7QnETkf51Sim4sJ40SUPib8moi+JMRJdvVk7ee1z9YM=;
+	s=korg; t=1795620296;
+	bh=GhxaZjG1j7HL18hOTEZvlKdrOp1h/E+JuWcsSwGjvSc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ojvuqKaO+YjgVsf3cnNunG4yNemQvmPxXi+71KHaeJRCnafZfczYDXRrVTcHYSUKy
-	 ya0welzs23Foy6Mj7uybrxU6WH3XBuP92S6Ru6/HSQ/Ii073UE8ujnrP6kTN1dwE+A
-	 bf2Hbzng7oT+SfSez73Nef0p8INKT5KCVs0qEd9U=
+	b=zFGLGxKDR1ATdGFbWInibOaUpGaaFZXQqzolSKx96BGCjnmx0sSrlIuCHHds58f6V
+	 TOYfQtM7wcdTdEmyrVWnErLeTM0OFsY0iGJeAz8NGjGclZJKFwi1aebVuYAdS4wrWh
+	 h4J23xfAebTcsHwUnxHnOEJGqbRsn70SAoB2m6pc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	syzbot+1288484b13bf6af3620d@syzkaller.appspotmail.com,
+	wuyuehong <wuyuehong@cmss.chinamobile.com>,
 	Mikulas Patocka <mpatocka@redhat.com>
-Subject: [PATCH 7.3 0869/1005] dm persistent data: dont leak bufio buffer if find_leaf fails
-Date: Wed, 25 Nov 2026 15:36:47 +0100
-Message-ID: <20261125143842.064674360@linuxfoundation.org>
+Subject: [PATCH 7.3 0870/1005] dm snapshot: fix discard_granularity unit in snapshot_io_hints
+Date: Wed, 25 Nov 2026 15:36:48 +0100
+Message-ID: <20261125143842.087666457@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143821.729802100@linuxfoundation.org>
 References: <20261125143821.729802100@linuxfoundation.org>
@@ -66,42 +68,63 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mikulas Patocka <mpatocka@redhat.com>
+From: wuyuehong <wuyuehong@cmss.chinamobile.com>
 
-commit b27523a0781aae0b51ac13f29dc65373d14b8434 upstream.
+commit d7216d7be2bbfdf3312695b6e41a4fc7c5e22902 upstream.
 
-If find_leaf fails, the function dm_btree_cursor_begin would return an
-error, but it would keep the dm-bufio buffers held. This would result in
-a memory leak and a warning when releasing the dm-bufio cache.
+snapshot_io_hints() copies the snapshot store's chunk_size, which is
+in 512-byte sectors, into queue_limits.discard_granularity, which, like
+all other members of struct queue_limits, is in bytes.
 
-This commit fixes it, so that dm_btree_cursor_begin releases the buffers
-on error.
+For snapshots with a chunk size smaller than 512 sectors, e.g. the
+16 KiB (32-sector) chunks created by the syzkaller reproducer, the
+resulting granularity is smaller than a single sector.  When
+dm_calculate_queue_limits() then stacks the target limits into the
+table limits:
 
-Signed-off-by: Mikulas Patocka <mpatocka@redhat.com>
-Assisted-by: Claude:claude-opus-5
+	blk_stack_limits(limits, &ti_limits, 0)
+
+queue_limit_discard_alignment() truncates that granularity to zero
+sectors and sector_div() divides by zero:
+
+  Oops: divide error: 0000 [#1] SMP KASAN NOPTI
+  RIP: 0010:queue_limit_discard_alignment block/blk-settings.c:645 [inline]
+  RIP: 0010:blk_stack_limits+0x1105/0x2d00 block/blk-settings.c:916
+  Call Trace:
+   dm_calculate_queue_limits+0x70c/0x1510 drivers/md/dm-table.c:1823
+   dm_setup_md_queue+0x199/0x4f0 drivers/md/dm.c:2618
+   table_load+0x4fd/0x8a0 drivers/md/dm-ioctl.c:1661
+
+The divide fault itself only became reachable when commit e924da7d6622
+("block: Drop granularity check in queue_limit_discard_alignment()")
+removed the check for a sub-sector granularity in v6.13.  Kernels
+before that returned a zero discard alignment instead of faulting, but
+they still advertised a granularity 512 times too small.
+
+Use the same chunk_size << SECTOR_SHIFT conversion that
+io_overlaps_chunk() already applies to turn chunk_size into bytes.
+
+Fixes: 2e6023850e17 ("dm snapshot: add optional discard support features")
+Reported-by: syzbot+1288484b13bf6af3620d@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=1288484b13bf6af3620d
 Cc: stable@vger.kernel.org
-Fixes: 7d111c81fa29 ("dm btree: introduce cursor api")
+Signed-off-by: wuyuehong <wuyuehong@cmss.chinamobile.com>
+Signed-off-by: Mikulas Patocka <mpatocka@redhat.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/md/persistent-data/dm-btree.c |    8 +++++++-
- 1 file changed, 7 insertions(+), 1 deletion(-)
+ drivers/md/dm-snap.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/md/persistent-data/dm-btree.c
-+++ b/drivers/md/persistent-data/dm-btree.c
-@@ -1582,7 +1582,13 @@ int dm_btree_cursor_begin(struct dm_btre
- 	if (r)
- 		return r;
+--- a/drivers/md/dm-snap.c
++++ b/drivers/md/dm-snap.c
+@@ -2414,7 +2414,7 @@ static void snapshot_io_hints(struct dm_
+ 			snap = snap_src;
  
--	return find_leaf(c);
-+	r = find_leaf(c);
-+	if (unlikely(r)) {
-+		dm_btree_cursor_end(c);
-+		return r;
-+	}
-+
-+	return 0;
- }
- EXPORT_SYMBOL_GPL(dm_btree_cursor_begin);
+ 		/* All discards are split on chunk_size boundary */
+-		limits->discard_granularity = snap->store->chunk_size;
++		limits->discard_granularity = snap->store->chunk_size << SECTOR_SHIFT;
+ 		limits->max_hw_discard_sectors = snap->store->chunk_size;
  
+ 		up_read(&_origins_lock);
 
 
