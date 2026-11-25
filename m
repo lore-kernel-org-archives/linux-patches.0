@@ -1,42 +1,42 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795624057;
-	b=oWtjoYzgTczmV93xQ2iXZxmZgrrtvAZyOioDKc69uuRwIBoWJYezgisvZt0l3sZePkFe
-	 uvAsBQqiK7zQjpOXKPfSMgMOfH/FCjGXdQaguPB1fEQKne7PhHYhNw0giZt1ZwRUbtokG
-	 sgfuSxAr62KbqzveKroS7DAoH05LOPJd6cAY2GgrUmkSicg0Nt9WOm0bclEp/FB7PAo6W
-	 IttJcYbi9tXm6OpXM/ECFFFtZoFQYDDV5If8PunP8OgvH58t1XY9xO/+TFQPHDz4fEtgi
-	 PzKwNEHghsDEXwsZfAr0EQidEMVQs22cY4RjpMrLaynnNxfaoF7scQY6Jls0EPLwQ4g==
+	t=1795624060;
+	b=kAemGpWXfYRIyglEZ1dWefp3KkArBN0xV1f7qGQbD5M8Iw1ob/K2qWF8k2qUFUFqgn4J
+	 Die/3fShM1Uyq3MWo9K/QyvfsNVB84cF2gz8NkJaTlupFcr8RpNAI9TgJ1sUkFaJAQqen
+	 LZqFXXX+Uvf0Al9dRiYtyDm8G9IGV/XA2/42E6NlUvXzHQGyC16yTyCatkeFAsPtLyTFV
+	 FPOFjFP/jp72OYz5InGlb3TuDpnNr7cswzslYkXOr+VlWshdGAeUuFT9wCELwXGBZ1CIZ
+	 GHstPiNoeXiG0d+67nb4BAgklT/jW1S3tDwDiPDIOtDdOJMcG45mkUeMnb56qM7AK7w==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795624057;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795624060;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=XnUZ+QNca7xQLC7QrXi9lNWPRFs3b1aX9kehzx8G/Pc=;
-	b=OoJzougYNiLDm2Hq+gSlmP0yd/2j57HAz+zkXjSbDS1Bz93sOteKgjjmOchAyYomVvth
-	 9wOoWTkNrZH51Q5K1B0xGwHTYBNdfEoVPzjAn5/71EPIsSiPmGzhBmcXP0xzz/BATbtET
-	 fdpw9hClSOvdpEbVLQ1Fj5Y9oC04nlRqc9+3wlo8BiJ6aqNEbVzl264abKVMn0XvitTLW
-	 goBa9qmJFubPKgZ76SlH1ERdwLd3zMxsHQTlYSHDsjv54boXGlXm+1ktilx1HH1mQG/lq
-	 OSFreR+o549NCapfZStt5ZQJ+Sluh7lARBwyR96tEBJUKhYDBiRelL75Rwj4YtCKo9w==
+	bh=6yx8bh+n5CSco4aUhhfTvQHTyhYNfBtnHR2ukueQLPU=;
+	b=MYNrvFdZMi+c5vneRufvPKVPjBmyGQyPO2fMQPcEcjSm6PomWW9f4jZ8QIQxRtGpghTx
+	 6lA76KKeNI1ef6uQZWHrrU84clAinlJBFqQ1aholYLcx0V8kje36qP6B4M/T3NjJzoRq8
+	 ZYl8nR5vLUagN7IrEzuDE6WP60pKlkr0LEqO3jmJdjBuQq3crQ5j5HmNfwFG0fW5U3WYB
+	 IT/ymAdJhtimjQifbRhcN1PfgoRbk+6sU4bX76Ve+nwRa53Wwff8FBv/flEQ04wme1KJD
+	 k1oVPSiqE7Oztt6dGt8Om4h7L0uqbdq1Ax+mVsvBEnPFqCdoVhxQGGZDa2SIDX/4m7Q==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=eEq9pDmy;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=wFk5d4D0;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A3E1C606A321;
-	Wed, 25 Nov 2026 16:27:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7C04D606A323;
+	Wed, 25 Nov 2026 16:27:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=eEq9pDmy
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 011F71F000C6;
-	Wed, 25 Nov 2026 16:27:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=wFk5d4D0
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CC99F1F000C4;
+	Wed, 25 Nov 2026 16:27:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795624057;
-	bh=XnUZ+QNca7xQLC7QrXi9lNWPRFs3b1aX9kehzx8G/Pc=;
+	s=korg; t=1795624060;
+	bh=6yx8bh+n5CSco4aUhhfTvQHTyhYNfBtnHR2ukueQLPU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=eEq9pDmyY7XBb4wrr2n0KKntlxILf6/RUh05+e4qs/AOTKPjnRPCV/ky/pKd8qRvS
-	 9sMRypKSog4qqiACCXZsyHlmesqXNbl/KdBTdhr4KSLTwC8nPu3NzSGFVZDDRMyWhb
-	 MhSywp5m9K7+FZmJ6ERRdNj2Dc9vJd+VMs8+DpkE=
+	b=wFk5d4D04rV3MjFpouhbY4OGaUV9MzgiPeyZaeuTSx6SfS5eiypFRrASW6c/XfE/i
+	 Auxr/mBIe4ixlKheavlocznMOp11e70kdUYaHU0NHreMt+voXWVbmKgzOP7SWnDNMU
+	 pb6XiZLsw4yK9d3MgfhtmUpezzktGg5UZO32ZfUQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -45,9 +45,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Filipe Manana <fdmanana@suse.com>,
 	David Sterba <dsterba@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 070/816] btrfs: fix fiemap merging compressed extents
-Date: Wed, 25 Nov 2026 15:26:58 +0100
-Message-ID: <20261125143850.842194336@linuxfoundation.org>
+Subject: [PATCH 6.12 071/816] btrfs: scrub: fix lost wakeup and hang when cancelling a scrub that is finishing
+Date: Wed, 25 Nov 2026 15:26:59 +0100
+Message-ID: <20261125143850.865105963@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143849.205329330@linuxfoundation.org>
 References: <20261125143849.205329330@linuxfoundation.org>
@@ -71,82 +71,53 @@ Content-Transfer-Encoding: 8bit
 
 From: Filipe Manana <fdmanana@suse.com>
 
-[ Upstream commit 980fbbd041ac2538fdbe7cfda4253dfc28fdcad1 ]
+[ Upstream commit bda65e5115fe66ee0d8cf4ade11807f9fca4f0e1 ]
 
-Compressed extents are never supposed to be merged by the fiemap code and
-reported as a single extent, as each extent's content comes from a
-different compression stream and has its own header and context.
+When scrub finishes, it does a wakeup on the fs_info->scrub_pause_wait
+wait queue and then sets dev->scrub_sctx to NULL. On the other hand the
+scrub cancel code (btrfs_scrub_cancel_dev()) waits on that wait queue
+for dev->scrub_sctx to be NULL. So this means if btrfs_scrub_cancel_dev()
+is called right when scrub is finishing and sees the wakeup before the
+NULL is assigned to dev->scrub_sctx by btrfs_scrub_dev(), it hangs.
 
-We currently rely on checking the logical and physical address adjacency
-to prevent merging compressed extents but that is broken. Consider the
-following reproducer which explains why the merging happens:
+Fix this by doing the wakeup in btrfs_scrub_dev() after setting
+dev->scrub_sctx to NULL.
 
-  $ cat test.sh
-  #!/bin/bash
-
-  DEV=/dev/sdi
-  MNT=/mnt/sdi
-
-  mkfs.btrfs -s 4K -f $DEV
-  mount -o compress $DEV $MNT
-
-  # Do a write that compresses to a single 4K extent and represents the
-  # maximum compressed chunk size (128K).
-  xfs_io -f -c "pwrite 0 128K" $MNT/foo
-
-  # Sync to flush delalloc and allocate the 4K extent.
-  sync -f $MNT
-
-  # Now allocate a 124K extent in some other file, which will be adjacent
-  # (to the right) of the 4K extent previously allocated.
-  xfs_io -f -c "falloc 0 124K" $MNT/filler
-
-  # Do another write to the main file at its current EOF that is
-  # compressible and fits in a 4K extent.
-  xfs_io -c "pwrite 128K 128K" $MNT/foo
-  # Sync to flush delalloc and allocate the 4K extent.
-  sync -f $MNT
-
-  # Run fiemap which should report 2 encoded extents, each with a
-  # logical size of 128K.
-  xfs_io -c "fiemap -v" $MNT/foo
-
-  umount $MNT
-
-Running this, fiemap will report a single extent:
-
-  $ ./test.sh
-  (...)
-  /mnt/sdi/foo:
-   EXT: FILE-OFFSET      BLOCK-RANGE      TOTAL FLAGS
-     0: [0..511]:        26624..27135       512   0x9
-
-Fix this by never attempting to merge extents if the flags contain
-FIEMAP_EXTENT_ENCODED.
-
-Fixes: 4751832da990 ("btrfs: fiemap: Cache and merge fiemap extent before submit it to user")
+Fixes: a2de733c78fa ("btrfs: scrub")
 Reviewed-by: Qu Wenruo <wqu@suse.com>
 Signed-off-by: Filipe Manana <fdmanana@suse.com>
 Signed-off-by: David Sterba <dsterba@suse.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/btrfs/fiemap.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ fs/btrfs/scrub.c | 8 +++++++-
+ 1 file changed, 7 insertions(+), 1 deletion(-)
 
-diff --git a/fs/btrfs/fiemap.c b/fs/btrfs/fiemap.c
-index 7364bae6b1720..cf93318d14080 100644
---- a/fs/btrfs/fiemap.c
-+++ b/fs/btrfs/fiemap.c
-@@ -228,7 +228,8 @@ static int emit_fiemap_extent(struct fiemap_extent_info *fieinfo,
- 	 *
- 	 * 3) Share same flags
- 	 */
--	if (cache->offset + cache->len  == offset &&
-+	if (!(flags & FIEMAP_EXTENT_ENCODED) &&
-+	    cache->offset + cache->len == offset &&
- 	    cache->phys + cache->len == phys  &&
- 	    cache->flags == flags) {
- 		cache->len += len;
+diff --git a/fs/btrfs/scrub.c b/fs/btrfs/scrub.c
+index 9afe36341d8a3..fc01ae2dcb69d 100644
+--- a/fs/btrfs/scrub.c
++++ b/fs/btrfs/scrub.c
+@@ -3067,7 +3067,6 @@ int btrfs_scrub_dev(struct btrfs_fs_info *fs_info, u64 devid, u64 start,
+ 	memalloc_nofs_restore(nofs_flag);
+ 
+ 	atomic_dec(&fs_info->scrubs_running);
+-	wake_up(&fs_info->scrub_pause_wait);
+ 
+ 	if (progress)
+ 		memcpy(progress, &sctx->stat, sizeof(*progress));
+@@ -3080,6 +3079,13 @@ int btrfs_scrub_dev(struct btrfs_fs_info *fs_info, u64 devid, u64 start,
+ 	dev->scrub_ctx = NULL;
+ 	mutex_unlock(&fs_info->scrub_lock);
+ 
++	/*
++	 * We have set dev->scrub_ctx to NULL, now do the wakeup as a concurrent
++	 * scrub cancel (btrfs_scrub_cancel_dev()) waits for dev->scrub_ctx to
++	 * be set to NULL.
++	 */
++	wake_up(&fs_info->scrub_pause_wait);
++
+ 	scrub_workers_put(fs_info);
+ 	scrub_put_ctx(sctx);
+ 
 -- 
 2.53.0
 
