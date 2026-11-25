@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795624277;
-	b=5VJSRkkqNusXQbMSeB/BcdK+EFtYtVp4zAu2JolW/du0bYbnFVt//mmIg8Js+V9icI08
-	 buaGGQ6MtZFm5Qp1udlWYnwhvnLiyZdC60C8MgPyrDen4tqkVJzsWtHgfuTN+P2PCyRAO
-	 yTNdna/sVORyc1ks82ypcxziGZ0eZ1TeLh5tiJRd3ppHdcpCZkvBz/t49V0JXT5GCCn5p
-	 nu5hfxP1zHZXjfnF2ZYuLIbV2nKu60KVhtFa7HdXhXp5jyxe4t2IF4PiLBsBCKVgzbX/K
-	 P14kHBD2WCvk4m/jUsTQ0H8ifnVop34YkeSo0iaFVxNF04S1BEj/JCYFFV1B7Hjp9EA==
+	t=1795624280;
+	b=CS3sag5LAc2NeEydxurR/++beIvMECAbGegkfz6TQnJyWXKjJQiambnTeBThDQ5OD7+4
+	 qJgZbKtSu7VPdcgbuqa3eF308FMQgXRoJuZ2cddddnpOHTRlyXRBDFdCOitf30UpcRru+
+	 /LpmV5AVY9lMQo7Ja0Gf/2jaPLUKzceF6Qjl1L6cSbaaEhORjgVb17yYI0xLdWmBKmG5L
+	 wow04LU7tyULMdDtgp9Cuz9gztsaprsrOc/NTHMOerem6N0Qfntm/DdM6hy5nui1i4cMf
+	 6tJgqjM2RyU0oRLTQ+R8X0fzIOnOQnypTchUEGSZ0VMFSuz62Cv1c9cdGfBkvE/rlAQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795624277;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795624280;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=VpQSGosHzWD3LxG20GsB/ChamafDFUkHi9u9FXG4rhg=;
-	b=PmncTAugZ3OYUHnR/ze44CHQRJNUgfGQBBczx8yfzhpXk27vDuHCP63bUqjiOj0poJTZ
-	 l0O+PbYNOxh0BzNZjzOcpVyIdklggzhBHsYQ9zmrBK4LHYMKVuh+qoZFyNCJmRudQw7qC
-	 LdNElTcA37G0U4l9JVT4C8rX58QYKuqxB+RUhdLZvpyM6Gr77/OufIwZoreChEHK/ftwG
-	 Q5MtJ7C5O4noRyIpXWFLyF45jprEQXy+qAwaYTI7yO/viqRDET91atVSXLn1WJAtqVOVw
-	 T+Xjf7HyQuMuL04FMdKq49aQcCaQ94XPXreLW7phwEqWue+R6/jZBfA+Q7DoCrdFbKg==
+	bh=PO8iSxyOY+N0wxJixAcILQmlvyOm+Pl1Vt+p6OEqr08=;
+	b=YvuHsE/LqL5pdIEy+4d/xy/a4yaIHh68sjPZsc7l4IOFF1dDA9tPAgh1FU3wzqydYvpc
+	 zQbc4Pxp5U0YXaNQa3dBsWjNVSP8Nn0S6b7LRzAIwUn3sl12RN+TepuB6joZaphQwIyuo
+	 wK5rTfmks/gxr+fNxdf+t8gAIrDu3QStPImYBCeVjUFYzdJIZnYnBYHKjgZFBFWLahVKH
+	 cwwIWJE4XVDtQqnvI+hQkYiGPOKAtxF+26QeWRBH0UAxs5QTRNsRXt03tAsgEJfM5sg+0
+	 DkSzkMukOIsuGa7nsF8KK5M/dlypx/wQ+kW7u1c7Qj6p0XgHdyNARXrWOOvN/6odb7Q==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=RPApFEWH;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=P9YIFSrB;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 33815606A6AE;
-	Wed, 25 Nov 2026 16:31:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 42B52606A697;
+	Wed, 25 Nov 2026 16:31:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=RPApFEWH
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4B25A1F000D4;
-	Wed, 25 Nov 2026 16:31:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=P9YIFSrB
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8AA421F0089F;
+	Wed, 25 Nov 2026 16:31:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795624276;
-	bh=VpQSGosHzWD3LxG20GsB/ChamafDFUkHi9u9FXG4rhg=;
+	s=korg; t=1795624280;
+	bh=PO8iSxyOY+N0wxJixAcILQmlvyOm+Pl1Vt+p6OEqr08=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=RPApFEWHGj5q0FfutB1nhnrbWX/972NLTDbHpoe2iU80bDgY2Hs6UsHUtqKNWGwI3
-	 MZXXt3ZHqJCKVMXd4vBJHgtU+2mHGiKTMmCGH+cKjxmwDh1zht+wQx1njVjAw/XG1a
-	 hagTFEjQTwtAGEO5FnbZ13aHQ5R+zr1reyx9BgrE=
+	b=P9YIFSrBFT1pqqLGd1K/Lm1b8BxGfDBV3d5tKOKCDPWLBWCQOrIjVYTvoLDoDKgQD
+	 f/tbJg9tM4gTBsSqZKYKO4uvyv60FsTbwZLDpKALd1jtNIITs0tX1PXWe0A2i4kUug
+	 BskJLQZftweUfYZFjSVxD5U7TSN3F8LrneOekNKQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
-	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
-	Mark Brown <broonie@kernel.org>,
+	Daniel Machon <daniel.machon@microchip.com>,
+	Simon Horman <horms@kernel.org>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 142/816] regulator: qcom_spmi: dont take a sleeping lock in the SAW IPI
-Date: Wed, 25 Nov 2026 15:28:10 +0100
-Message-ID: <20261125143852.487528875@linuxfoundation.org>
+Subject: [PATCH 6.12 143/816] net: sparx5/lan969x: release the in-flight slot of a stale TX skb
+Date: Wed, 25 Nov 2026 15:28:11 +0100
+Message-ID: <20261125143852.510695605@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143849.205329330@linuxfoundation.org>
 References: <20261125143849.205329330@linuxfoundation.org>
@@ -69,122 +69,93 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+From: Daniel Machon <daniel.machon@microchip.com>
 
-[ Upstream commit 053c50a7052549aab0d310ad505947db3e211592 ]
+[ Upstream commit 873363ac591a1774aa3ced84f7ea3d93a3eb9b07 ]
 
-The SAW voltage change runs on CPU 0 from an IPI, but it reaches the SAW
-registers through the syscon regmap, which is protected by a spinlock_t.
-That is a sleeping lock on PREEMPT_RT, and lockdep complains as soon as
-VDD_APCC actually changes voltage:
+sparx5_ptp_txtstamp_request() counts every two step TX skb waiting for
+its timestamp in sparx5->ptp_skbs, and refuses new ones once
+SPARX5_MAX_PTP_ID are in flight. sparx5_ptp_txtstamp_old_release()
+frees the skbs that have waited longer than SPARX5_PTP_TIMEOUT.
 
-  BUG: Invalid wait context
-  ...
-  regmap_lock_spinlock+0x18/0x30
-  regmap_read+0x3c/0x78
-  spmi_saw_set_vdd+0x50/0x1ac
-  __flush_smp_call_function_queue+0x1ac/0x334
+Before this patch, old_release() does not decrement ptp_skbs, so every
+skb whose timestamp never arrives, for example because the switch
+discarded the frame, keeps its slot forever. Once SPARX5_MAX_PTP_ID
+slots are lost, two step frames fail to transmit on every port of the
+switch.
 
-Map the SAW with a regmap of our own that uses a raw spinlock, and fail
-the probe when that cannot be done instead of carrying an error pointer
-around as the SAW regmap.
+Return the number of released skbs from old_release() and subtract it
+from ptp_skbs in txtstamp_request(), under the ptp_ts_id_lock it already
+takes.
 
-Fixes: 0caecaa87202 ("regulator: qcom_spmi: Add support for SAW")
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-Link: https://patch.msgid.link/20261019-fix-qcom-saw-v1-3-9c7ba3fc2493@oss.qualcomm.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+This fixes the accounting only. A port's stale skbs are still aged out
+only when that port sends a two step frame, so a port that stops sending
+them keeps its stale skbs, and their slots, until it sends one again.
+That behaviour is unchanged by this patch.
+
+Found by an AI code review agent. Reproduced on a lan9696 board with a
+modified kernel that drops the TX timestamps of two step frames, after
+which two step timestamping stopped working on the port. With the fix,
+timestamping keeps working on that board and on a sparx5 PCB135 board.
+
+Fixes: 70dfe25cd866 ("net: sparx5: Update extraction/injection for timestamping")
+Signed-off-by: Daniel Machon <daniel.machon@microchip.com>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Link: https://patch.msgid.link/20261029-sparx5-ptp-stale-tx-slot-v1-1-ec15f391bbb7@microchip.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/regulator/Kconfig               |  1 +
- drivers/regulator/qcom_spmi-regulator.c | 35 +++++++++++++++++++------
- 2 files changed, 28 insertions(+), 8 deletions(-)
+ drivers/net/ethernet/microchip/sparx5/sparx5_ptp.c | 10 ++++++++--
+ 1 file changed, 8 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/regulator/Kconfig b/drivers/regulator/Kconfig
-index 39297f7d81771..b2201d1bddc9f 100644
---- a/drivers/regulator/Kconfig
-+++ b/drivers/regulator/Kconfig
-@@ -1101,6 +1101,7 @@ config REGULATOR_QCOM_SMD_RPM
- config REGULATOR_QCOM_SPMI
- 	tristate "Qualcomm SPMI regulator driver"
- 	depends on SPMI || COMPILE_TEST
-+	select REGMAP_MMIO
- 	help
- 	  If you say yes to this option, support will be included for the
- 	  regulators found in Qualcomm SPMI PMICs.
-diff --git a/drivers/regulator/qcom_spmi-regulator.c b/drivers/regulator/qcom_spmi-regulator.c
-index d66a0f61637e1..05fe8ba0e7663 100644
---- a/drivers/regulator/qcom_spmi-regulator.c
-+++ b/drivers/regulator/qcom_spmi-regulator.c
-@@ -12,13 +12,13 @@
- #include <linux/bitops.h>
- #include <linux/slab.h>
- #include <linux/of.h>
-+#include <linux/of_address.h>
- #include <linux/of_device.h>
- #include <linux/platform_device.h>
- #include <linux/ktime.h>
- #include <linux/regulator/driver.h>
- #include <linux/regmap.h>
- #include <linux/list.h>
--#include <linux/mfd/syscon.h>
- #include <linux/io.h>
+diff --git a/drivers/net/ethernet/microchip/sparx5/sparx5_ptp.c b/drivers/net/ethernet/microchip/sparx5/sparx5_ptp.c
+index 6b2dbfbeef377..7e665e0892021 100644
+--- a/drivers/net/ethernet/microchip/sparx5/sparx5_ptp.c
++++ b/drivers/net/ethernet/microchip/sparx5/sparx5_ptp.c
+@@ -200,9 +200,10 @@ static void sparx5_ptp_classify(struct sparx5_port *port, struct sk_buff *skb,
+ 	*rew_op = IFH_REW_OP_TWO_STEP_PTP;
+ }
  
- /* Pin control enable input pins. */
-@@ -1332,6 +1332,14 @@ static irqreturn_t spmi_regulator_vs_ocp_isr(int irq, void *data)
- 
- static struct regmap *saw_regmap;
- 
-+static const struct regmap_config saw_regmap_config = {
-+	.name = "saw",
-+	.reg_bits = 32,
-+	.val_bits = 32,
-+	.reg_stride = 4,
-+	.use_raw_spinlock = true,
-+};
-+
- static void spmi_saw_set_vdd(void *data)
+-static void sparx5_ptp_txtstamp_old_release(struct sparx5_port *port)
++static unsigned int sparx5_ptp_txtstamp_old_release(struct sparx5_port *port)
  {
- 	u32 vctl, data3, avs_ctl, pmic_sts;
-@@ -2509,7 +2517,8 @@ static int qcom_spmi_regulator_probe(struct platform_device *pdev)
- 	const char *name;
- 	struct device *dev = &pdev->dev;
- 	struct device_node *node = pdev->dev.of_node;
--	struct device_node *syscon, *reg_node;
-+	struct device_node *saw, *reg_node;
-+	void __iomem *saw_base;
- 	struct property *reg_prop;
- 	int ret, lenp;
- 	struct list_head *vreg_list;
-@@ -2528,12 +2537,22 @@ static int qcom_spmi_regulator_probe(struct platform_device *pdev)
- 	if (!reg)
- 		return -ENODEV;
+ 	struct sk_buff *skb, *skb_tmp;
++	unsigned int purged = 0;
+ 	unsigned long flags;
  
--	syscon = of_parse_phandle(node, "qcom,saw-reg", 0);
--	if (syscon) {
--		saw_regmap = syscon_node_to_regmap(syscon);
--		of_node_put(syscon);
--		if (IS_ERR(saw_regmap))
--			dev_err(dev, "ERROR reading SAW regmap\n");
-+	saw = of_parse_phandle(node, "qcom,saw-reg", 0);
-+	if (saw) {
-+		saw_base = devm_of_iomap(dev, saw, 0, NULL);
-+		of_node_put(saw);
-+		if (IS_ERR(saw_base))
-+			return dev_err_probe(dev, PTR_ERR(saw_base),
-+					     "failed to map the SAW\n");
-+
-+		saw_regmap = devm_regmap_init_mmio(dev, saw_base,
-+						   &saw_regmap_config);
-+		if (IS_ERR(saw_regmap)) {
-+			ret = PTR_ERR(saw_regmap);
-+			saw_regmap = NULL;
-+			return dev_err_probe(dev, ret,
-+					     "failed to set the SAW regmap up\n");
-+		}
+ 	spin_lock_irqsave(&port->tx_skbs.lock, flags);
+@@ -213,8 +214,11 @@ static void sparx5_ptp_txtstamp_old_release(struct sparx5_port *port)
+ 
+ 		__skb_unlink(skb, &port->tx_skbs);
+ 		dev_kfree_skb_any(skb);
++		purged++;
  	}
+ 	spin_unlock_irqrestore(&port->tx_skbs.lock, flags);
++
++	return purged;
+ }
  
- 	for (; reg->name; reg++) {
+ int sparx5_ptp_txtstamp_request(struct sparx5_port *port,
+@@ -222,6 +226,7 @@ int sparx5_ptp_txtstamp_request(struct sparx5_port *port,
+ {
+ 	struct sparx5 *sparx5 = port->sparx5;
+ 	u8 rew_op, pdu_type, pdu_w16_offset;
++	unsigned int purged;
+ 	unsigned long flags;
+ 
+ 	sparx5_ptp_classify(port, skb, &rew_op, &pdu_type, &pdu_w16_offset);
+@@ -232,9 +237,10 @@ int sparx5_ptp_txtstamp_request(struct sparx5_port *port,
+ 	if (rew_op != IFH_REW_OP_TWO_STEP_PTP)
+ 		return 0;
+ 
+-	sparx5_ptp_txtstamp_old_release(port);
++	purged = sparx5_ptp_txtstamp_old_release(port);
+ 
+ 	spin_lock_irqsave(&sparx5->ptp_ts_id_lock, flags);
++	sparx5->ptp_skbs -= purged;
+ 	if (sparx5->ptp_skbs == SPARX5_MAX_PTP_ID) {
+ 		spin_unlock_irqrestore(&sparx5->ptp_ts_id_lock, flags);
+ 		return -EBUSY;
 -- 
 2.53.0
 
