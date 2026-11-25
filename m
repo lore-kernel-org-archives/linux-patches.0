@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795624079;
-	b=uvcWOLdzvVb5H46dYzuvSV6ZsSWgoVZNWanc7ljTx7JIcehBmVT63aHhKQtP4WHBizic
-	 +/Tf2+9KX7JMX1MVgwLj5ls/Z2I0vJCsM5+VUN799B8nU40pMygtoFm1Sg9PICTjB7abQ
-	 38looCHSQuuW1DssG4AuerBCDekPsoFnbeEL+dTAvKVbsHKl5p3IQdqttIZJk1Hhh6psJ
-	 9YkzLIRl7mdhSfUJwofLOfa2p9w+ZQmRpV15VhOCp4hzBX8sjUrQXNSeK0RSCcQDdhl0a
-	 NNDEQmjH3qIMAC9h85qT23ItC/DnOL9tBggZEvqRQZJC/M/+U5v2fVTayi4NWemUwjw==
+	t=1795624082;
+	b=RoSkY4mZPJ0pZyNYrqDd5EkCPPY675hQMyGIAIaoKVEJZBSR6vXDQz6OR7mwXVssUiMw
+	 lWstN+CCXYFFpiSrZfZfLYHzx9YJc9xTy/TjeZSdkc8CQzQj5Ur7qm4ODBWNz/OaluvUG
+	 UJx40lnbl045TAoZRj/QsyEnlgrlvhKIw/N1897tBKhiHn0tLub56zYMJBbaQbDHwfyg6
+	 Qpka0yBJ+kOltBFCwhIUbYNf9DHyBY65ahAlgMFEysctFwn3meYZI0/57xESRgHaJF6Xu
+	 PM+jyK/sAxGW8ve0KQBxigOejRgdz5qt+dw5JENTvsbT2DNorFjkcGHn78/Q1seNOdw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795624079;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795624082;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=b5xRaFNnNIV86zm1BnZdq/tsM3vaQgHx1MvsJAr0Ab0=;
-	b=MkkdEjM4/9HdN8RqSwLa2ifCq3lhfO0PN9C4CVxRMTXwPkRYZnTnrtF8kQ7ReVIkkIYL
-	 eK0CsrYbHG+pmb0Gb7QfYt2A+iGVe76rn3d9scC9S4kHfru8hO2bvYXsYgMtOB89pb6ww
-	 MO5K2Eec12APw1LyrbQm+PF8O4Fn+R28YGWXCX1uqLVBQfHJGhcpIEWC7I9Sy5QJfnzu7
-	 vUdHv/WFn5m6ED+gtexzyY+92aU7T7fjHg7PDayfzT4QnrAqfMkXPloFV0yDDecM6kbnE
-	 pDou0ddi2A/b1bd6Q4P3MsIo5m5hsWpEtGPtDXXztKyVoPrA/585QibFceb2I4+JM2g==
+	bh=xAw3gwoKJ4COdzCxmvjrCNqwBnuU0fdxCoSY5gE+Xy8=;
+	b=J9Yp+apDl9g8cNpGUPUxRyqcO02OeU8IZalKQicewxk7zRcU4DQbXE+b1bvBLFW86MPw
+	 1ZNGH2mauuutplY18rptK2NNd1nBBQMufRUmh1rpuLq8cQEDN1kZhpk49kXGmyVlBpc/H
+	 xv6LE1vIg8ixUemImRweXXaPEZZO23PPzcBY3XwV8ThhWFu/TAsmrfysiGm7PfxJrRVh1
+	 lzLgFr9dPYnIH8mwGcdvxmZzq0PxYKdZc/ony/ZjCibgSvBTqt8HlQVlpxBzXpB2IEOta
+	 y1UqjSAWu+h8HL3YYzPUQUR7QWeIjne/MkRH5H4Wd0dVqDvS81w7RfWUMre2xVR3+VQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=0LBtiSqa;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=DnCNZIlB;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AB38D606A32C;
-	Wed, 25 Nov 2026 16:27:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D4051606A323;
+	Wed, 25 Nov 2026 16:28:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=0LBtiSqa
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E30D01F000D2;
-	Wed, 25 Nov 2026 16:27:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=DnCNZIlB
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 22E111F000C6;
+	Wed, 25 Nov 2026 16:28:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795624079;
-	bh=b5xRaFNnNIV86zm1BnZdq/tsM3vaQgHx1MvsJAr0Ab0=;
+	s=korg; t=1795624082;
+	bh=xAw3gwoKJ4COdzCxmvjrCNqwBnuU0fdxCoSY5gE+Xy8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=0LBtiSqaHWLPSIaeGNKMfvn5Dm1+9SpQdem3OwUV+LouXqlFi6v+wkxgBWVNqEL83
-	 klPcxe8+kzdG532nG9P528W+qoqQl+LR3U5s44tP2mMQXWxGJf9zT9zDEX3gYyynCA
-	 /uER86cjQItVnAjvtA9PEDGvXmbRqMgIBzUiIPgY=
+	b=DnCNZIlBU0rCD21TPyWEyJ6iJkr+jc31NS99VzjCYuB1RUS51JLlNfZg3Y7bwOKEi
+	 KdonRdl+8TzkTy6Pt81PMimYFdPc13fRI5pu2fBDscLKNxXeiNz52ep7NRLCkcYhlo
+	 nP9OY+lRUJ84MLPdEEAOoN31v9TTKSiDs/a5cDds=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vadim Fedorenko <vadim.fedorenko@linux.dev>,
-	James Hilliard <james.hilliard1@gmail.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Yang Xiuwei <yangxiuwei@kylinos.cn>,
+	Jens Axboe <axboe@kernel.dk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 077/816] ptp: drain virtual clock sysfs operations before unregistering children
-Date: Wed, 25 Nov 2026 15:27:05 +0100
-Message-ID: <20261125143851.004452298@linuxfoundation.org>
+Subject: [PATCH 6.12 035/816] io_uring/rw: fail soft links on IOPOLL short or error IO
+Date: Wed, 25 Nov 2026 15:26:23 +0100
+Message-ID: <20261125143850.032311242@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143849.205329330@linuxfoundation.org>
 References: <20261125143849.205329330@linuxfoundation.org>
@@ -69,82 +68,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: James Hilliard <james.hilliard1@gmail.com>
+From: Yang Xiuwei <yangxiuwei@kylinos.cn>
 
-[ Upstream commit 0e4a135aebc7686286d87e286499ce55e5bd5aad ]
+Commit 4d3db66c5363dcf42c3d43ebaea330ac2d1888bb upstream.
 
-Parent clock removal walks its virtual clocks before removing the
-n_vclocks sysfs attribute. The mutex taken by ptp_vclock_in_use() is
-released before that walk, so a concurrent sysfs deletion can pick the
-same child and unregister and free its ptp_vclock a second time. A
-reference held by the device iterator does not protect that separately
-allocated virtual clock.
+io_complete_rw_iopoll() updates cqe.res when the transfer does not
+match the requested length, but it does not call req_set_fail().
+Soft linked requests then still run after a short or failed IOPOLL
+read or write.
 
-Remove n_vclocks before walking the children. Removing the attribute
-prevents new stores and drains stores already running, without holding
-n_vclocks_mux across a callback that needs that mutex. Skip virtual
-clocks, which do not have this attribute.
-
-This race was found by code inspection of virtual-clock registration
-failure cleanup and parent removal.
-
-Fixes: bfcbb76b0f59 ("ptp: unregister virtual clocks when unregistering physical clock.")
-Reviewed-by: Vadim Fedorenko <vadim.fedorenko@linux.dev>
-Signed-off-by: James Hilliard <james.hilliard1@gmail.com>
-Link: https://patch.msgid.link/20261026-ptp-vclock-sampling-v6-1-e705612541f1@gmail.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: b66ceaf324b3 ("io_uring: move iopoll reissue into regular IO path")
+Signed-off-by: Yang Xiuwei <yangxiuwei@kylinos.cn>
+Link: https://patch.msgid.link/20261114072246.741950-3-yangxiuwei@kylinos.cn
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/ptp/ptp_clock.c   | 5 +++++
- drivers/ptp/ptp_private.h | 1 +
- drivers/ptp/ptp_sysfs.c   | 6 ++++++
- 3 files changed, 12 insertions(+)
+ io_uring/rw.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/ptp/ptp_clock.c b/drivers/ptp/ptp_clock.c
-index 03c17b1db7aac..52849072e4372 100644
---- a/drivers/ptp/ptp_clock.c
-+++ b/drivers/ptp/ptp_clock.c
-@@ -424,6 +424,11 @@ static int unregister_vclock(struct device *dev, void *data)
+diff --git a/io_uring/rw.c b/io_uring/rw.c
+index b18b10cdbb524..688ce923f6a3c 100644
+--- a/io_uring/rw.c
++++ b/io_uring/rw.c
+@@ -553,8 +553,10 @@ static void io_complete_rw_iopoll(struct kiocb *kiocb, long res)
  
- int ptp_clock_unregister(struct ptp_clock *ptp)
- {
-+	/*
-+	 * Stop and drain virtual-clock creation and deletion before walking the
-+	 * children. Do not hold n_vclocks_mux while waiting for sysfs callbacks.
-+	 */
-+	ptp_vclock_remove_sysfs(ptp);
- 	if (ptp_vclock_in_use(ptp)) {
- 		device_for_each_child(&ptp->dev, NULL, unregister_vclock);
- 	}
-diff --git a/drivers/ptp/ptp_private.h b/drivers/ptp/ptp_private.h
-index f329263f33aa1..5ac416074ad26 100644
---- a/drivers/ptp/ptp_private.h
-+++ b/drivers/ptp/ptp_private.h
-@@ -167,6 +167,7 @@ extern const struct attribute_group *ptp_groups[];
+ 	if (res == -EAGAIN && io_rw_should_reissue(req))
+ 		req->flags |= REQ_F_REISSUE | REQ_F_BL_NO_RECYCLE;
+-	else if (unlikely(final_res != req->cqe.res))
++	else if (unlikely(final_res != req->cqe.res)) {
++		req_set_fail(req);
+ 		req->cqe.res = final_res;
++	}
  
- int ptp_populate_pin_groups(struct ptp_clock *ptp);
- void ptp_cleanup_pin_groups(struct ptp_clock *ptp);
-+void ptp_vclock_remove_sysfs(struct ptp_clock *ptp);
- 
- struct ptp_vclock *ptp_vclock_register(struct ptp_clock *pclock);
- void ptp_vclock_unregister(struct ptp_vclock *vclock);
-diff --git a/drivers/ptp/ptp_sysfs.c b/drivers/ptp/ptp_sysfs.c
-index 0d4b081daf639..998de4be08ebd 100644
---- a/drivers/ptp/ptp_sysfs.c
-+++ b/drivers/ptp/ptp_sysfs.c
-@@ -267,6 +267,12 @@ static ssize_t n_vclocks_store(struct device *dev,
- }
- static DEVICE_ATTR_RW(n_vclocks);
- 
-+void ptp_vclock_remove_sysfs(struct ptp_clock *ptp)
-+{
-+	if (!ptp->is_virtual_clock)
-+		device_remove_file(&ptp->dev, &dev_attr_n_vclocks);
-+}
-+
- static ssize_t max_vclocks_show(struct device *dev,
- 				struct device_attribute *attr, char *page)
- {
+ 	/* order with io_iopoll_complete() checking ->iopoll_completed */
+ 	smp_store_release(&req->iopoll_completed, 1);
 -- 
 2.53.0
 
