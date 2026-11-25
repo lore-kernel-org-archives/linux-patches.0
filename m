@@ -1,52 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795619166;
-	b=1vYc5+3ddwrAfQ6G8tUvhRUc4L2JLUJpUX7aZ7vYeIL5X12MjlsOEDJX3xJItTyZJ3ll
-	 /sDqr4/tOP5smgm3e+s0kiLQcShODP2m0XYJlOpzlKCFTa3O1v2+9gOV5+YcnYtS2h0v/
-	 292I99qSUTLhzZLqG7fRWUKDjdQUWOO3wYFUGVVdvYVy5CIwNsUrWLn3g3Okyt3uX3w//
-	 Sm+Wkw8FV8ASvBs9NRMWPtwW468bcvmhxqTWs3AwOybpbRhh+CVrzmG8eHHYK/5QFhs+o
-	 AhXLUNORB+Q4G0t4z2tFVpoPDnYimmMpcRHj/L9yPUNiVEsS6/cJIoPKoDKLiW+CPBA==
+	t=1795619169;
+	b=aDajzRoRIdadmcLU/g0fTOSL+ibsgPlj4yuOB4EP+WKLdhmsrYlOBXSHge2SPrlnUBf7
+	 7Wci4ops/KT0hVqLGlKQDEFzSoN5LpOVBStoPD8TFal6/kdZ99rk13NOAfesZtjFqizHZ
+	 wDVnUeI1sX0Uy0GFOM8vaAkxjzugKpprD/6S3qu6fPmrVdOX8mJTOtx7tzkSOVpmwVsNl
+	 Uz2K10+J9FbxshY9pUW6smywc0+8gCr0qozFmYGmNhwpD3WB8K3/HBc2KC4lm/3mlKvTv
+	 rD/0ahdlueo0SmHtht3dEe3Qnv/WOfyDTifgBiA6Bh8oFo3R8bs/P+hOIMZ8ZNSJpbQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795619166;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795619169;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Transfer-Encoding;
-	bh=2MitvDivMq5OAY/MdswFI6K4eZW+DAnas2ZLoiOqYjk=;
-	b=ZtSo2qF3W5JW1XYQJQHZ+G4a4MWn/4tDSJZae8+7GAM3NEGoqBf8tSpx9OMUVdXwkvu0
-	 4dy5zZDRmPVaTmfBfN8cmHnBmkN9Xzlm59cA2SZe7tP5tBnS77r+zwhEMwAkGojAMa3qf
-	 jPCgzcKZdHO4wwzlTPgUpJezFxTiMJO0srAX+UwlXVQx5Mui4HNU3cNkEuxk/nFLEAz6K
-	 eSqzo8w4sBU+ZeaSVawDSaXEK0WXUeVa1HZs1mBhQL8K5NIe2I8kuFbyq3sAKH+6xnQaD
-	 KZanuTi/iZ7BpA8Agm+6e7ZGqkmmO22TiAe+ptvgBXnnOvIxAIdjIn2lqURvU2KEwPw==
+	 MIME-Version:Content-Type:Content-Transfer-Encoding;
+	bh=hGwApIr3Yfkn8sCwjBSdbRrBKXpwdhMe0+AcgTHNwo8=;
+	b=H1Qoelrqoj2MGQ6qGyCLiA4YYvwwJ98Nc8ZvyUsDmAbDnKh5clUP7BxfTTl2eycRSdl7
+	 633W4eTRGImqLZ8CDkrXs74D/9ejRVDwrr6KjWWhd4ekKh39lQtmByayau+h/7Cz2RYr7
+	 GEIlWC9007NY9klf74nyk1CVBaJdnzBoiVEnYBsC93rE2A4KGGQkd3M0NUJDB8gXH7XUG
+	 TEUwinDY1cGgRCxnxkcDeILFNLAYrGhUfONelTgB8rpDUzL/ZfJIdWvu9ieZfHtj4BSEg
+	 lVxdixdp0nkcn8y8bQzP976AxX4WfLtJENtdp+gUM5H4WhllJngzo3vCJp447OqcVyA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=xTiXxTdJ;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="txRoe/GX";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 44E48606A32E;
-	Wed, 25 Nov 2026 15:06:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8F8CB606A321;
+	Wed, 25 Nov 2026 15:06:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=xTiXxTdJ
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 93CCA1F000C6;
-	Wed, 25 Nov 2026 15:06:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=txRoe/GX
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C7A731F000C0;
+	Wed, 25 Nov 2026 15:06:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795619166;
-	bh=2MitvDivMq5OAY/MdswFI6K4eZW+DAnas2ZLoiOqYjk=;
+	s=korg; t=1795619169;
+	bh=hGwApIr3Yfkn8sCwjBSdbRrBKXpwdhMe0+AcgTHNwo8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=xTiXxTdJsOPXX5HrRHm/skTN7ZbmN8KVIv0+xhcnDecjTQd2AIZiON+QmmT9EjYI8
-	 LpMaRA3hC2d5UEJgkxdZMvxqMn1NmWicfv5Ni3qSAD1nZcKuv0yWMlvtOS9p/KijgX
-	 toJyzEWafnk7Ogp0IcNz4fR+sEhxWZPllOJPhU98=
+	b=txRoe/GXwdrCwTE8MVw3GqGhGgqJY7dCGs8xjJ093revukm1IVa0AhHaotMm4oS4X
+	 y4/OCIDKhZUUMmTdIk+MfAvTm4h4DVehIADOPHAPTGsmc10Wvwe0iesh7ZNFNFGe7R
+	 7kkACjsmnd3uoXsQtqfjCvrp7B9hdCIPMhMhHWbY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Janne Grunau <j@jannau.net>,
-	Mark Brown <broonie@kernel.org>,
+	Ankit Nautiyal <ankit.k.nautiyal@intel.com>,
+	=?UTF-8?q?Jouni=20H=C3=B6gander?= <jouni.hogander@intel.com>,
+	Mika Kahola <mika.kahola@intel.com>,
+	Joonas Lahtinen <joonas.lahtinen@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0512/1005] ASoC: apple: mca: Fix clock selection for clock consumer FEs
-Date: Wed, 25 Nov 2026 15:30:50 +0100
-Message-ID: <20261125143833.738338899@linuxfoundation.org>
+Subject: [PATCH 7.3 0513/1005] drm/i915/psr: Flush on cursor update also when not using Selective Fetch
+Date: Wed, 25 Nov 2026 15:30:51 +0100
+Message-ID: <20261125143833.762899379@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143821.729802100@linuxfoundation.org>
 References: <20261125143821.729802100@linuxfoundation.org>
@@ -62,82 +64,62 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 7.3-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Janne Grunau <j@jannau.net>
+From: Jouni Högander <jouni.hogander@intel.com>
 
-[ Upstream commit d9bcb20e403908415809c37b96db4c9d651298cc ]
+[ Upstream commit 6b3ea5a07eac0514623da3d0709b34c8c70f2827 ]
 
-In commit 00309bfb1f54 ("ASoC: apple: mca: Support FEs being clock
-consumers") the syncgen clock selection was misunderstood resulting in
-selecting a random clock. In the capture on multiple BEs for IV sense
-data use case the configuration worked partially by sheer luck. On
-Macbook Pro's with 6 speakers it could result in desync IV sense data
-triggered likely by sample rate changes.
-When the FE is a clock consumer select the clock of first used BE as
-SYNCGEN_MCLK.
-Add function like macros to determine the clock index based on the FE or
-BE number.
-This is functionally equivalent to the state sent in v2 of "ASoC: apple:
-mca: support simultaneous I2S capture on the frontend" in [1].
+Currently we are not doing flush on cursor update if Selective Fetch is not
+in use. This does not cause problems in PSR cases as enabling VBI is
+triggering PSR exit which triggers sending update to panel. In case of
+Panel Replay this does not happen. This causes legacy cursor update not
+working if using Panel Replay without Selective Updates.
 
-Link: https://lore.kernel.org/all/20260628-apple-audio-redux-v2-4-6328269c9652@gmail.com/ [1]
-Fixes: 00309bfb1f54 ("ASoC: apple: mca: Support FEs being clock consumers")
-Fixes: 108a14b20f95 ("ASoC: apple: mca: Support capture on multiples BEs")
-Signed-off-by: Janne Grunau <j@jannau.net>
-Link: https://patch.msgid.link/20261110-snd-soc-apple-mca-capture-multiple-be-v1-1-d9569a8374c5@jannau.net
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Dc3co is currently not enabled. Anyways there is no reason to differentiate
+calling psr2_dc3co_flush_locked on cursor update depending on selective
+fetch being enabled. So remove this dependency.
+
+v2:
+  - Keep DC3CO handling for cursor updates.
+
+Fixes: 129a4da11707 ("drm/i915/psr: Use TRANS_PUSH to trigger frame change event")
+Cc: Ankit Nautiyal <ankit.k.nautiyal@intel.com>
+Signed-off-by: Jouni Högander <jouni.hogander@intel.com>
+Reviewed-by: Mika Kahola <mika.kahola@intel.com>
+Link: https://patch.msgid.link/20261102100051.272137-2-jouni.hogander@intel.com
+(cherry picked from commit 043ab39fe2daad32f15fe77cf787a759f3f73512)
+Signed-off-by: Joonas Lahtinen <joonas.lahtinen@linux.intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/apple/mca.c | 10 +++++++---
- 1 file changed, 7 insertions(+), 3 deletions(-)
+ drivers/gpu/drm/i915/display/intel_psr.c | 7 +++----
+ 1 file changed, 3 insertions(+), 4 deletions(-)
 
-diff --git a/sound/soc/apple/mca.c b/sound/soc/apple/mca.c
-index be702b2942a53..ec3636f9dc86e 100644
---- a/sound/soc/apple/mca.c
-+++ b/sound/soc/apple/mca.c
-@@ -53,6 +53,8 @@
- #define SYNCGEN_STATUS_EN	BIT(0)
- #define REG_SYNCGEN_MCLK_SEL	0x104
- #define SYNCGEN_MCLK_SEL	GENMASK(3, 0)
-+#define SYNCGEN_MCLK_FE_CLK(n)	((n) + 1)
-+#define SYNCGEN_MCLK_BE_CLK(n)	((n) + 7)
- #define REG_SYNCGEN_HI_PERIOD	0x108
- #define REG_SYNCGEN_LO_PERIOD	0x10c
+diff --git a/drivers/gpu/drm/i915/display/intel_psr.c b/drivers/gpu/drm/i915/display/intel_psr.c
+index 01c36ea315fa6..b68859c31d175 100644
+--- a/drivers/gpu/drm/i915/display/intel_psr.c
++++ b/drivers/gpu/drm/i915/display/intel_psr.c
+@@ -3717,12 +3717,11 @@ void intel_psr_flush(struct intel_display *display,
+ 		if (intel_dp->psr.pause_counter)
+ 			goto unlock;
  
-@@ -313,7 +315,8 @@ static int mca_fe_enable_clocks(struct mca_cluster *cl)
- 		return -EINVAL;
- 	}
+-		if (origin == ORIGIN_FLIP ||
+-		    (origin == ORIGIN_CURSOR_UPDATE &&
+-		     !intel_dp->psr.psr2_sel_fetch_enabled)) {
++		if (origin == ORIGIN_FLIP || origin == ORIGIN_CURSOR_UPDATE)
+ 			psr2_dc3co_flush_locked(intel_dp, frontbuffer_bits);
++
++		if (origin == ORIGIN_FLIP)
+ 			goto unlock;
+-		}
  
--	writel_relaxed(cl->no + 1, cl->base + REG_SYNCGEN_MCLK_SEL);
-+	writel_relaxed(SYNCGEN_MCLK_FE_CLK(cl->no),
-+		       cl->base + REG_SYNCGEN_MCLK_SEL);
- 	mca_modify(cl, REG_SYNCGEN_STATUS, SYNCGEN_STATUS_EN,
- 		   SYNCGEN_STATUS_EN);
- 	mca_modify(cl, REG_STATUS, STATUS_MCLK_EN, STATUS_MCLK_EN);
-@@ -390,7 +393,7 @@ static int mca_fe_prepare(struct snd_pcm_substream *substream,
- 
- 	/* Turn on the cluster power domain if not already in use */
- 	if (!cl->syncgen_in_use) {
--		int port = ffs(mca_fe_get_portmask(substream));
-+		int port = ffs(mca_fe_get_portmask(substream)) - 1;
- 
- 		cl->pd_link = device_link_add(mca->dev, cl->pd_dev,
- 					      DL_FLAG_STATELESS | DL_FLAG_PM_RUNTIME |
-@@ -401,7 +404,8 @@ static int mca_fe_prepare(struct snd_pcm_substream *substream,
- 			return -EINVAL;
- 		}
- 
--		mca_modify(cl, REG_SYNCGEN_MCLK_SEL, SYNCGEN_MCLK_SEL, BIT(port));
-+		mca_modify(cl, REG_SYNCGEN_MCLK_SEL, SYNCGEN_MCLK_SEL,
-+			   SYNCGEN_MCLK_BE_CLK(port));
- 		mca_modify(cl, REG_SYNCGEN_STATUS, SYNCGEN_STATUS_EN,
- 			   SYNCGEN_STATUS_EN);
- 	}
+ 		if (pipe_frontbuffer_bits == 0)
+ 			goto unlock;
 -- 
 2.53.0
 
