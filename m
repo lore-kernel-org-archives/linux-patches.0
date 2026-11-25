@@ -1,51 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795621123;
-	b=ALNOUZgpvGlQ4TzELhNLJHnDXPYUcT5QP8xhrTFe3lpY4fBuD5uLB97lpPkiehRx9H1q
-	 cAl2/veFwsikJuomGSeswRnva2S0S63ubc3yGCMbwa3AlUDUrIMxuqRUg9mB4P2IVg9b3
-	 XQa2OZ9pdqwxKXGQTCEvLpj7XPtXzk0osOLaWL9+GDAx3sG8+uzQpzJPQXNegwoHDQtAX
-	 1Wo2fH3fXU/9SvvIn06kdaqe6NrbFthww3x+cCUh3DdxQHCHrBHjcM2NHg+Pjlicg1QK1
-	 kKvMWUxJMwv1s2Jp8uISnHBcM9jJ9CIlrWas9/OH1tcnLVhjDFr8KPWavwNuCRcBaKg==
+	t=1795621126;
+	b=1dJVSuE49W5GL9g+6jt/BRZi3uxIIM77Hx6tNdRz7yNoZkiHkH5FKi7lwOHlj3StR8/O
+	 q8kVoN1OnHQ3/A/ytsM7+bkGNjhGOP4awmQaLjDMV1IpzMXEY5pZg8UGgYBYAqX0v6/4W
+	 dJC0ywGyXWtnFlfKuJkaIQ5IdGi+sLSMLoh84pB5GYMLso8hOQOKFWyS7raPRTpefjXkM
+	 6fJ2encUkhD1ezQFY0kzwLUaOVaxlENKfZxFDlfN9KULX+bbZ4m822AWckAaJ2wG7ScaR
+	 OdM1LWlX8kWQDfADsw6zIt/f8w+l1qroslfj1hGcNggak0G/in3Jl86nnUX1iWHcXlQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795621123;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795621126;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=lqtGtaIIbOTQvm1ZlXKb1ZwkrIf82mC7dFrWnLh37pg=;
-	b=X/rgTzujdCoDIo7Moc5e/SrHu75/DURUXCWS5R0FzVF+v59tBiXgAHi0yTefFFrjpOFN
-	 +Z/vv9yuzrZaiPnXlzQ48HpX3NICSsK08r9ObjTr76TSHTQ+0mqtLNBzsASP5QBqDFJFp
-	 zP/wC6khu3ySq6+fIHaiuYbwsouc2Ye0RvTJdI9pJYF1erz7UzjC9oY6pFWRNgsTF2fhy
-	 sUSqIRBV+0rH03jZJYnObNhtd9BNB/AhmNht2X1g961TqSofVxSUkwBjaK8JZ2/CmKn0Y
-	 qDUXpuyvp/T0NPw1l7sXF9zWpUhzSQGzxPj+44YTqJ3j+8AQ3NQbGYh99C4So2rlwIQ==
+	bh=bI/jXQ2KapG8aHPP+TmdFQTz2YIR1oOoJZuC/bjx4x0=;
+	b=aTcmiN4ZSUq4uGPGu40y/xp5GLswOG83ddflG+/ITlQsyw1G4QN4z3lylpkcZiqISKbz
+	 ZjzPd1sby/KUCZFdl+LE4P/LhLH0fuNdfMSqNh0sdXV0UxsrfgDnYTPyseJGRiq4V9799
+	 azRs+1eYEuCTgbeZfzBf/Ocpb9VWh1aE7TWq/iYj6OltjyXcXJTAyxcAkhExZ7tFKZ9ZC
+	 LOH7dZoaGxZtSQvpXNZli0rvsXiRrnbKNma1+q1XZ2rBXR1Ac5eoemMpxG/eigm1Co6tn
+	 /WpbqODsg2WwBgDlLTglN4hyDvyjFQQbRDbZ+8oxsg/Em9ZltgWh6Prum73NdZm2MTA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=bOxaOMrJ;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=SqTeHVhQ;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8270C606A323;
-	Wed, 25 Nov 2026 15:38:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5879F606A31E;
+	Wed, 25 Nov 2026 15:38:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=bOxaOMrJ
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D5A981F000C6;
-	Wed, 25 Nov 2026 15:38:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=SqTeHVhQ
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A91F61F000CA;
+	Wed, 25 Nov 2026 15:38:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795621123;
-	bh=lqtGtaIIbOTQvm1ZlXKb1ZwkrIf82mC7dFrWnLh37pg=;
+	s=korg; t=1795621126;
+	bh=bI/jXQ2KapG8aHPP+TmdFQTz2YIR1oOoJZuC/bjx4x0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=bOxaOMrJ4FeQrA9SqH6WQ0F5eHaFHq/cLZEvJrFUXsBt656cLB38Ex3IVtUGSPPYI
-	 fwbuvtNV4V8m+7CPTg4i3puujqMpIt8o2JFWykopoEwDzId6fcvqqKnopTWa6tEIiz
-	 9BsVTpLL4yw/MOLzxwOcJTT8du1zxIVVdpsm6Bgw=
+	b=SqTeHVhQ0BXkSzC1LOtnALNPMAVujudIU/xtS9IWPNQWH0INDwZrJhmxFm4sFnjsH
+	 kStVFLdaq3ytLX8HUiEoUC8WiCiq/oWuZKAY0NofaG+Fi7VNoNiyoiwo+EjP4GwtBB
+	 ekBAnz8CRChs18oDSEN4RSxjDkfO3sjGjOdSAAow=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Yuqiang Sun <izaiahsun@gmail.com>,
 	Alexei Starovoitov <ast@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 112/990] bpf: Clamp the trace length before the skip test in stackid_init()
-Date: Wed, 25 Nov 2026 15:24:39 +0100
-Message-ID: <20261125143824.712258509@linuxfoundation.org>
+Subject: [PATCH 6.18 130/990] bpf: lwt: Free the skb when bpf_xmit() fails to expand the headroom
+Date: Wed, 25 Nov 2026 15:24:57 +0100
+Message-ID: <20261125143825.131725939@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143822.072087159@linuxfoundation.org>
 References: <20261125143822.072087159@linuxfoundation.org>
@@ -67,63 +68,63 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alexei Starovoitov <ast@kernel.org>
+From: Yuqiang Sun <izaiahsun@gmail.com>
 
-[ Upstream commit a08ba2ab79dffd92c32d3f2dadfc7eba03625a2b ]
+[ Upstream commit 5e96760b25fdedbbf9312827f1f237d6b18b03e8 ]
 
-stackid_init() gives a bucket of the stack map
-min(trace_nr - skip, max_depth - skip) trace entries. Here max_depth is the
-size of a bucket plus skip, but at most perf_event_max_stack. Context
-markers can make trace_nr larger than that, so the skip test can pass when
-max_depth < skip. Then 'max_depth - skip' wraps, and the kernel can write
-after the bucket.
+When an LWT xmit program returns BPF_OK, bpf_xmit() makes sure that
+the skb still has room for the link layer header. If
+pskb_expand_head() fails there, bpf_xmit() returns -ENOMEM without
+freeing the skb. Its callers, lwtunnel_xmit() and then
+ip_finish_output2() or ip6_finish_output2(), take any return value
+other than LWTUNNEL_XMIT_CONTINUE to mean that the skb has been
+consumed, so nothing frees it.
 
-Clamp trace_nr to max_depth before the skip test, as __bpf_get_stack_pe()
-does. The result changes only when skip >= max_depth. Then it is -EFAULT.
-Until now skip == max_depth could give the id of an empty trace.
+Each such failure leaks the skb, together with what it holds: its dst
+and its charge to the sending socket, so the socket is never freed
+either. The other error paths of bpf_xmit() (BPF_DROP, an illegal
+return code, a changed protocol, a failed reroute) all free the skb.
 
-get_perf_callchain() releases the trace, so an NMI can change trace->nr.
-Use READ_ONCE() in bpf_get_stackid(), so the compiler reads it one time.
+Free it here too.
 
-Fixes: 23f852daa4ba ("bpf: Fix stackmap overflow check in __bpf_get_stackid()")
+The leak was found with kbound, a static analysis prototype for
+ownership mismatches at kernel interfaces, on v7.2.12; it is present in
+mainline.
+
+Build-tested with x86_64 and arm64 allmodconfig (W=1, sparse): no new
+warnings. Run-tested on QEMU (x86_64, KVM) with KASAN: a route through a
+dummy device with an LWT xmit program that pushes one byte with
+bpf_skb_change_head(), so the headroom check has to expand the head, and
+failslab limited to allocations under bpf_xmit(). Each of 10 pings then
+fails with ENOMEM. Without this patch each leaves a raw socket behind
+(RAW slab objects 6 -> 16); with it none does (6 -> 6), and nothing else
+is reported. Without injection both kernels go from 6 to 6.
+
+Fixes: 3a0af8fd61f9 ("bpf: BPF for lightweight tunnel infrastructure")
+Signed-off-by: Yuqiang Sun <izaiahsun@gmail.com>
 Signed-off-by: Alexei Starovoitov <ast@kernel.org>
-Link: https://patch.msgid.link/20261101190535.1454146-3-alexei.starovoitov@gmail.com
+Link: https://patch.msgid.link/20261101182343.17991-1-izaiahsun@gmail.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/bpf/stackmap.c | 9 ++++++---
- 1 file changed, 6 insertions(+), 3 deletions(-)
+ net/core/lwt_bpf.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/kernel/bpf/stackmap.c b/kernel/bpf/stackmap.c
-index 128c8d61070e4..aa87e8d2d7d2e 100644
---- a/kernel/bpf/stackmap.c
-+++ b/kernel/bpf/stackmap.c
-@@ -401,12 +401,14 @@ static int stackid_init(struct stackid *stackid, struct bpf_map *map,
- 	u32 skip = flags & BPF_F_SKIP_FIELD_MASK;
- 	u32 max_depth;
+diff --git a/net/core/lwt_bpf.c b/net/core/lwt_bpf.c
+index 982599bb41c97..6d29da9f5460b 100644
+--- a/net/core/lwt_bpf.c
++++ b/net/core/lwt_bpf.c
+@@ -341,8 +341,10 @@ static int bpf_xmit(struct sk_buff *skb)
+ 			 * made before LWT xmit.
+ 			 */
+ 			ret = xmit_check_headroom(skb, hroom);
+-			if (unlikely(ret))
++			if (unlikely(ret)) {
++				kfree_skb(skb);
+ 				return ret;
++			}
  
-+	max_depth = stack_map_calculate_max_depth(map->value_size, stack_map_data_size(map), flags);
-+	/* trace_nr can be above max_depth and max_depth below skip: clamp first */
-+	trace_nr = min_t(u32, trace_nr, max_depth);
- 	if (trace_nr <= skip)
- 		/* skipping more than usable stack trace */
- 		return -EFAULT;
- 
--	max_depth = stack_map_calculate_max_depth(map->value_size, stack_map_data_size(map), flags);
--	stackid->nr = min_t(u32, trace_nr - skip, max_depth - skip);
-+	stackid->nr = trace_nr - skip;
- 	stackid->len = stackid->nr * sizeof(u64);
- 	stackid->ips = trace->ip + skip;
- 	stackid->hash = jhash2((const u32 *)stackid->ips, stackid->len / sizeof(u32), 0);
-@@ -521,7 +523,8 @@ BPF_CALL_3(bpf_get_stackid, struct pt_regs *, regs, struct bpf_map *, map,
- 			/* couldn't fetch the stack trace */
- 			return -EFAULT;
- 
--		err = stackid_fastpath(&stackid, map, trace, trace->nr, flags);
-+		/* the entry is released already, an NMI can change trace->nr */
-+		err = stackid_fastpath(&stackid, map, trace, READ_ONCE(trace->nr), flags);
- 		if (err != -ENOENT)
- 			return err;
- 
+ 			return LWTUNNEL_XMIT_CONTINUE;
+ 		case BPF_REDIRECT:
 -- 
 2.53.0
 
