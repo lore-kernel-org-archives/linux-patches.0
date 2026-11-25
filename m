@@ -1,42 +1,42 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795617658;
-	b=S+kOYLXV1PUMRePi/cgarB10hgtCRJmQGHg6w1Vh5IBYAv2kF2q8G3Feui4mp9A5JMGN
-	 6KyeRTPyVgX4XE0mMXecRUePOHc/wS4lGpANIhYekG7MuAizjjc3E8nvj9rPerGDaYsk8
-	 Yvh13VvU/7HhTfaqSaBu87c3u9EgQ8ZxXAIv6AB8AvIpQC2xTWtH3nTQsZ8oiJ81bF1kC
-	 jQJ9WOj8AoqhQVIQ9+dx6iQtM4zL5P2dukH2ga/GFnFuw+skNy/vX2v2mR/pet+Kx/fBm
-	 v73MQAWCllTn2WcebjMhxtS99HzyKPmmjx/risE3FEmnSVrsN8M2Y9jcMqEoPuKUn5A==
+	t=1795617661;
+	b=wEjIQ6JsH3CF6XepyjdwJBk28PRpxvwGPlnIZ420FjBwgBoGNYQQs/bgnlpe68fUsIqo
+	 M2wtMTF8KTM7aYXMzRggYwb6KxkhPKEkUTJtmBaOwAWNBzCa/veifFfMfDFTGdrOqD+qX
+	 f68pHtKgb1RD/pCnzxrLNFb00fSE4qUP4c3m7gMRWMxEMUkV/zTHc8tcJRl9WNpCGndbG
+	 1WANWpGvsmhSER90aVpBln4KfwCiRNGpT/Fa9JQMZJaURGmQS7eTUAMiPV5tX8EDH0akg
+	 lWI5AU4LHJ76JSUrTE1luzMr1B4kb05MhCs8UT+1RPPgAmHWSIjF/2sx8I5Li6ZFvhQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795617658;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795617661;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=h/YrPR/LCS+ggtZg1hjEaP4eUCtOUuH4ZZOwU0E+1bs=;
-	b=nykBr2Ssy+9qLOkgIbfBxqAqIifd7bvhtkIzlaCNcRlyoWkcO8YyuiA0D0qwIXc/VNxW
-	 jIdnZlEFo/Z8bIBMGTEKlVBkkWXzDObTVdmkemPfj915hbk7kHFaIJT9kaufVhJbDZceQ
-	 Ky6NzxGq4ShQhXSItd5HAL1bSU75A/Huhi7sQAmzYQmOFdDzgukJ7BWelAQtFiP1fNwIi
-	 FRgfmcbiZ8Wn19hx8BPTDzC7I/PYvUATvZSmrfjquTP91S4cCTwOXcr3f2cD7XeRXBXpF
-	 viXC7f/KqUs8aHl+6Ib5Sixw5Ysc5CDqTBWQqEt+zpYb3N4MvarA6YTacx+MchcTP3g==
+	bh=S17qbo3ooiashb+iX9wiZvjP5PZAExVYnheVx+O9AWM=;
+	b=kniK4NPyHkw9Jfy/73f4tOhkg+kmUhLKCg9RdFU06Gk9PpOa8iSv3H81lnq2unplThLl
+	 qFw1Pp6PKA53vWKq9w+mI+KQsmhOmh+z1LuIPuWfOMweHRRQZ+4JT+DlR59GNAluSr4+w
+	 X5YzhcQDqYzarwK8OEQyBJTsNiU0kgx3chmkgE29MBMhhnNnHXcASoMIiinUlemDqkgd/
+	 nqcZAl8MRpXOIdm5neVaPCWNUWDXbLYjCcqww978CRPK0jb05d41lSL19h7HNVEVopFgd
+	 Fsud3gP6g/nei2lyiho4uR4w92hmrSPeX9CKAFk2a/I8Hw2hIInZTpG48WIIJKRDAqw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=hTJQee32;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="XfbnV/dW";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 91E2160A260E;
-	Wed, 25 Nov 2026 14:40:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D8020606A691;
+	Wed, 25 Nov 2026 14:41:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=hTJQee32
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6DC511F00AE3;
-	Wed, 25 Nov 2026 14:40:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=XfbnV/dW
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CD5C51F008B2;
+	Wed, 25 Nov 2026 14:41:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795617658;
-	bh=h/YrPR/LCS+ggtZg1hjEaP4eUCtOUuH4ZZOwU0E+1bs=;
+	s=korg; t=1795617661;
+	bh=S17qbo3ooiashb+iX9wiZvjP5PZAExVYnheVx+O9AWM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=hTJQee323cy14r76ufOeHMIvrzfHkgSFl/h3wzYq+R2zbAJs4/O75kivnOXw09I68
-	 Q5gZgx/p3+Ww90XxvKBhgdNwqLxoxrC7uGMYPJXQqu89LWL/bdk8RDHo7Pf6rss9pJ
-	 zcjHqv77DzQxfZV6H4/cEsIoJqfe9SptiUGp3+ok=
+	b=XfbnV/dW+4PKqpMOtqyMnScptkkymgSDk824Eh6+H8TZRPpcxw+Cb+2qMD1ttnYfN
+	 bDLPrmNwlS3DbwEmKoxamwWw0TK7WvOm3ySEt0+wrJjXdul8uXQB1yVk+j+3Z7GGnp
+	 2S3e12rm+uPzhuOgrkX/OyL7M5dtXHrQJXyooFEg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -45,9 +45,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Antony Antony <antony.antony@secunet.com>,
 	Steffen Klassert <steffen.klassert@secunet.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0035/1005] xfrm: fix use-after-free of migrated state in xfrm_do_migrate_state()
-Date: Wed, 25 Nov 2026 15:22:53 +0100
-Message-ID: <20261125143822.562642369@linuxfoundation.org>
+Subject: [PATCH 7.3 0036/1005] xfrm: fix hw offload state leak on xfrm_do_migrate_state() error path
+Date: Wed, 25 Nov 2026 15:22:54 +0100
+Message-ID: <20261125143822.586715629@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143821.729802100@linuxfoundation.org>
 References: <20261125143821.729802100@linuxfoundation.org>
@@ -71,10 +71,10 @@ Content-Transfer-Encoding: 8bit
 
 From: Antony Antony <antony.antony@secunet.com>
 
-[ Upstream commit 3eb841b771e81e0692b3ebfc75fdb774022cc4f6 ]
+[ Upstream commit da94223774ea012188ef76f89e0bd642b39ba517 ]
 
-A concurrent delete can free the migrated state before
-xfrm_do_migrate_state() finishes using it.
+In the error path, the cloned state is dropped without removing its
+hardware offload, leaking the offloaded SA entry.
 
 Fixes: a9d155ea9b44 ("xfrm: add XFRM_MSG_MIGRATE_STATE for single SA migration")
 Reported-by: Sashiko <sashiko-bot@kernel.org>
@@ -82,37 +82,22 @@ Signed-off-by: Antony Antony <antony.antony@secunet.com>
 Signed-off-by: Steffen Klassert <steffen.klassert@secunet.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/xfrm/xfrm_user.c | 3 +++
- 1 file changed, 3 insertions(+)
+ net/xfrm/xfrm_user.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
 diff --git a/net/xfrm/xfrm_user.c b/net/xfrm/xfrm_user.c
-index fffce22389e88..48b8a0af95e25 100644
+index 48b8a0af95e25..aac12991d2ca8 100644
 --- a/net/xfrm/xfrm_user.c
 +++ b/net/xfrm/xfrm_user.c
-@@ -3479,6 +3479,7 @@ static int xfrm_do_migrate_state(struct sk_buff *skb, struct nlmsghdr *nlh,
- 	__xfrm_state_delete(x);
- 	spin_unlock_bh(&x->lock);
- 
-+	xfrm_state_hold(xc);
- 	err = xfrm_state_migrate_install(x, xc, &m, extack);
- 	if (err < 0) {
- 		/*
-@@ -3486,6 +3487,7 @@ static int xfrm_do_migrate_state(struct sk_buff *skb, struct nlmsghdr *nlh,
- 		 * free under xfrm_cfg_mutex. Both SAs are gone if it does;
- 		 * restoring x would risk SN/IV reuse.
- 		 */
-+		xfrm_state_put(xc);
- 		goto out;
- 	}
- 
-@@ -3504,6 +3506,7 @@ static int xfrm_do_migrate_state(struct sk_buff *skb, struct nlmsghdr *nlh,
- 		err = 0;
- 	}
- 
-+	xfrm_state_put(xc);
- out:
+@@ -3511,6 +3511,8 @@ static int xfrm_do_migrate_state(struct sk_buff *skb, struct nlmsghdr *nlh,
  	xfrm_state_put(x);
  	return err;
+ out_xc:
++	if (m.xuo)
++		xfrm_dev_state_delete(xc);
+ 	xc->km.state = XFRM_STATE_DEAD;
+ 	xfrm_state_put(xc);
+ 	xfrm_state_put(x);
 -- 
 2.53.0
 
