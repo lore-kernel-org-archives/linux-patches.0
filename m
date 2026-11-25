@@ -1,59 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795620974;
-	b=Qtmnl63t+KiB9uqDQ0K0skjPxKp1d4Upw0dhudxV4iI2juDjsRrbOaalXKx9Mxl8Vwik
-	 D97gSHMOSGEQmTSjMWf8i50VJHNVf5eZGLaGLb4tudIT5zowqQFwgdY6Dn1HLCuc/QukG
-	 WqvlfNJim5CdClELdm7Mz/ZhV8mEUT7VNJfiZcLu10Lj7uitBx+M3N1L13AkYA6dgoIyi
-	 HRcG+8hOfdgQJYmZih46rwe1wGT/8t1JdjVqItl7u0ane/SzwgI5004dnwyrz0SXfLTLl
-	 8PdYkB/fEAjwkwnRbu8BjlugX10qYExkZWyBEiKDhmoeOblbXgBPjy85Ck6BPv6k5eQ==
+	t=1795620977;
+	b=3WlYCIO2rO0Wvw0DvS1aTXgVJBfMTEevlnUS4wg3gtngMKwsS2Sxo7LpWhap2JnbQsn0
+	 860LHx6NcAJAZjOutNfYPCiWbC1jFRWxfE6tPXDj2EDrrQQq0cpiHY8/mvWOsKWc45Gq4
+	 4EkKaiMiPot2lT5s9Fr76RlVNcfD3ndyp1DqMwGosmRfJPvL6vj1S4hQIBlkOFS3Hp6me
+	 VSRdizoggNXRmsAVpPzE2C5Kzsy5k9bFiUhPrlDQkD6pwbrZgzrxrab0xXOgRUEvPDIIT
+	 RJ0fXpyC4ch3SNvJm1yDcNbi0nsl//sfO08ygglbEeZtVQhVQkC5fQ7xhQPAHiMmpTQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795620974;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795620977;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=tNGko5YjgAmaKluT9M9p3Rpp9OqrTNL0ct0TPgaxV+U=;
-	b=QAFwMVoqe0lcYPYUpPeaaqT3hGAy34RI+5YY7a14LktOH8OwckewcR8ilftvxMVuLhz9
-	 jEmLryXaydaeHe9qJI+K4Dlj2PeE1qJgsv61kPwIMQ3hVf5rbAGrAE+bYqsvahHGf1irb
-	 7QYHauhlBOxjMWElXEl/BbYej8iOCvvkH/uLUImnFVA1UtbgAy6NFX/6tx9aobZ2l8tcE
-	 /H/4Xi26ngrZLR2gqYe5baAcnartTyYN9f72WIuWLeVcxj/dAlUTrioisw7vkAtHDmUzH
-	 Nn7YoMoaQlMKybMrR6fupnXK1UKTRuRInp+UBqZ4p3UvB9PdruiBuh3BLTNm7yxG5Iw==
+	bh=t1MBOOLuczWLPfetTjqi5Rkqod+e6oWWNHdHotspKTU=;
+	b=MWK2GDau6vPLA63LMGX/10JcaWCnJadQ1cOg8o3tnPAFRCq3gbBM/Yc2TwrhNgLelVRM
+	 wGub7v6POYruczWEfiLnDp7jKyi8ZbdPqoEAeF58PM8UVu0ioDtEEulIj3dbRiTDClFXv
+	 7le03l3xKK1Tpb4SklaJWnp5f+wJslRchF6FG7oSkcv6+zkCqkWLdmnwLSjIl+rdgawFY
+	 4yFe6U1H2GN67wNkmw/Sq4iO1HHjiNEVgH/kQHKwm4wSeH4lKu7ghLLV0jL8478aPFcuN
+	 BtVK77NXTkQAmDFGZp7Zyr7J3evQslkBLNaA5I/YjM/mfSF6QEYiPNfeEk28ZxlB53Q==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=mitzb5Pg;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=WAvXXeN2;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 451F4606A32D;
-	Wed, 25 Nov 2026 15:36:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2FFB9606A327;
+	Wed, 25 Nov 2026 15:36:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=mitzb5Pg
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 19B7B1F000C4;
-	Wed, 25 Nov 2026 15:36:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=WAvXXeN2
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3A6551F000D4;
+	Wed, 25 Nov 2026 15:36:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795620973;
-	bh=tNGko5YjgAmaKluT9M9p3Rpp9OqrTNL0ct0TPgaxV+U=;
+	s=korg; t=1795620976;
+	bh=t1MBOOLuczWLPfetTjqi5Rkqod+e6oWWNHdHotspKTU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=mitzb5PgvEnijUzMBv9eiPY6N7t6kkhhk2e1Kks8lGKf8MbhKgODKrt6UMRECnv3a
-	 3CKulKsvGEdp4qaL4x2caJJisaQtZmvJQ6vuXS/5CKZXLqPaj6TdBh5to0t0Gl7YMf
-	 C7c6vTtp/GtU+myyuzQeiJAd32GNpdFrZE9PnwGY=
+	b=WAvXXeN2UTUd4q8V00aLmXwYpQ4gHgkoF/AaSaZ1SiVOtzHXuhADSgOSH++j++gYi
+	 FgJsSRmwhipyrIJ8c/68aTCJd1lWGHVNcvdi9fdqhEao6uKHVoPB4C82Bu5L0g9Wua
+	 jse6V2RCXbZYIbRvMCB49sLQNfJ+R8p3/vtMyHVY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yizhou Zhao <zhaoyz24@mails.tsinghua.edu.cn>,
-	Yuxiang Yang <yangyx22@mails.tsinghua.edu.cn>,
-	Ao Wang <wangao@seu.edu.cn>,
-	Xuewei Feng <fengxw06@126.com>,
-	Qi Li <qli01@tsinghua.edu.cn>,
-	Ke Xu <xuke@tsinghua.edu.cn>,
-	Chengfeng Ye <nicoyip.dev@gmail.com>,
-	Michael Grzeschik <mgr@kernel.org>,
-	Dominique Martinet <asmadeus@codewreck.org>,
+	Filippo Falezza <effeffe99@gmail.com>,
+	Loic Poulain <loic.poulain@oss.qualcomm.com>,
+	Jeff Johnson <jeff.johnson@oss.qualcomm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 064/990] net/9p/usbg: fix descriptor cleanup use-after-free
-Date: Wed, 25 Nov 2026 15:23:51 +0100
-Message-ID: <20261125143823.587284547@linuxfoundation.org>
+Subject: [PATCH 6.18 082/990] wifi: ath10k: Stop unanswered temperature reads
+Date: Wed, 25 Nov 2026 15:24:09 +0100
+Message-ID: <20261125143824.011476534@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143822.072087159@linuxfoundation.org>
 References: <20261125143822.072087159@linuxfoundation.org>
@@ -75,76 +69,97 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yizhou Zhao <zhaoyz24@mails.tsinghua.edu.cn>
+From: Filippo Falezza <effeffe99@gmail.com>
 
-[ Upstream commit 0955472fff1e9f9e410a0300136924ebc8bd7a16 ]
+[ Upstream commit 2a87e367c62856b87a90f745c6b7d2eb91e0c51f ]
 
-usb9pfs_free_func() frees the f_usb9pfs object before calling
-usb_free_all_descriptors().  The usb_function passed to the latter is
-embedded in the freed object, so removing the function from a gadget
-dereferences freed memory.
+Reading the ath10k hwmon temperature sends WMI_PDEV_GET_TEMPERATURE and
+waits up to 5 s (ATH10K_THERMAL_SYNC_TIMEOUT_HZ) for the reply event,
+holding conf_mutex. Not all firmware answers: the WCN3990 firmware
+WLAN.HL.3.3.1-00694-QCAHLSWMTPLZ-1 on a Motorola Moto G 5G Plus
+codename nairo (SM7250) never sends the event, so every read of
+temp1_input stalls for 5 s, logs
 
-The failing teardown sequence is:
+  ath10k_snoc 18800000.wifi: failed to synchronize thermal read
 
-  configfs unlink
-    usb9pfs_free_func()
-      kfree(usb9pfs)
-      usb_free_all_descriptors(f)
-        dereference the embedded usb_function
+and returns -ETIMEDOUT. Tools that read all hwmon sensors, such as
+lm-sensors, hang for 5 s on every run, and configuration changes of the
+interface wait for conf_mutex in the meantime.
 
-KASAN reported:
+Whether the firmware answers cannot be told from the chip: firmware that
+answers and firmware that does not both advertise
+WMI_SERVICE_THERM_THROT, and WCN3990 firmware differs between devices.
+Instead, remember that the running firmware did not answer, and return
+-EOPNOTSUPP right away on later reads. Forget it when the firmware
+starts, so that a restarted or updated firmware is asked again.
 
-  BUG: KASAN: slab-use-after-free in usb_free_all_descriptors+0x138/0x190
-  Read of size 8 at addr ffff888106a73088 by task poc/95
-  Call Trace:
-   usb_free_all_descriptors+0x138/0x190
-   config_usb_cfg_unlink+0x1f0/0x2f0
-   configfs_unlink+0x321/0x6f0
+The first read after each firmware start still takes 5 s when the
+firmware does not answer. Reads on firmware that answers are unchanged.
 
-Free the descriptors before freeing their containing object.
-
-Fixes: a3be076dc174 ("net/9p/usbg: Add new usb gadget function transport")
-Reported-by: Yizhou Zhao <zhaoyz24@mails.tsinghua.edu.cn>
-Reported-by: Yuxiang Yang <yangyx22@mails.tsinghua.edu.cn>
-Reported-by: Ao Wang <wangao@seu.edu.cn>
-Reported-by: Xuewei Feng <fengxw06@126.com>
-Reported-by: Qi Li <qli01@tsinghua.edu.cn>
-Reported-by: Ke Xu <xuke@tsinghua.edu.cn>
-Assisted-by: GLM:GLM-5.1
-Signed-off-by: Yizhou Zhao <zhaoyz24@mails.tsinghua.edu.cn>
-Co-developed-by: Chengfeng Ye <nicoyip.dev@gmail.com>
-Signed-off-by: Chengfeng Ye <nicoyip.dev@gmail.com>
-Acked-by: Michael Grzeschik <mgr@kernel.org>
-Message-ID: <20260529081817.77898-1-zhaoyz24@mails.tsinghua.edu.cn>
-Message-ID: <20260731150414.3135662-1-nicoyip.dev@gmail.com>
-Signed-off-by: Dominique Martinet <asmadeus@codewreck.org>
+Fixes: e98199a8c27f ("ath10k: enable QCA6174/QCA9377 to read the chip temperature")
+Signed-off-by: Filippo Falezza <effeffe99@gmail.com>
+Reviewed-by: Loic Poulain <loic.poulain@oss.qualcomm.com>
+Link: https://patch.msgid.link/20261027-ath10k-temperature-v2-1-0793e80d73bc@gmail.com
+Signed-off-by: Jeff Johnson <jeff.johnson@oss.qualcomm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/9p/trans_usbg.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/net/wireless/ath/ath10k/core.c    | 1 +
+ drivers/net/wireless/ath/ath10k/thermal.c | 9 ++++++++-
+ drivers/net/wireless/ath/ath10k/thermal.h | 2 ++
+ 3 files changed, 11 insertions(+), 1 deletion(-)
 
-diff --git a/net/9p/trans_usbg.c b/net/9p/trans_usbg.c
-index dd5d833f2c827..1592b99ae00c7 100644
---- a/net/9p/trans_usbg.c
-+++ b/net/9p/trans_usbg.c
-@@ -753,8 +753,6 @@ static void usb9pfs_free_func(struct usb_function *f)
- 	struct f_usb9pfs *usb9pfs = func_to_usb9pfs(f);
- 	struct f_usb9pfs_opts *opts;
+diff --git a/drivers/net/wireless/ath/ath10k/core.c b/drivers/net/wireless/ath/ath10k/core.c
+index 9ae3595fb6986..f57105ad09759 100644
+--- a/drivers/net/wireless/ath/ath10k/core.c
++++ b/drivers/net/wireless/ath/ath10k/core.c
+@@ -2986,6 +2986,7 @@ int ath10k_core_start(struct ath10k *ar, enum ath10k_firmware_mode mode,
+ 	clear_bit(ATH10K_FLAG_CRASH_FLUSH, &ar->dev_flags);
  
--	kfree(usb9pfs);
--
- 	opts = container_of(f->fi, struct f_usb9pfs_opts, func_inst);
+ 	ar->running_fw = fw;
++	ar->thermal.broken = false;
  
- 	mutex_lock(&opts->lock);
-@@ -762,6 +760,8 @@ static void usb9pfs_free_func(struct usb_function *f)
- 	mutex_unlock(&opts->lock);
+ 	if (!test_bit(ATH10K_FW_FEATURE_NON_BMI,
+ 		      ar->running_fw->fw_file.fw_features)) {
+diff --git a/drivers/net/wireless/ath/ath10k/thermal.c b/drivers/net/wireless/ath/ath10k/thermal.c
+index 8b15ec07b1071..9b81f9ae58d74 100644
+--- a/drivers/net/wireless/ath/ath10k/thermal.c
++++ b/drivers/net/wireless/ath/ath10k/thermal.c
+@@ -75,6 +75,12 @@ static ssize_t ath10k_thermal_show_temp(struct device *dev,
+ 		goto out;
+ 	}
  
- 	usb_free_all_descriptors(f);
++	/* Don't stall every read on firmware that never answers */
++	if (ar->thermal.broken) {
++		ret = -EOPNOTSUPP;
++		goto out;
++	}
 +
-+	kfree(usb9pfs);
- }
- 
- static int usb9pfs_set_alt(struct usb_function *f,
+ 	reinit_completion(&ar->thermal.wmi_sync);
+ 	ret = ath10k_wmi_pdev_get_temperature(ar);
+ 	if (ret) {
+@@ -90,7 +96,8 @@ static ssize_t ath10k_thermal_show_temp(struct device *dev,
+ 	time_left = wait_for_completion_timeout(&ar->thermal.wmi_sync,
+ 						ATH10K_THERMAL_SYNC_TIMEOUT_HZ);
+ 	if (!time_left) {
+-		ath10k_warn(ar, "failed to synchronize thermal read\n");
++		ath10k_warn(ar, "failed to synchronize thermal read, not asking again until the firmware restarts\n");
++		ar->thermal.broken = true;
+ 		ret = -ETIMEDOUT;
+ 		goto out;
+ 	}
+diff --git a/drivers/net/wireless/ath/ath10k/thermal.h b/drivers/net/wireless/ath/ath10k/thermal.h
+index 1f4de9fbf2b30..d1fb5b958c37c 100644
+--- a/drivers/net/wireless/ath/ath10k/thermal.h
++++ b/drivers/net/wireless/ath/ath10k/thermal.h
+@@ -19,6 +19,8 @@ struct ath10k_thermal {
+ 	/* protected by conf_mutex */
+ 	u32 throttle_state;
+ 	u32 quiet_period;
++	/* the running firmware did not answer a temperature request */
++	bool broken;
+ 	/* temperature value in Celsius degree
+ 	 * protected by data_lock
+ 	 */
 -- 
 2.53.0
 
