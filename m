@@ -1,52 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795623370;
-	b=m3PPpRRtW3O5YRn06gwRro5S0usIWXxx1QH1ri/92FVPh/pMMVwlYwGMtN1aKuSHrYs8
-	 HjCjkFn/WeagdZhrmm4x0m1sdQ7LtHIGJ1+6psXolVXI9BFx2nCTuZhhcYec0U4hUzraq
-	 WaRUhqUSp7JdlOmZzN7XthlJxnWX/xC8HAzpg5TaDc/7lpZFtulyfiyz/VOY66quUJbR4
-	 QnVWkT9zPVWUowU0os0FJjMHKKl0DaDGs0NGpb037q6n2a3npX75jjz1FUicAymfuYiJO
-	 ncklxd9O2+I5tDy78cFny1U+LtQLurGZA9DgXsAe0QsTTpgQmulqqJsMHfaif6JfXsw==
+	t=1795623373;
+	b=HCOw6LR6GElFw5W8edds6nbBTbqSE1h2JuqE67tHG9w53kxu0mSDoHqHOvZv7vUQPGf9
+	 LwZUsjr1BvBxczM44NuhsmqWpY00QKgLxr9Z9N2/QdWQdx6uwM/g+S3/L8PI3n3YZ4TSF
+	 Sma2Yh2+dRzrB5N00dc5Hwffgqr32yFPyL01JbvuucA0eK2T5B92e5cF2ZWz8nzFP9Lr+
+	 zM+Nl0LsMZbVg8zQ7RTeBhsRp7cPzUWAyN5jFtRoAtyLfmVjWZeEYyr1xBi9NbgZv/P67
+	 by9bdhYiBIuubHeX02rpjRNMD99/wV2B5G9/Xe6G3Zu+T3PZnfF7gfCz8xCXrWN8a6w==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795623370;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795623373;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=X/kqMTbVO4lQyWZGm2s/mNc2hIQpZTnpnK/BVGJMjqw=;
-	b=4WYtWO6ql0kOYIJyvd8u45i4rFh04Jm8/P9uv0D28AhbYmtNsuL9GJ9LqTxzYW0Dhd53
-	 Wd+Wlm0fwQG6yVk4l6Dm5XfKkP7S+ydWbaRfztDhKyFQkQ7DAk+1BHvvZQ9faAj+LBNGI
-	 cOxRcu4X0W/hoLhSycmmVX/cqFgltUTc2uZijUT3cFc73/kO0lnT6VSH7XrPuWan65YU+
-	 B4W61EuV1Jn66vRO66n8G0Q5/hiMpHPIzcQ9KIinRSyp4CJD3CEYFiQvVLTeKvIPBkNx8
-	 KVW/SF4SoPPTVycic6UnsIrvfQu/ZFtqsX+WYi77OCKBKL/8B4eOki6VSiR/F6veUIQ==
+	bh=409gaLVdfqL37YZ9aAGd5vPJ00EqfgDbjIKJttT38i8=;
+	b=K7syzIPOC8J5NKI6eXlEpHk2zjRRuFfs940m2gkxKsy4XzjMrz0/7MEcnh4Qy2Y67IKy
+	 iCrW2lyU1T+wQKnaYfL6FRrDPTTGYgQXGF1goaFR3LY29S3b8HgKPuLDC6iYxRJs38HNr
+	 UbvjcEqNNoz44R+IYgUHKtJaAlAvBbPPvwyzhXOm6Eipz2DJT0nWxWmSJZ5OfnVeftJ6t
+	 kx36kne5xsrj/2zF1Zx0uou43Tk+BSI2+dXR8BEUy60EbYM9Xd6GPz6If++n85JgyGxNC
+	 +K8Flu5dq6fHQnOEwWXmuUC5EwXLBKuElaq1klT6npKkOyA+vjKxeWbpP2obYL5iW2w==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=OarKP0iL;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=w2BlzdCp;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7EC9D606A31E;
-	Wed, 25 Nov 2026 16:16:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 987A9606A323;
+	Wed, 25 Nov 2026 16:16:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=OarKP0iL
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D03EC1F000C6;
-	Wed, 25 Nov 2026 16:16:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=w2BlzdCp
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A5DDE1F000C4;
+	Wed, 25 Nov 2026 16:16:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795623370;
-	bh=X/kqMTbVO4lQyWZGm2s/mNc2hIQpZTnpnK/BVGJMjqw=;
+	s=korg; t=1795623373;
+	bh=409gaLVdfqL37YZ9aAGd5vPJ00EqfgDbjIKJttT38i8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=OarKP0iLYGplyTBImHnmJxUSNbqsatspH+yWIcWhg1Fi1HT+IJvhnsvQotMkBTpgN
-	 o8ma18TUwkik23gxYYJKBCF80Bf0/wIq1/54n6bsFPvEb7Qst71Z8/4wTV1mCobD58
-	 dT75CS62HdBz54wmjxCMkkXI/fjCxncTBTCwGAp8=
+	b=w2BlzdCp5hiwU8oX45YZzNW8K3LABF6o/XzoJD1ez9z3tyD6/b5JhcvXdrwY4FvCX
+	 aGcxBSbCXE2S1kFldqHcKCUf5YPV/4cqF43H12PqKNEs+zzSXCmDxJJE51zNETjYmz
+	 HqSamGsjJahF3DYXeYPlwznDVrjUTjLDbfVb1zMA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tim Budding <tim.budding@gmail.com>,
-	Xin Long <lucien.xin@gmail.com>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.18 792/990] sctp: fix I-FORWARD-TSN handling of fragments on other streams
-Date: Wed, 25 Nov 2026 15:35:59 +0100
-Message-ID: <20261125143840.596634107@linuxfoundation.org>
+	Stanislav Aleksandrov <lightofmysoul@gmail.com>,
+	Guenter Roeck <linux@roeck-us.net>
+Subject: [PATCH 6.18 783/990] hwmon: (max31760) Report 0 RPM before the first fan speed measurement
+Date: Wed, 25 Nov 2026 15:35:50 +0100
+Message-ID: <20261125143840.388133341@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143822.072087159@linuxfoundation.org>
 References: <20261125143822.072087159@linuxfoundation.org>
@@ -68,127 +67,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Tim Budding <tim.budding@gmail.com>
+From: Stanislav Aleksandrov <lightofmysoul@gmail.com>
 
-commit 5b9cfc6491a6e32e7315dc222992c7dbd5baa3e9 upstream.
+commit 33d58cbf2ab26bda81bc3052158d8b9867d5b9a6 upstream.
 
-sctp_report_iftsn() incorrectly frees queued I-DATA fragments in two
-cases. First, it drops any queued fragments with TSN less than or equal
-to the New Cumulative TSN. This prevents reconstruction of messages
-still being received on other streams and can fully block an ordered
-stream. Second, it calls sctp_intl_abort_pd() if the New Cumulative TSN
-equals the highest TSN seen. This check exists for association resets
-but can be inadvertently triggered by any I-FORWARD-TSN that arrives
-before data with a higher TSN, causing data loss and, if a partial
-delivery is in progress on an ordered stream, an aborted association.
+The tachometer count registers initialize to 0 until the first
+measurement cycle completes after power-on. To prevent division by
+zero, tach_to_rpm() clamped tach == 0 to 1, causing it to compute
+and report 3,000,000 RPM (60 * 100000 / 1 / 2).
 
-Fix the first by freeing fragments from sctp_intl_skip() based on
-stream, U bit, and MID instead of TSN. Fix the second by moving the call
-to sctp_intl_abort_pd() from sctp_report_iftsn() to the corresponding
-reset handlers.
+Return 0 RPM when tach == 0 instead.
 
-Observed in real use as unexpected message loss. Reproduced on an
-unmodified kernel with the sctp_ifwdtsn.sh selftest added later in this
-series, which passes with this fix. Reproduction and fix done with AI
-assistance.
-
-Fixes: 47b20a88566f ("sctp: implement report_ftsn for sctp_stream_interleave")
+Fixes: 38b04ad02d0d ("drivers: hwmon: Add max31760 fan speed controller driver")
 Cc: stable@vger.kernel.org
-Signed-off-by: Tim Budding <tim.budding@gmail.com>
-Acked-by: Xin Long <lucien.xin@gmail.com>
-Link: https://patch.msgid.link/20261105050225.49292-4-tim.budding@gmail.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Stanislav Aleksandrov <lightofmysoul@gmail.com>
+Link: https://patch.msgid.link/20261108-max31760-fixes-v1-3-a61450463059@gmail.com
+Signed-off-by: Guenter Roeck <linux@roeck-us.net>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/sctp/stream.c            |    2 ++
- net/sctp/stream_interleave.c |   32 +++++++++++---------------------
- 2 files changed, 13 insertions(+), 21 deletions(-)
+ drivers/hwmon/max31760.c |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
---- a/net/sctp/stream.c
-+++ b/net/sctp/stream.c
-@@ -749,6 +749,7 @@ struct sctp_chunk *sctp_process_strreset
- 	 */
- 	max_tsn_seen = sctp_tsnmap_get_max_tsn_seen(&asoc->peer.tsn_map);
- 	asoc->stream.si->report_ftsn(&asoc->ulpq, max_tsn_seen);
-+	asoc->stream.si->abort_pd(&asoc->ulpq, GFP_ATOMIC);
+--- a/drivers/hwmon/max31760.c
++++ b/drivers/hwmon/max31760.c
+@@ -68,8 +68,9 @@ static const int max31760_pwm_freq[] = {
  
- 	/* G1: Compute an appropriate value for the Receiver's Next TSN -- the
- 	 *     TSN that the peer should use to send the next DATA chunk.  The
-@@ -1028,6 +1029,7 @@ struct sctp_chunk *sctp_process_strreset
- 			LIST_HEAD(temp);
- 
- 			asoc->stream.si->report_ftsn(&asoc->ulpq, mtsn);
-+			asoc->stream.si->abort_pd(&asoc->ulpq, GFP_ATOMIC);
- 
- 			sctp_tsnmap_init(&asoc->peer.tsn_map,
- 					 SCTP_TSN_MAP_INITIAL,
---- a/net/sctp/stream_interleave.c
-+++ b/net/sctp/stream_interleave.c
-@@ -1203,28 +1203,21 @@ static void sctp_report_fwdtsn(struct sc
- 	sctp_ulpq_abort_pd(ulpq, GFP_ATOMIC);
- }
- 
--static void sctp_intl_reasm_flushtsn(struct sctp_ulpq *ulpq, __u32 ftsn)
-+static void sctp_intl_reasm_flush_mid(struct sk_buff_head *reasm, __u16 sid,
-+				      __u32 mid)
+ static int tach_to_rpm(u16 tach)
  {
- 	struct sk_buff *pos, *tmp;
++	/* The count is 0 until the first measurement */
+ 	if (tach == 0)
+-		tach = 1;
++		return 0;
  
--	skb_queue_walk_safe(&ulpq->reasm, pos, tmp) {
-+	skb_queue_walk_safe(reasm, pos, tmp) {
- 		struct sctp_ulpevent *event = sctp_skb2event(pos);
--		__u32 tsn = event->tsn;
- 
--		if (TSN_lte(tsn, ftsn)) {
--			__skb_unlink(pos, &ulpq->reasm);
--			sctp_ulpevent_free(event);
--		}
--	}
-+		if (event->stream < sid)
-+			continue;
-+		if (event->stream > sid || MID_lt(mid, event->mid))
-+			break;
- 
--	skb_queue_walk_safe(&ulpq->reasm_uo, pos, tmp) {
--		struct sctp_ulpevent *event = sctp_skb2event(pos);
--		__u32 tsn = event->tsn;
--
--		if (TSN_lte(tsn, ftsn)) {
--			__skb_unlink(pos, &ulpq->reasm_uo);
--			sctp_ulpevent_free(event);
--		}
-+		__skb_unlink(pos, reasm);
-+		sctp_ulpevent_free(event);
- 	}
+ 	return 60 * 100000 / tach / 2;
  }
- 
-@@ -1232,11 +1225,6 @@ static void sctp_report_iftsn(struct sct
- {
- 	/* Move the Cumulattive TSN Ack ahead. */
- 	sctp_tsnmap_skip(&ulpq->asoc->peer.tsn_map, ftsn);
--	/* purge the fragmentation queue */
--	sctp_intl_reasm_flushtsn(ulpq, ftsn);
--	/* abort only when it's for all data */
--	if (ftsn == sctp_tsnmap_get_max_tsn_seen(&ulpq->asoc->peer.tsn_map))
--		sctp_intl_abort_pd(ulpq, GFP_ATOMIC);
- }
- 
- static void sctp_handle_fwdtsn(struct sctp_ulpq *ulpq, struct sctp_chunk *chunk)
-@@ -1260,6 +1248,7 @@ static void sctp_intl_skip(struct sctp_u
- 			sctp_intl_stream_abort_pd(ulpq, sid, mid, 0x1,
- 						  GFP_ATOMIC);
- 		}
-+		sctp_intl_reasm_flush_mid(&ulpq->reasm_uo, sid, mid);
- 		return;
- 	}
- 
-@@ -1271,6 +1260,7 @@ static void sctp_intl_skip(struct sctp_u
- 		sctp_intl_stream_abort_pd(ulpq, sid, mid, 0x0, GFP_ATOMIC);
- 	}
- 
-+	sctp_intl_reasm_flush_mid(&ulpq->reasm, sid, mid);
- 	sctp_mid_skip(stream, in, sid, mid);
- 
- 	sctp_intl_reap_ordered(ulpq, sid);
 
 
