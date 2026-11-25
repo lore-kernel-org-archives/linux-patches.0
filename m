@@ -1,51 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795619856;
-	b=VLJ48ZOp7n5fwvckwgfmCgMHmYYW2ECIaICCsKYHZcA2FTaehpgYsclvOq2vIyO9/T44
-	 m8zqBdfkDd1bBASfOFNueUxIzxxWnbvOapfvHM+8zQCmcFqI/+aeGQOj88yw2idH9fB70
-	 7bcrzrewMy87ZaPBmljr5XxFi089QgHNTmPKwMnNCLmr/KLk1lf7L0XUOzQEbzxPLqv4Z
-	 BIgeFqV1uxaIlFweFXM7Bi8G4CDQj2Hyt4uKki0Avc71OYgUChkfLm5GdPCmJVwtNQH2A
-	 +CzmUvaw9OXAUzNkPHBrCytiXDt6+9eaBa0WTbQAavFEGObuLwOiqMtVX9dCpISl8Sg==
+	t=1795619859;
+	b=uem7S4nTUZuJvvq+gSVgzWnyJEmPgOdmTFRkU6cD8+tBR0SWXy7qRJ6D5odxnHUNb22B
+	 SpGM3n2Pt2qKRPy3ncRErfRzMEmKA3Lc224PPj6HAlsgCdHv6CXC+l0X6HLnaKMqtnzXr
+	 HfSOwINpuWKjnLJ89XNpqVLxSzxp0mNMIXDubREdzcb8mxvGYSUHqVBJhoby3H/T0hOCj
+	 u8rP5HCfsLoVN9CU5IbUIx3QcN4VUJhPFUtj9RlrHXqRBOVuIzHi7kVfqDNJPgkE0VLtI
+	 bXAEN3dgag0ow0O144qV2Vzriz4r6h3P1uiMO5K3Ddc5F4UT5jZ25dJVuvMPNAOqXgA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795619856;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795619859;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=wBkIpiwYvPjJ39GB981rx5gggI9Cec52MkERhX2lY9M=;
-	b=zLq975G3QFdL7U1vvF01u9P6QrAntGUV8Xl4oeOWSvkxOfL10Mq7hhSI7xLRJA2HQlIr
-	 U9wf6m9RItZNaCfj0iOl3vBpL5nDrSoZYKBssK42pbftBCIsXNppBROpYAdhxGGEIvZMn
-	 yT5Sk393QL+HInszgOShol5eQXZcLaDorwNw8w8pYCpbsgAE0ECw3HJilATXhAHeZ/MqC
-	 h3Jlb1uYEtM7J4gg7aGyZ9eDZ1fSTRxArteeYLaArJ8tkppseVkm2LDkaRpkt4WIXktwp
-	 PH/tSFnPJpwNx44z05ZrhTr25EArEYpxhqtdOpHzpFkyxOCL+V2M2e8Qm6RKHt582zg==
+	bh=OW17Z5Yd/Sfu//3q597eIWERvRVy4B4kfsLBfy4LBbc=;
+	b=1MILBUHl4/CxdgVwCmUmZ5JJK7Ocoi2E/FXmgJ1D4aW/qKEZ4WTBsJD0qEwfaJtkKNIl
+	 TNw4tCj/uK8C4R9jIqjRZyA+bXubRINm2jWqmBiby5VAU//7GiijvSRH/hBQ7ip3megE+
+	 H43/kvapsFSuVwaFMbxOdKKJl5JSgFtzHc4qt16PcChAPOvh8k1If7TpQWUV7OhHpyk2q
+	 TxOK5p4uZ/9Gq0y6ggcwca9jTTidrhax3MKKt/fRImVxkPSnaLKepwCBaNf05Ma/G745d
+	 BeQROAHG4qXGakrEGWfjJFKbxDI0fNSHvffGh6LryFJvdIxHXDSE4YO9h9IucmrBIuQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=GILbxMmX;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=npR300Bg;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1CCE0606A326;
-	Wed, 25 Nov 2026 15:17:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A7878606A323;
+	Wed, 25 Nov 2026 15:17:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=GILbxMmX
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2C16C1F000E6;
-	Wed, 25 Nov 2026 15:17:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=npR300Bg
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7487D1F000D8;
+	Wed, 25 Nov 2026 15:17:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795619855;
-	bh=wBkIpiwYvPjJ39GB981rx5gggI9Cec52MkERhX2lY9M=;
+	s=korg; t=1795619859;
+	bh=OW17Z5Yd/Sfu//3q597eIWERvRVy4B4kfsLBfy4LBbc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=GILbxMmXDnJzik6YiK+tjyAZL/qgkL0AGwnBn3im5QlEkd6hAPICKbpX37vRD+Mgr
-	 f4El9+rJwzFRyy8lVBy5ye/FPVMkCjdiCMlzPjhPE5KlhMTDFBre0EoE1y63IUOyYo
-	 Yx5XIsDGFu0rJ2N/8ceTDW8lrbVTKqNRbG8NgCIo=
+	b=npR300BgY9PYpZjStTGpBonTx0KLGoeV6u9DIHNoJB2pc39USY194hWcDjjSBWabP
+	 LZ0NuybtyonR2rGKRjjtvA5KCMSGnIA0prpQXvBwKgzCkICCeHuS7WZRNctgneg5Qk
+	 HVaT8SQhCGUPrV8ivfwwekUciekdrAOTGKMpz94U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Guanglei Zhu <zhugl3@xiaopeng.com>,
+	Hyunjung Ko <hj351016@gmail.com>,
 	Jarkko Sakkinen <jarkko@kernel.org>
-Subject: [PATCH 7.3 0728/1005] tpm: eventlog: check the payload size before reading tag events
-Date: Wed, 25 Nov 2026 15:34:26 +0100
-Message-ID: <20261125143838.817567082@linuxfoundation.org>
+Subject: [PATCH 7.3 0729/1005] tpm: flush timeout work outside buffer_mutex to avoid deadlock
+Date: Wed, 25 Nov 2026 15:34:27 +0100
+Message-ID: <20261125143838.840293561@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143821.729802100@linuxfoundation.org>
 References: <20261125143821.729802100@linuxfoundation.org>
@@ -67,75 +67,55 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Guanglei Zhu <zhugl3@xiaopeng.com>
+From: Hyunjung Ko <hj351016@gmail.com>
 
-commit 0a385f668ba77d29ae167c1668fd452418ebc9d6 upstream.
+commit c22052a012698ce56d599d75b669d55778521c7c upstream.
 
-The EVENT_TAG branch of get_event_name() casts the event payload to
-struct tcpa_pc_event and reads from it:
+tpm_common_read() calls flush_work(&priv->timeout_work) under
+priv->buffer_mutex, but tpm_timeout_work() also takes buffer_mutex, so a
+running timeout work deadlocks the flush. Flush after unlocking; the timer
+is deleted under the lock, so no new work can be queued.
 
-	pc_event = (struct tcpa_pc_event *)event_entry;
-
-	switch (do_endian_conversion(pc_event->event_id)) {
-	...
-		for (i = 0; i < 20; i++)
-			d_len += sprintf(&data[2*i], "%02x",
-					pc_event->event_data[i]);
-
-The log iterators only verify that the event header plus the declared
-event_size stays within the log buffer; they do not require the
-payload of an EVENT_TAG entry to be large enough for the fields the
-branch reads. A truncated entry makes the branch read up to 20 bytes
-of event_data[] past the end of the entry, and, for the last entry in
-the log, past the end of the buffer itself.
-
-The legacy PC Client spec defines the EV_EVENT_TAG payload as a
-TCPA_PC_EVENT - event_id, event_size and event-type-specific data -
-so a conformant entry carries the 8-byte header and the hash-type
-ids carry a full digest. The log itself, however, is an ACPI table
-the firmware leaves in memory: the TPM never measures the log, so
-the kernel cannot tell a conformant log from a corrupted one. The
-iterators already work on that assumption - they stop once the
-declared event_size runs past the buffer end - and the readers
-should apply the same rule to what they take off the payload.
-
-Skip entries whose payload cannot even hold the event id, and skip
-the 20-byte digest dump when the payload cannot hold the full
-tcpa_pc_event header plus the digest, so the branch never reads
-beyond the entry it is formatting.
-
+Fixes: 9488585b21be ("tpm: add support for partial reads")
 Cc: stable@vger.kernel.org
-Fixes: 55a82ab3181b ("[PATCH] tpm: add bios measurement log")
-Signed-off-by: Guanglei Zhu <zhugl3@xiaopeng.com>
+Signed-off-by: Hyunjung Ko <hj351016@gmail.com>
 Reviewed-by: Jarkko Sakkinen <jarkko@kernel.org>
+Link: https://lore.kernel.org/r/20261108165812.676876-1-hj351016@gmail.com
 Signed-off-by: Jarkko Sakkinen <jarkko@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/char/tpm/eventlog/tpm1.c |    7 +++++++
- 1 file changed, 7 insertions(+)
+ drivers/char/tpm/tpm-dev-common.c |   12 +++++++++++-
+ 1 file changed, 11 insertions(+), 1 deletion(-)
 
---- a/drivers/char/tpm/eventlog/tpm1.c
-+++ b/drivers/char/tpm/eventlog/tpm1.c
-@@ -178,6 +178,10 @@ static int get_event_name(char *dest, st
- 		}
- 		break;
- 	case EVENT_TAG:
-+		if (do_endian_conversion(event->event_size) <
-+		    sizeof(pc_event->event_id))
-+			break;
-+
- 		pc_event = (struct tcpa_pc_event *)event_entry;
+--- a/drivers/char/tpm/tpm-dev-common.c
++++ b/drivers/char/tpm/tpm-dev-common.c
+@@ -132,6 +132,7 @@ ssize_t tpm_common_read(struct file *fil
+ {
+ 	struct file_priv *priv = file->private_data;
+ 	ssize_t ret_size = 0;
++	bool flush = false;
+ 	int rc;
  
- 		/* ToDo Row data -> Base64 */
-@@ -203,6 +207,9 @@ static int get_event_name(char *dest, st
- 			name = tcpa_pc_event_id_strings[do_endian_conversion
- 							(pc_event->event_id)];
- 			n_len = strlen(name);
-+			if (do_endian_conversion(event->event_size) <
-+			    sizeof(struct tcpa_pc_event) + 20)
-+				break;
- 			for (i = 0; i < 20; i++)
- 				d_len += sprintf(&data[2*i], "%02x",
- 						pc_event->event_data[i]);
+ 	if (!size)
+@@ -164,9 +165,18 @@ out:
+ 	if (!priv->response_length) {
+ 		*off = 0;
+ 		timer_delete_sync(&priv->user_read_timer);
+-		flush_work(&priv->timeout_work);
++		flush = true;
+ 	}
+ 	mutex_unlock(&priv->buffer_mutex);
++
++	/*
++	 * tpm_timeout_work() takes buffer_mutex, so flush it after dropping
++	 * the mutex to avoid a deadlock; the timer is deleted above, so no new
++	 * timeout work can be queued once the mutex is released.
++	 */
++	if (flush)
++		flush_work(&priv->timeout_work);
++
+ 	return ret_size;
+ }
+ 
 
 
