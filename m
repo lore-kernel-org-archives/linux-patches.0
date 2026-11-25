@@ -1,52 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795623748;
-	b=F4ulyTKDCEtTl3eUbhC2UyNFuaThhdeeszVLXBOhaoxMFa1p5u4zDbhQZpbfNIBfMOkm
-	 8kzGO9auusjpuXYq25Km5Rgky4GzS+lOgoLtIV6ytleHV1Q8NStCGggEkwf5H44WlPkgr
-	 rKeXaTq+HLdKL9XKdD1+gJaUL/0j1NXQ9EIkMxUx+DRqxi8TdvUefldWaKjl8WtKCX8rq
-	 +V24JyvQ3iBrd/R9uwzWw1mQkbozQNly4C8bmBRCrtE2tSk4KP8P0hM4togqg2oK274yO
-	 ltOWiHQAeu7mSvY3+aZOBq6h522L1O3XGQJuxkFOFhxiEgsICFgrz0V5NyNQgAopuNw==
+	t=1795623751;
+	b=WWK1woqDwOv4CREZECsdi2O6FnYVtukWv2ukIpPWchNieOW2SHrJAHtWXEpSDjUeDyGl
+	 pu3wkl2o7dHgvE1tScilVF9keXbxkLeOcBgOtaooGt9CteUVRCy858tCGUhupFDuts6gT
+	 uarjF2NjhzMDQYmoN4+MW0MiJzqC/WuBiGk1zqoctHwxguwKX0ut827qktnydmBfwNQHg
+	 Gvhqu8LwLvFO/c5RatriOs2JdlCVUhD8VrlBZhTxxstMeQMJ0A2BEvZSNbGQL9NS9LkoW
+	 WcESsd5XgviOhYew5kMwxvPkn9IB7Zh/0dQY9xoziF/qGgmb8WRGMAw1Sz1bAm3Gl/Q==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795623748;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795623751;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=HBtP4wB/4PhorttmBPqJsGhyZPh8JvGM/ihXZ72GNAA=;
-	b=kULOJrDBJdonEjAFcVva/ASRg+KfWZTmVKvhktWJpmKObORRHj2Dq8r/x4kveHWGdOMl
-	 heoWPu173yaJtPXRRoBSV8WD56ksYZvs6HT1xcF/kb/ZjCQUjD6/y8ly/tl7BEN4zIWL2
-	 KO58ABsIkp/PFQmXIi9SvM2R5hjEIPmlOCrG9+pvbxUE9HcDp8gkeS6EfOjdTwyPs5Pfd
-	 Ex/dYuEbo2zrefj5bSn0tYv8zzAbOePy4sbq1bwsXL1TKNpRl7rjWA76rRwbuiVZP+6HZ
-	 DxwN5PPut35gIvx3A6v4J3e1vHd4ws2oDvSCErYhJ5rBYHrZ4kzVWoZV5r6w1B4QEgA==
+	bh=OJGAiHLeU03ZQiP8i4yqv2HPhNLGnu/PCvadPRY02RU=;
+	b=ZUNfzH/SAiPmcAWS/UIrjicgruer9sggGzYO+5UG9geDRVGOJ7/p5//B+trZC9yE/lsi
+	 HBmDaNBgO9FMcEn7HExBT39hu7E7OLY3h8ZmJmlLWvKjzlGjsFTgtsAR7VksV+nLhmXeG
+	 j3otoTVbGSVdeGI3arO/86vspm0I1zLzhNHH/qK718TCu8IUzABkct3nmPPn5zPEaEc2D
+	 L2HNuXevk67wAUHwX0r0j36BNkWiMPCyS8YJB35Ust73uPOpWKAF6nCDKtCdzag8dpd25
+	 fMbEI1sqVCtiNNBV7+UUmwzkxe3I0o7OxG5476Vb1XVkT2tRjh4txrScSvLtW7gjVKA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=UIz4sTkO;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ypoQToyN;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 07F39606A32A;
-	Wed, 25 Nov 2026 16:22:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ABEA9606A326;
+	Wed, 25 Nov 2026 16:22:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=UIz4sTkO
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 28AD11F000CA;
-	Wed, 25 Nov 2026 16:22:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ypoQToyN
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A4CFD1F000C0;
+	Wed, 25 Nov 2026 16:22:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795623747;
-	bh=HBtP4wB/4PhorttmBPqJsGhyZPh8JvGM/ihXZ72GNAA=;
+	s=korg; t=1795623751;
+	bh=OJGAiHLeU03ZQiP8i4yqv2HPhNLGnu/PCvadPRY02RU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=UIz4sTkOlAjRlkTi1vFMnqH3izJoU9s9g5EkdXADGiAI21kyavH5DkS8DQ6/4ZXwl
-	 LmxC5a6Le7q8OdgJcpjxLja8H/HK/HEW99Y3OnP0+aD23opF+lnQC7KngPEFK2RV5D
-	 w3crUU280poWt0Kk0v7GVIfCzT8zxzLT7QNqpRmw=
+	b=ypoQToyNl1MwrMzoM4vzqftiV1gdbaz5OHuVYSIBjDdZ6K3dgwGuXCkzUe+Va6dIz
+	 ScIOqt5/3UJ+0rjJl8tNidk58jQWyc02C6IMdIKdFjwhg/RdiYHeTT1B5sF7KlbIgM
+	 HxDWqq6ZRc5i1VdUcvKyKXe4VrSeveziEx9Lwh9M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Arnav Kapoor <kapoorarnav43@gmail.com>,
-	Jean-Baptiste Maneyrol <jean-baptiste.maneyrol@tdk.com>,
+	Jiale Yao <yaojiale02@163.com>,
 	Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>
-Subject: [PATCH 6.18 957/990] iio: imu: inv_mpu6050: fix swapped accel and gyro startup times
-Date: Wed, 25 Nov 2026 15:38:44 +0100
-Message-ID: <20261125143844.404447400@linuxfoundation.org>
+Subject: [PATCH 6.18 958/990] iio: imu: kmx61: reject duplicate event disable
+Date: Wed, 25 Nov 2026 15:38:45 +0100
+Message-ID: <20261125143844.428375761@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143822.072087159@linuxfoundation.org>
 References: <20261125143822.072087159@linuxfoundation.org>
@@ -68,263 +67,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Arnav Kapoor <kapoorarnav43@gmail.com>
+From: Jiale Yao <yaojiale02@163.com>
 
-commit 3a5e2ca34cadd9d5993064884aa5b9c4f6d71dff upstream.
+commit 9a60b35fe45801d45454e1efe90569c9cc6ea736 upstream.
 
-struct inv_mpu6050_hw declares startup_time as { accel, gyro }, but
-every entry of hw_info[] initializes it positionally as
-{ *_GYRO_STARTUP_TIME, *_ACCEL_STARTUP_TIME }, so the two values are
-swapped for all chips.
+The IIO core does not filter duplicate writes to the event enable
+attribute. kmx61_write_event_config() already ignores repeated enable
+requests, but a repeated disable request still calls
+kmx61_set_power_state(data, false, KMX61_ACC), dropping a runtime PM
+reference that was not acquired for this request. This can underflow the
+runtime PM usage count and trigger a "Runtime PM usage count underflow"
+warning.
 
-inv_mpu6050_switch_engine() waits for startup_time.gyro after enabling
-the gyroscope, so it waits for the accelerometer startup time instead,
-e.g. 20 ms instead of 60 ms on MPU6050 and 20 ms instead of 100 ms on
-ICM20602, and the first gyroscope samples can be read before the sensor
-has settled. Enabling only the accelerometer waits longer than needed.
+Return early when the requested state already matches ev_enable_state.
 
-Use designated initializers, so each value is assigned to the member it
-is named after.
-
-Fixes: e46a36d92da0 ("Add startup time for each chip using inv_mpu6050 driver")
-Signed-off-by: Arnav Kapoor <kapoorarnav43@gmail.com>
-Acked-by: Jean-Baptiste Maneyrol <jean-baptiste.maneyrol@tdk.com>
+Fixes: fd3ae7a9f21c ("iio: imu: kmx61: Add support for any motion trigger")
+Signed-off-by: Jiale Yao <yaojiale02@163.com>
 Cc: stable@vger.kernel.org
 Signed-off-by: Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/iio/imu/inv_mpu6050/inv_mpu_core.c |   95 +++++++++++++++++++++++------
- 1 file changed, 76 insertions(+), 19 deletions(-)
+ drivers/iio/imu/kmx61.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/iio/imu/inv_mpu6050/inv_mpu_core.c
-+++ b/drivers/iio/imu/inv_mpu6050/inv_mpu_core.c
-@@ -149,7 +149,10 @@ static const struct inv_mpu6050_hw hw_in
- 		.config = &chip_config_6050,
- 		.fifo_size = 1024,
- 		.temp = {INV_MPU6050_TEMP_OFFSET, INV_MPU6050_TEMP_SCALE},
--		.startup_time = {INV_MPU6050_GYRO_STARTUP_TIME, INV_MPU6050_ACCEL_STARTUP_TIME},
-+		.startup_time = {
-+			.accel = INV_MPU6050_ACCEL_STARTUP_TIME,
-+			.gyro = INV_MPU6050_GYRO_STARTUP_TIME,
-+		},
- 	},
- 	{
- 		.whoami = INV_MPU6500_WHOAMI_VALUE,
-@@ -158,7 +161,10 @@ static const struct inv_mpu6050_hw hw_in
- 		.config = &chip_config_6500,
- 		.fifo_size = 512,
- 		.temp = {INV_MPU6500_TEMP_OFFSET, INV_MPU6500_TEMP_SCALE},
--		.startup_time = {INV_MPU6500_GYRO_STARTUP_TIME, INV_MPU6500_ACCEL_STARTUP_TIME},
-+		.startup_time = {
-+			.accel = INV_MPU6500_ACCEL_STARTUP_TIME,
-+			.gyro = INV_MPU6500_GYRO_STARTUP_TIME,
-+		},
- 	},
- 	{
- 		.whoami = INV_MPU6515_WHOAMI_VALUE,
-@@ -167,7 +173,10 @@ static const struct inv_mpu6050_hw hw_in
- 		.config = &chip_config_6500,
- 		.fifo_size = 512,
- 		.temp = {INV_MPU6500_TEMP_OFFSET, INV_MPU6500_TEMP_SCALE},
--		.startup_time = {INV_MPU6500_GYRO_STARTUP_TIME, INV_MPU6500_ACCEL_STARTUP_TIME},
-+		.startup_time = {
-+			.accel = INV_MPU6500_ACCEL_STARTUP_TIME,
-+			.gyro = INV_MPU6500_GYRO_STARTUP_TIME,
-+		},
- 	},
- 	{
- 		.whoami = INV_MPU6880_WHOAMI_VALUE,
-@@ -176,7 +185,10 @@ static const struct inv_mpu6050_hw hw_in
- 		.config = &chip_config_6500,
- 		.fifo_size = 4096,
- 		.temp = {INV_MPU6500_TEMP_OFFSET, INV_MPU6500_TEMP_SCALE},
--		.startup_time = {INV_MPU6500_GYRO_STARTUP_TIME, INV_MPU6500_ACCEL_STARTUP_TIME},
-+		.startup_time = {
-+			.accel = INV_MPU6500_ACCEL_STARTUP_TIME,
-+			.gyro = INV_MPU6500_GYRO_STARTUP_TIME,
-+		},
- 	},
- 	{
- 		.whoami = INV_MPU6000_WHOAMI_VALUE,
-@@ -185,7 +197,10 @@ static const struct inv_mpu6050_hw hw_in
- 		.config = &chip_config_6050,
- 		.fifo_size = 1024,
- 		.temp = {INV_MPU6050_TEMP_OFFSET, INV_MPU6050_TEMP_SCALE},
--		.startup_time = {INV_MPU6050_GYRO_STARTUP_TIME, INV_MPU6050_ACCEL_STARTUP_TIME},
-+		.startup_time = {
-+			.accel = INV_MPU6050_ACCEL_STARTUP_TIME,
-+			.gyro = INV_MPU6050_GYRO_STARTUP_TIME,
-+		},
- 	},
- 	{
- 		.whoami = INV_MPU9150_WHOAMI_VALUE,
-@@ -194,7 +209,10 @@ static const struct inv_mpu6050_hw hw_in
- 		.config = &chip_config_6050,
- 		.fifo_size = 1024,
- 		.temp = {INV_MPU6050_TEMP_OFFSET, INV_MPU6050_TEMP_SCALE},
--		.startup_time = {INV_MPU6050_GYRO_STARTUP_TIME, INV_MPU6050_ACCEL_STARTUP_TIME},
-+		.startup_time = {
-+			.accel = INV_MPU6050_ACCEL_STARTUP_TIME,
-+			.gyro = INV_MPU6050_GYRO_STARTUP_TIME,
-+		},
- 	},
- 	{
- 		.whoami = INV_MPU9250_WHOAMI_VALUE,
-@@ -203,7 +221,10 @@ static const struct inv_mpu6050_hw hw_in
- 		.config = &chip_config_6500,
- 		.fifo_size = 512,
- 		.temp = {INV_MPU6500_TEMP_OFFSET, INV_MPU6500_TEMP_SCALE},
--		.startup_time = {INV_MPU6500_GYRO_STARTUP_TIME, INV_MPU6500_ACCEL_STARTUP_TIME},
-+		.startup_time = {
-+			.accel = INV_MPU6500_ACCEL_STARTUP_TIME,
-+			.gyro = INV_MPU6500_GYRO_STARTUP_TIME,
-+		},
- 	},
- 	{
- 		.whoami = INV_MPU9255_WHOAMI_VALUE,
-@@ -212,7 +233,10 @@ static const struct inv_mpu6050_hw hw_in
- 		.config = &chip_config_6500,
- 		.fifo_size = 512,
- 		.temp = {INV_MPU6500_TEMP_OFFSET, INV_MPU6500_TEMP_SCALE},
--		.startup_time = {INV_MPU6500_GYRO_STARTUP_TIME, INV_MPU6500_ACCEL_STARTUP_TIME},
-+		.startup_time = {
-+			.accel = INV_MPU6500_ACCEL_STARTUP_TIME,
-+			.gyro = INV_MPU6500_GYRO_STARTUP_TIME,
-+		},
- 	},
- 	{
- 		.whoami = INV_ICM20608_WHOAMI_VALUE,
-@@ -221,7 +245,10 @@ static const struct inv_mpu6050_hw hw_in
- 		.config = &chip_config_6500,
- 		.fifo_size = 512,
- 		.temp = {INV_ICM20608_TEMP_OFFSET, INV_ICM20608_TEMP_SCALE},
--		.startup_time = {INV_MPU6500_GYRO_STARTUP_TIME, INV_MPU6500_ACCEL_STARTUP_TIME},
-+		.startup_time = {
-+			.accel = INV_MPU6500_ACCEL_STARTUP_TIME,
-+			.gyro = INV_MPU6500_GYRO_STARTUP_TIME,
-+		},
- 	},
- 	{
- 		.whoami = INV_ICM20608D_WHOAMI_VALUE,
-@@ -230,7 +257,10 @@ static const struct inv_mpu6050_hw hw_in
- 		.config = &chip_config_6500,
- 		.fifo_size = 512,
- 		.temp = {INV_ICM20608_TEMP_OFFSET, INV_ICM20608_TEMP_SCALE},
--		.startup_time = {INV_MPU6500_GYRO_STARTUP_TIME, INV_MPU6500_ACCEL_STARTUP_TIME},
-+		.startup_time = {
-+			.accel = INV_MPU6500_ACCEL_STARTUP_TIME,
-+			.gyro = INV_MPU6500_GYRO_STARTUP_TIME,
-+		},
- 	},
- 	{
- 		.whoami = INV_ICM20609_WHOAMI_VALUE,
-@@ -239,7 +269,10 @@ static const struct inv_mpu6050_hw hw_in
- 		.config = &chip_config_6500,
- 		.fifo_size = 4 * 1024,
- 		.temp = {INV_ICM20608_TEMP_OFFSET, INV_ICM20608_TEMP_SCALE},
--		.startup_time = {INV_MPU6500_GYRO_STARTUP_TIME, INV_MPU6500_ACCEL_STARTUP_TIME},
-+		.startup_time = {
-+			.accel = INV_MPU6500_ACCEL_STARTUP_TIME,
-+			.gyro = INV_MPU6500_GYRO_STARTUP_TIME,
-+		},
- 	},
- 	{
- 		.whoami = INV_ICM20689_WHOAMI_VALUE,
-@@ -248,7 +281,10 @@ static const struct inv_mpu6050_hw hw_in
- 		.config = &chip_config_6500,
- 		.fifo_size = 4 * 1024,
- 		.temp = {INV_ICM20608_TEMP_OFFSET, INV_ICM20608_TEMP_SCALE},
--		.startup_time = {INV_MPU6500_GYRO_STARTUP_TIME, INV_MPU6500_ACCEL_STARTUP_TIME},
-+		.startup_time = {
-+			.accel = INV_MPU6500_ACCEL_STARTUP_TIME,
-+			.gyro = INV_MPU6500_GYRO_STARTUP_TIME,
-+		},
- 	},
- 	{
- 		.whoami = INV_ICM20600_WHOAMI_VALUE,
-@@ -257,7 +293,10 @@ static const struct inv_mpu6050_hw hw_in
- 		.config = &chip_config_6500,
- 		.fifo_size = 1008,
- 		.temp = {INV_ICM20608_TEMP_OFFSET, INV_ICM20608_TEMP_SCALE},
--		.startup_time = {INV_ICM20602_GYRO_STARTUP_TIME, INV_ICM20602_ACCEL_STARTUP_TIME},
-+		.startup_time = {
-+			.accel = INV_ICM20602_ACCEL_STARTUP_TIME,
-+			.gyro = INV_ICM20602_GYRO_STARTUP_TIME,
-+		},
- 	},
- 	{
- 		.whoami = INV_ICM20602_WHOAMI_VALUE,
-@@ -266,7 +305,10 @@ static const struct inv_mpu6050_hw hw_in
- 		.config = &chip_config_6500,
- 		.fifo_size = 1008,
- 		.temp = {INV_ICM20608_TEMP_OFFSET, INV_ICM20608_TEMP_SCALE},
--		.startup_time = {INV_ICM20602_GYRO_STARTUP_TIME, INV_ICM20602_ACCEL_STARTUP_TIME},
-+		.startup_time = {
-+			.accel = INV_ICM20602_ACCEL_STARTUP_TIME,
-+			.gyro = INV_ICM20602_GYRO_STARTUP_TIME,
-+		},
- 	},
- 	{
- 		.whoami = INV_ICM20690_WHOAMI_VALUE,
-@@ -275,7 +317,10 @@ static const struct inv_mpu6050_hw hw_in
- 		.config = &chip_config_6500,
- 		.fifo_size = 1024,
- 		.temp = {INV_ICM20608_TEMP_OFFSET, INV_ICM20608_TEMP_SCALE},
--		.startup_time = {INV_ICM20690_GYRO_STARTUP_TIME, INV_ICM20690_ACCEL_STARTUP_TIME},
-+		.startup_time = {
-+			.accel = INV_ICM20690_ACCEL_STARTUP_TIME,
-+			.gyro = INV_ICM20690_GYRO_STARTUP_TIME,
-+		},
- 	},
- 	{	.whoami = INV_IAM20380_WHOAMI_VALUE,
- 		.name = "IAM20380",
-@@ -283,7 +328,10 @@ static const struct inv_mpu6050_hw hw_in
- 		.config = &chip_config_6500,
- 		.fifo_size = 512,
- 		.temp = {INV_ICM20608_TEMP_OFFSET, INV_ICM20608_TEMP_SCALE},
--		.startup_time = {INV_MPU6500_GYRO_STARTUP_TIME, INV_MPU6500_ACCEL_STARTUP_TIME},
-+		.startup_time = {
-+			.accel = INV_MPU6500_ACCEL_STARTUP_TIME,
-+			.gyro = INV_MPU6500_GYRO_STARTUP_TIME,
-+		},
- 	},
- 	{
- 		.whoami = INV_IAM20680_WHOAMI_VALUE,
-@@ -292,7 +340,10 @@ static const struct inv_mpu6050_hw hw_in
- 		.config = &chip_config_6500,
- 		.fifo_size = 512,
- 		.temp = {INV_ICM20608_TEMP_OFFSET, INV_ICM20608_TEMP_SCALE},
--		.startup_time = {INV_MPU6500_GYRO_STARTUP_TIME, INV_MPU6500_ACCEL_STARTUP_TIME},
-+		.startup_time = {
-+			.accel = INV_MPU6500_ACCEL_STARTUP_TIME,
-+			.gyro = INV_MPU6500_GYRO_STARTUP_TIME,
-+		},
- 	},
- 	{
- 		.whoami = INV_IAM20680HP_WHOAMI_VALUE,
-@@ -301,7 +352,10 @@ static const struct inv_mpu6050_hw hw_in
- 		.config = &chip_config_6500,
- 		.fifo_size = 4 * 1024,
- 		.temp = {INV_ICM20608_TEMP_OFFSET, INV_ICM20608_TEMP_SCALE},
--		.startup_time = {INV_MPU6500_GYRO_STARTUP_TIME, INV_MPU6500_ACCEL_STARTUP_TIME},
-+		.startup_time = {
-+			.accel = INV_MPU6500_ACCEL_STARTUP_TIME,
-+			.gyro = INV_MPU6500_GYRO_STARTUP_TIME,
-+		},
- 	},
- 	{
- 		.whoami = INV_IAM20680HT_WHOAMI_VALUE,
-@@ -310,7 +364,10 @@ static const struct inv_mpu6050_hw hw_in
- 		.config = &chip_config_6500,
- 		.fifo_size = 4 * 1024,
- 		.temp = {INV_ICM20608_TEMP_OFFSET, INV_ICM20608_TEMP_SCALE},
--		.startup_time = {INV_MPU6500_GYRO_STARTUP_TIME, INV_MPU6500_ACCEL_STARTUP_TIME},
-+		.startup_time = {
-+			.accel = INV_MPU6500_ACCEL_STARTUP_TIME,
-+			.gyro = INV_MPU6500_GYRO_STARTUP_TIME,
-+		},
- 	},
- };
+--- a/drivers/iio/imu/kmx61.c
++++ b/drivers/iio/imu/kmx61.c
+@@ -942,7 +942,7 @@ static int kmx61_write_event_config(stru
+ 	struct kmx61_data *data = kmx61_get_data(indio_dev);
+ 	int ret = 0;
  
+-	if (state && data->ev_enable_state)
++	if (state == data->ev_enable_state)
+ 		return 0;
+ 
+ 	mutex_lock(&data->lock);
 
 
