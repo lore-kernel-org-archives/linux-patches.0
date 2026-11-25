@@ -1,52 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795619078;
-	b=BoKrvU9FiOBTef7ORGKGJ8QyhlPu3Y6/lEL81IoyOCE6JjaGyuq7uItkDcv+lSmpjnuX
-	 E8mvPrwH6pSsR2AcneUUuXFQWGlHxzWVkRe/ei/AloQZ1+lR0yHp7R57r0fJIgJRdoWzH
-	 /8eAZjWDxCIARPlIi1smsaB0JViRSt2g0N8wlsBs4jyAP5ekLEirCfHxIG4dQU9rIPOvB
-	 smNweykmbe7IskUSupryxieY5AN/be7Btx6OAUT6ZeWRJzvPHsL11Oc/0HOusc3+aWqEt
-	 ieqwud9hXLXTrhRczpW+TXB3qgSXGcP3mbr4YYRTE70q615trKOGtfWY8B0jmJpukOg==
+	t=1795619081;
+	b=peJC53wUJc+vmE48lU9gS5GKihcIcPVYZkJbrCuMNVu7T3SCPqtb4w3MHKLEcB/OZgrg
+	 wIR4IYpuIDmPL+fvVkaVXZFbcDCYaDH2NBuUdH/iuyDbNt4HINEBCtYqzoN0abG0stTQu
+	 i7CVxF5MAEzd/Azqy4I4Ds3NMLFmCzQMKedBi7aDEqJyRI0WZkfPF0QuM+qBUM100Gt2G
+	 ympEWBzK2+0DEj4O2+lFtFsyr5ynpZwuz3sDePSlDtPvspkNwUxpLqO9hQlq4dhWyK0w5
+	 TlwjgyTjy1FikqNNsPNT+UImgQSzYvUMZug15Ya/BLninztEy01zYu93Gw7xo8GN3Og==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795619078;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795619081;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=69opm3gLJtZ5REwgnOhH/HyKCuJrZ0TemLa6M88FQN8=;
-	b=MA6QuPbcDvASKurJEn3Kuu8+RKwaSH3Inb+8nxgbtFTVVbVOOGm/Ki8oAzBqA8+R3YhV
-	 YZ9GGytG9QgLoG4E7lAGHKqGAALmfX7w7zL8UAnXvENFUa3FK0QsU7zXvpF4PUUpFCs/S
-	 oG/9kmJwcIxlfiiwy1/Tjbj8UeW7uAVv0qplmkCa0UNIUn9YPp1kjUdhcnPBfWNyrLt80
-	 c2usRazmh3kvwIHCERY+Wk3QmHOHc07O/6JaB1dBrWEbZLinYFestYAwjlhkJANXO6qMO
-	 mK4eyL316VemWzR/Q4WB6Ch69s/nMTFYbRuOxXOKYqPB2H3hul+e5axL7Ig3EOuRPhQ==
+	bh=L0yi0DxxCw/RGzmOYMUhRSYPKdvh/8IJRWlHqMibaaw=;
+	b=D4szlBS5pJqC0A3M4O6aWrOUXUBxKsPmFMoNRFFrg6Hjx4L3KDTW3zkuSIwYG7jsa1Pz
+	 9Xl1urpCvOTh5OcsZuoz/mboUFyNkzzHaciMxNxqKPcduWTi9DBk86Ucj+H6mFO3AbKEn
+	 Of3eznK/vPpbPG42pJDmRJu+wG7wzeNQz9d6u/HURFVI7iktjXpEv48sDgYZ42YpC/78K
+	 SfZoNaClbmw1qw34ZrJwLc/Lww79nP5eTrnBa99WnZYjOg8IiZy4rSeMe1GfCFghZt6Cc
+	 hOsKW/thT9ju4osalRsYX4AAV51C2/O8pnIyzUn2St0Ys8SG7yxrAde0E+GJ6OgXueQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="0/RNyUqV";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="P9aQ1r/y";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C6390606A31E;
-	Wed, 25 Nov 2026 15:04:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9C7DF606A31E;
+	Wed, 25 Nov 2026 15:04:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=0/RNyUqV
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EE7481F000CF;
-	Wed, 25 Nov 2026 15:04:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=P9aQ1r/y
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ED4DD1F000D1;
+	Wed, 25 Nov 2026 15:04:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795619078;
-	bh=69opm3gLJtZ5REwgnOhH/HyKCuJrZ0TemLa6M88FQN8=;
+	s=korg; t=1795619081;
+	bh=L0yi0DxxCw/RGzmOYMUhRSYPKdvh/8IJRWlHqMibaaw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=0/RNyUqVuiHz2SFcyUsVmrvBaPugyQDoUwtDaYblo1OzQdA+6fqwpEM1Vnp7SCP/g
-	 lNCyoDWx4nwmSX4EQwLs247D++FO44NbGcXd4c04wR0zyqs+UXhv6IxfxJO9crg9uN
-	 VgIBF3gi88DiOMI5Gh+9RhRaUzEGHQqy/4gSOByk=
+	b=P9aQ1r/y5q2oGXmtGCk8MIDzGR1wcgz/5rmQmu8eVMV8vWuZvIe8GOyaTta35aGqs
+	 S4v/Z1gb1sDdxAIZKG89LHtz18Qgk9b1R2QqO4Ooqr8SEjgasIQCKMb+DcD78bOeVc
+	 DEeacJxxrwYntBqDPIBvmG6W5e0PJvUl1j54EKPg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alexander Duyck <alexanderduyck@fb.com>,
+	Yaroslav Dudkov <aroslavdudkov622@gmail.com>,
+	Hangbin Liu <liuhangbin@kylinos.cn>,
+	Ido Schimmel <idosch@nvidia.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0482/1005] fbnic: Disable PTP completions during the Tx force-flush
-Date: Wed, 25 Nov 2026 15:30:20 +0100
-Message-ID: <20261125143833.040863474@linuxfoundation.org>
+Subject: [PATCH 7.3 0456/1005] ipv6: ignore link state in gateway check
+Date: Wed, 25 Nov 2026 15:29:54 +0100
+Message-ID: <20261125143832.429866544@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143821.729802100@linuxfoundation.org>
 References: <20261125143821.729802100@linuxfoundation.org>
@@ -68,75 +70,83 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alexander Duyck <alexanderduyck@fb.com>
+From: Yaroslav Dudkov <aroslavdudkov622@gmail.com>
 
-[ Upstream commit 7d4568edce74ac72794cdd42767cc116bf1ca9b4 ]
+[ Upstream commit b76bcf3fff9332076d92de47a80d12fd3d5268e2 ]
 
-When the Tx queues fail to go idle, fbnic_wait_all_queues_idle() falls
-back to fbnic_tx_flush(), which sets FBNIC_TMI_DROP_CTRL_EN. That bit
-only drops packets at the Tx MAC Interface start of packet protection FIFO.
+IPv6 route cannot be added in table when all
+following conditions are true:
+- gateway is not link-local address
+- ignore_routes_with_linkdown=1 on device
+- nexthop has no carrier
+- gateway is not present or covered by any route in table already
+Also multipath routes addition is invalidated by kernel even
+if only one of added nexthops satisfies all above conditions.
 
-The PTP completion path is governed by a separate bit in the same
-register. With only the drop enable set, a timestamped frame has its
-packet discarded while the matching completion is still forwarded to
-the host. fbnic_clean_tsq() then walks the ring with no packet left to
-match it against and reports "Tx timestamp without matching packet".
-The drop does not retire the completion either, as the completion FIFO
-is only drained when the completion disable is set.
+Reproducer:
 
-Set FBNIC_TMI_DROP_CTRL_CMPL_DIS together with the drop enable so the
-completions are drained rather than leaked to the host, and clear both
-bits again when the flush is turned off.
+  ip netns add t
+  ip -n t link add va type veth peer name vb
+  ip -n t link set va up
+  ip -n t addr add fd00::1/64 dev va nodad
+  ip netns exec t sysctl -w \
+    net.ipv6.conf.va.ignore_routes_with_linkdown=1
+  ip -n t -6 route add 2001:db8::/64 via fd00::2 dev va
+  # added
+  ip -n t -6 route add 2001:db8::/64 table 100 via fd00::2 dev va
+  # RTNETLINK answers: No route to host
+  ip -n t -6 route show table all
+  ip netns del t
 
-Fixes: ad3d9f8bc66c ("eth: fbnic: add TX packets timestamping support")
-Signed-off-by: Alexander Duyck <alexanderduyck@fb.com>
-Link: https://patch.msgid.link/179381515954.9644.10831265959574467679.stgit@ahduyck-xeon-server.home.arpa
+Route should be added because:
+- RT6_LOOKUP_F_IGNORE_LINKSTATE in commit d5d32e4b7668
+("net: ipv6: Do not consider link state for nexthop validation")
+was added for this
+- the same route is valid in main table (when no specifying table id
+while adding route)
+- fib6_nh_init() initializes nexthops with no carrier
+- IPv4 already does this (fib_check_nh_v4_gw() ignores link state
+using the FIB_LOOKUP_IGNORE_LINKSTATE flag)
+
+Before commit b2c709cce682 ("ipv6: Convert gateway validation to
+use fib6_info") rt6_lookup() was used for checking if nexthop is
+valid, rt6_lookup called rt6_device_match() which does not check the
+link state. After change rt6_lookup() to fib6_lookup()
+find_match() under fib6_lookup() started to invalidate linkdown
+devices, because RT6_LOOKUP_F_IGNORE_LINKSTATE is not passed to it.
+
+Adding RT6_LOOKUP_F_IGNORE_LINKSTATE to flags for ip6_route_check_nh()
+solves the problem. RT6_LOOKUP_F_IGNORE_LINKSTATE is already used
+inside the first search ip6_nh_lookup_table() and fixes the
+bug in second search fib6_lookup(). Also RT6_LOOKUP_F_IGNORE_LINKSTATE
+isn't read inside fib6_select_path().
+
+Fixes: b2c709cce682 ("ipv6: Convert gateway validation to use fib6_info")
+Signed-off-by: Yaroslav Dudkov <aroslavdudkov622@gmail.com>
+Reviewed-by: Hangbin Liu <liuhangbin@kylinos.cn>
+Reviewed-by: Ido Schimmel <idosch@nvidia.com>
+Link: https://patch.msgid.link/20261104195655.1406837-2-aroslavdudkov622@gmail.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/meta/fbnic/fbnic_csr.h  |  1 +
- drivers/net/ethernet/meta/fbnic/fbnic_txrx.c | 10 +++++++---
- 2 files changed, 8 insertions(+), 3 deletions(-)
+ net/ipv6/route.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/net/ethernet/meta/fbnic/fbnic_csr.h b/drivers/net/ethernet/meta/fbnic/fbnic_csr.h
-index baba3471bf5a4..c601b64aa2646 100644
---- a/drivers/net/ethernet/meta/fbnic/fbnic_csr.h
-+++ b/drivers/net/ethernet/meta/fbnic/fbnic_csr.h
-@@ -459,6 +459,7 @@ enum {
- #define FBNIC_TMI_SOP_PROT_CTRL		0x04400		/* 0x11000 */
- #define FBNIC_TMI_DROP_CTRL		0x04401		/* 0x11004 */
- #define FBNIC_TMI_DROP_CTRL_EN			CSR_BIT(0)
-+#define FBNIC_TMI_DROP_CTRL_CMPL_DIS		CSR_BIT(1)
- #define FBNIC_TMI_DROP_PKTS		0x04402		/* 0x11008 */
- #define FBNIC_TMI_DROP_BYTE_L		0x04403		/* 0x1100c */
- #define FBNIC_TMI_ILLEGAL_PTP_REQS	0x04409		/* 0x11024 */
-diff --git a/drivers/net/ethernet/meta/fbnic/fbnic_txrx.c b/drivers/net/ethernet/meta/fbnic/fbnic_txrx.c
-index 69cd96a4508f3..c869b88db81ac 100644
---- a/drivers/net/ethernet/meta/fbnic/fbnic_txrx.c
-+++ b/drivers/net/ethernet/meta/fbnic/fbnic_txrx.c
-@@ -2309,15 +2309,19 @@ void fbnic_disable(struct fbnic_net *fbn)
- 
- static void fbnic_tx_flush(struct fbnic_dev *fbd)
+diff --git a/net/ipv6/route.c b/net/ipv6/route.c
+index 1ec9fd20b07d8..cf6f09a42c9b7 100644
+--- a/net/ipv6/route.c
++++ b/net/ipv6/route.c
+@@ -3483,9 +3483,9 @@ static int ip6_route_check_nh(struct net *net,
+ 			      netdevice_tracker *dev_tracker,
+ 			      struct inet6_dev **idev)
  {
-+	u32 drop_ctrl = FBNIC_TMI_DROP_CTRL_EN | FBNIC_TMI_DROP_CTRL_CMPL_DIS;
-+
- 	netdev_warn(fbd->netdev, "triggering Tx flush\n");
++	int flags = RT6_LOOKUP_F_IFACE | RT6_LOOKUP_F_IGNORE_LINKSTATE;
+ 	const struct in6_addr *gw_addr = &cfg->fc_gateway;
+ 	struct net_device *dev = _dev ? *_dev : NULL;
+-	int flags = RT6_LOOKUP_F_IFACE;
+ 	struct fib6_result res = {};
+ 	int err = -EHOSTUNREACH;
  
--	fbnic_rmw32(fbd, FBNIC_TMI_DROP_CTRL, FBNIC_TMI_DROP_CTRL_EN,
--		    FBNIC_TMI_DROP_CTRL_EN);
-+	/* Drop packets and retire their PTP completions */
-+	fbnic_rmw32(fbd, FBNIC_TMI_DROP_CTRL, drop_ctrl, drop_ctrl);
- }
- 
- static void fbnic_tx_flush_off(struct fbnic_dev *fbd)
- {
--	fbnic_rmw32(fbd, FBNIC_TMI_DROP_CTRL, FBNIC_TMI_DROP_CTRL_EN, 0);
-+	u32 drop_ctrl = FBNIC_TMI_DROP_CTRL_EN | FBNIC_TMI_DROP_CTRL_CMPL_DIS;
-+
-+	fbnic_rmw32(fbd, FBNIC_TMI_DROP_CTRL, drop_ctrl, 0);
- }
- 
- struct fbnic_idle_regs {
 -- 
 2.53.0
 
