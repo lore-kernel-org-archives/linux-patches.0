@@ -1,52 +1,56 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795623562;
-	b=WLU0/dSjsamFoHr04zFsRM9Qjd8ieHuF6QwYP+3oQ6MDSYHZLBT1PxkmMJnw99S+tKJW
-	 OHfege6DqjcMbqeHv43ijMrvT5ef98M4yTIF7jMcrd67oGhKYaK0f1diA/PrtqYEJ0EFi
-	 mBRc3mapUQzuTE5+3BpyTVywH2d1Lx3aRYQ0FMSZIH4gQScedcAGIYXouqernKkZ6Sllf
-	 DNH3DR2YfpKSxhC3aXwq5JlYt87oPiYxa0S7luoG2LTTqZm/4m54ErBt6vLXEnB+vvsXv
-	 4zeFgeao5gOtrvetZq5K82W/dv/yOrbOlvTwJtofUVb2pgnZZGydaZOS/RvF0UgLlqw==
+	t=1795623565;
+	b=NC9DVLN65oVbhn6IOaE1xPTmZB6p8k83VgcJDerc1IGW1nLyx4PjIs1e980QOEpN57d5
+	 gSzgt3HbgJWQFVM2Mo/37EGAWiWhJMZqkQOhKq3Kdc9bzbvibRQPXi/MGfAhsqbThXjLt
+	 2H+uNcoWq81Ghm1BosopEnHnj+uEinVJg9caPSHQmJOhftUQXflqM8I2W9iAMEZhDNnH3
+	 Vuj0eRxy4zUUbOOdEjXz7TEpnGOJUWX8lSwFaUp4sCQqsUCirGdSTrEKt4whIxmJdMFew
+	 zjXDoroEuGMIlyU3tJ58NYGGrI2ORGWTGUGks+RFaywx8wvkCX8ce/mWY/jZ247nxXA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795623562;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795623565;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=znfHUceQKDi0opIddpQO8mafWphG0gKDjceh+iGRonk=;
-	b=SEvQTgyyvYqAS5DNGrk+gAZ6VJmOpAWCYMm/7wN9LDqNuNnqbMHpIExRtNZBn+ZkT10w
-	 XyHeMDLDU3pSoxUoIsF1cdw8v9rhh7skO1u26RDklx8F9ynEMlAW3VDjmHAV2fZ7pQACH
-	 YH2ibaBEPyu7rSy8UI3I97VYAuCP4PkRgtJhqcNyQBShyUdpTMWBRp0TkGBcJFyfIGgYh
-	 Y7ncJPgkQUTzUDzV8acKdiy8tvELVeD6HHmwiOjxAfnfgz3UcTsCngLTu8eHNdRsUcxGI
-	 +37EEWs0GbYsgBMnfmw57ziV4FzCcnrTpynQAkOtOZMVra5hRhSLUIuiMkDrk6ksUew==
+	bh=RXDqsDUEYr3Q+UoTJuOOT4jMTBKYAZKI+ugwDDaP40E=;
+	b=ZFJKsFm5cBTnvHeJLGe3OXgwASXH2SL6AYZHyb/x/XQ2ZdcfJG1n0cBvG9L1KylK/16R
+	 WDbejqcZfxxCmzApHg4qAJblhRQE74yXnWzwJnpTJL/OV6R69DnZtp/KsYZuByfdrdIcz
+	 NgdVOGFqfJ7xBqtOUinhi1L8EGEvzvVbO7h4kAbT3Clzull0jGFucbRc7Xp5N/GS+bd39
+	 grW7mrUZVSI8Jn39cG0pCBe0TF+nmOWYAb5X5s5k0d9GG+q9zqgAg7tJ75Sm2zSRPGQ4B
+	 gIIakKuMTThSCC/yY5nhPZJUgBmLs+zUcLGRR917zmi3FAIPgKgTC/iGL/Xhd73kMsA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Bw3Cp0MD;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=lkCg9TJT;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 79650606A321;
-	Wed, 25 Nov 2026 16:19:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5F32F606A31E;
+	Wed, 25 Nov 2026 16:19:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Bw3Cp0MD
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 68DFD1F000CA;
-	Wed, 25 Nov 2026 16:19:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=lkCg9TJT
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9FFDB1F000C0;
+	Wed, 25 Nov 2026 16:19:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795623561;
-	bh=znfHUceQKDi0opIddpQO8mafWphG0gKDjceh+iGRonk=;
+	s=korg; t=1795623565;
+	bh=RXDqsDUEYr3Q+UoTJuOOT4jMTBKYAZKI+ugwDDaP40E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Bw3Cp0MDHIhiSXJhEoD9ZOqR+MfndPCW78jfoaRiwMH5CFxqOD2eu1/QZ0e5e5vMM
-	 ZDIxmvUsfMXqQbyBpmUIj3PXJEgO/uxgOetibHF1rHp47Fap4tXHp5jL4bIOeryxNt
-	 exUpNXS1bnsNtJTUOECI/GW8kgThCnQP0RtYT6ec=
+	b=lkCg9TJTAmhm3cNeJ5gO8hiFehxXm5TLAIH96kt6SGTfvGo4xPgrwAo8SZi5zSjoD
+	 EJUgdmrQ+tPjtR83WLt0fHkRG/mi0iACKhAzqvIpehR2att0nrP14NKeRsiBuhstOt
+	 tttlKn7M1FJpShmqQ2xXHrAUdlA96J136CrWUnFI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable <stable@kernel.org>,
-	Dan Drown <dan-netdev@drown.org>,
-	Johan Hovold <johan@kernel.org>
-Subject: [PATCH 6.18 900/990] USB: cdc-acm: fix NULL-deref on hangup
-Date: Wed, 25 Nov 2026 15:37:47 +0100
-Message-ID: <20261125143843.092828405@linuxfoundation.org>
+	"Mario Limonciello (AMD)" <superm1@kernel.org>,
+	McKenna Fan <blue_sun@tuta.io>,
+	Quinn Schive <quinnschive@hotmail.com>,
+	Bruno Filipe <bmilreu@gmail.com>,
+	Maciej Zonski <me@zonni.pl>,
+	Rishabh Jain <rishabh.jain1198@gmail.com>,
+	Mathias Nyman <mathias.nyman@linux.intel.com>
+Subject: [PATCH 6.18 901/990] usb: pci-quirks: always assert xHCI OS ownership
+Date: Wed, 25 Nov 2026 15:37:48 +0100
+Message-ID: <20261125143843.115952530@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143822.072087159@linuxfoundation.org>
 References: <20261125143822.072087159@linuxfoundation.org>
@@ -68,58 +72,88 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Johan Hovold <johan@kernel.org>
+From: Rishabh Jain <rishabh.jain1198@gmail.com>
 
-commit bc9dd21ec61acd152d9e7c12cb07db37c63ad41a upstream.
+commit 5550405351199fe78f4a3cd606c07f5ad7220e1b upstream.
 
-Make sure to take a reference to the port tty when processing carrier
-detect changes to avoid dereferencing a NULL pointer when the port is
-being hung up.
+The xHCI ownership protocol requires the OS driver to assert the HC OS
+Owned semaphore before using the host controller, then wait for HC BIOS
+Owned to clear if firmware owns it.
 
-Fixes: 3b563b901eef ("usb: cdc-acm: add PPS support")
-Cc: stable <stable@kernel.org>
-Cc: Dan Drown <dan-netdev@drown.org>
-Signed-off-by: Johan Hovold <johan@kernel.org>
-Link: https://patch.msgid.link/20261019123755.2008384-1-johan@kernel.org
+quirk_usb_handoff_xhci() currently asserts OS Owned only when BIOS Owned
+is already set. If firmware leaves BIOS Owned clear, Linux uses the xHC
+while both ownership semaphores remain clear.
+
+The timeout fallback also clears BIOS Owned using the original register
+value, which can clear OS Owned at the same time.
+
+On an AMD PROM21 xHCI controller (1022:43fc), this caused every S3
+resume to terminate Controller Restore State with USBSTS 0x401. Linux
+then reset the host controller, both root hubs and the USB Bluetooth
+adapter.
+
+The controller entered resume ready and halted with USBSTS 0x1.
+Endpoint state, 100 ms save/restore delays, scratchpads, the DCBAA,
+device contexts and command, event and transfer rings were verified not
+to cause the restore error.
+
+Across four S3 cycles, asserting only HC OS Owned changed USBLEGSUP from
+0x00000801 to 0x01000801 and eliminated the restore failure. Testing
+included the unmodified 7.1.8-ogc1.1.fc44.x86_64 distribution kernel
+using a test module that set the HC OS Owned semaphore. The same test
+was repeated after review with the same result. Clearing USBLEGCTLSTS
+was independently verified to be unnecessary.
+
+Always assert OS Owned for controllers using the standard xHCI handoff,
+and leave the existing TI/Renesas forced handoff unchanged. Keep OS
+Owned asserted after the standard handoff, including when forcing BIOS
+Owned clear after a timeout, to prevent firmware from reclaiming the
+controller during subsequent suspends.
+
+Fixes: 66d4eadd8d06 ("USB: xhci: BIOS handoff and HW initialization.")
+Cc: stable@vger.kernel.org
+Reviewed-by: Mario Limonciello (AMD) <superm1@kernel.org>
+Tested-by: McKenna Fan <blue_sun@tuta.io>
+Tested-by: Quinn Schive <quinnschive@hotmail.com>
+Tested-by: Bruno Filipe <bmilreu@gmail.com>
+Tested-by: Maciej Zonski <me@zonni.pl>
+Signed-off-by: Rishabh Jain <rishabh.jain1198@gmail.com>
+Signed-off-by: Mathias Nyman <mathias.nyman@linux.intel.com>
+Link: https://patch.msgid.link/20261105175106.241182-4-mathias.nyman@linux.intel.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/class/cdc-acm.c |   18 ++++++++++++------
- 1 file changed, 12 insertions(+), 6 deletions(-)
+ drivers/usb/host/pci-quirks.c |   13 ++++++++-----
+ 1 file changed, 8 insertions(+), 5 deletions(-)
 
---- a/drivers/usb/class/cdc-acm.c
-+++ b/drivers/usb/class/cdc-acm.c
-@@ -294,6 +294,7 @@ static void acm_process_notification(str
- 	unsigned long flags;
- 	struct usb_cdc_notification *dr = (struct usb_cdc_notification *)buf;
- 	unsigned char *data = buf + sizeof(struct usb_cdc_notification);
-+	struct tty_struct *tty;
+--- a/drivers/usb/host/pci-quirks.c
++++ b/drivers/usb/host/pci-quirks.c
+@@ -1194,10 +1194,11 @@ static void quirk_usb_handoff_xhci(struc
+ 			 && pdev->device == 0x0014)) {
+ 		val = (val | XHCI_HC_OS_OWNED) & ~XHCI_HC_BIOS_OWNED;
+ 		writel(val, base + ext_cap_offset);
+-	}
+-
+-	/* If the BIOS owns the HC, signal that the OS wants it, and wait */
+-	if (val & XHCI_HC_BIOS_OWNED) {
++	} else {
++		/*
++		 * Perform the standard handoff and leave OS ownership set to
++		 * keep the BIOS at bay during subsequent suspends.
++		 */
+ 		writel(val | XHCI_HC_OS_OWNED, base + ext_cap_offset);
  
- 	switch (dr->bNotificationType) {
- 	case USB_CDC_NOTIFY_NETWORK_CONNECTION:
-@@ -320,12 +321,17 @@ static void acm_process_notification(str
- 
- 		difference = acm->ctrlin ^ newctrl;
- 
--		if ((difference & USB_CDC_SERIAL_STATE_DCD) && acm->port.tty) {
--			struct tty_ldisc *ld = tty_ldisc_ref(acm->port.tty);
--			if (ld) {
--				if (ld->ops->dcd_change)
--					ld->ops->dcd_change(acm->port.tty, newctrl & USB_CDC_SERIAL_STATE_DCD);
--				tty_ldisc_deref(ld);
-+		if (difference & USB_CDC_SERIAL_STATE_DCD) {
-+			tty = tty_port_tty_get(&acm->port);
-+			if (tty) {
-+				struct tty_ldisc *ld = tty_ldisc_ref(tty);
-+
-+				if (ld) {
-+					if (ld->ops->dcd_change)
-+						ld->ops->dcd_change(tty, newctrl & USB_CDC_SERIAL_STATE_DCD);
-+					tty_ldisc_deref(ld);
-+				}
-+				tty_kref_put(tty);
- 			}
+ 		/* Wait for 1 second with 10 microsecond polling interval */
+@@ -1209,7 +1210,9 @@ static void quirk_usb_handoff_xhci(struc
+ 			dev_warn(&pdev->dev,
+ 				 "xHCI BIOS handoff failed (BIOS bug ?) %08x\n",
+ 				 val);
+-			writel(val & ~XHCI_HC_BIOS_OWNED, base + ext_cap_offset);
++			writel((val | XHCI_HC_OS_OWNED) &
++			       ~XHCI_HC_BIOS_OWNED,
++			       base + ext_cap_offset);
  		}
+ 	}
  
 
 
