@@ -1,56 +1,56 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795626107;
-	b=2pjgseq48DNDsJjnPzlAUIcUovHN5F7J8eZwIyY7as6l+QrYBmi9GXRiDTq7e5A9lN7i
-	 /6DiS5Zw24GZn/SmUU2Jf4KZdMFs+gB42F+UXsPD8uBJN5k51zsNTK2b6jJpohWZo7C6S
-	 exar0WK7xLAoJyoSnbOgZuX4I52O16+dqGXfWs+qRQWEryiN3BpVFe6vS+OuyUJOMOCeq
-	 PogMLlGEHcXZECsthCfF1iEWlIJPLedtxq9CBFmm0H/hEZbcBeCCawms5J75qQ41CTiCw
-	 QqYV297MsB/X2cenMpU9l2DeR+blftCWv40CPhzyl7JdoqCDODKDL5c5tCjmJO/5iew==
+	t=1795626110;
+	b=rRVvgPH308T3OKrnoPHZI03TgyvZE+TKWylyUthRyZdHwzJNpHNttL/pgdkmyE46ukbD
+	 95c+ErkyV5x4AdTS8L8HhT64+npwvLCboQAQSddovL6YdpkZxUFJgMHJQ4nbHiY6gKuV5
+	 Q1EvQQyow0m7teK5tF/3cvJsiOhl00lupRbAkxIo/jTvQPhTkG9Y1E2NqH3RcLBlCwKyl
+	 G+KiZAkM8ri1zhB0AfSd6PteWxmTGpN0N1+4eX+Lg49QQYpAq0OUOaKe8Nn2jwW+TTKuK
+	 dkkvhXuHFPXv7GAFD1FizOCxEGVHK3v3jFxPOpJQMFZuJAgxww9RgI4W21tMalbvqcQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795626107;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795626110;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Type:Content-Transfer-Encoding;
-	bh=AWLWb+TsyqcM17j2W9W7Gd6d2y/3Kbj5IS0hWRUH/+0=;
-	b=V2z9x3gLigel6vcLRxq2e05dLiZFCgqV/Ip12sb2SIOjVFoO7h7c3v1UOqcLbJps74P1
-	 9eOtKil7VHbgvG26X+iUXtV+TYJMCvtNa++7twxH8oZLlhpd6I/paT4K9NDtMKaz8BFVA
-	 iJlkJYh9nlM2JioYSRxvV1ThF4L/1m9SrNU3FX1haPnaPPFLab20fLX7HVylM6m+dXEA+
-	 wfZ4KYyLCzFa2RRiCgl77nbaj6Pq6bLVxMvoM2AfM7mz3qNSH5ejBEdF/qtdka31KMskI
-	 Bf/z1gksp3HVjyw2z83Fun9zcU17ALUOVGa59940xIJZ62Qjc6oXxpMKY/W/MMC5A8A==
+	 MIME-Version:Content-Transfer-Encoding;
+	bh=bKib9wjYwu3eEM+e6rH5PLRkZA544OQFTDaMS7uNnxs=;
+	b=e6x98ujTPvUgQ7yeeuRremK0X8zSAxdGm7GHxj0CJbJvVbUI4Or7aLMaYkLrzpVmg8Df
+	 +mwN2lHzB3g/uBV7+lzIbGwGyMsjtP0wxfkIptsfTxdPgnxNtXnx3VD3cIL6zyBdZuDr6
+	 2X3UAlu0bLaWmoLFojQeIjcYXWmgt9I1w3NrjHXMX5Tb4I7T+mcfEjB4FKaZWh3blBONa
+	 w5Db80/jlEUNlaiEnCntdOB6csm+m7/b79zNF+ZaWk/R785d6sNiI3Jsz2QH/xRQDT758
+	 fqmYj/IBS0FJhWHxA3xwbMTS5WRPw/iFz1DGKef5BANfvK1Mmc5pt6WEPK7vZJqXG9A==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=BeiZsRa7;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=VxN7+FXQ;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2B6AD606A31E;
-	Wed, 25 Nov 2026 17:01:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6F3C4606A31E;
+	Wed, 25 Nov 2026 17:01:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=BeiZsRa7
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 822D41F000C0;
-	Wed, 25 Nov 2026 17:01:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=VxN7+FXQ
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 52A0B1F000C6;
+	Wed, 25 Nov 2026 17:01:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795626107;
-	bh=AWLWb+TsyqcM17j2W9W7Gd6d2y/3Kbj5IS0hWRUH/+0=;
+	s=korg; t=1795626109;
+	bh=bKib9wjYwu3eEM+e6rH5PLRkZA544OQFTDaMS7uNnxs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=BeiZsRa7znVcLfEuiQcjzpV8MgxQatsvWwixnKN1XBeMQlGVR1rWsfxdN3RydjumS
-	 ORSU3DrRszUEXfMw9xJ1JiwVcWBkt9o7j8sPLvUyJhaJ/QtLfq7oMoz/aOscmZUmyM
-	 wb0YtNlEbFLDLmAOzR8zaTL0gMWNnAlFuuTYdUuY=
+	b=VxN7+FXQRfNc6oax0yh4UI+ssLlxhPkDwL1s1RW3bBL0wPC0dmFI1HPipx9DNWfSr
+	 RPoneBXV0NI378GvUnwD/ZutbrlwAwV1k+KewQY8kPdnTfa4vIZyUYk/c454a8r+3o
+	 9AcQAQgwcZok6JqlRU1g5px5B+5hkumZL1UOk1go=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	stable <stable@kernel.org>,
+	Krzysztof Kozlowski <krzk@kernel.org>,
+	Peter Griffin <peter.griffin@linaro.org>,
+	Alim Akhtar <alim.akhtar@samsung.com>,
 	Jiri Slaby <jirislaby@kernel.org>,
-	Arnd Bergmann <arnd@arndb.de>,
-	=?UTF-8?q?Andreas=20F=C3=A4rber?= <afaerber@suse.de>,
-	Olof Johansson <olof@lixom.net>,
-	Josef Bacik <josef@toxicpanda.com>,
-	Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>
-Subject: [PATCH 6.12 733/816] serial: rda: free the interrupt on shutdown
-Date: Wed, 25 Nov 2026 15:38:01 +0100
-Message-ID: <20261125143906.146895697@linuxfoundation.org>
+	Robert Baldyga <r.baldyga@samsung.com>,
+	Josef Bacik <josef@toxicpanda.com>
+Subject: [PATCH 6.12 734/816] serial: samsung: dont leak the tty on an RX IRQ
+Date: Wed, 25 Nov 2026 15:38:02 +0100
+Message-ID: <20261125143906.169647574@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143849.205329330@linuxfoundation.org>
 References: <20261125143849.205329330@linuxfoundation.org>
@@ -66,7 +66,6 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
@@ -75,40 +74,55 @@ Content-Transfer-Encoding: 8bit
 
 From: Josef Bacik <josef@toxicpanda.com>
 
-commit 859f7c56709b161a72b629b6f2f1384dcd374404 upstream.
+commit 7ada442f5ef77f8d53f608a0141a5e88a888ca9f upstream.
 
-rda_uart_startup() requests the interrupt, and nothing ever frees it.
-It is not shared, so once the port has been closed, the next startup
-fails with -EBUSY and the port cannot be opened any more.
+s3c24xx_serial_rx_chars_dma() starts by taking a reference to the tty.
+If the interrupt is not a receive timeout, it switches the port from PIO
+back to DMA and leaves through the "finish" label, which does not drop
+the reference.
 
-Free it in rda_uart_shutdown().
+A port with RX DMA changes to PIO on every receive timeout, that is at
+the end of every burst of data, and comes back this way when the next
+burst starts.  So each burst takes a reference which is never dropped,
+and the tty structure is not freed when the port is closed for the last
+time.
 
-Fixes: c10b13325ced ("tty: serial: Add RDA8810PL UART driver")
+Drop the reference on both paths.
+
+Fixes: b543c301c2c5 ("serial: samsung: add DMA support for RX")
 Cc: stable <stable@kernel.org>
+Cc: Krzysztof Kozlowski <krzk@kernel.org>
+Cc: Peter Griffin <peter.griffin@linaro.org>
+Cc: Alim Akhtar <alim.akhtar@samsung.com>
 Cc: Jiri Slaby <jirislaby@kernel.org>
-Cc: Arnd Bergmann <arnd@arndb.de>
-Cc: "Andreas Färber" <afaerber@suse.de>
-Cc: Olof Johansson <olof@lixom.net>
+Cc: Robert Baldyga <r.baldyga@samsung.com>
 Signed-off-by: Josef Bacik <josef@toxicpanda.com>
-Reviewed-by: Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Link: https://patch.msgid.link/20261027-tty-llm-v1-20-99b0202ae546@linuxfoundation.org
+Link: https://patch.msgid.link/20261027-tty-llm-v1-21-99b0202ae546@linuxfoundation.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/tty/serial/rda-uart.c |    2 ++
- 1 file changed, 2 insertions(+)
+ drivers/tty/serial/samsung_tty.c |    5 ++---
+ 1 file changed, 2 insertions(+), 3 deletions(-)
 
---- a/drivers/tty/serial/rda-uart.c
-+++ b/drivers/tty/serial/rda-uart.c
-@@ -471,6 +471,8 @@ static void rda_uart_shutdown(struct uar
- 	rda_uart_write(port, val, RDA_UART_CTRL);
+--- a/drivers/tty/serial/samsung_tty.c
++++ b/drivers/tty/serial/samsung_tty.c
+@@ -734,14 +734,13 @@ static irqreturn_t s3c24xx_serial_rx_cha
  
- 	uart_port_unlock_irqrestore(port, flags);
-+
-+	free_irq(port->irq, port);
- }
+ 	s3c24xx_serial_rx_drain_fifo(ourport);
  
- static const char *rda_uart_type(struct uart_port *port)
+-	if (tty) {
++	if (tty)
+ 		tty_flip_buffer_push(t);
+-		tty_kref_put(tty);
+-	}
+ 
+ 	wr_regl(port, S3C2410_UTRSTAT, S3C2410_UTRSTAT_TIMEOUT);
+ 
+ finish:
++	tty_kref_put(tty);
+ 	uart_port_unlock(port);
+ 
+ 	return IRQ_HANDLED;
 
 
