@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795625990;
-	b=1Zs2urnyroh6vzTrHc9Z7bykPKhzBbtHeAh0bs1UuwXDIhbZ1FWYipfJpx/LniUuaaep
-	 ZddkVB1k1I9FOrgv1v1Lb/V6EzfcisgU+C81/Ps/eazDHvXVDyO4mARO/5jbeCnzOwIMS
-	 BCok4M9aXm59WN8bSMsesS35KyxFgOdMXNVlIzDFrJLV4O3M+N28ZGoVgmpfWJnCYOCs2
-	 uivJy0puU5XqWfLTVX7bmfUpo1mRgQne4kcJGZaOaWxFQP51CwmNjHL02KFZfjOmQmCOF
-	 kpkygNoeFp0H58/ZO4Kfl8AeLaJYz7V5QMoVz8v+XfOB3QCf+0r2gjq/1nqDuzlzfsA==
+	t=1795625993;
+	b=F7z/afu3nZb46TOGmedJ1fJgizDwPLFZCdMoKoIBRzUAz3zLznNpxqEZb0N9WXAiekt9
+	 ay3Z5SSJfCji4CUKZgULILlM1qK+G/4esZeQEfr8GWjhY5bKtwzW8Iq3EXgD433iJzSQd
+	 Z/onh68bxcY6s7Qfvk2JdoIBL8OnW9tUrQt3qC30t+Z4esbB6o+hwC0Y0T2o19G8Y+TK3
+	 fQBUWce48ZKYlm7+Qx4fjHyt9xsqy+dkvLxXWSgO6tkKQJ9E+V4aJxscYTOj5Flg9bHJ9
+	 8k+ZC2uYuMvqn4tY9Qety/vMZM/nVt/MJcLIhvoBnkUb5qnGct44VdVxBvuMMbPuBhg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795625990;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795625993;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Transfer-Encoding;
-	bh=HxVPn+ImN5iWyKC6tZLTwQRBSRM7StU32bWoPU+VzZI=;
-	b=WG+XLOn6eeuFftY65cjEu7bXtqvwsLPe8Zspzm3YZ87Lh26/IKppyMrOpAH1pYJbR7k3
-	 /3/KWTZ7zD4DjAeWEsFm7gBdekCTEjSMqi767fDiexpnQhFlEq4ywThBY5gF03TRP9Fq1
-	 E6rMk4GGDOFfXH/GUKUH9eCV/hX7UsDtr0BnXJuA+7EfsKttq2cf5oFQ1uuEg7UEFokh9
-	 ZTQV434ofo7gOQBGhHSuUfIN3Ytqkw3znVteHls7NDqr629Thxn1oS6N+NegjLRgOGSWM
-	 yZm+OmPwQQ56kvrNo62bOvgfHFalMtXVOkEnuo6WBivHmvV44BHpOGpHCGB7XV1WDuw==
+	 MIME-Version:Content-Type:Content-Transfer-Encoding;
+	bh=Vs5Ifh3CyBT9ddZMSy4IMupd9fnkt2dUXMn1hk00mB0=;
+	b=inm6jVxZ1yTz6Q+mX2lm30oQYr0g/dzMOHT6kja4Ybtt4prWaBVZMgO5QHeLwkmIDRm3
+	 GbOtDitPtzCYm45D8aSrbI0nh0gAobc8HciHEVxX4UBBjAFyRg8kPt2f16aHE9vpme8x3
+	 PCVf6fxbDYPOhbI6u43NUtEh2d5S55h5riiJQoAZLimNKQ+3D1HxZ+g2wFTbWfgelzrw+
+	 VLxnGKJbhnUTMzqqcd1tyKMZkUe8UN77yHpAMvmq3N6RsZZLjrjG65Trosofd5lJJM3Pi
+	 9aBMqxfYSGqn1z0keobgqqO+FJg/PtQEqGfGZEozZO3r7Hs9XpYSlP6V4ZRpnyW9Ycg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=KJgco4YZ;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=pE82X5r2;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 514CC606A337;
-	Wed, 25 Nov 2026 16:59:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 318D4606A32C;
+	Wed, 25 Nov 2026 16:59:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=KJgco4YZ
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8A5E01F000C6;
-	Wed, 25 Nov 2026 16:59:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=pE82X5r2
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7B41C1F000C6;
+	Wed, 25 Nov 2026 16:59:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795625990;
-	bh=HxVPn+ImN5iWyKC6tZLTwQRBSRM7StU32bWoPU+VzZI=;
+	s=korg; t=1795625993;
+	bh=Vs5Ifh3CyBT9ddZMSy4IMupd9fnkt2dUXMn1hk00mB0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=KJgco4YZJOdUAlq8tsf/pVwv2PIiNZAFTPm1uEVZdJzZfi0JYXtYiiF1b3wHDjpym
-	 ehjzmDAvJoJ0Nux1ikn/+lpJAX4RHRaiQ0QiV29/1voFWv25Z+lFmnErgCVsfje6E8
-	 AiRnxZMlkDxf+JK9jvbO+JShL+TAceUqecZD3KO4=
+	b=pE82X5r2rtfQWmY6Cki/UNyQ0dtVS1Hd6IK5f7BPWvgMWT21RZR8+U5JQktOdwOtv
+	 koVhdtLeyec+Pg5lTybHGz3/2IKCiNdEkeIn5GusFFNnykVgNwMRS7WC7hCKLp/+2K
+	 TAtRlPTHOckbCH4hGHDPs6sGk1fzzVsYCoalkNOc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+a2626a25eb2595e3ec3c@syzkaller.appspotmail.com,
-	Edward Adam Davis <eadavis@sina.com>,
-	Mikulas Patocka <mpatocka@redhat.com>
-Subject: [PATCH 6.12 694/816] dm cache: reject kcopyd client destory if it setup failed
-Date: Wed, 25 Nov 2026 15:37:22 +0100
-Message-ID: <20261125143905.248474879@linuxfoundation.org>
+	Mehmet Fide <mehmet.fide@screeningeagle.com>,
+	=?UTF-8?q?Toke=20H=C3=B8iland-J=C3=B8rgensen?= <toke@toke.dk>,
+	Jeff Johnson <jeff.johnson@oss.qualcomm.com>
+Subject: [PATCH 6.12 659/816] wifi: ath9k_htc: do not start ANI before the first channel is set
+Date: Wed, 25 Nov 2026 15:36:47 +0100
+Message-ID: <20261125143904.433474139@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143849.205329330@linuxfoundation.org>
 References: <20261125143849.205329330@linuxfoundation.org>
@@ -62,55 +62,67 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Edward Adam Davis <eadavis@sina.com>
+From: Mehmet Fide <mehmet.fide@screeningeagle.com>
 
-commit 8b97b168eb4d3affcf23d2980a0c3f35ed9262e2 upstream.
+commit dda63dd136ba2bc3b297079b190ac81a0aea40ae upstream.
 
-The value of cache->copier is -EINTR when failed to create a rescuer
-kthread for wq kcopyd, in cache_create(), the code jumps directly to
-__destroy(cache), it merely performs a simple check to see whether copier
-is NULL, potentially hitting:
+ath9k_htc_add_interface() starts ANI for the first AP interface, before
+any channel is configured. The per-channel calibration data only gets
+attached by the first ath9k_htc_set_channel() that is not a fast
+channel change, and that same call cancels the ANI work a few
+milliseconds after add_interface, so normally the work never runs.
 
-BUG: KASAN: null-ptr-deref in dm_kcopyd_client_destroy+0xae/0x480 drivers/md/dm-kcopyd.c:980
-Read of size 4 at addr 0000000000000174 by task syz.2.19/6560
-Call Trace:
- dm_kcopyd_client_destroy+0xae/0x480 drivers/md/dm-kcopyd.c:980
- __destroy+0x172/0x2f0 drivers/md/dm-cache-target.c:1973
- cache_create drivers/md/dm-cache-target.c:2604 [inline]
- cache_ctr+0x1674/0x2bf0 drivers/md/dm-cache-target.c:2649
- dm_table_add_target+0x58d/0xc70 drivers/md/dm-table.c:749
- populate_table drivers/md/dm-ioctl.c:1602 [inline]
- table_load+0x325/0x8a0 drivers/md/dm-ioctl.c:1645
- ctl_ioctl drivers/md/dm-ioctl.c:2221 [inline]
+When the bring-up stalls for more than the 100 ms ANI poll interval in
+between, it does run, and ar9002_hw_per_calibration() records the IQ
+calibration result in the calibration data that does not exist yet:
 
-Set copier to NULL to avoid destroying a invalid kcopy client.
+  Unable to handle kernel NULL pointer dereference at virtual address
+  00000008
+  PC is at ar9002_hw_calibrate+0x1f8/0x570 [ath9k_hw]
+  Workqueue: phy0 ath9k_htc_ani_work [ath9k_htc]
 
+Seen about once per thousand AP starts with an AR9271 on a Cortex-A5
+board that starts hostapd while still booting; a 500 ms delay after
+add_interface reproduces it on every start. The crashed work never
+completes, so the next cancel_delayed_work_sync() blocks for good.
+
+Drop the start; it has nothing to calibrate against and is cancelled
+anyway. The TSF adjust bit that shared its condition is now set for
+every AP interface, which is harmless: the next reset applies it. The
+next patch starts ANI once the interface beacons.
+
+Fixes: a236254c35f0 ("ath9k_htc: Add ANI for AP mode")
 Cc: stable@vger.kernel.org
-Fixes: c6b4fcbad044 ("dm: add cache target")
-Reported-by: syzbot+a2626a25eb2595e3ec3c@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=a2626a25eb2595e3ec3c
-Signed-off-by: Edward Adam Davis <eadavis@sina.com>
-Signed-off-by: Mikulas Patocka <mpatocka@redhat.com>
+Signed-off-by: Mehmet Fide <mehmet.fide@screeningeagle.com>
+Acked-by: Toke Høiland-Jørgensen <toke@toke.dk>
+Link: https://patch.msgid.link/20261005072209.4101009-2-mehmet.fide@gmail.com
+Signed-off-by: Jeff Johnson <jeff.johnson@oss.qualcomm.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/md/dm-cache-target.c |    1 +
- 1 file changed, 1 insertion(+)
+ drivers/net/wireless/ath/ath9k/htc_drv_main.c |    5 +----
+ 1 file changed, 1 insertion(+), 4 deletions(-)
 
---- a/drivers/md/dm-cache-target.c
-+++ b/drivers/md/dm-cache-target.c
-@@ -2550,6 +2550,7 @@ static int cache_create(struct cache_arg
- 	if (IS_ERR(cache->copier)) {
- 		*error = "could not create kcopyd client";
- 		r = PTR_ERR(cache->copier);
-+		cache->copier = NULL;
- 		goto bad;
- 	}
+--- a/drivers/net/wireless/ath/ath9k/htc_drv_main.c
++++ b/drivers/net/wireless/ath/ath9k/htc_drv_main.c
+@@ -1098,11 +1098,8 @@ static int ath9k_htc_add_interface(struc
  
+ 	ath9k_htc_set_opmode(priv);
+ 
+-	if ((priv->ah->opmode == NL80211_IFTYPE_AP) &&
+-	    !test_bit(ATH_OP_ANI_RUN, &common->op_flags)) {
++	if (priv->ah->opmode == NL80211_IFTYPE_AP)
+ 		ath9k_hw_set_tsfadjust(priv->ah, true);
+-		ath9k_htc_start_ani(priv);
+-	}
+ 
+ 	ath_dbg(common, CONFIG, "Attach a VIF of type: %d at idx: %d\n",
+ 		vif->type, avp->index);
 
 
