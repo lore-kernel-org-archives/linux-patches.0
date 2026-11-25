@@ -1,51 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795625841;
-	b=wFyvvRna15AA6bdWXTvRVf4ti72IhVFX4pU5/PpqdEk301XOzSlFTkAa0MSC0eSywxV0
-	 ifDToGLN8cJDgbdrMHofX0R26ssjEvW56UghOsMcx4uJjsqOg+3ZNx+NqWABcSfnktFDo
-	 vvTlLBdEt1gA6kMATmkXq8PivZhdZyB/9GabhOtAJzN0RAnnoXX78bOSKh4hwtCb+6zmp
-	 RQz9NyzpNBQ8Nd2R1kLotet7hL2gmnBUMCvktfMm4SdRtkWM+VrlXJmbfwv54zfl1m+6J
-	 TsTh2uDPwslGKaW6AREVXaW5kVN8lnbtjHzYhqgLKkEX6aoHj0GV4vSUxXxUlb/15Iw==
+	t=1795625844;
+	b=A7OnHsEKE/33R1+njYHAgUSGNH3iPgx+555g4X2KNFh5Jfx62LwDxvyegWBKhpahrvOi
+	 kDdn0hzaIJsBfgnOsiu3S0cOdfI39BGNqOD3xyrJGSWlTVE4fSmb4+JoeUWMSVzcSqWvo
+	 INqzqli2tnI6BoxeFpE6s8fkviW49Ra1az/RrQLIiSTurBxjBtmoVPkqR+LaitDJZbuvZ
+	 +mqT6DWrZgNXOMklx9Y2apW9JVM6ca4P5hmKwefNkqsJCawmA8a8JIUBzPhOSHVFWBXEO
+	 hboO5i078OVCoOOA/FxHy4RDDtBWITPcoSAuEhLC6EJ4HGbTTkhrp7+RCA6YKKCdktg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795625841;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795625844;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=O6DUvv+HecEASWw3omgF295e3vDhOYgdAlfVeEFrS9E=;
-	b=qjvEt6+1QFCxNZ4GFCgC0vBdwCK+XY9eYkdNWqlCz3Fazkq3ZcVOZsmWu9etPVV1BViq
-	 RX/olXT9SSlUcPFgsws7YGh3ZdmaCY7KobFsRoOJuhDLR42jsYSG8eTbG41qtrYX8QTl0
-	 XjNVWrmuVrQIYd2nZL6uTW9YwcA8MZ4x784n9QL7Ztz4jhfP+Ju/fT2mW/7gbLzKvpgRn
-	 VVZdQayuydB7J9Swyxg6rBLZGflmu8gCAIAu4sdiVdv95XjGCIlK39ehR9EGuG/qeImTe
-	 NlFl1/EfKfy3yXh5Yo8gcNskzTUg+akUMpPH9e0xuQSud2+etD64qJH2XE86Q8y4n0w==
+	bh=NjQ9uor0c6MsMnUDqlpfsXcouRna/B3VAnzc7J6volM=;
+	b=osY+aowYGOCE72xi+1yiVmtvqoUn2OBnwSOypDAxSVxO2JOCpsPEAQjYHLu7ID0TAxhp
+	 E/ajuec5qp3jVStb0NzGug5s8eDW+IIL9qCbZxJ1ac/gSlSBkbfpRWuwSTZinPiuJ9WO8
+	 kl1/8+77N04iy5CnjJDmtNpaNZ1xsUp3wE8v8RWEB2BPI4TwdaDg9vQ8CCeTBozNYmc8U
+	 7d7wEVLnzESrMPXMSjbvbo7mCLIWgieIv1P524uAZfM285I6VcQVPZd4PGjo6SL4iNaoG
+	 zLJaw9lVCe+5nVrDOomJQJkPvtVihW7Io78Y5MfDZUBmBBTz+wtCINnGQO224ajyKeg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=PfVswbbJ;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=rQjmfdOQ;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7CDA5606A323;
-	Wed, 25 Nov 2026 16:57:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B3E22606A31E;
+	Wed, 25 Nov 2026 16:57:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=PfVswbbJ
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 961C31F000C4;
-	Wed, 25 Nov 2026 16:57:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=rQjmfdOQ
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D8B571F000C4;
+	Wed, 25 Nov 2026 16:57:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795625841;
-	bh=O6DUvv+HecEASWw3omgF295e3vDhOYgdAlfVeEFrS9E=;
+	s=korg; t=1795625844;
+	bh=NjQ9uor0c6MsMnUDqlpfsXcouRna/B3VAnzc7J6volM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=PfVswbbJZn2Ddo3+zgi0bnM+EjTwhbNnzrdL3lLNuVSqeBik67I2BzWXNnYcBtDGd
-	 10jK+JgNxKBwCGvXcOoMhsC1f52g3q4T9AYjF1zrKrCGFYvlQMBam6Mv3srMvklejP
-	 YRpW3fLCZvApqeRhtQmBFwi8mRRpuilEfTTcwBtI=
+	b=rQjmfdOQWLxc1oduSolnOQvUVc67rFGEMnIFvojPQS1zY8JaNEcLUkug6uZ02I/Ph
+	 kdUNuJGsbE4TpDC7wRTY6dtmWnT2b1OfMhHIyCVGqBjl6n9u6220zjNOPPlfSeEQKY
+	 MJYyLJmjetqrVXqQg29klNwGwfJuN7KgORKOIUBs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhao Li <enderaoelyther@gmail.com>,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
-Subject: [PATCH 6.12 611/816] Bluetooth: L2CAP: Keep recvmsg from resuming a closed channel
-Date: Wed, 25 Nov 2026 15:35:59 +0100
-Message-ID: <20261125143903.321664382@linuxfoundation.org>
+	Tim Budding <tim.budding@gmail.com>,
+	Xin Long <lucien.xin@gmail.com>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 6.12 647/816] sctp: abort unordered partial delivery when its message is skipped
+Date: Wed, 25 Nov 2026 15:36:35 +0100
+Message-ID: <20261125143904.159805813@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143849.205329330@linuxfoundation.org>
 References: <20261125143849.205329330@linuxfoundation.org>
@@ -67,43 +68,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zhao Li <enderaoelyther@gmail.com>
+From: Tim Budding <tim.budding@gmail.com>
 
-commit 1f2ac56137c51be0601e18a163d817e02a15913f upstream.
+commit 05852c8b70f2291a50bb3f740a66ce9caf9cb98d upstream.
 
-Reading buffered ERTM data after ACL link loss can clear local busy and
-send a supervisory frame after l2cap_conn_del() has destroyed the HCI
-channel, which oopses on a NULL pointer in hci_send_acl(). The socket still
-owns its L2CAP channel, so its lifetime does not protect the underlying HCI
-channel.
+When an I-FORWARD-TSN skips unordered messages on a stream,
+sctp_intl_skip() only aborts the stream's unordered partial delivery if
+the MID being delivered is lower than the skipped MID. If the skipped
+message is the one being partially delivered, partial delivery stays in
+progress: no PARTIAL_DELIVERY_ABORTED is sent, and the next unordered
+message on the stream is delivered as the rest of the abandoned one.
 
-Require BT_CONNECTED before clearing local busy in recvmsg. The socket lock
-already held here serializes this check and send with teardown, which
-closes the socket before the HCI channel is destroyed. Continue to allow
-buffered data to be read after disconnection.
+Abort the partial delivery when the MID being delivered is at or below
+the skipped MID, as the ordered case already does.
 
-AI assistance was used.
+Reproduced on an unmodified kernel with the uo_pd test of the
+sctp_ifwdtsn.sh selftest added later in this series; its partial
+delivery checks pass with this fix. Reproduction and fix done with AI
+assistance.
 
-Fixes: 61aa4f5b9f43 ("Bluetooth: Use the transmit state machine for busy state changes")
-Cc: stable@vger.kernel.org # needs adjustments for 5.15
-Signed-off-by: Zhao Li <enderaoelyther@gmail.com>
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Fixes: de60fe910543 ("sctp: implement handle_ftsn for sctp_stream_interleave")
+Cc: stable@vger.kernel.org
+Signed-off-by: Tim Budding <tim.budding@gmail.com>
+Acked-by: Xin Long <lucien.xin@gmail.com>
+Link: https://patch.msgid.link/20261105050225.49292-2-tim.budding@gmail.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/bluetooth/l2cap_sock.c |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ net/sctp/stream_interleave.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/net/bluetooth/l2cap_sock.c
-+++ b/net/bluetooth/l2cap_sock.c
-@@ -1289,7 +1289,8 @@ static int l2cap_sock_recvmsg(struct soc
- 	 * available.  This avoids resending large numbers of
- 	 * frames.
- 	 */
--	if (test_bit(CONN_LOCAL_BUSY, &pi->chan->conn_state) &&
-+	if (sk->sk_state == BT_CONNECTED &&
-+	    test_bit(CONN_LOCAL_BUSY, &pi->chan->conn_state) &&
- 	    atomic_read(&sk->sk_rmem_alloc) <= sk->sk_rcvbuf >> 1)
- 		l2cap_chan_busy(pi->chan, 0);
+--- a/net/sctp/stream_interleave.c
++++ b/net/sctp/stream_interleave.c
+@@ -1255,7 +1255,7 @@ static void sctp_intl_skip(struct sctp_u
+ 	struct sctp_stream *stream  = &ulpq->asoc->stream;
  
+ 	if (flags & SCTP_FTSN_U_BIT) {
+-		if (sin->pd_mode_uo && MID_lt(sin->mid_uo, mid)) {
++		if (sin->pd_mode_uo && !MID_lt(mid, sin->mid_uo)) {
+ 			sin->pd_mode_uo = 0;
+ 			sctp_intl_stream_abort_pd(ulpq, sid, mid, 0x1,
+ 						  GFP_ATOMIC);
 
 
