@@ -1,54 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795624729;
-	b=hMcvIQrdxtnZnWjXjL1o7DYeio4amKUGLFctFrkbw/g1IJC4lRObxZdVaDc9fL/gNT7A
-	 1Y6Tuk/lTKQ83nzYezaAWyW52ErNkPjT64aPVwtNgyWnyIQqV28fsGjUREm1lM7ZX5ZXJ
-	 V6lH5yI9pa864HedTp2n7OPmpxO0ExsdoMCm2PPcycE9o/ixNZ6lzJOHDmt7DPnJb7Cb9
-	 C+oLflbyB3eWH1uL//4e+MX9pewORO1q7m1XkyHxOfCNjEZhAchNab1gdIzMiDesmaa3H
-	 +9nKf23SRVMNvYTWCy9UB5qE9BG7xvIgE/jg1+PIqXo2CXgMkA525wzMT18eTouRGXQ==
+	t=1795624732;
+	b=EQb6suOS1YKcU36HcM8mucachVCIL7E8yKYwazeO0KqI0hpuK4QnTyyHhu1+i+qKbaA7
+	 bLd4+pHy1TCkH170WxOVOI8Nxrlbtjoom4NfBG61m6oKujRqz7Z0Dqqy4jjWyIx5DlJBK
+	 ggvchXU+qH8uBlNvPOIYpy0b4OOwcMJoxiJSo5vURq24UMPZodzNB+0NjMyCDS1NVBqpn
+	 0df8cmjxYYCLq4gsHzXvaLZ5XF3Fi8oIECvfBJ1lU+ynhscSkfClMOm3ZB7AGtOwRBYwq
+	 7avSd5acf/v2EvYjbnVazKzXUrR9JL2CTSm4OrkOIiA3CO0xJhfW5jILv8Nyr9H6hTw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795624729;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795624732;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=hk7egymihGUlj74KtIiFWAo1rcOfQceCIdkVTt19vqI=;
-	b=kAPhYBwVnZ2/fRG4QDIL7FWgBTnX1jE6NqmhxQUnZoK/0NIaVxQ3mXmbCkZpKbcyU8kv
-	 pAxMfuIBIN6aRAKdwc3Wrl1sNIgihKYhpriip2XMHn31jxeA7qkkQ0TNO0YpzLkjB7NuQ
-	 aZ1E/aFXeN6+UTe8xaiGyJSrhOQ1ZWAGwcVNiPtEbcUq/lU/9dqBsgb0VVsb/Vnwyi14V
-	 XnPsXI3oRKx5itqf/Ry0ObDID0uHf7YhSxuiL+IcXIzgBGmX9nrCD8eh8MVI8eZ4DBdUt
-	 cM7QAddOG41MmcnLPdHj+veWRxpZpYgwdkXnzBM3VTZpvZDscpjSMMG8opUcY3xr2gw==
+	bh=vOkjXLcDWCg0tM9fF06RuYLfkfpB2UHtAjdswGCzeNM=;
+	b=PVrdkDIAJWJ39SnMA4q7aDHuSdj4rexU/OcZlm7iBjTuLjSmkahthYWHFxjDeQNOERGc
+	 w6omWxooISC+xH+nuPqqhLgwNz4lgH2HclZtx0UcuwWYkw6D/dAodBNsE5u4R5U9UQrxR
+	 r4oBuszjpqWQpkyRqg11Di/OTLACWHle8SOwdCFr1X2+eOMUSEpWeTJkws+Rphv195qES
+	 epIIzEEBCILI/MzdcGZ+WKasVSkywvZT4zhNDw4DIRvR4y82hei+JexOa1N5/0E1R0b46
+	 0FrrGbtiZ8mO/9YE118AH7nvsVnqYemUXVT3IUWan26BkpmuehoqGtBXYF2NmYGV75Q==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=qoC3doUA;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=MZDu7f+5;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3C1A4606A686;
-	Wed, 25 Nov 2026 16:38:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0ADBC606A336;
+	Wed, 25 Nov 2026 16:38:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=qoC3doUA
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 108AC1F000D3;
-	Wed, 25 Nov 2026 16:38:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=MZDu7f+5
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5E4591F000D1;
+	Wed, 25 Nov 2026 16:38:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795624728;
-	bh=hk7egymihGUlj74KtIiFWAo1rcOfQceCIdkVTt19vqI=;
+	s=korg; t=1795624731;
+	bh=vOkjXLcDWCg0tM9fF06RuYLfkfpB2UHtAjdswGCzeNM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=qoC3doUAFtMKNrdfW+88LGHucV9w6DD/apoRlRMypt+AW64r2WrZJUB29RqOln+hW
-	 ia3iZoro8U9fz6U6/8MSbWnEb/q97C6p7hyEOh7cDRmT8RZmKGB2Y2mS5C9VWVdw7o
-	 ODqv64TUwVc7+iHa4y3SCQAlfhkJxqerHwwTERGE=
+	b=MZDu7f+5bMLA1MXgQGCCkZcXVnOi5ip5i+/E21SgpCrQx7zd4ho1sNDlB4UIgweaP
+	 R3HTjVPQj6pJ1hNwVXVbLUnV5l8pDQ+pvfVmTpNuGqfgiBOI3CxFvEmJQ4ifKNzbAF
+	 Wk6n2/SW4wFYrPxX5HKbyRO25RNseRpWDFiIaeIM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Vijendar Mukunda <Vijendar.Mukunda@amd.com>,
-	Ranjani Sridharan <ranjani.sridharan@linux.intel.com>,
-	Bard Liao <yung-chuan.liao@linux.intel.com>,
 	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 289/816] ASoC: SOF: amd: add soundwire wake irq handling
-Date: Wed, 25 Nov 2026 15:30:37 +0100
-Message-ID: <20261125143855.896718072@linuxfoundation.org>
+Subject: [PATCH 6.12 290/816] ASoC: SOF: amd: guard adata->sdw dereferences with NULL check in IRQ handler
+Date: Wed, 25 Nov 2026 15:30:38 +0100
+Message-ID: <20261125143855.918877090@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143849.205329330@linuxfoundation.org>
 References: <20261125143849.205329330@linuxfoundation.org>
@@ -72,152 +70,95 @@ Content-Transfer-Encoding: 8bit
 
 From: Vijendar Mukunda <Vijendar.Mukunda@amd.com>
 
-[ Upstream commit 1f41bf67bfe3721a4d4d36695302801cf70b5a70 ]
+[ Upstream commit 34ea81a7f284a13d825279fdede36b7f793f9936 ]
 
-Add SoundWire wake interrupt handling for ACP7.0 & ACP7.1
-platforms.
+The ACP external IRQ handler is registered before sdw_amd_probe() assigns
+adata->sdw, so a stray interrupt in the probe window could reach the
+adata->sdw->pdev[i] dereference with adata->sdw still NULL.
 
+The same window exists on the teardown side: after sdw_amd_exit() frees
+the context but before adata->sdw is cleared by the caller.
+
+Add NULL checks for adata->sdw in acp_irq_handler() before dereferencing
+->pdev[0] and ->pdev[1], and in amd_sof_handle_acp70_sdw_wake_event() for
+the same reason.  The interrupt-status register write that acknowledges the
+IRQ is kept outside the guard so the hardware bit is always cleared
+regardless of whether the SoundWire context is live.
+
+Fixes: 96eb81851012 ("ASoC: SOF: amd: add interrupt handling for SoundWire manager devices")
 Signed-off-by: Vijendar Mukunda <Vijendar.Mukunda@amd.com>
-Reviewed-by: Ranjani Sridharan <ranjani.sridharan@linux.intel.com>
-Reviewed-by: Bard Liao <yung-chuan.liao@linux.intel.com>
-Link: https://patch.msgid.link/20250502154445.3008598-9-Vijendar.Mukunda@amd.com
+Fixes: 1f41bf67bfe3 ("ASoC: SOF: amd: add soundwire wake irq handling")
+Link: https://patch.msgid.link/20261107175339.3547918-3-Vijendar.Mukunda@amd.com
 Signed-off-by: Mark Brown <broonie@kernel.org>
-Stable-dep-of: 34ea81a7f284 ("ASoC: SOF: amd: guard adata->sdw dereferences with NULL check in IRQ handler")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/sof/amd/acp-dsp-offset.h |  4 ++
- sound/soc/sof/amd/acp.c            | 73 +++++++++++++++++++++++++++++-
- sound/soc/sof/amd/acp.h            |  4 ++
- 3 files changed, 79 insertions(+), 2 deletions(-)
+ sound/soc/sof/amd/acp.c | 32 ++++++++++++++++++++------------
+ 1 file changed, 20 insertions(+), 12 deletions(-)
 
-diff --git a/sound/soc/sof/amd/acp-dsp-offset.h b/sound/soc/sof/amd/acp-dsp-offset.h
-index e77554f74c20d..08583a91afbc4 100644
---- a/sound/soc/sof/amd/acp-dsp-offset.h
-+++ b/sound/soc/sof/amd/acp-dsp-offset.h
-@@ -135,5 +135,9 @@
- #define ACP70_SW0_WAKE_EN			0x1458
- #define ACP70_SW1_WAKE_EN			0x1460
- #define ACP70_SDW_HOST_WAKE_MASK		0x0C00000
-+#define ACP70_SDW0_HOST_WAKE_STAT		BIT(24)
-+#define ACP70_SDW1_HOST_WAKE_STAT		BIT(25)
-+#define ACP70_SDW0_PME_STAT			BIT(26)
-+#define ACP70_SDW1_PME_STAT			BIT(27)
- 
- #endif
 diff --git a/sound/soc/sof/amd/acp.c b/sound/soc/sof/amd/acp.c
-index 244a9e0a8665e..33eb03051a7b2 100644
+index 33eb03051a7b2..a2abcb6d090ce 100644
 --- a/sound/soc/sof/amd/acp.c
 +++ b/sound/soc/sof/amd/acp.c
-@@ -398,6 +398,69 @@ static int acp_memory_init(struct snd_sof_dev *sdev)
- 	return 0;
+@@ -403,16 +403,20 @@ static void amd_sof_handle_acp70_sdw_wake_event(struct acp_dev_data *adata)
+ 	struct amd_sdw_manager *amd_manager;
+ 
+ 	if (adata->acp70_sdw0_wake_event) {
+-		amd_manager = dev_get_drvdata(&adata->sdw->pdev[0]->dev);
+-		if (amd_manager)
+-			pm_request_resume(amd_manager->dev);
++		if (adata->sdw) {
++			amd_manager = dev_get_drvdata(&adata->sdw->pdev[0]->dev);
++			if (amd_manager)
++				pm_request_resume(amd_manager->dev);
++		}
+ 		adata->acp70_sdw0_wake_event = 0;
+ 	}
+ 
+ 	if (adata->acp70_sdw1_wake_event) {
+-		amd_manager = dev_get_drvdata(&adata->sdw->pdev[1]->dev);
+-		if (amd_manager)
+-			pm_request_resume(amd_manager->dev);
++		if (adata->sdw) {
++			amd_manager = dev_get_drvdata(&adata->sdw->pdev[1]->dev);
++			if (amd_manager)
++				pm_request_resume(amd_manager->dev);
++		}
+ 		adata->acp70_sdw1_wake_event = 0;
+ 	}
  }
+@@ -504,10 +508,12 @@ static irqreturn_t acp_irq_handler(int irq, void *dev_id)
  
-+static void amd_sof_handle_acp70_sdw_wake_event(struct acp_dev_data *adata)
-+{
-+	struct amd_sdw_manager *amd_manager;
-+
-+	if (adata->acp70_sdw0_wake_event) {
-+		amd_manager = dev_get_drvdata(&adata->sdw->pdev[0]->dev);
-+		if (amd_manager)
-+			pm_request_resume(amd_manager->dev);
-+		adata->acp70_sdw0_wake_event = 0;
-+	}
-+
-+	if (adata->acp70_sdw1_wake_event) {
-+		amd_manager = dev_get_drvdata(&adata->sdw->pdev[1]->dev);
-+		if (amd_manager)
-+			pm_request_resume(amd_manager->dev);
-+		adata->acp70_sdw1_wake_event = 0;
-+	}
-+}
-+
-+static int amd_sof_check_and_handle_acp70_sdw_wake_irq(struct snd_sof_dev *sdev)
-+{
-+	const struct sof_amd_acp_desc *desc = get_chip_info(sdev->pdata);
-+	struct acp_dev_data *adata = sdev->pdata->hw_pdata;
-+	u32 ext_intr_stat1;
-+	int irq_flag = 0;
-+	bool sdw_wake_irq = false;
-+
-+	ext_intr_stat1 = snd_sof_dsp_read(sdev, ACP_DSP_BAR, desc->ext_intr_stat1);
-+	if (ext_intr_stat1 & ACP70_SDW0_HOST_WAKE_STAT) {
-+		snd_sof_dsp_write(sdev, ACP_DSP_BAR, desc->ext_intr_stat1,
-+				  ACP70_SDW0_HOST_WAKE_STAT);
-+		adata->acp70_sdw0_wake_event = true;
-+		sdw_wake_irq = true;
-+	}
-+
-+	if (ext_intr_stat1 & ACP70_SDW1_HOST_WAKE_STAT) {
-+		snd_sof_dsp_write(sdev, ACP_DSP_BAR, desc->ext_intr_stat1,
-+				  ACP70_SDW1_HOST_WAKE_STAT);
-+		adata->acp70_sdw1_wake_event = true;
-+		sdw_wake_irq = true;
-+	}
-+
-+	if (ext_intr_stat1 & ACP70_SDW0_PME_STAT) {
-+		snd_sof_dsp_write(sdev, ACP_DSP_BAR, ACP70_SW0_WAKE_EN, 0);
-+		snd_sof_dsp_write(sdev, ACP_DSP_BAR, desc->ext_intr_stat1, ACP70_SDW0_PME_STAT);
-+		adata->acp70_sdw0_wake_event = true;
-+		sdw_wake_irq = true;
-+	}
-+
-+	if (ext_intr_stat1 & ACP70_SDW1_PME_STAT) {
-+		snd_sof_dsp_write(sdev, ACP_DSP_BAR, ACP70_SW1_WAKE_EN, 0);
-+		snd_sof_dsp_write(sdev, ACP_DSP_BAR, desc->ext_intr_stat1, ACP70_SDW1_PME_STAT);
-+		adata->acp70_sdw1_wake_event = true;
-+		sdw_wake_irq = true;
-+	}
-+
-+	if (sdw_wake_irq) {
-+		amd_sof_handle_acp70_sdw_wake_event(adata);
-+		irq_flag = 1;
-+	}
-+	return irq_flag;
-+}
-+
- static irqreturn_t acp_irq_thread(int irq, void *context)
- {
- 	struct snd_sof_dev *sdev = context;
-@@ -430,7 +493,7 @@ static irqreturn_t acp_irq_handler(int irq, void *dev_id)
- 	struct acp_dev_data *adata = sdev->pdata->hw_pdata;
- 	unsigned int base = desc->dsp_intr_base;
- 	unsigned int val;
--	int irq_flag = 0;
-+	int irq_flag = 0, wake_irq_flag = 0;
+ 	val = snd_sof_dsp_read(sdev, ACP_DSP_BAR, desc->ext_intr_stat);
+ 	if (val & ACP_SDW0_IRQ_MASK) {
+-		amd_manager = dev_get_drvdata(&adata->sdw->pdev[0]->dev);
+ 		snd_sof_dsp_write(sdev, ACP_DSP_BAR, desc->ext_intr_stat, ACP_SDW0_IRQ_MASK);
+-		if (amd_manager)
+-			schedule_work(&amd_manager->amd_sdw_irq_thread);
++		if (adata->sdw) {
++			amd_manager = dev_get_drvdata(&adata->sdw->pdev[0]->dev);
++			if (amd_manager)
++				schedule_work(&amd_manager->amd_sdw_irq_thread);
++		}
+ 		irq_flag = 1;
+ 	}
  
- 	val = snd_sof_dsp_read(sdev, ACP_DSP_BAR, base + DSP_SW_INTR_STAT_OFFSET);
- 	if (val & ACP_DSP_TO_HOST_IRQ) {
-@@ -468,8 +531,14 @@ static irqreturn_t acp_irq_handler(int irq, void *dev_id)
- 				schedule_work(&amd_manager->amd_sdw_irq_thread);
+@@ -524,11 +530,13 @@ static irqreturn_t acp_irq_handler(int irq, void *dev_id)
+ 	if (desc->ext_intr_stat1) {
+ 		val = snd_sof_dsp_read(sdev, ACP_DSP_BAR, desc->ext_intr_stat1);
+ 		if (val & ACP_SDW1_IRQ_MASK) {
+-			amd_manager = dev_get_drvdata(&adata->sdw->pdev[1]->dev);
+ 			snd_sof_dsp_write(sdev, ACP_DSP_BAR, desc->ext_intr_stat1,
+ 					  ACP_SDW1_IRQ_MASK);
+-			if (amd_manager)
+-				schedule_work(&amd_manager->amd_sdw_irq_thread);
++			if (adata->sdw) {
++				amd_manager = dev_get_drvdata(&adata->sdw->pdev[1]->dev);
++				if (amd_manager)
++					schedule_work(&amd_manager->amd_sdw_irq_thread);
++			}
  			irq_flag = 1;
  		}
-+		switch (adata->pci_rev) {
-+		case ACP70_PCI_ID:
-+		case ACP71_PCI_ID:
-+			wake_irq_flag = amd_sof_check_and_handle_acp70_sdw_wake_irq(sdev);
-+			break;
-+		}
- 	}
--	if (irq_flag)
-+	if (irq_flag || wake_irq_flag)
- 		return IRQ_HANDLED;
- 	else
- 		return IRQ_NONE;
-diff --git a/sound/soc/sof/amd/acp.h b/sound/soc/sof/amd/acp.h
-index dde04ecadbd85..3380a761dcf67 100644
---- a/sound/soc/sof/amd/acp.h
-+++ b/sound/soc/sof/amd/acp.h
-@@ -263,6 +263,10 @@ struct acp_dev_data {
- 	bool is_dram_in_use;
- 	bool is_sram_in_use;
- 	bool sdw_en_stat;
-+	/* acp70_sdw0_wake_event flag set to true when wake irq asserted for SW0 instance */
-+	bool acp70_sdw0_wake_event;
-+	/* acp70_sdw1_wake_event flag set to true when wake irq asserted for SW1 instance */
-+	bool acp70_sdw1_wake_event;
- 	unsigned int pci_rev;
- };
- 
+ 		switch (adata->pci_rev) {
 -- 
 2.53.0
 
