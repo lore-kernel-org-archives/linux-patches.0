@@ -1,52 +1,55 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795618777;
-	b=FqMMpOZoIZrUIFA+bMg2hsNfuRtp6o9gkzb6uqrHr7YqE45p/hZfEyh81D52bALg7b8K
-	 dwSAi1RCZeTOLVi7YD8nLw/5zHT9EwB8MyqG8IwukYAjqdV1XG5VaUdZU6ZnFjhPmscPr
-	 e0gepurka4u5KUleLRBLwl+DMWnLoLyltLXezfFHrTVRPQQFwfPTlRhz7hVR8/lI0vj2i
-	 vVfPxvB9Rru++cI+bBmyVaygtLIJzHYpWGkK7qR2qxU8/KyFeS14XPm+67QwkYV94HiX8
-	 Jh2ci/J7nnvBe3jXUUXHf0l2rdtFNylJpHYOOR3KaYWAg6U0+Ts6GPeTuzGyeFr6d7Q==
+	t=1795618780;
+	b=kVm3ysUk80AJw7SsY91eGAWISxy5Szrf8csPxdakzzlqxJp6WEEOY3rIv+CoiYffejfL
+	 wabUKw1KQysa5Rmzhlc+Kg8mF17GKXTQUnZiLzorBHL4RcIMSGpZLrkvDELsSj9hVQ/ty
+	 kiexI386MEs2naOjvROC5BCQcuK8Z8/bxoI2YR6ypERDMFE0iG8XbjSuijbjGfWfYeGDu
+	 fWbukvl9snWTI60x8MfaagQcXYUd+DD5PmOdXT5noGLe1OA/vEMwL43aIry82VhPEwPTG
+	 QzreoGBJXCtCDyQHggrlmi1OaMQl9mH5loRDDERvbC9Zusu+cAzWIrRlaEl+RpoO1sw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795618777;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795618780;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=C7uCGei2RlQvDBnKozMiliPgxR6SEpCEBTOieWGKzAk=;
-	b=Xala5BnI4q+xpH98B+r7Afp+yMjr3Hwme/zz7oNBwaC5SLL0BwK0wA1lDPqS3FMt53BN
-	 b/DJ5ZwB2L2GUv8UE6l1X7wwedXKL2qfmXciTr3wSIP+1oEcdELhzfXNJvmxSeT9Vl2J4
-	 d2cnP4f2W5OAzFBTT/GbD9CoQDkDAwKWyx4qc+Zkd5AQdvCfdpDH72lRjIRgPsZ4TdPYe
-	 dPUFtbgBCjSsB52r2TIs5O/T9Q4STohLxPh3N5of01GChs2QMFMqcGe6SdBceTs6vUSET
-	 nGp1ae+zoYtD9S9tnQLx/TtIuvpvM6lT9NhRQ0ykrEeuIJV7+E8VzTR/1Re6bgeNwhA==
+	bh=IiVi7JVZ39nDRuap/IKtbF91epNZU36uGkkT2zipRuY=;
+	b=dywhMbisZ5abuGl2H+Al/2fVPvQZXtQvHbbIPFfEQEK/zDxCxPXtCtUZm9wOThbPOT4a
+	 aRILjFuEd1B1Fp8kB+1ddHDHrut8lQ2nr4cM0cufwEul5H0Lgj7TFikCABh6v+jRwqeaD
+	 aU+PnBDKkpzz1xe+QY+EJptNqP0fOleLK5CDxLmSfYwAPQWiTHdyJ05MGF569c+QswyZH
+	 GeZxbiEWYAnAyB8MOTNiyzHlkdQjX1g3dNwfoMG3EcAfWNDlvwXXo5cD56aVqo95ORkYW
+	 37Ch4P5AIWvS3n3jNQyAxJOciDHjeIpmi/lb7n0Tfz14lAWrDYvB0UbSGolJci62pPw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=yIq6S2me;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=FBMvirTI;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 52B70606A33E;
-	Wed, 25 Nov 2026 14:59:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 753C8606A31E;
+	Wed, 25 Nov 2026 14:59:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=yIq6S2me
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 974B71F000EB;
-	Wed, 25 Nov 2026 14:59:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=FBMvirTI
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ABC8E1F000C6;
+	Wed, 25 Nov 2026 14:59:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795618777;
-	bh=C7uCGei2RlQvDBnKozMiliPgxR6SEpCEBTOieWGKzAk=;
+	s=korg; t=1795618780;
+	bh=IiVi7JVZ39nDRuap/IKtbF91epNZU36uGkkT2zipRuY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=yIq6S2mefDWDRYPuN1NWi8Mb7J7BeZL7afdq8KgQ9TMPqOc6YI8QeppRWDBRgUjvR
-	 qPzOJSTMwEZuIINLnfGDHHSlnUzW7zDbjX7BydZ2LUkeCmjgB9vNKs3lriMEA3maeZ
-	 BIaqFmfPrOinoHV7bULyBXKNs4XbqSU/QEoLIrp8=
+	b=FBMvirTIUEWY+7o21unc9znfIbwHx2iudTGd2PfqjnkpE8N7m7f5DuTqGxfaHzX7N
+	 rqx8LPh4Cm8IU2ehMWHjIboS8pEiaWvwBPf7ROKVX3IsttbE/wj5LvW0iW/2BtRL2Z
+	 atJi26ZmHnWakyhE4Zg/ZLmXXaUtpkct7A00f5aA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Karthik Poosa <karthik.poosa@intel.com>,
-	Rodrigo Vivi <rodrigo.vivi@intel.com>,
+	Christian Loehle <christian.loehle@arm.com>,
+	Pengjie Zhang <zhangpengjie2@huawei.com>,
+	Zhongqiu Han <zhongqiu.han@oss.qualcomm.com>,
+	Sumit Gupta <sumitg@nvidia.com>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0386/1005] drm/xe/hwmon: Use shared pcode default timeout for power limit write
-Date: Wed, 25 Nov 2026 15:28:44 +0100
-Message-ID: <20261125143830.782825364@linuxfoundation.org>
+Subject: [PATCH 7.3 0360/1005] cpufreq: Serialize global boost updates
+Date: Wed, 25 Nov 2026 15:28:18 +0100
+Message-ID: <20261125143830.166858149@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143821.729802100@linuxfoundation.org>
 References: <20261125143821.729802100@linuxfoundation.org>
@@ -68,50 +71,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Karthik Poosa <karthik.poosa@intel.com>
+From: Christian Loehle <christian.loehle@arm.com>
 
-[ Upstream commit 1a925ad51847db376fc0acd21fc5b76fb9c36cde ]
+[ Upstream commit 3d5720dff09f3b90d9ab2a6707e4bb8d69542f4a ]
 
-Drop the local PL_WRITE_MBX_TIMEOUT_MS macro and use the common
-PCODE_DEFAULT_TIMEOUT_MS for the power limit write mailbox command.
-This removes a duplicate timeout definition and keeps hwmon in sync with
-the pcode default (now 10ms).
+Concurrent global boost sysfs writes can interleave their global flag
+and per-policy updates. An enabling write can set the global flag, then
+a disabling write can clear it and finish before the enabling write
+updates the policies. Both writes succeed, leaving boost enabled on
+the policies while the global flag is disabled.
 
-Signed-off-by: Karthik Poosa <karthik.poosa@intel.com>
-Link: https://patch.msgid.link/20260907083520.192418-3-karthik.poosa@intel.com
-Reviewed-by: Rodrigo Vivi <rodrigo.vivi@intel.com>
-Signed-off-by: Rodrigo Vivi <rodrigo.vivi@intel.com>
-Stable-dep-of: 94099304b80e ("drm/xe/hwmon: Fix pcode power limit handling")
+Serialize the complete global boost update, including rollback on
+failure, with a mutex.
+
+Fixes: 6f19efc0a1ca ("cpufreq: Add boost frequency support in core")
+Signed-off-by: Christian Loehle <christian.loehle@arm.com>
+Reviewed-by: Pengjie Zhang <zhangpengjie2@huawei.com>
+Reviewed-by: Zhongqiu Han <zhongqiu.han@oss.qualcomm.com>
+Reviewed-by: Sumit Gupta <sumitg@nvidia.com>
+Link: https://patch.msgid.link/20261105215223.1263415-3-christian.loehle@arm.com
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/xe/xe_hwmon.c | 7 +------
- 1 file changed, 1 insertion(+), 6 deletions(-)
+ drivers/cpufreq/cpufreq.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/drivers/gpu/drm/xe/xe_hwmon.c b/drivers/gpu/drm/xe/xe_hwmon.c
-index de3f2aeffc3fb..08cec511806fa 100644
---- a/drivers/gpu/drm/xe/xe_hwmon.c
-+++ b/drivers/gpu/drm/xe/xe_hwmon.c
-@@ -101,11 +101,6 @@ enum sensor_attr_power {
+diff --git a/drivers/cpufreq/cpufreq.c b/drivers/cpufreq/cpufreq.c
+index 4bf7738a81b0f..cef055a4b7d91 100644
+--- a/drivers/cpufreq/cpufreq.c
++++ b/drivers/cpufreq/cpufreq.c
+@@ -2814,6 +2814,8 @@ int cpufreq_boost_set_sw(struct cpufreq_policy *policy, int state)
+ }
+ EXPORT_SYMBOL_GPL(cpufreq_boost_set_sw);
  
- #define PWR_ATTR_TO_STR(attr)	(((attr) == hwmon_power_max) ? "PL1" : "PL2")
++static DEFINE_MUTEX(cpufreq_boost_mutex);
++
+ static int cpufreq_boost_trigger_state(int state)
+ {
+ 	struct cpufreq_policy *policy;
+@@ -2821,6 +2823,8 @@ static int cpufreq_boost_trigger_state(int state)
+ 	bool boost_enabled;
+ 	int ret = -EOPNOTSUPP;
  
--/*
-- * Timeout for power limit write mailbox command.
-- */
--#define PL_WRITE_MBX_TIMEOUT_MS	(1)
--
- /* Index of memory controller in READ_THERMAL_DATA output */
- #define TEMP_INDEX_MCTRL	2
- 
-@@ -252,7 +247,7 @@ static int xe_hwmon_pcode_rmw_power_limit(const struct xe_hwmon *hwmon, u32 attr
- 							     (channel == CHANNEL_CARD) ?
- 							     WRITE_PSYSGPU_POWER_LIMIT :
- 							     WRITE_PACKAGE_POWER_LIMIT, 0),
--							     val0, val1, PL_WRITE_MBX_TIMEOUT_MS);
-+							     val0, val1, PCODE_DEFAULT_TIMEOUT_MS);
- 	if (ret)
- 		drm_dbg(&hwmon->xe->drm, "write failed ch %d val0 0x%08x, val1 0x%08x, ret %d\n",
- 			channel, val0, val1, ret);
++	guard(mutex)(&cpufreq_boost_mutex);
++
+ 	/*
+ 	 * Don't compare 'cpufreq_driver->boost_enabled' with 'state' here to
+ 	 * make sure all policies are in sync with global boost flag.
 -- 
 2.53.0
 
