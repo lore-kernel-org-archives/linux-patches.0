@@ -1,42 +1,42 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795618221;
-	b=haL04bZRY9RyXu5l1FpQEG5USezGeaygY1Ponz+Ty3EroPrIMty5S04yo3x9qa4EhMwT
-	 m0RwR+L0cODNr3daDeoyUJ9Ea3JxzSjPDpkXpa90ukItbzSPOHsNfJzdDFeYneoLIAgBv
-	 oauqSH3vUcJMGHYidvnSq8vinx/8b+mx0eb11ABWv0L3skJ1eJcJzBMM8j1RqDH3Umu0j
-	 rkXbeTVTtcOiq9X725NHa4KXsw3T26HywmzfVUzz9nn6qWhX8B71rTDt3Hy40mM6nURTV
-	 lHEHel0+N+Y7rZKJOy2ZiA1zxN+OpiEQAX4a0XVkqa3AvsN4ciIDpFvy5wsqsrN3dXA==
+	t=1795618224;
+	b=2r2OlBG5j2+Kd3ta0tB8P242VeKTWyNntffKawdlig/8p+2gYu49g9mEfzs5zAGDL0Zq
+	 v+mKgkgQDnzf0be42dLmNPfbtRpYB60hepvVeN4XpmXl/s7/UKpBdfgpQGM4eRRA/BgwF
+	 JSwosRTBrA8KSJ81645ihFPGJ34TkuaW37AAF4GgNZtC7zesW4dYGz1rzitM9hqqwVb1o
+	 0ia0sa3bk8WyalFuZYsJUnJ0bXsmH3IJAARuvemEy8jEdhPeV0rQvm95BO+yn/Ghngps5
+	 Cvn/9789rxmApflmL0we1pgU65Fq9cUXY9PoulZLvyoQG1nmL5DksbfB/ShOOWV0hlA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795618221;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795618224;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=okh3C1XM3CkrcOPmJK1ZU6n8yW3Ksy1RMGZf2U37HKc=;
-	b=FGKZKEIJQVVfgC8fNlVtg2uZQs7BOG4XNS1TM40lWOOORnnserhemN0iv0pMKOenSku+
-	 G0jdvuIdYkVUJpul76UFt0r1jDObJNJbu3RL8TwDhRsuh4bE9N8Q0VclmcF7TjB9KAs6w
-	 HlFPRn2/eN26szVN7jFPjjSNmresL75NRVfhu/g7tYhM1J+lWyxKPuhMaQetiFNCPEp7p
-	 YKjTNkfbV7KYHYMF/xgPmUH36l40NulANDQLd7nB9c+1EjtyXIjHOqMU1yKiqTRYC9EY6
-	 1ezYwTKodEWrTZq89v2eIhAkwNAmCe2qrJ2JCzu0WMe+LbxrT7d4UEGhXVrvzVzIDSw==
+	bh=jC87emFLJ79PdZa8k5ARE5x90HdyZ5HDjeJ0hvXZPzQ=;
+	b=LmRPG35USoN4lef4xNeeGZBdEj8Vry4wcYsAHqqHg3YXfuBAfMOFtOuUpyX1AUPrAo3w
+	 NK9pskdf98WPjAYo6t6XjElk6uE4DqguK/Sg4YqgazhEKqxcWvQvMHUG+Wjm6LyVwzv4C
+	 lh3c9zdg8dWgNA3MLlcfWv6rqUzdJHXKLA5WvbjxDozJt+XxJcahot0w4Ni452ImJMmop
+	 pCubi8VnpC1t1Rjc9z70LckQRj7Ss+ySeaQPm96Y7KQN2RVUsbegsdCVk7Fp23drNk+/I
+	 46RbQu0Hh99kIiKRE6Y4x/NAcuCR9gmQnXF6x0Z351t2E7FJRDrGpeWBc1xIdwKsYmA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="KUxz/lPv";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=rihJdQon;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7F394606A323;
-	Wed, 25 Nov 2026 14:50:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 37187606A31E;
+	Wed, 25 Nov 2026 14:50:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=KUxz/lPv
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 45BE11F000C4;
-	Wed, 25 Nov 2026 14:50:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=rihJdQon
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7DE041F000E6;
+	Wed, 25 Nov 2026 14:50:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795618220;
-	bh=okh3C1XM3CkrcOPmJK1ZU6n8yW3Ksy1RMGZf2U37HKc=;
+	s=korg; t=1795618224;
+	bh=jC87emFLJ79PdZa8k5ARE5x90HdyZ5HDjeJ0hvXZPzQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=KUxz/lPvcv8PxoraMdo1ufSa9ycdxOxiKbG7ntA2y/h3AZ6CYWy+RyiYkSNZhTo8m
-	 vhz5X2x/yIbGYMQkgFm2T5t3wna3aXIwUxPIbDMyOCN2wdnOIOPKqY4NuNjih67NdV
-	 h7WDbgHixtBnzU/+XDFjr/drLpvsOQ2Y597rWryE=
+	b=rihJdQongy/1xmes2u3J35RTQAvXSuHlswULFf+r5tMe96saThXheb7W1IvOT4Fvh
+	 scXKy3KTF+jr2j+R3UlPC++4AUSgiPLDOs5xV0IQN1mzXP0BM7MUJk2Dql7NoeeWhy
+	 6amJKUX5CZV2gRkwTEgBrtvpNwU3jz0lP0lqcPG4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -44,9 +44,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Cen Zhang <zzzccc427@gmail.com>,
 	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0208/1005] Bluetooth: SMP: Protect link keys during LTK derivation
-Date: Wed, 25 Nov 2026 15:25:46 +0100
-Message-ID: <20261125143826.613160934@linuxfoundation.org>
+Subject: [PATCH 7.3 0209/1005] Bluetooth: SMP: Protect LTK encryption with RCU
+Date: Wed, 25 Nov 2026 15:25:47 +0100
+Message-ID: <20261125143826.637860262@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143821.729802100@linuxfoundation.org>
 References: <20261125143821.729802100@linuxfoundation.org>
@@ -70,221 +70,137 @@ Content-Transfer-Encoding: 8bit
 
 From: Cen Zhang <zzzccc427@gmail.com>
 
-[ Upstream commit ebc4f217c1fbe8364b5ef2ad8e3a8e9a1b2701a7 ]
+[ Upstream commit add463a65802bb117e4a17b8c00d747fa70399fc ]
 
-sc_generate_ltk() reads the type and value of the peer link key after
-hci_find_link_key() has returned. The finder ends its RCU read-side
-section before returning the borrowed entry, and the SMP receive path
-does not hold hdev->lock: l2cap_recv_acldata() releases it before the
-PDU is dispatched. The L2CAP connection and channel locks held by SMP
-do not serialize with management link-key removal.
+smp_ltk_encrypt() checks the security level of the LTK returned by
+hci_find_ltk() and then starts encryption with its EDIV, Rand, value
+and key size. The finder ends its RCU read-side section before
+returning the borrowed entry, and neither caller holds hdev->lock: the
+SMP Security Request handler runs from the receive path, and
+setsockopt(BT_SECURITY) reaches smp_conn_security() with only the
+socket and channel locks held.
 
-When BR/EDR Secure Connections pairing derives an LTK from the stored
-link key, MGMT_OP_LOAD_LINK_KEYS can free that key mid-derivation:
+MGMT_OP_LOAD_LONG_TERM_KEYS can therefore free the LTK in between:
 
-  HCI RX worker (SMP)              Management / RCU reclamation
-  sc_generate_ltk()
-    key = hci_find_link_key()
-                                   load_link_keys()
+  Socket security request          Management / RCU reclamation
+  smp_ltk_encrypt()
+    key = hci_find_ltk()
+                                   load_long_term_keys()
                                      hci_dev_lock(hdev)
-                                     hci_link_keys_clear(hdev)
+                                     hci_smp_ltks_clear(hdev)
                                        list_del_rcu(), kfree_rcu()
                                      hci_dev_unlock(hdev)
                                    grace period ends, key is freed
-    read key->type
-    smp_h6() or smp_h7() reads key->val
+    smp_ltk_sec_level(key)
+    hci_le_start_enc(hcon, key->ediv, key->rand, key->val, ...)
 
-Hold an RCU read-side section from the lookup until the type and value
-have been consumed. smp_h6() and smp_h7() only run the synchronous
-AES-CMAC library code, which neither sleeps nor allocates. Release the
-section before sc_add_ltk(), which allocates with GFP_KERNEL.
+Keep an RCU read-side section across the lookup and every use of the
+key. hci_le_start_enc() copies the key into the command and queues it
+with a GFP_ATOMIC allocation, so the whole sequence can stay inside the
+section.
 
-KASAN reported this on a test kernel whose scheduling hook paused the
-receive worker after the lookup; the hook frames appear in the trace.
+KFENCE reported this on a test kernel where the socket thread was
+paused after the lookup until the RCU callback had freed the key.
 
-KASAN report as below:
+KFENCE report as below:
 
     ==================================================================
-    BUG: KASAN: slab-use-after-free in smp_distribute_keys+0x2983/0x2b70
-    Read of size 1 at addr ffff88810618e9a6 by task kworker/u17:0/500
+    BUG: KFENCE: use-after-free read in smp_ltk_encrypt.isra.0+0xf3/0x370
 
-    CPU: 0 UID: 0 PID: 500 Comm: kworker/u17:0 Not tainted 7.2.0-rc6-pmb-bt-functional-v1+ #1 PREEMPT(lazy)
-    Hardware name: QEMU Ubuntu 24.04 PC v2 (i440FX + PIIX, arch_caps fix, 1996), BIOS 1.16.3-debian-1.16.3-2 04/01/2014
-    Workqueue: hci1 hci_rx_work
-    Call Trace:
-     <TASK>
-     dump_stack_lvl+0x93/0xd0
-     print_report+0xce/0x630
-     ? smp_distribute_keys+0x2983/0x2b70
-     ? srso_alias_return_thunk+0x5/0xfbef5
-     ? __virt_addr_valid+0x20d/0x410
-     ? smp_distribute_keys+0x2983/0x2b70
-     kasan_report+0xe0/0x110
-     ? smp_distribute_keys+0x2983/0x2b70
-     smp_distribute_keys+0x2983/0x2b70
-     ? __pfx_smp_distribute_keys+0x10/0x10
-     ? srso_alias_return_thunk+0x5/0xfbef5
-     ? pmbd_gate_maybe+0x47/0x60
-     ? srso_alias_return_thunk+0x5/0xfbef5
-     ? pmbd_probe_hit_cookie+0xe7/0x1c0
-     ? srso_alias_return_thunk+0x5/0xfbef5
-     ? pmbd_probe_hit_cookie+0xee/0x1c0
-     ? __pfx_pmbd_probe_hit_cookie+0x10/0x10
-     ? srso_alias_return_thunk+0x5/0xfbef5
-     ? __asan_memset+0x23/0x50
-     ? smp_recv_cb+0x12e2/0x8f30
-     ? srso_alias_return_thunk+0x5/0xfbef5
-     smp_recv_cb+0x12e2/0x8f30
-     ? __pfx_smp_recv_cb+0x10/0x10
-     ? __pfx___might_resched+0x10/0x10
-     ? __pfx_sched_balance_find_src_group+0x10/0x10
-     ? srso_alias_return_thunk+0x5/0xfbef5
-     ? __mutex_lock+0x182c/0x2590
-     ? l2cap_recv_frame+0x9ef/0x8830
-     ? __pfx___mutex_lock+0x10/0x10
-     ? __lock_acquire+0x466/0x2260
-     ? __pfx_l2cap_chan_hold_unless_zero+0x10/0x10
-     ? srso_alias_return_thunk+0x5/0xfbef5
-     ? l2cap_recv_frame+0x13cc/0x8830
-     ? __pfx_smp_recv_cb+0x10/0x10
-     l2cap_recv_frame+0x13cc/0x8830
-     ? srso_alias_return_thunk+0x5/0xfbef5
-     ? __mutex_lock+0x182c/0x2590
-     ? __pfx_l2cap_recv_frame+0x10/0x10
-     ? srso_alias_return_thunk+0x5/0xfbef5
-     ? find_held_lock+0x2b/0x80
-     ? l2cap_recv_acldata+0x1eb/0x10e0
-     ? __pfx___mutex_lock+0x10/0x10
-     ? srso_alias_return_thunk+0x5/0xfbef5
-     ? __mutex_unlock_slowpath+0x147/0x920
-     ? __pfx_l2cap_conn_hold_unless_zero+0x10/0x10
-     ? __pfx_hci_conn_enter_active_mode+0x10/0x10
-     ? l2cap_recv_acldata+0x13d/0x10e0
-     ? srso_alias_return_thunk+0x5/0xfbef5
-     l2cap_recv_acldata+0xe9f/0x10e0
-     ? srso_alias_return_thunk+0x5/0xfbef5
-     hci_rx_work+0x5a6/0xf00
-     ? srso_alias_return_thunk+0x5/0xfbef5
-     process_one_work+0x908/0x19c0
-     ? __pfx_process_one_work+0x10/0x10
-     ? srso_alias_return_thunk+0x5/0xfbef5
-     ? lock_is_held_type+0x8f/0x100
-     ? srso_alias_return_thunk+0x5/0xfbef5
-     worker_thread+0x65c/0xe40
-     ? __pfx_worker_thread+0x10/0x10
-     kthread+0x34f/0x460
-     ? srso_alias_return_thunk+0x5/0xfbef5
-     ? __pfx_kthread+0x10/0x10
-     ret_from_fork+0x659/0x940
-     ? __pfx_ret_from_fork+0x10/0x10
-     ? srso_alias_return_thunk+0x5/0xfbef5
-     ? __switch_to+0x74f/0xf80
-     ? __pfx_kthread+0x10/0x10
-     ret_from_fork_asm+0x1a/0x30
-     </TASK>
+    Use-after-free read at 0x00000000c45332eb (in kfence-#128):
+     smp_ltk_encrypt.isra.0+0xf3/0x370
+     smp_conn_security+0x489/0x9d0
+     l2cap_sock_setsockopt+0x1bbe/0x2300
+     do_sock_setsockopt+0x1fb/0x430
+     __sys_setsockopt+0x106/0x180
+     __x64_sys_setsockopt+0xc2/0x160
+     do_syscall_64+0x115/0x6a0
+     entry_SYSCALL_64_after_hwframe+0x77/0x7f
 
-    Allocated by task 500:
-     kasan_save_stack+0x33/0x60
-     kasan_save_track+0x14/0x30
-     __kasan_kmalloc+0xaa/0xb0
-     __kmalloc_cache_noprof+0x251/0x610
-     hci_add_link_key+0x474/0x840
-     hci_link_key_notify_evt+0x492/0xce0
-     hci_event_packet+0x894/0xc70
-     hci_rx_work+0x367/0xf00
-     process_one_work+0x908/0x19c0
-     worker_thread+0x65c/0xe40
-     kthread+0x34f/0x460
-     ret_from_fork+0x659/0x940
-     ret_from_fork_asm+0x1a/0x30
+    kfence-#128: 0x00000000d45af9b0-0x0000000053c1365e, size=72, cache=kmalloc-96
 
-    Freed by task 0:
-     kasan_save_stack+0x33/0x60
-     kasan_save_track+0x14/0x30
-     kasan_save_free_info+0x3b/0x60
-     __kasan_slab_free+0x5f/0x80
-     __rcu_free_sheaf_prepare+0x65/0x2a0
-     rcu_free_sheaf+0x1f/0xe0
+    allocated by task 533 on cpu 0 at 50.484258s (0.449177s ago):
+     hci_add_ltk+0x1f5/0x3a0
+     load_long_term_keys+0x6ea/0x930
+     hci_sock_sendmsg+0x128b/0x22e0
+     sock_write_iter+0x4c0/0x550
+     vfs_write+0x637/0x1010
+     ksys_write+0x1b7/0x200
+     do_syscall_64+0x115/0x6a0
+     entry_SYSCALL_64_after_hwframe+0x77/0x7f
+
+    freed by task 0 on cpu 0 at 50.846944s (0.093664s ago):
+     __rcu_free_sheaf_prepare+0x261/0x2a0
+     rcu_free_sheaf_nobarn+0x1d/0x50
      rcu_core+0x661/0x1d10
      handle_softirqs+0x201/0x930
      __irq_exit_rcu+0x110/0x1e0
      irq_exit_rcu+0xe/0x20
      sysvec_apic_timer_interrupt+0x6c/0x80
      asm_sysvec_apic_timer_interrupt+0x1a/0x20
+     pv_native_safe_halt+0xf/0x20
+     default_idle+0x9/0x10
+     default_idle_call+0x6c/0xb0
+     do_idle+0x3a7/0x650
+     cpu_startup_entry+0x54/0x60
+     rest_init+0x15e/0x2b0
+     start_kernel+0x412/0x4b0
+     x86_64_start_reservations+0x18/0x30
+     x86_64_start_kernel+0x111/0x120
+     common_startup_64+0x13e/0x158
 
-    The buggy address belongs to the object at ffff88810618e980
-     which belongs to the cache kmalloc-64 of size 64
-    The buggy address is located 38 bytes inside of
-     freed 64-byte region [ffff88810618e980, ffff88810618e9c0)
-
-    The buggy address belongs to the physical page:
-    page: refcount:0 mapcount:0 mapping:0000000000000000 index:0x0 pfn:0x10618e
-    flags: 0x200000000000000(node=0|zone=2)
-    page_type: f5(slab)
-    raw: 0200000000000000 ffff8881000428c0 dead000000000122 0000000000000000
-    raw: 0000000000000000 0000000000200020 00000000f5000000 0000000000000000
-    page dumped because: kasan: bad access detected
-
-    Memory state around the buggy address:
-     ffff88810618e880: fa fb fb fb fb fb fb fb fc fc fc fc fc fc fc fc
-     ffff88810618e900: fa fb fb fb fb fb fb fb fc fc fc fc fc fc fc fc
-    >ffff88810618e980: fa fb fb fb fb fb fb fb fc fc fc fc fc fc fc fc
-                                   ^
-     ffff88810618ea00: fa fb fb fb fb fb fb fb fc fc fc fc fc fc fc fc
-     ffff88810618ea80: fa fb fb fb fb fb fb fb fc fc fc fc fc fc fc fc
+    CPU: 2 UID: 0 PID: 534 Comm: l2cap-ltk-actor Not tainted 7.2.0-rc6-pmb-bt-functional-v1+ #5 PREEMPT(lazy)
+    Hardware name: QEMU Ubuntu 24.04 PC v2 (i440FX + PIIX, arch_caps fix, 1996), BIOS 1.16.3-debian-1.16.3-2 04/01/2014
     ==================================================================
 
-Fixes: b5ae344d4c0f ("Bluetooth: Add full SMP BR/EDR support")
+Fixes: 988c5997d320 ("Bluetooth: Use the LTK after receiving a LE Security Request")
 Assisted-by: LLM
 Signed-off-by: Cen Zhang <zzzccc427@gmail.com>
 Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/bluetooth/smp.c | 15 +++++++++++----
- 1 file changed, 11 insertions(+), 4 deletions(-)
+ net/bluetooth/smp.c | 14 ++++++++++----
+ 1 file changed, 10 insertions(+), 4 deletions(-)
 
 diff --git a/net/bluetooth/smp.c b/net/bluetooth/smp.c
-index 0e6f3adb0bf26..d783126076ee7 100644
+index d783126076ee7..4af7fa7f4a8e1 100644
 --- a/net/bluetooth/smp.c
 +++ b/net/bluetooth/smp.c
-@@ -1184,9 +1184,13 @@ static void sc_generate_ltk(struct smp_chan *smp)
- 	struct hci_conn *hcon = smp->conn->hcon;
- 	struct hci_dev *hdev = hcon->hdev;
- 	struct link_key *key;
-+	int err;
+@@ -2207,16 +2207,20 @@ static bool smp_ltk_encrypt(struct l2cap_conn *conn, u8 sec_level)
+ {
+ 	struct smp_ltk *key;
+ 	struct hci_conn *hcon = conn->hcon;
++	bool ret = false;
 +
 +	rcu_read_lock();
  
- 	key = hci_find_link_key(hdev, &hcon->dst);
- 	if (!key) {
-+		rcu_read_unlock();
- 		bt_dev_err(hdev, "no Link Key found to generate LTK");
- 		return;
- 	}
-@@ -1198,16 +1202,19 @@ static void sc_generate_ltk(struct smp_chan *smp)
- 		/* SALT = 0x000000000000000000000000746D7032 */
- 		const u8 salt[16] = { 0x32, 0x70, 0x6d, 0x74 };
+ 	key = hci_find_ltk(hcon->hdev, &hcon->dst, hcon->dst_type, hcon->role);
+ 	if (!key)
+-		return false;
++		goto unlock;
  
--		if (smp_h7(key->val, salt, smp->tk))
--			return;
-+		err = smp_h7(key->val, salt, smp->tk);
- 	} else {
- 		/* From core spec. Spells out in ASCII as 'tmp2'. */
- 		const u8 tmp2[4] = { 0x32, 0x70, 0x6d, 0x74 };
+ 	if (smp_ltk_sec_level(key) < sec_level)
+-		return false;
++		goto unlock;
  
--		if (smp_h6(key->val, tmp2, smp->tk))
--			return;
-+		err = smp_h6(key->val, tmp2, smp->tk);
- 	}
++	ret = true;
+ 	if (test_and_set_bit(HCI_CONN_ENCRYPT_PEND, hcon->flags))
+-		return true;
++		goto unlock;
  
+ 	hci_le_start_enc(hcon, key->ediv, key->rand, key->val, key->enc_size);
+ 	hcon->enc_key_size = key->enc_size;
+@@ -2224,7 +2228,9 @@ static bool smp_ltk_encrypt(struct l2cap_conn *conn, u8 sec_level)
+ 	/* We never store STKs for initiator role, so clear this flag */
+ 	clear_bit(HCI_CONN_STK_ENCRYPT, hcon->flags);
+ 
+-	return true;
++unlock:
 +	rcu_read_unlock();
-+
-+	if (err)
-+		return;
-+
- 	if (smp_h6(smp->tk, brle, smp->tk))
- 		return;
++	return ret;
+ }
  
+ bool smp_sufficient_security(struct hci_conn *hcon, u8 sec_level,
 -- 
 2.53.0
 
