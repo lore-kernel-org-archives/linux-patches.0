@@ -1,52 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795624852;
-	b=ssIgg2RLz6YeTEUzwph1atsqS9f3Wijpff2cw5PJbj47KyC4KFt/APkIlREqEeaHpu02
-	 0qfseCmbrS6xNoXQSarLOdNHx4GlLLXZGPqIP74VV6NO7YfgkUXC+zlurphtGI9tLhit1
-	 +CQoTFMgAgifbXYMBMFAbU0OrAD2CA0IC/L54/mMtjwIeEM4FdumExDupTaWgE4pq3FVy
-	 n7ZT0VM/fE3zb4Q7OrhqRlNNndkaPVfnQB+n48YhMUVdy+VdrMUtaBAVsJNfN4jlLnu9S
-	 IFeCdF8bP8WIzmJPhPd3TgOwL3fM1a6T1ypaI5OIbfQ/7gKEdjqGJS971bIaGejSN8Q==
+	t=1795624855;
+	b=ja5xXvCHOU5/ZztvXEJLhZUE1VBUzLl/hCvS7BMWXxcTASHuMT1OHFFF+nL8zVORo0wJ
+	 SveJqZOwVQ0OZmITvmRbyjWoU+e27qe73HOqzJsOzUDXfeV9BLn+desoPBA4xMhY8I7ee
+	 H9climT8xFkonngjjdsOLaFzxi9Y10pRtO8tLZ0Jn/OU3IXajQv+aTC6keFq/v1EmaUEE
+	 9dJnmst0MvnnGttsTqXO5y8FxrDx8AayMpx0WdrIHh3iZi63bVirRcRuKh8dsq+tXUMZg
+	 lJ0/pH0WkETwHvShrEGJ+MU0aJn+2ElydSZ+E/CeyiFRhGIJgp34R3WvooFAJKDrwmw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795624852;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795624855;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=T5qRXSwB7j0NO1WYqmAa+BnxrGKh78T6lhESjVAzXpg=;
-	b=d44MXsr6sUWv2H7vHiCYxl1vsiLbKxDtjNXAGp/k7VJdtPsDH4fKxFJap1PpsJpRP7uJ
-	 zxaviBc0gND6lO6s3BnAzX5Vg/QrwRRZA9ArZ6aQEr9YEGxuWk4MMUaoAvbhJ530JZqGm
-	 JM3JG1W05TPS07ghapzyyNHp/nuyWij7qC4gZhSD75NMtiok2txoh9O94THi45MxO/I5L
-	 2cb39Ppj9X18iO3S/XFbwObwZkD5hE90z3KgOimcQFgDCRFTPzkCXjCvBxjpYlmkYKzh2
-	 Zy0Ybcx58E3iCTH+7aD/U6kwuQNTq4UlmapV/xyTn2/nFW92Gwx0eBRHzAyS4EcnCag==
+	bh=nbIPAFXXIs6S8pKdDQMiWcaOQsoGCq20K85u/dMJrn4=;
+	b=VEJyt517cD2Z+BLOjnVOsX9pvQn1Yf7YtGPFeSlx4KPbTuWZSdaIYiD04j9oO7ipLDQ+
+	 tcEKcJjvKYANZm2YHC3i55IbYHV+Pt3LhzNradunlzAgVkZ3wh9zhHNwWa7p31KM8QoGn
+	 OmmX4kcdw972UvVLj7Wgrl4olF6DcB+/ZuIa59oXWnmVmNfPfCIpWckOnaXzPii0eewk3
+	 X61F4Xt9e1eSuJcPYuix/28NWZFWjKnDkRurssXMT+BeIdFPrIHdu8bWNEwMhb4I7AJa8
+	 YyS+qI9lSchyRazw3Z4K1YC6WfgTSgDkwWrch/jfCBFETEQglwQPjvB8N4A89tXxAgg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=tIWvm1vs;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=a0nfu79D;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 213FC606A31E;
-	Wed, 25 Nov 2026 16:40:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 55E5D606A31E;
+	Wed, 25 Nov 2026 16:40:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=tIWvm1vs
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 137771F000CF;
-	Wed, 25 Nov 2026 16:40:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=a0nfu79D
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 503951F000C6;
+	Wed, 25 Nov 2026 16:40:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795624851;
-	bh=T5qRXSwB7j0NO1WYqmAa+BnxrGKh78T6lhESjVAzXpg=;
+	s=korg; t=1795624854;
+	bh=nbIPAFXXIs6S8pKdDQMiWcaOQsoGCq20K85u/dMJrn4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=tIWvm1vsszu+0fZOnakHbJktFXpN5XNHkrEDzQiQeCHRiupUY54Ct8/Lc2M6HowJL
-	 744TckzbjmvadaLUG8sKLOHSH98XX8+CEfdhPJFRpTFxRURrB0psSOmOcP7c5Dwhgj
-	 1ozAWjPK0LcpnZ5JgzJtbwJzepN+2eKfEJn9vLwY=
+	b=a0nfu79DE1IK6SH88YHqAbAZ80P2UuWQDN0cpNjqIYJrotMTx3qIbRYHlx6lQ9p14
+	 BSN41VyV79tDhOytgC6XJ8Z9RKVfCSMH5QBRsv3lSc+R9rA6tNMCU/Fa6Wjg3JyR13
+	 l8LhvySnhq126b71dcVVKg6MeSDFBCc0/KrQ5+NA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Amir Goldstein <amir73il@gmail.com>,
-	"Christian Brauner (Amutable)" <brauner@kernel.org>,
+	Eric Dumazet <edumazet@kernel.org>,
+	Chase Hiltz <me@chasehil.tz>,
+	Ido Schimmel <idosch@nvidia.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 320/816] ovl: allow idmapping overlay mounts
-Date: Wed, 25 Nov 2026 15:31:08 +0100
-Message-ID: <20261125143856.607580328@linuxfoundation.org>
+Subject: [PATCH 6.12 329/816] ipv4: route: dont blackhole in-use routes when retiring fnhe routes
+Date: Wed, 25 Nov 2026 15:31:17 +0100
+Message-ID: <20261125143856.815632731@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143849.205329330@linuxfoundation.org>
 References: <20261125143849.205329330@linuxfoundation.org>
@@ -68,54 +70,101 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Christian Brauner <brauner@kernel.org>
+From: Chase Hiltz <me@chasehil.tz>
 
-[ Upstream commit adedb6a00a1e4c77b1de9ea1f63b5008ad0c21f5 ]
+[ Upstream commit ae89f2724db1afa96a1f1b661174fc41ae1e88fa ]
 
-Now that every overlay inode operation honors the overlay mount idmap,
-allow the merged overlay mount itself to be idmapped by setting
-FS_ALLOW_IDMAP on ovl_fs_type.  mount_setattr(MOUNT_ATTR_IDMAP) can
-then apply an idmapping to an overlay mount, exposing the merged tree
-under a different ownership view.
+When a route cached in a nexthop exception (fnhe) is replaced or
+flushed, rt_bind_exception() and fnhe_flush_routes() call
+dst_dev_put() on it. That sets dst->dev to blackhole_netdev and
+dst->input/output to dst_discard*(), but other CPUs can still be
+using the route, e.g. as a noref dst taken from the fnhe under RCU.
+Packets that reach dst_input() or dst_output() after that are dropped.
 
-The composition is clean because overlayfs already normalizes every
-underlying id through the relevant layer idmap when it copies
-attributes into the overlay inode (ovl_copyattr()); the overlay inode's
-i_{u,g}id are thus "overlay-final" ids.  The overlay mount idmap
-composes on top of that pivot: it is applied to (getattr) and removed
-from (setattr, create) those ids at the overlay-inode boundary -
-permission, getattr, setattr, ACL owner checks and inode_init_owner() -
-while the underlying layers keep being accessed with the mounter's
-credentials through their own, possibly idmapped, mounts.  The mount
-idmap therefore only changes how the caller sees the overlay inode and
-never widens the mounter's access to the layers.
+If dst_dev_put() runs after a forwarded packet has entered ip_output(),
+ip_skb_dst_mtu() in __ip_finish_output() can return the MTU of
+blackhole_netdev (68), and ip_fragment() can then drop a DF packet and
+send ICMP_FRAG_NEEDED with mtu 68 to its source.
 
-This is deliberately the final code patch of the series: only once
-every operation honors the mount idmap is it safe to make overlay
-mounts idmappable.
+Commit 5018c59607a5 ("ipv4: fix race condition between route lookup and
+invalidation") fixed the same race in rt_cache_route() by putting the
+old route on the uncached list instead of calling dst_dev_put(). Do the
+same for routes retired from an fnhe. rt_flush_dev() still moves them
+to blackhole_netdev when their device is unregistered.
 
-Link: https://patch.msgid.link/20260615-work-idmapped-overlayfs-v1-6-7381632aa402@kernel.org
-Reviewed-by: Amir Goldstein <amir73il@gmail.com>
-Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
-Stable-dep-of: cb6c084182d4 ("ovl: release the upperdir/workdir in-use locks before the umount sync")
+fnhe routes are also retired on fnhe expiry (ip_del_fnhe()) and
+eviction (fnhe_remove_oldest()). Those paths don't bump rt_genid, so
+without the obsolete marking ipv4_dst_check() could still accept the
+route. Keep marking retired routes DST_OBSOLETE_DEAD, as dst_dev_put()
+did, so that users that cached them, such as sockets, look up again.
+
+In a netns reproducer that forwards IPv4 traffic over an ip6tnl device,
+with an fnhe for the destination, while the FIB keeps changing, this
+patch stops the mtu 68 ICMPs and the drops.
+
+Fixes: 95c47f9cf5e0 ("ipv4: call dst_dev_put() properly")
+Reviewed-by: Eric Dumazet <edumazet@kernel.org>
+Signed-off-by: Chase Hiltz <me@chasehil.tz>
+Reviewed-by: Ido Schimmel <idosch@nvidia.com>
+Link: https://patch.msgid.link/20261105182640.2999521-1-me@chasehil.tz
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/overlayfs/super.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ net/ipv4/route.c | 23 +++++++++++++++--------
+ 1 file changed, 15 insertions(+), 8 deletions(-)
 
-diff --git a/fs/overlayfs/super.c b/fs/overlayfs/super.c
-index b0cf671b4200d..6a9db5b742598 100644
---- a/fs/overlayfs/super.c
-+++ b/fs/overlayfs/super.c
-@@ -1491,7 +1491,7 @@ struct file_system_type ovl_fs_type = {
- 	.name			= "overlay",
- 	.init_fs_context	= ovl_init_fs_context,
- 	.parameters		= ovl_parameter_spec,
--	.fs_flags		= FS_USERNS_MOUNT,
-+	.fs_flags		= FS_USERNS_MOUNT | FS_ALLOW_IDMAP,
- 	.kill_sb		= kill_anon_super,
- };
- MODULE_ALIAS_FS("overlay");
+diff --git a/net/ipv4/route.c b/net/ipv4/route.c
+index 9706d36c8388c..6bfac6239fff8 100644
+--- a/net/ipv4/route.c
++++ b/net/ipv4/route.c
+@@ -571,6 +571,17 @@ static void ip_rt_build_flow_key(struct flowi4 *fl4, const struct sock *sk,
+ 
+ static DEFINE_SPINLOCK(fnhe_lock);
+ 
++/* Other CPUs may still be using @rt, so don't dst_dev_put() it.
++ * rt_flush_dev() handles it if its device is unregistered.
++ * Marking it dead makes ipv4_dst_check() fail for users that cached it.
++ */
++static void fnhe_retire_route(struct rtable *rt)
++{
++	WRITE_ONCE(rt->dst.obsolete, DST_OBSOLETE_DEAD);
++	rt_add_uncached_list(rt);
++	dst_release(&rt->dst);
++}
++
+ static void fnhe_flush_routes(struct fib_nh_exception *fnhe)
+ {
+ 	struct rtable *rt;
+@@ -578,14 +589,12 @@ static void fnhe_flush_routes(struct fib_nh_exception *fnhe)
+ 	rt = rcu_dereference(fnhe->fnhe_rth_input);
+ 	if (rt) {
+ 		RCU_INIT_POINTER(fnhe->fnhe_rth_input, NULL);
+-		dst_dev_put(&rt->dst);
+-		dst_release(&rt->dst);
++		fnhe_retire_route(rt);
+ 	}
+ 	rt = rcu_dereference(fnhe->fnhe_rth_output);
+ 	if (rt) {
+ 		RCU_INIT_POINTER(fnhe->fnhe_rth_output, NULL);
+-		dst_dev_put(&rt->dst);
+-		dst_release(&rt->dst);
++		fnhe_retire_route(rt);
+ 	}
+ }
+ 
+@@ -1498,10 +1507,8 @@ static bool rt_bind_exception(struct rtable *rt, struct fib_nh_exception *fnhe,
+ 		if (do_cache) {
+ 			dst_hold(&rt->dst);
+ 			rcu_assign_pointer(*porig, rt);
+-			if (orig) {
+-				dst_dev_put(&orig->dst);
+-				dst_release(&orig->dst);
+-			}
++			if (orig)
++				fnhe_retire_route(orig);
+ 			ret = true;
+ 		}
+ 
 -- 
 2.53.0
 
