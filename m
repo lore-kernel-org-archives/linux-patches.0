@@ -1,54 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795625138;
-	b=YiKx68brnpVKtjL+nA6Vbx9wOsoZyilillV+be/aHPtg//bWihc0WCTjaBIClKWvviAF
-	 byzS5ltblz89MSK/lvy8qjvKJNeFUcl4xxnC3xaE4h+Ko/XBFIlGaAqSyZ1hs5cGmP9lB
-	 ymIVIMoVFDQrcnnpcTfi2aqTURlCSf42dmpj/CmOR7Vfc1J0cq4iIytS3HjwxOm2BJUsa
-	 Xb3T0N0PHb2ozVbn7Nf+3nFiUGONhW7k/1aJNvaTIaA0DsR4LDMZNdkRN1YzxrhykSH9l
-	 gDpDJ5S5sjwCn5Ez6LvlLv59e+Ni1wxPU8w2MoSVhVyFuyJMWxW4TkPYy/mZZlFcgRA==
+	t=1795625140;
+	b=QMr5GGkIFrsbzlulVwppBRZXfZl/7xuXDV2S6QT4y4bg0b4W47CkM2wsd/gJ5JC9O6d4
+	 RZvgAwD27soDkAn6gvbhwoPbrVZ8JD+kDOjF30hwffPqyY96ikZfyzUoE4p5ltmXD8peL
+	 P1u1AS+dvu1uE6MYXWYol8uI7WFnhM0gc7/UnnbEwh02Zvlj3upUmZuHxEcbm3dJhVv1m
+	 IzBdkAEVQ8b1S4Qr5pBwr51eOuSI74lym1sQZc3JoFKi8asrR9YfoA5dsFNOHlvEFiEEo
+	 iLipJXn/M+dY64hbeGtp2NHwnEWS501qSq2d/P+zxksKqJlaf16usw7t76ZBTZ41whQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795625138;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795625140;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=NgN43YrXJln/sOFqbFJ8nlj04vZmDZUN+I4stHhlMuk=;
-	b=NsxpcmfnFyuVYHkGGpUeF3ThaU6V6L2SIiZSZJwqeYHxssfhpkw1LYQsszmNCc9YVm1+
-	 WFif1ALxS81FPeQw8tL4oLczFZ+8sodOAfqErrYLB+31A4TmPEgujfGq6w2ZBb7OBv5XG
-	 WdWj0VAnW2DvexCS0rZdZ4AbiuVSvNTnBV3gnIJk4ZmLoeM0FxR4IdEn0p05yYvaS38ds
-	 yF3xfpEztxl+cDtoIkwjhpubdVolVw26ipl7KmsvVz+lr8PSESoSdPWW4hmA7ySCCmc/y
-	 i+pSSY7/vpjvL3lU8ANa9aQ2Smrf8pCpdXRPBJUnyQtZSrDcsRvSFAp4+3Z1eqY4gvg==
+	bh=e6LT3yPreuassQcNnETGxhQRSof91/H+uvvYWu6KiQM=;
+	b=hveyHRlIFypcN1rpykDVONAE33LRwNZCgGoX/t0UqFpTDytk9GHxxkAPd5IOPC8y76tn
+	 A5J5NO6tZL9b6LaFAQ+xBaq8MQurbr4kbNkdvZAO9jSnqqNOJ7oig/Suf9JBAVZ0e6aLz
+	 Dj3dqQjDffWK3BmQrPaE4q1LpZNpjjAZ15WAZqySe60yw0dZoN/Wwqu9LSo4enkRr4qXa
+	 +ULLZlD8raJVoaAbbRMfa2phaQ7aUYza4Vy0wgpo3RxEdvxJfvX2PEal3s5MGzQpKdFMN
+	 DgpcAai8K56Vi/uqAJoToVauvKANugdWfNV8D1bGUjtRN4pCJGLbWIh4Zdp5MlaB1mw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=bd6I74aR;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=gzmR55E1;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 05A96606A6B3;
-	Wed, 25 Nov 2026 16:45:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A654F606A685;
+	Wed, 25 Nov 2026 16:45:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=bd6I74aR
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0E1A31F000D4;
-	Wed, 25 Nov 2026 16:45:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=gzmR55E1
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 039EA1F000E0;
+	Wed, 25 Nov 2026 16:45:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795625137;
-	bh=NgN43YrXJln/sOFqbFJ8nlj04vZmDZUN+I4stHhlMuk=;
+	s=korg; t=1795625140;
+	bh=e6LT3yPreuassQcNnETGxhQRSof91/H+uvvYWu6KiQM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=bd6I74aRQPoUsXamfcMgehWXIBIg4khSWPemmr4SKcETwWkN5VxoRNNsiYMXxJfH2
-	 vNSJylu153usPgB2wCE0/oMyzfFkW++nZaYy65kdrO9uzTcyCG7J/xWj8lOMqiU6eK
-	 J6hyUUuOlEnryQblXwGFs/cxlod8KMAxX0vmnukg=
+	b=gzmR55E1MlbfN1FcoAJu2PNrs0AhO6YEiPwAq23eap/nKifKAOK15bAnxtR6+0IHL
+	 g6IFFYFyl5GJkOBJHkD9Bs3+JiQSJU8K2U0hekjzrjsWj8GhYaVdd7a2pVpu5eBZO0
+	 wI9IQSO2KVykb+y1dVMgNEEGti/jutwk4XOQbx2o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable@kernel.org,
-	Jianping Li <jianping.li@oss.qualcomm.com>,
-	Ekansh Gupta <ekansh.gupta@oss.qualcomm.com>,
-	Srinivas Kandagatla <srini@kernel.org>,
+	Shen Lichuan <shenlichuan@vivo.com>,
+	Sebastian Reichel <sebastian.reichel@collabora.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 374/816] misc: fastrpc: Allocate entire reserved memory for Audio PD in probe
-Date: Wed, 25 Nov 2026 15:32:02 +0100
-Message-ID: <20261125143857.853382579@linuxfoundation.org>
+Subject: [PATCH 6.12 375/816] power: supply: Correct multiple typos in comments
+Date: Wed, 25 Nov 2026 15:32:03 +0100
+Message-ID: <20261125143857.877205062@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143849.205329330@linuxfoundation.org>
 References: <20261125143849.205329330@linuxfoundation.org>
@@ -70,349 +68,147 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jianping Li <jianping.li@oss.qualcomm.com>
+From: Shen Lichuan <shenlichuan@vivo.com>
 
-[ Upstream commit 9e47ad9c562e82cabfbb9afa6c2b0dcdf2702a39 ]
+[ Upstream commit 570c2234d5d62d52be7e8e35169b96d98378a7ce ]
 
-Allocating and freeing Audio PD memory from userspace is unsafe because
-the kernel cannot reliably determine when the DSP has finished using the
-memory. Userspace may free buffers while they are still in use by the DSP,
-and remote free requests cannot be safely trusted.
+Fixed some spelling errors, the details are as follows:
 
-Additionally, the current implementation allows userspace to repeatedly
-grow the Audio PD heap, but does not support shrinking it. This can lead
-to unbounded memory usage over time, effectively causing a memory leak.
+-in the code comments:
+	dettached->detached
+	meausered->measured
+	meausurement->measurement
+	sholuld->should
+	Tempreture->Temperature
+	measuremnts->measurements
+	detecing->detecting
+	persent->percent
+	Parallell->Parallel
 
-Fix this by allocating the entire Audio PD reserved-memory region during
-rpmsg probe and tying its lifetime to the rpmsg channel. This removes
-userspace-controlled alloc/free and ensures that memory is reclaimed only
-when the DSP process is torn down.
-
-The reserved-memory region is now mandatory for the Audio PD domain.
-Rather than failing rpmsg probe when it is missing, validate it in
-fastrpc_init_create_static_process() and reject only the static-process
-creation. This keeps the fastrpc device probing for all other domains
-even on a misconfigured device tree.
-
-Fixes: 0871561055e66 ("misc: fastrpc: Add support for audiopd")
-Cc: stable@kernel.org
-Signed-off-by: Jianping Li <jianping.li@oss.qualcomm.com>
-Reviewed-by: Ekansh Gupta <ekansh.gupta@oss.qualcomm.com>
-Link: https://lore.kernel.org/all/20260814101955.234238-1-jianping.li@oss.qualcomm.com/
-Signed-off-by: Srinivas Kandagatla <srini@kernel.org>
-Link: https://patch.msgid.link/20261002101220.1084101-3-srinivas.kandagatla@oss.qualcomm.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-[ sashal: Replaced of_reserved_mem_region_to_resource() with of_parse_phandle()/of_reserved_mem_lookup(), and used the existing fdev_error label instead of err_free_data. ]
+Signed-off-by: Shen Lichuan <shenlichuan@vivo.com>
+Link: https://lore.kernel.org/r/20240914085415.3886-1-shenlichuan@vivo.com
+Signed-off-by: Sebastian Reichel <sebastian.reichel@collabora.com>
+Stable-dep-of: 1fba78714201 ("power: supply: qcom_smbx: set the charge enable after software control")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/misc/fastrpc.c | 198 ++++++++++++++++++++++-------------------
- 1 file changed, 106 insertions(+), 92 deletions(-)
+ drivers/power/supply/88pm860x_battery.c | 4 ++--
+ drivers/power/supply/ab8500_btemp.c     | 2 +-
+ drivers/power/supply/charger-manager.c  | 2 +-
+ drivers/power/supply/da9030_battery.c   | 4 ++--
+ drivers/power/supply/max8925_power.c    | 2 +-
+ drivers/power/supply/qcom_battmgr.c     | 2 +-
+ drivers/power/supply/qcom_smbx.c        | 2 +-
+ 7 files changed, 9 insertions(+), 9 deletions(-)
 
-diff --git a/drivers/misc/fastrpc.c b/drivers/misc/fastrpc.c
-index a4577ef5a3946..9c016ef288200 100644
---- a/drivers/misc/fastrpc.c
-+++ b/drivers/misc/fastrpc.c
-@@ -47,8 +47,6 @@
- #define ADSP_MMAP_HEAP_ADDR  4
- /* MAP static DMA buffer on DSP User PD */
- #define ADSP_MMAP_DMA_BUFFER  6
--/* Add memory to static PD pool protection thru hypervisor */
--#define ADSP_MMAP_REMOTE_HEAP_ADDR  8
- /* Add memory to userPD pool, for user heap */
- #define ADSP_MMAP_ADD_PAGES 0x1000
- /* Add memory to userPD pool, for LLC heap */
-@@ -273,10 +271,14 @@ struct fastrpc_channel_ctx {
- 	struct kref refcount;
- 	/* Flag if dsp attributes are cached */
- 	bool valid_attributes;
-+	/* Flag if audio PD init mem was allocated */
-+	bool audio_init_mem;
-+	/* Audio PD reserved remote heap region */
-+	phys_addr_t remote_heap_addr;
-+	u64 remote_heap_size;
- 	u32 dsp_attributes[FASTRPC_MAX_DSP_ATTRIBUTES];
- 	struct fastrpc_device *secure_fdevice;
- 	struct fastrpc_device *fdevice;
--	struct fastrpc_buf *remote_heap;
- 	struct list_head invoke_interrupted_mmaps;
- 	bool secure;
- 	bool unsigned_support;
-@@ -1320,15 +1322,24 @@ static int fastrpc_init_create_static_process(struct fastrpc_user *fl,
- 	struct fastrpc_init_create_static init;
- 	struct fastrpc_invoke_args *args;
- 	struct fastrpc_phy_page pages[1];
-+	struct fastrpc_channel_ctx *cctx = fl->cctx;
- 	char *name;
- 	int err;
--	bool scm_done = false;
- 	struct {
- 		int pgid;
- 		u32 namelen;
- 		u32 pageslen;
- 	} inbuf;
- 	u32 sc;
-+	unsigned long flags;
-+	bool sent_heap = false;
-+
-+	if (!cctx->remote_heap_addr || !cctx->remote_heap_size) {
-+		err = -ENOMEM;
-+		dev_err(fl->sctx->dev,
-+			"remote heap memory region is not added\n");
-+		return err;
-+	}
- 
- 	args = kcalloc(FASTRPC_CREATE_STATIC_PROCESS_NARGS, sizeof(*args), GFP_KERNEL);
- 	if (!args)
-@@ -1350,31 +1361,6 @@ static int fastrpc_init_create_static_process(struct fastrpc_user *fl,
- 		goto err;
+diff --git a/drivers/power/supply/88pm860x_battery.c b/drivers/power/supply/88pm860x_battery.c
+index 34619c4d4eced..b7938fbb24a51 100644
+--- a/drivers/power/supply/88pm860x_battery.c
++++ b/drivers/power/supply/88pm860x_battery.c
+@@ -422,7 +422,7 @@ static irqreturn_t pm860x_batt_handler(int irq, void *data)
+ 		info->temp_type = PM860X_TEMP_TINT;
  	}
- 
--	if (!fl->cctx->remote_heap) {
--		err = fastrpc_remote_heap_alloc(fl, fl->sctx->dev, init.memlen,
--						&fl->cctx->remote_heap);
--		if (err)
--			goto err_name;
--
--		/* Map if we have any heap VMIDs associated with this ADSP Static Process. */
--		if (fl->cctx->vmcount) {
--			u64 src_perms = BIT(QCOM_SCM_VMID_HLOS);
--
--			err = qcom_scm_assign_mem(fl->cctx->remote_heap->dma_addr,
--							(u64)fl->cctx->remote_heap->size,
--							&src_perms,
--							fl->cctx->vmperms, fl->cctx->vmcount);
--			if (err) {
--				dev_err(fl->sctx->dev,
--					"Failed to assign memory with dma_addr %pad size 0x%llx err %d\n",
--					&fl->cctx->remote_heap->dma_addr,
--					fl->cctx->remote_heap->size, err);
--				goto err_map;
--			}
--			scm_done = true;
--		}
--	}
--
- 	inbuf.pgid = fl->tgid;
- 	inbuf.namelen = init.namelen;
- 	inbuf.pageslen = 0;
-@@ -1388,8 +1374,25 @@ static int fastrpc_init_create_static_process(struct fastrpc_user *fl,
- 	args[1].length = inbuf.namelen;
- 	args[1].fd = -1;
- 
--	pages[0].addr = fl->cctx->remote_heap->dma_addr;
--	pages[0].size = fl->cctx->remote_heap->size;
-+	/*
-+	 * Audio PD is a static PD and retains the remote heap
-+	 * information across daemon restarts. Therefore only
-+	 * the first attach should provide heap information to
-+	 * DSP. Subsequent attaches reuse the previously
-+	 * initialized memory pool.
-+	 */
-+	spin_lock_irqsave(&cctx->lock, flags);
-+	if (!cctx->audio_init_mem) {
-+		pages[0].addr = cctx->remote_heap_addr;
-+		pages[0].size = cctx->remote_heap_size;
-+		cctx->audio_init_mem = true;
-+		inbuf.pageslen = 1;
-+		sent_heap = true;
-+	} else {
-+		pages[0].addr = 0;
-+		pages[0].size = 0;
-+	}
-+	spin_unlock_irqrestore(&cctx->lock, flags);
- 
- 	args[2].ptr = (u64)(uintptr_t) pages;
- 	args[2].length = sizeof(*pages);
-@@ -1407,27 +1410,11 @@ static int fastrpc_init_create_static_process(struct fastrpc_user *fl,
- 
- 	return 0;
- err_invoke:
--	if (fl->cctx->vmcount && scm_done) {
--		u64 src_perms = 0;
--		struct qcom_scm_vmperm dst_perms;
--		u32 i;
--
--		for (i = 0; i < fl->cctx->vmcount; i++)
--			src_perms |= BIT(fl->cctx->vmperms[i].vmid);
--
--		dst_perms.vmid = QCOM_SCM_VMID_HLOS;
--		dst_perms.perm = QCOM_SCM_PERM_RWX;
--		err = qcom_scm_assign_mem(fl->cctx->remote_heap->dma_addr,
--						(u64)fl->cctx->remote_heap->size,
--						&src_perms, &dst_perms, 1);
--		if (err)
--			dev_err(fl->sctx->dev, "Failed to assign memory dma_addr %pad size 0x%llx err %d\n",
--				&fl->cctx->remote_heap->dma_addr, fl->cctx->remote_heap->size, err);
-+	if (sent_heap) {
-+		spin_lock_irqsave(&cctx->lock, flags);
-+		cctx->audio_init_mem = false;
-+		spin_unlock_irqrestore(&cctx->lock, flags);
- 	}
--err_map:
--	fastrpc_buf_free(fl->cctx->remote_heap);
--	fl->cctx->remote_heap = NULL;
--err_name:
- 	kfree(name);
- err:
- 	kfree(args);
-@@ -1937,7 +1924,7 @@ static int fastrpc_req_mmap(struct fastrpc_user *fl, char __user *argp)
- 	if (copy_from_user(&req, argp, sizeof(req)))
- 		return -EFAULT;
- 
--	if (req.flags != ADSP_MMAP_ADD_PAGES && req.flags != ADSP_MMAP_REMOTE_HEAP_ADDR) {
-+	if (req.flags != ADSP_MMAP_ADD_PAGES) {
- 		dev_err(dev, "flag not supported 0x%x\n", req.flags);
- 
- 		return -EINVAL;
-@@ -1948,10 +1935,7 @@ static int fastrpc_req_mmap(struct fastrpc_user *fl, char __user *argp)
- 		return -EINVAL;
- 	}
- 
--	if (req.flags == ADSP_MMAP_REMOTE_HEAP_ADDR)
--		err = fastrpc_remote_heap_alloc(fl, dev, req.size, &buf);
--	else
--		err = fastrpc_buf_alloc(fl, dev, req.size, &buf);
-+	err = fastrpc_buf_alloc(fl, dev, req.size, &buf);
- 
- 	if (err) {
- 		dev_err(dev, "failed to allocate buffer\n");
-@@ -1990,20 +1974,6 @@ static int fastrpc_req_mmap(struct fastrpc_user *fl, char __user *argp)
- 	/* let the client know the address to use */
- 	req.vaddrout = rsp_msg.vaddr;
- 
--	/* Add memory to static PD pool, protection thru hypervisor */
--	if (req.flags == ADSP_MMAP_REMOTE_HEAP_ADDR && fl->cctx->vmcount) {
--		u64 src_perms = BIT(QCOM_SCM_VMID_HLOS);
--
--		err = qcom_scm_assign_mem(buf->dma_addr, (u64)buf->size,
--			&src_perms, fl->cctx->vmperms, fl->cctx->vmcount);
--		if (err) {
--			dev_err(fl->sctx->dev,
--				"Failed to assign memory dma_addr %pad size 0x%llx err %d",
--				&buf->dma_addr, buf->size, err);
--			goto err_assign;
--		}
--	}
--
- 	spin_lock(&fl->lock);
- 	list_add_tail(&buf->node, &fl->mmaps);
- 	spin_unlock(&fl->lock);
-@@ -2323,6 +2293,50 @@ static int fastrpc_device_register(struct device *dev, struct fastrpc_channel_ct
- 	return err;
+ 	mutex_unlock(&info->lock);
+-	/* clear ccnt since battery is attached or dettached */
++	/* clear ccnt since battery is attached or detached */
+ 	clear_ccnt(info, &ccnt_data);
+ 	return IRQ_HANDLED;
  }
+@@ -566,7 +566,7 @@ static int measure_temp(struct pm860x_battery_info *info, int *data)
+ 		ret = measure_12bit_voltage(info, PM8607_GPADC1_MEAS1, data);
+ 		if (ret)
+ 			return ret;
+-		/* meausered Vtbat(mV) / Ibias_current(11uA)*/
++		/* measured Vtbat(mV) / Ibias_current(11uA)*/
+ 		*data = (*data * 1000) / GPBIAS2_GPADC1_UA;
  
-+static int fastrpc_init_reserved_mem(struct fastrpc_channel_ctx *cctx,
-+				     struct device *rdev, u32 domain_id)
-+{
-+	struct device_node *rmem_node;
-+	struct reserved_mem *rmem;
-+	u64 src_perms;
-+
-+	/* Only SDSP and ADSP domains use a reserved remote heap region */
-+	if (domain_id != SDSP_DOMAIN_ID && domain_id != ADSP_DOMAIN_ID)
-+		return 0;
-+
-+	rmem_node = of_parse_phandle(rdev->of_node, "memory-region", 0);
-+	if (!rmem_node) {
-+		/*
-+		 * The reserved-memory region is optional at probe time. For
-+		 * the Audio PD (ADSP) domain its absence is validated later in
-+		 * fastrpc_init_create_static_process(), so keep probing here.
-+		 */
-+		return 0;
-+	}
-+
-+	rmem = of_reserved_mem_lookup(rmem_node);
-+	of_node_put(rmem_node);
-+	if (!rmem)
-+		return 0;
-+
-+	/*
-+	 * Audio PD (ADSP) is a static PD: cache the region so its lifetime
-+	 * is tied to the rpmsg channel instead of being controlled by
-+	 * userspace.
-+	 */
-+	if (domain_id == ADSP_DOMAIN_ID) {
-+		cctx->remote_heap_addr = rmem->base;
-+		cctx->remote_heap_size = rmem->size;
-+	}
-+
-+	if (!cctx->vmcount)
-+		return 0;
-+
-+	src_perms = BIT(QCOM_SCM_VMID_HLOS);
-+	return qcom_scm_assign_mem(rmem->base, rmem->size, &src_perms,
-+				  cctx->vmperms, cctx->vmcount);
-+}
-+
- static int fastrpc_rpmsg_probe(struct rpmsg_device *rpdev)
- {
- 	struct device *rdev = &rpdev->dev;
-@@ -2330,8 +2344,6 @@ static int fastrpc_rpmsg_probe(struct rpmsg_device *rpdev)
- 	int i, err, domain_id = -1, vmcount;
- 	const char *domain;
- 	bool secure_dsp;
--	struct device_node *rmem_node;
--	struct reserved_mem *rmem;
- 	unsigned int vmids[FASTRPC_MAX_VMIDS];
- 
- 	err = of_property_read_string(rdev->of_node, "label", &domain);
-@@ -2374,24 +2386,9 @@ static int fastrpc_rpmsg_probe(struct rpmsg_device *rpdev)
- 		}
+ 		if (*data > TBAT_NEG_25D) {
+diff --git a/drivers/power/supply/ab8500_btemp.c b/drivers/power/supply/ab8500_btemp.c
+index 082bd09cbedfd..769d28ebca105 100644
+--- a/drivers/power/supply/ab8500_btemp.c
++++ b/drivers/power/supply/ab8500_btemp.c
+@@ -283,7 +283,7 @@ static void ab8500_btemp_periodic_work(struct work_struct *work)
+ 			dev_warn(di->dev, "failed to identify the battery\n");
  	}
  
--	rmem_node = of_parse_phandle(rdev->of_node, "memory-region", 0);
--	if (domain_id == SDSP_DOMAIN_ID && rmem_node) {
--		u64 src_perms;
--
--		rmem = of_reserved_mem_lookup(rmem_node);
--		if (!rmem) {
--			err = -EINVAL;
--			goto fdev_error;
--		}
--
--		src_perms = BIT(QCOM_SCM_VMID_HLOS);
--
--		err = qcom_scm_assign_mem(rmem->base, rmem->size, &src_perms,
--				    data->vmperms, data->vmcount);
--		if (err)
--			goto fdev_error;
--
--	}
-+	err = fastrpc_init_reserved_mem(data, rdev, domain_id);
-+	if (err)
-+		goto fdev_error;
+-	/* Failover if a reading is erroneous, use last meausurement */
++	/* Failover if a reading is erroneous, use last measurement */
+ 	ret = thermal_zone_get_temp(di->tz, &bat_temp);
+ 	if (ret) {
+ 		dev_err(di->dev, "error reading temperature\n");
+diff --git a/drivers/power/supply/charger-manager.c b/drivers/power/supply/charger-manager.c
+index 272f963b69130..8d2c5de1603af 100644
+--- a/drivers/power/supply/charger-manager.c
++++ b/drivers/power/supply/charger-manager.c
+@@ -221,7 +221,7 @@ static bool is_charging(struct charger_manager *cm)
  
- 	secure_dsp = !(of_property_read_bool(rdev->of_node, "qcom,non-secure-domain"));
- 	data->secure = secure_dsp;
-@@ -2487,8 +2484,25 @@ static void fastrpc_rpmsg_remove(struct rpmsg_device *rpdev)
- 	list_for_each_entry_safe(buf, b, &cctx->invoke_interrupted_mmaps, node)
- 		list_del(&buf->node);
+ 	/* If at least one of the charger is charging, return yes */
+ 	for (i = 0; cm->desc->psy_charger_stat[i]; i++) {
+-		/* 1. The charger sholuld not be DISABLED */
++		/* 1. The charger should not be DISABLED */
+ 		if (cm->emergency_stop)
+ 			continue;
+ 		if (!cm->charger_enabled)
+diff --git a/drivers/power/supply/da9030_battery.c b/drivers/power/supply/da9030_battery.c
+index 04e0f4162d42b..b89604a8c0199 100644
+--- a/drivers/power/supply/da9030_battery.c
++++ b/drivers/power/supply/da9030_battery.c
+@@ -269,7 +269,7 @@ static void da9030_charger_check_state(struct da9030_charger *charger)
+ 		}
+ 		if (charger->adc.vchmax_res > charger->thresholds.vcharge_max ||
+ 		    charger->adc.vchmin_res < charger->thresholds.vcharge_min ||
+-		    /* Tempreture readings are negative */
++		    /* Temperature readings are negative */
+ 		    charger->adc.tbat_res < charger->thresholds.tbat_high ||
+ 		    charger->adc.tbat_res > charger->thresholds.tbat_low) {
+ 			/* disable charger */
+@@ -470,7 +470,7 @@ static int da9030_battery_charger_init(struct da9030_charger *charger)
+ 	if (ret)
+ 		return ret;
  
--	if (cctx->remote_heap)
--		fastrpc_buf_free(cctx->remote_heap);
-+	if (cctx->remote_heap_size && cctx->vmcount) {
-+		u64 src_perms = 0;
-+		int err, i;
-+		struct qcom_scm_vmperm dst_perms;
-+
-+		for (i = 0; i < cctx->vmcount; i++)
-+			src_perms |= BIT(cctx->vmperms[i].vmid);
-+
-+		dst_perms.vmid = QCOM_SCM_VMID_HLOS;
-+		dst_perms.perm = QCOM_SCM_PERM_RWX;
-+
-+		err = qcom_scm_assign_mem(cctx->remote_heap_addr,
-+					  cctx->remote_heap_size, &src_perms,
-+					  &dst_perms, 1);
-+		if (err)
-+			dev_err(&rpdev->dev,
-+				"Failed to assign memory back to HLOS: addr %pa size %#llx err %d\n",
-+				&cctx->remote_heap_addr, cctx->remote_heap_size, err);
-+	}
- 
- 	of_platform_depopulate(&rpdev->dev);
- 
+-	/* enable auto ADC measuremnts */
++	/* enable auto ADC measurements */
+ 	return da903x_write(charger->master, DA9030_ADC_AUTO_CONTROL,
+ 			    DA9030_ADC_TBAT_ENABLE | DA9030_ADC_VBAT_IN_TXON |
+ 			    DA9030_ADC_VCH_ENABLE | DA9030_ADC_ICH_ENABLE |
+diff --git a/drivers/power/supply/max8925_power.c b/drivers/power/supply/max8925_power.c
+index 621a006d52a96..fc24a6d3b63d8 100644
+--- a/drivers/power/supply/max8925_power.c
++++ b/drivers/power/supply/max8925_power.c
+@@ -73,7 +73,7 @@ struct max8925_power_info {
+ 	unsigned		usb_online:1;
+ 	unsigned		bat_online:1;
+ 	unsigned		chg_mode:2;
+-	unsigned		batt_detect:1;	/* detecing MB by ID pin */
++	unsigned		batt_detect:1;	/* detecting MB by ID pin */
+ 	unsigned		topoff_threshold:2;
+ 	unsigned		fast_charge:3;
+ 	unsigned		no_temp_support:1;
+diff --git a/drivers/power/supply/qcom_battmgr.c b/drivers/power/supply/qcom_battmgr.c
+index 81ec6ab7e1ad0..2c34cda87d07b 100644
+--- a/drivers/power/supply/qcom_battmgr.c
++++ b/drivers/power/supply/qcom_battmgr.c
+@@ -153,7 +153,7 @@ struct qcom_battmgr_message {
+ 			__le32 capacity_low;
+ 			__le32 capacity_warning;
+ 			__le32 cycle_count;
+-			/* thousandth of persent */
++			/* thousandth of percent */
+ 			__le32 accuracy;
+ 			__le32 max_sample_time_ms;
+ 			__le32 min_sample_time_ms;
+diff --git a/drivers/power/supply/qcom_smbx.c b/drivers/power/supply/qcom_smbx.c
+index 099d1385ea12d..1f35416b0d939 100644
+--- a/drivers/power/supply/qcom_smbx.c
++++ b/drivers/power/supply/qcom_smbx.c
+@@ -837,7 +837,7 @@ static const struct smb_init_register smb_init_seq[] = {
+ 		  AUTO_RECHG_BIT | EN_ANALOG_DROP_IN_VBATT_BIT |
+ 		  CHARGER_INHIBIT_BIT,
+ 	  .val = CHARGER_INHIBIT_BIT },
+-	/* STAT pin software override, match downstream. Parallell charging? */
++	/* STAT pin software override, match downstream. Parallel charging? */
+ 	{ .addr = STAT_CFG,
+ 	  .mask = STAT_SW_OVERRIDE_CFG_BIT,
+ 	  .val = STAT_SW_OVERRIDE_CFG_BIT },
 -- 
 2.53.0
 
