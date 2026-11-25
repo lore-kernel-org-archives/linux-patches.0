@@ -1,54 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795618236;
-	b=cnOl0MKj+0s6CBhD3l/+lpNGxtUSRM+u2p1iLpV/yMPWX7YhcMrsmOL1E2HqWgM3h0Iw
-	 DmKT4jOJsjpzp/HPNIjMOVUsRWL3fHQnBK8YGw5M/Zf7UsI+wYXAyfh0exdzE4FiHVR0X
-	 0M+dbTmUiB1yq4BIxob8wuekc2AQIUxaX3pP1qWxDgrOj+Rcx8HDaUE4O+mgPl2z8fzYC
-	 Zto1LuDdaxCldwOdMsWFiIGhU62HCfPCmgJtg4tYoOQ4Aw6CEDdByHhn6Sn5RoTrQmFFD
-	 kaT3sl2/uFzR3oyJNftmx3l6gVsQpMXscWof/CpAxlhxveMNVIr3KZMJNtGt2Gdox9w==
+	t=1795618239;
+	b=G4TEO6meHZ+PLxzjphbepJtxwhdFU6mndSlAS2qINft0Y7s3UicsUQmRV5yReThOdFg9
+	 2YJvlSyNo5a/VzRXYbkkqxU/E+NlbZmzvDgl7d17QqqGXkcS7j/OazwHOm2gvLV79gwts
+	 HZ9FgMoR9XuUqFktvRyIEGOCCweJb1x0y0Fxhj4eMdnVJm8bi5U3er+VTiwGU11ZDQ65X
+	 PDB0Bgxc4mb7PggiYxuDNJVqpBd+UdBtL06nVES/Ga/nr11c43BremGO5SN3pAe62s5Oh
+	 GuVODHizn4lzHy3tOKNvGTG1Zwz60DUvDfFLJODSTlbIAKSgTHNxCAtfgwq5k/ZrqFA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795618236;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795618239;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=j8AX5ErYCqcnGgfb24JSlsg3ln4GN0KEv6HrKbCQ6eg=;
-	b=3QWuGY2+RYRlTVohn7VD9D+FcB3LM1zlCE4iGbIFZOzt18Ng+6jAOArNCZ5ef5Fnq0Jj
-	 SrM8zh/ny7uehYCi2jQIWmCZRQgyZNNDUz6LE+29qnI3bhguzcGSBjUysbZMbq3IYOFoU
-	 eVcNtRLDN/iqyrC7lKXAEvE5Go6XkRNtjAXs7uvLXa4FWF7MZHeBrh98N9zG+mceNEQY8
-	 iUqAdwyZeyzPdtvQZNrGX5Mpt9eh+pRnXEKbUv1F66WKOORRKXKFfzHT3UGiLsgu3COsr
-	 cqN7+cEmGuIKbN0EZ36zHLWaOIouVttbHh/v+h4Z7cIuud0BNfztkZQIBcE3QxBrMcQ==
+	bh=ApNpEt3LwIKqVFRBLD7fhgh0s52U2Vox0XduZ4qEFyM=;
+	b=W8p0jLaFjyM8qOEuJ8O5emkgh04AIeFU3DppMBj+3YCm3Q71xBP5kdCivLRR/mRhI5f5
+	 qevP//UI++uJK1iJAWlDL7JVYwgz99Tl++pd0CqkArsR0leSePPxAhw3/Dw69iMeApC1h
+	 RH4OAs7SPm3BeRQN99sXLMmcg3z6ZwBiZv8nyIBm5XvQXg0uSPvfNavZxdb/4cmatg4HZ
+	 EWRjklzt/cfGjphRndqS+mmuG/Dh2IzqLOUp98/4E5tfEriZE1xAlxiIRf8inSZXLJ4ut
+	 4utwCRXiFPxq2JYbDFZhHfb22tJgS2NKHPhDo0Kedv07h93GsBLKzz7BchutZRBkWww==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=b7ZRhUDw;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=UC4DItCC;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 79357606A321;
-	Wed, 25 Nov 2026 14:50:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C195D606A31E;
+	Wed, 25 Nov 2026 14:50:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=b7ZRhUDw
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8F7841F000CA;
-	Wed, 25 Nov 2026 14:50:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=UC4DItCC
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9F1501F000C0;
+	Wed, 25 Nov 2026 14:50:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795618236;
-	bh=j8AX5ErYCqcnGgfb24JSlsg3ln4GN0KEv6HrKbCQ6eg=;
+	s=korg; t=1795618239;
+	bh=ApNpEt3LwIKqVFRBLD7fhgh0s52U2Vox0XduZ4qEFyM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=b7ZRhUDwOEF94L9+OXI4q0wf5hreDCQmx/vyzjsPbi/YTcSg7zsYZcrIO6DOKsn1d
-	 ES3fIWTeN6955Yrgev7ltQ9FEfTVgr7C99EQgSeNAy8gTzWNoiGKT1v4YLzppNbpnv
-	 AWtGFi+NhFFvGyTG+BaxhJSNiZxAidiRDkIc6tzk=
+	b=UC4DItCCbycQfxrgSbiopPeahF/qiZz8a2neZYy8jWSfGldIjf6kAZI0KnwnQ7iN2
+	 saY0C70WCxG6waS1H4wL3GgH9/HzFkFsulLuGtfJtKu5+27JvuaWr+AprjdPvi2Ii6
+	 x8gP9Zmx3uGElMOjt8SDvKTDTBrQhcxJuhGXVRa8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+583f42a41879bb60de32@syzkaller.appspotmail.com,
-	Nguyen Ngoc Thang <ngocthang2710.1999@gmail.com>,
-	Kory Maincent <kory.maincent@bootlin.com>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Vladimir Petrzhikovskii <vladimir@dfb.sh>,
+	Baochen Qiang <baochen.qiang@oss.qualcomm.com>,
+	Vasanthakumar Thiagarajan <vasanthakumar.thiagarajan@oss.qualcomm.com>,
+	Jeff Johnson <jeff.johnson@oss.qualcomm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0170/1005] net: phy: dont require RTNL to detach a PHY from an unregistered netdev
-Date: Wed, 25 Nov 2026 15:25:08 +0100
-Message-ID: <20261125143825.723930261@linuxfoundation.org>
+Subject: [PATCH 7.3 0171/1005] wifi: ath12k: dont advertise EHT-MCS15 to firmware unless we support it
+Date: Wed, 25 Nov 2026 15:25:09 +0100
+Message-ID: <20261125143825.747196409@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143821.729802100@linuxfoundation.org>
 References: <20261125143821.729802100@linuxfoundation.org>
@@ -70,66 +70,69 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Nguyen Ngoc Thang <ngocthang2710.1999@gmail.com>
+From: Baochen Qiang <baochen.qiang@oss.qualcomm.com>
 
-[ Upstream commit d1cf56164dc25c2c54853b23eab42369f53c8329 ]
+[ Upstream commit 83d689bbe8f90ce39961bcc3a64f2ca2ec184019 ]
 
-phy_detach_internal() reads dev->hwprov with rtnl_dereference(), but
-MAC drivers commonly attach and detach PHYs while their net_device is
-not registered, without holding RTNL. Before register_netdev(), a failed
-phylink_connect_phy() or phy_attach_direct() unwinds through
-phy_detach_internal(). After unregister_netdev(), a driver's remove path
-may call phy_disconnect(). Both trip lockdep:
+ath12k_peer_assoc_h_eht() copies the peer's EHT PHY capabilities into
+the WMI peer assoc command as is, including the EHT-MCS15 support bits.
+Firmware rate control enables EHT-MCS15 for TX whenever those bits are
+set, without checking whether the local PHY supports MCS15.
 
-  WARNING: suspicious RCU usage
-  drivers/net/phy/phy_device.c:1831 suspicious rcu_dereference_protected() usage!
-   phy_detach_internal+0x6a5/0x830 drivers/net/phy/phy_device.c:1831
-   phylink_connect_phy+0x22e/0x2b0 drivers/net/phy/phylink.c:2452
-   ax88772_bind+0xbb1/0x1520 drivers/net/usb/asix_devices.c:925
-   usbnet_probe+0xbb3/0x27e0 drivers/net/usb/usbnet.c:1812
+Currently WCN7850 firmware does not support EHT-MCS15 for TX and does
+not advertise it in its own EHT PHY capabilities. When connected to an
+AP that advertises MCS15 support, rate control may still select
+EHT-MCS15, and every PPDU at that rate is aborted by the PHY before it
+goes on the air. TX then stops for minutes while the association stays
+up, and frames sit in the queue until the firmware releases them as aged.
 
-syzbot hits this with an emulated asix device. phy_eee_rx_clock_stop()
-fails on a USB MDIO error, so phylink_bringup_phy() fails and the PHY is
-detached from inside usbnet_probe(), before the netdev is registered.
+Keep only the peer's MCS15 support bits that we also support ourselves
+to fix it. Chips that support MCS15 are not affected.
 
-hwprov is only set through ethtool, under RTNL, on a registered device.
-reg_state also changes only under RTNL. So if the device is not
-registered, no one else can reach hwprov, and RTNL is not needed. Tell
-lockdep that. A detach from a registered device without RTNL still
-warns.
+Tested-on: WCN7850 hw2.0 PCI WLAN.HMT.1.1.c7-00108-QCAHMTSWPL_V1.0_V2.0_SILICONZ_UPSTREAM-3
 
-Fixes: 35f7cad1743e ("net: Add the possibility to support a selected hwtstamp in netdevice")
-Reported-by: syzbot+583f42a41879bb60de32@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=583f42a41879bb60de32
-Signed-off-by: Nguyen Ngoc Thang <ngocthang2710.1999@gmail.com>
-Reviewed-by: Kory Maincent <kory.maincent@bootlin.com>
-Link: https://patch.msgid.link/20261029142423.93573-1-ngocthang2710.1999@gmail.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Fixes: 17bbb8aa74fd ("wifi: ath12k: prepare EHT peer assoc parameters")
+Reported-by: Vladimir Petrzhikovskii <vladimir@dfb.sh>
+Closes: https://bugzilla.kernel.org/show_bug.cgi?id=222136
+Tested-by: Vladimir Petrzhikovskii <vladimir@dfb.sh>
+Signed-off-by: Baochen Qiang <baochen.qiang@oss.qualcomm.com>
+Reviewed-by: Vasanthakumar Thiagarajan <vasanthakumar.thiagarajan@oss.qualcomm.com>
+Link: https://patch.msgid.link/20261029-ath12k-mcs15-v1-1-3bcfab101f00@oss.qualcomm.com
+Signed-off-by: Jeff Johnson <jeff.johnson@oss.qualcomm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/phy/phy_device.c | 8 ++++++--
- 1 file changed, 6 insertions(+), 2 deletions(-)
+ drivers/net/wireless/ath/ath12k/mac.c | 11 +++++++++++
+ 1 file changed, 11 insertions(+)
 
-diff --git a/drivers/net/phy/phy_device.c b/drivers/net/phy/phy_device.c
-index 2827d2226d6a9..5ec2bfdb23370 100644
---- a/drivers/net/phy/phy_device.c
-+++ b/drivers/net/phy/phy_device.c
-@@ -1767,9 +1767,13 @@ static void phy_detach_internal(struct phy_device *phydev)
- 		struct hwtstamp_provider *hwprov;
+diff --git a/drivers/net/wireless/ath/ath12k/mac.c b/drivers/net/wireless/ath/ath12k/mac.c
+index b5c3519065a2a..beccf11eb8aad 100644
+--- a/drivers/net/wireless/ath/ath12k/mac.c
++++ b/drivers/net/wireless/ath/ath12k/mac.c
+@@ -3366,6 +3366,7 @@ static void ath12k_peer_assoc_h_eht(struct ath12k *ar,
+ 	u32 *rx_mcs, *tx_mcs;
+ 	u16 *eht_mcs_mask;
+ 	u8 max_nss = 0;
++	u8 mcs15;
  
- 		/* hwprov may technically be protected by ops lock but
--		 * not for devices with a phydev, see phy_link_topo_add_phy()
-+		 * not for devices with a phydev, see phy_link_topo_add_phy().
-+		 * Drivers may detach without RTNL while dev is unregistered,
-+		 * but then nothing else can reach hwprov.
- 		 */
--		hwprov = rtnl_dereference(dev->hwprov);
-+		hwprov = rcu_dereference_protected(dev->hwprov,
-+						   lockdep_rtnl_is_held() ||
-+						   dev->reg_state != NETREG_REGISTERED);
- 		/* Disable timestamp if it is the one selected */
- 		if (hwprov && hwprov->phydev == phydev) {
- 			rcu_assign_pointer(dev->hwprov, NULL);
+ 	lockdep_assert_wiphy(ath12k_ar_to_hw(ar)->wiphy);
+ 
+@@ -3416,6 +3417,16 @@ static void ath12k_peer_assoc_h_eht(struct ath12k *ar,
+ 	memcpy(arg->peer_eht_cap_phy, eht_cap->eht_cap_elem.phy_cap_info,
+ 	       sizeof(eht_cap->eht_cap_elem.phy_cap_info));
+ 
++	/*
++	 * Firmware rate control enables EHT-MCS15 based only on the peer's
++	 * MCS15 support bits, so keep only the ones we support ourselves.
++	 */
++	mcs15 = u8_get_bits(eht_cap->eht_cap_elem.phy_cap_info[6] &
++			    own_eht_cap->eht_cap_elem.phy_cap_info[6],
++			    IEEE80211_EHT_PHY_CAP6_MCS15_SUPP_MASK);
++	u8p_replace_bits(&((u8 *)arg->peer_eht_cap_phy)[6], mcs15,
++			 IEEE80211_EHT_PHY_CAP6_MCS15_SUPP_MASK);
++
+ 	rx_mcs = arg->peer_eht_rx_mcs_set;
+ 	tx_mcs = arg->peer_eht_tx_mcs_set;
+ 
 -- 
 2.53.0
 
