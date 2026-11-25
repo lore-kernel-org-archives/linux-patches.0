@@ -1,54 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795621360;
-	b=ESCFFyvXaRhC8K6Nk0P3Dc2/s6NTivZDarJSVztnRdza3tLWdmav7k/IPMIIpGCSi7MR
-	 IE7f1jdcc2h4Z4wxLCBVT7LYbbNVlTgZvTv4+OGLAC/tGPrGBd7aK6oI+bvE2QjxON6El
-	 WWoMnekA56fjVoZGgxB73Y3bqZQ4hKTADHq70afo8NwN+epr/Nhu70LS+1EA2SMvuV2eO
-	 Bn/oCI6oU3IAUpjWQxBoE36MBHtqUe6aZQoGKb+0xr2iK4TVcnx8SqfC5/vvRARsiAl1W
-	 W1QaMKNxklllKxxHBUvS3Q1ShsFUQYTNPZAHLKROCz9is4JmhmEo3rCZ4w5rJvnToFA==
+	t=1795621363;
+	b=uvJfEGkMzRO4/s0C0MCDcaT5oes3dhJ4D+wmUzgmFidgvQ8avTsoNyUYhDRZi6bzKrYp
+	 k7pd4ZYWjNe+K7VSp8XTY9rQAGQwJnmw3+IwgkFOSgaQXYlQ7V3PEKPgAy8HCK4Jo0TFf
+	 u/y6wBw3IvwOmh8VjPbbOFi8YrdVU9r7foMIQZ/6ehDrWhbnU3xFRmldiGBUxYib8HylQ
+	 lO9kYYciBZsmN7dRImADbZE0UWvvW0de9YCLcsDTFnXHNObHqmREffJMPQa7HIshqhTEl
+	 Lk4cubQuq7xsdZcacoi9HelyoSBTW3Z5wEhPf5rQJw1lHlYynQ9l3IXWbtlIhLJRVpg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795621360;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795621363;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=nBdebUBdb6jf2+UvmI0Hqe5mc2f/x1RrPDT511TxOCc=;
-	b=vH3w6X489IQS+pDhvu7c/1fbYRX0Jko3RqhaWTw64Mi4SMcyq775F7uyG2J4y8B8nyDE
-	 Z432wWdlL1GwiAkiUYFtMxwBv9n7Jt+2LQIEaVqp+N6i3nqTAuvUETR4esrv0aaWlpxQo
-	 v46rdNV0yCiQA8U2EJb9j3ujH87ByetqtEsdfKXycrPRWmALqxbRyZb1cL8NNKmFSyQQE
-	 KpZpKPcLoZrKPXXb3LF1l7KtwhA7OiHytBi3kuOY6XIbI0RvgKSVY2siPDepReLHLcklu
-	 EOsYM2DLvsNkrepnoHCLL2YhAXt8ZCwwlIDJQFKrOlpfLTVTvHH5PheMS6eYgEddMHQ==
+	bh=rjGtR+ZzVlUp1+RvU/qOD26ngoBr2BM4cI51x42SnLg=;
+	b=TuL5mwo/Zl/+/YXZKFexDza9f13hObGCe39oUmX82bL0lcTAaPMHqlE44vwS1Cx6aQqn
+	 8jl+I+BEmeipPkckuikN3acOY9tOlgIiho7F2iW+FM/cyvi/ELZ4zHIpHwQkQJCjboMR3
+	 tO8SmhUrPqLUf3k2pbjM39oCsLkkevxBzUnkBeLf/H+voqohEbxVP//8l1XhMr4yXHCVX
+	 cizechZKzZAzKR7GuEWMt3uHIzXJeuDjZjQKYNNt4bElzJzb+BiwDHqKMfaqjrzZoAnUm
+	 3iRuuttpd4sXTDHOn0z2Q1yCBv4JFxOgycrwNpB6CBK1/NWVcURITGsDFCErNhQA8Vg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=gPoNXFkm;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=nEM2AHw+;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9C2F1606B3BD;
-	Wed, 25 Nov 2026 15:42:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B4F38606BF4C;
+	Wed, 25 Nov 2026 15:42:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=gPoNXFkm
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 658391F000F0;
-	Wed, 25 Nov 2026 15:42:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=nEM2AHw+
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E23271F000D1;
+	Wed, 25 Nov 2026 15:42:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795621359;
-	bh=nBdebUBdb6jf2+UvmI0Hqe5mc2f/x1RrPDT511TxOCc=;
+	s=korg; t=1795621363;
+	bh=rjGtR+ZzVlUp1+RvU/qOD26ngoBr2BM4cI51x42SnLg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=gPoNXFkmHrRLa9rQCZdsMf5AehuXELjkK03qVq5uwhmZBUJLugYZHDv+QvzJMdLyy
-	 AKbC2MiNEfH9bbeFQBzyZlzOI+GGIicUkfKQBm0qcAkkPHdjj/InaXU1nZfONR/ebg
-	 b3DCxO7cVZok8SC/jNNEf8wsMO1pnG5fzBKAb8Pk=
+	b=nEM2AHw++Pjm/wyTkuX6m+9LJVFNf3Lbb0LXwbupcEgtaFWUGlgdbJw91tk9+jBGX
+	 u8ypobyWeMrWSos7CJIokon8EBBAYmB32S9g0lOCj2E3kUb+7LJyyNRkHC5Y4Wtd8M
+	 xrqsngU8LsAZ0wv/yQzlrWwjKes3BK62JBH/wu7c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+a3f21220cbbb6e14ee2e@syzkaller.appspotmail.com,
-	Eric Dumazet <edumazet@kernel.org>,
-	Steffen Klassert <steffen.klassert@secunet.com>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Cheng Jiang <cheng.jiang@oss.qualcomm.com>,
+	Shuai Zhang <shuai.zhang@oss.qualcomm.com>,
+	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
+	Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 199/990] xfrm: iptfs: fix skb leak on error in __input_process_payload()
-Date: Wed, 25 Nov 2026 15:26:06 +0100
-Message-ID: <20261125143826.756459418@linuxfoundation.org>
+Subject: [PATCH 6.18 200/990] power: sequencing: qcom-wcn: increase WCN7850 power-up delay
+Date: Wed, 25 Nov 2026 15:26:07 +0100
+Message-ID: <20261125143826.779707730@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143822.072087159@linuxfoundation.org>
 References: <20261125143822.072087159@linuxfoundation.org>
@@ -70,61 +70,55 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eric Dumazet <edumazet@kernel.org>
+From: Shuai Zhang <shuai.zhang@oss.qualcomm.com>
 
-[ Upstream commit 64e45ed926cdd017c9816c8006d9117a7194c7e9 ]
+[ Upstream commit bd60a639b621453fe37b780df4b6d3a13f981f13 ]
 
-syzbot reported a memory leak of the received skb (and its sec_path
-extension) in the IP-TFS receive path.
+When the WCN7850 is powered up from the Bluetooth side first, i.e.
+BT_EN is asserted while WLAN_EN is still low, the chip starts from a
+cold state and is not ready to accept the first HCI command 50 ms after
+BT_EN goes high. The first command (0xfc00, read QCA version) is lost,
+hci_qca does not resend it and fails after the 2 s command timeout:
 
-__input_process_payload() parses the inner packets of an IP-TFS payload
-and queues them on @sublist, which is only sent after the parsing loop.
-Three error paths inside the loop (skb_copy_seq_read() failure, invalid
-inner IPv4 header length, unknown IP version) jump to the "done" label,
-which is placed after the code sending @sublist.
+  Bluetooth: hci0: Reading QCA version information failed (-110)
 
-Any skb already queued on @sublist is then neither delivered nor freed.
-This includes skbs added by iptfs_reassem_cont() before the call, newly
-allocated inner packets, and, since the received skb can be reused for
-the first inner packet, the received skb itself.
+When WLAN is powered first, 50 ms is sufficient, so the failure only
+shows up in the BT-first ordering. Measured on the affected board by
+which enable pin rose first:
 
-Move the "done" label before the trim/send code, so that inner packets
-parsed before the error are delivered as on the normal exit path. The
-received skb is then still freed (or consumed) as before when it was
-not reused.
+  pwup_delay_ms   BT-first boots   with -110
+  50              9                9
+  75              23               0
+  100             21               0
+  300             20               0
 
-Fixes: 6c82d2433671 ("xfrm: iptfs: add basic receive packet (tunnel egress) handling")
-Reported-by: syzbot+a3f21220cbbb6e14ee2e@syzkaller.appspotmail.com
-Closes: https://lore.kernel.org/netdev/6ae4102e.9c6421ad.36baac.0005.GAE@google.com/
-Signed-off-by: Eric Dumazet <edumazet@kernel.org>
-Acked-by: Steffen Klassert <steffen.klassert@secunet.com>
-Link: https://patch.msgid.link/20261030083358.2653599-1-edumazet@kernel.org
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Raise the power-up delay of WCN7850 to 100 ms. The delay is shared by
+the Bluetooth and WLAN targets, so WLAN power-up also waits 50 ms
+longer.
+
+Fixes: 2f1630f437df ("power: pwrseq: add a driver for the PMU module on the QCom WCN chipsets")
+Signed-off-by: Cheng Jiang <cheng.jiang@oss.qualcomm.com>
+Signed-off-by: Shuai Zhang <shuai.zhang@oss.qualcomm.com>
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+Link: https://patch.msgid.link/20261102094800.3225454-1-shuai.zhang@oss.qualcomm.com
+Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/xfrm/xfrm_iptfs.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/power/sequencing/pwrseq-qcom-wcn.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/net/xfrm/xfrm_iptfs.c b/net/xfrm/xfrm_iptfs.c
-index 4d3489acb099a..9a539618cb8fd 100644
---- a/net/xfrm/xfrm_iptfs.c
-+++ b/net/xfrm/xfrm_iptfs.c
-@@ -1183,6 +1183,7 @@ static bool __input_process_payload(struct xfrm_state *x, u32 data,
- 		/* this should not happen from the above code */
- 		XFRM_INC_STATS(net, LINUX_MIB_XFRMINIPTFSERROR);
- 
-+done:
- 	if (first_skb && first_iplen && !defer && !first_skb_partial) {
- 		/* first_skb is queued b/c !defer and not partial */
- 		if (pskb_trim(first_skb, first_iplen)) {
-@@ -1199,7 +1200,7 @@ static bool __input_process_payload(struct xfrm_state *x, u32 data,
- 		if (xfrm_input(skb, 0, 0, -2))
- 			kfree_skb(skb);
- 	}
--done:
-+
- 	skb = skbseq->root_skb;
- 	skb_abort_seq_read(skbseq);
+diff --git a/drivers/power/sequencing/pwrseq-qcom-wcn.c b/drivers/power/sequencing/pwrseq-qcom-wcn.c
+index 663d9a5370653..4720cf0ffb664 100644
+--- a/drivers/power/sequencing/pwrseq-qcom-wcn.c
++++ b/drivers/power/sequencing/pwrseq-qcom-wcn.c
+@@ -324,7 +324,7 @@ static const char *const pwrseq_wcn7850_vregs[] = {
+ static const struct pwrseq_qcom_wcn_pdata pwrseq_wcn7850_of_data = {
+ 	.vregs = pwrseq_wcn7850_vregs,
+ 	.num_vregs = ARRAY_SIZE(pwrseq_wcn7850_vregs),
+-	.pwup_delay_ms = 50,
++	.pwup_delay_ms = 100,
+ 	.targets = pwrseq_qcom_wcn_targets,
+ };
  
 -- 
 2.53.0
