@@ -1,51 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795626278;
-	b=M+0NzxAwDlyxMBMuysHL81cvQ2pJz83adsUf439BhuPfLl4kvKlmdviWW5MFYKcwwSwF
-	 ef4lhQU+D5+WWbTg5WZQP11Bg9RvNuS61y9s/YB+YBAcQDQ+IjpfZRp0J0U/cp9rHp6Ae
-	 wQORA2789ypy9ZvmmWVk/q+oWqMvlh3KU8qXBBY8s07n6xmO6yavg9C0yxtWd70Uw6qPi
-	 Ey6m/pQXj191Fh8LT0xc5gtW0WY9xHw5+nywSYOhZ/g34FtD5bB3R/KlLD2wTDoVOg0n5
-	 jVjM4D0uia/Ojr+AaRtlTFDdZUFdrCXJF4LMO3N1mOvHHtDUw1z5KHUdeAZU9c3zjpA==
+	t=1795626281;
+	b=KG0iTWXMePXs3lzPui5hxkMtoiGrJlI/NdBb45ABk5eFhXkx8jiRXJpyyrFv0BmQhpjI
+	 HaQ6GrurhqX682sDP4ZbGwemwHeqaghM/TavETnJLpVlGriY5FLViRpgrQzR+aUKAqhri
+	 k0OxZvSwf1bnjKPfkxPLa8fUiclDaqe9cyVkuk5QxYo0PJ3kLTZ+fDOCxKuhUkkIXabCO
+	 g/5Fz2A3JQDdMRIy6LdGfIjMZMUcXdiYSh2prcKOzpWP63Mjaipqdlgsz9a/A847kUjmE
+	 88QY9FCI0At8i5DtNF1xvCIIylYki+tuBx6X0QoTxrVMRtF7vwG9A9yOlvWOBVlkdmQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795626278;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795626281;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=8u1FhgJ93asVPEAlYbMbxRFUBlOM/qE4qts52wOoi7Q=;
-	b=5PfPfQYAY6AixQjyBCOqobR1Aq5BIP3+5L3HhO9Eb+7j8eZ8JJQbKKRsWQ/SaqsWPX3C
-	 t+jVjQlv0xxtSgiLybzNhEIsgi0GYtj1/Hsj0GxSXUMQsJU1Z3UiuwgZQb23MqytRwZOs
-	 1+COUzn+dhmNwBeVr7x+zXvLdqkCRhsfBf9U8FVGh814YqtGRQvQbRYsyhM4T3Og+U7v7
-	 Ddtd8JMzkNwpwqfeUhj491qEQXoQ/B2CN3oK86PhEz36SBVnovHiP+jLYqmjEeg1t/CDE
-	 riac5WfF2OG9tAia4OuJKKKBiSLbr8eIJgb6wfnKeIbl4LTrrsnHnsc3iaVqUXZbnWA==
+	bh=1/tTzEnWjJqkl24HpNyM2nwu2uRzUbRYoDzFmeqn4QQ=;
+	b=Z7lhW5jpPc4M3TBnuaSvJl3CaseRcI3wzsJdGdHVQSgzpCImkkClPc2HQlcSu7MBLlgB
+	 F/c+2l5nwh/jibkdnG7CuE5C5TA3QNWyR21An+z6lxQyJB3zrke1zTB20GwgGvZC9BSwB
+	 Xzhww/3qCdYbV1oHfc/4u85R4tGjw+fKoKktl0KinRYQ4Cr2iwc+SUN8KXhj5aNZhvyF/
+	 ZH+/GJZEdgGkIdAJlD6mAjDBHsR4pdObf8CTA3LEk5CzoqRMABldcFt3a+iOaVVDUvwv1
+	 nFgCHZEfpQT4EYLNqtimRFN/GmJuAQeYeOJiLxZfyp2jPSWgl+ThKbP7N6oO4i7b4pw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ulbIBHMC;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=HuWah5m3;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 57CE3606A31E;
-	Wed, 25 Nov 2026 17:04:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7B905606A31E;
+	Wed, 25 Nov 2026 17:04:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ulbIBHMC
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A92681F000C0;
-	Wed, 25 Nov 2026 17:04:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=HuWah5m3
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 81FB11F000C4;
+	Wed, 25 Nov 2026 17:04:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795626278;
-	bh=8u1FhgJ93asVPEAlYbMbxRFUBlOM/qE4qts52wOoi7Q=;
+	s=korg; t=1795626281;
+	bh=1/tTzEnWjJqkl24HpNyM2nwu2uRzUbRYoDzFmeqn4QQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ulbIBHMCUYKNzmS4445mbBfZgGPI+1OEz0xdleB517czqX1PUtlNEUsjjELKfpk9d
-	 xXuvLG6Q+f/n79f5rYDa+mOb1J/k1QLaXYDsAqxIIEhCkfx6fuT4Umr/GoQfY/0Xgx
-	 i5w7LfNh0gJEyxVzgKNb0634GHcaXn+nHiv2MRiw=
+	b=HuWah5m3zCy+Cr2SVhjRK2qeP70YxUKw8TljKjAuBUy8MMHrjKaejjT5u2CHZtVeN
+	 JB1NCU1zGF5ycA2lgDEMBydybHvZnnPwtcWTkGtlFmlRN6iwhMcnXRjESNV/W9WIIl
+	 zNXtIGvFIBc0XB7vfepq6EzUXqm1hgHgUNpG3cXU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Thinh Nguyen <Thinh.Nguyen@synopsys.com>,
-	stable <stable@kernel.org>
-Subject: [PATCH 6.12 754/816] usb: dwc3: gadget: Recover from End Transfer timeout
-Date: Wed, 25 Nov 2026 15:38:22 +0100
-Message-ID: <20261125143906.625624418@linuxfoundation.org>
+	Jean-Baptiste Maneyrol <jean-baptiste.maneyrol@tdk.com>,
+	Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>
+Subject: [PATCH 6.12 790/816] iio: imu: inv_icm42600: fix parsing of all FIFO frames for odr change
+Date: Wed, 25 Nov 2026 15:38:58 +0100
+Message-ID: <20261125143907.458339760@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143849.205329330@linuxfoundation.org>
 References: <20261125143849.205329330@linuxfoundation.org>
@@ -67,43 +67,81 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Thinh Nguyen <Thinh.Nguyen@synopsys.com>
+From: Jean-Baptiste Maneyrol <jean-baptiste.maneyrol@tdk.com>
 
-commit 61575534fb05d52d36979f38976ece74649f091a upstream.
+commit 4a141623442888458d147f4e61fe47411c0e4e17 upstream.
 
-If the End Transfer command times out, the endpoint resource is never
-released and every subsequent Start Transfer to the endpoint fails with
-"No Resource". Schedule an error recovery to reset the controller.
+For getting all odr change events, we need to parse all FIFO frames
+in each iio device. Fix this correctly by sending effectively all
+frames to all iio devices.
 
-Signed-off-by: Thinh Nguyen <Thinh.Nguyen@synopsys.com>
-Cc: stable <stable@kernel.org>
-Link: https://patch.msgid.link/7523e9a11303a33acd0b92a092fb0e8218d509d2.1792542945.git.Thinh.Nguyen@synopsys.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Previously only batches of frames containing a matching sensor event
+were sent to the corresponding iio device.
+
+Fixes: f670d4d34773 ("iio: imu: inv_icm42600: fix odr change not caught in certain cases")
+Cc: stable@vger.kernel.org
+Signed-off-by: Jean-Baptiste Maneyrol <jean-baptiste.maneyrol@tdk.com>
+Signed-off-by: Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/dwc3/gadget.c |    5 +++++
- 1 file changed, 5 insertions(+)
+ drivers/iio/imu/inv_icm42600/inv_icm42600_buffer.c |   24 ++++++++-------------
+ 1 file changed, 10 insertions(+), 14 deletions(-)
 
---- a/drivers/usb/dwc3/gadget.c
-+++ b/drivers/usb/dwc3/gadget.c
-@@ -1743,6 +1743,8 @@ static int __dwc3_gadget_get_frame(struc
- 	return DWC3_DSTS_SOFFN(reg);
+--- a/drivers/iio/imu/inv_icm42600/inv_icm42600_buffer.c
++++ b/drivers/iio/imu/inv_icm42600/inv_icm42600_buffer.c
+@@ -532,22 +532,20 @@ int inv_icm42600_buffer_fifo_parse(struc
+ 		ts = &gyro_st->ts;
+ 		inv_sensors_timestamp_interrupt(ts, st->fifo.watermark.eff_gyro,
+ 						st->timestamp.gyro);
+-		ret = inv_icm42600_gyro_parse_fifo(st->indio_gyro);
+-		if (ret)
+-			return ret;
+ 	}
+ 
++	ret = inv_icm42600_gyro_parse_fifo(st->indio_gyro);
++	if (ret)
++		return ret;
++
+ 	/* handle accelerometer timestamp and FIFO data parsing */
+ 	if (st->fifo.nb.accel > 0) {
+ 		ts = &accel_st->ts;
+ 		inv_sensors_timestamp_interrupt(ts, st->fifo.watermark.eff_accel,
+ 						st->timestamp.accel);
+-		ret = inv_icm42600_accel_parse_fifo(st->indio_accel);
+-		if (ret)
+-			return ret;
+ 	}
+ 
+-	return 0;
++	return inv_icm42600_accel_parse_fifo(st->indio_accel);
  }
  
-+static void dwc3_schedule_err_recovery(struct dwc3 *dwc);
-+
- /**
-  * __dwc3_stop_active_transfer - stop the current active transfer
-  * @dep: isoc endpoint
-@@ -1786,6 +1788,9 @@ static int __dwc3_stop_active_transfer(s
- 		dev_err_ratelimited(dep->dwc->dev,
- 				"end transfer failed: %d\n", ret);
+ int inv_icm42600_buffer_hwfifo_flush(struct inv_icm42600_state *st,
+@@ -572,20 +570,18 @@ int inv_icm42600_buffer_hwfifo_flush(str
+ 	if (st->fifo.nb.gyro > 0) {
+ 		ts = &gyro_st->ts;
+ 		inv_sensors_timestamp_interrupt(ts, st->fifo.nb.gyro, gyro_ts);
+-		ret = inv_icm42600_gyro_parse_fifo(st->indio_gyro);
+-		if (ret)
+-			return ret;
+ 	}
  
-+	if (ret == -ETIMEDOUT && dep->dwc->err_state == DWC3_ERR_NONE)
-+		dwc3_schedule_err_recovery(dep->dwc);
++	ret = inv_icm42600_gyro_parse_fifo(st->indio_gyro);
++	if (ret)
++		return ret;
 +
- 	dep->resource_index = 0;
+ 	if (st->fifo.nb.accel > 0) {
+ 		ts = &accel_st->ts;
+ 		inv_sensors_timestamp_interrupt(ts, st->fifo.nb.accel, accel_ts);
+-		ret = inv_icm42600_accel_parse_fifo(st->indio_accel);
+-		if (ret)
+-			return ret;
+ 	}
  
- 	if (!interrupt)
+-	return 0;
++	return inv_icm42600_accel_parse_fifo(st->indio_accel);
+ }
+ 
+ int inv_icm42600_buffer_init(struct inv_icm42600_state *st)
 
 
