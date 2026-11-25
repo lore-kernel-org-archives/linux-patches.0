@@ -1,53 +1,55 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795625020;
-	b=rJgA52wsmw4BuAeT4ybIdPXLOZNZ9sE7mHVOytHbLtPe9Y6hR6ptPpb5zFXNJrLbWvYg
-	 HZ67A7ehxsUNuOkccw6Bgc0P2QTusmm3qWty89jclu1Vc32GDLCJc87vyffD5N5aQiB5c
-	 05DHhDaF7KIsh/hL0v4FK/FY+TxBCmAtxr+Rg5eksBlsFZ6yLfv449TkZQzd2Z5McSk0N
-	 /IG+pxxsAttMo2QMmHwNONbEXSav0WaloUgSl8r6KIXWSToO+eHm6iPhiXAJHe0DcioTs
-	 FSwE7sqtPNFdiinnYZIYgqB3AbpSMFE9ooRV05pRqUJ5i9ns1BnsyMSuhikQGpJXNLg==
+	t=1795625023;
+	b=NNlI91MDCwJi2joTgxxLoAK2ZNKRDTAl9prUZKHyrTlx8If4g8xe8FzDyUQfv2wuMGyO
+	 hBuipn2JiyL7rBMr1KnjIN9Xj9Ql+AALXS3/UKmY38wvk2BjJaG5g63Mqmg8z+syv+fQ+
+	 KgJjibHH4n9JUXuk+8UW5k3Qo8KPwjoDnmuzyYSuXf3Xj3b6bFxSSU1tmBHJ7pgtivfAA
+	 Lp5M7xjC+yEKnJxIZG3dFeFxNCx9BiDVic+NnDHoMGnsJgA0y2XXA6gKaNQUaibBspYwK
+	 4J8h9Eapq3QEM8bBhUFuTd4bm5JwGFjmRXjV1gazoBAuFDnRxzcw2gzLbe9M6C14n0w==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795625020;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795625023;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=lR3EkZb9NnSsfH80uvLwXsqtD755qAfqzy3+SqF04dA=;
-	b=rvOdMzw0OX8dUCuZeagBg2JW0rz0aPug9QDVbLwqnS/Jy8S42Jw445dF/8ccRpH9xK1r
-	 gnD6HxEpLEus76SuNmW1T2t4hrnTiJ+Z+8EPLljHwT1I5QNAAUWBAbmhjhtLlKnJtpbeg
-	 HJqkb65t+cIwPUHQKASC7NIi3vy9CB8UbEmJU/MGlWnQ8wvviLjBUeRAtwqvTwuzZUTVn
-	 2Y2vteZRdVsnADI8FZncnXsEUhYsh08HjeXldVMovQUvhb6xnigevwKCx36BV2fpIaoFo
-	 CQ21rZnsNNbtE8+u1D6UL00Jczt9OAkmFmZMtMrKFgyWG+QjwdGZOrsFnr8zHgkrX5Q==
+	bh=nwsawGvHRvAQqhgYx5CLlM/CfHtlNR3dxZdkDCx3N40=;
+	b=jRTZ9YdreAfalk2c8m7k/2U9wQam/KexQe1ot9CsoGfoLm/YCPnzOoKUTHZm3P0EKjga
+	 6y/lhROIstDWC25t7grm0SQ0Va5gjKWEfQEyY1qEwo8/S4pH4WGhsevOFzk1PEslxml4z
+	 A24WpWVpHOk6sXa6RKuzw4n9wPk1b1whWEm0Fn+l84YkOdWNteze4o1xKviQVEdZXlKKT
+	 kqbZiOrMV6aEyXfao5AcNsS3j3RfjCl3qGaiNlaYKLY2LCGkmzzxVDSwfhDUnZE8KUL8F
+	 XfKGusVYTxR20+Qq0/5yOkC6lBnkF3FgJUTGqPP3/4RwcqyzoEzhYm5995kYx0G+k/A==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=TgXip8Io;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=BUbUUEvf;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3757A606A31E;
-	Wed, 25 Nov 2026 16:43:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 098CE606A321;
+	Wed, 25 Nov 2026 16:43:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=TgXip8Io
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6D7461F000CF;
-	Wed, 25 Nov 2026 16:43:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=BUbUUEvf
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 578391F000C4;
+	Wed, 25 Nov 2026 16:43:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795625020;
-	bh=lR3EkZb9NnSsfH80uvLwXsqtD755qAfqzy3+SqF04dA=;
+	s=korg; t=1795625022;
+	bh=nwsawGvHRvAQqhgYx5CLlM/CfHtlNR3dxZdkDCx3N40=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=TgXip8Ioi+w3HXXjqmx1EuDGv5fkdtCWAkQiBL6qZJnZMsdkItqFPbO4DyICon4Pu
-	 /rcDG6Axu5v/HBoejgosBKLI8R2WlS3YWofcJWoNkfsxoVljNNLFvmc/HOQswYJ+Z2
-	 X5Kxd9epuF9TJcQYhYkAjSUbtlWKemGMxzc8C7lA=
+	b=BUbUUEvfWzHHdA5eqeZAloi7M0TLTdlfVW+bjUym65Zrx2vcUE8YJwpjbU21fKooa
+	 4b2ivTiL90RZQyDqksBt5sDmQnbMksynHwDgKIw0OKtViTJIOjNV2nkB0J1bkBocCG
+	 9ngoJjOwenYq8+Zz4qtnIxa0PpV3lg2GQBBtAoNg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Cunhao Lu <1579567540@qq.com>,
-	stable@kernel.org,
-	Marc Kleine-Budde <mkl@pengutronix.de>,
+	Josef Bacik <josef@toxicpanda.com>,
+	"Mike Rapoport (Microsoft)" <rppt@kernel.org>,
+	"Lorenzo Stoakes (ARM)" <ljs@kernel.org>,
+	Muhammad Usama Anjum <usama.anjum@arm.com>,
+	"David Hildenbrand (Arm)" <david@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 381/816] can: skb: make echo skb freeing safe in any IRQ context
-Date: Wed, 25 Nov 2026 15:32:09 +0100
-Message-ID: <20261125143858.024841753@linuxfoundation.org>
+Subject: [PATCH 6.12 382/816] mm/userfaultfd: wake all waiters on unregister
+Date: Wed, 25 Nov 2026 15:32:10 +0100
+Message-ID: <20261125143858.047737106@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143849.205329330@linuxfoundation.org>
 References: <20261125143849.205329330@linuxfoundation.org>
@@ -69,99 +71,76 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Cunhao Lu <1579567540@qq.com>
+From: Josef Bacik <josef@toxicpanda.com>
 
-[ Upstream commit d743071964920c92af598c87a9e6f4369263ee09 ]
+[ Upstream commit 3afb19d68cc5e7851fdb1069c8094af97bd80417 ]
 
-can_put_echo_skb() can be called with hardware interrupts disabled. Its
-direct drop paths use kfree_skb(), while can_create_echo_skb() uses
-kfree_skb() when cloning fails and consume_skb() after a successful clone.
-None of these helpers is safe in every IRQ context.
+UFFDIO_UNREGISTER only wakes pending faults if VM_UFFD_MISSING is set.
+Threads waiting on write-protect, minor or RWP faults can therefore remain
+asleep after unregistering a range that does not track missing faults.
 
-Use dev_kfree_skb_any() for all drop paths and dev_consume_skb_any() when
-consuming a successfully cloned skb. This preserves the respective skb drop
-and consumed semantics regardless of the caller IRQ context.
+Wake pending faults regardless of the registration mode so they can retry
+without an explicit UFFDIO_WAKE or closing the userfaultfd. This matches
+the existing behavior for missing faults, including removing unread fault
+messages for the woken waiters.
 
-Signed-off-by: Cunhao Lu <1579567540@qq.com>
-Link: https://patch.msgid.link/tencent_E84809CF236D0137885E7E4E4D58340B3208@qq.com
-Cc: stable@kernel.org
-Fixes: ae64438be192 ("can: dev: fix skb drop check")
-Fixes: 0ae89beb283a ("can: add destructor for self generated skbs")
-Fixes: 3ccd4c6167d3 ("can: Unify droping of invalid tx skbs and netdev stats")
-Fixes: 39549eef3587 ("can: CAN Network device driver and Netlink interface")
-[mkl: also convert can_dropped_invalid_skb(), can_dev_dropped_skb()]
-[mkl: add stable on Cc + add Fixes tags]
-Signed-off-by: Marc Kleine-Budde <mkl@pengutronix.de>
+Fix generated by an LLM and sent by Josef Bacik in private.
+
+Fixes: 63b2d4174c4a ("userfaultfd: wp: add the writeprotect API to userfaultfd ioctl")
+Cc: stable@vger.kernel.org
+Signed-off-by: Josef Bacik <josef@toxicpanda.com>
+[ david: rebase; simplify description ]
+Reviewed-by: Mike Rapoport (Microsoft) <rppt@kernel.org>
+Reviewed-by: Lorenzo Stoakes (ARM) <ljs@kernel.org>
+Tested-by: Muhammad Usama Anjum <usama.anjum@arm.com>
+Link: https://patch.msgid.link/20261031-fixes_core-v3-24-d6437171ecc3@kernel.org
+Signed-off-by: David Hildenbrand (Arm) <david@kernel.org>
+[ sashal: Wake target kept as the VMA's own userfaultfd ctx instead of upstream's ctx argument, since this tree lacks the check that rejects unregistering another ctx's VMA; the file path also differs. ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/can/dev/skb.c | 6 +++---
- include/linux/can/dev.h   | 2 +-
- include/linux/can/skb.h   | 4 ++--
- 3 files changed, 6 insertions(+), 6 deletions(-)
+ fs/userfaultfd.c | 22 ++++++++++------------
+ 1 file changed, 10 insertions(+), 12 deletions(-)
 
-diff --git a/drivers/net/can/dev/skb.c b/drivers/net/can/dev/skb.c
-index b643995fc5369..a39cfdce341ce 100644
---- a/drivers/net/can/dev/skb.c
-+++ b/drivers/net/can/dev/skb.c
-@@ -61,7 +61,7 @@ int can_put_echo_skb(struct sk_buff *skb, struct net_device *dev,
- 	    (skb->protocol != htons(ETH_P_CAN) &&
- 	     skb->protocol != htons(ETH_P_CANFD) &&
- 	     skb->protocol != htons(ETH_P_CANXL))) {
--		kfree_skb(skb);
-+		dev_kfree_skb_any(skb);
- 		return 0;
- 	}
+diff --git a/fs/userfaultfd.c b/fs/userfaultfd.c
+index e1b1a5b1a757a..77b295cb39906 100644
+--- a/fs/userfaultfd.c
++++ b/fs/userfaultfd.c
+@@ -1491,6 +1491,8 @@ static int userfaultfd_unregister(struct userfaultfd_ctx *ctx,
  
-@@ -87,7 +87,7 @@ int can_put_echo_skb(struct sk_buff *skb, struct net_device *dev,
- 	} else {
- 		/* locking problem with netif_stop_queue() ?? */
- 		netdev_err(dev, "%s: BUG! echo_skb %d is occupied!\n", __func__, idx);
--		kfree_skb(skb);
-+		dev_kfree_skb_any(skb);
- 		return -EBUSY;
- 	}
+ 	ret = 0;
+ 	for_each_vma_range(vmi, vma, end) {
++		struct userfaultfd_wake_range range;
++
+ 		cond_resched();
  
-@@ -368,7 +368,7 @@ bool can_dropped_invalid_skb(struct net_device *dev, struct sk_buff *skb)
- 	return false;
+ 		BUG_ON(!vma_can_userfault(vma, vma->vm_flags, wp_async));
+@@ -1511,18 +1513,14 @@ static int userfaultfd_unregister(struct userfaultfd_ctx *ctx,
+ 		/* Prevent new userfaults from being queued after the wakeup. */
+ 		vma_start_write(vma);
  
- inval_skb:
--	kfree_skb(skb);
-+	dev_kfree_skb_any(skb);
- 	dev->stats.tx_dropped++;
- 	return true;
- }
-diff --git a/include/linux/can/dev.h b/include/linux/can/dev.h
-index 23492213ea359..30a3512139cb9 100644
---- a/include/linux/can/dev.h
-+++ b/include/linux/can/dev.h
-@@ -160,7 +160,7 @@ static inline bool can_dev_dropped_skb(struct net_device *dev, struct sk_buff *s
- 	if (priv->ctrlmode & CAN_CTRLMODE_LISTENONLY) {
- 		netdev_info_once(dev,
- 				 "interface in listen only mode, dropping skb\n");
--		kfree_skb(skb);
-+		dev_kfree_skb_any(skb);
- 		dev->stats.tx_dropped++;
- 		return true;
- 	}
-diff --git a/include/linux/can/skb.h b/include/linux/can/skb.h
-index 27d0ca115c6c1..1f0c3e8cde907 100644
---- a/include/linux/can/skb.h
-+++ b/include/linux/can/skb.h
-@@ -92,12 +92,12 @@ static inline struct sk_buff *can_create_echo_skb(struct sk_buff *skb)
+-		if (userfaultfd_missing(vma)) {
+-			/*
+-			 * Wake any concurrent pending userfault while
+-			 * we unregister, so they will not hang
+-			 * permanently and it avoids userland to call
+-			 * UFFDIO_WAKE explicitly.
+-			 */
+-			struct userfaultfd_wake_range range;
+-			range.start = start;
+-			range.len = vma_end - start;
+-			wake_userfault(vma->vm_userfaultfd_ctx.ctx, &range);
+-		}
++		/*
++		 * Wake any concurrent pending userfault while we unregister,
++		 * so they will not hang permanently and it avoids userland to
++		 * call UFFDIO_WAKE explicitly.
++		 */
++		range.start = start;
++		range.len = vma_end - start;
++		wake_userfault(vma->vm_userfaultfd_ctx.ctx, &range);
  
- 	nskb = skb_clone(skb, GFP_ATOMIC);
- 	if (unlikely(!nskb)) {
--		kfree_skb(skb);
-+		dev_kfree_skb_any(skb);
- 		return NULL;
- 	}
- 
- 	can_skb_set_owner(nskb, skb->sk);
--	consume_skb(skb);
-+	dev_consume_skb_any(skb);
- 	return nskb;
- }
- 
+ 		vma = userfaultfd_clear_vma(&vmi, prev, vma,
+ 					    start, vma_end);
 -- 
 2.53.0
 
