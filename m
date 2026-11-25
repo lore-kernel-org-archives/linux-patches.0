@@ -1,51 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795626023;
-	b=oNHcNanyprd6ckZvb3clE3t6ZaBsIWREdh1g5a6vIXEQO31ZodUnF6q0960VqoAYAJbx
-	 oJp+N4a5SVhpIUG+bMMhdP572N7o6rkxyP+Pp5Y0x1597gBt6EkH2fzaOexrQ8NR92/yY
-	 U4zihRgD/I4tcvpue7q+BrU0kE1ol4QJKHlTSTF2iMkE7BkgTmNFT6/Ar4w4LSrWdP0cU
-	 bkJ2HfF7uUDstGh4qu6C0xk7GrstVr7py67DmsV1HHVMytnXGTO1xb+70O1N4XWb6DIGM
-	 XYNOQvMsMGHQaoXBxBYaAmXdKLEI+55m1DvlapueM/zzaEFOd1Fka5TfyGmtQWHwBPw==
+	t=1795626026;
+	b=sTpXhIUwpoHZ/NIuVYdO3PLXtMcLJ2oLVzxkim8hcRTvjf0zasKJcFQ1Gi5igluo9prz
+	 Jiz0uATM4kK8JlXsTS169AnmIDFAcYV6zUAkLNu44udX3uN/lXKDHwmkLvvf3EZa3k1qx
+	 tANMGiy16mIyK/5YviPcRCTL5ukYWdWIjnqasBDRJYZl1cWAQmZWo3OZC9pdsQui3CgJK
+	 4Nci6t0Fo844AR0xZFxjDiacjacj2famXFFYpWf1jHyyISwZcXqTxvsmtOtcU+MyYwVoq
+	 XPZOonZRQiwVf5DdV/x67f7eh+x/kt4Bg1j73zWtXmoKgbUpno4lZpXJrmaLlXWbnOw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795626023;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795626026;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=dRZKA1Ajc3WHJcxzx97A6Cp/P6l20hX9Pl9AT/oty2g=;
-	b=lcMZZEHJwgxDBHhkjUWxEVF0TsaPWAVDTAZBaAICG3UkpDO41bOcWFOPxBkyOSiMOJcF
-	 9lOL5rJZKcQQmJ/Utu1Fbj6gA6271iFvOl9WlMAbqcN6lYjarUC2FWfX0/qTvhJ1728+E
-	 TJPyhnKl5YAt89GzNLB3h+5/DDfmlBLExOdPfMEQnrYmO5TNWR9vNR2a1t8HvCaQttZ7e
-	 DeDLRYLJs5i52CnXppVfVWfiB+K2FfgMHzub7AhxCCkhmzQ21s5KGP+h/J4JEPzo4+q+V
-	 57LVR8Tf1KDxhdLzHEDXPmNQpHmJQKOpC/fLm9Fz+urgVH3N5jWNy+9Gj/pSMQ/1GgA==
+	bh=ru9pfyK4QTysJlw/7ZjuwOIaVOM4BSRu21wS4St0G2I=;
+	b=gQ2ioV6WyJ/FyBE0azMX0ok+2LhfrnclXJihknu8dw2iisxJJmCCGhxX2usVqPI1CihW
+	 1qOj69NlBVwPS8xypmr6lTARXElo5MRWb/CQ4aRiN2IFifw4qyFXARO6Vha+SME/b80K7
+	 7c8QSnSZDYitPHCs/na7bBhTjH+FWBcIA1Ej1IVwLZyYPhAnG8I77hRSIo5Mb7VN54ESe
+	 wJ2NltyCQgscASkL4x2O+0m+yhoujj7wCZwgQnFjt5IdFuKRqBIhgmdgz6HCaRiUwB5bW
+	 WTdZVfgWt1BZ5Y3M62nc0Je/HIPyFtRbHWqYpLthJ46s2iu8p34lhX6iw+lbBjqLr+g==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=EG2AaiBu;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=W27e4rUX;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8C1EC606A321;
-	Wed, 25 Nov 2026 17:00:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 60270606A31E;
+	Wed, 25 Nov 2026 17:00:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=EG2AaiBu
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DE7BC1F000C4;
-	Wed, 25 Nov 2026 17:00:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=W27e4rUX
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B16B41F000C0;
+	Wed, 25 Nov 2026 17:00:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795626023;
-	bh=dRZKA1Ajc3WHJcxzx97A6Cp/P6l20hX9Pl9AT/oty2g=;
+	s=korg; t=1795626026;
+	bh=ru9pfyK4QTysJlw/7ZjuwOIaVOM4BSRu21wS4St0G2I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=EG2AaiBuiDKkbcGD8LIx7o47nUDGSewix08NGcaACaUGNvtCujpDUtc+Yu+1YJhNK
-	 KE/B0sUEFzJkFLuzDMtelU2sHqgvOe7l7vkVzv0PRVIZd8abW54+mqmGiZs5NX2f8j
-	 RorgyxEJni6JS4/7eZ/QoPZNPvjQ1kDBnse4+oYU=
+	b=W27e4rUXxxGmJjnKE6d72w2nKj94YYGo59bXN0/PFRS+cL3Z7+Yv0l4g7maIV5fxj
+	 bYsVFsOGdXJgrjoekrKi1hiM1aNqPyxPAdps6qHG4MQTFzMRrfCfVisGgvVyCtwEON
+	 MT1U9olD6Kb5YRuiC1zPX6t6UDw53vDePUwEgkwg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhao Li <enderaoelyther@gmail.com>,
+	Wahid Khan <wahidzk0091@gmail.com>,
 	Johannes Berg <johannes.berg@intel.com>
-Subject: [PATCH 6.12 661/816] wifi: cfg80211: preserve mesh A-MSDU lengths when adding mesh headers
-Date: Wed, 25 Nov 2026 15:36:49 +0100
-Message-ID: <20261125143904.479543531@linuxfoundation.org>
+Subject: [PATCH 6.12 662/816] wifi: cfg80211: dont truncate the merged MBSSID profile length
+Date: Wed, 25 Nov 2026 15:36:50 +0100
+Message-ID: <20261125143904.502141177@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143849.205329330@linuxfoundation.org>
 References: <20261125143849.205329330@linuxfoundation.org>
@@ -67,60 +67,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zhao Li <enderaoelyther@gmail.com>
+From: Wahid Khan <wahidzk0091@gmail.com>
 
-commit 9083da9dd3223068237395432323b407012aec1f upstream.
+commit 3ea152f3f77eeffc37b2f4423688b4df9136f90c upstream.
 
-A malformed mesh A-MSDU subframe with a declared payload length near
-65535 bytes can pass validation against a much shorter aggregate.
+cfg80211_parse_mbssid_data() keeps the length of a non-transmitted BSSID
+profile in a u8. cfg80211_merge_profile() returns a size_t, and it
+concatenates a profile that is split over several Multiple BSSID
+elements, so the merged length can be well above 255 even though every
+single sub-element is at most 255 bytes long.
 
-ieee80211_amsdu_subframe_length() adds the mesh control length to the
-declared length in a u16, and ieee80211_is_valid_amsdu() stores the
-result in a u16 local. The sum therefore wraps before either walker
-compares it with the remaining aggregate length. The decomposer then
-splits and delivers the malformed aggregate instead of rejecting it.
+The value is then cut to its low 8 bits. A 300 byte profile is handled
+as a 44 byte one: the elements after the cut are lost from the generated
+non-transmitted BSS, and if the Multiple BSSID-Index element lies past
+the cut the BSS is dropped altogether. Any AP in range can send such a
+profile.
 
-Keep the computed length in unsigned int in both the helper and the
-validator so oversized subframes cannot wrap.
+The multi-link code further down in the same file already uses a signed
+size type for the profile length. Do the same here, cfg80211_find_ie()
+and cfg80211_gen_new_ie() take a size_t anyway.
 
-LLM assistance was used to find the bug and review.
-
-Fixes: 6e4c0d0460bd ("wifi: mac80211: add a workaround for receiving non-standard mesh A-MSDU")
-Fixes: fe4a6d2db3ba ("wifi: mac80211: implement support for yet another mesh A-MSDU format")
+Fixes: fe806e4992c9 ("cfg80211: support profile split between elements")
 Cc: stable@vger.kernel.org
-Signed-off-by: Zhao Li <enderaoelyther@gmail.com>
-Link: https://patch.msgid.link/20261028142149.13834-1-enderaoelyther@gmail.com
+Signed-off-by: Wahid Khan <wahidzk0091@gmail.com>
+Link: https://patch.msgid.link/20261104211451.693451-1-wahidzk0091@gmail.com
 Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/wireless/util.c |    6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ net/wireless/scan.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/net/wireless/util.c
-+++ b/net/wireless/util.c
-@@ -772,12 +772,12 @@ __ieee80211_amsdu_copy(struct sk_buff *s
- 	return frame;
- }
+--- a/net/wireless/scan.c
++++ b/net/wireless/scan.c
+@@ -2497,7 +2497,7 @@ cfg80211_parse_mbssid_data(struct wiphy
+ 		if (elem->data[0] < 1 || (int)elem->data[0] > 8)
+ 			continue;
+ 		for_each_element(sub, elem->data + 1, elem->datalen - 1) {
+-			u8 profile_len;
++			size_t profile_len;
  
--static u16
-+static unsigned int
- ieee80211_amsdu_subframe_length(void *field, u8 mesh_flags, u8 hdr_type)
- {
- 	__le16 *field_le = field;
- 	__be16 *field_be = field;
--	u16 len;
-+	unsigned int len;
- 
- 	if (hdr_type >= 2)
- 		len = le16_to_cpu(*field_le);
-@@ -799,7 +799,7 @@ bool ieee80211_is_valid_amsdu(struct sk_
- 		    __be16 len;
- 		    u8 mesh_flags;
- 		} hdr;
--		u16 len;
-+		unsigned int len;
- 
- 		if (sizeof(hdr) > remaining)
- 			return false;
+ 			if (sub->id != 0 || sub->datalen < 4) {
+ 				/* not a valid BSS profile */
 
 
