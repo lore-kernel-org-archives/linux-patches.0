@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795618698;
-	b=TQiKQ1/9EyZ3/g1Q+nSyt1HA1ST98SP5LRBH/PcRjm2bBjBkHmkBF7QP3mSb8bmcL1lp
-	 cLxjRvT2AO/wnU0CGEqh9/VlWkW6pmBNesEr7VpQ1ss+vW6PJVIgMf+OtE9Xz/nuQihbo
-	 snylNGRmy9WSVsPveZyApCfKKrdpikRiXnGh25Qqg4B/fwrCbs69zolbaRAtFxSH+Noft
-	 JLipZyXPxKWfXYYrzUMsvFa+lxA3bebL8SExOtjur7Wp5YaGOtIMNLExXGGezfnG+qdfX
-	 3nN0jICp3c8aXD+gig7in/HcTaRD9/TFD7lg/W6/eSuIFlB3aAuLhX2WnRVHofJeDnw==
+	t=1795618701;
+	b=Muaa6FAdczL7Y1QsojVg0Tj8a97pGeoWalLtKy7EjI8NprXHlW6tnrJAbej+Vqau6mFs
+	 gt9T6IiEKOddlrXQm4lg8x0WOYyN7YjTyS0devONxGloNc9C6jvETQKE1NN040k1b33ur
+	 a9YzKYSzoS3fWvqWFWZeOryh4ZnVZu00Y/Y8yZ5+D5P6BHe0svMUCMkLOIMjb1Ugok5GE
+	 ZQ/8825VxgIVuuHsMVcQQeiQXofuwtyQY9CBstC6SoaFAFHqOamzmxJhvuFbt6rNQGKIw
+	 XLlaJzjTNPMBvMneSPYgZyzHfHDgLZTa4Vjz01R1ItJhVyJW6L2VFewQ+pZwOUEL11Q==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795618698;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795618701;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=eiEa55N03UTkWF9sU9spI5NZz1E3UlFsZNHH9HlEzN8=;
-	b=uh/1eVaTDZIOuiQOQL1oUAk8t4oRpeRnRoI3RnJFohX8A/oLhiLSnJ/YuqAJBB0RyKen
-	 tgWae8xlmO3SXGqrP4R+daCjlKwLWawKblMWzOU0rREQTJImC2vRfv1FxgaOoZXxZS17o
-	 DkKralfQfPlS1ojdWrJ33bPzzoWVIxQMRNC4hhSp847cULyyWkpoy97flCBQO1Ep0NPp8
-	 Dz3+/KDU1vj0V441rbphHZk4KLsbMRRjWjLz1wnK5UKhQMVp0b5jVAXseh2M66LZgbmTf
-	 4xc+mh+bEu2W2R58bANRJ0E3zB6PMb/Y6HaH8pyg30jPm85qBYnmdN2daLG6EI35orw==
+	bh=yX8Nr2U4GlFmin4t+PidZpmg/reKlckwOlmZJym3KBI=;
+	b=NaiZ7Sh8km+SIkFHWcQxRtT6CuGza+SCTi5H7eK/1deVLeN+AqM0FaL9bkwW02CPqTHu
+	 Fjlms6xbahyhllbvCtnWNnYtPDjN0VOfj3mfjmFzzbQEzN2B5xV4rUFaPA+u3X1WHOSU1
+	 ChOVaEwl8f7sGHWFd2IJa0JFLzIAgfs2IpPyJIQ1otvrycF4S6WNAcpZkMEkYKOeWX7G4
+	 Y9n8DjX4r+OPeXBJ7gaw9LYAsShQDUwy78VqYINpVtyDjP2dRbvo4rCKdLFkPmRK6VSnN
+	 FE9POYClNow55Lu/DTijCcGHLXZDt0Gp/KmMO2nxf4yTD+lPbx29S2+Y3EQD/5mAHEA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=cKFa0tY0;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Yf0woESZ;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 20A34606A31E;
-	Wed, 25 Nov 2026 14:58:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 535F1606A32A;
+	Wed, 25 Nov 2026 14:58:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=cKFa0tY0
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3EA981F000C6;
-	Wed, 25 Nov 2026 14:58:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Yf0woESZ
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 565EA1F000C0;
+	Wed, 25 Nov 2026 14:58:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795618697;
-	bh=eiEa55N03UTkWF9sU9spI5NZz1E3UlFsZNHH9HlEzN8=;
+	s=korg; t=1795618700;
+	bh=yX8Nr2U4GlFmin4t+PidZpmg/reKlckwOlmZJym3KBI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=cKFa0tY0sNdQSBIl4rSN98I1uAVoZb0AZI3Om9NqFlP6ufOOCgzTIao2Uz4QC0IWH
-	 I0iZc+5AJD28VHHOOrqCDP13q4vYp/cQb4TRvkfV+Udu3Pbn4IoyNPH1fWbhilYoW4
-	 jivKu0HvCflBan3892/AcJEtq39ZWaLDEUh1OQW8=
+	b=Yf0woESZyz/ap2RBbz38MDTkMx9OTSg1MfQ6BkF8K5QWc+s+nGTn1kJKFc36lDRCs
+	 /8EUhIv8jg8tIvECxDIE/3bu4cRhBFdAL+Fy0iZNBrcj6maBPlAlhegkxelwwyCJjJ
+	 ddvqpYJ0aw7Ad94+x4tf/9a4BaeB+B7iqvm9P3dw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Laveesh Bansal <laveeshb@laveeshbansal.com>,
+	VEGA <vega@nebusec.ai>,
+	Fernando Fernandez Mancera <fmancera@suse.de>,
 	Pablo Neira Ayuso <pablo@netfilter.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0315/1005] netfilter: bridge: use DEBUG_NET_WARN_ON_ONCE in nf_ct_bridge_refrag()
-Date: Wed, 25 Nov 2026 15:27:33 +0100
-Message-ID: <20261125143829.117754150@linuxfoundation.org>
+Subject: [PATCH 7.3 0316/1005] netfilter: x_tables: check target name before accessing verdict
+Date: Wed, 25 Nov 2026 15:27:34 +0100
+Message-ID: <20261125143829.140738275@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143821.729802100@linuxfoundation.org>
 References: <20261125143821.729802100@linuxfoundation.org>
@@ -68,48 +69,115 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Laveesh Bansal <laveeshb@laveeshbansal.com>
+From: Fernando Fernandez Mancera <fmancera@suse.de>
 
-[ Upstream commit 683ff28ab18accb25268741a724645eee839d41a ]
+[ Upstream commit 364b200285bb2cc518e3c5efe6591951c05b8e01 ]
 
-nf_ct_bridge_refrag() warns when skb->protocol is neither IPv4 nor IPv6.
-A vlan filtering bridge can get there with a vlan ethertype: if the
-protocol of the tag of a frame differs from the vlan_protocol of the
-bridge, br_allowed_ingress() moves the tag back into the packet after
-NF_BR_PRE_ROUTING, where bridge conntrack has already defragmented it.
+Non-standard targets may contain only struct xt_entry_target.
+mark_source_chains() nevertheless reads the target as an
+xt_standard_target before checking its name, potentially reading four
+bytes beyond a header-only target.
 
-Anyone who can send fragments into a port of such a bridge can trigger the
-warning, which takes the machine down with panic_on_warn. The packet is
-dropped either way, so only warn on kernels built with CONFIG_DEBUG_NET.
+Check that the target is standard before reading its verdict.
+Non-standard targets remain handled as fallthrough rules.
 
-This only avoids the warning. Such fragmented packets are still dropped.
-syzbot reported the warning. It keeps triggering on CONFIG_DEBUG_NET
-kernels until the vlan tag is handled, which is left for a follow-up:
+See the following KASAN trace:
 
-  https://syzkaller.appspot.com/bug?extid=a8ba738fe2db6b4bb27f
+BUG: KASAN: slab-out-of-bounds in translate_table+0x1660/0x1a40 [ip6_tables]
+Read of size 4 at addr ffff88800ed56ff8 by task rep/432
 
-Fixes: 3c171f496ef5 ("netfilter: bridge: add connection tracking system")
-Assisted-by: LLM
-Signed-off-by: Laveesh Bansal <laveeshb@laveeshbansal.com>
+Call Trace:
+ kasan_report+0xfa/0x120
+ translate_table+0x1660/0x1a40 [ip6_tables]
+ do_ip6t_set_ctl+0x667/0xa76 [ip6_tables]
+ nf_setsockopt+0x77/0xd0
+ do_sock_setsockopt+0x118/0x490
+ __sys_setsockopt+0xe4/0x160
+ __x64_sys_setsockopt+0xbd/0x190
+ do_syscall_64+0xde/0x4f0
+ entry_SYSCALL_64_after_hwframe+0x77/0x7f
+
+Allocated by task 432:
+ kasan_save_stack+0x2f/0x50
+ __kasan_kmalloc+0x7f/0x90
+ __kvmalloc_node_noprof+0x1b1/0x5c0
+ xt_alloc_table_info+0x3c/0xa0
+ do_ip6t_set_ctl+0x5ee/0xa76 [ip6_tables]
+ nf_setsockopt+0x77/0xd0
+ do_sock_setsockopt+0x118/0x490
+ __sys_setsockopt+0xe4/0x160
+ __x64_sys_setsockopt+0xbd/0x190
+ do_syscall_64+0xde/0x4f0
+ entry_SYSCALL_64_after_hwframe+0x77/0x7f
+
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Reported-by: VEGA <vega@nebusec.ai>
+Signed-off-by: Fernando Fernandez Mancera <fmancera@suse.de>
 Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/bridge/netfilter/nf_conntrack_bridge.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ net/ipv4/netfilter/arp_tables.c | 5 +++--
+ net/ipv4/netfilter/ip_tables.c  | 5 +++--
+ net/ipv6/netfilter/ip6_tables.c | 5 +++--
+ 3 files changed, 9 insertions(+), 6 deletions(-)
 
-diff --git a/net/bridge/netfilter/nf_conntrack_bridge.c b/net/bridge/netfilter/nf_conntrack_bridge.c
-index b5444335b86f2..8c83dc05114ba 100644
---- a/net/bridge/netfilter/nf_conntrack_bridge.c
-+++ b/net/bridge/netfilter/nf_conntrack_bridge.c
-@@ -358,7 +358,7 @@ nf_ct_bridge_refrag(struct sk_buff *skb, const struct nf_hook_state *state,
- 		nf_br_ip6_fragment(state->net, state->sk, skb, &data, output);
- 		break;
- 	default:
--		WARN_ON_ONCE(1);
-+		DEBUG_NET_WARN_ON_ONCE(1);
- 		return NF_DROP;
- 	}
+diff --git a/net/ipv4/netfilter/arp_tables.c b/net/ipv4/netfilter/arp_tables.c
+index db307fa49f3f6..8c5f7cf15045e 100644
+--- a/net/ipv4/netfilter/arp_tables.c
++++ b/net/ipv4/netfilter/arp_tables.c
+@@ -371,11 +371,12 @@ static int mark_source_chains(const struct xt_table_info *newinfo,
+ 				e->counters.pcnt = pos;
+ 				pos += size;
+ 			} else {
+-				int newpos = t->verdict;
++				int newpos;
  
+ 				if (strcmp(t->target.u.user.name,
+ 					   XT_STANDARD_TARGET) == 0 &&
+-				    newpos >= 0) {
++				    t->verdict >= 0) {
++					newpos = t->verdict;
+ 					/* This a jump; chase it. */
+ 					if (!xt_find_jump_offset(offsets, newpos,
+ 								 newinfo->number))
+diff --git a/net/ipv4/netfilter/ip_tables.c b/net/ipv4/netfilter/ip_tables.c
+index 809441cedcedc..b302bd77180a7 100644
+--- a/net/ipv4/netfilter/ip_tables.c
++++ b/net/ipv4/netfilter/ip_tables.c
+@@ -422,11 +422,12 @@ mark_source_chains(const struct xt_table_info *newinfo,
+ 				e->counters.pcnt = pos;
+ 				pos += size;
+ 			} else {
+-				int newpos = t->verdict;
++				int newpos;
+ 
+ 				if (strcmp(t->target.u.user.name,
+ 					   XT_STANDARD_TARGET) == 0 &&
+-				    newpos >= 0) {
++				    t->verdict >= 0) {
++					newpos = t->verdict;
+ 					/* This a jump; chase it. */
+ 					if (!xt_find_jump_offset(offsets, newpos,
+ 								 newinfo->number))
+diff --git a/net/ipv6/netfilter/ip6_tables.c b/net/ipv6/netfilter/ip6_tables.c
+index 313c4aac377aa..010baaa606657 100644
+--- a/net/ipv6/netfilter/ip6_tables.c
++++ b/net/ipv6/netfilter/ip6_tables.c
+@@ -440,11 +440,12 @@ mark_source_chains(const struct xt_table_info *newinfo,
+ 				e->counters.pcnt = pos;
+ 				pos += size;
+ 			} else {
+-				int newpos = t->verdict;
++				int newpos;
+ 
+ 				if (strcmp(t->target.u.user.name,
+ 					   XT_STANDARD_TARGET) == 0 &&
+-				    newpos >= 0) {
++				    t->verdict >= 0) {
++					newpos = t->verdict;
+ 					/* This a jump; chase it. */
+ 					if (!xt_find_jump_offset(offsets, newpos,
+ 								 newinfo->number))
 -- 
 2.53.0
 
