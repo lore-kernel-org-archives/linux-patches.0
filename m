@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795622256;
-	b=L8Ye8s4W3NqPyhvu/hlRDKRZvrLiXE7ThHXR2qkWPM1tfKaRyc8EG72YrP5q1K0EtHI9
-	 k5L5uz7VbHJchAIKuQu/bs0THLayX821u/keNooRO5djeyIwJpSFTEBNYFlD26oETDLqt
-	 QuIh+F0c7Xem54JNUg1gJkapSW19f+RY3sX1zOhLXeRQlsC4k+R2gd86SpUBvIK/AL5GC
-	 pEo81P0+/jstWnP6CyS5DMevCF4r1ogvx4IGior0Cjq7p8SiWs3ihAWYOgBRvh4C/WKS7
-	 Xq4QS5F17PfXAg4VrYhQY2e0Q8AhnX7SXvpMnOhqnR29SOA2g1DIcsVIaYNbAB5qURw==
+	t=1795622259;
+	b=u7xJSh4wj7lyzmYAOs+XFWWUTdsUm+D4lxLESfonhfZoyqGWgsxPE46nFrfS8YjPVw43
+	 dii8J8JwbczcKgC+esOvfa38LOhs5Z1R6/H4ak+bDaiEPUt+dREwYxvFOY9chengX/jYW
+	 YVt9TV9ogP22eFwa44HJLD8NpOaWwoPCqwcJpMBJSoWSVU2Wbrc4BcwWII66lMlV1sxhS
+	 wdJIyFNtSS63P/ZIT15UObi6q3cUAFQqzWF6ZBelxG9EnHBAb7pfDZR8yNe+CMUdsJYZB
+	 gQIxIDH3+JxlQOxb2Nn6RHGWycpiCXR6ju9P7kizKEOFcLElAT/xJPGLcFPu2botLtg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795622256;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795622259;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=d2yXll24P3honU40Jq3gCzDs85VyV9MZX0fVer0a2m4=;
-	b=go9irlTcPZF+LwwTxPfP7HZCre2FVg75j9O0K7k1PAZiJ4b8R2HtEPSPACUR45vGLMPE
-	 v83vr5G9mXq6/B/fk7EQwX9/xa3lv2mLJy7rJwQTjms4yIh5ATsk/aErnn6kAThO+GkPy
-	 2xkJjMxN2Oc7lVfi+tmeUucYFRHW36aLRGbixT83x6m8r4VRktLwpQQxFCXSd4i0d8Z4Y
-	 vNC4Se1dR4a7NXGmlRg4Ak8iPoMUpT+OBM8ZGpSV0UevR1mXfYwFPJTgvred6x/O/JyWD
-	 h7zPY8qaHxJZvg6HzyxxpHrZeVuwk9NxG1r+OjqiLhSYwcW0CRGWdlGZnOpHimBqsLg==
+	bh=XCl2GQSbR0InOwE+m2HoizLUtG5/UOYZzKC6FMfaK1k=;
+	b=olgByY8EA5JEt4cbWopq4C1H+OzghnGUM2PmBjCizqYfLPcC6lRJ0avkqXVrY4FErgEe
+	 vnfkqGF07RBmqvuVNUXtWQxLdD7QNeO/hEUDqwDGNwM0cg/dhQp6H5rECjOhlGrAOP/wg
+	 HrgRPld9KDTmwH+/iyin92bBAl/2YoJtGJxZi/P599OO44La25HBkXIj4MBb94VrTAUyh
+	 +MATIkJ1eGAUIPtqyb6P6hBcIRqsMD5henAtYJPxNR2HJyK2bpt/b9A/jMQJlMGYmIRuR
+	 Y3eiAKGyGkrLHWlz2Cn0NlTQpxbe2cj1YdtawFOAX6P7OhzKENJj4WbBIDtFMfZe6Rg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ghO6S+p5;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=dLs8hdVJ;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5DD65606A31E;
-	Wed, 25 Nov 2026 15:57:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5A00D606A31E;
+	Wed, 25 Nov 2026 15:57:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ghO6S+p5
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 188051F000C0;
-	Wed, 25 Nov 2026 15:57:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=dLs8hdVJ
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 820661F000C0;
+	Wed, 25 Nov 2026 15:57:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795622255;
-	bh=d2yXll24P3honU40Jq3gCzDs85VyV9MZX0fVer0a2m4=;
+	s=korg; t=1795622259;
+	bh=XCl2GQSbR0InOwE+m2HoizLUtG5/UOYZzKC6FMfaK1k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ghO6S+p5LhKiYzmHUZtrqF2NjCUkABogCBJMo9q8JeLaJ5n90DVrTs0tkddjE4ln9
-	 vfiYLzjOoU14SjtLbbusMJuTsU3jR7HA/FqRzxerEP+kYejUnMpEasFvnAs8oIjhVZ
-	 zwUb8eOiiV23vJD02rWqS+Eoo0lDLrXzDxXBojOw=
+	b=dLs8hdVJLWpel8fBS7/I0BJxKWWrUKBGmDEf9uhJ9cTlS792Ly0fmVNlqz6QgHyj8
+	 BoD4LJ41YLAm+dnETLz801y8vEm7on1NBC0npmrdrJkXMEIdRZUZYbAIQ9NkehSASe
+	 blon1EweohE0H2kn/pItTZrpKZeAq/Pyaua5eXyQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wenwen Fu <wenwfu@qti.qualcomm.com>,
+	Manuel Ebner <manuelebnerli@mailbox.org>,
+	Randy Dunlap <rdunlap@infradead.org>,
 	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 478/990] tracing: skip boot kprobe setup when no events were requested
-Date: Wed, 25 Nov 2026 15:30:45 +0100
-Message-ID: <20261125143833.292557188@linuxfoundation.org>
+Subject: [PATCH 6.18 479/990] docs, kprobes: Fix bracket
+Date: Wed, 25 Nov 2026 15:30:46 +0100
+Message-ID: <20261125143833.315895124@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143822.072087159@linuxfoundation.org>
 References: <20261125143822.072087159@linuxfoundation.org>
@@ -68,48 +69,36 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Wenwen Fu <wenwfu@qti.qualcomm.com>
+From: Manuel Ebner <manuelebnerli@mailbox.org>
 
-[ Upstream commit 2388a673e9276de30c7e917fce50830e497d46cc ]
+[ Upstream commit b91a5c16996d089cd07ceaf33b5a621cb94c2c2f ]
 
-setup_boot_kprobe_events() calls enable_boot_kprobe_events() even when
-the kprobe_event= boot parameter was not supplied. That call takes
-event_mutex without any command-line probes to enable.
+Remove needless ')'
 
-Asynchronous eval-map updates also hold event_mutex. A normal boot can
-therefore wait in init_kprobe_trace() for this background work despite
-having no boot probes to set up.
+Link: https://lore.kernel.org/all/20261112085511.690900-2-manuelebnerli@mailbox.org/
 
-Return early when the boot-event buffer is empty. Keep the mutex
-protection in trace_event_update_all() and retain setup for explicit
-kprobe_event= parameters. Bootconfig handles its own probe enablement,
-and the existing trace_eval_sync() still waits for background work
-before init memory is freed.
-
-Link: https://lore.kernel.org/all/20261106021457.2648231-1-wenwfu@qti.qualcomm.com/
-
-Fixes: 970988e19eb0 ("tracing/kprobe: Add kprobe_event= boot parameter")
-Signed-off-by: Wenwen Fu <wenwfu@qti.qualcomm.com>
+Fixes: a1dac767622c ("kprobes.txt: standardize document format")
+Signed-off-by: Manuel Ebner <manuelebnerli@mailbox.org>
+Acked-by: Randy Dunlap <rdunlap@infradead.org>
 Signed-off-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/trace/trace_kprobe.c | 3 +++
- 1 file changed, 3 insertions(+)
+ Documentation/trace/kprobes.rst | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/kernel/trace/trace_kprobe.c b/kernel/trace/trace_kprobe.c
-index ee8171b19bee2..52ec16d8d8384 100644
---- a/kernel/trace/trace_kprobe.c
-+++ b/kernel/trace/trace_kprobe.c
-@@ -1995,6 +1995,9 @@ static __init void setup_boot_kprobe_events(void)
- 	char *p, *cmd = kprobe_boot_events_buf;
- 	int ret;
+diff --git a/Documentation/trace/kprobes.rst b/Documentation/trace/kprobes.rst
+index 5e606730cec63..0b19d82d7d4cb 100644
+--- a/Documentation/trace/kprobes.rst
++++ b/Documentation/trace/kprobes.rst
+@@ -31,7 +31,7 @@ can trap at almost any kernel code address [1]_, specifying a handler
+ routine to be invoked when the breakpoint is hit.
  
-+	if (!kprobe_boot_events_buf[0])
-+		return;
-+
- 	strreplace(kprobe_boot_events_buf, ',', ' ');
+ .. [1] some parts of the kernel code can not be trapped, see
+-       :ref:`kprobes_blacklist`)
++       :ref:`kprobes_blacklist`
  
- 	while (cmd && *cmd != '\0') {
+ There are currently two types of probes: kprobes, and kretprobes
+ (also called return probes).  A kprobe can be inserted on virtually
 -- 
 2.53.0
 
