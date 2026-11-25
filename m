@@ -1,51 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795619544;
-	b=ySAJjrPX19rZWoe4L/mzuRr0bmzmjoAQE0Be7egrv8lHrJ2PUo2b86EZV45byo5mupji
-	 Jb22ZxkNJIgb1UUj0F0GoloQgc+GMxhlvBpdcJGEsUCtVL90iYQpeIxPTbXCFhiUhb89E
-	 whNpHka14LXZLi7pv9kwlxierr3K6bd4y7A7VPMOcNfm4NtAmiHZzQD7n0zItEJpkz1sx
-	 N34DQun+S/Wo2It4S1IRPVpj1JD0sKV4Vp7WE89I+Ld7JbhqhNASi06hQTAFTuwDOx3Yb
-	 jtCQyaSX6/8g7nbyAVSrv0MxMZvelugUTNHxBRHRx6/99iNwRgsU8hafXIwLltCzanQ==
+	t=1795619547;
+	b=hw7u380tf5fQBPzoyO9/eOZVgyACCnv0rPW6/SAfWV/eo8WMROcOxWFudIao5sghErD0
+	 AdgESKC3sS+tUVESDQ2u5PJxlDC2trkYurD6NY7KpWv3hLC1HJSz22bI/Ya+RqaqiX9uL
+	 KcKrDNDwBMA6B/zhuAepsXstbVXQ1zeS9+EFWqWBgUT4IZLfXqVgYiZ9VPxpaxrDycudu
+	 kUPxBR6U1Ui6sMw0ldS3FZ2o3i4YTXP98tgI+3GOQsJcNUtVTv4dnj1yH/z6NZ6zzta+v
+	 rONJHSjPF5+orp/1KrvvhbxJ4YXLP08LC83L/WOH2td6CREZPGiI/9PVJl0hLerOJTw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795619544;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795619547;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=OzOPQXWJNd7gNMg+XSSK2m+oUDWZoBJkvA/22mI3PmU=;
-	b=S/beqSZb4H85E722NmE6F+/v1IT5xFa7xTlRI13ONcbb9buTbsoLI1mqRFsKkDsDrDJj
-	 fzRwYUR96yrbHnX42x1Ei4KvoNMADXA3Qhn5q3+8xAa+nuMnPQGJhu6HVUYrts74EdqCE
-	 7gyLTnuExj2hdDvFYcyeKp2hNKj3xEw5TnmV7UfovdKGs62VfIg3fCBhInDdfYkN8Bd7V
-	 h/rMatS4yxEHleZSSQtWSzp3lzeER55oJrQ1w76N9BdvQOwnnClWUulBOjTox/AI28E8I
-	 JIxurfBQnJjTG/RYCT5WCBV64otcYmRr43lCJlT1Nok80VjCW7n500xXbNh6aWYSQ2g==
+	bh=qab9GaeJ7vBfW8Ma2Mf7byvodvhH8M2kQwV+LQnfD+k=;
+	b=3EwzP+jAh6YNNi3WoJflDFLcB6NPzUtXnrcDMeG14GwdXGwAYmfK3zfwrOQ4+EFREUxV
+	 J+jFuOCrbHrvWKo1oksBmxXtDobUeiX+TMANxr4pWvliK3VDT0VwKbSgx58kaDAjGIH1a
+	 p+ERN4OXklig316k0tSr0F6hXB+iKCmncNC9xX9MuvmvK0XxzWNPuniVHL3euWgBbliH4
+	 KS5YUH01f0KD+9V4FQExcZzJNJN+6Zt/2v6wEyX0irtrMbDwOrZQQUxAa7POo1G1/uWRm
+	 E4fumBq6XljjBBUCzy3Yuio/H4lip6JFGjDV6SB/4+2TNog1qLXzzjT3ZSaGlzB4qJw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=kWn3EM8x;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=r8wwCD3C;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9D12F606A31E;
-	Wed, 25 Nov 2026 15:12:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B1EF9606A31E;
+	Wed, 25 Nov 2026 15:12:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=kWn3EM8x
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A55CA1F000C6;
-	Wed, 25 Nov 2026 15:12:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=r8wwCD3C
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0C0451F000C6;
+	Wed, 25 Nov 2026 15:12:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795619544;
-	bh=OzOPQXWJNd7gNMg+XSSK2m+oUDWZoBJkvA/22mI3PmU=;
+	s=korg; t=1795619547;
+	bh=qab9GaeJ7vBfW8Ma2Mf7byvodvhH8M2kQwV+LQnfD+k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=kWn3EM8x2NvAlSXOdZNmb+VtVkupxNskdxGoWuq8fZCQfa+/9sD6BPMHlVeRZz1wF
-	 Harn/vRtQXWo5LrlrEstqMtKmvwg9IlWwvSyERRoE4++PpyzUoO+viORTMDKx1zObZ
-	 9BVz226ADtzhD4AAmLyE1ROgwC501w48meKTuWFk=
+	b=r8wwCD3CmiGp5HQ5kyMgOGA5r08KulNWjJv8AVDwfHJAXuUsDYGQYUHtgbj46HOUW
+	 Ijc/AsjIDmRxWixFIueq4ojvPqo5irfEDK+sSJPcA/Jlyk1kv9hWdzrUj0tYFyQVE5
+	 h0Y3Fbr/6/g8ntvg9uytQs9aD+QyhLorrGGxGbUU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhao Gongyi <zhaogongyi@bytedance.com>,
+	James Clark <jjc@jclark.com>,
+	Maxime Chevallier <maxime.chevallier@bootlin.com>,
+	Lorenzo Bianconi <lorenzo.bianconi@oss.qualcomm.com>,
+	Kory Maincent <kory.maincent@bootlin.com>,
 	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 7.3 0630/1005] net: netns: fix INT_MAX nsid cleanup
-Date: Wed, 25 Nov 2026 15:32:48 +0100
-Message-ID: <20261125143836.503901653@linuxfoundation.org>
+Subject: [PATCH 7.3 0631/1005] net: stmmac: ptp: fix support for PTP_EXTTS_REQUEST2 ioctl
+Date: Wed, 25 Nov 2026 15:32:49 +0100
+Message-ID: <20261125143836.529488612@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143821.729802100@linuxfoundation.org>
 References: <20261125143821.729802100@linuxfoundation.org>
@@ -67,75 +70,61 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zhao Gongyi <zhaogongyi@bytedance.com>
+From: James Clark <jjc@jclark.com>
 
-commit dd6f1e7582f0f7f12c2d620cf50446aa987d7327 upstream.
+commit b66fca408bf85bb40f48a689daac75421f5283f8 upstream.
 
-A syzkaller reproducer assigning INT_MAX as a peer nsid triggers an
-idr_get_next() warning during netns cleanup. With panic_on_warn, this
-panics the kernel.
+Commit 7c571ac57d9d ("net: ptp: introduce .supported_extts_flags to
+ptp_clock_info") modified the PTP core to validate the supported flags
+of external timestamp requests, rather than relying on each driver to
+check them.
 
-alloc_netid() also overflows reqid + 1 for this nsid. Use
-idr_alloc_u32() for requested IDs and idr_get_next_ul() for cleanup so
-the cursor can advance past INT_MAX.
+stmmac_enable() and dwmac1000_ptp_enable() ignore the flags, and
+neither stmmac_ptp_clock_ops nor dwmac1000_ptp_clock_ops was given any
+.supported_extts_flags. Since PTP_EXTTS_REQUEST2 always implies
+PTP_STRICT_FLAGS, the core now rejects every PTP_EXTTS_REQUEST2 for
+this driver with -EOPNOTSUPP, where before that commit the same
+requests succeeded. Only the PTP_EXTTS_REQUEST ioctl still works.
 
-QEMU/KVM reproduced the warning without kernel changes or fault
-injection. The same reproducer ran without warnings after this change.
-Kernel selftests were not run.
+Tests on an NXP i.MX 8M Plus (FRDM-IMX8MPLUS, GMAC 5.10a) show that the
+auxiliary snapshot inputs timestamp just the rising edge. The reference
+manuals for the STM32MP13 (GMAC 4.20a) and the Cyclone V HPS (GMAC
+3.70a, which uses dwmac1000_ptp_clock_ops) say the same.
 
-Fixes: 7acee67a6bce ("netns: optimize netns cleaning by batching unhash_nsid calls")
+Encode this in .supported_extts_flags. A PTP_EXTTS_REQUEST2 for the
+rising edge then succeeds, and one for the falling edge or for both
+edges fails with -EOPNOTSUPP.
+
+Fixes: 7c571ac57d9d ("net: ptp: introduce .supported_extts_flags to ptp_clock_info")
 Cc: stable@vger.kernel.org
-Signed-off-by: Zhao Gongyi <zhaogongyi@bytedance.com>
-Link: https://patch.msgid.link/20261111033525.65828-1-zhaogongyi@bytedance.com
+Signed-off-by: James Clark <jjc@jclark.com>
+Reviewed-by: Maxime Chevallier <maxime.chevallier@bootlin.com>
+Reviewed-by: Lorenzo Bianconi <lorenzo.bianconi@oss.qualcomm.com>
+Reviewed-by: Kory Maincent <kory.maincent@bootlin.com>
+Link: https://patch.msgid.link/20261104052504.1886335-1-jjc@jclark.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/core/net_namespace.c | 17 +++++++++++------
- 1 file changed, 11 insertions(+), 6 deletions(-)
+ drivers/net/ethernet/stmicro/stmmac/stmmac_ptp.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/net/core/net_namespace.c b/net/core/net_namespace.c
-index 52c2bd44778a..c94718429771 100644
---- a/net/core/net_namespace.c
-+++ b/net/core/net_namespace.c
-@@ -270,14 +270,19 @@ static void ops_undo_single(struct pernet_operations *ops,
- /* should be called with nsid_lock held */
- static int alloc_netid(struct net *net, struct net *peer, int reqid)
- {
--	int min = 0, max = 0;
-+	int ret;
-+	u32 id;
- 
- 	if (reqid >= 0) {
--		min = reqid;
--		max = reqid + 1;
-+		id = reqid;
-+		ret = idr_alloc_u32(&net->netns_ids, peer, &id, id,
-+				    GFP_ATOMIC);
-+		if (ret)
-+			return ret;
-+		return id;
- 	}
- 
--	return idr_alloc(&net->netns_ids, peer, min, max, GFP_ATOMIC);
-+	return idr_alloc(&net->netns_ids, peer, 0, 0, GFP_ATOMIC);
- }
- 
- /* This function is used by idr_for_each(). If net is equal to peer, the
-@@ -639,10 +644,10 @@ static void unhash_nsid(struct net *last)
- 	 * use for_each_net_rcu() or net_rwsem.
- 	 */
- 	for_each_net(tmp) {
--		int id = 0;
-+		unsigned long id = 0;
- 
- 		spin_lock(&tmp->nsid_lock);
--		while ((peer = idr_get_next(&tmp->netns_ids, &id))) {
-+		while ((peer = idr_get_next_ul(&tmp->netns_ids, &id))) {
- 			int curr_id = id;
- 
- 			id++;
--- 
-2.56.1
-
+--- a/drivers/net/ethernet/stmicro/stmmac/stmmac_ptp.c
++++ b/drivers/net/ethernet/stmicro/stmmac/stmmac_ptp.c
+@@ -277,6 +277,7 @@ const struct ptp_clock_info stmmac_ptp_c
+ 	.n_per_out = 0, /* will be overwritten in stmmac_ptp_register */
+ 	.n_pins = 0,
+ 	.pps = 0,
++	.supported_extts_flags = PTP_RISING_EDGE | PTP_STRICT_FLAGS,
+ 	.adjfine = stmmac_adjust_freq,
+ 	.adjtime = stmmac_adjust_time,
+ 	.gettimex64 = stmmac_get_timex,
+@@ -294,6 +295,7 @@ const struct ptp_clock_info dwmac1000_pt
+ 	.n_per_out = 0,
+ 	.n_pins = 0,
+ 	.pps = 0,
++	.supported_extts_flags = PTP_RISING_EDGE | PTP_STRICT_FLAGS,
+ 	.adjfine = stmmac_adjust_freq,
+ 	.adjtime = stmmac_adjust_time,
+ 	.gettimex64 = stmmac_get_timex,
 
 
