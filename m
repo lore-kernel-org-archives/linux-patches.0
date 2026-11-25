@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795618983;
-	b=x33yJKVnklv79E+za3YnhXtGye0KxPi0yqzjkHKoi7TiiBtzzvaYBx/mIz5Q+oRe+kE9
-	 9nRICKK3XcMtT0mWbxeY2ZYyE+AAOzVO0h8caTKeIMQQVrQ8C4Yzon6bsLW20jr6osgFM
-	 i8FB5DJMdpkCjooIY6SmInhLaXhy3xxMlicljTJLujmczQwQqbDVi/WzqZ3a7yGQ3aT77
-	 vcEiWLJIHwdXfJX5o/RF9zmtLeYpQSOuicK4wy8YQf5x4a9Z9Aox4os332QhJvO4wdEwB
-	 x+4I/ozvYVme/UEa3uuj7u6KIPEIC8CT0QhWB8TroGBXS7uRhdN+pT2S5XQLSV6dBrA==
+	t=1795618985;
+	b=uiY4lmQeDPT6uHRndlovoRd8uAv7PTjfGB34+Pw8zVgJwBrSYpDuiqRfELv2+X4xjgBw
+	 GFmPMFEW23unVOm6rMbAX9WbYsnCFjXaJsFdWrLXu0rYpAz3UWKhtr9mEuMIfj7jXiva7
+	 CuCvDWMdsEko9VGK+ihPU7MsmjbxW/KP4qi5dTq174v5REQ0CBixMzpMM8y7siBfUFGp4
+	 uTAm4vXIDP3VMpaZaClS4RGq6husc9ps+yNm+2URzr117t2Bs5lqsTDIQ6LYn6QhJCQ6G
+	 DHjLnjfG5iGgEBbzodidelG8SHvuAeyxNVArhDKOjcliZkuGfj9bap74e+VYdcOalOQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795618983;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795618985;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Type:Content-Transfer-Encoding;
-	bh=DfZpmB3hrZ3dtqgcc0cLtIC6IURZSfj+kGCnK46g/Ss=;
-	b=PuVnIaDafaE56wKSLrPnTrra3EHeGL6sQtrx0YMzrwMVlHlgaruKvw4EsvBBAf/HrR8s
-	 OhjoB/t9IRfQE05YHeoOO4KE+5xVT7pTxe+67aUsJaIz4sl2vAjktOOCnth6mHRiNNs1p
-	 Y6o1NHk/CJ2ccC4YpB0KKbQKw113UDgK4HwslZWdUc0S6z1qYeUDAi7MrVYVROGtnuOFZ
-	 EwRM1JGzh/d1Xcwzs9JqKe0gKbcnK/cw6PkvJQF98h7hF84+Ho+fKat0fL2su1way6WMG
-	 4/0q3AjIIN+u2gStl45D4YeJtHqSpd0ZI09UwFi3/mv7qh0lmnkVdeOgJU4aHUwjJRw==
+	 MIME-Version:Content-Transfer-Encoding;
+	bh=L72L/4RNg8bcdGiWi1VR/fQdQWqwCN3r+9SrBlyBO6k=;
+	b=LONVmXAsS5SkXUyuFvPCCKQlD5cms2TiMHTFVFiPSi8/PBwm1P9LsdJ5WAbHHVEqtEGR
+	 4fYXQWzZWT+CEXhZj/bf7wKZyNOveWsWFbwYtcby6IjQXZkXyQTpjqmkm7FvK4xp9lPBK
+	 UjNNXYDfsvMx7Fumo+z5HU0fUVaWOxW7Y+D7x7oxSxN7cUPlH+ZLgnK993Zk/UfZj1anC
+	 QJBaFrl1VJ9DPaxIckbUg9T4kvRQdNXUhv0pY6OZ1qjhP8F1Zkkcie6okovpdH8+z4qhC
+	 feGwoP1C69AB79ymYjphiQTQoTAIvT9os2hXDtwhybP55OrjSMj2lJyEYfcLl+UFmxA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=T2l7ZqRM;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=jZy3+VnA;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EC2B2606A323;
-	Wed, 25 Nov 2026 15:03:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BED76606A321;
+	Wed, 25 Nov 2026 15:03:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=T2l7ZqRM
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 40E1A1F000C6;
-	Wed, 25 Nov 2026 15:03:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=jZy3+VnA
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1C7471F000C0;
+	Wed, 25 Nov 2026 15:03:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795618982;
-	bh=DfZpmB3hrZ3dtqgcc0cLtIC6IURZSfj+kGCnK46g/Ss=;
+	s=korg; t=1795618985;
+	bh=L72L/4RNg8bcdGiWi1VR/fQdQWqwCN3r+9SrBlyBO6k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=T2l7ZqRMoXnqOm3EuYUfqqVj8HXwHi+zvsFMSmssD3sU6HV5fusSI2XOIYa1fCWB6
-	 891MriQd8S1FrrGFGIIAZ0ZIYya3VQKyt2nnsL0jy7/LdRiHb2G6eRYaRtl9la4hcG
-	 xylHXMpi1uYh47skmhcBU6DqhEtDSVlOf1jInZ7Q=
+	b=jZy3+VnAyNE87bPElBsN6D/nfcMrphjAycPERFtpIuLdt9I1ZwwdPF+JYXc3BLsbV
+	 t9oXwN2ma7FLRloGmpBd1qK83OmWebpf1kR7twgO/PNwiHmRFgMVQsBSIRyc0qmWQ+
+	 VnMnyhaG7+ajIbDz6PtDhL+RGIJCR76M9WASgWbo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Maciej Fijalkowski <maciej.fijalkowski@intel.com>,
-	=?UTF-8?q?Bj=C3=B6rn=20T=C3=B6pel?= <bjorn@kernel.org>,
+	Stefano Munari <stefanomunari.sm@gmail.com>,
+	Oleksij Rempel <o.rempel@pengutronix.de>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0449/1005] idpf: free stashed XSk Rx frame when releasing the queue
-Date: Wed, 25 Nov 2026 15:29:47 +0100
-Message-ID: <20261125143832.265936353@linuxfoundation.org>
+Subject: [PATCH 7.3 0450/1005] net: usb: lan78xx: resume phylink on non-reset USB resume
+Date: Wed, 25 Nov 2026 15:29:48 +0100
+Message-ID: <20261125143832.289276903@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143821.729802100@linuxfoundation.org>
 References: <20261125143821.729802100@linuxfoundation.org>
@@ -63,58 +63,78 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 7.3-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Maciej Fijalkowski <maciej.fijalkowski@intel.com>
+From: Stefano Munari <stefanomunari.sm@gmail.com>
 
-[ Upstream commit 3cbee39da8251098e2631a106fafcaebc7c8e66b ]
+[ Upstream commit be9587c47db16faaca5415f533637755c65a4eb0 ]
 
-idpf_xskrq_poll() stashes a partially received multi-buffer frame in
-rxq->xsk, with its frags on pool->xskb_list. Nothing frees or clears
-rxq->xsk on queue release, as idpf_rx_desc_rel() only returns the page
-stash sharing its storage for non-XSk queues.
+lan78xx_suspend() calls phylink_suspend(dev->phylink, false) on an open
+interface, which always stops phylink and halts the PHY. The matching
+phylink_resume() is only called from lan78xx_reset_resume().
+When the USB device stays powered across system sleep (e.g. s2idle) and
+the USB core calls .resume instead, the link stays down until the interface
+is brought down and up by hand. The ifdown triggers:
 
-On ifdown, the buffers are lost to user space and, as the pool outlives
-the queue, the stale frags are taken as frags of the next frame. If the
-pool is disabled on a running interface, the queue restarts in page
-mode with rxq->xdp.data still pointing to an xskb of the pool, which is
-freed later. The page path then takes it for a partial frame, writes
-frag info through it and returns it to a page pool.
+  WARNING: drivers/net/phy/phy.c:1670 at phy_stop+0x44/0xc8
+  called from state HALTED
 
-Free the stashed frame and clear the pointer when the XSk state of the
-queue is cleared, while the pool is still attached.
+Move phylink_resume() to the end of lan78xx_resume(), which both resume
+paths go through, and call it only if the resume succeeded and the
+interface was open, mirroring lan78xx_suspend(). As a side effect,
+lan78xx_reset_resume() no longer starts phylink on a closed interface.
 
-Fixes: 9705d6552f58 ("idpf: implement Rx path for AF_XDP")
-Signed-off-by: Maciej Fijalkowski <maciej.fijalkowski@intel.com>
-Reviewed-by: Björn Töpel <bjorn@kernel.org>
-Link: https://patch.msgid.link/20261102124950.958345-10-maciej.fijalkowski@intel.com
+Tested on a Raspberry Pi 3B+ (LAN7515) with s2idle: the link now comes
+back up on its own after resume and ifdown no longer warns.
+
+Fixes: e110bc825897 ("net: usb: lan78xx: Convert to PHYLINK for improved PHY and MAC management")
+Signed-off-by: Stefano Munari <stefanomunari.sm@gmail.com>
+Tested-by: Oleksij Rempel <o.rempel@pengutronix.de>
+Link: https://patch.msgid.link/20261102235133.23011-1-stefanomunari.sm@gmail.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/intel/idpf/xsk.c | 5 +++++
- 1 file changed, 5 insertions(+)
+ drivers/net/usb/lan78xx.c | 16 +++++++---------
+ 1 file changed, 7 insertions(+), 9 deletions(-)
 
-diff --git a/drivers/net/ethernet/intel/idpf/xsk.c b/drivers/net/ethernet/intel/idpf/xsk.c
-index d95d3efdfd36f..5a0a1d8a7a866 100644
---- a/drivers/net/ethernet/intel/idpf/xsk.c
-+++ b/drivers/net/ethernet/intel/idpf/xsk.c
-@@ -134,6 +134,11 @@ void idpf_xsk_clear_queue(void *q, enum virtchnl2_queue_type type)
- 		if (!idpf_queue_has_clear(XSK, rxq))
- 			return;
+diff --git a/drivers/net/usb/lan78xx.c b/drivers/net/usb/lan78xx.c
+index af845623bf609..e170c1114d8f2 100644
+--- a/drivers/net/usb/lan78xx.c
++++ b/drivers/net/usb/lan78xx.c
+@@ -5370,6 +5370,12 @@ static int lan78xx_resume(struct usb_interface *intf)
+ out:
+ 	mutex_unlock(&dev->dev_mutex);
  
-+		if (rxq->xsk) {
-+			libeth_xsk_buff_free_slow(rxq->xsk);
-+			rxq->xsk = NULL;
-+		}
++	if (!ret && dev_open) {
++		rtnl_lock();
++		phylink_resume(dev->phylink);
++		rtnl_unlock();
++	}
 +
- 		rxq->pool = NULL;
- 		break;
- 	case VIRTCHNL2_QUEUE_TYPE_RX_BUFFER:
+ 	return ret;
+ }
+ 
+@@ -5384,15 +5390,7 @@ static int lan78xx_reset_resume(struct usb_interface *intf)
+ 	if (ret < 0)
+ 		return ret;
+ 
+-	ret = lan78xx_resume(intf);
+-	if (ret < 0)
+-		return ret;
+-
+-	rtnl_lock();
+-	phylink_resume(dev->phylink);
+-	rtnl_unlock();
+-
+-	return 0;
++	return lan78xx_resume(intf);
+ }
+ 
+ static const struct usb_device_id products[] = {
 -- 
 2.53.0
 
