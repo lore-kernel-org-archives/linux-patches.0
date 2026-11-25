@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795624654;
-	b=Wan6terKFas/OFVl/c0IsGKVjUkbxPJZswXNxW1zUqsttkpGJlUMrX35h5VGuxhHmZsG
-	 bgGZe1NH+Sz1l1RfaOL5EdjqOBrceKpTNpFMmIOU3QDLYZ3c5YC/Pyul7dWmWB5HFESgU
-	 P2uaT1QQbK2uC3VxVK0zoY1w0KnxVP2BKv6gP/N9t5nWOYas5Llhs903E1jXga/5KlwOd
-	 qnCDfwWa6ZulPL78H6/j5zKzWjKxwdzUBt5aL/GJ+QZ9I6LhPujHM2H6LIMI5uadxGfqT
-	 HssOGV3+8DVNh1rJKTGXoUwNaHB5QqDBISXe4O/C7kxuw+bZdC8BoeAKGtY5ExzM0hg==
+	t=1795624656;
+	b=eC65zLmeG4vZrKj9/ru2HLNlOPrpst+gsCwYMdKhJbRUmQwY2Du9pPIF1N7vQrfXVZCz
+	 tZrRjM+PDUFJdLNIjk3z3zEClKLnfwIW/ahKpllyX5jgmvF91NGzmWBmodTRR/9J09zBC
+	 N9OwhKUXmJxttdJwAyPVhT6KxaEI3Pdrxml02CBWg4axfuylhEg9H6Pop9+Lc2TqKjP0E
+	 MTbBN036LugOsWbX05u7K/b7MWJHwyR0mdri6IgFBs2JtKDj9EspqmOZUohFEJiAcnGGG
+	 EgHsnvHrS8RFZK3QqjSKYviqLWKebnc61jPz7WYGEvuHmlMawNDzTwJGsYZaOQylBwg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795624654;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795624656;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=G4ogTb7PAhU+NFPjHZO+uncnFzOsqKKKh7O9r8SS1N0=;
-	b=dDxsMl/I/F0zZs82eZjAhdxwonzbSMMRg4wpUk3GTc3x0z65wJUmxG/C5npIGtH/a6jm
-	 pqf04urDahAQKVYVDbBFG9aX+m6Ieny6OpUS+SWC3toYIcBSzLNf+FmFmpEmBfnjqTvsK
-	 c4BUdBsRUmkJw2i2/9WD8Y+kScW+HrVWEfX65LVp8J9uNP1t3AhX51SMqXxtKo+qD0BrR
-	 AWO0oewpmoy7l6up+n6RZu5TUstGM/SguBRgq8x4JP0DI5TWVEl1Ab75wCs7UgSYj1c9b
-	 nf7ujsjMnsgj+VIFHKvDgLb/rvUv+Xxi6UEEAkxFTeNY/+8uUCp1uCDAV3hJL61AEgw==
+	bh=qQ/XgFqs+6Y37z4eYHFj4TyR7AIkLbf8Skm1OEeMNcA=;
+	b=uuzQ6sXXNHKWIMkQLADgpFnFYiDX4qsL7VgZI6M/oQYAnoAUbpQRaaCuY5l0R8KLhyuT
+	 Na0yTKIbZbyCUmQqLzQd1iNNFRxElQ7WINTJk+4wq/cN9XD4ksAyLqI1dISZu5ANEDpW7
+	 aKSiQnKGbb0boP2zc+34Q8v8mJhOLdo8cx5VkzvQYOafoyHgV/6cnQ7ZfMkxfBT8Iuk0w
+	 2jhhL2Beo1BwlrYs/LUB7TLaPI6KiQi6FZT8Vo46G3yeqJT5R57gZLJv6Rk1ka0Af6Ma6
+	 waH8Qdq8/CkaYDbUurI7Bx18XqfZc4hQfSUBYfPXjTNdxyrtgqnAzwZT0xnIGNhh72w==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=FOtQpkQh;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="cpkbx/U9";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E8CDA606A33B;
-	Wed, 25 Nov 2026 16:37:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CCD4E606A333;
+	Wed, 25 Nov 2026 16:37:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=FOtQpkQh
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 000091F000C6;
-	Wed, 25 Nov 2026 16:37:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=cpkbx/U9
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0D2BE1F000D0;
+	Wed, 25 Nov 2026 16:37:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795624653;
-	bh=G4ogTb7PAhU+NFPjHZO+uncnFzOsqKKKh7O9r8SS1N0=;
+	s=korg; t=1795624656;
+	bh=qQ/XgFqs+6Y37z4eYHFj4TyR7AIkLbf8Skm1OEeMNcA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=FOtQpkQh7E3FD5FntJAuMWw24PhRmz9tRCk/ALAKfFVs8WYW5kAW60lGUpPi2XV9z
-	 wMmMHbABKIId/9tnJUxQ9jvTpw1y/f5auRRzB26bk3FZtvKnCs4KDQhoItpUnQGIUT
-	 bN+OJ3LHT6XHmyNagkRhvFCv4Vu0NuTOoLND6pZA=
+	b=cpkbx/U9hOQUuVhf/p//svjnr/B35u1QZJYYt7TlFKa8SFLRfCCcdRWrHkO5dYwBH
+	 Lf07s0p3FNIVtHv3xTh788xoyCX3WNyUD476Cpr0l1q4xlQONjp/KPvhyTg53Pjh6n
+	 xiaig4+H3sJbOBjrqvroUuNUsRmG7KwGpkOQt7UI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sashiko <sashiko-bot@kernel.org>,
-	Ben Segall <bsegall@google.com>,
-	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
+	Kyle Zeng <kylebot@openai.com>,
+	Ido Schimmel <idosch@nvidia.com>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 262/816] perf: Fix racy update of cpc->hrtimer_interval
-Date: Wed, 25 Nov 2026 15:30:10 +0100
-Message-ID: <20261125143855.272821033@linuxfoundation.org>
+Subject: [PATCH 6.12 227/816] ip6mr: Serialize multicast router socket ownership
+Date: Wed, 25 Nov 2026 15:29:35 +0100
+Message-ID: <20261125143854.461444969@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143849.205329330@linuxfoundation.org>
 References: <20261125143849.205329330@linuxfoundation.org>
@@ -69,73 +69,112 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Benjamin Segall <bsegall@google.com>
+From: Kyle Zeng <kylebot@openai.com>
 
-[ Upstream commit 3bbd85b2f67aff58f2cbec9a7fb705677b94473b ]
+[ Upstream commit c6b41de4dd9f2d6856d8d8d292348f7961034152 ]
 
-Updates to cpc->hrtimer_interval can race with reads either in the
-hrtimer itself, or other calls to perf_mux_hrtimer_restart. This is not
-exactly expected to be a common config change, but it's easy enough to
-fix.
+MRT6_TABLE checks whether the socket owns its current table before
+acquiring RTNL. MRT6_INIT also looks up its table before taking RTNL.
+Consequently, concurrent TABLE and INIT calls can initialize the old
+table and then change the socket's selected table. Another INIT can
+register the same socket in the new table.
 
-Since there's already an IPI to each cpu to restart the timer, and all
-reads are with irqs disabled, just move the update onto the target cpu.
+rawv6_close() calls ip6mr_sk_done(), which clears only the first table
+owned by the socket. After the socket's RCU-delayed free, the other
+table retains a dangling mroute_sk pointer. A subsequent multicast cache
+report passes that pointer to sock_queue_rcv_skb_reason(). This produces
+a KASAN slab-use-after-free in sk_filter_trim_cap().
 
-Fixes: 62b856397927 ("perf: Add sysfs entry to adjust multiplexing interval per PMU")
-Reported-by: Sashiko <sashiko-bot@kernel.org>
-Signed-off-by: Ben Segall <bsegall@google.com>
-Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
-Link: https://sashiko.dev/#/patchset/xm265wykhyrv.fsf%40google.com
-Link: https://patch.msgid.link/xm26se1ihlqb.fsf@google.com
+Look up the selected table in ip6mr_sk_init() after acquiring RTNL.
+Likewise, re-read the current table and check its owner under RTNL in
+MRT6_TABLE before updating the selection. This preserves the single-table
+ownership invariant shared with ip6mr_sk_done(), without changing the
+locking of the other multicast socket options.
+
+Fixes: d1db275dd3f6 ("ipv6: ip6mr: support multiple tables")
+Signed-off-by: Kyle Zeng <kylebot@openai.com>
+Reviewed-by: Ido Schimmel <idosch@nvidia.com>
+Link: https://patch.msgid.link/20261030042221.73996-1-kylebot@openai.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/events/core.c | 22 +++++++++++-----------
- 1 file changed, 11 insertions(+), 11 deletions(-)
+ net/ipv6/ip6mr.c | 36 +++++++++++++++++++++++++-----------
+ 1 file changed, 25 insertions(+), 11 deletions(-)
 
-diff --git a/kernel/events/core.c b/kernel/events/core.c
-index 45b7a1fdc964d..104064992b760 100644
---- a/kernel/events/core.c
-+++ b/kernel/events/core.c
-@@ -1185,14 +1185,19 @@ static int perf_mux_hrtimer_restart(struct perf_cpu_pmu_context *cpc)
- 	return 0;
+diff --git a/net/ipv6/ip6mr.c b/net/ipv6/ip6mr.c
+index 0ecb6af344fbc..c608fc0a771aa 100644
+--- a/net/ipv6/ip6mr.c
++++ b/net/ipv6/ip6mr.c
+@@ -1575,12 +1575,20 @@ static void mroute_clean_tables(struct mr_table *mrt, int flags)
+ 	}
  }
  
--static int perf_mux_hrtimer_restart_ipi(void *arg)
-+static __always_inline struct perf_cpu_pmu_context *this_cpc(struct pmu *pmu)
+-static int ip6mr_sk_init(struct mr_table *mrt, struct sock *sk)
++static int ip6mr_sk_init(struct sock *sk)
  {
--	return perf_mux_hrtimer_restart(arg);
-+	return *this_cpu_ptr(pmu->cpu_pmu_context);
- }
+-	int err = 0;
+ 	struct net *net = sock_net(sk);
++	struct mr_table *mrt;
++	int err = 0;
  
--static __always_inline struct perf_cpu_pmu_context *this_cpc(struct pmu *pmu)
-+static int perf_mux_hrtimer_interval_ipi(void *arg)
- {
--	return *this_cpu_ptr(pmu->cpu_pmu_context);
-+	struct pmu *pmu = arg;
-+	struct perf_cpu_pmu_context *cpc = this_cpc(pmu);
-+	int ms = pmu->hrtimer_interval_ms;
+ 	rtnl_lock();
++	mrt = __ip6mr_get_table(net,
++				raw6_sk(sk)->ip6mr_table ? : RT6_TABLE_DFLT);
++	if (!mrt) {
++		err = -ENOENT;
++		goto out_unlock;
++	}
 +
-+	cpc->hrtimer_interval = ns_to_ktime(NSEC_PER_MSEC * ms);
-+	return perf_mux_hrtimer_restart(cpc);
- }
+ 	spin_lock(&mrt_lock);
+ 	if (rtnl_dereference(mrt->mroute_sk)) {
+ 		err = -EADDRINUSE;
+@@ -1596,6 +1604,7 @@ static int ip6mr_sk_init(struct mr_table *mrt, struct sock *sk)
+ 					     NETCONFA_MC_FORWARDING,
+ 					     NETCONFA_IFINDEX_ALL,
+ 					     net->ipv6.devconf_all);
++out_unlock:
+ 	rtnl_unlock();
  
- void perf_pmu_disable(struct pmu *pmu)
-@@ -11728,13 +11733,8 @@ perf_event_mux_interval_ms_store(struct device *dev,
+ 	return err;
+@@ -1694,7 +1703,7 @@ int ip6_mroute_setsockopt(struct sock *sk, int optname, sockptr_t optval,
+ 		if (optlen < sizeof(int))
+ 			return -EINVAL;
  
- 	/* update all cpuctx for this PMU */
- 	cpus_read_lock();
--	for_each_online_cpu(cpu) {
--		struct perf_cpu_pmu_context *cpc;
--		cpc = *per_cpu_ptr(pmu->cpu_pmu_context, cpu);
--		cpc->hrtimer_interval = ns_to_ktime(NSEC_PER_MSEC * timer);
+-		return ip6mr_sk_init(mrt, sk);
++		return ip6mr_sk_init(sk);
+ 
+ 	case MRT6_DONE:
+ 		return ip6mr_sk_done(sk);
+@@ -1815,16 +1824,21 @@ int ip6_mroute_setsockopt(struct sock *sk, int optname, sockptr_t optval,
+ 		/* "pim6reg%u" should not exceed 16 bytes (IFNAMSIZ) */
+ 		if (v != RT_TABLE_DEFAULT && v >= 100000000)
+ 			return -EINVAL;
+-		if (sk == rcu_access_pointer(mrt->mroute_sk))
+-			return -EBUSY;
 -
--		cpu_function_call(cpu, perf_mux_hrtimer_restart_ipi, cpc);
--	}
-+	for_each_online_cpu(cpu)
-+		cpu_function_call(cpu, perf_mux_hrtimer_interval_ipi, pmu);
- 	cpus_read_unlock();
- 	mutex_unlock(&mux_interval_mutex);
- 
+ 		rtnl_lock();
+ 		ret = 0;
+-		mrt = ip6mr_new_table(net, v);
+-		if (IS_ERR(mrt))
+-			ret = PTR_ERR(mrt);
+-		else
+-			raw6_sk(sk)->ip6mr_table = v;
++		mrt = __ip6mr_get_table(net,
++					raw6_sk(sk)->ip6mr_table ? : RT6_TABLE_DFLT);
++		if (!mrt) {
++			ret = -ENOENT;
++		} else if (sk == rtnl_dereference(mrt->mroute_sk)) {
++			ret = -EBUSY;
++		} else {
++			mrt = ip6mr_new_table(net, v);
++			if (IS_ERR(mrt))
++				ret = PTR_ERR(mrt);
++			else
++				raw6_sk(sk)->ip6mr_table = v;
++		}
+ 		rtnl_unlock();
+ 		return ret;
+ 	}
 -- 
 2.53.0
 
