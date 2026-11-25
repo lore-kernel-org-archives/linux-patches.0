@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795620240;
-	b=RgGu3e/SJznHBlIvW1LNeujk8ae38QJz57SCPbnH5V399uxAeRqpWSj4Zl/HK8FBa4Gy
-	 BwWzN3xvAtZL8fq9myUVI2amMh9+AIqux2+SvxSgPS2AOiSmWNm2F4PO3CC/ZzR1Hv381
-	 GdZliOZK2ECknslbi6oBSZ/FeztE3NEOOc9ufmHq7l6Ps6/g4ZHIYl6i5mnhGrOWUxIv6
-	 zOvVlmcCNjCf1CZSPytwwGFXrhbqf+tzQktYoHFEioFUdnkGMH4RNK1ytPsc5bXyhY8uT
-	 dYUuvJTplQJVKCM+xwDN2hSQ3eaiAiAJpTAza3jhHgWGT6Az0ziD0WS8mlx69puFvpw==
+	t=1795620244;
+	b=dKtQbOqUm/+dPib5cesRXKCrMm5MGiXqI/Y46eqecPv1fZhcUQaF3WECx0kaKWKK/n74
+	 XvWCiXh8921XF6CcIHe6nvWm3o05Pe6tQuSZy3gqXXSpcQ1o39DpHGz1QhwMaRSfCwXrY
+	 5K0WoOaY2A2PdmCsl9bDacEF4jmzgJ7VaSF+zFYeJd/Mwo3jLdHxmmn1dvCPx2lfU7bQg
+	 +QiDuZf2a9896Tc+hiArEyWtmV7OdKcjGTn40bd6YuhHt1DMNFn/rUFNGuZhbFfzL3lZ/
+	 UDqqE5/xteqyhTiq6RUNIVDsWWNGISyJNN1dTaMi932HVELkwUg4MEWoJMFlMN4v3EQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795620240;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795620244;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Transfer-Encoding;
-	bh=a6nj/pWGgyfG/Z6VClBehBd58vbj1XhZVK0QXaFD6+8=;
-	b=W+eicmdMTQg682GCeBi3GSJZtSbFOZgERNX6zMHCHD/ZkpjKp7OkzjNUZzSz2Q2mnZS9
-	 8YdoPcZWDn/WvGtd5VRVWP5v1b7kYhXfP4R9C9DA2DapnRSh16+vKzV3pyUooBgioOsZI
-	 DnCJXETzVnzIpZL6Nbzovj5aytxpC0pn9mgo+5beAKdvx0qk4eucxnhZJ2moR4GgmJ8YW
-	 d2LZYl+jGQV87zndqwt6qc7x7w6P+xhxmHDkpVK0Ey1VgBs7yVnvghK0pZ2Ga/bc/0xlx
-	 OJ27JVLQGSt2dpCaPsOY/Z5YZKyI5xqHbDWJqq06/NpjGcm/LizQMkAp2l1s17rmgyQ==
+	 MIME-Version:Content-Type:Content-Transfer-Encoding;
+	bh=PXMFJKaM9m1Gb2gUmll+ndi0eMrnk389eMz5I8O8w3g=;
+	b=cVbta+cfd9J8MwhpTzGui31s9ARdPQsEr57agopIcM/i+cAzl23cCT+M7ffeBe3IoiVt
+	 PtlIRmLunlxlKASBwltKH35IEdQGZOnpHf+nb7W4n+NBZ5lIoFiDljHshLu8Lu93bPKmu
+	 V1IAPbB2cjV9M74YM2p9WKBSnp4+GFORlX8KuLW20sFQrto2wwUtV7ifMSkatEGr8PZeb
+	 3iVHIruMudJ7HuXMLVdoyDq5rZN8VHan40tVoJkVzc+MgTV6WFZsB7TwKfSI4sK1iCCFK
+	 5Cam6AnTxDQkkpIzcj/xdTIVaLW9++mjwHkfsRoy0VCKRDvLtJZLQ1BwQXt/hshpj4g==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=IkJmG8e4;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=lsDUfTsg;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6E20B606A33D;
-	Wed, 25 Nov 2026 15:24:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 43C2F606A323;
+	Wed, 25 Nov 2026 15:24:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=IkJmG8e4
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A5C7E1F01576;
-	Wed, 25 Nov 2026 15:23:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=lsDUfTsg
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2237B1F000D0;
+	Wed, 25 Nov 2026 15:24:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795620240;
-	bh=a6nj/pWGgyfG/Z6VClBehBd58vbj1XhZVK0QXaFD6+8=;
+	s=korg; t=1795620243;
+	bh=PXMFJKaM9m1Gb2gUmll+ndi0eMrnk389eMz5I8O8w3g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=IkJmG8e48BYGIRcKP/MGdnzXV/7gRJdI9FZpp29EbakCzX8x5AApblKzCOymqZdhi
-	 NTjNVzus2iqF/adltmUmLPMGh1YoP08L8nZ6ssWYWRSD3KMT44MfIfinGTx02+X9WP
-	 xSbitySky4UsGe0lJZETg3D7GGV/io3rO0XgG3GY=
+	b=lsDUfTsg5rRiJ1EOAVeoajOOkWzjvqq2xiL/o+5/od5+JaUua0/0PBLZ1RwgP+lvE
+	 5SikqUEuXgC8khcupswBIp1gDsR+oUTxqdOMvjgAcLssNoik8wEr4CvuGYeOb9L/f4
+	 P7phCvLLDkXhI/xM3z054oxB16IDUw154DRRLRzA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mark Bundschuh <mkbund@amazon.com>,
-	Mikulas Patocka <mpatocka@redhat.com>,
-	Damien Le Moal <dlemoal@kernel.org>
-Subject: [PATCH 7.3 0855/1005] dm: fix infinite loop in dm_blk_do_report_zones()
-Date: Wed, 25 Nov 2026 15:36:33 +0100
-Message-ID: <20261125143841.737994458@linuxfoundation.org>
+	Fredric Cover <fredric.cover.lkernel@gmail.com>,
+	Namjae Jeon <linkinjeon@kernel.org>,
+	Paulo Alcantara <pc@manguebit.org>
+Subject: [PATCH 7.3 0838/1005] smb: client: fix out-of-bounds read in dfs_parse_target_referral()
+Date: Wed, 25 Nov 2026 15:36:16 +0100
+Message-ID: <20261125143841.350101228@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143821.729802100@linuxfoundation.org>
 References: <20261125143821.729802100@linuxfoundation.org>
@@ -62,55 +62,76 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 7.3-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Mark Bundschuh <mkbund@amazon.com>
+From: Fredric Cover <fredric.cover.lkernel@gmail.com>
 
-commit 648320de920b30ae1730bbf0e8b86c0df0fb490a upstream.
+commit 86aacc2f3f6ba18e1d87feee24f37c94b3ce863a upstream.
 
-If the device underlying a zoned target is removed, its capacity is set
-to 0 and blkdev_report_zones() returns 0 without reporting any zones.
-The mapped device keeps its old capacity, so args->zone_idx and
-args->next_sector never advance and dm_blk_do_report_zones() loops
-forever. On non-preemptible kernels this causes soft lockups and RCU
-stalls.
+dfs_parse_target_referral() decides whether a prefix path remains after
+the consumed part of full_path with:
 
-The following sequence of commands triggers the hang:
+	if (strlen(full_path) - ref->path_consumed)
 
-modprobe scsi_debug zbc=managed dev_size_mb=1024 zone_size_mb=64
-udevadm settle
-echo '0 2097152 linear /dev/sda 0' | dmsetup create lin
-echo 1 > /sys/block/sda/device/delete
-blkzone report -o 0 -c 1 /dev/mapper/lin
+strlen() returns size_t, so if path_consumed is larger than the length
+of full_path, the subtraction wraps around to a huge non-zero value.
+The branch is then taken, prepath is set to a pointer past the
+terminating NUL of full_path, and *prepath reads out of bounds.
 
-Fix this by returning -EIO when a target reports no zones. The target
-always maps args->next_sector, so a zero return means the underlying
-device no longer covers that sector.
+path_consumed can exceed strlen(full_path) when the mount charset is
+not utf8.  The referral code derives path_consumed from the canonical
+path, which is in the DFS cache charset (utf8), but it is applied here
+to full_path, which is in the mount charset.  Each non-ASCII character
+in the consumed part of the path that is longer in utf8 than in the
+mount charset makes the count too large by the difference.
 
-Fixes: d41003513e61 ("block: rework zone reporting")
+This was reproduced with iocharset=iso8859-1 against a Samba DFS root
+containing a link named "café", mounting with the single Latin-1 byte
+0xe9 in the path.  On an unmodified tree such a mount fails earlier
+with -ENOENT because the path is converted to utf8 twice in
+setup_dfs_ref(); with that fixed ("smb: client: fix double conversion
+of DFS path in setup_dfs_ref()"), the mount reaches this code.
+full_path was 29 bytes while path_consumed was 30:
+
+  BUG: KASAN: slab-out-of-bounds in dfs_parse_target_referral+0x26a/0x270
+  Read of size 1 at addr ffff88810db89d5f by task mount/1743
+  ...
+  The buggy address is located 0 bytes to the right of
+   allocated 31-byte region [ffff88810db89d40, ffff88810db89d5f)
+
+Compare path_consumed against the string length instead of subtracting,
+so that no prefix path is used when the consumed count covers the whole
+string.  With the bounds check in place the same mount succeeds and no
+KASAN report is produced.
+
+This only prevents the out-of-bounds access.  path_consumed is still in
+the wrong units, so a non-ASCII link followed by a path component can
+still produce a wrong prefix path.  That needs a separate fix.
+
+Signed-off-by: Fredric Cover <fredric.cover.lkernel@gmail.com>
 Cc: stable@vger.kernel.org
-Signed-off-by: Mark Bundschuh <mkbund@amazon.com>
-Signed-off-by: Mikulas Patocka <mpatocka@redhat.com>
-Reviewed-by: Damien Le Moal <dlemoal@kernel.org>
+Reviewed-by: Namjae Jeon <linkinjeon@kernel.org>
+Signed-off-by: Paulo Alcantara <pc@manguebit.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/md/dm-zone.c |    2 ++
- 1 file changed, 2 insertions(+)
+ fs/smb/client/dfs.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/md/dm-zone.c
-+++ b/drivers/md/dm-zone.c
-@@ -33,6 +33,8 @@ static int dm_blk_do_report_zones(struct
- 					      nr_zones - args->zone_idx);
- 		if (ret < 0)
- 			return ret;
-+		if (!ret)
-+			return -EIO;
- 	} while (args->zone_idx < nr_zones &&
- 		 args->next_sector < get_capacity(md->disk));
+--- a/fs/smb/client/dfs.c
++++ b/fs/smb/client/dfs.c
+@@ -33,7 +33,7 @@ int dfs_parse_target_referral(const char
+ 	if (WARN_ON_ONCE(!ref->node_name || ref->path_consumed < 0))
+ 		return -EINVAL;
  
+-	if (strlen(full_path) - ref->path_consumed) {
++	if ((size_t)ref->path_consumed < strlen(full_path)) {
+ 		prepath = full_path + ref->path_consumed;
+ 		/* skip initial delimiter */
+ 		if (*prepath == '/' || *prepath == '\\')
 
 
