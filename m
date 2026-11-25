@@ -1,51 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795618145;
-	b=D6Te4Mn3qhitUP5MeJPjCkBKveQhOWZtjrhytSkAnwgQGT2sMsrpo6JRppZ8feKDVSVp
-	 LUb9ujkEF1V0cHPl83S7n4s6RRyGhIO8lLDoSGfv/n+iw9qk9FNrZgoL56moc9e6D+CQe
-	 041odirvtI771ZbHBBBFik0BwxeMLKgzuveYywHPcWGzPJ7YUFZxo/m3WJtlgObXTzvE4
-	 4GXHO3B4/Yg3Lax5OoREa3cANRDAm6wsTRdy2XhrJqrcXEDQ9F2nHp6zo5mHQewn1dUVR
-	 WbLXGXOvkHuiMrhS01PF2idmAG1Y3WcqAXNIJE64C2FmjFBVJzd+NVWNL8GjzOBRWzQ==
+	t=1795618148;
+	b=kfbU5Pjys2uv3urrW9U5LM3MILxaVrJ4ADpXDteqqh+GM03s3qS5mJCBraZ/G7sVZAmO
+	 ZBcFbD7WeS0dYcYIIcjOUAngOgXri9R3ysgFlmLyXrXNFMjt50x7UqLfTYuvycflBhJ50
+	 U+U6E7Z6f735/SWkdIkvgGqwp6itG+ErHHM2lChszBFZboRl3whgGQihJ/pBtT8zKQfFV
+	 RN0eg/8uqpU8DvOFI8vN1T/btR/zXeq+cBHSwOhMCmzyuvtdzNUOSF6vF+aj94OPZNFiq
+	 f0GYG4VHWr8aUO3OE+8jakU3t5r/K0knQW0XMtAfutJL9Q77+Yhq+Ez6B757i4jWM1g==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795618145;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795618148;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=u7zE2QrQBLJSEMRwDyqEP9ZQcvViWdGid2N9AoUYHF8=;
-	b=oKggNGKm0r5zz/3a4FIVIgTVO73yoIFqJkUnQl7KrXHGLz0gIhrmxPsG/csLhatnt5/y
-	 VNbDATptFqReUOYYy7A4iEUbxFVyHdZHW5uEevvUcwQ9E68WKulZYWejp5ukZkRn47p65
-	 FvrV2gBf+t3nBLPVOfxZ9PVuYir2P4htPnjL779B8Wn30W7lGvZ00aKfDJbLz7T4JKsEx
-	 IJ8peeGqnoMdT3qgHELMhYn5sp6/mfjleK5OotRybY52SxDi3Z7OFvf1NL8RD6++oNIcd
-	 6Tlk7MNl0EV5reeG9YUbrses0sytNf9sbSp0w46Dn+eqz663caRNMxfyD9X7xM0/ttA==
+	bh=k4/lyylPW3dqj5Dpgl6ZIkj1INFJ3Ev9k433q8rMnws=;
+	b=HsEJWfmiIJL1p5yalJYGuBlBz351QC9lyT/LVMQVzm9wIWrsv2E0Xan+r2M3fWWUmSvr
+	 z3Vb6LqztYDMxIZ2KSTnBIo8LnMAiXB/1O7OFpbY7StTbGZu/HzxInQDfNyWTjo+zvr0P
+	 SNhoRKF+ro31VihjWDaywsUzXv/EJckVAcENKGw4eYt0FgaDfHVbf9j14H1MKqg4OUicM
+	 cGKH/eugCq1Q57PSCY3prLpgHrV771CZNYjhIA3XrKXMst3RvsncLn0gppadzxjNwP6E1
+	 z8QreIoqLj2pe2HABgR6PmK5WhJ4mY+V0b7L5tzjHcwZ2XL1pNzEQD/IQphIjLTI9mg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=oJxBgvRc;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=sn0esOSd;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6F81D606A31E;
-	Wed, 25 Nov 2026 14:49:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 651A0606A31E;
+	Wed, 25 Nov 2026 14:49:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=oJxBgvRc
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1FFE71F000CA;
-	Wed, 25 Nov 2026 14:49:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=sn0esOSd
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9AA2D1F000C0;
+	Wed, 25 Nov 2026 14:49:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795618144;
-	bh=u7zE2QrQBLJSEMRwDyqEP9ZQcvViWdGid2N9AoUYHF8=;
+	s=korg; t=1795618148;
+	bh=k4/lyylPW3dqj5Dpgl6ZIkj1INFJ3Ev9k433q8rMnws=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=oJxBgvRcV6E2GFXmiQFP6b6ZQCBsPcjwzKYP6EmJBMZknal6GtWMk4FckiQumfOBA
-	 +LD4FwtdQfnocmspo7Hw7ThJOax5+ssOejo5xF6pRPzJHIgez/tvHmSk7Y+rJch/Iq
-	 b4YKs/hJmZiInOSE2YxZBJGXaqxVWyI+iiHVAgcc=
+	b=sn0esOSd++Lky6mWB4gae4OpMg4NEkOubBCgJYtYpnmRFpKTZJzQ7ekz8p3W/Lbsp
+	 f0CP1cwmQBRMgiBPQIZk7xPMQKUqeArnhdTVFJel0vKNxEbx8hLfLqMQSwKQHVd7Mo
+	 03ejjEQKXLk82d+wdVIdGe5fap5dNOJg6gASMrcg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Binbin Deng <18983559317@163.com>,
 	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0187/1005] Bluetooth: hci_sync: Fix invalid Supervision_Timeout in LE Set Default Rate
-Date: Wed, 25 Nov 2026 15:25:25 +0100
-Message-ID: <20261125143826.122158673@linuxfoundation.org>
+Subject: [PATCH 7.3 0188/1005] Bluetooth: hci_core: Initialize IRK before publication
+Date: Wed, 25 Nov 2026 15:25:26 +0100
+Message-ID: <20261125143826.145387165@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143821.729802100@linuxfoundation.org>
 References: <20261125143821.729802100@linuxfoundation.org>
@@ -67,91 +68,71 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+From: Binbin Deng <18983559317@163.com>
 
-[ Upstream commit fb1baa000d7a0b597ab9eb29b179b03e70e5f6ee ]
+[ Upstream commit f0cf5a24cefeb629876bd15d668ff062c8655e28 ]
 
-The LE Set Default Rate Parameters command is rejected with Invalid HCI
-Command Parameters (0x12) because the Supervision_Timeout of 120 ms is
-exactly the minimum recommended by HOGP v1.2:
+hci_add_irk() initializes the identity address and address type of a newly
+allocated IRK, publishes it on hdev->identity_resolving_keys, and only then
+initializes its value and RPA.  RCU readers such as hci_find_irk_by_rpa()
+and the debugfs identity_resolving_keys_show() can traverse the new entry
+during that window and see a zero or partially initialized IRK.
 
-  Greater than or equal to (1 + Peripheral Latency) x Subrate max x
-  Connection Interval max x 2
+The race is reachable by racing an IRK addition with another CPU resolving
+or dumping IRKs.  In particular, userspace can issue MGMT_OP_LOAD_IRKS
+while another process reads the corresponding debugfs file or triggers RPA
+resolution.
 
-But the Core spec treats the equality as invalid:
+Initialize the IRK value and RPA before publishing a newly allocated IRK.
+Existing IRKs remain published and continue to be updated in place.
 
-BLUETOOTH CORE SPECIFICATION Version 6.3 | Vol 4, Part E
-7.8.158. LE Set Default Rate Parameters command
+Found during a static-analysis-assisted audit: candidate sites were
+surfaced by a Coccinelle rule, and the reader/writer paths were
+confirmed by LLM-assisted (GLM-5.3) code inspection.  The issue was
+not observed at runtime; it is identified by code inspection only.
 
-  If Connection_Interval_Max x Subrate_Max x (Max_Latency + 1) is
-  greater than or equal to Supervision_Timeout x 40, the Controller
-  shall return the error code Invalid HCI Command Parameters (0x12).
-
-With the current values 0x78 x 4 x 1 = 480 >= 0x0c x 40 = 480.
-
-Fix this by using 2 s as the default Supervision_Timeout, which is 10x
-lower than the 20 s used for non-SCI connections while still well above
-the minimum required, and make sure it remains above the minimum in
-case interval_max is raised to match the controller's minimum supported
-connection interval.
-
-Fixes: 2f8784cfe8a9 ("Bluetooth: Add support for Shorter Connection Interval (SCI) feature")
-Assisted-by: OpenCode:claude-opus-5.5
+Fixes: adae20cb2d20 ("Bluetooth: Convert IRK list to RCU")
+Assisted-by: GLM-5.3 coccinelle
+Signed-off-by: Binbin Deng <18983559317@163.com>
 Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/bluetooth/hci_sync.c | 30 +++++++++++++++++++++++++++---
- 1 file changed, 27 insertions(+), 3 deletions(-)
+ net/bluetooth/hci_core.c | 9 ++++++---
+ 1 file changed, 6 insertions(+), 3 deletions(-)
 
-diff --git a/net/bluetooth/hci_sync.c b/net/bluetooth/hci_sync.c
-index 4e5c47872c30b..b86f67ea5fddc 100644
---- a/net/bluetooth/hci_sync.c
-+++ b/net/bluetooth/hci_sync.c
-@@ -4834,6 +4834,9 @@ static int hci_le_set_def_rate_sync(struct hci_dev *hdev)
- 	struct hci_cp_le_set_def_rate cp;
- 	u16 interval_min = 0x000a;	/* 1.25 ms */
- 	u16 interval_max = 0x0078;	/* 15 ms */
-+	u16 subrate_max = 0x0004;
-+	u16 max_latency = 0x0000;
-+	u32 supv_timeout;
+diff --git a/net/bluetooth/hci_core.c b/net/bluetooth/hci_core.c
+index becac4a223dfd..99caed1aeb185 100644
+--- a/net/bluetooth/hci_core.c
++++ b/net/bluetooth/hci_core.c
+@@ -1315,9 +1315,10 @@ struct smp_ltk *hci_add_ltk(struct hci_dev *hdev, bdaddr_t *bdaddr,
+ struct smp_irk *hci_add_irk(struct hci_dev *hdev, bdaddr_t *bdaddr,
+ 			    u8 addr_type, u8 val[16], bdaddr_t *rpa)
+ {
+-	struct smp_irk *irk;
++	struct smp_irk *irk, *old_irk;
  
- 	if (!le_sci_capable(hdev))
- 		return 0;
-@@ -4858,10 +4861,31 @@ static int hci_le_set_def_rate_sync(struct hci_dev *hdev)
- 	cp.interval_min = cpu_to_le16(interval_min);
- 	cp.interval_max = cpu_to_le16(interval_max);
- 	cp.subrate_min = cpu_to_le16(0x0001);
--	cp.subrate_max = cpu_to_le16(0x0004);
--	cp.max_latency = cpu_to_le16(0x0000);
-+	cp.subrate_max = cpu_to_le16(subrate_max);
-+	cp.max_latency = cpu_to_le16(max_latency);
- 	cp.cont_num = cpu_to_le16(0x0001);
--	cp.supv_timeout = cpu_to_le16(0x000c);	/* 120 ms */
+-	irk = hci_find_irk_by_addr(hdev, bdaddr, addr_type);
++	old_irk = hci_find_irk_by_addr(hdev, bdaddr, addr_type);
++	irk = old_irk;
+ 	if (!irk) {
+ 		irk = kzalloc_obj(*irk);
+ 		if (!irk)
+@@ -1326,12 +1327,14 @@ struct smp_irk *hci_add_irk(struct hci_dev *hdev, bdaddr_t *bdaddr,
+ 		bacpy(&irk->bdaddr, bdaddr);
+ 		irk->addr_type = addr_type;
+ 
+-		list_add_rcu(&irk->list, &hdev->identity_resolving_keys);
+ 	}
+ 
+ 	memcpy(irk->val, val, 16);
+ 	bacpy(&irk->rpa, rpa);
+ 
++	if (!old_irk)
++		list_add_rcu(&irk->list, &hdev->identity_resolving_keys);
 +
-+	/* HOGP v1.2 recommends a Supervision_Timeout greater than or equal to
-+	 * (1 + Max_Latency) x Subrate_Max x Connection_Interval_Max x 2, but
-+	 * the Core spec treats the equality as invalid:
-+	 *
-+	 * BLUETOOTH CORE SPECIFICATION Version 6.3 | Vol 4, Part E
-+	 * 7.8.158. LE Set Default Rate Parameters command
-+	 *
-+	 * If Connection_Interval_Max x Subrate_Max x (Max_Latency + 1) is
-+	 * greater than or equal to Supervision_Timeout x 40, the Controller
-+	 * shall return the error code Invalid HCI Command Parameters (0x12).
-+	 *
-+	 * So default to 2 s, 10x lower than the 20 s used for non-SCI
-+	 * connections while still well above the minimum required, but make
-+	 * sure it stays strictly above the minimum in case interval_max has
-+	 * been raised.
-+	 */
-+	supv_timeout = (u32)interval_max * subrate_max * (max_latency + 1);
-+	supv_timeout = supv_timeout / 40 + 1;
-+	supv_timeout = clamp_t(u32, max_t(u32, supv_timeout, 0x00c8),
-+			       0x000a, 0x0c80);
-+	cp.supv_timeout = cpu_to_le16(supv_timeout);
+ 	return irk;
+ }
  
- 	/* The connection event length recommended in requests by a Peripheral
- 	 * uses units of 125 us with a valid range of 0x0001 to 0x7CFF
 -- 
 2.53.0
 
