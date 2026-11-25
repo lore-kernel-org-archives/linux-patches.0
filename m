@@ -1,51 +1,50 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795620202;
-	b=Bh5qbgDdxDAoXJSq8A/O6U6De+DJLMk1+pBL4K4L8u8Z6qBYY88NK5pmbmiJ5zboPKrj
-	 u8GtAGRLpI0RDACu+jzf/MEvIc8AibEfRLgcHXux+b7VkX0lyGI3H03EHOC+vMx08ii3h
-	 a3aPFnQDnQKJrVIqe432u2SURjza0oBj9HxDxyMCsdETOf3xK0PDfQrJie+8PJTLVxgGk
-	 Qjbs6LAMcXsjpg2x73qMNpEcrTR3FdVY08RWqZiQoYYP2ntUqUZijttbvDbyBf3GCoWjU
-	 WyYNLG/IKDnsXE0JwnHnp+rsFJ+AALPutOVlFTnPfux7wOJSrsTUTkDk43aEusPZMZQ==
+	t=1795620205;
+	b=eq4Q+A7wiFH0yy7J/2FT92w75DCMj1pLMz9SuklEPTrwh+59p8DWdUY1LHmOYLUMwall
+	 RxeawXYJhZmtEOfxS5RF24q070019DWIkkcE7dUNpI9xj/GY5xO41XEfcxHCLQp9EFO3q
+	 ulD9I58UPyTfh0tQ56n0wS2DyM4zY3Aa/uqWEApbL3omT+4hJQXc3ptIZvIWM71jQAHoL
+	 0t5x2NOM0be7CTx8VWEA4DHga7H4oWDlgS4Iv6xzQY1p9niklUIcf8Z9RGK+S+HhmH/u5
+	 a9abJppC+4Q2skTKf+uH20b6RA+hvuUPkqsKxt/tCNRAQ5/WQ7IwowpjhUFwHnNKNXw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795620202;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795620205;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=TvwEC2ntouQNpB1/IQEn6ekme+suJRE9uPh16jhXX4k=;
-	b=ASHktfjWnkzI7dxrdSyXRJiTNwiVcOaVND7vgLLDYNAD/kD8DKULHg9dAS3Zqu7ZJovH
-	 8D4DbzLG7Rkkrwv02GSEpF54JYzmOC+19QcIbE1U79LSildaIuwVot+7aDMOd22lvx1T9
-	 /01mX82QnZ2MhTTdwWhTGD6QpOLm2zNvEGJVqAqbw6OXZ7lduqDuEongJXiUbMpkkUxml
-	 1WQDzALwkGSjg21lQzmCzGI+h3reW0VfZywSSMmWoiVWQF88haOLcgnZD2oIPofy1Ehb/
-	 uNqkajQvOVYvz/83LowGzMlV1+rN+/ORRgS9A9qI3s/hRpMMTDQTZlVWykPenqiQM1A==
+	bh=1tVI/rI/hMWV7oLgtGguEt4cY3JvVCoXdTxY0n3h7j4=;
+	b=vAihqigD2gS2yUsKQ/XWWvVbpJmevR+PyqF8IIHAJv52BMasXPJPB3iXlC9wdsNbNpeC
+	 rAvFZKKjAgftriAVNaP17Kvbd0t/NUYA6hxCr3TM1vU4V6JVYhZKro5Sci2WZbglKgxFH
+	 hqCODX499ZG05f1nCmmSLEytuEBoLVwgjmNIjUxjVUISXXybH7JH59WHdMBZj4zA+nimE
+	 oBlUOnZ/zSnUEHwuMaB35/yltYB7DHNBQYSRYj4e1YJHUJyrWDf+wiUSfKa8wgyB5AQer
+	 cfp6c+LJLnSyzBis2n/CPYoooNwCWNXE01uXZyrBKD0zzybssIb69UvSTM7U8f/Q5hw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Zq4wUO8f;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="U7d/dRPn";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0F95D606A31E;
-	Wed, 25 Nov 2026 15:23:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 075FF606A326;
+	Wed, 25 Nov 2026 15:23:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Zq4wUO8f
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D9F191F000C0;
-	Wed, 25 Nov 2026 15:23:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=U7d/dRPn
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 34ADA1F000D1;
+	Wed, 25 Nov 2026 15:23:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795620201;
-	bh=TvwEC2ntouQNpB1/IQEn6ekme+suJRE9uPh16jhXX4k=;
+	s=korg; t=1795620204;
+	bh=1tVI/rI/hMWV7oLgtGguEt4cY3JvVCoXdTxY0n3h7j4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Zq4wUO8fSOWwUu/HQQhGVVfZw4O+sQtFEe8Uehg8Swme3BPfvzgz/ovN9gEKP9W9z
-	 G012xeIkEQN5XL0M8OQsEC3dQW8P/xY5CYsM68WF0wP0/A3Qzyf8sVZMSaLkHJ+zpa
-	 KACESpATo1Y2TqShF45DCAl27kZs8DEg/3jSMmLg=
+	b=U7d/dRPnxJpGE9QMkJ0FKkRpf/AUAKnlaMSCR9b/h3cx9o4t4Jk65nUXT3lZUg5Pp
+	 qetDZ9jXrXpdIPFiJJa3fWhEn+U4s3GxmfZ75lT48v2WHLe5A1r/sCkQm0DIO31ccB
+	 sZ4XdIxZ1JUzqleb97twd5da2kdG55GDRUE/f25E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wahid Khan <wahidzk0091@gmail.com>,
-	Johannes Berg <johannes.berg@intel.com>
-Subject: [PATCH 7.3 0797/1005] wifi: cfg80211: dont truncate the merged MBSSID profile length
-Date: Wed, 25 Nov 2026 15:35:35 +0100
-Message-ID: <20261125143840.406326841@linuxfoundation.org>
+	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>
+Subject: [PATCH 7.3 0788/1005] tracing/probes: Fix missing BTF kind checks in char pointer/array helpers
+Date: Wed, 25 Nov 2026 15:35:26 +0100
+Message-ID: <20261125143840.199160967@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143821.729802100@linuxfoundation.org>
 References: <20261125143821.729802100@linuxfoundation.org>
@@ -67,46 +66,55 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Wahid Khan <wahidzk0091@gmail.com>
+From: Masami Hiramatsu (Google) <mhiramat@kernel.org>
 
-commit 3ea152f3f77eeffc37b2f4423688b4df9136f90c upstream.
+commit c1e2c63e65421068566db3dde44dfd4fe7adb46d upstream.
 
-cfg80211_parse_mbssid_data() keeps the length of a non-transmitted BSSID
-profile in a u8. cfg80211_merge_profile() returns a size_t, and it
-concatenates a profile that is split over several Multiple BSSID
-elements, so the merged length can be well above 255 even though every
-single sub-element is at most 255 bytes long.
+In struct btf_type, the type ID and byte size share a union, and only
+BTF_KIND_INT types are followed by a 32-bit integer encoding word.
+Because btf_type_is_char_ptr() and btf_type_is_char_array() do not
+verify that the outer type is BTF_KIND_PTR or that the resolved element
+type is a non-NULL BTF_KIND_INT before inspecting it, non-pointer BTF
+types can have their byte size misinterpreted as a BTF type ID, and
+arrays of non-integer types read out-of-bounds or misinterpret trailing
+BTF metadata as BTF_INT_* encoding bits.
 
-The value is then cut to its low 8 bits. A 300 byte profile is handled
-as a 44 byte one: the elements after the cut are lost from the generated
-non-transmitted BSS, and if the Multiple BSSID-Index element lies past
-the cut the BSS is dropped altogether. Any AP in range can send such a
-profile.
+Validate the BTF type kinds and NULL pointers before reading inner type
+metadata in both helpers.
 
-The multi-link code further down in the same file already uses a signed
-size type for the profile length. Do the same here, cfg80211_find_ie()
-and cfg80211_gen_new_ie() take a size_t anyway.
+Link: https://lore.kernel.org/all/179455851632.403392.258264246782960594.stgit@devnote2/
 
-Fixes: fe806e4992c9 ("cfg80211: support profile split between elements")
+Fixes: 27973e5c64b9 ("tracing/probes: Add string type check with BTF")
 Cc: stable@vger.kernel.org
-Signed-off-by: Wahid Khan <wahidzk0091@gmail.com>
-Link: https://patch.msgid.link/20261104211451.693451-1-wahidzk0091@gmail.com
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+Signed-off-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/wireless/scan.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ kernel/trace/trace_probe.c |    8 ++++++++
+ 1 file changed, 8 insertions(+)
 
---- a/net/wireless/scan.c
-+++ b/net/wireless/scan.c
-@@ -2592,7 +2592,7 @@ cfg80211_parse_mbssid_data(struct wiphy
- 		if (elem->data[0] < 1 || (int)elem->data[0] > 8)
- 			continue;
- 		for_each_element(sub, elem->data + 1, elem->datalen - 1) {
--			u8 profile_len;
-+			size_t profile_len;
+--- a/kernel/trace/trace_probe.c
++++ b/kernel/trace/trace_probe.c
+@@ -411,6 +411,9 @@ static bool btf_type_is_char_ptr(struct
+ 	const struct btf_type *real_type;
+ 	u32 intdata;
  
- 			if (sub->id != 0 || sub->datalen < 4) {
- 				/* not a valid BSS profile */
++	if (BTF_INFO_KIND(type->info) != BTF_KIND_PTR)
++		return false;
++
+ 	real_type = btf_type_skip_modifiers(btf, type->type, NULL);
+ 	if (!real_type)
+ 		return false;
+@@ -435,6 +438,11 @@ static bool btf_type_is_char_array(struc
+ 	array = (const struct btf_array *)(type + 1);
+ 
+ 	real_type = btf_type_skip_modifiers(btf, array->type, NULL);
++	if (!real_type)
++		return false;
++
++	if (BTF_INFO_KIND(real_type->info) != BTF_KIND_INT)
++		return false;
+ 
+ 	intdata = btf_type_int(real_type);
+ 	return !(BTF_INT_ENCODING(intdata) & BTF_INT_SIGNED)
 
 
