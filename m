@@ -1,42 +1,42 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795619649;
-	b=ETcn1MhkYzryRXf4mPoWre0KZuzcxjCKt6if3Eyp9QGq+4toheo/x/aI2qu6wBiibs3d
-	 +wjvryJ3HQuBjoO7kjp93svtdsshH7lUSdN8Z4Cz9TUrg30mmayzcKvDG0SQNhjeY86Sa
-	 JwHYQCCKYmsF21Uh9aW2oHfEDRsj9mm/oePlg/hSq7+yAnWGCvI68Gd3pKwGxo58c4AQG
-	 zyQtPF3olE95dw5FbXYWGVH66o+T3XUJhVUXnd4/VAwFhuYLoQHGEp6vbNA4pMQK6J6gX
-	 KknnpHbMvTjInnakkNNcsfiyK9q3ghGOIZSFgl+yZgeqT5Sp/UcQ8r/hhT/EyJpRtFQ==
+	t=1795619652;
+	b=1kV+Vf1ypDeixupxjAJHWCWwmL4oMjDLly8vB7buYYTUvIkhtWd7t5P1Qo0e6DN/A0jg
+	 4XX7GvFvmyP98e18HrhwHs5fYsTBK5hkWG9Gi82Qrhlg2zaJqM94Bs22pM+Lh6U0mGTDp
+	 QNDJH8mYSabPJS0WHJqHze5wVfGG8AH5jNe9CWm+v4b8hf/YsKsRYfHKRTHwVXR0kaxVN
+	 UDdGdgpfZpiZoRtAd/UI5kmpfsoPEGwFOVuwA9SvRofx+S8vDBrB0nllJiCwnYn7XYvuF
+	 /WEYrfwry2tdxptB3hiq9wxfr7mXlQJav9kzMxn9p30cOlShSw0gpL+pV/0dUMlX9bg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795619649;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795619652;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=ESDkl3atI2u0p64uokrZ94RY3ndBGJeRwUjCbowd2Go=;
-	b=OjQHsp8uQyf4644paX1h2l4K0i0dwzdwIqrJhJWpLb7MQ7ow9M18dSVZRghs2elCV4cN
-	 fY5lZ8HFjVG5AuCx8RlaTXcrx5Pgd26bl1pbvqbRToSgPg02TUtdof4DINvvnDY4SGAhN
-	 NKfiwXcPTHQALu7SPgeyct3nKzQkbe+UxgJQMLnG8zyildZhf4VNURsdKYHLgChlOpUxt
-	 gK4oLUe8WLS7aXyeNesb1Ib3kwHsX7kCGpXzRMIe7AEAuZzp5VdiG9+G//sSyVadv/vLZ
-	 QFIhz5NPTZGUZm5a4pElERiUMyvKUwHyeZl0F4YnI4BioF8QgUfO3HcxXDf74pCD0xg==
+	bh=sJ0VkIa3vuOpmMpTBNn7iPjl98vZPoGIhRf+leiSLnY=;
+	b=X9tXtu8zlSLkrZSnW7ZGGk1cfu+aXj+o8u3ezGn4EOxMXEffcBUpyUCAw+uJjjYIWtVk
+	 eVIUXxXZ33h4e+5aiCMyCPOm8BG1WeVB+B22BftxwKLa4zyOzso8t2xNLj7J+eiyOuhPs
+	 fRQ3HYUgzcVZRW2mgoQxXwWPdrVACPOUoFklDfV+fGIPsg2F6ZuyyKPcmZmd5vgodGxdz
+	 tWBYSnH679z8t1N5T6ij4QeHBUmlL9oBtkTKo8H4FdkF21MTrmrl07/Bgp0Q54KQBfybL
+	 MP7Y/0ZaPX/E9PThQNp80WuXpdgIE/GL2oTg/QGkzsu1NRzJ188G8mPywhMm9zyreWg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=g020O4il;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="aK/bS2MQ";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EABF7606A32C;
-	Wed, 25 Nov 2026 15:14:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3C312606A327;
+	Wed, 25 Nov 2026 15:14:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=g020O4il
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3BC261F000D2;
-	Wed, 25 Nov 2026 15:14:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=aK/bS2MQ
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5832A1F000CF;
+	Wed, 25 Nov 2026 15:14:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795619648;
-	bh=ESDkl3atI2u0p64uokrZ94RY3ndBGJeRwUjCbowd2Go=;
+	s=korg; t=1795619651;
+	bh=sJ0VkIa3vuOpmMpTBNn7iPjl98vZPoGIhRf+leiSLnY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=g020O4il3/Bvj/qxG0WHUET2LcHikelNEvAV5Yk9wZKDh8cHlyYFtZLDU/Wyl4all
-	 YCqLWJ1pPoZbPjq95DanEB6bvZ0+3nGAPB3kL5r6pCzKP9qGfVRQlgd8viTjoB5871
-	 bQjyvE3vR3BrGSLi+m0u8hDA1eD8MucKX2fo6xJE=
+	b=aK/bS2MQWPqjLlrAitMuDbr7uR+AjLKrE33wPfauwKlqqdGiBhn+hSDw9kdxSDN4l
+	 RXp5ci8nRiP1gPoqnOwYhDF4bVp3me3d0i7n6A+XorK536HuYHj6gYCUWg/m0OV6bR
+	 jUBtZSXOp2EFyGfOi0CIfyUQIAzRSUmeGzn+SXos=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -46,9 +46,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Jamal Hadi Salim <jhs@mojatatu.com>,
 	Simon Horman <horms@kernel.org>,
 	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 7.3 0665/1005] net/sched: sch_teql: reject qdiscs from another network namespace
-Date: Wed, 25 Nov 2026 15:33:23 +0100
-Message-ID: <20261125143837.326889333@linuxfoundation.org>
+Subject: [PATCH 7.3 0666/1005] net/sched: act_ife: encode configured zero metadata values
+Date: Wed, 25 Nov 2026 15:33:24 +0100
+Message-ID: <20261125143837.349977805@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143821.729802100@linuxfoundation.org>
 References: <20261125143821.729802100@linuxfoundation.org>
@@ -72,85 +72,88 @@ Content-Transfer-Encoding: 8bit
 
 From: Jamal Hadi Salim <jhs@mojatatu.com>
 
-commit 1ae84bdd736f8fab30180159996e1d193f8029ff upstream.
+commit 7d02c07c738bf5c4b9a7d7ef498fbf465c446853 upstream.
 
-Reported by shaos <shawnq1@163.com> with a reproducer, which was
-reproduced and verified in our test environment.
+Reported by shaos <shawnq1@163.com> with a reproducer for the 32-bit
+case, which was reproduced and verified in our test environment.
 
 The issue:
-The teql master devices are created once in the initial network
-namespace and their Qdisc_ops are global. teql_qdisc_init() takes the
-teql_master embedded in the registered sch->ops and uses it without
-checking whether the new qdisc's device lives in the same network
-namespace as the master. A qdisc created in another netns can therefore
-attach to the init-net master and change its MTU and flags.
+ife_check_meta_u32() and ife_check_meta_u16() both reserve eight bytes
+of metadata for a configured value even when that value is zero, but the
+matching encoder returns without calling ife_tlv_meta_encode(). The
+encoder therefore writes neither the TLV header nor its value, while the
+enclosing IFE length still includes the reserved bytes, exposing stale
+skb headroom contents to the peer.
 
-The Fix:
-Reject a teql qdisc whose device is not in the master's network
-namespace with -EOPNOTSUPP and an extack message; same-netns teql still
-works.
+The 32-bit helper has been present since the IFE action was introduced
+(v4.6); the 16-bit helper was added with the 16-bit metadata helpers used
+by the skbtcindex callback (v4.9). Both defects predate the oldest
+supported stable kernel (5.10), so they are fixed together in this patch.
+Each hunk keeps its own Fixes: tag for provenance.
 
-Initialize the private skb queue before any validation so every
-constructor failure path, including qdisc_create_dflt(), which resets the
-qdisc before destroying it, sees an initialized empty queue.
+The fix:
+Encode any configured value, including zero; skip the TLV only when
+there is neither a configured nor a runtime value. The runtime fallback
+is unchanged.
+
+A raw TCA_IFE_METALST netlink request is needed to express the
+configured zero: the IFE_META_SKBMARK attribute carries four zero
+payload bytes for the u32 helper, and IFE_META_TCINDEX two zero payload
+bytes for the 16-bit helper (not an absent or zero-length attribute).
+Stock tc cannot build these requests; "use mark 0x0" emits no mark
+attribute and "allow mark" emits a zero-length one.
 
 Conditions to recreate the bug:
-CONFIG_NET_SCH_TEQL=y, CONFIG_DUMMY=y, CONFIG_USER_NS=y, CONFIG_NET_NS=y.
-As an unprivileged UID, unshare a user and network namespace, create a
-dummy device, set its MTU to 60000, and add a root teql0 qdisc:
+CONFIG_NET_ACT_IFE=y, CONFIG_NET_IFE_SKBMARK=y,
+CONFIG_NET_IFE_SKBTCINDEX=y, CONFIG_NET_CLS_MATCHALL=y,
+CONFIG_NET_SCH_INGRESS=y, CONFIG_USER_NS=y, CONFIG_NET_NS=y,
+CONFIG_VETH=y. In a fresh user and network namespace create a veth pair
+and attach clsact to the egress side. Install a matchall filter whose
+ife encode action carries a zero skb mark (or a zero tcindex) in
+TCA_IFE_METALST. Send a frame through the veth and inspect the IFE
+metadata in the received frame. The metadata region is eight bytes but
+holds neither a valid TLV header nor a value; it exposes prior headroom
+contents. Setting the value to a nonzero one does not trigger the leak.
+The namespace needs CAP_NET_ADMIN; no additional privilege is required.
+With the fix the zero TLVs are 0001000800000000 (u32) and
+0005000600000000 (u16).
 
-  unshare -Urn
-  ip link add dummy0 type dummy
-  ip link set dummy0 mtu 60000
-  tc qdisc add dev dummy0 root teql0
-
-The init-net teql0 device changes from MTU 1500 to 60000. A pfifo control
-on the same device leaves the MTU unchanged, and a direct MTU change on
-init-net teql0 is denied. The namespace needs CAP_NET_ADMIN; no init-net
-privilege is required. With the fix the attach fails with
-"Operation not supported" and the init-net MTU stays 1500.
-
-Fixes: 7316ae88c43d ("net_sched: make traffic control network namespace aware")
+Fixes: ef6980b6becb ("introduce IFE action")
+Fixes: 6a5d58b67e20 ("net sched ife action: add 16 bit helpers")
 Reported-by: shaos <shawnq1@163.com>
-Link: https://lore.kernel.org/netdev/20261022144830.67948-1-shawnq1@163.com/
-Link: https://netdev-ai.bots.linux.dev/sashiko/#/patchset/SER-NSBD.v1.r2.20261031160050-3%40mojatatu.com
-Link: https://lore.kernel.org/netdev/179366641863.488856.17368571591466000274@kernel.org/
+Link: https://lore.kernel.org/netdev/20261022144739.61342-1-shawnq1@163.com/
 Cc: stable@vger.kernel.org
 Reviewed-by: Victor Nogueira <victor@mojatatu.com>
 Signed-off-by: Jamal Hadi Salim <jhs@mojatatu.com>
 Reviewed-by: Simon Horman <horms@kernel.org>
-Link: https://patch.msgid.link/SER-NSBD.v3.r0.20261103064310-3@mojatatu.com
+Link: https://patch.msgid.link/SER-NSBD.v3.r0.20261103064310-1@mojatatu.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/sched/sch_teql.c |    9 +++++++--
- 1 file changed, 7 insertions(+), 2 deletions(-)
+ net/sched/act_ife.c |    6 ++----
+ 1 file changed, 2 insertions(+), 4 deletions(-)
 
---- a/net/sched/sch_teql.c
-+++ b/net/sched/sch_teql.c
-@@ -198,6 +198,8 @@ static int teql_qdisc_init(struct Qdisc
- 	struct Qdisc *first;
- 	unsigned long flags;
+--- a/net/sched/act_ife.c
++++ b/net/sched/act_ife.c
+@@ -50,8 +50,7 @@ int ife_encode_meta_u16(u16 metaval, voi
+ 		edata = *(u16 *)mi->metaval;
+ 	else if (metaval)
+ 		edata = metaval;
+-
+-	if (!edata) /* will not encode */
++	else
+ 		return 0;
  
-+	skb_queue_head_init(&q->q);
-+
- 	if (dev->hard_header_len > m->dev->hard_header_len)
- 		return -EINVAL;
+ 	edata = htons(edata);
+@@ -94,8 +93,7 @@ int ife_encode_meta_u32(u32 metaval, voi
+ 		edata = *(u32 *)mi->metaval;
+ 	else if (metaval)
+ 		edata = metaval;
+-
+-	if (!edata) /* will not encode */
++	else
+ 		return 0;
  
-@@ -209,9 +211,12 @@ static int teql_qdisc_init(struct Qdisc
- 		return -EOPNOTSUPP;
- 	}
- 
--	q->m = m;
-+	if (dev_net(dev) != dev_net(m->dev)) {
-+		NL_SET_ERR_MSG_MOD(extack, "teql master is in a different network namespace");
-+		return -EOPNOTSUPP;
-+	}
- 
--	skb_queue_head_init(&q->q);
-+	q->m = m;
- 
- 	raw_spin_lock_irqsave(&m->slaves_lock, flags);
- 	first = rcu_dereference_protected(m->slaves, lockdep_is_held(&m->slaves_lock));
+ 	edata = htonl(edata);
 
 
