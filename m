@@ -1,54 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795618416;
-	b=hr9cLUDSFdR+2su527geHJOynOzlwUOVoldN/GlnjwxLBeEtpeZJslufczgGf4gVCPFn
-	 qZqnMSflymlji5Q4hTbDxzfEYaLx2UcYZ7jL+pOK/Sy2PBQAtFGtep+kDREfL3qAZHQto
-	 HNaqx6Ajy3SRK6jnT6vh8QCHCfwaPQCoYUgRTAGTX+m7uCgWEeR7lE0oU4jHN0pFfMjdy
-	 Q/TtYPkdcJo+e0hQlFehyAiqvNMzJ0Cd/o0+eytI6wSx22ewkBEPxhKTOiMUE99idJvls
-	 8OBw+/h0TCHuM+uOTF5hXd1YLEzGaq5gh1l6icKrtOkvegu3FJvTXzDfImMx8+eiwEA==
+	t=1795618420;
+	b=rGbZxZRa/A9JCY8NBI2LCHbyaTOlzqTnCxQi0vbvsJcjesgNUsQk32dHrd2a+5pipqrL
+	 6wC6ibEpT64IGeLQAAwSpGhisexy3e6l9ilkSlUudgMNXupDMDz/R8qYwOBbZbrU0eK71
+	 aal+Rce595pAqt9afyWlN69d+EJPbBj/OsBrbPrAqMxiKm3fmgQzgF99wjECbbiIH8mRb
+	 jTo/59MqL5mKjMmHE7gtkhByCYtryubiFGQ4ZY6gxJHXP3D+rdFaB72A+I7ICMfMlUD7S
+	 iLdcOAihw15GSz6dU+1ByoXOs574IJzwGBCVWZamRYonH3dgA2b+Fqf5IgHuL862Y9A==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795618416;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795618420;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Transfer-Encoding;
-	bh=YqkMXvSd59TseasM3YA9C/TnYlXUD7oppqIWg7v13ug=;
-	b=jnVzQSsn3WnF3pzm1Uef2RnSKoWXsVQc9qJhzcWVefTFjVY8y9B792DhkWPVLjFKGvVB
-	 n4Q/ieA2UKJTkXnYmO7dY54neuTLrS2+DrLnExuEUeVC04cjznO+mmBO50zFWcLV5nPk5
-	 Tzyw1Me/KtLqRm7/bAXem/yvA21NbU3hHnOV+N4TX678bqnK73g/6uI98KZJM4Aao+fVN
-	 UpQyvnluLMCu9FMl5oe4u5z8PgtFgLyuB1tXXuxQpOV/jfIygDwZlGDTyhE+fJdh7EQge
-	 kRCnk4rRJduQHMXDzWqhfuJCzH/SrKGWN7J50TxdNPxADFXsLDzAvHfFhP73Iwx2FlA==
+	 MIME-Version:Content-Type:Content-Transfer-Encoding;
+	bh=GZQD9riHhsJyYmzjCRGe6NSTDDHfiSJXoXW3NV5lNlI=;
+	b=r+oGCMEnr5v8++8/wM/6/vkk/SRjbxVR28fuxKFfW5uymDFi/ZSYgENBe9I0EWROdmUp
+	 YUjvLQB4zCWdA3O9zVGgqABaBazIq2M0qkttl5D1bZc5A9OI0GnsWh68bHvkm9mM/I4Vi
+	 1E8nbGYHrdC2RX1b3pGPjvPM/38jDiTXyUcZ6iOlrmKVWJbcwIbmWbslAu17EF5yL8F7l
+	 9/zsuTZWsJag/zruLoAW9JUXlMIaGO5aQ7xo59OSMsOHZPaZUBu77Fn5JHuT84Ab1hS6K
+	 IG8/UjA2sme1eaUcGOMkqe8M9v+4m01JN+JogXzkG3T2vW8r33D1VmSY5lUdM1jk4Lw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="e9/Xpca2";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=RsadOExv;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6563D606A323;
-	Wed, 25 Nov 2026 14:53:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 42144606A31E;
+	Wed, 25 Nov 2026 14:53:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=e9/Xpca2
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9DC6D1F000D1;
-	Wed, 25 Nov 2026 14:53:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=RsadOExv
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ED5061F000C0;
+	Wed, 25 Nov 2026 14:53:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795618416;
-	bh=YqkMXvSd59TseasM3YA9C/TnYlXUD7oppqIWg7v13ug=;
+	s=korg; t=1795618419;
+	bh=GZQD9riHhsJyYmzjCRGe6NSTDDHfiSJXoXW3NV5lNlI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=e9/Xpca24p/7cnZXmAOz/Izrb/QjMCFie06K4a8EmnKSI0DWdI9PwOKv2kPl1/tcj
-	 BqB+8pUMEc2QBAqMNsKGUMFt4H9ORZasnT3UrPxDOAefSf9LH7Uz2QEqGYgCRKl6OH
-	 cf49QmSjVx4nmx9uYT2rLOO+GouKze8kZqCZIJec=
+	b=RsadOExvrN7/Uf6KFzk6hSUkfLjUzjUT8L2dtgzyTbHLceQpnlwgzlFaGlsL5AM67
+	 IGyZX4lWp2sguknFyK6LUWlCW1fbfAZgpm/Haz+ONlMBIEecqyoSijineNs5mltVBg
+	 7ry4WoYolDrn2o4DWYAAqgAUM/WA2P1eVFB12H+o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Avi Weiss <thnkslprpt@gmail.com>,
-	Xia Yan <yanxia@cmss.chinamobile.com>,
-	Simon Horman <horms@kernel.org>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Zhou Minqiang <zhouminqiang2@huawei.com>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0274/1005] net: skbuff: reject zero MPLS TTL before decrementing
-Date: Wed, 25 Nov 2026 15:26:52 +0100
-Message-ID: <20261125143828.157407895@linuxfoundation.org>
+Subject: [PATCH 7.3 0275/1005] PM: runtime: Fix check_flush_dependency warning from pm_runtime_remove
+Date: Wed, 25 Nov 2026 15:26:53 +0100
+Message-ID: <20261125143828.180078901@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143821.729802100@linuxfoundation.org>
 References: <20261125143821.729802100@linuxfoundation.org>
@@ -64,47 +62,84 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 7.3-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Avi Weiss <thnkslprpt@gmail.com>
+From: Zhou Minqiang <zhouminqiang2@huawei.com>
 
-[ Upstream commit 24614e72df484ad50ecba98aaa88c7df2448c122 ]
+[ Upstream commit 1f65b45f0f16e1c80a68a5757c9556f78bb39f19 ]
 
-skb_mpls_dec_ttl() decrements the u8 TTL before checking whether it
-expired. An incoming TTL of zero wraps to 255, causing the TC MPLS
-dec_ttl action to pass an expired packet instead of dropping it.
+When a WQ_MEM_RECLAIM workqueue (e.g. iscsi_ctrl) triggers device removal
+via device_del -> pm_runtime_remove, the unconditional flush_work inside
+pm_runtime_remove can trigger a check_flush_dependency warning:
 
-Reject a zero TTL before the decrement while preserving the existing
-behavior for TTL one and valid TTL values.
+  CPU1: pm_wq worker                 CPU2: iscsi_ctrl wq
+  --------                           --------
 
-Fixes: 2a2ea50870ba ("net: sched: add mpls manipulation actions to TC")
-Signed-off-by: Avi Weiss <thnkslprpt@gmail.com>
-Reviewed-by: Xia Yan <yanxia@cmss.chinamobile.com>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Link: https://patch.msgid.link/20261031114135.3784868-2-thnkslprpt@gmail.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+  pm_runtime_work(starget)           pm_runtime_remove(starget)
+    spin_lock_irq(&starget->lock)      __pm_runtime_disable(starget, false)
+    request_pending = false              spin_lock_irq(&starget->lock)
+                                         (blocked, CPU1 holds the lock)
+
+    rpm_suspend(starget, RPM_NOWAIT)
+      status = RPM_SUSPENDING
+      rpm_callback(cb, starget)
+        spin_unlock_irq(&starget->lock)
+                                         (acquires lock)
+                                         disable_depth 0→1
+                                         __pm_runtime_barrier():
+                                           request_pending == false
+                                             → skip cancel_work_sync
+                                           status == RPM_SUSPENDING
+                                             → enter wait_queue, sleep
+                                           spin_unlock_irq(&starget->lock)
+        cb(starget) → 0
+        spin_lock_irq(&starget->lock)
+      status = RPM_SUSPENDED
+      wake_up_all(&wait_queue)
+                                           (woken up, waiting for lock)
+      spin_unlock(&starget->lock)          spin_lock_irq(&starget->lock)
+                                             status == RPM_SUSPENDED
+      spin_lock(&parent->lock)                → exit wait_queue
+      rpm_idle(parent, RPM_ASYNC)        barrier returns
+      spin_unlock(&parent->lock)       flush_work(&starget->work)
+      spin_lock(&starget->lock)          __flush_work(from_cancel=false)
+      spin_unlock_irq(&starget->lock)      check_flush_dependency()
+                                            ← WARNING!
+
+Replace flush_work with cancel_work_sync in pm_runtime_remove.
+cancel_work_sync internally calls __flush_work with from_cancel=true,
+which causes check_flush_dependency to return early before the warning.
+This preserves the use-after-free fix from commit 29ab76827761
+("PM: runtime: Fix a race condition related to device removal")
+without the warning.
+
+Fixes: 29ab76827761 ("PM: runtime: Fix a race condition related to device removal")
+Signed-off-by: Zhou Minqiang <zhouminqiang2@huawei.com>
+Link: https://patch.msgid.link/20261104115641.2682786-1-zhouminqiang2@huawei.com
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/core/skbuff.c | 2 +-
+ drivers/base/power/runtime.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/net/core/skbuff.c b/net/core/skbuff.c
-index 54a76d6723fb7..0cd5f30ff9bbf 100644
---- a/net/core/skbuff.c
-+++ b/net/core/skbuff.c
-@@ -6779,7 +6779,7 @@ int skb_mpls_dec_ttl(struct sk_buff *skb)
+diff --git a/drivers/base/power/runtime.c b/drivers/base/power/runtime.c
+index f18d99c8d052b..7a62cb2b3f7ce 100644
+--- a/drivers/base/power/runtime.c
++++ b/drivers/base/power/runtime.c
+@@ -1899,7 +1899,7 @@ void pm_runtime_reinit(struct device *dev)
+ void pm_runtime_remove(struct device *dev)
+ {
+ 	__pm_runtime_disable(dev, false);
+-	flush_work(&dev->power.work);
++	cancel_work_sync(&dev->power.work);
+ 	pm_runtime_reinit(dev);
+ }
  
- 	lse = be32_to_cpu(mpls_hdr(skb)->label_stack_entry);
- 	ttl = (lse & MPLS_LS_TTL_MASK) >> MPLS_LS_TTL_SHIFT;
--	if (!--ttl)
-+	if (!ttl || !--ttl)
- 		return -EINVAL;
- 
- 	lse &= ~MPLS_LS_TTL_MASK;
 -- 
 2.53.0
 
