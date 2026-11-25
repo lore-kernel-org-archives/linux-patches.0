@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795618052;
-	b=Mz3nwguRqOn5pVm9FU4xw5CzdlG/Zw6hPXtLZFZ0lx9Jx3VpfrYHUvtgEMDEIxIk3Aue
-	 67VY85RwSDtdLwJtQqOkVK7UfZDAfnbmsbkSl+nqkPjYO1WO0uMmkTlX246HugknwM9rM
-	 AhD0NS42d7mGp4swPVo1AAsUz5/e5tC5LspOnVTLKY1tccB51AjSFZzdTRJIjQRkZ6V2g
-	 yVcgiBdw6YmHXctSbcafo7X3sGd/mJmlyXrgHpya3H+uHYcHcNuIU+6xrbecIbR098K2w
-	 R6AMT2DymH/o5lfLErwF4D79i2PTMHQbsaWTQ2M8bx+Wn7NBcUiywOvdTGD3PNw61NA==
+	t=1795618055;
+	b=uEq0Au8PzxhbkDjbkqZVbqzkD4tF7zXnN0NV19yqiX3asR7xOj89VIGqpsRV5EJ/DeNB
+	 IGGW+AqoDVrYplHZsRRQamuj4PUElT9DhgzNhW5L+x89g7A9eK8hQUa1UutB5VrbRt41h
+	 /m+7+gzfyy+yLo92VXsfllPMPL5jcGdGHKohy4rfvdWjkReg2kwdvU+Frn0UcwaQzkVOR
+	 OvlHaLXV5zfhcjnWf9QvkmmXkzaJ9IqWNVKSEIPF0bGReO2Ubv9TuZ2a+K3BiaqDsXdPk
+	 00bqnzZC8KyAhh45kDOPIgBBGiQbtaFAAIUqBg/r/ViUMa0CbGfZWEiLvc2JGrXCSPA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795618052;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795618055;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=aSwOgYDBL6eN3iOm0IeuoCFODMXxf5AGA+SRyUlnXkw=;
-	b=RHn1CPTFpCTXZj7s0i7BncLX+QnfELAt0RadFCxLQv0l3ITUP5y8zM4qS+O+8DBz79Co
-	 nZ8sNAn4vm67/8vJL6yZJmkSwvI0IDgmncPp1efchS8zdJWC8gWn9/WsGxQhOA9f9xSKz
-	 Yqo+qfmi1YcZbu4eqrCdvdXR5pizrbDC1p3XyOLzoLNjdvq9X9habnmG6DcY18P67+rRt
-	 3Tq5VVA6s+XZu+Pbc9dRl/c8UBBUdGSXmgZwH+eMZinUUTtfsqeOWoGkYibbMjxlei234
-	 uA5TH1H55akmOrL+GR7+DjQy0QgLpjqdq8+bfZ6Y7+JBUwqH/x/h/wwfafocHCsZz6Q==
+	bh=gwyfCh6X6JIOJZMh5YVn9TRzo07oJrJoA6dMgYE7+wQ=;
+	b=ClaiSPJhZ70jJ9wyEhsrOr0u/jxVqoxqWYiuf+qyMwfmcjKiFQFwFHwddBmIwHQ9CAZ2
+	 TVqOlbWQNRBd4SiX+QqmH4TF1tUo800IkQSIdLYnaWelzARnN9x5edRMdxkierMhN/Qbi
+	 ciHgIgG8kc+MFAovJ/cpad9XBTu6NUhA3EwhjhVv1O80c0UtAnykDmmFzXSV9lRvPjyZo
+	 kaG2Gz8DnG3kjFAPnCc7XfWBZf40s7WtH02KwLR2VQVVvpNDbuhw/xV1e7j4MVmah0l+t
+	 n+DPRSzu4d5k9u2IApX52y+HV/OiOk2fziJ/9iE/y5r3azsvRCtULDDLhGNloOEueWg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=XkLFGwnX;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=x3r0oV5S;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 62684606A321;
-	Wed, 25 Nov 2026 14:47:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 325A3606A321;
+	Wed, 25 Nov 2026 14:47:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=XkLFGwnX
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C07FF1F000C0;
-	Wed, 25 Nov 2026 14:47:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=x3r0oV5S
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 25A571F000C0;
+	Wed, 25 Nov 2026 14:47:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795618051;
-	bh=aSwOgYDBL6eN3iOm0IeuoCFODMXxf5AGA+SRyUlnXkw=;
+	s=korg; t=1795618054;
+	bh=gwyfCh6X6JIOJZMh5YVn9TRzo07oJrJoA6dMgYE7+wQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=XkLFGwnXzv+2Z3F6QlkK19VJ33J+YYqXiO/rLfUleDZQaHXtJsDXjPAdFr1bXw8dX
-	 c7USpIT2KtXiikaBhavsPVdxqNJePYTY+RA9BS0Oc0bEDCf/1OBJxqlJsbJBjx+cqR
-	 +v+0Hhy1ndRu1idl7Ctf9gYkNi9groyuTJ9m9UJU=
+	b=x3r0oV5S6d27lDpviOX4+DbiAFLw9Y8BQ+/FKOmF++txLDbGYONDVfFmLTognUK5F
+	 1HO5yrLaPHO66Ymp5MYDGi/rney4sxZGlMfGL6nfZmUMlfCpt0YaVyUazIPgJ+wxj7
+	 QcZySOjWh/hiIUS5g5VYIOMQpvFdfn/awZ52341U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alban Bedel <alban.bedel@lht.dlh.de>,
-	Mark Brown <broonie@kernel.org>,
+	Jia Jia <physicalmtea@gmail.com>,
+	Mike Christie <michael.christie@oracle.com>,
+	"Michael S. Tsirkin" <mst@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0120/1005] spi: Fix ACPI SPI resources using relative path
-Date: Wed, 25 Nov 2026 15:24:18 +0100
-Message-ID: <20261125143824.552999745@linuxfoundation.org>
+Subject: [PATCH 7.3 0156/1005] vhost-scsi: do not relock event vq mutex on send_evt fallback
+Date: Wed, 25 Nov 2026 15:24:54 +0100
+Message-ID: <20261125143825.392681816@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143821.729802100@linuxfoundation.org>
 References: <20261125143821.729802100@linuxfoundation.org>
@@ -68,55 +69,73 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alban Bedel <alban.bedel@lht.dlh.de>
+From: Jia Jia <physicalmtea@gmail.com>
 
-[ Upstream commit 4825287f6d2346e9273f35a928d1ef40e68bc58b ]
+[ Upstream commit a016d03a9cfe29aeeba438f32f8e8f63291e3275 ]
 
-ACPI resources can use relative path when pointing to other
-resources. This didn't work with SPISerialBus resources because the
-device defining the resource was not passed to acpi_get_handle().
+vhost_scsi_send_evt() is called with the event virtqueue mutex held.
+If the worker is gone, the fallback currently calls
+vhost_scsi_complete_events(), which tries to acquire the same mutex again
+and deadlocks the caller.
 
-Pass the ACPI device handle through the lookup context to also allow
-for relative paths.
+Split event completion into a helper for callers that already hold the
+mutex and a locking wrapper for the event worker. Use the helper on the
+fallback path.
 
-Signed-off-by: Alban Bedel <alban.bedel@lht.dlh.de>
-Link: https://patch.msgid.link/20261001153507.2011806-1-alban.bedel@lht.dlh.de
-Signed-off-by: Mark Brown <broonie@kernel.org>
-Stable-dep-of: 2d0953ab69d3 ("spi: acpi: only look up the IRQ of confirmed SPI devices")
+Link: https://lore.kernel.org/all/20260905005352.1E5B01F00A3D@smtp.kernel.org/
+Fixes: b1b2ce58ed23 ("vhost-scsi: Handle vhost_vq_work_queue failures for events")
+Signed-off-by: Jia Jia <physicalmtea@gmail.com>
+Reviewed-by: Mike Christie <michael.christie@oracle.com>
+Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
+Message-ID: <20260915094244.7900-3-physicalmtea@gmail.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/spi/spi.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/vhost/scsi.c | 15 +++++++++++----
+ 1 file changed, 11 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/spi/spi.c b/drivers/spi/spi.c
-index 172141650b648..e5ef3ca769d53 100644
---- a/drivers/spi/spi.c
-+++ b/drivers/spi/spi.c
-@@ -2983,6 +2983,7 @@ EXPORT_SYMBOL_GPL(devm_spi_new_ancillary_device);
- #ifdef CONFIG_ACPI
- struct acpi_spi_lookup {
- 	struct spi_controller 	*ctlr;
-+	acpi_handle		device_handle;
- 	u32			max_speed_hz;
- 	u32			mode;
- 	int			irq;
-@@ -3077,7 +3078,7 @@ static int acpi_spi_add_resource(struct acpi_resource *ares, void *data)
- 			if (lookup->index != -1 && lookup->n++ != lookup->index)
- 				return 1;
+diff --git a/drivers/vhost/scsi.c b/drivers/vhost/scsi.c
+index 738db166cb5db..8f57a789814f5 100644
+--- a/drivers/vhost/scsi.c
++++ b/drivers/vhost/scsi.c
+@@ -660,19 +660,26 @@ vhost_scsi_do_evt_work(struct vhost_scsi *vs, struct vhost_scsi_evt *evt)
+ 	vhost_scsi_log_write(vq, vq_log, log_num);
+ }
  
--			status = acpi_get_handle(NULL,
-+			status = acpi_get_handle(lookup->device_handle,
- 						 sb->resource_source.string_ptr,
- 						 &parent_handle);
+-static void vhost_scsi_complete_events(struct vhost_scsi *vs, bool drop)
++/* Caller must hold the event virtqueue mutex. */
++static void __vhost_scsi_complete_events(struct vhost_scsi *vs, bool drop)
+ {
+-	struct vhost_virtqueue *vq = &vs->vqs[VHOST_SCSI_VQ_EVT].vq;
+ 	struct vhost_scsi_evt *evt, *t;
+ 	struct llist_node *llnode;
  
-@@ -3169,6 +3170,7 @@ struct spi_device *acpi_spi_device_alloc(struct spi_controller *ctlr,
- 		return ERR_PTR(-EINVAL);
+-	mutex_lock(&vq->mutex);
+ 	llnode = llist_reverse_order(llist_del_all(&vs->vs_event_list));
+ 	llist_for_each_entry_safe(evt, t, llnode, list) {
+ 		if (!drop)
+ 			vhost_scsi_do_evt_work(vs, evt);
+ 		vhost_scsi_free_evt(vs, evt);
+ 	}
++}
++
++static void vhost_scsi_complete_events(struct vhost_scsi *vs, bool drop)
++{
++	struct vhost_virtqueue *vq = &vs->vqs[VHOST_SCSI_VQ_EVT].vq;
++
++	mutex_lock(&vq->mutex);
++	__vhost_scsi_complete_events(vs, drop);
+ 	mutex_unlock(&vq->mutex);
+ }
  
- 	lookup.ctlr		= ctlr;
-+	lookup.device_handle	= acpi_device_handle(adev);
- 	lookup.irq		= -1;
- 	lookup.index		= index;
- 	lookup.n		= 0;
+@@ -1864,7 +1871,7 @@ vhost_scsi_send_evt(struct vhost_scsi *vs, struct vhost_virtqueue *vq,
+ 
+ 	llist_add(&evt->list, &vs->vs_event_list);
+ 	if (!vhost_vq_work_queue(vq, &vs->vs_event_work))
+-		vhost_scsi_complete_events(vs, true);
++		__vhost_scsi_complete_events(vs, true);
+ }
+ 
+ static void vhost_scsi_evt_handle_kick(struct vhost_work *work)
 -- 
 2.53.0
 
