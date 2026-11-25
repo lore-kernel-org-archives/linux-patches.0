@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795620540;
-	b=Ib+lXA230UcO0kjkrmTdveGilXpBWRAEkhey1fdr2UGOHZ1y5iSDY7TOCp7yu8xTJteI
-	 R5mAjUT3WGHpCufKUW7RKn4cX1pzqUEpC8XvQ5tGHWF7WqKTneUMe6tMEvrirrStpgJlV
-	 pdU1tKpl7+Dfd6+2xSb5crfUN24IwcdSxnWQZMfQxoYjBDyi/a5RGhto7gAW3OmSvuW5R
-	 k3LopMmiM1V3Eeo+reFqX7wNppykNREa4O5mTf/ySlM9Sg9mB2P2ovVxLXJM7bw80Amxz
-	 2lBmIXsOx8aCQlEWc2FAIUF/TTVHG1wniLzA571yxnJK6o2bUbtjXRlvA9n3bS8nd0g==
+	t=1795620542;
+	b=0e1s2dBtsPUh0/VlrCLoFhVjhaJ2UyazRpSeTzrq29VSPN8arHMXyEXWknUqvlJ9BRWu
+	 li5C/hJzFab+GKBLa9oTvcn3zrrL+bZKq0q+6OYuWrZQbs4qX/Fso6lSu6LMg3AeInsS/
+	 tBc0oR8jaAcpJqannvrkATI5tvRQez/RV8mcgHWU+yPAfaajfp5vTwTWVg93FA6eue46l
+	 qUWvicouOQcvDbEsFuFg8zDgM2VUvio6pmi9falvSnaA7a7arSwcsZZP+t+CuEw+66oGn
+	 vTjB9hUI1x6lwoHNq0J9gI/jr+gs+Fp5FSOAt2PwEbKOT0qWDLUxsGbgQXnZfyC868Q==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795620540;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795620542;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Transfer-Encoding;
-	bh=C5Y8x0dFUZ4cgElzDb0G7H5mAOVKeoN31euYxr1QlsY=;
-	b=DMyRy27QOyht/sp2vypRz/oxvGtXwSJgohtw3q0O9fv2NWcYRpUXNt+SFq0Tw04lu0TQ
-	 jJYsJiogotlvJIUsz7WD8rg8TqbCDGtOrPG9cXy24dKb4WUohyBPdIgzRGSOUppaTrJAU
-	 CC8SCD0krci4/RGCbEBkSteEkpMvkjp1DPIQIQgdU1b9Kl+ejg5JxDCAawZtE97AFDfA9
-	 OvDxoi7kWL0tdU0v2sYkub508T++wQ67uA5YEsOYr+zZOFfMN5jr7ERhYGiB+tvgPkE9f
-	 CvHVM1b2IgtX2HFucYVA50EafPjXsHmtYH8rhj1jl1GOrrN+muNeaTI8oLR/gHyekMg==
+	 MIME-Version:Content-Type:Content-Transfer-Encoding;
+	bh=H91TIJN9zQNCHfN+vsso7En9rBuY9B4hBFERwUt2zdQ=;
+	b=cjrUc3DRLvGwey8rLIqgPy2cR2Cm1x9i/rnr0WvsAElOBF49CMzH5XVHNvUgzsRB5ugl
+	 HWLKxiuLghxZq/1d0f6RjqP9VmQ9dK1OHN4Ew67gosao0uNYkQqgXhds9G1bcXLWSzuA4
+	 e1t9g4KulO5R0qFwp24nabEB5Qsso/9lA3ruK+JwU2lwWSWGEMlGIlwbh3m6eKx+/6s59
+	 UXBaSisgqjDTkNsaWi5r0N+CWYroznZpTPaf9q8xZKgleoy2wVEw+LsFtY0/27mHhTR/i
+	 yPjccUXBkZG3kXud/0Ii/2xTdQJ7xFqAnwYLYNt75cnHFBL5XyBRhHM5M5nmLENKE3g==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=WyHIzx+Q;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=jfnrwEWE;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 48415606A323;
-	Wed, 25 Nov 2026 15:29:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B8D66606A31E;
+	Wed, 25 Nov 2026 15:29:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=WyHIzx+Q
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5C7041F000C4;
-	Wed, 25 Nov 2026 15:28:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=jfnrwEWE
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3ECC81F000C0;
+	Wed, 25 Nov 2026 15:29:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795620539;
-	bh=C5Y8x0dFUZ4cgElzDb0G7H5mAOVKeoN31euYxr1QlsY=;
+	s=korg; t=1795620542;
+	bh=H91TIJN9zQNCHfN+vsso7En9rBuY9B4hBFERwUt2zdQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=WyHIzx+QPRK2vmgQ3pOimN74NZe9NGy0hE9d3QM1rZr79dbFj2uWf1Mmpxtph/M5r
-	 EoYuyxZirOGS7Z1NYOyycpLwF23GcVRKs/RcIA4FGgc5GtCrftH7ap4r/icKgIqdP3
-	 TCzkkbMG4Kl3woJfzSmbRtlbm2Bio4ehBmOCEXB4=
+	b=jfnrwEWESkTeP4uT+LHhYaSQ4OkoYrMM7IKWKegNJOSFQkqwRMVjoKIYMvv3Pn+up
+	 LU4TJuqYiZaAaEBy+1Jq7bDjxLa0qeQt4WKbglZd0XQvFrhg/WJkDfRrOkRox0WNQc
+	 3dShMj+hLsXHXKueFOsv6w4z70c0cTMBcdkqaHEg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable <stable@kernel.org>,
-	Selvarasu Ganesan <selvarasu.g@samsung.com>,
-	Thinh Nguyen <Thinh.Nguyen@synopsys.com>
-Subject: [PATCH 7.3 0934/1005] usb: dwc3: gadget: Issue no-op Start Transfer only for stream endpoints
-Date: Wed, 25 Nov 2026 15:37:52 +0100
-Message-ID: <20261125143843.564333070@linuxfoundation.org>
+	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
+	Jesse Zhang <Jesse.Zhang@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>
+Subject: [PATCH 7.3 0952/1005] drm/amdgpu: fix the error handling of amdgpu_vm_init_entities()
+Date: Wed, 25 Nov 2026 15:38:10 +0100
+Message-ID: <20261125143843.975407841@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143821.729802100@linuxfoundation.org>
 References: <20261125143821.729802100@linuxfoundation.org>
@@ -62,151 +62,70 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 7.3-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Thinh Nguyen <Thinh.Nguyen@synopsys.com>
+From: Jesse Zhang <Jesse.Zhang@amd.com>
 
-commit e616d91e02881983e5dadf6980c4aa08123800b3 upstream.
+commit de0f2a6eabd019a3129025862bffca934a5d7180 upstream.
 
-The function driver may re-enable an endpoint before the End Transfer
-command issued on ep disable completes. The no-op Start Transfer issued
-on ep enable then fails with "No Resource".
+When initializing the immediate entity fails, amdgpu_vm_init_entities()
+destroys that entity which was never set up, and when initializing the
+delayed entity fails, it returns without destroying the immediate one.
 
-Only stream endpoints need the no-op Start Transfer to initiate a
-stream. Other bulk and interrupt endpoints start their transfer when a
-request is queued. Skip it for those endpoints, and move it to a helper
-to be reused.
+On navi48, with the allocation of the immediate entity's scheduler list
+failing through failslab while opening the render node:
 
-Fixes: a97ea994605e ("usb: dwc3: gadget: offset Start Transfer latency for bulk EPs")
-Cc: stable <stable@kernel.org>
-Reported-by: Selvarasu Ganesan <selvarasu.g@samsung.com>
-Closes: https://lore.kernel.org/linux-usb/20260227121236.963-1-selvarasu.g@samsung.com/
-Signed-off-by: Thinh Nguyen <Thinh.Nguyen@synopsys.com>
-Link: https://patch.msgid.link/227e97e30d26a017c92d7008a8633c01f955d088.1792542945.git.Thinh.Nguyen@synopsys.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+  Oops: general protection fault, probably for non-canonical address 0xdffffc0000000001: 0000 [#1] SMP KASAN NOPTI
+  KASAN: null-ptr-deref in range [0x0000000000000008-0x000000000000000f]
+  RIP: 0010:do_raw_spin_lock+0x7b/0x280
+   _raw_spin_lock+0x3c/0x50
+   drm_sched_rq_remove_entity+0x90/0x2a0 [gpu_sched]
+   drm_sched_entity_kill+0x86/0x5a0 [gpu_sched]
+   drm_sched_entity_fini+0x23/0x270 [gpu_sched]
+   drm_sched_entity_destroy+0x24/0x30 [gpu_sched]
+   amdgpu_vm_init_entities+0xc7/0x100 [amdgpu]
+   amdgpu_vm_init+0x5d1/0x1480 [amdgpu]
+   amdgpu_driver_open_kms+0x2b1/0xd10 [amdgpu]
+
+Only destroy the immediate entity once it exists and the delayed one
+failed.
+
+Fixes: 55bf196f60df ("drm/amdgpu: reset VM when an error is detected")
+Reviewed-by: Christian König <christian.koenig@amd.com>
+Signed-off-by: Jesse Zhang <Jesse.Zhang@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+(cherry picked from commit 2f538f57501a71baeb7116ff7485f9a7025e4fb9)
+Cc: stable@vger.kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/dwc3/gadget.c |   97 +++++++++++++++++++++++-----------------------
- 1 file changed, 50 insertions(+), 47 deletions(-)
+ drivers/gpu/drm/amd/amdgpu/amdgpu_vm.c |   10 +++++++---
+ 1 file changed, 7 insertions(+), 3 deletions(-)
 
---- a/drivers/usb/dwc3/gadget.c
-+++ b/drivers/usb/dwc3/gadget.c
-@@ -906,6 +906,54 @@ static int dwc3_gadget_resize_tx_fifos(s
- 	return 0;
- }
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_vm.c
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_vm.c
+@@ -532,11 +532,15 @@ static int amdgpu_vm_init_entities(struc
+ 				  adev->vm_manager.vm_pte_scheds,
+ 				  adev->vm_manager.vm_pte_num_scheds, NULL);
+ 	if (r)
++		return r;
++
++	r = drm_sched_entity_init(&vm->delayed, DRM_SCHED_PRIORITY_NORMAL,
++				  adev->vm_manager.vm_pte_scheds,
++				  adev->vm_manager.vm_pte_num_scheds, NULL);
++	if (r)
+ 		goto error;
  
-+static int dwc3_gadget_ep_start_noop_transfer(struct dwc3_ep *dep)
-+{
-+	struct dwc3_gadget_ep_cmd_params params;
-+	struct dwc3		*dwc = dep->dwc;
-+	struct dwc3_trb		*trb;
-+	dma_addr_t		trb_dma;
-+	u32			cmd;
-+	int			ret;
-+
-+	memset(&params, 0, sizeof(params));
-+	trb = &dep->trb_pool[0];
-+	trb_dma = dwc3_trb_dma_offset(dep, trb);
-+
-+	params.param0 = upper_32_bits(trb_dma);
-+	params.param1 = lower_32_bits(trb_dma);
-+
-+	cmd = DWC3_DEPCMD_STARTTRANSFER;
-+
-+	ret = dwc3_send_gadget_ep_cmd(dep, cmd, &params);
-+	if (ret < 0)
-+		return ret;
-+
-+	/*
-+	 * For streams, at start, there maybe a race where the host primes the
-+	 * endpoint before the function driver queues a request to initiate a
-+	 * stream. In that case, the controller will not see the prime to
-+	 * generate the ERDY and start stream. To workaround this, issue a
-+	 * no-op TRB as normal, but end it immediately. As a result, when the
-+	 * function driver queues the request, the next START_TRANSFER command
-+	 * will cause the controller to generate an ERDY to initiate the
-+	 * stream.
-+	 */
-+	dwc3_stop_active_transfer(dep, false, true);
-+
-+	/*
-+	 * All stream eps will reinitiate stream on NoStream rejection.
-+	 *
-+	 * However, if the controller is capable of TXF_FLUSH_BYPASS, then IN
-+	 * direction endpoints will automatically restart the stream without
-+	 * the driver initiation.
-+	 */
-+	if (!dep->direction ||
-+	    !(dwc->hwparams.hwparams9 & DWC3_GHWPARAMS9_DEV_TXF_FLUSH_BYPASS))
-+		dep->flags |= DWC3_EP_FORCE_RESTART_STREAM;
-+
+-	return drm_sched_entity_init(&vm->delayed, DRM_SCHED_PRIORITY_NORMAL,
+-				     adev->vm_manager.vm_pte_scheds,
+-				     adev->vm_manager.vm_pte_num_scheds, NULL);
 +	return 0;
-+}
-+
- /**
-  * __dwc3_gadget_ep_enable - initializes a hw endpoint
-  * @dep: endpoint to be initialized
-@@ -971,55 +1019,10 @@ static int __dwc3_gadget_ep_enable(struc
- 	 * Issue StartTransfer here with no-op TRB so we can always rely on No
- 	 * Response Update Transfer command.
- 	 */
--	if (usb_endpoint_xfer_bulk(desc) ||
--			usb_endpoint_xfer_int(desc)) {
--		struct dwc3_gadget_ep_cmd_params params;
--		struct dwc3_trb	*trb;
--		dma_addr_t trb_dma;
--		u32 cmd;
--
--		memset(&params, 0, sizeof(params));
--		trb = &dep->trb_pool[0];
--		trb_dma = dwc3_trb_dma_offset(dep, trb);
--
--		params.param0 = upper_32_bits(trb_dma);
--		params.param1 = lower_32_bits(trb_dma);
--
--		cmd = DWC3_DEPCMD_STARTTRANSFER;
--
--		ret = dwc3_send_gadget_ep_cmd(dep, cmd, &params);
-+	if (dep->stream_capable) {
-+		ret = dwc3_gadget_ep_start_noop_transfer(dep);
- 		if (ret < 0)
- 			return ret;
--
--		if (dep->stream_capable) {
--			/*
--			 * For streams, at start, there maybe a race where the
--			 * host primes the endpoint before the function driver
--			 * queues a request to initiate a stream. In that case,
--			 * the controller will not see the prime to generate the
--			 * ERDY and start stream. To workaround this, issue a
--			 * no-op TRB as normal, but end it immediately. As a
--			 * result, when the function driver queues the request,
--			 * the next START_TRANSFER command will cause the
--			 * controller to generate an ERDY to initiate the
--			 * stream.
--			 */
--			dwc3_stop_active_transfer(dep, false, true);
--
--			/*
--			 * All stream eps will reinitiate stream on NoStream
--			 * rejection.
--			 *
--			 * However, if the controller is capable of
--			 * TXF_FLUSH_BYPASS, then IN direction endpoints will
--			 * automatically restart the stream without the driver
--			 * initiation.
--			 */
--			if (!dep->direction ||
--			    !(dwc->hwparams.hwparams9 &
--			      DWC3_GHWPARAMS9_DEV_TXF_FLUSH_BYPASS))
--				dep->flags |= DWC3_EP_FORCE_RESTART_STREAM;
--		}
- 	}
  
- out:
+ error:
+ 	drm_sched_entity_destroy(&vm->immediate);
 
 
