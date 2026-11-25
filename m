@@ -1,56 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795618257;
-	b=TOiaH0yatrzsuX7/vRm6iXekmn6A3fpy0t0mmzIypz9FGVUosX2+ACVgwlj4jmLwz5X9
-	 6ruZAGzf4sCgqoa1PJdPSDMMq94z9bN1a8N+wu78bwc6ZQXSBPunZBZQK56M0HT0PalCm
-	 oJfX186APnwCLyNUppndVfeB+FobQxz4uZe+IE7ppYBkt/aB9+rQrlgt894NhNNYgSvvs
-	 Pg1AMAmQxzYveYt5iNP0fWVeJGFABBVLBfwNmUwbT3h6C+nzZCG3h7LKXh8gOE8xBDn14
-	 BKQ9NQndNYi/t2MGWGI5v5ZGbSVYr1cC/PDtS5v5xQs63HK7aA3UdbYwDsLRfEvahmg==
+	t=1795618260;
+	b=Tx6thzRzqX9SQ0O/exk1Hm3+YzZ2zjN2PHrVqm86v6zeJylucD4EvHIZ/oI/Sn+AqfPM
+	 yWS1f2eUBDttx9SHd+XQT7Rf10BIXExPEKMofDUB+RfjhrlR1UD9wzdqvPfCDMfI0tugq
+	 R6NTxbRhKoN/0Enn50xZRymCTqCWz6E2ymK2YerOj/1/eyP57oeDCizgNfpJHcY35zHyI
+	 FmbRAsm4DwT59BnzxNH+2xYv6Y7wkAW6VkVxLMiVDNoOk429cUovmizfmxnJLfnt77Zdw
+	 NY62/ri9bEmpIRJQQjSGXS3lA6zweEGPnmmT7G4RHnT61VSiZAJIt/W/KD01yNmWNnw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795618257;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795618260;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=v1h9iCU9xhZRsrH1zxmZFN+lCrA1r7F9o5cGgpjpcQ0=;
-	b=rvt61Cyvq1nAihse8AzpHsIuAUP7pm4vgTnjJPRHEcTvIm5unv1DH6guwqfZU7v2Tpam
-	 Q5w9Dblz8auQDLcfMA+CBCfgeks0gYKyC31wAWjOQml+S/S7yElQ4yCo5Ec+k/IJYOhq/
-	 y4Fx3wDOGZcYZdaRo2z/7mm7SEE455JrTeOpIrhFT+kCvwIgQNwBgJ6O/2YgImbsvud54
-	 GIIwk8+LkYyP0MCx6SbI7waJXHxiBYYo8hXjkKfhSoJm6glkw/II54kEkxWhWv0K5eK5O
-	 MLa468ofC5aZlwku4sp7iel7u3nTStr+rIq8q0ud+eAeAA6RWV+zm8YTNYULGHNOysA==
+	bh=O2MEJGFdytzJm94R1vMNmBT73fd8VqkY+8KSFnglP9s=;
+	b=GHIQCrAPSNAADlg434K1ixJaiod4Q3xoRwV2rdojVpsgPPNZifaFjm/bOoTe598SAtyp
+	 zlcw1ePltYPHd6iheYjv5E4o4P2au7/evTUZhaX90AYq894csT9uCIOCSCK0UiZ/CcMhF
+	 atHskUY6hGqcPP1+rxEU48njTyLCNLfsgHXedeGH8I4rgaoEv1DDNr+i/SLNAutB4qhjA
+	 4LTBOJKXkB2QTIlEr3frXVIuvnaiodF891njRkWIuOZ1juGjCIpzSoiP0iwvNiABA4me2
+	 kd8U+CAH4ZVsOyJGmNNOGN894+FBjG3HncozMoZgkuyI3hhJMJd0X8erkZdMkX4uH3w==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=spJ2cq2i;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=o39OeZQs;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 51322606A31E;
-	Wed, 25 Nov 2026 14:50:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6960A606A327;
+	Wed, 25 Nov 2026 14:51:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=spJ2cq2i
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6B19B1F000C0;
-	Wed, 25 Nov 2026 14:50:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=o39OeZQs
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 331F61F000D3;
+	Wed, 25 Nov 2026 14:50:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795618256;
-	bh=v1h9iCU9xhZRsrH1zxmZFN+lCrA1r7F9o5cGgpjpcQ0=;
+	s=korg; t=1795618259;
+	bh=O2MEJGFdytzJm94R1vMNmBT73fd8VqkY+8KSFnglP9s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=spJ2cq2imB1BFwaGhMwxIbEuiyZue5cpX1uLdIM/MJQ2hSTry5ToSY9UNINSqV/xX
-	 GUPN5ZY5IIw8CZBkiPIBYp4qSEZ01WC2yzOBG8r7YybVk4Gf64C7KBb8gi5s8LuoGu
-	 vbx6wP39AEa3WySIlVbX8lmcdNlrbK2Ilcovws0M=
+	b=o39OeZQsQamrnLmS0uzfAJGnnEB9WoaynNg6eAVGh7rEQVp1BsD0ubF9CI2pK10FM
+	 gPaeeqfBDIIFctV9uWWFPYBTucY/G4fd7Qbwy0DvovrB2ID9y9QYV5XShuJ+ryEfsk
+	 1ZHFQYaFcrTXsDD3WZ7yS9G7xBI1JCQgzZLc0j78=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Leo Yang <Leo-Yang@quantatw.com>,
-	Paolo Abeni <pabeni@redhat.com>,
-	Jeremy Kerr <jk@codeconstruct.com.au>,
-	Matt Johnston <matt@codeconstruct.com.au>,
-	netdev@vger.kernel.org,
-	Bart Van Assche <bvanassche@acm.org>,
+	Namjae Jeon <linkinjeon@kernel.org>,
+	Yifan Zhang <yfzhang23@stu.pku.edu.cn>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0223/1005] mctp i3c: Fix locking in an error path
-Date: Wed, 25 Nov 2026 15:26:01 +0100
-Message-ID: <20261125143826.965634465@linuxfoundation.org>
+Subject: [PATCH 7.3 0224/1005] ksmbd: require NUL-terminated EA names
+Date: Wed, 25 Nov 2026 15:26:02 +0100
+Message-ID: <20261125143826.989343959@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143821.729802100@linuxfoundation.org>
 References: <20261125143821.729802100@linuxfoundation.org>
@@ -72,44 +68,72 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Bart Van Assche <bvanassche@acm.org>
+From: Yifan Zhang <yfzhang23@stu.pku.edu.cn>
 
-[ Upstream commit 750eb5ab457e62e221a9c8521e2274f14c85b387 ]
+[ Upstream commit e49296d51ccbf2ad0ed0484db1382f1d7217bd6e ]
 
-If netdev_alloc_skb() fails, mctp_i3c_read() jumps to a label that
-unlocks mi->lock although that mutex has not been locked yet. Fix this
-by returning -ENOMEM directly. This bug has been detected by the Clang
-thread-safety analyzer.
+smb2_set_ea() verifies that the byte reserved for the declared EA-name
+terminator lies inside the request, but it does not verify that the byte is
+zero. With SMB debug logging enabled, the name is passed to %s and the
+diagnostic reads beyond the request allocation.
 
-Cc: Leo Yang <Leo-Yang@quantatw.com>
-Cc: Paolo Abeni <pabeni@redhat.com>
-Cc: Jeremy Kerr <jk@codeconstruct.com.au>
-Cc: Matt Johnston <matt@codeconstruct.com.au>
-Cc: netdev@vger.kernel.org
-Fixes: 2d2d4f60ed26 ("mctp i3c: fix MCTP I3C driver multi-thread issue")
-Signed-off-by: Bart Van Assche <bvanassche@acm.org>
-Acked-by: Matt Johnston <matt@codeconstruct.com.au>
-Link: https://patch.msgid.link/71e0a880ffe7a83237e501b07884bf54343e76ca.1793296780.git.bvanassche@acm.org
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+KASAN reports:
+
+  BUG: KASAN: slab-out-of-bounds in string
+  Read of size 1
+  string
+  vsnprintf
+  _printk
+  smb2_set_ea
+  smb2_set_info
+
+Reject an EA entry whose declared terminator byte is nonzero. Return
+-EBADMSG for the malformed buffer, and map that error to
+STATUS_EA_LIST_INCONSISTENT for both SET_INFO and CREATE.
+
+Fixes: e2f34481b24d ("cifsd: add server-side procedures for SMB3")
+Suggested-by: Namjae Jeon <linkinjeon@kernel.org>
+Signed-off-by: Yifan Zhang <yfzhang23@stu.pku.edu.cn>
+Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/mctp/mctp-i3c.c | 3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+ fs/smb/server/smb2pdu.c | 9 +++++++++
+ 1 file changed, 9 insertions(+)
 
-diff --git a/drivers/net/mctp/mctp-i3c.c b/drivers/net/mctp/mctp-i3c.c
-index 4e857dd5df642..5f225999d715e 100644
---- a/drivers/net/mctp/mctp-i3c.c
-+++ b/drivers/net/mctp/mctp-i3c.c
-@@ -111,8 +111,7 @@ static int mctp_i3c_read(struct mctp_i3c_device *mi)
- 			       mi->mrl + sizeof(struct mctp_i3c_internal_hdr));
- 	if (!skb) {
- 		stats->rx_dropped++;
--		rc = -ENOMEM;
--		goto err;
-+		return -ENOMEM;
- 	}
+diff --git a/fs/smb/server/smb2pdu.c b/fs/smb/server/smb2pdu.c
+index 828e2cf1dda54..b64458247b160 100644
+--- a/fs/smb/server/smb2pdu.c
++++ b/fs/smb/server/smb2pdu.c
+@@ -3439,6 +3439,11 @@ static int smb2_set_ea(struct smb2_ea_info *eabuf, unsigned int buf_len,
+ 		if (!eabuf->EaNameLength)
+ 			goto next;
  
- 	skb->protocol = htons(ETH_P_MCTP);
++		if (eabuf->name[eabuf->EaNameLength]) {
++			rc = -EBADMSG;
++			break;
++		}
++
+ 		ksmbd_debug(SMB,
+ 			    "name : <%s>, name_len : %u, value_len : %u, next : %u\n",
+ 			    eabuf->name, eabuf->EaNameLength,
+@@ -5622,6 +5627,8 @@ int smb2_open(struct ksmbd_work *work)
+ 	if (rc) {
+ 		if (rc == -EINVAL)
+ 			rsp->hdr.Status = STATUS_INVALID_PARAMETER;
++		else if (rc == -EBADMSG)
++			rsp->hdr.Status = STATUS_EA_LIST_INCONSISTENT;
+ 		else if (rc == -EOPNOTSUPP)
+ 			rsp->hdr.Status = STATUS_NOT_SUPPORTED;
+ 		else if ((rc == -EACCES || rc == -ESTALE || rc == -EXDEV) &&
+@@ -8974,6 +8981,8 @@ int smb2_set_info(struct ksmbd_work *work)
+ 	}
+ 	else if (rc == -EINVAL)
+ 		rsp->hdr.Status = STATUS_INVALID_PARAMETER;
++	else if (rc == -EBADMSG)
++		rsp->hdr.Status = STATUS_EA_LIST_INCONSISTENT;
+ 	else if (rc == -EMSGSIZE)
+ 		rsp->hdr.Status = STATUS_INFO_LENGTH_MISMATCH;
+ 	else if (rc == -ENOSPC || rc == -EFBIG)
 -- 
 2.53.0
 
