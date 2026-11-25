@@ -1,50 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795626168;
-	b=nn+1MjfP5y/88lGGtUYoN9TNvvlGsrnMCi9DdQOVuYUyHdVeMVGhkFVwb5ELTEPDZxLT
-	 9+MBS2vFP9L9GMaED6vvFugV9kj5HRNndUSzStfuTKhICgFL/Ad5HeZnXRo3lB1wUeQm2
-	 hsHS+TvN/m3nFhF4VIPDVo6QBuFsawOk28exhOizah2innAwS00uziYjjgPQ7wurYU/CB
-	 47qEHkgSHRhIRVZOzauh6lMk4cAdy53rh6JLOBgCWSNFfTOblgf1aLGJaMxvYwOFj37Sx
-	 Zr3AWFsBau+kyOmz7oicl9M8wz+TCHt1HnbAroBsunoUMzU/66Uvg4P0AAcWvBietNg==
+	t=1795626171;
+	b=riqkHVw4Ks4F0khgPaYn8Z3AClKBVFSjkONmZYKqQw/1odHC54yD0OT3YtVonw0sYyjr
+	 q7pBcZNHBo4J7A37ZiCoRZn6Ms/5HSIcI2zUsoL3pt1kwzLArTig81mlMALkP2ZROeTZ9
+	 opAVtxdTWCsxMKlJl4TzrsOypImWqQI9rSL51XToqDAmjHc4RIImdt0l+BokRt8XEjMRq
+	 m0F9PGN54UL3CUAA1JlAJaCMd2FZJ2KLWN4KpjWRksWKl6GNaWulqhbpadlbCLD/uQhs5
+	 0M5XRri/josXCZiFU0ULYJya4oM8jh+d6+g+jNP5KC/1Rhi5HaTuFcHdjBMnAU/9TvA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795626168;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795626171;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=dUn7xT3iOGhvf8Hv7EcOsTbI34DYF9R4PU2ByYTlCv8=;
-	b=KMCmZ2tNkL1+qbPCv4R6ElJZ6BeHI3NZ6YCsxWD4vRYc8x+bIGmgn0ekLGs/vlP2ICiq
-	 04FC2yxw1KGKvSYP2x352WdM/FvEowAY3JLKTjZluPawMq2UzXITz7eVC3qrgVyVLPvGb
-	 fH1hSQGAj+REVtlGbj+2uQAzlBorVj86s6pcRMFyNM6jz5RbvBSiWLBH2kvJgvAXZvwii
-	 M86y4eKox2SVYgjWkrv1AZMlrJ7TwZwN/Lr4FdB1idWe61xOsjhrnffVXeFPHfoYVXvFg
-	 a7+IYKmBPaS1sgBNtH2d7xLSzklprdBDv/XknpkXp+dnDVbNwsp1zFEoT4FUWdxHq1g==
+	bh=ifNI3p7WBRDN50asvwHqGfVq6PnMnqz4BD7RWFREaYU=;
+	b=Lz229KviF1BAzAc6IsWQwF3aehns8fCVj+AsEHMch9O2SCqsSyzKYG0z9CD5VFna/8wC
+	 c1C8dptu+rwU6M4rjdAt4J1K+cfpGza4jxJn/gwq3AFc2wUQ3yVzGv7ec7So2tWExCk9P
+	 r4W2g1rkcjFre3HNgIG27Qy/B3/2eSpaHTrO0em5Rp5sLTHigCsG3DovmNd0G8EuciDPD
+	 fGO2r/NrRQT5dLAp2tqzSdEOWimJdDgj7FGDPqSNpH4LqFIodLUrY9wgAlRuT7CvgkqxM
+	 r38sq0w2c9Q48/4md2wloEpIl0oJitZd5CtTWWDZYlb6qyMurx7Q7ThpB4n+mJEIFcQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=NuoURnQN;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=wbJff3s7;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8F7CB606A323;
-	Wed, 25 Nov 2026 17:02:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 526CA606A329;
+	Wed, 25 Nov 2026 17:02:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=NuoURnQN
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7F73E1F000C4;
-	Wed, 25 Nov 2026 17:02:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=wbJff3s7
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A59231F000C4;
+	Wed, 25 Nov 2026 17:02:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795626168;
-	bh=dUn7xT3iOGhvf8Hv7EcOsTbI34DYF9R4PU2ByYTlCv8=;
+	s=korg; t=1795626171;
+	bh=ifNI3p7WBRDN50asvwHqGfVq6PnMnqz4BD7RWFREaYU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=NuoURnQNNdmOtKkGdzgZQTkJE+ZFQ7Xs9o6+2S6nFhphqRtazKISGuEmucFItIHrS
-	 tSn7ra+23tx8QPGkIuv1k80P6nT5+hlsNJ3q/nbL36IJg5n1yVnulhW8IHnEp+qo9B
-	 uGI1M/45bzKpkMd8Rbx9ipI4AEANDuNtCOiBeF14=
+	b=wbJff3s7y3SORddoMqynlYWdVFfjEBv+u0Fa1bJn1iiNlmPT1dPngQ3UXODPU0s4y
+	 U6lpLUa5TEkeTZEpYYnZF7PO6htRde/dYSKBcOGaCOsTs2h5cf3vzI7+of1OdtH18L
+	 MkyhZtq6RHsjXZNgqkDZdHnuZ1pNUaoZNcH32hp4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	syzbot+ff132cb52bce4f44ecc9@syzkaller.appspotmail.com,
+	xietangxin <xietangxin@h-partners.com>,
 	Mikulas Patocka <mpatocka@redhat.com>
-Subject: [PATCH 6.12 710/816] dm-cache: fix ending a cursor that never began
-Date: Wed, 25 Nov 2026 15:37:38 +0100
-Message-ID: <20261125143905.611862110@linuxfoundation.org>
+Subject: [PATCH 6.12 711/816] dm-crypt: reject integrity_key_size with non-authenc AEAD ciphers
+Date: Wed, 25 Nov 2026 15:37:39 +0100
+Message-ID: <20261125143905.634992986@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143849.205329330@linuxfoundation.org>
 References: <20261125143849.205329330@linuxfoundation.org>
@@ -66,35 +68,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mikulas Patocka <mpatocka@redhat.com>
+From: xietangxin <xietangxin@h-partners.com>
 
-commit 421420758be348cb90715bfaa26e1211a12ff1d0 upstream.
+commit bd93c4e59c5132282c01f142806e307c7380e7ea upstream.
 
-If dm_bitset_cursor_begin fails, dm_array_cursor_end(&cmd->hint_cursor)
-is called. However, cmd->hint_cursor was only initialized if the variable
-hints_valid is true. Thus, we must also destroy hint_cursor only if
-hints_valid is true.
+When integrity_key_size parameter is paired with a pure AEAD cipher that
+is not an authenc composite, crypt_ctr_auth_cipher() returns 0 early
+without allocating cc->authenc_key, but cc->key_mac_size remains
+non-zero because CRYPT_KEY_MAC_SIZE_SET was set during option parsing.
+As a result crypt_copy_authenckey() dereferences NULL crashes the kernel.
 
-Signed-off-by: Mikulas Patocka <mpatocka@redhat.com>
-Assisted-by: Claude:claude-opus-5
+Reject the contradictory configuration explicitly instead of silently
+returning 0, so userspace gets a clear -EINVAL.
+
+Fixes: 4441686b24a1 ("dm-crypt: Allow to specify the integrity key size as option")
 Cc: stable@vger.kernel.org
-Fixes: 629d0a8a1a10 ("dm cache metadata: add "metadata2" feature")
+Reported-by: syzbot+ff132cb52bce4f44ecc9@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=ff132cb52bce4f44ecc9
+Assisted-by: LLM
+Signed-off-by: xietangxin <xietangxin@h-partners.com>
+Signed-off-by: Mikulas Patocka <mpatocka@redhat.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/md/dm-cache-metadata.c |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/md/dm-crypt.c |    5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
---- a/drivers/md/dm-cache-metadata.c
-+++ b/drivers/md/dm-cache-metadata.c
-@@ -1442,7 +1442,8 @@ static int __load_mappings(struct dm_cac
- 					   from_cblock(cmd->cache_blocks),
- 					   &cmd->dirty_cursor);
- 		if (r) {
--			dm_array_cursor_end(&cmd->hint_cursor);
-+			if (hints_valid)
-+				dm_array_cursor_end(&cmd->hint_cursor);
- 			dm_array_cursor_end(&cmd->mapping_cursor);
- 			return r;
- 		}
+--- a/drivers/md/dm-crypt.c
++++ b/drivers/md/dm-crypt.c
+@@ -2926,8 +2926,11 @@ static int crypt_ctr_auth_cipher(struct
+ 	char *start, *end, *mac_alg = NULL;
+ 	struct crypto_ahash *mac;
+ 
+-	if (!strstarts(cipher_api, "authenc("))
++	if (!strstarts(cipher_api, "authenc(")) {
++		if (test_bit(CRYPT_KEY_MAC_SIZE_SET, &cc->cipher_flags))
++			return -EINVAL;
+ 		return 0;
++	}
+ 
+ 	start = strchr(cipher_api, '(');
+ 	end = strchr(cipher_api, ',');
 
 
