@@ -1,59 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795625386;
-	b=PjtAwqvsf9cIt2lcFcdhyMRPXR7Zij3KkuCXX+AFZ5HScibNOwOv9FrgAE6DBSJlC5Gk
-	 6EhCPIgReWX5wVMCY7t4AnJa4vVdnBOcbINAHuk5ht+TF4G2gyUxjQTG/aJVrawj6odIZ
-	 gbQwc1hVstPnuUElvhYCwhl3smPM4WwUCe3CqGoHnKuMfdq0E2apmpj8j0MpgCNJe3WYv
-	 Ve/owC5bwZSroB0x7plzYvwYGM08sEeojs9MXaNtlT6mXBkK3VQKucU0iByBtT+MAhafK
-	 KfmWuP8SfnA0Pgk2N1ZZD2G1+TFCd0XdCaN5WJmEIutmB9Qk2NN/vjEEdaXsBpOHGeQ==
+	t=1795625389;
+	b=rgqepTjjgk20hRRdC15EzCeNQffj+Mj6AZQaZhZADwPl4pKjdkHrWhwyuuQqJjz/nZrW
+	 UoMLb8hgSAhKvARZCQRQLEGGESlWYzh1Z90tD5EFKQ1FfmSlWr8kROT+hq/XQLA+PexUk
+	 NYGWyCJyddokJZC4T2crETfUuyJdxiFPbY6nOxH9cu8cNEHau9FsK41xCT0BlmwiOK3Vk
+	 CvhiE3mMntPJ6GXWjdcuGfn1Jyk6F8QVW8SSj+6wVda+FgcJVsfELGIjg7CjltWnDc/zm
+	 7LL/Exe/Juba6Dt2TNrzY7jRC5FyYt8lH+7Q+8Rf0eWnt1RMzm9cKxp95zXzjUIN0XQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795625386;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795625389;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=ML36Ee0nbyY85TdAZuckza9Tjg4kGT37ceAnD648txk=;
-	b=0BQtfU9048cFaTBAIl+vm055pr7Nr3FByYCoPcdMxLmsufXYMtCzFtIFTJnIoUFTfDCp
-	 syYT4uA8xdmFidERk/ymOVOm/jxXxhdEIz975wORpLQZHm+GJmVoQwo4+n0HU7cjAYQy9
-	 t/WTKcrZIDlQ3qPUeJm9sPcC2NPRLvFEmfc7eSEUISnr43QvZjRwegUXWjrFUHSQEOKUg
-	 POOrXGf+Md1P5P5Hf+cp69Xh3aP5AjTMSe1lMvTRnADkGgV6/3pcRMbtpkehJ+MQOZer+
-	 KT2JkO7iIznYUvNcOoyoFIGGGwJHmgPq3+4c6nK7G5H2LjOpLzkO9k0nwTtdPwB8SsA==
+	bh=pV6PbWdFJ/zw+PjQLw7MZL9aQY9JVgO+yjBndJKaMbw=;
+	b=RpXxTzk5FuTwxfdtdNeyBMkeVb/Ra/uUIWB1I4lHhBBIVd8ZdEEBY437q/lvH2mocs3C
+	 p/BnaM3P9WQ80sVkL4BnZcMsyQ0jJXDi/oPu2XNKFQXMJpIA41ZL8G5fZeX2eSvfI4l24
+	 cx/9LX8sKf1DP/+CAzMoft1c5M3SbuTI5gloM0AG+BS3Vrb9sMKQAPoSkuy/JyTHwMKis
+	 Pd7y2zIjj4GnaIl3TsswzsmVk27jcgvOnOZzEWEwXPpqUXXFrfOeKgqRDB6fpeEnuVKdf
+	 BgH/CRIWqFqrU2PuAvxYFgNRReezoSoTOfV+vTpnFJPsAFuOKNPxQDYGXjJOEYSGzJw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=WPJ99VN+;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=uc9JdKsU;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C53ED606A31E;
-	Wed, 25 Nov 2026 16:49:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D8EB4606A31E;
+	Wed, 25 Nov 2026 16:49:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=WPJ99VN+
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DD7C71F000CA;
-	Wed, 25 Nov 2026 16:49:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=uc9JdKsU
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A3E7E1F000C6;
+	Wed, 25 Nov 2026 16:49:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795625386;
-	bh=ML36Ee0nbyY85TdAZuckza9Tjg4kGT37ceAnD648txk=;
+	s=korg; t=1795625389;
+	bh=pV6PbWdFJ/zw+PjQLw7MZL9aQY9JVgO+yjBndJKaMbw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=WPJ99VN+zenbwmh16fZiauW04Uqd4FUmFHNYyrteo0xq2Q5OQB0mVfLYGQZYCyrL5
-	 xj1NjPt94ABE6laVZyOc+bKyEc386bXAYmlw2ypHg6R/3hC5MhOysg89X5VxgUVn7p
-	 Np1H6IjHZ0EB4oErV1eg+8Kx2bPJ+vJ7OvewuxM4=
+	b=uc9JdKsUpixy8zyhxHPR4WgBULZCExz8hHpSJle6GgaG0A8+UnsTqT9osvvBJ9BHh
+	 wtl1nFmun9cd4wTib7FaJkqpcVm4h6qSnNNnJO7KGzzzAmikH/qdzwlWp19aVyhYea
+	 DICs6ChEchSxgMA3kJ4U0tkr6qm9TSRdHc9rK4U0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	David Howells <dhowells@redhat.com>,
-	Marc Dionne <marc.dionne@auristor.com>,
-	Jeffrey Altman <jaltman@auristor.com>,
-	Eric Dumazet <edumazet@google.com>,
-	"David S. Miller" <davem@davemloft.net>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Paolo Abeni <pabeni@redhat.com>,
-	Simon Horman <horms@kernel.org>,
-	linux-afs@lists.infradead.org,
+	Pengpeng Hou <hppiscas@163.com>,
+	Thomas Gleixner <tglx@kernel.org>,
+	Radu Rendec <radu@rendec.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 498/816] rxrpc: Fix sendmsg length
-Date: Wed, 25 Nov 2026 15:34:06 +0100
-Message-ID: <20261125143900.715963437@linuxfoundation.org>
+Subject: [PATCH 6.12 499/816] irqchip/mst-intc: Validate the DT interrupt range
+Date: Wed, 25 Nov 2026 15:34:07 +0100
+Message-ID: <20261125143900.738939190@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143849.205329330@linuxfoundation.org>
 References: <20261125143849.205329330@linuxfoundation.org>
@@ -75,101 +69,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: David Howells <dhowells@redhat.com>
+From: Pengpeng Hou <hppiscas@163.com>
 
-[ Upstream commit ef369cacbd524931199078427ae152c63a826189 ]
+[ Upstream commit 16f25d326e5d3b9fd51bc5e3916ecbffbca63e7b ]
 
-rxrpc_send_data() is given two data lengths (len and msg->msg_iter.count)
-and is inconsistent about how it uses them.  Fix this by using len in
-preference to msg->msg_iter.count.  Also limit the amount copied to either
-len or msg->msg_iter.count, whichever is smaller.
+The driver takes an inclusive interrupt range from the device tree
+without checking its endpoints. A reversed range wraps the unsigned
+count calculation, and a range larger than MST_INTC_MAX_IRQS exceeds the
+controller capacity used by the driver.
 
-Note that, currently, all the callers have len and msg->msg_iter.count the
-same and so the problem won't occur.  This is a prerequisite for another
-patch that fixes the handling of encryption errors.
+Reject these ranges before calculating nr_irqs or creating the domain.
+Check the difference after ordering the endpoints so the validation
+itself cannot wrap.
 
-Fixes: 382d7974de31 ("RxRPC: Use iov_iter_count() in rxrpc_send_data() instead of the len argument")
-Signed-off-by: David Howells <dhowells@redhat.com>
-cc: Marc Dionne <marc.dionne@auristor.com>
-cc: Jeffrey Altman <jaltman@auristor.com>
-cc: Eric Dumazet <edumazet@google.com>
-cc: "David S. Miller" <davem@davemloft.net>
-cc: Jakub Kicinski <kuba@kernel.org>
-cc: Paolo Abeni <pabeni@redhat.com>
-cc: Simon Horman <horms@kernel.org>
-cc: linux-afs@lists.infradead.org
-Link: https://patch.msgid.link/20261006133011.531806-8-dhowells@redhat.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
-[ sashal: Replaced the umin() context line with the tree's min_t(size_t, ...) form by taking the patch's if (len > 0) and min3(txb->space, len, msg_data_left(msg)) lines directly, with no other adaptation. ]
+The issue was found by our static-analysis tool.
+
+Fixes: ad4c938c92af ("irqchip/irq-mst: Add MStar interrupt controller support")
+Signed-off-by: Pengpeng Hou <hppiscas@163.com>
+Signed-off-by: Thomas Gleixner <tglx@kernel.org>
+Assisted-by: gpt 5
+Reviewed-by: Radu Rendec <radu@rendec.net>
+Link: https://patch.msgid.link/20260920034236.16229-1-hppiscas@163.com
+[ sashal: kept the branch's kzalloc(sizeof(*cd), GFP_KERNEL) allocation line instead of upstream's kzalloc_obj(*cd) as the patch context. ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/rxrpc/sendmsg.c | 17 +++++++++--------
- 1 file changed, 9 insertions(+), 8 deletions(-)
+ drivers/irqchip/irq-mst-intc.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/net/rxrpc/sendmsg.c b/net/rxrpc/sendmsg.c
-index ea649144c49f0..6686fc99ec3b0 100644
---- a/net/rxrpc/sendmsg.c
-+++ b/net/rxrpc/sendmsg.c
-@@ -324,9 +324,9 @@ static int rxrpc_send_data(struct rxrpc_sock *rx,
+diff --git a/drivers/irqchip/irq-mst-intc.c b/drivers/irqchip/irq-mst-intc.c
+index d771eb0346128..be6e37badb359 100644
+--- a/drivers/irqchip/irq-mst-intc.c
++++ b/drivers/irqchip/irq-mst-intc.c
+@@ -263,6 +263,9 @@ static int __init mst_intc_of_init(struct device_node *dn,
+ 	    of_property_read_u32_index(dn, "mstar,irqs-map-range", 1, &irq_end))
+ 		return -EINVAL;
  
- 	ret = -EMSGSIZE;
- 	if (call->tx_total_len != -1) {
--		if (len - copied > call->tx_total_len)
-+		if (len > call->tx_total_len)
- 			goto maybe_error;
--		if (!more && len - copied != call->tx_total_len)
-+		if (!more && len != call->tx_total_len)
- 			goto maybe_error;
- 	}
- 
-@@ -345,7 +345,7 @@ static int rxrpc_send_data(struct rxrpc_sock *rx,
- 			 * the security header is going to be in the padded
- 			 * region (enc blocksize), but the trailer is not.
- 			 */
--			remain = more ? INT_MAX : msg_data_left(msg);
-+			remain = more ? INT_MAX : len;
- 			txb = call->conn->security->alloc_txbuf(call, remain, sk->sk_allocation);
- 			if (!txb) {
- 				ret = -ENOMEM;
-@@ -359,8 +359,8 @@ static int rxrpc_send_data(struct rxrpc_sock *rx,
- 		_debug("append");
- 
- 		/* append next segment of data to the current buffer */
--		if (msg_data_left(msg) > 0) {
--			size_t copy = min_t(size_t, txb->space, msg_data_left(msg));
-+		if (len > 0) {
-+			size_t copy = min3(txb->space, len, msg_data_left(msg));
- 
- 			_debug("add %zu", copy);
- 			if (!copy_from_iter_full(txb->kvec[0].iov_base + txb->offset,
-@@ -371,6 +371,7 @@ static int rxrpc_send_data(struct rxrpc_sock *rx,
- 			txb->len += copy;
- 			txb->offset += copy;
- 			copied += copy;
-+			len -= copy;
- 			if (call->tx_total_len != -1)
- 				call->tx_total_len -= copy;
- 		}
-@@ -382,8 +383,8 @@ static int rxrpc_send_data(struct rxrpc_sock *rx,
- 
- 		/* add the packet to the send queue if it's now full */
- 		if (!txb->space ||
--		    (msg_data_left(msg) == 0 && !more)) {
--			if (msg_data_left(msg) == 0 && !more)
-+		    (len == 0 && !more)) {
-+			if (len == 0 && !more)
- 				txb->flags |= RXRPC_LAST_PACKET;
- 			else if (call->tx_top - call->acks_hard_ack <
- 				 call->tx_winsize)
-@@ -398,7 +399,7 @@ static int rxrpc_send_data(struct rxrpc_sock *rx,
- 			rxrpc_queue_packet(rx, call, txb, notify_end_tx);
- 			call->tx_pending = NULL;
- 		}
--	} while (msg_data_left(msg) > 0);
-+	} while (len > 0 && msg_data_left(msg) > 0);
- 
- success:
- 	ret = copied;
++	if (irq_end < irq_start || irq_end - irq_start >= MST_INTC_MAX_IRQS)
++		return -EINVAL;
++
+ 	cd = kzalloc(sizeof(*cd), GFP_KERNEL);
+ 	if (!cd)
+ 		return -ENOMEM;
 -- 
 2.53.0
 
