@@ -1,53 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795624942;
-	b=Rwc3ISN6KFXwmTxllv5AJ8ApncMz+tA+LweaM5owOrSx9161R9t5tkUN3CjUm4Syr32S
-	 KUjPVhYLsjndiC771ZCboLCUHgFGl7IHqlajpyhm747W6PragNJQPcH56LdI+r2MiT8ox
-	 q4K50y837KBf1X7Z8Cs/Z076Ldbfi5FPZezdcCbAOsgZ58f2upjCHt4Ethqd1gs+uWl9/
-	 l9LA0IKhfSA8yYCyZM2VNbMXSJPu0u5YyRsRyCSpwWHwMlwnj8LseYEmAVXgaGCpueVYw
-	 Cd9G4Ymg5FcsRqkKHEFmAwCMm+CPz2jre5HbZa1tp5bXjZZppF7yRnpqyV/oy3FnPWw==
+	t=1795624945;
+	b=LIos2hLIcODRG0/Giyrzvi3cnuu1lvOLwF76TCGv4dowyLCHDknp821KAtGnSfLVFRKG
+	 GhEH6uVtlcmnd/ZniyMJVvhCcAbxloUAWL/5H+CSH9YrA2RNcYKdjb5MZdn9XhKCBSvVq
+	 3kN3mwc0P+SRWFoyjr0xAQsPZdUEG/zO/MI6pI7Hmjo+dbEzHzIZpTCVd6VSDPBMSa+7Y
+	 GAYK+re9B88CoyL18H36fmHu74wNeFqqI9vGidsTBrYUu0Atxc0Re92kI6p6Qujo/5HGc
+	 498J6e7Q5+nPH7+Lf2IAfm4ty7j1TMmIlzfbT4fIj0UFBbMN3GT5WC8JfASs8ZWgj0Q==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795624942;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795624945;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=MAOYF2Ru+j+7FtqGzJ9j1nJFh1cH+ZCtlTlDankt+kU=;
-	b=aH3eonzkWyvNehnp3TcZDuwttiAHq4/m13uPsGJoWNiloNxMFClIY1kjqe7VoHah4P/v
-	 Zod04LP3et6hRSbs3zCpOv37RHTSfIG+HPKOyZpAH5OqGzvAxEp/dkTsTmJHaUMsC55rI
-	 jBh4pwNcKn2/f6s5G4lkoHlN2llqmJ1v9YqrX2FFr9RyJoRFN+WybK787l2gKcHHWE+HB
-	 GTw6qRN4uOtFgqlcl9W/dE1R4tYluG270TeuqVcUTvHSJahjH6sf1QIjivArSKuUBM9VM
-	 TtG6Vhuy0SsDoS+IQYe/1CroIt2le8mX8hme+8cmkDyLvoHSeN8SioLWz4j1TUpCWrQ==
+	bh=A95+xe+HLCt6Alkasq7A0p47wVG7vyU/sGR4Yn9R820=;
+	b=K6IWPEwb6odtkxiFYQGsT1GTDe/DvCrFuioJ6LeOzRVO+CdQ287b/iBw+dF5ZeHq96Kw
+	 kbfkIKqZ9FH8ac7zof0uF6dHko3X6FEbdFVgpN0mGpOCcd6OUSJRe8pvNLEtC+k4YloqD
+	 eQyCIuzdf8nexJfL0Sy1fAoByCComIfTN2C9EhroVEumZEm1mKGPZ4xA15qzSF6ZoLTpL
+	 Vf3HqLpaddUJQpiaWJoLQwcBTx6YxwfB3l1vGkVLUYv/a4sGYtAT3Vi18hrEa43c43PDx
+	 Nnpv2jvP7CfNyB1eFdjhQuDXZdEsSna79CoAm/H0FKI5bs7Rp8g6W+o2f1pJbpt5dQg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=2ZkzNR9e;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=eTuwxXXR;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 80C3B606A334;
-	Wed, 25 Nov 2026 16:42:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 92DFF606A337;
+	Wed, 25 Nov 2026 16:42:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=2ZkzNR9e
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6BC731F000D1;
-	Wed, 25 Nov 2026 16:42:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=eTuwxXXR
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CBF861F000D2;
+	Wed, 25 Nov 2026 16:42:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795624942;
-	bh=MAOYF2Ru+j+7FtqGzJ9j1nJFh1cH+ZCtlTlDankt+kU=;
+	s=korg; t=1795624945;
+	bh=A95+xe+HLCt6Alkasq7A0p47wVG7vyU/sGR4Yn9R820=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=2ZkzNR9eMmwOgHGjTl5a71abOxHKgEslGbx26eRbtMxp5bNVN4GBXTmmRtIJYUpEZ
-	 o+uBlutBFlSFOLLy0m4E7cMRvBh0ubptuMC2516RL2KIs5HGiFrYHUOdYN8BRgGO+S
-	 aGycUWgbXOC/ub0b2z7xIIpwYd+lWsiVoZh1NpJs=
+	b=eTuwxXXRf8wmC4UfKdLBy3egkWfD3H1nAPGy6gX5TEEpEk7/vkRMcg2MbP4RL8lIt
+	 MYEJQhtBehCVPfdjyhLwr68HTo6FJTa4fy9ptB0I0MANbS9ddSul9q+t8LQcJZi9wa
+	 kPnF2/zZ4ASuKQhRZNAlKcFg2AKcQkuKSdB9qBS8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+1994e2ecf323ed90f255@syzkaller.appspotmail.com,
-	Jiahao Xu <xujiahao@cmss.chinamobile.com>,
+	Cosmin Ratiu <cratiu@nvidia.com>,
+	Leon Romanovsky <leonro@nvidia.com>,
+	Tariq Toukan <tariqt@nvidia.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 354/816] net: usb: cdc_ncm: dont underflow the NDP room check
-Date: Wed, 25 Nov 2026 15:31:42 +0100
-Message-ID: <20261125143857.393014459@linuxfoundation.org>
+Subject: [PATCH 6.12 355/816] net/mlx5e: IPsec, dont match upper proto selectors in crypto offload TX
+Date: Wed, 25 Nov 2026 15:31:43 +0100
+Message-ID: <20261125143857.416819796@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143849.205329330@linuxfoundation.org>
 References: <20261125143849.205329330@linuxfoundation.org>
@@ -69,87 +70,63 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jiahao Xu <xujiahao@cmss.chinamobile.com>
+From: Cosmin Ratiu <cratiu@nvidia.com>
 
-[ Upstream commit b507828c7b6135ff7a4b69eba6e33502b4839fb9 ]
+[ Upstream commit 5ed47bd79cebee8429d06c6640aac7ac7c4805ca ]
 
-cdc_ncm_ndp16() and cdc_ncm_ndp32() verify that the new NDP and the
-datagram fit into the NTB with an unsigned subtraction:
+The mentioned commit introduced support for upper protocol selectors
+(protocol & ports) to mlx5 IPsec offload. In crypto offload mode this
+causes offloaded TX SAs to stop matching traffic.
 
-	if ((ctx->tx_curr_size - skb->len - reserve) < ctx->max_ndp_size)
-		return NULL;
+In tx_add_rule(), setup_fte_upper_proto_match() is called for all
+offload types and programs a match on the upper protocol (TCP/UDP) and
+ports. For crypto offload, setup_fte_esp() is then called and sets
+ip_protocol to ESP. The resulting rule requires both ESP as the IP
+protocol and TCP/UDP ports, which no packet can satisfy, so TX crypto
+offload silently stops working for such SAs.
 
-Nothing guarantees that skb->len plus the reserve stays below
-tx_curr_size, and when it does not the subtraction wraps around to a
-huge value, the check passes, and the skb_put_zero() of max_ndp_size
-bytes that follows overruns the NTB:
+In crypto offload mode the stack builds the ESP packet and the HW only
+encrypts it, so the SA rule should only match on the SPI. Move the
+setup_fte_upper_proto_match() call under the XFRM_DEV_OFFLOAD_PACKET
+case, where the rule matches the plaintext packet and upper protocol
+selectors apply.
 
-  skbuff: skb_over_panic: text:ffff80000db33558 len:428 put:172
-  head:ffff0000c2c66100 tail:0x1ac end:0x140
-  kernel BUG at net/core/skbuff.c:200
-  skb_put_zero include/linux/skbuff.h:2595 [inline]
-  cdc_ncm_ndp16 drivers/net/usb/cdc_ncm.c:1132 [inline]
-  cdc_ncm_fill_tx_frame+0xdf0/0x30e0 drivers/net/usb/cdc_ncm.c:1309
+The other three callers are unaffected: rx_add_rule_sa_selector() is
+already only invoked for packet offload, and tx_add_policy() /
+rx_add_policy() are only reachable in packet offload mode, since xfrm
+policy offload is exclusively of type XFRM_DEV_OFFLOAD_PACKET.
 
-Here tx_curr_size is 0x140 = 320, skb->len is already 256 and the
-skb_put_zero() wants another 172 bytes.
-
-Two device controlled settings make this reachable:
-
-  - dwNtbOutMaxSize = 320 caps tx_max at 320.  The lower bound computed
-    in cdc_ncm_check_tx_max() is max_datagram_size + max_ndp_size + the
-    NTH header, but cdc_ncm_setup() clamps tx_max before
-    cdc_ncm_set_dgram_size() runs, so max_datagram_size is still 0 and
-    the bound is only max_ndp_size + the NTH header.  It does not
-    reserve room for one datagram plus one NDP.
-
-  - wNdpOutAlignment = 256 is accepted by cdc_ncm_fix_modulus() as long
-    as it is smaller than tx_max, and cdc_ncm_align_tail() then pads the
-    12 byte NTH header up to 256 bytes right before this check.
-
-An NDP can also be added to an NTB that already holds datagrams through
-cdc_mbim_tx_fixup(), which uses a different signature per MBIM session.
-On plain cdc_ncm the chain lookup in cdc_ncm_ndp16() returns the
-existing NDP for the single signature, so there the create path is
-normally reached for the first datagram of each NTB.
-
-Rewrite the test as an addition, which cannot underflow and gives the
-same answer whenever the original subtraction did not wrap.
-
-Fixes: c78b7c586657 ("net: cdc_ncm: refactoring for tx multiplexing")
-Fixes: 0fa81b304a79 ("cdc_ncm: Implement the 32-bit version of NCM Transfer Block")
-Reported-by: syzbot+1994e2ecf323ed90f255@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=1994e2ecf323ed90f255
-Signed-off-by: Jiahao Xu <xujiahao@cmss.chinamobile.com>
-Link: https://patch.msgid.link/20261111124156.637661-1-xujiahao@cmss.chinamobile.com
+Fixes: a7385187a386 ("net/mlx5e: IPsec, support upper protocol selector field offload")
+Signed-off-by: Cosmin Ratiu <cratiu@nvidia.com>
+Reviewed-by: Leon Romanovsky <leonro@nvidia.com>
+Signed-off-by: Tariq Toukan <tariqt@nvidia.com>
+Link: https://patch.msgid.link/20261111081337.3129580-1-tariqt@nvidia.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/usb/cdc_ncm.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/net/ethernet/mellanox/mlx5/core/en_accel/ipsec_fs.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/net/usb/cdc_ncm.c b/drivers/net/usb/cdc_ncm.c
-index 65a156ffdde96..48cb2bbec2561 100644
---- a/drivers/net/usb/cdc_ncm.c
-+++ b/drivers/net/usb/cdc_ncm.c
-@@ -1126,7 +1126,7 @@ static struct usb_cdc_ncm_ndp16 *cdc_ncm_ndp16(struct cdc_ncm_ctx *ctx, struct s
- 		cdc_ncm_align_tail(skb, ctx->tx_ndp_modulus, 0, ctx->tx_curr_size);
+diff --git a/drivers/net/ethernet/mellanox/mlx5/core/en_accel/ipsec_fs.c b/drivers/net/ethernet/mellanox/mlx5/core/en_accel/ipsec_fs.c
+index e21c4f3c52967..573895aa9b240 100644
+--- a/drivers/net/ethernet/mellanox/mlx5/core/en_accel/ipsec_fs.c
++++ b/drivers/net/ethernet/mellanox/mlx5/core/en_accel/ipsec_fs.c
+@@ -1739,7 +1739,6 @@ static int tx_add_rule(struct mlx5e_ipsec_sa_entry *sa_entry)
+ 	}
  
- 	/* verify that there is room for the NDP and the datagram (reserve) */
--	if ((ctx->tx_curr_size - skb->len - reserve) < ctx->max_ndp_size)
-+	if (skb->len + reserve + ctx->max_ndp_size > ctx->tx_curr_size)
- 		return NULL;
+ 	setup_fte_no_frags(spec);
+-	setup_fte_upper_proto_match(spec, &attrs->upspec);
  
- 	/* link to it */
-@@ -1181,7 +1181,7 @@ static struct usb_cdc_ncm_ndp32 *cdc_ncm_ndp32(struct cdc_ncm_ctx *ctx, struct s
- 		cdc_ncm_align_tail(skb, ctx->tx_ndp_modulus, 0, ctx->tx_curr_size);
- 
- 	/* verify that there is room for the NDP and the datagram (reserve) */
--	if ((ctx->tx_curr_size - skb->len - reserve) < ctx->max_ndp_size)
-+	if (skb->len + reserve + ctx->max_ndp_size > ctx->tx_curr_size)
- 		return NULL;
- 
- 	/* link to it */
+ 	switch (attrs->type) {
+ 	case XFRM_DEV_OFFLOAD_CRYPTO:
+@@ -1752,6 +1751,7 @@ static int tx_add_rule(struct mlx5e_ipsec_sa_entry *sa_entry)
+ 		setup_fte_reg_a(spec);
+ 		break;
+ 	case XFRM_DEV_OFFLOAD_PACKET:
++		setup_fte_upper_proto_match(spec, &attrs->upspec);
+ 		setup_fte_reg_c4(spec, attrs->reqid);
+ 		err = setup_pkt_reformat(ipsec, attrs, &flow_act);
+ 		if (err)
 -- 
 2.53.0
 
