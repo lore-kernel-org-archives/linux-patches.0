@@ -1,42 +1,42 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795625113;
-	b=TdzJBiMUV8eoitjVlq5E5/k/G1LHKA1djuL1bBtJF6NkyhpqP3arOHRo9/uaWSNcGIhB
-	 JPWKkMfz70E8jkBM4C64BbUSMuHDK/ipXLl3j9z6QS5nNDM/BGVhxwO9Zz9PM/8ZIuijI
-	 CkMYXIim0agA+tFKCN/gl94l12rXiWaFWXBGHeiayH/C+mGtaEQNY6L0JmBHd6XR14YId
-	 RVe9/S5Vjv8IJ5/5GUY0/D/byIwSzcRNgu//HQFleTCVTJxWbW9e762v89kOgWa9HRmKH
-	 EZTjYboUPVtXjnTCrzPDilcbRKzs0i6CEErjOmSPhvxNWSJOcABorN2pAyFz9nE8yVg==
+	t=1795625116;
+	b=r6JU4SfUyf1tPg3RN91P0HAbfWZtx5JWlD42AxD5uRNek8vYgRoKpWb88Pc2ZggBzqDc
+	 jYAfPon/3XngkOAAcz9n4LpqPTxfvJNtFiKN4CeULR26qCmxCZ3iELSfwOS7YkimdaB4x
+	 iJgOx6ZMVP2MpuZU7LCNOjYliwlAdEyh9B3kEOIEyRhQDPq3OzT/U3BaRQc4SUa8105lw
+	 jI/RGh5RZZ19EUzJKL8zlnqjucSbiROAAauoLW7ghUbf4ud7qBRiqE3qS7d9CjIqpu0Gr
+	 HEIJLAqtD0yiTLIkW1f9ESDMkifDEGyfOh05yeR5aVyReWZ1IwAbnNC/XWbcMN9J0Xw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795625113;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795625116;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=anro231LRbIEgKmH3YL1eBFdq3mwqMQRv6ALbWG5ZE0=;
-	b=jU0981w1KAqEPggZsRjKY7ziXJ/opSNtqn2JljNEVrxSA+lUjFtSkB+ODhoN1GttdzbW
-	 Bx9s+UQ+71sUl6g20/NJcLdT0o1U8SYFI1aTe1n7JIpSKhkWKwQX9ScwTzhgCVhtPeWRf
-	 /GFOWhIPCcTwo0fPVlKjo3gltoZKvU40FV6+aQs5vzt9VmpiCSfpYJp7bsW970trh26aP
-	 0Y+dQHyITaAV3koV2KOs+1qWC9SMxRm6BH2oWyJkdFKy4svMlX1/jROU2YZi0EblBGU7E
-	 YlP+zLpoIN57HeonCJJwBAORIUS2HT9URhK3of9Dun4X/mCRni99HDMP+TX48nOMu7Q==
+	bh=bYnbfVhffaRAyG4+5T2T+Hw7KUbNu5O6YS2Zxwq+eAA=;
+	b=SD9fV3rW4CQC7nI+QV7PBLAyyBcUSKTSHcFSFWkRpXoi4W6fBvbsBeSyCEMn52gEk6o3
+	 5hx6YcbuVBZL5MiG69fVhm6LfuFtysWgrd6IuC3Co0fULh82jC85NWsaID4s1VsQWu13R
+	 1HZJYVVve6d/8YKCkXppd/aBDdKfM+Aprp0hs1n8XqebT6/MZScFJnqsJ/bC54X2ByBKd
+	 F0FzWOqDv7PHFfVb6K1qPftTt4RjL0TndxpMXv11pRj/NfK8HLdMlB1dVNRy2E9XoYmEj
+	 nbjV13Mkq1ICxNaynlLrhtMSKRFYVZUbc92R8rPsaGhbgCT41VcusHEHp+Tsg9oESTQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=plgfrZDz;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=QCBXNxzO;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8E19D606A32A;
-	Wed, 25 Nov 2026 16:45:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 71C03606A330;
+	Wed, 25 Nov 2026 16:45:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=plgfrZDz
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DF3B11F000C0;
-	Wed, 25 Nov 2026 16:45:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=QCBXNxzO
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BB2041F000C0;
+	Wed, 25 Nov 2026 16:45:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795625113;
-	bh=anro231LRbIEgKmH3YL1eBFdq3mwqMQRv6ALbWG5ZE0=;
+	s=korg; t=1795625116;
+	bh=bYnbfVhffaRAyG4+5T2T+Hw7KUbNu5O6YS2Zxwq+eAA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=plgfrZDzc5AtNlv+hiIWmqup4dH3VkHtQT/Dh4Oz5+Uhg9J9n6RidluhkrxtWWf7P
-	 GYmeHeYwomVqWzPfWQ5XegQh3Kzm7rDttTo+iRVILSEi0opkWJN6RUHiLXKw2JTrHR
-	 fpnlLaaH9Ibm7QYsg5AmEfIrVeE0txO+g9jo52wA=
+	b=QCBXNxzO1U0fU8cq7oydPk2jHhll4Q1rpqAi2uZ3Dz6NMp8OpXWB1k43DxcXqjShb
+	 stpaBvzAPsOQ+wCHATK8itlwi3NEqybC8745hlQUSQT26nLLw+X7TXbw7BXEpc25Ni
+	 EqHk0Bd6ZSNy16lzhATnTGTkpB221/1xPBEU4b0A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -44,9 +44,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Vijendar Mukunda <Vijendar.Mukunda@amd.com>,
 	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 409/816] ASoC: SOF: amd: fix amd_sof_acp_remove() teardown ordering
-Date: Wed, 25 Nov 2026 15:32:37 +0100
-Message-ID: <20261125143858.661287947@linuxfoundation.org>
+Subject: [PATCH 6.12 410/816] ASoC: SOF: amd: fix amd_sof_acp_probe() error unwind ordering
+Date: Wed, 25 Nov 2026 15:32:38 +0100
+Message-ID: <20261125143858.683599433@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143849.205329330@linuxfoundation.org>
 References: <20261125143849.205329330@linuxfoundation.org>
@@ -70,43 +70,36 @@ Content-Transfer-Encoding: 8bit
 
 From: Vijendar Mukunda <Vijendar.Mukunda@amd.com>
 
-[ Upstream commit db2167f2e3f72db64d01356cc9f2924d32fd5a51 ]
+[ Upstream commit b6aaef8ca8c305170de83e621c7e16d56731312a ]
 
-Call free_irq() before amd_sof_sdw_exit() in amd_sof_acp_remove().
-amd_sof_sdw_exit() sets adata->sdw to NULL; if an IRQ fires between
-that point and the subsequent free_irq(), acp_irq_handler() may
-dereference the now-NULL pdev[] pointer, causing a use-after-free.
+Call amd_sof_sdw_exit() after free_irq() in the free_ipc_irq error
+label of amd_sof_acp_probe(). Without this, an IRQ that fires between
+sdw context teardown and free_irq() can dereference freed SoundWire
+resources.
 
 Fixes: d948218424bf ("ASoC: SOF: amd: add code for invoking soundwire manager helper functions")
 Signed-off-by: Vijendar Mukunda <Vijendar.Mukunda@amd.com>
-Link: https://patch.msgid.link/20260910132251.1171943-3-Vijendar.Mukunda@amd.com
+Link: https://patch.msgid.link/20260910132251.1171943-4-Vijendar.Mukunda@amd.com
 Signed-off-by: Mark Brown <broonie@kernel.org>
-[ sashal: Context lines differ because the older tree still has the smn_dev pci_dev_put() at the top of amd_sof_acp_remove(); the free_irq()/amd_sof_sdw_exit() swap itself is identical. ]
+[ sashal: Moved the amd_sof_sdw_exit() call after free_irq() in the probe error path, with context adjusted for the extra free_smn_dev label in this tree. ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/sof/amd/acp.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ sound/soc/sof/amd/acp.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
 diff --git a/sound/soc/sof/amd/acp.c b/sound/soc/sof/amd/acp.c
-index a2abcb6d090ce..919c7bc98bf2b 100644
+index 919c7bc98bf2b..3de1c700a5a9e 100644
 --- a/sound/soc/sof/amd/acp.c
 +++ b/sound/soc/sof/amd/acp.c
-@@ -970,12 +970,12 @@ void amd_sof_acp_remove(struct snd_sof_dev *sdev)
- 	if (adata->smn_dev)
- 		pci_dev_put(adata->smn_dev);
+@@ -955,6 +955,8 @@ int amd_sof_acp_probe(struct snd_sof_dev *sdev)
  
--	if (adata->sdw)
--		amd_sof_sdw_exit(sdev);
--
- 	if (sdev->ipc_irq)
- 		free_irq(sdev->ipc_irq, sdev);
- 
+ free_ipc_irq:
+ 	free_irq(sdev->ipc_irq, sdev);
 +	if (adata->sdw)
 +		amd_sof_sdw_exit(sdev);
-+
- 	if (adata->dmic_dev)
- 		platform_device_unregister(adata->dmic_dev);
- 
+ free_smn_dev:
+ 	pci_dev_put(adata->smn_dev);
+ unregister_dev:
 -- 
 2.53.0
 
