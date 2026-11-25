@@ -1,51 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795619775;
-	b=S6CR7SvmO8gzZr152Doq1s67avZ9MOH9XCTQPSm0CvZ2MIB9DblOA1QBuZcEtf0UJzUB
-	 xuPdWU8CxHvKjQrrWRrTqCkHeM8KYx1v/QMJi3BRQmIU/MYCm5/XE2VQJ0kAidi6PX30J
-	 QOAy1LfoF2zYf05QzEmlUceiwdcSoSQnLReRdjer3nKiZE78hrTRjjNkVYBQzRarkqAm/
-	 +fm9oLkp71eufF5tqroHMFk+yOBC7lzOhV89LR+xcrarDr7n14utukutkU8bBUBFRnXRo
-	 BXqpfe1bOZ0mixD6rT5O+8NiIh/DjFsH6F5Kv+LqvVchJoCgLq4tbbdL9FsWuXWFj8Q==
+	t=1795619779;
+	b=FgUqiFbTtLyKaB7icFn49AOlg51TAXBj4fG0AEhk/43b/B+G98Zq/WPhdQAJHegkbfDY
+	 tM2qj4dbcQzqqc9nZZbgXscKJY9kiO7FOkC+4ZCQO9vubXoBiCOndo+xli3Htp9vlEsSq
+	 UjfKqnGoqCdrXRSBIfvQMt++GdckLUS6hgZGmvl3zZdO670NgbxPr060RIOVyMSeQrNSe
+	 le4ixTP2eGLuNjioVWUYaBq0OHITorGZ+3SU6kqpwQMjU70xLuNVyZa51Tg7+Bh6a2JYE
+	 r4eKaCi+sdAg+FSCQ8WGExUUCKTFE43hZ+3VzWSuqWY+JMnpVpvfKMviUkmpJqLG3Tw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795619775;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795619779;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=rnRajMKRTCA7ap43Wt9RJfkTCd1y6623Efpbea5/V6w=;
-	b=AUE5yDpXd+emcAIg6jnYGgJuc0WvD53jmaWxg4ycLRBZty1AMNwjJdc/CLJNGdZgIJnq
-	 1B+Io+G1elGYGYHyzluhjWxBiA6RGT0eeUcOxgvxr9p323xbeYNk8RqddNB97nBmfl2S1
-	 tz1VfcFVfnJ8u9UumU5dtGcjw3Md2TooF0RXI9OlxJ7QKxPJjwG3GFQzG8fA9QoUCSo0d
-	 E3pZCUNDErR9YqlDkSE172vWb6+Ro0S51+YaOf8yBkVx28lyBK4NGasV0QKl5pmugsgcw
-	 nBYBwnuHlK5srQDlyu0+wF8rjZK/SZ36zS/MRbTzCS6pL6zy+/HWjHLQ0ieKEuMUMZA==
+	bh=yhf1NiNLQjmgjFGBa3EWZBNssIi/QG0O+lYxh+JaFzs=;
+	b=re/3pkS0OkoPzOJ6O5fV0y2zwo28/o52oHJpZJCPrBEGs4P2fiHU7MYVLY7I2OGdI5D8
+	 RIUmIMPKur5tUqyGtD9T7v75JpgIyQC8tP+8u+Y0OyMKlP9K3kTifIcLEb7TjbmhOoJq1
+	 WiTGanW2MZDl/WZdPuNnhRQ7s3sY5TmxVrktLYyurbrD/2CcpxOabfdZRXbyHpqTbkmOb
+	 iyv+MWkr/kpQldAb7n4SXp4AvAML4S95IDKr9l5U1GLmmjnBaFLn+OzpLhrZoK1ilxB1J
+	 Ro1rrLZeyk0JO+NjRH4ZAzL0dhfZ3DMtpXZAQVMpSNMPDgICJ8zThGswGIJOl7XLgYw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=rqcdaFGR;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=itWzyYfj;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9F351606A31E;
-	Wed, 25 Nov 2026 15:16:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 762FB606A326;
+	Wed, 25 Nov 2026 15:16:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=rqcdaFGR
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C112C1F000C0;
-	Wed, 25 Nov 2026 15:16:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=itWzyYfj
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0FAE81F000CA;
+	Wed, 25 Nov 2026 15:16:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795619775;
-	bh=rnRajMKRTCA7ap43Wt9RJfkTCd1y6623Efpbea5/V6w=;
+	s=korg; t=1795619778;
+	bh=yhf1NiNLQjmgjFGBa3EWZBNssIi/QG0O+lYxh+JaFzs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=rqcdaFGRoIDoo0A9XVUzLahC1UyxVcFuRWx/ewIp2xHoC6piUp2Tzfr8Cv0GXbXds
-	 gtw8zY/AjjuZ3SgaQ17XNRP7veoNdBTl6LVw2C0c61OfV6weXJCmf1ytHOK44gg6Nh
-	 o9fLxYabOyY1DRXrLkI1TUxkWppgdt/oCCbpbiXY=
+	b=itWzyYfjmweB78CC9BhQ0DEsGdudQ9p8IRkvh0lrJ7avMzQprDKBE3cCXmxBu3gAu
+	 8EAvGkwKQBOWZgLu2NBQK1atK2go2qrRGB1WMyStDmhFIXiyOKtH5D7kv5THwjgfsJ
+	 vCZSAMakgOv/FwNtIbezQG9uUE4G0J8CyZ3npbEA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Catalin Marinas <catalin.marinas@arm.com>,
-	Mark Brown <broonie@kernel.org>
-Subject: [PATCH 7.3 0705/1005] arm64/gcs: Ignore attempts to change GCS mode during signal return
-Date: Wed, 25 Nov 2026 15:34:03 +0100
-Message-ID: <20261125143838.274645874@linuxfoundation.org>
+	Beata Michalska <beata.michalska@arm.com>,
+	Catalin Marinas <catalin.marinas@arm.com>
+Subject: [PATCH 7.3 0706/1005] arm64: errata: Extend the workaround for broken AMEVCNTR01 counter
+Date: Wed, 25 Nov 2026 15:34:04 +0100
+Message-ID: <20261125143838.297646584@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143821.729802100@linuxfoundation.org>
 References: <20261125143821.729802100@linuxfoundation.org>
@@ -67,103 +67,107 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mark Brown <broonie@kernel.org>
+From: Beata Michalska <beata.michalska@arm.com>
 
-commit d395db3dcd4c590d26a2f3d581d8d5b7ddbfa478 upstream.
+commit 139a9b7d5a07a570d5f636db02105025ece99e16 upstream.
 
-If userspace tries to update the GCS mode as part of signal return then
-we update the thread state but don't update GCSCRE0_EL1, meaning the
-change does not take effect.  We may also get issues for other tasks on
-context switch since we suppress writes of the register if the two tasks
-have the same mode.
+The erratum causing significant inaccuracies in the AMU CNT_CYCLES
+counter due to WFI/WFE has been identified in additional
+microarchitectures.
+Extend the existing workaround to cover these implementations,
+which are affected by the following errata:
 
-Since no currently known userspace tries to use this functionality close
-this by ignoring any attempt to change the mode through signal return.
-The GCS mode for the current thread can be changed using the prctl()
-interface and will be preserved on signal return, allowing updates to
-the mode from the signal handler.
+ - ARM Cortex-A725 erratum 3821522 (SDEN-2832921)
+ - ARM Cortex-A720 erratum 4689339 (SDEN-2439421)
+ - ARM Cortex-A720AE erratum 4689340 (SDEN-3090091)
+ - ARM Neoverse N3 erratum 4689341 (SDEN-3050973)
+ - ARM C1-Pro erratum 4689344 (SDEN-3273080)
 
-Reported-by: Catalin Marinas <catalin.marinas@arm.com>
-Link: https://lore.kernel.org/r/as-8IqsbMbOBo5Oq@arm.com
-Suggested-by: Catalin Marinas <catalin.marinas@arm.com>
-Fixes: 16f47bb9ac8a ("arm64/signal: Expose GCS state in signal frames")
-Signed-off-by: Mark Brown <broonie@kernel.org>
-Cc: stable@vger.kernel.org
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Beata Michalska <beata.michalska@arm.com>
 Signed-off-by: Catalin Marinas <catalin.marinas@arm.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- Documentation/arch/arm64/gcs.rst |   13 ++++---------
- arch/arm64/kernel/signal.c       |   22 +---------------------
- 2 files changed, 5 insertions(+), 30 deletions(-)
+ Documentation/arch/arm64/silicon-errata.rst |    8 ++++++++
+ arch/arm64/Kconfig                          |   12 +++++++++---
+ arch/arm64/kernel/cpu_errata.c              |    8 ++++++++
+ 3 files changed, 25 insertions(+), 3 deletions(-)
 
---- a/Documentation/arch/arm64/gcs.rst
-+++ b/Documentation/arch/arm64/gcs.rst
-@@ -179,9 +179,8 @@ intended to be exhaustive.
+--- a/Documentation/arch/arm64/silicon-errata.rst
++++ b/Documentation/arch/arm64/silicon-errata.rst
+@@ -172,6 +172,10 @@ stable kernels.
+ +----------------+-----------------+-----------------+-----------------------------+
+ | ARM            | Cortex-A720     | #3456091        | ARM64_ERRATUM_3194386       |
+ +----------------+-----------------+-----------------+-----------------------------+
++| ARM            | Cortex-A720     | #4689339        | ARM64_ERRATUM_3821522       |
+++----------------+-----------------+-----------------+-----------------------------+
++| ARM            | Cortex-A720AE   | #4689340        | ARM64_ERRATUM_3821522       |
+++----------------+-----------------+-----------------+-----------------------------+
+ | ARM            | Cortex-A725     | #3456106        | ARM64_ERRATUM_3194386       |
+ +----------------+-----------------+-----------------+-----------------------------+
+ | ARM            | Cortex-A725     | #3821522        | ARM64_ERRATUM_3821522       |
+@@ -230,6 +234,8 @@ stable kernels.
+ +----------------+-----------------+-----------------+-----------------------------+
+ | ARM            | Neoverse-N3     | #3456111        | ARM64_ERRATUM_3194386       |
+ +----------------+-----------------+-----------------+-----------------------------+
++| ARM            | Neoverse-N3     | #4689341        | ARM64_ERRATUM_3821522       |
+++----------------+-----------------+-----------------+-----------------------------+
+ | ARM            | Neoverse-V1     | #1619801        | N/A                         |
+ +----------------+-----------------+-----------------+-----------------------------+
+ | ARM            | Neoverse-V1     | #3324341        | ARM64_ERRATUM_3194386       |
+@@ -254,6 +260,8 @@ stable kernels.
+ +----------------+-----------------+-----------------+-----------------------------+
+ | ARM            | C1-Pro          | #4193714        | ARM64_ERRATUM_4193714       |
+ +----------------+-----------------+-----------------+-----------------------------+
++| ARM            | C1-Pro          | #4689344        | ARM64_ERRATUM_3821522       |
+++----------------+-----------------+-----------------+-----------------------------+
+ | ARM            | C1-Ultra        | #3683289        | N/A                         |
+ +----------------+-----------------+-----------------+-----------------------------+
+ | ARM            | C1-Ultra        | #4193780        | ARM64_ERRATUM_4118414       |
+--- a/arch/arm64/Kconfig
++++ b/arch/arm64/Kconfig
+@@ -1083,14 +1083,20 @@ config ARM64_ERRATUM_2645198
+ 	  If unsure, say Y.
  
- When returning from a signal handler:
+ config ARM64_ERRATUM_3821522
+-	bool "Cortex-A725: 3821522: workaround for possible CNT_CYCLES increment error due to WFE/WFI"
++	bool "Cortex-*/Neoverse-*/C1-*: workaround for possible CNT_CYCLES increment error due to WFE/WFI"
+ 	depends on ARM64_AMU_EXTN
+ 	select ARM64_WORKAROUND_BROKEN_AMU_CONSTCNT
+ 	default y
+ 	help
+-	  This option adds the workaround for ARM Cortex-A725 erratum 3821522.
++	  This option adds the workaround for the following errata:
  
--* If there is a gcs_context record in the signal frame then the GCS flags
--  and GCSPR_EL0 will be restored from that context prior to further
--  validation.
-+* If there is a gcs_context record in the signal frame then GCSPR_EL0
-+  will be restored from that context prior to further validation.
- 
- * If there is no gcs_context record in the signal frame then the GCS
-   configuration will be unchanged.
-@@ -190,12 +189,8 @@ When returning from a signal handler:
-   point to a valid GCS signal cap record, this will be popped from the
-   GCS prior to signal return.
- 
--* If the GCS configuration is locked when returning from a signal then any
--  attempt to change the GCS configuration will be treated as an error.  This
--  is true even if GCS was not enabled prior to signal entry.
--
--* GCS may be disabled via signal return but any attempt to enable GCS via
--  signal return will be rejected.
-+* The features_enabled in the signal return context will be ignored; any
-+  changes made using the prctl() in the signal handler will be preserved.
- 
- 
- 6.  ptrace extensions
---- a/arch/arm64/kernel/signal.c
-+++ b/arch/arm64/kernel/signal.c
-@@ -741,36 +741,16 @@ static int preserve_gcs_context(struct g
- 
- static int restore_gcs_context(struct user_ctxs *user)
- {
--	u64 gcspr, enabled;
-+	u64 gcspr;
- 	int err = 0;
- 
- 	if (user->gcs_size != sizeof(*user->gcs))
- 		return -EINVAL;
- 
- 	__get_user_error(gcspr, &user->gcs->gcspr, err);
--	__get_user_error(enabled, &user->gcs->features_enabled, err);
- 	if (err)
- 		return err;
- 
--	/* Don't allow unknown modes */
--	if (enabled & ~PR_SHADOW_STACK_SUPPORTED_STATUS_MASK)
--		return -EINVAL;
--
--	err = gcs_check_locked(current, enabled);
--	if (err != 0)
--		return err;
--
--	/* Don't allow enabling */
--	if (!task_gcs_el0_enabled(current) &&
--	    (enabled & PR_SHADOW_STACK_ENABLE))
--		return -EINVAL;
--
--	/* If we are disabling disable everything */
--	if (!(enabled & PR_SHADOW_STACK_ENABLE))
--		enabled = 0;
--
--	current->thread.gcs_el0_mode = enabled;
--
- 	/*
- 	 * We let userspace set GCSPR_EL0 to anything here, we will
- 	 * validate later in gcs_restore_signal().
+-	  On affected A725 cores, the CNT_CYCLES event may incur a significant
++	  * ARM Cortex-A725 erratum 3821522
++	  * ARM Cortex-A720 erratum 4689339
++	  * ARM Cortex-A720AE erratum 4689340
++	  * ARM Neoverse N3 erratum 4689341
++	  * ARM C1-Pro erratum 4689344
++
++	  On affected cores, the CNT_CYCLES event may incur a significant
+ 	  increment error when entering and subsequently exiting WFx.
+ 	  As a result, the CNT_CYCLES may diverge from the system counter
+ 	  frequency at which it is expected to increment.
+--- a/arch/arm64/kernel/cpu_errata.c
++++ b/arch/arm64/kernel/cpu_errata.c
+@@ -391,8 +391,16 @@ static const struct midr_range workaroun
+ 	MIDR_RANGE(MIDR_CORTEX_A510, 0, 0, 1, 1),
+ #endif
+ #ifdef CONFIG_ARM64_ERRATUM_3821522
++	/* Cortex-A720 r0p0 - r0p2 */
++	MIDR_RANGE(MIDR_CORTEX_A720, 0, 0, 0, 2),
++	/* Cortex-A720AE r0p0 - r0p1 */
++	MIDR_RANGE(MIDR_CORTEX_A720AE, 0, 0, 0, 1),
+ 	/* Cortex-A725 r0p0 - r0p2 */
+ 	MIDR_RANGE(MIDR_CORTEX_A725, 0, 0, 0, 2),
++	/* Neoverse N3 r0p0 - r0p1 */
++	MIDR_RANGE(MIDR_NEOVERSE_N3, 0, 0, 0, 1),
++	/* C1-Pro r0p0 - r1p3 */
++	MIDR_RANGE(MIDR_C1_PRO, 0, 0, 1, 3),
+ #endif
+ 	{}
+ };
 
 
