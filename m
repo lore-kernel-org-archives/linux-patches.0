@@ -1,51 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795625984;
-	b=WdA923RXO4kgr0dZIvJrSe9cgFfZiX0hAmngjmHePRsETep/GylOFVL+v5C+zGECt5i/
-	 hNxlLKUDY7f/OGibiuPJ4qEdIP/42b7n/bFud8cV8cbCMXzcOJ8l+8QOqRygYKCHS9IZn
-	 55G9/exx8IXX3Z0aefIubYOwV7B2kuhMIow6hMY+1vzbKAgK4eEs7/Dwwd8tLXWheCrls
-	 nS0PDOZNZGcRYmIJ7AaJDKJUw5cRw7oOdn4g6CyRIApvpIi7wCvqm7Krrg6UQD8OTQFcM
-	 5tT3gVx2hU/7fuLW85DE5vc5+c6Lqewd7BSohSsU1JMVOVPdek8xyUDipGxAS4hkUzg==
+	t=1795625987;
+	b=2bFJkx2Cdf+yzkIO0YAm0TYiYST5Al0KkaYZm9JUcWLCKNhoLloJVKkcsusM/GcPh5rq
+	 JrCja6txOOc8sNZhsLfwV8t55KCT5uLrO19a27MsaPwtwZfAONBO77TBgAhGcgSbigCCx
+	 HvNFG4zrhGl25CG0tp43iQDz0yOEqDOq5xfqhfyuIGOxsS0cbNgfEs6IznrSgEIDbwl0W
+	 eB3omaSB+E2M4aTWMGpludZdDeYK8HApGWVeL8/Wyj69ip7THwp9+5oQxMsjfagljsWmF
+	 qhTD4q/l7r1mYKp3jM9FQ8crssaxoFt56/4hP6p6JoPh3Xi6QK61tRffdH6yTnNQqfA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795625984;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795625987;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=MWMzctNGx2RSRu2X3nKxVumPkpg2Ln2o1sVtZ7YJ1Tc=;
-	b=WorUgDXk/uRYyysJnzIrgQ3JKPm7x5DfzmJ9ALXN7W6AwUEVVRSe4/GRGMQy9vEsCWLq
-	 r3OaoHcHbFM7K3nKgS0AqiC70oMgpPwKPNFwFp2/FN2WKE9B2XDQ4LjgaVU73NwXa8JUG
-	 KshVEM7oUavEJ8HeEr/0SItDAej/kNPwHDyo742e1Yvx3d70PNVLCCShwEmgzO9T5tHi5
-	 FnKrtSTvY3l6mtildkI3HU/vdEsln2YtITDeWwpu/hadA9Zd+BMUZMF9oeNCp2nhbI296
-	 C98dvGgSW/ZzUri9LcZH01Xw/PYHcwvzVS8gsF9vQin0SqHOuuq4ce7aYwISQNpYfCA==
+	bh=LkeSC22xEi8qpDK3njgre/MIqA8BoklvkNYHz75b1cw=;
+	b=dVev/3Zk8+dETVm/NttsJ4J8yLn09GZ5bIKDi/50wXxd0SUobhNAmBUwhcSZMBpEfazB
+	 MGB47KpKD8fnTY/MD0gR3cf8E1QszTBppmetFFisSwmaxbUkUV+0ZQUWgTKqzCHKqa7wQ
+	 7TOoFKCKjFVqwaih+wmu6gWWJt1cYo5WE88lALbAMGQq3ogM8qXuEf4XppBfKIHrUnIG5
+	 l3R0gUHxCq52tAWrQLKBwDIsEkqrTumx0Pmxj/B4fNqaZ7+fgA0kUcNtoKx/rWU3qzDMt
+	 CwWy8jzVdv0yqkXYj5xIVXzjk9AiJ7qOVD8a4jcx1I/NDGeznR/BfxWDh7zo/R8pjXg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=gBCJgpjH;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=QfEFlDUR;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5081D606A326;
-	Wed, 25 Nov 2026 16:59:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6ABB9606A31E;
+	Wed, 25 Nov 2026 16:59:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=gBCJgpjH
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2943D1F000C0;
-	Wed, 25 Nov 2026 16:59:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=QfEFlDUR
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7BF081F000D1;
+	Wed, 25 Nov 2026 16:59:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795625983;
-	bh=MWMzctNGx2RSRu2X3nKxVumPkpg2Ln2o1sVtZ7YJ1Tc=;
+	s=korg; t=1795625987;
+	bh=LkeSC22xEi8qpDK3njgre/MIqA8BoklvkNYHz75b1cw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=gBCJgpjHbgnQBoiS86FrE4sKB4rSFi6iE5uv4Szo+N5groun71JsYBjiFW+/Nu5k/
-	 Q1i5NoMLViFiLP9gSAKA+P+EBhdJnYY1to7EIxr0q6D08HrC4x7Wm7wsBBGjFNyC2v
-	 76tD9LFGVrD20jMecEoPiBQq70noXDAOYNklqrkM=
+	b=QfEFlDURp9KiqVjSgi3GJxZqn++WW2sRMpKlhxnds0erV3s8yIw+cC23EemerzY3o
+	 tVgPwz5DiBegMVdcmQxiFVzc/4LPFkgCV3cVmaTMFaEB0pZ1qldTFGOBWwBR9xzlU2
+	 TjM4aWS63BXKPSTCDCIBvJBHvaiV1ghmi4x6l1SQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yaohan Li <shunsheng1218@gmail.com>,
+	syzbot+5307e3bcacec2ce4c2f0@syzkaller.appspotmail.com,
+	Kirtikumar Anandrao Ramchandani <kirtiar15502@gmail.com>,
 	Mikulas Patocka <mpatocka@redhat.com>
-Subject: [PATCH 6.12 692/816] dm: avoid double-dropping the zone reset submission reference
-Date: Wed, 25 Nov 2026 15:37:20 +0100
-Message-ID: <20261125143905.203441991@linuxfoundation.org>
+Subject: [PATCH 6.12 693/816] dm: Reject table setup after queue or disk teardown
+Date: Wed, 25 Nov 2026 15:37:21 +0100
+Message-ID: <20261125143905.225999256@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143849.205329330@linuxfoundation.org>
 References: <20261125143849.205329330@linuxfoundation.org>
@@ -67,52 +68,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yaohan Li <shunsheng1218@gmail.com>
+From: Kirtikumar Anandrao Ramchandani <kirtiar15502@gmail.com>
 
-commit c4965effbe15f837a8089e79c0fc17ab19363cce upstream.
+commit ae310e4ad872a42f4707a596e66417f2aaa52826 upstream.
 
-On an error in __send_zone_reset_all(), the submission reference
-held by the dm_io can be decremented there and again by the caller's
-error path. If another clone is still outstanding, the second drop
-can release the dm_io before that clone completes.
+A failed table load can leave a mapped device in a state where its
+queue has already been initialized or its disk has been removed, while
+md->type is still DM_TYPE_NONE. A later table load then calls
+blk_mq_init_allocated_queue() on the same queue. If del_gendisk() exited
+the old hardware contexts, blk_mq_exit_hctx() dereferences their cleared
+flush queue pointer.
 
-Only drop the submission reference in __send_zone_reset_all() on
-success. On failure, leave the reference for the caller's existing
-error handling to release once.
+Reject setup attempts after queue initialization or disk removal. A
+failed request queue initialization still leaves md->tag_set NULL and
+can be retried. Set the request-based disk operations only after that
+initialization succeeds, so an unsuccessful attempt cannot leave a
+bio-based retry with request-based operations.
 
-The error path was reproduced under KASAN with an injected GFP_NOIO
-allocation failure while another zone-reset clone remained in
-flight. With the change, the same failure was reported normally,
-without the observed use-after-free, and ordinary zone resets
-continued to work.
-
-Fixes: 81e7706345f06 ("dm: handle REQ_OP_ZONE_RESET_ALL")
+Reported-by: syzbot+5307e3bcacec2ce4c2f0@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=5307e3bcacec2ce4c2f0
 Cc: stable@vger.kernel.org
-Assisted-by: ZCode:GLM-4
-Signed-off-by: Yaohan Li <shunsheng1218@gmail.com>
+Signed-off-by: Kirtikumar Anandrao Ramchandani <kirtiar15502@gmail.com>
 Signed-off-by: Mikulas Patocka <mpatocka@redhat.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/md/dm.c |    9 +++++++--
- 1 file changed, 7 insertions(+), 2 deletions(-)
+ drivers/md/dm.c |    6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
 --- a/drivers/md/dm.c
 +++ b/drivers/md/dm.c
-@@ -1945,8 +1945,13 @@ static blk_status_t __send_zone_reset_al
- 			break;
+@@ -2595,13 +2595,17 @@ int dm_setup_md_queue(struct mapped_devi
+ 
+ 	WARN_ON_ONCE(type == DM_TYPE_NONE);
+ 
++	/* A failed setup may have left the queue initialized or the disk dead. */
++	if (md->tag_set || test_bit(GD_DEAD, &md->disk->state))
++		return -ENODEV;
++
+ 	if (type == DM_TYPE_REQUEST_BASED) {
+-		md->disk->fops = &dm_rq_blk_dops;
+ 		r = dm_mq_init_request_queue(md, t);
+ 		if (r) {
+ 			DMERR("Cannot initialize queue for request-based dm mapped device");
+ 			return r;
+ 		}
++		md->disk->fops = &dm_rq_blk_dops;
  	}
  
--	/* Release the reference that alloc_io() took for submission. */
--	atomic_sub(1, &ci->io->io_count);
-+	/*
-+	 * Release the reference that alloc_io() took for submission. On error,
-+	 * that reference was not consumed: dm_split_and_process_bio() releases
-+	 * it on the error path, so do not release it here a second time.
-+	 */
-+	if (sts == BLK_STS_OK)
-+		atomic_dec(&ci->io->io_count);
- 
- 	return sts;
- }
+ 	r = dm_calculate_queue_limits(t, &limits);
 
 
