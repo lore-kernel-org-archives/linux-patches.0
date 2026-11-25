@@ -1,54 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795619443;
-	b=vOVM8yNju5aciGXA4zSsPOTDMy1IH3Id0ipIYQmvoCU8nQsFugxe9lQTbCTKBv8YTJpF
-	 MuDK1r5CfT4AU6oy5ybVmO7s8vGr4H9nedW05GJcM8wFPFPMBL/d+Rc2KHmq+FwjZL/LH
-	 MVk3IwDsFjsoDf1+dR3fSEJQlTlvIY3n0H53NB0mDrBCKkfMTede9+AkjWrUD65Fyb2Ky
-	 8P4GBe1pkEqtRS5la1rUbiLkiqkbf8+k2uMZaq+RyIlnkxOtSTaTYOgfZZwP5kCcRx+Ts
-	 wti5uKq7T8WB5MKHB1PeZbslelu2CgXglXft7yxKL2htBBe8dFgT5vjnHTALxFFel7w==
+	t=1795619446;
+	b=sqgw4CsN66qBRQD2bDNvRuLC0bA1rxIGWZytb32UFz7awMM9BGnnUEOGhD49TCRGVSr7
+	 LMCdrw28gvOSDy7A/jWon7gTNpo1V0Py67ocNBXT8jzqnYtjY0wAtLOXE9VlWClIflb0g
+	 8HTXUamrwfhWV2pxcsMPY0oR9/hxdcSub53JJqwXzxWg9BVYm5oX+jrlOGC8nQJlQEM+r
+	 B3FEylNQ5whWPNpCgI2iUUdPDjMdwlQHML/+tu+S0u3jkPBVQwn50ua6qJLZHOPg+joQ0
+	 t03kKn/jRL7TOtxB/olc6A5BPhHdBxfBDLZ3FYCIzwPCm2d6kufZdl3I7HknnecdG7g==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795619443;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795619446;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=nRI+pCNAHowiZsbf4hVFTdp2vWrXz0gJxHj9/iCyxiw=;
-	b=CrvBUF5JK6PauBgQ7FDX/M9kg9tTb2/gu7ArPexlY9HTbR1F75HXbdp9Wik0bH3jVANX
-	 T0GaYQY7HOveKXq6SzsF48ZZUw6DSHET/+F8Vp4/V8mEJU2WI2pSYIEst1sfbzrugXbXN
-	 2e4vB91Grxee2d9glJ2KZgXD9N3sKeIlLk2sxfgGIdhg0B4QcVR6QH8QvTog1+WuVlb1n
-	 eUnxoSEHFId3oIQr1oOpojE+ny9x7myKIRT8BE3pLyGqSex3/ItciR/Nw0d6QBtMqXJnR
-	 p0Ftk50SUmc37+tMevyWW7Eudu9ADYE48Mw1OuhQDUMoRMY/fbKdA1ai+qj7eh9NrNw==
+	bh=uaD1YvuP7v1TOiJyNZGNtVGQ/gnfSu39hDFnHIBa/HU=;
+	b=oXtzP8zTuUf4i3TMh60D1lVRwYI+8T2JTIEqqrDTeqCHIBLT3Dq01eOov/Oq68sPddV+
+	 BCBPCxZ8JXW0JPkvD7VmgOD//2wnguftO8hH18+nNyx6QEKztglJHZldHa7DnUIlun0nH
+	 GaDwjGd9agfIaQa3v+wcL7D61RHCPFPvpVHjitm2vNFHsah/NcL9dFbtwAFcQHZGRWguo
+	 m3sUlotaT0xUoV8pgsiLKdcSMMT+AJjj3+/k9mAt/P7lWDYZrHOITRaZBBNvo3HuZlv8/
+	 iyGwyPpBPjjk2hcQPu0W4OIE/c+LfGkipO827mYBoGx3K4Ra9eYaNsKnrvgbRwEcJcw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="RrL0Exr/";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Rfzp32Nd;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 62121606A321;
-	Wed, 25 Nov 2026 15:10:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4C4F0606A31E;
+	Wed, 25 Nov 2026 15:10:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=RrL0Exr/
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2BC641F000E1;
-	Wed, 25 Nov 2026 15:10:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Rfzp32Nd
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8D5421F008B2;
+	Wed, 25 Nov 2026 15:10:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795619442;
-	bh=nRI+pCNAHowiZsbf4hVFTdp2vWrXz0gJxHj9/iCyxiw=;
+	s=korg; t=1795619446;
+	bh=uaD1YvuP7v1TOiJyNZGNtVGQ/gnfSu39hDFnHIBa/HU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=RrL0Exr/gQJe22tOvA9i+YEC6ECQMKqp/wSCF7kGOOBQ8/lPS8nYtGrYq5IfFUFTY
-	 jRxaP4DHBgCHW1/dPyS8E982ZNz35/RXMPCv+4mQUpqzD8mCgsPmeSeDSrNjQG8JJl
-	 0J9iSHydH2uDlx56tA8UY1bhSUrFTqbWBXPOUBO0=
+	b=Rfzp32NdI5LHo0ASmwXaJT++eT/qLsApPSDz4qHyiTn6CIbH6Jc7Viiu3C6sAJz7X
+	 zRTmu6xOFYMNpV4J3oMmoCU1T/V+Uid73lPMoH9jDsnqFZy/LSjwYqKI+JncFdumPO
+	 klwa8QeqoFihmbnXQrBKtS8uopQpYcT8TW2GIh4k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sashiko <sashiko-bot@kernel.org>,
-	Jiri Benc <jbenc@redhat.com>,
-	Eric Dumazet <edumazet@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Wenwen Fu <wenwfu@qti.qualcomm.com>,
+	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0553/1005] nsh: limit recursion in nsh_gso_segment()
-Date: Wed, 25 Nov 2026 15:31:31 +0100
-Message-ID: <20261125143834.700415630@linuxfoundation.org>
+Subject: [PATCH 7.3 0554/1005] tracing: skip boot kprobe setup when no events were requested
+Date: Wed, 25 Nov 2026 15:31:32 +0100
+Message-ID: <20261125143834.723497372@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143821.729802100@linuxfoundation.org>
 References: <20261125143821.729802100@linuxfoundation.org>
@@ -70,106 +68,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eric Dumazet <edumazet@kernel.org>
+From: Wenwen Fu <wenwfu@qti.qualcomm.com>
 
-[ Upstream commit 3921fb102d78a6d7aa61b8d273e097a1a8026b90 ]
+[ Upstream commit 2388a673e9276de30c7e917fce50830e497d46cc ]
 
-nsh_gso_segment() calls skb_mac_gso_segment() for the inner packet,
-which calls nsh_gso_segment() again when the next protocol is NSH,
-either directly or behind an inner Ethernet header (ETH_P_TEB).
+setup_boot_kprobe_events() calls enable_boot_kprobe_events() even when
+the kprobe_event= boot parameter was not supplied. That call takes
+event_mutex without any command-line probes to enable.
 
-Nothing limits the depth: a GSO packet made of stacked 8-byte NSH
-headers recurses once per header, and a 64KB packet can hold about
-8000 of them, overflowing the kernel stack.
+Asynchronous eval-map updates also hold event_mutex. A normal boot can
+therefore wait in init_kprobe_trace() for this background work despite
+having no boot probes to set up.
 
-Such a packet can be injected with a packet socket using
-PACKET_VNET_HDR, or with tun/tap or virtio_net, as nothing checks
-that a GSO packet with VIRTIO_NET_HDR_F_NEEDS_CSUM carries the
-protocol it claims. It is then segmented in software if the output
-device does not support the GSO type:
+Return early when the boot-event buffer is empty. Keep the mutex
+protection in trace_event_update_all() and retain setup for explicit
+kprobe_event= parameters. Bootconfig handles its own probe enablement,
+and the existing trace_eval_sync() still waits for background work
+before init memory is freed.
 
-BUG: TASK stack guard page was hit at ffffcad5c0ab3ff8 (stack is ffffcad5c0ab4000..ffffcad5c0ab8000)
-Oops: stack guard page: 0000 [#1] SMP NOPTI
-CPU: 3 UID: 0 PID: 337 Comm: nsh_gso Tainted: G            E       7.4.0-rc1+ #118 PREEMPT(lazy)
-RIP: 0010:lock_acquire (kernel/locking/lockdep.c:5902)
-Call Trace:
- <TASK>
- skb_mac_gso_segment (include/linux/rcupdate.h:309 include/linux/rcupdate.h:849 net/core/gso.c:50)
- nsh_gso_segment (net/nsh/nsh.c:110) nsh
- skb_mac_gso_segment (net/core/gso.c:53)
- nsh_gso_segment (net/nsh/nsh.c:110) nsh
- [...]
- skb_mac_gso_segment (net/core/gso.c:53)
- __skb_gso_segment (net/core/gso.c:129)
- validate_xmit_skb (net/core/dev.c:4238)
- __dev_queue_xmit (net/core/dev.c:5087)
- packet_sendmsg (net/packet/af_packet.c:3157 net/packet/af_packet.c:3189)
- __sys_sendto (net/socket.c:800 net/socket.c:818 net/socket.c:2283)
- __x64_sys_sendto (net/socket.c:2290 net/socket.c:2286 net/socket.c:2286)
- do_syscall_64 (arch/x86/entry/syscall_64.c:61 arch/x86/entry/syscall_64.c:84)
- entry_SYSCALL_64_after_hwframe (arch/x86/entry/entry_64.S:121)
+Link: https://lore.kernel.org/all/20261106021457.2648231-1-wenwfu@qti.qualcomm.com/
 
-Use gso_recursion_inc_test(), added in commit 006c8b834aed ("net: gso:
-limit recursive IP-in-IP segmentation"), with the same limit as IPv4
-and IPv6. The counter is shared with them: a packet with four NSH
-headers in front of an IPv4 header is still segmented, one more NSH
-header and it is dropped.
-
-The NSH -> ETH_P_TEB -> NSH route is covered as well, as each round
-goes through nsh_gso_segment().
-
-Fixes: c411ed854584 ("nsh: add GSO support")
-Reported-by: Sashiko <sashiko-bot@kernel.org>
-Closes: https://lore.kernel.org/netdev/179443691180.2199510.148246238688217560@kernel.org/
-Cc: Jiri Benc <jbenc@redhat.com>
-Signed-off-by: Eric Dumazet <edumazet@kernel.org>
-Reviewed-by: Jiri Benc <jbenc@redhat.com>
-Link: https://patch.msgid.link/20261112102001.3744643-2-edumazet@kernel.org
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: 970988e19eb0 ("tracing/kprobe: Add kprobe_event= boot parameter")
+Signed-off-by: Wenwen Fu <wenwfu@qti.qualcomm.com>
+Signed-off-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/net/gso.h | 2 +-
- net/nsh/nsh.c     | 7 +++++++
- 2 files changed, 8 insertions(+), 1 deletion(-)
+ kernel/trace/trace_kprobe.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/include/net/gso.h b/include/net/gso.h
-index 0749230d414ec..e311a8f5b5a72 100644
---- a/include/net/gso.h
-+++ b/include/net/gso.h
-@@ -19,7 +19,7 @@ struct skb_gso_cb {
- 	int	encap_level;
- 	__wsum	csum;
- 	__u16	csum_start;
--	/* Number of IPv4/IPv6 GSO handler entries for this packet. */
-+	/* Number of IPv4/IPv6/NSH GSO handler entries for this packet. */
- 	u8	recursion_counter;
- };
- #define SKB_GSO_CB_OFFSET	32
-diff --git a/net/nsh/nsh.c b/net/nsh/nsh.c
-index bfb7758063f31..dd4de50fc38c3 100644
---- a/net/nsh/nsh.c
-+++ b/net/nsh/nsh.c
-@@ -9,6 +9,7 @@
- #include <linux/netdevice.h>
- #include <linux/skbuff.h>
- #include <net/gso.h>
-+#include <net/ip_tunnels.h>
- #include <net/nsh.h>
- #include <net/tun_proto.h>
+diff --git a/kernel/trace/trace_kprobe.c b/kernel/trace/trace_kprobe.c
+index e41a7c113646b..6e0fff6b4d91f 100644
+--- a/kernel/trace/trace_kprobe.c
++++ b/kernel/trace/trace_kprobe.c
+@@ -2017,6 +2017,9 @@ static __init void setup_boot_kprobe_events(void)
+ 	char *p, *cmd = kprobe_boot_events_buf;
+ 	int ret;
  
-@@ -84,6 +85,12 @@ static struct sk_buff *nsh_gso_segment(struct sk_buff *skb,
- 
- 	skb_reset_network_header(skb);
- 
-+	/* NSH can carry NSH (directly, or in an inner Ethernet frame):
-+	 * limit the recursion, as IPv4 and IPv6 do.
-+	 */
-+	if (unlikely(gso_recursion_inc_test(skb, IP_TUNNEL_RECURSION_LIMIT)))
-+		goto out;
++	if (!kprobe_boot_events_buf[0])
++		return;
 +
- 	outer_proto = skb->protocol;
- 	outer_hlen = skb_mac_header_len(skb);
- 	mac_len = skb->mac_len;
+ 	strreplace(kprobe_boot_events_buf, ',', ' ');
+ 
+ 	while (cmd && *cmd != '\0') {
 -- 
 2.53.0
 
