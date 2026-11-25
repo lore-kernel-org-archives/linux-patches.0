@@ -1,54 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795618303;
-	b=PaJqjxipY5KPyOmtwBnJGvCZONl6PENwLiAEHyLqRBcfZXue53vVkXYjpdoLMvutorOe
-	 vJTkKdR56OB9L4CFAKKJhfmiVMxR342P4+t31WlUMcO2OZ7ijtiLYwjx9e52W3auDzpUS
-	 EaI63JVQs/GkpwO3MuSW/pdBzqPbUJVffW4FBK6fA1UpH+kdyTPpbObDnBei2x4v5E62/
-	 G4KcsqlNDbTiO6pc+acHhF8HBcqtM4mGJfpsTMHu3swUM5x5JgkB7qrI+ACq9V5OV8SEI
-	 bUu6lJ/099Y/WAmpBfghD7N+whXZiYNBnvKdqcPwhfxrh4Cc8vkQbJkLnGJ3sGyhSMg==
+	t=1795618306;
+	b=gH21xZXCjzW1VpL/DUfaIXtTZD9rCTSUorV4x7c6olZrgeBA8Zauj848qcCUrIbj/yUJ
+	 T2BRQ2bm+VK/xNAhQO46OFkwatgNidsyVkvfqSxY06mi3BDaLCa2O/3T8VAY+JEXxbK4l
+	 YAK/mZcxKTMjHq6rQQAESIT6QENq5XnzQk+sz1yq3P8wwFBmsI+szd0fBP3vRWRp/xsNJ
+	 Ts5tho6/LN/xyfp002Kh2iKJqyOHjrN+d8522UnMzrpCskpeYqkVOV6d3dj6D7POQdZjb
+	 bgNlub6MWB1kIqViJqiHqnfJdgGmPFe/WG15lLcdgQDKgWoGI2aYaiKz5Zup4vsV5Jg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795618303;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795618306;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=BMVkQ3lGj3Yx1IQhNuymCu6Q1oVzvKWK2WMs3XuhOR8=;
-	b=nVO2MzgzYtcHb3bh/qgfKQSSfJWi+tP4KK9Dqm4Tf1/lOt1B+pS+sRjCukuGOXZmh2ec
-	 fQSZC5SgxPhNg3TEhKs+JUwJC56OeKFnwbtRmTt/d0jcuUp9dp9V9PxRvu17mmNSjje2f
-	 de0vf+6zBYQdAL8Xs2ZQd9rdJhg35lmngPMBAnFSEl24MKKNyKl9sUHmwjtAMGUAIHyX6
-	 GQoUXGnC0zXNCl2Lq5v33ywfq2LNVzdcGYAc94SfO2TU1AkEHo7MLmwfaYu/mtP/j/XID
-	 0DmAGnjEOu+V554msTDiv4JlS67GUKNallmLEaA88uzWaWEeAe5uXvHN+ZoWJUfVF3w==
+	bh=tNdd0oV99P9N5pPwPosLEPhn+MQkYmjNlsOlk4nYHJo=;
+	b=PMNpD+Z4YsPQx6ZErSASajp2Z5T3G6z/oXnHqAxhWEyQEQ+xpaePv3dfJyh/+9KdqpVe
+	 75f7wkjlWOJkyAd0acuUyqhqV4XIO039/YSOE3XKkEBgpozIEVMC70tHFP4XN7q98apim
+	 B7BStGV+2yA/zpGlr1UDPdW2rpYVqTqm2rFyroVLjogdNkhXQyjqfjPvhMt10N3x+8YCi
+	 EdgfIfIfj+iGnMQbkL4zr27ahx4J10FTKi15DUJHmPdFbar0e4syAVSzBjAxzVgrFVD8a
+	 UHTignoQymEs2Q6gTBEUUtzXGduUX9LbJPm0V8Wrb2NPbxGAM1g9tiKL2aLS9vcwZiw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="iRQFDZD/";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=xY1SvFHW;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 57962606A31E;
-	Wed, 25 Nov 2026 14:51:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9075C606A321;
+	Wed, 25 Nov 2026 14:51:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=iRQFDZD/
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 82BA71F000C0;
-	Wed, 25 Nov 2026 14:51:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=xY1SvFHW
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7FD561F000C0;
+	Wed, 25 Nov 2026 14:51:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795618303;
-	bh=BMVkQ3lGj3Yx1IQhNuymCu6Q1oVzvKWK2WMs3XuhOR8=;
+	s=korg; t=1795618306;
+	bh=tNdd0oV99P9N5pPwPosLEPhn+MQkYmjNlsOlk4nYHJo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=iRQFDZD/pavhRqoIoPvr+7PwWfQRSE+Sg4XMDKAOyTrbXVXn5dvYsr7jOAZs6ifAm
-	 P9R7nU6nVhp7fluak1w8FkrHyCPLf5dVXxIwqkq7fqEcPXGbPD42QuMrI7fYdmaOn6
-	 FO9xW8PH8ht8P+IiUaOastk0JrJ3W4o+aeQwa4Sc=
+	b=xY1SvFHWSA8E/XbbzwE0R8MSAiZJD15g2lplO/U5lax7zSUAy3oGw4/WyJX0YtCYK
+	 4ZeoR90YFbLXMIImTRXlYlToGy7Nb8JSUkuWnn0BhJAXpZFSpiw766JvtbL2PdCMNy
+	 Z7O7a9iMBlE84m3C0YvRUpxGrBwfwnIF7FDairuk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sashiko <sashiko-bot@kernel.org>,
-	John Ogness <john.ogness@linutronix.de>,
-	Petr Mladek <pmladek@suse.com>,
-	Derek Barbosa <debarbos@redhat.com>,
+	Jianan Huang <jnhuang95@gmail.com>,
+	Christoph Hellwig <hch@lst.de>,
+	Jens Axboe <axboe@kernel.dk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0237/1005] printk: Avoid multiple unregistration in unregister_console_locked()
-Date: Wed, 25 Nov 2026 15:26:15 +0100
-Message-ID: <20261125143827.290749519@linuxfoundation.org>
+Subject: [PATCH 7.3 0238/1005] blk-mq: reset queue state on scheduler teardown
+Date: Wed, 25 Nov 2026 15:26:16 +0100
+Message-ID: <20261125143827.314118893@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143821.729802100@linuxfoundation.org>
 References: <20261125143821.729802100@linuxfoundation.org>
@@ -70,113 +69,66 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: John Ogness <john.ogness@linutronix.de>
+From: Jianan Huang <jnhuang95@gmail.com>
 
-[ Upstream commit 8a7f26aa072a4e63bc3b1adfe649546709db722e ]
+[ Upstream commit 3a9892bca4dd0182db61702e131cad569b1d71e6 ]
 
-unregister_console_locked() is called from within
-hlist_for_each_entry_safe(console_list) loops. This would be safe if
-unregister_console_locked() only unregistered the specified console. After
-all, that is what the _safe variant is for.
+We observed I/O timeouts with requests stalled in per-CPU software
+queues.
 
-However, unregister_console_locked() calls printk_kthreads_check_locked(),
-which can unregister _multiple_ consoles if kthreads fail to start. This
-could lead to hlist_for_each_entry_safe() use-after-free scenarios because
-not only was the list entry removed, but possibly the following entry as
-well (the @n temporary storage of the next entry).
+The affected queue had no elevator, but QUEUE_FLAG_SQ_SCHED remained
+set. A failed elevator switch can leave this state when falling back to
+none without clearing the flag. With empty hctx dispatch lists, a
+queue-wide restart on CPU4 would skip requests pending in ctx5/ctx7:
 
-Move the call to printk_kthreads_check_locked() outside of
-unregister_console_locked(). Add comments to both functions to clarify
-if they are safe to be used in hlist_for_each_entry_safe(console_list)
-loops.
+CPU4: blk_mq_run_hw_queues(q)
+  sq_hctx = hctx4
+  hctx4: no pending requests   -> selected
+  hctx5: 9 reads in ctx5       -> skipped
+  hctx7: 3 writes in ctx7      -> skipped
 
-Reported-by: Sashiko <sashiko-bot@kernel.org>
-Closes: https://lore.kernel.org/lkml/87ik31iz4x.fsf@jogness.linutronix.de
-Fixes: 76f258bf3f2a ("printk: nbcon: Introduce printer kthreads")
-Signed-off-by: John Ogness <john.ogness@linutronix.de>
-Reviewed-by: Petr Mladek <pmladek@suse.com>
-Tested-by: Derek Barbosa <debarbos@redhat.com>
-Link: https://patch.msgid.link/20261030135802.663893-1-john.ogness@linutronix.de
-Signed-off-by: Petr Mladek <pmladek@suse.com>
+The pending requests may remain undispatched until another event runs
+their hardware queues.
+
+Clear the flag and restore nr_requests and async_depth to the driver
+queue depth in the common scheduler teardown path, covering both
+scheduler exit and failed initialization.
+
+Fixes: 4d337cebcb1c ("blk-mq: avoid to touch q->elevator without any protection")
+Assisted-by: LLM
+Signed-off-by: Jianan Huang <jnhuang95@gmail.com>
+Reviewed-by: Christoph Hellwig <hch@lst.de>
+Link: https://patch.msgid.link/20261023092611.116795-1-jnhuang95@gmail.com
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/printk/printk.c | 34 ++++++++++++++++++++++++++++++----
- 1 file changed, 30 insertions(+), 4 deletions(-)
+ block/blk-mq-sched.c | 6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
-diff --git a/kernel/printk/printk.c b/kernel/printk/printk.c
-index bc3b9f6e404bc..a14ab648ee9bc 100644
---- a/kernel/printk/printk.c
-+++ b/kernel/printk/printk.c
-@@ -3790,6 +3790,13 @@ static struct syscore printk_syscore = {
-  * If appropriate, start nbcon kthreads and set @printk_kthreads_running.
-  * If any kthreads fail to start, those consoles are unregistered.
-  *
-+ * Called after consoles are registered or unregistered.
-+ *
-+ * This MUST NOT be called within an hlist_for_each_entry_safe(console_list)
-+ * loop because it can unregister multiple consoles if any kthreads fail to
-+ * start. That would lead to use-after-free scenarios within the
-+ * hlist_for_each_entry_safe(console_list) loop of the caller.
-+ *
-  * Must be called under console_list_lock().
-  */
- static void printk_kthreads_check_locked(void)
-@@ -4228,7 +4235,20 @@ void register_console(struct console *newcon)
+diff --git a/block/blk-mq-sched.c b/block/blk-mq-sched.c
+index 0a00f5a76f5a8..d7b45778732b8 100644
+--- a/block/blk-mq-sched.c
++++ b/block/blk-mq-sched.c
+@@ -374,7 +374,7 @@ bool blk_mq_sched_try_insert_merge(struct request_queue *q, struct request *rq,
  }
- EXPORT_SYMBOL(register_console);
+ EXPORT_SYMBOL_GPL(blk_mq_sched_try_insert_merge);
  
--/* Must be called under console_list_lock(). */
-+/*
-+ * Unregister the specified console.
-+ *
-+ * This can be called safely from within an
-+ * hlist_for_each_entry_safe(console_list) loop because it unregisters
-+ * _only_ the specified console.
-+ *
-+ * Afterwards the caller should call printk_kthreads_check_locked() since
-+ * unregistering a console may require printer threads to start/stop. Note
-+ * that printk_kthreads_check_locked() cannot be called safely from within
-+ * an hlist_for_each_entry_safe(console_list) loop.
-+ *
-+ * Must be called under console_list_lock().
-+ */
- static int unregister_console_locked(struct console *console)
+-/* called in queue's release handler, tagset has gone away */
++/* Clear scheduler tags and reset queue state. */
+ static void blk_mq_sched_tags_teardown(struct request_queue *q, unsigned int flags)
  {
- 	bool use_device_lock = (console->flags & CON_NBCON) && console->write_atomic;
-@@ -4320,9 +4340,6 @@ static int unregister_console_locked(struct console *console)
- 	if (console->exit)
- 		res = console->exit(console);
+ 	struct blk_mq_hw_ctx *hctx;
+@@ -385,6 +385,10 @@ static void blk_mq_sched_tags_teardown(struct request_queue *q, unsigned int fla
  
--	/* Changed console list, may require printer threads to start/stop. */
--	printk_kthreads_check_locked();
--
- 	return res;
+ 	if (blk_mq_is_shared_tags(flags))
+ 		q->sched_shared_tags = NULL;
++
++	blk_queue_flag_clear(QUEUE_FLAG_SQ_SCHED, q);
++	q->nr_requests = q->tag_set->queue_depth;
++	q->async_depth = q->tag_set->queue_depth;
  }
  
-@@ -4331,7 +4348,12 @@ int unregister_console(struct console *console)
- 	int res;
- 
- 	console_list_lock();
-+
- 	res = unregister_console_locked(console);
-+
-+	/* Changed console list, may require printer threads to start/stop. */
-+	printk_kthreads_check_locked();
-+
- 	console_list_unlock();
- 	return res;
- }
-@@ -4455,6 +4477,10 @@ static int __init printk_late_init(void)
- 			unregister_console_locked(con);
- 		}
- 	}
-+
-+	/* Changed console list, may require printer threads to start/stop. */
-+	printk_kthreads_check_locked();
-+
- 	console_list_unlock();
- 
- 	ret = cpuhp_setup_state_nocalls(CPUHP_PRINTK_DEAD, "printk:dead", NULL,
+ void blk_mq_sched_reg_debugfs(struct request_queue *q)
 -- 
 2.53.0
 
