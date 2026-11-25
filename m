@@ -1,55 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795619266;
-	b=p4aFDgHEB5fkRqQVf/Wck9Noc4XZ2uz28QcsncpgZFmxPqRPfscTo9RLF3QNwzdbkqM8
-	 qYhGa1vR8SAeHUfif9u01AWxq+yd5M9VIM7tOuOCrQd56G0/vNa6paKtEUF3k2ntirns2
-	 NZenmj3rClVPtuK/yhVNcorG+fS8e37CDlnV3yT7xccIMwJ9c9qfAEqTBawnqWfqbFetg
-	 ugrlQ6CrauiPSalmT4rT4oVZZ2UqdgNGt/nj7vrODc/FZwvEUa0ATuU5GfcZJ+1olunl/
-	 DI5A4SMw75DoEJ0Y5WUbW5vrkwYbHekw4x5zQwqxOnfV9pho0YJ8PscYkPFqs795kpA==
+	t=1795619269;
+	b=YgHKBpsUuFMRMFVphgISiDhS3tw072yXhK6hWwGdN/aXJ0UliIyHmV9nI66Qo0LJp2dr
+	 v7epQXBHABcNO+BmqNVOUPAcxyNmKOfbVPtyeWEMY7KX6iVVK+jTbHJmqmNNdnXUROEIJ
+	 OemN2YhPktA9lWmbI/BDqE8rOx4VrmEQJzcesS60vtrVZoVr+ULwHJwYkOvs6Tbj4xAkn
+	 kK9e9hc576X+IrHGeD9n3nUnQeu9j7/GYhzDaY3IW9HZvjPNVVb3XC7RGmmP5PdniqqLZ
+	 5BgKRYujKJmR1VU8lgi+43FZi+PNi6FkVkqYDojWPbJG1RKvdUbOCqDVpegRR2Yzuyg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795619266;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795619269;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=42/5iFvOzqUHIL4jYUBs5SAp4w2jxwHlP4Ia3HJONsU=;
-	b=gY4jxiqsi33v87bjsDIZr9f3gw30Nl2SF0L7dBX37y+3ka8afPGNeHDqy+sO0xFNIOxi
-	 KBRxMBt9De0mdDFkTy9OEJuk4xWHeSSQoPPvM91+/AUCW/H2kluHYjx0fQBym/RtBpZzd
-	 TE7vI1JRXqGzudOqmgMAVOFQC+msfUghQCSTGVvZXF+d5eZlSRkLPDnzCfWQMnMAq3Guf
-	 I452yMjmbszN/qp+z2qWEmajaPW9U9mjHPS0+xnqswl7KQ3V/BdnPdSSQ6thov6NsDqqk
-	 nOX4tLs2SJSNUJ2cyESW8IRdclDIYHIV5ZSAAH+keJdS1Ij7vRuIkn516gpkPu1dikA==
+	bh=w7IOAubTkQHvxEzy20k2vQaPCMy1jdeIhSSeZLj2Z4A=;
+	b=CgOFnINNBtoRP5RZzP8+Z2pjgRiBhVXKUohG4lrPys4oF0oZ+/nL0/YnFvzI9VooEHGX
+	 YVuvW/j+qlc4nX9zSKDRJ9kT57J86OexWmmFy84RjD8Lm5vZkkJMxsaDSZePxex+du64o
+	 kMk+tV9WtQOuSCwVDLDosXMaPD1P/tI047Q+0o2La3FF2AN5GfQ0FB5+STq980+cFhsh8
+	 V/8PavUeAivnm7h5Toj5ZoIEkMB5cFqfQSAf1aqNxDyaiq2qJqwd0v5hwbIKnVUUD9UZE
+	 fOGPtfnV5WlZey2rRSYt6x7kswSEYnh3ZGICXE4WJr/Posm9iZWrN2HnK8NmoYj8eGQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=mfPUi0bI;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=nPOunPy5;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1F2B2606A32D;
-	Wed, 25 Nov 2026 15:07:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D7E01606A321;
+	Wed, 25 Nov 2026 15:07:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=mfPUi0bI
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 659C61F000D1;
-	Wed, 25 Nov 2026 15:07:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=nPOunPy5
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B98D91F000D1;
+	Wed, 25 Nov 2026 15:07:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795619265;
-	bh=42/5iFvOzqUHIL4jYUBs5SAp4w2jxwHlP4Ia3HJONsU=;
+	s=korg; t=1795619269;
+	bh=w7IOAubTkQHvxEzy20k2vQaPCMy1jdeIhSSeZLj2Z4A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=mfPUi0bIJf5QiO8AbTH92S4W3Eqm+PXkuI7/0E/RzhOPUwZlIxCDu2eYQ7lIKuLQc
-	 QaRg0nkcztf8IcRMwmCnqLSykm6Ltvb4Jln4ZN8a93tFV0L+vsDUQaehe+G/cz6Qwv
-	 b30m6nsQHJUw6Pcl8xP09QXNxKK6QYAI/Tc1jFM4=
+	b=nPOunPy5dNgpxpp6bX0KC9VWnSSMeeZKRp0CVlzPOSTZKNKzP2uJEJRWMyLcY044T
+	 KhFh2D+KxBtxnOQGg2X54qfov7mh28zRAPm8ocdNgBAE4jm8kuCi4g2bTYgEAgcwxn
+	 3mkx1BLkRfNqYl/sgJG5JbZbkEuZNLUFsoclU910=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Uri Dar <udar@nvidia.com>,
-	Shay Drori <shayd@nvidia.com>,
-	Tariq Toukan <tariqt@nvidia.com>,
-	Daniel Machon <daniel.machon@microchip.com>,
+	Sashiko <sashiko-bot@kernel.org>,
+	Eric Dumazet <edumazet@kernel.org>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0540/1005] net/mlx5: Lag, Return error when enabling MPESW without LAG support
-Date: Wed, 25 Nov 2026 15:31:18 +0100
-Message-ID: <20261125143834.395678892@linuxfoundation.org>
+Subject: [PATCH 7.3 0541/1005] net: virtio: fix UDP tunnel GSO header of VLAN tagged packets
+Date: Wed, 25 Nov 2026 15:31:19 +0100
+Message-ID: <20261125143834.419546573@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143821.729802100@linuxfoundation.org>
 References: <20261125143821.729802100@linuxfoundation.org>
@@ -71,46 +69,86 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Uri Dar <udar@nvidia.com>
+From: Eric Dumazet <edumazet@kernel.org>
 
-[ Upstream commit a532a7049ba23edeb2e16f7bb5929314f2e47ca0 ]
+[ Upstream commit 9e244f94128a4b89004f0564b66e039e58318a34 ]
 
-When firmware reports a function as not LAG capable (lag_master=0 or
-num_lag_ports < 2), mlx5_lag_add_mdev() creates no LAG object for it.
-Enabling multiport E-Switch on such a device returns 0 from
-mlx5_lag_mpesw_queue_work(), so
-"devlink dev param set ... esw_multiport value true" reports success
-although nothing was enabled, and a following "devlink dev param show"
-still reports false.
+virtio_net_hdr_tnl_from_skb() builds a wrong header for VLAN tagged UDP
+tunnel GSO packets.
 
-Return -EOPNOTSUPP instead. mlx5_lag_mpesw_disable() ignores the return
-value, so disabling keeps its current behavior.
+1) When the skb carries a hwaccel VLAN tag, tun_put_user() inserts the
+   802.1Q header in the frame it copies to user space or vhost-net, and
+   passes vlan_hlen = VLAN_HLEN. virtio_net_hdr_from_skb() adds
+   vlan_hlen to csum_start, but inner_nh_offset and outer_th_offset do
+   not account for it, and are 4 bytes short of the real inner L3 and
+   outer UDP headers in the emitted frame.
 
-Fixes: a32327a3a02c ("net/mlx5: Lag, Control MultiPort E-Switch single FDB mode")
-Signed-off-by: Uri Dar <udar@nvidia.com>
-Reviewed-by: Shay Drori <shayd@nvidia.com>
-Signed-off-by: Tariq Toukan <tariqt@nvidia.com>
-Reviewed-by: Daniel Machon <daniel.machon@microchip.com>
-Link: https://patch.msgid.link/20261110114350.2639891-1-tariqt@nvidia.com
+   tun advertises NETIF_F_HW_VLAN_CTAG_TX and NETIF_F_HW_VLAN_STAG_TX
+   in hw_enc_features, and its vlan_features keep the UDP tunnel GSO
+   features, so this happens for example with a VLAN filtering bridge
+   with a tagged port, or with a vlan device on top of a tap.
+
+2) The outer family comes from skb->protocol, which is ETH_P_8021Q or
+   ETH_P_8021AD when the VLAN tag is in the packet data, so a packet
+   with an outer IPv6 header is reported as
+   VIRTIO_NET_HDR_GSO_UDP_TUNNEL_IPV4. This happens when
+   __vlan_hwaccel_push_inside() inserted the tag because the device does
+   not offload it: virtio_net never offloads VLAN insertion but keeps
+   UDP tunnel GSO in its vlan_features, and tun does the same with VLAN
+   TX offload disabled, or with QinQ (outer tag offloaded, inner tag in
+   the data).
+
+The receiver sets inner_network_header and transport_header from these
+offsets, and checks them with the wrong outer family. A forwarded
+packet that gets segmented again uses the wrong inner headers, and a
+receiver checking the outer headers against the virtio header drops
+the packet.
+
+Add vlan_hlen to both offsets like csum_start, and take the outer
+family from vlan_get_protocol(), which skips VLAN tags in the data.
+
+Fixes: a2fb4bc4e2a6 ("net: implement virtio helpers to handle UDP GSO tunneling.")
+Reported-by: Sashiko <sashiko-bot@kernel.org>
+Closes: https://lore.kernel.org/netdev/179421814766.994134.3669228181251158303@kernel.org/
+Closes: https://lore.kernel.org/netdev/179433950084.994134.15100186606737698605@kernel.org/
+Signed-off-by: Eric Dumazet <edumazet@kernel.org>
+Link: https://patch.msgid.link/20261110213628.3476051-2-edumazet@kernel.org
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/mellanox/mlx5/core/lag/mpesw.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ include/linux/virtio_net.h | 12 +++++++++---
+ 1 file changed, 9 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/net/ethernet/mellanox/mlx5/core/lag/mpesw.c b/drivers/net/ethernet/mellanox/mlx5/core/lag/mpesw.c
-index abf72026c7513..549d31812c2f9 100644
---- a/drivers/net/ethernet/mellanox/mlx5/core/lag/mpesw.c
-+++ b/drivers/net/ethernet/mellanox/mlx5/core/lag/mpesw.c
-@@ -227,7 +227,7 @@ static int mlx5_lag_mpesw_queue_work(struct mlx5_core_dev *dev,
- 	int err = 0;
+diff --git a/include/linux/virtio_net.h b/include/linux/virtio_net.h
+index b7b6b542f4763..fc9667176f23c 100644
+--- a/include/linux/virtio_net.h
++++ b/include/linux/virtio_net.h
+@@ -622,7 +622,10 @@ virtio_net_hdr_tnl_from_skb(const struct sk_buff *skb,
+ 	if (feature_hdrlen && hdr->hdr_len)
+ 		__virtio_net_set_tnl_hdrlen(skb, hdr);
  
- 	if (!ldev)
--		return 0;
-+		return -EOPNOTSUPP;
+-	if (skb->protocol == htons(ETH_P_IPV6))
++	/* skb->protocol is the VLAN protocol when the tag is in the
++	 * packet data.
++	 */
++	if (vlan_get_protocol(skb) == htons(ETH_P_IPV6))
+ 		hdr->gso_type |= VIRTIO_NET_HDR_GSO_UDP_TUNNEL_IPV6;
+ 	else
+ 		hdr->gso_type |= VIRTIO_NET_HDR_GSO_UDP_TUNNEL_IPV4;
+@@ -630,8 +633,11 @@ virtio_net_hdr_tnl_from_skb(const struct sk_buff *skb,
+ 	if (skb_shinfo(skb)->gso_type & SKB_GSO_UDP_TUNNEL_CSUM)
+ 		hdr->flags |= VIRTIO_NET_HDR_F_UDP_TUNNEL_CSUM;
  
- 	work = kzalloc_obj(*work);
- 	if (!work)
+-	inner_nh = skb->inner_network_header - skb_headroom(skb);
+-	outer_th = skb->transport_header - skb_headroom(skb);
++	/* Like csum_start, the offsets must account for a VLAN tag
++	 * the caller inserts in the frame.
++	 */
++	inner_nh = skb->inner_network_header - skb_headroom(skb) + vlan_hlen;
++	outer_th = skb->transport_header - skb_headroom(skb) + vlan_hlen;
+ 	vhdr->inner_nh_offset = cpu_to_le16(inner_nh);
+ 	vhdr->outer_th_offset = cpu_to_le16(outer_th);
+ 	return 0;
 -- 
 2.53.0
 
