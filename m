@@ -1,53 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795623166;
-	b=XQyye8auI+L43qlIJ9XA5ZM16tJw5J/WN6mbu4GRSzW5tUi6vNZzRWmUz8eodaxoo2me
-	 nY+s+UGOsWCdwilPYTmlMtZ9ii3IuP2r+laJWXcvfjmabrbseod3e/eDNykSejtc6HXR5
-	 OT5p6g/hoXFN2hmTf2+e0ruf4HC1GdRZjQtndI3pkfID6ZU200igMHZ6Dwh1aar/MAv7p
-	 5JalneKcL7Us+zvmlBlSXVcynSLOhGIeefiTYIkeK1IMNqWvZXjj1ILxIr0wV/0JgL6K3
-	 eMeD9MK+ATJqlRwwypIGHcZPfCfAzeqJFhCb72rFGKKv3wUMEAldTDwFsHhiBiKj7mQ==
+	t=1795623169;
+	b=gPaWGXeXlMLIZai322BaAtqffMJe/iVTr2IIR7xOcdprW4GmSDBOsf8ZsrEqx7EsR4wa
+	 4yjSkakm9+Q2zMsNtBoSVYrVzPY6GdV9pk0wvRym12lnopEVuUrWFbcLyNL4H+X6bfTZ5
+	 lp/l1GSJtwbP0B+WJVSWChYUEoFhX4IytjHBxRw1q0mhc5KtQWtIAhVJ+VFHDMVXcjcRs
+	 QBFgkAOGdU4/iVSjyQConRZUdbuDh2ovFghMsOjyz9vNT7lJro1BiHdIUVm5he8n1heYU
+	 U0VmrRkUfaPMHQsN2+tXi9NDZWqKYFC6gnutOYznGApQb5XiWnKpLS77+zfw3lXVWrg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795623166;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795623169;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=HYH/bSlO9JCFdcbm3UyecwHFK3TW+OmEkINOTMb4vFk=;
-	b=uH9gUI2IJPOlLVZ1ewr03GT0nmPGYNTwx6fw632HWm/Ce6xzKw/tVF2jPsfBDhUBfBrh
-	 YW+wTyz9Khf5NIQGtN9IiyMalCGzrIGT7PBvkR/T+pL7JcfjDNBD7MjqV00h3gaM0qwpW
-	 uRsk84rtLdS3pMXhp96+ijh43RTUcBmVU1Ub/0Y8ke+U+0D+9f44pXOJ8C44zVFwKe2By
-	 iPVWUBnFTb9J6fpEE3V1je0inWREp7nlspIVa8ddN1UjkF9luwMx+KTw5U2jWbdtpyIcE
-	 Vx2j+QKipUFmKlifjv7KVI/WwX373HcPWxyZQN/fEG3FDKED1zXmGHyDk1FTb8t8FWg==
+	bh=zme0eg6yM0UTzmbOoXARheFqtjvnVpwZlLK6e4cGFYA=;
+	b=sFFRq6HoI1k3kQujOegKq45HoWPpuWz5Orqugrr9maZjHeJkiidot/EuAgtU1a2Az++j
+	 iJxT+mNagZEAIo9j7Uf3AmmpulPKXrDtvy7LqBww5QfipB1kpfu5lSTTDgpRRn9AX5alE
+	 yjZ4EqDcBKk3gmMwp6siihjP/FtRsw8hD2Si2az2UheTEFMOCi3BaG0SYyhxM2r4u9fJx
+	 6IXstidVgcqvJmD4Lb8BtrcuFgNYJOPqQfcXinX1zxdaLFCYgmQAndwtE/feLeVQ6oawp
+	 G7kdWEbk7eAn5Wwfwaqw7YFtXFrmvqhygA2zYTGrK+BMys2xJDsZsut6FDLh7HdxCsg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ReHJt6FH;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="p2x/s30A";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E102D606A680;
-	Wed, 25 Nov 2026 16:12:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 337FA606A338;
+	Wed, 25 Nov 2026 16:12:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ReHJt6FH
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D23961F000C0;
-	Wed, 25 Nov 2026 16:12:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=p2x/s30A
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 483201F00A01;
+	Wed, 25 Nov 2026 16:12:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795623165;
-	bh=HYH/bSlO9JCFdcbm3UyecwHFK3TW+OmEkINOTMb4vFk=;
+	s=korg; t=1795623168;
+	bh=zme0eg6yM0UTzmbOoXARheFqtjvnVpwZlLK6e4cGFYA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ReHJt6FHFze0WF119V8BPMMJogGAse67C8eYR1xL4lc0I9Or5gsikrDlt1KVyoXmD
-	 T3VGFrX+ggHg6HtIl1HyTYSmFltzttlxDOJmX5GjmeHcP2KuER8bqDlsgnA6yb3LLS
-	 5rUS70++HTMz4spSV0GlgeQKdNS6sSFELY6uLoZg=
+	b=p2x/s30AKkouNoctHtuXP++9RfDCvG3vhhRtT2QcQw5Z/BQOTfJQdDpLq0gFaWOz8
+	 UmXy6tv6e1fX7DfiwDzoA5Ni1g5EGaWuNVmaI6ogoq3y9fEMWDtV0kElDdu3GrqAen
+	 NOhp3xzleHzoiKKc7IEXK/FZoT7uIIEbUn++ic+8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hengyu Liang <hengyul@cs.unc.edu>,
-	"Borislav Petkov (AMD)" <bp@alien8.de>,
-	"Mario Limonciello (AMD)" <superm1@kernel.org>,
-	Thomas Zimmermann <tzimmermann@suse.de>
-Subject: [PATCH 6.18 771/990] x86/video: Preserve the default VGA fallback for legacy modes
-Date: Wed, 25 Nov 2026 15:35:38 +0100
-Message-ID: <20261125143840.114831085@linuxfoundation.org>
+	Andrey Misiurov <andrey.misyrov@gmail.com>,
+	Juergen Gross <jgross@suse.com>
+Subject: [PATCH 6.18 772/990] xen/gntdev: fix deadlock between map ioctl and mmap
+Date: Wed, 25 Nov 2026 15:35:39 +0100
+Message-ID: <20261125143840.136999146@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143822.072087159@linuxfoundation.org>
 References: <20261125143822.072087159@linuxfoundation.org>
@@ -69,62 +67,82 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hengyu Liang <hengyul@cs.unc.edu>
+From: Andrey Misiurov <andrey.misyrov@gmail.com>
 
-commit 3b4c98b47ba7c3c57bcf54fb85f54a854622041c upstream.
+commit 7620a997e4854c94eacebf0c2d453fbd78ccdb46 upstream.
 
-Commit
+Commit 45ca1afe2fd1 ("xen/gntdev: fix error handling in ioctl") moved
+copy_to_user() in gntdev_ioctl_map_grant_ref() under priv->lock. A
+fault in copy_to_user() takes mmap_lock, while gntdev_mmap() is called
+with mmap_lock held and takes priv->lock:
 
-  596b3678326d ("x86/video: Only fall back to vga_default_device() without screen info")
+  ioctl thread                        mmap thread
+  mutex_lock(&priv->lock)
+                                      mmap_write_lock(mm)
+                                      gntdev_mmap()
+                                        mutex_lock(&priv->lock)
+  copy_to_user() faults
+    mmap_read_lock(mm)
 
-made video_is_primary_device() rely exclusively on screen_info resources
-whenever any are available.
+Reproduced on Debian 6.12.111 in a Xen guest, with the ioctl argument
+on a MAP_PRIVATE file page that has not been written yet. sysrq-w:
 
-However, screen_info_resources() also returns legacy I/O and memory ranges for
-VGA text modes. These ranges are not PCI BARs, so pci_find_resource() does not
-find them and the default VGA fallback is skipped. As a result, no device is
-primary in VGA text mode.
+  task:repro state:D stack:0 pid:4479 tgid:4477 ppid:1 flags:0x00000000
+   rwsem_down_read_slowpath+0x25c/0x480
+   down_read_killable+0x48/0xc0
+   lock_mm_and_find_vma+0x96/0x250
+   do_user_addr_fault+0x12d/0x620
+   exc_page_fault+0x7e/0x180
+   asm_exc_page_fault+0x26/0x30
+   _copy_to_user+0x36/0x50
+   gntdev_ioctl+0x3b9/0xa00 [xen_gntdev]
+   __x64_sys_ioctl+0x97/0xc0
+  task:repro state:D stack:0 pid:4480 tgid:4477 ppid:1 flags:0x00000000
+   __mutex_lock.constprop.0+0x41b/0x720
+   gntdev_mmap+0x4d/0x330 [xen_gntdev]
+   __mmap_region+0x697/0xb10
+   mmap_region+0x78/0xa0
+   do_mmap+0x45d/0x630
+   vm_mmap_pgoff+0xf8/0x1c0
 
-On a SeaBIOS QEMU guest with bochs and VKMS, the boot VGA (bochs) loses its
-DRM boot_display attribute. VKMS registers fb0 and bochs registers fb1. VKMS
-is not a PCI device, so it is not primary either. With no primary device,
-fbcon keeps the console on fb0 and never remaps it to bochs. This can be
-checked with:
+Drop priv->lock before copy_to_user() again. On failure, re-take it
+and remove the map by index, as IOCTL_GNTDEV_UNMAP_GRANT_REF does,
+since another thread may have unmapped it meanwhile.
 
-  cat /sys/class/drm/card1/boot_display
-  stty -F /dev/tty1 size
-
-Without the fix, boot_display is missing and tty1 is 48 rows by 128 columns.
-With it, boot_display contains 1 and tty1 is 50 rows by 160 columns. VKMS only
-makes the console part visible. Without VKMS, tty1 has the same size with and
-without the fix, but boot_display is still missing without it.
-
-Use resource-based selection only for linear framebuffers. Fall back to
-vga_default_device() for legacy display modes, while keeping EFI and VESA
-framebuffer ownership authoritative.
-
-Fixes: 596b3678326d ("x86/video: Only fall back to vga_default_device() without screen info")
-Signed-off-by: Hengyu Liang <hengyul@cs.unc.edu>
-Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
-Reviewed-by: Mario Limonciello (AMD) <superm1@kernel.org>
-Reviewed-by: Thomas Zimmermann <tzimmermann@suse.de>
+Fixes: 45ca1afe2fd1 ("xen/gntdev: fix error handling in ioctl")
 Cc: stable@vger.kernel.org
-Link: https://patch.msgid.link/20261103031630.2085194-1-hengyul@cs.unc.edu
+Signed-off-by: Andrey Misiurov <andrey.misyrov@gmail.com>
+Reviewed-by: Juergen Gross <jgross@suse.com>
+Signed-off-by: Juergen Gross <jgross@suse.com>
+Message-ID: <20261013170745.583279-1-andrey.misyrov@gmail.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/video/video-common.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/xen/gntdev.c |    8 ++++++--
+ 1 file changed, 6 insertions(+), 2 deletions(-)
 
---- a/arch/x86/video/video-common.c
-+++ b/arch/x86/video/video-common.c
-@@ -45,7 +45,7 @@ bool video_is_primary_device(struct devi
+--- a/drivers/xen/gntdev.c
++++ b/drivers/xen/gntdev.c
+@@ -676,15 +676,19 @@ static long gntdev_ioctl_map_grant_ref(s
+ 	mutex_lock(&priv->lock);
+ 	gntdev_add_map(priv, map);
+ 	op.index = map->index << PAGE_SHIFT;
++	mutex_unlock(&priv->lock);
  
- #ifdef CONFIG_SCREEN_INFO
- 	numres = screen_info_resources(si, res, ARRAY_SIZE(res));
--	if (numres > 0) {
-+	if (numres > 0 && __screen_info_has_lfb(screen_info_video_type(si))) {
- 		for (i = 0; i < numres; ++i) {
- 			if (!(res[i].flags & IORESOURCE_MEM))
- 				continue;
+ 	if (copy_to_user(u, &op, sizeof(op)) != 0) {
+-		list_del(&map->next);
++		mutex_lock(&priv->lock);
++		map = gntdev_find_map_index(priv, op.index >> PAGE_SHIFT,
++					    op.count);
++		if (map)
++			list_del(&map->next);
+ 		mutex_unlock(&priv->lock);
+ 		gntdev_put_map(priv, map);
+ 		return -EFAULT;
+ 	}
+ 
+-	mutex_unlock(&priv->lock);
+ 	return 0;
+ }
+ 
 
 
