@@ -1,55 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795620987;
-	b=OoPQHLdi67n6URBIivls32xhlLYnEpJC26qpQwgoI2w77z9yzrsBqnwW9PLu9GkNn8iw
-	 M5Mb/Ss1Z8xG5QYanM9w8BZAj6E+bsrfQPy9JojmMBXNZOi6XI8LACVMZz5czyKRrAS/6
-	 rwbv0wEsm85XYwzEGiH3owDfaMaPdvyjyd5WTPiD+7uCbnCUUhpZMVi9oPK1cm9QpUOyI
-	 3aCFQVF7Bs9BdAXn6WDQYrpZBAvmWCA1YAFEAqjv4hFDQu7l6QMN2E6u/wVxzyXyFj3Yf
-	 Yh78oRIFmiMTwA9WlLLV/i0UjkjyuihXNoDBQOqV2OI65MkGuwsiQ2/o3nr7zBKLt6w==
+	t=1795620990;
+	b=FPIDIODQv2NV6CW9GkVS7gEiDUQW7X1CsZZs8zrC0RDieSqyY+QfiIq9eWM8jkq2BneE
+	 C07q1hEF2h7gsrXz0l54XXwZb/FYsCU0QlH+zviM8rWnKb4/jqfK0aG8xVfQIoTxticsz
+	 tA/bG1uXI8FcBzlB2M6et8qo/V7DREWdmo6AyjDvCI6oNHQV4QV7tFE7gTJRaLhPrAcCN
+	 r+eyMccRWy1zMt4OqpPNtcROw4p+SbCZCv+rHNELtZ5Pmb48Mio1JhOTGDTZJA8tyaWrr
+	 7RattMh5Sn1TEtK9WS1rc+/Ghq5FsSUZ/yy3JEmJm+2NMPSEHoucemxnVGk99Q+XdQg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795620987;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795620990;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=McyJdCl9vaE9pANSWjcEY5aeFrZHR3D3ya4a+4tVR0A=;
-	b=EeQkl6L2KjgX5yLGubfsF6GmHkvzwvfUYSu4cpxpOUpiu6L9cX6MLzSkNvge8e5EU4yY
-	 h4IvXo0gbt4WH6c0K8/xEmTVdd4Ln5qL39ON73wwfmWkpHWc79oQQB/tJzMlqSFJF4qpc
-	 OJWZPKZJGqj7saWOiXJFyJ6DAtOxLAocdor7jIEjs/tiTzFSlw3CRCwKj2k8mItsZDBCz
-	 2LJlKOzCfl5R9oCn77Cz5FIQucQX+tNDzBusDytLUanIKZrwX87vfMv91GFJM01/agegL
-	 Es+xPUuJCtGyGpOwOjSErFtsHsgOWVjE55X4jUTDzLX7bDdPChtH+bBfFOfh+ZAzupQ==
+	bh=OvYGaguo31zF/ACQilfBIIziN+FdgX71myHoYPdxmoI=;
+	b=PNSqG03Gm4eCtGrTnoKng0ypSt1vMEm9eYLBRoS5KaKFr4xqvj3wTvQJIkFtmS2r2Rru
+	 qOW4S3OQ+zgsi+ro8T7GFyJnMM9FZprvHgxMgT2dyPUoXRKEQn+XZ01lx6UJQIZMasAMZ
+	 SpD49mXG8XfcgGcyC/WgnGj8ZixlCOpHDOuV5Ne8KCGPvgo6S1nSUHL4zCMcIEpdoppOy
+	 sZD15niwxHURFeimm87q0rz4VETFxparVCukfK09X11XfW/03FC/3P7XNvgv6KagipJu8
+	 8XRC55H00MATr9N0tOOD3H5kKfAmXzCGFucPMgdS9rb70T5SKyTMBbczllz5oq0zV+Q==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=lOJMUjkg;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ZFRln2mP;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1E07D606A696;
-	Wed, 25 Nov 2026 15:36:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3B41C607DE5B;
+	Wed, 25 Nov 2026 15:36:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=lOJMUjkg
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 982A51F000D0;
-	Wed, 25 Nov 2026 15:36:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ZFRln2mP
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0ACCB1F000EF;
+	Wed, 25 Nov 2026 15:36:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795620986;
-	bh=McyJdCl9vaE9pANSWjcEY5aeFrZHR3D3ya4a+4tVR0A=;
+	s=korg; t=1795620989;
+	bh=OvYGaguo31zF/ACQilfBIIziN+FdgX71myHoYPdxmoI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=lOJMUjkgJoZMVCmgge2OlH3BdL9mCRBO+xqSBcfawjFrQh8bdi2tDoV6Aj+rkDVqs
-	 WY7VfYex85WdJmiWHoq9ox/EnKZVicvz3BW8uQ2O5Ms6dPQNnOvznWF6c5g8QhIjlC
-	 zbo4WLNeIs4VzLcBi0L/DwnzmjEgebOIFRlpZje4=
+	b=ZFRln2mPpCzJtpoWqyTe/g5dx5RFyEPpd/XyCQ9ktWNYFsTQIvRHFxQmRFZoImOMi
+	 YRfJYjtmxPFs4dU3rbWK+CHlFrgVtG65C4DquIvrI6QkHhQJzWa83Onv9+fv1eL/hi
+	 IHOjovBI2JlGuUjFLTFn//1VW3o//scs+llvZa5w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	kernel test robot <lkp@intel.com>,
-	Matt Coster <matt.coster@imgtec.com>,
-	Luigi Santivetti <luigi.santivetti@imgtec.com>,
-	Michal Wilczynski <m.wilczynski@samsung.com>,
-	Alessio Belle <alessio.belle@imgtec.com>,
+	Avi Weiss <thnkslprpt@gmail.com>,
+	Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 085/990] drm/imagination: Align rogue_fwif_hwrtdata to 64 bytes
-Date: Wed, 25 Nov 2026 15:24:12 +0100
-Message-ID: <20261125143824.083061640@linuxfoundation.org>
+Subject: [PATCH 6.18 086/990] gpio: omap: Propagate runtime PM failures in probe and request
+Date: Wed, 25 Nov 2026 15:24:13 +0100
+Message-ID: <20261125143824.107393236@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143822.072087159@linuxfoundation.org>
 References: <20261125143822.072087159@linuxfoundation.org>
@@ -71,51 +68,70 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Michal Wilczynski <m.wilczynski@samsung.com>
+From: Avi Weiss <thnkslprpt@gmail.com>
 
-[ Upstream commit 6c6200ffebf9766fd5d9293002298ea371c261c1 ]
+[ Upstream commit 05be1a99d6d68b24cbe24a191e1af67c70193ac3 ]
 
-Sparse (W=1) builds fail because `SIZE_CHECK(struct rogue_fwif_hwrtdata,
-384)` expects 384 bytes, but the compiler generates a 336-byte
-structure.
+pm_runtime_get_sync() can fail when the OMAP PM domain cannot
+resume a GPIO controller, but omap_gpio_probe() and
+omap_gpio_request() ignore its return value.
 
-This is due to an alignment conflict: the inner member `cleanup_state`
-requires 64-byte alignment, but the outer struct is explicitly marked
-`__aligned(8)`.
+Consequently, probe can register a GPIO controller despite a failed
+resume, while a GPIO request can report success and modify GPIO
+state even though runtime-PM acquisition failed.
 
-While a non-sparse build implicitly pads the size to a multiple of 64, a
-sparse build strictly respects the 8-byte outer alignment, resulting in
-a size mismatch.
+Use pm_runtime_resume_and_get() in both paths and propagate
+resume errors. On probe failure, disable runtime PM and unprepare
+the debounce clock when applicable.
 
-Fix this by aligning the entire structure to 64 bytes, which resolves
-the contradiction and forces the correct 384 byte size on all builds.
+Reproduced both failures on QEMU N800 by injecting -EIO from the
+OMAP PM-domain resume callback. The original driver continues
+probe and accepts the GPIO request - while the patched driver
+rejects both operations with -EIO. Normal GPIO controller
+registration continues to work without fault injection.
 
-Fixes: a26f067feac1 ("drm/imagination: Add FWIF headers")
-Reported-by: kernel test robot <lkp@intel.com>
-Closes: https://lore.kernel.org/oe-kbuild-all/202512131851.1WNXk3BC-lkp@intel.com/
-Reviewed-by: Matt Coster <matt.coster@imgtec.com>
-Reviewed-by: Luigi Santivetti <luigi.santivetti@imgtec.com>
-Signed-off-by: Michal Wilczynski <m.wilczynski@samsung.com>
-Link: https://patch.msgid.link/20261029-fix_imagination-v4-1-689745dd52ef@samsung.com
-Signed-off-by: Alessio Belle <alessio.belle@imgtec.com>
+Fixes: 77640aabd755 ("OMAP: GPIO: Implement GPIO as a platform device")
+Fixes: 55b93c32520d ("gpio/omap: use pm-runtime framework")
+Signed-off-by: Avi Weiss <thnkslprpt@gmail.com>
+Link: https://patch.msgid.link/20261029103626.1527919-2-thnkslprpt@gmail.com
+Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/imagination/pvr_rogue_fwif.h | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/gpio/gpio-omap.c | 13 +++++++++++--
+ 1 file changed, 11 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/gpu/drm/imagination/pvr_rogue_fwif.h b/drivers/gpu/drm/imagination/pvr_rogue_fwif.h
-index 5d590c4c25663..2f8daa93c9e68 100644
---- a/drivers/gpu/drm/imagination/pvr_rogue_fwif.h
-+++ b/drivers/gpu/drm/imagination/pvr_rogue_fwif.h
-@@ -2174,7 +2174,7 @@ struct rogue_fwif_hwrtdata {
- 	bool geom_caches_need_zeroing __aligned(4);
+diff --git a/drivers/gpio/gpio-omap.c b/drivers/gpio/gpio-omap.c
+index 8693544304fa8..2ebef18c37abe 100644
+--- a/drivers/gpio/gpio-omap.c
++++ b/drivers/gpio/gpio-omap.c
+@@ -814,8 +814,11 @@ static int omap_gpio_request(struct gpio_chip *chip, unsigned offset)
+ {
+ 	struct gpio_bank *bank = gpiochip_get_data(chip);
+ 	unsigned long flags;
++	int ret;
  
- 	struct rogue_fwif_cleanup_ctl cleanup_state __aligned(64);
--} __aligned(8);
-+} __aligned(64);
+-	pm_runtime_get_sync(chip->parent);
++	ret = pm_runtime_resume_and_get(chip->parent);
++	if (ret < 0)
++		return ret;
  
- /*
-  ******************************************************************************
+ 	raw_spin_lock_irqsave(&bank->lock, flags);
+ 	omap_enable_gpio_module(bank, offset);
+@@ -1469,7 +1472,13 @@ static int omap_gpio_probe(struct platform_device *pdev)
+ 	platform_set_drvdata(pdev, bank);
+ 
+ 	pm_runtime_enable(dev);
+-	pm_runtime_get_sync(dev);
++	ret = pm_runtime_resume_and_get(dev);
++	if (ret < 0) {
++		pm_runtime_disable(dev);
++		if (bank->dbck_flag)
++			clk_unprepare(bank->dbck);
++		return ret;
++	}
+ 
+ 	if (bank->is_mpuio)
+ 		omap_mpuio_init(bank);
 -- 
 2.53.0
 
