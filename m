@@ -1,55 +1,56 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795619227;
-	b=eudxkay/lgQrZ3ZYVJYGw3rlWo00ocITsOKFAV1xHaWKNRBIXpqZKJTYABh3w7vPscHT
-	 /ZxEUD/sgKsfkvLgwXH9YRsIUfhpH1praax+5+stWVYFTqZ2hXMRmX2oGPNGfC3Ltq3DI
-	 UJqAZQkdk5NRkwl6ehTxKYmZTqajdi1YKw8tyI1c26xMm7N3waz/SCymEX9dKeqB9Y5Pa
-	 fCHMXKMITfrFjVb/jWaY7rGex/TbUeBEle2KIDV9aAI5zAzRSvrdoZ2RcHhblONmgC4Dw
-	 qEh0MdAUShWUi/BXZI8z37TJZpFTPPWdeE2hChvwXToOflQRuVpdtNxb/7XfePXxUyg==
+	t=1795619230;
+	b=p1W+ggAlck9qg0NIuGcuoi5tdNnnreqoCGy9ZKGFxzjjR9Hyp6J8rGM71btjDRJ0tWg8
+	 cE3RSacRwzlelpJSKEKlPH7facgJqnOTvYFxkyguF90+0h72vQIHckjH5IHy1QhPz4mWi
+	 uEJpDc6zyHPrBisQ0p2t32yGYOlu2+WLNYkuBmL/9zDQ42UYSrs4a0dkR3lYx225LkjIU
+	 6sIxAPF2TCQcIo9AhOZPR/8zMAfhNNMPN5meW1zILgYCOQ18WPpMOpkQEQV7HxZPiQFkR
+	 pOvBrurp8wVYTk5ULVbta6NM4CFIK1W9W/a5BTyt9gqOMhgVuALkJMN43ATrrEWvBPg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795619227;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795619230;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=34TCPLdI9s9hkl8XQj8SgzBC8ITjauXTGJYsEOhdjWQ=;
-	b=Vvff/U1DroShU0snA7+IqrfSAUpbS0/dUQqWZvHknZkCO1CwETQGG7bOMgajla7uHzvj
-	 iPcmSuS8Te8lztHbPskAcdeUy+HAeswOuEa4ATIov9SlI+u0zYhgp5osE3znV2MptB7XN
-	 Z9KEwhoq4qt3C8TAlCO/7KsU2Ui0VQ+sY5qjPhCGQpIsGE96yWyWO8KJ8TQ1dY5I+fGJc
-	 s8rXQm/vYvpWQKb8rzCah5zICZoIs1qI9ztsfbfkTPx1CbsBJgzbcp4Xu22Pj0f1Z926B
-	 L8IxkGzouor/R2BHIm8msTvYhNKeNOO72+UvrIH1q8mM+CdISfLjlrXkQE+7VgBDgoA==
+	bh=Zb8uy1P79Qyu9a4D7QYXpVT6DMTPTNvRAAYP73f/JiM=;
+	b=xxu0T0IQAss3BU2Z1sOVD6Sh0T0w6AU4plih68saVY1kgJGF/upsmXiFh5TrNL83mOpA
+	 ZvI/ZWad9ZLFofQm4eB1iuKskMiF0NnI8j+1+x+ijLuJms7D+1uqVXe8aTptvcFuz7Px3
+	 zYYt8Yf61Ci9mEqAecaq00AB90noYpNPqGKMtTkG9N7M60rT7MEiv3t3gCcMjVzUQfX9P
+	 Us1AscYoVCvdT3sHeOkuLBkBfTDCPrRyf1NK9ceuV2tx+3nSfY1b9QIjpPC7eXnTnQ+fw
+	 3OsdqycHkhAWX373un+JKt8PkffFCDe/sdKCcyEVj80RhWwW3b2+wiMR15egzEjC90A==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=2SWOGdo5;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ZoV+66HX;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 73180606A321;
-	Wed, 25 Nov 2026 15:07:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CF7A4606A321;
+	Wed, 25 Nov 2026 15:07:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=2SWOGdo5
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B2F2F1F000EB;
-	Wed, 25 Nov 2026 15:07:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ZoV+66HX
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BB0291F000CF;
+	Wed, 25 Nov 2026 15:07:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795619227;
-	bh=34TCPLdI9s9hkl8XQj8SgzBC8ITjauXTGJYsEOhdjWQ=;
+	s=korg; t=1795619230;
+	bh=Zb8uy1P79Qyu9a4D7QYXpVT6DMTPTNvRAAYP73f/JiM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=2SWOGdo5EsyOeb3ZwVBBqKEf+AfRGLUyMxD1PR7C7qZOLTT0BMIgkLMvhHKDPsPOz
-	 Z27ZkVjhiZYZc2GliN/HAAMqfblpTi5SQAxGH/FbsOBtbiqJHGRj8egBdmVxMXFu9R
-	 9ELc2WR4d+4iV3OoBcoRBra2ojv2E68BGaZ/xOsw=
+	b=ZoV+66HX9LW9qp2orFSS6mT3wQvhSZe9xhfvoC29KHMIoYI++9nS6mkTYBBnK7qPr
+	 tg5PvGBVNu241L1NnoLMmLdL5Kc3yAXxh0OhQ4ArW7a4ITDNDYyUXQscEzx+ScZfwv
+	 RM8OeXG0L9yWbrxTvSF5fVumRQUMoCmkOJx+dFJM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Cosmin Ratiu <cratiu@nvidia.com>,
-	Dragos Tatulea <dtatulea@nvidia.com>,
-	Jianbo Liu <jianbol@nvidia.com>,
-	Tariq Toukan <tariqt@nvidia.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Dnyaneshwar Bhadane <dnyaneshwar.bhadane@intel.com>,
+	Matt Roper <matthew.d.roper@intel.com>,
+	Shekhar Chauhan <shekhar.chauhan@intel.com>,
+	Matt Atwood <matthew.s.atwood@intel.com>,
+	Gustavo Sousa <gustavo.sousa@intel.com>,
+	Matthew Brost <matthew.brost@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0503/1005] net/mlx5e: Block E-Switch mode changes during IPsec state creation
-Date: Wed, 25 Nov 2026 15:30:41 +0100
-Message-ID: <20261125143833.528129120@linuxfoundation.org>
+Subject: [PATCH 7.3 0530/1005] drm/xe: Sync Wa_16023105232 in xe_was to match OOB rule
+Date: Wed, 25 Nov 2026 15:31:08 +0100
+Message-ID: <20261125143834.163004306@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143821.729802100@linuxfoundation.org>
 References: <20261125143821.729802100@linuxfoundation.org>
@@ -71,138 +72,61 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Cosmin Ratiu <cratiu@nvidia.com>
+From: Gustavo Sousa <gustavo.sousa@intel.com>
 
-[ Upstream commit 0d09de8e4f11391e8468219dbbc7af027e39e9b8 ]
+[ Upstream commit 557c7b4343781cae9725bf26122d29c26ea12f5d ]
 
-mlx5e_xfrm_add_state() reads priv->ipsec before blocking eswitch mode
-changes. A concurrent profile change can free the saved IPsec context
-and cause use-after-free.
+Wa_16023105232 was extended in xe_wa_oob.rules to match extra IP
+releases while the respective entry in xe_was[] was overlooked.
+Update the latter to be in sync with the former.
 
-The temporary mode reservation was added in commit 22239eb258bc
-("net/mlx5e: Prevent tunnel reformat when tunnel mode not allowed")
-after saving priv->ipsec but the race was actually enabled by the
-"Fixes" commit.
-Extend the reservation to cover obtaining the context as well.
+Also add comments in the code so that we don't forget to update both
+places if new IP versions are added.
 
-Use mlx5_eswitch_block_mode(mdev, false) for the temporary reservation,
-as policy creation does, to check operation ownership under mode_lock
-without rejecting existing eswitch users. This allows reusing existing
-IPsec tables while TC rules exist on VF representors.
-
-Check the context only after taking the mode reservation, so a
-concurrent mode change consistently returns -EBUSY and a missing context
-returns -EOPNOTSUPP, preserving software fallback for crypto offload.
-Keep the atomic acquire-placeholder path exempt, since it creates no
-hardware state and cannot take sleeping locks.
-
-This was found by Sashiko, during review of the last patch in the
-series. No reproduction attempted, as it seems quite a tricky race to
-successfully trigger.
-
-Fixes: 7a9fb35e8c3a ("net/mlx5e: Do not reload ethernet ports when changing eswitch mode")
-Signed-off-by: Cosmin Ratiu <cratiu@nvidia.com>
-Reviewed-by: Dragos Tatulea <dtatulea@nvidia.com>
-Reviewed-by: Jianbo Liu <jianbol@nvidia.com>
-Signed-off-by: Tariq Toukan <tariqt@nvidia.com>
-Link: https://patch.msgid.link/20261105211637.1083978-8-tariqt@nvidia.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: c96e0df4e9f5 ("drm/xe/xe3: Add support for media IP version 30.02")
+Fixes: 4fde66699f1c ("drm/xe/xe3: Add support for graphics IP versions 30.04 & 30.05")
+Cc: Dnyaneshwar Bhadane <dnyaneshwar.bhadane@intel.com>
+Cc: Matt Roper <matthew.d.roper@intel.com>
+Cc: Shekhar Chauhan <shekhar.chauhan@intel.com>
+Reviewed-by: Matt Atwood <matthew.s.atwood@intel.com>
+Link: https://patch.msgid.link/20261105-wa_16031259911-v3-2-da6ec790aa29@intel.com
+Signed-off-by: Gustavo Sousa <gustavo.sousa@intel.com>
+(cherry picked from commit 0cfb54f8f4d69efc847641738d25065049160aca)
+Signed-off-by: Matthew Brost <matthew.brost@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../mellanox/mlx5/core/en_accel/ipsec.c       | 37 ++++++++++++-------
- 1 file changed, 23 insertions(+), 14 deletions(-)
+ drivers/gpu/drm/xe/xe_wa.c         | 5 +++--
+ drivers/gpu/drm/xe/xe_wa_oob.rules | 1 +
+ 2 files changed, 4 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/net/ethernet/mellanox/mlx5/core/en_accel/ipsec.c b/drivers/net/ethernet/mellanox/mlx5/core/en_accel/ipsec.c
-index 09f51f6fa8675..c1ff8f7a056e0 100644
---- a/drivers/net/ethernet/mellanox/mlx5/core/en_accel/ipsec.c
-+++ b/drivers/net/ethernet/mellanox/mlx5/core/en_accel/ipsec.c
-@@ -771,6 +771,7 @@ static int mlx5e_xfrm_add_state(struct net_device *dev,
- 				struct xfrm_state *x,
- 				struct netlink_ext_ack *extack)
- {
-+	bool is_acq = x->xso.flags & XFRM_DEV_OFFLOAD_FLAG_ACQ;
- 	struct mlx5e_ipsec_sa_entry *sa_entry = NULL;
- 	bool allow_tunnel_mode = false;
- 	struct mlx5_core_dev *mdev;
-@@ -787,20 +788,31 @@ static int mlx5e_xfrm_add_state(struct net_device *dev,
- 		NL_SET_ERR_MSG_MOD(extack, "Eswitch busy, can't add state");
- 		return -EBUSY;
- 	}
--	if (!priv->ipsec)
--		return -EOPNOTSUPP;
-+
-+	if (!is_acq) {
-+		err = mlx5_eswitch_block_mode(mdev, false);
-+		if (err)
-+			return err;
-+	}
- 
- 	ipsec = priv->ipsec;
--	gfp = (x->xso.flags & XFRM_DEV_OFFLOAD_FLAG_ACQ) ? GFP_ATOMIC : GFP_KERNEL;
-+	if (!ipsec) {
-+		err = -EOPNOTSUPP;
-+		goto unblock_mode;
-+	}
-+
-+	gfp = is_acq ? GFP_ATOMIC : GFP_KERNEL;
- 	sa_entry = kzalloc_obj(*sa_entry, gfp);
--	if (!sa_entry)
--		return -ENOMEM;
-+	if (!sa_entry) {
-+		err = -ENOMEM;
-+		goto unblock_mode;
-+	}
- 
- 	sa_entry->x = x;
- 	sa_entry->dev = dev;
- 	sa_entry->ipsec = ipsec;
- 	/* Check if this SA is originated from acquire flow temporary SA */
--	if (x->xso.flags & XFRM_DEV_OFFLOAD_FLAG_ACQ) {
-+	if (is_acq) {
- 		x->xso.offload_handle = (unsigned long)sa_entry;
- 		return 0;
- 	}
-@@ -814,21 +826,17 @@ static int mlx5e_xfrm_add_state(struct net_device *dev,
- 		goto err_xfrm;
- 	}
- 
--	err = mlx5_eswitch_block_mode(mdev, true);
--	if (err)
--		goto unblock_ipsec;
--
- 	if (x->props.mode == XFRM_MODE_TUNNEL &&
- 	    x->xso.type == XFRM_DEV_OFFLOAD_PACKET) {
- 		err = mlx5e_ipsec_fs_tunnel_allowed(sa_entry);
- 		if (err < 0)
--			goto unblock_mode;
-+			goto unblock_ipsec;
- 		allow_tunnel_mode = err;
- 		if (!allow_tunnel_mode) {
- 			NL_SET_ERR_MSG_MOD(extack,
- 					   "Packet offload tunnel mode is disabled due to encap settings");
- 			err = -EINVAL;
--			goto unblock_mode;
-+			goto unblock_ipsec;
- 		}
- 	}
- 
-@@ -904,13 +912,14 @@ static int mlx5e_xfrm_add_state(struct net_device *dev,
- unblock_encap:
- 	if (allow_tunnel_mode)
- 		mlx5_eswitch_unblock_encap(mdev);
--unblock_mode:
--	mlx5_eswitch_unblock_mode(mdev);
- unblock_ipsec:
- 	mlx5_eswitch_unblock_ipsec(mdev);
- err_xfrm:
- 	kfree(sa_entry);
- 	NL_SET_ERR_MSG_WEAK_MOD(extack, "Device failed to offload this state");
-+unblock_mode:
-+	if (!is_acq)
-+		mlx5_eswitch_unblock_mode(mdev);
- 	return err;
- }
- 
+diff --git a/drivers/gpu/drm/xe/xe_wa.c b/drivers/gpu/drm/xe/xe_wa.c
+index 139434946f8f8..0c847029437c5 100644
+--- a/drivers/gpu/drm/xe/xe_wa.c
++++ b/drivers/gpu/drm/xe/xe_wa.c
+@@ -579,8 +579,9 @@ static const struct xe_rtp_table_sr engine_was = XE_RTP_TABLE_SR(
+ 	  XE_RTP_ACTIONS(SET(TDL_CHICKEN, QID_WAIT_FOR_THREAD_NOT_RUN_DISABLE))
+ 	},
+ 	{ XE_RTP_NAME("16023105232"),
+-	  XE_RTP_RULES(MEDIA_VERSION_RANGE(1301, 3000), OR,
+-		       GRAPHICS_VERSION_RANGE(2001, 3001)),
++	  /* IP versions need to be in sync with the respective entry in xe_wa_oob.rules. */
++	  XE_RTP_RULES(MEDIA_VERSION_RANGE(1301, 3002), OR,
++		       GRAPHICS_VERSION_RANGE(2001, 3005)),
+ 	  XE_RTP_ACTIONS(SET(RING_PSMI_CTL(0), RC_SEMA_IDLE_MSG_DISABLE,
+ 			     XE_RTP_ACTION_FLAG(ENGINE_BASE)))
+ 	},
+diff --git a/drivers/gpu/drm/xe/xe_wa_oob.rules b/drivers/gpu/drm/xe/xe_wa_oob.rules
+index 6662987effd73..04eac463a261a 100644
+--- a/drivers/gpu/drm/xe/xe_wa_oob.rules
++++ b/drivers/gpu/drm/xe/xe_wa_oob.rules
+@@ -44,6 +44,7 @@
+ 18013179988	GRAPHICS_VERSION(1255)
+ 		GRAPHICS_VERSION_RANGE(1270, 1274)
+ 1508761755	GRAPHICS_VERSION(1255)
++# IP versions need to be in sync with the respective entry in xe_wa.c.
+ 16023105232	GRAPHICS_VERSION_RANGE(2001, 3005)
+ 		MEDIA_VERSION_RANGE(1301, 3002)
+ 16026508708	GRAPHICS_VERSION_RANGE(1200, 3005)
 -- 
 2.53.0
 
