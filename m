@@ -1,53 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795625527;
-	b=Zblghf1nF5wx44Y/Zi6nct8LNC1svUdHG29TBdIjiKAGpJ2B+SyHDdPBIuzgZnTxudex
-	 SkTsKx7xh5tX/YxWwSSgzwtV7x5Zm4OsyUsYvzvj7tY9RR4fkGqLPFxqAyzjJsdsYWoeQ
-	 0iWJuarw9xbHv1R9mhggpmGHWOJKKHa6FdQHHUwabw827zoH9A9WgHsw9wjFxWJli7NCi
-	 yBgX82YCQ5FbcU+MSOEXKU63QfEBrKVRIP92Ioj0rwUrEP0tmrHNj7buRuvRVoPEBLfUA
-	 clNN+NR+moJIGKrnF95tI1lzEzWb9oaUaHzVbXFm+L6FPwFo60TaAF2doJCmGOWOfsQ==
+	t=1795625530;
+	b=Z7/zlt2jVUX9bkXXoR5LfdfWu8g7Osz+1SUgacarBrLOIQ3Nf3jHtB7LjLa3GQblUkm5
+	 kyzkzicJjIIlQxRxAXc7cXm/QMP5Bbcw2+QqH8Gnlzz/pdNm3SZwLlthVRGMvp+aSrZfA
+	 AvLYLd2sSv/vtl0ecV4r6FEfbAVmWdTXuWNXRFcQx4zA06UUhBvaOQ2CVEr3RQCS/IYEW
+	 edNzeeDFQ39pJJAYQTWbRKLeLlxBMTkpuIBse0FhLKhQbbnq+wNmCz/AMTvQrLMaPnq1r
+	 6oFazyDqKytmFTePIbOgEU9K0RC9y+zkPCzPhpIRL6XAwRmAcoUwyIHOp/hadtDpp2g==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795625527;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795625530;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=e1LvjCFIzIeQLiwNcX/0vwcGTGsggudxy8nmphnouHQ=;
-	b=SuKXdUVovPmfZW7jFG98OaKrMVccnSxgQ+3+T8sfiCOB73bSrUQ+8oPg33ml+awPGTrD
-	 sQJFca4wPj+DVEeB/WyLKczafWYqloBukIRX/qyPuvhWoT7tkFTp0f45NwqaoVfTEpznN
-	 Qhq2VEvWD9aBX5RslFUGGUiZFvqEYXxcaV/kF6DhX8l1bC+kAiaKD1mEHu21TzKUJomEG
-	 DEqMeB7xXpV16F3xC0x7iOLaummwJerpNrGdY9VXTgFwd84OaiqGcZka1TMN9LEApEevT
-	 xyWvrVN4B1NLgpIYpVNYNn3x46AnyTzZYPXsrBgqD0RqY/Xi9DkV5pEif+453AMERTw==
+	bh=fW0l/Xb4/Pj4Hs9QTEHxqIxAVvr14XFRaLm4q/Rk12w=;
+	b=4729PdbJLLquwmubpHOWDnrAQpx+L98vsi5Pq8TmcYy2LWOGTvT3nb6j5K/ApzNc821F
+	 5b4R3QAYFIYDske97R9mmYTdTTMaONXxNBN2LwEur6sqzNtMFtApcconcFtGLVMOpNg9v
+	 Sia7ftyPtm5v5rvU7fawqPDCFQUxrtQXPEi+uOghtUH0xYJ0cm5KypHQ+WuYelzD1MliL
+	 55l4waUzoTKsBEOxmCsSIygRgrbASoI5ORIpTNY8Ds8XZnGPafFdPTfnHMRW+WcwLgfXe
+	 jG4aLOCBbBXZs5x7MY8smCzFYP6jct0xcMW02je7D7Yl/orgqKMEuJgmaIKEvoObD3Q==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ZqzEleiy;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=DjBHi+E7;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3DD68606A31E;
-	Wed, 25 Nov 2026 16:52:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E41AC606A321;
+	Wed, 25 Nov 2026 16:52:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ZqzEleiy
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BAB381F000C4;
-	Wed, 25 Nov 2026 16:52:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=DjBHi+E7
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 206731F000C6;
+	Wed, 25 Nov 2026 16:52:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795625526;
-	bh=e1LvjCFIzIeQLiwNcX/0vwcGTGsggudxy8nmphnouHQ=;
+	s=korg; t=1795625529;
+	bh=fW0l/Xb4/Pj4Hs9QTEHxqIxAVvr14XFRaLm4q/Rk12w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ZqzEleiy5KX3CgWOU6VfFdS7JwPZz4JbnhY8SPrZoan7PngBIBca0sX37pjL1spb4
-	 KCvTWAgnNQzcgd9KVfENJaaXUPsYq+1jC5WRLNrzCfwa+cnb8DrtlRprqmKHrKTxyt
-	 EuX69RcBIVgLkXyEzsUX8V25brMTdsE1jkaZ0NxE=
+	b=DjBHi+E7asjxh3GPakf2pG/nFzmE4o7rgzwDPdAhwiNsHevmMfaiogoL0VBNItQB3
+	 kO6+LcK6HVr8tJWNByTElpM4oyhAuDz2ND4UajpeVmeVFc0GtpAjSqMMSQsMmOIrlm
+	 rRMneonExWIukLksdBgXh4+rYK+XNCe5uDioxJRI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Josef Bacik <josef@toxicpanda.com>,
-	Christoph Hellwig <hch@lst.de>,
-	Jens Axboe <axboe@kernel.dk>,
+	syzbot+1269fe6cc2016008124e@syzkaller.appspotmail.com,
+	Kuniyuki Iwashima <kuniyu@google.com>,
+	Naman Gulati <namangulati@google.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 545/816] blk-mq: dont trust the cookie in blk_mq_poll()
-Date: Wed, 25 Nov 2026 15:34:53 +0100
-Message-ID: <20261125143901.801056489@linuxfoundation.org>
+Subject: [PATCH 6.12 546/816] netdev-genl: ignore NETDEV_UNREGISTER rebroadcasts
+Date: Wed, 25 Nov 2026 15:34:54 +0100
+Message-ID: <20261125143901.823820194@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143849.205329330@linuxfoundation.org>
 References: <20261125143849.205329330@linuxfoundation.org>
@@ -69,59 +70,104 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Josef Bacik <josef@toxicpanda.com>
+From: Naman Gulati <namangulati@google.com>
 
-[ Upstream commit 24974185999fd80b676fbe2a6c7a97bbd38aaf3a ]
+[ Upstream commit fd0909e963ed8f36967bd072ed484be7babe46de ]
 
-blk_mq_poll() indexes queue_hw_ctx[] with bio->bi_cookie unchecked. Zone
-write plugging keeps the segment count of a plugged write in
-__bi_nr_segments, which shares a union with the cookie, and clears
-REQ_POLLED, but bio_poll() only looks at the cookie. A plugged polled
-write with more segments than there are hardware queues reads past the
-array. The bio is also SLAB_TYPESAFE_BY_RCU, so a cookie from a bio
-reused for another device can meet the wrong array as well.
+netdev_wait_allrefs_any() re-sends NETDEV_UNREGISTER every second while
+it waits for the last references on a device to be dropped. By then
+netdev_run_todo() has already marked the device NETREG_UNREGISTERED and
+RTNL has been dropped at least once since the initial notification sent
+by unregister_netdevice_many_notify().
 
-Ignore a cookie that is out of range or doesn't name a poll queue.
+netdev_genl_netdevice_event() does not tell these rebroadcasts apart
+from the initial notification and sends a NETDEV_CMD_DEV_DEL_NTF
+multicast for each of them. At best this spams NETDEV_NLGRP_MGMT
+listeners with duplicate notifications; at worst the pernet state of
+the netns the device belongs to is already gone and the handler
+dereferences a NULL pointer.
 
-Fixes: 3e08773c3841 ("block: switch polling to be bio based")
-Fixes: dd291d77cc90 ("block: Introduce zone write plugging")
-Signed-off-by: Josef Bacik <josef@toxicpanda.com>
-Reviewed-by: Christoph Hellwig <hch@lst.de>
-Link: https://patch.msgid.link/20261028164415.1262013-28-axboe@kernel.dk
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
+default_device_exit_batch() only unregisters the devices still listed
+in the exiting netns; it does not wait for in-flight unregistrations of
+devices that were already unlisted (the barrier doing that was removed
+by commit 8a4fc54b07d7 ("net: get rid of rtnl_lock_unregistering()")).
+So when a device is unregistered by something other than the
+cleanup_net() of its own netns while references on it are still held,
+e.g. a veth whose peer in another netns gets deleted, and that netns
+exits while the device is stuck in netdev_wait_allrefs_any(), the
+remaining pernet exit handlers run and genl_pernet_exit() sets
+net->genl_sock to NULL. The next rebroadcast then crashes in
+genl_has_listeners():
+
+  BUG: KASAN: null-ptr-deref in netlink_has_listeners+0x3d/0x3f0 net/netlink/af_netlink.c:1388
+  Read of size 8 at addr 0000000000000578 by task syz.0.0/5325
+  Call Trace:
+   <TASK>
+   netlink_has_listeners+0x3d/0x3f0 net/netlink/af_netlink.c:1388
+   genl_has_listeners include/net/genetlink.h:644 [inline]
+   netdev_genl_dev_notify+0x161/0x450 net/core/netdev-genl.c:93
+   netdev_genl_netdevice_event+0x98/0x3c0 net/core/netdev-genl.c:1491
+   notifier_call_chain+0x1a5/0x3d0 kernel/notifier.c:85
+   netdev_wait_allrefs_any net/core/dev.c:11690 [inline]
+   netdev_run_todo+0x731/0x1060 net/core/dev.c:11808
+   rtnl_unlock net/core/rtnetlink.c:157 [inline]
+   rtnl_dellink+0x68f/0x810 net/core/rtnetlink.c:3707
+
+syzbot hit this by moving one end of a veth pair into a short-lived
+netns while netdevsim's deferred FIB event processing still held a
+reference on it, and then deleting the other end (repro [1]). While the
+source of this bug is netdevsim deferring FIB processing for and holding
+onto the device reference for O(seconds) which is being fixed
+separately [2], any driver may introduce such a delay and trigger the
+null-ptr-deref.
+
+Skip the rebroadcasts, which are the only NETDEV_UNREGISTER events
+delivered with reg_state == NETREG_UNREGISTERED. The notifications sent
+by unregister_netdevice_many_notify() and, for a device leaving a netns,
+by __dev_change_net_namespace() are issued under RTNL in the same
+critical section that unlists the device, before its netns can be torn
+down, and keep being handled. This mirrors what ip6_route_dev_notify()
+already does to cope with the rebroadcasts.
+
+This change should not break the UAPI spec as it defines dev-del-ntf as
+a "Notification about device disappearing." which is a single event. The
+rebroadcast in netdev_wait_allrefs_any() exists to re-kick in-kernel
+subsystems holding references; netdev-genl happens to be on the notifier
+chain and forwards it.
+
+[1] https://gist.github.com/NamanGulati/2d1b49b8757f9a88b0bd6e55018c02ae
+[2] https://lore.kernel.org/r/20261023191517.607834-1-kuniyu@google.com
+
+Fixes: d3d854fd6a1d ("netdev-genl: create a simple family for netdev stuff")
+Reported-by: syzbot+1269fe6cc2016008124e@syzkaller.appspotmail.com
+Closes: https://lore.kernel.org/netdev/6adf9f64.6200f071.51519.0ed1.GAE@google.com/
+Reviewed-by: Kuniyuki Iwashima <kuniyu@google.com>
+Signed-off-by: Naman Gulati <namangulati@google.com>
+Link: https://patch.msgid.link/20261026221306.3151025-1-namangulati@google.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+[ sashal: Added the upstream guard and comment to the NETDEV_UNREGISTER case, but without the netdev_lock()/netdev_unlock() context lines, which this tree lacks. ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- block/blk-mq.c | 15 ++++++++++++++-
- 1 file changed, 14 insertions(+), 1 deletion(-)
+ net/core/netdev-genl.c | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
-diff --git a/block/blk-mq.c b/block/blk-mq.c
-index 65a08aec007d2..63480b913e352 100644
---- a/block/blk-mq.c
-+++ b/block/blk-mq.c
-@@ -5150,9 +5150,22 @@ static int blk_hctx_poll(struct request_queue *q, struct blk_mq_hw_ctx *hctx,
- int blk_mq_poll(struct request_queue *q, blk_qc_t cookie,
- 		struct io_comp_batch *iob, unsigned int flags)
- {
-+	struct blk_mq_hw_ctx *hctx;
-+
- 	if (!blk_mq_can_poll(q))
- 		return 0;
--	return blk_hctx_poll(q, xa_load(&q->hctx_table, cookie), iob, flags);
-+
-+	/*
-+	 * The cookie is no more than a hint. iocb_bio_iopoll() may have read it
-+	 * from a bio that was reused for another queue right afterwards, and
-+	 * zone write plugging keeps the number of segments in the same field.
-+	 */
-+	if (cookie >= q->nr_hw_queues)
-+		return 0;
-+	hctx = xa_load(&q->hctx_table, cookie);
-+	if (!hctx || hctx->type != HCTX_TYPE_POLL)
-+		return 0;
-+	return blk_hctx_poll(q, hctx, iob, flags);
- }
- 
- int blk_rq_poll(struct request *rq, struct io_comp_batch *iob,
+diff --git a/net/core/netdev-genl.c b/net/core/netdev-genl.c
+index 12c6f7d5add09..7578686165515 100644
+--- a/net/core/netdev-genl.c
++++ b/net/core/netdev-genl.c
+@@ -897,6 +897,12 @@ static int netdev_genl_netdevice_event(struct notifier_block *nb,
+ 		netdev_genl_dev_notify(netdev, NETDEV_CMD_DEV_ADD_NTF);
+ 		break;
+ 	case NETDEV_UNREGISTER:
++		/* netdev_wait_allrefs_any() rebroadcasts NETDEV_UNREGISTER
++		 * while waiting for the last references to be dropped; the
++		 * netns may already be torn down by then. Notify only once.
++		 */
++		if (READ_ONCE(netdev->reg_state) == NETREG_UNREGISTERED)
++			break;
+ 		netdev_genl_dev_notify(netdev, NETDEV_CMD_DEV_DEL_NTF);
+ 		break;
+ 	case NETDEV_XDP_FEAT_CHANGE:
 -- 
 2.53.0
 
