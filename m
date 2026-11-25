@@ -1,56 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795621495;
-	b=CmxofKW1PXttSBPG9jzlZl8ZZVC6A42drO+6VPt73A6HthRH37N4OKIxBwrpqmMuQZCR
-	 h0ib5hjK7O7bWYCXrU42KxLtDr7STc1YiU5uIRGXaUgU9LTsZ1SDXZCFFb/a2BgJCRWuP
-	 I1LOkRZE5pdlNmdzxb8H5SWox2AxjHS6zJ727AFltdeiESAAQpVyRC1Y7pe1bGh9ZQnwA
-	 ArAqefwlz+w9fguJnA4V6e9x5EDhs1Ly1llFMJCPJ9wdYy2UMqgRNBrx5fKgf173Oj/zN
-	 bXhFuqyjCEE+/maZnjOGEsIeQDMfLlrYZkijRpi2fe/Lv1TGhgMb6cKL83GMwY6Klew==
+	t=1795621499;
+	b=ffD/DmgwdDZQaz9/MRnS5FdUnSzt3+RihHMohWOFDT/b6MjCMmImYrVjp+FxqQIkLLSG
+	 /3JnkhEcZz1Q+sD1diyRVIvev8Ccc10Fmvvr5GNwp27XLQvRCM9mglFxobNzuGRDb6oIP
+	 DydW3KHrPUk0UpjgJqnVL/h9k5fl9/5u3MzYBwMEyZXjMev55Hj1yMcCCT9diBuO5Gx2X
+	 IxGP7Jo9l9HeVHLfxwfjMaUv0m6HbXVoRnol5gotd3y44/cniEcmoffQOTATQ2hygYjfN
+	 KVZdyqTAc6wSwEKk1R1+z54APj13TTUn567bt7vNnNhqqEh4c9VqKMswci/tL+2znMw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795621495;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795621499;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=n3fpRJPnLtCi71P0i416eJJaGWSVTRo6yGEoyK/a7do=;
-	b=FeI8c2wog+zldBMHPfGH4XsOIZiqOPe9DT9khC8RFxCGhi8bY8sKauqYHYPDfN1F9bWf
-	 c2R9/jscznNRRiToOBR6Wbx+CSpYIbUsIp1yMWExY3WlEmyjhPodj8JxsonX0qpGhhnMp
-	 86O4feZMx97MyEFy/B/TPWM/WtuMeCf0sziN8TKitkAxXGLW44znvqGFwmpZ5QloL0fH9
-	 vlU/JhHSjbb3N/mgSqfMgNfXWjiSu1AMyc/doVNMr4/V/vXFyhAyuc6Aqgl70Ro6+VOga
-	 HLI61Tv5yFUEnz6nivsrudc3Ec5GHCEqQ5HuRLK1gA5glBRYmizvJyXcMt0OuBUEAoQ==
+	bh=VickcR66O6J/5C7q+DDwoivZtCxc7L+ZXp+DTi9Vewo=;
+	b=KBUWr1SskzQsQZM1/WenJGo0l04vkOCLNJaUXwbaWySxAMXHf/4k+oF7nzub+YMneitr
+	 cYGNUcqgXYfJKu7HIX/VcyhxnjYFmEiaII9n0R+8dG+vburooUM5NJL43GhVfLt+g2GNC
+	 UFx6iykk0ObIFGi5gjr/xVppcTuK7PUDTO9JcRhZq4bbjO1yG3aedvtGeSNagN0/8tCz4
+	 Vh89TC/bmGuOD8DkxIYwqyUcMTBfC4kWc03IMmAD6T+Jvs0zAxxzlmZL52JgLPx6F4fHd
+	 WbiS4OQmEv4/rNK+mNVjnzjVDA9ZRVCi5WzG5m2uJCVWRL3sPpsXQEwNcCqXPR1uYSA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=F5fDn+xd;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=xxst7MGI;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B03A7606A326;
-	Wed, 25 Nov 2026 15:44:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E229E606A31E;
+	Wed, 25 Nov 2026 15:44:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=F5fDn+xd
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 135C81F000C6;
-	Wed, 25 Nov 2026 15:44:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=xxst7MGI
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DD70B1F000CA;
+	Wed, 25 Nov 2026 15:44:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795621495;
-	bh=n3fpRJPnLtCi71P0i416eJJaGWSVTRo6yGEoyK/a7do=;
+	s=korg; t=1795621498;
+	bh=VickcR66O6J/5C7q+DDwoivZtCxc7L+ZXp+DTi9Vewo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=F5fDn+xduQ8rJoa2aZG2w1GETt7gf8wiXMsSQ6iHGJOvCaBWrYjTTyGw87naSEtJX
-	 medAephIoZa0VEsUaGP+8JW1NFczjRWux8BzSoSrC74FSnLIC3Wc29LgY7is0JGImi
-	 dd+AVavdqPYyC7sEpV6uvXFXGYVI3WokXudQTbfk=
+	b=xxst7MGIJxhEpNvXqpMU56QfoZZkXeIfd5u6PCpt6XfkYOzLiTyuk9XFmXR8eYqD2
+	 Ec/ZrKGEVsnAZ223xhC4nxmtdUTj3kP4qjmK+e4JuvuvcpCWuca7OOSE8rhmjBqgNR
+	 Nkf9FPLvQg/uTFINp1cSpkoMejDpvNa1leIozgX0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christoph Hellwig <hch@lst.de>,
-	Sagi Grimberg <sagi@grimberg.me>,
-	Chaitanya Kulkarni <kch@nvidia.com>,
-	Chris Mason <mason@kernel.org>,
-	Jens Axboe <axboe@kernel.dk>,
-	Keith Busch <kbusch@kernel.org>,
+	Jude Gyimah <jude.gyimah87@gmail.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 242/990] nvmet-rdma: disconnect a queue on device removal
-Date: Wed, 25 Nov 2026 15:26:49 +0100
-Message-ID: <20261125143827.758898671@linuxfoundation.org>
+Subject: [PATCH 6.18 243/990] ASoC: rockchip_i2s: select REGMAP_MMIO
+Date: Wed, 25 Nov 2026 15:26:50 +0100
+Message-ID: <20261125143827.782319983@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143822.072087159@linuxfoundation.org>
 References: <20261125143822.072087159@linuxfoundation.org>
@@ -72,76 +68,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chris Mason <mason@kernel.org>
+From: Jude Gyimah <jude.gyimah87@gmail.com>
 
-[ Upstream commit a4387799d4228866dc1746b466cd17e1c638d050 ]
+[ Upstream commit 1c57404bf9bad3e05d5686d91c208bf4e2b733d8 ]
 
-cma_remove_one() sends DEVICE_REMOVAL to the owner of every cm_id on
-the device and then waits, without timeout, until they're all
-destroyed. nvmet_rdma_device_removal() does nothing for a queue cm_id
-and leaves the queues to nvmet_rdma_remove_one(), which only works if
-that runs first. As a module it does, nvmet-rdma registers after
-rdma_cm. Built in, both register at the same initcall level and
-drivers/Makefile lists nvme/ ahead of infiniband/, so cma_remove_one()
-runs first and waits for cm_ids that only the later callback would
-destroy. Since the RDMA CM drops all later events for a cm_id once it
-has sent DEVICE_REMOVAL, a peer closing its connection doesn't help
-either. One connection from anyone who can reach the port hangs "rdma
-link delete" until something else ends the queue.
+rockchip_i2s calls __devm_regmap_init_mmio_clk, which
+drivers/base/regmap/regmap-mmio.c provides under REGMAP_MMIO.
 
-Call nvmet_rdma_queue_disconnect() for the queue. It unlists the queue
-and queues the release work, which destroys the cm_id. Don't wait for
-it, rdma_destroy_id() waits for the handler to return, which was the
-deadlock before commit f1d4ef7d8883.
+  rockchip_i2s.c:(.text+0x418): undefined reference to
+    `__devm_regmap_init_mmio_clk'
 
-Fixes: f1d4ef7d8883 ("nvmet-rdma: register ib_client to not deadlock in device removal")
-Cc: Christoph Hellwig <hch@lst.de>
-Cc: Sagi Grimberg <sagi@grimberg.me>
-Cc: Chaitanya Kulkarni <kch@nvidia.com>
-Reviewed-by: Christoph Hellwig <hch@lst.de>
-Signed-off-by: Chris Mason <mason@kernel.org>
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
-Signed-off-by: Keith Busch <kbusch@kernel.org>
+The driver can be built into vmlinux while REGMAP_MMIO is a module, in
+which case the symbol is not there at link time.
+
+Select rather than depend on: REGMAP_MMIO has no prompt of its own and is
+only ever enabled by a select, so a depends on would leave
+SND_SOC_ROCKCHIP_I2S unselectable.
+
+Reproduced on v7.3, x86_64, with CONFIG_SND_SOC_ROCKCHIP_I2S=y and
+CONFIG_REGMAP_MMIO=m.
+
+Found with kreach, a static check that compares what Kconfig allows
+against the symbols the compiled objects actually reference.
+
+Fixes: 4495c89fcf26 ("ASoC: add driver for Rockchip RK3xxx I2S controller")
+Signed-off-by: Jude Gyimah <jude.gyimah87@gmail.com>
+Link: https://patch.msgid.link/20261103132537.3717496-2-jude.gyimah87@gmail.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/nvme/target/rdma.c | 17 ++++++++---------
- 1 file changed, 8 insertions(+), 9 deletions(-)
+ sound/soc/rockchip/Kconfig | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/nvme/target/rdma.c b/drivers/nvme/target/rdma.c
-index 58fc89b22c98c..7cbba255de206 100644
---- a/drivers/nvme/target/rdma.c
-+++ b/drivers/nvme/target/rdma.c
-@@ -1779,10 +1779,13 @@ static void nvmet_rdma_queue_connect_fail(struct rdma_cm_id *cm_id,
-  * queue cm_id and/or a device bound listener cm_id (where in this
-  * case queue will be null).
-  *
-- * We registered an ib_client to handle device removal for queues,
-- * so we only need to handle the listening port cm_ids. In this case
-- * we nullify the priv to prevent double cm_id destruction and destroying
-- * the cm_id implicitly by returning a non-zero rc to the callout.
-+ * The RDMA CM waits until each cm_id of the device is destroyed, so a queue
-+ * has to go now. Our ib_client also removes the queues, but it cannot be
-+ * relied on here: built in, it is called after the RDMA CM's client.
-+ *
-+ * For a listening port cm_id we nullify the priv to prevent double cm_id
-+ * destruction and destroying the cm_id implicitly by returning a non-zero
-+ * rc to the callout.
-  */
- static int nvmet_rdma_device_removal(struct rdma_cm_id *cm_id,
- 		struct nvmet_rdma_queue *queue)
-@@ -1790,11 +1793,7 @@ static int nvmet_rdma_device_removal(struct rdma_cm_id *cm_id,
- 	struct nvmet_rdma_port *port;
+diff --git a/sound/soc/rockchip/Kconfig b/sound/soc/rockchip/Kconfig
+index bd210fafe9fea..e09325aaba534 100644
+--- a/sound/soc/rockchip/Kconfig
++++ b/sound/soc/rockchip/Kconfig
+@@ -5,6 +5,7 @@ menu "Rockchip"
  
- 	if (queue) {
--		/*
--		 * This is a queue cm_id. we have registered
--		 * an ib_client to handle queues removal
--		 * so don't interfere and just return.
--		 */
-+		nvmet_rdma_queue_disconnect(queue);
- 		return 0;
- 	}
- 
+ config SND_SOC_ROCKCHIP_I2S
+ 	tristate "Rockchip I2S Device Driver"
++	select REGMAP_MMIO
+ 	select SND_SOC_GENERIC_DMAENGINE_PCM
+ 	help
+ 	  Say Y or M if you want to add support for I2S driver for
 -- 
 2.53.0
 
