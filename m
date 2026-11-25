@@ -1,55 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795618691;
-	b=0ztpZ7NLjHrwu5FhmySjvlLVWiVUmlRB5AscNwlbzWb1lvFEU6gjxhCEFyvfj+XExCUY
-	 OQwxGxWaIIbBwXYFECrik1r+B1dDHx5Hh7KDKWYnr7ZGETyVFF6+OWlZY1IoNnx6hTpYj
-	 Wn1syFeP/8iWt7iZbVyekx7BWmWp2JIuPGGhmfwhp1TMnDA5cNfM9jlThxAaaJUyxhBP+
-	 aOdfRwvMqGHCWMD3KQc/CQKLdmAmMWnsDxgs08BrrCGSBevY+vw35d2FX9hZH+cfx3l8z
-	 GX+rrZupWaJW3SDPBWupSVCyuv3qi4nu7rSwb7AlAB2j8tsxZNxcvbEorWoSwpqtpSg==
+	t=1795618695;
+	b=hvgGUMqqifjcmP6/mNlbJO/3qIWBfgd0OL9QufFIXFm4AIOkwq1wYsZqk1K4wNmAwSDW
+	 mOshFuJw3l4lAzEecgYP3S1e90aJfXFgEKrGarzmGR32mRo5BjFsfG/NFQrE5UZvQgFhx
+	 gQ8BadXyj/BbWaPuhlHOmE0se/m1WNPO627WpDVg2Lz6+SviGVWek31KBiteeTmCmCFEy
+	 qFQBi6vMRQLsSkaZvEe68TQTBjXM+1kTIC/KW1GQxVbmjAjTlED8wGv2Xvr/nrjOvC0ZZ
+	 oJU10JyRoPKI+1jCCJ14mRQ9ItIBH7D0veRsTC9EzJPks2oZjfSu7f5YuhoWLKBv8Qg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795618691;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795618695;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=Yr1ZUBHenrMxABxz4Q20n1trovnFBd8lkarv34UiC0c=;
-	b=PCoV+cuHWuOmqXTRdRcUVT0hyufLIYJQp5BBzrwuoueD/h2hk7/ZyDehi3DRvR4l48y1
-	 bkWpPzKIQK7yOx4udIIzOKJeViiPBefirEali9f3A3+8PLWS83b0gZlPoojL7Sy9deamM
-	 cXpkAlNE2/qkVlYLSj6ZolT6cGvmSfyAyagqpy8KaYbJGjRHW62YOtw+16ozjhwNSqGup
-	 3R91rnZGTac7nw9PbYLsIw4oPZdCDohadPG1oVMB36lukVQeOOjsYuFdHhdZwCDRVKiSo
-	 aZlRpSMed3gS8fkPQKGxpuuIlURmPNIydpttwjR7Z18QcaB4ctKJVr1go5/Adrb4kFw==
+	bh=KL1DILIDXnWFNMBo3Fb3LW48d3DGggE6HesjfvARZwI=;
+	b=JeafGrTlk7ZMgsIaDKMJX8EtKOi8s9dimchog5zsjnPQHHVP0tt3mbnaLRZl3RIWZDUw
+	 P/e/JijAiDYiEeRzcKhPdYxZT/ToBzkSfjFa2jPw4QZSg3hyJ2hSw3mKT/QungPngaWa8
+	 PmXQWtXPCkzXNMI+QviBKylLjJ5OBqMo8Vm+op5OSNd4mjdNvnbQIf45oN19oDclwIdyu
+	 w9gyOjqmIkrpwah255NHL+tOFUOwGJS5cdImpPCdFsCF0Klpgf4rm+15EjlPCurpwFW94
+	 SFhiogZ9S0M2OCp2m20iHsO+pNDnnXvuuPYBClK400z4WKVqLvLW+dbBtxBELLcVBRQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="f/Q/ayZA";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=yTSpFXHh;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BBF0A606A330;
-	Wed, 25 Nov 2026 14:58:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 153DA606A326;
+	Wed, 25 Nov 2026 14:58:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=f/Q/ayZA
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1BB9D1F000CA;
-	Wed, 25 Nov 2026 14:58:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=yTSpFXHh
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E72EE1F000D3;
+	Wed, 25 Nov 2026 14:58:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795618691;
-	bh=Yr1ZUBHenrMxABxz4Q20n1trovnFBd8lkarv34UiC0c=;
+	s=korg; t=1795618694;
+	bh=KL1DILIDXnWFNMBo3Fb3LW48d3DGggE6HesjfvARZwI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=f/Q/ayZAoq/Mbt9gAVAwofGPIUZZYgfx0qBOos/a78DQmu+Vs2D+btZXsc/zyZFLW
-	 AlE+GwmudxpFhVJ7vxHKylyX7bHtVqnVZ3mUPpHt4FHgYdYvPd8nvcb8/wNosxosD3
-	 27oczTdxPfe0sC7om/1nkZRPXItL2LpS42mELGwE=
+	b=yTSpFXHhUKW6lYNWhBLwBUzLFko4WZqAOk2S4y41wVfoyrobeWeN0+L7tbVFHrUN4
+	 vCCs3W2Tb5WQsSAgjHb9DNHIc/uOkWz6iZZLbku0f41HPS05HJxOFi2fuGlRKLHGNx
+	 Yy0+G0fqWhuisA3Ak8YVcmUzcZ6YFaKrNOivtdws=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Qingfang Deng <qingfang.deng@linux.dev>,
-	Eric Dumazet <edumazet@kernel.org>,
-	Kuniyuki Iwashima <kuniyu@google.com>,
-	Neal Cardwell <ncardwell@google.com>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Xingyuan Mo <hdthky0@gmail.com>,
+	Pablo Neira Ayuso <pablo@netfilter.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0313/1005] tcp: initialize send sequence numbers before deferring TFO
-Date: Wed, 25 Nov 2026 15:27:31 +0100
-Message-ID: <20261125143829.070155173@linuxfoundation.org>
+Subject: [PATCH 7.3 0314/1005] netfilter: nft_set_rbtree: check catchall_sync return before queue_done
+Date: Wed, 25 Nov 2026 15:27:32 +0100
+Message-ID: <20261125143829.094582423@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143821.729802100@linuxfoundation.org>
 References: <20261125143821.729802100@linuxfoundation.org>
@@ -71,50 +68,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Qingfang Deng <qingfang.deng@linux.dev>
+From: Xingyuan Mo <hdthky0@gmail.com>
 
-[ Upstream commit 57889a8f6d49fc153aa0017d13086ab736567f8a ]
+[ Upstream commit 1cec19d70bc282a8e7f7c42697d44046f60dc506 ]
 
-TCP_FASTOPEN_CONNECT can return from connect() before tcp_connect_init()
-when a cached cookie or cookieless Fast Open allows deferring the SYN.
-At this point write_seq contains the initial sequence number, while
-snd_una and snd_nxt have not been initialized to that sequence number.
+nft_rbtree_gc_queue() passes the result of nft_trans_gc_catchall_sync()
+straight to nft_trans_gc_queue_sync_done(). When the catchall path flushes
+a full GC batch and nft_trans_gc_alloc() fails, catchall_sync returns
+NULL and queue_sync_done dereferences trans->net (NULL+0x10). Guard the
+call like the pipapo GC path already does.
 
-Consequently, inet_diag and /proc/net/tcp{,6} report the initial
-sequence number as the send queue length despite no SYN or payload being
-queued.
-
-Initialize snd_una and snd_nxt to write_seq before marking the
-connection as deferred. Both sequence-based queue lengths then remain
-zero until the first write starts the connection and runs
-tcp_connect_init().
-
-Fixes: 19f6d3f3c842 ("net/tcp-fastopen: Add new API support")
-Signed-off-by: Qingfang Deng <qingfang.deng@linux.dev>
-Reviewed-by: Eric Dumazet <edumazet@kernel.org>
-Reviewed-by: Kuniyuki Iwashima <kuniyu@google.com>
-Reviewed-by: Kuniyuki Iwashima <kuniyu@google.com>
-Reviewed-by: Neal Cardwell <ncardwell@google.com>
-Link: https://patch.msgid.link/20261102035943.9700-1-qingfang.deng@linux.dev
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Fixes: 7d259f021aaa ("netfilter: nft_set_rbtree: prefer sync gc to async worker")
+Assisted-by: opencode:deepseek-v4
+Signed-off-by: Xingyuan Mo <hdthky0@gmail.com>
+Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv4/tcp_fastopen.c | 2 ++
- 1 file changed, 2 insertions(+)
+ net/netfilter/nft_set_rbtree.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/net/ipv4/tcp_fastopen.c b/net/ipv4/tcp_fastopen.c
-index e40477b6b5549..b621c48a52314 100644
---- a/net/ipv4/tcp_fastopen.c
-+++ b/net/ipv4/tcp_fastopen.c
-@@ -543,6 +543,8 @@ bool tcp_fastopen_defer_connect(struct sock *sk, int *err)
+diff --git a/net/netfilter/nft_set_rbtree.c b/net/netfilter/nft_set_rbtree.c
+index fbe1750f1ca23..9d685899da701 100644
+--- a/net/netfilter/nft_set_rbtree.c
++++ b/net/netfilter/nft_set_rbtree.c
+@@ -953,7 +953,8 @@ static void nft_rbtree_gc_queue(struct nft_set *set)
+ 	}
  
- 	if (tp->fastopen_connect && !tp->fastopen_req) {
- 		if (tcp_fastopen_cookie_check(sk, &mss, &cookie)) {
-+			WRITE_ONCE(tp->snd_una, tp->write_seq);
-+			WRITE_ONCE(tp->snd_nxt, tp->write_seq);
- 			inet_set_bit(DEFER_CONNECT, sk);
- 			return true;
- 		}
+ 	gc = nft_trans_gc_catchall_sync(gc);
+-	nft_trans_gc_queue_sync_done(gc);
++	if (gc)
++		nft_trans_gc_queue_sync_done(gc);
+ }
+ 
+ static u64 nft_rbtree_privsize(const struct nlattr * const nla[],
 -- 
 2.53.0
 
