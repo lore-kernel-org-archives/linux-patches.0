@@ -1,50 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795623353;
-	b=SZmoiyFdCPv/lzFbVsMKkulHMX41NAfJqnqgpGbUJrBUp1QKb72sqNny3eOKqyN4xlY8
-	 RSizjmrWVk1SFkUBuWiOIMbzpwOIupLZZPdmWfRhzlaFUg2NqkNmABlqi3kFcs1yvNJCx
-	 tN1qP8YgYWw0Wsw5sPJmBBmVDQc4ACFopX5nBk0uhUJ4jejulvf8zrRMQEjTq6Je5Hw1g
-	 DZ2I9PHd5Wt517HzrITlNqZn6mqzkq77LIA/fNfjQSgAQnyy4XjuMzz4evtdc+zGv4Su+
-	 vam7qYCYBfmQ+KE0Sv3rRpAEDOHragjm/AUEW96Tdxg1s4skrHEiaNV0jLsiNmi4GvQ==
+	t=1795623356;
+	b=3MUeK/T34AzyPToQhf26/+iePYeg0CtIu9S0Qr8iUB7LwbB3SZITFFSlrujbK0xL4CLT
+	 /c6Vsf70p0dD5idgKzM8Uzc+y8Gc7zyBZZIZ+LB6awZqHfzuOBqFIgwoE4K8apxWz0l3Q
+	 AB/fhIBOCD/dUD7CPqnbNcYqiewFfav56pGydfAMgbucZz6Y0o9x8MVNHGqcmEazjSfVj
+	 5IHNTZ4oqQCdePcPT2Qpf2IoMWhf6qWEr+SeLRd9hDLfQnIlLP8S5W7R8nWajSUFqKM55
+	 ZHY1DjwZqhYz5Bl4UkdMdbV6xnnrIzNrpUgHVaULxOrpGp5MEBcPRgXtn2HvhvGh+dQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795623353;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795623356;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=NTOFYQ9MH5mRfZQVkY4OpcX66apWLVE9FT6R9TYL0fU=;
-	b=XrTxUJuFYqmFoV6m4Q8U975qmUj4IJx92Mnx2h+1IGfsjWfep0yHMB9Zea3nubdN8Ycc
-	 04yjaudefB9SmX3vnn+it/IvQ0zUKM67wCk9lm6daEuoDqrt3BAxZg3kPQPOj0nyxZ96O
-	 yXcOEDSGD7q3k5ySLehtg2BdDdLA4fKOwwdXt4mVzD9Ul4umVMuGJNW9qfivm9L3n5/Zs
-	 dtiI8fwlHc22xyER7yAWuBtxPo8b1o3dbmzwNhkazvrMYoAPQujHWAO6dr4esxvj4HelJ
-	 BZX7AvFun4/ztnzFJnPFTWvhHcN72x7vVhKmAxEYBcyHcN20EFBWgZhRkDsCoXRfX6w==
+	bh=p64zcLfmkyJa/oFNPnax9TpssRtw17nEwlW2I2CACoQ=;
+	b=ElXp0MO3O6q+7VN7x+KnxX0LflA2lyJ3Z1pD2iYP3rffqRqTAq8saygoDKXyEKwk6Q5R
+	 830IRUMjEWRevZEsTYn+aKF2Ysqt6H5pfcyHL7FU2FRAWuR/7Mg4M4nbg4bfWrUSnu9x4
+	 J8twITGChHJYJWptRI3RKGWhfbuhSd9L4Hxgm3aNre3OTSdD+PZnSsaWQ0c5R9vnwvh5+
+	 sRpjs8H9zJE02oCEepgz2tY1ufkDMul1Zhm6xCUkaAflcd7XuUL08YUzV99MIPcL9pr1j
+	 68ZnnxGghaUkK4x/B/1hQ7ywuXIlv6HBecQ2V1Z8TxSpW37oHeL2pOa9zfVNM+cdFFg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="h/LxBt1Q";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=CcpeauiL;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5EB8B606A326;
-	Wed, 25 Nov 2026 16:15:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 37F6A606A31E;
+	Wed, 25 Nov 2026 16:15:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=h/LxBt1Q
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AF60E1F000C0;
-	Wed, 25 Nov 2026 16:15:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=CcpeauiL
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8A5BE1F000C0;
+	Wed, 25 Nov 2026 16:15:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795623353;
-	bh=NTOFYQ9MH5mRfZQVkY4OpcX66apWLVE9FT6R9TYL0fU=;
+	s=korg; t=1795623356;
+	bh=p64zcLfmkyJa/oFNPnax9TpssRtw17nEwlW2I2CACoQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=h/LxBt1QN4UyhaS/4x82jJMIP8C+OUpZSqIyZztBzSo+27KezLxYbDQ52pf/zirJL
-	 ZIiP4xsCbk8xXVvym05GTAB9yd4qItlTToPHA/pXyVeWDZl3SHNztyoiev2tnNtMss
-	 Sd2yoj5De9yJ4oVpnWsoHn+yP5DUMnbDf8wCN8p0=
+	b=CcpeauiL2j8TFMTyEMu2/n0VCUvKNQg4xcmUAjKFhp6TOqGrTZoMWsf5U2DziO26L
+	 8ryjXWhIttgP0gLl79su92E4EAmgQUtUCPDKdzkyV22k80JIMkpyy7FZOCzuq4osuR
+	 bXx/vix1Qb+Z6dMpU07y67D9gC+Of2bb5KuPantI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Yu Zhang <yuz08559@gmail.com>,
 	Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
-Subject: [PATCH 6.18 829/990] gpio: virtuser: fix interrupt leak and UAF
-Date: Wed, 25 Nov 2026 15:36:36 +0100
-Message-ID: <20261125143841.453368517@linuxfoundation.org>
+Subject: [PATCH 6.18 830/990] gpio: virtuser: remove the debugfs files before freeing the line data
+Date: Wed, 25 Nov 2026 15:36:37 +0100
+Message-ID: <20261125143841.478182958@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143822.072087159@linuxfoundation.org>
 References: <20261125143822.072087159@linuxfoundation.org>
@@ -66,130 +67,132 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
+From: Yu Zhang <yuz08559@gmail.com>
 
-commit 24cafd9580627f9f066296f4a6ce1b282a3f425d upstream.
+commit c2d0710318b8cd57d0ef6088d0ee4bbc1e827fd3 upstream.
 
-When configuring interrupt handlers for GPIOs requested by virtual
-users, we never verify if an interrupt has been previously requested and
-just leak it if it was.
+gpio_virtuser_probe() registers the devm action that removes the debugfs
+directory before it allocates the per-line and per-array data that the
+debugfs files point to. devres releases resources in reverse order, so
+on unbind the line data is freed, the consumer_lock mutex is destroyed
+and the GPIO descriptors are put first, and the debugfs files are only
+removed afterwards.
 
-We also never free the interrupts at device unbind. This is both a leak
-and a potential UAF bug.
+A read or write of any of the per-line debugfs files (value, direction,
+consumer, interrupts, ...) that runs in that window dereferences the
+freed data. debugfs_remove_recursive() waits for in-flight file
+operations, but by then the data has already been freed.
 
-We use atomic_t for the irq field for now reason, it can't be modifying
-or read from atomic context. Let's repurpose the existing consumer_lock
-mutex and serialize access to the irq field. Let's add sanitization of
-input and schedule a tear-down action.
+Running eight threads that read the per-line debugfs files while
+another task writes 1 and 0 to the configfs "live" attribute triggers
+this within a second on a KASAN kernel, with gpio-sim as the provider:
 
-Cc: stable@vger.kernel.org
+  BUG: KASAN: slab-use-after-free in gpio_virtuser_value_get+0x19/0x60
+  Read of size 8 at addr ffff888005109e38 by task vu_race/3479
+  Call Trace:
+   gpio_virtuser_value_get+0x19/0x60
+   simple_attr_read+0x109/0x290
+   debugfs_attr_read+0x5e/0x80
+   full_proxy_read+0xae/0xe0
+   vfs_read+0x1bc/0x7a0
+  Allocated by task 1:
+   devm_kmalloc+0x89/0x1d0
+   gpio_virtuser_probe+0x56f/0x910
+  Freed by task 1:
+   kfree+0x196/0x430
+   release_nodes+0x77/0xa0
+   devres_release_all+0xf3/0x150
+   device_unbind_cleanup+0x18/0x130
+   ...
+   platform_device_unregister+0x3c/0x50
+   gpio_virtuser_device_deactivate+0x3c/0xc0
+
+The same run also reports use-after-free on the freed consumer_lock
+from the consumer attribute.
+
+Register the debugfs removal action after the line data has been set
+up, so that it runs first on unbind, and remove the directory by hand
+on the probe error paths before that point.
+
 Fixes: 91581c4b3f29 ("gpio: virtuser: new virtual testing driver for the GPIO API")
-Closes: https://sashiko.dev/#/bug/linux-d8935133-0e80-487a-9e00-e748056f595e
-Link: https://patch.msgid.link/20261106-gpio-virtuser-irq-uaf-leak-v1-1-ce9772d8ad0d@oss.qualcomm.com
+Cc: stable@vger.kernel.org
+Signed-off-by: Yu Zhang <yuz08559@gmail.com>
+Link: https://patch.msgid.link/20261102075707.41742-1-yuz08559@gmail.com
 Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpio/gpio-virtuser.c |   39 +++++++++++++++++++++++++++++----------
- 1 file changed, 29 insertions(+), 10 deletions(-)
+ drivers/gpio/gpio-virtuser.c |   46 +++++++++++++++++++++++++++----------------
+ 1 file changed, 29 insertions(+), 17 deletions(-)
 
 --- a/drivers/gpio/gpio-virtuser.c
 +++ b/drivers/gpio/gpio-virtuser.c
-@@ -58,9 +58,9 @@ struct gpio_virtuser_line_array_data {
- struct gpio_virtuser_line_data {
- 	struct gpio_virtuser_attr_data ad;
- 	char consumer[GPIO_VIRTUSER_NAME_BUF_LEN];
--	struct mutex consumer_lock;
-+	struct mutex lock;
- 	unsigned int debounce;
--	atomic_t irq;
-+	int irq;
- 	atomic_t irq_count;
- };
+@@ -951,38 +951,50 @@ static int gpio_virtuser_probe(struct pl
+ 				     "Failed to get the IDs of GPIOs to request\n");
  
-@@ -612,7 +612,7 @@ static ssize_t gpio_virtuser_consumer_re
+ 	dbgfs_entry = debugfs_create_dir(dev_name(dev), gpio_virtuser_dbg_root);
+-	ret = devm_add_action_or_reset(dev, gpio_virtuser_debugfs_remove,
+-				       dbgfs_entry);
+-	if (ret)
+-		return ret;
  
- 	memset(buf, 0x0, sizeof(buf));
+ 	for (i = 0; i < num_ids; i++) {
+ 		descs = devm_gpiod_get_array(dev, ids[i], GPIOD_ASIS);
+-		if (IS_ERR(descs))
+-			return dev_err_probe(dev, PTR_ERR(descs),
+-					     "Failed to request the '%s' GPIOs\n",
+-					     ids[i]);
++		if (IS_ERR(descs)) {
++			ret = dev_err_probe(dev, PTR_ERR(descs),
++					    "Failed to request the '%s' GPIOs\n",
++					    ids[i]);
++			goto err_remove_debugfs;
++		}
  
--	scoped_guard(mutex, &data->consumer_lock)
-+	scoped_guard(mutex, &data->lock)
- 		ret = snprintf(buf, sizeof(buf), "%s\n", data->consumer);
+ 		ret = gpio_virtuser_dbgfs_init_line_array_attrs(dev, descs,
+ 								ids[i],
+ 								dbgfs_entry);
+-		if (ret)
+-			return dev_err_probe(dev, ret,
+-					     "Failed to setup the debugfs array interface for the '%s' GPIOs\n",
+-					     ids[i]);
++		if (ret) {
++			dev_err_probe(dev, ret,
++				      "Failed to setup the debugfs array interface for the '%s' GPIOs\n",
++				      ids[i]);
++			goto err_remove_debugfs;
++		}
  
- 	return simple_read_from_buffer(user_buf, size, ppos, buf, ret);
-@@ -640,7 +640,7 @@ static ssize_t gpio_virtuser_consumer_wr
- 	if (ret)
- 		return ret;
- 
--	scoped_guard(mutex, &data->consumer_lock)
-+	scoped_guard(mutex, &data->lock)
- 		strscpy(data->consumer, buf, sizeof(data->consumer));
- 
- 	return count;
-@@ -680,7 +680,12 @@ static int gpio_virtuser_interrupts_set(
- 	if (val > 1)
- 		return -EINVAL;
- 
-+	guard(mutex)(&ld->lock);
-+
- 	if (val) {
-+		if (ld->irq >= 0)
-+			return -EBUSY;
-+
- 		irq = gpiod_to_irq(ld->ad.desc);
- 		if (irq < 0)
- 			return irq;
-@@ -694,11 +699,13 @@ static int gpio_virtuser_interrupts_set(
- 		if (ret)
- 			return ret;
- 
--		atomic_set(&ld->irq, irq);
-+		ld->irq = irq;
- 	} else {
--		irq = atomic_xchg(&ld->irq, 0);
--		if (irq)
--			free_irq(irq, ld);
-+		if (ld->irq < 0)
-+			return -EBUSY;
-+
-+		free_irq(ld->irq, ld);
-+		ld->irq = -1;
+ 		for (j = 0; j < descs->ndescs; j++) {
+ 			ret = gpio_virtuser_dbgfs_init_line_attrs(dev,
+ 							descs->desc[j], ids[i],
+ 							j, dbgfs_entry);
+-			if (ret)
+-				return dev_err_probe(dev, ret,
+-						     "Failed to setup the debugfs line interface for the '%s' GPIOs\n",
+-						     ids[i]);
++			if (ret) {
++				dev_err_probe(dev, ret,
++					      "Failed to setup the debugfs line interface for the '%s' GPIOs\n",
++					      ids[i]);
++				goto err_remove_debugfs;
++			}
+ 		}
  	}
  
- 	return 0;
-@@ -798,6 +805,14 @@ static int gpio_virtuser_dbgfs_init_line
- 			data->ad.dbgfs_dir, data);
+-	return 0;
++	/*
++	 * The debugfs files point to the devres-managed line data allocated
++	 * above. Register the removal last so that it runs first on unbind,
++	 * before any of that data is released.
++	 */
++	return devm_add_action_or_reset(dev, gpio_virtuser_debugfs_remove,
++					dbgfs_entry);
++
++err_remove_debugfs:
++	debugfs_remove_recursive(dbgfs_entry);
++	return ret;
  }
  
-+static void gpio_virtuser_free_irq(void *data)
-+{
-+	struct gpio_virtuser_line_data *ld = data;
-+
-+	if (ld->irq >= 0)
-+		free_irq(ld->irq, ld);
-+}
-+
- static int gpio_virtuser_dbgfs_init_line_attrs(struct device *dev,
- 					       struct gpio_desc *desc,
- 					       const char *id,
-@@ -814,14 +829,18 @@ static int gpio_virtuser_dbgfs_init_line
- 
- 	data->ad.desc = desc;
- 	strscpy(data->consumer, id);
--	atomic_set(&data->irq, 0);
-+	data->irq = -1;
- 	atomic_set(&data->irq_count, 0);
- 
-+	ret = devm_add_action_or_reset(dev, gpio_virtuser_free_irq, data);
-+	if (ret)
-+		return ret;
-+
- 	name = devm_kasprintf(dev, GFP_KERNEL, "gpiod:%s:%u", id, index);
- 	if (!name)
- 		return -ENOMEM;
- 
--	ret = devm_mutex_init(dev, &data->consumer_lock);
-+	ret = devm_mutex_init(dev, &data->lock);
- 	if (ret)
- 		return ret;
- 
+ static const struct of_device_id gpio_virtuser_of_match[] = {
 
 
