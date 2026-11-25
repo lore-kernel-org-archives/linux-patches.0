@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795624186;
-	b=tSv/w6AO1Bzr/8t8VetVvScTO3+qm/NGnqAMtqbABrtxmm5f5K1PcWaexRDpUI83a8yS
-	 u+4wz6y6j51u69pYVVrY8Fym5E1YOiItHt0kUBoekoELItOA5EfWJcroEgV0lcZGSbcDt
-	 zySmL8pwfNViK+fp/MVzZeCAy3k6ocfmiBI/9p23sKqoSC5yj2DbwojnjOJLeIn5hOYsp
-	 4614Qv67viIeThWvTEuPDo+x8Nr/Ga6FAyedyNFl8oYuLRwhApE8c3b/7JA8nh386JRpN
-	 ejKE/PeNZtCnt0ItghqK5l05T3FnnqTQppm7YOx8Rk43nKpdHdbLKq1WCu9zgk4LNAQ==
+	t=1795624189;
+	b=tkhjo6NWsbWervNS++IrSJSgUbaosftDjgawpXJaC/zCyg7ZrNhFHpU4IqJxVPJP0m5j
+	 KBcjsIuRo7XLp3FFrZyxc2u1Ff/VWcC1Qez3wh59TZF4/1xXkRhUlM0hWs8q8wzYFIWhg
+	 O/Na16g3K+QveJFixV0TUO/fQk4+RXpetupcdwTdiAhWO9vy5uKnamjcrDMD7alyLX5Fn
+	 nTamyf52t4rIzuGnNi6YNQeHDCqAzgv3AJDQ/R8y9UlX1yWMBVpWxK4s7bhPcTkjF35/o
+	 PBwgg7tpANtkP2iWEy+SSUVnWNl3I4jHCwGKHhfYj0z4A3o2PPonswwNlGF0OeaKRdA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795624186;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795624189;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=W3lI7rur9PHXGZIZcLwzu0+mtf6S3ODuplvSEUItfI4=;
-	b=bRjox/j2zg1GEKQDZ0/bayRQzTiuHvNzj5Y1jYo7AeDIBaL0qy1tqyUrh41WI3GQiF9H
-	 4u+fGJUStU0Wvy1g+p4dm/JneAB9dAblJ1qVYlKm+VIWJpK+UUXVs0P7213sNx2WjFubr
-	 MSTO5dL9yoDUeBAgnWy74oTiV1zZKIyVrd00fVQ/gAif5R0mDIcuEUCmnSM1x8DtX/XSb
-	 rsp1G+hRhcGy/PzX7HSMOm5ZLhwdiDmewudmYw6x9hQn3LB79HH7hZOaO5MBi5ImYNLWe
-	 EE893lrxorEmE1e2LmViAUiOFZtKyEvRUQ/9M3eEBQElHwtPsTF2CrIDjKQTR2NkzNQ==
+	bh=kmovbdqi1SZNWfHZsGDlxzMs7tAqKfsLc3Ja43cXmJA=;
+	b=i3hYpnn1D1+aQac1KLiTz+XjkSus0v9ntzv5NxmQZbpfBiNTbdnD8zGU6vMIsOpLVG2X
+	 NPSOa91jnWMm6+B5aFXSFwL/Kmiw4VgZUKSDTqEGV+1ngz9dtO+H47vIOLyYH0m5LuW3B
+	 5Bh2VgoQTfK9MROZBK80uH2+1+K2GlU0oYIy6esdDZNe+ypi/ym85zg2sLlMtgRc/xsCw
+	 asPvu7AKnFKHVcohcnvskz7ttKvY23zICVqGK/ejRCNmd5FIDUI4O1QoxBh4jyzkm7+iT
+	 Fd21a29QaKptPN10t93xlVER8I2XQy/LanhRSxx9xWMX1UNvNYC7La4WdFPnQa4Bvpw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=tZI59Q5v;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=N776oFTo;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4D5F8606A688;
-	Wed, 25 Nov 2026 16:29:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BD820606A326;
+	Wed, 25 Nov 2026 16:29:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=tZI59Q5v
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F3B381F000D1;
-	Wed, 25 Nov 2026 16:29:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=N776oFTo
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5A6F91F000C6;
+	Wed, 25 Nov 2026 16:29:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795624185;
-	bh=W3lI7rur9PHXGZIZcLwzu0+mtf6S3ODuplvSEUItfI4=;
+	s=korg; t=1795624188;
+	bh=kmovbdqi1SZNWfHZsGDlxzMs7tAqKfsLc3Ja43cXmJA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=tZI59Q5voacfgiRRMfMGoZcrp5TWG9xIQT18MzNcC6iQWZzPSsZPRZvfPPkhUXu0V
-	 8cZ9rqwuvMK8vHQabs0c9qRaDPo4mL97iLpJKqLn9vyj3C4A00N36a3SM/+pMcG3ox
-	 FeWF2nt8NgMEaTVps5WSfEeKWPI7mUa6DBNGywr8=
+	b=N776oFToDjXkMBTifhtAifALh41vU7aa+Cs9oqLClF86WXnCbB48G18x81CsgpWX0
+	 ZtVFkbGIocGcecFF9geLNBF8kpFk4SL9PTMZRJAfMtR8aDucyxD4JHxnDSvLY1IXmf
+	 FDb0O6Zxgj2QwhAZ1NqAdoaztXyp64QyRyMmb7us=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chris Mason <mason@kernel.org>,
-	Alexei Starovoitov <ast@kernel.org>,
+	Alban Bedel <alban.bedel@lht.dlh.de>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 111/816] bpf: Check the offset in bpf_skb_generic_{push,pop}()
-Date: Wed, 25 Nov 2026 15:27:39 +0100
-Message-ID: <20261125143851.781442514@linuxfoundation.org>
+Subject: [PATCH 6.12 112/816] spi: Fix ACPI SPI resources using relative path
+Date: Wed, 25 Nov 2026 15:27:40 +0100
+Message-ID: <20261125143851.804078858@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143849.205329330@linuxfoundation.org>
 References: <20261125143849.205329330@linuxfoundation.org>
@@ -68,66 +68,55 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chris Mason <mason@kernel.org>
+From: Alban Bedel <alban.bedel@lht.dlh.de>
 
-[ Upstream commit ee36c9aa44ef300cd651074bd97552b229337f85 ]
+[ Upstream commit 4825287f6d2346e9273f35a928d1ef40e68bc58b ]
 
-To make room for len bytes at offset off, bpf_skb_generic_push() moves the
-first off bytes and clears len bytes after them. It assumes that the first
-off bytes are in the linear part. But in bpf_skb_adjust_room() off can be
-the end of the IP header, and this header can be in a frag. Then the
-function reads and writes after skb->tail, and can damage skb_shared_info.
+ACPI resources can use relative path when pointing to other
+resources. This didn't work with SPISerialBus resources because the
+device defining the resource was not passed to acpi_get_handle().
 
-bpf_skb_generic_pop() checks off + len, but this u32 sum can wrap to a
-small value. bpf_skb_adjust_room() and bpf_skb_change_proto() calculate off
-from skb_mac_header_len(). This length is a very large u32 when
-network_header < mac_header. Then the check can pass, and memmove() reads
-and writes far outside the skb.
+Pass the ACPI device handle through the lookup context to also allow
+for relative paths.
 
-Return -ENOMEM from both functions, like the present check, when
-off > skb->len. Thus the sum cannot wrap. In bpf_skb_generic_push() also
-pull the first off bytes into the linear part. Now bpf_skb_adjust_room()
-fails when a prog grows an skb that ends before off. network_header stays
-wrong.
-
-Fixes: 6578171a7ff0 ("bpf: add bpf_skb_change_proto helper")
-Fixes: 2be7e212d541 ("bpf: add bpf_skb_adjust_room helper")
-Signed-off-by: Chris Mason <mason@kernel.org>
-Signed-off-by: Alexei Starovoitov <ast@kernel.org>
-Link: https://patch.msgid.link/20261101190535.1454146-28-alexei.starovoitov@gmail.com
+Signed-off-by: Alban Bedel <alban.bedel@lht.dlh.de>
+Link: https://patch.msgid.link/20261001153507.2011806-1-alban.bedel@lht.dlh.de
+Signed-off-by: Mark Brown <broonie@kernel.org>
+Stable-dep-of: 2d0953ab69d3 ("spi: acpi: only look up the IRQ of confirmed SPI devices")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/core/filter.c | 9 +++++++--
- 1 file changed, 7 insertions(+), 2 deletions(-)
+ drivers/spi/spi.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/net/core/filter.c b/net/core/filter.c
-index 359180c91d034..044595be4217a 100644
---- a/net/core/filter.c
-+++ b/net/core/filter.c
-@@ -3320,6 +3320,10 @@ static void bpf_skb_change_protocol(struct sk_buff *skb, u16 proto)
+diff --git a/drivers/spi/spi.c b/drivers/spi/spi.c
+index c5cd38e295f56..5f58df273dc7b 100644
+--- a/drivers/spi/spi.c
++++ b/drivers/spi/spi.c
+@@ -2628,6 +2628,7 @@ EXPORT_SYMBOL_GPL(spi_new_ancillary_device);
+ #ifdef CONFIG_ACPI
+ struct acpi_spi_lookup {
+ 	struct spi_controller 	*ctlr;
++	acpi_handle		device_handle;
+ 	u32			max_speed_hz;
+ 	u32			mode;
+ 	int			irq;
+@@ -2722,7 +2723,7 @@ static int acpi_spi_add_resource(struct acpi_resource *ares, void *data)
+ 			if (lookup->index != -1 && lookup->n++ != lookup->index)
+ 				return 1;
  
- static int bpf_skb_generic_push(struct sk_buff *skb, u32 off, u32 len)
- {
-+	/* The bytes in front of @off are moved with skb->data. */
-+	if (unlikely(off > skb->len || !pskb_may_pull(skb, off)))
-+		return -ENOMEM;
-+
- 	/* Caller already did skb_cow() with meta_len+len as headroom,
- 	 * so no need to do it here.
- 	 */
-@@ -3340,9 +3344,10 @@ static int bpf_skb_generic_pop(struct sk_buff *skb, u32 off, u32 len)
- 	void *old_data;
+-			status = acpi_get_handle(NULL,
++			status = acpi_get_handle(lookup->device_handle,
+ 						 sb->resource_source.string_ptr,
+ 						 &parent_handle);
  
- 	/* skb_ensure_writable() is not needed here, as we're
--	 * already working on an uncloned skb.
-+	 * already working on an uncloned skb. The first test
-+	 * keeps off + len from wrapping.
- 	 */
--	if (unlikely(!pskb_may_pull(skb, off + len)))
-+	if (unlikely(off > skb->len || !pskb_may_pull(skb, off + len)))
- 		return -ENOMEM;
+@@ -2814,6 +2815,7 @@ struct spi_device *acpi_spi_device_alloc(struct spi_controller *ctlr,
+ 		return ERR_PTR(-EINVAL);
  
- 	old_data = skb->data;
+ 	lookup.ctlr		= ctlr;
++	lookup.device_handle	= acpi_device_handle(adev);
+ 	lookup.irq		= -1;
+ 	lookup.index		= index;
+ 	lookup.n		= 0;
 -- 
 2.53.0
 
