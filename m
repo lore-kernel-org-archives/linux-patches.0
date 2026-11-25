@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795624842;
-	b=ACGCaZsfAxyIj3xk9fiWxiNbdlvOCzaXmEZOOMZA5oFpYiIEguTCUaqP1iCdtgM3q7+N
-	 6NYiTGwnlrCq1BZ2CEyfFJIStVDWQvYMLZyX8jRfeEPRDeQdFqmcrIXIFBhPunFcMV6TZ
-	 t2u0OxJAvZSFsM4W5lhm/PH1R5sgZjH06Xf3NEnaWZm2o9FkvZrqOQLPNjxsoE3YnHr6A
-	 gDsccRNqtxQmfN4gpoHjcACVTw3RMwTevxHLAdmpqLASLI+9ne9SXGMKYVqTJlzcpWoZ6
-	 EgmP/J8PXu0TzClGDyOxAZjWbuzPX1kNmKOjocu7Gxplhjy/cIWoD+5kMPVtx4/72KA==
+	t=1795624845;
+	b=PPkwlwlGQswF7FTLvNJzIXBQ91gexfY4BV+FDQN1FWzqDmPFWNscBBPmqqyp9P14//bt
+	 JnVYySW0pmlluwIfPD1P7t+ddKdforVsLgOkDWRgVij+sdTghsHhSK/OatjkXlDsaC0f4
+	 ECuKnsHvdczL9Pb4Xw4gPlJeYvCSxUPxYVgU+0igfyD30t9YT4xRZt0J45p8s/7rJLR4D
+	 xgRU5RTG8Sqp7w2YAWijShXo0le1g7jx0Lqvo/vjSiEfzNto1MKxAVomWMZWOdmTXRFlU
+	 4R8yPBTx9dAw8NonBvlCF2jKQrHX5UVfE4V25Vcw/yZ6v1JJLlaBnXnNsJnI60D2ksQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795624842;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795624845;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=SY5iIUb/evDE0XDslNo53mKij/6VbVKzg9YbHYHzUGk=;
-	b=BkwqmUcqskEBy1UtKsX7Jjx05soZkQZ91aCAW29/XV7+F9VAEY1P+jeY0TLbA5tVjmNV
-	 nHUdbj+1YmBVAi4woZo1tNkeKK5hZ2hv1gwSFN3z1kLe8VNqA3A+SC3SxkrnbyvSt3TF/
-	 lXuiDdOI30GHSs/uB+KvtP01ocj+JkiHFYHn1a3sDDqnIJRtMM2TQBxN4lVDvtLjMiNGU
-	 kVj7A11kCgW2wwkprU8bFH1Z8xSFHskpcSvo9x2OMvDcVTMaQk/oLMlDgOqLHcL1/65XN
-	 mDssWLo4T0wdPDzwLKeEY0PZoQxqkWJ/iVjnmGbTk+4knsS0Q/MxM5U0rkXvkRpncqA==
+	bh=cofsxXJo4eWKW8F4QWF9QYi16LnzlpJNPay+gy6yfQE=;
+	b=KlH9SRyb5Q1GHL8gWfUg0PMO1JjTrVtSJBWm/UMkXg57kGGtjDQlaE7rU893/T9eYn+e
+	 Ec6UlUupEyOBDY1UVKhNO2tY8dqeLTdC1k/C5+3LSfgsW37uQwuCb0jXkpDtd8VzExwo0
+	 Q266JOV2R3RikW5U1yhqfAW9RzJEwFEjQpFNA23xTB59zWZjwSQNqpvexh1s4LVmetVJS
+	 onuMGxj4Aw12RHgZnNIp4n8F7WsCHjVoANlT5E2bKrrWkkjGGMbAnwD+0Hr3iPxfjuZmH
+	 llyatGFyeY2HiKN2yhmDt2Bpk9V9mVhG54OOrIVzFCKS0SLXltuJFIlRVd7xyrLiRIQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=pekIdNdv;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=sUr25SBl;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5D3F9606A32A;
-	Wed, 25 Nov 2026 16:40:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8CB25606A321;
+	Wed, 25 Nov 2026 16:40:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=pekIdNdv
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3221D1F000D1;
-	Wed, 25 Nov 2026 16:40:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=sUr25SBl
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6BB231F000D2;
+	Wed, 25 Nov 2026 16:40:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795624841;
-	bh=SY5iIUb/evDE0XDslNo53mKij/6VbVKzg9YbHYHzUGk=;
+	s=korg; t=1795624845;
+	bh=cofsxXJo4eWKW8F4QWF9QYi16LnzlpJNPay+gy6yfQE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=pekIdNdvMsso745EPMz5svwhrDT6IQhFoEgOkRkSk28R7bpflnogLq94g7xYHotJH
-	 ID0wDdjitlZjx/rmqscU7n8/Td/z/IgrlhsgBoQYY2MjoWI5WiPiwnHvrLYPY7Fy4i
-	 +0ogOj3cZyTs+CBSAwR8BnmaVlFN20E9bxM9D5Rs=
+	b=sUr25SBlvP0ZGT4X2uYirt3++oqnAvQMVjuN9mfr+NgXOZ4EnXFPOlCMCf59Ed+9x
+	 30oKl0sTsf2+rHep+FpEgr2TzlYKUIbyZ5WJzIPOQOfQu498/yiYHH1tGVgr0RJgd9
+	 TWeM/fj5iedHazY0ctA2Svch7kKj2dC83OB6ydHE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shao Mingyin <shao.mingyin@zte.com.cn>,
-	Damien Le Moal <dlemoal@kernel.org>,
-	Niklas Cassel <cassel@kernel.org>,
+	Yifan Zhang <yfzhang23@stu.pku.edu.cn>,
+	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 279/816] ata: libata-scsi: set the field pointer when rejecting CDL
-Date: Wed, 25 Nov 2026 15:30:27 +0100
-Message-ID: <20261125143855.666959570@linuxfoundation.org>
+Subject: [PATCH 6.12 280/816] tracing/probes: bound symstr stores to reserved length
+Date: Wed, 25 Nov 2026 15:30:28 +0100
+Message-ID: <20261125143855.689114562@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143849.205329330@linuxfoundation.org>
 References: <20261125143849.205329330@linuxfoundation.org>
@@ -69,49 +68,64 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Shao Mingyin <shao.mingyin@zte.com.cn>
+From: Yifan Zhang <yfzhang23@stu.pku.edu.cn>
 
-[ Upstream commit 7c972e73641cbe5f77f63c336de15c7a30268d49 ]
+[ Upstream commit 2fc0b3070d6d5dcecfed43cd0e62aa0fd4b4315c ]
 
-ata_mselect_control_ata_feature() rejects enabling CDL while NCQ
-priority is enabled, but unlike its other error branches it returns
-without setting *fp.
+Traceprobe calculates dynamic string sizes before storing the values.  A
+probed pointer can change between those passes, so
+fetch_store_symstrlen() can reserve space for a short symbol while
+fetch_store_symstring() observes a longer one.  The store path then
+overwrites the trace record.
 
-ata_scsi_mode_select_xlat() initializes fp to 0xffff and, when the
-handler fails, adds the offset of the mode page in the parameter list
-to it, i.e. the length of the mode parameter header and of the block
-descriptors. As fp is a u16, this wraps around, so the resulting sense
-data reports the byte before the mode page, i.e. the last byte of the
-mode parameter header or of the block descriptors, as the FIELD
-POINTER, instead of the byte containing the CDL_CTRL field that
-requests enabling CDL.
+Format the symbol into a temporary KSYM_SYMBOL_LEN buffer and copy only
+the bytes that fit in the reserved field, including a trailing NUL.
+Update __data_loc with the length actually stored so consumers do not
+read beyond the truncated value.
 
-Set *fp to 4, i.e. to the byte containing the CDL_CTRL field, like the
-branch rejecting an invalid CDL_CTRL value does.
+Link: https://lore.kernel.org/all/179378621331.55520.2052332247156241151@stu.pku.edu.cn/
 
-Fixes: df60f9c64576 ("scsi: ata: libata: Add ATA feature control sub-page translation")
-Signed-off-by: Shao Mingyin <shao.mingyin@zte.com.cn>
-[cassel: set *fp to 4, the offset of CDL_CTRL in the mode page]
-Reviewed-by: Damien Le Moal <dlemoal@kernel.org>
-Link: https://lore.kernel.org/r/20261103205448.931471-17-cassel@kernel.org
-Signed-off-by: Niklas Cassel <cassel@kernel.org>
+Fixes: b26a124cbfa8 ("tracing/probes: Add symstr type for dynamic events")
+Signed-off-by: Yifan Zhang <yfzhang23@stu.pku.edu.cn>
+Signed-off-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/ata/libata-scsi.c | 1 +
- 1 file changed, 1 insertion(+)
+ kernel/trace/trace_probe_tmpl.h | 14 +++++++++++++-
+ 1 file changed, 13 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/ata/libata-scsi.c b/drivers/ata/libata-scsi.c
-index 7f093456fa3b7..5be76156f1dc1 100644
---- a/drivers/ata/libata-scsi.c
-+++ b/drivers/ata/libata-scsi.c
-@@ -4222,6 +4222,7 @@ static int ata_mselect_control_ata_feature(struct ata_queued_cmd *qc,
- 		if (dev->flags & ATA_DFLAG_NCQ_PRIO_ENABLED) {
- 			ata_dev_err(dev,
- 				"NCQ priority must be disabled to enable CDL\n");
-+			*fp = 4;
- 			return -EINVAL;
- 		}
- 		ata_dev_dbg(dev, "Enabling CDL\n");
+diff --git a/kernel/trace/trace_probe_tmpl.h b/kernel/trace/trace_probe_tmpl.h
+index 2caf0d2afb322..6991ab3b9e0b9 100644
+--- a/kernel/trace/trace_probe_tmpl.h
++++ b/kernel/trace/trace_probe_tmpl.h
+@@ -87,15 +87,27 @@ fetch_store_symstrlen(unsigned long addr)
+ static nokprobe_inline int
+ fetch_store_symstring(unsigned long addr, void *dest, void *base)
+ {
++	char namebuf[KSYM_SYMBOL_LEN];
+ 	int maxlen = get_loc_len(*(u32 *)dest);
+ 	void *__dest;
++	int len;
+ 
+ 	if (unlikely(!maxlen))
+ 		return -ENOMEM;
+ 
+ 	__dest = get_loc_data(dest, base);
++	len = sprint_symbol(namebuf, addr);
++	if (len < 0) {
++		*(u32 *)dest = make_data_loc(0, __dest - base);
++		return 0;
++	}
++
++	len = min(len, maxlen - 1);
++	memcpy(__dest, namebuf, len);
++	((char *)__dest)[len] = '\0';
++	*(u32 *)dest = make_data_loc(len + 1, __dest - base);
+ 
+-	return sprint_symbol(__dest, addr);
++	return len + 1;
+ }
+ 
+ /* common part of process_fetch_insn*/
 -- 
 2.53.0
 
