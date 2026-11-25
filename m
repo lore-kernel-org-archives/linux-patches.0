@@ -1,55 +1,56 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795618826;
-	b=PkH0sIYVYUv0V+7H41tkJ/blJ1vEkBaOxGTEiN6xB1od7e/7FCbQYcVJUjVeIdPvY9WN
-	 GTqSn7uTxzvJNBn0kB5+4AW3pKvW/c4KERNMJ//CXGkpVPP0lc1b1lyi3nQ4JFvcPcPds
-	 A+sgAASLVAsg/n2Sv2cWsat9TY1doZ0acCCYlg1obeiIs7BKr+HLveTjf7XkdFmJfjHAu
-	 ZQzHk4l83VYsHvuRyQQtfgjAh0yM2G6y9Q1l1P9Zwq91bnsIclGXmksj3+wztlM28VaOt
-	 lwHS5XvkQzII0b3SxM6W8y4fnDXfueiSPpQFX3V6Yfmw/S40dAldHI6yvgeCl72coSA==
+	t=1795618830;
+	b=g/fsEkP5lIvak4rHqcJ1e1fJRvIZygLg6wVNwO2kN0bt8Wrk2YrkmAqgG90dZEZ1Lmax
+	 bVo7/5ZkfNh4dMa6hx5dhgEhTivZXbAfimqYvkrZA4LRBray3dn56lPYiwn30Yl9sXT/E
+	 D8kHWa8kcKYRb9bCK5uVUhWMvQNYRscNsfWpROW95zc7LVrrWyYrWHintOVlA4sWNN+UV
+	 fJ9n3jbIL0mAC66i+3wD4zIqqtAAHF1SeM1Z+DiYP6hoVcNWeWr0n785yeGNxdY+PkjKV
+	 7GJb9RJolREAvVH8o02M0i+6UGxcEGkALqoJhGCqxnvIop/nMCl7y0LzRRIugxZ4uog==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795618826;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795618830;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Transfer-Encoding;
-	bh=9ohTa7vuCKhVDwzJaDDVvaxAaBehMHwvekLuGujoKKU=;
-	b=2gcqBBSZScIlLRfYCOX04an6kmhICg2hVcdzfSNScpN93B3xwKjzAq3zOyOuLgot2rt6
-	 h6e90uTnP8mO3OUAH0f80ixaea87+MGxPSnEhg475z5bf7DCL/bX5DdVae43ra3TGHVI+
-	 jKzdzpQD3pJ6//ze4YyRPRIGBSgvpjgY8G29bkp2s4ZgDAOfbCIUGAwk54yTJsDkuOpUm
-	 quh+6bKmeW9Q2OOBKislGM99xfkmfE+Wk4EzqwYAki7Rxuo0wENhOBiUfQ+O2BQWR83jv
-	 3OJhi0TXyLTzYkXh6EZ8kq0oAO7xtZFYA82KWDWhLW5007mpAsVsyE0v/2ARTKDl2tw==
+	 MIME-Version:Content-Type:Content-Transfer-Encoding;
+	bh=pWCZDazaYpyQlr+0Gyw9dvX/6mmM/mzEvY4p94CmLLw=;
+	b=1LPRF1wf/JVNHpEu/x8VNCIlrPZ4jdl4kq9j44WndPdz7TIiMWOsY4oSPgWMxjM4mZi6
+	 7ZlDS6cXx0SS0JifNjrPeTEsBYqe1kkr1Y9mYFq+z8hVdokyGdCEGohe1vXCI7+6BsdxH
+	 w1bWkzkFOW2st4a60gXFwmIFw4Iy5ZdJ8y/85EI4cSGh+6cPZPr19vNN0Fx2C4TLkgc6r
+	 5vpIjLQHNNnHzPFal+gJztxE5TnEJoUT6SU/g5bAvwwIhUMggQpbKZDanqpmYtYcsFnov
+	 FXs1ObqhmVOuB5lxkKVWYed2m9DKqmNUQfPIJ6lXbOpXC54Igeqy4iLPPuQegnL0zeA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=CqJZthFI;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=hSc0hJbK;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DB229606A327;
-	Wed, 25 Nov 2026 15:00:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 68263606A323;
+	Wed, 25 Nov 2026 15:00:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=CqJZthFI
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 28EFF1F000C0;
-	Wed, 25 Nov 2026 15:00:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=hSc0hJbK
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 70D7D1F000C0;
+	Wed, 25 Nov 2026 15:00:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795618826;
-	bh=9ohTa7vuCKhVDwzJaDDVvaxAaBehMHwvekLuGujoKKU=;
+	s=korg; t=1795618830;
+	bh=pWCZDazaYpyQlr+0Gyw9dvX/6mmM/mzEvY4p94CmLLw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=CqJZthFI0GvfGwTOgsEchLrnFZfNL0o/n0kvVZ7jLZVCQtDwoWsIpmwKvBQqGUsiz
-	 dBBYwSf0MQh1w3z6Lbjh1yMagDRB/95MT1hgfbwU9N0/VqXbNcInA/E1QtBVM4BENv
-	 5J1fESgf3Ix1tcRfP1DaTngN/EpQxtX9jm0tX0cA=
+	b=hSc0hJbKBhtIA4HlXtgAdIdwPIGEfIWyCThgLKpRJrX5sHlzQwo+kJnF0ZHQZJPYX
+	 a5AIxd7AbHoUoKaGNGXh/JPVxp/zxdN8QjtqiOgc1LwXFAsJk787kSakaF4cyHzo2t
+	 PsjgenTutS4374fSaj0T6PIIVMtES2uXWvgcPVXU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Raag Jadav <raag.jadav@intel.com>,
-	Rodrigo Vivi <rodrigo.vivi@intel.com>,
-	Matt Roper <matthew.d.roper@intel.com>,
 	Matthew Brost <matthew.brost@intel.com>,
+	=?UTF-8?q?Thomas=20Hellstr=C3=B6m?= <thomas.hellstrom@linux.intel.com>,
+	Himal Prasad Ghimiray <himal.prasad.ghimiray@intel.com>,
+	Arvind Yadav <arvind.yadav@intel.com>,
+	Tejas Upadhyay <tejas.upadhyay@intel.com>,
 	Dave Airlie <airlied@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0399/1005] drm/xe/pci_error: Flush GT wedge worker before bus reset
-Date: Wed, 25 Nov 2026 15:28:57 +0100
-Message-ID: <20261125143831.091424525@linuxfoundation.org>
+Subject: [PATCH 7.3 0400/1005] drm/xe: Rebind BOs evicted before the first LR queue
+Date: Wed, 25 Nov 2026 15:28:58 +0100
+Message-ID: <20261125143831.114649382@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143821.729802100@linuxfoundation.org>
 References: <20261125143821.729802100@linuxfoundation.org>
@@ -65,48 +66,67 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 7.3-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Raag Jadav <raag.jadav@intel.com>
+From: Arvind Yadav <arvind.yadav@intel.com>
 
-[ Upstream commit 1eb526467c96ddaf87791c2b3cefa9f93ff45358 ]
+[ Upstream commit b52dcc698250e08eabdc4554a6fdb4d6f909133f ]
 
-With GT wedging now done async, make sure the wedge worker is flushed to
-avoid side-effects during PCI bus reset.
+A VM bind can evict BOs before the first LR exec queue is added.
+There is no preempt fence to trigger at that point.
 
-Fixes: 13b9555ffb03 ("drm/xe/xe_pci_error: Implement PCI error recovery callbacks")
-Signed-off-by: Raag Jadav <raag.jadav@intel.com>
-Reviewed-by: Rodrigo Vivi <rodrigo.vivi@intel.com>
-Link: https://patch.msgid.link/20261022051303.282805-7-raag.jadav@intel.com
-Signed-off-by: Matt Roper <matthew.d.roper@intel.com>
-(cherry picked from commit 0dbc1d0762bc89649aeaea98a63f6e5f786ea1b8)
+When the queue is added later, its new preempt fence is not triggered.
+The exec IOCTL does not validate or rebind BOs in preempt fence mode,
+and the rebind worker skips that work because no preempt fence is
+waiting. The first exec can then use stale mappings.
+
+Trigger the new preempt fence in xe_vm_add_compute_exec_queue() when
+the VM has evicted BOs or pending rebinds. This keeps the queue
+suspended until the rebind worker validates the BOs and restores
+their mappings.
+
+Fixes: dd08ebf6c352 ("drm/xe: Introduce a new DRM driver for Intel GPUs")
+Cc: Matthew Brost <matthew.brost@intel.com>
+Cc: Thomas Hellström <thomas.hellstrom@linux.intel.com>
+Cc: Himal Prasad Ghimiray <himal.prasad.ghimiray@intel.com>
+Reviewed-by: Matthew Brost <matthew.brost@intel.com>
+Signed-off-by: Arvind Yadav <arvind.yadav@intel.com>
+Link: https://patch.msgid.link/20261015162639.3528278-1-arvind.yadav@intel.com
+Signed-off-by: Tejas Upadhyay <tejas.upadhyay@intel.com>
+(cherry picked from commit 928ee5d4fb1f211aa361524801c15b54603fae52)
 Signed-off-by: Matthew Brost <matthew.brost@intel.com>
 Signed-off-by: Dave Airlie <airlied@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/xe/xe_pci_error.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/gpu/drm/xe/xe_vm.c | 9 ++++++++-
+ 1 file changed, 8 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/xe/xe_pci_error.c b/drivers/gpu/drm/xe/xe_pci_error.c
-index e41af2ac7f23b..dc9d1be7857c2 100644
---- a/drivers/gpu/drm/xe/xe_pci_error.c
-+++ b/drivers/gpu/drm/xe/xe_pci_error.c
-@@ -29,8 +29,10 @@ static void prepare_device_for_reset(struct pci_dev *pdev)
+diff --git a/drivers/gpu/drm/xe/xe_vm.c b/drivers/gpu/drm/xe/xe_vm.c
+index 99e42bd29e790..90820f5fff283 100644
+--- a/drivers/gpu/drm/xe/xe_vm.c
++++ b/drivers/gpu/drm/xe/xe_vm.c
+@@ -269,8 +269,15 @@ int xe_vm_add_compute_exec_queue(struct xe_vm *vm, struct xe_exec_queue *q)
+ 	 * Check to see if a preemption on VM is in flight or userptr
+ 	 * invalidation, if so trigger this preempt fence to sync state with
+ 	 * other preempt fences on the VM.
++	 *
++	 * Also trigger it if eviction or rebinding is pending. BOs evicted
++	 * before the first exec queue was added had no preempt fence to
++	 * trigger. Suspend this queue until the rebind worker restores
++	 * the mappings.
+ 	 */
+-	wait = __xe_vm_userptr_needs_repin(vm) || preempt_fences_waiting(vm);
++	wait = __xe_vm_userptr_needs_repin(vm) || preempt_fences_waiting(vm) ||
++		!list_empty(&vm->gpuvm.evict.list) ||
++		!list_empty(&vm->rebind_list);
+ 	if (wait)
+ 		dma_fence_enable_signaling(pfence);
  
- 	xe_device_set_in_reset(xe);
- 
--	for_each_gt(gt, xe, id)
-+	for_each_gt(gt, xe, id) {
- 		xe_gt_declare_wedged(gt);
-+		flush_work(&gt->wedge.worker);
-+	}
- 
- 	pci_disable_device(pdev);
- }
 -- 
 2.53.0
 
