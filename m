@@ -1,54 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795624528;
-	b=PzOIVKun27H3KMWslye/dIpuH8LxrrLPXbYSR56gk89KK3kjt5TmFPjL+dITTX9cZodw
-	 Y1/dSJD426oFC9s+WOWDFufHOJ6fScsF2mzrM3ChEBeQs9Tn2EICnXuDgP5E9KZQsEIMh
-	 1U1ZEUhulGtrRYeNSn4VTcClqLoFaHqc3rzkVFcSUcRcMbAD6/CIP/Ljlf+pI16Z2aMK/
-	 optC+pHF3AIe+BiLeMNIy8MMBLrm6AGEBGvDFGuiRM7dE7UQZLg0NF0tF4FEIjTtTMj75
-	 s/grZhNktsQUetcOAWS2DNd+qCm01g5iduHwqFbymtORgAWX8lCnOnQkOfdp2LxiXpg==
+	t=1795624531;
+	b=uda43IFo0cS4mCq69zu3cQ99yGDpZf/qFz1+e+B/yKpAN4HFzBSc5UdBH57l5SztpRLc
+	 Cr5GBPH1PJwtKBEsRc5htKPsfwzDbagnbhbOSXsgCg4h3gWWsOR+/kbKcqIcocemGll8L
+	 s8hL9poPw2PWIV6OHRPqLw+F8XM0UEpzHjX7rz98b4/E9IcsZvMszmFgc1Rv6tNEeHjPA
+	 tBG4NUKsS8lLXE7nwaEiAAT2eMAeimKVXm6gFtpdR+DPd5f+b376GQ8BPiDBpCbPBI4d8
+	 L7nyYfylnGBvamXhQTZvfrEiuHcAjuHxqrDe0Ggfxw+ggLizmu6dODbsvGq6j5XbjyQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795624528;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795624531;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=/1qP+sJvydd6z2xSFZVNASCcai2I/Z42S4fARMXqKoo=;
-	b=HwHKNI2BOxOqkbNKXmhmtbYbHrn5h0wyKOSOBK+htc/I6WoDCfrfj2V0YkPvXeEtveU4
-	 VgLmMpSGWZZHnItRdltjUFQj0W1gtD58VOBYciAP1rFjwBeoU5rgqhEmJf0RpqklRx5Vh
-	 CC5VuYqUKmZSayTEic8VWq4BcW1M7gfabioYlwXkzWGAmO4ggq2KO4LlHRwvpd+QR1bht
-	 IRos4Gt9ZcEfeC4UKr8nQSM+HShDFK+n7Giw+hR08BtyOYRH6RMwuLq/EliZXbGwacrqQ
-	 2zCrjb2d3CSp8fSpBqXgPsU9lKZPfSfxnJr1rGcy/GDcgBpOXzfzD2WvQeCFvkzneXA==
+	bh=NNsft8Ca5cFIMPaEV9NE6ti4ZPxWPFMQ0BvtURPWCrY=;
+	b=VGr4syhKt3ebe/JHhjvgXFLisXQBdIvevNPpxrwMhKqUaesrRdaSv+Oi7MUo5U44NtC6
+	 25lgEnkYAnJniH7RFtD/Z0e8/KYigor/yDbpQPQ74ux+FyVbmh+/UZ3mWN4DDsw3rkw0D
+	 KlG53H/lkEIHgzXEEQ9IybLcGmp3Db9c/6K1Y60c2E+S/Ge0BvxROw0irb4QUrM4Onr9G
+	 AUbNRY3CMNBk1btTj41/fY3qJ5y6XQsGXNn/fDL99dA7d/KLyO/8Z/WUZmyE6UHbOy0Ux
+	 9hLRXo+aYWkglR32rmbRVLs6PT4MouRHD/VS+u/o655tcS70FaZMM25GIRH+k4UOu2Q==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=LBdb8Dtk;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=hikhhcD1;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 564A4606A339;
-	Wed, 25 Nov 2026 16:35:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 856D5606A33D;
+	Wed, 25 Nov 2026 16:35:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=LBdb8Dtk
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A762E1F000C4;
-	Wed, 25 Nov 2026 16:35:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=hikhhcD1
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 80A881F000CF;
+	Wed, 25 Nov 2026 16:35:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795624528;
-	bh=/1qP+sJvydd6z2xSFZVNASCcai2I/Z42S4fARMXqKoo=;
+	s=korg; t=1795624531;
+	bh=NNsft8Ca5cFIMPaEV9NE6ti4ZPxWPFMQ0BvtURPWCrY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=LBdb8Dtk6aoV0Qt75Qq6kC5R3E1O0lmWOuvEgTmtryS51PsUf1hxl0ZGHTr4n5hyr
-	 0vRCR7rnQlNBQj92qNPnhTJAj5o3MgrbqDCJK5n+I8JRr+p7PbIujXPKhbi5/vtUri
-	 lvvR9PXkzJcumHrN1gy54Q89fyZAy+dU1081uyjQ=
+	b=hikhhcD1BWUKX+wFuaUg0Zhr/dwXo9S9JQiVmCG9qzUM/7eFKsOlf/eSUzSLSVlZo
+	 CoKf8kcbtvKEofYbPznVvEs97X9F1VIaP2il8Dm6IUe/F5C/JjacCyf2VIBnvQdYG6
+	 2u9NqNRxR3/VkqTSSUJEkBBZKW69ZO4Karssjb/s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Frederic Konrad <fkonrad@amd.com>,
-	Srikanth Boyapally <srikanth.boyapally@amd.com>,
-	Radhey Shyam Pandey <radhey.shyam.pandey@amd.com>,
-	Mark Brown <broonie@kernel.org>,
+	Rosen Penev <rosenp@gmail.com>,
+	Dave Airlie <airlied@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 220/816] spi: cadence-quadspi: Fix race between DMA completion and transfer start
-Date: Wed, 25 Nov 2026 15:29:28 +0100
-Message-ID: <20261125143854.298314448@linuxfoundation.org>
+Subject: [PATCH 6.12 221/816] drm/nouveau/fifo: map Kepler video engine contexts non-privileged
+Date: Wed, 25 Nov 2026 15:29:29 +0100
+Message-ID: <20261125143854.321230992@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143849.205329330@linuxfoundation.org>
 References: <20261125143849.205329330@linuxfoundation.org>
@@ -70,55 +68,58 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Frederic Konrad <fkonrad@amd.com>
+From: Rosen Penev <rosenp@gmail.com>
 
-[ Upstream commit 059518f775baecc9803fc97787bd0b17558f8047 ]
+[ Upstream commit 0820004c342af7ca1b01d0b21e0d5d99ad5c10eb ]
 
-In cqspi_versal_indirect_read_dma(), the DMA transfer is started by
-writing CQSPI_REG_INDIRECTRD_START_MASK to the indirect read control
-register. Under certain timing conditions, the DMA completion interrupt
-may be triggered and complete the transfer before the completion
-structure is reinitialized.
+Since the engine context rework, gk104_ectx_ctor() maps every engine
+context into the channel's VMM as a privileged page.  The MSVLD,
+MSPDEC and MSPPP falcons on Kepler fetch their context with
+non-privileged requests, so the first method sent to any of them
+faults and the channel is killed:
 
-This creates a race where the completion event is lost, causing
-wait_for_completion_timeout() to time out even though the transfer has
-already completed, resulting in errors such as:
+  fifo: fault 00 [READ] at 0000000001050000 engine 10 [MSVLD] client 0d [HUB/MSVLD] reason 05 [PRIV_VIOLATION] on channel 9
+  fifo: fault 00 [READ] at 0000000001051000 engine 14 [MSPDEC] client 0b [HUB/MSPDEC] reason 05 [PRIV_VIOLATION] on channel 10
+  fifo: fault 00 [READ] at 0000000001052000 engine 11 [MSPPP] client 0c [HUB/MSPPP] reason 05 [PRIV_VIOLATION] on channel 11
 
-  spi-nor spi0.0: CS0: operation failed with -110
+Before the rework, gk104_fifo_gpfifo_engine_ctor() mapped engine
+contexts without the privileged bit.  Restore that for the three video
+engines, and keep the privileged mapping for everything else.
 
-Fix this by reinitializing the completion structure before starting the
-DMA transfer, ensuring that any completion event generated after the
-transfer begins is correctly observed.
-
-Fixes: 1a6f854f7daa ("spi: cadence-quadspi: Add Xilinx Versal external DMA support")
-Signed-off-by: Frederic Konrad <fkonrad@amd.com>
-Signed-off-by: Srikanth Boyapally <srikanth.boyapally@amd.com>
-Signed-off-by: Radhey Shyam Pandey <radhey.shyam.pandey@amd.com>
-Link: https://patch.msgid.link/20261104071958.2405117-1-radhey.shyam.pandey@amd.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Fixes: 8ab849d6dd4c ("drm/nouveau/fifo: add new engine context handling")
+Signed-off-by: Rosen Penev <rosenp@gmail.com>
+Reviewed-by: Dave Airlie <airlied@redhat.com>
+Signed-off-by: Dave Airlie <airlied@redhat.com>
+Link: https://patch.msgid.link/20261103221529.585436-1-rosenp@gmail.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/spi/spi-cadence-quadspi.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/gpu/drm/nouveau/nvkm/engine/fifo/gk104.c | 13 +++++++++++++
+ 1 file changed, 13 insertions(+)
 
-diff --git a/drivers/spi/spi-cadence-quadspi.c b/drivers/spi/spi-cadence-quadspi.c
-index 0e387dee17323..90f3a9604ab30 100644
---- a/drivers/spi/spi-cadence-quadspi.c
-+++ b/drivers/spi/spi-cadence-quadspi.c
-@@ -932,11 +932,11 @@ static int cqspi_versal_indirect_read_dma(struct cqspi_flash_pdata *f_pdata,
- 	writel(CQSPI_REG_VERSAL_DMA_DST_CTRL_VAL,
- 	       reg_base + CQSPI_REG_VERSAL_DMA_DST_CTRL);
+diff --git a/drivers/gpu/drm/nouveau/nvkm/engine/fifo/gk104.c b/drivers/gpu/drm/nouveau/nvkm/engine/fifo/gk104.c
+index d8a4d773a58ca..1a5e54f5636ed 100644
+--- a/drivers/gpu/drm/nouveau/nvkm/engine/fifo/gk104.c
++++ b/drivers/gpu/drm/nouveau/nvkm/engine/fifo/gk104.c
+@@ -180,6 +180,19 @@ gk104_ectx_ctor(struct nvkm_engn *engn, struct nvkm_vctx *vctx)
+ 	struct gf100_vmm_map_v0 args = { .priv = 1 };
+ 	int ret;
  
-+	reinit_completion(&cqspi->transfer_complete);
++	/* The video falcons access their context with non-privileged
++	 * requests, and fault with PRIV_VIOLATION on a privileged mapping.
++	 */
++	switch (engn->engine->subdev.type) {
++	case NVKM_ENGINE_MSVLD:
++	case NVKM_ENGINE_MSPDEC:
++	case NVKM_ENGINE_MSPPP:
++		args.priv = 0;
++		break;
++	default:
++		break;
++	}
 +
- 	writel(CQSPI_REG_INDIRECTRD_START_MASK,
- 	       reg_base + CQSPI_REG_INDIRECTRD);
- 
--	reinit_completion(&cqspi->transfer_complete);
--
- 	if (!wait_for_completion_timeout(&cqspi->transfer_complete,
- 					 msecs_to_jiffies(max_t(size_t, bytes_to_dma, 500)))) {
- 		ret = -ETIMEDOUT;
+ 	ret = nvkm_vmm_get(vctx->vmm, 12, vctx->inst->size, &vctx->vma);
+ 	if (ret)
+ 		return ret;
 -- 
 2.53.0
 
