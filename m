@@ -1,42 +1,42 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795619102;
-	b=20VD5F1js7mUKnEk/9nNDYfYSSVlC1Oia+eCsjgA7ca9lD0B+p/dec8n0D0aHZZyJxbk
-	 5eO37da1l9CAeBceQnUsmFRrCacUEMS0uoTJ+t8HqPHbKTPX7izShth5ty7d3yZggBYrn
-	 PNZb9+spKPO+8pJrkiq/uBSGuJb4lyxe4vA1UqyPZUt8iCZn8Z4m9IjAbA94SdwYRIPrn
-	 648JwlFqwulUEG5/xg/V47ih+nQm0MuGuj6POEXdJX3IEEftwADZP/bWdGMtobLucS/ZS
-	 Qbnh0E0hmaWdlqLBz0uLvMUJ7Jaf9hvd6laXt+lfywEUGg3QvEyAI6r8h2/agl67nyA==
+	t=1795619104;
+	b=i3tjK5lkCu8enLBMCKxiP4XoYQz8GV3IjxdcKx4CAXmo1KruQ/b5jqOl3R/MMl6+R30V
+	 S3prB9RUHz0T+xUzCzuX+pzugeUnsba1MLqmwxPxKq0z7daSQo0VKi3/ut6emhKuDlow/
+	 FEMXmbS3LNSoxYOTPLZnElPDQ7nXtDz9rUHGj6/1CPGF5NAxewp/y1t4aaeX7ivQe6L8z
+	 a35ztUgPWxE7Wqi6Esgws5KbZZLinABKoycJVRCDnIjftSw5/rfO4W9UCPZB699wzifNO
+	 S4k/5zUhQfR1RmhwjlBkwE5Of4/m+eIkj/JxfJy1IwbCbmHagNbIxii4+EhWH8Tu6oQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795619102;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795619104;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=By5YUogGL8FLQ/poPtD8QlWkNiP7SZqfI1os2VIrZKI=;
-	b=FrJ62Xd711LbkJtac5GNH+JwWw4mOKlsUfT7z9KLeov4XbmOSbdEPyrfJ8VposxLVy2M
-	 Q5s2zqLprbQfeMfkdBEnhln9A0chALCVRnCqGW8FS373FpZgFrF7BXz91IZmzTkrcn4mE
-	 wY/aG1kKjuUOYs+2Ngjv8FCmz1/Vxptj5FfXtCIIkCgCpjJ9x78BJXegbLiY0eUzpaCAA
-	 q4bKUs9qa6PjgWOR/jkhhtBlewShqOblqag4oHQWYCWM1meaIrflqXJW575963sAnr2XG
-	 +M36F85S1d7yLFQqK0uwuG4T1xA+7zcHvOOY6Qojf8cVe5QK7Io+4ncmhhprM38YiKw==
+	bh=V/CS4BldytsWkpo5ehW6PyHyKhsqi34kXxo9YCIWD6A=;
+	b=4R5s+g9pNKL9+rD8ay1VC693RL4EEv7b4tF/Ry57KnXu5vKFaoTWlK5L8bGThQ5mBjzi
+	 WP6FWAfdsK+ZXi2JvX0GCZd+mm23lP9aQt7TKjWMPmEi4FPF7B1jF0vjEnDNAwHrT9qc4
+	 a9PCwpbqZT2vHy2nF0Q/9IrdEik72fwOrxkojskwDLfFrj5rJzvcdgvKI8hDATG62TL26
+	 Amdxxf3f2X+/CQlUVwOxnWGudIx39vCvdEZXdOF0E8KI3uW0P62B6GMZNWNoor7PzQmoY
+	 PNzi4PfJnluoJ4bLreb6pey7RhhB4SYlUzX5v4urU3qtlvy7kR/TKjAts3CbQfu+mkQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=A7zD0bJG;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=wVXydAo1;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4D784606A31E;
-	Wed, 25 Nov 2026 15:05:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D04BA606A323;
+	Wed, 25 Nov 2026 15:05:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=A7zD0bJG
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 525841F000C0;
-	Wed, 25 Nov 2026 15:05:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=wVXydAo1
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2BD6C1F000C4;
+	Wed, 25 Nov 2026 15:05:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795619101;
-	bh=By5YUogGL8FLQ/poPtD8QlWkNiP7SZqfI1os2VIrZKI=;
+	s=korg; t=1795619104;
+	bh=V/CS4BldytsWkpo5ehW6PyHyKhsqi34kXxo9YCIWD6A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=A7zD0bJGqsIaAAsWHvzap1iWspfBjyEd1PXMLKXLCKypS0jmkOdnPMMghEzH1ppL3
-	 E0gpaCRwMEKMYYVLifuJwFCCbyNoMh0hYoDuchVyDVE9ilGVFVESmoHPpGZEkJ+j4t
-	 HKHdeXjfebWqDaskZArVveemBOwwX0BmJMKldUSA=
+	b=wVXydAo125CFUMVOgyhnkhhoneez7XxKhQhBV9wn4EkPz1xUtJhdJZG33d+bKuNZW
+	 k/+0libpczVIBnl1UZ4TE3Wzkrk1K8scJriKJOWp0Fwk48m7EhE44CQbAdAxCpPkSY
+	 MhMi1u1k/GEtxBbRfGmdCNkSluJK089X1nuI08ac=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -44,9 +44,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Tim Menninger <tmenninger@everpuredata.com>,
 	Anna Schumaker <anna.schumaker@hammerspace.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0489/1005] SUNRPC: add request-scoped disconnects when cancelling tasks
-Date: Wed, 25 Nov 2026 15:30:27 +0100
-Message-ID: <20261125143833.202615698@linuxfoundation.org>
+Subject: [PATCH 7.3 0490/1005] NFSv4/flexfiles: limit transport disconnects when cancelling I/O
+Date: Wed, 25 Nov 2026 15:30:28 +0100
+Message-ID: <20261125143833.225592232@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143821.729802100@linuxfoundation.org>
 References: <20261125143821.729802100@linuxfoundation.org>
@@ -70,380 +70,58 @@ Content-Transfer-Encoding: 8bit
 
 From: Tim Menninger <tmenninger@everpuredata.com>
 
-[ Upstream commit 9d84719d34cb98a2f584e38679f95216c1a15d0e ]
+[ Upstream commit 788c4f628565897e7090cdf5bb2e049e74aeca96 ]
 
-rpc_cancel_tasks() allows callers to cancel a selected set of RPC tasks,
-but callers that also need to tear down the connection currently have to
-disconnect at the rpc_clnt level.
+ff_layout_cancel_io() cancels RPC tasks associated with a recalled or
+revoked layout segment. If any matching tasks are found, it then calls
+rpc_clnt_disconnect().
 
-That is broader than necessary for clients with multiple transports. A
-cancelled request is associated with a specific rpc_xprt and records the
-connection generation on which it was transmitted in rq_connect_cookie.
+rpc_clnt_disconnect() disconnects every transport attached to the RPC
+client. A data server client can have multiple transports, while the
+cancelled requests may have used only a subset of them. Cancelling I/O
+for one layout segment can therefore disrupt unrelated I/O using other
+transports belonging to the same data server client.
 
-Add rpc_cancel_tasks_and_disconnect() to cancel matching tasks and mark
-matching requests that remain on the transport transmit or receive queues
-for conditional transport disconnect when the request is released.
+This is particularly disruptive with RPC/RDMA during data server
+recovery, where unnecessary transport disconnects can result in repeated
+reconnect activity on otherwise unaffected connections.
 
-Store the disconnect indication in struct rpc_rqst rather than struct
-rpc_task. An RPC task can release one request and later acquire another,
-so task-scoped state could otherwise be consumed by a successor request
-and disconnect the wrong transport generation.
+Use rpc_cancel_tasks_and_disconnect() instead. Matching tasks are still
+cancelled, but only matching requests belonging to that client that
+remain on the transport transmit or receive queues are marked for
+disconnect. When such a request is released, SUNRPC conditionally
+disconnects the connection generation on which that request was sent.
 
-After cancelling matching tasks, walk the client's transports and mark
-matching requests belonging to that client that remain on the transmit
-or receive queues. An rpc_xprt may be shared by multiple rpc_clnt
-instances, so requests belonging to other clients are not marked.
+This preserves cancellation and draining of I/O associated with the
+layout segment without disconnecting unrelated transports attached to
+the same RPC client.
 
-When a marked request is released, consume the marker under the existing
-transport_lock critical section. If the request was transmitted, call
-xprt_conditional_disconnect_locked() with its rq_connect_cookie. The
-disconnect is skipped if that cookie no longer matches the transport's
-current connection generation.
-
-This adds no lock acquisition to the normal request-release path.
-Requests that were never transmitted do not trigger this additional
-disconnect.
-
+Fixes: b739a5bd9d9f ("NFSv4/flexfiles: Cancel I/O if the layout is recalled or revoked")
 Signed-off-by: Tim Menninger <tmenninger@everpuredata.com>
 Signed-off-by: Anna Schumaker <anna.schumaker@hammerspace.com>
-Stable-dep-of: 788c4f628565 ("NFSv4/flexfiles: limit transport disconnects when cancelling I/O")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/sunrpc/sched.h |   4 ++
- include/linux/sunrpc/xprt.h  |   5 ++
- net/sunrpc/clnt.c            |  94 ++++++++++++++++++++++++------
- net/sunrpc/sunrpc.h          |   8 +++
- net/sunrpc/xprt.c            | 107 +++++++++++++++++++++++++++++++++--
- 5 files changed, 195 insertions(+), 23 deletions(-)
+ fs/nfs/flexfilelayout/flexfilelayout.c | 7 +++----
+ 1 file changed, 3 insertions(+), 4 deletions(-)
 
-diff --git a/include/linux/sunrpc/sched.h b/include/linux/sunrpc/sched.h
-index 0dbdf3722537f..dbaad8b5f181c 100644
---- a/include/linux/sunrpc/sched.h
-+++ b/include/linux/sunrpc/sched.h
-@@ -230,6 +230,10 @@ unsigned long	rpc_cancel_tasks(struct rpc_clnt *clnt, int error,
- 				 bool (*fnmatch)(const struct rpc_task *,
- 						 const void *),
- 				 const void *data);
-+unsigned long	rpc_cancel_tasks_and_disconnect(struct rpc_clnt *clnt, int error,
-+						bool (*fnmatch)(const struct rpc_task *,
-+								const void *),
-+						const void *data);
- void		rpc_execute(struct rpc_task *);
- void		rpc_init_priority_wait_queue(struct rpc_wait_queue *, const char *);
- void		rpc_init_wait_queue(struct rpc_wait_queue *, const char *);
-diff --git a/include/linux/sunrpc/xprt.h b/include/linux/sunrpc/xprt.h
-index a82045804d34e..ef120fc504227 100644
---- a/include/linux/sunrpc/xprt.h
-+++ b/include/linux/sunrpc/xprt.h
-@@ -112,6 +112,11 @@ struct rpc_rqst {
- 
- 	ktime_t			rq_xtime;	/* transmit time stamp */
- 	int			rq_ntrans;
-+	bool                    rq_disconnect_on_release;
-+						/*
-+						 * protected by rq_xprt->transport_lock
-+						 * while the request is active
-+						 */
- 
- #if defined(CONFIG_SUNRPC_BACKCHANNEL)
- 	struct lwq_node		rq_bc_list;	/* Callback service list */
-diff --git a/net/sunrpc/clnt.c b/net/sunrpc/clnt.c
-index 33e64c0225f37..2f076b4bfd540 100644
---- a/net/sunrpc/clnt.c
-+++ b/net/sunrpc/clnt.c
-@@ -904,29 +904,36 @@ void rpc_killall_tasks(struct rpc_clnt *clnt)
- }
- EXPORT_SYMBOL_GPL(rpc_killall_tasks);
- 
--/**
-- * rpc_cancel_tasks - try to cancel a set of RPC tasks
-- * @clnt: Pointer to RPC client
-- * @error: RPC task error value to set
-- * @fnmatch: Pointer to selector function
-- * @data: User data
-- *
-- * Uses @fnmatch to define a set of RPC tasks that are to be cancelled.
-- * The argument @error must be a negative error value.
-- */
--unsigned long rpc_cancel_tasks(struct rpc_clnt *clnt, int error,
--			       bool (*fnmatch)(const struct rpc_task *,
--					       const void *),
--			       const void *data)
-+struct rpc_cancel_disconnect_ctx {
-+	bool (*fnmatch)(const struct rpc_task *task, const void *data);
-+	const void *data;
-+};
-+
-+static int rpc_mark_xprt_disconnect_on_release(struct rpc_clnt *clnt,
-+					       struct rpc_xprt *xprt,
-+					       void *arg)
-+{
-+	struct rpc_cancel_disconnect_ctx *ctx = arg;
-+
-+	xprt_mark_matching_reqs_disconnect_on_release(xprt, clnt,
-+						      ctx->fnmatch,
-+						      ctx->data);
-+	return 0;
-+}
-+
-+static unsigned long
-+__rpc_cancel_tasks(struct rpc_clnt *clnt, int error,
-+		   bool (*fnmatch)(const struct rpc_task *,
-+				   const void *),
-+		   const void *data,
-+		   bool disconnect)
- {
- 	struct rpc_task *task;
- 	unsigned long count = 0;
- 
- 	if (list_empty(&clnt->cl_tasks))
- 		return 0;
--	/*
--	 * Spin lock all_tasks to prevent changes...
--	 */
-+
- 	spin_lock(&clnt->cl_lock);
- 	list_for_each_entry(task, &clnt->cl_tasks, tk_task) {
- 		if (!RPC_IS_ACTIVATED(task))
-@@ -937,10 +944,63 @@ unsigned long rpc_cancel_tasks(struct rpc_clnt *clnt, int error,
- 		count++;
- 	}
- 	spin_unlock(&clnt->cl_lock);
-+
-+	if (disconnect && count) {
-+		struct rpc_cancel_disconnect_ctx ctx = {
-+			.fnmatch = fnmatch,
-+			.data = data,
-+		};
-+		rpc_clnt_iterate_for_each_xprt(clnt,
-+					       rpc_mark_xprt_disconnect_on_release,
-+					       &ctx);
-+	}
- 	return count;
- }
-+
-+/**
-+ * rpc_cancel_tasks - try to cancel a set of RPC tasks
-+ * @clnt: Pointer to RPC client
-+ * @error: RPC task error value to set
-+ * @fnmatch: Pointer to selector function
-+ * @data: User data
-+ *
-+ * Uses @fnmatch to define a set of RPC tasks that are to be cancelled.
-+ * The argument @error must be a negative error value.
-+ */
-+unsigned long rpc_cancel_tasks(struct rpc_clnt *clnt, int error,
-+			       bool (*fnmatch)(const struct rpc_task *,
-+					       const void *),
-+			       const void *data)
-+{
-+	return __rpc_cancel_tasks(clnt, error, fnmatch, data, false);
-+}
- EXPORT_SYMBOL_GPL(rpc_cancel_tasks);
- 
-+/**
-+ * rpc_cancel_tasks_and_disconnect - cancel matching RPC tasks
-+ * @clnt: Pointer to RPC client
-+ * @error: RPC task error value to set
-+ * @fnmatch: Pointer to selector function
-+ * @data: User data
-+ *
-+ * Like rpc_cancel_tasks(), but after cancelling matching tasks, marks
-+ * matching in-flight requests so that xprt_release() conditionally
-+ * disconnects the connection generation on which each request was sent.
-+ *
-+ * @fnmatch is called while holding spinlocks and must not sleep.
-+ *
-+ * Returns the number of active tasks matched by @fnmatch.
-+ */
-+unsigned long
-+rpc_cancel_tasks_and_disconnect(struct rpc_clnt *clnt, int error,
-+				bool (*fnmatch)(const struct rpc_task *,
-+						const void *),
-+				const void *data)
-+{
-+	return __rpc_cancel_tasks(clnt, error, fnmatch, data, true);
-+}
-+EXPORT_SYMBOL_GPL(rpc_cancel_tasks_and_disconnect);
-+
- static int rpc_clnt_disconnect_xprt(struct rpc_clnt *clnt,
- 				    struct rpc_xprt *xprt, void *dummy)
- {
-diff --git a/net/sunrpc/sunrpc.h b/net/sunrpc/sunrpc.h
-index e3c6e3b63f0ba..11b9e5cead8e2 100644
---- a/net/sunrpc/sunrpc.h
-+++ b/net/sunrpc/sunrpc.h
-@@ -38,9 +38,17 @@ static inline int sock_is_loopback(struct sock *sk)
- 
- struct svc_serv;
- struct svc_rqst;
-+struct rpc_clnt;
-+struct rpc_task;
-+struct rpc_xprt;
- int rpc_clients_notifier_register(void);
- void rpc_clients_notifier_unregister(void);
- void auth_domain_cleanup(void);
- void svc_sock_update_bufs(struct svc_serv *serv);
- enum svc_auth_status svc_authenticate(struct svc_rqst *rqstp);
-+void xprt_mark_matching_reqs_disconnect_on_release(struct rpc_xprt *xprt,
-+						   const struct rpc_clnt *clnt,
-+						   bool (*fnmatch)(const struct rpc_task *,
-+								   const void *),
-+						   const void *data);
- #endif /* _NET_SUNRPC_SUNRPC_H */
-diff --git a/net/sunrpc/xprt.c b/net/sunrpc/xprt.c
-index 48a3618cbb29f..c110806989c5d 100644
---- a/net/sunrpc/xprt.c
-+++ b/net/sunrpc/xprt.c
-@@ -812,6 +812,17 @@ xprt_request_retransmit_after_disconnect(struct rpc_task *task)
- 		!xprt_connected(xprt);
- }
- 
-+static void xprt_conditional_disconnect_locked(struct rpc_xprt *xprt,
-+					       unsigned int cookie)
-+	__must_hold(&xprt->transport_lock)
-+{
-+	if (cookie != xprt->connect_cookie)
-+		return;
-+	if (test_bit(XPRT_CLOSING, &xprt->state))
-+		return;
-+	xprt_schedule_autoclose_locked(xprt);
-+}
-+
- /**
-  * xprt_conditional_disconnect - force a transport to disconnect
-  * @xprt: transport to disconnect
-@@ -827,12 +838,7 @@ void xprt_conditional_disconnect(struct rpc_xprt *xprt, unsigned int cookie)
- {
- 	/* Don't race with the test_bit() in xprt_clear_locked() */
- 	spin_lock(&xprt->transport_lock);
--	if (cookie != xprt->connect_cookie)
--		goto out;
--	if (test_bit(XPRT_CLOSING, &xprt->state))
--		goto out;
--	xprt_schedule_autoclose_locked(xprt);
--out:
-+	xprt_conditional_disconnect_locked(xprt, cookie);
- 	spin_unlock(&xprt->transport_lock);
- }
- 
-@@ -1434,6 +1440,79 @@ xprt_request_dequeue_transmit(struct rpc_task *task)
- 	spin_unlock(&xprt->queue_lock);
- }
- 
-+static bool
-+xprt_request_matches(const struct rpc_rqst *req,
-+		     const struct rpc_clnt *clnt,
-+		     bool (*fnmatch)(const struct rpc_task *, const void *),
-+		     const void *data)
-+{
-+	const struct rpc_task *task = req->rq_task;
-+
-+	return task && task->tk_client == clnt && fnmatch(task, data);
-+}
-+
-+static void
-+xprt_request_mark_disconnect_on_release(struct rpc_xprt *xprt,
-+					struct rpc_rqst *req)
-+	__must_hold(&xprt->queue_lock)
-+{
-+	spin_lock(&xprt->transport_lock);
-+	req->rq_disconnect_on_release = true;
-+	spin_unlock(&xprt->transport_lock);
-+}
-+
-+/**
-+ * xprt_mark_matching_reqs_disconnect_on_release - mark matching in-flight
-+ *                                     requests for connection-generation
-+ *                                     teardown at release
-+ * @xprt: transport whose queues to walk
-+ * @clnt: RPC client whose requests are eligible
-+ * @fnmatch: selector called with the request's owning rpc_task
-+ * @data: caller data forwarded to @fnmatch
-+ *
-+ * @fnmatch must not sleep and must be safe to call while xprt->queue_lock
-+ * is held.
-+ *
-+ * Walks the transmit queue (including per-owner rq_xmit2 chains) and the
-+ * receive tree under xprt->queue_lock and marks each matching rpc_rqst so
-+ * that xprt_release() will conditionally disconnect the transport against
-+ * that request's rq_connect_cookie. Requests remain eligible for marking
-+ * while they are present on a transport queue. The marker is set under
-+ * xprt->transport_lock, nested inside xprt->queue_lock, and xprt_release()
-+ * consumes it with xprt->transport_lock held after removing queue membership.
-+ *
-+ * The @clnt qualification preserves the selection domain of
-+ * rpc_cancel_tasks(). An rpc_xprt may be shared by multiple rpc_clnt
-+ * instances, so requests belonging to other clients must not be marked.
-+ */
-+void
-+xprt_mark_matching_reqs_disconnect_on_release(struct rpc_xprt *xprt,
-+					      const struct rpc_clnt *clnt,
-+					      bool (*fnmatch)(const struct rpc_task *,
-+							      const void *),
-+					      const void *data)
-+{
-+	struct rpc_rqst *req, *pos;
-+	struct rb_node *n;
-+
-+	spin_lock(&xprt->queue_lock);
-+	list_for_each_entry(req, &xprt->xmit_queue, rq_xmit) {
-+		if (xprt_request_matches(req, clnt, fnmatch, data))
-+			xprt_request_mark_disconnect_on_release(xprt, req);
-+		list_for_each_entry(pos, &req->rq_xmit2, rq_xmit2) {
-+			if (xprt_request_matches(pos, clnt, fnmatch, data))
-+				xprt_request_mark_disconnect_on_release(xprt,
-+									pos);
-+		}
-+	}
-+	for (n = rb_first(&xprt->recv_queue); n; n = rb_next(n)) {
-+		req = rb_entry(n, struct rpc_rqst, rq_recv);
-+		if (xprt_request_matches(req, clnt, fnmatch, data))
-+			xprt_request_mark_disconnect_on_release(xprt, req);
-+	}
-+	spin_unlock(&xprt->queue_lock);
-+}
-+
- /**
-  * xprt_request_dequeue_xprt - remove a task from the transmit+receive queue
-  * @task: pointer to rpc_task
-@@ -1915,6 +1994,7 @@ xprt_request_init(struct rpc_task *task)
- 	req->rq_rcv_buf.bvec = NULL;
- 	req->rq_release_snd_buf = NULL;
- 	req->rq_seqno_count = 0;
-+	req->rq_disconnect_on_release = false;
- 	xprt_init_majortimeo(task, req, task->tk_client->cl_timeout);
- 
- 	trace_xprt_reserve(req);
-@@ -1991,6 +2071,20 @@ void xprt_release(struct rpc_task *task)
- 	xprt = req->rq_xprt;
- 	xprt_request_dequeue_xprt(task);
- 	spin_lock(&xprt->transport_lock);
-+	if (unlikely(req->rq_disconnect_on_release)) {
-+		req->rq_disconnect_on_release = false;
-+		/*
-+		 * Dequeue may skip queue_lock. Pair with the fully ordered
-+		 * test_and_clear_bit(RPC_TASK_NEED_XMIT) in
-+		 * xprt_request_dequeue_transmit_locked() to order the runstate
-+		 * check before reading the sender's rq_ntrans and
-+		 * rq_connect_cookie updates.
-+		 */
-+		smp_rmb();
-+		if (req->rq_ntrans > 0)
-+			xprt_conditional_disconnect_locked(xprt,
-+							   req->rq_connect_cookie);
-+	}
- 	xprt->ops->release_xprt(xprt, task);
- 	if (xprt->ops->release_request)
- 		xprt->ops->release_request(task);
-@@ -2020,6 +2114,7 @@ xprt_init_bc_request(struct rpc_rqst *req, struct rpc_task *task,
- 	task->tk_rqstp = req;
- 	req->rq_task = task;
- 	xprt_init_connect_cookie(req, req->rq_xprt);
-+	req->rq_disconnect_on_release = false;
- 	/*
- 	 * Set up the xdr_buf length.
- 	 * This also indicates that the buffer is XDR encoded already.
+diff --git a/fs/nfs/flexfilelayout/flexfilelayout.c b/fs/nfs/flexfilelayout/flexfilelayout.c
+index 1bc6559ab660f..a4ccd53c79e79 100644
+--- a/fs/nfs/flexfilelayout/flexfilelayout.c
++++ b/fs/nfs/flexfilelayout/flexfilelayout.c
+@@ -2597,10 +2597,9 @@ static void ff_layout_cancel_io(struct pnfs_layout_segment *lseg)
+ 			clnt = ds_clp->cl_rpcclient;
+ 			if (!clnt)
+ 				goto next;
+-			if (!rpc_cancel_tasks(clnt, -ECANCELED,
+-					      ff_layout_match_io, lseg))
+-				goto next;
+-			rpc_clnt_disconnect(clnt);
++			rpc_cancel_tasks_and_disconnect(clnt, -ECANCELED,
++							ff_layout_match_io,
++							lseg);
+ next:
+ 			nfs4_ff_layout_put_deviceid(mirror_ds);
+ 		}
 -- 
 2.53.0
 
