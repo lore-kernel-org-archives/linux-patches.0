@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795625132;
-	b=Fy/lEUloGm7ZLf6YgzJsHURePvq0stWoFZplk8h06ZosKPntRnE3L9ZFnrnUlpNkeKPO
-	 L9Sd9B6toTlNJLEFQzJDqf6T3rzGk7miRUmb+XUB6u1IXvTVX6X3pMNHidUjjCrd9A6Vd
-	 SxXXT/4Hol5Y3rfuIdTKlnKRd46bHiODP+hmDMyBqQbINCmc41jerRuVKmBgz8a7n/PCt
-	 HtfTkllhZs6D0x7kaJ8kvDw00NoWLUdCbjIoJUrlBAXtg5P4Wf46Hl41WvbJaVXNe1V/k
-	 LchDe9lRUxBTpob09G1fUy6V+Kk5dgaZLWcSWkDfR+ScxXWOmVzVRpfQWf2e0jLARww==
+	t=1795625135;
+	b=AopJbaTvXOCz1EhH0K+306GM/26+ckOG7K1T3GBs12u4jlfq7HHg4G1UlosHDPIqcWAd
+	 9nYd9C3Yz4Te1Hjo8jxXeOx0EzcsfQHIQZWgZ7pKMn9nruDbMBLAlMSRN+uD5x12arILN
+	 0J0rP2uPjE0ScMnKD3dnTJ6JWVa/2tCVRz0kj9J9Cv6QYJoGP7dvHAAcFCdj7IizH5YhH
+	 PydenE11hxPJH45faLT4fiD78vZYQq/bUv0G4b4D+r21ydXChYM1cFbsMlGhIW0WBR6Ed
+	 fj+fbSQg84sVs+BLRY8Ac5JmkTiqnGRGixne4PDeGtWdRS1jNT3SM3yIlLezIJVC+xw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795625132;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795625135;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=8SBG4xe25hZisLoM+5XE/5niOhio8KAxUx8E0VfIu04=;
-	b=fDTko3h9NaL8C3IfdV8ynEfLBolGPoeDHYIOGH4tjKqJ9CvPUCbL6sLGaskld3kxM5AZ
-	 vYpT0EIbA6SSPd0Bp9IKypolwCCSIdRgGdgZfxrlSfH4vhx11rztnE1V3csNzxNNBjuK4
-	 Nl8FCErQKrMQwApVmU/kIZvnOjH2JrCKFrUycYzYYONDay23Vwp8WNsFCINuJw947gYoO
-	 2/Vt3yZx30Uy+UmyzzM2ZjLc9BJixQfMz4RM46zh+GM/WM3Qt5NWxsZHG23+sjyRsHtxS
-	 FHOa/rqKBaQbBQ3sFHLVOJPo9kwU+OoAw6Z6LXA51HxHP5JbR/IAVwP8FtntKVolDxg==
+	bh=Knb856X/DjSnNNXJdFLRn8K+/axHBBUXQYJswen2hDw=;
+	b=xjXTVGRq8qy4LIgwockVA8hlrjAGx74kSbkwKJDUXkZGotv7qgALqLkwWDtWd4zwXwDD
+	 GV6NVVCkIDhdzuDNGTayo8vVpLk9VsvmzoY2c+8he5arfKVWZ7xBk7QXrkdZE7czQqAjn
+	 alQ3Yp3QJ6kkVwZoKGvO/yxUJ3/Abdu3by8u/2zcycw0WQnP0ZZkpwmpn3wfwKm5PabZb
+	 kNX0s9xuw/sGa6xACrJx/GWUHtXZlvvIzytaaLz4vq/zeF8uaMczWWxwjFAuzGVfOKAuC
+	 IUFHVu44C40Ygye5qz4+eYxRf2jYyOrtiX/LBwjNaSgBKDaJE4Q2aw/K0pe0FuN0QQg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=FUF17wt2;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=iO7cbM6K;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 27F02606A327;
-	Wed, 25 Nov 2026 16:45:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E5567606A321;
+	Wed, 25 Nov 2026 16:45:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=FUF17wt2
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EEC811F000C4;
-	Wed, 25 Nov 2026 16:45:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=iO7cbM6K
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 408EF1F000C4;
+	Wed, 25 Nov 2026 16:45:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795625131;
-	bh=8SBG4xe25hZisLoM+5XE/5niOhio8KAxUx8E0VfIu04=;
+	s=korg; t=1795625134;
+	bh=Knb856X/DjSnNNXJdFLRn8K+/axHBBUXQYJswen2hDw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=FUF17wt2K0leWH4D4qTx3kBYVYYsCqzoacnNVStLCXw9VRAeM/Tti4eeyBCUJyvG5
-	 mvNUD+9KZN6n6FOYMZWT3ePhYkoKehJL+LBJ8lYaQ89HuEDwSPZmZD7adV5ANFeLCp
-	 hn2MJ3BbPhO66oGwWP514kC4xxUzP7zFXBDRyQ6A=
+	b=iO7cbM6Kl+IEoTwLmsMSefG5MiGCI5XsY7f13yr0LF68L2zjk6KpIlGcQAUJ1kuhV
+	 CuFaIYPSvAxX1gnHiFymzLhRgB305kBYVXCPKROkSXLTT+G9dqsPlNumaCt+zfihsS
+	 zCi6nP6JyQd9L7qmq3AvQcnvrLVA6drUPvoFuYlY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sean Young <sean@mess.org>,
-	Hans Verkuil <hverkuil+cisco@kernel.org>,
+	Devin Wittmayer <lucid_duck@justthetip.ca>,
+	Felix Fietkau <nbd@nbd.name>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 372/816] media: rc: Add missing locking for keymap
-Date: Wed, 25 Nov 2026 15:32:00 +0100
-Message-ID: <20261125143857.807702340@linuxfoundation.org>
+Subject: [PATCH 6.12 373/816] wifi: mt76: take rcu_read_lock in the USB/SDIO tx completion path
+Date: Wed, 25 Nov 2026 15:32:01 +0100
+Message-ID: <20261125143857.830620707@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143849.205329330@linuxfoundation.org>
 References: <20261125143849.205329330@linuxfoundation.org>
@@ -68,208 +68,88 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sean Young <sean@mess.org>
+From: Devin Wittmayer <lucid_duck@justthetip.ca>
 
-[ Upstream commit ab9567336171e46ce9e03ee126902b3fd7901baa ]
+[ Upstream commit a7871a7ae5a8625f0ba0a89454ac734c383dd538 ]
 
-When the rc_map for an rc_dev gets updated, locking is required but is
-missing in places. A concurrent scancode lookup and a call to
-rc_{register,unregistered}_device() could result in a use-after-free;
-this could happen if IR is decoded during those function calls.
+The USB and SDIO completion path reads a station pointer that RCU
+protects, without holding the read lock. Lockdep catches it on the
+first association:
 
-Add lockdep assertions where locks are required.
+  mt76.h:1305 suspicious rcu_dereference_check() usage!
+  no locks held by mt76-usb-status/1254.
+   mt7925_usb_sdio_tx_complete_skb+0x119/0x130 [mt7925_common]
+   mt76_queue_tx_complete+0x27/0x60 [mt76]
+   mt76u_status_worker+0xed/0x1e0 [mt76_usb]
 
-ir_free_table() should only be called for non-TX devices else we will
-use a spinlock without iniitializing it.
+  mt7925/mac.c:856 suspicious rcu_dereference_check() usage!
+   mt7925_tx_check_aggr.part.0+0xc2/0xe0 [mt7925_common]
+   mt7925_usb_sdio_tx_complete_skb+0xa0/0x130 [mt7925_common]
 
-Fixes: dccc0c3ddf8f ("media: rc: fix race between unregister and urb/irq callbacks")
-Signed-off-by: Sean Young <sean@mess.org>
+mt7921 does the same, and warns once instead of twice because its
+aggregation check reads the default link directly. The DMA path makes
+the same reads but completes from softirq, so it stays quiet.
+
+Take the read lock around the lookup and the check.
+
+Tested on 7.2-rc5 with lockdep, fresh module load per arm, 4000
+packets each and no change to the link:
+
+                             splats before   after
+    MT7925  Netgear A9000          2           0
+    MT7921  Alfa                   1           0
+    mt7921e same kernel            0           0
+
+Fixes: dc66a129adf1 ("wifi: mt76: add a wrapper for wcid access with validation")
+Fixes: c22769de2509 ("wifi: mt76: mt7925u: use connac3 tx aggr check in tx complete")
 Cc: stable@vger.kernel.org
-Acked-by: Hans Verkuil <hverkuil+cisco@kernel.org>
+Signed-off-by: Devin Wittmayer <lucid_duck@justthetip.ca>
+Link: https://patch.msgid.link/20261003233056.94497-1-lucid_duck@justthetip.ca
+Signed-off-by: Felix Fietkau <nbd@nbd.name>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/rc/rc-main.c | 86 +++++++++++++++++++++++++-------------
- 1 file changed, 57 insertions(+), 29 deletions(-)
+ drivers/net/wireless/mediatek/mt76/mt7921/mac.c | 3 +++
+ drivers/net/wireless/mediatek/mt76/mt7925/mac.c | 3 +++
+ 2 files changed, 6 insertions(+)
 
-diff --git a/drivers/media/rc/rc-main.c b/drivers/media/rc/rc-main.c
-index 63b536571d442..22848d7d3e4f0 100644
---- a/drivers/media/rc/rc-main.c
-+++ b/drivers/media/rc/rc-main.c
-@@ -104,7 +104,6 @@ static struct rc_map_list *seek_rc_map(const char *name)
+diff --git a/drivers/net/wireless/mediatek/mt76/mt7921/mac.c b/drivers/net/wireless/mediatek/mt76/mt7921/mac.c
+index 6da67054e521d..89df72e20598b 100644
+--- a/drivers/net/wireless/mediatek/mt76/mt7921/mac.c
++++ b/drivers/net/wireless/mediatek/mt76/mt7921/mac.c
+@@ -832,11 +832,14 @@ void mt7921_usb_sdio_tx_complete_skb(struct mt76_dev *mdev,
+ 	u16 idx;
  
- struct rc_map *rc_map_get(const char *name)
- {
--
- 	struct rc_map_list *map;
- 
- 	map = seek_rc_map(name);
-@@ -201,7 +200,7 @@ static int scancode_to_u64(const struct input_keymap_entry *ke, u64 *scancode)
-  * ir_create_table() - initializes a scancode table
-  * @dev:	the rc_dev device
-  * @rc_map:	the rc_map to initialize
-- * @name:	name to assign to the table
-+ * @map_name:	name to assign to the table
-  * @rc_proto:	ir type to assign to the new table
-  * @size:	initial size of the table
-  *
-@@ -211,23 +210,31 @@ static int scancode_to_u64(const struct input_keymap_entry *ke, u64 *scancode)
-  * return:	zero on success or a negative error code
-  */
- static int ir_create_table(struct rc_dev *dev, struct rc_map *rc_map,
--			   const char *name, u64 rc_proto, size_t size)
-+			   const char *map_name, u64 rc_proto, size_t size)
- {
-+	struct rc_map_table *scan;
- 	unsigned int alloc;
--	rc_map->name = kstrdup(name, GFP_KERNEL);
--	if (!rc_map->name)
-+	char *name;
+ 	idx = le32_get_bits(txwi[1], MT_TXD1_WLAN_IDX);
 +
-+	name = kstrdup(map_name, GFP_KERNEL);
-+	if (!name)
- 		return -ENOMEM;
++	rcu_read_lock();
+ 	wcid = rcu_dereference(mdev->wcid[idx]);
+ 	sta = wcid_to_sta(wcid);
+ 
+ 	if (sta && likely(e->skb->protocol != cpu_to_be16(ETH_P_PAE)))
+ 		mt76_connac2_tx_check_aggr(sta, txwi);
++	rcu_read_unlock();
+ 
+ 	skb_pull(e->skb, headroom);
+ 	mt76_tx_complete_skb(mdev, e->wcid, e->skb);
+diff --git a/drivers/net/wireless/mediatek/mt76/mt7925/mac.c b/drivers/net/wireless/mediatek/mt76/mt7925/mac.c
+index a8d0cd09184e3..876236888519f 100644
+--- a/drivers/net/wireless/mediatek/mt76/mt7925/mac.c
++++ b/drivers/net/wireless/mediatek/mt76/mt7925/mac.c
+@@ -1482,11 +1482,14 @@ void mt7925_usb_sdio_tx_complete_skb(struct mt76_dev *mdev,
+ 	u16 idx;
+ 
+ 	idx = le32_get_bits(txwi[1], MT_TXD1_WLAN_IDX);
 +
- 	alloc = roundup_pow_of_two(size);
--	rc_map->rc_proto = rc_proto;
--	rc_map->len = 0;
--	rc_map->size = alloc;
--	rc_map->scan = kmalloc_objs(struct rc_map_table, alloc, GFP_KERNEL);
--	if (!rc_map->scan) {
--		kfree(rc_map->name);
--		rc_map->name = NULL;
-+	scan = kmalloc_objs(struct rc_map_table, alloc, GFP_KERNEL);
-+	if (!scan) {
-+		kfree(name);
- 		return -ENOMEM;
- 	}
++	rcu_read_lock();
+ 	wcid = rcu_dereference(mdev->wcid[idx]);
+ 	sta = wcid_to_sta(wcid);
  
-+	scoped_guard(spinlock_irqsave, &rc_map->lock) {
-+		rc_map->name = name;
-+		rc_map->scan = scan;
-+		rc_map->rc_proto = rc_proto;
-+		rc_map->len = 0;
-+		rc_map->size = alloc;
-+	}
-+
- 	dev_dbg(&dev->dev, "Allocated space for %u keycode entries (%zu bytes)\n",
- 		alloc, alloc * sizeof(struct rc_map_table));
- 	return 0;
-@@ -237,16 +244,26 @@ static int ir_create_table(struct rc_dev *dev, struct rc_map *rc_map,
-  * ir_free_table() - frees memory allocated by a scancode table
-  * @rc_map:	the table whose mappings need to be freed
-  *
-- * This routine will free memory alloctaed for key mappings used by given
-+ * This routine will free memory allocated for key mappings used by given
-  * scancode table.
-  */
- static void ir_free_table(struct rc_map *rc_map)
- {
--	rc_map->size = 0;
--	kfree(rc_map->name);
--	rc_map->name = NULL;
--	kfree(rc_map->scan);
--	rc_map->scan = NULL;
-+	struct rc_map_table *scan;
-+	const char *name;
-+
-+	scoped_guard(spinlock_irqsave, &rc_map->lock) {
-+		name = rc_map->name;
-+		scan = rc_map->scan;
-+
-+		rc_map->size = 0;
-+		rc_map->len = 0;
-+		rc_map->name = NULL;
-+		rc_map->scan = NULL;
-+	}
-+
-+	kfree(name);
-+	kfree(scan);
- }
+ 	if (sta && likely(e->skb->protocol != cpu_to_be16(ETH_P_PAE)))
+ 		mt7925_tx_check_aggr(sta, e->skb, wcid);
++	rcu_read_unlock();
  
- /**
-@@ -266,6 +283,8 @@ static int ir_resize_table(struct rc_dev *dev, struct rc_map *rc_map,
- 	unsigned int newsize = rc_map->size;
- 	struct rc_map_table *newscan;
- 
-+	lockdep_assert_held(&rc_map->lock);
-+
- 	if (rc_map->size == rc_map->len) {
- 		/* All entries in use -> grow keytable */
- 		if (newsize >= IR_TAB_MAX_ENTRIES)
-@@ -317,6 +336,8 @@ static unsigned int ir_update_mapping(struct rc_dev *dev,
- 	int old_keycode = rc_map->scan[index].keycode;
- 	int i;
- 
-+	lockdep_assert_held(&rc_map->lock);
-+
- 	/* Did the user wish to remove the mapping? */
- 	if (new_keycode == KEY_RESERVED || new_keycode == KEY_UNKNOWN) {
- 		dev_dbg(&dev->dev, "#%d: Deleting scan 0x%04llx\n",
-@@ -372,6 +393,8 @@ static unsigned int ir_establish_scancode(struct rc_dev *dev,
- {
- 	unsigned int i;
- 
-+	lockdep_assert_held(&rc_map->lock);
-+
- 	/*
- 	 * Unfortunately, some hardware-based IR decoders don't provide
- 	 * all bits for the complete IR code. In general, they provide only
-@@ -396,7 +419,7 @@ static unsigned int ir_establish_scancode(struct rc_dev *dev,
- 	/* No previous mapping found, we might need to grow the table */
- 	if (rc_map->size == rc_map->len) {
- 		if (!resize || ir_resize_table(dev, rc_map, GFP_ATOMIC))
--			return -1U;
-+			return UINT_MAX;
- 	}
- 
- 	/* i is the proper index to insert our new keycode */
-@@ -478,16 +501,18 @@ static int ir_setkeytable(struct rc_dev *dev, const struct rc_map *from)
- 	if (rc)
- 		return rc;
- 
--	for (i = 0; i < from->size; i++) {
--		index = ir_establish_scancode(dev, rc_map,
--					      from->scan[i].scancode, false);
--		if (index >= rc_map->len) {
--			rc = -ENOMEM;
--			break;
--		}
-+	scoped_guard(spinlock_irqsave, &rc_map->lock) {
-+		for (i = 0; i < from->size; i++) {
-+			index = ir_establish_scancode(dev, rc_map,
-+						      from->scan[i].scancode, false);
-+			if (index >= rc_map->len) {
-+				rc = -ENOMEM;
-+				break;
-+			}
- 
--		ir_update_mapping(dev, rc_map, index,
--				  from->scan[i].keycode);
-+			ir_update_mapping(dev, rc_map, index,
-+					  from->scan[i].keycode);
-+		}
- 	}
- 
- 	if (rc)
-@@ -523,6 +548,8 @@ static unsigned int ir_lookup_by_scancode(const struct rc_map *rc_map,
- {
- 	struct rc_map_table *res;
- 
-+	lockdep_assert_held(&rc_map->lock);
-+
- 	res = bsearch(&scancode, rc_map->scan, rc_map->len,
- 		      sizeof(struct rc_map_table), rc_map_cmp);
- 	if (!res)
-@@ -1988,7 +2015,8 @@ int rc_register_device(struct rc_dev *dev)
- 	scoped_guard(mutex, &dev->lock)
- 		dev->registered = false;
- out_free_table:
--	ir_free_table(&dev->rc_map);
-+	if (dev->driver_type != RC_DRIVER_IR_RAW_TX)
-+		ir_free_table(&dev->rc_map);
- out_raw:
- 	ir_raw_event_free(dev);
- out_minor:
+ 	skb_pull(e->skb, headroom);
+ 	mt76_tx_complete_skb(mdev, e->wcid, e->skb);
 -- 
 2.53.0
 
