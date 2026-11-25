@@ -1,42 +1,42 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795621790;
-	b=EMpeGUxbVTvbHTkfxtExEtjVKYNzjwGV0h85g89BqHZlsgv+nAMuuO0dz3sH19EmGqYC
-	 AGi1nIq4hRELxQS/lhvHVVmOc5QcRTA81CmzyzT4npbWLfCWi3/mrumn3usgeIwvrfEBg
-	 aqjiuLyZmGNu9Zo3S+/vz0yJITY0tC5FPjVtURrb6VvXXKm/6qKi/1UPn+z2wmT4Pe+jb
-	 R8qRpQKNnttyNJcDbzu2evtbxdaqAubUTipOMxUxXJIW8uBll2zrsQ4nitJHBm2qBNf2V
-	 LEchnW05JRi3aTPJlNrmDUyNOK/03fyzFWqFio4znmL4m4wlOKT0qmwnAIDnWBRoDgA==
+	t=1795621793;
+	b=mLlFnrIKOakt7kDpkJUkXHrtH3kLeQgJxli0Zn0VIrqFfCtBWGdZy1P+0wFSc/JEBLRb
+	 rm/j//kY583YD6okec1rBSuIduWwnNGmhoq0uuvwbrYGz2JxZxBhVcOJhYMsE+oAjBrci
+	 Van4M9fBNrgOSMU+8wa589XmOhkvHJaWJdJY745zl+liaU6YjU4bUOdT6PMAVVQeYKU2q
+	 5COTx240J+CpU/6CfqeEY0xMCMhVEemqA0s6Er3Fz0NgPM+gThBCzz8lTT/gS48Yrczxl
+	 ZAono/j80lreXocbve7SftzIHNCBAeiYN//iyPZsi85BGJxkWxl1Ze+hbYvauQ9kgng==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795621790;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795621793;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=U2NqUag6Oh0on7N71A3juZZrfNCZt8RHJOJcehUbHX0=;
-	b=vbywc27L8lcnihhAiI9s5m0B4F7N27pmBvvhQ4pez50eoVjBpOGi/jTFljEaDDmxXdxn
-	 tH+KjVFoS9UOrH9zUbe3+AL0ruIjkDnw6rdmWYDs8DASDGy4UlkDBnWxZ6yHr16vjEidY
-	 AQHG6Bee236qMi9OMwG8brxs2yAfBfwvt7IybBusXcys8inR6/iV8nE1/vWKTCbnDK+uX
-	 kKqOyRfi+Bw/29WT++glnrTkvMlzKTWXRcu+axGFWJyNUAKzra6XbEkoj8vE05NyLevub
-	 JPL3zsE9NLgBcc6u3FWt8AlJ1a8uOfbJWSTkLAsoAx7fB7ALTYmRWnrstcGMFbIgDdA==
+	bh=DsSm/iTyLW0kxAAVxa73dPKheUgjg8ZttDBH0w7DXw0=;
+	b=KYbmDF+8fZuqi0oYcE8zVjg6TDg63S4G8CWDhngJKpmhgT/Dcwzc2DH/JIv6ONt9Z0TZ
+	 HlvMnSQ6n92udaE6D6AYBwUOGhuR9+Etr21elbDkjxhkvVfGbmuPSg5Yw39A7AxVu97lU
+	 4Q7tOvTvMXvr2AjEV/A3jwSBsuXoVCMCSQAVfCOszgqbDH6IUy4vQNePA2TiI5IZh/4qG
+	 zFujSjVnNQ8X5dDFz5a+3t3FBzxxCIkUIRi03BYADU5aRSsBoaPm5EwmQVoXjacTgAO2C
+	 nGZRlCUOcI+/F8VSNjiM0lYob8WJVA+0Ystn/jqGmc6kjllG8RyqvEY3G93lEvzHb5w==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="YQql5i/3";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=SmIC8N7w;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2194E606A327;
-	Wed, 25 Nov 2026 15:49:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 48856606A31E;
+	Wed, 25 Nov 2026 15:49:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=YQql5i/3
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1E6011F000C0;
-	Wed, 25 Nov 2026 15:49:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=SmIC8N7w
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 62D431F000C6;
+	Wed, 25 Nov 2026 15:49:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795621789;
-	bh=U2NqUag6Oh0on7N71A3juZZrfNCZt8RHJOJcehUbHX0=;
+	s=korg; t=1795621793;
+	bh=DsSm/iTyLW0kxAAVxa73dPKheUgjg8ZttDBH0w7DXw0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=YQql5i/3emlc31HCdbmnJ2+yE5afMTxpcP3mgSF+bdESev2k+GDpes7HE3MiAc8ka
-	 dreLkBcHuEKiPo6api9kVgEjNAR03Lk3K7hPThK5gsnILVLFO35IFb9Blgt6e9MC6y
-	 mZdlRUoQPMZyG7o+UuPKxcDcYyLEHkgnY/k0WQJk=
+	b=SmIC8N7wveMdD5dfjTFDY6FdNlrU2Z7k4PgJACi2WDeyc/oMholJFAWp0nuv48Qba
+	 giczWtoub0iJ+kjCRVuqSygrk3ThJez6Lsz0tDhyt6WCDsqo1GzPC26HyhdP2w5ZLO
+	 Oodkee6Gq9NvWcOYLoxO1wdWV2/BDVDOfuAGHei8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -44,9 +44,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Damien Le Moal <dlemoal@kernel.org>,
 	Niklas Cassel <cassel@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 336/990] ata: libata-scsi: fix MODE SELECT field pointer for block descriptor length
-Date: Wed, 25 Nov 2026 15:28:23 +0100
-Message-ID: <20261125143829.959235330@linuxfoundation.org>
+Subject: [PATCH 6.18 337/990] ata: libata-scsi: pass the whole mode page to the MODE SELECT handlers
+Date: Wed, 25 Nov 2026 15:28:24 +0100
+Message-ID: <20261125143829.987467638@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143822.072087159@linuxfoundation.org>
 References: <20261125143822.072087159@linuxfoundation.org>
@@ -70,46 +70,278 @@ Content-Transfer-Encoding: 8bit
 
 From: Niklas Cassel <cassel@kernel.org>
 
-[ Upstream commit a3e52dcf0fbaa1a103accef3e8861cdc250ee5d6 ]
+[ Upstream commit 0fdb8eef88a886751e33600d446a66c529384f11 ]
 
-ata_scsi_mode_select_xlat() only accepts MODE SELECT parameter lists
-without block descriptors or with a single 8 byte block descriptor. For
-any other BLOCK DESCRIPTOR LENGTH, it terminates the command with
-INVALID FIELD IN PARAMETER LIST, and the FIELD POINTER should point at
-the BLOCK DESCRIPTOR LENGTH field, i.e. at byte 3 of the mode parameter
-header(6) or at byte 6 of the mode parameter header(10), as SPC requires
-the FIELD POINTER of a multiple-byte field to point at its first byte.
+ata_scsi_mode_select_xlat() strips the mode page header before calling
+the mode page handlers, which report the position of an invalid field
+as an offset relative to the mode page data. It then converts this
+offset into an offset in the parameter list by adding the length of the
+mode parameter header and of the block descriptors, but not the length
+of the mode page header. As a result, the FIELD POINTER of the INVALID
+FIELD IN PARAMETER LIST sense data points 2 bytes (page_0 format) or 4
+bytes (sub_page format) before the byte that is actually invalid. For
+example, changing byte 3 of the caching mode page in a MODE SELECT(10)
+parameter list without block descriptors reports byte 9 instead of
+byte 11.
 
-However, the mode parameter header length and the BLOCK DESCRIPTOR
-LENGTH are added to the offset of the field, so the FIELD POINTER points
-3 or 6 bytes after the end of the block descriptors instead. For
-example, a MODE SELECT(10) with a BLOCK DESCRIPTOR LENGTH of 16 reports
-byte 30 instead of byte 6.
+Pass the whole mode page, starting with its mode page header, to the
+handlers instead, like the ata_msense_*() functions, which generate the
+whole mode page. Offsets in buf are then the byte numbers of the mode
+page, as used in the mode page definitions of SPC, SBC and SAT, the
+handlers can compare buf with the mode page generated by the matching
+ata_msense_*() function without adjusting offsets, and the conversion
+done by ata_scsi_mode_select_xlat() becomes correct. This also allows
+reporting an invalid PAGE LENGTH at the PAGE LENGTH field, which was not
+part of buf before. As ata_scsi_mode_select_xlat() rejects SUBPAGE CODE
+FFh and mode pages with a wrong SPF bit, each handler only gets its mode
+page in a single format, so the mode page header length is known.
 
-Do not add the mode parameter header length and the BLOCK DESCRIPTOR
-LENGTH to the offset of the BLOCK DESCRIPTOR LENGTH field.
+Document what buf, len and fp are, and the return values, in kernel-doc
+comments for all the handlers.
 
 Fixes: 7780081c1f04 ("libata-scsi: Set information sense field for invalid parameter")
 Reviewed-by: Damien Le Moal <dlemoal@kernel.org>
-Link: https://lore.kernel.org/r/20261103205448.931471-15-cassel@kernel.org
+Link: https://lore.kernel.org/r/20261103205448.931471-16-cassel@kernel.org
 Signed-off-by: Niklas Cassel <cassel@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/ata/libata-scsi.c | 1 -
- 1 file changed, 1 deletion(-)
+ drivers/ata/libata-scsi.c | 133 +++++++++++++++++++++++---------------
+ 1 file changed, 82 insertions(+), 51 deletions(-)
 
 diff --git a/drivers/ata/libata-scsi.c b/drivers/ata/libata-scsi.c
-index ce85f1dc69569..e408071208018 100644
+index e408071208018..c9aa4521a4fe5 100644
 --- a/drivers/ata/libata-scsi.c
 +++ b/drivers/ata/libata-scsi.c
-@@ -4302,7 +4302,6 @@ static unsigned int ata_scsi_mode_select_xlat(struct ata_queued_cmd *qc)
- 		goto invalid_param_len;
- 	if (bd_len != 0 && bd_len != 8) {
- 		fp = (six_byte) ? 3 : 6;
--		fp += bd_len + hdr_len;
- 		goto invalid_param;
+@@ -4055,14 +4055,22 @@ static unsigned int ata_scsi_zbc_out_xlat(struct ata_queued_cmd *qc)
+ /**
+  *	ata_mselect_caching - Simulate MODE SELECT for caching info page
+  *	@qc: Storage for translated ATA taskfile
+- *	@buf: input buffer
+- *	@len: number of valid bytes in the input buffer
+- *	@fp: out parameter for the failed field on error
++ *	@buf: Mode page, starting with the mode page header
++ *	@len: Length of the mode page, including the mode page header
++ *	@fp: Out parameter, offset in @buf of the first invalid byte on error
+  *
+  *	Prepare a taskfile to modify caching information for the device.
+  *
++ *	The caller has stripped the mode parameter header and the block
++ *	descriptors, so @buf points at the mode page header, like the buffer
++ *	filled by the ata_msense_*() functions, and offsets in @buf, including
++ *	the one returned in @fp, are the byte numbers of the mode page.
++ *
+  *	LOCKING:
+  *	None.
++ *
++ *	RETURNS:
++ *	0 if a taskfile was prepared, -EINVAL if the mode page is invalid.
+  */
+ static int ata_mselect_caching(struct ata_queued_cmd *qc,
+ 			       const u8 *buf, int len, u16 *fp)
+@@ -4073,26 +4081,19 @@ static int ata_mselect_caching(struct ata_queued_cmd *qc,
+ 	u8 wce;
+ 	int i;
+ 
+-	/*
+-	 * The first two bytes of def_cache_mpage are a header, so offsets
+-	 * in mpage are off by 2 compared to buf.  Same for len.
+-	 */
+-
+-	if (len != CACHE_MPAGE_LEN - 2) {
+-		*fp = min(len, CACHE_MPAGE_LEN - 2);
++	if (len != CACHE_MPAGE_LEN) {
++		*fp = 1;
+ 		return -EINVAL;
  	}
  
+-	wce = buf[0] & (1 << 2);
++	wce = buf[2] & (1 << 2);
+ 
+ 	/*
+ 	 * Check that read-only bits are not modified.
+ 	 */
+ 	ata_msense_caching(dev->id, mpage, false);
+-	for (i = 0; i < CACHE_MPAGE_LEN - 2; i++) {
+-		if (i == 0)
+-			continue;
+-		if (mpage[i + 2] != buf[i]) {
++	for (i = 3; i < CACHE_MPAGE_LEN; i++) {
++		if (mpage[i] != buf[i]) {
+ 			*fp = i;
+ 			return -EINVAL;
+ 		}
+@@ -4106,8 +4107,26 @@ static int ata_mselect_caching(struct ata_queued_cmd *qc,
+ 	return 0;
+ }
+ 
+-/*
+- * Simulate MODE SELECT control mode page, sub-page 0.
++/**
++ *	ata_mselect_control_spg0 - Simulate MODE SELECT for control sub-page 0
++ *	@qc: Storage for translated ATA taskfile
++ *	@buf: Mode page, starting with the mode page header
++ *	@len: Length of the mode page, including the mode page header
++ *	@fp: Out parameter, offset in @buf of the first invalid byte on error
++ *
++ *	Simulate MODE SELECT control mode page, sub-page 0.
++ *
++ *	The caller has stripped the mode parameter header and the block
++ *	descriptors, so @buf points at the mode page header, like the buffer
++ *	filled by the ata_msense_*() functions, and offsets in @buf, including
++ *	the one returned in @fp, are the byte numbers of the mode page.
++ *
++ *	LOCKING:
++ *	None.
++ *
++ *	RETURNS:
++ *	0, as no ATA command needs to be sent, or -EINVAL if the mode page is
++ *	invalid.
+  */
+ static int ata_mselect_control_spg0(struct ata_queued_cmd *qc,
+ 				    const u8 *buf, int len, u16 *fp)
+@@ -4117,26 +4136,19 @@ static int ata_mselect_control_spg0(struct ata_queued_cmd *qc,
+ 	u8 d_sense;
+ 	int i;
+ 
+-	/*
+-	 * The first two bytes of def_control_mpage are a header, so offsets
+-	 * in mpage are off by 2 compared to buf.  Same for len.
+-	 */
+-
+-	if (len != CONTROL_MPAGE_LEN - 2) {
+-		*fp = min(len, CONTROL_MPAGE_LEN - 2);
++	if (len != CONTROL_MPAGE_LEN) {
++		*fp = 1;
+ 		return -EINVAL;
+ 	}
+ 
+-	d_sense = buf[0] & (1 << 2);
++	d_sense = buf[2] & (1 << 2);
+ 
+ 	/*
+ 	 * Check that read-only bits are not modified.
+ 	 */
+ 	ata_msense_control_spg0(dev, mpage, false);
+-	for (i = 0; i < CONTROL_MPAGE_LEN - 2; i++) {
+-		if (i == 0)
+-			continue;
+-		if (mpage[2 + i] != buf[i]) {
++	for (i = 3; i < CONTROL_MPAGE_LEN; i++) {
++		if (mpage[i] != buf[i]) {
+ 			*fp = i;
+ 			return -EINVAL;
+ 		}
+@@ -4148,9 +4160,27 @@ static int ata_mselect_control_spg0(struct ata_queued_cmd *qc,
+ 	return 0;
+ }
+ 
+-/*
+- * Translate MODE SELECT control mode page, sub-page f2h (ATA feature mode
+- * page) into a SET FEATURES command.
++/**
++ *	ata_mselect_control_ata_feature - Translate ATA Feature Control page
++ *	@qc: Storage for translated ATA taskfile
++ *	@buf: Mode page, starting with the mode page header
++ *	@len: Length of the mode page, including the mode page header
++ *	@fp: Out parameter, offset in @buf of the first invalid byte on error
++ *
++ *	Translate MODE SELECT control mode page, sub-page f2h (ATA feature mode
++ *	page) into a SET FEATURES command.
++ *
++ *	The caller has stripped the mode parameter header and the block
++ *	descriptors, so @buf points at the mode page header, like the buffer
++ *	filled by the ata_msense_*() functions, and offsets in @buf, including
++ *	the one returned in @fp, are the byte numbers of the mode page.
++ *
++ *	LOCKING:
++ *	None.
++ *
++ *	RETURNS:
++ *	1 if a taskfile was prepared, -EINVAL if the mode page is invalid or if
++ *	CDL cannot be enabled.
+  */
+ static int ata_mselect_control_ata_feature(struct ata_queued_cmd *qc,
+ 					   const u8 *buf, int len, u16 *fp)
+@@ -4159,17 +4189,13 @@ static int ata_mselect_control_ata_feature(struct ata_queued_cmd *qc,
+ 	struct ata_taskfile *tf = &qc->tf;
+ 	u8 cdl_action;
+ 
+-	/*
+-	 * The first four bytes of ATA Feature Control mode page are a header,
+-	 * so offsets in mpage are off by 4 compared to buf.  Same for len.
+-	 */
+-	if (len != ATA_FEATURE_SUB_MPAGE_LEN - 4) {
+-		*fp = min(len, ATA_FEATURE_SUB_MPAGE_LEN - 4);
++	if (len != ATA_FEATURE_SUB_MPAGE_LEN) {
++		*fp = 2;
+ 		return -EINVAL;
+ 	}
+ 
+ 	/* Check cdl_ctrl */
+-	switch (buf[0] & 0x03) {
++	switch (buf[4] & 0x03) {
+ 	case 0:
+ 		/* Disable CDL */
+ 		ata_dev_dbg(dev, "Disabling CDL\n");
+@@ -4191,7 +4217,7 @@ static int ata_mselect_control_ata_feature(struct ata_queued_cmd *qc,
+ 		dev->flags |= ATA_DFLAG_CDL_ENABLED;
+ 		break;
+ 	default:
+-		*fp = 0;
++		*fp = 4;
+ 		return -EINVAL;
+ 	}
+ 
+@@ -4207,15 +4233,24 @@ static int ata_mselect_control_ata_feature(struct ata_queued_cmd *qc,
+ /**
+  *	ata_mselect_control - Simulate MODE SELECT for control page
+  *	@qc: Storage for translated ATA taskfile
+- *	@spg: target sub-page of the control page
+- *	@buf: input buffer
+- *	@len: number of valid bytes in the input buffer
+- *	@fp: out parameter for the failed field on error
++ *	@spg: Sub-page of the control page, 0 or ATA_FEATURE_SUB_MPAGE
++ *	@buf: Mode page, starting with the mode page header
++ *	@len: Length of the mode page, including the mode page header
++ *	@fp: Out parameter, offset in @buf of the first invalid byte on error
+  *
+- *	Prepare a taskfile to modify caching information for the device.
++ *	Call the handler of sub-page @spg of the control mode page.
++ *
++ *	The caller has stripped the mode parameter header and the block
++ *	descriptors, so @buf points at the mode page header, like the buffer
++ *	filled by the ata_msense_*() functions, and offsets in @buf, including
++ *	the one returned in @fp, are the byte numbers of the mode page.
+  *
+  *	LOCKING:
+  *	None.
++ *
++ *	RETURNS:
++ *	0 if no ATA command needs to be sent, 1 if a taskfile was prepared,
++ *	-EINVAL if the mode page is invalid.
+  */
+ static int ata_mselect_control(struct ata_queued_cmd *qc, u8 spg,
+ 			       const u8 *buf, int len, u16 *fp)
+@@ -4327,17 +4362,13 @@ static unsigned int ata_scsi_mode_select_xlat(struct ata_queued_cmd *qc)
+ 			goto invalid_param;
+ 		}
+ 
+-		pg_len = get_unaligned_be16(&p[2]);
+-		p += 4;
+-		len -= 4;
++		pg_len = get_unaligned_be16(&p[2]) + 4;
+ 	} else {
+ 		if (len < 2)
+ 			goto invalid_param_len;
+ 
+ 		spg = 0;
+-		pg_len = p[1];
+-		p += 2;
+-		len -= 2;
++		pg_len = p[1] + 2;
+ 	}
+ 
+ 	/*
 -- 
 2.53.0
 
