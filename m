@@ -1,52 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795625007;
-	b=mxqaOV4bBCcDRZv+ubbn90wutDbrwdWY+pWfVfwVd4fNAO3LmPpKQzsz5E1lDKxFW+JL
-	 ivp8r9Y5X3gxv8U2grvBX2qrg6ZCSXqg/dO7j7T+0Dpf/p8g2xKyjlKS64MrvHm6hMrCe
-	 rtkLQNLbe4Sm5mdf+XfLEY5PWQ09ullSMX6KOhVeMhduwxTamUNFuViZp7FUHQcHHHFMh
-	 qh1jXaPWvzPZa9zUcyE3wLeNWgsHskqp2sYdzELP07L7540oD2+cJY6kFZfcDtkLEV/FK
-	 5V1GpbMJEhrmmQi9gIR7cIZMgN8/Y54+HyRYpEhktNRKrsfZ7nkj6VeYZyyTVd++38A==
+	t=1795625010;
+	b=BNmZixvHeaOXFxOkbgCQwM+qUfuZEyZYJocNf28XsqhkWeyHV3aoT7JooP6CIZKi642c
+	 WkKcH9JSVkvOxX3Xw1iKGe4Q4kSZy8WQS9Cf6acC/RY1w/OstpSUm/ZeCpDEwbjfOlpFw
+	 33H5vmZnBmJ8xpNZhWf10SUya+45lFynAaYJUiQXZxosoPwuKRAGMOIX7I5V7G3pfnWmB
+	 Z6g1MaqbQ61WZ+qxQDVJdOJvtNwNckJUvf5f5O6F2PNtr3GzBIEzBNQoakcmvlO2q/Ma3
+	 xRa8LPQQOIYX7karPl1snsAajhcItlGmomfjFYw6aNUupjO8m+oMWZb0uSTcSWL8nSA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795625007;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795625010;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=2yo0Ck0XY3CjXHrEfhi8M2ABgm8IIEhMv1E+/EItgYc=;
-	b=dZI+cD4wxuODDsOKrIW/AvEbWJWN+9Xzi6lY/84r2DRdqNE/yBAfvafFqdOabl+GaPsG
-	 uV1bd0Ypptrexim1lYwMHTiYgPLINsm3qRlpbhVZDHORb3wE12/junYBvA3DPD91gY8s7
-	 ayXcYxinnNy2Z/VzQsLouLiF+urphlgfdAtqBuT/ty64LjVFzv74XOnyDtiJyQt/ey+i4
-	 Wcwnwy8E5aYtiCIskC5IUilf+Nr3xin5Ofih8P9nDUqN3b8ntF//Wtq95+KPI3XbKr32r
-	 ikOwLj0esOQHEMhSqrGCu+hRWr1I8uCjQVcqo0WMq5r6Be90ui0rqf4PVG70I5pqyHw==
+	bh=AwLNl0Fa0x43gGBNqaRU3OLmBhiGgnvMm6AL6w41cgE=;
+	b=usxz4TXmLq9QJoSPTVygPmoH7DvzhCTaLVhY/8DOHGxshS9i4ot0IKJz7y90t/V341bD
+	 K8meugSefPAeIRde3udtUah93QlewC3JkzKHC3nKPLcnn3vpbXnvcp/RYdK9mlmOe6Ga3
+	 pCGQV6J5zUP7EhfqFgjyHR5jm5zCoMWL+VC42I1t50PNX+5AC7cXQ1pqgKH+WRHnCwMMz
+	 tUSQqsmjjCP8Sib3y65705UbzyWCEXPlFK2k0zDDNfx6r9WHmn3HJSJg/JzJUUUlxmC/s
+	 ZLD679yQ8B7SNQj0KdCTouTqdg03ZXpR+JZoAeY9pftclNL5ks7gXBezG115NYqcLZg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Xgw9cuoy;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Nk6KElrH;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A402D606A321;
-	Wed, 25 Nov 2026 16:43:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CE11F606A31E;
+	Wed, 25 Nov 2026 16:43:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Xgw9cuoy
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 011EE1F000CF;
-	Wed, 25 Nov 2026 16:43:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Nk6KElrH
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C1F721F000D1;
+	Wed, 25 Nov 2026 16:43:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795625007;
-	bh=2yo0Ck0XY3CjXHrEfhi8M2ABgm8IIEhMv1E+/EItgYc=;
+	s=korg; t=1795625010;
+	bh=AwLNl0Fa0x43gGBNqaRU3OLmBhiGgnvMm6AL6w41cgE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Xgw9cuoydK5aP/RnS9Mm0sDcG3D8M5GCMaToKqrekVuYgCPrzhPoGMes0/nOYbR/9
-	 eiNtMubXZ2pja6EE0NDTmIqhUXb8JK7MQqHNg6N/KpG6ttNG70lYUydU06Pr8L8Myh
-	 IQM9HEdDt4U7DK6WWFkOYTKtuiP3cgB2XOVCQx/g=
+	b=Nk6KElrH8G0koWawytYu7jPZiG6wGO/GXSGXqygrCOvtasy8JizZbuZ4n5Gk96Jjs
+	 W8S5W65HUy9tQPuyldT+WncHsrJp3jN+ABwtJ9PDpsbZ4O9nbEWe+9JZqWLTcRM8Ef
+	 h67NgPqH6pool3zzuxqjwRLf+BdxXUFJ8WVyILUo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sinan Turunc <enscrpt@pm.me>,
-	Takashi Iwai <tiwai@suse.de>,
+	Hannes Reinecke <hare@kernel.org>,
+	Christoph Hellwig <hch@lst.de>,
+	Yingjie Wang <1075151112@qq.com>,
+	Keith Busch <kbusch@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 377/816] ALSA: ua101: Bound packet copies by the PCM buffer size
-Date: Wed, 25 Nov 2026 15:32:05 +0100
-Message-ID: <20261125143857.930987545@linuxfoundation.org>
+Subject: [PATCH 6.12 378/816] nvmet-tcp: validate the TLS handshake timeout
+Date: Wed, 25 Nov 2026 15:32:06 +0100
+Message-ID: <20261125143857.953756778@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143849.205329330@linuxfoundation.org>
 References: <20261125143849.205329330@linuxfoundation.org>
@@ -68,107 +70,122 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sinan Turunc <enscrpt@pm.me>
+From: Yingjie Wang <1075151112@qq.com>
 
-[ Upstream commit 493a77a9f20fca07ca5654f61c1b03bef035df25 ]
+[ Upstream commit e3e7a85730a4b17efa1e2ff4088443c4753be683 ]
 
-copy_capture_data() and copy_playback_data() wrap the ring buffer
-position once and split the memcpy() in two at the buffer end, which is
-only correct when one packet holds at most buffer_size frames. The
-capture packet size is the device's (actual_length up to wMaxPacketSize,
-divided by 3 * bNrChannels from its own descriptor), the playback packet
-size is taken from the capture packets, and set_stream_hw() lets the
-PCM client pick period_bytes_min 1, periods_min 2 and a period time of
-1.5 packet intervals: 9 frames at 44.1 kHz high speed, an 18-frame
-buffer. A device sending 672-byte mono 24-bit packets delivers 224
-frames per packet.
+tls_handshake_timeout is writable but stored as a signed int. Multiplying
+the value by MSEC_PER_SEC and HZ therefore uses signed arithmetic.
 
-After the first packet buffer_pos is 206 and stays beyond buffer_size.
-On the next packet frames1 = buffer_size - buffer_pos wraps and memcpy()
-runs away:
+With HZ=1000, setting it to 2147484 overflows both multiplications. If
+the handshake request is accepted and remains pending, the timer wheel
+treats the jiffies delay as already expired and queues the timeout work
+on its next advance, while the handshake agent was given about 24.9
+days. Negative values such as -1 cause the same immediate kernel-side
+timeout.
 
-  snd-ua101 2-1:1.0: invalid position: , pos = 206, buffer size = 18,
-period size = 9
-  BUG: KASAN: slab-out-of-bounds in capture_urb_complete+0x9eb/0xcb0
-  Read of size 4294966732 at addr ffff88800d73e7e0 by task vhci_rx/81
+Store the parameter as an unsigned int and reject values that cannot be
+represented both by tls_handshake_args::ta_timeout_ms and by a safe
+jiffies delay. Take one snapshot so a concurrent parameter update cannot
+give the handshake agent and delayed work different timeouts. Document
+the accepted range for built-in use.
 
-and for playback:
+Negative and oversized values now fail with -EINVAL. Keep zero valid,
+preserving the existing immediate-timeout behavior.
 
-  BUG: KASAN: vmalloc-out-of-bounds in playback_work+0x789/0xac0
-  Read of size 4294966732 at addr ffffc9000002626a by task kworker/0:1H/80
-
-Clamp the capture copy to buffer_size. On playback, copy at most one
-buffer and fill the rest of the packet with silence, so the URB length,
-the delay accounting and the data sent stay consistent. With that bound
-the single wrap and both memcpy() halves stay inside the buffer. A
-device whose packets do not fit the buffer never played correctly
-anyway.
-
-Reproduced on 7.3-rc7 with a USB/IP device presenting the UA-101
-interface layout and a 672-byte isochronous endpoint.
-
-Fixes: 63978ab3e3e9 ("sound: add Edirol UA-101 support")
+Fixes: 675b453e0241 ("nvmet-tcp: enable TLS handshake upcall")
 Cc: stable@vger.kernel.org
-Signed-off-by: Sinan Turunc <enscrpt@pm.me>
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
-Link: https://patch.msgid.link/20261026223543.620-3-enscrpt@pm.me
-[ sashal: Adapted the playback_work() hunk to the older code: no scoped_guard indentation, and urb->urb.* / &urb->urb access via the struct ua101_urb wrapper. ]
+Reviewed-by: Hannes Reinecke <hare@kernel.org>
+Reviewed-by: Christoph Hellwig <hch@lst.de>
+Signed-off-by: Yingjie Wang <1075151112@qq.com>
+Signed-off-by: Keith Busch <kbusch@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/usb/misc/ua101.c | 29 ++++++++++++++++++++++++++---
- 1 file changed, 26 insertions(+), 3 deletions(-)
+ .../admin-guide/kernel-parameters.txt         |  5 ++++
+ drivers/nvme/target/tcp.c                     | 26 ++++++++++++++++---
+ 2 files changed, 27 insertions(+), 4 deletions(-)
 
-diff --git a/sound/usb/misc/ua101.c b/sound/usb/misc/ua101.c
-index c43f4e4a8d670..db9dd58b20322 100644
---- a/sound/usb/misc/ua101.c
-+++ b/sound/usb/misc/ua101.c
-@@ -285,13 +285,29 @@ static void playback_work(struct work_struct *work)
- 		/* fill packet with data or silence */
- 		urb->urb.iso_frame_desc[0].length =
- 			frames * ua->playback.frame_bytes;
--		if (test_bit(ALSA_PLAYBACK_RUNNING, &ua->states))
-+		if (test_bit(ALSA_PLAYBACK_RUNNING, &ua->states)) {
-+			/*
-+			 * The packet size comes from the capture stream,
-+			 * i.e. from the device, while the ring buffer can
-+			 * be as small as two tiny periods. The single wrap
-+			 * in copy_playback_data() is only valid for
-+			 * frames <= buffer_size, so copy at most one
-+			 * buffer and send silence for the rest.
-+			 */
-+			unsigned int copy_frames = min(frames,
-+				ua->playback.substream->runtime->buffer_size);
+diff --git a/Documentation/admin-guide/kernel-parameters.txt b/Documentation/admin-guide/kernel-parameters.txt
+index c0748a3c5aa6e..5f2ecf40fad58 100644
+--- a/Documentation/admin-guide/kernel-parameters.txt
++++ b/Documentation/admin-guide/kernel-parameters.txt
+@@ -4219,6 +4219,11 @@
+ 			Valid values range from 0 to the smaller of
+ 			UINT_MAX / 1000 and MAX_JIFFY_OFFSET / HZ. Default: 10
+ 
++	nvmet_tcp.tls_handshake_timeout=
++			[NVME] NVMe/TCP target TLS handshake timeout in seconds.
++			Valid values range from 0 to the smaller of
++			UINT_MAX / 1000 and MAX_JIFFY_OFFSET / HZ. Default: 10
 +
- 			do_period_elapsed |= copy_playback_data(&ua->playback,
- 								&urb->urb,
--								frames);
--		else
-+								copy_frames);
-+			memset(urb->urb.transfer_buffer +
-+			       copy_frames * ua->playback.frame_bytes, 0,
-+			       (frames - copy_frames) *
-+			       ua->playback.frame_bytes);
-+		} else {
- 			memset(urb->urb.transfer_buffer, 0,
- 			       urb->urb.iso_frame_desc[0].length);
-+		}
+ 	ohci1394_dma=early	[HW,EARLY] enable debugging via the ohci1394 driver.
+ 			See Documentation/core-api/debugging-via-ohci1394.rst for more
+ 			info.
+diff --git a/drivers/nvme/target/tcp.c b/drivers/nvme/target/tcp.c
+index ab74d36438888..b46b022a68bc2 100644
+--- a/drivers/nvme/target/tcp.c
++++ b/drivers/nvme/target/tcp.c
+@@ -6,6 +6,7 @@
+ #define pr_fmt(fmt) KBUILD_MODNAME ": " fmt
+ #include <linux/module.h>
+ #include <linux/init.h>
++#include <linux/jiffies.h>
+ #include <linux/slab.h>
+ #include <linux/err.h>
+ #include <linux/key.h>
+@@ -77,8 +78,24 @@ MODULE_PARM_DESC(idle_poll_period_usecs,
+ /*
+  * TLS handshake timeout
+  */
+-static int tls_handshake_timeout = 10;
+-module_param(tls_handshake_timeout, int, 0644);
++static unsigned int tls_handshake_timeout = 10;
++
++static int tls_handshake_timeout_set(const char *val,
++				     const struct kernel_param *kp)
++{
++	return param_set_uint_minmax(val, kp, 0,
++		min_t(unsigned long, UINT_MAX / MSEC_PER_SEC,
++		      MAX_JIFFY_OFFSET / HZ));
++}
++
++static const struct kernel_param_ops tls_handshake_timeout_ops = {
++	.set = tls_handshake_timeout_set,
++	.get = param_get_uint,
++};
++
++module_param_cb(tls_handshake_timeout, &tls_handshake_timeout_ops,
++		&tls_handshake_timeout, 0644);
++__MODULE_PARM_TYPE(tls_handshake_timeout, "uint");
+ MODULE_PARM_DESC(tls_handshake_timeout,
+ 		 "nvme TLS handshake timeout in seconds (default 10)");
+ #endif
+@@ -1948,6 +1965,7 @@ static int nvmet_tcp_tls_handshake(struct nvmet_tcp_queue *queue)
+ {
+ 	int ret = -EOPNOTSUPP;
+ 	struct tls_handshake_args args;
++	unsigned int timeout = READ_ONCE(tls_handshake_timeout);
  
- 		/* and off you go ... */
- 		err = usb_submit_urb(&urb->urb, GFP_ATOMIC);
-@@ -320,6 +336,13 @@ static bool copy_capture_data(struct ua101_stream *stream, struct urb *urb,
+ 	if (queue->state != NVMET_TCP_Q_TLS_HANDSHAKE) {
+ 		pr_warn("cannot start TLS in state %d\n", queue->state);
+@@ -1961,7 +1979,7 @@ static int nvmet_tcp_tls_handshake(struct nvmet_tcp_queue *queue)
+ 	args.ta_done = nvmet_tcp_tls_handshake_done;
+ 	args.ta_data = queue;
+ 	args.ta_keyring = key_serial(queue->port->nport->keyring);
+-	args.ta_timeout_ms = tls_handshake_timeout * 1000;
++	args.ta_timeout_ms = timeout * MSEC_PER_SEC;
  
- 	runtime = stream->substream->runtime;
- 	frame_bytes = stream->frame_bytes;
-+	/*
-+	 * A packet can carry up to max_packet_bytes, the device's
-+	 * wMaxPacketSize, which may exceed the whole ring buffer; keep what
-+	 * fits so the single wrap below stays valid.
-+	 */
-+	if (unlikely(frames > runtime->buffer_size))
-+		frames = runtime->buffer_size;
- 	dest = runtime->dma_area + stream->buffer_pos * frame_bytes;
- 	if (stream->buffer_pos + frames <= runtime->buffer_size) {
- 		memcpy(dest, urb->transfer_buffer, frames * frame_bytes);
+ 	ret = tls_server_hello_psk(&args, GFP_KERNEL);
+ 	if (ret) {
+@@ -1969,7 +1987,7 @@ static int nvmet_tcp_tls_handshake(struct nvmet_tcp_queue *queue)
+ 		pr_err("failed to start TLS, err=%d\n", ret);
+ 	} else {
+ 		queue_delayed_work(nvmet_wq, &queue->tls_handshake_tmo_work,
+-				   tls_handshake_timeout * HZ);
++				   (unsigned long)timeout * HZ);
+ 	}
+ 	return ret;
+ }
 -- 
 2.53.0
 
