@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795617729;
-	b=mAgKFPNLtXD0uLstVfssfzJvjopwDAuYaHH9S3W4fj/a99ELj7FtT1v0cYxkSfr/dJ+G
-	 Ztn1+UpVHda7SLR5AVubyXW8SETA7UkJJXzZNM9q00huvaHJARvzoHZ/SapZRzKBHvXFz
-	 pjuUllTpn7jD2dtnSUS9ziig2PMLwV7EWAFczgc5QqwYXVhC0CZUAalSspHOT4rj2TVoS
-	 mgqRnZwGZawNOtw9og3KXcW5/61YZp2OgHaTXwj9n3Ffhmx+kjGKoUD8iY786hEHCyqAU
-	 BVQYHgNTX45ijrviHvFbcv9gXz0hWdthnUVpqnglJCTWFHuYYZ0/b9G9gikTmrRQpNQ==
+	t=1795617733;
+	b=WirdjFG4E3j8v7mJXxGR9i2PEnCNZTVb0FppJvOSGTNqglrtuSUyNS5TEgMP3UoBW2P5
+	 nOate4BoTZQVnueUDd0KjZ5qRr3r/4skz62Fmr7Vq6wSN7gQUSoXyO4z8T3JNxO1VsrwD
+	 z3J+bKBXKRkkLebT3KEgsTPLaXfy/9+sb37aWp+AdOaoNpyJn8FqMDe3PQSufMNG6+Dmy
+	 a04fMJplkgY1HBXA4R3F0Zw9WaMdZcf9kvO9A1S+Q2z5GfLmyD5PsKSdra8wd7O6ktCGP
+	 7/B4l6Iq7DmTsJHauZr++S838GcYlqXzxooNYRGosUHpcK1Igs1jypnhJzMa9aBTdcg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795617729;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795617733;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=3YwKoPT73KGPzSQftHkUjHY4CEOOTzB0M1D4iAYeyKg=;
-	b=ywTW2fQteGcvwZ98bexERqMzkDuEXVCssIixM0SBDZkjPJcfzZO3jPo70LE19m1aC3SY
-	 hKkeOD3sMkOrrVnZtrFP4dct9GkSaH7C2GKSH6/jnf0a+56jajEzP9uKZouBsjbuSm1IN
-	 uZEY+EsYAwUz2gS2xHbBRcQYomgTsHPyG+GtXZNB1L5bA6balGDz3fccfSfQoQ/cMexct
-	 5Nrvqn4nrl7L7gbyqPR13T5p8iPzKsdLQcC+Nj6YPnGhRkXrRL2upMIhqywPPy1HTO2xR
-	 UE6e5J3KtrtiY/FVyhFGnn1CZi1RoOvPfatAk0Tp/EYhW9s1EAkZX+XNKybrMMdGxhA==
+	bh=T45Ui3wWeX6ntZEK9E63fnhBFroq+8HRNEOfTtYVddM=;
+	b=WIS7FiFEKkQZqjfuYY7Zg9fKi7/l3rP+5m60INYEzH7eGZEwibW5mC0UjM/KVLvflJDM
+	 l0uv8kST/a+/RJEXAX4YOo+lnxJn4vWrNprWkxLv8t5T1E7EEBiGUnIqp7rHsqRcAwq5G
+	 eiD15/aZsSC2RKy1FnMVIv+di0h9XhhCkjqzlXaJxDdSWd+kQezH9ZOFfWGnEaTA6YyaW
+	 n7vwp8ZFNeGLGnnq+t2rh1o66OoZ2guJ3RquxwDDRV8JhwrA/ZL0yphiMvc61/U37+1FX
+	 Wbzo0BLxNWTceaoXU2nd7tBXDa8XbUA7cipHhhfgLvQJ8I1EeU2NY7jHe4T5NXtm5EA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="kB1/Ily8";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=hpB6gdS3;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D369F606A31E;
-	Wed, 25 Nov 2026 14:42:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0194D606A31E;
+	Wed, 25 Nov 2026 14:42:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=kB1/Ily8
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EF9951F000CA;
-	Wed, 25 Nov 2026 14:42:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=hpB6gdS3
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 32D731F000C6;
+	Wed, 25 Nov 2026 14:42:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795617729;
-	bh=3YwKoPT73KGPzSQftHkUjHY4CEOOTzB0M1D4iAYeyKg=;
+	s=korg; t=1795617732;
+	bh=T45Ui3wWeX6ntZEK9E63fnhBFroq+8HRNEOfTtYVddM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=kB1/Ily8inl/2VpEpydlNGi5wfU4KwvUGHveP+qGMZVQz7TP8E4NojAG+Su/uBHma
-	 R6cToiKw9jrgCK/pLGPV4m9uN1siZe68YN+YCi686lWhFtND5vGbpFowl4YmkuN/D0
-	 HgcoL+Rk2hl3TZgTYtZhyG+yKxl+ZqsMebAENVdg=
+	b=hpB6gdS30uyspAk+m3zC+LdWKmOnhate18UcnvI1ciVbjZ5N7R7apgPhJ93w3XNmk
+	 qoIsf/avEN5aY8DeblK+SXcynIcxNcx10p40BcaW+6qEKPFVXKw/8BF7Lqed8+a6Ir
+	 Kqq51mQNulvNMyWXZJkJuhJ/0C9ooO/P0KfhifxM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Barret Rhoden <brho@google.com>,
+	Omokefe Emmanuel Onanaroghene <emmaonana18@gmail.com>,
 	Dominique Martinet <asmadeus@codewreck.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0055/1005] 9p: treat read return values of 0 as EOF
-Date: Wed, 25 Nov 2026 15:23:13 +0100
-Message-ID: <20261125143823.031030580@linuxfoundation.org>
+Subject: [PATCH 7.3 0056/1005] 9p: fix kernel-doc warning for enum p9_session_flags
+Date: Wed, 25 Nov 2026 15:23:14 +0100
+Message-ID: <20261125143823.053837179@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143821.729802100@linuxfoundation.org>
 References: <20261125143821.729802100@linuxfoundation.org>
@@ -68,53 +68,98 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Barret Rhoden <brho@google.com>
+From: Omokefe Emmanuel Onanaroghene <emmaonana18@gmail.com>
 
-[ Upstream commit a3a6212c7d67baebebd0e4c2cf2ae1b75eb9231e ]
+[ Upstream commit d037e9c1b40c28eb57ea10947141cad3781b91a7 ]
 
-If your 9p server shares a synthetic file system such as sysfs, the file
-size from stat often disagrees with the actual file size.
+kernel-doc cannot parse enum p9_session_flags, since its documentation
+comment is followed by #define lines instead of the enum declaration:
 
-Treat non-error reads of 0 as EOF, except in the case where the request
-was for 0 bytes.
+  fs/9p/v9fs.h:31 : error: Cannot parse enum!
 
-Tested:
-	git@github.com:hugelgupf/p9.git, served "/" on 10.0.2.2
+Move the three #define lines below the enum whose values they are
+derived from, and give V9FS_ACCESS_ANY and V9FS_ACCESS_MASK their own
+kernel-doc comments with the descriptions they had in the enum comment.
 
-	bash-5.3# mount -t 9p -o trans=tcp,port=12345,cache=none 10.0.2.2 /tmp/foo
-	bash-5.3# cat /tmp/foo/sys/devices/system/cpu/online
-	0-47
+Also document the four enum members that had no description, using the
+corresponding mount option wording from
+Documentation/filesystems/9p.rst.
 
-Fixes: eb497943fa21 ("9p: Convert to using the netfs helper lib to do reads and caching")
-Signed-off-by: Barret Rhoden <brho@google.com>
-Message-ID: <20260702090941.1298188-1-brho@google.com>
+Fixes: 76381a42e4a5 ("fs/9p: Add access = client option to opt in acl evaluation.")
+Assisted-by: LLM
+Signed-off-by: Omokefe Emmanuel Onanaroghene <emmaonana18@gmail.com>
+Message-ID: <20261002035837.39703-1-emmaonana18@gmail.com>
+[Dominique: slight reword, also fixed typo in Doc/ for access=client]
 Signed-off-by: Dominique Martinet <asmadeus@codewreck.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/9p/vfs_addr.c | 3 +++
- 1 file changed, 3 insertions(+)
+ Documentation/filesystems/9p.rst |  2 +-
+ fs/9p/v9fs.h                     | 26 ++++++++++++++++++--------
+ 2 files changed, 19 insertions(+), 9 deletions(-)
 
-diff --git a/fs/9p/vfs_addr.c b/fs/9p/vfs_addr.c
-index 13cf87a5f90cb..a48cc34b9a23a 100644
---- a/fs/9p/vfs_addr.c
-+++ b/fs/9p/vfs_addr.c
-@@ -99,6 +99,7 @@ static void v9fs_issue_read(struct netfs_io_subrequest *subreq)
- 	char *target;
- 	unsigned long long pos = subreq->start + subreq->transferred;
- 	int total = 0, err, len, n;
-+	size_t to_read = iov_iter_count(&subreq->io_iter);
+diff --git a/Documentation/filesystems/9p.rst b/Documentation/filesystems/9p.rst
+index 3f65db648db06..dc1f5f9632d8d 100644
+--- a/Documentation/filesystems/9p.rst
++++ b/Documentation/filesystems/9p.rst
+@@ -228,7 +228,7 @@ Options
+ 			any
+ 				v9fs does single attach and performs all
+ 				operations as one user
+-			clien
++			client
+ 				 ACL based access check on the 9p client
+ 			         side for access validation
  
- 	if (S_ISLNK(rreq->inode->i_mode)) {
- 		/* p9_client_readlink() must not be called for legacy protocols
-@@ -131,6 +132,8 @@ static void v9fs_issue_read(struct netfs_io_subrequest *subreq)
- 		__set_bit(NETFS_SREQ_CLEAR_TAIL, &subreq->flags);
- 	if (pos + total >= i_size_read(rreq->inode))
- 		__set_bit(NETFS_SREQ_HIT_EOF, &subreq->flags);
-+	if (!err && !total && to_read)
-+		__set_bit(NETFS_SREQ_HIT_EOF, &subreq->flags);
- 	if (!err && total) {
- 		subreq->transferred += total;
- 		__set_bit(NETFS_SREQ_MADE_PROGRESS, &subreq->flags);
+diff --git a/fs/9p/v9fs.h b/fs/9p/v9fs.h
+index 2ac863dc8446c..9a730d2d9d87d 100644
+--- a/fs/9p/v9fs.h
++++ b/fs/9p/v9fs.h
+@@ -21,20 +21,16 @@
+  * @V9FS_ACCESS_SINGLE: only the mounting user can access the hierarchy
+  * @V9FS_ACCESS_USER: a new attach will be issued for every user (default)
+  * @V9FS_ACCESS_CLIENT: Just like user, but access check is performed on client.
+- * @V9FS_ACCESS_ANY: use a single attach for all users
+- * @V9FS_ACCESS_MASK: bit mask of different ACCESS options
+  * @V9FS_POSIX_ACL: POSIX ACLs are enforced
++ * @V9FS_NO_XATTR: do not offer xattr functions on this mount
++ * @V9FS_IGNORE_QV: ignore qid.version==0 as a marker to disable data cache
++ * @V9FS_DIRECT_IO: disable data read/write cache
++ * @V9FS_SYNC: disable data write cache
+  * @V9FS_NDENTRY_TIMEOUT_SET: Has negative dentry timeout retention time been
+  *                            overridden by negtimeout mount option
+  *
+  * Session flags reflect options selected by users at mount time
+  */
+-#define	V9FS_ACCESS_ANY (V9FS_ACCESS_SINGLE | \
+-			 V9FS_ACCESS_USER |   \
+-			 V9FS_ACCESS_CLIENT)
+-#define V9FS_ACCESS_MASK V9FS_ACCESS_ANY
+-#define V9FS_ACL_MASK V9FS_POSIX_ACL
+-
+ enum p9_session_flags {
+ 	V9FS_PROTO_2000U         = 0x01,
+ 	V9FS_PROTO_2000L         = 0x02,
+@@ -49,6 +45,20 @@ enum p9_session_flags {
+ 	V9FS_NDENTRY_TIMEOUT_SET = 0x400,
+ };
+ 
++/**
++ * V9FS_ACCESS_ANY - use a single attach for all users
++ */
++#define	V9FS_ACCESS_ANY (V9FS_ACCESS_SINGLE | \
++			 V9FS_ACCESS_USER |   \
++			 V9FS_ACCESS_CLIENT)
++
++/**
++ * V9FS_ACCESS_MASK - bit mask of different ACCESS options
++ */
++#define V9FS_ACCESS_MASK V9FS_ACCESS_ANY
++
++#define V9FS_ACL_MASK V9FS_POSIX_ACL
++
+ /**
+  * enum p9_cache_shortcuts - human readable cache preferences
+  * @CACHE_SC_NONE: disable all caches
 -- 
 2.53.0
 
