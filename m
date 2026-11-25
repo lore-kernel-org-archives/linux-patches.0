@@ -1,51 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795623000;
-	b=AwiDlKML4QrLA5EV+Pyh44RKIbZ+oIUMo7tb7zryZbEuVZEgRXaJfsqx5bdyU8koVxTh
-	 J+lQFU8hrEIsUGb1bkgFCvxo0TyNUU+Pw0D19H0sU1mSOw79IJJBqnT1ty+TkrFDWEJWi
-	 qJezvKQfBK4F6vxOfniEoc1bSim0kcFFrxITIJFLFHIqdwMUbATYxXXg42tFzAyNySeTy
-	 qB1t0UvwbZYZsUEg4gyG15+sCtDgkqGql3l7f1+kS9fh7llvYZ2rDSZ2ONyNtOmYe/HdS
-	 kBCRi5SVYm7sIuBzfSgTc2t/eg430J3YvrddHiEVff36B/3hlI5fyiozLJr/kGp3Qcg==
+	t=1795623003;
+	b=BT+GvPS6LA3T1cima4RUwHalVbQBdRaYjxNPSKwwL2ydwkD5fK7mbgqp47KKzjeB/Dgi
+	 oOcDjUo2rtL2yjw12RJL9A6ThFADw9QKPeE6V8VItttjBossDIlolue9Y3ryZxCe7So9G
+	 wurGznw6IiN5s0/LUAtuGi3yXAARMnV0SmIGtKPhEE9rNUvTNGF+zgzH2sA8g9unTlT83
+	 yvdxrSLF33FwaionXXx3i2Jj6lqgt5W0WqNa1tCmj8SF+QSYHEzzsLtqkZkWoH1B7QdoN
+	 Dcu7g0DBaImYXL9U7kfGo+CFEuwKOSZoU/mWE3YOf0LCn08cO4ArdXjef3Vk6W/ED4g==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795623000;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795623003;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=wFfvZp9NBowBTSiuR6PkF4L8W0LMKRmtw7rbeFlOtC0=;
-	b=fhUMiMF7DnbCK7ExYD1HLUXPGH5AxYc4kVcIO4NlKMIl4v4bCfL0VquKj+lcjPlv8rDE
-	 RaSo7s3SH1QcRV5tt8AV+jA0pwnJ5MNRiGXSEBBNk8py9ZRQnVtOt0gMGRVMryWQsoM6a
-	 WcEAamIAQotRkrSkiY3ZzHhyz+C8gRQFgOH7P2Gy9ShF0P0FiXr7Q96dkeSrBuegj+Cim
-	 7/4H752A7bqwNufyiaZJeaaVrPOGMJrjbW2xk9/3XNZjQaO9XvEkwdzSP/DgpP87UF+TB
-	 XVCkhT26mzJ31QpbrbUOMCnMFik0jfJ4WZ96d0KDePxo4kPK+iIqRxrjZnGx6eoqXWQ==
+	bh=nxtnl09ARr+7TuOyKyuZ1Vo6qrITK2Y/ELSsTyD55AU=;
+	b=0VowkSyqLONkcGqonPIab2OK3AIDxAc+pQx9tkHt5TkHWHSpswwEgXRdfd9QvxAGd1Jg
+	 oC8tkj8nq+F7tB6oW6GqddMGmlHvSV1/Nq3rSxifDMGkteS59fb5ipPuoiG+RcOVU4ObK
+	 GaQnmiiKLo0PULwnOgEL5LUuz+tl8bs3N86KOKKXsDsJT6I/XkkjAoa1sYcBCBRpZwjj4
+	 HEgy6xEtxeDE9M6tKjuLYZWWYf1Gq2Ylq19md1ByQFw6wI+VvbzAQoA4C0SGGkoxGPQ2V
+	 sBm+NiWxEHk5XhgCyVmxoZ93r0HnOrpiUmFO/ABGCi+dtbdt3OuKygan0mdzBwbtV4Q==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="yAi/Xcer";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=lscSj425;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1C829606A326;
-	Wed, 25 Nov 2026 16:10:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EC6E5606A321;
+	Wed, 25 Nov 2026 16:10:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=yAi/Xcer
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 00CAD1F000D1;
-	Wed, 25 Nov 2026 16:09:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=lscSj425
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 45DFD1F000D1;
+	Wed, 25 Nov 2026 16:10:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795622999;
-	bh=wFfvZp9NBowBTSiuR6PkF4L8W0LMKRmtw7rbeFlOtC0=;
+	s=korg; t=1795623002;
+	bh=nxtnl09ARr+7TuOyKyuZ1Vo6qrITK2Y/ELSsTyD55AU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=yAi/Xcer8igEHVNtz4Ja2XB8gHassoE+r433hppyMtEOtvv0ss/PM/Qca29w++Gmz
-	 KvO/zrIDU2d+te5j5vw5xX57xIU0O4t1r7l6hiuntFnjFjLpXkAD2QgHXNsXQWhgaj
-	 jXhQU5cgCfciIEqqeWE02PelsEdt3CN7l347SevA=
+	b=lscSj425cHC6YZeYEZH6ElTIK9zTFv1naZRAPlmdn4JWjh8LJa+RIPYv0uje6SjRp
+	 Y0XUnMd7wvQPOubC7RX/K7GC45RQo6a2JZxgKHwoCiwO+HBy1qTNG9hc40ne7a9vyW
+	 8qr8mfRFpbygIfNyvmWeW6qV87996c2a6dB2gn5g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kyle Zeng <kylebot@openai.com>,
-	Dave Miller <davem@davem-thinkpadp1gen8.ibmlond.csb>
-Subject: [PATCH 6.18 690/990] macsec: reject frames that decapsulate into runt Ethernet frames
-Date: Wed, 25 Nov 2026 15:34:17 +0100
-Message-ID: <20261125143838.250667607@linuxfoundation.org>
+	Chengfeng Ye <nicoyip.dev@gmail.com>,
+	Julian Anastasov <ja@ssi.bg>,
+	Pablo Neira Ayuso <pablo@netfilter.org>
+Subject: [PATCH 6.18 717/990] ipvs: fix protocol data lifetime during namespace teardown
+Date: Wed, 25 Nov 2026 15:34:44 +0100
+Message-ID: <20261125143838.876675373@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143822.072087159@linuxfoundation.org>
 References: <20261125143822.072087159@linuxfoundation.org>
@@ -67,66 +68,90 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kyle Zeng <kylebot@openai.com>
+From: Chengfeng Ye <nicoyip.dev@gmail.com>
 
-commit 1d5e2c57e9ffc134e14b3f837c8d7c53b508bd22 upstream.
+commit 832aa3e89e806bb2667fe4e656b705f4088b3c9d upstream.
 
-When an SCI is unknown and the C bit is clear, macsec_handle_frame()
-removes the SecTAG and the default ICV without checking how much of the
-frame remains. A short frame can therefore become an skb shorter than
-ETH_HLEN. eth_type_trans() cannot pull its Ethernet header, and a second
-stacked MACsec device can copy stale skb headroom into a packet delivered
-to a packet socket.
+IPVS frees its per-net protocol data before control cleanup cancels
+defense work and unregisters the sysctl table. A defense worker can load
+a protocol data pointer, then namespace cleanup can unlink and free that
+object before the worker dereferences pd->pp or pd->next. The worker's
+securetcp_lock does not serialize with protocol cleanup. A concurrent
+defense-mode sysctl write can reach the same timeout update path.
 
-The matched-SCI path has a related hole: macsec_validate_skb() accepts a
-short_length of one, so a frame that passes the existing length check can
-still become a 13-byte Ethernet frame.
+KASAN reported:
 
-Require enough bytes for the MACsec overhead and a complete Ethernet
-header before decapsulating an unknown-SCI frame. Apply the same bound
-in macsec_validate_skb(), using the selected SecY's ICV length, to cover
-the no-SA, synchronous-decrypt and asynchronous-decrypt delivery paths.
-Leave other unknown-SCI handling unchanged.
+  BUG: KASAN: slab-use-after-free in ip_vs_protocol_timeout_change
+  Workqueue: events_long defense_work_handler
+  Call Trace:
+   ip_vs_protocol_timeout_change+0x1b4/0x1e0
+   update_defense_level+0x63e/0xd80
+   defense_work_handler+0x1e/0xc0
+  Allocated by task 125:
+   ip_vs_protocol_net_init+0xda/0x2f0
+   __ip_vs_init+0x16b/0x240
+   setup_net+0xfc/0x310
+  Freed by task 12:
+   ip_vs_protocol_net_cleanup+0x1d6/0x2e0
+   __ip_vs_cleanup_batch+0x7d/0x100
+   cleanup_net+0x38c/0x770
 
-Fixes: c09440f7dcb3 ("macsec: introduce IEEE 802.1AE driver")
+Run control cleanup before protocol cleanup so that defense work and
+active sysctl handlers have finished before their protocol data is freed.
+Initialize protocols before exposing the control interface, and unwind
+in reverse order, to enforce the same lifetime on initialization failure.
+Protocol initialization and exit do not depend on control state.
+
+Fixes: 9330419d9aa4 ("IPVS: netns, use ip_vs_proto_data as param.")
 Cc: stable@vger.kernel.org
-Signed-off-by: Kyle Zeng <kylebot@openai.com>
-Signed-off-by: Dave Miller <davem@davem-thinkpadp1gen8.ibmlond.csb>
+Signed-off-by: Chengfeng Ye <nicoyip.dev@gmail.com>
+Acked-by: Julian Anastasov <ja@ssi.bg>
+Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/macsec.c |   15 ++++++++++-----
- 1 file changed, 10 insertions(+), 5 deletions(-)
+ net/netfilter/ipvs/ip_vs_core.c |   12 ++++++------
+ 1 file changed, 6 insertions(+), 6 deletions(-)
 
---- a/drivers/net/macsec.c
-+++ b/drivers/net/macsec.c
-@@ -403,8 +403,10 @@ static bool macsec_validate_skb(struct s
- 	int len = skb->len - 2 * ETH_ALEN;
- 	int extra_len = macsec_extra_len(!!(h->tci_an & MACSEC_TCI_SC)) + icv_len;
+--- a/net/netfilter/ipvs/ip_vs_core.c
++++ b/net/netfilter/ipvs/ip_vs_core.c
+@@ -2319,12 +2319,12 @@ static int __net_init __ip_vs_init(struc
+ 	if (ip_vs_estimator_net_init(ipvs) < 0)
+ 		goto estimator_fail;
  
--	/* a) It comprises at least 17 octets */
--	if (skb->len <= 16)
-+	/* a) It comprises at least 17 octets. The SecTAG and ICV must
-+	 * also leave a complete Ethernet header.
-+	 */
-+	if (skb->len < ETH_HLEN + extra_len)
- 		return false;
+-	if (ip_vs_control_net_init(ipvs) < 0)
+-		goto control_fail;
+-
+ 	if (ip_vs_protocol_net_init(ipvs) < 0)
+ 		goto protocol_fail;
  
- 	/* b) MACsec EtherType: already checked */
-@@ -1326,9 +1328,12 @@ drop_direct:
- nosci:
- 	/* 10.6.1 if the SC is not found */
- 	cbit = !!(hdr->tci_an & MACSEC_TCI_C);
--	if (!cbit)
--		macsec_finalize_skb(skb, MACSEC_DEFAULT_ICV_LEN,
--				    macsec_extra_len(macsec_skb_cb(skb)->has_sci));
-+	if (!cbit) {
-+		len = macsec_extra_len(macsec_skb_cb(skb)->has_sci);
-+		if (skb->len < ETH_HLEN + len + MACSEC_DEFAULT_ICV_LEN)
-+			goto drop_nosc;
-+		macsec_finalize_skb(skb, MACSEC_DEFAULT_ICV_LEN, len);
-+	}
++	if (ip_vs_control_net_init(ipvs) < 0)
++		goto control_fail;
++
+ 	if (ip_vs_app_net_init(ipvs) < 0)
+ 		goto app_fail;
  
- 	list_for_each_entry_rcu(macsec, &rxd->secys, secys) {
- 		struct sk_buff *nskb;
+@@ -2344,10 +2344,10 @@ sync_fail:
+ conn_fail:
+ 	ip_vs_app_net_cleanup(ipvs);
+ app_fail:
+-	ip_vs_protocol_net_cleanup(ipvs);
+-protocol_fail:
+ 	ip_vs_control_net_cleanup(ipvs);
+ control_fail:
++	ip_vs_protocol_net_cleanup(ipvs);
++protocol_fail:
+ 	ip_vs_estimator_net_cleanup(ipvs);
+ estimator_fail:
+ 	net->ipvs = NULL;
+@@ -2364,8 +2364,8 @@ static void __net_exit __ip_vs_cleanup_b
+ 		ipvs = net_ipvs(net);
+ 		ip_vs_conn_net_cleanup(ipvs);
+ 		ip_vs_app_net_cleanup(ipvs);
+-		ip_vs_protocol_net_cleanup(ipvs);
+ 		ip_vs_control_net_cleanup(ipvs);
++		ip_vs_protocol_net_cleanup(ipvs);
+ 		ip_vs_estimator_net_cleanup(ipvs);
+ 		IP_VS_DBG(2, "ipvs netns %d released\n", ipvs->gen);
+ 		net->ipvs = NULL;
 
 
