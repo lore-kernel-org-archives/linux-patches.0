@@ -1,51 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795626125;
-	b=y3f3JeO2gWDC4NpMqUkWDrs3ulij60NJtBqNoUN4U+RjSV3ON1wxNsD0nb1Pd6avwOXQ
-	 nMLjUHTWZj7vEJoehqpv+V8mMh0USQwdlJU6LUFespAM1jliNsac8loHAyYZ9XbgY1UND
-	 EnrDgc6oAQaD8w8foNZ2e3GHZECsL4mKoF5/uxp4BHsXp++1eoSzcqt9y3H0S+sfB5fN9
-	 eokKFn/MM9sxfYEEzLFRgxVazb7L0UEro6NjNtyXbds1puyjRFRLBegokNH7HHDgXTNk6
-	 Egm+diSWQeGvS/D1HLlYM4f8uOI7hgohYv7VsBnIxdbv8bWRg81p5wrTgiz+gAp6gqQ==
+	t=1795626128;
+	b=c6jRStmDc5grPX6YyBLgnm3Wlj/shh/gZ9DtGXOR5nnt+6JSHdcu7eHHaeHkcBRm7jvE
+	 GghlW/ewRxcYsnIO+PYtKbdqaNMk34vCbLTqB4l7m1K5BTwU9CgBAqueOOWvkHZlyQlLb
+	 vhobTqSYQNzAqXMhqXh3NQAHUXyvAAI5LOCe0fTtJJVECV3NPtB4qV/DGujTaNCJljqC+
+	 8JfZw7xl/gJk1MySwLZYoqMyxa1swLlo+4BZUTO3uaspGpB25mpMi/JForx54ROt1BZ4s
+	 VT0Uv/regA3iZK1BHKPvOhihluOBEx619/AuVvavufAEtkFjYt+U5y1Of9/64FAq/+A==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795626125;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795626128;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=CdGlavCUzMbF6dEQ0OhmDK9zmmUjUfC/Yun8Am7R/W8=;
-	b=PAFEzOE4mIJajBD3AdgGyFL+9QhYD6Q9NwTyopCG45HKAbGGtS0WZIXiWHa1u3etkoDF
-	 GFacAws6p4YCo8d/TQpoNKAJ+kavZ84MiZNUUL6i0Bfb+xaIeM7l6Wa2LBITkfvQWMLuA
-	 G5u78WRLa9AHd+BdoGTtH++EUiBeTcLFv2UaTqcoebXDwF38qdmJq0SuhC4+63OA0QEUI
-	 /7gsUoa33yaBMWRmIQ4/D61JUMKQNFfDg6Q2UjaIvEEDP2Fr7ApeFmXK16Pm5DnlU6IYz
-	 GSchLi4fF94nYg8XKzhoO10DHo6WVqW8GUonSia+rqH79sjLH76Y3mqLgynPUKqukJQ==
+	bh=Wjixxwhy6MurZO6QWJPkRhcrfLbK1gRqxY0wOpSaicM=;
+	b=pl2HSyezcz0IUeOQ0bHWRFHoc0qgMlnbYowKmvO0qA6bbHC9LvmLXhMI24+Sw0FYgICf
+	 7yI9ovF3hKLwjNIz0cEqloW0GZrSsY8w2LltwU5NF0i0BBRH/8hlh0IIOqsuSl8u6T1GO
+	 UJnvrV6uAFGVFIJhmcjZlFpGtHFyz4Mr/f7unYvWutgDq24X6w3vKQ93IpH9mUjBD1GfG
+	 PBnUzHz/BvELkUrq7i3Whg3b6iY9jUxerA9XDt3EYGH9h1L0bhoONdQtdw5p1Bi7TFi7Z
+	 zpCzZtX2bm8hl/WN7+gVwjaxHi6QU7AgO6jQ3dE9/spc89PdPhOzUHCexV0j0PMhX/A==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=vIsKVhPV;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=UNSvyMnw;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 10773606A323;
-	Wed, 25 Nov 2026 17:02:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E60AD606A31E;
+	Wed, 25 Nov 2026 17:02:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=vIsKVhPV
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 604EF1F000CA;
-	Wed, 25 Nov 2026 17:02:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=UNSvyMnw
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 367BE1F000C6;
+	Wed, 25 Nov 2026 17:02:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795626124;
-	bh=CdGlavCUzMbF6dEQ0OhmDK9zmmUjUfC/Yun8Am7R/W8=;
+	s=korg; t=1795626127;
+	bh=Wjixxwhy6MurZO6QWJPkRhcrfLbK1gRqxY0wOpSaicM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=vIsKVhPVpfbH2l3lJVJF+nSDkHvSsgAWY4O7jppAIVVM+DHDYNyi+ggiKW+KmbZXj
-	 y9Zw8Sjaykd0fFjWzgwyk5pKSl7Ul2xdATU5Oa1EtX0N2k7JHuqecHpoikcbTC/9Gs
-	 05QmxXhkE9rNp6RvopbUs0FEIopZf2ouJnDhh6PQ=
+	b=UNSvyMnwMyO34OvlvlIEcp9q+o6W0dqiuruPThYjfemFCrO+mXdnlhWIRVrJnHMzD
+	 aegyM/4rbQUhbF7zCJS2zgBeX454tM4hAHkeyd+E4jIGiPVgMy6aMh6JRGBNjsvlvA
+	 DHW5UvHAkD65bbtkd7Xo+0nmgqJ9LFPpv/bNK5Gw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Josef Bacik <josef@toxicpanda.com>,
-	Johan Hovold <johan@kernel.org>
-Subject: [PATCH 6.12 739/816] USB: serial: garmin_gps: fix deadlock on reset request
-Date: Wed, 25 Nov 2026 15:38:07 +0100
-Message-ID: <20261125143906.285622804@linuxfoundation.org>
+	stable <stable@kernel.org>,
+	Johan Hovold <johan@kernel.org>,
+	Josef Bacik <josef@toxicpanda.com>
+Subject: [PATCH 6.12 740/816] USB: serial: oti6858: fix the teardown order in close
+Date: Wed, 25 Nov 2026 15:38:08 +0100
+Message-ID: <20261125143906.308575903@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143849.205329330@linuxfoundation.org>
 References: <20261125143849.205329330@linuxfoundation.org>
@@ -67,61 +68,102 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Johan Hovold <johan@kernel.org>
+From: Josef Bacik <josef@toxicpanda.com>
 
-commit ab89a9dab02d9553eb0cc27fd3e4a4998acbc8e9 upstream.
+commit f184ae84a5d19554d980a918a9c8baaef87ac301 upstream.
 
-The garmin_gps driver has a reset feature that is supposed to reset the
-device when writing a private reset request packet. The reset is however
-done synchronously from the write() callback (and without holding the
-required device lock) which leads to a deadlock in the line discipline
-when hanging up the port as part of disconnect.
+The driver passes a baton around: the completion handler of the
+interrupt urb either resubmits the urb, submits the read urb or
+schedules one of the two delayed works, and the works and the bulk
+completion handlers submit the interrupt urb again.
 
-Switch to using the asynchronous reset interface while dropping the
-redundant and synchronous stopping of the interrupt urb (write()
-callbacks are supposed to be atomic and USB core, USB serial core and
-the driver itself will unlink and kill all URBs during disconnect).
+oti6858_close() cancels the works first and kills the urbs afterwards.
+An interrupt urb that completes in between schedules a work again:
 
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Reported-by: Josef Bacik <josef@toxicpanda.com>
-Link: https://lore.kernel.org/2026102733-prayer-drainer-56f3@gregkh
-Cc: stable@vger.kernel.org
-Reviewed-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+	oti6858_close()
+	  cancel_delayed_work_sync(setup)
+	  cancel_delayed_work_sync(write)
+				oti6858_read_int_callback()
+				  schedule_delayed_work(setup)
+	  usb_kill_urb(interrupt_in_urb)	/* not in flight */
+				setup_line()
+				  usb_submit_urb(interrupt_in_urb)
+
+The port is now closed with the baton still going round. The next open
+fails because the interrupt urb is already submitted, and if the device
+is unplugged, oti6858_port_remove() frees the private data while a work
+may be pending or running.
+
+Poison the interrupt urb first: that waits for the handler and makes all
+further submissions fail, so nothing schedules the works any more. Then
+cancel the works, after which only the bulk urbs are left, kill those,
+and make the interrupt urb usable again for the next open. Don't print
+an error for the submissions that fail with -EPERM in this window, as
+oti6858_read_bulk_callback() already does.
+
+Fixes: 49cdee0ed0fc ("USB: oti6858 usb-serial driver (in Nokia CA-42 cable)")
+Cc: stable <stable@kernel.org>
+Cc: Johan Hovold <johan@kernel.org>
+Signed-off-by: Josef Bacik <josef@toxicpanda.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Johan Hovold <johan@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/serial/garmin_gps.c |   12 +++---------
- 1 file changed, 3 insertions(+), 9 deletions(-)
+ drivers/usb/serial/oti6858.c |   16 ++++++++++++----
+ 1 file changed, 12 insertions(+), 4 deletions(-)
 
---- a/drivers/usb/serial/garmin_gps.c
-+++ b/drivers/usb/serial/garmin_gps.c
-@@ -821,10 +821,9 @@ static void priv_status_resp(struct usb_
-  * Garmin specific driver functions
-  ******************************************************************************/
+--- a/drivers/usb/serial/oti6858.c
++++ b/drivers/usb/serial/oti6858.c
+@@ -251,7 +251,7 @@ static void setup_line(struct work_struc
  
--static int process_resetdev_request(struct usb_serial_port *port)
-+static void process_resetdev_request(struct usb_serial_port *port)
- {
- 	unsigned long flags;
--	int status;
- 	struct garmin_data *garmin_data_p = usb_get_serial_port_data(port);
+ 	dev_dbg(&port->dev, "%s(): submitting interrupt urb\n", __func__);
+ 	result = usb_submit_urb(port->interrupt_in_urb, GFP_KERNEL);
+-	if (result != 0) {
++	if (result != 0 && result != -EPERM) {
+ 		dev_err(&port->dev, "%s(): usb_submit_urb() failed with error %d\n",
+ 			__func__, result);
+ 	}
+@@ -303,7 +303,7 @@ static void send_data(struct work_struct
  
- 	spin_lock_irqsave(&garmin_data_p->lock, flags);
-@@ -833,13 +832,8 @@ static int process_resetdev_request(stru
- 	garmin_data_p->serial_num = 0;
- 	spin_unlock_irqrestore(&garmin_data_p->lock, flags);
+ 		dev_dbg(&port->dev, "%s(): submitting interrupt urb\n", __func__);
+ 		result = usb_submit_urb(port->interrupt_in_urb, GFP_NOIO);
+-		if (result != 0) {
++		if (result != 0 && result != -EPERM) {
+ 			dev_err(&port->dev, "%s(): usb_submit_urb() failed with error %d\n",
+ 				__func__, result);
+ 		}
+@@ -564,6 +564,13 @@ static void oti6858_close(struct usb_ser
  
+ 	dev_dbg(&port->dev, "%s(): after buf_clear()\n", __func__);
+ 
++	/*
++	 * The interrupt urb schedules the works, and the works and the bulk
++	 * urbs resubmit the interrupt urb: keep it from being submitted until
++	 * all of them are gone.
++	 */
++	usb_poison_urb(port->interrupt_in_urb);
++
+ 	/* cancel scheduled setup */
+ 	cancel_delayed_work_sync(&priv->delayed_setup_work);
+ 	cancel_delayed_work_sync(&priv->delayed_write_work);
+@@ -572,7 +579,8 @@ static void oti6858_close(struct usb_ser
+ 	dev_dbg(&port->dev, "%s(): shutting down urbs\n", __func__);
+ 	usb_kill_urb(port->write_urb);
+ 	usb_kill_urb(port->read_urb);
 -	usb_kill_urb(port->interrupt_in_urb);
--	dev_dbg(&port->dev, "%s - usb_reset_device\n", __func__);
--	status = usb_reset_device(port->serial->dev);
--	if (status)
--		dev_dbg(&port->dev, "%s - usb_reset_device failed: %d\n",
--			__func__, status);
--	return status;
-+	dev_dbg(&port->dev, "%s - usb_queue_reset_device\n", __func__);
-+	usb_queue_reset_device(port->serial->interface);
++
++	usb_unpoison_urb(port->interrupt_in_urb);
  }
  
- 
+ static int oti6858_tiocmset(struct tty_struct *tty,
+@@ -829,7 +837,7 @@ static void oti6858_write_bulk_callback(
+ 	/* schedule the interrupt urb if we are still open */
+ 	dev_dbg(&port->dev, "%s(): submitting interrupt urb\n", __func__);
+ 	result = usb_submit_urb(port->interrupt_in_urb, GFP_ATOMIC);
+-	if (result != 0) {
++	if (result != 0 && result != -EPERM) {
+ 		dev_err(&port->dev, "%s(): failed submitting int urb,"
+ 					" error %d\n", __func__, result);
+ 	}
 
 
