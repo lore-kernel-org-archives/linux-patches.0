@@ -1,51 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795621234;
-	b=Y93U8uqsUYXw03fMbvONFWCP8n5rq20lWfAExr/72zNC2jU7g8O5w4lkpINxZhni4sKf
-	 grFDMxVSzWiSti3yZSmGMW7ssAWOZQ9eDPEXUnVXDE3bQLlH6zn5X8ZUST2SuesxM+jGs
-	 /bMW3Kk63enUG3AiQaKW4hSyErS7yWT+jkL4luXmqlLeJcAC6YyVYoLzmWlwZFm1BHGP0
-	 iB4LhBH3rv+m36vkWHuW6jEzAdw0zpN3YgGzw/qtSM1SYRjJmLqIOcapofiPm5BMLcYX5
-	 iVPh8Mk1sZqUAUN2kFQPugPt51EeIbyq1d3JfMGDwgKJqCjnJ6+WRT/32hRkzmVA46A==
+	t=1795621238;
+	b=ow61Wxm/cfkF9a1BMvYSG3IdT6pK7/Qt8eRZHzcBovm+xx6uIaMQZSh3q2rHxwiZOLb0
+	 o06Qbgpht3hrHZX+jwdkZ4iLSP/uaoQGdhp8d7/K7CtvBZyGnJokjYDnKFmc1/Pd0EBq7
+	 sx+v8eBrEKIYMB32rPqzIlh5vBPfUyOOPnwXnar+TEUUQ30NF/VcIWriM6eiGmDSe+bGQ
+	 7OZjpdno7WKCk8/yVzzV82v1gUohzs6ReCEvjMqnpZ7pkqxVqMDC8Qgt7WWrkSPUTwFlL
+	 O6AOy172s9oyS53LYvCNvba7vqK3kOumMDCMcefHtEsazi+7vRbmhy0IrwbUleWe0oQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795621234;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795621238;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=IcG2hYi5iq6lyWYRv1C9QN8KyPTY6m5D2R2thafX/mU=;
-	b=XaTwapWdhEr23FgXKvkquCTT4ci/qVZlWv0fO72cdFtLMuE/qsjmEkaS40kXXEKO7bpD
-	 KPawqb5Mxk8650IoIAt3RP9R91Rqob42ssJCpHqpDFQ8x8SsEarHq54hXtPYh/zIJDYyz
-	 QVRb/LGWqukk6I4hmafVMZ6lv8mhB7RDUEdYKe3TYaCdvAyus0j0uYBMj5xex2Ma31Fb1
-	 WCexrA+WfY1MeO3Ob7EQPOeSdY/n+H/54OvhCZHTTi0hJX90U1SbDTucV3UZVk07xhGdT
-	 b3uus6TQa/hHex88lO3DhTIKI5NwXH4erk4WpotbFpscQY8xUk2cC36wIYAAGlllAkA==
+	bh=DuwLdRggUY/c9YfWa6kcuRNWg4zmPRsfSIvnPNQCbfU=;
+	b=egCboxLPEOYa+2zhlj7RMQvzbHZSVV3mE5NHvApqD5wY4byAcbgmmqZD38CIrlKfw0Tb
+	 FFtSzcZb1aFifPEuGBgcM0ZY2YO5orPJbvEMeLGqLuSNM8wVUUEekZHSnjcXwei8qGJv7
+	 5dKz4uG8jj/vmX2yicHyNLt2lg+F8qlT2+EDereaT0G1QF1qYuNbkyzaZkwlV7Y6+vxop
+	 bYJXJzY5XRyi3ml0plgi9zomoRHmgxXBM67KXEIqGLIMm92C49LET9WVsu0Wc50PBecF5
+	 bYjDQ4JJ1c4p2ItthJ5JGozHbnbibEsji65SlQQkex9UEq2tIxd/gD5HqOIzXmMq7UQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=vCgLq8pg;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="L/o7JpQv";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B339C607DEBC;
-	Wed, 25 Nov 2026 15:40:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 30A68606B3A4;
+	Wed, 25 Nov 2026 15:40:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=vCgLq8pg
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8205B1F000D0;
-	Wed, 25 Nov 2026 15:40:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=L/o7JpQv
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D8B241F000C4;
+	Wed, 25 Nov 2026 15:40:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795621234;
-	bh=IcG2hYi5iq6lyWYRv1C9QN8KyPTY6m5D2R2thafX/mU=;
+	s=korg; t=1795621237;
+	bh=DuwLdRggUY/c9YfWa6kcuRNWg4zmPRsfSIvnPNQCbfU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=vCgLq8pgwu9AZRrnqbiPdlb4FW8sCC2Pvq8fx6aEd5Z5n+D9FxXa4E9LGyzFcXHkn
-	 lY7zT99punkBM7GeonImDjVy34FbhstWgkqT1DrnYDNIOkVWxDdfp/8JBvY0jwGn4L
-	 mUUhSHuFhjEZYjpJ2LFn4hyDPKX/I1gMjSKcBZT4=
+	b=L/o7JpQvZJ14ASm36+ONBAiUW6Z7ig4dO+nHwFdK+UsA/2RTTNlCapB9wtU+LFcTV
+	 a/6pa9rknz5BSXnQ8oq8AjmH0h3Wd+MYU8nhn+TYgzQEbHyaAm3KLG852QsrnsY5UL
+	 VgvUqmGLFVaCYWayaGjJPRL4IJ5o9gvd6+7RyFZg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Chris Mason <mason@kernel.org>,
 	Alexei Starovoitov <ast@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 118/990] bpf: Dont let bpf_skb_adjust_room() raise gso_size to GSO_BY_FRAGS
-Date: Wed, 25 Nov 2026 15:24:45 +0100
-Message-ID: <20261125143824.851313127@linuxfoundation.org>
+Subject: [PATCH 6.18 119/990] bpf: Reject non-IPv6 packets in BPF_LWT_ENCAP_SEG6
+Date: Wed, 25 Nov 2026 15:24:46 +0100
+Message-ID: <20261125143824.876032195@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143822.072087159@linuxfoundation.org>
 References: <20261125143822.072087159@linuxfoundation.org>
@@ -67,48 +68,59 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alexei Starovoitov <ast@kernel.org>
+From: Chris Mason <mason@kernel.org>
 
-[ Upstream commit 6d8118937ba477e03fa2e94e9bd9abac7291a2a2 ]
+[ Upstream commit 58e39f8d58b141b96c030008a20dde9d625ec997 ]
 
-When bpf_skb_adjust_room() shrinks a TCP GSO skb, it adds the number of
-removed bytes to gso_size. gso_size has 16 bits, and nothing checks the
-sum. Thus gso_size can wrap to 0 or to a small size, or it can be
-GSO_BY_FRAGS. GSO_BY_FRAGS is not a size. It tells skb_segment() to read
-the length of each segment from the frag_list. If the TCP GSO skb has no
-frag_list, skb_segment() dereferences a NULL pointer.
+The mode BPF_LWT_ENCAP_SEG6 of bpf_lwt_push_encap() pushes an IPv6 header
+and an SRH, and it replaces the dst. The SRH says that IPv6 follows, and
+skb->protocol does not change. Thus the mode assumes an IPv6 packet, but an
+lwt_in prog also runs for IPv4 packets. After the prog, bpf_input() calls
+orig_input() of the old dst. This IPv4 handler reads the pushed headers as
+IPv4. It can write after the packet data, and the kernel crashes.
 
-Return -ENOTSUPP and do not change the skb if the sum is GSO_BY_FRAGS or
-larger. With BPF_F_ADJ_ROOM_FIXED_GSO the helper does not change gso_size,
-so it shrinks the skb as before.
+                 after the push         orig_input() expects
+                 ---------------------  --------------------
+  skb->protocol  ETH_P_IP               ETH_P_IP
+  dst            rt6_info               rtable
+  packet         | IPv6 | SRH | IPv4 |  | IPv4 |
 
-Fixes: 2be7e212d541 ("bpf: add bpf_skb_adjust_room helper")
+The mode BPF_LWT_ENCAP_SEG6_INLINE returns -EBADMSG for non-IPv6 packets.
+Apply this check to both modes. End.BPF does not change, because
+seg6_local_input() drops non-IPv6 packets.
+
+Fixes: fe94cc290f53 ("bpf: Add IPv6 Segment Routing helpers")
+Signed-off-by: Chris Mason <mason@kernel.org>
 Signed-off-by: Alexei Starovoitov <ast@kernel.org>
-Link: https://patch.msgid.link/20261101190535.1454146-16-alexei.starovoitov@gmail.com
+Link: https://patch.msgid.link/20261101190535.1454146-17-alexei.starovoitov@gmail.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/core/filter.c | 8 ++++++++
- 1 file changed, 8 insertions(+)
+ net/core/filter.c | 10 +++++++---
+ 1 file changed, 7 insertions(+), 3 deletions(-)
 
 diff --git a/net/core/filter.c b/net/core/filter.c
-index 8f92e2bf85517..9463c10d0c907 100644
+index 9463c10d0c907..2df3e5cfc3fcd 100644
 --- a/net/core/filter.c
 +++ b/net/core/filter.c
-@@ -3701,6 +3701,14 @@ static int bpf_skb_net_shrink(struct sk_buff *skb, u32 off, u32 len_diff,
- 			return -ENOTSUPP;
- 	}
+@@ -6611,11 +6611,15 @@ static int bpf_push_seg6_encap(struct sk_buff *skb, u32 type, void *hdr, u32 len
+ 	if (!seg6_validate_srh(srh, len, false))
+ 		return -EINVAL;
  
 +	/*
-+	 * The MSS is raised by len_diff. It has 16 bits, and GSO_BY_FRAGS is
-+	 * not a size.
++	 * The encap mode names IPv6 as the inner protocol, and neither mode
++	 * updates skb->protocol.
 +	 */
-+	if (skb_is_gso(skb) && !(flags & BPF_F_ADJ_ROOM_FIXED_GSO) &&
-+	    skb_shinfo(skb)->gso_size + len_diff >= GSO_BY_FRAGS)
-+		return -ENOTSUPP;
++	if (skb->protocol != htons(ETH_P_IPV6))
++		return -EBADMSG;
 +
- 	ret = skb_unclone(skb, GFP_ATOMIC);
- 	if (unlikely(ret < 0))
- 		return ret;
+ 	switch (type) {
+ 	case BPF_LWT_ENCAP_SEG6_INLINE:
+-		if (skb->protocol != htons(ETH_P_IPV6))
+-			return -EBADMSG;
+-
+ 		err = seg6_do_srh_inline(skb, srh);
+ 		break;
+ 	case BPF_LWT_ENCAP_SEG6:
 -- 
 2.53.0
 
