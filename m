@@ -1,46 +1,47 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795618368;
-	b=kAgWVQQgKTmzfB/FIrCEh8VsS6b1o+iIjU/KB8AkZuF7W+gbo1K6p/zLbQUDbnXuRZKf
-	 UIqsWPaIFGSXLWodp1ho+o7QqGkk/YcLy9jx3tK1pHkJkdacSjBPjarcl2qxVY4iyuBm/
-	 iLh5GgmwGkqxoCAsNXLHBQt2Dh61Ox9lK7Da6uxvCF/djj0meOtdiaBfdTgmt8tfLFxqy
-	 N/xLZ79Hi6Ji82/HEjeb0aNg4jL4B6KvxVBkOzKhYyTkAcPQmKz/UcQZt83dmCVkwVie8
-	 pau1QBQPxInrGRFI7XGZBAjTq6DviET9ib3ZgNxwCluH7oGZ09NRQuOg++uLLu3a8cg==
+	t=1795618371;
+	b=bXZTbeABC4rXaPedi55mfo/PEc5nIozsdlesPlD1SoVyZhV6zujv7Amd+IT+x3dgCdcK
+	 js7ntABis3rZwxaPEyl+i1iMBJuJxmiQnDjnEATOxnp6MT+03E0mCzYl2GoKVj0SjVG80
+	 7eNdeW0zlicxMbSoSQVE5w0eAqvTy0hGuIdjm1aMLYP/q8llIxHhagbB6VSC1Ls8Qo6G1
+	 J1VNveyxLpIcmlz4CjXHiTKuKH+PLKc9C16wr2pEk8NCk1rViDefFS6AeSlBgMvTOKBpv
+	 ibAgkomR/wuCv0DWM78pUk3ueXcGuTc/H1txe3Yq4sde+P+BwGIzSC+8cUPrwTxF9Aw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795618368;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795618371;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=GzT3XDz070Uw9QUKqYhhA29CHF24YwwHCXmBAe7KPIA=;
-	b=BC7MxPBq7yLNQU5ys08wDH9ZhrUwnPuaUYQkoh8VeHGiYE10p+UGsPSSFsdOFFf7Qn4X
-	 1cmu1leMH4kcvUBMNQQj7TyB/T+iqhiMpxMuW8bbNvRg9qSpY0sJSawdE+Mp6AClts9pH
-	 vbFgkgXyKnAJoifPJceND2nDWmb4wXW82g5zXoHgukh2KbvJD4itJkESKwQnP03yxADuc
-	 bNlmfv++NwUeuYG7sNE7FTbe2Zi4sQsd+uAzB/uoSEr5eomMx3vHVEKRMg+S/+/i/1YFa
-	 sMSlEWBVc0lyeFXeS75Frqu2eyyl7XTgfBH2WFVEQc5aNPu7SbruB7Z9f5JY9+SYfUA==
+	bh=k8T60hfhv8Ai2rjyn+filaCFMbcmLlPYuA0xTFTeMdY=;
+	b=sq/zV+b6aeTyHmKcXHDuGdbwvoBjlAXN1+T3RbceE4HXK/+pcdVwYVfMS6fJE5/Y/MLu
+	 PsfTohXHOmGmoQTxbzh8n27r9a/25z9mfM0y1ZB+p/0+J1wowhLh9sntApe1aVAC/+Gd/
+	 4QSkga0obtuQiIhQTkfRdOtgudKdDGMiR5aVr7Tb/yKdewEkNSZCQoIctx0UUo3WBIIb1
+	 oJSRKw11wIClb+78QjWYA3Dvd9fApCw7uQcTldUWrtIB1W/8pPnZzvr94ShvfD83MvYIv
+	 eMDKxqubOAKxOlbi31u2H6qL5Mby51u5yAeBXEg8NZ6Z+nXJV9iCd+3W6nfsugMnPWQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=RkvNk6hQ;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=W+NM4GE9;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 15C77606A323;
-	Wed, 25 Nov 2026 14:52:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7BAF3606A321;
+	Wed, 25 Nov 2026 14:52:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=RkvNk6hQ
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6BDF41F000D1;
-	Wed, 25 Nov 2026 14:52:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=W+NM4GE9
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AAF301F000C6;
+	Wed, 25 Nov 2026 14:52:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795618367;
-	bh=GzT3XDz070Uw9QUKqYhhA29CHF24YwwHCXmBAe7KPIA=;
+	s=korg; t=1795618371;
+	bh=k8T60hfhv8Ai2rjyn+filaCFMbcmLlPYuA0xTFTeMdY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=RkvNk6hQExSuMVDHjW3NHNBXl6ePaW/Ta2iPX2qBmWnQ9G7FJx1vT/Xfo8gtEatTc
-	 8a08euU/zP07WYFzkO5gu1SI+dhN+sL2UvMt1DKZhLBuxW70dpy6Cn+0tp62gZgcjP
-	 brqXBEdEQ+f3wtH+78lf+eBfHdHk72qI3p8ADypk=
+	b=W+NM4GE9GPyP+Q2rQDM/xZBgfP2ZBTtSmiELSLh4QPvanSPEuLseVUjpIIHzVEduh
+	 JWi+fMOgMFy4hEBVrfhk7xYc3p1nK++xSmr7bQ2fU6r9F5X8ihSy3RPNf2EWOQ1Za+
+	 F0EG+nNe6q9wZRG1cvAdwb0mAjI16w61XOOaGnXM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Hannes Reinecke <hare@suse.de>,
 	Christoph Hellwig <hch@lst.de>,
 	Sagi Grimberg <sagi@grimberg.me>,
 	Chaitanya Kulkarni <kch@nvidia.com>,
@@ -49,9 +50,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Jens Axboe <axboe@kernel.dk>,
 	Keith Busch <kbusch@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0256/1005] nvmet-tcp: ask for the TLS record type on every receive
-Date: Wed, 25 Nov 2026 15:26:34 +0100
-Message-ID: <20261125143827.736362748@linuxfoundation.org>
+Subject: [PATCH 7.3 0257/1005] nvmet-auth: keep the old keys if the new ones fail
+Date: Wed, 25 Nov 2026 15:26:35 +0100
+Message-ID: <20261125143827.759510769@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143821.729802100@linuxfoundation.org>
 References: <20261125143821.729802100@linuxfoundation.org>
@@ -75,48 +76,129 @@ Content-Transfer-Encoding: 8bit
 
 From: Josef Bacik <josef@toxicpanda.com>
 
-[ Upstream commit 77f72de389e3774dc95d7cd03a98a73e47013abd ]
+[ Upstream commit 41ad4af45ac90259c652135b24539a08a92a7491 ]
 
-nvmet_tcp_alloc_cmd() points recv_msg.msg_control at recv_cbuf once.
-The first receive that stores a record type there advances msg_control
-and leaves msg_controllen at 0 for the lifetime of the command. From
-then on nvmet_tcp_try_recv_data() sees the record type of that first
-receive: if it was an alert, all later data is dropped as alerts and the
-queue stalls, if it was data, a later alert can't be reported and
-tls_sw_recvmsg() fails with -EIO.
+AUTH_Negotiate on the admin queue has nvmet_setup_auth() reload the
+host's keys, and it frees the old host key first. If decoding the new
+secret fails, or an allocation does, the controller is left without a
+host key, which means no authentication at all: nvmet_check_auth_status()
+passes everything and I/O queue Connects no longer ask for it. configfs
+accepts any string starting with "DHHC-1:" and a digit, so one typo
+while changing a secret opens the namespaces to any connected admin
+queue.
 
-Set up the control buffer before each receive, like the other receive
-paths do.
+Decode the new keys first and only then replace the old ones.
 
-Fixes: a1c5dd8355b1 ("nvmet-tcp: control messages for recvmsg()")
+Fixes: db1312dd9548 ("nvmet: implement basic In-Band Authentication")
+Cc: Hannes Reinecke <hare@suse.de>
 Cc: Christoph Hellwig <hch@lst.de>
 Cc: Sagi Grimberg <sagi@grimberg.me>
 Cc: Chaitanya Kulkarni <kch@nvidia.com>
 Reviewed-by: Hannes Reinecke <hare@kernel.org>
+Reviewed-by: Christoph Hellwig <hch@lst.de>
 Signed-off-by: Josef Bacik <josef@toxicpanda.com>
 Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Keith Busch <kbusch@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/nvme/target/tcp.c | 5 +++++
- 1 file changed, 5 insertions(+)
+ drivers/nvme/target/auth.c | 69 ++++++++++++++++----------------------
+ 1 file changed, 28 insertions(+), 41 deletions(-)
 
-diff --git a/drivers/nvme/target/tcp.c b/drivers/nvme/target/tcp.c
-index 85a10679d0a93..8287f19741e80 100644
---- a/drivers/nvme/target/tcp.c
-+++ b/drivers/nvme/target/tcp.c
-@@ -1302,6 +1302,11 @@ static int nvmet_tcp_try_recv_data(struct nvmet_tcp_queue *queue)
- 	int len, ret;
+diff --git a/drivers/nvme/target/auth.c b/drivers/nvme/target/auth.c
+index 574025730834c..ccba84b1344e0 100644
+--- a/drivers/nvme/target/auth.c
++++ b/drivers/nvme/target/auth.c
+@@ -135,6 +135,7 @@ u8 nvmet_setup_auth(struct nvmet_ctrl *ctrl, struct nvmet_sq *sq, bool reset)
+ 	int ret = 0;
+ 	struct nvmet_host_link *p;
+ 	struct nvmet_host *host = NULL;
++	struct nvme_dhchap_key *host_key, *ctrl_key = NULL;
  
- 	while (msg_data_left(&cmd->recv_msg)) {
-+		if (queue->tls_pskid) {
-+			/* The last receive has used it up */
-+			cmd->recv_msg.msg_control = cmd->recv_cbuf;
-+			cmd->recv_msg.msg_controllen = sizeof(cmd->recv_cbuf);
+ 	down_read(&nvmet_config_sem);
+ 	if (nvmet_is_disc_subsys(ctrl->subsys))
+@@ -172,55 +173,41 @@ u8 nvmet_setup_auth(struct nvmet_ctrl *ctrl, struct nvmet_sq *sq, bool reset)
+ 		goto out_unlock;
+ 	}
+ 
+-	if (host->dhchap_hash_id == ctrl->shash_id) {
+-		pr_debug("Re-use existing hash ID %d\n",
+-			 ctrl->shash_id);
+-	} else {
+-		ctrl->shash_id = host->dhchap_hash_id;
+-	}
+-
+-	/* Skip the 'DHHC-1:XX:' prefix */
+-	nvme_auth_free_key(ctrl->host_key);
+-	ctrl->host_key = nvme_auth_extract_key(host->dhchap_secret + 10,
+-					       host->dhchap_key_hash);
+-	if (IS_ERR(ctrl->host_key)) {
++	/*
++	 * Skip the 'DHHC-1:XX:' prefix. Keep the old keys until the new ones
++	 * are there: a controller without a host key needs no authentication.
++	 */
++	host_key = nvme_auth_extract_key(host->dhchap_secret + 10,
++					 host->dhchap_key_hash);
++	if (IS_ERR(host_key)) {
+ 		ret = NVME_AUTH_DHCHAP_FAILURE_NOT_USABLE;
+-		ctrl->host_key = NULL;
+-		goto out_free_hash;
++		goto out_unlock;
+ 	}
++	if (host->dhchap_ctrl_secret) {
++		ctrl_key = nvme_auth_extract_key(host->dhchap_ctrl_secret + 10,
++						 host->dhchap_ctrl_key_hash);
++		if (IS_ERR(ctrl_key)) {
++			nvme_auth_free_key(host_key);
++			ret = NVME_AUTH_DHCHAP_FAILURE_NOT_USABLE;
++			goto out_unlock;
 +		}
- 		len = sock_recvmsg(cmd->queue->sock, &cmd->recv_msg,
- 			cmd->recv_msg.msg_flags);
- 		if (len <= 0)
++	}
++	nvme_auth_free_key(ctrl->host_key);
++	ctrl->host_key = host_key;
++	nvme_auth_free_key(ctrl->ctrl_key);
++	ctrl->ctrl_key = ctrl_key;
++	ctrl->shash_id = host->dhchap_hash_id;
+ #ifdef CONFIG_NVME_TARGET_AUTH_DEBUG
+ 	pr_debug("%s: using hash %s key %*ph\n", __func__,
+ 		 ctrl->host_key->hash > 0 ?
+ 		 nvme_auth_hmac_name(ctrl->host_key->hash) : "none",
+ 		 (int)ctrl->host_key->len, ctrl->host_key->key);
++	if (ctrl->ctrl_key)
++		pr_debug("%s: using ctrl hash %s key %*ph\n", __func__,
++			 ctrl->ctrl_key->hash > 0 ?
++			 nvme_auth_hmac_name(ctrl->ctrl_key->hash) : "none",
++			 (int)ctrl->ctrl_key->len, ctrl->ctrl_key->key);
+ #endif
+-	nvme_auth_free_key(ctrl->ctrl_key);
+-	if (!host->dhchap_ctrl_secret) {
+-		ctrl->ctrl_key = NULL;
+-		goto out_unlock;
+-	}
+-
+-	ctrl->ctrl_key = nvme_auth_extract_key(host->dhchap_ctrl_secret + 10,
+-					       host->dhchap_ctrl_key_hash);
+-	if (IS_ERR(ctrl->ctrl_key)) {
+-		ret = NVME_AUTH_DHCHAP_FAILURE_NOT_USABLE;
+-		ctrl->ctrl_key = NULL;
+-		goto out_free_hash;
+-	}
+-#ifdef CONFIG_NVME_TARGET_AUTH_DEBUG
+-	pr_debug("%s: using ctrl hash %s key %*ph\n", __func__,
+-		 ctrl->ctrl_key->hash > 0 ?
+-		 nvme_auth_hmac_name(ctrl->ctrl_key->hash) : "none",
+-		 (int)ctrl->ctrl_key->len, ctrl->ctrl_key->key);
+-#endif
+-out_free_hash:
+-	if (ret) {
+-		if (ctrl->host_key) {
+-			nvme_auth_free_key(ctrl->host_key);
+-			ctrl->host_key = NULL;
+-		}
+-		ctrl->shash_id = 0;
+-	}
+ out_unlock:
+ 	up_read(&nvmet_config_sem);
+ 
 -- 
 2.53.0
 
