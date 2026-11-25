@@ -1,42 +1,42 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795620640;
-	b=uEf9nLqJ5J0XYl2YwcZQmy17vfUbyyMqZk7tGjIR4z18ty3e+YRS48TvB9KV4JiNiA4A
-	 ajm0B+39pwr/82O1kl9b2V/hWHIfFeNCixsuDOQXPnKCcRdvr8Vnqa8GCOvmJmfbT5TzG
-	 1m+DmAMxPDJUHKujXrwOkx8C+j92ZCkb1EqVpEgiDnHcAOK4TvnZ42WmodBCuxQWtpKnm
-	 ocsQLFxkVy1QoKUEqr8DmtUskDPFFFvXRMd4sneBK9/FweWoKyDciMecuTE4bh46yVFw6
-	 ThjocsRNKtT7AcSFrredmK5f3bkEkntMxm7yJdXdl55GNgd57ASR7Cl9oW/LBCHJdRw==
+	t=1795620643;
+	b=n+UiTssGeTzMVE+Sf3aYXG5WVSSwAY1iP0zqNsprEw6I8udF0l1D6eCW6baVohLEjxx4
+	 mhcz7/rjI6TjYKLKCoGUXfKhYVVRrRcC7weS8ZCe8t3l+b+Uq9nGFYsOCKym6lKF34QHD
+	 //ZHKxyCSqnoeRgTG6KZcV3eLrwYt1RaRALN2uFLFuwVLuNPSF6F9QpJlfB6d4AgBUtDo
+	 k4yVP4HU21JE8wzoEkw8RI748EdkA3OZCbdPusW1K8LTxpwywNQBb88FI7b0yI/Vuu2JL
+	 5SAUDxsbY5q/kKLWN3RuaT1W5ykJrpTUnLkl+XSr3GMGSui0WabifwaM2FL81I0coPg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795620640;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795620643;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=9ql1fgHR8PdxWjmJ7gjKhwpSuX14RxQ1bn/e4Or/RPI=;
-	b=Ea8O1sILBXmJ8u8jIwcYjY1urw9E0Fo/wYsggZctfyup9AjKWO/KF+VAu358nvZ4lbqo
-	 6KYUWHdFDWRiXlI8QretEJ/T+hsDGWfgLywioKJXba0xiCM/6lrexCX1S/k+Aizn5YCf5
-	 olmT9sBcNNV+jFP5Mtax/ZpAv9Sdhraxi/KlES3Yn+Yjh88+R8gFZ5kq3ZRXqhlCdzyQ3
-	 /AK1GQzbfCvaDaJK4Q+phnEEJ8vY1vasBsbaVdI3X0+Zu25z92E92Y0sWgNvCC0Pe9u+S
-	 aYsFyK8Sd+qdEa6AEXFSjsyIn3EjdKWpzo6F9vl3Jjq+sqiGV1fuzoRwsEUDrJSYUgQ==
+	bh=j65ibqxnFWoPmqGawxqr4FwXZ3tIMKTBl9WA6n5z+a0=;
+	b=e0zRxjzEzyVd0Ju/Ddb5nvcL9VEqpDKnFVgTjOB4LxZyHfrRQkPAFDe8LBYFdVlHzA2U
+	 wVw/JtorA0QtoVyl6hWYUrp9dCCo7dawUX0fmmBgKpVeMYVA+H8qQ1tA6iTRuWwzGBdfL
+	 J/uTo1H/P4YEtX8SW41VNP/1BH45HK/Ons+HH26THYPkb+3X+NBKK+nqb1aSDxcrgKnLo
+	 xUT0qcLzHf2ifTeCSYTTlhPhzS3O9k/baWjTh7JDkND27Mp5CwdeJ8dLG634TKKd9zQpL
+	 f7UiDPrXqLkBtjZIhSXqs3nxVPs02Q4jSRRowOpKnGShbRnnu9ux5f2Gcr80KXipFxA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=xb2dgrJ2;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="Nsre/zlf";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0B9CA606A31E;
-	Wed, 25 Nov 2026 15:30:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 045EC606A327;
+	Wed, 25 Nov 2026 15:30:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=xb2dgrJ2
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5E0741F000C0;
-	Wed, 25 Nov 2026 15:30:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Nsre/zlf
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2ADD21F000CA;
+	Wed, 25 Nov 2026 15:30:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795620639;
-	bh=9ql1fgHR8PdxWjmJ7gjKhwpSuX14RxQ1bn/e4Or/RPI=;
+	s=korg; t=1795620642;
+	bh=j65ibqxnFWoPmqGawxqr4FwXZ3tIMKTBl9WA6n5z+a0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=xb2dgrJ2b3VWviv/KfwX0+MhxavxxGds1Wfw/9ZjZ0GlN/519mvvCAI4jbI3Ai0Ms
-	 88YArcA88VSCU0wuNPiG/rAhg63Yst7SjFWN6RtkuKOGUsx5iczL30jls0yeec3rmW
-	 L1sT/6eQKGPbnCXgagdEO4JuOqxCqp5cF4LUB2NQ=
+	b=Nsre/zlfQluOVrkN5xdzmEfi3eJHMcN66/owoBcm8HHMYav5J5gaO2Jq2ceUoXtO2
+	 mi9LAtAkHuEOxbE67miK1XWCBua3qCWmF8S1c+9xaslHDVYMWmplkidgXg8a1q/hhD
+	 sG6CWTNxJPyNbc7qAaYVUGx7ce8YPuq4tyEOQSpU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -44,9 +44,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	stable <stable@kernel.org>,
 	Radhey Shyam Pandey <radhey.shyam.pandey@amd.com>,
 	Thinh Nguyen <Thinh.Nguyen@synopsys.com>
-Subject: [PATCH 7.3 0940/1005] usb: dwc3: xilinx: fix system suspend and resume PHY handling
-Date: Wed, 25 Nov 2026 15:37:58 +0100
-Message-ID: <20261125143843.700385074@linuxfoundation.org>
+Subject: [PATCH 7.3 0941/1005] usb: dwc3: xilinx: re-assert resets on ZynqMP init error paths
+Date: Wed, 25 Nov 2026 15:37:59 +0100
+Message-ID: <20261125143843.723901348@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143821.729802100@linuxfoundation.org>
 References: <20261125143821.729802100@linuxfoundation.org>
@@ -70,80 +70,169 @@ Content-Transfer-Encoding: 8bit
 
 From: Radhey Shyam Pandey <radhey.shyam.pandey@amd.com>
 
-commit 2fad8d241a6833d0c7aeafa0ab596e83c7b4ec9c upstream.
+commit f33f0dd2eb014bffda02ecfd182de3ddab058596 upstream.
 
-System suspend and resume error paths do not handle PHY and clock
-resources correctly. Suspend calls phy_exit() without first powering
-off the PHY and ignores failures, while resume can leave clocks
-enabled if PHY reinitialization fails.
+If reset deassert or PHY setup fails partway through
+dwc3_xlnx_init_zynqmp(), re-assert the resets that were already
+released before unwinding the PHY.
 
-Propagate errors to the PM core and unwind resources to ensure a
-consistent state on suspend and resume failures.
+Only undo the reset cycle the function actually performed. The cycle is
+skipped when no usb3-phy is present, because asserting the core resets
+can break a USB3 configuration that is live but missing from the device
+tree, so the error path skips it for the same reason. Asserting an
+already asserted reset is harmless, so one block covers however far the
+deasserts progressed.
 
-Fixes: d6edcdc1ef06 ("usb: dwc3: xilinx: fix usb3 non-wakeup source resume failure")
+Save the ZynqMP reset handles in driver private data so later probe
+teardown can re-assert released resets.
+
+Fixes: 84770f028fab ("usb: dwc3: Add driver for Xilinx platforms")
 Cc: stable <stable@kernel.org>
 Assisted-by: Claude:claude-opus-5
 Signed-off-by: Radhey Shyam Pandey <radhey.shyam.pandey@amd.com>
 Acked-by: Thinh Nguyen <Thinh.Nguyen@synopsys.com>
-Link: https://patch.msgid.link/20260928120015.3152461-2-radhey.shyam.pandey@amd.com
+Link: https://patch.msgid.link/20260928120015.3152461-3-radhey.shyam.pandey@amd.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/dwc3/dwc3-xilinx.c |   24 +++++++++++++++++++++---
- 1 file changed, 21 insertions(+), 3 deletions(-)
+ drivers/usb/dwc3/dwc3-xilinx.c |   55 ++++++++++++++++++++++++++---------------
+ 1 file changed, 36 insertions(+), 19 deletions(-)
 
 --- a/drivers/usb/dwc3/dwc3-xilinx.c
 +++ b/drivers/usb/dwc3/dwc3-xilinx.c
-@@ -383,13 +383,26 @@ static int __maybe_unused dwc3_xlnx_runt
- static int __maybe_unused dwc3_xlnx_suspend(struct device *dev)
+@@ -48,6 +48,9 @@ struct dwc3_xlnx {
+ 	void __iomem			*regs;
+ 	int				(*pltfm_init)(struct dwc3_xlnx *data);
+ 	struct phy			*usb3_phy;
++	struct reset_control		*usb_crst;
++	struct reset_control		*usb_hibrst;
++	struct reset_control		*usb_apbrst;
+ };
+ 
+ static void dwc3_xlnx_mask_phy_rst(struct dwc3_xlnx *priv_data, bool mask)
+@@ -112,7 +115,6 @@ static int dwc3_xlnx_init_versal(struct
+ static int dwc3_xlnx_init_zynqmp(struct dwc3_xlnx *priv_data)
  {
- 	struct dwc3_xlnx *priv_data = dev_get_drvdata(dev);
-+	int ret;
-+
-+	ret = phy_power_off(priv_data->usb3_phy);
-+	if (ret < 0)
-+		return ret;
+ 	struct device		*dev = priv_data->dev;
+-	struct reset_control	*crst, *hibrst, *apbrst;
+ 	struct gpio_desc	*reset_gpio;
+ 	int			ret = 0;
  
--	phy_exit(priv_data->usb3_phy);
-+	ret = phy_exit(priv_data->usb3_phy);
-+	if (ret < 0)
-+		goto err_phy_power_on;
- 
- 	/* Disable the clocks */
- 	clk_bulk_disable(priv_data->num_clocks, priv_data->clks);
- 
- 	return 0;
-+
-+err_phy_power_on:
-+	if (phy_power_on(priv_data->usb3_phy))
-+		dev_err(dev, "failed to restore PHY power after suspend error\n");
-+
-+	return ret;
- }
- 
- static int __maybe_unused dwc3_xlnx_resume(struct device *dev)
-@@ -403,15 +416,20 @@ static int __maybe_unused dwc3_xlnx_resu
- 
- 	ret = phy_init(priv_data->usb3_phy);
- 	if (ret < 0)
--		return ret;
-+		goto err_clk_disable;
- 
- 	ret = phy_power_on(priv_data->usb3_phy);
- 	if (ret < 0) {
- 		phy_exit(priv_data->usb3_phy);
--		return ret;
-+		goto err_clk_disable;
+@@ -124,25 +126,25 @@ static int dwc3_xlnx_init_zynqmp(struct
+ 		goto err;
  	}
  
- 	return 0;
-+
-+err_clk_disable:
-+	clk_bulk_disable(priv_data->num_clocks, priv_data->clks);
-+
-+	return ret;
- }
+-	crst = devm_reset_control_get_exclusive(dev, "usb_crst");
+-	if (IS_ERR(crst)) {
+-		ret = PTR_ERR(crst);
++	priv_data->usb_crst = devm_reset_control_get_exclusive(dev, "usb_crst");
++	if (IS_ERR(priv_data->usb_crst)) {
++		ret = PTR_ERR(priv_data->usb_crst);
+ 		dev_err_probe(dev, ret,
+ 			      "failed to get core reset signal\n");
+ 		goto err;
+ 	}
  
- static const struct dev_pm_ops dwc3_xlnx_dev_pm_ops = {
+-	hibrst = devm_reset_control_get_exclusive(dev, "usb_hibrst");
+-	if (IS_ERR(hibrst)) {
+-		ret = PTR_ERR(hibrst);
++	priv_data->usb_hibrst = devm_reset_control_get_exclusive(dev, "usb_hibrst");
++	if (IS_ERR(priv_data->usb_hibrst)) {
++		ret = PTR_ERR(priv_data->usb_hibrst);
+ 		dev_err_probe(dev, ret,
+ 			      "failed to get hibernation reset signal\n");
+ 		goto err;
+ 	}
+ 
+-	apbrst = devm_reset_control_get_exclusive(dev, "usb_apbrst");
+-	if (IS_ERR(apbrst)) {
+-		ret = PTR_ERR(apbrst);
++	priv_data->usb_apbrst = devm_reset_control_get_exclusive(dev, "usb_apbrst");
++	if (IS_ERR(priv_data->usb_apbrst)) {
++		ret = PTR_ERR(priv_data->usb_apbrst);
+ 		dev_err_probe(dev, ret,
+ 			      "failed to get APB reset signal\n");
+ 		goto err;
+@@ -156,19 +158,19 @@ static int dwc3_xlnx_init_zynqmp(struct
+ 	 * absent.
+ 	 */
+ 	if (priv_data->usb3_phy) {
+-		ret = reset_control_assert(crst);
++		ret = reset_control_assert(priv_data->usb_crst);
+ 		if (ret < 0) {
+ 			dev_err(dev, "Failed to assert core reset\n");
+ 			goto err;
+ 		}
+ 
+-		ret = reset_control_assert(hibrst);
++		ret = reset_control_assert(priv_data->usb_hibrst);
+ 		if (ret < 0) {
+ 			dev_err(dev, "Failed to assert hibernation reset\n");
+ 			goto err;
+ 		}
+ 
+-		ret = reset_control_assert(apbrst);
++		ret = reset_control_assert(priv_data->usb_apbrst);
+ 		if (ret < 0) {
+ 			dev_err(dev, "Failed to assert APB reset\n");
+ 			goto err;
+@@ -179,7 +181,7 @@ static int dwc3_xlnx_init_zynqmp(struct
+ 	if (ret < 0)
+ 		goto err;
+ 
+-	ret = reset_control_deassert(apbrst);
++	ret = reset_control_deassert(priv_data->usb_apbrst);
+ 	if (ret < 0) {
+ 		dev_err(dev, "Failed to release APB reset\n");
+ 		goto err_phy_exit;
+@@ -195,21 +197,21 @@ static int dwc3_xlnx_init_zynqmp(struct
+ 		writel(PIPE_CLK_DESELECT, priv_data->regs + XLNX_USB_FPD_PIPE_CLK);
+ 	}
+ 
+-	ret = reset_control_deassert(crst);
++	ret = reset_control_deassert(priv_data->usb_crst);
+ 	if (ret < 0) {
+ 		dev_err(dev, "Failed to release core reset\n");
+-		goto err_phy_exit;
++		goto err_reset_assert;
+ 	}
+ 
+-	ret = reset_control_deassert(hibrst);
++	ret = reset_control_deassert(priv_data->usb_hibrst);
+ 	if (ret < 0) {
+ 		dev_err(dev, "Failed to release hibernation reset\n");
+-		goto err_phy_exit;
++		goto err_reset_assert;
+ 	}
+ 
+ 	ret = phy_power_on(priv_data->usb3_phy);
+ 	if (ret < 0)
+-		goto err_phy_exit;
++		goto err_reset_assert;
+ 
+ 	/* ulpi reset via gpio-modepin or gpio-framework driver */
+ 	reset_gpio = devm_gpiod_get_optional(dev, "reset", GPIOD_OUT_HIGH);
+@@ -230,6 +232,21 @@ static int dwc3_xlnx_init_zynqmp(struct
+ 
+ err_phy_power_off:
+ 	phy_power_off(priv_data->usb3_phy);
++err_reset_assert:
++	/*
++	 * Undo only the reset cycle performed above.  That cycle is skipped
++	 * when there is no usb3-phy.  The deasserts stay unconditional so a
++	 * core the bootloader left in reset still comes up, but they are
++	 * deliberately not paired with an assert here: resetting a USB3
++	 * configuration that is live but missing from the device tree could
++	 * break it.  Asserting an already asserted reset is harmless, so one
++	 * block covers however far the cycle's deasserts got.
++	 */
++	if (priv_data->usb3_phy) {
++		reset_control_assert(priv_data->usb_hibrst);
++		reset_control_assert(priv_data->usb_crst);
++		reset_control_assert(priv_data->usb_apbrst);
++	}
+ err_phy_exit:
+ 	phy_exit(priv_data->usb3_phy);
+ err:
 
 
