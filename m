@@ -1,53 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795620672;
-	b=Oe0XwGg6X7tp5Wz72Qdn3zGOrxx5JFbzLU1g1a0D801eDoGRuTn7upE3Fqd96XsW4Wj9
-	 OGLfAKZUyFDM+cgWOiqUnnahRx9CXM4L3/dY4qJffP5m1xG6nwp3ISF9zGXwiSAJcf4c8
-	 lcUZl/KjEgkK/39C+Yt2kboGAg4nKTuTk4TizrSVTTOJgbry4V3xA0YteH1VE0mMPOKzs
-	 nefa1qtJs7zFKRM+hrk+hdSApMuvyW8lO2SE61/BvBrZQzKmi8h6nc/vI065PbrK7AKS5
-	 1s8pQbVkjYAv9+1U0f0uVjXEYBt2lCkQ7aBnU6JGVVnyuxd9+mdhaOE7YGpJUHf4dnQ==
+	t=1795620675;
+	b=CzvraG/BTIMdVsnhh0bkQoG/bpw1g7XwDSzrzK0cZdEpB7CrfRea0wkJOCwa5Tk31p8m
+	 KbqM7HCucKZTeeE7mzN7vAgkNM2A1yEWzs4a6dJwae4uJYd1e1vEpV58BKwy9MYx14qoj
+	 XT+1xrE6rhLdJKlsh38N/gP0hJfJrN2RH/tAT3Xr7wtaO6+Zyve6J4s4K1PNMrwyg2hez
+	 vWx5A4FQMTiD/0yhZ7TYO8MxM5iDO2yrxlXx150xcHUymECduP+JLyt6tgmkZCPcXegbV
+	 YvDwGvhQ5/uwT4V30uU5Ac4EQJW9brIPsoEu9LliDzZMQjLSr6LL0B+rXysiPrKB/gA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795620672;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795620675;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=2WMLKuSttjjcQh9j7LErLKp7HgZNhzEv1cjP9hcRzWk=;
-	b=NhMD/zGnwm5n0FO0Pqq6g1/qTkXE1IU2oxWIaLOqedwSCKJIgB+GUjSruZywXSiGKUkl
-	 m6tFvNRVCfSyPzEbF/v5D2pHlKF5W34/nZiQ1L/xyPiVHKp1DazreRWHPwM3ZDMPfC4g9
-	 +Yo/m04NjWC2pODDsgbmsmCDDgFjGmbR7tAvf6dObmHiEO+kYDQM5nSV1z1W+EF9Ar7Z/
-	 eyqkXWEjDRyLt/IPoKhWBMWInic/0moVN7gDF+0ESzjNXAZu6eMHmSeDcK6rs1P+VSM5y
-	 Jq8Tgs6I3WalFw/d4tT7+5AU5aP0mJQZSK1l3vPK5ycmjXbk3ObimRNI30sK9AvAodw==
+	bh=1rPFL42K9z5QQf5kdzHP4LRIOcafsRQ30yqk9GJ9TjU=;
+	b=NSKhhSa4hccAVL7IWo9poiMlI1joaWcKCTK3dTd/E4qB8L7tk9p/uyOFXziNU7q4nz0B
+	 vo73FmF4T73GtbKlRuLkInuoRfvEkpvHKAQMjbN1vTpX5oRC7GB+91c4vA1oTb4J7jjnl
+	 v8aglKgEn4s1DPmADp+cBaIJLCcViFGd4/7YnnhrU4Rz4QgDplsA9NRLZvTG1hv8PRjBE
+	 AKdi0NLmXabJxsR/Te9yRAOkkqV1O4N2VPypNENNnZ63HcaNTTnyGlldgcroZRjAyoYJ1
+	 2OSiXpqgWCOaXZygrwYRw6ZcZAOq7FDgr+kgRf7KzkZ385C34U2q73IrG8MDpX7sgyg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=rBQOWys4;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ZCQyrMOW;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 37CC2606A33A;
-	Wed, 25 Nov 2026 15:31:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3BE7A606A31E;
+	Wed, 25 Nov 2026 15:31:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=rBQOWys4
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 01A631F000C4;
-	Wed, 25 Nov 2026 15:31:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ZCQyrMOW
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 55F5F1F000D3;
+	Wed, 25 Nov 2026 15:31:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795620671;
-	bh=2WMLKuSttjjcQh9j7LErLKp7HgZNhzEv1cjP9hcRzWk=;
+	s=korg; t=1795620674;
+	bh=1rPFL42K9z5QQf5kdzHP4LRIOcafsRQ30yqk9GJ9TjU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=rBQOWys4Ju6gs4M1aX2mhdI08RbQ0eux6Fy5VsCqxeP0Eg5fV/5Vx1T1UlBumSl1l
-	 i2BcupGK6ktyXfURChEnNilePQPLffH7gmvJoMS2vbbiz0HqDo7NMtCIZw0dejs2Ug
-	 lp7IOU73tyyfIYlHU6GmB0Wn05MgcyF0FwDuwCS0=
+	b=ZCQyrMOWkzkKOVoNCC89Rxc/fDqKrYRrHLRsEScVKHS5qiIehDp0Ssd+ezmWHEzmH
+	 YvX7y/KOAl6HwqqKYgfKPBGy8dMZy9wJIwaiozsXemsaPBck8QYCaVTROg8VZ3RxGf
+	 3ggbKqqXQZefFD7PVWOvVzM7GvVtXsZrlOQGTLZQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chengfeng Ye <nicoyip.dev@gmail.com>,
-	Theodor Arsenij Larionov Trichkine <theodorlarionov@gmail.com>,
-	Ido Schimmel <idosch@nvidia.com>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 7.3 0996/1005] fou: reserve headroom before pushing the encap header
-Date: Wed, 25 Nov 2026 15:38:54 +0100
-Message-ID: <20261125143844.983722858@linuxfoundation.org>
+	Mohamed Khalfella <mkhalfella@purestorage.com>,
+	Mani Tofigh <mt4022@columbia.edu>,
+	Christoph Hellwig <hch@lst.de>,
+	Nilay Shroff <nilay@linux.ibm.com>,
+	Jens Axboe <axboe@kernel.dk>
+Subject: [PATCH 7.3 0997/1005] blk-mq: take quiesce_lock when removing a queue from the tag set
+Date: Wed, 25 Nov 2026 15:38:55 +0100
+Message-ID: <20261125143845.008313033@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143821.729802100@linuxfoundation.org>
 References: <20261125143821.729802100@linuxfoundation.org>
@@ -69,129 +70,109 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Theodor Arsenij Larionov Trichkine <theodorlarionov@gmail.com>
+From: Mani Tofigh <mt4022@columbia.edu>
 
-commit bcb42672751a8786dce871a35bde363b041cb2f7 upstream.
+commit 495f22c5a99ac38e527294cdc4f3972718b9bee0 upstream.
 
-ip_tunnel_xmit() and ip_md_tunnel_xmit() push the encap header before
-reserving headroom. A packet redirected into the tunnel (tc mirred, nft
-fwd/dup) keeps the headroom of its original device, so fou_build_udp()
-panics:
+Unquiescing a tag set can run the hw queues of a queue whose hctxs were
+already freed.  blk_mq_unquiesce_tagset() walks the tag set's queues
+under quiesce_lock and rcu_read_lock().  Commit 71ec3c7d6db8 ("blk-mq:
+quiesce a queue that joins a quiesced tag set") added quiesce_lock to
+the walks and to adding a queue, but blk_mq_del_queue_tag_set() still
+removes a queue without it.  The hctxs are then freed right away since
+RCU only keeps the request_queue itself alive:
 
-  kernel BUG at net/core/skbuff.c:214!
-  Call Trace:
-   skb_push+0xcc/0xf0
-   fou_build_udp+0x2f/0x380
-   gue_build_header+0xfa/0x150
-   ip_tunnel_xmit+0x87f/0x21c0
+  Task A (controller reset)            Task B (namespace removal)
+  blk_mq_unquiesce_tagset()
+    /* finds q */
+                                       blk_mq_del_queue_tag_set(q)
+                                       blk_mq_release(q)
+                                         /* frees the hctxs */
+    blk_mq_run_hw_queues(q)
+      /* reads freed hctxs */
 
-With a mirred mirror, the push overwrites the original packet instead.
-Reachable with CAP_NET_ADMIN in a user namespace.
+The window is short.  On PREEMPT_RT quiesce_lock is a sleeping lock and
+the walk can be preempted inside it, which is how it's hit here:
 
-Reserve the headroom in fou_build_header() and gue_build_header(); GUE
-sizes and builds the header from one copy of the encap fields. The skb
-head may move, so reload inner_iph after ip_tunnel_encap() and read
-tnl_params, which points into the head for GRE with header_ops, before
-the call. sit's ipip6_tunnel_xmit() holds no head pointer across it.
+  [  399.851277] BUG: KASAN: slab-use-after-free in blk_mq_run_hw_queues+0x4bd/0x550
+  [  399.851328] Read of size 8 at addr ff11000003014148 by task kworker/u9:2/116
+  [  399.851352] CPU: 1 UID: 0 PID: 116 Comm: kworker/u9:2 Not tainted 7.3.0-16299-g81cb9aa43246 #1 PREEMPT_RT
+  [  399.851425] Workqueue: nvme-reset-wq nvme_loop_reset_ctrl_work
+  [  399.851441] Call Trace:
+  [  399.851457]  <TASK>
+  [  399.851551]  blk_mq_run_hw_queues+0x4bd/0x550
+  [  399.851564]  blk_mq_unquiesce_tagset+0x128/0x210
+  [  399.851576]  nvme_loop_reset_ctrl_work+0x78/0x4c0
+  [  399.851600]  process_one_work+0x92b/0x16d0
+  [  399.851660]  worker_thread+0x4e6/0xd60
+  [  399.851707]  kthread+0x300/0x3e0
+  [  399.851727]  ret_from_fork+0x4f0/0x6f0
+  [  399.851776]  ret_from_fork_asm+0x1a/0x30
+  [  399.851793]  </TASK>
+  ...
+  [  399.851988] Freed by task 111:
+  [  399.852040]  kfree+0x1b3/0x4b0
+  [  399.852050]  blk_mq_release+0x400/0x550
+  [  399.852060]  blk_put_queue+0x94/0x120
+  [  399.852068]  disk_release+0x1bd/0x3f0
+  [  399.852102]  nvme_free_ns+0x39/0x270
+  [  399.852113]  nvme_remove_nsid_range+0x2d1/0x4a0
+  [  399.852123]  nvme_scan_ns_list+0x2cc/0x390
+  [  399.852134]  nvme_scan_work+0x421/0x9f0
+  ...
 
-Fixes: 56328486539d ("net: Changes to ip_tunnel to support foo-over-udp encapsulation")
-Fixes: ac931d4cdec3 ("ipip,ip_tunnel,sit: Add FOU support for externally controlled ipip devices")
-Reported-by: Chengfeng Ye <nicoyip.dev@gmail.com>
-Closes: https://lore.kernel.org/netdev/20260801060115.3538849-1-nicoyip.dev@gmail.com/
+With BLK_CGROUP the disk's root blkg holds the queue until a grace
+period later, which hides this for NVMe namespaces.  It's still open
+without BLK_CGROUP, and from reading the code also for queues freed
+without a disk (e.g., SCSI device queues on a UFS host).
+
+Take quiesce_lock around the list_del_rcu() as well so that the walk
+either finishes with a queue before it leaves the list or never sees
+it, and say so in the comment of quiesce_lock.  With the fix, KASAN
+doesn't report the use-after-free anymore.
+
+This bug was identified and confirmed with the help of a deterministic
+hypervisor currently under development.  The C reproducer below however
+hits it about once every 20 minutes on a PREEMPT_RT kernel.
+
+Fixes: 59e25ef2b413 ("block: Use RCU in blk_mq_[un]quiesce_tagset() instead of set->tag_list_lock")
 Cc: stable@vger.kernel.org
-Signed-off-by: Theodor Arsenij Larionov Trichkine <theodorlarionov@gmail.com>
-Reviewed-by: Ido Schimmel <idosch@nvidia.com>
-Link: https://patch.msgid.link/20261116113845.166280-1-theodorlarionov@gmail.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Reviewed-by: Mohamed Khalfella <mkhalfella@purestorage.com>
+Signed-off-by: Mani Tofigh <mt4022@columbia.edu>
+Reviewed-by: Christoph Hellwig <hch@lst.de>
+Reviewed-by: Nilay Shroff <nilay@linux.ibm.com>
+Link: https://patch.msgid.link/20261106-blk-mq-del-quiesce-lock-v2-1-cd4f72a6eb03@columbia.edu
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/ipv4/fou_core.c  |   19 +++++++++++++++----
- net/ipv4/ip_tunnel.c |    6 ++++--
- 2 files changed, 19 insertions(+), 6 deletions(-)
+ block/blk-mq.c         |    3 +++
+ include/linux/blk-mq.h |    3 ++-
+ 2 files changed, 5 insertions(+), 1 deletion(-)
 
---- a/net/ipv4/fou_core.c
-+++ b/net/ipv4/fou_core.c
-@@ -1071,6 +1071,9 @@ static int fou_build_header(struct sk_bu
- 	__be16 sport;
- 	int err;
+--- a/block/blk-mq.c
++++ b/block/blk-mq.c
+@@ -4341,7 +4341,10 @@ static void blk_mq_del_queue_tag_set(str
  
-+	if (skb_cow_head(skb, fou_encap_hlen(e)))
-+		return -ENOMEM;
-+
- 	err = __fou_build_header(skb, e, protocol, &sport, type);
- 	if (err)
- 		return err;
-@@ -1083,16 +1086,24 @@ static int fou_build_header(struct sk_bu
- static int gue_build_header(struct sk_buff *skb, struct ip_tunnel_encap *e,
- 			    u8 *protocol, struct flowi4 *fl4)
- {
--	int type = e->flags & TUNNEL_ENCAP_FLAG_CSUM ? SKB_GSO_UDP_TUNNEL_CSUM :
--						       SKB_GSO_UDP_TUNNEL;
-+	struct ip_tunnel_encap encap = {
-+		.flags = READ_ONCE(e->flags),
-+		.sport = READ_ONCE(e->sport),
-+		.dport = READ_ONCE(e->dport),
-+	};
-+	int type = encap.flags & TUNNEL_ENCAP_FLAG_CSUM ?
-+		   SKB_GSO_UDP_TUNNEL_CSUM : SKB_GSO_UDP_TUNNEL;
- 	__be16 sport;
- 	int err;
+ 	lockdep_assert_held(&set->tag_list_lock);
  
--	err = __gue_build_header(skb, e, protocol, &sport, type);
-+	if (skb_cow_head(skb, gue_encap_hlen(&encap)))
-+		return -ENOMEM;
-+
-+	err = __gue_build_header(skb, &encap, protocol, &sport, type);
- 	if (err)
- 		return err;
- 
--	fou_build_udp(skb, e, fl4, protocol, sport);
-+	fou_build_udp(skb, &encap, fl4, protocol, sport);
- 
- 	return 0;
- }
---- a/net/ipv4/ip_tunnel.c
-+++ b/net/ipv4/ip_tunnel.c
-@@ -604,6 +604,7 @@ void ip_md_tunnel_xmit(struct sk_buff *s
- 
- 	if (ip_tunnel_encap(skb, &tun_info->encap, &proto, &fl4) < 0)
- 		goto tx_error;
-+	inner_iph = (const struct iphdr *)skb_inner_network_header(skb);
- 
- 	use_cache = ip_tunnel_dst_cache_usable(skb, tun_info);
- 	if (use_cache)
-@@ -747,6 +748,8 @@ void ip_tunnel_xmit(struct sk_buff *skb,
- 	}
- 
- 	tos = tnl_params->tos;
-+	df = tnl_params->frag_off;
-+	ttl = tnl_params->ttl;
- 	if (tos & 0x1) {
- 		tos &= ~0x1;
- 		if (payload_protocol == htons(ETH_P_IP)) {
-@@ -765,6 +768,7 @@ void ip_tunnel_xmit(struct sk_buff *skb,
- 
- 	if (ip_tunnel_encap(skb, &tunnel->encap, &protocol, &fl4) < 0)
- 		goto tx_error;
-+	inner_iph = (const struct iphdr *)skb_inner_network_header(skb);
- 
- 	if (connected && md) {
- 		use_cache = ip_tunnel_dst_cache_usable(skb, tun_info);
-@@ -797,7 +801,6 @@ void ip_tunnel_xmit(struct sk_buff *skb,
- 		goto tx_error;
- 	}
- 
--	df = tnl_params->frag_off;
- 	if (payload_protocol == htons(ETH_P_IP) && !tunnel->ignore_df)
- 		df |= (inner_iph->frag_off & htons(IP_DF));
- 
-@@ -819,7 +822,6 @@ void ip_tunnel_xmit(struct sk_buff *skb,
- 	}
- 
- 	tos = ip_tunnel_ecn_encap(tos, inner_iph, skb);
--	ttl = tnl_params->ttl;
- 	if (ttl == 0) {
- 		if (payload_protocol == htons(ETH_P_IP))
- 			ttl = inner_iph->ttl;
++	/* blk_mq_unquiesce_tagset() runs the hctxs, which are not RCU freed */
++	spin_lock(&set->quiesce_lock);
+ 	list_del_rcu(&q->tag_set_list);
++	spin_unlock(&set->quiesce_lock);
+ 	if (list_is_singular(&set->tag_list)) {
+ 		/* just transitioned to unshared */
+ 		set->flags &= ~BLK_MQ_F_TAG_QUEUE_SHARED;
+--- a/include/linux/blk-mq.h
++++ b/include/linux/blk-mq.h
+@@ -524,7 +524,8 @@ enum hctx_type {
+  * @tag_list:	   List of the request queues that use this tag set. See also
+  *		   request_queue.tag_set_list.
+  * @quiesce_lock:  Serializes blk_mq_[un]quiesce_tagset() against each other
+- *		   and against a request queue being added to @tag_list.
++ *		   and against a request queue being added to or removed from
++ *		   @tag_list.
+  * @quiesce_depth: How often blk_mq_quiesce_tagset() has been called without
+  *		   blk_mq_unquiesce_tagset().
+  * @srcu:	   Use as lock when type of the request queue is blocking
 
 
