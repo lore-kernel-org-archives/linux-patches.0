@@ -1,54 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795624212;
-	b=Qjy3xys9rA8MmaAT9gMBk6fTsJHmZ0Wa4k3p5xyWAH8ogCmR+jKywZUxCLAHE2bKLo6v
-	 cDpt6+ou1M/NhLYcFNfR7V2iuVhQ/c22NPYyTGR2gsPK4sE+mlF9z12Ni0vdS5LkZcc8H
-	 QQ9vmUdbJFNSGF2xPh+GLwwH2/ceAmIL2/cZvUg1Hj38oMkfIq2GvoEP7H/NaQuR2sDJI
-	 qMMP05aPrBZmN7MUA83AmbL3tbzUemkxgrGESeNis5bLCrzNr97Gb4+0X01KxZwRAYCSe
-	 7UxvNXXDmNGedsINu4bD+ppqSK2+mp7sGLdP6O2w9qwVON2pvlI7paGwtAtY22twEyg==
+	t=1795624215;
+	b=g2IT2uozSMJd5+wSfCmB/+fD3RpgccnkyR/gpPLGoLC0jdAz04Q85wIAW25qHu07XfaY
+	 /N/BE7YQ2kbaN7eH9+ABKLhaI+SE+Ln7QOfe4660WRPYJuyCxmRHTd8bdnkXjD8mOOMlo
+	 1FqKcatbl73Rc75pbiaR8oXQTdpFMUmoM7NnWo0/VhlyE6wMdgxErYcNY6CBpi+gTzKTe
+	 L48etOpy/D4gCmBeNFGi+EC0aHkpnRM4h1Z7Vo8nk8yVSR6ABaIsv5FFG1ljIMvHPFYYf
+	 aIHsCLuqP7TlMpeED5DTWkoYD+ZfZ+1eRzTHQ2DezXz5PM9SZXgZrLDzg4q8CJFAfcw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795624212;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795624215;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=BMl3yCZg95aUR5sOHRQFqaxMUhzgxOeXOjwSSqPBsSo=;
-	b=KSnuu8Yb7XgZ7ZW+J53wLNhC4TMGIh09Z+VnbMdhqY1HPwyXwT003d+3Apgpdc2GjUGx
-	 6guPbRGBIUZ9Rl4PB6Xpky2nhGWgoqIuynZHd+qbUvNCzmCErPw9d4t9fK0VzruSAfrFQ
-	 RRI4PPHqLxUvapHO04TBgbRR8qHsPZEPxSJvLxtPmkW73gALmWNi11T85O5QqK/sSjf6I
-	 /je1C0hHWrImnM2bmCD7VG4c1p44+JaDvTI7mOLsELzOCtrDc+edHl0mUnozKExm8MEKU
-	 v0vz3wmK9Ivp8oFw3w7unBmWXo08LpPJsAWu700CKD62chWc5BQhap59p9H7t3DMn7g==
+	bh=JvVJf7+MsJnKf367vnsMcsdolZw4+exDwxOT4UqLHO4=;
+	b=2JnFfMVx0R1EGL63HXOxoou7Kfc4IwErNv4QM777DctPMAvojkiaGln3QdNTtCg09i1V
+	 S1/Z36R/qNpYOKwlMbCxQ51UZxKSwi5GcZ0ph8FGXpQZgniayJGNYm1fC9FeZR7H5PP5G
+	 7E8pkmOkRwxD/dVC7oHBEfyNu6WkJNZo/rePQJVycbWdNVEuHxbjXHZIgRnqYJG1ZyF8U
+	 iSNwqeY4F2HYmz3znrUPEJGle5v3YgwSjFq8fxWYtyzxIBF3+tKML2svRpMombdKNie2R
+	 QnFMxXrp+2miAC5InEjwJ+puO8mYEjKTP+0GyYUATpxN8ggaCdlFFoUtCzon4gwV4Hw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=EifaqjwY;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=HllOkyHP;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 782F1606A32D;
-	Wed, 25 Nov 2026 16:30:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BB55F606A33E;
+	Wed, 25 Nov 2026 16:30:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=EifaqjwY
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 10DD51F000CA;
-	Wed, 25 Nov 2026 16:30:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=HllOkyHP
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 69D861F000C0;
+	Wed, 25 Nov 2026 16:30:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795624211;
-	bh=BMl3yCZg95aUR5sOHRQFqaxMUhzgxOeXOjwSSqPBsSo=;
+	s=korg; t=1795624215;
+	bh=JvVJf7+MsJnKf367vnsMcsdolZw4+exDwxOT4UqLHO4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=EifaqjwYKHUXn9okgNOVgFfTy1mPPLjQgmavO2tD/iFgugyVeRVr2fxLWLHvJysZq
-	 eYChZBxlzvKnGG8Pi5nO6ItYRwAf+jeWOZBKhCUkaG2qsKP1rpfxxYB9aE69NOrbDY
-	 Situud79VzvewemRJINML2AM1YtIk6FgqEMnbosw=
+	b=HllOkyHPckVarGBmUg4gYn80pfhan/z0XFFDjfC0R3Evcz/ImmQwvbnCknLQx+VSu
+	 uEN8roAjUT3P5v5wYqysQhTwkMOCQrcN5nHyeJC4gDhgMxav/hMBa6zU32dVHc9giV
+	 QEJ8GlJIZGtXmr4EdGT0c7OSSD1u1FnHLPVDM2Cs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eric Dumazet <edumazet@kernel.org>,
-	Kuniyuki Iwashima <kuniyu@google.com>,
-	Octavian Purdila <tavip@google.com>,
-	Dave Miller <davem@davem-thinkpadp1gen8.ibmlond.csb>,
+	Igor Pylypiv <ipylypiv@google.com>,
+	Niklas Cassel <cassel@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 118/816] tcp: do not let tcp_collapse() drive sk_forward_alloc negative
-Date: Wed, 25 Nov 2026 15:27:46 +0100
-Message-ID: <20261125143851.943292805@linuxfoundation.org>
+Subject: [PATCH 6.12 119/816] ata: libata-sata: allow re-enabling NCQ with the same queue_depth
+Date: Wed, 25 Nov 2026 15:27:47 +0100
+Message-ID: <20261125143851.964929099@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143849.205329330@linuxfoundation.org>
 References: <20261125143849.205329330@linuxfoundation.org>
@@ -70,49 +68,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eric Dumazet <edumazet@kernel.org>
+From: Igor Pylypiv <ipylypiv@google.com>
 
-[ Upstream commit 031c403d13e5046750e2abebd4e770631e7c4627 ]
+[ Upstream commit d7c5cc8cc21c1264cce07feb4a51be158688280e ]
 
-tcp_collapse() charges each newly allocated skb with skb_set_owner_r()
-before the skbs it replaces are freed, without scheduling memory first.
+When ata_eh_speed_down() disables NCQ due to excessive errors, it sets
+ATA_DFLAG_NCQ_OFF without changing sdev->queue_depth. Userspace can
+re-enable NCQ by writing a queue depth > 1 to the sysfs queue_depth
+attribute, which invokes ata_change_queue_depth() to clear
+ATA_DFLAG_NCQ_OFF.
 
-Since sk_mem_uncharge() reclaims eagerly, sk->sk_forward_alloc has no
-cushion and can become negative. This can be durable when the collapsed
-skbs had a high payload/truesize ratio or were partially read, because
-the new skbs can have a bigger total truesize than the old ones.
+However, ata_change_queue_depth() returns early if the requested
+queue_depth is equal to sdev->queue_depth before clearing
+ATA_DFLAG_NCQ_OFF. As a result, writing a different queue depth > 1
+re-enables NCQ, whereas writing the current sdev->queue_depth value
+leaves ATA_DFLAG_NCQ_OFF set.
 
-A negative sk_forward_alloc then confuses tcp_wmem_schedule(), which
-can return a negative length to tcp_sendmsg_locked(), triggering
-a WARN_ON_ONCE(bytes > INT_MAX) in check_copy_size().
+Since ata_change_queue_depth() already checks whether queue_depth equals
+sdev->queue_depth before calling scsi_change_queue_depth(), remove the
+early check so that writing the current queue_depth > 1 clears
+ATA_DFLAG_NCQ_OFF and re-enables NCQ.
 
-Call sk_forced_mem_schedule() before charging nskb.
-
-Fixes: 4890b686f408 ("net: keep sk->sk_forward_alloc as small as possible")
-Signed-off-by: Eric Dumazet <edumazet@kernel.org>
-Reviewed-by: Kuniyuki Iwashima <kuniyu@google.com>
-Signed-off-by: Octavian Purdila <tavip@google.com>
-Signed-off-by: Dave Miller <davem@davem-thinkpadp1gen8.ibmlond.csb>
+Fixes: 45623d33bfc0 ("ata: libata-sata: Improve ata_change_queue_depth()")
+Signed-off-by: Igor Pylypiv <ipylypiv@google.com>
+Reviewed-by: Niklas Cassel <cassel@kernel.org>
+Link: https://lore.kernel.org/r/20261029184445.1615717-1-ipylypiv@google.com
+Signed-off-by: Niklas Cassel <cassel@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv4/tcp_input.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ drivers/ata/libata-sata.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/net/ipv4/tcp_input.c b/net/ipv4/tcp_input.c
-index c11faca825ff9..e529ecb9b42b8 100644
---- a/net/ipv4/tcp_input.c
-+++ b/net/ipv4/tcp_input.c
-@@ -5534,6 +5534,10 @@ tcp_collapse(struct sock *sk, struct sk_buff_head *list, struct rb_root *root,
- 			__skb_queue_before(list, skb, nskb);
- 		else
- 			__skb_queue_tail(&tmp, nskb); /* defer rbtree insertion */
-+		/* nskb is charged before the skbs it replaces are freed.
-+		 * Make sure sk->sk_forward_alloc can not become negative.
-+		 */
-+		sk_forced_mem_schedule(sk, nskb->truesize);
- 		skb_set_owner_r(nskb, sk);
- 		mptcp_skb_ext_move(nskb, skb);
+diff --git a/drivers/ata/libata-sata.c b/drivers/ata/libata-sata.c
+index 0b6cfdfc27598..263a03e14b115 100644
+--- a/drivers/ata/libata-sata.c
++++ b/drivers/ata/libata-sata.c
+@@ -1287,7 +1287,7 @@ int ata_change_queue_depth(struct ata_port *ap, struct scsi_device *sdev,
+ 	spin_lock_irqsave(ap->lock, flags);
  
+ 	dev = ata_scsi_find_dev(ap, sdev);
+-	if (!dev || queue_depth < 1 || queue_depth == sdev->queue_depth) {
++	if (!dev || queue_depth < 1) {
+ 		spin_unlock_irqrestore(ap->lock, flags);
+ 		return sdev->queue_depth;
+ 	}
 -- 
 2.53.0
 
