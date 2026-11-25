@@ -1,52 +1,64 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795620754;
-	b=adVdz6TVJnTv5YhY4WIwChE5PHuqrY5by1wDbVXJy21CnxY7kzM0AWLGsOHzEI6ohHit
-	 L3c1NIxUrw4h3biU8J8D35HZWQ7NAxpDWA2Y9sGLAVi7ijKqfUMAoROYnTmKFSw4oy5qk
-	 b/R+kWR2xGo1wC0yTzZgDMAsg80kE7OSP/LDZBlCsblExpy9/LgBWibJNOwg8Tt3jZlxQ
-	 WxqpQpfdaUo+CSYHFbHq6ij7ZMqe1HBCAdtYH2mvdc5pCr1XMNuEE6FdmBrDQqByvKpFk
-	 X7IjzRilsZshryz2A9gFhK6oI4pJoj+ATAiqSuJHObd5CQ9xrLeTy6yZ11xrx836NIQ==
+	t=1795620757;
+	b=nUFFt6/k+XpjKZfpOrNHRYSrUEeU5SGWE+eGJr43Aja2Wpw0teJ6o/xBm207Jgi4VcB1
+	 RM2Bg43ZVVLGU1WBg5ZbYBFLv+wh2RUX1wdYdDrr1MVWabz2PMLjHDvTFyvpWLAbo9jnS
+	 5lkXzmnUfF7fHQB1vU14EnfbimjwDSXKgvpMWNnQv0MGXrQzlNuexKwNB+d1An8qQBhG/
+	 wc97e5hPU76gH7LnacNvL1BFjwpZxe4a7mgQiCbx9PfFIgjKOK5LtM1HCFamDKBcrQ1Qu
+	 EW2/q2C7O/0RTIbOrnOsnPVsfgNunt+JiSy+EPSZwERkLrL7pIyLd9KVGDrxmRjuZ7w==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795620754;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795620757;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Type:Content-Transfer-Encoding;
-	bh=RTBnaO5wWp890CvD3O1EawOvXCRixq/ycgk6FipJd/8=;
-	b=UHN9ZMdqPKIOkibdqlxiHjp1aW2jhQeOD2OZlRezkVdYx/Rzzchnsq5dNWQOn+BklwMQ
-	 FhVR0pZddea5gLSCEIEoUFGC3iYrn7lTiaNjDfjPC6oFcAzVx6HGclaFt9l3sA+piyngA
-	 5NokeSwzRzhlVeYjlaMR00q2/y/jxnMiS9jSbzCjb0VlVpHlxWodlGzrXzz5q8oDBOPGi
-	 oa8vgSdyE+WPOoIkOeeajPSotCPx4ofBHMhn7NlzO2oygGjMJT7ihBpB2T4mb6Nij23Up
-	 YnsgbI0Vk6UnvqowgP1pmkxl1RE6jGZK1lZahKRJXUJjdQN5N03ztOBKblSCZK9EbVQ==
+	 MIME-Version:Content-Transfer-Encoding;
+	bh=HP+yxls8Y0b5PVdLHjba0/cUyjCChIUB7EQtWUhrUg8=;
+	b=xP9nbJ7tS2kHvBILXRczIygEQaVWy/5fz36CX7x++0Q6Nh+QF9ICuEpz9CAzy+WVCV+L
+	 FjXLkz8nN7iJI6Nr5NOHOneA0p9c03T/2llQpQ2vCN8bk67aXn/0bRn2+WCItWkVT6yb4
+	 BLj4Z32CBqgH9tJ3Zs99en3hppQDtJfADq186s7nYVGMoZNGxEezwdhBzl/cYNDaeTbqO
+	 9nSbKnIwcgGCgrxd4GMvWodW1PZUXcHVnDXP6BFBFIw4D32TpcFhVa/pt6p+b2nC3xw1k
+	 vzJMIflyX4gJVIBAL9Vi42tZs+Bq8hop4yJf3nlMlLYwfXEJ4zXLZpRTW35Ljh7aq+w==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=KO9fZ9zv;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=bHV5GWKA;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 54FE8606A326;
-	Wed, 25 Nov 2026 15:32:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6A916606A31E;
+	Wed, 25 Nov 2026 15:32:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=KO9fZ9zv
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EDA8F1F000CA;
-	Wed, 25 Nov 2026 15:32:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=bHV5GWKA
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 068E31F000CA;
+	Wed, 25 Nov 2026 15:32:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795620753;
-	bh=RTBnaO5wWp890CvD3O1EawOvXCRixq/ycgk6FipJd/8=;
+	s=korg; t=1795620756;
+	bh=HP+yxls8Y0b5PVdLHjba0/cUyjCChIUB7EQtWUhrUg8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=KO9fZ9zvd9MYVrKq/MBAKCNodrWzCXuQ1JD097/UMvST/7+trDDo0SwkubZzDdcCH
-	 YbuuN2syjkU0HVHIOgmJi8umuh3Tiwp7d1D3uL5BH0sB8q8T+e5WnvBZpfvy0NojbI
-	 ANnmHumcKfD4yPrycPfRap2sAEFcNZUGO5newQlU=
+	b=bHV5GWKAQbjZe7kujFJQVsOMcR8ymnz7ghZEwpuRgzbLbTjjnAGh2SVXAROAoACVK
+	 MwGGAeK4ucLnhqrvWHd4gseDY46pVy3NOc8UhGckXpV8x0jsC6NB0zVm2uruGuahgK
+	 mbfpW3BhS0MV7iwZz2TBPBltNvuxE1cNyVbgBQmo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ilya Dryomov <idryomov@gmail.com>,
-	=?UTF-8?q?Jordan=20DESNO=C3=8BS?= <jordan.desnoes@francetv.fr>,
+	Johannes Weiner <hannes@cmpxchg.org>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	Balbir Singh <balbirs@nvidia.com>,
+	"Vlastimil Babka (SUSE)" <vbabka@kernel.org>,
+	"Matthew Wilcox (Oracle)" <willy@infradead.org>,
+	Salvatore Dipietro <dipiets@amazon.it>,
+	Christoph Hellwig <hch@lst.de>,
+	Dave Chinner <dgc@kernel.org>,
+	Matt Fleming <matt@readmodwrite.com>,
+	Mel Gorman <mgorman@techsingularity.net>,
+	Michal Hocko <mhocko@suse.com>,
+	Suren Baghdasaryan <surenb@google.com>,
+	Brendan Jackman <brendan.jackman@linux.dev>,
+	Zi Yan <ziy@nvidia.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 013/990] libceph: introduce ceph_crypto_key_prepare()
-Date: Wed, 25 Nov 2026 15:23:00 +0100
-Message-ID: <20261125143822.397238488@linuxfoundation.org>
+Subject: [PATCH 6.18 005/990] mm: page_alloc: remove ALLOC_NON_BLOCK from ALLOC_RESERVES
+Date: Wed, 25 Nov 2026 15:22:52 +0100
+Message-ID: <20261125143822.209465934@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143822.072087159@linuxfoundation.org>
 References: <20261125143822.072087159@linuxfoundation.org>
@@ -62,238 +74,116 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Ilya Dryomov <idryomov@gmail.com>
+From: Johannes Weiner <hannes@cmpxchg.org>
 
-commit 6cec0b61aacce4da5125b21c718189f0dc11eb51 upstream.
+[ Upstream commit fe21f930d1e64d121191673076fc4ebe79fc82d5 ]
 
-In preparation for bringing in a new encryption scheme/key type,
-decouple decoding or cloning the key from allocating required crypto
-API objects and setting them up.  The rationale is that a) in some
-cases a shallow clone is sufficient and b) ceph_crypto_key_prepare()
-may grow additional parameters that would be inconvenient to provide
-at the point the key is originally decoded.
+1ebbb21811b7 ("mm/page_alloc: explicitly define how __GFP_HIGH
+non-blocking allocations accesses reserves") stopped handing out reserve
+access for ALLOC_NON_BLOCK on its own: the extra 25% below the min
+watermark is now only granted on top of ALLOC_MIN_RESERVE.  But the flag
+was left in ALLOC_RESERVES, which produces something odd:
 
-Signed-off-by: Ilya Dryomov <idryomov@gmail.com>
-Signed-off-by: Jordan DESNOËS <jordan.desnoes@francetv.fr>
+With the ALLOC_RESERVES match, __zone_watermark_unusable_free() doesn't
+subtract the free highatomic pages for them.  So in the slowpath, they get
+to consume regular blocks below the min watermark by the number of free
+highatomic pages.  The highatomic reserve is capped at 1% of the zone,
+which on any decently sized machine is a multiple of the min watermark:
+GFP_NOWAIT can drain regular memory to zero.
+
+The user-visible result is brutal hiccups during bursts of GFP_NOWAIT
+allocations under memory pressure.  This was found in review and
+reproduced with a synthetic burst, not observed in production, but the
+sequence of events is a realistic one: On a 32G box with an anonymous
+working set, swap, and a filled 290M highatomic reserve, a GFP_NOWAIT
+burst drove regular free memory in the 28G Normal zone (min=60M) to 28M,
+0.8M and 0.6M in three runs.  Swapout failed to allocate its swap table,
+reclaim scanned 13M pages to reclaim 200k, page faults stalled for tens to
+hundreds of milliseconds.  The machine survives it, but not by design:
+direct reclaimers eventually fail and start unreserving highatomic blocks,
+until the allocation succeeds or the reserve is gone and the OOM killer
+runs.  That reserve exists for high-order atomic allocations; here it is
+destroyed to bail out a GFP_NOWAIT consumer that was never entitled to the
+memory.
+
+Remove ALLOC_NON_BLOCK from ALLOC_RESERVES.  With that, the GFP_NOWAIT
+burst is stopped short at the min watermark.  No direct reclaim, no
+stalls, no failed allocations, and the highatomic reserve stays intact for
+the requests it exists for.
+
+__zone_watermark_ok() is unaffected, since everything it keys on
+ALLOC_NON_BLOCK is already nested under ALLOC_MIN_RESERVE.  Update the
+flag comments accordingly: ALLOC_NON_BLOCK just means the caller can't
+block; the reserve math belongs with ALLOC_MIN_RESERVE.
+
+GFP_ATOMIC order-0 requests have a milder version of the same problem.
+Through ALLOC_MIN_RESERVE they also count the free highatomic pages in
+their watermark check, but rmqueue_buddy() serves them regular pages first
+and only falls back to the reserve once those are gone.  They can still
+push regular free memory to 37.5% of min minus the free highatomic pages
+before the reserve is touched.  Unlike GFP_NOWAIT they are entitled to the
+reserve, so this needs the watermark check and the freelist order reworked
+together, and is left to a separate patch.
+
+Link: https://lore.kernel.org/20261028171719.2043421-3-hannes@cmpxchg.org
+Fixes: 1ebbb21811b7 ("mm/page_alloc: explicitly define how __GFP_HIGH non-blocking allocations accesses reserves")
+Signed-off-by: Johannes Weiner <hannes@cmpxchg.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Acked-by: Balbir Singh <balbirs@nvidia.com>
+Reviewed-by: Vlastimil Babka (SUSE) <vbabka@kernel.org>
+Cc: Matthew Wilcox (Oracle) <willy@infradead.org>
+Cc: Salvatore Dipietro <dipiets@amazon.it>
+Cc: Christoph Hellwig <hch@lst.de>
+Cc: Dave Chinner <dgc@kernel.org>
+Cc: Matt Fleming <matt@readmodwrite.com>
+Cc: Mel Gorman <mgorman@techsingularity.net>
+Cc: Michal Hocko <mhocko@suse.com>
+Cc: Suren Baghdasaryan <surenb@google.com>
+Cc: Brendan Jackman <brendan.jackman@linux.dev>
+Cc: Zi Yan <ziy@nvidia.com>
+Cc: <stable@vger.kernel.org>
+[ sashal: Applied the same three edits in mm/internal.h because mm/page_alloc.h does not exist in this tree, with slightly different surrounding flag context. ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ceph/auth_x.c | 26 +++++++++++++----
- net/ceph/crypto.c | 71 +++++++++++++++++++++++------------------------
- net/ceph/crypto.h |  1 +
- 3 files changed, 56 insertions(+), 42 deletions(-)
+ mm/internal.h | 11 +++++------
+ 1 file changed, 5 insertions(+), 6 deletions(-)
 
-diff --git a/net/ceph/auth_x.c b/net/ceph/auth_x.c
-index d1c7b78808279..a23e0e2b8011d 100644
---- a/net/ceph/auth_x.c
-+++ b/net/ceph/auth_x.c
-@@ -226,6 +226,10 @@ static int process_one_ticket(struct ceph_auth_client *ac,
- 	if (ret)
- 		goto out;
+diff --git a/mm/internal.h b/mm/internal.h
+index 4a27dac7a42a8..7504592042b23 100644
+--- a/mm/internal.h
++++ b/mm/internal.h
+@@ -1322,12 +1322,11 @@ unsigned int reclaim_clean_pages_from_list(struct zone *zone,
+ #define ALLOC_OOM		ALLOC_NO_WATERMARKS
+ #endif
  
-+	ret = ceph_crypto_key_prepare(&new_session_key);
-+	if (ret)
-+		goto out;
-+
- 	ceph_decode_need(&dp, dend, sizeof(struct ceph_timespec), bad);
- 	ceph_decode_timespec64(&validity, dp);
- 	dp += sizeof(struct ceph_timespec);
-@@ -385,6 +389,10 @@ static int ceph_x_build_authorizer(struct ceph_auth_client *ac,
- 	if (ret)
- 		goto out_au;
+-#define ALLOC_NON_BLOCK		 0x10 /* Caller cannot block. Allow access
+-				       * to 25% of the min watermark or
+-				       * 62.5% if __GFP_HIGH is set.
+-				       */
++#define ALLOC_NON_BLOCK		 0x10 /* Caller cannot block. */
+ #define ALLOC_MIN_RESERVE	 0x20 /* __GFP_HIGH set. Allow access to 50%
+-				       * of the min watermark.
++				       * of the min watermark, or 62.5% if
++				       * the caller cannot block either
++				       * (ALLOC_NON_BLOCK).
+ 				       */
+ #define ALLOC_CPUSET		 0x40 /* check for correct cpuset */
+ #define ALLOC_CMA		 0x80 /* allow allocations from CMA areas */
+@@ -1341,7 +1340,7 @@ unsigned int reclaim_clean_pages_from_list(struct zone *zone,
+ #define ALLOC_KSWAPD		0x800 /* allow waking of kswapd, __GFP_KSWAPD_RECLAIM set */
  
-+	ret = ceph_crypto_key_prepare(&au->session_key);
-+	if (ret)
-+		goto out_au;
-+
- 	maxlen = sizeof(*msg_a) + ticket_blob_len +
- 		ceph_x_encrypt_buflen(&au->session_key, sizeof(*msg_b));
- 	dout("  need len %d\n", maxlen);
-@@ -1118,21 +1126,26 @@ int ceph_x_init(struct ceph_auth_client *ac)
- 	int ret;
+ /* Flags that allow allocations below the min watermark. */
+-#define ALLOC_RESERVES (ALLOC_NON_BLOCK|ALLOC_MIN_RESERVE|ALLOC_HIGHATOMIC|ALLOC_OOM)
++#define ALLOC_RESERVES (ALLOC_MIN_RESERVE|ALLOC_HIGHATOMIC|ALLOC_OOM)
  
- 	dout("ceph_x_init %p\n", ac);
--	ret = -ENOMEM;
- 	xi = kzalloc(sizeof(*xi), GFP_NOFS);
- 	if (!xi)
--		goto out;
-+		return -ENOMEM;
- 
- 	ret = -EINVAL;
- 	if (!ac->key) {
- 		pr_err("no secret set (for auth_x protocol)\n");
--		goto out_nomem;
-+		goto err_xi;
- 	}
- 
- 	ret = ceph_crypto_key_clone(&xi->secret, ac->key);
- 	if (ret < 0) {
- 		pr_err("cannot clone key: %d\n", ret);
--		goto out_nomem;
-+		goto err_xi;
-+	}
-+
-+	ret = ceph_crypto_key_prepare(&xi->secret);
-+	if (ret) {
-+		pr_err("cannot prepare key: %d\n", ret);
-+		goto err_secret;
- 	}
- 
- 	xi->starting = true;
-@@ -1143,8 +1156,9 @@ int ceph_x_init(struct ceph_auth_client *ac)
- 	ac->ops = &ceph_x_ops;
- 	return 0;
- 
--out_nomem:
-+err_secret:
-+	ceph_crypto_key_destroy(&xi->secret);
-+err_xi:
- 	kfree(xi);
--out:
- 	return ret;
- }
-diff --git a/net/ceph/crypto.c b/net/ceph/crypto.c
-index 2b98daffe9af7..3453dc3033156 100644
---- a/net/ceph/crypto.c
-+++ b/net/ceph/crypto.c
-@@ -16,65 +16,61 @@
- #include <linux/ceph/decode.h>
- #include "crypto.h"
- 
--/*
-- * Set ->key and ->tfm.  The rest of the key should be filled in before
-- * this function is called.
-- */
--static int set_secret(struct ceph_crypto_key *key, void *buf)
-+static int set_aes_tfm(struct ceph_crypto_key *key)
- {
- 	unsigned int noio_flag;
- 	int ret;
- 
--	key->key = NULL;
--	key->tfm = NULL;
--
--	switch (key->type) {
--	case CEPH_CRYPTO_NONE:
--		return 0; /* nothing to do */
--	case CEPH_CRYPTO_AES:
--		break;
--	default:
--		return -ENOTSUPP;
--	}
--
--	key->key = kmemdup(buf, key->len, GFP_NOIO);
--	if (!key->key) {
--		ret = -ENOMEM;
--		goto fail;
--	}
--
--	/* crypto_alloc_sync_skcipher() allocates with GFP_KERNEL */
- 	noio_flag = memalloc_noio_save();
- 	key->tfm = crypto_alloc_sync_skcipher("cbc(aes)", 0, 0);
- 	memalloc_noio_restore(noio_flag);
- 	if (IS_ERR(key->tfm)) {
- 		ret = PTR_ERR(key->tfm);
- 		key->tfm = NULL;
--		goto fail;
-+		return ret;
- 	}
- 
- 	ret = crypto_sync_skcipher_setkey(key->tfm, key->key, key->len);
- 	if (ret)
--		goto fail;
-+		return ret;
- 
- 	return 0;
-+}
- 
--fail:
--	ceph_crypto_key_destroy(key);
--	return ret;
-+int ceph_crypto_key_prepare(struct ceph_crypto_key *key)
-+{
-+	switch (key->type) {
-+	case CEPH_CRYPTO_NONE:
-+		return 0; /* nothing to do */
-+	case CEPH_CRYPTO_AES:
-+		return set_aes_tfm(key);
-+	default:
-+		return -ENOTSUPP;
-+	}
- }
- 
-+/*
-+ * @dst should be zeroed before this function is called.
-+ */
- int ceph_crypto_key_clone(struct ceph_crypto_key *dst,
- 			  const struct ceph_crypto_key *src)
- {
--	memcpy(dst, src, sizeof(struct ceph_crypto_key));
--	return set_secret(dst, src->key);
-+	dst->type = src->type;
-+	dst->created = src->created;
-+	dst->len = src->len;
-+
-+	dst->key = kmemdup(src->key, src->len, GFP_NOIO);
-+	if (!dst->key)
-+		return -ENOMEM;
-+
-+	return 0;
- }
- 
-+/*
-+ * @key should be zeroed before this function is called.
-+ */
- int ceph_crypto_key_decode(struct ceph_crypto_key *key, void **p, void *end)
- {
--	int ret;
--
- 	ceph_decode_need(p, end, 2*sizeof(u16) + sizeof(key->created), bad);
- 	key->type = ceph_decode_16(p);
- 	ceph_decode_copy(p, &key->created, sizeof(key->created));
-@@ -85,10 +81,13 @@ int ceph_crypto_key_decode(struct ceph_crypto_key *key, void **p, void *end)
- 		return -EINVAL;
- 	}
- 
--	ret = set_secret(key, *p);
-+	key->key = kmemdup(*p, key->len, GFP_NOIO);
-+	if (!key->key)
-+		return -ENOMEM;
-+
- 	memzero_explicit(*p, key->len);
- 	*p += key->len;
--	return ret;
-+	return 0;
- 
- bad:
- 	dout("failed to decode crypto key\n");
-@@ -322,7 +321,7 @@ static int ceph_key_preparse(struct key_preparsed_payload *prep)
- 		goto err;
- 
- 	ret = -ENOMEM;
--	ckey = kmalloc(sizeof(*ckey), GFP_KERNEL);
-+	ckey = kzalloc(sizeof(*ckey), GFP_KERNEL);
- 	if (!ckey)
- 		goto err;
- 
-diff --git a/net/ceph/crypto.h b/net/ceph/crypto.h
-index 736ec6d2fbcb2..2b8f8f68ff7a8 100644
---- a/net/ceph/crypto.h
-+++ b/net/ceph/crypto.h
-@@ -19,6 +19,7 @@ struct ceph_crypto_key {
- 	struct crypto_sync_skcipher *tfm;
- };
- 
-+int ceph_crypto_key_prepare(struct ceph_crypto_key *key);
- int ceph_crypto_key_clone(struct ceph_crypto_key *dst,
- 			  const struct ceph_crypto_key *src);
- int ceph_crypto_key_decode(struct ceph_crypto_key *key, void **p, void *end);
+ /* Flags that mean GFP_ATOMIC */
+ #define ALLOC_MASK_ATOMIC (ALLOC_NON_BLOCK|ALLOC_MIN_RESERVE)
 -- 
 2.53.0
 
