@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795622758;
-	b=jP2EvUo3Dk5qz7jRcyNca3LjqZPO0ibAm7v81+v8Y3XsWgDpdsjtBQiU+ATSSOY2zwkc
-	 hfzT0Gltu827HU+lNJGPI2S0AboWRAUGjeNU7+VtvDB56EO/tgmhxvQxqwJ3bSI/oYXOL
-	 IEyAwRzFXMuADLFKV6pJXA1azoeAFFjkaGqFP2it7VaaOPmUQCT0y0P4BwW+AS30RHnrk
-	 K9syCpSkTpEk8cOeTylJSR6Dl/KvBpeMODw2/O/Xj2AHhhMAJA6PUkqifnZ1wp2DOxhfX
-	 gagbl4/WdFRka/Tg6NO4QQvu3CiJQmGS3u3VBDTNZ2q7qnzr4emhQYYGTv0FJf1iNfQ==
+	t=1795622761;
+	b=SC1EMnM7Fz8bE99IIqEi4Ev7QRYzHTUxdOIQ06+J5JshQ36blQeN4N3SQ3q7ytMYgOSi
+	 Pahi4drwjXcb/PU8CMF39xkC5Nnqfn+rvlH7NBqljEBsBOYLsqo6HcMKO8mVltPd4Qpe4
+	 wvLiDnFcxUHk60U5oZfOrBDGB7jWqlOnzhI73U0SRxK+gOYV5s/3J0qDj/VQOpnQvYMzP
+	 Ad4xldBFd6nPGXptV3+Y2n8fIWtRa4vUK6I2DFwlGDfhHEC1ofZpAr+OdwRM8nqA//hh/
+	 21cB1dyGCYXvhmApGRi+LFJWAwsoXuaQUb+MIx9AfwghbpHSUpBa7VQxMv1y+rQHKSw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795622758;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795622761;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=mh9EBSoQb68f83g1fNNMXt7KE2DBZuzoF4MXsQZetIo=;
-	b=1Da2uJW3tquAJF6jqRgRAIL14DqDVttV/QYYt7gcWSiLpFny7wr2YYXYJxa0SoIRO7Ji
-	 Tv8Jl2VbeFs1aBqmaldQRQrM+me60O1fajXkn5brXg2Qat+Nom/sPqT3Ezxl8MZjEb+N/
-	 KacoCub6tmggagfMwbZZk9bAq9o1wP8/Fh8NX9caVQt6QjRor2AaO8I3dtSC4lPe2B5+T
-	 AXMd+xWOqoTybZpjCRFPl7hyvoXZPAPb6/R+KOaH5vlS7hoCpEloqZi2pvZBtTMKA9diG
-	 l+6LsBrKogAoUrNPShT3GcMuVdUsjl+S3ZlXQbZlmPjltHkZU9Sp6CKxrDeSpMGhQRg==
+	bh=k46yHtsYymgyb+9l0pX/+O+Ay8HzbBHIBOoWtweN73c=;
+	b=yjyF2LOtAnYerRdgehNEyvDsP+e7UsLRPIFfaMt35fDAbGmZoxEixoqrzz8eJjrcRh3o
+	 +WHQAgxPCWZr8BdBU4URYinSs1XVRxDl6UGep4Jcb5PFgIzBEUICjff9CkplZq7TYUQ8p
+	 wtg3nloLby+B7y5ZyebcMLxxGwJc01Fv39NLJkWWEB0nsiUX6Nda6rJNpuUC9l7yw7N1j
+	 VUT0xoN7WAkLKlXTs+3trhW5NvNVL5GaHj+keFxuQoEVHwCbz7BisryrO2OahGpurNyDq
+	 OApiOHtcBfV1jQsKKKkeQCgezt5Qwb52tvrYGeoYdn5pHbQ3Y5VWXZCbi2ftGZNsfYA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=tC3KBU60;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=PHsuvNnP;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1F685606A31E;
-	Wed, 25 Nov 2026 16:05:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E848E606A329;
+	Wed, 25 Nov 2026 16:06:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=tC3KBU60
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6AE0D1F000C4;
-	Wed, 25 Nov 2026 16:05:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=PHsuvNnP
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 448451F000C0;
+	Wed, 25 Nov 2026 16:06:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795622758;
-	bh=mh9EBSoQb68f83g1fNNMXt7KE2DBZuzoF4MXsQZetIo=;
+	s=korg; t=1795622760;
+	bh=k46yHtsYymgyb+9l0pX/+O+Ay8HzbBHIBOoWtweN73c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=tC3KBU60+Ug151IbBtA25NxUAaMWnmNla3yPaeShee9fECSCDHC+pKg13u9F4kgtk
-	 nnsspKkFm6jmt8tAPk9qzMRydA/u7GtOw+qDW/xXLxptqqeoINrsmg18Kq/jE+J2st
-	 gEpQmOJ6tIKX+AXDiGsIV0q6FrqnsgH67+/Lc5UA=
+	b=PHsuvNnP0LtWZe6YyV7hk3+tb8VfSWiC2mNTFFoqe4bX2qDF9Lx262FgGs/gQWzHe
+	 NdhMGtlaTezKSetrHrwsjFPvE0/n2iayx48AvXa9r8g5rC0PLoM4gGzg3kWUlTT09F
+	 kez4SL6GnaKstfLz1w7X3FI5KEhwd1TzAiCIscRA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dudu Lu <phx0fer@gmail.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Rishikesh Jethwani <rjethwani@purestorage.com>,
+	Dave Miller <davem@davem-thinkpadp1gen8.ibmlond.csb>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 636/990] net-sysfs: reject a one-entry RPS flow table
-Date: Wed, 25 Nov 2026 15:33:23 +0100
-Message-ID: <20261125143836.991983142@linuxfoundation.org>
+Subject: [PATCH 6.18 637/990] tls: keep TX and RX hardware offload on the same device
+Date: Wed, 25 Nov 2026 15:33:24 +0100
+Message-ID: <20261125143837.015143132@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143822.072087159@linuxfoundation.org>
 References: <20261125143822.072087159@linuxfoundation.org>
@@ -68,59 +68,129 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dudu Lu <phx0fer@gmail.com>
+From: Rishikesh Jethwani <rjethwani@purestorage.com>
 
-[ Upstream commit 24927bdf0f62f63470a065c21d80fff7e4e9f207 ]
+[ Upstream commit 1c8a70075235cd733095532a97f2405037c52a7b ]
 
-store_rps_dev_flow_table_cnt() accepts rps_flow_cnt == 1.  For count == 1
-the round-up loop leaves mask == 0, which is stored as log == 0 in the
-tag (tag_ptr |= ilog2(mask) + 1).  get_rps_cpu() then calls
-rfs_slot() -> hash_32(hash, rps_tag_to_log(tag_ptr)) with log == 0:
+After TX is offloaded on device A, a route change, or a change in the
+usable-slave set of an 802.3ad or balance-xor (layer3+4) bond, can make
+RX setup program device B. tls_device_attach() sees the existing TLS
+destructor and keeps ctx->netdev pointing at A. The RX driver state on B
+is then untracked: tls_dev_resync() and tls_dev_del() are invoked on A
+for a context it never created, and neither socket close nor
+NETDEV_DOWN on B calls tls_dev_del() for B, so the driver context leaks.
+The reverse setup order has the same problem.
 
-  include/linux/hash.h:68
-	return __hash_32(val) >> (32 - bits);   /* bits == 0 -> shift by 32 */
+Check the shared device binding under device_offload_lock before each
+tls_dev_add(). Permit the first attachment and a second direction on the
+same device. Reject a different device, including when the old binding
+was cleared by NETDEV_DOWN: the TLS destructor remains installed and
+tls_device_attach() cannot establish a new binding. Setup then falls
+back to software for the requested direction.
 
-The shift by 32 is undefined and yields the full 32-bit hash, which is
-used to index the one-entry rps_dev_flow[] table unchecked:
+The RX check precedes allocation and software setup. TX uses its existing
+resource unwind path without calling the driver. Document the shared
+binding and clarify that fallback is per direction.
 
-  UBSAN: shift-out-of-bounds in ./include/linux/hash.h:68:24
-  shift exponent 32 is too large for 32-bit type 'unsigned int'
-   __ubsan_handle_shift_out_of_bounds+0x11c/0x208
-   get_rps_cpu+0x12fc/0x1344
-   netif_rx_internal+0x1e0/0x4d4
+This issue was discovered during code review and subsequently
+reproduced on hardware using mlx5 and TLS 1.2 AES-GCM-128.
 
-rps_dev_flow[] is then read (rflow->cpu) and written (last_qtail) out of
-bounds on the packet path.  Require at least two entries.
+Changing the route between TX and RX setup installed the second
+direction on a different device. Driver traces showed successful adds
+on both devices, but both deletes at socket close targeted the first
+device, leaving an orphaned context on the second. Both setup orders
+reproduced the leak, even though all current core TLS context counters
+returned to zero. No crash was observed.
 
-Fixes: f3483c8e1da6 ("net: rfs: hash function change")
-Signed-off-by: Dudu Lu <phx0fer@gmail.com>
-Link: https://patch.msgid.link/20261021155522.67521-1-phx0fer@gmail.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-[ sashal: Context lines adapted to the older overflow checks and vmalloc code; the added if (!mask) return -EINVAL; block is otherwise identical to upstream. ]
+With the fix, the same tests correctly fall back to software for the
+second direction and leave no orphaned hardware context.
+
+Fixes: 4799ac81e52a ("tls: Add rx inline crypto offload")
+Signed-off-by: Rishikesh Jethwani <rjethwani@purestorage.com>
+Signed-off-by: Dave Miller <davem@davem-thinkpadp1gen8.ibmlond.csb>
+[ sashal: Kept the branch's kzalloc(sizeof(*context), GFP_KERNEL) instead of upstream's kzalloc_obj(*context) and placed the new tls_device_can_attach() check just before it. ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/core/net-sysfs.c | 8 ++++++++
- 1 file changed, 8 insertions(+)
+ Documentation/networking/tls-offload.rst | 16 ++++++++++------
+ net/tls/tls_device.c                     | 24 ++++++++++++++++++++++++
+ 2 files changed, 34 insertions(+), 6 deletions(-)
 
-diff --git a/net/core/net-sysfs.c b/net/core/net-sysfs.c
-index 3a3a92f3a314c..e408f0b6786b7 100644
---- a/net/core/net-sysfs.c
-+++ b/net/core/net-sysfs.c
-@@ -1101,6 +1101,14 @@ static ssize_t store_rps_dev_flow_table_cnt(struct netdev_rx_queue *queue,
- 		 */
- 		while ((mask | (mask >> 1)) != mask)
- 			mask |= (mask >> 1);
+diff --git a/Documentation/networking/tls-offload.rst b/Documentation/networking/tls-offload.rst
+index 7354d48cdf926..7ed28e40f1702 100644
+--- a/Documentation/networking/tls-offload.rst
++++ b/Documentation/networking/tls-offload.rst
+@@ -76,12 +76,16 @@ During driver initialization device sets the ``NETIF_F_HW_TLS_RX`` and
+ pointer in the :c:member:`tlsdev_ops` member of the
+ :c:type:`struct net_device <net_device>`.
+ 
+-When TLS cryptographic connection state is installed on a ``ktls`` socket
+-(note that it is done twice, once for RX and once for TX direction,
+-and the two are completely independent), the kernel checks if the underlying
+-network device is offload-capable and attempts the offload. In case offload
+-fails the connection is handled entirely in software using the same mechanism
+-as if the offload was never tried.
++TLS cryptographic connection state is installed separately for RX and TX
++on a ``ktls`` socket. For each direction, the kernel checks if the underlying
++network device is offload-capable and attempts the offload. If offload fails,
++that direction is handled in software as if offload had never been tried.
 +
-+		/* Require at least two entries. A one-entry table rounds up
-+		 * to mask == 0, which encodes log == 0 in the tag.
-+		 * get_rps_cpu() then computes hash_32(hash, 0), a shift by 32.
-+		 */
-+		if (!mask)
-+			return -EINVAL;
++Both hardware directions share one device binding. Once one direction is
++offloaded, the other direction must use the same device. If a route change
++selects a different device, or ``NETDEV_DOWN`` has cleared the binding,
++hardware offload of the other direction is declined and it uses software
++instead.
+ 
+ Offload request is performed via the :c:member:`tls_dev_add` callback of
+ :c:type:`struct tlsdev_ops <tlsdev_ops>`:
+diff --git a/net/tls/tls_device.c b/net/tls/tls_device.c
+index 2c661e17efb8f..c49798486ea52 100644
+--- a/net/tls/tls_device.c
++++ b/net/tls/tls_device.c
+@@ -1030,6 +1030,20 @@ int tls_device_decrypted(struct sock *sk, struct tls_context *tls_ctx)
+ 	return tls_device_reencrypt(sk, tls_ctx);
+ }
+ 
++/* Both directions share ctx->netdev. A second direction must use that
++ * device; after NETDEV_DOWN clears it, no new direction can be offloaded.
++ */
++static bool tls_device_can_attach(struct tls_context *ctx, struct sock *sk,
++				  struct net_device *netdev)
++{
++	struct net_device *ctx_netdev;
 +
- 		/* On 64 bit arches, must check mask fits in table->mask (u32),
- 		 * and on 32bit arches, must check
- 		 * RPS_DEV_FLOW_TABLE_SIZE(mask + 1) doesn't overflow.
++	ctx_netdev = rcu_dereference_protected(ctx->netdev,
++					       lockdep_is_held(&device_offload_lock));
++	return sk->sk_destruct != tls_device_sk_destruct ||
++	       ctx_netdev == netdev;
++}
++
+ static void tls_device_attach(struct tls_context *ctx, struct sock *sk,
+ 			      struct net_device *netdev)
+ {
+@@ -1165,6 +1179,11 @@ int tls_set_device_offload(struct sock *sk)
+ 		goto release_lock;
+ 	}
+ 
++	if (!tls_device_can_attach(ctx, sk, netdev)) {
++		rc = -EOPNOTSUPP;
++		goto release_lock;
++	}
++
+ 	ctx->priv_ctx_tx = offload_ctx;
+ 	rc = netdev->tlsdev_ops->tls_dev_add(netdev, sk, TLS_OFFLOAD_CTX_DIR_TX,
+ 					     &ctx->crypto_send.info,
+@@ -1235,6 +1254,11 @@ int tls_set_device_offload_rx(struct sock *sk, struct tls_context *ctx)
+ 		goto release_lock;
+ 	}
+ 
++	if (!tls_device_can_attach(ctx, sk, netdev)) {
++		rc = -EOPNOTSUPP;
++		goto release_lock;
++	}
++
+ 	context = kzalloc(sizeof(*context), GFP_KERNEL);
+ 	if (!context) {
+ 		rc = -ENOMEM;
 -- 
 2.53.0
 
