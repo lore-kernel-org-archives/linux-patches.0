@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795617812;
-	b=lkAvB7zHayXRIt6tHyLHgrYBJV31HpjLnRcZ3trSoTa7lhaOHfavKmsBM+EFiqMr/7H1
-	 3UnXq1A+VmQG0+g9FmoEchqC3Z0uPxff/H46Hiusj6VfJXG+Kk+VeEqb7oWndrWvV8hhX
-	 5ISauD0oUuoIk9k8RkXPiPU6H5n8aauKmNzhvzqVqEkFuMDfv5s1yfUkbEv34HFMfgXVc
-	 kHNO4v1kIhtBy3MvjP1orlbxQlJj9TqgcKkWPvkGome84uz/ebJ4bpfLmXCri3cDihxlr
-	 iQ3CXh5LBTBjk7ySXx1XhbVTkPPb31HpBlYPMZI64RD/bxmDvHwjP9Q8Raqd/3Q7aiA==
+	t=1795617816;
+	b=L3loQyNLftRlEAeKlVjqeFyxZGqfaC8X4L8slbkRJ5beOZJk4c2hHgD6VWUfkoZ2gF8P
+	 HsPbIq6JAMXUqx4vMuA84FER1kQlooMcjuOyNcUSQaQI7WJK7/p+1o0P7bMyOFntDKILk
+	 mMtlye/7xDQgoVJtfy8Pi1Yq3r1O3dzd1WCY+vac+NJMj47F2Qpjazia5cLTWZhr6qEz0
+	 2QtzNxVpZrARNkyffaI2MqFyE24wx2a+Ir8Uy56RwZ6FQnXQ5QtE/OxZ4A3ziUUdaQ02x
+	 1s7vr6NXXyjmmMTCX0kOcs8Vl93fWSDIznsEXM1xgcRJOaEuavZIUaf+BSR22y5pJpg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795617812;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795617816;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=9U2sim0FoYr1cJJJTuD57FI2yru+aRYg6kKEW/ctOwo=;
-	b=eXDun0IZAdW8TrGajX9bXZAiRCrHt2G2uyKLOjRfU8TRyGCgntPYhCSsj1Wuhr+E1/TI
-	 Ym1WkBuaq+LbAEUlJ6msS59ir6oKoNEpzL3bfUfrBSLKRk6/5E3t6HvtsaY8cYjSLxS9I
-	 xe9PjKcN5Scb5jjP/hhhjoRU9qY/6nnBEVOp4As6KR99P8pu/vg7tcVhKe8KSeH5nsZ85
-	 OxqoPhnV7gFSAj0CRNkvrvrP7PTgYMLL1KiuCDgagQ0x+Ej1TFD8BjpIKajyxcZQ8uphG
-	 53vBfDJizkxWr/sxaMQ5DSXQIaqb47Ag/ycohDj7cXaTGiDgDh5SUcNT9c15o5G7MKg==
+	bh=rXKUe/776pLa2XqlMnUOQZGH5iQA0H21qQRrXWNpm2k=;
+	b=shD+DSmN8nkqr8iXkQ6YqbvWK3EaEbrdjwDYFEh+LO5Yv2C7CDdE6dSvwWN2BxDzEAYw
+	 Bc6RTDw4f8RQXQXkxdj1kOBFFLWgidMexmlfzf0wgrjBmnyCIibd26fRxUrR4vDIBrMLU
+	 Y3bGdEM13rLgDJEZgMjI0byvKTR04V4Aeh4KnzJZwKrWuRPFHMZ4adU2l68NKQ3bXqxT/
+	 p9GSJRYjzhZLK9FOxB+2EOYtYjkg4nR/uPzmkoY3Sb99S4oFK3yUSocaef0UIjleO0YLy
+	 ej2HEp1Q9yVg4+qPaCI6E+OPxfY5ovt24wIHY0ytfU9UxchKEYG5aVwG5pT5rE7U3eA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=D4tY7YUD;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=kGykqDLD;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 481C0606A326;
-	Wed, 25 Nov 2026 14:43:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 07D6E606A321;
+	Wed, 25 Nov 2026 14:43:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=D4tY7YUD
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 80BB11F000D1;
-	Wed, 25 Nov 2026 14:43:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=kGykqDLD
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DAF7C1F000C6;
+	Wed, 25 Nov 2026 14:43:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795617812;
-	bh=9U2sim0FoYr1cJJJTuD57FI2yru+aRYg6kKEW/ctOwo=;
+	s=korg; t=1795617815;
+	bh=rXKUe/776pLa2XqlMnUOQZGH5iQA0H21qQRrXWNpm2k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=D4tY7YUD/DkZ3IN6VROHoRbl/yHP9bbR5AL3RMBuhunbdeaatxLOIPuFZ59svhMh5
-	 /Wud0819VWDrIvIBjL28Nn59aLaUe0c9yLg1HZRJJnzjtnKpLUpZmQA1RY6LcLWVYk
-	 UdqJJnqHbcyIJxAT6FMY6r1YI3KRXIuDpZhBedqc=
+	b=kGykqDLDElQZ6RLkqH8mP+dZ/aQIu9fH1MNKOEHwzuAfJaZ3VnnqsJU2rG5cVKbYi
+	 2efNHYzNQSKRkRMX6CsoYEyWRb/t/PBryvUm9NY7TZii9NZBlOE9qlWbgzT6Y7CgqE
+	 keAIfCWYv9KPODTyPmBmLSfyrkwAXEr8hzytem4A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Vadim Fedorenko <vadim.fedorenko@linux.dev>,
 	James Hilliard <james.hilliard1@gmail.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0083/1005] ptp: vclock: serialize extended samples with counter updates
-Date: Wed, 25 Nov 2026 15:23:41 +0100
-Message-ID: <20261125143823.685971595@linuxfoundation.org>
+Subject: [PATCH 7.3 0084/1005] ptp: vclock: preserve missing hardware timestamps
+Date: Wed, 25 Nov 2026 15:23:42 +0100
+Message-ID: <20261125143823.708757813@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143821.729802100@linuxfoundation.org>
 References: <20261125143821.729802100@linuxfoundation.org>
@@ -70,94 +71,57 @@ Content-Transfer-Encoding: 8bit
 
 From: James Hilliard <james.hilliard1@gmail.com>
 
-[ Upstream commit d3fcce5afe3bb62e8f7a2efb29e43da4fe4ae1f3 ]
+[ Upstream commit 63787dfd1b5ae720cc30dab5e66c8e4d81ff7391 ]
 
-The extended and cross-timestamp callbacks sample the physical clock
-before taking the virtual clock mutex. A concurrent frequency adjustment
-can advance the timecounter and change its multiplier in between, so the
-older sample is converted using a different frequency than the one in
-effect when it was taken.
+Socket timestamp delivery converts hardware timestamps to a bound
+virtual clock before checking whether a hardware timestamp is present.
+A zero timestamp means that the packet has no hardware timestamp, but
+timecounter_cyc2time() can turn that zero into a nonzero virtual time.
+The socket then reports a hardware timestamp which was never supplied.
 
-Take the mutex before sampling and keep it held through the conversion.
-Retain timecounter_cyc2time() and its existing conversion window. A PHC
-sample need not advance the counter: for example, e1000e explicitly
-allows non-monotonic SYSTIM readings. Treating a slightly older sample
-as a forward delta would instead advance virtual time by nearly a full
-counter wrap.
+Return zero without conversion when the input timestamp is absent.
+This also covers skb_get_tx_timestamp(), which checks for an absent
+timestamp after the same conversion.
 
-This race was found by code inspection of the virtual clock sampling
-paths.
+This was identified during review of virtual clock sampling changes.
 
-Fixes: f0067ebfc42b ("ptp: add gettimex64() to virtual clocks.")
-Fixes: 21fad63084c2 ("ptp: add getcrosststamp() to virtual clocks.")
+Fixes: d7c088265588 ("net: socket: support hardware timestamp conversion to PHC bound")
+Reviewed-by: Vadim Fedorenko <vadim.fedorenko@linux.dev>
 Signed-off-by: James Hilliard <james.hilliard1@gmail.com>
-Link: https://patch.msgid.link/20261026-ptp-vclock-sampling-v6-4-e705612541f1@gmail.com
+Link: https://patch.msgid.link/20261026-ptp-vclock-sampling-v6-5-e705612541f1@gmail.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/ptp/ptp_vclock.c | 32 ++++++++++++++------------------
- 1 file changed, 14 insertions(+), 18 deletions(-)
+ drivers/ptp/ptp_vclock.c         | 2 ++
+ include/linux/ptp_clock_kernel.h | 2 +-
+ 2 files changed, 3 insertions(+), 1 deletion(-)
 
 diff --git a/drivers/ptp/ptp_vclock.c b/drivers/ptp/ptp_vclock.c
-index b97f3a8772602..679ae40916f7e 100644
+index 679ae40916f7e..e9cf4da3ed8a4 100644
 --- a/drivers/ptp/ptp_vclock.c
 +++ b/drivers/ptp/ptp_vclock.c
-@@ -115,20 +115,18 @@ static int ptp_vclock_gettimex(struct ptp_clock_info *ptp,
- 	struct ptp_clock *pptp = vclock->pclock;
- 	struct timespec64 pts;
- 	int err;
--	u64 ns;
--
--	err = pptp->info->getcyclesx64(pptp->info, &pts, sts);
--	if (err)
--		return err;
+@@ -326,6 +326,8 @@ ktime_t ptp_convert_timestamp(const ktime_t *hwtstamp, int vclock_index)
+ 	u64 ns;
  
- 	if (mutex_lock_interruptible(&vclock->lock))
- 		return -EINTR;
--	ns = timecounter_cyc2time(&vclock->tc, timespec64_to_ns(&pts));
--	mutex_unlock(&vclock->lock);
-+	err = pptp->info->getcyclesx64(pptp->info, &pts, sts);
-+	if (!err) {
-+		u64 ns = timecounter_cyc2time(&vclock->tc, timespec64_to_ns(&pts));
+ 	ns = ktime_to_ns(*hwtstamp);
++	if (!ns)
++		return 0;
  
--	*ts = ns_to_timespec64(ns);
-+		*ts = ns_to_timespec64(ns);
-+	}
-+	mutex_unlock(&vclock->lock);
+ 	srcu_idx = srcu_read_lock(&vclock_srcu);
  
--	return 0;
-+	return err;
- }
- 
- static int ptp_vclock_settime(struct ptp_clock_info *ptp,
-@@ -154,20 +152,18 @@ static int ptp_vclock_getcrosststamp(struct ptp_clock_info *ptp,
- 	struct ptp_vclock *vclock = info_to_vclock(ptp);
- 	struct ptp_clock *pptp = vclock->pclock;
- 	int err;
--	u64 ns;
--
--	err = pptp->info->getcrosscycles(pptp->info, xtstamp);
--	if (err)
--		return err;
- 
- 	if (mutex_lock_interruptible(&vclock->lock))
- 		return -EINTR;
--	ns = timecounter_cyc2time(&vclock->tc, ktime_to_ns(xtstamp->device));
--	mutex_unlock(&vclock->lock);
-+	err = pptp->info->getcrosscycles(pptp->info, xtstamp);
-+	if (!err) {
-+		u64 ns = timecounter_cyc2time(&vclock->tc, ktime_to_ns(xtstamp->device));
- 
--	xtstamp->device = ns_to_ktime(ns);
-+		xtstamp->device = ns_to_ktime(ns);
-+	}
-+	mutex_unlock(&vclock->lock);
- 
--	return 0;
-+	return err;
- }
- 
- static long ptp_vclock_refresh(struct ptp_clock_info *ptp)
+diff --git a/include/linux/ptp_clock_kernel.h b/include/linux/ptp_clock_kernel.h
+index 36a27a9105958..56f6ab1855d38 100644
+--- a/include/linux/ptp_clock_kernel.h
++++ b/include/linux/ptp_clock_kernel.h
+@@ -496,7 +496,7 @@ int ptp_get_vclocks_index(int pclock_index, int **vclock_index);
+  * @hwtstamp:     timestamp
+  * @vclock_index: phc index of ptp vclock.
+  *
+- * Returns: converted timestamp, or 0 on error.
++ * Returns: converted timestamp, or 0 if @hwtstamp is zero or on error.
+  */
+ ktime_t ptp_convert_timestamp(const ktime_t *hwtstamp, int vclock_index);
+ #else
 -- 
 2.53.0
 
