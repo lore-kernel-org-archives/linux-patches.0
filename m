@@ -1,52 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795620260;
-	b=RJjBV4zy0AJSBWqzIrwbU56223qQCXwoUfsFS9SXH42lMoXzV/e+ykaUuHA3ULSPTTiN
-	 haOOcgaQr8Nl/xEY10qrhvzWQUjo6kBy9QO2Vlu/ipJL3ypjXkxfbfvFaksBE+Gw5M0QZ
-	 8QPDXEaK77D4Cgg9tXf+k/1VRnpNeBjQyVMdaHpnO3lMeZhGhbPhrNwaVPzHlqzmThNL7
-	 NJEsSi2u/zA270LvN/aYV4umpfjjmGTdVHUI8RyWOFfgeQUtJliPahOTVnphsacyxgpbY
-	 NixArAljoiZOoO/yySnexaeStoPDAI7n4jN8jDJvpUp7iREu9BmPV7LTE4WcwAR7i7g==
+	t=1795620263;
+	b=y51xSDXi8mEsO9Ps/J6iJVVD8p1y2Ch6NEPOoglJ01Tj09Y7H3TC+TlY+6lcL7ECgXf8
+	 GTFrJkOwxGgrNmpofmeZMWI0vD1XFShcE0eBr1Y4RV7PrwViLdSSZ7B5VZwbgTHVvgqRI
+	 /X4S1HbpnRfMumdjzeNmwUDN5Y3gWh5LGASpy/5yYhqOmMkWrODTnjE0suR2Zhi1swHWt
+	 YBCxDwPYvLzdpGn6Z+77VAVBB05D4vZ7mcsciMEhXpKCTU3he5o70DZBPEV88kBA7AgbJ
+	 kpxyIlg3Dtg9vbAB7cWFGFAPAffOP6VtX85t1D7Un3j7eO6SBhdHIxVJuoAOgG92hbg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795620260;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795620263;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=3xtn19WLmJAiK8GuxIhdGGQw4BG/JH7Vry9wrkSIxF8=;
-	b=km2DkUfMSXL3CEoJhGUre+xIZuGZeIfgK/GcNloOljAudvBXbqloos1xvB/EGDqJpQzB
-	 HgLShc3h3o7TPDmUmVF1rbqBti8WddqlHuW6ZXH34/A+P5tDivTd1jDtj0dndbPSMkqCX
-	 A1SSxOL5ZZezeaErfZEH42emzVKOzCYFs23rwXxg512NXeFF32ioFIbxqZ6YXjyVSR2Mp
-	 Z5uMp6h0j5ohrXh2ps5PEmggBpZlxcaBcd3GQ1QzHpADgzzb4DmKtkyu52DqZ1sXKLrne
-	 1PqfFRciRXBWqftvAHnvpOk/9A6Wyy3hOVt8PVnTd7xoN+ythZ5MCnuQk2+4iZ+9vYQ==
+	bh=w70VRETvNAT09ZkbUiBDeodqAAuEZshrq5AH9ajOaMw=;
+	b=ekdngA4d3lHWdDauAYH4wszNdF59zoOZRCTEr45R4d0w+rmbUlBzs6e2O+REGqvLewAu
+	 vM4R1roBr7jI1plvhM0U7uDlKeMRg2wEyE26OBnct+IbVbBTrOQtVw6lY4M1MnNpu0eL3
+	 YXeEBbn7ixQAEfzMZlwNAkI5IDkKtswgaPJ34WeM9CbZNkh6R/nomuCbkQvfAyo1RSS82
+	 Gi4bvELvBGY8azVT4Hnz1hDCg5+bMeBH8yJ0H0lmEIMuGO9SHswxVHmra4xhLxwJwGhii
+	 VvIoVOSwh3DUgr8/va4o5FQfVvvobh35tqLFWcAccrMVTC849wYFAzK0/qO0hIYaBLA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=jm461UMT;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=JzgfKJUq;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 757AF606A31E;
-	Wed, 25 Nov 2026 15:24:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6CF13606A32C;
+	Wed, 25 Nov 2026 15:24:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=jm461UMT
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6ED861F000CA;
-	Wed, 25 Nov 2026 15:24:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=JzgfKJUq
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8F9661F000D8;
+	Wed, 25 Nov 2026 15:24:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795620260;
-	bh=3xtn19WLmJAiK8GuxIhdGGQw4BG/JH7Vry9wrkSIxF8=;
+	s=korg; t=1795620263;
+	bh=w70VRETvNAT09ZkbUiBDeodqAAuEZshrq5AH9ajOaMw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=jm461UMTWbN6bo5cuOxZWTu+4oGNP1hGqi9k4TwHa5aWQvXBFPidX7Iy4UvsNTDJf
-	 JlDTj9JbmAmB4XdSMXXFoFKhblMZzraZG44wWM28oRwXvb9JX2EHyU2rlRJC3Ng3Ko
-	 VOrj4PLgF8htJihWxFwbinwxN7uTXikOJLmXcMTM=
+	b=JzgfKJUqd7hTO/EYDenrt/bWev/ce3kMcud4eM6nmV7rcosYvCVyLRYc6mTqgi3UX
+	 WIGQlAHIz2YGDEU9vGY3iTw3lSOnJQkVia4NcawqrZnZ8DoTWkAeseCl7PwLQ0oAHV
+	 IhIZGqat1aTAfpD9tGwT7PDIk6KnZYSIPrZqjmVs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+4b232570d625662eaab4@syzkaller.appspotmail.com,
-	Zhao Feng <zhaofeng2@cmss.chinamobile.com>,
+	Shao Mingyin <shao.mingyin@zte.com.cn>,
 	Mikulas Patocka <mpatocka@redhat.com>
-Subject: [PATCH 7.3 0860/1005] dm crypt: fix use of uninitialized percpu_counter in ctr error path
-Date: Wed, 25 Nov 2026 15:36:38 +0100
-Message-ID: <20261125143841.855829548@linuxfoundation.org>
+Subject: [PATCH 7.3 0861/1005] dm mpath: fix buffer overflow in parse_hw_handler()
+Date: Wed, 25 Nov 2026 15:36:39 +0100
+Message-ID: <20261125143841.879061986@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143821.729802100@linuxfoundation.org>
 References: <20261125143821.729802100@linuxfoundation.org>
@@ -68,67 +67,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zhao Feng <zhaofeng2@cmss.chinamobile.com>
+From: shao.mingyin@zte.com.cn <shao.mingyin@zte.com.cn>
 
-commit 8ba1ade3e6b595b9091040feaa3341d7e45ba95d upstream.
+commit 8f611fe94a781c6fb658488cc7eab4e4923e6df6 upstream.
 
-If percpu_counter_init() fails in crypt_ctr() (e.g. when the
-underlying percpu allocation fails under memory pressure or fault
-injection), the error path jumps to "bad", which calls
-crypt_dtr().  crypt_dtr() then evaluates
-WARN_ON(percpu_counter_sum(&cc->n_allocated_pages) != 0) and calls
-percpu_counter_destroy() on a counter that was never initialized,
-because __percpu_counter_init_many() returns -ENOMEM before
-calling raw_spin_lock_init() on fbc->lock.
+parse_hw_handler() builds the hw_handler parameter string in a buffer
+sized with
 
-With lockdep enabled this triggers "INFO: trying to register
-non-static key" in __percpu_counter_sum(), as reported by syzbot.
-The console additionally shows "crypt: Unknown error (-ENOMEM)"
-because this failure path sets no ti->error.
+	len = 4;
 
-Move percpu_counter_init() to right after the allocation of cc,
-before ti->private is set and before any "goto bad" can happen.
-On failure, set ti->error and free cc directly, so that
-crypt_dtr() is only ever called with an initialized counter.
+plus one byte per argument.  Those four bytes were meant for the decimal
+form of the parameter count, three digits plus the terminating NUL.
+dm_read_arg_group() accepts up to 1024 arguments and the count written is
+'hw_argc - 1', so a count of 1000 or more needs four digits plus the NUL
+and sprintf() writes one byte past the allocation.
 
-Reported-by: syzbot+4b232570d625662eaab4@syzkaller.appspotmail.com
-Closes: https://syzbot.org/bug?extid=4b232570d625662eaab4
-Fixes: 5059353df86e ("dm crypt: limit the number of allocated pages")
+Size the buffer from the actual string length instead.
+
+Fixes: 2bfd2e1337f0 ("[SCSI] scsi_dh: Use scsi_dh_set_params() in multipath.")
 Cc: stable@vger.kernel.org
-Signed-off-by: Zhao Feng <zhaofeng2@cmss.chinamobile.com>
+Signed-off-by: Shao Mingyin <shao.mingyin@zte.com.cn>
 Signed-off-by: Mikulas Patocka <mpatocka@redhat.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/md/dm-crypt.c |   12 ++++++++----
- 1 file changed, 8 insertions(+), 4 deletions(-)
+ drivers/md/dm-mpath.c |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
---- a/drivers/md/dm-crypt.c
-+++ b/drivers/md/dm-crypt.c
-@@ -3208,6 +3208,14 @@ static int crypt_ctr(struct dm_target *t
- 		ti->error = "Cannot allocate encryption context";
- 		return -ENOMEM;
- 	}
-+
-+	ret = percpu_counter_init(&cc->n_allocated_pages, 0, GFP_KERNEL);
-+	if (ret < 0) {
-+		ti->error = "Cannot initialize page counter";
-+		kfree_sensitive(cc);
-+		return ret;
-+	}
-+
- 	cc->key_size = key_size;
- 	cc->sector_size = (1 << SECTOR_SHIFT);
- 	cc->sector_shift = 0;
-@@ -3219,10 +3227,6 @@ static int crypt_ctr(struct dm_target *t
- 	crypt_calculate_pages_per_client();
- 	spin_unlock(&dm_crypt_clients_lock);
+--- a/drivers/md/dm-mpath.c
++++ b/drivers/md/dm-mpath.c
+@@ -1085,8 +1085,9 @@ static int parse_hw_handler(struct dm_ar
  
--	ret = percpu_counter_init(&cc->n_allocated_pages, 0, GFP_KERNEL);
--	if (ret < 0)
--		goto bad;
--
- 	/* Optional parameters need to be read before cipher constructor */
- 	if (argc > 5) {
- 		ret = crypt_ctr_optional(ti, argc - 5, &argv[5]);
+ 	if (hw_argc > 1) {
+ 		char *p;
+-		int i, j, len = 4;
++		int i, j, len;
+ 
++		len = snprintf(NULL, 0, "%d", hw_argc - 1) + 1;
+ 		for (i = 0; i <= hw_argc - 2; i++)
+ 			len += strlen(as->argv[i]) + 1;
+ 		p = m->hw_handler_params = kzalloc(len, GFP_KERNEL);
 
 
