@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795620801;
-	b=z/24biKQALB09JIwDpnPNcFg8esP+1FUHHX0P0MatOXABPKSY1js/X53PYr6M+D1+Me2
-	 u7fCVrGjQ6kwXeBl1BElMQmEM+gp2qWd/T+CJ3YVdN/GgsP/5bRjAlXsE59/R7xY62GmU
-	 uLPV2/nqO052gCANUJtDEgzKgT519cack8/yigA2UHk6XhIpbvYAsPOD72Cejkcc4PKfl
-	 HErasxlLRZ29PfJITa0sAZ5Egw9yDOFJllbZxYdSoWDMFBCiwGaGM71TLcMLkXS6GFa1I
-	 tAcREW49Tdf4rgRS0+c5uJPRvFpw2ehJuqjjfKTMZT97ie2Jt9cQNT3JXDBUeimkR7Q==
+	t=1795620804;
+	b=Gd1JVNlzYiSZALzOfw/ojBNJ2vw5MvLgt4fHGAvHLLu+sTQZLS2uXykxTEdM582hN4WH
+	 Vr3aAB5FtgdbEGY0czTEZARSnBV+IrbeN8HlxCgiloqmym7fZwq3/L5xfhuAmFNnsMxYa
+	 SUVxmAuek3Scfd9FFmscNFln0fLUp74Lb7fsSD24RmsuUxGTopa8cw/3EAtFKlmlnpLAS
+	 cx248weHVyVzxtIiV4XhqA0XI/Cp6N4VvvkMhgUSdr1tks+Z1D6R8lAt/pyF8H0MFNTDC
+	 daRZc6Vox1erlt4yJjry3CHB5V/Th6tVfhl+kozRzhITTnlHYw1pgs7hX+noNLXjhBw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795620801;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795620804;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=7y7btWLCb9rewHgFiVBzDtk9gX/BenTNLEWTBkZUzOI=;
-	b=rbyw35xl/RlyqCKVOxEmeARE26doWS+ZpjOKgYIQl1FRRxdn/TTI9WT7ndGhfJSk4Wkd
-	 KkFIe3w8Fv6MDzLbIiX2KgFweJb+ZR8jpy1CKJj7yQapN43nCIaUJHhsHKPUE6wK7S6/l
-	 H3a6yq+Un1LQA3fUNMUixn1hrUwnixYDCZfbehhpNpMvydLP5obvqtMexIXcNr0zGB9VW
-	 a3sTm5Ib4cO5GQQA0djk7C81778kcjzBbhJhTwxEYUq1+jWAVg3NHsj3c5M2A/2H9TfKz
-	 qMq6l7uX5TWxQxSn6uqNEkSiMQp4zQ/o5gVX0b3JsoC62wyRGd8nno9ZOaiGMNhsLkA==
+	bh=T4EfI8/m4C9NAM8EvIs8mQmpYODE8xUySmtVm8Q1KUI=;
+	b=rwqxAkId3MmKhC9xMgdHmcLt3VZj/WA7yizdulLqQf+rTtKzzb00U1IGBqRjWIoRP8bC
+	 g27siraYF9/GAbf8uZG3J+pt3IhD6GrMLnxt0XjMIF0zuSFO1FhzNrzRKyl7XF06ESRcp
+	 MsIIRk8HrCVIaybFcMyFAoBRpg1fKIc++sD7k5R1o5DAZsWVgJzo8zlOqsFwe9PGoqHRk
+	 FRt6Rq5pYQdj/pEVjrL6LV+jP5fy7pM10ZRD44pjsMPUnapokCp00bSekApjclBSMOPg9
+	 lytb2i7tVKmXLsd1YFYw8BUy1TCqG5c5GTrr9N7if5cWsv8p83lw04QDzMRLyBtU/qQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=DR2Bewyw;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=GNpuip63;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 84A6A606A32D;
-	Wed, 25 Nov 2026 15:33:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D5765606A323;
+	Wed, 25 Nov 2026 15:33:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=DR2Bewyw
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8F8121F000D3;
-	Wed, 25 Nov 2026 15:33:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=GNpuip63
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E60DA1F000D1;
+	Wed, 25 Nov 2026 15:33:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795620801;
-	bh=7y7btWLCb9rewHgFiVBzDtk9gX/BenTNLEWTBkZUzOI=;
+	s=korg; t=1795620804;
+	bh=T4EfI8/m4C9NAM8EvIs8mQmpYODE8xUySmtVm8Q1KUI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=DR2BewywNL95bvoKPcWCgGyJyPx39UiG9WPLY7BJBI2VMP76Mqmly/RHIGDxCuly2
-	 thdgM6Y8SllcpOvtacJ/6bOz1dHECLrRX7ry4ngxdvZodpoosvbEvVgUEOTbZ7AhIK
-	 Mq3Ek1diHBzJrYUD7inab8AyIwIS3IuuvJuUcMz8=
+	b=GNpuip63ok22fBVANSjJz/KBo/nuZcW7ztF2zyS9kp75aom30asvPkjjGpMtQWoPH
+	 F/2e3tHlE4NC8ZuREMOwyjPrj9iragRox7DZvQfqEZcnqCm/ONPeorolkyb7hcov12
+	 isnflxg1hq9dEWtHTjPfAuc2wRoOWWo+Mp6HRj+I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Gabriele Monaco <gmonaco@redhat.com>,
-	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
+	"Darrick J. Wong" <djwong@kernel.org>,
+	Long Li <leo.lilong@huawei.com>,
+	Carlos Maiolino <cem@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 028/990] sched/deadline: Fix server stopping with runnable tasks
-Date: Wed, 25 Nov 2026 15:23:15 +0100
-Message-ID: <20261125143822.748141744@linuxfoundation.org>
+Subject: [PATCH 6.18 029/990] xfs: only assert new size for datafork during truncate extents
+Date: Wed, 25 Nov 2026 15:23:16 +0100
+Message-ID: <20261125143822.771065228@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143822.072087159@linuxfoundation.org>
 References: <20261125143822.072087159@linuxfoundation.org>
@@ -68,81 +69,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Gabriele Monaco <gmonaco@redhat.com>
+From: Long Li <leo.lilong@huawei.com>
 
-[ Upstream commit ca1e8eede4fc68ce85a9fdce1a6c13ad64933318 ]
+[ Upstream commit e942498385bf80f4d6d075b47174035545eb6a2e ]
 
-The deadline server can currently stop due to idle although fair tasks
-are runnable. This happens essentially when:
+The assertion functions properly because we currently only truncate the
+attr to a zero size. Any other new size of the attr is not preempted.
+Make this assertion is specific to the datafork, preparing for
+subsequent patches to truncate the attribute to a non-zero size.
 
- * the server is set to idle, a task wakes up, the server stops
- * a task wakes up, the server sets itself to idle and stops right away
-
-Address both cases by clearing the server idle flag whenever a fair task
-wakes up and accounting also for pending tasks in the definition of idle.
-
-Fixes: f5a538c07df2 ("sched/deadline: Fix dl_server stop condition")
-Signed-off-by: Gabriele Monaco <gmonaco@redhat.com>
-Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
-Link: https://patch.msgid.link/20260113085159.114226-3-gmonaco@redhat.com
+Reviewed-by: Darrick J. Wong <djwong@kernel.org>
+Signed-off-by: Long Li <leo.lilong@huawei.com>
+Signed-off-by: Carlos Maiolino <cem@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/sched/deadline.c | 13 +++++++++----
- 1 file changed, 9 insertions(+), 4 deletions(-)
+ fs/xfs/xfs_inode.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/kernel/sched/deadline.c b/kernel/sched/deadline.c
-index 7064c8985b3db..1c677016115a9 100644
---- a/kernel/sched/deadline.c
-+++ b/kernel/sched/deadline.c
-@@ -1434,7 +1434,7 @@ update_stats_dequeue_dl(struct dl_rq *dl_rq, struct sched_dl_entity *dl_se, int
- 
- static void update_curr_dl_se(struct rq *rq, struct sched_dl_entity *dl_se, s64 delta_exec)
- {
--	bool idle = rq->curr == rq->idle;
-+	bool idle = idle_rq(rq);
- 	s64 scaled_delta_exec;
- 
- 	if (unlikely(delta_exec <= 0)) {
-@@ -1617,8 +1617,8 @@ void dl_server_update(struct sched_dl_entity *dl_se, s64 delta_exec)
-  * | 8 |       B:zero_laxity-wait       |     |    |
-  * |   |                                | <---+    |
-  * |   +--------------------------------+          |
-- * |     |              ^     ^           2        |
-- * |     | 7            | 2   +--------------------+
-+ * |     |              ^         ^       2        |
-+ * |     | 7            | 2, 1    +----------------+
-  * |     v              |
-  * |   +-------------+  |
-  * +-- | C:idle-wait | -+
-@@ -1663,8 +1663,11 @@ void dl_server_update(struct sched_dl_entity *dl_se, s64 delta_exec)
-  *   dl_defer_idle = 0
-  *
-  *
-- * [1] A->B, A->D
-+ * [1] A->B, A->D, C->B
-  * dl_server_start()
-+ *   dl_defer_idle = 0;
-+ *   if (dl_server_active)
-+ *     return; // [B]
-  *   dl_server_active = 1;
-  *   enqueue_dl_entity()
-  *     update_dl_entity(WAKEUP)
-@@ -1779,6 +1782,7 @@ void dl_server_update(struct sched_dl_entity *dl_se, s64 delta_exec)
-  *   "B:zero_laxity-wait" -> "C:idle-wait"        [label="7:dl_server_update_idle"]
-  *   "B:zero_laxity-wait" -> "D:running"          [label="3:dl_server_timer"]
-  *   "C:idle-wait" -> "A:init"                    [label="8:dl_server_timer"]
-+ *   "C:idle-wait" -> "B:zero_laxity-wait"        [label="1:dl_server_start"]
-  *   "C:idle-wait" -> "B:zero_laxity-wait"        [label="2:dl_server_update"]
-  *   "C:idle-wait" -> "C:idle-wait"               [label="7:dl_server_update_idle"]
-  *   "D:running" -> "A:init"                      [label="4:pick_task_dl"]
-@@ -1804,6 +1808,7 @@ void dl_server_start(struct sched_dl_entity *dl_se)
- {
- 	struct rq *rq = dl_se->rq;
- 
-+	dl_se->dl_defer_idle = 0;
- 	if (!dl_server(dl_se) || dl_se->dl_server_active)
- 		return;
- 
+diff --git a/fs/xfs/xfs_inode.c b/fs/xfs/xfs_inode.c
+index 36b39539e561a..c5afc8997fb4e 100644
+--- a/fs/xfs/xfs_inode.c
++++ b/fs/xfs/xfs_inode.c
+@@ -1048,7 +1048,8 @@ xfs_itruncate_extents_flags(
+ 	xfs_assert_ilocked(ip, XFS_ILOCK_EXCL);
+ 	if (icount_read(VFS_I(ip)))
+ 		xfs_assert_ilocked(ip, XFS_IOLOCK_EXCL);
+-	ASSERT(new_size <= XFS_ISIZE(ip));
++	if (whichfork == XFS_DATA_FORK)
++		ASSERT(new_size <= XFS_ISIZE(ip));
+ 	ASSERT(tp->t_flags & XFS_TRANS_PERM_LOG_RES);
+ 	ASSERT(ip->i_itemp != NULL);
+ 	ASSERT(ip->i_itemp->ili_lock_flags == 0);
 -- 
 2.53.0
 
