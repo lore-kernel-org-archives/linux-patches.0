@@ -1,42 +1,42 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795621994;
-	b=jSD+TvbhqYfPPPwqEtcxumjnQLLLvQ+pO7XVbQYFFQ+JCiZOEiHzaJBp4myJSvBdB34P
-	 8/nagHfwMY2t2wIPo2iupotZ2xgTgE5vXuyB61GlehzCAC3JG5xyVHluSUfWlIlbqMzIW
-	 wpd1X7abJKdyDZA2LXEJUdCl0GKSlNGut4SfadEsrUoac46gbo8eStVvnerauRQBESuYp
-	 gim5stGoobFVB1PkK6cXhUy2/3alYSsR45Ktvzl92qBet9BOpk8nQOgmh0kVBUdAmzOws
-	 lRfTya+p5RDxtkpMUM6n/QhS2moOq9TwQZlK90pfDKvSvz3KP7F77/uHX9cWta11d5Q==
+	t=1795621998;
+	b=hCnwqN+6jyWM1nD9V327uBBdMd6M/8RIl/7WmbNYxgYLVe4r41litZWdGE8HQv53VxUC
+	 sa//L1egM5OnfsP8RzKqaKMXu+LX0MUqiWwc/ghUkTAtaulOZtCB9IjPD4Dg4IjZ2oOS9
+	 96iD55qWyqr8oMWwdS0t5BsP3+HCydDkBZrqFucQgycbaOpium2dThIBDTzZtMtMsDHqE
+	 QG8GYLcYP+cgSrSmkVsXe7aGAhWIsoH5zPLkBb9xYMMilagak7Vq+WY2FgikrlrEopULG
+	 MQXfPJXgnTHthhwyTNKS/fjSPKXwcfsAnOFIomvPQEMgfFksfbC3CUEq5r07UX/+MWQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795621994;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795621998;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Type:Content-Transfer-Encoding;
-	bh=ysXD9rYq5eocGO4jTNc/oQsRHY2ZE09sZdSBIR20Z2c=;
-	b=hTFIdzHdXc7w5Ggt1TbACFWzt53vUVH4JEuvDarX+Jlv54piGxtdpKZ2v1gOmxesxKt0
-	 rqPVA42MFG36m17FB+gydJN3DYkK+Abol9qssvymojHRTIKOEI9aoWjkTejk8it7Vo6Jj
-	 0Wz8Qwhtb6spNaUJaMSpWG4/43gX5pzAyXLny4CL6nEEAn+Mk9BBUykZV2MzKBBe1Thl/
-	 cJz42auHN+KJJN2TomqiBACyUFcYbVd8qfXJQA3uGPExWLQjnz4OLASklYr1u2M7GwTZn
-	 9LARjRX5Pm1vq8B7q7ShDsvbMUfOZqt8hpeofyNLrg0kpByU1Tm7+BiOKjFUiVv/C2w==
+	bh=c5NXnLWUStMrbAby/gGa3DtN2BUxG4pGvwa4n/kewfs=;
+	b=B7N0j6p5XiUFIq0fPpvci7SEkptKgzHqXdG8MkTRjwzrPzAgejWwKgNL0Xqw3Kk9VOEv
+	 xzi6LbJxnQ2BgyIs9xm/flThJPDvcgGV08Le6iET99lapwyGIm3vJY2o0LQ/DocRDWANN
+	 V03stC0mexeWwvBxXcIOO/JSYhoJYR+9Tvd7Faz26PqCDm0yliIlNVe0jKj11lt5TIKHD
+	 duuNewvMdtIKaDRxd/Qn/iAs3l/q3j209hywAVYYSqw0GyfVC0H8rjXh0H783L5YO0J3d
+	 45aAFAlGCW5rXrQqtdJvEyo9JCCPA150OgwQTXWCf/Mw4vg8kXVks+OQSBqVT7+xmlA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=kitFPGnr;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=XCxdedrh;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CDF30606A31E;
-	Wed, 25 Nov 2026 15:53:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4BA25606A31E;
+	Wed, 25 Nov 2026 15:53:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=kitFPGnr
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D297E1F000D0;
-	Wed, 25 Nov 2026 15:53:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=XCxdedrh
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2EA811F000CF;
+	Wed, 25 Nov 2026 15:53:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795621994;
-	bh=ysXD9rYq5eocGO4jTNc/oQsRHY2ZE09sZdSBIR20Z2c=;
+	s=korg; t=1795621997;
+	bh=c5NXnLWUStMrbAby/gGa3DtN2BUxG4pGvwa4n/kewfs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=kitFPGnrfIp+KgiyZ5MD/hm9XfJDuKrpUC0qYJQAhwWHFYjXCJ9VK3fJFzse1U4PB
-	 7Kl30uAeylA3J7/3BfjhUoSE0dLXf54cRrkqaqUzdFOKIcN2BJsv+u5AV1vZsjTAgp
-	 lc/DE0SljHEQbq3z8bbrWPF6YobbmbwshvcOsr8g=
+	b=XCxdedrhIi4xQfDA0snG925fnua8aqkZgSfSgBjVFYnFmI4fRyixASjz+N/zSGiMQ
+	 HmiL9UaWpcbOD1Cn/AVHPaKgbVWXtVQBZ+CPqePD6FGTt76EU/WESLggAQgAeucHdc
+	 HiYm191FD6YZRrzwm1DKxloDDj2ksDKTO/fKiZag=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -45,9 +45,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	=?UTF-8?q?Bj=C3=B6rn=20T=C3=B6pel?= <bjorn@kernel.org>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 395/990] ice: xsk: fix leaking Rx buffers in multi-buffer path
-Date: Wed, 25 Nov 2026 15:29:22 +0100
-Message-ID: <20261125143831.350024488@linuxfoundation.org>
+Subject: [PATCH 6.18 396/990] ice: xsk: do not free in-flight frags on XDP_TX completion
+Date: Wed, 25 Nov 2026 15:29:23 +0100
+Message-ID: <20261125143831.373500822@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143822.072087159@linuxfoundation.org>
 References: <20261125143822.072087159@linuxfoundation.org>
@@ -72,44 +72,72 @@ Content-Transfer-Encoding: 8bit
 
 From: Maciej Fijalkowski <maciej.fijalkowski@intel.com>
 
-[ Upstream commit 8b7bd01b9c56c0d1f65d0e2ad304b775e0d709e3 ]
+[ Upstream commit 5a9b5e315e101dfa02af5d8d3b27d893ba3e5566 ]
 
-ice_clean_rx_irq_zc() consumes a descriptor without freeing its buffer
-when a frag has zero length or when xsk_buff_add_frag() fails, which
-happens if the frags array is full or the fill ring has duplicates.
-Such buffers are lost to user space until the socket is closed.
+ice_xmit_xdp_tx_zc() takes the frags of a multi-buffer frame off
+pool->xskb_list but leaves XDP_FLAGS_HAS_FRAGS set on the head. When
+the head completes, xsk_buff_free() frees whatever is on the list at
+that point, which are the frags of a frame still being received.
 
-Free the buffer in both cases. xp_free() skips a duplicate already
-freed with the frame.
+If ice_xmit_xdp_tx_zc() completes such a head while cleaning the ring
+before sending another frame, xsk_buff_get_frag() returns NULL and
+xsk_buff_xdp_get_dma() dereferences it.
 
-Fixes: 1bbc04de607b ("ice: xsk: add RX multi-buffer support")
-Fixes: 93f53db9f9dc ("ice: switch to Page Pool")
+Clear the flag on the head once its frags are on the ring. As
+xdp_get_buff_len() then covers only the head, count Rx bytes before
+running the XDP program, like libeth does.
+
+Fixes: eeb2b5381038 ("ice: xsk: Tx multi-buffer support")
 Signed-off-by: Maciej Fijalkowski <maciej.fijalkowski@intel.com>
 Reviewed-by: Björn Töpel <bjorn@kernel.org>
-Link: https://patch.msgid.link/20261102124950.958345-4-maciej.fijalkowski@intel.com
+Link: https://patch.msgid.link/20261102124950.958345-5-maciej.fijalkowski@intel.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/intel/ice/ice_xsk.c | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ drivers/net/ethernet/intel/ice/ice_xsk.c | 9 ++++++++-
+ 1 file changed, 8 insertions(+), 1 deletion(-)
 
 diff --git a/drivers/net/ethernet/intel/ice/ice_xsk.c b/drivers/net/ethernet/intel/ice/ice_xsk.c
-index 102631398af3c..6dfc6fd34c886 100644
+index 6dfc6fd34c886..2009744a9f6a4 100644
 --- a/drivers/net/ethernet/intel/ice/ice_xsk.c
 +++ b/drivers/net/ethernet/intel/ice/ice_xsk.c
-@@ -619,8 +619,11 @@ int ice_clean_rx_irq_zc(struct ice_rx_ring *rx_ring,
+@@ -494,6 +494,11 @@ static int ice_xmit_xdp_tx_zc(struct xdp_buff *xdp,
+ 	tx_desc->cmd_type_offset_bsz |=
+ 		cpu_to_le64(ICE_TX_DESC_CMD_EOP << ICE_TXD_QW1_CMD_S);
  
- 		if (!first) {
- 			first = xdp;
--		} else if (likely(size) && !xsk_buff_add_frag(first, xdp)) {
-+		} else if (unlikely(!size)) {
-+			xsk_buff_free(xdp);
-+		} else if (!xsk_buff_add_frag(first, xdp)) {
- 			xsk_buff_free(first);
-+			xsk_buff_free(xdp);
- 			first = NULL;
++	/* Each frag is now freed via its own Tx buffer. Completing the head
++	 * must not release what is on the pool's frag list at that time.
++	 */
++	xdp_buff_clear_frags_flag(head);
++
+ 	return ICE_XDP_TX;
+ 
+ busy:
+@@ -593,6 +598,7 @@ int ice_clean_rx_irq_zc(struct ice_rx_ring *rx_ring,
+ 		struct sk_buff *skb;
+ 		u16 stat_err_bits;
+ 		u16 vlan_tci;
++		u32 xdp_len;
+ 
+ 		rx_desc = ICE_RX_DESC(rx_ring, ntc);
+ 
+@@ -635,6 +641,7 @@ int ice_clean_rx_irq_zc(struct ice_rx_ring *rx_ring,
+ 
+ 		((struct libeth_xdp_buff *)first)->desc = rx_desc;
+ 
++		xdp_len = xdp_get_buff_len(first);
+ 		xdp_res = ice_run_xdp_zc(rx_ring, first, xdp_prog, xdp_ring,
+ 					 xsk_pool);
+ 		if (likely(xdp_res & (ICE_XDP_TX | ICE_XDP_REDIR))) {
+@@ -649,7 +656,7 @@ int ice_clean_rx_irq_zc(struct ice_rx_ring *rx_ring,
+ 			goto construct_skb;
  		}
  
+-		total_rx_bytes += xdp_get_buff_len(first);
++		total_rx_bytes += xdp_len;
+ 		total_rx_packets++;
+ 
+ 		first = NULL;
 -- 
 2.53.0
 
