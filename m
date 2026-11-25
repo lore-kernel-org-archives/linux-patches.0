@@ -1,55 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795621816;
-	b=jkxB2qT03E/Jc1RRpfZVWlt7o1yyqdtuFpr4f1o0u4QwHoNFEyDtPRtUlsegeWNjvp8r
-	 6OYgLU4g/QVbdeRwrOi9q5Ae6R+1PQPMZwZ2sR5hJF1Uo9fCDr5Xc5mhzAs0JLDn4U7Tx
-	 GGB+7mNjfDVlNSCHTP/ASdJIlo3ZXzckFAIeKg4V8GiRaNOx+tIfRDtn8o0AO4/uRh1es
-	 fuPadSHcjgvGdOUhfncBJcDQ1gCFskCtb+Z6iIvKEoaR7tZovykeB5JySBWNh4asqQ3Hs
-	 wj1pWMnt33SAgoye1/WwydrCaLq7L8AHLGvNLOy7qtbGN8xEsLrcLLncCT5rcs1+jtQ==
+	t=1795621820;
+	b=JGt5i4BLkq/wvY5tf1mQY+VUmn2O7o7TIsBwCSnekSxL/OCaqWG18+4rqc5q7GUv/KKL
+	 r1JeXlpEoApxtoKt8iodRnAYDQol5Xq1xg2j4GE+J29A8ZGTeBnZiKz2ScOSlAT5gBJfb
+	 nDOtt2sUzAQ3xidkWU0cUNVxFyRYR01+/XISBGUXYm+PHpkJ4KifAxMt4BHwfjKBRwaoC
+	 8FNJFhevl14iemFTufVVium8CeED1E+eGb3dXBXYKHXci+ZezoNwGzTyV7BSzkf1pDqk7
+	 XrVyIOfSmSup/wVeqEt4w95z8K+Y/2uQybv8HmDCH378x6ztOcOviHu1qmmckMFfytw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795621816;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795621820;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=RdPejvrOOXUvvZlcAimlYr83CdhDKExUkbnvzLVOZHc=;
-	b=MAxuSqzi+TyRhFp/BNNFsYak5pqfXHNpf5AxxJmBzobvqdTJnPXurqIQbbPWG7s9GSQx
-	 Jde7XcfzvHbpmqxKXZdZ8cGpqi7fDKkflYwKUhIvuMF9KiISyFAjM7Z3rDaBEXD6pGyCB
-	 aRpzfstw9mK++JyPKdqwmy/+pE7h1TTmoHerOny/fkYkYIibcmvVohFnqb2aGvu1hHZgl
-	 qfFw8U5n1TzJ/wEza13RuUa77dxjGrOlbonzJxD8Kru0egGvnZZviBaLrEypScExO7JLb
-	 rq1HJ2kG9oy9FrOsnISP9HWsMVmK4ONmXpHxb4V/i9IuZbFLmmFbdi6RQ/pWk43cu0A==
+	bh=kgNVtEnHcv6uUTMxX67ECgEKacwLdAw4H9CSvcdTw/4=;
+	b=AZ8AgTdEGsVYCYfsZ+eqBJLDRZmfWBEVTnxd/s5xBKFMmRPB/rI+W+8OLLW3Esh3SPsU
+	 1dRAeMyHyhvYHrJvk2HPOFGT+qIyjLcZ46uUfj6IJr8MdMFsi5zS3FEjWKtmrrfU4Hpvp
+	 Nu1OkLcIE58Wg+5ExE2LdN4PJ+D3qLG3ec36D7ARJ25m/tLgbQ79a9DBEnsfiTLnJHhwp
+	 qwKgnubFY3nMEQGIsZj9KaMdmwvmvLWNlsPBrrfwA0nbCWWXULbxaZqPNJ+0n5P/hVgTB
+	 Fa4upXarYFRrLggd2llVguoYLpzIHBE5olseCjuZCQLMJdwSbtUFynVR0CBXCPVv0hg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=mxOidA63;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=uHOlcXkE;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 559EA606A691;
-	Wed, 25 Nov 2026 15:50:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E9C84606A337;
+	Wed, 25 Nov 2026 15:50:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=mxOidA63
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1DDF21F000CF;
-	Wed, 25 Nov 2026 15:50:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=uHOlcXkE
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D31901F0093C;
+	Wed, 25 Nov 2026 15:50:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795621815;
-	bh=RdPejvrOOXUvvZlcAimlYr83CdhDKExUkbnvzLVOZHc=;
+	s=korg; t=1795621819;
+	bh=kgNVtEnHcv6uUTMxX67ECgEKacwLdAw4H9CSvcdTw/4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=mxOidA63BGUS/s3MMHrca+9ClO/KVBbqM7VM1dG6yq5hEeJevOfwysNZs34eY9U5d
-	 cXa0+UJy3ABeki3sHRoDbcqgO6H3AEe+pZqzYv6WBmoTHK3+cOGCqD45KutOY7u19i
-	 FE92b2wtPtF2h4DoHVEmMgog0UKsBUtRaSyRigH0=
+	b=uHOlcXkEkGc12qV6YCBfLhsIbxz6QM2t/n2BK99g9Dkyg7/QUQl7J5vL5Vj6oz66J
+	 mlzsD7SPthZ4JH7DiIxBFbQ/Gn84I8t1AqH3oOLqUPrtKRPRku519FuMDr/dHS9IRg
+	 h/kT79UzYcEzzt4/mDpkXk2gCPWA4Hv5YNGbanZM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Leo Yan <leo.yan@arm.com>,
-	Ian Rogers <irogers@google.com>,
-	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
-	James Clark <james.clark@linaro.org>,
-	Will Deacon <will@kernel.org>,
+	Matt Roper <matthew.d.roper@intel.com>,
+	Nitin Gote <nitin.r.gote@intel.com>,
+	Matthew Brost <matthew.brost@intel.com>,
+	Dave Airlie <airlied@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 307/990] perf: Add perf_event_attr::config4
-Date: Wed, 25 Nov 2026 15:27:54 +0100
-Message-ID: <20261125143829.282629048@linuxfoundation.org>
+Subject: [PATCH 6.18 343/990] drm/xe/tuning: Restrict Anyhit NULL-query tuning to render engines
+Date: Wed, 25 Nov 2026 15:28:30 +0100
+Message-ID: <20261125143830.127231961@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143822.072087159@linuxfoundation.org>
 References: <20261125143822.072087159@linuxfoundation.org>
@@ -71,47 +70,55 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: James Clark <james.clark@linaro.org>
+From: Nitin Gote <nitin.r.gote@intel.com>
 
-[ Upstream commit cbbfba4847b8a5299d36e002bf864b21bb83295d ]
+[ Upstream commit ddef200c67d445f978f323d947c8993570ae4756 ]
 
-Arm FEAT_SPE_FDS adds the ability to filter on the data source of a
-packet using another 64-bits of event filtering control. As the existing
-perf_event_attr::configN fields are all used up for SPE PMU, an
-additional field is needed. Add a new 'config4' field.
+The "Disable NULL query for Anyhit Shader" tuning uses
+xe_rtp_match_first_render_or_compute to program RT_CTRL once per GT.
+On a GT with no render (RCS) engine, that match falls back to a
+compute (CCS) engine instead, so the tuning is still written even
+though RT_CTRL's ray-tracing logic has no hardware behind it there.
 
-Reviewed-by: Leo Yan <leo.yan@arm.com>
-Tested-by: Leo Yan <leo.yan@arm.com>
-Reviewed-by: Ian Rogers <irogers@google.com>
-Acked-by: Peter Zijlstra (Intel) <peterz@infradead.org>
-Signed-off-by: James Clark <james.clark@linaro.org>
-Signed-off-by: Will Deacon <will@kernel.org>
-Stable-dep-of: b61c12527223 ("perf/amd/ibs: Fix kernel address leak via REGS_USER and REGS_INTR")
+A CRI compute-only GT hits exactly this path, causing
+igt@xe_debugfs@check-gt-reg-sr to report a save-restore mismatch:
+
+  Mismatch on 0xe530, expected 0x400 got 0x0
+
+Restrict the rule to ENGINE_CLASS(RENDER) so it only applies where
+ray-tracing hardware is actually present. Every other in-tree platform
+in this version range (BMG, LNL, PTL, NVL) always has a render engine,
+which xe_rtp_match_first_render_or_compute already resolves ahead of
+any compute engine, so this is a no-op for them.
+
+Assisted-by: LLM
+Cc: Matt Roper <matthew.d.roper@intel.com>
+Signed-off-by: Nitin Gote <nitin.r.gote@intel.com>
+Fixes: 8d8431298f69 ("drm/xe/xe3: Disable null query for anyhit shader")
+Reviewed-by: Matt Roper <matthew.d.roper@intel.com>
+Link: https://patch.msgid.link/20261012171901.19508-6-nitin.r.gote@intel.com
+Signed-off-by: Matt Roper <matthew.d.roper@intel.com>
+(cherry picked from commit 65e2e108e466a2def170797a6d1b4b7849cec3a1)
+Signed-off-by: Matthew Brost <matthew.brost@intel.com>
+Signed-off-by: Dave Airlie <airlied@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/uapi/linux/perf_event.h | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/gpu/drm/xe/xe_tuning.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/include/uapi/linux/perf_event.h b/include/uapi/linux/perf_event.h
-index 78a362b800277..0d0ed85ad8cb3 100644
---- a/include/uapi/linux/perf_event.h
-+++ b/include/uapi/linux/perf_event.h
-@@ -382,6 +382,7 @@ enum perf_event_read_format {
- #define PERF_ATTR_SIZE_VER6			120	/* Add: aux_sample_size */
- #define PERF_ATTR_SIZE_VER7			128	/* Add: sig_data */
- #define PERF_ATTR_SIZE_VER8			136	/* Add: config3 */
-+#define PERF_ATTR_SIZE_VER9			144	/* add: config4 */
- 
- /*
-  * 'struct perf_event_attr' contains various attributes that define
-@@ -543,6 +544,7 @@ struct perf_event_attr {
- 	__u64	sig_data;
- 
- 	__u64	config3; /* extension of config2 */
-+	__u64	config4; /* extension of config3 */
+diff --git a/drivers/gpu/drm/xe/xe_tuning.c b/drivers/gpu/drm/xe/xe_tuning.c
+index a524170a04d02..84e99f6474e61 100644
+--- a/drivers/gpu/drm/xe/xe_tuning.c
++++ b/drivers/gpu/drm/xe/xe_tuning.c
+@@ -100,7 +100,7 @@ static const struct xe_rtp_entry_sr engine_tunings[] = {
+ 	},
+ 	{ XE_RTP_NAME("Tuning: Disable NULL query for Anyhit Shader"),
+ 	  XE_RTP_RULES(GRAPHICS_VERSION_RANGE(2000, XE_RTP_END_VERSION_UNDEFINED),
+-		       FUNC(xe_rtp_match_first_render_or_compute)),
++		       ENGINE_CLASS(RENDER)),
+ 	  XE_RTP_ACTIONS(SET(RT_CTRL, DIS_NULL_QUERY))
+ 	},
  };
- 
- /*
 -- 
 2.53.0
 
