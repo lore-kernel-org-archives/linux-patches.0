@@ -1,51 +1,50 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795626032;
-	b=A4wOnryqo9wk3foPjtEgAQ1IuEFPT1Cp5ghz5utnjhe5hr8HtQOX1kfHjGUcB3u9JZLh
-	 9575UxpzliKJqaJDBiryvZ0KQq5pVMSbk7uMunnXocdo1/Ko6ooaw4RCDm7BxzCAuXqO5
-	 InLxyv4IIfTRsvfBs2RM7LWc2w5bfgv+l6/M4GVUQEL+5U1NoWkYQ0skMsYnbhZbVLy9I
-	 I2EDyikPicGl3BOh1SRFGi08zyIG3dD9EvxB0nCBOuSvvS2atOxFg7+l1jrcAS6BrUy1i
-	 pgNba+1IPeYVpqrbk0NCSwav4dbEymuQjH7n5pWZbxeR5IZCfZGUacdLhTfMn9sjbWA==
+	t=1795626034;
+	b=zGlM2baDdauMXJQOVQBI1STWaw7TN/azuealXFaoeKubs6SAUDu4jpOsZcJf2yhb6iUZ
+	 xHGZHu16Lm7YlXWXaz59nV94OTWvQkZGHJJ1Bs+LWyDjfXE9BTv+OzgBC0ntsokw3PZRi
+	 ZkeMKN8SKrYSKCmaKSfaTVH+LjUzwtgIMmZSkrS36Pi08lSET78d9naCJtNNzQQ9AOpkg
+	 6PaBuOpr22wxzgfM1zaObEDA7UIirD2vz9BkYaOarB9QqNz3rhBw13S2i5felC9TIedeQ
+	 brausbFUpPNqq2dDGZv14uakRcGpeOMXNwOWtCpCKM0vq4ztHKj3CNnW1BAqAaFQj8Q==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795626032;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795626034;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=8+KiR38dxxUdh6krx8yS562E6NBNgtjEV/hT/B+JS4M=;
-	b=L09xXUU6J1G/I0lUGoaf0syVG9GDUWPXvGmv0tnZU0j6aY7U9GkJ6J6ky9HDcjcyetpu
-	 d8I3X2kKJ/2PMrEUNXeqgGLweewxApK9OHeICO0V4JOSCNVUf+euV3G9g6FW8A+l8AYpU
-	 fcxMQ3k5HTSj0IXDwpofvjno/12Nw2htfkNKxmeULtDf8+SxgmvXa2u1NUGA3Wnn6Otfk
-	 MOXUmRpJu2vlWY3XQ9Ga2OWHSrgAZ2yFSDSlCdyuxBj6A0Wdp3MF40Y0ixkVPu+IoQs98
-	 4aQGYm+SItmia45Mu2U9qd8yROXFGE08GywrtAlYZp3AgEhkg4eYwIXkPK+cwEuTNxA==
+	bh=fIdkKEe1zoRRhx2uoDe4FmQ+jjQmkH5DQXWfloppXCs=;
+	b=okMvAiC766rE/62/KYKCMpwHOBYyK42Sb7IZyJ4768z3U5BHF/LRzF7v/QKW3twYkvqR
+	 gTDv/ZTH6ChNTdpmbhVKzyiUMQ0SrCuzMPg/MGZU79FIVOrXnOyC5+7zW7HNNNAInfhi6
+	 gObkfPFTqgIdN1+TOH6iF64JlDfZt8XMO9CU+WCIvLxnbdaeVcFOYmmNJRoWsIyGnFpnt
+	 SM8LSQJmuC2TI8ki0iEeeElWY2wrXTLB7u8m03mUU8rkdJnSAqj7WT7edUpy4L9CNhCBJ
+	 IBlQ/oa+qr3a3T6G9Wmr55I+BFMa8GHNAd6tH5XQjcJeSdSsGnIrv3qh55D9RIIbmmA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=vrTxVn9J;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Dfv5Jv+3;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0B8AA606A321;
-	Wed, 25 Nov 2026 17:00:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D5AE8606A326;
+	Wed, 25 Nov 2026 17:00:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=vrTxVn9J
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5E3301F000C0;
-	Wed, 25 Nov 2026 17:00:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Dfv5Jv+3
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 324D51F000C0;
+	Wed, 25 Nov 2026 17:00:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795626031;
-	bh=8+KiR38dxxUdh6krx8yS562E6NBNgtjEV/hT/B+JS4M=;
+	s=korg; t=1795626034;
+	bh=fIdkKEe1zoRRhx2uoDe4FmQ+jjQmkH5DQXWfloppXCs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=vrTxVn9JxuWmTb3IAUoyFySPss9Swv2nJKjyiFU8SOJDl1RF3GYsGXNyFDIitV/go
-	 qTjNMCslskZEPmVhlCWEM7CE+Hypr4hF6sEJh+HldRqByAiqRnMACRq+TY1+n+/FBh
-	 uNVnLqy/s8SsC1vpnP5AMCYfmJjyez9/KZ972zjs=
+	b=Dfv5Jv+3d8gJMZ8pr0HJ5hxOpYklO5IEuKZpWBbKt6eynv1sE1SX2BQB5jldyMzHs
+	 DWUvHwnrr9qzbUDfHPzmepDzZxLIGKRYHgwhlfbQJsqovDyAzl2uF3YJ0GMVZc5OgJ
+	 xX78+eFWaCt5ZsVEslT/FTXIh+8y8wxqLANwThuo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhao Li <enderaoelyther@gmail.com>,
-	Johannes Berg <johannes.berg@intel.com>
-Subject: [PATCH 6.12 664/816] wifi: mac80211: drain link readers before stopping removed links
-Date: Wed, 25 Nov 2026 15:36:52 +0100
-Message-ID: <20261125143904.548740315@linuxfoundation.org>
+	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>
+Subject: [PATCH 6.12 655/816] tracing/eprobe: Disallow attaching eprobes to fprobe events
+Date: Wed, 25 Nov 2026 15:36:43 +0100
+Message-ID: <20261125143904.341934802@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143849.205329330@linuxfoundation.org>
 References: <20261125143849.205329330@linuxfoundation.org>
@@ -67,62 +66,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zhao Li <enderaoelyther@gmail.com>
+From: Masami Hiramatsu (Google) <mhiramat@kernel.org>
 
-commit 745f5d04395dfc4c311f443c7c04ccb00c436984 upstream.
+commit 92d9fa0ed69e1f724feed908bd0a462a42df4b88 upstream.
 
-Removing an MLO link can leave work queued on its link container after
-the container is freed.
+Event probes (eprobes) are not allowed to attach to other dynamic probe
+events (kprobes, uprobes, and eprobes) to avoid recursive probe chains
+and lifecycle dependencies. However, when fprobe events were introduced,
+TRACE_EVENT_FL_FPROBE was omitted from the exclusion mask in
+find_and_get_event(), allowing eprobes to attach to fprobe and tprobe
+events.
 
-ieee80211_tear_down_links() stops each link before the RCU grace period.
-A reader that fetched the link earlier can therefore queue work after
-ieee80211_link_stop() has canceled it. ieee80211_request_smps() and
-ieee80211_csa_finish() can both reach this window.
+Exclude TRACE_EVENT_FL_FPROBE events in find_and_get_event().
 
-Record each removed link while removing its keys and debugfs state. Wait
-for RCU readers, then stop the recorded links so cancellation includes
-work queued by those readers. Free the detached keys after the grace
-period as before.
+Link: https://lore.kernel.org/all/179455853457.403392.14549390017750529531.stgit@devnote2/
 
-LLM assistance was used to find the bug and review.
-
-Fixes: efe9c2bfd1a8 ("wifi: mac80211: isolate driver from inactive links")
+Fixes: 334e5519c375 ("tracing/probes: Add fprobe events for tracing function entry and exit.")
 Cc: stable@vger.kernel.org
-Signed-off-by: Zhao Li <enderaoelyther@gmail.com>
-Link: https://patch.msgid.link/20261028141708.5532-1-enderaoelyther@gmail.com
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+Signed-off-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/mac80211/link.c |    8 +++++++-
- 1 file changed, 7 insertions(+), 1 deletion(-)
+ kernel/trace/trace_eprobe.c |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
---- a/net/mac80211/link.c
-+++ b/net/mac80211/link.c
-@@ -176,6 +176,7 @@ struct link_container {
- static void ieee80211_tear_down_links(struct ieee80211_sub_if_data *sdata,
- 				      struct link_container **links, u16 mask)
- {
-+	struct ieee80211_link_data *stop[IEEE80211_MLD_MAX_NUM_LINKS] = {};
- 	struct ieee80211_link_data *link;
- 	LIST_HEAD(keys);
- 	unsigned int link_id;
-@@ -190,11 +191,16 @@ static void ieee80211_tear_down_links(st
+--- a/kernel/trace/trace_eprobe.c
++++ b/kernel/trace/trace_eprobe.c
+@@ -750,7 +750,8 @@ find_and_get_event(const char *system, c
+ 		    (TRACE_EVENT_FL_IGNORE_ENABLE |
+ 		     TRACE_EVENT_FL_KPROBE |
+ 		     TRACE_EVENT_FL_UPROBE |
+-		     TRACE_EVENT_FL_EPROBE))
++		     TRACE_EVENT_FL_EPROBE |
++		     TRACE_EVENT_FL_FPROBE))
  			continue;
- 		ieee80211_remove_link_keys(link, &keys);
- 		ieee80211_link_debugfs_remove(link);
--		ieee80211_link_stop(link);
-+		stop[link_id] = link;
- 	}
- 
-+	/* drain RCU readers before cancelling work they may queue */
- 	synchronize_rcu();
- 
-+	for (link_id = 0; link_id < IEEE80211_MLD_MAX_NUM_LINKS; link_id++)
-+		if (stop[link_id])
-+			ieee80211_link_stop(stop[link_id]);
-+
- 	ieee80211_free_key_list(sdata->local, &keys);
- }
- 
+ 		if (!tp_event->class->system ||
+ 		    strcmp(system, tp_event->class->system))
 
 
