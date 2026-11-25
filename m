@@ -1,55 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795621251;
-	b=gITW3aeQNOx8XOcB4b3PfLujC8apO8mmvntuKr1BqvmoxIZDuSKh5YhacZQ4M3Rq86vQ
-	 Z8kVAJ/0cClZHS3q/KP8Oa8nloEC7QRyOu0AzNZDC45O6Ja+zl+tQptfWXQZLE1Kx0GmO
-	 JbwiWMdKlmmqWBHFMhkc4SbvQ1cu2GlHLvzxitqRNJ7eHXB9aFdobcJOOG5eHW8IJBnfi
-	 q0jWF2HoTdjyP4AwWxC8XzQrxeKYIyafouvY8VuIeW9a/VJhHSQ4yBwnmIp/xRuxvBhXg
-	 aKrfvJ/mW02BpYlKMuOUP7xXKNwkyjvItFqj9ib4RkSsOZMmrnO+4T15YkMQNYsGItg==
+	t=1795621254;
+	b=UMSEJr8b1JONFwgYk8FTi59mITmRtanQRb+Bq9scKnmBWVp/Q7vbSFHaFAN1ZZZLQh9c
+	 A260MUN7AQrS+j3Cqm2tduQtLcN3Dy6DR+9hCVQLGEnXRNQJ9jQHEE6MVN94FWDERmvM/
+	 wFGEei97TjnhPPKRXkkB57G3fpen0PnysZdPMjC0uesFEKxx/Cf5MNJ0roLuGuw1vzMJu
+	 V3SG1UraU64OdXx6f7NuBMchCWm+tD1DsdzHb/nONg3BftgiFzOv3U182tkVloUZot4vW
+	 +3ZJ5vRBU4ls0d7H1vnOhMYusQTB2rO/vcp7cL7qrHBR76FpSn+wu0ANwb3051/zJaA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795621251;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795621254;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=p4ZPqVmnFVXFp9U8gwwEMUX3bR5ZaUWFjdr41inQLww=;
-	b=f0N1RfMTA9Gn4mwg39daiIUzmmnf41rwXqiY4HU/AaUiR3W1JZ5KuAkbtSs1M8ZCCett
-	 I+vCaxbaoljUD5unl5J4rQSqgHgf7iOq48FVDnN2PRe+w9yJQWIJUIvfiAJcSrAfZGSXr
-	 SY9doQFlMNZT4j545JscMlsEB93dR+8uJZagRmhb3oFsViLsTHd2Gwrblr72r4Mo8MuvW
-	 RKyo1TxbTi3+Qw6vOHgwZY+Vc3qmBKGJnw/+kNnGv67YSr3FJKZJw1my5Juv1RJCJzwYj
-	 jEQfyD0aw+ov/SQvkKL2drmsfQf1eWrYQ3GjCquEwaZCsbWUCizfWuDMk3cvWgVscXQ==
+	bh=+aTifPswarImLDC03LK4nO8xKQn7uuCKms/UUbd0TIY=;
+	b=wb5Aj+n3ZzL43rcmI51s1uEtUksC/rUW8jXFAh7sHYzRRosSgOZKCRR+7kVYG28UVtc9
+	 7efBdTSD+7QXdXv9Yeu+H8L4K05h1YcnSfcA7JigCEZUHmW2Q0LVs+Hx3P5012ztmozYX
+	 t+zMapI7n6dwSFYPu/qdWYDqT7Pg555UZGyhnvh00wCQt1y7Wb33lB5kXC8X1jFntzll/
+	 tfvvFFAB//0zjaBrHhry/acFYkcPgDE+wgn6jS95YoI6ekS0Buz1FNNS3sgd7MglDrVbR
+	 rVgP2uUbW1reVeca/sjnSaU5bHUn20Vga00dJL+2gniz43ZYOWDYTzfRrpSYt1IALUA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=QXOl9R0A;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="tghZ/Ie6";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6BDFE60A3807;
-	Wed, 25 Nov 2026 15:40:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 15059606A695;
+	Wed, 25 Nov 2026 15:40:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=QXOl9R0A
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E5CCB1F008B2;
-	Wed, 25 Nov 2026 15:40:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=tghZ/Ie6
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 53CC51F01577;
+	Wed, 25 Nov 2026 15:40:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795621250;
-	bh=p4ZPqVmnFVXFp9U8gwwEMUX3bR5ZaUWFjdr41inQLww=;
+	s=korg; t=1795621253;
+	bh=+aTifPswarImLDC03LK4nO8xKQn7uuCKms/UUbd0TIY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=QXOl9R0AQ5V442T9mZUDman0k3gdcrhOaI/lXdc+XLqz9PiXmSUMUYxYtkROlYGMO
-	 hFBnrBak5cPz8/yQlZi5zLNETHNmCmM+74h+sHud5HTzhK/OFVKpgUjucdEAQ/IjJ0
-	 XIHQvkS6anFuVZpq8hrq9qrPw8ZkXFrU0/rqUD60=
+	b=tghZ/Ie60PzznZY4KSvYVmC2mK5QzW+Bf78GAmbYUNREVQbOSXicC/2WjyJd/t2Mp
+	 B9Kvgdywokz0cZTNSkreyp3aA7lbvSSrQjw5UoWUQBuwqWqXn6fjSAWSCuBdRtBRMM
+	 odC2MnG6zVJ3CJm+4m23dRvvntayvNXzjSgfjlas=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vishal Kumar <quic_visk@quicinc.com>,
-	Aloka Dixit <aloka.dixit@oss.qualcomm.com>,
-	Muna Sinada <muna.sinada@oss.qualcomm.com>,
+	Vladimir Petrzhikovskii <vladimir@dfb.sh>,
+	Baochen Qiang <baochen.qiang@oss.qualcomm.com>,
 	Vasanthakumar Thiagarajan <vasanthakumar.thiagarajan@oss.qualcomm.com>,
 	Jeff Johnson <jeff.johnson@oss.qualcomm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 169/990] wifi: ath12k: Add EHT MCS/NSS rates to Peer Assoc
-Date: Wed, 25 Nov 2026 15:25:36 +0100
-Message-ID: <20261125143826.054804824@linuxfoundation.org>
+Subject: [PATCH 6.18 170/990] wifi: ath12k: dont advertise EHT-MCS15 to firmware unless we support it
+Date: Wed, 25 Nov 2026 15:25:37 +0100
+Message-ID: <20261125143826.076604603@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143822.072087159@linuxfoundation.org>
 References: <20261125143822.072087159@linuxfoundation.org>
@@ -71,227 +70,69 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Muna Sinada <muna.sinada@oss.qualcomm.com>
+From: Baochen Qiang <baochen.qiang@oss.qualcomm.com>
 
-[ Upstream commit 6c95151e2e776462de6b6fd9e577865e8b32203e ]
+[ Upstream commit 83d689bbe8f90ce39961bcc3a64f2ca2ec184019 ]
 
-Add EHT MCS/NSS rate functionality to peer association. As part of
-ath12k_peer_assoc_h_eht() add the calculation of EHT MCS/NSS using
-intersection of link_sta and phy capability.
+ath12k_peer_assoc_h_eht() copies the peer's EHT PHY capabilities into
+the WMI peer assoc command as is, including the EHT-MCS15 support bits.
+Firmware rate control enables EHT-MCS15 for TX whenever those bits are
+set, without checking whether the local PHY supports MCS15.
 
-ath12k_mac_max_eht_mcs_nss() function is utilized when comparing the
-max NSS of link STA and phy capability since in split phy case, phy
-supports max NSS of 2 for 5G band.
+Currently WCN7850 firmware does not support EHT-MCS15 for TX and does
+not advertise it in its own EHT PHY capabilities. When connected to an
+AP that advertises MCS15 support, rate control may still select
+EHT-MCS15, and every PPDU at that rate is aborted by the PHY before it
+goes on the air. TX then stops for minutes while the association stays
+up, and frames sit in the queue until the firmware releases them as aged.
 
-Tested-on: QCN9274 hw2.0 PCI WLAN.WBE.1.0.1-00029-QCAHKSWPL_SILICONZ-1
+Keep only the peer's MCS15 support bits that we also support ourselves
+to fix it. Chips that support MCS15 are not affected.
 
-Co-developed-by: Vishal Kumar <quic_visk@quicinc.com>
-Signed-off-by: Vishal Kumar <quic_visk@quicinc.com>
-Co-developed-by: Aloka Dixit <aloka.dixit@oss.qualcomm.com>
-Signed-off-by: Aloka Dixit <aloka.dixit@oss.qualcomm.com>
-Signed-off-by: Muna Sinada <muna.sinada@oss.qualcomm.com>
+Tested-on: WCN7850 hw2.0 PCI WLAN.HMT.1.1.c7-00108-QCAHMTSWPL_V1.0_V2.0_SILICONZ_UPSTREAM-3
+
+Fixes: 17bbb8aa74fd ("wifi: ath12k: prepare EHT peer assoc parameters")
+Reported-by: Vladimir Petrzhikovskii <vladimir@dfb.sh>
+Closes: https://bugzilla.kernel.org/show_bug.cgi?id=222136
+Tested-by: Vladimir Petrzhikovskii <vladimir@dfb.sh>
+Signed-off-by: Baochen Qiang <baochen.qiang@oss.qualcomm.com>
 Reviewed-by: Vasanthakumar Thiagarajan <vasanthakumar.thiagarajan@oss.qualcomm.com>
-Link: https://patch.msgid.link/20251024001928.257356-4-muna.sinada@oss.qualcomm.com
+Link: https://patch.msgid.link/20261029-ath12k-mcs15-v1-1-3bcfab101f00@oss.qualcomm.com
 Signed-off-by: Jeff Johnson <jeff.johnson@oss.qualcomm.com>
-Stable-dep-of: 83d689bbe8f9 ("wifi: ath12k: don't advertise EHT-MCS15 to firmware unless we support it")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/ath/ath12k/mac.c | 110 ++++++++++++++++++++++++--
- 1 file changed, 103 insertions(+), 7 deletions(-)
+ drivers/net/wireless/ath/ath12k/mac.c | 11 +++++++++++
+ 1 file changed, 11 insertions(+)
 
 diff --git a/drivers/net/wireless/ath/ath12k/mac.c b/drivers/net/wireless/ath/ath12k/mac.c
-index 99d80a0aafe4a..94e5af15cd618 100644
+index 94e5af15cd618..c3f761cc35558 100644
 --- a/drivers/net/wireless/ath/ath12k/mac.c
 +++ b/drivers/net/wireless/ath/ath12k/mac.c
-@@ -545,6 +545,18 @@ ath12k_mac_max_eht_nss(const u16 eht_mcs_mask[NL80211_EHT_NSS_MAX])
- 	return 1;
- }
- 
-+static u32
-+ath12k_mac_max_eht_mcs_nss(const u8 *eht_mcs, int eht_mcs_set_size)
-+{
-+	int i;
-+	u8 nss = 0;
-+
-+	for (i = 0; i < eht_mcs_set_size; i++)
-+		nss = max(nss, u8_get_bits(eht_mcs[i], IEEE80211_EHT_MCS_NSS_RX));
-+
-+	return nss;
-+}
-+
- static u8 ath12k_parse_mpdudensity(u8 mpdudensity)
- {
- /*  From IEEE Std 802.11-2020 defined values for "Minimum MPDU Start Spacing":
-@@ -3016,6 +3028,18 @@ static enum wmi_phy_mode ath12k_mac_get_phymode_eht(struct ath12k *ar,
- 	return MODE_UNKNOWN;
- }
- 
-+static bool
-+ath12k_peer_assoc_h_eht_masked(const u16 eht_mcs_mask[NL80211_EHT_NSS_MAX])
-+{
-+	int nss;
-+
-+	for (nss = 0; nss < NL80211_EHT_NSS_MAX; nss++)
-+		if (eht_mcs_mask[nss])
-+			return false;
-+
-+	return true;
-+}
-+
- static void ath12k_peer_assoc_h_phymode(struct ath12k *ar,
- 					struct ath12k_link_vif *arvif,
- 					struct ath12k_link_sta *arsta,
-@@ -3027,6 +3051,7 @@ static void ath12k_peer_assoc_h_phymode(struct ath12k *ar,
- 	const u8 *ht_mcs_mask;
- 	const u16 *vht_mcs_mask;
- 	const u16 *he_mcs_mask;
-+	const u16 *eht_mcs_mask;
- 	enum wmi_phy_mode phymode = MODE_UNKNOWN;
- 
- 	lockdep_assert_wiphy(ath12k_ar_to_hw(ar)->wiphy);
-@@ -3041,6 +3066,7 @@ static void ath12k_peer_assoc_h_phymode(struct ath12k *ar,
- 	ht_mcs_mask = arvif->bitrate_mask.control[band].ht_mcs;
- 	vht_mcs_mask = arvif->bitrate_mask.control[band].vht_mcs;
- 	he_mcs_mask = arvif->bitrate_mask.control[band].he_mcs;
-+	eht_mcs_mask = arvif->bitrate_mask.control[band].eht_mcs;
- 
- 	link_sta = ath12k_mac_get_link_sta(arsta);
- 	if (!link_sta) {
-@@ -3051,7 +3077,8 @@ static void ath12k_peer_assoc_h_phymode(struct ath12k *ar,
- 
- 	switch (band) {
- 	case NL80211_BAND_2GHZ:
--		if (link_sta->eht_cap.has_eht) {
-+		if (link_sta->eht_cap.has_eht &&
-+		    !ath12k_peer_assoc_h_eht_masked(eht_mcs_mask)) {
- 			if (link_sta->bandwidth == IEEE80211_STA_RX_BW_40)
- 				phymode = MODE_11BE_EHT40_2G;
- 			else
-@@ -3197,16 +3224,21 @@ static void ath12k_peer_assoc_h_eht(struct ath12k *ar,
- {
- 	struct ieee80211_sta *sta = ath12k_ahsta_to_sta(arsta->ahsta);
- 	struct ieee80211_vif *vif = ath12k_ahvif_to_vif(arvif->ahvif);
-+	const struct ieee80211_eht_mcs_nss_supp *own_eht_mcs_nss_supp;
- 	const struct ieee80211_eht_mcs_nss_supp_20mhz_only *bw_20;
-+	const struct ieee80211_sta_eht_cap *eht_cap, *own_eht_cap;
-+	const struct ieee80211_sband_iftype_data *iftd;
- 	const struct ieee80211_eht_mcs_nss_supp_bw *bw;
--	const struct ieee80211_sta_eht_cap *eht_cap;
- 	const struct ieee80211_sta_he_cap *he_cap;
- 	struct ieee80211_link_sta *link_sta;
- 	struct ieee80211_bss_conf *link_conf;
- 	struct cfg80211_chan_def def;
-+	bool user_rate_valid = true;
- 	enum nl80211_band band;
-+	int eht_nss, nss_idx;
+@@ -3239,6 +3239,7 @@ static void ath12k_peer_assoc_h_eht(struct ath12k *ar,
  	u32 *rx_mcs, *tx_mcs;
  	u16 *eht_mcs_mask;
-+	u8 max_nss = 0;
+ 	u8 max_nss = 0;
++	u8 mcs15;
  
  	lockdep_assert_wiphy(ath12k_ar_to_hw(ar)->wiphy);
  
-@@ -3234,6 +3266,16 @@ static void ath12k_peer_assoc_h_eht(struct ath12k *ar,
- 	band = def.chan->band;
- 	eht_mcs_mask = arvif->bitrate_mask.control[band].eht_mcs;
+@@ -3289,6 +3290,16 @@ static void ath12k_peer_assoc_h_eht(struct ath12k *ar,
+ 	memcpy(arg->peer_eht_cap_phy, eht_cap->eht_cap_elem.phy_cap_info,
+ 	       sizeof(eht_cap->eht_cap_elem.phy_cap_info));
  
-+	iftd = ieee80211_get_sband_iftype_data(&ar->mac.sbands[band], vif->type);
-+	if (!iftd) {
-+		ath12k_warn(ar->ab,
-+			    "unable to access iftype_data in struct ieee80211_supported_band\n");
-+		return;
-+	}
++	/*
++	 * Firmware rate control enables EHT-MCS15 based only on the peer's
++	 * MCS15 support bits, so keep only the ones we support ourselves.
++	 */
++	mcs15 = u8_get_bits(eht_cap->eht_cap_elem.phy_cap_info[6] &
++			    own_eht_cap->eht_cap_elem.phy_cap_info[6],
++			    IEEE80211_EHT_PHY_CAP6_MCS15_SUPP_MASK);
++	u8p_replace_bits(&((u8 *)arg->peer_eht_cap_phy)[6], mcs15,
++			 IEEE80211_EHT_PHY_CAP6_MCS15_SUPP_MASK);
 +
-+	own_eht_cap = &iftd->eht_cap;
-+	own_eht_mcs_nss_supp = &own_eht_cap->eht_mcs_nss_supp;
-+
- 	arg->eht_flag = true;
- 
- 	if ((eht_cap->eht_cap_elem.phy_cap_info[5] &
-@@ -3250,6 +3292,28 @@ static void ath12k_peer_assoc_h_eht(struct ath12k *ar,
  	rx_mcs = arg->peer_eht_rx_mcs_set;
  	tx_mcs = arg->peer_eht_tx_mcs_set;
  
-+	eht_nss = ath12k_mac_max_eht_mcs_nss((void *)own_eht_mcs_nss_supp,
-+					     sizeof(*own_eht_mcs_nss_supp));
-+	if (eht_nss > link_sta->rx_nss) {
-+		user_rate_valid = false;
-+		for (nss_idx = (link_sta->rx_nss - 1); nss_idx >= 0; nss_idx--) {
-+			if (eht_mcs_mask[nss_idx]) {
-+				user_rate_valid = true;
-+				break;
-+			}
-+		}
-+	}
-+
-+	if (!user_rate_valid) {
-+		ath12k_dbg(ar->ab, ATH12K_DBG_MAC,
-+			   "Setting eht range MCS value to peer supported nss %d for peer %pM\n",
-+			   link_sta->rx_nss, arsta->addr);
-+		eht_mcs_mask[link_sta->rx_nss - 1] = eht_mcs_mask[eht_nss - 1];
-+	}
-+
-+	bw_20 = &eht_cap->eht_mcs_nss_supp.only_20mhz;
-+	bw = &eht_cap->eht_mcs_nss_supp.bw._80;
-+
- 	switch (link_sta->bandwidth) {
- 	case IEEE80211_STA_RX_BW_320:
- 		bw = &eht_cap->eht_mcs_nss_supp.bw._320;
-@@ -3274,11 +3338,8 @@ static void ath12k_peer_assoc_h_eht(struct ath12k *ar,
- 		arg->peer_eht_mcs_count++;
- 		fallthrough;
- 	default:
--		if ((he_cap->he_cap_elem.phy_cap_info[0] &
--		     (IEEE80211_HE_PHY_CAP0_CHANNEL_WIDTH_SET_40MHZ_IN_2G |
--		      IEEE80211_HE_PHY_CAP0_CHANNEL_WIDTH_SET_40MHZ_80MHZ_IN_5G |
--		      IEEE80211_HE_PHY_CAP0_CHANNEL_WIDTH_SET_160MHZ_IN_5G |
--		      IEEE80211_HE_PHY_CAP0_CHANNEL_WIDTH_SET_80PLUS80_MHZ_IN_5G)) == 0) {
-+		if (!(link_sta->he_cap.he_cap_elem.phy_cap_info[0] &
-+		      IEEE80211_HE_PHY_CAP0_CHANNEL_WIDTH_SET_MASK_ALL)) {
- 			bw_20 = &eht_cap->eht_mcs_nss_supp.only_20mhz;
- 
- 			ath12k_mac_set_eht_mcs(bw_20->rx_tx_mcs7_max_nss,
-@@ -3305,6 +3366,41 @@ static void ath12k_peer_assoc_h_eht(struct ath12k *ar,
- 
- 	arg->punct_bitmap = ~arvif->punct_bitmap;
- 	arg->eht_disable_mcs15 = link_conf->eht_disable_mcs15;
-+
-+	if (!(link_sta->he_cap.he_cap_elem.phy_cap_info[0] &
-+	      IEEE80211_HE_PHY_CAP0_CHANNEL_WIDTH_SET_MASK_ALL)) {
-+		if (bw_20->rx_tx_mcs13_max_nss)
-+			max_nss = max(max_nss, u8_get_bits(bw_20->rx_tx_mcs13_max_nss,
-+							   IEEE80211_EHT_MCS_NSS_RX));
-+		if (bw_20->rx_tx_mcs11_max_nss)
-+			max_nss = max(max_nss, u8_get_bits(bw_20->rx_tx_mcs11_max_nss,
-+							   IEEE80211_EHT_MCS_NSS_RX));
-+		if (bw_20->rx_tx_mcs9_max_nss)
-+			max_nss = max(max_nss, u8_get_bits(bw_20->rx_tx_mcs9_max_nss,
-+							   IEEE80211_EHT_MCS_NSS_RX));
-+		if (bw_20->rx_tx_mcs7_max_nss)
-+			max_nss = max(max_nss, u8_get_bits(bw_20->rx_tx_mcs7_max_nss,
-+							   IEEE80211_EHT_MCS_NSS_RX));
-+	} else {
-+		if (bw->rx_tx_mcs13_max_nss)
-+			max_nss = max(max_nss, u8_get_bits(bw->rx_tx_mcs13_max_nss,
-+							   IEEE80211_EHT_MCS_NSS_RX));
-+		if (bw->rx_tx_mcs11_max_nss)
-+			max_nss = max(max_nss, u8_get_bits(bw->rx_tx_mcs11_max_nss,
-+							   IEEE80211_EHT_MCS_NSS_RX));
-+		if (bw->rx_tx_mcs9_max_nss)
-+			max_nss = max(max_nss, u8_get_bits(bw->rx_tx_mcs9_max_nss,
-+							   IEEE80211_EHT_MCS_NSS_RX));
-+	}
-+
-+	max_nss = min(max_nss, (uint8_t)eht_nss);
-+
-+	arg->peer_nss = min(link_sta->rx_nss, max_nss);
-+
-+	ath12k_dbg(ar->ab, ATH12K_DBG_MAC,
-+		   "mac eht peer %pM nss %d mcs cnt %d ru_punct_bitmap 0x%x\n",
-+		   arsta->addr, arg->peer_nss, arg->peer_eht_mcs_count,
-+		   arg->punct_bitmap);
- }
- 
- static void ath12k_peer_assoc_h_mlo(struct ath12k_link_sta *arsta,
 -- 
 2.53.0
 
