@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795617671;
-	b=ZYqXg+XO85Ah3479g3PqyKXQG3mVIaFyZhP+mTghJpceIGfAcfqTLzZ7vb7QjtZdRPcb
-	 aVizeR6vKddXQ0anID1s+8Aw5loKw4b+mlaZUmN8RTablOHm1E/Oshhh6oPFXbGhWw6gM
-	 OFO/rrRZVi5cmv7qV52YnW/OYTQ0+TdBvd5OWTqKGvB6GvOZy75gAzW2V9biTwTv1s+Nk
-	 kBhGgNq7H6Mq6S/y0rklwjluaFDjzb0wHhhfom3I14RSkMIFypIqBcdcJR0jU4EAvzFWh
-	 pOE59CYNdGkm1nxI/i39/xeCHTJ3bmXGepiIWsTTR7XemJQMw9wwmZBictcs7EuhYeQ==
+	t=1795617675;
+	b=ZpplcDd5EQiNXf9YWAu5UfwFtujsNiDdS4NHiJAp1cxTrLa5jD+llskaVbYUHiI+FYms
+	 h145qhMlyUol+xarBI/vK/Ak2VNbuB/GUX/xdlVS6hGO7Gc7Tqtdpd7Jbk0Gd8m7Fh4+t
+	 G2zgPDhiygurAid90GxeVMyV+ijHmZpL8211Oa9X+7O5VsBMKrr7ZYNxeBNvORdvGEjSE
+	 OTetgODC4V4hui8iTvw8UdgqrjuFhD3C3wxnLJ2dNFd+hxti/xWMBgCA6flu3vGmSyENx
+	 4tUVhTsU83QCITueFdqKpGe2AFKCtUK5TdzY6LygkroK/HjLp6pz+jI7YPq4Yt2ygJA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795617671;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795617675;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=PFrPhR/XLF+tCU3lIIcRCEMas9pQzBDL6UtHxdlCE5w=;
-	b=324TXT4kE86phvSnBnh9bc2tOfqsZV1ez/c9kisjgzgjis3rU/8aCDHeRNwz4rU/iPos
-	 Lu17JmHFdv5U+JNPyKTvHcvuHkx2WD+3cp2dcxB+6YOiUSpVw5HSlQ8Sl9fn47mhuw9+D
-	 TPl4tCMc1DApbDa5QPcwGoB9KXZtPmR+IG59XDKl3eRvuWu/OA6aJd3w3tarvspCDTytJ
-	 WVnxajmpqMEc/QY0E3jfW70f1RJGrNFuDq2JeLP3u5LiQbgBTEa78GkO4ynwppKN6aBcY
-	 LxBO7oeH+1NEpmRJKaUF7FKGDAmR0OqQAyYyz3sso4UaLjDVLw2OOOXz9Pc1dfd3LzA==
+	bh=iwN5hPTSzveawySJShxloU+1Izf37UGRFUPZJ4tcycc=;
+	b=JgB+O/qzJHVKbEST7/grobC1AyVN9E5ZUyAAItJ+zfO+zkR4hmYn6l2mVLikpvMcVzAI
+	 lyX+8AxNCLRR97y2Rf8eIRfbqJxMVY8XUWB/rIiLfFRDd7bRIiybqNXwZ1hElWQK1cLZe
+	 4q2s8FmDixDMeNb5FMlZzZfTaazaMaj0lKn+668NPfYLq47vgRos5nYXgIKEcQDDuQ5Pf
+	 36bnktzIzZC2YlHgICs832nivPHJ9thSFhg4pe95lUk57kuEuCm8Oobw8kzC8U9ODWCvz
+	 jYBPMWlTTLu/G3m5DwLTnqm/vrwAFNoL+t5lyJGcaxjSmn/v7vpclwG+Vh/263ZOjbw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=eXlkhl6k;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=iMKrzUNG;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CF199606A327;
-	Wed, 25 Nov 2026 14:41:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8FC5A606A31E;
+	Wed, 25 Nov 2026 14:41:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=eXlkhl6k
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EA5471F000D4;
-	Wed, 25 Nov 2026 14:41:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=iMKrzUNG
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3C7AA1F000D3;
+	Wed, 25 Nov 2026 14:41:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795617671;
-	bh=PFrPhR/XLF+tCU3lIIcRCEMas9pQzBDL6UtHxdlCE5w=;
+	s=korg; t=1795617674;
+	bh=iwN5hPTSzveawySJShxloU+1Izf37UGRFUPZJ4tcycc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=eXlkhl6kw47+oRc71UR2DL+3LnBPR5zJJJ+HfYyYr1Ek2lnqvV80itxbTaFcGQ79m
-	 +0FZNlXNyfppazoX4suqGaDHaYOQUWRs9w7T93yr2JN+9K3kndbY2P8SfWOe3G/5hP
-	 L8MZRj4reIk4JKD6QXDUUWrxVYZ/LYIP+FK3WZjU=
+	b=iMKrzUNGAqhJ9r1xOFohwQA0EfIpTQVPvS2trBIuqKEhRASp4cwSnjJNzc02NcmN0
+	 uptKn2K5yggwhF5wBJeD5DchPIbzLZjEz7Q2y2eM1VduONp7qZMPu8B4UJb8TsdTnE
+	 lBaUlMLxUvPcbJjH/CzJP4IV1n+osSnSh7JV0sAs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Antony Antony <antony.antony@secunet.com>,
-	Steffen Klassert <steffen.klassert@secunet.com>,
+	Mikhail Malyshev <mike.malyshev@gmail.com>,
+	Jens Axboe <axboe@kernel.dk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0039/1005] docs: xfrm: include mark in XFRM_MSG_MIGRATE_STATE EEXIST tuple
-Date: Wed, 25 Nov 2026 15:22:57 +0100
-Message-ID: <20261125143822.655909578@linuxfoundation.org>
+Subject: [PATCH 7.3 0022/1005] io_uring/io-wq: apply the current cpuset to new workers
+Date: Wed, 25 Nov 2026 15:22:40 +0100
+Message-ID: <20261125143822.255563128@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143821.729802100@linuxfoundation.org>
 References: <20261125143821.729802100@linuxfoundation.org>
@@ -68,75 +68,121 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Antony Antony <antony.antony@secunet.com>
+From: Mikhail Malyshev <mike.malyshev@gmail.com>
 
-[ Upstream commit dcf413245c8c2351f7f80502f89c344256f61a66 ]
+Commit 0659e44ce739ecd856164c75a5325b7959a2921d upstream.
 
-Document mark as part of the EEXIST tuple and update the SA lookup
-description to match.
+Since commit 84eacf177faa ("io_uring/io-wq: inherit cpuset of cgroup in
+io worker"), io_wq_create() copies the cpuset of the creating task into
+wq->cpu_mask, and io_init_new_worker() gives each new worker that copy.
+A cpuset change, or a move of the task to another cgroup, updates the
+workers that exist but not the copy, so workers started later run on
+the CPUs the cgroup had when the io-wq was created, which may since
+have been given to other tasks. Workers come and go for the life of the
+io-wq, and a worker that cpuset moved is also retired at its next idle
+timeout and replaced on the old CPUs.
 
-Fixes: c13c0cc6f52e ("xfrm: add documentation for XFRM_MSG_MIGRATE_STATE")
-Signed-off-by: Antony Antony <antony.antony@secunet.com>
-Signed-off-by: Steffen Klassert <steffen.klassert@secunet.com>
+Keep wq->cpu_mask for the affinity of the io-wq itself, all CPUs or the
+mask set with IORING_REGISTER_IOWQ_AFF, and intersect it with the cpuset
+of the worker when the worker starts, falling back to the cpuset if the
+two do not intersect, as __set_cpus_allowed_ptr() does. Use the same
+mask in the idle exit test, and go back to all CPUs when the registered
+affinity is removed.
+
+Fixes: 84eacf177faa ("io_uring/io-wq: inherit cpuset of cgroup in io worker")
+Cc: stable@vger.kernel.org
+Signed-off-by: Mikhail Malyshev <mike.malyshev@gmail.com>
+Link: https://patch.msgid.link/20261111162705.1150983-1-mike.malyshev@gmail.com
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../networking/xfrm/xfrm_migrate_state.rst    | 25 +++++++++++++------
- 1 file changed, 17 insertions(+), 8 deletions(-)
+ io_uring/io-wq.c | 44 +++++++++++++++++++++++++++++++++++++++-----
+ 1 file changed, 39 insertions(+), 5 deletions(-)
 
-diff --git a/Documentation/networking/xfrm/xfrm_migrate_state.rst b/Documentation/networking/xfrm/xfrm_migrate_state.rst
-index 9d53cb22b0075..ca2c9e5aaf33a 100644
---- a/Documentation/networking/xfrm/xfrm_migrate_state.rst
-+++ b/Documentation/networking/xfrm/xfrm_migrate_state.rst
-@@ -27,15 +27,20 @@ SA Identification
- =================
+diff --git a/io_uring/io-wq.c b/io_uring/io-wq.c
+index 358f32888a853..d2ef08d65ec89 100644
+--- a/io_uring/io-wq.c
++++ b/io_uring/io-wq.c
+@@ -738,6 +738,34 @@ static bool io_worker_retire(struct io_wq_acct *acct, struct io_worker *worker)
+ 	return false;
+ }
  
- The struct is defined in ``include/uapi/linux/xfrm.h``. The SA is looked
--up using ``xfrm_state_lookup()`` with ``id.spi``,
--``id.daddr``, ``id.proto``, ``id.family``, and
--``old_mark.v & old_mark.m`` as the mark key::
-+up using ``xfrm_state_lookup_exact()`` with ``id.spi``, ``id.daddr``,
-+``id.proto``, ``id.family``, and an exact match against ``old_mark.v``
-+and ``old_mark.m``. Unlike the data path, which uses a masked
-+comparison, this requires the SA's mark and mask to equal ``old_mark``
-+exactly, so a broad-mask SA is never matched when a more specific one
-+was intended. If no such SA exists, ``-ESRCH`` is returned.
++/*
++ * The CPUs a worker of @wq runs on: those of the io-wq affinity that the
++ * worker's cpuset allows, or the cpuset if they have none in common, as the
++ * scheduler does with a task's requested affinity when its cpuset changes.
++ * Read the cpuset each time: it can change while the io-wq exists.
++ */
++static void io_wq_worker_cpus(struct io_wq *wq, struct task_struct *tsk,
++			      struct cpumask *cpus)
++{
++	cpuset_cpus_allowed(tsk, cpus);
++	if (cpumask_intersects(cpus, wq->cpu_mask))
++		cpumask_and(cpus, cpus, wq->cpu_mask);
++}
 +
-+The layout is::
++/* Is the current worker on a CPU that a new worker would not get? */
++static bool io_wq_worker_off_cpus(struct io_wq *wq)
++{
++	cpumask_var_t cpus;
++	bool off;
++
++	if (!alloc_cpumask_var(&cpus, GFP_KERNEL))
++		return false;
++	io_wq_worker_cpus(wq, current, cpus);
++	off = !cpumask_test_cpu(raw_smp_processor_id(), cpus);
++	free_cpumask_var(cpus);
++	return off;
++}
++
+ static int io_wq_worker(void *data)
+ {
+ 	struct io_worker *worker = data;
+@@ -816,8 +844,7 @@ static int io_wq_worker(void *data)
+ 		}
+ 		if (!ret) {
+ 			last_timeout = true;
+-			exit_mask = !cpumask_test_cpu(raw_smp_processor_id(),
+-							wq->cpu_mask);
++			exit_mask = io_wq_worker_off_cpus(wq);
+ 		}
+ 	}
  
-     struct xfrm_user_migrate_state {
-         struct xfrm_usersa_id  id;       /* spi, daddr, proto, family */
-         xfrm_address_t         new_daddr;
-         xfrm_address_t         new_saddr;
--        struct xfrm_mark       old_mark; /* SA lookup: key = v & m */
-+        struct xfrm_mark       old_mark; /* SA lookup key (exact v/m match) */
-         struct xfrm_selector   new_sel;  /* new selector (see Flags) */
-         __u32                  new_reqid;
-         __u32                  flags;    /* XFRM_MIGRATE_STATE_* */
-@@ -72,8 +77,8 @@ inherits the value from the existing SA (omit-to-inherit).
-      - Description
-    * - ``XFRMA_MARK``
-      - Mark on the migrated SA (``struct xfrm_mark``). Absent inherits
--       ``old_mark``. To use no mark on the new SA, send ``XFRMA_MARK``
--       with ``{0, 0}``.
-+       the mark of the existing SA. To use no mark on the new SA, send
-+       ``XFRMA_MARK`` with ``{0, 0}``.
-    * - ``XFRMA_ENCAP``
-      - UDP encapsulation template; only ``UDP_ENCAP_ESPINUDP`` is supported.
-        Set ``encap_type=0`` to remove encap.
-@@ -259,8 +264,12 @@ Attributes in the notification
- Error Handling
- ==============
+@@ -867,9 +894,16 @@ void io_wq_worker_sleeping(struct task_struct *tsk)
+ static void io_init_new_worker(struct io_wq *wq, struct io_wq_acct *acct, struct io_worker *worker,
+ 			       struct task_struct *tsk)
+ {
++	cpumask_var_t cpus;
++
+ 	tsk->worker_private = worker;
+ 	worker->task = tsk;
+-	set_cpus_allowed_ptr(tsk, wq->cpu_mask);
++	/* Without a mask, the worker keeps its creator's CPUs. */
++	if (alloc_cpumask_var(&cpus, GFP_KERNEL)) {
++		io_wq_worker_cpus(wq, tsk, cpus);
++		set_cpus_allowed_ptr(tsk, cpus);
++		free_cpumask_var(cpus);
++	}
  
--If the target SA tuple (new daddr, SPI, proto, new family) is already
--occupied, the operation returns ``-EEXIST`` before the migration begins.
-+If the target SA tuple (new daddr, SPI, proto, new family, mark) is
-+already occupied, the operation returns ``-EEXIST`` before the migration
-+begins. "Occupied" includes wildcard shadowing: an existing SA with a
-+broader mask (e.g. mark 0/0) claims every mark value, so it blocks
-+migrating to any more specific mark at the same tuple, not just an
-+exact mark/mask duplicate.
- The old SA remains intact and the operation is safe to retry after
- resolving the conflict.
+ 	raw_spin_lock(&acct->workers_lock);
+ 	hlist_nulls_add_head_rcu(&worker->nulls_node, &acct->free_list);
+@@ -1366,7 +1400,7 @@ struct io_wq *io_wq_create(unsigned bounded, struct io_wq_data *data)
+ 
+ 	if (!alloc_cpumask_var(&wq->cpu_mask, GFP_KERNEL))
+ 		goto err;
+-	cpuset_cpus_allowed(data->task, wq->cpu_mask);
++	cpumask_copy(wq->cpu_mask, cpu_possible_mask);
+ 	wq->acct[IO_WQ_ACCT_BOUND].max_workers = bounded;
+ 	wq->acct[IO_WQ_ACCT_UNBOUND].max_workers =
+ 				task_rlimit(current, RLIMIT_NPROC);
+@@ -1588,7 +1622,7 @@ int io_wq_cpu_affinity(struct io_uring_task *tctx, cpumask_var_t mask)
+ 		else
+ 			ret = -EINVAL;
+ 	} else {
+-		cpumask_copy(tctx->io_wq->cpu_mask, allowed_mask);
++		cpumask_copy(tctx->io_wq->cpu_mask, cpu_possible_mask);
+ 	}
+ 	rcu_read_unlock();
  
 -- 
 2.53.0
