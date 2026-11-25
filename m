@@ -1,52 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795625879;
-	b=ynCOqP6s7mt3klcVVA29O4oMkKOGtCeW3eCPGtaH2vwDfd/ESNSMOFT7MPxoaEwnfwOV
-	 Ei0HG4TiLh+CFpZ6OQmg2zEABJvx2ljoohsBEwEMmcS0PLgVb/NQc0WRYEYAL0cs4Ommy
-	 Hl16M69hAcTOX9ZvMAKsm2V+JWmKB1mWsos7ZO4uPqxU3ej9B3i9E1hWl4IYRhUAaDCCC
-	 Vb+BoOuCkJb8WaK3MTyTdc+Dvqmv5MCx/Y5tuBu0UNhvZmmI10hoXL+Wk5sYbGGCAOQ4p
-	 Oe/knBnzuoDT7vmSsD6XVIM2cyRcBEW1l6upMqR05dYdUL/vGzvgEqEO4swjhm72xOw==
+	t=1795625883;
+	b=M8b1zoan+SpdZxztnG0f1WN3pqvgYg652rZgC5WnI/wHXF631+lqBtGEWu+5rLA6b5uU
+	 JmC3anzCjJaPIwNjFBh1di5Dnr3RfK7C8cYpzfp5/old6wf9bLSrAtoq84LxA/Ip0YYdj
+	 Hyt5dN6/8uRq+C0ExUfmHYEu7iQkZYh5NO/+FU3TqiK+j0jbk3bGIQEpTX2LrmhvKXVk6
+	 wWoM+YWrnU0QXVDg/5a9SNWoFasLRdyYnnypgRcbDN3ETjPZUqLzH/7t/9NTs4fN6ZnDD
+	 ZNDgvxzwX7M1uou6q9Ezy7w1DUZDx1tiGPP1UR1TGLIpS6m30UBFsD/uIe3GRuiRUPw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795625879;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795625883;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=3UXdhcuWUJsLHT96nTapKyF/NfGfKKUpXq0irDBLEkk=;
-	b=i8Nf+DQ194jKZZNjUfNE33zylhGPvBnHTVVqJVcLvx/BegETHFfgKWPP6Tqvw57QTDM3
-	 khiYFowwWUWhhS8ia2PBmAAcimKf4YsSzDqc3FJ8K2QhzrlpTJGuEjZMZTafEMr4JNHc1
-	 ad9Lo7GO9/fqZK1U+JROefB/U55gbcchJAp4piJ9V+4N6ia8dXZHmryr7Y0ahiD7KtW6o
-	 /icSPNkrfhcQOSOuIXbMudiqY71lgkV08TqvcT7grzSfX78V7kuLE6jtCC5jr0BtV9t4n
-	 3bwFtfa0bjwgaRH7mz0bqPf98XeFJDRx/1CvbS3NIThVO2tJKKStv1lbMTYftVloTNw==
+	bh=OXO9ms6dNztFj8At+v4irJzxaX7QMsuokc7Gpvq4LDY=;
+	b=pS3JbKfDPFaU+aRI9uyoDto4whiLVIcVQh5T8XepsZMsLUx+gopHtFo2X9kCEFLAnA8Z
+	 e/6oCrKODbyqpZl/OJr9JFoZkk/05rIak59F7T6+qHBD74rn7t5ucUWRzaQeUas2LtG7x
+	 pXfbZaamsVgGiy3gJIPiQtOX5zsMRpMRwNCCIo4ju1Pp07P6+Zi+J6bmTAWesbJ2UxXWA
+	 QmRFIzPvgp4oMBs1k7pG7wDsSp7QeMW4etOugjpgF5PA4dAYWTBwSYwauX9/llI/TC6yx
+	 Iyxh4toUw3/sSdX5mLYXcPJ1Vu6tX1Eu6ahO2iL4CZntbRFn1QVFtkkFwHeIY+ImNVQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=PHKyBfAg;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=u9ldH0qZ;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B588A606A321;
-	Wed, 25 Nov 2026 16:57:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 39730606A31E;
+	Wed, 25 Nov 2026 16:58:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=PHKyBfAg
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0D9431F000C6;
-	Wed, 25 Nov 2026 16:57:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=u9ldH0qZ
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4B0201F000C4;
+	Wed, 25 Nov 2026 16:58:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795625879;
-	bh=3UXdhcuWUJsLHT96nTapKyF/NfGfKKUpXq0irDBLEkk=;
+	s=korg; t=1795625882;
+	bh=OXO9ms6dNztFj8At+v4irJzxaX7QMsuokc7Gpvq4LDY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=PHKyBfAga8Q+mSlUKs932XCiosZFMu96J/V8wKZfsg1bayRaywm2zvogCKZKCZ707
-	 8kIXfTcB2joTyExnoKA65ik4yyDlY+Z1ZeNTqMXYEVgnNNUfHSakZdJW2Vq+K4q6qo
-	 K5n9ZfmcyNs0AYt4E+CrKfbUL/AjhM8mzTUF60c4=
+	b=u9ldH0qZxnWtAHB6U9EgGEf+JrewujeXXf1+/PpLoQkvT6mD3Pc8beimxAgOIVnM4
+	 LWihKGoYMWSkh6s0X+9MIKYSCfisABX0w/sWKHr1IWfjhAI42EIte8ulgCY740jZsr
+	 P0dQKJWEDwhsJKMOBd0O7ei+f5sdSUfGLLsPD32M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hyungjung Joo <jhj140711@gmail.com>,
-	HyeongJun An <sammiee5311@gmail.com>,
+	Cheng Yongkang <teel4res@gmail.com>,
 	"Christian Brauner (Amutable)" <brauner@kernel.org>
-Subject: [PATCH 6.12 615/816] fs/adfs: bound directory entry name length in adfs_fplus_getnext()
-Date: Wed, 25 Nov 2026 15:36:03 +0100
-Message-ID: <20261125143903.416323338@linuxfoundation.org>
+Subject: [PATCH 6.12 616/816] fs/proc: fix the write length returned by proc_sys_call_handler()
+Date: Wed, 25 Nov 2026 15:36:04 +0100
+Message-ID: <20261125143903.440076277@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143849.205329330@linuxfoundation.org>
 References: <20261125143849.205329330@linuxfoundation.org>
@@ -68,50 +67,63 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: HyeongJun An <sammiee5311@gmail.com>
+From: Cheng Yongkang <teel4res@gmail.com>
 
-commit ebf5025b0d989f95542fc9da899b7de2fec499f2 upstream.
+commit fbdc020ee1b82079102e493aaa7200de5f497a38 upstream.
 
-adfs_fplus_getnext() reads the per-entry name length bigdirobnamelen
-straight from the on-disk big directory and passes it to
-adfs_dir_copyfrom() as the copy length into obj->name[], a fixed
-ADFS_MAX_NAME_LEN (260) byte buffer.  adfs_dir_copyfrom() only bounds
-the copy against the number of directory buffers, not the size of the
-destination, so a crafted image with bigdirobnamelen larger than the
-buffer overflows the stack-allocated object_info::name that
-adfs_fplus_iterate() passes in.
+proc_sys_call_handler() reads the write length from iov_iter_count() and
+copies that many bytes from the iterator into kbuf.  A cgroup/sysctl BPF
+program can replace the new value through bpf_sysctl_set_new_value() and
+update count to the length of the replacement value.  The handler then
+returns that adjusted count as the number of bytes written, even though
+the iterator originally held a different number of bytes.
 
-adfs_object_fixup() may additionally append a four byte ",xyz" filetype
-suffix, so the accepted length must also leave room for that.
+If the replacement value is longer than the original input, ->write_iter()
+reports more bytes than the iterator held.  splice(2) passes that value to
+iter_file_splice_write(), which subtracts it from the pipe length and
+walks past the pipe head:
 
-The old-style directory parser (dir_f.c) already clamps names to
-ADFS_F_NAME_LEN, and adfs_fplus_validate_header() validates the header
-name fields, but the per-entry name length in the big directory format
-was never checked.  Reject over-long entries, using -EIO as elsewhere
-in this file for a corrupt big directory.
+  Splice Exceeded! ret=7 tot=1 left=0
+  Oops: general protection fault
+  RIP: 0010:iter_file_splice_write+0xb6f/0x1170
 
-Reported-by: Hyungjung Joo <jhj140711@gmail.com>
-Closes: https://lore.kernel.org/all/CAP_j_b9BqyQrk3D5nj6RSa=eGcs2HkRYsWc3WdXeXp9O3=z4nQ@mail.gmail.com/
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+The write path consumes at most the original iterator length in
+copy_from_iter_full() before the BPF hook runs.  Return the smaller of the
+adjusted and original counts on the write path, so an expanded BPF value
+cannot exceed the iterator while a handler that reports a shorter parsed
+length still produces a short write.  The read path keeps using the
+adjusted count for copy_to_iter().
+
+Fixes: 4e63acdff864 ("bpf: Introduce bpf_sysctl_{get,set}_new_value helpers")
 Cc: stable@vger.kernel.org
-Signed-off-by: HyeongJun An <sammiee5311@gmail.com>
-Link: https://patch.msgid.link/20260715115231.1585166-1-sammiee5311@gmail.com
+Signed-off-by: Cheng Yongkang <teel4res@gmail.com>
+Link: https://patch.msgid.link/179328314073.648427.7892850166511253762@gmail.com
 Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/adfs/dir_fplus.c |    2 ++
- 1 file changed, 2 insertions(+)
+ fs/proc/proc_sysctl.c |    5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
---- a/fs/adfs/dir_fplus.c
-+++ b/fs/adfs/dir_fplus.c
-@@ -192,6 +192,8 @@ adfs_fplus_getnext(struct adfs_dir *dir,
- 	obj->indaddr  = le32_to_cpu(bde.bigdirindaddr);
- 	obj->attr     = le32_to_cpu(bde.bigdirattr);
- 	obj->name_len = le32_to_cpu(bde.bigdirobnamelen);
-+	if (obj->name_len > ADFS_MAX_NAME_LEN - 4)	/* leave room for ,xyz suffix */
-+		return -EIO;
+--- a/fs/proc/proc_sysctl.c
++++ b/fs/proc/proc_sysctl.c
+@@ -552,6 +552,8 @@ static ssize_t proc_sys_call_handler(str
+ 	struct ctl_table_header *head = grab_header(inode);
+ 	struct ctl_table *table = PROC_I(inode)->sysctl_entry;
+ 	size_t count = iov_iter_count(iter);
++	/* ->write_iter() must never report more than the iterator held */
++	size_t orig_count = count;
+ 	char *kbuf;
+ 	ssize_t error;
  
- 	offset = adfs_fplus_offset(h, le32_to_cpu(h->bigdirentries));
- 	offset += le32_to_cpu(bde.bigdirobnameptr);
+@@ -602,7 +604,8 @@ static ssize_t proc_sys_call_handler(str
+ 			goto out_free_buf;
+ 	}
+ 
+-	error = count;
++	/* the write path consumed at most the original iterator length */
++	error = write ? min(count, orig_count) : count;
+ out_free_buf:
+ 	kvfree(kbuf);
+ out:
 
 
