@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795620990;
-	b=FPIDIODQv2NV6CW9GkVS7gEiDUQW7X1CsZZs8zrC0RDieSqyY+QfiIq9eWM8jkq2BneE
-	 C07q1hEF2h7gsrXz0l54XXwZb/FYsCU0QlH+zviM8rWnKb4/jqfK0aG8xVfQIoTxticsz
-	 tA/bG1uXI8FcBzlB2M6et8qo/V7DREWdmo6AyjDvCI6oNHQV4QV7tFE7gTJRaLhPrAcCN
-	 r+eyMccRWy1zMt4OqpPNtcROw4p+SbCZCv+rHNELtZ5Pmb48Mio1JhOTGDTZJA8tyaWrr
-	 7RattMh5Sn1TEtK9WS1rc+/Ghq5FsSUZ/yy3JEmJm+2NMPSEHoucemxnVGk99Q+XdQg==
+	t=1795620993;
+	b=M1oM4D8XN1g0eMq6LNyDcK8zkithu8+VZlD41pjHdr9f12kgpgqhI83M0Oib54xhxEV7
+	 0MRnWz1s35dyoCfjy3gWE78NWh8pRTYz1PPyqzuO9kZwU8R2anjGtgQF/WrPLUAkdeElE
+	 raEoPcpzvLCtPCy+AgGKlD9DMSPOMb7qTueVBFoWn7G68oWGo2MzV7yseV3o+fgHoOn64
+	 9bW1LIF65DdGGUL+4CJNGAPK9u7HT2qx1oS/U2qQYpYBtjDlouxsLp3DjsO1YCAk4zBct
+	 911RyVGfh9Zr+rCxCf8KQ+klFTcZ0uuWjbhH1Li7AU9BR1AwwENaiOe1SI+69mYcTtQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795620990;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795620993;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=OvYGaguo31zF/ACQilfBIIziN+FdgX71myHoYPdxmoI=;
-	b=PNSqG03Gm4eCtGrTnoKng0ypSt1vMEm9eYLBRoS5KaKFr4xqvj3wTvQJIkFtmS2r2Rru
-	 qOW4S3OQ+zgsi+ro8T7GFyJnMM9FZprvHgxMgT2dyPUoXRKEQn+XZ01lx6UJQIZMasAMZ
-	 SpD49mXG8XfcgGcyC/WgnGj8ZixlCOpHDOuV5Ne8KCGPvgo6S1nSUHL4zCMcIEpdoppOy
-	 sZD15niwxHURFeimm87q0rz4VETFxparVCukfK09X11XfW/03FC/3P7XNvgv6KagipJu8
-	 8XRC55H00MATr9N0tOOD3H5kKfAmXzCGFucPMgdS9rb70T5SKyTMBbczllz5oq0zV+Q==
+	bh=YlWJwVTrV9Q/5cOZAFrBlLV+budQhEcOZe0QZ4OttWE=;
+	b=dYRGHS3NX1jJB/dXu/l9YBui1Y3NmBHshtCCa+W2JEAg0bRa/mEuaMv7w3udiN06VR1g
+	 T6uHLTWcUD/+sy7AyOMNTP/P7PrgBbm1Xw/PMPRu3UtQB+HsuSJxVvNqD61XH2CJgEHWW
+	 SWMI2Ik2Ua3B2bl703aVwA7r9ZkYryb0s9ldW5/vZk0IYmUzMdkxwgg/NlrQ6yna28Nsg
+	 53MKQ35CbwJDQ6Y5OlnFwgaX9k1Oh34CU3Fu1YPQ1PLqG63e5fn/01G1wr4a51fx5e6OM
+	 lkOFyebUTZoIzuimvFPKsS9dYbd2Uf6veiyBzzA/KKK5bBc1/GhDalZ2nX8zg2RAsIA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ZFRln2mP;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=AqTPCBBU;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3B41C607DE5B;
-	Wed, 25 Nov 2026 15:36:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4557C607DE6C;
+	Wed, 25 Nov 2026 15:36:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ZFRln2mP
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0ACCB1F000EF;
-	Wed, 25 Nov 2026 15:36:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=AqTPCBBU
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 60B581F00A00;
+	Wed, 25 Nov 2026 15:36:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795620989;
-	bh=OvYGaguo31zF/ACQilfBIIziN+FdgX71myHoYPdxmoI=;
+	s=korg; t=1795620992;
+	bh=YlWJwVTrV9Q/5cOZAFrBlLV+budQhEcOZe0QZ4OttWE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ZFRln2mPpCzJtpoWqyTe/g5dx5RFyEPpd/XyCQ9ktWNYFsTQIvRHFxQmRFZoImOMi
-	 YRfJYjtmxPFs4dU3rbWK+CHlFrgVtG65C4DquIvrI6QkHhQJzWa83Onv9+fv1eL/hi
-	 IHOjovBI2JlGuUjFLTFn//1VW3o//scs+llvZa5w=
+	b=AqTPCBBUvo9PdIpozCXWof/o75MY7XOJ7Xwfgl6Vg6XauK5R3k/nMZKnFIlJMr3ZL
+	 /R/5wx408LosOmRIJcHdHRlNUGutal+Ha3fhb+m/m4tzoEL7iZFCnG0K49cP7SmERq
+	 3xCMo/N1aSBShCXKYpIa0OjL5u/Idq58VaB3Eu8o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Avi Weiss <thnkslprpt@gmail.com>,
-	Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>,
+	Sashiko <sashiko-bot@kernel.org>,
+	Alexei Starovoitov <ast@kernel.org>,
+	"Jose Fernandez (Anthropic)" <jose.fernandez@linux.dev>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 086/990] gpio: omap: Propagate runtime PM failures in probe and request
-Date: Wed, 25 Nov 2026 15:24:13 +0100
-Message-ID: <20261125143824.107393236@linuxfoundation.org>
+Subject: [PATCH 6.18 087/990] bpf: Fix jited line info off by the CFI preamble
+Date: Wed, 25 Nov 2026 15:24:14 +0100
+Message-ID: <20261125143824.130880276@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143822.072087159@linuxfoundation.org>
 References: <20261125143822.072087159@linuxfoundation.org>
@@ -68,70 +69,73 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Avi Weiss <thnkslprpt@gmail.com>
+From: Jose Fernandez (Anthropic) <jose.fernandez@linux.dev>
 
-[ Upstream commit 05be1a99d6d68b24cbe24a191e1af67c70193ac3 ]
+[ Upstream commit 3e4279dc5144a5afcda101df23792b13e94c3859 ]
 
-pm_runtime_get_sync() can fail when the OMAP PM domain cannot
-resume a GPIO controller, but omap_gpio_probe() and
-omap_gpio_request() ignore its return value.
+With CONFIG_CFI=y, every jited line info entry after a function's
+first is cfi_get_offset() bytes too high on x86-64, riscv64 and arm64,
+so tools that use it show the wrong source line.
 
-Consequently, probe can register a GPIO controller despite a failed
-resume, while a GPIO request can report success and modify GPIO
-state even though runtime-PM acquisition failed.
+The JITs count the insn_to_jit_off[] offsets from the start of the
+image. Since the CFI commits below, prog->bpf_func starts
+cfi_get_offset() bytes into the image, and bpf_prog_fill_jited_linfo()
+adds the offsets to prog->bpf_func. s390 corrects its offsets before
+the call, the other three JITs do not.
 
-Use pm_runtime_resume_and_get() in both paths and propagate
-resume errors. On probe failure, disable runtime PM and unprepare
-the debounce clock when applicable.
+Subtract cfi_get_offset() once in bpf_prog_fill_jited_linfo() and drop
+the s390 correction. jited_linfo[0] stays prog->bpf_func, the
+function's ksym address. Without CONFIG_CFI, cfi_get_offset() is 0 and
+nothing changes.
 
-Reproduced both failures on QEMU N800 by injecting -EIO from the
-OMAP PM-domain resume callback. The original driver continues
-probe and accepts the GPIO request - while the patched driver
-rejects both operations with -EIO. Normal GPIO controller
-registration continues to work without fault injection.
-
-Fixes: 77640aabd755 ("OMAP: GPIO: Implement GPIO as a platform device")
-Fixes: 55b93c32520d ("gpio/omap: use pm-runtime framework")
-Signed-off-by: Avi Weiss <thnkslprpt@gmail.com>
-Link: https://patch.msgid.link/20261029103626.1527919-2-thnkslprpt@gmail.com
-Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
+Fixes: 4f9087f16651 ("x86/cfi,bpf: Fix BPF JIT call")
+Fixes: e63985ecd226 ("bpf, riscv64/cfi: Support kCFI + BPF on riscv64")
+Fixes: 710618c760c0 ("arm64/cfi,bpf: Support kCFI + BPF on arm64")
+Reported-by: Sashiko <sashiko-bot@kernel.org>
+Reported-by: Alexei Starovoitov <ast@kernel.org>
+Signed-off-by: Jose Fernandez (Anthropic) <jose.fernandez@linux.dev>
+Signed-off-by: Alexei Starovoitov <ast@kernel.org>
+Link: https://patch.msgid.link/20261030-b4-arm64-bpf-linfo-cfi-v2-1-4eac83435d4b@linux.dev
+Closes: https://lore.kernel.org/all/20260904014748.C04AA1F000E9@smtp.kernel.org/
+Closes: https://lore.kernel.org/all/DLNXZ2WK7TPD.2RZBUNRS4FA4L@gmail.com/
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpio/gpio-omap.c | 13 +++++++++++--
- 1 file changed, 11 insertions(+), 2 deletions(-)
+ kernel/bpf/core.c | 8 +++++---
+ 1 file changed, 5 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/gpio/gpio-omap.c b/drivers/gpio/gpio-omap.c
-index 8693544304fa8..2ebef18c37abe 100644
---- a/drivers/gpio/gpio-omap.c
-+++ b/drivers/gpio/gpio-omap.c
-@@ -814,8 +814,11 @@ static int omap_gpio_request(struct gpio_chip *chip, unsigned offset)
- {
- 	struct gpio_bank *bank = gpiochip_get_data(chip);
- 	unsigned long flags;
-+	int ret;
+diff --git a/kernel/bpf/core.c b/kernel/bpf/core.c
+index 346588a32a854..bbd0f1ebd2d3c 100644
+--- a/kernel/bpf/core.c
++++ b/kernel/bpf/core.c
+@@ -206,7 +206,9 @@ void bpf_prog_jit_attempt_done(struct bpf_prog *prog)
+  * here is relative to the prog itself instead of the main prog.
+  * This array has one entry for each xlated bpf insn.
+  *
+- * jited_off is the byte off to the end of the jited insn.
++ * jited_off is the byte off to the end of the jited insn, counted from
++ * the start of the jited image, which is cfi_get_offset() bytes before
++ * prog->bpf_func.
+  *
+  * Hence, with
+  * insn_start:
+@@ -220,7 +222,7 @@ void bpf_prog_jit_attempt_done(struct bpf_prog *prog)
+  *
+  * For i > linfo_idx,
+  *
+- * jited_linfo[i] = prog->bpf_func +
++ * jited_linfo[i] = prog->bpf_func - cfi_get_offset() +
+  *	insn_to_jit_off[linfo[i].insn_off - insn_start - 1]
+  */
+ void bpf_prog_fill_jited_linfo(struct bpf_prog *prog,
+@@ -248,7 +250,7 @@ void bpf_prog_fill_jited_linfo(struct bpf_prog *prog,
+ 		/* The verifier ensures that linfo[i].insn_off is
+ 		 * strictly increasing
+ 		 */
+-		jited_linfo[i] = prog->bpf_func +
++		jited_linfo[i] = prog->bpf_func - cfi_get_offset() +
+ 			insn_to_jit_off[linfo[i].insn_off - insn_start - 1];
+ }
  
--	pm_runtime_get_sync(chip->parent);
-+	ret = pm_runtime_resume_and_get(chip->parent);
-+	if (ret < 0)
-+		return ret;
- 
- 	raw_spin_lock_irqsave(&bank->lock, flags);
- 	omap_enable_gpio_module(bank, offset);
-@@ -1469,7 +1472,13 @@ static int omap_gpio_probe(struct platform_device *pdev)
- 	platform_set_drvdata(pdev, bank);
- 
- 	pm_runtime_enable(dev);
--	pm_runtime_get_sync(dev);
-+	ret = pm_runtime_resume_and_get(dev);
-+	if (ret < 0) {
-+		pm_runtime_disable(dev);
-+		if (bank->dbck_flag)
-+			clk_unprepare(bank->dbck);
-+		return ret;
-+	}
- 
- 	if (bank->is_mpuio)
- 		omap_mpuio_init(bank);
 -- 
 2.53.0
 
