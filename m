@@ -1,51 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795623494;
-	b=b3JmN7Kyk4+kIKrmNKhjyGS8D/s9gccb9dRiPEx7M8UShftgSQZZkNVjf3A+SBkOPWAl
-	 2k5EW6+mMPElttthmdPVD4WEwu6HGwy44FPN+/7gLcOEcxdYWpVU7jaOgiMQIHm+h4Snl
-	 cZ42hwxv26A3o9kWCk/Ntwp5x+k0OmMZIEPlfFrulyVkxmUtEA70sTB4bi6O7lDHKNGEE
-	 hMPAfbhKPAxWIA9qRTnqp8H28XUmz3lUINl55/OSAAgkOy0BtgSpYl5O655+Wyvx4Gbfm
-	 3p8Z2SSu6UrNG42NQLyv7yBbSa7M1oackSK2k7Qqc3kb6rvucuqVe0d2iB4fVYVF1Kw==
+	t=1795623496;
+	b=F/7GHVXiKJ5t0Aec46BRzKSiTIk3/7UTRlzbMWrwH+46rUikOP0E1xUuwdQwDvZxGBje
+	 rvldJNZAs5hmi42dSG6FIS6mgQiEgYV3lEA/TG/MhXH4BLOw85pT2itR63CD43y3bD2BP
+	 9a++9tIieK2vEbkZc/9XCvejjyuiwZWT+I1Ywz9HRWDj+WyzdPGHSLljia2lXFWqrbXPe
+	 mZ/xXslZof5SQP7EV3CyTC7lR6O9CeaS46duHZgex7cBsdUz7QeaVAPnvQ3hu7mOkAJ6O
+	 Jlsaw0nPKMqI5t7Bsa+5eGeCuh2rWT1+ZS7LCPLyDRn6ahdl2/E5Ft+QJYpD6g0quow==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795623494;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795623496;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=tl4cGn5RvUG6Tv+HE/S6hJC4X/61+xeOR6ZJdBx0x6E=;
-	b=VEteXJSigsSDoqoQhftGltH9LVAy6Jlp6b+73/ktb8bXWqWaj7Pcxq7PYQk43qCTCRZC
-	 iLpUv+bYrBoH84oBu1TVv9L+xu33jlTG7WV+hHqneWHhNuD0K2/LGCYhr1Kv52B3iFXsI
-	 LqaChMdz24F+tiIr7zo7efvTy1ree+w/D8372xsdh/h68s+dkT6SAwNntye3h+FUCRt0v
-	 pH9dLW66yRluVQnIx7xBV761MpUvws+eYS0ARJNtury+RshNmkzUUFCNc2J83aZMCAVAk
-	 PTyPEB/H6e+UtQSZk7As+gOUinl9dgo5cHNq6a8hwWIJ8lq8hUh0RuY70gqzwSkjxZg==
+	bh=qVYQsWIENs8Prkn4O82Rwdr2wdU0rYD2Swlj85mxgz8=;
+	b=AL0U8JM3kRxeFScocANfLf9/MR2YrhkIIHAhssc8weI/NsriqLfiL0i8ofphklhcCgoy
+	 zL32JaDPF5Gfv23hIf6jgifJoVwLR1/GE0DF0Y0olYcZ9lQl5KXnPafFTLkcFJEzSflRr
+	 /acPvUe2Ea+xfaDxl7GywPOrtN6qBdxnLcQIgR+lukjcbgU7u9Z+UKklTrZ3vCu3sIFvn
+	 2mrRa7ciwz8Nr07S9bbiC7UduFPhksinvO7o1RUkkS7dzskooCM2zMPtBZZVHvZm/zqVB
+	 v6lguWPHbohovdGaKbAzjzTjMhKgAMQUF8OZJ5U8lu0uQ/lxAFzW/l2VeUkEIRHwmQg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=YvPfht1q;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=USVg6tpv;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0E98D606A339;
-	Wed, 25 Nov 2026 16:18:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DD16E606A321;
+	Wed, 25 Nov 2026 16:18:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=YvPfht1q
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E13B71F000D2;
-	Wed, 25 Nov 2026 16:18:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=USVg6tpv
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3063F1F000F4;
+	Wed, 25 Nov 2026 16:18:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795623493;
-	bh=tl4cGn5RvUG6Tv+HE/S6hJC4X/61+xeOR6ZJdBx0x6E=;
+	s=korg; t=1795623496;
+	bh=qVYQsWIENs8Prkn4O82Rwdr2wdU0rYD2Swlj85mxgz8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=YvPfht1qgAfu8ZUeqShXBAkTFZjbdkyqFAJMWHBHWoHGEv93OMCuFIVtUit5tgj2i
-	 OWXeZSxPfMOpX5Hd1MftXUIB/0w6G1lAGL25WKRdbIpDoug1TVrQ1jBA0cPO78i+/u
-	 jEZxnmvyJF+V/IYhy5JO+6kiTSqyK644H5N5avzE=
+	b=USVg6tpv/QFoQ7DpLUkcFuB/+02tnBoLDiXLeOhzywJZK0TjSKlF1U1O96TFnJTRm
+	 sRzS+medDD4jusEBcCVb/2slV+G3G4w/dyDV8mCRkDGQCK7y8YfrOfuhVHlFEOLRuE
+	 kZxBS8OHn93IziStdAb1X7GSXk9D9IB7k9SOa0xM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jay Vadayath <jay@artiphishell.com>,
+	Li Youhong <liyouhong@kylinos.cn>,
 	Mikulas Patocka <mpatocka@redhat.com>
-Subject: [PATCH 6.18 876/990] dm-raid: bound array_position before indexing failed_devices
-Date: Wed, 25 Nov 2026 15:37:23 +0100
-Message-ID: <20261125143842.537085484@linuxfoundation.org>
+Subject: [PATCH 6.18 877/990] dm-raid: fix use-after-free in raid_dtr()
+Date: Wed, 25 Nov 2026 15:37:24 +0100
+Message-ID: <20261125143842.560436891@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143822.072087159@linuxfoundation.org>
 References: <20261125143822.072087159@linuxfoundation.org>
@@ -67,77 +67,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jay Vadayath <jay@artiphishell.com>
+From: Li Youhong <liyouhong@kylinos.cn>
 
-commit 11b5cd14c0eecae458cecbe53d21a3dbc10190f5 upstream.
+commit 46af2c975958119290ddcd984a98491966123a7b upstream.
 
-super_init_validation() reads role = le32_to_cpu(sb2->array_position)
-out of an on-disk dm_raid_superblock and then uses it as a bit index into
-the failed_devices bitmap via test_bit(role, (void *)failed_devices).
-failed_devices is a uint64_t[DISKS_ARRAY_ELEMS] (DISKS_ARRAY_ELEMS == 4,
-i.e. 256 bits) living on the stack. The only guard is role < 0, so any
-on-disk array_position >= 256 makes test_bit() read past the end of the
-stack array (array_position == 256 reads failed_devices[4], 8 bytes past
-the object). For a raid1 set the role != raid_disk reorder branch falls
-through to the same test_bit().
+raid_dtr() currently flushes event_work only if work_pending() is true.
+This is insufficient because once a worker has dequeued the work, the
+PENDING bit is cleared while do_table_event() is still running. In that
+window raid_set_free() can free the raid_set, leading to a
+use-after-free when do_table_event() accesses rs->ti->table.
 
-A crafted dm-raid superblock therefore causes a stack out-of-bounds read
-during table load. Reachable by anyone able to issue a dmsetup create
-with attacker-controlled metadata (CAP_SYS_ADMIN in the target
-namespace); the crash fires in the constructor / analyse_superblocks
-path, before any md_run or array sizing.
+Flush event_work whenever it has been initialized, so raid_set is not
+freed while the event handler is still running. The .func guard skips the
+flush for mddev instances where INIT_WORK has not run yet.
 
-  BUG: KASAN: stack-out-of-bounds in super_validate+0x1cd0/0x3390
-  Read of size 8 at addr ffff888007b17828 by task poc/152
-  Call Trace:
-   dump_stack_lvl+0x64/0x80
-   print_report+0xd0/0x630
-   kasan_report+0xe5/0x120
-   kasan_check_range+0x105/0x1b0
-   super_validate+0x1cd0/0x3390        (super_init_validation, inlined)
-   raid_ctr+0x2c4b/0xa0f0
-   dm_table_add_target+0x66f/0xf80
-   table_load+0x2ee/0x780
-   ctl_ioctl+0x362/0x9f0
-   dm_ctl_ioctl+0x9/0x10
-   __x64_sys_ioctl+0x134/0x1c0
-   do_syscall_64+0xe2/0x4b0
-   entry_SYSCALL_64_after_hwframe+0x77/0x7f
-
-role is a device position that must refer to an actual member of the
-array, so reject anything outside [0, rs->raid_disks) instead of only the
-negative case. rs->raid_disks is always <= the 256-bit capacity of
-failed_devices, so this both closes the out-of-bounds access and matches
-the intended semantics.
-
-This bug was discovered by Artiphishell's vTriage pipeline, which
-generated a crafted raid1 superblock (magic "DmRd", compat_features=1,
-num_devices=2, array_position=256, level=1) and a dmsetup-create
-reproducer that reliably triggers the KASAN report on an unpatched kernel
-(the precursor DMINFO "raid device #256 now at position #0" is visible in
-the serial log just before the splat). The fix below was drafted with the
-Claude coding assistant; a userspace reproducer is available on request.
-
-Assisted-by: Claude:claude-opus-4-8
-Signed-off-by: Jay Vadayath <jay@artiphishell.com>
-Signed-off-by: Mikulas Patocka <mpatocka@redhat.com>
+Fixes: db29d79b34d9 ("dm-raid: delay flushing event_work() after reconfig_mutex is released")
 Cc: stable@vger.kernel.org
+Signed-off-by: Li Youhong <liyouhong@kylinos.cn>
+Signed-off-by: Mikulas Patocka <mpatocka@redhat.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/md/dm-raid.c |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/md/dm-raid.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
 --- a/drivers/md/dm-raid.c
 +++ b/drivers/md/dm-raid.c
-@@ -2420,7 +2420,8 @@ static int super_init_validation(struct
- 		 */
- 		if (!test_bit(FirstUse, &r->flags) && (r->raid_disk >= 0)) {
- 			role = le32_to_cpu(sb2->array_position);
--			if (role < 0)
-+			/* Bound @role before it indexes the failed_devices stack bitmap. */
-+			if (role < 0 || role >= rs->raid_disks)
- 				continue;
+@@ -3334,7 +3334,7 @@ static void raid_dtr(struct dm_target *t
+ 	rs->md.dm_gendisk = NULL;
+ 	mddev_unlock(&rs->md);
  
- 			if (role != r->raid_disk) {
+-	if (work_pending(&rs->md.event_work))
++	if (rs->md.event_work.func)
+ 		flush_work(&rs->md.event_work);
+ 	raid_set_free(rs);
+ }
 
 
