@@ -1,51 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795623735;
-	b=fj4sIrzJMUnNwBO2lPJUQMVpylfC2cH3vtoXJQ2Z0YNeirDL3aMG48tpH5ZHhj1Pjwjt
-	 zabiGBIirkZpKQIL3zB1Cso4KGp839sRhkTdD3Df1tnvld5hE31kfODKtwhkKgwxBM1Dm
-	 C8kjs/elNl5fsV7wI/HxLQPMBsvpp1+QfTjfttZV/ZwzXM6TxD49MRqDBaxkAVJb/Fy18
-	 Oy3LBAAWRBgByXvjVHkLLp4U5vBcObto1CRaDk/KoBR07bSdTi+c3ONYrkChKHRS5zyfC
-	 wBuBVk0ssH7EVTbRmeEdFUk8eqKXNCv8iK9w/I7cBH9Ihd/VtQoPP3fpuA7a346XFkg==
+	t=1795623739;
+	b=GD7rf3MLmATrKeo8reVP6lKwygmQuZLpUVbvBCIPvI+nG8o+Nsm6cGKc+nwB121eXj08
+	 wiRTAvkXTrFxGnakaj/Z0XvaO8JQTzDM5X3xKAkihc2IN3aVQUKN0hgOEK3/jlwlSd04R
+	 OppFlqK75JCtFnJo0MWLQWUHFuzcATEq3lvWh2CEIOFEheoKFlQeWQML1N3KrAUWhzOpQ
+	 rAqwA/duiJLkm8ueyD1NY9YUa91yxVJOu3ZDvTUbHpE44eQgbFc4jtz0FSbu3Gf3If556
+	 6hKEmVDKLVYYvhwGfrIZLxW3YC8pOeMBqxxFCCwIWYILTxQmOz1iBkjRU7vMb1mu7WA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795623735;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795623739;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=G/jx/dK7VICEJROACspLH8FnJkOV2o6wNH7nJUTS50w=;
-	b=4Fd5R5xA1C03shY3qBgKb/ZBxiPjhJQKjt2X3fV8g8LTTUbq9V2da9VyBQTu7cwsrHUx
-	 cI9mLa0TbxqEW5ShznF/060V7ncJk3i8Zxn3hpNSpeNihlfU5kk9hCqkPv76XXjYMed6f
-	 CV+qWFWWeha45KqPfTSww+f6R74J7v+pj+sp7CGp9Lqhf+dWAyQdtEvHP8648skh37jmf
-	 1H5BRKq+rkyrdSUKRqsoHirrjyLAu5bxy7syIdNuT20rK6A54VKMT+YxeDob/3GtAcrAS
-	 QrSonprQN+yN7jr/LdWra2katJl2vBbAzwvcMPipL4Vz6XoEeT2Z/LOIhlKa4MMsrOA==
+	bh=KLAOPrlJ+yFpQa8g1fHSw69B6StkUPhuY+WJy7D7Ug0=;
+	b=CPZJRbTZ0JzlcooTJ1lj8QjwsaCX/+kooQEkKsSJIQov+xAIZipG74Ntgux8Z/McUl3r
+	 BNp4m8GSu/j5L2XoiONaasSmi8mQA6Jy2ct66XMI4qMbx0QhmYWgJvsC3qj8byJAubqjn
+	 OsCxPZARvWQFyaiO6kgqaSyI2zE8BnS2PlkarwuWIdSiHSAgWb/rfzvqTv1vFey88duzq
+	 cXBX+CV9PRrO/gDGiZmhfTk6DakJ3apkG4iT6QDqkZrBz9/voKFXGwe52KnH1hyrCZVya
+	 iY5OLFG+dIkPbAOH0kh0UTbNb1goq/ri2RgCpHXun5fbvC+Kh0+IjRlr1amWiT/zqrg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=nRK6VOop;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=XuHhyNHK;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3E775606A327;
-	Wed, 25 Nov 2026 16:22:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1F39C606A321;
+	Wed, 25 Nov 2026 16:22:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=nRK6VOop
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 77AA91F000CF;
-	Wed, 25 Nov 2026 16:22:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=XuHhyNHK
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 99FB21F000C6;
+	Wed, 25 Nov 2026 16:22:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795623735;
-	bh=G/jx/dK7VICEJROACspLH8FnJkOV2o6wNH7nJUTS50w=;
+	s=korg; t=1795623738;
+	bh=KLAOPrlJ+yFpQa8g1fHSw69B6StkUPhuY+WJy7D7Ug0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=nRK6VOopSRaFnGdx/oVRJK9HwFd2Ud2Rdgxfz2S++qAOlCiABNmKopDKJCJ22Xgee
-	 jf1RAiS0TOflAiMkF8s8ZXw3GMj3DAGOBwKFR6Q/mknVdpRoZ6MJKo844DpIn/r7DL
-	 1+YGu2BPaYoK33hod5UoMkXDd7d7XRR+CRxqeqbM=
+	b=XuHhyNHK8uZIK+uqqiZvathEUqUecion704Q5xliLhrfGAKnL6Nb+T84L8a6viIc3
+	 j7O5GU4C6QOp1DSq9e29BF47jBU7gmWV2sJ7N3VjrVoywACwvr3EYOqfNVakwOTlX3
+	 l2GUpfcN/THQO17KOjG4KxA9bYddE54cghuBy3Ys=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vidhu Sarwal <vidhu.linux@gmail.com>,
+	Jean-Baptiste Maneyrol <jean-baptiste.maneyrol@tdk.com>,
 	Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>
-Subject: [PATCH 6.18 954/990] iio: humidity: am2315: fix negative temperature decoding
-Date: Wed, 25 Nov 2026 15:38:41 +0100
-Message-ID: <20261125143844.335136795@linuxfoundation.org>
+Subject: [PATCH 6.18 955/990] iio: imu: inv_icm42600: fix parsing of all FIFO frames for odr change
+Date: Wed, 25 Nov 2026 15:38:42 +0100
+Message-ID: <20261125143844.358255473@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143822.072087159@linuxfoundation.org>
 References: <20261125143822.072087159@linuxfoundation.org>
@@ -67,55 +67,81 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Vidhu Sarwal <vidhu.linux@gmail.com>
+From: Jean-Baptiste Maneyrol <jean-baptiste.maneyrol@tdk.com>
 
-commit 0a570feeca37d85fbfd6b4f6e3d9f33e1461c634 upstream.
+commit 4a141623442888458d147f4e61fe47411c0e4e17 upstream.
 
-The AM2315/AM2320 report temperature as a sign-magnitude value,
-with bit 15 as the sign and bits 14-0 as the magnitude.
-am2315_read_data() stores the raw value directly in an s16, causing
-negative temperatures to be interpreted as two's complement. Both the
-read_raw and the triggered buffer paths are affected.
+For getting all odr change events, we need to parse all FIFO frames
+in each iio device. Fix this correctly by sending effectively all
+frames to all iio devices.
 
-Decode the sign bit before storing the temperature value. Positive
-readings are unaffected.
+Previously only batches of frames containing a matching sensor event
+were sent to the corresponding iio device.
 
-Fixes: 366a3270c1c5 ("iio: humidity: Add support for AM2315")
-Signed-off-by: Vidhu Sarwal <vidhu.linux@gmail.com>
+Fixes: f670d4d34773 ("iio: imu: inv_icm42600: fix odr change not caught in certain cases")
 Cc: stable@vger.kernel.org
+Signed-off-by: Jean-Baptiste Maneyrol <jean-baptiste.maneyrol@tdk.com>
 Signed-off-by: Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/iio/humidity/am2315.c |   12 ++++++++++--
- 1 file changed, 10 insertions(+), 2 deletions(-)
+ drivers/iio/imu/inv_icm42600/inv_icm42600_buffer.c |   24 ++++++++-------------
+ 1 file changed, 10 insertions(+), 14 deletions(-)
 
---- a/drivers/iio/humidity/am2315.c
-+++ b/drivers/iio/humidity/am2315.c
-@@ -113,6 +113,7 @@ static int am2315_read_data(struct am231
- 	 */
- 	u8 rx_buf[8];
- 	u16 crc;
-+	u16 temp_raw;
+--- a/drivers/iio/imu/inv_icm42600/inv_icm42600_buffer.c
++++ b/drivers/iio/imu/inv_icm42600/inv_icm42600_buffer.c
+@@ -513,22 +513,20 @@ int inv_icm42600_buffer_fifo_parse(struc
+ 		ts = &gyro_st->ts;
+ 		inv_sensors_timestamp_interrupt(ts, st->fifo.watermark.eff_gyro,
+ 						st->timestamp.gyro);
+-		ret = inv_icm42600_gyro_parse_fifo(st->indio_gyro);
+-		if (ret)
+-			return ret;
+ 	}
  
- 	/* First wake up the device. */
- 	am2315_ping(data->client);
-@@ -144,8 +145,15 @@ static int am2315_read_data(struct am231
- 
- 	sensor_data->hum_data = (rx_buf[AM2315_HUM_OFFSET] << 8) |
- 				 rx_buf[AM2315_HUM_OFFSET + 1];
--	sensor_data->temp_data = (rx_buf[AM2315_TEMP_OFFSET] << 8) |
--				  rx_buf[AM2315_TEMP_OFFSET + 1];
++	ret = inv_icm42600_gyro_parse_fifo(st->indio_gyro);
++	if (ret)
++		return ret;
 +
-+	/*
-+	 * Temperature is sign-magnitude, not two's complement:
-+	 * bit 15 is the sign, bits 14-0 are the magnitude (x0.1 degC).
-+	 */
-+	temp_raw = (rx_buf[AM2315_TEMP_OFFSET] << 8) |
-+		   rx_buf[AM2315_TEMP_OFFSET + 1];
-+	sensor_data->temp_data = (temp_raw & 0x8000) ?
-+				  -(temp_raw & 0x7fff) : temp_raw;
+ 	/* handle accelerometer timestamp and FIFO data parsing */
+ 	if (st->fifo.nb.accel > 0) {
+ 		ts = &accel_st->ts;
+ 		inv_sensors_timestamp_interrupt(ts, st->fifo.watermark.eff_accel,
+ 						st->timestamp.accel);
+-		ret = inv_icm42600_accel_parse_fifo(st->indio_accel);
+-		if (ret)
+-			return ret;
+ 	}
  
- 	return ret;
+-	return 0;
++	return inv_icm42600_accel_parse_fifo(st->indio_accel);
+ }
  
+ int inv_icm42600_buffer_hwfifo_flush(struct inv_icm42600_state *st,
+@@ -553,20 +551,18 @@ int inv_icm42600_buffer_hwfifo_flush(str
+ 	if (st->fifo.nb.gyro > 0) {
+ 		ts = &gyro_st->ts;
+ 		inv_sensors_timestamp_interrupt(ts, st->fifo.nb.gyro, gyro_ts);
+-		ret = inv_icm42600_gyro_parse_fifo(st->indio_gyro);
+-		if (ret)
+-			return ret;
+ 	}
+ 
++	ret = inv_icm42600_gyro_parse_fifo(st->indio_gyro);
++	if (ret)
++		return ret;
++
+ 	if (st->fifo.nb.accel > 0) {
+ 		ts = &accel_st->ts;
+ 		inv_sensors_timestamp_interrupt(ts, st->fifo.nb.accel, accel_ts);
+-		ret = inv_icm42600_accel_parse_fifo(st->indio_accel);
+-		if (ret)
+-			return ret;
+ 	}
+ 
+-	return 0;
++	return inv_icm42600_accel_parse_fifo(st->indio_accel);
+ }
+ 
+ int inv_icm42600_buffer_init(struct inv_icm42600_state *st)
 
 
