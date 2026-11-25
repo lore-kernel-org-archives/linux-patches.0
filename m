@@ -1,57 +1,55 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795620418;
-	b=PRyxd/g7fBYvQSRAV+sFGc2JMu6J3te/keWUipjEeFlOwW8iBWQ5syaku7aEscwqMkoR
-	 q+rVSNxtQn53ZLnUv70O2b+bEF5exMIBQkVFxIfL3aqGqN2rpbyEhC6Ffi7ZKNz8u3Weu
-	 XLPHWXYHGzrf3lajWhV6MO9pS5fRuturDBoMLFzdWY5FTn6SyCzq+cJ8N2OXtmx4CcOR/
-	 EL95TifaEfxN+zp08fN+MtvO+1/4bNsr6ZB8I13D9F2qnSz6Iq26WTFSkY5rLRtGhhGoP
-	 JastAvzSoNizon7usOQeGZGKYSYC9+3+OvLb7Mk4sDJWjqRUwUoO06cOkkaThd1cvrw==
+	t=1795620421;
+	b=CC3/K6/BnPRJq+IOkGJUcxgeomIOyAgS8KAhZulgv4S1OHHwj29AbEnXVdEYZwWW9bdI
+	 rzt20Lb4mF01NajPFLOZViRvFE8ps9CyTE8NqLMreipnrl2K63pIHJzvaV/6+uHh/58e2
+	 8ZSTPTyNQUzZP+nsoHlSkz5qwcYc+bQzKzBXn33Ujnuw99puNXmdDmZcQ+dvIG7EshPL2
+	 5BBql5C4zSVzIEmcMzDeMA4jgm6Lv5q5q7Bd25A2bctjfnI1BNlRC4nsSA9gbzZOKp2ZR
+	 E0ph2QCS+Gpqv33MRR/iGLLy9rqgwnEY4XlKUmCVstvE/G+Szw7wUX2Bqy1Wb7vrJog==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795620418;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795620421;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=qK7KEjysv134WDqM+yYiv6RL5M8t+zjAXvaYSrFmPkQ=;
-	b=dS/zsy6u9mIiD7Ei5oJydzrX8EpWiWCv7gSLFALeGGPxDnsVmv5zm482fL4S2za6IFHL
-	 jlghQd4AvikIyCeHjkh30F80uVwHo/eHaRku9PQCzEVLPdbapP8OkxSnpX8ATHN3kpwsY
-	 zjN1MpqSXpI/DM07vG8jPORL8nSAbGUIOkJP0DpWYbgbtCi3e5XDFRxm7o4sG4U66EL/N
-	 swfBCNllCMwWepTiE2roGgAkBmALRw0KdGWOX0tf6eaODDQg/LNLBEomZ7SxqmMlatr3c
-	 MaocKMW9VMwSRzyEfX76tQCwykwNoF4RlddDdZN9O4qJr8fHJu1kIiXHa3MTmjOcuhg==
+	bh=d99ErwmnBTJr+slHYjds0Gh8zlh+xdGNp9E3bLxreiw=;
+	b=YOQQIMY2Dz9uwcq/f0+dFJHPA7Vl0Nh5pnZqRrgrsIKXtyOm/vwv8hvC32mVwBHVwAz7
+	 XS4OOaB1DqJiYviEXICndAG4pTpjuuDo8NImeaEyYB/OxpWBVoGupsLrZMQ136kyVjnZ7
+	 z8fV51L5BE6GNuu78meWtp/4ljZJnwduRPWL/Ly1WT4muZbKhrMdluFrjNdyzG5+Myowf
+	 uQYRZMixItgQhHaR6XQDmEyGt4hTnCyxvh1o3rauSSnsN/NX2sfgzD8K7ofYGVGAgjJF5
+	 AWzsfudLQYwc2EbEujbMWAYWke3I6efhfNmMU0CV6zmg4Nbyp/dZK71HzdlwRODigvw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=cUhxqBPQ;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=LYdWKDGU;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 81018606A326;
-	Wed, 25 Nov 2026 15:26:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 63C87606A321;
+	Wed, 25 Nov 2026 15:27:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=cUhxqBPQ
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D4D941F000C6;
-	Wed, 25 Nov 2026 15:26:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=LYdWKDGU
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BB5E61F000CA;
+	Wed, 25 Nov 2026 15:27:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795620418;
-	bh=qK7KEjysv134WDqM+yYiv6RL5M8t+zjAXvaYSrFmPkQ=;
+	s=korg; t=1795620421;
+	bh=d99ErwmnBTJr+slHYjds0Gh8zlh+xdGNp9E3bLxreiw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=cUhxqBPQ1QslWQWzjWjBHlmRKx0gjiOrjUMU/popWpR9SF46EvhXdHBENb5sOMbzl
-	 DLor260chYZCg8H5dvQr2nQtD1I+msr6mIuUPlxwPzZpWkXq/FHC8LvV94iP3vuSbH
-	 5p54I1xUYConm6ig/p4sLzA+bPSl6zs8U1nwG5sQ=
+	b=LYdWKDGUBSDAqs2WJjWM4VMsVOpcMVUHUz3nSFnlxmhX6o9JreYZLsvgXYb8X3wJ1
+	 YBr6dqHQNzT2czjC+1ildRGscsOK6lJ35PvKQCrRXrWuZdI09x5xzcCCn8fQwQtUXS
+	 AxDxh7sawvnQnRhvccDuZ+IAIzbX6ahlvPRgrsdQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	stable <stable@kernel.org>,
-	Krzysztof Kozlowski <krzk@kernel.org>,
-	Peter Griffin <peter.griffin@linaro.org>,
-	Alim Akhtar <alim.akhtar@samsung.com>,
-	Jiri Slaby <jirislaby@kernel.org>,
-	Kukjin Kim <kgene.kim@samsung.com>,
-	Thomas Abraham <thomas.abraham@linaro.org>,
+	Andreas Noever <andreas.noever@gmail.com>,
+	Mika Westerberg <westeri@kernel.org>,
+	Yehezkel Bernat <YehezkelShB@gmail.com>,
+	Alan Borzeszkowski <alan.borzeszkowski@linux.intel.com>,
 	Josef Bacik <josef@toxicpanda.com>
-Subject: [PATCH 7.3 0911/1005] serial: samsung: put the previous baud clock
-Date: Wed, 25 Nov 2026 15:37:29 +0100
-Message-ID: <20261125143843.033652402@linuxfoundation.org>
+Subject: [PATCH 7.3 0912/1005] thunderbolt: stream: Undo more if the start fails
+Date: Wed, 25 Nov 2026 15:37:30 +0100
+Message-ID: <20261125143843.056704980@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143821.729802100@linuxfoundation.org>
 References: <20261125143821.729802100@linuxfoundation.org>
@@ -75,54 +73,46 @@ Content-Transfer-Encoding: 8bit
 
 From: Josef Bacik <josef@toxicpanda.com>
 
-commit eedf2cf3505c1562a2fb24f8b997056f023d242b upstream.
+commit 03e3c33fe074ba57ae4457894fe5b6a90e3be6ee upstream.
 
-s3c24xx_serial_getclk() returns the best baud clock with the reference
-which clk_get() has taken.  s3c24xx_serial_set_termios() stores it in
-ourport->baudclk and disables the clock which was there before, but does
-not put it.
+If the receive buffers cannot be allocated or mapped,
+tbstream_dev_start() stops and frees the rings, but
 
-clk_get() hands out a new handle on every call, so the new clock never
-equals the old one, and every call of ->set_termios() leaks a handle: a
-struct clk and a copy of the connection name.  Whoever has the port open
-can repeat that at will with tcsetattr().
+ - leaves the DMA paths through the XDomain connection enabled, with the
+   hop IDs of rings which no longer exist;
+ - does not release the frame array and the pages which
+   tbstream_dev_alloc_rx_buffers() had allocated and mapped before it
+   failed.
 
-Put the old clock when it is replaced, and the new one in case it is not
-stored.
-
-Fixes: 5f5a7a5578c5 ("serial: samsung: switch to clkdev based clock lookup")
+Fixes: 6db21d817b43 ("thunderbolt: Add support for USB4STREAM")
 Cc: stable <stable@kernel.org>
-Cc: Krzysztof Kozlowski <krzk@kernel.org>
-Cc: Peter Griffin <peter.griffin@linaro.org>
-Cc: Alim Akhtar <alim.akhtar@samsung.com>
-Cc: Jiri Slaby <jirislaby@kernel.org>
-Cc: Kukjin Kim <kgene.kim@samsung.com>
-Cc: Thomas Abraham <thomas.abraham@linaro.org>
+Cc: Andreas Noever <andreas.noever@gmail.com>
+Cc: Mika Westerberg <westeri@kernel.org>
+Cc: Yehezkel Bernat <YehezkelShB@gmail.com>
+Cc: Alan Borzeszkowski <alan.borzeszkowski@linux.intel.com>
 Signed-off-by: Josef Bacik <josef@toxicpanda.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Link: https://patch.msgid.link/20261027-tty-llm-v1-22-99b0202ae546@linuxfoundation.org
+Acked-by: Mika Westerberg (Intel) <westeri@kernel.org>
+Link: https://patch.msgid.link/2026102751-nibble-synapse-d406@gregkh
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/tty/serial/samsung_tty.c |    3 +++
- 1 file changed, 3 insertions(+)
+ drivers/thunderbolt/stream.c |    6 ++++++
+ 1 file changed, 6 insertions(+)
 
---- a/drivers/tty/serial/samsung_tty.c
-+++ b/drivers/tty/serial/samsung_tty.c
-@@ -1498,11 +1498,14 @@ static void s3c24xx_serial_set_termios(s
- 
- 		if (!IS_ERR(ourport->baudclk)) {
- 			clk_disable_unprepare(ourport->baudclk);
-+			clk_put(ourport->baudclk);
- 			ourport->baudclk = ERR_PTR(-EINVAL);
- 		}
- 
- 		ourport->baudclk = clk;
- 		ourport->baudclk_rate = clk ? clk_get_rate(clk) : 0;
-+	} else {
-+		clk_put(clk);
- 	}
- 
- 	if (ourport->info->has_divslot) {
+--- a/drivers/thunderbolt/stream.c
++++ b/drivers/thunderbolt/stream.c
+@@ -630,6 +630,12 @@ static int tbstream_dev_start(struct tbs
+ err_stop:
+ 	tb_ring_stop(sdev->rx_ring.ring);
+ 	tb_ring_stop(sdev->tx_ring.ring);
++	tb_xdomain_disable_paths(xd, sdev->out_hopid,
++				 sdev->tx_ring.ring->hop,
++				 sdev->in_hopid,
++				 sdev->rx_ring.ring->hop);
++	if (sdev->rx_ring.frames)
++		tbstream_ring_free(&sdev->rx_ring);
+ err_free_rx:
+ 	tb_ring_free(sdev->rx_ring.ring);
+ err_free_tx_buffers:
 
 
