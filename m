@@ -1,56 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795625838;
-	b=H8Ogdw0udjrglFA8127FZFOQSkjqiQMbfG9ZRegqhLIycn7S9cWojxGD9jpqCRGA+sMT
-	 WupfnpsIK5eNkSlxhA6V9Xw2zcsCsn2Imf6mx/0LtE2CIVT8hNRa+WWsvxlYYEOKa4OKy
-	 T3Tb4qqDnxeQnZ00Qvlm7NRbi5gybYyocn1UkYLJycpOnPbVN9B4OIlcE/orqYQkNHJKm
-	 iQElkV2wcbcCFDAzpnmKQJ+o0mA7SaRGAa4EOHBaljnik3Cq6TJW1/oJK7mXMuqJbP6QP
-	 YcFLzGkkk6wPLWea1Sjryky/mw0IJW6VbOaopiIyk2G1ek/rCJ6zuFEj1KOOYOhqOGA==
+	t=1795625841;
+	b=wFyvvRna15AA6bdWXTvRVf4ti72IhVFX4pU5/PpqdEk301XOzSlFTkAa0MSC0eSywxV0
+	 ifDToGLN8cJDgbdrMHofX0R26ssjEvW56UghOsMcx4uJjsqOg+3ZNx+NqWABcSfnktFDo
+	 vvTlLBdEt1gA6kMATmkXq8PivZhdZyB/9GabhOtAJzN0RAnnoXX78bOSKh4hwtCb+6zmp
+	 RQz9NyzpNBQ8Nd2R1kLotet7hL2gmnBUMCvktfMm4SdRtkWM+VrlXJmbfwv54zfl1m+6J
+	 TsTh2uDPwslGKaW6AREVXaW5kVN8lnbtjHzYhqgLKkEX6aoHj0GV4vSUxXxUlb/15Iw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795625838;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795625841;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=+TxC6gLSG0HGKhLL+h12fTyhEq7U6YjQkzT+jvzztp4=;
-	b=2i6M1oZCYY5rs+87CZx5n4apXDmGSb1BYI1xkhZiu3fiw6WFBmAoBseK3du3KaPafNRS
-	 euefQDCv6tTB98OJ8CacMEi/be21Snf5xQWrQVMBnmQQPe91gh4wuwp8dRtPWRDPEYY6j
-	 IyjRcK4kWc2+m3/Cqt+LWUZnLJ7u6qQnOY8XKMYFSAn+ucTM9UFYzSRec3gwW075nMo3d
-	 IMFtnBYDz6aqpM+xDj2AijuxiaQTpVc6p8PwSEH0C7Ge0aOqCm0ORN/qzrCzn/TnH4LmD
-	 MAdNK+6fbx9CdCBLaTV+CiIhzABmLxTKnk6AJmW8gHvLx763BY4duItx9kqdelelJ1w==
+	bh=O6DUvv+HecEASWw3omgF295e3vDhOYgdAlfVeEFrS9E=;
+	b=qjvEt6+1QFCxNZ4GFCgC0vBdwCK+XY9eYkdNWqlCz3Fazkq3ZcVOZsmWu9etPVV1BViq
+	 RX/olXT9SSlUcPFgsws7YGh3ZdmaCY7KobFsRoOJuhDLR42jsYSG8eTbG41qtrYX8QTl0
+	 XjNVWrmuVrQIYd2nZL6uTW9YwcA8MZ4x784n9QL7Ztz4jhfP+Ju/fT2mW/7gbLzKvpgRn
+	 VVZdQayuydB7J9Swyxg6rBLZGflmu8gCAIAu4sdiVdv95XjGCIlK39ehR9EGuG/qeImTe
+	 NlFl1/EfKfy3yXh5Yo8gcNskzTUg+akUMpPH9e0xuQSud2+etD64qJH2XE86Q8y4n0w==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=T4ffl61V;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=PfVswbbJ;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6F5ED606A31E;
-	Wed, 25 Nov 2026 16:57:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7CDA5606A323;
+	Wed, 25 Nov 2026 16:57:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=T4ffl61V
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2E35C1F000C4;
-	Wed, 25 Nov 2026 16:57:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=PfVswbbJ
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 961C31F000C4;
+	Wed, 25 Nov 2026 16:57:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795625837;
-	bh=+TxC6gLSG0HGKhLL+h12fTyhEq7U6YjQkzT+jvzztp4=;
+	s=korg; t=1795625841;
+	bh=O6DUvv+HecEASWw3omgF295e3vDhOYgdAlfVeEFrS9E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=T4ffl61VFSpAxXftO7fMRxVk7G8aHapuNzdqJDlitKLNauDJdvdy8679ob+Onsnjz
-	 O/dnGbhakzn2wbxBgLvuFwvJP0bA3EWDGjOhoqK9vonKSnoa6vc51xXySgLtDrCen2
-	 UJCraK5h76iKrXqo2sCKFe6HOnux+HdY+wTkv2gI=
+	b=PfVswbbJZn2Ddo3+zgi0bnM+EjTwhbNnzrdL3lLNuVSqeBik67I2BzWXNnYcBtDGd
+	 10jK+JgNxKBwCGvXcOoMhsC1f52g3q4T9AYjF1zrKrCGFYvlQMBam6Mv3srMvklejP
+	 YRpW3fLCZvApqeRhtQmBFwi8mRRpuilEfTTcwBtI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sashiko <sashiko-bot@kernel.org>,
-	Andrea Parri <parri.andrea@gmail.com>,
-	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
-	Ingo Molnar <mingo@kernel.org>,
-	Waiman Long <longman@redhat.com>,
-	Kayra Cizmeci <kayracizmeci@gmail.com>,
-	Juri Lelli <juri.lelli@redhat.com>
-Subject: [PATCH 6.12 646/816] sched/core: Fix cpuset_mutex double unlock in __sched_setscheduler()
-Date: Wed, 25 Nov 2026 15:36:34 +0100
-Message-ID: <20261125143904.137033195@linuxfoundation.org>
+	Zhao Li <enderaoelyther@gmail.com>,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Subject: [PATCH 6.12 611/816] Bluetooth: L2CAP: Keep recvmsg from resuming a closed channel
+Date: Wed, 25 Nov 2026 15:35:59 +0100
+Message-ID: <20261125143903.321664382@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143849.205329330@linuxfoundation.org>
 References: <20261125143849.205329330@linuxfoundation.org>
@@ -72,165 +67,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Andrea Parri <parri.andrea@gmail.com>
+From: Zhao Li <enderaoelyther@gmail.com>
 
-commit f7141257dd67d4936f906a6cfd1d0007721f6898 upstream.
+commit 1f2ac56137c51be0601e18a163d817e02a15913f upstream.
 
-A sched_setattr() with SCHED_FLAG_KEEP_POLICY on a SCHED_DEADLINE task
-unlocks cpuset_mutex twice if the task's policy changes concurrently:
+Reading buffered ERTM data after ACL link loss can clear local busy and
+send a supervisory frame after l2cap_conn_del() has destroyed the HCI
+channel, which oopses on a NULL pointer in hci_send_acl(). The socket still
+owns its L2CAP channel, so its lifetime does not protect the underlying HCI
+channel.
 
-  WARNING: bad unlock balance detected!
-  7.4.0-rc1 #1 Not tainted
-  -------------------------------------
-  repro/126 is trying to release lock (cpuset_mutex) at:
-  [<ffffffff9a17cacc>] __sched_setscheduler+0x9cc/0xc40
-  but there are no more locks to release!
-  ...
-  Call Trace:
-   print_unlock_imbalance_bug.part.0+0xfb/0x110
-   lock_release+0x286/0x2e0
-   __mutex_unlock_slowpath+0x1a/0x400
-   __sched_setscheduler+0x9cc/0xc40
-   __x64_sys_sched_setattr+0xa3/0x1b0
-   do_syscall_64+0x106/0x5f0
-   entry_SYSCALL_64_after_hwframe+0x77/0x7f
+Require BT_CONNECTED before clearing local busy in recvmsg. The socket lock
+already held here serializes this check and send with teardown, which
+closes the socket before the HCI channel is destroyed. Continue to allow
+buffered data to be read after disconnection.
 
-__sched_setscheduler() samples p->policy before taking any lock, and
-restarts from the recheck label if p->policy differs under the rq lock.
-The restart drops cpuset_mutex but leaves cpuset_locked set, so a pass
-that no longer needs the mutex still unlocks it on its way out:
+AI assistance was used.
 
-  CPU 1                                CPU 2
-  __sched_setscheduler(KEEP_POLICY)
-    policy = p->policy /* DEADLINE */
-                                       __sched_setscheduler(SCHED_OTHER)
-                                         p->policy = SCHED_OTHER
-    cpuset_locked = true
-    cpuset_lock()
-    rq = task_rq_lock(p)
-    oldpolicy != p->policy
-      cpuset_unlock()
-      goto recheck
-    /* no cpuset_lock() this time */
-    ...
-    if (cpuset_locked)
-      cpuset_unlock()
-
-Without CONFIG_DEBUG_MUTEXES, or CONFIG_DEBUG_RT_MUTEXES on PREEMPT_RT,
-nothing warns. The second unlock still clears the owner field regardless
-of who holds the mutex, so another task can lose cpuset_mutex inside its
-critical section. Entering SCHED_DEADLINE needs CAP_SYS_NICE, but a
-racing caller that owns the task does not need it if it samples a policy
-other than SCHED_DEADLINE.
-
-Clear cpuset_locked when dropping the mutex for the restart. This should be
-safe because the flag is only tested on the paths leaving the next pass,
-after that pass has set it again if it took the mutex.
-
-The following program, run as root, reproduces the splat, which no longer
-appears with this applied. On PREEMPT_RT it crashes the kernel within
-seconds, which this also fixes:
-
-  #define _GNU_SOURCE
-  #include <pthread.h>
-  #include <stdint.h>
-  #include <sys/syscall.h>
-  #include <unistd.h>
-
-  struct attr {
-      uint32_t size, policy;
-      uint64_t flags;
-      int32_t nice;
-      uint32_t prio;
-      uint64_t runtime, deadline, period;
-  };
-
-  static volatile int stop;
-  static volatile pid_t target;
-
-  static void set(struct attr a)
-  {
-      a.size = sizeof(a);
-      syscall(SYS_sched_setattr, target, &a, 0);
-  }
-
-  static void *sleeper(void *arg)
-  {
-      target = syscall(SYS_gettid);
-      while (!stop)
-          usleep(1000);
-      return arg;
-  }
-
-  static void *switcher(void *arg)
-  {
-      while (!stop) {
-          /* SCHED_DEADLINE, 2us every 1s */
-          set((struct attr){ .policy = 6, .runtime = 2000,
-                             .deadline = 1000000000,
-                             .period = 1000000000 });
-          set((struct attr){ .policy = 0 }); /* SCHED_OTHER */
-      }
-      return arg;
-  }
-
-  static void *racer(void *arg)
-  {
-      /* KEEP_POLICY | KEEP_PARAMS */
-      while (!stop)
-          set((struct attr){ .flags = 0x18 });
-      return arg;
-  }
-
-  int main(void)
-  {
-      pthread_t t[5];
-      int i;
-
-      pthread_create(&t[0], NULL, sleeper, NULL);
-      while (!target)
-          usleep(100);
-      pthread_create(&t[1], NULL, switcher, NULL);
-      for (i = 2; i < 5; i++)
-          pthread_create(&t[i], NULL, racer, NULL);
-      sleep(30);
-      stop = 1;
-      for (i = 0; i < 5; i++)
-          pthread_join(t[i], NULL);
-      return 0;
-  }
-
-An LLM helped find the PREEMPT_RT crash and write this patch and its test.
-
-Fixes: 111cd11bbc54 ("sched/cpuset: Bring back cpuset_mutex")
-Reported-by: Sashiko <sashiko-bot@kernel.org>
-Signed-off-by: Andrea Parri <parri.andrea@gmail.com>
-Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
-Signed-off-by: Ingo Molnar <mingo@kernel.org>
-Reviewed-by: Waiman Long <longman@redhat.com>
-Reviewed-by: Kayra Cizmeci <kayracizmeci@gmail.com>
-Reviewed-by: Juri Lelli <juri.lelli@redhat.com>
-Cc: stable@vger.kernel.org
-Link: https://sashiko.dev/#/patchset/20261016062629.2102883-1-sh_def%40163.com
-Link: https://patch.msgid.link/20261102134606.242743-1-parri.andrea@gmail.com
+Fixes: 61aa4f5b9f43 ("Bluetooth: Use the transmit state machine for busy state changes")
+Cc: stable@vger.kernel.org # needs adjustments for 5.15
+Signed-off-by: Zhao Li <enderaoelyther@gmail.com>
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/sched/syscalls.c |    4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ net/bluetooth/l2cap_sock.c |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
---- a/kernel/sched/syscalls.c
-+++ b/kernel/sched/syscalls.c
-@@ -644,8 +644,10 @@ change:
- 	if (unlikely(oldpolicy != -1 && oldpolicy != p->policy)) {
- 		policy = oldpolicy = -1;
- 		task_rq_unlock(rq, p, &rf);
--		if (cpuset_locked)
-+		if (cpuset_locked) {
- 			cpuset_unlock();
-+			cpuset_locked = false;
-+		}
- 		goto recheck;
- 	}
+--- a/net/bluetooth/l2cap_sock.c
++++ b/net/bluetooth/l2cap_sock.c
+@@ -1289,7 +1289,8 @@ static int l2cap_sock_recvmsg(struct soc
+ 	 * available.  This avoids resending large numbers of
+ 	 * frames.
+ 	 */
+-	if (test_bit(CONN_LOCAL_BUSY, &pi->chan->conn_state) &&
++	if (sk->sk_state == BT_CONNECTED &&
++	    test_bit(CONN_LOCAL_BUSY, &pi->chan->conn_state) &&
+ 	    atomic_read(&sk->sk_rmem_alloc) <= sk->sk_rcvbuf >> 1)
+ 		l2cap_chan_busy(pi->chan, 0);
  
 
 
