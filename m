@@ -1,53 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795625488;
-	b=kd7a++stZkg9x7JjUSkff+icodIkXjJ/7jwJuoy7vNnSE+3F+JKNSSHMr8cNUBkzsVaQ
-	 mwxACO9DaCJyXjkWy+Wyk4v3AB6GmAAAyBalX1QhTvrsesVd8I3Ak8+3qu6Raz4fHmHN4
-	 R6hx89aCzVn5dimzc07oJZofWoe9/JWItCv/XSn4D9zzsFLrpQusGVOrseVog7/798yu4
-	 AqV9L/h1zz27tfVF4JWINF/ov25dO61JlpE/34bXFsyG1Cmor5MhKP0JVh+EFiPFmVpoP
-	 1OaMF75TEzjaDsYAcroX3Y2H3RFj1P6HqJGjUr9BgNRdafA5LexDTgvKGXCnsXSAE9g==
+	t=1795625491;
+	b=UFc2CjnP5aZAGb5Vo+oIo4m9lu4hHwiwObtDL+HGeRnafpW41L3CUBOpArw50/gXhanA
+	 cBhyIMG/NwG2hTJi5AP1x6xTGumXeoPA2oJTgloTN+SEWXjpu1hSTRguZsvp2N+kPE4uq
+	 LL3XRJLM2nPKr4KxcYm7L7RQeK9PW+BFVoHRgPmwT4pJ8TfFKRSbIPQoayzFIeBwe8qRn
+	 5rU5y2CGAwJ8l2j5VlnyeRLcPI3xf49qMOdlVOr1Pnbu4zVH3W44UIcxUiNHbnehIMBgT
+	 nN0IjDCZeuJSDtyPZ6lp/FJL25x1k6pvmxZxlWDU+XPNGbwYxptLApBb4i4MQCo4vZA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795625488;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795625491;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=mk19yznoLP8+S9Bfaj8NigwSM11mLNS5Lnq9TJvX+fs=;
-	b=WzFiwJQXACHLBHUuyDaj0jTn6ZiIoq6jYLIhB2lvE+7V6Y3V7cyNsiC1ngLgN9frASHl
-	 tMWUeb6sdjE59ldE3vc3NA9xyGtbNED/Mj0sA3QQQ33Pp7QvXtHhqOKhDW6pE2zV0O8QY
-	 PvLxTnSLijK7UjbuCBcPHIiJakNrbmDWJ91c3EzlmNCrk/+bqIaLqTOuFXE1m9G5tVXYi
-	 By57moZRGzBjgcEPkan6wOAo1ZdZS1z1LWinWlkDAa/H4u6eDDfvUmnv+5wuwBenMkI00
-	 86rnTvKOZd2hRkZxPF+QFTl0eiXKgDLFsXj8YJ1a0IRLORGN3nSLXGfvCaoVwqaNZgg==
+	bh=AgSyI9d6/GpaAPi2IqFZRPjjIBrkFHydYTs3/PZw0HM=;
+	b=vAV3dSqCi93pZFqL2W0ihOL5qaYod9WWhp3GVcwva/zrzUMKUAOu5RXmdPt5u+VvvRMP
+	 xwyvIKdYalTYga3bBP1Y1WbDdWQf/ewUTONhQvsFM371mjr1acgqS01CwR40EMu6qyP+J
+	 is7cAvrS3pgzuq//iw7MrrYKOSiLIOciJuUwBUdBbBLu30cDErtNaEN4kfdDsTUUjN0Ub
+	 udqZtCxA65TszZW24YeXHIhc4bpm3EPfio1y13qaoPVnAJTuqXyo7qX74cMlGP/JtRmvU
+	 r8VRZLp9zCoaopP9EVmUfqt6Ds5h6w1T+JJ8+06krTOkrv1WBy6kd0LIKxkIF/cT0rw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ksMFeDXY;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=splLCZjB;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 92952606A31E;
-	Wed, 25 Nov 2026 16:51:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 97E2B606A331;
+	Wed, 25 Nov 2026 16:51:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ksMFeDXY
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E2BDE1F000C6;
-	Wed, 25 Nov 2026 16:51:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=splLCZjB
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B92DD1F000EC;
+	Wed, 25 Nov 2026 16:51:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795625488;
-	bh=mk19yznoLP8+S9Bfaj8NigwSM11mLNS5Lnq9TJvX+fs=;
+	s=korg; t=1795625491;
+	bh=AgSyI9d6/GpaAPi2IqFZRPjjIBrkFHydYTs3/PZw0HM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ksMFeDXYglvFM2jl76Vhor49jsgs42/KB0GVjI2XGwEoUXJFG6rNycES5z4PyhQ4f
-	 4ug4qnkX8ArfPzxjeW5U+xOKL48yRt39P2UjNyWQiIaPes1Eh8Wg/BylAxNu8brupA
-	 bfjBcIkL5PGgBYXKvCaIIfft+oCRYRMdl+O5p/nk=
+	b=splLCZjBDd1sP9+wJ8ASF5rDPQ/8Yx47bEVft2GtHjcnYD2VYkuXlbvJ7qIVnpKAa
+	 GZsWRfiUzp+qThA4Ff8fUe2bXn3DFseDoxKj3o0lR6AyofOFVx/UhITqEd88IpmRUE
+	 Fki/GuSEd31Huz1vtg360IMwIxXOXDOz3WoskTzA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Namhyung Kim <namhyung@kernel.org>,
-	Ian Rogers <irogers@google.com>,
-	Arnaldo Carvalho de Melo <acme@redhat.com>,
+	Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 533/816] perf lock contention: Filter events before creating lock_stat
-Date: Wed, 25 Nov 2026 15:34:41 +0100
-Message-ID: <20261125143901.528528304@linuxfoundation.org>
+Subject: [PATCH 6.12 534/816] gpiolib: Propagate emulated drive errors when setting arrays
+Date: Wed, 25 Nov 2026 15:34:42 +0100
+Message-ID: <20261125143901.551279991@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143849.205329330@linuxfoundation.org>
 References: <20261125143849.205329330@linuxfoundation.org>
@@ -69,129 +67,57 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ian Rogers <irogers@google.com>
+From: Baek Kyu, Kim <pocj8ur4in@gmail.com>
 
-[ Upstream commit c58d1598e79554cc8f587668ab2ebcaeb616b076 ]
+[ Upstream commit 15665047024e30f9c2227563d03034061c99ac2c ]
 
-In report_lock_contention_begin_event(), lock_stat_findnew() was
-called before checking filters.nr_types (-Y), filters.nr_addrs (-L),
-and match_callstack_filter() (-S).
+gpiod_set_array_value_complex() ignores errors from the open-drain and
+open-source emulation helpers. If a direction change fails,
+GPIO_V2_LINE_SET_VALUES_IOCTL still reports success, including when
+updating a single line.
 
-When a filtered-out lock event (such as a mutex contention when
-running with -Y spinlock) shared the same aggregation key as a
-subsequent matching event (for example, contention on the mutex's
-internal wait_lock spinlock from the same caller), the first event
-created the lock_stat entry with the filtered-out lock's flags and the
-second event reused that entry, causing non-spinlock entries to appear
-in -Y spinlock output.
+Return the first emulation error after freeing the temporary bitmaps.
+Keep updates already made to earlier lines and stop processing the
+remaining lines, as for errors from gpiochip_set_multiple().
 
-Check the type, address, and callstack filters before looking up or
-creating the lock_stat entry.
-
-Fixes: b4a7eff93c39f985 ("perf lock contention: Add -Y/--type-filter option")
-Reviewed-by: Namhyung Kim <namhyung@kernel.org>
-Signed-off-by: Ian Rogers <irogers@google.com>
-Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
-[ sashal: adjusted the lock_contention_caller() call to pass the extra evsel argument, and kept the existing -ENOMEM return on get_callstack() failure instead of 0. ]
+Fixes: 8ce258f62f90 ("gpiolib: make value setters have return values")
+Signed-off-by:
+Link: https://patch.msgid.link/20261020172601.221861-1-pocj8ur4in@gmail.com
+Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
+[ sashal: adjusted context to use the older FLAG_OPEN_DRAIN/FLAG_OPEN_SOURCE names and added the cleanup_bitmap label in this tree's function layout. ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/perf/builtin-lock.c | 61 +++++++++++++++++++++------------------
- 1 file changed, 33 insertions(+), 28 deletions(-)
+ drivers/gpio/gpiolib.c | 9 +++++++--
+ 1 file changed, 7 insertions(+), 2 deletions(-)
 
-diff --git a/tools/perf/builtin-lock.c b/tools/perf/builtin-lock.c
-index 3d490ea46551b..1de2ee1464fee 100644
---- a/tools/perf/builtin-lock.c
-+++ b/tools/perf/builtin-lock.c
-@@ -1070,6 +1070,7 @@ static int report_lock_contention_begin_event(struct evsel *evsel,
- 	struct machine *machine = &session->machines.host;
- 	struct map *kmap;
- 	struct symbol *sym;
-+	u64 *callstack = NULL;
+diff --git a/drivers/gpio/gpiolib.c b/drivers/gpio/gpiolib.c
+index 28a1a184e580d..c9dae5cf4db34 100644
+--- a/drivers/gpio/gpiolib.c
++++ b/drivers/gpio/gpiolib.c
+@@ -3572,9 +3572,13 @@ int gpiod_set_array_value_complex(bool raw, bool can_sleep,
+ 			 * open drain and open source outputs are set individually
+ 			 */
+ 			if (test_bit(FLAG_OPEN_DRAIN, &desc->flags) && !raw) {
+-				gpio_set_open_drain_value_commit(desc, value);
++				ret = gpio_set_open_drain_value_commit(desc, value);
++				if (ret)
++					goto cleanup_bitmap;
+ 			} else if (test_bit(FLAG_OPEN_SOURCE, &desc->flags) && !raw) {
+-				gpio_set_open_source_value_commit(desc, value);
++				ret = gpio_set_open_source_value_commit(desc, value);
++				if (ret)
++					goto cleanup_bitmap;
+ 			} else {
+ 				__set_bit(hwgpio, mask);
+ 				__assign_bit(hwgpio, bits, value);
+@@ -3592,6 +3596,7 @@ int gpiod_set_array_value_complex(bool raw, bool can_sleep,
+ 		if (count != 0)
+ 			ret = gpiochip_set_multiple(guard.gc, mask, bits);
  
- 	ret = get_key_by_aggr_mode(&key, addr, evsel, sample);
- 	if (ret < 0)
-@@ -1105,33 +1106,6 @@ static int report_lock_contention_begin_event(struct evsel *evsel,
- 		}
- 	}
- 
--	ls = lock_stat_find(key);
--	if (!ls) {
--		char buf[128];
--		const char *name = "";
--
--		switch (aggr_mode) {
--		case LOCK_AGGR_ADDR:
--			sym = machine__find_kernel_symbol(machine, key, &kmap);
--			if (sym)
--				name = sym->name;
--			break;
--		case LOCK_AGGR_CALLER:
--			name = buf;
--			if (lock_contention_caller(evsel, sample, buf, sizeof(buf)) < 0)
--				name = "Unknown";
--			break;
--		case LOCK_AGGR_CGROUP:
--		case LOCK_AGGR_TASK:
--		default:
--			break;
--		}
--
--		ls = lock_stat_findnew(key, name, flags);
--		if (!ls)
--			return -ENOMEM;
--	}
--
- 	if (filters.nr_types) {
- 		bool found = false;
- 
-@@ -1161,7 +1135,7 @@ static int report_lock_contention_begin_event(struct evsel *evsel,
- 	}
- 
- 	if (needs_callstack()) {
--		u64 *callstack = get_callstack(sample, max_stack_depth);
-+		callstack = get_callstack(sample, max_stack_depth);
- 		if (callstack == NULL)
- 			return -ENOMEM;
- 
-@@ -1169,7 +1143,38 @@ static int report_lock_contention_begin_event(struct evsel *evsel,
- 			free(callstack);
- 			return 0;
- 		}
-+	}
-+
-+	ls = lock_stat_find(key);
-+	if (!ls) {
-+		char buf[128];
-+		const char *name = "";
-+
-+		switch (aggr_mode) {
-+		case LOCK_AGGR_ADDR:
-+			sym = machine__find_kernel_symbol(machine, key, &kmap);
-+			if (sym)
-+				name = sym->name;
-+			break;
-+		case LOCK_AGGR_CALLER:
-+			name = buf;
-+			if (lock_contention_caller(evsel, sample, buf, sizeof(buf)) < 0)
-+				name = "Unknown";
-+			break;
-+		case LOCK_AGGR_CGROUP:
-+		case LOCK_AGGR_TASK:
-+		default:
-+			break;
-+		}
-+
-+		ls = lock_stat_findnew(key, name, flags);
-+		if (!ls) {
-+			free(callstack);
-+			return -ENOMEM;
-+		}
-+	}
- 
-+	if (callstack) {
- 		if (ls->callstack == NULL)
- 			ls->callstack = callstack;
- 		else
++cleanup_bitmap:
+ 		if (mask != fastpath_mask)
+ 			bitmap_free(mask);
+ 		if (bits != fastpath_bits)
 -- 
 2.53.0
 
