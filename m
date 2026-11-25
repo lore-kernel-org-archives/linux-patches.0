@@ -1,42 +1,42 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795626079;
-	b=kJiztjI4TzJdlkgQOEBz+CNSQ+viB9G+vRJhgJUf5yCbftjLW5WcBUNra0+268KX5v2s
-	 yE3Jlp6uX+Ue3Ai5m5LTF9362q5uCLSurXraSMET7yPaSgylqCCb/QjTNfkFzAXVa559n
-	 2Wkde4XM74oDV/r9OYrimQ0JSrz87ScRX9Id+qMLnvrqbDSm27qNOC3D4GS2XpB26MTwu
-	 C4cLzJO5Py/rWneTmf7vhLbZIdaygCMfbSrYnpCkEibw2J5QKFBFswXNmwCrqWOwvJaK4
-	 fk84zY48RuOKSO+YOq+EaUuP71Ung2QsFCAnYeiye4+el1Gi9mQ9YPjKJNgeAzXc/xw==
+	t=1795626082;
+	b=v0RShPkTyWo2Ar+36bBKJ0P/7aP8B1YvN9LCHWD+GUg3MpRWxeNi/os+H+W+IUHMdpW/
+	 2bMt4/aGflLr5hTjIFEf9lmxZ83EcoYSUc6Ct6kmripdyVplSQthuGF8h4IDEAlBW8cvX
+	 hvhKt7CTAj/Dgnj6QgNHkeYomAsOyShgI31tYUjDNZoHa06nQ2UJzfgJPSlyS5fq5y8Cf
+	 tBhwlP6378Lq3MB7/RYhR/zJl74aMivT7TlDyq+f4gTPPlCk+Rt9Uja+n/QDZxwNWnTna
+	 7fiGy2MSHUuid523tQUDPlPdgBVSRfKVdZ9yJLw5mnSGXT+GfpLx8YHxaVBzL1lSqXg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795626079;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795626082;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Type:Content-Transfer-Encoding;
-	bh=Gmquu17EhftoPK0jXDLX9mH9DXD9jKGiwBeW4NLl2bw=;
-	b=OpPd12HNAnHnlj9JE9M6Tft5tEWw1hPHOGodvCHOv2XivBXC8I6CbfEdtwkCO5S88XiL
-	 FFLRu10pLNnafh7gmm2FuUQRaLfdRXujtldLWS4xcgYIfSsdwCKkmjn3sGuSdJ//ADQ6x
-	 h2KvYC7+cQ6w/HO7YluXqLRCI+YK6OFv7G4Mvz0uYIi6hVirYFmPDe0JHMMEt17sNL8CC
-	 9W6j5GsI7ibNgZMxUoqPnDf6qG9deygEu1sCJzvZ6YngA9Jzvv+NIE2XSoKzXTAs5SBfD
-	 ErFZ2uI6f7baaDUQYFuSbc9EwlKSJDIH79bSgqlI39T0tLGeB4Z68wwR7pagLTqHOgg==
+	bh=LOKUZBcVaeTNxU1WFqv7AoaRfqL9Ccn3pZs9douZM3Y=;
+	b=YOhicPDRRP/k5fRQFhGlar9s3t1ovHlCqOE2WT8sxcsKfG3CulkKNiCveHrBa57/uFZK
+	 vsxEPWz7SkuHoO40fPbxuMwUjWQCcmU2kiNxLJ4UiCux1pSAqWvmo5PnCo7bJOEcF6ssi
+	 edvgUFzBq8h8AY+DQy/h5ws/7ca9HkgP3/nb1ysell4E2NXu/7DlWWHT7ZiAun84N6QQQ
+	 tV0hIgYIQgDyM8uy/5dDk0k7pt2DpIqcEXsilSQsDsSXko/8zPpa7eMhTEyFxjlrhElc7
+	 BYOWmJytHk4RFdFV//7ZYLz/L2ii8+TYv6l4vYcW1abOmjSDG/HWE531UCljJOy7SGQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=FYDqKbse;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=WBG+cn85;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 930BB606A323;
-	Wed, 25 Nov 2026 17:01:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CE5D4606A31E;
+	Wed, 25 Nov 2026 17:01:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=FYDqKbse
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 852351F000CA;
-	Wed, 25 Nov 2026 17:01:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=WBG+cn85
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BC0701F000CA;
+	Wed, 25 Nov 2026 17:01:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795626079;
-	bh=Gmquu17EhftoPK0jXDLX9mH9DXD9jKGiwBeW4NLl2bw=;
+	s=korg; t=1795626082;
+	bh=LOKUZBcVaeTNxU1WFqv7AoaRfqL9Ccn3pZs9douZM3Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=FYDqKbse+yfdyUDqOUS9cvzBy5wxhBxR9Xm49May/gPDzKDgW8Q+F3F1PGo3/6KnZ
-	 gqp6b2rjoAXVFtKD8JJwnNqsBBa8mr27PPEFFW2JywOeobOzlUs7z6KKQgebeW3vwe
-	 hNrx2xlmo/43v6Wuu0Q+KG7QhIiPbad6flyb0aaA=
+	b=WBG+cn85IZ8VZK58pd0J4QmLZZPNANCgtZpQh9OXEheDYHCPL5m36evo9JPfLQW0j
+	 x/RxdzeTuDKJqF9oWDWL6ur0SmF+gvJmCIyysXsGuSmKIe92o4Qujfn1DFtBwd2Q4w
+	 zYB61Xsqz42/KoZ2Zyk+k4d78/zg9XzTQJcchPSI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -45,9 +45,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Josef Bacik <josef@toxicpanda.com>,
 	=?UTF-8?q?Nuno=20S=C3=A1?= <nuno.sa@analog.com>,
 	Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>
-Subject: [PATCH 6.12 725/816] iio: accel: adxl380: dont stay in standby on -EINVAL
-Date: Wed, 25 Nov 2026 15:37:53 +0100
-Message-ID: <20261125143905.961248050@linuxfoundation.org>
+Subject: [PATCH 6.12 726/816] iio: addac: ad74413r: fix the values of set_multiple
+Date: Wed, 25 Nov 2026 15:37:54 +0100
+Message-ID: <20261125143905.985391775@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143849.205329330@linuxfoundation.org>
 References: <20261125143849.205329330@linuxfoundation.org>
@@ -72,24 +72,20 @@ Content-Transfer-Encoding: 8bit
 
 From: Josef Bacik <josef@toxicpanda.com>
 
-commit 4c56180167ea4d419a0578545bf62110494b563d upstream.
+commit e6dfbd84b833ed595a5236b027357e917de28260 upstream.
 
-adxl380_set_act_inact_threshold() puts the sensor into standby, writes the
-threshold and switches the measurement on again.  A threshold above 8191 is
-refused in between, and the sensor stays in standby: no samples and no
-events until the next write that succeeds.
+ad74413r_gpio_set_multiple() walks over the lines in the mask and looks up
+the new value of each with
 
-adxl380_set_range() has the same problem and a worse one.  It rescales both
-thresholds for the new range.  If one no longer fits it returns -EINVAL
-with the sensor in standby, the new range in the chip, the old one in
-st->range and rescaled thresholds in the driver's state: from the next
-successful write on the samples are reported with the wrong scale.
+	if (*bits & offset)
 
-Switch the measurement on again if the threshold is refused.  In
-adxl380_set_range() see whether the thresholds fit before anything is
-changed.
+offset is the number of the line, not a bit mask.  Line 0 is always driven
+low, line 1 gets the value meant for line 0, line 2 the one meant for line
+1, and line 3 is driven high if either of these two is.
 
-Fixes: df36de13677a ("iio: accel: add ADXL380 driver")
+Test the bit which belongs to the line.
+
+Fixes: fea251b6a5db ("iio: addac: add AD74413R driver")
 Cc: stable <stable@kernel.org>
 Signed-off-by: Josef Bacik <josef@toxicpanda.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
@@ -97,36 +93,19 @@ Reviewed-by: Nuno Sá <nuno.sa@analog.com>
 Signed-off-by: Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/iio/accel/adxl380.c |   11 ++++++++++-
- 1 file changed, 10 insertions(+), 1 deletion(-)
+ drivers/iio/addac/ad74413r.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/iio/accel/adxl380.c
-+++ b/drivers/iio/accel/adxl380.c
-@@ -341,8 +341,11 @@ static int adxl380_set_act_inact_thresho
- 		return ret;
+--- a/drivers/iio/addac/ad74413r.c
++++ b/drivers/iio/addac/ad74413r.c
+@@ -312,7 +312,7 @@ static void ad74413r_gpio_set_multiple(s
+ 			return;
  
- 	ret = adxl380_write_act_inact_threshold(st, act, th);
--	if (ret)
-+	if (ret) {
-+		/* Leave standby also if the value was refused */
-+		adxl380_set_measure_en(st, true);
- 		return ret;
-+	}
+ 		real_mask |= BIT(real_offset);
+-		if (*bits & offset)
++		if (test_bit(offset, bits))
+ 			real_bits |= BIT(real_offset);
+ 	}
  
- 	return adxl380_set_measure_en(st, true);
- }
-@@ -709,6 +712,12 @@ static int adxl380_set_range(struct adxl
- 
- 	guard(mutex)(&st->lock);
- 
-+	/* The thresholds are rescaled: see that they fit before any change */
-+	if (mult_frac(max(st->act_threshold, st->inact_threshold),
-+		      adxl380_range_scale_factor_tbl[st->range],
-+		      adxl380_range_scale_factor_tbl[range]) > ADXL380_THRESH_MAX)
-+		return -EINVAL;
-+
- 	ret = adxl380_set_measure_en(st, false);
- 	if (ret)
- 		return ret;
 
 
