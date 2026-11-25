@@ -1,51 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795626304;
-	b=TIaNUpH1UCflV4quDbMw3QjOTDNawjC3Z46cgR1G2Bl01+SaO+r2wjA++gOvL1YNgbEt
-	 EROYD85iP9EcW3u0JAAoMG7tihEY4p9eDJnq+6jrWUBCINJxRrJ13AUyDRiJFnjb5x1ta
-	 4lsIw/Mfn3ZPuO8orxPvfy7HDCjz3OL8qMGimG4fj758bnB9DPrkdIpnDzEra1ex++HyD
-	 IdYSSjZh1fTa/lh2YkYWHzwykteDb1eg0VGEB0epIxYKN3SzHEc7nW2LcLyGf/DnubDvD
-	 MytsTC2qqInHo+QsUFP4s5vLRFEsUeyy+lqyyWtQ6SnAzmLj0vWE9ghLNSo6Z/bwZjQ==
+	t=1795626307;
+	b=PH9P+rcUbuvIYM+ZQCuF8KbYw+jxMU7GVUM96RskZsq4JC0bT0bkIdsfqzlJ/sNTHTJf
+	 wRwyEdrhq97XyjR2CsmLsmq/Zfblo9AhtSasRTV8jmnjj1vtUy4sSyP+Tbvjq8ONtZo2i
+	 n67TOzi/Bfw4z78+GxhbeOqikr/aFLjSnT9cM2yczg18OGLzOhoymuzr19CGr6iz9GfSN
+	 hsp035MUGmI8lmr8wSGBxlsk60pqM6RneoCdpYKC/l3WB6MB4B83kGlDoD5mC7a5xM0XL
+	 kvyDU4VKG+DpMGY1o14keESxV+pKlPUHADPOLEuGpqS1obB5a0inE6Odrrhus4aOWPg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795626304;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795626307;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=YIF7TF/uFke46e44OGKBGH5VDybz+aIHEw5tk/8iMqU=;
-	b=EOH0T/HHb/jTDgjXG/+HF0fGElmWQY5g/JbVQufmuSpR8OXLz7PuEK+AR9XbWhNH+keA
-	 f/d4iWkBP3OhSvboAEy65xcG310yOsOiOwZH+HVb1b8hVhXNgapqaHzyfoyRf28am7LDN
-	 Kp3PMRId+ycl3yHYQ7Uqx94kVRSKVdmESwXVwDCI7OD000fGNB5TTftcXMbxg+zOZDgKe
-	 Rq/3N3KX3Eo3nHJt4xPY4TYDr7mn4kIteIR3RDeMQGOsbRuX73J4nSCc3SfyfBqoQzV8N
-	 3dIYNc79f6ziu6c3Mci97iChIVAf6WB42uBhXHVRs3cB9+keT0Ig0gzsRdnvSgYWc9g==
+	bh=qHWsgHQBxhTiJNDhN1Go+yEANLAN9i1IupaVezPNrx4=;
+	b=eLig64L3fgWEDARpXjrNFuVnTB1Jptx1FIapBPFG5VgvqJbnQSdrigdaMxHeOOE6ObQB
+	 CMTPAFRqLD7iN7jRNXwztj29ffNTBJF4YX2SfNP8c4cJSNy2NTMe7daY8xknrsl9kG+uR
+	 gSUQ82YJY5RqEn3vWj5i8Q1qJ5yZuJJQVD5MwdDIS3Kd4UZZOiO1O6lFGxUyITP3FeZaZ
+	 cih/653Mw6YIOWLiQBjP9slwRqrLpnsKUoIdrT44uT2Rc/4jzW87nOWUMC/fLGiJR/rG8
+	 QsY5CWKKUpfATiveuaxflICZ2AV16MVyRiDnc36+mkv2+6KlRgog3dNjM/vMgwANfUg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Tq773BxL;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=te+qyjGD;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A4C00606A33A;
-	Wed, 25 Nov 2026 17:05:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DE1F9606A31E;
+	Wed, 25 Nov 2026 17:05:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Tq773BxL
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D9F661F000C4;
-	Wed, 25 Nov 2026 17:05:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=te+qyjGD
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2EDBC1F000C4;
+	Wed, 25 Nov 2026 17:05:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795626304;
-	bh=YIF7TF/uFke46e44OGKBGH5VDybz+aIHEw5tk/8iMqU=;
+	s=korg; t=1795626307;
+	bh=qHWsgHQBxhTiJNDhN1Go+yEANLAN9i1IupaVezPNrx4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Tq773BxLAWQ3KGY1EL9hVOE0449iEZeUvHaQyJaQJR5taeg1sTBfKDh8dcN1xKfVN
-	 eh9OlCQKFnWx0I9DuxvTBdimtgxCvS6zWYRxjQZpZF6t/Wlqpx6+U+65jwxXeQcXA6
-	 f4bQjXYzse1wkr430GnV7mwiwc7axlBCwYhdNNNc=
+	b=te+qyjGDcW6dZrpmvzPmT3D72YnIhwAKhjCzOoBQqp8BcMLe01Nn/RUgGB7VzKsqG
+	 mx7yokh+nIQRMRtsvEkS2iU7p2Brpwz2ClF9nFqbIAxBGj2NRaz6pUIVHcPh8H+4YK
+	 D+2cIz6f68D7VdM9rNbH0voFaqmVXg7kbkueOxyU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Changyul Lee <lcy8047@gmail.com>,
-	Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>
-Subject: [PATCH 6.12 798/816] iio: trigger: free the trigger ID after device_del()
-Date: Wed, 25 Nov 2026 15:39:06 +0100
-Message-ID: <20261125143907.642634357@linuxfoundation.org>
+	stable <stable@kernel.org>,
+	Thinh Nguyen <Thinh.Nguyen@synopsys.com>
+Subject: [PATCH 6.12 755/816] usb: dwc3: gadget: Reject requests to a disabled endpoint
+Date: Wed, 25 Nov 2026 15:38:23 +0100
+Message-ID: <20261125143906.649975674@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143849.205329330@linuxfoundation.org>
 References: <20261125143849.205329330@linuxfoundation.org>
@@ -67,45 +67,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Changyul Lee <lcy8047@gmail.com>
+From: Thinh Nguyen <Thinh.Nguyen@synopsys.com>
 
-commit d32bf759801e6df23038dc834622a122ec76a4dd upstream.
+commit 5eb11b1647b0534b3a61a21473d77ebf4ffbed7c upstream.
 
-iio_trigger_unregister() returns the trigger ID to iio_trigger_ida
-before device_del() removes the "trigger<N>" device. A trigger
-registered in between can get the same ID, and its device_add() fails:
+__dwc3_gadget_ep_disable() releases the lock while giving back requests,
+and DWC3_EP_ENABLED is only cleared afterward. A function driver can
+queue a new request in this window, and the driver would start a
+transfer on an endpoint that is already disabled in hardware.
 
-  sysfs: cannot create duplicate filename '/bus/iio/devices/trigger0'
+Clear DWC3_EP_ENABLED before giving back the requests, and reject
+requests queued to an endpoint that is not enabled.
 
-For example, adding a sysfs trigger while an hrtimer trigger is being
-removed through configfs, or the other way around, hits this because the
-two paths do not share a lock.
-
-Free the ID after device_del(), as the error path of
-iio_trigger_register() already does, and drop the "Possible issue in
-here" comment.
-
-Fixes: 1637db44413e ("Staging: IIO: Trigger support added to core.")
-Signed-off-by: Changyul Lee <lcy8047@gmail.com>
-Cc: stable@vger.kernel.org
-Signed-off-by: Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>
+Fixes: 72246da40f37 ("usb: Introduce DesignWare USB3 DRD Driver")
+Cc: stable <stable@kernel.org>
+Signed-off-by: Thinh Nguyen <Thinh.Nguyen@synopsys.com>
+Link: https://patch.msgid.link/4ceab6aa5d6af0e4780f9d3a964fd5d8168a0a02.1792542945.git.Thinh.Nguyen@synopsys.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/iio/industrialio-trigger.c |    3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+ drivers/usb/dwc3/gadget.c |    5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
---- a/drivers/iio/industrialio-trigger.c
-+++ b/drivers/iio/industrialio-trigger.c
-@@ -105,9 +105,8 @@ void iio_trigger_unregister(struct iio_t
- 	scoped_guard(mutex, &iio_trigger_list_lock)
- 		list_del(&trig_info->list);
+--- a/drivers/usb/dwc3/gadget.c
++++ b/drivers/usb/dwc3/gadget.c
+@@ -1074,6 +1074,8 @@ static int __dwc3_gadget_ep_disable(stru
+ 	reg &= ~DWC3_DALEPENA_EP(dep->number);
+ 	dwc3_writel(dwc->regs, DWC3_DALEPENA, reg);
  
--	ida_free(&iio_trigger_ida, trig_info->id);
--	/* Possible issue in here */
- 	device_del(&trig_info->dev);
-+	ida_free(&iio_trigger_ida, trig_info->id);
- }
- EXPORT_SYMBOL(iio_trigger_unregister);
++	dep->flags &= ~DWC3_EP_ENABLED;
++
+ 	dwc3_remove_requests(dwc, dep, -ESHUTDOWN);
  
+ 	dep->stream_capable = false;
+@@ -1987,7 +1989,8 @@ static int __dwc3_gadget_ep_queue(struct
+ {
+ 	struct dwc3		*dwc = dep->dwc;
+ 
+-	if (!dep->endpoint.desc || !dwc->pullups_connected || !dwc->connected) {
++	if (!(dep->flags & DWC3_EP_ENABLED) || !dep->endpoint.desc ||
++	    !dwc->pullups_connected || !dwc->connected) {
+ 		dev_dbg(dwc->dev, "%s: can't queue to disabled endpoint\n",
+ 				dep->name);
+ 		return -ESHUTDOWN;
 
 
