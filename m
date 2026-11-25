@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795618087;
-	b=X7CkNwOYNT3ID/XXyqKVisCteJQAZhKxKrEQgTUMkE6rT2sFEoC8YqQvkaDOYSvBI5lm
-	 Hz3XUb7mESWRGNZ/5GOwOjyi5vMUtDxhWmgSrsH2vFkL78bm3f/ERZD34HpDrEBEb6Xgt
-	 yEKbwysT4sr5twdime1vdTmKYzA8itSGGhOqFs3MqOJZ43y5mFVYk7q7TaW+FniyQnEBA
-	 AcdSZJqHK53iWWHkvvjIJgmv9OyEgaS+zEs0Fuw85GRNEQtvHfR7Wk6QnTouGPwZV2UCq
-	 jtObhf9pxtvIL9I3/TM4nEnoOMbcNuQ0uGpk7g86f1Uhf5t8t9ZAYoKMVdt8pnEXm7g==
+	t=1795618091;
+	b=r1FLSB4xqLBl6Ss/zRaWS1ka708SJDtTDmtCv0EMTEL8+yA/JcSHK53CvLlvPRHD8y6F
+	 hM7zQTtQBH/NLL0RCOJqJkVSRtA5KuRDY9ozFeJngudSPfJEcgg2EU6xJm+vzNKxXLyC6
+	 THNKTxd+1jrrnANGGI5NOr6hXf0wYerrjwWK5PBOaudaBOwp4GmLiOhR+cjMPji3oXmGA
+	 UDH0DXlcXEwPBZTwP6IgFS3XihRnRvF9aI1dIgcN3OE/Eo917GSblqW7f0nZhvg50qcLI
+	 uRODSie59c0a/3rHNiyXSWwxaEmffYV/3zrURaKPiVB7gRmzXK9vEBauH5o+/w8udZA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795618087;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795618091;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Type:Content-Transfer-Encoding;
-	bh=tW9R3KVTbJCd+iXUKendANAArCpImA2YaEne1Nduv+g=;
-	b=schxHd86rrHe3ElbU25lYD/JUTbpcMRacBF6UJ2wI+Xvy590OUrYTTowv9KEoDY6XvDf
-	 ifpQg9Ou3rRc1yEb6S9i48UZuIITGV9Z5iJkv0VOU+Gw7jukGzO9/nMMUAExVTJiCjf9n
-	 sxiorv9jeY/NAjaDOEr0ScXmBlS+yzc4lM+rFWkkRIcWknHjGV/qRPjZbJmmOLBDilZ3U
-	 BkPVdWc/8804NeLbGUdaq1kNQmBqAd77pZZV8EZyx87eV9JnGJuccezeOuSQZK9kGP3Ug
-	 +2LXd3XA/LRQpGnAl238vwlRAKRzq3iDodoVnss70AgPGRHDAZPzOgEsxnF9BYcFAEA==
+	 MIME-Version:Content-Transfer-Encoding;
+	bh=gmiV54zzV0RPFEG2ZwpkjBsIxmXxyfgR7uEwyFgE3lI=;
+	b=2z0TDQSLjZmD3Zyvmqwo/YygfCIYBMGzN8piDU8jw32iniM62c1ZTw1TnAS4kHc8sJH2
+	 83J24G2424mkgbbpHDMWRJNwcbDBE6SMSocMI53CyE3X51CgrUHbNYjRn5utJSnSz8EiW
+	 I+IlM7WpqsfbS1UVS7HCkcXvih07uAQdtFyCLbweTayle+dMDHEufB96b5svzve/dPtRe
+	 /Rab52lAZ1Z64qKzPh5visko2at1vavlKGmuMY+wGF9IqPJzMFODYAMWqg9JEa75qI9qk
+	 0FQW1znR69uo3BkfSzchH/LAjzS/zsQpAiIco6zLe3KQWcp3XVgjneGMKWdZmb3/I6Q==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=i+NPfrRG;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=lODVIV6u;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9EC2A606A31E;
-	Wed, 25 Nov 2026 14:48:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 07BBD606A31E;
+	Wed, 25 Nov 2026 14:48:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=i+NPfrRG
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8E54E1F000CA;
-	Wed, 25 Nov 2026 14:48:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=lODVIV6u
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D8CA11F000C0;
+	Wed, 25 Nov 2026 14:48:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795618087;
-	bh=tW9R3KVTbJCd+iXUKendANAArCpImA2YaEne1Nduv+g=;
+	s=korg; t=1795618090;
+	bh=gmiV54zzV0RPFEG2ZwpkjBsIxmXxyfgR7uEwyFgE3lI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=i+NPfrRGpoMEMN58yDHsHiTaHFunCdgk2Yr9EZcRFLNNeCVdzM6AfyCIOiJiCqmn7
-	 V4r2+EjLbduX+yAva1ruxdBrZl7NC3Solipf6+smPC/j9vHKv8bJwCp8YQ5EVzX/U5
-	 5kaf+x9f2uJiGyLneFk0ZPbFWsV91ig6Xq0A/8rA=
+	b=lODVIV6uXLtAb1Z+F09S8AqGv4/Np5d8f4KgVlD56eigu1/baBoIdP8efMICoS2vF
+	 Y3NKIGIz7w2MqpjaJQqw26mmXFvvS3XSs4db5wVEIR7kYfHnFZaKBPPXAmkXijTQFa
+	 5kqXQtFw6Rjfv9YprLKcLA0iN9vZxy5PEW5y7ne0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Micha=C5=82=20Kope=C4=87?= <michal@nozomi.space>,
-	Tzung-Bi Shih <tzungbi@kernel.org>,
+	Yuqiang Sun <izaiahsun@gmail.com>,
+	Alexei Starovoitov <ast@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0122/1005] firmware: coreboot: Dont skip CBMEM entries outside of known memory
-Date: Wed, 25 Nov 2026 15:24:20 +0100
-Message-ID: <20261125143824.598907786@linuxfoundation.org>
+Subject: [PATCH 7.3 0123/1005] bpf: lwt: Free the skb when bpf_xmit() fails to expand the headroom
+Date: Wed, 25 Nov 2026 15:24:21 +0100
+Message-ID: <20261125143824.622057169@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143821.729802100@linuxfoundation.org>
 References: <20261125143821.729802100@linuxfoundation.org>
@@ -62,99 +62,69 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 7.3-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Michał Kopeć <michal@nozomi.space>
+From: Yuqiang Sun <izaiahsun@gmail.com>
 
-[ Upstream commit e094fd05defaf0b05774ea1c65fc2d0ab798c809 ]
+[ Upstream commit 5e96760b25fdedbbf9312827f1f237d6b18b03e8 ]
 
-coreboot leaves CBMEM out of the /memory node of the device tree that it
-passes to FIT payloads, e.g. LinuxBoot on arm64 Chromebooks, and only
-lists it in the memory reservation block. The kernel has no resource for
-that memory, so region_intersects() reports it as neither System RAM nor
-Reserved memory, and since commit e31ecda9e3af ("firmware: coreboot:
-Skip no-map CBMEM entries") all CBMEM entries are skipped on such boards.
-That loses the coreboot log, the TPM event log and everything else that
-CBMEM devices expose.
+When an LWT xmit program returns BPF_OK, bpf_xmit() makes sure that
+the skb still has room for the link layer header. If
+pskb_expand_head() fails there, bpf_xmit() returns -ENOMEM without
+freeing the skb. Its callers, lwtunnel_xmit() and then
+ip_finish_output2() or ip6_finish_output2(), take any return value
+other than LWTUNNEL_XMIT_CONTINUE to mean that the skb has been
+consumed, so nothing frees it.
 
-Also accept entries that don't intersect any memory resource. No-map
-regions are still skipped, as they are IORESOURCE_MEM resources, as are
-device regions.
+Each such failure leaks the skb, together with what it holds: its dst
+and its charge to the sending socket, so the socket is never freed
+either. The other error paths of bpf_xmit() (BPF_DROP, an illegal
+return code, a changed protocol, a failed reroute) all free the skb.
 
-Fixes: e31ecda9e3af ("firmware: coreboot: Skip no-map CBMEM entries")
-Signed-off-by: Michał Kopeć <michal@nozomi.space>
-Link: https://lore.kernel.org/r/20261017090351.1266064-1-michal@nozomi.space
-Signed-off-by: Tzung-Bi Shih <tzungbi@kernel.org>
+Free it here too.
+
+The leak was found with kbound, a static analysis prototype for
+ownership mismatches at kernel interfaces, on v7.2.12; it is present in
+mainline.
+
+Build-tested with x86_64 and arm64 allmodconfig (W=1, sparse): no new
+warnings. Run-tested on QEMU (x86_64, KVM) with KASAN: a route through a
+dummy device with an LWT xmit program that pushes one byte with
+bpf_skb_change_head(), so the headroom check has to expand the head, and
+failslab limited to allocations under bpf_xmit(). Each of 10 pings then
+fails with ENOMEM. Without this patch each leaves a raw socket behind
+(RAW slab objects 6 -> 16); with it none does (6 -> 6), and nothing else
+is reported. Without injection both kernels go from 6 to 6.
+
+Fixes: 3a0af8fd61f9 ("bpf: BPF for lightweight tunnel infrastructure")
+Signed-off-by: Yuqiang Sun <izaiahsun@gmail.com>
+Signed-off-by: Alexei Starovoitov <ast@kernel.org>
+Link: https://patch.msgid.link/20261101182343.17991-1-izaiahsun@gmail.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/firmware/google/coreboot_table.c | 42 ++++++++++++++----------
- 1 file changed, 25 insertions(+), 17 deletions(-)
+ net/core/lwt_bpf.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/firmware/google/coreboot_table.c b/drivers/firmware/google/coreboot_table.c
-index 25ee8cf534290..6b2ea781ddf77 100644
---- a/drivers/firmware/google/coreboot_table.c
-+++ b/drivers/firmware/google/coreboot_table.c
-@@ -114,6 +114,30 @@ void coreboot_driver_unregister(struct coreboot_driver *driver)
- }
- EXPORT_SYMBOL(coreboot_driver_unregister);
+diff --git a/net/core/lwt_bpf.c b/net/core/lwt_bpf.c
+index 774fad4e9fbf7..72c86ff2a8472 100644
+--- a/net/core/lwt_bpf.c
++++ b/net/core/lwt_bpf.c
+@@ -345,8 +345,10 @@ static int bpf_xmit(struct sk_buff *skb)
+ 			 * made before LWT xmit.
+ 			 */
+ 			ret = xmit_check_headroom(skb, hroom);
+-			if (unlikely(ret))
++			if (unlikely(ret)) {
++				kfree_skb(skb);
+ 				return ret;
++			}
  
-+/*
-+ * Whether the memory of a CBMEM entry may be mapped: it must be exclusively
-+ * System RAM, or exclusively Reserved memory, as CBMEM often is on x86, or
-+ * memory that the kernel doesn't know about at all. coreboot leaves CBMEM out
-+ * of the /memory node of the device tree that it passes to FIT payloads, e.g.
-+ * on arm64, and only lists it in the memory reservation block.
-+ *
-+ * Anything else, such as no-map regions on arm64, which are IORESOURCE_MEM
-+ * (see request_standard_resources() in arch/arm64/kernel/setup.c), must not
-+ * be mapped.
-+ */
-+static bool cbmem_entry_is_mappable(const struct lb_cbmem_entry *entry)
-+{
-+	resource_size_t start = entry->address;
-+	size_t size = entry->entry_size;
-+
-+	return region_intersects(start, size, IORESOURCE_SYSTEM_RAM,
-+				 IORES_DESC_NONE) == REGION_INTERSECTS ||
-+	       region_intersects(start, size, IORESOURCE_MEM,
-+				 IORES_DESC_RESERVED) == REGION_INTERSECTS ||
-+	       region_intersects(start, size, IORESOURCE_MEM,
-+				 IORES_DESC_NONE) == REGION_DISJOINT;
-+}
-+
- static int coreboot_table_populate(struct device *dev, void *ptr, resource_size_t len)
- {
- 	int i, ret;
-@@ -149,23 +173,7 @@ static int coreboot_table_populate(struct device *dev, void *ptr, resource_size_
- 
- 		switch (device->entry.tag) {
- 		case LB_TAG_CBMEM_ENTRY:
--			/*
--			 * Skip entries that are not exclusively System RAM or
--			 * Reserved memory.
--			 * On ARM64, no-map regions are filtered out as they are
--			 * IORESOURCE_MEM (see request_standard_resources() in
--			 * arch/arm64/kernel/setup.c).
--			 * On x86, CBMEM often resides in standard reserved regions
--			 * (IORES_DESC_RESERVED).
--			 */
--			if (region_intersects(device->cbmem_entry.address,
--					      device->cbmem_entry.entry_size,
--					      IORESOURCE_SYSTEM_RAM,
--					      IORES_DESC_NONE) != REGION_INTERSECTS &&
--			    region_intersects(device->cbmem_entry.address,
--					      device->cbmem_entry.entry_size,
--					      IORESOURCE_MEM,
--					      IORES_DESC_RESERVED) != REGION_INTERSECTS) {
-+			if (!cbmem_entry_is_mappable(&device->cbmem_entry)) {
- 				kfree(device);
- 				continue;
- 			}
+ 			return LWTUNNEL_XMIT_CONTINUE;
+ 		case BPF_REDIRECT:
 -- 
 2.53.0
 
