@@ -1,52 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795625186;
-	b=XUZ2PbjVbnkGqTRfbf0SOQQzLSmGmNVHqKZ9WCpqoUgC/7tI9JCS6FLXFYmbPIixzsRr
-	 GxVCvfLCh5DBVSpwTMT5lsvaszwoZeJDlQ3frFfxADgzueP51guKmuXgHvtTXuMTJ8owl
-	 cSjU/74h4uhSd6ajuzz7AF9WgYzYPFFScUR3DNCQZMvAS0hKOBBbGj08z7iPbkoR/bDFT
-	 SEwhTVdYX+ihqCp4ow29bjWI5ISwfgyZkyInXHp0vTuKrGspvCHAIhUHwCVgZwIklhK0b
-	 DSMMvrV6QSqUc8EAVXT2nP4LiMhqj2qWzOUl+zCvR6ssns8em4qFmFE7w0CSpi0z58Q==
+	t=1795625189;
+	b=r/aYmAv3qr7mD0Nx9Ypfl+VIMxkmX28OdnFihF6KYr79ngYxmoql8uCbIx6s8aOGoClQ
+	 tVV3EwqKEbKlh4UJDXedNPvceYK2RoxE5K0TrmtLb+48ICYbovinHSYb4R/3cl/HYpokS
+	 ZaOXkZQxDwz1ywq6uk2PgFo+BEuy4/GzvPD3SOBKoFtCe4O72K60Ilixu+b34maiy04GJ
+	 ZlF/oYfxaFYoIEJPzrcaIGkwQA6GynLWYb64c7tpaJ/sLDYx6VQ2gRSkVLXXdKrd6chcg
+	 YUCQu2AU/+XTVU6WjXYdwD9kpErNq/DAkv6CWYqcIxcOXflcGeZEVaMkkCARi4JQAGg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795625186;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795625189;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=QiVhlg8PK0EXHT5yLV9TOuy7BvyVkJeFBZQ8v8yoP6Y=;
-	b=vkPs5WHihc3HJMnb1NCWVKESJOhg8wE8pz69cbreDMf3EsDsbsoTy4UMCJPmsoDz//I/
-	 K2spTSA6K7T7FzqrnZqpuKvs8Q5orZQ/Wxjf3pFbeNkwq2hAgQDDQ7rP0YwRxzBraHlOm
-	 WrNg9OHjNTww+e8mSwiM1yZMEGyD7onPzk7NO4HhJz/oD3esyM+G6xEQN5CEK1CZOfC5y
-	 5IuKuxFJdBBJSM/2ic8SWqc6/87Gu/WjZsJGFheLdX5mveV1GKNGpJ3U/ecsQmjEk6xQe
-	 UdD2RNFoLVPOUzawl9o5+MCodQYlccqVqmaj5ajSCDBqRvNUIN+rNZlmwOp7V2AIjRA==
+	bh=D0+OCOpGekyD8eOHz5uXmNOCkhjqTiGp+fl+37Pa2sY=;
+	b=FZ/U0jmuoDB6/JMLx019lGCyS2NRqvBUoMSHuW3d5DxhbJKfd1kO4/nF3y78Mxh+am6N
+	 zH3+2kTakZZMc4nnauFyYaGbLgOVX8fUM0jkFNQbFVBFwp5PdiqHL28s7sqQu4tKs8rRP
+	 BLVbxtP9TXvWh09uXw7OkUTmJNbDOTXL2IQLyyUGGhU9EgsFYlh/SJ6bTsgmugtJ7BB1J
+	 D6z57yo606YoBhquYDrCXZRTRlRxs9hO8XCCkrbqJ67mC70wIyy72rOfv7UvfdDu/u0dB
+	 wKXeNPmW4iRawjAraXrH1ETRopOz9OuVvDCoq//iO3H6EFH8vp/XOWXG5y633eVEhmw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ysD9VIYI;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=bBrY0KXe;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C4275606A31E;
-	Wed, 25 Nov 2026 16:46:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A3265606A321;
+	Wed, 25 Nov 2026 16:46:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ysD9VIYI
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A56BB1F000D0;
-	Wed, 25 Nov 2026 16:46:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=bBrY0KXe
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 80C021F000C0;
+	Wed, 25 Nov 2026 16:46:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795625186;
-	bh=QiVhlg8PK0EXHT5yLV9TOuy7BvyVkJeFBZQ8v8yoP6Y=;
+	s=korg; t=1795625189;
+	bh=D0+OCOpGekyD8eOHz5uXmNOCkhjqTiGp+fl+37Pa2sY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ysD9VIYIE22YqEgVmDghAOF6Z9YuJcMqJzYDSn5KpzPb7bWIoeCboc9vL+lZYBTgD
-	 XNcTxXKwnO+T+rqaH51vVx2bOWDzPL8zxHcNWCN4ic0ZVrTV75NQGBzYUUSaxUw+t3
-	 phxKrGDrpjN7IFClYSvxFqyOR6HrJi/UT7+K3MsE=
+	b=bBrY0KXeviINlh9e1wNLkgjb/+BKJFIKcEpZyHJoH0QkUiOiueChadbC2k2RGnryw
+	 79+KWdrxa+WoegCWBzMU9S0tZ1kuu2XGYF6VrV+AE403HCvV9y3+kvQw5JZmVZOCnD
+	 60u6N27ivUWEBI/wmhA5oJEWsIOF99dohqH8wYcI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kim Wooseok <5mghybrid@khu.ac.kr>,
-	Ping-Ke Shih <pkshih@realtek.com>,
+	Andrei Vagin <avagin@google.com>,
+	"Borislav Petkov (AMD)" <bp@alien8.de>,
+	Alexander Mikhalitsyn <alexander@mihalicyn.com>,
+	"Chang S. Bae" <chang.seok.bae@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 417/816] wifi: rtl8xxxu: preserve RX requests across recoverable transfer errors
-Date: Wed, 25 Nov 2026 15:32:45 +0100
-Message-ID: <20261125143858.850082984@linuxfoundation.org>
+Subject: [PATCH 6.12 435/816] x86/fpu: Fix potential underflow in xstate_calculate_size()
+Date: Wed, 25 Nov 2026 15:33:03 +0100
+Message-ID: <20261125143859.260908352@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143849.205329330@linuxfoundation.org>
 References: <20261125143849.205329330@linuxfoundation.org>
@@ -68,171 +70,56 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kim Wooseok <5mghybrid@khu.ac.kr>
+From: Andrei Vagin <avagin@google.com>
 
-[ Upstream commit 2f77c66694108785a1f6ae6c5de06453e7f7a91f ]
+[ Upstream commit f1751b220bc8a9bd2dc38ecf61f5c29f3826ace0 ]
 
-rtl8xxxu resubmits completed RX requests when more than eight URBs are
-waiting on the pending list. It starts with 32 URBs, but frees them on
-completion errors. After enough errors, the remaining pool can no longer
-reach the submission threshold. Reception then stays stopped even after
-the errors end. Temporary submission failures can leave a small batch
-waiting with no further work scheduled, too.
+xstate_calculate_size() calculates the size required for a given set of
+xfeatures. It determines the topmost feature by finding the most
+significant bit in xfeatures using fls64(xfeatures) - 1.
 
-Keep the URB when a completion reports EPROTO, EILSEQ, ETIME, EOVERFLOW,
-ECOMM or ENOSR. Free its receive buffer and return the request to the
-same pending list used by normal completions. ENOMEM/EAGAIN from startup
-or worker submission uses this path as well, so a submission failure
-cannot strand a request during recovery.
+If xfeatures is 0, fls64(0) returns 0, and topmost becomes -1.
+Previously, topmost was unsigned int, so -1 underflowed to UINT_MAX.
+This caused the subsequent check `topmost <= XFEATURE_SSE` to fail, and
+the code proceeded to access xstate arrays using topmost (UINT_MAX) as
+an index, leading to an out-of-bounds access.
 
-Use one delayed work item to submit the pending requests. An error
-queues a retry after 100 ms without moving an existing reservation back.
-If a normal completion takes the pending count above eight,
-mod_delayed_work(..., 0) brings the work forward. This limits repeated
-retries when reception is not progressing, while allowing normal traffic
-to replenish the pool promptly. The 100 ms delay is therefore not a
-minimum wait for each failed URB.
+  [ bp: Remove text explaining what the patch does. ]
 
-Keep the shutdown check, queue insertion and scheduling under the RX
-lock. Stop sets shutdown under that lock, cancels the delayed work
-synchronously, then drains active and pending requests. Cancellation and
-device removal continue to free their URBs.
-
-Fixes: 26f1fad29ad9 ("New driver: rtl8xxxu (mac80211)")
-Assisted-by: GPT-6 Astra
-Signed-off-by: Kim Wooseok <5mghybrid@khu.ac.kr>
-Reviewed-by: Ping-Ke Shih <pkshih@realtek.com>
-Signed-off-by: Ping-Ke Shih <pkshih@realtek.com>
-Link: https://patch.msgid.link/20260921-codex-rtl-rx-v3-submit-v4-3-eeb09fe8f791@khu.ac.kr
+Fixes: d6d6d50f1e80 ("x86/fpu/xstate: Consolidate size calculations")
+Signed-off-by: Andrei Vagin <avagin@google.com>
+Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
+Reviewed-by: Alexander Mikhalitsyn <alexander@mihalicyn.com>
+Reviewed-by: Chang S. Bae <chang.seok.bae@intel.com>
+Link: https://patch.msgid.link/20260925162454.1403405-6-avagin@google.com
+[ sashal: Moved the xfeatures early-return check ahead of the topmost and offset initialization, and dropped the missing i variable and loop context, keeping the unbraced if (compacted). ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/realtek/rtl8xxxu/core.c  | 46 ++++++++++++-------
- .../net/wireless/realtek/rtl8xxxu/rtl8xxxu.h  |  2 +-
- 2 files changed, 30 insertions(+), 18 deletions(-)
+ arch/x86/kernel/fpu/xstate.c | 8 +++++---
+ 1 file changed, 5 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/net/wireless/realtek/rtl8xxxu/core.c b/drivers/net/wireless/realtek/rtl8xxxu/core.c
-index d9ef95f08911f..e124519d77c09 100644
---- a/drivers/net/wireless/realtek/rtl8xxxu/core.c
-+++ b/drivers/net/wireless/realtek/rtl8xxxu/core.c
-@@ -57,6 +57,7 @@ MODULE_PARM_DESC(dma_agg_pages, "Set DMA aggregation pages (range 1-127, 0 to di
- #define USB_VENDOR_ID_REALTEK		0x0bda
- #define RTL8XXXU_RX_URBS		32
- #define RTL8XXXU_RX_URB_PENDING_WATER	8
-+#define RTL8XXXU_RX_URB_RETRY_DELAY_MS	100
- #define RTL8XXXU_TX_URBS		64
- #define RTL8XXXU_TX_URB_LOW_WATER	25
- #define RTL8XXXU_TX_URB_HIGH_WATER	32
-@@ -5882,9 +5883,8 @@ static int rtl8xxxu_alloc_rx_urbs(struct rtl8xxxu_priv *priv)
- }
+diff --git a/arch/x86/kernel/fpu/xstate.c b/arch/x86/kernel/fpu/xstate.c
+index aacb59c4a35c3..1a751da3313b4 100644
+--- a/arch/x86/kernel/fpu/xstate.c
++++ b/arch/x86/kernel/fpu/xstate.c
+@@ -562,12 +562,14 @@ static bool __init check_xstate_against_struct(int nr)
  
- static void rtl8xxxu_queue_rx_urb(struct rtl8xxxu_priv *priv,
--				  struct rtl8xxxu_rx_urb *rx_urb)
-+				  struct rtl8xxxu_rx_urb *rx_urb, bool defer_schedule)
+ static unsigned int xstate_calculate_size(u64 xfeatures, bool compacted)
  {
--	struct sk_buff *skb;
- 	unsigned long flags;
+-	unsigned int topmost = fls64(xfeatures) -  1;
+-	unsigned int offset = xstate_offsets[topmost];
++	unsigned int topmost, offset;
  
- 	spin_lock_irqsave(&priv->rx_urb_lock, flags);
-@@ -5892,16 +5892,13 @@ static void rtl8xxxu_queue_rx_urb(struct rtl8xxxu_priv *priv,
- 	if (!priv->shutdown) {
- 		list_add_tail(&rx_urb->list, &priv->rx_urb_pending_list);
- 		priv->rx_urb_pending_count++;
--		/*
--		 * Arm the worker under rx_urb_lock so this is atomic with the
--		 * shutdown check: moving it out of the lock would let a
--		 * completion arm the work after rtl8xxxu_stop() canceled it.
--		 */
--		if (priv->rx_urb_pending_count > RTL8XXXU_RX_URB_PENDING_WATER)
--			schedule_work(&priv->rx_urb_wq);
-+		/* Serialize scheduling with the shutdown check and cancellation. */
-+		if (defer_schedule)
-+			schedule_delayed_work(&priv->rx_urb_wq,
-+					      msecs_to_jiffies(RTL8XXXU_RX_URB_RETRY_DELAY_MS));
-+		else if (priv->rx_urb_pending_count > RTL8XXXU_RX_URB_PENDING_WATER)
-+			mod_delayed_work(system_percpu_wq, &priv->rx_urb_wq, 0);
- 	} else {
--		skb = (struct sk_buff *)rx_urb->urb.context;
--		dev_kfree_skb_irq(skb);
- 		usb_free_urb(&rx_urb->urb);
- 	}
+-	if (topmost <= XFEATURE_SSE)
++	if (!(xfeatures & ~XFEATURE_MASK_FPSSE))
+ 		return sizeof(struct xregs_state);
  
-@@ -5928,7 +5925,7 @@ static int rtl8xxxu_submit_rx_urbs(struct rtl8xxxu_priv *priv, bool startup)
- 			break;
- 		case -ENOMEM:
- 		case -EAGAIN:
--			rtl8xxxu_queue_rx_urb(priv, rx_urb);
-+			rtl8xxxu_queue_rx_urb(priv, rx_urb, true);
- 			break;
- 		default:
- 			usb_free_urb(&rx_urb->urb);
-@@ -5951,7 +5948,8 @@ static int rtl8xxxu_submit_rx_urbs(struct rtl8xxxu_priv *priv, bool startup)
- 
- static void rtl8xxxu_rx_urb_work(struct work_struct *work)
- {
--	struct rtl8xxxu_priv *priv = container_of(work, struct rtl8xxxu_priv, rx_urb_wq);
-+	struct rtl8xxxu_priv *priv = container_of(to_delayed_work(work),
-+					       struct rtl8xxxu_priv, rx_urb_wq);
- 
- 	rtl8xxxu_submit_rx_urbs(priv, false);
- }
-@@ -6607,10 +6605,24 @@ static void rtl8xxxu_rx_complete(struct urb *urb)
- 
- 		skb = NULL;
- 		rx_urb->urb.context = NULL;
--		rtl8xxxu_queue_rx_urb(priv, rx_urb);
-+		rtl8xxxu_queue_rx_urb(priv, rx_urb, false);
- 	} else {
- 		dev_dbg(dev, "%s: status %i\n",	__func__, urb->status);
--		goto cleanup;
++	topmost = fls64(xfeatures) -  1;
++	offset = xstate_offsets[topmost];
 +
-+		switch (urb->status) {
-+		case -EPROTO:
-+		case -EILSEQ:
-+		case -ETIME:
-+		case -EOVERFLOW:
-+		case -ECOMM:
-+		case -ENOSR:
-+			dev_kfree_skb(skb);
-+			urb->context = NULL;
-+			rtl8xxxu_queue_rx_urb(priv, rx_urb, true);
-+			return;
-+		default:
-+			goto cleanup;
-+		}
- 	}
- 	return;
- 
-@@ -7540,7 +7552,7 @@ static void rtl8xxxu_stop(struct ieee80211_hw *hw, bool suspend)
- 	 * it drained via rtl8xxxu_submit_rx_urb(), so a worker still running
- 	 * after the kill could submit a URB that escapes it.
- 	 */
--	cancel_work_sync(&priv->rx_urb_wq);
-+	cancel_delayed_work_sync(&priv->rx_urb_wq);
- 
- 	usb_kill_anchored_urbs(&priv->rx_anchor);
- 	usb_kill_anchored_urbs(&priv->tx_anchor);
-@@ -7853,7 +7865,7 @@ static int rtl8xxxu_probe(struct usb_interface *interface,
- 	spin_lock_init(&priv->tx_urb_lock);
- 	INIT_LIST_HEAD(&priv->rx_urb_pending_list);
- 	spin_lock_init(&priv->rx_urb_lock);
--	INIT_WORK(&priv->rx_urb_wq, rtl8xxxu_rx_urb_work);
-+	INIT_DELAYED_WORK(&priv->rx_urb_wq, rtl8xxxu_rx_urb_work);
- 	INIT_DELAYED_WORK(&priv->ra_watchdog, rtl8xxxu_watchdog_callback);
- 	INIT_DELAYED_WORK(&priv->update_beacon_work, rtl8xxxu_update_beacon_work_callback);
- 	skb_queue_head_init(&priv->c2hcmd_queue);
-diff --git a/drivers/net/wireless/realtek/rtl8xxxu/rtl8xxxu.h b/drivers/net/wireless/realtek/rtl8xxxu/rtl8xxxu.h
-index f42463e595cc2..c6a4a58a92512 100644
---- a/drivers/net/wireless/realtek/rtl8xxxu/rtl8xxxu.h
-+++ b/drivers/net/wireless/realtek/rtl8xxxu/rtl8xxxu.h
-@@ -1803,7 +1803,7 @@ struct rtl8xxxu_priv {
- 	struct list_head rx_urb_pending_list;
- 	int rx_urb_pending_count;
- 	bool shutdown;
--	struct work_struct rx_urb_wq;
-+	struct delayed_work rx_urb_wq;
- 
- 	u8 mac_addr[ETH_ALEN];
- 	char chip_name[8];
+ 	if (compacted)
+ 		offset = xfeature_get_offset(xfeatures, topmost);
+ 	return offset + xstate_sizes[topmost];
 -- 
 2.53.0
 
