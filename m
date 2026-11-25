@@ -1,57 +1,55 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795621452;
-	b=TZ2XjUp3hULaFkQeKeGW5jO/RvhKrRe6ci3fTntE7OZdsxj6QOvMKQokshns9fN8b4hy
-	 povXmqiLj/+nHTf2fQiV4PugosqttPQahJeBR1p4xMG3hcP0Mju78cDxMb1/2g/RJ8V1k
-	 SmtUtTGn0oLzxTgZBFL80B+9TlbMkVQ+6rzn+8HUynsZNqbuy+gTKS5oXzlRdPW6fcwFW
-	 5GqQcYuWQiCfjNS9CmssnL58iwDWNkjBX7QH8YkgE/cyx2IX3x0HRbsOE9Ggsxe1qo+2l
-	 K0+zb95GjcjS0t78Hr2LTQ6KkjEfcU57E7LcmPDdt7/lJENGPkVg6d/UK4d1qJz1S1w==
+	t=1795621454;
+	b=FyaMi4/kBBWpys1DcOY2PwAiUtN5fS7Jf+7EDFfT5yD5ps91BpNFJTXIPAAIvjIVVkaS
+	 UGj4WnxJDPqjQheupeVi+JknaKVW7j0Sv8hyPu9U0PONKkXUC2T1CIknystGv6fzCBpyH
+	 Qe2PPEZKYgnmq96zLK3z/UzLlV1Br41xFWKqM4nGps/4smntRew07TeoKBjS+Q9QI8xid
+	 TfGGbydlo5T8IV5f5pbUWK6KszxBzmr6fYS771DZ6BWXCQPGk/aRVhlxJ35IqC0V8hPAV
+	 SaEpshQBV+KP13HG6pHRNf9i48mPAnNkwdWmyIo7jGBuMpgHk8n4c1lX/PqWhbVTB8A==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795621452;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795621454;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=OoZVQmwiIc8JFpQr7vpaUDqtqmyr+7YBoTwTiJw2mPI=;
-	b=dws4VKbOCa8l68Acqc6eUmbdhIacTzE2BDIAblSBOl6Gxc0UGmSP7aBhq5Qpr0LGritu
-	 BpKx+vV1nZqqY+zlXCpSaEalAcU/85Z49TtP6wXf8j5vcv/Iub9i+OwnnbqWUvmuvBq6m
-	 sV4sCQ0ReuOO5E3SvfLUANL4Jx7y84thlEgGWYZbsNtp2LgwMNOQD/c2stCIpR8jD1fAj
-	 Kz4ixD1QYJUiYlncjsN96FWyGsPEIMMYXnJro/smXfr3a8MxpSRD6K1XPsnFzy32sawC8
-	 Uk2YcsjXDIvLBovKsu2sc+lFzJtXdwY5wRIeDEAoNlxHS4O/lI8V/Avc6MJ6dytQRhA==
+	bh=EifOHJSFZtR3bKsFCr8gBQVCtcR2sEkWrEU9/j3oEow=;
+	b=zB5kgee8LM4Yjjr70nwFYg/zNhIuMRvERiNPnuxDekSjpbhKDeJ3ctjaScVyGZlgH6PY
+	 qazIAclGsAbEIuCiPaHJ0TgClhsuvMW7Js/XmtgikV1FSqGRm6K9tuRiw7mj9E78KjkOL
+	 s3uY+pg55pxg2t5f46RdjLxVIhnnlK0/CrziM7FJ3EzGrHPK2rcFXNwwM6DMoz0eW64Jl
+	 YrrTDVTZlh9c7s1iseRKiFDoP66P34SHKo0CzofbZ+3LIJ8N6t6MfCRj2VOsSvKNdLIbd
+	 9f+UTtaj4hpPa2xVbE08y8wrl1olxc9hUOE9/XWBmhA0JNIZvVWhs+tY1uEqj57QpDw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Rvh2nvN4;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=i00W25GQ;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1178C606A321;
-	Wed, 25 Nov 2026 15:44:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 966BC606A31E;
+	Wed, 25 Nov 2026 15:44:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Rvh2nvN4
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DEE191F000C4;
-	Wed, 25 Nov 2026 15:44:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=i00W25GQ
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E13ED1F000C0;
+	Wed, 25 Nov 2026 15:44:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795621451;
-	bh=OoZVQmwiIc8JFpQr7vpaUDqtqmyr+7YBoTwTiJw2mPI=;
+	s=korg; t=1795621454;
+	bh=EifOHJSFZtR3bKsFCr8gBQVCtcR2sEkWrEU9/j3oEow=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Rvh2nvN4DzzkCjBO9WIoZR+Z/PgmPyHCQL6SfQXmZE+YbR+XGyyO6NNgX/bF9sisK
-	 khnlvVuv1H0Y8RSnItLogztv1u8RTb0u4gNejZC5Abp2hUArRMeMDmzOtqPpih8PP7
-	 49Yf3MUlJOLJD9y7idzonEYT/iRW4eKWJAhVoj6k=
+	b=i00W25GQ3zgJgGj6YAK/+j4sGluIjLk0fNKEOI0XU3n0O0cYb542q449FS63nF92/
+	 WSfAIukC/P8N1VgEi6xa3Z1NIb4NXfu6TYIWhVpwZR458o1xZBUOxUZ2fYTa8rNE40
+	 KJaZ79wf8vl5qZbQPqgWySeXWtYHQyFLMcEU+whU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Ard Biesheuvel <ardb@kernel.org>,
 	Christoph Hellwig <hch@lst.de>,
-	Sagi Grimberg <sagi@grimberg.me>,
-	Chaitanya Kulkarni <kch@nvidia.com>,
-	Hannes Reinecke <hare@kernel.org>,
-	Josef Bacik <josef@toxicpanda.com>,
-	Jens Axboe <axboe@kernel.dk>,
+	Hannes Reinecke <hare@suse.de>,
+	Eric Biggers <ebiggers@kernel.org>,
 	Keith Busch <kbusch@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 229/990] nvmet-tcp: ask for the TLS record type on every receive
-Date: Wed, 25 Nov 2026 15:26:36 +0100
-Message-ID: <20261125143827.453970196@linuxfoundation.org>
+Subject: [PATCH 6.18 230/990] nvme-auth: add NVME_AUTH_MAX_DIGEST_SIZE constant
+Date: Wed, 25 Nov 2026 15:26:37 +0100
+Message-ID: <20261125143827.476732269@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143822.072087159@linuxfoundation.org>
 References: <20261125143822.072087159@linuxfoundation.org>
@@ -73,50 +71,90 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Josef Bacik <josef@toxicpanda.com>
+From: Eric Biggers <ebiggers@kernel.org>
 
-[ Upstream commit 77f72de389e3774dc95d7cd03a98a73e47013abd ]
+[ Upstream commit 9100a28c8bb4270744942cf834efcd80f1acda7d ]
 
-nvmet_tcp_alloc_cmd() points recv_msg.msg_control at recv_cbuf once.
-The first receive that stores a record type there advances msg_control
-and leaves msg_controllen at 0 for the lifetime of the command. From
-then on nvmet_tcp_try_recv_data() sees the record type of that first
-receive: if it was an alert, all later data is dropped as alerts and the
-queue stalls, if it was data, a later alert can't be reported and
-tls_sw_recvmsg() fails with -EIO.
+Define a NVME_AUTH_MAX_DIGEST_SIZE constant and use it in the
+appropriate places.
 
-Set up the control buffer before each receive, like the other receive
-paths do.
-
-Fixes: a1c5dd8355b1 ("nvmet-tcp: control messages for recvmsg()")
-Cc: Christoph Hellwig <hch@lst.de>
-Cc: Sagi Grimberg <sagi@grimberg.me>
-Cc: Chaitanya Kulkarni <kch@nvidia.com>
-Reviewed-by: Hannes Reinecke <hare@kernel.org>
-Signed-off-by: Josef Bacik <josef@toxicpanda.com>
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Acked-by: Ard Biesheuvel <ardb@kernel.org>
+Acked-by: Christoph Hellwig <hch@lst.de>
+Reviewed-by: Hannes Reinecke <hare@suse.de>
+Signed-off-by: Eric Biggers <ebiggers@kernel.org>
 Signed-off-by: Keith Busch <kbusch@kernel.org>
+Stable-dep-of: 41ad4af45ac9 ("nvmet-auth: keep the old keys if the new ones fail")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/nvme/target/tcp.c | 5 +++++
- 1 file changed, 5 insertions(+)
+ drivers/nvme/common/auth.c | 6 ++----
+ drivers/nvme/host/auth.c   | 6 +++---
+ include/linux/nvme.h       | 5 +++++
+ 3 files changed, 10 insertions(+), 7 deletions(-)
 
-diff --git a/drivers/nvme/target/tcp.c b/drivers/nvme/target/tcp.c
-index 6f8d5c268a221..c059a671a1d59 100644
---- a/drivers/nvme/target/tcp.c
-+++ b/drivers/nvme/target/tcp.c
-@@ -1324,6 +1324,11 @@ static int nvmet_tcp_try_recv_data(struct nvmet_tcp_queue *queue)
- 	int len, ret;
+diff --git a/drivers/nvme/common/auth.c b/drivers/nvme/common/auth.c
+index 1f51fbebd9fac..aab06fc8ac774 100644
+--- a/drivers/nvme/common/auth.c
++++ b/drivers/nvme/common/auth.c
+@@ -15,8 +15,6 @@
+ #include <linux/nvme.h>
+ #include <linux/nvme-auth.h>
  
- 	while (msg_data_left(&cmd->recv_msg)) {
-+		if (queue->tls_pskid) {
-+			/* The last receive has used it up */
-+			cmd->recv_msg.msg_control = cmd->recv_cbuf;
-+			cmd->recv_msg.msg_controllen = sizeof(cmd->recv_cbuf);
-+		}
- 		len = sock_recvmsg(cmd->queue->sock, &cmd->recv_msg,
- 			cmd->recv_msg.msg_flags);
- 		if (len <= 0)
+-#define HKDF_MAX_HASHLEN 64
+-
+ static u32 nvme_dhchap_seqnum;
+ static DEFINE_MUTEX(nvme_dhchap_mutex);
+ 
+@@ -769,7 +767,7 @@ int nvme_auth_derive_tls_psk(int hmac_id, u8 *psk, size_t psk_len,
+ 	struct crypto_shash *hmac_tfm;
+ 	const char *hmac_name;
+ 	const char *label = "nvme-tls-psk";
+-	static const char default_salt[HKDF_MAX_HASHLEN];
++	static const char default_salt[NVME_AUTH_MAX_DIGEST_SIZE];
+ 	size_t prk_len;
+ 	const char *ctx;
+ 	unsigned char *prk, *tls_key;
+@@ -798,7 +796,7 @@ int nvme_auth_derive_tls_psk(int hmac_id, u8 *psk, size_t psk_len,
+ 		goto out_free_shash;
+ 	}
+ 
+-	if (WARN_ON(prk_len > HKDF_MAX_HASHLEN)) {
++	if (WARN_ON(prk_len > NVME_AUTH_MAX_DIGEST_SIZE)) {
+ 		ret = -EINVAL;
+ 		goto out_free_prk;
+ 	}
+diff --git a/drivers/nvme/host/auth.c b/drivers/nvme/host/auth.c
+index 38506314248f6..044f6cc6493bf 100644
+--- a/drivers/nvme/host/auth.c
++++ b/drivers/nvme/host/auth.c
+@@ -39,9 +39,9 @@ struct nvme_dhchap_queue_context {
+ 	u8 hash_id;
+ 	u8 sc_c;
+ 	size_t hash_len;
+-	u8 c1[64];
+-	u8 c2[64];
+-	u8 response[64];
++	u8 c1[NVME_AUTH_MAX_DIGEST_SIZE];
++	u8 c2[NVME_AUTH_MAX_DIGEST_SIZE];
++	u8 response[NVME_AUTH_MAX_DIGEST_SIZE];
+ 	u8 *ctrl_key;
+ 	u8 *host_key;
+ 	u8 *sess_key;
+diff --git a/include/linux/nvme.h b/include/linux/nvme.h
+index 2a5d2d941d845..8aa83abc78638 100644
+--- a/include/linux/nvme.h
++++ b/include/linux/nvme.h
+@@ -1837,6 +1837,11 @@ enum {
+ 	NVME_AUTH_HASH_INVALID	= 0xff,
+ };
+ 
++/* Maximum digest size for any NVME_AUTH_HASH_* value */
++enum {
++	NVME_AUTH_MAX_DIGEST_SIZE = 64,
++};
++
+ /* Defined Diffie-Hellman group identifiers for DH-HMAC-CHAP authentication */
+ enum {
+ 	NVME_AUTH_DHGROUP_NULL		= 0x00,
 -- 
 2.53.0
 
