@@ -1,53 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795622540;
-	b=hgTjpNONegXlAf1XZsa6rnFrQ3491s+MWFHDZ4fFQf4r/8JYVNHPY9HeDg96mXB2XxDV
-	 lrP58JJVHauO9Zxllg9BI+bDpVZD5x2YzGePE0fRPb8vZnFg9JFK8xW3M8uwAUCnhtF9t
-	 zCTEMF9hiQm3edGTmGOaUW/xb5F+v6PWxHeHiqB578MaRVJTiG4z1tVkInYdLx0zpE0oK
-	 6UD1AtQf/HuJSJZdkLGWIE6/3FAGSEzDPZkMI6nPZp5sB+D/OMaOS1FKYOfIuNJZfg3j7
-	 tL+ND4Koij4WiKChvVRdj3CbCqSuYbrFHifGwouGQzIQaq4zy+et0EsIADeKIB9pf8A==
+	t=1795622543;
+	b=qTLiLEYAjQ5hVPKs2mat2LQocNCCaLa3zwqfWreRLI3o0CoRG3AOxDHWyHjExatE7Ea4
+	 xMDqEoKj/rKRknLFdrHA96Oev29/tyFC4YIaisFuNYSuDbmZXaoDxH/sKEwHtnjaz94Uz
+	 1Q8d6SnaS7A8tnT8bLX0Yi7I2m+xwMv09Uk5JBrhizTov+yzaoZ4r10SRlsDtKEDhYZTC
+	 U3hiep3G+xlN73tE/LrndYKhq1JQNOuSmqpVCzfvRMbv20+uHxWsyt2b6e/bgD8jB3OV9
+	 t+W1uSKamOyWCwYwB+fmc2tUnOiEX3N5TRblonND0RNo3ZsIeENN3Z7XY72oyNrR2fA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795622540;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795622543;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=kGAckH5gGNGiRxjmcVUx/GmDEXk+JJ0gQNi03Yncdoc=;
-	b=iSQcyBU+4LarR0zy/nn5BONae2a6vLaHV7PZyHxBll/5ULelpmVFhN0jpkmKuCinfVk8
-	 JloBVY+HBIRcW52CKMdfsiFYFGAK+8zu6DWuBN8+NIG06o/7xZMZPqTGwiHBRLMOLGRIA
-	 lHcvEY7J6MGwjKVSZ7dQJ4P8j0zi/4OUoo4aNa/5nUW84/GTMvAOuraUFo8s/Bzyk9Bfm
-	 oro4z67vHB0wRujfyEBnJALnP8JaI6XxOo0jmSvDzFjcnuu6uLWx4WNZvlbqEAN9vQzD4
-	 Lw24qfWa2t5KFTcQt5LmKV9K7yf69iqNRjxJHnbSgH/hzFVXl5At7goWy5sOGUk6PNQ==
+	bh=GCVgFLJT5kEWXN7JdBgMEaQpLfO9FVriy/eDgA9/BQU=;
+	b=lE2mly0VLpj+FZiONH0/f/cFfb2Q5oujKGocLvTPDB3Q5/i2a1RQWgPwXa/6PccBeDle
+	 sLZLg81D/TIdcbwmvb0i8bXHkdMiSN4kgkOZOdFmgWN88wchzEyUjg9hD3GjSqVXzM+tD
+	 MQGzXrLVZnMudM8nnE2UajZ1mGkekTL0LGrHxybzryRtg8LgGvIto88tMQ0iT4BVj9I1t
+	 bmyImq9//ccVEqzawdeSenHae74AH0+CFUqsaQcOLTHfBk6kUsXfcAQZZnip0ZX+K2G6s
+	 XaKnSxwYpTfuI1dznVqUywxGdwJOb9q66ciH3cGMBOxf4Gb2dWeLpmrpIrKp+mdWEyw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=TpFYVuIa;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=yMqFrVMK;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ABBD2606A321;
-	Wed, 25 Nov 2026 16:02:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9CDB3606A31E;
+	Wed, 25 Nov 2026 16:02:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=TpFYVuIa
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7D1FE1F000CF;
-	Wed, 25 Nov 2026 16:02:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=yMqFrVMK
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D0A7C1F000CA;
+	Wed, 25 Nov 2026 16:02:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795622540;
-	bh=kGAckH5gGNGiRxjmcVUx/GmDEXk+JJ0gQNi03Yncdoc=;
+	s=korg; t=1795622543;
+	bh=GCVgFLJT5kEWXN7JdBgMEaQpLfO9FVriy/eDgA9/BQU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=TpFYVuIata/3YgNcWg+DDytOXeIRXkoP0jKG9uMwH1HuCZtj9PgkMgYD8X/R6Tbq3
-	 2mHiprr75tiap+ZklTuu7NbsklRbY6vmQa5bzduNpUGlOOqFIuDFW/flPLC5dnlqnI
-	 gyuY4GpX5fcZk/UgigxAvEeKNpzxpB28TlGCva/U=
+	b=yMqFrVMK3t9fLdxYFJOA8qCb2oL5/XOtpSB9ItO8pd8wsli5Dz/wXb6d0xeEmnMeG
+	 Z4NRmOMBoHJdyO2ENCp8jJOJHz1HVbnWcIY+u0WTLfj8vSJZYcpNvWwmJuzaPQ2J0W
+	 /6Ai5QSdSlvpL/+xd0xym++HMZQI0RaY15+WSpSA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Linus Walleij <linusw@kernel.org>,
-	Frank Li <Frank.Li@nxp.com>,
-	Vinod Koul <vkoul@kernel.org>,
+	Felix Fietkau <nbd@nbd.name>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 570/990] dmaengine: ste_dma40: Recover coalesced cyclic callbacks
-Date: Wed, 25 Nov 2026 15:32:17 +0100
-Message-ID: <20261125143835.445903903@linuxfoundation.org>
+Subject: [PATCH 6.18 571/990] wifi: mt76: mt7996: free the WTBL index if a link allocation fails
+Date: Wed, 25 Nov 2026 15:32:18 +0100
+Message-ID: <20261125143835.468981979@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143822.072087159@linuxfoundation.org>
 References: <20261125143822.072087159@linuxfoundation.org>
@@ -69,174 +67,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Linus Walleij <linusw@kernel.org>
+From: Felix Fietkau <nbd@nbd.name>
 
-[ Upstream commit db28400d92cd97005065dad230b8a5d72ab121cb ]
+[ Upstream commit 36f1934a2bf04f355e748c68ba7f7cbb5e6950fc ]
 
-DMA40 has one terminal-count status bit per channel, so cyclic period
-interrupts can coalesce.
+mt7996_mac_sta_init_link() takes a WTBL index from wcid_mask before it
+allocates the msta_link of a link other than the first one. If that
+allocation fails, the function returns -ENOMEM and the index stays set
+in wcid_mask, so no later station can use it.
 
-Use the memory-side pointer displacement to queue the minimum observable
-number of callbacks. If sampling fails, queue one callback and invalidate
-the saved position; the next successful sample resynchronizes without
-recounting it.
+Return the index to wcid_mask on that error.
 
-The pointer is modulo the cyclic buffer: a displacement of d periods can
-mean d plus n complete iterations of the buffer. Report d, so the driver
-could have missed n iterations of the buffer; DMA40 has no counter to
-recover them. For an unchanged pointer, report one callback rather than
-risk a spurious full-buffer burst.
-
-This condition has not been seen in practice and is only a product of
-review comments that the buffer can miss interrupts.
-
-The preceding cyclic-residue fix ensures that every cyclic period fits in
-one LLI, so each boundary corresponds to one client callback.
-
-Fixes: 0c842b551063 ("dma40: cyclic xfer support")
-Assisted-by: LLM
-Signed-off-by: Linus Walleij <linusw@kernel.org>
-Reviewed-by: Frank Li <Frank.Li@nxp.com>
-Link: https://patch.msgid.link/20260927-dma40-fixes-v7-3-89f595e8851d@kernel.org
-Signed-off-by: Vinod Koul <vkoul@kernel.org>
+Fixes: dd82a9e02c05 ("wifi: mt76: mt7996: Rely on mt7996_sta_link in sta_add/sta_remove callbacks")
+Link: https://patch.msgid.link/20261006205936.669125-11-nbd@nbd.name
+Signed-off-by: Felix Fietkau <nbd@nbd.name>
+[ sashal: Kept the older kzalloc(sizeof(*msta_link), GFP_KERNEL) allocation instead of kzalloc_obj(*msta_link) as the context line, then applied the same fix on top. ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/dma/ste_dma40.c | 69 ++++++++++++++++++++++++++++++++++++++++-
- 1 file changed, 68 insertions(+), 1 deletion(-)
+ drivers/net/wireless/mediatek/mt76/mt7996/main.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/dma/ste_dma40.c b/drivers/dma/ste_dma40.c
-index 53e56b4be3fca..2c83eb05faa16 100644
---- a/drivers/dma/ste_dma40.c
-+++ b/drivers/dma/ste_dma40.c
-@@ -374,11 +374,14 @@ struct d40_lli_pool {
-  * @cyclic_dma_addr: Start address of the cyclic buffer.
-  * @cyclic_buf_len: Length of the cyclic buffer.
-  * @cyclic_residue: Last valid cyclic residue sample.
-+ * @cyclic_period_len: Length of one cyclic period.
-+ * @cyclic_callback_pos: Position after the callbacks already queued.
-  * @txd: DMA engine struct. Used for among other things for communication
-  * during a transfer.
-  * @node: List entry.
-  * @is_in_client_list: true if the client owns this descriptor.
-  * @cyclic: true if this is a cyclic job
-+ * @cyclic_callback_pos_valid: Whether cyclic_callback_pos is reliable.
-  *
-  * This descriptor is used for both logical and physical transfers.
-  */
-@@ -395,12 +398,15 @@ struct d40_desc {
- 	dma_addr_t			 cyclic_dma_addr;
- 	size_t				 cyclic_buf_len;
- 	size_t				 cyclic_residue;
-+	size_t				 cyclic_period_len;
-+	size_t				 cyclic_callback_pos;
- 
- 	struct dma_async_tx_descriptor	 txd;
- 	struct list_head		 node;
- 
- 	bool				 is_in_client_list;
- 	bool				 cyclic;
-+	bool				 cyclic_callback_pos_valid;
- };
- 
- /**
-@@ -1479,6 +1485,61 @@ static bool d40_cyclic_offset(struct d40_chan *d40c, struct d40_desc *d40d,
- 	return false;
- }
- 
-+static unsigned int d40_cyclic_periods_elapsed(struct d40_chan *d40c,
-+					       struct d40_desc *d40d)
-+{
-+	size_t current_pos;
-+	size_t delta;
-+	size_t offset;
-+	unsigned int periods;
-+
-+	if (!d40d->cyclic_period_len)
-+		return 1;
-+
-+	if (!d40_cyclic_offset(d40c, d40d, &offset)) {
-+		d40d->cyclic_callback_pos_valid = false;
-+		return 1;
-+	}
-+
-+	current_pos = rounddown(offset, d40d->cyclic_period_len);
-+	if (!d40_residue(d40c) && current_pos != offset)
-+		current_pos += d40d->cyclic_period_len;
-+	if (current_pos == d40d->cyclic_buf_len)
-+		current_pos = 0;
-+
-+	if (!d40d->cyclic_callback_pos_valid) {
-+		/*
-+		 * The previous interrupt was reported without a pointer
-+		 * sample. Resynchronize without using the stale position,
-+		 * which would count that callback again.
-+		 */
-+		d40d->cyclic_callback_pos = current_pos;
-+		d40d->cyclic_callback_pos_valid = true;
-+		return 1;
-+	}
-+
-+	/*
-+	 * The pointer wraps with the cyclic buffer, so its displacement is
-+	 * only the minimum number of elapsed periods. Complete buffer laps
-+	 * are not observable.
-+	 */
-+	delta = (current_pos + d40d->cyclic_buf_len -
-+		 d40d->cyclic_callback_pos) % d40d->cyclic_buf_len;
-+	periods = delta / d40d->cyclic_period_len;
-+	if (!periods) {
-+		/*
-+		 * The TC status is a single latched bit. An unchanged pointer
-+		 * cannot distinguish a complete lap from a repeated interrupt,
-+		 * so do not amplify it into a buffer's worth of callbacks.
-+		 */
-+		periods = 1;
-+	}
-+
-+	d40d->cyclic_callback_pos = current_pos;
-+
-+	return periods;
-+}
-+
- static bool d40_tx_is_linked(struct d40_chan *d40c)
- {
- 	bool is_link;
-@@ -1626,6 +1687,7 @@ static struct d40_desc *d40_queue_start(struct d40_chan *d40c)
- static void dma_tc_handle(struct d40_chan *d40c)
- {
- 	struct d40_desc *d40d;
-+	unsigned int callbacks = 1;
- 
- 	/* Get first active entry from list */
- 	d40d = d40_first_active_get(d40c);
-@@ -1650,6 +1712,8 @@ static void dma_tc_handle(struct d40_chan *d40c)
- 			if (d40d->lli_current == d40d->lli_len)
- 				d40d->lli_current = 0;
- 		}
-+
-+		callbacks = d40_cyclic_periods_elapsed(d40c, d40d);
+diff --git a/drivers/net/wireless/mediatek/mt76/mt7996/main.c b/drivers/net/wireless/mediatek/mt76/mt7996/main.c
+index fa0fe117e8f30..02ffd5b1c0ca3 100644
+--- a/drivers/net/wireless/mediatek/mt76/mt7996/main.c
++++ b/drivers/net/wireless/mediatek/mt76/mt7996/main.c
+@@ -1056,8 +1056,10 @@ mt7996_mac_sta_init_link(struct mt7996_dev *dev,
+ 		mt7996_sta_init_txq_wcid(sta, idx);
  	} else {
- 		d40_lcla_free_all(d40c, d40d);
+ 		msta_link = kzalloc(sizeof(*msta_link), GFP_KERNEL);
+-		if (!msta_link)
++		if (!msta_link) {
++			mt76_wcid_mask_clear(dev->mt76.wcid_mask, idx);
+ 			return -ENOMEM;
++		}
  
-@@ -1670,7 +1734,7 @@ static void dma_tc_handle(struct d40_chan *d40c)
- 		}
- 	}
- 
--	d40c->pending_tx++;
-+	d40c->pending_tx += callbacks;
- 	tasklet_schedule(&d40c->tasklet);
- 
- }
-@@ -2744,6 +2808,9 @@ dma40_prep_dma_cyclic(struct dma_chan *chan, dma_addr_t dma_addr,
- 		desc->cyclic_dma_addr = buf_addr;
- 		desc->cyclic_buf_len = buf_len;
- 		desc->cyclic_residue = buf_len;
-+		desc->cyclic_period_len = period_len;
-+		desc->cyclic_callback_pos = 0;
-+		desc->cyclic_callback_pos_valid = true;
- 	}
- 
- 	kfree(sg);
+ 		if (msta->seclink_id == msta->deflink_id &&
+ 		    (sta->valid_links & ~BIT(msta->deflink_id)))
 -- 
 2.53.0
 
