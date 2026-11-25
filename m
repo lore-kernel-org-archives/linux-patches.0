@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795618104;
-	b=XNgaLkJYZGFdIM9iw84RUTINlYMIQ1im7LMKZP7kVssURqXla/sayhbjJ0engnjMYlaX
-	 E7fMO7/bZhmg6zVuEJNNDmEgC25b0NXISueoDevRkYVI+W+SgWJWjE6ZVCNCjL2GpXl2e
-	 q6LDVRsPEJ8vv3YBFW4dCyO7pTO1Ytqc8EkCg3tkTdfUkATzOuL3Bz4ObtTfMjkF7WL4D
-	 YHZAODFnFbeL5wWhJcWfNhHhwxnY3FVJIlSOb/WLBoD7x15TD/ISX6pSlmUJfeXjvcbXv
-	 +1TClUXvBekeP51hDUS15SE/shrjh6LDCCvAoYVRft9I74Q6SPhRYi2KZIlhP3sv9QA==
+	t=1795618107;
+	b=ww2xE3Ubx+u8yOYiAr/k3+rXAHJxxaXsY44woKoAIvQfcZOADp5e5SOPZzbt+1DrJk+c
+	 QXF7OYe78/un7ulwtFlpLen6EwOMTpxY7ivi0g90hLKJSg4mbPFLTd+MfnxgVv30H/0Fx
+	 LCEx0+AFyQZSJGJHDf+Nv4Z53nCCaZz5Z7Z9MUi93kQkiPmPWgGPRQB887WmjfmLzojMh
+	 ltjBPkwRsyNzW0Z6UCLm6PBY1wo24jXk2sX8m0TNfXGmiCj8/g61xjhfHoCJPUjTLAExD
+	 4KNSvFQ/GDnl+CrdroOZ0BrwkiktBRbasD6MxZzsoGBwVfvOCi1TSSS4cbMtKRtIDiQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795618104;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795618107;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=n0W92DUCCB9hfohUUMOnBMKj1D7VH+0pXotuHJpMfRI=;
-	b=Z83zk3kftEbPCcxCFewHJTi0fCZ2p9booBgbaxCX+alVeJJNWz6c4kKrBWt+DjxTWsX4
-	 4VOccehaO7Hw4ESZnm9NsaT4AQv7JPqXbNU1ZElFscqak/b9i+mFxTQgePFoUZvBGakVn
-	 AXIJcRh5EdyOVkrv8xTqTaw5HIRsHn53mOC9uu++laKfud4ZFJPbXoZNiya+TR4c2ibYy
-	 oK7mQAkGvfUpCoZLkJtyuEeDeAZWvHrcBLaHLjVKt8LqfEcZD6BCR02Yd/kV0QQBgIZVr
-	 +QqlZJqaLYrLcBjWI3leq+v0clJma/N8xVLeXHfYqDaXGJHaizLw63Ql5c6OD6WuyZA==
+	bh=z8eszeMBrKJs7gBSnVVgKuxrqbsCnmrfBonCkjngLK8=;
+	b=ieK7ZLuJpaxaasr8QbhZPCiTHw1s67ADyki/sty3Vqpywov/SgLcrijfOV3vZjfTkDTb
+	 TxKReJlG3w360l/50J/LHgXIZmgufRRrAuap4a4E5UkwlAZjbr2x7f/1NEA5oVSgRzOWN
+	 HwysYMXbf8ZXx6ITWK4DQSzSrBygucVEShCjNEgY7tJ9/rKJ8JUEAkthSxhraKQln7EMA
+	 MvJYSJjJ9c73uuabrxlhV//qXPfMMrBI7tNNhgG9vnEzwS9jZw4+V93PZNy0WoOtdD3CI
+	 Vao8KbRq78LjbYf5XkcUqUR6OSPPVZ8QuGtVZH6dPyqK/Uf1Oo0oAcECOkOry06QQbA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=HR0cgoUt;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="VjPiXo/W";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E73DA606A31E;
-	Wed, 25 Nov 2026 14:48:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3AC4F606A31E;
+	Wed, 25 Nov 2026 14:48:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=HR0cgoUt
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B30B11F000D0;
-	Wed, 25 Nov 2026 14:48:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=VjPiXo/W
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1C8611F000CA;
+	Wed, 25 Nov 2026 14:48:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795618103;
-	bh=n0W92DUCCB9hfohUUMOnBMKj1D7VH+0pXotuHJpMfRI=;
+	s=korg; t=1795618106;
+	bh=z8eszeMBrKJs7gBSnVVgKuxrqbsCnmrfBonCkjngLK8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=HR0cgoUtFOAjAWSAyM0GzZk3BKseVwQBAqAixNStZEYUC2CakHitjwUFJz5QI78vH
-	 AZAFfdWAFX6AEdA0UNs7MWtVhoqTKuhh1d/cGIGSd1ViQlCjugyxiRtVgmw7urqPKY
-	 /voS2/VLpvXv6oFwVwHy+qc2CjPaZCV4uopDjc7g=
+	b=VjPiXo/WaTXJV4/Zh9V56FOsX0qtqe0fXR2x44FteqGh3JQ2uNgBK8wgIfNb84o7b
+	 p7W5OWqh+OwsH7yCT0cdBUtQWVafJncfRtYkyFzYyY1z3zzZOd4rtYVnZjJ25bblZE
+	 VRFDEUYLUb9D6bgSdUs6EoKGDdgNK3ajTZuuVEtY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Daniel Machon <daniel.machon@microchip.com>,
-	Simon Horman <horms@kernel.org>,
+	Maxime Chevallier <maxime.chevallier@bootlin.com>,
+	Lorenzo Bianconi <lorenzo.bianconi@oss.qualcomm.com>,
 	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0166/1005] net: sparx5/lan969x: release the in-flight slot of a stale TX skb
-Date: Wed, 25 Nov 2026 15:25:04 +0100
-Message-ID: <20261125143825.631367929@linuxfoundation.org>
+Subject: [PATCH 7.3 0175/1005] net: stmmac: pass the desired EST enable state to est_configure()
+Date: Wed, 25 Nov 2026 15:25:13 +0100
+Message-ID: <20261125143825.841476186@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143821.729802100@linuxfoundation.org>
 References: <20261125143821.729802100@linuxfoundation.org>
@@ -69,93 +69,119 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Daniel Machon <daniel.machon@microchip.com>
+From: Lorenzo Bianconi <lorenzo.bianconi@oss.qualcomm.com>
 
-[ Upstream commit 873363ac591a1774aa3ced84f7ea3d93a3eb9b07 ]
+[ Upstream commit e4f5b46dfb8ac27a822fa0b411bd4526abf5ba97 ]
 
-sparx5_ptp_txtstamp_request() counts every two step TX skb waiting for
-its timestamp in sparx5->ptp_skbs, and refuses new ones once
-SPARX5_MAX_PTP_ID are in flight. sparx5_ptp_txtstamp_old_release()
-frees the skbs that have waited longer than SPARX5_PTP_TIMEOUT.
+Pass the desired EST enable state explicitly to est_configure() instead
+of having it derive from cfg->enable. This decouples the hardware
+programming state from the priv->est->enable flag, which records whether
+the taprio offload is attached.
 
-Before this patch, old_release() does not decrement ptp_skbs, so every
-skb whose timestamp never arrives, for example because the switch
-discarded the frame, keeps its slot forever. Once SPARX5_MAX_PTP_ID
-slots are lost, two step frames fail to transmit on every port of the
-switch.
+No functional change intended: the callers keep toggling
+priv->est->enable around the EST programming, as before.
 
-Return the number of released skbs from old_release() and subtract it
-from ptp_skbs in txtstamp_request(), under the ptp_ts_id_lock it already
-takes.
-
-This fixes the accounting only. A port's stale skbs are still aged out
-only when that port sends a two step frame, so a port that stops sending
-them keeps its stale skbs, and their slots, until it sends one again.
-That behaviour is unchanged by this patch.
-
-Found by an AI code review agent. Reproduced on a lan9696 board with a
-modified kernel that drops the TX timestamps of two step frames, after
-which two step timestamping stopped working on the port. With the fix,
-timestamping keeps working on that board and on a sparx5 PCB135 board.
-
-Fixes: 70dfe25cd866 ("net: sparx5: Update extraction/injection for timestamping")
-Signed-off-by: Daniel Machon <daniel.machon@microchip.com>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Link: https://patch.msgid.link/20261029-sparx5-ptp-stale-tx-slot-v1-1-ec15f391bbb7@microchip.com
+Reviewed-by: Maxime Chevallier <maxime.chevallier@bootlin.com>
+Signed-off-by: Lorenzo Bianconi <lorenzo.bianconi@oss.qualcomm.com>
+Link: https://patch.msgid.link/20261029-stmmac-est-fixes-v5-2-85b830a795a9@oss.qualcomm.com
 Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Stable-dep-of: 23d96de472f7 ("net: stmmac: re-apply taprio offload in __stmmac_open() and stmmac_resume()")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/microchip/sparx5/sparx5_ptp.c | 10 ++++++++--
- 1 file changed, 8 insertions(+), 2 deletions(-)
+ drivers/net/ethernet/stmicro/stmmac/hwif.h       | 2 +-
+ drivers/net/ethernet/stmicro/stmmac/stmmac_est.c | 6 +++---
+ drivers/net/ethernet/stmicro/stmmac/stmmac_ptp.c | 4 ++--
+ drivers/net/ethernet/stmicro/stmmac/stmmac_tc.c  | 4 ++--
+ 4 files changed, 8 insertions(+), 8 deletions(-)
 
-diff --git a/drivers/net/ethernet/microchip/sparx5/sparx5_ptp.c b/drivers/net/ethernet/microchip/sparx5/sparx5_ptp.c
-index 2826e48af1033..9f61692b243b7 100644
---- a/drivers/net/ethernet/microchip/sparx5/sparx5_ptp.c
-+++ b/drivers/net/ethernet/microchip/sparx5/sparx5_ptp.c
-@@ -204,9 +204,10 @@ static void sparx5_ptp_classify(struct sparx5_port *port, struct sk_buff *skb,
- 	*rew_op = IFH_REW_OP_TWO_STEP_PTP;
+diff --git a/drivers/net/ethernet/stmicro/stmmac/hwif.h b/drivers/net/ethernet/stmicro/stmmac/hwif.h
+index bfcc930fd831f..4c2d7b156ac0e 100644
+--- a/drivers/net/ethernet/stmicro/stmmac/hwif.h
++++ b/drivers/net/ethernet/stmicro/stmmac/hwif.h
+@@ -623,7 +623,7 @@ struct stmmac_mmc_ops {
+ 
+ struct stmmac_est_ops {
+ 	int (*configure)(struct stmmac_priv *priv, struct stmmac_est *cfg,
+-			 unsigned int ptp_rate);
++			 unsigned int ptp_rate, bool enable);
+ 	void (*irq_status)(struct stmmac_priv *priv, struct net_device *dev,
+ 			   struct stmmac_extra_stats *x, u32 txqcnt);
+ };
+diff --git a/drivers/net/ethernet/stmicro/stmmac/stmmac_est.c b/drivers/net/ethernet/stmicro/stmmac/stmmac_est.c
+index afc516059b897..f15d4d046aa74 100644
+--- a/drivers/net/ethernet/stmicro/stmmac/stmmac_est.c
++++ b/drivers/net/ethernet/stmicro/stmmac/stmmac_est.c
+@@ -26,7 +26,7 @@ static int est_write(void __iomem *est_addr, u32 reg, u32 val, bool gcl)
  }
  
--static void sparx5_ptp_txtstamp_old_release(struct sparx5_port *port)
-+static unsigned int sparx5_ptp_txtstamp_old_release(struct sparx5_port *port)
+ static int est_configure(struct stmmac_priv *priv, struct stmmac_est *cfg,
+-			 unsigned int ptp_rate)
++			 unsigned int ptp_rate, bool enable)
  {
- 	struct sk_buff *skb, *skb_tmp;
-+	unsigned int purged = 0;
- 	unsigned long flags;
- 
- 	spin_lock_irqsave(&port->tx_skbs.lock, flags);
-@@ -217,8 +218,11 @@ static void sparx5_ptp_txtstamp_old_release(struct sparx5_port *port)
- 
- 		__skb_unlink(skb, &port->tx_skbs);
- 		dev_kfree_skb_any(skb);
-+		purged++;
+ 	void __iomem *est_addr = priv->estaddr;
+ 	int i, ret = 0;
+@@ -62,7 +62,7 @@ static int est_configure(struct stmmac_priv *priv, struct stmmac_est *cfg,
+ 		ctrl |= ((NSEC_PER_SEC / ptp_rate) * EST_GMAC5_PTOV_MUL) <<
+ 			 EST_GMAC5_PTOV_SHIFT;
  	}
- 	spin_unlock_irqrestore(&port->tx_skbs.lock, flags);
-+
-+	return purged;
- }
+-	if (cfg->enable)
++	if (enable)
+ 		ctrl |= EST_EEST | EST_SSWL | EST_DFBS;
+ 	else
+ 		ctrl &= ~EST_EEST;
+@@ -70,7 +70,7 @@ static int est_configure(struct stmmac_priv *priv, struct stmmac_est *cfg,
+ 	writel(ctrl, est_addr + EST_CONTROL);
  
- int sparx5_ptp_txtstamp_request(struct sparx5_port *port,
-@@ -226,6 +230,7 @@ int sparx5_ptp_txtstamp_request(struct sparx5_port *port,
- {
- 	struct sparx5 *sparx5 = port->sparx5;
- 	u8 rew_op, pdu_type, pdu_w16_offset;
-+	unsigned int purged;
- 	unsigned long flags;
+ 	/* Configure EST interrupt */
+-	if (cfg->enable)
++	if (enable)
+ 		ctrl = EST_IECGCE | EST_IEHS | EST_IEHF | EST_IEBE | EST_IECC;
+ 	else
+ 		ctrl = 0;
+diff --git a/drivers/net/ethernet/stmicro/stmmac/stmmac_ptp.c b/drivers/net/ethernet/stmicro/stmmac/stmmac_ptp.c
+index e54a3c8878265..9a32af00d7d2d 100644
+--- a/drivers/net/ethernet/stmicro/stmmac/stmmac_ptp.c
++++ b/drivers/net/ethernet/stmicro/stmmac/stmmac_ptp.c
+@@ -74,7 +74,7 @@ static int stmmac_adjust_time(struct ptp_clock_info *ptp, s64 delta)
+ 		mutex_lock(&priv->est_lock);
+ 		priv->est->enable = false;
+ 		stmmac_est_configure(priv, priv, priv->est,
+-				     priv->plat->clk_ptp_rate);
++				     priv->plat->clk_ptp_rate, false);
+ 		mutex_unlock(&priv->est_lock);
+ 	}
  
- 	sparx5_ptp_classify(port, skb, &rew_op, &pdu_type, &pdu_w16_offset);
-@@ -236,9 +241,10 @@ int sparx5_ptp_txtstamp_request(struct sparx5_port *port,
- 	if (rew_op != IFH_REW_OP_TWO_STEP_PTP)
- 		return 0;
+@@ -105,7 +105,7 @@ static int stmmac_adjust_time(struct ptp_clock_info *ptp, s64 delta)
+ 		priv->est->btr[1] = (u32)time.tv_sec;
+ 		priv->est->enable = true;
+ 		ret = stmmac_est_configure(priv, priv, priv->est,
+-					   priv->plat->clk_ptp_rate);
++					   priv->plat->clk_ptp_rate, true);
+ 		mutex_unlock(&priv->est_lock);
+ 		if (ret)
+ 			netdev_err(priv->dev, "failed to configure EST\n");
+diff --git a/drivers/net/ethernet/stmicro/stmmac/stmmac_tc.c b/drivers/net/ethernet/stmicro/stmmac/stmmac_tc.c
+index fc6ec39f2108b..c4daf014e885e 100644
+--- a/drivers/net/ethernet/stmicro/stmmac/stmmac_tc.c
++++ b/drivers/net/ethernet/stmicro/stmmac/stmmac_tc.c
+@@ -1090,7 +1090,7 @@ static int tc_taprio_configure(struct stmmac_priv *priv,
+ 	tc_taprio_map_maxsdu_txq(priv, qopt);
  
--	sparx5_ptp_txtstamp_old_release(port);
-+	purged = sparx5_ptp_txtstamp_old_release(port);
- 
- 	spin_lock_irqsave(&sparx5->ptp_ts_id_lock, flags);
-+	sparx5->ptp_skbs -= purged;
- 	if (sparx5->ptp_skbs == SPARX5_MAX_PTP_ID) {
- 		spin_unlock_irqrestore(&sparx5->ptp_ts_id_lock, flags);
- 		return -EBUSY;
+ 	ret = stmmac_est_configure(priv, priv, priv->est,
+-				   priv->plat->clk_ptp_rate);
++				   priv->plat->clk_ptp_rate, true);
+ 	mutex_unlock(&priv->est_lock);
+ 	if (ret) {
+ 		netdev_err(priv->dev, "failed to configure EST\n");
+@@ -1109,7 +1109,7 @@ static int tc_taprio_configure(struct stmmac_priv *priv,
+ 		mutex_lock(&priv->est_lock);
+ 		priv->est->enable = false;
+ 		stmmac_est_configure(priv, priv, priv->est,
+-				     priv->plat->clk_ptp_rate);
++				     priv->plat->clk_ptp_rate, false);
+ 		/* Reset taprio status */
+ 		for (i = 0; i < priv->plat->tx_queues_to_use; i++) {
+ 			priv->xstats.max_sdu_txq_drop[i] = 0;
 -- 
 2.53.0
 
