@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795625572;
-	b=xkf5Qbj9f4M8i5LrPW3lLlQhYBAHjzmstUONzzXY6ZFYZQ98LQuWTDhi2L8pHpqgDW8l
-	 icN01iPI3w1TG2Jwn3HK3S1p0+SwyYIcIkuX2JufS8ntkOvYsLuRdbUBcRCiVsIvksQtt
-	 rKoowcQFld8gXGQ2KGFcmFAYN6H2/JFRFOU91HgIMCs78JWjvFiKu15J5fQQz1sjyt97l
-	 aXnY1IIBpDmQEzmI2Vw1XX1gIZZyqRUKzEOmgYRkeXa+6glDNShnLze0R68sB5TIy0x44
-	 VruAiyUAiSsWagotKuF/kpEny/b9odKEtjmlfeipPd3NXF9FpEgmoHB1ScbZgoU82yg==
+	t=1795625575;
+	b=4lDkrBH4L4288Pi7RwiRiSb7Um6El086z2VDUKunPpRY8D3uZKpr6O3znfqRN+ajqId8
+	 kINLhWet+tjq8ARA3FQXX2iG28kW+9kxBPW/wss+z/gvvQjV8C0GvSx7P46s3BiO9ohDe
+	 fME4YFhzQj05W6+f2ehYIOoymVx2pmorS1/sWXtb6F9xFw4Qq1z+cd26yHLze3nCmTZTl
+	 tTuToVSdR2kR5B49bE7zogrjB70YJ5m0Q7JVG84wIPadpFSp6CPNespCTgYHRTbQavLQj
+	 MeSmgVesSD4Q/DjOuQ6jKglGhqgt8riCRMzU/vsRvIMtjqWd+Mi+DBj1dXA5N/QkJ0w==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795625572;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795625575;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=/BOrpr2iXhnQO5IPygfHQR7vju5B/g/XWHh+Xzul0vI=;
-	b=QE8pau87Zueg7aQPwvE+yccM5ceFGDVP1ZkFBT5eDIu6ICPF1qWHLrnLJfKSTC1lx5kp
-	 4fNSyt/OfrF2lc/riCIEztG94RFAD7mE59xqdlvOJlrihbX9prlqxeyS0HUXY5dFHwc8X
-	 DXWB6meUcRpE/lsmfa7BO0Mt80+0cQbjFAQn/xKb6MWy6NUqinnmh8tYKi1+JxAOmbNhw
-	 scuA20ITS3HLNqOMS9c2NNiWi5sMxVIcBSIwAqhDeuHxYy8B9zTT+fZ9FBeRpJzAkX1Pb
-	 joDFyjQLr/DZjs/hVm8Xeai+ntwuX/5FR3BlpHKQYIgyZgHgD8SCyO+VaboKlFaB50w==
+	bh=FV87LFIAJU/OHB8MvKwq2Nrqz10Di/Ib+S+82+Gk4fw=;
+	b=xhH7qbCVts+tA9zHEUZbCodhK32tH3QGqIIlNs0t1mLY6sy/Lf8UnJw0fYdQNBeklyfJ
+	 JcvYk0q/3fLjQdumfDkQYouL8Adeta31Sqcw5ooYahC8Ztf64NGgw3PqA1ECwjiWvMKNq
+	 5lVwFBtOHPOrDrYNwihfdc7iiGm015ZFL5p69wQp6WfFPbNVgkUFygN6n5icexjw/wUma
+	 451d8byAUznAbq88NkadJ17XWqDakLV1NjO54q5s+2ltvW4NAk/dlC4lwbqt+K0Fgg9we
+	 MFun2A793fUirR/I/5yVHHiQbnakYXRgKZGalXmDRI+z4xEt65wGnFAgEntqjAYP8cg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=USV8NODN;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="1SDAny/9";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 62008606A331;
-	Wed, 25 Nov 2026 16:52:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CDC8C606A332;
+	Wed, 25 Nov 2026 16:52:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=USV8NODN
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9FD701F000D3;
-	Wed, 25 Nov 2026 16:52:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=1SDAny/9
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 185791F00A01;
+	Wed, 25 Nov 2026 16:52:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795625572;
-	bh=/BOrpr2iXhnQO5IPygfHQR7vju5B/g/XWHh+Xzul0vI=;
+	s=korg; t=1795625575;
+	bh=FV87LFIAJU/OHB8MvKwq2Nrqz10Di/Ib+S+82+Gk4fw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=USV8NODNo2IWty75RAb+tGtMpNkkgnOkPlJYJ09q/+e3/4uaLbnbKvqZH3fiLc6Wh
-	 rVIntv60lsjVQ1gjVeJnNjhWMw1v8pa42aHtayuxFsxHeuCSv/DBsh/gXuWWSfJvzH
-	 wBm5ZPikY2RCSDLSEpKdWjLl6qTbhqpFWNOteSXM=
+	b=1SDAny/9VCf6mnRwEr+0jUCIofrWepa2UwQ+cjvTQp/H+kgnFBL+3y+hFNQB8KDVK
+	 +Sz/gX+zRr8MG252JofHe/wgMNsizvEW8MkQRmJBkQYMOcOHgswsUXQ6NvW3gPnsDV
+	 xrKWp0CALjZpzMQBhBJEY+LCettZWHJLWrdH8cBY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"kernelci.org bot" <bot@kernelci.org>,
-	kernel test robot <lkp@intel.com>,
-	Sasha Levin <sashal@kernel.org>,
-	Alexei Starovoitov <ast@kernel.org>
-Subject: [PATCH 6.12 516/816] locking/atomic: arc, hexagon, openrisc: Define arch_cmpxchg_local()
-Date: Wed, 25 Nov 2026 15:34:24 +0100
-Message-ID: <20261125143901.129800673@linuxfoundation.org>
+	Woojin Ji <random6.xyz@gmail.com>,
+	Alexei Starovoitov <ast@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.12 517/816] bpf: Zero-extend the index in inlined bpf_get_func_arg()
+Date: Wed, 25 Nov 2026 15:34:25 +0100
+Message-ID: <20261125143901.153881794@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143849.205329330@linuxfoundation.org>
 References: <20261125143849.205329330@linuxfoundation.org>
@@ -69,101 +68,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-[ Upstream commit 8cebaa3be829c88a59957900f8de98fed09daefe ]
+From: Woojin Ji <random6.xyz@gmail.com>
 
-Commit ccb88db8dac8 ("bpf: Don't hand out a linked element as extra
-element") made alloc_htab_elem() take the per-cpu spare element with
-try_cmpxchg_local(), the first caller of cmpxchg_local() outside of
-architecture code. It doesn't build on arc, hexagon and openrisc:
+[ Upstream commit 1c1dda9ba9f3af9cd511a197dcc86de2465d8fe5 ]
 
-  include/linux/atomic/atomic-arch-fallback.h:384:27: error: implicit declaration of function 'arch_cmpxchg_local'; did you mean 'raw_cmpxchg_local'? [-Werror=implicit-function-declaration]
+bpf_get_func_arg() takes a u32 index, but the inlined expansion compared
+only the low 32 bits of R2 with the argument count and then shifted the
+full 64-bit register to compute the context address. R2 is ARG_ANYTHING,
+so nothing guarantees that its upper bits are zero: an index of
+1ULL << 32 passes the bounds check as index zero while the load is
+performed at ctx + (1ULL << 35).
 
-raw_cmpxchg_local() maps to arch_cmpxchg_local() unconditionally, but
-these three architectures don't define it, and unlike nios2 and
-microblaze they don't get it from asm-generic/cmpxchg.h either.
+Shift the index as a 32-bit value. When the 32-bit bounds check passes,
+the low 32 bits of R2 are below R0, and R0 is at most 255: the trampoline
+arm masks the argument count with 0xFF and the raw_tp arm uses the BTF
+argument count minus one, which the verifier caps at MAX_BPF_FUNC_ARGS.
+The 3-bit shift therefore cannot overflow and it clears the upper bits of
+the register. Widening the comparison instead would reject indices whose
+low 32 bits are valid. The check itself is unchanged, so this cannot
+change which programs are accepted, only the address that is computed.
 
-cmpxchg_local() only has to be atomic with respect to the local CPU, so
-an architecture's own arch_cmpxchg() can serve for the sizes it
-supports. arc uses its relaxed LLOCK/SCOND variant when ARC_HAS_LLSC is
-set and its atomic_ops_lock() variant otherwise, and openrisc uses its
-LL/SC arch_cmpxchg(), the way arm64, riscv and s390 alias theirs. The
-hexagon arch_cmpxchg() only handles 32-bit words, so hexagon uses the
-generic version that disables interrupts, like sh, sparc32 and xtensa
-do. Linux has no NMIs on hexagon, so that is sufficient there.
-
-Fixes: ccb88db8dac8 ("bpf: Don't hand out a linked element as extra element")
-Reported-by: kernelci.org bot <bot@kernelci.org>
-Reported-by: kernel test robot <lkp@intel.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: f92c1e183604 ("bpf: Add get_func_[arg|ret|arg_cnt] helpers")
+Signed-off-by: Woojin Ji <random6.xyz@gmail.com>
 Signed-off-by: Alexei Starovoitov <ast@kernel.org>
-Link: https://patch.msgid.link/20261018132907.3823160-1-sashal@kernel.org
-Closes: https://d.kernelci.org/i/maestro:78b65519ee4561df1fbf1e72f1dec9da7e5b153e
-Closes: https://lore.kernel.org/oe-kbuild-all/202610181750.BoqAddaF-lkp@intel.com/
-Closes: https://lore.kernel.org/oe-kbuild-all/202610182048.aEaiBP8W-lkp@intel.com/
+Link: https://patch.msgid.link/20261018-get-func-arg-v2-1-048848b3eddf@gmail.com
+[ sashal: Changed the inlined bpf_get_func_arg() shift to BPF_ALU32_IMM in do_misc_fixups() in verifier.c, since the fixups file doesn't exist here and only the tracing arm is present. ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arc/include/asm/cmpxchg.h      | 4 ++++
- arch/hexagon/include/asm/cmpxchg.h  | 6 ++++++
- arch/openrisc/include/asm/cmpxchg.h | 2 ++
- 3 files changed, 12 insertions(+)
+ kernel/bpf/verifier.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/arch/arc/include/asm/cmpxchg.h b/arch/arc/include/asm/cmpxchg.h
-index 76f43db0890fc..07d7a01d26de0 100644
---- a/arch/arc/include/asm/cmpxchg.h
-+++ b/arch/arc/include/asm/cmpxchg.h
-@@ -59,6 +59,8 @@
- 	_prev_;								\
- })
- 
-+#define arch_cmpxchg_local	arch_cmpxchg_relaxed
-+
- #else
- 
- #define arch_cmpxchg(ptr, old, new)				        \
-@@ -80,6 +82,8 @@
- 	_prev_;								\
- })
- 
-+#define arch_cmpxchg_local	arch_cmpxchg
-+
- #endif
- 
- /*
-diff --git a/arch/hexagon/include/asm/cmpxchg.h b/arch/hexagon/include/asm/cmpxchg.h
-index 9c58fb81f7fd6..e6114e713db9f 100644
---- a/arch/hexagon/include/asm/cmpxchg.h
-+++ b/arch/hexagon/include/asm/cmpxchg.h
-@@ -8,6 +8,8 @@
- #ifndef _ASM_CMPXCHG_H
- #define _ASM_CMPXCHG_H
- 
-+#include <asm-generic/cmpxchg-local.h>
-+
- /*
-  * __arch_xchg - atomically exchange a register and a memory location
-  * @x: value to swap
-@@ -72,4 +74,8 @@ __arch_xchg(unsigned long x, volatile void *ptr, int size)
- 	__oldval;						\
- })
- 
-+#define arch_cmpxchg_local(ptr, o, n)					\
-+	((__typeof__(*(ptr)))__generic_cmpxchg_local((ptr),		\
-+			(unsigned long)(o), (unsigned long)(n), sizeof(*(ptr))))
-+
- #endif /* _ASM_CMPXCHG_H */
-diff --git a/arch/openrisc/include/asm/cmpxchg.h b/arch/openrisc/include/asm/cmpxchg.h
-index 8ee151c072e41..fcf1bc8db8fe9 100644
---- a/arch/openrisc/include/asm/cmpxchg.h
-+++ b/arch/openrisc/include/asm/cmpxchg.h
-@@ -140,6 +140,8 @@ static inline unsigned long __cmpxchg(volatile void *ptr, unsigned long old,
- 					       sizeof(*(ptr)));		\
- 	})
- 
-+#define arch_cmpxchg_local	arch_cmpxchg
-+
- /*
-  * This function doesn't exist, so you'll get a linker error if
-  * something tries to do an invalidly-sized xchg().
+diff --git a/kernel/bpf/verifier.c b/kernel/bpf/verifier.c
+index dd7445537b1e3..a5ffecbaa7bf9 100644
+--- a/kernel/bpf/verifier.c
++++ b/kernel/bpf/verifier.c
+@@ -21867,7 +21867,7 @@ static int do_misc_fixups(struct bpf_verifier_env *env)
+ 			/* Load nr_args from ctx - 8 */
+ 			insn_buf[0] = BPF_LDX_MEM(BPF_DW, BPF_REG_0, BPF_REG_1, -8);
+ 			insn_buf[1] = BPF_JMP32_REG(BPF_JGE, BPF_REG_2, BPF_REG_0, 6);
+-			insn_buf[2] = BPF_ALU64_IMM(BPF_LSH, BPF_REG_2, 3);
++			insn_buf[2] = BPF_ALU32_IMM(BPF_LSH, BPF_REG_2, 3);
+ 			insn_buf[3] = BPF_ALU64_REG(BPF_ADD, BPF_REG_2, BPF_REG_1);
+ 			insn_buf[4] = BPF_LDX_MEM(BPF_DW, BPF_REG_0, BPF_REG_2, 0);
+ 			insn_buf[5] = BPF_STX_MEM(BPF_DW, BPF_REG_3, BPF_REG_0, 0);
 -- 
 2.53.0
 
