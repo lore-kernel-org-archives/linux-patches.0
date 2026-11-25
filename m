@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795623096;
-	b=ddcp/TImdav+Nlyed1/12IbyyzZy66hS26jvAbKvZ3H7iH70bVFAKS7A227ZFcJeZOcF
-	 l2xEYT8C3VyvacPt7RthY7u86tSkQ6HESv0FHVyOAffHT68nVWF/7auQv21xQYjt8O+Uf
-	 /CDhoatupLSshzggkPPIZtcQf7dZQyGZafPufUrn2NichJWNZ5yQBmTXex4VLLVDO7gO5
-	 HBiJvT3N5LEQ9uVwoy7ibz4NTYpT0oh5JtMj+BAnURukcj636pry6CQkEWcXRIkfBTSv+
-	 lZ/M3ZG7OI4mZpXsk9UBxqW1IBinPrNjMOeEyc+RTUkLpT0mKr7DPDbaOU3B/JQEBUQ==
+	t=1795623099;
+	b=kR4lyRK/SCFK4nwaytvDoLFzb+3FV2tEJFXQ0NlmmtzdgHVdylf18NDxwYAslaNBSZMU
+	 BQ0RAVJ4xCURcCdBIhAV9STLa6dtK48wI6DpQLiAYSR6IRX6L4isRlnY4Pc+uFVBVRNBN
+	 Z2F3P9a0OT+oTO2FSDGe80kKZBNeFgakSpFrEu6lj+uB/iv5WnXNdHM+ahZf/gPgHEWf5
+	 0QKj4C3qfy+im4p3l32lYmRBpFHBbhe3L9/4VRRrYi1zGlBmdzZJDWRW6NqKzfc1hPbQf
+	 VJogOjEzZ87lJCLwxU0cRjK/wnxWa/M301h172zBoE9P9nlbzv0j0kkgnpfUIxipM0Q==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795623096;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795623099;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=iN5dyfdQfzg9S+Bu9EavQOJH2jdOwRlEH8wwHOzzz8o=;
-	b=iaIvvt3VbFs2GKK6F6rzNs6P5DtjXKJTh+cVvW2rf1pxkn0Esuc04stItg/OrL7A1qYv
-	 tSd5MpE4f476hKa2Iq6GBZO1fdsvAbcRQkWjWNLc08p+jLhAW+QcthHXzWPfLxKpZR5x7
-	 2zq8nVwBb1XItRRCkzYjtYXYzoAwzvHlZSJ0eLkrQzPbgmPMNEaueLn/2qfig4aQupGZ3
-	 in6J+3xsspZkLxisHvayKjxv2YCkh16hZ2SYyR+6fQNQ7k0BWW6/VHOeAwtnh/9wMUFeo
-	 YMi010Jshm451sK5FTuPHa7jOB8M/BFAXVr8S0nYkhA5N6zP9Rc/+exhhEbyN4u8R4A==
+	bh=OaPP0wg6n84DH0mb8m6HryWoCP333UWOa3hzfo4+ikQ=;
+	b=mh3wgGdxlrZio9r9OVkeU8omwlsYJF6/6nxAuFMqoAMmaY92W7D5Qo5Qms6iMFfreKSC
+	 qKO2XRkiaNZ+k0RzNMwC/+7d01W6K/lpJLsKEYSyMQgtHaHg9W55DJfAlEfJ9z+sHka8N
+	 CxEu1i3dKmDhCLgFIu7gwAoljKKAARpwdB1ma/M/gF+lzUNQmw5hrcshW5o0LWs8EBsUX
+	 rZHvyxSTM6iZkqn192LCuP/jl9XQxu3vWJ05a1rkzOexaWxqbajcvEIakAmSEFzrm+zhK
+	 i6MBSj3OFqKxks0PXd0c5xVCku/5Hnbq+bQnB6vhrNuA9XHH1/hYML6pjEKC2cUaHpA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=NOdLP9in;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=c7M2cuAN;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A1569606A31E;
-	Wed, 25 Nov 2026 16:11:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 81BC0606A323;
+	Wed, 25 Nov 2026 16:11:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=NOdLP9in
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B2EE21F000C0;
-	Wed, 25 Nov 2026 16:11:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=c7M2cuAN
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CBF7D1F000C0;
+	Wed, 25 Nov 2026 16:11:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795623096;
-	bh=iN5dyfdQfzg9S+Bu9EavQOJH2jdOwRlEH8wwHOzzz8o=;
+	s=korg; t=1795623099;
+	bh=OaPP0wg6n84DH0mb8m6HryWoCP333UWOa3hzfo4+ikQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=NOdLP9in1Xa+oCw2GWc/nPX0JlVZc+bM6Hu2yOzS0Zoaf2HVzb2xHgnS97Fi0EuNb
-	 vSPGizV+py1ql+e+u88QvbzG02NV6aEEOzgYKiFDii1rcVc7woPp4SVmfK6go8VeCs
-	 KC/QU5XB+OExZu9LORUsMdV4NffHPZjdE1HvVnBs=
+	b=c7M2cuANTripEAYgiiHg3UDDy0B9F+jCLTLCS3XLLgBH1A4LQv4w3aQScE2l8Tovn
+	 Htmw2oresZ/me8CfJkUByhovwhRXhkR8fresySrpeb43V7tHn/F7gFQE+5aahYTvIw
+	 3l0NSdLV2oDI2o1gZgvBGHaiRI17QWtmgYyLPtZ8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jinjie Ruan <ruanjinjie@huawei.com>,
+	Zhao Gongyi <zhaogongyi@bytedance.com>,
+	Oleg Nesterov <oleg@redhat.com>,
 	Will Deacon <will@kernel.org>,
-	Mike Rapoport <rppt@kernel.org>,
 	Catalin Marinas <catalin.marinas@arm.com>
-Subject: [PATCH 6.18 750/990] arm64: kexec_file: Do not use CMA for images with a non-zero text_offset
-Date: Wed, 25 Nov 2026 15:35:17 +0100
-Message-ID: <20261125143839.628787381@linuxfoundation.org>
+Subject: [PATCH 6.18 751/990] arm64: ptrace: dont warn on missing siginfo in a group-stop
+Date: Wed, 25 Nov 2026 15:35:18 +0100
+Message-ID: <20261125143839.651397957@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143822.072087159@linuxfoundation.org>
 References: <20261125143822.072087159@linuxfoundation.org>
@@ -69,57 +69,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jinjie Ruan <ruanjinjie@huawei.com>
+From: Zhao Gongyi <zhaogongyi@bytedance.com>
 
-commit 18f2d01bfce99a885511c451cba95234eea190bc upstream.
+commit 5306f124f3171289b2ef5bac1e08aad175f66d1e upstream.
 
-image_load() adds text_offset to kernel_segment->mem and subtracts it
-from kernel_segment->memsz.  For CMA backed segments this breaks the
-load path: the payload is copied to page_address(cma), which is the CMA
-base, while image->start is set to the adjusted address, so kexec jumps
-into the middle of the kernel.  kimage_map_segment() has the same
-mismatch when a segment has been moved.
+PTRACE_ATTACH to a group-stopped child can enter do_jobctl_trap(),
+which calls ptrace_stop() without siginfo. If the tracer writes
+NT_ARM_SYSTEM_CALL, system_call_set() can change syscallno from
+NO_SYSCALL before update_syscall_orig_x0_after_ptrace() checks
+last_siginfo. WARN_ON_ONCE(!info) then fires for a valid ptrace stop.
 
-The adjusted memsz also breaks the release path: the CMA pages are
-freed using segment->memsz >> PAGE_SHIFT, which is fewer than were
-allocated, leaking the tail of the allocation.
+Keep the early return when siginfo is absent, but remove the warning.
+This leaves orig_x0 untouched at a non-seized group-stop and preserves
+the existing syscall-exit-stop handling.
 
-Both problems are specific to CMA segments, which are accessed through
-page_address(cma) and ignore segment->mem.  The normal load path uses
-segment->mem, so the text_offset adjustment stays consistent there.
-Keep honoring text_offset, but load such images from regular memory by
-setting image->no_cma: they lose the CMA contiguous allocation, but
-keep working.
-
-Fixes: 07d24902977e ("kexec: enable CMA based contiguous allocation")
-Signed-off-by: Jinjie Ruan <ruanjinjie@huawei.com>
-Cc: Will Deacon <will@kernel.org>
-Cc: Mike Rapoport <rppt@kernel.org>
+Fixes: 88b839ce497c ("arm64: ptrace: Keep 'orig_x0' in-sync with x0 on syscall entry")
 Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/all/20260921090450.807575-2-ruanjinjie@huawei.com/
-Link: https://lore.kernel.org/all/20260921090450.807575-3-ruanjinjie@huawei.com/
-Link: https://lore.kernel.org/all/au4JOjnQlx2aSpiE@arm.com/
+Signed-off-by: Zhao Gongyi <zhaogongyi@bytedance.com>
+Acked-by: Oleg Nesterov <oleg@redhat.com>
+Acked-by: Will Deacon <will@kernel.org>
+[catalin.marinas@arm.com: modified comment as per Will's suggestion]
 Signed-off-by: Catalin Marinas <catalin.marinas@arm.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/arm64/kernel/kexec_image.c |    7 +++++++
- 1 file changed, 7 insertions(+)
+ arch/arm64/kernel/ptrace.c |    8 ++++++--
+ 1 file changed, 6 insertions(+), 2 deletions(-)
 
---- a/arch/arm64/kernel/kexec_image.c
-+++ b/arch/arm64/kernel/kexec_image.c
-@@ -82,6 +82,13 @@ static void *image_load(struct kimage *i
- 	kbuf.mem = KEXEC_BUF_MEM_UNKNOWN;
- 	kbuf.memsz = le64_to_cpu(h->image_size);
- 	text_offset = le64_to_cpu(h->text_offset);
-+	/*
-+	 * A CMA segment is loaded and mapped through page_address(cma), which
-+	 * is the CMA base and cannot represent the text_offset adjustment
-+	 * below.  Load images with a non-zero text_offset from normal memory.
-+	 */
-+	if (text_offset)
-+		image->no_cma = true;
- 	kbuf.buf_align = MIN_KIMG_ALIGN;
+--- a/arch/arm64/kernel/ptrace.c
++++ b/arch/arm64/kernel/ptrace.c
+@@ -573,8 +573,12 @@ static void update_syscall_orig_x0_after
+ 	if (regs->syscallno == NO_SYSCALL)
+ 		return;
  
- 	/* Adjust kernel segment with TEXT_OFFSET */
+-	/* We should only be called when target is in a ptrace stop */
+-	if (WARN_ON_ONCE(!info))
++	/*
++	 * For exit-stops, info is always non-NULL, but that's not true for other
++	 * stops such as non-seized group-stops. In those cases, just return early
++	 * as there's no need to update orig_x0 anyway.
++	 */
++	if (!info)
+ 		return;
+ 
+ 	/*
 
 
