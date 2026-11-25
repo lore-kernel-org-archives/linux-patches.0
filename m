@@ -1,51 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795626301;
-	b=xJ7mHwAJBk34j1NPBNbFumhxXAx3D0ES8og+BiSJsnOMbsZeGYq7kT0tF0mhGXllYbj5
-	 iOL8rLhA2jaXA+59/JoWgsj1Id8akiAVuvdd5kcDrklgQlUiuKzAcDFmjVV2f7i+NtP+V
-	 FCH1wNw1rPTmMOzWWrbCnfQ89XdCHx06xKxnFmjaoPmU4gPm7z6BA39rqP2DYHv4Wv/qM
-	 kG/1vH+McedFgcmqS92hWE0PEHMiv7Fa2rj8QDPd9kzKL1TyhjYQSgysAr6osTB+hgQmH
-	 Y2q3iY/xtaIdySgOJnQG+fLrv2gH+CLLf00kT5a6j2Z4kYOt7RwcIOu0ruBp4k5NHLg==
+	t=1795626304;
+	b=TIaNUpH1UCflV4quDbMw3QjOTDNawjC3Z46cgR1G2Bl01+SaO+r2wjA++gOvL1YNgbEt
+	 EROYD85iP9EcW3u0JAAoMG7tihEY4p9eDJnq+6jrWUBCINJxRrJ13AUyDRiJFnjb5x1ta
+	 4lsIw/Mfn3ZPuO8orxPvfy7HDCjz3OL8qMGimG4fj758bnB9DPrkdIpnDzEra1ex++HyD
+	 IdYSSjZh1fTa/lh2YkYWHzwykteDb1eg0VGEB0epIxYKN3SzHEc7nW2LcLyGf/DnubDvD
+	 MytsTC2qqInHo+QsUFP4s5vLRFEsUeyy+lqyyWtQ6SnAzmLj0vWE9ghLNSo6Z/bwZjQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795626301;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795626304;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=HE9pm/A9RH3OC0vZdlOtD3h2fzhS2Ztj0gHguNVoIYI=;
-	b=c/KW1j1Az3+D1uhu3DXX/Cm9Q2AuY/zqvdQ9uDX4SLeiUkIINzoEyYlhlv0vD/whUQqg
-	 JtSajjvL+WphZL6CXJUJtCUYkmvO1o+9lkDzELyDSXCaVGMZk8IJC9m4jhCdi80TB83RB
-	 Ej8s1uw+W6I3ZAWA8jNG8bqAJiLi3uWhiGUGUcgxKKSr3nfE/BbOOkHcGkoroUOSlWTwb
-	 5w6fOfIKN4wt8gLFyq7ZnT8Pg6m+DbMjtaLcpSlwPA2JMxQ0oH84OY+T26s7dvti5CsXw
-	 iLL+KOfMPhrqZtH2Hfq18xSSqW/fZBuFM6Hsr57VHiK/2Bsy8nAjEUZh4DR24Y+imng==
+	bh=YIF7TF/uFke46e44OGKBGH5VDybz+aIHEw5tk/8iMqU=;
+	b=EOH0T/HHb/jTDgjXG/+HF0fGElmWQY5g/JbVQufmuSpR8OXLz7PuEK+AR9XbWhNH+keA
+	 f/d4iWkBP3OhSvboAEy65xcG310yOsOiOwZH+HVb1b8hVhXNgapqaHzyfoyRf28am7LDN
+	 Kp3PMRId+ycl3yHYQ7Uqx94kVRSKVdmESwXVwDCI7OD000fGNB5TTftcXMbxg+zOZDgKe
+	 Rq/3N3KX3Eo3nHJt4xPY4TYDr7mn4kIteIR3RDeMQGOsbRuX73J4nSCc3SfyfBqoQzV8N
+	 3dIYNc79f6ziu6c3Mci97iChIVAf6WB42uBhXHVRs3cB9+keT0Ig0gzsRdnvSgYWc9g==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=NzVMl7Ks;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Tq773BxL;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 45D6B606A685;
-	Wed, 25 Nov 2026 17:05:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A4C00606A33A;
+	Wed, 25 Nov 2026 17:05:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=NzVMl7Ks
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A911E1F000EC;
-	Wed, 25 Nov 2026 17:05:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Tq773BxL
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D9F661F000C4;
+	Wed, 25 Nov 2026 17:05:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795626301;
-	bh=HE9pm/A9RH3OC0vZdlOtD3h2fzhS2Ztj0gHguNVoIYI=;
+	s=korg; t=1795626304;
+	bh=YIF7TF/uFke46e44OGKBGH5VDybz+aIHEw5tk/8iMqU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=NzVMl7KsQcSJByoAqB86xzEgPg4mrlOaHfURvtNLX3VIK69Ci045dzX4HHN4JOkOU
-	 /aL23L6SipZ1sssWj/U7N+sT2YR7AJRjb7jgAEyG4p0hx26rpg5Trw2z+ssSsKIWtF
-	 zXTy2trxt1WMwId7or182vY+zB4NFKjTSDWI1NMY=
+	b=Tq773BxLAWQ3KGY1EL9hVOE0449iEZeUvHaQyJaQJR5taeg1sTBfKDh8dcN1xKfVN
+	 eh9OlCQKFnWx0I9DuxvTBdimtgxCvS6zWYRxjQZpZF6t/Wlqpx6+U+65jwxXeQcXA6
+	 f4bQjXYzse1wkr430GnV7mwiwc7axlBCwYhdNNNc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Salah Triki <salah.triki@gmail.com>,
+	Changyul Lee <lcy8047@gmail.com>,
 	Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>
-Subject: [PATCH 6.12 797/816] iio: temperature: mlx90614: Fix dual channel probe condition check
-Date: Wed, 25 Nov 2026 15:39:05 +0100
-Message-ID: <20261125143907.619702159@linuxfoundation.org>
+Subject: [PATCH 6.12 798/816] iio: trigger: free the trigger ID after device_del()
+Date: Wed, 25 Nov 2026 15:39:06 +0100
+Message-ID: <20261125143907.642634357@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143849.205329330@linuxfoundation.org>
 References: <20261125143849.205329330@linuxfoundation.org>
@@ -67,46 +67,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Salah Triki <salah.triki@gmail.com>
+From: Changyul Lee <lcy8047@gmail.com>
 
-commit 4d4e75b3074bc29525c963a81c19471528f29a45 upstream.
+commit d32bf759801e6df23038dc834622a122ec76a4dd upstream.
 
-In mlx90614_probe_num_ir_sensors(), the check on chip_info->dual_channel
-is inverted.
+iio_trigger_unregister() returns the trigger ID to iio_trigger_ida
+before device_del() removes the "trigger<N>" device. A trigger
+registered in between can get the same ID, and its device_add() fails:
 
-Currently, if dual_channel is true (MLX90614), the function returns 0
-immediately without checking op_eeprom_config1. This forces all MLX90614
-devices to be registered as single sensor (num_channels = 2), making the
-second object temperature channel inaccessible.
+  sysfs: cannot create duplicate filename '/bus/iio/devices/trigger0'
 
-Conversely, if dual_channel is false (MLX90615), the function skips the
-early return and performs an unnecessary SMBus read on EEPROM CONFIG1 even
-though MLX90615 does not support dual channel operation.
+For example, adding a sysfs trigger while an hrtimer trigger is being
+removed through configfs, or the other way around, hits this because the
+two paths do not share a lock.
 
-Fix this by negating the condition so that single-channel chips return
-early with 0, while dual-channel capable chips (MLX90614) proceed to read
-the EEPROM configuration register to detect whether 1 or 2 object channels
-are present.
+Free the ID after device_del(), as the error path of
+iio_trigger_register() already does, and drop the "Possible issue in
+here" comment.
 
-Fixes: 3d5ead238bc8 ("iio: mlx90614: Factor our register IO and constants into model specific descriptor")
-Signed-off-by: Salah Triki <salah.triki@gmail.com>
+Fixes: 1637db44413e ("Staging: IIO: Trigger support added to core.")
+Signed-off-by: Changyul Lee <lcy8047@gmail.com>
 Cc: stable@vger.kernel.org
 Signed-off-by: Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/iio/temperature/mlx90614.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/iio/industrialio-trigger.c |    3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
---- a/drivers/iio/temperature/mlx90614.c
-+++ b/drivers/iio/temperature/mlx90614.c
-@@ -570,7 +570,7 @@ static int mlx90614_probe_num_ir_sensors
- 	const struct mlx_chip_info *chip_info = data->chip_info;
- 	s32 ret;
+--- a/drivers/iio/industrialio-trigger.c
++++ b/drivers/iio/industrialio-trigger.c
+@@ -105,9 +105,8 @@ void iio_trigger_unregister(struct iio_t
+ 	scoped_guard(mutex, &iio_trigger_list_lock)
+ 		list_del(&trig_info->list);
  
--	if (chip_info->dual_channel)
-+	if (!chip_info->dual_channel)
- 		return 0;
+-	ida_free(&iio_trigger_ida, trig_info->id);
+-	/* Possible issue in here */
+ 	device_del(&trig_info->dev);
++	ida_free(&iio_trigger_ida, trig_info->id);
+ }
+ EXPORT_SYMBOL(iio_trigger_unregister);
  
- 	ret = i2c_smbus_read_word_data(client, chip_info->op_eeprom_config1);
 
 
