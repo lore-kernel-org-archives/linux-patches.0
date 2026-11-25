@@ -1,50 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795620149;
-	b=1nyyHDCRCRf4vS4TgKkujENKDeSRmw0gMyHPyBZNgtDNLHdCccy1Wg2WxG4X8G3AU7pv
-	 kVMyeBTUkpJR3wnNjSE6OCqzVZzrDgfEsZnz5fH/l/jfr7w2Dh9cn7j5+Ngj1qWqlStEM
-	 0g15yPQJfvlXDZRXCZkbsiRLBJH8sMO0L91Mv1+LhB8ym7ghX/J0pXPibR9c0kaZcqT3m
-	 W/DbqFiItyTYwpQvH9otGNOR6Tz1IrhrqwwvPduVepBiEU43Fjs0qbnx8AUlrCdTljeTP
-	 x1k9GfEMf2qoBHW8ctJ0Nu/+nzA1HF5uRNWtx44aMpWaupXdekB/pDnBvK8BB6SUdCQ==
+	t=1795620152;
+	b=in6u0eNWbrIJHTdc71ktyMpKK520egdbENuu0iW5pJF5oJ5ETG6HMTWxKPRyH/r0Jkw7
+	 g7usUlN0FG5yP0z1asCU6vnhw4FU4S6tPXNwZioFWI7qiX4txC/WVevPZTkO5rVA1c5nZ
+	 +xsFi3rDjo2I/pCfOaog/MJEg6TM1U7PtOEKZUlQ/eZuakdXTq0ChyatVZNI1A4h/ge8l
+	 Eq2jUNFNMjlag8dHUqgsBUpLFfGoc4pfF3pQYTO4SLdOFq0tEgYFcdhV4n4hvHa7wE91h
+	 jZ7otMTnNHupi1XSNxbmLsMiNcquKFUlQhm1lDd7kCxqNQPrZ9RPrxEmdTWY7d7Scpg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795620149;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795620152;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Transfer-Encoding;
-	bh=uAaWH/xxXOpujHZ9F8rd920MYsAZxc2zoVhADSgND+4=;
-	b=NJknwxhLUQrJRe5eJo2gGnkNGqwlHHSEykcmDZh6fHxZaETyLagbtSSOR7LdhhGTNahL
-	 8FwfPs5/D8WhseuqXYbRyggTHucskSFCRZ9VjYnjGKtcZq8GEIVdgl4rmR5eX3r5TTCg1
-	 nx/MEB2oH203Tu4bKI+gY4HNIjVGJlNZopHe+Lx2+DYgUSK8Rd4JqzMjaIUJ97b4TQnMF
-	 DW+ACeG/KftNJua4+4m/V9qCVQupAKC59OVr38SruO/xKgD4aVO8KhEJosuPpeNrt+s1R
-	 wyBAYws/PSmx/yq7NjCkX8MGgt4/AwSUk3GunveNDQ8/ynVCgPV6SbJD2xgxyOG2RmQ==
+	 MIME-Version:Content-Type:Content-Transfer-Encoding;
+	bh=SJYTubhPJCSSbBBzkWxfWWI3fui9VF7/AlbRcCTph7I=;
+	b=2HjImy+j426Q8sCGKM9F5pzY+LNJ4521iKYYttQrvgNKrBp22rRaphD2flRylWTxBqYU
+	 kji6a08pKgTQCxavKDz6PghW3WpaTDBQepOlS9CuXpTZ+pbYUmOuF7psAts0B6a/8OD8t
+	 sJ0swr2OV3Lw+/HStjmg+MbNt5jNamZzI39sEw/QUejshGZwVoQs3cOaz1fhaK1AylMY4
+	 YaWrwrVCJ2RzTx+e0n45nXOTEm06h3lezoUrgjcieKGgYxGucSuomUbZdspm3v3uHDdJe
+	 y4xX/PN8/IhOuvOskMoA89aZbK+x5r3jIFnoOhoNdLQYHCGJlo4OvspllrPmG6GksMQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=luje5Dzj;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=AeC8++YE;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 435B1606A330;
-	Wed, 25 Nov 2026 15:22:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5CC21606A331;
+	Wed, 25 Nov 2026 15:22:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=luje5Dzj
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3F9501F000C6;
-	Wed, 25 Nov 2026 15:22:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=AeC8++YE
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 705AC1F000C4;
+	Wed, 25 Nov 2026 15:22:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795620148;
-	bh=uAaWH/xxXOpujHZ9F8rd920MYsAZxc2zoVhADSgND+4=;
+	s=korg; t=1795620152;
+	bh=SJYTubhPJCSSbBBzkWxfWWI3fui9VF7/AlbRcCTph7I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=luje5DzjiS7NTOJnPirQPn26x9h6Xp5J44+N1lC10n6XKDb50Q3lAqn26VDLAnfQJ
-	 L3CzP6vwhb0xRYlFoMMCJ01KpHxjI/M90BLlS2CXbaEoFySV6ZkQl4JbZgVeUKcpQk
-	 gJA4OLj3BEfrZS+e4dYhJlJQbIeLzDwld0u2bqxM=
+	b=AeC8++YEVZ59wcTScRWZ7V4G6jPCtg7ABbo12qRxoh34mEOIY5BWu8qkQ4t5hDEFx
+	 8+gElhWuX31Rr/oJh9jBMYkRpYuOKneRl7HwYJAZujmsPny0HS5LjAy+Nc2YSn4/C0
+	 rzt4wwfdmMyhiCeMIGQ9byeYPV0OczG1ByzL6rIo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Christian Brauner <brauner@kernel.org>,
+	=?UTF-8?q?J=C3=A9r=C3=A9my=20Jean?= <Jeremy.Jean@oss.cyber.gouv.fr>,
 	Amir Goldstein <amir73il@gmail.com>
-Subject: [PATCH 7.3 0824/1005] ovl: fix leak of lowerdata redirect on ovl_get_inode() failure
-Date: Wed, 25 Nov 2026 15:36:02 +0100
-Message-ID: <20261125143841.027461116@linuxfoundation.org>
+Subject: [PATCH 7.3 0825/1005] ovl: reject different lower idmaps on the same fs
+Date: Wed, 25 Nov 2026 15:36:03 +0100
+Message-ID: <20261125143841.050467746@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143821.729802100@linuxfoundation.org>
 References: <20261125143821.729802100@linuxfoundation.org>
@@ -60,55 +62,83 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 7.3-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Amir Goldstein <amir73il@gmail.com>
+From: Jérémy Jean <Jeremy.Jean@oss.cyber.gouv.fr>
 
-commit f1b7e5534854043077bb72afc8d87ad1e0b283e0 upstream.
+commit 720f40c05b2785406121da0151543751204f2953 upstream.
 
-ovl_lookup_layers() moves d->redirect into oip.lowerdata_redirect and
-clears d->redirect before calling ovl_get_inode().  When ovl_get_inode()
-fails, it does not free oip.lowerdata_redirect, and ovl_lookup() frees
-the already cleared d->redirect, so the lowerdata redirect string is
-leaked.
+Overayfs mounted with index=on or nfs_export=on require file handle
+support from backing filesystems.
 
-Clear d->redirect only after ovl_get_inode() has succeeded, like
-d->upperredirect, so that ovl_lookup() frees it on failure.
+Overlay file handles identify a backing filesystem, but not the lower
+mount used to decode it. If lower layers share a superblock and use
+different idmaps, a handle can decode through the wrong layer.
 
-Fixes: 2b21da920866 ("ovl: prepare to store lowerdata redirect for lazy lowerdata lookup")
-Closes: https://sashiko.dev/#/bug/linux-dabbd363-9c71-4915-af72-e2b5e75fa58e
+Record the first idmap on a private lower clone for each backing
+filesystem. Fail if another clone has a different idmap. Comparing
+the private clones prevents mount_setattr() from changing the checked
+state. Distinct idmap objects are treated as ambiguous.
+
+Fixes: bc70682a497c ("ovl: support idmapped layers")
+Suggested-by: Christian Brauner <brauner@kernel.org>
+Link: Link: https://lore.kernel.org/all/20260925-server-hager-riskieren-06116eded213@brauner/
 Cc: stable@vger.kernel.org
+Signed-off-by: Jérémy Jean <Jeremy.Jean@oss.cyber.gouv.fr>
 Signed-off-by: Amir Goldstein <amir73il@gmail.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/overlayfs/namei.c |    7 ++++---
- 1 file changed, 4 insertions(+), 3 deletions(-)
+ fs/overlayfs/ovl_entry.h |    2 ++
+ fs/overlayfs/super.c     |   23 +++++++++++++++++++++++
+ 2 files changed, 25 insertions(+)
 
---- a/fs/overlayfs/namei.c
-+++ b/fs/overlayfs/namei.c
-@@ -1366,15 +1366,16 @@ static int ovl_lookup_layers(struct ovl_
- 		};
+--- a/fs/overlayfs/ovl_entry.h
++++ b/fs/overlayfs/ovl_entry.h
+@@ -24,6 +24,8 @@ struct ovl_config {
+ struct ovl_sb {
+ 	struct super_block *sb;
+ 	dev_t pseudo_dev;
++	/* Idmap of the first lower layer on this fs */
++	const struct mnt_idmap *lower_idmap;
+ 	/* Unusable (conflicting) uuid */
+ 	bool bad_uuid;
+ 	/* Used as a lower layer (but maybe also as upper) */
+--- a/fs/overlayfs/super.c
++++ b/fs/overlayfs/super.c
+@@ -1121,6 +1121,29 @@ static int ovl_get_layers(struct super_b
+ 		}
  
- 		/* Store lowerdata redirect for lazy lookup */
--		if (ctx->ctr > 1 && !d->is_dir && !ctx->stack[ctx->ctr - 1].dentry) {
-+		if (ctx->ctr > 1 && !d->is_dir && !ctx->stack[ctx->ctr - 1].dentry)
- 			oip.lowerdata_redirect = d->redirect;
--			d->redirect = NULL;
--		}
- 
- 		inode = ovl_get_inode(dentry->d_sb, &oip);
- 		if (IS_ERR(inode))
- 			return PTR_ERR(inode);
- 
-+		if (oip.lowerdata_redirect)
-+			d->redirect = NULL;
+ 		/*
++		 * Lower file handles identify the lower fs, but not the layer,
++		 * so with different idmaps on the same lower fs, index and
++		 * nfs_export may decode a file handle through a layer with the
++		 * wrong idmap.  Following copy up origin without index is only
++		 * used for st_ino, which does not depend on the idmap.
++		 */
++		if (i < nr_merged_lower &&
++		    (ofs->config.index || ofs->config.nfs_export)) {
++			const struct mnt_idmap *idmap = mnt_idmap(mnt);
++			struct ovl_sb *fs = &ofs->fs[fsid];
 +
- 		ctx->inode = inode;
- 		if (ctx->upperdentry && !uppermetacopy)
- 			ovl_set_flag(OVL_UPPERDATA, ctx->inode);
++			if (!fs->lower_idmap) {
++				fs->lower_idmap = idmap;
++			} else if (fs->lower_idmap != idmap) {
++				pr_err("lower layer '%pd2' conflicts with idmap of another lower layer on the same fs, mount with '-o index=off,nfs_export=off' to override.\n",
++				       l->path.dentry);
++				iput(trap);
++				kern_unmount(mnt);
++				return -EINVAL;
++			}
++		}
++
++		/*
+ 		 * Make lower layers R/O.  That way fchmod/fchown on lower file
+ 		 * will fail instead of modifying lower fs.
+ 		 */
 
 
