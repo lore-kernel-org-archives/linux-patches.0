@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795620918;
-	b=uvyVvXSt+jZLMDuIAeDicw+eM6LO7iLcabRaDs/LiHvEZXGuJYvmRMsrI+Md1NN30dDc
-	 bTojcgDQFjzuOsPiEHIW/aD0oGNnua2LC4vjbVd771Wre8Q7gVwe96fuFaqdPM5vaog3P
-	 OzRLxPwiDCqexeNJ6dJciiYOTWjUhsoZEm3PAu87RUdHpI2eNd6eWKQ31Q+IfTnS7jZqk
-	 guWemZ2S4rFQSHe/QTyyw1/BkdgM/Qd690UCsTbDjTlg3txrRcTPSy5k09W9TqQHi/6SV
-	 gP+3d738kufYCCu8mEeWT9YpRk1RydWWi0MDSCbf4hCT4bBbtUL/FOpDmJRybxOHQ3A==
+	t=1795620922;
+	b=e8xNtip51Ew7d9ZBl/vR+G4Llamjo5RP44hlhA0SdZpj+xNkSoah36tBaOrpGrjhVRNF
+	 x8Za57QFOdb5y5ReZ6n/G0Y0GvwziPI3jav5np1OfSX4Gn74mRoEIj0tMEI3C/hc/7Upo
+	 V+MlCgp0lTpFRVSVS2ldZAh0Ar3glx06nx/n4dtX7gGfcA7Hy3fklWVPKndk08aNOOYly
+	 7J2gO0dsA3EV/ZGdT9kgXrjxqkD9E2h8GwimJivG9uV48b1vJaVbmHBRwd9b2k9w255AS
+	 htukn38SfJMsTwFk1MA8Yff/oBAWXCyrocsxyTwhpXItyxFN28eKOCRvx+IjyqZ2L5g==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795620918;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795620922;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=LRsRAzOjchB0FjeJm4L4F/nCyhLhwTOyYSeZQbP/5CM=;
-	b=kMP6178smMCpOwAwt2Au0DWsdbbGUQcOZV8xejLnqHZEhV72uVLam9W0qn3ViVueDB/E
-	 EN0Bp3B0rwY6hQbAEydLdyLcw8mQF0yX1gQiRuWMbAHeg+futXaUkNowPAfNpj3/hOiia
-	 jq2ypIMMMYfi/xutEkotgbSoTgwGI2VGQ11HvPLyblgB1ccNDAtaFZKVF+Np3PTzOajE3
-	 0ujHQFuiYVTrqs/ouPxcJJQ7flGfOBOXqf/pRy8WZEavIYlhlqp3gEeuMJVWnvpg6gTWJ
-	 PjDiaROWaxaD6IXqD2Aq3kQ3uEExArMog8axsenGWvjVWaqJe3iyv7cl1TfVv7YHCsA==
+	bh=ecDt0Z9262A/5O/TBaXLY0zrs8X2qaOraGjbEwngtqI=;
+	b=kXDL4XsgUW5SOuGmDOM5xSThunHZZL/9zpCcew1AfpL9UDUlX3OCNGbV5o6Pt6xhuon4
+	 /jb0+R4VPRXQofZ6LVIHeZOTbclW4MPGzDJj97heVUMMbbXwlFb3Sx6Mc6hXPm877iby+
+	 /nUfFvj+zaINgShwFYshV1f2iTylmjtw5yu2lBPsVKqrFvR48iI7RSXafKLkdFArZ0fPP
+	 NCssdDBUCn4jzaLy/N7fV9oRoS8mqwTi9hjDE8XMfkaY35fleCI3YapAYRj/9B0ZGrazk
+	 uydU5TMqbJMn9rYNNMxqZYd9Vu3+QcDY9Qt5GHIlSKwb2NLMmp8OA8K1Hqc9ZZPaPNQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=xcJtNHpx;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=TfcDVxOo;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 92D8B606A337;
-	Wed, 25 Nov 2026 15:35:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F268D606A32E;
+	Wed, 25 Nov 2026 15:35:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=xcJtNHpx
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 96AB31F000D3;
-	Wed, 25 Nov 2026 15:35:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=TfcDVxOo
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BD4D41F000D1;
+	Wed, 25 Nov 2026 15:35:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795620918;
-	bh=LRsRAzOjchB0FjeJm4L4F/nCyhLhwTOyYSeZQbP/5CM=;
+	s=korg; t=1795620921;
+	bh=ecDt0Z9262A/5O/TBaXLY0zrs8X2qaOraGjbEwngtqI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=xcJtNHpxHynhl/JRaVUo2EyccndODIq1o3JcXdu3FUNwDdHLQS+bDxVoMYd8bZIc2
-	 uUI4qf2XQadBRYXiQvGdklmxgGmPPB1qXXTwFtpiuGMrDavfm6F1TKbjHz8D5Z4I3S
-	 74FIqhHFQIoe88Svl1UoSfayeFsm5813yk/vJv20=
+	b=TfcDVxOoSSgbWTR5qYJJBk2Hv3XxYo5/am+qlaN+synXE03/n06ksXve9SL1Ywukg
+	 SzeLu8JQMEPGOK8XrezPi7W1Uh/pDvmvEHylF47yE4Fzh/X5EwFS15vsW3beVovwwC
+	 LokkP9ytTr3JbnSz2a3704jN8tDZP7Ax+Z8pIg0o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hakan Abay <hakan.abay84@gmail.com>,
+	Krittikun Wongnin <krittikunwongnin@gmail.com>,
 	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 019/990] ACPI: PM: Add unused power resource quirk for Casper Excalibur G900
-Date: Wed, 25 Nov 2026 15:23:06 +0100
-Message-ID: <20261125143822.539567217@linuxfoundation.org>
+Subject: [PATCH 6.18 020/990] ACPI: PM: Add Acer Aspire A515-53G to dmi_leave_unused_power_resources_on[]
+Date: Wed, 25 Nov 2026 15:23:07 +0100
+Message-ID: <20261125143822.562260637@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143822.072087159@linuxfoundation.org>
 References: <20261125143822.072087159@linuxfoundation.org>
@@ -68,54 +68,75 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hakan Abay <hakan.abay84@gmail.com>
+From: Krittikun Wongnin <krittikunwongnin@gmail.com>
 
-[ Upstream commit 23ec17231cc6a83bb11d8660db5bfc5336f53a0e ]
+[ Upstream commit 8eb2754ef96d77d870d6b1ef1e0e8470c892b6b4 ]
 
-On the Casper Excalibur G900, the NVIDIA discrete GPU and the second
-NVMe device become inaccessible when unused ACPI power resources are
-turned off during initialization.
+On the Acer Aspire A515-53G (Whiskey Lake + NVIDIA GeForce MX230), the
+dGPU behind root port RP05 (00:1c.4) falls off the bus during boot and
+is unusable until the next power cycle:
 
-The failure is similar to the THUNDEROBOT ZERO case addressed by
-commit cd7ef20ba8c6 ("ACPI: PM: Add unused power resource quirk for THUNDEROBOT ZERO").
+  nvidia 0000:02:00.0: Unable to change power state from D3cold to D0, device inaccessible
+  NVRM: The NVIDIA GPU 0000:02:00.0 ... has fallen off the bus
 
-Without the quirk, the NVIDIA GPU and the second NVMe device are left
-inaccessible in D3cold and attempts to transition them back to D0 fail.
+The firmware ships two SSDTs which both provide power management for
+the dGPU:
 
-Add a DMI quirk for the affected Casper Excalibur G900 with NLCC 001
-mainboard to leave unused ACPI power resources on.
+ - One SSDT defines \_SB.PCI0.RP05.PC01 together with
+   RP05._PR0/_PR2/_PR3 = { PC01 }.
 
-With the quirk applied, the second NVMe device remains accessible. The
-NVIDIA GPU can enter D3cold while idle and subsequently return to D0
-for accelerated rendering.
+ - A second SSDT defines \_SB.PCI0.RP05.PCRP (_STA initially One,
+   _OFF calls \_SB.PCI0.HGOF, which puts the link into L2/L3 and drops
+   the dGPU power enable GPIO) and its own RP05._PR0/_PR2/_PR3/_S0W.
+   The latter fail to load:
 
-Link: https://bugs.kali.org/view.php?id=9891
-Signed-off-by: Hakan Abay <hakan.abay84@gmail.com>
-Link: https://patch.msgid.link/20261005174939.53873-1-hakan.abay84@gmail.com
+     ACPI BIOS Error (bug): Failure creating named object [\_SB.PCI0.RP05._PR0], AE_ALREADY_EXISTS
+
+As a result PCRP is not referenced by any device and
+acpi_turn_off_unused_power_resources() turns it off right after the
+ACPI namespace scan. This cuts power to the dGPU, but PC01 still
+believes it is on, so its _ON method is a no-op when the PCI core later
+tries to bring the GPU back to D0.
+
+Windows does not turn off unused power resources, so the dGPU works
+there.
+
+Add the machine to dmi_leave_unused_power_resources_on[], like the
+THUNDEROBOT ZERO which has a similar SSDT bug. With this change the
+dGPU stays on the bus and the nvidia driver binds. Runtime PM of the
+dGPU is unaffected, as it is handled through PC01: with no driver
+bound and power/control set to auto, RP05 reaches D3cold and the GPU
+comes back to D0 on resume.
+
+Link: https://lore.kernel.org/r/CADS-TgDQ1G8vrTQLJeQ3RTBVFTyMe0C+5p2=UBKS=EFCDFuaxw@mail.gmail.com/
+Signed-off-by: Krittikun Wongnin <krittikunwongnin@gmail.com>
+[ rjw: Subject and changelog tweaks ]
+Link: https://patch.msgid.link/20261013074245.4327-1-krittikunwongnin@gmail.com
 Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/acpi/power.c | 12 ++++++++++++
- 1 file changed, 12 insertions(+)
+ drivers/acpi/power.c | 13 +++++++++++++
+ 1 file changed, 13 insertions(+)
 
 diff --git a/drivers/acpi/power.c b/drivers/acpi/power.c
-index 92cd9f963c6f5..2c0c982602014 100644
+index 2c0c982602014..4a67e9afdd7fc 100644
 --- a/drivers/acpi/power.c
 +++ b/drivers/acpi/power.c
-@@ -1139,6 +1139,18 @@ static const struct dmi_system_id dmi_leave_unused_power_resources_on[] = {
- 		}
- 
+@@ -1151,6 +1151,19 @@ static const struct dmi_system_id dmi_leave_unused_power_resources_on[] = {
+ 			DMI_MATCH(DMI_BOARD_NAME, "NLCC 001"),
+ 		},
  	},
 +	{
 +		/*
-+		 * CASPER EXCALIBUR G900 laptop: Keep unused ACPI power
-+		 * resources on to prevent the NVIDIA dGPU and NVMe #2
-+		 * from becoming inaccessible.
++		 * Acer Aspire A515-53G: Two SSDTs both define power resources
++		 * for the dGPU root port RP05 ('PC01' and 'PCRP'). Only PC01 ends
++		 * up in RP05's _PR0/_PR3, so 'PCRP' is shut down on
++		 * initialization, cutting power to the NVIDIA dGPU behind the
++		 * back of 'PC01' and making the dGPU unavailable.
 +		 */
 +		.matches = {
-+			DMI_MATCH(DMI_SYS_VENDOR, "CASPER BILGISAYAR SISTEMLERI"),
-+			DMI_MATCH(DMI_PRODUCT_NAME, "EXCALIBUR G900"),
-+			DMI_MATCH(DMI_BOARD_NAME, "NLCC 001"),
++			DMI_MATCH(DMI_SYS_VENDOR, "Acer"),
++			DMI_MATCH(DMI_PRODUCT_NAME, "Aspire A515-53G"),
 +		},
 +	},
  	{}
