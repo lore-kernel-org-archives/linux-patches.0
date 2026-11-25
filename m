@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795621943;
-	b=K9Ai/NZ512UosHQQI52MgzEC6sbG4xhIBrto+8QmDYRAd5uy5Z7lvmt6+czE/SScXidE
-	 fn4vIBXK5vmXWYPeaymU8SISanymaymL7Tnm1cOQGHjM9KPqdXTt2NkjM4GmmLaSMoKhB
-	 4K9pnf8kTCEi3qtnBFzbokVku7hqkl/FS95AxV8Xf8opWcOwFCleu9CAiOabAMEg4vInp
-	 tin6xHK5uuBeM3lZQRraukUr872VilIM+4/66+48/ZPb+1csc4a0o2VDlxcRGwegQYzx6
-	 beUicMaeHRKiOQsHzRH4HM1Dgb+KA3u6U2t7hSG14dyPZUKRUZrbMoF/hr9ObPhqk3Q==
+	t=1795621946;
+	b=to6bfU0g+TKnF3LqoURh7AOPNQfwUDVF/veBo3RvkrfYOF/UW3MbLAGg+QDm4bjC1aOj
+	 HB/sLxKc+P6hHTz5Da2nmkP6QK0D2S+wNYV8Xf043HzTxEC0fzzbJq3gnIDzrGtbYolVS
+	 vJBaKpIxi08Jwd5p4zdZ302vQyl5UKNn6sfMJQI2jdptf8IQ1k9FEAz2R0gGXjLMhD6yD
+	 8wDRxKh08ldw1EZugZ9zOR34nbCia54ixw1FZP/SpUKk3aE0VzRcWY1mvhH7UxAWzJTh1
+	 rV8EF7+y22VXn9FROrOmt4VQb/BIGlAVzFdIMkgXHbQeK7Bz8pxiRckecpqf5EXhXbg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795621943;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795621946;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=wIwHcK2FxKJn9wZO1N4jh443yG8uYSPbkrqQserX4ws=;
-	b=XMX9GwwWBQDJPb+AyIYPAWW5sSUVC8lr0Oh0KhL+vn5mLP9k/n6cbA37Z79fuk9BnTVO
-	 xMGgfq5mm4uySvjPpnrHw8DEIRTvk9jUOCSitYEtYjjTkLuRiNZuEaDnfuzGL/FZsfaXO
-	 vFqEBnNIMOFTttWvqenP+A9018aefeA5DLnQ2aBEHO3511pmjGWgjELQ9YkM7llUxMRMD
-	 MOn65Utj+vc8whQqgCBBB0MXr7+H+mp4hftgTm/oGaSrwb3RDZP+bvtDuZLeNPQUuRFM1
-	 KFDInimOv7oxQ1wcJUpg5HHYGL9GL4MYSEuRaerfDcWykvfNfZdNKXEFz/ctKjq8G/A==
+	bh=XuTEi/SNv6XQpd1yeF2D04BahvD79NUkvwUU3k0OGuc=;
+	b=2LPCzoq/BqoOfhuyEX6Bqu16/8ndKUK6vCSx99dllLBkbGEmq31kOni8PDAOxVZwi8sj
+	 jLC+ifuKCFbGNvFfcPDyOCd/03GSoyWHOxBC0uEmTk3oFS846J3+QJIjxMPKDCkVxqcBN
+	 p3DR2bNwUvv/WhJ9zZrm7Mqt0zo8hGgbVonvPIralnHHowv3lEbB18/pRGC1L/Mix1o7e
+	 PT6pkx/w4LyixoBoU05qt3e190Q05Vw6lMjGRj0uovsPR1OenJFK5/DIcpSIxP6WZnhHJ
+	 Zp6Ma4rxMT+R0NiV1qb1JwPgDu4x1kQc262VE7xqDscQcY+exQCDzIiGUBiB3wxLB/A==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=GtiKnCRx;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ohPS9Cmw;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0F535606A323;
-	Wed, 25 Nov 2026 15:52:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D3BBF606A321;
+	Wed, 25 Nov 2026 15:52:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=GtiKnCRx
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E1F471F000E1;
-	Wed, 25 Nov 2026 15:52:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ohPS9Cmw
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A7C071F000D4;
+	Wed, 25 Nov 2026 15:52:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795621942;
-	bh=wIwHcK2FxKJn9wZO1N4jh443yG8uYSPbkrqQserX4ws=;
+	s=korg; t=1795621946;
+	bh=XuTEi/SNv6XQpd1yeF2D04BahvD79NUkvwUU3k0OGuc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=GtiKnCRx34AFdsDp2T64ad+WX6r4NFBiUrljYeku7DKa5j2N12wmp9T78M9vn9sUe
-	 o8KF3oXdjcPgDs+qzjShvCOH02zpDFsfMZ9WyUJ8OgqZ28Eu7kd/DIq05T/RM+zCnn
-	 QM8jYuwcNT0kl2DgkbjHMs36gUUMyCHLcnbTSqpU=
+	b=ohPS9CmwYoabaWhmxklzu1ZnKidjV4j4j0mN1/NZF7/xETMojy0AMR/ZFzku4DZ0K
+	 hZXZrgETB564kSSe5LKWSVtSBDfi/f+02mhCmeppf1qKoxxDNF3X6/uHyZyy878RDR
+	 8HR+kNmw9B4pnNP6mkFS/5HhEL+G+JQSxL+TuahY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andy Shevchenko <andriy.shevchenko@intel.com>,
-	Dmitry Torokhov <dmitry.torokhov@gmail.com>,
-	Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>,
+	Avi Weiss <thnkslprpt@gmail.com>,
+	Anna Schumaker <anna.schumaker@hammerspace.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 354/990] gpiolib: of: return -ENOENT from of_gpio_count() stub
-Date: Wed, 25 Nov 2026 15:28:41 +0100
-Message-ID: <20261125143830.385382600@linuxfoundation.org>
+Subject: [PATCH 6.18 381/990] NFS: update ctime for atime-only UTIME_NOW requests
+Date: Wed, 25 Nov 2026 15:29:08 +0100
+Message-ID: <20261125143831.018793901@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143822.072087159@linuxfoundation.org>
 References: <20261125143822.072087159@linuxfoundation.org>
@@ -69,43 +68,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dmitry Torokhov <dmitry.torokhov@gmail.com>
+From: Avi Weiss <thnkslprpt@gmail.com>
 
-[ Upstream commit e20e4b8cda2b4d7dd32dbd2c0875a15d92545f04 ]
+[ Upstream commit a38d7cc8c90f0d093550487c2905b51db0be1522 ]
 
-gpiod_count() and its firmware backends are expected to return either a
-positive number of GPIOs or a negative error code (-ENOENT) when no
-GPIOs are assigned. However, the !CONFIG_OF_GPIO stub for
-of_gpio_count() returns 0 instead of -ENOENT. This causes gpiod_count()
-to skip the platform_gpio_count() fallback (which triggers when
-count < 0) and erroneously return 0 to callers.
+When an NFS client holds a timestamp delegation, utimensat()
+with atime set to UTIME_NOW and mtime set to UTIME_OMIT reaches
+nfs_setattr() with ATTR_TIMES_SET but without ATTR_ATIME_SET.
 
-Change the stub to return -ENOENT to match the real of_gpio_count()
-implementation and the other error-returning stubs in gpiolib-of.h.
+There may be other paths that can reach here as well.
 
-Fixes: f626d6dfb709 ("gpio: of: Break out OF-only code")
-Reviewed-by: Andy Shevchenko <andriy.shevchenko@intel.com>
-Signed-off-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
-Link: https://patch.msgid.link/20261105-b4-gpiolib-free-v3-3-bb47ad58642d@gmail.com
-Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
+The delegated-atime fast path treats this as an implicit atime
+update, clears ATTR_ATIME and returns success without updating
+ctime.
+
+Add check for ATTR_TIMES_SET along with ATTR_ATIME_SET (OR) so
+explicit timestamp requests use the normal SETATTR path while
+incidental atime updates can keep using the local shortcut.
+
+Fixes: e12912d94137 ("NFSv4: Add support for delegated atime and mtime attributes")
+Signed-off-by: Avi Weiss <thnkslprpt@gmail.com>
+Signed-off-by: Anna Schumaker <anna.schumaker@hammerspace.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpio/gpiolib-of.h | 2 +-
+ fs/nfs/inode.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/gpio/gpiolib-of.h b/drivers/gpio/gpiolib-of.h
-index 2257f7a498a10..4778b46256bb9 100644
---- a/drivers/gpio/gpiolib-of.h
-+++ b/drivers/gpio/gpiolib-of.h
-@@ -42,7 +42,7 @@ static inline bool of_gpiochip_instance_match(struct gpio_chip *gc,
- static inline int of_gpio_count(const struct fwnode_handle *fwnode,
- 				const char *con_id)
- {
--	return 0;
-+	return -ENOENT;
- }
- #endif /* CONFIG_OF_GPIO */
- 
+diff --git a/fs/nfs/inode.c b/fs/nfs/inode.c
+index 1edc11cd286aa..f985bf55a4d51 100644
+--- a/fs/nfs/inode.c
++++ b/fs/nfs/inode.c
+@@ -758,7 +758,7 @@ nfs_setattr(struct mnt_idmap *idmap, struct dentry *dentry,
+ 	} else if (nfs_have_delegated_atime(inode) &&
+ 		   attr->ia_valid & ATTR_ATIME &&
+ 		   !(attr->ia_valid & ATTR_MTIME)) {
+-		if (!(attr->ia_valid & ATTR_ATIME_SET)) {
++		if (!(attr->ia_valid & (ATTR_ATIME_SET | ATTR_TIMES_SET))) {
+ 			nfs_update_delegated_atime(inode);
+ 			attr->ia_valid &= ~ATTR_ATIME;
+ 		}
 -- 
 2.53.0
 
