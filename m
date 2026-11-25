@@ -1,51 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795623218;
-	b=u0KH8+SybJAHsFfl14KWKfRv64ELRSYRCj/QWlusOVCeHk+6yGioxuoaiAw0oWasQNwR
-	 o7hs2nv4OjqixibGDn/prO6SdzGapD5traF8wklbH6o46Ukq029bRkBjccPBNgwxuDJO2
-	 l84XLp5Fa12XiUeduqVf6CF43OKsGkJ6h2Dvm2Mff/e10Hl3gX101x1qp7i+3/IfA2OpU
-	 IZ2V6s9P1pilfEfAEUCSi4qznYO4qm84cwp06rndLLOBqL7VSx7oi02sJdzihnlM5es6x
-	 wE/dqMBG25juzpQud/UH92eI6hmKygBAqXSr/YHqcdT3ilqD8ISpFBfLceAhv7NgtLw==
+	t=1795623220;
+	b=bDcjoqxOrufHa+2seIJAwIj0VtiXpq7sCHM7c8/LaTAFemlnhmwgwHoLY7Pp/Xr/qb6K
+	 MDR10KnpgJb3NZFjB3vFQEiAc4XxFHDDqQ26O9eAbmooN+E5vsFm/Q+LOA79LTT/m6kTs
+	 paNs+xkjODLcetIHDy9IbVQZUls9rlooNagUsO4QLguJHGez/oZDEdXYk6m70ZvKvuRBh
+	 +URras2vHAsX1JTmuAFpZ38jP7FvQDW/5zAQMmC+XdchuPpxA5OsrjT5KGaTbCKNxrFrJ
+	 X60wdkDoXRh9WPVAOzSTdq3fGdSEawZTEMoZSv9WYYbf+PqTQnPdhxZqW0D0kCGIiPA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795623218;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795623220;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Type:Content-Transfer-Encoding;
-	bh=7wbIO4pNXkfAlJYP/i+gEayjEEYI1QAimfuICIi+ZEA=;
-	b=IwTU9os1XH2ZwD7WQok7Hl6keoWHhISMKopb+DsFOWxX7e9pcMiNKL9p1ua9pyHAeuae
-	 q9I57l3YDbzk0ollPACqAtBm33Pz1ESNrkp7TKIDHYW9x8nHxwxW/AMr5p6JnKVR1c1iD
-	 43BoJ7ZVbJaRX+hVGeCEdXFE10wFPotRQnov/ukzZDTvXvWA46SR3mOk+y7D3ijlpVVH4
-	 oCDwBgrzwpAbhdwJ9UOOIlGmatwlHiRSRNjgz5r9MSzoSTE2BhE/ikcrl6Anpluei7QIv
-	 I+AHVyGizFJtnnyZA+Cmxn9dd7Qzl2NLDfcny5ciAl0NSaiVc8TAcgDTCr2wNb/2coQ==
+	 MIME-Version:Content-Transfer-Encoding;
+	bh=HzReksb29y3g7SOeswjJPmNeIJbXwrEg/OZakSN8Xgo=;
+	b=Cg4T+VAvrPI0D4Z8VZx8PGFF9+gzxuIoHxskIMpZ+jQARelbi8NFtYJ18sXTneXVeaC4
+	 SoNGAIDRuoUiEGU78F+dkBgmDqOgBBr6yocoC3vwwy0t6ymHeu3M8zxQVC6aJBLz7OKVb
+	 VOw3hSodg7abSegZcfTpSIvSO6bpcCoLxbq2JtHMEpn5Qgs8ZOWQYlMXx/fIWOc3onX22
+	 BHqxOLt8pr4rzcHH1ADaaik8prmildCW9vskKZDIKWHc+g9yD87rzAGiVCGQ/Fq+ocSWS
+	 6cuXwBgAJ4axfIpryoAANqWsR6OPgBlZM3mdwTsJ6sqVrWarx526VL2V7RKuUxyJpCQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=cjY0OqAU;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=xqcP6VK9;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E4958606A31E;
-	Wed, 25 Nov 2026 16:13:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 954CE606A329;
+	Wed, 25 Nov 2026 16:13:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=cjY0OqAU
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7CD071F000C6;
-	Wed, 25 Nov 2026 16:13:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=xqcP6VK9
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D0B591F000C6;
+	Wed, 25 Nov 2026 16:13:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795623217;
-	bh=7wbIO4pNXkfAlJYP/i+gEayjEEYI1QAimfuICIi+ZEA=;
+	s=korg; t=1795623220;
+	bh=HzReksb29y3g7SOeswjJPmNeIJbXwrEg/OZakSN8Xgo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=cjY0OqAU5Cvz1AOT+Izokoahg4OUBKK0TeZHh53iwcW3n0t6y3D7Sy4NKUIR8QVcL
-	 Y5eUftNFAT6QVNHN5LaFlVveeH2wrWI2LpltCN6I31dH6VPESdW3fcmfhWdNcFNw0L
-	 G16UQZX6lCvRj5Am58cojfH64C40T5WEDcA82/Z0=
+	b=xqcP6VK9sTEN6UHyPAJ7OcCwYfkDjl1ee6FQdYzUOWqoQ9K9PohGUtCaJ0ciRnb4Y
+	 sF0IUP55G5epJH456LGPoCvbLiak191bBBrHMzZQo9P7caijJwUz8KObZ1prawfDlB
+	 KXJbsQ+RLWhx2ssJOg+dxHf2SWiD5NdclzmXotIg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?J=C3=A9r=C3=A9my=20Jean?= <Jeremy.Jean@oss.cyber.gouv.fr>,
-	Herbert Xu <herbert@gondor.apana.org.au>
-Subject: [PATCH 6.18 743/990] crypto: essiv - fix use-after-free in AEAD path
-Date: Wed, 25 Nov 2026 15:35:10 +0100
-Message-ID: <20261125143839.467292093@linuxfoundation.org>
+	Josef Bacik <josef@toxicpanda.com>,
+	"Christian Brauner (Amutable)" <brauner@kernel.org>
+Subject: [PATCH 6.18 744/990] dcache: let d_invalidate() wait for a d_set_mounted() in flight
+Date: Wed, 25 Nov 2026 15:35:11 +0100
+Message-ID: <20261125143839.490386564@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143822.072087159@linuxfoundation.org>
 References: <20261125143822.072087159@linuxfoundation.org>
@@ -61,50 +61,164 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Jérémy Jean <Jeremy.Jean@oss.cyber.gouv.fr>
+From: Christian Brauner <brauner@kernel.org>
 
-commit e9ce64dce975a14700e835003847415e29918474 upstream.
+commit 20a6a9ec19e522ae85f87337886b3fb47efce5f3 upstream.
 
-The request that ESSIV submits to its wrapped AEAD transform may
-finish before crypto_aead_encrypt() or crypto_aead_decrypt() returns.
-In case this happens, essiv_aead_done() calls aead_request_complete()
-on the original ESSIV request, which can end up freeing the request
-before essiv_aead_crypt() resumes, creating a UAF:
+d_invalidate() and d_set_mounted() are supposed to exclude each other.
+Either the mount fails with -ENOENT because an ancestor of the
+mountpoint was unhashed or d_invalidate() finds the mountpoint and
+detaches the mount. d_invalidate() unhashes the dentry first and then
+searches the subtree with d_walk() which starts out lockless and only
+looks at the seqcount of rename_lock.
 
-  BUG: KASAN: slab-use-after-free in essiv_aead_crypt+0x8e6/0x950
-  Read of size 8 at addr ffff888102af1360 by task init/66
+Since d_set_mounted() switched to read_seqlock_excl() nothing makes that
+walk wait or retry:
 
-Check the return status before dereferencing rctx after submitting that
-request. If the operation did not return -EINPROGRESS or -EBUSY, then
-the request cannot have been freed yet.
+  CPU0: mount on A/M                 CPU1: d_invalidate(A)
+  d_set_mounted(M)
+    read_seqlock_excl(&rename_lock)
+    A is hashed, go on
+                                     __d_drop(A)
+                                     shrink_dcache_parent(A)
+                                     d_walk(A, find_submount)
+                                       read_seqbegin(&rename_lock)
+                                       M is not a mountpoint
+                                       need_seqretry() == false
+                                     return
+    M->d_flags |= DCACHE_MOUNTED
+    return 0
+  mount gets attached to M
 
-Fixes: be1eb7f78aa8 ("crypto: essiv - create wrapper template for ESSIV generation")
-Cc: stable@vger.kernel.org
-Assisted-by: LLM
-Signed-off-by: Jérémy Jean <Jeremy.Jean@oss.cyber.gouv.fr>
-Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
+The mount ends up below an unhashed dentry. It can't be reached anymore
+and pins the subtree until its parent mount or the mount namespace goes
+away. The window grows with the depth of the mountpoint. With a FUSE
+directory 3000 levels deep a bind mount racing with
+FUSE_NOTIFY_INVAL_ENTRY for the parent of the mountpoint survived in 151
+of 200 attempts.
+
+Before 5e317d23f6c6 the seqcount bump made the walk wait while
+d_set_mounted() ran and retry under the lock when one had run in the
+meantime. That was the right thing to wait for on the wrong counter:
+every rename_lock reader paid for it, d_lookup(), d_path(), the ".."
+step of the RCU walk.
+
+So give d_set_mounted() a seqlock of its own. It is the only writer and
+d_invalidate() is the only reader. After unhashing the dentry
+d_invalidate() runs an empty read_seqbegin()/read_seqretry() section on
+it. That spins while the count is odd, i.e. while a d_set_mounted() is
+between its ancestor check and its flag, and goes round once more if
+one started in the meantime. Nobody else retries anything. The ordering
+comes from the locks both already take:
+
+- If that d_set_mounted() saw the dentry hashed its check ran under the
+  dentry's d_lock before __d_drop() took it. So the count is odd by the
+  time d_invalidate() reads it and d_invalidate() waits.
+
+- Once the count is even again the flag has been set under the
+  mountpoint's d_lock and the walk takes that lock to look at it.
+
+A d_set_mounted() that starts after the unhash fails its ancestor check
+and never touches the flag. So the only flag the walk can pick up
+belongs to the one mount that saw the dentry hashed and is still in
+flight, and there is at most one of those because namespace_sem
+serializes mounts. Either it gets attached and detach_mounts() takes it
+off after waiting for namespace_sem or it fails later on and drops the
+flag again. In that case the walk goes round once more and finds
+nothing. The same goes for the mountpoint that attach_recursive_mnt()
+preallocates on the root of the tree it attaches. IOW, d_invalidate()
+does at most one extra round, which the removed-name trap (cf. [1])
+relies on.
+
+Note that on PREEMPT_RT read_seqbegin() takes the lock instead of
+spinning on a preempted d_set_mounted().
+
+The cost is a seqlock around the ancestor walk for every new mountpoint
+and two loads of a cacheline that only d_set_mounted() writes for every
+d_invalidate() of a positive dentry. Walking the ancestors a second time
+after setting the flag would close the race as well but doubles the
+cost of d_set_mounted() with the depth of the mountpoint: about 1us at
+64 levels and 75us at 4096 levels.
+
+[1]: https://patch.msgid.link/20261028-work-mount-trap-b4-v1-0-f20d9d0730d6@kernel.org
+
+Fixes: 5e317d23f6c6 ("d_set_mounted(): we don't need to bump seqcount component of rename_lock")
+Reported-by: Josef Bacik <josef@toxicpanda.com>
+Cc: stable@vger.kernel.org # v6.17+
+Link: https://patch.msgid.link/20261030-work-dcache-ai-v1-1-cd6b86e0ccc7@kernel.org
+Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- crypto/essiv.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ fs/dcache.c |   19 +++++++++++++++----
+ 1 file changed, 15 insertions(+), 4 deletions(-)
 
---- a/crypto/essiv.c
-+++ b/crypto/essiv.c
-@@ -250,7 +250,7 @@ static int essiv_aead_crypt(struct aead_
- 	err = enc ? crypto_aead_encrypt(subreq) :
- 		    crypto_aead_decrypt(subreq);
- 
--	if (rctx->assoc && err != -EINPROGRESS && err != -EBUSY)
-+	if (err != -EINPROGRESS && err != -EBUSY)
- 		kfree(rctx->assoc);
- 	return err;
+--- a/fs/dcache.c
++++ b/fs/dcache.c
+@@ -1437,21 +1437,25 @@ int path_has_submounts(const struct path
  }
+ EXPORT_SYMBOL(path_has_submounts);
+ 
++/* odd while d_set_mounted() runs, d_invalidate() waits on it */
++static __cacheline_aligned_in_smp DEFINE_SEQLOCK(d_set_mounted_lock);
++
+ /*
+  * Called by mount code to set a mountpoint and check if the mountpoint is
+  * reachable (e.g. NFS can unhash a directory dentry and then the complete
+  * subtree can become unreachable).
+  *
+  * Only one of d_invalidate() and d_set_mounted() must succeed.  For
+- * this reason take rename_lock and d_lock on dentry and ancestors.
+- * Likewise for dont_mount() which marks a dentry that is being removed
+- * under d_lock.
++ * this reason take rename_lock, d_set_mounted_lock and d_lock on dentry
++ * and ancestors.  Likewise for dont_mount() which marks a dentry that
++ * is being removed under d_lock.
+  */
+ int d_set_mounted(struct dentry *dentry)
+ {
+ 	struct dentry *p;
+ 	int ret = -ENOENT;
+ 	read_seqlock_excl(&rename_lock);
++	write_seqlock(&d_set_mounted_lock);
+ 	for (p = dentry->d_parent; !IS_ROOT(p); p = p->d_parent) {
+ 		/* Need exclusion wrt. d_invalidate() */
+ 		spin_lock(&p->d_lock);
+@@ -1469,8 +1473,9 @@ int d_set_mounted(struct dentry *dentry)
+ 			ret = 0;
+ 		}
+ 	}
+- 	spin_unlock(&dentry->d_lock);
++	spin_unlock(&dentry->d_lock);
+ out:
++	write_sequnlock(&d_set_mounted_lock);
+ 	read_sequnlock_excl(&rename_lock);
+ 	return ret;
+ }
+@@ -1674,6 +1679,7 @@ static enum d_walk_ret find_submount(voi
+ void d_invalidate(struct dentry *dentry)
+ {
+ 	bool had_submounts = false;
++	unsigned seq;
+ 	spin_lock(&dentry->d_lock);
+ 	if (d_unhashed(dentry)) {
+ 		spin_unlock(&dentry->d_lock);
+@@ -1686,6 +1692,11 @@ void d_invalidate(struct dentry *dentry)
+ 	if (!dentry->d_inode)
+ 		return;
+ 
++	/* wait for a d_set_mounted() that saw us hashed to set its flag */
++	do {
++		seq = read_seqbegin(&d_set_mounted_lock);
++	} while (read_seqretry(&d_set_mounted_lock, seq));
++
+ 	shrink_dcache_parent(dentry);
+ 	for (;;) {
+ 		struct dentry *victim = NULL;
 
 
