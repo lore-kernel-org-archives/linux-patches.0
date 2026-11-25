@@ -1,54 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795618263;
-	b=JxoO3PLrfJvkB4qUloMUAMO6crffswiTlJot+TuYURekfp7uiUcg3OmoA5nGgtWLj6FB
-	 dBIO1R9t7qoFBSzK80Y75+oz4DMPE7N5irCvxqclZYA/SWOF3IjBD5xpcPOwZ4dr0Zkzm
-	 lm6JlXfObV1cryBAGhIiDrNSTg581+Jjg7crQu+rPi77kcDfZG3ACBof5v+T6nefICPvi
-	 uBaglHXWmAx7YZ20J2LgV4n9Z4eqH3rJjdAl8usdQ8JXes7itIZ+t5MeHgpq7Sn70zed5
-	 2XgQ4NumuAkANxnuYJ7AuUkK82fS2/0Z56HDh3esb4y9F6yLNPxpiQ1WDTd1cMrJDXA==
+	t=1795618266;
+	b=wzB23SVTk+6vpRt2r9t/mrfHZCvmXLsPopi6dEzTaGLS0wAgMEgODdrNqsTpFyA+EkXX
+	 cz1CDSU1D91jWKJsQV2ZBYbTGYi1Q3fvd0i9xCm6KxJOxG+DH1T9Hq3t8PiuMOZPa2mTw
+	 9jh9pcPBqRB7ydjd6qLIfnn8zfpiyeXomf06eLKM+Ju1What00qn7F6jxxofmknPg7goV
+	 rIN1JkIxEMJCyBSRs69jShChjYRhQ20BZKO3WiCwvekD7eJWxD3G3+VRaUXLLCHQfoEZe
+	 1VjQHBgnPhXqkmlu6vN92DwDKAkO2w9E8VvBmPIA5bHGxgldMzXyR0vdB9gLGXyxm/A==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795618263;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795618266;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=43JsQeQFvjlLGe6eMNAim+8Yv/yp9/s2Ny1IlIy4kRk=;
-	b=WKw6TdPDyVBvtlb3x2YVIJr2ASOYRV/G++YSjmsvgAyEHpfjTMGtX+90kPGuneHC14zi
-	 lXTVzDWgVSL72veFGf2B8NaRXWpqumyLMUPAJUFRBA2DwOg0ZZrWk0GJc7iQGx/c+Q5aw
-	 VsukqjGsWNLeDCcqqIwTDLLaus3hc92/hSodG6ZVvjm5f2Zj7ODsUkqdvwkTYl8xTXMIJ
-	 mNHX7pVO0SS4xhaQoMc9uQkSNC0qQCqCGXzOCjSZZQoJQv+Ivx3rJBbzUmtNp/vyDg+1U
-	 BL5cLQuisl5H0LbxsXZ2v4JugYPr7q1PsfP1dttkX2W86/gVawWGzmTdw0UTb5vep/A==
+	bh=WrswDdqgs9u/a2iAEvJjBA0UBilBxrz0w7Oas1NrHcA=;
+	b=FJYbx9wxt0bHeCSb3Q7WngV6gBSa/97hs/TSIgr5yc8gjoyQv1ArFTIi3bsugxw4FTE+
+	 Ztl1qF5VhTU1VQAni0DM7haYu4rCHEKNPqZ8+P7adi1VEV0N0hlMbYD3OfHkLjHile9oX
+	 FMP7npXeqsB/ixkRhG58ivAprT2I6e1kMnr7yu8vZddC4cpcAydCF2bvC1JxcwyCSF06i
+	 wRN/cLq5m5NjNOCxkWxC0Q4MSCD8hoxvD4MriU7Lz5GvuzjfBXDRZ1JgXVln33bAhrh0+
+	 b3QCleOLQNRgJ/sW15pwt5+UYffl2XMkf6BCaJHCH05ANE8TlKCBD41oirc8VAy65wA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=PNb6WkIP;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="dK+/BBWd";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4B940606A321;
-	Wed, 25 Nov 2026 14:51:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3E168606A321;
+	Wed, 25 Nov 2026 14:51:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=PNb6WkIP
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9AC171F000CF;
-	Wed, 25 Nov 2026 14:51:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=dK+/BBWd
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6994E1F000C4;
+	Wed, 25 Nov 2026 14:51:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795618263;
-	bh=43JsQeQFvjlLGe6eMNAim+8Yv/yp9/s2Ny1IlIy4kRk=;
+	s=korg; t=1795618266;
+	bh=WrswDdqgs9u/a2iAEvJjBA0UBilBxrz0w7Oas1NrHcA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=PNb6WkIP2TiDZ8D8aLm99IPgv1N8u7wgu0gJYE6wp1xG2uYH6qGxb3qfPliURtD8h
-	 IMKye/O1f9a0jz6/PPaKi2VUbm81WzqUnaJ5N7N9LVAgNMJadZFUB4aCLy4s8gqzZU
-	 GRUMmhi9F+hbh/VWNckynhXzvFgGpqsb8h3JrI+Y=
+	b=dK+/BBWdWjMOzURKxdaLv1rbUO+GgEMFSqN3EjQ7x8O3xs1w7s0IDry6wx8RwpQ21
+	 pCFZrYlireMy5Rp1S8ZYls28YB4SzvrQ8hfN+4MmyeFTmTnV5GTwY3HvBjfrP2BHmN
+	 TOZHYoHnEiLBniuqFmZl9YPo8Ff/LzLPuzN9WiAM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kuniyuki Iwashima <kuniyu@google.com>,
-	Eric Dumazet <edumazet@kernel.org>,
-	Jiayuan Chen <jiayuan.chen@linux.dev>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Jia Jia <physicalmtea@gmail.com>,
+	"Michael S. Tsirkin" <mst@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0225/1005] soreuseport: annotate data-races around reuse->socks[] and num_socks
-Date: Wed, 25 Nov 2026 15:26:03 +0100
-Message-ID: <20261125143827.012039261@linuxfoundation.org>
+Subject: [PATCH 7.3 0226/1005] vhost-scsi: do not count PI bytes in the data length
+Date: Wed, 25 Nov 2026 15:26:04 +0100
+Message-ID: <20261125143827.034376416@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143821.729802100@linuxfoundation.org>
 References: <20261125143821.729802100@linuxfoundation.org>
@@ -70,115 +68,80 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eric Dumazet <edumazet@kernel.org>
+From: Jia Jia <physicalmtea@gmail.com>
 
-[ Upstream commit 213d491308b99d026514c93980cf8dd572226b1b ]
+[ Upstream commit 1f5bc40e33d8b3e5e3b89047956099b0c19f1d3d ]
 
-reuseport_select_sock() and reuseport_migrate_sock() read
-reuse->num_socks and reuse->socks[] locklessly under RCU, while
-writers holding reuseport_lock can change them.
+vhost_scsi_handle_vq() moves pi_bytesout or pi_bytesin into the
+protection sgl and subtracts those bytes from exp_data_len.  The length
+passed to TCM is still exp_data_len + prot_bytes.
 
-Readers snapshot num_socks once, then index socks[] with it.
-Meanwhile, writers can perform several operations, storing into
-slots below the reader's stale count:
+prot_bytes comes from virtio_scsi_cmd_req_pi.  With
+VIRTIO_SCSI_F_T10_PI negotiated, vhost reads that header and does not
+check that the CDB is a READ or WRITE.  sbc_check_prot() replaces
+data_length from the CDB only when the protect field is non-zero.
+target_cmd_size_check() leaves a write's data_length unchanged when the
+CDB size is smaller, so a command that does not get that replacement
+keeps a data_length larger than the data sgl.
 
-- __reuseport_detach_sock() moves the last socket into slot i.
-- __reuseport_add_sock() then writes the new socket at the
-  (now smaller) num_socks index.
-- reuseport_stop_listen_sock() calls __reuseport_detach_sock()
-  then __reuseport_add_closed_sock(), which writes slot
-  max_socks - num_closed_socks - 1. This can be the slot a reader
-  still considers part of the listener region when the array is full.
-- __reuseport_detach_closed_sock() can then rewrite that slot.
+The KASAN report is a MODE SELECT whose header had pi_bytesout set.
+The data sgl held only the parameter list.  spc_emulate_modeselect()
+walked data_length and read the next physical page.
 
-All pointers stored in socks[] remain valid for the RCU grace period,
-but without annotations the compiler is allowed to tear or reload
-these accesses. For instance, reuseport_select_sock_by_hash() could
-reload reuse->socks[i] between the sk_state/sk_incoming_cpu checks
-and the return, returning a socket that did not pass them.
+Pass the data sgl length.  Protected READ and WRITE still take their
+length from the CDB in sbc_check_prot().
 
-Use WRITE_ONCE() for all socks[] stores done while the array is
-visible to readers, and for num_socks updates (readers already use
-READ_ONCE()). Use READ_ONCE() in the two lockless readers.
+KASAN reports:
 
-Fixes: ef456144da8e ("soreuseport: define reuseport groups")
-Link: https://lore.kernel.org/netdev/20260902071900.395567-1-ruanjinjie@huawei.com/
-Cc: Kuniyuki Iwashima <kuniyu@google.com>
-Signed-off-by: Eric Dumazet <edumazet@kernel.org>
-Reviewed-by: Kuniyuki Iwashima <kuniyu@google.com>
-Reviewed-by: Jiayuan Chen <jiayuan.chen@linux.dev>
-Link: https://patch.msgid.link/20261030120956.3026324-1-edumazet@kernel.org
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+  BUG: KASAN: use-after-free in spc_emulate_modeselect+0x145/0x380 [target_core_mod]
+  Read of size 1
+
+  spc_emulate_modeselect
+  __target_execute_cmd
+  target_execute_cmd
+  vhost_scsi_write_pending
+  transport_generic_new_cmd
+  __target_submit
+  target_queued_submit_work
+  process_one_work
+  worker_thread
+  kthread
+  ret_from_fork
+  ret_from_fork_asm
+
+Fixes: 9f977ef7b671 ("vhost-scsi: Include prot_bytes into expected data transfer length")
+Signed-off-by: Jia Jia <physicalmtea@gmail.com>
+Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
+Message-ID: <20261012103954.136698-1-physicalmtea@gmail.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/core/sock_reuseport.c | 17 +++++++++--------
- 1 file changed, 9 insertions(+), 8 deletions(-)
+ drivers/vhost/scsi.c | 12 ++++++++++--
+ 1 file changed, 10 insertions(+), 2 deletions(-)
 
-diff --git a/net/core/sock_reuseport.c b/net/core/sock_reuseport.c
-index 29948cb44b7d1..fccbdd0430b05 100644
---- a/net/core/sock_reuseport.c
-+++ b/net/core/sock_reuseport.c
-@@ -124,10 +124,10 @@ static int reuseport_sock_index(struct sock *sk,
- static void __reuseport_add_sock(struct sock *sk,
- 				 struct sock_reuseport *reuse)
- {
--	reuse->socks[reuse->num_socks] = sk;
-+	WRITE_ONCE(reuse->socks[reuse->num_socks], sk);
- 	/* paired with smp_rmb() in reuseport_(select|migrate)_sock() */
- 	smp_wmb();
--	reuse->num_socks++;
-+	WRITE_ONCE(reuse->num_socks, reuse->num_socks + 1);
- 	reuseport_get_incoming_cpu(sk, reuse);
- }
- 
-@@ -139,8 +139,8 @@ static bool __reuseport_detach_sock(struct sock *sk,
- 	if (i == -1)
- 		return false;
- 
--	reuse->socks[i] = reuse->socks[reuse->num_socks - 1];
--	reuse->num_socks--;
-+	WRITE_ONCE(reuse->socks[i], reuse->socks[reuse->num_socks - 1]);
-+	WRITE_ONCE(reuse->num_socks, reuse->num_socks - 1);
- 	reuseport_put_incoming_cpu(sk, reuse);
- 
- 	return true;
-@@ -149,7 +149,7 @@ static bool __reuseport_detach_sock(struct sock *sk,
- static void __reuseport_add_closed_sock(struct sock *sk,
- 					struct sock_reuseport *reuse)
- {
--	reuse->socks[reuse->max_socks - reuse->num_closed_socks - 1] = sk;
-+	WRITE_ONCE(reuse->socks[reuse->max_socks - reuse->num_closed_socks - 1], sk);
- 	/* paired with READ_ONCE() in inet_csk_bind_conflict() */
- 	WRITE_ONCE(reuse->num_closed_socks, reuse->num_closed_socks + 1);
- 	reuseport_get_incoming_cpu(sk, reuse);
-@@ -163,7 +163,8 @@ static bool __reuseport_detach_closed_sock(struct sock *sk,
- 	if (i == -1)
- 		return false;
- 
--	reuse->socks[i] = reuse->socks[reuse->max_socks - reuse->num_closed_socks];
-+	WRITE_ONCE(reuse->socks[i],
-+		   reuse->socks[reuse->max_socks - reuse->num_closed_socks]);
- 	/* paired with READ_ONCE() in inet_csk_bind_conflict() */
- 	WRITE_ONCE(reuse->num_closed_socks, reuse->num_closed_socks - 1);
- 	reuseport_put_incoming_cpu(sk, reuse);
-@@ -521,7 +522,7 @@ static struct sock *run_bpf_filter(struct sock_reuseport *reuse, u16 socks,
- 	if (index >= socks)
- 		return NULL;
- 
--	return reuse->socks[index];
-+	return READ_ONCE(reuse->socks[index]);
- }
- 
- static struct sock *reuseport_select_sock_by_hash(struct sock_reuseport *reuse,
-@@ -532,7 +533,7 @@ static struct sock *reuseport_select_sock_by_hash(struct sock_reuseport *reuse,
- 
- 	i = j = reciprocal_scale(hash, num_socks);
- 	do {
--		struct sock *sk = reuse->socks[i];
-+		struct sock *sk = READ_ONCE(reuse->socks[i]);
- 
- 		if (sk->sk_state != TCP_ESTABLISHED) {
- 			/* Paired with WRITE_ONCE() in __reuseport_(get|put)_incoming_cpu(). */
+diff --git a/drivers/vhost/scsi.c b/drivers/vhost/scsi.c
+index 8f57a789814f5..886a9700351bb 100644
+--- a/drivers/vhost/scsi.c
++++ b/drivers/vhost/scsi.c
+@@ -1546,9 +1546,17 @@ vhost_scsi_handle_vq(struct vhost_scsi *vs, struct vhost_virtqueue *vq)
+ 		 * vhost_scsi_queue_data_in() and vhost_scsi_queue_status()
+ 		 */
+ 		cmd->tvc_vq_desc = vc.head;
++		/*
++		 * vhost_scsi_mapal() maps the PI bytes into cmd->prot_table.
++		 * It maps the remaining exp_data_len bytes into cmd->table,
++		 * which is the data SGL passed to the target core.  Its
++		 * expected length must therefore exclude prot_bytes.
++		 *
++		 * sbc_check_prot() derives the data length for protected READ
++		 * and WRITE commands from the CDB.
++		 */
+ 		vhost_scsi_target_queue_cmd(nexus, cmd, cdb, lun, task_attr,
+-					    data_direction,
+-					    exp_data_len + prot_bytes);
++					    data_direction, exp_data_len);
+ 		ret = 0;
+ err:
+ 		/*
 -- 
 2.53.0
 
