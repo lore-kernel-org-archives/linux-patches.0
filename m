@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795624230;
-	b=wKF1Vbw8JDKJMzst7/Lz1SV2tNcwyWbkK+FKeQjjv4caeZSXGTJ+QeHvhaRjCggEPPXD
-	 Nt9hvD1l/mq4Da79Wf9JQ18G2ZF/rJ4Y2QNspuns/+6XXPtiujbaE7lltCZHZy87ZJMWM
-	 J0vCLDNw8z4bMwMcbbfJKar/nyLC8ikpl2raxPgcWlVbq1bLhAb3z7iEnpzpaUpaykLQl
-	 4DETcpiSECK6JZNZLMy9TjGAxbESlnF4cS76XbeFnMh+4zaNDkOG/8+fnZ/EHOJzfeA08
-	 PmM+I0hbSckd3b8SLmBjoFfJAl1XBeuf6fQjkHkEnA3BjgP98O6Dj6zprYRD/AgOWAg==
+	t=1795624233;
+	b=CKHdvIgTQPCqlgNwUH1V9UfOqHuKIe9H4WsUUZQcKQLtfbvU+ifa93Ppw3CaXh8yObUk
+	 whNtFPZOuZug7bd/p7D6PhBZtOwmnf+1iYy91BeDmn1BS9f46LZ3NVz8ESi4FDeS3t/LM
+	 JFotOQOFybpAHQBLniiFjyYmI3WyRXA46RnY0eDqeoz9PybA5iJhRIyc0gH/67po0nGTt
+	 LzFj89O0aqHdARJ0BDGvHkJYWNyWWxpi2NjeAY8Up9maXxipsPwSN7k+YciCsD3yE4t89
+	 ln9/qDAg8/VpEjA5TnBHD4XvOPGg0U1WQwbfCXJSZj9bL6qqzpDoYJKu5PBmKvKToJQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795624230;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795624233;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=r7gvARbgR1WJah1Zplssb7CEj8Fqx75eeyFbBZdJbrI=;
-	b=bdcNez/m7jvc41+8Jt5n/BJPu85dfKwnbbfrpy0hvz3YvR3RyvIYcntZLKmltLE9KXDa
-	 kDf1NihrigTIb0JzhOq61nVk4OHNiOi7Dsq/wdjs6zmn2wGM8YVPI4LnFu0Of9z2JbYt7
-	 dF6lBKEEExbAnDahlRUKTNX79vMwyMVltUnSUzL3J9/o9vifmRRWG/Xzdxa5pAET262os
-	 +MK+nUhUgQp2cZ4xHVG/5Iypg1gsVJNYyhBcZfHrLVd0hoKrC+OlDa+VZL8wfRXxXCu9I
-	 8uNtD4P9HBFo29o96fqGz7CEd+YTnoiQ3sGLYNOxpTsd3KNCwzYRZzP95u2eEoMerZg==
+	bh=O3yqL8HTWoPNvswYyvp9nQrAHqA+/Do+qbag8QQzBsE=;
+	b=gLEg2MSCcpgkA/qiGyTIqG1S67vfrzVBDZtX4Yf7NNqk1Tb48V/IY+HdBtfyUFdA+Kss
+	 Db0cGyWIHl0riBq67mOI23krN3sHGSxTPv2+P/3T0E1UviYkkbO3VanbWvC3ftz4/3oM/
+	 O0Bsnz1TaicTXis9Px4bs0K6Xr799K93EnZQKvyQst+ic2uLjRKf7crvDXnCPmyzANWf2
+	 gm+J6OJ/kxtcSfsAQrsGZulJPUSg4ZA9RKADeEVNvT8VGlEwfqURQgkVt8NVzhOUiNcmf
+	 Kyq2D+dOHgEu8lNb8UqxLLJOkEN8yOuSzKS8ZRngzlN2vTRgvgrDRt021hysjbs9w1Q==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=UB3H7usB;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=LJZRvSZk;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 21564606A33E;
-	Wed, 25 Nov 2026 16:30:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 96117606A33F;
+	Wed, 25 Nov 2026 16:30:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=UB3H7usB
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6F5381F000C0;
-	Wed, 25 Nov 2026 16:30:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=LJZRvSZk
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 502E31F000CA;
+	Wed, 25 Nov 2026 16:30:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795624230;
-	bh=r7gvARbgR1WJah1Zplssb7CEj8Fqx75eeyFbBZdJbrI=;
+	s=korg; t=1795624232;
+	bh=O3yqL8HTWoPNvswYyvp9nQrAHqA+/Do+qbag8QQzBsE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=UB3H7usBGvpa1BWo+1s+OEwW5nMTRO71r6hsWO2qemUK/WDNJGS/SLeWf7oh0Av2K
-	 0tJeTIbs2lLt3Oa5YF8RXCh7fTkhAmnIjp1PkFNyNQpCf8g4+3vzoATpQdX4gHym49
-	 Ov8fj/Ask6oXh3NMA+GILw6AhiPPXLnxFtSWJGSk=
+	b=LJZRvSZkM388RujELD3TO6V0P2qB3mjBrkLc8GiXI7GwuAgInTThYR+QWHylSwagz
+	 J6s1Imu5fkgpFUq+vfPPw6mmoe+RbSNG2qiYs2qzqpgWLpWn6rpFu1Hl6NMSxOU1nS
+	 PB64PkJaB6ddW48IEyXqGnIQsftiph0EohqF0ISM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Giuseppe Piscitelli <ooonea@gmail.com>,
-	Niklas Cassel <cassel@kernel.org>,
+	Daniel Machon <daniel.machon@microchip.com>,
+	Simon Horman <horms@kernel.org>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 124/816] ata: libata-core: Check device support before querying power state
-Date: Wed, 25 Nov 2026 15:27:52 +0100
-Message-ID: <20261125143852.077203177@linuxfoundation.org>
+Subject: [PATCH 6.12 125/816] net: lan966x: dont free XDP buffers in fdma tx clear with budget 0
+Date: Wed, 25 Nov 2026 15:27:53 +0100
+Message-ID: <20261125143852.099932230@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143849.205329330@linuxfoundation.org>
 References: <20261125143849.205329330@linuxfoundation.org>
@@ -68,53 +69,57 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Giuseppe Piscitelli <ooonea@gmail.com>
+From: Daniel Machon <daniel.machon@microchip.com>
 
-[ Upstream commit ec585ac78742527f80495dd8f451dcda7e9e7f59 ]
+[ Upstream commit 263a5514cb9535380734b5e300b298f82570eb57 ]
 
-The standby path queries the power state before checking whether the
-device accepts ATA power-management commands. This sends CHECK POWER MODE
-to ATAPI devices, including the QEMU DVD-ROM, which rejects it.
+lan966x_fdma_tx_clear_buf() runs from the NAPI poll and frees the
+buffers of completed tx DCBs with napi_consume_skb(),
+page_pool_recycle_direct() and xdp_return_frame_bulk().
 
-Run the existing taskfile initialization and device-class check first,
-as the active-power path already does.
+netpoll calls the NAPI poll with a budget of 0 and hardirqs disabled.
+With a budget of 0, a driver cannot call any XDP or page pool API.
 
-Fixes: 9cec467d0502 ("ata: libata-core: Do not call ata_dev_power_set_standby() twice")
-Signed-off-by: Giuseppe Piscitelli <ooonea@gmail.com>
-Reviewed-by: Niklas Cassel <cassel@kernel.org>
-Link: https://lore.kernel.org/r/20261026202513.669084-1-ooonea@gmail.com
-Signed-off-by: Niklas Cassel <cassel@kernel.org>
+Before this patch, the XDP_TX pages and ndo_xdp_xmit frames are freed
+regardless of the budget. With netconsole on the port that owns the
+FDMA NAPI, such a buffer is freed with hardirqs disabled, and
+__page_pool_put_page() warns via lockdep_assert_no_hardirq().
+
+Leave the XDP buffers of completed DCBs in place when the budget is 0,
+and free them in the next NAPI poll. napi_consume_skb() already handles
+a budget of 0, so skbs are still freed.
+
+Found by an AI code review agent. Reproduced on a lan9668 board with a
+modified kernel that runs the NAPI poll with a budget of 0 and hardirqs
+disabled. With the fix the warning is gone.
+
+Fixes: 19c6f534f636 ("net: lan966x: Add support for XDP_TX")
+Signed-off-by: Daniel Machon <daniel.machon@microchip.com>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Link: https://patch.msgid.link/20261029-lan966x-fdma-tx-clear-budget-v1-1-38c52d7aab8c@microchip.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/ata/libata-core.c | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ drivers/net/ethernet/microchip/lan966x/lan966x_fdma.c | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
-diff --git a/drivers/ata/libata-core.c b/drivers/ata/libata-core.c
-index b1947e4e534f6..1424c90f8bead 100644
---- a/drivers/ata/libata-core.c
-+++ b/drivers/ata/libata-core.c
-@@ -2045,6 +2045,10 @@ void ata_dev_power_set_standby(struct ata_device *dev)
- 	struct ata_taskfile tf;
- 	unsigned int err_mask;
+diff --git a/drivers/net/ethernet/microchip/lan966x/lan966x_fdma.c b/drivers/net/ethernet/microchip/lan966x/lan966x_fdma.c
+index 11a341fc45779..6dad3c019f01c 100644
+--- a/drivers/net/ethernet/microchip/lan966x/lan966x_fdma.c
++++ b/drivers/net/ethernet/microchip/lan966x/lan966x_fdma.c
+@@ -354,6 +354,12 @@ static void lan966x_fdma_tx_clear_buf(struct lan966x *lan966x, int weight)
+ 		if (!fdma_db_is_done(db))
+ 			continue;
  
-+	/* Issue STANDBY IMMEDIATE command only if supported by the device */
-+	if (!ata_dev_power_init_tf(dev, &tf, false))
-+		return;
++		/* XDP and page pool APIs can't be used with a budget of 0.
++		 * Leave these buffers for the next NAPI poll.
++		 */
++		if (!weight && !dcb_buf->use_skb)
++			continue;
 +
- 	/* If the device is already sleeping or in standby, do nothing. */
- 	if ((dev->flags & ATA_DFLAG_SLEEPING) ||
- 	    !ata_dev_power_is_active(dev))
-@@ -2063,10 +2067,6 @@ void ata_dev_power_set_standby(struct ata_device *dev)
- 	    system_entering_hibernation())
- 		return;
+ 		dcb_buf->dev->stats.tx_packets++;
+ 		dcb_buf->dev->stats.tx_bytes += dcb_buf->len;
  
--	/* Issue STANDBY IMMEDIATE command only if supported by the device */
--	if (!ata_dev_power_init_tf(dev, &tf, false))
--		return;
--
- 	ata_dev_notice(dev, "Entering standby power mode\n");
- 
- 	err_mask = ata_exec_internal(dev, &tf, NULL, DMA_NONE, NULL, 0, 0);
 -- 
 2.53.0
 
