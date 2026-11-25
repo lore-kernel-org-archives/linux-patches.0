@@ -1,54 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795618331;
-	b=W7Lww0QtzRJa+hLq7sARtDbOcX1APGytSMZp3ZN3umL0qI/RxmBLie6y1dFe9TWq9hfL
-	 dYWvC8Nr+oCxcPUBg09tQ3oACib8PVvo4VfCRHtLMrGFdKGXUau1xopB5D+bkxWhAvAZy
-	 JW3UqFFrkho4FCek9qSEzj9R58+J+f+hc2ueqI/e+cpIpLLibZwyrbc8DqVWAM60TNhqE
-	 ChlCXiTpEEHPC//ho8UkWPLqUkhNE+xzlU2U5KQFGUjxR+3rIb5bfZCvjUy0bkF0QsYO3
-	 AfiEqFK0lAh2YnemCZn9J7H6G3xf1fYg5IECKXk5fOfOtGtOVtFYwI6MLQcUq8joJZg==
+	t=1795618334;
+	b=wnb6TknjNWhrtkxTQKdagke5ZjWMcyKWMcfdaG3AhvQXeTQ8AoeL3mA8mK4By9ndvAZZ
+	 /5dZxet1STWiZaXKoFk0I5coFwFMZa5eVQseXXXH381TbC7caaQvI/d6NyXybTf+cqHBJ
+	 wZRhr/aW6nvq2tNvDSQxFGMUHh5e2vXHhrFmeXbJEJ5kaB/KRyGsDs0s9zectJ0mvRHXK
+	 VDdsgJS9lHZh9YBEdBendonxAqw6oV+V77Zo3q6AhBSK657m11zKTHb/7TaCcHnwbRmFB
+	 q8t44YbE9mzflaiQ8fNlpQf8A0KpdQtV+w0uhZ/BpkeZ+6fyiqxnk6TW382yLXJcsXg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795618331;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795618334;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=1pWsC4csH3zT7fEosaw8xDHqeFUtgM2IRmhyh/DZLqM=;
-	b=NbjyBccQTZjPTcBHpUF+N8WcEfGQ3tN489D2Wt75MtDYD7hqbEFY46/qixWsBrSsBO2n
-	 4UbbpQ/aBcF0rlfmcCP9mwIBOwacXXbqIMfsGSU383PWevQquPlwH+SQOJAor+z81BOis
-	 gqu1Jx0LcBgiUvtwv1BBRi7+TqnPOjlh630wChD820Sye7rvlLfMhOZE6JJ139SoL/L2Z
-	 jRRDjPg0f+/vaSG+O/FeLjIMzTLrsn+OF7UXwurbekV+ri/VhUw0W6KucJp/btyaXiQE7
-	 xnrPXShd1SX+lbORRPbfL3zLFm/QdPpSNUktihD3XNoQ/NLW+nKnHtpFLSM5kJ7ocAg==
+	bh=ow5D6YqQX9rixTVlwJJ4te59x72ZMuGtiFxlf+jT6FI=;
+	b=HOeYvAVGXEVbFGGDW4llWGR5WpF1fv0fA/ZY8GBvqjrX1kF2N7Vq4QxG7OjuTYWfBNa/
+	 f7eVbZojuAaOWgK10tiHko1yJH9UqqlclQmLqLRwjSzR9BNzL5LTtrLGsUDLWbjywFILL
+	 yIHsap2Mur+JLNxQhHeh/V70skluIPbYVEc6rzB4woW3lnsX8X1GnlreOq3DtKd+VSXsb
+	 xrb0GY4T2mtSGWsouTJFsNdgF5kGy8GAwxKcu44e8Wn78T+idj7aDil3m8mAM9eoReBUo
+	 DLkDf6P3eBfOdNz8EjL+i6PEB19TkrWrvSAfNRFzcffdX1h7NJY0ohYBICkEgQ0iMxQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=POwkTNmZ;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=biMwJNbh;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5B0D5606A321;
-	Wed, 25 Nov 2026 14:52:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3614C606A321;
+	Wed, 25 Nov 2026 14:52:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=POwkTNmZ
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A76A11F000D3;
-	Wed, 25 Nov 2026 14:52:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=biMwJNbh
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7E07E1F000C4;
+	Wed, 25 Nov 2026 14:52:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795618331;
-	bh=1pWsC4csH3zT7fEosaw8xDHqeFUtgM2IRmhyh/DZLqM=;
+	s=korg; t=1795618334;
+	bh=ow5D6YqQX9rixTVlwJJ4te59x72ZMuGtiFxlf+jT6FI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=POwkTNmZ34rwyQVuPYoYjmSBZCwmRXdDqVWN60y1UtTY/iTKPIz60TXM4VKObMLRe
-	 UNYR5Nw00zT3gg9o6ZnveK1IFZSy7aersYZUrcD+EzwCQ/0TNS01lzKJEmFIboV44v
-	 BjqHbiQsUx+myibciUj67141Vd0CytoNJNj98PNc=
+	b=biMwJNbh3JOC0vvkAlwmyV+eBRGGguH214ZB9y6tXD4Z55r7SmZ1Z5lfY8M8CzaKh
+	 S5CQLKI/E/HubMpiJQMLmZE6pQwDD1QTx3V0rI2u6wDuxBGl4KmEZ/mSC+I4UBu/be
+	 t4JoriNO9GjcIBtcoMfADa4rj8iFYX2oiQl7UyR0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nguyen Dinh Phi <phind.uet@gmail.com>,
-	Stefano Garzarella <sgarzare@redhat.com>,
-	Bobby Eshleman <bobbyeshleman@meta.com>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Damien Le Moal <dlemoal@kernel.org>,
+	Niklas Cassel <cassel@kernel.org>,
+	Jens Axboe <axboe@kernel.dk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0245/1005] vsock: reject negative tv_usec in SO_VM_SOCKETS_CONNECT_TIMEOUT
-Date: Wed, 25 Nov 2026 15:26:23 +0100
-Message-ID: <20261125143827.476958829@linuxfoundation.org>
+Subject: [PATCH 7.3 0246/1005] null_blk: fix opening closed zones at the active zone limit
+Date: Wed, 25 Nov 2026 15:26:24 +0100
+Message-ID: <20261125143827.499789634@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143821.729802100@linuxfoundation.org>
 References: <20261125143821.729802100@linuxfoundation.org>
@@ -70,40 +69,65 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Nguyen Dinh Phi <phind.uet@gmail.com>
+From: Niklas Cassel <cassel@kernel.org>
 
-[ Upstream commit c0ef6144b4d60afb90bc6d8db3ffdac043cd6ffc ]
+[ Upstream commit 6f2b59737bf9cf3623719857ac149f0d431db109 ]
 
-The timeval validation checks tv_usec < USEC_PER_SEC but not
-tv_usec >= 0, so a negative tv_usec makes the timeout computation
-wrap into a bogus value, later tripping "schedule_timeout: wrong
-timeout value" instead of being rejected.
+When the open zone limit is reached, null_check_open() closes an
+implicitly open zone only if the active zone limit is not reached.
 
-Fixes: d021c344051a ("VSOCK: Introduce VM Sockets")
-Signed-off-by: Nguyen Dinh Phi <phind.uet@gmail.com>
-Reviewed-by: Stefano Garzarella <sgarzare@redhat.com>
-Reviewed-by: Bobby Eshleman <bobbyeshleman@meta.com>
-Link: https://patch.msgid.link/20261030064428.73930-1-phind.uet@gmail.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Closing an implicitly open zone does not change the number of active
+zones, so this check is wrong. For an empty zone, the active zone limit
+was already checked by null_check_zone_resources(). For a closed zone,
+the check makes writing to, opening or finishing the zone fail with
+BLK_STS_ZONE_OPEN_RESOURCE at the active zone limit, whereas ZBC-3
+(4.5.3.2.7.2) and NVMe ZNS (2.1.1.4.1) require closing an implicitly
+open zone instead.
+
+Remove the check, and update the comment above
+null_check_zone_resources() accordingly.
+
+Fixes: dc4d137ee3b7 ("null_blk: add support for max open/active zone limit for zoned devices")
+Reviewed-by: Damien Le Moal <dlemoal@kernel.org>
+Signed-off-by: Niklas Cassel <cassel@kernel.org>
+Link: https://patch.msgid.link/20261022092158.2248831-6-cassel@kernel.org
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/vmw_vsock/af_vsock.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/block/null_blk/zoned.c | 13 +++++++------
+ 1 file changed, 7 insertions(+), 6 deletions(-)
 
-diff --git a/net/vmw_vsock/af_vsock.c b/net/vmw_vsock/af_vsock.c
-index 6ba8c85dc1613..9f9b02d1e0508 100644
---- a/net/vmw_vsock/af_vsock.c
-+++ b/net/vmw_vsock/af_vsock.c
-@@ -2101,7 +2101,8 @@ static int vsock_connectible_setsockopt(struct socket *sock,
- 					     optname == SO_VM_SOCKETS_CONNECT_TIMEOUT_OLD);
- 		if (err)
- 			break;
--		if (tv.tv_sec >= 0 && tv.tv_usec < USEC_PER_SEC &&
-+		if (tv.tv_sec >= 0 && tv.tv_usec >= 0 &&
-+		    tv.tv_usec < USEC_PER_SEC &&
- 		    tv.tv_sec < (MAX_SCHEDULE_TIMEOUT / HZ - 1)) {
- 			vsk->connect_timeout = tv.tv_sec * HZ +
- 				DIV_ROUND_UP((unsigned long)tv.tv_usec, (USEC_PER_SEC / HZ));
+diff --git a/drivers/block/null_blk/zoned.c b/drivers/block/null_blk/zoned.c
+index 7e9b5ffb9e841..ecdc8d68ca2a9 100644
+--- a/drivers/block/null_blk/zoned.c
++++ b/drivers/block/null_blk/zoned.c
+@@ -311,10 +311,8 @@ static blk_status_t null_check_open(struct nullb_device *dev)
+ 		return BLK_STS_OK;
+ 
+ 	if (dev->nr_zones_imp_open) {
+-		if (null_check_active(dev) == BLK_STS_OK) {
+-			null_close_imp_open_zone(dev);
+-			return BLK_STS_OK;
+-		}
++		null_close_imp_open_zone(dev);
++		return BLK_STS_OK;
+ 	}
+ 
+ 	return BLK_STS_ZONE_OPEN_RESOURCE;
+@@ -330,8 +328,11 @@ static blk_status_t null_check_open(struct nullb_device *dev)
+  *
+  * ZBC states that an implicit open zone shall be closed only if there is not
+  * room within the open limit. However, with the addition of an active limit,
+- * it is not certain that closing an implicit open zone will allow a new zone
+- * to be opened, since we might already be at the active limit capacity.
++ * it is not certain that closing an implicit open zone will allow an empty
++ * zone to be opened, since we might already be at the active limit capacity.
++ * Therefore, the active limit is checked first for an empty zone. A closed
++ * zone already holds an active zone resource, so only the open limit has to
++ * be checked for a closed zone.
+  */
+ static blk_status_t null_check_zone_resources(struct nullb_device *dev,
+ 					      struct nullb_zone *zone)
 -- 
 2.53.0
 
