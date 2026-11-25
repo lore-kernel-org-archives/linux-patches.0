@@ -1,51 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795619756;
-	b=XVFQoLYsCcFeqxqiVGEysVeDmKcHrnO6ive7InAZWMkZgMh2F3h3Is8SyzhlHhys/YNJ
-	 LvM2NqpO2AOfXf6yIAMoKUGXn03mRiPr2oNCjJELle78xv0GTYlfCAypocNbXWr/6/4hc
-	 SFUeHiKz6p81hSg5VIsjwmzunSJrML3PS6elSTc4TH3ZNzV1dR/zlEzJxSkvIY3ZbSmPe
-	 2EDq9IFfQs5RRrAWVds2w1GAwL/L4OjJvB9Uwo4uliDp80QY+qLlzfoHszO8In5G8QcBW
-	 jWgeFD59Ah6+1w3zKhR8uWRRBYQxEwcZVph7PxFirRdB7X1w7pdqKnTXPnn2MW+ZrUg==
+	t=1795619759;
+	b=qz2rwHEa8cXKqxNCHWQl2xjPkzBz5flnjGN+tgbDLfiE7K+8Exz8v3m8c+SNCd+D1G0D
+	 A9X65LwEjinZmsXF5mGTST+HQzM/1McZVlVVS5vy7bdc9tst8NweZt9HFNs0i3zpi3NC8
+	 nYPbfw/5KSU6JjGRmp9cuwEOWtQ2Jm6DKBICm6WVp/0DwWSeIsmmXQEngmk4VNUTiLtxP
+	 aZJutkLVwwJMdFujGFE5RWSVKkiCIdPc70bKo8+3RSGJ89RdMDBBILJ1MhCdrEgbkKH5B
+	 nt3vsKJ1xw0rjL0EFPUP4zCfl6LZfombCPGMPuRrnahOv4JSR7s9MSsuW85+sZFQ+TA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795619756;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795619759;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=07eDr7khUQNc7DSmROhbc1SJ/LbKAgLspRI+1F5fTYU=;
-	b=gX3Q3PTriOuc2xCnigvb9XONYedIIEdIe738X54d5m1MxuvA9IOibCD83eyxohiXZooL
-	 e144qAyYazkzVbLH6XfII+KCrIW7bjkLYzj9WsG3LOfg1GXYCqJDVjV+oZaxzsgUJ0zo1
-	 i057IBPhWfrMGspMm4vWMJDK0sijtZSe/v7BE+VbxSm4jBh62RDVWb84a0qXBHk6Gh1kY
-	 wW/x+8oPCo3DRMM38vGf9iIg7dv00ReONodmsqYZX/Izkr6ey55WJQOYN4C+QiaacFCCh
-	 zFlvCfUlr9AY3Ga8O5B8fAXmLZRWpsHKIJ6W3y5n9NlUpkLzLcTUVs1RdBs0nD08J9A==
+	bh=TMn8uD+JimKb15vaQur5NOCVGGj4kuRdvY2J4y2Jujk=;
+	b=BvOEu++UqJT3EPm2xSeFUEtk6BjbF+MhAYvKbmvXwXbJ/NCGT2N7fFyT6gB3sVnR7uwy
+	 gSLnIK1V5ZRkij1yoY1JoGmO/Rz9pOAVTKkga4m8VDwKKnU4khwJfP7pwj+ZO4gXPvQKD
+	 SKO+VAYPvAeZsgpCEqW6ptdfWfJNAh32hQu/WoIiDfm1EMDve7NftM3YHWPQEq9JnMGAg
+	 IGhylPJzsPsCROOiPYiiKETJAK+jgKDKoY4dK5skirhP5d+Wzrp70NqbtqxPpSkNovdKb
+	 OEUpal735A4fFFwNtGvkXSG9Ie1Wr+xs2UZOMmrJJ7eu4f2UFNPOGN52OERetINoSSg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=lW8uZR5e;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=CZMAsCWs;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3860B606A321;
-	Wed, 25 Nov 2026 15:15:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 83173606A323;
+	Wed, 25 Nov 2026 15:15:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=lW8uZR5e
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 769A41F000CA;
-	Wed, 25 Nov 2026 15:15:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=CZMAsCWs
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BECA51F000D2;
+	Wed, 25 Nov 2026 15:15:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795619756;
-	bh=07eDr7khUQNc7DSmROhbc1SJ/LbKAgLspRI+1F5fTYU=;
+	s=korg; t=1795619759;
+	bh=TMn8uD+JimKb15vaQur5NOCVGGj4kuRdvY2J4y2Jujk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=lW8uZR5eYeF47Rmp3HHZGWNrpGbrkhxi0zsbaCjIGeIGjUgW0xLmDu9t1ETzMVsH7
-	 bBKryugIXhspZU2ZzbGFvGNV9fDkT2d+Z2AzIQSW/N5s3v9md9RSPSYEmGr1P5+IzD
-	 xcjL2po1G3WA1CFuzrqLP9NOJeApF/MJgf9z5Fuo=
+	b=CZMAsCWsz7cw4G3gq3NQo0Wa5NxsseU9dO0oA5Nr/Lgvy3m45r6z3RMu8v5/WmZxY
+	 whJ+3ij0BBMQlR/ZoL1fVzvfyYeWWNGB8xQL1L7C1IOBH83SKon8k8CHyVTmbHhUJT
+	 H5rKKa3fdQDHl7Q1hp5Rr6lw1G8QmIUFaAC8rEVc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Joas Antonio dos Santos <joasantonio108@gmail.com>,
+	Hyunwoo Kim <imv4bel@gmail.com>,
+	Kuniyuki Iwashima <kuniyu@google.com>,
 	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 7.3 0653/1005] gtp: free the skb after handling an echo response
-Date: Wed, 25 Nov 2026 15:33:11 +0100
-Message-ID: <20261125143837.046939586@linuxfoundation.org>
+Subject: [PATCH 7.3 0644/1005] tcp: fix request_sock use-after-free during Fast Open accept()
+Date: Wed, 25 Nov 2026 15:33:02 +0100
+Message-ID: <20261125143836.837892971@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143821.729802100@linuxfoundation.org>
 References: <20261125143821.729802100@linuxfoundation.org>
@@ -67,108 +68,88 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Joas Antonio dos Santos <joasantonio108@gmail.com>
+From: Hyunwoo Kim <imv4bel@gmail.com>
 
-commit f17b293d155f377e4cff582b8113991d2ad346d6 upstream.
+commit 62754aad50d0b30938bd8ce30b43474ce502a2af upstream.
 
-gtp0_handle_echo_resp() and gtp1u_handle_echo_resp() return the result
-of genlmsg_multicast_netns() to gtp_encap_recv().  When the netlink
-notification is delivered that result is 0, and gtp_encap_recv() treats
-0 as "the skb has been consumed":
+Commit e3d95ad7da4f ("inet: avoid fastopen lock for regular accept()")
+made inet_csk_accept() check tfo_listener before taking fastopenq.lock
+to avoid taking the lock for connections that did not use Fast Open.
 
-	switch (ret) {
-	case 1:
-		netdev_dbg(gtp->dev, "pass up to the process\n");
-		break;
-	case 0:
-		break;
-	case -1:
-		netdev_dbg(gtp->dev, "GTP packet has been dropped\n");
-		kfree_skb(skb);
-		ret = 0;
-		break;
-	}
+reqsk_fastopen_remove() clears tfo_listener while holding fastopenq.lock,
+then reads req->sk. If inet_csk_accept() concurrently observes
+tfo_listener after it has been cleared, it skips fastopenq.lock and
+drops the last reference to the request_sock. This can free the
+request_sock while reqsk_fastopen_remove() is still using it.
 
-The echo response handlers only read from the skb and never free it or
-pass it on, so every echo response that is reported to a listener on the
-gtp multicast group leaks the skb.  Echo responses are handled for any
-peer when the UDP sockets were created by the kernel, so a remote host
-can leak memory on the receiver by sending GTP echo responses while a
-process with CAP_NET_ADMIN is subscribed to the gtp multicast group, for
-example a daemon that monitors echo responses.
+If the freed memory is reused for a new request_sock with req->sk ==
+NULL, the reset path in reqsk_fastopen_remove() can append the new
+request_sock to the original listener's list of requests that caused an
+RST. After the new request_sock is freed, the next append writes through
+the stale rskq_rst_tail into freed memory.
 
-The error paths do not leak but have a related problem.  -ENOMEM and the error from
-genlmsg_multicast_netns() (-ESRCH when nobody listens) are not -1, so
-they are returned unchanged to the UDP stack, which takes a negative
-value from encap_rcv() as a request to resubmit the packet to the
-protocol with that number.
+KASAN reported the following use-after-free when writing
+fastopenq->rskq_rst_tail->dl_next = req:
 
-Return -1 when the notification cannot be built, so that
-gtp_encap_recv() drops the skb, and consume the skb once the
-notification has been handed to netlink, whether or not anybody is
-listening.
+  BUG: KASAN: slab-use-after-free in reqsk_fastopen_remove+0x142/0x210
+  Write of size 8 at addr ffff888108230688 by task swapper/5/0
+  ...
+  Call Trace:
+   <IRQ>
+   ...
+   reqsk_fastopen_remove+0x142/0x210
+   tcp_check_req+0x96f/0xdd0
+   ...
+   tcp_rcv_state_process+0x19c/0x26b0
+   ...
+   tcp_v4_do_rcv+0x16e/0x490
+   tcp_v4_rcv+0x14a0/0x1af0
+   ...
+   ip_protocol_deliver_rcu+0x39/0x1e0
+   ip_local_deliver_finish+0x124/0x1e0
+   ip_local_deliver+0xfb/0x1e0
+   ...
+   </IRQ>
 
-Found by LLM-assisted source review, untested.
+To widen the race windows, mdelay(5) was added after newsk = req->sk,
+mdelay(20) after the if (req) reqsk_put(req) block, and mdelay(100)
+after tcp_rsk(req)->tfo_listener = false. The KASAN report above was
+reproduced with this kernel.
 
-Fixes: d33bd757d362 ("gtp: Implement GTP echo request")
+For the lockless check, use tcp_sk(newsk)->syn_fastopen_child instead of
+tfo_listener, which reqsk_fastopen_remove() clears.
+
+syn_fastopen_child is a field of the Fast Open child TCP socket
+referenced by newsk, not of the request_sock. It is set before the child
+socket is added to the accept queue. The paths that call
+reqsk_fastopen_remove() in response to a remote ACK or RST do not clear
+this field.
+
+inet_csk_accept() uses this field to take fastopenq.lock only for Fast
+Open child sockets and rechecks tfo_listener while holding the lock.
+Connections that did not use Fast Open continue to avoid the lock.
+
+Fixes: e3d95ad7da4f ("inet: avoid fastopen lock for regular accept()")
 Cc: stable@vger.kernel.org
-Signed-off-by: Joas Antonio dos Santos <joasantonio108@gmail.com>
-Link: https://patch.msgid.link/20261110-gtp-echo-rsp-leak-v1-1-192c032f3dfa@gmail.com
+Signed-off-by: Hyunwoo Kim <imv4bel@gmail.com>
+Reviewed-by: Kuniyuki Iwashima <kuniyu@google.com>
+Link: https://patch.msgid.link/avQKA_YTAThtbsYU@v4bel
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/gtp.c |   22 ++++++++++++++--------
- 1 file changed, 14 insertions(+), 8 deletions(-)
+ net/ipv4/inet_connection_sock.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/net/gtp.c
-+++ b/drivers/net/gtp.c
-@@ -560,16 +560,19 @@ static int gtp0_handle_echo_resp(struct
+--- a/net/ipv4/inet_connection_sock.c
++++ b/net/ipv4/inet_connection_sock.c
+@@ -683,7 +683,7 @@ struct sock *inet_csk_accept(struct sock
+ 	newsk = req->sk;
  
- 	msg = nlmsg_new(NLMSG_DEFAULT_SIZE, GFP_ATOMIC);
- 	if (!msg)
--		return -ENOMEM;
-+		return -1;
- 
- 	ret = gtp_genl_fill_echo(msg, 0, 0, 0, GTP_CMD_ECHOREQ, echo);
- 	if (ret < 0) {
- 		nlmsg_free(msg);
--		return ret;
-+		return -1;
- 	}
- 
--	return genlmsg_multicast_netns(&gtp_genl_family, dev_net(gtp->dev),
--				       msg, 0, GTP_GENL_MCGRP, GFP_ATOMIC);
-+	genlmsg_multicast_netns(&gtp_genl_family, dev_net(gtp->dev),
-+				msg, 0, GTP_GENL_MCGRP, GFP_ATOMIC);
-+	consume_skb(skb);
-+
-+	return 0;
- }
- 
- static int gtp_proto_to_family(__u16 proto)
-@@ -747,16 +750,19 @@ static int gtp1u_handle_echo_resp(struct
- 
- 	msg = nlmsg_new(NLMSG_DEFAULT_SIZE, GFP_ATOMIC);
- 	if (!msg)
--		return -ENOMEM;
-+		return -1;
- 
- 	ret = gtp_genl_fill_echo(msg, 0, 0, 0, GTP_CMD_ECHOREQ, echo);
- 	if (ret < 0) {
- 		nlmsg_free(msg);
--		return ret;
-+		return -1;
- 	}
- 
--	return genlmsg_multicast_netns(&gtp_genl_family, dev_net(gtp->dev),
--				       msg, 0, GTP_GENL_MCGRP, GFP_ATOMIC);
-+	genlmsg_multicast_netns(&gtp_genl_family, dev_net(gtp->dev),
-+				msg, 0, GTP_GENL_MCGRP, GFP_ATOMIC);
-+	consume_skb(skb);
-+
-+	return 0;
- }
- 
- static int gtp_parse_exthdrs(struct sk_buff *skb, unsigned int *hdrlen)
+ 	if (sk->sk_protocol == IPPROTO_TCP &&
+-	    tcp_rsk(req)->tfo_listener) {
++	    tcp_sk(newsk)->syn_fastopen_child) {
+ 		spin_lock_bh(&queue->fastopenq.lock);
+ 		if (tcp_rsk(req)->tfo_listener) {
+ 			/* We are still waiting for the final ACK from 3WHS
 
 
