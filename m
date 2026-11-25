@@ -1,54 +1,56 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795618432;
-	b=L8Vb2Q9+s+1VucVgMxqCNDfI0iKOrTznWFjAfsqslHp+IVt5lVdtOFvcxOZUfUZ58eVK
-	 qneNr9G+OFHWd6w5GmG16jRrx26QZ82d8tr8ku08XfNI1QrNH8kY1zFPMmvhpMTyPpVHo
-	 eygF9+a+4wS7EaYckf7YBXI6ioflPEXPBDWJD5rGZAYQvrl1zf0LQUs/47cZtUwdwB0ZL
-	 m7tdpEA+DLAoHp8ez4rxCHMnTUVUnEEF1SCh7FxNtl/gHj2tLSf1aGrbRl2gq8Gkot1tk
-	 b+Zd5XxNjsTtdjZtoxCHiLJIt6yC1wgCiM+HP6BUgLKZbYb4MnNVCdzg+BO1lGw9VPg==
+	t=1795618435;
+	b=jiol5Gf6ULF9uXn9N5BfhVz3h9dTUI1vVYOD+vpA31wKLRP3AjOI1X0X7bdVjoSMndNW
+	 5jepOmvdasoS+8V8GGBcSj1sLug48kjZ5Ld+szsOWeVSMdgaTJT4jl4BBCIQEv/Sy75T7
+	 4F8UBfot3ji7xKDKq6HbTBOOcse+ZGrAMGD+VSuH1NpCX5Dyd+Iw7N3uDGOYDj7EAZ/EJ
+	 nQOKwkJbm85sOM80J9zj+mCozRFT1kaHEsgP+2PUOGE2GMuzaxDWTvOGi1EuiuQBEojv7
+	 UGz+UWQtkd02TqA821+GaK9K0MDxY6em98Lc54mChzteJO6KgHpSiolBU3WDBGA02bQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795618432;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795618435;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=QeAfNFyQrqh3efyNi9mEpRfo+xVZyHFCszqE/QBUFj0=;
-	b=lWzndIw91Lqta/S9X1YQVa9URdjyICnetuAeAgBJpGXce0Q4WQIGieF0gs3yFxyqvccU
-	 sIUZSFH5It4E+flAybWyGT9s9aZtGTAqQO25aK3/cKfupkPyUPTkRzMUu1K2qNpK3ovxJ
-	 9bQ8mCnBMSqvr+P0txfofnRsYT5XnIHEMagYBJ8BfmnxEAvVNk4sHRsH7vwvMcPpELnmF
-	 bK7JlsM0BZCXqxPdWOGQETdC1KBC9JmiyZH3I4WZkw+0KeJQFtK/aA8WNo/GzAgWREd1T
-	 YRug1JMGcAVoH/1YZSfMDqeywgUO9swj+KMSLG7GCfXPOvh9iDE+gpbhffyMKDwtQLA==
+	bh=3cKYyGdNuYgCgfoDfU+MOXGZagkQuC6K5g/212i+F00=;
+	b=k1Yo1xV5puy3H7Q/crLJdYBrz+Eq6L+mIcb1Gop8NCT8YBHxlzzJP4034i+lq7El9dN2
+	 +OSjtaX4vKeeofv19GspVDZc2LNQsje6dxi8BWH6+7TsMXWeDURnOFTXzyMr/OlDBiCxV
+	 xVhbCjEzw4hcq4gKLSHdMQ2BVp0ezZOeeSfFY0ywSKmsvzj5vm1Pjhd08moeeTk1WsbyY
+	 qb46GpYW1GQCmika96hP3oSmmf/kTCwa2sHjsEl+Bj8AqI/wG0w7AYqFUK8BdE+sksRoq
+	 82TWmx0mGxFE1OZCDnq0ufRevwQ7oWGA469Q3cvXnk5b2DySEFrGAMhm4T+LB+JNOoQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="i/VdY4jX";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=EGPN0SUg;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CC5E1606A32E;
-	Wed, 25 Nov 2026 14:53:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ABA37606A321;
+	Wed, 25 Nov 2026 14:53:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=i/VdY4jX
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E33071F000C0;
-	Wed, 25 Nov 2026 14:53:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=EGPN0SUg
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F29FE1F000C6;
+	Wed, 25 Nov 2026 14:53:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795618432;
-	bh=QeAfNFyQrqh3efyNi9mEpRfo+xVZyHFCszqE/QBUFj0=;
+	s=korg; t=1795618435;
+	bh=3cKYyGdNuYgCgfoDfU+MOXGZagkQuC6K5g/212i+F00=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=i/VdY4jXvSk0etQGwCOOkkuLRI9PAotyZs+CKXxRAkgKLFU6CKsZhltL7f1/t/v4E
-	 nZF0KE/LkKTA2wDznJleBr2khTtlhvGLOO77hlfafsiV/2niJbz63MHYmRw2WY2XL2
-	 P1l5klPck7T/Zj4ijXmg8TSdRKbO7jvQhwKIFS2o=
+	b=EGPN0SUg4sH4t11x1SSD1LmD3k4Wui6JHauMnl9/ToibbPfcsDONzu+Eoj+0GCLZe
+	 HTnXH4530Bx4+Os/XyPsZe6T8b8Mc5HbPRlM17eK5z7heG7dF/3zij5IaGC2njxUPM
+	 GWp2qbv6E/AIKQdA8Hj5SeqK15jCtuXHj9KkzB2E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jason Zhang <jdz@google.com>,
-	Kuniyuki Iwashima <kuniyu@google.com>,
-	Ido Schimmel <idosch@nvidia.com>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Christoph Hellwig <hch@lst.de>,
+	Sagi Grimberg <sagi@grimberg.me>,
+	Chaitanya Kulkarni <kch@nvidia.com>,
+	Chris Mason <mason@kernel.org>,
+	Jens Axboe <axboe@kernel.dk>,
+	Keith Busch <kbusch@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0279/1005] ipv6: Flush rt->from in rt6_uncached_list_flush_dev().
-Date: Wed, 25 Nov 2026 15:26:57 +0100
-Message-ID: <20261125143828.276005118@linuxfoundation.org>
+Subject: [PATCH 7.3 0262/1005] nvmet-rdma: disconnect a queue on device removal
+Date: Wed, 25 Nov 2026 15:26:40 +0100
+Message-ID: <20261125143827.875732809@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143821.729802100@linuxfoundation.org>
 References: <20261125143821.729802100@linuxfoundation.org>
@@ -70,99 +72,76 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kuniyuki Iwashima <kuniyu@google.com>
+From: Chris Mason <mason@kernel.org>
 
-[ Upstream commit a0fe1a3f390a75152c7395fdf63fc39da77d7838 ]
+[ Upstream commit a4387799d4228866dc1746b466cd17e1c638d050 ]
 
-When a device is unregistered, rt6_uncached_list_flush_dev()
-iterates over uncached routes and switches the dying dev
-with blackhole_netdev.
+cma_remove_one() sends DEVICE_REMOVAL to the owner of every cm_id on
+the device and then waits, without timeout, until they're all
+destroyed. nvmet_rdma_device_removal() does nothing for a queue cm_id
+and leaves the queues to nvmet_rdma_remove_one(), which only works if
+that runs first. As a module it does, nvmet-rdma registers after
+rdma_cm. Built in, both register at the same initcall level and
+drivers/Makefile lists nvme/ ahead of infiniband/, so cma_remove_one()
+runs first and waits for cm_ids that only the later callback would
+destroy. Since the RDMA CM drops all later events for a cm_id once it
+has sent DEVICE_REMOVAL, a peer closing its connection doesn't help
+either. One connection from anyone who can reach the port hangs "rdma
+link delete" until something else ends the queue.
 
-However, rt->from could be cached via sk->sk_rx_dst and
-hold the device reference.
+Call nvmet_rdma_queue_disconnect() for the queue. It unlists the queue
+and queues the release work, which destroys the cm_id. Don't wait for
+it, rdma_destroy_id() waits for the handler to return, which was the
+deadlock before commit f1d4ef7d8883.
 
-Then, unregister_netdevice() gets stuck with the splat
-below. [0]
-
-Let's release rt->from in rt6_uncached_list_flush_dev().
-
-Note that ip6_rt_copy_init() could set rt->from even if
-in6_dev_get() returns NULL (e.g. mtu < IPV6_MIN_MTU is
-set concurrently).
-
-Also, rt->from->nh could be replaced with another device
-than rt_dev and rt_idev->dev, and in such a case,
-nexthop_flush_dev() sets fib6_destroying before
-rt6_uncached_list_flush_dev().
-
-[0]:
-unregister_netdevice: waiting for dummy2 to become free. Usage count = 2
-ref_tracker: netdev@000000006fb9da8c has 1/1 users at
-     netdev_get_by_index+0x14c/0x170
-     fib6_nh_init+0x1ae/0x1950
-     ip6_route_info_create_nh+0x15d/0x780
-     ip6_route_add+0x55/0x150
-     inet6_rtm_newroute+0x15d/0x1360
-     rtnetlink_rcv_msg+0x606/0x710
-     netlink_rcv_skb+0x14f/0x2f0
-     netlink_unicast+0x71b/0x940
-     netlink_sendmsg+0x595/0x840
-     __sock_sendmsg+0x119/0x150
-     ____sys_sendmsg+0x3e9/0x5c0
-     ___sys_sendmsg+0x157/0x1a0
-     __x64_sys_sendmsg+0x119/0x170
-     do_syscall_64+0x109/0x330
-     entry_SYSCALL_64_after_hwframe+0x77/0x7f
-
-Fixes: 93531c674315 ("net/ipv6: separate handling of FIB entries from dst based routes")
-Reported-by: Jason Zhang <jdz@google.com>
-Signed-off-by: Kuniyuki Iwashima <kuniyu@google.com>
-Link: https://patch.msgid.link/20261101064418.2055158-3-kuniyu@google.com
-Reviewed-by: Ido Schimmel <idosch@nvidia.com>
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Fixes: f1d4ef7d8883 ("nvmet-rdma: register ib_client to not deadlock in device removal")
+Cc: Christoph Hellwig <hch@lst.de>
+Cc: Sagi Grimberg <sagi@grimberg.me>
+Cc: Chaitanya Kulkarni <kch@nvidia.com>
+Reviewed-by: Christoph Hellwig <hch@lst.de>
+Signed-off-by: Chris Mason <mason@kernel.org>
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Signed-off-by: Keith Busch <kbusch@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv6/route.c | 14 ++++++++++++++
- 1 file changed, 14 insertions(+)
+ drivers/nvme/target/rdma.c | 17 ++++++++---------
+ 1 file changed, 8 insertions(+), 9 deletions(-)
 
-diff --git a/net/ipv6/route.c b/net/ipv6/route.c
-index 94273e6476885..1ec9fd20b07d8 100644
---- a/net/ipv6/route.c
-+++ b/net/ipv6/route.c
-@@ -179,12 +179,20 @@ void rt6_uncached_list_flush_dev(struct net_device *dev)
- 		list_for_each_entry_safe(rt, safe, &ul->head, dst.rt_uncached) {
- 			struct inet6_dev *rt_idev = rt->rt6i_idev;
- 			struct net_device *rt_dev = rt->dst.dev;
-+			struct fib6_info *from;
-+			bool release_fib;
-+
-+			rcu_read_lock();
-+			from = rcu_dereference(rt->from);
-+			release_fib = from && from->fib6_destroying;
-+			rcu_read_unlock();
+diff --git a/drivers/nvme/target/rdma.c b/drivers/nvme/target/rdma.c
+index e7dbfa383c57d..ff387fc47885d 100644
+--- a/drivers/nvme/target/rdma.c
++++ b/drivers/nvme/target/rdma.c
+@@ -1782,10 +1782,13 @@ static void nvmet_rdma_queue_connect_fail(struct rdma_cm_id *cm_id,
+  * queue cm_id and/or a device bound listener cm_id (where in this
+  * case queue will be null).
+  *
+- * We registered an ib_client to handle device removal for queues,
+- * so we only need to handle the listening port cm_ids. In this case
+- * we nullify the priv to prevent double cm_id destruction and destroying
+- * the cm_id implicitly by returning a non-zero rc to the callout.
++ * The RDMA CM waits until each cm_id of the device is destroyed, so a queue
++ * has to go now. Our ib_client also removes the queues, but it cannot be
++ * relied on here: built in, it is called after the RDMA CM's client.
++ *
++ * For a listening port cm_id we nullify the priv to prevent double cm_id
++ * destruction and destroying the cm_id implicitly by returning a non-zero
++ * rc to the callout.
+  */
+ static int nvmet_rdma_device_removal(struct rdma_cm_id *cm_id,
+ 		struct nvmet_rdma_queue *queue)
+@@ -1793,11 +1796,7 @@ static int nvmet_rdma_device_removal(struct rdma_cm_id *cm_id,
+ 	struct nvmet_rdma_port *port;
  
- 			if (rt_idev &&
- 			    (dev ? rt_idev->dev == dev :
- 			     READ_ONCE(rt_idev->dev->reg_state) == NETREG_UNREGISTERED)) {
- 				rt->rt6i_idev = in6_dev_get(blackhole_netdev);
- 				in6_dev_put(rt_idev);
-+				release_fib = true;
- 			}
+ 	if (queue) {
+-		/*
+-		 * This is a queue cm_id. we have registered
+-		 * an ib_client to handle queues removal
+-		 * so don't interfere and just return.
+-		 */
++		nvmet_rdma_queue_disconnect(queue);
+ 		return 0;
+ 	}
  
- 			if (dev ? rt_dev == dev :
-@@ -193,6 +201,12 @@ void rt6_uncached_list_flush_dev(struct net_device *dev)
- 				netdev_ref_replace(rt_dev, blackhole_netdev,
- 						   &rt->dst.dev_tracker,
- 						   GFP_ATOMIC);
-+				release_fib = true;
-+			}
-+
-+			if (release_fib) {
-+				from = unrcu_pointer(xchg(&rt->from, NULL));
-+				fib6_info_release(from);
- 			}
- 
- 			if (rt->dst.dev == blackhole_netdev &&
 -- 
 2.53.0
 
