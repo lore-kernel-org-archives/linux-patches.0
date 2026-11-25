@@ -1,42 +1,42 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795624613;
-	b=OWB1KuhX5Tz7nEpqIBLhj6vYvG+VJUwYNFf/iBl8+Ehkmz7dbjLBb09n+pEdqOSdynkh
-	 QTJ6HCKQHZmaaXqzZN67cMOijNGOfFxIeRxACLQcE8VS0bbG/rkuWHHwRiu8Vy3LE30I8
-	 35Yx9IAqznD4oOfZDlCH+VvQXaQkTv2olb0io+lNKDLqscJVWR4+HkubiWuLNjXLUWnLw
-	 /xfd+i58xC+QvMr68pY5Aa0+axJ/rKqaP6EUY4BEPRi4ioHxFBJ0XoYzDwXb+JqmJ875R
-	 9OFD1N73J5dw0oClODwYiZtqU8B5crx2GwToDx8Jzgw+EsPbxUjFpKnFDvryvabelLw==
+	t=1795624616;
+	b=Sb8UhyyzltInJq5cfxrwayjrW+rLAihil0eGn+XwdarugmftYDjDvLBCb9Ad+l03W5QC
+	 yzCCqzaeMHrBn4kkTdUVXi16ZHGT8bn5GhZjgOFtkFXeoWwXpBwsuV9J+XXU1aImMb4v2
+	 lzEWTXU6qgV5gCPlHpzcNNA4BZRvWez0TT3GDKKVRbERmoZHCLXME1t1NCmttX18HnUzY
+	 yLJxyL0ljdif9tOwBucYUw9P9Z+7kwld9mnvp0bE1XPmN8+VVJfcXPEUwFnx/fXwbK64Y
+	 1VH4MJOePZZ1lsuWJkzK6brbMjIL9U03IeWp1S28dz2Y3z7b+ik3x+jaAE1M2uM2hiw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795624613;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795624616;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=o6xBY+H0QZ9Ge+eu9LZWQQH8jMGaVjSejGIkJSIGZXo=;
-	b=hyjHIzHwtAm7nJcmw/we0qCshyuoo6RCHrOM+5pRQgwvw+b4WGxun0shlRjdYRSD9evz
-	 Org7Kc2RkNDALKoo8ogrnRmNjsPP2egsmDln0Wi6Sp6HSYlX4Br78o/yIP/RPverydEhY
-	 W+J1GUQEmb6bClGu9v2/ID2hUEm1G/gVg8Kinoky158SXlyu5848g3RMVj4MJCd76SX3Q
-	 ABkMu/C+1OLDQUNNbQF/XdX0h6K63mRBX4DYLm1FvTDkawxMTQFyBfz+22i3hLMHN+o3M
-	 yYU0HYPkjTJBoFYbDiVq8Syf7WN3vFa9R2Bc3OcC98AvcL23FPECga4iOM121bdqZyA==
+	bh=FQMzPEzZoDoNXHZAPt4V82UkXFQJadKbbwRNuFgix1k=;
+	b=1bu9j4DzxcoE/RAxov3Kvivp83tci0HozjO24GJ7J4NhxCCCQi6qzNgEgUpb115M8Eij
+	 +px6feqmPgKiUYbyiUB/cVEx12tb0GhIS0ySEz1xO9YqcHkOKdMh2e7AMBNiHoU2sm8sb
+	 6PyRxHLcZcjZ6ENIaRFyBZSyO/yUBj8Y+YNSpS7yCX+otfKjD6PlGzW2WA7s5xD55LHHM
+	 StSsCfd3FMozKVB5PvUAzTpE+F7NSiuSVY0zgnAsvOzvZmF2n+BFcV5cstnuMGMJ7y2/Y
+	 Drzjn87lu/NxRiq9aNteCLXmgwV5ZRpYAZ9p3RC8hJPrhGaV3vVxrdmDPDmQlKn3osw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=zIH2Q6jb;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="2uq0ht/M";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4DC33606A33B;
-	Wed, 25 Nov 2026 16:36:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8413E606A33C;
+	Wed, 25 Nov 2026 16:36:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=zIH2Q6jb
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A5F7D1F000C0;
-	Wed, 25 Nov 2026 16:36:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=2uq0ht/M
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 72E891F000C0;
+	Wed, 25 Nov 2026 16:36:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795624613;
-	bh=o6xBY+H0QZ9Ge+eu9LZWQQH8jMGaVjSejGIkJSIGZXo=;
+	s=korg; t=1795624616;
+	bh=FQMzPEzZoDoNXHZAPt4V82UkXFQJadKbbwRNuFgix1k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=zIH2Q6jbao88Rw4zK8787gPxVpqMr/PdbboEd+51+UgJjd3yM3YKswU0ahpnvLaHt
-	 FailGybz9KjANPSWu8dShZdXpId50yZ2xRSXbFQXzQaF27VCxyaCQ7O5+9vvJli921
-	 QjxBkxZ+xKlIPnVVHjQ8yEjkO3zJiurpdwsuHryU=
+	b=2uq0ht/MGruTwT9ZVJ1nYeCf8kKYvv2XMOFXpsJnrljrrPl3ZS2mR2Bm6RiqxGUPD
+	 8i7wihDB2iPt6n1aaQktr3OgmiBT4WIrohwiQitib6KRFAMjscXI04o1imGHy/hjq7
+	 WvOId/np59GliRLUDrOj2HiPz1HRaaeXzX9Ruynk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -44,12 +44,12 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Hui Su <sh_def@163.com>,
 	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
 	Ingo Molnar <mingo@kernel.org>,
-	Vincent Guittot <vincent.guittot@linaro.org>,
+	K Prateek Nayak <kprateek.nayak@amd.com>,
 	Kayra Cizmeci <kayracizmeci@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 250/816] sched/pelt: Fix u32 truncation of the PELT period count
-Date: Wed, 25 Nov 2026 15:29:58 +0100
-Message-ID: <20261125143854.995772297@linuxfoundation.org>
+Subject: [PATCH 6.12 251/816] sched/topology: Balance cluster static-key updates
+Date: Wed, 25 Nov 2026 15:29:59 +0100
+Message-ID: <20261125143855.019662111@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143849.205329330@linuxfoundation.org>
 References: <20261125143849.205329330@linuxfoundation.org>
@@ -73,43 +73,70 @@ Content-Transfer-Encoding: 8bit
 
 From: Hui Su <sh_def@163.com>
 
-[ Upstream commit a0c755e574e37fddb59edf175f27dc3877e7fe23 ]
+[ Upstream commit 5ebdfe12ab96368d0339593129d4ce0bc2bd06f5 ]
 
-accumulate_sum() computes the number of elapsed PELT periods in a
-u64 but returns u32. When the count is a multiple of 2^32, it is
-truncated to zero even though the PELT sums have been updated.
+build_sched_domains() increments sched_cluster_active once per newly
+built partition that contains an SD_CLUSTER domain.
+detach_destroy_domains() instead tested the global static key before
+decrementing it, so destroying a cluster-less partition could drop a
+reference owned by another partition and disable cluster-aware
+scheduling while SD_CLUSTER domains remained installed.
 
-The caller interprets zero as no period boundary crossed and skips
-recomputing the averages, leaving *_avg stale relative to *_sum.
+Check the installed domains before detaching them, only while the key is
+enabled, and decrement only when the removed partition contains an
+SD_CLUSTER domain.
 
-Return the period count as u64 so the caller can test it without
-truncation.
+With two cluster-bearing partitions installed, removing a singleton
+partition left the baseline count at 1 where 2 partitions still
+carried SD_CLUSTER; the fixed kernel correctly reports 2.  On an
+asymmetric cluster topology where the parent partition gains no
+cluster domain, the baseline count drops to 0 while a cluster
+partition remains installed; the fixed kernel keeps it at 1.
 
-Fixes: a481db34b9be ("sched/fair: Optimize ___update_sched_avg()")
+Fixes: 8881e1639f1f ("sched/fair: Scan cluster before scanning LLC in wake-up path")
 Signed-off-by: Hui Su <sh_def@163.com>
 Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
 Signed-off-by: Ingo Molnar <mingo@kernel.org>
-Reviewed-by: Vincent Guittot <vincent.guittot@linaro.org>
+Reviewed-by: K Prateek Nayak <kprateek.nayak@amd.com>
 Reviewed-by: Kayra Cizmeci <kayracizmeci@gmail.com>
-Link: https://patch.msgid.link/20261023025207.2967903-1-sh_def@163.com
+Link: https://patch.msgid.link/20261021043834.1140951-1-sh_def@163.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/sched/pelt.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ kernel/sched/topology.c | 16 ++++++++++++++--
+ 1 file changed, 14 insertions(+), 2 deletions(-)
 
-diff --git a/kernel/sched/pelt.c b/kernel/sched/pelt.c
-index 8189a35e53fe1..2bd7d9448d0cb 100644
---- a/kernel/sched/pelt.c
-+++ b/kernel/sched/pelt.c
-@@ -98,7 +98,7 @@ static u32 __accumulate_pelt_segments(u64 periods, u32 d1, u32 d3)
-  *      d1 y^p + 1024 \Sum y^n + d3 y^0		(Step 2)
-  *                     n=1
-  */
--static __always_inline u32
-+static __always_inline u64
- accumulate_sum(u64 delta, struct sched_avg *sa,
- 	       unsigned long load, unsigned long runnable, int running)
+diff --git a/kernel/sched/topology.c b/kernel/sched/topology.c
+index bd8b2b3015709..b909f56dcaecf 100644
+--- a/kernel/sched/topology.c
++++ b/kernel/sched/topology.c
+@@ -2635,13 +2635,25 @@ int __init sched_init_domains(const struct cpumask *cpu_map)
+ static void detach_destroy_domains(const struct cpumask *cpu_map)
  {
+ 	unsigned int cpu = cpumask_any(cpu_map);
++	bool has_cluster = false;
+ 	int i;
+ 
+ 	if (rcu_access_pointer(per_cpu(sd_asym_cpucapacity, cpu)))
+ 		static_branch_dec_cpuslocked(&sched_asym_cpucapacity);
+ 
+-	if (static_branch_unlikely(&sched_cluster_active))
+-		static_branch_dec_cpuslocked(&sched_cluster_active);
++	if (static_branch_unlikely(&sched_cluster_active)) {
++		rcu_read_lock();
++		for_each_cpu(i, cpu_map) {
++			if (lowest_flag_domain(i, SD_CLUSTER)) {
++				has_cluster = true;
++				break;
++			}
++		}
++		rcu_read_unlock();
++
++		if (has_cluster)
++			static_branch_dec_cpuslocked(&sched_cluster_active);
++	}
+ 
+ 	rcu_read_lock();
+ 	for_each_cpu(i, cpu_map)
 -- 
 2.53.0
 
