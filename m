@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795618586;
-	b=v1YZxnZ2EpMbdztVbevcX0Aobqp31fr8DXk+WedrTxvew4pEuxaDM6Bu4/36SYk4zlrV
-	 99cqV0VL4U3YYOiXjz9N/EaiY3LeqPJYXxSsYLy1mb/vAhbG9SseESfyLbj8c3gPP2hpx
-	 2d7PWJ6S7G+wvneajxYK9fWcOncXsiD+fz5gBoWq1mmeeuTOONaFmpDKE+TyfvQEWbshY
-	 ShC0YUgjVT5WaOdT1z5tqnSY8vvlZnBeKoQOSA/FiiagcN95mUEx8iMUNW76BhBxTMDAH
-	 hSAyuuYOI8ElQcacmRjbMUlNLCJAJaW2cQOI8lOEu/BKhu7FMjtM0ecN3AfDE84ahYA==
+	t=1795618589;
+	b=sRvNkV5g2aa16hTQ7rantA8JM5X2jxcS8c2TfeaSGp75o0Gj2b4HSGROg5UEu4fH/DZA
+	 EDhGO6Sv8exBH9q872AMJaq8HgKemD6NHdbyf8oBFyjZGEvXxRtdjb/4D51mf710JTS8z
+	 EQst+XdcxxYFfVqgvF+EzqOO/Kjgq2eKhUVZ3ZSLXGPeuS/gXoa7e7AT7z3GPRqUwZEfC
+	 AZ/GtSkBpJNARKPDNeCH+XtaqhRRpfk9PUWZOdGrFe+GNicP8H8uLnvkjjOcsJm3Cbluj
+	 Rl5zqIKWbuO339vdH8GTYawmPUWo0itp/7EmJ8YmP2uRuIm0uxdMojNw1YqN5qf5v8A==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795618586;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795618589;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=eCaFoSJAtunOua815AxX2J/cTwyx3+aXq5peWYGdXIA=;
-	b=3TX1Q0x4cBpIVjwA6sHpYlCEVAdZ1W4Xq/9nSRf6pJPTolgwJOpbgvAaoVKHtkngAVmr
-	 6aMpqI9AQjrDDNUuHGbcOh9GsUH+MUqHDipcLjXqPZBe0i1ASfOLGC4F/nzmxAeC3i71R
-	 hGafRDHXi6ULDRpkuWboFJD4HrAXhYLJgJwRcuogETQgyBjUAXEkGXEFg2xkTpDJ1NC6l
-	 wtlWiAp3YR3uOCBnW2/tptxFqr+41SBgCfYnK6YfjZwrXAqqnA4SFA/Mw3Zjyfm1kpJT/
-	 ZOhzMdr6ofEunYNpYiISD9QM5hG51M3rAKWTVWKwS61LvATa6eujXRJNt757v5askIw==
+	bh=BCTkc17iu7JiqQjLOzpxWISaaNq/YENnLxQ9fkdiaOw=;
+	b=iNPiWkfnOhd2Qn4L8xNmwBI8hOdaDVMZhST6wM8nW/CSoDFE5OjgU2woKfQ403yakmaI
+	 KsHNslwTlY4T2CzQ7SF3GadaCyuERLtcEehE2jTyqgnmSf1Pg9WlYYTDaGh/q5tsiTwIV
+	 wqZrkHOOKdKwjkPAaDg41AOQgdnjK83lSLKji8fBGJpFHwP7pyeirBNbxZm2rDql+ZGne
+	 3QBPwcm/WBvXDNGKO4MBWHLLls5EmoD8IR37/DbxukiES/P2ML+eKLmqcC/0kG+mV+M5b
+	 JKoFedC9Pk+8H/0a43H04eKFrFmHw6QVUlX2HwEOoLWCCbFQ8v4C61g9Y1pNv5YTRmg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=oJ78WBXg;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=voHt1SpQ;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 05CE4606A321;
-	Wed, 25 Nov 2026 14:56:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4EB1E606A321;
+	Wed, 25 Nov 2026 14:56:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=oJ78WBXg
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 516BB1F000E1;
-	Wed, 25 Nov 2026 14:56:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=voHt1SpQ
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9FCAF1F000D3;
+	Wed, 25 Nov 2026 14:56:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795618585;
-	bh=eCaFoSJAtunOua815AxX2J/cTwyx3+aXq5peWYGdXIA=;
+	s=korg; t=1795618589;
+	bh=BCTkc17iu7JiqQjLOzpxWISaaNq/YENnLxQ9fkdiaOw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=oJ78WBXgX6HD2P0NHFnKcqyb1TI+3DixusAuDyQVRMU4RYR2bwbCDE/UmyY/ytb8j
-	 q5fR5tYQ8ztM/Wq6D9TAyRwH6O9Neq4vBnYSg9SGVbIVzBnDH+UzL09m1JuOi1Ai/S
-	 LP7V/YYKnuI4EXVLzouddS0lTNw2Y+xUzlsDUsFU=
+	b=voHt1SpQGLQRxoV6JGGMHi5w7agAVE3RB02EKvfxyIjPhFilTWBUwvJYm543FoQxz
+	 PQ7YMzQkYXkB6LJQICeQSHzzQ/eIejwLGw+CTAEfQIWQZi5z7+gx5N3LKNC/WQgAaM
+	 ICEqaefPL1nrknV8jCf+RD+KZ2UjcLsx2WLe+WJs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Florian Fainelli <f.fainelli@gmail.com>,
-	"Maciej W. Rozycki" <macro@orcam.me.uk>,
-	Thomas Bogendoerfer <tsbogend@alpha.franken.de>,
+	Timur Stukan <timur.stukan.linux@gmail.com>,
+	Hangbin Liu <liuhangbin@kylinos.cn>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0327/1005] MIPS: Cobalt: Include legacy IDE ports in the PCI I/O window
-Date: Wed, 25 Nov 2026 15:27:45 +0100
-Message-ID: <20261125143829.394175284@linuxfoundation.org>
+Subject: [PATCH 7.3 0310/1005] bonding: fix missing down path on speed/duplex failure after FAIL->UP
+Date: Wed, 25 Nov 2026 15:27:28 +0100
+Message-ID: <20261125143828.998247984@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143821.729802100@linuxfoundation.org>
 References: <20261125143821.729802100@linuxfoundation.org>
@@ -69,107 +69,177 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Florian Fainelli <f.fainelli@gmail.com>
+From: Timur Stukan <timur.stukan.linux@gmail.com>
 
-[ Upstream commit ff209a7294988aac52b2522b1d0d7349da4541ec ]
+[ Upstream commit a76ab5e733b41dede6f238a691eefb4374f99f79 ]
 
-The Cobalt PCI I/O window starts at 0x1000, excluding the VIA IDE
-controller's fixed compatibility-mode ports at 0x170, 0x1f0, 0x376 and
-0x3f6. Since pcibios_enable_device() was converted to
-pci_enable_resources(), these unclaimed resources cause pata_via to
-fail to probe with -EINVAL.
+In bond_miimon_commit(), when a slave is proposed as BOND_LINK_UP but
+bond_update_speed_duplex() fails in bonding mode that needs speed/duplex
+(802.3ad, tlb, alb), the slave is set to BOND_LINK_DOWN directly. This
+bypasses bond_set_slave_link_state(), bond_miimon_link_change() and
+failover.
 
-Start the PCI I/O window at zero to cover the southbridge legacy ports,
-retaining 0x1000 as the allocation minimum via PCIBIOS_MIN_IO. Register
-the PCI controller from plat_mem_setup(), before the VIA reservations
-and i8259 initialization, so the legacy resources do not conflict with
-the host bridge window and prevent PCI bus scanning.
+This is fine for slave that coming from BOND_LINK_BACK, which was never
+brought up and is not in use. But since commit 1899bb325149 ("bonding:
+fix state transition issue in link monitoring") the commit phase also
+handles BOND_LINK_FAIL -> BOND_LINK_UP which means a slave that is still
+in use and may be curr_active_slave.
 
-Keep the VIA resource reservations in plat_mem_setup() after the PCI
-controller registration and use insert_resource() to nest them beneath
-the PCI window. The i8259 and RTC resources are also claimed beneath it.
+If the link recovers within downdelay and goes down again before the
+commit phase reads speed/duplex, the slave is silently marked down while
+remaining the active slave in worst cases. In alb/tlb the bond MAC stays
+on the dead port, no failover happens and TLB/RLB state is not cleaned,
+so the bond stops passing traffic until that link comes back even though
+other slaves are up. A non-active slave is affected too, in alb, RLB
+clients assigned to it are not reassigned and become unreachable.
 
-Boot-tested on a Qube2 with a MIPS64 kernel. All seven PCI functions
-enumerate, both tulip devices bind, and pata_via initializes both ATA
-hosts and detects the ST380012A 80 GB disk. All 18 boot checks pass,
-including a read-only disk test and Ethernet ping.
+Reproduced in tlb and alb mode with miimon=100 and downdelay=10000 by
+flapping a slave within downdelay and dropping it again before commit
+(a longer delay was added between inspect and commit to make window
+wider and easier to test):
+  bond0: (slave enp0s3): link status down for interface, disabling it in 10000 ms
+  bond0: (slave enp0s3): link status up again after 3400 ms
+  bond0: (slave enp0s3): failed to get link speed/duplex
 
-Fixes: ae81aad5c2e1 ("MIPS: PCI: Use pci_enable_resources()")
-Signed-off-by: Florian Fainelli <f.fainelli@gmail.com>
-Reviewed-by: Maciej W. Rozycki <macro@orcam.me.uk>
-Signed-off-by: Thomas Bogendoerfer <tsbogend@alpha.franken.de>
+procfs then shows the active slave with "MII Status: down" and "Link
+Failure Count: 0", and all traffic is lost.
+
+Fix this by dropping the loop in bond_mii_monitor() that applied all
+proposed link states before bond_miimon_commit(). bond_miimon_commit()
+now applies each state itself: UP after the speed/duplex check, as it
+already did, DOWN in the down path, and FAIL/BACK directly. So when the
+speed/duplex check runs, slave->link still holds the previous state. If
+the check fails for a slave that is FAIL or UP, take it through the
+regular down path, including failover. DOWN and BACK slaves were
+never brought up and are still just reverted to DOWN. The down path is
+moved into bond_miimon_slave_down() so both callers share it.
+
+After the fix:
+  bond0: (slave enp0s3): failed to get link speed/duplex
+  bond0: (slave enp0s3): link status definitely down, disabling slave
+  bond0: (slave enp0s4): making interface the new active one
+
+Fixes: 1899bb325149 ("bonding: fix state transition issue in link monitoring")
+Signed-off-by: Timur Stukan <timur.stukan.linux@gmail.com>
+Reviewed-by: Hangbin Liu <liuhangbin@kylinos.cn>
+Link: https://patch.msgid.link/20261101150240.66292-1-timur.stukan.linux@gmail.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/mips/cobalt/pci.c                     | 11 +++++------
- arch/mips/cobalt/setup.c                   |  4 +++-
- arch/mips/include/asm/mach-cobalt/cobalt.h |  1 +
- 3 files changed, 9 insertions(+), 7 deletions(-)
+ drivers/net/bonding/bond_main.c | 63 +++++++++++++++++++--------------
+ 1 file changed, 37 insertions(+), 26 deletions(-)
 
-diff --git a/arch/mips/cobalt/pci.c b/arch/mips/cobalt/pci.c
-index 85ec9cc31d666..29fd052766b2a 100644
---- a/arch/mips/cobalt/pci.c
-+++ b/arch/mips/cobalt/pci.c
-@@ -14,6 +14,8 @@
+diff --git a/drivers/net/bonding/bond_main.c b/drivers/net/bonding/bond_main.c
+index 8212d406f3bc9..a1c156c145b2d 100644
+--- a/drivers/net/bonding/bond_main.c
++++ b/drivers/net/bonding/bond_main.c
+@@ -2779,6 +2779,27 @@ static void bond_miimon_link_change(struct bonding *bond,
+ 	}
+ }
  
- #include <asm/gt64120.h>
- 
-+#include <cobalt.h>
++static bool bond_miimon_slave_down(struct bonding *bond,
++				   struct slave *slave)
++{
++	if (slave->link_failure_count < UINT_MAX)
++		slave->link_failure_count++;
 +
- extern struct pci_ops gt64xxx_pci0_ops;
- 
- static struct resource cobalt_mem_resource = {
-@@ -24,7 +26,7 @@ static struct resource cobalt_mem_resource = {
- };
- 
- static struct resource cobalt_io_resource = {
--	.start	= 0x1000,
-+	.start	= 0,
- 	.end	= 0xffffffUL,
- 	.name	= "PCI I/O",
- 	.flags	= IORESOURCE_IO,
-@@ -38,11 +40,8 @@ static struct pci_controller cobalt_pci_controller = {
- 	.io_map_base	= CKSEG1ADDR(GT_DEF_PCI0_IO_BASE),
- };
- 
--static int __init cobalt_pci_init(void)
-+void __init cobalt_pci_init(void)
++	bond_set_slave_link_state(slave, BOND_LINK_DOWN,
++				  BOND_SLAVE_NOTIFY_NOW);
++
++	if (BOND_MODE(bond) == BOND_MODE_ACTIVEBACKUP ||
++	    BOND_MODE(bond) == BOND_MODE_8023AD)
++		bond_set_slave_inactive_flags(slave,
++					      BOND_SLAVE_NOTIFY_NOW);
++
++	slave_info(bond->dev, slave->dev, "link status definitely down, disabling slave\n");
++
++	bond_miimon_link_change(bond, slave, BOND_LINK_DOWN);
++
++	return slave == rcu_access_pointer(bond->curr_active_slave);
++}
++
+ static void bond_miimon_commit(struct bonding *bond)
  {
-+	PCIBIOS_MIN_IO = 0x1000;
- 	register_pci_controller(&cobalt_pci_controller);
+ 	struct slave *slave, *primary, *active;
+@@ -2807,10 +2828,22 @@ static void bond_miimon_commit(struct bonding *bond)
+ 			err = bond_update_speed_duplex(slave);
+ 			netdev_unlock_ops(slave->dev);
+ 			if (err && bond_needs_speed_duplex(bond)) {
+-				slave->link = BOND_LINK_DOWN;
+ 				if (net_ratelimit())
+ 					slave_warn(bond->dev, slave->dev,
+ 						   "failed to get link speed/duplex\n");
++				/* Coming from FAIL/UP, the slave may still be
++				 * in use and may be curr_active_slave, so take
++				 * it through the full down path. Coming from
++				 * DOWN/BACK, it was never brought up, so just
++				 * revert it to DOWN.
++				 */
++				if (slave->link == BOND_LINK_FAIL ||
++				    slave->link == BOND_LINK_UP) {
++					if (bond_miimon_slave_down(bond, slave))
++						do_failover = true;
++					continue;
++				}
++				slave->link = BOND_LINK_DOWN;
+ 				continue;
+ 			}
+ 			bond_set_slave_link_state(slave, BOND_LINK_UP,
+@@ -2839,28 +2872,13 @@ static void bond_miimon_commit(struct bonding *bond)
+ 			continue;
+ 
+ 		case BOND_LINK_DOWN:
+-			if (slave->link_failure_count < UINT_MAX)
+-				slave->link_failure_count++;
 -
--	return 0;
- }
+-			bond_set_slave_link_state(slave, BOND_LINK_DOWN,
+-						  BOND_SLAVE_NOTIFY_NOW);
 -
--arch_initcall(cobalt_pci_init);
-diff --git a/arch/mips/cobalt/setup.c b/arch/mips/cobalt/setup.c
-index 9a266bf783399..502acc92969b8 100644
---- a/arch/mips/cobalt/setup.c
-+++ b/arch/mips/cobalt/setup.c
-@@ -83,9 +83,11 @@ void __init plat_mem_setup(void)
- 	/* I/O port resource */
- 	ioport_resource.end = 0x01ffffff;
+-			if (BOND_MODE(bond) == BOND_MODE_ACTIVEBACKUP ||
+-			    BOND_MODE(bond) == BOND_MODE_8023AD)
+-				bond_set_slave_inactive_flags(slave,
+-							      BOND_SLAVE_NOTIFY_NOW);
+-
+-			slave_info(bond->dev, slave->dev, "link status definitely down, disabling slave\n");
+-
+-			bond_miimon_link_change(bond, slave, BOND_LINK_DOWN);
+-
+-			if (slave == rcu_access_pointer(bond->curr_active_slave))
++			if (bond_miimon_slave_down(bond, slave))
+ 				do_failover = true;
+-
+ 			continue;
  
-+	cobalt_pci_init();
-+
- 	/* These resources have been reserved by VIA SuperI/O chip. */
- 	for (i = 0; i < ARRAY_SIZE(cobalt_reserved_resources); i++)
--		request_resource(&ioport_resource, cobalt_reserved_resources + i);
-+		insert_resource(&ioport_resource, cobalt_reserved_resources + i);
- }
+ 		case BOND_LINK_FAIL:
+ 		case BOND_LINK_BACK:
++			bond_commit_link_state(slave, BOND_SLAVE_NOTIFY_LATER);
+ 			slave_dbg(bond->dev, slave->dev, "link_new_state %d on slave\n",
+ 				  slave->link_new_state);
+ 			continue;
+@@ -2894,8 +2912,6 @@ static void bond_mii_monitor(struct work_struct *work)
+ {
+ 	struct bonding *bond = container_of(work, struct bonding,
+ 					    mii_work.work);
+-	struct list_head *iter;
+-	struct slave *slave;
+ 	unsigned long delay;
+ 	bool commit;
  
- /*
-diff --git a/arch/mips/include/asm/mach-cobalt/cobalt.h b/arch/mips/include/asm/mach-cobalt/cobalt.h
-index 97f9d5e9446d2..c7a8607cd651a 100644
---- a/arch/mips/include/asm/mach-cobalt/cobalt.h
-+++ b/arch/mips/include/asm/mach-cobalt/cobalt.h
-@@ -19,6 +19,7 @@ extern int cobalt_board_id;
- #define COBALT_BRD_ID_QUBE2    0x5
- #define COBALT_BRD_ID_RAQ2     0x6
+@@ -2917,13 +2933,8 @@ static void bond_mii_monitor(struct work_struct *work)
+ 			goto re_arm;
+ 		}
  
-+void cobalt_pci_init(void);
- void cobalt_machine_halt(void);
- void cobalt_machine_restart(char *command);
+-		if (commit) {
+-			bond_for_each_slave(bond, slave, iter) {
+-				bond_commit_link_state(slave,
+-						       BOND_SLAVE_NOTIFY_LATER);
+-			}
++		if (commit)
+ 			bond_miimon_commit(bond);
+-		}
  
+ 		if (bond->send_peer_notif)
+ 			bond_peer_notify_may_events(bond, true);
 -- 
 2.53.0
 
