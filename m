@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795625014;
-	b=KTEYGyEhudNgcl3LpVEcY8y1ytjjSxJEDMvjr3axRzqtITulMSffy657rEH3M9GLdewd
-	 +8+sIDkmR92FEjc/kdlsnV5yg3fQrE6RqV8xKLJpl1nlo+g3Yfy/4pFyTKJUAmMf2LC4X
-	 61s4Hwab7b6OphqbM3dEOKV372VQ8dD1I79smh9uqCe+XqvslJtF6DrK6DNXHyVufxriK
-	 tTrAOLstdcAJG/WV6J6ImLmCfVqBtTnSI1WyD5kIuR7Jpj6T7a3hMfNg55v79AP3jJ7j1
-	 GywrbQsJ5H5tA5C/GpCh8EJxMyH8xnqUir4zbK/w7SDu1iKu0MXfxeeAUIXFhJnhFhw==
+	t=1795625017;
+	b=su892sN8H6t/Gob19iDlKdFZnyGov7oBAdl2jLENS3VdHZIBp1BKjCoLcpF8M0etfTVW
+	 +wNVftMru71Rc1k4oYgHqXXw1rzB6+sWcFVXw5fj1WPEZs1V6flKR8fFu+gqCFRs9uNla
+	 cT75FJ9+xcmaxc+FC8JS3yv7qnlaOThmLn8MOqb9JP5QvROnwkst3nYkYme1t0jbGCopI
+	 Z8yaNKWtwvDsmLFWWjxgM65cyz+U8WCU2kANn/hLI1WFACR7gdte1oVOEboWQq9KUqbxn
+	 WqvZuyOcTlKwY/9YaDNbN36UVpBxgmaAm4g4ZsCtSCq1rLirXvLFafKO2MiRajYsUCw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795625014;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795625017;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Type:Content-Transfer-Encoding;
-	bh=Opg11w1JOJLGyhpEJOPauRnNuoC0NYC4tDL4FLUCcyc=;
-	b=kGvEGRW/TvZgL+q1JGYCU/JolaprNYu5wxidqZ8RAaxBvlcOE7wYcD7o9v5LJwxvTjYH
-	 tr2mL5ITyo2E+vV2QhgM3mDjrMThUiZB4PSgjqP3wym5tS0J/+ZFb3fh/Zoz39HEqVn3K
-	 Q7C4n4KginNbjir/Kr9BW3XvGb2FIePVt3BBgLSzasg+F2LRJJIIWeF5uN1ckFdrL8YHN
-	 AJdnX7xNGMBMIO5zXsUjlx8rBWxHGsPubgMv3EtUi33o2hpDfh2Xka1eJdqkz/9dHhiUx
-	 H0Rjtr32E6uwZbN4K8ALCnGUx7MzOsvfALxwMYgWto4vtLX4ecQd8C6SECcwGvcgQww==
+	 MIME-Version:Content-Transfer-Encoding;
+	bh=aZZkZzMEqHaloYikMBWUPT1K7wqm0hy+azcTt/LRFTE=;
+	b=qoGYOlvZiXOZFFUVIMBzaeWmZ7Bg9rlqqF9xB5wAMVBgx/eB2LC0QDENcS+NHWQo3g+A
+	 rh64YPE8a6kEUhls1qpUELu/NpUdL2VVrNW9QztOpFrd74WuZ4WnsTLt1Cu71FHpNHFss
+	 VHjBjocrOG2RkSy0BCHBAUCCilXsOggebcgM52jnMmsEA0u8258a5AVpgtGNJM31ufIme
+	 u/ZVMOhXBzt2ro5XWmvMEYd91SB9A2N66zEs7kMlTWYCG5LkgKZchcviBKGhpTDfychqM
+	 SVuP3PCSMw135QuVCb5+0i+vbbRZn3+88rOUxzAAu9X42FHiD1Uayep97xAxt0oSvew==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=NyEwgusm;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="n56Sm/XW";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 18C1F606A323;
-	Wed, 25 Nov 2026 16:43:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2B388606A31E;
+	Wed, 25 Nov 2026 16:43:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=NyEwgusm
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E94FD1F000CF;
-	Wed, 25 Nov 2026 16:43:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=n56Sm/XW
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4093C1F000CA;
+	Wed, 25 Nov 2026 16:43:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795625013;
-	bh=Opg11w1JOJLGyhpEJOPauRnNuoC0NYC4tDL4FLUCcyc=;
+	s=korg; t=1795625016;
+	bh=aZZkZzMEqHaloYikMBWUPT1K7wqm0hy+azcTt/LRFTE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=NyEwgusm3pgcs4u6Xdn5uf4i+BCJ6bRbYalUr9H+S8++rSafGdbGMfftm+3KnVFd9
-	 e4Gj8OifmEYdpMkSMPOeLfUT70Hy2x2S8aTNVk47tDiDBlFDObqWmIUvtcoTEJ4Gbj
-	 5HtC4Gn7gzSVwC6Hd0ZoSc75of4kbrE6s6sJt/g0=
+	b=n56Sm/XW+HYWi7MgBMRABRJLXg+h/wsqZt8vNICraehxCfOxV4PcTYZ1dKud0XTFA
+	 46SrqyjNVjMW9N0gzTWJIamgCzYRksxJZoKweWOHM8fnh0Vv9bPIqd/nyOqCea2xnX
+	 FVxkrcDTMzWGUBtK4t78nqf6DMu2hIxqt6103Yd4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Jouni=20H=C3=B6gander?= <jouni.hogander@intel.com>,
-	Mika Kahola <mika.kahola@intel.com>,
-	Joonas Lahtinen <joonas.lahtinen@linux.intel.com>,
+	Daejun Park <daejun7.park@samsung.com>,
+	Christoph Hellwig <hch@lst.de>,
+	Carlos Maiolino <cem@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 379/816] drm/i915/psr: Disable linked plane sel fetch as well
-Date: Wed, 25 Nov 2026 15:32:07 +0100
-Message-ID: <20261125143857.977430798@linuxfoundation.org>
+Subject: [PATCH 6.12 380/816] xfs: refuse a pNFS LAYOUTCOMMIT of a range without blocks
+Date: Wed, 25 Nov 2026 15:32:08 +0100
+Message-ID: <20261125143858.001013742@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143849.205329330@linuxfoundation.org>
 References: <20261125143849.205329330@linuxfoundation.org>
@@ -63,95 +63,137 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Jouni Högander <jouni.hogander@intel.com>
+From: Daejun Park <daejun7.park@samsung.com>
 
-[ Upstream commit b56721c32eb3ad0f086fdc0f33479be395e43bb9 ]
+[ Upstream commit bcf0b7f18ad11e1d410e82ffef678705eff0a317 ]
 
-Currently we are not setting linked plane selective area when selective
-fetch is about to be disabled for the UV plane. Fix this by simplifying the
-loop by just handling plane selective fetch disable and area setting same
-way.
+A client can commit a hole in a LAYOUTCOMMIT, because nfsd does not
+check the extents against its layouts. xfs_iomap_write_unwritten() then
+allocates written blocks there. A large hole overruns the block
+reservation and shuts XFS down. A small one exposes stale data.
 
-Also set the update_planes bit based on comparing old and new plane
-selective fetch area. This way both the plane and its linked Y plane are
-updated only when their selective fetch area changed.
+Refuse such a range with -EIO, using XFS_BMAPI_CONVERT_ONLY.
 
-Fixes: a4f477e6ac17 ("drm/i915/psr: Add proper handling for disabling sel fetch for planes")
-Cc: <stable@vger.kernel.org> # v6.8+
-Assisted-by: GitHub-Copilot:claude-opus-5
-Signed-off-by: Jouni Högander <jouni.hogander@intel.com>
-Reviewed-by: Mika Kahola <mika.kahola@intel.com>
-Link: https://patch.msgid.link/20260929094434.77129-4-jouni.hogander@intel.com
-(cherry picked from commit b10c83af60cbc00ce4112742fd297581233e43cd)
-Signed-off-by: Joonas Lahtinen <joonas.lahtinen@linux.intel.com>
+Link: https://lore.kernel.org/r/20261014130834.GB15773@lst.de
+Fixes: 527851124d10 ("xfs: implement pNFS export operations")
+Cc: stable@vger.kernel.org
+Signed-off-by: Daejun Park <daejun7.park@samsung.com>
+Reviewed-by: Christoph Hellwig <hch@lst.de>
+Signed-off-by: Carlos Maiolino <cem@kernel.org>
+[ sashal: Replaced the upstream xfs_ioend.c hunk with the same one-line change (extra trailing argument 0) in xfs_aops.c's xfs_end_ioend(), since xfs_ioend.c doesn't exist here. ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/i915/display/intel_psr.c | 27 ++++++++++++------------
- 1 file changed, 13 insertions(+), 14 deletions(-)
+ fs/xfs/xfs_aops.c  |  2 +-
+ fs/xfs/xfs_file.c  |  2 +-
+ fs/xfs/xfs_iomap.c | 20 +++++++++++++++++---
+ fs/xfs/xfs_iomap.h |  3 ++-
+ fs/xfs/xfs_pnfs.c  |  9 ++++++++-
+ 5 files changed, 29 insertions(+), 7 deletions(-)
 
-diff --git a/drivers/gpu/drm/i915/display/intel_psr.c b/drivers/gpu/drm/i915/display/intel_psr.c
-index 929113fc12e60..7a9b1baaa4435 100644
---- a/drivers/gpu/drm/i915/display/intel_psr.c
-+++ b/drivers/gpu/drm/i915/display/intel_psr.c
-@@ -2724,21 +2724,14 @@ int intel_psr2_sel_fetch_update(struct intel_atomic_state *state,
+diff --git a/fs/xfs/xfs_aops.c b/fs/xfs/xfs_aops.c
+index ba6b4a180e808..041d83a95d012 100644
+--- a/fs/xfs/xfs_aops.c
++++ b/fs/xfs/xfs_aops.c
+@@ -129,7 +129,7 @@ xfs_end_ioend(
+ 	if (ioend->io_flags & IOMAP_F_SHARED)
+ 		error = xfs_reflink_end_cow(ip, offset, size);
+ 	else if (ioend->io_type == IOMAP_UNWRITTEN)
+-		error = xfs_iomap_write_unwritten(ip, offset, size, false);
++		error = xfs_iomap_write_unwritten(ip, offset, size, false, 0);
  
- 		inter = crtc_state->psr2_su_area;
- 		sel_fetch_area = &new_plane_state->psr2_sel_fetch_area;
--		if (!drm_rect_intersect(&inter, &new_plane_state->uapi.dst)) {
--			/*
--			 * if plane sel fetch was previously enabled ->
--			 * disable it
--			 */
--			if (drm_rect_height(&old_plane_state->psr2_sel_fetch_area) > 0)
--				crtc_state->update_planes |= BIT(plane->id);
--
--			continue;
-+		if (drm_rect_intersect(&inter, &new_plane_state->uapi.dst)) {
-+			sel_fetch_area->y1 = inter.y1 - new_plane_state->uapi.dst.y1;
-+			sel_fetch_area->y2 = inter.y2 - new_plane_state->uapi.dst.y1;
- 		}
- 
--		sel_fetch_area = &new_plane_state->psr2_sel_fetch_area;
--		sel_fetch_area->y1 = inter.y1 - new_plane_state->uapi.dst.y1;
--		sel_fetch_area->y2 = inter.y2 - new_plane_state->uapi.dst.y1;
--		crtc_state->update_planes |= BIT(plane->id);
-+		if (!drm_rect_equals(&old_plane_state->psr2_sel_fetch_area,
-+				     sel_fetch_area))
-+			crtc_state->update_planes |= BIT(plane->id);
- 
- 		/*
- 		 * Sel_fetch_area is calculated for UV plane. Use
-@@ -2746,16 +2739,22 @@ int intel_psr2_sel_fetch_update(struct intel_atomic_state *state,
- 		 */
- 		if (linked) {
- 			struct intel_plane_state *linked_new_plane_state;
-+			struct intel_plane_state *linked_old_plane_state;
- 			struct drm_rect *linked_sel_fetch_area;
- 
- 			linked_new_plane_state = intel_atomic_get_new_plane_state(state, linked);
- 			if (!linked_new_plane_state)
- 				return -EINVAL;
- 
-+			linked_old_plane_state = intel_atomic_get_old_plane_state(state, linked);
-+
- 			linked_sel_fetch_area = &linked_new_plane_state->psr2_sel_fetch_area;
- 			linked_sel_fetch_area->y1 = sel_fetch_area->y1;
- 			linked_sel_fetch_area->y2 = sel_fetch_area->y2;
--			crtc_state->update_planes |= BIT(linked->id);
-+
-+			if (!drm_rect_equals(&linked_old_plane_state->psr2_sel_fetch_area,
-+					     linked_sel_fetch_area))
-+				crtc_state->update_planes |= BIT(linked->id);
- 		}
+ 	if (!error && xfs_ioend_is_append(ioend))
+ 		error = xfs_setfilesize(ip, ioend->io_offset, ioend->io_size);
+diff --git a/fs/xfs/xfs_file.c b/fs/xfs/xfs_file.c
+index aba54e3c58366..e05289776090d 100644
+--- a/fs/xfs/xfs_file.c
++++ b/fs/xfs/xfs_file.c
+@@ -539,7 +539,7 @@ xfs_dio_write_end_io(
+ 	 * they are converted.
+ 	 */
+ 	if (flags & IOMAP_DIO_UNWRITTEN) {
+-		error = xfs_iomap_write_unwritten(ip, offset, size, true);
++		error = xfs_iomap_write_unwritten(ip, offset, size, true, 0);
+ 		goto out;
  	}
  
+diff --git a/fs/xfs/xfs_iomap.c b/fs/xfs/xfs_iomap.c
+index afd655d8f2ae4..70d7bf0dc4377 100644
+--- a/fs/xfs/xfs_iomap.c
++++ b/fs/xfs/xfs_iomap.c
+@@ -571,7 +571,8 @@ xfs_iomap_write_unwritten(
+ 	xfs_inode_t	*ip,
+ 	xfs_off_t	offset,
+ 	xfs_off_t	count,
+-	bool		update_isize)
++	bool		update_isize,
++	uint32_t	bmapi_flags)
+ {
+ 	xfs_mount_t	*mp = ip->i_mount;
+ 	xfs_fileoff_t	offset_fsb;
+@@ -633,8 +634,21 @@ xfs_iomap_write_unwritten(
+ 		 */
+ 		nimaps = 1;
+ 		error = xfs_bmapi_write(tp, ip, offset_fsb, count_fsb,
+-					XFS_BMAPI_CONVERT, resblks, &imap,
+-					&nimaps);
++					XFS_BMAPI_CONVERT | bmapi_flags,
++					resblks, &imap, &nimaps);
++		if (error == -ENOSR && (bmapi_flags & XFS_BMAPI_CONVERT_ONLY)) {
++			/*
++			 * Nothing was mapped: the rest of the range starts
++			 * with a hole or a delalloc extent. Nothing was
++			 * changed either, but xfs_iext_count_extend() may
++			 * have logged the inode, and cancelling a dirty
++			 * transaction shuts the filesystem down. Commit it,
++			 * as xfs_alloc_file_space() does on -ENOSR.
++			 */
++			error = xfs_trans_commit(tp);
++			xfs_iunlock(ip, XFS_ILOCK_EXCL);
++			return error ? error : -EIO;
++		}
+ 		if (error)
+ 			goto error_on_bmapi_transaction;
+ 
+diff --git a/fs/xfs/xfs_iomap.h b/fs/xfs/xfs_iomap.h
+index 4da13440bae9b..eb70f1653776a 100644
+--- a/fs/xfs/xfs_iomap.h
++++ b/fs/xfs/xfs_iomap.h
+@@ -14,7 +14,8 @@ struct xfs_bmbt_irec;
+ int xfs_iomap_write_direct(struct xfs_inode *ip, xfs_fileoff_t offset_fsb,
+ 		xfs_fileoff_t count_fsb, unsigned int flags,
+ 		struct xfs_bmbt_irec *imap, u64 *sequence);
+-int xfs_iomap_write_unwritten(struct xfs_inode *, xfs_off_t, xfs_off_t, bool);
++int xfs_iomap_write_unwritten(struct xfs_inode *ip, xfs_off_t offset,
++		xfs_off_t count, bool update_isize, uint32_t bmapi_flags);
+ xfs_fileoff_t xfs_iomap_eof_align_last_fsb(struct xfs_inode *ip,
+ 		xfs_fileoff_t end_fsb);
+ 
+diff --git a/fs/xfs/xfs_pnfs.c b/fs/xfs/xfs_pnfs.c
+index fa027574d6de1..4cc5c8b0f935c 100644
+--- a/fs/xfs/xfs_pnfs.c
++++ b/fs/xfs/xfs_pnfs.c
+@@ -315,7 +315,14 @@ xfs_fs_commit_blocks(
+ 					(end - 1) >> PAGE_SHIFT);
+ 		WARN_ON_ONCE(error);
+ 
+-		error = xfs_iomap_write_unwritten(ip, start, length, false);
++		/*
++		 * A client may only write to blocks that a layout handed out,
++		 * and xfs_fs_map_blocks() allocates blocks for any hole in a
++		 * write layout, so refuse to allocate blocks for a hole or a
++		 * delalloc extent in the committed range.
++		 */
++		error = xfs_iomap_write_unwritten(ip, start, length, false,
++				XFS_BMAPI_CONVERT_ONLY);
+ 		if (error)
+ 			goto out_drop_iolock;
+ 	}
 -- 
 2.53.0
 
