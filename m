@@ -1,51 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795619687;
-	b=xYMtvbULg1uSG2Oz3psVr4oBBosMH2HjzwXh4cyFh4gGG5iQl9+6gFTN8/0HbhVNyW6A
-	 JaPVf9dk0qYV364iQeAGcYvxx7TIQK9PnqgS+9CHiMph58oKuw+A1NsUQpuPzFRNcp2g1
-	 Nal+3pGQGn6HpMCZz0GOHY22jhbVtN2pMKFwpyR9p52VWnuKnsicQChIJ6hUc5WyhBZk4
-	 pkGGrrSdEwZFlumyOpz3lBYkN2CAM0wt6OT9F9k1Y2Kw7NIAGqQSoBpJFJ1F4qXYsllyM
-	 0Uws1E0RPl63UR2uYToEtxuxWnxLh/rwqoXiIbGxEzwfapxMskDvnWj4QRyFTrHLEpA==
+	t=1795619691;
+	b=S8KOelCkT7kMn8FhT7iM/IDP99ZaLZEkFeWCB98f+lsM55NaNbjpTpQZXxSeKSTAk7WZ
+	 Otkm5s1zFaekBRBrwh6U5RmwaKGpA+/sqotjuT1dXzsG7BPqt4hZlEDtL2nTkdCOXyRDt
+	 2ow1ApI+km/ccljHiB3Dke6O3zeW0229iISIMDH6H6/+zFWGN/5d5R3va33tWmzEINR3N
+	 G+MGy9fDgyLkBf7oWIkkglUsLV8P2IWPXJYMSvAzOQCT0FDUHx66llpZh6IrUD9klkrfU
+	 yCyqbHOcFiNA4DrbSNph7WKwYd7qCiSyN2ZRM9sYfDCTCWSonxA/u3YBYKDjpFk3LcA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795619687;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795619691;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=I4Ym+PwQ15PdfegeLVOoPPw75U07A/q1hjJkILoYmUo=;
-	b=IdpV77x53OlrRUgqHuN6cb5QC4Q+hR4HjFM/rKDQ61vb4KF8Z4m4aEyHJKHbjQGObqUW
-	 Lj+dIQHS2gffjjPn+URiR/5/7zkLJuvY+ngh+fiWpDjaA4Ng7tlgrEybdCeTXk/2aiyp3
-	 pV4qvhs8DW7EW3G1SrJhlyrNdbQ/vMPbi4mNOR8G0xbLWNZ7kkDuCXckFMfCEVDSwoF5g
-	 Z0YQcMhLsTP0ouvxrz7CC3GFMwtkSeazygu/MTzXHoaI9VKvc0vL/29zyuZ4lJZ2lON2J
-	 fFNSgY2peL1EIFHWgFc9ZgfDb50NOlyHlGrfmsVI8CHddRQFlj+CnI4rWib+psJd50w==
+	bh=BuRBVck36yIprP9V+l6Itmo7TnAW3BUNXFimMcIClU0=;
+	b=A95WaVe1qahLZnz1v0VAxijAHcjPaXhSO1RyJiO3Dnm8S1kFz7q/gAa0/WvcJt4F2op3
+	 7hIuonra4zOCJKovTcOb8iNGNAsQAmGLBiO1MA9iMUWcJXrXdf5OMlWqqGpazv7+xLxbD
+	 Xb8qXa7CVpigZ70p7RZ8lptqJN0P2eDos8PXFsP+vwGHH+Oal5iegX9XQebmY/ccovNVE
+	 70KDNZqt4h8Or7aHNcaXkDBJspGZf8A3moTH0Q+8CxPJIDN/gqjPIWT1LgvfyUeNyVhKd
+	 J95NbPbQjmLh8OReWW+I111WmSjfBUTQl1IZbZdhIyUut+qMTNw7FcmnRrEzOuxdGNQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=JQYQmXFH;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Cw+QXS2E;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D7BA0606A327;
-	Wed, 25 Nov 2026 15:14:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5B015606A331;
+	Wed, 25 Nov 2026 15:14:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=JQYQmXFH
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 301051F000EC;
-	Wed, 25 Nov 2026 15:14:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Cw+QXS2E
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0B9391F000E0;
+	Wed, 25 Nov 2026 15:14:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795619687;
-	bh=I4Ym+PwQ15PdfegeLVOoPPw75U07A/q1hjJkILoYmUo=;
+	s=korg; t=1795619690;
+	bh=BuRBVck36yIprP9V+l6Itmo7TnAW3BUNXFimMcIClU0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=JQYQmXFHKiRUGrz8w3up1g+B0D3LCsR4KHGl8FR0Zv3scnU2keGI6+8284qqHAKIO
-	 6FugTHOV1oIhoKqMRi2ljn1B/N6elZQMqcv6S4TobPBKM+2MXtCghTwD6Pye7yiadE
-	 Yg5tL1HyaIHtVmqNmC4Rm1GDpbM7diJ+KTwIKBd8=
+	b=Cw+QXS2EAcnS50YalNcqz5hPUO49dETF1doFGBheq9PdlM17aZdpoAEpxXIxCGFIj
+	 j2EGQlBvFWvjLoqni0djDtYC3OzTDgO8+HUzF8s3FSoHo98l6Z93G/k6QVrWK4CVGU
+	 NLmqfPjPseZ2keX+8dOv202dKRJSmuhjxYS+pD1A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Phat Dinh <phatdt1116@gmail.com>,
+	Paolo Bertinetti <paolobertinetti200f4@proton.me>,
 	"Peter Zijlstra (Intel)" <peterz@infradead.org>
-Subject: [PATCH 7.3 0676/1005] perf/core: Do not resurrect cpuctx->cgrp after last cgroup event exit
-Date: Wed, 25 Nov 2026 15:33:34 +0100
-Message-ID: <20261125143837.590289837@linuxfoundation.org>
+Subject: [PATCH 7.3 0677/1005] perf/hw_breakpoint: Clear stop state in hw_breakpoint_add()
+Date: Wed, 25 Nov 2026 15:33:35 +0100
+Message-ID: <20261125143837.614323197@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143821.729802100@linuxfoundation.org>
 References: <20261125143821.729802100@linuxfoundation.org>
@@ -67,104 +67,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Phat Dinh <phatdt1116@gmail.com>
+From: Paolo Bertinetti <paolobertinetti200f4@proton.me>
 
-commit 59f1398140869432c7171b9a2a279ca315467c4e upstream.
+commit 6bea5e29daf123a78ae58cb5926023f4705f396f upstream.
 
-perf_cgroup_switch() relies on:
+Since commit 18dbcbfabfff ("perf: Fix the POLL_HUP delivery breakage"),
+__perf_event_overflow() stops the event with pmu->stop() and disables
+it when the PERF_EVENT_IOC_REFRESH limit is reached. When userspace
+re-arms the event with PERF_EVENT_IOC_REFRESH, the event is enabled
+again and pmu->add() is called with PERF_EF_START.
 
-    /*
-     * cpuctx->cgrp is set when the first cgroup event enabled,
-     * and is cleared when the last cgroup event disabled.
-     */
+hw_breakpoint_add() sets PERF_HES_STOPPED when PERF_EF_START is
+missing, but never clears it. The flag set by pmu->stop() stays, and
+perf_bp_event() drops every later hit, so a breakpoint re-armed this
+way delivers only its first overflow.
 
-It computes the next task's cgroup, schedules out the CPU context and
-then assigns cpuctx->cgrp unconditionally:
+Set the state from PERF_EF_START on every add, as perf_swevent_add()
+does.
 
-    ctx_sched_out(&cpuctx->ctx, NULL, EVENT_ALL|EVENT_CGROUP);
-    /*
-     * must not be done before ctxswout due
-     * to update_cgrp_time_from_cpuctx() in
-     * ctx_sched_out()
-     */
-    cpuctx->cgrp = cgrp;
-
-However, ctx_sched_out() can disable events itself. If a cgroup event
-has a pending disable from perf_event_disable_inatomic() (e.g. its
-PERF_EVENT_IOC_REFRESH limit ran out) that the irq_work has not
-handled yet, event_sched_out() consumes it inline:
-
-    if (event->pending_disable) {
-        event->pending_disable = 0;
-        perf_cgroup_event_disable(event, ctx);
-        state = PERF_EVENT_STATE_OFF;
-    }
-
-If that was the last cgroup event, perf_cgroup_event_disable() clears
-cpuctx->cgrp:
-
-    if (--ctx->nr_cgroups)
-        return;
-
-    cpuctx->cgrp = NULL;
-
-and perf_cgroup_switch() then sets it again. cpuctx->cgrp is left
-non-NULL with ctx.nr_cgroups == 0, so the NULL check in
-perf_cgroup_switch() no longer catches it and the next switch trips:
-
-    WARN_ON_ONCE(cpuctx->ctx.nr_cgroups == 0);
-
-cpuctx->cgrp does not hold a reference on the cgroup. Once that cgroup
-is removed, the next ctx_sched_in() dereferences the stale pointer:
-
-  BUG: KASAN: slab-use-after-free in ctx_sched_in+0xb1f/0xfa0
-  Read of size 8 at addr ffff8881008972d0 by task swapper/3/0
-
-  Tainted: [W]=WARN
-  Call Trace:
-   <IRQ>
-   ctx_sched_in+0xb1f/0xfa0
-   perf_event_sched_in+0x1a/0x70
-   ctx_resched+0x32b/0xac0
-   __perf_install_in_context+0x475/0xab0
-   remote_function+0x105/0x200
-   __flush_smp_call_function_queue+0x179/0x8d0
-   __sysvec_call_function_single+0x1b/0x1c0
-   sysvec_call_function_single+0x66/0x80
-   </IRQ>
-   <TASK>
-   asm_sysvec_call_function_single+0x1a/0x20
-
-Only assign cpuctx->cgrp when cgroup events remain after the context
-has been scheduled out, so that it stays NULL as the invariant
-requires.
-
-Fixes: e19cd0b6fa59 ("perf/core: Always set cpuctx cgrp when enable cgroup event")
-Signed-off-by: Phat Dinh <phatdt1116@gmail.com>
+Fixes: 18dbcbfabfff ("perf: Fix the POLL_HUP delivery breakage")
+Assisted-by: LLM
+Signed-off-by: Paolo Bertinetti <paolobertinetti200f4@proton.me>
 Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
 Cc: stable@vger.kernel.org
-Link: https://patch.msgid.link/20261106101642.494674-1-phatdt1116@gmail.com
+Link: https://patch.msgid.link/20261103130732.764081-3-paolobertinetti200f4@proton.me
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/events/core.c |    7 ++++++-
- 1 file changed, 6 insertions(+), 1 deletion(-)
+ kernel/events/hw_breakpoint.c |    3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
---- a/kernel/events/core.c
-+++ b/kernel/events/core.c
-@@ -1072,8 +1072,13 @@ static void perf_cgroup_switch(struct ta
- 	 * must not be done before ctxswout due
- 	 * to update_cgrp_time_from_cpuctx() in
- 	 * ctx_sched_out()
-+	 *
-+	 * ctx_sched_out() can consume a pending disable and drop the last cgroup
-+	 * event, which clear the cpuctx->cgrp. Cgroup tracking follow active cgroup
-+	 * event, so do not resurrect it
- 	 */
--	cpuctx->cgrp = cgrp;
-+	if (cpuctx->ctx.nr_cgroups)
-+		cpuctx->cgrp = cgrp;
- 	/*
- 	 * set cgrp before ctxsw in to allow
- 	 * perf_cgroup_set_timestamp() in ctx_sched_in()
+--- a/kernel/events/hw_breakpoint.c
++++ b/kernel/events/hw_breakpoint.c
+@@ -968,8 +968,7 @@ static int hw_breakpoint_event_init(stru
+ 
+ static int hw_breakpoint_add(struct perf_event *bp, int flags)
+ {
+-	if (!(flags & PERF_EF_START))
+-		bp->hw.state = PERF_HES_STOPPED;
++	bp->hw.state = (flags & PERF_EF_START) ? 0 : PERF_HES_STOPPED;
+ 
+ 	if (is_sampling_event(bp)) {
+ 		bp->hw.last_period = bp->hw.sample_period;
 
 
