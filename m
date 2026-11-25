@@ -1,51 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795625153;
-	b=xNUz3mLIFYNvLIzP0wy/pd30SnjV9pemW+aWB+t7F1LS4/lEXID9f/Uj8dwofACKZ93E
-	 WA1doWna0HExw/A7GqtJbqA+LXQbVoDaQZzjXRDgbVbuEjWDGheqGa7yTsB4VsDYdiTYb
-	 4N0F4xbUO+QbPctXgBK+wo/e9USYWn3yUe9TupTFumZZHf3RnXf7BGA8TpI0Vf5Ybxwlq
-	 UqzKqXvi4xhD7QHddlOQUs1pKd56k17jtelsmbvozJh50Ld38H2tl/VU4gcLOJpV6rRgK
-	 7j8EA1ChjqC2EErhwZ9XZBDLCOTfynvUFasKHtQswJV9bIn/lJX4+b7VXCf4J/JkU6g==
+	t=1795625157;
+	b=BIO8Qy1jFZg36/ePSkSj5AfbO5DCkBO28iVYG23P/EqFDrb90ygp+V/7bgd16jTw2jSW
+	 /IXt2fxvZgqmmVUn1aUEDwQH7GqSzB+Oy7jyYblhA8DthVd0HaJxq39rpfIs5M3WkE/RL
+	 u/d4hweDiJVRXQKjH2MFVt4h2GPVD3GuQ1Mxfb7gZygzaGPrPzccXOfz1R42cKnalMkXf
+	 mD2cOibizEcn8B38p2IcRz91OEfJZWg7MITFdb3yYx9oX9D9Mb4KkDLByPZGtc9kq/AB8
+	 8FQw7c5fWbTrtSD0K1VQAq9c4ofp1PxpS1TNVfat0DfnObTqr7zL4DgjJPuPzVzMmVA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795625153;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795625157;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=gvsl3zTIgmwsCsdvnOEXnGfTiRUlKKhYsTEiXqRFVIs=;
-	b=hb2cXVW6dq180SvQwxKBqpJj6guQfAD8Vhks9FIm8ZO+SB8PiUktA5jDew+E1yF1/+Iz
-	 e0dpZy/7Bg4H18ND6dg6sm2p6USmqb91GebKzJGLJcnn+rqx+utz/+0kFG25JfnHKjZ03
-	 mLI3hE58AWApsmMCgCCcfu9kBhTetMSgijZXUerB3PoXT1AnH+YYvK7vo0iyfK+HMDE35
-	 loKfcrTe/7DikVv9CR4/InArjtoJ0XtNHgtdGRL8zQviAoPyIEpCc+pk7k8krXfswGHPm
-	 zM8x29+vlt0sIMdejm9W2kMT5wwT5sryesj02vFBX6RDVmcYycKskKb9Jc2Q8RiR0Pg==
+	bh=/JZl03W+69edSXL91uj+XdqPU8I2QMS76h0AevnJjNY=;
+	b=VogLL9GkHwlWcQKWt22dYDcJG3EkBE+VSqzSCadj+W3/FduV6VvH5hQQBXiIpbT2lps1
+	 6f6nXC6Zigv0gw5AG7R9cf8Rr/Jym91qK5WZJONra6+HA0cuYGvySsKU63Ni6bnC4D8xu
+	 VzmO5MQ5tXA/L+WoDT36aUqHxdsu2UJpUjCSUL2HLdTHfPRRQOECkKzYKjVJAAO5JeNJx
+	 8THiRHI2K5Kh6RMU5BXXaqqpjxAS0HY6sTZi/JStMU/7KbCxt6Ld/0fs9kb0FjEIVllee
+	 fACz8Gxod70cbPvE9jJ2ZDP354NoK+n9WW/4TWJAYPDRMnOQKqljvc8l3jWn/yZl9+Q==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=1GnigL2y;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=DEm0pPFm;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B49B0606A330;
-	Wed, 25 Nov 2026 16:45:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 15DA9606A323;
+	Wed, 25 Nov 2026 16:45:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=1GnigL2y
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0ED331F000F2;
-	Wed, 25 Nov 2026 16:45:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=DEm0pPFm
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5A7761F000C0;
+	Wed, 25 Nov 2026 16:45:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795625153;
-	bh=gvsl3zTIgmwsCsdvnOEXnGfTiRUlKKhYsTEiXqRFVIs=;
+	s=korg; t=1795625156;
+	bh=/JZl03W+69edSXL91uj+XdqPU8I2QMS76h0AevnJjNY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=1GnigL2ykfUJ6q6QTunh8GU8c1LNTIZxwV10CHZQq3TsHZ7z54qb9R+qEGYeYBxhT
-	 5DIaWkoZp8p4hpd+A+ZFFXjmUGbSn+iMM27xPr7OSwiIsnUf3qnT2taMzHHfbAWkVx
-	 Mt2Zt1luBo5rVmIA3mpWga0EGt+grQI4MW6vw5vs=
+	b=DEm0pPFmcgtav2NHeDxZ/X6rR1TopKo7m8kDdmBjxlpzqDR3vMVrriFBy8qge4YVI
+	 e2hBbh8XojjLJKFtLfEGUIIcXoFfy4aqVgKsX0I3zGGb1DIUaFqGGbXuj2XC+T5a4l
+	 Yx/WSU3/jU4EHte9vZYmPkt5v4vCSY5CuxfIgGwA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Alexei Starovoitov <ast@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 425/816] bpf: Fix overflow of jump offset in may_goto expansion
-Date: Wed, 25 Nov 2026 15:32:53 +0100
-Message-ID: <20261125143859.033614617@linuxfoundation.org>
+Subject: [PATCH 6.12 426/816] bpf: Dont converge a loop on an iterator that was created anew
+Date: Wed, 25 Nov 2026 15:32:54 +0100
+Message-ID: <20261125143859.056178542@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143849.205329330@linuxfoundation.org>
 References: <20261125143849.205329330@linuxfoundation.org>
@@ -69,89 +69,75 @@ Content-Transfer-Encoding: 8bit
 
 From: Alexei Starovoitov <ast@kernel.org>
 
-[ Upstream commit 8a12a00f6c5dba70a6d908fe27a3c980d42b9515 ]
+[ Upstream commit 6f3ee3516305da3043f1787e3890381a54151730 ]
 
-may_goto is expanded into 'if AX == 0 goto off + 5' when it's timed,
-off + 2 when it's not and off - 1 when it jumps backward. The sum is
-stored into 16-bit off without a range check, so may_goto +32763
-turns into:
+When the verifier reaches bpf_iter_*_next() in a state that is equal to
+a state that is still being explored it concludes that the loop
+converged, since an active iterator will be drained eventually.
+states_equal() matches ids through idmap, so the same is concluded for
+an iterator that was destroyed and created again since the old state:
 
-  if r12 == 0x0 goto pc-32768
+  bpf_iter_num_new(&it, 0, 10);
+  loop:
+          if (bpf_ktime_get_ns())
+                  goto remake;
+  next:
+          if (!bpf_iter_num_next(&it))
+                  goto out;
+          goto loop;
+  remake:
+          bpf_iter_num_destroy(&it);
+          bpf_iter_num_new(&it, 0, 10);
+          goto next;
 
-and the prog jumps backward when may_goto expires.
+Such prog is accepted when the call of bpf_iter_num_next() is the first
+prune point after bpf_iter_num_new() and it never returns. Otherwise
+it's rejected with "infinite loop detected".
 
-Emit 'if AX != 0 goto +1; gotol' when the offset doesn't fit and
-compute the offset from the number of insns in the expansion.
-JITs that don't support gotol will reject such prog.
+Require the iterator to have the same id in both states.
 
-Fixes: 011832b97b31 ("bpf: Introduce may_goto instruction")
-Fixes: e723608bf428 ("bpf: Add verifier support for timed may_goto")
+Fixes: 06accc8779c1 ("bpf: add support for open-coded iterator loops")
 Signed-off-by: Alexei Starovoitov <ast@kernel.org>
-Link: https://patch.msgid.link/20260924233130.1213812-6-alexei.starovoitov@gmail.com
-[ sashal: Moved may_goto expansion into a new may_goto_expand() helper in verifier.c's do_misc_fixups(), since fixups.c doesn't exist here, and dropped the timed may_goto hunk, which has no counterpart. ]
+Link: https://patch.msgid.link/20260924233130.1213812-8-alexei.starovoitov@gmail.com
+[ sashal: Applied the hunk to is_state_visited() in verifier.c since states.c doesn't exist here, using open-coded frame/stack lookups and comparing ref_obj_id instead of id because iterator slots never set id. ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/bpf/verifier.c | 38 ++++++++++++++++++++++++++++++--------
- 1 file changed, 30 insertions(+), 8 deletions(-)
+ kernel/bpf/verifier.c | 14 ++++++++++++--
+ 1 file changed, 12 insertions(+), 2 deletions(-)
 
 diff --git a/kernel/bpf/verifier.c b/kernel/bpf/verifier.c
-index ab7cf92771d81..86482f36329dd 100644
+index 86482f36329dd..b66d0487444f1 100644
 --- a/kernel/bpf/verifier.c
 +++ b/kernel/bpf/verifier.c
-@@ -21156,6 +21156,30 @@ static int add_hidden_subprog(struct bpf_verifier_env *env, struct bpf_insn *pat
- 	return 0;
- }
+@@ -18659,8 +18659,9 @@ static int is_state_visited(struct bpf_verifier_env *env, int insn_idx)
+ 			 */
+ 			if (is_iter_next_insn(env, insn_idx)) {
+ 				if (states_equal(env, &sl->state, cur, RANGE_WITHIN)) {
+-					struct bpf_func_state *cur_frame;
++					struct bpf_func_state *cur_frame, *old_frame;
+ 					struct bpf_reg_state *iter_state, *iter_reg;
++					struct bpf_reg_state *old_iter;
+ 					int spi;
  
-+/*
-+ * Expand may_goto: load the count from the stack, jump to the target of
-+ * may_goto when it is zero, then the tail that updates the count.
-+ * Use gotol when the target is too far for 16-bit offset of a conditional jump.
-+ */
-+static int may_goto_expand(struct bpf_insn *insn_buf, int off, int stack_off,
-+			   const struct bpf_insn *tail, int tail_cnt)
-+{
-+	int cnt = 0;
-+
-+	/* Forward jump has to step over the tail */
-+	off = off >= 0 ? off + tail_cnt : off - 1;
-+
-+	insn_buf[cnt++] = BPF_LDX_MEM(BPF_DW, BPF_REG_AX, BPF_REG_10, stack_off);
-+	if (off == (s16)off) {
-+		insn_buf[cnt++] = BPF_JMP_IMM(BPF_JEQ, BPF_REG_AX, 0, off);
-+	} else {
-+		insn_buf[cnt++] = BPF_JMP_IMM(BPF_JNE, BPF_REG_AX, 0, 1);
-+		insn_buf[cnt++] = BPF_JMP32_A(off >= 0 ? off : off - 1);
-+	}
-+	memcpy(insn_buf + cnt, tail, tail_cnt * sizeof(*tail));
-+	return cnt + tail_cnt;
-+}
-+
- /* Do various post-verification rewrites in a single program pass.
-  * These rewrites simplify JIT and interpreter implementations.
-  */
-@@ -21443,16 +21467,14 @@ static int do_misc_fixups(struct bpf_verifier_env *env)
- 
- 		if (is_may_goto_insn(insn)) {
- 			int stack_off = -stack_depth - 8;
-+			struct bpf_insn tail[] = {
-+				BPF_ALU64_IMM(BPF_SUB, BPF_REG_AX, 1),
-+				BPF_STX_MEM(BPF_DW, BPF_REG_10, BPF_REG_AX, stack_off),
-+			};
- 
- 			stack_depth_extra = 8;
--			insn_buf[0] = BPF_LDX_MEM(BPF_DW, BPF_REG_AX, BPF_REG_10, stack_off);
--			if (insn->off >= 0)
--				insn_buf[1] = BPF_JMP_IMM(BPF_JEQ, BPF_REG_AX, 0, insn->off + 2);
--			else
--				insn_buf[1] = BPF_JMP_IMM(BPF_JEQ, BPF_REG_AX, 0, insn->off - 1);
--			insn_buf[2] = BPF_ALU64_IMM(BPF_SUB, BPF_REG_AX, 1);
--			insn_buf[3] = BPF_STX_MEM(BPF_DW, BPF_REG_10, BPF_REG_AX, stack_off);
--			cnt = 4;
-+			cnt = may_goto_expand(insn_buf, insn->off, stack_off,
-+					      tail, ARRAY_SIZE(tail));
- 
- 			new_prog = bpf_patch_insn_data(env, i + delta, insn_buf, cnt);
- 			if (!new_prog)
+ 					cur_frame = cur->frame[cur->curframe];
+@@ -18674,7 +18675,16 @@ static int is_state_visited(struct bpf_verifier_env *env, int insn_idx)
+ 					 */
+ 					spi = __get_spi(iter_reg->off + iter_reg->var_off.value);
+ 					iter_state = &func(env, iter_reg)->stack[spi].spilled_ptr;
+-					if (iter_state->iter.state == BPF_ITER_STATE_ACTIVE) {
++					old_frame = sl->state.frame[iter_reg->frameno];
++					old_iter = &old_frame->stack[spi].spilled_ptr;
++					/*
++					 * states_equal() matches ids through idmap.
++					 * The loop converged only if it's the same
++					 * iterator. The one that was destroyed and
++					 * created again starts from the beginning.
++					 */
++					if (iter_state->iter.state == BPF_ITER_STATE_ACTIVE &&
++					    iter_state->ref_obj_id == old_iter->ref_obj_id) {
+ 						update_loop_entry(cur, &sl->state);
+ 						goto hit;
+ 					}
 -- 
 2.53.0
 
