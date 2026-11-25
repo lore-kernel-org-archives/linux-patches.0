@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795622180;
-	b=zDWSZByNh60bAHA3Qd0krSNEgomkNtlHk47yMqACotMUFyMW7BBa8n/uDQ8kk1XIg2Pz
-	 x2Omkri3NEJBe+MqGsRH3oyw4A+NAtAh9k9mxLv8H0CtLnzWyDIjmNJLOriUPJlPshuKi
-	 +syBlrWFqzeXp+MLQJJAPIo77tuSvb60Ms1Opj8oZVXME4FaGpGS7ebZUYsu/MQE8eZam
-	 53XgA735o0wbkH2VzcofXgCyVopOYeFegWbpqgGErXfR6n7OBFf+N4UL+Ts6IENWXk7hI
-	 OORvUDyO+8SfOmwT/wu0GF9NL5tH2y/wvZjE3gjfb83Yt7q0zGmv6wniKfKYIU77WgQ==
+	t=1795622184;
+	b=nFYDZ/+x286zmyTTjvptxsDQQnR/jfu7+lQ5GgcWyhpwNbPbDIAsG2r9R3dCfYoZg9tK
+	 PgghWtij50DX+54v7yqeXooGSDYQzVi3np5rrXUq+b8dWw9hUZ4jrWr4ujx6OcUSOyf0i
+	 q9QCBqWiJDlN8vo1C4Crd8e9faqIJlEmZaEmdv3rRqA3V+RVPj3tFyHbMYC/m7sly4/7y
+	 ++bynq8EmB2CAycJJP7OCCs2ghXoCRWNlw8gNeInc12e3a25ZvBtVOwAgVjs8WsxKMVGD
+	 7g7stnEiwTyqswCpMkvnD54T68U2+1yHOWUsHJsV+ICRsFiefQs1lSVTYMegh9DYfHA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795622180;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795622184;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=73KIqV4wRVEr99VbPz5fjMLJQGAbCbZJhYOrbnMAOy4=;
-	b=zZsURe4ZHG4d2jnF0TtQyfF/8AuWks+DsR2qv9WUbD88rlii7dk+5DVlOg4v1kqx5Jhd
-	 McssVI7e+QjIQfuw6mTHduqqgcqchL+SLTY4pu5DUhn4xSvUexXDfAQeQnbpGrIaqjcCs
-	 AcPqiIJBm2/LBgzkQn++T0qmhAfAKqudIv4sOh9iDB52qHdsRO8iOUvFlJj8LNIYU7Ut3
-	 iy8SYom0MYa1Hbft7OTOLwOLQEmND5SMAsuJLX0sa3VY2E7mo0q+Yd4EWtPfmfepom+23
-	 duSBqypQuHDyEl7yj7BC27kHnXEWVPeMf6Il+Rx+RPlyHtQVKl3Ot3lQ4xf9eOwslNw==
+	bh=3+fRK0Kf/QJKn732Hd4BYy4khmA2hCZkFgWfUVuHQrQ=;
+	b=VqMmmQLRt2oRE3WNwamYLegSokIXz0fid6LwaBBSgZvwBcP7IiWc9KmxTaUHj416umgU
+	 /0RjeNig5mQmB8d7Wbq+8zo2ORsgY6S/dD2yIVJYjxZS40luUDI1ul2xAG85Zppze2oOg
+	 MHvAw6ZKsm6kJpEayzUS7SoMrqmYGVD25Wq05ITtcCaslwLd7w2gykT1z6jPWPOQ8Se0U
+	 2IJH3s13O9YCgXmSMWJS3laMmWV6/5yhoe4sulsU64uksfX5OfzJj8ga4510mWcbDfiqG
+	 V8OM+0zLvcKOn69gLfKHYmKqYxjU6Z9D6+Raa3SyuOt3KoNYkW0nbekgnOUmhZbcMIw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=YN9wRPBu;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=xoe3SRkT;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A6B0D606A32C;
-	Wed, 25 Nov 2026 15:56:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E7F4C606A333;
+	Wed, 25 Nov 2026 15:56:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=YN9wRPBu
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E35BF1F000EB;
-	Wed, 25 Nov 2026 15:56:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=xoe3SRkT
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 343391F000C6;
+	Wed, 25 Nov 2026 15:56:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795622180;
-	bh=73KIqV4wRVEr99VbPz5fjMLJQGAbCbZJhYOrbnMAOy4=;
+	s=korg; t=1795622183;
+	bh=3+fRK0Kf/QJKn732Hd4BYy4khmA2hCZkFgWfUVuHQrQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=YN9wRPBujH4mdPINnC6K1bEkZqW3Q5LcHU1v7DQe7NWGBOuhYXKj3KF9NnG8BEttc
-	 6rs6UC1R+TNtaU32lppsc4YwTVY+ftDI2Q1x9ahC+0LkrXKriI/6kncl0g6BDyGYXU
-	 VqJhpBNMo4g69LQqdrvB6zHkG7zv6laPXvcfmwzo=
+	b=xoe3SRkTE+vJQvEGL+eskLvsrif1mJeFUoz5vVTKjpW5YnMC9sEBR9TyhEtkOPC3E
+	 K7bljuNgkgXlTXjIyD9mdWfXHINkcWFwKNjZewkBeBCBv3dq/cDLny1A7BJZ/Nbfdl
+	 f+i30kQNkIj0UWvLmniB+SF1EOfa6OElytXuM9Dg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chris Mason <mason@kernel.org>,
-	Kuniyuki Iwashima <kuniyu@google.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Michal Wajdeczko <michal.wajdeczko@intel.com>,
+	Gustavo Sousa <gustavo.sousa@intel.com>,
+	Matt Roper <matthew.d.roper@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 448/990] tcp: Drop any segments if DEFER_CONNECT is set.
-Date: Wed, 25 Nov 2026 15:30:15 +0100
-Message-ID: <20261125143832.587097136@linuxfoundation.org>
+Subject: [PATCH 6.18 457/990] drm/xe/forcewake: Add scope-based cleanup for forcewake
+Date: Wed, 25 Nov 2026 15:30:24 +0100
+Message-ID: <20261125143832.798807175@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143822.072087159@linuxfoundation.org>
 References: <20261125143822.072087159@linuxfoundation.org>
@@ -69,91 +69,134 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chris Mason <mason@kernel.org>
+From: Matt Roper <matthew.d.roper@intel.com>
 
-[ Upstream commit 44809e49177992b15708a150437d9aebc5beea9c ]
+[ Upstream commit 074edfbdfba25493324807f749fbc86bf0af3a2d ]
 
-TCP Fast Open lets a client send data in its SYN. With
-TCP_FASTOPEN_CONNECT and a cached Fast Open cookie, which the server
-sent in the SYN-ACK of an earlier connection, the connection is set up
-in two steps:
+Since forcewake uses a reference counting get/put model, there are many
+places where we need to be careful to drop the forcewake reference when
+bailing out of a function early on an error path.  Add scope-based
+cleanup options that can be used in place of explicit get/put to help
+prevent mistakes in this area.
 
-- connect() sends nothing, so that the SYN can carry the data of the
-  first write(). It only sets DEFER_CONNECT and inserts the socket into
-  the hash table in SYN_SENT.
-- The first write() calls tcp_connect(), which runs tcp_connect_init()
-  and sends the SYN.
+Examples:
 
-A socket must not accept any segment before it has sent its SYN. But
-nothing on the receive path checks DEFER_CONNECT. So until the write(),
-the half-initialised socket processes segments like any socket in
-SYN_SENT, and a forged SYN is accepted.
+   CLASS(xe_force_wake, fw_ref)(gt_to_fw(gt), XE_FW_GT);
 
-Similarly, ICMP with seq matching ISN is accepted in the state.
-Before commit 57889a8f6d49 ("tcp: initialize send sequence numbers
-before deferring TFO"), even seq 0 message was accepted.
+       Obtain forcewake on the XE_FW_GT domain and hold it until the
+       end of the current block.  The wakeref will be dropped
+       automatically when the current scope is exited by any means
+       (return, break, reaching the end of the block, etc.).
 
-Drop any segments if DEFER_CONNECT is set.
+   xe_with_force_wake(fw_ref, gt_to_fw(ss->gt), XE_FORCEWAKE_ALL) {
+        ...
+   }
 
-Fixes: 19f6d3f3c842 ("net/tcp-fastopen: Add new API support")
-Signed-off-by: Chris Mason <mason@kernel.org>
-[kuniyu: revised DEFER_CONNECT tests and the commit message]
-Signed-off-by: Kuniyuki Iwashima <kuniyu@google.com>
-Link: https://patch.msgid.link/20261107235720.3129212-3-kuniyu@google.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+       Hold all forcewake domains for the following block.  As with the
+       CLASS usage, forcewake will be dropped automatically when the
+       block is exited by any means.
+
+Use of these cleanup helpers should allow us to remove some ugly
+goto-based error handling and help avoid mistakes in functions with lots
+of early error exits.
+
+An 'xe_force_wake_release_only' class is also added for cases where a
+forcewake reference is passed in from another function and the current
+function is responsible for releasing it in every flow and error path.
+
+v2:
+ - Create a separate constructor that just wraps xe_force_wake_get for
+   use in the class.  This eliminates the need to update the signature
+   of xe_force_wake_get().  (Michal)
+
+v3:
+ - Wrap xe_with_force_wake's 'done' marker in __UNIQUE_ID.  (Gustavo)
+ - Add a note to xe_force_wake_get()'s kerneldoc explaining that
+   scope-based cleanup is preferred when possible.  (Gustavo)
+ - Add an xe_force_wake_release_only class.  (Gustavo)
+
+v4:
+ - Add NULL check on fw in release_only variant.  (Gustavo)
+
+Cc: Michal Wajdeczko <michal.wajdeczko@intel.com>
+Cc: Gustavo Sousa <gustavo.sousa@intel.com>
+Reviewed-by: Gustavo Sousa <gustavo.sousa@intel.com>
+Link: https://patch.msgid.link/20251118164338.3572146-30-matthew.d.roper@intel.com
+Signed-off-by: Matt Roper <matthew.d.roper@intel.com>
+Stable-dep-of: 557c7b434378 ("drm/xe: Sync Wa_16023105232 in xe_was to match OOB rule")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv4/tcp_input.c | 9 +++++++++
- net/ipv4/tcp_ipv4.c  | 2 +-
- net/ipv6/tcp_ipv6.c  | 2 +-
- 3 files changed, 11 insertions(+), 2 deletions(-)
+ drivers/gpu/drm/xe/xe_force_wake.c |  7 ++++++
+ drivers/gpu/drm/xe/xe_force_wake.h | 40 ++++++++++++++++++++++++++++++
+ 2 files changed, 47 insertions(+)
 
-diff --git a/net/ipv4/tcp_input.c b/net/ipv4/tcp_input.c
-index 7b5839236f77c..e72eb30d165c2 100644
---- a/net/ipv4/tcp_input.c
-+++ b/net/ipv4/tcp_input.c
-@@ -7048,6 +7048,15 @@ tcp_rcv_state_process(struct sock *sk, struct sk_buff *skb)
- 		goto discard;
+diff --git a/drivers/gpu/drm/xe/xe_force_wake.c b/drivers/gpu/drm/xe/xe_force_wake.c
+index c59a9b330697d..76e054f314ee1 100644
+--- a/drivers/gpu/drm/xe/xe_force_wake.c
++++ b/drivers/gpu/drm/xe/xe_force_wake.c
+@@ -166,6 +166,13 @@ static int domain_sleep_wait(struct xe_gt *gt,
+  * xe_force_wake_ref_has_domain() function. Caller must call
+  * xe_force_wake_put() function to decrease incremented refcounts.
+  *
++ * When possible, scope-based forcewake (through CLASS(xe_force_wake, ...) or
++ * xe_with_force_wake()) should be used instead of direct calls to this
++ * function.  Direct usage of get/put should only be used when the function
++ * has goto-based flows that can interfere with scope-based cleanup, or when
++ * the lifetime of the forcewake reference does not match a specific scope
++ * (e.g., forcewake obtained in one function and released in a different one).
++ *
+  * Return: opaque reference to woken domains or zero if none of requested
+  * domains were awake.
+  */
+diff --git a/drivers/gpu/drm/xe/xe_force_wake.h b/drivers/gpu/drm/xe/xe_force_wake.h
+index 0e3e84bfa51c3..1e2198f6a0078 100644
+--- a/drivers/gpu/drm/xe/xe_force_wake.h
++++ b/drivers/gpu/drm/xe/xe_force_wake.h
+@@ -61,4 +61,44 @@ xe_force_wake_ref_has_domain(unsigned int fw_ref, enum xe_force_wake_domains dom
+ 	return fw_ref & domain;
+ }
  
- 	case TCP_SYN_SENT:
-+		/* We sent nothing yet, so no segment belongs to this connection.
-+		 * Send no RST: it would be built from this socket, whose TCP-AO
-+		 * keys are not set up either.
-+		 */
-+		if (unlikely(inet_test_bit(DEFER_CONNECT, sk))) {
-+			SKB_DR_SET(reason, NOT_SPECIFIED);
-+			goto discard;
-+		}
++struct xe_force_wake_ref {
++	struct xe_force_wake *fw;
++	unsigned int domains;
++};
 +
- 		tp->rx_opt.saw_tstamp = 0;
- 		tcp_mstamp_refresh(tp);
- 		queued = tcp_rcv_synsent_state_process(sk, skb, th);
-diff --git a/net/ipv4/tcp_ipv4.c b/net/ipv4/tcp_ipv4.c
-index fa5437b405207..f8e91616d9bd8 100644
---- a/net/ipv4/tcp_ipv4.c
-+++ b/net/ipv4/tcp_ipv4.c
-@@ -546,7 +546,7 @@ int tcp_v4_err(struct sk_buff *skb, u32 info)
- 		if (!(type == ICMP_DEST_UNREACH && code == ICMP_FRAG_NEEDED))
- 			__NET_INC_STATS(net, LINUX_MIB_LOCKDROPPEDICMPS);
- 	}
--	if (sk->sk_state == TCP_CLOSE)
-+	if (sk->sk_state == TCP_CLOSE || inet_test_bit(DEFER_CONNECT, sk))
- 		goto out;
- 
- 	if (static_branch_unlikely(&ip4_min_ttl)) {
-diff --git a/net/ipv6/tcp_ipv6.c b/net/ipv6/tcp_ipv6.c
-index b07e8d22edcfb..490fc17a782c9 100644
---- a/net/ipv6/tcp_ipv6.c
-+++ b/net/ipv6/tcp_ipv6.c
-@@ -425,7 +425,7 @@ static int tcp_v6_err(struct sk_buff *skb, struct inet6_skb_parm *opt,
- 	if (sock_owned_by_user(sk) && type != ICMPV6_PKT_TOOBIG)
- 		__NET_INC_STATS(net, LINUX_MIB_LOCKDROPPEDICMPS);
- 
--	if (sk->sk_state == TCP_CLOSE)
-+	if (sk->sk_state == TCP_CLOSE || inet_test_bit(DEFER_CONNECT, sk))
- 		goto out;
- 
- 	if (static_branch_unlikely(&ip6_min_hopcount)) {
++static struct xe_force_wake_ref
++xe_force_wake_constructor(struct xe_force_wake *fw, unsigned int domains)
++{
++	struct xe_force_wake_ref fw_ref = { .fw = fw };
++
++	fw_ref.domains = xe_force_wake_get(fw, domains);
++
++	return fw_ref;
++}
++
++DEFINE_CLASS(xe_force_wake, struct xe_force_wake_ref,
++	     xe_force_wake_put(_T.fw, _T.domains),
++	     xe_force_wake_constructor(fw, domains),
++	     struct xe_force_wake *fw, unsigned int domains);
++
++/*
++ * Scoped helper for the forcewake class, using the same trick as scoped_guard()
++ * to bind the lifetime to the next statement/block.
++ */
++#define __xe_with_force_wake(ref, fw, domains, done) \
++	for (CLASS(xe_force_wake, ref)(fw, domains), *(done) = NULL; \
++	     !(done); (done) = (void *)1)
++
++#define xe_with_force_wake(ref, fw, domains) \
++	__xe_with_force_wake(ref, fw, domains, __UNIQUE_ID(done))
++
++/*
++ * Used when xe_force_wake_constructor() has already been called by another
++ * function and the current function is responsible for releasing the forcewake
++ * reference in all possible cases and error paths.
++ */
++DEFINE_CLASS(xe_force_wake_release_only, struct xe_force_wake_ref,
++	     if (_T.fw) xe_force_wake_put(_T.fw, _T.domains), fw_ref,
++	     struct xe_force_wake_ref fw_ref);
++
+ #endif
 -- 
 2.53.0
 
