@@ -1,52 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795619541;
-	b=qQWYCTX2K+tOl5/ooxxwx3rDg39taCFSPYGBYdMuG90O4MRIrXcR3h1TIFZkrLju3COn
-	 vctvGvdR1/+ekXAR6HeVHiUGPiH90oBkJuk2in84I+CeajtgvrW8Jutcwwm2hZg7ceI2y
-	 WILLa6iFf1ucupyR04HvufSHtwObVgGuaOJwBevB89HyP0I7E5XGbcze/wa4p6sLulgV5
-	 FeB/Y2ajbTlzM8Yo9HFzugCiicvJdZ0/8Pr977oF2vdmhneBLyx3MFpuT5QYpayzssRy9
-	 9qSa0al0+/W5WIHj6ilKVIf8urDFSoJ1F7Kw5f/lusN0ZyTfOMqPlWFb/tcJH06TdFw==
+	t=1795619544;
+	b=ySAJjrPX19rZWoe4L/mzuRr0bmzmjoAQE0Be7egrv8lHrJ2PUo2b86EZV45byo5mupji
+	 Jb22ZxkNJIgb1UUj0F0GoloQgc+GMxhlvBpdcJGEsUCtVL90iYQpeIxPTbXCFhiUhb89E
+	 whNpHka14LXZLi7pv9kwlxierr3K6bd4y7A7VPMOcNfm4NtAmiHZzQD7n0zItEJpkz1sx
+	 N34DQun+S/Wo2It4S1IRPVpj1JD0sKV4Vp7WE89I+Ld7JbhqhNASi06hQTAFTuwDOx3Yb
+	 jtCQyaSX6/8g7nbyAVSrv0MxMZvelugUTNHxBRHRx6/99iNwRgsU8hafXIwLltCzanQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795619541;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795619544;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=vG2u4m5Sfgt2qNfQU99/p6j/q6KvjJLh8Wi9P1JQbqo=;
-	b=1nH559PkjaAi6sjqD4FA/up9GoSqrMiehOEUZEQpQcWNdNQJVTCPkoZZHT3DGyWPEJQl
-	 QBmsMN+SLdy/LsNuecuiY9Uip6IvSVo3a/8Bv0iwptP0goxZbq8Fmjdoj9drzvjLWGP2J
-	 NjC1lZFq2gBhP7Q8swdulyOeiruOCgsAqUmWH5TqHg82uyppUW5lPjWmSOPxaLETvUxHg
-	 34Vq09elY79HH/wjzVE+cv5ySjG3PrvxLxSgkkjyd1edasz7lfWBMoqT8k9unCDQRWqxa
-	 0436o+YADQkfYrWwMbTlZc/CsnNAFCJG74cy4t6z2O1xKKP4p9FAr44ngzBLAbW1y+Q==
+	bh=OzOPQXWJNd7gNMg+XSSK2m+oUDWZoBJkvA/22mI3PmU=;
+	b=S/beqSZb4H85E722NmE6F+/v1IT5xFa7xTlRI13ONcbb9buTbsoLI1mqRFsKkDsDrDJj
+	 fzRwYUR96yrbHnX42x1Ei4KvoNMADXA3Qhn5q3+8xAa+nuMnPQGJhu6HVUYrts74EdqCE
+	 7gyLTnuExj2hdDvFYcyeKp2hNKj3xEw5TnmV7UfovdKGs62VfIg3fCBhInDdfYkN8Bd7V
+	 h/rMatS4yxEHleZSSQtWSzp3lzeER55oJrQ1w76N9BdvQOwnnClWUulBOjTox/AI28E8I
+	 JIxurfBQnJjTG/RYCT5WCBV64otcYmRr43lCJlT1Nok80VjCW7n500xXbNh6aWYSQ2g==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ZnXsV69P;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=kWn3EM8x;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 77096606A321;
-	Wed, 25 Nov 2026 15:12:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9D12F606A31E;
+	Wed, 25 Nov 2026 15:12:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ZnXsV69P
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B9FAD1F000C4;
-	Wed, 25 Nov 2026 15:12:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=kWn3EM8x
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A55CA1F000C6;
+	Wed, 25 Nov 2026 15:12:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795619541;
-	bh=vG2u4m5Sfgt2qNfQU99/p6j/q6KvjJLh8Wi9P1JQbqo=;
+	s=korg; t=1795619544;
+	bh=OzOPQXWJNd7gNMg+XSSK2m+oUDWZoBJkvA/22mI3PmU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ZnXsV69P66EkggYNwLtBHMi3gKpP3okop3Tam8SGj+52GiOTVyobaoCdAtHHDaowP
-	 37JqYOspT3CmUecXtWL0Wp4xcjtMU1ohzUdiGNyy/ocGliQdib8Q0PbKFSZGg6h4nF
-	 mhE5A9rY64EGFlAQp5/E2jCMMwFQ8UottBaPHsjQ=
+	b=kWn3EM8x2NvAlSXOdZNmb+VtVkupxNskdxGoWuq8fZCQfa+/9sD6BPMHlVeRZz1wF
+	 Harn/vRtQXWo5LrlrEstqMtKmvwg9IlWwvSyERRoE4++PpyzUoO+viORTMDKx1zObZ
+	 9BVz226ADtzhD4AAmLyE1ROgwC501w48meKTuWFk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Haiyang Zhang <haiyangz@microsoft.com>,
-	Hamza Mahfooz <hamzamahfooz@linux.microsoft.com>,
+	Zhao Gongyi <zhaogongyi@bytedance.com>,
 	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 7.3 0629/1005] net: mana: report RX checksum offload for IPv6
-Date: Wed, 25 Nov 2026 15:32:47 +0100
-Message-ID: <20261125143836.481303606@linuxfoundation.org>
+Subject: [PATCH 7.3 0630/1005] net: netns: fix INT_MAX nsid cleanup
+Date: Wed, 25 Nov 2026 15:32:48 +0100
+Message-ID: <20261125143836.503901653@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143821.729802100@linuxfoundation.org>
 References: <20261125143821.729802100@linuxfoundation.org>
@@ -68,59 +67,75 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hamza Mahfooz <hamzamahfooz@linux.microsoft.com>
+From: Zhao Gongyi <zhaogongyi@bytedance.com>
 
-commit bbcd02741c4cfbf9e1c59b1906f21ef772bd15eb upstream.
+commit dd6f1e7582f0f7f12c2d620cf50446aa987d7327 upstream.
 
-The hardware validates TCP and UDP checksums for both IPv4 and IPv6 and
-reports the result in rx_tcp_csum_succeed and rx_udp_csum_succeed.
-However, mana_rx_skb() also requires rx_iphdr_csum_succeed before it
-sets CHECKSUM_UNNECESSARY. That bit is only set for IPv4 (since IPv6
-has no header checksum), so IPv6 TCP and UDP traffic is always
-checksummed again in software.
+A syzkaller reproducer assigning INT_MAX as a peer nsid triggers an
+idr_get_next() warning during netns cleanup. With panic_on_warn, this
+panics the kernel.
 
-So, only look at the L4 result. For IPv4 this makes no material
-difference since CHECKSUM_UNNECESSARY only covers the L4 checksum, and
-ip_rcv_core() always verifies the IPv4 header checksum in software.
+alloc_netid() also overflows reqid + 1 for this nsid. Use
+idr_alloc_u32() for requested IDs and idr_get_next_ul() for cleanup so
+the cursor can advance past INT_MAX.
 
-Between two Azure Standard_E16s_v6 VMs (VF enabled), IPv6 TCP and UDP
-packets (including VXLAN over IPv6), now arrive with
-CHECKSUM_UNNECESSARY instead of CHECKSUM_NONE, so GRO no longer
-checksums them in software. Calls to __skb_gro_checksum_complete() on
-the receiver during an 8 second iperf3 run:
+QEMU/KVM reproduced the warning without kernel changes or fault
+injection. The same reproducer ran without warnings after this change.
+Kernel selftests were not run.
 
-                               before    after
-  TCP/IPv4, 12.2 Gbps              23       28
-  TCP/IPv6, 12.1 Gbps         8728419       25
-  UDP/IPv6, 1.5 Gbps          1071380       20
-  TCP/VXLAN/IPv6, 10.9 Gbps   7934373       18
-
+Fixes: 7acee67a6bce ("netns: optimize netns cleaning by batching unhash_nsid calls")
 Cc: stable@vger.kernel.org
-Fixes: ca9c54d2d6a5 ("net: mana: Add a driver for Microsoft Azure Network Adapter (MANA)")
-Reviewed-by: Haiyang Zhang <haiyangz@microsoft.com>
-Signed-off-by: Hamza Mahfooz <hamzamahfooz@linux.microsoft.com>
-Link: https://patch.msgid.link/20261109142856.779955-1-hamzamahfooz@linux.microsoft.com
+Signed-off-by: Zhao Gongyi <zhaogongyi@bytedance.com>
+Link: https://patch.msgid.link/20261111033525.65828-1-zhaogongyi@bytedance.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ethernet/microsoft/mana/mana_en.c |    7 +++----
- 1 file changed, 3 insertions(+), 4 deletions(-)
+ net/core/net_namespace.c | 17 +++++++++++------
+ 1 file changed, 11 insertions(+), 6 deletions(-)
 
---- a/drivers/net/ethernet/microsoft/mana/mana_en.c
-+++ b/drivers/net/ethernet/microsoft/mana/mana_en.c
-@@ -2148,10 +2148,9 @@ static void mana_rx_skb(void *buf_va, bo
- 	skb_checksum_none_assert(skb);
- 	skb_record_rx_queue(skb, rxq_idx);
+diff --git a/net/core/net_namespace.c b/net/core/net_namespace.c
+index 52c2bd44778a..c94718429771 100644
+--- a/net/core/net_namespace.c
++++ b/net/core/net_namespace.c
+@@ -270,14 +270,19 @@ static void ops_undo_single(struct pernet_operations *ops,
+ /* should be called with nsid_lock held */
+ static int alloc_netid(struct net *net, struct net *peer, int reqid)
+ {
+-	int min = 0, max = 0;
++	int ret;
++	u32 id;
  
--	if ((ndev->features & NETIF_F_RXCSUM) && cqe->rx_iphdr_csum_succeed) {
--		if (cqe->rx_tcp_csum_succeed || cqe->rx_udp_csum_succeed)
--			skb->ip_summed = CHECKSUM_UNNECESSARY;
--	}
-+	if ((ndev->features & NETIF_F_RXCSUM) &&
-+	    (cqe->rx_tcp_csum_succeed || cqe->rx_udp_csum_succeed))
-+		skb->ip_summed = CHECKSUM_UNNECESSARY;
+ 	if (reqid >= 0) {
+-		min = reqid;
+-		max = reqid + 1;
++		id = reqid;
++		ret = idr_alloc_u32(&net->netns_ids, peer, &id, id,
++				    GFP_ATOMIC);
++		if (ret)
++			return ret;
++		return id;
+ 	}
  
- 	if (cqe->rx_hashtype != 0 && (ndev->features & NETIF_F_RXHASH)) {
- 		if (cqe->rx_hashtype & MANA_HASH_L4)
+-	return idr_alloc(&net->netns_ids, peer, min, max, GFP_ATOMIC);
++	return idr_alloc(&net->netns_ids, peer, 0, 0, GFP_ATOMIC);
+ }
+ 
+ /* This function is used by idr_for_each(). If net is equal to peer, the
+@@ -639,10 +644,10 @@ static void unhash_nsid(struct net *last)
+ 	 * use for_each_net_rcu() or net_rwsem.
+ 	 */
+ 	for_each_net(tmp) {
+-		int id = 0;
++		unsigned long id = 0;
+ 
+ 		spin_lock(&tmp->nsid_lock);
+-		while ((peer = idr_get_next(&tmp->netns_ids, &id))) {
++		while ((peer = idr_get_next_ul(&tmp->netns_ids, &id))) {
+ 			int curr_id = id;
+ 
+ 			id++;
+-- 
+2.56.1
+
 
 
