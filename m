@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795623227;
-	b=eKnRpIPdhUV6tpHvd1M2hDKtK7EhSw7PCIke1PbobJluKPRdnkedjVWsl1c1qDwaroVr
-	 Jp90q0ySbnv1doF0hHLOJ8hr8exGOvDKkneYP85DEUVt8qQJoZUbJRTveoVEOn7yVClCA
-	 Sviy5xdsnVJYr81206+zIFifr4HOI5JQwnwQ6ndRI5+VJYC72QTa8cHdjP/d6gNHotSdx
-	 KTYowi5K6W3j7/ehe15wtiks/mg/FB/e33CL7uTszJymApO+Ib5Kk6OyjOirn6M4fxY2W
-	 OSaEH59b3DHfkfTnGoeCIBscObWz4dIPjvWoDltd/mVT7H32rOxzuVZsYh5OxFHRkXg==
+	t=1795623230;
+	b=pFkLB7ZSWzUDftjnC/j3UHRbW/zOY1uEmbocQdn40m4rCPhLlbOUHXFJ3yfGsZkK9bIY
+	 lIy8JUcf2ptQjrlJkUDj6BHDFveFez25cj5aoor6mTm9+IXcjbym/cei/BTCpnFSTcXI0
+	 +vs+ox0yTpzMpeGlrFDcKRpgilnMO9E52c9Q8XK2zgAEwz0UPAiC1A6ZWBOtEi0+kyvgf
+	 oFWz2/lkg/gFOUy7nEHJm1/jKlnC3AciEjrLMPl0sKqhloeUtpSo6CNCA10ONI4jsp0h2
+	 17D3eS3puSHoYqvc4KW6Xlc+/qoTmhZG7Vhi7w+SzoTuJf2ixrESOW188iHL5GnYnUw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795623227;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795623230;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Type:Content-Transfer-Encoding;
-	bh=6+fpVnGVHvOkTDRKNH/Is+6zagx/grL8C72dw6oDUN0=;
-	b=DSWMK3P0kakFL7DmnO+rrAvW5GuELbNflQ2/fdjLhFDDC6i0ZpjMI0lVWVlz4JTY9K+/
-	 uGI05ClqH41SRJmUVk8n0mnFxL9VGBhVqd8PLU8RPT2xiU1fdJAFpWOfpLTACO2EoaVAS
-	 QzUEBZ0P8UWUXSR45vRb73pTjCEQMRS2LgQWsgx/OHp5GS2get4Yue7Rn+TSE4MiM7mFx
-	 cLOWJvZXp84dXF1ex494EHlIA0rYeIjC5WqDvmi/cqyiQnqSv7CZDhcpTWrYRA7g2/kjM
-	 nRVFcQXbznoFVs8OQc1vPIusossKUl3kWJZJJANtgwUIklAh1L+HSAOygvUCfW+xu3Q==
+	 MIME-Version:Content-Transfer-Encoding;
+	bh=sXtPEVE+iW4pu3pST+kExmbtjnwaoDR4Qon66LxZ6Y0=;
+	b=GyL2EE4QFOFdFdIEGYlaB3nvK4PTK29gWPYWutLyEWDlbpmgubwSzOv3LbZ/RKUa6/7U
+	 4AU2pG0gFQquGMfOGBoG60G2R4XcCBVZGCL7/DABleQZuj8PE95rjED/GfO6MX+hiTNd7
+	 MTiijumUFEsz7iSmn/5fN/AM9FyttxB0tVvglZF2iYgxJvgVE9j5ZUb09lTHtLiS8mae6
+	 0dE3ZeCpWBk3aYb0tGpgj8LMXh82fU5/RbEZkOyFyvaPHHM//utPqCzAnzAP695lvXvR3
+	 Hv2MraXw/JUauAo/GxEzqEMUG3IKfduG89bF/boLFmw6H0286Skkbcja0kkDdfKmSVw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=QIK6AW5Q;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Mk4Frisp;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 43D3A606A331;
-	Wed, 25 Nov 2026 16:13:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1E277606A329;
+	Wed, 25 Nov 2026 16:13:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=QIK6AW5Q
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 038CA1F000C0;
-	Wed, 25 Nov 2026 16:13:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Mk4Frisp
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6DD1E1F000C0;
+	Wed, 25 Nov 2026 16:13:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795623226;
-	bh=6+fpVnGVHvOkTDRKNH/Is+6zagx/grL8C72dw6oDUN0=;
+	s=korg; t=1795623230;
+	bh=sXtPEVE+iW4pu3pST+kExmbtjnwaoDR4Qon66LxZ6Y0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=QIK6AW5Q0L0Yr62rQYV9XenyG2kgog/heuUWUmNl/eHTW1Tt6IvkUmGm7ApQya4tA
-	 qO1QCEVOVf2wmR8ZLn0q1ksAcis776Uk2bt7kGGFiqMxXZ01cbyIr7TWEuAYpc1ZiR
-	 wxojzMG/4Rm7C8llbw3M/SXS2CGzEITM2oMgA40Q=
+	b=Mk4Frisp7w5pbB+tVsfvcmcIWDQsA/H2aUSh04YaH9+YwmzxmjvlccH3XL56R02AZ
+	 wJiJ94IyQn+uzNCpqNnKmmw7MfKbj0HTTlIuU8Amku5Q6g8wlQrIsdVK5Ejk76I+4M
+	 /ypvDKoqBG73ZAC8Fi71QqOX5I9zOkf0q6jucgs0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Sashiko <sashiko-bot@kernel.org>,
-	=?UTF-8?q?Jan=20H=C3=B6ppner?= <hoeppner@linux.ibm.com>,
-	Stefan Haberland <sth@linux.ibm.com>,
-	Jens Axboe <axboe@kernel.dk>
-Subject: [PATCH 6.18 784/990] s390/dasd: Fix wrong free and refcount leak in build_check_tcw error path
-Date: Wed, 25 Nov 2026 15:35:51 +0100
-Message-ID: <20261125143840.411347281@linuxfoundation.org>
+	Tim Budding <tim.budding@gmail.com>,
+	Xin Long <lucien.xin@gmail.com>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 6.18 793/990] sctp: report the partially delivered MID in PARTIAL_DELIVERY_ABORTED
+Date: Wed, 25 Nov 2026 15:36:00 +0100
+Message-ID: <20261125143840.619988818@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143822.072087159@linuxfoundation.org>
 References: <20261125143822.072087159@linuxfoundation.org>
@@ -63,53 +63,62 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Stefan Haberland <sth@linux.ibm.com>
+From: Tim Budding <tim.budding@gmail.com>
 
-commit df56f7a6c20a5eb2794c0a7391bde50ba7c8c54b upstream.
+commit 3097fba868019924e92b8786ebd473992565f015 upstream.
 
-dasd_eckd_build_check_tcw() allocates its request with
-dasd_fmalloc_request(), but its out_err path frees it with
-dasd_sfree_request(). The latter uses a different pool and therefor,
-leading to invalid pointer arithmetic and a crash.
-Use the matching dasd_ffree_request() instead.
+When an I-FORWARD-TSN skips the message being partially delivered on a
+stream, sctp_intl_skip() passes the MID from the I-FORWARD-TSN to the
+PARTIAL_DELIVERY_ABORTED notification as pdapi_seq. That MID is the
+highest one skipped on the stream, so when more than one message is
+skipped, the notification names a later message instead of the one
+whose partial delivery was aborted.
 
-The same error path also leaves start_priv->count incremented
-without ever decrementing it again.
-This leaks a permanent reference on every build failure.
-Decrement it before freeing the request.
+Report the MID being partially delivered, sin->mid_uo or sin->mid,
+instead.
 
+Reproduced on an unmodified kernel with the pdapi and pdapi_uo tests of
+the sctp_ifwdtsn.sh selftest added later in this series, which pass
+with this fix. Reproduction and fix done with AI assistance.
+
+Fixes: de60fe910543 ("sctp: implement handle_ftsn for sctp_stream_interleave")
 Reported-by: Sashiko <sashiko-bot@kernel.org>
-Closes: https://sashiko.dev/#/patchset/20260722103704.1709668-1-sth@linux.ibm.com
-Fixes: 8fd575200db5 ("s390/dasd: Add new ioctl BIODASDCHECKFMT")
-Cc: stable@vger.kernel.org #4.7
-Reviewed-by: Jan Höppner <hoeppner@linux.ibm.com>
-Signed-off-by: Stefan Haberland <sth@linux.ibm.com>
-Fixes: 5e2b17e712cf ("s390/dasd: Add dynamic formatting support for ESE volumes")
-Link: https://patch.msgid.link/20261112102608.1057852-4-sth@linux.ibm.com
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Closes: https://lore.kernel.org/all/179293012867.3134.16497481637722705271@kernel.org/
+Cc: stable@vger.kernel.org
+Signed-off-by: Tim Budding <tim.budding@gmail.com>
+Acked-by: Xin Long <lucien.xin@gmail.com>
+Link: https://patch.msgid.link/20261105050225.49292-3-tim.budding@gmail.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/s390/block/dasd_eckd.c |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ net/sctp/stream_interleave.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/drivers/s390/block/dasd_eckd.c
-+++ b/drivers/s390/block/dasd_eckd.c
-@@ -2594,7 +2594,8 @@ dasd_eckd_build_check_tcw(struct dasd_de
- 	return cqr;
+--- a/net/sctp/stream_interleave.c
++++ b/net/sctp/stream_interleave.c
+@@ -1245,7 +1245,7 @@ static void sctp_intl_skip(struct sctp_u
+ 	if (flags & SCTP_FTSN_U_BIT) {
+ 		if (sin->pd_mode_uo && !MID_lt(mid, sin->mid_uo)) {
+ 			sin->pd_mode_uo = 0;
+-			sctp_intl_stream_abort_pd(ulpq, sid, mid, 0x1,
++			sctp_intl_stream_abort_pd(ulpq, sid, sin->mid_uo, 0x1,
+ 						  GFP_ATOMIC);
+ 		}
+ 		sctp_intl_reasm_flush_mid(&ulpq->reasm_uo, sid, mid);
+@@ -1257,7 +1257,7 @@ static void sctp_intl_skip(struct sctp_u
  
- out_err:
--	dasd_sfree_request(cqr, startdev);
-+	start_priv->count--;
-+	dasd_ffree_request(cqr, startdev);
+ 	if (sin->pd_mode) {
+ 		sin->pd_mode = 0;
+-		sctp_intl_stream_abort_pd(ulpq, sid, mid, 0x0, GFP_ATOMIC);
++		sctp_intl_stream_abort_pd(ulpq, sid, sin->mid, 0x0, GFP_ATOMIC);
+ 	}
  
- 	return ERR_PTR(rc);
- }
+ 	sctp_intl_reasm_flush_mid(&ulpq->reasm, sid, mid);
 
 
