@@ -1,50 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795626034;
-	b=zGlM2baDdauMXJQOVQBI1STWaw7TN/azuealXFaoeKubs6SAUDu4jpOsZcJf2yhb6iUZ
-	 xHGZHu16Lm7YlXWXaz59nV94OTWvQkZGHJJ1Bs+LWyDjfXE9BTv+OzgBC0ntsokw3PZRi
-	 ZkeMKN8SKrYSKCmaKSfaTVH+LjUzwtgIMmZSkrS36Pi08lSET78d9naCJtNNzQQ9AOpkg
-	 6PaBuOpr22wxzgfM1zaObEDA7UIirD2vz9BkYaOarB9QqNz3rhBw13S2i5felC9TIedeQ
-	 brausbFUpPNqq2dDGZv14uakRcGpeOMXNwOWtCpCKM0vq4ztHKj3CNnW1BAqAaFQj8Q==
+	t=1795626038;
+	b=F5nbAjYCG2x+BURjrAGZR1+Ie7xqiPpMRo8/x0BWDe8kvnfsusm8h8bZilr7rbFKHXLL
+	 UtJ2Qgp93ZkiTq4QjVf8aEBRh2DvasacNElqdmXEioyfZwlg24IS+hrBLqrALhsxthHCg
+	 YncfezKBtL1RTJQ3HptjPF+IMdkiFy25j3XiLQQHbKzbYeO7iU4uppcU0zXz6HucmPMvj
+	 vxx3ZIkxlrJtet3y9Y/lSNsPiCCnKZRasAsIPN9+7C02BR2oizkIVcxnB23M7q1Rr+MVu
+	 OAjpIr0WiELMY64qFEa1Xjcn6kSSNQOthGmljunp98fj/PYZzwsRSYl9PdOul1Ds3pA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795626034;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795626038;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=fIdkKEe1zoRRhx2uoDe4FmQ+jjQmkH5DQXWfloppXCs=;
-	b=okMvAiC766rE/62/KYKCMpwHOBYyK42Sb7IZyJ4768z3U5BHF/LRzF7v/QKW3twYkvqR
-	 gTDv/ZTH6ChNTdpmbhVKzyiUMQ0SrCuzMPg/MGZU79FIVOrXnOyC5+7zW7HNNNAInfhi6
-	 gObkfPFTqgIdN1+TOH6iF64JlDfZt8XMO9CU+WCIvLxnbdaeVcFOYmmNJRoWsIyGnFpnt
-	 SM8LSQJmuC2TI8ki0iEeeElWY2wrXTLB7u8m03mUU8rkdJnSAqj7WT7edUpy4L9CNhCBJ
-	 IBlQ/oa+qr3a3T6G9Wmr55I+BFMa8GHNAd6tH5XQjcJeSdSsGnIrv3qh55D9RIIbmmA==
+	bh=ebBscPcUNCsJWPAT6wrur9xtpCc1XkdIpFJdCy7sUtY=;
+	b=ZKWaElPGzf1dhJnk3QL7n7cqOG9cW18ZgfdnUuXVHzgCuBBqTe10uNDoFRDYyfJcr9F9
+	 XqaP6I+aoTO2ozgwrpJe2N4dXPFSCZivNuFp8sR0a89YFHfsLZ//VuYjqReAa0UnbL1Hj
+	 iuuw5Vzsgfrd3f7RZOvY4W0eG/DPY+zJIB1x5pHd1ULIxlaEtRsJQCZwSSuk35mclx745
+	 5v695wjo5Zn3IQT96tZdSFENiilkNMGYVMVe4jxF40P7rAyjGLPnn3M/IoTRwIzfMY9Bv
+	 rw8wO6cOo5KqFEmVue/A9e2QbhyrJhrM2cGp3GR/L7mM0FakJgZ/G2pXxTpzJ4JlN6w==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Dfv5Jv+3;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=IFG9VhKi;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D5AE8606A326;
-	Wed, 25 Nov 2026 17:00:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E52A0606A326;
+	Wed, 25 Nov 2026 17:00:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Dfv5Jv+3
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 324D51F000C0;
-	Wed, 25 Nov 2026 17:00:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=IFG9VhKi
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0857B1F000C6;
+	Wed, 25 Nov 2026 17:00:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795626034;
-	bh=fIdkKEe1zoRRhx2uoDe4FmQ+jjQmkH5DQXWfloppXCs=;
+	s=korg; t=1795626037;
+	bh=ebBscPcUNCsJWPAT6wrur9xtpCc1XkdIpFJdCy7sUtY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Dfv5Jv+3d8gJMZ8pr0HJ5hxOpYklO5IEuKZpWBbKt6eynv1sE1SX2BQB5jldyMzHs
-	 DWUvHwnrr9qzbUDfHPzmepDzZxLIGKRYHgwhlfbQJsqovDyAzl2uF3YJ0GMVZc5OgJ
-	 xX78+eFWaCt5ZsVEslT/FTXIh+8y8wxqLANwThuo=
+	b=IFG9VhKihwDpUPB6WILv5qpFf+jIkwrqbLz4VxMhcS1viBDFmfDsm/DCmDrREI7LH
+	 k5Rl5qO4tbXbasIo5hn+73oqnCZIYLN8ZLGeapLNnB//YCeeFfuvnAQlhzF7c5u1+X
+	 IsF2dUwf4R1cCBY/fsZkTaCx+gC021ds7WCZ96CQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>
-Subject: [PATCH 6.12 655/816] tracing/eprobe: Disallow attaching eprobes to fprobe events
-Date: Wed, 25 Nov 2026 15:36:43 +0100
-Message-ID: <20261125143904.341934802@linuxfoundation.org>
+	syzbot+1288484b13bf6af3620d@syzkaller.appspotmail.com,
+	wuyuehong <wuyuehong@cmss.chinamobile.com>,
+	Mikulas Patocka <mpatocka@redhat.com>
+Subject: [PATCH 6.12 704/816] dm snapshot: fix discard_granularity unit in snapshot_io_hints
+Date: Wed, 25 Nov 2026 15:37:32 +0100
+Message-ID: <20261125143905.475140301@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143849.205329330@linuxfoundation.org>
 References: <20261125143849.205329330@linuxfoundation.org>
@@ -66,40 +68,63 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Masami Hiramatsu (Google) <mhiramat@kernel.org>
+From: wuyuehong <wuyuehong@cmss.chinamobile.com>
 
-commit 92d9fa0ed69e1f724feed908bd0a462a42df4b88 upstream.
+commit d7216d7be2bbfdf3312695b6e41a4fc7c5e22902 upstream.
 
-Event probes (eprobes) are not allowed to attach to other dynamic probe
-events (kprobes, uprobes, and eprobes) to avoid recursive probe chains
-and lifecycle dependencies. However, when fprobe events were introduced,
-TRACE_EVENT_FL_FPROBE was omitted from the exclusion mask in
-find_and_get_event(), allowing eprobes to attach to fprobe and tprobe
-events.
+snapshot_io_hints() copies the snapshot store's chunk_size, which is
+in 512-byte sectors, into queue_limits.discard_granularity, which, like
+all other members of struct queue_limits, is in bytes.
 
-Exclude TRACE_EVENT_FL_FPROBE events in find_and_get_event().
+For snapshots with a chunk size smaller than 512 sectors, e.g. the
+16 KiB (32-sector) chunks created by the syzkaller reproducer, the
+resulting granularity is smaller than a single sector.  When
+dm_calculate_queue_limits() then stacks the target limits into the
+table limits:
 
-Link: https://lore.kernel.org/all/179455853457.403392.14549390017750529531.stgit@devnote2/
+	blk_stack_limits(limits, &ti_limits, 0)
 
-Fixes: 334e5519c375 ("tracing/probes: Add fprobe events for tracing function entry and exit.")
+queue_limit_discard_alignment() truncates that granularity to zero
+sectors and sector_div() divides by zero:
+
+  Oops: divide error: 0000 [#1] SMP KASAN NOPTI
+  RIP: 0010:queue_limit_discard_alignment block/blk-settings.c:645 [inline]
+  RIP: 0010:blk_stack_limits+0x1105/0x2d00 block/blk-settings.c:916
+  Call Trace:
+   dm_calculate_queue_limits+0x70c/0x1510 drivers/md/dm-table.c:1823
+   dm_setup_md_queue+0x199/0x4f0 drivers/md/dm.c:2618
+   table_load+0x4fd/0x8a0 drivers/md/dm-ioctl.c:1661
+
+The divide fault itself only became reachable when commit e924da7d6622
+("block: Drop granularity check in queue_limit_discard_alignment()")
+removed the check for a sub-sector granularity in v6.13.  Kernels
+before that returned a zero discard alignment instead of faulting, but
+they still advertised a granularity 512 times too small.
+
+Use the same chunk_size << SECTOR_SHIFT conversion that
+io_overlaps_chunk() already applies to turn chunk_size into bytes.
+
+Fixes: 2e6023850e17 ("dm snapshot: add optional discard support features")
+Reported-by: syzbot+1288484b13bf6af3620d@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=1288484b13bf6af3620d
 Cc: stable@vger.kernel.org
-Signed-off-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
+Signed-off-by: wuyuehong <wuyuehong@cmss.chinamobile.com>
+Signed-off-by: Mikulas Patocka <mpatocka@redhat.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/trace/trace_eprobe.c |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/md/dm-snap.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/kernel/trace/trace_eprobe.c
-+++ b/kernel/trace/trace_eprobe.c
-@@ -750,7 +750,8 @@ find_and_get_event(const char *system, c
- 		    (TRACE_EVENT_FL_IGNORE_ENABLE |
- 		     TRACE_EVENT_FL_KPROBE |
- 		     TRACE_EVENT_FL_UPROBE |
--		     TRACE_EVENT_FL_EPROBE))
-+		     TRACE_EVENT_FL_EPROBE |
-+		     TRACE_EVENT_FL_FPROBE))
- 			continue;
- 		if (!tp_event->class->system ||
- 		    strcmp(system, tp_event->class->system))
+--- a/drivers/md/dm-snap.c
++++ b/drivers/md/dm-snap.c
+@@ -2420,7 +2420,7 @@ static void snapshot_io_hints(struct dm_
+ 			snap = snap_src;
+ 
+ 		/* All discards are split on chunk_size boundary */
+-		limits->discard_granularity = snap->store->chunk_size;
++		limits->discard_granularity = snap->store->chunk_size << SECTOR_SHIFT;
+ 		limits->max_hw_discard_sectors = snap->store->chunk_size;
+ 
+ 		up_read(&_origins_lock);
 
 
