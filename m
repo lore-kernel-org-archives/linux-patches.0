@@ -1,42 +1,42 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795618774;
-	b=0MksxnBig+ZxtF0LRIjkOOg1BgYVBnbTtSZ38teuyyrH89AMpLP5tgXWunDQr0JLStKl
-	 5OhuZtfDeFUGqdNBEdc1iaaDV3OZ+Txr4bbPrBHXGAPfGuGE1lJ4fMhNqxJvgBc/HUvJ4
-	 OhtHXWKDo4L0JB0giTkaBOtoCdw7eKiu1FnVaSHE61ipv7DdqaOSuRK7k1iIqV7VG+mSi
-	 tQw70x0OWZf/FGhXSd1ifcYN5MmcXxQJkI2KEeU02OcYnXLAQqQ4zMJgO7Z4qWhlBMJzm
-	 BzcbHv+y5HQUt3XrzKhlghHa9QsUjyC0qmMh1bFtoyV5LibKTfFPA29CckEONQFDzCw==
+	t=1795618777;
+	b=FqMMpOZoIZrUIFA+bMg2hsNfuRtp6o9gkzb6uqrHr7YqE45p/hZfEyh81D52bALg7b8K
+	 dwSAi1RCZeTOLVi7YD8nLw/5zHT9EwB8MyqG8IwukYAjqdV1XG5VaUdZU6ZnFjhPmscPr
+	 e0gepurka4u5KUleLRBLwl+DMWnLoLyltLXezfFHrTVRPQQFwfPTlRhz7hVR8/lI0vj2i
+	 vVfPxvB9Rru++cI+bBmyVaygtLIJzHYpWGkK7qR2qxU8/KyFeS14XPm+67QwkYV94HiX8
+	 Jh2ci/J7nnvBe3jXUUXHf0l2rdtFNylJpHYOOR3KaYWAg6U0+Ts6GPeTuzGyeFr6d7Q==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795618774;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795618777;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=a4occAV4tBPzXkGWWufhsBd9HpAThYxO8t2vn8p1ulY=;
-	b=prcnJZIE7BqH9CK3Y5EhB+ujY3Pvx2eErRj8z7KV2bUMJfZddMbhpHgvFhqDge/Pot9D
-	 e1YtszEqFUoJYvABkFdw1hREB1iLfF7qRyWUXv5uLRS2TwFiOhzciSTx/SpWRah19yEM9
-	 GBkBJJU4i2MWqGwCKTMuw3GtOZ3sruWWgteWYe5OPdrIu25qvTi43vAkMpq5Ptiy2S/jF
-	 eqyyohkIThVMfwNh3K3L1UGUdDfeiebdButrXk7+KkORig6t/5+0ILJgTUDJaMYD06rF1
-	 C7HUpN6CJQIFFatK7HK5aHDg/8L2e4VzRP1CccGn2ND59r30U9nyiLPLa3T6qBVXd/Q==
+	bh=C7uCGei2RlQvDBnKozMiliPgxR6SEpCEBTOieWGKzAk=;
+	b=Xala5BnI4q+xpH98B+r7Afp+yMjr3Hwme/zz7oNBwaC5SLL0BwK0wA1lDPqS3FMt53BN
+	 b/DJ5ZwB2L2GUv8UE6l1X7wwedXKL2qfmXciTr3wSIP+1oEcdELhzfXNJvmxSeT9Vl2J4
+	 d2cnP4f2W5OAzFBTT/GbD9CoQDkDAwKWyx4qc+Zkd5AQdvCfdpDH72lRjIRgPsZ4TdPYe
+	 dPUFtbgBCjSsB52r2TIs5O/T9Q4STohLxPh3N5of01GChs2QMFMqcGe6SdBceTs6vUSET
+	 nGp1ae+zoYtD9S9tnQLx/TtIuvpvM6lT9NhRQ0ykrEeuIJV7+E8VzTR/1Re6bgeNwhA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=2MwZuZAN;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=yIq6S2me;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 13BCE606A323;
-	Wed, 25 Nov 2026 14:59:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 52B70606A33E;
+	Wed, 25 Nov 2026 14:59:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=2MwZuZAN
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3F1C11F000EB;
-	Wed, 25 Nov 2026 14:59:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=yIq6S2me
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 974B71F000EB;
+	Wed, 25 Nov 2026 14:59:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795618773;
-	bh=a4occAV4tBPzXkGWWufhsBd9HpAThYxO8t2vn8p1ulY=;
+	s=korg; t=1795618777;
+	bh=C7uCGei2RlQvDBnKozMiliPgxR6SEpCEBTOieWGKzAk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=2MwZuZANjDp8bji4f3atfGWK0m3MhAEqQ1+IKmturL7E/d75snBTLIhN6rpq7vqKR
-	 71xyHv0I1nUFLuxKFFRWudM9+4FQf0CX0HaRaLNf7jMBvdtZp8jc6gFBW2talramhx
-	 LnXxtC78yVhMXPe2ebBITGnfC+oTgym95F4e7Ags=
+	b=yIq6S2mefDWDRYPuN1NWi8Mb7J7BeZL7afdq8KgQ9TMPqOc6YI8QeppRWDBRgUjvR
+	 qPzOJSTMwEZuIINLnfGDHHSlnUzW7zDbjX7BydZ2LUkeCmjgB9vNKs3lriMEA3maeZ
+	 BIaqFmfPrOinoHV7bULyBXKNs4XbqSU/QEoLIrp8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -44,9 +44,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Karthik Poosa <karthik.poosa@intel.com>,
 	Rodrigo Vivi <rodrigo.vivi@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0385/1005] drm/xe/pcode: Increase default pcode mailbox timeout to 10ms
-Date: Wed, 25 Nov 2026 15:28:43 +0100
-Message-ID: <20261125143830.758624203@linuxfoundation.org>
+Subject: [PATCH 7.3 0386/1005] drm/xe/hwmon: Use shared pcode default timeout for power limit write
+Date: Wed, 25 Nov 2026 15:28:44 +0100
+Message-ID: <20261125143830.782825364@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143821.729802100@linuxfoundation.org>
 References: <20261125143821.729802100@linuxfoundation.org>
@@ -70,59 +70,48 @@ Content-Transfer-Encoding: 8bit
 
 From: Karthik Poosa <karthik.poosa@intel.com>
 
-[ Upstream commit 8721a51d44733b8b5cb41fa1bfe7fac2cf55107b ]
+[ Upstream commit 1a925ad51847db376fc0acd21fc5b76fb9c36cde ]
 
-The previous 1ms timeout may be insufficient for some mailbox commands,
-leading to spurious -ETIMEDOUT failures under load. Increase the default
-timeout to 10ms and introduce PCODE_DEFAULT_TIMEOUT_MS for a shared
-timeout definition, in line with pcode mailbox specification guidance.
+Drop the local PL_WRITE_MBX_TIMEOUT_MS macro and use the common
+PCODE_DEFAULT_TIMEOUT_MS for the power limit write mailbox command.
+This removes a duplicate timeout definition and keeps hwmon in sync with
+the pcode default (now 10ms).
 
 Signed-off-by: Karthik Poosa <karthik.poosa@intel.com>
-Link: https://patch.msgid.link/20260907083520.192418-2-karthik.poosa@intel.com
+Link: https://patch.msgid.link/20260907083520.192418-3-karthik.poosa@intel.com
 Reviewed-by: Rodrigo Vivi <rodrigo.vivi@intel.com>
 Signed-off-by: Rodrigo Vivi <rodrigo.vivi@intel.com>
 Stable-dep-of: 94099304b80e ("drm/xe/hwmon: Fix pcode power limit handling")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/xe/xe_pcode.c | 2 +-
- drivers/gpu/drm/xe/xe_pcode.h | 4 +++-
- 2 files changed, 4 insertions(+), 2 deletions(-)
+ drivers/gpu/drm/xe/xe_hwmon.c | 7 +------
+ 1 file changed, 1 insertion(+), 6 deletions(-)
 
-diff --git a/drivers/gpu/drm/xe/xe_pcode.c b/drivers/gpu/drm/xe/xe_pcode.c
-index ccdfc33cf5876..6e41075ae9f69 100644
---- a/drivers/gpu/drm/xe/xe_pcode.c
-+++ b/drivers/gpu/drm/xe/xe_pcode.c
-@@ -141,7 +141,7 @@ int xe_pcode_read(struct xe_tile *tile, u32 mbox, u32 *val0, u32 *val1)
- 	int err;
+diff --git a/drivers/gpu/drm/xe/xe_hwmon.c b/drivers/gpu/drm/xe/xe_hwmon.c
+index de3f2aeffc3fb..08cec511806fa 100644
+--- a/drivers/gpu/drm/xe/xe_hwmon.c
++++ b/drivers/gpu/drm/xe/xe_hwmon.c
+@@ -101,11 +101,6 @@ enum sensor_attr_power {
  
- 	mutex_lock(&tile->pcode.lock);
--	err = pcode_mailbox_rw(tile, mbox, val0, val1, 1, true, false);
-+	err = pcode_mailbox_rw(tile, mbox, val0, val1, PCODE_DEFAULT_TIMEOUT_MS, true, false);
- 	mutex_unlock(&tile->pcode.lock);
+ #define PWR_ATTR_TO_STR(attr)	(((attr) == hwmon_power_max) ? "PL1" : "PL2")
  
- 	return err;
-diff --git a/drivers/gpu/drm/xe/xe_pcode.h b/drivers/gpu/drm/xe/xe_pcode.h
-index ba8a1d1b21521..7e43792b0037a 100644
---- a/drivers/gpu/drm/xe/xe_pcode.h
-+++ b/drivers/gpu/drm/xe/xe_pcode.h
-@@ -18,6 +18,8 @@ struct xe_pcode_version {
- 	u32 engg;
- };
+-/*
+- * Timeout for power limit write mailbox command.
+- */
+-#define PL_WRITE_MBX_TIMEOUT_MS	(1)
+-
+ /* Index of memory controller in READ_THERMAL_DATA output */
+ #define TEMP_INDEX_MCTRL	2
  
-+#define PCODE_DEFAULT_TIMEOUT_MS	10
-+
- int xe_pcode_init_early(struct xe_tile *tile);
- int xe_pcode_probe_early(struct xe_device *xe);
- int xe_pcode_ready(struct xe_device *xe, bool locked);
-@@ -31,7 +33,7 @@ int xe_pcode_write64_timeout(struct xe_tile *tile, u32 mbox, u32 data0,
- int xe_get_pcode_version(struct xe_device *xe, struct xe_pcode_version *version);
- 
- #define xe_pcode_write(tile, mbox, val) \
--	xe_pcode_write_timeout(tile, mbox, val, 1)
-+	xe_pcode_write_timeout(tile, mbox, val, PCODE_DEFAULT_TIMEOUT_MS)
- 
- int xe_pcode_request(struct xe_tile *tile, u32 mbox, u32 request,
- 		     u32 reply_mask, u32 reply, int timeout_ms);
+@@ -252,7 +247,7 @@ static int xe_hwmon_pcode_rmw_power_limit(const struct xe_hwmon *hwmon, u32 attr
+ 							     (channel == CHANNEL_CARD) ?
+ 							     WRITE_PSYSGPU_POWER_LIMIT :
+ 							     WRITE_PACKAGE_POWER_LIMIT, 0),
+-							     val0, val1, PL_WRITE_MBX_TIMEOUT_MS);
++							     val0, val1, PCODE_DEFAULT_TIMEOUT_MS);
+ 	if (ret)
+ 		drm_dbg(&hwmon->xe->drm, "write failed ch %d val0 0x%08x, val1 0x%08x, ret %d\n",
+ 			channel, val0, val1, ret);
 -- 
 2.53.0
 
