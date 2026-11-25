@@ -1,54 +1,55 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795623048;
-	b=kXkFWzPHj82KWCI1SJGHRsvYIZNDoQUFFbdcn1yYkYTM7fpCPSLW34KEYGlj01Zu/AvQ
-	 85qxQuFJQfzXqGNrr6cQHMxgznBT/EvndrG77yxCx5Ku2pSgXKZDYom1czMyxrLURZXMi
-	 f2M8DpDFa4kCTyFzBjPz3GRDoO80nDsCHgVYukEfElZTwwGy2TYNij/O6fWdHHciZs7/A
-	 Fk/wn5aPosR/hBDxSCIvG3TrwRyeVYvtLOzgwpW5IuguukDudQLsl7zWymOcCVGe4JFGb
-	 rcIKFYm/R3Ahfs2ev4SpMCH8Kgvn7+EiPjP2fPQPTtZHHiDk2E2j0nidCkH2zczd6Zg==
+	t=1795623051;
+	b=jEJb9A4hvu2h4kButPO+IQaKT08RK9uBOo3dVBJv5f3NDnZBtgpUeZ4x8I8z29FJ3H7a
+	 kvrQPqZ87oqMlZXWVFN5ZIN634zl928S5Ia7aWHGYvw/ZQ+Hwy2DWmIiLtUCFn+C1HUvY
+	 WfBtrqrg4wVA5pl0S8zje0vzUxVS6zgSxtIjT5Ic/nh5I7VdXAfqvG4/qFDEoYkqy+8mo
+	 /mEBb0w/orh2U09xDVS4Kjzfod9BUXDRoqQWmp80wIUcvVjs02RlCo0FfgQ6+Mzita5Sw
+	 emw5ijzcjMtoQKnplG1BIXRqblyHNJ4MpCWzgRqPYMH/Ld4LGcAGyvkA88hCliY29AQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795623048;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795623051;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=xlOWFhAFridshpIBC9eMuaVfXoL1lTRB+8H3/y15EaE=;
-	b=hPlQRsK4bg9QbcChzf8ww679HxMDwuc/cd0HYDbn3U04b1MhFQXI58dpitb7uMQEw3tS
-	 GvTFy3y0Z4VK/A2ApaNTlYTP8/RtEUfpxfub4LGxNrLMpiQpP1OHRkpxSTIppqpyh4UPQ
-	 V6dWwiwzZt3kGj/6F2YBI5bRFgYxWMTEriESTJ5aBH2j0ErurrkpWT+RDopDzAJNHWs4r
-	 v30/aRftvsQPP1JGEgo7OhsDzND/7BzArYuXtVRZ9+7w+qr/Y4TgWORqeO/y4DqeQ7+K6
-	 GiQSJjUvrCZIZF2UIcGq+nhl6LDWLMr816DC4aRRMumvJbfqR5kXE0AvRCt6/sGqicQ==
+	bh=so2u2ERFHx+kbkBrS+zcPMGdeyjDhylAU4F8b/XlSq4=;
+	b=QYPDqpQA/yG1l6cVUxcLthO0xyvEGfr2O9Xm9E7+DM6EpGraPywxrwuiZa2CjizCuf+s
+	 oShrovvAxAyROaoWAEOhw4oA0dNEVTIXq+ailv3J+WchXeXiHJiwcF+FDI2mGTEXkDWh9
+	 gL/3SaftZFW2NgetAMQ7+KHoKps75K1Zy99B/wCQXMH0jDZN+N8+NXzPCAOxURvh2aGRg
+	 sZIfNNSGQUGngI8st3KpHQo7AqyQb+KafdAag5/aZW14+rUW2AkGgxFgycu1j7W2yqm0/
+	 alUFyGtvpTm2MtuT3C/C/r5VoXkLXFwcxQHEGj88iGlGW8WQcBVd4093zwU6vVCGNKg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ohUhItY0;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=GrFjWnQd;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B6A8E606A31E;
-	Wed, 25 Nov 2026 16:10:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D4190606A31E;
+	Wed, 25 Nov 2026 16:10:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ohUhItY0
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 13CDC1F000C4;
-	Wed, 25 Nov 2026 16:10:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=GrFjWnQd
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DEF0B1F000C0;
+	Wed, 25 Nov 2026 16:10:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795623048;
-	bh=xlOWFhAFridshpIBC9eMuaVfXoL1lTRB+8H3/y15EaE=;
+	s=korg; t=1795623051;
+	bh=so2u2ERFHx+kbkBrS+zcPMGdeyjDhylAU4F8b/XlSq4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ohUhItY0bihppE58lzkpE+F2MAGk/JhDFSH2rQ24dVFV4O/UDjbp361x4v3g+zd6L
-	 xc67tJ8uCzV++bAi6r+RnowP7PNoeSrA3fAe3DaiZPnHVImUPQM3gqNlfhC75peiXU
-	 mcyMH2VtPg0X6ZclAOw7w9Uc9lK7wG+niPiiVAn8=
+	b=GrFjWnQd/ZUSwy1L+9tzTaxwdhNvHQW1sRJvMNZZX0vewl9OVE3Xtrghn/x5VcWfH
+	 pEZBzHr/rS2hPdkOyu/RqOKzcJ5BjuZltAYyuZpcBjxvIxSxr4xvrKDcj0O8OvmKZk
+	 eLOpBhFZdm/usGwTftbbtuxNrMLbRaFWGY7SvTlU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	"Sashiko (nipa)" <sashiko-bot@kernel.org>,
 	shaos <shawnq1@163.com>,
 	Victor Nogueira <victor@mojatatu.com>,
 	Jamal Hadi Salim <jhs@mojatatu.com>,
 	Simon Horman <horms@kernel.org>,
 	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.18 731/990] net/sched: act_ife: encode configured zero metadata values
-Date: Wed, 25 Nov 2026 15:34:58 +0100
-Message-ID: <20261125143839.193055395@linuxfoundation.org>
+Subject: [PATCH 6.18 732/990] net/sched: act_ife: require a full Ethernet header on egress
+Date: Wed, 25 Nov 2026 15:34:59 +0100
+Message-ID: <20261125143839.215239911@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143822.072087159@linuxfoundation.org>
 References: <20261125143822.072087159@linuxfoundation.org>
@@ -72,88 +73,105 @@ Content-Transfer-Encoding: 8bit
 
 From: Jamal Hadi Salim <jhs@mojatatu.com>
 
-commit 7d02c07c738bf5c4b9a7d7ef498fbf465c446853 upstream.
+commit 11dbce09083473249c3843ff31bf8d8fa01bdeef upstream.
 
-Reported by shaos <shawnq1@163.com> with a reproducer for the 32-bit
-case, which was reproduced and verified in our test environment.
+This is a followup of commit 5b483f7791b0 ("net/sched: act_ife: Only
+operate on Ethernet frames") as reported by Sashiko.
+
+The finding was raised by both Sashiko providers (nipa and gemini)
+while reviewing the parent patchset. shaos <shawnq1@163.com>
+independently reported the same undersized-egress path with a
+reproducer, which was reproduced and verified in our test environment.
 
 The issue:
-ife_check_meta_u32() and ife_check_meta_u16() both reserve eight bytes
-of metadata for a configured value even when that value is zero, but the
-matching encoder returns without calling ife_tlv_meta_encode(). The
-encoder therefore writes neither the TLV header nor its value, while the
-enclosing IFE length still includes the reserved bytes, exposing stale
-skb headroom contents to the peer.
+On egress tcf_ife_is_eth_skb() only checks the device type; it does not
+check that the skb carries a full Ethernet header. For an Ethernet or
+loopback device it returns true even when the skb has no Ethernet
+header. tcf_ife_encode() then calls ife_encode(), which copies ETH_HLEN
+bytes from skb->data. A short skb therefore reads past its linear data
+and the copied bytes, including stale kernel memory, are emitted in the
+outer Ethernet header.
 
-The 32-bit helper has been present since the IFE action was introduced
-(v4.6); the 16-bit helper was added with the 16-bit metadata helpers used
-by the skbtcindex callback (v4.9). Both defects predate the oldest
-supported stable kernel (5.10), so they are fixed together in this patch.
-Each hunk keeps its own Fixes: tag for provenance.
+The parent commit fixed the reported ingress mac_len case but left the
+egress path without a length check.
 
-The fix:
-Encode any configured value, including zero; skip the TLV only when
-there is neither a configured nor a runtime value. The runtime fallback
-is unchanged.
+A total-length test is not sufficient: a non-GSO TUN skb can have a
+large total length while only a single byte sits in the linear area, so
+ife_encode() still reads past the linear header. Require instead that
+the Ethernet header the encoder copies is present in the linear part of
+the skb.
 
-A raw TCA_IFE_METALST netlink request is needed to express the
-configured zero: the IFE_META_SKBMARK attribute carries four zero
-payload bytes for the u32 helper, and IFE_META_TCINDEX two zero payload
-bytes for the 16-bit helper (not an absent or zero-length attribute).
-Stock tc cannot build these requests; "use mark 0x0" emits no mark
-attribute and "allow mark" emits a zero-length one.
+The Fix:
+On egress require pskb_may_pull(skb, ETH_HLEN) before encoding, which
+ensures the Ethernet header is present in the linear data ife_encode()
+copies from; the ingress mac_len check is unchanged. A short egress skb
+is now dropped instead of being encoded.
 
 Conditions to recreate the bug:
-CONFIG_NET_ACT_IFE=y, CONFIG_NET_IFE_SKBMARK=y,
-CONFIG_NET_IFE_SKBTCINDEX=y, CONFIG_NET_CLS_MATCHALL=y,
-CONFIG_NET_SCH_INGRESS=y, CONFIG_USER_NS=y, CONFIG_NET_NS=y,
-CONFIG_VETH=y. In a fresh user and network namespace create a veth pair
-and attach clsact to the egress side. Install a matchall filter whose
-ife encode action carries a zero skb mark (or a zero tcindex) in
-TCA_IFE_METALST. Send a frame through the veth and inspect the IFE
-metadata in the received frame. The metadata region is eight bytes but
-holds neither a valid TLV header nor a value; it exposes prior headroom
-contents. Setting the value to a nonzero one does not trigger the leak.
-The namespace needs CAP_NET_ADMIN; no additional privilege is required.
-With the fix the zero TLVs are 0001000800000000 (u32) and
-0005000600000000 (u16).
+CONFIG_NET_ACT_IFE=y, CONFIG_NET_CLS_MATCHALL=y, CONFIG_NET_SCH_INGRESS=y,
+CONFIG_TUN=y, CONFIG_NET_ACT_MIRRED=y. In two user and network
+namespaces (a victim and an attacker), open a TUN device in IFF_TUN mode
+and attach clsact to it and to lo. Redirect ingress traffic from the TUN
+device to lo egress with mirred, and install an ife encode action on lo
+egress:
 
-Fixes: ef6980b6becb ("introduce IFE action")
-Fixes: 6a5d58b67e20 ("net sched ife action: add 16 bit helpers")
+  tc qdisc add dev <tun> clsact
+  tc qdisc add dev lo clsact
+  tc filter add dev <tun> ingress matchall action mirred egress \
+      redirect dev lo
+  tc filter add dev lo egress matchall action ife encode use mark 1 \
+      action ok
+
+Send a TUN packet shorter than ETH_HLEN (a one-byte payload is enough)
+and receive the emitted frame on the other side. Without the fix the
+outer Ethernet header contains bytes copied past the short packet; with
+the fix the short skb is dropped. The attacker needs CAP_NET_ADMIN in
+its user namespace; no init-net privilege is required.
+
+The same path is reachable when the total length is large but the
+Ethernet header is not linear: write a non-GSO virtio header with
+hdr_len=1 followed by an 8192-byte packet so that only one byte stays
+linear. Without the fix the copied header reads past the linear data;
+with the fix the header is pulled into the linear area before the copy.
+
+Fixes: 295a6e06d21e ("net/sched: act_ife: Change to use ife module")
+Reported-by: Sashiko (nipa) <sashiko-bot@kernel.org>
+Reported-by: Sashiko (gemini) <sashiko-bot@kernel.org>
 Reported-by: shaos <shawnq1@163.com>
-Link: https://lore.kernel.org/netdev/20261022144739.61342-1-shawnq1@163.com/
+Link: https://netdev-ai.bots.linux.dev/sashiko/#/patchset/20260821164031.32824-1-victor%40mojatatu.com
+Link: https://sashiko.dev/#/patchset/20260821164031.32824-1-victor@mojatatu.com
+Link: https://lore.kernel.org/netdev/20261022144736.61227-1-shawnq1@163.com/
 Cc: stable@vger.kernel.org
 Reviewed-by: Victor Nogueira <victor@mojatatu.com>
 Signed-off-by: Jamal Hadi Salim <jhs@mojatatu.com>
 Reviewed-by: Simon Horman <horms@kernel.org>
-Link: https://patch.msgid.link/SER-NSBD.v3.r0.20261103064310-1@mojatatu.com
+Link: https://patch.msgid.link/SER-NSBD.v3.r0.20261103064310-2@mojatatu.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/sched/act_ife.c |    6 ++----
- 1 file changed, 2 insertions(+), 4 deletions(-)
+ net/sched/act_ife.c |    7 +++++--
+ 1 file changed, 5 insertions(+), 2 deletions(-)
 
 --- a/net/sched/act_ife.c
 +++ b/net/sched/act_ife.c
-@@ -50,8 +50,7 @@ int ife_encode_meta_u16(u16 metaval, voi
- 		edata = *(u16 *)mi->metaval;
- 	else if (metaval)
- 		edata = metaval;
--
--	if (!edata) /* will not encode */
-+	else
- 		return 0;
+@@ -871,13 +871,16 @@ drop:
+  * is an Ethernet header because the skb could've been redirected with mirred
+  * from a non-Ethernet device.
+  */
+-static bool tcf_ife_is_eth_skb(const struct sk_buff *skb)
++static bool tcf_ife_is_eth_skb(struct sk_buff *skb)
+ {
+ 	if (skb->dev->type != ARPHRD_ETHER &&
+ 	    skb->dev->type != ARPHRD_LOOPBACK)
+ 		return false;
  
- 	edata = htons(edata);
-@@ -94,8 +93,7 @@ int ife_encode_meta_u32(u32 metaval, voi
- 		edata = *(u32 *)mi->metaval;
- 	else if (metaval)
- 		edata = metaval;
--
--	if (!edata) /* will not encode */
-+	else
- 		return 0;
+-	return !skb_at_tc_ingress(skb) || skb->mac_len == ETH_HLEN;
++	if (skb_at_tc_ingress(skb))
++		return skb->mac_len == ETH_HLEN;
++
++	return pskb_may_pull(skb, ETH_HLEN);
+ }
  
- 	edata = htonl(edata);
+ TC_INDIRECT_SCOPE int tcf_ife_act(struct sk_buff *skb,
 
 
