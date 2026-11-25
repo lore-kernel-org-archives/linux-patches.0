@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795622803;
-	b=SdGuYCCRUXLoKOsjZSVgph7opiXe9cXQcYamUV1dQFrFLKpOvcuu+bpiAJ0gWf3elEcz
-	 1U1Qe4fSxYEWfgFDP049zdNcPop0svqaJclVlVQ34HqKXVB/YE1Lfkbi4H+D+gm/3UE93
-	 rmnj+OIS8eflb9uQ0XRHxlN9yLo8TTld48t9+OdYW4uFQivNC7H1G7QUlFoGg93L2vsA0
-	 XkVLwBw8qoaUxT8+qpvxLOmKN9L8bVvK2BHkRwJFV2VAvlpNBQQk9zm8X62lLkhR8RG6M
-	 6Bh3WFlMo5WBhNG3sn1hwPX6rsQTtD4OcrZNSIfylG4Wr6zux6pTkRSK/MbDvV7ZYWg==
+	t=1795622806;
+	b=IHZgtaMbQ2x+ktzHno6RJo3VSnGESNfKUUMCtjq8xCsu3Rjn934ggaSDAzhsTxID9mAV
+	 WpJLLTfu6cgM7i9r5D5UEOofqH0RT074g2lZN+RdZHZaIrl1hsw0R+W17KgnS8ZDVy/HK
+	 lV+jN3TdtdW+4CSP8Ut9W+0IW1ea14rIJwYAgd5QvnC5NLdgTf1sfOIuJqQH5aGYeOzKx
+	 X9jYdRqaj3F8QhD3CG56OvCrqhJEpOlMEuIgbdlVkL3gaI3MQMK/r64UXUHU7grN4VzWc
+	 32kVDnDukgV2A9YalMV5KtEwfo8ADUDnrLnamjZLgBOtjKaIHPckd9rl8hzNnKOcE/A==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795622803;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795622806;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=RJVLNO7Gyo5s1n6xly/VaY4y4Z49FHiZWiNOGGaml5g=;
-	b=OTX6JcDjParJJ40MfyfrDJ+mUNLxSvsLHUNbfne1uUI/gQnz+w+Z0vy9L6ZSNSatvvPK
-	 I7+xYpr/+Y8sgRQqRrQJfv4WC6t0v3Euk05S13jSmGkUp6VU3LHjUb/dMOM9NA62vxVJ4
-	 7m8Mt2qLhEWAGOh+KTtcJ6TIGzUqx31aA62jUKYDCEB+VsS935FN5WFtPaQFBqmRCgmX0
-	 NeKGnhg1sS0ADGp7w1kg53SjlQlvgLqukhzubptDZEsBKqeVFk7dverDilXPPRuLaaitI
-	 A6tRVozeVQ4io5kmMuR+dn8thKxOcmX6xdx3GGodiy+AcB9IyZsMZLWj+Hw/Goe78Ug==
+	bh=tG1FIwvddJZNH0DjxFIOy8F56bvoqTaQ12GeJrlGXzQ=;
+	b=F5xbj67vPlj1WARU9gQg1VhDNgNahktYwhBzI7tG1kg1ocwelImwb0zWEZT2Opu1YUzn
+	 YH5TLCF9Q+MgfEi43CKWSlx2/w76L/5oIAUTsZ74GjPabRnwY8rjyrNjW5AjKsmRoz7CW
+	 75x7XJWYgWgcsi/tIZvWR61H1IR0hAWfxhYBN1ygooEBHdODMbJWiqnxib2knMaghYrH7
+	 q5szEmopBKJsRYBZsGGc8FRNcwgDGrZQtwtZr6anjDDBOX9QBoU+E9AKCxOA7toGMaqTY
+	 J/4CzJZOaoqvmCP7kkTHjh40s5ZkPAZzy0FWIjqkgoVmq52M46e8AWSLLer+7tXf/vA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=rP9KZ4Et;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="C6uG/n61";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DC050606A33C;
-	Wed, 25 Nov 2026 16:06:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B60D0606A33C;
+	Wed, 25 Nov 2026 16:06:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=rP9KZ4Et
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3629C1F000C0;
-	Wed, 25 Nov 2026 16:06:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=C6uG/n61
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 129B11F000C0;
+	Wed, 25 Nov 2026 16:06:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795622803;
-	bh=RJVLNO7Gyo5s1n6xly/VaY4y4Z49FHiZWiNOGGaml5g=;
+	s=korg; t=1795622806;
+	bh=tG1FIwvddJZNH0DjxFIOy8F56bvoqTaQ12GeJrlGXzQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=rP9KZ4Eta8e0uP4oifV7fpBtc6w5EiZwLTVetmHp15e32CS1T55SRtOpdlCtSk5v9
-	 r48hNIfTqbsq6yD3Nh+F31N3UslLH4XvK7sETNh+ilhqZRvr3Qdm3IAuD+jjRcszBZ
-	 +zM2z996ezisvFzcbboqRcGp5K3CXY4LCYt0S0aI=
+	b=C6uG/n61QIqr2WemoyHLndc0HI82dJJKrUFoPK73/S6J3nzT4DV6pyg4KtD4IVgRI
+	 RdYEPdvK1worBWjTjCDx+IOY+EsHWmH4VQgvzeQoj1tp9Ig1Ceaf9Tc840wFmPdaeq
+	 7pWyalBT2H+wsi/acZGO7L9OLUXZBFxaSUPW3GRc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jaewon Jung <jaewon8868@gmail.com>,
+	Steven Rostedt <rostedt@goodmis.org>,
 	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>,
 	Shuah Khan <skhan@linuxfoundation.org>
-Subject: [PATCH 6.18 655/990] selftests/ftrace: Add missing spaces after ! in probe syntax tests
-Date: Wed, 25 Nov 2026 15:33:42 +0100
-Message-ID: <20261125143837.433466216@linuxfoundation.org>
+Subject: [PATCH 6.18 656/990] tracing/selftests: Fix false bashism in kprobe_non_uniq_symbol.tc
+Date: Wed, 25 Nov 2026 15:33:43 +0100
+Message-ID: <20261125143837.456303060@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143822.072087159@linuxfoundation.org>
 References: <20261125143822.072087159@linuxfoundation.org>
@@ -68,57 +68,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jaewon Jung <jaewon8868@gmail.com>
+From: Steven Rostedt <rostedt@goodmis.org>
 
-commit 36990c8fda77d918b1e52d5d6df3a144b552d86e upstream.
+commit 88d5f8cb8a6276194ac8c1de44f3ed77d7e938ce upstream.
 
-Add the missing space between ! and grep. Otherwise, the shell tries
-to run !grep and reports "!grep: not found". This always skips the
-conditional checks without checking for kernel return probe argument
-support.
+The checkbashism is giving a false positive to the kprobe test of:
 
-Link: https://lore.kernel.org/r/20261025075044.1750113-1-jaewon8868@gmail.com
-Fixes: 25f00e40ce79 ("tracing/probes: Support $argN in return probe (kprobe and fprobe)")
+  ($"foo" should be eval_gettext "foo"):
+  if [ "$(grep -c -E "[[:alnum:]]+ t ${SYMBOL}$" /proc/kallsyms)" -le '1' ]; then
+
+This is because it sees the $" at the end of the grep as a bash symbol.
+Instead, escape the '$' with a backslash as it is within quotes and that
+'$' is for grep to process an end of line character and not a bash
+variable.
+
+Link: https://lore.kernel.org/r/20261029211218.3749963a@fedora
 Cc: stable@vger.kernel.org
-Signed-off-by: Jaewon Jung <jaewon8868@gmail.com>
+Fixes: d22c3e0088e85 ("selftests/ftrace: Fix unique symbol check in kprobe_non_uniq_symbol.tc")
+Signed-off-by: Steven Rostedt <rostedt@goodmis.org>
 Acked-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
 Signed-off-by: Shuah Khan <skhan@linuxfoundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- tools/testing/selftests/ftrace/test.d/dynevent/fprobe_syntax_errors.tc |    4 ++--
- tools/testing/selftests/ftrace/test.d/kprobe/kprobe_syntax_errors.tc   |    2 +-
- 2 files changed, 3 insertions(+), 3 deletions(-)
+ tools/testing/selftests/ftrace/test.d/kprobe/kprobe_non_uniq_symbol.tc |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/tools/testing/selftests/ftrace/test.d/dynevent/fprobe_syntax_errors.tc
-+++ b/tools/testing/selftests/ftrace/test.d/dynevent/fprobe_syntax_errors.tc
-@@ -33,7 +33,7 @@ check_error 'f vfs_read ^$stack10000'	#
+--- a/tools/testing/selftests/ftrace/test.d/kprobe/kprobe_non_uniq_symbol.tc
++++ b/tools/testing/selftests/ftrace/test.d/kprobe/kprobe_non_uniq_symbol.tc
+@@ -6,7 +6,7 @@
+ SYMBOL='name_show'
  
- check_error 'f vfs_read ^$arg10000'	# BAD_ARG_NUM
+ # We skip this test on kernel where SYMBOL is unique or does not exist.
+-if [ "$(grep -c -E "[[:alnum:]]+ t ${SYMBOL}$" /proc/kallsyms)" -le '1' ]; then
++if [ "$(grep -c -E "[[:alnum:]]+ t ${SYMBOL}\$" /proc/kallsyms)" -le '1' ]; then
+ 	exit_unsupported
+ fi
  
--if !grep -q 'kernel return probes support:' README; then
-+if ! grep -q 'kernel return probes support:' README; then
- check_error 'f vfs_read $retval ^$arg1' # BAD_VAR
- fi
- check_error 'f vfs_read ^$none_var'	# BAD_VAR
-@@ -100,7 +100,7 @@ if grep -q "<argname>" README; then
- check_error 'f vfs_read args=^$arg*'		# BAD_VAR_ARGS
- check_error 'f vfs_read +0(^$arg*)'		# BAD_VAR_ARGS
- check_error 'f vfs_read $arg* ^$arg*'		# DOUBLE_ARGS
--if !grep -q 'kernel return probes support:' README; then
-+if ! grep -q 'kernel return probes support:' README; then
- check_error 'f vfs_read%return ^$arg*'		# NOFENTRY_ARGS
- fi
- check_error 'f vfs_read ^hoge'			# NO_BTFARG
---- a/tools/testing/selftests/ftrace/test.d/kprobe/kprobe_syntax_errors.tc
-+++ b/tools/testing/selftests/ftrace/test.d/kprobe/kprobe_syntax_errors.tc
-@@ -108,7 +108,7 @@ if grep -q "<argname>" README; then
- check_error 'p vfs_read args=^$arg*'		# BAD_VAR_ARGS
- check_error 'p vfs_read +0(^$arg*)'		# BAD_VAR_ARGS
- check_error 'p vfs_read $arg* ^$arg*'		# DOUBLE_ARGS
--if !grep -q 'kernel return probes support:' README; then
-+if ! grep -q 'kernel return probes support:' README; then
- check_error 'r vfs_read ^$arg*'			# NOFENTRY_ARGS
- fi
- check_error 'p vfs_read+20 ^$arg*'		# NOFENTRY_ARGS
 
 
