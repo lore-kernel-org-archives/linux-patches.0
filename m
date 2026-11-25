@@ -1,53 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795622462;
-	b=iyxq85qB3dJeJM9oxJ7btr9N7x8fT1Ecgl7eBeQYWTMxzrg2vKppkrYt2MeLCtm63iGH
-	 ie7EEuCd4Uyp/W7fCyod5Rx5BV9v+XQ1jYzQlZnYslUi1jO+4q777jq3ub+Maq3tvQjG6
-	 ffFCX4SaKyQ8priLPMDdPlIv+7rS+gGQktZQXq7vKtP8mmz2lD27glELM09+0w2DZpqbS
-	 2rQFCWK8y7GlDWqGJOqJTHTwHtqLieQVb2JJkAuEFUHpyCWshU2SJbgGIoRUFnJ0XlZW/
-	 pY7pqdh1Xc1lc96bEonESREfFbL86CCf5lhhP3VynfBOdyIbw/xeR2E6MH3CMJR7xvg==
+	t=1795622466;
+	b=VhOO4WjZ0epi+5kxj5fQBWhPEQeefHzyqGLZkVbbW+6st97rhOuf69lrLLCppg4RdFl6
+	 IUmo/eufL/UVTMEq0Mpv5R7gwvqd47TLhsJuD74zHsGonuXMANtuPS6PqkzLp5Bg/aInY
+	 A6xTx5fWT5Prs6y3qu3lUH2hbmr1JGxtV1XfKzvVaxRPAa/JnS1Ub2/1YlVloXjR+89BT
+	 3rqceuVEsgx2IDWwLjGK5y46h2iI+HlYJ2IJnEBQ52dwSGhWUTH7qX2pOUrNhIVMto+ur
+	 hx4R/Zdo1CuChqXLx1Yw/OvRi8KuwAQD6xo1Dgj7x85Yx8EEYXRX5WRNTbSS5lK2ojA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795622462;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795622466;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=w2QOZUKshoyh/FkuMrueQzNJsLFuo+F9jeR286ZhYWo=;
-	b=Ba5VfsI/9RObz3+Bsmnijexq3jlA+hKd9L6CiEF2w0kTYxPXoj9U27DbdEO731+XrRLx
-	 y5Aq3ESV4We2ZDdMUzYllQBWHgnqJYD70jgOJT+XrZebTryIpEGqGRfkobbD+mWy8vsuY
-	 7Nu9+mGEhG0zlHsUZBivkxdi6RxlHIdfR22osuoGbulvSdkQAXTJmUzbMscdPEzy6cvjF
-	 sC/HwdIzET6siM7ayjYciD8jwy4fs2qeROVl1Wt/m2klmd2pJJt1S3lHbCs+S8MIIvJ5N
-	 H5KZFBcvaXRNTxuOxbNJeKHMfef3OnpINAhbjbjW9OmLeE4AzFrnfndBhH72/gb68DQ==
+	bh=ebsvlVhD0WiOJzzWV8my9To6ZENy9EY5tB5nmqb0ano=;
+	b=sP3QD1oIowzHXuPwLqNBKE1okeRA/5zE2WcxPPaFTX1W16IgBWshj20fRHzs+Fw6QwcR
+	 rO5l9HXh3lyVQCd5gGpTij9QCmnp1sEiD4lbd7PJ6/rZ28RZPLaN+8pLBWIBwRZs1BMCQ
+	 WukTgqMCU94yyDcQA4TacqNR+kzItcbXylGSGtaufEKYiTTQrUjGQXgR2mbKnBAmEJnf3
+	 acs00t9zF/AlBTeANHBFAhQF2e6UF963EEhYVWVv28qJGv6veWQ/EWQbfFF7o0/PDh9Xz
+	 aemedd5ys4w7rx9/ug0JE/Xsj7bM2onW4DY9J3gBe/YVjSN89EGLhjKhID3KM+kFBQQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=G3xUta1u;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=oCk8YTZy;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D07B9606A33A;
-	Wed, 25 Nov 2026 16:01:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 03FA3606A696;
+	Wed, 25 Nov 2026 16:01:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=G3xUta1u
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 581411F000D4;
-	Wed, 25 Nov 2026 16:01:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=oCk8YTZy
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F3ED91F000C4;
+	Wed, 25 Nov 2026 16:01:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795622462;
-	bh=w2QOZUKshoyh/FkuMrueQzNJsLFuo+F9jeR286ZhYWo=;
+	s=korg; t=1795622465;
+	bh=ebsvlVhD0WiOJzzWV8my9To6ZENy9EY5tB5nmqb0ano=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=G3xUta1u7EaBhOzv0ONHwWb5rGKAMSrep76mwAwEaG0joC7H7KKKjMc6Swc4Thtpu
-	 XzSjE9Ux4TizrDhHsy5U3n4hqX8wV7dink7wYHLI7M9HVXa6+FSEm/gZ2ASvmN15GM
-	 FU6n0nTE4ya4629dbhOL41M2d5jAvEe1AVf1WHh4=
+	b=oCk8YTZyffD55uGjxaDw7O5ouk7f0mr6CnlWvKhFDbL9cp2JyhAsDItJwzBFHZIBb
+	 pPNwDsgKuCsEu0N8ncACC6nEU/TXE578ctXcww9pUyA2OBjTXYKTw6XO+wl6wpK+HB
+	 x13W7UKTs3bLwbFfU/e9kl+c129Kj5KernXb8dZ4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nilay Shroff <nilay@linux.ibm.com>,
-	Christian Aurich Zanettini Martins <christian.aurichzm@gmail.com>,
-	Keith Busch <kbusch@kernel.org>,
+	Boris Brezillon <boris.brezillon@collabora.com>,
+	Nicolas Frattaroli <nicolas.frattaroli@collabora.com>,
+	Liviu Dudau <liviu.dudau@arm.com>,
+	Steven Price <steven.price@arm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 501/990] nvme-tcp: fix use-after-free in nvme_tcp_free_ctrl()
-Date: Wed, 25 Nov 2026 15:31:08 +0100
-Message-ID: <20261125143833.834079297@linuxfoundation.org>
+Subject: [PATCH 6.18 502/990] drm/panthor: Revisit reqs_lock handling in flush/reset paths
+Date: Wed, 25 Nov 2026 15:31:09 +0100
+Message-ID: <20261125143833.858541640@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143822.072087159@linuxfoundation.org>
 References: <20261125143822.072087159@linuxfoundation.org>
@@ -69,82 +70,133 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Christian Aurich Zanettini Martins <christian.aurichzm@gmail.com>
+From: Nicolas Frattaroli <nicolas.frattaroli@collabora.com>
 
-[ Upstream commit b1d1f6b1ee03285690f12c2ebf23616416e6d881 ]
+[ Upstream commit 4fd08b3d1da78e33cb5939f0086e61f9d660cd6c ]
 
-nvme_tcp_free_ctrl() reads ctrl->ctrl.opts to know how many queue
-mutexes to destroy. When creating the controller fails,
-nvmf_create_ctrl() frees opts as soon as nvme_tcp_create_ctrl()
-returns, but a concurrent open of the character device can hold the
-last reference to the controller. With CONFIG_DEBUG_KOBJECT_RELEASE,
-which delays the release, every failed connect reads freed memory:
+panthor_gpu_flush_caches() and panthor_gpu_soft_reset() acquire their
+reqs_lock spinlock with the IRQ-disabling variants of the spinlocking
+functions. This isn't necessary, as the lock is never taken from an
+atomic context, as Panthor uses threaded interrupt handlers. The result
+of this overly strict locking is that IRQs may be disabled more
+frequently and for longer than they should be, resulting in increased
+system latency.
 
-  BUG: KASAN: slab-use-after-free in nvme_tcp_free_ctrl+0x38b/0x430
-  Read of size 4 at addr ffff888005b93740 by task kworker/2:1/51
+Switch the locking to use non-IRQ-disabling scoped_guard statements for
+locking. The wait_event_timeout read of pending_reqs outside of the
+spinlock is fine as wait_event_timeout is a memory barrier according to
+the Linux Memory Model.
 
-Keep the size of the queue array in the controller and use it instead.
+Fixes: 5cd894e258c4 ("drm/panthor: Add the GPU logical block")
+Reviewed-by: Boris Brezillon <boris.brezillon@collabora.com>
+Signed-off-by: Nicolas Frattaroli <nicolas.frattaroli@collabora.com>
+Reviewed-by: Liviu Dudau <liviu.dudau@arm.com>
+Reviewed-by: Steven Price <steven.price@arm.com>
+Signed-off-by: Liviu Dudau <liviu.dudau@arm.com>
+Link: https://patch.msgid.link/20260812-panthor-cache-flush-fix-v4-2-751e32901898@collabora.com
 
-Fixes: 2eeeaa9c1ff0 ("nvme-tcp: Validate the queue state under the queue lock in the address attribute")
-Cc: stable@vger.kernel.org
-Reviewed-by: Nilay Shroff <nilay@linux.ibm.com>
-Signed-off-by: Christian Aurich Zanettini Martins <christian.aurichzm@gmail.com>
-Signed-off-by: Keith Busch <kbusch@kernel.org>
-[ sashal: Replaced upstream's nvme_tcp_exit_queue(), nvme_tcp_init_queue() and kzalloc_objs() with this tree's mutex_destroy(), mutex_init() and kcalloc(), keeping the nr_allocated_queues loop bounds. ]
+[ sashal: Dropped the cache flush tracepoint calls, which this tree lacks. ]
+
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/nvme/host/tcp.c | 10 +++++-----
- 1 file changed, 5 insertions(+), 5 deletions(-)
+ drivers/gpu/drm/panthor/panthor_gpu.c | 61 ++++++++++++---------------
+ 1 file changed, 28 insertions(+), 33 deletions(-)
 
-diff --git a/drivers/nvme/host/tcp.c b/drivers/nvme/host/tcp.c
-index d97ef58b834a3..e25cc8e55cf40 100644
---- a/drivers/nvme/host/tcp.c
-+++ b/drivers/nvme/host/tcp.c
-@@ -224,6 +224,7 @@ struct nvme_tcp_ctrl {
- 	struct delayed_work	connect_work;
- 	struct nvme_tcp_request async_req;
- 	u32			io_queues[HCTX_MAX_TYPES];
-+	unsigned int		nr_allocated_queues;
- 	struct net		*net;
- };
- 
-@@ -2781,8 +2782,6 @@ static void nvme_tcp_stop_ctrl(struct nvme_ctrl *ctrl)
- static void nvme_tcp_free_ctrl(struct nvme_ctrl *nctrl)
+diff --git a/drivers/gpu/drm/panthor/panthor_gpu.c b/drivers/gpu/drm/panthor/panthor_gpu.c
+index 7f2dc65386fd4..6be62672a3be8 100644
+--- a/drivers/gpu/drm/panthor/panthor_gpu.c
++++ b/drivers/gpu/drm/panthor/panthor_gpu.c
+@@ -259,34 +259,30 @@ int panthor_gpu_l2_power_on(struct panthor_device *ptdev)
+ int panthor_gpu_flush_caches(struct panthor_device *ptdev,
+ 			     u32 l2, u32 lsc, u32 other)
  {
- 	struct nvme_tcp_ctrl *ctrl = to_tcp_ctrl(nctrl);
--	/* the same count used to size and initialize the queue array */
--	unsigned int nr_queues = NVME_TCP_OPT_NR_QUEUES(nctrl->opts);
- 	unsigned int i;
+-	unsigned long flags;
+ 	int ret = 0;
  
- 	if (list_empty(&ctrl->list))
-@@ -2795,7 +2794,7 @@ static void nvme_tcp_free_ctrl(struct nvme_ctrl *nctrl)
- 	nvmf_free_options(nctrl->opts);
- free_ctrl:
- 	put_net(ctrl->net);
--	for (i = 0; i < nr_queues; i++)
-+	for (i = 0; i < ctrl->nr_allocated_queues; i++)
- 		mutex_destroy(&ctrl->queues[i].queue_lock);
- 	kfree(ctrl->queues);
- 	kfree(ctrl);
-@@ -3186,7 +3185,8 @@ static struct nvme_tcp_ctrl *nvme_tcp_alloc_ctrl(struct device *dev,
- 		goto out_free_ctrl;
+ 	/* Serialize cache flush operations. */
+ 	guard(mutex)(&ptdev->gpu->cache_flush_lock);
+ 
+-	spin_lock_irqsave(&ptdev->gpu->reqs_lock, flags);
+-	if (!(ptdev->gpu->pending_reqs & GPU_IRQ_CLEAN_CACHES_COMPLETED)) {
+-		ptdev->gpu->pending_reqs |= GPU_IRQ_CLEAN_CACHES_COMPLETED;
+-		gpu_write(ptdev, GPU_CMD, GPU_FLUSH_CACHES(l2, lsc, other));
+-	} else {
+-		ret = -EIO;
++	scoped_guard(spinlock, &ptdev->gpu->reqs_lock) {
++		if (!(ptdev->gpu->pending_reqs & GPU_IRQ_CLEAN_CACHES_COMPLETED)) {
++			ptdev->gpu->pending_reqs |= GPU_IRQ_CLEAN_CACHES_COMPLETED;
++			gpu_write(ptdev, GPU_CMD, GPU_FLUSH_CACHES(l2, lsc, other));
++		} else {
++			return -EIO;
++		}
+ 	}
+-	spin_unlock_irqrestore(&ptdev->gpu->reqs_lock, flags);
+-
+-	if (ret)
+-		return ret;
+ 
+ 	if (!wait_event_timeout(ptdev->gpu->reqs_acked,
+ 				!(ptdev->gpu->pending_reqs & GPU_IRQ_CLEAN_CACHES_COMPLETED),
+ 				msecs_to_jiffies(100))) {
+-		spin_lock_irqsave(&ptdev->gpu->reqs_lock, flags);
+-		if ((ptdev->gpu->pending_reqs & GPU_IRQ_CLEAN_CACHES_COMPLETED) != 0 &&
+-		    !(gpu_read(ptdev, GPU_INT_RAWSTAT) & GPU_IRQ_CLEAN_CACHES_COMPLETED))
+-			ret = -ETIMEDOUT;
+-		else
+-			ptdev->gpu->pending_reqs &= ~GPU_IRQ_CLEAN_CACHES_COMPLETED;
+-		spin_unlock_irqrestore(&ptdev->gpu->reqs_lock, flags);
++		scoped_guard(spinlock, &ptdev->gpu->reqs_lock) {
++			if ((ptdev->gpu->pending_reqs & GPU_IRQ_CLEAN_CACHES_COMPLETED) != 0 &&
++			    !(gpu_read(ptdev, GPU_INT_RAWSTAT) & GPU_IRQ_CLEAN_CACHES_COMPLETED))
++				ret = -ETIMEDOUT;
++			else
++				ptdev->gpu->pending_reqs &= ~GPU_IRQ_CLEAN_CACHES_COMPLETED;
++		}
  	}
  
--	ctrl->queues = kcalloc(ctrl->ctrl.queue_count, sizeof(*ctrl->queues),
-+	ctrl->nr_allocated_queues = ctrl->ctrl.queue_count;
-+	ctrl->queues = kcalloc(ctrl->nr_allocated_queues, sizeof(*ctrl->queues),
- 				GFP_KERNEL);
- 	if (!ctrl->queues) {
- 		ret = -ENOMEM;
-@@ -3198,7 +3198,7 @@ static struct nvme_tcp_ctrl *nvme_tcp_alloc_ctrl(struct device *dev,
- 	 * they outlive the per-queue connect/disconnect cycles so that
- 	 * sysfs readers can never race their destruction.
- 	 */
--	for (i = 0; i < ctrl->ctrl.queue_count; i++)
-+	for (i = 0; i < ctrl->nr_allocated_queues; i++)
- 		mutex_init(&ctrl->queues[i].queue_lock);
+ 	if (ret) {
+@@ -306,27 +302,26 @@ int panthor_gpu_flush_caches(struct panthor_device *ptdev,
+ int panthor_gpu_soft_reset(struct panthor_device *ptdev)
+ {
+ 	bool timedout = false;
+-	unsigned long flags;
  
- 	ctrl->net = get_net(current->nsproxy->net_ns);
+-	spin_lock_irqsave(&ptdev->gpu->reqs_lock, flags);
+-	if (!drm_WARN_ON(&ptdev->base,
+-			 ptdev->gpu->pending_reqs & GPU_IRQ_RESET_COMPLETED)) {
+-		ptdev->gpu->pending_reqs |= GPU_IRQ_RESET_COMPLETED;
+-		gpu_write(ptdev, GPU_INT_CLEAR, GPU_IRQ_RESET_COMPLETED);
+-		gpu_write(ptdev, GPU_CMD, GPU_SOFT_RESET);
++	scoped_guard(spinlock, &ptdev->gpu->reqs_lock) {
++		if (!drm_WARN_ON(&ptdev->base,
++				ptdev->gpu->pending_reqs & GPU_IRQ_RESET_COMPLETED)) {
++			ptdev->gpu->pending_reqs |= GPU_IRQ_RESET_COMPLETED;
++			gpu_write(ptdev, GPU_INT_CLEAR, GPU_IRQ_RESET_COMPLETED);
++			gpu_write(ptdev, GPU_CMD, GPU_SOFT_RESET);
++		}
+ 	}
+-	spin_unlock_irqrestore(&ptdev->gpu->reqs_lock, flags);
+ 
+ 	if (!wait_event_timeout(ptdev->gpu->reqs_acked,
+ 				!(ptdev->gpu->pending_reqs & GPU_IRQ_RESET_COMPLETED),
+ 				msecs_to_jiffies(100))) {
+-		spin_lock_irqsave(&ptdev->gpu->reqs_lock, flags);
+-		if ((ptdev->gpu->pending_reqs & GPU_IRQ_RESET_COMPLETED) != 0 &&
+-		    !(gpu_read(ptdev, GPU_INT_RAWSTAT) & GPU_IRQ_RESET_COMPLETED))
+-			timedout = true;
+-		else
+-			ptdev->gpu->pending_reqs &= ~GPU_IRQ_RESET_COMPLETED;
+-		spin_unlock_irqrestore(&ptdev->gpu->reqs_lock, flags);
++		scoped_guard(spinlock, &ptdev->gpu->reqs_lock) {
++			if ((ptdev->gpu->pending_reqs & GPU_IRQ_RESET_COMPLETED) != 0 &&
++			    !(gpu_read(ptdev, GPU_INT_RAWSTAT) & GPU_IRQ_RESET_COMPLETED))
++				timedout = true;
++			else
++				ptdev->gpu->pending_reqs &= ~GPU_IRQ_RESET_COMPLETED;
++		}
+ 	}
+ 
+ 	if (timedout) {
 -- 
 2.53.0
 
