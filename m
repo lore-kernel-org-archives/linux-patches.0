@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795625509;
-	b=zloaDuVZIk9U0umiLXZj6MaXcaVx2B5mxUdWmAAxECSDaraC3HGvdhN9WavIQhXajuZu
-	 hhw9c9ryRYa+SKptK/XoSSa9TRCNgsTATZi+M+ctLWHUNOfTzzESgvyCEoqJo8lg6hPlx
-	 x15mrHQKCn2NHmrRaVWgm04VuhVit8XpJq/Iwl/Rb7nY1hyAZ1tW50TzWUlekk3gW6BeY
-	 C0gdj6QNGgocR17IbHa+ttD9q/eT5k23P35xnC0WXWCl2f4LVYIlPvaDcgTxUwtTXsEmf
-	 8fnmstiASS94G5v3OpVdgYsGJQyqsDCHUXezH8/c8occDYpi4DpLj/W+xRnPsn2pvbQ==
+	t=1795625512;
+	b=NyuEvw6/0+vMWahDVOXWC725WzhMjOQkoGplCI/wBPpHT/HsWoe4hltc5SzYjdQCGjOy
+	 Q4VBib/2gsualQpHYtOwWAOGWBmMtyzcs6HrFx7x0emqvsp+y2q6KVIJWhh2m9DefQOJV
+	 cmb6C0yFgKwC8yMZW7axEGYdrlXrcBsx4nYOip0hdk0CyNpN0b1i9taxRFAGNMCtxUIC8
+	 FF4cum0zZH7yjOaXiXGCaDgNND8DREcR2Zcax57/hpNznLVw0p1Z0/78HqFo9eOU+aFFn
+	 HQln3NraRIfeqL25sH3dM1a4TcqEELoZ1s17pzMJR6G1yog6fg4NNnG+gruOokBoLBQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795625509;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795625512;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=1NNqdYjKOSK8VUiw5bj2aiC//4wgT0qjMkFKEz7ykhY=;
-	b=DyYunVQVor3nGB8UGPuW9y2EXt1kj3GLuyV1eVfTO6DDcuM1dgFBnofE0LEMip/2FANl
-	 j+Z+7F3NXBHzJVmJgK23pMoT06sgsT0LrojF/MGued8PGizZNFRUy76+xTQ2ELcvbLl/P
-	 /G+nCuE1rt5EbaMS6QxPHGHL5MHLT0yH/PDJtRmZRTMheup7xRpq5F00AVr1rbFnJjV8f
-	 IYQT0GFk9VRekNIB+zpLgZXY3VNuJt8ZvTAoK5IbEX0Q6CcgOJ3XFleVqbjRc7FW55e44
-	 6KgrHY91WAXmZApubiCvNR1gr0cfXb16Jp+1elfQYaBYlDBStAMqTy+wTA72q+DX9nA==
+	bh=dpmo8O15si8x4J1vary6ty4Q1wgmyNAdyV9KouaBPUY=;
+	b=dg4xpt1HeeVOWiBbn4KRHRonCOBT4d7HjmCSF+tu6Z2+nngrFET5YbAw9L2wjRgLQdXF
+	 M7luyLjdBVwTxOt5VyXODohW2+dpcyDH6vLxu7+dqmaOuqNH7bY+54RiSZAMsNsC/qHgu
+	 C8QPIE4MW8/eEuOb9MRsF9qHzraQAyWYpNWFPdNmzsowFJivh55Q/VwjhsiSFwsbihMVD
+	 SUQzGOs6mTOlSlruDkDeJrPa+0pd2RtfovBZA2ktwtv4FLV/aBxJhuHza5ffPln2s7j5z
+	 80KX0+/vfLQX6+yQuXiuOdmUE7dHgGHv+qeETodUZ+X0UVv0xDcklYRGQenLR2CiDVQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=xWVyZsEE;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=04O4xvUU;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C517A606A31E;
-	Wed, 25 Nov 2026 16:51:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5769A606A31E;
+	Wed, 25 Nov 2026 16:51:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=xWVyZsEE
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D98D21F000C4;
-	Wed, 25 Nov 2026 16:51:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=04O4xvUU
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A950C1F000C0;
+	Wed, 25 Nov 2026 16:51:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795625509;
-	bh=1NNqdYjKOSK8VUiw5bj2aiC//4wgT0qjMkFKEz7ykhY=;
+	s=korg; t=1795625512;
+	bh=dpmo8O15si8x4J1vary6ty4Q1wgmyNAdyV9KouaBPUY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=xWVyZsEEATVRRsb8g2CVFBmBr+RxOFkw5h46LknjUKK19noklpDmjYLEiirQu4ABZ
-	 5j3utvPskbXZUbYbUHgWsIjGrdxsEMJIXkJErV640KZDewnTBYEmkPV2K54oltL9Ht
-	 miIfCZj4MvrQiqASKfcO56W+wCim2I6I8aja9+hE=
+	b=04O4xvUUQFePXR4Y3vXw1QOd631Ag+HFjUVsFuSiHIIYnO8LRpygdL/yJ9DhBFAdt
+	 ZIfE5IkNXcSEsRF4SWxST8Y9xPwj0QOZIs0QT70eK1fjitT/z/sj83XFN1b01G+ALu
+	 gxlEk8E+EgUkAytAzZKcR8GgZ4hKfOfvs0ETt5sk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Rishikesh Jethwani <rjethwani@purestorage.com>,
-	Dave Miller <davem@davem-thinkpadp1gen8.ibmlond.csb>,
+	Josef Bacik <josef@toxicpanda.com>,
+	Alexei Starovoitov <ast@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 540/816] tls: keep TX and RX hardware offload on the same device
-Date: Wed, 25 Nov 2026 15:34:48 +0100
-Message-ID: <20261125143901.687573057@linuxfoundation.org>
+Subject: [PATCH 6.12 514/816] bpf: Dont take a dynptr argument for a local dynptr
+Date: Wed, 25 Nov 2026 15:34:22 +0100
+Message-ID: <20261125143901.084072762@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143849.205329330@linuxfoundation.org>
 References: <20261125143849.205329330@linuxfoundation.org>
@@ -68,129 +68,55 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Rishikesh Jethwani <rjethwani@purestorage.com>
+From: Josef Bacik <josef@toxicpanda.com>
 
-[ Upstream commit 1c8a70075235cd733095532a97f2405037c52a7b ]
+[ Upstream commit b7f97db88948aa511bcd989978f181e1367e0e8b ]
 
-After TX is offloaded on device A, a route change, or a change in the
-usable-slave set of an 802.3ad or balance-xor (layer3+4) bond, can make
-RX setup program device B. tls_device_attach() sees the existing TLS
-destructor and keeps ctx->netdev pointing at A. The RX driver state on B
-is then untracked: tls_dev_resync() and tls_dev_del() are invoked on A
-for a context it never created, and neither socket close nor
-NETDEV_DOWN on B calls tls_dev_del() for B, so the driver context leaks.
-The reverse setup order has the same problem.
+A global function is verified on its own. A dynptr which it gets as an
+argument is assumed to be of type BPF_DYNPTR_TYPE_LOCAL, but the callers
+may pass one of any type, that of an skb for example.
 
-Check the shared device binding under device_offload_lock before each
-tls_dev_add(). Permit the first attachment and a second direction on the
-same device. Reject a different device, including when the old binding
-was cleared by NETDEV_DOWN: the TLS destructor remains installed and
-tls_device_attach() cannot establish a new binding. Setup then falls
-back to software for the requested direction.
+The type decides whether a write through the dynptr invalidates packet
+pointers, and whether a slice of it is invalidated together with them.
+Inside of the function neither happens. It can take a packet pointer from
+its context argument, or a slice from the dynptr, write through the dynptr
+and go on using the pointer, although the write may have reallocated the
+head of the skb.
 
-The RX check precedes allocation and software setup. TX uses its existing
-resource unwind path without calling the driver. Document the shared
-binding and clarify that fallback is per direction.
+Assume the type of an skb dynptr instead. Nothing becomes forbidden for the
+dynptr itself, and a clone inherits the caution. The dynptr which the
+callback of bpf_user_ringbuf_drain() gets is known to be local, and stays
+so.
 
-This issue was discovered during code review and subsequently
-reproduced on hardware using mlx5 and TLS 1.2 AES-GCM-128.
-
-Changing the route between TX and RX setup installed the second
-direction on a different device. Driver traces showed successful adds
-on both devices, but both deletes at socket close targeted the first
-device, leaving an orphaned context on the second. Both setup orders
-reproduced the leak, even though all current core TLS context counters
-returned to zero. No crash was observed.
-
-With the fix, the same tests correctly fall back to software for the
-second direction and leave no orphaned hardware context.
-
-Fixes: 4799ac81e52a ("tls: Add rx inline crypto offload")
-Signed-off-by: Rishikesh Jethwani <rjethwani@purestorage.com>
-Signed-off-by: Dave Miller <davem@davem-thinkpadp1gen8.ibmlond.csb>
-[ sashal: Replaced kzalloc_obj(*context) with kzalloc(sizeof(*context), GFP_KERNEL) in tls_set_device_offload_rx() because the kzalloc_obj helper is not available. ]
+Fixes: a64bfe618665 ("bpf: add support for passing dynptr pointer to global subprog")
+Signed-off-by: Josef Bacik <josef@toxicpanda.com>
+Signed-off-by: Alexei Starovoitov <ast@kernel.org>
+Link: https://patch.msgid.link/20261017230950.802052-11-alexei.starovoitov@gmail.com
+[ sashal: adjusted context for the older tree: dropped the trailing 0 argument to __mark_dynptr_reg() and kept the existing ARG_PTR_TO_DYNPTR | MEM_RDONLY guard and do_check_common() signature. ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- Documentation/networking/tls-offload.rst | 16 ++++++++++------
- net/tls/tls_device.c                     | 24 ++++++++++++++++++++++++
- 2 files changed, 34 insertions(+), 6 deletions(-)
+ kernel/bpf/verifier.c | 8 ++++++--
+ 1 file changed, 6 insertions(+), 2 deletions(-)
 
-diff --git a/Documentation/networking/tls-offload.rst b/Documentation/networking/tls-offload.rst
-index 5f0dea3d571e3..371cbd2824c65 100644
---- a/Documentation/networking/tls-offload.rst
-+++ b/Documentation/networking/tls-offload.rst
-@@ -76,12 +76,16 @@ During driver initialization device sets the ``NETIF_F_HW_TLS_RX`` and
- pointer in the :c:member:`tlsdev_ops` member of the
- :c:type:`struct net_device <net_device>`.
- 
--When TLS cryptographic connection state is installed on a ``ktls`` socket
--(note that it is done twice, once for RX and once for TX direction,
--and the two are completely independent), the kernel checks if the underlying
--network device is offload-capable and attempts the offload. In case offload
--fails the connection is handled entirely in software using the same mechanism
--as if the offload was never tried.
-+TLS cryptographic connection state is installed separately for RX and TX
-+on a ``ktls`` socket. For each direction, the kernel checks if the underlying
-+network device is offload-capable and attempts the offload. If offload fails,
-+that direction is handled in software as if offload had never been tried.
-+
-+Both hardware directions share one device binding. Once one direction is
-+offloaded, the other direction must use the same device. If a route change
-+selects a different device, or ``NETDEV_DOWN`` has cleared the binding,
-+hardware offload of the other direction is declined and it uses software
-+instead.
- 
- Offload request is performed via the :c:member:`tls_dev_add` callback of
- :c:type:`struct tlsdev_ops <tlsdev_ops>`:
-diff --git a/net/tls/tls_device.c b/net/tls/tls_device.c
-index 099cf5d093689..02a77f2a7a55f 100644
---- a/net/tls/tls_device.c
-+++ b/net/tls/tls_device.c
-@@ -1030,6 +1030,20 @@ int tls_device_decrypted(struct sock *sk, struct tls_context *tls_ctx)
- 	return tls_device_reencrypt(sk, tls_ctx);
- }
- 
-+/* Both directions share ctx->netdev. A second direction must use that
-+ * device; after NETDEV_DOWN clears it, no new direction can be offloaded.
-+ */
-+static bool tls_device_can_attach(struct tls_context *ctx, struct sock *sk,
-+				  struct net_device *netdev)
-+{
-+	struct net_device *ctx_netdev;
-+
-+	ctx_netdev = rcu_dereference_protected(ctx->netdev,
-+					       lockdep_is_held(&device_offload_lock));
-+	return sk->sk_destruct != tls_device_sk_destruct ||
-+	       ctx_netdev == netdev;
-+}
-+
- static void tls_device_attach(struct tls_context *ctx, struct sock *sk,
- 			      struct net_device *netdev)
- {
-@@ -1165,6 +1179,11 @@ int tls_set_device_offload(struct sock *sk)
- 		goto release_lock;
- 	}
- 
-+	if (!tls_device_can_attach(ctx, sk, netdev)) {
-+		rc = -EOPNOTSUPP;
-+		goto release_lock;
-+	}
-+
- 	ctx->priv_ctx_tx = offload_ctx;
- 	rc = netdev->tlsdev_ops->tls_dev_add(netdev, sk, TLS_OFFLOAD_CTX_DIR_TX,
- 					     &ctx->crypto_send.info,
-@@ -1235,6 +1254,11 @@ int tls_set_device_offload_rx(struct sock *sk, struct tls_context *ctx)
- 		goto release_lock;
- 	}
- 
-+	if (!tls_device_can_attach(ctx, sk, netdev)) {
-+		rc = -EOPNOTSUPP;
-+		goto release_lock;
-+	}
-+
- 	context = kzalloc(sizeof(*context), GFP_KERNEL);
- 	if (!context) {
- 		rc = -ENOMEM;
+diff --git a/kernel/bpf/verifier.c b/kernel/bpf/verifier.c
+index 9818cdbfb9724..dd7445537b1e3 100644
+--- a/kernel/bpf/verifier.c
++++ b/kernel/bpf/verifier.c
+@@ -22372,8 +22372,12 @@ static int do_check_common(struct bpf_verifier_env *env, int subprog)
+ 				reg->type = SCALAR_VALUE;
+ 				mark_reg_unknown(env, regs, i);
+ 			} else if (arg->arg_type == (ARG_PTR_TO_DYNPTR | MEM_RDONLY)) {
+-				/* assume unspecial LOCAL dynptr type */
+-				__mark_dynptr_reg(reg, BPF_DYNPTR_TYPE_LOCAL, true, ++env->id_gen);
++				/*
++				 * The callers may hand in a dynptr of any type.
++				 * Take it for that of an skb, so that a write
++				 * through it and its slices are treated with care.
++				 */
++				__mark_dynptr_reg(reg, BPF_DYNPTR_TYPE_SKB, true, ++env->id_gen);
+ 			} else if (base_type(arg->arg_type) == ARG_PTR_TO_MEM) {
+ 				reg->type = PTR_TO_MEM;
+ 				if (arg->arg_type & PTR_MAYBE_NULL)
 -- 
 2.53.0
 
