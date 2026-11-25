@@ -1,54 +1,55 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795621745;
-	b=0/+nJAARRTDUEsamcXy1RA2SULEAgda4/SwveNHPpZDvrxLNUtIX0MFfZW3sl/Pr2YOz
-	 uj56hZOmfvzu9tZKqaT8QkOB5vyohm5H+TYR+juF3FUHNGYAv0d2egf8i/qWeJwQh4UtX
-	 h5+CuagH6ANtum1Nl23t+1AjqXp5wfxxQJrAaoEAwHHxy21hBjWVeFwg2QW9ZnCUtLSK6
-	 85kfDe7Wgn2+TxTTkgKUpwBFfwUV13OlZnIDErzbErEtqmXd4ht+vwoM8nqzBq4kDfUnq
-	 1jQ3TZrsjvWYGMObJq8o6HwWajdspcXpdX8eyA+FQLguZ8/FKN0RVEHAzssd7mfCzDg==
+	t=1795621748;
+	b=oG0W5uUxe5EW+wJ76UiadUFGRJnsyRbqjy47JWX4dyaUa4WXiRToXl8MaQVs2yQvFHgA
+	 IoID3tuAPAUkGearUiiKK5PKybACzYUZ1dJlmMglYVkwVtoHOY6s53EltwLUsxyUJ35Pc
+	 a5thTGooP5phqZPjcacCt2qrr+kvumNZEivRScqliaIgir60cFx5fMKnZSiONKtGP4/6y
+	 eVgB2JQTrBEdeJXMG4C1LlJqd9ZKHM73NhzbGDAUfnOWaOc1m/D5ndD7euwbl62car1/m
+	 wk5W/Fac14zJuwbtDOWdTiKXKMxHIuexAXWPsaJhzV4e5+s3bb81HRyeQj2SEkr3AgA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795621745;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795621748;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=B7mPjl9oWhsi63qK4IFr0yxxS4CuOUAKxUpDcPoQFso=;
-	b=xeocax4VjiZ0NgGc41NI7irbOwi6mqPfcuC+a4Oy+3oWoB9paXZ5islNUdbND73hf/1L
-	 jCfBsfElJq8YSsqlwfwZbI7HbNTp6DdY+6PCZj6ebPOeFuFKZ08bQJA/E3e24Kny75of5
-	 lr30Q9UfjGSYMgXJxIB0gmRZd+b0nnZ6hKzdRWIGIKXN08P9TtQfdjMruHTiiUTRS4IIe
-	 5jz6pTPlzWPnr1G9b2QS9fudb2GvtHMHk8pwdXYBqSrtMvWRa7SmUujTRcf7iLQMfylgB
-	 0ankL26k7JojgJhST1sArXoF+KRdqQH3exLCAs0KAn4EEgSvWS6H0rbHVtU+enH81Gg==
+	bh=nX9gxgDtstcwu/edv4x2FNWcPDxBtah3KDBIPACXWK4=;
+	b=RT40TDST5bhl9C71i8hvGQ4MGgKOtdZb0LXfL6g3jeCvEGCG8WAg4Tg9kVxcpvuFppaA
+	 KjfJ8KvdTb/DARuI+2ilC00BJfCilEyvVXbC1Qm3qO4MHUbiXhvH3G0q0z43dTOgvHsCV
+	 GgNpmRKTM02Tj5LpbiIvSlaS0reg/e5/2oe6rJrkrQdWYfPsdPERVGlxHOyonvyc4MjVj
+	 gb0nj1hAyqatGRwW6DHL+AKcJSWneVot0zll7QnLNR3iHDhSGij4VHstfq5HfxvXGSWFU
+	 0pvFfm4IvUHq5S8aAXK4H0HXV9F0CMdkT26GJ7K4I4AEysCPCPi0eqIX5dMzhijqneA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=SfjovmmU;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=nXPVHYJU;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1A6DD606A321;
-	Wed, 25 Nov 2026 15:49:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6B3F8606A329;
+	Wed, 25 Nov 2026 15:49:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=SfjovmmU
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EEE211F000C6;
-	Wed, 25 Nov 2026 15:49:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=nXPVHYJU
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 410401F000CF;
+	Wed, 25 Nov 2026 15:49:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795621744;
-	bh=B7mPjl9oWhsi63qK4IFr0yxxS4CuOUAKxUpDcPoQFso=;
+	s=korg; t=1795621747;
+	bh=nX9gxgDtstcwu/edv4x2FNWcPDxBtah3KDBIPACXWK4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=SfjovmmUhsfVwsY8em8A8uZVv4FMxCS20fkErLKhIiLcI+pPTqdjPYhAgY2c78eeZ
-	 GDseJYMXzOojORtlxgjAsJBkRCgfERHXCpKXW6Vii/VVfCYEE/SkmNE0jJczmsIqcG
-	 bwiZT90AOzBPMsZcqUYVIS6nvxyHS3ew2YulsKrU=
+	b=nXPVHYJUap4fJfk/MVrQ5MzR/c+j6WTJh5QE8kMMNsupj27m2nJ5OSYdzwYQIfR2v
+	 bdPOrdqsO6dHPKZND2gf23NGPAMW1pG7F/lAgJhGg81GvfuikTvhSnEju41RIQg6ih
+	 nfzlfzwsTD0Bd+tuqyfej/oErq+JXoMb53aR3IIs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lifeng Zheng <zhenglifeng1@huawei.com>,
-	Viresh Kumar <viresh.kumar@linaro.org>,
-	Jie Zhan <zhanjie9@hisilicon.com>,
+	Christian Loehle <christian.loehle@arm.com>,
+	Pengjie Zhang <zhangpengjie2@huawei.com>,
+	Zhongqiu Han <zhongqiu.han@oss.qualcomm.com>,
+	Sumit Gupta <sumitg@nvidia.com>,
 	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 323/990] cpufreq: Return -EOPNOTSUPP if no policy supports boost
-Date: Wed, 25 Nov 2026 15:28:10 +0100
-Message-ID: <20261125143829.654971312@linuxfoundation.org>
+Subject: [PATCH 6.18 324/990] cpufreq: Preserve global boost state on failed updates
+Date: Wed, 25 Nov 2026 15:28:11 +0100
+Message-ID: <20261125143829.677082668@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143822.072087159@linuxfoundation.org>
 References: <20261125143822.072087159@linuxfoundation.org>
@@ -70,53 +71,58 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Lifeng Zheng <zhenglifeng1@huawei.com>
+From: Christian Loehle <christian.loehle@arm.com>
 
-[ Upstream commit 77cf053b041fe13d1fdd2e572e16ee7776ff687d ]
+[ Upstream commit a0cde2b601bc32b76d61e50141c619790e5e2e41 ]
 
-In cpufreq_boost_trigger_state(), if none of the the policies support
-boost, policy_set_boost() will not be called and this function will
-return 0.
+cpufreq_boost_trigger_state() restores the opposite of the requested
+state when updating policy boost state fails. For example, a failed
+write of 0 when global boost is already disabled enables the global
+flag without enabling any policies.
 
-But it is better to return an error to indicate that the platform
-doesn't support boost.
+Save the original global boost state and restore it on failure.
 
-Signed-off-by: Lifeng Zheng <zhenglifeng1@huawei.com>
-Acked-by: Viresh Kumar <viresh.kumar@linaro.org>
-Reviewed-by: Jie Zhan <zhanjie9@hisilicon.com>
-[ rjw: Subject and changelog edits ]
-Link: https://patch.msgid.link/20251202072727.1368285-2-zhenglifeng1@huawei.com
+Fixes: 121baab7b88e ("cpufreq: Force sync policy boost with global boost on sysfs update")
+Signed-off-by: Christian Loehle <christian.loehle@arm.com>
+Reviewed-by: Pengjie Zhang <zhangpengjie2@huawei.com>
+Reviewed-by: Zhongqiu Han <zhongqiu.han@oss.qualcomm.com>
+Reviewed-by: Sumit Gupta <sumitg@nvidia.com>
+Link: https://patch.msgid.link/20261105215223.1263415-2-christian.loehle@arm.com
 Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
-Stable-dep-of: a0cde2b601bc ("cpufreq: Preserve global boost state on failed updates")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/cpufreq/cpufreq.c | 6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+ drivers/cpufreq/cpufreq.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
 diff --git a/drivers/cpufreq/cpufreq.c b/drivers/cpufreq/cpufreq.c
-index 002afd47d2d59..46cf3d49b0636 100644
+index 46cf3d49b0636..a48dd423b8f98 100644
 --- a/drivers/cpufreq/cpufreq.c
 +++ b/drivers/cpufreq/cpufreq.c
-@@ -2809,7 +2809,7 @@ static int cpufreq_boost_trigger_state(int state)
+@@ -2809,6 +2809,7 @@ static int cpufreq_boost_trigger_state(int state)
  {
  	struct cpufreq_policy *policy;
  	unsigned long flags;
--	int ret = 0;
-+	int ret = -EOPNOTSUPP;
++	bool boost_enabled;
+ 	int ret = -EOPNOTSUPP;
  
  	/*
- 	 * Don't compare 'cpufreq_driver->boost_enabled' with 'state' here to
-@@ -2831,6 +2831,10 @@ static int cpufreq_boost_trigger_state(int state)
- 		if (ret)
- 			goto err_reset_state;
- 	}
-+
-+	if (ret)
-+		goto err_reset_state;
-+
+@@ -2817,6 +2818,7 @@ static int cpufreq_boost_trigger_state(int state)
+ 	 */
+ 
+ 	write_lock_irqsave(&cpufreq_driver_lock, flags);
++	boost_enabled = cpufreq_driver->boost_enabled;
+ 	cpufreq_driver->boost_enabled = state;
+ 	write_unlock_irqrestore(&cpufreq_driver_lock, flags);
+ 
+@@ -2843,7 +2845,7 @@ static int cpufreq_boost_trigger_state(int state)
  	cpus_read_unlock();
  
- 	return 0;
+ 	write_lock_irqsave(&cpufreq_driver_lock, flags);
+-	cpufreq_driver->boost_enabled = !state;
++	cpufreq_driver->boost_enabled = boost_enabled;
+ 	write_unlock_irqrestore(&cpufreq_driver_lock, flags);
+ 
+ 	pr_err("%s: Cannot %s BOOST\n",
 -- 
 2.53.0
 
