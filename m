@@ -1,55 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795619107;
-	b=kIavTxcVrrCOCZT04NU7SWYU48Maq5YtZZgMXDQTvK4ydoGDcojWHlTqae/mH6OsETn7
-	 F3a9YQkqCWjOCFok4bk5kUhHIqMMxfu/iuLKPH1OC7Krras6eyywsv7QejOqhKqjtGSWI
-	 Eg+95FtXsob/tA+wPMetdwJNJhDrfAlIeKoYr4Rx4DB+1+5tSeXbj9Okr/hGS+u8pRSy2
-	 N7/pfx1dh5US5l7FdShfuLWfS5qs4PY53bbApms6C/09J+Zog388RJjqccClGnvVYAJsT
-	 gELAF+Gy+scG9KoxUOg4hVh1Q/nIbxPdp8JD7DtDSPArQsRezR5R07iqPxVmo58keHg==
+	t=1795619110;
+	b=2OwlYGSsqqdUsX9+PRY/wtkw9JL4/gnUBe8zaeuETmTDuGGIpGbvwY4j175JRZZrl8oQ
+	 CRSYK1PzwZrwvph/VNDuFAkxymG7o8b4TI2HYNg27MpDnCAQJpIDJTdJLEo4FBtzfKdli
+	 zAfiWElfHzOUwxytGmXQ+IDD5120NnJqHEAEHZDm7TiXrB3/OCO7Ux0WjKfPdPmEVXERf
+	 0k8oq/HX9gqpxDB5uZEKUb85+JhgZ0C6roNapZUOL/J74wWZ3de5XFuS28FhNr3j2T78K
+	 ju9pvBELLpx0XDYHUS4EA/yIQ+jjnw5c7RqAJK4dX2LQxlRJ8LJIiahPqjXrsUBmk4Q==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795619107;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795619110;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=F1RjG2olC2n05ycsLfKZfdukTNfESHL8qpZKtW2VkqU=;
-	b=Dp6FFM70zrVVrV2/fZzTtsQebI/zyDbYkDwvtQxDMffu11tfYL3C9KbW4vItq+15GStN
-	 pEAT8oq8gPbF8bgPGDff7fUVsj6jUH6wsukqhEdUkeXUaljCfWO370Q9TpOMqaiynqXQy
-	 EUb2lnD3/EewAfflrOqI5/zv1Io/9gCGqSTeRp9mAjMBB3/KEQuI1lQLg2yepvxXG1Tc/
-	 P+zUdGCfmkv3VUxhBouVfsG+5i73xs2x8uJn4IUjsTDCNXugkcZ/hHR0gM+oI8vJaybS9
-	 Vv2gRTe80OLp1R+gUuxef8ITvRdz6Wr2he2iLTs1Yyyz8Iwdrzx0T0bzKGjlVaVJoUw==
+	bh=thqTClCmNysP48b51GmlTBVcsshkLARrCyfot/R+J44=;
+	b=MSMs1YbZAng19uDfzbblB5TZvdU+ScLbH0t7AHzaJZnu+Ehf8MkJjUB13AzTs64Eu1VX
+	 MaZXwH/gqaZILVdJbsoo1cCMfl+HeVJPpJXPUF2GAWnkhKgCd3Q4tc6JLgrMgLb0lwgF1
+	 s+q1+cthuxzhjJCx/IwG0PVI6AytMceM5Y90LACaypgRQmOlogP0lA7XHcaSeROUCNE/M
+	 JT48CdCYzm9uGI+3lGT4xlRzfXjPiEwnw30OkgJe007zFOaqQwyLp4Uu3RxaCAHhBjTlx
+	 50qMc5oFw/DqhO8siF8icX+LKWG1b8XuDX9GJuu1U+I5DqRHBWjiPj6BRFkPEyZGBRQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=q3sCV9oU;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=njr8cKeU;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A5BA2606A321;
-	Wed, 25 Nov 2026 15:05:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 80B29606A31E;
+	Wed, 25 Nov 2026 15:05:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=q3sCV9oU
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 07E4E1F000C0;
-	Wed, 25 Nov 2026 15:05:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=njr8cKeU
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D09151F000C4;
+	Wed, 25 Nov 2026 15:05:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795619107;
-	bh=F1RjG2olC2n05ycsLfKZfdukTNfESHL8qpZKtW2VkqU=;
+	s=korg; t=1795619110;
+	bh=thqTClCmNysP48b51GmlTBVcsshkLARrCyfot/R+J44=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=q3sCV9oUmIqvv3ly3l4ZCLi/CElEydYmiQV8VC31YM+S9vzCUROjyvRDhM9x6be7J
-	 v+lL+TRguieFBAw7Hza41fAN6Nk2eTTlrUrZ/GsGdJKuqblXjdKFvB1ZGI4bf1hNCx
-	 PXlglvTDrLaRSFgCzGqu8wTo0Z6SCLgfKuvfbRIE=
+	b=njr8cKeU7syXUBIRJR+/3KolblC2SHttg7zfu9L1Q3KhUrieAgjiiHi0HlI64mwTU
+	 9wpm4sAcy4rsNqE84bErXeXNMhG5nrqTXt3kruagODTo5QsoW2r1hlGp0SVDEK9ETS
+	 ODI4M8kNX8Ln4DccEbyDmn2lw7ZyoS04zmNbhBAY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shay Drory <shayd@nvidia.com>,
-	Moshe Shemesh <moshe@nvidia.com>,
-	Mark Bloch <mbloch@nvidia.com>,
+	Changyul Lee <lcy8047@gmail.com>,
 	Tariq Toukan <tariqt@nvidia.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0491/1005] net/mlx5: E-switch, Restore host PF enable for ECPF that isnt E-switch manager
-Date: Wed, 25 Nov 2026 15:30:29 +0100
-Message-ID: <20261125143833.249139552@linuxfoundation.org>
+Subject: [PATCH 7.3 0492/1005] net/mlx5: macsec: Dont remove fs_id when adding a rule fails
+Date: Wed, 25 Nov 2026 15:30:30 +0100
+Message-ID: <20261125143833.271443578@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143821.729802100@linuxfoundation.org>
 References: <20261125143821.729802100@linuxfoundation.org>
@@ -71,86 +69,122 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Shay Drory <shayd@nvidia.com>
+From: Changyul Lee <lcy8047@gmail.com>
 
-[ Upstream commit 4777203cc9af51db5ae647920c14ee9451e783d7 ]
+[ Upstream commit 5175da73dd128520ad6d704d7fe54926ee5f658b ]
 
-The cited commit breaks host PF enable_hca when the ECPF isn't E-switch
-manager. For example, when the link layer is infiniband, the ECPF isn't
-E-switch manager, so after the cited commit enable_hca is never issued
-for the host PF, it stays in initializing state and fails to probe.
+macsec_fs_tx_add_rule() and macsec_fs_rx_add_rule() clean up a failed
+rule with macsec_fs_{tx,rx}_del_rule(), which also calls
+macsec_fs_id_del(). The fs_id is never in the xarray at that point:
+macsec_fs_id_add() is the last step of adding a rule and removes its
+own entry when it fails.
 
-Fix it by checking esw_allowed() only for vport bookkeeping
+macsec_fs_id_del() then dereferences NULL, through macsec_device for
+the first SA of a MACsec netdev and through fs_id_found otherwise. On
+RX, the SAs of one SC share an fs_id, so a failure while adding another
+SA drops the reference that an existing SA holds.
 
-Fixes: 0e6c95c98829 ("net/mlx5: Support devlink port state for host PF")
-Signed-off-by: Shay Drory <shayd@nvidia.com>
-Reviewed-by: Moshe Shemesh <moshe@nvidia.com>
-Reviewed-by: Mark Bloch <mbloch@nvidia.com>
-Signed-off-by: Tariq Toukan <tariqt@nvidia.com>
-Link: https://patch.msgid.link/20261104184756.773910-1-tariqt@nvidia.com
+Split the rule teardown from the fs_id removal and do only the teardown
+on the error paths.
+
+Fixes: d4ece08f4b1d ("net/mlx5: Maintain fs_id xarray per MACsec device inside macsec steering")
+Signed-off-by: Changyul Lee <lcy8047@gmail.com>
+Reviewed-by: Tariq Toukan <tariqt@nvidia.com>
+Link: https://patch.msgid.link/20261105003419.4016283-1-lcy8047@gmail.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../net/ethernet/mellanox/mlx5/core/eswitch.c | 24 +++++++++----------
- 1 file changed, 12 insertions(+), 12 deletions(-)
+ .../mellanox/mlx5/core/lib/macsec_fs.c        | 38 ++++++++++++-------
+ 1 file changed, 24 insertions(+), 14 deletions(-)
 
-diff --git a/drivers/net/ethernet/mellanox/mlx5/core/eswitch.c b/drivers/net/ethernet/mellanox/mlx5/core/eswitch.c
-index fc197d1dc9dfe..603e8ae72734c 100644
---- a/drivers/net/ethernet/mellanox/mlx5/core/eswitch.c
-+++ b/drivers/net/ethernet/mellanox/mlx5/core/eswitch.c
-@@ -1509,13 +1509,9 @@ int mlx5_esw_pf_enable_hca(struct mlx5_core_dev *dev, u16 vport_num)
- 	struct mlx5_vport *vport;
- 	int err;
- 
--	if (!mlx5_core_is_ecpf(dev) || !mlx5_esw_allowed(esw))
-+	if (!mlx5_core_is_ecpf(dev))
- 		return 0;
- 
--	vport = mlx5_eswitch_get_vport(esw, vport_num);
--	if (IS_ERR(vport))
--		return PTR_ERR(vport);
--
- 	/* Once vport and representor are ready, take the PF out of
- 	 * initializing state. Enabling HCA clears the iser->initializing
- 	 * bit and PF driver loading can progress.
-@@ -1524,7 +1520,11 @@ int mlx5_esw_pf_enable_hca(struct mlx5_core_dev *dev, u16 vport_num)
- 	if (err)
- 		return err;
- 
--	vport->pf_activated = true;
-+	if (mlx5_esw_allowed(esw)) {
-+		vport = mlx5_eswitch_get_vport(esw, vport_num);
-+		if (!IS_ERR(vport))
-+			vport->pf_activated = true;
-+	}
- 
- 	return 0;
+diff --git a/drivers/net/ethernet/mellanox/mlx5/core/lib/macsec_fs.c b/drivers/net/ethernet/mellanox/mlx5/core/lib/macsec_fs.c
+index 7d785c937d43d..4892175ca5774 100644
+--- a/drivers/net/ethernet/mellanox/mlx5/core/lib/macsec_fs.c
++++ b/drivers/net/ethernet/mellanox/mlx5/core/lib/macsec_fs.c
+@@ -764,13 +764,9 @@ static int macsec_fs_id_add(struct list_head *macsec_devices_list, u32 fs_id,
+ 	return err;
  }
-@@ -1535,18 +1535,18 @@ int mlx5_esw_pf_disable_hca(struct mlx5_core_dev *dev, u16 vport_num)
- 	struct mlx5_vport *vport;
- 	int err;
  
--	if (!mlx5_core_is_ecpf(dev) || !mlx5_esw_allowed(esw))
-+	if (!mlx5_core_is_ecpf(dev))
- 		return 0;
- 
--	vport = mlx5_eswitch_get_vport(esw, vport_num);
--	if (IS_ERR(vport))
--		return PTR_ERR(vport);
+-static void macsec_fs_tx_del_rule(struct mlx5_macsec_fs *macsec_fs,
+-				  struct mlx5_macsec_tx_rule *tx_rule,
+-				  void *macdev)
++static void macsec_fs_tx_free_rule(struct mlx5_macsec_fs *macsec_fs,
++				   struct mlx5_macsec_tx_rule *tx_rule)
+ {
+-	macsec_fs_id_del(&macsec_fs->macsec_devices_list, tx_rule->fs_id, macdev,
+-			 &macsec_fs->sci_hash, true);
 -
- 	err = mlx5_cmd_pf_disable_hca(dev, vport_num);
- 	if (err)
- 		return err;
- 
--	vport->pf_activated = false;
-+	if (mlx5_esw_allowed(esw)) {
-+		vport = mlx5_eswitch_get_vport(esw, vport_num);
-+		if (!IS_ERR(vport))
-+			vport->pf_activated = false;
-+	}
- 
- 	return 0;
+ 	if (tx_rule->rule) {
+ 		mlx5_del_flow_rules(tx_rule->rule);
+ 		tx_rule->rule = NULL;
+@@ -791,6 +787,15 @@ static void macsec_fs_tx_del_rule(struct mlx5_macsec_fs *macsec_fs,
+ 	macsec_fs_tx_ft_put(macsec_fs);
  }
+ 
++static void macsec_fs_tx_del_rule(struct mlx5_macsec_fs *macsec_fs,
++				  struct mlx5_macsec_tx_rule *tx_rule,
++				  void *macdev)
++{
++	macsec_fs_id_del(&macsec_fs->macsec_devices_list, tx_rule->fs_id, macdev,
++			 &macsec_fs->sci_hash, true);
++	macsec_fs_tx_free_rule(macsec_fs, tx_rule);
++}
++
+ #define MLX5_REFORMAT_PARAM_ADD_MACSEC_OFFSET_4_BYTES 1
+ 
+ static union mlx5_macsec_rule *
+@@ -883,7 +888,7 @@ macsec_fs_tx_add_rule(struct mlx5_macsec_fs *macsec_fs,
+ 	goto out_spec;
+ 
+ err:
+-	macsec_fs_tx_del_rule(macsec_fs, tx_rule, macsec_ctx->secy->netdev);
++	macsec_fs_tx_free_rule(macsec_fs, tx_rule);
+ 	macsec_rule = NULL;
+ out_spec:
+ 	kvfree(spec);
+@@ -1648,15 +1653,11 @@ static void macsec_fs_rx_ft_put(struct mlx5_macsec_fs *macsec_fs)
+ 	macsec_fs_rx_destroy(macsec_fs);
+ }
+ 
+-static void macsec_fs_rx_del_rule(struct mlx5_macsec_fs *macsec_fs,
+-				  struct mlx5_macsec_rx_rule *rx_rule,
+-				  void *macdev, u32 fs_id)
++static void macsec_fs_rx_free_rule(struct mlx5_macsec_fs *macsec_fs,
++				   struct mlx5_macsec_rx_rule *rx_rule)
+ {
+ 	int i;
+ 
+-	macsec_fs_id_del(&macsec_fs->macsec_devices_list, fs_id, macdev,
+-			 &macsec_fs->fs_id_hash, false);
+-
+ 	for (i = 0; i < RX_NUM_OF_RULES_PER_SA; ++i) {
+ 		if (rx_rule->rule[i]) {
+ 			mlx5_del_flow_rules(rx_rule->rule[i]);
+@@ -1674,6 +1675,15 @@ static void macsec_fs_rx_del_rule(struct mlx5_macsec_fs *macsec_fs,
+ 	macsec_fs_rx_ft_put(macsec_fs);
+ }
+ 
++static void macsec_fs_rx_del_rule(struct mlx5_macsec_fs *macsec_fs,
++				  struct mlx5_macsec_rx_rule *rx_rule,
++				  void *macdev, u32 fs_id)
++{
++	macsec_fs_id_del(&macsec_fs->macsec_devices_list, fs_id, macdev,
++			 &macsec_fs->fs_id_hash, false);
++	macsec_fs_rx_free_rule(macsec_fs, rx_rule);
++}
++
+ static void macsec_fs_rx_setup_fte(struct mlx5_flow_spec *spec,
+ 				   struct mlx5_flow_act *flow_act,
+ 				   struct mlx5_macsec_rule_attrs *attrs,
+@@ -1833,7 +1843,7 @@ macsec_fs_rx_add_rule(struct mlx5_macsec_fs *macsec_fs,
+ 	return macsec_rule;
+ 
+ err:
+-	macsec_fs_rx_del_rule(macsec_fs, rx_rule, macsec_ctx->secy->netdev, fs_id);
++	macsec_fs_rx_free_rule(macsec_fs, rx_rule);
+ 	macsec_rule = NULL;
+ out_spec:
+ 	kvfree(spec);
 -- 
 2.53.0
 
