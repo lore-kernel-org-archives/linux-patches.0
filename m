@@ -1,53 +1,55 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795624425;
-	b=Sb91QTaDIsUPWBFelhi4O+JnCA/svUC9iVWHgXjmZOCO7PsMLySJ8Nz/6+jMlB68ixV6
-	 C9Y9w+fIuDWBROKI4qkySqVtczQRE3xE9NWNn9itBJgJgP4QNwoujlNBB00+l0Z7w+7cx
-	 7eMTiYk2rJnHFnH7diBZeF8b6uWpGAdYvLdWdy0/TEwcU0zzPzr72GbOMZFg8Z6BbCGU8
-	 k3BdHFfHrs5Jit1+xNTG7DT35BzrDNyvxL7/LBG9+8eVxRM+HzijCV3HWLwbpeJGd45RW
-	 oZFw8SB9PSncUJVjl8Eyg5WvgwBt0KBrnCgER54YP5QXI7Laxtyla+CaTbR+CsA8EXA==
+	t=1795624428;
+	b=Jje5SGSVrpiDkH+WcX0DFhf6z1/FejEtW38r01Jts6+lOBjmXvREZEn4S8DRczbsafvj
+	 ux4wWBT4WKvUHSnbuh+Zl179r7iZ8UQlyL4O5nKxG4slfQ+NAu4GqJ9pIyCJ+uUaCDrHv
+	 Ws8c4h5C+Z6D/I/2Eyz08g2xKNuBj87qvY/k9qwRd3owuyPDhGYQ0C0f1oqYoz6Esk5KH
+	 88u6jynNt9OcIUBO35sZz3R3ntXqkHL+D1P4wMTcx1y2YafdhAgGH4+fVKIgOBH7F75xL
+	 6xscgXOBFwwE2pyZ14YoCXjMwrlEsZy07vmclsEyum27jSfj/mSKFAu5QN3byaO06vw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795624425;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795624428;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=16OvuAlOTk4q2kZopJfMg8qqEMDrqBPvNg6/P1ock+U=;
-	b=SHdgqvxr7P6HLTlIOBw/SdcHij6Ack9sEIxQ+k2XjQo0+MqCdYKW7n7OsZGQJGeBLwHj
-	 Cs6Zpx2YKkbrs4c14yWWLU+KW4+ErqwIgE12Q9RzibfidtCsyJg3wV5YD1vBUzqkCbjOs
-	 9ckGbvhWFn2A+c+gNljKK3Nwhgu9bQGuowXKWNYUTFH6vEEOGcDdeHlHSOAFmpz4WNQhj
-	 7RMuV1fMn3ojeGtoS5fL6O4sd1uV+h8n9eMZdwPnqLuwnlZ4oa69cnCxJN6LZz1eLNhHT
-	 tEELRjw73CUsQs7PZVqSl7Bw4o4mPaCibuPj8Vkb5J88ZWG7VxnVa9FDbQ/cS+tUEuQ==
+	bh=5HySbtZp+rXIqvXR6rELySxeOfvGQVfDSodmgLQDZng=;
+	b=1CO2bfdRYyxQu9viZM2Gp3qoBgSvN5CNO0VxjgXkqPYFRzSCuCq3BLufaP/Jt2FwfUrb
+	 2IkzuK17jlz7ymTpLBVWh6pk8piiSCJUEQsR6YiSqkTBtA8KnDlaMfkjuhzXu3xU8HKkz
+	 /HktsogFUr20fKV55HZwjQC81SQt2kSb/6gS0sclGTB+3HXLv/jbetH2quloO6AkAm3WN
+	 E0PmWrYhhdC/KumygkDJ8Z+ksZ0SNTUMG7WGxSBoHxO6MoJnwKI7bATU7Rp97VyXPyWEV
+	 xtCo0GRMXH8pItkqCLI/3dqtPPS+v+VBD5UxveGqy7fJe1sUhAWEltgEfrkgBCeFKEg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=dGsF+lAG;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=PpEL4uhx;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 26482606A339;
-	Wed, 25 Nov 2026 16:33:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8B5E5606A33A;
+	Wed, 25 Nov 2026 16:33:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=dGsF+lAG
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 65B721F000C4;
-	Wed, 25 Nov 2026 16:33:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=PpEL4uhx
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D03A81F000C0;
+	Wed, 25 Nov 2026 16:33:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795624424;
-	bh=16OvuAlOTk4q2kZopJfMg8qqEMDrqBPvNg6/P1ock+U=;
+	s=korg; t=1795624428;
+	bh=5HySbtZp+rXIqvXR6rELySxeOfvGQVfDSodmgLQDZng=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=dGsF+lAGr4iJKq1dtAWo9p1JoHViJiGSjmWFBi5AFzHBqWpOxFtkC2jWksTAKuYEK
-	 nbDlNDVDAdvSgEevZhRu0HHhnIeAZod3X5tRrhqg+Y/8obsNE99d2s8bEh7Y+/rIFq
-	 09fo8FR93kCqgYn1OeXFkh3oeYWqhcY9ux6N3tHg=
+	b=PpEL4uhxvSgB4GYECK4A0Wgk9y2/c5i8VwrEaeMaF4FQGfLAEyu+2Z5KeAVpIFim3
+	 h8WUWbNOfltN2ZIPPXv/ONn0JQYSZam6TWogb5uZky6jYgA1WNjO1Fj59ffXmiby8B
+	 wI5cOOJc91RgQeiS6Knkn/WxVtArDpl2YKEqHHmg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Damien Le Moal <dlemoal@kernel.org>,
-	Niklas Cassel <cassel@kernel.org>,
-	Jens Axboe <axboe@kernel.dk>,
+	Kyle Zeng <kylebot@openai.com>,
+	Eric Dumazet <edumazet@kernel.org>,
+	Jiayuan Chen <jiayuan.chen@linux.dev>,
+	Kuniyuki Iwashima <kuniyu@google.com>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 189/816] null_blk: dont finish zones to set them read-only or offline
-Date: Wed, 25 Nov 2026 15:28:57 +0100
-Message-ID: <20261125143853.569824972@linuxfoundation.org>
+Subject: [PATCH 6.12 190/816] tcp: wait for TIME_WAIT teardown before freeing per-netns ehash
+Date: Wed, 25 Nov 2026 15:28:58 +0100
+Message-ID: <20261125143853.592614185@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143849.205329330@linuxfoundation.org>
 References: <20261125143849.205329330@linuxfoundation.org>
@@ -69,92 +71,96 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Niklas Cassel <cassel@kernel.org>
+From: Kyle Zeng <kylebot@openai.com>
 
-[ Upstream commit 973bf587d79f061beffdd392e77012a07f25fcd6 ]
+[ Upstream commit 647b81ddefc6364290e67bf33c89d54971f8995e ]
 
-null_set_zone_cond() calls null_finish_zone() to release the zone
-resources held by a zone before setting it read-only or offline.
+inet_twsk_kill() removes a TIME_WAIT socket from the established hash
+before it finishes using the ehash lock, hashinfo and bind tables, and
+before it drops the death-row reference. A running timer can therefore
+unhash its socket before inet_twsk_purge() reaches it. The purge cannot
+synchronize with that timer, and tcp_sk_exit_batch() can free the
+private ehash and hashinfo while inet_twsk_kill() is still using them.
 
-For an empty or closed zone, null_finish_zone() first runs the zone
-resource checks, which can close an unrelated implicitly open zone, or
-fail. As the error is ignored, a failure for a closed zone leaks
-nr_zones_closed, permanently lowering the effective active zone limit.
+An unprivileged reproducer using user and network namespaces, a private
+TCP ehash and a FIN_WAIT2 timer triggers a KASAN slab-use-after-free in
+inet_twsk_kill(). The allocation and free stacks point to
+inet_pernet_hashinfo_alloc() and inet_pernet_hashinfo_free().
 
-Setting a zone read-only or offline requires no zone resources, so
-release the zone resources held by the zone directly instead, using a
-new helper, null_release_zone_resources().
+Wait for an RCU grace period after purging the whole batch, if one
+netns in the batch uses a private ehash. TIME_WAIT removal runs with
+bottom halves disabled, so this also waits for removers that were
+already invisible to the purge. Keep the wait under
+tcp_exit_batch_mutex, before freeing any private hashinfo.
 
-Fixes: d3a5738849e0 ("null_blk: support read-only and offline zone conditions")
-Reviewed-by: Damien Le Moal <dlemoal@kernel.org>
-Signed-off-by: Niklas Cassel <cassel@kernel.org>
-Link: https://patch.msgid.link/20261022092158.2248831-7-cassel@kernel.org
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
+The same window exists with the shared tcp_hashinfo. There, the
+hashinfo memory stays valid, but tcp_sk_exit_batch() can decrement
+tcp_death_row.tw_refcount from 2 to 1 before inet_twsk_kill() drops its
+own reference. This triggers the WARN_ON_ONCE() in tcp_sk_exit_batch(),
+then a refcount_t "decrement hit 0" warning from inet_twsk_kill().
+
+Adding a grace period for the shared case would be costly on busy
+hosts. It is not needed: struct net is freed by a later cleanup_net(),
+after the synchronize_rcu() in ops_undo_list(), so inet_twsk_kill()
+can safely drop the last tw_refcount reference itself.
+Use refcount_dec_if_one() and only warn if tw_refcount is not 1
+after a grace period.
+
+Fixes: d1e5e6408b30 ("tcp: Introduce optional per-netns ehash.")
+Signed-off-by: Kyle Zeng <kylebot@openai.com>
+[edumazet: only call synchronize_net() if one netns in the batch uses a private ehash,
+ use refcount_dec_if_one() to avoid a false WARN with the shared ehash]
+Signed-off-by: Eric Dumazet <edumazet@kernel.org>
+Reviewed-by: Jiayuan Chen <jiayuan.chen@linux.dev>
+Reviewed-by: Kuniyuki Iwashima <kuniyu@google.com>
+Link: https://patch.msgid.link/20261030075843.2567707-1-edumazet@kernel.org
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/block/null_blk/zoned.c | 35 +++++++++++++++++++++++++++++-----
- 1 file changed, 30 insertions(+), 5 deletions(-)
+ net/ipv4/tcp_ipv4.c | 21 ++++++++++++++++++++-
+ 1 file changed, 20 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/block/null_blk/zoned.c b/drivers/block/null_blk/zoned.c
-index badedb4769220..512e3181d5b5a 100644
---- a/drivers/block/null_blk/zoned.c
-+++ b/drivers/block/null_blk/zoned.c
-@@ -731,6 +731,33 @@ blk_status_t null_process_zoned_cmd(struct nullb_cmd *cmd, enum req_op op,
- 	}
- }
+diff --git a/net/ipv4/tcp_ipv4.c b/net/ipv4/tcp_ipv4.c
+index b42630611afc7..b92f040a3eaab 100644
+--- a/net/ipv4/tcp_ipv4.c
++++ b/net/ipv4/tcp_ipv4.c
+@@ -3681,6 +3681,7 @@ static int __net_init tcp_sk_init(struct net *net)
  
-+/*
-+ * Release the zone resources held by a zone, before changing the condition of
-+ * the zone to a condition that does not hold any zone resources.
-+ */
-+static void null_release_zone_resources(struct nullb_device *dev,
-+					struct nullb_zone *zone)
-+{
-+	if (!dev->need_zone_res_mgmt)
-+		return;
-+
-+	spin_lock(&dev->zone_res_lock);
-+	switch (zone->cond) {
-+	case BLK_ZONE_COND_IMP_OPEN:
-+		dev->nr_zones_imp_open--;
-+		break;
-+	case BLK_ZONE_COND_EXP_OPEN:
-+		dev->nr_zones_exp_open--;
-+		break;
-+	case BLK_ZONE_COND_CLOSED:
-+		dev->nr_zones_closed--;
-+		break;
-+	default:
-+		break;
+ static void __net_exit tcp_sk_exit_batch(struct list_head *net_exit_list)
+ {
++	bool synced = false;
+ 	struct net *net;
+ 
+ 	/* make sure concurrent calls to tcp_sk_exit_batch from net_cleanup_work
+@@ -3695,9 +3696,27 @@ static void __net_exit tcp_sk_exit_batch(struct list_head *net_exit_list)
+ 
+ 	tcp_twsk_purge(net_exit_list);
+ 
++	/* inet_twsk_kill() unhashes a twsk before it is done with ehash
++	 * and bhash, and before it drops its tw_refcount reference,
++	 * so tcp_twsk_purge() can miss it. Such callers run with BH
++	 * disabled: wait for them before freeing a private ehash.
++	 */
++	list_for_each_entry(net, net_exit_list, exit_list) {
++		if (net->ipv4.tcp_death_row.hashinfo->pernet) {
++			synchronize_net();
++			synced = true;
++			break;
++		}
 +	}
-+	spin_unlock(&dev->zone_res_lock);
-+}
 +
- /*
-  * Set a zone in the read-only or offline condition.
-  */
-@@ -747,8 +774,8 @@ static void null_set_zone_cond(struct nullb_device *dev,
- 	 * If the read-only condition is requested again to zones already in
- 	 * read-only condition, restore back normal empty condition. Do the same
- 	 * if the offline condition is requested for offline zones. Otherwise,
--	 * set the specified zone condition to the zones. Finish the zones
--	 * beforehand to free up zone resources.
-+	 * set the specified zone condition to the zones. Release the zone
-+	 * resources held by the zones beforehand.
- 	 */
- 	if (zone->cond == cond) {
- 		zone->cond = BLK_ZONE_COND_EMPTY;
-@@ -756,9 +783,7 @@ static void null_set_zone_cond(struct nullb_device *dev,
- 		if (dev->memory_backed)
- 			null_handle_discard(dev, zone->start, zone->len);
- 	} else {
--		if (zone->cond != BLK_ZONE_COND_READONLY &&
--		    zone->cond != BLK_ZONE_COND_OFFLINE)
--			null_finish_zone(dev, zone);
-+		null_release_zone_resources(dev, zone);
- 		zone->cond = cond;
- 		zone->wp = NULL_ZONE_INVALID_WP;
+ 	list_for_each_entry(net, net_exit_list, exit_list) {
+ 		inet_pernet_hashinfo_free(net->ipv4.tcp_death_row.hashinfo);
+-		WARN_ON_ONCE(!refcount_dec_and_test(&net->ipv4.tcp_death_row.tw_refcount));
++		/* Without a grace period, a concurrent inet_twsk_kill() might
++		 * still hold a tw_refcount reference. Let it drop it: struct net
++		 * is freed by a later cleanup_net(), after an RCU grace period.
++		 */
++		if (!refcount_dec_if_one(&net->ipv4.tcp_death_row.tw_refcount))
++			WARN_ON_ONCE(synced);
+ 		tcp_fastopen_ctx_destroy(net);
  	}
+ 
 -- 
 2.53.0
 
