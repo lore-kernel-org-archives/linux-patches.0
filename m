@@ -1,52 +1,55 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795625628;
-	b=m0nZaJ+cpLnRKHWglFJnE3Yswh2PgQqspHxlXztPhktaJJfY7CosRcrKRtJu41EOyFLu
-	 +tlIko6xQCWPB5ThV5wCyjfmwwm3zt3vPi9/zsAHpKSKT4kEJE9kz1Efew+jeNqB2oVP4
-	 xUgAP4rHGn1Iv7M+1hHCO34iZCYpMtmiFBJehEOqi1judA66GuEfmRWlFNskVCD7MSZ/k
-	 /31bjy3Y4qLwQ3cB4Bn2cV2POhkSRKAf3u9ORvOhpcTScA3KIvdKKbp4x8CL4GeYyYcES
-	 P3xzeHmAfAn54BJdQlYc+UAW9BVoTUsmy6frgr5eUWxAOEwRHgROg5kvnFzQ+gJqizg==
+	t=1795625631;
+	b=l3r+6xUZO4z5R7uQthc3agdlZaEVMy5M62+WtEKlRl9crLOTe5C0g1Nhwc+0g/5knIVC
+	 5Mg1SYVCNCXCsLPDV0XzrCMMUVwoGuK05iQIqxc3QCc/DsSX4zNDAvszk9lHd0cwT4jJ7
+	 hmljmxkENNwW6qyzVAP0hap1mstyOzjre+0PAh7RqBO2ipNoSg+rxkPy+d01wsfEKzwhi
+	 oGvZ5kH23XxyZ16zZtgWG5DotICyJ5nvkPGQohM1NCRj8x3LpmUjluyB0I2TfjLvv+b6U
+	 fEBIOdiAoQvZXW5m24m28Cf73j/A5zNWOQ8LYaCWHY4Ty5XjUIYGOo+e8p+xUer6X6g==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795625628;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795625631;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=eo7Xt3Z9UmVRYhuXQXPs0ODGTmr6vejva9jGKQl1tBA=;
-	b=Nznb0otfgOXdDc1R04Hl/AtXN6dKEZcgyl7puPYipNP1UlfPF7qMLUnh6vD4baNvO62u
-	 eRDSI8Au7S9rH0wiSM88S6LayZkSEmFo4Ka6/CZmT0R0vhUrD2rJktt8s0kN38v50x6uO
-	 tLYRSxnCGhdMNUn8GPpQ3Durk9R9V8n7qO6gjAQl/klKdI2OrAvrs53ZWmAs/kc7frZm/
-	 TyYz3PszGAYYsP2/Ghg/jHH6+Zdd4UVyOSFkrVZ9NvsBZHvwG8UWBdL1okDogszMgK5Go
-	 bsTEbU9i9GBgIaCdQRgXGXoz9Buai3cero98xodcxnoW/Mea8pV6obyvYtmu3O9pfDw==
+	bh=Trou5+PekrFvfQ/MqEy0VYmXCoAFk5+qGMR78v7mVPU=;
+	b=HV8WpGTSjLwew6XtHrSZZLh2HLKkRkcaBJevJUlnvZ71vnpTa43dczHRWDrnOuQeog+r
+	 oeH6QD3QaoxR8pMlSyr6w4GlKbyYeIvVk1dsfTQD9JZblwNMwrFzmI/nD2oHZJ5EUV99j
+	 tppJpr/l7iR+N4J+47Je7XUbDF/UBWy7yQfQOTi1z7pGsyZY2tjhC/H1r1YHz2joJfzSd
+	 E8EzFc33SSpFR+Mdyq+SDjPYFF3ywOy1hGKSjWB2FY5X+MDhwyy4fdYNafFxfsRyZpacb
+	 Flb3yh1yTA0xjfr49tgQn0mT904az1RMQzlWZKpT3E/I+ZmkQEiKzSJybsxoieE6phg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="Y/WI9YhQ";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="P9/7ELyT";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F2645606A323;
-	Wed, 25 Nov 2026 16:53:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EB712606A326;
+	Wed, 25 Nov 2026 16:53:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Y/WI9YhQ
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4C8FD1F000C4;
-	Wed, 25 Nov 2026 16:53:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=P9/7ELyT
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 209CA1F000D2;
+	Wed, 25 Nov 2026 16:53:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795625627;
-	bh=eo7Xt3Z9UmVRYhuXQXPs0ODGTmr6vejva9jGKQl1tBA=;
+	s=korg; t=1795625630;
+	bh=Trou5+PekrFvfQ/MqEy0VYmXCoAFk5+qGMR78v7mVPU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Y/WI9YhQeQPKHPuVECF/JyotUOQmIAh7SHdEHhm26m5olnMBy1dZozRlAK7/51uif
-	 rg1Ua2prhDIZuKlgg9CXu52s484RwCwfH+0ZIAyfQ6hVl8M3ZKewfKnOwICfV36BHZ
-	 hYQMS1rmES6uvEZ7Bvs05QDj46juBWWttagy/UWk=
+	b=P9/7ELyTBr8lF3tLX4CJO5AehOEFmwIl36fKht58RSgykUwSuMC3meE13m6xiEp2W
+	 ZF7ROVVJCwhv8BXl5MYmGtlGpPaKlfFCYt4LL/mGR67l7Ene20JreF9h2z/7U8yqYB
+	 fMAL9bbr+jV4ILabG1u6mmjF0lX/XJiglohWt7jc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mahanta Jambigi <mjambigi@linux.ibm.com>,
-	Sidraya Jayagond <sidraya@linux.ibm.com>,
+	stable@kernel.org,
+	TencentOS Corvus AI <corvus@tencent.com>,
+	Jun Yang <junvyyang@tencent.com>,
+	Nikolay Aleksandrov <razor@blackwall.org>,
+	Ido Schimmel <idosch@nvidia.com>,
 	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.12 579/816] net/smc: fix lgr/lnk lifetime vs diag reader race
-Date: Wed, 25 Nov 2026 15:35:27 +0100
-Message-ID: <20261125143902.582934536@linuxfoundation.org>
+Subject: [PATCH 6.12 580/816] net: bridge: use one headroom snapshot for ND replies
+Date: Wed, 25 Nov 2026 15:35:28 +0100
+Message-ID: <20261125143902.605758552@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143849.205329330@linuxfoundation.org>
 References: <20261125143849.205329330@linuxfoundation.org>
@@ -68,265 +71,60 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mahanta Jambigi <mjambigi@linux.ibm.com>
+From: Jun Yang <junvyyang@tencent.com>
 
-commit d7900fa51642fbc2a5a03354238e71050a7d391d upstream.
+commit e573df093ef849bb7c763aed591cb6556b110671 upstream.
 
-The diag dump walks the socket hash table under a read_lock and
-dereferences conn->lgr and conn->lnk. Several paths expose a window
-where a hashed socket has freed or partially freed conn/lgr/lnk state.
+br_nd_send() calls LL_RESERVED_SPACE(dev) once to size the reply skb and
+again to reserve its headroom. When a port requiring more headroom is
+added to the bridge, br_add_if() can increase dev->needed_headroom
+between the two calls. The reserved headroom can then exceed the space
+accounted for by alloc_skb().
 
-First, smc_conn_abort() calls smc_conn_free() during early handshake
-aborts while the socket is still hashed in SMC_INIT, synchronously
-freeing the lgr on the smc_lgr_cleanup_early() path without holding the
-hash write_lock. A concurrent diag reader can load a non-NULL conn->lgr
-and dereference it after the kfree. Skip the connection, link group and
-DMB attributes in __smc_diag_dump() for sockets in SMC_INIT or
-SMC_CLOSED or fallen back to TCP, and take diag_mode from an is_smcd
-flag cached at connection creation.
+Take one headroom snapshot and use it for both the allocation size and
+skb_reserve().
 
-The state filter alone does not close the race. A connection aborted by
-a failed handshake can keep its alert token, because smc_conn_free()
-skips the unregister when smc_lgr_terminate_sched() has emptied
-lgr->list; close_work may also have been queued before the abort, as the
-CDC receive path is not excluded by the handshake's socket lock.
-smc_close_passive_work() would then move the hashed socket from SMC_INIT
-to SMC_APPCLOSEWAIT1 or SMC_PROCESSABORT, states the filter does not
-cover, and later run a passive-closing sock_put() that
-smc_connect_decline_fallback() dropped already. Return early from
-smc_close_passive_work() when the connection was freed; the check holds
-the socket lock that every smc_conn_free() caller holds as well, so a
-hashed socket with a freed connection stays in SMC_INIT or SMC_CLOSED
-until release.
-
-This changes the sock_diag output for such sockets: the connection, link
-group and DMB attributes are omitted, which smcss does not read for
-sockets in these states, while SMC_DIAG_FALLBACK is still reported and
-an SMC-D socket in SMC_INIT or SMC_CLOSED still reports
-SMC_DIAG_MODE_SMCD from the cached flag. A fallback socket is a plain
-TCP socket with no SMC connection state to report; the stale conn fields
-left behind by smc_conn_abort() must not be read.
-
-Second, in smc_conn_kill() on SMC-D with dmb_nocopy, smcd_buf_detach()
-NULLs and frees conn->sndbuf_desc while the socket is still hashed. A
-concurrent diag reader entering the CONNINFO block can dereference the
-freed descriptor. Unhash the socket right before smcd_buf_detach(). As a
-result, killed ACTIVE and APPCLOSEWAIT sockets that are still open are
-no longer visible to smcss on loopback-ism devices.
-
-Third, in the terminal teardown branches of smc_close_active_abort()
-(PEERCLOSEWAIT and PROCESSABORT groups) and in smc_close_passive_work(),
-smc_conn_free() drops lgr and lnk references while the socket is still
-hashed. Unhash immediately before each smc_conn_free() call at those
-sites. Sockets killed in those close states are therefore unhashed, and
-their inuse accounting dropped, before close(), even if the fd is still
-open.
-
-Fourth, use smp_load_acquire() / smp_store_release() on sk_state to
-order these checks on weakly ordered CPUs. A reader that observes
-SMC_ACTIVE is guaranteed to see the connection setup that preceded the
-store; a reader that observes SMC_CLOSED from smc_listen_out_err() skips
-the connection fields in any case, so that particular store is hardening
-kept for uniformity, not a required ordering.
-
-Additionally, in __smc_diag_dump(), use the cached link->ibname instead
-of link->smcibdev->ibdev->name, avoiding a NULL pointer dereference or
-use-after-free of the IB device when __smcr_link_clear() zeroes the link
-during concurrent SMC-R link failover. The link data is still read
-without conns_lock or send_lock, so a dump racing a failover may
-transiently report zeroed or mixed link fields; this does not affect
-memory safety and the next dump reports the new link. Like the SMC
-netlink link dump and the tracepoints, the name is the one cached at
-link creation time.
-
-Fixes: f16a7dd5cf27 ("smc: netlink interface for SMC sockets")
-Fixes: 2a0674fffb6b ("net/smc: improve abnormal termination of link groups")
-Fixes: 46c28dbd4c23 ("net/smc: no socket state changes in tasklet context")
-Fixes: 9dbe086c69b8 ("net/smc: fix invalid link access in dumping SMC-R connections")
-Fixes: ae2be35cbed2 ("net/smc: {at|de}tach sndbuf to peer DMB if supported")
-Cc: stable@vger.kernel.org
-Signed-off-by: Mahanta Jambigi <mjambigi@linux.ibm.com>
-Reviewed-by: Sidraya Jayagond <sidraya@linux.ibm.com>
-Link: https://patch.msgid.link/20261102083122.1098393-1-mjambigi@linux.ibm.com
+Fixes: ed842faeb2bd ("bridge: suppress nd pkts on BR_NEIGH_SUPPRESS ports")
+Cc: stable@kernel.org
+Reported-by: TencentOS Corvus AI <corvus@tencent.com>
+Signed-off-by: Jun Yang <junvyyang@tencent.com>
+Acked-by: Nikolay Aleksandrov <razor@blackwall.org>
+Reviewed-by: Ido Schimmel <idosch@nvidia.com>
+Link: https://patch.msgid.link/20261103075439.43644-1-juny24602@gmail.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/smc/af_smc.c    |   10 +++++-----
- net/smc/smc.h       |    1 +
- net/smc/smc_close.c |   14 ++++++++++++++
- net/smc/smc_core.c  |    8 +++++++-
- net/smc/smc_diag.c  |   12 ++++++++----
- 5 files changed, 35 insertions(+), 10 deletions(-)
+ net/bridge/br_arp_nd_proxy.c |    6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
---- a/net/smc/af_smc.c
-+++ b/net/smc/af_smc.c
-@@ -977,7 +977,7 @@ static int smc_connect_fallback(struct s
- 	smc_copy_sock_settings_to_clc(smc);
- 	smc->connect_nonblock = 0;
- 	if (smc->sk.sk_state == SMC_INIT)
--		smc->sk.sk_state = SMC_ACTIVE;
-+		smp_store_release(&smc->sk.sk_state, SMC_ACTIVE);
- 	return 0;
- }
+--- a/net/bridge/br_arp_nd_proxy.c
++++ b/net/bridge/br_arp_nd_proxy.c
+@@ -259,6 +259,7 @@ static void br_nd_send(struct net_bridge
+ 	struct sk_buff *reply;
+ 	struct ipv6hdr *pip6;
+ 	int na_olen = 8; /* opt hdr + ETH_ALEN for target */
++	int headroom;
+ 	int ns_olen;
+ 	int i, len;
+ 	u8 *daddr;
+@@ -268,7 +269,8 @@ static void br_nd_send(struct net_bridge
+ 	if (!dev || skb_linearize(request))
+ 		return;
  
-@@ -1381,7 +1381,7 @@ static int smc_connect_rdma(struct smc_s
- 	smc_copy_sock_settings_to_clc(smc);
- 	smc->connect_nonblock = 0;
- 	if (smc->sk.sk_state == SMC_INIT)
--		smc->sk.sk_state = SMC_ACTIVE;
-+		smp_store_release(&smc->sk.sk_state, SMC_ACTIVE);
+-	len = LL_RESERVED_SPACE(dev) + sizeof(struct ipv6hdr) +
++	headroom = LL_RESERVED_SPACE(dev);
++	len = headroom + sizeof(struct ipv6hdr) +
+ 		sizeof(*na) + na_olen + dev->needed_tailroom;
  
- 	return 0;
- connect_abort:
-@@ -1484,7 +1484,7 @@ static int smc_connect_ism(struct smc_so
- 	smc_copy_sock_settings_to_clc(smc);
- 	smc->connect_nonblock = 0;
- 	if (smc->sk.sk_state == SMC_INIT)
--		smc->sk.sk_state = SMC_ACTIVE;
-+		smp_store_release(&smc->sk.sk_state, SMC_ACTIVE);
+ 	reply = alloc_skb(len, GFP_ATOMIC);
+@@ -277,7 +279,7 @@ static void br_nd_send(struct net_bridge
  
- 	return 0;
- connect_abort:
-@@ -1955,7 +1955,7 @@ static void smc_listen_out_connected(str
- 	struct sock *newsmcsk = &new_smc->sk;
- 
- 	if (newsmcsk->sk_state == SMC_INIT)
--		newsmcsk->sk_state = SMC_ACTIVE;
-+		smp_store_release(&newsmcsk->sk_state, SMC_ACTIVE);
- 
- 	smc_listen_out(new_smc);
- }
-@@ -1969,7 +1969,7 @@ static void smc_listen_out_err(struct sm
- 	this_cpu_inc(net->smc.smc_stats->srv_hshake_err_cnt);
- 	if (newsmcsk->sk_state == SMC_INIT)
- 		sock_put(&new_smc->sk); /* passive closing */
--	newsmcsk->sk_state = SMC_CLOSED;
-+	smp_store_release(&newsmcsk->sk_state, SMC_CLOSED);
- 
- 	smc_listen_out(new_smc);
- }
---- a/net/smc/smc.h
-+++ b/net/smc/smc.h
-@@ -196,6 +196,7 @@ struct smc_connection {
- 	struct rb_node		alert_node;
- 	struct smc_link_group	*lgr;		/* link group of connection */
- 	struct smc_link		*lnk;		/* assigned SMC-R link */
-+	bool			is_smcd;	/* SMC-R or SMC-D connection */
- 	u32			alert_token_local; /* unique conn. id */
- 	u8			peer_rmbe_idx;	/* from tcp handshake */
- 	int			peer_rmbe_size;	/* size of peer rx buffer */
---- a/net/smc/smc_close.c
-+++ b/net/smc/smc_close.c
-@@ -154,6 +154,7 @@ void smc_close_active_abort(struct smc_s
- 		if (sk->sk_state != SMC_PEERABORTWAIT)
- 			break;
- 		sk->sk_state = SMC_CLOSED;
-+		sk->sk_prot->unhash(sk);
- 		smc_conn_free(&smc->conn);
- 		release_clcsock = true;
- 		sock_put(sk); /* passive closing */
-@@ -165,6 +166,7 @@ void smc_close_active_abort(struct smc_s
- 		if (sk->sk_state != SMC_PEERABORTWAIT)
- 			break;
- 		sk->sk_state = SMC_CLOSED;
-+		sk->sk_prot->unhash(sk);
- 		smc_conn_free(&smc->conn);
- 		release_clcsock = true;
- 		break;
-@@ -367,6 +369,17 @@ static void smc_close_passive_work(struc
- 	lock_sock(sk);
- 	old_state = sk->sk_state;
- 
-+	if (conn->freed) {
-+		/* conn->freed is set under the socket lock, which is
-+		 * held here as well, so this cannot race with the free; the
-+		 * state machine and its postponed sock_put() are not owed
-+		 * anymore
-+		 */
-+		release_sock(sk);
-+		sock_put(sk); /* sock_hold done by schedulers of close_work */
-+		return;
-+	}
-+
- 	rxflags = &conn->local_rx_ctrl.conn_state_flags;
- 	if (rxflags->peer_conn_abort) {
- 		/* peer has not received all data */
-@@ -433,6 +446,7 @@ wakeup:
- 		sk->sk_state_change(sk);
- 		if ((sk->sk_state == SMC_CLOSED) &&
- 		    (sock_flag(sk, SOCK_DEAD) || !sk->sk_socket)) {
-+			sk->sk_prot->unhash(sk);
- 			smc_conn_free(conn);
- 			if (smc->clcsock)
- 				release_clcsock = true;
---- a/net/smc/smc_core.c
-+++ b/net/smc/smc_core.c
-@@ -1511,8 +1511,10 @@ static void smc_conn_kill(struct smc_con
- 			tasklet_kill(&conn->rx_tsklet);
- 		else
- 			tasklet_unlock_wait(&conn->rx_tsklet);
--		if (smc_ism_support_dmb_nocopy(conn->lgr->smcd))
-+		if (smc_ism_support_dmb_nocopy(conn->lgr->smcd)) {
-+			smc->sk.sk_prot->unhash(&smc->sk);
- 			smcd_buf_detach(conn);
-+		}
- 	} else {
- 		smc_cdc_wait_pend_tx_wr(conn);
- 	}
-@@ -2032,6 +2034,10 @@ create:
- 			goto out;
- 		}
- 	}
-+	/* cache the connection type: smc_diag reads it after
-+	 * smc_conn_free() dropped the link group reference
-+	 */
-+	conn->is_smcd = conn->lgr->is_smcd;
- 	smc_lgr_hold(conn->lgr); /* lgr_put in smc_conn_free() */
- 	if (!conn->lgr->is_smcd)
- 		smcr_link_hold(conn->lnk); /* link_put in smc_conn_free() */
---- a/net/smc/smc_diag.c
-+++ b/net/smc/smc_diag.c
-@@ -87,10 +87,10 @@ static int __smc_diag_dump(struct sock *
- 
- 	r = nlmsg_data(nlh);
- 	smc_diag_msg_common_fill(r, sk);
--	r->diag_state = sk->sk_state;
-+	r->diag_state = smp_load_acquire(&sk->sk_state);
- 	if (smc->use_fallback)
- 		r->diag_mode = SMC_DIAG_MODE_FALLBACK_TCP;
--	else if (smc_conn_lgr_valid(&smc->conn) && smc->conn.lgr->is_smcd)
-+	else if (smc->conn.is_smcd)
- 		r->diag_mode = SMC_DIAG_MODE_SMCD;
- 	else
- 		r->diag_mode = SMC_DIAG_MODE_SMCR;
-@@ -103,6 +103,10 @@ static int __smc_diag_dump(struct sock *
- 	if (nla_put(skb, SMC_DIAG_FALLBACK, sizeof(fallback), &fallback) < 0)
- 		goto errout;
- 
-+	if (r->diag_state == SMC_INIT || r->diag_state == SMC_CLOSED ||
-+	    smc->use_fallback)
-+		goto out;
-+
- 	if ((req->diag_ext & (1 << (SMC_DIAG_CONNINFO - 1))) &&
- 	    smc->conn.alert_token_local) {
- 		struct smc_connection *conn = &smc->conn;
-@@ -154,8 +158,7 @@ static int __smc_diag_dump(struct sock *
- 			.lnk[0].link_id = link->link_id,
- 		};
- 
--		memcpy(linfo.lnk[0].ibname, link->smcibdev->ibdev->name,
--		       sizeof(link->smcibdev->ibdev->name));
-+		memcpy(linfo.lnk[0].ibname, link->ibname, sizeof(link->ibname));
- 		smc_gid_be16_convert(linfo.lnk[0].gid, link->gid);
- 		smc_gid_be16_convert(linfo.lnk[0].peer_gid, link->peer_gid);
- 
-@@ -185,6 +188,7 @@ static int __smc_diag_dump(struct sock *
- 			goto errout;
- 	}
- 
-+out:
- 	nlmsg_end(skb, nlh);
- 	return 0;
+ 	reply->protocol = htons(ETH_P_IPV6);
+ 	reply->dev = dev;
+-	skb_reserve(reply, LL_RESERVED_SPACE(dev));
++	skb_reserve(reply, headroom);
+ 	skb_push(reply, sizeof(struct ethhdr));
+ 	skb_set_mac_header(reply, 0);
  
 
 
