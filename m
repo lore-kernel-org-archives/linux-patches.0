@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795618605;
-	b=LihjkgHtKbWDxsmTZVWcIIjw+npJ/93d4MaXZSdDbomIt0EUOiS4/1isP23/Kkn4zKBV
-	 fgmeb9pintq/Q+O5Y1EYEYRgIC54GDkMSQEyuAfjgf9K3gR2r7zppN9GnDFECvUGjFkk2
-	 F3IyCAlt1ziL9Dg7XpW4K3LGE4SO6r7kGB6t8bcZ2k2ln8dYEjscV+DiSGk/mHcskuj4l
-	 776YHPAZmzkhJAWiGehlWiejU8hiamuNNrknA1TCmjyIvTmvvxPTkNHMZnJCfIKLra6/o
-	 7XtoR/rUvq2AMVAJkmAE8NjVWI1Z03Il7IPyB9vYuyv8TiHrGaIPkLYhRke0Ra/vRyw==
+	t=1795618609;
+	b=c31zolEVQdCAwK4QhZohcOohNC8ekpYcYSsPP2eo/UTuqy2FEtzhc3Hq1GNmSurCStn6
+	 D8MZQ4rw5Gc80GwQxKydxPHc0mv/zRIe+C/k3687HzTJ6oEGX2G85L/D8/BP7OJfulwc4
+	 Bc8i/iBojtEcRpOr25wnkbg2g2M8PgckbIdnJeS0PYnss4vGDz0PZoUX8cfe3XxlhJqqT
+	 2m9fAmi7VazTQPyVHCScQokzfB9qpa9DMxrfCntcpMZw29X4KsqbPpU+Xe890lRj78vDj
+	 joIRax52q0UBuGQeG+iaRNYlgsY9BC9SSOFEkB5yNUrnh6FDwDOvmzAHK30++0zk45A==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795618605;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795618609;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=v/5Au3wmejWVdelUl4cNscNy8l5C0YlGHshNzNXcGOY=;
-	b=SSh3nsPB0WVjArQ6PgLItiF8sucLrKSiOTQOWchUwz78xUCj1DsBNhHYJ318JprWeifI
-	 RkEiVwaBTemRvzz2/h0Z4s2w0tYl5NB8UGMQ8YorQKmKG0BW17W35kEF6w34BPg+ql+EU
-	 PFyzJoaJSjNhi+ItVty07jejbUXdAdK9pBAI6RvdmbN+Vxixu3i4EQB6LsczN962bjoPQ
-	 7911aK4grz1y+vW7OnvtWhx1ah8HTllc/aEMRaqKA53Ri4qsjopQtsh+qxWusIn4r07GS
-	 Gy/z09BvRVhfHHB1QqHouMwnwMz1Ka67bGfRczqq7+yFnloE8BiCdglCF3O9aZKRSig==
+	bh=RysUVl38xUTHVW3CGAQkpEhoBfKMnecxMFTJiEvTqyo=;
+	b=roU4g/aqLrVv1WoF6jq3cMBFh7vFfrzBE0bCdn5gExBe7NOAPYMajISdyZmci5/gftRH
+	 AAyzp2v4w5fBBBhZYUuz2bEm8KVtl+fTatXehckvHAX2BM3+BBWvNzB+t0iKO+opeIcRi
+	 JltejISyWNc10V21LdtqiNFPGr3GCkwW2Cl2jbz+Rah+60TtzYmmR1RbIBJCkjZvin/Lw
+	 HCWvqBdicUsnpijMu7HTr2OFH/TR3hi8oUzdEdB+BnbwiZdVLaEMxCk9nf8uxsyHUoGW9
+	 HdUNkYk4aJ0zd8w6DcuAw8x13JXx7S5i1R4pUHhtRw1VURBDRC4goH5lp29cJe4mCVg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ivaXz9LG;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=C5Vq3uWl;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 59B21606A321;
-	Wed, 25 Nov 2026 14:56:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E3888606A32A;
+	Wed, 25 Nov 2026 14:56:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ivaXz9LG
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7C8701F000F0;
-	Wed, 25 Nov 2026 14:56:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=C5Vq3uWl
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CBEF71F000D2;
+	Wed, 25 Nov 2026 14:56:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795618605;
-	bh=v/5Au3wmejWVdelUl4cNscNy8l5C0YlGHshNzNXcGOY=;
+	s=korg; t=1795618608;
+	bh=RysUVl38xUTHVW3CGAQkpEhoBfKMnecxMFTJiEvTqyo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ivaXz9LGwRLZ+ujxJJmTcVr7hMBollwjynGXnt0Z+dChhjn/9J648Hktkq5dhyC1Q
-	 2tk7FQmLT2OK156tJ6ntiaPxIMPoJIrHcIHDekJp5rQi1gpEeQVpe+513HRxzJGg9y
-	 rlQ2+0bYLNyt0TBOs5frL4EWahu0TuQ3ExmqOYIc=
+	b=C5Vq3uWl0vWfUtH1bKqVOEe4ySEul6rmJYEQf9yjg8Qzh4FOzDOI6cy37u7EvNy3f
+	 HsO2sTc8IyFa52jL+zQnl5WzxK6iJ+88u1PF8JCvSCrZJMCcGKIT62NJVgI2aiQJx5
+	 mv74Z4ITJqyEx10PDJz2nVmd7yXQF/RzyS8jYgc8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andrea Parri <parri.andrea@gmail.com>,
-	Jan Kara <jack@suse.cz>,
+	Hungyu Lin <dennylin0707@gmail.com>,
+	Jeff Layton <jlayton@kernel.org>,
 	"Christian Brauner (Amutable)" <brauner@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0332/1005] iov_iter: take an unsigned long segment count in import_iovec()
-Date: Wed, 25 Nov 2026 15:27:50 +0100
-Message-ID: <20261125143829.511728041@linuxfoundation.org>
+Subject: [PATCH 7.3 0333/1005] vfs: preserve subsecond timestamps at filesystem time limits
+Date: Wed, 25 Nov 2026 15:27:51 +0100
+Message-ID: <20261125143829.534702792@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143821.729802100@linuxfoundation.org>
 References: <20261125143821.729802100@linuxfoundation.org>
@@ -69,90 +69,55 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Andrea Parri <parri.andrea@gmail.com>
+From: Hungyu Lin <dennylin0707@gmail.com>
 
-[ Upstream commit 965e5e451146a19f69523fbcbc73d07e401a3775 ]
+[ Upstream commit 55a0c91000646b008261e3b1e15d1e774f3026e4 ]
 
-readv(), writev() and their positional variants, process_vm_readv(),
-process_vm_writev(), vmsplice(), process_madvise(), vectored aio and
-the btrfs encoded I/O ioctls all take a full-width segment count, and
-all of them hand it to import_iovec() or __import_iovec().  Those take
-an unsigned int count, so on 64-bit kernels the upper 32 bits are
-dropped before iovec_from_user() checks the count against UIO_MAXIOV.
+timestamp_truncate() clears tv_nsec whenever the clamped seconds equal
+either filesystem time limit. This also drops the fractional part of
+timestamps whose seconds were already within the supported range.
 
-A count of 0x100000001 is therefore imported as one segment: writev()
-on a pipe writes a byte and readv() reads it back, instead of both
-failing with EINVAL.  A count of 0x100000000 returns 0 as an empty
-vector.
+For example, setting a JFS mtime to 0.123456789 produces 0.000000000,
+although the filesystem can store the requested value. Utilities such
+as touch and cp -p consequently lose valid subsecond timestamps when
+preserving these endpoint values. Timestamps strictly between the
+filesystem limits are unaffected.
 
-import_iovec() was added with an unsigned int count, but the helper it
-wrapped, rw_copy_check_uvector(), took an unsigned long, as does
-iovec_from_user() today.  Until v4.1, readv(), writev(), preadv(),
-pwritev(), process_vm_readv(), process_vm_writev() and vectored aio
-therefore failed these counts with EINVAL, as did vmsplice() until
-v4.18.
+Only clear tv_nsec when clamping actually changes tv_sec. Continue to
+truncate in-range nanoseconds to the filesystem's timestamp granularity,
+including when the seconds equal either endpoint.
 
-Widen nr_segs in both import helpers so the UIO_MAXIOV check sees the
-count the caller passed.  Callers with 32-bit counts are unaffected.
+Ben Hutchings suggested comparing clamped and original seconds in the
+2019 utimes review. That caller was switched to timestamp_truncate(),
+but the helper retained its endpoint equality check.
 
-AI assistance was used to find the bug, develop the fix, and run the
-reproducers.
-
-Fixes: bc917be81059 ("saner iov_iter initialization primitives")
-Signed-off-by: Andrea Parri <parri.andrea@gmail.com>
-Link: https://patch.msgid.link/20261026180619.4147910-1-parri.andrea@gmail.com
-Reviewed-by: Jan Kara <jack@suse.cz>
+Link: https://lore.kernel.org/lkml/12c095e595836a7ff7f2c7b2a32cb5544dd29b55.camel@codethink.co.uk/
+Fixes: 50e17c000c46 ("vfs: Add timestamp_truncate() api")
+Signed-off-by: Hungyu Lin <dennylin0707@gmail.com>
+Link: https://patch.msgid.link/20261101113815.52911-1-dennylin0707@gmail.com
+Reviewed-by: Jeff Layton <jlayton@kernel.org>
 Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/uio.h | 8 ++++----
- lib/iov_iter.c      | 6 +++---
- 2 files changed, 7 insertions(+), 7 deletions(-)
+ fs/inode.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/include/linux/uio.h b/include/linux/uio.h
-index fe2e985d74d24..529c6cd53df7a 100644
---- a/include/linux/uio.h
-+++ b/include/linux/uio.h
-@@ -362,11 +362,11 @@ struct iovec *iovec_from_user(const struct iovec __user *uvector,
- 		unsigned long nr_segs, unsigned long fast_segs,
- 		struct iovec *fast_iov, bool compat);
- ssize_t import_iovec(int type, const struct iovec __user *uvec,
--		 unsigned nr_segs, unsigned fast_segs, struct iovec **iovp,
--		 struct iov_iter *i);
-+		 unsigned long nr_segs, unsigned int fast_segs,
-+		 struct iovec **iovp, struct iov_iter *i);
- ssize_t __import_iovec(int type, const struct iovec __user *uvec,
--		 unsigned nr_segs, unsigned fast_segs, struct iovec **iovp,
--		 struct iov_iter *i, bool compat);
-+		 unsigned long nr_segs, unsigned int fast_segs,
-+		 struct iovec **iovp, struct iov_iter *i, bool compat);
- int import_ubuf(int type, void __user *buf, size_t len, struct iov_iter *i);
- 
- static inline void iov_iter_ubuf(struct iov_iter *i, unsigned int direction,
-diff --git a/lib/iov_iter.c b/lib/iov_iter.c
-index 56c59a2b589d3..55c0dc7e10741 100644
---- a/lib/iov_iter.c
-+++ b/lib/iov_iter.c
-@@ -1366,8 +1366,8 @@ static ssize_t __import_iovec_ubuf(int type, const struct iovec __user *uvec,
- }
- 
- ssize_t __import_iovec(int type, const struct iovec __user *uvec,
--		 unsigned nr_segs, unsigned fast_segs, struct iovec **iovp,
--		 struct iov_iter *i, bool compat)
-+		 unsigned long nr_segs, unsigned int fast_segs,
-+		 struct iovec **iovp, struct iov_iter *i, bool compat)
+diff --git a/fs/inode.c b/fs/inode.c
+index bc93c1757a380..5ffe9b74acbc2 100644
+--- a/fs/inode.c
++++ b/fs/inode.c
+@@ -2858,9 +2858,10 @@ struct timespec64 timestamp_truncate(struct timespec64 t, struct inode *inode)
  {
- 	ssize_t total_len = 0;
- 	unsigned long seg;
-@@ -1438,7 +1438,7 @@ ssize_t __import_iovec(int type, const struct iovec __user *uvec,
-  * Return: Negative error code on error, bytes imported on success
-  */
- ssize_t import_iovec(int type, const struct iovec __user *uvec,
--		 unsigned nr_segs, unsigned fast_segs,
-+		 unsigned long nr_segs, unsigned int fast_segs,
- 		 struct iovec **iovp, struct iov_iter *i)
- {
- 	return __import_iovec(type, uvec, nr_segs, fast_segs, iovp, i,
+ 	struct super_block *sb = inode->i_sb;
+ 	unsigned int gran = sb->s_time_gran;
++	time64_t seconds = t.tv_sec;
+ 
+ 	t.tv_sec = clamp(t.tv_sec, sb->s_time_min, sb->s_time_max);
+-	if (unlikely(t.tv_sec == sb->s_time_max || t.tv_sec == sb->s_time_min))
++	if (unlikely(t.tv_sec != seconds))
+ 		t.tv_nsec = 0;
+ 
+ 	/* Avoid division in the common cases 1 ns and 1 s. */
 -- 
 2.53.0
 
