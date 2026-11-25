@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795625760;
-	b=rQ/eJra41m++t+5/VpZln3S89+ptpRc2dH8RwxvKGh165K9J/+NxIh/uMyHpzm8wxlUO
-	 czfVNxBp2TjEBwkvO+Xfqm2PGzEw1Bqrsjvx93cSEWbHyA39YxGSw+pyx0ObAmzmg4xsd
-	 JFrwoUDJLca6pI1AVw0ukysrBqQuuoqGA5RmwOp9LdjAO1DZjEeqp3GWq8+IRM6bBGuLl
-	 3ne2rGYtXKTbzKEWlOlA4bbN3Ywa4H2qIFJ93t+JCevJ4RkweiXAzT4AjkTHyUI+kLfGV
-	 2y03/ETqnGQiS23zaK0VQk1d+lp3VmOd1HPxHz3JZ47HB/9/RB2OrHVGTszhCzfYjMQ==
+	t=1795625763;
+	b=vqNA7FWMfvgIxVbWz3mhvnIjfy42zD9faDehSGDC0/DWFS4WKtH8sdG3x/aMcs63QaS7
+	 BnMWdlBbAc0l4+fMjD+wjz693eLEV9RiN5rFyu8hCNpZkxsQAEPEZjwUEvPKGkHoJ7SlR
+	 iVaIOC5KQCnHo+BfPKxF4ggp81m6NmEu1V0d2+kYQG5oqYA278WqyQVct4J9fwx3JVmlk
+	 A61JUZAjNj6dk1RIVuieq6B31VqZEbdl1qokgwNyVNom3yUxBgzNLa1Hzg+8lwotDfZeo
+	 W1sSV+YrXE5UaZ/NndcQ5qWJWvdNjeCRzdoq7I/DmqbeUCPuXQEh5TT6wPKizbZXIug==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795625760;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795625763;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=6L5POoj5pECP/yQdw2ydJGGl93+116+NXDEClfqGeug=;
-	b=CQImpzLtHBvJjCNWOUUt4e1lkcUZZVh1Q2/qwnCYIow96AiPc1HgHWAK+RzSSX2GdXYK
-	 B2z4BYP5UjC8zyW7S3ZIVHLmVvzMAo6LWUwH6InyJpeUlkZkQ5RG5V0VYpyNazCsVjQ/o
-	 7XnmYkPrTV5UKmVDkRk+hJi8PoN1blyKTXSi5pY1BcFzWyQJPRUpxaIvNVuL9OcsPV/mO
-	 zEiqupnCN68NHT4F4uKdmlHSxFHCgBBmOcioQQZJVRhHPRtQj2iNIZF7AJrCWfPZO/L3y
-	 n1UknF78i9ocFtdIh8JhKU5DCMhsMs3Qr2mVW+XGNcG+dbSxWOwjBgWleB7gl5pqZ/Q==
+	bh=IR6rrCsDJu3ywhXK/mnmFy09LBzRJ7yGkWCfoDjMsuw=;
+	b=PBse5lpdSCcX7GtrMcuRkWbYBBzPCiHJOAs2GEUH1qujZD+ttXsgjjoIeEj6RBGWmtBr
+	 bfAB48abeLuatPbSTE3+Zk7ee9+ZovYbxIApjwAsFrLha51hY3WAuFBDgdiSy6MF/tFFQ
+	 J9qpu8NWXgEFXa8RHPW3l429YAuwI66e5kcn/dVuAccahcEu4kmtrOyeuEm1KC1F5mI8T
+	 1il0/cu7BwSs6RlALyZC37YAXg3tSHL79gjHm9wpLTYCsS3mdi8cue7WBAnJHlIcXeF8E
+	 P60TrCul46fpnJxAnYKVTiRpt2r1keloXqmq+u8yNR5Orhh379MtQKOt0xy1DE7DAeg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=b0UHxmMx;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="D15fuM/x";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EDE99606A327;
-	Wed, 25 Nov 2026 16:55:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B6E72606A321;
+	Wed, 25 Nov 2026 16:56:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=b0UHxmMx
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D42F81F000C0;
-	Wed, 25 Nov 2026 16:55:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=D15fuM/x
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 213331F000C0;
+	Wed, 25 Nov 2026 16:56:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795625759;
-	bh=6L5POoj5pECP/yQdw2ydJGGl93+116+NXDEClfqGeug=;
+	s=korg; t=1795625762;
+	bh=IR6rrCsDJu3ywhXK/mnmFy09LBzRJ7yGkWCfoDjMsuw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=b0UHxmMxer6jUsJLBUfTAF0g226XW8uoIlutJs+Yozku+YI5f1w0BgGsLex1+88I1
-	 AewwlvzwL2xMM+ofsnz578PoT7l6fQS7ISkZxMa/RK3RfgNlMlE3Rn7WLSKLaGPDD+
-	 uP/2nkXQn/5pg3VnGtSEnzIVTsgpMw5Xx0TMd3+8=
+	b=D15fuM/x7X+OueygoR/d0QDJxlUqqVfWHTUvL/2QcMjvyzwgjnKMgLAX5GkYVwylK
+	 8HJ+mgWjwz9kiIAg2F22XJCdcx5J4eFu8onMX2EW/7rqAmVq5ZDWEhrgfv29Qh+MXZ
+	 sra8hFy1x6qd6wzQKxEV3y93r8l3YeUad56GKnE0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Balasubramani Vivekanandan <balasubramani.vivekanandan@intel.com>,
-	Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>,
-	Heikki Krogerus <heikki.krogerus@linux.intel.com>,
-	Johan Hovold <johan@kernel.org>
-Subject: [PATCH 6.12 624/816] software node: only let the owner release a managed node
-Date: Wed, 25 Nov 2026 15:36:12 +0100
-Message-ID: <20261125143903.627819788@linuxfoundation.org>
+	Avi Weiss <thnkslprpt@gmail.com>,
+	Benjamin Coddington <bcodding@hammerspace.com>,
+	Anna Schumaker <anna.schumaker@hammerspace.com>
+Subject: [PATCH 6.12 625/816] SUNRPC: Fix TCP-with-TLS transport class identification
+Date: Wed, 25 Nov 2026 15:36:13 +0100
+Message-ID: <20261125143903.651563893@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143849.205329330@linuxfoundation.org>
 References: <20261125143849.205329330@linuxfoundation.org>
@@ -69,82 +68,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
+From: Avi Weiss <thnkslprpt@gmail.com>
 
-commit f8623ce596492d2e96ca57eeec992938d3d79f00 upstream.
+commit 0502c7e7f171a8c9c892bdef89e6aa6f44d7b2a3 upstream.
 
-device_create_managed_software_node() creates a node whose lifetime is
-tied to the device it was created for. software_node_notify_remove() is
-called for every device that has the node as its fwnode (primary OR
-secondary) and, if the node is managed, unconditionally detaches it from
-that device and drops the creation reference.
+xs_setup_tcp_tls() assigns the ordinary TCP transport class to
+a TCP-with-TLS transport. When rpc_clnt_add_xprt() is called
+with an unspecified transport type, it inherits the class
+identifier and can create an unencrypted TCP transport.
 
-This breaks when the node is shared with another device. Example: the
-i2c-designware copies the parent's fwnode to the adapter's struct device.
-When the adapter is deleted, it releases the reference that belongs to
-the owner and the latter ends up with a dangling pointer.
+Looks like a copy-paste error from the commit 3 years ago.
 
-Record the device's "manager" and only perform the actual release when
-notify is called for that "owner" device.
+NFSv4 trunk discovery uses an unspecified transport type when
+adding server-advertised addresses. If the additional transport
+passes server-identity validation, it can be admitted to the
+client's transport switch.
 
-Note that it was never the intention that managed software nodes would
-be shared, but descendants reusing ancestor firmware nodes is not
-uncommon and such use is hard to predict when allocating software nodes.
+An isolated loopback test reproduced plaintext application RPC
+transmission for TLS- and mTLS-configured clients, including
+an unpinned TLS-client RPC that selected the added transport.
 
-Reported-by: Balasubramani Vivekanandan <balasubramani.vivekanandan@intel.com>
-Closes: https://lore.kernel.org/all/20261009164241.923756-2-balasubramani.vivekanandan@intel.com/
-Fixes: 151f6ff78cdf ("software node: Provide replacement for device_add_properties()")
-Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
-Fixes: 0f485f88656a ("drm/xe/i2c: use device_create_managed_software_node()")
-Reviewed-by: Balasubramani Vivekanandan <balasubramani.vivekanandan@intel.com>
-Tested-by: Balasubramani Vivekanandan <balasubramani.vivekanandan@intel.com>
-Reviewed-by: Heikki Krogerus <heikki.krogerus@linux.intel.com>
+Assign the TCP-with-TLS class instead. With the fix, the
+plaintext-only test peer receives TLS negotiation probes but
+no application payloads.
+
+Fixes: 75eb6af7acdf ("SUNRPC: Add a TCP-with-TLS RPC transport class")
 Cc: stable@vger.kernel.org
-Link: https://patch.msgid.link/20261102-swnode-only-owner-release-v1-1-ee4c9022a629@oss.qualcomm.com
-[ johan: drop temporary variable; skip clearing owner field;
-         mention reuse not intended in commit message ]
-Signed-off-by: Johan Hovold <johan@kernel.org>
+Signed-off-by: Avi Weiss <thnkslprpt@gmail.com>
+Reviewed-by: Benjamin Coddington <bcodding@hammerspace.com>
+Signed-off-by: Anna Schumaker <anna.schumaker@hammerspace.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/base/swnode.c |    7 ++++---
- 1 file changed, 4 insertions(+), 3 deletions(-)
+ net/sunrpc/xprtsock.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/base/swnode.c
-+++ b/drivers/base/swnode.c
-@@ -29,6 +29,8 @@ struct swnode {
- 	struct fwnode_handle fwnode;
- 	const struct software_node *node;
- 	int id;
-+	/* Device the managed node's lifetime is tied to. */
-+	struct device *owner;
+--- a/net/sunrpc/xprtsock.c
++++ b/net/sunrpc/xprtsock.c
+@@ -3534,7 +3534,7 @@ static struct rpc_xprt *xs_setup_tcp_tls
+ 	transport = container_of(xprt, struct sock_xprt, xprt);
  
- 	/* hierarchy */
- 	struct ida child_ids;
-@@ -37,7 +39,6 @@ struct swnode {
- 	struct swnode *parent;
+ 	xprt->prot = IPPROTO_TCP;
+-	xprt->xprt_class = &xs_tcp_transport;
++	xprt->xprt_class = &xs_tcp_tls_transport;
+ 	xprt->max_payload = RPC_MAX_FRAGMENT_SIZE;
  
- 	unsigned int allocated:1;
--	unsigned int managed:1;
- };
- 
- static DEFINE_IDA(swnode_root_ids);
-@@ -1060,7 +1061,7 @@ int device_create_managed_software_node(
- 	if (IS_ERR(fwnode))
- 		return PTR_ERR(fwnode);
- 
--	to_swnode(fwnode)->managed = true;
-+	to_swnode(fwnode)->owner = dev;
- 	set_secondary_fwnode(dev, fwnode);
- 
- 	if (device_is_registered(dev))
-@@ -1104,7 +1105,7 @@ void software_node_notify_remove(struct
- 	sysfs_remove_link(&dev->kobj, "software_node");
- 	kobject_put(&swnode->kobj);
- 
--	if (swnode->managed) {
-+	if (swnode->owner == dev) {
- 		set_secondary_fwnode(dev, NULL);
- 		kobject_put(&swnode->kobj);
- 	}
+ 	xprt->bind_timeout = XS_BIND_TO;
 
 
