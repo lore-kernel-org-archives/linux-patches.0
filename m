@@ -1,55 +1,56 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795621837;
-	b=y7e6H7SAGmHaE4bWefPB7fA+LUzOvFURmQkGLE5i7K2gfPfjisqENmEqXr/YOpzzDi/e
-	 2+ok43+rs4C8la1Jau8H7V+QD2bWDgGXwuUvdS3Pij8syCXcrSP74gSg7bntlUwe3Upjx
-	 Hv6tRpIU/WsvTjDmNRA1a8+IRK6WIKee7YwG158kk8IrNcYX7HwwkF7E3Sze4KON5uePE
-	 sZne/UBeKvlTeb+FGXzxMX6L6ygm+IdRDqnPr5q8Q4yqusJPzd32pM1pevM0YbGbiEqbO
-	 4LajZ1L5LCH9fCoEHK79A/r9fvXaMRMdAUoR94tAlsLaa+lVcHj51xGTtCNDpwKLw/Q==
+	t=1795621840;
+	b=4eByIwJDaaWSU5cdT/ghxKsEIa5GeM8l3z2yArw3f3vUDrQi7jcJQne3Sbxym6pVbol0
+	 z8WbuKsiJxvyZ4vt1B7qp07J37iW00MCdqUcdsImQEyJetMhQRqRKi7mVy6gIX6VgbGvV
+	 8rYygKm9MmKwMW+Fi/tzA2fVMMY5XcPGyXavye86avDqXz2JZn76pgNsFUxcqUaXpGEVf
+	 LcZTW64ff+Kx0lB14P4/VWa1ySb/TT+r/NX+fQ8VgdzYXMOEAVM6oF2WF5bP0T+5yGOA0
+	 SCswJRLY31l/l3UeelVbrUehfY6LSJKvLNl6Zj5ZHqb25lYyjfc8rB2h9ikdkXs5/XA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795621837;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795621840;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Transfer-Encoding;
-	bh=lfY6+ACkKkMJkIiJJyXZaNfUJtxH402RHVK27od4sFw=;
-	b=xThl0XS38y+kqnaXmwCWqQxstFfDCdqhYM7bgpdsG9OqixOYTmcKXVm9aFgDfp3bzeKU
-	 j+CoP5BdCdjFT340c3DbJ54ubHYPkhXsTGvYAq/k51ZODNMnp6BnqOGcXCtjWPJp9BIde
-	 TDsRk2MUWM8x+6KawLPFKIPhTwDkelDSaAH6HdEloNWYMvTF++F4iZe/SpWJtHz2QZGhE
-	 DAAQKAYcUnJC3+iRyUKcYRVANx1dQUumN7rrwE5pVdNVCVx9Bju8ThCXkcBWYS0sQZZal
-	 c58hwDkdawePjF24l4uafn7naUqG4asntqnh/Xv2zJBiTEfgbIBB/R7e5YfXNByE3tQ==
+	 MIME-Version:Content-Type:Content-Transfer-Encoding;
+	bh=OjlRCyl/7Xz8BY8WGkyslXVf2oaaRQAffVjAqjx01Ng=;
+	b=QbbsaqyUk/nQROJh0NSG8duvy4O9VCnQhpojJ7Bec6qGwbCY7E6w+kMQ+2Na/lOQsQbH
+	 7oLrVUo+sw5rCTMfhbDM5x/FOuCCxpGGgCxQ9tWERDKXU8tkr6ZIzfNCaKhAzf6xtg3Xw
+	 vLaoYV1NRZSFQG8N5vmwUGGncgMMglNAs8jhqS3vYlHuJCWw4DHirULYY926irIWLXTAj
+	 FlZhIRR9ch9dFaCulSK3BD6Y2XGSIZXulq3L7DGzKSUCnGMYgL1vbN6f2pHmIDSIUbyLf
+	 adzC32aJ+FFCA8qODD+oX2BR3it0WG5BuEOF6D19udOd1DeI24t7eFPTKv/o0m9J6kA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=L5Fnntom;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=FfDqOcFc;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 65A09606A33B;
-	Wed, 25 Nov 2026 15:50:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 537D5606A330;
+	Wed, 25 Nov 2026 15:50:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=L5Fnntom
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 218EF1F000D2;
-	Wed, 25 Nov 2026 15:50:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=FfDqOcFc
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7DB401F000E6;
+	Wed, 25 Nov 2026 15:50:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795621836;
-	bh=lfY6+ACkKkMJkIiJJyXZaNfUJtxH402RHVK27od4sFw=;
+	s=korg; t=1795621840;
+	bh=OjlRCyl/7Xz8BY8WGkyslXVf2oaaRQAffVjAqjx01Ng=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=L5FnntomSFufEQ/bT6bd3ERkIFti0AJN5jLmAakwlZ448cFcjEPPPPGodmxQtYAi1
-	 J7NedflCsS+pw14jhZpZXFFKDSmvRGEZM+mAxQuJ/1KnTOYqgDlfBuseozh/nh36Q9
-	 8bCq79tpvK/dw+aPTcaC7oaYrAG+fDYXtNHbul1A=
+	b=FfDqOcFci51k3kgJ+VIboin72F5ypWH4tSdwaJMZm1o9ae/V13ugFQTzpudfnY7OR
+	 bf9HjoGaYrFwzK0+9/RBv54VzDz2R8rbR8ocAj34XZRpjwp9LNVqhaUWXl9V0BF2mh
+	 NHg6okJGFK0ZVINjBIhtVNGDsrz+VI+rhCgjO3yw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Raag Jadav <raag.jadav@intel.com>,
-	Riana Tauro <riana.tauro@intel.com>,
-	Matt Roper <matthew.d.roper@intel.com>,
 	Matthew Brost <matthew.brost@intel.com>,
+	=?UTF-8?q?Thomas=20Hellstr=C3=B6m?= <thomas.hellstrom@linux.intel.com>,
+	Himal Prasad Ghimiray <himal.prasad.ghimiray@intel.com>,
+	Arvind Yadav <arvind.yadav@intel.com>,
+	Tejas Upadhyay <tejas.upadhyay@intel.com>,
 	Dave Airlie <airlied@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 348/990] drm/xe/hw_error: Guard csc_hw_error_work() with runtime PM
-Date: Wed, 25 Nov 2026 15:28:35 +0100
-Message-ID: <20261125143830.243694842@linuxfoundation.org>
+Subject: [PATCH 6.18 349/990] drm/xe: Rebind BOs evicted before the first LR queue
+Date: Wed, 25 Nov 2026 15:28:36 +0100
+Message-ID: <20261125143830.267092518@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143822.072087159@linuxfoundation.org>
 References: <20261125143822.072087159@linuxfoundation.org>
@@ -65,51 +66,66 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Raag Jadav <raag.jadav@intel.com>
+From: Arvind Yadav <arvind.yadav@intel.com>
 
-[ Upstream commit a890a885b982f73e6e984e828ffda06b5121c4b6 ]
+[ Upstream commit b52dcc698250e08eabdc4554a6fdb4d6f909133f ]
 
-xe_device_declare_wedged() callers are expected to hold a runtime PM
-reference. Fix it.
+A VM bind can evict BOs before the first LR exec queue is added.
+There is no preempt fence to trigger at that point.
 
-Fixes: a7df563b45b0 ("drm/xe/xe_hw_error: Handle CSC Firmware reported Hardware errors")
-Signed-off-by: Raag Jadav <raag.jadav@intel.com>
-Reviewed-by: Riana Tauro <riana.tauro@intel.com>
-Link: https://patch.msgid.link/20261022051303.282805-4-raag.jadav@intel.com
-Signed-off-by: Matt Roper <matthew.d.roper@intel.com>
-(cherry picked from commit fc8d229d76102489b6f56538a818c285a87db1e9)
+When the queue is added later, its new preempt fence is not triggered.
+The exec IOCTL does not validate or rebind BOs in preempt fence mode,
+and the rebind worker skips that work because no preempt fence is
+waiting. The first exec can then use stale mappings.
+
+Trigger the new preempt fence in xe_vm_add_compute_exec_queue() when
+the VM has evicted BOs or pending rebinds. This keeps the queue
+suspended until the rebind worker validates the BOs and restores
+their mappings.
+
+Fixes: dd08ebf6c352 ("drm/xe: Introduce a new DRM driver for Intel GPUs")
+Cc: Matthew Brost <matthew.brost@intel.com>
+Cc: Thomas Hellström <thomas.hellstrom@linux.intel.com>
+Cc: Himal Prasad Ghimiray <himal.prasad.ghimiray@intel.com>
+Reviewed-by: Matthew Brost <matthew.brost@intel.com>
+Signed-off-by: Arvind Yadav <arvind.yadav@intel.com>
+Link: https://patch.msgid.link/20261015162639.3528278-1-arvind.yadav@intel.com
+Signed-off-by: Tejas Upadhyay <tejas.upadhyay@intel.com>
+(cherry picked from commit 928ee5d4fb1f211aa361524801c15b54603fae52)
 Signed-off-by: Matthew Brost <matthew.brost@intel.com>
 Signed-off-by: Dave Airlie <airlied@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/xe/xe_hw_error.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/gpu/drm/xe/xe_vm.c | 9 ++++++++-
+ 1 file changed, 8 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/xe/xe_hw_error.c b/drivers/gpu/drm/xe/xe_hw_error.c
-index 3c105269e6fa8..0cf3c6d7b3731 100644
---- a/drivers/gpu/drm/xe/xe_hw_error.c
-+++ b/drivers/gpu/drm/xe/xe_hw_error.c
-@@ -12,6 +12,7 @@
- #include "xe_device.h"
- #include "xe_hw_error.h"
- #include "xe_mmio.h"
-+#include "xe_pm.h"
- #include "xe_survivability_mode.h"
- 
- #define  HEC_UNCORR_FW_ERR_BITS 4
-@@ -56,6 +57,7 @@ static void csc_hw_error_work(struct work_struct *work)
- 	struct xe_tile *tile = container_of(work, typeof(*tile), csc_hw_error_work);
- 	struct xe_device *xe = tile_to_xe(tile);
- 
-+	guard(xe_pm_runtime)(xe);
- 	xe_survivability_mode_runtime_enable(xe);
- }
+diff --git a/drivers/gpu/drm/xe/xe_vm.c b/drivers/gpu/drm/xe/xe_vm.c
+index 94a62b4256b42..b6d6608758797 100644
+--- a/drivers/gpu/drm/xe/xe_vm.c
++++ b/drivers/gpu/drm/xe/xe_vm.c
+@@ -258,8 +258,15 @@ int xe_vm_add_compute_exec_queue(struct xe_vm *vm, struct xe_exec_queue *q)
+ 	 * Check to see if a preemption on VM is in flight or userptr
+ 	 * invalidation, if so trigger this preempt fence to sync state with
+ 	 * other preempt fences on the VM.
++	 *
++	 * Also trigger it if eviction or rebinding is pending. BOs evicted
++	 * before the first exec queue was added had no preempt fence to
++	 * trigger. Suspend this queue until the rebind worker restores
++	 * the mappings.
+ 	 */
+-	wait = __xe_vm_userptr_needs_repin(vm) || preempt_fences_waiting(vm);
++	wait = __xe_vm_userptr_needs_repin(vm) || preempt_fences_waiting(vm) ||
++		!list_empty(&vm->gpuvm.evict.list) ||
++		!list_empty(&vm->rebind_list);
+ 	if (wait)
+ 		dma_fence_enable_sw_signaling(pfence);
  
 -- 
 2.53.0
