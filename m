@@ -1,55 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795621713;
-	b=XyI8GNCYzH8PMsQkOIPu7ZpZcbzhXens2HPJ3FaIBN6+mV9ZGaTr4b5dUiU4qs60Yw/O
-	 jwRNIMf/M2+sLwOlw6+7bWb0qfnZ3MmulyJu7zH2BqrXghd3LDsou+xaEAv1PYGdhociV
-	 bmPkChQyD1miwx3vTAZwYf8SXCcgxX+Zk9ecBf/DR0WgW3N0fCwQvIkHtC6IsVbIYElTU
-	 vCT0KFVeyTI1Yx5+kw+Z1BZSobXI3FHfT4y5euDnLXM/lSR/cC8+8twGpU79VW2EdlZ+g
-	 eXtoPOc217o0LyVqpGoWux3/5UIUKd7oKzWZQj5DSODUDMl/IUSdIJjrtBHNfpF3IEQ==
+	t=1795621717;
+	b=AyDZAvs3zldxJFFykpddwnNTHltekBgwqCRp3K8uGSkI8nBBqwOwXJpuMUozoFxHGoCR
+	 OeWQgr+lJVOFpKfvcV/tv4/XQfs8mobjxkxcDJJ8mueyPzIIpFgSB+ST58P8GOtAV5j2W
+	 Du8KXevONn4EgwRCOY5mO7eYXp0bfgM4ZN1nz2oqXvfp3hDHx8/B4loIU/mh+u+GBJn0d
+	 yHZXqf/ijCnpT7PTzGBQ6UZ3/0SW4erREoSnTCKLfpCAFAj4jpA4aoVbPA9fivZBxDKih
+	 fAZZCWsqY+22ghDIBjxD7IV8NXXNBV/C1UOC+b9FHZFTt+YEqh3/bu97u2zpqkQfhdw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795621713;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795621717;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=SvFXQMfqZKQf5ZIJ7U7GvauEoK3Tr4JU6wr9uvyD9ac=;
-	b=lVk0LMnNMFqvXJYWCKQW9kdfTRztbHNq5zEhrm5U76NFdbqBHFzGsc52sZrQ6eIIZK9n
-	 MmZNYoU5vpNEF/uFXN1kRSJGOrP0bVN3SWyH6uMXkp7L07aAMPC60dLnoazVVlLWSBLA2
-	 YkEvxf0XWHBxodCwK3Ase6AQbBrMhocwMSpDZFydYZMek+rY0DwpGFhnFpzn/Mto4JBLJ
-	 90tEHwYAiKbUMRrJMcaPKEgGgebdZnjFSJvkjlhQcB0Zkb1wgkYkL9CVVKWAnPIbaiz4+
-	 NWsPyiJFz8npzb0h25V2V0DKVE22FXUiwbD8IpZRzsKDF0GQhO7ZGVuft4U5gI0Rrlg==
+	bh=AEtuRBZyBn8cGtEoJbQEs+0h7bQcWKAoIjdsh1zKEs0=;
+	b=VSdf5fdio6fLyKWQeQDgUU1HPL/CwNAhNxiAqrXdq1o+WK1uLT9nYVIWNZCAqe1Yzm4y
+	 T39jkj6MXgD0oyze+PlzoFaC0kqwuLxvuLOUMatN1lL6SkzSzxP6x0AH2PT0TWgUV9Win
+	 tYi1QB6i5yAxQyVdSrpBRoUcLzCsBVx+mMAWB9CiWKZ3zAOqh8QyUEKSEqfjxeONU1O8r
+	 GvN1wmqBLa1xYOsmGsltGwWoLoxUp1xxlhMKgBjcQD6vErbj0ZY1VxE9jxtqVfda2DcEH
+	 eif+Cnp+1ImRNJqtc5PTEy7v5sA++B8/x5Lwbjngose6sEVosDlIPHPin7tyHSLg3wA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Y3pGhvYi;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=DHjNcS9K;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 938A6606A337;
-	Wed, 25 Nov 2026 15:48:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0B0D4606A327;
+	Wed, 25 Nov 2026 15:48:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Y3pGhvYi
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E949D1F000C4;
-	Wed, 25 Nov 2026 15:48:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=DHjNcS9K
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1DF171F000C0;
+	Wed, 25 Nov 2026 15:48:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795621713;
-	bh=SvFXQMfqZKQf5ZIJ7U7GvauEoK3Tr4JU6wr9uvyD9ac=;
+	s=korg; t=1795621716;
+	bh=AEtuRBZyBn8cGtEoJbQEs+0h7bQcWKAoIjdsh1zKEs0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Y3pGhvYiAVkjgdUjLzkLc3Y8gr9yp2qH60MI0ju674bc2k2EVR0WweRpRmoRTEWKs
-	 btY+zb1d2yFOJWtPvajO+jvT9IAkbln87/8Mtj4/wo7Br+5xObpX7J9bcX2qgqOR+4
-	 OwIjXQuIT1H7j+RkP9igXiOlKrrRr5BcRlpU9YGs=
+	b=DHjNcS9KbfnHN3OjzeiFm6r4jaergdnhHBuph0POrZgKoPxcuk+3/L9E4erdhxRbS
+	 BclC808lPuc6XJ8gHpSyqWDeOQJ9JFdygNjBRgdgAP34BymTChbYwnD/4iV43Yb6kT
+	 RZvRKdM9OweKBuGLU7PqymHOVnSS3VQUsZgZ+6Rg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hui Su <sh_def@163.com>,
-	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
-	Ingo Molnar <mingo@kernel.org>,
-	K Prateek Nayak <kprateek.nayak@amd.com>,
-	Kayra Cizmeci <kayracizmeci@gmail.com>,
+	Chris Mason <mason@kernel.org>,
+	Eric Dumazet <edumazet@kernel.org>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 314/990] sched/topology: Balance cluster static-key updates
-Date: Wed, 25 Nov 2026 15:28:01 +0100
-Message-ID: <20261125143829.447999089@linuxfoundation.org>
+Subject: [PATCH 6.18 315/990] tcp: bound snd_cwnd_clamp to TCP_MAX_SND_CWND
+Date: Wed, 25 Nov 2026 15:28:02 +0100
+Message-ID: <20261125143829.471255172@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143822.072087159@linuxfoundation.org>
 References: <20261125143822.072087159@linuxfoundation.org>
@@ -71,72 +69,115 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hui Su <sh_def@163.com>
+From: Eric Dumazet <edumazet@kernel.org>
 
-[ Upstream commit 5ebdfe12ab96368d0339593129d4ce0bc2bd06f5 ]
+[ Upstream commit 475ff14ba558bb8857bca878f1d593784ccc4f0f ]
 
-build_sched_domains() increments sched_cluster_active once per newly
-built partition that contains an SD_CLUSTER domain.
-detach_destroy_domains() instead tested the global static key before
-decrementing it, so destroying a cluster-less partition could drop a
-reference owned by another partition and disable cluster-aware
-scheduling while SD_CLUSTER domains remained installed.
+snd_cwnd has no practical upper bound: snd_cwnd_clamp defaults to ~0,
+and RTAX_INITCWND, a locked RTAX_CWND metric, TCP_BPF_IW and
+TCP_BPF_SNDCWND_CLAMP accept any positive value.
 
-Check the installed domains before detaching them, only while the key is
-enabled, and decrement only when the removed partition contains an
-SD_CLUSTER domain.
+Congestion control modules do u32 arithmetic on cwnd that assumes
+much smaller values. For instance, ssthresh() handlers compute:
 
-With two cluster-bearing partitions installed, removing a singleton
-partition left the baseline count at 1 where 2 partitions still
-carried SD_CLUSTER; the fixed kernel correctly reports 2.  On an
-asymmetric cluster topology where the parent partition gains no
-cluster domain, the baseline count drops to 0 while a cluster
-partition remains installed; the fixed kernel keeps it at 1.
+  CUBIC, BIC, ROCCET:  cwnd * (BICTCP_BETA_SCALE + beta), up to 2047
+  DCTCP:               cwnd * dctcp_alpha, up to 1024
+  CDG, NV, CUBIC, ...: cwnd * beta, below 1024
 
-Fixes: 8881e1639f1f ("sched/fair: Scan cluster before scanning LLC in wake-up path")
-Signed-off-by: Hui Su <sh_def@163.com>
-Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
-Signed-off-by: Ingo Molnar <mingo@kernel.org>
-Reviewed-by: K Prateek Nayak <kprateek.nayak@amd.com>
-Reviewed-by: Kayra Cizmeci <kayracizmeci@gmail.com>
-Link: https://patch.msgid.link/20261021043834.1140951-1-sh_def@163.com
+With a large initcwnd route or TCP_BPF_IW, cwnd is set directly to
+such values, and the next RTO or recovery calls ->ssthresh() with it.
+The product then wraps: DCTCP with cwnd = 2^24 and alpha = 1024 gets
+ssthresh == cwnd, and CUBIC computes a wrong ssthresh and Wmax.
+CUBIC bictcp_update() also expects cwnd below about one million packets.
+
+The paths that can grow cwnd by large amounts (tcp_slow_start(),
+tcp_cong_avoid_ai(), bbr_set_cwnd() and tcp_init_cwnd()) already
+bound it by snd_cwnd_clamp, so give snd_cwnd_clamp a finite default
+of 2^20 packets, and cap the metric and BPF paths that set it or set
+cwnd directly.
+
+2^20 packets do not limit real flows: with the maximum window scale
+of 14, a peer can not advertise more than 65535 << 14 bytes (~1GB),
+which is less than 2^20 packets for any MSS of 1024 bytes or more.
+
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Reported-by: Chris Mason <mason@kernel.org>
+Signed-off-by: Eric Dumazet <edumazet@kernel.org>
+Link: https://patch.msgid.link/20261030111528.2850082-1-edumazet@kernel.org
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/sched/topology.c | 16 ++++++++++++++--
- 1 file changed, 14 insertions(+), 2 deletions(-)
+ include/net/tcp.h      | 9 +++++++++
+ net/core/filter.c      | 3 ++-
+ net/ipv4/tcp.c         | 2 +-
+ net/ipv4/tcp_metrics.c | 3 ++-
+ 4 files changed, 14 insertions(+), 3 deletions(-)
 
-diff --git a/kernel/sched/topology.c b/kernel/sched/topology.c
-index 35478aa2536fc..e3bf754e081c5 100644
---- a/kernel/sched/topology.c
-+++ b/kernel/sched/topology.c
-@@ -2714,13 +2714,25 @@ int __init sched_init_domains(const struct cpumask *cpu_map)
- static void detach_destroy_domains(const struct cpumask *cpu_map)
- {
- 	unsigned int cpu = cpumask_any(cpu_map);
-+	bool has_cluster = false;
- 	int i;
+diff --git a/include/net/tcp.h b/include/net/tcp.h
+index f9bcfa8773a3a..3bf508ceae7b0 100644
+--- a/include/net/tcp.h
++++ b/include/net/tcp.h
+@@ -1430,6 +1430,15 @@ static inline unsigned int tcp_packets_in_flight(const struct tcp_sock *tp)
  
- 	if (rcu_access_pointer(per_cpu(sd_asym_cpucapacity, cpu)))
- 		static_branch_dec_cpuslocked(&sched_asym_cpucapacity);
+ #define TCP_INFINITE_SSTHRESH	0x7fffffff
  
--	if (static_branch_unlikely(&sched_cluster_active))
--		static_branch_dec_cpuslocked(&sched_cluster_active);
-+	if (static_branch_unlikely(&sched_cluster_active)) {
-+		rcu_read_lock();
-+		for_each_cpu(i, cpu_map) {
-+			if (lowest_flag_domain(i, SD_CLUSTER)) {
-+				has_cluster = true;
-+				break;
-+			}
-+		}
-+		rcu_read_unlock();
++/* Default and maximum snd_cwnd_clamp, in packets.
++ * A peer can not advertise more than 65535 << 14 bytes, so a larger
++ * cwnd is useless with any MSS of 1024 bytes or more.
++ * Congestion control modules multiply cwnd by u32 factors up to 2047
++ * (cwnd * (BICTCP_BETA_SCALE + beta) in CUBIC), and CUBIC's
++ * bictcp_update() expects cwnd to stay below about one million packets.
++ */
++#define TCP_MAX_SND_CWND	(1U << 20)
 +
-+		if (has_cluster)
-+			static_branch_dec_cpuslocked(&sched_cluster_active);
-+	}
+ static inline u32 tcp_snd_cwnd(const struct tcp_sock *tp)
+ {
+ 	return tp->snd_cwnd;
+diff --git a/net/core/filter.c b/net/core/filter.c
+index c6677657656c9..8b76dd1201038 100644
+--- a/net/core/filter.c
++++ b/net/core/filter.c
+@@ -5498,11 +5498,12 @@ static int bpf_sol_tcp_setsockopt(struct sock *sk, int optname,
+ 	case TCP_BPF_IW:
+ 		if (val <= 0 || tp->data_segs_out > tp->syn_data)
+ 			return -EINVAL;
+-		tcp_snd_cwnd_set(tp, val);
++		tcp_snd_cwnd_set(tp, min_t(u32, val, tp->snd_cwnd_clamp));
+ 		break;
+ 	case TCP_BPF_SNDCWND_CLAMP:
+ 		if (val <= 0)
+ 			return -EINVAL;
++		val = min_t(u32, val, TCP_MAX_SND_CWND);
+ 		tp->snd_cwnd_clamp = val;
+ 		WRITE_ONCE(tp->snd_ssthresh, val);
+ 		break;
+diff --git a/net/ipv4/tcp.c b/net/ipv4/tcp.c
+index aa860cbd3a442..5f983535bc1d6 100644
+--- a/net/ipv4/tcp.c
++++ b/net/ipv4/tcp.c
+@@ -472,7 +472,7 @@ void tcp_init_sock(struct sock *sk)
+ 	 * initialization of these values.
+ 	 */
+ 	tp->snd_ssthresh = TCP_INFINITE_SSTHRESH;
+-	tp->snd_cwnd_clamp = ~0;
++	tp->snd_cwnd_clamp = TCP_MAX_SND_CWND;
+ 	tp->mss_cache = TCP_MSS_DEFAULT;
  
- 	rcu_read_lock();
- 	for_each_cpu(i, cpu_map)
+ 	tp->reordering = READ_ONCE(sock_net(sk)->ipv4.sysctl_tcp_reordering);
+diff --git a/net/ipv4/tcp_metrics.c b/net/ipv4/tcp_metrics.c
+index 276127902f154..5a83f09cdbd7d 100644
+--- a/net/ipv4/tcp_metrics.c
++++ b/net/ipv4/tcp_metrics.c
+@@ -495,7 +495,8 @@ void tcp_init_metrics(struct sock *sk)
+ 	}
+ 
+ 	if (tcp_metric_locked(tm, TCP_METRIC_CWND))
+-		tp->snd_cwnd_clamp = tcp_metric_get(tm, TCP_METRIC_CWND);
++		tp->snd_cwnd_clamp = min(tcp_metric_get(tm, TCP_METRIC_CWND),
++					 TCP_MAX_SND_CWND);
+ 
+ 	val = READ_ONCE(net->ipv4.sysctl_tcp_no_ssthresh_metrics_save) ?
+ 	      0 : tcp_metric_get(tm, TCP_METRIC_SSTHRESH);
 -- 
 2.53.0
 
