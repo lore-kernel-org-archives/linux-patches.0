@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795620922;
-	b=e8xNtip51Ew7d9ZBl/vR+G4Llamjo5RP44hlhA0SdZpj+xNkSoah36tBaOrpGrjhVRNF
-	 x8Za57QFOdb5y5ReZ6n/G0Y0GvwziPI3jav5np1OfSX4Gn74mRoEIj0tMEI3C/hc/7Upo
-	 V+MlCgp0lTpFRVSVS2ldZAh0Ar3glx06nx/n4dtX7gGfcA7Hy3fklWVPKndk08aNOOYly
-	 7J2gO0dsA3EV/ZGdT9kgXrjxqkD9E2h8GwimJivG9uV48b1vJaVbmHBRwd9b2k9w255AS
-	 htukn38SfJMsTwFk1MA8Yff/oBAWXCyrocsxyTwhpXItyxFN28eKOCRvx+IjyqZ2L5g==
+	t=1795620924;
+	b=xoXHnQFXPXWPyaO/PSfiqDiV6K4FmLp0sE6BYK2IdiWDPZUyUPOBrZqNgSAp3gwWeDK5
+	 3YCcSDGKQTzvVPw+cWQQkE0RwYh+S9+IBojj2YrbncrjCQfNrTAstdrxRJfY1kcqnau93
+	 dAuxjRR18fLqmw4Q2QEQiTkpS9roECfuKi0lLT6jPeZt4fou5Yj/TXVdg/ohIuFZLHmNp
+	 Yr/Ep4aYiSwn1bAddw/Is6yuS8AlXlSxQK696S2m8DKJX6odKTT8gY5B4EbblH2fs8hsC
+	 Eg+3Fg3iIsLOSv+IK562MJhd/2G65O7YyT1ENGm8A9xZHpPVT56uV/1UX+vy2zhLHbQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795620922;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795620924;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=ecDt0Z9262A/5O/TBaXLY0zrs8X2qaOraGjbEwngtqI=;
-	b=kXDL4XsgUW5SOuGmDOM5xSThunHZZL/9zpCcew1AfpL9UDUlX3OCNGbV5o6Pt6xhuon4
-	 /jb0+R4VPRXQofZ6LVIHeZOTbclW4MPGzDJj97heVUMMbbXwlFb3Sx6Mc6hXPm877iby+
-	 /nUfFvj+zaINgShwFYshV1f2iTylmjtw5yu2lBPsVKqrFvR48iI7RSXafKLkdFArZ0fPP
-	 NCssdDBUCn4jzaLy/N7fV9oRoS8mqwTi9hjDE8XMfkaY35fleCI3YapAYRj/9B0ZGrazk
-	 uydU5TMqbJMn9rYNNMxqZYd9Vu3+QcDY9Qt5GHIlSKwb2NLMmp8OA8K1Hqc9ZZPaPNQ==
+	bh=8wAxcrvmrtB5K200z5fAW3m2z/R3OOER7sgIhHXP5UI=;
+	b=2rcTj1KhYcDFE9zfHz9WXID8q9+qj2M18eqXdnXMsu7eW4+R/7aC/257+XodgiFf12kV
+	 I1rWdxZBYqZxw6tCsbx1iff938niqXUFxKTvteBwNn8Jydpt+aasOQIwkruNlhd7LjA2K
+	 mlkBDaMugeRLvZ6KJHo7A2tLzN8/YFM9z71KOBzZdRSdAOPjYMUoYP+t98QgflU7n2hcO
+	 bnJhT2VXirj2Sphu/xKPdDKV3YxQiqOgRUdAFZjdci6poZD6LBP2PNR1CtmcJkHq57SNK
+	 AxsepNA4iWOALMFvWfrcInuiujXHKUxatrFyjJmYRCe3NQB9GjKR3W0xPz5+bM2HEOw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=TfcDVxOo;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=M2klITMV;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F268D606A32E;
-	Wed, 25 Nov 2026 15:35:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D4825606A323;
+	Wed, 25 Nov 2026 15:35:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=TfcDVxOo
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BD4D41F000D1;
-	Wed, 25 Nov 2026 15:35:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=M2klITMV
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 25D6B1F00A00;
+	Wed, 25 Nov 2026 15:35:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795620921;
-	bh=ecDt0Z9262A/5O/TBaXLY0zrs8X2qaOraGjbEwngtqI=;
+	s=korg; t=1795620924;
+	bh=8wAxcrvmrtB5K200z5fAW3m2z/R3OOER7sgIhHXP5UI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=TfcDVxOoSSgbWTR5qYJJBk2Hv3XxYo5/am+qlaN+synXE03/n06ksXve9SL1Ywukg
-	 SzeLu8JQMEPGOK8XrezPi7W1Uh/pDvmvEHylF47yE4Fzh/X5EwFS15vsW3beVovwwC
-	 LokkP9ytTr3JbnSz2a3704jN8tDZP7Ax+Z8pIg0o=
+	b=M2klITMV6XA28pNFRRpdady+nzIJ6naWlkAtPf+7BuokNyDEQpczcYLxJEAdy+7U/
+	 joulTyPlX4pXzg0VeHNAAEPsIwS36is7+aPA19osoIc3kEHvus7wYysdWAPZS9fb+7
+	 P1Vyy/8aXnVeQ7IMiCqxwh6bwgXUPr6c9ozqD/Ho=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Krittikun Wongnin <krittikunwongnin@gmail.com>,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+	Zizhi Wo <wozizhi@huaweicloud.com>,
+	Jan Kara <jack@suse.cz>,
+	Christian Brauner <brauner@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 020/990] ACPI: PM: Add Acer Aspire A515-53G to dmi_leave_unused_power_resources_on[]
-Date: Wed, 25 Nov 2026 15:23:07 +0100
-Message-ID: <20261125143822.562260637@linuxfoundation.org>
+Subject: [PATCH 6.18 021/990] fs: aio: reject partial mremap to avoid Null-pointer-dereference error
+Date: Wed, 25 Nov 2026 15:23:08 +0100
+Message-ID: <20261125143822.585549510@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143822.072087159@linuxfoundation.org>
 References: <20261125143822.072087159@linuxfoundation.org>
@@ -68,80 +69,96 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Krittikun Wongnin <krittikunwongnin@gmail.com>
+From: Zizhi Wo <wozizhi@huawei.com>
 
-[ Upstream commit 8eb2754ef96d77d870d6b1ef1e0e8470c892b6b4 ]
+[ Upstream commit 3adf7ae18bf42601246031002287c103a27df307 ]
 
-On the Acer Aspire A515-53G (Whiskey Lake + NVIDIA GeForce MX230), the
-dGPU behind root port RP05 (00:1c.4) falls off the bus during boot and
-is unusable until the next power cycle:
+[BUG]
+Recently, our internal syzkaller testing uncovered a null pointer
+dereference issue:
+BUG: kernel NULL pointer dereference, address: 0000000000000000
+...
+[   51.111664]  filemap_read_folio+0x25/0xe0
+[   51.112410]  filemap_fault+0xad7/0x1250
+[   51.113112]  __do_fault+0x4b/0x460
+[   51.113699]  do_pte_missing+0x5bc/0x1db0
+[   51.114250]  ? __pte_offset_map+0x23/0x170
+[   51.114822]  __handle_mm_fault+0x9f8/0x1680
+...
+Crash analysis showed the file involved was an AIO ring file. The
+phenomenon triggered is the same as the issue described in [1].
 
-  nvidia 0000:02:00.0: Unable to change power state from D3cold to D0, device inaccessible
-  NVRM: The NVIDIA GPU 0000:02:00.0 ... has fallen off the bus
+[CAUSE]
+Consider the following scenario: userspace sets up an AIO context via
+io_setup(), which creates a VMA covering the entire ring buffer. Then
+userspace calls mremap() with the AIO ring address as the source, a smaller
+old_len (less than the full ring size), MREMAP_MAYMOVE set, and without
+MREMAP_DONTUNMAP. The kernel will relocate the requested portion to a new
+destination address.
 
-The firmware ships two SSDTs which both provide power management for
-the dGPU:
+During this move, __split_vma() splits the original AIO ring VMA. The
+requested portion is unmapped from the source and re-established at the
+destination, while the remainder stays at the original source address as
+an orphan VMA. The aio_ring_mremap() callback fires on the new destination
+VMA, updating ctx->mmap_base to the destination address. But the callback
+is unaware that only a partial region was moved and that an orphan VMA
+still exists at the source:
 
- - One SSDT defines \_SB.PCI0.RP05.PC01 together with
-   RP05._PR0/_PR2/_PR3 = { PC01 }.
+  source(AIO):
+  +-------------------+---------------------+
+  |  moved to dest    |  orphan VMA (AIO)   |
+  +-------------------+---------------------+
+  A                 A+partial_len        A+ctx->mmap_size
 
- - A second SSDT defines \_SB.PCI0.RP05.PCRP (_STA initially One,
-   _OFF calls \_SB.PCI0.HGOF, which puts the link into L2/L3 and drops
-   the dGPU power enable GPIO) and its own RP05._PR0/_PR2/_PR3/_S0W.
-   The latter fail to load:
+  dest:
+  +-------------------+
+  |  moved VMA (AIO)  |
+  +-------------------+
+  B                 B+partial_len
 
-     ACPI BIOS Error (bug): Failure creating named object [\_SB.PCI0.RP05._PR0], AE_ALREADY_EXISTS
+Later, io_destroy() calls vm_munmap(ctx->mmap_base, ctx->mmap_size), which
+unmaps the destination. This not only fails to unmap the orphan VMA at the
+source, but also overshoots the destination VMA and may unmap unrelated
+mappings adjacent to it! After put_aio_ring_file() calls truncate_setsize()
+to remove all pages from the pagecache, any subsequent access to the orphan
+VMA triggers filemap_fault(), which calls a_ops->read_folio(). Since aio
+does not implement read_folio, this results in a NULL pointer dereference.
 
-As a result PCRP is not referenced by any device and
-acpi_turn_off_unused_power_resources() turns it off right after the
-ACPI namespace scan. This cuts power to the dGPU, but PC01 still
-believes it is on, so its _ON method is a no-op when the PCI core later
-tries to bring the GPU back to D0.
+[FIX]
+Note that expanding mremap (new_len > old_len) is already rejected because
+AIO ring VMAs are created with VM_DONTEXPAND. The only problematic case is
+a partial move where "old_len == new_len" but both are smaller than the
+full ring size.
 
-Windows does not turn off unused power resources, so the dGPU works
-there.
+Fix this by checking in aio_ring_mremap() that the new VMA covers the
+entire ring. This ensures the AIO ring is always moved as a whole,
+preventing orphan VMAs and the subsequent crash.
 
-Add the machine to dmi_leave_unused_power_resources_on[], like the
-THUNDEROBOT ZERO which has a similar SSDT bug. With this change the
-dGPU stays on the bus and the nvidia driver binds. Runtime PM of the
-dGPU is unaffected, as it is handled through PC01: with no driver
-bound and power/control set to auto, RP05 reaches D3cold and the GPU
-comes back to D0 on resume.
+[1]: https://lore.kernel.org/all/20260413010814.548568-1-wozizhi@huawei.com/
 
-Link: https://lore.kernel.org/r/CADS-TgDQ1G8vrTQLJeQ3RTBVFTyMe0C+5p2=UBKS=EFCDFuaxw@mail.gmail.com/
-Signed-off-by: Krittikun Wongnin <krittikunwongnin@gmail.com>
-[ rjw: Subject and changelog tweaks ]
-Link: https://patch.msgid.link/20261013074245.4327-1-krittikunwongnin@gmail.com
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Signed-off-by: Zizhi Wo <wozizhi@huaweicloud.com>
+Link: https://patch.msgid.link/20260418060634.3713620-1-wozizhi@huaweicloud.com
+Reviewed-by: Jan Kara <jack@suse.cz>
+Signed-off-by: Christian Brauner <brauner@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/acpi/power.c | 13 +++++++++++++
- 1 file changed, 13 insertions(+)
+ fs/aio.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/acpi/power.c b/drivers/acpi/power.c
-index 2c0c982602014..4a67e9afdd7fc 100644
---- a/drivers/acpi/power.c
-+++ b/drivers/acpi/power.c
-@@ -1151,6 +1151,19 @@ static const struct dmi_system_id dmi_leave_unused_power_resources_on[] = {
- 			DMI_MATCH(DMI_BOARD_NAME, "NLCC 001"),
- 		},
- 	},
-+	{
-+		/*
-+		 * Acer Aspire A515-53G: Two SSDTs both define power resources
-+		 * for the dGPU root port RP05 ('PC01' and 'PCRP'). Only PC01 ends
-+		 * up in RP05's _PR0/_PR3, so 'PCRP' is shut down on
-+		 * initialization, cutting power to the NVIDIA dGPU behind the
-+		 * back of 'PC01' and making the dGPU unavailable.
-+		 */
-+		.matches = {
-+			DMI_MATCH(DMI_SYS_VENDOR, "Acer"),
-+			DMI_MATCH(DMI_PRODUCT_NAME, "Aspire A515-53G"),
-+		},
-+	},
- 	{}
- };
+diff --git a/fs/aio.c b/fs/aio.c
+index e06fa57b05ca9..641cf69bc959b 100644
+--- a/fs/aio.c
++++ b/fs/aio.c
+@@ -369,7 +369,8 @@ static int aio_ring_mremap(struct vm_area_struct *vma)
  
+ 		ctx = rcu_dereference(table->table[i]);
+ 		if (ctx && ctx->aio_ring_file == file) {
+-			if (!atomic_read(&ctx->dead)) {
++			if (!atomic_read(&ctx->dead) &&
++			    (ctx->mmap_size == (vma->vm_end - vma->vm_start))) {
+ 				ctx->user_id = ctx->mmap_base = vma->vm_start;
+ 				res = 0;
+ 			}
 -- 
 2.53.0
 
