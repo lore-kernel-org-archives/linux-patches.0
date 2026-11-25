@@ -1,51 +1,50 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795620092;
-	b=yx+ExyH9ywMv4XO6yriD1Ss+e0pe7WeMiFuECP7NbAhEheGdtSRDIYbOjuGuk11DTjsL
-	 +73l4SJJwpLusUDCZrcf6Xx/VHSd/5cXIwV5y1CrfiqKT9HVZT5PGgjH1TVmTs0UmkESr
-	 QALSGSiDkDgDIpzAavQd4cdnURLPuYSIirjPGVMOZzStMUk6WkEuNytn9MtVue8T/KcY3
-	 OnotOwwJo+gNHdlB1ay1blpPQcnQcqmg5REWNg0dCFQ1/m9YPBpZzgCdIBUGyFDYKNdBx
-	 pssWX61J1Lyf0GFy7bbu31uo0XSWuYh3Wj6NXcMoRVNqOhZXCFVEfbrVVJQT5eTuOZg==
+	t=1795620096;
+	b=32b9mc8zN6+f8sxGKfSI2pOW0MKwjTqV/Pgsc4/MjJmWwaPb2OMou/xSZmNkN7vrZnV1
+	 o2cKl3SqqTum/GkDGwpyMxphW5gd9RMkOZnFWEBmUhBl9xkrCziSHolJ/47VN/kHiGpvY
+	 UW7f1k0AQd04PVAEbDbOxTtaN1hWH7AS9GhH2UpRFX6NDRr1zFc80K1mGeuI5c7S0gLN/
+	 NearKMDcGzOqQ4QtjN/kzDP6H4JzHf8H9nFCKEAU66gJLEGKqIJGc5LU8AlB2vpqaGaop
+	 k4Uv/8VIJZpMT386RDtQTviU9o2lr6oPhoC3YEjFst57eTmGxzG1rV/o3RpKiFeONBg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795620092;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795620096;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=0X25TcfSNxkQ6CW5r369aCTcnv6LqHo8F0pbvQyEsfw=;
-	b=WhyW3iIQvGgw7ARkpsYpvIwMN+7lg5j/B+XhvKWuzmnzSO8KRdCR6vbRDxeBPKT12IEn
-	 ZzncB8e9vowFpbr/gQzIrOZFspUyrjJgM9uABPJsm6mpjJ2hqctQs1WrI9bap21Ef6UlK
-	 xNHj9olA2BWMwElZ4jysceoDC4LJMYZrR7e+wLZyYtc0JWpQ81DxitdvqRsHztqc7XZWy
-	 mhM1VnHnbXSsMIU9O2D7t43sPeSTFz59+J9LkGZscjsn+/mbU4T7BZWMZK1VDFEnqz80c
-	 diRBhImSxjWUdtM/OLAbWeY4iFmUg9gTzY2Zj0+mntU13NYX4qrfZj1BlOVX95ZsNNA==
+	bh=S5zCKAqg0BAh7QieNC3YOPDOwEs8r9DjY3+5K8azR0c=;
+	b=IZNgvzmS5WW1dowbh8vwgw4pb4KUA9R0mWJL3YOT58HOUkfWWhecBZUIx8rtTB5CxS6y
+	 qUmwSqKHej0ubL09C/4D+i9Ic2baJw5Ir9Yuk9l02oS+pwtYCEz1vgOnjZmxJRashezXY
+	 pc0YZla2ywWqileT1NWiC7fKyc+FtS7PYOuk9vV86np+Pn7ilKwvAS/3lzJQlYsF3NZWz
+	 5W9MfVHtUKgVOytlnfCAbhK2+bVvSwOW0QL1nUmFXbRMnVjD6U9Qfp5XVzeHfIrTJ8PWc
+	 JXYpFiEtDwG4YZcw8Ad49Tis6u4ocLj/tnumQsavJz5R2Bq9ALjGF51ysBJ3aayvxmw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=W6hxyzTv;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="2aU3PJ/8";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D5C97606A32C;
-	Wed, 25 Nov 2026 15:21:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 05809606A323;
+	Wed, 25 Nov 2026 15:21:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=W6hxyzTv
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8DA511F000CF;
-	Wed, 25 Nov 2026 15:21:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=2aU3PJ/8
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ED6C11F000CA;
+	Wed, 25 Nov 2026 15:21:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795620092;
-	bh=0X25TcfSNxkQ6CW5r369aCTcnv6LqHo8F0pbvQyEsfw=;
+	s=korg; t=1795620095;
+	bh=S5zCKAqg0BAh7QieNC3YOPDOwEs8r9DjY3+5K8azR0c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=W6hxyzTvkZ9+FjBwDGwM+2+TcASYJsT2ZZirTLCEt2GLdSdp92X5/7xxizYV5+BJm
-	 ryJWyjeuU/ildRyXicAyMVh60lviDcrYJjszoODZfZrRez5aDyT2xp3NCunDqgIhPM
-	 LJxgMbgPutN/DVDokjmTMoNMw3VknU0wqjtWLpRw=
+	b=2aU3PJ/8Ipes7zuRoQ6mOjVIdkKEpWohJoAL+cmMKTRxWKa/z+ww04RzVnTuL8UAx
+	 mqa3RgGG1Elsai/xXExbShBp73R3GV8so3hGEeKqAU1sflFdQlJnERD1cbBJEDNlBq
+	 glD6HF0p3TmlPFJJ/6/o6cl/a+g4wYxZibKni6Zo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhao Li <enderaoelyther@gmail.com>,
-	Johannes Berg <johannes.berg@intel.com>
-Subject: [PATCH 7.3 0807/1005] wifi: mac80211: bound pending OCB station allocations
-Date: Wed, 25 Nov 2026 15:35:45 +0100
-Message-ID: <20261125143840.635716860@linuxfoundation.org>
+	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>
+Subject: [PATCH 7.3 0790/1005] tracing/probes: Reject array count on non-dereference string sources
+Date: Wed, 25 Nov 2026 15:35:28 +0100
+Message-ID: <20261125143840.245298372@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143821.729802100@linuxfoundation.org>
 References: <20261125143821.729802100@linuxfoundation.org>
@@ -67,89 +66,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zhao Li <enderaoelyther@gmail.com>
+From: Masami Hiramatsu (Google) <mhiramat@kernel.org>
 
-commit ee1a5e92dba0a98cabe476c780e3af4f0ab88b27 upstream.
+commit 0941144ebeaf3ce46c80711f00e935921eb28b21 upstream.
 
-Delaying the OCB station worker while frames arrive from new peers can
-retain an unbounded number of station allocations.
+The runtime array loop (FETCH_OP_LP_ARRAY) for string types requires a
+preceding memory dereference instruction so it can advance the pointer
+address on each iteration. Non-dereference string sources such as $comm,
+immediate strings, and eprobe event fields cannot be indexed as pointer
+arrays, but finalize_fetch_insn() still accepts an array count on them
+and emits an invalid FETCH_OP_LP_ARRAY sequence.
 
-The receive-side limit counts installed stations, while new allocations
-wait on incomplete_stations until process context inserts them. The list
-lock does not cover the interval between allocation and list insertion.
+Reject string array counts when the preceding operation is not a memory
+dereference.
 
-Reserve one of 128 pending slots per interface before allocation. Release
-the reservation on allocation failure, after the worker inserts or frees
-the station, and when leave frees the pending list.
+Link: https://lore.kernel.org/all/179455855309.403392.4197028577158545202.stgit@devnote2/
 
-LLM assistance was used to find the bug and review.
-
-Fixes: 239281f803e2 ("mac80211: 802.11p OCB mode support")
+Fixes: 40b53b771806 ("tracing: probeevent: Add array type support")
 Cc: stable@vger.kernel.org
-Signed-off-by: Zhao Li <enderaoelyther@gmail.com>
-Link: https://patch.msgid.link/20261028142302.16634-3-enderaoelyther@gmail.com
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+Signed-off-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/mac80211/ieee80211_i.h |    2 ++
- net/mac80211/ocb.c         |   13 ++++++++++++-
- 2 files changed, 14 insertions(+), 1 deletion(-)
+ kernel/trace/trace_probe.c |    6 ++++++
+ 1 file changed, 6 insertions(+)
 
---- a/net/mac80211/ieee80211_i.h
-+++ b/net/mac80211/ieee80211_i.h
-@@ -697,6 +697,7 @@ struct ieee80211_if_ibss {
-  * @wrkq_flags: OCB deferred task action
-  * @incomplete_lock: delayed STA insertion lock
-  * @incomplete_stations: list of STAs waiting for delayed insertion
-+ * @incomplete_sta_count: pending entries and reserved allocations
-  * @joined: indication if the interface is connected to an OCB network
-  */
- struct ieee80211_if_ocb {
-@@ -705,6 +706,7 @@ struct ieee80211_if_ocb {
- 
- 	spinlock_t incomplete_lock;
- 	struct list_head incomplete_stations;
-+	atomic_t incomplete_sta_count;
- 
- 	bool joined;
- };
---- a/net/mac80211/ocb.c
-+++ b/net/mac80211/ocb.c
-@@ -70,9 +70,18 @@ void ieee80211_ocb_rx_no_sta(struct ieee
- 	band = chanctx_conf->def.chan->band;
- 	rcu_read_unlock();
- 
-+	if (!atomic_add_unless(&ifocb->incomplete_sta_count, 1,
-+			       IEEE80211_OCB_MAX_STA_ENTRIES)) {
-+		net_info_ratelimited("%s: No room for a new OCB STA entry %pM\n",
-+				     sdata->name, addr);
-+		return;
-+	}
-+
- 	sta = sta_info_alloc(sdata, addr, GFP_ATOMIC);
--	if (!sta)
-+	if (!sta) {
-+		atomic_dec(&ifocb->incomplete_sta_count);
- 		return;
-+	}
- 
- 	/* Add only mandatory rates for now */
- 	sband = local->hw.wiphy->bands[band];
-@@ -145,6 +154,7 @@ void ieee80211_ocb_work(struct ieee80211
- 			ieee80211_ocb_finish_sta(sta);
- 			rcu_read_unlock();
- 		}
-+		atomic_dec(&ifocb->incomplete_sta_count);
- 		spin_lock_bh(&ifocb->incomplete_lock);
- 	}
- 	spin_unlock_bh(&ifocb->incomplete_lock);
-@@ -228,6 +238,7 @@ int ieee80211_ocb_leave(struct ieee80211
- 		spin_unlock_bh(&ifocb->incomplete_lock);
- 
- 		sta_info_free(local, sta);
-+		atomic_dec(&ifocb->incomplete_sta_count);
- 		spin_lock_bh(&ifocb->incomplete_lock);
- 	}
- 	spin_unlock_bh(&ifocb->incomplete_lock);
+--- a/kernel/trace/trace_probe.c
++++ b/kernel/trace/trace_probe.c
+@@ -1990,6 +1990,12 @@ static int finalize_fetch_insn(struct fe
+ 			 * For the symstr, it doesn't need to dereference, thus
+ 			 * it just get the value.
+ 			 */
++			if (parg->count && (code->op != FETCH_OP_DEREF &&
++					    code->op != FETCH_OP_UDEREF)) {
++				trace_probe_log_err(ctx->offset + type_offset,
++						    BAD_STRING);
++				return -EINVAL;
++			}
+ 			code++;
+ 			if (code->op != FETCH_OP_NOP) {
+ 				trace_probe_log_err(ctx->offset, TOO_MANY_OPS);
 
 
