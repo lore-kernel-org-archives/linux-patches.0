@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795623967;
-	b=sbcF3dX1LLzuZFDzeGSsf9aICaYmkdP4GYchw6FvwxAhsKj3SLaQYNnd5ISUqNZ3NU6c
-	 5UZOqQVChe05RU7d8l+65Upe7HlScZP8SrO506gJ3tUOt4RNc/6/o2x7cbuxJYzfCf4/T
-	 /A97+oQ7C2VuTrCNexStO5+fT6oFLD94Rj6JB9EgR5N+ZNkyT38LKFDnEFkl5seKGaBkY
-	 q98oV8GUtfrho0XAzEpnUyrYm4UvZHrBnwVBfhBspkuOw2BcPSlGMY7/AeBKEJtBvO7RV
-	 FjPI2cK0HJhCOBfVwUevPdLLqm1IiSc+zAvLIpm7S9I3Uu5dB7qubo9it6LiwvN8aJA==
+	t=1795623970;
+	b=s8j77dHP0cT9Ots24NtkAIOEt1iVo5tlaBf2h9ba+/gdHILVB0Ucv2SrsuVI/kpNpk1L
+	 deQn1nPBgHS277P5TcMcrYvTSFU8hrMz8Y93rTnuiqxPV/1P9EpKuU4sYMW+qZPtGcANd
+	 gpdWJeTxfFu3QveGefq1Ce87JEI7GKQa7Vxpx5X8O4BP8OqGpC5WvXutWvUtpJ19ZYdqk
+	 FqDnjevZseYDM4SEpiQXObYlBKK6Xpxvo3ze/lT2NqERbUkRxuxx54NOUMt0YtVuPTDZW
+	 7xAAm48Yb/C8dRvXZ/OcRuNVuhg1fayZ/rLaD2gL1PBwhQJdZDwrxfzGTWjPPe179XA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795623967;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795623970;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=zFk5H3z0J6ROGQBF3/wKTXwPx7RGff9rhp8O7/sYhec=;
-	b=nskLOlKvfmXKCfTVjWM+KHehTWX4IY9BVn9pHl3VKhrfJqPGMR5HpuHFHKJRcp19SakG
-	 EESfMn8XJvyCxiRAWkzhCgwjZ7ecj0ZfJUNjrZ4Q/jKGqNoackqBpBY3q3azMmfTRYRsk
-	 AL5bIko68T30M+m1nJV/5NGFypvppV6RBa+53vceav8vHHTBhP0Hez0sscFmKImYv6Gb5
-	 oRyhESUdakguFwcgPKoURRR4TBZFEMefxhzLL+tNI7/2+GXWqsXkq5gadc3FhNO2MaHql
-	 lH2ozV7ngVPqFNsZejyTQRkHaMEaSkccmOwrRZCQ4xaEVl8PwKAkEOjziRPtNeqCkTA==
+	bh=8Hl6ZTVEnkm0ujm8GGujk0rfb+4+OogS2uoWJ83VPpo=;
+	b=gQ+BvIiyXbcJUUOsWNMUlZdID575bFSd0Gh2Tys4fFIwUbY+DbMpf3jkkrvWh39IqkxV
+	 nBo7AjBTWGcm1LbQydgfiP7AhJXiAxAEGGvDRcR8flIV2SgFOVDlALqGuejVQk8ynvKCR
+	 sYKwp3rziTa0fBMEZL9n0ape6n41pqClQWSkchHP/H0U9w/tKgtqILNiHmHZW9PCJGa2i
+	 nQAcz1sm4FtqGUFcRizwk+Yxqs5rPVqiGtijMt44ynviMzeWJWFAeCI9WoIXldueMRDe2
+	 RZZcfff8g8KrbnyP2hbqu2b6zlkg0llCl40SeiR5pLH6YH6DamXntj5LNgRbuh+evbQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=NTTAKayT;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ljD8a8Jh;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 62976606A326;
-	Wed, 25 Nov 2026 16:26:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0E0A9606A31E;
+	Wed, 25 Nov 2026 16:26:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=NTTAKayT
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 87C011F000C6;
-	Wed, 25 Nov 2026 16:26:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ljD8a8Jh
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5F4321F000C4;
+	Wed, 25 Nov 2026 16:26:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795623967;
-	bh=zFk5H3z0J6ROGQBF3/wKTXwPx7RGff9rhp8O7/sYhec=;
+	s=korg; t=1795623969;
+	bh=8Hl6ZTVEnkm0ujm8GGujk0rfb+4+OogS2uoWJ83VPpo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=NTTAKayTgbWVCOdDssIj6Qvip8XK3iWoBGbb3apf4PAChFhMt0V+YOFfSwhiHUgoe
-	 TMXHgGF2IbBMeJkPww/PsjUULdFV7hnIY9tSb+QTt1ahpUAEhk1XUKKoZImQ+U86Bw
-	 tvcH/A/p7lOekKxsyJb40CovC6ZOSlMzNyd41ojM=
+	b=ljD8a8JhYHDTR4GMOJCsudK7olZ6KwCUAxM4G7TLC+ASjsdkOXyrtHGSOK7J/UGih
+	 afigJMd9/Y57KStvkWBAGOue8vZlgcR4rLQqkb/1TJo8m0oET0MY80RlZ8rIe75BLT
+	 MO7Ke7Fg0PZs/87zzpwjwopMinX48GOkMkgRsWvw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Feng Ning <feng@innora.ai>,
-	Sakari Ailus <sakari.ailus@linux.intel.com>,
+	Joshua Murphy <joshuamurphy@posteo.net>,
+	Dominique Martinet <asmadeus@codewreck.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 044/816] staging: media: atomisp: use array3_size() for overflow-safe allocation
-Date: Wed, 25 Nov 2026 15:26:32 +0100
-Message-ID: <20261125143850.241883184@linuxfoundation.org>
+Subject: [PATCH 6.12 045/816] net/9p/fd: support ipv6 for trans=tcp
+Date: Wed, 25 Nov 2026 15:26:33 +0100
+Message-ID: <20261125143850.264979578@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143849.205329330@linuxfoundation.org>
 References: <20261125143849.205329330@linuxfoundation.org>
@@ -68,185 +68,130 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Feng Ning <feng@innora.ai>
+From: Joshua Murphy <joshuamurphy@posteo.net>
 
-commit d178c7ca8fefc28115d35b94c3b1f4d653e34182 upstream.
+[ Upstream commit a22a29655c42d0263a7a84d5d808bfd55f20c53a ]
 
-Replace open-coded width * height * sizeof() multiplications with
-array3_size() to prevent integer overflow in buffer allocations.
+Allows specifying an IPv6 address when mounting a remote 9p file system.
 
-The atomisp driver computes DVS, morphing table, shading table and
-statistics buffer sizes using unchecked arithmetic.  When dimensions
-are attacker-controlled or simply large, the product can silently wrap,
-causing kvmalloc() to allocate an undersized buffer.
-
-array3_size() saturates to SIZE_MAX on overflow, so kvmalloc() returns
-NULL instead of succeeding with too few bytes.
-
-Signed-off-by: Feng Ning <feng@innora.ai>
-Signed-off-by: Sakari Ailus <sakari.ailus@linux.intel.com>
+Signed-off-by: Joshua Murphy <joshuamurphy@posteo.net>
+Message-ID: <20250118192122.327-2-joshuamurphy@posteo.net>
+Signed-off-by: Dominique Martinet <asmadeus@codewreck.org>
+Stable-dep-of: 37dce65a0b43 ("9p: use fc->net_ns for network namespace in RDMA and socket transports")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../media/atomisp/pci/sh_css_param_dvs.c      | 11 +++---
- .../media/atomisp/pci/sh_css_param_shading.c  |  4 ++-
- .../staging/media/atomisp/pci/sh_css_params.c | 35 +++++++++++--------
- 3 files changed, 31 insertions(+), 19 deletions(-)
+ net/9p/trans_fd.c | 56 ++++++++++++++++++++---------------------------
+ 1 file changed, 24 insertions(+), 32 deletions(-)
 
-diff --git a/drivers/staging/media/atomisp/pci/sh_css_param_dvs.c b/drivers/staging/media/atomisp/pci/sh_css_param_dvs.c
-index 5174bc210ae17..f70dd99030e9e 100644
---- a/drivers/staging/media/atomisp/pci/sh_css_param_dvs.c
-+++ b/drivers/staging/media/atomisp/pci/sh_css_param_dvs.c
-@@ -13,6 +13,7 @@
-  * more details.
-  */
+diff --git a/net/9p/trans_fd.c b/net/9p/trans_fd.c
+index 5bdfc25689169..a516745f732f7 100644
+--- a/net/9p/trans_fd.c
++++ b/net/9p/trans_fd.c
+@@ -11,6 +11,7 @@
+ #define pr_fmt(fmt) KBUILD_MODNAME ": " fmt
  
-+#include <linux/overflow.h>
- #include "sh_css_param_dvs.h"
- #include <assert_support.h>
- #include <type_support.h>
-@@ -58,7 +59,7 @@ alloc_dvs_6axis_table(const struct ia_css_resolution *frame_res,
- 		}
+ #include <linux/in.h>
++#include <linux/in6.h>
+ #include <linux/module.h>
+ #include <linux/net.h>
+ #include <linux/ipv6.h>
+@@ -950,64 +951,55 @@ static void p9_fd_close(struct p9_client *client)
+ 	kfree(ts);
+ }
  
- 		/* Generate Y buffers  */
--		dvs_config->xcoords_y = kvmalloc(width_y * height_y * sizeof(uint32_t),
-+		dvs_config->xcoords_y = kvmalloc(array3_size(width_y, height_y, sizeof(uint32_t)),
- 						 GFP_KERNEL);
- 		if (!dvs_config->xcoords_y) {
- 			IA_CSS_ERROR("out of memory");
-@@ -66,7 +67,7 @@ alloc_dvs_6axis_table(const struct ia_css_resolution *frame_res,
- 			goto exit;
- 		}
+-/*
+- * stolen from NFS - maybe should be made a generic function?
+- */
+-static inline int valid_ipaddr4(const char *buf)
+-{
+-	int rc, count, in[4];
+-
+-	rc = sscanf(buf, "%d.%d.%d.%d", &in[0], &in[1], &in[2], &in[3]);
+-	if (rc != 4)
+-		return -EINVAL;
+-	for (count = 0; count < 4; count++) {
+-		if (in[count] > 255)
+-			return -EINVAL;
+-	}
+-	return 0;
+-}
+-
+ static int p9_bind_privport(struct socket *sock)
+ {
+-	struct sockaddr_in cl;
++	struct sockaddr_storage stor = { 0 };
+ 	int port, err = -EINVAL;
  
--		dvs_config->ycoords_y = kvmalloc(width_y * height_y * sizeof(uint32_t),
-+		dvs_config->ycoords_y = kvmalloc(array3_size(width_y, height_y, sizeof(uint32_t)),
- 						 GFP_KERNEL);
- 		if (!dvs_config->ycoords_y) {
- 			IA_CSS_ERROR("out of memory");
-@@ -77,7 +78,8 @@ alloc_dvs_6axis_table(const struct ia_css_resolution *frame_res,
- 		/* Generate UV buffers  */
- 		IA_CSS_LOG("UV W %d H %d", width_uv, height_uv);
+-	memset(&cl, 0, sizeof(cl));
+-	cl.sin_family = AF_INET;
+-	cl.sin_addr.s_addr = htonl(INADDR_ANY);
++	stor.ss_family = sock->ops->family;
++	if (stor.ss_family == AF_INET)
++		((struct sockaddr_in *)&stor)->sin_addr.s_addr = htonl(INADDR_ANY);
++	else
++		((struct sockaddr_in6 *)&stor)->sin6_addr = in6addr_any;
+ 	for (port = p9_ipport_resv_max; port >= p9_ipport_resv_min; port--) {
+-		cl.sin_port = htons((ushort)port);
+-		err = kernel_bind(sock, (struct sockaddr *)&cl, sizeof(cl));
++		if (stor.ss_family == AF_INET)
++			((struct sockaddr_in *)&stor)->sin_port = htons((ushort)port);
++		else
++			((struct sockaddr_in6 *)&stor)->sin6_port = htons((ushort)port);
++		err = kernel_bind(sock, (struct sockaddr *)&stor, sizeof(stor));
+ 		if (err != -EADDRINUSE)
+ 			break;
+ 	}
+ 	return err;
+ }
  
--		dvs_config->xcoords_uv = kvmalloc(width_uv * height_uv * sizeof(uint32_t),
-+		dvs_config->xcoords_uv = kvmalloc(array3_size(width_uv, height_uv,
-+							      sizeof(uint32_t)),
- 						  GFP_KERNEL);
- 		if (!dvs_config->xcoords_uv) {
- 			IA_CSS_ERROR("out of memory");
-@@ -85,7 +87,8 @@ alloc_dvs_6axis_table(const struct ia_css_resolution *frame_res,
- 			goto exit;
- 		}
+-
+ static int
+ p9_fd_create_tcp(struct p9_client *client, const char *addr, char *args)
+ {
+ 	int err;
++	char port_str[6];
+ 	struct socket *csocket;
+-	struct sockaddr_in sin_server;
++	struct sockaddr_storage stor = { 0 };
+ 	struct p9_fd_opts opts;
  
--		dvs_config->ycoords_uv = kvmalloc(width_uv * height_uv * sizeof(uint32_t),
-+		dvs_config->ycoords_uv = kvmalloc(array3_size(width_uv, height_uv,
-+							      sizeof(uint32_t)),
- 						  GFP_KERNEL);
- 		if (!dvs_config->ycoords_uv) {
- 			IA_CSS_ERROR("out of memory");
-diff --git a/drivers/staging/media/atomisp/pci/sh_css_param_shading.c b/drivers/staging/media/atomisp/pci/sh_css_param_shading.c
-index 5b43cc6562690..0441d7f47a610 100644
---- a/drivers/staging/media/atomisp/pci/sh_css_param_shading.c
-+++ b/drivers/staging/media/atomisp/pci/sh_css_param_shading.c
-@@ -13,6 +13,7 @@
-  * more details.
-  */
+ 	err = parse_opts(args, &opts);
+ 	if (err < 0)
+ 		return err;
  
-+#include <linux/overflow.h>
- #include <linux/math.h>
- #include <linux/slab.h>
+-	if (addr == NULL || valid_ipaddr4(addr) < 0)
++	if (!addr)
+ 		return -EINVAL;
  
-@@ -348,7 +349,8 @@ ia_css_shading_table_alloc(
- 	me->fraction_bits = 0;
- 	for (i = 0; i < IA_CSS_SC_NUM_COLORS; i++) {
- 		me->data[i] =
--		    kvmalloc(width * height * sizeof(*me->data[0]),
-+		    kvmalloc(array3_size(width, height,
-+					 sizeof(*me->data[0])),
- 			     GFP_KERNEL);
- 		if (!me->data[i]) {
- 			unsigned int j;
-diff --git a/drivers/staging/media/atomisp/pci/sh_css_params.c b/drivers/staging/media/atomisp/pci/sh_css_params.c
-index b1feb6f6ebe89..76e0b475b12e9 100644
---- a/drivers/staging/media/atomisp/pci/sh_css_params.c
-+++ b/drivers/staging/media/atomisp/pci/sh_css_params.c
-@@ -13,6 +13,7 @@
-  * more details.
-  */
++	sprintf(port_str, "%u", opts.port);
++	err = inet_pton_with_scope(current->nsproxy->net_ns, AF_UNSPEC, addr,
++				   port_str, &stor);
++	if (err < 0)
++		return err;
++
+ 	csocket = NULL;
  
-+#include <linux/overflow.h>
- #include "gdc_device.h"		/* gdc_lut_store(), ... */
- #include "isp.h"			/* ISP_VEC_ELEMBITS */
- #include "vamem.h"
-@@ -1390,11 +1391,11 @@ struct ia_css_morph_table *ia_css_morph_table_allocate(
+ 	client->trans_opts.tcp.port = opts.port;
+ 	client->trans_opts.tcp.privport = opts.privport;
+-	sin_server.sin_family = AF_INET;
+-	sin_server.sin_addr.s_addr = in_aton(addr);
+-	sin_server.sin_port = htons(opts.port);
+-	err = __sock_create(current->nsproxy->net_ns, PF_INET,
++	err = __sock_create(current->nsproxy->net_ns, stor.ss_family,
+ 			    SOCK_STREAM, IPPROTO_TCP, &csocket, 1);
+ 	if (err) {
+ 		pr_err("%s (%d): problem creating socket\n",
+@@ -1026,8 +1018,8 @@ p9_fd_create_tcp(struct p9_client *client, const char *addr, char *args)
  	}
  
- 	for (i = 0; i < IA_CSS_MORPH_TABLE_NUM_PLANES; i++) {
--		me->coordinates_x[i] = kvmalloc(height * width *
--						sizeof(*me->coordinates_x[i]),
-+		me->coordinates_x[i] = kvmalloc(array3_size(height, width,
-+							    sizeof(*me->coordinates_x[i])),
- 						GFP_KERNEL);
--		me->coordinates_y[i] = kvmalloc(height * width *
--						sizeof(*me->coordinates_y[i]),
-+		me->coordinates_y[i] = kvmalloc(array3_size(height, width,
-+							    sizeof(*me->coordinates_y[i])),
- 						GFP_KERNEL);
- 
- 		if ((!me->coordinates_x[i]) ||
-@@ -4215,13 +4216,17 @@ ia_css_dvs_statistics_allocate(const struct ia_css_dvs_grid_info *grid)
- 		goto err;
- 
- 	me->grid = *grid;
--	me->hor_proj = kvmalloc(grid->height * IA_CSS_DVS_NUM_COEF_TYPES *
--				sizeof(*me->hor_proj), GFP_KERNEL);
-+	me->hor_proj = kvmalloc(array3_size(grid->height,
-+					    IA_CSS_DVS_NUM_COEF_TYPES,
-+						sizeof(*me->hor_proj)),
-+				GFP_KERNEL);
- 	if (!me->hor_proj)
- 		goto err;
- 
--	me->ver_proj = kvmalloc(grid->width * IA_CSS_DVS_NUM_COEF_TYPES *
--				sizeof(*me->ver_proj), GFP_KERNEL);
-+	me->ver_proj = kvmalloc(array3_size(grid->width,
-+					    IA_CSS_DVS_NUM_COEF_TYPES,
-+						sizeof(*me->ver_proj)),
-+				GFP_KERNEL);
- 	if (!me->ver_proj)
- 		goto err;
- 
-@@ -4488,24 +4493,26 @@ ia_css_dvs2_6axis_config_allocate(const struct ia_css_stream *stream)
- 				    params->pipe_dvs_6axis_config[IA_CSS_PIPE_ID_VIDEO]->height_uv;
- 	IA_CSS_LOG("table Y: W %d H %d", width_y, height_y);
- 	IA_CSS_LOG("table UV: W %d H %d", width_uv, height_uv);
--	dvs_config->xcoords_y = kvmalloc(width_y * height_y * sizeof(uint32_t),
-+	dvs_config->xcoords_y = kvmalloc(array3_size(width_y, height_y,
-+						     sizeof(uint32_t)),
- 					 GFP_KERNEL);
- 	if (!dvs_config->xcoords_y)
- 		goto err;
- 
--	dvs_config->ycoords_y = kvmalloc(width_y * height_y * sizeof(uint32_t),
-+	dvs_config->ycoords_y = kvmalloc(array3_size(width_y, height_y,
-+						     sizeof(uint32_t)),
- 					 GFP_KERNEL);
- 	if (!dvs_config->ycoords_y)
- 		goto err;
- 
--	dvs_config->xcoords_uv = kvmalloc(width_uv * height_uv *
--					  sizeof(uint32_t),
-+	dvs_config->xcoords_uv = kvmalloc(array3_size(width_uv, height_uv,
-+						      sizeof(uint32_t)),
- 					  GFP_KERNEL);
- 	if (!dvs_config->xcoords_uv)
- 		goto err;
- 
--	dvs_config->ycoords_uv = kvmalloc(width_uv * height_uv *
--					  sizeof(uint32_t),
-+	dvs_config->ycoords_uv = kvmalloc(array3_size(width_uv, height_uv,
-+						      sizeof(uint32_t)),
- 					  GFP_KERNEL);
- 	if (!dvs_config->ycoords_uv)
- 		goto err;
+ 	err = READ_ONCE(csocket->ops)->connect(csocket,
+-				    (struct sockaddr *)&sin_server,
+-				    sizeof(struct sockaddr_in), 0);
++					       (struct sockaddr *)&stor,
++					       sizeof(stor), 0);
+ 	if (err < 0) {
+ 		pr_err("%s (%d): problem connecting socket to %s\n",
+ 		       __func__, task_pid_nr(current), addr);
 -- 
 2.53.0
 
