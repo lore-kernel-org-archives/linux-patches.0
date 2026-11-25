@@ -1,52 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795623515;
-	b=TBwo7C9jZIFqAsDjgN78K+4HlOQyNTpnPK9oxNc8P6QBkD1zLeU5RkI8z7qnJ7bFXxsJ
-	 bEAcKWPQZb+XJ4U37Az4mCwBDl1AfuanS4MgnBxY8vPDzRZpyM+/PeigSu+fnUu396HYw
-	 pzxTLaS7mYlKlJvgDz4c5dJ34uyzlrro0YQdeDmc9TSaoHQxDguuaMQVjRKb3m8DEPmnl
-	 uypyHZlLL888QrqXEvOMN6jxFYrPq70RKWbK9qSTw68J9Ya7UX9y9CAGTQq77MZmjzdSK
-	 vyD2AndpsV672T0rOqQc2tcowPF2+uN2ofJM+5DCybWAO8LusbkxcJnGQOYMsLhA7Kg==
+	t=1795623518;
+	b=durDEanWJCsDiAre2vCX/3lFkHZBTl4rb0OECHsxFlb8KqSQ29aixeytwNYKUFD6KcWN
+	 9wxvQgzSehpO3k1+1UQ+dFpXDvNHEmtDxzbdxKfWcaQGOA7YqsHwkuaL/K2IrsJRcp/PE
+	 NH5XG+Q/4rWymABF4ePGuJDF6XIBVApDVzpN+4W4BEPscWQ9WIG9FFi/Qux86gnI7QFTO
+	 yKHm1kYQ/IHxhBlHRQ+7suw9ZlmuxMb8R7By/KhwWpqyAoyuxKv85p7cTUgMxRXxmI1De
+	 IhoItAhCrsSEzK+Jg+QEWGNkIR6Japuad4n02PCpYtfmIvZMthG3t669HRMASi1T/AA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795623515;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795623518;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Type:Content-Transfer-Encoding;
-	bh=sHq3jSfuWwSI/b/mKj4EEm+FRzc5EwdFwJbP7l8COPA=;
-	b=W+CsIiOSrI4uwenFjt0HB6CLSZAJsndikC+lYQV0fORJMsSGLdWQrO/EsBadXBF94aNk
-	 aXy0jQGQyKTEf29xSdjOmvk/TVIV8FFaa7/S4nSUTx6AEKpXZxPXQv9BkHNFYasLJ68mr
-	 dMfyoosoljSULUdEV9SPi7GFR4to91oqk7Rx2xZqDSvf3YeVJbyAt1lIAGHKjX+2NASxl
-	 kLfZ1MMXN0Typvw6NdSvYXUZsPGWx7X7QtxjgMOShibwRqfY+vSro8yAVcQoBEpds6nHJ
-	 46hiLYuwhMMPwiGAjrTLrXJ/bk5a7GNGp+kE3kRIqtvIbm3wsl5ArC65bgwVB/WYNWg==
+	 MIME-Version:Content-Transfer-Encoding;
+	bh=cvD8xmYwAMSi5sanuLY3X/SZpIsCeL7WBKtcVFXKykM=;
+	b=cP6zuE/xmETF5S0GX472N8vGnjWqAP1Z1tQVjxr4eX1YgKnLhlClXWCYIS94EaIS4cRx
+	 oZeNj47lTT6wxy9YjFVQb4oQgF9iYg0P34BVmhJyp5u8ZJru9o6GS56GUSBnS+o+o+dYq
+	 3nPTzHbABXqg2coblenLTBZeyPpC8fNWy2RGp0Na0YPg3uek352BA26pbVrdTysZCyJGf
+	 aY0HFd2T6mDRSQ5FHs966sUyGtMK7khVkQ9S2DpkrbkOJ3uJIiFHTj/064Jiyh4AYRwA/
+	 P4LmNJC2SL0flwI59c4PSWzk/F0bcZIQCnDz10v4KJ2EJAJAgsxV5W8URveywfZ3Sug==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=UEPT3q8Q;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=swcuc9qi;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 83DBD606A31E;
-	Wed, 25 Nov 2026 16:18:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D1A8F606A31E;
+	Wed, 25 Nov 2026 16:18:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=UEPT3q8Q
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A16431F000C6;
-	Wed, 25 Nov 2026 16:18:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=swcuc9qi
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 20A781F000CF;
+	Wed, 25 Nov 2026 16:18:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795623515;
-	bh=sHq3jSfuWwSI/b/mKj4EEm+FRzc5EwdFwJbP7l8COPA=;
+	s=korg; t=1795623518;
+	bh=cvD8xmYwAMSi5sanuLY3X/SZpIsCeL7WBKtcVFXKykM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=UEPT3q8Q11B0fpoKcN1opGCi43kQjIxbaov0RAfVnTdyIb7teQVVJmPrz6nWHoskg
-	 U47VB5NkxGUbWKFQtscrl/pTxXsIrr59JRDDWdwgRRO157cyYFSKJtMX7egjBby2Sd
-	 I6mopxYrxIE/Yfi2X1VmGohrbkXpX1hF2ehRE9vA=
+	b=swcuc9qi/Mb8lcczChBzzIlEaxKOlNAHOIJ1uHh4zAoacVSIYhFxCXMda0nquvIOo
+	 l+Bz0wPjby0K/J1tOBuiuymGsYG0dVmfLszE9BvwgXtljxfjC9Z0QzrhXq+DPCAtHL
+	 xCd6Q/89uuF9hrqqVnpfeCVq1EtvHqDgz41NQuWo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Fredric Cover <fredric.cover.lkernel@gmail.com>,
-	Namjae Jeon <linkinjeon@kernel.org>,
-	Paulo Alcantara <pc@manguebit.org>
-Subject: [PATCH 6.18 840/990] smb: client: fix double conversion of DFS path in setup_dfs_ref()
-Date: Wed, 25 Nov 2026 15:36:47 +0100
-Message-ID: <20261125143841.707886096@linuxfoundation.org>
+	Giuseppe Scrivano <giuseppe@scrivano.org>,
+	Amir Goldstein <amir73il@gmail.com>
+Subject: [PATCH 6.18 831/990] ovl: do not always clear absolute_redirect
+Date: Wed, 25 Nov 2026 15:36:38 +0100
+Message-ID: <20261125143841.501183768@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143822.072087159@linuxfoundation.org>
 References: <20261125143822.072087159@linuxfoundation.org>
@@ -62,84 +61,57 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Fredric Cover <fredric.cover.lkernel@gmail.com>
+From: Giuseppe Scrivano <giuseppe@scrivano.org>
 
-commit 92509ce64ffff02d05fe9f3c82b889e1cc500076 upstream.
+commit 477449a7a5fd1b2fe973fe2978b0c921115a65f3 upstream.
 
-setup_dfs_ref() converts the path from the mount charset to the DFS
-cache charset (utf8) via dfs_get_path(), and then passes that already
-converted string to dfs_get_referral().  dfs_cache_find() converts its
-input again, assuming it is still in the mount charset.
+ovl_check_redirect() clears d->absolute_redirect before it checks that
+the path element has a redirect xattr.  An element without one, such as
+an intermediate directory in a lower layer, then clears the flag set by
+the absolute redirect of a metacopy file found in a higher layer.  The
+lookup of the data in the data-only layers is not deferred any more and
+the lookup fails with -EIO:
 
-When the mount charset is not utf8 (iocharset=iso8859-1, or a kernel
-built with a non-utf8 CONFIG_NLS_DEFAULT) and the DFS path contains
-non-ASCII characters, the utf8 bytes are interpreted as mount-charset
-characters and encoded a second time.  For example, "é" is sent as
-c3 83 c2 a9 instead of c3 a9.  The server then fails the second-level
-referral with STATUS_OBJECT_PATH_NOT_FOUND and the mount fails with
--ENOENT, even though the path exists.
+  # l2/f: metacopy, redirect "/dir/file"; l1/dir/ exists, no "file"
+  mount -t overlay none -o metacopy=on,redirect_dir=on,\
+        lowerdir+=l2,lowerdir+=l1,datadir+=data m
+  cat m/f   # Input/output error
 
-Pass the unconverted path to dfs_get_referral() so that it is converted
-exactly once.
+Set d->absolute_redirect only when a redirect xattr was read.
 
-Such mounts now get past the second-level referral and reach
-dfs_parse_target_referral(), which is why this change depends on
-"smb: client: fix out-of-bounds read in dfs_parse_target_referral()".
-
-Tested with a Samba DFS root containing a link named "café", mounted
-with iocharset=iso8859-1 and the single Latin-1 byte 0xe9 in the path:
-before, the mount failed with -ENOENT; with both patches applied, it
-succeeds.
-
-Signed-off-by: Fredric Cover <fredric.cover.lkernel@gmail.com>
+Fixes: 5436ab0a864e ("ovl: implement lookup in data-only layers")
+Closes: https://sashiko.dev/#/bug/linux-2cc24e0b-fbdc-4cf1-aded-cfd19c2918ee
 Cc: stable@vger.kernel.org
-Reviewed-by: Namjae Jeon <linkinjeon@kernel.org>
-Signed-off-by: Paulo Alcantara <pc@manguebit.org>
+Signed-off-by: Giuseppe Scrivano <giuseppe@scrivano.org>
+Signed-off-by: Amir Goldstein <amir73il@gmail.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/smb/client/dfs.c |   10 +++++-----
- 1 file changed, 5 insertions(+), 5 deletions(-)
+ fs/overlayfs/namei.c |    5 ++---
+ 1 file changed, 2 insertions(+), 3 deletions(-)
 
---- a/fs/smb/client/dfs.c
-+++ b/fs/smb/client/dfs.c
-@@ -103,6 +103,7 @@ static int setup_dfs_ref(struct dfs_info
- 	struct cifs_sb_info *cifs_sb = rw->mnt_ctx->cifs_sb;
- 	struct smb3_fs_context *ctx = rw->mnt_ctx->fs_ctx;
- 	char *ref_path, *full_path;
-+	const char *raw_path;
- 	int rc;
+--- a/fs/overlayfs/namei.c
++++ b/fs/overlayfs/namei.c
+@@ -38,13 +38,12 @@ static int ovl_check_redirect(const stru
+ 	char *buf;
+ 	struct ovl_fs *ofs = OVL_FS(d->sb);
  
- 	set_root_smb_session(rw->mnt_ctx);
-@@ -114,9 +115,10 @@ static int setup_dfs_ref(struct dfs_info
+-	d->absolute_redirect = false;
+ 	buf = ovl_get_redirect_xattr(ofs, path, prelen + strlen(post));
+ 	if (IS_ERR_OR_NULL(buf))
+ 		return PTR_ERR(buf);
  
- 	if (!tgt || (tgt->server_type == DFS_TYPE_LINK &&
- 		     DFS_INTERLINK(tgt->flags)))
--		ref_path = dfs_get_path(cifs_sb, ctx->UNC);
-+		raw_path = ctx->UNC;
- 	else
--		ref_path = dfs_get_path(cifs_sb, full_path);
-+		raw_path = full_path;
-+	ref_path = dfs_get_path(cifs_sb, raw_path);
- 	if (IS_ERR(ref_path)) {
- 		rc = PTR_ERR(ref_path);
- 		kfree(full_path);
-@@ -125,9 +127,7 @@ static int setup_dfs_ref(struct dfs_info
- 	ref_walk_path(rw) = ref_path;
- 	ref_walk_fpath(rw) = full_path;
- 
--	return dfs_get_referral(rw->mnt_ctx,
--				ref_walk_path(rw) + 1,
--				ref_walk_tl(rw));
-+	return dfs_get_referral(rw->mnt_ctx, raw_path + 1, ref_walk_tl(rw));
- }
- 
- static int __dfs_referral_walk(struct dfs_ref_walk *rw)
+-	if (buf[0] == '/') {
+-		d->absolute_redirect = true;
++	d->absolute_redirect = buf[0] == '/';
++	if (d->absolute_redirect) {
+ 		/*
+ 		 * One of the ancestor path elements in an absolute path
+ 		 * lookup in ovl_lookup_layer() could have been opaque and
 
 
