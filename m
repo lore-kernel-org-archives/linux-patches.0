@@ -1,51 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795623086;
-	b=kAA9g/7hip1T7IAeZnZYHWIWTrNIEBYxbbL+SnnKvbl144SqaLQb9r1n1sW8bf7k3A8j
-	 teeCaL6wT2ymTVadh67dPDpuUVIvdQTWcWB74POozh9GtWsx38SxEFh7J7rmL4ASkJxH2
-	 IobAb+EwBKU3a20vmceSyaddzB2XJVFhMhXCilXpQuWKWAkUYzEJ8pqo+6fEuqtfHYyj6
-	 xe4B1ReyWJBOIleJ5+MvYrTtI2oEP3p4Kl0WoIr70jjlQ/J6F1WloEtZDor25uMThDqeR
-	 0DkUUsYmmq1K1VBmIBrY/U8NLCC61hbR5xJb0e78mXwUMwI/8cJ1nJgc2GK8EEVEpqA==
+	t=1795623089;
+	b=mlnWo2PfTbvvxhT3tM7BckE9IcT9a2oWL7P9z1n7QGLSNSGhzz3e+UuYecdSDepZl8NG
+	 Q8+qkPhU57ReTi58LEqEfxWt5uYhoP1xBRd9HXPf98rgzTJcMSqkzU/OmqyQFTy5zOgQ6
+	 RLPOtDPnJfOD7t4+vcgiVSdVTi2D7yHK8QrViYunmD5X8fDk6CdI7lQDs512bm24rpP54
+	 hH8e79gzqJ2ubhlHoymNQ0bYt0GqiaIme0dk9EEKLYRKBcJeQmWdaD230/CWjsBy7l1Mx
+	 mXxs57sk4O9l2lmjTwASOun0DF0Tse9+J2YnwyUaWvvAZ4RcMTFELtxODE0r9L2JSsg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795623086;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795623089;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=u3k+f4S4vQFstRA7vDe/yV+8TxOqHXoO/LKWfPEWLMs=;
-	b=qs1bgj5EsDBtSvHGDHvxpVYNLq4/iKz8NBszNDSuHjtSqCZr9oUIBZ9Pzh8E0mf3pf0K
-	 LRSzW0z2gSyFAI/QcygyTfKENb7sywhQeBepr6u1leX5JVqrEVsnzEo2ubmnxwR9D5nYP
-	 YOT+n2O/khg8O2x0TyjKQH+pkgoZ6xDHSk8Uu/4QDB+HY0/cfm24Cxqed3bRsj3QIvrr6
-	 zDxlRkJXCI0+Hz5uKz0tMCNarxDznkdJ9apY4Yrs3PAO2dx6vsX65xqdmkbV6GzB1VQz5
-	 Y9BORGm1w75bO7+oiO7sD96P2NbjMhv6py9E8UUCQZ2vYYp/tyer+Fgh5AgzewlrXFg==
+	bh=Ptx7t9V8KYYplTaDuWHAlhjDiQv6cSJ+zvI1hLJrqb4=;
+	b=Jwgn4LvDUHQrtLqAZZH5/2B+66MxKHgZoqgZW+WTfi9RP84anJZqMhFCWtJ6gLMt5EiR
+	 YYpaS0OId/jllzLJwXwXZkjM9JXusF2Enm6tlsLexTmRoXI9qdBTfLS5JBNitcJ0eQTCe
+	 r7jps14UHfLgsIY6DbIrwsYQ8azD4Wp4FiBLJElzG/FiijzolUlmQGAn316MciWfLmaFi
+	 +/TwyhpRU2KUZ/u5Z/vCRDNnAzbFGilOje1icas9ymsCM7D4omCE4DQsaYuSZrCADVDCl
+	 IiLJktPai39p0Z7gxIalLaAgPzVDTPnWEZWjfJyTyMYZ6Qqkh5XcovM7DHd0Ak1i20Q==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=bh7CK6uO;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=tteKTznj;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7D3DE606A326;
-	Wed, 25 Nov 2026 16:11:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 59D45606A332;
+	Wed, 25 Nov 2026 16:11:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=bh7CK6uO
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A16571F000C4;
-	Wed, 25 Nov 2026 16:11:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=tteKTznj
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A59AC1F000D3;
+	Wed, 25 Nov 2026 16:11:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795623086;
-	bh=u3k+f4S4vQFstRA7vDe/yV+8TxOqHXoO/LKWfPEWLMs=;
+	s=korg; t=1795623089;
+	bh=Ptx7t9V8KYYplTaDuWHAlhjDiQv6cSJ+zvI1hLJrqb4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=bh7CK6uObKr4e2mbevZo+rbVNu5GEQZGhKx2jXr5OqgRaHHQknF0sEYetFJc7suNU
-	 K1q+oROswa8FgUCtdzLPue1oYayhLQGMB1GWpjvlkb4cjJn+0JKxO/YhMIUyBx+7fr
-	 xfBDnB2cJ4wBX9hr+TUVxd1xysP2tTwEBRfARmI0=
+	b=tteKTznjWcLlYVPmKdpwTUo3Db/ZQzeTVo42CrsOVqxmHt3EEB0Gp2alpYtfjGsjd
+	 fXgcYCXAZsRg9ZcnPa6SUD3YDnaw4EkpsWnJk54LXGEITnqaDoT4Az3xMj5hH59Vwo
+	 upWCrPtlO22vCovmZIK2lVwaRXzHrXT68JLQexI0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Cheng Yongkang <teel4res@gmail.com>,
-	"Christian Brauner (Amutable)" <brauner@kernel.org>
-Subject: [PATCH 6.18 747/990] fs/splice: clamp an over-reported write_iter result
-Date: Wed, 25 Nov 2026 15:35:14 +0100
-Message-ID: <20261125143839.559843537@linuxfoundation.org>
+	Catalin Marinas <catalin.marinas@arm.com>,
+	Mark Brown <broonie@kernel.org>
+Subject: [PATCH 6.18 748/990] arm64/gcs: Ignore attempts to change GCS mode during signal return
+Date: Wed, 25 Nov 2026 15:35:15 +0100
+Message-ID: <20261125143839.583136787@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143822.072087159@linuxfoundation.org>
 References: <20261125143822.072087159@linuxfoundation.org>
@@ -67,55 +67,103 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Cheng Yongkang <teel4res@gmail.com>
+From: Mark Brown <broonie@kernel.org>
 
-commit 2d956723e82cddae8ff8e9da99a666217b02065f upstream.
+commit d395db3dcd4c590d26a2f3d581d8d5b7ddbfa478 upstream.
 
-iter_file_splice_write() builds a bvec iterator of at most
-sd.total_len - left bytes and passes it to ->write_iter().  It then
-subtracts the returned length from sd.total_len and walks the pipe
-buffers by that length.  A ->write_iter() implementation that reports
-more bytes than the iterator held makes sd.total_len underflow and the
-dismissal loop advance pipe->tail past pipe->head, releasing a zeroed
-pipe buffer:
+If userspace tries to update the GCS mode as part of signal return then
+we update the thread state but don't update GCSCRE0_EL1, meaning the
+change does not take effect.  We may also get issues for other tasks on
+context switch since we suppress writes of the register if the two tasks
+have the same mode.
 
-  Splice Exceeded! ret=7 tot=1 left=0
-  Oops: general protection fault
-  RIP: 0010:iter_file_splice_write+0xb6f/0x1170
+Since no currently known userspace tries to use this functionality close
+this by ignoring any attempt to change the mode through signal return.
+The GCS mode for the current thread can be changed using the prctl()
+interface and will be preserved on signal return, allowing updates to
+the mode from the signal handler.
 
-Commit a3de58b12ce0 ("netfs: Fix unbuffered write error handling")
-added the warning for this condition but only reports it.  Clamp the
-return value to the size of the iterator that was actually handed to
-->write_iter(), so the pipe accounting stays consistent even when a
-producer violates the iterator contract.
-
-Fixes: 8d0207652cbe ("->splice_write() via ->write_iter()")
+Reported-by: Catalin Marinas <catalin.marinas@arm.com>
+Link: https://lore.kernel.org/r/as-8IqsbMbOBo5Oq@arm.com
+Suggested-by: Catalin Marinas <catalin.marinas@arm.com>
+Fixes: 16f47bb9ac8a ("arm64/signal: Expose GCS state in signal frames")
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Cc: stable@vger.kernel.org
-Signed-off-by: Cheng Yongkang <teel4res@gmail.com>
-Link: https://patch.msgid.link/179328314072.648427.13388575162083843840@gmail.com
-Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
+Signed-off-by: Catalin Marinas <catalin.marinas@arm.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/splice.c |    9 ++++++---
- 1 file changed, 6 insertions(+), 3 deletions(-)
+ Documentation/arch/arm64/gcs.rst |   13 ++++---------
+ arch/arm64/kernel/signal.c       |   22 +---------------------
+ 2 files changed, 5 insertions(+), 30 deletions(-)
 
---- a/fs/splice.c
-+++ b/fs/splice.c
-@@ -739,9 +739,12 @@ iter_file_splice_write(struct pipe_inode
- 		sd.pos = kiocb.ki_pos;
- 		if (ret <= 0)
- 			break;
--		WARN_ONCE(ret > sd.total_len - left,
--			  "Splice Exceeded! ret=%zd tot=%zu left=%zu\n",
--			  ret, sd.total_len, left);
-+		if (unlikely(ret > sd.total_len - left)) {
-+			WARN_ONCE(1,
-+				  "Splice Exceeded! ret=%zd tot=%zu left=%zu\n",
-+				  ret, sd.total_len, left);
-+			ret = sd.total_len - left;
-+		}
+--- a/Documentation/arch/arm64/gcs.rst
++++ b/Documentation/arch/arm64/gcs.rst
+@@ -179,9 +179,8 @@ intended to be exhaustive.
  
- 		sd.num_spliced += ret;
- 		sd.total_len -= ret;
+ When returning from a signal handler:
+ 
+-* If there is a gcs_context record in the signal frame then the GCS flags
+-  and GCSPR_EL0 will be restored from that context prior to further
+-  validation.
++* If there is a gcs_context record in the signal frame then GCSPR_EL0
++  will be restored from that context prior to further validation.
+ 
+ * If there is no gcs_context record in the signal frame then the GCS
+   configuration will be unchanged.
+@@ -190,12 +189,8 @@ When returning from a signal handler:
+   point to a valid GCS signal cap record, this will be popped from the
+   GCS prior to signal return.
+ 
+-* If the GCS configuration is locked when returning from a signal then any
+-  attempt to change the GCS configuration will be treated as an error.  This
+-  is true even if GCS was not enabled prior to signal entry.
+-
+-* GCS may be disabled via signal return but any attempt to enable GCS via
+-  signal return will be rejected.
++* The features_enabled in the signal return context will be ignored; any
++  changes made using the prctl() in the signal handler will be preserved.
+ 
+ 
+ 6.  ptrace extensions
+--- a/arch/arm64/kernel/signal.c
++++ b/arch/arm64/kernel/signal.c
+@@ -741,36 +741,16 @@ static int preserve_gcs_context(struct g
+ 
+ static int restore_gcs_context(struct user_ctxs *user)
+ {
+-	u64 gcspr, enabled;
++	u64 gcspr;
+ 	int err = 0;
+ 
+ 	if (user->gcs_size != sizeof(*user->gcs))
+ 		return -EINVAL;
+ 
+ 	__get_user_error(gcspr, &user->gcs->gcspr, err);
+-	__get_user_error(enabled, &user->gcs->features_enabled, err);
+ 	if (err)
+ 		return err;
+ 
+-	/* Don't allow unknown modes */
+-	if (enabled & ~PR_SHADOW_STACK_SUPPORTED_STATUS_MASK)
+-		return -EINVAL;
+-
+-	err = gcs_check_locked(current, enabled);
+-	if (err != 0)
+-		return err;
+-
+-	/* Don't allow enabling */
+-	if (!task_gcs_el0_enabled(current) &&
+-	    (enabled & PR_SHADOW_STACK_ENABLE))
+-		return -EINVAL;
+-
+-	/* If we are disabling disable everything */
+-	if (!(enabled & PR_SHADOW_STACK_ENABLE))
+-		enabled = 0;
+-
+-	current->thread.gcs_el0_mode = enabled;
+-
+ 	/*
+ 	 * We let userspace set GCSPR_EL0 to anything here, we will
+ 	 * validate later in gcs_restore_signal().
 
 
