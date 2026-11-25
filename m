@@ -1,52 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795626298;
-	b=rUb4ur8qRoZOENnUS73sHPmPU5zZqwNaCamlrrZKh/NPR2poeBCKx0T589sDHwnvSwLX
-	 q/x9Fex2kq4X2zMoM2q80mc2ZNg7XDoHZ4nVjQ8BMfUrJDIsGboqZ5YuP/ySiTSy1Vy2V
-	 lZBFPI48ERXJOQNqxPX1K125IO4fG2S6uYCMesB/w59l49K1Uki83Fjmr21zGG9Ij4CxA
-	 dtiChMreBqjIJKklc5gfPZ9FRu5k5fn/HVnaMzQYk/xvEoAswvm/36Smd1654vTpNzMUT
-	 6/qtFVfpO77Gy4sU17CiTBvGME40AFji9Qjed+jCxahtSCZHSOCZDdocKmYxkd5R21A==
+	t=1795626301;
+	b=xJ7mHwAJBk34j1NPBNbFumhxXAx3D0ES8og+BiSJsnOMbsZeGYq7kT0tF0mhGXllYbj5
+	 iOL8rLhA2jaXA+59/JoWgsj1Id8akiAVuvdd5kcDrklgQlUiuKzAcDFmjVV2f7i+NtP+V
+	 FCH1wNw1rPTmMOzWWrbCnfQ89XdCHx06xKxnFmjaoPmU4gPm7z6BA39rqP2DYHv4Wv/qM
+	 kG/1vH+McedFgcmqS92hWE0PEHMiv7Fa2rj8QDPd9kzKL1TyhjYQSgysAr6osTB+hgQmH
+	 Y2q3iY/xtaIdySgOJnQG+fLrv2gH+CLLf00kT5a6j2Z4kYOt7RwcIOu0ruBp4k5NHLg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795626298;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795626301;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=DdFYz8QQQxSP0TuNAZZWwNyjGz/149GYIYRisKdBamo=;
-	b=5lP9m2Qaq7n6pF6dmapdqJ3Uon6liFaXxhsow6R/tbQN0MQrctpf1YKuqHpk+SRrlGtD
-	 Ff4FIV/T0GrJEidxq5h5Imj/i+M2kOUGdFN0xr2IhyF0PBmiExBmOlfLLfEiVfcRP35y3
-	 YqBzovMvvz2XTkwumQ5yKZdKThPqydUoztJXgVksYCDc9Zay+9puyQU+p8bwYoQn5YaBq
-	 1qbh0RdB0d0mitPVWnvfGdXetVLy+mvyL3g6xeoipaqSAblul0WnbV+0BwBfhiczICA+w
-	 q9Xu5LkBuMfLKjcs/wCZsWCESeL+ya7LSzgp0/5+1RliQbZ3Cvd0mwXgR8Sv+CuAbqw==
+	bh=HE9pm/A9RH3OC0vZdlOtD3h2fzhS2Ztj0gHguNVoIYI=;
+	b=c/KW1j1Az3+D1uhu3DXX/Cm9Q2AuY/zqvdQ9uDX4SLeiUkIINzoEyYlhlv0vD/whUQqg
+	 JtSajjvL+WphZL6CXJUJtCUYkmvO1o+9lkDzELyDSXCaVGMZk8IJC9m4jhCdi80TB83RB
+	 Ej8s1uw+W6I3ZAWA8jNG8bqAJiLi3uWhiGUGUcgxKKSr3nfE/BbOOkHcGkoroUOSlWTwb
+	 5w6fOfIKN4wt8gLFyq7ZnT8Pg6m+DbMjtaLcpSlwPA2JMxQ0oH84OY+T26s7dvti5CsXw
+	 iLL+KOfMPhrqZtH2Hfq18xSSqW/fZBuFM6Hsr57VHiK/2Bsy8nAjEUZh4DR24Y+imng==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=CbYnCnDs;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=NzVMl7Ks;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 78059606A321;
-	Wed, 25 Nov 2026 17:04:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 45D6B606A685;
+	Wed, 25 Nov 2026 17:05:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=CbYnCnDs
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C75711F000C0;
-	Wed, 25 Nov 2026 17:04:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=NzVMl7Ks
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A911E1F000EC;
+	Wed, 25 Nov 2026 17:05:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795626298;
-	bh=DdFYz8QQQxSP0TuNAZZWwNyjGz/149GYIYRisKdBamo=;
+	s=korg; t=1795626301;
+	bh=HE9pm/A9RH3OC0vZdlOtD3h2fzhS2Ztj0gHguNVoIYI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=CbYnCnDsuf6VVhdF81YhFRQnmBAUWixX7bCk1Qzj/7J4B3j2eHqEFPI4VwsUTl46u
-	 ZuJWG/qAgBc9OEaWfr5ytDykPMEcnzuMqvwuaQ+1OdAG49YIIHER5sW36ZpS/lTcGQ
-	 0m4QjmzH9nmEpm1jYiJmcDsAKVfhQn/s7stYd2XI=
+	b=NzVMl7KsQcSJByoAqB86xzEgPg4mrlOaHfURvtNLX3VIK69Ci045dzX4HHN4JOkOU
+	 /aL23L6SipZ1sssWj/U7N+sT2YR7AJRjb7jgAEyG4p0hx26rpg5Trw2z+ssSsKIWtF
+	 zXTy2trxt1WMwId7or182vY+zB4NFKjTSDWI1NMY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Arnav Kapoor <kapoorarnav43@gmail.com>,
-	Andy Shevchenko <andriy.shevchenko@intel.com>,
+	Salah Triki <salah.triki@gmail.com>,
 	Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>
-Subject: [PATCH 6.12 796/816] iio: proximity: sx9324: fix out-of-bounds read of scan period table
-Date: Wed, 25 Nov 2026 15:39:04 +0100
-Message-ID: <20261125143907.597239736@linuxfoundation.org>
+Subject: [PATCH 6.12 797/816] iio: temperature: mlx90614: Fix dual channel probe condition check
+Date: Wed, 25 Nov 2026 15:39:05 +0100
+Message-ID: <20261125143907.619702159@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143849.205329330@linuxfoundation.org>
 References: <20261125143849.205329330@linuxfoundation.org>
@@ -68,63 +67,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Arnav Kapoor <kapoorarnav43@gmail.com>
+From: Salah Triki <salah.triki@gmail.com>
 
-commit 7b5f54280f8e6ef07664f6705dd005feefbe87d1 upstream.
+commit 4d4e75b3074bc29525c963a81c19471528f29a45 upstream.
 
-The scan period of the SX9324 is selected by the 5 bit wide
-SX9324_REG_GNRL_CTRL0_SCANPERIOD field, so it has 32 possible values.
-sx9324_scan_period_table[] however only has 16 entries, it was copied
-over from the SX9310 driver where the field is only 4 bits wide.
+In mlx90614_probe_num_ir_sensors(), the check on chip_info->dual_channel
+is inverted.
 
-sx9324_wait_for_sample() indexes the table with the raw field value, so
-all the codes from 16 to 31 read past the end of the array. The default
-value of the register is SX9324_REG_GNRL_CTRL0_SCANPERIOD_100MS (0x16,
-i.e. 22), so the out-of-bounds read happens with the default
-configuration of the device. It is only avoided when the device has an
-interrupt line, as the wait is only done in the polling case.
+Currently, if dual_channel is true (MLX90614), the function returns 0
+immediately without checking op_eeprom_config1. This forces all MLX90614
+devices to be registered as single sensor (num_channels = 2), making the
+second object temperature channel inaccessible.
 
-The value read is then used as the duration of an msleep() call, so the
-sensor is polled with a completely random delay.
+Conversely, if dual_channel is false (MLX90615), the function skips the
+early return and performs an unnecessary SMBus read on EEPROM CONFIG1 even
+though MLX90615 does not support dual channel operation.
 
-Fill the table with the scan periods of all 32 codes, which are the
-periods documented for the corresponding sx9324_samp_freq_table[]
-entries, and add a static assertion to keep both tables in sync.
+Fix this by negating the condition so that single-channel chips return
+early with 0, while dual-channel capable chips (MLX90614) proceed to read
+the EEPROM configuration register to detect whether 1 or 2 object channels
+are present.
 
-Fixes: 4c18a890dff8 ("iio:proximity:sx9324: Add SX9324 support")
+Fixes: 3d5ead238bc8 ("iio: mlx90614: Factor our register IO and constants into model specific descriptor")
+Signed-off-by: Salah Triki <salah.triki@gmail.com>
 Cc: stable@vger.kernel.org
-Signed-off-by: Arnav Kapoor <kapoorarnav43@gmail.com>
-Reviewed-by: Andy Shevchenko <andriy.shevchenko@intel.com>
 Signed-off-by: Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/iio/proximity/sx9324.c |   13 +++++++++++--
- 1 file changed, 11 insertions(+), 2 deletions(-)
+ drivers/iio/temperature/mlx90614.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/iio/proximity/sx9324.c
-+++ b/drivers/iio/proximity/sx9324.c
-@@ -280,11 +280,20 @@ static const struct {
- 	{ 0, 250000 },  /* 11111: 4 s */
- };
+--- a/drivers/iio/temperature/mlx90614.c
++++ b/drivers/iio/temperature/mlx90614.c
+@@ -570,7 +570,7 @@ static int mlx90614_probe_num_ir_sensors
+ 	const struct mlx_chip_info *chip_info = data->chip_info;
+ 	s32 ret;
  
-+/*
-+ * The scan period of the SX9324 is selected by the 5-bit wide
-+ * SX9324_REG_GNRL_CTRL0_SCANPERIOD field. The values below are the scan
-+ * periods in ms of the corresponding sx9324_samp_freq_table[] entries.
-+ */
- static const unsigned int sx9324_scan_period_table[] = {
--	2,   15,  30,  45,   60,   90,	 120,  200,
--	400, 600, 800, 1000, 2000, 3000, 4000, 5000,
-+	1, 2, 4, 6, 8, 10, 14, 18,			/* 0x00 - 0x07 */
-+	22, 26, 30, 34, 38, 42, 46, 50,			/* 0x08 - 0x0f */
-+	56, 62, 68, 74, 80, 90, 100, 200,		/* 0x10 - 0x17 */
-+	300, 400, 600, 800, 1000, 2000, 3000, 4000,	/* 0x18 - 0x1f */
- };
+-	if (chip_info->dual_channel)
++	if (!chip_info->dual_channel)
+ 		return 0;
  
-+static_assert(ARRAY_SIZE(sx9324_scan_period_table) == ARRAY_SIZE(sx9324_samp_freq_table));
-+
- static const struct regmap_range sx9324_writable_reg_ranges[] = {
- 	/*
- 	 * To set COMPSTAT for compensation, even if datasheet says register is
+ 	ret = i2c_smbus_read_word_data(client, chip_info->op_eeprom_config1);
 
 
