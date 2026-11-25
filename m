@@ -1,42 +1,42 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795625419;
-	b=5CugZqjnOYuuuZHvForBiz9ehCjMNOkPht1l45BVsS0YxKErhWuLXpnciVYuXxIop4Q4
-	 GN+7P7RRxj/5YThfznc7Us2qf3lIBed5vTM7DYP4nnykYB4d08BSLeIaIFKxVyW4ECpYl
-	 4YFC++3bvoRoauFk2bfiBvDB0teutAyXxOJ45gExV/ITP5zzpI/STitz9nCYMa5z9LYlL
-	 VhQenxMEh7wZimW8ht5kFz1h1nFIltZNNr3V/8Q8FUIuzROCohS+j5hzzstmIFtRh1WFf
-	 HSP49KXMnAz66D59Zun4x+i2+oJLz1W/3DCPZnbL7TxuhCO0onBz5I2U/tokPuwZZTQ==
+	t=1795625422;
+	b=Iz+uo0trLtLNCpvUNxS93yr0TcUD5HMUpe9fJxF8RrL2UAsbc7LOwKtnHksc9i6WqsF3
+	 tksVQjEegbSTtC2S/CuUcBpg/OQebMjFux16kswx6epApf+fu34bCbsr52oH7dai3mdOV
+	 v9v5aE3/yyUlMWxgDjUFGJwm5kql3e8P6Y0/uYTmeeDNM6pg07xczyZ+aSUSGnggZ+Wbt
+	 tvRHdGUzvjqWFJgJMispBlZMo3rIBAINhvFKrN/VKaxy5tM/crqmk5mCenfwYMD5hJQ2B
+	 h8dtAsWtOms0epYI4Zt3IC4qI1c81RwPz7eWQ1FThWoEbTcY7tumArfXhG2D3k5v0eQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795625419;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795625422;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=gZtyepsJ+bv99G7L3U5BJn5+jcf/9KMJo6tfYhvyjc4=;
-	b=PgouzqYeOH9TLn8FLh9fZS8nzBOr8VAiL+lh/FrlFgI971NwhIHqpXmmaOMW/oLIVWkk
-	 JPW0gyaZjHVr3babwV1mKPY8scQebKtJxXHH+mFprUOekVa1F/zPbys3q+wwL5JDwPEyS
-	 yEyFsfXkAvjs9POSJAXbe4L2iOHV3mrhq9BfcjeMw8YxfjOp9ft1KOotQDRG3N5TFxb9A
-	 0OmXfbiY8ACjD+Ufaedu+43hqLKoDXix3UeWwsCD5Oh6xg0U5OSs9OwbdIeyIHQsZ50QB
-	 eT346fxi6yQuG8aR1rbI1/ss15OjRSuWQHT9Kd2zxAFJlUjTv0Sv/L/5hTGSRFcMSyw==
+	bh=ZgFyLnGSDT7v7awC1QbnJ5LuWr4u4HUfob1VA7SPzJo=;
+	b=iZ094x8UcLyoVlyAZcZEPIsE/Jr52J3ZZ58+ipROWCTsMJXBTwnfbr6DxoBfi0ZAzQU9
+	 cjcXS02i3nwpC78mC0ZcGf2RtquKaOJlZ42GxJ4w52lRzEmDJjjtta0qJLRqprr4f5Djz
+	 YIRYgxBkJNQ6NTQHMdYA9lf6myMqFgGnGX8YeOPXOyxCTJ1Oh1vWxbtF33kpvj1hPcRp6
+	 NRGlEXVWp88BD5dgM8ED06qN1rWM9G9k2T/VNOw9KBL9dOXMZJOoVi3ymSFuUHPFuqc61
+	 AfELbna4yidbb4pHujKZXqUEJsAtQerOLkpEb+ulihulDOboRNKSM62rJwpD4ruGKLw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="sGi39t/x";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=qMO5hlbT;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5487A606A31E;
-	Wed, 25 Nov 2026 16:50:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 78033606A31E;
+	Wed, 25 Nov 2026 16:50:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=sGi39t/x
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8227A1F000C4;
-	Wed, 25 Nov 2026 16:50:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=qMO5hlbT
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C8E5C1F000C0;
+	Wed, 25 Nov 2026 16:50:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795625419;
-	bh=gZtyepsJ+bv99G7L3U5BJn5+jcf/9KMJo6tfYhvyjc4=;
+	s=korg; t=1795625422;
+	bh=ZgFyLnGSDT7v7awC1QbnJ5LuWr4u4HUfob1VA7SPzJo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=sGi39t/xdcBkjpEOPkZHcBmCRhVhmtgsqHjN8xrHkcjfhTjOTVdFJ+DPJUX4uGQC2
-	 crFeeMLboH7CiYvRn6FDbYXv3id75W0IY+6O4A5IZGrX4wmSt1p3xjlAbJfgA0Tzrk
-	 Nqu27FbPOONrfPk0werPklf4rlUoQpwKdtNM4Zag=
+	b=qMO5hlbTD5kUj6QuNGGuhwEMX6MBQ7ZcoBVAqtYDhfVXCUInR6bp2Yxzj0d2MEaeU
+	 7QhYy/zh2R9MndeokPQ9r125x2aHD1QcQZOEArual9l7JDU5fN7XRIe5WEo9VjfmVe
+	 96n3kTWBgIdnKM2RNBke0h2Cjj3FaUllkK4ZMgBY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -44,9 +44,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Josef Bacik <josef@toxicpanda.com>,
 	Alexei Starovoitov <ast@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 508/816] bpf: Count sleepable callbacks as sleepable map users
-Date: Wed, 25 Nov 2026 15:34:16 +0100
-Message-ID: <20261125143900.944660487@linuxfoundation.org>
+Subject: [PATCH 6.12 509/816] bpf: Assume no bounds for buffers behind a tail call
+Date: Wed, 25 Nov 2026 15:34:17 +0100
+Message-ID: <20261125143900.967394538@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143849.205329330@linuxfoundation.org>
 References: <20261125143849.205329330@linuxfoundation.org>
@@ -70,104 +70,49 @@ Content-Transfer-Encoding: 8bit
 
 From: Josef Bacik <josef@toxicpanda.com>
 
-[ Upstream commit 927c9c985f3ef4d30c086884b7e0ecb933f742ef ]
+[ Upstream commit 7fa323d77688e8b62b2f0bf6c3208a2c96d4a5e7 ]
 
-map->sleepable_refcnt tells bpf_map_fd_put_ptr() whether an inner map that
-is taken out of its outer map has to wait for an RCU Tasks Trace grace
-period as well.  It counts the sleepable programs that use the outer map.
-The bpf_wq or bpf_task_work callback of a program that is not sleepable
-runs under rcu_read_lock_trace() only, and is not counted.
+The bpf_map_elem, bpf_sk_storage_map and sockmap iterators hand the key
+and the value of an element to the program as buffers.  The verifier notes
+how far a program reaches into them, and the iterator compares that with
+the map when the program is attached.  A program that does not touch the
+buffers passes.  It can tail-call another program of the same target,
+which gets the same context, and whose reach nobody compares with the
+map:
 
-Such a callback can look an inner map up and keep it while user space
-deletes it from the outer map.  The inner map is freed behind a plain RCU
-grace period, under the callback:
+  BUG: KASAN: slab-out-of-bounds in ___bpf_prog_run+0xa46a/0xae80
 
-  BUG: KASAN: slab-use-after-free in array_map_update_elem+0x6bc/0x7d0
+The program array can be filled at any time, so there is nothing to look
+at when the link is made.  For the same reason a program with a tail call
+is taken to use the whole stack and the whole packet.  Take it to reach
+as far as can be into the buffers as well, so that these iterators refuse
+it with -EACCES.
 
-Count a program with such a callback.  The maps are bound before the
-verifier meets the callback, so raise the count of those that are bound
-when it does.
-
-Fixes: 8e83da9732d9 ("bpf: add bpf_wq_start")
+Fixes: d6c4503cc296 ("bpf: Implement bpf iterator for hash maps")
+Fixes: 5ce6e77c7edf ("bpf: Implement bpf iterator for sock local storage map")
+Fixes: 0365351524d7 ("net: Allow iterating sockmap and sockhash")
 Signed-off-by: Josef Bacik <josef@toxicpanda.com>
 Signed-off-by: Alexei Starovoitov <ast@kernel.org>
-Link: https://patch.msgid.link/20261017163745.3341787-24-alexei.starovoitov@gmail.com
-[ sashal: Adapted to missing helpers by keeping the local is_bpf_wq_set_callback_impl_kfunc() check and is_may_goto_insn() name, and by editing add_used_map_from_fd() without the check_map_prog_compatibility() context. ]
+Link: https://patch.msgid.link/20261017163745.3341787-26-alexei.starovoitov@gmail.com
+[ sashal: Adapted the hunk to the older code layout, where the tail-call fixup lives in do_misc_fixups() in the verifier source, with the same two added lines. ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/bpf/core.c     |  2 +-
- kernel/bpf/syscall.c  |  2 +-
- kernel/bpf/verifier.c | 17 +++++++++++++++--
- 3 files changed, 17 insertions(+), 4 deletions(-)
+ kernel/bpf/verifier.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/kernel/bpf/core.c b/kernel/bpf/core.c
-index df529db44f35c..de2c0ffb30252 100644
---- a/kernel/bpf/core.c
-+++ b/kernel/bpf/core.c
-@@ -2873,7 +2873,7 @@ void __bpf_free_used_maps(struct bpf_prog_aux *aux,
- 	bool sleepable;
- 	u32 i;
- 
--	sleepable = aux->prog->sleepable;
-+	sleepable = bpf_prog_runs_sleepable(aux->prog);
- 	for (i = 0; i < len; i++) {
- 		map = used_maps[i];
- 		if (map->ops->map_poke_untrack)
-diff --git a/kernel/bpf/syscall.c b/kernel/bpf/syscall.c
-index 3e084cf77d134..8fd823047c3a0 100644
---- a/kernel/bpf/syscall.c
-+++ b/kernel/bpf/syscall.c
-@@ -5754,7 +5754,7 @@ static int bpf_prog_bind_map(union bpf_attr *attr)
- 	/* The bpf program will not access the bpf map, but for the sake of
- 	 * simplicity, increase sleepable_refcnt for sleepable program as well.
- 	 */
--	if (prog->sleepable)
-+	if (bpf_prog_runs_sleepable(prog))
- 		atomic64_inc(&map->sleepable_refcnt);
- 	memcpy(used_maps_new, used_maps_old,
- 	       sizeof(used_maps_old[0]) * prog->aux->used_map_cnt);
 diff --git a/kernel/bpf/verifier.c b/kernel/bpf/verifier.c
-index d8317cef6e8ab..1404e842580ba 100644
+index 1404e842580ba..15a02a4c08d22 100644
 --- a/kernel/bpf/verifier.c
 +++ b/kernel/bpf/verifier.c
-@@ -547,6 +547,19 @@ static bool is_async_callback_calling_insn(struct bpf_insn *insn)
- 	       (bpf_pseudo_kfunc_call(insn) && is_async_callback_calling_kfunc(insn->imm));
- }
+@@ -21566,6 +21566,8 @@ static int do_misc_fixups(struct bpf_verifier_env *env)
+ 			if (!allow_tail_call_in_subprogs(env))
+ 				prog->aux->stack_depth = MAX_BPF_STACK;
+ 			prog->aux->max_pkt_offset = MAX_PACKET_OFF;
++			prog->aux->max_rdonly_access = U32_MAX;
++			prog->aux->max_rdwr_access = U32_MAX;
  
-+/* From here on the maps of the program count it as a sleepable user. */
-+static void mark_sleepable_async_cb(struct bpf_verifier_env *env)
-+{
-+	int i;
-+
-+	if (bpf_prog_runs_sleepable(env->prog))
-+		return;
-+
-+	env->prog->aux->sleepable_async_cb = true;
-+	for (i = 0; i < env->used_map_cnt; i++)
-+		atomic64_inc(&env->used_maps[i]->sleepable_refcnt);
-+}
-+
- static bool is_may_goto_insn(struct bpf_insn *insn)
- {
- 	return insn->code == (BPF_JMP | BPF_JCOND) && insn->src_reg == BPF_MAY_GOTO;
-@@ -10175,7 +10188,7 @@ static int push_callback_call(struct bpf_verifier_env *env, struct bpf_insn *ins
- 		if (IS_ERR(async_cb))
- 			return PTR_ERR(async_cb);
- 		if (is_bpf_wq_set_callback_impl_kfunc(insn->imm))
--			env->prog->aux->sleepable_async_cb = true;
-+			mark_sleepable_async_cb(env);
- 		callee = async_cb->frame[0];
- 		callee->async_entry_cnt = state->frame[0]->async_entry_cnt + 1;
- 
-@@ -19651,7 +19664,7 @@ static int add_used_map_from_fd(struct bpf_verifier_env *env, int fd, bool *reus
- 		return -E2BIG;
- 	}
- 
--	if (env->prog->sleepable)
-+	if (bpf_prog_runs_sleepable(env->prog))
- 		atomic64_inc(&map->sleepable_refcnt);
- 
- 	/* hold the map. If the program is rejected by verifier,
+ 			/* mark bpf_tail_call as different opcode to avoid
+ 			 * conditional branch in the interpreter for every normal
 -- 
 2.53.0
 
