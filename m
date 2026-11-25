@@ -1,52 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795625914;
-	b=39ul9GajO1RyNFJWlIuY7d2jXszi4QpBW5cs+D1zNtupHywgg0lsycmu/53405xe049B
-	 pk8hl0Idua+DT80V4M0udJdbwqOYWVL5Ske/zGvlClUQh6FsCHsER5EaXmTwK5+G/yVJO
-	 u0ZP1dAL/RhD1SXH02E3eL8aKUys/8cYl5j1czqtaW4onvlCMW2NOXJaV/UY8c7DSqMW8
-	 ISpQCkt0q+80P05HW1tA/l8s71dR5k2Y9buJFC2W95eWsk3D/RqE5knk1PL3UlBHzQdeP
-	 NTPNGnbfeGB3fBU8JE44ySbnR9gig4Es60DFoCdDpdYwnjrIx0XlfLg6nijxY2YWjvw==
+	t=1795625917;
+	b=qAeyvt7TXApOVW5ejmjQe5t3IL1u0JarUboYPLar1xT5AblMh4zOYIMqVGiQjf/gvtMo
+	 a4d+InKIlqyQxMdY3679hM659rGvyg1e6sO1qRXAPNWUM4OuI72laQ1ddyKk4ZO7rOsLx
+	 cwWONrybQpcwUounM1aQFB878oYRbB/CYmufl8hd/7bWnmZGfSQYQ+ot2q692STMxKXpz
+	 u3Qtrsa6XR5/zj5o7FFtdO6CWpcpahK2zucSpJ9QpBRCBNqNRnGaIaWNvSk7JQxdZb29F
+	 IZKW/D5x6khgoBBwg/EFhgJVG0yC+zogY8TqCUusR8GySapI4FmffamXyoGN857/7gg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795625914;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795625917;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=zhFI/xDgvvrBZuFk6ZUugiWg3qcSSToltIpe3HZapl0=;
-	b=yRvkAWGszCs+qgJs4YsQ0x2bklLh+rilHFxIBpgbpfy+Z2aLp02hJbayenlI83cz3XVJ
-	 i81gRLzzdAfHY+mHDnmzePQr8Pmm5l0dL2xEyvPMwiETxJhsQwBawy/H09J7fb0Bo1TKY
-	 yoK/Jjc4YRqB+D+/XWu4D0+cDG7Vh7soGt1hLhtclil9PWagvnC4098L6kz//aDCmLa40
-	 Wd45J7aKdgLvfdaDyF/tV+OlpwZzQAo7aptuwcDqYFMeNw532GuX7WuTPX7qLytpXMZJX
-	 1OIVZAeI7g/GoomR6uNVydgskK9mCMZsKOGsq8fIlPztLu/gy80kfKoQW/pEoskvveQ==
+	bh=K0KhQU50sa4o5FkyLIgX1ZkCQWeEY1nPod/Xjtcg2nA=;
+	b=zSb4Q1CC+GsY3BDB+bY+DLanCq9BuQ5LRNhEqpk24A84wp3yBc7rrUfY55vZ3fil7/F0
+	 Kt6/OYeHcEtanZS+Dg1Ozh7umnYbG+skiRveyyushyCKA7iOnoMrHIRvqjPwxY7OawPKJ
+	 0/h/2yGelU/riXjy4RPJ/hjJp6xUrrzPqG9h+oq4VXcuvxFdUxdUX/DuWF9/edNC7P32Y
+	 NdwOFn1bhkSTvQ35WYOhRQt9TR65iIifbSDnBI4hEGfCTyUtnKUBvi6DIZ/6ZtpVqY2hN
+	 4HDg+GKeuMEF+qLJiNQTVnEjl8QTnxxmMqtOPa65YWqW5LnP2W+sxa1YbEAgJMJsgsg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=hPBCaQyu;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=HrRcqdPh;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 99112606A32C;
-	Wed, 25 Nov 2026 16:58:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D2200606A330;
+	Wed, 25 Nov 2026 16:58:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=hPBCaQyu
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8657D1F000CA;
-	Wed, 25 Nov 2026 16:58:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=HrRcqdPh
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C24761F000CA;
+	Wed, 25 Nov 2026 16:58:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795625914;
-	bh=zhFI/xDgvvrBZuFk6ZUugiWg3qcSSToltIpe3HZapl0=;
+	s=korg; t=1795625917;
+	bh=K0KhQU50sa4o5FkyLIgX1ZkCQWeEY1nPod/Xjtcg2nA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=hPBCaQyuFESp23VEu/yNl58fyD8H8X6al0v3a7NLXu/JXVLlysPUQCrHhoKdFAuDG
-	 vaWtQg3OFOp4vvstuhC1FXmMBEfOcVF6mhP9pLogcqt3kZ40ssRh0jGK80KedGR8NM
-	 VMbPi2SpWrr/UuQkMLmJZALojSB+TrO2cE4DBghc=
+	b=HrRcqdPh6s8sN1LAU0pwMn6olbZ22q82FgjNAfCeTTxPxAkK0HlpYt25I3PjLNpy+
+	 DwmZxZ1OfESBve3egviCov7I9SlDRXuUGzjogpPg7iog7WWiiow+j06/6ZSISjWkQ6
+	 A6BIRY5DSqHzNZhrm8KebML2reNSbVC5AZD3iy4M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Guangshuo Li <lgs201920130244@gmail.com>,
-	Florian Fainelli <florian.fainelli@broadcom.com>,
+	Cunhao Lu <1579567540@qq.com>,
 	Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
-Subject: [PATCH 6.12 672/816] gpio: brcmstb: fix UAF after IRQ domain setup failure
-Date: Wed, 25 Nov 2026 15:37:00 +0100
-Message-ID: <20261125143904.734040490@linuxfoundation.org>
+Subject: [PATCH 6.12 673/816] gpio: rockchip: Fix debounce arithmetic for GPIO v2
+Date: Wed, 25 Nov 2026 15:37:01 +0100
+Message-ID: <20261125143904.757745217@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143849.205329330@linuxfoundation.org>
 References: <20261125143849.205329330@linuxfoundation.org>
@@ -68,44 +67,66 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Guangshuo Li <lgs201920130244@gmail.com>
+From: Cunhao Lu <1579567540@qq.com>
 
-commit baa14758afb3e2828de1f76511edc1de50216f39 upstream.
+commit 13467fd6998f5da4f5b4f172f1af3d9c48d5de8f upstream.
 
-When devm_request_irq() fails in brcmstb_gpio_irq_setup(), the error
-path removes the IRQ domain but leaves priv->irq_domain non-NULL.
+The debounce interval calculations use unsigned long operands. On 32-bit
+systems, the numerator used to calculate the maximum interval overflows
+before division, while multiplying the requested interval by the clock
+rate overflows before it is assigned to a u64. A zero debounce clock rate
+also causes division by zero.
 
-The probe error path subsequently calls brcmstb_gpio_remove(), which
-checks priv->irq_domain and attempts to access the already-freed
-domain through irq_find_mapping(). It also attempts to remove the
-domain again, resulting in a use-after-free and potentially further
-memory corruption.
+Use 64-bit arithmetic for both calculations and reject a zero clock rate
+before division.
 
-Set priv->irq_domain to NULL after removing it so that the common
-cleanup path skips the already-freed IRQ domain.
+At 32768 Hz, a 1 us request rounds to zero divider periods. Subtracting
+one then wraps the divider value to ULONG_MAX. Decrement only a nonzero
+rounded period count so that such requests use the smallest divider
+value.
 
-This issue was found by our static analysis tool under development.
-
-Fixes: 0ba31dc201de ("gpio: brcmstb: consolidate interrupt domains")
+Fixes: 3bcbd1a85b68 ("gpio/rockchip: support next version gpio controller")
 Cc: stable@vger.kernel.org
-Signed-off-by: Guangshuo Li <lgs201920130244@gmail.com>
-Reviewed-by: Florian Fainelli <florian.fainelli@broadcom.com>
-Link: https://patch.msgid.link/20261026115227.41779-1-lgs201920130244@gmail.com
+Signed-off-by: Cunhao Lu <1579567540@qq.com>
+Link: https://patch.msgid.link/20261023-fix-rockchip-gpio-v2-debounce-v1-1-f1141bd5b58f@qq.com
 Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpio/gpio-brcmstb.c |    1 +
- 1 file changed, 1 insertion(+)
+ drivers/gpio/gpio-rockchip.c |   15 ++++++++++-----
+ 1 file changed, 10 insertions(+), 5 deletions(-)
 
---- a/drivers/gpio/gpio-brcmstb.c
-+++ b/drivers/gpio/gpio-brcmstb.c
-@@ -487,6 +487,7 @@ static int brcmstb_gpio_irq_setup(struct
+--- a/drivers/gpio/gpio-rockchip.c
++++ b/drivers/gpio/gpio-rockchip.c
+@@ -192,20 +192,25 @@ static int rockchip_gpio_set_debounce(st
+ {
+ 	struct rockchip_pin_bank *bank = gpiochip_get_data(gc);
+ 	const struct rockchip_gpio_regs	*reg = bank->gpio_regs;
+-	unsigned long flags, div_reg, freq, max_debounce;
++	unsigned long flags, div_reg, freq;
+ 	bool div_debounce_support;
+ 	unsigned int cur_div_reg;
+-	u64 div;
++	u64 div, max_debounce;
  
- out_free_domain:
- 	irq_domain_remove(priv->irq_domain);
-+	priv->irq_domain = NULL;
+ 	if (bank->gpio_type == GPIO_TYPE_V2 && !IS_ERR(bank->db_clk)) {
+ 		div_debounce_support = true;
+ 		freq = clk_get_rate(bank->db_clk);
+-		max_debounce = (GENMASK(23, 0) + 1) * 2 * 1000000 / freq;
++		if (!freq)
++			return -EINVAL;
++
++		div = (u64)(GENMASK(23, 0) + 1) * 2 * USEC_PER_SEC;
++		max_debounce = div64_u64(div, freq);
+ 		if (debounce > max_debounce)
+ 			return -EINVAL;
  
- 	return err;
- }
+-		div = debounce * freq;
+-		div_reg = DIV_ROUND_CLOSEST_ULL(div, 2 * USEC_PER_SEC) - 1;
++		div = (u64)debounce * freq;
++		div_reg = DIV_ROUND_CLOSEST_ULL(div, 2 * USEC_PER_SEC);
++		div_reg = div_reg ? div_reg - 1 : 0;
+ 	} else {
+ 		div_debounce_support = false;
+ 	}
 
 
