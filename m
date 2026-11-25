@@ -1,51 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795625613;
-	b=Vkk/k8pQEwtMvEDQAjvhlj8pRPhF6R8HB2k6lCO2wVIrssoWhQth04sVssaY+AhlkXUF
-	 J7tATf0FCOd3rwWmJnvZPB6/AC5riEYjFO/JYJsF9arf+qOFwGeHy2AH49mTBLEBYVgtx
-	 TeTRoR8K7VjG2brIHAZmRWx5fp63rDEjf8cmK++SGGR1sKcGHEwEWcjP0oKB2QAIXc3l2
-	 1uzY7rlO9XgAkB+DYRSAPa3t9I35L58/XIMkdBtmNt0Rrk0M8UyE26bEP9B+fALKp21De
-	 CLZVjr8hhw9HvgUNfq7k8Ja19t5X8fQWMnlrBhaRXTULQ8jfoMbrt5wrldS71xshH7w==
+	t=1795625616;
+	b=R4xlnnhBn+oPfdETkLHuuzolIVuK+pC68ZQrFqn3ghoAX1I8V+ikU6tBYuSycwuwv7TD
+	 N/9O3NYyDnKZRGseAHUFp/YBzXTvD4BWMPOWflqHN5TqWIwTEdBePicc1Rl5hl3CT+6rj
+	 YgjJyvjiRlFF1TgNwOfC2alB2N8lJyG6g1r9MHh46JqMwta4AzCpjd/Dpf5UlPXXgHz+e
+	 aX2X3n+dwkkuCBlTYZpRym6F9HtR+Y84dqJ1Ty9BQ4DH5QrYMCBQidNwzAMFH7TbCeRPh
+	 +RYPqcN43afy5CLiDqfrsfrga9BTfjzBGMMZPgJlmEUVZ6fpaD/ewZDT2Y9ukYZYVdw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795625613;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795625616;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=A8EqMEFl2CImpDNf2agGue++axkv7DenyBJ2me+0qXk=;
-	b=kEyN9G/H2iO7od/a0pRoxVUxkzz1skCFH2ovgpbk5p2Sp+Me7R3y4aCbhOXoNVi8DFmN
-	 xhNJFBAQVBOFaJejkEYDzoU0GtcBaGB0VpVMDpm4OBGKAGqTnwLXyacD/EUBKac0/UeSp
-	 m1Pca3+f7aBSeG0Ow3RrfIY8Zm3idLrhLd1AsKM/em9CKnFfsuBbdmDLhf4LqwWQKjmK5
-	 sl1ELyWAkI698ty2AsKnGSrHPmmRiJTC5cjtHoVXbCRk4KK16Brm3OeGC7rFdH5N7MTEB
-	 /Bqsmq0QpPV1UhpzyQCgpWiJiINoSy8PLHi0RFbL3yQqUDrRuBCLB91BYRr10cY2KIQ==
+	bh=GrNWSoBTsse4hjvZS7Slz8+vGxo03uY98SiQcYohv9A=;
+	b=BTkDlwR6VB0EN0fyFvW6UnMBmFREPL6QG8yt7/qE+XaBZoKwKBbBJCZ0IRUJb73RdrD1
+	 NRhqUBtncQsuxujGptWIDokVypaiESdYkpKolh0FfJ8W+EuPpv5LzzZO+wMtFXZM4zyrw
+	 7E26bD0t3mJM4GjalOIIsNiU59O5F2XNWZHo8wvqz/0UYW34G3iFSxQFYkbgKalYPA2eQ
+	 90pZYeYpgQzYb37MVAuSKiv9k0dkcPw42CyYDwkyvJEtQZvM0OxB5kDD7AA5l8+Ix+MUD
+	 fDMbYuHgyfTEo8UbvTlSmX/ZdpPj41hOIWiPxh5uuEb5+lB8U0xVS2sBXOLHwuKbeew==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=GiIglmSX;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=kuyqXf1z;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 82D83606A321;
-	Wed, 25 Nov 2026 16:53:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 70E40606A31E;
+	Wed, 25 Nov 2026 16:53:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=GiIglmSX
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8055A1F000CA;
-	Wed, 25 Nov 2026 16:53:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=kuyqXf1z
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ABB291F000C0;
+	Wed, 25 Nov 2026 16:53:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795625613;
-	bh=A8EqMEFl2CImpDNf2agGue++axkv7DenyBJ2me+0qXk=;
+	s=korg; t=1795625616;
+	bh=GrNWSoBTsse4hjvZS7Slz8+vGxo03uY98SiQcYohv9A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=GiIglmSXjGtgT7Ef7eONzvI+3N4J5yND6dXqeHBq6ryTpyBwjTSiYAeQwEyt6ppvW
-	 8yHMIq5nFKvUMzJ6uHrKE923pNHvCV/3x+JFUrIPtRnIaN+hhA3fM8fydUTCtD39eT
-	 nHJCHlJ7ic/8r4YsOmBG6493Z+88TYLTsZyVYM0E=
+	b=kuyqXf1zVKOA+hgpBbipH2CEUcVwJQKJZYeq64ULn4VW1Reiza+FhXE62WmE/ldbu
+	 v7ceoPhoURRTfvSHEBiBXe2kdZwLgJZ01Z0WAKqnW55Twknc/mBDkRgqwHiFncaP7l
+	 iVkVUfY3MWFkT3p4/snPlCE0SnXXRIdCIqku01Gc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kyle Zeng <kylebot@openai.com>,
-	Dave Miller <davem@davem-thinkpadp1gen8.ibmlond.csb>
-Subject: [PATCH 6.12 575/816] macsec: reject frames that decapsulate into runt Ethernet frames
-Date: Wed, 25 Nov 2026 15:35:23 +0100
-Message-ID: <20261125143902.489782651@linuxfoundation.org>
+	Davidlohr Bueso <dave@stgolabs.net>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 6.12 576/816] mctp: accept MSG_CMSG_COMPAT in recvmsg
+Date: Wed, 25 Nov 2026 15:35:24 +0100
+Message-ID: <20261125143902.513651333@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143849.205329330@linuxfoundation.org>
 References: <20261125143849.205329330@linuxfoundation.org>
@@ -67,66 +67,35 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kyle Zeng <kylebot@openai.com>
+From: Davidlohr Bueso <dave@stgolabs.net>
 
-commit 1d5e2c57e9ffc134e14b3f837c8d7c53b508bd22 upstream.
+commit 350e1d0d3b386fcc0cff2d37aa920fab4800bf72 upstream.
 
-When an SCI is unknown and the C bit is clear, macsec_handle_frame()
-removes the SecTAG and the default ICV without checking how much of the
-frame remains. A short frame can therefore become an skb shorter than
-ETH_HLEN. eth_type_trans() cannot pull its Ethernet header, and a second
-stacked MACsec device can copy stale skb headroom into a packet delivered
-to a packet socket.
+32-bit userspace running on a 64-bit kernel is unable to receive MCTP
+messages on an AF_MCTP socket, even though sending succeeds. There is
+nothing for MCTP to do with it beyond not rejecting it, as af_packet,
+af_key and can/isotp already do, for example.
 
-The matched-SCI path has a related hole: macsec_validate_skb() accepts a
-short_length of one, so a frame that passes the existing length check can
-still become a 13-byte Ethernet frame.
-
-Require enough bytes for the MACsec overhead and a complete Ethernet
-header before decapsulating an unknown-SCI frame. Apply the same bound
-in macsec_validate_skb(), using the selected SecY's ICV length, to cover
-the no-SA, synchronous-decrypt and asynchronous-decrypt delivery paths.
-Leave other unknown-SCI handling unchanged.
-
-Fixes: c09440f7dcb3 ("macsec: introduce IEEE 802.1AE driver")
+Fixes: 833ef3b91de6 ("mctp: Populate socket implementation")
 Cc: stable@vger.kernel.org
-Signed-off-by: Kyle Zeng <kylebot@openai.com>
-Signed-off-by: Dave Miller <davem@davem-thinkpadp1gen8.ibmlond.csb>
+Signed-off-by: Davidlohr Bueso <dave@stgolabs.net>
+Link: https://patch.msgid.link/20261105160704.2546031-1-dave@stgolabs.net
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/macsec.c |   15 ++++++++++-----
- 1 file changed, 10 insertions(+), 5 deletions(-)
+ net/mctp/af_mctp.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/net/macsec.c
-+++ b/drivers/net/macsec.c
-@@ -402,8 +402,10 @@ static bool macsec_validate_skb(struct s
- 	int len = skb->len - 2 * ETH_ALEN;
- 	int extra_len = macsec_extra_len(!!(h->tci_an & MACSEC_TCI_SC)) + icv_len;
+--- a/net/mctp/af_mctp.c
++++ b/net/mctp/af_mctp.c
+@@ -212,7 +212,7 @@ static int mctp_recvmsg(struct socket *s
+ 	u8 type;
+ 	int rc;
  
--	/* a) It comprises at least 17 octets */
--	if (skb->len <= 16)
-+	/* a) It comprises at least 17 octets. The SecTAG and ICV must
-+	 * also leave a complete Ethernet header.
-+	 */
-+	if (skb->len < ETH_HLEN + extra_len)
- 		return false;
+-	if (flags & ~(MSG_DONTWAIT | MSG_TRUNC | MSG_PEEK))
++	if (flags & ~(MSG_DONTWAIT | MSG_TRUNC | MSG_PEEK | MSG_CMSG_COMPAT))
+ 		return -EOPNOTSUPP;
  
- 	/* b) MACsec EtherType: already checked */
-@@ -1325,9 +1327,12 @@ drop_direct:
- nosci:
- 	/* 10.6.1 if the SC is not found */
- 	cbit = !!(hdr->tci_an & MACSEC_TCI_C);
--	if (!cbit)
--		macsec_finalize_skb(skb, MACSEC_DEFAULT_ICV_LEN,
--				    macsec_extra_len(macsec_skb_cb(skb)->has_sci));
-+	if (!cbit) {
-+		len = macsec_extra_len(macsec_skb_cb(skb)->has_sci);
-+		if (skb->len < ETH_HLEN + len + MACSEC_DEFAULT_ICV_LEN)
-+			goto drop_nosc;
-+		macsec_finalize_skb(skb, MACSEC_DEFAULT_ICV_LEN, len);
-+	}
- 
- 	list_for_each_entry_rcu(macsec, &rxd->secys, secys) {
- 		struct sk_buff *nskb;
+ 	skb = skb_recv_datagram(sk, flags, &rc);
 
 
