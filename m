@@ -1,51 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795620548;
-	b=BpylSUbQv3Z/SrZh6HB5A84R9Z2KJOBY8RPy507xs+zLvxM4zbYkqcXOrZ2i1NoXGkpX
-	 tVLB+bvcq23iVJ3F928nekz6gKncY3frcd5SSoGghQ4U7nU0hD4o84YJPuov6eckLMdvS
-	 UeHuQ56H22fWsuB141HCGqL0jMlmf4xk/atdyN833FhJnKaKkm435R58dA14eFwyC5KIW
-	 2yHzbRellNhCLx0qfEPuVyE6WT4Y2fxdzhBBHQZ/jgAAO8SWy1oILbIYx7ehgVmtPE1kR
-	 XLbxaepMjTuYoTOJfjqYCaYNgpiAo9sPRj7UMIEPfJv7FNjHc4OTv8H77i23CNULf8A==
+	t=1795620551;
+	b=lhjCSMKcmOawjd4CiSp67SyQFAbbfpkcl/cTU9+VnFf52cWvvdqB5RtgI6Nm4uOkwlGA
+	 yPlrOvMxOjNVmKXUG4PtrfwBPf3d++8fZ0pYZPGSsM0/RpMmbNcJqfkM9UX/4O9ZwksB5
+	 0q+tCWkDDKKQlosyZlndajSVu4wy6OdRC8jPxxBD6ro0/goU3Oji580YcWkPnkbpmvOLB
+	 BEdN+iiy6YfHU/SGBIQwsPU/hI0L0P3X4lrRygfdxpfEekIRJtD5NDuxyWwx1NYsJQrFZ
+	 o8Tny3Ua3i7oVLHhPBP/6GYe8i0kUV47+Ekr4uGG255oZPcbo6/LVcE4YDc90xAiUOA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795620548;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795620551;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=ctmXe9Bx07bXmXhchdCEPuFfZ71XG3cEC9zH3BLI90w=;
-	b=EkbnNzybc6LBzbLxZqCemx4St+jlyzQS12UNqRFzQKFR9woIMa8TyszdsmZyw9rDlgUk
-	 NOtQr1bDhCaR0BCHQIMnGkz/WuGYiZFmLIj3ze5cTanqVWGUOnG4iVi1YQg3/6oktThE+
-	 dN+4uf1PDoBOXm8VKzJqPFuTmRwTHz1AEy1nZY684D177XW1kncw7Ad+VjU9b+5ARAGkr
-	 ICPILDNtIkT3UVilJDOTq03thAN4wc9j9/zJguVr/gSCsJEgHf2XKV0xVlmB7ateciOdO
-	 jOFt+FijCJiin5kVXRQgnr1I27q6Bdg2Ypm6YiNL8Kr7N4ebgBCPO98BTUXlNGDttAA==
+	bh=2lTPu8EL3m8AlkXwrSJQpQyOPpYeDhZTMLkzadDT9cQ=;
+	b=JDrKnIqHcZOzQs7sD7Leqm+D7ZEhNwmw1K+u8IFcBLg/ClsXEoaoHYyEIhkAx81XRp28
+	 4F3b/cXGKGImbQnarlpMb8ATNoovK9d0UWhyKLh06vl3K8QUl6Q6iWPmtTHwPMRDO/WA8
+	 7eCi/np79FgGjkwd+g9wYw7gt8qxIyZ4j7R3atShzDi7RneFErPW8fL/0qIt7d1ED003C
+	 aZYLZZKMV4mxadl527XTsBsnBr1TSfkTM2Qg2aiLFjakzHae2OqlR/Wwe9QyO974XVPvL
+	 dUXafCGw9RCbPkjflA6KcKrHpLFvJF2cAHNGzj2uw8yvWUqAQoSaBYKm9HNam8aGP8g==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=c7DzAO7z;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=cxoYxaKj;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 64544606A31E;
-	Wed, 25 Nov 2026 15:29:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 39260606A321;
+	Wed, 25 Nov 2026 15:29:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=c7DzAO7z
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B48901F000C0;
-	Wed, 25 Nov 2026 15:29:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=cxoYxaKj
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 88EE91F000C0;
+	Wed, 25 Nov 2026 15:29:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795620548;
-	bh=ctmXe9Bx07bXmXhchdCEPuFfZ71XG3cEC9zH3BLI90w=;
+	s=korg; t=1795620551;
+	bh=2lTPu8EL3m8AlkXwrSJQpQyOPpYeDhZTMLkzadDT9cQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=c7DzAO7z1XXThs+KhVXeJCdFXkzX1vwCmR2E6y1f5bIZCzHfJHwv87yq7EVthQXJM
-	 6HqcLkkU5IIZkxPhfGmX8EM3UEouTBwSviA7HTyCZ10PVz5pzxpBa1MKdG3PaaFxuz
-	 fUP2xZX9Rj1aDoz+oiMCZt23HoAq2Jujn4tbej4c=
+	b=cxoYxaKjPbewmMUlyUl9BLhKWK8Xwp2WUYqIBG2BqxP84DD407N+nozrmx35Ez9ik
+	 5//+USfHSMVLDze3smwGLgK2wSZLl8i8+7h8l5WbznbSUC1qJ06QBCLO82LZPRRTFe
+	 gyp/H4C45RP9ze2d4z+kvSeNQE+0ivvGlKAWnYpw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tristan Madani <tristan@talencesecurity.com>,
+	Maksim Salau <maksim.salau@gmail.com>,
 	Johan Hovold <johan@kernel.org>
-Subject: [PATCH 7.3 0954/1005] USB: serial: sierra: validate URB length in instat callback
-Date: Wed, 25 Nov 2026 15:38:12 +0100
-Message-ID: <20261125143844.020245226@linuxfoundation.org>
+Subject: [PATCH 7.3 0955/1005] USB: serial: upd78f0730: fix NULL-deref on hangup
+Date: Wed, 25 Nov 2026 15:38:13 +0100
+Message-ID: <20261125143844.043094770@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143821.729802100@linuxfoundation.org>
 References: <20261125143821.729802100@linuxfoundation.org>
@@ -67,60 +67,72 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Tristan Madani <tristan@talencesecurity.com>
+From: Johan Hovold <johan@kernel.org>
 
-commit a3d43b39032cc5565a5693a10c581844342372cd upstream.
+commit 0e0b1fcfb80c0490bda7f7eb633ebb5e431c2e16 upstream.
 
-sierra_instat_callback() reads request fields and one byte past the
-usb_ctrlrequest header without first checking that urb->actual_length
-is large enough.  A short USB interrupt transfer could cause an
-out-of-bounds read.
+The port tty pointer is cleared on hangup before deasserting the modem
+control signals and should not be used in the dtr_rts() callback.
 
-Add two length checks matching the pattern already present in the
-option driver (option_instat_callback): one for the request header
-before accessing bRequestType, and one for the line-state data byte
-inside the serial-state notification handler.  Use dev_err() since
-failing these checks causes the interrupt URB not to be resubmitted.
+Factor out a new upd78f0730_port_tiocmset() helper that can be used in
+upd78f0730_dtr_rts() to avoid dereferencing a NULL-pointer on hangup
+(e.g. on disconnect).
 
-Fixes: 033a3fb980b041 ("USB: Sierra Wireless driver update")
-Cc: stable@vger.kernel.org
-Signed-off-by: Tristan Madani <tristan@talencesecurity.com>
-[ johan: use sizeof(*req_pkt) consistently ]
+This issue was flagged by an LLM.
+
+Fixes: ea534e0b4047 ("USB: serial: add uPD78F0730 USB to Serial Adaptor Driver")
+Cc: stable@vger.kernel.org	# 4.11
+Cc: Maksim Salau <maksim.salau@gmail.com>
 Signed-off-by: Johan Hovold <johan@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/serial/sierra.c |   18 +++++++++++++++---
- 1 file changed, 15 insertions(+), 3 deletions(-)
+ drivers/usb/serial/upd78f0730.c |   13 +++++++++----
+ 1 file changed, 9 insertions(+), 4 deletions(-)
 
---- a/drivers/usb/serial/sierra.c
-+++ b/drivers/usb/serial/sierra.c
-@@ -575,12 +575,24 @@ static void sierra_instat_callback(struc
- 				__func__);
- 			return;
- 		}
-+		if (urb->actual_length < sizeof(*req_pkt)) {
-+			dev_err(&port->dev, "%s: short transfer\n",
-+				__func__);
-+			return;
-+		}
- 		if ((req_pkt->bRequestType == 0xA1) &&
- 				(req_pkt->bRequest == 0x20)) {
- 			int old_dcd_state;
--			unsigned char signals = *((unsigned char *)
--					urb->transfer_buffer +
--					sizeof(struct usb_ctrlrequest));
-+			unsigned char signals;
-+
-+			if (urb->actual_length < sizeof(*req_pkt) + 1) {
-+				dev_err(&port->dev,
-+					"%s: short interrupt transfer\n",
-+					__func__);
-+				return;
-+			}
-+			signals = *((unsigned char *)urb->transfer_buffer +
-+					sizeof(*req_pkt));
+--- a/drivers/usb/serial/upd78f0730.c
++++ b/drivers/usb/serial/upd78f0730.c
+@@ -201,10 +201,9 @@ static int upd78f0730_tiocmget(struct tt
+ 	return res;
+ }
  
- 			dev_dbg(&port->dev, "%s: signal x%x\n", __func__,
- 				signals);
+-static int upd78f0730_tiocmset(struct tty_struct *tty,
++static int upd78f0730_port_tiocmset(struct usb_serial_port *port,
+ 			unsigned int set, unsigned int clear)
+ {
+-	struct usb_serial_port *port = tty->driver_data;
+ 	struct upd78f0730_port_private *private;
+ 	struct upd78f0730_set_dtr_rts request;
+ 	struct device *dev = &port->dev;
+@@ -238,6 +237,13 @@ static int upd78f0730_tiocmset(struct tt
+ 	return res;
+ }
+ 
++static int upd78f0730_tiocmset(struct tty_struct *tty, unsigned int set, unsigned int clear)
++{
++	struct usb_serial_port *port = tty->driver_data;
++
++	return upd78f0730_port_tiocmset(port, set, clear);
++}
++
+ static int upd78f0730_break_ctl(struct tty_struct *tty, int break_state)
+ {
+ 	struct upd78f0730_port_private *private;
+@@ -267,7 +273,6 @@ static int upd78f0730_break_ctl(struct t
+ 
+ static void upd78f0730_dtr_rts(struct usb_serial_port *port, int on)
+ {
+-	struct tty_struct *tty = port->port.tty;
+ 	unsigned int set = 0;
+ 	unsigned int clear = 0;
+ 
+@@ -276,7 +281,7 @@ static void upd78f0730_dtr_rts(struct us
+ 	else
+ 		clear = TIOCM_DTR | TIOCM_RTS;
+ 
+-	upd78f0730_tiocmset(tty, set, clear);
++	upd78f0730_port_tiocmset(port, set, clear);
+ }
+ 
+ static speed_t upd78f0730_get_baud_rate(struct tty_struct *tty)
 
 
