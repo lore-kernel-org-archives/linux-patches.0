@@ -1,54 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795621626;
-	b=2QJGxK3yx6V3dXioUYuDx4cfVTInYvANnAbeXptj6gKvd31LVxshQ8uPXmDv2k4HJgYy
-	 AwZ85ZXjecGVU7cpqhTbJXVtcW0lRoXXcIanf80TSJcssZq/xsWpmiUX9nAZ/zvLBWd09
-	 hKyORopGp56YtQkrSA6fsbhvqoUnY9wYxy94n+lfR+fT97HfYa/wgFvabq7zWKv6VFvfC
-	 HDviTbk6EE9R3R8O1tF632JfmMWlbpXt5z9S0FTj9uQ1fDmqWy7tlqn7l14JWOM5s2kzt
-	 F6GBIUxCmqFf51Qs6HZQCMajprcsg+sekPVMITXwSDQ+W/vtTz0bRT5H6qCI7Dp5o/A==
+	t=1795621629;
+	b=xfAsptbAyD/wdefnr7+VKX3jIY8QuEIsSCOjyLcFQyl5rEinlVjy6b0hdkHDbME4KkJT
+	 ni4n5fcsD05bmO2buu14kPAJZm9qfZJc1a0tVdMO7nL/AWr9swphGLzGncV59mEJMfBqA
+	 zdSGLplP0gKvFEqceDilqCq1U1WKgTEDuJWBVuwrgNuOaCjQY5OEk+JGm1yvMEnjKfI73
+	 PGAw48eAn43IHzB4G/8Wbzt3UGfyThxws4NZeBZ+F2SPLsTznoGpIsvs25X6TmlqyeNR5
+	 Y8NglTU67Y4s7KBNeY47qLleqmHi0TklJXM17vEavAb4sAJ8JZJ3BVz2IhYLb3YkV9A==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795621626;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795621629;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=oHHleJFF78KlcyDkrtRS9QaZOPv3H3jycsgUZFDVUjE=;
-	b=RO4ooG1LI6Ijn+GjBzBB/wNusoa4YxKxB2MlG7BjUu3OGMLa+x8yR0SNS8ZsxaiVvEx5
-	 sgdXMHV4CB/PZejJ4Hrxx1BS7Gw/K3uJLHXnGSz3tDE3d8qfdcMeHcJjYrpz4Mue7BgwR
-	 hIlsVBnHoObQnpBo3wjZXGvSzcW87ru2AhBGZU8SrAnRPF77EnPvw+mWCjD8shLnGEFTN
-	 +Yp1Z7TXs1epEaS60kPvbBOFaEBZ8WcE7+dEMWfYi5H6KVRsD5OVDNl/tLtKfGwlxi5gj
-	 fAxrLBtcOrbYUa0l17/yFg+y642qy95g6gJevi90UtmRgyUkIKUMIorYg8cp1fzv1LA==
+	bh=gUshBm3wzdXDLNt6SiNyr4GnUYLgA2To1JXtYSF+K1I=;
+	b=UtosfFC7eMJDQtgbm82Pc36PuQJpkQw9DQWPZ69hsntHdoMSwmuP8LALL/JHFhjXi9z5
+	 n6Oy4A7gCmxnvoovADXEg4qzI/AabfYJuL04P7Y1TsYBPkqFYME7G7BpBBt4rg5Qip3SV
+	 YkhY78+NRr5caYC0+RUMUpEmv4nbASpWIBGxTD6PEy5OlYHyADnLu8CT64FTjV7I6fTQx
+	 vV4cretxHuP7U3x1+kEhmd+XDejGfwx6FnnafYfnsMIk7A3hc5mOmUeXXOq9nTVTR2qxv
+	 0vMBE3KODJ5d1dTKLfxjxln6r8s6kkIEUmkLj496I7RmXRG5kulbokKdjXyhqIUxqCw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=sF3Npvzc;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=QakPHyzQ;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 40D85606A326;
-	Wed, 25 Nov 2026 15:47:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9DEA4606A32E;
+	Wed, 25 Nov 2026 15:47:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=sF3Npvzc
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3FF521F000C0;
-	Wed, 25 Nov 2026 15:47:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=QakPHyzQ
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 690D61F000C4;
+	Wed, 25 Nov 2026 15:47:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795621625;
-	bh=oHHleJFF78KlcyDkrtRS9QaZOPv3H3jycsgUZFDVUjE=;
+	s=korg; t=1795621628;
+	bh=gUshBm3wzdXDLNt6SiNyr4GnUYLgA2To1JXtYSF+K1I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=sF3NpvzcGpHRjAa1E12bKuPxYthUoKn2yE5/zncqa6MtYVho1NfzEaXep6E9gNCXr
-	 QME5eRDtMtDMznxfFzH5IA2JmDfm2w1Id9OJZ285DgQxFRDtUGDt4qWE4FUaHnfLaD
-	 M1oXCARiqpqqGQz7lI2ZEEVd9pPhikjXUMq5NAIc=
+	b=QakPHyzQMXcLrGHT5cLiRJqN4n158sLkAXin75SE2LEMO+0YZ0S2B6uRCAY/2KMx2
+	 N8xk/KZ2kQYUrwgI/T6NFv8cNweOmynyIq/XL4+ZOZD+9gsuV08AqcyL2Xb8Y/TLFt
+	 520mbei0t15bsY0rO70W3NDRNbMkJ9QY+ROdd07s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jason Zhang <jdz@google.com>,
-	Kuniyuki Iwashima <kuniyu@google.com>,
-	Ido Schimmel <idosch@nvidia.com>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Xingyuan Mo <hdthky0@gmail.com>,
+	Pablo Neira Ayuso <pablo@netfilter.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 258/990] ipv4: Call rt_add_uncached_list() if !do_cache in ip_route_input_slow().
-Date: Wed, 25 Nov 2026 15:27:05 +0100
-Message-ID: <20261125143828.135853364@linuxfoundation.org>
+Subject: [PATCH 6.18 285/990] netfilter: nft_set_rbtree: check catchall_sync return before queue_done
+Date: Wed, 25 Nov 2026 15:27:32 +0100
+Message-ID: <20261125143828.762908621@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143822.072087159@linuxfoundation.org>
 References: <20261125143822.072087159@linuxfoundation.org>
@@ -70,74 +68,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kuniyuki Iwashima <kuniyu@google.com>
+From: Xingyuan Mo <hdthky0@gmail.com>
 
-[ Upstream commit 4019af3afd72864ec6abbfde2d76e416a64456c2 ]
+[ Upstream commit 1cec19d70bc282a8e7f7c42697d44046f60dc506 ]
 
-Since the cited commit, ip_route_input_slow() could call
-rt_dst_alloc() with vrf in the local_input: path.
+nft_rbtree_gc_queue() passes the result of nft_trans_gc_catchall_sync()
+straight to nft_trans_gc_queue_sync_done(). When the catchall path flushes
+a full GC batch and nft_trans_gc_alloc() fails, catchall_sync returns
+NULL and queue_sync_done dereferences trans->net (NULL+0x10). Guard the
+call like the pipapo GC path already does.
 
-If res->fi != NULL and one of the following is true,
-
-  - a non-zero itag from fib_validate_source_reason()
-    (realms/classid)
-  - RTN_BROADCAST with BC_FORWARDING enabled
-
-do_cache is set to false.
-
-Then, the route is not added to rt_uncached_list, so the
-route cannot be removed from rt_flush_dev().
-
-If the route is cached in sk->sk_rx_dst, removing the
-vrf device gets stuck. [0]
-
-Let's call rt_add_uncached_list() if !do_cache in
-ip_route_input_slow().
-
-[0]:
-unregister_netdevice: waiting for vrf0 to become free. Usage count = 2
-ref_tracker: netdev@000000008b304ac4 has 1/1 users at
-     dst_alloc+0x14b/0x490
-     ip_route_input_rcu+0x1540/0x2530
-     ip_route_input_noref+0x5a/0x90
-     ip_rcv_finish_core+0x4b0/0x1140
-     ip_rcv_finish+0xe6/0x190
-     ip_rcv+0x6c/0x130
-     __netif_receive_skb+0x121/0x300
-     process_backlog+0x2df/0x5e0
-     __napi_poll+0x8c/0x380
-     net_rx_action+0x43c/0xab0
-     handle_softirqs+0x19f/0x520
-     do_softirq+0x46/0x60
-     __local_bh_enable_ip+0x79/0x80
-     __dev_queue_xmit+0x1b0e/0x24c0
-     ip_finish_output2+0x8b2/0xcd0
-     ip_output+0xf2/0x1e0
-
-Fixes: f5a0aab84b74 ("net: ipv4: dst for local input routes should use l3mdev if relevant")
-Reported-by: Jason Zhang <jdz@google.com>
-Signed-off-by: Kuniyuki Iwashima <kuniyu@google.com>
-Link: https://patch.msgid.link/20261101064418.2055158-4-kuniyu@google.com
-Reviewed-by: Ido Schimmel <idosch@nvidia.com>
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Fixes: 7d259f021aaa ("netfilter: nft_set_rbtree: prefer sync gc to async worker")
+Assisted-by: opencode:deepseek-v4
+Signed-off-by: Xingyuan Mo <hdthky0@gmail.com>
+Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv4/route.c | 2 ++
- 1 file changed, 2 insertions(+)
+ net/netfilter/nft_set_rbtree.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/net/ipv4/route.c b/net/ipv4/route.c
-index e6276896f3ad4..489d3b2cb612b 100644
---- a/net/ipv4/route.c
-+++ b/net/ipv4/route.c
-@@ -2485,6 +2485,8 @@ ip_route_input_slow(struct sk_buff *skb, __be32 daddr, __be32 saddr,
- 
- 		if (unlikely(!rt_cache_route(nhc, rth)))
- 			rt_add_uncached_list(rth);
-+	} else {
-+		rt_add_uncached_list(rth);
+diff --git a/net/netfilter/nft_set_rbtree.c b/net/netfilter/nft_set_rbtree.c
+index 1270b472e3334..c00ac231ccda0 100644
+--- a/net/netfilter/nft_set_rbtree.c
++++ b/net/netfilter/nft_set_rbtree.c
+@@ -958,7 +958,8 @@ static void nft_rbtree_gc_queue(struct nft_set *set)
  	}
- 	skb_dst_set(skb, &rth->dst);
- 	reason = SKB_NOT_DROPPED_YET;
+ 
+ 	gc = nft_trans_gc_catchall_sync(gc);
+-	nft_trans_gc_queue_sync_done(gc);
++	if (gc)
++		nft_trans_gc_queue_sync_done(gc);
+ }
+ 
+ static u64 nft_rbtree_privsize(const struct nlattr * const nla[],
 -- 
 2.53.0
 
