@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795619310;
-	b=4O0oonI7xzYafrQ3EqDD0nqrnhTfs5bgKwc3BmifgSdHiA+gpX8JSx6zHTSv5EVA06x4
-	 RXFOOi1tZKRptzxBC9A+eY872B23F5kKeowfvE0u4+Cckb6DDQlbtqFzfTd6GWZS6YzPD
-	 yM0WLuEWpYUbCcq+WAT0uNDrwV87B2YFfVlul35Qv+wRN+v9nxXrJYbID4Dj79PQqnlzB
-	 g6z+xX/Z4jWabBKAjQKDfajeEABnRLxqqhoMLW6JkEq8ib5l3ysNPcmQOrsWWOtQEVzri
-	 lciCW2QwVdGS+E3G2I2rteim+VLoAvQEMuGy/EVl9DaCZJKs+UA6eLZ4k1fjjsllSRA==
+	t=1795619313;
+	b=Ewhylx/KEYfXNzCSyNYkfkVTBIt/RhGwPSKdU0Uf3koBtdXdIDLkKxIO4AxKVAp2T9uM
+	 RXiwp5PUKIm7xgBY3gJGm0WwnW9hbJJkt4UkQNbe2syx0y+QKJfburSYZxdpRRPGX+M6x
+	 yOtJwGo0I//vua9nmC/+2IE2jouHsSYrcFrw1XaA85ExbCIVWFARpjSgFTN3n0Xju+GnQ
+	 2/WselAcCKwnNCPnWMrZLW+Z2xxJR4SUOeU1jdN1p4nDCa7lH9Qm0G83a/c9OYv97GV8H
+	 qc1eIpLeWaptUVGY86FCCZS7zGAHsXWdojxqJ8pAcF1kBGPN7V93oN4TdOP/QBS0UqA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795619310;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795619313;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=R3g13roKbdCFOAzUcbKJ1KFnuT2Zg8r2+NEPi/1wBRc=;
-	b=EHKFMmnai0VayGkEwmwl73vRzCh4TU+TZPGtDcd088ExJWFUI0RHIA/5U/oV7N5gAdvH
-	 34iy45gwdIRs7uPqXCleyNRsbDQUwIJbZxEKgqq9gybNZQ2NmzyzGURZO6+yW/tQih06A
-	 HkJEgEimfso1HhUyePVfsa5fp5RTL4Qv5SVQt7Bob8WqVJTryANgv7wpDo/iXXxvZ16I4
-	 a5g5TW4zblj9Cqt5zp9N2Af3qA2TY/BGaoLOpe9Z2rb9wSwpuqlbdcfrkaaY57EIyJSYj
-	 /du/Oamd7A1fNPhpH7yO7hZz7Se0cQk34SxpDYU9OH+i/vJ4Z/AlDIJz3/+aHwOsvYg==
+	bh=gzGJ8U+AXKJ9kX9KOmpezh4a9dUaXQoBrAYPFVfoiMc=;
+	b=ogwqKOaiSiMYKIL7eLdSJV274ONUo8XRjIKppQkJemvusRGYF2ltMuA9GURIM+Bwu/x2
+	 yKeZA8p0HuLr1tzRLWrWMBh1pooSjkYGnJXxNO1ORELYkS/9b6aw1lTAwqihwNmAvQBAf
+	 4L0VNLGA8UA88XaFXFp2HhlyfZiS1Ns9/FkbYkUkRBGWpffq0anF1XadjgsVw3HqYONTx
+	 6ThddT1Yygw3tXXpyPj4EgJzhNWDqWhLoI1Qut41KDU2HvWnw69zeaZBoACWKa1iWhL2A
+	 +8try4IVN4jCQxFpcXa8FIuRCafp6TocfqKPmjsIdOdnji/qx6/lkXZneyDhAdKcZGg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=qE4J5zlO;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=dy2s07kT;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ADB2F606A31E;
-	Wed, 25 Nov 2026 15:08:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 86E5B606A327;
+	Wed, 25 Nov 2026 15:08:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=qE4J5zlO
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B29EE1F000C0;
-	Wed, 25 Nov 2026 15:08:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=dy2s07kT
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D0CEC1F000C4;
+	Wed, 25 Nov 2026 15:08:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795619310;
-	bh=R3g13roKbdCFOAzUcbKJ1KFnuT2Zg8r2+NEPi/1wBRc=;
+	s=korg; t=1795619313;
+	bh=gzGJ8U+AXKJ9kX9KOmpezh4a9dUaXQoBrAYPFVfoiMc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=qE4J5zlOVKpaQwAHWZUXa/jJQ3PbL0pB76PsF61YExdRwSa2t0nmtA2ppgG15d5Yj
-	 f6ClfcW4wQaGsOGs89tiCuaz8ypqeH0kH3mQZnpSOy1LGEoraHLt/feVVSoew+2ZfK
-	 qZ9psaE+Z0LbOXhn1Vp+KcCB8r49z2srSopHzGUA=
+	b=dy2s07kTgHj1JWXzVlyQFyT0jNNzQa076MocsL3C37xixKUm4N5MAv8hUqyoHvYHy
+	 jtM12wQ0NAQq2AT+XFJeMlz+p6DzxGcO/hx/KJxv1ZxgpyezTW3TrVbMUDRS5wwqak
+	 BD5dGWtGRxpYX72z2VqM1LbXngqNi0XnJv8MIPkA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Iustin Stolniceanu <iustin.stolniceanu@analog.com>,
-	Andrew Lunn <andrew@lunn.ch>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Jan Beulich <jbeulich@suse.com>,
+	Juergen Gross <jgross@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0549/1005] net: phy: c45: select BASE-T1 type for the forced speed
-Date: Wed, 25 Nov 2026 15:31:27 +0100
-Message-ID: <20261125143834.605525256@linuxfoundation.org>
+Subject: [PATCH 7.3 0558/1005] Xen/gnttab: improve error handling in gnttab_dma_{alloc,free}_pages()
+Date: Wed, 25 Nov 2026 15:31:36 +0100
+Message-ID: <20261125143834.821464730@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143821.729802100@linuxfoundation.org>
 References: <20261125143821.729802100@linuxfoundation.org>
@@ -69,145 +68,78 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Iustin Stolniceanu <iustin.stolniceanu@analog.com>
+From: Jan Beulich <jbeulich@suse.com>
 
-[ Upstream commit df501db9b18fae4d3edd534b992675f4673a938e ]
+[ Upstream commit 2b66f2cc753243a6adb3e9a5c038b0fc59ba7ec9 ]
 
-Commit 25108a834e14 ("net: phy: c45: add support for 1000BASE-T1 forced
-setup") made genphy_c45_pma_setup_forced() write the type selection
-field (bits 3:0) of the BASE-T1 PMA/PMD control register (1.2100) on
-every forced setup: 1000BASE-T1 for SPEED_1000, and 0 for everything
-else. 0 selects 100BASE-T1, so forcing a 10BASE-T1L PHY to 10 Mbit/s
-now also switches its PMA to 100BASE-T1, a mode it does not implement.
+Both decrease-reservation and populate-physmap can succeed partially. For
+the former this may be pretty unlikely, but clearly the latter can hit
+both out-of-memory conditions in the hypervisor or denial because of the
+allocation exceeding the domain's allowance (there's no interaction with
+the balloon driver here either).
 
-Seen on an ADIN1110 (internal ADIN1100 PHY): after
+In gnttab_dma_free_pages() we simply can't give back to the system what
+hasn't been re-filled with backing memory. For gnttab_dma_alloc_pages()
+both parts of the overall region need dealing with differently.
 
-  ethtool -s ethX autoneg off speed 10 master-slave forced-master
+While no present caller of gnttab_dma_free_pages() checks its return
+value, also don't use -EFAULT there: It really is an out-of-memory
+condition. (In gnttab_dma_alloc_pages() -EFAULT doesn't look quite right
+either, but I couldn't think of a clearly better error code there.)
 
-1.2100 reads 0xc000 instead of the 0xc002. Since the field is not
-restored by re-enabling autoneg, the PHY keeps the wrong type until
-the next forced setup or reset.
-
-Add a helper that returns the type selection value for the forced speed
-and the supported link modes: 100BASE-T1, 1000BASE-T1, and 10BASE-T1L or
-10BASE-T1S for SPEED_10 depending on the supported 10 Mbit/s modes. Fail
-with -EINVAL when no type matches instead of writing 100BASE-T1. This
-also applies to forced 2.5G, 5G and 10G on BASE-T1 capable PHYs, for
-which there are no link modes yet.
-
-The field is called "type selection" in IEEE 802.3-2022 (45.2.1.214,
-Table 45-178). Keep the old STRAP names as aliases.
-
-Tested on EVAL-ADIN1110EBZ: with this change, forcing 10 Mbit/s writes
-1.2100 = 0xc002 (10BASE-T1L) instead of the invalid 0xc000.
-
-Fixes: 25108a834e14 ("net: phy: c45: add support for 1000BASE-T1 forced setup")
-Signed-off-by: Iustin Stolniceanu <iustin.stolniceanu@analog.com>
-Reviewed-by: Andrew Lunn <andrew@lunn.ch>
-Link: https://patch.msgid.link/20261111100053.345196-1-iustin.stolniceanu@analog.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: 9bdc7304f536 ("xen/grant-table: Allow allocating buffers suitable for DMA")
+Signed-off-by: Jan Beulich <jbeulich@suse.com>
+Reviewed-by: Jan Beulich <jbeulich@suse.com>
+Signed-off-by: Juergen Gross <jgross@suse.com>
+Message-ID: <20261110095605.369848-3-jgross@suse.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/phy/phy-c45.c | 46 ++++++++++++++++++++++++++++++++++-----
- include/uapi/linux/mdio.h | 13 +++++++++--
- 2 files changed, 52 insertions(+), 7 deletions(-)
+ drivers/xen/grant-table.c | 25 ++++++++++++++++++++++++-
+ 1 file changed, 24 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/net/phy/phy-c45.c b/drivers/net/phy/phy-c45.c
-index 870920311f9a0..828af4c4e9d4c 100644
---- a/drivers/net/phy/phy-c45.c
-+++ b/drivers/net/phy/phy-c45.c
-@@ -104,6 +104,36 @@ int genphy_c45_pma_baset1_setup_master_slave(struct phy_device *phydev)
- }
- EXPORT_SYMBOL_GPL(genphy_c45_pma_baset1_setup_master_slave);
- 
-+/* Type selection value for the BASE-T1 PMA/PMD control register (1.2100,
-+ * 802.3-2022 Table 45-178) matching the forced speed. 10 Mbit/s is ambiguous
-+ * between 10BASE-T1L and 10BASE-T1S, so the supported link modes decide.
-+ * 2.5G, 5G and 10GBASE-T1 are not handled as there are no link modes for them
-+ * yet.
-+ */
-+static int genphy_c45_baset1_type_sel(struct phy_device *phydev)
-+{
-+	switch (phydev->speed) {
-+	case SPEED_10:
-+		if (linkmode_test_bit(ETHTOOL_LINK_MODE_10baseT1L_Full_BIT,
-+				      phydev->supported))
-+			return MDIO_PMA_PMD_BT1_CTRL_TYPE_SEL_10BT1L;
-+		if (linkmode_test_bit(ETHTOOL_LINK_MODE_10baseT1S_Full_BIT,
-+				      phydev->supported) ||
-+		    linkmode_test_bit(ETHTOOL_LINK_MODE_10baseT1S_Half_BIT,
-+				      phydev->supported) ||
-+		    linkmode_test_bit(ETHTOOL_LINK_MODE_10baseT1S_P2MP_Half_BIT,
-+				      phydev->supported))
-+			return MDIO_PMA_PMD_BT1_CTRL_TYPE_SEL_10BT1S;
-+		return -EINVAL;
-+	case SPEED_100:
-+		return MDIO_PMA_PMD_BT1_CTRL_TYPE_SEL_100BT1;
-+	case SPEED_1000:
-+		return MDIO_PMA_PMD_BT1_CTRL_TYPE_SEL_1000BT1;
-+	default:
-+		return -EINVAL;
-+	}
-+}
+diff --git a/drivers/xen/grant-table.c b/drivers/xen/grant-table.c
+index 11c2ef1cc86eb..2a28884a84b78 100644
+--- a/drivers/xen/grant-table.c
++++ b/drivers/xen/grant-table.c
+@@ -1097,6 +1097,24 @@ int gnttab_dma_alloc_pages(struct gnttab_dma_alloc_args *args)
+ 	ret = xenmem_reservation_decrease(args->nr_pages, args->frames);
+ 	if (ret != args->nr_pages) {
+ 		pr_debug("Failed to decrease reservation for DMA buffer\n");
++		if (ret >= 0) {
++			/* Free the part where decrease didn't work. */
++			size_t done = ret << PAGE_SHIFT;
 +
- /**
-  * genphy_c45_pma_setup_forced - configures a forced speed
-  * @phydev: target phy_device struct
-@@ -166,6 +196,16 @@ int genphy_c45_pma_setup_forced(struct phy_device *phydev)
- 		return -EINVAL;
- 	}
- 
-+	/* Resolve the type before the first write, so a speed without a
-+	 * matching type leaves the PHY untouched.
-+	 */
-+	bt1_ctrl = 0;
-+	if (genphy_c45_baset1_able(phydev)) {
-+		bt1_ctrl = genphy_c45_baset1_type_sel(phydev);
-+		if (bt1_ctrl < 0)
-+			return bt1_ctrl;
-+	}
++			if (args->coherent)
++				dma_free_coherent(args->dev, size - done,
++						  args->vaddr + done,
++						  args->dev_bus_addr + done);
++			else
++				dma_free_wc(args->dev, size - done,
++					    args->vaddr + done,
++					    args->dev_bus_addr + done);
 +
- 	ret = phy_write_mmd(phydev, MDIO_MMD_PMAPMD, MDIO_CTRL1, ctrl1);
- 	if (ret < 0)
- 		return ret;
-@@ -179,12 +219,8 @@ int genphy_c45_pma_setup_forced(struct phy_device *phydev)
- 		if (ret < 0)
- 			return ret;
- 
--		bt1_ctrl = 0;
--		if (phydev->speed == SPEED_1000)
--			bt1_ctrl = MDIO_PMA_PMD_BT1_CTRL_STRAP_B1000;
--
- 		ret = phy_modify_mmd(phydev, MDIO_MMD_PMAPMD, MDIO_PMA_PMD_BT1_CTRL,
--				     MDIO_PMA_PMD_BT1_CTRL_STRAP, bt1_ctrl);
-+				     MDIO_PMA_PMD_BT1_CTRL_TYPE_SEL, bt1_ctrl);
- 		if (ret < 0)
- 			return ret;
++			if (!ret) /* Nothing else to do? */
++				return -EFAULT;
++
++			args->nr_pages = ret;
++		}
+ 		ret = -EFAULT;
+ 		goto fail;
  	}
-diff --git a/include/uapi/linux/mdio.h b/include/uapi/linux/mdio.h
-index 06f4bc3c20c71..2806f60ed1054 100644
---- a/include/uapi/linux/mdio.h
-+++ b/include/uapi/linux/mdio.h
-@@ -417,8 +417,17 @@
- #define MDIO_AN_10BT1_AN_STAT_LPA_EEE_T1L	0x4000 /* 10BASE-T1L LP EEE ability advertisement */
- 
- /* BASE-T1 PMA/PMD control register */
--#define MDIO_PMA_PMD_BT1_CTRL_STRAP		0x000F /* Type selection (Strap) */
--#define MDIO_PMA_PMD_BT1_CTRL_STRAP_B1000	0x0001 /* Select 1000BASE-T1 */
-+#define MDIO_PMA_PMD_BT1_CTRL_TYPE_SEL		0x000F /* Type selection */
-+#define MDIO_PMA_PMD_BT1_CTRL_TYPE_SEL_100BT1	0x0000 /* Select 100BASE-T1 */
-+#define MDIO_PMA_PMD_BT1_CTRL_TYPE_SEL_1000BT1	0x0001 /* Select 1000BASE-T1 */
-+#define MDIO_PMA_PMD_BT1_CTRL_TYPE_SEL_10BT1L	0x0002 /* Select 10BASE-T1L */
-+#define MDIO_PMA_PMD_BT1_CTRL_TYPE_SEL_10BT1S	0x0003 /* Select 10BASE-T1S */
-+#define MDIO_PMA_PMD_BT1_CTRL_TYPE_SEL_2P5GBT1	0x0004 /* Select 2.5GBASE-T1 */
-+#define MDIO_PMA_PMD_BT1_CTRL_TYPE_SEL_5GBT1	0x0005 /* Select 5GBASE-T1 */
-+#define MDIO_PMA_PMD_BT1_CTRL_TYPE_SEL_10GBT1	0x0006 /* Select 10GBASE-T1 */
-+/* Legacy names, kept for userspace */
-+#define MDIO_PMA_PMD_BT1_CTRL_STRAP		MDIO_PMA_PMD_BT1_CTRL_TYPE_SEL
-+#define MDIO_PMA_PMD_BT1_CTRL_STRAP_B1000	MDIO_PMA_PMD_BT1_CTRL_TYPE_SEL_1000BT1
- #define MDIO_PMA_PMD_BT1_CTRL_CFG_MST		0x4000 /* MASTER-SLAVE config value */
- 
- /* 1000BASE-T1 PCS control register */
+@@ -1130,7 +1148,12 @@ int gnttab_dma_free_pages(struct gnttab_dma_alloc_args *args)
+ 	ret = xenmem_reservation_increase(args->nr_pages, args->frames);
+ 	if (ret != args->nr_pages) {
+ 		pr_debug("Failed to increase reservation for DMA buffer\n");
+-		ret = -EFAULT;
++		/* Can only free what has been re-filled. */
++		if (!ret)
++			return -ENOMEM;
++		if (ret > 0)
++			args->nr_pages = ret;
++		ret = -ENOMEM;
+ 	} else {
+ 		ret = 0;
+ 	}
 -- 
 2.53.0
 
