@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795621168;
-	b=2Ht4CACxlfFkRxuN78uDCcmw5ovsB4WVQk2hJ3ZdqzX4jyg2KF2ZTs54UlvbzT6p6HV4
-	 QM2Cu7LxkPCtczdTLXnUjx2jepM3nObMbRVocas2xD/iGKNzBcPpDOc7M4R/j/QPaPs0T
-	 lq0I/xkZtPES17Uvm99F4qzG0NRSAN5XQP1WqIKp3oq7tvo2FDadny9mAvWwQmF+i7Uu/
-	 Zsqf+7W+cYl29op33D0+kQ4atl7Pvos8fjtzt3wB4fhqLqjL7Cezn5+ANQ9nlh0rAWaRa
-	 hs04qHJKVK+/D2KZ/KEUFG22fRxvCGb1Yp1COF9H6VlB7l3y/eiLeJvkIuq7S8KF17A==
+	t=1795621171;
+	b=zbYsSJJPFwRqDjExTBtebxYWjtYgdsOlDKqOXaacYGzBKXjomebEbV6JJj6ZRaj/TU9h
+	 JYbgkzpX+DCOudq4zlyITfXYedNcqhj7U6ymvnBR1mvrjNdnftH9nO4uyoc8DtXIAWE2z
+	 x7Dkx9RJ51jJNGQF1KOXYrLiU1nW0oVFqJeic7AiZ90EBIbrBOy51ILHLZV7drkmYk/vS
+	 rgusoE4zYzBeCPIFDGhNNGD4e25zLXippNWVgylaYys574LR4J/Hk8LBstR6Nw+vD/Ee4
+	 1K3za1YDBVbBtqnPcxON42TmtrHoBKL2cS+Rzbr+9m6oT4EqPvJkKjq8AnwoLtv3hpg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795621168;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795621171;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=aVY4TMBUnhLgCx+TgIk+tQpT9jD735rZc4QECHz/IH0=;
-	b=FsC1IX4CicQQy60D1YWP5XugLKD+/g/fL5p5eFOnEHQB9ou3Z8Y+qEQ6RMGJ8GkDlqyI
-	 0AAXM3zWknsGZnxW14vnLvVkajKRJn2jEGnnPul3JlSlLiIktWl6X7QzZSwh2gFhNor7G
-	 RTXjyGL3ikOBVVXW1U4XNG32SI1tu3OyJjKmzAKQn/EAedshQ2mPVqaFTk8UW7mJDw9jN
-	 Uoj2dlf6pk4kvP16WRcs5BRqS8kNUIqmKPFi7+JhNTVnurH+PfdcSfvL53CVtns3kAGO1
-	 Ez9jNTgAALnMlygGrloVQT8nA0iyVFYq8qKJJnLyGVx3n2Lb+29nGaQlTeCVuFS50xw==
+	bh=ygWLWgdiy+CbAjUV4cAdrAZHh8QGOhSZBI8ALHUjAv0=;
+	b=YuVbQr+8gjE0f7wVYWGJwWH/Oybw2kSGZ9j3BThaqAunN3vs5Bhsg+dRIQuO5prnC56+
+	 pq5qhzD/SXhLzM+eSCI7dH0uxyqNtqjjr9ljLP7Z5DHvL4ZqOdm5LHI6vhnZkGfFzIOPz
+	 B9yiVBAGV2Pcm5pbssz5SPwEB4fDlHVpVAXyb1qk0d8GR9UlNIxgHpHlQjiLoIdfGTFRU
+	 J+1EE6399kaxxdvov9FxndlKchBB1Fy68nSsuqYUj6qHrULjKm6HNVa+AnaMlDpWkWM6q
+	 1dPIUc+dPi7gulxQaRRA8XQUF6CH5DAyQ3oO/Af70A2ncxaHJ7v7UPd7TEJSC0EUJ8Q==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=HLlQ7r5w;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Fakrewiu;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0F3AE606A31E;
-	Wed, 25 Nov 2026 15:39:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 42908606A6A3;
+	Wed, 25 Nov 2026 15:39:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=HLlQ7r5w
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4868B1F000C6;
-	Wed, 25 Nov 2026 15:39:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Fakrewiu
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 891A61F000D1;
+	Wed, 25 Nov 2026 15:39:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795621167;
-	bh=aVY4TMBUnhLgCx+TgIk+tQpT9jD735rZc4QECHz/IH0=;
+	s=korg; t=1795621171;
+	bh=ygWLWgdiy+CbAjUV4cAdrAZHh8QGOhSZBI8ALHUjAv0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=HLlQ7r5wAF9Qz4UxPuvGoQYXdyYBTFKxWiehoRAJKVDFl8RJSBSSVNJUtCFtgryI8
-	 LnUwFgj8Grib+gg6wZLWQE8CZVIlVeet/dwKFR4fg/yul77WNGZyr/nwLx2m1GLUuJ
-	 paOmn8oKFuxqNgQdWOGr3s799kdQXEnlfHIOXBVs=
+	b=FakrewiuuurN6DcixHQzFJWm1gPuFsRTnM5kcrTjV7Nbc3Gdi6RUatZ0BCLvNw5hF
+	 JosNcHSl+rT4Cr4qTALlm2OFme6179HqigPVHeKnvCJBHHzl9VdFsa8qKwwgTk/Sor
+	 VVKHqk+TgC6utNIctYZS5J1IgTwI2Qe1mZgMlquk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lorenzo Bianconi <lorenzo.bianconi@oss.qualcomm.com>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Giuseppe Piscitelli <ooonea@gmail.com>,
+	Niklas Cassel <cassel@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 142/990] net: stmmac: fix XDP RX buffer DMA sync length
-Date: Wed, 25 Nov 2026 15:25:09 +0100
-Message-ID: <20261125143825.411362908@linuxfoundation.org>
+Subject: [PATCH 6.18 143/990] ata: libata-core: Check device support before querying power state
+Date: Wed, 25 Nov 2026 15:25:10 +0100
+Message-ID: <20261125143825.434970578@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143822.072087159@linuxfoundation.org>
 References: <20261125143822.072087159@linuxfoundation.org>
@@ -68,88 +68,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Lorenzo Bianconi <lorenzo.bianconi@oss.qualcomm.com>
+From: Giuseppe Piscitelli <ooonea@gmail.com>
 
-[ Upstream commit 363ff816277d4c7064514b160e655bed1dfb3ed8 ]
+[ Upstream commit ec585ac78742527f80495dd8f451dcda7e9e7f59 ]
 
-stmmac_rx() bounded the DMA sync length by the largest data_end seen
-before and after the XDP program and passed it to page_pool_put_page()
-on the XDP_CONSUMED path. bpf_xdp_adjust_tail() zeroes the grown area,
-which dirties the CPU cache, but a later negative adjust only moves
-data_end back. If the program grows and then shrinks the tail, both
-endpoints miss the zeroed range, so those dirty cache lines are not
-written back before the page is reused.
+The standby path queries the power state before checking whether the
+device accepts ATA power-management commands. This sends CHECK POWER MODE
+to ATAPI devices, including the QEMU DVD-ROM, which rejects it.
 
-The length was also wrong since commit 88095728511e ("net: stmmac: fix
-rx Scatter-Gather support") moved the page_pool DMA window to offset 0
-and set max_len to dma_buf_sz + page_offset: the driver still
-subtracted buf->page_offset, so it synced [base, data_end - page_offset)
-instead of [base, data_end).
+Run the existing taskfile initialization and device-class check first,
+as the active-power path already does.
 
-On a non-coherent platform those dirty lines can be evicted after the
-device has DMA'd the next frame into the recycled page and corrupt it.
-
-Sync the whole page_pool DMA window on the XDP_CONSUMED path with
-page_pool_recycle_direct(), as the PASS path and page_pool allocation
-already do. The device only writes [page_offset, page_offset +
-dma_buf_sz), so syncing [base, base + max_len) covers every cache line
-it can touch, regardless of how the program adjusted the packet.
-
-Fixes: be8b38a722e6 ("net: stmmac: Add support for XDP_TX action")
-Fixes: 88095728511e ("net: stmmac: fix rx Scatter-Gather support")
-Signed-off-by: Lorenzo Bianconi <lorenzo.bianconi@oss.qualcomm.com>
-Link: https://patch.msgid.link/20261027-stmmac-xdp-fixes-v2-6-10eae8a093a8@oss.qualcomm.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Fixes: 9cec467d0502 ("ata: libata-core: Do not call ata_dev_power_set_standby() twice")
+Signed-off-by: Giuseppe Piscitelli <ooonea@gmail.com>
+Reviewed-by: Niklas Cassel <cassel@kernel.org>
+Link: https://lore.kernel.org/r/20261026202513.669084-1-ooonea@gmail.com
+Signed-off-by: Niklas Cassel <cassel@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../net/ethernet/stmicro/stmmac/stmmac_main.c   | 17 ++---------------
- 1 file changed, 2 insertions(+), 15 deletions(-)
+ drivers/ata/libata-core.c | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c b/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
-index 123f2415e745e..2e7b146895ba8 100644
---- a/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
-+++ b/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
-@@ -5689,8 +5689,6 @@ static int stmmac_rx(struct stmmac_priv *priv, int limit, u32 queue)
- 			len -= ETH_FCS_LEN;
+diff --git a/drivers/ata/libata-core.c b/drivers/ata/libata-core.c
+index 29394d18e7e83..209bd48ee8615 100644
+--- a/drivers/ata/libata-core.c
++++ b/drivers/ata/libata-core.c
+@@ -2046,6 +2046,10 @@ void ata_dev_power_set_standby(struct ata_device *dev)
+ 	struct ata_taskfile tf;
+ 	unsigned int err_mask;
  
- 		if (!skb) {
--			unsigned int pre_len, sync_len;
++	/* Issue STANDBY IMMEDIATE command only if supported by the device */
++	if (!ata_dev_power_init_tf(dev, &tf, false))
++		return;
++
+ 	/* If the device is already sleeping or in standby, do nothing. */
+ 	if ((dev->flags & ATA_DFLAG_SLEEPING) ||
+ 	    !ata_dev_power_is_active(dev))
+@@ -2064,10 +2068,6 @@ void ata_dev_power_set_standby(struct ata_device *dev)
+ 	    system_entering_hibernation())
+ 		return;
+ 
+-	/* Issue STANDBY IMMEDIATE command only if supported by the device */
+-	if (!ata_dev_power_init_tf(dev, &tf, false))
+-		return;
 -
- 			/* Each frame starts here: reset the FCS handling */
- 			fcs_stripped = false;
+ 	ata_dev_notice(dev, "Entering standby power mode\n");
  
-@@ -5708,29 +5706,18 @@ static int stmmac_rx(struct stmmac_priv *priv, int limit, u32 queue)
- 			xdp_prepare_buff(&ctx.xdp, page_address(buf->page),
- 					 buf->page_offset, buf1_len, true);
- 
--			pre_len = ctx.xdp.data_end - ctx.xdp.data_hard_start -
--				  buf->page_offset;
--
- 			ctx.priv = priv;
- 			ctx.desc = p;
- 			ctx.ndesc = np;
- 
- 			skb = stmmac_xdp_run_prog(priv, &ctx.xdp);
--			/* Due xdp_adjust_tail: DMA sync for_device
--			 * cover max len CPU touch
--			 */
--			sync_len = ctx.xdp.data_end - ctx.xdp.data_hard_start -
--				   buf->page_offset;
--			sync_len = max(sync_len, pre_len);
--
- 			/* For Not XDP_PASS verdict */
- 			if (IS_ERR(skb)) {
- 				unsigned int xdp_res = -PTR_ERR(skb);
- 
- 				if (xdp_res & STMMAC_XDP_CONSUMED) {
--					page_pool_put_page(rx_q->page_pool,
--							   virt_to_head_page(ctx.xdp.data),
--							   sync_len, true);
-+					page_pool_recycle_direct(rx_q->page_pool,
-+								 virt_to_head_page(ctx.xdp.data));
- 					buf->page = NULL;
- 					rx_dropped++;
- 					goto next;
+ 	err_mask = ata_exec_internal(dev, &tf, NULL, DMA_NONE, NULL, 0, 0);
 -- 
 2.53.0
 
