@@ -1,51 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795619662;
-	b=NeAIbZ7sqI8gHVVRkbxmC5Ijfw4vQnotXWKkGXVaTjzwBrFfYH4iqQPpy6i6BToXcM48
-	 vpFBD61lxpxb2cDeZSfgVxgIEj6EMYa1FUIZBXviyvgX1JeVJQPIJBdPSoZ/KMEUNsnPq
-	 WF1EAscqJr7yAT16v1jBER0cg+hRFb8LliHfTlhfZFVOcxHBh6eK9lw8Ba4gVavwFyPwR
-	 /gXtGyO8L8yc9R6TTw5L2V1O0mzJzbaoUlMwRCJ1UIaiXRhGkHEq2G8bGfK0vNFWowpJB
-	 UWwiRGouVqTs7fQf4OJA4epi/955t/lcz2csaCqHfGw+vnlPNc9TKf9MTDVzC7SQgXg==
+	t=1795619665;
+	b=MKHmTIO+sEGLStzSOu6rvP0OXeL4UF7qngShOutZ2m3plT4B8sHNe/+RsjlYbupQE7k9
+	 TNLU4uEZ9jd9yjDeZ0AgVrz9J/OJVA9mnhNKi4NftQ39g4YpESRoN44IaLez50agArRSa
+	 aD2bJNk7Dh88PbFjXV5kIBOL6xBuIdmUxnh3aGPlOlGuOsBPnxLjQ2XCdOKHQlTpfYPaa
+	 EvJAdBHrPioHWJ/DcD8DuEeAjyNpMRAtwsqd+vKqYvsPTmJiEJE+9QCIC2roSUy/mT7Mw
+	 5VpB0DvrwIXQpL34nFcpt2w4iwxw6913iVXDefuOzPIyb9IlqaH/zjSpVTZmkpLIjrg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795619662;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795619665;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=0n3RnnX3FbRF0YN12mB+PZjvL1Za3VDRHDP0LshfGMI=;
-	b=fSbz/LlnpgWWeO4Rr9GnjVbID5fK02itq60FGDdPubeaAUv5LMDoWKvnSwsdQNMB5OPT
-	 giDapW632wh38InPYMIcTLH5660qe6sgExBtrFUBf61DsYIYDVTbGdCEzw5AeZAWeWHmO
-	 +bGE04oyDOZPpYEf7wGqEf2fNMvy66G7Z717w/cpAyXnNm+uo2VlaZ6XtGUEgqJtJDz8b
-	 P51M3Pf1NhBl8QNc0BghVrM4cFRU1tyFEK/UUeQrBv7IXlE7QEND+Qtcqj2Dz/YL9eiKs
-	 JbHtuTsbrA8aJLMeBmcGSZ2HLMe/oUr5G9Xkco9v+RVAqHtFsTT/jqR2ZShd0LmyAQw==
+	bh=tYkwyW+S7+R4ohhKBKJUNjzLX8D+nQUnr4RVHxbEGk4=;
+	b=vF0Ydbl/1Hh9FTKEZxwpWYFdHMzKCELLCP3po92CLAQOltkJHszmMSPy7CWHLNt/u0U4
+	 z2/A3PWxu8gQSnuCCdF3RQFy64XvdVzzH4OYIikEQuUwccMxT1DesAf0+ZdDUbKlhUzoD
+	 OAN1yGH4EvqJyHNmAJKl9Llt1mzzI/8csOp0F7RlNwRMJ8SmWABnziLSLVzXqXDetJ1wo
+	 Mj91oblu8lFJdSp6PCtWRy+zkGmWda8DGzsUC1/qIOZ0e6S+fFzqC1jFwBFRCJ0ax4ORt
+	 0t3GfV5C30q6L/OzsqvlSfpwvqMa3qrYCc0EFB1q9+FTjl4PxbFx9BkfatIQO7aZRTg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=bRx3NDB6;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=hlC2LTtg;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5F0C5606A696;
-	Wed, 25 Nov 2026 15:14:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 719BF606A6B1;
+	Wed, 25 Nov 2026 15:14:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=bRx3NDB6
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 346BE1F00AD4;
-	Wed, 25 Nov 2026 15:14:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=hlC2LTtg
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7C11E1F000E0;
+	Wed, 25 Nov 2026 15:14:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795619661;
-	bh=0n3RnnX3FbRF0YN12mB+PZjvL1Za3VDRHDP0LshfGMI=;
+	s=korg; t=1795619665;
+	bh=tYkwyW+S7+R4ohhKBKJUNjzLX8D+nQUnr4RVHxbEGk4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=bRx3NDB6117F0Ddtr0A0HoFdvDPdozQds+O3FlPuhBU6vZSqgnDXDIoju+HTHVQQM
-	 /vR5dNfz82Aurml5SxaVsR9Zcsn7VQibyf9vu0tXmFhv0FhZQXy9wcItxJB6pt72VY
-	 QIU9c0yECAK1ucwLVQ/pk1YXj9aiDQJY2Gejnil4=
+	b=hlC2LTtgxWy2CTM5smO8URVRa1XlDpaMzC5/PdMC84c1QAdre0Izlj/MsU14yX7SK
+	 YnpaYKM9GNTyuj60VyxLdoOmRfAwyN1z7uMaEP7TLk7i6TAN0C2Ir6aXZu6cFXw35x
+	 9qbB3MYX4mnsMW3Dv+I3qr4xe3eFEYMX9OOQxSDE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Jan Kara <jack@suse.cz>,
 	"Christian Brauner (Amutable)" <brauner@kernel.org>
-Subject: [PATCH 7.3 0669/1005] minix: add minix_inode_block() helper
-Date: Wed, 25 Nov 2026 15:33:27 +0100
-Message-ID: <20261125143837.421952596@linuxfoundation.org>
+Subject: [PATCH 7.3 0670/1005] minix: dont read the inode block in minix_sync_inode_metadata()
+Date: Wed, 25 Nov 2026 15:33:28 +0100
+Message-ID: <20261125143837.446148369@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143821.729802100@linuxfoundation.org>
 References: <20261125143821.729802100@linuxfoundation.org>
@@ -69,101 +69,65 @@ Content-Transfer-Encoding: 8bit
 
 From: Christian Brauner <brauner@kernel.org>
 
-commit 1037134824e9d5c8cc04eea5ec6a5eb3ef4312bb upstream.
+commit ccb8bbf93985d89f60d904386e27aad60f34dbbf upstream.
 
-Move the lookup of the block that holds an inode out of
-minix_V1_raw_inode() and minix_V2_raw_inode() into a helper.
-minix_sync_inode_metadata() is going to use it to find the block
-without reading it from disk.
+minix_sync_inode_metadata() looks the inode block up with
+minix_V1_raw_inode() or minix_V2_raw_inode() which read it from disk if
+it isn't cached. But a block that isn't cached is neither dirty nor
+under writeback, so there's nothing to write or to wait for.
 
-No functional changes.
+That read is also something we can't afford once inode eviction calls
+->sync_inode_metadata() from reclaim. So look the block up with
+sb_find_get_block_nonatomic() instead.
 
 Cc: stable@vger.kernel.org # v7.3
 Reviewed-by: Jan Kara <jack@suse.cz>
-Link: https://patch.msgid.link/20261109-work-inode-metadata_writeback-v3-5-91ac6c024018@kernel.org
+Link: https://patch.msgid.link/20261109-work-inode-metadata_writeback-v3-6-91ac6c024018@kernel.org
 Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/minix/bitmap.c |   37 +++++++++++++++++++++++--------------
- fs/minix/minix.h  |    1 +
- 2 files changed, 24 insertions(+), 14 deletions(-)
+ fs/minix/inode.c | 16 ++++++++--------
+ 1 file changed, 8 insertions(+), 8 deletions(-)
 
---- a/fs/minix/bitmap.c
-+++ b/fs/minix/bitmap.c
-@@ -103,21 +103,35 @@ unsigned long minix_count_free_blocks(st
- 		<< sbi->s_log_zone_size);
- }
- 
--struct minix_inode *
--minix_V1_raw_inode(struct super_block *sb, ino_t ino, struct buffer_head **bh)
-+/* Return the block that holds inode @ino or 0 if @ino is out of range. */
-+int minix_inode_block(struct super_block *sb, ino_t ino)
+diff --git a/fs/minix/inode.c b/fs/minix/inode.c
+index 670179173645..756bef4dc832 100644
+--- a/fs/minix/inode.c
++++ b/fs/minix/inode.c
+@@ -702,24 +702,24 @@ static int minix_sync_inode_metadata(struct inode *inode,
  {
--	int block;
- 	struct minix_sb_info *sbi = minix_sb(sb);
--	struct minix_inode *p;
-+	int inodes_per_block;
- 
- 	if (!ino || ino > sbi->s_ninodes) {
- 		printk("Bad inode number on dev %s: %ld is out of range\n",
- 		       sb->s_id, (long)ino);
--		return NULL;
-+		return 0;
- 	}
-+	if (sbi->s_version == MINIX_V1)
-+		inodes_per_block = MINIX_INODES_PER_BLOCK;
-+	else
-+		inodes_per_block = sb->s_blocksize / sizeof(struct minix2_inode);
-+	return 2 + sbi->s_imap_blocks + sbi->s_zmap_blocks +
-+		 (ino - 1) / inodes_per_block;
-+}
-+
-+struct minix_inode *
-+minix_V1_raw_inode(struct super_block *sb, ino_t ino, struct buffer_head **bh)
-+{
+ 	int err = 0;
+ 	struct buffer_head *bh;
+-	void *raw_inode;
 +	int block;
-+	struct minix_inode *p;
-+
-+	block = minix_inode_block(sb, ino);
-+	if (!block)
-+		return NULL;
- 	ino--;
--	block = 2 + sbi->s_imap_blocks + sbi->s_zmap_blocks +
--		 ino / MINIX_INODES_PER_BLOCK;
- 	*bh = sb_bread(sb, block);
- 	if (!*bh) {
- 		printk("Unable to read inode block\n");
-@@ -131,19 +145,14 @@ struct minix2_inode *
- minix_V2_raw_inode(struct super_block *sb, ino_t ino, struct buffer_head **bh)
- {
- 	int block;
--	struct minix_sb_info *sbi = minix_sb(sb);
- 	struct minix2_inode *p;
- 	int minix2_inodes_per_block = sb->s_blocksize / sizeof(struct minix2_inode);
  
- 	*bh = NULL;
--	if (!ino || ino > sbi->s_ninodes) {
--		printk("Bad inode number on dev %s: %ld is out of range\n",
--		       sb->s_id, (long)ino);
-+	block = minix_inode_block(sb, ino);
+-	if (INODE_VERSION(inode) == MINIX_V1)
+-		raw_inode = minix_V1_raw_inode(inode->i_sb, inode->i_ino, &bh);
+-	else
+-		raw_inode = minix_V2_raw_inode(inode->i_sb, inode->i_ino, &bh);
+-	if (!raw_inode)
++	block = minix_inode_block(inode->i_sb, inode->i_ino);
 +	if (!block)
- 		return NULL;
--	}
- 	ino--;
--	block = 2 + sbi->s_imap_blocks + sbi->s_zmap_blocks +
--		 ino / minix2_inodes_per_block;
- 	*bh = sb_bread(sb, block);
- 	if (!*bh) {
- 		printk("Unable to read inode block\n");
---- a/fs/minix/minix.h
-+++ b/fs/minix/minix.h
-@@ -47,6 +47,7 @@ void __minix_error_inode(struct inode *i
- 			 unsigned int line, const char *fmt, ...);
- 
- struct inode *minix_iget(struct super_block *, unsigned long);
-+int minix_inode_block(struct super_block *sb, ino_t ino);
- struct minix_inode *minix_V1_raw_inode(struct super_block *, ino_t, struct buffer_head **);
- struct minix2_inode *minix_V2_raw_inode(struct super_block *, ino_t, struct buffer_head **);
- struct inode *minix_new_inode(const struct inode *, umode_t);
+ 		return -EIO;
+ 	err = mmb_sync(&minix_i(inode)->i_metadata_bhs);
+ 	if (err)
+-		goto out;
++		return err;
++	/* A block that isn't cached is neither dirty nor under writeback. */
++	bh = sb_find_get_block_nonatomic(inode->i_sb, block);
++	if (!bh)
++		return 0;
+ 	sync_dirty_buffer(bh);
+ 	if (buffer_write_io_error(bh)) {
+ 		printk("IO error syncing minix inode [%s:%08llx]\n",
+ 			inode->i_sb->s_id, inode->i_ino);
+ 		err = -EIO;
+ 	}
+-out:
+ 	brelse(bh);
+ 	return err;
+ }
+-- 
+2.56.1
+
 
 
