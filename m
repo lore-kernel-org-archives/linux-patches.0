@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795622910;
-	b=EYKp3jURYZuRiZI68vz+vrXA6Jozdvb1wCjegY5X2ursrBoP9OBZ5p6HtzZFVzfJDuPW
-	 g2lNILfnoQHvDeqDoz8Fz+B1QUG15T0C7ZikQ8FFdWQB2JR8qB6Qfuei9OpbkB5AoXjcG
-	 FQWB6b5xJH9jaLJmDvO36e/ar3dYtmri3FDwz1IcecPfwj7k0SEuZlK9rGCJ+K9IOMQNJ
-	 4IEVFAjsHL2eATzlzJjbNydIMmCmtuabkqxOtNsRRVuSvpIwfc9TW6GHd3QkvE4JUmNbB
-	 +I4fFRucsM7pWN2r2T4NndfvaI6OVSiXVBbWlSuYqNKdcy7LFFRlBTj/YHzazEAUZJA==
+	t=1795622913;
+	b=27x2/QdnOS9KcEuUirLG51i6llUsgijB8Wv8K7F2fPTzP89Ly0WBjoEb3LoW4QCS1Rfu
+	 Hgma4CVst7AID80jg0w9sBkORUUCamU8cozMbpGDxGRdqvStni2sfOh+UDlzXQb+pf8Rg
+	 ON9L7eCiAk9kVWdnN9+L05VDCu4jRiyDGb4EJ3w60zlm5Q7Zpqk9+9LNEGkTPntIgqXp3
+	 AxhT1XXhJtTv3Ni8trQeO4Ec8734oCfuRaX3pPmazhM3bWz7Z47rEmyK/ATasewjBHoL5
+	 ze/S343sXDKGOMhm7+vTFbUWZOO4o8srRRLu0EdrgbiSDYLpjcOdiSxaoYlq2eklSEA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795622910;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795622913;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=boDTxHFUfmxZcfvEdRt6ZKFmt0NauU/WZBTtQJ7pS9U=;
-	b=Fo2rS+pgBSG5cTICMIglfJw3O5Dr4K7vHYnW4CFnCUjp+zRsbvUIGvwHMYdXk+bSRTIn
-	 U+KQFw0iZ2DQm+QETlVe93x7DX0+j4F2UgzNat2VbpK3stk81zFwp5sKemfbCWFwxCvEH
-	 zBZxPihEWn93ygvhBdBB0U729sU1mQnDieB88ApszkNKo7ENjnDsq+SFgElETrt+vfojf
-	 v6LXCj5o/sVBjl01A9Z/MvGPBH+nys0Q9vkqfSlzOhP1LJFmyGegK9AkYwymd9hw5P9yW
-	 hkPp3KRu87pddc01+zis/gxMi+RtV7sbUiK4fvaIXt4c1FzVA8KdZ7M44nyUqf2hSaQ==
+	bh=MhTZxV/a663lBYGW/KlDxrLAvPWgCBA5djKyx1qzsYM=;
+	b=MNe1pnemxRwH48WK6dh4rbqKCLLm8GuPk2gPW7SXO4K0B+zmtdb7qklRjlB5IABRSIId
+	 9IfSz6tPUs0LuoZCT09kcUTGwnq25jNuV1KLuaIeHHQ19QNu7YpUpqFcRKXGHiFacQ0lo
+	 XU9Ho+6K5snSqqgoKglqOjurOvvR5EfgPRbQs7USurqORdwlCkxcGI1tBgUX6Ya0vghCy
+	 Ahte34XgFgdHPKmlnUuofZK8eLZBHG8/H7WdZ16yXdNFe7E/vNSww2YRtO+iSEGduVQ95
+	 izLQ4GIu87HbAHiKr40rQonGLZR9jr41BWoFD+mafGOQ4eRGzgKOEvP14h4otkJllgA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=oJj4Z+FA;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Tos6Y2PD;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3A2C7606A31E;
-	Wed, 25 Nov 2026 16:08:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 80E8D606A31E;
+	Wed, 25 Nov 2026 16:08:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=oJj4Z+FA
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 03E891F000E0;
-	Wed, 25 Nov 2026 16:08:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Tos6Y2PD
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 611391F000E0;
+	Wed, 25 Nov 2026 16:08:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795622909;
-	bh=boDTxHFUfmxZcfvEdRt6ZKFmt0NauU/WZBTtQJ7pS9U=;
+	s=korg; t=1795622912;
+	bh=MhTZxV/a663lBYGW/KlDxrLAvPWgCBA5djKyx1qzsYM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=oJj4Z+FA4XkdzkOsiRZ7Ni4qgF4k3H8ok2Y1crOUEFJeIgbGvx+2Q8eOz56k2Thn7
-	 AN2J5N9pxzK+ZFbnDO5vwBoss0ASDATNljuB+dbSM7KwnESPUVmIBvfHm9FNnY70ov
-	 xOkQMAnEeaxLpDTraKCD9kO4x+dU5Dr5yURmtQoI=
+	b=Tos6Y2PDIkQdqLmdE5b5Rp00n7422KjIIFRNsvg8E3BV75T7Oz3EXlZPL7pzxLlnB
+	 OdUZmaYlKCt1c/aqir0TToZ4zOt/NkKs+vcbRWTFbn4Uv6VRp4iIudxtH4tc6RMnu7
+	 gW7hBMsi6HmXIpArOm+FgYrQxWTCrnd1Ic6A7vM8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pauli Virtanen <pav@iki.fi>,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
+	Hao Li <hao.li@linux.dev>,
+	"Harry Yoo (Meta)" <harry@kernel.org>,
+	"Vlastimil Babka (SUSE)" <vbabka@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 645/990] Bluetooth: 6lowpan: avoid concurrent peer_del() in bt_6lowpan_disconnect
-Date: Wed, 25 Nov 2026 15:33:32 +0100
-Message-ID: <20261125143837.199636127@linuxfoundation.org>
+Subject: [PATCH 6.18 646/990] mm/slub: refill prefilled sheaves from the barn
+Date: Wed, 25 Nov 2026 15:33:33 +0100
+Message-ID: <20261125143837.223277408@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143822.072087159@linuxfoundation.org>
 References: <20261125143822.072087159@linuxfoundation.org>
@@ -68,63 +69,255 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pauli Virtanen <pav@iki.fi>
+From: Hao Li <hao.li@linux.dev>
 
-[ Upstream commit df5175dfcf4879f6bcdadee614ac089e5627b721 ]
+[ Upstream commit 1b87ea06a34b213e45e3e0c4effd5043f15046ed ]
 
-bt_6lowpan_disconnect() looks up and accesses peer->chan, without
-holding locks guaranteeing peer_del() cannot free the peer concurrently.
+Currently, when the prefill API refills a non-full sheaf, it takes the
+objects from partial slabs and never from the full sheaves in the barn,
+so once the barn's full list becomes saturated, it stays saturated.
 
-Take devices_lock to ensure peer can be dereferenced safely.
+For objects freed via kfree_rcu(), every RCU sheaf then has to be
+flushed to slabs because the barn's full list has no room.
 
-Fixes: 15f32cabf426 ("Bluetooth: 6lowpan: add missing l2cap_chan_lock()")
-Signed-off-by: Pauli Virtanen <pav@iki.fi>
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
-[ sashal: Kept this tree's existing lock/close/unlock sequence on the pinned channel instead of upstream's l2cap_chan_close_unlocked() helper, which is missing here. ]
+To fix this, let the sheaf refill from the barn first, and introduce a
+partial sheaf in the barn, which holds the leftover objects [1].
+
+Only the prefill path needs the partial sheaf. The generic allocation
+path (__pcs_replace_empty_main()) exchanges an empty sheaf for a full
+one from the barn, so nothing is left over. The prefill path refills a
+sheaf that is not necessarily empty, so taking objects from the barn
+usually leaves leftovers, and the partial sheaf is where they are
+kept. refill_sheaf() only takes objects from partial slabs and never
+involves the partial sheaf.
+
+The sheaf is refilled by copying objects from the partial sheaf, and
+then from a full sheaf taken from the barn if it is still not full. A
+sheaf that objects were copied from stays in the barn as the partial
+sheaf if it still holds objects, or goes on the empty list if it is
+empty. The sheaf being refilled is never replaced.
+
+The gain comes from two sides: every full sheaf taken out makes room on
+the barn's full list for a future RCU sheaf, and refilling from the
+barn is cheaper than refilling from partial slabs under list_lock.
+
+Note that putting the sheaf with the leftover objects on the full list
+instead would not work: it would occupy room on the full list, so the
+list would stay saturated and rcu_free_sheaf() would still keep
+flushing.
+
+An earlier version of this patch swapped sheaves instead, to minimize
+the memcpy overhead. As Harry Yoo pointed out [2], replacing the
+caller's sheaf loses cache affinity, filling it directly is more
+straightforward, and testing showed no measurable difference between
+the two approaches, so the approach he suggested is used.
+
+Tested with will-it-scale mmap1 (192 processes, one-minute runs) on the
+maple_node cache.
+
+throughput: 27778727 -> 34500556 (+24.2%)
+
+metric                       baseline           patched        change
+=====================================================================
+alloc_fastpath                 54,124            56,696        +4.75%
+alloc_slab                  7,100,651           159,739       -97.75%
+barn_get                          849       194,460,392    +22904539.81%
+barn_get_fail                       2               217    +10750.00%
+barn_put                          851       182,306,701    +21422544.07%
+barn_put_fail             260,400,484       145,522,675       -44.12%
+cmpxchg_double_fail         1,029,204           334,228       -67.53%
+free_add_partial          326,694,687       181,935,790       -44.31%
+free_fastpath                  13,297            15,611       +17.40%
+free_rcu_sheaf          8,332,839,104    10,490,535,227       +25.89%
+free_remove_partial         7,099,788           158,297       -97.77%
+free_slab                   7,099,788           158,297       -97.77%
+free_slowpath              10,969,156           782,851       -92.86%
+objects                        15,295            14,849        -2.92%
+objects_partial                15,295            14,849        -2.92%
+partial                         1,604             2,336       +45.64%
+sheaf_alloc               137,757,895       141,208,076        +2.50%
+sheaf_flush             8,332,823,922     4,656,725,764       -44.12%
+sheaf_free                137,757,883       141,208,072        +2.50%
+sheaf_prefill_fast      3,337,502,163     4,196,506,116       +25.74%
+sheaf_prefill_slow                685               400       -41.61%
+sheaf_refill            8,343,794,364     4,657,509,724       -44.18%
+sheaf_return_fast       3,337,502,411     4,196,506,382       +25.74%
+sheaf_return_slow                 437               134       -69.34%
+slabs                           1,604             2,336       +45.64%
+total_objects                 102,656           149,504       +45.64%
+
+Here is what the important metric changes mean.
+
+barn_get and barn_put: refills now take full sheaves out of the barn,
+and RCU sheaves are put into the barn again. Before, the barn's full
+list was saturated once and hardly ever consumed.
+
+barn_put_fail: more than half of the RCU sheaves are now put into the
+barn instead of being flushed. The rest are still flushed because they
+arrive while the barn's full list is at its limit.
+
+sheaf_refill and free_add_partial: fewer objects are taken from partial
+slabs to refill sheaves, and fewer slabs are added to the partial list,
+by the same percentage.
+
+alloc_slab and free_slab: the partial list is almost never empty when a
+refill looks at it, so slabs are almost never allocated and freed again
+only to serve refills.
+
+After the test, the maple_node cache holds 1604 slabs without the patch
+and 2336 with it. After a manual shrink
+(echo 1 > /sys/kernel/slab/maple_node/shrink), it holds 485 without
+the patch and 563 with it. So most of the extra slabs are held only by
+objects sitting in sheaves and are returned by a shrink, and what
+remains is a small difference, because objects handed out from the barn
+come from many more slabs than a refill from partial slabs would use.
+
+Link: https://lore.kernel.org/linux-mm/aqPlMzUIw-4g2iOX@fedora/ [1]
+Link: https://lore.kernel.org/linux-mm/aq0ylDidEHa2kg4X@thinkstation/ [2]
+Signed-off-by: Hao Li <hao.li@linux.dev>
+Reviewed-by: Harry Yoo (Meta) <harry@kernel.org>
+Link: https://patch.msgid.link/20260921094521.141665-1-hao.li@linux.dev
+Reviewed-by: Vlastimil Babka (SUSE) <vbabka@kernel.org>
+Signed-off-by: Harry Yoo (Meta) <harry@kernel.org>
+[ sashal: Adapted by calling refill_sheaf_from_barn() directly in the two prefill/refill functions, since the upstream pfmemalloc prefill helper doesn't exist here. ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/bluetooth/6lowpan.c | 21 ++++++++++++++++-----
- 1 file changed, 16 insertions(+), 5 deletions(-)
+ mm/slub.c | 86 +++++++++++++++++++++++++++++++++++++++++++++++++++++--
+ 1 file changed, 84 insertions(+), 2 deletions(-)
 
-diff --git a/net/bluetooth/6lowpan.c b/net/bluetooth/6lowpan.c
-index 64dffdc8125b3..9515b82cda688 100644
---- a/net/bluetooth/6lowpan.c
-+++ b/net/bluetooth/6lowpan.c
-@@ -913,18 +913,29 @@ static int bt_6lowpan_connect(bdaddr_t *addr, u8 dst_type)
- static int bt_6lowpan_disconnect(struct l2cap_conn *conn, u8 dst_type)
- {
- 	struct lowpan_peer *peer;
-+	struct l2cap_chan *chan;
+diff --git a/mm/slub.c b/mm/slub.c
+index 8fdbe531a0cba..d49b6f69136c5 100644
+--- a/mm/slub.c
++++ b/mm/slub.c
+@@ -462,6 +462,7 @@ struct node_barn {
+ 	spinlock_t lock;
+ 	struct list_head sheaves_full;
+ 	struct list_head sheaves_empty;
++	struct slab_sheaf *sheaf_partial;
+ 	unsigned int nr_full;
+ 	unsigned int nr_empty;
+ };
+@@ -3047,6 +3048,7 @@ static void barn_init(struct node_barn *barn)
+ 	spin_lock_init(&barn->lock);
+ 	INIT_LIST_HEAD(&barn->sheaves_full);
+ 	INIT_LIST_HEAD(&barn->sheaves_empty);
++	barn->sheaf_partial = NULL;
+ 	barn->nr_full = 0;
+ 	barn->nr_empty = 0;
+ }
+@@ -3067,6 +3069,10 @@ static void barn_shrink(struct kmem_cache *s, struct node_barn *barn)
+ 	barn->nr_full = 0;
+ 	list_splice_init(&barn->sheaves_empty, &empty_list);
+ 	barn->nr_empty = 0;
++	if (barn->sheaf_partial) {
++		list_add(&barn->sheaf_partial->barn_list, &full_list);
++		barn->sheaf_partial = NULL;
++	}
  
- 	BT_DBG("conn %p dst type %u", conn, dst_type);
+ 	spin_unlock_irqrestore(&barn->lock, flags);
  
-+	spin_lock(&devices_lock);
+@@ -5381,6 +5387,78 @@ void *kmem_cache_alloc_node_noprof(struct kmem_cache *s, gfp_t gfpflags, int nod
+ }
+ EXPORT_SYMBOL(kmem_cache_alloc_node_noprof);
+ 
++/*
++ * Refill @sheaf from the barn: from its partial sheaf first, then from its full
++ * sheaves. A sheaf that objects were copied from stays in the barn as the
++ * partial sheaf if it still holds objects, or goes on the empty list if it is
++ * empty.
++ *
++ * Returns true if the sheaf is now full, at s->sheaf_capacity.
++ * Returns false if the sheaf is still not full.
++ */
++static bool refill_sheaf_from_barn(struct kmem_cache *s,
++				   struct slab_sheaf *sheaf)
++{
++	struct node_barn *barn = get_barn(s);
++	struct slab_sheaf *src;
++	unsigned int to_move;
++	unsigned long flags;
 +
- 	peer = lookup_peer(conn);
--	if (!peer)
-+	if (!peer) {
-+		spin_unlock(&devices_lock);
- 		return -ENOENT;
++	if (!barn)
++		return false;
++
++	if (!data_race(barn->nr_full) && !data_race(barn->sheaf_partial))
++		return false;
++
++	spin_lock_irqsave(&barn->lock, flags);
++
++	/*
++	 * The partial sheaf can hold fewer objects than @sheaf needs to
++	 * reach capacity, and a sheaf on the full list is not necessarily
++	 * full (see the comment in rcu_free_sheaf()), so keep taking from
++	 * the barn until @sheaf is full or nothing is left.
++	 */
++	while (sheaf->size < s->sheaf_capacity) {
++		src = barn->sheaf_partial;
++		barn->sheaf_partial = NULL;
++		if (!src) {
++			if (!barn->nr_full)
++				break;
++			src = list_first_entry(&barn->sheaves_full,
++					       struct slab_sheaf, barn_list);
++			list_del(&src->barn_list);
++			barn->nr_full--;
++		}
++
++		to_move = min(s->sheaf_capacity - sheaf->size, src->size);
++		src->size -= to_move;
++		memcpy(&sheaf->objects[sheaf->size], &src->objects[src->size],
++		       to_move * sizeof(void *));
++		sheaf->size += to_move;
++
++		if (src->size) {
++			barn->sheaf_partial = src;
++		} else {
++			/*
++			 * No empty-limit check: the sheaf put on the empty list
++			 * was already in the barn, so the barn holds no more
++			 * sheaves than before. barn_replace_empty_sheaf() skips
++			 * the check for the same reason.
++			 */
++			list_add(&src->barn_list, &barn->sheaves_empty);
++			barn->nr_empty++;
++		}
 +	}
 +
-+	chan = peer->chan;
-+	l2cap_chan_hold(chan);
++	spin_unlock_irqrestore(&barn->lock, flags);
 +
-+	spin_unlock(&devices_lock);
++	if (sheaf->size < s->sheaf_capacity)
++		return false;
++
++	stat(s, BARN_GET);
++	return true;
++}
++
+ /*
+  * returns a sheaf that has at least the requested size
+  * when prefilling is needed, do so with given gfp flags
+@@ -5452,7 +5530,8 @@ kmem_cache_prefill_sheaf(struct kmem_cache *s, gfp_t gfp, unsigned int size)
+ 		sheaf = alloc_empty_sheaf(s, gfp);
  
--	BT_DBG("peer %p chan %p", peer, peer->chan);
-+	BT_DBG("peer %p chan %p", peer, chan);
+ 	if (sheaf && sheaf->size < size) {
+-		if (refill_sheaf(s, sheaf, gfp)) {
++		if (!refill_sheaf_from_barn(s, sheaf) &&
++		    refill_sheaf(s, sheaf, gfp)) {
+ 			sheaf_flush_unused(s, sheaf);
+ 			free_empty_sheaf(s, sheaf);
+ 			sheaf = NULL;
+@@ -5546,8 +5625,11 @@ int kmem_cache_refill_sheaf(struct kmem_cache *s, gfp_t gfp,
+ 		return 0;
  
--	l2cap_chan_lock(peer->chan);
--	l2cap_chan_close(peer->chan, ENOENT);
--	l2cap_chan_unlock(peer->chan);
-+	l2cap_chan_lock(chan);
-+	l2cap_chan_close(chan, ENOENT);
-+	l2cap_chan_unlock(chan);
-+	l2cap_chan_put(chan);
+ 	if (likely(sheaf->capacity >= size)) {
+-		if (likely(sheaf->capacity == s->sheaf_capacity))
++		if (likely(sheaf->capacity == s->sheaf_capacity)) {
++			if (refill_sheaf_from_barn(s, sheaf))
++				return 0;
+ 			return refill_sheaf(s, sheaf, gfp);
++		}
  
- 	return 0;
- }
+ 		if (!__kmem_cache_alloc_bulk(s, gfp, sheaf->capacity - sheaf->size,
+ 					     &sheaf->objects[sheaf->size])) {
 -- 
 2.53.0
 
