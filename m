@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795621048;
-	b=Sm6bcbWeAvq/CHOGwz+CQRSJ0IWX/ZcjJeXC8ah+f5ydTuifsXX/9lcB/VuzF5SfPY0e
-	 pb0we2QXHsP+K/1EW0bNsa5teh0Wn8wm+80A1igwv9upUqn/ripSsSm3d+vnTP0GStiSc
-	 LUo8eeHv9oFpgFGfXKL8bzmlfq+cHdbF3ktL/Z0B12jSJW2rIuAVx1sksXDlqxi4J5RDn
-	 ZG96eBbdwI5j8XJeVK/8bNMvHiP6hkdbxALWYjDixQRJm2iql6dmRGpYSjjjzzSMmzd4G
-	 +Cc5KzE7yQ7/EjtaS3dM3AO/XNiFntlJIh4FS7QfQOcSC8R/4EK+IdJRTjqhoWwvstg==
+	t=1795621052;
+	b=a5XH8OanLVF5NOFY4J3387fJOiAFke8MDKrCCNihjEtE0rckkwxQL8D1xA9/peC9WrYR
+	 sFVUaZv4y+PqWZZIwKpfO7CUrmL8R1zkb78tNdMug21pgBxc3b1OxMVx0agfjltzPZtKa
+	 LlzWFPG3/fhYw2IORxoB+zAPfhQEn60c5BVckScJqn7LZOumqOnkYCqQEZayohFaZZTCq
+	 1RlROGbM57EgM51E2Ngh6L43cKcZvUNj4CRXvzT6y0nmZSUN2nZmwWq5IJhrhD7pXcruB
+	 jqjituNanPMR+6he4p+fm72If1+7raLger28Kvc4T+prH0rLKjuP0sF3RBY/sQ47Hng==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795621048;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795621052;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=icA2uXMrdf6bm74X/Sl71MFVm/YmfZi0zx1mDVLMNSY=;
-	b=yvW4FsyooTcYXsS0o3V4zgUAP14rTMSWInweHqVSgG70+uhxjNVxheH72ZOnAjBXNNiA
-	 Fd6DxYtPox8nE1EAr1mz6mpay/CgV0x10P3QvGR0HkYoDEYfel+WDFUuAEAoTydpAA0Fd
-	 +ZLm6Wg2arqR8uSN1Y7d9TE42sj54M1P5UxMF4BpPYBe51GUg8zTnDWu/yCRvEQ/bo1Yw
-	 t45p+Nx7CD+SA99V3On+qC1FSRJdHAF2SEyQh5TjOFK1HDV2mVt3q9w14R9eHKRdgOteI
-	 prDn3NdGRvdiVXL+I5cbKAxxqyt6AYZdlslTj68oGwrOGch54QoqlTzy76ktVRIPnsQ==
+	bh=DXIehU4anHhhAwRcVUDcNPKNGLSJVwXQOV5DuT7pMJQ=;
+	b=gpzP7EeoWWin/pzul15M+dUwsJWdOwLUGDzQGs4qwgrrJ9ERsy11bmTs7rSr2mkTuRn1
+	 sJrvE7LVxtcqbxf6FQSI2t3FlUiZxKrek4KUeR6gPVB1GUC7zXxnPq6nVNo6ZeUF1SXse
+	 9InSSq5DXQhdl3dAf67WzauDysQdIZuJelA+ez6Y7y18VCSMReXqccOxFKcaovyb9ONtp
+	 z8CkHhKqiy3HCb1WIcTtUpNeK7e+Mp51/z0jXZNjkThIA5kGwoxnjQewTOmzqwxP2psjF
+	 UkxwQ6z5CJiGN/UHTl2Pp4uUi1g/QOplcFVblFzeWSem6mCh/ApdTT/N2z3OJRaI6vg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=BPHtz+6Q;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=bw3DqjOx;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8B533606A69C;
-	Wed, 25 Nov 2026 15:37:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0CFB6606A32C;
+	Wed, 25 Nov 2026 15:37:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=BPHtz+6Q
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C37D61F000ED;
-	Wed, 25 Nov 2026 15:37:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=bw3DqjOx
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F1A041F000CF;
+	Wed, 25 Nov 2026 15:37:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795621048;
-	bh=icA2uXMrdf6bm74X/Sl71MFVm/YmfZi0zx1mDVLMNSY=;
+	s=korg; t=1795621051;
+	bh=DXIehU4anHhhAwRcVUDcNPKNGLSJVwXQOV5DuT7pMJQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=BPHtz+6QaiWDR6Kkb+s+6tAAviHX9p/4ecLLtJTK5A1lskvHw9gpFOIjQKexQXv9M
-	 jg7hCvdgn+vTIhsx778WCB+hVbFfPBZfrtDjt3208juxh8U+qBu4o5rKDo7NhNVl2t
-	 TXpKDO8l79iNyl5SQnNeylzbQpEe7ODOrLP7nbMc=
+	b=bw3DqjOxyFrjluDNaO2b89KBIeQ0ZSWqvAbwlt9xJIBs6wCptfJbcZacsWyGoHDcb
+	 OOtGXitfJ8XXQ4buFMbNV1e/z26l1yGgGvHQj0vknXzmDLnQIHuY8fpIDs67RksauA
+	 k4JGCjXfJsTtzHnCAv+rbOlIjHSKDJPpN0nKXmiU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Fernando Fernandez Mancera <fmancera@suse.de>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Jia Jia <physicalmtea@gmail.com>,
+	"Martin K. Petersen (Oracle)" <mkp@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 102/990] net/smc: fix limit_smc_hs sysctl on big-endian architecture
-Date: Wed, 25 Nov 2026 15:24:29 +0100
-Message-ID: <20261125143824.479144173@linuxfoundation.org>
+Subject: [PATCH 6.18 103/990] scsi: target: Validate REGISTER AND MOVE TransportID length
+Date: Wed, 25 Nov 2026 15:24:30 +0100
+Message-ID: <20261125143824.501442680@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143822.072087159@linuxfoundation.org>
 References: <20261125143822.072087159@linuxfoundation.org>
@@ -68,50 +68,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Fernando Fernandez Mancera <fmancera@suse.de>
+From: Jia Jia <physicalmtea@gmail.com>
 
-[ Upstream commit 162cf592b577cccf04515100563e819d9eba5c4a ]
+[ Upstream commit 5d5913710c81eed6fa275b6a24773059d9dbfdfa ]
 
-net->smc.limit_smc_hs is a bool, but its sysctl entry uses
-proc_dointvec_minmax() with .maxlen = sizeof(int), so the handler
-accesses four bytes at the address of a one-byte field.
+REGISTER AND MOVE has a 24-byte parameter-list header followed by a
+TransportID.  A 24-byte parameter list with a zero TransportID length
+passes the existing tid_len + 24 check, then the handler reads buf[24] for
+the TransportID protocol identifier, one byte past the received parameter
+list.
 
-On little-endian this works with the extra bytes being written in struct
-padding. On big-endian (tested on s390x) the bool sits at the most
-significant byte of the int therefore the bool stays false and the "1"
-goes into padding. The sysctl reads back 1 but SMC sockets created
-afterwards see limit_smc_hs as disabled.
+A TransportID is at least 24 bytes.  Reject shorter TransportIDs and
+compare the declared length with the bytes following the header before
+reading buf[24].
 
-Fix this by using proc_dobool() handler and adjust the maxlen to the
-right value.
+A malformed PR OUT sent through vhost-scsi triggered this read on a KASAN
+kernel.  The command is now rejected with INVALID PARAMETER LIST before
+buf[24] is accessed.
 
-Fixes: f8406a2fd279 ("net/smc: add sysctl for smc_limit_hs")
-Signed-off-by: Fernando Fernandez Mancera <fmancera@suse.de>
-Link: https://patch.msgid.link/20261028225350.3753-1-fmancera@suse.de
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: c66ac9db8d4a ("[SCSI] target: Add LIO target core v4.0.0-rc6")
+Signed-off-by: Jia Jia <physicalmtea@gmail.com>
+Link: https://patch.msgid.link/20261021094334.198599-1-physicalmtea@gmail.com
+Signed-off-by: Martin K. Petersen (Oracle) <mkp@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/smc/smc_sysctl.c | 6 ++----
- 1 file changed, 2 insertions(+), 4 deletions(-)
+ drivers/target/target_core_pr.c | 9 +++++----
+ 1 file changed, 5 insertions(+), 4 deletions(-)
 
-diff --git a/net/smc/smc_sysctl.c b/net/smc/smc_sysctl.c
-index 2fab6456f7654..7da98bd5287ae 100644
---- a/net/smc/smc_sysctl.c
-+++ b/net/smc/smc_sysctl.c
-@@ -93,11 +93,9 @@ static struct ctl_table smc_table[] = {
- 	{
- 		.procname	= "limit_smc_hs",
- 		.data		= &init_net.smc.limit_smc_hs,
--		.maxlen		= sizeof(int),
-+		.maxlen		= sizeof(bool),
- 		.mode		= 0644,
--		.proc_handler	= proc_dointvec_minmax,
--		.extra1		= SYSCTL_ZERO,
--		.extra2		= SYSCTL_ONE,
-+		.proc_handler	= proc_dobool,
- 	},
- };
+diff --git a/drivers/target/target_core_pr.c b/drivers/target/target_core_pr.c
+index f18085d8345f5..24b240786f88a 100644
+--- a/drivers/target/target_core_pr.c
++++ b/drivers/target/target_core_pr.c
+@@ -3220,10 +3220,11 @@ core_scsi3_emulate_pro_register_and_move(struct se_cmd *cmd, u64 res_key,
+ 	transport_kunmap_data_sg(cmd);
+ 	buf = NULL;
  
+-	if ((tid_len + 24) != cmd->data_length) {
+-		pr_err("SPC-3 PR: Illegal tid_len: %u + 24 byte header"
+-			" does not equal CDB data_length: %u\n", tid_len,
+-			cmd->data_length);
++	/* TransportID is at least 24 bytes. buf[24] is its first byte. */
++	if (tid_len < 24 ||
++	    tid_len != cmd->data_length - 24) {
++		pr_err("SPC-3 PR: Illegal tid_len: %u for data_length: %u\n",
++		       tid_len, cmd->data_length);
+ 		ret = TCM_INVALID_PARAMETER_LIST;
+ 		goto out_put_pr_reg;
+ 	}
 -- 
 2.53.0
 
