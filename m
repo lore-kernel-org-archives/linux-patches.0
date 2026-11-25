@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795622323;
-	b=E04XUZdTkNDo5rh7YwoJSBcDK09Xg5LA4jYiSIc2j2K7tLghFnIqKoqH51r8jBRs94UD
-	 GMSt7YISGI8n/3agSufKa+c6qV0OfTSYa8N2dAJwyJzr6W+AyZumvb4Y6r+oaNQWHTjyg
-	 3IEGgLS/5atQznB31+kVa3sWe1Ih8+EC1flEWmHbLkWgHSRsbfLxgdgr4rZybzc1+InFa
-	 bkmeHTCmJ+833DEfEk/MUuuDLgHgohvZHfnhn3gmdt0kLD6gnreiytkkcuR2HNebvq1Nu
-	 D85qsKySgrjw0kxzdkTs4TEsV+Km7GK9kI95/fv9n/ZXl2OwsSO0XV0S+khvou9ZGPQ==
+	t=1795622326;
+	b=LeRgbgc3OvkgAXEpuyEt7649+4hFBq9K2MlEidlGz1f/zYfvjSgQYkVSyW7W0Fvftile
+	 1+pV28QjmorvZ2EcuFGDk82aSLmnrrmhj0gNPLvn72JTR2lm4CeScn0AaK2nnHtV+czx8
+	 pjEpnGCjVd90N8igX3cM1D9EuIrlVlhdBoC9AOBTEn1w4L9HEBUDdgiEaOiaiu65i5cd0
+	 WfHRgR/NUobgZr4AsxSwQbYrvFzviWugUyiGwlxC1GLIjS6JkNkBi86ADckBrNQkpOeMY
+	 uWkjy1td+NVabLw06YoNEvMZlJEbyvTvfkjN0YLe7K1YpwswW/ag2IJZpVVJgjiMFmA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795622323;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795622326;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=G57U9cCrCGDuepfptGlTLijDst3jA+55gNLnCO6SsE0=;
-	b=VGVwwMhbPh1jcKVYZAVi9NOG5pXPYSbMMHq2ud+EVmxiKEwZn1VkpaS7FhjpvNkZGGVo
-	 9bLMxqepDV2edrjQ973C2CXD0IkuMUkC+1x2k7LFKI/AJCnfBq1fh8NDpg9CT+ZMY5x8A
-	 5fGY0ejtmVdd/nHLbYu/Gx0rfVadd57eQz+qquDzg+CS796jUPimofXE8W1FwLmsBxpD5
-	 mcsUdsBz4qFqExEq2w5Np2cGgNDk92D2lBD/8VUWgsT0fSp/5ZhC6EKBosSMfnJBWsWk2
-	 hjlnDIejZxL5HPiAEWiX0EsfmrSWLJDJ2iHrBVEe2Bjd9aAbIPt2Onxsh1aQErtM6Zw==
+	bh=VXVsYy+IzT+mOz5N3HAYvxr7/NXjkcqexQHrgPIKYh0=;
+	b=sUmAi8mlrNOG+zsu1G/1oktoc2OadvnTf1aC0deRUYmwjfgsZ25k2+3DmkMB47jq6ZoZ
+	 Ehe54ZnYxQ4yw4C/YguKy0RDafZiDYOgtDe8I/w1YAYdSwkzC+s1/m6Iqfz0ag5S2NBlM
+	 uHho8K6BxMumm3RPo/Unwv2Upzd1o2ySn/uWhaqaVv5zv1SmAsTu6/LWu0w+q0kV0nlTV
+	 ey7nDM4SFUJ0GUkAzd5JM1oaEo8Gj71ZDAUmqkgvJdyzYhz7MfNgQjvp4Xs79xuzjLjlY
+	 DbHbjDuzw+Lq3VQFBeT++e4Z1pPkOF2YaWLPycCqAYJ+LtdN3B00tuW2JpAEv0LWf7Q==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=2NpRRakz;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=eVoa2yfA;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5B4B5606A691;
-	Wed, 25 Nov 2026 15:58:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5D205606A330;
+	Wed, 25 Nov 2026 15:58:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=2NpRRakz
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7DEB21F000E0;
-	Wed, 25 Nov 2026 15:58:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=eVoa2yfA
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 84B491F000C6;
+	Wed, 25 Nov 2026 15:58:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795622323;
-	bh=G57U9cCrCGDuepfptGlTLijDst3jA+55gNLnCO6SsE0=;
+	s=korg; t=1795622326;
+	bh=VXVsYy+IzT+mOz5N3HAYvxr7/NXjkcqexQHrgPIKYh0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=2NpRRakzLCAGVgnTwPFbabXFr+A92ar6zr+4i/FLugRr0WqYiy7tRo8xQiEOIeBsF
-	 k+ukkvv/9FAPCPhgJHACJ3lE5URGduShRR5ajLIBFDmwzRcjQfOf/SQfA+31J6zSgL
-	 9aRyo7673RCb5rHW2C/nxU4TOKZ2/JPOr3MXbzus=
+	b=eVoa2yfASvOWsQ5ungb7k4HX3xMODh/EM3hSBSHtJVhuPbYwZO0d0I+0498f4cbeT
+	 mg/xm5ybPUWH1pDPYlz/jmoEuDHPG6CSp/gxDGJWgqV9fZdBsQISa/FlVeeUXZDOSr
+	 A5E+ZmLAtN21+BInBoW1BDC6Ex8S3x+k/5jWMqhU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sk Anirban <sk.anirban@intel.com>,
-	Vinay Belgaumkar <vinay.belgaumkar@intel.com>,
-	Rodrigo Vivi <rodrigo.vivi@intel.com>,
+	LiangCheng Wang <zaq14760@gmail.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 456/990] drm/xe/guc: Eliminate RPe caching for SLPC parameter handling
-Date: Wed, 25 Nov 2026 15:30:23 +0100
-Message-ID: <20261125143832.776354227@linuxfoundation.org>
+Subject: [PATCH 6.18 447/990] ASoC: max98090: keep the MIC boost across mic input power-up
+Date: Wed, 25 Nov 2026 15:30:14 +0100
+Message-ID: <20261125143832.564198679@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143822.072087159@linuxfoundation.org>
 References: <20261125143822.072087159@linuxfoundation.org>
@@ -69,179 +68,100 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sk Anirban <sk.anirban@intel.com>
+From: LiangCheng Wang <zaq14760@gmail.com>
 
-[ Upstream commit 2917e17b5fd25447a702e79f4ecba3e3b3e08d58 ]
+[ Upstream commit 58d51fa6ff1d21e79c3c340bfb3155dfa3025ca3 ]
 
-RPe is runtime-determined by PCODE and caching it caused stale values,
-leading to incorrect GuC SLPC parameter settings.
-Drop the cached rpe_freq field and query fresh values from hardware
-on each use to ensure GuC SLPC parameters reflect current RPe.
+PA1EN/PA2EN select both the MIC1/MIC2 preamp enable and its gain
+(0 = off, 1 = 0 dB, 2 = +20 dB, 3 = +30 dB). "MICn Boost Volume" keeps
+the selected gain in max98090->pa1en/pa2en while the input is off, and
+max98090_micinput_event() writes it to the field when the "MICn Input"
+widget powers up.
 
-v2: Remove cached RPe frequency field (Rodrigo)
-v3: Remove extra variable (Vinay)
-    Modify function name (Vinay)
-v4: Maintain a separate function for PVC (Rodrigo)
-v5: Avoid RPn update while fetching RPe frequency (Rodrigo)
-v6: Split platform-specific RPe comments (Vinay)
+The event handler also reads the field back to keep the stored gain in
+sync ("Update for volatile"), but it does so on POST_PMU and POST_PMD.
+The widget drives PA1EN/PA2EN as a single enable bit, the low bit of
+the field, so at both points DAPM has just rewritten it:
 
-Closes: https://gitlab.freedesktop.org/drm/xe/kernel/-/issues/5166
-Signed-off-by: Sk Anirban <sk.anirban@intel.com>
-Reviewed-by: Vinay Belgaumkar <vinay.belgaumkar@intel.com>
-Link: https://patch.msgid.link/20251112185153.3593145-5-sk.anirban@intel.com
-Signed-off-by: Rodrigo Vivi <rodrigo.vivi@intel.com>
-Stable-dep-of: 557c7b434378 ("drm/xe: Sync Wa_16023105232 in xe_was to match OOB rule")
+  - POST_PMU: DAPM has set the field to 1, so the read-back stores
+    0 dB and the handler then restores 0 dB.
+  - POST_PMD: DAPM has cleared the low bit, so a +30 dB (3) gain reads
+    back as +20 dB (2).
+
+As a result every capture starts at 0 dB: a boost set while the input is
+powered down, e.g. restored by alsactl or an audio HAL at boot, never
+takes effect, and one changed during capture is lost at the next
+power-up.
+
+Read the field back on PRE_PMD instead, while it still holds the active
+gain, and only restore the stored gain on POST_PMU.
+
+Tested on i.MX95 with a MAX98090 headset mic on MIC1, running NXP's
+6.18.38 vendor kernel (max98090_micinput_event() is the same as in
+mainline): with MIC1 Boost Volume set to 2 (+30 dB) before capture,
+register 0x10 reads 0x20 (0 dB) during capture without this change and
+0x60 (+30 dB) with it, and a boost changed during capture is kept for
+the next capture.
+
+Fixes: 685e42154dcf ("ASoC: Replace max98090 Device Driver")
+Signed-off-by: LiangCheng Wang <zaq14760@gmail.com>
+Link: https://patch.msgid.link/20261111-max98090-mic-boost-v1-1-20b9bd8816db@gmail.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/xe/xe_guc_pc.c       | 61 +++++++++++++++-------------
- drivers/gpu/drm/xe/xe_guc_pc_types.h |  2 -
- 2 files changed, 32 insertions(+), 31 deletions(-)
+ sound/soc/codecs/max98090.c | 22 ++++++++++++----------
+ 1 file changed, 12 insertions(+), 10 deletions(-)
 
-diff --git a/drivers/gpu/drm/xe/xe_guc_pc.c b/drivers/gpu/drm/xe/xe_guc_pc.c
-index a3e9796e6430f..e41d97263eb62 100644
---- a/drivers/gpu/drm/xe/xe_guc_pc.c
-+++ b/drivers/gpu/drm/xe/xe_guc_pc.c
-@@ -348,7 +348,7 @@ static int pc_set_min_freq(struct xe_guc_pc *pc, u32 freq)
- 	 * Our goal is to have the admin choices respected.
- 	 */
- 	pc_action_set_param(pc, SLPC_PARAM_IGNORE_EFFICIENT_FREQUENCY,
--			    freq < pc->rpe_freq);
-+			    freq < xe_guc_pc_get_rpe_freq(pc));
- 
- 	return pc_action_set_param(pc,
- 				   SLPC_PARAM_GLOBAL_MIN_GT_UNSLICE_FREQ_MHZ,
-@@ -393,7 +393,7 @@ static void mtl_update_rpa_value(struct xe_guc_pc *pc)
- 	pc->rpa_freq = decode_freq(REG_FIELD_GET(MTL_RPA_MASK, reg));
- }
- 
--static void mtl_update_rpe_value(struct xe_guc_pc *pc)
-+static u32 mtl_get_rpe_freq(struct xe_guc_pc *pc)
- {
- 	struct xe_gt *gt = pc_to_gt(pc);
- 	u32 reg;
-@@ -403,7 +403,7 @@ static void mtl_update_rpe_value(struct xe_guc_pc *pc)
+diff --git a/sound/soc/codecs/max98090.c b/sound/soc/codecs/max98090.c
+index 830caf62d0fa8..f686f80b2c522 100644
+--- a/sound/soc/codecs/max98090.c
++++ b/sound/soc/codecs/max98090.c
+@@ -743,14 +743,6 @@ static int max98090_micinput_event(struct snd_soc_dapm_widget *w,
  	else
- 		reg = xe_mmio_read32(&gt->mmio, MTL_GT_RPE_FREQUENCY);
+ 		val = (val & M98090_MIC_PA2EN_MASK) >> M98090_MIC_PA2EN_SHIFT;
  
--	pc->rpe_freq = decode_freq(REG_FIELD_GET(MTL_RPE_MASK, reg));
-+	return decode_freq(REG_FIELD_GET(MTL_RPE_MASK, reg));
- }
- 
- static void tgl_update_rpa_value(struct xe_guc_pc *pc)
-@@ -426,24 +426,29 @@ static void tgl_update_rpa_value(struct xe_guc_pc *pc)
- 	}
- }
- 
--static void tgl_update_rpe_value(struct xe_guc_pc *pc)
-+static u32 pvc_get_rpe_freq(struct xe_guc_pc *pc)
- {
- 	struct xe_gt *gt = pc_to_gt(pc);
--	struct xe_device *xe = gt_to_xe(gt);
- 	u32 reg;
- 
- 	/*
- 	 * For PVC we still need to use fused RP1 as the approximation for RPe
--	 * For other platforms than PVC we get the resolved RPe directly from
-+	 */
-+	reg = xe_mmio_read32(&gt->mmio, PVC_RP_STATE_CAP);
-+	return REG_FIELD_GET(RP1_MASK, reg) * GT_FREQUENCY_MULTIPLIER;
-+}
-+
-+static u32 tgl_get_rpe_freq(struct xe_guc_pc *pc)
-+{
-+	struct xe_gt *gt = pc_to_gt(pc);
-+	u32 reg;
-+
-+	/*
-+	 * For other platforms than PVC, we get the resolved RPe directly from
- 	 * PCODE at a different register
- 	 */
--	if (xe->info.platform == XE_PVC) {
--		reg = xe_mmio_read32(&gt->mmio, PVC_RP_STATE_CAP);
--		pc->rpe_freq = REG_FIELD_GET(RP1_MASK, reg) * GT_FREQUENCY_MULTIPLIER;
--	} else {
--		reg = xe_mmio_read32(&gt->mmio, FREQ_INFO_REC);
--		pc->rpe_freq = REG_FIELD_GET(RPE_MASK, reg) * GT_FREQUENCY_MULTIPLIER;
--	}
-+	reg = xe_mmio_read32(&gt->mmio, FREQ_INFO_REC);
-+	return REG_FIELD_GET(RPE_MASK, reg) * GT_FREQUENCY_MULTIPLIER;
- }
- 
- static void pc_update_rp_values(struct xe_guc_pc *pc)
-@@ -451,20 +456,10 @@ static void pc_update_rp_values(struct xe_guc_pc *pc)
- 	struct xe_gt *gt = pc_to_gt(pc);
- 	struct xe_device *xe = gt_to_xe(gt);
- 
--	if (GRAPHICS_VERx100(xe) >= 1270) {
-+	if (GRAPHICS_VERx100(xe) >= 1270)
- 		mtl_update_rpa_value(pc);
--		mtl_update_rpe_value(pc);
--	} else {
-+	else
- 		tgl_update_rpa_value(pc);
--		tgl_update_rpe_value(pc);
+-	if (val >= 1) {
+-		if (w->reg == M98090_REG_MIC1_INPUT_LEVEL) {
+-			max98090->pa1en = val - 1; /* Update for volatile */
+-		} else {
+-			max98090->pa2en = val - 1; /* Update for volatile */
+-		}
 -	}
 -
--	/*
--	 * RPe is decided at runtime by PCODE. In the rare case where that's
--	 * smaller than the fused min, we will trust the PCODE and use that
--	 * as our minimum one.
--	 */
--	pc->rpn_freq = min(pc->rpn_freq, pc->rpe_freq);
- }
+ 	switch (event) {
+ 	case SND_SOC_DAPM_POST_PMU:
+ 		/* If turning on, set to most recently selected volume */
+@@ -759,6 +751,14 @@ static int max98090_micinput_event(struct snd_soc_dapm_widget *w,
+ 		else
+ 			val = max98090->pa2en + 1;
+ 		break;
++	case SND_SOC_DAPM_PRE_PMD:
++		if (val >= 1) {
++			if (w->reg == M98090_REG_MIC1_INPUT_LEVEL)
++				max98090->pa1en = val - 1;
++			else
++				max98090->pa2en = val - 1;
++		}
++		return 0;
+ 	case SND_SOC_DAPM_POST_PMD:
+ 		/* If turning off, turn off */
+ 		val = 0;
+@@ -1108,11 +1108,13 @@ static const struct snd_soc_dapm_widget max98090_dapm_widgets[] = {
  
- /**
-@@ -578,9 +573,17 @@ u32 xe_guc_pc_get_rpa_freq(struct xe_guc_pc *pc)
-  */
- u32 xe_guc_pc_get_rpe_freq(struct xe_guc_pc *pc)
- {
--	pc_update_rp_values(pc);
-+	struct xe_device *xe = pc_to_xe(pc);
-+	u32 freq;
+ 	SND_SOC_DAPM_PGA_E("MIC1 Input", M98090_REG_MIC1_INPUT_LEVEL,
+ 		M98090_MIC_PA1EN_SHIFT, 0, NULL, 0, max98090_micinput_event,
+-		SND_SOC_DAPM_POST_PMU | SND_SOC_DAPM_POST_PMD),
++		SND_SOC_DAPM_POST_PMU | SND_SOC_DAPM_PRE_PMD |
++		SND_SOC_DAPM_POST_PMD),
  
--	return pc->rpe_freq;
-+	if (GRAPHICS_VERx100(xe) == 1260)
-+		freq = pvc_get_rpe_freq(pc);
-+	else if (GRAPHICS_VERx100(xe) >= 1270)
-+		freq = mtl_get_rpe_freq(pc);
-+	else
-+		freq = tgl_get_rpe_freq(pc);
-+
-+	return freq;
- }
+ 	SND_SOC_DAPM_PGA_E("MIC2 Input", M98090_REG_MIC2_INPUT_LEVEL,
+ 		M98090_MIC_PA2EN_SHIFT, 0, NULL, 0, max98090_micinput_event,
+-		SND_SOC_DAPM_POST_PMU | SND_SOC_DAPM_POST_PMD),
++		SND_SOC_DAPM_POST_PMU | SND_SOC_DAPM_PRE_PMD |
++		SND_SOC_DAPM_POST_PMD),
  
- /**
-@@ -1039,7 +1042,7 @@ static int pc_set_mert_freq_cap(struct xe_guc_pc *pc)
- 	/*
- 	 * Ensure min and max are bound by MERT_FREQ_CAP until driver loads.
- 	 */
--	ret = pc_set_min_freq(pc, min(pc->rpe_freq, pc_max_freq_cap(pc)));
-+	ret = pc_set_min_freq(pc, min(xe_guc_pc_get_rpe_freq(pc), pc_max_freq_cap(pc)));
- 	if (!ret)
- 		ret = pc_set_max_freq(pc, min(pc->rp0_freq, pc_max_freq_cap(pc)));
- 
-@@ -1391,7 +1394,7 @@ static void xe_guc_pc_fini_hw(void *arg)
- 	XE_WARN_ON(xe_guc_pc_stop(pc));
- 
- 	/* Bind requested freq to mert_freq_cap before unload */
--	pc_set_cur_freq(pc, min(pc_max_freq_cap(pc), pc->rpe_freq));
-+	pc_set_cur_freq(pc, min(pc_max_freq_cap(pc), xe_guc_pc_get_rpe_freq(pc)));
- 
- 	xe_force_wake_put(gt_to_fw(pc_to_gt(pc)), fw_ref);
- }
-diff --git a/drivers/gpu/drm/xe/xe_guc_pc_types.h b/drivers/gpu/drm/xe/xe_guc_pc_types.h
-index 5e4ea53fbee6e..f27c05d817065 100644
---- a/drivers/gpu/drm/xe/xe_guc_pc_types.h
-+++ b/drivers/gpu/drm/xe/xe_guc_pc_types.h
-@@ -21,8 +21,6 @@ struct xe_guc_pc {
- 	u32 rp0_freq;
- 	/** @rpa_freq: HW RPa frequency - The Achievable one */
- 	u32 rpa_freq;
--	/** @rpe_freq: HW RPe frequency - The Efficient one */
--	u32 rpe_freq;
- 	/** @rpn_freq: HW RPN frequency - The Minimum one */
- 	u32 rpn_freq;
- 	/** @user_requested_min: Stash the minimum requested freq by user */
+ 	SND_SOC_DAPM_MIXER("LINEA Mixer", SND_SOC_NOPM, 0, 0,
+ 		&max98090_linea_mixer_controls[0],
 -- 
 2.53.0
 
