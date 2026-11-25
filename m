@@ -1,56 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795621728;
-	b=X5prjwSIxm4aiNmHgnwc/ambSz4Hf7SysRO02u182eZby4AyX6r5UNTIaxfPtOXCSrHg
-	 6uhtmZwF1VQSbFmleYkXMNbpmDkQmKxdqbTiXgAY8XKJ/ETSDom78boAF2ZMWPeTtYOeQ
-	 OKRmLeaP821pENZhcraVQZZVHkhSd2AZ5dn+cM8A7Z2ci7ySPAGZQR1C5wTjDhHK8jC0J
-	 F7doHudnBgU4XPjaEdvwJD4JA8SIhlkPVzZHKIg5CTFrTw8x2fegXG4SvYDoAWFT7Pz8E
-	 a55MR37E/OoMYFSEG3hdLujYjKGwzdXrCS5WrykWWsUuamIQ5J4surAwL7gXw1oWOJQ==
+	t=1795621731;
+	b=nUaH8nJJ8JgSUKvXLJh2ryGr7czGQGbByrvkXE4QAX47zSPN8SxH8w8QK4mv6xUnuaRa
+	 OD2R6yH1bNUiujykgkQmcMo59OhcLKnp2ZQQxpS7OUalm6nFhH1NeUu32Y40d9j2jlyVn
+	 RJixVF+G9lrnpuNy2qUGCGmDQMrPE32+Lkfvb7tqfR+jZf2O65+Dxac18xPaf0utgms0A
+	 1IUpJe61cssA30akt9wDDCb+U7YK48mGLSg04fMeGPrGJ/OQGtKjzyyFvXZvRvxcMUiw9
+	 oPSAYLvjawba9j6lCqTgmcJS+lwWNvEEubuft4C+iCzccsF6BrdZioMpLLH6xoBF0hQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795621728;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795621731;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=BDLkUgt7FrBq+KFL0yHFk0kjjjhl77LKC0GcoVKOcCE=;
-	b=wu3d5sGaDIgPHf0SQk1wR4+LzqCm7awYdufeRrDtuyaLA202bg5pPo0mCuOq3PSVdpIr
-	 HJsCPZ2e0WBq08kSx2XHyXJwl4/KdqC5q1U7PmiXmYX+MRzkugQLfKwEqsVADz2aN7sVr
-	 6yCHYS1FajiQVFcjDukaJwL4lgGWwVapwN9rimiAnulxkYW+pKqf1NI3MDgZseEZUJ3x1
-	 svZ0MqjIgcolG0wVLtT4rjmbJ5KzBIvELlpaxCu57T2xPEX0JIvH5S/nNagWnR9QrbWCU
-	 S2YZjFZVFfZ9F8YoZugfHyS8bPdk86BwPRJjdNYKJaWSVee6ZY++pB2g2mmrR1MiV2Q==
+	bh=FHLW/jMLvAE+Li626qLCNFEs6Fc2bdpYlmczMikz9ic=;
+	b=e628FJeI+ERv9yKZ4lnJQuc4/adUF6zGG0ZGof43Pr6S1WAXUxRC0wYf10CadtS9Okd4
+	 AlbUIFk/hxjVMX1o/EiRW4+rZ/GBvHLshQLvMPrfGw1XoBAl4gtJXgj0Q96ij3m4Yxa73
+	 3rXoZxxWP+rLHIOH5AuovspI5q1TOPhBjENVBZgxM1sXptPNjJJE1CjmFDiwLAIzwnQsS
+	 Xy2CcE+t3mb2at2d6IoFHVBKgLK2zIVHzmv+lrt7Q/nM5QAwRzrk0qBXAuC9uhgWibFC2
+	 CyhZXGp/anfjL7pINeqE502ceo61AJQiKIQsscXrS2qrsU2iceB5ye8TIzhlNG2P+kw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="GOp/OGzH";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=zhuo4S9V;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CC7EB606A339;
-	Wed, 25 Nov 2026 15:48:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B5404606A682;
+	Wed, 25 Nov 2026 15:48:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=GOp/OGzH
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F0E511F000C6;
-	Wed, 25 Nov 2026 15:48:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=zhuo4S9V
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E6AA21F00A00;
+	Wed, 25 Nov 2026 15:48:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795621728;
-	bh=BDLkUgt7FrBq+KFL0yHFk0kjjjhl77LKC0GcoVKOcCE=;
+	s=korg; t=1795621731;
+	bh=FHLW/jMLvAE+Li626qLCNFEs6Fc2bdpYlmczMikz9ic=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=GOp/OGzHvquDCgjQ/bJOXJAhtebaq1cmCbp7C49Xf2GVb4g7RRfNw2+L87i6yn5BF
-	 lJgdnnFLxobbruzHGYsPJIse26MTPrJ2djvZ7tfdrCbFP+wuBQRhykIJBe44jx3lor
-	 lXQEECVqhSOsOnczsY5DkDMtREJNBTnvNStzmEL4=
+	b=zhuo4S9VrQpwqt7riUxr3GRnByXL5c3v/opbdth3epw+zc17qNtj7v0AoC+wNwE67
+	 Gy4JLYgRZS7Eo2amz0MOlXhLsJAkM4c3T99UM9mp98YuQ5K/xOaB78rWmHe0g6786s
+	 ykvV3XBqYcEcPZGx9Fo1zgBgJWTJu5IW+19Hj8L4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	David Laight <david.laight.linux@gmail.com>,
+	Sandipan Das <sandipan.das@amd.com>,
 	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
-	Ingo Molnar <mingo@kernel.org>,
-	Linus Torvalds <torvalds@linux-foundation.org>,
-	Waiman Long <longman@redhat.com>,
-	linux-kernel@vger.kernel.org,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 319/990] locking/osq: Fix unlink queue corruption
-Date: Wed, 25 Nov 2026 15:28:06 +0100
-Message-ID: <20261125143829.562890663@linuxfoundation.org>
+Subject: [PATCH 6.18 320/990] perf/x86/amd/uncore: Avoid context migration from non-owners
+Date: Wed, 25 Nov 2026 15:28:07 +0100
+Message-ID: <20261125143829.584978915@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143822.072087159@linuxfoundation.org>
 References: <20261125143822.072087159@linuxfoundation.org>
@@ -72,111 +68,75 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Peter Zijlstra <peterz@infradead.org>
+From: Sandipan Das <sandipan.das@amd.com>
 
-[ Upstream commit 408b129aac48b574c0c9d11137a89eefba825d5d ]
+[ Upstream commit 0ae655bce1934857fa3e316ddcb4be38c30dbd38 ]
 
-Very similar to commit 50972fe78f24 ("locking/osq_lock: Fix osq_lock
-queue corruption"), make sure to order the prev->next store against
-the next->prev store.
+Each uncore context is owned by a single CPU that hosts all events for
+the corresponding uncore domain and is advertised through the sysfs
+cpumask attribute. When a CPU goes offline, the context is migrated to
+an online sibling if the departing CPU is the owner.
 
-Fixes: 50972fe78f24 ("locking/osq_lock: Fix osq_lock queue corruption")
-Suggested-by: David Laight <david.laight.linux@gmail.com>
+Before commit d6389d3ccc13 ("perf/x86/amd/uncore: Refactor uncore
+management"), uncore_down_prepare() checked whether the CPU going
+offline owned the context. The check was lost when the function was
+replaced by amd_uncore_ctx_move(). Hence, when a CPU that is not the
+owner goes offline, ownership is always handed over to the first online
+sibling in the uncore domain irrespective of whether another sibling
+already owns it. This goes unnoticed as long as the owner is the
+lowest-numbered online CPU in the domain, since the first online
+sibling is then the owner itself. Once ownership has moved, that no
+longer holds.
+
+For example, consider an L3 domain spanning CPUs 8-15,136-143 and owned
+by CPU 8.
+
+  $ cat /sys/bus/event_source/devices/amd_l3/cpumask
+  0,8,16,24,32,40,48,56,64,72,80,88,96,104,112,120
+
+  $ echo 0 | sudo tee /sys/devices/system/cpu/cpu8/online
+  $ cat /sys/bus/event_source/devices/amd_l3/cpumask
+  0,9,16,24,32,40,48,56,64,72,80,88,96,104,112,120
+
+  $ echo 1 | sudo tee /sys/devices/system/cpu/cpu8/online
+  $ cat /sys/bus/event_source/devices/amd_l3/cpumask
+  0,9,16,24,32,40,48,56,64,72,80,88,96,104,112,120
+
+  $ echo 0 | sudo tee /sys/devices/system/cpu/cpu10/online
+  $ cat /sys/bus/event_source/devices/amd_l3/cpumask
+  0,8-9,16,24,32,40,48,56,64,72,80,88,96,104,112,120
+
+Offlining CPU 8 correctly moves ownership to CPU 9 and onlining it
+again leaves CPU 9 as the owner. However, offlining CPU 10 then makes
+CPU 8 the owner while existing events remain on CPU 9. Both CPUs are
+now advertised for the same domain, so tools that open an event on
+every CPU in the cpumask count the domain twice, and the context gets
+modified from two CPUs without any synchronization.
+
+Restore the ownership check that was lost during the refactor.
+
+Fixes: d6389d3ccc13 ("perf/x86/amd/uncore: Refactor uncore management")
+Signed-off-by: Sandipan Das <sandipan.das@amd.com>
 Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
-Signed-off-by: Ingo Molnar <mingo@kernel.org>
-Cc: Linus Torvalds <torvalds@linux-foundation.org>
-Cc: Waiman Long <longman@redhat.com>
-Cc: linux-kernel@vger.kernel.org
+Link: https://patch.msgid.link/273135a6d33a40f442fb18e140a90689fae7cd32.1793614726.git.sandipan.das@amd.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/locking/osq_lock.c | 60 +++++++++++++++++++++++++++++----------
- 1 file changed, 45 insertions(+), 15 deletions(-)
+ arch/x86/events/amd/uncore.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/kernel/locking/osq_lock.c b/kernel/locking/osq_lock.c
-index 98b12d7b79964..2bcc148eb2ddb 100644
---- a/kernel/locking/osq_lock.c
-+++ b/kernel/locking/osq_lock.c
-@@ -90,6 +90,49 @@ osq_wait_next(struct optimistic_spin_queue *lock,
- 	}
- }
+diff --git a/arch/x86/events/amd/uncore.c b/arch/x86/events/amd/uncore.c
+index c960481222727..8714e4b36ff31 100644
+--- a/arch/x86/events/amd/uncore.c
++++ b/arch/x86/events/amd/uncore.c
+@@ -609,7 +609,7 @@ static void amd_uncore_ctx_move(struct amd_uncore *uncore, unsigned int cpu)
+ 	for (i = 0; i < uncore->num_pmus; i++) {
+ 		pmu = &uncore->pmus[i];
+ 		curr = *per_cpu_ptr(pmu->ctx, cpu);
+-		if (!curr)
++		if (!curr || curr->cpu != cpu)
+ 			continue;
  
-+/*
-+ * Set prev->next; this is the counterpart of osq_wait_next() in that
-+ * by setting ->next the wait is terminated and progress is resumed.
-+ */
-+static inline void osq_link_next(struct optimistic_spin_node *prev,
-+				 struct optimistic_spin_node *next)
-+{
-+	/*
-+	 * Suppose:
-+	 *
-+	 *                   tail
-+	 *                    |
-+	 *                    V
-+	 *   CPU1 -> CPU2 -> CPU3:
-+	 *   n: 2    n: 3    n: nil
-+	 *   p: nil  p: 1    p: 2
-+	 *
-+	 * And this is CPU2 doing the self-unqueue concurrent against CPU1s
-+	 * unlock()/unqueue(). Since 'prev->next == NULL' and CPU1 will be
-+	 * stuck in osq_wait_next() until the below store of 'prev->next'.
-+	 *
-+	 * CPU2				CPU1
-+	 *
-+	 * next->prev = prev;		osq_wait_next()
-+	 * WMB				MB
-+	 * prev->next = next;		next->prev = prev
-+	 *
-+	 * Without the WMB it would be possible to have conflicting stores
-+	 * like:
-+	 *
-+	 * CPU2				CPU1
-+	 *
-+	 * prev->next = next // CPU1.n = 3
-+	 *				next = osq_wait_next() // = 3
-+	 *				next->prev = prev // CPU3.p = nil
-+	 * next->prev = prev // CPU3.p = 1
-+	 *
-+	 * Which would result in list corruption.
-+	 */
-+	smp_wmb();
-+	WRITE_ONCE(prev->next, next);
-+}
-+
- bool osq_lock(struct optimistic_spin_queue *lock)
- {
- 	struct optimistic_spin_node *node = this_cpu_ptr(&osq_node);
-@@ -113,20 +156,7 @@ bool osq_lock(struct optimistic_spin_queue *lock)
- 
- 	prev = decode_cpu(old);
- 	node->prev = prev;
--
--	/*
--	 * osq_lock()			unqueue
--	 *
--	 * node->prev = prev		osq_wait_next()
--	 * WMB				MB
--	 * prev->next = node		next->prev = prev // unqueue-C
--	 *
--	 * Here 'node->prev' and 'next->prev' are the same variable and we need
--	 * to ensure these stores happen in-order to avoid corrupting the list.
--	 */
--	smp_wmb();
--
--	WRITE_ONCE(prev->next, node);
-+	osq_link_next(prev, node);
- 
- 	/*
- 	 * Normally @prev is untouchable after the above store; because at that
-@@ -202,7 +232,7 @@ bool osq_lock(struct optimistic_spin_queue *lock)
- 	 */
- 
- 	WRITE_ONCE(next->prev, prev);
--	WRITE_ONCE(prev->next, next);
-+	osq_link_next(prev, next);
- 
- 	return false;
- }
+ 		/* Migrate to a shared sibling if possible */
 -- 
 2.53.0
 
