@@ -1,42 +1,42 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795625337;
-	b=OxiCgb65xcv5ZVB6FzTBVpYJPtc/ZtBr6yr6KxReVOC28nJOo5nxBlnRaLw6Ly+UXfME
-	 NtuLitizboPkpdETlvtI3nFJCWefq+ChHkqqWdMn8PaZcGUYMKQGWL0IxYSjUbtHIMMPT
-	 yWy5KzJFsQSsUeokfaPIpv/wa5engTigcu2LM9SGNRD5LbPG9l5vTNmRMB+fiGyQTTaDf
-	 JhgyMeHyRKinVnXpaek1S0K8qlrag50aKs7jHs4eeoCu2aHIRKHP+baTKGfb2lNx2tlOh
-	 20HEBbI90Txs+a27AuznF0NpC+zBwj5FJqpiFX8u43I0YREwnognoM0QroYWlMwVyUw==
+	t=1795625339;
+	b=TV59o+fv2IMulSjLWAIk7A7BHxdt9qMeIxSpLSrDQH3ZDp6oxBYI8YLM9K4DxFtH7FaF
+	 S6V8mGbTo51dJJqlp77+2+Zb8X2UPSxWLShkA5nhbiqkDhpZJ6iqVRHIRci4FfwvWHpew
+	 lnhpAkIQVC3msGF4NRXp5vBXXeaCk2TC8oLVGturWJTNouFcwrn+ZNDJedOEQ12dRPEUJ
+	 EPAE31vkWrggnV/7WwVo1PR7jXBS9rtnO6BcRWs13oDCQnipGZkSNJWgjKRy9A4oLMTxj
+	 DitBCLZDGRqk6IqNtI9Qpb+menQxO4zOw++EKyXIiOWV9LeyAj6h2UFcQ5HfOnXeZVA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795625337;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795625339;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=04UwIaiak5C7ii8Wyn97xXwP05PBJ6/KxK4RHx+DeZc=;
-	b=Rd1lbFb9WvzQv2gPfVVQw2174d4NHUSUef13NgEyMzfOmVf2OWbXJk/G/UkBn1s1zDm4
-	 aSYrhZFAxA43mrdYfoTXNO4+p0A2Hye9vvGLkhc/MKA5doVmH0vFODV/cDRzirDvsaLxt
-	 PNkOfZ3ELcO8Pu92FQWlXkkvhOo5Pnh61zl5bhSu+mJMlbx9t3lZHqee9nv4bku7M2u9x
-	 NifOSoioodJArLJeqZwYp6yXkQX5WrPk+Zw6EcwWtg2JfktZEsqyNZhFydOFUuH5Kwrch
-	 TjT+OMBF3jt0TqoIY06eJxFmneFlqcvgeCN/T2gC8BGJ8SaJJ6Cd2c45nIrQlkQ6Hlg==
+	bh=e4ILsRMYSmX59dewfdSQpN3IXr0deZ8C6sd3I3ljjws=;
+	b=F+fBxGAyzNicHMF/1vim2ZUMaX0KlQ1NO7lMhei6fvG/fgxmG+lOOOLKmLDvLG6qapIA
+	 Tp9OLf+PWyXRXb3LHX4NNx4iLyq37wcPbU+EBCJDO4OoBT8YgfSR0Nv/BBG5qU17g2z3D
+	 L8p4XS5yh/MY0j7gO6WHJ9YFGPty56cMo0cx0GrzqfMCn00/EtjlJajFwXxNpIeCUvp2F
+	 wg3uwmWGQCrsynZa0aUtLwfzocb00V3DDmPD5zz5rjCe14rDwdx3QpNAmuo3U/10G0FXr
+	 tTxmdTGw2oacaLWywBBua7aY9f5nUD3OUqodSZiEGlTFtR7by8g20AYNkeeI2/Kz75g==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=vsmyu+ZY;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=XuIBV1u0;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 01BE9606A323;
-	Wed, 25 Nov 2026 16:48:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CD7E4606A31E;
+	Wed, 25 Nov 2026 16:48:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=vsmyu+ZY
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 545231F000C4;
-	Wed, 25 Nov 2026 16:48:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=XuIBV1u0
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 29F8D1F000C0;
+	Wed, 25 Nov 2026 16:48:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795625336;
-	bh=04UwIaiak5C7ii8Wyn97xXwP05PBJ6/KxK4RHx+DeZc=;
+	s=korg; t=1795625339;
+	bh=e4ILsRMYSmX59dewfdSQpN3IXr0deZ8C6sd3I3ljjws=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=vsmyu+ZYD0YPk9ci/EyIxdH0iE87H4/FGy/xT4hF1tD1dYjm1Hpj53B18KPt0Tsn2
-	 CoO4DV6SWFUMOxoaQP0v3h3Qke/P8FTkXhOnTEJs2MJ5jHIEdbIzD1Q6F95T5/MT7i
-	 FoM2fWqL8Y7/va3vsceTFLah74DqJZ5J6Zn7O6lk=
+	b=XuIBV1u0qDMq6BGEKWLbdwQ0ZziHLKTQBcc6k1YYe8ARYll8me4Qi4e65U+WvkW1f
+	 1JPohzh/RxIUG8oK468IbEHPMRuAp4Ty28ca+oFCbSmtbyz2av9SS79oPUG8/rYJ4i
+	 mkP2oggiiopKFd11i3D10hQ0ibLQ2JFrEEclyfE4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -45,9 +45,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Mukesh Ojha <mukesh.ojha@oss.qualcomm.com>,
 	Jassi Brar <jassisinghbrar@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 483/816] mailbox: qcom-ipcc: Remove redundant mbox_controller_unregister() on probe failure
-Date: Wed, 25 Nov 2026 15:33:51 +0100
-Message-ID: <20261125143900.374830937@linuxfoundation.org>
+Subject: [PATCH 6.12 484/816] mailbox: arm_mhu_db: Remove redundant mbox_controller_unregister() on probe failure
+Date: Wed, 25 Nov 2026 15:33:52 +0100
+Message-ID: <20261125143900.397505459@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143849.205329330@linuxfoundation.org>
 References: <20261125143849.205329330@linuxfoundation.org>
@@ -71,50 +71,40 @@ Content-Transfer-Encoding: 8bit
 
 From: Anup Vishwakarma <anup.vishwakarma@oss.qualcomm.com>
 
-[ Upstream commit da988ac6afe152f802140ccaa0ad5e8f675b8814 ]
+[ Upstream commit 8228ed61b6cbd6e79531c9ebfcad233c35eae562 ]
 
-qcom_ipcc_probe() registers the mailbox controller via
+mhu_db_probe() registers the mailbox controller via
 devm_mbox_controller_register(), which automatically calls
 mbox_controller_unregister() through devres when the device is removed
-or probe fails. If devm_request_irq() subsequently fails, the
-err_req_irq: label also manually calls mbox_controller_unregister(),
-resulting in a double call that corrupts the global mailbox controller
-list and causes a kernel panic.
+or probe fails. If devm_request_threaded_irq() subsequently fails in
+the channel setup loop, the error path also manually calls
+mbox_controller_unregister(), resulting in a double call that corrupts
+the global mailbox controller list and causes a kernel panic.
 
 Remove the redundant manual call and rely on devres for cleanup.
 
-Fixes: e9d50e4b4d04 ("mailbox: qcom-ipcc: Dynamic alloc for channel arrangement")
+Fixes: 7002ca237b21 ("mailbox: arm_mhu: Add ARM MHU doorbell driver")
 Signed-off-by: Anup Vishwakarma <anup.vishwakarma@oss.qualcomm.com>
 Reviewed-by: Mukesh Ojha <mukesh.ojha@oss.qualcomm.com>
 Signed-off-by: Jassi Brar <jassisinghbrar@gmail.com>
-[ sashal: Adjusted context to keep the existing braces and dev_err() around the goto in qcom_ipcc_probe(), which the upstream hunk lacked. ]
+[ sashal: Kept the braces and the dev_err() line in the error branch, since a prerequisite cleanup is missing here, and removed only the mbox_controller_unregister() call. ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/mailbox/qcom-ipcc.c | 5 +----
- 1 file changed, 1 insertion(+), 4 deletions(-)
+ drivers/mailbox/arm_mhu_db.c | 1 -
+ 1 file changed, 1 deletion(-)
 
-diff --git a/drivers/mailbox/qcom-ipcc.c b/drivers/mailbox/qcom-ipcc.c
-index c619dfb24cd0e..c37ce8258da71 100644
---- a/drivers/mailbox/qcom-ipcc.c
-+++ b/drivers/mailbox/qcom-ipcc.c
-@@ -321,16 +321,13 @@ static int qcom_ipcc_probe(struct platform_device *pdev)
- 			       IRQF_NO_THREAD, name, ipcc);
- 	if (ret < 0) {
- 		dev_err(&pdev->dev, "Failed to register the irq: %d\n", ret);
--		goto err_req_irq;
-+		goto err_mbox;
+diff --git a/drivers/mailbox/arm_mhu_db.c b/drivers/mailbox/arm_mhu_db.c
+index 27a510d469082..b6eeef867cbfc 100644
+--- a/drivers/mailbox/arm_mhu_db.c
++++ b/drivers/mailbox/arm_mhu_db.c
+@@ -319,7 +319,6 @@ static int mhu_db_probe(struct amba_device *adev, const struct amba_id *id)
+ 						IRQF_ONESHOT, "mhu_db_link", mhu);
+ 		if (err) {
+ 			dev_err(dev, "Can't claim IRQ %d\n", irq);
+-			mbox_controller_unregister(&mhu->mbox);
+ 			return err;
+ 		}
  	}
- 
- 	platform_set_drvdata(pdev, ipcc);
- 
- 	return 0;
- 
--err_req_irq:
--	if (ipcc->num_chans)
--		mbox_controller_unregister(&ipcc->mbox);
- err_mbox:
- 	irq_domain_remove(ipcc->irq_domain);
- 
 -- 
 2.53.0
 
