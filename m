@@ -1,44 +1,44 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795594466;
-	b=MAZWnvkoS+DkyxspeNgZdCmyeUWUDmVQs8gNQcRIS4847pZXFTrwTGu9NlFthtqUIzac
-	 QjuX9/0CLKlXzo5w9OUVcBNbk5TipTAH2MD+xA1KL1I2E60YPSeX98TMG65ruGxrwnDKN
-	 ni9nLOcUnxzT4bZAOlhSTvQExJoet+xTje8KNrT8V+7LyRL6VbCPSuCef1vgA4Q6tb/4a
-	 PQvpsrdlClOWA/Cvs9jUXketvptbRokSNd+ZzouXm1y2vXEuGyRbtv5EK+SJ8raTY0XqM
-	 DFvdDwd72ZOrikAJDHNRlsID1Lcl/i9I9Slh08fMRnQqPmGU+FSJ1GNmyX2iPSOKoNA==
+	t=1795594478;
+	b=rE5ZRVeu2OMrMxMmQQBZbIx7Fi8DRi6yHdIXl21A9FXM7j2ouwhGAWBtMHmSBT4DiREJ
+	 R61C23lUSwObxzDGfeFQD32jvTZ45Exvb5rcALgynuI7uMHOr/lnEJ5phnK3uKg53grJv
+	 ixLyokLXKO/vxzm6O/ojchts7rRkeSnyvm2fTMLpq3fHwgxfNppXCVM60Wk2fJtNkyU/P
+	 ysN+bDap3l63Ky7xbDC34fhqCmrkfJTKY4u5/PPhkZ9j799TUwksL/by07QdiqO0+1I5K
+	 e4eBmLPFiDLfpMpEo5MIHfAP7mbfzKKPYTkjZzIpb4TEx9QCqFnKQg4ixFBPWz35jRQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795594466;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795594478;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:MIME-Version:Content-Transfer-Encoding;
-	bh=VHYKwMKvPACMn5MQeShJE0HU3QErcgbBmjTZnSqlsy0=;
-	b=E5RFA9OR5FaSdCi0RtglptLR7hjD7cEj0o/3nuGULin7tAiE2L4pKMmIi9aMFSLrsdVZ
-	 gFx7FFoOWPO3+aRq7EgkdBiEpZTooIpletw7zha4oGwml7MPaoTE9Zs/x79+Eku0XajqW
-	 qGLFlxfupYxk1jBK+CIDDcmTU/3Q3JjUPt3UXQynqysN41F1+q/5Ud9DE1esEzCl+zEdm
-	 h3gRiduqJ1Jf+EVSS8hb+ihDSymAaDxe5sIDGta1G+0hDaSvopz0/Z1dHgC89hhLFttxa
-	 qHkWYNy9Ug6duUT1RjTHfMA31ARhwvhGo4x7RR2+R0P5Ic/WjdAbwvYpgTsrbG778WA==
+	bh=qNqeDbpxVzyt0D8zrNO/DsvDdR3BesjNRof9Gv3qM14=;
+	b=JV0R9ntJwlL1vjZW1p/cBQ6QTn8KrmRJV4rxDFigxrNk1jMmnhVrY7FVA4CUlPzq4knV
+	 qEo5atC0KqVyfk5itn5qBfuqQs1ZXxJRDNgwooKW63NasoqmSyOPrFL6nAYOtgV7gtfTt
+	 rrg9E8IfpHHPzadnMW6lgTIpNhCGXc79gddVd45KOmXCZ1JUuoaVr+LudHQbpJKBxFBOt
+	 e6sqGeMt99vvh8yWGVOBpTFrWr2/O9CSaehGM8sF79Ys4rdRVPp7Apr3RDJBIC/Dbvg5T
+	 RIHAJDb9aKMmJMcdxN1dtX/pNX8TxV8LGwLhdQUZpoHr4N8+qX2IMzEZWSJKY4Tv0Tg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=ftuJ51iu;
+	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=LGvq23yc;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 080CF606A327;
-	Wed, 25 Nov 2026 08:14:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A0468606A31E;
+	Wed, 25 Nov 2026 08:14:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=ftuJ51iu
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B0F141F00A00;
-	Wed, 25 Nov 2026 08:14:14 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=LGvq23yc
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D7DA81F000D4;
+	Wed, 25 Nov 2026 08:14:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1795594465;
-	bh=VHYKwMKvPACMn5MQeShJE0HU3QErcgbBmjTZnSqlsy0=;
+	s=k20260515; t=1795594477;
+	bh=qNqeDbpxVzyt0D8zrNO/DsvDdR3BesjNRof9Gv3qM14=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ftuJ51iuKT8qxzSlV3oRYofion3uPTZb0NguEaItP5YhgIPQfX0KbOPl+z6tUfEQI
-	 PuZL55ETNQTfYuJWhokBt23P0kyvJZxEeAYlVy30DwTKTg6L/eVk7sQWtNCDWkqSe1
-	 xhT6yKyj4EFes7IwRS+uunNz3ebtsLtSvmKiXwYLuassine8f/6wUc9R0uC2439a/Y
-	 nOOUgTvL4xt24yBQDqJQ2FOlgbqyMtGCxkkFi0iXd4fhlzwNd+eu8oiJEpBhj3c52R
-	 iK/RAGPCfbnU7lsXnbg6jXZ4E72wR2kGq8425BWU7jIQOE7lNCPyoy396rvZ03AStz
-	 WrVc5KbX8GHgw==
+	b=LGvq23ycPLAFWkSCIANStiF3/I1CS8tqcpXJ+2ulG1LLnPfbvqOZZIC8fpQk77//u
+	 Zkds3wMYrnFCoi8NuC3h/2iM7PzYAyW6fxJ6eY/mZVpYamEpGb8XUd8DCbZ3moOwRR
+	 D2ynW4NWqadyra7eZvsXKT2rDNZXemNtn95kZ9SeIsbh/YgUmUQ+EckQptspjmHeqR
+	 Wj70vRVJFUD+Kv52tr7mTNOfyHM44A+ko0g0J8XsbwgCQ7cN7VA99+ZB9p0OgE8iVE
+	 rFEwjoAYJBnCrKJz61s0DxXvMI39UKU7iy8+KqE+3hIa247g6DxxGqAHiyILw+nXbM
+	 42YFG2opPib9Q==
 From: "Aneesh Kumar K.V (Arm)" <aneesh.kumar@kernel.org>
 To: linux-coco@lists.linux.dev
 Cc: "Aneesh Kumar K.V (Arm)" <aneesh.kumar@kernel.org>,
@@ -75,9 +75,9 @@ Cc: "Aneesh Kumar K.V (Arm)" <aneesh.kumar@kernel.org>,
 	linux-pci@vger.kernel.org,
 	linux-tegra@vger.kernel.org,
 	patches@lists.linux.dev
-Subject: [PATCH v10 13/18] PCI/TSM: Add helpers to look up and reference a device's TSM
-Date: Wed, 25 Nov 2026 13:41:16 +0530
-Message-ID: <20261125081121.379481-14-aneesh.kumar@kernel.org>
+Subject: [PATCH v10 14/18] iommufd/viommu: Identify physical IOMMU backing with a tag
+Date: Wed, 25 Nov 2026 13:41:17 +0530
+Message-ID: <20261125081121.379481-15-aneesh.kumar@kernel.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20261125081121.379481-1-aneesh.kumar@kernel.org>
 References: <20261125081121.379481-1-aneesh.kumar@kernel.org>
@@ -92,201 +92,93 @@ Precedence: list
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Add tsm_get_device() to find and reference the TSM attached to a device,
-using pci_tsm_get_device() for PCI devices. Resolve the PCI association
-under pci_tsm_rwsem and acquire TSM device and backend module
-references. Return NULL when no TSM is attached and an error if the
-module cannot be pinned.
+When allocating a vDEVICE or nested HWPT, IOMMUFD checks that the device
+and its vIOMMU use the same physical IOMMU.
 
-Add tsm_put_device() to release the device reference before the module
-reference, since the final device put may call into the backend module.
+The next patch adds vIOMMUs implemented by a TSM. These store a TSM
+pointer instead of a physical IOMMU pointer, so the same comparison
+cannot be used.
 
-Set the AMD SEV TSM operations owner to THIS_MODULE so lookup pins the
-module implementing its callbacks.
-
-Following patch lets IOMMUFD use vIOMMU operations implemented by the
-selected device's TSM. vIOMMU allocation must look up that TSM to find
-its operations. The vIOMMU keeps the TSM device and module references
-until it is destroyed, so the TSM allocation cannot be freed and its
-callback code cannot be unloaded while the vIOMMU can still call it.
+Add a backing field to identify vIOMMUs that use a physical IOMMU, and
+perform the comparison only for those vIOMMUs. All existing vIOMMUs
+select that value, so their behavior is unchanged.
 
 Signed-off-by: Aneesh Kumar K.V (Arm) <aneesh.kumar@kernel.org>
 ---
- drivers/crypto/ccp/sev-dev-tsm.c |  1 +
- drivers/pci/tsm.c                | 19 +++++++++++++++++++
- drivers/virt/coco/tsm-core.c     | 32 ++++++++++++++++++++++++++++++++
- include/linux/pci-tsm.h          | 10 ++++++++++
- include/linux/tsm.h              | 19 +++++++++++++++++++
- 5 files changed, 81 insertions(+)
+ drivers/iommu/iommufd/hw_pagetable.c | 10 ++++++----
+ drivers/iommu/iommufd/viommu.c       | 11 +++++++----
+ include/linux/iommufd.h              |  5 +++++
+ 3 files changed, 18 insertions(+), 8 deletions(-)
 
-diff --git a/drivers/crypto/ccp/sev-dev-tsm.c b/drivers/crypto/ccp/sev-dev-tsm.c
-index 46f2539d2d5a..45f2995c3e4d 100644
---- a/drivers/crypto/ccp/sev-dev-tsm.c
-+++ b/drivers/crypto/ccp/sev-dev-tsm.c
-@@ -340,6 +340,7 @@ static void dsm_disconnect(struct pci_dev *pdev)
- }
+diff --git a/drivers/iommu/iommufd/hw_pagetable.c b/drivers/iommu/iommufd/hw_pagetable.c
+index ae62db50885c..859eadf05f1d 100644
+--- a/drivers/iommu/iommufd/hw_pagetable.c
++++ b/drivers/iommu/iommufd/hw_pagetable.c
+@@ -404,10 +404,12 @@ int iommufd_hwpt_alloc(struct iommufd_ucmd *ucmd)
+ 		struct iommufd_viommu *viommu;
  
- static struct pci_tsm_ops sev_tsm_ops = {
-+	.owner = THIS_MODULE,
- 	.probe = dsm_probe,
- 	.remove = dsm_remove,
- 	.connect = dsm_connect,
-diff --git a/drivers/pci/tsm.c b/drivers/pci/tsm.c
-index ddff81554372..88e88fc9aec6 100644
---- a/drivers/pci/tsm.c
-+++ b/drivers/pci/tsm.c
-@@ -9,6 +9,7 @@
- #define dev_fmt(fmt) "PCI/TSM: " fmt
+ 		viommu = container_of(pt_obj, struct iommufd_viommu, obj);
+-		iommu_dev = iommufd_device_get_iommu_dev(idev);
+-		if (!iommu_dev || viommu->iommu_dev != iommu_dev) {
+-			rc = -EINVAL;
+-			goto out_unlock;
++		if (viommu->backing == IOMMUFD_VIOMMU_BACKING_IOMMU) {
++			iommu_dev = iommufd_device_get_iommu_dev(idev);
++			if (!iommu_dev || viommu->iommu_dev != iommu_dev) {
++				rc = -EINVAL;
++				goto out_unlock;
++			}
+ 		}
+ 		hwpt_nested = iommufd_viommu_alloc_hwpt_nested(
+ 			viommu, cmd->flags, &user_data);
+diff --git a/drivers/iommu/iommufd/viommu.c b/drivers/iommu/iommufd/viommu.c
+index 472381b96a8e..dab499d24c45 100644
+--- a/drivers/iommu/iommufd/viommu.c
++++ b/drivers/iommu/iommufd/viommu.c
+@@ -105,6 +105,7 @@ int iommufd_viommu_alloc_ioctl(struct iommufd_ucmd *ucmd)
+ 	 * pluggable IOMMU instance (if exists) is responsible for refcounting
+ 	 * on its own.
+ 	 */
++	viommu->backing = IOMMUFD_VIOMMU_BACKING_IOMMU;
+ 	viommu->iommu_dev = iommu_dev;
  
- #include <linux/bitfield.h>
-+#include <linux/module.h>
- #include <linux/pci.h>
- #include <linux/pci-doe.h>
- #include <linux/pci-tsm.h>
-@@ -35,6 +36,24 @@ static const struct pci_tsm_ops *to_pci_tsm_ops(struct pci_tsm *tsm)
- 	return tsm->tsm_dev->pci_ops;
- }
+ 	rc = ops->viommu_init(viommu, idev->dev,
+@@ -218,10 +219,12 @@ int iommufd_vdevice_alloc_ioctl(struct iommufd_ucmd *ucmd)
+ 		goto out_put_idev;
+ 	}
  
-+struct tsm_dev *pci_tsm_get_device(struct pci_dev *pdev)
-+{
-+	const struct pci_tsm_ops *ops;
-+	struct tsm_dev *tsm_dev;
-+
-+	guard(rwsem_read)(&pci_tsm_rwsem);
-+	if (!pdev->tsm)
-+		return NULL;
-+
-+	tsm_dev = pdev->tsm->tsm_dev;
-+	ops = tsm_dev->pci_ops;
-+	if (!try_module_get(ops->owner))
-+		return ERR_PTR(-ENODEV);
-+	get_device(&tsm_dev->dev);
-+	return tsm_dev;
-+}
-+EXPORT_SYMBOL_GPL(pci_tsm_get_device);
-+
- static inline bool is_dsm(struct pci_dev *pdev)
- {
- 	return pdev->tsm && pdev->tsm->dsm_dev == pdev;
-diff --git a/drivers/virt/coco/tsm-core.c b/drivers/virt/coco/tsm-core.c
-index bf09bb4546de..4f735c628ec3 100644
---- a/drivers/virt/coco/tsm-core.c
-+++ b/drivers/virt/coco/tsm-core.c
-@@ -16,6 +16,38 @@ static const struct class tsm_class = {
- };
- static DEFINE_IDA(tsm_ida);
+-	iommu_dev = iommufd_device_get_iommu_dev(idev);
+-	if (!iommu_dev || viommu->iommu_dev != iommu_dev) {
+-		rc = -EINVAL;
+-		goto out_put_idev;
++	if (viommu->backing == IOMMUFD_VIOMMU_BACKING_IOMMU) {
++		iommu_dev = iommufd_device_get_iommu_dev(idev);
++		if (!iommu_dev || viommu->iommu_dev != iommu_dev) {
++			rc = -EINVAL;
++			goto out_put_idev;
++		}
+ 	}
  
-+/**
-+ * tsm_get_device() - Pin the TSM attached to a device
-+ * @dev: device whose TSM is to be pinned
-+ *
-+ * A successful lookup takes a TSM device reference and pins the backend
-+ * module. Release both with tsm_put_device(). The TSM must remain registered
-+ * while the module is pinned.
-+ * Return: NULL if no TSM is attached, an error if the module
-+ * cannot be pinned, or the TSM device associated with the pinned backend.
-+ */
-+struct tsm_dev *tsm_get_device(struct device *dev)
-+{
-+	if (!dev_is_pci(dev))
-+		return NULL;
-+
-+	return pci_tsm_get_device(to_pci_dev(dev));
-+}
-+EXPORT_SYMBOL_GPL(tsm_get_device);
-+
-+void tsm_put_device(struct tsm_dev *tsm_dev)
-+{
-+	struct module *owner;
-+
-+	if (!tsm_dev)
-+		return;
-+
-+	owner = tsm_dev->pci_ops->owner;
-+	put_device(&tsm_dev->dev);
-+	module_put(owner);
-+}
-+EXPORT_SYMBOL_GPL(tsm_put_device);
-+
- static int match_id(struct device *dev, const void *data)
- {
- 	struct tsm_dev *tsm_dev = container_of(dev, struct tsm_dev, dev);
-diff --git a/include/linux/pci-tsm.h b/include/linux/pci-tsm.h
-index e6fe099f2cc9..6e31faa2c36c 100644
---- a/include/linux/pci-tsm.h
-+++ b/include/linux/pci-tsm.h
-@@ -4,6 +4,7 @@
- #include <linux/mutex.h>
- #include <linux/pci.h>
+ 	mutex_lock(&idev->igroup->lock);
+diff --git a/include/linux/iommufd.h b/include/linux/iommufd.h
+index 5f5c67b24134..192d46b8ccfd 100644
+--- a/include/linux/iommufd.h
++++ b/include/linux/iommufd.h
+@@ -98,9 +98,14 @@ void iommufd_access_detach(struct iommufd_access *access);
  
-+struct module;
- struct pci_tsm;
- struct tsm_dev;
+ void iommufd_ctx_get(struct iommufd_ctx *ictx);
  
-@@ -15,12 +16,15 @@ struct tsm_dev;
-  * @devsec_ops: Lock, unlock, and interrogate the security state of the
-  *		function via the platform TSM (typically virtual function
-  *		operations).
-+ * @owner: Module implementing the PCI TSM operations
-  *
-  * This operations are mutually exclusive either a tsm_dev instance
-  * manages physical link properties or it manages function security
-  * states like TDISP lock/unlock.
-  */
- struct pci_tsm_ops {
-+	struct module *owner;
++enum iommufd_viommu_backing {
++	IOMMUFD_VIOMMU_BACKING_IOMMU,
++};
 +
- 	/*
- 	 * struct pci_tsm_link_ops - Manage physical link and the TSM/DSM session
- 	 * @probe: establish context with the TSM (allocate / wrap 'struct
-@@ -143,6 +147,7 @@ int pci_tsm_doe_transfer(struct pci_dev *pdev, u8 type, const void *req,
- 			 size_t req_sz, void *resp, size_t resp_sz);
- int pci_tsm_context_get(struct pci_dev *pdev, struct tsm_dev *tsm_dev);
- void pci_tsm_context_put(struct pci_dev *pdev);
-+struct tsm_dev *pci_tsm_get_device(struct pci_dev *pdev);
- #else
- static inline int pci_tsm_register(struct tsm_dev *tsm_dev)
- {
-@@ -152,6 +157,11 @@ static inline void pci_tsm_unregister(struct tsm_dev *tsm_dev)
- {
- }
- 
-+static inline struct tsm_dev *pci_tsm_get_device(struct pci_dev *pdev)
-+{
-+	return NULL;
-+}
-+
- static inline int
- pci_tsm_context_get(struct pci_dev *pdev, struct tsm_dev *tsm_dev)
- {
-diff --git a/include/linux/tsm.h b/include/linux/tsm.h
-index 19dedf971f14..dc03b2e38eaf 100644
---- a/include/linux/tsm.h
-+++ b/include/linux/tsm.h
-@@ -124,4 +124,23 @@ int tsm_report_unregister(const struct tsm_report_ops *ops);
- struct tsm_dev *tsm_register(struct device *parent, struct pci_tsm_ops *ops);
- void tsm_unregister(struct tsm_dev *tsm_dev);
- struct tsm_dev *find_tsm_dev(int id);
-+
-+#ifdef CONFIG_TSM
-+struct tsm_dev *tsm_get_device(struct device *dev);
-+void tsm_put_device(struct tsm_dev *tsm_dev);
-+#else
-+static inline struct tsm_dev *tsm_get_device(struct device *dev)
-+{
-+	return NULL;
-+}
-+
-+static inline void tsm_put_device(struct tsm_dev *tsm_dev)
-+{
-+}
-+#endif
-+
-+DEFINE_FREE(tsm_put_device, struct tsm_dev *,
-+	if (!IS_ERR_OR_NULL(_T))
-+		tsm_put_device(_T))
-+
- #endif /* __TSM_H */
+ struct iommufd_viommu {
+ 	struct iommufd_object obj;
+ 	struct iommufd_ctx *ictx;
++	enum iommufd_viommu_backing backing;
+ 	struct iommu_device *iommu_dev;
+ 	struct iommufd_hwpt_paging *hwpt;
+ 	struct file *kvm_file;
 -- 
 2.43.0
 
