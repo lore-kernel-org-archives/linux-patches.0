@@ -1,51 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795625470;
-	b=E7cEIhMZgmdg7MeOhoIzIUJHEhWAzzcPcZyL/2M6OaW0nSfOXkV0MbOFWqKxi9g3pYZa
-	 N/zttVHPxxKw0jmKp2VsrLVqyfsOCXbowceVnbrlHgteA0AFqGAmEGBg0Wk2khpMA0kE7
-	 LZoPS8AafGOfm4PxXGlzd/a6o6wglqZBKHQ9cHXBSualYK/fyWdSONBQ/IZD3LV0UEDEG
-	 p33bf4ByKTeZp13GGVPZzB9jGCil91yXYxtRJ6J2q4s1uddt/4HmKEQaih3HLtV5xenZn
-	 kWaemLCoSJiSR+9a20U+xFo2MzuptyHI+KDsCSMfhYXHxeKBPsPUIe3uJAz52NtEW7A==
+	t=1795625473;
+	b=BXzmX2tBovmGTyYzmuG75RyO8fGfIg//pVIHUxTg7qP+uoOqBcot8R2iAX+7K/VOcpjA
+	 lIb7zEu5CpELTRbqUMVgxjmEh+jcO2HzqPAhWJTD8OGRp+JnAIRNId7+OhtpNtJs4QM3C
+	 sgQsffv6WLiYatffSmH2t5sWilj/k9Mminsl5j3TaQxes9s15J/jHVNVIdHKSExZ6w5cU
+	 uVEN2CUGlzMYPi7YNVa7iWlbF1yIcCm9UmSLSOBTD+XKEFXNXEZWXAZLgP6DbW6Fmrgnk
+	 5JS0HgdmzQgxlpydzL2pPg3g2yMIEcArEorLM8arLEB59EPv+5/W/aGN9gGFiJ7P+lw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795625470;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795625473;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=bgTIHSQLsz/9VyFloaAKJ+6Lrg3li5+QPK3hzsuXE/M=;
-	b=CqBoAR5CijAWhtGHOUmNMD12BlW8H+4BpLm2rfpvgqLM9fyqEqvsWCJr9AtWvwWvHoU0
-	 ekSLGS0ki2b8vdw2Mmm6MTTVyjitvop1k2KePW7B370/iaMkH5NBsyqK/oyayT7KGfRm3
-	 SqU2N0WMywKAfG0cJOW2G6ZsKUUn2Yrz4NZP1mGmQlnDrydqhrm3lCyFNwCJP4i5jDZA3
-	 Ei1driQnACTLNXgkogSzjgvRiKzR13llcjiwOAxxK8rLzXCDKHZE0keRQN2QBKtEzGC+g
-	 KltXkJ+FmX0o6EUhxbLZKO/kdNViGRd3vaMcTsXxXl2L+eznwhiSQXOReVpCdLAtWvw==
+	bh=yw4mQQJv17OzCVQPJXjWPy36h/FEFRwqehPfneXlsbQ=;
+	b=eywsMOGSJnA41fQYODEoQCdk0hDhEkXJkVXQ3xVj7oYBhObLlnTgRpfzu+1sREpI9GiN
+	 nLeE5BE3AEa9VamE65rVMI2AbwJB4wNo4DBCSsxRKKYvT6Q6F4fO9ve3Cz+75xE18OrN0
+	 HzJONh7nJiwbGYCIAYIlT4dKy6/GFsCGc3Xa2pDtxNhmU+h4lqF5dmk8aLx4G3y9/JWE4
+	 L68BUBeJbD+f5J4uM8djlog1YgxMK2SY0H4UsGUygn4cyrxwbVl2+5wALhFRnTYswu+yj
+	 grlE4rq3paG7L6T0lwXQEf4gAaoZfEUT1giFWZnviVGXZiI5xN/umhYfYSQ7CiZgzsQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=xnYgSQHN;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="pfAS/kPU";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5753A606A31E;
-	Wed, 25 Nov 2026 16:51:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2F364606A31E;
+	Wed, 25 Nov 2026 16:51:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=xnYgSQHN
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A7F441F000C6;
-	Wed, 25 Nov 2026 16:51:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=pfAS/kPU
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8093B1F000C4;
+	Wed, 25 Nov 2026 16:51:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795625470;
-	bh=bgTIHSQLsz/9VyFloaAKJ+6Lrg3li5+QPK3hzsuXE/M=;
+	s=korg; t=1795625473;
+	bh=yw4mQQJv17OzCVQPJXjWPy36h/FEFRwqehPfneXlsbQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=xnYgSQHNTqXkoWXlotz00qXymHGR9852Bs1mYX7ynHzbQbfSCHEldiQzQ7xBCpG+z
-	 SgfJ0i60F7sJKzv+uVPm1b2iLrrVwVhPYhxF7SrV8neS5AH36Kw4KU78uFJa+T1+rY
-	 ReoiNenByUyG8o0Z9j4Ft+epr6JHqk9mt/Bh5KSg=
+	b=pfAS/kPU1UUFOjFjZ6NISNRVcNOh3Xvxixjssk5uH00vxKQW2omtx6aI6wRsYcBTn
+	 8VdLmmumQ/5vwxXphILUX8BYCzrXWJx2EXo2cjsuOqn4jL3glbFHUuZ45tNUVT7UcS
+	 Z6GBdBSLvNqP8ZijidGvjLMAMEgAs8/3lmqs9uf4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Dairui Zhang <zhangdairui@gmail.com>,
 	Namjae Jeon <linkinjeon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 528/816] ksmbd: disconnect on invalid encryption transform flags
-Date: Wed, 25 Nov 2026 15:34:36 +0100
-Message-ID: <20261125143901.414495838@linuxfoundation.org>
+Subject: [PATCH 6.12 529/816] ksmbd: cache the resolved share path for durable reconnects
+Date: Wed, 25 Nov 2026 15:34:37 +0100
+Message-ID: <20261125143901.438668857@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143849.205329330@linuxfoundation.org>
 References: <20261125143849.205329330@linuxfoundation.org>
@@ -69,43 +70,157 @@ Content-Transfer-Encoding: 8bit
 
 From: Namjae Jeon <linkinjeon@kernel.org>
 
-[ Upstream commit 0882f124ae329eefb66b00e63b9043f24c006b0e ]
+[ Upstream commit 2a90ba573d41efa82e075ba9ac532bb3ec0519c4 ]
 
-MS-SMB2 3.3.5.2.1.1 requires the Flags/EncryptionAlgorithm field in an
-SMB2 transform header to be 0x0001. The server must disconnect the
-connection when it has any other value.
+A share configured as /a/link/b, with /a/link pointing to /real, is
+opened relative to share->vfs_path at /real/b. However,
+ksmbd_validate_name_reconnect() compares the file's d_path() result
+against the original /a/link/b string and rejects a valid reconnect.
 
-smb3_decrypt_req() currently ignores this field. A client with the
-session key can therefore send a correctly authenticated encrypted
-request with invalid flags and have it processed. Check the field
-before looking up the session key or decrypting the request. The caller
-aborts the connection when this check fails.
+Render share->vfs_path with d_path() after the existing kern_path()
+lookup and cache a copy in real_path along with its length. Use the
+resolved string for durable reconnect name validation. Keep path and
+path_sz as the configured spelling for existing consumers, including
+the volume serial calculation and path lookups.
 
-Fixes: e2f34481b24d ("cifsd: add server-side procedures for SMB3")
+Fixes: c8efcc786146 ("ksmbd: add support for durable handles v1/v2")
+Reported-by: Dairui Zhang <zhangdairui@gmail.com>
 Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
-[ sashal: Added the transform-header Flags check to smb3_decrypt_req() unchanged, but adjusted the surrounding context because this older code lacks original_msg_size and the compression-header size check. ]
+[ sashal: Dropped the scoped_with_init_fs() wrapper around the share_config_resolve_path() call because this tree lacks it, and adjusted the include context where <linux/fs_struct.h> is absent. ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/smb/server/smb2pdu.c | 6 ++++++
- 1 file changed, 6 insertions(+)
+ fs/smb/server/mgmt/share_config.c | 43 +++++++++++++++++++++++++++++--
+ fs/smb/server/mgmt/share_config.h |  2 ++
+ fs/smb/server/vfs_cache.c         | 12 +++++----
+ 3 files changed, 50 insertions(+), 7 deletions(-)
 
-diff --git a/fs/smb/server/smb2pdu.c b/fs/smb/server/smb2pdu.c
-index e65fe5858a51d..5492e7490a26b 100644
---- a/fs/smb/server/smb2pdu.c
-+++ b/fs/smb/server/smb2pdu.c
-@@ -9572,6 +9572,12 @@ int smb3_decrypt_req(struct ksmbd_work *work)
- 		return -ECONNABORTED;
- 	}
+diff --git a/fs/smb/server/mgmt/share_config.c b/fs/smb/server/mgmt/share_config.c
+index 04e8c11e865e9..fee0b784e2f1c 100644
+--- a/fs/smb/server/mgmt/share_config.c
++++ b/fs/smb/server/mgmt/share_config.c
+@@ -8,6 +8,7 @@
+ #include <linux/slab.h>
+ #include <linux/rwsem.h>
+ #include <linux/parser.h>
++#include <linux/dcache.h>
+ #include <linux/namei.h>
+ #include <linux/sched.h>
+ #include <linux/mm.h>
+@@ -50,6 +51,7 @@ static void kill_share(struct ksmbd_share_config *share)
+ 		path_put(&share->vfs_path);
+ 	kfree(share->name);
+ 	kfree(share->path);
++	kfree(share->real_path);
+ 	kfree(share);
+ }
  
-+	if (tr_hdr->Flags != cpu_to_le16(TRANSFORM_FLAG_ENCRYPTED)) {
-+		pr_err_ratelimited("Invalid transform flags 0x%04x\n",
-+				   le16_to_cpu(tr_hdr->Flags));
-+		return -ECONNABORTED;
+@@ -124,6 +126,43 @@ static int parse_veto_list(struct ksmbd_share_config *share,
+ 	return 0;
+ }
+ 
++static int share_config_resolve_path(struct ksmbd_share_config *share)
++{
++	char *buf, *path;
++	int ret;
++
++	ret = kern_path(share->path, 0, &share->vfs_path);
++	if (ret)
++		return ret;
++
++	buf = kmalloc(PATH_MAX, KSMBD_DEFAULT_GFP);
++	if (!buf) {
++		ret = -ENOMEM;
++		goto out;
 +	}
 +
- 	if (buf_data_size < le32_to_cpu(tr_hdr->OriginalMessageSize)) {
- 		pr_err("Transform message is broken\n");
- 		return -ECONNABORTED;
++	path = d_path(&share->vfs_path, buf, PATH_MAX);
++	if (IS_ERR(path)) {
++		ret = PTR_ERR(path);
++		goto out_buf;
++	}
++
++	path = kstrdup(path, KSMBD_DEFAULT_GFP);
++	if (!path) {
++		ret = -ENOMEM;
++		goto out_buf;
++	}
++
++	share->real_path = path;
++	share->real_path_sz = strlen(path);
++out_buf:
++	kfree(buf);
++out:
++	if (ret)
++		path_put(&share->vfs_path);
++	return ret;
++}
++
+ static struct ksmbd_share_config *share_config_request(struct ksmbd_work *work,
+ 						       const char *name)
+ {
+@@ -212,12 +251,12 @@ static struct ksmbd_share_config *share_config_request(struct ksmbd_work *work,
+ 				goto out;
+ 			}
+ 
+-			ret = kern_path(share->path, 0, &share->vfs_path);
++			ret = share_config_resolve_path(share);
+ 			ksmbd_revert_fsids(work);
+ 			if (ret) {
+ 				ksmbd_debug(SMB, "failed to access '%s'\n",
+ 					    share->path);
+-				/* Avoid put_path() */
++				/* No path reference is retained on failure. */
+ 				kfree(share->path);
+ 				share->path = NULL;
+ 			}
+diff --git a/fs/smb/server/mgmt/share_config.h b/fs/smb/server/mgmt/share_config.h
+index d4ac2dd4de204..baa9f9ed91cde 100644
+--- a/fs/smb/server/mgmt/share_config.h
++++ b/fs/smb/server/mgmt/share_config.h
+@@ -16,8 +16,10 @@ struct ksmbd_work;
+ struct ksmbd_share_config {
+ 	char			*name;
+ 	char			*path;
++	char			*real_path;
+ 
+ 	unsigned int		path_sz;
++	unsigned int		real_path_sz;
+ 	unsigned int		flags;
+ 	struct list_head	veto_list;
+ 
+diff --git a/fs/smb/server/vfs_cache.c b/fs/smb/server/vfs_cache.c
+index 2621d2cffe619..b1ee76949a2ea 100644
+--- a/fs/smb/server/vfs_cache.c
++++ b/fs/smb/server/vfs_cache.c
+@@ -1355,6 +1355,8 @@ void ksmbd_free_global_file_table(void)
+ int ksmbd_validate_name_reconnect(struct ksmbd_share_config *share,
+ 				  struct ksmbd_file *fp, char *name)
+ {
++	const char *share_path = share->real_path;
++	size_t share_path_sz = share->real_path_sz;
+ 	char *pathname, *ab_pathname;
+ 	int ret = 0;
+ 
+@@ -1371,14 +1373,14 @@ int ksmbd_validate_name_reconnect(struct ksmbd_share_config *share,
+ 	if (name) {
+ 		size_t len = strlen(ab_pathname);
+ 
+-		if (len == share->path_sz && !strncmp(ab_pathname, share->path, len)) {
++		if (len == share_path_sz && !strncmp(ab_pathname, share_path, len)) {
+ 			/* the durable fp is the share root itself */
+ 			if (name[0])
+ 				ret = -EINVAL;
+-		} else if (len <= share->path_sz ||
+-			   strncmp(ab_pathname, share->path, share->path_sz) ||
+-			   ab_pathname[share->path_sz] != '/' ||
+-			   strcmp(&ab_pathname[share->path_sz + 1], name)) {
++		} else if (len <= share_path_sz ||
++			   strncmp(ab_pathname, share_path, share_path_sz) ||
++			   ab_pathname[share_path_sz] != '/' ||
++			   strcmp(&ab_pathname[share_path_sz + 1], name)) {
+ 			ret = -EINVAL;
+ 		}
+ 		if (ret)
 -- 
 2.53.0
 
