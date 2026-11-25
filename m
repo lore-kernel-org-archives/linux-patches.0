@@ -1,53 +1,55 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795619253;
-	b=K9L8SJM5bWSNpyjTd6LzjwNajXIUhGpiiRmYBFs7kxVmnRy+14/I6rnX1kA8svrx/X7w
-	 ioKDezoWtaLxE9WE1FaV30cnRTQ6YEGU9EdIRc2kbLrFgzphCTjvztW8J5n3A1cwPq4+G
-	 SH0/zlbenxSAI+nUPq8zi/H/SBxDdsFpvO1cq+lS6VyALotu2ft8215xBQ6R1rKt3Aqo4
-	 VzAvAKRzon6lPPMoLH0y5r4mobAB6bXSF/wb3Hlf9P3azOCgCS94WEukP3/V/JoW1VMMX
-	 QNAiPURndtofIva2wUeeNCUBnKyMDzypIarRQ6YhmkpFPLjUI0b7tEuNfFZSwmV0prA==
+	t=1795619256;
+	b=v68lIBO/TueGYzHo0yOYYWz93luVP2H/XQpjUQ0BvdE5JNnRDEHAJJ9mLigv7StU83hI
+	 Ncf4G0s0LhJUr0jKgpZ+xIX1uS3kGgjSG8hb+l6ptuAHpjcM80CMn4JM/e5NfXzEzdG1Y
+	 Klw/DM4IGjsgRm3NLR8PfRka6Ba5Igfyz3tsBEHHJQIhoO+Inc+5dwccBbaLLei2xfzEi
+	 GsMGAosnHPKpq5scuqMLuZdljMxUHSLpwCA74d4/+62Pi5C6IeiotDs71zAXSEDDsXigM
+	 tG5dEYQqcfz1tc+29RKDmqrFS7LguRTDbI0sdZcVdL/JugmKb3+j82auk6Wtqr85XkQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795619253;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795619256;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=uwI+SLMLX15dmD7UqWuvsHs6wq36McXlcillFQ9O7fo=;
-	b=HvTW7ab89S0rV+spgyOGfnCeqp6ySfq1HnLc+CeKbLyGiSxiChMFjAibrq21XjybnHgh
-	 y+pKJUFjQ3j+jArfMLmOATM3MQD/YplkIECOsoNlhc7Dygi5IXh5E8kdNisvWaOFj8hxD
-	 DW6qkG5VBymSJp6lT3FcLXJTpCcNPw9hSYLZXAI29DKq01RuqWqgw7XKhf6Ufo8XydYYI
-	 HlO9xuYCsQdFdfm2SXiLqxe0xe9tQiSSuS8hZT3CPRUQn/Y0GCSc6ncvdGxlPqF5YZoWA
-	 4puo3iB/ihQFZUYZZ6w+Z2uuiHt3YlEHOkxfD7gUGtq/9pqmtNoaSKwmCW8O7R78zcA==
+	bh=jd8sjmY9P2R/gOm2u32wf/I5m/SiBAou4rIIkAPTKuo=;
+	b=qfWHzj2X64X8Ohs8JwMOF2LqQwLuO18O/HkkKMJQPhrTi7j66tVu3aVwnnbZSKCmSAjt
+	 0CdMlh4D7V41U8xAUGO3cBV1kiGbOIF6ELe2czAorzDt9wiU59rs+snBuuw1MBGYREnC0
+	 LuOdAV3KdmuxF7Xa2JhBmnJhieEGGj6vS6G08xDQdrS2Arx7hsPIYVYzfS36PVcVitqml
+	 cFug7tvKGchJd6LWITmu9d4F/RmOavlMlx4bLTc+VPZdOiREKm1niRXRm7AIb10xQyNvo
+	 dtV6r9QLGEUmxzbRAdDWAROJX7FM+YPTcEqXmPykBdJZ5kC+NDh0HKX9dG2nOFppQeg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=YVXHh5Wr;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=C49jjuAv;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 87007606A31E;
-	Wed, 25 Nov 2026 15:07:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6EF1D606A334;
+	Wed, 25 Nov 2026 15:07:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=YVXHh5Wr
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 831861F000CF;
-	Wed, 25 Nov 2026 15:07:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=C49jjuAv
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B34141F0093C;
+	Wed, 25 Nov 2026 15:07:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795619253;
-	bh=uwI+SLMLX15dmD7UqWuvsHs6wq36McXlcillFQ9O7fo=;
+	s=korg; t=1795619256;
+	bh=jd8sjmY9P2R/gOm2u32wf/I5m/SiBAou4rIIkAPTKuo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=YVXHh5WrRb82Hyu7rX4DCx8Dm/gPsMNqr9niMYZD5UIcw+qzEHGISMeO542smlUjg
-	 bkuShZiuf7bw2ptT8/LGMwItHqcG+fyCRH2dtCBL9hPmZrsR/WAk/2VD2U+y+0kcqq
-	 XEy1kKUGE4bOA+mQEdVWq7NVd1EVfT4nmUUioHaM=
+	b=C49jjuAvtTT4kTwDHC/MKV68SyqawcF/TubBlfuHDXuwJO10Q4hzBHEV2UX0MKiyf
+	 jYBAdClBOUx7LnU0Lv6kzSEwiOtXmlamqGsakMpYR37EEajsIPLaPBJcFuMr+xxoaL
+	 yBfguMR5JyNaRVgGLZyMBE9j4l3Seu1Qn4Ls0sKk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ivan Vecera <ivecera@redhat.com>,
-	Petr Oros <poros@redhat.com>,
+	Xuanqiang Luo <luoxuanqiang@kylinos.cn>,
+	Simon Horman <horms@kernel.org>,
+	Saeed Mahameed <saeedm@nvidia.com>,
+	Tariq Toukan <tariqt@nvidia.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0537/1005] ice: dpll: set the SyncE divider only for the port driving the output
-Date: Wed, 25 Nov 2026 15:31:15 +0100
-Message-ID: <20261125143834.325398083@linuxfoundation.org>
+Subject: [PATCH 7.3 0538/1005] net/mlx5e: kTLS, Fix missing error unwind when enabling RX offload
+Date: Wed, 25 Nov 2026 15:31:16 +0100
+Message-ID: <20261125143834.348261177@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143821.729802100@linuxfoundation.org>
 References: <20261125143821.729802100@linuxfoundation.org>
@@ -69,100 +71,56 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ivan Vecera <ivecera@redhat.com>
+From: Xuanqiang Luo <luoxuanqiang@kylinos.cn>
 
-[ Upstream commit 164721e16b822c3b2f19526ff00deaa7b47fbf46 ]
+[ Upstream commit 343672bad64153e895d201ff6d3dfaf15c22682e ]
 
-R10 holds one divider for each recovered clock output, shared by all
-ports. ice_ptp_link_change() sets it from the link speed of its own port
-even when another port drives the output, and checks the mux only to
-decide whether an error is worth reporting. With ports running at
-different speeds, a link change on one port leaves the output of another
-port with a wrong divider.
+Since commit abed42f9cd80 ("net/mlx5e: Conditionally create async
+ICOSQ"), the async ICOSQ is only created when an XDP program is attached
+or priv->ktls_rx_was_enabled is set. When TLS RX offload is enabled for
+the first time, mlx5e_ktls_set_feature_rx() sets the flag and reopens
+the channels so that they get the queue, but it ignores the return value
+of mlx5e_safe_reopen_channels().
 
-Skip the outputs that the port does not drive, and check the mux under
-cgu_synce_lock, so that another PF cannot select its port in between.
+If the reopen fails, mlx5e_safe_switch_params() keeps the old channels,
+which have no async ICOSQ, while NETIF_F_HW_TLS_RX is still reported as
+enabled. The next offloaded RX connection then dereferences the NULL
+c->async_icosq in post_rx_param_wqes(). Enabling the feature again does
+not help, as the flag is already set and the reopen is skipped.
 
-The check computes the mux value as port % ports_per_phy + 3, while
-ice_tspll_cfg_bypass_mux_e825c() and ice_dpll_rclk_update_e825c() use
-port + 3. With the skip, a port from ports_per_phy up would never update
-the divider, so use port + 3 as they do.
+Propagate the error, clear the flag and destroy the accel TCP flow
+tables again, so that the feature stays disabled and the next attempt
+retries the reopen.
 
-Tested on GNR-D with dual complex E825. With the RCLK pin of one port
-connected, five down and up cycles of another port of the same complex
-called ice_tspll_cfg_synce_ethdiv_e825c() 20 times without this patch
-and never with it. Five cycles of the port driving the output still
-called it 10 times. Both ports ran at 25 Gb/s, so the divider value did
-not change on this setup.
-
-Fixes: ad1df4f2d591 ("ice: dpll: Support E825-C SyncE and dynamic pin discovery")
-Signed-off-by: Ivan Vecera <ivecera@redhat.com>
-Reviewed-by: Petr Oros <poros@redhat.com>
-Link: https://patch.msgid.link/20261110094350.184185-3-ivecera@redhat.com
+Fixes: abed42f9cd80 ("net/mlx5e: Conditionally create async ICOSQ")
+Signed-off-by: Xuanqiang Luo <luoxuanqiang@kylinos.cn>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Reviewed-by: Saeed Mahameed <saeedm@nvidia.com>
+Signed-off-by: Tariq Toukan <tariqt@nvidia.com>
+Link: https://patch.msgid.link/20261110101709.2589088-1-tariqt@nvidia.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/intel/ice/ice_ptp.c   | 10 +++++++---
- drivers/net/ethernet/intel/ice/ice_tspll.c |  4 ++--
- 2 files changed, 9 insertions(+), 5 deletions(-)
+ drivers/net/ethernet/mellanox/mlx5/core/en_accel/ktls.c | 6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/net/ethernet/intel/ice/ice_ptp.c b/drivers/net/ethernet/intel/ice/ice_ptp.c
-index b15b02c03b933..07c315f3f5a1d 100644
---- a/drivers/net/ethernet/intel/ice/ice_ptp.c
-+++ b/drivers/net/ethernet/intel/ice/ice_ptp.c
-@@ -1347,6 +1347,7 @@ void ice_ptp_link_change(struct ice_pf *pf, bool linkup)
- 		int pin, err;
- 
- 		mutex_lock(&pf->dplls.lock);
-+		mutex_lock(&pf->adapter->cgu_synce_lock);
- 		for (pin = 0; pin < ICE_SYNCE_CLK_NUM; pin++) {
- 			enum ice_synce_clk clk_pin;
- 			bool active;
-@@ -1365,16 +1366,19 @@ void ice_ptp_link_change(struct ice_pf *pf, bool linkup)
- 				break;
- 			}
- 
--			mutex_lock(&pf->adapter->cgu_synce_lock);
-+			/* The divider is shared, set it only for our port */
-+			if (!active)
-+				continue;
-+
- 			err = ice_tspll_cfg_synce_ethdiv_e825c(hw, clk_pin);
--			mutex_unlock(&pf->adapter->cgu_synce_lock);
--			if (active && err) {
+diff --git a/drivers/net/ethernet/mellanox/mlx5/core/en_accel/ktls.c b/drivers/net/ethernet/mellanox/mlx5/core/en_accel/ktls.c
+index 337201f128958..3cc1213c2f682 100644
+--- a/drivers/net/ethernet/mellanox/mlx5/core/en_accel/ktls.c
++++ b/drivers/net/ethernet/mellanox/mlx5/core/en_accel/ktls.c
+@@ -139,7 +139,11 @@ int mlx5e_ktls_set_feature_rx(struct net_device *netdev, bool enable)
+ 		err = mlx5e_accel_fs_tcp_create(priv->fs);
+ 		if (!err && !priv->ktls_rx_was_enabled) {
+ 			priv->ktls_rx_was_enabled = true;
+-			mlx5e_safe_reopen_channels(priv);
++			err = mlx5e_safe_reopen_channels(priv);
 +			if (err) {
- 				dev_err_once(ice_pf_to_dev(pf),
- 					     "Failed to configure SyncE ETH divider for pin %d, err %d\n",
- 					     pin, err);
- 				break;
- 			}
++				priv->ktls_rx_was_enabled = false;
++				mlx5e_accel_fs_tcp_destroy(priv->fs);
++			}
  		}
-+		mutex_unlock(&pf->adapter->cgu_synce_lock);
- 		mutex_unlock(&pf->dplls.lock);
- 
- 		if (linkup)
-diff --git a/drivers/net/ethernet/intel/ice/ice_tspll.c b/drivers/net/ethernet/intel/ice/ice_tspll.c
-index 25227690418eb..b4773e9b64dd3 100644
---- a/drivers/net/ethernet/intel/ice/ice_tspll.c
-+++ b/drivers/net/ethernet/intel/ice/ice_tspll.c
-@@ -634,6 +634,7 @@ int ice_tspll_init(struct ice_hw *hw)
-  *
-  * Check if given port is selected as recovered clock source for given output.
-  *
-+ * Context: Called under pf->dplls.lock and adapter->cgu_synce_lock
-  * Return:
-  * * 0 - success
-  * * negative - error
-@@ -662,8 +663,7 @@ int ice_tspll_bypass_mux_active_e825c(struct ice_hw *hw, u8 port, bool *active,
- 		return -EINVAL;
- 	}
- 
--	if (active_clk == port % hw->ptp.ports_per_phy +
--			  ICE_CGU_BYPASS_MUX_OFFSET_E825C)
-+	if (active_clk == port + ICE_CGU_BYPASS_MUX_OFFSET_E825C)
- 		*active = true;
- 	else
- 		*active = false;
+ 	} else {
+ 		mlx5e_accel_fs_tcp_destroy(priv->fs);
 -- 
 2.53.0
 
