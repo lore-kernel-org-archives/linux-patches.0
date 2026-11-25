@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795618473;
-	b=gmy6K8JPCif1MvK3+7OZo1A1dmKNRg/Xiek+etKm4AYaGqMamC9XtaNNfR7UxJtUMpQy
-	 4vI38xF/22byS5Y0l186ZKYGzmDasOc5EMCKohB0kwEvzQqcQZbP4yVNwiryFuoz2u8Rz
-	 n1ShuXyu90x6KNNuaZAPuitUo4+xCiJVa53V9sZmWr2yciJ/tN7W4vUCqrhJ6G012R467
-	 ct2xfrKnfNwLn6AJRh/g9FmfdlJ9Tz5wut43estdTxmtPAxU+iMJBd7KujM0ZCnb7SAov
-	 Ch0Ro/0LnCrGJX/gJSCkgo2IMYQtGtPPqa9CD6gEc1KFeL8NP2rRdYjlC9KLQael1qQ==
+	t=1795618476;
+	b=PDJqW2RUR/KXMC4Br2uY+f5rejLNybpt8xrd/+AzSCzf7aPSpKaFKKAOhSzoXgnr1Gmr
+	 DZOwGBCerNF1jnJs8i0ChyOdg1GppSLpRwPc4l08ojHicjpN43hbUXcviTllWlhI/3CIw
+	 m/amgQ+bsUdsKDgojxCNkUEjZujDpZzW8R6Ak/90nqAMaymhJYfFF8+DcnzDxlbhlVEHv
+	 2ES2e89kbFxrNOw8PmNMP3CLBCSxUZDedRqT3dYErcvCx4fGyrCWelioQ9qjM3nLvm/OG
+	 Kt7taL4D9Yxb5Z2UwzTkJd+QDkIkKJ2ClDDUKhziF5zCrO/0WRY/TbeKLFvD1loZHrw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795618473;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795618476;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=Wo7ZamULx7v/aXW70PQ5E+u0lW60VH5N3l3yl8KetOQ=;
-	b=VhE96Hg9aR4MbynnsLTyzktUFZS+ZHjj5LU+zmUuKTMY/jI2QuE3AJnH4nZM5xiNCLem
-	 pQeJGK1xjsu1mVSM3230/Jz2d4o5MZ1XXwmdQqwFxH7At2XuTBRTcDLJDNUaAXoK4ITWy
-	 StH12qAUgW8L9RPIvL0BRE3UFXvNjkwg1SZ+duYptejDYZ8swYrqt/xN5orMGAyTzF4XU
-	 yd6B4dpGVkC2GJf426vKJIYB4XyN3qdubybqAXgFUpFopF9ZanaEOWTIKFMNqLH3Q3/wg
-	 SpyMKEx+LcNA/YgkkdUTO4TPDrDvvS1nbLZaBr4lacrSRpdRjHLLH88528ieo1ATNwg==
+	bh=Pv3mrw6Ed3nSyyjrIh7zHpNczLthL9jmPX9ZSW+Avjo=;
+	b=4ypMrdDAZE/0GFOY66mNqqxxyCc1qeikd+mgquWA5CxBXHutqNxZXX3Tghaeec+wMyyL
+	 1FWwZGvj1ktwEQZLMdc4GjbtnU8V75kJEbnbBCgg1LhmAlyyjqhHbEFTw8r3KpSXqOurV
+	 N9vKMEq/cof317BADw8TSYTYMNFaS9eF7gYMM9DHvOBmuVXzHVjLZ3urGWVzkU9c7NhVw
+	 DrXmQx/xG7EqmeYly/Y7tlxPgegli7TDAzlvhsu/Ui0Z6Ww23zuefbxYFvwvXyN3YxoDa
+	 m8dvjMop7aj1RM/xOIkctUVKfl572LK392B0SGZy4K/vViC7Ja8RXuuwuw8tfSPYHqQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=kdVVaOjQ;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="NGRuw/B5";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A2BC8606A32E;
-	Wed, 25 Nov 2026 14:54:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 93F62606A321;
+	Wed, 25 Nov 2026 14:54:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=kdVVaOjQ
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D66611F000C4;
-	Wed, 25 Nov 2026 14:54:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=NGRuw/B5
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C5C601F000EB;
+	Wed, 25 Nov 2026 14:54:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795618473;
-	bh=Wo7ZamULx7v/aXW70PQ5E+u0lW60VH5N3l3yl8KetOQ=;
+	s=korg; t=1795618476;
+	bh=Pv3mrw6Ed3nSyyjrIh7zHpNczLthL9jmPX9ZSW+Avjo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=kdVVaOjQsGL8eZwnhvx1lE5B4A+jXgbrGu8aT27N28d25jMeL5V0/Q9kn04mwhYJi
-	 9Mbkpe+atUhyYg4Q9YIdCuIA0u88duo+Aj2Rd/c3udnKEdH9iCfjFEOY3rRfLk7iz+
-	 pGpTZhdmDGbi5soCRBRXx/Llx+Xc8v7+PxKryVno=
+	b=NGRuw/B5DChn+GOfJ3oX6DKOIQiFY/CFk4TWi+E50Tuugx4SpXiiwFgstvjUgF7aK
+	 surYzSD47s+pcp/YsvIWbiINGpt/O1Pd0KpGKUwvt2ZRmAvNP41By8ps+MqBIYD6mh
+	 xKBqkF7mHBWlmjyQX8uOkHf34RQzlp4qkfmZx/dw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Richard Fitzgerald <rf@opensource.cirrus.com>,
-	Mark Brown <broonie@kernel.org>,
+	Zijun Hu <zijun.hu@oss.qualcomm.com>,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0290/1005] ASoC: wm_adsp: Prevent negative string length in wm_adsp_control_add()
-Date: Wed, 25 Nov 2026 15:27:08 +0100
-Message-ID: <20261125143828.531551100@linuxfoundation.org>
+Subject: [PATCH 7.3 0291/1005] Bluetooth: hci_conn: Fix SCO/eSCO Transport_Unit_Size for HCI data path
+Date: Wed, 25 Nov 2026 15:27:09 +0100
+Message-ID: <20261125143828.554045091@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143821.729802100@linuxfoundation.org>
 References: <20261125143821.729802100@linuxfoundation.org>
@@ -68,54 +68,68 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Richard Fitzgerald <rf@opensource.cirrus.com>
+From: Zijun Hu <zijun.hu@oss.qualcomm.com>
 
-[ Upstream commit 4d07af76ca41cc1a03240cd3b5f44dc428856214 ]
+[ Upstream commit 3efdadae3a252b14ca1f62b16e31a9aa7c5d30cf ]
 
-Check that avail does not become < 1 in wm_adsp_control_add(). This
-prevents overflows during subsequent operations.
+Correct (Input|Output)_Transport_Unit_Size based on Core spec v6.3,
+Vol 4, Part E, 7.1.45:
 
-The main aim is to trap a negative value in avail, but a zero length
-would mean that the control ends up without a name, so 1 is the smallest
-valid value.
+  "The Host shall set the Input_Transport_Unit_Size and
+   Output_Transport_Unit_Size to be equal. For HCI Host transport
+   the Host shall set them to 0."
 
-Fixes: b7ede5af62ab6 ("ASoC: wm_adsp: Take prefix into account in control name length")
-Signed-off-by: Richard Fitzgerald <rf@opensource.cirrus.com>
-Link: https://patch.msgid.link/20261104133322.1085061-1-rf@opensource.cirrus.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Fixes: b2af264ad3af ("Bluetooth: Add support for HCI_Enhanced_Setup_Synchronous_Connection command")
+Signed-off-by: Zijun Hu <zijun.hu@oss.qualcomm.com>
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/codecs/wm_adsp.c | 10 ++++++++++
- 1 file changed, 10 insertions(+)
+ net/bluetooth/hci_conn.c | 18 ++++++++++++------
+ 1 file changed, 12 insertions(+), 6 deletions(-)
 
-diff --git a/sound/soc/codecs/wm_adsp.c b/sound/soc/codecs/wm_adsp.c
-index b8f3035af3ba1..7740a9c8ced32 100644
---- a/sound/soc/codecs/wm_adsp.c
-+++ b/sound/soc/codecs/wm_adsp.c
-@@ -46,6 +46,9 @@
- #define adsp_dbg(_dsp, fmt, ...) \
- 	dev_dbg(_dsp->cs_dsp.dev, "%s: " fmt, _dsp->cs_dsp.name, ##__VA_ARGS__)
- 
-+#define adsp_warn_once(_dsp, fmt, ...) \
-+	dev_warn_once(_dsp->cs_dsp.dev, "%s: " fmt, _dsp->cs_dsp.name, ##__VA_ARGS__)
-+
- #define compr_err(_obj, fmt, ...) \
- 	adsp_err(_obj->dsp, "%s: " fmt, _obj->name ? _obj->name : "legacy", \
- 		 ##__VA_ARGS__)
-@@ -625,6 +628,13 @@ int wm_adsp_control_add(struct cs_dsp_coeff_ctl *cs_ctl)
- 		if (dsp->component->name_prefix)
- 			avail -= strlen(dsp->component->name_prefix) + 1;
- 
-+		if (avail < 1) {
-+			adsp_warn_once(dsp,
-+				       "%.*s: ALSA prefix too long: control not created\n",
-+				       cs_ctl->subname_len, cs_ctl->subname);
-+			return -EINVAL;
+diff --git a/net/bluetooth/hci_conn.c b/net/bluetooth/hci_conn.c
+index b007f623b2ecc..eebd73988bf66 100644
+--- a/net/bluetooth/hci_conn.c
++++ b/net/bluetooth/hci_conn.c
+@@ -327,8 +327,10 @@ static int hci_enhanced_setup_sync(struct hci_dev *hdev, void *data)
+ 		cp.out_pcm_sample_payload_msb_pos = 0;
+ 		cp.in_data_path = conn->codec.data_path;
+ 		cp.out_data_path = conn->codec.data_path;
+-		cp.in_transport_unit_size = 1;
+-		cp.out_transport_unit_size = 1;
++		if (conn->codec.data_path) {
++			cp.in_transport_unit_size = 1;
++			cp.out_transport_unit_size = 1;
 +		}
-+
- 		/* Truncate the subname from the start if it is too long */
- 		if (cs_ctl->subname_len > avail)
- 			skip = cs_ctl->subname_len - avail;
+ 		break;
+ 
+ 	case BT_CODEC_TRANSPARENT:
+@@ -353,8 +355,10 @@ static int hci_enhanced_setup_sync(struct hci_dev *hdev, void *data)
+ 		cp.out_pcm_sample_payload_msb_pos = 0;
+ 		cp.in_data_path = conn->codec.data_path;
+ 		cp.out_data_path = conn->codec.data_path;
+-		cp.in_transport_unit_size = 1;
+-		cp.out_transport_unit_size = 1;
++		if (conn->codec.data_path) {
++			cp.in_transport_unit_size = 1;
++			cp.out_transport_unit_size = 1;
++		}
+ 		break;
+ 
+ 	case BT_CODEC_CVSD:
+@@ -384,8 +388,10 @@ static int hci_enhanced_setup_sync(struct hci_dev *hdev, void *data)
+ 		cp.out_pcm_sample_payload_msb_pos = 0;
+ 		cp.in_data_path = conn->codec.data_path;
+ 		cp.out_data_path = conn->codec.data_path;
+-		cp.in_transport_unit_size = 16;
+-		cp.out_transport_unit_size = 16;
++		if (conn->codec.data_path) {
++			cp.in_transport_unit_size = 16;
++			cp.out_transport_unit_size = 16;
++		}
+ 		break;
+ 	default:
+ 		goto unlock;
 -- 
 2.53.0
 
