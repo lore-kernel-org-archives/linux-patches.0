@@ -1,54 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795626159;
-	b=e33c/gxu30hhRjjkeMRefqC5klqS+mg2T9pucgx/Ibu1njW2ZybNgnBriD57rezuIENs
-	 gh47HW8bb8kTKjEjf3342cDdDMZkVyCoJIhaQlwetR5fzgcw84HwT584HEfOqIW4WateQ
-	 32udmb/r5cs1vsdcryWYXH+6k4ySGl0QCckBjxQ9BhM8mUUu5bKqHpait6rHwjh6kW6wS
-	 8CXM+sY/P93VVE/VD4/9SSKgV7LnonyyXN9miXo6/yfchxnqLgN5nlV3HVYvcZkVE9CFN
-	 V6yX7Qp3JFq85u3t+mlL2/0iUj+YgoB0hawVpX63xx229B4XP1NX4YqQeolo/IISjmw==
+	t=1795626162;
+	b=a/zW+n+KD9m9PUcNJm0QwyGhOC+KG8qwEQ7mrM5OPawwAA/B7HMMVFYFaWUWSztZvn3w
+	 T0ERYMUpYttOjhKUXCWgpIBQIg3/XCL2UQUPWbo24yzBGM6cIW6d0t5PVPTtZDU3vJSsg
+	 U1PT29l/kW9xs9PJVhua3Qm+8QfdB+Vr5YqCKoETiWwHkw8iKm8s9f/Jm535a4FjU6Pqh
+	 6tZ54/0L2MuY0kb1EwHCN9iysoIm6REDDO9Rv2asuIKcKslxri2QPDZz1GcQmbXRO1u/D
+	 cuy+zxSDSuJ7eRI1sPHpDljBpSHSpMSZ+1Cckhjc2AI/9mwtUh2blVgXN/kc8dhqmjw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795626159;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795626162;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=4QydWAt4ZtgYdoGrPZEBEsQPkwGyq8sEGz62YF1VMTg=;
-	b=23O+D52ZowL4teXQpmvMLFNuWOspMlw5+EyEUaEx8C7eUSW/fkGC5X7JawLh2QIwwUuo
-	 tLbutBx3rpjxFJ9bqGWM8bVpjV1fLnONjv7w0rxoaTmDT0lvN0uqKS4ALmqd1EY8HcVch
-	 aeSnkyPt/SJAYxMcrdlDt/Ob6E7JvFoq8bPbvKKdMfbrWRcMNJxk9A7dxXf0M5kaI5XPI
-	 U8a6IPMSeEkD+XYCLiHEZdqwL7jCLNZM2mns4GY/gUhY0Et4g3eKdT+3rFNgOP1G6ugyk
-	 vevR8fRt072inKOrF9UrIErmF6HTEUsCSY5/I/QHu/tqnH0+9IoTk6R3/bOlJ6Zp6sw==
+	bh=XCykAeXVeilP/qwzf18HrVL0VTmep22+/7+5r1gyLjk=;
+	b=mSEvEycnhSsONPjZ38x8Ofcz8BE5P7NCvlA1OYtbNTTrklJPNzJcBZjz/o/LiOVvnZuU
+	 pmmGPcFlAWz188WPPlnq0cOzww0dWpJplUlXNABYc+H7QEldHs+EwsHCusnhWCuKmdLJQ
+	 uySlAz5OPmmT1reIIh2rNS7WNmod/ebno6P2F2DhzaxBL8fe0BoUTlSGTMDQJ/WqZ6oab
+	 LbAkF3ZvB+yC+0T3tZb/hNEMWMRqxpDSghzLOUAATN7y27kDHh2de/1pGQzTRO4Yg4tcN
+	 UEexYVDzSUjEFxTGa+jWgbz2C8p6/NEN/m75vAit9Z2kV7nn/QL1XSx/D/vmo+eAoFw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=DJXXKjdn;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Lvy+wSRv;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 27A34606A329;
-	Wed, 25 Nov 2026 17:02:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7CAA1606A31E;
+	Wed, 25 Nov 2026 17:02:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=DJXXKjdn
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6A21D1F000C0;
-	Wed, 25 Nov 2026 17:02:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Lvy+wSRv
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5032C1F000C4;
+	Wed, 25 Nov 2026 17:02:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795626159;
-	bh=4QydWAt4ZtgYdoGrPZEBEsQPkwGyq8sEGz62YF1VMTg=;
+	s=korg; t=1795626161;
+	bh=XCykAeXVeilP/qwzf18HrVL0VTmep22+/7+5r1gyLjk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=DJXXKjdngFKG8CLXEcNU2NmEfuWvQVQKXRqLMSueFRJ5E9aZChB1Ivus0cBtmapbP
-	 Qpqb/BSv1pKCWUhNt0tFu15RY4OgWRkIlGqClQ1j8O9+wrmOXEF0oIUM218XvGDUAf
-	 nF2C8JyWEMLIajjRMhJShNYoMDeKH65XEC52ZEso=
+	b=Lvy+wSRvHItxH38yCWek9EzYSdpfxogjL5OmVFupUXycw9DmAMBgugjriaeGguLxC
+	 SN3ObTPamb5NtJWNPfczgzUumMIVw3Y8sLI+r3RuB1oeUn0pV/GB/qS9BGagY7iLRK
+	 f0J75KIWNHeEMnMXrEyg6x8KYkyAAWVJj/kOctCc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable <stable@kernel.org>,
-	Cosmin Tanislav <cosmin-gabriel.tanislav.xa@renesas.com>,
-	Vladyslav Tymoshchuk <tvlad744@gmail.com>,
-	Leonardo Costa <leonardo.costa@toradex.com>,
-	Hiago De Franco <hiago.franco@toradex.com>
-Subject: [PATCH 6.12 749/816] usb: gadget: f_ncm: restart the TX timer if the TX freelist is empty
-Date: Wed, 25 Nov 2026 15:38:17 +0100
-Message-ID: <20261125143906.510808347@linuxfoundation.org>
+	Damien Le Moal <dlemoal@kernel.org>,
+	Hannes Reinecke <hare@kernel.org>,
+	Kyrylo Biryuk <illofspeed@gmail.com>,
+	Mikulas Patocka <mpatocka@redhat.com>
+Subject: [PATCH 6.12 708/816] dm zoned: do not reclaim a random zone into another random zone
+Date: Wed, 25 Nov 2026 15:37:36 +0100
+Message-ID: <20261125143905.566526338@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143849.205329330@linuxfoundation.org>
 References: <20261125143849.205329330@linuxfoundation.org>
@@ -70,65 +69,65 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Cosmin Tanislav <cosmin-gabriel.tanislav.xa@renesas.com>
+From: Kyrylo Biryuk <illofspeed@gmail.com>
 
-commit 78585f90feb3bbaf3b1c642294c8c47e451dc3cf upstream.
+commit dab527d83462a618d99bfc96370ce45ae3428706 upstream.
 
-ncm_wrap_ntb() aggregates datagrams into a pending NTB, which is sent
-either when it becomes full, or after 300us since the NTB was started,
-using ndo_start_xmit() (eth_start_xmit()).
+dmz_reclaim_rnd_data() falls back to a random destination zone when no
+free sequential zone is available and the target has cache zones. When
+the target is idle and the cache zone list is empty,
+dmz_get_rnd_zone_for_reclaim() selects random zones of the zoned device
+as well, so a random zone is then copied into another random zone. That
+frees nothing: the next pass picks the next random zone and copies it
+again, for as long as the target stays idle.
 
-ndo_start_xmit() returns NETDEV_TX_BUSY when the TX freelist is empty.
+Seen on a two-device target (256 GiB regular cache device plus a 27 TB
+host-managed drive) used as an md RAID5 member: after a full rebuild
+every chunk was mapped and no sequential zone was free, and the idle
+drive kept reading and writing while the free zone counters
+in "dmsetup status" did not change.
 
-For regular packets this is fine since the networking core will requeue
-them, but for timer-flushed packets there is no logic to handle this
-situation, and HRTIMER_NORESTART is returned from ncm_tx_timeout()
-without checking eth_start_xmit()'s return value.
+Only switch to a random destination zone when the zone being reclaimed
+is a cache zone: moving it to the zoned device still frees cache space.
 
-Under sustained TX saturation the request freelist is empty most of the
-time. Since the timer is never restarted, small packets keep getting
-accumulated into the NTB, until either TX_MAX_NUM_DPE packets are stored
-or NTB_DEFAULT_IN_SIZE is reached, which is an unknown amount of time.
+This depends on "dm zoned: back off when reclaim cannot make progress":
+without it, dmz_reclaim_work() would retry the resulting -ENOSPC at
+once, and run dmz_check_dev(), for as long as the target stays idle.
 
-Check the return value of ndo_start_xmit() and restart the timer after
-another 300us.
+Tested on 7.4-rc1 together with the previous patch, on a two-device
+target (a 512 MiB RAM-backed regular cache device plus a 1 GiB
+scsi_debug host-managed drive) filled until no sequential zone was
+free, then idle for 60 seconds: the stock module made 877
+random-to-random copies; with this series it made none, and each pass
+failed with -ENOSPC once per DMZ_IDLE_PERIOD without a device check.
 
-Cc: stable <stable@kernel.org>
-Fixes: 6d3865f9d41f ("usb: gadget: NCM: Add transmit multi-frame.")
-Signed-off-by: Cosmin Tanislav <cosmin-gabriel.tanislav.xa@renesas.com>
-Tested-by: Vladyslav Tymoshchuk <tvlad744@gmail.com>
-Tested-by: Leonardo Costa <leonardo.costa@toradex.com>
-Reported-by: Hiago De Franco <hiago.franco@toradex.com>
-Closes: https://lore.kernel.org/all/20231204183751.64202-1-hiagofranco@gmail.com/
-Link: https://patch.msgid.link/20260817192638.437798-1-cosmin-gabriel.tanislav.xa@renesas.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: c5c788595292 ("dm zoned: start reclaim with sequential zones")
+Cc: stable@vger.kernel.org
+Reviewed-by: Damien Le Moal <dlemoal@kernel.org>
+Reviewed-by: Hannes Reinecke <hare@kernel.org>
+Signed-off-by: Kyrylo Biryuk <illofspeed@gmail.com>
+Signed-off-by: Mikulas Patocka <mpatocka@redhat.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/gadget/function/f_ncm.c |    7 ++++++-
- 1 file changed, 6 insertions(+), 1 deletion(-)
+ drivers/md/dm-zoned-reclaim.c |    8 +++++++-
+ 1 file changed, 7 insertions(+), 1 deletion(-)
 
---- a/drivers/usb/gadget/function/f_ncm.c
-+++ b/drivers/usb/gadget/function/f_ncm.c
-@@ -1148,6 +1148,7 @@ static enum hrtimer_restart ncm_tx_timeo
- {
- 	struct f_ncm *ncm = container_of(data, struct f_ncm, task_timer);
- 	struct net_device *netdev = READ_ONCE(ncm->netdev);
-+	netdev_tx_t ret;
- 
- 	if (netdev) {
- 		/* XXX This allowance of a NULL skb argument to ndo_start_xmit
-@@ -1158,7 +1159,11 @@ static enum hrtimer_restart ncm_tx_timeo
- 		 *
- 		 * This will call directly into u_ether's eth_start_xmit()
- 		 */
--		netdev->netdev_ops->ndo_start_xmit(NULL, netdev);
-+		ret = netdev->netdev_ops->ndo_start_xmit(NULL, netdev);
-+		if (ret == NETDEV_TX_BUSY) {
-+			hrtimer_forward_now(data, TX_TIMEOUT_NSECS);
-+			return HRTIMER_RESTART;
-+		}
+--- a/drivers/md/dm-zoned-reclaim.c
++++ b/drivers/md/dm-zoned-reclaim.c
+@@ -290,7 +290,13 @@ static int dmz_reclaim_rnd_data(struct d
+ again:
+ 	szone = dmz_alloc_zone(zmd, zrc->dev_idx,
+ 			       alloc_flags | DMZ_ALLOC_RECLAIM);
+-	if (!szone && alloc_flags == DMZ_ALLOC_SEQ && dmz_nr_cache_zones(zmd)) {
++	/*
++	 * If no free sequential zone is available, a cache zone can still be
++	 * moved into a free random zone of the zoned device, which frees cache
++	 * space. Do not do this for a random zone: moving it into another
++	 * random zone frees nothing and, on an idle target, repeats forever.
++	 */
++	if (!szone && alloc_flags == DMZ_ALLOC_SEQ && dmz_is_cache(dzone)) {
+ 		alloc_flags = DMZ_ALLOC_RND;
+ 		goto again;
  	}
- 	return HRTIMER_NORESTART;
- }
 
 
