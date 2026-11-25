@@ -1,53 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795621717;
-	b=AyDZAvs3zldxJFFykpddwnNTHltekBgwqCRp3K8uGSkI8nBBqwOwXJpuMUozoFxHGoCR
-	 OeWQgr+lJVOFpKfvcV/tv4/XQfs8mobjxkxcDJJ8mueyPzIIpFgSB+ST58P8GOtAV5j2W
-	 Du8KXevONn4EgwRCOY5mO7eYXp0bfgM4ZN1nz2oqXvfp3hDHx8/B4loIU/mh+u+GBJn0d
-	 yHZXqf/ijCnpT7PTzGBQ6UZ3/0SW4erREoSnTCKLfpCAFAj4jpA4aoVbPA9fivZBxDKih
-	 fAZZCWsqY+22ghDIBjxD7IV8NXXNBV/C1UOC+b9FHZFTt+YEqh3/bu97u2zpqkQfhdw==
+	t=1795621719;
+	b=ui59w31PcUS9hgh6mKJOCV3Vb495/wCH7XGwMZ4Ur6IlVmdIHP1FBq28rHfShtquIITK
+	 /cWj2cHC1uin84WApEWtKYUsahvpSlB5fUOliQVYSx4E0EXpn1S1eVwZhL5j2IDephlvP
+	 YJKY2dZbvQlXPaM00mGemMofoyCYYBptna94PMGVzR1UllILBKfWmM0C9hvJCEy5Li7//
+	 ZBvXFCaxAZyr+gGYTBQeVOV+4dTLbyaWbVeYeXZA7FJICk/vx3qeSok8h+JwBbJIIJRq1
+	 bq0QDFQl1hDtiIlHsCR3do0Wl3wI8+LmGSCw7sRX++Lv2+3D+EkhggvGv/bxY61BVGA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795621717;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795621719;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=AEtuRBZyBn8cGtEoJbQEs+0h7bQcWKAoIjdsh1zKEs0=;
-	b=VSdf5fdio6fLyKWQeQDgUU1HPL/CwNAhNxiAqrXdq1o+WK1uLT9nYVIWNZCAqe1Yzm4y
-	 T39jkj6MXgD0oyze+PlzoFaC0kqwuLxvuLOUMatN1lL6SkzSzxP6x0AH2PT0TWgUV9Win
-	 tYi1QB6i5yAxQyVdSrpBRoUcLzCsBVx+mMAWB9CiWKZ3zAOqh8QyUEKSEqfjxeONU1O8r
-	 GvN1wmqBLa1xYOsmGsltGwWoLoxUp1xxlhMKgBjcQD6vErbj0ZY1VxE9jxtqVfda2DcEH
-	 eif+Cnp+1ImRNJqtc5PTEy7v5sA++B8/x5Lwbjngose6sEVosDlIPHPin7tyHSLg3wA==
+	bh=GLfo6Y8B6mJlsnQwfPVT6MDhrpSBqknviga8Z/SluNI=;
+	b=gWc8hpo+lnXc76GQbO1xBuB7nqkalWmj+TJIF/DyV1xw9fg7U3qlWFNKnw5UtUljOE7y
+	 qgz/kiZEyLoKssVRI4b4tObI1xpwy0xlVk18vRwDFUi4ancOUtP0Mqkk6b3UPWKK3iqrX
+	 M8oHXNWLgr87moiPMy950p9lzYzxFHI8PBp0H343CCMEYsxuVTEf1VJVwJN3jFKu3hH/O
+	 V9EoDltdSLlK1ht9w0SBHPuj/aHzWIMnBjrWJsFGbxYFudKCxONNkCMHtIBrKEdL3oyr9
+	 1dhmYNHhFeWaBAIeSm7BiVYVvZZ//7XU8/uOWo20ovjfKLVvZz//886lnC4F7vFlrJg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=DHjNcS9K;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Uyd3r7+Y;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0B0D4606A327;
-	Wed, 25 Nov 2026 15:48:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A2F98606A32A;
+	Wed, 25 Nov 2026 15:48:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=DHjNcS9K
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1DF171F000C0;
-	Wed, 25 Nov 2026 15:48:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Uyd3r7+Y
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 011931F000C4;
+	Wed, 25 Nov 2026 15:48:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795621716;
-	bh=AEtuRBZyBn8cGtEoJbQEs+0h7bQcWKAoIjdsh1zKEs0=;
+	s=korg; t=1795621719;
+	bh=GLfo6Y8B6mJlsnQwfPVT6MDhrpSBqknviga8Z/SluNI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=DHjNcS9KbfnHN3OjzeiFm6r4jaergdnhHBuph0POrZgKoPxcuk+3/L9E4erdhxRbS
-	 BclC808lPuc6XJ8gHpSyqWDeOQJ9JFdygNjBRgdgAP34BymTChbYwnD/4iV43Yb6kT
-	 RZvRKdM9OweKBuGLU7PqymHOVnSS3VQUsZgZ+6Rg=
+	b=Uyd3r7+YtE/0UJVov7oa+mu52fMFBfTgMGVe82HUKSU6fkqX8t5CXu51uMxrEI/a1
+	 0PBjTlEKUvS3zhKgPo2eNwu3bXBbx5TdjSt+z+oIux73zqaDvp0whosnEtCn9vU5xD
+	 ECTHSYA+E3nesSEVbI/BrTqWfhrgWAjaBLBi0YyI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chris Mason <mason@kernel.org>,
-	Eric Dumazet <edumazet@kernel.org>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Ridge Lomont <cyridge@proton.me>,
+	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
+	Ingo Molnar <mingo@kernel.org>,
+	Nathan Chancellor <nathan@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 315/990] tcp: bound snd_cwnd_clamp to TCP_MAX_SND_CWND
-Date: Wed, 25 Nov 2026 15:28:02 +0100
-Message-ID: <20261125143829.471255172@linuxfoundation.org>
+Subject: [PATCH 6.18 316/990] x86/kcfi: Dont emit KCFI_REFERENCE() in modules
+Date: Wed, 25 Nov 2026 15:28:03 +0100
+Message-ID: <20261125143829.493198717@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143822.072087159@linuxfoundation.org>
 References: <20261125143822.072087159@linuxfoundation.org>
@@ -69,115 +70,80 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eric Dumazet <edumazet@kernel.org>
+From: Ridge Lomont <cyridge@proton.me>
 
-[ Upstream commit 475ff14ba558bb8857bca878f1d593784ccc4f0f ]
+[ Upstream commit fb685de78e6bf79e49854e7d149f69b125583de5 ]
 
-snd_cwnd has no practical upper bound: snd_cwnd_clamp defaults to ~0,
-and RTAX_INITCWND, a locked RTAX_CWND metric, TCP_BPF_IW and
-TCP_BPF_SNDCWND_CLAMP accept any positive value.
+KCFI_REFERENCE() takes the address of a symbol so that the compiler
+emits its __kcfi_typeid_ symbol, which the SYM_TYPED_FUNC_START()
+assembly implementing it needs. It is used from arch/x86 headers for
+__clear_pages_unrolled(), copy_page(), __memset() and __memmove(), and
+all of that assembly is built into vmlinux.
 
-Congestion control modules do u32 arithmetic on cwnd that assumes
-much smaller values. For instance, ssthresh() handlers compute:
+Modules include the same headers, so with CONFIG_CFI=y every module
+also gets an __ADDRESSABLE() reference to each of these symbols in
+.discard.addressable. This serves no purpose there, and since
+__clear_pages_unrolled() is EXPORT_SYMBOL_GPL, modpost now rejects any
+GPL-incompatible module that includes <linux/mm.h>:
 
-  CUBIC, BIC, ROCCET:  cwnd * (BICTCP_BETA_SCALE + beta), up to 2047
-  DCTCP:               cwnd * dctcp_alpha, up to 1024
-  CDG, NV, CUBIC, ...: cwnd * beta, below 1024
+  ERROR: modpost: GPL-incompatible module repro.ko uses GPL-only
+  symbol '__clear_pages_unrolled'
 
-With a large initcwnd route or TCP_BPF_IW, cwnd is set directly to
-such values, and the next RTO or recovery calls ->ssthresh() with it.
-The product then wraps: DCTCP with cwnd = 2^24 and alpha = 1024 gets
-ssthresh == cwnd, and CUBIC computes a wrong ssthresh and Wmax.
-CUBIC bictcp_update() also expects cwnd below about one million packets.
+even though the module never uses the symbol. This makes OpenZFS
+impossible to build against CFI kernels; its configure checks fail
+in the same way and are misreported as CONFIG_DEBUG_LOCK_ALLOC.
 
-The paths that can grow cwnd by large amounts (tcp_slow_start(),
-tcp_cong_avoid_ai(), bbr_set_cwnd() and tcp_init_cwnd()) already
-bound it by snd_cwnd_clamp, so give snd_cwnd_clamp a finite default
-of 2^20 packets, and cap the metric and BPF paths that set it or set
-cwnd directly.
+scripts/module.lds.S does not help here: modpost checks <module>.o
+before the final link, and even after it the discarded section only
+loses its relocations, the undefined symbols stay in .symtab, where
+the module loader resolves them with the same license check.
 
-2^20 packets do not limit real flows: with the maximum window scale
-of 14, a peer can not advertise more than 65535 << 14 bytes (~1GB),
-which is less than 2^20 packets for any MSS of 1024 bytes or more.
+Only emit the reference when building vmlinux.
 
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Reported-by: Chris Mason <mason@kernel.org>
-Signed-off-by: Eric Dumazet <edumazet@kernel.org>
-Link: https://patch.msgid.link/20261030111528.2850082-1-edumazet@kernel.org
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Tested on x86_64 with clang 23.1.3 and CONFIG_CFI=y, with both
+CONFIG_LTO_CLANG_FULL=y (the configuration from the Fixes: commit) and
+CONFIG_LTO_CLANG_THIN=y: vmlinux links without warnings and still contains
+__kcfi_typeid___clear_pages_unrolled, __kcfi_typeid_copy_page,
+__kcfi_typeid___memset and __kcfi_typeid___memmove. It boots in QEMU
+with no CFI failures. A minimal module with MODULE_LICENSE("Proprietary")
+including <linux/mm.h> fails modpost before this change and builds and
+loads after it. OpenZFS builds against a CFI kernel with this change,
+and its pool, encryption, checksum and send/recv operations run
+without CFI failures, in QEMU and on a desktop with CFI enforcing.
+
+Fixes: 9b041a4b66b3 ("x86/mm: Ensure clear_page() variants always have __kcfi_typeid_ symbols")
+Assisted-by: LLM
+Signed-off-by: Ridge Lomont <cyridge@proton.me>
+Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
+Signed-off-by: Ingo Molnar <mingo@kernel.org>
+Acked-by: Nathan Chancellor <nathan@kernel.org>
+Link: https://github.com/openzfs/zfs/issues/18092
+Link: https://patch.msgid.link/20261027-kcfi-reference-modules-v2-1-3a3247f15806@proton.me
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/net/tcp.h      | 9 +++++++++
- net/core/filter.c      | 3 ++-
- net/ipv4/tcp.c         | 2 +-
- net/ipv4/tcp_metrics.c | 3 ++-
- 4 files changed, 14 insertions(+), 3 deletions(-)
+ include/linux/compiler.h | 7 +++++--
+ 1 file changed, 5 insertions(+), 2 deletions(-)
 
-diff --git a/include/net/tcp.h b/include/net/tcp.h
-index f9bcfa8773a3a..3bf508ceae7b0 100644
---- a/include/net/tcp.h
-+++ b/include/net/tcp.h
-@@ -1430,6 +1430,15 @@ static inline unsigned int tcp_packets_in_flight(const struct tcp_sock *tp)
+diff --git a/include/linux/compiler.h b/include/linux/compiler.h
+index 5b45ea7dff3e5..2911b9e622929 100644
+--- a/include/linux/compiler.h
++++ b/include/linux/compiler.h
+@@ -248,10 +248,13 @@ void ftrace_likely_update(struct ftrace_likely_data *f, int val,
  
- #define TCP_INFINITE_SSTHRESH	0x7fffffff
+ #endif /* __KERNEL__ */
  
-+/* Default and maximum snd_cwnd_clamp, in packets.
-+ * A peer can not advertise more than 65535 << 14 bytes, so a larger
-+ * cwnd is useless with any MSS of 1024 bytes or more.
-+ * Congestion control modules multiply cwnd by u32 factors up to 2047
-+ * (cwnd * (BICTCP_BETA_SCALE + beta) in CUBIC), and CUBIC's
-+ * bictcp_update() expects cwnd to stay below about one million packets.
-+ */
-+#define TCP_MAX_SND_CWND	(1U << 20)
-+
- static inline u32 tcp_snd_cwnd(const struct tcp_sock *tp)
- {
- 	return tp->snd_cwnd;
-diff --git a/net/core/filter.c b/net/core/filter.c
-index c6677657656c9..8b76dd1201038 100644
---- a/net/core/filter.c
-+++ b/net/core/filter.c
-@@ -5498,11 +5498,12 @@ static int bpf_sol_tcp_setsockopt(struct sock *sk, int optname,
- 	case TCP_BPF_IW:
- 		if (val <= 0 || tp->data_segs_out > tp->syn_data)
- 			return -EINVAL;
--		tcp_snd_cwnd_set(tp, val);
-+		tcp_snd_cwnd_set(tp, min_t(u32, val, tp->snd_cwnd_clamp));
- 		break;
- 	case TCP_BPF_SNDCWND_CLAMP:
- 		if (val <= 0)
- 			return -EINVAL;
-+		val = min_t(u32, val, TCP_MAX_SND_CWND);
- 		tp->snd_cwnd_clamp = val;
- 		WRITE_ONCE(tp->snd_ssthresh, val);
- 		break;
-diff --git a/net/ipv4/tcp.c b/net/ipv4/tcp.c
-index aa860cbd3a442..5f983535bc1d6 100644
---- a/net/ipv4/tcp.c
-+++ b/net/ipv4/tcp.c
-@@ -472,7 +472,7 @@ void tcp_init_sock(struct sock *sk)
- 	 * initialization of these values.
- 	 */
- 	tp->snd_ssthresh = TCP_INFINITE_SSTHRESH;
--	tp->snd_cwnd_clamp = ~0;
-+	tp->snd_cwnd_clamp = TCP_MAX_SND_CWND;
- 	tp->mss_cache = TCP_MSS_DEFAULT;
- 
- 	tp->reordering = READ_ONCE(sock_net(sk)->ipv4.sysctl_tcp_reordering);
-diff --git a/net/ipv4/tcp_metrics.c b/net/ipv4/tcp_metrics.c
-index 276127902f154..5a83f09cdbd7d 100644
---- a/net/ipv4/tcp_metrics.c
-+++ b/net/ipv4/tcp_metrics.c
-@@ -495,7 +495,8 @@ void tcp_init_metrics(struct sock *sk)
- 	}
- 
- 	if (tcp_metric_locked(tm, TCP_METRIC_CWND))
--		tp->snd_cwnd_clamp = tcp_metric_get(tm, TCP_METRIC_CWND);
-+		tp->snd_cwnd_clamp = min(tcp_metric_get(tm, TCP_METRIC_CWND),
-+					 TCP_MAX_SND_CWND);
- 
- 	val = READ_ONCE(net->ipv4.sysctl_tcp_no_ssthresh_metrics_save) ?
- 	      0 : tcp_metric_get(tm, TCP_METRIC_SSTHRESH);
+-#if defined(CONFIG_CFI) && !defined(__DISABLE_EXPORTS) && !defined(BUILD_VDSO)
++#if defined(CONFIG_CFI) && !defined(__DISABLE_EXPORTS) && !defined(BUILD_VDSO) && \
++	!defined(MODULE)
+ /*
+  * Force a reference to the external symbol so the compiler generates
+- * __kcfi_typid.
++ * __kcfi_typid. Only vmlinux needs it, as that is where the assembly
++ * using the typeid lives; in a module it would only add a reference to
++ * the symbol, which fails modpost if the symbol is GPL-only.
+  */
+ #define KCFI_REFERENCE(sym) __ADDRESSABLE(sym)
+ #else
 -- 
 2.53.0
 
