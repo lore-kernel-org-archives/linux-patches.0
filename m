@@ -1,51 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795625943;
-	b=AbwEQUy9XtfYDBPclyoqX8OmNLxEw+dHRYQy4rUPLniMUt00o6RgMNmPpddP7C53A8RR
-	 lKvwYDFhwSGeumqJqJPOTCc0NEzd+oKJ5CNulgdfHQkXsSrIaYWumK+hE0Qh9oiOk0T4a
-	 lKVGgHjLgui8p1lQlAChkjGTM33d3AwURVGZOL0X+hc1fU4538FuaCqdkV0Bvme56Lh4p
-	 usS4on9r0niJUIvZOkiOENxbeo05Z3KBAveQGGr9A65/r6vSP+U9m8LjB8qGgLIb5wPd5
-	 /2MpX3m9rbglC/uOcSSxnFfQaUAqCD25ueCXdEw7HAGmGs3igVyIXXNMMrGq5yp0vUg==
+	t=1795625946;
+	b=QclNrigVcgK+A3aZxbbQUiymRSNpGq7Y9NBZUNYnp+bXEMC8eqsgWjrzKNbuDYzg/6dT
+	 NdUWBEbDOarnh7FloIH249zziyXpBrZrLWKkxZAtFRhw0mIqXRRy1uHQd7VIJWGQoxi/y
+	 +VmJN0sJ9yCPtDdGTXy/x/Fe9Ck5oA8Nm+ihfvw+vCjRTVSUHv33O0w5DSeAw7vTeZelm
+	 rU2AknwURJSvLdGsBpDJLONUjCSsMU+4cI75LscyK0IXuMmWhz4aENpalBjmkOYnUk+OW
+	 qzOJmWj1ld1yLLmDh383vhW4q0da7QTVgIP0ih67sAkp0qO3hKbBydtVbYgmza5dTiA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795625943;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795625946;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=yfZPfVqgCp7AVFkYpHa4+YPtGX3+y57cw0kLEnFlZrc=;
-	b=YY4akgglRMlS9E3/ex2BW00aWMwchI0nzeie+so7dFIYrupjzGEWuivjkEDbPE0iBTaB
-	 N662OKkQdHxSEffoggYer/FTc9yYLClyCGAYr6aR8tZaLUaf2XXvS+t7YNqhTzL+IpWF0
-	 wjgcTw9xnDL0fRy8sNjHBilurWM0ftCBp98GVnqft4O91F6Hu4SDh/hiOqVMxi4dVOD2Z
-	 I3tX6bjW77k8UXpwJspQ3+UYN1STaK0dKnYcw/0zbFqWKOJG9WOeMcwlr0jPz6rSY7Jqe
-	 3KIG/ldex/aLwR4SAeqLxeCMWNMXJiwr+mz2BJo+WA4CGoGApDvRkprkPlORuUsT+4w==
+	bh=L0tkzWcexSbdszt+jZdm+TM0NW13/QUH4FIGFx0fyMo=;
+	b=unmSJX2Qemlrycn0sz655BsXfHTX2DHKc85grLV8OgUEMlBaL9AbXnbw4KKiP3SVlayN
+	 1SanF05dszGiNEJ8vRmcwaal0D6IUeXtf87Zmfqj+XOT1TTp6+qp7r8Z/E19wlLH2Wz9q
+	 6U8O475UjOe4W74QuD8jf+FrW8D8+FQKL2espY9qbzwVLDocTXDBR/ndw+ej5UdoJ8d3Z
+	 04NYFdt3EENdo9QPrluZE6Ai2KnXSvUif4h4b8S4K5wJ/ATxqHd5hWbDbTXST2037wadJ
+	 jvjXm/wKZvZcbJ3FI3wmIA+ctfqC5mUZReRnr+KHy3la4K/5xov/Mrqbgx/FC3+FHCg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=iweIg9Kt;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=rywuEXFX;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 53612606A33E;
-	Wed, 25 Nov 2026 16:59:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 36C25606A332;
+	Wed, 25 Nov 2026 16:59:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=iweIg9Kt
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 564BA1F000C6;
-	Wed, 25 Nov 2026 16:59:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=rywuEXFX
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7EE911F0093E;
+	Wed, 25 Nov 2026 16:59:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795625942;
-	bh=yfZPfVqgCp7AVFkYpHa4+YPtGX3+y57cw0kLEnFlZrc=;
+	s=korg; t=1795625946;
+	bh=L0tkzWcexSbdszt+jZdm+TM0NW13/QUH4FIGFx0fyMo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=iweIg9KtnZHOhL4kf5K3la+8/QiN1wW0p+AKBEHT837wV7+sHPyfprpJlo7iMpO0K
-	 fPrAz5RsKHinDj/4M3Sl5PuF8FZkJR518pJrgxmn2oRWUe2ZNR++hyU4FGE/9nKU+b
-	 ZwVNMzaneuIu86mEBP6aXcm5S8Rzqi59LZOiGvxk=
+	b=rywuEXFX77ohW0vLzw3RAOGgqAAVOWdHXNGOVM1Qk/9zHDkoSydpkiy78RKZkWjuE
+	 yjeO0czP6/H+BgaYLfKp+quEIIFAw4zORcxBqKb2NqRvlQQvEyi9CTQqu3a2CCQUwL
+	 gdRcL7FC0H39HMm9U7cke8qVLWguSiJGWBLJNmTY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Giuseppe Scrivano <giuseppe@scrivano.org>,
-	Amir Goldstein <amir73il@gmail.com>
-Subject: [PATCH 6.12 680/816] ovl: return EIO if the lowerdata is missing
-Date: Wed, 25 Nov 2026 15:37:08 +0100
-Message-ID: <20261125143904.921556119@linuxfoundation.org>
+	Namjae Jeon <linkinjeon@kernel.org>,
+	Yifan Zhang <yfzhang23@stu.pku.edu.cn>,
+	Paulo Alcantara <pc@manguebit.org>
+Subject: [PATCH 6.12 681/816] smb: client: bound invalid NTLMSSP signature diagnostic
+Date: Wed, 25 Nov 2026 15:37:09 +0100
+Message-ID: <20261125143904.944712163@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143849.205329330@linuxfoundation.org>
 References: <20261125143849.205329330@linuxfoundation.org>
@@ -67,48 +68,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Giuseppe Scrivano <giuseppe@scrivano.org>
+From: Yifan Zhang <yfzhang23@stu.pku.edu.cn>
 
-commit 0d5e729c515f4ae4eacc179dbcf350d9b499a161 upstream.
+commit 0584b02669c3e76188097174b4f25ed13723e94c upstream.
 
-The data of a metacopy file that redirects to a data-only layer is
-looked up when the file is opened, and the error of the lookup is
-returned as is.  If the data file is missing, open() fails with ENOENT
-even though the file is there and stat() works.
+The NTLMSSP Signature field is an eight-byte binary value and need not be
+NUL-terminated. decode_ntlmssp_challenge() prints it with %s on the
+signature-mismatch path, so the diagnostic can continue beyond the received
+blob until it encounters a zero byte.
 
-This can be an integrity problem when using composefs: a data file that
-is changed or has the wrong fs-verity digest is reported with EIO, but
-a missing one is not reported, the file just looks like it does not
-exist, e.g. a configuration file that overrides the defaults.
+KASAN reports:
 
-Return EIO as it is already done in ovl_lookup() when no lower data is
-found for a metacopy file.  ENOMEM is not changed.
+  BUG: KASAN: slab-out-of-bounds in string
+  Read of size 1
+  string
+  vsnprintf
+  _printk
+  decode_ntlmssp_challenge
 
-Fixes: 42dd69ae1af4 ("ovl: implement lazy lookup of lowerdata in data-only layers")
+Print the fixed-width field with the bounded hexadecimal format.
+
+The patched kernel reaches the invalid-signature path and returns -EINVAL
+without a KASAN report.
+
+Fixes: 0b3cc858003b ("[CIFS] NTLMSSP reenabled after move from connect.c to sess.c")
+Reviewed-by: Namjae Jeon <linkinjeon@kernel.org>
+Signed-off-by: Yifan Zhang <yfzhang23@stu.pku.edu.cn>
 Cc: stable@vger.kernel.org
-Signed-off-by: Giuseppe Scrivano <giuseppe@scrivano.org>
-Signed-off-by: Amir Goldstein <amir73il@gmail.com>
+Signed-off-by: Paulo Alcantara <pc@manguebit.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/overlayfs/namei.c |    8 ++++++++
- 1 file changed, 8 insertions(+)
+ fs/smb/client/sess.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/fs/overlayfs/namei.c
-+++ b/fs/overlayfs/namei.c
-@@ -1020,6 +1020,14 @@ out:
- out_err:
- 	pr_warn_ratelimited("lazy lowerdata lookup failed (%pd2, err=%i)\n",
- 			    dentry, err);
-+	/*
-+	 * The data of a metacopy file is missing or is not a regular file in
-+	 * the data-only layers: the layers are corrupted.  Do not return the
-+	 * error of the lookup (e.g. ENOENT) to the caller, it would make the
-+	 * file look like it does not exist.
-+	 */
-+	if (err != -ENOMEM)
-+		err = -EIO;
- 	goto out;
- }
+--- a/fs/smb/client/sess.c
++++ b/fs/smb/client/sess.c
+@@ -961,8 +961,8 @@ int decode_ntlmssp_challenge(char *bcc_p
+ 	}
  
+ 	if (memcmp(pblob->Signature, "NTLMSSP", 8)) {
+-		cifs_dbg(VFS, "blob signature incorrect %s\n",
+-			 pblob->Signature);
++		cifs_dbg(VFS, "%s: blob signature incorrect: %8phN\n",
++			 __func__, pblob->Signature);
+ 		return -EINVAL;
+ 	}
+ 	if (pblob->MessageType != NtLmChallenge) {
 
 
