@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795618163;
-	b=wJO09t/pZ0GCyLaPprmq44WLF1xumCJqR0Jo2YZBWGm1ngTdHP9wh66GsqZw6H7c3LBH
-	 lpUNGQIdryTQbvY+dGgolH4zA2LlKySeQ2m9AF9KGzryH5IFgiEpRMqeukV8qf5/ON5lp
-	 fKgp31SDCm1r05UF88dIF2pcPmgivFQAPfLNLoktUFSZmDhGWMUvzicRQAh0E4/1BF0EW
-	 xip9Py7B2XL18ogwLd1/vf2q8rEhECbrvPaPwodYvYorI55CrHoz4ljr0q//CZuu96F64
-	 NJ8PUq1GKCBw41HWQwPF395hC/IHX9cPpfGw1sjneXAzX+1XOc4f+7lCkq3X1nVTZQA==
+	t=1795618166;
+	b=k+MxUTmvUfRyQXJsNg1y0Z/VQjZy9aj1cXf4H+n4k29eKDdLv+5RP++3zRK/54X40Ewk
+	 3uxUag30za0B9veThrc+hKdQroPyqICoYztZP1MD87Ag01nC2AxEm6QzdRgRiO32dmLbs
+	 x4XWIfXeoA1GUaVMctaCzFmGO9LyoUDvMSaJrxsR31NgW9CyjS5HQ7+c3crxGfUinDIOo
+	 zCzmG8IJZakA7ENeYhdMCpCHgVDhJAuS6JWNO99LXF75MTA48Ii2fXmjSa/D5HQ46Y1xB
+	 WHH9BLlR2MYqGpkLQ2Js5HKiljhSQJv+VW5VcEbOvqaL1asLeSr1ZNU0gTxJChnC0EA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795618163;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795618166;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=ZuMpHpL1cQ0wZKzywovKd9Vvm7VqyXPNZsNAES/TbF4=;
-	b=HSqC3bid17eynHxYTgUa5qovQ30+JDQ0TsyBvBcMf77c6l8E06Yt/ZfixWb9CnoVAI4c
-	 YUY40U4YgLVWX1DRea09I+2FXoIxpP082+solBFLjE6EOm/2ha2lwJWXY1m6RKON1bFUj
-	 mIXO/+KKW1uVrpR/MnNz1Xlyh6wmwGhSd0l6dzrLtrGNl5g45x9I1E0cI3fFZGWak5a2f
-	 fe8zL5MlcP8VmScuu4hAcdf00q99W5g0ey6VmomWHpuFz/epUTQT9cxrtM2im9qaPtGCI
-	 UFp7ale+EHjeiflXE8tFWaRiV/FNBnmrXG7T6soySbUtNsEMF2f/nS+ZEi6kR8X8XAA==
+	bh=icRWUV8aSnc2A7VEtdeLEnEPFpXWM1+MkJLvhfDwM4c=;
+	b=ofTN/cOTOLKR7hgarvlnyZQiulGe5oENTCbeT4gGtIfc1Wx4PT7CJmwdDE2y+6Y099Az
+	 OP5By3zpfqyxkYAd8+GtnmVI4qnwUBeXvrNkygGEL7ruLkEDvGcdjiuNwDbzFbXrys92z
+	 ytc7FQxR5ek+cNpZnspDlaNatdkvkZWLKpZXaxS0uFnC21omT2QL6blpeeb/WmG1Qx1WE
+	 k4QofA+q9Ub6HQPl1oyojrBXK77GnbxExCs5bBlHUJedNV0d/lX90wB+hQfiOqAsh7KK4
+	 9X5ST9/JfvswPKnmXU4SuGIu3Wt1VZPp4Zx2qMo/pyDNfERG6dZJ1WdIjHfo97T4PQg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Vuw1P0n8;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=LdGL9wXk;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5113F606A329;
-	Wed, 25 Nov 2026 14:49:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 65D45606A323;
+	Wed, 25 Nov 2026 14:49:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Vuw1P0n8
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A281B1F01570;
-	Wed, 25 Nov 2026 14:49:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=LdGL9wXk
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7E0B41F0157C;
+	Wed, 25 Nov 2026 14:49:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795618163;
-	bh=ZuMpHpL1cQ0wZKzywovKd9Vvm7VqyXPNZsNAES/TbF4=;
+	s=korg; t=1795618166;
+	bh=icRWUV8aSnc2A7VEtdeLEnEPFpXWM1+MkJLvhfDwM4c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Vuw1P0n8YtBLljrX9XrmWm4TV6xCqcYANepz4DJ1m3VA1/VsPXrv0s2Be7DpR41+b
-	 Cfgf/XsDBgD6SlPYf3m0Wb+zywuxA2UnI4z1H8WGSVgYPkIubyNaFCcC1tCAWR3zE1
-	 o0gl7vT6n4duXOnqdqJsOJf+mgTUFj3mg3h5D7PE=
+	b=LdGL9wXknTxfJY/VQxGHGaXs128BuBjTM7gFBhdXBHj3sL+4qYt3iHkXmmiipQ0zo
+	 SC6SvLDmKCSlGfIuAyFp6/WPqLQAH05MwrUszgT05QljHmQsJzAYSkQUyw5gKv3ukn
+	 PXKm4qTp/09/Yr/gDChZggNF8i18iXhgAvyGyCvU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kevin Dewald <kevin@simpleble.org>,
+	Peng Fan <peng.fan@nxp.com>,
 	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0193/1005] Bluetooth: hci_event: Clear explicit connect state on LE connection
-Date: Wed, 25 Nov 2026 15:25:31 +0100
-Message-ID: <20261125143826.261343977@linuxfoundation.org>
+Subject: [PATCH 7.3 0194/1005] Bluetooth: use assign_bit() where applicable
+Date: Wed, 25 Nov 2026 15:25:32 +0100
+Message-ID: <20261125143826.285666130@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143821.729802100@linuxfoundation.org>
 References: <20261125143821.729802100@linuxfoundation.org>
@@ -68,94 +68,268 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kevin Dewald <kevin@simpleble.org>
+From: Peng Fan <peng.fan@nxp.com>
 
-[ Upstream commit f5cd268af1c6f87fb3847e98274e22b8c6324aa4 ]
+[ Upstream commit c4154fc34772134b0dbd14ab0134ba10b90c52cc ]
 
-Since commit 6cd29ec6ae5e ("Bluetooth: hci_sync: Wait for proper events
-when connecting LE"), create_le_conn_complete() only runs once the LE
-Connection Complete event has been handled, and le_conn_complete_evt()
-has already removed the connection parameters from pend_le_conns by
-then. hci_connect_le_scan_cleanup() looks the parameters up in
-pend_le_conns, so after a successful connection it no longer clears
-explicit_connect, nor deletes the parameters that were only created for
-the explicit connect.
+Convert open-coded if/else with set_bit/clear_bit the assign_bit API.
 
-The parameters of every device connected through an explicit connect,
-such as an L2CAP or ATT connect or MGMT Pair Device, are thus left with
-explicit_connect set. MGMT Remove Device for all devices then keeps
-them as HCI_AUTO_CONN_EXPLICIT instead of freeing them, and if the
-device was set to auto-connect and is disconnected, they also stay on
-pend_le_conns: the kernel keeps scanning for the device and connects to
-it as soon as it advertises, although no one asked for it any more.
+Done with Coccinelle semantic patch:
+    // set_bit -> clear_bit => assign_bit
 
-Do the cleanup in le_conn_complete_evt() instead, where the explicit
-connect request is fulfilled: clear explicit_connect, delete the
-parameters if they only existed for it, and put report parameters back
-on pend_le_reports. Auto-connect parameters are added back to
-pend_le_conns on disconnection, as before. Update the comment in
-hci_explicit_conn_params_set() that names hci_connect_le_scan_cleanup()
-as the only place deleting them.
+    @@
+    expression cond, bit, addr;
+    @@
 
-Fixes: 6cd29ec6ae5e ("Bluetooth: hci_sync: Wait for proper events when connecting LE")
-Assisted-by: Claude:claude-opus-5.5
-Signed-off-by: Kevin Dewald <kevin@simpleble.org>
+    -if (cond)
+    -        set_bit(bit, addr);
+    -else
+    -        clear_bit(bit, addr);
+    +assign_bit(bit, addr, cond);
+
+    @@
+    expression cond, bit, addr;
+    @@
+
+    -if (cond)
+    -        clear_bit(bit, addr);
+    -else
+    -        set_bit(bit, addr);
+    +assign_bit(bit, addr, !cond);
+
+Signed-off-by: Peng Fan <peng.fan@nxp.com>
 Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Stable-dep-of: 5d005ded2cb1 ("Bluetooth: L2CAP: Hold incoming data until encryption key size is known")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/bluetooth/hci_conn.c  |  5 +++--
- net/bluetooth/hci_event.c | 22 ++++++++++++++++++++++
- 2 files changed, 25 insertions(+), 2 deletions(-)
+ net/bluetooth/hci_event.c   | 31 +++++++------------------------
+ net/bluetooth/iso.c         | 15 +++------------
+ net/bluetooth/l2cap_sock.c  | 22 ++++++----------------
+ net/bluetooth/rfcomm/core.c |  6 ++----
+ net/bluetooth/rfcomm/sock.c |  5 +----
+ net/bluetooth/sco.c         | 10 ++--------
+ 6 files changed, 21 insertions(+), 68 deletions(-)
 
-diff --git a/net/bluetooth/hci_conn.c b/net/bluetooth/hci_conn.c
-index cf44452e0766e..8f136f28b7d68 100644
---- a/net/bluetooth/hci_conn.c
-+++ b/net/bluetooth/hci_conn.c
-@@ -1586,8 +1586,9 @@ static int hci_explicit_conn_params_set(struct hci_dev *hdev,
- 		if (!params)
- 			return -ENOMEM;
- 
--		/* If we created new params, mark them to be deleted in
--		 * hci_connect_le_scan_cleanup. It's different case than
-+		/* If we created new params, mark them to be deleted once the
-+		 * explicit connect is done, see le_conn_complete_evt() and
-+		 * hci_connect_le_scan_cleanup(). It's different case than
- 		 * existing disabled params, those will stay after cleanup.
- 		 */
- 		params->auto_connect = HCI_AUTO_CONN_EXPLICIT;
 diff --git a/net/bluetooth/hci_event.c b/net/bluetooth/hci_event.c
-index 3288f92fe41bf..f5c2bc77397b9 100644
+index f5c2bc77397b9..1962dccabbef1 100644
 --- a/net/bluetooth/hci_event.c
 +++ b/net/bluetooth/hci_event.c
-@@ -5956,6 +5956,28 @@ static void le_conn_complete_evt(struct hci_dev *hdev, u8 status,
- 			hci_conn_put(params->conn);
- 			params->conn = NULL;
- 		}
-+
-+		/* An explicit connect request is complete once connected, so
-+		 * clean it up here: hci_connect_le_scan_cleanup() no longer
-+		 * finds the params since they have just been removed from
-+		 * pend_le_conns.
-+		 */
-+		if (params->explicit_connect) {
-+			params->explicit_connect = false;
-+
-+			switch (params->auto_connect) {
-+			case HCI_AUTO_CONN_EXPLICIT:
-+				hci_conn_params_del(hdev, &conn->dst,
-+						    conn->dst_type);
-+				break;
-+			case HCI_AUTO_CONN_REPORT:
-+				hci_pend_le_list_add(params,
-+						     &hdev->pend_le_reports);
-+				break;
-+			default:
-+				break;
-+			}
-+		}
+@@ -404,10 +404,7 @@ static u8 hci_cc_write_auth_enable(struct hci_dev *hdev, void *data,
+ 	if (!rp->status) {
+ 		__u8 param = *((__u8 *) sent);
+ 
+-		if (param == AUTH_ENABLED)
+-			set_bit(HCI_AUTH, &hdev->flags);
+-		else
+-			clear_bit(HCI_AUTH, &hdev->flags);
++		assign_bit(HCI_AUTH, &hdev->flags, param == AUTH_ENABLED);
  	}
  
- 	/* If we are central and have subrate parameters stored, queue a
+ 	if (hci_dev_test_flag(hdev, HCI_MGMT))
+@@ -436,10 +433,7 @@ static u8 hci_cc_write_encrypt_mode(struct hci_dev *hdev, void *data,
+ 
+ 	param = *((__u8 *) sent);
+ 
+-	if (param)
+-		set_bit(HCI_ENCRYPT, &hdev->flags);
+-	else
+-		clear_bit(HCI_ENCRYPT, &hdev->flags);
++	assign_bit(HCI_ENCRYPT, &hdev->flags, param);
+ 
+ 	return rp->status;
+ }
+@@ -466,15 +460,9 @@ static u8 hci_cc_write_scan_enable(struct hci_dev *hdev, void *data,
+ 		goto done;
+ 	}
+ 
+-	if (param & SCAN_INQUIRY)
+-		set_bit(HCI_ISCAN, &hdev->flags);
+-	else
+-		clear_bit(HCI_ISCAN, &hdev->flags);
++	assign_bit(HCI_ISCAN, &hdev->flags, param & SCAN_INQUIRY);
+ 
+-	if (param & SCAN_PAGE)
+-		set_bit(HCI_PSCAN, &hdev->flags);
+-	else
+-		clear_bit(HCI_PSCAN, &hdev->flags);
++	assign_bit(HCI_PSCAN, &hdev->flags, param & SCAN_PAGE);
+ 
+ done:
+ 	hci_dev_unlock(hdev);
+@@ -4661,10 +4649,8 @@ static void hci_mode_change_evt(struct hci_dev *hdev, void *data,
+ 
+ 		if (!test_and_clear_bit(HCI_CONN_MODE_CHANGE_PEND,
+ 					&conn->flags)) {
+-			if (conn->mode == HCI_CM_ACTIVE)
+-				set_bit(HCI_CONN_POWER_SAVE, &conn->flags);
+-			else
+-				clear_bit(HCI_CONN_POWER_SAVE, &conn->flags);
++			assign_bit(HCI_CONN_POWER_SAVE, &conn->flags,
++				   conn->mode == HCI_CM_ACTIVE);
+ 		}
+ 
+ 		if (test_and_clear_bit(HCI_CONN_SCO_SETUP_PEND, &conn->flags))
+@@ -4864,10 +4850,7 @@ static void hci_link_key_notify_evt(struct hci_dev *hdev, void *data,
+ 		goto unlock;
+ 	}
+ 
+-	if (persistent)
+-		clear_bit(HCI_CONN_FLUSH_KEY, &conn->flags);
+-	else
+-		set_bit(HCI_CONN_FLUSH_KEY, &conn->flags);
++	assign_bit(HCI_CONN_FLUSH_KEY, &conn->flags, !persistent);
+ 
+ unlock:
+ 	hci_dev_unlock(hdev);
+diff --git a/net/bluetooth/iso.c b/net/bluetooth/iso.c
+index 8768d9c0cf512..c1fdd9846eeb0 100644
+--- a/net/bluetooth/iso.c
++++ b/net/bluetooth/iso.c
+@@ -1977,10 +1977,7 @@ static int iso_sock_setsockopt(struct socket *sock, int level, int optname,
+ 		if (err)
+ 			break;
+ 
+-		if (opt)
+-			set_bit(BT_SK_DEFER_SETUP, &bt_sk(sk)->flags);
+-		else
+-			clear_bit(BT_SK_DEFER_SETUP, &bt_sk(sk)->flags);
++		assign_bit(BT_SK_DEFER_SETUP, &bt_sk(sk)->flags, opt);
+ 		break;
+ 
+ 	case BT_PKT_STATUS:
+@@ -1988,10 +1985,7 @@ static int iso_sock_setsockopt(struct socket *sock, int level, int optname,
+ 		if (err)
+ 			break;
+ 
+-		if (opt)
+-			set_bit(BT_SK_PKT_STATUS, &bt_sk(sk)->flags);
+-		else
+-			clear_bit(BT_SK_PKT_STATUS, &bt_sk(sk)->flags);
++		assign_bit(BT_SK_PKT_STATUS, &bt_sk(sk)->flags, opt);
+ 		break;
+ 
+ 	case BT_PKT_SEQNUM:
+@@ -1999,10 +1993,7 @@ static int iso_sock_setsockopt(struct socket *sock, int level, int optname,
+ 		if (err)
+ 			break;
+ 
+-		if (opt)
+-			set_bit(BT_SK_PKT_SEQNUM, &bt_sk(sk)->flags);
+-		else
+-			clear_bit(BT_SK_PKT_SEQNUM, &bt_sk(sk)->flags);
++		assign_bit(BT_SK_PKT_SEQNUM, &bt_sk(sk)->flags, opt);
+ 		break;
+ 
+ 	case BT_ISO_QOS:
+diff --git a/net/bluetooth/l2cap_sock.c b/net/bluetooth/l2cap_sock.c
+index 1796929f61b86..47b0f8886fd11 100644
+--- a/net/bluetooth/l2cap_sock.c
++++ b/net/bluetooth/l2cap_sock.c
+@@ -871,15 +871,11 @@ static int l2cap_sock_setsockopt_old(struct socket *sock, int optname,
+ 		if (opt & L2CAP_LM_SECURE)
+ 			chan->sec_level = BT_SECURITY_HIGH;
+ 
+-		if (opt & L2CAP_LM_MASTER)
+-			set_bit(FLAG_ROLE_SWITCH, &chan->flags);
+-		else
+-			clear_bit(FLAG_ROLE_SWITCH, &chan->flags);
++		assign_bit(FLAG_ROLE_SWITCH, &chan->flags,
++			   opt & L2CAP_LM_MASTER);
+ 
+-		if (opt & L2CAP_LM_RELIABLE)
+-			set_bit(FLAG_FORCE_RELIABLE, &chan->flags);
+-		else
+-			clear_bit(FLAG_FORCE_RELIABLE, &chan->flags);
++		assign_bit(FLAG_FORCE_RELIABLE, &chan->flags,
++			   opt & L2CAP_LM_RELIABLE);
+ 		break;
+ 
+ 	default:
+@@ -1046,10 +1042,7 @@ static int l2cap_sock_setsockopt(struct socket *sock, int level, int optname,
+ 			}
+ 		}
+ 
+-		if (opt)
+-			set_bit(FLAG_FLUSHABLE, &chan->flags);
+-		else
+-			clear_bit(FLAG_FLUSHABLE, &chan->flags);
++		assign_bit(FLAG_FLUSHABLE, &chan->flags, opt);
+ 		break;
+ 
+ 	case BT_POWER:
+@@ -1065,10 +1058,7 @@ static int l2cap_sock_setsockopt(struct socket *sock, int level, int optname,
+ 		if (err)
+ 			break;
+ 
+-		if (pwr.force_active)
+-			set_bit(FLAG_FORCE_ACTIVE, &chan->flags);
+-		else
+-			clear_bit(FLAG_FORCE_ACTIVE, &chan->flags);
++		assign_bit(FLAG_FORCE_ACTIVE, &chan->flags, pwr.force_active);
+ 		break;
+ 
+ 	case BT_CHANNEL_POLICY:
+diff --git a/net/bluetooth/rfcomm/core.c b/net/bluetooth/rfcomm/core.c
+index 54ec1136f87ea..8a4205347c4ac 100644
+--- a/net/bluetooth/rfcomm/core.c
++++ b/net/bluetooth/rfcomm/core.c
+@@ -1740,10 +1740,8 @@ static int rfcomm_recv_msc(struct rfcomm_session *s, int cr, struct sk_buff *skb
+ 		return 0;
+ 
+ 	if (cr) {
+-		if (msc->v24_sig & RFCOMM_V24_FC && !d->cfc)
+-			set_bit(RFCOMM_TX_THROTTLED, &d->flags);
+-		else
+-			clear_bit(RFCOMM_TX_THROTTLED, &d->flags);
++		assign_bit(RFCOMM_TX_THROTTLED, &d->flags,
++			   msc->v24_sig & RFCOMM_V24_FC && !d->cfc);
+ 
+ 		rfcomm_dlc_lock(d);
+ 
+diff --git a/net/bluetooth/rfcomm/sock.c b/net/bluetooth/rfcomm/sock.c
+index b26918dc9e9e9..3fb8b54749482 100644
+--- a/net/bluetooth/rfcomm/sock.c
++++ b/net/bluetooth/rfcomm/sock.c
+@@ -724,10 +724,7 @@ static int rfcomm_sock_setsockopt(struct socket *sock, int level, int optname,
+ 		if (err)
+ 			break;
+ 
+-		if (opt)
+-			set_bit(BT_SK_DEFER_SETUP, &bt_sk(sk)->flags);
+-		else
+-			clear_bit(BT_SK_DEFER_SETUP, &bt_sk(sk)->flags);
++		assign_bit(BT_SK_DEFER_SETUP, &bt_sk(sk)->flags, opt);
+ 
+ 		break;
+ 
+diff --git a/net/bluetooth/sco.c b/net/bluetooth/sco.c
+index f4a20d7b5f9cb..8be48ca9f4c5b 100644
+--- a/net/bluetooth/sco.c
++++ b/net/bluetooth/sco.c
+@@ -1037,10 +1037,7 @@ static int sco_sock_setsockopt(struct socket *sock, int level, int optname,
+ 		if (err)
+ 			break;
+ 
+-		if (opt)
+-			set_bit(BT_SK_DEFER_SETUP, &bt_sk(sk)->flags);
+-		else
+-			clear_bit(BT_SK_DEFER_SETUP, &bt_sk(sk)->flags);
++		assign_bit(BT_SK_DEFER_SETUP, &bt_sk(sk)->flags, opt);
+ 		break;
+ 
+ 	case BT_VOICE:
+@@ -1080,10 +1077,7 @@ static int sco_sock_setsockopt(struct socket *sock, int level, int optname,
+ 		if (err)
+ 			break;
+ 
+-		if (opt)
+-			set_bit(BT_SK_PKT_STATUS, &bt_sk(sk)->flags);
+-		else
+-			clear_bit(BT_SK_PKT_STATUS, &bt_sk(sk)->flags);
++		assign_bit(BT_SK_PKT_STATUS, &bt_sk(sk)->flags, opt);
+ 		break;
+ 
+ 	case BT_CODEC:
 -- 
 2.53.0
 
