@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795620244;
-	b=dKtQbOqUm/+dPib5cesRXKCrMm5MGiXqI/Y46eqecPv1fZhcUQaF3WECx0kaKWKK/n74
-	 XvWCiXh8921XF6CcIHe6nvWm3o05Pe6tQuSZy3gqXXSpcQ1o39DpHGz1QhwMaRSfCwXrY
-	 5K0WoOaY2A2PdmCsl9bDacEF4jmzgJ7VaSF+zFYeJd/Mwo3jLdHxmmn1dvCPx2lfU7bQg
-	 +QiDuZf2a9896Tc+hiArEyWtmV7OdKcjGTn40bd6YuhHt1DMNFn/rUFNGuZhbFfzL3lZ/
-	 UDqqE5/xteqyhTiq6RUNIVDsWWNGISyJNN1dTaMi932HVELkwUg4MEWoJMFlMN4v3EQ==
+	t=1795620247;
+	b=YHJu94RcQFiphi051hFexQHkHd9Du5lVKcANwb0O+oaXor0KmkShASvlYxGaY/crX+Az
+	 ICzZhJmvtsAFR8pr6IMLJitCdxxW1Z+fZCuOr06q8FK9Lj0O3N+9xYZK3lWbgGKI0n/FV
+	 YysVVoCS3/rrjpJ9d1Gun3aiQPP6qwHG5PTLR1x4KrsTsUr65JIZihAQzkcneTaG+ZDh6
+	 oLJf36Kfnt1mRlYjgV5b/nKY2IOf6asVcCluJzAzKeGMqRVvcURrEneBQxIdZzw6x+OJS
+	 nWzkX/1mU8pZBwv0yHMCPPrE+9TIWZhkVEmah9AJLMOkyJRRQQCa+ReFg2CVGVsPs2A==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795620244;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795620247;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Type:Content-Transfer-Encoding;
-	bh=PXMFJKaM9m1Gb2gUmll+ndi0eMrnk389eMz5I8O8w3g=;
-	b=cVbta+cfd9J8MwhpTzGui31s9ARdPQsEr57agopIcM/i+cAzl23cCT+M7ffeBe3IoiVt
-	 PtlIRmLunlxlKASBwltKH35IEdQGZOnpHf+nb7W4n+NBZ5lIoFiDljHshLu8Lu93bPKmu
-	 V1IAPbB2cjV9M74YM2p9WKBSnp4+GFORlX8KuLW20sFQrto2wwUtV7ifMSkatEGr8PZeb
-	 3iVHIruMudJ7HuXMLVdoyDq5rZN8VHan40tVoJkVzc+MgTV6WFZsB7TwKfSI4sK1iCCFK
-	 5Cam6AnTxDQkkpIzcj/xdTIVaLW9++mjwHkfsRoy0VCKRDvLtJZLQ1BwQXt/hshpj4g==
+	 MIME-Version:Content-Transfer-Encoding;
+	bh=CpAIIJiNZe1FhiuqD8V/bB12EweVksvsgL4nogiJnyc=;
+	b=mLEoNqaAApV2jfqCgOMseD5lRbiskbY1dCNICEEhzogCacKBTP5c7tYMCQLdPxWttmm8
+	 Ukc1RvlgXNAvGkbw9xyZO21RBfKTVj4/DAfyYVTUXa3sizh1cZnKRSshuV5gtuPHuyx/s
+	 prKdQEbC+kfYukPW2BqOzQxyMWxSCHokG9n86jHTcMY+3rznprD9sa5W/Gg5SNL6uTxYA
+	 KK9iwXZfcHylvIBRQeun5UVROi83uB08RpCnROsHHljJ17gO2hszjokGOucEvqH9/ktE/
+	 ISYeESfvvebrcF55W2VP+lQGSonNb/0Wr4fab6zVBoqkQBrA8j41miHJmzfrTBdU+sA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=lsDUfTsg;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=RJKuJYgy;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 43C2F606A323;
-	Wed, 25 Nov 2026 15:24:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 23E77606A321;
+	Wed, 25 Nov 2026 15:24:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=lsDUfTsg
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2237B1F000D0;
-	Wed, 25 Nov 2026 15:24:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=RJKuJYgy
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6E79B1F000C6;
+	Wed, 25 Nov 2026 15:24:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795620243;
-	bh=PXMFJKaM9m1Gb2gUmll+ndi0eMrnk389eMz5I8O8w3g=;
+	s=korg; t=1795620247;
+	bh=CpAIIJiNZe1FhiuqD8V/bB12EweVksvsgL4nogiJnyc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=lsDUfTsg5rRiJ1EOAVeoajOOkWzjvqq2xiL/o+5/od5+JaUua0/0PBLZ1RwgP+lvE
-	 5SikqUEuXgC8khcupswBIp1gDsR+oUTxqdOMvjgAcLssNoik8wEr4CvuGYeOb9L/f4
-	 P7phCvLLDkXhI/xM3z054oxB16IDUw154DRRLRzA=
+	b=RJKuJYgySf/d/5V2/i0xNL/mKxVt4/TjfaNYRZJudOTB8ghaGxY3/qNezHjYpprrr
+	 11CyDmScOa6HRouhLpFLGJWsnZ2hI46UaSJ9BfKEk6+iUdOaqeTsnTuRxisTrm/3xb
+	 u0iepSYa7q4nTDCkSw2H7uEcYfcFRPK6D/7gQiX0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Fredric Cover <fredric.cover.lkernel@gmail.com>,
-	Namjae Jeon <linkinjeon@kernel.org>,
-	Paulo Alcantara <pc@manguebit.org>
-Subject: [PATCH 7.3 0838/1005] smb: client: fix out-of-bounds read in dfs_parse_target_referral()
-Date: Wed, 25 Nov 2026 15:36:16 +0100
-Message-ID: <20261125143841.350101228@linuxfoundation.org>
+	Ming Hung Tsai <mtsai@redhat.com>,
+	Mikulas Patocka <mpatocka@redhat.com>,
+	Claude Opus 5 <noreply@anthropic.com>
+Subject: [PATCH 7.3 0856/1005] dm: fix use-after-free when dm_get_device() widens the open mode
+Date: Wed, 25 Nov 2026 15:36:34 +0100
+Message-ID: <20261125143841.761219175@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143821.729802100@linuxfoundation.org>
 References: <20261125143821.729802100@linuxfoundation.org>
@@ -62,76 +62,320 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 7.3-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Fredric Cover <fredric.cover.lkernel@gmail.com>
+From: Ming-Hung Tsai <mtsai@redhat.com>
 
-commit 86aacc2f3f6ba18e1d87feee24f37c94b3ce863a upstream.
+commit c834161ded1a141a58d5f03b24f6894291222c96 upstream.
 
-dfs_parse_target_referral() decides whether a prefix path remains after
-the consumed part of full_path with:
+There's an UAF bug in dm_get_device(): when a table construction calls
+dm_get_device() on the same device twice with widen access mode (e.g.,
+read-only first then read-write), the second dm_get_device() calls
+upgrade_mode(), which reopens the device in upgraded mode, making
+previously returned dm_dev* a stale pointer.
 
-	if (strlen(full_path) - ref->path_consumed)
+Fixing approaches:
+- Add per-mode views (dm_dev_ref) from a per-device dm_dev_internal to
+  multiple table_devices.
+- Keep reusing the dm_dev_ref when the requested mode is included, i.e.,
+  a read-only reference can reuse the read-write opened device within a
+  table.
+- Maintain a canonical block_device pointer in dm_dev_internal for
+  handling the DM_TABLE_DEPS ioctl.
 
-strlen() returns size_t, so if path_consumed is larger than the length
-of full_path, the subtraction wraps around to a huge non-zero value.
-The branch is then taken, prepath is set to a pointer past the
-terminating NUL of full_path, and *prepath reads out of bounds.
+Also tweak the way of mode sharing check in find_ref() to
+"(x & mask) == mask". The result stays the same to the previous
+upgrade_mode() guard "(x | mask) == x".
 
-path_consumed can exceed strlen(full_path) when the mount charset is
-not utf8.  The referral code derives path_consumed from the canonical
-path, which is in the DFS cache charset (utf8), but it is applied here
-to full_path, which is in the mount charset.  Each non-ASCII character
-in the consumed part of the path that is longer in utf8 than in the
-mount charset makes the count too large by the difference.
+Pros: keep the relationship between dm_dev_internal and table_device:
+one dm_dev_internal per device, regardless the mode, so the output of
+DMM_TABLE_DEPS ioctl unchanged.
 
-This was reproduced with iocharset=iso8859-1 against a Samba DFS root
-containing a link named "café", mounting with the single Latin-1 byte
-0xe9 in the path.  On an unmodified tree such a mount fails earlier
-with -ENOENT because the path is converted to utf8 twice in
-setup_dfs_ref(); with that fixed ("smb: client: fix double conversion
-of DFS path in setup_dfs_ref()"), the mount reaches this code.
-full_path was 29 bytes while path_consumed was 30:
+Cons: extra dm_dev_ref allocation.
 
-  BUG: KASAN: slab-out-of-bounds in dfs_parse_target_referral+0x26a/0x270
-  Read of size 1 at addr ffff88810db89d5f by task mount/1743
-  ...
-  The buggy address is located 0 bytes to the right of
-   allocated 31-byte region [ffff88810db89d40, ffff88810db89d5f)
+Note that now the table_device's count not necessarily mean the number
+tables referecing this <dev, mode> pair, since we're allowing multiple
+references within a table.
 
-Compare path_consumed against the string length instead of subtracting,
-so that no prefix path is used when the consumed count covers the whole
-string.  With the bounds check in place the same mount succeeds and no
-KASAN report is produced.
-
-This only prevents the out-of-bounds access.  path_consumed is still in
-the wrong units, so a non-ASCII link followed by a path component can
-still produce a wrong prefix path.  That needs a separate fix.
-
-Signed-off-by: Fredric Cover <fredric.cover.lkernel@gmail.com>
+Signed-off-by: Ming Hung Tsai <mtsai@redhat.com>
+Signed-off-by: Mikulas Patocka <mpatocka@redhat.com>
+Co-Authored-By: Claude Opus 5 <noreply@anthropic.com>
+Fixes: 86f1152b117a ("dm: allow active and inactive tables to share dm_devs")
 Cc: stable@vger.kernel.org
-Reviewed-by: Namjae Jeon <linkinjeon@kernel.org>
-Signed-off-by: Paulo Alcantara <pc@manguebit.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/smb/client/dfs.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/md/dm-ioctl.c |    2 
+ drivers/md/dm-table.c |  140 +++++++++++++++++++++++++++-----------------------
+ drivers/md/dm.c       |    2 
+ drivers/md/dm.h       |   18 ++++++
+ 4 files changed, 97 insertions(+), 65 deletions(-)
 
---- a/fs/smb/client/dfs.c
-+++ b/fs/smb/client/dfs.c
-@@ -33,7 +33,7 @@ int dfs_parse_target_referral(const char
- 	if (WARN_ON_ONCE(!ref->node_name || ref->path_consumed < 0))
+--- a/drivers/md/dm-ioctl.c
++++ b/drivers/md/dm-ioctl.c
+@@ -1794,7 +1794,7 @@ static void retrieve_deps(struct dm_tabl
+ 	deps->count = count;
+ 	count = 0;
+ 	list_for_each_entry(dd, dm_table_get_devices(table), list)
+-		deps->dev[count++] = huge_encode_dev(dd->dm_dev->bdev->bd_dev);
++		deps->dev[count++] = huge_encode_dev(dd->bdev->bd_dev);
+ 
+ 	param->data_size = param->data_start + needed;
+ }
+--- a/drivers/md/dm-table.c
++++ b/drivers/md/dm-table.c
+@@ -165,14 +165,16 @@ int dm_table_create(struct dm_table **re
+ 
+ static void free_devices(struct list_head *devices, struct mapped_device *md)
+ {
+-	struct list_head *tmp, *next;
++	struct dm_dev_internal *dd, *dd_next;
++	struct dm_dev_ref *ref, *ref_next;
+ 
+-	list_for_each_safe(tmp, next, devices) {
+-		struct dm_dev_internal *dd =
+-		    list_entry(tmp, struct dm_dev_internal, list);
+-		DMWARN("%s: dm_table_destroy: dm_put_device call missing for %s",
+-		       dm_device_name(md), dd->dm_dev->name);
+-		dm_put_table_device(md, dd->dm_dev);
++	list_for_each_entry_safe(dd, dd_next, devices, list) {
++		list_for_each_entry_safe(ref, ref_next, &dd->refs, list) {
++			DMWARN("%s: dm_table_destroy: dm_put_device call missing for %s",
++			       dm_device_name(md), ref->dm_dev->name);
++			dm_put_table_device(md, ref->dm_dev);
++			kfree(ref);
++		}
+ 		kfree(dd);
+ 	}
+ }
+@@ -218,13 +220,28 @@ static struct dm_dev_internal *find_devi
+ 	struct dm_dev_internal *dd;
+ 
+ 	list_for_each_entry(dd, l, list)
+-		if (dd->dm_dev->bdev->bd_dev == dev)
++		if (dd->bdev->bd_dev == dev)
+ 			return dd;
+ 
+ 	return NULL;
+ }
+ 
+ /*
++ * See if the device is already open with a mode that covers the
++ * requested one.
++ */
++static struct dm_dev_ref *find_ref(struct dm_dev_internal *dd, blk_mode_t mode)
++{
++	struct dm_dev_ref *ref;
++
++	list_for_each_entry(ref, &dd->refs, list)
++		if ((ref->dm_dev->mode & mode) == mode)
++			return ref;
++
++	return NULL;
++}
++
++/*
+  * If possible, this checks an area of a destination device is invalid.
+  */
+ static int device_area_is_invalid(struct dm_target *ti, struct dm_dev *dev,
+@@ -304,31 +321,6 @@ static int device_area_is_invalid(struct
+ }
+ 
+ /*
+- * This upgrades the mode on an already open dm_dev, being
+- * careful to leave things as they were if we fail to reopen the
+- * device and not to touch the existing bdev field in case
+- * it is accessed concurrently.
+- */
+-static int upgrade_mode(struct dm_dev_internal *dd, blk_mode_t new_mode,
+-			struct mapped_device *md)
+-{
+-	int r;
+-	struct dm_dev *old_dev, *new_dev;
+-
+-	old_dev = dd->dm_dev;
+-
+-	r = dm_get_table_device(md, dd->dm_dev->bdev->bd_dev,
+-				dd->dm_dev->mode | new_mode, &new_dev);
+-	if (r)
+-		return r;
+-
+-	dd->dm_dev = new_dev;
+-	dm_put_table_device(md, old_dev);
+-
+-	return 0;
+-}
+-
+-/*
+  * Note: the __ref annotation is because this function can call the __init
+  * marked early_lookup_bdev when called during early boot code from dm-init.c.
+  */
+@@ -360,7 +352,9 @@ EXPORT_SYMBOL(dm_devt_from_path);
+ 
+ /*
+  * Add a device to the list, or just increment the usage count if
+- * it's already present.
++ * it's already present with a mode that covers the requested one.
++ * Otherwise open the device again with the requested mode, so the
++ * dm_devs returned earlier stay valid.
+  */
+ int dm_get_device(struct dm_target *ti, const char *path, blk_mode_t mode,
+ 		  struct dm_dev **result)
+@@ -368,6 +362,7 @@ int dm_get_device(struct dm_target *ti,
+ 	int r;
+ 	dev_t dev;
+ 	struct dm_dev_internal *dd;
++	struct dm_dev_ref *ref;
+ 	struct dm_table *t = ti->table;
+ 
+ 	BUG_ON(!t);
+@@ -380,30 +375,46 @@ int dm_get_device(struct dm_target *ti,
  		return -EINVAL;
  
--	if (strlen(full_path) - ref->path_consumed) {
-+	if ((size_t)ref->path_consumed < strlen(full_path)) {
- 		prepath = full_path + ref->path_consumed;
- 		/* skip initial delimiter */
- 		if (*prepath == '/' || *prepath == '\\')
+ 	dd = find_device(&t->devices, dev);
+-	if (!dd) {
++	if (dd) {
++		ref = find_ref(dd, mode);
++		if (ref) {
++			refcount_inc(&ref->count);
++			goto out;
++		}
++	} else {
+ 		dd = kmalloc_obj(*dd);
+ 		if (!dd)
+ 			return -ENOMEM;
++		INIT_LIST_HEAD(&dd->refs);
++	}
+ 
+-		r = dm_get_table_device(t->md, dev, mode, &dd->dm_dev);
+-		if (r) {
+-			kfree(dd);
+-			return r;
+-		}
++	ref = kmalloc_obj(*ref);
++	if (!ref) {
++		r = -ENOMEM;
++		goto bad;
++	}
+ 
+-		refcount_set(&dd->count, 1);
+-		list_add(&dd->list, &t->devices);
+-		goto out;
++	r = dm_get_table_device(t->md, dev, mode, &ref->dm_dev);
++	if (r) {
++		kfree(ref);
++		goto bad;
++	}
++	refcount_set(&ref->count, 1);
+ 
+-	} else if (dd->dm_dev->mode != (mode | dd->dm_dev->mode)) {
+-		r = upgrade_mode(dd, mode, t->md);
+-		if (r)
+-			return r;
++	/* A device in the list always has at least one ref */
++	if (list_empty(&dd->refs)) {
++		dd->bdev = ref->dm_dev->bdev;
++		list_add(&dd->list, &t->devices);
+ 	}
+-	refcount_inc(&dd->count);
++	list_add_tail(&ref->list, &dd->refs);
+ out:
+-	*result = dd->dm_dev;
++	*result = ref->dm_dev;
+ 	return 0;
++
++bad:
++	if (list_empty(&dd->refs))
++		kfree(dd);
++	return r;
+ }
+ EXPORT_SYMBOL(dm_get_device);
+ 
+@@ -453,23 +464,28 @@ static int dm_set_device_limits(struct d
+  */
+ void dm_put_device(struct dm_target *ti, struct dm_dev *d)
+ {
+-	int found = 0;
+ 	struct list_head *devices = &ti->table->devices;
+ 	struct dm_dev_internal *dd;
++	struct dm_dev_ref *ref;
+ 
+-	list_for_each_entry(dd, devices, list) {
+-		if (dd->dm_dev == d) {
+-			found = 1;
+-			break;
+-		}
+-	}
+-	if (!found) {
+-		DMERR("%s: device %s not in table devices list",
+-		      dm_device_name(ti->table->md), d->name);
++	list_for_each_entry(dd, devices, list)
++		list_for_each_entry(ref, &dd->refs, list)
++			if (ref->dm_dev == d)
++				goto found;
++
++	DMERR("%s: device %s not in table devices list",
++	      dm_device_name(ti->table->md), d->name);
++	return;
++
++found:
++	if (!refcount_dec_and_test(&ref->count))
+ 		return;
+-	}
+-	if (refcount_dec_and_test(&dd->count)) {
+-		dm_put_table_device(ti->table->md, d);
++
++	dm_put_table_device(ti->table->md, d);
++	list_del(&ref->list);
++	kfree(ref);
++
++	if (list_empty(&dd->refs)) {
+ 		list_del(&dd->list);
+ 		kfree(dd);
+ 	}
+--- a/drivers/md/dm.c
++++ b/drivers/md/dm.c
+@@ -1588,7 +1588,7 @@ static void __send_empty_flush(struct cl
+ 			 */
+ 			clone = alloc_tio(ci, NULL, 0, &len, GFP_NOIO);
+ 			atomic_add(1, &ci->io->io_count);
+-			bio_set_dev(clone, dd->dm_dev->bdev);
++			bio_set_dev(clone, dd->bdev);
+ 			clone->bi_end_io = clone_endio;
+ 			dm_submit_bio_remap(clone, NULL);
+ 		}
+--- a/drivers/md/dm.h
++++ b/drivers/md/dm.h
+@@ -37,10 +37,26 @@
+ 
+ /*
+  * List of devices that a metadevice uses and should open/close.
++ * There is one dm_dev_internal per device. It holds one dm_dev_ref
++ * for each mode that the targets opened the device with.
+  */
+ struct dm_dev_internal {
+ 	struct list_head list;
+-	refcount_t count;
++	struct block_device *bdev;
++	struct list_head refs;
++};
++
++/*
++ * One open of a device with one mode, shared by the targets of a table.
++ * dm_get_device() reuses a dm_dev_ref whose mode covers the requested
++ * mode, and adds a new one only when none does. So the dm_dev_refs of
++ * a device have different modes, and a table holds each table_device
++ * at most once. table_device->count is still the number of tables that
++ * use the table_device.
++ */
++struct dm_dev_ref {
++	struct list_head list;
++	refcount_t count;	/* dm_get_device() calls that returned dm_dev */
+ 	struct dm_dev *dm_dev;
+ };
+ 
 
 
