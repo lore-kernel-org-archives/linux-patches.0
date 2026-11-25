@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795618124;
-	b=sR1OYuXgyzZIl6lnxur1B+hU5JYLw2MWOkJrol8KHPaUF3YrEAISNvCqJxpJmYWejZpq
-	 bS+Z+WQK95iuGiK79l6akeI6UFP7vDFpwt5HvNgvxLLRdKuKBokwY8pEO+n/a1veRqs/L
-	 3Vqo19fUg2nsA0fl6GfQ2ZY/jBEEudIm68XIQkBhhdLzbDhV5l21rX6WvSrkhFL5fhDxO
-	 ENWwASbPqSRraLHUpFXtiDjBbyqyvdCuZjLJtx4ah/p9Y33DeVoqxPYKjaCssUcltUg7H
-	 FuySdyfxHPNBwSL31uFXiPmjJyGZLA2BO8o8mCM/fpvFr/BpSWHEGqZDjSThoadt9bg==
+	t=1795618127;
+	b=5nx1FBlAozT6eVA8sLWLK/MX09r4Jy+eTz66ugVY2eip+lYXecJW2gwCi3FrsPpNtnZD
+	 MkHmdoIKfqb60XztcKaiVOF4hw5fFlTV4NZhkQjKymWZymETGaHDoCNVU41SF7ws11z3r
+	 2MvQbmN8hfJYy7PKNzdxgTvwY5HuQrNyMsSNvMCVMnoutC3bTVZDqNKTiGw0N7bkUvwu7
+	 Dxzo+li1kkw/O7VhsSXxDHN2wZ0pj+V0XIN0BQ+2qPpadnaWSC5GxvtPIiekRhq0wxSSe
+	 NlR30moYc9/WCdZ8g6JtvOOoG8U6GNnOCEEC4s1wDaxH9YmrYnh72wQUnMUyn9Bmzrw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795618124;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795618127;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=dr78bYtjaNj+fUdXzg8ZBkq5laVlRArTpNOKw0MK6h4=;
-	b=JsAfMKbPJIlBuLwEjuOxRKZ+Gmp4QqoVncX7TOqsW+PMXlAMeJIi5IblrsQl8w0LQx3H
-	 A70prGfTsFHJswrbkMzvs0KdcWlsKEQ+y/vJN2kmT3CbR3qigJQkRM61OcQKtZVZ28Xw0
-	 qpnBnHlszCbvnDa0AduUhiATNZ8oxZ76eUPiMomEaqwHNyqKTvxMF/cLrFer3+xfP/65V
-	 K9W1PPFKY/sq0lvRPbQBAGUIdwcxUUYk4hYBkhKVh4lbgaFZZi8ojX/iMKxhNHBcIP1VI
-	 p9woFzE8mEz90HxE7sDWx/szM2rSNmEdK83pqlL4Dr6Pi7roVa7RHvgI5B/vfggBBmQ==
+	bh=u9MPwhoXgDdbAYm324U8I/OIcNk6n4E/B/ByP9RVUDg=;
+	b=gGnPk/EmIvxlZaa5BfFZg8KlmFml1NB8B0eYIaHn9oxCtStsxuRhYgXpT5zuvNLr+5wr
+	 FC8cknlhIhwaoOqQP4Sysd9dE1wTunAJL8OZ9UJoN1kvN+oW+CsdXWkLFLhLsxJbWCbpO
+	 bFU2znC8ZpxszBKUfOwhAoPlDVZLGFmm5NUgDINQgzIkLiE3keqT317/Ynf3m1IwraMSf
+	 WyZeMgn5NZ2XMbrGYG5Ek4pgXc7TRtrkbFYN3aOpGkrEisZvf6Ro0c8DIR8mncxWF3ib4
+	 y080pobQmsJHq2tVfddxEb10sCmEGgtzLIYV84ek5p6SqJ+as3p0cYO+FmkUOlczuVQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=VJ8LdjjE;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=jdqS3MXh;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 970D2606A31E;
-	Wed, 25 Nov 2026 14:48:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6AF56606A31E;
+	Wed, 25 Nov 2026 14:48:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=VJ8LdjjE
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E83261F000C4;
-	Wed, 25 Nov 2026 14:48:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=jdqS3MXh
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BE1931F000C4;
+	Wed, 25 Nov 2026 14:48:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795618124;
-	bh=dr78bYtjaNj+fUdXzg8ZBkq5laVlRArTpNOKw0MK6h4=;
+	s=korg; t=1795618127;
+	bh=u9MPwhoXgDdbAYm324U8I/OIcNk6n4E/B/ByP9RVUDg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=VJ8LdjjE8WeieywC5B9lV46BEDH0nf2ZsXKs+8+QDShhkViDek9m1ARRoXv5O/c45
-	 qZkcVl5b2M0PuTRpmM11EOd1mYHopYHGKGFmmHG/BkCqesyOvaMflxEYT3L5r23j3j
-	 /JJWEvfOeaRYW11GH7xq6Kbt06aHPkfQeY1drNLg=
+	b=jdqS3MXhcOSfFA75dtX/VQaDiiSLU8xi+6vQ5czJTJmWMAV9dYIqI8NkDuyh7iz7x
+	 uodKmEIwq5LkCpR6fpvaWps6651ukKNxAKqNdyZeD1TlBzagnyvidC3FUJLf0HxOXA
+	 /Un6eKHc7cRLwNmgyq+gEtKq4RSJe/W2C/sdhjes=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yonghong Song <yonghong.song@linux.dev>,
 	Alexei Starovoitov <ast@kernel.org>,
+	Eduard Zingerman <eddyz87@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0181/1005] bpf: Rename bpf_call_summary::num_params to arg_slot_cnt
-Date: Wed, 25 Nov 2026 15:25:19 +0100
-Message-ID: <20261125143825.981978967@linuxfoundation.org>
+Subject: [PATCH 7.3 0182/1005] bpf: Prepare static analysis passes for callx instruction
+Date: Wed, 25 Nov 2026 15:25:20 +0100
+Message-ID: <20261125143826.004988521@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143821.729802100@linuxfoundation.org>
 References: <20261125143821.729802100@linuxfoundation.org>
@@ -68,116 +68,205 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yonghong Song <yonghong.song@linux.dev>
+From: Alexei Starovoitov <ast@kernel.org>
 
-[ Upstream commit c6ff4e06033fede2fd1d41232ae942add649b759 ]
+[ Upstream commit 373e3fd0bff0e276fd76c86c830cdb16a3457776 ]
 
-The field 'num_params' counts the argument registers and outgoing
-stack slots a helper or kfunc call takes. The next patch gives a
-16-byte parameter two slots, so the name stops describing what the
-field holds.
+BPF_JMP | BPF_CALL | BPF_X (callx) will be an indirect call of static
+subprog with address in dst_reg. The passes that run before the main
+verifier pass don't know which subprog callx calls.
+Teach them to treat callx as a call with unknown callee:
 
-Rename 'num_params' to 'arg_slot_cnt'. No functional change.
+- const_fold: callx clobbers R0-R5 like any other call. Otherwise
+  bpf_prune_dead_branches() could rewrite a live conditional jump.
 
-Signed-off-by: Yonghong Song <yonghong.song@linux.dev>
-Link: https://lore.kernel.org/r/20260912195232.988528-1-yonghong.song@linux.dev
+- live regs: callx uses R1-R5 and dst_reg, defines R0-R5.
+
+- stack liveness: func instances are keyed by (callsite, depth) and
+  cannot describe a callsite with multiple callees. Don't create
+  instances for callees of callx. If any callx argument is derived
+  from fp mark stack of all frames as read at callx insn and keep slots
+  of outer frames alive 'before' the callsite while the callee is
+  verified. Same as for callbacks that are not known statically.
+  The callee is analyzed as standalone instance.
+
+- backtracking: treat callx as a call of static subprog, same as
+  BPF_PSEUDO_CALL.
+
+callx is still rejected as unknown opcode. No functional change.
+
 Signed-off-by: Alexei Starovoitov <ast@kernel.org>
+Acked-by: Eduard Zingerman <eddyz87@gmail.com>
+Link: https://patch.msgid.link/20260924031042.1690890-5-alexei.starovoitov@gmail.com
 Stable-dep-of: cdefba74b53f ("bpf: Don't trust pointers spilled in slots that a callee can write")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/bpf_verifier.h |  2 +-
- kernel/bpf/liveness.c        | 10 +++++-----
- kernel/bpf/verifier.c        |  8 ++++----
- 3 files changed, 10 insertions(+), 10 deletions(-)
+ include/linux/bpf_verifier.h |  6 ++++++
+ kernel/bpf/backtrack.c       | 20 +++++++++++--------
+ kernel/bpf/const_fold.c      |  3 ++-
+ kernel/bpf/liveness.c        | 38 +++++++++++++++++++++++++++++++-----
+ 4 files changed, 53 insertions(+), 14 deletions(-)
 
 diff --git a/include/linux/bpf_verifier.h b/include/linux/bpf_verifier.h
-index 0eda96e1162f3..baf390c86406c 100644
+index baf390c86406c..a253ca2c6e5d3 100644
 --- a/include/linux/bpf_verifier.h
 +++ b/include/linux/bpf_verifier.h
-@@ -1053,7 +1053,7 @@ static inline struct bpf_subprog_info *subprog_info(struct bpf_verifier_env *env
+@@ -1076,6 +1076,12 @@ static inline bool bpf_pseudo_kfunc_call(const struct bpf_insn *insn)
+ 	       insn->src_reg == BPF_PSEUDO_KFUNC_CALL;
  }
  
- struct bpf_call_summary {
--	u8 num_params;
-+	u8 arg_slot_cnt;
- 	bool is_void;
- 	bool fastcall;
- };
++/* callx: indirect call of a bpf subprog whose address is in insn->dst_reg */
++static inline bool bpf_is_callx(const struct bpf_insn *insn)
++{
++	return insn->code == (BPF_JMP | BPF_CALL | BPF_X);
++}
++
+ __printf(2, 0) void bpf_verifier_vlog(struct bpf_verifier_log *log,
+ 				      const char *fmt, va_list args);
+ __printf(2, 3) void bpf_verifier_log_write(struct bpf_verifier_env *env,
+diff --git a/kernel/bpf/backtrack.c b/kernel/bpf/backtrack.c
+index 44d107fd96c4d..50c66115ab45e 100644
+--- a/kernel/bpf/backtrack.c
++++ b/kernel/bpf/backtrack.c
+@@ -406,15 +406,18 @@ static int backtrack_insn(struct bpf_verifier_env *env, int idx, int subseq_idx,
+ 		if (class == BPF_STX)
+ 			bt_set_reg(bt, sreg);
+ 	} else if (class == BPF_JMP || class == BPF_JMP32) {
+-		if (bpf_pseudo_call(insn)) {
+-			int subprog_insn_idx, subprog;
++		if (bpf_pseudo_call(insn) || bpf_is_callx(insn)) {
++			int subprog_insn_idx, subprog = -1;
+ 
+-			subprog_insn_idx = idx + insn->imm + 1;
+-			subprog = bpf_find_subprog(env, subprog_insn_idx);
+-			if (subprog < 0)
+-				return -EFAULT;
++			if (bpf_pseudo_call(insn)) {
++				subprog_insn_idx = idx + insn->imm + 1;
++				subprog = bpf_find_subprog(env, subprog_insn_idx);
++				if (subprog < 0)
++					return -EFAULT;
++			}
+ 
+-			if (bpf_subprog_is_global(env, subprog)) {
++			/* callx calls static subprogs only */
++			if (subprog >= 0 && bpf_subprog_is_global(env, subprog)) {
+ 				/* check that jump history doesn't have any
+ 				 * extra instructions from subprog; the next
+ 				 * instruction after call to global subprog
+@@ -531,7 +534,8 @@ static int backtrack_insn(struct bpf_verifier_env *env, int idx, int subseq_idx,
+ 			 * necessary. In the former we never do that.
+ 			 */
+ 			from_subprog_call = subseq_idx - 1 >= 0 &&
+-					    bpf_pseudo_call(&env->prog->insnsi[subseq_idx - 1]);
++					    (bpf_pseudo_call(&env->prog->insnsi[subseq_idx - 1]) ||
++					     bpf_is_callx(&env->prog->insnsi[subseq_idx - 1]));
+ 
+ 			r0_precise = from_subprog_call && bt_is_reg_set(bt, BPF_REG_0);
+ 
+diff --git a/kernel/bpf/const_fold.c b/kernel/bpf/const_fold.c
+index d8d2d00380aef..e090f368e9256 100644
+--- a/kernel/bpf/const_fold.c
++++ b/kernel/bpf/const_fold.c
+@@ -191,7 +191,8 @@ static void const_reg_xfer(struct bpf_verifier_env *env, struct const_arg_info *
+ 		dst->val = val;
+ 		break;
+ 	case BPF_JMP:
+-		if (opcode != BPF_CALL)
++		/* both 'call imm' and 'callx reg' clobber caller saved registers */
++		if (BPF_OP(insn->code) != BPF_CALL)
+ 			break;
+ process_call:
+ 		for (r = BPF_REG_0; r <= BPF_REG_5; r++)
 diff --git a/kernel/bpf/liveness.c b/kernel/bpf/liveness.c
-index e1340e73cbeda..c7aa5c8fc34cf 100644
+index c7aa5c8fc34cf..b01cdabaf3bf5 100644
 --- a/kernel/bpf/liveness.c
 +++ b/kernel/bpf/liveness.c
-@@ -1596,21 +1596,21 @@ static int record_call_access(struct bpf_verifier_env *env,
- {
- 	struct bpf_insn *insn = &env->prog->insnsi[insn_idx];
- 	struct bpf_call_summary cs;
--	int r, err, num_params = 5;
-+	int r, err, arg_slot_cnt = 5;
+@@ -464,12 +464,29 @@ int bpf_live_stack_query_init(struct bpf_verifier_env *env, struct bpf_verifier_
+ 	return 0;
+ }
  
++/*
++ * Stack slots of outer frames that the callee may read are accounted as read
++ * by the @callsite insn itself, i.e. they are live before @callsite and may be
++ * dead after it, when:
++ * - @callsite calls a callback, which may be called several times;
++ * - @callsite is callx. Its callee is not known when stack liveness is
++ *   computed, so there is no func instance for it at @callsite. While
++ *   the verifier is in the callee lookup_instance() finds its standalone
++ *   instance that knows nothing about outer frames. What the callee may read
++ *   there is recorded by record_call_access().
++ */
++static bool callee_stack_access_at_callsite(struct bpf_verifier_env *env, u32 callsite)
++{
++	return bpf_calls_callback(env, callsite) ||
++	       bpf_is_callx(&env->prog->insnsi[callsite]);
++}
++
+ bool bpf_stack_slot_alive(struct bpf_verifier_env *env, u32 frameno, u32 half_spi)
+ {
+ 	/*
+ 	 * Slot is alive if it is read before q->insn_idx in current func instance,
+ 	 * or if for some outer func instance:
+-	 * - alive before callsite if callsite calls callback, otherwise
++	 * - alive before callsite if callsite calls callback or is callx, otherwise
+ 	 * - alive after callsite
+ 	 */
+ 	struct live_stack_query *q = &env->liveness->live_stack_query;
+@@ -502,7 +519,7 @@ bool bpf_stack_slot_alive(struct bpf_verifier_env *env, u32 frameno, u32 half_sp
+ 		/* Get callsite from verifier state, not from instance callchain */
+ 		callsite = q->callsites[i];
+ 
+-		alive = bpf_calls_callback(env, callsite)
++		alive = callee_stack_access_at_callsite(env, callsite)
+ 			? is_live_before(instance, callsite, rel, half_spi)
+ 			: is_live_before(instance, callsite + 1, rel, half_spi);
+ 		if (alive)
+@@ -1601,7 +1618,15 @@ static int record_call_access(struct bpf_verifier_env *env,
  	if (bpf_pseudo_call(insn))
  		return 0;
  
- 	if (bpf_get_call_summary(env, insn, &cs))
--		num_params = cs.num_params;
-+		arg_slot_cnt = cs.arg_slot_cnt;
+-	if (bpf_get_call_summary(env, insn, &cs))
++	if (bpf_is_callx(insn))
++		/*
++		 * The callee is not known statically. Assume that all arg
++		 * slots are passed and let record_arg_access() conservatively
++		 * mark the stack of all frames as read if any of them is
++		 * derived from a frame pointer.
++		 */
++		arg_slot_cnt = MAX_BPF_FUNC_REG_ARGS + MAX_STACK_ARG_SLOTS;
++	else if (bpf_get_call_summary(env, insn, &cs))
+ 		arg_slot_cnt = cs.arg_slot_cnt;
  
--	for (r = BPF_REG_1; r < BPF_REG_1 + min(num_params, MAX_BPF_FUNC_REG_ARGS); r++) {
-+	for (r = BPF_REG_1; r < BPF_REG_1 + min(arg_slot_cnt, MAX_BPF_FUNC_REG_ARGS); r++) {
- 		err = record_arg_access(env, instance, insn, &at[r], r - 1, insn_idx);
- 		if (err)
- 			return err;
- 	}
+ 	for (r = BPF_REG_1; r < BPF_REG_1 + min(arg_slot_cnt, MAX_BPF_FUNC_REG_ARGS); r++) {
+@@ -1695,7 +1720,7 @@ static void print_subprog_arg_access(struct bpf_verifier_env *env,
+ 		bool has_extra = false;
+ 		u8 cls = BPF_CLASS(insns[idx].code);
+ 		bool is_ldx_stx_call = cls == BPF_LDX || cls == BPF_STX ||
+-				       insns[idx].code == (BPF_JMP | BPF_CALL);
++				       (cls == BPF_JMP && BPF_OP(insns[idx].code) == BPF_CALL);
  
--	for (r = 0; r < MAX_STACK_ARG_SLOTS && r < num_params - MAX_BPF_FUNC_REG_ARGS; r++) {
-+	for (r = 0; r < MAX_STACK_ARG_SLOTS && r < arg_slot_cnt - MAX_BPF_FUNC_REG_ARGS; r++) {
- 		err = record_arg_access(env, instance, insn, &at[MAX_BPF_REG + r],
- 					r + MAX_BPF_FUNC_REG_ARGS, insn_idx);
+ 		verbose(env, "%3d: ", idx);
+ 		bpf_verbose_insn(env, &insns[idx]);
+@@ -1887,7 +1912,7 @@ static int compute_subprog_args(struct bpf_verifier_env *env,
  		if (err)
-@@ -2386,7 +2386,7 @@ static void compute_insn_live_regs(struct bpf_verifier_env *env,
- 			def = ALL_CALLER_SAVED_REGS;
- 			use = def & ~BIT(BPF_REG_0);
- 			if (bpf_get_call_summary(env, insn, &cs))
--				use = GENMASK(min_t(u8, cs.num_params, MAX_BPF_FUNC_REG_ARGS), 1);
-+				use = GENMASK(min_t(u8, cs.arg_slot_cnt, MAX_BPF_FUNC_REG_ARGS), 1);
+ 			goto err_free;
+ 
+-		if (insn->code == (BPF_JMP | BPF_CALL)) {
++		if (BPF_CLASS(insn->code) == BPF_JMP && BPF_OP(insn->code) == BPF_CALL) {
+ 			err = record_call_access(env, instance, at_in[i], idx);
+ 			if (err)
+ 				goto err_free;
+@@ -2389,6 +2414,9 @@ static void compute_insn_live_regs(struct bpf_verifier_env *env,
+ 				use = GENMASK(min_t(u8, cs.arg_slot_cnt, MAX_BPF_FUNC_REG_ARGS), 1);
  			def = mask_widen(def);
  			use = mask_widen(use);
++			/* callx reads the address of the callee from dst_reg */
++			if (bpf_is_callx(insn))
++				use |= dst;
  			break;
-diff --git a/kernel/bpf/verifier.c b/kernel/bpf/verifier.c
-index 2ed356a03a57b..4bb0f362f44a8 100644
---- a/kernel/bpf/verifier.c
-+++ b/kernel/bpf/verifier.c
-@@ -17985,11 +17985,11 @@ bool bpf_get_call_summary(struct bpf_verifier_env *env, struct bpf_insn *call,
- 			       (bpf_verifier_inlines_helper_call(env, call->imm) ||
- 				bpf_jit_inlines_helper_call(call->imm));
- 		cs->is_void = fn->ret_type == RET_VOID;
--		cs->num_params = 0;
-+		cs->arg_slot_cnt = 0;
- 		for (i = 0; i < ARRAY_SIZE(fn->arg_type); ++i) {
- 			if (fn->arg_type[i] == ARG_DONTCARE)
- 				break;
--			cs->num_params++;
-+			cs->arg_slot_cnt++;
- 		}
- 		return true;
- 	}
-@@ -18001,7 +18001,7 @@ bool bpf_get_call_summary(struct bpf_verifier_env *env, struct bpf_insn *call,
- 		if (err < 0)
- 			/* error would be reported later */
- 			return false;
--		cs->num_params = btf_type_vlen(meta.func_proto);
-+		cs->arg_slot_cnt = btf_type_vlen(meta.func_proto);
- 		cs->fastcall = meta.kfunc_flags & KF_FASTCALL;
- 		cs->is_void = btf_type_is_void(btf_type_by_id(meta.btf, meta.func_proto->type));
- 		return true;
-@@ -18110,7 +18110,7 @@ static void mark_fastcall_pattern_for_call(struct bpf_verifier_env *env,
- 	 * - includes R1-R5 if corresponding parameter has is described
- 	 *   in the function prototype.
- 	 */
--	clobbered_regs_mask = GENMASK(cs.num_params, cs.is_void ? 1 : 0);
-+	clobbered_regs_mask = GENMASK(cs.arg_slot_cnt, cs.is_void ? 1 : 0);
- 	/* e.g. if helper call clobbers r{0,1}, expect r{2,3,4,5} in the pattern */
- 	expected_regs_mask = ~clobbered_regs_mask & ALL_CALLER_SAVED_REGS;
- 
+ 		default:
+ 			def = 0;
 -- 
 2.53.0
 
