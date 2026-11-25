@@ -1,51 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795619386;
-	b=wvuDL+v0uzivwUM0cdlpr8B66eoa+I0RVWIk/v19z/j+2G8ZDAjmf+o9nbBTz5pP7Hfs
-	 iDw9Smq3m4cON5Ad3jUvb1Foe61/aq+w4wc9X+8nRGcbtpJUBPOMhZAmF1hGhSGCdLJqp
-	 B9b4T+ysk70qP3nopdUxhW41jUyAQFifmoLqXHlEcqxHF7RHPEEuXNVC3Si7QVqlFph9T
-	 vi8vMz9dTJSD/hmwNiNid9LHfFFAqCbERZv2DmOEIe1h9t/vx1GSZIjYtDZf1rNI/Jbo9
-	 lWXzgqE7lgZ0CZPH3TkOleKnrYDE/oJsfiey4ta/zAze/fjHi/5H0Ilb4wX726BB38A==
+	t=1795619388;
+	b=sP/IqqRqDcfd/M5WmlsZ+xg/4YzeGRF3vEwWhW1qLBjxuAiqqkKv1it1T1szVWJDNTHZ
+	 foylL7sNxezg+gjThs/KwDPPCsMZw8UcuIvzLKD8Q4OgBh5SMKTBPmyN0rzgc5V90NuvO
+	 nxPIUZV6Og2ImaLF4zHigs5y5i5VJEyZn1X08miLEbWSGxmujEsy+GuFJuRtIDy+bJVJu
+	 ijsC8cOz5XHlJUu8gETX2nCg6ThS+9Ld0ubJWL+GWZ8nLYndacOa2VSwD7CQ4PkJ5ZLW6
+	 kBpyfFq4kiUxM1kjqJZQrt6n2nq9ESpzqZVkKXotm0JO00o6BNDcqFRE5hd44I4flQQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795619386;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795619388;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=1yfiluj3EylgAwOhQGxUWE7R/s2jy6CyLNTYajz6k6o=;
-	b=z5kwdl9Ll3KudUDOhhzKpIZc/hg/W2iQGnRUh1/YG9xUbdz0WI9grBPecH4sh1PfxeQg
-	 U9RvWtHMVJFvzSvC3wEY98qpDQ0b01B6Zb0I1bpJX9JLPY6UjbLci+FGPq/IX8F4Ktjsw
-	 XhyUc8IEwk569pquaT+EAKRgLeSw47rzeWyo6id1xd0Bu5yXuMgZXavdSe8U6Ne8+pIGs
-	 u3OOOa2aFCtkCuI6ztZr3PMuTXZ2mcq9bfQDCLYh/spPl8uYLVZnPcRRnj2uoNfDWUY7s
-	 Sm1NhZHs9TrS3x3Skoa3dR1H3/rXRV85JKIHT36yMXwk8yLakKDyQzXkU71BI/6P7tQ==
+	bh=FhCU0481ncXoCs93cZvgktHgSQcwBSoPncaeWnxkOcU=;
+	b=Dewjx1D6ojb6/B6nmN1EA7DoRixubC45I2uv9uMBlEc9yKkHzhuA+L9ACvaL5ZAHnhJ/
+	 NtDkeC/z606Wbj5jFkWQgk8Bkm5RAkkOvlHpdIRHI8tO1odiq210H52RksNrAVZnbiILG
+	 n+mW+/g77HTwurj1lnK8h8JDxd7dG1IfK97/v1ouSEuO8gwcYgPSZ7jUV8sC5ElRpa6mH
+	 O6YT0X1oejca1XH1jpDRhSg0/Y+XQtun9x19EOcg6xvohOInL74WR0wX2NcosLP6Jj3xM
+	 zEiag0d8sjdzme69e+ovCwYWMej/z2Ay+mH4yJUs5m8po9cehR9KSLxGzSSAX3+C1Xw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=0nB5IaY0;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=CQ50E0yf;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1A9CC606A323;
-	Wed, 25 Nov 2026 15:09:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DC40F606A31E;
+	Wed, 25 Nov 2026 15:09:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=0nB5IaY0
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 87C6D1F000C0;
-	Wed, 25 Nov 2026 15:09:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=CQ50E0yf
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E63741F000C4;
+	Wed, 25 Nov 2026 15:09:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795619385;
-	bh=1yfiluj3EylgAwOhQGxUWE7R/s2jy6CyLNTYajz6k6o=;
+	s=korg; t=1795619388;
+	bh=FhCU0481ncXoCs93cZvgktHgSQcwBSoPncaeWnxkOcU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=0nB5IaY0n9xEWsQrkP3ECvqIJzbQxGomcITEaOYwADJs45AjZjZv4PTJMKYLgZ4FO
-	 blFRE7nKU34R4H78tUanieEJSF64SFFxrDU9aQuBTQZFutfKOFUiC1EzIpl3RPn6Z0
-	 xdMi5k1jevv1wcJUTgD/KbmDS8/GCT80czN6C9Co=
+	b=CQ50E0yfyjuY13rYtPIcwrQZMHx2Lv9xtQbi7Y4TP1cZorhqRM9XK5J45YM/A2RVH
+	 Dj135QKwCs3ZWjgN4Kvo1aMP6MoG1Pxd2R+jUTbzGJK0gkSCrBRK/u1R4BUIFmdmbH
+	 o/VIFBWQ+hBuFkIeGPG9sO/dDr39BWeDHPSLgbCc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Anfernee Cao <anferneemelokc5@gmail.com>,
 	Ulf Hansson <ulfh@kernel.org>
-Subject: [PATCH 7.3 0578/1005] mmc: sunxi: fix clock and runtime PM leaks on probe failure
-Date: Wed, 25 Nov 2026 15:31:56 +0100
-Message-ID: <20261125143835.288300542@linuxfoundation.org>
+Subject: [PATCH 7.3 0579/1005] mmc: mmci: fix DMA channel leak when mmc_add_host() fails
+Date: Wed, 25 Nov 2026 15:31:57 +0100
+Message-ID: <20261125143835.312436615@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143821.729802100@linuxfoundation.org>
 References: <20261125143821.729802100@linuxfoundation.org>
@@ -69,98 +69,46 @@ Content-Transfer-Encoding: 8bit
 
 From: Anfernee Cao <anferneemelokc5@gmail.com>
 
-commit e35e360bd66898a977c296ab71fe4bae17ddceb7 upstream.
+commit 2d8927fadbf95e2d2dfa95bcc73882d6e19c2ce4 upstream.
 
-sunxi_mmc_resource_request() enables the bus, card, output and sample
-clocks before returning. Several failure paths later in
-sunxi_mmc_probe() leave them running:
+mmci_probe() calls mmci_dma_setup(), which acquires the RX and TX DMA
+channels via dma_request_chan(). These channels are not managed by
+devres, and are released only by mmci_dma_release().
 
- - If devm_request_threaded_irq() fails, the clocks enabled by
-   sunxi_mmc_enable() are never disabled.
- - If dma_alloc_coherent(), mmc_of_parse() or sunxi_mmc_init_host()
-   fails, probe only frees the DMA buffer and the mmc_host.
- - If mmc_add_host() fails, runtime PM has already been enabled, but
-   pm_runtime_disable() is never called.
+If the following mmc_add_host() fails, probe jumps to the clk_disable
+label, which only disables the clock. As probe then fails,
+mmci_remove() is never called, so both DMA channels are leaked.
 
-Besides leaking the clocks, this leaves the clock enable counts
-unbalanced, so a reprobe (for example after -EPROBE_DEFER) calls
-clk_prepare_enable() on the same clocks again.
-
-Disable the IRQ and the clocks in the probe error path, and disable
-runtime PM on the mmc_add_host() failure path. Also handle a failure of
-devm_request_threaded_irq() in sunxi_mmc_resource_request().
-
-Tested with QEMU's orangepi-pc machine: with forced sunxi_mmc_init_host()
-and mmc_add_host() failures the MMC clocks stay disabled in clk_summary,
-and a normal probe with an emulated SD card still works.
+Release them by adding a dedicated unwind label, reached only after
+mmci_dma_setup().
 
 This issue was found by manual code inspection.
 
-Fixes: 3cbcb16095f9 ("mmc: sunxi: Add driver for SD/MMC hosts found on Allwinner sunxi SoCs")
-Fixes: 9a8e1e8cc2c0 ("mmc: sunxi: Add runtime_pm support")
-Cc: stable@vger.kernel.org # v4.18+
+Fixes: b38a20f29a49 ("mmc: mmci: fix return value check of mmc_add_host()")
+Cc: stable@vger.kernel.org
 Signed-off-by: Anfernee Cao <anferneemelokc5@gmail.com>
 Signed-off-by: Ulf Hansson <ulfh@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/mmc/host/sunxi-mmc.c |   24 ++++++++++++++++++------
- 1 file changed, 18 insertions(+), 6 deletions(-)
+ drivers/mmc/host/mmci.c |    4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
---- a/drivers/mmc/host/sunxi-mmc.c
-+++ b/drivers/mmc/host/sunxi-mmc.c
-@@ -1354,8 +1354,13 @@ static int sunxi_mmc_resource_request(st
- 		goto error_disable_mmc;
- 	}
- 
--	return devm_request_threaded_irq(&pdev->dev, host->irq, sunxi_mmc_irq,
--			sunxi_mmc_handle_manual_stop, 0, "sunxi-mmc", host);
-+	ret = devm_request_threaded_irq(&pdev->dev, host->irq, sunxi_mmc_irq,
-+					sunxi_mmc_handle_manual_stop, 0,
-+					"sunxi-mmc", host);
-+	if (ret)
-+		goto error_disable_mmc;
-+
-+	return 0;
- 
- error_disable_mmc:
- 	sunxi_mmc_disable(host);
-@@ -1385,9 +1390,11 @@ static int sunxi_mmc_probe(struct platfo
- 
- 	host->sg_cpu = dma_alloc_coherent(&pdev->dev, PAGE_SIZE,
- 					  &host->sg_dma, GFP_KERNEL);
--	if (!host->sg_cpu)
--		return dev_err_probe(&pdev->dev, -ENOMEM,
--				     "Failed to allocate DMA descriptor mem\n");
-+	if (!host->sg_cpu) {
-+		ret = dev_err_probe(&pdev->dev, -ENOMEM,
-+				    "Failed to allocate DMA descriptor mem\n");
-+		goto error_disable_mmc;
-+	}
- 
- 	if (host->cfg->ccu_has_timings_switch) {
- 		/*
-@@ -1467,7 +1474,7 @@ static int sunxi_mmc_probe(struct platfo
+--- a/drivers/mmc/host/mmci.c
++++ b/drivers/mmc/host/mmci.c
+@@ -2477,11 +2477,13 @@ static int mmci_probe(struct amba_device
  
  	ret = mmc_add_host(mmc);
  	if (ret)
--		goto error_free_dma;
-+		goto error_disable_rpm;
+-		goto clk_disable;
++		goto dma_release;
  
- 	dev_info(&pdev->dev, "initialized, max. request size: %u KB%s\n",
- 		 mmc->max_req_size >> 10,
-@@ -1475,8 +1482,13 @@ static int sunxi_mmc_probe(struct platfo
- 
+ 	pm_runtime_put(&dev->dev);
  	return 0;
  
-+error_disable_rpm:
-+	pm_runtime_disable(&pdev->dev);
- error_free_dma:
- 	dma_free_coherent(&pdev->dev, PAGE_SIZE, host->sg_cpu, host->sg_dma);
-+error_disable_mmc:
-+	disable_irq(host->irq);
-+	sunxi_mmc_disable(host);
++dma_release:
++	mmci_dma_release(host);
+  clk_disable:
+ 	clk_disable_unprepare(host->clk);
  	return ret;
- }
- 
 
 
