@@ -1,54 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795622112;
-	b=Od4lIYB5fzPec5JC1/FHohDunLtIX5c1HUGirQM9lf1X4+29Gh0hTAZaQvzrUEFWzjo5
-	 mwgz1ZPnrFJJaKJ/CGw3mtteJEwriZL3gLq+r4spjj9X8Af84aReC5155VvGB1y9H5+8a
-	 wIt8UV0gy4bWRMcjs3xqwUEBJL0AwcCUZy+eDgtHw8uTzonnvNUY1TPwYdGxkKpzn6JAF
-	 PCAn5Dz3wZ3JST6V1Ggff81/AVn5RnAiftDX3oxOiOgFSpMgfP91U78WruvEFy/i6jztU
-	 DLFt3aUBrqZbDClMrij3871VrHRzE8riGZxWzLuBv1ikjC95+CVWbBGbXOzypHkf0/w==
+	t=1795622115;
+	b=WAlnLEUqwzg+BkWscrx4NSROwdWHNObKkCXGluDvZtsvphwOrkI/Ax6CcjYWeQyHR4nf
+	 g2iD/cv61Q8yoz0slxbNrLt3U/xv0wA1EBseszZsHffYuRXDANFHEqCulvBzZmyv74WWo
+	 R8VVzaltdnfrAEt7sQxWiEyC5FBWhbeKwq1woMwm8hOk16CtPCogpJ0awFatIEkmOYQQd
+	 3cYHw+afuXrjmRhlpfGCvQr6z6x2wafOa+1qgfLn7h495yl5zM6PRripWM0Ic5KpWDgGG
+	 7ZPKv2Z94pnZQcvMdPoC4APGZRi2srS9lQqxXA5V/8289Gjv17UQ9ND3+hb31+sEk/w==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795622112;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795622115;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Transfer-Encoding;
-	bh=EVAGWzK+xd+FySOtBjv8LHHU22XlUdQsrjvELajHEXU=;
-	b=FEi7xuCGqjv7cIpVQXonvcDxdb7mgqyjX3neAyiITpdeUSW4pB1SSoigHN7oZeWCPFUV
-	 BdwGL8fYABuoqYPQCt/hdVo2u/ptHLbR0/5etLo6r68l6ZHx+ghmTgh6x/bjqEFgbSXNY
-	 7gUCwJd69Ej2KBM4WJ1fAghsV7m1WNlAvdU5WmoJsEezY6M/AUGhlBDxmGAHzTQqGY6jH
-	 HazgafGPSof5ArhLLO1J41uYG6X3/RVixCpTsxDWNhI/Opp2WLgIo96RwcITdch8Ti2x8
-	 teB+LBwpDxrhX0yS0q+WpGPQsdIIauOw0YNfCqr9Z88wAWWGGbMNN/4YiBO74YMlCRg==
+	 MIME-Version:Content-Type:Content-Transfer-Encoding;
+	bh=PozJ/9qegF6DQQ9HSdFR7ZCEI11djyhysRM4Z6I6BME=;
+	b=4EhUd6WhL78QvMpZs05QWus+3iVL4yRivvu4jc1UISPj2BvTQrP7OETINKnxjP/EcAuL
+	 SUqxNkckgmQHrxpLYMF6D9scHUWoiVufLz4HxsG3oAq2JTpcEaG1g18wjbBzB0YwO6ut7
+	 V2SbQ7WTw0DWw/7TtXKU7WVoRNk9x5Uu5H1drbZBN9ZwwxG+/cByttpype/h44GA+zw+T
+	 3ElIsWy2eGprQeRlZ4xkBgk+NVBVt72KKDCgeQWQu7Qn7cOFBLfWBUoH6WlUPw10DsbVz
+	 spzoDINpRGy0Pcb4q9wOOo3E//ySOm6WAuw5O89FKqIGx7in2RelsYlMRk6X8gNylsA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=NKzxmdUM;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=cwuU0wNH;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 99DED606A31E;
-	Wed, 25 Nov 2026 15:55:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C17E1606A321;
+	Wed, 25 Nov 2026 15:55:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=NKzxmdUM
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ED7811F000C4;
-	Wed, 25 Nov 2026 15:55:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=cwuU0wNH
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C2FC41F000D3;
+	Wed, 25 Nov 2026 15:55:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795622112;
-	bh=EVAGWzK+xd+FySOtBjv8LHHU22XlUdQsrjvELajHEXU=;
+	s=korg; t=1795622115;
+	bh=PozJ/9qegF6DQQ9HSdFR7ZCEI11djyhysRM4Z6I6BME=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=NKzxmdUMgk23binhQVEjXwup9LIk9cyzsgAREZginF30Om+OBzCITuA74965TbgDG
-	 vzaCPfbTjS1W/8gal3XUcQ4k3wS5UPlj+E+OqZM95PedT3lPC9WqPjTFjHooFnp3uy
-	 E4FUBVHm8PhJcc7cTQdczj6jlq/0/YwXIGA3oB7A=
+	b=cwuU0wNH26i184Y18gbqZrh8Zo9gnzCwZ6YGBRFJZI6mNfB+rTiw87Nh375MbMVqd
+	 pgR9V08ZyJxKcqErzAPolbzej9yYrkeua5uUx01M8twTwhh26bDCrvha+qVZuR6BPI
+	 n1XrIfjop5MAIIgNByjaSEZU4F4ZU/vSptY6QAgs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Nikola Z. Ivanov" <zlatistiv@gmail.com>,
-	Simon Horman <horms@kernel.org>,
-	Jiri Pirko <jiri@nvidia.com>,
+	Maciej Fijalkowski <maciej.fijalkowski@intel.com>,
+	=?UTF-8?q?Bj=C3=B6rn=20T=C3=B6pel?= <bjorn@kernel.org>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 408/990] team: Add matching error label for failed action
-Date: Wed, 25 Nov 2026 15:29:35 +0100
-Message-ID: <20261125143831.655977700@linuxfoundation.org>
+Subject: [PATCH 6.18 399/990] ice: xsk: free stashed Rx frame when cleaning the ring
+Date: Wed, 25 Nov 2026 15:29:26 +0100
+Message-ID: <20261125143831.446499959@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143822.072087159@linuxfoundation.org>
 References: <20261125143822.072087159@linuxfoundation.org>
@@ -64,54 +63,56 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Nikola Z. Ivanov <zlatistiv@gmail.com>
+From: Maciej Fijalkowski <maciej.fijalkowski@intel.com>
 
-[ Upstream commit aee0f01b4f118844cb126a5f27e91c2adf087c59 ]
+[ Upstream commit d5e7a86b7cd6c38a628635baace7eb2fdce14a43 ]
 
-Follow the "action" - "err_action" pairing of labels
-found across the source code of team net device.
+ice_clean_rx_irq_zc() stashes a partially received multi-buffer frame
+in rx_ring->xsk, with its frags on pool->xskb_list. next_to_clean is
+already past its buffers, so ice_xsk_clean_rx_ring(), which walks
+next_to_clean..next_to_use, misses the frame, and ice_vsi_cfg_rxq()
+later clears the pointer via ring->xdp.data.
 
-Currently in team_port_add the err_set_slave_promisc
-label is reused for exiting on error when setting
-allmulti level of the new slave.
+The buffers are lost to user space and, as the pool outlives the ring
+across ifdown/ifup or a reset, the stale frags are taken as frags of
+the next frame. Before commit 93f53db9f9dc ("ice: switch to Page
+Pool"), the frame was tracked by rx_ring->first_desc and leaked the
+same way.
 
-Signed-off-by: Nikola Z. Ivanov <zlatistiv@gmail.com>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Reviewed-by: Jiri Pirko <jiri@nvidia.com>
-Link: https://patch.msgid.link/20251128072544.223645-1-zlatistiv@gmail.com
+Free the stashed frame when cleaning the ring.
+
+Fixes: 1bbc04de607b ("ice: xsk: add RX multi-buffer support")
+Signed-off-by: Maciej Fijalkowski <maciej.fijalkowski@intel.com>
+Reviewed-by: Björn Töpel <bjorn@kernel.org>
+Link: https://patch.msgid.link/20261102124950.958345-9-maciej.fijalkowski@intel.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Stable-dep-of: ff618cb00a64 ("team: fix promisc/allmulti leak in team_port_add error path")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/team/team_core.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/net/ethernet/intel/ice/ice_xsk.c | 5 +++++
+ 1 file changed, 5 insertions(+)
 
-diff --git a/drivers/net/team/team_core.c b/drivers/net/team/team_core.c
-index 7a189f32c865b..cb0ff3d89de93 100644
---- a/drivers/net/team/team_core.c
-+++ b/drivers/net/team/team_core.c
-@@ -1260,7 +1260,7 @@ static int team_port_add(struct team *team, struct net_device *port_dev,
- 		if (err) {
- 			if (dev->flags & IFF_PROMISC)
- 				dev_set_promiscuity(port_dev, -1);
--			goto err_set_slave_promisc;
-+			goto err_set_slave_allmulti;
- 		}
- 	}
+diff --git a/drivers/net/ethernet/intel/ice/ice_xsk.c b/drivers/net/ethernet/intel/ice/ice_xsk.c
+index 2009744a9f6a4..9840522d65dac 100644
+--- a/drivers/net/ethernet/intel/ice/ice_xsk.c
++++ b/drivers/net/ethernet/intel/ice/ice_xsk.c
+@@ -913,6 +913,11 @@ void ice_xsk_clean_rx_ring(struct ice_rx_ring *rx_ring)
+ 	if (xdp_rxq_info_is_reg(&rx_ring->xdp_rxq))
+ 		xdp_rxq_info_unreg(&rx_ring->xdp_rxq);
  
-@@ -1287,6 +1287,7 @@ static int team_port_add(struct team *team, struct net_device *port_dev,
- 	return 0;
- 
- err_set_dev_type:
-+err_set_slave_allmulti:
- err_set_slave_promisc:
- 	__team_option_inst_del_port(team, port);
++	if (rx_ring->xsk) {
++		xsk_buff_free(&rx_ring->xsk->base);
++		rx_ring->xsk = NULL;
++	}
++
+ 	while (ntc != ntu) {
+ 		struct xdp_buff *xdp = *ice_xdp_buf(rx_ring, ntc);
  
 -- 
 2.53.0
