@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795625241;
-	b=mHkPXpk9tBnqZCPfqKSAh7HJ1Zaj2hCcWZkIDriVqAaG8NenUUFi6QW+WWarKTlaTzTp
-	 t8Sw2/P682AW7yFxzvJ2RpkgC4qTMugAt7/lzXVJ/BcWpCaZCqIXxDoU8jwFR+y7Xy1Ai
-	 73BbXyCiFbtc2K1dI8+46hng36IzRl6Gq+EsfkJBmXC7rgmtHiOwETEcu6SBb/c3ISvn4
-	 zypG2FrLkMgdR0wmWHQpb/QLcGM7oFzGBmTEPlyPm8TBU60iR8jgZ8fj8sYQ99ri5xYtZ
-	 0x4kIZFzOkIswdXcAIOWxpV29irsGGT08icuyqOp8vKcLCBgqRFthRfz2cSocg63X1w==
+	t=1795625243;
+	b=YoW+ExSWMCkmlqqYo2jbFwebwGjvhjmFSWyC9cvPGn3U01A/7R5Pl0Frmk3lNhxfWuGU
+	 8dLqOvZ6cof8psT/R5dLWi6TLP6oFMdu+zOQT16E+YJ8pHwwO07iEIwsp+wWh6Wks51KX
+	 IRjA2ggEspEyKAFRjkaClbvT953B/5PdEc7rOksBeizHa3u+oEUS5WmcNBqyNsFs2WYmH
+	 ukHR0uODs870TG0v+5BoWlJxPYipBSFDt95qVKxtNmiQEOPgG5zE6YLsqXCfk1F/EY/VT
+	 5PFF1On3kLOpLvh/Ke2WwGQQkX98qr+gFtGMPVnell1AZbiIspGyKNH8J4AQDe0qQ6w==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795625241;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795625243;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=sbGJK49q8E7L2Cmc8x65IEVAcfjRH6nmL4PTlTeFv70=;
-	b=YnoOBI8VescDYyfrkOuGtanAJC5Xq42HAjiqs1DusUxhzpTUySbj4CcgcDxDuF/ol320
-	 jSyoZ6Mbvg8DETBsHLc188i58QEEEJHX97k/lcv31cOY+p7KavUwmzCMfCGP3whJcM/yZ
-	 e3l//rQ7//fGscmsCh/PB2XP7gYdhoK6S9dtdG+GpgrKEe8TOnFZ+77zdA7bvgaGsrBJ/
-	 qukBj9ztdOLs8bVXgHOvWOOHTAwSEEc4rTW2qxDhhTFVgSUx6LHZZry6oVlxFPw1mlvz0
-	 /9Vrhhw/QkCPo5mXgSkXaXssenVOnomG8Qw1aVtFmnBGfV2BI8upXIMaFWimCkCoXpA==
+	bh=WT2NH8JSDERMODKFUO1K59xcIzdaLJr2+JjuPAxP/1s=;
+	b=FNyYr5hPL4a3X/M/qjCBkv4GXWMarfAS0KJUmuQfZWJriBBs3euFNrBfDRSRvJ55ksQj
+	 yVDVBXbHifOh6BXOq/UqoFg4/Trd5C2xvRgs/FK8MPW+Tn2ZvR32N/Ddci3Bmsqa6I33C
+	 T5a6fj822uJGKgzLgAt/oiRCeiu1rSu1jQxdzthi5c3Cs0V5HJQfPK0SsGpg+okS5eyFM
+	 OwmfFojnviqIQn97pQGxERwVxvzG92vXftmJ7mpte+cqjskxcCvbHwREeKxQJ3dJV3Jh1
+	 7LGM9Ihm2Q8RSbqi0pZOcyNrAuN4PaIfsRrcQ/zedLvgMAT3P75Bb1CNoCHxeE4WHZA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=03n+mTt7;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=IIXioytV;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E4804606A31E;
-	Wed, 25 Nov 2026 16:47:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B4B88606A31E;
+	Wed, 25 Nov 2026 16:47:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=03n+mTt7
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 409381F000C0;
-	Wed, 25 Nov 2026 16:47:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=IIXioytV
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 117D51F000C4;
+	Wed, 25 Nov 2026 16:47:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795625240;
-	bh=sbGJK49q8E7L2Cmc8x65IEVAcfjRH6nmL4PTlTeFv70=;
+	s=korg; t=1795625243;
+	bh=WT2NH8JSDERMODKFUO1K59xcIzdaLJr2+JjuPAxP/1s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=03n+mTt7lWgvwD71O/GASzjpOwteuyn5m89IE9vGB2hCqxzLBerva+8wsbQcffCLP
-	 5FpcjYce866irBi7I1toQjgh0R8AfWZud2VFN2DPcd7mxu64GboYelkZD3qzFEBJoa
-	 onPkYiHJljwdbCb1fP6zKTiTP07LkGphLaDctjeE=
+	b=IIXioytVpSZv2gKKvryWY3XWhy80I8F93xYveRA8YQ4bL3WH53gGf7j4G9Y7xHknU
+	 8S50UajRuqzsUm3fBge+My5cgaYiNJXNXONbFb9R5qqUykWq3cHmNPPBK9x87ekQBQ
+	 X4yKzhdleIRo9ioLIxaHCYAxgidTdv0lPuwjDIBg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Niklas Cassel <cassel@kernel.org>,
 	Damien Le Moal <dlemoal@kernel.org>,
+	Niklas Cassel <cassel@kernel.org>,
 	"Martin K. Petersen (Oracle)" <mkp@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 451/816] scsi: scsi_debug: Avoid 32-bit overflow in WRITE SCATTERED offsets
-Date: Wed, 25 Nov 2026 15:33:19 +0100
-Message-ID: <20261125143859.629971036@linuxfoundation.org>
+Subject: [PATCH 6.12 452/816] scsi: scsi_debug: Enforce physical block alignment of zoned writes
+Date: Wed, 25 Nov 2026 15:33:20 +0100
+Message-ID: <20261125143859.652611116@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143849.205329330@linuxfoundation.org>
 References: <20261125143849.205329330@linuxfoundation.org>
@@ -71,84 +71,63 @@ Content-Transfer-Encoding: 8bit
 
 From: Niklas Cassel <cassel@kernel.org>
 
-[ Upstream commit 92feb036a2d33c7b78b8daa2384f5c70d6679a91 ]
+[ Upstream commit 63cb3900be261fccc05cadcf3402058418a5fada ]
 
-resp_write_scat() computes the length of an LBA range in bytes as a 32-bit
-product, num_by = num * lb_size, and adds it to sg_off, the 32-bit offset
-of the next range in the data-out buffer. The product wraps for a range of
-4 GiB or more, which check_device_access_params() allows once the store is
-that large, and sg_off wraps once the ranges add up to 4 GiB, which neither
-their number nor their overlap prevents.  The ranges that follow are then
-written from the wrong offset in the buffer.
+ZBC-3 r06 (T10/BSR INCITS 579), 4.5.3.3.2, requires a write to a sequential
+write required zone to be terminated with ILLEGAL REQUEST / UNALIGNED WRITE
+COMMAND both when it does not start at the write pointer and when it does
+not end on a physical block boundary. That is why sd_zbc_read_zones() sets
+the zone_write_granularity queue limit to the physical block size of a
+host-managed device.
 
-Make num_by and sg_off 64-bit, and pass do_device_access() sg_off capped at
-the length of the buffer. An offset at the end of the buffer copies
-nothing, and sg_copy_buffer(), which takes it as an off_t, is never given
-one larger than the buffer that it copies.
+check_zbc_access_params() implements the first condition but not the
+second. So with zbc=managed sector_size=512 physblk_exp=3, a write of a
+single logical block at the write pointer is accepted and advances the
+write pointer by one logical block, leaving it off the granularity that was
+advertised: nothing can write at it any more, and the zone can only be used
+again after being reset.
+
+Check the ending LBA as well, with the same sense data, as the standard
+gives both conditions the same. An entire medium write same command, which
+the standard excludes, needs no special case: the preceding check already
+terminates it with WRITE BOUNDARY VIOLATION. Sequential write preferred
+zones are left alone, as writes to them need not be sequential, and with
+the default physblk_exp=0 the check is a no-op.
 
 Assisted-by: LLM
-Fixes: 481b5e5c7949 ("scsi: scsi_debug: add resp_write_scat function")
-Signed-off-by: Niklas Cassel <cassel@kernel.org>
+Fixes: f0d1cf9378bd ("scsi: scsi_debug: Add ZBC zone commands")
 Reviewed-by: Damien Le Moal <dlemoal@kernel.org>
-Link: https://patch.msgid.link/20260929082456.857423-21-cassel@kernel.org
+Signed-off-by: Niklas Cassel <cassel@kernel.org>
+Link: https://patch.msgid.link/20260929082456.857423-23-cassel@kernel.org
 Signed-off-by: Martin K. Petersen (Oracle) <mkp@kernel.org>
-[ sashal: Kept the older branch's __func__ in the verbose printk format string and applied only the %u to %llu change for sg_off. ]
+[ sashal: Replaced the two-argument mk_sense_buffer(scp, key, UNALIGNED_WRITE_COMMAND) call with the four-argument form LBA_OUT_OF_RANGE, UNALIGNED_WRITE_ASCQ, since this tree lacks the combined constant. ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/scsi/scsi_debug.c | 13 ++++++++-----
- 1 file changed, 8 insertions(+), 5 deletions(-)
+ drivers/scsi/scsi_debug.c | 11 +++++++++++
+ 1 file changed, 11 insertions(+)
 
 diff --git a/drivers/scsi/scsi_debug.c b/drivers/scsi/scsi_debug.c
-index 7a1ad88669eeb..5529dcbd9eeba 100644
+index 5529dcbd9eeba..ac8f313172e06 100644
 --- a/drivers/scsi/scsi_debug.c
 +++ b/drivers/scsi/scsi_debug.c
-@@ -4613,7 +4613,8 @@ static int resp_write_scat(struct scsi_cmnd *scp,
- 	struct sdeb_store_info *sip = devip2sip(devip, true);
- 	u8 wrprotect;
- 	u16 lbdof, num_lrd, k;
--	u32 num, num_by, bt_len, lbdof_blen, sg_off, cum_lb;
-+	u32 num, bt_len, lbdof_blen, cum_lb;
-+	u64 num_by, sg_off;
- 	u32 lb_size = sdebug_sector_size;
- 	u32 ei_lba;
- 	u64 lba;
-@@ -4691,14 +4692,14 @@ static int resp_write_scat(struct scsi_cmnd *scp,
- 		num = get_unaligned_be32(up + 8);
- 		if (sdebug_verbose)
- 			sdev_printk(KERN_INFO, scp->device,
--				"%s: %s: k=%d  LBA=0x%llx num=%u  sg_off=%u\n",
-+				"%s: %s: k=%d  LBA=0x%llx num=%u  sg_off=%llu\n",
- 				my_name, __func__, k, lba, num, sg_off);
- 		if (num == 0)
- 			continue;
- 		ret = check_device_access_params(scp, lba, num, true);
- 		if (ret)
- 			goto err_out_unlock;
--		num_by = num * lb_size;
-+		num_by = (u64)num * lb_size;
- 		ei_lba = is_16 ? 0 : get_unaligned_be32(up + 12);
+@@ -3571,6 +3571,17 @@ static int check_zbc_access_params(struct scsi_cmnd *scp,
+ 					UNALIGNED_WRITE_ASCQ);
+ 			return check_condition_result;
+ 		}
++		/*
++		 * Writes must end on a physical block boundary, that is, the
++		 * transfer length must be a multiple of the physical block
++		 * size.
++		 */
++		if (!IS_ALIGNED(lba + num, 1U << sdebug_physblk_exp)) {
++			mk_sense_buffer(scp, ILLEGAL_REQUEST,
++					LBA_OUT_OF_RANGE,
++					UNALIGNED_WRITE_ASCQ);
++			return check_condition_result;
++		}
+ 	}
  
- 		if ((cum_lb + num) > bt_len) {
-@@ -4729,7 +4730,9 @@ static int resp_write_scat(struct scsi_cmnd *scp,
- 		 * Write ranges atomically to keep as close to pre-atomic
- 		 * writes behaviour as possible.
- 		 */
--		ret = do_device_access(sip, scp, sg_off, lba, num, group, true, true);
-+		ret = do_device_access(sip, scp,
-+				       min_t(u64, sg_off, scsi_bufflen(scp)),
-+				       lba, num, group, true, true);
- 		/* If ZBC zone then bump its write pointer */
- 		if (sdebug_dev_is_zoned(devip))
- 			zbc_inc_wp(devip, lba, num);
-@@ -4740,7 +4743,7 @@ static int resp_write_scat(struct scsi_cmnd *scp,
- 			goto err_out_unlock;
- 		} else if (unlikely(sdebug_verbose && (ret < num_by)))
- 			sdev_printk(KERN_INFO, scp->device,
--			    "%s: write: cdb indicated=%u, IO sent=%d bytes\n",
-+			    "%s: write: cdb indicated=%llu, IO sent=%d bytes\n",
- 			    my_name, num_by, ret);
- 
- 		if (unlikely((sdebug_opts & SDEBUG_OPT_RECOV_DIF_DIX) &&
+ 	/* Handle implicit open of closed and empty zones */
 -- 
 2.53.0
 
