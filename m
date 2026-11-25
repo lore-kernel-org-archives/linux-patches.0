@@ -1,42 +1,42 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795624329;
-	b=dtmsv+9r8EZ2kfmMdusA6BJWVLxsmBiO1kv2xZ1P1xiQt3tfRA10tv2/HkMPG277u53p
-	 UzBwAtMY2YXCEnIJ/cQervZUCnbtLOaDxHLW9rXEDz+ji9ltRMkk64o25cxaJSDoDFCVK
-	 5YJcGS814QBV5dhYMdvivht0S1MRzkjpUpfS4V/BKwNKf/EDwo9VfWWInI2kTvcKobpAr
-	 J9Sv+IUV7DReWLfmgGVNlDHOKH5sZtXOPohrTCqyx8bi9a9ATJEfGw+AfP558/pp6A8Vp
-	 3mJByfDtiJR2JIgq89XAIFdiJJA3h3vdeQQv9sze5uBjm65HMn//0De2vDluBX9wzLA==
+	t=1795624332;
+	b=VDEkLokbv4pPf2EV+foXW9B1r4TAUlykH4qDAxZZJ/BHhHM09EBgk8d7gJO+b06h9o4Q
+	 c+LO/8HCPBCucShI3yEXiYww9DOnVdmksGJPVNLtCePlgn+LscpBatS+WIXZsmSPfKX+J
+	 qwI8yhVMbBxoxGS43UKFMacHP8OZZz2NJ8UY3CZ18Sj3nCj5FW+NihJ/BXVyJmvk+cJM7
+	 GyvbUYfK6pCVl8CwAW6CFb1um7mW3wkZS24vouNq/JrxvJaTbL4/ReChpGGPObn+D5JH2
+	 nBiLnlAQjz8pkA5KnatjsZJTYYNh6sH0AApFgiA1JDMfsrPY3Tu14sdkGSMJZrxTL0Q==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795624329;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795624332;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=MCEvmXGFM9tm8QoKk4cWNTzZOh8kkIBi2QovhRGPHL4=;
-	b=D3kSy907qsRvPQasyq5RuDPoX67A7bTIHGwGCd6KDgR04x75texAbbTr4T+QRmmuKnyM
-	 7KdgxrclyiM0t0ImiWsMmvTcIc0gfx+kU0SmtzWhkGkntamRPd32uE6SGg2dZ+wamRQxL
-	 GMCjG1ensj1UhlwNXzqrJ5gdQJBEXC3uN+jnW5+pQjD6ImONqB92x4qYAsFViEgUeEBRR
-	 YW9ZlI9hyH5OTOepsd8jP+ixRQL1s//5v90ajPo4uYTyI0SERxEBhhOg/N2PHrEZdGfDi
-	 pJj+t3KSvn3OTR9cBiA34WTeI2f56Klk/Ky67PHpWUQukmEk7vtptNYP0j/8i7Yp9pQ==
+	bh=zCxcN1LYHLhD4qHH0lmKbiV45NaW5O4E0WDAJKNeO84=;
+	b=4E7TzwN3u6H793ymB8IEnsg8TrzDhhZJzfdIE8YOFijE9n4AE423nip4EXGiyoN47aiX
+	 KcA6OvClaYICqEjmNowm0d+RnEt2/0WMCevBVgs7pmzavbWJ0Td7OjXavq4EcOu47tVdX
+	 kdHoG4zXcHcJICjqpHkRGaxDsarNPK8lFcp1mmiP1sVkETbIbnNdnZFEW2xBA037vhDjA
+	 G95G3OjSuXrbsMdBO/3tsJHBYd/PlEy9YBlq3uD3FiB1gJV8/xlwhvyYcCT1fVfFNVJKH
+	 me3ESxAIwG0NSS91ZsTBokJ5qMttE1RvApUwhy63xwiVVt6fcCgNc6X2Gtu8MD4Or6A==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=QEew319I;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=G5k5stKC;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4045D606A33C;
-	Wed, 25 Nov 2026 16:32:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7FC0D606A338;
+	Wed, 25 Nov 2026 16:32:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=QEew319I
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0CFE11F000D2;
-	Wed, 25 Nov 2026 16:32:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=G5k5stKC
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4C2911F000C0;
+	Wed, 25 Nov 2026 16:32:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795624328;
-	bh=MCEvmXGFM9tm8QoKk4cWNTzZOh8kkIBi2QovhRGPHL4=;
+	s=korg; t=1795624331;
+	bh=zCxcN1LYHLhD4qHH0lmKbiV45NaW5O4E0WDAJKNeO84=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=QEew319IcwAmoc8V+RQoCX4x4TdbLfUFZ9AwQIXeJoQVEElPlxBybRnwGkkNpOQ2j
-	 4S2LzLOw8KSixe0Ii2NE47UHKRkngnukpltww3VPkDkacqmJhsSAH3tzi7N9YBmOye
-	 ja9iElJrkBlYDwSw4gUh13Ad9b5RFJYgvPWGWGR4=
+	b=G5k5stKCKI0Cbf2sYXs9coTxGX/zD5FHjE5np088i3Mb27dnIGOEKE/ZO6pnorUjU
+	 1MYGfukj7El690/iTW6g9AUr6uKUVyRx4BXb3MZ00Z9u+VymmnC4PPOdGwWvwpoCVM
+	 JqyUga7xRLXHD+9b3OcAkytZJk7MZHtYHh6Yz9CQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -44,9 +44,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Cen Zhang <zzzccc427@gmail.com>,
 	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 157/816] Bluetooth: hci_sync: Copy the LE accept list under hdev->lock
-Date: Wed, 25 Nov 2026 15:28:25 +0100
-Message-ID: <20261125143852.829917660@linuxfoundation.org>
+Subject: [PATCH 6.12 158/816] Bluetooth: hci_sync: Protect resolving-list lookups
+Date: Wed, 25 Nov 2026 15:28:26 +0100
+Message-ID: <20261125143852.852823037@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143849.205329330@linuxfoundation.org>
 References: <20261125143849.205329330@linuxfoundation.org>
@@ -70,71 +70,82 @@ Content-Transfer-Encoding: 8bit
 
 From: Cen Zhang <zzzccc427@gmail.com>
 
-[ Upstream commit 674006912777747170ad70d7727804ad4f2d047f ]
+[ Upstream commit f05bd61a3213613de7848c8df2865492d5225023 ]
 
-The LE accept-list mirror consists of bdaddr_list entries that are
-added, removed and freed under hdev->lock. The ordinary branch of
-hci_update_accept_list_sync() traverses this list without that lock.
-The request worker's req_lock does not serialize raw HCI completions,
-and the RCU sections protect connection and pending-action lookups,
-not the accept-list nodes.
+The host resolving list is updated under hdev->lock, and each
+bdaddr_list_with_irk entry must remain alive throughout a lookup.
+hci_le_del_resolve_list_sync() and hci_le_add_resolve_list_sync()
+traverse that list without taking the lock.
 
-Changing connectability can reach this iterator through
-set_connectable_sync(), hci_update_connectable_sync(),
-hci_update_passive_scan_sync() and hci_passive_scan_sync(). With a
-populated mirror, a privileged raw HCI sender can issue
-HCI_OP_LE_CLEAR_ACCEPT_LIST while request work is reconciling it:
+On an LE privacy-capable controller with a programmed entry, passive
+scan reconciliation can reach hci_le_del_resolve_list_sync() while a
+privileged HCI_RAW client sends LE Clear Resolving List. The raw
+command does not take req_lock, and its successful completion runs
+on the controller workqueue independently of request work:
 
-  Request work                    HCI event work
-  select b and successor t
-                                  hci_cc_le_clear_accept_list()
-                                    hci_dev_lock(hdev)
-                                    hci_bdaddr_list_clear()
-                                      unlink nodes and kfree(b)
-                                    hci_dev_unlock(hdev)
-  read b->bdaddr_type
+  Request work                     Raw HCI / event work
+  hci_le_del_resolve_list_sync()
+    lookup loads a list node
+                                   hci_sock_sendmsg()
+                                     queue LE Clear Resolving List
+                                   hci_cc_le_clear_resolv_list()
+                                     take hdev->lock
+                                     unlink and free the node
+                                     release hdev->lock
+    read the node's address/type
 
-The clear completion can therefore free the selected node before its
-field read, or the saved successor before the iterator advances.
-KASAN reported a one-byte read of bdaddr_type from the freed node.
+The clear can free the node after the lookup loads it and before its
+address/type read, causing a use-after-free. The report below shows
+this access with the delete helper on the faulting stack. The add
+helper uses the same unprotected lookup.
 
-Copy each entry's address and type under hdev->lock and reconcile the
-private array instead. Release the mutex before issuing synchronous
-commands, since their completion handlers also acquire it. Free the
-copy after iteration and use the existing error path to disable
-accept-list filtering if allocation fails.
-
-This change has not been runtime-tested.
+Take hdev->lock around each resolving-list membership lookup and
+retain only a boolean result. This serializes traversal with clear
+completion and keeps entry pointers inside the protected section.
+Release the lock before issuing a synchronous HCI command, whose
+completion also needs the lock.
 
 KASAN report as below:
 
     ==================================================================
-    BUG: KASAN: slab-use-after-free in hci_passive_scan_sync+0x1cc4/0x1f80
-    Read of size 1 at addr ffff888105ee6c56 by task kworker/u17:1/499
+    BUG: KASAN: slab-use-after-free in
+    hci_bdaddr_list_lookup_with_irk+0x106/0x120
+    Read of size 1 at addr ffff88810b036e16 by task kworker/u17:0/495
 
+    CPU: 2 UID: 0 PID: 495 Comm: kworker/u17:0 Not tainted
+    7.2.0-rc6-pmb-bt-functional-v1+ #3 PREEMPT(lazy)
+    Hardware name: QEMU Ubuntu 24.04 PC v2 (i440FX + PIIX, arch_caps fix,
+    1996), BIOS 1.16.3-debian-1.16.3-2 04/01/2014
     Workqueue: hci0 hci_cmd_sync_work
     Call Trace:
      <TASK>
      dump_stack_lvl+0x93/0xd0
      print_report+0xce/0x630
-     ? hci_passive_scan_sync+0x1cc4/0x1f80
+     ? hci_bdaddr_list_lookup_with_irk+0x106/0x120
      ? srso_alias_return_thunk+0x5/0xfbef5
      ? __virt_addr_valid+0x20d/0x410
-     ? hci_passive_scan_sync+0x1cc4/0x1f80
+     ? hci_bdaddr_list_lookup_with_irk+0x106/0x120
      kasan_report+0xe0/0x110
-     ? hci_passive_scan_sync+0x1cc4/0x1f80
-     hci_passive_scan_sync+0x1cc4/0x1f80
-     ? pmbd_gate_site_armed+0x31/0x1c0
-     ? __pfx_hci_passive_scan_sync+0x10/0x10
+     ? hci_bdaddr_list_lookup_with_irk+0x106/0x120
+     hci_bdaddr_list_lookup_with_irk+0x106/0x120
+     hci_le_del_resolve_list_sync.isra.0+0xd6/0x3f0
+     ? __pfx_hci_le_del_resolve_list_sync.isra.0+0x10/0x10
      ? srso_alias_return_thunk+0x5/0xfbef5
-     ? pmbd_probe_hit_cookie+0x10/0x1c0
-     ? __pfx_pmbd_probe_hit_cookie+0x10/0x10
-     ? hci_update_passive_scan_sync+0x43f/0x9e0
+     hci_le_del_accept_list_sync.isra.0+0x11c/0x290
+     ? __pfx_hci_le_del_accept_list_sync.isra.0+0x10/0x10
+     ? hci_passive_scan_sync+0x551/0x1e80
      ? srso_alias_return_thunk+0x5/0xfbef5
      ? lock_release+0xc8/0x280
-     hci_update_passive_scan_sync+0x473/0x9e0
-     hci_update_connectable_sync+0x13c/0x250
-     set_connectable_sync+0x39/0xb0
+     hci_passive_scan_sync+0x71c/0x1e80
+     ? __pfx_hci_passive_scan_sync+0x10/0x10
+     ? find_held_lock+0x2b/0x80
+     ? hci_lookup_le_connect+0xe1/0x3c0
+     ? srso_alias_return_thunk+0x5/0xfbef5
+     ? find_held_lock+0x2b/0x80
+     ? hci_update_passive_scan_sync+0x437/0x950
+     ? srso_alias_return_thunk+0x5/0xfbef5
+     ? lock_release+0xc8/0x280
+     hci_update_passive_scan_sync+0x461/0x950
      hci_cmd_sync_work+0x1b3/0x450
      ? srso_alias_return_thunk+0x5/0xfbef5
      process_one_work+0x908/0x19c0
@@ -155,13 +166,13 @@ KASAN report as below:
      ret_from_fork_asm+0x1a/0x30
      </TASK>
 
-    Allocated by task 511:
+    Allocated by task 495:
      kasan_save_stack+0x33/0x60
      kasan_save_track+0x14/0x30
      __kasan_kmalloc+0xaa/0xb0
      __kmalloc_cache_noprof+0x251/0x610
-     hci_bdaddr_list_add+0x179/0x390
-     hci_cc_le_add_to_accept_list+0x189/0x2d0
+     hci_bdaddr_list_add_with_irk+0x183/0x3e0
+     hci_cc_le_add_to_resolv_list+0x18c/0x240
      hci_cmd_complete_evt+0x373/0xab0
      hci_event_packet+0x4e8/0xc70
      hci_rx_work+0x367/0xf00
@@ -171,14 +182,14 @@ KASAN report as below:
      ret_from_fork+0x659/0x940
      ret_from_fork_asm+0x1a/0x30
 
-    Freed by task 511:
+    Freed by task 497:
      kasan_save_stack+0x33/0x60
      kasan_save_track+0x14/0x30
      kasan_save_free_info+0x3b/0x60
      __kasan_slab_free+0x5f/0x80
      kfree+0x307/0x580
      hci_bdaddr_list_clear+0x134/0x230
-     hci_cc_le_clear_accept_list+0x80/0x1f0
+     hci_cc_le_clear_resolv_list+0x13d/0x240
      hci_cmd_complete_evt+0x373/0xab0
      hci_event_packet+0x4e8/0xc70
      hci_rx_work+0x367/0xf00
@@ -188,33 +199,31 @@ KASAN report as below:
      ret_from_fork+0x659/0x940
      ret_from_fork_asm+0x1a/0x30
 
-    The buggy address belongs to the object at ffff888105ee6c40
-                                                                which
-                                belongs to the cache kmalloc-32 of size 32
+    The buggy address belongs to the object at ffff88810b036e00
+    which belongs to the cache kmalloc-64 of size 64
     The buggy address is located 22 bytes inside of
-                                                                freed
-                                32-byte region [ffff888105ee6c40,
-                                ffff888105ee6c60)
+    freed 64-byte region [ffff88810b036e00, ffff88810b036e40)
 
     The buggy address belongs to the physical page:
-        page: refcount:0 mapcount:0 mapping:0000000000000000
-    index:0xffff888105ee69c0 pfn:0x105ee6
-    flags: 0x200000000000200(workingset|node=0|zone=2)
+    page: refcount:0 mapcount:0 mapping:0000000000000000 index:0x0
+    pfn:0x10b036
+    flags: 0x200000000000000(node=0|zone=2)
     page_type: f5(slab)
-        raw: 0200000000000200 ffff888100042780 ffffea0004187150
-    ffffea00042534d0
-        raw: ffff888105ee69c0 000000000040003f 00000000f5000000
+    raw: 0200000000000000 ffff8881000428c0 dead000000000100
+    dead000000000122
+    raw: 0000000000000000 0000000000200020 00000000f5000000
     0000000000000000
     page dumped because: kasan: bad access detected
 
     Memory state around the buggy address:
-     ffff888105ee6b00: fa fb fb fb fc fc fc fc fa fb fb fb fc fc fc fc
-     ffff888105ee6b80: fa fb fb fb fc fc fc fc fa fb fb fb fc fc fc fc
-    >ffff888105ee6c00: fa fb fb fb fc fc fc fc fa fb fb fb fc fc fc fc
-                                                     ^
-     ffff888105ee6c80: fa fb fb fb fc fc fc fc fa fb fb fb fc fc fc fc
-     ffff888105ee6d00: fa fb fb fb fc fc fc fc fa fb fb fb fc fc fc fc
+     ffff88810b036d00: 00 00 00 00 00 00 00 00 fc fc fc fc fc fc fc fc
+     ffff88810b036d80: fa fb fb fb fb fb fb fb fc fc fc fc fc fc fc fc
+    >ffff88810b036e00: fa fb fb fb fb fb fb fb fc fc fc fc fc fc fc fc
+                             ^
+     ffff88810b036e80: fa fb fb fb fb fb fb fb fc fc fc fc fc fc fc fc
+     ffff88810b036f00: fa fb fb fb fb fb fb fb fc fc fc fc fc fc fc fc
     ==================================================================
+    Disabling lock debugging due to kernel taint
 
 Fixes: e8907f76544f ("Bluetooth: hci_sync: Make use of hci_cmd_sync_queue set 3")
 Assisted-by: LLM
@@ -222,107 +231,61 @@ Signed-off-by: Cen Zhang <zzzccc427@gmail.com>
 Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/bluetooth/hci_sync.c | 53 ++++++++++++++++++++++++++++++++--------
- 1 file changed, 43 insertions(+), 10 deletions(-)
+ net/bluetooth/hci_sync.c | 21 ++++++++++++---------
+ 1 file changed, 12 insertions(+), 9 deletions(-)
 
 diff --git a/net/bluetooth/hci_sync.c b/net/bluetooth/hci_sync.c
-index b29d996feab6b..ddfa09b8176a1 100644
+index ddfa09b8176a1..c6ae135f1b3b6 100644
 --- a/net/bluetooth/hci_sync.c
 +++ b/net/bluetooth/hci_sync.c
-@@ -2923,6 +2923,31 @@ static struct conn_params *conn_params_copy(struct list_head *list, size_t *n)
- 	return p;
- }
+@@ -2491,15 +2491,17 @@ static int hci_le_del_resolve_list_sync(struct hci_dev *hdev,
+ 					bdaddr_t *bdaddr, u8 bdaddr_type)
+ {
+ 	struct hci_cp_le_del_from_resolv_list cp;
+-	struct bdaddr_list_with_irk *entry;
++	bool exists;
  
-+static struct conn_params *le_accept_list_copy(struct hci_dev *hdev,
-+					       size_t *n)
-+{
-+	struct bdaddr_list *entry;
-+	struct conn_params *params;
-+	size_t i = 0;
-+
+ 	if (!use_ll_privacy(hdev))
+ 		return 0;
+ 
+ 	/* Check if the IRK has been programmed */
+-	entry = hci_bdaddr_list_lookup_with_irk(&hdev->le_resolv_list, bdaddr,
+-						bdaddr_type);
+-	if (!entry)
 +	hci_dev_lock(hdev);
-+
-+	*n = list_count_nodes(&hdev->le_accept_list);
-+	params = kvzalloc_objs(struct conn_params, *n);
-+	if (!params)
-+		goto unlock;
-+
-+	list_for_each_entry(entry, &hdev->le_accept_list, list) {
-+		bacpy(&params[i].addr, &entry->bdaddr);
-+		params[i].addr_type = entry->bdaddr_type;
-+		i++;
-+	}
-+
-+unlock:
++	exists = hci_bdaddr_list_lookup_with_irk(&hdev->le_resolv_list,
++						 bdaddr, bdaddr_type);
 +	hci_dev_unlock(hdev);
-+	return params;
-+}
-+
- /* Clear LE Accept List */
- static int hci_le_clear_accept_list_sync(struct hci_dev *hdev)
++	if (!exists)
+ 		return 0;
+ 
+ 	cp.bdaddr_type = bdaddr_type;
+@@ -2555,8 +2557,8 @@ static int hci_le_add_resolve_list_sync(struct hci_dev *hdev,
  {
-@@ -2953,7 +2978,6 @@ static int hci_le_clear_accept_list_sync(struct hci_dev *hdev)
- static u8 hci_update_accept_list_sync(struct hci_dev *hdev)
- {
- 	struct conn_params *params;
--	struct bdaddr_list *b, *t;
- 	u8 num_entries = 0;
- 	bool pend_conn, pend_report;
- 	u8 filter_policy;
-@@ -3018,20 +3042,27 @@ static u8 hci_update_accept_list_sync(struct hci_dev *hdev)
- 	 * report. If not present in either list, then remove it from
- 	 * the controller.
- 	 */
--	list_for_each_entry_safe(b, t, &hdev->le_accept_list, list) {
-+	params = le_accept_list_copy(hdev, &n);
-+	if (!params) {
-+		err = -ENOMEM;
-+		goto done;
-+	}
-+
-+	for (i = 0; i < n; i++) {
- 		rcu_read_lock();
+ 	struct hci_cp_le_add_to_resolv_list cp;
+ 	struct smp_irk *irk;
+-	struct bdaddr_list_with_irk *entry;
+ 	struct hci_conn_params *p;
++	bool exists;
  
--		if (hci_conn_hash_lookup_le(hdev, &b->bdaddr, b->bdaddr_type)) {
-+		if (hci_conn_hash_lookup_le(hdev, &params[i].addr,
-+					    params[i].addr_type)) {
- 			rcu_read_unlock();
- 			continue;
- 		}
+ 	if (!use_ll_privacy(hdev))
+ 		return 0;
+@@ -2578,10 +2580,11 @@ static int hci_le_add_resolve_list_sync(struct hci_dev *hdev,
+ 		return 0;
  
- 		pend_conn = hci_pend_le_action_lookup(&hdev->pend_le_conns,
--						      &b->bdaddr,
--						      b->bdaddr_type);
--		pend_report = hci_pend_le_action_lookup(&hdev->pend_le_reports,
--							&b->bdaddr,
--							b->bdaddr_type);
-+						      &params[i].addr,
-+						      params[i].addr_type);
-+		pend_report = hci_pend_le_action_lookup(
-+			&hdev->pend_le_reports, &params[i].addr,
-+			params[i].addr_type);
+ 	/* Check if the IK has _not_ been programmed yet. */
+-	entry = hci_bdaddr_list_lookup_with_irk(&hdev->le_resolv_list,
+-						&params->addr,
+-						params->addr_type);
+-	if (entry)
++	hci_dev_lock(hdev);
++	exists = hci_bdaddr_list_lookup_with_irk(
++		&hdev->le_resolv_list, &params->addr, params->addr_type);
++	hci_dev_unlock(hdev);
++	if (exists)
+ 		return 0;
  
- 		rcu_read_unlock();
- 
-@@ -3039,14 +3070,16 @@ static u8 hci_update_accept_list_sync(struct hci_dev *hdev)
- 		 * remove it from the acceptlist.
- 		 */
- 		if (!pend_conn && !pend_report) {
--			hci_le_del_accept_list_sync(hdev, &b->bdaddr,
--						    b->bdaddr_type);
-+			hci_le_del_accept_list_sync(hdev, &params[i].addr,
-+						    params[i].addr_type);
- 			continue;
- 		}
- 
- 		num_entries++;
- 	}
- 
-+	kvfree(params);
-+
- 	/* Since all no longer valid accept list entries have been
- 	 * removed, walk through the list of pending connections
- 	 * and ensure that any new device gets programmed into
+ 	cp.bdaddr_type = params->addr_type;
 -- 
 2.53.0
 
