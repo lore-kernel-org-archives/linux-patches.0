@@ -1,53 +1,55 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795623937;
-	b=ZW+Nf8dD9DnSze6UehwA1qQ4mBDBdFqVxHXtBtqTza2J3tX24DHI3CNYW7/Wrk2LQuJB
-	 sNWMuC50T0y2Ubp7DRSgX7wFoGa9O+TQUA6DAb+mUKCybwttCF8hVFE8so2+HSlZnYFnq
-	 mzxPVUllco/EA0b6/DCEE0U7rJOwiodxYZ/xF0akDw4m7nxeN30KbsFXmVy0551Lg8FmZ
-	 6E9+VYTSy6x9wRuoIaxP0dI5w/ZdBl37N0FHe3FglQB3gCxrxNKOMsEFhcb+NMGVx/q6f
-	 aG9i6Yc7jwDH/QLTEXedW6BD1CS+Nl8gvnlA4/yJipt4Vhey2rTBDEigelIPCjAZJzA==
+	t=1795623940;
+	b=FjDPaPkytceChPT5b7OdgF9EBlx1CFHLLpC57MJoc9V7MXL4FCkzjIMeCnqcwNVLeXS2
+	 tfoXfX0aZheEqt+NYRbn+JjCllIbd09mN0XWqopWZZiV5m0wBfDquhwLW3JljOqSQ2Ky2
+	 dzenCWN8b9Hao8gzWaSBsjl3LWnbYzCzbXeYxbXbAv449VWd82O35KfwVHPdKkTqKmx24
+	 VNBSMBdWdc5qDKToMv9Y1GcAQvUD7lTDVCQIsGp088uc2GKZ0gt2du7SfAYzbfBhDX9Sf
+	 bC6EVJdhcE86Bef90vJ9Nk06q8yp2a/CUU2wzKFvGtuiEzCvch5tMzlx1LjRjuG888Q==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795623937;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795623940;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=KL2CiuggNKOcBnAhg3sJTnHDXEPnWbnziVsWNp6EHLw=;
-	b=D0yTvrylMg+aTVPBKW9ZvFX32aUi/rFQVrxK2wvISRa/u8sZy/reTa85T6+z6uuu84SK
-	 mjjQ17jz6W/r8GCg9WlZb0S4VCwMGKr5/lhWRTPtAgft/pjluO/yceWGFcsI/GvDde0bM
-	 lk7SJuvLIUjZBPHctFSaua552M2GJ1dKn38YyGs4iwOIJ0KS4M2RhfERnFf6j4OOKfOrz
-	 YM//O7kmHYQNya8Z1JNY4MWWZXq33Oq7vVs09Vj1NmVol+1JGvzcVIZXvAeXsvz3q9AjY
-	 8nxMmvVhn1yJV/9nGvxItz5/6eMqSAvsF+nTtYjHk4q0/AVjd0+z2pmP28szs3q/mgQ==
+	bh=PGFunurA/S5Q/sSki0rlhHhwkM6EnEEkd0KAV3KaEcA=;
+	b=e+j+f5/1WCAfsmKrdgJ6hflWqVonnFY+mFdNdFs4+LDhmdBZAMRpxsyfJz9lirx7ae/N
+	 ssFSX//KxyPJmRZcd16/h3otFId4VEc8Ct4BUVoTHJLwVPRLWImrIwSbLXmU7Pe7BJgsS
+	 r1+Q7VF75a/hDO2sUqsvbDdHq098Gx5pS/6qr/60aSoLZFEC/aoqCsviCjqakBXWbJRyD
+	 2TeqDI3/mQtCDcgjqSykDS0w5yR+IAdlanun2F12tTic2fZ3m5N/iBHGBpglqvSg6wLhx
+	 TJWdON4BUEmaBKXgTjr3dlG9DC024rw4ShC0EBJHX98pwJ22VDNeGv/fUdSonCoqfYw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=1osJewOF;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=YOF6JlaQ;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 72415606A321;
-	Wed, 25 Nov 2026 16:25:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5C9B1606A326;
+	Wed, 25 Nov 2026 16:25:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=1osJewOF
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BC2E41F000C0;
-	Wed, 25 Nov 2026 16:25:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=YOF6JlaQ
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A59C91F000CA;
+	Wed, 25 Nov 2026 16:25:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795623937;
-	bh=KL2CiuggNKOcBnAhg3sJTnHDXEPnWbnziVsWNp6EHLw=;
+	s=korg; t=1795623940;
+	bh=PGFunurA/S5Q/sSki0rlhHhwkM6EnEEkd0KAV3KaEcA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=1osJewOFAD3qQ3QHPWAzD2dJvSaj5+5UjUOwbJiN2BDPizrp/uVU4OW8CeEwV20cr
-	 rGexY06n5uq5J5UO7NXGFkdoxtRnZctW7EU1Bl+5z+tRk/Xd+B0WoSvSJC+ggtdClK
-	 Am1oooCVk+NMWsy7VG0+xFz3+pdj36Xb1+XIuSDE=
+	b=YOF6JlaQYTwPH5tkCy8fgJLJd73HL66VPkAlhNeT4vqT0SUBCWEjZ5TvYM6VtTJW3
+	 7tDkPxpSBg3eGpnkMoDESZfdfmuhe4AcQOU5mr2goSvm7S1gny8gK6LuyQI6vQnGTO
+	 GtqcweLMfhTe4A0wr/QJunNoYMOjBtoDUVTcpGNg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jerome Marchand <jmarchan@redhat.com>,
-	Yonghong Song <yonghong.song@linux.dev>,
-	Alexei Starovoitov <ast@kernel.org>,
+	Christian Brauner <brauner@kernel.org>,
+	Jan Kara <jack@suse.cz>,
+	Baokun Li <libaokun@linux.alibaba.com>,
+	Tejun Heo <tj@kernel.org>,
+	Eric Hagberg <ehagberg@janestreet.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 009/816] bpf: Specify access type of bpf_sysctl_get_name args
-Date: Wed, 25 Nov 2026 15:25:57 +0100
-Message-ID: <20261125143849.432749414@linuxfoundation.org>
+Subject: [PATCH 6.12 010/816] writeback: use a per-sb counter to drain inode wb switches at umount
+Date: Wed, 25 Nov 2026 15:25:58 +0100
+Message-ID: <20261125143849.455085728@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143849.205329330@linuxfoundation.org>
 References: <20261125143849.205329330@linuxfoundation.org>
@@ -69,46 +71,320 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jerome Marchand <jmarchan@redhat.com>
+From: Baokun Li <libaokun@linux.alibaba.com>
 
-[ Upstream commit 2eb7648558a7911f2208e8940cd22ca40e93cc76 ]
+commit 31c1d19ead2c26a63859a2757d8b786765ba9cdd upstream.
 
-The second argument of bpf_sysctl_get_name() helper is a pointer to a
-buffer that is being written to. However that isn't specify in the
-prototype.
+Tracking in-flight inode wb switches with a single global counter
+(isw_nr_in_flight) plus a synchronize_rcu() based wait in
+cgroup_writeback_umount() forces every umount to take a global hit
+whenever any other superblock on the system has wb switches in flight,
+even if the superblock being unmounted has none of its own.
 
-Until commit 37cce22dbd51a ("bpf: verifier: Refactor helper access
-type tracking"), all helper accesses were considered as a possible
-write access by the verifier, so no big harm was done. However, since
-then, the verifier might make wrong asssumption about the content of
-that address which might lead it to make faulty optimizations (such as
-removing code that was wrongly labeled dead). This is what happens in
-test_sysctl selftest to the tests related to sysctl_get_name.
+Replace the global synchronize_rcu()/flush_workqueue() pair with a
+per-sb counter, s_isw_nr_in_flight, plus three small helpers:
 
-Add MEM_WRITE flag the second argument of bpf_sysctl_get_name().
+  - cgroup_writeback_pin(sb)   - increment counter
+  - cgroup_writeback_unpin(sb) - decrement and wake drainer if last
+  - cgroup_writeback_drain(sb) - wait for counter to reach zero
 
-Signed-off-by: Jerome Marchand <jmarchan@redhat.com>
-Acked-by: Yonghong Song <yonghong.song@linux.dev>
-Link: https://lore.kernel.org/r/20250619140603.148942-2-jmarchan@redhat.com
-Signed-off-by: Alexei Starovoitov <ast@kernel.org>
+The wiring is:
+
+  - inode_prepare_wbs_switch() pins before checking SB_ACTIVE and
+    grabbing the inode; failure paths unpin before returning.  A
+    lockless SB_ACTIVE check at the top of the function lets us skip
+    the atomic_inc/smp_mb dance once SB_ACTIVE has been cleared (it
+    is monotonic and never set back).
+  - process_inode_switch_wbs() unpins after the matching iput().
+  - cgroup_writeback_umount() drains the per-sb counter via
+    wait_var_event().
+
+The smp_mb() pair between inode_prepare_wbs_switch() and
+cgroup_writeback_umount() keeps the SB_ACTIVE / counter ordering:
+either the umounter sees a non-zero counter and waits, or the
+switcher sees SB_ACTIVE cleared and aborts before grabbing the
+inode.
+
+The global isw_nr_in_flight is left in place, since it is still used
+to throttle in-flight switches via WB_FRN_MAX_IN_FLIGHT.
+
+The rcu_read_lock() extension in inode_switch_wbs() and
+cleanup_offline_cgwb() that the race fix added is no longer needed
+and is reverted; the synchronize_rcu() that the race fix added to
+cgroup_writeback_umount() is dropped as well.
+
+The following numbers were measured on a 16 vCPU QEMU guest with 4
+background superblocks each churning "create memcg -> write 1 MiB ->
+rmdir memcg" to keep the global isw_nr_in_flight non-zero.  Latencies
+are wall-clock around umount(8); only the target sb's umount is
+measured.
+
+Target sb runs its own cgwb churn:
+
+                              p50      p95      p99      max
+  global synchronize_rcu()   67.6 ms  88.3 ms  88.3 ms  96.8 ms
+  per-sb counter (this)       7.9 ms  10.0 ms  10.0 ms  10.1 ms
+
+Idle target umount latency under cross-sb cgwb-switch pressure:
+
+                              p50      p95      p99      max
+  global synchronize_rcu()   62.7 ms  95.4 ms 108.1 ms 108.6 ms
+  per-sb counter (this)       5.3 ms   6.9 ms   7.4 ms   7.4 ms
+  no-pressure baseline        4.9 ms   5.9 ms   6.3 ms   6.7 ms
+
+8 concurrent umounts of idle sbs under the same pressure:
+
+                              p50      p95      max
+  global synchronize_rcu()   61.3 ms  99.5 ms 113.7 ms
+  per-sb counter (this)       8.1 ms   9.1 ms   9.5 ms
+
+In-kernel cgroup_writeback_umount() time across the same run
+(bpftrace, ~340 calls covering all scenarios):
+
+  global synchronize_rcu()    12371 ms total (~36 ms / call)
+  per-sb counter (this)        1.37 ms total ( ~4 us / call)
+
+Suggested-by: Christian Brauner <brauner@kernel.org>
+Link: https://lore.kernel.org/r/177910456953.488929.2169908940676707307.b4-review@b4
+Reviewed-by: Jan Kara <jack@suse.cz>
+Signed-off-by: Baokun Li <libaokun@linux.alibaba.com>
+Link: https://patch.msgid.link/20260521095016.2791354-4-libaokun@linux.alibaba.com
+Acked-by: Tejun Heo <tj@kernel.org>
+Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
+[ ehagberg: Backported to 6.12.y. struct super_block lives in
+  include/linux/fs.h here, so add the field there. 6.12.y predates the
+  inode_state_read()/inode_state_set() accessors and the
+  trace_inode_switch_wbs_queue() tracepoint, so adjust context
+  accordingly. Also adjust context in cleanup_offline_cgwb() for
+  "writeback: keep cleanup_offline_cgwb()'s scan out of syncs".
+  No functional change from upstream. ]
+Signed-off-by: Eric Hagberg <ehagberg@janestreet.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/bpf/cgroup.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ fs/fs-writeback.c  | 97 ++++++++++++++++++++++------------------------
+ include/linux/fs.h |  8 ++++
+ 2 files changed, 55 insertions(+), 50 deletions(-)
 
-diff --git a/kernel/bpf/cgroup.c b/kernel/bpf/cgroup.c
-index 0674785e86767..bd47c4cb19910 100644
---- a/kernel/bpf/cgroup.c
-+++ b/kernel/bpf/cgroup.c
-@@ -2284,7 +2284,7 @@ static const struct bpf_func_proto bpf_sysctl_get_name_proto = {
- 	.gpl_only	= false,
- 	.ret_type	= RET_INTEGER,
- 	.arg1_type	= ARG_PTR_TO_CTX,
--	.arg2_type	= ARG_PTR_TO_MEM,
-+	.arg2_type	= ARG_PTR_TO_MEM | MEM_WRITE,
- 	.arg3_type	= ARG_CONST_SIZE,
- 	.arg4_type	= ARG_ANYTHING,
- };
+diff --git a/fs/fs-writeback.c b/fs/fs-writeback.c
+index c195c97717396..eb7f3a525e39b 100644
+--- a/fs/fs-writeback.c
++++ b/fs/fs-writeback.c
+@@ -488,6 +488,23 @@ static bool inode_do_switch_wbs(struct inode *inode,
+ 	return switched;
+ }
+ 
++static inline void cgroup_writeback_pin(struct super_block *sb)
++{
++	atomic_inc(&sb->s_isw_nr_in_flight);
++}
++
++static inline void cgroup_writeback_unpin(struct super_block *sb)
++{
++	if (atomic_dec_and_test(&sb->s_isw_nr_in_flight))
++		wake_up_var(&sb->s_isw_nr_in_flight);
++}
++
++static inline void cgroup_writeback_drain(struct super_block *sb)
++{
++	wait_var_event(&sb->s_isw_nr_in_flight,
++		       !atomic_read(&sb->s_isw_nr_in_flight));
++}
++
+ static void process_inode_switch_wbs(struct bdi_writeback *new_wb,
+ 				     struct inode_switch_wbs_context *isw)
+ {
+@@ -546,8 +563,12 @@ static void process_inode_switch_wbs(struct bdi_writeback *new_wb,
+ 		wb_put_many(old_wb, nr_switched);
+ 	}
+ 
+-	for (inodep = isw->inodes; *inodep; inodep++)
++	for (inodep = isw->inodes; *inodep; inodep++) {
++		struct super_block *sb = (*inodep)->i_sb;
++
+ 		iput(*inodep);
++		cgroup_writeback_unpin(sb);
++	}
+ 	wb_put(new_wb);
+ 	kfree(isw);
+ 	atomic_dec(&isw_nr_in_flight);
+@@ -590,16 +611,19 @@ void inode_switch_wbs_work_fn(struct work_struct *work)
+ static bool inode_prepare_wbs_switch(struct inode *inode,
+ 				     struct bdi_writeback *new_wb)
+ {
++	/* Avoid the atomic_inc/smp_mb dance once SB_ACTIVE is gone. */
++	if (!(inode->i_sb->s_flags & SB_ACTIVE))
++		return false;
++
+ 	/*
+-	 * Paired with smp_mb() in cgroup_writeback_umount().
+-	 * isw_nr_in_flight must be increased before checking SB_ACTIVE and
+-	 * grabbing an inode, otherwise isw_nr_in_flight can be observed as 0
+-	 * in cgroup_writeback_umount() and the isw_wq will be not flushed.
++	 * Pairs with smp_mb() in cgroup_writeback_umount(): the umounter either
++	 * sees a non-zero counter and waits, or we see SB_ACTIVE clear below.
+ 	 */
++	cgroup_writeback_pin(inode->i_sb);
+ 	smp_mb();
+ 
+ 	if (IS_DAX(inode))
+-		return false;
++		goto out_unpin;
+ 
+ 	/* while holding I_WB_SWITCH, no one else can update the association */
+ 	spin_lock(&inode->i_lock);
+@@ -607,13 +631,17 @@ static bool inode_prepare_wbs_switch(struct inode *inode,
+ 	    inode->i_state & (I_WB_SWITCH | I_FREEING | I_WILL_FREE) ||
+ 	    inode_to_wb(inode) == new_wb) {
+ 		spin_unlock(&inode->i_lock);
+-		return false;
++		goto out_unpin;
+ 	}
+ 	inode->i_state |= I_WB_SWITCH;
+ 	__iget(inode);
+ 	spin_unlock(&inode->i_lock);
+ 
+ 	return true;
++
++out_unpin:
++	cgroup_writeback_unpin(inode->i_sb);
++	return false;
+ }
+ 
+ static void wb_queue_isw(struct bdi_writeback *wb,
+@@ -652,19 +680,12 @@ static void inode_switch_wbs(struct inode *inode, int new_wb_id)
+ 
+ 	atomic_inc(&isw_nr_in_flight);
+ 
+-	/*
+-	 * Paired with synchronize_rcu() in cgroup_writeback_umount():
+-	 * holding rcu_read_lock across inode_prepare_wbs_switch()
+-	 * (covering the SB_ACTIVE check and the inode grab) and
+-	 * wb_queue_isw() ensures synchronize_rcu() cannot return until
+-	 * the work is queued, so the subsequent flush_workqueue() will
+-	 * wait for the switch.
+-	 */
+-	rcu_read_lock();
+ 	/* find and pin the new wb */
++	rcu_read_lock();
+ 	memcg_css = css_from_id(new_wb_id, &memory_cgrp_subsys);
+ 	if (memcg_css && !css_tryget(memcg_css))
+ 		memcg_css = NULL;
++	rcu_read_unlock();
+ 	if (!memcg_css)
+ 		goto out_free;
+ 
+@@ -679,11 +700,9 @@ static void inode_switch_wbs(struct inode *inode, int new_wb_id)
+ 	isw->inodes[0] = inode;
+ 
+ 	wb_queue_isw(new_wb, isw);
+-	rcu_read_unlock();
+ 	return;
+ 
+ out_free:
+-	rcu_read_unlock();
+ 	atomic_dec(&isw_nr_in_flight);
+ 	if (new_wb)
+ 		wb_put(new_wb);
+@@ -764,14 +783,6 @@ bool cleanup_offline_cgwb(struct bdi_writeback *wb)
+ 	 * moved ones. Exclude syncs as process_inode_switch_wbs() does.
+ 	 */
+ 	down_read(&wb->bdi->wb_switch_rwsem);
+-	/*
+-	 * Paired with synchronize_rcu() in cgroup_writeback_umount().
+-	 * Holding rcu_read_lock across the SB_ACTIVE check, the inode grab
+-	 * and wb_queue_isw() ensures synchronize_rcu() cannot return until
+-	 * the work is queued, so the subsequent flush_workqueue() will wait
+-	 * for the switch.
+-	 */
+-	rcu_read_lock();
+ 	spin_lock(&wb->list_lock);
+ 	/*
+ 	 * In addition to the inodes that have completed writeback, also switch
+@@ -790,7 +801,6 @@ bool cleanup_offline_cgwb(struct bdi_writeback *wb)
+ 
+ 	/* no attached inodes? bail out */
+ 	if (nr == 0) {
+-		rcu_read_unlock();
+ 		atomic_dec(&isw_nr_in_flight);
+ 		wb_put(new_wb);
+ 		kfree(isw);
+@@ -798,7 +808,6 @@ bool cleanup_offline_cgwb(struct bdi_writeback *wb)
+ 	}
+ 
+ 	wb_queue_isw(new_wb, isw);
+-	rcu_read_unlock();
+ 
+ 	return restart;
+ }
+@@ -1208,39 +1217,27 @@ int cgroup_writeback_by_id(u64 bdi_id, int memcg_id,
+ }
+ 
+ /**
+- * cgroup_writeback_umount - flush inode wb switches for umount
++ * cgroup_writeback_umount - wait for in-flight inode wb switches on @sb
+  * @sb: target super_block
+  *
+- * This function is called when a super_block is about to be destroyed and
+- * flushes in-flight inode wb switches.  An inode wb switch goes through
+- * RCU and then workqueue, so the two need to be flushed in order to ensure
+- * that all previously scheduled switches are finished.  As wb switches are
+- * rare occurrences and synchronize_rcu() can take a while, perform
+- * flushing iff wb switches are in flight.
++ * Wait until every inode wb switch that already passed the SB_ACTIVE
++ * check on this superblock has been completed by the worker.  Since
++ * SB_ACTIVE is cleared before this is called, no new switches can start
++ * for @sb, so s_isw_nr_in_flight will monotonically drop to zero.
+  */
+ void cgroup_writeback_umount(struct super_block *sb)
+ {
+-
+ 	if (!(sb->s_bdi->capabilities & BDI_CAP_WRITEBACK))
+ 		return;
+ 
+ 	/*
+-	 * SB_ACTIVE should be reliably cleared before checking
+-	 * isw_nr_in_flight, see generic_shutdown_super().
++	 * Pairs with smp_mb() in inode_prepare_wbs_switch(): we either observe
++	 * a non-zero counter and wait, or the switcher sees SB_ACTIVE clear
++	 * (cleared by generic_shutdown_super()) and bails before grabbing the
++	 * inode.
+ 	 */
+ 	smp_mb();
+-
+-	if (atomic_read(&isw_nr_in_flight)) {
+-		/*
+-		 * Paired with rcu_read_lock() in inode_switch_wbs() and
+-		 * cleanup_offline_cgwb().  synchronize_rcu() waits for any
+-		 * in-flight switcher that already passed the SB_ACTIVE check
+-		 * to finish queueing its work, so flush_workqueue() below
+-		 * will then drain it.
+-		 */
+-		synchronize_rcu();
+-		flush_workqueue(isw_wq);
+-	}
++	cgroup_writeback_drain(sb);
+ }
+ 
+ static int __init cgroup_writeback_init(void)
+diff --git a/include/linux/fs.h b/include/linux/fs.h
+index 67b57ce46b203..fc63611ac3c6c 100644
+--- a/include/linux/fs.h
++++ b/include/linux/fs.h
+@@ -1443,6 +1443,14 @@ struct super_block {
+ 
+ 	spinlock_t		s_inode_wblist_lock;
+ 	struct list_head	s_inodes_wb;	/* writeback inodes */
++
++#ifdef CONFIG_CGROUP_WRITEBACK
++	/*
++	 * Number of in-flight inode wb switches for this sb.  Drained by
++	 * cgroup_writeback_umount() before tear-down.
++	 */
++	atomic_t		s_isw_nr_in_flight;
++#endif
+ } __randomize_layout;
+ 
+ static inline struct user_namespace *i_user_ns(const struct inode *inode)
 -- 
 2.53.0
 
