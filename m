@@ -1,51 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795623953;
-	b=P2a2hYiW4z1c2hGadHUefVJcn5dR6Il4NFG44r8biLjuh+J1CALSSzmK++VRmjh9F01Y
-	 3OpML1OcSe5U2+8ejgx1wQiqOHniQ6l/BXB48o9ebMfzgXPn8m1Ab44zP1rKAajgOX/n0
-	 4KGSYaW/Qywy6Tdu6g49CpyHOAFeX3tHhaR/vvbKBEV3/SMPuGJvGXZRKEVwcEsOKXINc
-	 KSw60LxoBnsAqvevMIVe7VbM1Ae6u3vx7DrHP8j3vCM8v71vDnCZD5KDDTfUITzUWWqYC
-	 k1s1DtbBe1nlKjxW+pC3GK0Jw/0D0aHxpqNxC7eIBrLZX/4eR1D4Wx6meqmPOa2nyEg==
+	t=1795623956;
+	b=KjIlLh43Pm3107X1831t5ea79n5uqRTWjgSI4qtG6lhGKuMcmwQCCNG9p4b7SjWRJnh6
+	 ByCU8xK9joPO87/5H2Dr75X2SF7JHivqmyFhMDq6gRbSwJpgD9KEzldDY5Soxj0dkFg4F
+	 /iI2dZArlkWXxU4mRS2xdDaYvZxHHYm/D06Scv3/lCw1j+hEm46ZgGGXeN021CznWjtbZ
+	 lkNcKynGAInm2pSCsl32UXaOgcxe+bMTBNxqbXRczl+tAl5kBWoHDrtRoPfnTSUrAV4Ex
+	 LdM0T8SfXpAXqhJuqHQ3keZ8csf1mWq7q1rONXikmjOMHUZFRc8xwow8mVuV5adKAEQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795623953;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795623956;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=VBJXXDlJ2mVhbri4v5QwvlUHugI21uqlnX0nrxTMa7w=;
-	b=ByNYT5cu3M0IcEfdWKD8tKvmB0VsSN788jNYz5zahaFjAjitPYgfAaT9pY4P/4g7MgPx
-	 K+d6yB8uKF8Pk9C8PkZNnGkSQ+OXZuLSLPt3qhkPtwpE3H1tFI1W398g3+jtoUTsILaDZ
-	 Ji37rxQI93+PplieT3tjSv//WMRkq2HgQf1qPxBV3tYOTUMCdg4pdqEUvHfQRyIRDsT8r
-	 ofkSxM+jB51mGXNawOzH5Nb5l52jUUpnFnpVoXnzLmyhKdKxgfYrCpI2Qd6BUEoLaPNuF
-	 pDIRcCaWmJCieNzXhWKFwsLX1esbmxiPuUU/efBjq4Dt1IKvwy/2Jm4Ny+YFVrJooxA==
+	bh=tB+ZZF1QOCc2mb0RbniBW0kYrGMW7tkiTEJFP/SJdog=;
+	b=lEvQYCweUoqEwqMVxgttvUQ//pwvSc9kxZh7E/Q6BekqI6J0gCZoQblTDOjlgWRygEes
+	 x/nLeCNFtzaQGyYOnevJm1M4H9lrqfdNVkTxlIggj1HwGtlOtpTSz89m8wa6wbvX1wwRK
+	 M8/CKdJBFerJcs0PuCQKeDPOYYcVzS0d3gK8j4NjxJAzpTQcTk1DIg8UiT1CzIbm0eyJk
+	 mO3GBHA7kMZW8oKxqpMbyUPKmMst4N4MwkC/he0xYc62kib7Za27KeGA899uGr/9VQ7tz
+	 tluDV5wITFrWlA6znfz+1KKBuC2Vq9Oyh7b8e6Hs6FaPtQc0o8RYMge/eFzBfMOLvPw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=u2DQGQgd;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ZL5L4QXo;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 21B7C606A321;
-	Wed, 25 Nov 2026 16:25:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E9CDF606A321;
+	Wed, 25 Nov 2026 16:25:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=u2DQGQgd
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 182721F000C6;
-	Wed, 25 Nov 2026 16:25:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ZL5L4QXo
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 456F31F000C4;
+	Wed, 25 Nov 2026 16:25:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795623952;
-	bh=VBJXXDlJ2mVhbri4v5QwvlUHugI21uqlnX0nrxTMa7w=;
+	s=korg; t=1795623955;
+	bh=tB+ZZF1QOCc2mb0RbniBW0kYrGMW7tkiTEJFP/SJdog=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=u2DQGQgd5xgpVeGow/iV2Hk2kH24U08HFwmQ2IQTQwd0IqJpwqAlkIkYTveTCv2Qp
-	 Tf4c+y7gzYUfp95ilvik92FQA8AqEho2wWmEaUIzWXz2Cj/rhKZWRXFM1wBEqysBtF
-	 FiI3vTVEgBWnNFWX9I/7RuxpCcVANZmoOYY7TsL0=
+	b=ZL5L4QXozmcS8exxd1SBTDGxtJcPhOMfDgvjWV0uXugCaZoFwRYl4OOsqR2qzBe91
+	 vtw8vlPDb9TupBImCru5t1PUk1vSHOjDd4MTpV+PVQb6tTXQDaU0Fi0zFO3+KundcU
+	 dkvWc0AnXcbT//9M/mfIWYoYrH/OCRkLTLeV9UL0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jens Axboe <axboe@kernel.dk>,
+	Bernard Pidoux <bernard.f6bvp@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 031/816] io_uring: enable toggle of iowait usage when waiting on CQEs
-Date: Wed, 25 Nov 2026 15:26:19 +0100
-Message-ID: <20261125143849.938732486@linuxfoundation.org>
+Subject: [PATCH 6.12 040/816] bpqether: reserve the Ethernet devices own header room on transmit
+Date: Wed, 25 Nov 2026 15:26:28 +0100
+Message-ID: <20261125143850.150055104@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143849.205329330@linuxfoundation.org>
 References: <20261125143849.205329330@linuxfoundation.org>
@@ -67,153 +67,100 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jens Axboe <axboe@kernel.dk>
+From: Bernard Pidoux <bernard.f6bvp@gmail.com>
 
-Commit 07754bfd9aee59063f8549f6e4d455eae636ecc7 upstream.
+bpq_xmit() makes sure the frame has AX25_BPQ_HEADER_LEN (16) bytes of
+headroom, then pushes the two length bytes and lets dev_hard_header()
+of the underlying device build the link layer header. That covers a
+plain Ethernet header, but not a longer one.
 
-By default, io_uring marks a waiting task as being in iowait, if it's
-sleeping waiting on events and there are pending requests. This isn't
-necessarily always useful, and may be confusing on non-storage setups
-where iowait isn't expected. It can also cause extra power usage, by
-preventing the CPU from entering lower sleep states.
+A VLAN device on top of an Ethernet device that cannot insert the tag
+in hardware, with reorder_hdr turned off, pushes an 18 byte header
+(VLAN tag, then the Ethernet header). A UI frame sent from an AX.25
+datagram socket with 8 digipeaters reaches bpq_xmit() with 17 bytes of
+headroom once the KISS byte is dropped: skb_cow() leaves it alone, 15
+bytes remain after the length bytes, and eth_header() underflows the
+skb:
 
-This adds a new enter flag, IORING_ENTER_NO_IOWAIT. If set, then
-io_uring will not account the sleeping task as being in iowait. If the
-kernel supports this feature, then it will be marked by having the
-IORING_FEAT_NO_IOWAIT feature flag set.
+  skbuff: skb_under_panic: ... len:101 put:14 ... dev:eth0.5
+  kernel BUG at net/core/skbuff.c:209!
+  Call Trace:
+   eth_header
+   vlan_dev_hard_header
+   dev_hard_start_xmit
+   __dev_queue_xmit
+   ax25_sendmsg
+   __sys_sendto
 
-As the kernel currently does not support separating the iowait
-accounting and CPU frequency boosting, the IORING_ENTER_NO_IOWAIT
-controls both of these at the same time. In the future, if those do end
-up being split, then it'd be possible to control them separately.
-However, it seems more likely that the kernel will decouple iowait and
-CPU frequency boosting anyway.
+No privilege is needed to open and bind such a socket, so any local
+user can crash a host that runs bpqether over this kind of VLAN.
 
-[ 6.12: only the NO_IOWAIT flag bits are added, the EXT_ARG_REG and
-  RW_ATTR bits before them don't exist here. io_get_ext_arg() has no
-  ctx argument. ]
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Look up the Ethernet device first and ask skb_cow() for
+LL_RESERVED_SPACE() of that device plus the two length bytes.
+
+Tested in a QEMU guest (6.12.94, KASAN) with bpq devices on eth0, on
+eth0.6 (reorder_hdr on) and on eth0.5 (reorder_hdr off), eth0 being a
+virtio-net port without VLAN tag insertion: UI frames with 0, 7 and 8
+digipeaters on each. Before the change the 8 digipeater frame on
+eth0.5 panicked the guest with 15 bytes of headroom left; after it,
+79 bytes are left and all frames are sent, with no kernel report.
+
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Signed-off-by: Bernard Pidoux <bernard.f6bvp@gmail.com>
+Assisted-by: Claude:claude-opus-5-5
+(cherry picked from commit 6b7e0767b46d918b5c8a5a2fbb8a9c8a2531d698)
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/uapi/linux/io_uring.h |  2 ++
- io_uring/io_uring.c           | 31 +++++++++++++++++++------------
- 2 files changed, 21 insertions(+), 12 deletions(-)
+ drivers/net/hamradio/bpqether.c | 25 ++++++++++++++-----------
+ 1 file changed, 14 insertions(+), 11 deletions(-)
 
-diff --git a/include/uapi/linux/io_uring.h b/include/uapi/linux/io_uring.h
-index fdd7b931ea1d4..e777e6b128e85 100644
---- a/include/uapi/linux/io_uring.h
-+++ b/include/uapi/linux/io_uring.h
-@@ -518,6 +518,7 @@ struct io_cqring_offsets {
- #define IORING_ENTER_EXT_ARG		(1U << 3)
- #define IORING_ENTER_REGISTERED_RING	(1U << 4)
- #define IORING_ENTER_ABS_TIMER		(1U << 5)
-+#define IORING_ENTER_NO_IOWAIT		(1U << 7)
+diff --git a/drivers/net/hamradio/bpqether.c b/drivers/net/hamradio/bpqether.c
+index f027205347d34..ea6bee45e2a4d 100644
+--- a/drivers/net/hamradio/bpqether.c
++++ b/drivers/net/hamradio/bpqether.c
+@@ -257,12 +257,24 @@ static netdev_tx_t bpq_xmit(struct sk_buff *skb, struct net_device *dev)
+ 	skb_pull(skb, 1);			/* Drop KISS byte */
+ 	size = skb->len;
  
- /*
-  * Passed in for io_uring_setup(2). Copied back with updated info on success
-@@ -554,6 +555,7 @@ struct io_uring_params {
- #define IORING_FEAT_REG_REG_RING	(1U << 13)
- #define IORING_FEAT_RECVSEND_BUNDLE	(1U << 14)
- #define IORING_FEAT_MIN_TIMEOUT		(1U << 15)
-+#define IORING_FEAT_NO_IOWAIT		(1U << 17)
- 
- /*
-  * io_uring_register(2) opcodes and arguments
-diff --git a/io_uring/io_uring.c b/io_uring/io_uring.c
-index 09551e3907f91..630b306a849f0 100644
---- a/io_uring/io_uring.c
-+++ b/io_uring/io_uring.c
-@@ -2532,8 +2532,17 @@ static int io_cqring_schedule_timeout(struct io_wait_queue *iowq,
- 	return READ_ONCE(iowq->hit_timeout) ? -ETIME : 0;
- }
- 
-+struct ext_arg {
-+	size_t argsz;
-+	struct __kernel_timespec __user *ts;
-+	const sigset_t __user *sig;
-+	ktime_t min_time;
-+	bool iowait;
-+};
++	bpq = netdev_priv(dev);
 +
- static int __io_cqring_wait_schedule(struct io_ring_ctx *ctx,
- 				     struct io_wait_queue *iowq,
-+				     struct ext_arg *ext_arg,
- 				     ktime_t start_time)
- {
- 	int ret = 0;
-@@ -2543,7 +2552,7 @@ static int __io_cqring_wait_schedule(struct io_ring_ctx *ctx,
- 	 * can take into account that the task is waiting for IO - turns out
- 	 * to be important for low QD IO.
++	orig_dev = dev;
++	dev = bpq_get_ether_dev(dev);
++	if (!dev) {
++		orig_dev->stats.tx_dropped++;
++		kfree_skb(skb);
++		return NETDEV_TX_OK;
++	}
++
+ 	/*
+ 	 * We're about to mess with the skb which may still shared with the
+ 	 * generic networking code so unshare and ensure it's got enough
+-	 * space for the BPQ headers.
++	 * space for the length bytes and for the link layer header of the
++	 * Ethernet device. That header can be longer than an Ethernet
++	 * header, e.g. on a VLAN device that inserts the tag itself.
  	 */
--	if (current_pending_io())
-+	if (ext_arg->iowait && current_pending_io())
- 		current->in_iowait = 1;
- 	if (iowq->timeout != KTIME_MAX || iowq->min_timeout)
- 		ret = io_cqring_schedule_timeout(iowq, ctx->clockid, start_time);
-@@ -2556,6 +2565,7 @@ static int __io_cqring_wait_schedule(struct io_ring_ctx *ctx,
- /* If this returns > 0, the caller should retry */
- static inline int io_cqring_wait_schedule(struct io_ring_ctx *ctx,
- 					  struct io_wait_queue *iowq,
-+					  struct ext_arg *ext_arg,
- 					  ktime_t start_time)
- {
- 	if (unlikely(READ_ONCE(ctx->check_cq)))
-@@ -2569,16 +2579,9 @@ static inline int io_cqring_wait_schedule(struct io_ring_ctx *ctx,
- 	if (unlikely(io_should_wake(iowq)))
- 		return 0;
+-	if (skb_cow(skb, AX25_BPQ_HEADER_LEN)) {
++	if (skb_cow(skb, LL_RESERVED_SPACE(dev) + 2)) {
+ 		if (net_ratelimit())
+ 			pr_err("bpqether: out of memory\n");
+ 		kfree_skb(skb);
+@@ -275,15 +287,6 @@ static netdev_tx_t bpq_xmit(struct sk_buff *skb, struct net_device *dev)
+ 	*ptr++ = (size + 5) % 256;
+ 	*ptr++ = (size + 5) / 256;
  
--	return __io_cqring_wait_schedule(ctx, iowq, start_time);
-+	return __io_cqring_wait_schedule(ctx, iowq, ext_arg, start_time);
- }
- 
--struct ext_arg {
--	size_t argsz;
--	struct __kernel_timespec __user *ts;
--	const sigset_t __user *sig;
--	ktime_t min_time;
--};
+-	bpq = netdev_priv(dev);
 -
- /*
-  * Wait until events become available, if we don't already have some. The
-  * application must reap them itself, as they reside on the shared cq ring.
-@@ -2660,7 +2663,7 @@ static int io_cqring_wait(struct io_ring_ctx *ctx, int min_events, u32 flags,
- 							TASK_INTERRUPTIBLE);
- 		}
- 
--		ret = io_cqring_wait_schedule(ctx, &iowq, start_time);
-+		ret = io_cqring_wait_schedule(ctx, &iowq, ext_arg, start_time);
- 		__set_current_state(TASK_RUNNING);
- 		atomic_set(&ctx->cq_wait_nr, IO_CQ_WAKE_INIT);
- 
-@@ -3363,6 +3366,8 @@ static int io_get_ext_arg(unsigned flags, const void __user *argp,
- {
- 	struct io_uring_getevents_arg arg;
- 
-+	ext_arg->iowait = !(flags & IORING_ENTER_NO_IOWAIT);
-+
- 	/*
- 	 * If EXT_ARG isn't set, then we have no timespec and the argp pointer
- 	 * is just a pointer to the sigset_t.
-@@ -3399,7 +3404,8 @@ SYSCALL_DEFINE6(io_uring_enter, unsigned int, fd, u32, to_submit,
- 	if (unlikely(flags & ~(IORING_ENTER_GETEVENTS | IORING_ENTER_SQ_WAKEUP |
- 			       IORING_ENTER_SQ_WAIT | IORING_ENTER_EXT_ARG |
- 			       IORING_ENTER_REGISTERED_RING |
--			       IORING_ENTER_ABS_TIMER)))
-+			       IORING_ENTER_ABS_TIMER |
-+			       IORING_ENTER_NO_IOWAIT)))
- 		return -EINVAL;
- 
- 	/*
-@@ -3786,7 +3792,8 @@ static __cold int io_uring_create(unsigned entries, struct io_uring_params *p,
- 			IORING_FEAT_EXT_ARG | IORING_FEAT_NATIVE_WORKERS |
- 			IORING_FEAT_RSRC_TAGS | IORING_FEAT_CQE_SKIP |
- 			IORING_FEAT_LINKED_FILE | IORING_FEAT_REG_REG_RING |
--			IORING_FEAT_RECVSEND_BUNDLE | IORING_FEAT_MIN_TIMEOUT;
-+			IORING_FEAT_RECVSEND_BUNDLE | IORING_FEAT_MIN_TIMEOUT |
-+			IORING_FEAT_NO_IOWAIT;
- 
- 	if (copy_to_user(params, p, sizeof(*p))) {
- 		ret = -EFAULT;
+-	orig_dev = dev;
+-	if ((dev = bpq_get_ether_dev(dev)) == NULL) {
+-		orig_dev->stats.tx_dropped++;
+-		kfree_skb(skb);
+-		return NETDEV_TX_OK;
+-	}
+-
+ 	skb->protocol = ax25_type_trans(skb, dev);
+ 	skb_reset_network_header(skb);
+ 	dev_hard_header(skb, dev, ETH_P_BPQ, bpq->dest_addr, NULL, 0);
 -- 
 2.53.0
 
