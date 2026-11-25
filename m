@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795625180;
-	b=qtBBCHRjrtwZwp30uapmVlQzLVtVY4+5R8N+Cld1fB4hZ5MmJh7rqWvoIfwhejIf0qws
-	 6EwkoEauohf0jcXzuLc/967jY4uAqVlYpITd9PsR5Bf5E/wn61Zk9UdKfwH8Hcx4CGPSU
-	 QlkSVdWoXKP5HO9FEKtwNhScU+mHx8gbsce9/ptFfE9k+MTSPP4oiskoOrsEOPq+vDNxx
-	 HXPvPekbYbE570TCnfGp7Bfc54a29n9FEDnUHOE7PMApex73FjWfxsDtAx0cbQ5M/Yf+H
-	 avRAsK/Ye/EuhLCtoKWMjD8WgDIdTHLAt/SjdCz7cRM8krgV9G3rulrcb4RNZOubrBg==
+	t=1795625183;
+	b=b7p0I1x+71UDfaAqx/HKVfk+FQ1Bny1N/IYuJTf7Z3djbz1WJ84NVZPbRknz8Gn/6iXv
+	 yfdNriT1DP1YBoyfa7arDYhdadLmcbjB9Idm0BpjD927eqZnzPGQYDrQPtx/eYwxkHqId
+	 S5G1DMlmyJUyNurROq6Oj8/UAMvqfmVFNAwPkoxBUBB2/62X1hWpXGpSZSimCMMfE7CPK
+	 GBR3IYUHsqjAzRrnflgrRbC0MW9n3200pCkSdvmh3DAshs9jjdj3ikpyAb81vLUHFArs6
+	 kX8N2pR/fyYoeM/5J30M+WD5FIzBr8vlCcnNrDiG/nB/SPo6OzrOVVd63N7M+0kDmSw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795625180;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795625183;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=tPnSXCPM9ukV2sVALm0QSY217dYkxQICkiEAGIoCkQA=;
-	b=dktFVhDZDZRGudD5kwgfL8BFNXSGO6urCVAMRSnEL6+CZ+Dr3+NCFnQqOgU7TgKeU+l5
-	 l1BgDDKryZg2ky/1pFspoDRZHple7OZZpb5e3y2IpRi2upAdglB4GT5p50QGXgHLu+32y
-	 8mnU1pFovcJ9WHx6GnK3oI+KRGIEd0U1SR3NguwiN/I8Zqz2HmvUkp7ka6B/HoJJUvlma
-	 pjvdteopCUQwRyUtoaGhnoKT83xWF5Eb5/En+retbBxCQHYltc5Jh3uvzGOuGNOd031BH
-	 ZGsfneY5n64r5cJwIgRy2sx8uG/n+eKyBUMPrxikL5UnA653UpYuf2JUAKgozJtBeHg==
+	bh=T371u+AcX7s3PQR+Ou2IELdDmg/kEMfO1/VFnTk8pYU=;
+	b=hmQ2T8KqjZF8PPfkppft/uA9Gy2iWIXkggXplUMPNGEXqpeni69ja3CkOKLuc5rEEyuf
+	 9sldh0X5Og6xLT34qGCRlOclP764tUc4AxIH03lcr1joE0FC7aWGlr7wxxe4fz7Pcr0S1
+	 tDZoflm4xdOC8VV1ehDcvioEZ+XTHWje6JfQnGJIiT6lqJ3fWXPRsMcPLjrJbXSQDrjH2
+	 PCzqLhK5LHaX6BjSuHQf30T5MOvy2mX9gxT0i5dQykkN3zYRWrFcrDKOwHjPrJzDriLav
+	 MR/gk5TKQmxaxUseVizY7GgTbbX+bdQKZEm1n/5jd7cP9dvKsIsY4BUtgqEhSJjoh1A==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="WfL3qE/C";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=yiaHV6Bs;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 907AC606A31E;
-	Wed, 25 Nov 2026 16:46:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7ED84606A31E;
+	Wed, 25 Nov 2026 16:46:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=WfL3qE/C
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 778611F000C0;
-	Wed, 25 Nov 2026 16:46:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=yiaHV6Bs
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C264E1F000C0;
+	Wed, 25 Nov 2026 16:46:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795625180;
-	bh=tPnSXCPM9ukV2sVALm0QSY217dYkxQICkiEAGIoCkQA=;
+	s=korg; t=1795625183;
+	bh=T371u+AcX7s3PQR+Ou2IELdDmg/kEMfO1/VFnTk8pYU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=WfL3qE/CiOPCers5bMVmE97coQBwFm5HoAU3SOu857VFzCyLHFI4H3ZdJKSwb7tzy
-	 BubfKTRfdRAi1MQaACn58wSdieIp7kprPm8khmqu1vnt+RowVIUbwwYSWubBx2Kc67
-	 JWyyI37azdUxwYV0Se0dcvilR2SqnLAJP8cjRiE0=
+	b=yiaHV6BsaVDf4YklnNgVEY2lVx581wLMUYp99Sbao5A7MnzEmJ+F3I5DFYfuLEar6
+	 gPiigfxpuk5eXigE6kIkSh0s+7OCx+eL+7aaiZkIBYJkoXF0wS6NtShd97ubSzw5kL
+	 gvJk4AP/eqKWaCAoTqMs18RJ6Xcn49O8NN9cEqLc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Abel Vesa <abel.vesa@oss.qualcomm.com>,
-	Bjorn Andersson <bjorn.andersson@oss.qualcomm.com>,
+	Huisong Li <lihuisong@huawei.com>,
+	Sudeep Holla <sudeep.holla@kernel.org>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 433/816] arm64: dts: qcom: x1-asus-vivobook-s15: Mark the EC reset gpio as reserved
-Date: Wed, 25 Nov 2026 15:33:01 +0100
-Message-ID: <20261125143859.215514122@linuxfoundation.org>
+Subject: [PATCH 6.12 434/816] ACPI: PCC: Free channel on OpRegion deactivation
+Date: Wed, 25 Nov 2026 15:33:02 +0100
+Message-ID: <20261125143859.238341252@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143849.205329330@linuxfoundation.org>
 References: <20261125143849.205329330@linuxfoundation.org>
@@ -68,40 +69,57 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Abel Vesa <abel.vesa@oss.qualcomm.com>
+From: Sudeep Holla <sudeep.holla@kernel.org>
 
-[ Upstream commit 94a0d3a2595821878de98d495e89691f694a2083 ]
+[ Upstream commit fa9c7ee692988edddc1da74bc5257d53dd3c7130 ]
 
-GPIO 65 from TLMM is used by the embedded controller as its reset line.
+ACPICA calls the address space setup callback with
+ACPI_REGION_DEACTIVATE when a PCC OperationRegion is torn down.
 
-On some devices, toggling the embedded controller reset line makes the
-device not power up at all, unless the battery is unplugged.
+The PCC setup callback currently allocates a fresh pcc_data and requests
+the mailbox channel before looking at the function argument. If ACPICA
+deactivates a region, this can leave the existing region context and
+mailbox channel unreleased, and may also request a channel during
+teardown.
 
-So reserve it in order to prevent Linux from requesting or
-reconfiguring it.
+Handle ACPI_REGION_DEACTIVATE before allocation. Free the PCC mailbox
+channel, release the region context and clear the context pointer.
 
-Fixes: d0e2f8f62dff ("arm64: dts: qcom: Add device tree for ASUS Vivobook S 15")
-Signed-off-by: Abel Vesa <abel.vesa@oss.qualcomm.com>
-Link: https://patch.msgid.link/20260922-dts-qcom-hamoa-reserve-ec-reset-gpio-v3-9-fde7f8a53382@oss.qualcomm.com
-Signed-off-by: Bjorn Andersson <bjorn.andersson@oss.qualcomm.com>
-[ sashal: Applied the one-line GPIO 65 reservation to the single x1e80100-asus-vivobook-s15.dts file, since the upstream split dtsi file doesn't exist here. ]
+Fixes: 77e2a04745ff ("ACPI: PCC: Implement OperationRegion handler for the PCC Type 3 subtype")
+Reviewed-by: Huisong Li <lihuisong@huawei.com>
+Signed-off-by: Sudeep Holla <sudeep.holla@kernel.org>
+Link: https://patch.msgid.link/20260922144302.3847593-4-sudeep.holla@kernel.org
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+[ sashal: kept the tree's existing kzalloc(sizeof(*data), GFP_KERNEL) allocation line instead of upstream's kzalloc_obj(*data) to resolve the context mismatch. ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/qcom/x1e80100-asus-vivobook-s15.dts | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/acpi/acpi_pcc.c | 13 +++++++++++++
+ 1 file changed, 13 insertions(+)
 
-diff --git a/arch/arm64/boot/dts/qcom/x1e80100-asus-vivobook-s15.dts b/arch/arm64/boot/dts/qcom/x1e80100-asus-vivobook-s15.dts
-index ce3fa29de7b4a..62a36017616a6 100644
---- a/arch/arm64/boot/dts/qcom/x1e80100-asus-vivobook-s15.dts
-+++ b/arch/arm64/boot/dts/qcom/x1e80100-asus-vivobook-s15.dts
-@@ -506,6 +506,7 @@ &smb2360_1_eusb2_repeater {
- &tlmm {
- 	gpio-reserved-ranges = <34 2>, /* Unused */
- 			       <44 4>, /* SPI (TPM) */
-+			       <65 1>, /* EC reset */
- 			       <238 1>; /* UFS Reset */
+diff --git a/drivers/acpi/acpi_pcc.c b/drivers/acpi/acpi_pcc.c
+index 683924a708ba0..04bb232603965 100644
+--- a/drivers/acpi/acpi_pcc.c
++++ b/drivers/acpi/acpi_pcc.c
+@@ -55,6 +55,19 @@ acpi_pcc_address_space_setup(acpi_handle region_handle, u32 function,
+ 	struct pcc_mbox_chan *pcc_chan;
+ 	acpi_status ret;
  
- 	edp_reg_en: edp-reg-en-state {
++	if (function == ACPI_REGION_DEACTIVATE) {
++		data = *region_context;
++		if (data) {
++			pcc_mbox_free_channel(data->pcc_chan);
++			kfree(data);
++			*region_context = NULL;
++		}
++		return AE_OK;
++	}
++
++	if (function != ACPI_REGION_ACTIVATE)
++		return AE_BAD_PARAMETER;
++
+ 	data = kzalloc(sizeof(*data), GFP_KERNEL);
+ 	if (!data)
+ 		return AE_NO_MEMORY;
 -- 
 2.53.0
 
