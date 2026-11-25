@@ -1,54 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795622454;
-	b=NcODn5gUoJWiQZZjIom/ZYk6o0zgsP2nMiYiVxh++CivRmDSJkn84yEMGO1v+xtoXRNI
-	 pbN3x7qYTtSpXx4emiZzvaSYwklnciUavfTnHsnAb5IAYFRrNW3MCDDvplAbpqe+JN5GM
-	 hIEpONgRJyFwHodOmD1UEMhJvLhiqdZzaPXE6RRKGQK5CcEnmgkIZi/c4kR6dhjkm55Zu
-	 vlSw0Xc2V/bWPi3i/dsIyBD0TiP3ie8X1Mmm+5vKxUsd/fauhADKs9NYbdg6K6DJWM34G
-	 RUbbNoCRNwUIKOf2jtdIWqzl267HQzYvRQMIj+keKkFKTqbJEqAuivG8GaMHSvQxXIA==
+	t=1795622457;
+	b=ZzoxZEK1+NvLwZJdiwJ0q2fKy+6WlPW+ib+et+Mx56Zaaf5VeR1q5nnfWzXlMnfWbKt2
+	 3MLN1Rpw4cNyybzl5G9fPiEjrdKQkIf9y3FpNi3m+mjcG57sGBSnMGfNQ2Hgq2bC85xIN
+	 GZzHE5ZC03+7yYoENvrudGFZKRlyai4AfpF53yKUMAj5r/sjbfg8LJP/iV9XchUw31kaL
+	 r/tOGf316jLxm1PAmrLkwrPtDcrgIOScwAF7RTp8VuoUxpOhVKPTNcGSzp7/IYoThpINX
+	 Lj9OmwLKr3sJWqEqhSCi34nmjx79F4npewVNq7u6K4hPGI2kFkqBbfXizzHtGviqSuA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795622454;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795622457;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Transfer-Encoding;
-	bh=6IcZTZMhQTMcJU+6JA6jYg9PHAN66cRLiR5xhFJeBtk=;
-	b=txszyLRGiAfQoCULHSDIc7wBP9zIphBHgOEL43GtKSa2aEiTgsVcDMdRfKaq9VhW2uSU
-	 qIF4xkT1vnw3ZG6LUoxaQ+64MDdtnaxzWq1KyEbvk6wGcOLnIMNwHerrnOjmhdBp/UA6T
-	 qpv/ETFewRlhBA6guG7zgMtvK+TlrP3qlSP7ZRlO20PInINRIYoJuYOs210FdryrvQjMd
-	 UmNmfjeEwNC+xSohb1TobLM559NS2SKSR3389gZ7YA2ffi8JJzKua0iPXU43dfwd3uSfC
-	 dNMppxVBmT+9S3btqs56ap3icOYtyrG9Ztt4huLQa1CO4+lWArUsNqIhLT2BXnLpnUg==
+	 MIME-Version:Content-Type:Content-Transfer-Encoding;
+	bh=SMBsZRtI4GD55yz970Pyx2T/rMiI6QDpDh/sAOObsQ4=;
+	b=VX7EPqUFFYdvqz7bU01gIoA5RpWYEnS/HXpM5nFEkaGMQgfa+ma8o/H2/vP7SJsgwbuY
+	 NlTWTPySH7/0MTt2RbRG4RrBHir5Kj4TzX6hC+g2QWeR2DtRuzru7Yyw+RYfGJMGyLU9g
+	 Y0WS0A56dEAopw5tYP2kxIqq+SMsVdC5pO1XOi+7s4b1gP/CLwDOyzJwAdwS75KRpLoX9
+	 E/QhT76Od9nLNt/vahqzemwZTQT1oyEWHfWMzIJk4VaKs4TPgZnjVyMocysDHA0CJXcm2
+	 Q8iRZ9tNkilQmYwYOMRqsowyLrQJ5DBCGJHbxFYBj91jWbm3+iWhBqLkEIYk4EZEeWw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=g0yu3u8L;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=pSHzky4M;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 690F3606A31E;
-	Wed, 25 Nov 2026 16:00:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1F380606A31E;
+	Wed, 25 Nov 2026 16:00:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=g0yu3u8L
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3D4851F000CF;
-	Wed, 25 Nov 2026 16:00:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=pSHzky4M
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 513311F000D0;
+	Wed, 25 Nov 2026 16:00:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795622453;
-	bh=6IcZTZMhQTMcJU+6JA6jYg9PHAN66cRLiR5xhFJeBtk=;
+	s=korg; t=1795622456;
+	bh=SMBsZRtI4GD55yz970Pyx2T/rMiI6QDpDh/sAOObsQ4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=g0yu3u8L6TzNN5eCIKv7CHrYEwWWqgJ51wsTRCitJE44vXihKLe46FKFwvBCgj2EN
-	 NYwrf+OVGq9WLEAkIo0E8/IrREZBpWZeNbHxnMAXrArXdRwd6NwKndGImObBlJjfNC
-	 JEdPqltxBCAwhBQrLc8O+gExcPM71nmwfAawN9LQ=
+	b=pSHzky4M49JjkdtvN+J9K/8Rfn8O5p0xfJFxbMYSQS4IlQeXuQ66h2jdA5Y7csPnt
+	 3hAhF4MfnzpUnBCpfy44MWn8inOlF6zIMuwbFxDr1w7nO8o9KfpKhliPQPj15hxzDq
+	 WpHNoDAHZC3KI4oHdyPikOc/o0j9FlDduSoDt7YA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sashiko <sashiko-bot@kernel.org>,
-	Kanishka De Silva <kpskanna1915@gmail.com>,
-	Joanne Koong <joannelkoong@gmail.com>,
-	Miklos Szeredi <mszeredi@redhat.com>,
+	Rodrigo Vivi <rodrigo.vivi@intel.com>,
+	"Michael J. Ruhl" <michael.j.ruhl@intel.com>,
+	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 541/990] fuse: zero the correct range on a short read reply
-Date: Wed, 25 Nov 2026 15:31:48 +0100
-Message-ID: <20261125143834.768501547@linuxfoundation.org>
+Subject: [PATCH 6.18 542/990] platform/x86/intel/pmt: complete pcidev to device update
+Date: Wed, 25 Nov 2026 15:31:49 +0100
+Message-ID: <20261125143834.792516338@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143822.072087159@linuxfoundation.org>
 References: <20261125143822.072087159@linuxfoundation.org>
@@ -64,128 +63,101 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Joanne Koong <joannelkoong@gmail.com>
+From: Michael J. Ruhl <michael.j.ruhl@intel.com>
 
-[ Upstream commit d0a079b5b94bf5e10f1c00bd092eda0333782037 ]
+[ Upstream commit b86e5062cb881f6e5c1ddb8913c1357a9508f6db ]
 
-When a read reply is shorter than the requested range, fuse_copy_folio()
-zeroes everything in the folio outside the copied bytes. However, for
-folios with block sizes smaller than the folio size, this can clear
-blocks outside the requested range which are uptodate, or dirty and have
-not yet been written back.
+The update that moved struct pci_dev usage to struct device is
+incomplete. Only telemetry endpoints are covered.
 
-Move the zeroing logic into fuse_copy_folios(), since descs[i].length
-needs to be used, and clear only the tail of the requested range that
-the server did not send.
+Other PMT features (crashlog) are now blocked from using the callback
+mechanism.
 
-The range is also no longer cleared upfront in the non
-cs->skip_folio_copy case. This is fine since a failed copy leaves those
-blocks non-uptodate, so the uncopied bytes are never visible. This also
-matches the pre-existing behavior in the non-short-read case (a failed
-copy doesn't zero out the range in the folio). This lets the zeroing
-logic stay the same regardless of whether the folio copy is skipped or
-not.
+Change struct intel_pmt_entry pci_dev member to device.
 
-Fixes: a4c9ab1d4975 ("fuse: use iomap for buffered writes")
-Reported-by: Sashiko <sashiko-bot@kernel.org>
-Reported-by: Kanishka De Silva <kpskanna1915@gmail.com>
-Signed-off-by: Joanne Koong <joannelkoong@gmail.com>
-Signed-off-by: Miklos Szeredi <mszeredi@redhat.com>
-[ sashal: Moved zeroing into fuse_copy_folios() in dev.c, kept fuse_copy_folio() static so the dev.h hunk is dropped, and omitted the skip_folio_copy/folio_zero_segments logic that isn't present here. ]
+Update callback usage to use the intel_pmt_entry rather than the
+telemetry endpoint.
+
+Reviewed-by: Rodrigo Vivi <rodrigo.vivi@intel.com>
+Fixes: 353042d54d82 ("platform/x86/intel/vsec: Switch exported helpers from pci_dev to device")
+Signed-off-by: Michael J. Ruhl <michael.j.ruhl@intel.com>
+Link: https://patch.msgid.link/20260923181115.2514193-23-michael.j.ruhl@intel.com
+Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+[ sashal: Removed the entry->pcidev = pci_dev; line from the single intel_pmt_populate_entry() here, since this tree lacks upstream's pmt_resolve_access_pci() split, and added entry->dev there. ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/fuse/dev.c    | 32 ++++++++++++++++++++------------
- fs/fuse/notify.c |  2 +-
- 2 files changed, 21 insertions(+), 13 deletions(-)
+ drivers/platform/x86/intel/pmt/class.c     | 4 ++--
+ drivers/platform/x86/intel/pmt/class.h     | 3 +--
+ drivers/platform/x86/intel/pmt/discovery.c | 2 +-
+ 3 files changed, 4 insertions(+), 5 deletions(-)
 
-diff --git a/fs/fuse/dev.c b/fs/fuse/dev.c
-index 0f9ef3ca9824f..56bc4381c2874 100644
---- a/fs/fuse/dev.c
-+++ b/fs/fuse/dev.c
-@@ -1129,17 +1129,10 @@ static int fuse_ref_folio(struct fuse_copy_state *cs, struct folio *folio,
-  * done atomically
-  */
- static int fuse_copy_folio(struct fuse_copy_state *cs, struct folio **foliop,
--			   unsigned offset, unsigned count, int zeroing)
-+			   unsigned offset, unsigned count)
- {
- 	int err;
- 	struct folio *folio = *foliop;
--	size_t size;
--
--	if (folio) {
--		size = folio_size(folio);
--		if (zeroing && count < size)
--			folio_zero_range(folio, 0, size);
--	}
+diff --git a/drivers/platform/x86/intel/pmt/class.c b/drivers/platform/x86/intel/pmt/class.c
+index 9ec843617e3c9..ebb5071334e5c 100644
+--- a/drivers/platform/x86/intel/pmt/class.c
++++ b/drivers/platform/x86/intel/pmt/class.c
+@@ -99,7 +99,7 @@ intel_pmt_read(struct file *filp, struct kobject *kobj,
+ 	if (count > entry->size - off)
+ 		count = entry->size - off;
  
- 	while (count) {
- 		if (cs->write && cs->pipebufs && folio) {
-@@ -1156,7 +1149,7 @@ static int fuse_copy_folio(struct fuse_copy_state *cs, struct folio **foliop,
- 			}
- 		} else if (!cs->len) {
- 			if (cs->move_folios && folio &&
--			    offset == 0 && count == size) {
-+			    offset == 0 && count == folio_size(folio)) {
- 				err = fuse_try_move_folio(cs, foliop);
- 				if (err <= 0)
- 					return err;
-@@ -1197,10 +1190,25 @@ static int fuse_copy_folios(struct fuse_copy_state *cs, unsigned nbytes,
+-	count = pmt_telem_read_mmio(entry->ep->dev, entry->cb, entry->header.guid, buf,
++	count = pmt_telem_read_mmio(entry->dev, entry->cb, entry->header.guid, buf,
+ 				    entry->base, off, count);
  
- 	for (i = 0; i < ap->num_folios && (nbytes || zeroing); i++) {
- 		int err;
-+		struct folio *folio = ap->folios[i];
- 		unsigned int offset = ap->descs[i].offset;
--		unsigned int count = min(nbytes, ap->descs[i].length);
-+		unsigned int length = ap->descs[i].length;
-+		unsigned int count = min(nbytes, length);
-+
-+		/*
-+		 * The reply may be shorter than what was asked for. The full
-+		 * descs[i].length is reported as read, so the tail bytes the
-+		 * server did not send are about to be marked uptodate and need
-+		 * to be zeroed.
-+		 *
-+		 * Only [offset, offset + length) can be touched since the
-+		 * rest of the folio can hold blocks that are already uptodate
-+		 * or dirty, and clearing those would lose data.
-+		 */
-+		if (folio && zeroing && count < length)
-+			folio_zero_range(folio, offset + count, length - count);
+ 	return count;
+@@ -283,10 +283,10 @@ static int intel_pmt_populate_entry(struct intel_pmt_entry *entry,
+ 		return -EINVAL;
+ 	}
  
--		err = fuse_copy_folio(cs, &ap->folios[i], offset, count, zeroing);
-+		err = fuse_copy_folio(cs, &ap->folios[i], offset, count);
- 		if (err)
- 			return err;
+-	entry->pcidev = pci_dev;
+ 	entry->guid = header->guid;
+ 	entry->size = header->size;
+ 	entry->cb = ivdev->priv_data;
++	entry->dev = ivdev->dev;
  
-@@ -1835,7 +1843,7 @@ static int fuse_notify_store(struct fuse_conn *fc, unsigned int size,
- 		nr_bytes = min_t(unsigned, num, folio_size(folio) - folio_offset);
- 		nr_pages = (offset + nr_bytes + PAGE_SIZE - 1) >> PAGE_SHIFT;
+ 	return 0;
+ }
+diff --git a/drivers/platform/x86/intel/pmt/class.h b/drivers/platform/x86/intel/pmt/class.h
+index 1ae56a5baad23..1d66681d14722 100644
+--- a/drivers/platform/x86/intel/pmt/class.h
++++ b/drivers/platform/x86/intel/pmt/class.h
+@@ -20,7 +20,6 @@
+ #define GET_ADDRESS(v)		((v) & GENMASK(31, 3))
  
--		err = fuse_copy_folio(cs, &folio, folio_offset, nr_bytes, 0);
-+		err = fuse_copy_folio(cs, &folio, folio_offset, nr_bytes);
- 		if (!folio_test_uptodate(folio) && !err && offset == 0 &&
- 		    (nr_bytes == folio_size(folio) || file_size == end)) {
- 			folio_zero_segment(folio, nr_bytes, folio_size(folio));
-diff --git a/fs/fuse/notify.c b/fs/fuse/notify.c
-index 7cd63502e124b..f21ba27f0f82e 100644
---- a/fs/fuse/notify.c
-+++ b/fs/fuse/notify.c
-@@ -184,7 +184,7 @@ static int fuse_notify_store(struct fuse_conn *fc, unsigned int size,
- 		folio_offset = offset_in_folio(folio, pos);
- 		nr_bytes = min(num, folio_size(folio) - folio_offset);
+ struct device;
+-struct pci_dev;
+ extern struct class intel_pmt_class;
  
--		err = fuse_copy_folio(cs, &folio, folio_offset, nr_bytes, 0);
-+		err = fuse_copy_folio(cs, &folio, folio_offset, nr_bytes);
- 		if (!folio_test_uptodate(folio) && !err && folio_offset == 0 &&
- 		    (nr_bytes == folio_size(folio) || file_size == end)) {
- 			folio_zero_segment(folio, nr_bytes, folio_size(folio));
+ struct telem_endpoint {
+@@ -41,7 +40,7 @@ struct intel_pmt_header {
+ 
+ struct intel_pmt_entry {
+ 	struct telem_endpoint	*ep;
+-	struct pci_dev		*pcidev;
++	struct device		*dev;
+ 	struct intel_pmt_header	header;
+ 	struct bin_attribute	pmt_bin_attr;
+ 	const struct attribute_group *attr_grp;
+diff --git a/drivers/platform/x86/intel/pmt/discovery.c b/drivers/platform/x86/intel/pmt/discovery.c
+index c482368bfaaef..f4203d240f542 100644
+--- a/drivers/platform/x86/intel/pmt/discovery.c
++++ b/drivers/platform/x86/intel/pmt/discovery.c
+@@ -609,7 +609,7 @@ void intel_pmt_get_features(struct intel_pmt_entry *entry)
+ 
+ 	mutex_lock(&feature_list_lock);
+ 	list_for_each_entry(feature, &pmt_feature_list, list) {
+-		if (feature->priv->parent != entry->ep->dev)
++		if (feature->priv->parent != entry->dev)
+ 			continue;
+ 
+ 		pmt_get_features(entry, feature);
 -- 
 2.53.0
 
