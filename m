@@ -1,54 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795618670;
-	b=HcVfNagwTLkhmXVC+I+KPMV7f+h5n0+RaO/fH7EPqKTLwUbeAgILkrNGeZOQfNOAQH3O
-	 q1aC+1GMuom7J0hrQvuxHr+MbfNHcRKS8hhIOXHMLY6U5R6EtSrbYa0cftilplCP3583A
-	 RWOrZrJ0eeTdn+8BLqr3gtcn3Oxox8GLWfKYp690yn2mYRLI+fXEOMR2EIRAwehont5zQ
-	 qPinTleuVy8v0QV3yqOVt2xo6xdD+79p0+sCuc3p6oBelDZBThXxV3u5jwDN5ckN2xW2j
-	 Y0vul9GlVkTmmJGik8qqbZRkGQFhmUWE75cDOzl9ewo8GMVnPZdX1d7fTRkYALtTYCA==
+	t=1795618673;
+	b=DnemN0/lNRUKCBglKphx+60CAw2f0fngLm49/j3wTobs84omdDbJGiFdbD8l31y9dn81
+	 HdZXlHsp9SnEkKOJMD9aeYdaKYnmL4Tiz2VujEUF8VpGOTcde8Hgz2yCqrEP8PKiLo+iz
+	 9Q+XpNQwCMAvU2SBtGJRjkJpKbz3869bKtUnwIT5VrNjVhcINebnHa9824Y/UYCPu6usE
+	 ib3JDIB+d9g1kklIKaTEwAJk+Rr+eJ+37ojlxmMeNHYZeXAaMNs2nj9768BCw/qjqT/5f
+	 wV39/pf1HL3HnKjCRKLEI6D0oofo5Di2JZq+ndMq1j+DUKhqhh3E8IS0qSfdcOi3kPw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795618670;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795618673;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=0wUrhvHUkRFEdu6ES38zgWzjLq/ea30aOB8Z4lc+qUg=;
-	b=tPY60vTMlSuhhzZBNPnUlfS1+RLTnPUmOySpF6TMGb477try96K6zYGxN6fCJZR8qUaF
-	 fwNnRbBvdrOjv1CijAUNJpDv7Sbdu8Ge62B+oIlUAVaiXIWdXjFFmtRCySGCTJuEt/caL
-	 tS7CA4Iy+3NzEv9FMapjj/Bz0wfIyTKlaAEQ/SHpm9uQufG2W3wMvBz9D9etKK6fE4m7N
-	 pnmUZa4NNhoFkJb1WNB59uAYDl8viRR88debeaJy4AchZuUTBzT4iEt0Qasnkt3T9S5lS
-	 dekqhP9NzACep0+n9OP2SBJKkOyTZks22/yofogptSSoPLdXAGSy4/ZgqKDcZgSrj2Q==
+	bh=wrMpJx/6zygWLsEing4O/dDUcPXAaJ86EG06ua+MMkU=;
+	b=ylG5lKL47MMFrbvPbdKyX6pKWHsJg7d10AW8F1RoGD9sqVzLsmSEZO25gGaEoQRCU1Sx
+	 JS166/FWP09EiTQExBuzcj8+jtY5/v32Azor0WVyZXCrnp/h7NkXw3r83YnvEWmj9JPYt
+	 lzqP32NKgBwg06tp/KcKUnpD41lxM/QOqrOSnVCZkzQu8Wn/iUbExLUKcCw4kFmjMPvy5
+	 qzXmW9/WHx9M+v3JEQH+6KHXn1S1rQNwCtvSxzgQvwX2YwnPA67h3qAHrNSIM1CxDH0ma
+	 bUUt+ZhK6X99AjiCc2vM531VgzaKK2GME4AnRe4Sd0cNSlw3Dr/Rwopt57vVRC2x8UQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=PQQYKwTM;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=CBmF74Hm;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0E9B5606A323;
-	Wed, 25 Nov 2026 14:57:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E6A9B606A323;
+	Wed, 25 Nov 2026 14:57:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=PQQYKwTM
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5ED911F000C6;
-	Wed, 25 Nov 2026 14:57:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=CBmF74Hm
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2C40D1F000C4;
+	Wed, 25 Nov 2026 14:57:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795618669;
-	bh=0wUrhvHUkRFEdu6ES38zgWzjLq/ea30aOB8Z4lc+qUg=;
+	s=korg; t=1795618672;
+	bh=wrMpJx/6zygWLsEing4O/dDUcPXAaJ86EG06ua+MMkU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=PQQYKwTMaKYdtfiPOJzQ/7da18ctEPtJplxhBOaFcmzCuiXiIs0BAuKGAruolzEXP
-	 XsOjxH6fOLbFW4Dqr8rmw6lFmioArsXgdp6UkYr3YUYQU0K2SNdSrxk4Q1+NaUNmrf
-	 9Xo7bpKPDgS//qm/OAn2hu8giKdTQoneTJ8GxzT0=
+	b=CBmF74Hm/dpjGY16P2DSYfD7rgDfJHCkMswHKX6Rhy2HyJ8MX6z+FSoSCMI05B3+7
+	 zEZNL+QrPaqaa7UpCrGvgUHN2vz2rSNbN+ykIqxvBADFDLuydkj8DBSpu2vVGrSHzJ
+	 BQfib4iKG22e20SGGA5U8qgBUPf7cHo1GzypGGQo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	kernel test robot <lkp@intel.com>,
-	Dan Carpenter <error27@gmail.com>,
-	Isaac Adjei <code@isaacadjei.me>,
-	Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>,
+	Ridge Lomont <cyridge@proton.me>,
+	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
+	Ingo Molnar <mingo@kernel.org>,
+	Nathan Chancellor <nathan@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0350/1005] gpio: mpfs: reject unsupported interrupt types
-Date: Wed, 25 Nov 2026 15:28:08 +0100
-Message-ID: <20261125143829.932132547@linuxfoundation.org>
+Subject: [PATCH 7.3 0351/1005] x86/kcfi: Dont emit KCFI_REFERENCE() in modules
+Date: Wed, 25 Nov 2026 15:28:09 +0100
+Message-ID: <20261125143829.955163072@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143821.729802100@linuxfoundation.org>
 References: <20261125143821.729802100@linuxfoundation.org>
@@ -70,55 +70,80 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Isaac Adjei <code@isaacadjei.me>
+From: Ridge Lomont <cyridge@proton.me>
 
-[ Upstream commit cfbd01eddaf5bfdd4f53560013fe830571a186e9 ]
+[ Upstream commit fb685de78e6bf79e49854e7d149f69b125583de5 ]
 
-The switch statement in mpfs_gpio_irq_set_type() does not handle
-unsupported interrupt types. For example, IRQ_TYPE_NONE is not listed.
+KCFI_REFERENCE() takes the address of a symbol so that the compiler
+emits its __kcfi_typeid_ symbol, which the SYM_TYPED_FUNC_START()
+assembly implementing it needs. It is used from arch/x86 headers for
+__clear_pages_unrolled(), copy_page(), __memset() and __memmove(), and
+all of that assembly is built into vmlinux.
 
-When an unsupported type is passed, interrupt_type remains
-uninitialised. Its undefined value is then written to the GPIO control
-register. The function still returns 0, making the caller believe the
-operation succeeded.
+Modules include the same headers, so with CONFIG_CFI=y every module
+also gets an __ADDRESSABLE() reference to each of these symbols in
+.discard.addressable. This serves no purpose there, and since
+__clear_pages_unrolled() is EXPORT_SYMBOL_GPL, modpost now rejects any
+GPL-incompatible module that includes <linux/mm.h>:
 
-Add a default case to return -EINVAL for unsupported interrupt types.
+  ERROR: modpost: GPL-incompatible module repro.ko uses GPL-only
+  symbol '__clear_pages_unrolled'
 
-Smatch reported the following warning:
+even though the module never uses the symbol. This makes OpenZFS
+impossible to build against CFI kernels; its configure checks fail
+in the same way and are misreported as CONFIG_DEBUG_LOCK_ALLOC.
 
-  drivers/gpio/gpio-mpfs.c:144 mpfs_gpio_irq_set_type() error: uninitialized symbol 'interrupt_type'.
+scripts/module.lds.S does not help here: modpost checks <module>.o
+before the final link, and even after it the discarded section only
+loses its relocations, the undefined symbols stay in .symtab, where
+the module loader resolves them with the same license check.
 
-I built the driver with W=1 and got no warnings. I also reran Smatch
-and confirmed that the warning was resolved.
+Only emit the reference when building vmlinux.
 
-This is compile-tested only. I do not have access to PolarFire SoC
-hardware for runtime testing.
+Tested on x86_64 with clang 23.1.3 and CONFIG_CFI=y, with both
+CONFIG_LTO_CLANG_FULL=y (the configuration from the Fixes: commit) and
+CONFIG_LTO_CLANG_THIN=y: vmlinux links without warnings and still contains
+__kcfi_typeid___clear_pages_unrolled, __kcfi_typeid_copy_page,
+__kcfi_typeid___memset and __kcfi_typeid___memmove. It boots in QEMU
+with no CFI failures. A minimal module with MODULE_LICENSE("Proprietary")
+including <linux/mm.h> fails modpost before this change and builds and
+loads after it. OpenZFS builds against a CFI kernel with this change,
+and its pool, encryption, checksum and send/recv operations run
+without CFI failures, in QEMU and on a desktop with CFI enforcing.
 
-Fixes: e57b53f0f36a ("gpio: mpfs: Add interrupt support")
-Reported-by: kernel test robot <lkp@intel.com>
-Reported-by: Dan Carpenter <error27@gmail.com>
-Closes: https://lore.kernel.org/r/202411080149.bOpayvf6-lkp@intel.com/
-Signed-off-by: Isaac Adjei <code@isaacadjei.me>
-Link: https://patch.msgid.link/20261105-gpio-mpfs-irq-type-v1-1-cbb2b0b2a807@isaacadjei.me
-Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
+Fixes: 9b041a4b66b3 ("x86/mm: Ensure clear_page() variants always have __kcfi_typeid_ symbols")
+Assisted-by: LLM
+Signed-off-by: Ridge Lomont <cyridge@proton.me>
+Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
+Signed-off-by: Ingo Molnar <mingo@kernel.org>
+Acked-by: Nathan Chancellor <nathan@kernel.org>
+Link: https://github.com/openzfs/zfs/issues/18092
+Link: https://patch.msgid.link/20261027-kcfi-reference-modules-v2-1-3a3247f15806@proton.me
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpio/gpio-mpfs.c | 2 ++
- 1 file changed, 2 insertions(+)
+ include/linux/compiler.h | 7 +++++--
+ 1 file changed, 5 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/gpio/gpio-mpfs.c b/drivers/gpio/gpio-mpfs.c
-index 7f0751d7b1c4b..0b7a48e0ac262 100644
---- a/drivers/gpio/gpio-mpfs.c
-+++ b/drivers/gpio/gpio-mpfs.c
-@@ -138,6 +138,8 @@ static int mpfs_gpio_irq_set_type(struct irq_data *data, unsigned int type)
- 	case IRQ_TYPE_LEVEL_LOW:
- 		interrupt_type = MPFS_GPIO_TYPE_INT_LEVEL_LOW;
- 		break;
-+	default:
-+		return -EINVAL;
- 	}
+diff --git a/include/linux/compiler.h b/include/linux/compiler.h
+index cb2f6050bdf7d..a7e57ffb6126d 100644
+--- a/include/linux/compiler.h
++++ b/include/linux/compiler.h
+@@ -241,10 +241,13 @@ void ftrace_likely_update(struct ftrace_likely_data *f, int val,
  
- 	regmap_update_bits(mpfs_gpio->regs, MPFS_GPIO_CTRL(gpio_index),
+ #endif /* __KERNEL__ */
+ 
+-#if defined(CONFIG_CFI) && !defined(__DISABLE_EXPORTS) && !defined(BUILD_VDSO)
++#if defined(CONFIG_CFI) && !defined(__DISABLE_EXPORTS) && !defined(BUILD_VDSO) && \
++	!defined(MODULE)
+ /*
+  * Force a reference to the external symbol so the compiler generates
+- * __kcfi_typid.
++ * __kcfi_typid. Only vmlinux needs it, as that is where the assembly
++ * using the typeid lives; in a module it would only add a reference to
++ * the symbol, which fails modpost if the symbol is GPL-only.
+  */
+ #define KCFI_REFERENCE(sym) __ADDRESSABLE(sym)
+ #else
 -- 
 2.53.0
 
