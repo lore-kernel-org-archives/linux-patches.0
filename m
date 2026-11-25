@@ -1,44 +1,44 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795595503;
-	b=vpigWH22k0IvF4CSmTZHsUwLFA1X/UzXyECL9YF8b3d8xGp5K8Dc3thcZzdVcVRuo6yT
-	 +kkEbU/s3eEBNae4GsVps+DV3bbVvzxGGt+nyFl19O2iqG9qZeXbe8pw78uvwK+59jRri
-	 FW5xqBXpLfwi7RcqXcKu5F/T8fD/zkd6EmDnyeOAbqyWl2tpmk6uqCtZvjd33L4eEm2Me
-	 NNjMT81p0JxRJ2iz0Q/FotPEaj/u7THnjC9E43JtCXbEuqOJEGkl4jjTdgGB16jaPPUfN
-	 RhE6N9G0Q6+LQXMm3+zXryhYecVhs2gsHb7vmBd1w3Gtcd4dKc9c+J85PPihC7B9ZIQ==
+	t=1795595848;
+	b=r44hRd52i4pfMbVde6/OTqbdDPa21RjW2BaFFY0nGYZ3PdFjYfSuuFTVHwKDrdWFGvRZ
+	 oTIVuI5k7yktBeRAQsxCKNquEbuuOBasp6bkN7b3kwH1Idw9ZfhfM9C3DTA40OBtA2bbO
+	 3odPZaAA9aVyFXF9djWO94tmS2sBDhBnWZuKH/BJC9Y6XKkT8qpwTk8kBEpahuRbi6SPg
+	 7U4jOYHF7uXbFO/RkuOooO7QhX5JkiiTVBAiNQpy1E/nSmmjl+6AMcOP7GdBRrB7O0qt3
+	 x3ONZ3z/6hB5v2X7hvbdn3cFCn1sp4/OI1ohFYAwCL1si9W40L67W7yEVDmoIJcDszA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795595503;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795595848;
 	h=Received:DKIM-Signature:X-Mailer:From:To:Cc:Subject:In-Reply-To:
 	 References:Date:Message-ID:MIME-Version:Content-Type;
-	bh=NR5n9vnMwUztju7EXEqCo7XSLAUDb4Xqk+VIxyLE7/c=;
-	b=lxEr7T41g6MmeooyjYitfYQaaNxUH6v1LNmEPpgV3tmwSDWIawqaqVImq4N9EYb7ib0F
-	 /fQ7p1RvPOElCk32Gw1UI2xpb8QbRSLL8sy/RIJvB0rc/Q7rjl7pRObJkfpBxiMQWxsgO
-	 oD6KwqEqUMzIXLVvrUPd1NcP+z/4l3uwlxO9zdO8GldAL5jRKWmFthG4Tx0dfP63SEcx0
-	 wVt7+9DGCXxYosnV0Hc+ns681Y1D+cBbmDXfaUendqYC0rmBmYe7m6Dx3OIId4kZPJKIS
-	 iS01kyrkyAyx/NSCtmBQAPV+dVCPvRnrf2djGGHTJSA3K/4hj1xCeCLMw4eQzmimI0A==
+	bh=zPQ6zQ8uV4eKmUcVRQ1hIv+A3D6QwvcOfGuZSPbSW+c=;
+	b=C1qWGQA5ObvF6y1ajc1HniZ/Yjv3Q+h27GEojHQi7C5Ndd/Uq69q2ASdGXlArAIyQtnb
+	 mlb9dcjcusob57Ls32EQWaFDdySFWkk7kgqkj6BGUEKx3z0leNXqEYzh6HFyVWzztHo71
+	 3OqKemj2V5xtk//scH9R3ONG3esy3zcacjHde+/5OYVe5dEZPacn4YDnS2gfczzJsPhoi
+	 QSni4Fni14+PS4ifsCsONFf2i0D0VDypwcT3wM+H4sfBg3Rhi7uwAj8Kk/HTClIGfo20L
+	 V3/ARfCvVsUMwuMgNg+q9AkZRUUvcVqz0rLFRVbpj0QPlvXekDyClUPpCpPfp4im7rA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=HLC5lvWP;
+	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=RqwuNeO+;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 02349606A329;
-	Wed, 25 Nov 2026 08:31:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 41CB1606A326;
+	Wed, 25 Nov 2026 08:37:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=HLC5lvWP
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1CC321F000D1;
-	Wed, 25 Nov 2026 08:31:35 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=RqwuNeO+
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 378A21F000C0;
+	Wed, 25 Nov 2026 08:37:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1795595502;
-	bh=NR5n9vnMwUztju7EXEqCo7XSLAUDb4Xqk+VIxyLE7/c=;
+	s=k20260515; t=1795595848;
+	bh=zPQ6zQ8uV4eKmUcVRQ1hIv+A3D6QwvcOfGuZSPbSW+c=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date;
-	b=HLC5lvWPvpRSC9jTJfKtu4fMESxtMMFO5C7Yoj6vnnCP9MiS9vmvYmuW53XLNVPbf
-	 HlkfJuTvtxYb3uLi3GqPy7wHWypzMIziP36kJXFP3kP/OfsvpInni9uBdbhD5H3anj
-	 KliWQaHd8M6l5d0Y5ZYx77+zWobP9kWCN3ChdsaX8pNOtmy420MjoDG1h6OwUnE8Lo
-	 Zztk1Fhxinh2x5d3aCA2xHVndIF4WoZphX5261LJt/OiEKq/EIhlhB7Mwo2O13HOs/
-	 5gWu5PraXInicwPXcrVCMWymSwF9SzxCcWQ0e1oVS52EIyab2KWntUhLfeczOeCfH1
-	 w9qhP7GoDTDVQ==
+	b=RqwuNeO+en6ylIrQjzIoRLSLJhqQ/ZEyfYT8SJDHB3wI2f2OzxEgKMPBIlvgaqk1h
+	 c6xRRn988L/1TZNfg9RGOfrRNNLhx1dMzqvvTtj6c7Loysu62HBh/uAKDr5B3KbF6y
+	 p0Z+DNpiOhk02aH8n36HkVQmg0/jgCIaJUWy2a9uWWel2U0JlbonYZV9CjE+eZjCda
+	 4eEbSnB40uO4ASwHyxUjLcYHzrPtrCG3FGcNIgX1MpH9N9fkfCCW2QcEEvpp8c/yjw
+	 bFMpMfj49pN8fXhTM8egt0MwzWw8FMZoyQ9nwPNeG1rHL1dQ5NaC2jopXjoxN4Gttf
+	 2U9by7pYmIEkA==
 X-Mailer: emacs 31.1 (via feedmail 11-beta-1 I)
 From: Aneesh Kumar K.V <aneesh.kumar@kernel.org>
 To: Alexey Kardashevskiy <aik@amd.com>, linux-coco@lists.linux.dev
@@ -57,14 +57,14 @@ Cc: Dan Williams <djbw@kernel.org>, Leon Romanovsky <leon@kernel.org>,
 	Herbert Xu <herbert@gondor.apana.org.au>,
 	driver-core@lists.linux.dev, linux-pci@vger.kernel.org,
 	kvm@vger.kernel.org, patches@lists.linux.dev
-Subject: Re: [PATCH v1 03/10] PCI/TSM: Let TSM drivers discover the CMA DOE
- mailbox
-In-Reply-To: <4279cc50-0e05-4d86-ac12-398adcfb6091@amd.com>
+Subject: Re: [PATCH v1 04/10] PCI/TSM: Defer TSM vDEVICE allocation until
+ device setup completes
+In-Reply-To: <5e04323f-dfdc-4956-acee-bcc09926726d@amd.com>
 References: <20261123083337.2731019-1-aneesh.kumar@kernel.org>
- <20261123083337.2731019-4-aneesh.kumar@kernel.org>
- <4279cc50-0e05-4d86-ac12-398adcfb6091@amd.com>
-Date: Wed, 25 Nov 2026 14:01:32 +0530
-Message-ID: <yq5atsl59usb.fsf@kernel.org>
+ <20261123083337.2731019-5-aneesh.kumar@kernel.org>
+ <5e04323f-dfdc-4956-acee-bcc09926726d@amd.com>
+Date: Wed, 25 Nov 2026 14:07:19 +0530
+Message-ID: <yq5aqzg99uio.fsf@kernel.org>
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Post: <mailto:patches@lists.linux.dev>
@@ -79,27 +79,54 @@ Content-Type: text/plain
 Alexey Kardashevskiy <aik@amd.com> writes:
 
 > On 23/11/26 19:33, Aneesh Kumar K.V (Arm) wrote:
->> Move CMA DOE discovery out of pci_tsm_pf0_constructor(). An external
->> Endpoint requires a mailbox, while an RcIEP can use device assignment
->> without DOE. Let each TSM driver enforce its own requirement.
+>> A successful connect does not necessarily complete the checks and setup
+>> needed to assign a device to a confidential guest. Authentication and
+>> userspace evidence acceptance may still be required.
 >> 
+>> Add pci_tsm_pf0::ready and pci_tsm_set_ready(). While ready is false,
+>> pci_tsm_context_get() returns -EACCES, preventing TSM virtual device
+>> (vDEVICE) allocation.
+>> 
+>> Initialize ready to true to preserve existing TSM driver behavior. A
+>> follow-up CCA patch will clear ready during connect and set it after
+>> evidence-accept completes the required device setup.
 >
-> It is DOE of a PF which will be passed through (or its VF).
 >
-> The AMD hardware has such devices too which are still PCIe so I'd
-> think it is the same TSM driver. imho this is quite common and needs
-> to be handled in the common code.
+> If the host is not yet happy with the device, it can simply not pass
+> it through to a VM, what is the value of doing this blocking in the
+> kernel? I'd drop this one. Thanks,
 >
-
-If this is common across TSM drivers, we can move it into the common
-code. For the next iteration, I will implement the arm requirement
-there, and we can resolve any architectural differences later?
-
->
-> And the patch does too many unrelated renames, a bit harder to see the
-> actual change.
 >
 
-Sure, I will drop the unrelated renames.
+
+That is what this patch does. If IDE setup is not complete but the
+device already has tsm0 attached and connected, pci_tsm_context_get()
+returns an error from cca_vdevice_init(), preventing the device from
+being assigned to the VM.
+
+static int cca_vdevice_init(struct iommufd_vdevice *vdev)
+{
+.......
+	ret = pci_tsm_context_get(pdev, viommu_tsm_dev);
+	if (ret) {
+		if (ret == -EOPNOTSUPP)
+			return 0;
+
+		return ret;
+	}
+}
+
+int pci_tsm_context_get(struct pci_dev *pdev, struct tsm_dev *tsm_dev)
+{
+	down_read(&pci_tsm_rwsem);
+ ....
+	pf0 = to_pci_tsm_pf0(pdev->tsm);
+ 	mutex_lock(&pf0->lock);
+	if (!pf0->ready) {
+		rc = -EACCES;
+		goto out_unlock_mutex;
+	}
+
+}
 
 -aneesh
