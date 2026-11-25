@@ -1,54 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795625032;
-	b=t6WqwsIOeVQBDpJnmD18dd8qjq0fn0lglKfjyxEzw26SgphLCMbLx7ciFbKCwhJFYK1J
-	 wbkBGEAQeIhw2WX/ak0BM/uYyfPzq6M7mc18nX5opmOTheCp6WX2RywRZKTOQF/tGeRDG
-	 EXoYygsa7aswRkh6krISg2+jAqpsgPbnBQGsCp4DqJBbjAcxE8WFicyWHQDZFJ1rk5ulE
-	 Oe8TrOa5cv9I6VdPr6xR/2DJqUxmvXqTdU0WoNkU1qckSZaTSEs9LkXORuVdRzPOY3m5T
-	 zseFhU606VZlKowT3zkS+Zivrh+SLjW+FaNtIyXZW8iffX1uwP/qqBqsrHKngqJPMIg==
+	t=1795625035;
+	b=vbDHsZHdejQ6dDUkD+mM516kUQCy0CtvSxP699NgR2j7tTypPirA3UhHqXSU3KQJIUKO
+	 Ue7tVwg5+B7Qq77Rp/6VSCGORitZn0Yr89IOna3336sCNCyvZ+NWIZH8gCQzz1CJXmOcb
+	 +47aUiHZ9q4pnnryIUj2Ac3XHhXUfKqjt1EtBzcz+XSv5tgCto9MHmGpbp3O7MAmgY/kl
+	 jBsZokEboe1Ir86XEkDRdcRju8kCleVoENB1+2U0RKtKSfwrj/yZeNzkRzY7NJyXb8ENn
+	 ZShwnEfk08UKbSZkbvO/NG3s7tXsUFZueYftaARs1HUAZ35GkGU691cHeKTiiPFqBZw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795625032;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795625035;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=bKVHnvmPvNhv4wrWTI/NNewpbKoWzRNAu889gAqWQkk=;
-	b=bK5DnXJEqc2+QKC43iciAdM7MiT9z7epAuLTvsel7yKSzyEmg7o+6i1Itpgbl10kCHPY
-	 8BNQEtWoHl8yNKLF5NE7z+S/NlbHCmX2L+XOJOugADm74jFs2sEkFewiOU+YqxDVpYeUp
-	 j9LOM+M1zMMePiYcu4q6H3Lqw8nUH87erUgS+RNpsEt1PJ743dflV+glWXnaetyvAyIf2
-	 CK8Cfu0uod995PHUJxKFNpxwk++t3V0CSHyiEM1Rsu36z+wmQo8SgOG1MatWVe5j90lqU
-	 xzFpepPT7pkzgr0oxKIvvKr8q+gAgz/MOecx4fH3P9sODT3+kcirmca8L5c3bdY1KBA==
+	bh=lccPBJT3KTsrXXuUU8XH4bYNBsdt7OYXagNc0enUlEA=;
+	b=iezO2GaHYH76+V6LO91KdpTfPo5kLujKBsPmXAHktEupAPqi1LASk/gPXUbcJ/ILXjXH
+	 aH+ft259vvLIcxyihvactrARCWwfZMJEX8TNbYxIG2XVAAfRqUQFmM8+B6yyxYgLMhq9D
+	 Mx1JgcTIaC7gIc2yb7s7xjlt/wUszbaKdWjxm8CW6yeTvBS0il/Q+O14WmpMU0kBPQ/8j
+	 lQx+/ImSGox91oB5z0Ezap7/6pbWvF2esJBKkL7UeDT2oOHpfu2iVp1lnH5YmogLY2bYw
+	 g67B3mSMRfUrebrKq3RHeDet8gZcumuXQdjIjx3HQnWewJIHuChOneGItAFMb/d4wBw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=X7qO0hQa;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=w3e9dhzl;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 22CD8606A31E;
-	Wed, 25 Nov 2026 16:43:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F3A8E606A31E;
+	Wed, 25 Nov 2026 16:43:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=X7qO0hQa
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7267C1F000C0;
-	Wed, 25 Nov 2026 16:43:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=w3e9dhzl
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 45D3B1F000C0;
+	Wed, 25 Nov 2026 16:43:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795625032;
-	bh=bKVHnvmPvNhv4wrWTI/NNewpbKoWzRNAu889gAqWQkk=;
+	s=korg; t=1795625034;
+	bh=lccPBJT3KTsrXXuUU8XH4bYNBsdt7OYXagNc0enUlEA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=X7qO0hQa2SAa+grn5dUPUAeFC4ouQPp6fZ5UIfvtjr2yR2hTKjI/UCZWGNaVKQfjm
-	 rAhlPa6AMIbDOTlNuQ14tBDKp6veObxu1fSljN/MVr6oYCYDw6iA2oGgxgfNEUz+Rk
-	 k/IbjwraMgiKM1svbcXvvuqWMORH9BwhQ16URlHI=
+	b=w3e9dhzlDq10eW9QctHCb9GMVrYJ3If2UV8iL1iID8NDx2AhpHpmno4RCiOOwhUki
+	 EPgQvMmokfJSwGA71GSyLLQQRgUHLu79M5BqkU7A2NcN6y+d+xn8TEuoyRIUILOiIQ
+	 4hEzTPif37kpdD/iH+mbnBHcPpFdL5l7jzIyGXs0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ian Rogers <irogers@google.com>,
-	Hui Su <sh_def@163.com>,
-	Namhyung Kim <namhyung@kernel.org>,
-	Arnaldo Carvalho de Melo <acme@redhat.com>,
+	Guixin Liu <kanie@linux.alibaba.com>,
+	Nilay Shroff <nilay@linux.ibm.com>,
+	Keith Busch <kbusch@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 385/816] perf evsel: Restrict incremental open error unwind
-Date: Wed, 25 Nov 2026 15:32:13 +0100
-Message-ID: <20261125143858.116621401@linuxfoundation.org>
+Subject: [PATCH 6.12 386/816] nvme-tcp: Validate the queue state under the queue lock in the address attribute
+Date: Wed, 25 Nov 2026 15:32:14 +0100
+Message-ID: <20261125143858.138110153@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143849.205329330@linuxfoundation.org>
 References: <20261125143849.205329330@linuxfoundation.org>
@@ -70,68 +69,184 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hui Su <sh_def@163.com>
+From: Guixin Liu <kanie@linux.alibaba.com>
 
-[ Upstream commit d023b2110d0d7232ba952a486c497ba8817f6f66 ]
+[ Upstream commit 2eeeaa9c1ff0c429096acc2947c296db6a56f96d ]
 
-evsel__open_cpu(), evsel__tool_pmu_open() and
-evsel__hwmon_pmu_open() support opening a subrange of a CPU map, bounded
-by [start_cpu_map_idx, end_cpu_map_idx).
+Reading the "address" sysfs attribute calls kernel_getsockname() on the
+admin queue socket, which can race with the queue teardown during
+connection error recovery: a reader can observe NVME_TCP_Q_LIVE set,
+then block on the queue lock while nvme_tcp_free_queue() releases the
+socket and clears queue->sock without holding the lock.  Once the
+reader acquires the lock it dereferences the NULL socket pointer.
 
-Their error paths, however, unwind using "while (--idx >= 0)" all the way
-back to CPU index 0 regardless of start_cpu_map_idx. If lower CPU indices
-were opened by an earlier invocation, a later incremental open failure
-therefore closes those existing file descriptors and overwrites their
-slots with -1.
+Commit 76d54bf20cdc ("nvme-tcp: don't access released socket during
+error recovery") had the queue liveness check inside the lock.
+Commit 782373ba2766 ("nvme: tcp: avoid race between queue_lock lock
+and destroy") moved it back out because the lock itself is destroyed
+in nvme_tcp_free_queue(), so a reader arriving late trips
+mutex_destroy().
 
-Before this fix, running the new incremental open test demonstrates this
-corruption:
+Check the queue liveness inside the queue lock, and clear queue->sock
+under the same lock.  The teardown clears NVME_TCP_Q_LIVE under the
+lock well before the socket is released, so a reader either sees the
+bit cleared or a socket that cannot be released while it holds the
+lock.  To also close the lock lifetime race, the queue locks are now
+owned by the controller: they are initialized with the queue array and
+only destroyed when the controller is freed, which cannot happen while
+a sysfs attribute read is still in progress.  The queue count is
+computed by the NVME_TCP_OPT_NR_QUEUES() macro from the original
+connect options for both initialization and destruction, as reconnects
+may shrink ctrl->queue_count.
 
-  $ perf test -v "Tool PMU"
-   12: Tool PMU:
-   12.1: Tool PMU                                                      : Ok
-   12.2: Tool PMU leader                                               : Ok
-   12.3: Incremental open error unwind boundary:
-     FAILED: CPU 0 FD overwritten: FD(evsel, 0, 0)=-1, expected 4
-  FAILED!
-
-Stop the unwind at start_cpu_map_idx so that only file descriptors
-opened by the current invocation are rolled back.
-
-After this fix:
-
-  $ perf test -v "Tool PMU"
-   12: Tool PMU:
-   12.1: Tool PMU                                                      : Ok
-   12.2: Tool PMU leader                                               : Ok
-   12.3: Incremental open error unwind boundary                        : Ok
-
-Fixes: 4804e0111662d7d8 ("perf stat: Use affinity for opening events")
-Fixes: 240505b2d0adcdc8 ("perf tool_pmu: Factor tool events into their own PMU")
-Fixes: 53cc0b351ec99278 ("perf hwmon_pmu: Add a tool PMU exposing events from hwmon in sysfs")
-Reviewed-by: Ian Rogers <irogers@google.com>
-Signed-off-by: Hui Su <sh_def@163.com>
-Acked-by: Namhyung Kim <namhyung@kernel.org>
-Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
-[ sashal: Dropped the tool_pmu.c, hwmon_pmu.c and tests/tool_pmu.c hunks because those files don't exist here, leaving only the one-line unwind bound in evsel__open_cpu(). ]
+Fixes: 782373ba2766 ("nvme: tcp: avoid race between queue_lock lock and destroy")
+Cc: stable@vger.kernel.org
+Signed-off-by: Guixin Liu <kanie@linux.alibaba.com>
+Reviewed-by: Nilay Shroff <nilay@linux.ibm.com>
+Signed-off-by: Keith Busch <kbusch@kernel.org>
+[ sashal: Moved queue_lock init and destroy to controller alloc and free, and kept the older fput(), memalloc_noreclaim and per-queue pf_cache_lock code instead of upstream's newer helpers. ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/perf/util/evsel.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/nvme/host/tcp.c | 53 ++++++++++++++++++++++++++++-------------
+ 1 file changed, 37 insertions(+), 16 deletions(-)
 
-diff --git a/tools/perf/util/evsel.c b/tools/perf/util/evsel.c
-index e84dacb5627b6..6798db83bf7cc 100644
---- a/tools/perf/util/evsel.c
-+++ b/tools/perf/util/evsel.c
-@@ -2483,7 +2483,7 @@ static int evsel__open_cpu(struct evsel *evsel, struct perf_cpu_map *cpus,
- 			FD(evsel, idx, thread) = -1;
- 		}
- 		thread = nthreads;
--	} while (--idx >= 0);
-+	} while (--idx >= start_cpu_map_idx);
- 	errno = old_errno;
- 	return err;
+diff --git a/drivers/nvme/host/tcp.c b/drivers/nvme/host/tcp.c
+index f6bc2a90592cf..4d9cd0e34b7b8 100644
+--- a/drivers/nvme/host/tcp.c
++++ b/drivers/nvme/host/tcp.c
+@@ -155,6 +155,9 @@ enum nvme_tcp_queue_flags {
+ 	NVME_TCP_Q_IO_CPU_SET	= 3,
+ };
+ 
++#define NVME_TCP_OPT_NR_QUEUES(opts) ((opts)->nr_io_queues + \
++	(opts)->nr_write_queues + (opts)->nr_poll_queues + 1)
++
+ enum nvme_tcp_recv_state {
+ 	NVME_TCP_RECV_PDU = 0,
+ 	NVME_TCP_RECV_DATA,
+@@ -1581,14 +1584,22 @@ static void nvme_tcp_free_queue(struct nvme_ctrl *nctrl, int qid)
+ 	page_frag_cache_drain(&queue->pf_cache);
+ 
+ 	noreclaim_flag = memalloc_noreclaim_save();
++	/*
++	 * Clear queue->sock under the queue lock so that a sysfs reader in
++	 * nvme_tcp_get_address() either observes the NVME_TCP_Q_LIVE bit
++	 * cleared or a still valid socket.  The queue lock itself is owned
++	 * by the controller and only destroyed when the controller is
++	 * freed, so readers blocked on it cannot race its teardown.
++	 */
++	mutex_lock(&queue->queue_lock);
+ 	/* ->sock will be released by fput() */
+ 	fput(queue->sock->file);
+ 	queue->sock = NULL;
++	mutex_unlock(&queue->queue_lock);
+ 	memalloc_noreclaim_restore(noreclaim_flag);
+ 
+ 	kfree(queue->pdu);
+ 	mutex_destroy(&queue->send_mutex);
+-	mutex_destroy(&queue->queue_lock);
+ 	mutex_destroy(&queue->pf_cache_lock);
  }
+ 
+@@ -2020,7 +2031,6 @@ static int nvme_tcp_alloc_queue(struct nvme_ctrl *nctrl, int qid,
+ 	int ret, rcv_pdu_size;
+ 	struct file *sock_file;
+ 
+-	mutex_init(&queue->queue_lock);
+ 	queue->ctrl = ctrl;
+ 	init_llist_head(&queue->req_list);
+ 	INIT_LIST_HEAD(&queue->send_list);
+@@ -2168,7 +2178,6 @@ static int nvme_tcp_alloc_queue(struct nvme_ctrl *nctrl, int qid,
+ 	queue->sock = NULL;
+ err_destroy_mutex:
+ 	mutex_destroy(&queue->send_mutex);
+-	mutex_destroy(&queue->queue_lock);
+ 	mutex_destroy(&queue->pf_cache_lock);
+ 	return ret;
+ }
+@@ -2773,6 +2782,9 @@ static void nvme_tcp_stop_ctrl(struct nvme_ctrl *ctrl)
+ static void nvme_tcp_free_ctrl(struct nvme_ctrl *nctrl)
+ {
+ 	struct nvme_tcp_ctrl *ctrl = to_tcp_ctrl(nctrl);
++	/* the same count used to size and initialize the queue array */
++	unsigned int nr_queues = NVME_TCP_OPT_NR_QUEUES(nctrl->opts);
++	unsigned int i;
+ 
+ 	if (list_empty(&ctrl->list))
+ 		goto free_ctrl;
+@@ -2784,6 +2796,8 @@ static void nvme_tcp_free_ctrl(struct nvme_ctrl *nctrl)
+ 	nvmf_free_options(nctrl->opts);
+ free_ctrl:
+ 	put_net(ctrl->net);
++	for (i = 0; i < nr_queues; i++)
++		mutex_destroy(&ctrl->queues[i].queue_lock);
+ 	kfree(ctrl->queues);
+ 	kfree(ctrl);
+ }
+@@ -3036,17 +3050,18 @@ static int nvme_tcp_get_address(struct nvme_ctrl *ctrl, char *buf, int size)
+ 
+ 	len = nvmf_get_address(ctrl, buf, size);
+ 
+-	if (!test_bit(NVME_TCP_Q_LIVE, &queue->flags))
+-		return len;
+-
+ 	mutex_lock(&queue->queue_lock);
+ 
+-	ret = kernel_getsockname(queue->sock, (struct sockaddr *)&src_addr);
+-	if (ret > 0) {
+-		if (len > 0)
+-			len--; /* strip trailing newline */
+-		len += scnprintf(buf + len, size - len, "%ssrc_addr=%pISc\n",
+-				(len) ? "," : "", &src_addr);
++	if (test_bit(NVME_TCP_Q_LIVE, &queue->flags)) {
++		ret = kernel_getsockname(queue->sock,
++				(struct sockaddr *)&src_addr);
++		if (ret > 0) {
++			if (len > 0)
++				len--; /* strip trailing newline */
++			len += scnprintf(buf + len, size - len,
++					"%ssrc_addr=%pISc\n",
++					(len) ? "," : "", &src_addr);
++		}
+ 	}
+ 
+ 	mutex_unlock(&queue->queue_lock);
+@@ -3111,7 +3126,7 @@ static struct nvme_tcp_ctrl *nvme_tcp_alloc_ctrl(struct device *dev,
+ 		struct nvmf_ctrl_options *opts)
+ {
+ 	struct nvme_tcp_ctrl *ctrl;
+-	int ret;
++	int i, ret;
+ 
+ 	ctrl = kzalloc(sizeof(*ctrl), GFP_KERNEL);
+ 	if (!ctrl)
+@@ -3119,8 +3134,7 @@ static struct nvme_tcp_ctrl *nvme_tcp_alloc_ctrl(struct device *dev,
+ 
+ 	INIT_LIST_HEAD(&ctrl->list);
+ 	ctrl->ctrl.opts = opts;
+-	ctrl->ctrl.queue_count = opts->nr_io_queues + opts->nr_write_queues +
+-				opts->nr_poll_queues + 1;
++	ctrl->ctrl.queue_count = NVME_TCP_OPT_NR_QUEUES(opts);
+ 	ctrl->ctrl.sqsize = opts->queue_size - 1;
+ 	ctrl->ctrl.kato = opts->kato;
+ 
+@@ -3179,8 +3193,15 @@ static struct nvme_tcp_ctrl *nvme_tcp_alloc_ctrl(struct device *dev,
+ 		goto out_free_ctrl;
+ 	}
+ 
+-	ctrl->net = get_net(current->nsproxy->net_ns);
++	/*
++	 * The queue locks are owned by the controller, not the queues:
++	 * they outlive the per-queue connect/disconnect cycles so that
++	 * sysfs readers can never race their destruction.
++	 */
++	for (i = 0; i < ctrl->ctrl.queue_count; i++)
++		mutex_init(&ctrl->queues[i].queue_lock);
+ 
++	ctrl->net = get_net(current->nsproxy->net_ns);
+ 	ret = nvme_init_ctrl(&ctrl->ctrl, dev, &nvme_tcp_ctrl_ops, 0);
+ 	if (ret)
+ 		goto out_kfree_queues;
 -- 
 2.53.0
 
