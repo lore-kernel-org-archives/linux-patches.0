@@ -1,59 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795617787;
-	b=vtwJ33rBjcxGd0yetwEBWJYHhCfWMi+uRpOBcqQcJOhPquqo29JUXBxlCBBZyagiO7X9
-	 og0uRNkr2ti+4kW/zRmo5K025mG4apoZPcpNyM58d4OzDnP2sUHhafO+gbQVLtxBwFSSy
-	 qxxRaB+MOevSo0QCXNkKj6eKnHIrA9qAvJrPzP/CVu7L9i8eI3lrWklQOh7yTUWt9+0Vj
-	 BsckFep8lCpYaXFnq9AocjckRmnBGrckg8r78aQAydP9sJk3QOaXaVBaj7KnqF/hRTkIU
-	 HMQp8u6xXN+/rFLP5R3ZXwtB/JBaujJI7QX8pvXdQr1P8LnvFdvU9ho990HGdvIQp5g==
+	t=1795617790;
+	b=0cuWMeHP1ehxH5pZzpoDfoACip6ObmOYobbNzw0AY2FfkrS9L3XbJ2JFbJCr+OAUmVW5
+	 ZlA3HORkvwgUNE5jzhDF5yaIc/m7qiTpEXhTx5bhLoN6X/QwneM/OllnbiAeHl69+s7NE
+	 3y9uAMqKTvG94sEzsl/YhRhv4s3Bji707dNb2BYjY5JcTK4epnrT7Xsldafus8hk1kgeY
+	 gsZghpdNLHLNOf3cmn5Hiq3GvrwheuY85GEKAf+ZUZXknDc336ba9g3NUlQbyMhRZZ8Za
+	 vTPZbwZgwcExdKuJGg1QFre0MvyDsFjJ0d9Vrux078mj+wEAzxB5tt+1YMWCdrphckA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795617787;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795617790;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=DWmvCYj4QBcLkxzRtE2c0a5OhcquZgxN3+WbCmnGtaE=;
-	b=GpTn/Eu9P/BbxUaaz3BtcJqlbNbbOKlEbdh/yw9yCv7qlVlKju2s0RGPSsgFPdZw1XzE
-	 E8QFeZUhQmJ3HbWpkJwjUiYuE45rkM/yB13HI9PAe18MUePkMe42fsVcDTgYHn5qcefcj
-	 V85SYjsxQbpLlIkr4bH+FjmkMxA6RzSdB0rpiTSLAfsIX4Z6Uuwe+ku9emgce6o22glgh
-	 G6bBa4T7zgAUvWyMV3oOaSA4IwhzrPE1Hp49pBgj7AGR6Aw7/fwze1II1OpKJ+aTN0ReF
-	 PytfY7znd5OFdWX2wiu+M3al9Ou74Cm4g0citEOWyknSggNhwUQhM7rmk9rXtfIpYbQ==
+	bh=RNHACMrXBrv2QAyykzn/5IZvO8AtsIEip9tgR+TKong=;
+	b=dgJ9ebHuCsZn6637ldtI+gr0s+OjzW44MPMB2T7wnmG/AU3DyugndHviwWfQbtVDdVA9
+	 5yQ0dbtcBOZpQ3n9kRwk+Rq259VJFPFmz2QdFwxoYCiP2aLJ7qYzE+DlqVEapnEp4y1h2
+	 6EwBlSpO6mZn5vj/Jsxhqh5cCMpw/UCuXsbCI7AGo5MaRM7X2cD4rLKgoNS83NgMTXqyO
+	 w8b0lEbw5kXp2IT2O536PRUS1orLqPOxudIBrvxL6lnmvOzfXogSXeIsC5L2aL/CnaU/t
+	 a6Xsztjcqy/bw0Vq5uKu/t8KUkQ9u8QySA6Wrj97uf0NEaPFyxruLjMjvDg6iiIzbVA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=XBooifoo;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=x9Dj5jpe;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EE091606A333;
-	Wed, 25 Nov 2026 14:43:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7ADCA606A326;
+	Wed, 25 Nov 2026 14:43:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=XBooifoo
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 363491F000D1;
-	Wed, 25 Nov 2026 14:43:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=x9Dj5jpe
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B5BC41F000C4;
+	Wed, 25 Nov 2026 14:43:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795617786;
-	bh=DWmvCYj4QBcLkxzRtE2c0a5OhcquZgxN3+WbCmnGtaE=;
+	s=korg; t=1795617790;
+	bh=RNHACMrXBrv2QAyykzn/5IZvO8AtsIEip9tgR+TKong=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=XBooifoo6jrY/2lGq8xbKrvxtSPXqihTJVUmWYoE4dSN70+MuvY+o533LXfdrvif+
-	 YsP5JWt97G1CKtgWnzqSxabDnAdyJ+OvSSzB1nsEUdRopfe1/JebrlI1mWZEUbgDpT
-	 4XIhCLwu71kmX/OH0bBfMfq8wmEOI7BYmSNqZELA=
+	b=x9Dj5jpeBnGncXGGS+jzErUAajW/Wb8k+rbsAmk3O1u7nlZua5t0fA1c5l7hzGxFZ
+	 by+tjCnchR2iV3PNBRVj+8/CSvn6fEUKQEsO5mgLga23dPH3ANY8+ZBXCtDSlX8Ici
+	 CJFpdG5X+BaMR0m9a03CH0rDsL5B5nDh7seSzooI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yizhou Zhao <zhaoyz24@mails.tsinghua.edu.cn>,
-	Yuxiang Yang <yangyx22@mails.tsinghua.edu.cn>,
-	Ao Wang <wangao@seu.edu.cn>,
-	Xuewei Feng <fengxw06@126.com>,
-	Qi Li <qli01@tsinghua.edu.cn>,
-	Ke Xu <xuke@tsinghua.edu.cn>,
-	Chengfeng Ye <nicoyip.dev@gmail.com>,
-	Michael Grzeschik <mgr@kernel.org>,
-	Dominique Martinet <asmadeus@codewreck.org>,
+	Cheng Yongkang <teel4res@gmail.com>,
+	Jens Axboe <axboe@kernel.dk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0029/1005] net/9p/usbg: fix descriptor cleanup use-after-free
-Date: Wed, 25 Nov 2026 15:22:47 +0100
-Message-ID: <20261125143822.420468673@linuxfoundation.org>
+Subject: [PATCH 7.3 0020/1005] io_uring/rsrc: keep the old file when a file update fails
+Date: Wed, 25 Nov 2026 15:22:38 +0100
+Message-ID: <20261125143822.210530851@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143821.729802100@linuxfoundation.org>
 References: <20261125143821.729802100@linuxfoundation.org>
@@ -75,76 +68,60 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yizhou Zhao <zhaoyz24@mails.tsinghua.edu.cn>
+From: Cheng Yongkang <teel4res@gmail.com>
 
-[ Upstream commit 0955472fff1e9f9e410a0300136924ebc8bd7a16 ]
+Commit e5a346e4309d720c47fe8331a00068608fad47dd upstream.
 
-usb9pfs_free_func() frees the f_usb9pfs object before calling
-usb_free_all_descriptors().  The usb_function passed to the latter is
-embedded in the freed object, so removing the function from a gadget
-dereferences freed memory.
+__io_sqe_files_update() resets the slot before it calls fget() on the
+new fd. If fget() fails, the fd is an io_uring file, or the node
+allocation fails, the update stops and reports that entry as not done,
+but the old file has already been removed. Later requests that use the
+slot fail with -EBADF, and if the old file was registered with a tag,
+its tag CQE is posted as if it had been removed on purpose.
 
-The failing teardown sequence is:
+Reset the slot only after the new file has been checked and its node
+allocated, as io_install_fixed_file() does. Removal with fd == -1 still
+resets the slot right away.
 
-  configfs unlink
-    usb9pfs_free_func()
-      kfree(usb9pfs)
-      usb_free_all_descriptors(f)
-        dereference the embedded usb_function
-
-KASAN reported:
-
-  BUG: KASAN: slab-use-after-free in usb_free_all_descriptors+0x138/0x190
-  Read of size 8 at addr ffff888106a73088 by task poc/95
-  Call Trace:
-   usb_free_all_descriptors+0x138/0x190
-   config_usb_cfg_unlink+0x1f0/0x2f0
-   configfs_unlink+0x321/0x6f0
-
-Free the descriptors before freeing their containing object.
-
-Fixes: a3be076dc174 ("net/9p/usbg: Add new usb gadget function transport")
-Reported-by: Yizhou Zhao <zhaoyz24@mails.tsinghua.edu.cn>
-Reported-by: Yuxiang Yang <yangyx22@mails.tsinghua.edu.cn>
-Reported-by: Ao Wang <wangao@seu.edu.cn>
-Reported-by: Xuewei Feng <fengxw06@126.com>
-Reported-by: Qi Li <qli01@tsinghua.edu.cn>
-Reported-by: Ke Xu <xuke@tsinghua.edu.cn>
-Assisted-by: GLM:GLM-5.1
-Signed-off-by: Yizhou Zhao <zhaoyz24@mails.tsinghua.edu.cn>
-Co-developed-by: Chengfeng Ye <nicoyip.dev@gmail.com>
-Signed-off-by: Chengfeng Ye <nicoyip.dev@gmail.com>
-Acked-by: Michael Grzeschik <mgr@kernel.org>
-Message-ID: <20260529081817.77898-1-zhaoyz24@mails.tsinghua.edu.cn>
-Message-ID: <20260731150414.3135662-1-nicoyip.dev@gmail.com>
-Signed-off-by: Dominique Martinet <asmadeus@codewreck.org>
+Fixes: c3a31e605620 ("io_uring: add support for IORING_REGISTER_FILES_UPDATE")
+Cc: stable@vger.kernel.org
+Signed-off-by: Cheng Yongkang <teel4res@gmail.com>
+Link: https://patch.msgid.link/20261116044531.281978-1-teel4res@gmail.com
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/9p/trans_usbg.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ io_uring/rsrc.c | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
-diff --git a/net/9p/trans_usbg.c b/net/9p/trans_usbg.c
-index 7d600e1288a30..6bc7de04bd514 100644
---- a/net/9p/trans_usbg.c
-+++ b/net/9p/trans_usbg.c
-@@ -754,8 +754,6 @@ static void usb9pfs_free_func(struct usb_function *f)
- 	struct f_usb9pfs *usb9pfs = func_to_usb9pfs(f);
- 	struct f_usb9pfs_opts *opts;
+diff --git a/io_uring/rsrc.c b/io_uring/rsrc.c
+index c1ab760c4591c..d1ba00390c58d 100644
+--- a/io_uring/rsrc.c
++++ b/io_uring/rsrc.c
+@@ -330,8 +330,6 @@ static int __io_sqe_files_update(struct io_ring_ctx *ctx,
+ 		if (i >= ctx->file_table.data.nr)
+ 			break;
+ 		i = array_index_nospec(i, ctx->file_table.data.nr);
+-		if (io_reset_rsrc_node(ctx, &ctx->file_table.data, i))
+-			io_file_bitmap_clear(&ctx->file_table, i);
  
--	kfree(usb9pfs);
--
- 	opts = container_of(f->fi, struct f_usb9pfs_opts, func_inst);
- 
- 	mutex_lock(&opts->lock);
-@@ -763,6 +761,8 @@ static void usb9pfs_free_func(struct usb_function *f)
- 	mutex_unlock(&opts->lock);
- 
- 	usb_free_all_descriptors(f);
-+
-+	kfree(usb9pfs);
- }
- 
- static int usb9pfs_set_alt(struct usb_function *f,
+ 		if (fd != -1) {
+ 			struct file *file = fget(fd);
+@@ -355,11 +353,15 @@ static int __io_sqe_files_update(struct io_ring_ctx *ctx,
+ 				fput(file);
+ 				break;
+ 			}
++			if (io_reset_rsrc_node(ctx, &ctx->file_table.data, i))
++				io_file_bitmap_clear(&ctx->file_table, i);
+ 			ctx->file_table.data.nodes[i] = node;
+ 			if (tag)
+ 				node->tag = tag;
+ 			io_fixed_file_set(node, file);
+ 			io_file_bitmap_set(&ctx->file_table, i);
++		} else if (io_reset_rsrc_node(ctx, &ctx->file_table.data, i)) {
++			io_file_bitmap_clear(&ctx->file_table, i);
+ 		}
+ 	}
+ 	return done ? done : err;
 -- 
 2.53.0
 
