@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795618169;
-	b=hQq5zPNpzmnVp794cjzTLcNrn5RvE8ERQPrZYhVwOoFKfyCQsG4WEzd1qhNw6U+ZXBPG
-	 zS8DonanEPXQtZ5D435O1JKysR6lHQl+cFG7r5oznyQ2/YoEe74/Z3sDeSrySKeAhvdt/
-	 iD+loTpIteFlF41HM+kUPvoqSPENi0FNYD/Nh1dJJa0U/UuMAujuBkyaNuZuol5O8CCIs
-	 0kGuDycnAYk4M/Q/AWuOzz86+sOr9MHWfaTSMCjlQVn2Z9TOiEZXTfNeg5YL4EKRI/iIK
-	 KDwdWpqWEuDQwKVCVvFIygYUOUkeNhONnfj3+J2B3D51i6WTS7J6w0jMi7SZLb1Y4nw==
+	t=1795618173;
+	b=MVGmLSIP2mMBJhwVms4xMRg8m5/DbReC6/slTFFlnR8TebdmsdTuuF9j9RB9yXLXy5sD
+	 u9xi/Lx+ge0Q7rzx+E7oNsYY5SMCkqzalveN8Qms7Ftnyq8judPd5e78OOStrxUa/TKjh
+	 qzQPcIPGY0ZK7DGYMfLZY6IR6uWU03sIWd7CKRLFpLugdz4Ch9Ws/pZaQDNhHnoYVWCgE
+	 XtAkMRcTvuYPyZo9xQe3JYGhCKsjI9X82WbIuEhYfGI0kk1J1XJ2t+DWQrPoJ+DOl6d7c
+	 WnE4upMtqddr9AUS+xgaRUDdtg7mfM9P3ClQAgPzoeO56bRw9AYiYTmJYtSSkdmr0wA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795618169;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795618173;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Transfer-Encoding;
-	bh=qbmoPgCuD49kcnouspcZIXvH69wmrDQVt30KAt0iluM=;
-	b=VRMnhTzoxUVp2Y6/M+zXpDcnZ0sif538cb8rqRGS7G0eNnntfkqyHem8jWHfLfLANDdU
-	 +CoYK/M0a/tPU8CUsy8IMj5HF0CZTblQWtxgcV825wpRetFmpLU4RcJpLqJHA9r3umhXH
-	 CmYv+o32RSI/owBvb4ulrY3ETnXYL/BVAfO9lSPXM1aFZY2o4RKVawIV3W+k4nNGEFZHE
-	 GgrgmWAzVob/HhQPTJsb3GOIDJZAqwc2IYK374fBct+0Coepe0Hhjxkb/yoANhom2zfPq
-	 LI0OzrVS5CGCZ95P/mRgC2PfZ4Ukg4zcZWcT/SeLUFaaQ4hGOid/jbIoa3S1EzhiQRw==
+	 MIME-Version:Content-Type:Content-Transfer-Encoding;
+	bh=Fd1taeQJgx3VzTUp09ib4wcHZ/3AZp2LrTtA6Y7r60E=;
+	b=Apkw/YM0tWDoPdDQdin5rdWfUWurkldDqXcxb4ZHZMO+dmNQmnMd9a0tYnfnC3GdkGvN
+	 x+vLTDYQ93uRLi5bJD2rG1OSti62rpucL5/CdoTAco4kDgkDIoEkc1K5X4iWCRjIj6qWJ
+	 I8NmW2aUAWuEGxS0Cu0pJrhxR1fm2fmkI2MGTtvJaGazQzDIcXKtWFTMjPGLJoEWsS1Wl
+	 tNfo4P0DChh36G6fg/Lt5rImNaEFSxrX7mhu7B+minhkitga5n89JOA7RB8O08s0h433F
+	 0z7yR/NvUXj+ErBZ5j4cm2MyfLqHNqt9FHjcgZdt3g85B5KjASE7uy0w6sgS2fShPgw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=2JTkxjNF;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=yaiyuve5;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9A40C606A31E;
-	Wed, 25 Nov 2026 14:49:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F2396606A321;
+	Wed, 25 Nov 2026 14:49:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=2JTkxjNF
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C4C9E1F000EC;
-	Wed, 25 Nov 2026 14:49:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=yaiyuve5
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C16C91F0180C;
+	Wed, 25 Nov 2026 14:49:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795618169;
-	bh=qbmoPgCuD49kcnouspcZIXvH69wmrDQVt30KAt0iluM=;
+	s=korg; t=1795618172;
+	bh=Fd1taeQJgx3VzTUp09ib4wcHZ/3AZp2LrTtA6Y7r60E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=2JTkxjNFEDESXIhK6F4wG+BPP2tWnYy1IVC6ODpJ8Ztsas8elLq0WhfMF1O1tzc3V
-	 b7fdg7M0907w0NdmBW4+1q1pE5KOzNLroqGRxWQRTvGPBsyhPXc7G4skRR85Gul2SB
-	 b0a7L3nGI2cpMWPfXn2CVM8u96nzCmI+jLnwz9DM=
+	b=yaiyuve5Qlv9812Je2Qt5mp5AMtZfvxBQlDROJQxxhUVScov8gKqDGQwLioXuazm0
+	 ELbVvvRRU2h84MihFIS7NOFLPvJM5rjH8GErRWdKMPFXD4zLVTdypPt7RPzsdwe132
+	 HHpQFcW7nl1cwyCYd4M8gs575qyXuZHhN/XtN1sA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bryam Vargas <hexlabsecurity@proton.me>,
-	Simon Horman <horms@kernel.org>,
-	Paolo Abeni <pabeni@redhat.com>,
+	=?UTF-8?q?Fr=C3=A9d=C3=A9ric=20Danis?= <frederic.danis@collabora.com>,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0168/1005] net/iucv: take a private, writable frame before rewriting it in place
-Date: Wed, 25 Nov 2026 15:25:06 +0100
-Message-ID: <20261125143825.677783922@linuxfoundation.org>
+Subject: [PATCH 7.3 0195/1005] Bluetooth: MGMT: Add management security level changed event
+Date: Wed, 25 Nov 2026 15:25:33 +0100
+Message-ID: <20261125143826.309529234@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143821.729802100@linuxfoundation.org>
 References: <20261125143821.729802100@linuxfoundation.org>
@@ -63,68 +62,454 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 7.3-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Bryam Vargas <hexlabsecurity@proton.me>
+From: Frédéric Danis <frederic.danis@collabora.com>
 
-[ Upstream commit f38bce9af9e2a3cced7d303a1476f21c1f42bcb7 ]
+[ Upstream commit 1b723bd2945df4c75d7a4a4525660704ef8f4df8 ]
 
-afiucv_hs_rcv() rewrites the frame in place -- EBCASC() on four name
-fields, then afiucv_swap_src_dest() swaps them and pushes an Ethernet
-header -- and can hand the same skb to dev_queue_xmit(), without making
-it private first, so a packet socket that also gets the frame reads the
-rewritten names. An ETH_P_ALL tap runs first and leaves af_iucv a
-cloned skb; a socket opened for ETH_P_AF_IUCV sits on a ptype_specific
-list, walked after ptype_base[], so deliver_skb() takes a reference and
-af_iucv runs on an skb that is shared but not cloned.
+Add an event on device security level or encryption type change to
+let user space know which level is currently in use.
+Reset security level to 0 on disconnection so further connections
+will correctly report security level changes.
 
-Unshare, then cow, in that order: skb_cow() can reach
-pskb_expand_head(), which has BUG_ON(skb_shared()). skb_cow() tests
-skb_cloned(), which is what a rewrite of the data needs; skb_cow_head()
-tests only the header. Asking for ETH_HLEN also covers the unchecked
-push in afiucv_swap_src_dest(); on the ordinary path eth_type_trans()
-has already pulled that much, so it only compares.
+This will be used for BlueZ qualification automation.
 
-Fixes: 3881ac441f64 ("af_iucv: add HiperSockets transport")
-Closes: https://sashiko.dev/#/patchset/20260813-b4-disp-60433a46-v1-1-509e1200533e@proton.me?part=1
-Signed-off-by: Bryam Vargas <hexlabsecurity@proton.me>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Link: https://patch.msgid.link/20261028-b4-disp-1edbbc34-v3-1-13495411f5b9@proton.me
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Assisted-by: GPT:GPT-5.3-Codex
+Assisted-by: Copilot:claude-sonnet-5
+Signed-off-by: Frédéric Danis <frederic.danis@collabora.com>
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Stable-dep-of: 5d005ded2cb1 ("Bluetooth: L2CAP: Hold incoming data until encryption key size is known")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/iucv/af_iucv.c | 9 +++++++++
- 1 file changed, 9 insertions(+)
+ include/net/bluetooth/hci_core.h |  18 +++--
+ include/net/bluetooth/mgmt.h     |  14 ++++
+ net/bluetooth/hci_conn.c         |  28 ++++++++
+ net/bluetooth/hci_event.c        | 118 +++++++++++++++++++++++++++++--
+ net/bluetooth/mgmt.c             |  66 ++++++++++++++++-
+ 5 files changed, 232 insertions(+), 12 deletions(-)
 
-diff --git a/net/iucv/af_iucv.c b/net/iucv/af_iucv.c
-index db261ecd19af1..b02c865c71fa5 100644
---- a/net/iucv/af_iucv.c
-+++ b/net/iucv/af_iucv.c
-@@ -2072,11 +2072,20 @@ static int afiucv_hs_rcv(struct sk_buff *skb, struct net_device *dev,
- 	int err = NET_RX_SUCCESS;
- 	char nullstring[8];
+diff --git a/include/net/bluetooth/hci_core.h b/include/net/bluetooth/hci_core.h
+index fa2a367731b5e..5b71b4eac92f5 100644
+--- a/include/net/bluetooth/hci_core.h
++++ b/include/net/bluetooth/hci_core.h
+@@ -2208,6 +2208,8 @@ static inline void hci_auth_cfm(struct hci_conn *conn, __u8 status)
+ 		conn->security_cfm_cb(conn, status);
+ }
  
-+	skb = skb_share_check(skb, GFP_ATOMIC);
-+	if (!skb)
-+		return NET_RX_SUCCESS;
++void mgmt_security_level_changed(struct hci_conn *conn);
 +
- 	if (!pskb_may_pull(skb, sizeof(*trans_hdr))) {
- 		kfree_skb(skb);
- 		return NET_RX_SUCCESS;
+ static inline void hci_encrypt_cfm(struct hci_conn *conn, __u8 status)
+ {
+ 	struct hci_cb *cb;
+@@ -2230,11 +2232,19 @@ static inline void hci_encrypt_cfm(struct hci_conn *conn, __u8 status)
+ 		encrypt = 0x01;
+ 
+ 	if (!status) {
+-		if (conn->sec_level == BT_SECURITY_SDP)
++		/* Callers either set conn->sec_level = conn->pending_sec_level
++		 * unconditionally before calling this function, or never
++		 * reach here with status == 0 (e.g. conn->state == BT_CONFIG
++		 * returns early above, or status is actually an error).  So
++		 * conn->pending_sec_level is never greater than
++		 * conn->sec_level at this point; only the initial
++		 * BT_SECURITY_SDP -> BT_SECURITY_LOW bump can still happen
++		 * here.
++		 */
++		if (conn->sec_level == BT_SECURITY_SDP) {
+ 			conn->sec_level = BT_SECURITY_LOW;
+-
+-		if (conn->pending_sec_level > conn->sec_level)
+-			conn->sec_level = conn->pending_sec_level;
++			mgmt_security_level_changed(conn);
++		}
  	}
  
-+	if (skb_cow(skb, ETH_HLEN)) {
-+		kfree_skb(skb);
-+		return NET_RX_SUCCESS;
-+	}
+ 	mutex_lock(&hci_cb_list_lock);
+diff --git a/include/net/bluetooth/mgmt.h b/include/net/bluetooth/mgmt.h
+index 1e22eab1081cc..b02e915bb44cd 100644
+--- a/include/net/bluetooth/mgmt.h
++++ b/include/net/bluetooth/mgmt.h
+@@ -1221,3 +1221,17 @@ struct mgmt_ev_conn_subrate {
+ 	__le16	cont_num;
+ 	__le16	supv_timeout;
+ } __packed;
 +
- 	trans_hdr = iucv_trans_hdr(skb);
- 	EBCASC(trans_hdr->destAppName, sizeof(trans_hdr->destAppName));
- 	EBCASC(trans_hdr->destUserID, sizeof(trans_hdr->destUserID));
++#define MGMT_CONN_SEC_ENCRYPT_NONE		0x00
++#define MGMT_CONN_SEC_ENCRYPT_E0		0x01
++#define MGMT_CONN_SEC_ENCRYPT_AES_CCM		0x02
++
++#define MGMT_SEC_LEVEL_CHANGED_PARAM_LEVEL	0x0000
++#define MGMT_SEC_LEVEL_CHANGED_PARAM_ENC_TYPE	0x0001
++
++#define MGMT_EV_SECURITY_LEVEL_CHANGED		0x0034
++struct mgmt_ev_security_level_changed {
++	struct mgmt_addr_info addr;
++	__u8	tlv_length;
++	__u8	tlv_data[] __counted_by(tlv_length);
++} __packed;
+diff --git a/net/bluetooth/hci_conn.c b/net/bluetooth/hci_conn.c
+index 8f136f28b7d68..5de95408e6e30 100644
+--- a/net/bluetooth/hci_conn.c
++++ b/net/bluetooth/hci_conn.c
+@@ -1233,6 +1233,29 @@ static void hci_conn_unlink(struct hci_conn *conn)
+ 	if (!conn->parent) {
+ 		struct hci_link *link, *t;
+ 
++		conn->sec_level = BT_SECURITY_SDP;
++		clear_bit(HCI_CONN_ENCRYPT, &conn->flags);
++		clear_bit(HCI_CONN_AES_CCM, &conn->flags);
++		/* mgmt_security_level_changed() reports the reset only if
++		 * this connection was actually reported to userspace as
++		 * connected (it checks HCI_CONN_MGMT_CONNECTED itself), so it
++		 * must be called before the flag is cleared below.
++		 * Callers that already know whether the connection was
++		 * mgmt-connected (e.g. disconnect event handlers) only peek
++		 * at the flag, so it is still set here; this is the place
++		 * actually clearing it.
++		 *
++		 * Skip the report if hdev is down: this means
++		 * hci_dev_close_sync()/hci_conn_hash_flush() is in progress
++		 * and no MGMT_EV_DEVICE_DISCONNECTED was ever sent for this
++		 * connection, so sending a security level reset here would
++		 * be a spurious, order-less event; the adapter-wide powered
++		 * off notification is enough for userspace to reset state.
++		 */
++		if (test_bit(HCI_UP, &hdev->flags))
++			mgmt_security_level_changed(conn);
++		clear_bit(HCI_CONN_MGMT_CONNECTED, &conn->flags);
++
+ 		list_for_each_entry_safe(link, t, &conn->link_list, list) {
+ 			struct hci_conn *child = link->conn;
+ 
+@@ -1543,6 +1566,11 @@ struct hci_conn *hci_connect_le(struct hci_dev *hdev, bdaddr_t *dst,
+ 		conn->pending_sec_level = sec_level;
+ 	}
+ 
++	/* Do not report the security level here: conn->dst may still hold
++	 * the peer's RPA instead of its identity address, and the connection
++	 * is not established yet. le_conn_complete_evt() reports it once the
++	 * connection completes and the identity address has been resolved.
++	 */
+ 	conn->sec_level = BT_SECURITY_LOW;
+ 	conn->conn_timeout = conn_timeout;
+ 	conn->le_adv_phy = phy;
+diff --git a/net/bluetooth/hci_event.c b/net/bluetooth/hci_event.c
+index 1962dccabbef1..8230fb706ffb3 100644
+--- a/net/bluetooth/hci_event.c
++++ b/net/bluetooth/hci_event.c
+@@ -732,6 +732,14 @@ static u8 hci_cc_read_enc_key_size(struct hci_dev *hdev, void *data,
+ 		bt_dev_err(hdev, "failed to read key size for handle %u",
+ 			   handle);
+ 		conn->enc_key_size = 0;
++		clear_bit(HCI_CONN_ENCRYPT, &conn->flags);
++		clear_bit(HCI_CONN_AES_CCM, &conn->flags);
++		/* Downgrade to reflect the connection no longer being
++		 * encrypted, instead of advertising a stale elevated
++		 * security level alongside MGMT_CONN_SEC_ENCRYPT_NONE.
++		 */
++		if (conn->sec_level > BT_SECURITY_LOW)
++			conn->sec_level = BT_SECURITY_LOW;
+ 	} else {
+ 		u8 *key_enc_size = hci_conn_key_enc_size(conn);
+ 
+@@ -755,6 +763,25 @@ static u8 hci_cc_read_enc_key_size(struct hci_dev *hdev, void *data,
+ 			status = HCI_ERROR_AUTH_FAILURE;
+ 			clear_bit(HCI_CONN_ENCRYPT, &conn->flags);
+ 			clear_bit(HCI_CONN_AES_CCM, &conn->flags);
++			/* Downgrade to reflect the connection no longer being
++			 * encrypted, instead of advertising a stale elevated
++			 * security level alongside MGMT_CONN_SEC_ENCRYPT_NONE.
++			 */
++			if (conn->sec_level > BT_SECURITY_LOW)
++				conn->sec_level = BT_SECURITY_LOW;
++		} else {
++			/* Pre-apply hci_encrypt_cfm()'s own upgrade rules
++			 * here unconditionally on success, so its internal
++			 * change check below always finds nothing new: this
++			 * function remains the sole place deciding whether
++			 * and when to report the change, regardless of
++			 * whether the caller already touched conn->sec_level
++			 * (e.g. hci_encrypt_change_evt()) or not.
++			 */
++			if (conn->sec_level == BT_SECURITY_SDP)
++				conn->sec_level = BT_SECURITY_LOW;
++			if (conn->pending_sec_level > conn->sec_level)
++				conn->sec_level = conn->pending_sec_level;
+ 		}
+ 
+ 		/* Update the key encryption size with the connection one */
+@@ -764,6 +791,13 @@ static u8 hci_cc_read_enc_key_size(struct hci_dev *hdev, void *data,
+ 
+ 	hci_encrypt_cfm(conn, status);
+ 
++	/* mgmt_security_level_changed() only reports the change for
++	 * connections already announced to userspace (it checks
++	 * HCI_CONN_MGMT_CONNECTED itself); otherwise it is a no-op here and
++	 * reporting is deferred to mgmt_device_connected().
++	 */
++	mgmt_security_level_changed(conn);
++
+ done:
+ 	hci_dev_unlock(hdev);
+ 
+@@ -2786,7 +2820,11 @@ static void hci_cs_disconnect(struct hci_dev *hdev, u8 status)
+ 	if (hdev->suspended)
+ 		conn->state = BT_CLOSED;
+ 
+-	mgmt_conn = test_and_clear_bit(HCI_CONN_MGMT_CONNECTED, &conn->flags);
++	/* Only peek at the flag here: hci_conn_del() (via hci_conn_unlink())
++	 * still needs it set to know whether to report the security level
++	 * reset, so it is consumed there instead of here.
++	 */
++	mgmt_conn = test_bit(HCI_CONN_MGMT_CONNECTED, &conn->flags);
+ 
+ 	if (conn->type == ACL_LINK) {
+ 		if (test_and_clear_bit(HCI_CONN_FLUSH_KEY, &conn->flags))
+@@ -3407,6 +3445,16 @@ static void hci_conn_request_evt(struct hci_dev *hdev, void *data,
+ 			bt_dev_err(hdev, "connection err: %ld", PTR_ERR(conn));
+ 			goto unlock;
+ 		}
++
++		/* Unlike outgoing BR/EDR connections, conn->sec_level is not
++		 * set at connection request time for incoming connections,
++		 * so it is still at its zero-initialized value
++		 * (BT_SECURITY_SDP) here. Set it to BT_SECURITY_LOW so
++		 * mgmt_device_connected() later reports the correct initial
++		 * security level instead of a transient, never-really-in-use
++		 * SDP value.
++		 */
++		conn->sec_level = BT_SECURITY_LOW;
+ 	}
+ 
+ 	memcpy(conn->dev_class, ev->dev_class, 3);
+@@ -3473,7 +3521,11 @@ static void hci_disconn_complete_evt(struct hci_dev *hdev, void *data,
+ 
+ 	conn->state = BT_CLOSED;
+ 
+-	mgmt_connected = test_and_clear_bit(HCI_CONN_MGMT_CONNECTED, &conn->flags);
++	/* Only peek at the flag here: hci_conn_del() (via hci_conn_unlink())
++	 * still needs it set to know whether to report the security level
++	 * reset, so it is consumed there instead of here.
++	 */
++	mgmt_connected = test_bit(HCI_CONN_MGMT_CONNECTED, &conn->flags);
+ 
+ 	if (test_bit(HCI_CONN_AUTH_FAILURE, &conn->flags))
+ 		reason = MGMT_DEV_DISCONN_AUTH_FAILURE;
+@@ -3557,6 +3609,15 @@ static void hci_auth_complete_evt(struct hci_dev *hdev, void *data,
+ 	if (!ev->status) {
+ 		clear_bit(HCI_CONN_AUTH_FAILURE, &conn->flags);
+ 		set_bit(HCI_CONN_AUTH, &conn->flags);
++		/* Authentication alone does not imply encryption: for SSP
++		 * capable devices, encryption is only requested below, and
++		 * for legacy devices it is requested by a separate
++		 * HCI_OP_SET_CONN_ENCRYPT command. Do not report the new
++		 * security level yet, to avoid userspace seeing an elevated
++		 * level alongside no encryption; hci_encrypt_change_evt()
++		 * (possibly via hci_cc_read_enc_key_size() for ACL links)
++		 * reports it once encryption is actually confirmed.
++		 */
+ 		conn->sec_level = conn->pending_sec_level;
+ 	} else {
+ 		if (ev->status == HCI_ERROR_PIN_OR_KEY_MISSING)
+@@ -3673,9 +3734,28 @@ static void hci_encrypt_change_evt(struct hci_dev *hdev, void *data,
+ 			if ((conn->type == ACL_LINK && ev->encrypt == 0x02) ||
+ 			    conn->type == LE_LINK)
+ 				set_bit(HCI_CONN_AES_CCM, &conn->flags);
++
++			/* For ACL links the encryption key size is still
++			 * validated below via hci_read_enc_key_size(). Its
++			 * completion handler, hci_cc_read_enc_key_size(),
++			 * reports the final security level so userspace does
++			 * not see a transient "encrypted" state that a
++			 * key-size downgrade would immediately invalidate.
++			 */
++			if (conn->type != ACL_LINK)
++				mgmt_security_level_changed(conn);
+ 		} else {
+ 			clear_bit(HCI_CONN_ENCRYPT, &conn->flags);
+ 			clear_bit(HCI_CONN_AES_CCM, &conn->flags);
++			/* Elevated security levels (MEDIUM and above) require
++			 * encryption, so downgrade to reflect the connection
++			 * no longer being encrypted before reporting, instead
++			 * of advertising a stale elevated level alongside
++			 * MGMT_CONN_SEC_ENCRYPT_NONE.
++			 */
++			if (conn->sec_level > BT_SECURITY_LOW)
++				conn->sec_level = BT_SECURITY_LOW;
++			mgmt_security_level_changed(conn);
+ 		}
+ 	}
+ 
+@@ -3708,8 +3788,14 @@ static void hci_encrypt_change_evt(struct hci_dev *hdev, void *data,
+ 
+ 	/* Try reading the encryption key size for encrypted ACL links */
+ 	if (!ev->status && ev->encrypt && conn->type == ACL_LINK) {
+-		if (hci_read_enc_key_size(hdev, conn))
++		if (hci_read_enc_key_size(hdev, conn)) {
++			/* Could not even issue the key-size read: report the
++			 * security level now since hci_cc_read_enc_key_size()
++			 * will not run to do it.
++			 */
++			mgmt_security_level_changed(conn);
+ 			goto notify;
++		}
+ 
+ 		goto unlock;
+ 	}
+@@ -5275,8 +5361,14 @@ static void hci_key_refresh_complete_evt(struct hci_dev *hdev, void *data,
+ 	if (conn->type != LE_LINK)
+ 		goto unlock;
+ 
+-	if (!ev->status)
++	if (!ev->status) {
++		bool sec_level_changed =
++				conn->sec_level != conn->pending_sec_level;
++
+ 		conn->sec_level = conn->pending_sec_level;
++		if (sec_level_changed)
++			mgmt_security_level_changed(conn);
++	}
+ 
+ 	clear_bit(HCI_CONN_ENCRYPT_PEND, &conn->flags);
+ 
+@@ -5905,9 +5997,16 @@ static void le_conn_complete_evt(struct hci_dev *hdev, u8 status,
+ 		goto unlock;
+ 	}
+ 
++	/* Unlike outgoing BR/EDR connections, conn->sec_level is not set at
++	 * connection request time for LE, so it is still at its
++	 * zero-initialized value (BT_SECURITY_SDP) here. Set it to
++	 * BT_SECURITY_LOW before reporting the connection so
++	 * mgmt_device_connected() reports the correct initial security level
++	 * instead of a transient, never-really-in-use SDP value.
++	 */
++	conn->sec_level = BT_SECURITY_LOW;
+ 	mgmt_device_connected(hdev, conn, NULL, 0);
+ 
+-	conn->sec_level = BT_SECURITY_LOW;
+ 	conn->state = BT_CONFIG;
+ 
+ 	/* Store current advertising instance as connection advertising instance
+@@ -7380,8 +7479,13 @@ static void hci_le_big_sync_lost_evt(struct hci_dev *hdev, void *data,
+ 						     BT_CONNECTED,
+ 						     HCI_ROLE_SLAVE))) {
+ 		if (!mgmt_conn) {
+-			mgmt_conn = test_and_clear_bit(HCI_CONN_MGMT_CONNECTED,
+-						       &bis->flags);
++			/* Only peek at the flag here: hci_conn_del() (via
++			 * hci_conn_unlink()) still needs it set to know
++			 * whether to report the security level reset, so
++			 * it is consumed there instead of here.
++			 */
++			mgmt_conn = test_bit(HCI_CONN_MGMT_CONNECTED,
++					     &bis->flags);
+ 			mgmt_device_disconnected(hdev, &bis->dst, bis->type,
+ 						 bis->dst_type, ev->reason,
+ 						 mgmt_conn);
+diff --git a/net/bluetooth/mgmt.c b/net/bluetooth/mgmt.c
+index 11f01b8d53f80..c9e93393ff826 100644
+--- a/net/bluetooth/mgmt.c
++++ b/net/bluetooth/mgmt.c
+@@ -177,6 +177,7 @@ static const u16 mgmt_events[] = {
+ 	MGMT_EV_CONTROLLER_RESUME,
+ 	MGMT_EV_ADV_MONITOR_DEVICE_FOUND,
+ 	MGMT_EV_ADV_MONITOR_DEVICE_LOST,
++	MGMT_EV_SECURITY_LEVEL_CHANGED,
+ };
+ 
+ static const u16 mgmt_untrusted_commands[] = {
+@@ -10158,6 +10159,14 @@ void mgmt_device_connected(struct hci_dev *hdev, struct hci_conn *conn,
+ 	ev->eir_len = cpu_to_le16(eir_len);
+ 
+ 	mgmt_event_skb(skb, NULL);
++
++	/* Connections that negotiated encryption as part of setup (e.g. via
++	 * an existing link key) had their security level change suppressed
++	 * since userspace did not know about them yet, so report it now.
++	 * Unencrypted connections have no change to report.
++	 */
++	if (test_bit(HCI_CONN_ENCRYPT, &conn->flags))
++		mgmt_security_level_changed(conn);
+ }
+ 
+ static void unpair_device_rsp(struct mgmt_pending_cmd *cmd, void *data)
+@@ -10264,7 +10273,11 @@ void mgmt_connect_failed(struct hci_dev *hdev, struct hci_conn *conn, u8 status)
+ {
+ 	struct mgmt_ev_connect_failed ev;
+ 
+-	if (test_and_clear_bit(HCI_CONN_MGMT_CONNECTED, &conn->flags)) {
++	/* Only peek at the flag here: hci_conn_del() (via hci_conn_unlink())
++	 * still needs it set to know whether to report the security level
++	 * reset, so it is consumed there instead of here.
++	 */
++	if (test_bit(HCI_CONN_MGMT_CONNECTED, &conn->flags)) {
+ 		mgmt_device_disconnected(hdev, &conn->dst, conn->type,
+ 					 conn->dst_type,
+ 					 hci_to_mgmt_reason(status), true);
+@@ -10898,6 +10911,57 @@ void mgmt_device_found(struct hci_dev *hdev, bdaddr_t *bdaddr, u8 link_type,
+ 	mgmt_adv_monitor_device_found(hdev, bdaddr, report_device, skb, NULL);
+ }
+ 
++void mgmt_security_level_changed(struct hci_conn *conn)
++{
++	struct mgmt_ev_security_level_changed *ev;
++	struct mgmt_tlv *tlv;
++	u8 *tlv_data;
++	u8 tlv_len;
++
++	if (!test_bit(HCI_CONN_MGMT_CONNECTED, &conn->flags))
++		return;
++
++	/* Only ACL, LE and BIS links are tracked as mgmt connections, so
++	 * restrict the event to those link types. Other transports (SCO,
++	 * CIS, PA sync, ...) share the parent's address and would otherwise
++	 * report a spurious security level change for it.
++	 */
++	if (conn->type != ACL_LINK && conn->type != LE_LINK &&
++	    conn->type != BIS_LINK)
++		return;
++
++	tlv_len = 2 * (sizeof(*tlv) + sizeof(__u8));
++	ev = kzalloc_flex(*ev, tlv_data, tlv_len, GFP_KERNEL);
++	if (!ev)
++		return;
++
++	bacpy(&ev->addr.bdaddr, &conn->dst);
++	ev->addr.type = link_to_bdaddr(conn->type, conn->dst_type);
++	ev->tlv_length = tlv_len;
++
++	tlv_data = ev->tlv_data;
++	tlv = (void *)tlv_data;
++	tlv->type = cpu_to_le16(MGMT_SEC_LEVEL_CHANGED_PARAM_LEVEL);
++	tlv->length = sizeof(__u8);
++	tlv->value[0] = conn->sec_level;
++
++	tlv_data += sizeof(*tlv) + sizeof(__u8);
++	tlv = (void *)tlv_data;
++	tlv->type = cpu_to_le16(MGMT_SEC_LEVEL_CHANGED_PARAM_ENC_TYPE);
++	tlv->length = sizeof(__u8);
++	if (!test_bit(HCI_CONN_ENCRYPT, &conn->flags))
++		tlv->value[0] = MGMT_CONN_SEC_ENCRYPT_NONE;
++	else if (test_bit(HCI_CONN_AES_CCM, &conn->flags))
++		tlv->value[0] = MGMT_CONN_SEC_ENCRYPT_AES_CCM;
++	else
++		tlv->value[0] = MGMT_CONN_SEC_ENCRYPT_E0;
++
++	mgmt_event(MGMT_EV_SECURITY_LEVEL_CHANGED, conn->hdev, ev,
++		   struct_size(ev, tlv_data, tlv_len), NULL);
++
++	kfree(ev);
++}
++
+ void mgmt_remote_name(struct hci_dev *hdev, bdaddr_t *bdaddr, u8 link_type,
+ 		      u8 addr_type, s8 rssi, u8 *name, u8 name_len)
+ {
 -- 
 2.53.0
 
