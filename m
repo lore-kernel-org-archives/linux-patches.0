@@ -1,53 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795619497;
-	b=L2r2YpleEOISSMHIk7YsqoKeSdqdWHePaU8aN5DxWy8mCGlx5oTSV5l3pNNnbjh/plWE
-	 RqHm8DxOQJgQte3zn/iYJATfUfG2AUStjJATfgFoIYQKBE8tf1glrAHfWMsiPVN/wgQzR
-	 NpL4tPgSnVSkhi3bVvmIotS1MKPj69i/KQCOGoNPi8VgS51nVLuDst6FgsXDUBGjfg3xg
-	 EKwsPcj8CPiMtL96XvTiDL7r8ErhmGPSXkUd5rL6+peElYx/MXRXuV0gMzf+7AMikUL9K
-	 O04JVDCusHIA4nF2kZATXXYmgUlJZiTQKWhQlBKKkDy27tDoOWGJLpmX8B4/FMA0ozg==
+	t=1795619500;
+	b=jVQcflxNEQ4SENkFdZiOMA9dik5BaRMzFEWFuWpsjqHz8VKA+N5CXZY6N80/V2TeW2SP
+	 nptysDdA0NTFsR2QTzO2dOAgZJNHmFdHGhE5lYZ8O8ssxWXOOKN/ZfRKzfc68z63mOwtR
+	 cPZOuUte3cBq+jvNzcCKvE+tNalUcdT314o/nLyITFx6tNgKBu80z+/nWoGXlWDhpbkOG
+	 xGffshQAs/vsfZq8ju74ii9ANwTQIRHYjBmX8sVzDzbl7ugTgIf+sLuw9qnqR97ByWaPg
+	 fMpTT52hkRjwhO0LyC/Hqcmx6+YP4LF8vtG9bzRYttyC8NyVCSzXnPTtG6cQOHuupIA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795619497;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795619500;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=WVO1soJfHbEBmgo7qXJtgiUvrJX4687UFMur9tkTGHE=;
-	b=KiQyLIl9WYs3HNMKR0+BIO/3tbB/iT94M1G0LTZiXUdMhQD30iEMYOVS8xJH2yqb5YMa
-	 FSvIzwPdnb2JKAft9IXdO5/7g4czovoy6jH2DglYV2uweNuqoU1JOtGOrAVv6b9L9RqcN
-	 +sNZFnXNCzoZlXBcCQ6N31wnID9vXTgSSVQIco5db6LoogyJ2XryUroZM2gDXeCxEXCGm
-	 su7u7dnblboeZkMHSyQR5fvnoyu/K9+xUZhVOWTOIFmdItGP96/ERImO59F+S1pVFmsio
-	 2ZG7M9PByqOzowxe9EiFRI1eTVL46IY2Yxl+RHxfzy9UKxeWGEELbDRc8VGHMnVzlkA==
+	bh=EyfCy7TujlBWVPoca6vTzv18bFe9Wdl2g08NUB+ltbQ=;
+	b=jX6O9u8zWG/tozF8RP5lTFvPJMvAJkRUy1ESooBgXXK41YnrIrF0FXDDgBBPUoKEb48N
+	 +3l9XX1KdBpvhhPlCmm1+cFFSBV59Fmb2YOY8jPq4oMtDQGKcny3zk3MoGsp4DWvID5Z0
+	 rKPHI0qhaFNMoNj/ZHohgkfaPs1k0uIkbAqb02NWgriYdgHl65gvGM1tFHE5wF/LqS4jW
+	 /xtH8g9/jefQfYbhJBbt5RjxtJeExUnQTSmX7l0gt+36Ey/2E+9qpCtG4lMGMsQ0dUTMZ
+	 SfczmodWGkXRrF8TmCjR1cjeCoTIMRR2iUEafYUFaPNTMLBl57pjla1Av+0a0FOo49w==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=FzgOoNJM;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=1C4Ftu3i;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DD853606A31E;
-	Wed, 25 Nov 2026 15:11:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 739DB606A323;
+	Wed, 25 Nov 2026 15:11:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=FzgOoNJM
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E7E9B1F000C0;
-	Wed, 25 Nov 2026 15:11:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=1C4Ftu3i
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C48A01F000CA;
+	Wed, 25 Nov 2026 15:11:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795619497;
-	bh=WVO1soJfHbEBmgo7qXJtgiUvrJX4687UFMur9tkTGHE=;
+	s=korg; t=1795619500;
+	bh=EyfCy7TujlBWVPoca6vTzv18bFe9Wdl2g08NUB+ltbQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=FzgOoNJMiygZh0Gaj6jVIA6V7wrMVXCkOkTJ0Vl70jmeVmvuxPvePz1v1eIYktFGV
-	 RWwQjyFKWFbjlfxkD2SObhWHCfDg4ipR2dMWagL2PI6v+IWUEEiFZYNG/9+E5ng8iS
-	 jzt89+bS4YG2evyCnwWwdVA9Oa3bE+QdBHkA7XXs=
+	b=1C4Ftu3iAi/mS1gP1eaWVgYv5UD7Y7eVjhZOBeoNTlncgrvgiHCVzF7XgIwKMGq5S
+	 /B0gZl1AslQd3eh6qtNX8jlLAJJ18/xCt+A8/4GYyBQQZ8HWkIdU5o9Cfgb6mfVdrU
+	 Ntg4sBZ96JjRKJODKDdzAgY6x6j8WKw41MwHPeEE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Josef Bacik <josef@toxicpanda.com>,
-	"David Hildenbrand (Arm)" <david@kernel.org>,
-	Johannes Weiner <hannes@cmpxchg.org>,
-	"Vlastimil Babka (SUSE)" <vbabka@kernel.org>
-Subject: [PATCH 7.3 0598/1005] mm: page_frag: refill the cache for large fragments
-Date: Wed, 25 Nov 2026 15:32:16 +0100
-Message-ID: <20261125143835.754105087@linuxfoundation.org>
+	Florian Bezdeka <florian.bezdeka@siemens.com>,
+	Thomas Gleixner <tglx@kernel.org>
+Subject: [PATCH 7.3 0616/1005] entry: Fix return type of syscall_trace_enter()
+Date: Wed, 25 Nov 2026 15:32:34 +0100
+Message-ID: <20261125143836.176972738@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143821.729802100@linuxfoundation.org>
 References: <20261125143821.729802100@linuxfoundation.org>
@@ -69,75 +67,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Josef Bacik <josef@toxicpanda.com>
+From: Florian Bezdeka <florian.bezdeka@siemens.com>
 
-commit c028ecdf15131a2ab70d78a76657b81c00fa240d upstream.
+commit 75b1663222d7aa0b3c33cc3522a347757e6d1d26 upstream.
 
-A fragment which is larger than PAGE_SIZE can only be served from the
-32K page of a page_frag_cache. If memory is low and the cache had to fall
-back to a single page, __page_frag_alloc_align() returns NULL and keeps
-that page.
+All return values of syscall_trace_enter() were migrated to bool in
+commit 71ff30013f19 ("entry: Make return type of syscall_trace_enter() bool"),
+but the function declaration has not been updated.
 
-Since the offset counts up, this check comes first and is made whenever
-the fragment does not fit behind nc->offset, no matter how big the page
-of the cache is. So the cache is never refilled on behalf of a large
-fragment: with fragsz = 10000 the first three allocations succeed, the
-fourth one and all the following ones fail although memory is plentiful.
-nc->offset does not move either, so this lasts until smaller fragments
-have used up the rest of the page, which never happens if the cache has
-no other user.
+Fix that up now.
 
-The nfp driver allocates its receive buffers with napi_alloc_frag() and
-netdev_alloc_frag(). They are larger than a page with a jumbo MTU.
-
-Only give up if the fragment does not fit into the page at all, which is
-what the comment describes. The fourth allocation in the scenario above
-with a 32k page will thus now proceed to refill the cache.
-
-Fixes: 8218f62c9c9b ("mm: page_frag: use initial zero offset for page_frag_alloc_align()")
+Fixes: 71ff30013f19 ("entry: Make return type of syscall_trace_enter() bool")
+Signed-off-by: Florian Bezdeka <florian.bezdeka@siemens.com>
+Signed-off-by: Thomas Gleixner <tglx@kernel.org>
 Cc: stable@vger.kernel.org
-Assisted-by: LLM
-Signed-off-by: Josef Bacik <josef@toxicpanda.com>
-Signed-off-by: David Hildenbrand (Arm) <david@kernel.org>
-Reviewed-by: Johannes Weiner <hannes@cmpxchg.org>
-[vbabka@kernel.org: make the comment more obvious]
-Link: https://patch.msgid.link/20261103-pgalloc-ai-hotfixes-v2-2-e0d2890ab74f@kernel.org
-Signed-off-by: Vlastimil Babka (SUSE) <vbabka@kernel.org>
+Link: https://patch.msgid.link/20261030-wip-flo-fixup-entry-code-v1-1-7724c29e800b@siemens.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- mm/page_frag_cache.c |   21 +++++++++++++--------
- 1 file changed, 13 insertions(+), 8 deletions(-)
+ include/linux/entry-common.h | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/mm/page_frag_cache.c
-+++ b/mm/page_frag_cache.c
-@@ -119,15 +119,20 @@ refill:
- 	size = PAGE_SIZE << encoded_page_decode_order(encoded_page);
- 	offset = __ALIGN_KERNEL_MASK(nc->offset, ~align_mask);
- 	if (unlikely(offset + fragsz > size)) {
--		if (unlikely(fragsz > PAGE_SIZE)) {
-+		if (unlikely(fragsz > size)) {
- 			/*
--			 * The caller is trying to allocate a fragment
--			 * with fragsz > PAGE_SIZE but the cache isn't big
--			 * enough to satisfy the request, this may
--			 * happen in low memory conditions.
--			 * We don't release the cache page because
--			 * it could make memory pressure worse
--			 * so we simply return NULL here.
-+			 * The caller is trying to allocate a fragment that's
-+			 * larger than the whole cache page.
-+			 *
-+			 * Either fragsz is larger than PAGE_FRAG_CACHE_MAX_SIZE
-+			 * so this cannot ever succeed.
-+			 *
-+			 * Or the refill has fallen back to order-0 due to a low
-+			 * memory condition. Then we don't want to release the
-+			 * cache page to attempt a new large-size refill because
-+			 * it could make memory pressure worse.
-+			 *
-+			 * So in both cases we simply return NULL here.
- 			 */
- 			return NULL;
- 		}
+diff --git a/include/linux/entry-common.h b/include/linux/entry-common.h
+index fa2854fed1f2..a8b2430eadc5 100644
+--- a/include/linux/entry-common.h
++++ b/include/linux/entry-common.h
+@@ -62,7 +62,7 @@ void trace_syscall_enter(struct pt_regs *regs);
+ void trace_syscall_exit(struct pt_regs *regs, long ret);
+ void syscall_enter_audit(struct pt_regs *regs);
+ 
+-static __always_inline long syscall_trace_enter(struct pt_regs *regs, unsigned long work,
++static __always_inline bool syscall_trace_enter(struct pt_regs *regs, unsigned long work,
+ 						long syscall)
+ {
+ 	/*
+-- 
+2.56.1
+
 
 
