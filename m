@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795621324;
-	b=PCKInWHaXX4aH2hRjmHSJqjEVOY/jw3Dqux05ipzSpy/1Gom3mGiiYutpprN5XF//ifC
-	 /WNg4h4o5UEX7U2t20rC5SDXuBum0ZPTaMcZg29mGkfHlisPPjgddisIZ6Vrq7eLEJ7Gx
-	 93D37O2KREU1Rz22dAYNkuFLbg5vRI3/8C/cPjL0AqS+6iuGS2C+zx3PcyjgLVuZp6jwG
-	 +z8BSTo/NCFNnVySTIMLZ3vEw10LtxeETFRA6Wu+6R6c6mA3FIMvfe5zg6jzzI+QELL4E
-	 MnAmWri1ppw3xBThrgE5kgNdOSLAVgR8MveQj0/Fse8WC3J3VzZ39TGY5z7E1/ocLww==
+	t=1795621327;
+	b=Kt+EjbHopmiv6kx1bl1RJpr9EuoXXjNoIpBUS5HA1E3nrjwsVcv9+54HB3fQVMP+puyZ
+	 3SZis4fZ1wwgNIS7haIGleOTBdTViwDng7lbvxnU1Cip/SnVm1CWrNdVt9BoDccBptrPA
+	 QeRv/vPCmmtgAefEsmukHyip3gfr6uyWdx/E5wXOLs/p+Nj/YdGYf0E9uYxKe8kACFH7z
+	 Q7UE4vVljEu7OHHmeQzqxPSQhEjaQBrwekNs6KzQV2BP9K3xo4uUv0W9Is4GWv3UAlCcc
+	 SPH32/sOeFTmJiuPPfXTNQBfhw+VP+pvaNqSWgXO3atCGdOblO88E7zgbV4YWaaaaIA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795621324;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795621327;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=/7i5UjGnaOT+BE+uu/5IstyPiBN/1Op17/3b/lBFNEU=;
-	b=EceSOAh/H2mCDTm5Q/UQzMYfigu/7+s1k373oCZWgOQ6VcHc7oRsAKhCmk3Mg64k9c3F
-	 dBX2m0VKmcUbP3tgzu5FT2j6Epdl3iDh9skUwVxTOTQG3hHoUQyLYPJBtLkhpNzF7c21v
-	 Ikox6gKryFUn7eRX0mCDDGPgJEl3WvhK4Kk881r+fbTdQzIKkORnkr8cxoe0hyFr54kP1
-	 pxFx7/2fQDfBbAnkSs3Iq+ahGrrnVUgxZBKq6SBAwOHh3zlWF2/B96qRsE1VTdsJTHREf
-	 3cA3kmDtRC6teNoxmfqo/HYJU1x+9sVlPp3Y3QzRx3xM7aKil1sbmOErHoRv1y68iSA==
+	bh=UBsGQpkLrZzd+eMAa1kc3BUJkKu5D/yX+tYE0kqrphk=;
+	b=2NF9fQtfIHmTjLEHBUtjFEIZsn3A5DhmY2MSO6+alXeG5g9mZgyPmxwfjUOxHV9VQM1z
+	 Ecz8aGHWKai6XaKtKRNjQuZwBt4U4b7C5UrNi3KovOCrvvJopnUu9uwhrqrKghdKsHCEi
+	 usv4JZPSKGG0C+3ivGuJ3ZzgnHhDalnq9DuuIk8aEeHldB+np8KJ1CeI54xQwkt4u3Pf5
+	 /SHx5kOq5M/p80/3oSuchEipeGTN6m7hFaZrY/9tsmG0NGGA7lVYDYpC21KLeyZlNvnwq
+	 W84w3lfTmw0v8BFYucf1Gq4cFtbLRYGiwCDnIGYqsa6Ms0dZCl9gJ3oxtOuZ0erETsg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=MeyKgl+Q;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=iQjpgU7Q;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EC485606B387;
-	Wed, 25 Nov 2026 15:42:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 39739606A6A8;
+	Wed, 25 Nov 2026 15:42:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=MeyKgl+Q
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E318A1F000E0;
-	Wed, 25 Nov 2026 15:42:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=iQjpgU7Q
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 448E71F000EF;
+	Wed, 25 Nov 2026 15:42:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795621323;
-	bh=/7i5UjGnaOT+BE+uu/5IstyPiBN/1Op17/3b/lBFNEU=;
+	s=korg; t=1795621326;
+	bh=UBsGQpkLrZzd+eMAa1kc3BUJkKu5D/yX+tYE0kqrphk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=MeyKgl+QudBwI9BvhtdhF6lmXtjVQUuygcaMt1N8UlXvLP+IYpqz6FDCoEfeAZpnN
-	 ckM2NIcVg/+mN2/xcy/mqg0myWYdnqzL2vmqfKb1vQ9zGbxaHCux9uUTn8ATy7Zwxg
-	 P+pglbuB3c/YdLRk3tPCmL6Z1biicrnTAYgUAUBo=
+	b=iQjpgU7QyJlZilMoul3iFU7UhNdeRDUF+ZGilt+2KzWpuYh3h4fNxPItTPiejL4p2
+	 iRFoW2XK6bSLMHvNmiT5IYjIU/UNps0IWm7MOTq9nLRXG2jyr0fldKQ0ohnnp2qqtO
+	 aaZh4sZL8gWUyfSRPMKQ0Pyw/NP8Rb0sGMiEKl2c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Cen Zhang <zzzccc427@gmail.com>,
+	Yifan Zhang <yfzhang23@stu.pku.edu.cn>,
 	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 189/990] Bluetooth: hci_core: Initialize advertising RPA work only once
-Date: Wed, 25 Nov 2026 15:25:56 +0100
-Message-ID: <20261125143826.520960746@linuxfoundation.org>
+Subject: [PATCH 6.18 190/990] Bluetooth: validate retained LE Create CIS command length
+Date: Wed, 25 Nov 2026 15:25:57 +0100
+Message-ID: <20261125143826.545709518@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143822.072087159@linuxfoundation.org>
 References: <20261125143822.072087159@linuxfoundation.org>
@@ -68,93 +68,130 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Cen Zhang <zzzccc427@gmail.com>
+From: Yifan Zhang <yfzhang23@stu.pku.edu.cn>
 
-[ Upstream commit a7c5c18b7cc30dcd2a9ae5a0fb38378d3998417e ]
+[ Upstream commit 1eb52f35fc8fb06ab7f2973fff29cba81f96b947 ]
 
-hci_add_adv_instance() also updates existing instances and calls
-INIT_DELAYED_WORK() on their rpa_expired_cb every time, even when the
-work is pending or running. cancel_delayed_work_sync() then no longer
-finds the work, so hci_remove_adv_instance() can free the instance
-under it:
+hci_cs_le_create_cis() retrieves the parameters of the previously sent
+command without their length.  It then trusts num_cis and walks the
+flexible cis[] array when a controller reports a failed command.
 
-  hdev->workqueue                 MGMT_OP_ADD_EXT_ADV_PARAMS
-  adv_instance_rpa_expired()
-                                  hci_dev_lock(hdev)
-                                  hci_add_adv_instance()
-                                    INIT_DELAYED_WORK()
-                                  mgmt_pending_new() fails
-                                  hci_remove_adv_instance()
-                                    cancel_delayed_work_sync()
-                                      returns without waiting
-                                    kfree(adv)
-                                  hci_dev_unlock(hdev)
-    adv->rpa_expired = true
+A five-byte HCI command containing only num_cis can therefore make the
+handler read beyond the command skb.  KASAN reports:
 
-The work has been initialized on every update since it was added.
-Initialize it only when the instance is allocated.
+  BUG: KASAN: slab-out-of-bounds in hci_cs_le_create_cis
+  Read of size 2
+  hci_cs_le_create_cis
+  hci_cmd_status_evt
+  hci_event_packet
 
-KASAN report as below:
+Add a length-returning saved-command helper and require the fixed header
+and complete CIS array before walking it.
 
-    BUG: KASAN: slab-use-after-free in adv_instance_rpa_expired+0x139/0x160
-    Write of size 1 at addr ffff888108d84b2e by task kworker/u17:0/504
+The reproducer no longer triggers a KASAN report with this change.
 
-    Workqueue: hci0 adv_instance_rpa_expired
-    Call Trace:
-     adv_instance_rpa_expired+0x139/0x160
-
-    Allocated by task 560:
-     hci_add_adv_instance+0x68d/0x9d0
-     add_ext_adv_params+0x4d4/0xb60
-     hci_sock_sendmsg+0x128b/0x22e0
-
-    Freed by task 594:
-     kfree+0x307/0x580
-     hci_remove_adv_instance+0x230/0x540
-     add_ext_adv_params+0xa43/0xb60
-     hci_sock_sendmsg+0x128b/0x22e0
-
-    Last potentially related work creation:
-     insert_work+0x37/0x210
-     __queue_work+0xaba/0x1270
-     call_timer_fn+0x171/0x500
-
-    The buggy address belongs to the object at ffff888108d84800
-     which belongs to the cache kmalloc-1k of size 1024
-    The buggy address is located 814 bytes inside of
-     freed 1024-byte region [ffff888108d84800, ffff888108d84c00)
-
-Fixes: a73c046a2869 ("Bluetooth: Implement Set ADV set random address")
-Signed-off-by: Cen Zhang <zzzccc427@gmail.com>
+Fixes: 26afbd826ee3 ("Bluetooth: Add initial implementation of CIS connections")
+Closes: https://lore.kernel.org/linux-bluetooth/179317462624.87574.6271582002629080499@stu.pku.edu.cn/
+Signed-off-by: Yifan Zhang <yfzhang23@stu.pku.edu.cn>
 Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/bluetooth/hci_core.c | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ include/net/bluetooth/hci_core.h |  2 ++
+ net/bluetooth/hci_core.c         | 18 ++++++++++++++----
+ net/bluetooth/hci_event.c        |  7 ++++++-
+ 3 files changed, 22 insertions(+), 5 deletions(-)
 
+diff --git a/include/net/bluetooth/hci_core.h b/include/net/bluetooth/hci_core.h
+index c416f7f2af6aa..37b3dc2b4c945 100644
+--- a/include/net/bluetooth/hci_core.h
++++ b/include/net/bluetooth/hci_core.h
+@@ -2330,6 +2330,8 @@ void hci_send_sco(struct hci_conn *conn, struct sk_buff *skb);
+ void hci_send_iso(struct hci_conn *conn, struct sk_buff *skb);
+ 
+ void *hci_sent_cmd_data(struct hci_dev *hdev, __u16 opcode);
++void *hci_sent_cmd_data_len(struct hci_dev *hdev, __u16 opcode,
++			    size_t *len);
+ void *hci_recv_event_data(struct hci_dev *hdev, __u8 event);
+ 
+ u32 hci_conn_get_phy(struct hci_conn *conn);
 diff --git a/net/bluetooth/hci_core.c b/net/bluetooth/hci_core.c
-index c9b8fa9a2e88a..c19a9fa19e7d3 100644
+index c19a9fa19e7d3..54a8942a022ec 100644
 --- a/net/bluetooth/hci_core.c
 +++ b/net/bluetooth/hci_core.c
-@@ -1736,6 +1736,9 @@ struct adv_info *hci_add_adv_instance(struct hci_dev *hdev, u8 instance,
- 		if (!adv)
- 			return ERR_PTR(-ENOMEM);
+@@ -3175,7 +3175,8 @@ int __hci_cmd_send(struct hci_dev *hdev, u16 opcode, u32 plen,
+ EXPORT_SYMBOL(__hci_cmd_send);
  
-+		INIT_DELAYED_WORK(&adv->rpa_expired_cb,
-+				  adv_instance_rpa_expired);
+ /* Get data from the previously sent command */
+-static void *hci_cmd_data(struct sk_buff *skb, __u16 opcode)
++static void *hci_cmd_data(struct sk_buff *skb, __u16 opcode,
++			  size_t *len)
+ {
+ 	struct hci_command_hdr *hdr;
+ 
+@@ -3187,23 +3188,32 @@ static void *hci_cmd_data(struct sk_buff *skb, __u16 opcode)
+ 	if (hdr->opcode != cpu_to_le16(opcode))
+ 		return NULL;
+ 
++	if (len)
++		*len = skb->len - HCI_COMMAND_HDR_SIZE;
 +
- 		adv->pending = true;
- 		adv->instance = instance;
+ 	return skb->data + HCI_COMMAND_HDR_SIZE;
+ }
  
-@@ -1772,8 +1775,6 @@ struct adv_info *hci_add_adv_instance(struct hci_dev *hdev, u8 instance,
- 	else
- 		adv->duration = duration;
+ /* Get data from the previously sent command */
+-void *hci_sent_cmd_data(struct hci_dev *hdev, __u16 opcode)
++void *hci_sent_cmd_data_len(struct hci_dev *hdev, __u16 opcode, size_t *len)
+ {
+ 	void *data;
  
--	INIT_DELAYED_WORK(&adv->rpa_expired_cb, adv_instance_rpa_expired);
--
- 	BT_DBG("%s for %dMR", hdev->name, instance);
+ 	/* Check if opcode matches last sent command */
+-	data = hci_cmd_data(hdev->sent_cmd, opcode);
++	data = hci_cmd_data(hdev->sent_cmd, opcode, len);
+ 	if (!data)
+ 		/* Check if opcode matches last request */
+-		data = hci_cmd_data(hdev->req_skb, opcode);
++		data = hci_cmd_data(hdev->req_skb, opcode, len);
  
- 	return adv;
+ 	return data;
+ }
+ 
++/* Get data from the previously sent command */
++void *hci_sent_cmd_data(struct hci_dev *hdev, __u16 opcode)
++{
++	return hci_sent_cmd_data_len(hdev, opcode, NULL);
++}
++
+ /* Get data from last received event */
+ void *hci_recv_event_data(struct hci_dev *hdev, __u8 event)
+ {
+diff --git a/net/bluetooth/hci_event.c b/net/bluetooth/hci_event.c
+index 4be09dd9d9597..1897663dfbdb2 100644
+--- a/net/bluetooth/hci_event.c
++++ b/net/bluetooth/hci_event.c
+@@ -4303,6 +4303,7 @@ static void hci_cs_le_create_cis(struct hci_dev *hdev, u8 status)
+ {
+ 	struct hci_cp_le_create_cis *cp;
+ 	bool pending = false;
++	size_t len;
+ 	int i;
+ 
+ 	bt_dev_dbg(hdev, "status 0x%2.2x", status);
+@@ -4310,10 +4311,14 @@ static void hci_cs_le_create_cis(struct hci_dev *hdev, u8 status)
+ 	if (!status)
+ 		return;
+ 
+-	cp = hci_sent_cmd_data(hdev, HCI_OP_LE_CREATE_CIS);
++	cp = hci_sent_cmd_data_len(hdev, HCI_OP_LE_CREATE_CIS, &len);
+ 	if (!cp)
+ 		return;
+ 
++	if (len < sizeof(*cp) ||
++	    len < struct_size(cp, cis, cp->num_cis))
++		return;
++
+ 	hci_dev_lock(hdev);
+ 
+ 	/* Remove connection if command failed */
 -- 
 2.53.0
 
