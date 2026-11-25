@@ -1,51 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795625789;
-	b=TmBab6p+XgATpRa5mlw91vNELpqSeWBtPiItfkOvLR5Mu4rey1AKcvTKYCXzXUqwrBo8
-	 n7RH8Qd69RDcNKtiHG/x5vHgY6AWhrjjPwM7ZwxZYaiksCbgD/XU7aE6IgnlNxxjgMgJq
-	 bTOZZ8wCg4CHlSg2TD5DS19uki8+J3yTe4DE08KCh2d35RYS3t0n8OyLNi65+MoEOWS81
-	 8IRsRSIIc7Neg+BYCwCT3groad6+euqboCoLeCTSaRGW1Q6pVWEJxel3ytNOvddCUgE5T
-	 o/SHuM/1OPt0cQPktHCiIdJo/25bZL8JFm5Dpl0FRrblHuzUIh+mEP3hsrf8ZtFq7Sw==
+	t=1795625792;
+	b=4Ge3LFtC5aiyBzjif4sO/pgIF68l7Lid50U3GQf6H5EZTVjDykIcYdk8tToNJNODP2vm
+	 22cXjIfUsV/nAsCW7ECo760KGkYOEbosMGy8dtf+DwCjAYSsfh0x6STG9KBZSYXwScQHD
+	 iENJ4urrch1y5epEN53CU6bv45gLW1K3BNUzO1Yssz2mo/n6OfbqlfnI+oHyYXDWzCuhi
+	 bxDaQ5cXypbCPKzTQSu6Eym/YPXBeq2bIp6O6ctc1DMuD7gbJT2HiyJ6BoZ5ec9xb+ptK
+	 IqtgF5iKFGOnxJGlqHWEoZz9PCt5n5mhQqVGxMxpOgPXWtRHllhzOf0RU2vDQHZEZuQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795625789;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795625792;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=cgN9sLPGFolPzEGuUw0npxwMlb92gN9P5NGlf+7lGqE=;
-	b=3uXyuJjCFnfDmnlrpEnFsdEkq9lPmUFg7EsWIn9cvG2IBifXpg/iI/85g1Z1DmTrlKF7
-	 la44XCBpkoGuwizKmJE9gGAaGScm7tGTXtWgsPGP6NhP+wZZFovIKq8X/UEFe2YD7rQuB
-	 IGWtauCizW8fuoIkaOAxbA4PuHAXGqqQS0rCOzqIqS8Ygj72BAj6Q2y1e34jMZErSPFnB
-	 uwbYwU12/ZP3Y7HIL+dGaRpd8Zi9gZaun3eExen9HBtRAn1DuahHMnEuvJtTaJhd3tHfs
-	 lPJ6iIpDvl9LNAiCdd220a2ayyGbVW5lauyjxnuu6/HzGUO7cCcqdBudjBy51ezXuyg==
+	bh=cUWTTJc6Q3r23Zsy9rXzUAf9qypohXh3ONcSILjEvh0=;
+	b=GPxZSg/7Fw8Za20JA1wIxMyu1VFa7AMusrlWtvRWJyO/N+tq3eHb3RXzLXCitgQJHtla
+	 /esifnTw8c2Rk/gTDAfXDRNuc2wpT5PaNDX5tbKFRp2Zg1lVRV8BiCS7Ma4jMW8edrRuq
+	 w93KsRlIZieH+Tgi1vu50ylowv351yppijwr1581gnTZkNWA1Y7hc5CK/Sbv4ZGfDmguW
+	 V6/Z+o/fm8Dl1EcS/TqCEY1xYj/zvV3TQ03c0nL/ko4FFqUE2qbUTQm0hunDLF3XQPFHG
+	 NSZ03rDjyRkYsqb435boApzfapv8aNIQr6mKeSgv+DZxkv+GHkU/y/7rdMuBBFdMGUg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=d4CV6ELB;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=jM9Sbjn9;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B0455606A326;
-	Wed, 25 Nov 2026 16:56:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 69BED606A332;
+	Wed, 25 Nov 2026 16:56:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=d4CV6ELB
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 52D3F1F000D8;
-	Wed, 25 Nov 2026 16:56:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=jM9Sbjn9
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A30001F000D3;
+	Wed, 25 Nov 2026 16:56:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795625788;
-	bh=cgN9sLPGFolPzEGuUw0npxwMlb92gN9P5NGlf+7lGqE=;
+	s=korg; t=1795625792;
+	bh=cUWTTJc6Q3r23Zsy9rXzUAf9qypohXh3ONcSILjEvh0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=d4CV6ELBhSCoFk97KgS9Cc1AJL0AmxgVrn+weSr55eDWi1+oGcv2T7Eb7uU7uAzbk
-	 wUn4acjCQ1d0NmARia4MPk5fhJnHbMdyr2AQ4J3JfMPp1nF/naM41nNDkDEDIsnaaL
-	 3C327n+2Pm27Vxi7u/d0LEKc0ytZXR634cnductI=
+	b=jM9Sbjn9PySSvpEYyNPW7A1SBaDDEdk3RZYNG1jsftoH/bqTtatZRmKzJtqc0a2lF
+	 Q2PdGH2hVkCHSjO3x56MK70NsvvCvIm/wsWBwuB7j2CWFyKSAcWkJI29kQMl6FAgbL
+	 Yr9dtAErr7CfOEC/44BHLKTA3rV0u3j7ozP+BHt8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Qihang <q.h.hack.winter@gmail.com>,
+	Stefano Stabellini <sstabellini@kernel.org>,
+	Yehyeong Lee <yhlee@isslab.korea.ac.kr>,
 	Juergen Gross <jgross@suse.com>
-Subject: [PATCH 6.12 632/816] xen/privcmd: fix double free when an irqfd is shut down twice
-Date: Wed, 25 Nov 2026 15:36:20 +0100
-Message-ID: <20261125143903.813184550@linuxfoundation.org>
+Subject: [PATCH 6.12 633/816] xen/pvcalls: unwind pvcalls_new_active_socket() step by step
+Date: Wed, 25 Nov 2026 15:36:21 +0100
+Message-ID: <20261125143903.836446813@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143849.205329330@linuxfoundation.org>
 References: <20261125143849.205329330@linuxfoundation.org>
@@ -67,102 +68,167 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Qihang <q.h.hack.winter@gmail.com>
+From: Yehyeong Lee <yhlee@isslab.korea.ac.kr>
 
-commit 72a900c666adb97df77b05cf8540c4117f9c83ba upstream.
+commit 702ba3c80a8736898813a2c7484d695278aa114d upstream.
 
-irqfd_deactivate() takes the irqfd off irqfds_list and queues
-irqfd_shutdown().  queue_work() is not a once-only gate: it refuses to
-enqueue a work item only while WORK_STRUCT_PENDING is set, and
-process_one_work() clears that bit before it calls the work function.  So
-nothing records that the shutdown work has already been queued, and
-nothing protects the window between the start of irqfd_shutdown() and the
-kfree() at its end.
+Every error path in pvcalls_new_active_socket() jumps to one shared label
+that does list_del(&map->list) and then hands map to
+pvcalls_back_release_active().  But map comes from kzalloc() and its
+list_head is only published at the very end of the function, after the last
+of those jumps:
 
-Two paths call irqfd_deactivate() for the same irqfd:
+	down(&fedata->socket_lock);
+	list_add_tail(&map->list, &fedata->socket_mappings);
+	up(&fedata->socket_lock);
 
-  - privcmd_irqfd_deassign(), from the PRIVCMD_IRQFD_FLAG_DEASSIGN ioctl;
+so on the error path map->list is still {NULL, NULL} and __list_del()
+writes through a NULL pointer.
 
-  - irqfd_wakeup(), with EPOLLHUP set, when the last reference to the
-    eventfd file goes away, which runs wake_up_poll(&ctx->wqh, EPOLLHUP)
-    from eventfd_release().
+A frontend gets there with one value it owns: the ring_order field of the
+page it granted.  Anything above MAX_RING_ORDER takes the second goto, and
+nothing else in the function has run by then.
 
-irqfds_lock serialises the two calls, but it does not make the second one
-a no-op, and eventfd_ctx_fdget() takes a reference to the eventfd_ctx,
-not to the struct file, so the last fd can still be closed while the
-ioctl is running:
+The result is an oops in whichever context handled the request - the
+pvcalls-back threaded IRQ handler for PVCALLS_CONNECT, mappass->wq for
+PVCALLS_ACCEPT - and because it happens after down(&fedata->socket_lock)
+that semaphore is never released, so every later operation on the frontend
+blocks on it and the backend never completes backend_disconnect().  (With
+CONFIG_DEBUG_LIST the list_del() only reports and returns, and
+pvcalls_back_release_active() then runs on a map whose irq is still 0 and
+whose bytes, ioworker.wq and saved_data_ready are all NULL.)
 
-  CPU0                                 CPU1
+A frontend asking for ring_order 5, on a dom0 built with KASAN
+(the request was issued by a test-only change to the frontend):
 
-  eventfd_ctx_fdget()
-  spin_lock(irqfds_lock)
-  list_del_init(&kirqfd->list)
-  queue_work(&kirqfd->shutdown)        close(fd)
-                                         eventfd_release()
-                                           wake_up_poll(EPOLLHUP)
-                                         irqfd_wakeup()
-                                         spin_lock(irqfds_lock)
-                                         irqfd_deactivate() again
+[  133.728877] pvcalls_new_active_socket frontend requested ring_order 5, which is > MAX (4)
+[  133.732868] Oops: general protection fault, probably for non-canonical address 0xdffffc0000000001: 0000 [#1] SMP KASAN NOPTI
+[  133.737910] KASAN: null-ptr-deref in range [0x0000000000000008-0x000000000000000f]
+[  133.741666] CPU: 0 UID: 0 PID: 133 Comm: irq/39-pvcalls- Not tainted 7.3.0-kCTLblk2-15482-g21a7f44fd076-dirty #1 PREEMPT(full)
+[  133.746986] Hardware name: QEMU Standard PC (Q35 + ICH9, 2009), BIOS 1.16.3-debian-1.16.3-2 04/01/2014
+[  133.751512] RIP: 0010:pvcalls_new_active_socket+0x821/0xb90
+[  133.754237] Code: 48 89 fa 48 c1 ea 03 80 3c 02 00 0f 85 f6 01 00 00 48 8d 79 08 4c 8b 6b 08 48 b8 00 00 00 00 00 fc ff df 48 89 fa 48 c1 ea 03 <80> 3c 02 00 0f 85 14 02 00 00 4c 89 ea 4c 89 69 08 48 b8 00 00 00
+[  133.763126] RSP: 0018:ffffc900004afb38 EFLAGS: 00010202
+[  133.765861] RAX: dffffc0000000000 RBX: ffff88810886c900 RCX: 0000000000000000
+[  133.769348] RDX: 0000000000000001 RSI: 0000000000000246 RDI: 0000000000000008
+[  133.772787] RBP: 1ffff92000095f6b R08: 0000000000000001 R09: fffff52000095f58
+[  133.776260] R10: 0000000000000003 R11: ffff888100077320 R12: ffff88810858b410
+[  133.779823] R13: 0000000000000000 R14: ffff88810858b460 R15: ffff88810858b400
+[  133.783382] FS:  0000000000000000(0000) GS:ffff8881b034c000(0000) knlGS:0000000000000000
+[  133.787351] CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+[  133.790308] CR2: 00000000006042c0 CR3: 0000000108400001 CR4: 0000000000770ef0
+[  133.793822] PKRU: 55555554
+[  133.795347] Call Trace:
+[  133.796778]  <TASK>
+[  133.798082]  ? __pfx_pvcalls_new_active_socket+0x10/0x10
+[  133.800801]  ? security_socket_post_create+0x4d/0x60
+[  133.803275]  ? release_sock+0x1a/0x1d0
+[  133.805182]  pvcalls_back_event+0x1b09/0x23e0
+[  133.807431]  ? __pfx_pvcalls_back_event+0x10/0x10
+[  133.809814]  ? __pfx__raw_spin_lock_irqsave+0x10/0x10
+[  133.812251]  ? __pfx_pvcalls_back_event+0x10/0x10
+[  133.814554]  irq_thread_fn+0x86/0x150
+[  133.816468]  irq_thread+0x2da/0x580
+[  133.818363]  ? __pfx_irq_thread_fn+0x10/0x10
+[  133.820586]  ? __pfx_irq_thread+0x10/0x10
+[  133.822670]  ? __kthread_parkme+0x88/0x170
+[  133.824803]  ? __pfx_irq_thread+0x10/0x10
+[  133.827153]  ? __pfx_irq_thread+0x10/0x10
+[  133.829304]  kthread+0x2c8/0x3b0
+[  133.831176]  ? recalc_sigpending+0x15c/0x1e0
+[  133.833570]  ? __pfx_kthread+0x10/0x10
+[  133.835572]  ret_from_fork+0x373/0x5b0
+[  133.837581]  ? __pfx_ret_from_fork+0x10/0x10
+[  133.839978]  ? __switch_to+0x3c4/0xb40
+[  133.841984]  ? __pfx_kthread+0x10/0x10
+[  133.843970]  ret_from_fork_asm+0x1a/0x30
+[  133.846031]  </TASK>
+[  133.847420] Modules linked in:
+[  133.849240] ---[ end trace 0000000000000000 ]---
 
-If the work item has already started by then, its pending bit has been
-cleared and the second queue_work() succeeds.  irqfd_shutdown() then runs
-twice, so eventfd_ctx_remove_wait_queue(), eventfd_ctx_put() and kfree()
-each hit the same object a second time; and when the second queue_work()
-lands after the irqfd has been freed, the workqueue list operations write
-to freed memory.
+Give each failure its own label, so that only resources that were actually
+acquired are released and the list the map was never added to is left
+alone.  The map is not published anywhere at that point, so the error path
+needs no socket_lock at all.  sock_release() stays in the callee on every
+error path, the way
+commit 8fafac202d18 ("xen/pvcalls-back: fix double frees with pvcalls_new_active_socket()")
+arranged it.
 
-virt/kvm/eventfd.c has the same two callers and has had this guard since
-the original irqfd support (721eecbf4fe99): irqfd_wakeup() calls
-irqfd_deactivate() only if irqfd_is_active().  The comment there explains
-why that is enough: the other side deactivates the irqfd before it takes
-it off the waitqueue, and irqfd_shutdown() needs the waitqueue lock,
-which this callback holds, so the irqfd cannot be freed under it.
-
-Do the same here.  list_del_init() leaves the list head empty and the
-irqfd stays off the list until kfree(), so it serves as a one-way
-"active" flag.  The test is in irqfd_deactivate() rather than in
-irqfd_wakeup() because privcmd_irqfd_deassign() walks irqfds_list and can
-therefore never reach an inactive irqfd; only the wakeup path can, and a
-single test covers both callers.
-
-Fixes: f8941e6c4c712 ("xen: privcmd: Add support for irqfd")
+Fixes: 5db4d286a8ef ("xen/pvcalls: implement connect command")
 Cc: stable@vger.kernel.org
-Signed-off-by: Qihang <q.h.hack.winter@gmail.com>
-Reviewed-by: Juergen Gross <jgross@suse.com>
+Reviewed-by: Stefano Stabellini <sstabellini@kernel.org>
+Signed-off-by: Yehyeong Lee <yhlee@isslab.korea.ac.kr>
 Signed-off-by: Juergen Gross <jgross@suse.com>
-Message-ID: <20261101163251.55099-1-q.h.hack.winter@gmail.com>
+Message-ID: <20261110125002.46683-2-yhlee@isslab.korea.ac.kr>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/xen/privcmd.c |   15 +++++++++++++++
- 1 file changed, 15 insertions(+)
+ drivers/xen/pvcalls-back.c |   25 +++++++++++++++----------
+ 1 file changed, 15 insertions(+), 10 deletions(-)
 
---- a/drivers/xen/privcmd.c
-+++ b/drivers/xen/privcmd.c
-@@ -903,10 +903,25 @@ struct privcmd_kernel_irqfd {
- 	poll_table pt;
- };
+--- a/drivers/xen/pvcalls-back.c
++++ b/drivers/xen/pvcalls-back.c
+@@ -337,7 +337,7 @@ static struct sock_mapping *pvcalls_new_
  
-+static bool irqfd_is_active(struct privcmd_kernel_irqfd *kirqfd)
-+{
-+	lockdep_assert_held(&irqfds_lock);
-+
-+	return !list_empty(&kirqfd->list);
-+}
-+
- static void irqfd_deactivate(struct privcmd_kernel_irqfd *kirqfd)
- {
- 	lockdep_assert_held(&irqfds_lock);
+ 	ret = xenbus_map_ring_valloc(fedata->dev, &ref, 1, &page);
+ 	if (ret < 0)
+-		goto out;
++		goto out_map;
+ 	map->ring = page;
+ 	map->ring_order = map->ring->ring_order;
+ 	/* first read the order, then map the data ring */
+@@ -345,19 +345,19 @@ static struct sock_mapping *pvcalls_new_
+ 	if (map->ring_order > MAX_RING_ORDER) {
+ 		pr_warn("%s frontend requested ring_order %u, which is > MAX (%u)\n",
+ 				__func__, map->ring_order, MAX_RING_ORDER);
+-		goto out;
++		goto out_unmap_ring;
+ 	}
+ 	ret = xenbus_map_ring_valloc(fedata->dev, map->ring->ref,
+ 				     (1 << map->ring_order), &page);
+ 	if (ret < 0)
+-		goto out;
++		goto out_unmap_ring;
+ 	map->bytes = page;
  
-+	/*
-+	 * Both the deassign ioctl and the eventfd wakeup path can reach
-+	 * this function.  list_del_init() marks the irqfd inactive, so
-+	 * only the first caller may queue the shutdown work.
-+	 */
-+	if (!irqfd_is_active(kirqfd))
-+		return;
+ 	ret = bind_interdomain_evtchn_to_irqhandler_lateeoi(
+ 			fedata->dev, evtchn,
+ 			pvcalls_back_conn_event, 0, "pvcalls-backend", map);
+ 	if (ret < 0)
+-		goto out;
++		goto out_unmap_bytes;
+ 	map->irq = ret;
+ 
+ 	map->data.in = map->bytes;
+@@ -365,7 +365,7 @@ static struct sock_mapping *pvcalls_new_
+ 
+ 	map->ioworker.wq = alloc_ordered_workqueue("pvcalls_io", 0);
+ 	if (!map->ioworker.wq)
+-		goto out;
++		goto out_unbind;
+ 	atomic_set(&map->io, 1);
+ 	INIT_WORK(&map->ioworker.register_work,	pvcalls_back_ioworker);
+ 
+@@ -381,11 +381,16 @@ static struct sock_mapping *pvcalls_new_
+ 	write_unlock_bh(&map->sock->sk->sk_callback_lock);
+ 
+ 	return map;
+-out:
+-	down(&fedata->socket_lock);
+-	list_del(&map->list);
+-	pvcalls_back_release_active(fedata->dev, fedata, map);
+-	up(&fedata->socket_lock);
 +
- 	list_del_init(&kirqfd->list);
- 	queue_work(irqfd_cleanup_wq, &kirqfd->shutdown);
++out_unbind:
++	unbind_from_irqhandler(map->irq, map);
++out_unmap_bytes:
++	xenbus_unmap_ring_vfree(fedata->dev, map->bytes);
++out_unmap_ring:
++	xenbus_unmap_ring_vfree(fedata->dev, (void *)map->ring);
++out_map:
++	sock_release(sock);
++	kfree(map);
+ 	return NULL;
  }
+ 
 
 
