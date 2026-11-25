@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795622886;
-	b=QJjzpu18GBEwJLK+evzXpnZWFahOOLq4czPh/IZGVPdkQ2jxFKB87GfIGnBjaSoc3ASs
-	 3nVtdTjmtDfIOCJik2Fquv0Qdr0Nf14hbOzDWP64IiEjvoVzHDfkH1W8L8Z3+SzmaLcNs
-	 y43cWtiyBhQ30wuIYQRleUj9zPnc1Gv/t4S/ZXj0nF8RYbFgsK01mPEA/yt8KIr5gkB6s
-	 UsdD7TYaSbdD35nGPksnivF4RvQuKmS7rIpMlWCXtqkkO1/7h3OV7OtEjT0LrNLILG0/O
-	 S/NArH1J8rPSaGzXYq1Tkl925qsGg1LPBdL2eJHlH/R37wCM+nx6BQkNYV63WUTJOug==
+	t=1795622888;
+	b=NddgJ2dTlxtloQZzE+3/yV4E67QxgsxkCjquKjsUYbxa2AS8z1uohNFriVUoQLxhmOWK
+	 UiJ6tk3/ZBnlrMNBmDNPD7phAxUCBj6P3QqblziyZD/M6D8Eqiq9Ob+hcJwKZmMmW5s05
+	 +B1X4sbwuoKaTiRaCVd2brc4IvJ+zEmoVY++tGKEmEc3Ete81Rz5f88ds8ItjlUCqro2R
+	 Ryj8l+yQVgxp9ctwWYieiOkJ7KH+1o3B0DJfhoiR+B5wqs8KLG2EMpLe9paFV7skdiZl8
+	 r3K9f9azLwJhm1znURghQwgGYXbl6SuPrAnk/DyCCD99WMUCQeLmr3JicZ/tM4/laNA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795622886;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795622888;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=lRue6xf5Z0KAwT/xAN/3YTaz/0MB5l9GM95/kD69BSE=;
-	b=TZFafZAutidUqS4RKBDOxT4RHe3zuY60TurBk6bgisMdV3/zKI7rbnpH09mHqwpTSbqA
-	 g9/DKLuNDkzETT3pcjcrY+Y8p4GQ0X43EAnQ2bADJgLJ9EriEPkrVS6JYUv3F5ejfwqPh
-	 LF4rq6bvVbjpuyFzsyQ+FgyP0sul8zoXJJwwiyZ7UGU5+7UUtWq6FGWwI0pMGlcD2iwBU
-	 bGyfpA5ItBupRl/Hgovy89rTPSYyRZeJ3YMB0lp0jlblM2yYdyZ4vaNMF5z+i7VmjDc2n
-	 D7ISgP/r+Hcc4b3OrLJPmXg2LJ3yCq59XCLKcgakUOVw9VEB1XvQpQQKDz0ppci7aQg==
+	bh=5blvONKUWx9MFhd6ameo1+9wgZnuie5FEeWbgEMkdaY=;
+	b=0aW95c4M401r5zlw4c1MB8CFY6tGRpPCnKwHgthkW0APLFc3uQZrVxv2hFip24VfeIG2
+	 qAgmAjTppiCFd4BByvARAuu86vXn4S5VDz25IKhmcYi00L9oaDxPegXy0avhBYjxOEqsF
+	 3mrFFgruyPvxEbqfzZH0LgW1ugpTi7RBHyVuNty42FP0wJCrsN+70nGTDHYERaU+JfJrs
+	 bfuYCS+ht0sMEiUBBVe4QfbLiS3ep8f/RDpddb3KIcz0cV9++7oDmJdwC3aoQORMRfh5V
+	 ho8IEPZe5RQeDmLpx4vAdsZFE0r2HZh64jeA/AWvxb8nkbMVSAUtbcLIgDajpE3bNiQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=NbZ6kSyG;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=1C9g90t5;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F0B0C606A327;
-	Wed, 25 Nov 2026 16:08:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C2BE5606A31E;
+	Wed, 25 Nov 2026 16:08:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=NbZ6kSyG
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4B6EE1F000C0;
-	Wed, 25 Nov 2026 16:08:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=1C9g90t5
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 205C71F000C6;
+	Wed, 25 Nov 2026 16:08:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795622885;
-	bh=lRue6xf5Z0KAwT/xAN/3YTaz/0MB5l9GM95/kD69BSE=;
+	s=korg; t=1795622888;
+	bh=5blvONKUWx9MFhd6ameo1+9wgZnuie5FEeWbgEMkdaY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=NbZ6kSyG5kOrqrkZ3K8bNqZx+VluKanuURSVMMwNQAHSDUM+e8aGV6CmizjAnQzfu
-	 qnJKiWddN0cyD49/O82puhx6W/NdSz+OtUQBVM40YM1NhCQ07ieBCF0RhqHtC3ABkq
-	 t13OH6ajnHmg+ROEuEa+zfKhiKYROM2yBGR323c0=
+	b=1C9g90t54Twy5FWUcob4eyGj7B+t4GG62BGymAJEIqCRJJhmcN5fDhT839QZjPiW7
+	 u/1BaM7CRGkCGof6aljo3rqGZqi1ij2eOG/kqzx0wXWsvHst9CKmfh6SPR+uHXh+PJ
+	 VTWXqbFDupqH2I2vi55iAzGTTSrJj66IKM6BbOf0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nickolai Zeldovich <nickolai@csail.mit.edu>,
-	Luca Boccassi <luca.boccassi@gmail.com>,
-	"Christian Brauner (Amutable)" <brauner@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 644/990] pidfs: do not report fields that do not fit into the callers struct
-Date: Wed, 25 Nov 2026 15:33:31 +0100
-Message-ID: <20261125143837.176174845@linuxfoundation.org>
+	"Gregory Price (Meta)" <gourry@gourry.net>,
+	"Vlastimil Babka (SUSE)" <vbabka@kernel.org>,
+	Zi Yan <ziy@nvidia.com>
+Subject: [PATCH 6.18 680/990] mm/mempolicy: read the zoneref slot once in mempolicy_slab_node()
+Date: Wed, 25 Nov 2026 15:34:07 +0100
+Message-ID: <20261125143838.014962545@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143822.072087159@linuxfoundation.org>
 References: <20261125143822.072087159@linuxfoundation.org>
@@ -69,61 +68,72 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Nickolai Zeldovich <nickolai@csail.mit.edu>
+From: Gregory Price (Meta) <gourry@gourry.net>
 
-[ Upstream commit 1534c37167488f2b85c74de048e1d6a4ba3848de ]
+commit 4cc1bcdf2e4ebcd319005ce2ea132489f6155139 upstream.
 
-The documentation of struct pidfd_info promises that "If the structure
-size is too small to contain a field (requested or not), to avoid
-confusion the mask will not contain a bit for that field", and asks
-userspace to trust the returned mask when deciding which fields hold
-valid data.
+For a bind or preferred-many policy, mempolicy_slab_node() tests the
+first matching slot's zone for NULL, then reads the slot again to look
+up the zone's node. Offlining a zone's last block rebuilds the
+zonelists in place, so the second read can return the terminator:
 
-pidfd_info() does not keep that promise. It builds kinfo.mask without
-looking at the size encoded in the ioctl command, and
-copy_struct_to_user() then truncates the copy to that size. A caller
-that passes a 64-byte struct (PIDFD_INFO_SIZE_VER0) and requests
-PIDFD_INFO_COREDUMP or PIDFD_INFO_SUPPORTED_MASK gets a mask with
-PIDFD_INFO_COREDUMP, PIDFD_INFO_COREDUMP_SIGNAL, PIDFD_INFO_COREDUMP_CODE
-and PIDFD_INFO_SUPPORTED_MASK set, while the coredump_* and
-supported_mask fields behind the 64 bytes were never written. Trusting
-the mask as documented, userspace then reads whatever its own buffer
-held at those offsets. The same happens for a 72- or 80-byte struct
-and the fields added after it.
+  CPU 0                             CPU 1
+  mempolicy_slab_node()
+    zonelist_zone(slot 4)
+      = node 2 NORMAL
+                                    offline_pages()
+                                      build_all_zonelists()
+                                        slot 4 = NULL
+    zonelist_node_idx(slot 4)
+      zone_to_nid(NULL)
 
-Clear the bits of the fields that lie beyond the caller's size before
-the copy, in the one place that knows both the final mask and the size.
-A request for a field that cannot be returned is thereby answered the
-way the header describes: the field is simply absent from the mask.
+Current GCC merges the two reads, but nothing requires it. With
+mm/mempolicy.o built with -fno-inline -fno-ipa-sra, holding a bound
+task's slab_strict_numa allocation between the reads while a movable
+block earlier in the zonelist goes offline oopses every time:
 
-Fixes: 1d8db6fd698d ("pidfs, coredump: add PIDFD_INFO_COREDUMP")
-Signed-off-by: Nickolai Zeldovich <nickolai@csail.mit.edu>
-Link: https://patch.msgid.link/20261024041334.831273-2-nickolai@csail.mit.edu
-Acked-by: Luca Boccassi <luca.boccassi@gmail.com>
-Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
-[ sashal: Dropped the COREDUMP_SIGNAL, COREDUMP_CODE and SUPPORTED_MASK clearing hunks, since those bits and struct sizes don't exist here, keeping only the PIDFD_INFO_COREDUMP check. ]
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+  BUG: kernel NULL pointer dereference, address: 0000000000000060
+  RIP: 0010:zone_to_nid+0x0/0x10
+  Call Trace:
+   kmem_cache_alloc_noprof+0x294/0x610
+   do_getname+0x34/0x230
+
+mempolicy_slab_node() and zonelist_node_idx() are tail calls here, so
+neither appears in the trace.
+
+Read the slot once and use that zone.
+
+Fixes: 11cd8638c37f ("mm, page_alloc: remove stop_machine from build_all_zonelists")
+Cc: stable@vger.kernel.org
+Signed-off-by: Gregory Price (Meta) <gourry@gourry.net>
+Reviewed-by: Vlastimil Babka (SUSE) <vbabka@kernel.org>
+Link: https://patch.msgid.link/20261101021340.2251928-12-gourry@gourry.net
+Reviewed-by: Zi Yan <ziy@nvidia.com>
+Signed-off-by: Vlastimil Babka (SUSE) <vbabka@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/pidfs.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ mm/mempolicy.c |    4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/fs/pidfs.c b/fs/pidfs.c
-index a014db891aaa8..cfecc1098170e 100644
---- a/fs/pidfs.c
-+++ b/fs/pidfs.c
-@@ -440,6 +440,10 @@ static long pidfd_info(struct file *file, unsigned int cmd, unsigned long arg)
- 	}
+--- a/mm/mempolicy.c
++++ b/mm/mempolicy.c
+@@ -2088,6 +2088,7 @@ unsigned int mempolicy_slab_node(void)
+ 	case MPOL_PREFERRED_MANY:
+ 	{
+ 		struct zoneref *z;
++		struct zone *zone;
  
- copy_out:
-+	/* Only report fields that fit into the caller's struct. */
-+	if (usize < PIDFD_INFO_SIZE_VER1)
-+		kinfo.mask &= ~PIDFD_INFO_COREDUMP;
-+
- 	/*
- 	 * If userspace and the kernel have the same struct size it can just
- 	 * be copied. If userspace provides an older struct, only the bits that
--- 
-2.53.0
-
+ 		/*
+ 		 * Follow bind policy behavior and start allocation at the
+@@ -2098,7 +2099,8 @@ unsigned int mempolicy_slab_node(void)
+ 		zonelist = &NODE_DATA(node)->node_zonelists[ZONELIST_FALLBACK];
+ 		z = first_zones_zonelist(zonelist, highest_zoneidx,
+ 							&policy->nodes);
+-		return zonelist_zone(z) ? zonelist_node_idx(z) : node;
++		zone = zonelist_zone(z);
++		return zone ? zone_to_nid(zone) : node;
+ 	}
+ 	case MPOL_LOCAL:
+ 		return node;
 
 
