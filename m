@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795621403;
-	b=MTEJ3Slh2flofrio6E/lzoLhnAQwo/vdtzaUTIG5AnlgMYU8dSTYOQ/0s9C0OGcHGIP6
-	 mu/ydNicsFz9mi5oGDSN/1IhNlh7OT05jixbyXOppviVoJjVTMCRS17xxJ+h9Sh5/cvDm
-	 21hEasDbbM85NUQL0FQmrUFMoyFKbj1OWqkXSzLDSOJwONHO5LKHh13d7y+kX94XRacWI
-	 Qm6s7Z6HIIrZzs+SAktjDHhc9f1MKpQR9cASU8UfU70Fq/hgXVOvd9onF/nctAkdMMXwG
-	 5kgmxMy8Iuw9eCkAmi2aj324XoxrP4g0Gc3CCh51Ee/wue2elE1jX6vIcL0Ln7Tvi3A==
+	t=1795621406;
+	b=QZVXQsVQTBOaDFZL/4TjEQmURYcqcYpR4UlWlgGWjT9K0v7Nw0JF1lKaYpXaSabAcR9N
+	 vJlgccK3Rt+hkk4JNlPwcxppEPd7gHWE6yf2qqqZsxl+hFjRwMfURTrb9PwVnQuFRc6PP
+	 l1ArIXrWSczjqkbDjnXQqFGc9Rboqpn2x1VESn2/0k0EFtP/uTNQNmUFUv1/z6TtPbVzN
+	 2XXg4BclBAzYJ2G6inKNR0lcf4YZztUGlMONJWSNykaNaFrhUyrvVE51IgZyD+UYYCOvb
+	 hFcIyclJETUMD+i6IjIEB5mTbP2m1uaC8EMQQzZL2P287XvMGgFWz1GfEPcL2MF+3zw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795621403;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795621406;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=+9YiwMef5dBAFMrOTq1zYO/2TYpZqEaO4jDbm6i54NE=;
-	b=Om9QSElYdvT3Ax8mmGEodtT852nZ/5nIgUrl1rBQ5xag1KV33BHYNd5kHvQYZ57J5fn6
-	 aCTjZq0lYxwLOsBOe7wGa6dq846A8ATZBq9ZGS8kAM46hMiMk08j9CCwPlk1MZv4DHEpQ
-	 kNBLZgxnfQsCD21x6CIDgzNkoXxRRYsfylIQ1HpWV4ApQg0a+Hozgvly1HkxbR5fUA16d
-	 0hw9KdScDyt5PgINmv7jHeL3umgVz75yL0JEorRYzmklYVKBelss4km98gNrv52IxNN5w
-	 8usgwQUCUcUJBV43VQIgGFapqPO2bonNWayb9uk5w9Ju90T58NuCBHNqUq1gxjKiuog==
+	bh=1lZxgEu1WQBSPTeywWNRwGKNcXYhfwNZut47tsU4aBM=;
+	b=i5/PVuNM/lJ/9ZhReo9IZFifRwFSjnVjp+eTrnLRDlPU2uJuRhHHvGP0oWXY/xWLm8gg
+	 pjjrwRkpnF6Y7aF3AKNfWLRn0bCT36qoayIwCf2hKkIh8VpCzGL1MqVfGT0LJIe2evH46
+	 fjswWyL2jTwjJ+YYdSU3r0Qj3OhUR0yrNCH1/KMyjjf5HCJcQKbOmHsQ5FNFjTDUyR5p4
+	 w3MoEGymSb3f17Qs44RV9N6ffVWtAzu72AIC4/uvRdMUN7dxZNIO9j+S1RWKcoJxvf+dK
+	 7EnzCyUsI1oF7xmcIwg4wQoGIn6dFy0LDAQrAB8xyge8P5Wh2cZFtxDHulpwLE4mDiA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=dXOXflHP;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=J1eVeBoH;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3048E606A329;
-	Wed, 25 Nov 2026 15:43:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 48BB1606A329;
+	Wed, 25 Nov 2026 15:43:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=dXOXflHP
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 44C3C1F000E1;
-	Wed, 25 Nov 2026 15:43:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=J1eVeBoH
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2B2DF1F000C6;
+	Wed, 25 Nov 2026 15:43:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795621402;
-	bh=+9YiwMef5dBAFMrOTq1zYO/2TYpZqEaO4jDbm6i54NE=;
+	s=korg; t=1795621405;
+	bh=1lZxgEu1WQBSPTeywWNRwGKNcXYhfwNZut47tsU4aBM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=dXOXflHPmBy1cgWRKgQHZrVAu0AFi8c22bOBH6pG7Ee76rRgfzYHhxWnxPNH3VZDS
-	 xn/nVZ9ifOhL6wdwPws01E/n//OLuONNddEwW0NZepy/XUj8/84+r5ybrTNkleEeG4
-	 TeztZoxkse99afZKQDg8mXsDRnyuYv4dDPynQ5S8=
+	b=J1eVeBoHjpONcH1KZvIYqumd1UaVV9Obz38Ewtyqo9q8I/fjX4ICixzAxT4d1ypGZ
+	 IDCcVJ/NSTl4LUfkle6ER9r6FAOMY4llkHdOBYbDtP+YevWLkYzmQpkQKeqFGLD6vn
+	 p9PEOg0UPdbnZcW8xrhjDvn6p4AuIDmogUJ+5To4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Linfeng Sun <linfeng.sun.dev@gmail.com>,
-	"Michael S. Tsirkin" <mst@redhat.com>,
+	Zizhi Wo <wozizhi@huawei.com>,
+	Christoph Hellwig <hch@lst.de>,
+	Jens Axboe <axboe@kernel.dk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 207/990] vhost-vdpa: initialize state before publishing cdev
-Date: Wed, 25 Nov 2026 15:26:14 +0100
-Message-ID: <20261125143826.940280725@linuxfoundation.org>
+Subject: [PATCH 6.18 216/990] block: partitions: reject GPT entries with starting_lba > ending_lba
+Date: Wed, 25 Nov 2026 15:26:23 +0100
+Message-ID: <20261125143827.148552267@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143822.072087159@linuxfoundation.org>
 References: <20261125143822.072087159@linuxfoundation.org>
@@ -68,57 +69,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Linfeng Sun <linfeng.sun.dev@gmail.com>
+From: Zizhi Wo <wozizhi@huawei.com>
 
-[ Upstream commit 4b03d1e7f13613af708441a061556de99891a516 ]
+[ Upstream commit 7e3801d12ebabaa3db6e2685ccc80b6e6f6d1ff7 ]
 
-Initialize the completion and as hash buckets before cdev_device_add()
-makes the device accessible.
+A GPT entry whose starting_lba is greater than its ending_lba is accepted,
+and the kernel creates a partition with a bogus size. The bogus sector
+count defeats the end-of-device check, so I/O through that partition is not
+confined to it and can access sectors outside the partition on the same
+disk.
 
-Fixes: 4c8cf31885f6 ("vhost: introduce vDPA-based backend")
-Assisted-by: OpenAI-Codex:GPT-5.6
-Signed-off-by: Linfeng Sun <linfeng.sun.dev@gmail.com>
-Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
-Message-ID: <20261011-fix-null-pointer-in-vhost_vdpa_release-v2-1-66ba929971ce@gmail.com>
+is_pte_valid() only rejects an entry when its type is NULL or when
+starting_lba or ending_lba is greater than lastlba; it never checks that
+starting_lba <= ending_lba. For a reversed entry both field checks still
+pass, but efi_partition() computes size = ending_lba - starting_lba + 1 in
+u64, which underflows to a huge value. That value also wraps in the
+end-of-device check in blk_add_partition() (from + size) and does not fit
+the signed i_size, which turns negative.
+
+Reject entries with starting_lba > ending_lba in is_pte_valid(), matching
+the head-level check against last_usable_lba < first_usable_lba.
+
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Signed-off-by: Zizhi Wo <wozizhi@huawei.com>
+Reviewed-by: Christoph Hellwig <hch@lst.de>
+Link: https://patch.msgid.link/20261102080442.3775061-1-wozizhi@huaweicloud.com
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/vhost/vdpa.c | 9 +++++----
- 1 file changed, 5 insertions(+), 4 deletions(-)
+ block/partitions/efi.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/vhost/vdpa.c b/drivers/vhost/vdpa.c
-index 665739ba03f8e..9014ee30861ff 100644
---- a/drivers/vhost/vdpa.c
-+++ b/drivers/vhost/vdpa.c
-@@ -1705,7 +1705,7 @@ static int vhost_vdpa_probe(struct vdpa_device *vdpa)
- 		return minor;
- 	}
- 
--	atomic_set(&v->opened, 0);
-+	atomic_set(&v->opened, 1);
- 	spin_lock_init(&v->config_lock);
- 	v->minor = minor;
- 	v->vdpa = vdpa;
-@@ -1729,16 +1729,17 @@ static int vhost_vdpa_probe(struct vdpa_device *vdpa)
- 
- 	cdev_init(&v->cdev, &vhost_vdpa_fops);
- 	v->cdev.owner = THIS_MODULE;
-+	init_completion(&v->completion);
-+	for (i = 0; i < VHOST_VDPA_IOTLB_BUCKETS; i++)
-+		INIT_HLIST_HEAD(&v->as[i]);
- 
- 	r = cdev_device_add(&v->cdev, &v->dev);
- 	if (r)
- 		goto err;
- 
--	init_completion(&v->completion);
- 	vdpa_set_drvdata(vdpa, v);
- 
--	for (i = 0; i < VHOST_VDPA_IOTLB_BUCKETS; i++)
--		INIT_HLIST_HEAD(&v->as[i]);
-+	atomic_set_release(&v->opened, 0);
- 
- 	return 0;
- 
+diff --git a/block/partitions/efi.c b/block/partitions/efi.c
+index 7acba66eed481..d88321f6400ab 100644
+--- a/block/partitions/efi.c
++++ b/block/partitions/efi.c
+@@ -461,6 +461,7 @@ static inline int
+ is_pte_valid(const gpt_entry *pte, const u64 lastlba)
+ {
+ 	if ((!efi_guidcmp(pte->partition_type_guid, NULL_GUID)) ||
++	    le64_to_cpu(pte->starting_lba) > le64_to_cpu(pte->ending_lba) ||
+ 	    le64_to_cpu(pte->starting_lba) > lastlba         ||
+ 	    le64_to_cpu(pte->ending_lba)   > lastlba)
+ 		return 0;
 -- 
 2.53.0
 
