@@ -1,55 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795624933;
-	b=2LM9lmj0dili6j/+w0muiE31MRbfyJmT9sXvaeBZ443l6rgnJ5qXwL1BgFaKxP82Kvr9
-	 3UusxRdu4QyC51WQe3IVa0JxjpuYHXL215gMc1oq6Z/+Nivojyt1lO16d8L1DIRP1o6HK
-	 H3slyt+6PNv547cUenrKV/wVQ/iqjydylhs170CDGC1MaAoJIP0JjAEzZSXI1EcD3+lkc
-	 PV8BF8inMLM58s6PIJpnNZF6xaYYWAE9R8CikRCYgLGw5H4WX2pMjj9CR3brC9p357qiu
-	 DXNYw/LisUkpjnXbzz/LHeBqp7f4unl149YAYjxiRSJS9CtWlJyU7lzJFkMfFmdqG/A==
+	t=1795624935;
+	b=dey/248nXehRDBberGj+v0bA0wyBgvgaNDehbR167OQTx1X7/7OORvmC/481VasuwH6u
+	 Hnn4x+DyIQ+k26jcziB+9LwRtKQ0kgVvOkoPVC7tBzckYzQvDbSw7T1n4Bl5bVxTK8I0N
+	 N6TBlHsf3qSRa8sBPzmK8/0974qIknOXoPf+H+AFecYzuUQ4s4kVZmAJQNbXXcdQ2EIzZ
+	 TX3NIncnQav1uK13R2koucHN4rIfT/oTd3bFUgBSqpSr04ABTYHVzl6JaoJJD9V4helKi
+	 WzlL7wfXcJ7vcaHI8D7o4QZSemYfjUGFaE/bhDj7vrngVEoEYHGITOXEIO78gla0lQg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795624933;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795624935;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=/MTdPjT6koU8a9jltikgy1r/kJj/+WFuy3bDoZ4jNPU=;
-	b=i/3i0X0xJHI+KoFkGlH6UhWodS+JV7JU3fMpq36sDIcLOxfIV3qnYcyB7bKA+cFnNEm0
-	 mw321PlFn7BoSvlF75vTLzf2zoVCZUAOZ9OZelKEcrE9jZqjiuEGvy1jW0a0hwfG/QKDc
-	 xiiQzfPB1K3ergJ0nySluwGzXuwg6xnZQ95EIsf5QnI/X9PKMI2lKWJjpOPdf2zQ8znUl
-	 7K++7adi5RGb4+JWXhn8k7zEAYnv/WYaIN4RGMBpwd0/IzU1rPOKi5VLO15FgplhgWwGC
-	 gdWjmDTZibFMNsI8Mn6o9aYARgyYgS871s9IQbGa4xurgpRPbd2dzjMiC7fsvoBnQAw==
+	bh=FOPXVvF3Mg0kf0rqjI6dJ3u0NUgj0jhRW9HItk1AHus=;
+	b=bSWTY+URl6FAim6g8IxfGCbIqepdvX8rjmkPjwNCBx/cJZLIdAfFRihD62oLzE6mEqrg
+	 qopz8CfE2nV5l7ejkzKQh98B7JT03RAX5My0W+kXiFDMQyaWuUdPXKTVaGm+EAKfSdg+h
+	 pafnPq6FTxrCxmpFWf+1SYd6YSWTDeAyOwCqBM7D9AfzwpqLx8WYO5b+DCBA3D7r037tC
+	 ULOYHleqyZX4UWM8FJ670N/8SviKo0JGTLFchxFSvMZKDe285KTLStaUbP/hB/UCj8QZD
+	 qX0mDbivX0ooa14Mif+AAN/B/5sqKTJ35Sdm6Hs6/BP8NBCxiAQ16FFI0FT3LjJtl3w==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=MgGEBliK;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=tUIvg9eU;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EE0E7606A321;
-	Wed, 25 Nov 2026 16:42:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DA8A8606A31E;
+	Wed, 25 Nov 2026 16:42:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=MgGEBliK
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B581E1F000CA;
-	Wed, 25 Nov 2026 16:42:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=tUIvg9eU
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 179B41F000C6;
+	Wed, 25 Nov 2026 16:42:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795624932;
-	bh=/MTdPjT6koU8a9jltikgy1r/kJj/+WFuy3bDoZ4jNPU=;
+	s=korg; t=1795624935;
+	bh=FOPXVvF3Mg0kf0rqjI6dJ3u0NUgj0jhRW9HItk1AHus=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=MgGEBliKEjpTGFDOnLZmSEkx/K99KBeDYenmUuQATNgX5ZjqVWEkuMaRMLXOoq8GS
-	 C/9UAj0/QN1ObgDCexgOJ/iGSoKajc2EK7hgWXjfG+7l5UFmIzZkWj6MBJ1VuuVm0y
-	 JZnYj7qEdLak7gRFY+pzSLRFoJbQP/I68gDVmQu8=
+	b=tUIvg9eUfOZPeKMD2g3jRqkKu+FjpfG/616NoHJ3FFknaocYecRrNQ6GyzZnW+/DR
+	 LOOg6muW3uPLnwHtXUXjgJz+x07LBkLU3BzfKqh9E+g5+6d8qx6A+h6+iVnNf9+rg6
+	 KtqUDd6EyaCeRkUvc6aHQ8fjn6vpFlyRTlfcgCsI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Uri Dar <udar@nvidia.com>,
-	Shay Drori <shayd@nvidia.com>,
-	Tariq Toukan <tariqt@nvidia.com>,
-	Daniel Machon <daniel.machon@microchip.com>,
+	Kuniyuki Iwashima <kuniyu@google.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 351/816] net/mlx5: Lag, Return error when enabling MPESW without LAG support
-Date: Wed, 25 Nov 2026 15:31:39 +0100
-Message-ID: <20261125143857.322876544@linuxfoundation.org>
+Subject: [PATCH 6.12 352/816] tcp: Pass req->rsk_listener to inet_csk_reqsk_queue_drop() in tcp_check_req().
+Date: Wed, 25 Nov 2026 15:31:40 +0100
+Message-ID: <20261125143857.345896303@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143849.205329330@linuxfoundation.org>
 References: <20261125143849.205329330@linuxfoundation.org>
@@ -71,46 +68,77 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Uri Dar <udar@nvidia.com>
+From: Kuniyuki Iwashima <kuniyu@google.com>
 
-[ Upstream commit a532a7049ba23edeb2e16f7bb5929314f2e47ca0 ]
+[ Upstream commit a9782a6f2bbd0c444689725a710d8b21eab61bc5 ]
 
-When firmware reports a function as not LAG capable (lag_master=0 or
-num_lag_ports < 2), mlx5_lag_add_mdev() creates no LAG object for it.
-Enabling multiport E-Switch on such a device returns 0 from
-mlx5_lag_mpesw_queue_work(), so
-"devlink dev param set ... esw_multiport value true" reports success
-although nothing was enabled, and a following "devlink dev param show"
-still reports false.
+When connection migration happens in tcp_v[46]_rcv(), a new
+listener is passed to tcp_check_req().
 
-Return -EOPNOTSUPP instead. mlx5_lag_mpesw_disable() ignores the return
-value, so disabling keeps its current behavior.
+When either of the following is true,
 
-Fixes: a32327a3a02c ("net/mlx5: Lag, Control MultiPort E-Switch single FDB mode")
-Signed-off-by: Uri Dar <udar@nvidia.com>
-Reviewed-by: Shay Drori <shayd@nvidia.com>
-Signed-off-by: Tariq Toukan <tariqt@nvidia.com>
-Reviewed-by: Daniel Machon <daniel.machon@microchip.com>
-Link: https://patch.msgid.link/20261110114350.2639891-1-tariqt@nvidia.com
+  * the new listener queue is full and
+    net.ipv4.tcp_abort_on_overflow is set
+
+  * the packet has RST or (not stripped) SYN
+
+tcp_check_req() sends RST and calls inet_csk_reqsk_queue_drop().
+
+Here, the new listener is passed, and its qlen is decremented
+wrongly while reqsk is tied to the old listener.
+
+Once qlen underflows, inet_csk_reqsk_queue_is_full() always
+return true, and the new listener stops serving.
+
+Without the patch, this script times out while waiting for SYN+ACK
+since the new listener drops SYN, but with the patch, 3WHS completes.
+
+    0 `sysctl -q net.ipv4.tcp_migrate_req=1`
+   +0 `sysctl -q net.ipv4.tcp_syncookies=0`
+   +0 socket(..., SOCK_STREAM, IPPROTO_TCP) = 3
+   +0 setsockopt(3, SOL_SOCKET, SO_REUSEPORT, [1], 4) = 0
+   +0 bind(3, ..., ...) = 0
+   +0 socket(..., SOCK_STREAM, IPPROTO_TCP) = 4
+   +0 setsockopt(4, SOL_SOCKET, SO_REUSEPORT, [1], 4) = 0
+   +0 bind(4, ..., ...) = 0
+   +0 listen(4, 128) = 0
+   +0 < S 0:0(0) win 32792 <mss 1000>
+   +0 > S. 0:0(0) ack 1 <...>
+   +0 listen(3, 128) = 0
+   +0 close(4) = 0
+ +.01 < R 1:1(0) win 0
+   +0 socket(..., SOCK_STREAM, IPPROTO_TCP) = 5
+   +0 listen(5, 1) = 0
+ +.01 < S 0:0(0) win 32792 <mss 1000>
+   +0 > S. 0:0(0) ack 1 <...>
+   +0 < . 1:1(0) ack 1 win 32792
+   +0 fcntl(3, F_SETFL, O_RDWR|O_NONBLOCK) = 0
+   +0 accept(3, ..., ...) = 6
+
+Let's pass req->rsk_listener instead.
+
+Fixes: d4f2c86b2b7e ("tcp: Migrate TCP_NEW_SYN_RECV requests at receiving the final ACK.")
+Signed-off-by: Kuniyuki Iwashima <kuniyu@google.com>
+Link: https://patch.msgid.link/20261111020304.1532064-2-kuniyu@google.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/mellanox/mlx5/core/lag/mpesw.c | 2 +-
+ net/ipv4/tcp_minisocks.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/net/ethernet/mellanox/mlx5/core/lag/mpesw.c b/drivers/net/ethernet/mellanox/mlx5/core/lag/mpesw.c
-index b0a60d2433e50..36009fb4ea5fd 100644
---- a/drivers/net/ethernet/mellanox/mlx5/core/lag/mpesw.c
-+++ b/drivers/net/ethernet/mellanox/mlx5/core/lag/mpesw.c
-@@ -165,7 +165,7 @@ static int mlx5_lag_mpesw_queue_work(struct mlx5_core_dev *dev,
- 	int err = 0;
+diff --git a/net/ipv4/tcp_minisocks.c b/net/ipv4/tcp_minisocks.c
+index a43f082b871ed..567710d43c13f 100644
+--- a/net/ipv4/tcp_minisocks.c
++++ b/net/ipv4/tcp_minisocks.c
+@@ -900,7 +900,7 @@ struct sock *tcp_check_req(struct sock *sk, struct sk_buff *skb,
+ 		tcp_reset(sk, skb);
+ 	}
+ 	if (!fastopen) {
+-		bool unlinked = inet_csk_reqsk_queue_drop(sk, req);
++		bool unlinked = inet_csk_reqsk_queue_drop(req->rsk_listener, req);
  
- 	if (!ldev)
--		return 0;
-+		return -EOPNOTSUPP;
- 
- 	work = kzalloc(sizeof(*work), GFP_KERNEL);
- 	if (!work)
+ 		if (unlinked)
+ 			__NET_INC_STATS(sock_net(sk), LINUX_MIB_EMBRYONICRSTS);
 -- 
 2.53.0
 
