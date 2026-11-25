@@ -1,52 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795626370;
-	b=iaaWpG6cOasc+qUzZjvdPYVeF+Ij1NL5SgtmVeRqujQkBKdg4nhKWFoQgRR5n1bJw32j
-	 r3CU6Sxxxm/iZmgjhnAtaa73MEzS0NI9L/YXvJRFqBfjyetYVv3BX8+5wog/sOwF9Q0J3
-	 H8ubDgyfQBZbbnQNxghrxgCfPrSJQJzywoOS7Y5aM2FIH0I0DFFAGmSRlWC1onBH6H5Ls
-	 erDHLDJ/aQKaBDYCUNpr3Rcx0oP72q74MohKGF+Trd0JQa2Wa8IkOoAQEBMZEtKRM8aL4
-	 A/vppUJSedRduKxgG1mQaf+hN3EGDiStR8iHjujYzvuBRKMewWtZyJoVIC3V5iMAAZA==
+	t=1795626374;
+	b=Sbyg0Q+VXNAIAcMcbb8GwHALEu1Qxam099MheM959vTe/aQHN7HhlyIdDGaC8CnEyosM
+	 vlBSsI05Cw3Q6I9BuaLiq9X1vLfo2JjINeUYu2APtUQ0gLzzFlbtSdvqHqzGSyKVk4tuM
+	 klDbLa4AFq9mMEuGp7AqmvyJldQ+5ZuUrbPfIIj9bvIk+7pObup4+HAvEePhbgt7F7ZXM
+	 eTXGYnu5XeROL4sX+hUKd+2n0PyIiNmhXrE/BE4EYxAyytnIrMEmrixSLDlk0+Ufaj7GO
+	 2bzEF8fa1V692FljtXhUyi8juMkJtAnoqCJwBUMf7mhIU8W2GVdHGnviFUXr6qROOOQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795626370;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795626374;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=aIK0yPqpkIu+p4F7Baps9lTh+yal8aZ+5hzqXTV23T8=;
-	b=ZqKmhUuhkb5qSmpA1AhtXyvFqFoQx0U9rckqlX/XleDAUC9DRQj7s3+dcJGJ90cmBaQ3
-	 tVrMQQmXXyOmWITJ3uyQtNATugt2j9ExEBDP9ap1LZMz3//ESBTIFVZFDITKf+IFwdrD8
-	 ooZtur9q7WP8SZdfe98fZz+M8DIRFetH0nMTSIQduDa9kMtBnEgsa43qBFGx34NLiktt0
-	 V9W7vmcEd4DZb5X5tvu4++iLpcstx8URCTI6EYfLDU/+pNGv2euloXZoNrWObwTQI1nhs
-	 RuXrUoTWKi1JnsHfz6A5JQ03rN81Yv7qjJBGqBNDJCR8susXO1PqK3H1zqF9+ioWJVg==
+	bh=kyBdlZOD8/ecoIDpwHWs2JNhzprwW4P683GDZFfwFzg=;
+	b=AkKk5PZctNFZVaFxSprS6WpGQuhLMGasZLWIVYZ9aB+x0PuukEMGWnTpRTm2ZC9mVrck
+	 W2Dso2lYUKxsi91DMQzkamaFgJSqZ8dHk8XEgsWfr67InFj5mSkuthaiUKvSA2/OVfnXR
+	 yd3sEzj5vT2NlKD2EyF82ptS992LnYBBKWyF16HIdw0kW6i4Iz4xySKFcZJdGQmFAzZ/H
+	 nTVIxKVt6bPpzSJv3aP/yujb1R5ztwr/CJXgNdqUPH+8d+UwA2oIDwianRzjoCcWdKkOm
+	 2prVO4sbzgpNLO8Ag85+7+lzzQ6RBtwIeOEJlzF68cxzlSg6yv3OjUIei5/nP3e6Z8g==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=G5ymVYpR;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=QilR4UQh;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B3459606A31E;
-	Wed, 25 Nov 2026 17:06:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E423F606A329;
+	Wed, 25 Nov 2026 17:06:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=G5ymVYpR
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0CE121F000CA;
-	Wed, 25 Nov 2026 17:06:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=QilR4UQh
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DE9C11F000CA;
+	Wed, 25 Nov 2026 17:06:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795626370;
-	bh=aIK0yPqpkIu+p4F7Baps9lTh+yal8aZ+5hzqXTV23T8=;
+	s=korg; t=1795626373;
+	bh=kyBdlZOD8/ecoIDpwHWs2JNhzprwW4P683GDZFfwFzg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=G5ymVYpR9hnG/XuCqw9wyD9VCxYDY0xQWa0sUh4Ft68QaQP3jceQt4q2uajVuXS2w
-	 y+CxA3iMpPhvcJoOjpTQFFTZI24qqq6w3BMG6dB1b/FfIZhxpp2q5NsLOHADd0PRao
-	 UMLNIcQ9OOOppiGSdUQHCcrqOkI/+5fQeVdvX/G4=
+	b=QilR4UQhXMPPHUcLpCQxlJxXgIsNTQ+91dGK9TpckCBq9trP81n1GByF4gcJrO8r1
+	 vXHFn+IEWdf52XSZi2gewyUwL9g22Niwj2J/VWiWYCV2w6fpBE7BuJ/JhEWnzmDi+i
+	 081AoluJmvTUMQYw0cIvJlhol4Wmcw+FTqQn6jiY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Luiz Capitulino (Red Hat)" <luiz.capitulino@linux.dev>,
-	Michael Ellerman <mpe@kernel.org>,
-	Madhavan Srinivasan <maddy@linux.ibm.com>
-Subject: [PATCH 6.12 806/816] powerpc/watchdog: disable watchdog when watchdog_thresh=0
-Date: Wed, 25 Nov 2026 15:39:14 +0100
-Message-ID: <20261125143907.827247482@linuxfoundation.org>
+	Sasha Levin <sashal@kernel.org>,
+	Dominique Martinet <asmadeus@codewreck.org>
+Subject: [PATCH 6.12 807/816] 9p: fix memory leak in v9fs_init_fs_context error path
+Date: Wed, 25 Nov 2026 15:39:15 +0100
+Message-ID: <20261125143907.849881092@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143849.205329330@linuxfoundation.org>
 References: <20261125143849.205329330@linuxfoundation.org>
@@ -68,90 +67,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Luiz Capitulino (Red Hat) <luiz.capitulino@linux.dev>
+From: Sasha Levin <sashal@kernel.org>
 
-commit d513ec3c907b067d4a32b14ec6f73c3e041cb136 upstream.
+commit 0fd76f1be20d19ac593138ceec502cb044c909bd upstream.
 
-On powerpc, trying to disable the hardlockup detector with:
+Move the assignments of fc->ops and fc->fs_private to right after the
+kzalloc, before any fallible operations. Previously these were assigned
+at the end of the function, after the kstrdup calls for uname and aname.
+If either kstrdup failed, the error path would set fc->need_free but
+leave fc->ops NULL, so put_fs_context() would never call v9fs_free_fc()
+to free the allocated context and any already-duplicated strings.
 
- # echo 0 > /proc/sys/kernel/watchdog_thresh
-
-causes an immediate and endless hardlockup detection, eventually leading
-to an unusable system (splat example below). This happens because
-watchdog_calc_timeouts() sets wd_timer_period_ms, wd_panic_timeout_tb
-and wd_smp_panic_timeout_tb to zero, but start_watchdog() still starts
-the timer (with expiry=0) in this code path:
-
-proc_watchdog_thresh()
-  proc_watchdog_update()
-    __lockup_detector_reconfigure()
-      watchdog_hardlockup_start()
-        start_watchdog_on_cpu()
-          start_watchdog()
-            hrtimer_start() /* wd_timer_period_ms=0 */
-
-However, according to Documentation/admin-guide/sysctl/kernel.rst,
-setting watchdog_thresh=0 should disable both the soft and hard lockup
-detectors.
-
-This condition is already checked in __lockup_detector_reconfigure() for
-the soft lockup detector and the arch-independent hardlockup detector,
-what's missing is powerpc performing the same check in start_watchdog().
-
-[  278.110085] watchdog: CPU 0 detected hard LOCKUP on other CPUs 1
-[  278.110086] watchdog: CPU 1 became unstuck TB:33050716089564575
-[  278.110097] CPU: 1 UID: 0 PID: 0 Comm: swapper/1 Kdump: loaded Tainted: G            E       7.4.0-rc1 #1 PREEMPT(full)
-[  278.110103] watchdog: CPU 0 TB:33050716089564185, last SMP heartbeat TB:33050716089563885 (0ms ago)
-[  278.110109] Tainted: [E]=UNSIGNED_MODULE
-[  278.110126] Hardware name: IBM,8375-42A POWER9 (architected) 0x4e0202 0xf000005 of:IBM,FW940.00 (VL940_027) hv:phyp pSeries
-[  278.110136] NIP:  c0000000001bd518 LR: c0000000014dedf8 CTR: 0000000000000000
-[  278.110145] REGS: c000000004b17a80 TRAP: 0900   Tainted: G            E        (7.4.0-rc1)
-[  278.110155] MSR:  800000000280b033 <SF,VEC,VSX,EE,FP,ME,IR,DR,RI,LE>  CR: 22000224  XER: 20040004
-[  278.110189] CFAR: 0000000000000000 IRQMASK: 0
-GPR00: 0000000000000000 c000000004b17d20 c000000001c38100 0000000000000000
-GPR04: 000000000000ffff 0000000000000000 0000000000000000 0000000000000000
-GPR08: 0000000000000000 0000000000000080 0000000000000080 ffffffffffffffff
-GPR12: 0000000000000000 c000000017fff300 0000000000000000 000000002ef3d820
-GPR16: 0000000000000000 0000000000000000 0000000000000000 0000000000000000
-GPR20: 0000000000000000 0000000000000000 0000000000000000 0000000000000001
-GPR24: 0000000000000001 00000040c0a6075e 0000000000000000 0000000000000001
-GPR28: c0000001fdb5b140 0000000000000001 c000000002291968 c000000002291970
-[  278.110306] NIP [c0000000001bd518] plpar_hcall_norets_notrace+0x18/0x2c
-[  278.110319] LR [c0000000014dedf8] check_and_cede_processor+0x48/0x60
-[  278.110333] Call Trace:
-[  278.110338] [c000000004b17d20] [c000000004b17dd0] 0xc000000004b17dd0 (unreliable)
-[  278.110354] [c000000004b17d80] [c0000000014df020] shared_cede_loop+0x70/0x170
-[  278.110367] [c000000004b17dc0] [c0000000014de460] cpuidle_enter_state+0x2f0/0x748
-[  278.110381] [c000000004b17e70] [c000000000fe43b8] cpuidle_enter+0x48/0x70
-[  278.110397] [c000000004b17eb0] [c0000000002cdcf8] call_cpuidle+0x48/0x90
-[  278.110409] [c000000004b17ed0] [c0000000002d6300] cpuidle_idle_call+0x160/0x2d0
-[  278.110422] [c000000004b17f20] [c0000000002d6578] do_idle+0x108/0x1f0
-[  278.110434] [c000000004b17f60] [c0000000002d6938] cpu_startup_entry+0x48/0x50
-[  278.110446] [c000000004b17f90] [c0000000000615c0] start_secondary+0x290/0x2a0
-[  278.110459] [c000000004b17fe0] [c00000000000e258] start_secondary_prolog+0x10/0x14
-
-Fixes: 2104180a5369 ("powerpc/64s: implement arch-specific hardlockup watchdog")
-Cc: stable@vger.kernel.org
-Signed-off-by: Luiz Capitulino (Red Hat) <luiz.capitulino@linux.dev>
-Reviewed-by: Michael Ellerman <mpe@kernel.org>
-Signed-off-by: Madhavan Srinivasan <maddy@linux.ibm.com>
-Link: https://patch.msgid.link/20261104034018.2676750-1-luiz.capitulino@linux.dev
+Fixes: 1f3e4142c0eb ("9p: convert to the new mount API")
+Assisted-by: Claude:claude-opus-4-6
+Signed-off-by: Sasha Levin <sashal@kernel.org>
+Message-ID: <20260225135745.351984-1-sashal@kernel.org>
+Signed-off-by: Dominique Martinet <asmadeus@codewreck.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/powerpc/kernel/watchdog.c |    3 +++
- 1 file changed, 3 insertions(+)
+ fs/9p/vfs_super.c |    6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
---- a/arch/powerpc/kernel/watchdog.c
-+++ b/arch/powerpc/kernel/watchdog.c
-@@ -482,6 +482,9 @@ static void start_watchdog(void *arg)
- 	if (!(watchdog_enabled & WATCHDOG_HARDLOCKUP_ENABLED))
- 		return;
+--- a/fs/9p/vfs_super.c
++++ b/fs/9p/vfs_super.c
+@@ -310,6 +310,9 @@ static int v9fs_init_fs_context(struct f
+ 	if (!ctx)
+ 		return -ENOMEM;
  
-+	if (!watchdog_thresh)
-+		return;
++	fc->ops = &v9fs_context_ops;
++	fc->fs_private = ctx;
 +
- 	if (!cpumask_test_cpu(cpu, &watchdog_cpumask))
- 		return;
+ 	/* initialize core options */
+ 	ctx->session_opts.afid = ~0;
+ 	ctx->session_opts.cache = CACHE_NONE;
+@@ -343,9 +346,6 @@ static int v9fs_init_fs_context(struct f
+ 	ctx->rdma_opts.timeout = P9_RDMA_TIMEOUT;
+ 	ctx->rdma_opts.privport = false;
  
+-	fc->ops = &v9fs_context_ops;
+-	fc->fs_private = ctx;
+-
+ 	return 0;
+ error:
+ 	fc->need_free = 1;
 
 
