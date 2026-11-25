@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795622739;
-	b=qqCrRvGCLTmZsVDJDYqq1NGuAcPja1BPKNXL1AzqLDSXmNRutduwH1udV8/N7hr42tc0
-	 tDMBAJElPYY6+oC6zSErxIlm4XrVQaMUhG3BWlBgeNJu/TuP/Kf+wAsPnUFGL5olEXIMa
-	 9pDzyWb0hYGfrdmnNjd8H9pcm62TLfHEzCkiH4yWvXVKLvH+ela/tyyNy+IUD+CjaWjTJ
-	 gUFco/OivwceAZLqg3hUnFs5hpioKgyxbstObzArq1gpth8qHcGg4xYZVA1APqfevcTlf
-	 mInr8PYcJXPpJxufG9Y9SWdtPoAcS5IJmrGEiabZoOh6vWmu8LmTGvJTTwMePnx9d3Q==
+	t=1795622742;
+	b=vvG26yg3Pvtlf1X6QlF+pzFtYvpmFeYWcklmHl+WzIV7XC/B7bajxmynhYjspwfQmtcI
+	 7v4dkWC+T/GGAb2e8V8I/UmdaWiRHzToEkm88CZmisXDvJLN2dZB4RyueBZK4YVCJ4i0P
+	 2dg3AhtJSo6lweuSQ5KAKI/10YT3bZFv991KRxiUrYzSc94CbVPfIibS2v30TFPqpOeko
+	 O4hPVEMRbwrIJE/0p2mAT7NmcC+vMEHKuE/cR5OYwUBhlV+Ll39aePmLw3iYV3noXEsO4
+	 pG10AHJX7jQatrr984o1jLeyN89VBt5PW/QlVWmsUIcXXwl6xnsCrJfaewdc9oN4Pwg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795622739;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795622742;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=JPaOCOc+RZtt4ErNlQ2HtHQDMv1wFqnuCOGI4pqbzQ8=;
-	b=Ejr21zPqZ1cMiJLz5JlhW4akk+me/wKcqsThYSDYPeOwGcam8J8FQEfJRlN3lb4FrQjV
-	 IoQqUpwy0jlWbzzAZjlEbBsOHksg0Vxtvi35pmrC5FbcvGH2Tpx+PN6iYiipu01Swcw7O
-	 9BGoCgwxGGnP+IODaeY2G8nIPbatnTjwkgtlWBLNe80aaK5Bko7D47CY53jf9vHa+a42L
-	 mksws7YpADN3VG3/S7T9gHJsicpLI7qkomWKthwG/yH3TXIpj6WY0zvbeWTgtLXxGejZb
-	 FVhJASgNOFwPv7PtsHWCxT/U9Pvgzf5cQGHYSytlzsmnH50yOXu3Tf5B+j6+qaS32vA==
+	bh=/1GzfEOS0mEVfgIf+YpxxsQDF+XWUfzNYBDnwscqqWU=;
+	b=gc81rrU4XMov3RKUNUp1h0rSXKHCBgP73sjAqbH51Pstm/Ok96EEV2UZceDl0tb9wlLj
+	 pr3Zjc9WBRcj/Kwxyg9/y/Gmn209ealTXF/XLYQG16nV2UeRzYnBs25l+Ow/v6J4a33EU
+	 xNjH4tjIhAmysxVhIZQkGnTdrcEJr0Fds+tqAzuoafDHvEwJcVmC35rbmYStRntr3o50+
+	 D6YrJNn4DR6V8cRZqxb9Qi8dTYJeeqRzgAmqWEK6vbnQRENvzFBx2mpMumPmuFcpr02Fo
+	 Hu56EccerGj+E7XKFOGfZRYmy8Ud+SO6ws16aZZSWUGYHYjJhvTSYrTxK9U2MqJ5A5g==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="2V/kmqG5";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ZMiokcim;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 607C5606A31E;
-	Wed, 25 Nov 2026 16:05:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CA10F606A31E;
+	Wed, 25 Nov 2026 16:05:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=2V/kmqG5
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 514501F000D0;
-	Wed, 25 Nov 2026 16:05:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ZMiokcim
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A5A431F000C6;
+	Wed, 25 Nov 2026 16:05:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795622738;
-	bh=JPaOCOc+RZtt4ErNlQ2HtHQDMv1wFqnuCOGI4pqbzQ8=;
+	s=korg; t=1795622742;
+	bh=/1GzfEOS0mEVfgIf+YpxxsQDF+XWUfzNYBDnwscqqWU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=2V/kmqG57lb7bjb3ji9xXiI4C/ENmK3flv05w0QqzHz7XYqja1vv8B96qrZrmLpqs
-	 o7oCYRWAxTCWSsIzn9JBmmwJ2asYxgRyxmnx8k1IJZ2TeDTNxI48bT/yYHq7/WEocO
-	 3Di95+KOhw9ZWITlA3lGUP4oS+Q8f+fpHBHvB8cA=
+	b=ZMiokcimDNIuRwluWc71Q1vDfpgK/ZUgP8uVN22bC9rAmvct5UtGKAzy/XHZXZMeY
+	 lFL57T4NeH/eKY7WSCJQ6DDCHMwkjVcVy2Ttl+YqabwdZpKcffj5azB2j1lnFcUULo
+	 l8JNsx/aPnsrloIItQMZh9BIOnFi5gsKv5eOLQCA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chandrashekar Devegowda <chandrashekar.devegowda@intel.com>,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
+	Guopeng Zhang <zhangguopeng@kylinos.cn>,
+	Waiman Long <longman@redhat.com>,
+	Tejun Heo <tj@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 595/990] Bluetooth: btintel_pcie: remove duplicate BTINTEL_PCIE_MAGIC_NUM definition
-Date: Wed, 25 Nov 2026 15:32:42 +0100
-Message-ID: <20261125143836.028592331@linuxfoundation.org>
+Subject: [PATCH 6.18 631/990] cgroup/cpuset: Prevent recursive call of remote_cpus_update() via update_cpumasks_hier()
+Date: Wed, 25 Nov 2026 15:33:18 +0100
+Message-ID: <20261125143836.878292810@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143822.072087159@linuxfoundation.org>
 References: <20261125143822.072087159@linuxfoundation.org>
@@ -68,40 +69,125 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chandrashekar Devegowda <chandrashekar.devegowda@intel.com>
+From: Waiman Long <longman@redhat.com>
 
-[ Upstream commit 937363063afde2dce1f45d8f22514db99b9eba6b ]
+[ Upstream commit 10a6f00d82544a1baa901de8d28f41f28c364995 ]
 
-Two identical definitions of BTINTEL_PCIE_MAGIC_NUM were present in
-btintel_pcie.c, one indented with spaces and one with a tab. Remove the
-space-indented duplicate and the surrounding blank lines. Kernel coding
-style requires tabs for indentation, so keep the tab-indented copy.
+Guopeng reports that changing the cpumask of a remote partition root
+may set the effective_cpus of the top_cpuset incorrectly. It is
+due to the following call sequence:
 
-No functional change.
+  update_cpumask()
+   -> partition_cpus_change()
+    -> remote_cpus_update()
+     -> update_sibling_cpumasks()
+      -> update_cpumasks_hier()
+       -> remote_cpus_update()
 
-Assisted-by: Copilot:claude-opus-4.7 sparse
-Fixes: 6ed83047389c ("Bluetooth: btintel_pcie: Setup buffers for firmware traces")
-Signed-off-by: Chandrashekar Devegowda <chandrashekar.devegowda@intel.com>
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
-[ sashal: Removed the duplicate space-indented BTINTEL_PCIE_MAGIC_NUM define and one blank line, since the two defines are not adjacent in this tree and the context differed. ]
+The second remote_cpus_update() call passes in the cs->effective_xcpus
+instead of the trialcs->effective_xcpus of the first remote_cpus_update()
+call.  As a result, the second call can revert what has been done in
+the first call leading to incorrect effective_cpus of the top_cpuset
+as well as subpartitions_cpus.
+
+Fix that by adding a new remote_partition_updating flag into the cpuset
+structure to indicate that a remote partition is being updated and
+update_cpumasks_hier() should skip the whole subtree as update_cpumask()
+or update_exclusive_cpumask() which calls partition_cpus_change()
+will eventually calls update_cpumasks_hier() for that subtree anyway.
+
+This new flag is currently set only in remote_cpus_update() to prevent
+recursive call of remote_cpus_update() on the same cpuset.
+
+A test case is added to test_cpuset_prs.sh to verify this change.
+
+Reported-by: Guopeng Zhang <zhangguopeng@kylinos.cn>
+Link: https://lore.kernel.org/lkml/20261010075947.333549-2-guopeng.zhang@linux.dev
+Reviewed-by: Guopeng Zhang <zhangguopeng@kylinos.cn>
+Tested-by: Guopeng Zhang <zhangguopeng@kylinos.cn>
+Fixes: f62a5d39368e ("cgroup/cpuset: Remove remote_partition_check() & make update_cpumasks_hier() handle remote partition")
+Signed-off-by: Waiman Long <longman@redhat.com>
+Signed-off-by: Tejun Heo <tj@kernel.org>
+[ sashal: adjusted struct field placement because remote_partition bool is missing, and added :S+ to the new selftest row to match this tree's row format. ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/bluetooth/btintel_pcie.c | 2 --
- 1 file changed, 2 deletions(-)
+ kernel/cgroup/cpuset-internal.h                   |  5 +++++
+ kernel/cgroup/cpuset.c                            | 13 +++++++++----
+ tools/testing/selftests/cgroup/test_cpuset_prs.sh |  1 +
+ 3 files changed, 15 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/bluetooth/btintel_pcie.c b/drivers/bluetooth/btintel_pcie.c
-index 3e8c894fbf640..75bbb2bb6be55 100644
---- a/drivers/bluetooth/btintel_pcie.c
-+++ b/drivers/bluetooth/btintel_pcie.c
-@@ -63,8 +63,6 @@ struct btintel_pcie_dev_recovery {
- #define BTINTEL_PCIE_HCI_EVT_PKT	0x00000004
- #define BTINTEL_PCIE_HCI_ISO_PKT	0x00000005
+diff --git a/kernel/cgroup/cpuset-internal.h b/kernel/cgroup/cpuset-internal.h
+index 0eb9ebd4fcb92..89acf907e7354 100644
+--- a/kernel/cgroup/cpuset-internal.h
++++ b/kernel/cgroup/cpuset-internal.h
+@@ -161,6 +161,11 @@ struct cpuset {
+ 	/* partition root state */
+ 	int partition_root_state;
  
--#define BTINTEL_PCIE_MAGIC_NUM    0xA5A5A5A5
--
- #define BTINTEL_PCIE_BLZR_HWEXP_SIZE		1024
- #define BTINTEL_PCIE_BLZR_HWEXP_DMP_ADDR	0xB00A7C00
++	/*
++	 * Set to true when a remote partition is undergoing update.
++	 */
++	bool remote_partition_updating;
++
+ 	/*
+ 	 * number of SCHED_DEADLINE tasks attached to this cpuset, so that we
+ 	 * know when to rebuild associated root domain bandwidth information.
+diff --git a/kernel/cgroup/cpuset.c b/kernel/cgroup/cpuset.c
+index d2bedfbd533de..b63489f9d3765 100644
+--- a/kernel/cgroup/cpuset.c
++++ b/kernel/cgroup/cpuset.c
+@@ -1833,6 +1833,7 @@ static void remote_cpus_update(struct cpuset *cs, struct cpumask *xcpus,
+ 			goto invalidate;
+ 	}
  
++	cs->remote_partition_updating = true;
+ 	spin_lock_irq(&callback_lock);
+ 	if (adding)
+ 		isolcpus_updated += partition_xcpus_add(prs, NULL, tmp->addmask);
+@@ -1855,6 +1856,7 @@ static void remote_cpus_update(struct cpuset *cs, struct cpumask *xcpus,
+ 	 */
+ 	cpuset_update_tasks_cpumask(&top_cpuset, tmp->new_cpus);
+ 	update_sibling_cpumasks(&top_cpuset, NULL, tmp);
++	cs->remote_partition_updating = false;
+ 	return;
+ 
+ invalidate:
+@@ -2323,16 +2325,19 @@ static void update_cpumasks_hier(struct cpuset *cs, struct tmpmasks *tmp,
+ 		old_prs = new_prs = cp->partition_root_state;
+ 
+ 		/*
+-		 * For child remote partition root (!= cs), we need to call
+-		 * remote_cpus_update() if effective_xcpus will be changed.
+-		 * Otherwise, we can skip the whole subtree.
++		 * For a child remote partition with remote_partition_updating
++		 * set, we can skip the whole subtree as the this function will
++		 * be called eventually. We can also skip the subtree if the
++		 * effective_xcpus isn't going to be changed. Otherwise, we
++		 * will have to call remote_cpus_update().
+ 		 *
+ 		 * remote_cpus_update() will reuse tmp->new_cpus only after
+ 		 * its value is being processed.
+ 		 */
+ 		if (remote && (cp != cs)) {
+ 			compute_excpus(cp, tmp->new_cpus);
+-			if (cpumask_equal(cp->effective_xcpus, tmp->new_cpus)) {
++			if (cp->remote_partition_updating ||
++			    cpumask_equal(cp->effective_xcpus, tmp->new_cpus)) {
+ 				pos_css = css_rightmost_descendant(pos_css);
+ 				continue;
+ 			}
+diff --git a/tools/testing/selftests/cgroup/test_cpuset_prs.sh b/tools/testing/selftests/cgroup/test_cpuset_prs.sh
+index 7a077f4365072..bd06324af3843 100755
+--- a/tools/testing/selftests/cgroup/test_cpuset_prs.sh
++++ b/tools/testing/selftests/cgroup/test_cpuset_prs.sh
+@@ -277,6 +277,7 @@ TEST_MATRIX=(
+ 	" C0-3:S+ C1-3:S+ C2-3    C4    X2-3   X2-3  X2-3:P2 P2:C4-5 0 A3:2-3|B1:4-5 A3:P2|B1:P2 2-5"
+ 	" C4:X0-3:S+ X1-3:S+ X2-3  .      .      P2     .      .     0 A1:4|A2:1-3|A3:1-3 A2:P2 1-3"
+ 	" C4:X0-3:S+ X1-3:S+ X2-3  .      .      .      P2     .     0 A1:4|A2:4|A3:2-3 A3:P2 2-3"
++	" CX1-6:S+ C1-4:P1 .    C4-5     .    C1-3     .      .     0 A1:4-6|A2:1-3|B1:4-5 A2:P1"
+ 
+ 	# Nested remote/local partition tests
+ 	" C0-3:S+ C1-3:S+ C2-3   C4-5   X2-3  X2-3:P1   P2     P1    0 A1:0-1|A2:|A3:2-3|B1:4-5 \
 -- 
 2.53.0
 
