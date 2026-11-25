@@ -1,52 +1,55 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795622396;
-	b=yLrI+gGCNN9nu/nC5gckaFMKeHjqzsSeVlnRIHWd79uNBuHNPZFbuozpIhGL7laj7kcu
-	 W+vrzyV6r+eqHvjux5UVVPkXBMXUBNnSOo4fDvRyJnx8JrKchXg1qdnskZHZ/xYCThLAC
-	 d2mhlKr1PSzkumzVaVrYtnbPZdljf75adusqhX2V2izOBBK/W8uvFZFT3fq/kV/u+HBNR
-	 L58mz/CzD+2SS1VGmxAsP/Zfjpl4Ae42W1Odrs9eZk6eEvcIEvUFkHOT6dZYsXNGE4Ho5
-	 ENXnfC/x90NLx9UPkikT4yHZANEAtZVM6lon4ymXT1tql/2m+EY4aFomRdJPb8cbMXw==
+	t=1795622399;
+	b=ZdkX825pCsyrox05DU1RJC3hwBtS5mxiV/OHtAjLIuS9oSlFT19WWEQvoelfXJ2HtIQz
+	 Nwd2i0qsFbwPSEeEU88IaPD126/yCk3ZIMuLNHvLiN7cu6qOFnZIlBu+753832PkIdeyl
+	 6I5MnPThEqT4WTUhWUP/CCoY4HPYCUpk2XONhtG3926USvZrPCWFVrFA0pvQ1ZNfwoXt9
+	 fVQcupp2DjLmQkAbS3M7KbcgD2BLWeiQ2Y0CO/2c8oNHS4K0vjObyhKq6U1SV81F9p8U/
+	 jKbp7ShyH3by55bRsDVGmfcvLbfbPxZzSofhPpjSJDd5uo4ciKFPl8ZMnnER2PlAwOg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795622396;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795622399;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=uBtlrLLAmYGGb8QYWLatnvCN11LTo94Gf2J3QIdehzg=;
-	b=nUBmE2DJ8XdkzoEcuo9+SNlmBzFHBU8FulUeCjsydf9ALRSQUPooJpOGIs1TPiAP1/y/
-	 M9sV5Md0UX5p/5P44g4v4R8VjEWBGMYBQlBB4Er70UuHB5cSVsSxc1A9FRMbgCRkUKso9
-	 6E6LNVRQD/KV2BNj3c6vhAgn+zDadEQaVvGzfSmwfkd0pMqzG5hE0T9PKCzkzW00vwBiN
-	 cqa+DB81owj63Fy59GiRBu7LvmiRaY7uhiOaAfGNm6S3w0SvsWCQG07FmjL/H9EaFoWvq
-	 aakVZh2g24JgJydcWD4+HTjUo31SA2ZeAgca8PoJoxDigwbhJHn98hdf/aYa2+ejxaw==
+	bh=AEGXU68njbiR0I8odwwFXeoCs0abrIPdpNA0l2xRUiY=;
+	b=Vhd3UfIn7jhAm64QtXZTHadvHn7h3yZPzSTvIrRswHmv2wpoCHh/VLXTeO+/WZrv79r+
+	 FKi+e8Kb9ph0hh5UDmtnp3Eu7QsasyyviPnIv+HMf7VCImCxg9FTMqsdhWvrwyYZ90UZl
+	 xkpc3FiRWYkCph4TrbAEADx26gQtezElZz/gfwOFlzP7boFPl5FHgqRndDRp/h5PoHbBk
+	 Nt+zGDFpvFLGnUNN00aNjBEkb4MpkUv8s5qSPWuO4WvqXFNpMLCpzwFl0YVAXxvyCqfJc
+	 T8sWYNVRF15wNWUzZdWKBEUEOgiWSKFi3qGwHgygcHqyaW8d4IwOOn8Ht5qb5CwmREg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ksvjbjAX;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=r9gRzchz;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BBA54606A326;
-	Wed, 25 Nov 2026 15:59:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 85168606A321;
+	Wed, 25 Nov 2026 15:59:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ksvjbjAX
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 17C6B1F000C4;
-	Wed, 25 Nov 2026 15:59:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=r9gRzchz
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D1DB01F000C6;
+	Wed, 25 Nov 2026 15:59:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795622396;
-	bh=uBtlrLLAmYGGb8QYWLatnvCN11LTo94Gf2J3QIdehzg=;
+	s=korg; t=1795622399;
+	bh=AEGXU68njbiR0I8odwwFXeoCs0abrIPdpNA0l2xRUiY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ksvjbjAXpK2Llm1sZ7TE1fh9MZvNhp1TQIjLjA8uAXQqlgdNHG07Zg00ww5Ov0OHE
-	 uMu/58Z74nZqMmyZvx3OjpcufFwumgPwlwWz/XSDeOC6dTbU5LnelEKPW0TYdCwmr5
-	 BW3XP+Sy6KD4SnOb0+OKiBsvRK4Zu5zBeY7iPj2g=
+	b=r9gRzchzyN1EBiQdbJRbxk80D9fvv3esUFVmgdtzoeEuJknoM1sXCSRrlNFduseP/
+	 w+ykuJGvgcPrPDTUtsa05dV+ftG6jl7nZZTKZMCQZ2926zcNxVI6t0VZBLYA81ZqgO
+	 AnreEoBDsUvjBxwq30CQ8EX1yvdttkGni8DEtsMk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ping-Ke Shih <pkshih@realtek.com>,
-	Kim Wooseok <5mghybrid@khu.ac.kr>,
+	Josef Bacik <josef@toxicpanda.com>,
+	"Mike Rapoport (Microsoft)" <rppt@kernel.org>,
+	"Lorenzo Stoakes (ARM)" <ljs@kernel.org>,
+	Muhammad Usama Anjum <usama.anjum@arm.com>,
+	"David Hildenbrand (Arm)" <david@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 524/990] wifi: rtl8xxxu: unwind incomplete receive startup
-Date: Wed, 25 Nov 2026 15:31:31 +0100
-Message-ID: <20261125143834.369450570@linuxfoundation.org>
+Subject: [PATCH 6.18 498/990] mm/userfaultfd: wake all waiters on unregister
+Date: Wed, 25 Nov 2026 15:31:05 +0100
+Message-ID: <20261125143833.761548483@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143822.072087159@linuxfoundation.org>
 References: <20261125143822.072087159@linuxfoundation.org>
@@ -68,232 +71,76 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kim Wooseok <5mghybrid@khu.ac.kr>
+From: Josef Bacik <josef@toxicpanda.com>
 
-[ Upstream commit 4c58fb8944a2cfbe5506534de0cf58646408d31a ]
+[ Upstream commit 3afb19d68cc5e7851fdb1069c8094af97bd80417 ]
 
-rtl8xxxu_start() allocates and submits RX URBs one at a time. If a later
-allocation fails, the error path frees the TX pool but leaves earlier RX
-requests active. A partial TX or RX allocation failure can also leave
-ret at zero, so start reports success despite the incomplete setup.
+UFFDIO_UNREGISTER only wakes pending faults if VM_UFFD_MISSING is set.
+Threads waiting on write-protect, minor or RWP faults can therefore remain
+asleep after unregistering a range that does not track missing faults.
 
-Allocate the RX pool before submitting any of it, and return ENOMEM
-whenever a pool allocation fails. Pass start errors through
-rtl8xxxu_stop(), including interrupt URB submission failures, so the
-existing stop path cancels work and releases both active requests and
-partially allocated pools.
+Wake pending faults regardless of the registration mode so they can retry
+without an explicit UFFDIO_WAKE or closing the userfaultfd. This matches
+the existing behavior for missing faults, including removing unread fault
+messages for the woken waiters.
 
-Share the submission loop with the RX worker. Both callers keep requests
-that fail with ENOMEM/EAGAIN. For a fatal error during startup, free the
-rest of the unsubmitted batch and return the error so start can unwind.
-In the worker, free only the failed request and continue with the rest
-of the batch.
+Fix generated by an LLM and sent by Josef Bacik in private.
 
-Keep the allocation loop in a small helper so the setup and error paths
-in start remain easy to follow.
-
-On an RTL8192EU, I exercised every error exit in rtl8xxxu_start()
-except interrupt-URB allocation and submission failures, which this
-adapter does not use.
-
-Fixes: 26f1fad29ad9 ("New driver: rtl8xxxu (mac80211)")
-Assisted-by: GPT-6 Astra
-Reviewed-by: Ping-Ke Shih <pkshih@realtek.com>
-Signed-off-by: Kim Wooseok <5mghybrid@khu.ac.kr>
-Signed-off-by: Ping-Ke Shih <pkshih@realtek.com>
-Link: https://patch.msgid.link/20260921-codex-rtl-rx-v3-submit-v4-2-eeb09fe8f791@khu.ac.kr
-[ sashal: Replaced kmalloc_obj(struct ...) calls with the older kmalloc(sizeof(struct ...), GFP_KERNEL) form, since the kmalloc_obj macro doesn't exist in this tree. ]
+Fixes: 63b2d4174c4a ("userfaultfd: wp: add the writeprotect API to userfaultfd ioctl")
+Cc: stable@vger.kernel.org
+Signed-off-by: Josef Bacik <josef@toxicpanda.com>
+[ david: rebase; simplify description ]
+Reviewed-by: Mike Rapoport (Microsoft) <rppt@kernel.org>
+Reviewed-by: Lorenzo Stoakes (ARM) <ljs@kernel.org>
+Tested-by: Muhammad Usama Anjum <usama.anjum@arm.com>
+Link: https://patch.msgid.link/20261031-fixes_core-v3-24-d6437171ecc3@kernel.org
+Signed-off-by: David Hildenbrand (Arm) <david@kernel.org>
+[ sashal: Applied the change to the in-tree userfaultfd_unregister() in fs/userfaultfd.c, since the mm/ file move isn't present, with identical function body but a different location. ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/realtek/rtl8xxxu/core.c | 96 +++++++++++---------
- 1 file changed, 54 insertions(+), 42 deletions(-)
+ fs/userfaultfd.c | 22 ++++++++++------------
+ 1 file changed, 10 insertions(+), 12 deletions(-)
 
-diff --git a/drivers/net/wireless/realtek/rtl8xxxu/core.c b/drivers/net/wireless/realtek/rtl8xxxu/core.c
-index 0f3f10dbfc541..c7e46445545af 100644
---- a/drivers/net/wireless/realtek/rtl8xxxu/core.c
-+++ b/drivers/net/wireless/realtek/rtl8xxxu/core.c
-@@ -61,6 +61,7 @@ MODULE_PARM_DESC(dma_agg_pages, "Set DMA aggregation pages (range 1-127, 0 to di
- #define RTL8XXXU_TX_URB_LOW_WATER	25
- #define RTL8XXXU_TX_URB_HIGH_WATER	32
+diff --git a/fs/userfaultfd.c b/fs/userfaultfd.c
+index 02ff11cf42bd8..1b33c92bae9e2 100644
+--- a/fs/userfaultfd.c
++++ b/fs/userfaultfd.c
+@@ -1505,6 +1505,8 @@ static int userfaultfd_unregister(struct userfaultfd_ctx *ctx,
  
-+static void rtl8xxxu_stop(struct ieee80211_hw *hw, bool suspend);
- static int rtl8xxxu_submit_rx_urb(struct rtl8xxxu_priv *priv,
- 				  struct rtl8xxxu_rx_urb *rx_urb);
- 
-@@ -5880,6 +5881,28 @@ static void rtl8xxxu_free_rx_resources(struct rtl8xxxu_priv *priv)
- 	spin_unlock_irqrestore(&priv->rx_urb_lock, flags);
- }
- 
-+static int rtl8xxxu_alloc_rx_urbs(struct rtl8xxxu_priv *priv)
-+{
-+	struct rtl8xxxu_rx_urb *rx_urb;
-+	int i;
+ 	ret = 0;
+ 	for_each_vma_range(vmi, vma, end) {
++		struct userfaultfd_wake_range range;
 +
-+	/* No RX work is active until the complete pool has been allocated. */
-+	for (i = 0; i < RTL8XXXU_RX_URBS; i++) {
-+		rx_urb = kmalloc(sizeof(struct rtl8xxxu_rx_urb), GFP_KERNEL);
-+		if (!rx_urb)
-+			return -ENOMEM;
-+
-+		usb_init_urb(&rx_urb->urb);
-+		INIT_LIST_HEAD(&rx_urb->list);
-+		rx_urb->hw = priv->hw;
-+
-+		list_add_tail(&rx_urb->list, &priv->rx_urb_pending_list);
-+		priv->rx_urb_pending_count++;
-+	}
-+
-+	return 0;
-+}
-+
- static void rtl8xxxu_queue_rx_urb(struct rtl8xxxu_priv *priv,
- 				  struct rtl8xxxu_rx_urb *rx_urb)
- {
-@@ -5907,32 +5930,21 @@ static void rtl8xxxu_queue_rx_urb(struct rtl8xxxu_priv *priv,
- 	spin_unlock_irqrestore(&priv->rx_urb_lock, flags);
- }
+ 		cond_resched();
  
--static void rtl8xxxu_rx_urb_work(struct work_struct *work)
-+static int rtl8xxxu_submit_rx_urbs(struct rtl8xxxu_priv *priv, bool startup)
- {
--	struct rtl8xxxu_priv *priv;
- 	struct rtl8xxxu_rx_urb *rx_urb, *tmp;
--	struct list_head local;
- 	unsigned long flags;
-+	LIST_HEAD(local);
- 	int ret;
+ 		/* VMA not registered with userfaultfd. */
+@@ -1522,18 +1524,14 @@ static int userfaultfd_unregister(struct userfaultfd_ctx *ctx,
+ 		/* Prevent new userfaults from being queued after the wakeup. */
+ 		vma_start_write(vma);
  
--	priv = container_of(work, struct rtl8xxxu_priv, rx_urb_wq);
--	INIT_LIST_HEAD(&local);
--
- 	spin_lock_irqsave(&priv->rx_urb_lock, flags);
--
- 	list_splice_init(&priv->rx_urb_pending_list, &local);
- 	priv->rx_urb_pending_count = 0;
--
- 	spin_unlock_irqrestore(&priv->rx_urb_lock, flags);
- 
- 	list_for_each_entry_safe(rx_urb, tmp, &local, list) {
- 		list_del_init(&rx_urb->list);
- 		ret = rtl8xxxu_submit_rx_urb(priv, rx_urb);
--		/*
--		 * If out of memory or temporary error, put it back on the
--		 * queue and try again. Otherwise the device is dead/gone
--		 * and we should drop it.
--		 */
- 		switch (ret) {
- 		case 0:
- 			break;
-@@ -5941,11 +5953,29 @@ static void rtl8xxxu_rx_urb_work(struct work_struct *work)
- 			rtl8xxxu_queue_rx_urb(priv, rx_urb);
- 			break;
- 		default:
-+			usb_free_urb(&rx_urb->urb);
-+			if (startup)
-+				goto free_remaining;
- 			dev_warn(&priv->udev->dev,
- 				 "failed to requeue urb with error %i\n", ret);
--			usb_free_urb(&rx_urb->urb);
- 		}
- 	}
-+
-+	return 0;
-+
-+free_remaining:
-+	list_for_each_entry_safe(rx_urb, tmp, &local, list) {
-+		list_del(&rx_urb->list);
-+		usb_free_urb(&rx_urb->urb);
-+	}
-+	return ret;
-+}
-+
-+static void rtl8xxxu_rx_urb_work(struct work_struct *work)
-+{
-+	struct rtl8xxxu_priv *priv = container_of(work, struct rtl8xxxu_priv, rx_urb_wq);
-+
-+	rtl8xxxu_submit_rx_urbs(priv, false);
- }
- 
- /*
-@@ -7452,7 +7482,6 @@ static void rtl8xxxu_watchdog_callback(struct work_struct *work)
- static int rtl8xxxu_start(struct ieee80211_hw *hw)
- {
- 	struct rtl8xxxu_priv *priv = hw->priv;
--	struct rtl8xxxu_rx_urb *rx_urb;
- 	struct rtl8xxxu_tx_urb *tx_urb;
- 	unsigned long flags;
- 	int ret, i;
-@@ -7467,14 +7496,13 @@ static int rtl8xxxu_start(struct ieee80211_hw *hw)
- 	if (priv->usb_interrupts) {
- 		ret = rtl8xxxu_submit_int_urb(hw);
- 		if (ret)
--			goto exit;
-+			goto error_out;
- 	}
- 
- 	for (i = 0; i < RTL8XXXU_TX_URBS; i++) {
- 		tx_urb = kmalloc(sizeof(struct rtl8xxxu_tx_urb), GFP_KERNEL);
- 		if (!tx_urb) {
--			if (!i)
--				ret = -ENOMEM;
-+			ret = -ENOMEM;
- 
- 			goto error_out;
- 		}
-@@ -7485,31 +7513,21 @@ static int rtl8xxxu_start(struct ieee80211_hw *hw)
- 		priv->tx_urb_free_count++;
- 	}
- 
-+	ret = rtl8xxxu_alloc_rx_urbs(priv);
-+	if (ret)
-+		goto error_out;
-+
- 	priv->tx_stopped = false;
- 
- 	spin_lock_irqsave(&priv->rx_urb_lock, flags);
- 	priv->shutdown = false;
- 	spin_unlock_irqrestore(&priv->rx_urb_lock, flags);
- 
--	for (i = 0; i < RTL8XXXU_RX_URBS; i++) {
--		rx_urb = kmalloc(sizeof(struct rtl8xxxu_rx_urb), GFP_KERNEL);
--		if (!rx_urb) {
--			if (!i)
--				ret = -ENOMEM;
--
--			goto error_out;
+-		if (userfaultfd_missing(vma)) {
+-			/*
+-			 * Wake any concurrent pending userfault while
+-			 * we unregister, so they will not hang
+-			 * permanently and it avoids userland to call
+-			 * UFFDIO_WAKE explicitly.
+-			 */
+-			struct userfaultfd_wake_range range;
+-			range.start = start;
+-			range.len = vma_end - start;
+-			wake_userfault(vma->vm_userfaultfd_ctx.ctx, &range);
 -		}
--		usb_init_urb(&rx_urb->urb);
--		INIT_LIST_HEAD(&rx_urb->list);
--		rx_urb->hw = hw;
--
--		ret = rtl8xxxu_submit_rx_urb(priv, rx_urb);
--		if (ret)
--			rtl8xxxu_queue_rx_urb(priv, rx_urb);
--	}
-+	ret = rtl8xxxu_submit_rx_urbs(priv, true);
-+	if (ret)
-+		goto error_out;
++		/*
++		 * Wake any concurrent pending userfault while we unregister,
++		 * so they will not hang permanently and it avoids userland to
++		 * call UFFDIO_WAKE explicitly.
++		 */
++		range.start = start;
++		range.len = vma_end - start;
++		wake_userfault(ctx, &range);
  
- 	schedule_delayed_work(&priv->ra_watchdog, 2 * HZ);
--exit:
- 	/*
- 	 * Accept all data and mgmt frames
- 	 */
-@@ -7522,13 +7540,7 @@ static int rtl8xxxu_start(struct ieee80211_hw *hw)
- 	return ret;
- 
- error_out:
--	rtl8xxxu_free_tx_resources(priv);
--	/*
--	 * Disable all data and mgmt frames
--	 */
--	rtl8xxxu_write16(priv, REG_RXFLTMAP2, 0x0000);
--	rtl8xxxu_write16(priv, REG_RXFLTMAP0, 0x0000);
--
-+	rtl8xxxu_stop(hw, false);
- 	return ret;
- }
- 
+ 		vma = userfaultfd_clear_vma(&vmi, prev, vma,
+ 					    start, vma_end);
 -- 
 2.53.0
 
