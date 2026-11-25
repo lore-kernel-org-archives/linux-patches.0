@@ -1,52 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795622903;
-	b=0RodQfWszc/a9X8f9reH7zGP4Uv6Iru4Lm8IW5o9Wm5K++2iFrTNMXBJB7MiNINQrSC5
-	 vJOs4Nrzd3aXRzvja8fmLb1lqIm+wieZDN8S4eh2SifaA7z/e4hY/DMGJlpsmhv3rKEbP
-	 O4IIn//LrrIFpi0aSRoJTwTsZqFE1tmP2Hh/lP6pKLd8oCA735VYWB76vYux49l2/y7UG
-	 AE6wtTiVgizIqxLJDwfmI2pI3blkiilCPaZ9LR65MoNesQEH+TjlPKLGWGPGzmDON3xnM
-	 ascMGJPiLFBpu3ZrxUAPDNl327yb+B2gSlLRJDGAfMzmbZipnNTFYrUfjDXMCxlwQSw==
+	t=1795622907;
+	b=Z4uOzbbPTgOWvH/sHLE3wOzc5h2ZWch+NcT4uSCeYW36bHlbQBi6iVE8/Wl0vKXUCDhj
+	 KNupH+goafw82n48xrLq6IaPJhgFUMMssKkA4DVjY2ssgGd0YTdzmWdIqos+B+r035TRl
+	 yqqEJ2Yvuj7Q3Chl1onbeEi+1kCeMsdd1O+0gozhd/v0fUV/SWimKQ+ZmdgZ1mdrpS+Qy
+	 DgAFllQNnXSLGYCLLLDzYQ+E4FCe4cMxsCEZBDs5+Kbba6Ocvx/GU0EItalp8ctQaSPbF
+	 JB0c/tWd2Aufzt3nfSdeVunj/hXxTof6qkm9yZsmkso+t7R+cHEMcxTZ2v/6judIcXQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795622903;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795622907;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=smdQVbGphZLqPptqEsYuNSNoAB+SE925KacA4saMXFc=;
-	b=nV7vxfXagpb1BOcxUU/3zO0HKVhKC1mp1TMLnGQ6pailDD9ki4Yz9IOpXTGslG6AtZR+
-	 D0vKkMwYtn4/rm1JdquzvZTyqz1a1u3Nu92B3ia1aGJFhY+jMv3hzd1rXf0zye0yhrqda
-	 xE4prgjoMsc2sqfYTGMJMZXl4WtzKCv5sOHIVBLaA+xtHekHDE7HPDRqV+ZURoW/RAGUT
-	 MvPaoobtAX3SVOnw9UHiWGNnuv/AiYQj1LUeT2LkPsOpqR9zK/vDHJPl53zX9UStHt8zD
-	 j+kQDJ2gPums00BbQaJvlLcC9lntySL/pwnDYwD2opk6aMlClpNEc4UAYJPONnS4YAA==
+	bh=n7WCTsA9ctwEHtnM/XSGw8BX2X0s9E4ZaQ/CDpjafUA=;
+	b=hL4YeiajPuPK0NWijihe3rIc3CWx4vs6wAwXV2q8DkgUcxb/9Q6EHb9CS3mZ0i6x3gUt
+	 EEDunOoKJ1Ystd6gnDtIqrZO06kPeeL3XA7NNsviiZvjyAnQ2iSY2g07C5AbcrDx+I7eP
+	 AUO9N/cxk74JnLoGVnmZT1P9cN616xHVZWXOe8rrcwxg58cZ55k3B4YljSez7Kqsw0POT
+	 W5JeNGqbhKxZzzn+sRJP8ko9GGOxlmIQB6Y9/cQ0IqjownMUOb+lqlJBqG3vxpRbwmb4N
+	 EeI8c+dKePbO3bYXujTPZn5bDBSEvypO0mXh4l/stnFnUZiuv7EcPpNS4ZC2b/hl3Dw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=jyOivMai;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=jdTgldky;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 45AC5606A323;
-	Wed, 25 Nov 2026 16:08:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2D34F606A32C;
+	Wed, 25 Nov 2026 16:08:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=jyOivMai
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8AA4A1F000C4;
-	Wed, 25 Nov 2026 16:08:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=jdTgldky
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D18251F000E0;
+	Wed, 25 Nov 2026 16:08:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795622903;
-	bh=smdQVbGphZLqPptqEsYuNSNoAB+SE925KacA4saMXFc=;
+	s=korg; t=1795622906;
+	bh=n7WCTsA9ctwEHtnM/XSGw8BX2X0s9E4ZaQ/CDpjafUA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=jyOivMaiGfwIQX4ccoFcdro42zpd28UnNvuV1LW8Q7ngQfH7A5Bx97HYvsoomPQEV
-	 X8WR6wwt0DIkRhZ+/bbEYjMxtwrKvPyOlVxZ0N7hjAkCL3a3eBGKyEnJFjnprbQq+G
-	 R7JILIuqa1Hg9Mt7LIMsUEB/raKS6+p4ILv+F/wM=
+	b=jdTgldkyGGHqIs9lTbwPZXyX/0/GP878aHuHndsQyml5uRnWA61rxVhQ2MgSpAP7f
+	 0p9u1HhkqOCj6xK0bNNW2AMcPSN5gdlVNEqk68zy4hwsWROUaw6o1K3XBvuD2wvsDO
+	 7dcC+O7M8q2l+CDZn3f5KOcoqPmNWVUJFDryD6nk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Gregory Price (Meta)" <gourry@gourry.net>,
-	"Vlastimil Babka (SUSE)" <vbabka@kernel.org>,
-	Zi Yan <ziy@nvidia.com>
-Subject: [PATCH 6.18 685/990] mm/page_alloc: snapshot the preferred zone against shrink rebuilds
-Date: Wed, 25 Nov 2026 15:34:12 +0100
-Message-ID: <20261125143838.131489393@linuxfoundation.org>
+	Josef Bacik <josef@toxicpanda.com>,
+	"David Hildenbrand (Arm)" <david@kernel.org>,
+	Zi Yan <ziy@nvidia.com>,
+	Johannes Weiner <hannes@cmpxchg.org>,
+	"Vlastimil Babka (SUSE)" <vbabka@kernel.org>
+Subject: [PATCH 6.18 686/990] mm/page_alloc: clear ->private of deferred free pages
+Date: Wed, 25 Nov 2026 15:34:13 +0100
+Message-ID: <20261125143838.156353528@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143822.072087159@linuxfoundation.org>
 References: <20261125143822.072087159@linuxfoundation.org>
@@ -68,153 +70,61 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Gregory Price (Meta) <gourry@gourry.net>
+From: Josef Bacik <josef@toxicpanda.com>
 
-commit b3e3a760eb68449e2794ef68ab212173d9c3e8c7 upstream.
+commit aae6b83fe47ed8bff9195efbe1d191ec52e5436e upstream.
 
-get_page_from_freelist() and alloc_pages_bulk_noprof() reread
-ac->preferred_zoneref->zone at every use. Offlining a zone's last block
-rebuilds the zonelists in place, and the shrunk list's NULL terminator
-can land on the preferred slot mid-walk:
+free_pages_nolock() and free_frozen_pages_nolock() put the page on
+zone->trylock_free_pages if they get neither the pcp lock nor zone->lock.
+add_page_to_zone_llist() keeps the order of the page in page->private.
+The next free_one_page() which does get zone->lock passes these pages to
+split_large_buddy() with ->private still set.
 
-  CPU 0                             CPU 1
-  get_page_from_freelist(GFP_KERNEL | __GFP_THISNODE)
-    zone = NORMAL (slot 1)
-                                    offline_pages()
-                                      build_all_zonelists()
-                                        [MOVABLE, NORMAL, NULL]
-                                        -> [NORMAL, NULL]
-    rmqueue(zonelist_zone(slot 1), zone)
-      zone_statistics(NULL, zone)
+__free_one_page() writes ->private of the head of the resulting free page
+only. If the deferred page is merged with its lower buddy, it becomes a
+tail of that free page and keeps the order in ->private.
 
-  BUG: kernel NULL pointer dereference, address: 0000000000000060
-  RIP: 0010:get_page_from_freelist+0x6a5/0x15f0
-  Call Trace:
-   __alloc_frozen_pages_noprof+0x125/0x330
+All other free pages which are not the head of a buddy have a ->private
+of zero, and since commit 819bfbd47e49 ("mm/page_alloc: remove
+set_page_private() in prep_compound_tail()") the allocator relies on it.
+When the stale page is allocated again as a tail of a larger page:
 
-Read the slot once. Zones are never freed, so a stale zone is safe, and
-a NULL slot fails the same way as walking off the end.
+ - prep_compound_tail() hits VM_WARN_ON_ONCE(tail->private);
+ - with the page checks enabled, __free_pages_prepare() reports
+   "BUG: Bad page state", "nonzero private", and leaks the whole page;
+ - without them the value is seen by whoever uses that page next, e.g. as
+   folio->private of a folio which is split off a large folio.
 
-Fixes: 11cd8638c37f ("mm, page_alloc: remove stop_machine from build_all_zonelists")
+Only pages of an order above zero are affected. Those can be freed
+through _nolock() by the stack depot (order 2) and by SLUB (a new slab
+which cannot be added to the partial list by kmalloc_nolock()).
+
+Clear ->private when the page is taken off the list.
+
+Fixes: 8c57b687e833 ("mm, bpf: Introduce free_pages_nolock()")
 Cc: stable@vger.kernel.org
-Signed-off-by: Gregory Price (Meta) <gourry@gourry.net>
-Reviewed-by: Vlastimil Babka (SUSE) <vbabka@kernel.org>
-Link: https://patch.msgid.link/20261101021340.2251928-7-gourry@gourry.net
-Acked-by: Zi Yan <ziy@nvidia.com>
+Assisted-by: LLM
+Signed-off-by: Josef Bacik <josef@toxicpanda.com>
+Signed-off-by: David Hildenbrand (Arm) <david@kernel.org>
+Reviewed-by: Zi Yan <ziy@nvidia.com>
+Reviewed-by: Johannes Weiner <hannes@cmpxchg.org>
+Link: https://patch.msgid.link/20261103-pgalloc-ai-hotfixes-v2-1-e0d2890ab74f@kernel.org
 Signed-off-by: Vlastimil Babka (SUSE) <vbabka@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- mm/page_alloc.c |   31 +++++++++++++++++++++++--------
- 1 file changed, 23 insertions(+), 8 deletions(-)
+ mm/page_alloc.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
 --- a/mm/page_alloc.c
 +++ b/mm/page_alloc.c
-@@ -3793,12 +3793,21 @@ get_page_from_freelist(gfp_t gfp_mask, u
- {
- 	struct zoneref *z;
- 	struct zone *zone;
-+	struct zone *preferred_zone;
- 	struct pglist_data *last_pgdat = NULL;
- 	bool last_pgdat_dirty_ok = false;
- 	bool no_fallback;
- 	bool skip_kswapd_nodes = nr_online_nodes > 1;
- 	bool skipped_kswapd_nodes = false;
+@@ -1608,6 +1608,8 @@ static void free_one_page(struct zone *z
+ 		llist_for_each_entry_safe(p, tmp, llnode, pcp_llist) {
+ 			unsigned int p_order = p->private;
  
-+	/*
-+	 * A concurrent zonelist rebuild can NULL or replace this slot. Zones
-+	 * are never freed, so reading it once keeps a usable zone.
-+	 */
-+	preferred_zone = zonelist_zone(ac->preferred_zoneref);
-+	if (!preferred_zone)
-+		return NULL;
-+
- retry:
- 	/*
- 	 * Scan zonelist, looking for a zone with enough free.
-@@ -3845,7 +3854,7 @@ retry:
++			/* It may end up as a tail of the merged free page. */
++			p->private = 0;
+ 			split_large_buddy(zone, p, page_to_pfn(p), p_order, fpi_flags);
+ 			__count_vm_events(PGFREE, 1 << p_order);
  		}
- 
- 		if (no_fallback && !defrag_mode && nr_online_nodes > 1 &&
--		    zone != zonelist_zone(ac->preferred_zoneref)) {
-+		    zone != preferred_zone) {
- 			int local_nid;
- 
- 			/*
-@@ -3853,7 +3862,7 @@ retry:
- 			 * fragmenting fallbacks. Locality is more important
- 			 * than fragmentation avoidance.
- 			 */
--			local_nid = zonelist_node_idx(ac->preferred_zoneref);
-+			local_nid = zone_to_nid(preferred_zone);
- 			if (zone_to_nid(zone) != local_nid) {
- 				alloc_flags &= ~ALLOC_NOFRAGMENT;
- 				goto retry;
-@@ -3917,7 +3926,7 @@ check_alloc_wmark:
- 				goto try_this_zone;
- 
- 			if (!node_reclaim_enabled() ||
--			    !zone_allows_reclaim(zonelist_zone(ac->preferred_zoneref), zone))
-+			    !zone_allows_reclaim(preferred_zone, zone))
- 				continue;
- 
- 			ret = node_reclaim(zone->zone_pgdat, gfp_mask, order);
-@@ -3939,7 +3948,7 @@ check_alloc_wmark:
- 		}
- 
- try_this_zone:
--		page = rmqueue(zonelist_zone(ac->preferred_zoneref), zone, order,
-+		page = rmqueue(preferred_zone, zone, order,
- 				gfp_mask, alloc_flags, ac->migratetype);
- 		if (page) {
- 			prep_new_page(page, order, gfp_mask, alloc_flags);
-@@ -5156,6 +5165,7 @@ unsigned long alloc_pages_bulk_noprof(gf
- 	struct page *page;
- 	unsigned long __maybe_unused UP_flags;
- 	struct zone *zone;
-+	struct zone *preferred_zone;
- 	struct zoneref *z;
- 	struct per_cpu_pages *pcp;
- 	struct list_head *pcp_list;
-@@ -5206,6 +5216,11 @@ unsigned long alloc_pages_bulk_noprof(gf
- 		goto out;
- 	gfp = alloc_gfp;
- 
-+	/* Read once; see get_page_from_freelist(). */
-+	preferred_zone = zonelist_zone(ac.preferred_zoneref);
-+	if (!preferred_zone)
-+		goto failed;
-+
- 	/* Find an allowed local zone that meets the low watermark. */
- 	z = ac.preferred_zoneref;
- 	for_next_zone_zonelist_nodemask(zone, z, ac.highest_zoneidx, ac.nodemask) {
-@@ -5216,8 +5231,8 @@ unsigned long alloc_pages_bulk_noprof(gf
- 			continue;
- 		}
- 
--		if (nr_online_nodes > 1 && zone != zonelist_zone(ac.preferred_zoneref) &&
--		    zone_to_nid(zone) != zonelist_node_idx(ac.preferred_zoneref)) {
-+		if (nr_online_nodes > 1 && zone != preferred_zone &&
-+		    zone_to_nid(zone) != zone_to_nid(preferred_zone)) {
- 			goto failed;
- 		}
- 
-@@ -5225,7 +5240,7 @@ unsigned long alloc_pages_bulk_noprof(gf
- retry_this_zone:
- 		mark = wmark_pages(zone, alloc_flags & ALLOC_WMARK_MASK) + nr_pages;
- 		if (zone_watermark_fast(zone, 0,  mark,
--				zonelist_zone_idx(ac.preferred_zoneref),
-+				zone_idx(preferred_zone),
- 				alloc_flags, gfp)) {
- 			break;
- 		}
-@@ -5284,7 +5299,7 @@ retry_this_zone:
- 	pcp_trylock_finish(UP_flags);
- 
- 	__count_zid_vm_events(PGALLOC, zone_idx(zone), nr_account);
--	zone_statistics(zonelist_zone(ac.preferred_zoneref), zone, nr_account);
-+	zone_statistics(preferred_zone, zone, nr_account);
- 
- out:
- 	return nr_populated;
 
 
