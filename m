@@ -1,54 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795622042;
-	b=BaxoBEJ2ufoRmZUr6e6RL0ltvxUxnnQnfrNSHb9VA9sFSLRfEkwFOPIAXTrozVbIBR6F
-	 cvY7m4X17j/Oukv+lzgCefYXcnqBWhGVkRIXZAHIsWnf5BJztxpu0iv5FIZH/AmZlCOWV
-	 sKTE8ySXjsyyztLWXnxwsa9995lR3XYp0o5xEKLTJ6zLFNriT7vQ6Ou7BjRxSuOgamFoc
-	 Wj/Ts4Q/LGL7ngyL0ngTtp3/bpRTC4Xfs71MbrwiUk1POXV2P9TPm7/gjHzOARQOvMGZv
-	 Zi9wTgQeYvYYwxaegZ7SOt0uq2Wxf8RaK2/YmUls0KzR7suUgr7up1pmPWWGQk8WWKA==
+	t=1795622046;
+	b=uGJ8vGEof2uQHSqr7kXxMQRbGQAy3m/zOkOLKDOA0gDHynM3NqXtL7whsxJ9AzzWd0mH
+	 NTVfSWnBGcW3POwvlgkKPZ3C62SCtc4AZIK70Hs66XY3ItWRONeMUuKDUWP4JoUMnh9Is
+	 bDQCeNY3vSTnLuJIpximeeeaTLbIrcWV9AGkJOVOx//WvW9yohMTNOGq2QYsCD0UgbSrH
+	 zT3uvadePKF8XNEmik9IwMIz0qVLZEj6LvF4Gacs2jOLtFGYeSPAeC3m7+ov7tkqhT7vq
+	 pEBB3Dbwo6/M1DbHnTlJQV/dQ0opZWZ2j51iJliwqkCyb9MBP9yg+xiW/sD/hVZ6ldw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795622042;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795622046;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=vIhxbdbI72Whp3h9h7u7RTb65IbmEtyRvZ5KNH/hsZY=;
-	b=dhFR+kd2mnRpj0+CRwpKxC+IbtPtRHF8HjCONXMDzPc4b9j+KDmwIkFCgKwdanNU9KNT
-	 3VsGbffbovktMARKObluTPdJT/PPoU62Suj/kq1tZbmRPSgrOysaOuJ//l/Wl4a/bb9Ta
-	 y5JJ/97ZRy+i+0eM7C8l1LWdoAsl2+FZptqlYlqo1BQGydwvJQoG5n98ckvglp2+NN+Yd
-	 3mzORiy4t9vPWowKldEH6yqgBjRI7J5mqtmoLGcWgCc02/a47j06OSdDWfUJ0pvHTKwJn
-	 CvIWrf56yKp8ifwnMmiErdnG2gc2FOzRivCpUOhgovBLs+DrO2c6/Um7vWEfN+6/CsA==
+	bh=/ymzXA4tKIIsnH8hLM9EJLpUxG4GQBcX7LUk7cl1sVE=;
+	b=y/S8TKHYmknRpx8d3rT2O2mPen50IIx7XcEZxEnojzWog6u7LHI2/K+7Wm31Ym3dSSOF
+	 ncMm6/m5DdK4O9Qhvb1UKIHjEQiXIp1gBmfxiAgQk1YRFB4dc1foAJjIOn/DolwoyUj5G
+	 W3+ObJ8yhqMRXCztYimJ7kEARmZyFRC6v71A51g20EqEwW05MmNw3u14+AR4I4TWt18+g
+	 a7Pu6C7+o/MHST8oyWQSvJreI6DIzIENr3oWDo1eURgJ1rmcSAFTcJvjD40Y+MFNIlAh+
+	 sGdpuYPmglIfc8wwh6lmMzzxooEzkW8s9MIl8ekZWgFglRZb3cIRyYS6b2u/N9uOL1A==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=KLbqNu7h;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="odJbv6e/";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CC201606A321;
-	Wed, 25 Nov 2026 15:54:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2EC3E606A31E;
+	Wed, 25 Nov 2026 15:54:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=KLbqNu7h
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1048B1F000C0;
-	Wed, 25 Nov 2026 15:54:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=odJbv6e/
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0DAA91F000D0;
+	Wed, 25 Nov 2026 15:54:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795622042;
-	bh=vIhxbdbI72Whp3h9h7u7RTb65IbmEtyRvZ5KNH/hsZY=;
+	s=korg; t=1795622045;
+	bh=/ymzXA4tKIIsnH8hLM9EJLpUxG4GQBcX7LUk7cl1sVE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=KLbqNu7hCBb17SW2NSsxwqkJAfTOvFJPjS227TKfFKasZJU2yBkWfF+wFIgPl2Wqw
-	 C2GmrQZRiVUD7BgLHvfygyleZ3+FZvQUCLHMGLFWFWXNkS9fa2gwppvD3XlDvrjFD5
-	 6TK0yDKCpkFqkQPJ2fqZJzOVtY1aWpAZWIfGOSBA=
+	b=odJbv6e/RndOqsYb+COiVss2a4Od6Qb5hkEQyTMC/rmuKpX4hi1GZTtOPflKloaWC
+	 6hhGp8loGpyjd340MFHZWjBu84p585yV3PHe/tqXLGavsIKWooLdQ49mvs6dzwxjHa
+	 m9dRSNhKSuQlRiomLCAo+oJNvheU+1K6S1PC3wpA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Kyle Zeng <kylebot@openai.com>,
 	Eric Dumazet <edumazet@kernel.org>,
-	Kuniyuki Iwashima <kuniyu@google.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 413/990] net: require a full socket in sock_confirm_neigh()
-Date: Wed, 25 Nov 2026 15:29:40 +0100
-Message-ID: <20261125143831.773744337@linuxfoundation.org>
+Subject: [PATCH 6.18 414/990] ipvlan: make outbound skb headers writable
+Date: Wed, 25 Nov 2026 15:29:41 +0100
+Message-ID: <20261125143831.797924847@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143822.072087159@linuxfoundation.org>
 References: <20261125143822.072087159@linuxfoundation.org>
@@ -72,84 +71,72 @@ Content-Transfer-Encoding: 8bit
 
 From: Kyle Zeng <kylebot@openai.com>
 
-[ Upstream commit c78b47704934e44442f4e48bfdcc99039e3b85a5 ]
+[ Upstream commit a45dbf182137275f44ad7c8bc8acd23f7af6b2cf ]
 
-An skb can retain dst_pending_confirm after its original output and
-socket owner have changed. For example, a raw MSG_CONFIRM packet can
-cross veth, have a TCP request socket assigned by TPROXY, and be bridged
-into gretap. Neighbor output for the outer packet then calls
-sock_confirm_neigh() with the request socket in skb->sk.
+In L3 and L3S modes, ipvlan_process_v4_outbound() and
+ipvlan_process_v6_outbound() hand the skb to ip_local_out() and
+ip6_local_out(). The IP output path assumes it owns the network header:
+__ip_local_out() rewrites tot_len and the header checksum, and
+transport-mode XFRM can memmove the network header into the headroom
+when xfrm_skb_check_space() finds enough room, without copying.
 
-The helper unconditionally treats a non-NULL skb->sk as a full socket
-when accessing sk_dst_pending_confirm. TCP request and TIME_WAIT sockets
-do not contain that field. This produces an out-of-bounds four-byte read
-and, if the word is nonzero, an out-of-bounds four-byte zero write. A
-KASAN-enabled kernel reports:
+The skb reaching ipvlan can have its header shared with another skb,
+for example after an AF_PACKET tap on the ipvlan device or a tc mirred
+mirror action. pskb_network_may_pull() only makes the header linear;
+it does not unshare an already linear head. The writes above then
+modify the other skb. If that skb is on the receive path and its IPv4
+header was already validated, IPv4 option processing can use the
+modified header, write past the linear data, and corrupt
+skb_shared_info.
 
-  BUG: KASAN: slab-out-of-bounds in ip_finish_output2+0xc9f/0xd60
-  Read of size 4 at addr ffff8880bdc3d880 by task tproxy_dst_conf/1771
+Use skb_cow_head() before taking header pointers and entering the local
+IP output path, like ip_forward() does with skb_cow() before it touches
+the header. Only checking skb_header_cloned() is enough here: skbs that
+TCP transmits are clones of the write-queue skb, whose header area has
+been released with __skb_header_release(). Their headers are private,
+so they are not copied, which avoids a reallocation for every TCP
+segment sent through an ipvlan slave.
 
-Require sk_fullsock() before accessing the socket field, moving the
-existing helper earlier in the header to make it available here. Keep
-neigh_confirm() independent of the socket type so the skb's neighbor
-confirmation still works, including for socketless packets. This also
-covers the IPv6, VRF, and BPF neighbor-output callers.
+If the allocation fails, the existing error accounting and drop paths
+are used. L2 mode is unaffected.
 
-Fixes: 4ff0620354f2 ("net: add dst_pending_confirm flag to skbuff")
+[edumazet: use skb_cow_head() instead of skb_unclone() to avoid
+ copying every TCP segment, reword changelog]
+
+Fixes: 2ad7bf363841 ("ipvlan: Initial check-in of the IPVLAN driver.")
 Signed-off-by: Kyle Zeng <kylebot@openai.com>
 Signed-off-by: Eric Dumazet <edumazet@kernel.org>
-Reviewed-by: Kuniyuki Iwashima <kuniyu@google.com>
-Link: https://patch.msgid.link/20261104132900.1071940-1-edumazet@kernel.org
+Link: https://patch.msgid.link/20261104113530.986664-1-edumazet@kernel.org
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/net/sock.h | 19 ++++++++++---------
- 1 file changed, 10 insertions(+), 9 deletions(-)
+ drivers/net/ipvlan/ipvlan_core.c | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
-diff --git a/include/net/sock.h b/include/net/sock.h
-index 49d4c25271bee..dd728a89c10f0 100644
---- a/include/net/sock.h
-+++ b/include/net/sock.h
-@@ -2231,6 +2231,14 @@ struct dst_entry *__sk_dst_check(struct sock *sk, u32 cookie);
+diff --git a/drivers/net/ipvlan/ipvlan_core.c b/drivers/net/ipvlan/ipvlan_core.c
+index 6c6677ded82ef..18f03d59ea486 100644
+--- a/drivers/net/ipvlan/ipvlan_core.c
++++ b/drivers/net/ipvlan/ipvlan_core.c
+@@ -425,7 +425,8 @@ static noinline_for_stack int ipvlan_process_v4_outbound(struct sk_buff *skb)
+ 		.flowi4_mark = skb->mark,
+ 	};
  
- struct dst_entry *sk_dst_check(struct sock *sk, u32 cookie);
+-	if (!pskb_network_may_pull(skb, sizeof(struct iphdr)))
++	if (!pskb_network_may_pull(skb, sizeof(struct iphdr)) ||
++	    skb_cow_head(skb, 0))
+ 		goto err;
  
-+/* This helper checks if a socket is a full socket,
-+ * ie _not_ a timewait or request socket.
-+ */
-+static inline bool sk_fullsock(const struct sock *sk)
-+{
-+	return (1 << sk->sk_state) & ~(TCPF_TIME_WAIT | TCPF_NEW_SYN_RECV);
-+}
-+
- static inline void sk_dst_confirm(struct sock *sk)
- {
- 	if (!READ_ONCE(sk->sk_dst_pending_confirm))
-@@ -2242,7 +2250,8 @@ static inline void sock_confirm_neigh(struct sk_buff *skb, struct neighbour *n)
- 	if (skb_get_dst_pending_confirm(skb)) {
- 		struct sock *sk = skb->sk;
+ 	ip4h = ip_hdr(skb);
+@@ -491,7 +492,8 @@ static int ipvlan_process_v6_outbound(struct sk_buff *skb)
+ 	struct net_device *dev = skb->dev;
+ 	int err, ret = NET_XMIT_DROP;
  
--		if (sk && READ_ONCE(sk->sk_dst_pending_confirm))
-+		if (sk && sk_fullsock(sk) &&
-+		    READ_ONCE(sk->sk_dst_pending_confirm))
- 			WRITE_ONCE(sk->sk_dst_pending_confirm, 0);
- 		neigh_confirm(n);
- 	}
-@@ -2966,14 +2975,6 @@ skb_sk_is_prefetched(struct sk_buff *skb)
- #endif /* CONFIG_INET */
- }
- 
--/* This helper checks if a socket is a full socket,
-- * ie _not_ a timewait or request socket.
-- */
--static inline bool sk_fullsock(const struct sock *sk)
--{
--	return (1 << sk->sk_state) & ~(TCPF_TIME_WAIT | TCPF_NEW_SYN_RECV);
--}
--
- static inline bool
- sk_is_refcounted(struct sock *sk)
- {
+-	if (!pskb_network_may_pull(skb, sizeof(struct ipv6hdr))) {
++	if (!pskb_network_may_pull(skb, sizeof(struct ipv6hdr)) ||
++	    skb_cow_head(skb, 0)) {
+ 		DEV_STATS_INC(dev, tx_errors);
+ 		kfree_skb(skb);
+ 		return ret;
 -- 
 2.53.0
 
