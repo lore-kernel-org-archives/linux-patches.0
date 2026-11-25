@@ -1,51 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795619900;
-	b=3kFYPOSLJv/z3/c5BYHNlz9b/qnsGyzfw5PZwiep4DwHgZjrhgA5SajW6h62WhDaOjmC
-	 i28jPhcwM48xVZETCfm59wl7GdKh9NL+zPL0XQmpIcllfH8h55lNYEXAptjlex8ZZbffG
-	 7TB1TFDrKYrTDwSRmkUGDnn+gN6SQKeRVE5LUhGS7oHjmTvJS3aK1zk3U+XK65+zxYrdY
-	 DkNL1IleePJ/CJ5hGmxJB3FneFJm9RNHOHDIH5TwDfKdzoL2H8rhFlBAcQI8EEJ70Qu3D
-	 d6wr8jtCmJqFD0zLh+otdTlmc4ggadPrjzrwftsuumCPNW9+RUlwIG/1L2Ksd7BNecQ==
+	t=1795619903;
+	b=mWZiLq7PoBNu167ASKnieyPbCqzEwdmIaSWfMy+cN3gTlH2s/4/wWLM2AKlkQHNbnTHh
+	 pN8tnMDHwyL5Zv/tB3KgVdNqbIDU/r+uNeJBLRIT8GkV7d0rydgMC0uhyiHuewSOv1Vrw
+	 y/R8hwLJSitURAjo7AVAPGdttPLNXMmj/rP98HGs0krlIjK7Pu1Om8ROijdHnK69mqC19
+	 CbUxOVkexJiNBA0isC1cpMqyBnUyW2TC8/H1Ysti0BmnflBf3OGsr2LGeIeAyr+RQkpF+
+	 H3IoDefJ5CdBvFRXath9zyWuFQeGcdabk7XNvnrWYWaOdf2lmtgeL4A6YJrCXBYxgyg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795619900;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795619903;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=ao+9z2RNVE+D26inig4GSVdDX2Yz2u60a3y/Cw1+4vE=;
-	b=U4Ays4DYroPJg9+7G0Qxq7E/l+MeRj3yIWaqNZsitQU0pQVOPDuo+ySfn86vEB3F84e3
-	 oBim6JAZbZ5IGL/c+Frppayx6U03eFJXvabMEO4W8FcuRQ2SqiUUflY06T9wy8fnswhz+
-	 d81vMgPUaj5w0/CMa8bx9PtkwRVdsAJaSzokFrzy0VLvZC/SjM3El38cxeB1jkOcm0jUT
-	 q1Y8XR5fiQcqPmvDH+LzWTZsdf9310sxhLVxqTxAyJeA6OQTZ2Cgf5hdgZ6NH47trB5Ps
-	 l++suRiwhVAVPlfWJQU5wHb5qDtURlBr1pAWEgI+MGjHBTxBo/7BNoohBR8W22w/Ocg==
+	bh=P8ZGvcuQpW6A4H3+e3VBVbGSONuALvq/w6sapPKWzY0=;
+	b=MFZI2ejw25dQayeGWc+mj7bgrzJH3x0mI7xljTYHzWyJMrv2rvdErRi/cYEFYHgkB8B4
+	 czE6Q32MLD2g0jkl3sQsF1L7EGHnPNnXlpaGF643eaQWJvFUv5r/MlEECZnmTRKnQvqzm
+	 1tsMeZbklN13p8Ous7gfpqkuwTUCOGRUoUsBD6vfbKiv1+hlxisEvlpiRZ/41BPzMJEMn
+	 usFLTxK5XpfPU46Sb2wuGqN/dsvfLaHkiNRNMAVlxHK5Wl93zQLYcubE7X2X7cqXwPTnB
+	 U798a2KkT7cjcsjGmR18a+V+BWRVNRdVJCOBY9rS0plBBeUQvO+WrO79Sjsg3LCwRbA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=e5WRjdqV;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=VLvrwige;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0800B606A323;
-	Wed, 25 Nov 2026 15:18:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B8F38606A31E;
+	Wed, 25 Nov 2026 15:18:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=e5WRjdqV
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1FA9C1F000CF;
-	Wed, 25 Nov 2026 15:18:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=VLvrwige
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 676FB1F000C4;
+	Wed, 25 Nov 2026 15:18:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795619899;
-	bh=ao+9z2RNVE+D26inig4GSVdDX2Yz2u60a3y/Cw1+4vE=;
+	s=korg; t=1795619902;
+	bh=P8ZGvcuQpW6A4H3+e3VBVbGSONuALvq/w6sapPKWzY0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=e5WRjdqVrLUzBFaZQquNF9nvS+KQaePKhQ6TozChxn/yGGAL8OoORPotywhlXPb4E
-	 1QiU/sl3pVeeeK6RupOsuJJ9zFk/z24ON0TEWpdoZjquZFt2XqxLM89rpubJHOaIe8
-	 GTKK+4dkKL0gXp/k0IYGJjTs7ODwGu9O7stiHLXQ=
+	b=VLvrwigeXb/xq+FAP+QERrxkOX6ROFcBb5VLjmxCFEgjIxcd28ZEjUKVeFcV2HSji
+	 KdBouU+jmD2PpQnTjvYrlq+ya/jieBpBoF0u4uIUYO9QUCKNlakMdGP5vTyJ8pTgIm
+	 E8DX25r8UmHf8nszuNdijRy4FLsPf2ffALpRCRjo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Jan Kara <jack@suse.cz>,
 	"Christian Brauner (Amutable)" <brauner@kernel.org>
-Subject: [PATCH 7.3 0698/1005] ext2: dont read the inode block in ext2_sync_inode_metadata()
-Date: Wed, 25 Nov 2026 15:33:56 +0100
-Message-ID: <20261125143838.106534541@linuxfoundation.org>
+Subject: [PATCH 7.3 0699/1005] ext4: use sb_find_get_block_nonatomic() in ext4_get_inode_loc_noio()
+Date: Wed, 25 Nov 2026 15:33:57 +0100
+Message-ID: <20261125143838.130306568@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143821.729802100@linuxfoundation.org>
 References: <20261125143821.729802100@linuxfoundation.org>
@@ -69,63 +69,54 @@ Content-Transfer-Encoding: 8bit
 
 From: Christian Brauner <brauner@kernel.org>
 
-commit c2e595a57aba6aa166053776969f31cc510b3e71 upstream.
+commit d25c14b2d79e4e8292b19041efd1aae4057bf383 upstream.
 
-ext2_sync_inode_metadata() looks the inode block up with
-ext2_get_inode() which reads it from disk if it isn't cached. But a
-block that isn't cached is neither dirty nor under writeback, so there's
-nothing to write or to wait for.
+ext4_get_inode_loc_noio() looks the inode table block up with
+sb_find_get_block(). That's the atomic lookup. It serializes against
+try_to_free_buffers() with i_private_lock instead of the folio lock and
+gives up if the folio is being migrated. So it can report the block as
+not cached while it is.
 
-That read is also something we can't afford once inode eviction calls
-->sync_inode_metadata() from reclaim. So look the block up with
-sb_find_get_block_nonatomic() instead, the way fat_sync_inode_metadata()
-already does.
+For ext4_fc_snapshot_inode() that only means falling back to a full
+commit. But ext4_sync_inode_metadata() is going to use
+ext4_get_inode_loc_noio() to find the inode block that fsync() has to
+write out and there a dirty block must not be skipped.
 
+ext4_fc_snapshot_inode() is the only caller and it can sleep. It runs
+under jbd2_journal_lock_updates() and allocates the snapshot with
+GFP_NOFS. So use sb_find_get_block_nonatomic() which takes the folio
+lock and waits for the migration instead.
+
+Suggested-by: Jan Kara <jack@suse.cz>
 Cc: stable@vger.kernel.org # v7.3
 Reviewed-by: Jan Kara <jack@suse.cz>
-Link: https://patch.msgid.link/20261109-work-inode-metadata_writeback-v3-2-91ac6c024018@kernel.org
+Link: https://patch.msgid.link/20261109-work-inode-metadata_writeback-v3-3-91ac6c024018@kernel.org
 Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/ext2/inode.c |   12 +++++++-----
- 1 file changed, 7 insertions(+), 5 deletions(-)
+ fs/ext4/inode.c |    5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
---- a/fs/ext2/inode.c
-+++ b/fs/ext2/inode.c
-@@ -1578,19 +1578,22 @@ int ext2_write_inode(struct inode *inode
- int ext2_sync_inode_metadata(struct inode *inode, struct writeback_control *wbc)
+--- a/fs/ext4/inode.c
++++ b/fs/ext4/inode.c
+@@ -5060,7 +5060,8 @@ int ext4_get_inode_loc(struct inode *ino
+ /*
+  * ext4_get_inode_loc_noio() is a best-effort variant of ext4_get_inode_loc().
+  * It looks up the inode table block in the buffer cache and returns -EAGAIN if
+- * the block is not present or not uptodate, without starting any I/O.
++ * the block is not present or not uptodate, without starting any I/O. It may
++ * sleep on the folio lock of the block.
+  */
+ int ext4_get_inode_loc_noio(struct inode *inode, struct ext4_iloc *iloc)
  {
- 	struct buffer_head *bh;
--	struct ext2_inode *raw_inode = ext2_get_inode(inode->i_sb, inode->i_ino,
--						      &bh);
-+	unsigned long block, offset;
- 	int err = 0;
+@@ -5096,7 +5097,7 @@ int ext4_get_inode_loc_noio(struct inode
+ 	}
+ 	block += inode_offset / inodes_per_block;
  
--	if (IS_ERR(raw_inode))
-+	if (ext2_inode_block(inode->i_sb, inode->i_ino, &block, &offset))
- 		return -EIO;
- 	err = mmb_sync(&EXT2_I(inode)->i_metadata_bhs);
- 	if (err) {
- 		ext2_error(inode->i_sb, __func__,
- 			"Error syncing inode metadata ino=%lu\n",
- 			(unsigned long)inode->i_ino);
--		goto out;
-+		return err;
- 	}
-+	/* A block that isn't cached is neither dirty nor under writeback. */
-+	bh = sb_find_get_block_nonatomic(inode->i_sb, block);
-+	if (!bh)
-+		return 0;
- 	sync_dirty_buffer(bh);
- 	if (buffer_write_io_error(bh)) {
- 		ext2_error(inode->i_sb, __func__,
-@@ -1598,7 +1601,6 @@ int ext2_sync_inode_metadata(struct inod
- 			(unsigned long)inode->i_ino);
- 		err = -EIO;
- 	}
--out:
- 	brelse(bh);
- 	return err;
- }
+-	bh = sb_find_get_block(sb, block);
++	bh = sb_find_get_block_nonatomic(sb, block);
+ 	if (!bh)
+ 		return -EAGAIN;
+ 	if (!ext4_buffer_uptodate(bh)) {
 
 
