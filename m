@@ -1,52 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795620457;
-	b=uCcVgMRpMOVwEAVt7Tq5haJCdaJEbtgu9AtG8QhS13a3Ywu0lp01grB6eIlDSV7Gg/G6
-	 4U0hK3spXTWFqJULaFLD0X3WIc+yihButFpjouSOjFm9fpz8cGUmSN/KxkC/3GZAG56Fi
-	 JyB8Y+yZtZBFdHHacw26UtScXvekjkQmlMsIB3Ki7tTqNaeCxTPXCjeRI4MhdZg4oFert
-	 HFVq9NUlJ3YAiaV0i3PySTjG2B2lYc+CZsU6Yot4v8RVhXkgqoJ6JBzLKfVUUMQdxxNEF
-	 p5G+TL2qB8qIuuCkNl3s5ckQQsw2O2UArnMWoK6LDynGchUipiHuSDTbpMU0dGBECnw==
+	t=1795620460;
+	b=tnW3alUdSj6fzlSgIyA0+RFlbAzDEd4pikDl2jH5Zd67Ou9slm6RefiPvwxns8HxttMh
+	 kH7d4aTYKxXo2QTUCRVheXfq3oM4pNBBGIlYsJvtFUz0zCB1g14cF5pI5RbGxwsdCMipJ
+	 rx7chp2+MFyZ8naOdg6YpPljMzz+H8mYHhpTYQcqdYhEJptGaHuLXo5u5t+64ft0LVeTR
+	 p7Q+BA5IMpinXbNzef0dCbFT6R6saZB+8X5OCJwvjk7EA4vJpHPECRRS+zyPxdQnObkEm
+	 L8FVaeodt2hy2yIA7n12/d9jjO7vQizyzWsXqVqWGQ59PqxEj/8kiroqnO2njNVH3og==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795620457;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795620460;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Type:Content-Transfer-Encoding;
-	bh=muZsG/RnJ80RsC6aksWPYj6d0vWCye/gsL5UpmVacyE=;
-	b=avpzE6L2C+xqC+2+yVBH/3lUjBVwNWeaH7XrDSwd000SXHoq2NoWLGgX+4mnAreunBlW
-	 0vqyWtDMyARbRgLajzX/ouVwTXASUovICJVx40SPl9y87AVxUwDM+DriGZbkxrKV9bvDK
-	 5hCB0P+5sZZY8SdSN4MAGPCwbVTJjqwZjByQKV586515qyr6hW81XII3eIF5Rum2wfQnT
-	 FjLj0B9ju3m3pqg+of6WNJ2ek/8w126+LEc3UeQwy/xzEDAj9R7NsKN39RhZDkNRHncAQ
-	 kFUyXmeBKuHHqXa8cfjmRrGNw1pl6y4Gb5wr1VAsl31kNp5oUQFR7ueCBBG3Oi98W4w==
+	 MIME-Version:Content-Transfer-Encoding;
+	bh=h4O6Hz+UvCVxfBmtT4BoJo2hQBlLg8XbQ8S27PJtRvI=;
+	b=h2VXRVtHiaOIHm83GbsZiow8IFW19qqqsJwUzaqAdn9LOu3TP3qR+5YGLbywj9zafiMH
+	 pdqTKbty4LJgvwzAPYTcKK8UVYiZVmujZ+Zor+rLL8K96vHyS31f88dRG4OVZFDq1uiIO
+	 S4oUONmlhTEdXCGLM5I6Zrr3I5Tk5/8uULK56VgHM/s7XaZ54iR56Ix/X27mGC/dWTzRN
+	 dGHMbyaH8maBDipggGxCHY8tUfmrkQuLxidHQS8wcJt+pdFecbY7uwlBZ7+m+D21tdVGT
+	 FrFvPkZedYNKeUhqSSq/yeV2YYXZEIO5XfNlqLFAPjW6gwsW0SvUsW78pKJWppHTiDw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=W3gpLzkq;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=n0RJQIeM;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BB7A9606A326;
-	Wed, 25 Nov 2026 15:27:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8BB4D606A323;
+	Wed, 25 Nov 2026 15:27:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=W3gpLzkq
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 53A181F000CA;
-	Wed, 25 Nov 2026 15:27:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=n0RJQIeM
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9773F1F000C0;
+	Wed, 25 Nov 2026 15:27:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795620456;
-	bh=muZsG/RnJ80RsC6aksWPYj6d0vWCye/gsL5UpmVacyE=;
+	s=korg; t=1795620460;
+	bh=h4O6Hz+UvCVxfBmtT4BoJo2hQBlLg8XbQ8S27PJtRvI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=W3gpLzkqSiMN27NCxpIp7oNZVm9OMvXT5tMo0S6LBNlGhXNukmkRVic+h/ibFNrvZ
-	 AAxsffMjw8VBAgioF8qtcdnAVkjNKOh59o4+2g9wTDS7Wtqb3L0fViYHCCSFmGEB2v
-	 rBMq6v59X/iN9cfG6S8khCmGwBZzhHZh/74aFLhk=
+	b=n0RJQIeMJ1jYfHfnWr15RLavLlpUoT+mvBkj7sWNOiUKIo8/FmdiTlMJZk/cOS9Ek
+	 +BYDezz9CDdg8U0k+iBwFFq5ICKQfS66wcdR7eTichScB1U/6GEosIPbz7hkwF5CfZ
+	 ++U2gJU4Vznp9sRM1YDj6N8OubnxPXkBN5heplsM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	stable <stable@kernel.org>,
-	=?UTF-8?q?Ali=20Ahmet=20Memi=C5=9F?= <aliamemis@disroot.org>,
-	Heikki Krogerus <heikki.krogerus@linux.intel.com>
-Subject: [PATCH 7.3 0923/1005] usb: typec: ucsi: debugfs: Fix GET commands on UCSI < 2.0
-Date: Wed, 25 Nov 2026 15:37:41 +0100
-Message-ID: <20261125143843.309413657@linuxfoundation.org>
+	Josef Bacik <josef@toxicpanda.com>
+Subject: [PATCH 7.3 0888/1005] comedi: fix endless recursion in comedi_event()
+Date: Wed, 25 Nov 2026 15:37:06 +0100
+Message-ID: <20261125143842.499838996@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143821.729802100@linuxfoundation.org>
 References: <20261125143821.729802100@linuxfoundation.org>
@@ -62,48 +61,53 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 7.3-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Ali Ahmet Memiş <aliamemis@disroot.org>
+From: Josef Bacik <josef@toxicpanda.com>
 
-commit 7cfb037005c04b9dee5b0c4626e56e2eddeef157 upstream.
+commit d432e5d3dbd98589029905e898bfe7005be69b68 upstream.
 
-Since the debugfs response buffer grew to 24 bytes, every GET command
-fails with -EINVAL on UCSI < 2.0, where the data length is limited to 16
-bytes. Clamp the length to UCSI_MAX_DATA_LENGTH().
+When comedi_event() was split into a wrapper which takes a reference on
+the running command and _comedi_event(), which does the work, the wrapper
+ended up calling itself:
 
-Fixes: d9dc19910321 ("usb: typec: ucsi: Fix debugfs response truncation beyond 16 bytes")
+	if (comedi_get_is_subdevice_running(s)) {
+		comedi_event(dev, s);
+		comedi_put_is_subdevice_running(s);
+	}
+
+As long as the command is running every level takes another reference
+and recurses, until the stack is used up.
+
+Most drivers go through comedi_handle_events(), which calls
+_comedi_event(). usbdux, usbduxfast and usbduxsigma cannot use that and
+call comedi_event() from their URB completion handlers, i.e. for every
+completed URB of a running acquisition.
+
+Fixes: 51495254fda4 ("comedi: Use reference count for asynchronous command functions")
 Cc: stable <stable@kernel.org>
-Signed-off-by: Ali Ahmet Memiş <aliamemis@disroot.org>
-Reviewed-by: Heikki Krogerus <heikki.krogerus@linux.intel.com>
-Link: https://patch.msgid.link/20261024174441.878903-1-aliamemis@disroot.org
+Signed-off-by: Josef Bacik <josef@toxicpanda.com>
+Link: https://patch.msgid.link/20261027-llm-char-misc-comedi-v1-1-1899771ee15b@linuxfoundation.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/typec/ucsi/debugfs.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/comedi/comedi_fops.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/usb/typec/ucsi/debugfs.c b/drivers/usb/typec/ucsi/debugfs.c
-index 77a0dd75edd3..3cffd3778c67 100644
---- a/drivers/usb/typec/ucsi/debugfs.c
-+++ b/drivers/usb/typec/ucsi/debugfs.c
-@@ -60,7 +60,8 @@ static int ucsi_cmd(void *data, u64 val)
- 	case UCSI_GET_LPM_PPM_INFO:
- 		ret = ucsi_send_command(ucsi, val,
- 					&ucsi->debugfs->response,
--					sizeof(ucsi->debugfs->response));
-+					min(sizeof(ucsi->debugfs->response),
-+					    UCSI_MAX_DATA_LENGTH(ucsi)));
- 		break;
- 	default:
- 		ret = -EOPNOTSUPP;
--- 
-2.56.1
-
+--- a/drivers/comedi/comedi_fops.c
++++ b/drivers/comedi/comedi_fops.c
+@@ -3494,7 +3494,7 @@ void _comedi_event(struct comedi_device
+ void comedi_event(struct comedi_device *dev, struct comedi_subdevice *s)
+ {
+ 	if (comedi_get_is_subdevice_running(s)) {
+-		comedi_event(dev, s);
++		_comedi_event(dev, s);
+ 		comedi_put_is_subdevice_running(s);
+ 	}
+ }
 
 
