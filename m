@@ -1,54 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795625497;
-	b=ELgSidh2i+5dYmZHPo6ih2iAHOPvjqpRAM910XymIDEFvl+XHfxBGe4EoylCUGkEbC3p
-	 wQAIP7iuCuEF9mDq9R/zyL+IJrEMsD3/3pVIbXN4dnDXsF7xq7QTSZLvm+pwA+kszPSYs
-	 Ka09q9e2Nwl/6q1EFwzazWOpsGIr45wO5VTzb8eC+RLo+iKabc6ASQMqyKV+u1+OT68H3
-	 zwSX8DpakunexC52xxyfoEEBxC04kchrkrcR6n/7cEVog//Ht+aT/mwo1ruReKeHkPEWz
-	 iqSRCnFMe1czYo8OueQzzp1BBwFOh4v9TstjvBJ1Vz6FPypLt+zC3km8lQlHKsQKnuA==
+	t=1795625501;
+	b=QrVXy9OyL0/BUQn4yCWV4YNgYkGFp1zXhE7kiAazteceQJfUmcfA0IWajRPsWfFXmuMo
+	 HyxCzRp0h+RfDsQgsqseb4jWPjGO+dlB8wFTRKYmDRuHRLzL6K44t6VJwnWAuV+x/d1HZ
+	 gua0zTMzy8j1hH4/Wxhxsvs6byBno1CAOPuJVufbwKGOumboISjUTz2DloBeLo6yBnz0t
+	 c4LuCBJwqvDhNN7Sc6Nhc/3scqQiNiDbzrP0yldhJPst2iWEKH0tiMai7hETq/Engkmsp
+	 7CUXaDSSONS3eMtD5OeukZ6ug0N61lfiD7LQgWay+3QwVYQoV0dreSeDPcWYZsmJ9uA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795625497;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795625501;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=MNWVb8NNR6KyNo7qRuUYGnpVOA1XNgp4JZn2YChKZnY=;
-	b=WphUepCTRV7c/p+g5SfOY34r0nS7Hqcsmqthq7AoulaEr3PzGcKZtuEyc3lFsWObMkxk
-	 ea2D6L9FuT9ECUM8IjcBuAlrpCm87SoM1Qwrk8KDNIuo7YXvR3p/I8++f5AUibWCc6pD2
-	 e8YWL34hA0NPqMaXmPW6SEBSLYLzbWMoeyfh+rVIp51DmnSUAdR0f3VU/X5Z7D64yP1wZ
-	 HWhxTQ7vHhjYqk7KbIpsJh1waOZp4KzMBbDpYrnGYaxaNwZTCC0LlIT1aZy25n1a5VL0x
-	 Bs8KvWT1pZgmo1LgU9rOnZFQ+8yUewn458bpYj9/hkaYuT1AANZkilZ5+kSJKwOLbRg==
+	bh=kuR1zjDkhTh5pl3gbQVLnwJyJ3qIFL/fAVLW/0PJw1Q=;
+	b=CPi0DtY2AQVBvjmChXfyE7SSD6Lb7EIVnBX3n+nSowoYeh8TOHo+CVfppOWJRvJ9e6aq
+	 l6mgst3QOnScO+DWvI9PGcYCxXhckkbO1F9ky3VHcGsQy1om6SB8K6vb20GRu+fL+gouk
+	 jZF5pu/vtcxgpCDpLYehSQotTaE6DEksC0vLbbO2DVpRaOmRncVc+f7xNd1nS7ZXcD3n0
+	 bcOU6kPz+r3ED85Hj9TzhgsOEWvknVprwmHIT+l5NVrMuKpROvCPMVQogUBs+zhJMg7F6
+	 vCJFzJI8r+IBYxHmi843DnZ7ZhhYCySuvOYGQTKS+0qddgLNBpA8bzA6L9LG3PHXS7A==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=uJuwjhJn;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Q6DRQOro;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AD24C606A321;
-	Wed, 25 Nov 2026 16:51:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2CE19606A31E;
+	Wed, 25 Nov 2026 16:51:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=uJuwjhJn
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EE5781F00A3C;
-	Wed, 25 Nov 2026 16:51:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Q6DRQOro
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 01C821F000C4;
+	Wed, 25 Nov 2026 16:51:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795625497;
-	bh=MNWVb8NNR6KyNo7qRuUYGnpVOA1XNgp4JZn2YChKZnY=;
+	s=korg; t=1795625500;
+	bh=kuR1zjDkhTh5pl3gbQVLnwJyJ3qIFL/fAVLW/0PJw1Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=uJuwjhJnjZwcZ90HPywMVNz02jZE/MuP3DZk5HaE8JVdZb5Tqf00OMS5g9wQxRMv+
-	 ZsuxlvHSpk6Lk5tX1igQVdOlNlqzAuIVNb8fVPINIR0PVF6rTfFaj/r1qSInsnXL7P
-	 x54+oQMDfgzwY39m4pycTW4BXq8QSNJ9mOVPYdeI=
+	b=Q6DRQOroD08YxUnAj0ZPXIz+wI0i0MI5eTW+SCS7IS3V/W9nsotmAfab07rmJJMNR
+	 NLqzQFGRKCcs3Rfru/9Noikt8eFD1iVtRVH3ETPEXb3amYTSWw+x3k5zqzoH98uvjd
+	 RAVXJyRqwzqDZXn/gTL8f2S+5PtDmVH5WslCFw4E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sashiko <sashiko-bot@kernel.org>,
-	Tal Zussman <tz2294@columbia.edu>,
-	Alex Markuze <amarkuze@redhat.com>,
-	Ilya Dryomov <idryomov@gmail.com>,
+	Guopeng Zhang <zhangguopeng@kylinos.cn>,
+	Waiman Long <longman@redhat.com>,
+	Tejun Heo <tj@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 536/816] ceph: wait for pending fscache write in write_folio_nounlock()
-Date: Wed, 25 Nov 2026 15:34:44 +0100
-Message-ID: <20261125143901.595978097@linuxfoundation.org>
+Subject: [PATCH 6.12 537/816] cgroup/cpuset: Prevent recursive call of remote_cpus_update() via update_cpumasks_hier()
+Date: Wed, 25 Nov 2026 15:34:45 +0100
+Message-ID: <20261125143901.618238106@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143849.205329330@linuxfoundation.org>
 References: <20261125143849.205329330@linuxfoundation.org>
@@ -70,77 +69,125 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Tal Zussman <tz2294@columbia.edu>
+From: Waiman Long <longman@redhat.com>
 
-[ Upstream commit 3f7655f0d9186656c6f1cbc012a39c866d4aaabf ]
+[ Upstream commit 10a6f00d82544a1baa901de8d28f41f28c364995 ]
 
-write_folio_nounlock() marks the folio with PG_private_2 via
-ceph_set_page_fscache() and starts an async write to the cache via
-ceph_fscache_write_to_cache(). PG_private_2 is only cleared once that
-write completes.
+Guopeng reports that changing the cpumask of a remote partition root
+may set the effective_cpus of the top_cpuset incorrectly. It is
+due to the following call sequence:
 
-If the OSD write fails, the error paths return without waiting for the
-cache write. On retry, ceph_find_incompatible() would wait for
-writeback, but not for PG_private_2, before calling
-write_folio_nounlock() again, which would trip the VM_BUG_ON_FOLIO() in
-folio_start_private_2().
+  update_cpumask()
+   -> partition_cpus_change()
+    -> remote_cpus_update()
+     -> update_sibling_cpumasks()
+      -> update_cpumasks_hier()
+       -> remote_cpus_update()
 
-Wait for any pending cache write before starting writeback on the
-folio. Do so before bumping the writeback congestion count and
-allocating the possibly mempool-backed OSD request, so that a thread
-sleeping on the cache I/O does not hold either while it waits.
-Add ceph_folio_wait_fscache(), a wrapper for folio_wait_private_2(), and
-use it.
+The second remote_cpus_update() call passes in the cs->effective_xcpus
+instead of the trialcs->effective_xcpus of the first remote_cpus_update()
+call.  As a result, the second call can revert what has been done in
+the first call leading to incorrect effective_cpus of the top_cpuset
+as well as subpartitions_cpus.
 
-Fixes: 1702e7973410 ("ceph: add fscache writeback support")
-Reported-by: Sashiko <sashiko-bot@kernel.org>
-Link: https://sashiko.dev/#/patchset/20260804-remove-wait-on-page-writeback-v2-0-81f0ab065284%40columbia.edu?part=7
-Signed-off-by: Tal Zussman <tz2294@columbia.edu>
-Reviewed-by: Alex Markuze <amarkuze@redhat.com>
-Signed-off-by: Ilya Dryomov <idryomov@gmail.com>
-[ sashal: Adjusted the context line so the new helper is inserted above ceph_fscache_write_terminated(), which already takes the extra was_async parameter. ]
+Fix that by adding a new remote_partition_updating flag into the cpuset
+structure to indicate that a remote partition is being updated and
+update_cpumasks_hier() should skip the whole subtree as update_cpumask()
+or update_exclusive_cpumask() which calls partition_cpus_change()
+will eventually calls update_cpumasks_hier() for that subtree anyway.
+
+This new flag is currently set only in remote_cpus_update() to prevent
+recursive call of remote_cpus_update() on the same cpuset.
+
+A test case is added to test_cpuset_prs.sh to verify this change.
+
+Reported-by: Guopeng Zhang <zhangguopeng@kylinos.cn>
+Link: https://lore.kernel.org/lkml/20261010075947.333549-2-guopeng.zhang@linux.dev
+Reviewed-by: Guopeng Zhang <zhangguopeng@kylinos.cn>
+Tested-by: Guopeng Zhang <zhangguopeng@kylinos.cn>
+Fixes: f62a5d39368e ("cgroup/cpuset: Remove remote_partition_check() & make update_cpumasks_hier() handle remote partition")
+Signed-off-by: Waiman Long <longman@redhat.com>
+Signed-off-by: Tejun Heo <tj@kernel.org>
+[ sashal: Selftest row adapted to C1-6:X1-4:S+ for A1 (instead of CX1-6) so setup passes this tree's validation, and the kernel context uses the local compute_effective_exclusive_cpumask() and partition_xcpus_add() signatures. ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ceph/addr.c | 12 ++++++++++++
- 1 file changed, 12 insertions(+)
+ kernel/cgroup/cpuset-internal.h                   |  5 +++++
+ kernel/cgroup/cpuset.c                            | 13 +++++++++----
+ tools/testing/selftests/cgroup/test_cpuset_prs.sh |  1 +
+ 3 files changed, 15 insertions(+), 4 deletions(-)
 
-diff --git a/fs/ceph/addr.c b/fs/ceph/addr.c
-index 7ad96fcdcd20c..01c9800bd8d07 100644
---- a/fs/ceph/addr.c
-+++ b/fs/ceph/addr.c
-@@ -560,6 +560,11 @@ static void ceph_set_page_fscache(struct page *page)
- 	folio_start_private_2(page_folio(page)); /* [DEPRECATED] */
- }
+diff --git a/kernel/cgroup/cpuset-internal.h b/kernel/cgroup/cpuset-internal.h
+index 6c9916e85efd1..1f3fef06ee45b 100644
+--- a/kernel/cgroup/cpuset-internal.h
++++ b/kernel/cgroup/cpuset-internal.h
+@@ -162,6 +162,11 @@ struct cpuset {
+ 	/* partition root state */
+ 	int partition_root_state;
  
-+static void ceph_folio_wait_fscache(struct folio *folio)
-+{
-+	folio_wait_private_2(folio); /* [DEPRECATED] */
-+}
++	/*
++	 * Set to true when a remote partition is undergoing update.
++	 */
++	bool remote_partition_updating;
 +
- static void ceph_fscache_write_terminated(void *priv, ssize_t error, bool was_async)
- {
- 	struct inode *inode = priv;
-@@ -581,6 +586,10 @@ static inline void ceph_set_page_fscache(struct page *page)
- {
- }
+ 	/*
+ 	 * number of SCHED_DEADLINE tasks attached to this cpuset, so that we
+ 	 * know when to rebuild associated root domain bandwidth information.
+diff --git a/kernel/cgroup/cpuset.c b/kernel/cgroup/cpuset.c
+index b1af98c19891e..99f8d505bea3a 100644
+--- a/kernel/cgroup/cpuset.c
++++ b/kernel/cgroup/cpuset.c
+@@ -1590,6 +1590,7 @@ static void remote_cpus_update(struct cpuset *cs, struct cpumask *xcpus,
+ 			goto invalidate;
+ 	}
  
-+static inline void ceph_folio_wait_fscache(struct folio *folio)
-+{
-+}
-+
- static inline void ceph_fscache_write_to_cache(struct inode *inode, u64 off, u64 len, bool caching)
- {
- }
-@@ -784,6 +793,9 @@ static int write_folio_nounlock(struct folio *folio,
- 	      ceph_vinop(inode), folio, folio->index, page_off, wlen, snapc,
- 	      snapc->seq);
++	cs->remote_partition_updating = true;
+ 	spin_lock_irq(&callback_lock);
+ 	if (adding)
+ 		isolcpus_updated += partition_xcpus_add(prs, NULL, tmp->addmask);
+@@ -1612,6 +1613,7 @@ static void remote_cpus_update(struct cpuset *cs, struct cpumask *xcpus,
+ 	 */
+ 	cpuset_update_tasks_cpumask(&top_cpuset, tmp->new_cpus);
+ 	update_sibling_cpumasks(&top_cpuset, NULL, tmp);
++	cs->remote_partition_updating = false;
+ 	return;
  
-+	/* wait for a cache write left pending by a previously failed attempt */
-+	ceph_folio_wait_fscache(folio);
-+
- 	if (atomic_long_inc_return(&fsc->writeback_count) >
- 	    CONGESTION_ON_THRESH(fsc->mount_options->congestion_kb))
- 		fsc->write_congested = true;
+ invalidate:
+@@ -2075,16 +2077,19 @@ static void update_cpumasks_hier(struct cpuset *cs, struct tmpmasks *tmp,
+ 		old_prs = new_prs = cp->partition_root_state;
+ 
+ 		/*
+-		 * For child remote partition root (!= cs), we need to call
+-		 * remote_cpus_update() if effective_xcpus will be changed.
+-		 * Otherwise, we can skip the whole subtree.
++		 * For a child remote partition with remote_partition_updating
++		 * set, we can skip the whole subtree as the this function will
++		 * be called eventually. We can also skip the subtree if the
++		 * effective_xcpus isn't going to be changed. Otherwise, we
++		 * will have to call remote_cpus_update().
+ 		 *
+ 		 * remote_cpus_update() will reuse tmp->new_cpus only after
+ 		 * its value is being processed.
+ 		 */
+ 		if (remote && (cp != cs)) {
+ 			compute_effective_exclusive_cpumask(cp, tmp->new_cpus, NULL);
+-			if (cpumask_equal(cp->effective_xcpus, tmp->new_cpus)) {
++			if (cp->remote_partition_updating ||
++			    cpumask_equal(cp->effective_xcpus, tmp->new_cpus)) {
+ 				pos_css = css_rightmost_descendant(pos_css);
+ 				continue;
+ 			}
+diff --git a/tools/testing/selftests/cgroup/test_cpuset_prs.sh b/tools/testing/selftests/cgroup/test_cpuset_prs.sh
+index f6bc762705abc..f52678bb2efee 100755
+--- a/tools/testing/selftests/cgroup/test_cpuset_prs.sh
++++ b/tools/testing/selftests/cgroup/test_cpuset_prs.sh
+@@ -275,6 +275,7 @@ TEST_MATRIX=(
+ 	" C0-3:S+ C1-3:S+ C2-3    C4    X2-3   X2-3  X2-3:P2 P2:C4-5 0 A3:2-3|B1:4-5 A3:P2|B1:P2 2-5"
+ 	" C4:X0-3:S+ X1-3:S+ X2-3  .      .      P2     .      .     0 A1:4|A2:1-3|A3:1-3 A2:P2 1-3"
+ 	" C4:X0-3:S+ X1-3:S+ X2-3  .      .      .      P2     .     0 A1:4|A2:4|A3:2-3 A3:P2 2-3"
++	"  C1-6:X1-4:S+ C1-4:P1 .   C4-5     .    C1-3     .      .     0 A1:4-6|A2:1-3|B1:4-5 A2:P1"
+ 
+ 	# Nested remote/local partition tests
+ 	" C0-3:S+ C1-3:S+ C2-3   C4-5   X2-3  X2-3:P1   P2     P1    0 A1:0-1|A2:|A3:2-3|B1:4-5 \
 -- 
 2.53.0
 
