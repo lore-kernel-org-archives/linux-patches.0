@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795621073;
-	b=uIoyQ9V8B/DCxsezzbUogYXZWKBtbtGOFxr3RdRobIVRpLTfKZqgUvZE7MQcxTykdTxR
-	 20MOs5m3KxRhqp+jSMXEzuI9zjBmiyVq8r6UcNYC+SkpKJlzdX9SBvwTCMzweGUOsAxuC
-	 o29S6N1VxrRdR8DTlHvjSpcQ+VfMnTyuFhAzoKkdTPZpfeCsmn6cf92QgQitVuq49eOWu
-	 fz054GuItgZWJqqHhF9sAXwLM7pwiY9AYOuVdwlaQwdQ1Iw/b3PeI04GBv6PWQw8CjKXP
-	 mxsK6j93UOwyy9Vfsum2Wc03eYoPBMYPuL3p9d0foO83+U4aF7jNpKvKIWLwAMo8A0Q==
+	t=1795621076;
+	b=bF4qfOQIfirKUZmEAtYe6ZFuGrMkNoEQHnXVUKGH5JcxUqa0X0ojq5Sud1DOodpOhuF9
+	 +suNs2kNpK2NZWcfVNXKs8bUl+y7cQpCCgI5dSyWiA2GYD/cFjVm6sFGG0BgSnp4/PCUY
+	 76ccJE3t1LvhipUQQIZyo2EReJL1w+hpC9y10jsl2SKQQg56DB25+3wC9NuRSgusCSQDD
+	 /3r1ywQxo7Y46pqW4dz46OV6Vn2asu565c39n14lU9TK1WilVlGqIbWQtUvSKxMJ8zJqV
+	 rnpe1+wcsrnC/XBNzyrv/6i3K3H1RTEr94VGeQVciSZ7JmkBgpwaWJzyvjRCylgAYBg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795621073;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795621076;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=QUgEyLvoRyGqc7Sqi1ek2xa2SGcxuks8EyPn8GmojYg=;
-	b=oyl1o+w7gdVdGF6BzCkafahl5Rdt+CPMIclacC48d41bvOtw/3V2r9MZw/ty/MbKwbxt
-	 aLyBQ+9fDbcfPzyEz6gF3ypj66tDVP6z49je8kdS96OsfQvMiarzIwL5S5hSaOW/1ptQB
-	 +NkjdvWkqefWsRs/ljVSVsQoyeu9ziUu9KgGinCfJLCJ7HHNuftBEOtZSJLUnV+w2wOpX
-	 /4jBu3JOa86bxngnMUwlpPFZByyQoLhPMMr2v/5bJZHqr1cXlLACuqu9M9WzwsRjcUX/E
-	 VNUUiz7BIvLS3iAHOTDXvQBwAsxBiT7b5xP8deQz0niy1mq13VlQaVITspl+NqD9EmA==
+	bh=9m7Qa0AyBhB/I+3SJoPkeydKt8qFKV/wgJFWjAxpUrs=;
+	b=3U0v1fmWJ6Qe33te4wNufOZ6PMpHwiycsINFGJru+Ojwpkb/kYLH/zhlQ/REEtYOrioA
+	 Tn99glHNtl6O6Ph75YMVCaDdg19aYL7BRYghT93aVQPy/OFqNiHyhFdswk0uVZA6Q6ZBB
+	 8iP4zWMxUISZ1J9yK/hKUVDl4QcKzlNfsWrtZuptXzOgtAomgy2gxBMOZKxXgZ/8smsN+
+	 xEpWdj6NO2uQ5WhUrcF+K2B92j2Oy5h0SzJzMkQppOMZ2KxZ74GoVhR95QCpcLcRK8DD8
+	 U5Gj0sfYpWJitAVrO+xe9VQwyNe89ZL9DRvgUH2Ar9cS3noJsACPEdhH8+JPlBDZ6tA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=gEYes68E;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=fYVzdP5e;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 85A6E606A326;
-	Wed, 25 Nov 2026 15:37:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B25A1606A321;
+	Wed, 25 Nov 2026 15:37:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=gEYes68E
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CF11E1F000C4;
-	Wed, 25 Nov 2026 15:37:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=fYVzdP5e
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A64991F000C0;
+	Wed, 25 Nov 2026 15:37:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795621073;
-	bh=QUgEyLvoRyGqc7Sqi1ek2xa2SGcxuks8EyPn8GmojYg=;
+	s=korg; t=1795621076;
+	bh=9m7Qa0AyBhB/I+3SJoPkeydKt8qFKV/wgJFWjAxpUrs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=gEYes68EZOaxDXtEJOywo3I+mTUrdDspiLLO3ul2dJME1FZ8CvDQOEhN1xvUR5yqT
-	 zt+YfTXQ0VQCUf+Ptp4dMdqKJurVtSSZ0IDDHp5ESk4E+U2RxOAbCEubzaaK6U3Qtv
-	 0gZWcsH61y/fffkm0629jzRXARD4H2oYqSNdJn18=
+	b=fYVzdP5eGH5KZ5QEysSJfGRg9AXlPhoLx4U3yRyLqNqVHK5hRGq1zFO4MC07bxDwO
+	 yNx5bdd2ZO0LNsKOQfkp+eE8GNSoI6cER18CTisiXRdtMm/KjK1GAqXEFJSlZfHniI
+	 zfa90xT2MDug6xvAcGiGLqXLbYu6sj0iY6KU5cDw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Giovanni Vignone <gio@octane.security>,
-	Shubham Antil <shubham@octane.security>,
-	Steffen Klassert <steffen.klassert@secunet.com>,
+	syzbot+a079f084653164a652d1@syzkaller.appspotmail.com,
+	Deepanshu Kartikey <kartikey406@gmail.com>,
+	Sven Eckelmann <sven@narfation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 067/990] xfrm: zero-initialise km_event in the replay-notify path
-Date: Wed, 25 Nov 2026 15:23:54 +0100
-Message-ID: <20261125143823.657999427@linuxfoundation.org>
+Subject: [PATCH 6.18 068/990] batman-adv: avoid WARN_ON for orig_ifinfo allocation failure
+Date: Wed, 25 Nov 2026 15:23:55 +0100
+Message-ID: <20261125143823.681646217@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143822.072087159@linuxfoundation.org>
 References: <20261125143822.072087159@linuxfoundation.org>
@@ -69,69 +69,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Shubham Antil <shubham@octane.security>
+From: Deepanshu Kartikey <kartikey406@gmail.com>
 
-[ Upstream commit e35a12dffd5da67b6ca12bd23eebdd0570592205 ]
+[ Upstream commit dfa953ba5366b0a80c303700dab2bbcbdc5c27e9 ]
 
-xfrm_replay_notify(), xfrm_replay_notify_bmp() and
-xfrm_replay_notify_esn() declare a struct km_event on the stack and
-initialise only its .event and .data.aevent fields, leaving .seq and
-.portid uninitialised. build_aevent() then builds the XFRM_MSG_NEWAE
-message with those fields:
+batadv_orig_ifinfo_new() returns NULL only when its GFP_ATOMIC
+allocation fails, which is a normal runtime condition and not a bug.
+batadv_v_ogm_forward() already handles this the same way, simply
+checking for NULL without a WARN_ON.
 
-  nlmsg_put(skb, c->portid, c->seq, ...)
+Do the same in batadv_iv_ogm_update_seqnos() to avoid a spurious
+WARN_ON splat when the allocation fails (e.g. under fault injection).
 
-so the netlink header of a replay event carries uninitialised stack
-values rather than defined ones. This was confirmed at runtime rather
-than by inspection alone: the .seq and .portid carried in that header
-hold values that nothing in the replay path assigns.
-
-The request-driven paths set these header fields from the requester
-(xfrm_get_ae() / xfrm_new_ae()); only the kernel-originated replay path
-leaves them unset. Zero-initialise the event so the header fields are 0,
-the correct value for a kernel-originated notification.
-
-Fixes: f8cd54884e67 ("[IPSEC]: Sync series - core changes")
-Reported-by: Giovanni Vignone <gio@octane.security>
-Assisted-by: Claude:claude-opus-4-8
-Signed-off-by: Shubham Antil <shubham@octane.security>
-Signed-off-by: Steffen Klassert <steffen.klassert@secunet.com>
+Fixes: 7351a4822d42 ("batman-adv: split out router from orig_node")
+Reported-by: syzbot+a079f084653164a652d1@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=a079f084653164a652d1
+Signed-off-by: Deepanshu Kartikey <kartikey406@gmail.com>
+Signed-off-by: Sven Eckelmann <sven@narfation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/xfrm/xfrm_replay.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ net/batman-adv/bat_iv_ogm.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/net/xfrm/xfrm_replay.c b/net/xfrm/xfrm_replay.c
-index dbdf8a39dffee..9394953247ab9 100644
---- a/net/xfrm/xfrm_replay.c
-+++ b/net/xfrm/xfrm_replay.c
-@@ -40,7 +40,7 @@ static void xfrm_replay_notify_esn(struct xfrm_state *x, int event);
+diff --git a/net/batman-adv/bat_iv_ogm.c b/net/batman-adv/bat_iv_ogm.c
+index 38320f6a1dd1f..26f2795fbc183 100644
+--- a/net/batman-adv/bat_iv_ogm.c
++++ b/net/batman-adv/bat_iv_ogm.c
+@@ -1298,7 +1298,7 @@ batadv_iv_ogm_update_seqnos(const struct ethhdr *ethhdr,
+ 		return BATADV_NO_DUP;
  
- void xfrm_replay_notify(struct xfrm_state *x, int event)
- {
--	struct km_event c;
-+	struct km_event c = {};
- 	/* we send notify messages in case
- 	 *  1. we updated on of the sequence numbers, and the seqno difference
- 	 *     is at least x->replay_maxdiff, in this case we also update the
-@@ -304,7 +304,7 @@ static void xfrm_replay_advance_bmp(struct xfrm_state *x, __be32 net_seq)
- 
- static void xfrm_replay_notify_bmp(struct xfrm_state *x, int event)
- {
--	struct km_event c;
-+	struct km_event c = {};
- 	struct xfrm_replay_state_esn *replay_esn = x->replay_esn;
- 	struct xfrm_replay_state_esn *preplay_esn = x->preplay_esn;
- 
-@@ -356,7 +356,7 @@ static void xfrm_replay_notify_bmp(struct xfrm_state *x, int event)
- static void xfrm_replay_notify_esn(struct xfrm_state *x, int event)
- {
- 	u32 seq_diff, oseq_diff;
--	struct km_event c;
-+	struct km_event c = {};
- 	struct xfrm_replay_state_esn *replay_esn = x->replay_esn;
- 	struct xfrm_replay_state_esn *preplay_esn = x->preplay_esn;
- 
+ 	orig_ifinfo = batadv_orig_ifinfo_new(orig_node, if_outgoing);
+-	if (WARN_ON(!orig_ifinfo)) {
++	if (!orig_ifinfo) {
+ 		batadv_orig_node_put(orig_node);
+ 		return 0;
+ 	}
 -- 
 2.53.0
 
