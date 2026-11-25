@@ -1,51 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795623156;
-	b=KvgO3UJP74DhqUKe6/IOjxVi8KkeG9sydbgyOhZitXcUKzXThiWb9X1p+jYvjAE55EYd
-	 QX47Gk0Tv0RALeE/cy8bjMbzGMFkqfAkp4AYwYwZkGK+cOz5t+XeT7czmDBtk27hm0JHJ
-	 0SVxj8MUrxp1yhg5U+vqm4HUIM7h0/og/ECrDJZF0jCxDeDL3RGy8DXX1yaab6HYsgfp0
-	 DZBpBxAWXb6mn3tpZR0lXO4aUtFiz4aOK4+gNqbcJ5vh8bzxiYhEkMh4S1MUfFmEpdHLo
-	 7YwrGxWs46Bh/iJoNz5qFzeN19hKtDH6A7j1vXTdQlzAKc1NWRRg9tSV7CsCib+oRyQ==
+	t=1795623159;
+	b=hLfWZANcnl3Acrt+HstAysQl0jnQ8c2tnKQqBsrQ7akNUX9DFiQ/QUJOhuyH6DpcOQyw
+	 tAxqNnQzgVTOFbCwR4glTIQaO64x1IonM5DqccSFK5n/0y1085EoBz7etaYPfXoojlMP8
+	 NuSx/FfvqA0rH+XZGkB1+iiSMKNTFshgzbE228nOlNOypiE6cYd2zQY+lYd9W523dwF81
+	 45CWGuH/nv1+pHExZ1AZ9YMBZctLtFOffilYM3nF5pvjwNtciwUn1Pb1mh1miJCRFpdfv
+	 3ueNdl46NDMcRMot8AKYjOdSHUFgAPP6omXvVnlFwCF0mW+2N5zqbQmxKAfTzB93ABA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795623156;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795623159;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=/GlpIqh1Nq8ZzzfWQKXoLoioCTeu+als7GxHI6ZETzw=;
-	b=y0LrNUpNeOj4y4DDnwt2wygYS6mEZ2ku4EJnDYw9lN4Y2/PfMBN0IaMwf3bwPj+hJp7g
-	 jrf/TEL3qWNCcNssqbHJmRLzBEvOmHY3WEI7iOCnZs51pFLYSy/p9BYGxPXffCv8scFts
-	 E60GuOmEUs4g3J/LlYglz6opWVg2/olfFFCN4iWjLujYSUuyZF9kROKk7sTva3Wz6c+sp
-	 Rp9VnAhz7oiaSl0rF8HvOnSDlb4+CuY1YU/d4kfDhu8eC2QBIcDvgtkZiVyUwfrMrHwgU
-	 i+ZI+WArKXVl2qVr14hjongW9J6a++C0ePS3CKJ5gJUsFcS0iRnDCGG30Ryq0LeEv0w==
+	bh=Lt3pRZsadrcv04MtrTl2r5ck0bdB4JWs8EbZThyE/Ac=;
+	b=nQql3v31g8zkwTok9R4kkb8hPPuSAr0aS/BpxpE98v5buIzm3ojkfOk6zXq4Q1m94R4X
+	 WHOXfK2h61+UZSZTskdcvJZ+9PFfa5O0fBODjKjXfjalcVVHhTF2tjfJzyihqZpaI9tMD
+	 13rjEY5IGR+OLdsRyX5taQKiYpxJ4oPO9JNgnxCeUa2G5U94RhquWs/7vl3fx9wfVONza
+	 +XmWvxf1G5ABc6IdPYK8SdKR4BbeE1A6NcqyOnR9cUP+nSJdopz5PrsPMTEiompbY/qyS
+	 2BBi/YmD0Cv57Z+yzkTck/Q/nu19u/cftJNU7TvlvMNIw6bZCEvHOXrfiUvFAc2R75g==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Bgt8dr86;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=QMSQAYw3;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6A6D1606A321;
-	Wed, 25 Nov 2026 16:12:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 98256606A32D;
+	Wed, 25 Nov 2026 16:12:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Bgt8dr86
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2FF391F000D2;
-	Wed, 25 Nov 2026 16:12:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=QMSQAYw3
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5EDE41F000C0;
+	Wed, 25 Nov 2026 16:12:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795623155;
-	bh=/GlpIqh1Nq8ZzzfWQKXoLoioCTeu+als7GxHI6ZETzw=;
+	s=korg; t=1795623158;
+	bh=Lt3pRZsadrcv04MtrTl2r5ck0bdB4JWs8EbZThyE/Ac=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Bgt8dr86WpPBw4PnmMXCa+BOgn90KuDwsAiwaOUsPFHCU0N5uLaElqZjJNCn8AQ5H
-	 BvQDRlkgsBU2I9y9Q46T1uaNBFvzEkao1j3qt/xuvdk7moTnCNwOWcsnBrMIuoSTW3
-	 QgrQaeq72QsgwWD16x7T9PhDQtdem0YyXJScVjb8=
+	b=QMSQAYw38EdEVTEkav5NPbIPHAd2DVdB2boKTalE/UFEsZyTIeTQcdwwzHJ7fHBsB
+	 6W78CTIgaaY4f9vihTdPkHK8l2wRri8H9NIljPDuZzeYFbLQSWdjktO/t1bKeUPtbM
+	 Qiv9fHKnuBM+L3jTyJwVApHHC4UXI5M8azoLxJQY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhao Feng <zhaofeng2@cmss.chinamobile.com>,
-	Guenter Roeck <linux@roeck-us.net>
-Subject: [PATCH 6.18 768/990] watchdog: npcm: fix clock prepare leak when setting timeout on a running watchdog
-Date: Wed, 25 Nov 2026 15:35:35 +0100
-Message-ID: <20261125143840.044091627@linuxfoundation.org>
+	Borislav Petkov <bp@alien8.de>,
+	Jason Andryuk <jason.andryuk@amd.com>,
+	"Mario Limonciello (AMD)" <superm1@kernel.org>,
+	Yazen Ghannam <yazen.ghannam@amd.com>,
+	Juergen Gross <jgross@suse.com>
+Subject: [PATCH 6.18 769/990] x86/CPU/AMD: Dont print reset reason in VMs
+Date: Wed, 25 Nov 2026 15:35:36 +0100
+Message-ID: <20261125143840.067721551@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143822.072087159@linuxfoundation.org>
 References: <20261125143822.072087159@linuxfoundation.org>
@@ -67,74 +70,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zhao Feng <zhaofeng2@cmss.chinamobile.com>
+From: Jason Andryuk <jason.andryuk@amd.com>
 
-commit 57c7cbe21acc77291ec0fbdd4bd72aa259cf4986 upstream.
+commit ea51d1a4c31fc8320c34f897dc5296a0bfc5c7ca upstream.
 
-npcm_wdt_start() unconditionally prepares and enables the watchdog
-clock, and npcm_wdt_stop() is the only place that disables it.
-npcm_wdt_set_timeout() calls npcm_wdt_start() again whenever the
-watchdog is already active, so every WDIOC_SETTIMEOUT ioctl issued
-while the watchdog is running takes one extra clock prepare/enable
-reference that is never dropped.
+print_s5_reset_status_mmio() expects to read FCH MMIO on baremetal.  VMs don't
+have emulated FCH registers, so there is nothing to check.  Add an early exit
+when running on a hypervisor.
 
-Split the register programming out of npcm_wdt_start() into a
-__npcm_wdt_start() helper that assumes the clock is already running,
-and call the helper from npcm_wdt_set_timeout() instead; only the
-watchdog .start callback (and the restart path, which intentionally
-keeps the clock) now acquires the clock.
+The real motivation is Xen PV domUs can't boot on Zen CPUs.  PV domUs PTEs
+contain system physical addresses - they don't have the concept of guest
+physical addresses.  domUs can only map physical addresses they are assigned, so
+a domU fails to map the FCH MMIO addresses.
 
-Fixes: af084fdccfaf ("watchdog: npcm: Enable clock if provided")
+However set_pte() does not return failure, so ioremap() returns a pointer while
+the PTEs are unpopulated.  print_s5_reset_status_mmio() faults when reading
+through the pointer, breaking the boot.
+
+Limit the reset reason printing to baremetal only where it actually makes sense.
+
+  [ bp: Massage commit message. ]
+
+Fixes: ab8131028710 ("x86/CPU/AMD: Print the reason for the last reset")
+Suggested-by: Borislav Petkov <bp@alien8.de>
+Signed-off-by: Jason Andryuk <jason.andryuk@amd.com>
+Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
+Reviewed-by: Mario Limonciello (AMD) <superm1@kernel.org>
+Reviewed-by: Yazen Ghannam <yazen.ghannam@amd.com>
+Reviewed-by: Juergen Gross <jgross@suse.com>
 Cc: stable@vger.kernel.org
-Signed-off-by: Zhao Feng <zhaofeng2@cmss.chinamobile.com>
-Link: https://patch.msgid.link/20261109071004.1506-1-zhaofeng2@cmss.chinamobile.com
-Signed-off-by: Guenter Roeck <linux@roeck-us.net>
+Link: https://patch.msgid.link/20261104013026.185392-1-jason.andryuk@amd.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/watchdog/npcm_wdt.c |   15 +++++++++++----
- 1 file changed, 11 insertions(+), 4 deletions(-)
+ arch/x86/kernel/cpu/amd.c |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
---- a/drivers/watchdog/npcm_wdt.c
-+++ b/drivers/watchdog/npcm_wdt.c
-@@ -63,13 +63,11 @@ static int npcm_wdt_ping(struct watchdog
- 	return 0;
- }
+--- a/arch/x86/kernel/cpu/amd.c
++++ b/arch/x86/kernel/cpu/amd.c
+@@ -1370,7 +1370,8 @@ static __init int print_s5_reset_status_
+ 	u32 value;
+ 	int i;
  
--static int npcm_wdt_start(struct watchdog_device *wdd)
-+static void __npcm_wdt_start(struct watchdog_device *wdd)
- {
- 	struct npcm_wdt *wdt = to_npcm_wdt(wdd);
- 	u32 val;
+-	if (!cpu_feature_enabled(X86_FEATURE_ZEN))
++	if (!cpu_feature_enabled(X86_FEATURE_ZEN) ||
++	    cpu_feature_enabled(X86_FEATURE_HYPERVISOR))
+ 		return 0;
  
--	clk_prepare_enable(wdt->clk);
--
- 	if (wdd->timeout < 2)
- 		val = 0x800;
- 	else if (wdd->timeout < 3)
-@@ -94,6 +92,15 @@ static int npcm_wdt_start(struct watchdo
- 	val |= NPCM_WTRE | NPCM_WTE | NPCM_WTR | NPCM_WTIE;
- 
- 	writel(val, wdt->reg);
-+}
-+
-+static int npcm_wdt_start(struct watchdog_device *wdd)
-+{
-+	struct npcm_wdt *wdt = to_npcm_wdt(wdd);
-+
-+	clk_prepare_enable(wdt->clk);
-+
-+	__npcm_wdt_start(wdd);
- 
- 	return 0;
- }
-@@ -134,7 +141,7 @@ static int npcm_wdt_set_timeout(struct w
- 		wdd->timeout = 2750;
- 
- 	if (watchdog_active(wdd))
--		npcm_wdt_start(wdd);
-+		__npcm_wdt_start(wdd);
- 
- 	return 0;
- }
+ 	addr = ioremap(FCH_PM_BASE + FCH_PM_S5_RESET_STATUS, sizeof(value));
 
 
