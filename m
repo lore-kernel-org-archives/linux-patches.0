@@ -1,51 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795619931;
-	b=oNE5xM6Ua7i1hIJpN/5+6kvHlyFIDlyU2LzFIqXnkhhOVIvcHCr9fmR2oAPsyPvHML/i
-	 nLZegUp1ZGfe+r1ZP/eQCEeQFLsh8q4FgRcbjPw9PMYC4IdMnxm9/ZVRTxjp50NS5LGxu
-	 ueKv52Ib4iduawq6qebw+2Y2f4EJFCTro+/TNLigWS99BSAzF9HtfuJWsmfiKMobYl6M1
-	 7JQvDk9BCk9LErypQTd5wXI1Ztdyid85DfCCO/zF8phXI4Xue+qqDQJok79vcg30XUMHh
-	 SnPHFIygfZFG+np42jtmE5ImdgyxvX73mTglXetNjr/ZVC2RvZfVVYbphgIbytrTFsQ==
+	t=1795619934;
+	b=4mWvE3Xm4MZlMqMtcNUlZnb8eX3OuLurH7ItOJPVjBCUN1jNoS8+hRzdRs+bf60/nzE2
+	 sKybpnBihSrRgoHW1Ign7AAVHPbA1EZ+z4Ynsa3s6h16pXaaebiVm2+Uat5+I2TsBrumN
+	 zfjiTBi2TKChy2Z53o82/JSDIyEVXyBXstOqSdssFAsT11DlAbtkZm7wa+m7Qy/qKDutu
+	 s/RhL1WqLxkWFkhIA+0aBOkZmZO8Efk+smXAh0yEAqiFsDop66GrOCytBIukqKlk8sQUM
+	 c65DU3TzHtuiUGc6+frusI3LYN2bt5QyUdajDa4M6LNF7qIQ8dH/jFETgrHkWqboCCQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795619931;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795619934;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Transfer-Encoding;
-	bh=Y70P143RoREUfOEImEEuvjDFrxqkyA4m+4pN3EZFr+w=;
-	b=zd228MKWlIJQqzxqSpfeyL1UNFfaFtXoL269qcEkeN0Mz0gQIqN1iBxnlLSNC2I0jq93
-	 uD/xgfnxBijBui/YM8O82MXqr0N17FtV6Ci0qG21W67GRHtnm+yozFQTSYdNXBsyxXkPX
-	 isQxp3w6gIdUH0R/ZFUAC9Kt2EgqJNsLHxBAK1DyYaX9HFFh0+KC8Xpp271MtN7pOqAfO
-	 1UXNQQ4xWjBSbGiatBjJ/gzk+IlEkCsqbr4W9pwXME3KyxMycu3TO1KCfo3GXzvQEhU5W
-	 O4OBhHjFeHVPWXf3Y4gmFY3mLCLwdON1sekPFIAIIdEfYewFLNZmyADb5c4fLqMeaWQ==
+	 MIME-Version:Content-Type:Content-Transfer-Encoding;
+	bh=K13I0Qjak81HuDhayJBQ2Paqh+QOFJJ2MG4ttEXWHqw=;
+	b=wDjr6WhrOE9ivT0+svLx22qm5+d7VAc43W7dRczzTGR7ATAsHOjKYYcft/Q/bvHhdrVm
+	 l9ojyFcCjaUsko1mHoeVJII+ubznTlnbR9Y7NBap7tZ4pqdySROe7hGC4JH1wXBAy3tkQ
+	 i/V+dJ3lMFPZWL8krS56ZoANiUhnGBO5i8bS/WGAnQTiM2DD8a7UTEwvZRB8J+mXFlVrn
+	 eTWWN3j/EgfihAhnRSRyq67dS/RwYy3CG6Y+8wt8rB8RFLkrGZWnXkLEqDh7F1FYcOxZ1
+	 LEfhl5ACTza5lIPwQ3xVSpKZyg5YtuGZU3NGj9uI6T5nEdvwwtJeoIE1thpeRWZ4/rQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=AftbFDDe;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="dxU/7t0h";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9F5D6606A31E;
-	Wed, 25 Nov 2026 15:18:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 74268606A323;
+	Wed, 25 Nov 2026 15:18:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=AftbFDDe
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A07EE1F000CA;
-	Wed, 25 Nov 2026 15:18:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=dxU/7t0h
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C65381F000C6;
+	Wed, 25 Nov 2026 15:18:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795619931;
-	bh=Y70P143RoREUfOEImEEuvjDFrxqkyA4m+4pN3EZFr+w=;
+	s=korg; t=1795619934;
+	bh=K13I0Qjak81HuDhayJBQ2Paqh+QOFJJ2MG4ttEXWHqw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=AftbFDDeEH4qVJtGgcivNrHNcXRxHVjrRWrfr8iyemx75kzKnnpovnHVfSf2gtGaG
-	 IFEdTnwjZfaoydARrjvMYluwhMs+lFSNdgPQ7+IVS1Sldth9tPOSQArnYzfdgL4yrN
-	 5Gjc4KJtAFQ1OMngfEEWfWKzufzU6spXQiVuXIyk=
+	b=dxU/7t0hHYNzdQFro8Dx59dDK4+GACwUo1qpV0L8hDjMTE/oT/TtG72q7b7kX9xtg
+	 8+g9mNSJ98Zf5Ayi8yCQXk7okV4MU4Fm8/fGOnzF4bXe0Wt5m4Fv6LLGSyea7mNEVy
+	 bfrLlY1NbIDp9swfxYKdcSYd6E2zh9L14ijALpKo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Stanislav Aleksandrov <lightofmysoul@gmail.com>,
-	Guenter Roeck <linux@roeck-us.net>
-Subject: [PATCH 7.3 0754/1005] hwmon: (max31760) Report 0 RPM before the first fan speed measurement
-Date: Wed, 25 Nov 2026 15:34:52 +0100
-Message-ID: <20261125143839.408108128@linuxfoundation.org>
+	Sashiko <sashiko-bot@kernel.org>,
+	=?UTF-8?q?Jan=20H=C3=B6ppner?= <hoeppner@linux.ibm.com>,
+	Stefan Haberland <sth@linux.ibm.com>,
+	Jens Axboe <axboe@kernel.dk>
+Subject: [PATCH 7.3 0755/1005] s390/dasd: Fix wrong free and refcount leak in build_check_tcw error path
+Date: Wed, 25 Nov 2026 15:34:53 +0100
+Message-ID: <20261125143839.431666495@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143821.729802100@linuxfoundation.org>
 References: <20261125143821.729802100@linuxfoundation.org>
@@ -61,45 +63,53 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 7.3-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Stanislav Aleksandrov <lightofmysoul@gmail.com>
+From: Stefan Haberland <sth@linux.ibm.com>
 
-commit 33d58cbf2ab26bda81bc3052158d8b9867d5b9a6 upstream.
+commit df56f7a6c20a5eb2794c0a7391bde50ba7c8c54b upstream.
 
-The tachometer count registers initialize to 0 until the first
-measurement cycle completes after power-on. To prevent division by
-zero, tach_to_rpm() clamped tach == 0 to 1, causing it to compute
-and report 3,000,000 RPM (60 * 100000 / 1 / 2).
+dasd_eckd_build_check_tcw() allocates its request with
+dasd_fmalloc_request(), but its out_err path frees it with
+dasd_sfree_request(). The latter uses a different pool and therefor,
+leading to invalid pointer arithmetic and a crash.
+Use the matching dasd_ffree_request() instead.
 
-Return 0 RPM when tach == 0 instead.
+The same error path also leaves start_priv->count incremented
+without ever decrementing it again.
+This leaks a permanent reference on every build failure.
+Decrement it before freeing the request.
 
-Fixes: 38b04ad02d0d ("drivers: hwmon: Add max31760 fan speed controller driver")
-Cc: stable@vger.kernel.org
-Signed-off-by: Stanislav Aleksandrov <lightofmysoul@gmail.com>
-Link: https://patch.msgid.link/20261108-max31760-fixes-v1-3-a61450463059@gmail.com
-Signed-off-by: Guenter Roeck <linux@roeck-us.net>
+Reported-by: Sashiko <sashiko-bot@kernel.org>
+Closes: https://sashiko.dev/#/patchset/20260722103704.1709668-1-sth@linux.ibm.com
+Fixes: 8fd575200db5 ("s390/dasd: Add new ioctl BIODASDCHECKFMT")
+Cc: stable@vger.kernel.org #4.7
+Reviewed-by: Jan Höppner <hoeppner@linux.ibm.com>
+Signed-off-by: Stefan Haberland <sth@linux.ibm.com>
+Fixes: 5e2b17e712cf ("s390/dasd: Add dynamic formatting support for ESE volumes")
+Link: https://patch.msgid.link/20261112102608.1057852-4-sth@linux.ibm.com
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/hwmon/max31760.c |    3 ++-
+ drivers/s390/block/dasd_eckd.c |    3 ++-
  1 file changed, 2 insertions(+), 1 deletion(-)
 
---- a/drivers/hwmon/max31760.c
-+++ b/drivers/hwmon/max31760.c
-@@ -68,8 +68,9 @@ static const int max31760_pwm_freq[] = {
+--- a/drivers/s390/block/dasd_eckd.c
++++ b/drivers/s390/block/dasd_eckd.c
+@@ -2780,7 +2780,8 @@ dasd_eckd_build_check_tcw(struct dasd_de
+ 	return cqr;
  
- static int tach_to_rpm(u16 tach)
- {
-+	/* The count is 0 until the first measurement */
- 	if (tach == 0)
--		tach = 1;
-+		return 0;
+ out_err:
+-	dasd_sfree_request(cqr, startdev);
++	start_priv->count--;
++	dasd_ffree_request(cqr, startdev);
  
- 	return 60 * 100000 / tach / 2;
+ 	return ERR_PTR(rc);
  }
 
 
