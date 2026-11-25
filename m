@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795617720;
-	b=VaW7NswfI2dOLpXjA4WG+tjqbOEMmISVDpEpdAK+2aKcXj9ELor4XsODKCh/2fBF+ytW
-	 3ycpdvTBknBnAkszXTleH7qZ2W1pyUAlJ1JwCeElwk5BSssl2U38xiYexZE8yNtm/6uTM
-	 vkGc1Ht+pRLMgf8ZMUsarAcMxK0f/C0jM9EZRHniOH05PsUUZ3eH+ClkYCPycmQQB+s/u
-	 ymyWrFw9ORXqWBghufpVNi1/BNwQgoLh2wDqYHBTd9PVsDn3T/qxvsFzwJcTU3VUppXGZ
-	 n24Fa8utUhhuLij2RiLrXI4pELMTMUTqFa+O/6V23ZTOeR8t9wSN6YiwgxKFz8MVQ6g==
+	t=1795617722;
+	b=Kz7Cw+zeLow9xe+uGVLQqYBbuPNTzizxNJkTqplMzcTieJhSDHYBHQyNFvVM4EZO109T
+	 tv22nTh7uuzrERAeuxa4mtP/+vP4NI3W8p/yzw/57x+PBbdVSgV2Fthhc8mQmVHpg3bLB
+	 2vmqgdDUXgkVLZZBtZxaWK9wLgmZYFwRy2fC/yTpGwXA/3OKs6khsIOyuH3rylD97BYM8
+	 jAyL1vgCjMtm7U9qf36Q7v/T7OyEJxLuX0SD6kYxaG68oNI2SWZ3LaJDnhoN17tUjym75
+	 1558VR0GT8kpX81n8ma65wBE0nMKCHa2EIH+YnurSxASem33yJ6bl72uk45dblXxUDA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795617720;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795617722;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=eCUiFgi8QwYEXN6x3EX3gZvSDw+CF7D/5EA3VsbBwiI=;
-	b=cNMNZ/R1iZqQ8dL0HVkheWODYPOEe+IGSe6zICs1FDUDgqCZlp38HYL1SA3I3U3yBe5v
-	 jomy1/FhGOr6Ij0oggKz647nHcYt8bscquAUcB7/SZqbMtilXkTh1tTsBW/yNcPS4su+F
-	 RoXKU/QhLLMXDus85xWdgVoDMek0rPZB9djlpM3nriZISMZpEC3qKxMpbHifUK3komfJU
-	 OWbcT3ynSqZ9BDLgoDvCyB/i/gOy/xxqTeI04kZiLEAwQ9CUyFvklctNzaV8PJXbvdX01
-	 H5kYfwR9TQGBHi5/4dMpVPU9WBj7byKju+HY68mdYN59BqPQNP6+uFnYtNbV+GWPm5Q==
+	bh=+gFEbO0SAUCX00ic2Czgx8a0pjotk5k3wY/VHPdaRvY=;
+	b=sGRFnwWby25gGKsTAMmEszvwEXtGlT232LUq76vDOQWu4k+LAzV7wz4LqO4FtVI9xjzF
+	 vrteeV/f9n2oEBjOXgkAoJWjYWioAfzscEYscWnrMthYOoCBThShs8XWGDhHGNcbESSov
+	 xVx5rjOyKs4FXTtBPpsqeukjxj5+iNV0h6385HjeMPNCy/WPB7u3VYF6fTQREfBtjiXqi
+	 hpznMPbYZqpg0NArQSF6RW73B4IFKXX37PkclDAz8E3Z2/F+hkiB7xcDZh6wHsE1KRwe1
+	 LyVpkvlr/kJBnhdfDQIK5FaxfcPzfSeema/Iavg/eJVl0Lm2/y3RgXt1LqlWe/jBIgg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=c7Jg4UQq;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=GXAMbnsq;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 24C01606A326;
-	Wed, 25 Nov 2026 14:41:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AE48E606A32A;
+	Wed, 25 Nov 2026 14:42:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=c7Jg4UQq
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B98601F000C0;
-	Wed, 25 Nov 2026 14:41:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=GXAMbnsq
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0E8151F000EF;
+	Wed, 25 Nov 2026 14:42:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795617719;
-	bh=eCUiFgi8QwYEXN6x3EX3gZvSDw+CF7D/5EA3VsbBwiI=;
+	s=korg; t=1795617722;
+	bh=+gFEbO0SAUCX00ic2Czgx8a0pjotk5k3wY/VHPdaRvY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=c7Jg4UQqrdLWVVkfKq0TiJAINHMJ652+TJResI+3/m2jl8mN1s39yiJUuQ9Uv+3oM
-	 FCbKaY1legq+RPqle8Spnqh8ACQ2ITonA+yF74V7uCbEfpIv+tNTxEsCHYS9j7lOn+
-	 5pWMHiZFSZ5RF2Eka9cVqB/szeyabKEIW/LekFt4=
+	b=GXAMbnsqWV4yBhHay6YMP/g/Bj1d5GTkBynuFTECFc03cEA92XXb2BFEXiJBJOfHv
+	 xyCcXSkIvVBHry448aMTkhREggDvfs24Mj9vetAGGfG/E/Je02khO+GADbcLJZERfz
+	 JlHy3Bwq4V+7YtVJZT4USerXA2D+KUGQTBrLsme4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Giuseppe Piscitelli <ooonea@gmail.com>,
+	Bart Van Assche <bvanassche@acm.org>,
 	"Martin K. Petersen (Oracle)" <mkp@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0052/1005] scsi: scsi_debug: Drain target cleanup before module exit
-Date: Wed, 25 Nov 2026 15:23:10 +0100
-Message-ID: <20261125143822.959853596@linuxfoundation.org>
+Subject: [PATCH 7.3 0053/1005] scsi: core: Balance the pseudo target reap reference
+Date: Wed, 25 Nov 2026 15:23:11 +0100
+Message-ID: <20261125143822.983258543@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143821.729802100@linuxfoundation.org>
 References: <20261125143821.729802100@linuxfoundation.org>
@@ -70,33 +71,54 @@ Content-Transfer-Encoding: 8bit
 
 From: Giuseppe Piscitelli <ooonea@gmail.com>
 
-[ Upstream commit 34c99ce2993971712d89010a948d2f650687b796 ]
+[ Upstream commit 8a832fb632da303cdf0704e0d56722ec47799f19 ]
 
-Target destruction queues cleanup in an exclusive async domain. The module
-loader's async_synchronize_full() does not wait for exclusive domains. Wait
-for target cleanup after removing the hosts and before removing the debugfs
-root and returning from module exit.
+With memory allocation profiling enabled, unloading scsi_debug reports
+allocations left at module unload. A stock Linux 7.2.11 VM without OpenZFS
+emitted the following on each of three load/unload cycles:
 
-Fixes: b402a0dce64a ("scsi: scsi_debug: Fix create target debugfs failure")
+[    1.644665] drivers/scsi/scsi_debug.c:8863 module scsi_debug func:sdebug_add_host_helper has 1024 allocated at module unload
+[    1.656260] drivers/scsi/scsi_debug.c:1261 module scsi_debug func:sdebug_target_alloc has 16 allocated at module unload
+
+scsi_alloc_target() supplies a reap reference for its caller. The SCSI
+device initializer takes another reference, which device removal drops.
+scsi_get_pseudo_sdev() drops its caller reference only when device
+allocation fails. On success the target cannot be destroyed, retaining its
+driver-private data and its parent host and adapter.
+
+Drop the caller reference in the common cleanup path, as the other
+scsi_alloc_target() callers do.
+
+Fixes: d630fbf6fc8c ("scsi: core: Support allocating a pseudo SCSI device")
 Signed-off-by: Giuseppe Piscitelli <ooonea@gmail.com>
-Link: https://patch.msgid.link/20261026202342.668361-1-ooonea@gmail.com
+Reviewed-by: Bart Van Assche <bvanassche@acm.org>
+Link: https://patch.msgid.link/20261027100859.1031135-1-ooonea@gmail.com
 Signed-off-by: Martin K. Petersen (Oracle) <mkp@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/scsi/scsi_debug.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/scsi/scsi_scan.c | 5 ++---
+ 1 file changed, 2 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/scsi/scsi_debug.c b/drivers/scsi/scsi_debug.c
-index 8290feadc212b..232b4eccd5a11 100644
---- a/drivers/scsi/scsi_debug.c
-+++ b/drivers/scsi/scsi_debug.c
-@@ -8723,6 +8723,7 @@ static void __exit scsi_debug_exit(void)
+diff --git a/drivers/scsi/scsi_scan.c b/drivers/scsi/scsi_scan.c
+index 6cd77b0592e45..53a0af2104ef0 100644
+--- a/drivers/scsi/scsi_scan.c
++++ b/drivers/scsi/scsi_scan.c
+@@ -2156,14 +2156,13 @@ struct scsi_device *scsi_get_pseudo_sdev(struct Scsi_Host *shost)
+ 		goto out;
  
- 	sdebug_erase_all_stores(false);
- 	xa_destroy(per_store_ap);
-+	async_synchronize_full_domain(&sdebug_async_domain);
- 	debugfs_remove(sdebug_debugfs_root);
- }
+ 	sdev = scsi_alloc_sdev(starget, U64_MAX, NULL);
+-	if (!sdev) {
+-		scsi_target_reap(starget);
++	if (!sdev)
+ 		goto put_target;
+-	}
+ 
+ 	sdev->borken = 0;
+ 
+ put_target:
++	scsi_target_reap(starget);
+ 	/* See also the get_device(dev) call in scsi_alloc_target(). */
+ 	put_device(&starget->dev);
  
 -- 
 2.53.0
