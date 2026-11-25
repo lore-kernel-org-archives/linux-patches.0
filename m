@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795618530;
-	b=4Xwg8awx/wRgPrgwRL3rQmPWB7bXBkpuHqXmcejlgo0Qpvsc5KWSl1f8AGkdFwNZjRwK
-	 DaA52f+28Uk5esdV9fnAOa25glikPiEEdOyFwhw4zYaqBpJocJHVSRtF2rznihuo7KiEv
-	 9/BVtiPODdn6O6r2sGvOkHgdAqVxO7XgDFwUxsd22DUjMRDtWdfMdWK6r/iGkiXK+uyIS
-	 b2ZgaWXIJ4Hm3vpzhj+xiAnY/8Sz1iKwMbZ/pcHeAag1vnXihJleBBy8y6uUqz85hqwjs
-	 i7QiAi69WprOkbraf6JofPGZbgFU/HQICKpC9pk9+OFG1SAkcS0pSA14cPJTFaW4dgA==
+	t=1795618533;
+	b=WqC+hwPhoplFZRvIvymtpjxlCQVlGpVDhzqSz4qXcc2BIYr0Uu9/E7qdD/0wv4h7Oy0z
+	 st1K5CNIUCX2fAez/XbbrfVTnHdedj5oLe8S24Cu1VQJLZBf9yZGqlQaCvG22C9ViYk9T
+	 a1jgzNH/3wRDhAs8amyjZOxJDXlPZhI4ZLYC99DerMF4G559U34zGYABR3YAvQb4Dx+dS
+	 ymOeSExLpvHdNMvqjt/JkrdrOD6/R/CRIbDKHYa/X49QpbLQNqINzx/efTezZO76115Qf
+	 vzY0SiFWO0OprGqsDPo+rh5kw374D9d+I1ALlhbCkER9NC7/ZENcnYg9fvCq9AOcs/w==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795618530;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795618533;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=E6FKyEIG0RuQ2D1IlaN5rvJ5Ql+PbQXXMxQmLmNkSw0=;
-	b=o6qD/kiFjWekOO2a0cIezX63Llhd/GgM1NyDrIusr39Zv1yclJIBmp37t7h1VeYh+/0H
-	 ugW4G+ylDWHFpO4jRFX1/hw2lrrWnaN18YOlD1GwneKopWbbLavCNGZLep5NWx/dssUHT
-	 knQD9X4CceuvWJMDE3KXWhWvIjNgQaj2vq+PDt19Cfm6WJSkDaoh6DBiOJK6kl/CQE3XJ
-	 5ZZYlTHrGK/V7AwYM6KKArcCORRHaMLIZoM9jOKz/m/m9ixH+cK4vfB5oYaBPZkczT8Q+
-	 jT4Cc5/k1wGEelYoiwtklWTkPGt2dCVzg/MDjArtJvYcBwUCSuENRz9ZyfM35/c9o2g==
+	bh=JMjSJtiTOdCistG1Y4RVwacr/NcFxYlECfkCCofEzgI=;
+	b=dM1/OGvrioRsEpP8Zdk1i2V8Yy3mnRsr8DEV+F4XFT37s/sewDQzPfzlPNmXEYDFBdVU
+	 YEwUomX10giDahsoKVMX5p9YidB7f8A8aRgsQIdf25CKZytJfm2Z757Dau8jhAU9VtaVS
+	 sZXJ5ruDgmgL4M1IDPRBlo9Nb0rS27fSEMnq0Zk1JR8A/HjTy3dsrv/y7ghbULRzMUF7G
+	 mm+sSsIIbg4/B35oM+sWJTWkJGrjgh7Atpu5j923g9bMHGPzehNe3KrK/UVcqkGEGixWB
+	 fx9CPP7LcXce2/PSLaT068QmWIUnkoLpdOCFZsEYqPHWk8nWUGvmVUw6yxy5AxzUfCQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=A0hV7eHa;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=G2FuzDAl;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 62CDB606A326;
-	Wed, 25 Nov 2026 14:55:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 63517606A33C;
+	Wed, 25 Nov 2026 14:55:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=A0hV7eHa
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3FA231F000D3;
-	Wed, 25 Nov 2026 14:55:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=G2FuzDAl
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 81A631F000D3;
+	Wed, 25 Nov 2026 14:55:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795618529;
-	bh=E6FKyEIG0RuQ2D1IlaN5rvJ5Ql+PbQXXMxQmLmNkSw0=;
+	s=korg; t=1795618533;
+	bh=JMjSJtiTOdCistG1Y4RVwacr/NcFxYlECfkCCofEzgI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=A0hV7eHaluezRP1WAWmMo4S6ITWzXnsNKRYJG4mvokyN53HN6zOXi8lOlNkcxo5Nw
-	 nTGmk7EXgRoP132xi0KIcOmYWcZ6pz1Jc+3e+hyjtHg1qsNcdy5G7o2oEx4afoWUjL
-	 feooqSE6S89/mqCZFe/hzZsHjpSi7uKWdUrWLR8A=
+	b=G2FuzDAlKnv+XKvPo0mJlS5CBAOC3S2CSmCfgl4IejLYAOc/r2MSb4/FRdRkqc91f
+	 pDhNFXp3XjEA2yjV84h64uHf13BlxIZIWRo13Kp6hOFhZxBmx97nAHdWFoKisMGRHQ
+	 8t+f5JjYuDxvHcuuGDOVpCMITW5Q5625Tq/AMmM4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Colton Pawielski <colton.pawielski@gmail.com>,
-	Daniel Machon <daniel.machon@microchip.com>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Jude Gyimah <jude.gyimah87@gmail.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0307/1005] net: 8139cp: keep Rx masked while NAPI is scheduled
-Date: Wed, 25 Nov 2026 15:27:25 +0100
-Message-ID: <20261125143828.925727495@linuxfoundation.org>
+Subject: [PATCH 7.3 0265/1005] ASoC: rockchip_pdm: select REGMAP_MMIO
+Date: Wed, 25 Nov 2026 15:26:43 +0100
+Message-ID: <20261125143827.946649162@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143821.729802100@linuxfoundation.org>
 References: <20261125143821.729802100@linuxfoundation.org>
@@ -69,58 +68,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Colton Pawielski <colton.pawielski@gmail.com>
+From: Jude Gyimah <jude.gyimah87@gmail.com>
 
-[ Upstream commit 547b1ae5ec50b7d81b05b4219e0db7e56279d65f ]
+[ Upstream commit 420c7918a61b97b8cd99e402e7e5a857edb097ee ]
 
-cp_rx_poll() calls napi_complete_done() and only then takes cp->lock
-with interrupts disabled to unmask the Rx interrupts. An interrupt
-that is not masked while polling (TxOK, TxErr, ...) can arrive in
-between. cp_interrupt() then sees the Rx status bits, which are still
-set, finds NAPI no longer scheduled, masks Rx and schedules NAPI again.
-cp_rx_poll() then carries on and unmasks Rx anyway.
+rockchip_pdm calls __devm_regmap_init_mmio_clk, which
+drivers/base/regmap/regmap-mmio.c provides under REGMAP_MMIO.
 
->From that point Rx interrupts are enabled while NAPI is scheduled:
-cp_interrupt() leaves the Rx bits for the poll routine, does not mask
-them because napi_schedule_prep() fails, and the level-triggered
-interrupt fires again as soon as it returns. On an SH7751 LANDISK
-under combined Tx/Rx load this interrupt storm was captured with a RAM
-trace right before the board locked up hard.
+  rockchip_pdm.c:(.text+0xef4): undefined reference to
+    `__devm_regmap_init_mmio_clk'
 
-Mask Rx in cp_interrupt() whenever Rx status is pending, not only when
-NAPI gets scheduled. If the race leaves Rx unmasked, the next interrupt
-masks it again, and the pending poll unmasks it when it completes.
+The driver can be built into vmlinux while REGMAP_MMIO is a module, in
+which case the symbol is not there at link time.
 
-Fixes: ab1e7e1d2666 ("8139cp: use napi_complete_done()")
-Signed-off-by: Colton Pawielski <colton.pawielski@gmail.com>
-Reviewed-by: Daniel Machon <daniel.machon@microchip.com>
-Link: https://patch.msgid.link/20261031-b4-8139cp-napi-v2-1-5824797c0fe6@gmail.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Select rather than depend on: REGMAP_MMIO has no prompt of its own and is
+only ever enabled by a select, so a depends on would leave
+SND_SOC_ROCKCHIP_PDM unselectable.
+
+Reproduced on v7.3, x86_64, with CONFIG_SND_SOC_ROCKCHIP_PDM=y and
+CONFIG_REGMAP_MMIO=m.
+
+Found with kreach, a static check that compares what Kconfig allows
+against the symbols the compiled objects actually reference.
+
+Fixes: fc05a5b22253 ("ASoC: rockchip: add support for pdm controller")
+Signed-off-by: Jude Gyimah <jude.gyimah87@gmail.com>
+Link: https://patch.msgid.link/20261103132537.3717496-4-jude.gyimah87@gmail.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/realtek/8139cp.c | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ sound/soc/rockchip/Kconfig | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/net/ethernet/realtek/8139cp.c b/drivers/net/ethernet/realtek/8139cp.c
-index 9016527e229ac..8f81dc7deef1e 100644
---- a/drivers/net/ethernet/realtek/8139cp.c
-+++ b/drivers/net/ethernet/realtek/8139cp.c
-@@ -600,11 +600,11 @@ static irqreturn_t cp_interrupt (int irq, void *dev_instance)
- 		goto out_unlock;
- 	}
+diff --git a/sound/soc/rockchip/Kconfig b/sound/soc/rockchip/Kconfig
+index 0f8ef68683568..e0ded1fa4da5d 100644
+--- a/sound/soc/rockchip/Kconfig
++++ b/sound/soc/rockchip/Kconfig
+@@ -25,6 +25,7 @@ config SND_SOC_ROCKCHIP_I2S_TDM
  
--	if (status & (RxOK | RxErr | RxEmpty | RxFIFOOvr))
--		if (napi_schedule_prep(&cp->napi)) {
--			cpw16_f(IntrMask, cp_norx_intr_mask);
-+	if (status & (RxOK | RxErr | RxEmpty | RxFIFOOvr)) {
-+		cpw16_f(IntrMask, cp_norx_intr_mask);
-+		if (napi_schedule_prep(&cp->napi))
- 			__napi_schedule(&cp->napi);
--		}
-+	}
- 
- 	if (status & (TxOK | TxErr | TxEmpty | SWInt))
- 		cp_tx(cp);
+ config SND_SOC_ROCKCHIP_PDM
+ 	tristate "Rockchip PDM Controller Driver"
++	select REGMAP_MMIO
+ 	select SND_SOC_GENERIC_DMAENGINE_PCM
+ 	select RATIONAL
+ 	help
 -- 
 2.53.0
 
