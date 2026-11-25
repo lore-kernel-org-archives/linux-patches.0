@@ -1,55 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795619379;
-	b=DBdLKMumrn6x6Jj3fiIYpTv8+YdHGUVE3AY7QPLEpz36UK07xgwNgmsjeT7MlO+ne0sB
-	 uCDEE5LbcmQ/Rao5iVxOVO+JkgYCgX+Uz1N+nu72sFWH9thNLvv1bEDhup4V3cNiN8eil
-	 bF4PaVMrw2LbjURoPwbB1XSlVCgTjRZTNVVNyS7wAgRv1HbGF7e6dx+BgeLkYWwBcTV8O
-	 SLtYfZsbmOSDPZeSmZfkSROiRMclSPswHJBwVbJC2pIRnLAA6rts5cnluGOsTTgttNGCi
-	 7vBzttKwnL4PD3m/L4+z76PSKXbXC6HZgDLY99r/KIlXfV6+VNODz8a1FWNd/RS+O/w==
+	t=1795619382;
+	b=n3vfaxhTJkaQ6yWsDJzXa7Jgpnp8ZBWoX2mHsSbKG7Jd3+lOngk9CtyeZODqf2w59IVt
+	 ljTmt/qFxPLHk+Ka+dkNB9rM3u1rz+Xf7OojMyie1ywkOJEAdYpKKzbcLW6FR5pa1yC4h
+	 sq0XWh6Ks/mUU+EZ/649rkWM93claCLTPSlQ1lWgdj7X97QlTC5yvPHooLoAfEQoPqNcJ
+	 DIiJa3RctJqxuU1/B9521phad4RMKeS8YroQeowVivjK9FnaN7AdrEQ91iP/XLlD4P545
+	 OvDBVgk6UD/J2twN1DlTwIv1a8Q5+qXCR3yu/JfET+eQXHLaJsWTLNQNJZmBYxZjlJg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795619379;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795619382;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=5H97xj4+3oMbkVnDCimJDqHo4Bzcm3YhN9t/wM7cYaA=;
-	b=MOW5iKlnNNptFdiEficqXWB2bH44+oqckcpE7WLyQqj7C9tiqNYUQr1e2HW2RFnLfzI0
-	 9a2ED1C4s3pgNxcnZ7WOjSJC8uKEus1z9Y/N8uYWNMEr6NnPvFJaDOuzWaP1YhehwsWGq
-	 qbqvj3to4XuLG7z6tp1pHzmhxKlwTR9pH0vJC6XvxLRkWzdxq+81InOfw89q+J32iMm4X
-	 3Almaf1njQOHB8y3yaJVpXikN4ighSv5dzb3H+3yIvUvq2iZABQysg3NY0xTTIhRsU9d7
-	 5cOyEQ4KykLA8akRxrhya3Q9mEBQKFPvHshrqqoFUmTb3bwhwjwYOjHPrpc7YjWlVpg==
+	bh=ADVnujTVb5/3uHI0hRsGuBCSyKB/SzyR5T4nKuhTnM4=;
+	b=4zxyHDJTVCQXGhKwCilCmjD3gHSq0S/5RsVetyA1zN0JD52EqMzOZNbkmdbxRUAQtic/
+	 dOB8xLYv0FrtytcM6mLahgnaxUjRhPAVTwYofriQcTTvdiRB80xNe8+L7kaGP4I7ELbez
+	 dHAMCzN/rueFpbOBpv501I0R4L5jQB/WYHhhZKpzHy2x1AV/NXGi0LR7AX1gnaJW5ipaQ
+	 h2lMwBJfWsibmAGSJItWkTY3Wg2nn+u6O66m+N+2WtwHQQ6w8mZ5LgVIw+qUtuun7Saor
+	 /1f33dWqh+vRtsuf1RrDEl97f7TWyNUMctXyI6M9yAxWeQl78o+R2PjqYwtkxlZbF3A==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=juqiBabf;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=IroD2ZFF;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5E24F606A31E;
-	Wed, 25 Nov 2026 15:09:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5E2B9606A321;
+	Wed, 25 Nov 2026 15:09:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=juqiBabf
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5487E1F000C6;
-	Wed, 25 Nov 2026 15:09:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=IroD2ZFF
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 882B81F000C6;
+	Wed, 25 Nov 2026 15:09:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795619378;
-	bh=5H97xj4+3oMbkVnDCimJDqHo4Bzcm3YhN9t/wM7cYaA=;
+	s=korg; t=1795619382;
+	bh=ADVnujTVb5/3uHI0hRsGuBCSyKB/SzyR5T4nKuhTnM4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=juqiBabfVgp0If/j27fdLumz8PHmyKWQyDsAYKoYYPk+cGkFE4Ez58rcj/yktQ1Rp
-	 8QEWJHihKUbmSqoXBERJtSCzcGUZmH9jmNP9LOqKg3G9yt2A3ep7LXNu6XsnrC8X/X
-	 oDII3GcuBn0siz4rz3H8OyZMAjmYcLnN/xtkr+cU=
+	b=IroD2ZFFVw7lxulP2hE2B+4MAMtRXzcO3y+1JhJJ5H+47Ral1qRzKKrAu4uejPV3B
+	 xBmDDqflJ53sGosZNp9H5hpRnX2MIHUyXg3HsuCXVOjuBI0wz/Y8DAue99fcqUZpi2
+	 3wBDQgq9yJAlOSdI/TQd9T8Hz6e6CSARJl1fPAyc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Karl Mehltretter <kmehltretter@gmail.com>,
-	Gregor Herburger <gregor.herburger@linutronix.de>,
-	Adrian Hunter <adrian.hunter@intel.com>,
-	Florian Fainelli <florian.fainelli@broadcom.com>,
-	Kamal Dasu <kamal.dasu@broadcom.com>,
-	Ulf Hansson <ulfh@kernel.org>
-Subject: [PATCH 7.3 0577/1005] mmc: sdhci-brcmstb: dont log an error for missing BOOT registers
-Date: Wed, 25 Nov 2026 15:31:55 +0100
-Message-ID: <20261125143835.264526752@linuxfoundation.org>
+	Sabrina Dubroca <sd@queasysnail.net>,
+	Chuck Lever <cel@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 7.3 0551/1005] tls: Consume empty data records in tls_sw_splice_read()
+Date: Wed, 25 Nov 2026 15:31:29 +0100
+Message-ID: <20261125143834.652823352@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143821.729802100@linuxfoundation.org>
 References: <20261125143821.729802100@linuxfoundation.org>
@@ -71,67 +69,100 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Karl Mehltretter <kmehltretter@gmail.com>
+From: Chuck Lever <cel@kernel.org>
 
-commit cf4a8d8b82db7f8e88e6ef4f3020a72860a9c440 upstream.
+[ Upstream commit db6a6c6863bd22b2543e313cb8e4807fdd33778b ]
 
-The BOOT register range is optional: the probe function ignores a
-failure to map it and the suspend/resume code checks for NULL. It is
-mapped with devm_platform_get_and_ioremap_resource(), though, which
-calls dev_err_probe() when the resource does not exist. Every
-non-removable host without a third reg entry therefore logs an error
-at probe time and then works normally.
+A zero-length application_data record decrypts to full_len == 0,
+so tls_sw_splice_read() splices zero bytes and returns zero. A zero
+return from a splice read means EOF, and the caller tears down a
+connection that is still live.
 
-The binding only describes the "host" and "cfg" ranges, so this is the
-case for the in-tree users. On the Raspberry Pi 5 family (BCM2712),
-where the SDIO host of the Wi-Fi module is non-removable, each boot
-prints:
+Consume the record and fetch the next one, as tls_sw_read_sock()
+does. The cap on consecutive empty records bounds the loop.
 
-  sdhci-brcmstb 1001100000.mmc: error -EINVAL: invalid resource (null)
+When an empty record precedes a close_notify, splice(2) now returns
+-EINVAL from the control-record test instead of a false EOF. A
+splice that reaches an alert record already reports -EINVAL.
 
-Look the resource up with platform_get_resource() first and map it only
-when it is present. Hosts that do have the range are mapped by the same
-two calls as before.
-
-Fixes: b7e614802e3f ("mmc: sdhci-brcmstb: save and restore registers during PM")
-Cc: stable@vger.kernel.org
-Signed-off-by: Karl Mehltretter <kmehltretter@gmail.com>
-Reviewed-by: Gregor Herburger <gregor.herburger@linutronix.de>
-Acked-by: Adrian Hunter <adrian.hunter@intel.com>
-Reviewed-by: Florian Fainelli <florian.fainelli@broadcom.com>
-Reviewed-by: Kamal Dasu <kamal.dasu@broadcom.com>
-Signed-off-by: Ulf Hansson <ulfh@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: c46234ebb4d1 ("tls: RX path for ktls")
+Reported-by: Sabrina Dubroca <sd@queasysnail.net>
+Closes: https://lore.kernel.org/netdev/akaoXcfamBp8_mYe@krikkit/
+Signed-off-by: Chuck Lever <cel@kernel.org>
+Link: https://patch.msgid.link/20261111185522.2859004-3-kuba@kernel.org
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/mmc/host/sdhci-brcmstb.c |   11 ++++++++---
- 1 file changed, 8 insertions(+), 3 deletions(-)
+ net/tls/tls_sw.c | 48 ++++++++++++++++++++++++++++--------------------
+ 1 file changed, 28 insertions(+), 20 deletions(-)
 
---- a/drivers/mmc/host/sdhci-brcmstb.c
-+++ b/drivers/mmc/host/sdhci-brcmstb.c
-@@ -491,6 +491,7 @@ static int sdhci_brcmstb_probe(struct pl
- 	struct sdhci_brcmstb_priv *priv;
- 	u32 actual_clock_mhz;
- 	struct sdhci_host *host;
-+	struct resource *boot_res;
- 	struct clk *clk;
- 	struct clk *base_clk = NULL;
- 	int res;
-@@ -534,9 +535,13 @@ static int sdhci_brcmstb_probe(struct pl
+diff --git a/net/tls/tls_sw.c b/net/tls/tls_sw.c
+index 3dc0d9db3e882..ecd26d1f3019f 100644
+--- a/net/tls/tls_sw.c
++++ b/net/tls/tls_sw.c
+@@ -2051,32 +2051,40 @@ ssize_t tls_sw_splice_read(struct socket *sock,  loff_t *ppos,
+ 	if (err)
+ 		goto splice_read_end;
  
- 	/* map non-standard BOOT registers if present */
- 	if (host->mmc->caps & MMC_CAP_NONREMOVABLE) {
--		priv->boot_regs = devm_platform_get_and_ioremap_resource(pdev, 2, NULL);
--		if (IS_ERR(priv->boot_regs))
--			priv->boot_regs = NULL;
-+		boot_res = platform_get_resource(pdev, IORESOURCE_MEM, 2);
-+		if (boot_res) {
-+			priv->boot_regs = devm_ioremap_resource(&pdev->dev,
-+								boot_res);
-+			if (IS_ERR(priv->boot_regs))
-+				priv->boot_regs = NULL;
+-	if (!skb_queue_empty(&ctx->rx_list)) {
+-		skb = __skb_dequeue(&ctx->rx_list);
+-	} else {
+-		struct tls_decrypt_arg darg;
++	for (;;) {
++		if (!skb_queue_empty(&ctx->rx_list)) {
++			skb = __skb_dequeue(&ctx->rx_list);
++		} else {
++			struct tls_decrypt_arg darg;
+ 
+-		err = tls_rx_rec_wait(sk, nonblock, true, false);
+-		if (err <= 0)
+-			goto splice_read_end;
++			err = tls_rx_rec_wait(sk, nonblock, true, false);
++			if (err <= 0)
++				goto splice_read_end;
+ 
+-		memset(&darg.inargs, 0, sizeof(darg.inargs));
++			memset(&darg.inargs, 0, sizeof(darg.inargs));
+ 
+-		err = tls_rx_one_record(sk, NULL, &darg);
+-		if (err < 0)
+-			goto splice_read_end;
++			err = tls_rx_one_record(sk, NULL, &darg);
++			if (err < 0)
++				goto splice_read_end;
+ 
+-		tls_rx_rec_done(ctx);
+-		skb = darg.skb;
+-	}
++			tls_rx_rec_done(ctx);
++			skb = darg.skb;
 +		}
+ 
+-	rxm = strp_msg(skb);
+-	tlm = tls_msg(skb);
++		rxm = strp_msg(skb);
++		tlm = tls_msg(skb);
+ 
+-	/* splice does not support reading control messages */
+-	if (tlm->control != TLS_RECORD_TYPE_DATA) {
+-		err = -EINVAL;
+-		goto splice_requeue;
++		/* splice does not support reading control messages */
++		if (tlm->control != TLS_RECORD_TYPE_DATA) {
++			err = -EINVAL;
++			goto splice_requeue;
++		}
++
++		/* Splicing zero bytes would read as EOF */
++		if (rxm->full_len)
++			break;
++
++		consume_skb(skb);
  	}
  
- 	/*
+ 	chunk = min_t(unsigned int, rxm->full_len, len);
+-- 
+2.53.0
+
 
 
