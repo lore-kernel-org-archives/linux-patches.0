@@ -1,52 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795618413;
-	b=XczOUMJAEDckgmJ+hFyZRcgOUkjg5xSukby/l2QUvLimajeaogyo6QUWRLnylGxTeLgw
-	 /p3U9ba4LZTx8O6bkimuRPviB3g5M/TmNfnsTf5DUNRSf4ksYyCw5QCMX6C0e0z+qT7d9
-	 M1Rr8AmRME0r1OP1Q65GrLxSim3c0cpYi0q9chw1IhzHNLI05hf0+FSNneDql7TZPdqi1
-	 fYmUT/uuE1T8PVg3/Oxyn9LjR+Dmt2g2JkKZaXV+2H0gQVUwna3zp0M3huF5eQBYkeuej
-	 iwHWpWv90OTZZuitTkbiB4dujqwfeT8PLiyn7IjEQ1cUi3yxJHPFcMCr3kK4sjecpGA==
+	t=1795618416;
+	b=hr9cLUDSFdR+2su527geHJOynOzlwUOVoldN/GlnjwxLBeEtpeZJslufczgGf4gVCPFn
+	 qZqnMSflymlji5Q4hTbDxzfEYaLx2UcYZ7jL+pOK/Sy2PBQAtFGtep+kDREfL3qAZHQto
+	 HNaqx6Ajy3SRK6jnT6vh8QCHCfwaPQCoYUgRTAGTX+m7uCgWEeR7lE0oU4jHN0pFfMjdy
+	 Q/TtYPkdcJo+e0hQlFehyAiqvNMzJ0Cd/o0+eytI6wSx22ewkBEPxhKTOiMUE99idJvls
+	 8OBw+/h0TCHuM+uOTF5hXd1YLEzGaq5gh1l6icKrtOkvegu3FJvTXzDfImMx8+eiwEA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795618413;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795618416;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=OzPeOfj6gHMV2aPHp6vQRLxZfUTIRqLx82VbwOD+eto=;
-	b=2f4QqD8ALM6SBWUrtZjFduWpIdOlC/uuZIvmR7Y4LlPC/4JMRYo1lXe7jTeg8SueTfzw
-	 TPQik8COfChlXVWpaLjQY9fKQl/LXM7iRmRy9WNFnfQKMzDVBsOaz78BJAxeAygPa8lhK
-	 j/8E1DrgNEOh81hRTqQTL30oYVss9ZpBdH/VkCqLCur3R81YNkQtjwk41RrdxuDxhKkxO
-	 /wJmyhEtvbNIpDypvuBAg9Ky17bQbmfe/jyIfvBFaELIvoh/Xbsql0KCN/M2A8GAwX8DY
-	 Dmf41WOu3z14KJ05DieFLDdVvup1Ud5OIb1ianb8z9OtllcKjfY5gmJXXJxy5qmyhxw==
+	bh=YqkMXvSd59TseasM3YA9C/TnYlXUD7oppqIWg7v13ug=;
+	b=jnVzQSsn3WnF3pzm1Uef2RnSKoWXsVQc9qJhzcWVefTFjVY8y9B792DhkWPVLjFKGvVB
+	 n4Q/ieA2UKJTkXnYmO7dY54neuTLrS2+DrLnExuEUeVC04cjznO+mmBO50zFWcLV5nPk5
+	 Tzyw1Me/KtLqRm7/bAXem/yvA21NbU3hHnOV+N4TX678bqnK73g/6uI98KZJM4Aao+fVN
+	 UpQyvnluLMCu9FMl5oe4u5z8PgtFgLyuB1tXXuxQpOV/jfIygDwZlGDTyhE+fJdh7EQge
+	 kRCnk4rRJduQHMXDzWqhfuJCzH/SrKGWN7J50TxdNPxADFXsLDzAvHfFhP73Iwx2FlA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=vy+rAO4p;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="e9/Xpca2";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B7D96606A31E;
-	Wed, 25 Nov 2026 14:53:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6563D606A323;
+	Wed, 25 Nov 2026 14:53:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=vy+rAO4p
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C99591F000C4;
-	Wed, 25 Nov 2026 14:53:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=e9/Xpca2
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9DC6D1F000D1;
+	Wed, 25 Nov 2026 14:53:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795618413;
-	bh=OzPeOfj6gHMV2aPHp6vQRLxZfUTIRqLx82VbwOD+eto=;
+	s=korg; t=1795618416;
+	bh=YqkMXvSd59TseasM3YA9C/TnYlXUD7oppqIWg7v13ug=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=vy+rAO4pUVE4dpqEmaGCgG9HYT5FDN8sIZHfn73qzj18NE+mBmwT+oqqSMsgrp8P0
-	 OMwWmQpy/FZ6w/PKlmK5a2va2KWTzDBycLrR+LQvcneNSTs79lPwg9tm1ViRjzVe0s
-	 EKU8Fvi0T00Px3NAP84LuxBjo5KKQ3AWsU3e7MHo=
+	b=e9/Xpca24p/7cnZXmAOz/Izrb/QjMCFie06K4a8EmnKSI0DWdI9PwOKv2kPl1/tcj
+	 BqB+8pUMEc2QBAqMNsKGUMFt4H9ORZasnT3UrPxDOAefSf9LH7Uz2QEqGYgCRKl6OH
+	 cf49QmSjVx4nmx9uYT2rLOO+GouKze8kZqCZIJec=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christian Loehle <christian.loehle@arm.com>,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+	Avi Weiss <thnkslprpt@gmail.com>,
+	Xia Yan <yanxia@cmss.chinamobile.com>,
+	Simon Horman <horms@kernel.org>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0273/1005] cpufreq: Hold the policy write lock when changing boost state
-Date: Wed, 25 Nov 2026 15:26:51 +0100
-Message-ID: <20261125143828.133891130@linuxfoundation.org>
+Subject: [PATCH 7.3 0274/1005] net: skbuff: reject zero MPLS TTL before decrementing
+Date: Wed, 25 Nov 2026 15:26:52 +0100
+Message-ID: <20261125143828.157407895@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143821.729802100@linuxfoundation.org>
 References: <20261125143821.729802100@linuxfoundation.org>
@@ -68,62 +70,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Christian Loehle <christian.loehle@arm.com>
+From: Avi Weiss <thnkslprpt@gmail.com>
 
-[ Upstream commit e6f50e602e373583423654ec000cad8b8d08f7bc ]
+[ Upstream commit 24614e72df484ad50ecba98aaa88c7df2448c122 ]
 
-The per-policy boost sysfs handler calls policy_set_boost() under
-policy->rwsem, but the global boost handler and cpufreq_online() do not.
-Consequently, global and per-policy boost changes can concurrently
-update policy->boost_enabled, invoke the driver callback and update the
-boost frequency QoS request. The driver callbacks also access policy
-state, e.g. CPPC updates cpuinfo.max_freq that assumes policy->rw_sem
-held.
+skb_mpls_dec_ttl() decrements the u8 TTL before checking whether it
+expired. An incoming TTL of zero wraps to 255, causing the TC MPLS
+dec_ttl action to pass an expired packet instead of dropping it.
 
-Take policy->rwsem around policy_set_boost() in both unlocked
-callers. Keep locking at the call sites because the per-policy sysfs
-handler already holds the lock.
+Reject a zero TTL before the decrement while preserving the existing
+behavior for TTL one and valid TTL values.
 
-Fixes: 218a06a79d9a ("cpufreq: Support per-policy performance boost")
-Signed-off-by: Christian Loehle <christian.loehle@arm.com>
-Link: https://patch.msgid.link/be3739f8-e668-4711-912c-91459d77ed35@arm.com
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Fixes: 2a2ea50870ba ("net: sched: add mpls manipulation actions to TC")
+Signed-off-by: Avi Weiss <thnkslprpt@gmail.com>
+Reviewed-by: Xia Yan <yanxia@cmss.chinamobile.com>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Link: https://patch.msgid.link/20261031114135.3784868-2-thnkslprpt@gmail.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/cpufreq/cpufreq.c | 6 ++++++
- 1 file changed, 6 insertions(+)
+ net/core/skbuff.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/cpufreq/cpufreq.c b/drivers/cpufreq/cpufreq.c
-index 54dde8419bdc4..015962e6c1fe4 100644
---- a/drivers/cpufreq/cpufreq.c
-+++ b/drivers/cpufreq/cpufreq.c
-@@ -576,6 +576,8 @@ static int policy_set_boost(struct cpufreq_policy *policy, bool enable)
- {
- 	int ret;
+diff --git a/net/core/skbuff.c b/net/core/skbuff.c
+index 54a76d6723fb7..0cd5f30ff9bbf 100644
+--- a/net/core/skbuff.c
++++ b/net/core/skbuff.c
+@@ -6779,7 +6779,7 @@ int skb_mpls_dec_ttl(struct sk_buff *skb)
  
-+	lockdep_assert_held_write(&policy->rwsem);
-+
- 	if (policy->boost_enabled == enable)
- 		return 0;
+ 	lse = be32_to_cpu(mpls_hdr(skb)->label_stack_entry);
+ 	ttl = (lse & MPLS_LS_TTL_MASK) >> MPLS_LS_TTL_SHIFT;
+-	if (!--ttl)
++	if (!ttl || !--ttl)
+ 		return -EINVAL;
  
-@@ -1629,6 +1631,8 @@ static int cpufreq_online(unsigned int cpu)
- 	 */
- 	if (cpufreq_driver->set_boost && policy->boost_supported &&
- 	    (new_policy || !cpufreq_boost_enabled())) {
-+		guard(cpufreq_policy_write)(policy);
-+
- 		ret = policy_set_boost(policy, cpufreq_boost_enabled());
- 		if (ret) {
- 			/* If the set_boost fails, the online operation is not affected */
-@@ -2830,6 +2834,8 @@ static int cpufreq_boost_trigger_state(int state)
- 		if (!policy->boost_supported)
- 			continue;
- 
-+		guard(cpufreq_policy_write)(policy);
-+
- 		ret = policy_set_boost(policy, state);
- 		if (unlikely(ret))
- 			break;
+ 	lse &= ~MPLS_LS_TTL_MASK;
 -- 
 2.53.0
 
