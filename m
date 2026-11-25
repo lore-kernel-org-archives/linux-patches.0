@@ -1,53 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795621409;
-	b=VeZUgXAHBQTmUr1Ylld7OYmKBSuNFqGSBo82XrGh2zAaSN1pGjc7zHrz/PqpmrPZxeQ5
-	 hHZ1Rnkayxsv9F/x/0GzpWsBcibidPOP+IFszAANtiT/E1asMKJiyR2WqwAxn4a8Lw901
-	 xRU4Qp8xPd+YkSWCza6Ce5uyy2v2Po9rGuCie7h15GrY3u9sY1fIcZ7OVIxlxKeykXjyH
-	 rqqrrUeoeyC6i76MdD8lEpCsFQSd0BJrBjV+xvbssrSIMsrWhUKvBMnpfdl+lfgtSvRKW
-	 C/4VWSlw8WUln6G7O5SLMiGx5DKW22ir7tyGnRVgPw7ytQu0h5z7yEzgB+OGzMpUP/A==
+	t=1795621412;
+	b=phtNRg+JR9MHaq3e22ZRtp8vDQcf8H+HJRSglymEGtN3r9YV+rG6uwyEYzp2OTRWvYFV
+	 LNR/XlwAlX8PpbTy7XR5JiKewzbX1Lt4adtc1lhpvqG8d4GVdPAtxVrtltJ06GqfCW2Jt
+	 lfHJGyKEPdl2gOtHGzVacNZs7b7i5wR1oA2s5BO/oOMZ9E1RCHLZFvVxSkMDD4ip3keRE
+	 iIwSG2oFPdxP4EJBIkGVsGh7yGgTENL7yZrfT8ua8FAOtJ9rdsgLvpI5DY+GzHoJhMSS/
+	 mRSfn5HipxNz96cUHKJcHMiHpUIPmth5XoJkfwVZygRnap8BaAkivnCm/d4xI6t5Ymg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795621409;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795621412;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=JLaIIMEJ+S/tY6AuOUf/HrvBiHyHuEgnGwD3L+M82WU=;
-	b=41bS0jPGdl9s/9dmFH5VOfTEsMwwRSJh7d4wc0y4nUfqPxfjtMxuFP3hvFfHS3/3EgJG
-	 w1BCPbAMZDR1Se9SqEy1DGuF9zB0I2l7mRdrS5KNxoUcyWyHg2crYtYPMrizKZvQiWKab
-	 6Gi6rdcSBm+rv9II/teSylCHpZUkBLb6Vvq8Qu16OFRRJP3khLrdVu3bka58fjvJJGgrz
-	 p/oEgW1P/g08Xa+Q+R+J8dIyQAOheSBcyKvX/F0+pKYc3jNCDoZl6ATfm79lGChp2itPy
-	 7O4XGhgrckNafnm4Zz5Xt0Jj2AlTLZa8H0ya8g3bUwhvGFQsc3iS3yknXX3l2ioqpIQ==
+	bh=8vuRpYneZp1QHs/6kYyiW4OllieTsNS4yz5oEfgbLEw=;
+	b=Fvma05QDiaRIixuh++KdH/t+b+C1GKDXi/fz7bRjETH5MnrACQ2j6PjX3N4v8TJD+M38
+	 ZebGMAZ+S0YOnkNqvgzGfIadL1l5ZfcO6deVMNuh1NX+Az5qSeby2x1gw9YJF6/63sgXl
+	 zpJglxGgo7VPa7Cy+QL6GSgOjLXTn9EIEo01L7UGaFtpLyBUzFryDV1oVWfTTOozo/N8T
+	 NGYfijHyH1+KYL1ifhrWlonbNJr7e1wg0wm4tY7exypXDgTQEUcoNEk1Pmaa2fU8Y4jie
+	 GXlVZIlmfCequQVHF9lGorBN7TlcGITrhshHZEYBgJ9sQ0f1b6DUDRt/cb0JWWlfF4w==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Iyy9aUqA;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=TDxFTfnh;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B0BF0606A688;
-	Wed, 25 Nov 2026 15:43:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D1136606A330;
+	Wed, 25 Nov 2026 15:43:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Iyy9aUqA
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 950821F000C4;
-	Wed, 25 Nov 2026 15:43:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=TDxFTfnh
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BC41F1F000C0;
+	Wed, 25 Nov 2026 15:43:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795621409;
-	bh=JLaIIMEJ+S/tY6AuOUf/HrvBiHyHuEgnGwD3L+M82WU=;
+	s=korg; t=1795621412;
+	bh=8vuRpYneZp1QHs/6kYyiW4OllieTsNS4yz5oEfgbLEw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Iyy9aUqARX39+/lOvNn4oekJatkV9gPfEi0gfOwxY6B45rFXOs6Y/yGtrFa5oWBv6
-	 o/0GGgfVPNLR/gvG1VufNFOOBftsdD/C1Xi5bh4y/3h4dRLcbOOArWmdoyM4xCqtrm
-	 Z3xgRe+6FWx8I91mwr3NEn8Yute3Aa8zLLWv3Mos=
+	b=TDxFTfnhf+HMYAbZkitStTcVsdaWBp9PMHxHnNUsoraaFFVVlP5Gl0ZrXPpoE9j7v
+	 Ce1tSCUhJ99vueAcQBA2xyEc4LMZt6sUSlbvjrS9pPrXzsL2ZE6PgPAXVG79twRC9E
+	 HzrlavsGv35UCwQmTP47Ro6mhcVtB5ajmcIr867U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Avi Weiss <thnkslprpt@gmail.com>,
+	Shao Mingyin <shao.mingyin@zte.com.cn>,
 	Christoph Hellwig <hch@lst.de>,
+	Damien Le Moal <dlemoal@kernel.org>,
 	Jens Axboe <axboe@kernel.dk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 217/990] block: report the correct discard alignment in sysfs
-Date: Wed, 25 Nov 2026 15:26:24 +0100
-Message-ID: <20261125143827.172876473@linuxfoundation.org>
+Subject: [PATCH 6.18 218/990] zloop: fix the error code in the blk_mq_alloc_disk message
+Date: Wed, 25 Nov 2026 15:26:25 +0100
+Message-ID: <20261125143827.195534499@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143822.072087159@linuxfoundation.org>
 References: <20261125143822.072087159@linuxfoundation.org>
@@ -69,41 +70,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Avi Weiss <thnkslprpt@gmail.com>
+From: Shao Mingyin <shao.mingyin@zte.com.cn>
 
-[ Upstream commit 2516f0413f8704a7370ef8a2eeae26c9bc438978 ]
+[ Upstream commit 703f6aee8d8d1cb6227af56169be6b1dc4d3c4d5 ]
 
-disk_discard_alignment_show() reports the physical I/O alignment offset
-instead of the discard alignment. Devices can specify these offsets
-independently, so the discard_alignment sysfs attribute can report the
-wrong value.
+When blk_mq_alloc_disk() fails, "ret" still holds the zero returned by the
+preceding blk_mq_alloc_tag_set() call, so the error message always reports
+"err=0".  Save PTR_ERR(zlo->disk) in "ret" before printing it, like the
+blk_mq_alloc_tag_set() and add_disk() failure paths do.
 
-Use bdev_discard_alignment() for the whole-disk attribute, as is already
-done for partitions.
-
-Fixes: 4e1462ffe899 ("block: remove queue_discard_alignment")
-Signed-off-by: Avi Weiss <thnkslprpt@gmail.com>
+Fixes: eb0570c7df23 ("block: new zoned loop block device driver")
+Signed-off-by: Shao Mingyin <shao.mingyin@zte.com.cn>
 Reviewed-by: Christoph Hellwig <hch@lst.de>
-Link: https://patch.msgid.link/20261031102023.3644494-2-thnkslprpt@gmail.com
+Reviewed-by: Damien Le Moal <dlemoal@kernel.org>
+Link: https://patch.msgid.link/20261031221737569WQ3bg8y80Ht7JdTCWwlkL@zte.com.cn
 Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- block/genhd.c | 2 +-
+ drivers/block/zloop.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/block/genhd.c b/block/genhd.c
-index 6ba0e22ce9dff..2bba931bd10aa 100644
---- a/block/genhd.c
-+++ b/block/genhd.c
-@@ -1146,7 +1146,7 @@ static ssize_t disk_discard_alignment_show(struct device *dev,
- {
- 	struct gendisk *disk = dev_to_disk(dev);
+diff --git a/drivers/block/zloop.c b/drivers/block/zloop.c
+index 9986cfff47d6d..a49170a6565a2 100644
+--- a/drivers/block/zloop.c
++++ b/drivers/block/zloop.c
+@@ -1024,8 +1024,8 @@ static int zloop_ctl_add(struct zloop_options *opts)
  
--	return sysfs_emit(buf, "%d\n", bdev_alignment_offset(disk->part0));
-+	return sysfs_emit(buf, "%u\n", bdev_discard_alignment(disk->part0));
- }
- 
- static ssize_t diskseq_show(struct device *dev,
+ 	zlo->disk = blk_mq_alloc_disk(&zlo->tag_set, &lim, zlo);
+ 	if (IS_ERR(zlo->disk)) {
+-		pr_err("blk_mq_alloc_disk failed (err=%d)\n", ret);
+ 		ret = PTR_ERR(zlo->disk);
++		pr_err("blk_mq_alloc_disk failed (err=%d)\n", ret);
+ 		goto out_cleanup_tags;
+ 	}
+ 	zlo->disk->flags = GENHD_FL_NO_PART;
 -- 
 2.53.0
 
