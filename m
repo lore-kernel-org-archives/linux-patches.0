@@ -1,55 +1,55 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795620983;
-	b=2PDIG217+hI12xj599K4B15hqTbDuMSPaxW68zmfx8nkIkcfTRPIa7P6DfXM/JnIIFDN
-	 BMqUornS7Btrmr3t64LyYmm4TWZTfp5HHSGMrY8SIPr9t6L2Th6+tNlamMEUrSej076ym
-	 C1htilzIWy5rQIlD1rH9o92JK5/AWYryVD5qoXp4ixPO1ZOfW66uSK088GumxJwc2qCHY
-	 REFNK7NAjx1PaSvUELQSNEkJmQzRuLPMfSldJd8rbzSp/KOoPRLozWdp46uQT1H+9cpKW
-	 en/zd2fd/jivGtqg3v4cWjhr5/LP5EkYBcuDlxhJAVuDpM6oftwbvpNSjUsENyE5a0A==
+	t=1795620987;
+	b=OoPQHLdi67n6URBIivls32xhlLYnEpJC26qpQwgoI2w77z9yzrsBqnwW9PLu9GkNn8iw
+	 M5Mb/Ss1Z8xG5QYanM9w8BZAj6E+bsrfQPy9JojmMBXNZOi6XI8LACVMZz5czyKRrAS/6
+	 rwbv0wEsm85XYwzEGiH3owDfaMaPdvyjyd5WTPiD+7uCbnCUUhpZMVi9oPK1cm9QpUOyI
+	 3aCFQVF7Bs9BdAXn6WDQYrpZBAvmWCA1YAFEAqjv4hFDQu7l6QMN2E6u/wVxzyXyFj3Yf
+	 Yh78oRIFmiMTwA9WlLLV/i0UjkjyuihXNoDBQOqV2OI65MkGuwsiQ2/o3nr7zBKLt6w==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795620983;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795620987;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=DoBf1CRsJ65foUtqh0+fAbzJWw01VoZ4iRRMJQUVAqw=;
-	b=bzJYUpghXM6u6yjxq5qH7w38YCtGLhl1iyNeIJDm3qh4qS+UYCVP3HiRKKJs9RU6XNRs
-	 5JiFOkBWg+/CZynexsxXIE5ZyTt60t4sVvbH6ApEdWNyUiHD+oOcrLYkviPvS00vidCkT
-	 CvakKI4/vJJY0v7OmtlXkJYUUdUvEdklSdC8wyHZwtUWvSCl4aQnZw3oudC4e3YBtqEWV
-	 R3oq/b9qstsYuANeGi79vnUvISg5QZ6El2VdoHh5ExJQBcKfPcntpG+KN2PUGmxI6F6O7
-	 QYMTclpaf3GcHwr0dNnBMWD5INV7AMRfeH71Qp4fZYelt9W0KSPOyWGpiXHN3CJT7+A==
+	bh=McyJdCl9vaE9pANSWjcEY5aeFrZHR3D3ya4a+4tVR0A=;
+	b=EeQkl6L2KjgX5yLGubfsF6GmHkvzwvfUYSu4cpxpOUpiu6L9cX6MLzSkNvge8e5EU4yY
+	 h4IvXo0gbt4WH6c0K8/xEmTVdd4Ln5qL39ON73wwfmWkpHWc79oQQB/tJzMlqSFJF4qpc
+	 OJWZPKZJGqj7saWOiXJFyJ6DAtOxLAocdor7jIEjs/tiTzFSlw3CRCwKj2k8mItsZDBCz
+	 2LJlKOzCfl5R9oCn77Cz5FIQucQX+tNDzBusDytLUanIKZrwX87vfMv91GFJM01/agegL
+	 Es+xPUuJCtGyGpOwOjSErFtsHsgOWVjE55X4jUTDzLX7bDdPChtH+bBfFOfh+ZAzupQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=K9vi7TY7;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=lOJMUjkg;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9D445606A69E;
-	Wed, 25 Nov 2026 15:36:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1E07D606A696;
+	Wed, 25 Nov 2026 15:36:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=K9vi7TY7
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 516641F000C4;
-	Wed, 25 Nov 2026 15:36:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=lOJMUjkg
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 982A51F000D0;
+	Wed, 25 Nov 2026 15:36:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795620982;
-	bh=DoBf1CRsJ65foUtqh0+fAbzJWw01VoZ4iRRMJQUVAqw=;
+	s=korg; t=1795620986;
+	bh=McyJdCl9vaE9pANSWjcEY5aeFrZHR3D3ya4a+4tVR0A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=K9vi7TY7gTNx2q3lsKPnLRtqX0HuTjuer+07KCIRL0PM5zF39JMQKh6GNuJaGjVnN
-	 2cjicBUzCgD8AUeYmpmau/C8R/3ozl/QbOnkseCxzHueRFUKcK0sdbnT/5xOHlCTKV
-	 ZnWnsmSm6bl8ApQbRjCGW66DFtFusTQOOtaiDoKk=
+	b=lOJMUjkgJoZMVCmgge2OlH3BdL9mCRBO+xqSBcfawjFrQh8bdi2tDoV6Aj+rkDVqs
+	 WY7VfYex85WdJmiWHoq9ox/EnKZVicvz3BW8uQ2O5Ms6dPQNnOvznWF6c5g8QhIjlC
+	 zbo4WLNeIs4VzLcBi0L/DwnzmjEgebOIFRlpZje4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hazley Samsudin <hazleycryilis@gmail.com>,
-	David Ahern <dsahern@kernel.org>,
-	Hangbin Liu <liuhangbin@kylinos.cn>,
-	Andrea Mayer <andrea.mayer@uniroma2.it>,
-	Jakub Kicinski <kuba@kernel.org>,
+	kernel test robot <lkp@intel.com>,
+	Matt Coster <matt.coster@imgtec.com>,
+	Luigi Santivetti <luigi.santivetti@imgtec.com>,
+	Michal Wilczynski <m.wilczynski@samsung.com>,
+	Alessio Belle <alessio.belle@imgtec.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 084/990] seg6: fix transport header for inner IPv4 with IP options
-Date: Wed, 25 Nov 2026 15:24:11 +0100
-Message-ID: <20261125143824.059638145@linuxfoundation.org>
+Subject: [PATCH 6.18 085/990] drm/imagination: Align rogue_fwif_hwrtdata to 64 bytes
+Date: Wed, 25 Nov 2026 15:24:12 +0100
+Message-ID: <20261125143824.083061640@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143822.072087159@linuxfoundation.org>
 References: <20261125143822.072087159@linuxfoundation.org>
@@ -71,203 +71,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Andrea Mayer <andrea.mayer@uniroma2.it>
+From: Michal Wilczynski <m.wilczynski@samsung.com>
 
-[ Upstream commit 5838f10563d58afca6711edb5e4eda968ca181d9 ]
+[ Upstream commit 6c6200ffebf9766fd5d9293002298ea371c261c1 ]
 
-The End.DT4, End.DT46 (its IPv4 path only) and End.DX4 behaviors set the
-transport header of the decapsulated IPv4 packet at a fixed 20 bytes, the
-size of an IPv4 header without options. They do not validate the header
-length either. With options, the transport header points at the first
-option byte. The effects include:
-- ping -R sends an echo request with a 60-byte IPv4 header to a local
-  address through an End.DT4 or an End.DX4 SID. Since icmp_rcv()
-  computes the ICMP checksum from the first option byte, the request
-  fails the check and is counted in IcmpInCsumErrors.
-- A UDP datagram can reach a port that an iptables rule drops. The rule
-  checks the UDP header after the full IPv4 header, while the socket
-  lookup reads it at the fixed 20-byte offset.
-- With an inbound AH state, ah_input() reads the AH header at the fixed
-  20-byte offset, but copies the IPv4 header over it with the length in
-  the IHL field. A packet shorter than that length can make ah_input()
-  write past the end of the data, into skb_shared_info when the skb has
-  no tailroom.
+Sparse (W=1) builds fail because `SIZE_CHECK(struct rogue_fwif_hwrtdata,
+384)` expects 384 bytes, but the compiler generates a 336-byte
+structure.
 
-Validate the inner IPv4 header length with the new helper
-seg6_validate_iphdr_len() and set the transport header at that length. A
-packet that is not IPv4, whose header length field is below 5, or whose
-header is truncated, is dropped with a drop reason. The fix is limited to
-the header length, which the transport header relies on. Other checks done
-on IPv4 input, such as the header checksum, the total length and the IP
-options, are not addressed here.
+This is due to an alignment conflict: the inner member `cleanup_state`
+requires 64-byte alignment, but the outer struct is explicitly marked
+`__aligned(8)`.
 
-Found by code inspection while reviewing commit 44930446dde4 ("ipv6: seg6:
-clear IPv4 control block on IPIP decapsulation"), as a pre-existing issue
-that Sashiko also reported on v2 of that patch. Without this patch, a
-bpftrace probe on ah_input() shows the reporter's reproducer packet
-written into skb_shared_info. With it, that packet is dropped before
-ah_input(), ping -R no longer fails the ICMP checksum, the UDP datagram
-reaches its real port, and the SRv6 selftests still pass. These effects
-reproduce on an unmodified kernel, without error injection.
+While a non-sparse build implicitly pads the size to a multiple of 64, a
+sparse build strictly respects the 8-byte outer alignment, resulting in
+a size mismatch.
 
-Fixes: 891ef8dd2a8d ("ipv6: sr: implement additional seg6local actions")
-Fixes: 664d6f86868b ("seg6: add support for the SRv6 End.DT4 behavior")
-Reported-by: Hazley Samsudin <hazleycryilis@gmail.com>
-Closes: https://lore.kernel.org/netdev/20260809221915.2ffc1ecd0f445fcb70270e31@uniroma2.it/
-Reviewed-by: David Ahern <dsahern@kernel.org>
-Reviewed-by: Hangbin Liu <liuhangbin@kylinos.cn>
-Signed-off-by: Andrea Mayer <andrea.mayer@uniroma2.it>
-Link: https://patch.msgid.link/20261028171511.35-1-andrea.mayer@uniroma2.it
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fix this by aligning the entire structure to 64 bytes, which resolves
+the contradiction and forces the correct 384 byte size on all builds.
+
+Fixes: a26f067feac1 ("drm/imagination: Add FWIF headers")
+Reported-by: kernel test robot <lkp@intel.com>
+Closes: https://lore.kernel.org/oe-kbuild-all/202512131851.1WNXk3BC-lkp@intel.com/
+Reviewed-by: Matt Coster <matt.coster@imgtec.com>
+Reviewed-by: Luigi Santivetti <luigi.santivetti@imgtec.com>
+Signed-off-by: Michal Wilczynski <m.wilczynski@samsung.com>
+Link: https://patch.msgid.link/20261029-fix_imagination-v4-1-689745dd52ef@samsung.com
+Signed-off-by: Alessio Belle <alessio.belle@imgtec.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv6/seg6_local.c | 69 +++++++++++++++++++++++++++++++++----------
- 1 file changed, 53 insertions(+), 16 deletions(-)
+ drivers/gpu/drm/imagination/pvr_rogue_fwif.h | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/net/ipv6/seg6_local.c b/net/ipv6/seg6_local.c
-index 67eeb27ee43a8..df928fed6676e 100644
---- a/net/ipv6/seg6_local.c
-+++ b/net/ipv6/seg6_local.c
-@@ -149,9 +149,7 @@ struct seg6_end_dt_info {
- 	int vrf_ifindex;
- 	int vrf_table;
+diff --git a/drivers/gpu/drm/imagination/pvr_rogue_fwif.h b/drivers/gpu/drm/imagination/pvr_rogue_fwif.h
+index 5d590c4c25663..2f8daa93c9e68 100644
+--- a/drivers/gpu/drm/imagination/pvr_rogue_fwif.h
++++ b/drivers/gpu/drm/imagination/pvr_rogue_fwif.h
+@@ -2174,7 +2174,7 @@ struct rogue_fwif_hwrtdata {
+ 	bool geom_caches_need_zeroing __aligned(4);
  
--	/* tunneled packet family (IPv4 or IPv6).
--	 * Protocol and header length are inferred from family.
--	 */
-+	/* tunneled packet family (IPv4 or IPv6) */
- 	u16 family;
- };
+ 	struct rogue_fwif_cleanup_ctl cleanup_state __aligned(64);
+-} __aligned(8);
++} __aligned(64);
  
-@@ -972,6 +970,40 @@ static int input_action_end_dx6(struct sk_buff *skb,
- 	return -EINVAL;
- }
- 
-+/* Validate the length of the IPv4 header at skb->data (which must point to
-+ * the network header) and report that length, options included.
-+ * Only the version, the header length and the presence of the whole header
-+ * are checked.
-+ * The length is written only when SKB_NOT_DROPPED_YET is returned.
-+ *
-+ * skb pointers may change: after this call, the caller must evaluate again
-+ * any pointer into the packet data.
-+ */
-+static enum skb_drop_reason
-+seg6_validate_iphdr_len(struct sk_buff *skb, int *hdrlen)
-+{
-+	enum skb_drop_reason reason;
-+	const struct iphdr *iph;
-+	int len;
-+
-+	reason = pskb_may_pull_reason(skb, sizeof(struct iphdr));
-+	if (reason)
-+		return reason;
-+
-+	iph = ip_hdr(skb);
-+	if (iph->version != 4 || iph->ihl < 5)
-+		return SKB_DROP_REASON_IP_INHDR;
-+
-+	len = ip_hdrlen(skb);
-+
-+	reason = pskb_may_pull_reason(skb, len);
-+	if (reason)
-+		return reason;
-+
-+	*hdrlen = len;
-+	return SKB_NOT_DROPPED_YET;
-+}
-+
- static int input_action_end_dx4_finish(struct net *net, struct sock *sk,
- 				       struct sk_buff *skb)
- {
-@@ -1001,14 +1033,18 @@ static int input_action_end_dx4_finish(struct net *net, struct sock *sk,
- static int input_action_end_dx4(struct sk_buff *skb,
- 				struct seg6_local_lwt *slwt)
- {
-+	SKB_DR(reason);
-+	int hdrlen;
-+
- 	if (!decap_and_validate(skb, IPPROTO_IPIP))
- 		goto drop;
- 
--	if (!pskb_may_pull(skb, sizeof(struct iphdr)))
-+	reason = seg6_validate_iphdr_len(skb, &hdrlen);
-+	if (reason)
- 		goto drop;
- 
- 	skb->protocol = htons(ETH_P_IP);
--	skb_set_transport_header(skb, sizeof(struct iphdr));
-+	skb_set_transport_header(skb, hdrlen);
- 	nf_reset_ct(skb);
- 
- 	if (static_branch_unlikely(&nf_hooks_lwtunnel_enabled))
-@@ -1018,7 +1054,7 @@ static int input_action_end_dx4(struct sk_buff *skb,
- 
- 	return input_action_end_dx4_finish(dev_net(skb->dev), NULL, skb);
- drop:
--	kfree_skb(skb);
-+	kfree_skb_reason(skb, reason);
- 	return -EINVAL;
- }
- 
-@@ -1153,16 +1189,24 @@ static struct sk_buff *end_dt_vrf_core(struct sk_buff *skb,
- 	struct seg6_end_dt_info *info = &slwt->dt_info;
- 	struct net_device *vrf;
- 	__be16 protocol;
-+	SKB_DR(reason);
- 	int hdrlen;
- 
- 	vrf = end_dt_get_vrf_rcu(skb, info);
- 	if (unlikely(!vrf))
- 		goto drop;
- 
-+	if (unlikely(info->family != AF_UNSPEC && info->family != family)) {
-+		pr_warn_once("seg6local: SRv6 End.DT* family mismatch");
-+		goto drop;
-+	}
-+
- 	switch (family) {
- 	case AF_INET:
- 		protocol = htons(ETH_P_IP);
--		hdrlen = sizeof(struct iphdr);
-+		reason = seg6_validate_iphdr_len(skb, &hdrlen);
-+		if (unlikely(reason))
-+			goto drop;
- 		break;
- 	case AF_INET6:
- 		protocol = htons(ETH_P_IPV6);
-@@ -1174,11 +1218,6 @@ static struct sk_buff *end_dt_vrf_core(struct sk_buff *skb,
- 		goto drop;
- 	}
- 
--	if (unlikely(info->family != AF_UNSPEC && info->family != family)) {
--		pr_warn_once("seg6local: SRv6 End.DT* family mismatch");
--		goto drop;
--	}
--
- 	skb->protocol = protocol;
- 
- 	skb_dst_drop(skb);
-@@ -1189,7 +1228,7 @@ static struct sk_buff *end_dt_vrf_core(struct sk_buff *skb,
- 	return end_dt_vrf_rcv(skb, family, vrf);
- 
- drop:
--	kfree_skb(skb);
-+	kfree_skb_reason(skb, reason);
- 	return ERR_PTR(-EINVAL);
- }
- 
-@@ -1202,9 +1241,7 @@ static int input_action_end_dt4(struct sk_buff *skb,
- 	if (!decap_and_validate(skb, IPPROTO_IPIP))
- 		goto drop;
- 
--	if (!pskb_may_pull(skb, sizeof(struct iphdr)))
--		goto drop;
--
-+	/* end_dt_vrf_core() validates the inner IPv4 header length */
- 	skb = end_dt_vrf_core(skb, slwt, AF_INET);
- 	if (!skb)
- 		/* packet has been processed and consumed by the VRF */
+ /*
+  ******************************************************************************
 -- 
 2.53.0
 
