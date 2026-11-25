@@ -1,53 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795624522;
-	b=L1JN6v8IPlCj0QWVr1JKBdpwsH3VferEuS2QdzvhMT819jdwboFhoBogj4TkNoYE6FUL
-	 9W1cJ6+W4v9FoVmO02VamUlUkUtvNUYFMFZ5g1M60zsRKCws2kGuoSrcsJmXST1Kfex9K
-	 G9cOv2VcgqrNd7SSwRhS16ckEqiGBIb6+aBLa0kP4Wd/fKN24aQsc7wmYAhigUGUvJv87
-	 VG5OKh9Ih9RoFMLOARjzYpxVTq+GbCF25YY89LBrLSYQw8QNM7y7MJtUmGRpN+nX7G+OG
-	 zOS1AERcr+M+W/3rjPV4rMMEszuEXMZyIQODgCry4MuMrOqmZoC9+Ao81VUnklu5+Vg==
+	t=1795624525;
+	b=pvhKJx87f2a5DUaPRqsbiu0XbSV5ccVanZISgAeAWgVITkB6SvLU7WscvVdrkcvmq0lP
+	 9AYpU+TUDu7ii7q1yFAA+Mgw1a05CiJCLh1UtuInxWN3M7sJRlI/6sHReXc8HtAeaJsoX
+	 ahz8pJfpc6gw9ljIXI3N9uqb/7kl16WhM2eGxCh2c5qAj9hTjlqi7ujzmsM6E8yG848E3
+	 cjwkxpzGZnBDSzVYwawK7C/7dKiERWDw5IylioLFh8kFRuboaRST7pCqe4/vbhVRGtZoT
+	 lLJ+6tmhVNAl6Q/I3BARc6jKqoDBGLzwWCUniRI4OkItgeEsso3QVBrypApNfnAQ+TA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795624522;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795624525;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=zr7+CcMvGiYftbTPaRJjdt/sTZZOwqFzxUi5KTRQaos=;
-	b=Eo8PfXuhAOQwMEaFSH6w8PImTGb3kuV1oH41XjxXqr2XoRlYHlmhXfaBeRsVyS2oNeqL
-	 b8pudVKvqhr1l8917uNEkyhIaPjtwYjN+pqaffgJLdx/AQ3QqXqsw2sM8yXky3kmg+vQf
-	 fq/o9rcuceduocT1F03Bxwl6s26OJko3g/xnCk8iLvvPd0t1f44AuTEz5UCNiTmBjKueR
-	 GH8hnIrxwkai9oh0f25suX/cQIRKP+vl9dgm3q30oCR6Ezn3MoKp0Im9F8kVI8rT1mTHY
-	 7Ii76u4QpkBOVHxxObTM8ZLnQ0tVxMSTLSygAJS6KefoqpugKLa/Zv6n++a8ZAbLcTA==
+	bh=zaV0og6fys0leE/cDjlOL+hXgguRfp3Q+cRDQiS3msw=;
+	b=NQEZLKYrhpyqPBx9GApENfF3Nombww3G4DKjuusagBtvPrB+CJJX5GPyDg5T6KjnDye1
+	 6dw1xtG9ZF9l6Zq6fzhCSxoJADMFU3smRurd6pNKUiTtE8MsmETRU84QtTbVn9dBXew4R
+	 zTMkvrG42DC+HzFbcpT2fUIoIZaO6firl7S+gjpK7khW7t3gw1cgcRK90JULlSgvTdGa/
+	 VWfz5zkPQttmSNr8ZV2edWw6nExS3EqptDwpgPXtMegrkW8cosZOfNWWMJXXp8oV1feHW
+	 KIs5RKv1Xg82lj3JCy10kt5iM1fK5a3LrnEkspsoqZXRsw7RgPZxBQL74WLiP2zKM8Q==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="i/ItKG2S";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="nC/JVqgL";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3BA79606A33F;
-	Wed, 25 Nov 2026 16:35:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 34758606A33A;
+	Wed, 25 Nov 2026 16:35:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=i/ItKG2S
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8D10B1F000F2;
-	Wed, 25 Nov 2026 16:35:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=nC/JVqgL
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 60A1E1F000D1;
+	Wed, 25 Nov 2026 16:35:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795624522;
-	bh=zr7+CcMvGiYftbTPaRJjdt/sTZZOwqFzxUi5KTRQaos=;
+	s=korg; t=1795624524;
+	bh=zaV0og6fys0leE/cDjlOL+hXgguRfp3Q+cRDQiS3msw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=i/ItKG2SqCg6U275gxNRjzKKnwnVRFl6eWdu5XJQfQa8XtfFlR3L+qp0ThRFFqkY7
-	 ByJWYDF35ebVHwc4tIPPJurLDwODO5eJrt2KrOvj6FJyJzM3A0STM4HoGLIeGmbgIS
-	 5QJ1s6Hm03PAMX/9uEuyzROjkMrscnHtjjbOYjoQ=
+	b=nC/JVqgLsDtOJLArK2JPj+fBuwzXbok7yo95mvcflI0cLtLkVUW6d/dYnLIiKO/rq
+	 imh2o/2A2QNm6UaUw4Hy38CD1B2V03eRyuJJ8thoQX4JXppKO075ZRlTVPYC1c5pL/
+	 tH3zUzg48EYVA/suJdaaYrlWSbYJupZaK2kjFt7w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Florian Fainelli <florian.fainelli@broadcom.com>,
-	Simon Horman <horms@kernel.org>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 218/816] net: dsa: b53: restore the NSP IMP port 2 Gbps mode
-Date: Wed, 25 Nov 2026 15:29:26 +0100
-Message-ID: <20261125143854.249625035@linuxfoundation.org>
+Subject: [PATCH 6.12 219/816] Bluetooth: Fix not updating of hdev->commands[] after reset
+Date: Wed, 25 Nov 2026 15:29:27 +0100
+Message-ID: <20261125143854.274147828@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143849.205329330@linuxfoundation.org>
 References: <20261125143849.205329330@linuxfoundation.org>
@@ -69,53 +67,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Florian Fainelli <florian.fainelli@broadcom.com>
+From: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 
-[ Upstream commit 41af38324341df9d769641d6485abb67fd5209ed ]
+[ Upstream commit e00aa1a33f81a5e25b510f569ab9cb9f97eb41b9 ]
 
-The Northstar Plus IMP port uses the switch's proprietary 2 Gbps mode for
-its internal link to the AMAC.  Its fixed-link description reports 1 Gbps,
-so applying that speed clears PORT_OVERRIDE_SPEED_2000M and leaves the two
-ends of the internal link configured at different speeds.
+Read Local Supported Commands was only read once during the INIT/SETUP
+flow, but the supported commands bits may change at runtime, for
+example after a firmware change applied with vendor commands, so update
+hdev->commands[] every time the response is received.
 
-Force the 2 Gbps mode and flow control for BCM5301x and NSP CPU ports.  The
-mismatch caused switch output queue discards on both copper and SerDes
-ports, with one discard for every TCP retransmission.  With both ends
-restored to their high-speed modes, iperf3 reports no retransmissions.
-
-Fixes: b6a8a5477fe9 ("net: dsa: b53: fix resetting speed and pause on forced link")
-Signed-off-by: Florian Fainelli <florian.fainelli@broadcom.com>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Link: https://patch.msgid.link/20261029211540.4123250-3-florian.fainelli@broadcom.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Fixes: 6a070e6e81ad ("Bluetooth: Store supported commands only during setup procedure")
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/dsa/b53/b53_common.c | 12 +++++++++---
- 1 file changed, 9 insertions(+), 3 deletions(-)
+ net/bluetooth/hci_event.c | 4 +---
+ 1 file changed, 1 insertion(+), 3 deletions(-)
 
-diff --git a/drivers/net/dsa/b53/b53_common.c b/drivers/net/dsa/b53/b53_common.c
-index 1bc00288612c5..0ad48ef3ecfc9 100644
---- a/drivers/net/dsa/b53/b53_common.c
-+++ b/drivers/net/dsa/b53/b53_common.c
-@@ -1654,9 +1654,15 @@ static void b53_phylink_mac_link_up(struct phylink_config *config,
- 	}
+diff --git a/net/bluetooth/hci_event.c b/net/bluetooth/hci_event.c
+index 1fb641656fe0a..3eea2343f1977 100644
+--- a/net/bluetooth/hci_event.c
++++ b/net/bluetooth/hci_event.c
+@@ -781,9 +781,7 @@ static u8 hci_cc_read_local_commands(struct hci_dev *hdev, void *data,
+ 	if (rp->status)
+ 		return rp->status;
  
- 	if (mode == MLO_AN_FIXED) {
--		/* Force flow control on BCM5301x's CPU port */
--		if (is5301x(dev) && dsa_is_cpu_port(ds, port))
--			tx_pause = rx_pause = true;
-+		/* Force flow control and 2Gbits/sec on BCM5301x and NSP CPU
-+		 * ports
-+		 */
-+		if ((is5301x(dev) || dev->chip_id == BCM58XX_DEVICE_ID) &&
-+		    dsa_is_cpu_port(ds, port)) {
-+			tx_pause = true;
-+			rx_pause = true;
-+			speed = 2000;
-+		}
+-	if (hci_dev_test_flag(hdev, HCI_SETUP) ||
+-	    hci_dev_test_flag(hdev, HCI_CONFIG))
+-		memcpy(hdev->commands, rp->commands, sizeof(hdev->commands));
++	memcpy(hdev->commands, rp->commands, sizeof(hdev->commands));
  
- 		b53_force_port_config(dev, port, speed, duplex,
- 				      tx_pause, rx_pause);
+ 	return rp->status;
+ }
 -- 
 2.53.0
 
