@@ -1,53 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795620658;
-	b=YieSFz0WJWPhy08Pu5VsFIhUTqizgrSjDl7OcYomxxPneFXSdkgYVewKCKzfWm53mmi+
-	 ZL5g94D8sOfr9dC2yashlN11/Lrir8uAdbcGvn3t8zSs3OcmX0YOCNChjHHejW/J91N43
-	 5xLJL5aNBSZf9R0uTAa+jMKUhZ2/i5LzHJeR6Sn0ZE9hoKQpn1RkLE7IoYbBPEzPHePnG
-	 0RvOc5IhvXy0FdY1s+OHBdPj85Bia7iUjiO3PbBP1h9gLwDZupfxGZdtjfE1iXflhU9Dn
-	 i/brvS3lhfBrnXICZC2rosxvfh19zY7IqT1TPBTZorhcKFaGw/ym/CZpARzCGaMkekQ==
+	t=1795620662;
+	b=e1fdGMLtvKsExtwGmyzIKW/PuEehmJxiCl2dbrcm4kC5XU9LHP1EhDJlXQaLxwOWr2Jk
+	 ltUmVBE/c6oiFE7pnHnyOrckLklrxpnPIBjZG5hZgpvZZIsfC/Bk2IP5y4B0DA+FBn+Q8
+	 4E7LEL/kZt3/aTP5wZYbS3E1+LbMMMQ1fyjWboCOrIcY/UTyLRf7Tlk3V8KRkt3wIG0FJ
+	 r2chCVNY8XbowBvkhE0dDrp5ZMqTNSMS2B7+1fObXTaJuGgcbGLLigeKU0XuE/zXaP2ER
+	 j4k0wUHur4M2OCEQsouTx2DVFBwe95m8DdaQVqUV0Kn2jZ/GjpU2bhqpuhwo7bEdB/A==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795620658;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795620662;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=/hlC4LVKJV6hPG50OaXCP1rRxNY2v8bM+KDV4gPEaEo=;
-	b=QNY53lNXQ3OmLjB0vn0QLG+P3edTplRdVhzZddylyPO4X+b+P47vI+8E4URZS+kgZfRG
-	 PHd5MMYnAGVEVpLm0qoWGAtOM8++8vA074c9OPQykOj9qlPtwyLSeR8/wowrUEVjyuAnr
-	 Q2V6QjXMTtTUAz0C+98XsgQPSajXJkYD9GofkHGJ25eMscO9tFr0xOGJTZJT/4d6C/5at
-	 MAVaV/FH4/AZKJMAPcqkVRuFf0CSqTZgNupmQ+B4Bm0HEFmBMkGoXJzDgBnTMIbJFiaNN
-	 FerbV1NDtdNWNEHKw/HW7tY+ZWx0DhXnMbXm+QZY0ymYOOICvxjuCGe/rVOhTwJ06UA==
+	bh=w8XB4ml3jvWes5HZk088OFFwDjnFfxTgUJ6WftHDIb8=;
+	b=sRj0DL0Qklo7gsHDW4EhoKliH9TaNdSlvske1ZDPMre+Oy8wc6hJVwq5+fadsURQ7URS
+	 CgBIsAEJrmTmmOVdE5ywpCVUmfQYgEsS0I4jf8m/Xjrbo9MPK2BlMASW1ciY/qM0ucRjf
+	 tiReq1TYRM+id3PMNnupP8hTm5fsLjZJr/gKv4flEeL5f4ZDZVHwSHJCaLH0fkPsPsZjX
+	 HhuxQlZdisWGxRNCeESV8o3MU9hWabHhhZrdoC043cz6N3og34wrdUvkZS2mn3Hy24Mzx
+	 Oj27CoZ5GjXt/WxlDMLMlTWFNrQXmOgjW2IAp4PCL6zFIeJPjRw0Zo5m7NblghtmQgg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=oIVZIG5H;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=KnpdiiMX;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AAA09606A31E;
-	Wed, 25 Nov 2026 15:30:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2D201606A327;
+	Wed, 25 Nov 2026 15:31:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=oIVZIG5H
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D39E61F000C4;
-	Wed, 25 Nov 2026 15:30:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=KnpdiiMX
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 328161F000C0;
+	Wed, 25 Nov 2026 15:31:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795620658;
-	bh=/hlC4LVKJV6hPG50OaXCP1rRxNY2v8bM+KDV4gPEaEo=;
+	s=korg; t=1795620661;
+	bh=w8XB4ml3jvWes5HZk088OFFwDjnFfxTgUJ6WftHDIb8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=oIVZIG5HSHQkefr/U93UGy7EWgTczWH3CHzOAsXw7IXs9ejonhGmo9WsJm+lDHd0Z
-	 Gyi/4K0t9GDgAnz2MFJuPxAN3A5Chfq9VSrguV2VvtYK+uldBq+96ptWxky9GIcEve
-	 yQoo+aQfntZululOH5yYSZZi5RF2QdPzW3OW/YH0=
+	b=KnpdiiMXfMXNbB+mEl8r+d4zVyun+QyxPXrMbL0ILQuofPTXUVeJ3srMGlpD8nrRZ
+	 7AfsSUTkn6D96gsNriaP+B/O0RPqgzGwxW+FtTExCG7DnOMzCncY+HAG+0hnATQ1lv
+	 aaXHhu0wqprS8VqX/hyl6NP9nT+x5gXanuH7Z9SY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christopher Hoover <ch@murgatroid.com>,
-	Joshua Crofts <joshua.crofts1@gmail.com>,
-	Srinivas Pandruvada <srinivas.pandruvada@linux.intel.com>,
+	Salah Triki <salah.triki@gmail.com>,
 	Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>
-Subject: [PATCH 7.3 0992/1005] iio: temperature: hid-sensor-temperature: Use per-instance callbacks
-Date: Wed, 25 Nov 2026 15:38:50 +0100
-Message-ID: <20261125143844.893241999@linuxfoundation.org>
+Subject: [PATCH 7.3 0993/1005] iio: temperature: mlx90614: Fix dual channel probe condition check
+Date: Wed, 25 Nov 2026 15:38:51 +0100
+Message-ID: <20261125143844.915684522@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143821.729802100@linuxfoundation.org>
 References: <20261125143821.729802100@linuxfoundation.org>
@@ -69,76 +67,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Christopher Hoover <ch@murgatroid.com>
+From: Salah Triki <salah.triki@gmail.com>
 
-commit 36eeb26031e90eeb81bbac3d3acad61d23fcbdf3 upstream.
+commit 4d4e75b3074bc29525c963a81c19471528f29a45 upstream.
 
-hid-sensor-temperature keeps a single static struct
-hid_sensor_hub_callbacks for all instances and overwrites its pdev in
-every probe.  With two temperature sensors, input reports for one are
-delivered with the other's platform device; once that device is
-removed, platform_get_drvdata() returns NULL and
-temperature_capture_sample() dereferences it:
+In mlx90614_probe_num_ir_sensors(), the check on chip_info->dual_channel
+is inverted.
 
-  BUG: kernel NULL pointer dereference, address: 00000000000003a8
-  RIP: 0010:temperature_capture_sample+0xd/0x50 [hid_sensor_temperature]
+Currently, if dual_channel is true (MLX90614), the function returns 0
+immediately without checking op_eeprom_config1. This forces all MLX90614
+devices to be registered as single sensor (num_channels = 2), making the
+second object temperature channel inaccessible.
 
-The oops happens in sensor_hub_raw_event() with the hub's spinlock
-held, so the hub's removal then hangs.  It reproduces with two uhid
-devices that each declare a temperature sensor, one destroyed while
-the other still sends input reports.
+Conversely, if dual_channel is false (MLX90615), the function skips the
+early return and performs an unnecessary SMBus read on EEPROM CONFIG1 even
+though MLX90615 does not support dual channel operation.
 
-Keep the callbacks in struct temperature_state, as the other HID
-sensor drivers (accel, gyro, als, ...) do.
+Fix this by negating the condition so that single-channel chips return
+early with 0, while dual-channel capable chips (MLX90614) proceed to read
+the EEPROM configuration register to detect whether 1 or 2 object channels
+are present.
 
-Fixes: 59d0f2da3569 ("iio: hid: Add temperature sensor support")
+Fixes: 3d5ead238bc8 ("iio: mlx90614: Factor our register IO and constants into model specific descriptor")
+Signed-off-by: Salah Triki <salah.triki@gmail.com>
 Cc: stable@vger.kernel.org
-Signed-off-by: Christopher Hoover <ch@murgatroid.com>
-Reviewed-by: Joshua Crofts <joshua.crofts1@gmail.com>
-Acked-by: Srinivas Pandruvada <srinivas.pandruvada@linux.intel.com>
 Signed-off-by: Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/iio/temperature/hid-sensor-temperature.c |   14 +++++++-------
- 1 file changed, 7 insertions(+), 7 deletions(-)
+ drivers/iio/temperature/mlx90614.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/iio/temperature/hid-sensor-temperature.c
-+++ b/drivers/iio/temperature/hid-sensor-temperature.c
-@@ -15,6 +15,7 @@
- struct temperature_state {
- 	struct hid_sensor_common common_attributes;
- 	struct hid_sensor_hub_attribute_info temperature_attr;
-+	struct hid_sensor_hub_callbacks callbacks;
- 	struct {
- 		s32 temperature_data;
- 		aligned_s64 timestamp;
-@@ -181,11 +182,6 @@ static int temperature_parse_report(stru
- 	return ret;
- }
+--- a/drivers/iio/temperature/mlx90614.c
++++ b/drivers/iio/temperature/mlx90614.c
+@@ -565,7 +565,7 @@ static int mlx90614_probe_num_ir_sensors
+ 	const struct mlx_chip_info *chip_info = data->chip_info;
+ 	s32 ret;
  
--static struct hid_sensor_hub_callbacks temperature_callbacks = {
--	.send_event = &temperature_proc_event,
--	.capture_sample = &temperature_capture_sample,
--};
--
- /* Function to initialize the processing for usage id */
- static int hid_temperature_probe(struct platform_device *pdev)
- {
-@@ -237,9 +233,13 @@ static int hid_temperature_probe(struct
+-	if (chip_info->dual_channel)
++	if (!chip_info->dual_channel)
+ 		return 0;
  
- 	platform_set_drvdata(pdev, indio_dev);
- 
--	temperature_callbacks.pdev = pdev;
-+	temp_st->callbacks = (struct hid_sensor_hub_callbacks) {
-+		.send_event = temperature_proc_event,
-+		.capture_sample = temperature_capture_sample,
-+		.pdev = pdev,
-+	};
- 	ret = sensor_hub_register_callback(hsdev, HID_USAGE_SENSOR_TEMPERATURE,
--					   &temperature_callbacks);
-+					   &temp_st->callbacks);
- 	if (ret)
- 		goto error_remove_trigger;
- 
+ 	ret = i2c_smbus_read_word_data(client, chip_info->op_eeprom_config1);
 
 
