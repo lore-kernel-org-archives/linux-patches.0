@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795623525;
-	b=YjhA1ZgVBWTS2IO9IhT3HEaqS+D2KS5n34Y9+FvJ6VnP13RPel7dQrh2YkliSU55yvlS
-	 zY1xdxlMeDaOJo5i405fN7PXE9RTUfwHr2LRol20Of9XIwuqKdJ1JimA5L2Y+q7Yum4zY
-	 Dbb8Z2sde6RupxzPRgrxM9/imXjmECSZ0Az62Yy9GgO0xAcE48330SC39E3iMK7MNrWtY
-	 hd70H91WtIvgSSxjelbSM9Qb7wnFm8ftlVZkXI9BEDsxG1yTkTMUr64FQKOBTUnrEyGA4
-	 MPV9KqLSxRB6P+Um30NJPk7IRQzFw+QIpG5xIxMXtxXT/nuqzK1YJ0oittq2sf2nYJg==
+	t=1795623528;
+	b=EwZATs+iuR57tNWB2tOJdqJI5zXO1dPp3M4gT1E8AsRlZNlwo671QrWQ8+8VOWOQFl67
+	 VcmQhVbA+vd4Xt8PxYxgAVn/+J2UaTh2r6RqpWEtB3Q5DcWlXoNolbaF8j0MMG74FeJ1L
+	 IZ+hauKtckmPMgB81A0FbldZAiEkRKhJ/1roF6YgPGzbEPVgSWQakx5Er9ZflucapKkGx
+	 EgJOyc8SiZsQangtHywW6gZeWWz2Dqpl1foOFtUMVDR3S3CVxJonq9pAkq+93NWYNRspW
+	 qFFfXulGLPcp2D3LuykuYPNtXVz3IY3TrDjG9MU+1wn9fo2m+PnVsdKc+A80FzJgcDw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795623525;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795623528;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=g4uuFCunH2pZR5+jRMRMlzTZ/p30DfI7MioTVzS/K8I=;
-	b=zWsj8eP82B6K8jqleuo6CDtACb8ISjausSG2mmaNvqxhndLleY8gT4GyKyoT7l85UBEc
-	 unlbeIQ919KDu/mzt4S3Br/OkOj8jXyO1HEeLw5eLTqj4wW72TM7K9IaPDjdmTnW/1sUz
-	 /8uhqxtnogIAYn35pfkQX0O5vajKPA/fp0zbj6QxtcC3cNMllhvOol45y3r2Jd5azIav8
-	 a45pu8JkFtIj5oBZqrzP1vXffpKFDDKfyKmpTCe9HsMj3jxYtSHU2Vs0ItCpm+1v1vQwt
-	 dVduMh/da5d6+fh8EsWP6dPmaZpPu5vY9k+SuBUqMQqZYHF7/3q96pXcs+U7OIKQ4ig==
+	bh=sLdSl5r+MV27WLeZyH+qr2yxyEPKRJ5Vs2j0+VW8cCk=;
+	b=4aG1RNJHoXq5K3fgLlDFCdHCQv9IUrT5jWnq7bJ9bpDk+jveLHfB16T/RWwJ32QFtg31
+	 qjL8nrT3kDpcbJlvz0IZ/KfwK9CffIaBojkwwcRiojgR3auhQmOZSbuGD++dp8VMoPpoM
+	 8r/bA31G89FygVtx25iHnpWrct0QtwA7H5p7tpNVHO2S82eHxQTvyniOf6AkQl6yOq29q
+	 Jf1j5q5MZeTpWxxM6qqTVR2G9J7fu3uMP6B1zNrSQflwYfleU0kLbrJdIH5HwgXzIfTIr
+	 YULObwDqVEx5qquwd1NLf56P6zT/OoCh/u5TeqWQqEewCoYFu50BDALFqujBP3WjNNw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=M7IcRJNf;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=I7bCqc3y;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4CD14606A321;
-	Wed, 25 Nov 2026 16:18:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 758C1606A323;
+	Wed, 25 Nov 2026 16:18:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=M7IcRJNf
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9CF711F000CA;
-	Wed, 25 Nov 2026 16:18:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=I7bCqc3y
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6731E1F000CA;
+	Wed, 25 Nov 2026 16:18:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795623525;
-	bh=g4uuFCunH2pZR5+jRMRMlzTZ/p30DfI7MioTVzS/K8I=;
+	s=korg; t=1795623527;
+	bh=sLdSl5r+MV27WLeZyH+qr2yxyEPKRJ5Vs2j0+VW8cCk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=M7IcRJNfEBu194aY+SvqC37/Iujpw/PnvqQ3/JqBGBbWcNZZ1ol04aSobFdO44/YW
-	 AFv0oKRoeGUMqdf7RfAIwfhXzVS9l8n5gSXWibtsKoNSaWbGRPOjyXFeTKxt6OfAl4
-	 jxIoWkeNkD8prx1WnreBXBFN8IulHAReTrMmtGK8=
+	b=I7bCqc3ySe/KXBhvmooya8rYV+olnmqFgvcPwEEUjw/PRA9ZlriCBA29FWOzQppFU
+	 4NZ2EJil9r1Z9MOt/MGXRDlu0YAQ3ttyhI6QzMZ24XGWF4pFhk9mFBAJL0ZV+POtAg
+	 9qCsK6oXtmkkLkJ4dbZMA8Yw2LiCOf+KxbU60M3c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	stable <stable@kernel.org>,
 	Josef Bacik <josef@toxicpanda.com>,
-	Srinivas Pandruvada <srinivas.pandruvada@linux.intel.com>,
 	Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>
-Subject: [PATCH 6.18 889/990] iio: hid-sensors: fix a division by zero
-Date: Wed, 25 Nov 2026 15:37:36 +0100
-Message-ID: <20261125143842.836030644@linuxfoundation.org>
+Subject: [PATCH 6.18 890/990] iio: sx9310: use the data of the I2C table
+Date: Wed, 25 Nov 2026 15:37:37 +0100
+Message-ID: <20261125143842.859726978@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143822.072087159@linuxfoundation.org>
 References: <20261125143822.072087159@linuxfoundation.org>
@@ -71,42 +70,41 @@ Content-Transfer-Encoding: 8bit
 
 From: Josef Bacik <josef@toxicpanda.com>
 
-commit fd4c92bbd3a64556e81042ff8d30545b15a3b93a upstream.
+commit f3fc8718af9189aad13a2ad7f5b256475bb14b21 upstream.
 
-convert_to_vtf_format() divides the micro part of a value by
-10^(6 + exp).  The unit exponent of a HID field is a nibble and goes
-down to -8.  For -7 and -8 the argument of int_pow() is negative, which
-the unsigned parameter turns into a huge power of ten: 0 modulo 2^64.
-The division by it is a divide error.  The exponent comes from the report
-descriptor of the sensor hub, the value from a write to the hysteresis
-attribute of the IIO device.
+sx9310_check_whoami() takes the chip information from
+device_get_match_data(), which only looks at the OF and ACPI tables, and
+dereferences it. For a client which was bound through the i2c_device_id
+table, for instance one created with
 
-Multiply by 10^(-exp - 6) in these two cases.
+  echo sx9310 0x28 > /sys/bus/i2c/devices/i2c-1/new_device
 
-Fixes: 73c6768b710a ("iio: hid-sensors: Common attribute and trigger")
+it returns NULL, and the kernel oopses as soon as something at that address
+answers the read of the WHOAMI register.
+
+The I2C table has the same pointers. Use i2c_get_match_data(), which falls
+back to it.
+
+Fixes: 21fd3b1373f6 ("iio: proximity: sx9310: Convert enum->pointer for match data table")
 Cc: stable <stable@kernel.org>
 Signed-off-by: Josef Bacik <josef@toxicpanda.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Acked-by: Srinivas Pandruvada <srinivas.pandruvada@linux.intel.com>
 Signed-off-by: Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/iio/common/hid-sensors/hid-sensor-attributes.c |    5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ drivers/iio/proximity/sx9310.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/iio/common/hid-sensors/hid-sensor-attributes.c
-+++ b/drivers/iio/common/hid-sensors/hid-sensor-attributes.c
-@@ -141,7 +141,10 @@ static u32 convert_to_vtf_format(int siz
- 	if (val1 < 0 || val2 < 0)
- 		sign = -1;
- 	exp = hid_sensor_convert_exponent(exp);
--	if (exp < 0) {
-+	if (exp < -6) {
-+		value = abs(val1) * int_pow(10, -exp);
-+		value += abs(val2) * int_pow(10, -exp - 6);
-+	} else if (exp < 0) {
- 		divisor = int_pow(10, 6 + exp);
- 		value = abs(val1) * int_pow(10, -exp);
- 		value += abs(val2) / divisor;
+--- a/drivers/iio/proximity/sx9310.c
++++ b/drivers/iio/proximity/sx9310.c
+@@ -892,7 +892,7 @@ static int sx9310_check_whoami(struct de
+ 	if (ret)
+ 		return ret;
+ 
+-	ddata = device_get_match_data(dev);
++	ddata = i2c_get_match_data(data->client);
+ 	if (ddata->whoami != whoami)
+ 		return -ENODEV;
+ 
 
 
