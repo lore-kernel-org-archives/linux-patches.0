@@ -1,51 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795620602;
-	b=5NalS/3fMtXKv9w112vMy4AOt0yGAGFT7+kw7OQrxX++0lB7Ep5JY9pmm1/KQO2OP3ZD
-	 QK+LpVtGbDMrTNIiD9VkgTMZCccItZLUHABhIj143i+Fl1Gil9HbcAGtepKudwrTQJQry
-	 9euCJxu2U1losC4p28eSQwVKjEzAUXjKIlx3+YMPsKRguDf/08J8zr2FmsWV5beB/RUGF
-	 v3m03yT0EUcmT6SHZNWPJcqKxDxsOcvQ5jwLAIqTjeq3WdGSiUv08p9ljbpmhsxV1xsNx
-	 v0fwoX6FLoxgo05if85ctMoBgihPSzY94lVWCVVwTzmn2DIpDX5xaN81B5mcokWSexw==
+	t=1795620605;
+	b=gVpskbTBB7oyyxJLZsd2rnrlFE1denlL9sK0/y7Y7nzyAuFXKbVE8bGLtE6DoZl9ydYr
+	 vmmnMu0xWsb2dk9fIkDDswVDEJX0RFX3POU4v11ZJGU5zxTK7CZBd4a3OZYjHm9+BHjKF
+	 A5yOtcGBYAMofhKqCHY9o/83BYK8GdQ7RRxo+S1gEjsBkqAnMTYDbGMpI8q/U9WgUCepH
+	 dusDXQIE21hrp64wmUgaozaTYncVUv4FFw9a66ZSCjleMXKPIlEaK/TitCp2iz2I6K4qU
+	 DPl15UVbMOYNoF5hoKa1uENC6HLj+ED9U9SI5+9nrCmUdOEIRJlroZ+PevOqRgOOV6Q==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795620602;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795620605;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=t76FggURDf424tdEcN8/3StuIzWXmUUWXPwMH5qDON4=;
-	b=IR1VnDajPQMVSEvrPmLN3ODPGCnTO2LkMcY4QeVoNJvqKjrIgxOjrVipSqDVHPmBPIlP
-	 1HYVXClHd6vn9Cs/o1nG5OLRSdCvp07PAAEfmMnz/HhYDMtZqQUdymE5gd9JNFeOwVtG+
-	 SnAulOQfTHtsIEn2jk4FF65CJHlua4v/jiDkQkDIlrFP6VDAhDndUI1CeEDXg17qfC56q
-	 9eywWaicfMGZ70WIgWLc7q63j2zNzOv75GgyScYjiNCnrESFafHCbUU1qd+eF6TBI0dYy
-	 7MwcWL6CUwaL+zYo7zoS+CSKZOlMDCkifyozMmDoy13geL+dhhEOXYfV2muHls0W6wg==
+	bh=QzlJrVnxqAEQYiWjjxtL2q7eYXvQTJ5ZTT0C3M2nuaI=;
+	b=LbPYNTKB6S2hu9MapQDepG2TX14sBgfDXSg3kLWhMgL+nCVcZIg655TwBkWsHOU95b6o
+	 SJWtfR65iNxa8/eNT3E1xZ0D9SMoQIYONw1uJFs/K0JrlBYh4xJhfxqkkVVy/8IkRWRR0
+	 ZxFnL8iqMhVHvvUrpTLIcnESo/QsJyOpOgimK3EXoKuwtOvLEB8r9yjgUkDfjsndikq6j
+	 qxo3vuqcdxVDHadwI9vxrqFQVOGF7b/BgUEhhv8ajEtfp4h7o50Kp8PGfyHdUs5S+CZWl
+	 CXGGfacPHOGSMQSOibJxjaA7WTkNX65vJcDcx2nSJ/VzbWEAbleKKY32b/mbrAvC1KQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=HbmCcgV4;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=O0pktoi1;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AC760606A31E;
-	Wed, 25 Nov 2026 15:30:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 82A89606A323;
+	Wed, 25 Nov 2026 15:30:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=HbmCcgV4
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C97421F000C0;
-	Wed, 25 Nov 2026 15:30:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=O0pktoi1
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D499B1F000C4;
+	Wed, 25 Nov 2026 15:30:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795620602;
-	bh=t76FggURDf424tdEcN8/3StuIzWXmUUWXPwMH5qDON4=;
+	s=korg; t=1795620605;
+	bh=QzlJrVnxqAEQYiWjjxtL2q7eYXvQTJ5ZTT0C3M2nuaI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=HbmCcgV4Uo/LtXE8zqQdfIq1TcvOiudspHHmCtywiPYJD2MQ7T4ApiBak4EDx+75+
-	 oavbA94Bc7WS63UwDeRYFEHWeLaqqxOiG8oZrbb0eHt/nAYk59ZT91v6O6F3+RwTxv
-	 0oE+diTNtj3HornS51uk/z+rmPlq7kA1GlseJqiU=
+	b=O0pktoi1SxXpLFaV/b1dHzTl02GsyuV0FFt8r+60C7YxBnbnqOGr7hp00tVCOy6I6
+	 rAzhRh/SyAWfnkzibPuKUAxLaFk8u5RzTOvup7dmBmlrjJNfDo8etLrQ1O+dj37vEs
+	 eDV9lkKYLXw6pQeaDpe4AE2LXUAs5zvmd6+nVN3I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Baek Kyu, Kim" <pocj8ur4in@gmail.com>,
-	Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>
-Subject: [PATCH 7.3 0971/1005] iio: dac: mcp4725: Update the cached DAC value only on success
-Date: Wed, 25 Nov 2026 15:38:29 +0100
-Message-ID: <20261125143844.411948491@linuxfoundation.org>
+	stable <stable@kernel.org>,
+	Thinh Nguyen <Thinh.Nguyen@synopsys.com>
+Subject: [PATCH 7.3 0936/1005] usb: dwc3: gadget: Reject requests to a disabled endpoint
+Date: Wed, 25 Nov 2026 15:37:54 +0100
+Message-ID: <20261125143843.609778597@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143821.729802100@linuxfoundation.org>
 References: <20261125143821.729802100@linuxfoundation.org>
@@ -67,39 +67,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Baek Kyu, Kim <pocj8ur4in@gmail.com>
+From: Thinh Nguyen <Thinh.Nguyen@synopsys.com>
 
-commit 098a4c37dc8815ea941866179220394e4d182c67 upstream.
+commit 5eb11b1647b0534b3a61a21473d77ebf4ffbed7c upstream.
 
-mcp4725_write_raw() updates dac_value even if mcp4725_set_value() rejects
-the requested value or reports an I2C transfer error. After writing 1000,
-a rejected write of 4096 returns -EINVAL without an I2C transfer, but
-out_voltage0_raw reports 4096. A later powerdown exit sends 00 00 instead
-of the 03 e8 frame for the last successful value. The EEPROM store path
-uses the same cache.
+__dwc3_gadget_ep_disable() releases the lock while giving back requests,
+and DWC3_EP_ENABLED is only cleared afterward. A function driver can
+queue a new request in this window, and the driver would start a
+transfer on an endpoint that is already disabled in hardware.
 
-Return the setter error before updating dac_value. This keeps the last
-successful software value for readback, powerdown exit and EEPROM writes.
+Clear DWC3_EP_ENABLED before giving back the requests, and reject
+requests queued to an endpoint that is not enabled.
 
-Fixes: cf35ad61aca2 ("iio: add mcp4725 I2C DAC driver")
-Signed-off-by: Baek Kyu, Kim <pocj8ur4in@gmail.com>
-Cc: stable@vger.kernel.org
-Signed-off-by: Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>
+Fixes: 72246da40f37 ("usb: Introduce DesignWare USB3 DRD Driver")
+Cc: stable <stable@kernel.org>
+Signed-off-by: Thinh Nguyen <Thinh.Nguyen@synopsys.com>
+Link: https://patch.msgid.link/4ceab6aa5d6af0e4780f9d3a964fd5d8168a0a02.1792542945.git.Thinh.Nguyen@synopsys.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/iio/dac/mcp4725.c |    2 ++
- 1 file changed, 2 insertions(+)
+ drivers/usb/dwc3/gadget.c |    5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
---- a/drivers/iio/dac/mcp4725.c
-+++ b/drivers/iio/dac/mcp4725.c
-@@ -356,6 +356,8 @@ static int mcp4725_write_raw(struct iio_
- 	switch (mask) {
- 	case IIO_CHAN_INFO_RAW:
- 		ret = mcp4725_set_value(indio_dev, val);
-+		if (ret)
-+			return ret;
- 		data->dac_value = val;
- 		break;
- 	default:
+--- a/drivers/usb/dwc3/gadget.c
++++ b/drivers/usb/dwc3/gadget.c
+@@ -1087,6 +1087,8 @@ static int __dwc3_gadget_ep_disable(stru
+ 	reg &= ~DWC3_DALEPENA_EP(dep->number);
+ 	dwc3_writel(dwc, DWC3_DALEPENA, reg);
+ 
++	dep->flags &= ~DWC3_EP_ENABLED;
++
+ 	dwc3_remove_requests(dwc, dep, -ESHUTDOWN);
+ 
+ 	dep->stream_capable = false;
+@@ -1998,7 +2000,8 @@ static int __dwc3_gadget_ep_queue(struct
+ {
+ 	struct dwc3		*dwc = dep->dwc;
+ 
+-	if (!dep->endpoint.desc || !dwc->pullups_connected || !dwc->connected) {
++	if (!(dep->flags & DWC3_EP_ENABLED) || !dep->endpoint.desc ||
++	    !dwc->pullups_connected || !dwc->connected) {
+ 		dev_dbg(dwc->dev, "%s: can't queue to disabled endpoint\n",
+ 				dep->name);
+ 		return -ESHUTDOWN;
 
 
