@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795622703;
-	b=W/weoeVCDqGVxBbZiY6KSQZ7i0vqsYOttn3Mz06lIQJz6Ir3WZFxjawr9aR00EtB9ljI
-	 rnKEgPXQxMrS+lFa3EdqSRAXgS3z2+RSvtAqSCaYJUngGzLc4d8SSkwK4bfcEgOfZKYsU
-	 Up46ZnKvaZy6Xzsq5udZImbj/FutkVsmqvuDq6yPLKeAe9d1TmUujjVDQJWdspt3KmuoO
-	 kklBr+pjZAI27pyJwBOXa/XyEa4zxuXEGtgHlHC5jrnimpSMRuUSU7r+F9bZgGuSaVNbL
-	 T2FSZpgDrAMzpA2ANtoXHicoSzIcc+2fcCPZ/vnBXwNTpbLBr72UxQ/acUZCZwb11Ow==
+	t=1795622707;
+	b=RIpulB1N532vvVIYel8f1nYtgfyJXf+y9//wSLCu3xw56rOotlFjEjhOa4TXUxizD+41
+	 fVZg0Y8ARv297B+D1YOZwCsQHioBUnmmkAevJvP5MvNYVNdRoGzKXeozWRDC7Xa9utGVx
+	 djHExuSXQNqWpZ6yn1GuutE5uJtJSHNTR5lhYbUd06Rk/aYNUTPBFJ4Z9smybEgLDnHuy
+	 onTwK6CXAAjhZHVwiVu2LVT2UCvvfBdMT6tgmJKavIg0O0giDa7jkm6M8X1D5qrINBeyp
+	 V/EzsLz+yqchhgRDTgXPM6sY2IKf2YycTbDUMVqBYprLlWqY/al9Rb8zPdfMQbbFmlA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795622703;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795622707;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=KCXd8s5GMTpnnOZtR5LNDMWpz60l2S9VDc0Xe2YUiuE=;
-	b=dHOxHEMG3DL4UZiC7Ll/iVpvboxaoadFurXjyzcXg2zrZPIezHRKSUsTUKVv7qws9YJ7
-	 77YC5aby0ejEnz48qsImSDvyMNabrwGoN/xf/TlsXH52Y/dtjLctz1GXGrn9fZ6k8S5x7
-	 0dVMhODdFLnzauNyxLNtDN9Cj1nlE+C4Jegm9j5sthHB3leMA8O0LmaN4g/GD3ovnha8z
-	 bh9PecEbBZhlbadLd9ksx0TDBJhg+W9HYaZOhh2ZAinzoC4VHRL9NxPRwJbDeLyy3Sn9U
-	 KjZwDt2YgtFdqeOLDKbbLFBHrUjCPj6Qs0VKZo5fJfeX8Z4wAPf11+8SNyn30LLNxkw==
+	bh=uhF2qlZYOEzmMSDLn0rA6m1wTZ7s5IlATl/mPnxsgWI=;
+	b=wR/9l/xLclGX2OH/YUjvwbOv0eDVXHsFkR/AiBxP89kZSdS67RrfpX4N/L9dSmqxt7zf
+	 OFhLZhRvIkaj3F0L3cVSvEr2e39eeit5I1Dde3hh5lf8MvrqZoQVdrT/Y0eB9SlfxnPQ8
+	 Rc9c8pnl6tBSyh9OIR5vG2JVQFuUD6nh1vmSk3R5ZaJ+3t4TXyktjlfEw+e6a8NkSgS+c
+	 RvFZZKyyQNeVk/hyiM+XCc6uH/lNxnEHzBM97tvZd06VnvgEOl0EwWImxroA5omo7qKS9
+	 pkoIGzGRTkqA4dJSuFOV8SaJwZIdc+LNhEjhKUokNCleCvjKbdCDXdATr3PX9y7+UAQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=fv0Y7kKA;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="l/Ioa5bf";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AE16D606A31E;
-	Wed, 25 Nov 2026 16:05:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E8B33606A31E;
+	Wed, 25 Nov 2026 16:05:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=fv0Y7kKA
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 02FAA1F000ED;
-	Wed, 25 Nov 2026 16:05:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=l/Ioa5bf
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D47981F000C0;
+	Wed, 25 Nov 2026 16:05:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795622703;
-	bh=KCXd8s5GMTpnnOZtR5LNDMWpz60l2S9VDc0Xe2YUiuE=;
+	s=korg; t=1795622706;
+	bh=uhF2qlZYOEzmMSDLn0rA6m1wTZ7s5IlATl/mPnxsgWI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=fv0Y7kKAuuGbns10Q8xWsPW/V1qV1SH10M95zaKV9yopR5DIoUAvTdCTB91NGP2IE
-	 qlokH04K5azjnNRA3wsKrXE5IRCOkLAk0l7vHSiqATm5Q3Jgvjr0v1gdx78LMzawVp
-	 UteYV0o4hmiq84iE8wu/3UZ08r3MrOPz6RvpSovY=
+	b=l/Ioa5bfzgfbzyqzD1Yfmp8ecoWPruTyz4A/JT8X7IdzdHyqXzeG6P5z1N5fx5iYd
+	 5HZIUnEgXkirClezZ42iKPXQYD37YIcAssvI0P8m16iM0KbUCkfDmlJxVrW3MN2ytv
+	 HsTwmZHMDxSjBxxwyLGPGzUwf6/3Fsh9oEps4V2Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Selvin Xavier <selvin.xavier@broadcom.com>,
-	Leon Romanovsky <leon@kernel.org>,
+	Chi Zhiling <chizhiling@kylinos.cn>,
+	Namjae Jeon <linkinjeon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 594/990] RDMA/bnxt_re: Unpublish QP table before freeing it
-Date: Wed, 25 Nov 2026 15:32:41 +0100
-Message-ID: <20261125143836.006258420@linuxfoundation.org>
+Subject: [PATCH 6.18 621/990] exfat: take bitmap_lock at the start of exfat_alloc_cluster()
+Date: Wed, 25 Nov 2026 15:33:08 +0100
+Message-ID: <20261125143836.647538735@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143822.072087159@linuxfoundation.org>
 References: <20261125143822.072087159@linuxfoundation.org>
@@ -68,63 +68,72 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Selvin Xavier <selvin.xavier@broadcom.com>
+From: Chi Zhiling <chizhiling@kylinos.cn>
 
-[ Upstream commit 978361dd2ccff357d4fe6aac6ce057d1bfae8312 ]
+[ Upstream commit 48acff2eedef7fecdfbd39be1b6f4463a9e43e3e ]
 
-bnxt_re_dev_uninit() frees the QP table before the RCFW channel is
-disabled, so the CREQ tasklet can still look up rcfw->qp_tbl while it
-is being freed.
+exfat_alloc_cluster() checks sbi->used_clusters against the total
+number of data clusters before acquiring sbi->bitmap_lock. A concurrent
+allocation can update sbi->used_clusters after the check but before
+the lock is acquired, making the check stale. This can allow the
+allocation to proceed even though there are not enough free clusters,
+causing it to fail partway through.
 
-Clear rcfw->qp_tbl under tbl_lock before freeing it, and have the QP
-error notification handler bail out if the table is gone.
+Acquire sbi->bitmap_lock before checking sbi->used_clusters so that
+the free-space check and subsequent cluster allocation are serialized
+with concurrent allocations.
 
-Fixes: 82f1f575aa13 ("RDMA/bnxt_re: Fix allocation of QP table")
-Signed-off-by: Selvin Xavier <selvin.xavier@broadcom.com>
-Link: https://patch.msgid.link/20261013140427.256612-3-selvin.xavier@broadcom.com
-Signed-off-by: Leon Romanovsky <leon@kernel.org>
+Fixes: f55c096f62f1 ("exfat: do not zero the extended part")
+Signed-off-by: Chi Zhiling <chizhiling@kylinos.cn>
+Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/hw/bnxt_re/qplib_rcfw.c |  4 ++++
- drivers/infiniband/hw/bnxt_re/qplib_res.c  | 10 +++++++++-
- 2 files changed, 13 insertions(+), 1 deletion(-)
+ fs/exfat/fatent.c | 17 ++++++++++-------
+ 1 file changed, 10 insertions(+), 7 deletions(-)
 
-diff --git a/drivers/infiniband/hw/bnxt_re/qplib_rcfw.c b/drivers/infiniband/hw/bnxt_re/qplib_rcfw.c
-index 4dad0cfcfa98d..a70aa6a83da3b 100644
---- a/drivers/infiniband/hw/bnxt_re/qplib_rcfw.c
-+++ b/drivers/infiniband/hw/bnxt_re/qplib_rcfw.c
-@@ -638,6 +638,10 @@ static int bnxt_qplib_process_qp_event(struct bnxt_qplib_rcfw *rcfw,
- 		err_event = (struct creq_qp_error_notification *)qp_event;
- 		qp_id = le32_to_cpu(err_event->xid);
- 		spin_lock(&rcfw->tbl_lock);
-+		if (!rcfw->qp_tbl) {
-+			spin_unlock(&rcfw->tbl_lock);
-+			break;
-+		}
- 		tbl_indx = map_qp_id_to_tbl_indx(qp_id, rcfw);
- 		qp = rcfw->qp_tbl[tbl_indx].qp_handle;
- 		if (!qp) {
-diff --git a/drivers/infiniband/hw/bnxt_re/qplib_res.c b/drivers/infiniband/hw/bnxt_re/qplib_res.c
-index ad0ba952eb48d..5948e1f11384e 100644
---- a/drivers/infiniband/hw/bnxt_re/qplib_res.c
-+++ b/drivers/infiniband/hw/bnxt_re/qplib_res.c
-@@ -867,7 +867,15 @@ int bnxt_qplib_init_res(struct bnxt_qplib_res *res)
+diff --git a/fs/exfat/fatent.c b/fs/exfat/fatent.c
+index 13a79845be016..87c7823efa718 100644
+--- a/fs/exfat/fatent.c
++++ b/fs/exfat/fatent.c
+@@ -355,19 +355,22 @@ int exfat_alloc_cluster(struct inode *inode, unsigned int num_alloc,
+ 	struct super_block *sb = inode->i_sb;
+ 	struct exfat_sb_info *sbi = EXFAT_SB(sb);
  
- void bnxt_qplib_free_res(struct bnxt_qplib_res *res)
- {
--	kvfree(res->rcfw->qp_tbl);
-+	struct bnxt_qplib_rcfw *rcfw = res->rcfw;
-+	struct bnxt_qplib_qp_node *qp_tbl;
++	mutex_lock(&sbi->bitmap_lock);
 +
-+	/* The CREQ tasklet may still be running; unpublish the table first */
-+	spin_lock_bh(&rcfw->tbl_lock);
-+	qp_tbl = rcfw->qp_tbl;
-+	rcfw->qp_tbl = NULL;
-+	spin_unlock_bh(&rcfw->tbl_lock);
-+	kvfree(qp_tbl);
- 	bnxt_qplib_free_sgid_tbl(res, &res->sgid_tbl);
- 	bnxt_qplib_free_pd_tbl(&res->pd_tbl);
- 	bnxt_qplib_free_dpi_tbl(res, &res->dpi_tbl);
+ 	total_cnt = EXFAT_DATA_CLUSTER_COUNT(sbi);
+ 
+ 	if (unlikely(total_cnt < sbi->used_clusters)) {
+ 		exfat_fs_error_ratelimit(sb,
+ 			"%s: invalid used clusters(t:%u,u:%u)\n",
+ 			__func__, total_cnt, sbi->used_clusters);
+-		return -EIO;
++		ret = -EIO;
++		goto unlock;
+ 	}
+ 
+-	if (num_alloc > total_cnt - sbi->used_clusters)
+-		return -ENOSPC;
+-
+-	mutex_lock(&sbi->bitmap_lock);
++	if (num_alloc > total_cnt - sbi->used_clusters) {
++		ret = -ENOSPC;
++		goto unlock;
++	}
+ 
+ 	hint_clu = p_chain->dir;
+ 	/* find new cluster */
+@@ -437,8 +440,8 @@ int exfat_alloc_cluster(struct inode *inode, unsigned int num_alloc,
+ 
+ 		if (p_chain->size == num_alloc) {
+ 			sbi->clu_srch_ptr = hint_clu;
+-			mutex_unlock(&sbi->bitmap_lock);
+-			return 0;
++			ret = 0;
++			goto unlock;
+ 		}
+ 
+ 		hint_clu = new_clu + 1;
 -- 
 2.53.0
 
