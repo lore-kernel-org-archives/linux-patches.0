@@ -1,52 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795619428;
-	b=K9nDC8d5SqipMHXHE3slAKuPT1fvMPddg61Kjs2ASl62a6ddSNrPDKLo2VHbk1gFWNx4
-	 ZqyqJpXASPlTX72eVQWbZt12cX2bJrmQW28GtNsxM30G3b2VZmaIl8Du4lT4zMWChBWA9
-	 KpVyXD/fM1jwoT7I++iMfEe6pX7+qAjI+jwFOz7+HU/lFQ6HtU7HXaTcCV1WGucSv2PiC
-	 XabkV3VoVRaCwQcFpxkofyCAeFrkeVPZlsAhvvb7OaFQ9ZyhkbhKUef2PdkAYHbRcva7k
-	 KQvHct5Hnzxmh3blhM5jNfSYpssZDOE11JrPf0UsB+busD3EnmrVv8jdOC2aqjgGBAw==
+	t=1795619431;
+	b=NEeNWCxUbdn0/53CUFirBdtD4xmwP2Owp8UCBah7wFcPRkKRVEylU0NhrP7JxnFW6zUa
+	 gXsT9PQcjHyY6d7lm7T7n2CjlbvyzoD124nz+pU2VJpHWAxqHyOQSXL6B3plfgOXcpcwF
+	 076tPaAn4wA/maBeOmZ8UY0e/r0YOB2VtqnCZ9z2nIzh/dNCwN+kfokwi9pTc90nFTFpu
+	 Ac3EQVMGnpX+90rpaV9C6E3Pm6snqW1D+KqOsQpI4dmgsuRoLtTi0j4rkmQlk47BGuE5B
+	 n9IqAvxE/vcJS5d+BzMCk732E4ezrR5kXt4qkANlB2+3w3bOezse4lxoF5IIvYx2qOg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795619428;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795619431;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=B/weP5CqJomvyK+ZtWfpWoGjtwYU6EY02qW4XWKbsnE=;
-	b=2Qswy+gm2turovAerELhTdRI2FypUh1PB/LrssMAbIdYDvvv9heVZyFRhjxNioIk2DOG
-	 Yj+Pb5g11GFDY7Myn/uNEeLvMj3FcDpobF9lqby8Oa1CwMmjCrkBDeVxg/Vw3huTH7Q3J
-	 UFk3Hu5fMnHxHtE76EFUht19pcxY/jcDpeZUIapkbCFhVzS3Zv/o45cl47pJqPcfUH9T7
-	 +1IT/rrQCaOngclcFeWs+4PzLNIrgTNOpcxTiWkxU5+JELsE0GwoAs/ic7dcibXZGWca4
-	 x8N+gVuVm+GqNcwACgLXOsI6R6j3hSaGa/3nJ1pjs++xCU4g70jyVCYMKH4OCvuTTow==
+	bh=SSWsP9LmqwqJOsN/l9wV/V5rqZ/3x9/XiANeYh3y5j4=;
+	b=KpcGRRkan+D/yKnCGV1xgLPjzlSBsPBpICKI8NZbTs8lQNOpaeJoY214kzcrNZxVKkrz
+	 4bk2WEDBFlmk0Tf2C1tREi+B7Q8WjPS6GgXUlxmV5HAf4imrc8QBDRKBpo/Yg8EvgQ+bO
+	 2aBhqHHMlednBriAM4aJpA/etUId4DrBQfSPa/gRDr1yTeRQxNWu/LaGywuIA4VaxP0W+
+	 8atmTD8g0IIw3ivuwZH8x+r24f5Jnp5CN9ZjrQTHRseFxnbX/zt2uoxP2rbSJo3wsTjwH
+	 iqzw3l+uQCeRbj3pEU3L8U8OWnWf7dM9TxODdWsMZl8tHDlnXP+BUJA/QGbdWajSwKw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=A9gNmM1G;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=yM9XxgN+;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 545D0606A336;
-	Wed, 25 Nov 2026 15:10:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3F782606A338;
+	Wed, 25 Nov 2026 15:10:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=A9gNmM1G
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A676A1F000D2;
-	Wed, 25 Nov 2026 15:10:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=yM9XxgN+
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7F1E21F000C6;
+	Wed, 25 Nov 2026 15:10:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795619428;
-	bh=B/weP5CqJomvyK+ZtWfpWoGjtwYU6EY02qW4XWKbsnE=;
+	s=korg; t=1795619431;
+	bh=SSWsP9LmqwqJOsN/l9wV/V5rqZ/3x9/XiANeYh3y5j4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=A9gNmM1G8g3hIKJ2tFmwud0Te3X33G8id00Lsc7SCQw4nMOrFUL7UDfaYUmMQEiF4
-	 PsYt1n73+JjqZz1hyKUEwVuO0qZVlx4BN+rLLcnoKZ0GOdVmAKXD3NtjUdtjsxa/+l
-	 bdfrjWUl5A+Acv76x3h8rmAyDRk4P6x2bPxwXkqA=
+	b=yM9XxgN+cr8xkwzRb5yY3EqsHInw7S9bKyuhHFht60hd712AZ0yNdMXVsRwMTdvdb
+	 zOWgxGFUDSrL11u6MLfHPgaMvpfpd9RoiPUavBs+NgzxCPOFRWejiXs/VZ9dOdZRSN
+	 4Z8GADxHSALH/EHxxlggqpHYDmwFDV1BgUaiQRpA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kyle Zeng <kylebot@openai.com>,
 	Jan Kara <jack@suse.cz>,
 	"Christian Brauner (Amutable)" <brauner@kernel.org>
-Subject: [PATCH 7.3 0591/1005] aio: dont let exit_aio() return before complete() is done
-Date: Wed, 25 Nov 2026 15:32:09 +0100
-Message-ID: <20261125143835.589579122@linuxfoundation.org>
+Subject: [PATCH 7.3 0592/1005] fs: fix the SEEK_CUR f_lock condition
+Date: Wed, 25 Nov 2026 15:32:10 +0100
+Message-ID: <20261125143835.611629177@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143821.729802100@linuxfoundation.org>
 References: <20261125143821.729802100@linuxfoundation.org>
@@ -70,63 +69,55 @@ Content-Transfer-Encoding: 8bit
 
 From: Christian Brauner <brauner@kernel.org>
 
-commit ac4b449b39e605123c12ea10042cafc9b6f39603 upstream.
+commit 1448959fe3d013ffdb8302d17e4a8fdad2d2da95 upstream.
 
-exit_aio() kills all contexts in one go and waits for them with a
-single on-stack struct ctx_rq_wait. The count starts at table->nr, each
-killed context drops one count in free_ioctx_reqs() and exit_aio()
-subtracts the empty slots afterwards. Whoever drops the last count
-either calls complete() or, if it is exit_aio(), skips the wait.
+Commit da06e3c51794 ("fs: don't needlessly acquire f_lock") wanted to
+skip f_lock for SEEK_CUR on files that already serialize f_pos through
+f_pos_lock, i.e. FMODE_ATOMIC_POS files and directories, and keep it
+for everything else. The condition it added does the opposite:
+file_seek_cur_needs_f_lock() returns false exactly for the files that
+never take f_pos_lock and true for the ones that do.
 
-With a full table skipped is zero and atomic_sub_and_test(0, ...) only
-tells us whether the count already hit zero. free_ioctx_reqs() runs from
-the percpu_ref RCU callback, so if exit_aio() is off the CPU long enough
-the last callback can have done its atomic_dec_and_test() but not yet
-called complete():
+So since v6.15 a SEEK_CUR on a shared block device or on a character
+device that uses fixed_size_llseek() updates f_pos without any lock and
+two concurrent calls can lose an update, while regular files and
+directories pay for a spinlock they don't need.
 
-    free_ioctx_reqs()                    exit_aio()
-    atomic_dec_and_test() // 1 -> 0
-                                         atomic_sub_and_test(0) // true
-                                         kfree(table)
-                                         return
-    complete(&wait.comp)
+Invert the condition.
 
-complete() then locks and writes a completion on a stack frame that is
-gone. So hold an extra count for exit_aio() itself. Then the last count
-is always dropped by exit_aio() after it waited, or by a callback while
-exit_aio() waits for it. An unprivileged user gets there with four
-io_setup() calls and an exit without io_destroy().
-
-Reported-by: Kyle Zeng <kylebot@openai.com>
-Fixes: dc48e56d7616 ("aio: fix serial draining in exit_aio()")
+Fixes: da06e3c51794 ("fs: don't needlessly acquire f_lock")
 Cc: stable@vger.kernel.org
-Link: https://patch.msgid.link/20261030-work-aio-exit_aio-v1-1-83942022a4c4@kernel.org
+Link: https://patch.msgid.link/20261106-work-file-seek_f_lock-v1-1-5b9a6c2928d4@kernel.org
 Reviewed-by: Jan Kara <jack@suse.cz>
 Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/aio.c |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ fs/file.c |   10 +++++++---
+ 1 file changed, 7 insertions(+), 3 deletions(-)
 
---- a/fs/aio.c
-+++ b/fs/aio.c
-@@ -962,7 +962,7 @@ void exit_aio(struct mm_struct *mm)
- 	if (!table)
- 		return;
+--- a/fs/file.c
++++ b/fs/file.c
+@@ -1237,14 +1237,18 @@ static inline bool file_needs_f_pos_lock
  
--	atomic_set(&wait.count, table->nr);
-+	atomic_set(&wait.count, table->nr + 1);
- 	init_completion(&wait.comp);
+ bool file_seek_cur_needs_f_lock(struct file *file)
+ {
+-	if (!(file->f_mode & FMODE_ATOMIC_POS) && !file->f_op->iterate_shared)
+-		return false;
+-
+ 	/*
++	 * Files that go through f_pos_lock when they are shared, i.e.
++	 * FMODE_ATOMIC_POS files and directories, don't need f_lock for a
++	 * SEEK_CUR. Everything else does, since nothing else serializes
++	 * the f_pos update.
++	 *
+ 	 * Note that we are not guaranteed to be called after fdget_pos() on
+ 	 * this file obj, in which case the caller is expected to provide the
+ 	 * appropriate locking.
+ 	 */
++	if ((file->f_mode & FMODE_ATOMIC_POS) || file->f_op->iterate_shared)
++		return false;
  
- 	skipped = 0;
-@@ -986,7 +986,7 @@ void exit_aio(struct mm_struct *mm)
- 		kill_ioctx(mm, ctx, &wait);
- 	}
- 
--	if (!atomic_sub_and_test(skipped, &wait.count)) {
-+	if (!atomic_sub_and_test(skipped + 1, &wait.count)) {
- 		/* Wait until all IO for the context are done. */
- 		wait_for_completion(&wait.comp);
- 	}
+ 	return true;
+ }
 
 
