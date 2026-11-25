@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795622243;
-	b=I4C1+bA22uhFrVW/ZFmdRlHSYL2O+jEyP04UuTB5WPHPTFtrnBfVp0ZMd478GITr9HF4
-	 KYQEi8tijtkNhTNB4j2I2hGUnAP0HOTYJpx4p27WBE0Hybho1AB8XlZlIhLN7SOMLwMaW
-	 NLY1TVv9LQVK7eIjET8ZX2fvhJ2KzQHNPqx3Uv9G/MTTJS4uDstKUkyuiG3TBxmq9A2+/
-	 o6y+6EQA+RxtTx2khXS+KSH2yRAHJVJPRL0CW+8D3rpn75cZMxeRWEANYE6BkBdD5qOWX
-	 eNWhEzsoDsQgJRhmPXdoUVr1U3sQ9aBPSWHiYQPeFY1jejrPxAjwTNU28jMafNOTLrw==
+	t=1795622246;
+	b=4Sv5AZOGwERjBCSo06XWprbSmNmBRmphgEMQEsvi8dmPKjmsIS13nA8i3Pijrwbs+HKH
+	 m0Xxyk5++yNkjmcEuOcM3NyWfQGk9rgaEgbuJVozolgU9shJnwRhnZpoCcSFwdQ44MMqO
+	 s2C1ekZwk23sVVq3GgM762XyueW053ywN/EXorn7LRnRLEb7FMKJ8v0V0ARaRosswB+Uw
+	 wrdXoI/dc7yZTDXgafs6ZPFlteiEfaUZwtMq/WP7JwjogxK/ZQEvLuxPemJiRxJg9kHLt
+	 ADijbIZN5YKY/vWHbh48BlfEJjZcgtIhhlaAsU04grNBJ8fOeikOcxeldAb4J1pZYUA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795622243;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795622246;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=t5NLhD58Yp+LFTDHwcr/I3cV/VMooN+IWwa8vHhS/sM=;
-	b=2VStLSAwPo8pnEgVIFu4JA1eI1GF91MSclpT1yurJTN1mAjh9I6+njGtr+XeWG4yLP7l
-	 CRM07DdTRYXsOW1vhJnjlZN3Iw53yVtFc0MouA+MOj5in0QlsSxlvR7Yi4g4Ra7aTV7a7
-	 ii2KF0T1+ynv7M2qGhBYZcvIXo4az4Fe1fCqPxPml14dtS/OUqrZ/9OfGLx03bMSEQBqT
-	 JlWfDOzmVVPzzly4WpRcD1N5rjjWBAz3aiSVnTiG5M5vJn+Jy9IC5r4BoaLD/0wkql1Zt
-	 Rum5OWTLnWWOKOg269RXs1aSFd2iat0CnlYP19imNbcKNcc6xiy6uUQ9lk6c+eHVcKw==
+	bh=x0MqZka/QZeHMVxbUKFP3V1zQvgfCo7r3A6pk9m8EWE=;
+	b=qqM3yNDNpZHJZmO62MUnyJUGuVfm3c/5RRKgWlzBmEEOXQ5JsBAApAtBYtW+9FrCg5kl
+	 bwelo2Hzc8gHSiISq81NcJVuzsSd/GNp8avnhs8oLVZuObk77YiK54SbhKvIUObL9uctx
+	 LUFkWn42RJdbaH0XAmGo80ccBv4S5Jk3eDb7fMUWQ8LXmqUxzUNdL8VWV7UZfkdmfUiJc
+	 DAFjBhMyVk56TGCg9AS51dCnNzHEKwhtuLt0Baob103fZAaegpH/irBIeXJcAEepQMVv3
+	 2T54BH6gSEWNOLw618S3nX/a1e2X1wuaxJtgvSExPwbDyYIeXfhW74Gu/ZDnIugfSOw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=zWEATpg3;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=UvZspfF3;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A76BC606A31E;
-	Wed, 25 Nov 2026 15:57:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 80977606A321;
+	Wed, 25 Nov 2026 15:57:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=zWEATpg3
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7079C1F000CF;
-	Wed, 25 Nov 2026 15:57:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=UvZspfF3
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D04861F000CA;
+	Wed, 25 Nov 2026 15:57:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795622243;
-	bh=t5NLhD58Yp+LFTDHwcr/I3cV/VMooN+IWwa8vHhS/sM=;
+	s=korg; t=1795622246;
+	bh=x0MqZka/QZeHMVxbUKFP3V1zQvgfCo7r3A6pk9m8EWE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=zWEATpg3UoCbn6ezB2HzcUfqEaPZfABH0r2apklx5xxBCM/M4ALFNM1RS8gZ5mTrs
-	 QVWXb0yzj5tpILVuvFoGZlfxtgnoXg5WlYYhEMtxNNXGdpCFuf1gf1H4os6/aus0Ss
-	 oqM7rrKY6TZolz4mv5iam4yXx/3af+JbAxeAtBuE=
+	b=UvZspfF3UOuAbiM1RrwoSziVQqOU+4PiB2/LFbAtKgygi3LpjYThrYmvSV9RzrKoR
+	 UOetrCNFRd67vpk1vLmpiY5be4YyvUCdUlkaDKKPE5C8V61rwYrnpQrLrwQqXC7Gkm
+	 WUqkeW+z/Yet1Wdiq+TyeYB3UG2Q9EKZ/RtkgYv8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Iustin Stolniceanu <iustin.stolniceanu@analog.com>,
-	Andrew Lunn <andrew@lunn.ch>,
+	Chuck Lever <cel@kernel.org>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 475/990] net: phy: c45: select BASE-T1 type for the forced speed
-Date: Wed, 25 Nov 2026 15:30:42 +0100
-Message-ID: <20261125143833.221971171@linuxfoundation.org>
+Subject: [PATCH 6.18 476/990] selftests: tls: Skip the zero_len tests when TLS is unavailable
+Date: Wed, 25 Nov 2026 15:30:43 +0100
+Message-ID: <20261125143833.245556698@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143822.072087159@linuxfoundation.org>
 References: <20261125143822.072087159@linuxfoundation.org>
@@ -69,145 +68,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Iustin Stolniceanu <iustin.stolniceanu@analog.com>
+From: Chuck Lever <cel@kernel.org>
 
-[ Upstream commit df501db9b18fae4d3edd534b992675f4673a938e ]
+[ Upstream commit 77389a6d30a262fa94d427c03a393c05c013665c ]
 
-Commit 25108a834e14 ("net: phy: c45: add support for 1000BASE-T1 forced
-setup") made genphy_c45_pma_setup_forced() write the type selection
-field (bits 3:0) of the BASE-T1 PMA/PMD control register (1.2100) on
-every forced setup: 1000BASE-T1 for SPEED_1000, and 0 for everything
-else. 0 selects 100BASE-T1, so forcing a 10BASE-T1L PHY to 10 Mbit/s
-now also switches its PMA to 100BASE-T1, a mode it does not implement.
+FIXTURE_SETUP(zero_len) returns early when ulp_sock_pair() reports
+that the TCP_ULP setsockopt failed, so on a kernel built without
+CONFIG_TLS the TLS_RX setsockopt never runs. TEST_F(zero_len, test)
+then sends its raw records over a plain TCP socket, which returns
+the ciphertext verbatim. All eight variants FAIL on a machine that
+lacks TLS, and those failures mask any real regression in the same
+run.
 
-Seen on an ADIN1110 (internal ADIN1100 PHY): after
+Skip the test when the fixture recorded notls, as the other
+fixtures in this file do.
 
-  ethtool -s ethX autoneg off speed 10 master-slave forced-master
-
-1.2100 reads 0xc000 instead of the 0xc002. Since the field is not
-restored by re-enabling autoneg, the PHY keeps the wrong type until
-the next forced setup or reset.
-
-Add a helper that returns the type selection value for the forced speed
-and the supported link modes: 100BASE-T1, 1000BASE-T1, and 10BASE-T1L or
-10BASE-T1S for SPEED_10 depending on the supported 10 Mbit/s modes. Fail
-with -EINVAL when no type matches instead of writing 100BASE-T1. This
-also applies to forced 2.5G, 5G and 10G on BASE-T1 capable PHYs, for
-which there are no link modes yet.
-
-The field is called "type selection" in IEEE 802.3-2022 (45.2.1.214,
-Table 45-178). Keep the old STRAP names as aliases.
-
-Tested on EVAL-ADIN1110EBZ: with this change, forcing 10 Mbit/s writes
-1.2100 = 0xc002 (10BASE-T1L) instead of the invalid 0xc000.
-
-Fixes: 25108a834e14 ("net: phy: c45: add support for 1000BASE-T1 forced setup")
-Signed-off-by: Iustin Stolniceanu <iustin.stolniceanu@analog.com>
-Reviewed-by: Andrew Lunn <andrew@lunn.ch>
-Link: https://patch.msgid.link/20261111100053.345196-1-iustin.stolniceanu@analog.com
+Fixes: a61a3e961baf ("selftests: tls: add tests for zero-length records")
+Signed-off-by: Chuck Lever <cel@kernel.org>
+Link: https://patch.msgid.link/20261111185522.2859004-4-kuba@kernel.org
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/phy/phy-c45.c | 46 ++++++++++++++++++++++++++++++++++-----
- include/uapi/linux/mdio.h | 13 +++++++++--
- 2 files changed, 52 insertions(+), 7 deletions(-)
+ tools/testing/selftests/net/tls.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/drivers/net/phy/phy-c45.c b/drivers/net/phy/phy-c45.c
-index d2e36e460cc7f..db1ae54c62738 100644
---- a/drivers/net/phy/phy-c45.c
-+++ b/drivers/net/phy/phy-c45.c
-@@ -103,6 +103,36 @@ int genphy_c45_pma_baset1_setup_master_slave(struct phy_device *phydev)
- }
- EXPORT_SYMBOL_GPL(genphy_c45_pma_baset1_setup_master_slave);
+diff --git a/tools/testing/selftests/net/tls.c b/tools/testing/selftests/net/tls.c
+index b37ebc2beac7a..462f80a46b900 100644
+--- a/tools/testing/selftests/net/tls.c
++++ b/tools/testing/selftests/net/tls.c
+@@ -2558,6 +2558,9 @@ TEST_F(zero_len, test)
+ 	int rec_off;
+ 	int i;
  
-+/* Type selection value for the BASE-T1 PMA/PMD control register (1.2100,
-+ * 802.3-2022 Table 45-178) matching the forced speed. 10 Mbit/s is ambiguous
-+ * between 10BASE-T1L and 10BASE-T1S, so the supported link modes decide.
-+ * 2.5G, 5G and 10GBASE-T1 are not handled as there are no link modes for them
-+ * yet.
-+ */
-+static int genphy_c45_baset1_type_sel(struct phy_device *phydev)
-+{
-+	switch (phydev->speed) {
-+	case SPEED_10:
-+		if (linkmode_test_bit(ETHTOOL_LINK_MODE_10baseT1L_Full_BIT,
-+				      phydev->supported))
-+			return MDIO_PMA_PMD_BT1_CTRL_TYPE_SEL_10BT1L;
-+		if (linkmode_test_bit(ETHTOOL_LINK_MODE_10baseT1S_Full_BIT,
-+				      phydev->supported) ||
-+		    linkmode_test_bit(ETHTOOL_LINK_MODE_10baseT1S_Half_BIT,
-+				      phydev->supported) ||
-+		    linkmode_test_bit(ETHTOOL_LINK_MODE_10baseT1S_P2MP_Half_BIT,
-+				      phydev->supported))
-+			return MDIO_PMA_PMD_BT1_CTRL_TYPE_SEL_10BT1S;
-+		return -EINVAL;
-+	case SPEED_100:
-+		return MDIO_PMA_PMD_BT1_CTRL_TYPE_SEL_100BT1;
-+	case SPEED_1000:
-+		return MDIO_PMA_PMD_BT1_CTRL_TYPE_SEL_1000BT1;
-+	default:
-+		return -EINVAL;
-+	}
-+}
++	if (self->notls)
++		SKIP(return, "no TLS support");
 +
- /**
-  * genphy_c45_pma_setup_forced - configures a forced speed
-  * @phydev: target phy_device struct
-@@ -165,6 +195,16 @@ int genphy_c45_pma_setup_forced(struct phy_device *phydev)
- 		return -EINVAL;
- 	}
- 
-+	/* Resolve the type before the first write, so a speed without a
-+	 * matching type leaves the PHY untouched.
-+	 */
-+	bt1_ctrl = 0;
-+	if (genphy_c45_baset1_able(phydev)) {
-+		bt1_ctrl = genphy_c45_baset1_type_sel(phydev);
-+		if (bt1_ctrl < 0)
-+			return bt1_ctrl;
-+	}
-+
- 	ret = phy_write_mmd(phydev, MDIO_MMD_PMAPMD, MDIO_CTRL1, ctrl1);
- 	if (ret < 0)
- 		return ret;
-@@ -178,12 +218,8 @@ int genphy_c45_pma_setup_forced(struct phy_device *phydev)
- 		if (ret < 0)
- 			return ret;
- 
--		bt1_ctrl = 0;
--		if (phydev->speed == SPEED_1000)
--			bt1_ctrl = MDIO_PMA_PMD_BT1_CTRL_STRAP_B1000;
--
- 		ret = phy_modify_mmd(phydev, MDIO_MMD_PMAPMD, MDIO_PMA_PMD_BT1_CTRL,
--				     MDIO_PMA_PMD_BT1_CTRL_STRAP, bt1_ctrl);
-+				     MDIO_PMA_PMD_BT1_CTRL_TYPE_SEL, bt1_ctrl);
- 		if (ret < 0)
- 			return ret;
- 	}
-diff --git a/include/uapi/linux/mdio.h b/include/uapi/linux/mdio.h
-index 6975f182b22c6..d194b8182a251 100644
---- a/include/uapi/linux/mdio.h
-+++ b/include/uapi/linux/mdio.h
-@@ -383,8 +383,17 @@
- #define MDIO_AN_10BT1_AN_STAT_LPA_EEE_T1L	0x4000 /* 10BASE-T1L LP EEE ability advertisement */
- 
- /* BASE-T1 PMA/PMD control register */
--#define MDIO_PMA_PMD_BT1_CTRL_STRAP		0x000F /* Type selection (Strap) */
--#define MDIO_PMA_PMD_BT1_CTRL_STRAP_B1000	0x0001 /* Select 1000BASE-T1 */
-+#define MDIO_PMA_PMD_BT1_CTRL_TYPE_SEL		0x000F /* Type selection */
-+#define MDIO_PMA_PMD_BT1_CTRL_TYPE_SEL_100BT1	0x0000 /* Select 100BASE-T1 */
-+#define MDIO_PMA_PMD_BT1_CTRL_TYPE_SEL_1000BT1	0x0001 /* Select 1000BASE-T1 */
-+#define MDIO_PMA_PMD_BT1_CTRL_TYPE_SEL_10BT1L	0x0002 /* Select 10BASE-T1L */
-+#define MDIO_PMA_PMD_BT1_CTRL_TYPE_SEL_10BT1S	0x0003 /* Select 10BASE-T1S */
-+#define MDIO_PMA_PMD_BT1_CTRL_TYPE_SEL_2P5GBT1	0x0004 /* Select 2.5GBASE-T1 */
-+#define MDIO_PMA_PMD_BT1_CTRL_TYPE_SEL_5GBT1	0x0005 /* Select 5GBASE-T1 */
-+#define MDIO_PMA_PMD_BT1_CTRL_TYPE_SEL_10GBT1	0x0006 /* Select 10GBASE-T1 */
-+/* Legacy names, kept for userspace */
-+#define MDIO_PMA_PMD_BT1_CTRL_STRAP		MDIO_PMA_PMD_BT1_CTRL_TYPE_SEL
-+#define MDIO_PMA_PMD_BT1_CTRL_STRAP_B1000	MDIO_PMA_PMD_BT1_CTRL_TYPE_SEL_1000BT1
- #define MDIO_PMA_PMD_BT1_CTRL_CFG_MST		0x4000 /* MASTER-SLAVE config value */
- 
- /* 1000BASE-T1 PCS control register */
+ 	for (i = 0; i < 4 && variant->recs[i]; i++)
+ 		EXPECT_EQ(send(self->fd, variant->recs[i]->cipher_data,
+ 			       variant->recs[i]->cipher_len, 0),
 -- 
 2.53.0
 
