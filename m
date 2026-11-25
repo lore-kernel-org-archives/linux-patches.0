@@ -1,53 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795625861;
-	b=YTC99gqjYAUlfGCBd7tSoxOMsHsZPhcnzKUE3nb3cbSel/oBJqaElhvOXGBgnNuKh69S
-	 P+vJxB/u77vKoXJ4Itt5bQNqE7+NB2yopHWl+qiKDnZbeqAtP9cUj9299Kr+bEO6vY6Uk
-	 wrWK1aLb29zIML0YOuIjcEqoxKD3U83EbgQUd7fv2rERxS0GRs7tuM2pRsNIQU59d7Q78
-	 0nMCg5zDAyoCzH2ZNCqO0nOHezjivZ/cwlxIYCA6nD+Dxk45XJmv4WJQbjEZe49mJ3D6q
-	 Zd/GVbuVoYi1Lg/JlHIJvjmSnC6Ao6FsBax8Dy8TjHWo5Rupmk1sD7hRGY03tsdlnAw==
+	t=1795625864;
+	b=LXxQ4lO5CL0WS6fvCdXA3NlPJ1e0qut0vzlCrF6YE+uDWSjuHDpCo/7ZMPkwO7kofhBV
+	 XJURLsSzSEJj+7eu4IsxeNCDKutwbshr4xKsdKWWAHuc9m2rXBdcmEZAuiFSfQXr2fD60
+	 wu+B/ykwqF/XljqkyzxC005ecBerESPenYYWUfAIkXiRU2jQu3l1uz/IzylK3BdmJOPdy
+	 GUCf9ubatHZYmCu2QcsCNPkpUCH03OiFrp6P8mB5O9y6BVKUwI855YBoT0iN2tRV6xIWL
+	 GUnIazGY+l8zHcnpZls1xv2IHyX/k/31Sk53/9aShWMu9e39mESJJpDUSTKaYCgZfyg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795625861;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795625864;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=516ci6ctBq7CcJbyUOjdyq+ugY/z9zIU2WED7xbkzU0=;
-	b=mSUrdWrswblkMJK6594x2rUgGshEDtBlkPt0yiMP5WQ7vJ84Q0ET6sy2LuSSdRi7qu8d
-	 3x0FQxsCrCr4kW1Fr+pltLWA+Dkp99KHpn8aAahyg/OwKZKkhqjXj3xvBQtng3CzuM0c1
-	 /G+28Vf7Onfxe8tIDdz7HHS1GS4LJeluAznwN/Yf0h3Ge7Xez62Z2P/fJ0quQeLEvNDSW
-	 QrOA0E2yVVLexKvMEUVqTbQZgj9dMl8MhB3BAWIQucyKkl89fNcUytRqlo+o+54DCoxKB
-	 mqg+j89KnvZ0cx2/dIR8i4yTKdMBa4yqe7Ijcf9OlStvOvlyK9VO41wup2tv9qJWI5w==
+	bh=xYkIFTKgGwAuHjiw2xD5CTFFaLP4vq8loFA208Api3w=;
+	b=bT22+iiGcQJWxpdGprWgsrEzAswOHiwNjNT+tu6JY6AMRpubQkARPYmOubD3u8sEcYqc
+	 w6OuTfrpZGRdjP1ZmAX8SGT/icG6u74/qEqPyLRTnTLSUxSCoZGDVP4MVVo1ExuLJfH4A
+	 yEu5Ubln0JwFzjqq2H6VHEUHSieSmuHO+xemHEU54c0s23MY4oNGsv3LAl4s9cIYbDiM4
+	 +x/3AedVAJa7loupmYJgiK+8W123KQcbJOf0utlxR5N6mvmP93gHOiA5uWZnKkrwaMnd3
+	 VpHTAHN1eswpePQ8GnaJj+KQwCms6fY4ZGu9AL9SpcKWTKpaD9c5qE3d5cGn947n7nQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=j+IGghEz;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=l+jEggpv;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0A3B1606A323;
-	Wed, 25 Nov 2026 16:57:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1A979606A327;
+	Wed, 25 Nov 2026 16:57:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=j+IGghEz
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3C4DE1F000C6;
-	Wed, 25 Nov 2026 16:57:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=l+jEggpv
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2E0CC1F000C0;
+	Wed, 25 Nov 2026 16:57:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795625860;
-	bh=516ci6ctBq7CcJbyUOjdyq+ugY/z9zIU2WED7xbkzU0=;
+	s=korg; t=1795625863;
+	bh=xYkIFTKgGwAuHjiw2xD5CTFFaLP4vq8loFA208Api3w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=j+IGghEzTAYj5SGBx97B/2H05jxPyS3cbWkc5Z0adAfqV8RoXTI/Z1WbZqpcQY66s
-	 OoAAm2zZTEZ1kMjg74c2eVv1mPGgGVxaP4Yj75ekMLOiYYuy6gJrDx//BEVFzLD0fF
-	 E0zW+PShrzTZnvLtf2vx3OPKUAp2eXIvx4IlKzaE=
+	b=l+jEggpvgM+Reikgyos1um2ltYCg4cODomTwBr02b8Pgfz58dRcy3mJVBXlq+Of6r
+	 WLXpPcQyvwLsONMGD8NrZRwDJa/8DO1NE+LsTMD5j9TtVl3+ctL5AhODe52e1wnDoj
+	 NmDeRiAE1pat4ZBmWr0hPc7GmW+kN4wIY4IWLkJs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xiang Mei <xmei5@asu.edu>,
-	Weiming Shi <bestswngs@gmail.com>,
-	Xin Long <lucien.xin@gmail.com>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.12 652/816] sctp: reset stored flag for each association
-Date: Wed, 25 Nov 2026 15:36:40 +0100
-Message-ID: <20261125143904.274348995@linuxfoundation.org>
+	"Mike Rapoport (Microsoft)" <rppt@kernel.org>,
+	Huacai Chen <chenhuacai@loongson.cn>
+Subject: [PATCH 6.12 653/816] LoongArch: Restore KFENCE pages through DMW on resume
+Date: Wed, 25 Nov 2026 15:36:41 +0100
+Message-ID: <20261125143904.297039119@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143849.205329330@linuxfoundation.org>
 References: <20261125143849.205329330@linuxfoundation.org>
@@ -69,51 +67,74 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Weiming Shi <bestswngs@gmail.com>
+From: Mike Rapoport (Microsoft) <rppt@kernel.org>
 
-commit 173712d868eb20628ad82deb07f6829a68a9e064 upstream.
+commit 40d7a3e63c3d88b43e9115d23d9937dd506bbd02 upstream.
 
-sctp_send_asconf_del_ip() walks every association on an endpoint. The
-stored flag records that the current association took the single-homed
-deferral path and therefore did not allocate an ASCONF chunk. It is
-currently scoped to the whole function. Once one association sets it,
-later eligible multihomed associations allocate chunks but skip
-sctp_send_asconf(), leaking each chunk and its skb.
+With KFENCE enabled, resume from hibernation triggers KFENCE reports
+while swsusp_asm_resume() copies the image pages, for example:
 
-Reset stored for every association so only an association taking the
-deferral path skips transmission. In an A/B kmemleak test, the
-vulnerable kernel reported 210 leaked objects from this call path and the
-fixed kernel reported none.
+  BUG: KFENCE: use-after-free write in swsusp_asm_resume+0x20/0x94
+
+  Use-after-free write at 0x00000000a57ee925 (in kfence-#254):
+   swsusp_asm_resume+0x20/0x94
+   hibernation_restore+0x128/0x1a0
+   load_image_and_restore+0x6c/0xc8
+   software_resume+0x240/0x260
+   do_one_initcall+0x68/0x200
+   kernel_init_freeable+0x26c/0x304
+   kernel_init+0x20/0x134
+   ret_from_kernel_thread+0x24/0x1d0
+   ret_from_kernel_thread_asm+0xc/0x98
+
+During resume from hibernation, the image pages that occupy physical
+pages used by the restore kernel are first loaded into free pages and
+then, as the very last step, swsusp_asm_resume() copies them to their
+final location pointed to by pbe->orig_address, which the hibernation
+core sets to page_address() of the page in the restore kernel.
+
+The early KFENCE pool is allocated from memblock and normally occupies
+the same physical pages in the restore kernel and in the image kernel,
+so these pages are usually copied by swsusp_asm_resume().
+
+The KFENCE pool is remapped into the KFENCE area above vm_map_base and
+set_page_address() adjusts page->virtual so that page_address() returns
+the page-table mapped alias rather than the DMW virtual address of the
+pool pages.
+
+Hence, pbe->orig_address of KFENCE pages points to that alias and
+swsusp_asm_resume() writes them through the page tables. But:
+
+* the copy loop overwrites the kernel page tables, so a TLB refill for
+  the KFENCE alias may use a partially restored page table
+* the KFENCE pool pages that are protected in the restore kernel fault
+  in the middle of the copy
+
+Convert pbe->orig_address to DMW addresses before starting the copy.
 
 Cc: stable@vger.kernel.org
-Fixes: 8a07eb0a50ae ("sctp: Add ASCONF operation on the single-homed host")
-Reported-by: Xiang Mei <xmei5@asu.edu>
-Signed-off-by: Weiming Shi <bestswngs@gmail.com>
-Acked-by: Xin Long <lucien.xin@gmail.com>
-Link: https://patch.msgid.link/20261108161149.2774119-1-bestswngs@gmail.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: 0ca84aeaee15 ("LoongArch: Make {virt, phys, page, pfn} translation work with KFENCE")
+Signed-off-by: Mike Rapoport (Microsoft) <rppt@kernel.org>
+Signed-off-by: Huacai Chen <chenhuacai@loongson.cn>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/sctp/socket.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ arch/loongarch/power/hibernate.c |    6 ++++++
+ 1 file changed, 6 insertions(+)
 
---- a/net/sctp/socket.c
-+++ b/net/sctp/socket.c
-@@ -809,7 +809,6 @@ static int sctp_send_asconf_del_ip(struc
- 	struct sctp_sockaddr_entry *saddr;
- 	int 			i;
- 	int 			retval = 0;
--	int			stored = 0;
+--- a/arch/loongarch/power/hibernate.c
++++ b/arch/loongarch/power/hibernate.c
+@@ -59,6 +59,12 @@ extern int swsusp_asm_resume(void);
  
- 	chunk = NULL;
- 	sp = sctp_sk(sk);
-@@ -822,6 +821,7 @@ static int sctp_send_asconf_del_ip(struc
- 		 __func__, sk, addrs, addrcnt);
- 
- 	list_for_each_entry(asoc, &ep->asocs, asocs) {
-+		int stored = 0;
- 
- 		if (!asoc->peer.asconf_capable)
- 			continue;
+ int swsusp_arch_resume(void)
+ {
++#ifdef CONFIG_KFENCE
++	struct pbe *pbe;
++
++	for (pbe = restore_pblist; pbe; pbe = pbe->next)
++		pbe->orig_address = __va(virt_to_phys(pbe->orig_address));
++#endif
+ 	/* Avoid TLB mismatch during and after kernel resume */
+ 	local_flush_tlb_all();
+ 	return swsusp_asm_resume();
 
 
