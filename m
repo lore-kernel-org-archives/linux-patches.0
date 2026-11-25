@@ -1,58 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795624790;
-	b=A0XHJMRNjWfFNBmyJQ3TryvXwL9v2ne7oyOe0KrWEStsbZ5wRYiQKCqYfvP/RBZoNmWq
-	 Qdv45U5g1RjnDYVmTiDaSkFbVje3MwZyg77Mmra74WTXCviDwgGJs82KdZPpvqgis4mX8
-	 fqJX9Zxr+VSI2DzhyPB1snyBj5ItNZ85FoprFaKGADbLuk7NOklUQ8lGzlJWeKqN4rLrT
-	 L03+22nEuOb5EAwXxRF5WaHgNNXpsSK3GFE02bY0qyymMvzs1MXZWX4+UTULhjSI0ppPt
-	 j5tyMRIBtPIC3O0HrtAc+w0QSu2L2Q8EWhK0gRTHJ1gqcuXnZR3xTQzRtSBYWTiODQQ==
+	t=1795624793;
+	b=Y2uXINdmGOYk/3z8fW6om6XuYw5ctPqy49L4mbsFfoskxkP2koBqHCkD/k4UQbbwlOkE
+	 0rG6Npl4l7C9BB5qpcZpDQTQKSsShldkc38vewNn8w6ZglT5NyBMqgUtsz4aUeuCkfhyP
+	 9KUn3Ak4NbQK24kQpsvKLczyuerriMrwKEiXHOOpFDEaFqz7I/YtZ9nUTS852AHZ0Fsvn
+	 TD4NCzy9GVLgqBxaN+/KHjucv+lgD0yLzEh/MJfLSqQleX5z/iTWKnB6M2NNP/Nci0viH
+	 nZwxDbmOWx2u15F3aK0Nuw/qKdP/oXtDAOG870pu77k0jk5GXNPLJFOjw5T1hsTRH1A==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795624790;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795624793;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Type:Content-Transfer-Encoding;
-	bh=JfpPs61rwgoB9TrHFYZcEbGuwwH+z4nppxgphp8e34Y=;
-	b=G/VuJiJKgEoX/7aT30GuC6EGkhBW5AGX+fXo//xwQMYYA1labNydIq3PUIE1OG5mg7K3
-	 0Ew9IX+YZxC+8ap8qzz/vbN3lAjftLXE7vajmcPSWW2uf1EreulRpfHIpQglBiaWZXeSb
-	 phSNIit5QgZvsFsPKEPeGNESutpn9GodZUAN8955NOSwmB+GzXGuMunEv3qp0VDQ0raZ8
-	 oydvDGil9R5iRUrD82Dm7UbbdYXPahuEunx6WbGLn6HjmMpKUcSqvpMu/16dWhZwshwDl
-	 oZL018JDGosgFxaGNH48szJRp8JXJxp4jUcBORUWVZUWIuoUrIWA1rhCiFFG76yJP+w==
+	 MIME-Version:Content-Transfer-Encoding;
+	bh=9ZTeH4ufTxRcyO2sz52D3kJy0d4d/dEbTvOcjanrwg4=;
+	b=UWylHnsLc7wtug4ZfhhQSQJPOw6EP7gWu+eSC/F9B12bhnAbu8a7wXIZAnGbprfraECE
+	 FOtFxFIwsVgNScCIFJyeTFLVWHNrDKBTlDJnVBGyuRGDN6N0WolJfZZWKpvcCw6V9a9mI
+	 8vTCYtOXzJ6Oqd8A8UriSAg9qWEepDpPImXbLKjntNZfg7nAwRddkuP9ofYeHihPAnBrF
+	 XJ8AeW7IRbHkQ8OfldiCyfXQj/9FDNz44dnp5S8zgjBXYeJuo8Nsf4UONupivusWNpCpM
+	 L6fDuGf3zL3gYwaTj3aUtEw7KXF/AdFrAb8VY2pETcEtDCc1BzIAAowKmyoAfQfisxw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=GJ6tvdFU;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=kRyeZuZx;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 57399606A68B;
-	Wed, 25 Nov 2026 16:39:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D58AC606A329;
+	Wed, 25 Nov 2026 16:39:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=GJ6tvdFU
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A0C7E1F000F4;
-	Wed, 25 Nov 2026 16:39:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=kRyeZuZx
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 05F0E1F000D1;
+	Wed, 25 Nov 2026 16:39:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795624790;
-	bh=JfpPs61rwgoB9TrHFYZcEbGuwwH+z4nppxgphp8e34Y=;
+	s=korg; t=1795624793;
+	bh=9ZTeH4ufTxRcyO2sz52D3kJy0d4d/dEbTvOcjanrwg4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=GJ6tvdFUdt+e2zxq1knTrDooPXTpbwrTpv38vD04RcwYGMbryw0+g6bi3WeegmchJ
-	 4oW2CmX/Sje44EOsG6MmJvxojOtnQsHC4Zel/2J1bAUj+wBZGSn6FjxSspjSNbYvG/
-	 SxERnuw04f/N3EwTdRyN21vonWuQwwuoBsPk9I7w=
+	b=kRyeZuZxaHE3myp4Nnw9zK+bAy1JU0Yxo34VO7FoGbjbVoLs1nFrDC8haTC/qXqnM
+	 FuSXtchB6X/Cb3U4Bzn8bw82G32cuxOUxmE2xXb2BEX0pTopfLNlbkA1MYRlkyJLkQ
+	 8fdabOUNGuWJ/91W8UuEEv0KkkajiOeNkGISeZk8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chenguang Zhao <zhaochenguang@kylinos.cn>,
-	Aleksandr Loktionov <aleksandr.loktionov@intel.com>,
-	Jason Xing <kerneljasonxing@gmail.com>,
-	Maciej Fijalkowski <maciej.fijalkowski@intel.com>,
-	Patryk Holda <patryk.holda@intel.com>,
-	Tony Nguyen <anthony.l.nguyen@intel.com>,
-	=?UTF-8?q?Bj=C3=B6rn=20T=C3=B6pel?= <bjorn@kernel.org>,
+	Qihang Tang <q.h.hack.winter@gmail.com>,
+	Kuniyuki Iwashima <kuniyu@google.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 307/816] i40e: xsk: fix multi-buffer XDP_PASS skb construction
-Date: Wed, 25 Nov 2026 15:30:55 +0100
-Message-ID: <20261125143856.307601597@linuxfoundation.org>
+Subject: [PATCH 6.12 308/816] af_unix: Remove gc_in_progress check in unix_peek_fpl().
+Date: Wed, 25 Nov 2026 15:30:56 +0100
+Message-ID: <20261125143856.330585633@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143849.205329330@linuxfoundation.org>
 References: <20261125143849.205329330@linuxfoundation.org>
@@ -68,76 +63,59 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Chenguang Zhao <zhaochenguang@kylinos.cn>
+From: Kuniyuki Iwashima <kuniyu@google.com>
 
-[ Upstream commit 76b41e83e69ae4ab23cc3535e36b780ea17e76c2 ]
+[ Upstream commit 0edbc945eb9edd0086f25b151a79cfe4adc0dfa8 ]
 
-When AF_XDP ZC receives a multi-buffer frame and the XDP program
-returns XDP_PASS, i40e_construct_skb_zc() copies frags into a new
-skb. The copy used skb_frag_page() as the memcpy source (page
-metadata instead of packet data) and passed a virtual address to
-__skb_fill_page_desc_noacc(), which expects a struct page *.
+unix_vertex_dead() and unix_peek_fpl() are synchronised
+with unix_peek_seq to prevent GC from purging a live
+socket's recvq.
 
-Use skb_frag_address() for the copy, attach frags with
-skb_add_rx_frag() so len/data_len/truesize are updated, and on
-dev_alloc_page() failure free the skb via the shared out path so
-xsk_buff_free() still runs and previously attached pages are
-released by kfree_skb.
+unix_peek_fpl() skips the synchronisation if gc_in_progress
+is false.
 
-Fixes: 1c9ba9c14658 ("i40e: xsk: add RX multi-buffer support")
-Signed-off-by: Chenguang Zhao <zhaochenguang@kylinos.cn>
-Reviewed-by: Aleksandr Loktionov <aleksandr.loktionov@intel.com>
-Reviewed-by: Jason Xing <kerneljasonxing@gmail.com>
-Acked-by: Maciej Fijalkowski <maciej.fijalkowski@intel.com>
-Tested-by: Patryk Holda <patryk.holda@intel.com>
-Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
-Reviewed-by: Björn Töpel <bjorn@kernel.org>
-Link: https://patch.msgid.link/20261102124950.958345-8-maciej.fijalkowski@intel.com
+However, on weakly ordered arch, GC might have already
+started working while the write to gc_in_progress is
+buffered.
+
+This does not occur on x86.
+
+This is an unlikely path that happens only when AF_UNIX
+fd is peeked so not worth complicating.
+
+Instead of adding memory barriers in unix_gc() and
+unix_peek_fpl(), let's simply remove the broken short-circuit.
+
+Fixes: e5b31d988a41 ("af_unix: Give up GC if MSG_PEEK intervened.")
+Reported-by: Qihang Tang <q.h.hack.winter@gmail.com>
+Signed-off-by: Kuniyuki Iwashima <kuniyu@google.com>
+Link: https://patch.msgid.link/20261104162858.991930-1-kuniyu@google.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/intel/i40e/i40e_xsk.c | 13 +++++--------
- 1 file changed, 5 insertions(+), 8 deletions(-)
+ net/unix/garbage.c | 3 ---
+ 1 file changed, 3 deletions(-)
 
-diff --git a/drivers/net/ethernet/intel/i40e/i40e_xsk.c b/drivers/net/ethernet/intel/i40e/i40e_xsk.c
-index 4e885df789ef4..a1892373e9216 100644
---- a/drivers/net/ethernet/intel/i40e/i40e_xsk.c
-+++ b/drivers/net/ethernet/intel/i40e/i40e_xsk.c
-@@ -317,22 +317,19 @@ static struct sk_buff *i40e_construct_skb_zc(struct i40e_ring *rx_ring,
- 		goto out;
+diff --git a/net/unix/garbage.c b/net/unix/garbage.c
+index 338769200065e..9c1afd8507c57 100644
+--- a/net/unix/garbage.c
++++ b/net/unix/garbage.c
+@@ -317,9 +317,6 @@ void unix_peek_fpl(struct scm_fp_list *fpl)
+ 	if (!fpl || !fpl->count_unix)
+ 		return;
  
- 	for (int i = 0; i < nr_frags; i++) {
--		struct skb_shared_info *skinfo = skb_shinfo(skb);
- 		skb_frag_t *frag = &sinfo->frags[i];
-+		unsigned int frag_size = skb_frag_size(frag);
- 		struct page *page;
--		void *addr;
- 
- 		page = dev_alloc_page();
- 		if (!page) {
- 			dev_kfree_skb(skb);
--			return NULL;
-+			skb = NULL;
-+			goto out;
- 		}
--		addr = page_to_virt(page);
- 
--		memcpy(addr, skb_frag_page(frag), skb_frag_size(frag));
+-	if (!READ_ONCE(gc_in_progress))
+-		return;
 -
--		__skb_fill_page_desc_noacc(skinfo, skinfo->nr_frags++,
--					   addr, 0, skb_frag_size(frag));
-+		memcpy(page_to_virt(page), skb_frag_address(frag), frag_size);
-+		skb_add_rx_frag(skb, i, page, 0, frag_size, PAGE_SIZE);
- 	}
- 
- out:
+ 	/* Invalidate the final refcnt check in unix_vertex_dead(). */
+ 	spin_lock(&unix_peek_lock);
+ 	raw_write_seqcount_barrier(&unix_peek_seq);
 -- 
 2.53.0
 
