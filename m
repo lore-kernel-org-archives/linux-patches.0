@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795620105;
-	b=aiebvxALSvIEZX5zVFco78VuZ1O5+sP01XWisSk1Ju1Ra+zeK7IOzWgoQJ8TculR33St
-	 Y9Nrr6TzlM9iYghK7zyJbpN2is2ilDWqnoPKt1ztYkYOjyGvduSVREj2RYvNU5wSXo7VY
-	 vEc5IC0osU1LVA92LG5PjvGIohaCRQP5WCKjxjW1hxl/Zbx9x+QdhJ08lyMGw1pk3hpcD
-	 4v9ORxz4sqiPDM/fYJ2Pv0h+5FKa0NQnyh+IARrdmH/ckMgWwyTVeREjo21zLiCbxTtih
-	 l5i2mPCw0MOzv7qS8K1ZIea2SSK5zV4ClZcudFr9cohqbqQGbYJoyGqNUS3xQPJwhdQ==
+	t=1795620108;
+	b=X0sGWkMWY9JWPIn7+feXVtWFfWGX+ys773bvdchT05hxCI/OOF9jCVH3ZNDUPFV0LlMd
+	 tPb77naAqpbjpvvkOsbdpSj1e2Cj1RF5+SmV7BI01KW1KWeCGgu/bi7Sqkr7hec7FcPOr
+	 xOCJZNPDyGBpa+gaC3zjhn840Zqn5MCXF06CaPVpi8b/Xw2e3eRryBwuNhWbkqBSHJxaM
+	 zf65U8XxW4MUa+y+9/02BP76mWgNxfovyiyCq9/9HDBiT7DvgXADZfoJ5d1FCAXrDnyV1
+	 2Qbpg9Jj5PWNTeuXkJmpJ0Xnl+K/fZ7Lvsm5O2r9drKfVov8TB4mpJBOD4ZkpMCbR5A==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795620105;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795620108;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=ooqjLtLCE1PcSq8IyolPWC4szutegVgAbPiiJ3Zyx8k=;
-	b=baFp8V40jm7ruwOmWNaOOQE3VRa2Avo5aQBaMUkbEItF94FiesS66NFlXskq7dT2Xl15
-	 a0rn+2B7CYI1Ipu0nmzCz2XSo3DDmSVjEzkefYlPNuFB0pyLOO4HobW7jyAsKmEZCIE0u
-	 RgTy2eUHD+F8zozJteAlR5HIsmCJEibcnD3OWvCxOXKOd2oPo/Cx0SQ104S6XIG9e9had
-	 9Mojnh0xlOAkJgytyUNUM9j4xa91W0VFRjENG/VAAUIeH5aZjk8MKDQY/yb8Gk9vbVWz3
-	 jm0bpBlMIgPM5vzK+vywFu3eYkFTxmxp3vzlGoAAeJsugYxwgIFM3UdH+KEUeeaz8eA==
+	bh=Zskb5R3sr7hZHLZlIWJHOUergTVG7ELIkApqkezu/w4=;
+	b=z7idZdFgx8xX5UdHy37vuGxgb3fPGf4vJod9dhCG6LSVzwYwO4zx7J6ySf3lh1NEF2WW
+	 m/ph3lco8MeFy1vR+MJNFl+lxsCJBbyrDMXqkDPq1iSr/o9YAo202/0i/3bgXa3HGY4ID
+	 6y/bZLbinWwQw52CQzDG59nk6HNA45Ha/bOgTxU+oWV1hsYc+GJld7l1DFWwb0Lfet2EW
+	 Rlwhw0jXHA4skEaYthKz/r8bRTldsl1W+yNYGWL2zehSXL10fRufvNjExKxPrOxVCnE/f
+	 G/x5h98EkHynHcs4IF28gqvohckc8GJhMal3RvV1qhDj4IJq9iCN9+5kyH9k8rynvIA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=gRn+cHf2;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=0bwDgqq0;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 62E7F606A321;
-	Wed, 25 Nov 2026 15:21:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7AFF8606A31E;
+	Wed, 25 Nov 2026 15:21:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=gRn+cHf2
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3C7C41F000C0;
-	Wed, 25 Nov 2026 15:21:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=0bwDgqq0
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3FE7F1F000CA;
+	Wed, 25 Nov 2026 15:21:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795620104;
-	bh=ooqjLtLCE1PcSq8IyolPWC4szutegVgAbPiiJ3Zyx8k=;
+	s=korg; t=1795620107;
+	bh=Zskb5R3sr7hZHLZlIWJHOUergTVG7ELIkApqkezu/w4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=gRn+cHf2UBn6mu4sdUWSTKE9q4pjtXt4hpedXK/ix4TAivJZCbQx3++AuwpJLJij0
-	 MdyWhl5KfkULlJxMUtYi464b6v9a//58OQYH1CtjkGUBnvB6V4ymCJEYp7A1ur/gdz
-	 rza07wl9FLZCpsRMOCtjYvQ/UBrdA+r8WCqjMxL0=
+	b=0bwDgqq0VlTUjiJZGv5IIdriEOWe79UO87pmR++D3n64pVYnn2LE2pnKb6KJwsm+z
+	 LIf+O69GxBIWw1Uo4vp+aDuXcSJakjoCLXMBwamvCqEdfNnvlImTRoBZnh5k+xSvpQ
+	 VMawE/jnroZrhkcEdBaNZ8OT4PIQSkKgDgEPi69g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Billy Tsai <billy_tsai@aspeedtech.com>,
-	Andrew Jeffery <andrew@codeconstruct.com.au>,
+	Guangshuo Li <lgs201920130244@gmail.com>,
+	Florian Fainelli <florian.fainelli@broadcom.com>,
 	Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
-Subject: [PATCH 7.3 0810/1005] gpio: aspeed: Preserve the pending G7 interrupt status on control writes
-Date: Wed, 25 Nov 2026 15:35:48 +0100
-Message-ID: <20261125143840.704893143@linuxfoundation.org>
+Subject: [PATCH 7.3 0811/1005] gpio: brcmstb: fix UAF after IRQ domain setup failure
+Date: Wed, 25 Nov 2026 15:35:49 +0100
+Message-ID: <20261125143840.727056958@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143821.729802100@linuxfoundation.org>
 References: <20261125143821.729802100@linuxfoundation.org>
@@ -68,49 +68,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Billy Tsai <billy_tsai@aspeedtech.com>
+From: Guangshuo Li <lgs201920130244@gmail.com>
 
-commit 18cc1d1ad94df8a6760fff2617d3d6923550cba0 upstream.
+commit baa14758afb3e2828de1f76511edc1de50216f39 upstream.
 
-On G7 each line has its own control register, and its interrupt status
-bit (bit 12) is write-1-to-clear. aspeed_g7_reg_bit_set() updates a
-field by reading the control register, replacing that field and writing
-the value back. When the line's interrupt is pending, the status bit
-reads as 1 and is written back as 1, so updating an unrelated field
-such as the interrupt enable, trigger type, direction or debounce
-selection also clears the pending interrupt.
+When devm_request_irq() fails in brcmstb_gpio_irq_setup(), the error
+path removes the IRQ domain but leaves priv->irq_domain non-NULL.
 
-Mask out the status bit when composing the value to write, so it is
-written as 1 only when the status field itself is being set to ack the
-interrupt.
+The probe error path subsequently calls brcmstb_gpio_remove(), which
+checks priv->irq_domain and attempts to access the already-freed
+domain through irq_find_mapping(). It also attempts to remove the
+domain again, resulting in a use-after-free and potentially further
+memory corruption.
 
-Fixes: b2e861bd1eaf ("gpio: aspeed: Support G7 Aspeed gpio controller")
+Set priv->irq_domain to NULL after removing it so that the common
+cleanup path skips the already-freed IRQ domain.
+
+This issue was found by our static analysis tool under development.
+
+Fixes: 0ba31dc201de ("gpio: brcmstb: consolidate interrupt domains")
 Cc: stable@vger.kernel.org
-Signed-off-by: Billy Tsai <billy_tsai@aspeedtech.com>
-Reviewed-by: Andrew Jeffery <andrew@codeconstruct.com.au>
-Link: https://patch.msgid.link/20261104-gpio-aspeed-irq-status-v1-2-9805645f856d@aspeedtech.com
+Signed-off-by: Guangshuo Li <lgs201920130244@gmail.com>
+Reviewed-by: Florian Fainelli <florian.fainelli@broadcom.com>
+Link: https://patch.msgid.link/20261026115227.41779-1-lgs201920130244@gmail.com
 Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpio/gpio-aspeed.c |    8 +++++++-
- 1 file changed, 7 insertions(+), 1 deletion(-)
+ drivers/gpio/gpio-brcmstb.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/drivers/gpio/gpio-aspeed.c
-+++ b/drivers/gpio/gpio-aspeed.c
-@@ -1168,7 +1168,13 @@ static void aspeed_g7_reg_bit_set(struct
- 	u32 write_val;
+--- a/drivers/gpio/gpio-brcmstb.c
++++ b/drivers/gpio/gpio-brcmstb.c
+@@ -513,6 +513,7 @@ static int brcmstb_gpio_irq_setup(struct
  
- 	if (mask) {
--		write_val = (ioread32(addr) & ~(mask)) | field_prep(mask, val);
-+		/*
-+		 * The interrupt status bit is write-1-to-clear. Keep it zero
-+		 * unless it is the field being written, so that updating any
-+		 * other field leaves a pending interrupt latched.
-+		 */
-+		write_val = ioread32(addr) & ~(mask | GPIO_G7_CTRL_IRQ_STS);
-+		write_val |= field_prep(mask, val);
- 		iowrite32(write_val, addr);
- 	}
+ out_free_domain:
+ 	irq_domain_remove(priv->irq_domain);
++	priv->irq_domain = NULL;
+ 
+ 	return err;
  }
 
 
