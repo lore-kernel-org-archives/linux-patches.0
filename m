@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795622186;
-	b=Omxd7ANIecNUBc5nJdSU7lgia3BwspDOGHrsgjT4Weix7phVj9xRWB95X0tyK66GbYMa
-	 4SsWpSm2OADtgWGLvf5ea8Sz5zh1Jb3dpXpcyuPwZeKB817rk63xqPsdJFCuQhJrhheXi
-	 SDTpOsY+dd2aGCPL3Gs3WK2kSU69AWygWzXXOiJYFFvwImUr25NEIup+2dLOSa1fzd19g
-	 A8LVi7HQTrAIfwekVPWmEMu+xPUUwI4s4ACVc4OMM6yq8kT8cIu2yCnPm2VjN7sqxgYE0
-	 WlkJdm5eh71ABr2Mdg8rqWovPvodxkiXeR0MdqhQtvsZFmorTwGu2A6KRxOKm7jFEbw==
+	t=1795622190;
+	b=o7XCXHqPPfxX08QJnOPHVg52z6bwq3GtBYRoIbkvRmBXqfOTuHqRILm0FHe3vg1Z5ruD
+	 PUC8dR3S1+HnF4uNniuADGJowh4HQKNZ7IhyjmJyqxdgmTUHDI+Ul46BmAfTWo4MRJAKf
+	 8ifrB6siTL6OzCFzU9TcpfX5VkvDShJskbcqVOJIrWb6eCOjdSMBjj3gR/J7DoHkBcLG9
+	 YH5mAXEuER9vJkfwlPsdYZ+iQv4lK/LASso09tfidRzZUmehsjkblGHSg2kX3gxMyuz65
+	 Lg8vh7iDb3H196dcGou5ASL1M/zfYTCpEU78kQFG8vIiBJuA5n4zxSOyKh21BmoPz9Q==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795622186;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795622190;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Transfer-Encoding;
-	bh=F/mRknEzLyHNCsLb56RYENxB1TUrGX/Ot40ObJHRMf4=;
-	b=Io2ZKcsZsTx9lwgqrVOK16J7xtllA8zxQEVxDA7dkPG7sNK0qzXdmwHsjdnoIe3+0GVB
-	 6W8WiDUEbjZMk+NTKU7tyCg7ogmJBaeO1LfAFnjQiC4TA7kl5JC0ZvpStHRdQgMsS0DjM
-	 jl4tt9lx2VftjoJgdNYR0sX8j0MFsp6qWYNhYQZP+kE0JwnOpMbQVwuxaBcTytTSbO9Vc
-	 ea6DRrgo/0Ad0lq+3rliiytcntmHAjb6+6fNi4NB2XhbIvaAEsUd/so8EpOoRvBHTHm5v
-	 Aqy2L9fzXY0fH62RUutOAikqXUA55YkKmjckr+7BS/V2S8pitckyITWfIWkQGklsJWA==
+	 MIME-Version:Content-Type:Content-Transfer-Encoding;
+	bh=Q4aIr97e0YHlE0/oweTt+ZU1AhGFXUZ4urmnd3sVPec=;
+	b=B1LmgQ0iQaTyHiD+jc1TtpI5URFLADl4AsXtEsNNi9OIbcUwG16ieJZwmeKqPSj7/+Ra
+	 Qa73MZJuhibvEF3nGyDSkfKUxkvh6K3BW7lgo4/18cty6kDZ6WTBoOKZlDL0OJwiMBtkw
+	 fznKsWJpiXAH+jfd6ReeB0vx5rRuy6r6SjOj8+Yd4M0qyUsR7xUS3x5/v/0MIv/soif2P
+	 KFpT8gOPfRr26tnxeL58KR08zrvwv2Q0ll8DocbqFDrcp2hnmJwx6g6TyycbZgLMigMPv
+	 arH7AvWpWe41bdNoDxwyhmA8Lue3/Ro2IJx9eixzBpsxSuMEESzFks6KRBEYOW6b83g==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=G7OkKNek;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=FMIgEmeP;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BEFD7606A333;
-	Wed, 25 Nov 2026 15:56:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ADAB3606A323;
+	Wed, 25 Nov 2026 15:56:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=G7OkKNek
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 18A511F000CF;
-	Wed, 25 Nov 2026 15:56:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=FMIgEmeP
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 81AFF1F000CA;
+	Wed, 25 Nov 2026 15:56:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795622186;
-	bh=F/mRknEzLyHNCsLb56RYENxB1TUrGX/Ot40ObJHRMf4=;
+	s=korg; t=1795622190;
+	bh=Q4aIr97e0YHlE0/oweTt+ZU1AhGFXUZ4urmnd3sVPec=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=G7OkKNekSkg0u1sPeumXB8zRdbXVg1gwjtz48l1HzLi5q1MTyL55GNhEtGGgfzCPf
-	 9lC2srB3teENvPpB+jWFUT5ns7F+8GkyoF1BakhitdqEkvnoEDZf6SpaF+SKE5ec09
-	 epGW4DKTL8YZEOXGLfqzEu5kHAsvNH59lKGpEOos=
+	b=FMIgEmeP6ix7ZGZOwWP4HLbG54bxfRC+iS87Wevd29CAMxTai+Haw8nz5YkUQ1IpF
+	 Mv99kW6yCVOBpjgyG3HFp5Q6TNquSmD8stg95h+u9H+SY/u81miYP8wK2iEB4c0la3
+	 YlB2QcQdy/zbtm+CF9DTnti5zMAw8JYCZpZBz16M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Gustavo Sousa <gustavo.sousa@intel.com>,
-	Matt Roper <matthew.d.roper@intel.com>,
+	Riana Tauro <riana.tauro@intel.com>,
+	Michal Wajdeczko <michal.wajdeczko@intel.com>,
+	Vinay Belgaumkar <vinay.belgaumkar@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 458/990] drm/xe/guc_pc: Use scope-based cleanup
-Date: Wed, 25 Nov 2026 15:30:25 +0100
-Message-ID: <20261125143832.823177911@linuxfoundation.org>
+Subject: [PATCH 6.18 459/990] drm/xe: Decouple GuC RC code from xe_guc_pc
+Date: Wed, 25 Nov 2026 15:30:26 +0100
+Message-ID: <20261125143832.846864510@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143822.072087159@linuxfoundation.org>
 References: <20261125143822.072087159@linuxfoundation.org>
@@ -62,213 +63,452 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Matt Roper <matthew.d.roper@intel.com>
+From: Vinay Belgaumkar <vinay.belgaumkar@intel.com>
 
-[ Upstream commit e9bc4162bf39154c1eb8d5edb11a00fc30771c39 ]
+[ Upstream commit 40a684f91d267164f9adf0d35b572b4cad0b8d3c ]
 
-Use scope-based cleanup for forcewake and runtime PM in the GuC PC code.
-This allows us to eliminate to goto-based cleanup and simplifies some
-other functions.
+Move enable/disable GuC RC logic into the new file. This will
+allow us to independently enable/disable GuC RC and not rely
+on SLPC related functions. GuC already provides separate H2G
+interfaces to setup GuC RC and SLPC.
 
-Reviewed-by: Gustavo Sousa <gustavo.sousa@intel.com>
-Link: https://patch.msgid.link/20251118164338.3572146-35-matthew.d.roper@intel.com
-Signed-off-by: Matt Roper <matthew.d.roper@intel.com>
+Cc: Riana Tauro <riana.tauro@intel.com>
+Cc: Michal Wajdeczko <michal.wajdeczko@intel.com>
+Reviewed-by: Michal Wajdeczko <michal.wajdeczko@intel.com>
+Reviewed-by: Riana Tauro <riana.tauro@intel.com>
+Signed-off-by: Vinay Belgaumkar <vinay.belgaumkar@intel.com>
+Link: https://patch.msgid.link/20260204014234.2867763-2-vinay.belgaumkar@intel.com
 Stable-dep-of: 557c7b434378 ("drm/xe: Sync Wa_16023105232 in xe_was to match OOB rule")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/xe/xe_guc_pc.c | 62 ++++++++++------------------------
- 1 file changed, 17 insertions(+), 45 deletions(-)
+ Documentation/gpu/xe/xe_firmware.rst |   3 +
+ drivers/gpu/drm/xe/Makefile          |   1 +
+ drivers/gpu/drm/xe/xe_gt.c           |   1 -
+ drivers/gpu/drm/xe/xe_guc.c          |   6 ++
+ drivers/gpu/drm/xe/xe_guc_pc.c       |  68 +++-----------
+ drivers/gpu/drm/xe/xe_guc_pc.h       |   1 -
+ drivers/gpu/drm/xe/xe_guc_rc.c       | 130 +++++++++++++++++++++++++++
+ drivers/gpu/drm/xe/xe_guc_rc.h       |  15 ++++
+ drivers/gpu/drm/xe/xe_uc.c           |  10 +--
+ drivers/gpu/drm/xe/xe_uc.h           |   1 -
+ 10 files changed, 172 insertions(+), 64 deletions(-)
+ create mode 100644 drivers/gpu/drm/xe/xe_guc_rc.c
+ create mode 100644 drivers/gpu/drm/xe/xe_guc_rc.h
 
+diff --git a/Documentation/gpu/xe/xe_firmware.rst b/Documentation/gpu/xe/xe_firmware.rst
+index 5d23e9f273914..9c15a300bc625 100644
+--- a/Documentation/gpu/xe/xe_firmware.rst
++++ b/Documentation/gpu/xe/xe_firmware.rst
+@@ -31,6 +31,9 @@ GuC Power Conservation (PC)
+ .. kernel-doc:: drivers/gpu/drm/xe/xe_guc_pc.c
+    :doc: GuC Power Conservation (PC)
+ 
++.. kernel-doc:: drivers/gpu/drm/xe/xe_guc_rc.c
++   :doc: GuC Render C-states (GuC RC)
++
+ PCIe Gen5 Limitations
+ =====================
+ 
+diff --git a/drivers/gpu/drm/xe/Makefile b/drivers/gpu/drm/xe/Makefile
+index c5fc8cc71149c..57346b1085c7a 100644
+--- a/drivers/gpu/drm/xe/Makefile
++++ b/drivers/gpu/drm/xe/Makefile
+@@ -74,6 +74,7 @@ xe-y += xe_bb.o \
+ 	xe_guc_klv_helpers.o \
+ 	xe_guc_log.o \
+ 	xe_guc_pc.o \
++	xe_guc_rc.o \
+ 	xe_guc_submit.o \
+ 	xe_guc_tlb_inval.o \
+ 	xe_heci_gsc.o \
+diff --git a/drivers/gpu/drm/xe/xe_gt.c b/drivers/gpu/drm/xe/xe_gt.c
+index 1099335298471..c276a5fbb43ed 100644
+--- a/drivers/gpu/drm/xe/xe_gt.c
++++ b/drivers/gpu/drm/xe/xe_gt.c
+@@ -889,7 +889,6 @@ static int gt_reset(struct xe_gt *gt)
+ 	if (IS_SRIOV_PF(gt_to_xe(gt)))
+ 		xe_gt_sriov_pf_stop_prepare(gt);
+ 
+-	xe_uc_gucrc_disable(&gt->uc);
+ 	xe_uc_stop_prepare(&gt->uc);
+ 	xe_gt_pagefault_reset(gt);
+ 
+diff --git a/drivers/gpu/drm/xe/xe_guc.c b/drivers/gpu/drm/xe/xe_guc.c
+index ae0c88da422b2..5a8244633b67f 100644
+--- a/drivers/gpu/drm/xe/xe_guc.c
++++ b/drivers/gpu/drm/xe/xe_guc.c
+@@ -33,6 +33,7 @@
+ #include "xe_guc_klv_helpers.h"
+ #include "xe_guc_log.h"
+ #include "xe_guc_pc.h"
++#include "xe_guc_rc.h"
+ #include "xe_guc_relay.h"
+ #include "xe_guc_submit.h"
+ #include "xe_memirq.h"
+@@ -852,6 +853,10 @@ int xe_guc_init_post_hwconfig(struct xe_guc *guc)
+ 	if (ret)
+ 		return ret;
+ 
++	ret = xe_guc_rc_init(guc);
++	if (ret)
++		return ret;
++
+ 	ret = xe_guc_engine_activity_init(guc);
+ 	if (ret)
+ 		return ret;
+@@ -1614,6 +1619,7 @@ void xe_guc_stop_prepare(struct xe_guc *guc)
+ 	if (!IS_SRIOV_VF(guc_to_xe(guc))) {
+ 		int err;
+ 
++		xe_guc_rc_disable(guc);
+ 		err = xe_guc_pc_stop(&guc->pc);
+ 		xe_gt_WARN(guc_to_gt(guc), err, "Failed to stop GuC PC: %pe\n",
+ 			   ERR_PTR(err));
 diff --git a/drivers/gpu/drm/xe/xe_guc_pc.c b/drivers/gpu/drm/xe/xe_guc_pc.c
-index e41d97263eb62..994675336f04c 100644
+index 994675336f04c..47281c46f0631 100644
 --- a/drivers/gpu/drm/xe/xe_guc_pc.c
 +++ b/drivers/gpu/drm/xe/xe_guc_pc.c
-@@ -523,21 +523,17 @@ u32 xe_guc_pc_get_cur_freq_fw(struct xe_guc_pc *pc)
- int xe_guc_pc_get_cur_freq(struct xe_guc_pc *pc, u32 *freq)
- {
- 	struct xe_gt *gt = pc_to_gt(pc);
--	unsigned int fw_ref;
- 
- 	/*
- 	 * GuC SLPC plays with cur freq request when GuCRC is enabled
- 	 * Block RC6 for a more reliable read.
- 	 */
--	fw_ref = xe_force_wake_get(gt_to_fw(gt), XE_FW_GT);
--	if (!xe_force_wake_ref_has_domain(fw_ref, XE_FW_GT)) {
--		xe_force_wake_put(gt_to_fw(gt), fw_ref);
-+	CLASS(xe_force_wake, fw_ref)(gt_to_fw(gt), XE_FW_GT);
-+	if (!xe_force_wake_ref_has_domain(fw_ref.domains, XE_FW_GT))
- 		return -ETIMEDOUT;
--	}
- 
- 	*freq = get_cur_freq(gt);
- 
--	xe_force_wake_put(gt_to_fw(gt), fw_ref);
- 	return 0;
- }
- 
-@@ -1105,13 +1101,8 @@ int xe_guc_pc_gucrc_disable(struct xe_guc_pc *pc)
+@@ -90,6 +90,17 @@
+  * Render-C states is also a GuC PC feature that is now enabled in Xe for
+  * all platforms.
+  *
++ * Implementation details:
++ * -----------------------
++ * The implementation for GuC Power Management features is split as follows:
++ *
++ * xe_guc_rc:  Logic for handling GuC RC
++ * xe_gt_idle: Host side logic for RC6 and Coarse Power gating (CPG)
++ * xe_guc_pc:  Logic for all other SLPC related features
++ *
++ * There is some cross interaction between these where host C6 will need to be
++ * enabled when we plan to skip GuC RC. Also, the GuC RC mode is currently
++ * overridden through 0x3003 which is an SLPC H2G call.
   */
- int xe_guc_pc_override_gucrc_mode(struct xe_guc_pc *pc, enum slpc_gucrc_mode mode)
- {
--	int ret;
--
--	xe_pm_runtime_get(pc_to_xe(pc));
--	ret = pc_action_set_param(pc, SLPC_PARAM_PWRGATE_RC_MODE, mode);
--	xe_pm_runtime_put(pc_to_xe(pc));
--
--	return ret;
-+	guard(xe_pm_runtime)(pc_to_xe(pc));
-+	return pc_action_set_param(pc, SLPC_PARAM_PWRGATE_RC_MODE, mode);
- }
  
- /**
-@@ -1122,13 +1113,8 @@ int xe_guc_pc_override_gucrc_mode(struct xe_guc_pc *pc, enum slpc_gucrc_mode mod
-  */
- int xe_guc_pc_unset_gucrc_mode(struct xe_guc_pc *pc)
- {
--	int ret;
--
--	xe_pm_runtime_get(pc_to_xe(pc));
--	ret = pc_action_unset_param(pc, SLPC_PARAM_PWRGATE_RC_MODE);
--	xe_pm_runtime_put(pc_to_xe(pc));
--
--	return ret;
-+	guard(xe_pm_runtime)(pc_to_xe(pc));
-+	return pc_action_unset_param(pc, SLPC_PARAM_PWRGATE_RC_MODE);
- }
- 
- static void pc_init_pcode_freq(struct xe_guc_pc *pc)
-@@ -1218,7 +1204,7 @@ int xe_guc_pc_set_power_profile(struct xe_guc_pc *pc, const char *buf)
- 		return -EINVAL;
- 
- 	guard(mutex)(&pc->freq_lock);
--	xe_pm_runtime_get_noresume(pc_to_xe(pc));
-+	guard(xe_pm_runtime_noresume)(pc_to_xe(pc));
- 
- 	ret = pc_action_set_param(pc,
- 				  SLPC_PARAM_POWER_PROFILE,
-@@ -1229,8 +1215,6 @@ int xe_guc_pc_set_power_profile(struct xe_guc_pc *pc, const char *buf)
- 	else
- 		pc->power_profile = val;
- 
--	xe_pm_runtime_put(pc_to_xe(pc));
--
+ static struct xe_guc *pc_to_guc(struct xe_guc_pc *pc)
+@@ -270,22 +281,6 @@ static int pc_action_unset_param(struct xe_guc_pc *pc, u8 id)
  	return ret;
  }
  
-@@ -1273,17 +1257,14 @@ int xe_guc_pc_start(struct xe_guc_pc *pc)
- 	struct xe_device *xe = pc_to_xe(pc);
- 	struct xe_gt *gt = pc_to_gt(pc);
- 	u32 size = PAGE_ALIGN(sizeof(struct slpc_shared_data));
--	unsigned int fw_ref;
- 	ktime_t earlier;
- 	int ret;
+-static int pc_action_setup_gucrc(struct xe_guc_pc *pc, u32 mode)
+-{
+-	struct xe_guc_ct *ct = pc_to_ct(pc);
+-	u32 action[] = {
+-		GUC_ACTION_HOST2GUC_SETUP_PC_GUCRC,
+-		mode,
+-	};
+-	int ret;
+-
+-	ret = xe_guc_ct_send(ct, action, ARRAY_SIZE(action), 0, 0);
+-	if (ret && !(xe_device_wedged(pc_to_xe(pc)) && ret == -ECANCELED))
+-		xe_gt_err(pc_to_gt(pc), "GuC RC enable mode=%u failed: %pe\n",
+-			  mode, ERR_PTR(ret));
+-	return ret;
+-}
+-
+ static u32 decode_freq(u32 raw)
+ {
+ 	return DIV_ROUND_CLOSEST(raw * GT_FREQUENCY_MULTIPLIER,
+@@ -1068,30 +1063,6 @@ int xe_guc_pc_restore_stashed_freq(struct xe_guc_pc *pc)
+ 	return ret;
+ }
  
- 	xe_gt_assert(gt, xe_device_uc_enabled(xe));
- 
--	fw_ref = xe_force_wake_get(gt_to_fw(gt), XE_FW_GT);
--	if (!xe_force_wake_ref_has_domain(fw_ref, XE_FW_GT)) {
--		xe_force_wake_put(gt_to_fw(gt), fw_ref);
-+	CLASS(xe_force_wake, fw_ref)(gt_to_fw(gt), XE_FW_GT);
-+	if (!xe_force_wake_ref_has_domain(fw_ref.domains, XE_FW_GT))
+-/**
+- * xe_guc_pc_gucrc_disable - Disable GuC RC
+- * @pc: Xe_GuC_PC instance
+- *
+- * Disables GuC RC by taking control of RC6 back from GuC.
+- *
+- * Return: 0 on success, negative error code on error.
+- */
+-int xe_guc_pc_gucrc_disable(struct xe_guc_pc *pc)
+-{
+-	struct xe_device *xe = pc_to_xe(pc);
+-	struct xe_gt *gt = pc_to_gt(pc);
+-	int ret = 0;
+-
+-	if (xe->info.skip_guc_pc)
+-		return 0;
+-
+-	ret = pc_action_setup_gucrc(pc, GUCRC_HOST_CONTROL);
+-	if (ret)
+-		return ret;
+-
+-	return xe_gt_idle_disable_c6(gt);
+-}
+-
+ /**
+  * xe_guc_pc_override_gucrc_mode - override GUCRC mode
+  * @pc: Xe_GuC_PC instance
+@@ -1267,9 +1238,6 @@ int xe_guc_pc_start(struct xe_guc_pc *pc)
  		return -ETIMEDOUT;
--	}
  
  	if (xe->info.skip_guc_pc) {
- 		if (xe->info.platform != XE_PVC)
-@@ -1291,9 +1272,7 @@ int xe_guc_pc_start(struct xe_guc_pc *pc)
- 
+-		if (xe->info.platform != XE_PVC)
+-			xe_gt_idle_enable_c6(gt);
+-
  		/* Request max possible since dynamic freq mgmt is not enabled */
  		pc_set_cur_freq(pc, UINT_MAX);
+ 		return 0;
+@@ -1311,15 +1279,6 @@ int xe_guc_pc_start(struct xe_guc_pc *pc)
+ 	if (ret)
+ 		return ret;
+ 
+-	if (xe->info.platform == XE_PVC) {
+-		xe_guc_pc_gucrc_disable(pc);
+-		return 0;
+-	}
 -
--		ret = 0;
--		goto out;
-+		return 0;
- 	}
- 
- 	xe_map_memset(xe, &pc->bo->vmap, 0, 0, size);
-@@ -1302,7 +1281,7 @@ int xe_guc_pc_start(struct xe_guc_pc *pc)
- 	earlier = ktime_get();
- 	ret = pc_action_reset(pc);
- 	if (ret)
--		goto out;
-+		return ret;
- 
- 	if (wait_for_pc_state(pc, SLPC_GLOBAL_STATE_RUNNING,
- 			      SLPC_RESET_TIMEOUT_MS)) {
-@@ -1313,8 +1292,7 @@ int xe_guc_pc_start(struct xe_guc_pc *pc)
- 		if (wait_for_pc_state(pc, SLPC_GLOBAL_STATE_RUNNING,
- 				      SLPC_RESET_EXTENDED_TIMEOUT_MS)) {
- 			xe_gt_err(gt, "GuC PC Start failed: Dynamic GT frequency control and GT sleep states are now disabled.\n");
--			ret = -EIO;
--			goto out;
-+			return -EIO;
- 		}
- 
- 		xe_gt_warn(gt, "GuC PC excessive start time: %lldms",
-@@ -1327,21 +1305,20 @@ int xe_guc_pc_start(struct xe_guc_pc *pc)
- 
- 	ret = pc_init_freqs(pc);
- 	if (ret)
--		goto out;
-+		return ret;
- 
- 	ret = pc_set_mert_freq_cap(pc);
- 	if (ret)
--		goto out;
-+		return ret;
- 
- 	if (xe->info.platform == XE_PVC) {
- 		xe_guc_pc_gucrc_disable(pc);
--		ret = 0;
--		goto out;
-+		return 0;
- 	}
- 
- 	ret = pc_action_setup_gucrc(pc, GUCRC_FIRMWARE_CONTROL);
- 	if (ret)
--		goto out;
-+		return ret;
- 
+-	ret = pc_action_setup_gucrc(pc, GUCRC_FIRMWARE_CONTROL);
+-	if (ret)
+-		return ret;
+-
  	/* Enable SLPC Optimized Strategy for compute */
  	ret = pc_action_set_strategy(pc, SLPC_OPTIMIZED_STRATEGY_COMPUTE);
-@@ -1351,8 +1328,6 @@ int xe_guc_pc_start(struct xe_guc_pc *pc)
- 	if (unlikely(ret))
- 		xe_gt_err(gt, "Failed to set SLPC power profile: %pe\n", ERR_PTR(ret));
  
--out:
--	xe_force_wake_put(gt_to_fw(gt), fw_ref);
- 	return ret;
- }
- 
-@@ -1384,19 +1359,16 @@ static void xe_guc_pc_fini_hw(void *arg)
+@@ -1339,10 +1298,8 @@ int xe_guc_pc_stop(struct xe_guc_pc *pc)
  {
- 	struct xe_guc_pc *pc = arg;
  	struct xe_device *xe = pc_to_xe(pc);
--	unsigned int fw_ref;
  
- 	if (xe_device_wedged(xe))
+-	if (xe->info.skip_guc_pc) {
+-		xe_gt_idle_disable_c6(pc_to_gt(pc));
++	if (xe->info.skip_guc_pc)
+ 		return 0;
+-	}
+ 
+ 	mutex_lock(&pc->freq_lock);
+ 	pc->freq_ready = false;
+@@ -1364,7 +1321,6 @@ static void xe_guc_pc_fini_hw(void *arg)
  		return;
  
--	fw_ref = xe_force_wake_get(gt_to_fw(pc_to_gt(pc)), XE_FORCEWAKE_ALL);
-+	CLASS(xe_force_wake, fw_ref)(gt_to_fw(pc_to_gt(pc)), XE_FORCEWAKE_ALL);
- 	xe_guc_pc_gucrc_disable(pc);
+ 	CLASS(xe_force_wake, fw_ref)(gt_to_fw(pc_to_gt(pc)), XE_FORCEWAKE_ALL);
+-	xe_guc_pc_gucrc_disable(pc);
  	XE_WARN_ON(xe_guc_pc_stop(pc));
  
  	/* Bind requested freq to mert_freq_cap before unload */
- 	pc_set_cur_freq(pc, min(pc_max_freq_cap(pc), xe_guc_pc_get_rpe_freq(pc)));
--
--	xe_force_wake_put(gt_to_fw(pc_to_gt(pc)), fw_ref);
+diff --git a/drivers/gpu/drm/xe/xe_guc_pc.h b/drivers/gpu/drm/xe/xe_guc_pc.h
+index 0e31396f103cd..1b95873b262e3 100644
+--- a/drivers/gpu/drm/xe/xe_guc_pc.h
++++ b/drivers/gpu/drm/xe/xe_guc_pc.h
+@@ -15,7 +15,6 @@ struct drm_printer;
+ int xe_guc_pc_init(struct xe_guc_pc *pc);
+ int xe_guc_pc_start(struct xe_guc_pc *pc);
+ int xe_guc_pc_stop(struct xe_guc_pc *pc);
+-int xe_guc_pc_gucrc_disable(struct xe_guc_pc *pc);
+ int xe_guc_pc_override_gucrc_mode(struct xe_guc_pc *pc, enum slpc_gucrc_mode mode);
+ int xe_guc_pc_unset_gucrc_mode(struct xe_guc_pc *pc);
+ void xe_guc_pc_print(struct xe_guc_pc *pc, struct drm_printer *p);
+diff --git a/drivers/gpu/drm/xe/xe_guc_rc.c b/drivers/gpu/drm/xe/xe_guc_rc.c
+new file mode 100644
+index 0000000000000..6c4591e712d9d
+--- /dev/null
++++ b/drivers/gpu/drm/xe/xe_guc_rc.c
+@@ -0,0 +1,130 @@
++// SPDX-License-Identifier: MIT
++/*
++ * Copyright © 2026 Intel Corporation
++ */
++
++#include <drm/drm_print.h>
++
++#include "abi/guc_actions_slpc_abi.h"
++#include "xe_device.h"
++#include "xe_force_wake.h"
++#include "xe_gt.h"
++#include "xe_gt_idle.h"
++#include "xe_gt_printk.h"
++#include "xe_guc.h"
++#include "xe_guc_ct.h"
++#include "xe_guc_rc.h"
++#include "xe_pm.h"
++
++/**
++ * DOC: GuC RC (Render C-states)
++ *
++ * GuC handles the GT transition to deeper C-states in conjunction with Pcode.
++ * GuC RC can be enabled independently of the frequency component in SLPC,
++ * which is also controlled by GuC.
++ *
++ * This file will contain all H2G related logic for handling Render C-states.
++ * There are some calls to xe_gt_idle, where we enable host C6 when GuC RC is
++ * skipped. GuC RC is mostly independent of xe_guc_pc with the exception of
++ * functions that override the mode for which we have to rely on the SLPC H2G
++ * calls.
++ */
++
++static int guc_action_setup_gucrc(struct xe_guc *guc, u32 control)
++{
++	u32 action[] = {
++		GUC_ACTION_HOST2GUC_SETUP_PC_GUCRC,
++		control,
++	};
++	int ret;
++
++	ret = xe_guc_ct_send(&guc->ct, action, ARRAY_SIZE(action), 0, 0);
++	if (ret && !(xe_device_wedged(guc_to_xe(guc)) && ret == -ECANCELED))
++		xe_gt_err(guc_to_gt(guc),
++			  "GuC RC setup %s(%u) failed (%pe)\n",
++			   control == GUCRC_HOST_CONTROL ? "HOST_CONTROL" :
++			   control == GUCRC_FIRMWARE_CONTROL ? "FIRMWARE_CONTROL" :
++			   "UNKNOWN", control, ERR_PTR(ret));
++	return ret;
++}
++
++/**
++ * xe_guc_rc_disable() - Disable GuC RC
++ * @guc: Xe GuC instance
++ *
++ * Disables GuC RC by taking control of RC6 back from GuC.
++ */
++void xe_guc_rc_disable(struct xe_guc *guc)
++{
++	struct xe_device *xe = guc_to_xe(guc);
++	struct xe_gt *gt = guc_to_gt(guc);
++
++	if (!xe->info.skip_guc_pc && xe->info.platform != XE_PVC)
++		if (guc_action_setup_gucrc(guc, GUCRC_HOST_CONTROL))
++			return;
++
++	xe_gt_WARN_ON(gt, xe_gt_idle_disable_c6(gt));
++}
++
++static void xe_guc_rc_fini_hw(void *arg)
++{
++	struct xe_guc *guc = arg;
++	struct xe_device *xe = guc_to_xe(guc);
++	struct xe_gt *gt = guc_to_gt(guc);
++
++	if (xe_device_wedged(xe))
++		return;
++
++	CLASS(xe_force_wake, fw_ref)(gt_to_fw(gt), XE_FW_GT);
++	xe_guc_rc_disable(guc);
++}
++
++/**
++ * xe_guc_rc_init() - Init GuC RC
++ * @guc: Xe GuC instance
++ *
++ * Add callback action for GuC RC
++ *
++ * Return: 0 on success, negative error code on error.
++ */
++int xe_guc_rc_init(struct xe_guc *guc)
++{
++	struct xe_device *xe = guc_to_xe(guc);
++	struct xe_gt *gt = guc_to_gt(guc);
++
++	xe_gt_assert(gt, xe_device_uc_enabled(xe));
++
++	return devm_add_action_or_reset(xe->drm.dev, xe_guc_rc_fini_hw, guc);
++}
++
++/**
++ * xe_guc_rc_enable() - Enable GuC RC feature if applicable
++ * @guc: Xe GuC instance
++ *
++ * Enables GuC RC feature.
++ *
++ * Return: 0 on success, negative error code on error.
++ */
++int xe_guc_rc_enable(struct xe_guc *guc)
++{
++	struct xe_device *xe = guc_to_xe(guc);
++	struct xe_gt *gt = guc_to_gt(guc);
++
++	xe_gt_assert(gt, xe_device_uc_enabled(xe));
++
++	CLASS(xe_force_wake, fw_ref)(gt_to_fw(gt), XE_FW_GT);
++	if (!xe_force_wake_ref_has_domain(fw_ref.domains, XE_FW_GT))
++		return -ETIMEDOUT;
++
++	if (xe->info.platform == XE_PVC) {
++		xe_guc_rc_disable(guc);
++		return 0;
++	}
++
++	if (xe->info.skip_guc_pc) {
++		xe_gt_idle_enable_c6(gt);
++		return 0;
++	}
++
++	return guc_action_setup_gucrc(guc, GUCRC_FIRMWARE_CONTROL);
++}
+diff --git a/drivers/gpu/drm/xe/xe_guc_rc.h b/drivers/gpu/drm/xe/xe_guc_rc.h
+new file mode 100644
+index 0000000000000..2e7e15e2be506
+--- /dev/null
++++ b/drivers/gpu/drm/xe/xe_guc_rc.h
+@@ -0,0 +1,15 @@
++/* SPDX-License-Identifier: MIT */
++/*
++ * Copyright © 2026 Intel Corporation
++ */
++
++#ifndef _XE_GUC_RC_H_
++#define _XE_GUC_RC_H_
++
++struct xe_guc;
++
++int xe_guc_rc_init(struct xe_guc *guc);
++int xe_guc_rc_enable(struct xe_guc *guc);
++void xe_guc_rc_disable(struct xe_guc *guc);
++
++#endif
+diff --git a/drivers/gpu/drm/xe/xe_uc.c b/drivers/gpu/drm/xe/xe_uc.c
+index b799efc838017..367e05354c384 100644
+--- a/drivers/gpu/drm/xe/xe_uc.c
++++ b/drivers/gpu/drm/xe/xe_uc.c
+@@ -14,6 +14,7 @@
+ #include "xe_gt_sriov_vf.h"
+ #include "xe_guc.h"
+ #include "xe_guc_pc.h"
++#include "xe_guc_rc.h"
+ #include "xe_guc_engine_activity.h"
+ #include "xe_guc_submit.h"
+ #include "xe_huc.h"
+@@ -219,6 +220,10 @@ int xe_uc_load_hw(struct xe_uc *uc)
+ 	if (ret)
+ 		goto err_out;
+ 
++	ret = xe_guc_rc_enable(&uc->guc);
++	if (ret)
++		goto err_out;
++
+ 	xe_guc_engine_activity_enable_stats(&uc->guc);
+ 
+ 	/* We don't fail the driver load if HuC fails to auth, but let's warn */
+@@ -244,11 +249,6 @@ int xe_uc_reset_prepare(struct xe_uc *uc)
+ 	return xe_guc_reset_prepare(&uc->guc);
  }
  
- /**
+-void xe_uc_gucrc_disable(struct xe_uc *uc)
+-{
+-	XE_WARN_ON(xe_guc_pc_gucrc_disable(&uc->guc.pc));
+-}
+-
+ void xe_uc_stop_prepare(struct xe_uc *uc)
+ {
+ 	xe_gsc_stop_prepare(&uc->gsc);
+diff --git a/drivers/gpu/drm/xe/xe_uc.h b/drivers/gpu/drm/xe/xe_uc.h
+index 21c9306098cfd..df6b62ddd85ef 100644
+--- a/drivers/gpu/drm/xe/xe_uc.h
++++ b/drivers/gpu/drm/xe/xe_uc.h
+@@ -12,7 +12,6 @@ int xe_uc_init_noalloc(struct xe_uc *uc);
+ int xe_uc_init(struct xe_uc *uc);
+ int xe_uc_init_post_hwconfig(struct xe_uc *uc);
+ int xe_uc_load_hw(struct xe_uc *uc);
+-void xe_uc_gucrc_disable(struct xe_uc *uc);
+ int xe_uc_reset_prepare(struct xe_uc *uc);
+ void xe_uc_stop_prepare(struct xe_uc *uc);
+ void xe_uc_stop(struct xe_uc *uc);
 -- 
 2.53.0
 
