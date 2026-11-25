@@ -1,55 +1,59 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795582329;
-	b=EKaE21Y6ZSa0gQPByfmA8e89n5LdB9eMwiAbzeEAZzGAowmMV5X9F4FX7MYc7pabv6+F
-	 PhglEHE2eE8lcGzOKWm8UpAR7xJrpvI2Yle158iwHkLaEgZzBi0d0VRcV9QfaIvfAUJeZ
-	 i5IQ0LQ5zR2hgN4wCSBWFSVLMxr5K7iK58BwTjIgYK4UGUNMs1f3JVnpoT9ytM6NenJ/l
-	 vh0JF7AQHunEC17p9fa3aEJ/tydGBjrHzAzyDykelc4e/MfTw6QILOQ2+ohyrfHjwJ7Lb
-	 Rjm06quLSIb6FC/l+SvXgzSi1XXskhfn6SSNhaXKujRjPRCqW1EB3q1V0ehYg01ksLA==
+	t=1795591425;
+	b=HVOBExS1lbhzoUcVDoWwVbmXHIDwaM7G5Mk3cfhLQAkMgdZBJwj/Gcrk/+YVi5J47EbV
+	 k1ecxg7sS8QHBViROEbxRTQY/15FMbvBz32NFh5JG1ZTg5LW3tnL17Zyfq6Vu/J2C/45e
+	 hCK4/euEztzkyIHdsfe+ArK3gnrMudKziCY+AXXPj1HovYSnXD7bgCykm6zl/YSRHZgTV
+	 u0lN71KkFWDN3UT+hC5UiekXreBxzDvKuXX6PEwucyJVmj0OyCk1G0np0BlA5LEtxjodX
+	 n4YW1GLTQuQZI9CZa9G57e81UiUkJ3Gw1ejiAaJBMxYYAJAWX/eQrpmOyLCbgRWwT8g==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795582329;
-	h=Received:DKIM-Signature:Date:From:To:Cc:Subject:Message-ID:
-	 References:MIME-Version:Content-Type:Content-Disposition:In-Reply-To;
-	bh=UfsA9CwJ0qOfvuF+NW18HhX6r6LNmP5pTktEx9vryhc=;
-	b=Nka/xV21toAsYEU4JPf2NlQcgNDPDsJ/INhZ12MOghHHdgL30T7B+VwhLAxn4fP632N0
-	 uktw+lbLNky9t90EelMO19rvOWIEZE6miMe9X5cQZvyiulMxbLE2wwykdlJA6owY+LaLX
-	 gIl7HFUD4OZAv8cAZtQrICqxk8thD2OflnKAPWLYoCIuVBPqI2MXKc8dqApOByV9djnQG
-	 56ikF6gn0mIy12buxmRVyBP1gPvHE82PHwRvIuH27hylmcm97E4dxOokIPfRq13iNeeCW
-	 yBROl8CZQF9a92KjSAYgaWuY6zVGFwGL90FKPKgCTjiDwmibVDVWtS08Gf6iPf7Ljww==
+	a=rsa-sha256; c=relaxed/relaxed; t=1795591425;
+	h=Received:DKIM-Signature:X-Mailer:From:To:Cc:Subject:In-Reply-To:
+	 References:Date:Message-ID:MIME-Version:Content-Type;
+	bh=q0hHWQYAcpLXZYWDPR8xQDF7EnYAaANCqBcrQywzfyU=;
+	b=UoMrFac7m34Et3F50/BYl0lPsuxYYaVf4gwEPCrosJj0lf+WESompr7lgYdD5ycAXtUj
+	 UCz5N0Rj+UIxwQd1TxTbHiSLv+8Pd6144tD6iF+r0DkLGOlWAEYHClCueqwhudQf8doRi
+	 AuelNPUjK4XJDueNUkUNw2mJpcctUGzf6GWOtRWzMoQ0Zx7aWvysasF/K2Nj/vagohmR+
+	 pKjp1XNDFabaKlA68R9ksjG39plzP1irvMhKV7ZbONC8Ifgbt27W4q0mdbswCmRdqsgYC
+	 lb9y+QI4qkYP6OPdjAVadi4psJfSEtBK09XwRMeRxBFAIQTDDa41Jk4EsoA9+V85hpA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=N5WvpHxk;
+	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=Hnofm9ol;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D7754606A31E;
-	Wed, 25 Nov 2026 04:52:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 23F98606A323;
+	Wed, 25 Nov 2026 07:23:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=N5WvpHxk
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1500F1F000C6;
-	Wed, 25 Nov 2026 04:52:07 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795582327;
-	bh=UfsA9CwJ0qOfvuF+NW18HhX6r6LNmP5pTktEx9vryhc=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To;
-	b=N5WvpHxkDSBJ4VG//Q65BqDCUHQS56DYuBT+qbcytUhFnv9Jm42LjFWpw6L1GlrAw
-	 IZkCRljOIpXsCcQJ+sbBv+anljYdVJOoLeyiiS17U92qiqcDM/fNrlLUeR7JjGyoaR
-	 xxq6pzP4k30H/zxRSQZBeExU4iZHTKNAsF0bscd4=
-Date: Wed, 25 Nov 2026 05:52:27 +0100
-From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-To: Alexey Kardashevskiy <aik@amd.com>
-Cc: Jason Gunthorpe <jgg@ziepe.ca>,
-	"Aneesh Kumar K.V (Arm)" <aneesh.kumar@kernel.org>,
-	linux-coco@lists.linux.dev, Dan Williams <djbw@kernel.org>,
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=Hnofm9ol
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6F13F1F000C4;
+	Wed, 25 Nov 2026 07:23:37 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1795591424;
+	bh=q0hHWQYAcpLXZYWDPR8xQDF7EnYAaANCqBcrQywzfyU=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date;
+	b=Hnofm9olul8X7U563TFP9EoBxPQH6Cku69KsUU7t9hAkp1G7O+zSkVsJ+Bkpp0frG
+	 ZSjjNSGxc3K6ajhlxq8OpaFfMOzGPEO5qjmvN/TE3MOIqkAE4hqkyKJa8E/3sCX+oj
+	 9GIj48Rbpb8Rl+AxOtn9LBH2pz9gANgrYN0LyP3g8simq3jeo8oyFbbmjAx+1mNgDQ
+	 4TbSCb5P27rkXsOAJnJdA9m8Z8f++u/h0mFS5FNNGPoaB9w16axwBSN+P2ep1JooBl
+	 J4b6wPabWVhiIlwly9lhGfeSMBacvaND+/vHY7GMKEoeHHZWcY5jlq4JijHtodTLcb
+	 DpgwCjZvWXZSw==
+X-Mailer: emacs 31.1 (via feedmail 11-beta-1 I)
+From: Aneesh Kumar K.V <aneesh.kumar@kernel.org>
+To: Jason Gunthorpe <jgg@ziepe.ca>,
+	Alexey Kardashevskiy <aik@amd.com>
+Cc: linux-coco@lists.linux.dev, Dan Williams <djbw@kernel.org>,
 	Leon Romanovsky <leon@kernel.org>,
 	Bjorn Helgaas <bhelgaas@google.com>,
 	Jonathan Cameron <jonathan.cameron@huawei.com>,
 	Xu Yilun <yilun.xu@linux.intel.com>,
+	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	"Rafael J . Wysocki" <rafael@kernel.org>,
 	Steven Price <steven.price@arm.com>,
 	Suzuki K Poulose <suzuki.poulose@arm.com>,
-	Lukas Wunner <lukas@wunner.de>, Ashish Kalra <ashish.kalra@amd.com>,
+	Lukas Wunner <lukas@wunner.de>,
+	Ashish Kalra <ashish.kalra@amd.com>,
 	Tom Lendacky <thomas.lendacky@amd.com>,
 	Herbert Xu <herbert@gondor.apana.org.au>,
 	driver-core@lists.linux.dev, linux-pci@vger.kernel.org,
@@ -57,12 +61,13 @@ Cc: Jason Gunthorpe <jgg@ziepe.ca>,
 	Dan Williams <dan.j.williams@intel.com>
 Subject: Re: [PATCH v1 01/10] PCI/TSM: Report active IDE streams per host
  bridge
-Message-ID: <2026112519-hesitant-deviation-9917@gregkh>
+In-Reply-To: <20261124024842.GB9566@ziepe.ca>
 References: <20261123083337.2731019-1-aneesh.kumar@kernel.org>
  <20261123083337.2731019-2-aneesh.kumar@kernel.org>
  <f377271d-353f-4c8e-94d5-98159a66ab28@amd.com>
  <20261124024842.GB9566@ziepe.ca>
- <25fa4ffc-96cd-4851-8ac7-dd3750b71f15@amd.com>
+Date: Wed, 25 Nov 2026 12:53:33 +0530
+Message-ID: <yq5azeux9xxm.fsf@kernel.org>
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Post: <mailto:patches@lists.linux.dev>
@@ -72,51 +77,76 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <25fa4ffc-96cd-4851-8ac7-dd3750b71f15@amd.com>
+Content-Type: text/plain
 
-On Wed, Nov 25, 2026 at 02:30:26PM +1100, Alexey Kardashevskiy wrote:
-> On 24/11/26 13:48, Jason Gunthorpe wrote:
-> > On Tue, Nov 24, 2026 at 11:11:49AM +1100, Alexey Kardashevskiy wrote:
-> > > On 23/11/26 19:33, Aneesh Kumar K.V (Arm) wrote:
-> > > > From: Dan Williams <dan.j.williams@intel.com>
-> > > > 
-> > > > The first attempt at an ABI for this failed to account for naming
-> > > > collisions across host bridges:
-> > > > 
-> > > > Commit a4438f06b1db ("PCI/TSM: Report active IDE streams")
-> > > > 
-> > > > Revive this ABI with a per host bridge link that appears at first stream
-> > > > creation for a given host bridge and disappears after the last stream is
-> > > > removed.
-> > > > 
-> > > > For systems with many host bridge objects it allows:
-> > > > 
-> > > >       ls /sys/class/tsm/tsmN/pci*/stream*
-> > > > 
-> > > > ...to find all the host bridges with active streams without first iterating
-> > > > over all host bridges. Yilun notes that is handy to have this short cut [1]
-> > > > and from an administrator perspective it helps with inventory for
-> > > > constrained stream resources.
-> > > > 
-> > > > Link: http://lore.kernel.org/aXLtILY85oMU5qlb@yilunxu-OptiPlex-7050 [1]
-> > > > Reviewed-by: Xu Yilun <yilun.xu@linux.intel.com>
-> > > > Signed-off-by: Dan Williams <dan.j.williams@intel.com>
-> > > > Signed-off-by: Aneesh Kumar K.V (Arm) <aneesh.kumar@kernel.org>
-> > > > ---
-> > > >    Documentation/ABI/testing/sysfs-class-tsm | 13 ++++
-> > > >    drivers/pci/ide.c                         |  4 +
-> > > >    drivers/virt/coco/tsm-core.c              | 95 +++++++++++++++++++++++
-> > > 
-> > > I'll take to the tsm tree, thanks!
-> > 
-> > Lets not take any new sysfs APIs please. These all need a careful
-> > thing and we are not having a good history right now on any of these.
-> 
-> hm okay.
-> 
-> > I'm not even sure what this is supposed to be for, is it debugging?
-> yup, pretty much.
+Jason Gunthorpe <jgg@ziepe.ca> writes:
 
-Then put it in debugfs please.
+> On Tue, Nov 24, 2026 at 11:11:49AM +1100, Alexey Kardashevskiy wrote:
+>> On 23/11/26 19:33, Aneesh Kumar K.V (Arm) wrote:
+>> > From: Dan Williams <dan.j.williams@intel.com>
+>> > 
+>> > The first attempt at an ABI for this failed to account for naming
+>> > collisions across host bridges:
+>> > 
+>> > Commit a4438f06b1db ("PCI/TSM: Report active IDE streams")
+>> > 
+>> > Revive this ABI with a per host bridge link that appears at first stream
+>> > creation for a given host bridge and disappears after the last stream is
+>> > removed.
+>> > 
+>> > For systems with many host bridge objects it allows:
+>> > 
+>> >      ls /sys/class/tsm/tsmN/pci*/stream*
+>> > 
+>> > ...to find all the host bridges with active streams without first iterating
+>> > over all host bridges. Yilun notes that is handy to have this short cut [1]
+>> > and from an administrator perspective it helps with inventory for
+>> > constrained stream resources.
+>> > 
+>> > Link: http://lore.kernel.org/aXLtILY85oMU5qlb@yilunxu-OptiPlex-7050 [1]
+>> > Reviewed-by: Xu Yilun <yilun.xu@linux.intel.com>
+>> > Signed-off-by: Dan Williams <dan.j.williams@intel.com>
+>> > Signed-off-by: Aneesh Kumar K.V (Arm) <aneesh.kumar@kernel.org>
+>> > ---
+>> >   Documentation/ABI/testing/sysfs-class-tsm | 13 ++++
+>> >   drivers/pci/ide.c                         |  4 +
+>> >   drivers/virt/coco/tsm-core.c              | 95 +++++++++++++++++++++++
+>> 
+>> I'll take to the tsm tree, thanks!
+>
+> Lets not take any new sysfs APIs please. These all need a careful
+> thing and we are not having a good history right now on any of these.
+>
+> I'm not even sure what this is supposed to be for, is it debugging?
+
+
+I think this helps users identify active IDE streams and determine how
+many secure streams remain available on the host bridge. I would not
+classify it as a debugging-only aid.
+
+A sample output for a toplogy given below
+# lspci -t   
+-[0000:00]-+-01.0-[01]--+-00.0
+           |            \-00.1
+           +-02.0-[02]----00.0
+           \-03.0-[03]----00.0
+# 
+
+# pwd
+/sys/class/tsm/tsm0/pci0000:00
+# ls
+0000:00:01.0  0000:00:03.0              pci_bus  stream0.0.0  trust_policy
+0000:00:02.0  available_secure_streams  power    trust        uevent
+# cat available_secure_streams 
+255
+# ls -al stream0.0.0
+lrwxrwxrwx 1 root root 0 Jan  1 00:48 stream0.0.0 -> 0000:00:02.0/0000:02:00.0
+# 
+
+Here, I have set up an IDE stream with 0000:02:00.0.
+
+The previous discussion cited in the cover letter indicated a need for
+this because the number of streams available at the host bridge level is
+limited.
+
+-aneesh
