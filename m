@@ -1,42 +1,42 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795620524;
-	b=PLx3EH7on6m+nGdC23l2JtuGKWmQiDRydOy2NPYR6aDL+SM2qpWyvfhddJs2qQlyWuqe
-	 o8RigpskkOdLSIy7FPLDrQ/4gUS09OGG3iMmqmLykVeSnL+FE9dGtuojHTkYs3hHH205/
-	 3VIfOKK7HF2pGK/f0UaEgolzC4J49waNxGjcK8Xxde9iERAJspo8p6RVtqrh0WibJ0sdy
-	 UGZ5a09zLmXAPcG0dke/cL5cTIZ3YtrY8W4zVP41k/ar91cJmypMuLUFjOvPFQcyrpovA
-	 8wSaBgGi6jBN7TUqgXINUgpwIDDqc1zQ5z82PSsTlgQMgYPU0pOAeH/kRxW5bgGZkXA==
+	t=1795620528;
+	b=InGv6QlnW5ZYTWH21ZUWk9eA+p2FN9f7B0bw8gn5FVYPOKIcx5VkYKB+cqpyBB7RhQlk
+	 ihwocPLIYFhWlb4oSYceYInRyIGgoHJXQzry/OQ3v5faZxIyPzmke1TDbw4QBoyC+suhn
+	 Zb3RYHx6wXkRw0jEALLnIsWrj6VyKg7OsTcnKErJywYnCFLANAjbSQha47jhmhU3oiRqr
+	 fAYDOpoM3aA8L2eYAY2rL9EJw1mONZER7QF5QNFX4L7ixuxgOko0SEVWNNto/vDDJxMdw
+	 +vcO96oWBHFG1rDXXYBh0co7wGh/6jQPQ+RFYQkcyqI2Igyjx5+/XRKlu12ZERB/TkQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795620524;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795620528;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=CBaEVVgeRrszXoMyDzSRnN+OY14fOMFXdY4MW8Eh4aM=;
-	b=RzZmERmXjt2kIah0uuKwuC+ZfMHryAQNnBfs/uzCoj9cqnaUngqLPgKNWoWGOu81WIBo
-	 AUDVvVynZyRVZtYDyDDg1v7yz49jHnPYxK+cx4v4wG0OohMrBqbPFJbIYCdSR+tiBX2JV
-	 yFIVnbiqZvOfALY9aIXRFV8EGblHVvn51GEPYMX4E5kaFznBSwoAdLTwNW+WlzOtMEC4T
-	 8iGEnNXM49GzX8GmXnOFFeCAxkVUlF8OGlYZTvQqyeWX4O4RU/HXUi3U0HZz1yYMEWnQN
-	 I1JRwwqUOvXEaE4nyZx0gRMHGPNq1o2k/HbaVhy75mFzdyKssTJqpQMQXPqFoTCq7DQ==
+	bh=u7nWFJXhzAjInubbR/c0KjFQGOM/m9QCD3q3QBXLJ+8=;
+	b=W2i96zkXsseH3mQR4ZbAKz6V+ISIRK2hSrIveO61pCQGxvqLPjlyDZ5PMdei9y++LHXH
+	 /HOcRg07X1vLMkeM2IozzA7RVCfLI/epgTDyFpGplxsPBsgTcGTiESBY6J+yBw2hvBDAc
+	 3xuGV8NWwpeKKt+ph+3fy14Ts685W+1PGwABADzHZRhvsufChCaS/XdvMWtjmtmfUpppC
+	 o+tck/N3DhWLPA1XeZOWjPbHAMmJTsLX/M1MA/vbiWolP+peI7AcvDnR36h12+o/7qmNy
+	 OIbc+DqWaHulhui6lEbhW5eEgm9ouS3GLm3OS06FeHMJQdlJp3oJ6jYZKE1Lb4+JNbA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=AEPpT31u;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=IItrWTr9;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3116E606A33C;
-	Wed, 25 Nov 2026 15:28:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0A4DF606A321;
+	Wed, 25 Nov 2026 15:28:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=AEPpT31u
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 74A8C1F000D8;
-	Wed, 25 Nov 2026 15:28:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=IItrWTr9
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C7A381F000C6;
+	Wed, 25 Nov 2026 15:28:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795620524;
-	bh=CBaEVVgeRrszXoMyDzSRnN+OY14fOMFXdY4MW8Eh4aM=;
+	s=korg; t=1795620527;
+	bh=u7nWFJXhzAjInubbR/c0KjFQGOM/m9QCD3q3QBXLJ+8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=AEPpT31uLQebvBkJRmyLJq/Quxg9YYP3l853zl9zTZPiNUHRuQb3mpM7JkQLUG5cd
-	 Ffleh9TEhOENym6vHyxAtWA9+RIUKzaC+Q6RlFIudANZhwyJxjjwG8NojR7B0Fb0Fs
-	 iywAWHQxbzADH1Y7fUSDFf2t435Y/8bAGzBlD2GY=
+	b=IItrWTr9VvWJafeo/Nq/jqQz1aPmoCvLAJSvoQ028711rgtz5v0ZzccTcaZsSzUfH
+	 77x4zGCHK0PLG+gK7a11892EsCUAOt+jrVPnQ/Hw5FDjBUta3ANx3VWqDUsbqDt3mh
+	 Y0YHxnyhrSEZ9dommtgrhAy8Iabju37H3sxnoW2s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -44,9 +44,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	stable <stable@kernel.org>,
 	Josef Bacik <josef@toxicpanda.com>,
 	Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
-Subject: [PATCH 7.3 0947/1005] w1: netlink: drop the slave after the bus is unlocked
-Date: Wed, 25 Nov 2026 15:38:05 +0100
-Message-ID: <20261125143843.861073463@linuxfoundation.org>
+Subject: [PATCH 7.3 0948/1005] w1: remove the masters files before taking its locks
+Date: Wed, 25 Nov 2026 15:38:06 +0100
+Message-ID: <20261125143843.883984579@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143821.729802100@linuxfoundation.org>
 References: <20261125143821.729802100@linuxfoundation.org>
@@ -70,60 +70,64 @@ Content-Transfer-Encoding: 8bit
 
 From: Josef Bacik <josef@toxicpanda.com>
 
-commit 847fa880a3e1b2fdbbf72d89e830566108457637 upstream.
+commit dfc57752ec53c3cc6105656d3037fb2f5e80e9cc upstream.
 
-w1_process_cb() executes the commands of a netlink message with bus_mutex
-held, and drops the reference to the slave which the message was
-addressed to before it unlocks the mutex.  If the slave has been detached
-in the meantime, this is the last reference, and w1_unref_slave() tears
-the slave down on the spot.  That waits
+__w1_remove_master_device() calls w1_destroy_master_attributes() with
+both the mutex of the master and list_mutex held.  Removing the files
+waits for the callbacks which are running, and nearly all of them take
+one of these two locks:
 
-- in device_unregister(), for the sysfs callbacks of the slave which are
-  running, and
+  __w1_remove_master_device()           read() of .../w1_master_slaves
+    mutex_lock(&dev->mutex)               kernfs active reference
+    mutex_lock(&dev->list_mutex)          w1_master_attribute_show_slaves()
+    w1_destroy_master_attributes()          mutex_lock(&md->list_mutex)
+      sysfs_remove_group()                    waits
+        waits for the reference
 
-- in w1_therm_remove_slave(), for the readers which have taken a
-  reference to the family data,
+The files are readable for everybody, and a bus master goes away when, for
+instance, a DS2490 USB adapter is unplugged.
 
-and both kinds take bus_mutex to talk to the slave.  Whoever is waiting
-for the mutex at that moment is never going to finish, and neither is the
-thread of the bus master.
+Remove the files first, before the locks are taken.  That has to be done
+before the slaves are detached and not afterwards: as long as the files
+exist, a write to w1_master_add could attach a new slave behind the back
+of this function, which would then wait for the reference count of the
+master for ever.  And it is done before the thread is stopped, because a
+write to w1_master_search wakes the thread up.
 
-Unlock the bus first.  The reference keeps the slave, and with it the
-master, alive until then.
-
-Fixes: d3a8a9dbb903 ("w1: hold bus_mutex in netlink and search")
+Fixes: c30c9b15187e ("W1: fix deadlocks and remove w1_control_thread")
 Cc: stable <stable@kernel.org>
 Signed-off-by: Josef Bacik <josef@toxicpanda.com>
 Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
-Link: https://patch.msgid.link/20261027-llm-char-misc-w1-v1-6-d2e6bfafb6a4@linuxfoundation.org
+Link: https://patch.msgid.link/20261027-llm-char-misc-w1-v1-2-d2e6bfafb6a4@linuxfoundation.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/w1/w1_netlink.c |    8 +++++---
- 1 file changed, 5 insertions(+), 3 deletions(-)
+ drivers/w1/w1_int.c |    8 +++++++-
+ 1 file changed, 7 insertions(+), 1 deletion(-)
 
---- a/drivers/w1/w1_netlink.c
-+++ b/drivers/w1/w1_netlink.c
-@@ -478,15 +478,17 @@ static void w1_process_cb(struct w1_mast
- 	if (!cmd || err)
- 		w1_netlink_queue_status(node->block, node->msg, cmd, err);
+--- a/drivers/w1/w1_int.c
++++ b/drivers/w1/w1_int.c
+@@ -176,6 +176,13 @@ void __w1_remove_master_device(struct w1
+ 	mutex_unlock(&w1_mlock);
  
-+	dev->priv = NULL;
-+	mutex_unlock(&dev->bus_mutex);
+ 	set_bit(W1_ABORT_SEARCH, &dev->flags);
 +
- 	/* ref taken in w1_search_slave or w1_search_master_id when building
--	 * the block
-+	 * the block.  If it is the last one, the slave is removed, which waits
-+	 * for users of the bus.
- 	 */
- 	if (sl)
- 		w1_unref_slave(sl);
- 	else
- 		atomic_dec(&dev->refcnt);
--	dev->priv = NULL;
--	mutex_unlock(&dev->bus_mutex);
++	/*
++	 * This waits for the callbacks, which take the locks below. One of
++	 * them wakes the thread up.
++	 */
++	w1_destroy_master_attributes(dev);
++
+ 	kthread_stop(dev->thread);
  
- 	mutex_lock(&dev->list_mutex);
- 	list_del(&async_cmd->async_entry);
+ 	mutex_lock(&dev->mutex);
+@@ -185,7 +192,6 @@ void __w1_remove_master_device(struct w1
+ 		w1_slave_detach(sl);
+ 		mutex_lock(&dev->list_mutex);
+ 	}
+-	w1_destroy_master_attributes(dev);
+ 	mutex_unlock(&dev->list_mutex);
+ 	mutex_unlock(&dev->mutex);
+ 	atomic_dec(&dev->refcnt);
 
 
