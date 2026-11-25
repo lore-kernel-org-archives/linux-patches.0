@@ -1,55 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795617617;
-	b=ctnCOUzNRj8fUzvA1hajdaN2vIPoiqEyXEVOHRyY4tGpnZij6Zt6zUa5n5FLz6+GIDl1
-	 5TIdfsYGIu1nwcFcr9f1SFfrLuFtskmM5DvZq1M2sFKq7WV93xQDI1td/GVDEIKMTsLaP
-	 us5dAuIWDjy7uEdRMZOY/O2JYeobdYRpo4K2w/h3/lodabrxkaGNXfzwpvLDKvLO6r0Qf
-	 yZEFx9FvsX9hep/2XwCWfWg7ZQjTBAHnVGlHZ2Wj2+iwHZjW5AgVN0qL0XymZPBVwisEE
-	 VDHlkE7Sscz7eVLIxxf9oNSkogB10YCtuHF+ZQCa9tAymPaGXXbHeInLrhKO9oMapgA==
+	t=1795617621;
+	b=R/47MvjTif+0RZaU9r5JzEpO8XQ0Y9o0csjNWvLKEExFtICMk7MwDBRCgoG7nrkqfPmB
+	 AVSTkzoV6z9Ac7i8laQoCsFp4S3pKZgnJt3Eg40oJovzG7Mkoqcuh5juJhq2bR7LnWN4t
+	 ExymgWblxw+gD4w3fGlYkQ82BZCluR5+VK2mfLDb5SmdMT2RA5Xcmgp3dl+1eaPsQTaSp
+	 LqYMRarD9/xKi1GLC2XEYjXIBgTjSDA3Zxn+95Ge5G7e6QyY1J1Y7kADzL3mVaGrj6Wfo
+	 4uU4a2eijIZuks05dBuWJjV/qqUKNYDqvdlcsXfaerHRkkgnVIA3n/Z12z++7HmMC8w==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795617617;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795617621;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=Oo4YtMyYrWDiZ6LGuMUrjXomE1WNM1zu0IkNursfAB4=;
-	b=hpR671WemchHQwb38+Jmzo2lVHDqF7OaYva843cltQPXoaRzmCIvm15ZLjg1NgmCBP0J
-	 Tc7lo9S2YnUdvWxby+vjHYOiiFwBUJ39M87vR77oQuRP8H/uWRlaMNvnE+d1y15OSHGHY
-	 8KRn6eLUApsa2FmAtdE41vB9PDK8VJ2bsuRReDeSfESKDVhEK/gtKfV3FksZdel++hfp6
-	 HiJ5IOfOFycf8DXxkAVdBw+iHkgUkBBT8C9QjMGXQl11RCggP4E/N04RqFuJbD8DhGNIe
-	 Zd7875km2W714c0eOgTWPreba/OBoOF7Z7YTHhTvkcvdmPWBr4Msg7tRt6k5Bv/2aHQ==
+	bh=vda0iBwsT41ccVeLA6PCeMVZQzsoaIrvFwfNk0vjpRg=;
+	b=uI3VoDh83sbN35EyNHleyiVdVkL6vZ6RPX76Y5r4aG/tn4lKJWCYxGru/vAhvjiF/t8I
+	 GAReRl5dU/IjHuZ/mkXGhkXL8jOx51dNRzUvH+7YUqJxY8u+J+gL5RjkUC2ci4Oqo0eXg
+	 +iiBsL03I6WN53F4So4wqKcH4qXJdN0llaOAv6DewD/XiZ8cpONIYJYS2HKza+e575uoB
+	 PkF9fVUlr+cJEcBb6hhcXM4KoBjLWTQ75/wmxuBiVMqBMc4LyyBo/7BB549iUOdHWd9l4
+	 Q1XK8gEZ3MMVcXFHp78nSiv+SmHtAV+GhgC2YxlzC199J2g23diGtEtO5Wk6hR6V9ew==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=wlcvyyiF;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=gvUowlGU;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B3805606A321;
-	Wed, 25 Nov 2026 14:40:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5CB73606A329;
+	Wed, 25 Nov 2026 14:40:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=wlcvyyiF
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 100AF1F000C0;
-	Wed, 25 Nov 2026 14:40:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=gvUowlGU
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5945B1F000D0;
+	Wed, 25 Nov 2026 14:40:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795617617;
-	bh=Oo4YtMyYrWDiZ6LGuMUrjXomE1WNM1zu0IkNursfAB4=;
+	s=korg; t=1795617620;
+	bh=vda0iBwsT41ccVeLA6PCeMVZQzsoaIrvFwfNk0vjpRg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=wlcvyyiFD0QANJBku9wwzph+CI4Ipa4rFL/CR/HU/Tok6eRNrDHmwFhpgUJ1o7aGT
-	 LkLU7VqxEHDXnzEFpK6kHzXMLY6n5i/P3q8+1b6vitPTMe5g7Vtf+eyAF/wtv+vPat
-	 M7qG+qR6eurN0JomSfjJB1ru45vPFUnlMUbtvybA=
+	b=gvUowlGUibMJzlatTJAkUeTH0ArGMgz4mdAMpCgoNFMlBqla3D6Ms04voooZ3T7il
+	 hIeW5KzEDt91r/wN2Gjl/54j7pxo1nlG9AiwHAWdVBd/0ZKPH7BR50BQMDj/BNTWMe
+	 L7tz0uuzUussGffWR1LVDlAhdj0oc7dpVZV4Y21I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pierre-Louis Bossart <pierre-louis.bossart@linux.dev>,
-	Bard Liao <bard.liao@intel.com>,
-	Sergey Lebedev <lsa.uz@pm.me>,
-	German Pablo Lindo <germanpapulindez@gmail.com>,
-	Vinod Koul <vkoul@kernel.org>,
+	Hao Li <hao.li@linux.dev>,
+	"Harry Yoo (Meta)" <harry@kernel.org>,
+	"Vlastimil Babka (SUSE)" <vbabka@kernel.org>,
+	Suren Baghdasaryan <surenb@google.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0005/1005] soundwire: dmi-quirks: drop the ghost RT1320 on the Surface Pro 11 (Intel)
-Date: Wed, 25 Nov 2026 15:22:23 +0100
-Message-ID: <20261125143821.863685822@linuxfoundation.org>
+Subject: [PATCH 7.3 0006/1005] mm/slub: refill prefilled sheaves from the barn
+Date: Wed, 25 Nov 2026 15:22:24 +0100
+Message-ID: <20261125143821.886512001@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143821.729802100@linuxfoundation.org>
 References: <20261125143821.729802100@linuxfoundation.org>
@@ -71,102 +70,242 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sergey Lebedev <lsa.uz@pm.me>
+From: Hao Li <hao.li@linux.dev>
 
-[ Upstream commit d32e04c052342d7d1cc03f6ba4cbd135cd0112bc ]
+commit 1b87ea06a34b213e45e3e0c4effd5043f15046ed upstream.
 
-The Microsoft Surface Pro 11 for Business (Intel, Lunar Lake) carries a
-single physical RT1320 amplifier on link 0 and describes it twice:
+Currently, when the prefill API refills a non-full sheaf, it takes the
+objects from partial slabs and never from the full sheaves in the barn,
+so once the barn's full list becomes saturated, it stays saturated.
 
-  SWRA  _ADR 0x000030025D132000   SDCA class 0
-  SWRB  _ADR 0x000030025D132001   SDCA class 1
+For objects freed via kfree_rcu(), every RCU sheaf then has to be
+flushed to slabs because the barn's full list has no room.
 
-Identical apart from the class id: same link, same manufacturer, part and
-version, same unique id 0. The part reports class 1, so only SWRB
-enumerates. SWRA never attaches on any boot or firmware version tested,
-including the November 2025 bundle.
+To fix this, let the sheaf refill from the barn first, and introduce a
+partial sheaf in the barn, which holds the leftover objects [1].
 
-The ghost is not harmless. It consumes an amplifier index in
-find_acpi_adr_device(), so the real part is named "rt1320-2" and the stock
-sof-soundwire UCM profile enables switches on a device that is not there.
-Its endpoints also reach create_sdw_dailink(), which builds DAI link names
-from link id and function type alone; the ghost declares the same SmartMic
-function as the real part, so the card fails to register at all:
+Only the prefill path needs the partial sheaf. The generic allocation
+path (__pcs_replace_empty_main()) exchanges an empty sheaf for a full
+one from the barn, so nothing is left over. The prefill path refills a
+sheaf that is not necessarily empty, so taking objects from the barn
+usually leaves leftovers, and the partial sheaf is where they are
+kept. refill_sheaf() only takes objects from partial slabs and never
+involves the partial sheaf.
 
-  sysfs: cannot create duplicate filename
-    '.../sof_sdw/SDW0-Capture-SmartMic'
-  kobject_add_internal failed for SDW0-Capture-SmartMic with -EEXIST
-  sof_sdw sof_sdw: probe with driver sof_sdw failed with error -12
+The sheaf is refilled by copying objects from the partial sheaf, and
+then from a full sheaf taken from the barn if it is still not full. A
+sheaf that objects were copied from stays in the barn as the partial
+sheaf if it still holds objects, or goes on the empty list if it is
+empty. The sheaf being refilled is never replaced.
 
-Remap its _ADR to zero so sdw_acpi_find_slaves() never creates the
-peripheral, which is how ghost devices are handled already - see
-ghost_realtek and global_ghost_adr in this file. Both failures then
-disappear, because neither path is reached.
+The gain comes from two sides: every full sheaf taken out makes room on
+the barn's full list for a future RCU sheaf, and refilling from the
+barn is cheaper than refilling from partial slabs under list_lock.
 
-Matched on DMI_PRODUCT_SKU rather than the product name. A later batch of
-the same model could carry a different RT1320 version, which would change
-the _ADR; keying on the SKU keeps this remap to the hardware it was
-verified on, and follows dell_sku_0A3E above.
+Note that putting the sheaf with the leftover objects on the full list
+instead would not work: it would occupy room on the full list, so the
+list would stay saturated and rcu_free_sheaf() would still keep
+flushing.
 
-Link: https://lore.kernel.org/linux-sound/20260830151516.44629-1-lsa.uz@pm.me/
-Suggested-by: Pierre-Louis Bossart <pierre-louis.bossart@linux.dev>
-Suggested-by: Bard Liao <bard.liao@intel.com>
-Signed-off-by: Sergey Lebedev <lsa.uz@pm.me>
-Reviewed-by: Pierre-Louis Bossart <pierre-louis.bossart@linux.dev>
-Tested-by: German Pablo Lindo <germanpapulindez@gmail.com>
-Link: https://patch.msgid.link/20260913210849.6446-1-lsa.uz@pm.me
-Signed-off-by: Vinod Koul <vkoul@kernel.org>
+An earlier version of this patch swapped sheaves instead, to minimize
+the memcpy overhead. As Harry Yoo pointed out [2], replacing the
+caller's sheaf loses cache affinity, filling it directly is more
+straightforward, and testing showed no measurable difference between
+the two approaches, so the approach he suggested is used.
+
+Tested with will-it-scale mmap1 (192 processes, one-minute runs) on the
+maple_node cache.
+
+throughput: 27778727 -> 34500556 (+24.2%)
+
+metric                       baseline           patched        change
+=====================================================================
+alloc_fastpath                 54,124            56,696        +4.75%
+alloc_slab                  7,100,651           159,739       -97.75%
+barn_get                          849       194,460,392    +22904539.81%
+barn_get_fail                       2               217    +10750.00%
+barn_put                          851       182,306,701    +21422544.07%
+barn_put_fail             260,400,484       145,522,675       -44.12%
+cmpxchg_double_fail         1,029,204           334,228       -67.53%
+free_add_partial          326,694,687       181,935,790       -44.31%
+free_fastpath                  13,297            15,611       +17.40%
+free_rcu_sheaf          8,332,839,104    10,490,535,227       +25.89%
+free_remove_partial         7,099,788           158,297       -97.77%
+free_slab                   7,099,788           158,297       -97.77%
+free_slowpath              10,969,156           782,851       -92.86%
+objects                        15,295            14,849        -2.92%
+objects_partial                15,295            14,849        -2.92%
+partial                         1,604             2,336       +45.64%
+sheaf_alloc               137,757,895       141,208,076        +2.50%
+sheaf_flush             8,332,823,922     4,656,725,764       -44.12%
+sheaf_free                137,757,883       141,208,072        +2.50%
+sheaf_prefill_fast      3,337,502,163     4,196,506,116       +25.74%
+sheaf_prefill_slow                685               400       -41.61%
+sheaf_refill            8,343,794,364     4,657,509,724       -44.18%
+sheaf_return_fast       3,337,502,411     4,196,506,382       +25.74%
+sheaf_return_slow                 437               134       -69.34%
+slabs                           1,604             2,336       +45.64%
+total_objects                 102,656           149,504       +45.64%
+
+Here is what the important metric changes mean.
+
+barn_get and barn_put: refills now take full sheaves out of the barn,
+and RCU sheaves are put into the barn again. Before, the barn's full
+list was saturated once and hardly ever consumed.
+
+barn_put_fail: more than half of the RCU sheaves are now put into the
+barn instead of being flushed. The rest are still flushed because they
+arrive while the barn's full list is at its limit.
+
+sheaf_refill and free_add_partial: fewer objects are taken from partial
+slabs to refill sheaves, and fewer slabs are added to the partial list,
+by the same percentage.
+
+alloc_slab and free_slab: the partial list is almost never empty when a
+refill looks at it, so slabs are almost never allocated and freed again
+only to serve refills.
+
+After the test, the maple_node cache holds 1604 slabs without the patch
+and 2336 with it. After a manual shrink
+(echo 1 > /sys/kernel/slab/maple_node/shrink), it holds 485 without
+the patch and 563 with it. So most of the extra slabs are held only by
+objects sitting in sheaves and are returned by a shrink, and what
+remains is a small difference, because objects handed out from the barn
+come from many more slabs than a refill from partial slabs would use.
+
+Link: https://lore.kernel.org/linux-mm/aqPlMzUIw-4g2iOX@fedora/ [1]
+Link: https://lore.kernel.org/linux-mm/aq0ylDidEHa2kg4X@thinkstation/ [2]
+Signed-off-by: Hao Li <hao.li@linux.dev>
+Reviewed-by: Harry Yoo (Meta) <harry@kernel.org>
+Link: https://patch.msgid.link/20260921094521.141665-1-hao.li@linux.dev
+Reviewed-by: Vlastimil Babka (SUSE) <vbabka@kernel.org>
+Signed-off-by: Harry Yoo (Meta) <harry@kernel.org>
+Cc: stable@vger.kernel.org
+Signed-off-by: Suren Baghdasaryan <surenb@google.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/soundwire/dmi-quirks.c | 28 ++++++++++++++++++++++++++++
- 1 file changed, 28 insertions(+)
+ mm/slub.c | 81 +++++++++++++++++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 81 insertions(+)
 
-diff --git a/drivers/soundwire/dmi-quirks.c b/drivers/soundwire/dmi-quirks.c
-index 197b754068920..0daa877cd9055 100644
---- a/drivers/soundwire/dmi-quirks.c
-+++ b/drivers/soundwire/dmi-quirks.c
-@@ -111,6 +111,25 @@ static const struct adr_remap ghost_realtek[] = {
- 	{}
+diff --git a/mm/slub.c b/mm/slub.c
+index 6bb75db087a2d..41a66fc15edf8 100644
+--- a/mm/slub.c
++++ b/mm/slub.c
+@@ -422,6 +422,7 @@ struct node_barn {
+ 	spinlock_t lock;
+ 	struct list_head sheaves_full;
+ 	struct list_head sheaves_empty;
++	struct slab_sheaf *sheaf_partial;
+ 	unsigned int nr_full;
+ 	unsigned int nr_empty;
  };
+@@ -3298,6 +3299,7 @@ static void barn_init(struct node_barn *barn)
+ 	spin_lock_init(&barn->lock);
+ 	INIT_LIST_HEAD(&barn->sheaves_full);
+ 	INIT_LIST_HEAD(&barn->sheaves_empty);
++	barn->sheaf_partial = NULL;
+ 	barn->nr_full = 0;
+ 	barn->nr_empty = 0;
+ }
+@@ -3315,6 +3317,10 @@ static void barn_shrink(struct kmem_cache *s, struct node_barn *barn)
+ 	barn->nr_full = 0;
+ 	list_splice_init(&barn->sheaves_empty, &empty_list);
+ 	barn->nr_empty = 0;
++	if (barn->sheaf_partial) {
++		list_add(&barn->sheaf_partial->barn_list, &full_list);
++		barn->sheaf_partial = NULL;
++	}
+ 
+ 	spin_unlock_irqrestore(&barn->lock, flags);
+ 
+@@ -5073,12 +5079,87 @@ void *kmem_cache_alloc_node_noprof(struct kmem_cache *s, gfp_t gfpflags, int nod
+ }
+ EXPORT_SYMBOL(kmem_cache_alloc_node_noprof);
  
 +/*
-+ * The Microsoft Surface Pro 11 (Intel) describes its single physical RT1320
-+ * amplifier twice on link 0, as two _ADR entries differing only in SDCA class
-+ * id and sharing the same unique id. Only the class 1 entry enumerates; the
-+ * class 0 entry is a ghost.
++ * Refill @sheaf from the barn: from its partial sheaf first, then from its full
++ * sheaves. A sheaf that objects were copied from stays in the barn as the
++ * partial sheaf if it still holds objects, or goes on the empty list if it is
++ * empty.
 + *
-+ * Matched on the product SKU rather than the product name: a later batch of the
-+ * same model could carry a different RT1320 version, which would change the
-+ * _ADR. Keying on the SKU keeps this remap to the hardware it was verified on.
++ * Returns true if the sheaf is now full, at s->sheaf_capacity.
++ * Returns false if the sheaf is still not full.
 + */
-+static const struct adr_remap microsoft_sp11_intel[] = {
-+	/* ghost rt1320 on link0 */
-+	{
-+		0x000030025d132000ull,
-+		0x0000000000000000ull
-+	},
-+	{}
-+};
++static bool refill_sheaf_from_barn(struct kmem_cache *s,
++				   struct slab_sheaf *sheaf)
++{
++	struct node_barn *barn = get_barn(s);
++	struct slab_sheaf *src;
++	unsigned int to_move;
++	unsigned long flags;
 +
- static const struct dmi_system_id adr_remap_quirk_table[] = {
- 	/* TGL devices */
- 	{
-@@ -249,6 +268,15 @@ static const struct dmi_system_id adr_remap_quirk_table[] = {
- 		},
- 		.driver_data = (void *)ghost_realtek,
- 	},
-+	/* LNL devices */
-+	{
-+		.matches = {
-+			DMI_MATCH(DMI_SYS_VENDOR, "Microsoft Corporation"),
-+			DMI_EXACT_MATCH(DMI_PRODUCT_SKU,
-+					"Surface_Pro_11th_Edition_With_Intel_For_Business_2103")
-+		},
-+		.driver_data = (void *)microsoft_sp11_intel,
-+	},
- 	{}
- };
++	if (!barn)
++		return false;
++
++	if (!data_race(barn->nr_full) && !data_race(barn->sheaf_partial))
++		return false;
++
++	spin_lock_irqsave(&barn->lock, flags);
++
++	/*
++	 * The partial sheaf can hold fewer objects than @sheaf needs to
++	 * reach capacity, and a sheaf on the full list is not necessarily
++	 * full (see the comment in rcu_free_sheaf()), so keep taking from
++	 * the barn until @sheaf is full or nothing is left.
++	 */
++	while (sheaf->size < s->sheaf_capacity) {
++		src = barn->sheaf_partial;
++		barn->sheaf_partial = NULL;
++		if (!src) {
++			if (!barn->nr_full)
++				break;
++			src = list_first_entry(&barn->sheaves_full,
++					       struct slab_sheaf, barn_list);
++			list_del(&src->barn_list);
++			barn->nr_full--;
++		}
++
++		to_move = min(s->sheaf_capacity - sheaf->size, src->size);
++		src->size -= to_move;
++		memcpy(&sheaf->objects[sheaf->size], &src->objects[src->size],
++		       to_move * sizeof(void *));
++		sheaf->size += to_move;
++
++		if (src->size) {
++			barn->sheaf_partial = src;
++		} else {
++			/*
++			 * No empty-limit check: the sheaf put on the empty list
++			 * was already in the barn, so the barn holds no more
++			 * sheaves than before. barn_replace_empty_sheaf() skips
++			 * the check for the same reason.
++			 */
++			list_add(&src->barn_list, &barn->sheaves_empty);
++			barn->nr_empty++;
++		}
++	}
++
++	spin_unlock_irqrestore(&barn->lock, flags);
++
++	if (sheaf->size < s->sheaf_capacity)
++		return false;
++
++	stat(s, BARN_GET);
++	return true;
++}
++
+ static int __prefill_sheaf_pfmemalloc(struct kmem_cache *s,
+ 				      struct slab_sheaf *sheaf, gfp_t gfp)
+ {
+ 	gfp_t gfp_nomemalloc;
+ 	int ret;
  
++	if (refill_sheaf_from_barn(s, sheaf))
++		return 0;
++
+ 	gfp_nomemalloc = gfp | __GFP_NOMEMALLOC;
+ 	if (gfp_pfmemalloc_allowed(gfp))
+ 		gfp_nomemalloc |= __GFP_NOWARN;
 -- 
 2.53.0
 
