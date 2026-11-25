@@ -1,51 +1,86 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795623919;
-	b=IuuztC/EHtofEPVXwbpFrlqD1JckvKL1bDfWB17cjsZw4s3JCULmCgzf4Q5yTh9/Rnq4
-	 xdq8sIAPIVAwSPSQkJipet84b4osdT1OXexR7WtB2yodaruTanEWFEYGdcHHEaX78Qrww
-	 qsDGdCrbe8ja7Me13lq2Cr2TU5jEap7R9PoA3i65c0BVX09FSU8kRWRQ8PYOGTy9rE/Mm
-	 8uCIw4/dK31TC2kSBAMYYXAtx83RSqxmNM71aM4MJ/LKAb/5l6IQCnz+XSXIqiTwmW1M7
-	 /viLzawVdIS1t6hHSvGY6GYm8r6Y4NEf9eOpJqQgfR69+FWLq2N9iKuch8UNcE1jN8Q==
+	t=1795623922;
+	b=a8co3O1zgcqT1zPiCL5+LZ9LotUDcfd3IcZpzqyet5kQqPO25EqLReZjVFZvyYxj42m7
+	 C8VDa16r6MesUek5vDQn7hOqehpYwu0z3GYXFXckNWYF7cN/P8PV0uN5kJe37b3nq9EUB
+	 SaAPOYmbU4Blu6R4H6B5QKShmYGrGnhLhp0C14dIgJ0JQEa3x8KWNNp7GTS3TiUKLOs5z
+	 YYXDgpWcO5YL72foZ//Mi6gVvMRJM83QyBWMkzb0i4whOmrP4jjMTD3Pq/cNF8tW6cR34
+	 c9MDpdMY8vZrHrBht9fTeKAkTunxzedefRtk2GV2G9nLnFtyLMG8SLEG3umrwmmQxpA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795623919;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795623922;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Transfer-Encoding;
-	bh=xm6kkHxstscDbD2AliLGIxiQvXtOaPl9LQwR7GQW3mU=;
-	b=bLWaVbwhAiUxcL1C6akHmHnaFhc7R+BTEkmy8J3M9gR5zXHCv2RDqEu5tzi5zqpthOqE
-	 7+HSLNReejgS37AoFASv5lXKRW5p9Y2kPlqcGehv2KElUXcGEAO29nF+U5nrUNEcEwzTv
-	 HUA7poHuVD9U4iyje0YUNtHtszNkt302zK8L+jwXDuADOJBcy7ScxS+hM1pb+iGgreCls
-	 swhVgybafqBbGOy5Ud1T2LP+yoNHy6eIC8z2ejBdbcNDiQtevVaA/pzdKxl+QQIROLC6T
-	 b0dwYncp3LvJYGmYPY7TDwwCRguWzRjmQ9SocvbquOQiNF6a0rrB3VRYrHl4PpPs03w==
+	 MIME-Version:Content-Type:Content-Transfer-Encoding;
+	bh=GXBOu65AC2brS+Q27Qu59hksFemwIIZAQKNcETyJlhs=;
+	b=pHi/FlkXCnb48T4D0jmzRGLfdKzDNuSsDmhr+lNSx7YjR6W2jKDoz01SzSRTQPQfVfU/
+	 jdysPZRYV6nQ7K9UWiRMK21uKu1mszZLZVd2Ixyz0NS4DpDM0gCrlbcdJEHYK0KNGyUCS
+	 v5MH/YD/TJXezmU+dLJyytm0WYroMo6+AIbC6gA8ewFofbI6JP6xTDmDlCWE+84q5y29B
+	 jNX6uLajdRUtjDFOufcDoH1Gk0G+xi8S1jh18eHk5V+Yr0gf72cwNUhnNxvTrmbFpzDft
+	 fQOr6SThkoSqOQDHdf6Tj7rvkh947nCfUZd7AKGn+lPOzY4/YnS+aIELO/fqxlXvggQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=hDlvLsg6;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=VkXlc4pP;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 730B4606A327;
-	Wed, 25 Nov 2026 16:25:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5DD35606A321;
+	Wed, 25 Nov 2026 16:25:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=hDlvLsg6
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C29A41F000C6;
-	Wed, 25 Nov 2026 16:25:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=VkXlc4pP
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7DF391F000D1;
+	Wed, 25 Nov 2026 16:25:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795623919;
-	bh=xm6kkHxstscDbD2AliLGIxiQvXtOaPl9LQwR7GQW3mU=;
+	s=korg; t=1795623922;
+	bh=GXBOu65AC2brS+Q27Qu59hksFemwIIZAQKNcETyJlhs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=hDlvLsg6ANv2PgVaxXYOOnmT4kZEAiBcdaOiWqgliCk+Kf3xf+bCrN0a2Mz4dr3am
-	 SFo3El+xyWYiYa5oLld8/OpxyE/fN2bTElgz9JZfTKZ9QM2t2iqykL9gNGaGrt2s9F
-	 VS9mNLt2rqqd2fO4AVGFzzBCGnGprYtDiFc1n1Z4=
+	b=VkXlc4pPgKpW1TCGGoOf5akzl+xxKhjsosxJnbFghOuQb5XBWyRMacIfHn0Wt3PD7
+	 ypSFRVfU7+R9Jugbvrgq3vEDn4ub0+1fmacAzNaKv/uBU6Gu+jt3NqdzcTZQzdZiah
+	 4TlTkqZbnK4eM782+BBgiL1Qzo0uOicvSb4AIPcY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bernard Pidoux <bernard.f6bvp@gmail.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 027/816] netrom: give the sysctl timer limits in milliseconds
-Date: Wed, 25 Nov 2026 15:26:15 +0100
-Message-ID: <20261125143849.844932158@linuxfoundation.org>
+	Samarth Narang <samarth.colleges@gmail.com>,
+	Lance Yang <lance.yang@linux.dev>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	"Lorenzo Stoakes (ARM)" <ljs@kernel.org>,
+	"Kiryl Shutsemau (Meta)" <kas@kernel.org>,
+	"David Hildenbrand (Arm)" <david@kernel.org>,
+	Mel Gorman <mgorman@techsingularity.net>,
+	Chengming Zhou <chengming.zhou@linux.dev>,
+	"Liam R. Howlett" <liam@infradead.org>,
+	Vlastimil Babka <vbabka@kernel.org>,
+	Mike Rapoport <rppt@kernel.org>,
+	Suren Baghdasaryan <surenb@google.com>,
+	Michal Hocko <mhocko@suse.com>,
+	=?UTF-8?q?J=C3=A9r=C3=B4me=20Glisse?= <jglisse@redhat.com>,
+	Andrea Arcangeli <aarcange@redhat.com>,
+	Peter Xu <peterx@redhat.com>,
+	Bobby Powers <bobbypowers@gmail.com>,
+	Brian Geffon <bgeffon@google.com>,
+	Denis Plotnikov <dplotnikov@virtuozzo.com>,
+	Doug Gilbert <dgilbert@interlog.com>,
+	Hugh Dickins <hughd@google.com>,
+	Johannes Weiner <hannes@cmpxchg.org>,
+	Martin Cracauer <cracauer@cons.org>,
+	Marty McFadden <mcfadden8@llnl.gov>,
+	Maya Gokhale <gokhale2@llnl.gov>,
+	Pavel Emelyanov <xemul@openvz.org>,
+	Rik van Riel <riel@surriel.com>,
+	Shaohua Li <shli@fb.com>,
+	James Houghton <jthoughton@google.com>,
+	Jonathan Corbet <corbet@lwn.net>,
+	Paolo Bonzini <pbonzini@redhat.com>,
+	Sean Christopherson <seanjc@google.com>,
+	SJ Park <sj@kernel.org>,
+	Zi Yan <ziy@nvidia.com>,
+	Mohammed EL Kadiri <med08elkadiri@gmail.com>,
+	Sasha Levin <sashal@kernel.org>,
+	Xu Xin <xu.xin@linux.dev>
+Subject: [PATCH 6.12 028/816] mm/ksm: fix userfaultfd protection during merge and unmerge
+Date: Wed, 25 Nov 2026 15:26:16 +0100
+Message-ID: <20261125143849.866792418@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143849.205329330@linuxfoundation.org>
 References: <20261125143849.205329330@linuxfoundation.org>
@@ -61,74 +96,105 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Bernard Pidoux <bernard.f6bvp@gmail.com>
+From: Lance Yang <lance.yang@linux.dev>
 
-Since commit 4d8937d0b113 ("[NETROM]: Eleminate HZ from NET/ROM kernel
-interfaces") the NET/ROM timer sysctls hold milliseconds, converted
-with msecs_to_jiffies() where they are used, but their limits were left
-in jiffies: 5 * HZ to 600 * HZ for the transport timeout, 1 * HZ to
-60 * HZ for the acknowledge delay, 1 * HZ to 1000 * HZ for the busy
-delay, up to 65535 * HZ for the no activity timeout. They only match
-with HZ=1000.
+[ Upstream commit 990d6c2194a938a19a8cf94c6cfd75171345089b ]
 
-With HZ=100 the largest transport timeout that can be written is 60 s
-while the default is 120 s, and the largest busy delay is 100 s while
-the default is 180 s: once changed, a default can no longer be put
-back. The smallest transport timeout accepted is 0.5 s instead of 5 s.
-With HZ=250 the acknowledge delay is limited to 15 s instead of 60 s.
+KSM loses userfaultfd protection when replace_page() builds a new PTE from
+vma->vm_page_prot.  Dropping its uffd bit lets a subsequent write go
+through ordinary COW instead of userfaultfd write protection handling.
+For RWP, a merged page also becomes readable without faulting.
 
-Seen on a Raspberry Pi node (HZ=100): writing back the current values
-120000 to transport_timeout and 180000 to transport_busy_delay fails
-with EINVAL, and 60000 is accepted.
+Keeping the uffd bit and restoring PAGE_NONE fixes merging, but we also
+have to handle unmerging.  An existing KSM page can be protected with RWP
+before MADV_UNMERGEABLE, so unmerging already needs fixing independently
+of preserving RWP during merging.
 
-Give the limits in milliseconds, as was done for ROSE. With HZ=1000
-nothing changes.
+Unsharing replaces a shared page with a private one and should leave
+userfaultfd protection in place, as do_wp_page() already does for write
+protection.  Currently, an unshare fault reaches do_uffd_rwp() before it
+can proceed to do_wp_page().
 
-Fixes: 4d8937d0b113 ("[NETROM]: Eleminate HZ from NET/ROM kernel interfaces")
-Signed-off-by: Bernard Pidoux <bernard.f6bvp@gmail.com>
-Assisted-by: Claude:claude-opus-5-5
-(cherry picked from commit e59d8b990552be401ace7750a4617ffa07c86637)
+- With synchronous RWP, handle_userfault() returns VM_FAULT_SIGBUS.
+  break_ksm() then reports success with a KSM page still merged.
+
+- With asynchronous RWP, protection is cleared before unsharing.
+
+Preserve the uffd bit when merging, and restore PAGE_NONE for RWP.  Let
+FAULT_FLAG_UNSHARE skip RWP fault handling and keep PAGE_NONE on each
+private copy as well.  Unsharing can then complete with RWP still armed
+for a subsequent access.
+
+Link: https://lore.kernel.org/20261026130054.91461-1-lance.yang@linux.dev
+Link: https://lore.kernel.org/all/20261019010934.697895-1-samarth.colleges@gmail.com/
+Link: https://lore.kernel.org/all/20261020055518.36087-1-lance.yang@linux.dev/
+Fixes: 63b2d4174c4a ("userfaultfd: wp: add the writeprotect API to userfaultfd ioctl")
+Fixes: 2d427bb01639 ("mm/userfaultfd: add RWP fault delivery and expose UFFDIO_REGISTER_MODE_RWP")
+Signed-off-by: Samarth Narang <samarth.colleges@gmail.com>
+Signed-off-by: Lance Yang <lance.yang@linux.dev>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Co-developed-by: Samarth Narang <samarth.colleges@gmail.com>
+Acked-by: Lorenzo Stoakes (ARM) <ljs@kernel.org>
+Reviewed-by: Kiryl Shutsemau (Meta) <kas@kernel.org>
+Acked-by: David Hildenbrand (Arm) <david@kernel.org>
+Cc: Mel Gorman <mgorman@techsingularity.net>
+Cc: Xu Xin <xu.xin@linux.dev>"
+Cc: Chengming Zhou <chengming.zhou@linux.dev>
+Cc: Liam R. Howlett <liam@infradead.org>
+Cc: Vlastimil Babka <vbabka@kernel.org>
+Cc: Mike Rapoport <rppt@kernel.org>
+Cc: Suren Baghdasaryan <surenb@google.com>
+Cc: Michal Hocko <mhocko@suse.com>
+Cc: Jérôme Glisse <jglisse@redhat.com>
+Cc: Andrea Arcangeli <aarcange@redhat.com>
+Cc: Peter Xu <peterx@redhat.com>
+Cc: Bobby Powers <bobbypowers@gmail.com>
+Cc: Brian Geffon <bgeffon@google.com>
+Cc: Denis Plotnikov <dplotnikov@virtuozzo.com>
+Cc: Doug Gilbert <dgilbert@interlog.com>
+Cc: Hugh Dickins <hughd@google.com>
+Cc: Johannes Weiner <hannes@cmpxchg.org>
+Cc: Martin Cracauer <cracauer@cons.org>
+Cc: Marty McFadden <mcfadden8@llnl.gov>
+Cc: Maya Gokhale <gokhale2@llnl.gov>
+Cc: Pavel Emelyanov <xemul@openvz.org>
+Cc: Rik van Riel <riel@surriel.com>
+Cc: Shaohua Li <shli@fb.com>
+Cc: James Houghton <jthoughton@google.com>
+Cc: Jonathan Corbet <corbet@lwn.net>
+Cc: Paolo Bonzini <pbonzini@redhat.com>
+Cc: Sean Christopherson <seanjc@google.com>
+Cc: SJ Park <sj@kernel.org>
+Cc: Zi Yan <ziy@nvidia.com>
+Cc: Mohammed EL Kadiri <med08elkadiri@gmail.com>
+Cc: <stable@vger.kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/netrom/sysctl_net_netrom.c | 17 +++++++++--------
- 1 file changed, 9 insertions(+), 8 deletions(-)
+ mm/ksm.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/net/netrom/sysctl_net_netrom.c b/net/netrom/sysctl_net_netrom.c
-index 7dc0fa628f2e7..bccc165a4a2ec 100644
---- a/net/netrom/sysctl_net_netrom.c
-+++ b/net/netrom/sysctl_net_netrom.c
-@@ -15,16 +15,17 @@
- static int min_quality[] = {0}, max_quality[] = {255};
- static int min_obs[]     = {0}, max_obs[]     = {255};
- static int min_ttl[]     = {0}, max_ttl[]     = {255};
--static int min_t1[]      = {5 * HZ};
--static int max_t1[]      = {600 * HZ};
-+/* The timers are given in milliseconds */
-+static int min_t1[]      = {5 * MSEC_PER_SEC};
-+static int max_t1[]      = {600 * MSEC_PER_SEC};
- static int min_n2[]      = {2}, max_n2[]      = {127};
--static int min_t2[]      = {1 * HZ};
--static int max_t2[]      = {60 * HZ};
--static int min_t4[]      = {1 * HZ};
--static int max_t4[]      = {1000 * HZ};
-+static int min_t2[]      = {1 * MSEC_PER_SEC};
-+static int max_t2[]      = {60 * MSEC_PER_SEC};
-+static int min_t4[]      = {1 * MSEC_PER_SEC};
-+static int max_t4[]      = {1000 * MSEC_PER_SEC};
- static int min_window[]  = {1}, max_window[]  = {127};
--static int min_idle[]    = {0 * HZ};
--static int max_idle[]    = {65535 * HZ};
-+static int min_idle[]    = {0 * MSEC_PER_SEC};
-+static int max_idle[]    = {65535 * MSEC_PER_SEC};
- static int min_route[]   = {0}, max_route[]   = {1};
- static int min_fails[]   = {1}, max_fails[]   = {10};
- static int min_reset[]   = {0}, max_reset[]   = {1};
+diff --git a/mm/ksm.c b/mm/ksm.c
+index 9a98aa97317a4..6d7b21636f549 100644
+--- a/mm/ksm.c
++++ b/mm/ksm.c
+@@ -1413,6 +1413,10 @@ static int replace_page(struct vm_area_struct *vma, struct page *page,
+ 	if (pte_soft_dirty(orig_pte))
+ 		newpte = pte_mksoft_dirty(newpte);
+ 
++	/* Preserve uffd-wp when replacing the page. */
++	if (pte_uffd_wp(orig_pte))
++		newpte = pte_mkuffd_wp(newpte);
++
+ 	flush_cache_page(vma, addr, pte_pfn(ptep_get(ptep)));
+ 	/*
+ 	 * No need to notify as we are replacing a read only page with another
 -- 
 2.53.0
 
