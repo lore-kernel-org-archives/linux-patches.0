@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795623865;
-	b=KLPYUi2ZE75vngsq9mPMcNKR8D1fkyFLVCGZ1D14CkOPw+jVwKTx/6O5p0Bz11ribTge
-	 lOoGe1314XYc37KQIhH/9+6wsYwJHvr4aIU5Ep4jAkGmZ0ZftIBKUjjGRAIi3Tx6Zdqh7
-	 hX37csp70FgBwJ9GF1aNTgmLAfmGcxcSprodCAk65YEHvCIKibe9bDYga+nDi0FKEg5Mi
-	 OgkVnY3rdPnePsPtv/GqDISwhwd105gbPP6ep1OgQW3DldJJwsjq9N86upvpkiHb7j1Ti
-	 z6dIlFDXAgabf0wUp2PSnFP0OvTbMKa/dJtaIMYtX53E+KOcdPyGE+tzABO9m5LCB7w==
+	t=1795623868;
+	b=dNpTQmCDBiEfO8F2GlyKVUHVTXfIjic9sFp4h/PVVDwTsuTql8SSc/+0ylPbrrnB3tnQ
+	 FKqx7ULRU1LwgSkA+EbGvgJXzk/wy5vC+V4I1MCeIenVL5SUQXKXoe5Zvt8DGi/ymzELX
+	 fgj6jV9z3Uxuv3w/SJHPIo2G+ICXI0sYT7hFseODzZNc17quKrI7hdmzzE1ATzdVYB0p7
+	 DKycdebguLH/z6FMx0/+nkWJ+t/YpjUbdaAqn2hw0cRQ5BxExQpFLFCNPwcQ7Zp6YNoYF
+	 LlZltNJHE6qd688wOtGIH6BR5HdKsYJCNlVFJCF4RiylW9l3fC6t3d4jgCRX2FLsqtg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795623865;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795623868;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=zsMRqezp+5FLLU2zLi2BDBKgqtdzOdsLtzuO5dAEssk=;
-	b=kqQv89SNzJS6wb2nIBWYHlSB4PIsfXuFPRZ38c4c4QHIxTEmytlEWXe1xEBiXrkLxU+Z
-	 S0prxx6TUc7ZSNsDfzY9tW6s+h/FkcFWMihRNmWjjWsJpfYzA3fZ6E3ePFTutQH+FgYFh
-	 VPfms4i3+d4Y8UpEyD2JyP32IsjSCh/Z/Xyoa5yZQWZOKrCHeHtp+Pa8fRJhCej3yrug/
-	 aG+voSOPRjvWZWnkBrzCgsMg9ypHdWFksVZ3Vy9hqHMT3EbNSnq+khA+RJJPBZnbRvwVC
-	 e/8GSR1kSH4ZUprE9C9n64AnONU1I8mjQqhaFiWxbxA9muwQLXzIV2WbFynliA3w0ww==
+	bh=Pq6RH/kA+aMb6DyNsaI4FIAZlzhC80e3xJTQjXZGX6M=;
+	b=a1+e/pqIqBwcunw6LQc8Eb/WVwVqgHQlHzsAoaTeUsG5UUWDZYVptcrFTjIzsM/TtFQN
+	 e2u64wGIriWeR4+WqwcUh6JhCg0+3tSroVnV3OP1eZNQiESLcEvuyL6/wwr4+Kfnuv8XN
+	 Yhqrhb833ytyn6FPPsyIp1PPQSBNOf/GZrdlRyWa5vcKEa3m4Tg2ebiydPfKnD4ad/KWq
+	 chECAFmv64spmL++FSGdR7Txy72x8JT5N6hff0OcRAyCwaz8gn4jj+CkGOwA4EDUyuhaU
+	 ZNh8x6SpUuhTnTub6nFnJC9tyMiHudwlB6tpKdcd8S7DW7iAUG6L1qyciaw3G1L8Geg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=e3QnNNGy;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=0Sz9G4S1;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D78E6606A323;
-	Wed, 25 Nov 2026 16:24:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8318C606A329;
+	Wed, 25 Nov 2026 16:24:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=e3QnNNGy
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 90AAD1F000D0;
-	Wed, 25 Nov 2026 16:24:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=0Sz9G4S1
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C7A771F008B2;
+	Wed, 25 Nov 2026 16:24:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795623865;
-	bh=zsMRqezp+5FLLU2zLi2BDBKgqtdzOdsLtzuO5dAEssk=;
+	s=korg; t=1795623868;
+	bh=Pq6RH/kA+aMb6DyNsaI4FIAZlzhC80e3xJTQjXZGX6M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=e3QnNNGyza+lWUFauYv73uO7XUWIzpX932Em4+locqWDkmvb8hLW9PMmHDGSHhTzW
-	 8Ikx7TfRakGnJNqh7tm4+SWwO5akrv6HVFQTmPaA2mN3jugW6jRoZ5VEyg0IT94qF8
-	 fWxlLyT1L6Q57FE1rQfEJ90XHRdnQScvqDSORGRk=
+	b=0Sz9G4S1LVkuL1/HM18bhYP+oAc1iIwdNGkMs/ju4lom7eRPmuh25hiA2fhrEvtVr
+	 i8Qp/4HnxP+vthknfVtlfGP0NMhYKldx1M0iH8Qu41qMl/H5qXJjG8mYtN5FV77+bO
+	 OzCzup3JNrObO03aFMg1Y5pALr8Pdf37t9rJIH4s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ido Schimmel <idosch@nvidia.com>,
-	Nikolay Aleksandrov <razor@blackwall.org>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.18 984/990] net: bridge: vlan: fix bugs caused by switchdev deletion errors
-Date: Wed, 25 Nov 2026 15:39:11 +0100
-Message-ID: <20261125143845.027958240@linuxfoundation.org>
+	"Luiz Capitulino (Red Hat)" <luiz.capitulino@linux.dev>,
+	Michael Ellerman <mpe@kernel.org>,
+	Madhavan Srinivasan <maddy@linux.ibm.com>
+Subject: [PATCH 6.18 975/990] powerpc/watchdog: disable watchdog when watchdog_thresh=0
+Date: Wed, 25 Nov 2026 15:39:02 +0100
+Message-ID: <20261125143844.822696743@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143822.072087159@linuxfoundation.org>
 References: <20261125143822.072087159@linuxfoundation.org>
@@ -68,121 +68,90 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Nikolay Aleksandrov <razor@blackwall.org>
+From: Luiz Capitulino (Red Hat) <luiz.capitulino@linux.dev>
 
-commit 2842ce397dd09882530b42f7fdb0c855767eb24e upstream.
+commit d513ec3c907b067d4a32b14ec6f73c3e041cb136 upstream.
 
-Allowing switchdev to prevent vlan deletion and error out in __vlan_del
-could cause multiple different issues - inconsistent state, memory leaks
-when flushing, NULL pointer dereference on bridge error when flushing.
-It doesn't make sense to allow it to stop __vlan_del, so log the error
-and continue with software vlan deletion. This is also consistent with
-8021q behaviour.
+On powerpc, trying to disable the hardlockup detector with:
 
-Suggested-by: Ido Schimmel <idosch@nvidia.com>
-Fixes: bf361ad38165 ("net: bridge: check __vlan_vid_del for error")
-Fixes: 5454f5c28eca ("net: bridge: vlan: check for errors from __vlan_del in __vlan_flush")
-Fixes: 2594e9064a57 ("bridge: vlan: add per-vlan struct and move to rhashtables")
-Fixes: 9c86ce2c1ae3 ("net: bridge: Notify about bridge VLANs")
-Signed-off-by: Nikolay Aleksandrov <razor@blackwall.org>
-Reviewed-by: Ido Schimmel <idosch@nvidia.com>
-Link: https://patch.msgid.link/20260914105258.3436918-1-razor@blackwall.org
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+ # echo 0 > /proc/sys/kernel/watchdog_thresh
+
+causes an immediate and endless hardlockup detection, eventually leading
+to an unusable system (splat example below). This happens because
+watchdog_calc_timeouts() sets wd_timer_period_ms, wd_panic_timeout_tb
+and wd_smp_panic_timeout_tb to zero, but start_watchdog() still starts
+the timer (with expiry=0) in this code path:
+
+proc_watchdog_thresh()
+  proc_watchdog_update()
+    __lockup_detector_reconfigure()
+      watchdog_hardlockup_start()
+        start_watchdog_on_cpu()
+          start_watchdog()
+            hrtimer_start() /* wd_timer_period_ms=0 */
+
+However, according to Documentation/admin-guide/sysctl/kernel.rst,
+setting watchdog_thresh=0 should disable both the soft and hard lockup
+detectors.
+
+This condition is already checked in __lockup_detector_reconfigure() for
+the soft lockup detector and the arch-independent hardlockup detector,
+what's missing is powerpc performing the same check in start_watchdog().
+
+[  278.110085] watchdog: CPU 0 detected hard LOCKUP on other CPUs 1
+[  278.110086] watchdog: CPU 1 became unstuck TB:33050716089564575
+[  278.110097] CPU: 1 UID: 0 PID: 0 Comm: swapper/1 Kdump: loaded Tainted: G            E       7.4.0-rc1 #1 PREEMPT(full)
+[  278.110103] watchdog: CPU 0 TB:33050716089564185, last SMP heartbeat TB:33050716089563885 (0ms ago)
+[  278.110109] Tainted: [E]=UNSIGNED_MODULE
+[  278.110126] Hardware name: IBM,8375-42A POWER9 (architected) 0x4e0202 0xf000005 of:IBM,FW940.00 (VL940_027) hv:phyp pSeries
+[  278.110136] NIP:  c0000000001bd518 LR: c0000000014dedf8 CTR: 0000000000000000
+[  278.110145] REGS: c000000004b17a80 TRAP: 0900   Tainted: G            E        (7.4.0-rc1)
+[  278.110155] MSR:  800000000280b033 <SF,VEC,VSX,EE,FP,ME,IR,DR,RI,LE>  CR: 22000224  XER: 20040004
+[  278.110189] CFAR: 0000000000000000 IRQMASK: 0
+GPR00: 0000000000000000 c000000004b17d20 c000000001c38100 0000000000000000
+GPR04: 000000000000ffff 0000000000000000 0000000000000000 0000000000000000
+GPR08: 0000000000000000 0000000000000080 0000000000000080 ffffffffffffffff
+GPR12: 0000000000000000 c000000017fff300 0000000000000000 000000002ef3d820
+GPR16: 0000000000000000 0000000000000000 0000000000000000 0000000000000000
+GPR20: 0000000000000000 0000000000000000 0000000000000000 0000000000000001
+GPR24: 0000000000000001 00000040c0a6075e 0000000000000000 0000000000000001
+GPR28: c0000001fdb5b140 0000000000000001 c000000002291968 c000000002291970
+[  278.110306] NIP [c0000000001bd518] plpar_hcall_norets_notrace+0x18/0x2c
+[  278.110319] LR [c0000000014dedf8] check_and_cede_processor+0x48/0x60
+[  278.110333] Call Trace:
+[  278.110338] [c000000004b17d20] [c000000004b17dd0] 0xc000000004b17dd0 (unreliable)
+[  278.110354] [c000000004b17d80] [c0000000014df020] shared_cede_loop+0x70/0x170
+[  278.110367] [c000000004b17dc0] [c0000000014de460] cpuidle_enter_state+0x2f0/0x748
+[  278.110381] [c000000004b17e70] [c000000000fe43b8] cpuidle_enter+0x48/0x70
+[  278.110397] [c000000004b17eb0] [c0000000002cdcf8] call_cpuidle+0x48/0x90
+[  278.110409] [c000000004b17ed0] [c0000000002d6300] cpuidle_idle_call+0x160/0x2d0
+[  278.110422] [c000000004b17f20] [c0000000002d6578] do_idle+0x108/0x1f0
+[  278.110434] [c000000004b17f60] [c0000000002d6938] cpu_startup_entry+0x48/0x50
+[  278.110446] [c000000004b17f90] [c0000000000615c0] start_secondary+0x290/0x2a0
+[  278.110459] [c000000004b17fe0] [c00000000000e258] start_secondary_prolog+0x10/0x14
+
+Fixes: 2104180a5369 ("powerpc/64s: implement arch-specific hardlockup watchdog")
+Cc: stable@vger.kernel.org
+Signed-off-by: Luiz Capitulino (Red Hat) <luiz.capitulino@linux.dev>
+Reviewed-by: Michael Ellerman <mpe@kernel.org>
+Signed-off-by: Madhavan Srinivasan <maddy@linux.ibm.com>
+Link: https://patch.msgid.link/20261104034018.2676750-1-luiz.capitulino@linux.dev
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/bridge/br_vlan.c |   31 ++++++++++++++-----------------
- 1 file changed, 14 insertions(+), 17 deletions(-)
+ arch/powerpc/kernel/watchdog.c |    3 +++
+ 1 file changed, 3 insertions(+)
 
---- a/net/bridge/br_vlan.c
-+++ b/net/bridge/br_vlan.c
-@@ -387,12 +387,12 @@ out_filt:
- 	goto out;
- }
+--- a/arch/powerpc/kernel/watchdog.c
++++ b/arch/powerpc/kernel/watchdog.c
+@@ -482,6 +482,9 @@ static void start_watchdog(void *arg)
+ 	if (!(watchdog_enabled & WATCHDOG_HARDLOCKUP_ENABLED))
+ 		return;
  
--static int __vlan_del(struct net_bridge_vlan *v)
-+static void __vlan_del(struct net_bridge_vlan *v)
- {
- 	struct net_bridge_vlan *masterv = v;
- 	struct net_bridge_vlan_group *vg;
- 	struct net_bridge_port *p = NULL;
--	int err = 0;
-+	int err;
++	if (!watchdog_thresh)
++		return;
++
+ 	if (!cpumask_test_cpu(cpu, &watchdog_cpumask))
+ 		return;
  
- 	if (br_vlan_is_master(v)) {
- 		vg = br_vlan_group(v->br);
-@@ -406,12 +406,16 @@ static int __vlan_del(struct net_bridge_
- 	if (p) {
- 		err = __vlan_vid_del(p->dev, p->br, v);
- 		if (err)
--			goto out;
-+			br_warn(p->br,
-+				"port %u(%s) failed to delete vlan %u from switchdev: %pe\n",
-+				(unsigned int)p->port_no, p->dev->name,
-+				v->vid, ERR_PTR(err));
- 	} else {
- 		err = br_switchdev_port_vlan_del(v->br->dev, v->vid);
- 		if (err && err != -EOPNOTSUPP)
--			goto out;
--		err = 0;
-+			br_warn(v->br,
-+				"failed to delete bridge vlan %u from switchdev: %pe\n",
-+				v->vid, ERR_PTR(err));
- 	}
- 
- 	if (br_vlan_should_use(v)) {
-@@ -431,8 +435,6 @@ static int __vlan_del(struct net_bridge_
- 	}
- 
- 	br_vlan_put_master(masterv);
--out:
--	return err;
- }
- 
- static void __vlan_group_free(struct net_bridge_vlan_group *vg)
-@@ -449,7 +451,6 @@ static void __vlan_flush(const struct ne
- {
- 	struct net_bridge_vlan *vlan, *tmp;
- 	u16 v_start = 0, v_end = 0;
--	int err;
- 
- 	__vlan_delete_pvid(vg, vg->pvid);
- 	list_for_each_entry_safe(vlan, tmp, &vg->vlan_list, vlist) {
-@@ -463,13 +464,7 @@ static void __vlan_flush(const struct ne
- 		}
- 		v_end = vlan->vid;
- 
--		err = __vlan_del(vlan);
--		if (err) {
--			br_err(br,
--			       "port %u(%s) failed to delete vlan %d: %pe\n",
--			       (unsigned int) p->port_no, p->dev->name,
--			       vlan->vid, ERR_PTR(err));
--		}
-+		__vlan_del(vlan);
- 	}
- 
- 	/* notify about the last/whole vlan range */
-@@ -837,8 +832,9 @@ int br_vlan_delete(struct net_bridge *br
- 	br_fdb_delete_by_port(br, NULL, vid, 0);
- 
- 	vlan_tunnel_info_del(vg, v);
-+	__vlan_del(v);
- 
--	return __vlan_del(v);
-+	return 0;
- }
- 
- void br_vlan_flush(struct net_bridge *br)
-@@ -1368,8 +1364,9 @@ int nbp_vlan_delete(struct net_bridge_po
- 		return -ENOENT;
- 	br_fdb_find_delete_local(port->br, port, port->dev->dev_addr, vid);
- 	br_fdb_delete_by_port(port->br, port, vid, 0);
-+	__vlan_del(v);
- 
--	return __vlan_del(v);
-+	return 0;
- }
- 
- void nbp_vlan_flush(struct net_bridge_port *port)
 
 
