@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795619949;
-	b=E+2pFJSUKXSh98edGmwlQH8+nTRdW/JeqmTN1qVoLICuRRK5JsL1ytgTnCyBwYugsb+0
-	 wvbDW7b7FYsKxf9ig0Mv64Gm6IcQGKk0SmBzRIJz2LhvrlysmuzkLj0PJZ/M0c14fsRfQ
-	 UKhxZMDKgaYQshoCVhnirCM6MeO+HkRVEbJf+RMHwfQKdsYKSwgGVj9GVmqkpMITFuqbm
-	 N+Rlj16h3Atujndqyb8snPaUbsB/YljsDbUDtlNiiMmBhXsl+ciNYG+W6wVv0SvedESUG
-	 8JVQbl0tiPsUPD9VAUAtMho8hoack9VYZ/HcdBYqUuy54+h9OhtvOtc2697TaiALRgQ==
+	t=1795619951;
+	b=xlJzwn/3MGkst/cKGCFrO3lUObXRC2j5vnRW1DttkPrwaP5tGxtZLoSPscWIykeJAwg+
+	 Sziuyjw6JYeQ0pabb6djzObPZs2MRvUEYiguydLnLLHP3YwzBaypw43fy6CyyrAmoB3nG
+	 aO18C+totOyTwosGs2Ng8Cfmelz1+hqx+Q+aOmH3/53ugomXgNyjCeTbYe3XE98kAsiOI
+	 FlgtILgoqmaIwlivcJbEwbsh1nKmqp/yKCbU2RGEr+BfV7NZFszjSUARj/n+XjnTve+uM
+	 9EOXdaF/1dgZ8+z3Syhw6bjCtqOjDYWujEXwPwA89qGGhg/MJL2ZSSkTLZuUCtdKOUA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795619949;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795619951;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=ywdrBb+ZyUaSaUA/+TbNBg9EBrretqHyHf6P+VFBnB4=;
-	b=uziYnLrQM4wKOGdYxbl/bSUc1ikGOTr8SKFON8DtRMtuHd89Xcf++3uhDX6VcYGX8EOY
-	 diSHbgxvget3OoIX/UkZpDIrhXdIpZFGyOguU2GCkWZyVSmY+wf2LQG0+WYUEiI5Oqgxd
-	 LW94K8KVcN0H6k8HFLoljdhJTK/7LCV2f3Zc6iNf35njsOBcH9AzKabPL/vL4sAVnxfyh
-	 UpFCPNGC2nO5KVdcaC7TF7BJ6zXHmNRprabVpnvpo/QyoMxnedxbEDJ1+KLYKBLBVSUbq
-	 KIs/RkBekEF4kdxmG1yvnwn5nKSyeKqw8dUjvAxDlxeOZOu4WMiaWlhgZjw6szfsIRw==
+	bh=Oqb2gPLI9PtYCuhTXbGeTOQKbYT0SpKILwtxkOXwtP8=;
+	b=pNB32ZvGZV9ttf4mLgK76bkixmhHJP/IMuV2BggN+R9HZkEOEEyJqL3KgAHCmHr4Wvgm
+	 bDo3NM+k0YdiJ6Y410IfST+kC2bIqYgnHvozgLizUwXZEDuHOs3cwX9uNqQZ0WJZ56zTc
+	 I1BKcxu51Zl3B+Gi+E5gUCPq2rH0dflDRZ0uNXGGb+BuzqRcEXrau1qV0KrBIsHy8MnUK
+	 FRH9A0M0YoU24j0GAm/ERGGzU+N6feQFMAAflHbQR7/TaE/WlolxQYfO1k4BIDYAMhv8G
+	 3UwfbvaGnFWh81EugeXrRl1/DyHI4TdZeyCU9TADwfABHFN9qs/JMDj9Iww4BsGed6A==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=isv7WTxH;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=dSgTR3Q8;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 06084606A321;
-	Wed, 25 Nov 2026 15:19:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C3E1D606A321;
+	Wed, 25 Nov 2026 15:19:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=isv7WTxH
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 54A891F000C6;
-	Wed, 25 Nov 2026 15:19:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=dSgTR3Q8
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 206141F000C4;
+	Wed, 25 Nov 2026 15:19:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795619948;
-	bh=ywdrBb+ZyUaSaUA/+TbNBg9EBrretqHyHf6P+VFBnB4=;
+	s=korg; t=1795619951;
+	bh=Oqb2gPLI9PtYCuhTXbGeTOQKbYT0SpKILwtxkOXwtP8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=isv7WTxH0cVQA964S7TjM43VaBPsh9wn8UySnAKHwjwq7ufvc2r4SgAnENPJO6IdY
-	 9+2dNNH/KXftDqrE4t/v8WGtuF2uFKBUiJkp3LvqMJDsHGTXdZCVeRjykWuCWw81O2
-	 l+L3IsZTI3SWXYdqEWsInOzUmf1g1chceqDdtfzk=
+	b=dSgTR3Q8EcZcv9VVEuqLtX+dYffd7zQi/NOgqlfFW4y8QTlgJpAqR4TAcVpP4cG0e
+	 kqv/z/Md70GJEA9nwc7TpkZZclCybx20pma0yOjZQzEz+JwxQkm0bJK+hl5KyqSthr
+	 wzrlv9tDgCH2m/NBR5vQ3/jdlhsGPN0rJL0dByVw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Stefano Stabellini <sstabellini@kernel.org>,
-	Yehyeong Lee <yhlee@isslab.korea.ac.kr>,
-	Juergen Gross <jgross@suse.com>
-Subject: [PATCH 7.3 0742/1005] xen/pvcalls: unwind pvcalls_new_active_socket() step by step
-Date: Wed, 25 Nov 2026 15:34:40 +0100
-Message-ID: <20261125143839.134924740@linuxfoundation.org>
+	syzbot+681e729b2cf0d4860042@syzkaller.appspotmail.com,
+	Seiji Nishikawa <snishika@redhat.com>,
+	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
+	Ingo Molnar <mingo@kernel.org>
+Subject: [PATCH 7.3 0760/1005] sched/core: Do not touch SMT siblings that have not joined the core yet
+Date: Wed, 25 Nov 2026 15:34:58 +0100
+Message-ID: <20261125143839.549440984@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143821.729802100@linuxfoundation.org>
 References: <20261125143821.729802100@linuxfoundation.org>
@@ -68,167 +69,170 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yehyeong Lee <yhlee@isslab.korea.ac.kr>
+From: Seiji Nishikawa <snishika@redhat.com>
 
-commit 702ba3c80a8736898813a2c7484d695278aa114d upstream.
+commit ec6f6731538e0d45872eb279fdeb477bed152d6f upstream.
 
-Every error path in pvcalls_new_active_socket() jumps to one shared label
-that does list_del(&map->list) and then hands map to
-pvcalls_back_release_active().  But map comes from kzalloc() and its
-list_head is only published at the very end of the function, after the last
-of those jumps:
+When a CPU comes online, it is added to cpu_smt_mask() of its siblings
+before sched_core_cpu_starting() sets its rq->core to the core leader.
+For example, on x86, ap_starting() calls set_cpu_sibling_map() first,
+and calls notify_cpu_starting() after that. This order is intended.
 
-	down(&fedata->socket_lock);
-	list_add_tail(&map->list, &fedata->socket_mappings);
-	up(&fedata->socket_lock);
+Before sched_core_cpu_starting() runs, rq->core of the new CPU still
+points to its own rq. But rq->core_enabled of the new CPU is already
+set. __sched_core_flip() sets it for all possible CPUs, also for
+offline CPUs, and CPU offline does not clear it. So __rq_lockp() of the
+new CPU returns its own rq->__lock. It does not return the core wide
+lock.
 
-so on the error path map->list is still {NULL, NULL} and __list_del()
-writes through a NULL pointer.
+If a sibling CPU runs pick_next_task() for SCHED_CORE at this time, it
+checks all CPUs in cpu_smt_mask(). It calls update_rq_clock() and
+pick_task() for the rq of the new CPU. But it holds only its own core
+lock, not the lock of the new CPU. Then lockdep shows this warning in
+update_rq_clock().
 
-A frontend gets there with one value it owns: the ring_order field of the
-page it granted.  Anything above MAX_RING_ORDER takes the second goto, and
-nothing else in the function has run by then.
+  debug_locks && !(lock_is_held(&(__rq_lockp(rq))->dep_map) != 0)
+  WARNING: kernel/sched/sched.h:1666 at update_rq_clock+0x40a/0xd20 kernel/sched/core.c:875, CPU#0: syz-executor251/5712
+  Call Trace:
+   <TASK>
+   pick_next_task kernel/sched/core.c:6375 [inline]
+   __schedule+0x1c69/0x6920 kernel/sched/core.c:7199
+   preempt_schedule_irq+0x4e/0x90 kernel/sched/core.c:7606
 
-The result is an oops in whichever context handled the request - the
-pvcalls-back threaded IRQ handler for PVCALLS_CONNECT, mappass->wq for
-PVCALLS_ACCEPT - and because it happens after down(&fedata->socket_lock)
-that semaphore is never released, so every later operation on the frontend
-blocks on it and the backend never completes backend_disconnect().  (With
-CONFIG_DEBUG_LIST the list_del() only reports and returns, and
-pvcalls_back_release_active() then runs on a map whose irq is still 0 and
-whose bytes, ioworker.wq and saved_data_ready are all NULL.)
+The next loops in pick_next_task() also change rq_i->core_pick of this
+rq, and can call resched_curr() for it, without its lock.
+resched_curr() has the same lockdep_assert_rq_held() check.
+__sched_core_account_forceidle() also checks all CPUs in the same mask.
 
-A frontend asking for ring_order 5, on a dom0 built with KASAN
-(the request was issued by a test-only change to the frontend):
+CPU offline does not have this problem. remove_siblinginfo() and
+sched_core_cpu_dying() both run in take_cpu_down() under stop_machine.
+So no sibling CPU can be in pick_next_task() at that time.
 
-[  133.728877] pvcalls_new_active_socket frontend requested ring_order 5, which is > MAX (4)
-[  133.732868] Oops: general protection fault, probably for non-canonical address 0xdffffc0000000001: 0000 [#1] SMP KASAN NOPTI
-[  133.737910] KASAN: null-ptr-deref in range [0x0000000000000008-0x000000000000000f]
-[  133.741666] CPU: 0 UID: 0 PID: 133 Comm: irq/39-pvcalls- Not tainted 7.3.0-kCTLblk2-15482-g21a7f44fd076-dirty #1 PREEMPT(full)
-[  133.746986] Hardware name: QEMU Standard PC (Q35 + ICH9, 2009), BIOS 1.16.3-debian-1.16.3-2 04/01/2014
-[  133.751512] RIP: 0010:pvcalls_new_active_socket+0x821/0xb90
-[  133.754237] Code: 48 89 fa 48 c1 ea 03 80 3c 02 00 0f 85 f6 01 00 00 48 8d 79 08 4c 8b 6b 08 48 b8 00 00 00 00 00 fc ff df 48 89 fa 48 c1 ea 03 <80> 3c 02 00 0f 85 14 02 00 00 4c 89 ea 4c 89 69 08 48 b8 00 00 00
-[  133.763126] RSP: 0018:ffffc900004afb38 EFLAGS: 00010202
-[  133.765861] RAX: dffffc0000000000 RBX: ffff88810886c900 RCX: 0000000000000000
-[  133.769348] RDX: 0000000000000001 RSI: 0000000000000246 RDI: 0000000000000008
-[  133.772787] RBP: 1ffff92000095f6b R08: 0000000000000001 R09: fffff52000095f58
-[  133.776260] R10: 0000000000000003 R11: ffff888100077320 R12: ffff88810858b410
-[  133.779823] R13: 0000000000000000 R14: ffff88810858b460 R15: ffff88810858b400
-[  133.783382] FS:  0000000000000000(0000) GS:ffff8881b034c000(0000) knlGS:0000000000000000
-[  133.787351] CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
-[  133.790308] CR2: 00000000006042c0 CR3: 0000000108400001 CR4: 0000000000770ef0
-[  133.793822] PKRU: 55555554
-[  133.795347] Call Trace:
-[  133.796778]  <TASK>
-[  133.798082]  ? __pfx_pvcalls_new_active_socket+0x10/0x10
-[  133.800801]  ? security_socket_post_create+0x4d/0x60
-[  133.803275]  ? release_sock+0x1a/0x1d0
-[  133.805182]  pvcalls_back_event+0x1b09/0x23e0
-[  133.807431]  ? __pfx_pvcalls_back_event+0x10/0x10
-[  133.809814]  ? __pfx__raw_spin_lock_irqsave+0x10/0x10
-[  133.812251]  ? __pfx_pvcalls_back_event+0x10/0x10
-[  133.814554]  irq_thread_fn+0x86/0x150
-[  133.816468]  irq_thread+0x2da/0x580
-[  133.818363]  ? __pfx_irq_thread_fn+0x10/0x10
-[  133.820586]  ? __pfx_irq_thread+0x10/0x10
-[  133.822670]  ? __kthread_parkme+0x88/0x170
-[  133.824803]  ? __pfx_irq_thread+0x10/0x10
-[  133.827153]  ? __pfx_irq_thread+0x10/0x10
-[  133.829304]  kthread+0x2c8/0x3b0
-[  133.831176]  ? recalc_sigpending+0x15c/0x1e0
-[  133.833570]  ? __pfx_kthread+0x10/0x10
-[  133.835572]  ret_from_fork+0x373/0x5b0
-[  133.837581]  ? __pfx_ret_from_fork+0x10/0x10
-[  133.839978]  ? __switch_to+0x3c4/0xb40
-[  133.841984]  ? __pfx_kthread+0x10/0x10
-[  133.843970]  ret_from_fork_asm+0x1a/0x30
-[  133.846031]  </TASK>
-[  133.847420] Modules linked in:
-[  133.849240] ---[ end trace 0000000000000000 ]---
+Fix this. In these loops, skip a sibling CPU if its rq->core is
+different from our rq->core. At run time, rq->core of a CPU is changed
+by sched_core_cpu_starting(), sched_core_cpu_deactivate() and
+sched_core_cpu_dying(). The first two hold sched_core_lock(), and
+sched_core_lock() takes the rq locks of all CPUs in the SMT mask. The
+last one runs under stop_machine, as written above. So while we hold
+our core lock, the result of this check does not change. A CPU that is
+not in the core yet will pick its own tasks. The comment in the
+reschedule loop of pick_next_task() already expects this case.
 
-Give each failure its own label, so that only resources that were actually
-acquired are released and the list the map was never added to is left
-alone.  The map is not published anywhere at that point, so the error path
-needs no socket_lock at all.  sock_release() stays in the callee on every
-error path, the way
-commit 8fafac202d18 ("xen/pvcalls-back: fix double frees with pvcalls_new_active_socket()")
-arranged it.
+I tested this with the syzbot C reproducer in QEMU. The two vCPUs were
+SMT siblings (-smp 2,sockets=1,cores=1,threads=2). Without this patch,
+the warning came after about 100 seconds. Just before the warning, a
+debug print showed that the loop on CPU 0 saw CPU 1 with rq->core
+pointing to CPU 1 itself, and cpu_online() was false for CPU 1. With
+this patch, the same state still happened, but there was no warning
+in more than 2 hours.
 
-Fixes: 5db4d286a8ef ("xen/pvcalls: implement connect command")
+Fixes: 3c474b3239f1 ("sched: Fix Core-wide rq->lock for uninitialized CPUs")
+Closes: https://syzkaller.appspot.com/bug?extid=681e729b2cf0d4860042
+Reported-by: syzbot+681e729b2cf0d4860042@syzkaller.appspotmail.com
+Signed-off-by: Seiji Nishikawa <snishika@redhat.com>
+Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
+Signed-off-by: Ingo Molnar <mingo@kernel.org>
 Cc: stable@vger.kernel.org
-Reviewed-by: Stefano Stabellini <sstabellini@kernel.org>
-Signed-off-by: Yehyeong Lee <yhlee@isslab.korea.ac.kr>
-Signed-off-by: Juergen Gross <jgross@suse.com>
-Message-ID: <20261110125002.46683-2-yhlee@isslab.korea.ac.kr>
+Link: https://patch.msgid.link/20261104022004.3810619-1-snishika@redhat.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/xen/pvcalls-back.c |   25 +++++++++++++++----------
- 1 file changed, 15 insertions(+), 10 deletions(-)
+ kernel/sched/core.c       |    9 +++------
+ kernel/sched/core_sched.c |    3 +--
+ kernel/sched/sched.h      |   19 +++++++++++++++++++
+ 3 files changed, 23 insertions(+), 8 deletions(-)
 
---- a/drivers/xen/pvcalls-back.c
-+++ b/drivers/xen/pvcalls-back.c
-@@ -337,7 +337,7 @@ static struct sock_mapping *pvcalls_new_
+--- a/kernel/sched/core.c
++++ b/kernel/sched/core.c
+@@ -6251,7 +6251,6 @@ pick_next_task(struct rq *rq, struct rq_
+ 	__must_hold(__rq_lockp(rq))
+ {
+ 	struct task_struct *next, *p, *max;
+-	const struct cpumask *smt_mask;
+ 	bool fi_before = false;
+ 	bool core_clock_updated = (rq == rq->core);
+ 	unsigned long cookie;
+@@ -6301,8 +6300,6 @@ pick_next_task(struct rq *rq, struct rq_
  
- 	ret = xenbus_map_ring_valloc(fedata->dev, &ref, 1, &page);
- 	if (ret < 0)
--		goto out;
-+		goto out_map;
- 	map->ring = page;
- 	map->ring_order = map->ring->ring_order;
- 	/* first read the order, then map the data ring */
-@@ -345,19 +345,19 @@ static struct sock_mapping *pvcalls_new_
- 	if (map->ring_order > MAX_RING_ORDER) {
- 		pr_warn("%s frontend requested ring_order %u, which is > MAX (%u)\n",
- 				__func__, map->ring_order, MAX_RING_ORDER);
--		goto out;
-+		goto out_unmap_ring;
+ 	prev_balance(rq, rf);
+ 
+-	smt_mask = cpu_smt_mask(cpu);
+-
+ restart:
+ 	need_sync |= !!rq->core->core_cookie;
+ 
+@@ -6368,7 +6365,7 @@ restart:
+ 	 * Tie-break prio towards the current CPU
+ 	 */
+ 	max = NULL;
+-	for_each_cpu_wrap(i, smt_mask, cpu) {
++	for_each_core_cpu_wrap(i, rq) {
+ 		rq_i = cpu_rq(i);
+ 
+ 		/*
+@@ -6401,7 +6398,7 @@ restart:
+ 	 * For each thread: try and find a runnable task that matches @max or
+ 	 * force idle.
+ 	 */
+-	for_each_cpu(i, smt_mask) {
++	for_each_core_cpu(i, rq) {
+ 		rq_i = cpu_rq(i);
+ 		p = rq_i->core_pick;
+ 
+@@ -6447,7 +6444,7 @@ restart:
+ 	 * their task. This ensures there is no inter-sibling overlap between
+ 	 * non-matching user state.
+ 	 */
+-	for_each_cpu(i, smt_mask) {
++	for_each_core_cpu(i, rq) {
+ 		rq_i = cpu_rq(i);
+ 
+ 		/*
+--- a/kernel/sched/core_sched.c
++++ b/kernel/sched/core_sched.c
+@@ -241,7 +241,6 @@ out:
+ /* REQUIRES: rq->core's clock recently updated. */
+ void __sched_core_account_forceidle(struct rq *rq)
+ {
+-	const struct cpumask *smt_mask = cpu_smt_mask(cpu_of(rq));
+ 	u64 delta, now = rq_clock(rq->core);
+ 	struct rq *rq_i;
+ 	struct task_struct *p;
+@@ -273,7 +272,7 @@ void __sched_core_account_forceidle(stru
+ 		delta = div_u64(delta, rq->core->core_forceidle_occupation);
  	}
- 	ret = xenbus_map_ring_valloc(fedata->dev, map->ring->ref,
- 				     (1 << map->ring_order), &page);
- 	if (ret < 0)
--		goto out;
-+		goto out_unmap_ring;
- 	map->bytes = page;
  
- 	ret = bind_interdomain_evtchn_to_irqhandler_lateeoi(
- 			fedata->dev, evtchn,
- 			pvcalls_back_conn_event, 0, "pvcalls-backend", map);
- 	if (ret < 0)
--		goto out;
-+		goto out_unmap_bytes;
- 	map->irq = ret;
+-	for_each_cpu(i, smt_mask) {
++	for_each_core_cpu(i, rq) {
+ 		rq_i = cpu_rq(i);
+ 		p = rq_i->core_pick ?: rq_i->curr;
  
- 	map->data.in = map->bytes;
-@@ -365,7 +365,7 @@ static struct sock_mapping *pvcalls_new_
- 
- 	map->ioworker.wq = alloc_ordered_workqueue("pvcalls_io", 0);
- 	if (!map->ioworker.wq)
--		goto out;
-+		goto out_unbind;
- 	atomic_set(&map->io, 1);
- 	INIT_WORK(&map->ioworker.register_work,	pvcalls_back_ioworker);
- 
-@@ -381,11 +381,16 @@ static struct sock_mapping *pvcalls_new_
- 	write_unlock_bh(&map->sock->sk->sk_callback_lock);
- 
- 	return map;
--out:
--	down(&fedata->socket_lock);
--	list_del(&map->list);
--	pvcalls_back_release_active(fedata->dev, fedata, map);
--	up(&fedata->socket_lock);
-+
-+out_unbind:
-+	unbind_from_irqhandler(map->irq, map);
-+out_unmap_bytes:
-+	xenbus_unmap_ring_vfree(fedata->dev, map->bytes);
-+out_unmap_ring:
-+	xenbus_unmap_ring_vfree(fedata->dev, (void *)map->ring);
-+out_map:
-+	sock_release(sock);
-+	kfree(map);
- 	return NULL;
+--- a/kernel/sched/sched.h
++++ b/kernel/sched/sched.h
+@@ -1514,6 +1514,25 @@ static inline raw_spinlock_t *__rq_lockp
+ 	return &rq->__lock;
  }
+ 
++/*
++ * A CPU coming online is set in cpu_smt_mask() before
++ * sched_core_cpu_starting() links its rq->core to the core leader.
++ * Until then it does not share the core-wide lock, so it must not be
++ * touched as part of the core.
++ */
++static inline bool sched_core_sibling(struct rq *rq, struct rq *rq_i)
++{
++	return rq_i->core == rq->core;
++}
++
++#define for_each_core_cpu(i, rq) \
++	for_each_cpu(i, cpu_smt_mask(rq->cpu)) \
++		if (sched_core_sibling(rq, cpu_rq(i)))
++
++#define for_each_core_cpu_wrap(i, rq) \
++	for_each_cpu_wrap(i, cpu_smt_mask(rq->cpu), rq->cpu) \
++		if (sched_core_sibling(rq, cpu_rq(i)))
++
+ extern bool
+ cfs_prio_less(const struct task_struct *a, const struct task_struct *b, bool fi);
  
 
 
