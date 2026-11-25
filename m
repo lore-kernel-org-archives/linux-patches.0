@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795625763;
-	b=vqNA7FWMfvgIxVbWz3mhvnIjfy42zD9faDehSGDC0/DWFS4WKtH8sdG3x/aMcs63QaS7
-	 BnMWdlBbAc0l4+fMjD+wjz693eLEV9RiN5rFyu8hCNpZkxsQAEPEZjwUEvPKGkHoJ7SlR
-	 iVaIOC5KQCnHo+BfPKxF4ggp81m6NmEu1V0d2+kYQG5oqYA278WqyQVct4J9fwx3JVmlk
-	 A61JUZAjNj6dk1RIVuieq6B31VqZEbdl1qokgwNyVNom3yUxBgzNLa1Hzg+8lwotDfZeo
-	 W1sSV+YrXE5UaZ/NndcQ5qWJWvdNjeCRzdoq7I/DmqbeUCPuXQEh5TT6wPKizbZXIug==
+	t=1795625766;
+	b=gQqqKJY3rOrEul7NU9AX9dJieA7NV0U2QJHExOrFd7iM4kYbIA+KRlA3eZ/24zOJsi2r
+	 xggwb173HmQ4HsF47WUa1vmVaXCzdyAl7EE3j0p/F1vswJlEZb9RMLW5CFR2Qz4BE6B5O
+	 XKnBvGnCaWwNwUTKbwwwEb71MtZ3TK2KBE43Ogfe2ZsBInUQVK/JbUIk+sxr+Uiy9wU59
+	 FEMW0kr4izVqmS1h1bwt5drDUZBaGh/tr+gDXI4Pf+Xhk5ZRTlNE0l5Ol4Mlq+B63Xk8w
+	 NGrNP0sZeTmtnq9Di0xG52N3x1uIRumsNdOUcZHQG3aTjZCAXL4ulO6jYVDcZHtFbVg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795625763;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795625766;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=IR6rrCsDJu3ywhXK/mnmFy09LBzRJ7yGkWCfoDjMsuw=;
-	b=PBse5lpdSCcX7GtrMcuRkWbYBBzPCiHJOAs2GEUH1qujZD+ttXsgjjoIeEj6RBGWmtBr
-	 bfAB48abeLuatPbSTE3+Zk7ee9+ZovYbxIApjwAsFrLha51hY3WAuFBDgdiSy6MF/tFFQ
-	 J9qpu8NWXgEFXa8RHPW3l429YAuwI66e5kcn/dVuAccahcEu4kmtrOyeuEm1KC1F5mI8T
-	 1il0/cu7BwSs6RlALyZC37YAXg3tSHL79gjHm9wpLTYCsS3mdi8cue7WBAnJHlIcXeF8E
-	 P60TrCul46fpnJxAnYKVTiRpt2r1keloXqmq+u8yNR5Orhh379MtQKOt0xy1DE7DAeg==
+	bh=ZTS5SAKKhTCUGRvouHMQj6x5xQ1sIdOWhI2Ijn5kWlc=;
+	b=eyJ7WMXWIF8Z2F2Ds5R7vNHapM7WlAAyXm7z+tL6xa9hOjFZjR2+Q9l4U3CfklADnopY
+	 dTk1KnSwjYo13hLR1RkzFvF7m+uUJ7VOfmkGP+qRhsQb5YQAnrDyiqCx52IXVSM9iU8CY
+	 6ewJHiJPUo0oVXiNFBV+4LpZku6B2hcSEyOi+Dzxmplmhl3N/Y1j8mz3DAqyGUoAaddIX
+	 b/cQuK4YVPQLsDURrkRq/1iNwMcvn+w/hp/wWlLdOdADPnm8NRaMeY1QDfrSQe3wCBkp3
+	 UYgK6+7o6PWJ1Doxzs7FeiFz65CDQccI3slHJZ5Fo9jIpN6U9WIbT4exAKC7grZT/3w==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="D15fuM/x";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=s4GCmfEQ;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B6E72606A321;
-	Wed, 25 Nov 2026 16:56:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 41BEB606A321;
+	Wed, 25 Nov 2026 16:56:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=D15fuM/x
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 213331F000C0;
-	Wed, 25 Nov 2026 16:56:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=s4GCmfEQ
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 564CE1F000C0;
+	Wed, 25 Nov 2026 16:56:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795625762;
-	bh=IR6rrCsDJu3ywhXK/mnmFy09LBzRJ7yGkWCfoDjMsuw=;
+	s=korg; t=1795625765;
+	bh=ZTS5SAKKhTCUGRvouHMQj6x5xQ1sIdOWhI2Ijn5kWlc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=D15fuM/x7X+OueygoR/d0QDJxlUqqVfWHTUvL/2QcMjvyzwgjnKMgLAX5GkYVwylK
-	 8HJ+mgWjwz9kiIAg2F22XJCdcx5J4eFu8onMX2EW/7rqAmVq5ZDWEhrgfv29Qh+MXZ
-	 sra8hFy1x6qd6wzQKxEV3y93r8l3YeUad56GKnE0=
+	b=s4GCmfEQ0DnNXDXu7xWoS1fVIeMnKJ4kvolXPciO5JZXiIFh+3z5+OGNFMhvbCPEf
+	 z5gkY34ZQa+KnCK2Hqxgh+UYe/s/OTWxDf/i0yA+LKX7raMLAQiYRVQastdHOxRN/a
+	 uKSUDVpOMMjIOV9e5iLuMBdI6Vsn37UAgnKSIXvI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Avi Weiss <thnkslprpt@gmail.com>,
-	Benjamin Coddington <bcodding@hammerspace.com>,
-	Anna Schumaker <anna.schumaker@hammerspace.com>
-Subject: [PATCH 6.12 625/816] SUNRPC: Fix TCP-with-TLS transport class identification
-Date: Wed, 25 Nov 2026 15:36:13 +0100
-Message-ID: <20261125143903.651563893@linuxfoundation.org>
+	Hungyu Lin <dennylin0707@gmail.com>,
+	Thomas Gleixner <tglx@kernel.org>,
+	John Stultz <jstultz@google.com>
+Subject: [PATCH 6.12 626/816] timekeeping: Read getboottime64() offsets under the sequence counter
+Date: Wed, 25 Nov 2026 15:36:14 +0100
+Message-ID: <20261125143903.674431043@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143849.205329330@linuxfoundation.org>
 References: <20261125143849.205329330@linuxfoundation.org>
@@ -68,50 +68,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Avi Weiss <thnkslprpt@gmail.com>
+From: Hungyu Lin <dennylin0707@gmail.com>
 
-commit 0502c7e7f171a8c9c892bdef89e6aa6f44d7b2a3 upstream.
+commit 385b5ec1f31dd39297578eed42be74b07ae74017 upstream.
 
-xs_setup_tcp_tls() assigns the ordinary TCP transport class to
-a TCP-with-TLS transport. When rpc_clnt_add_xprt() is called
-with an unspecified transport type, it inherits the class
-identifier and can create an unencrypted TCP transport.
+getboottime64() computes the wall-clock boot timestamp from offs_real
+minus offs_boot without checking tk_core.seq. A concurrent timekeeping
+update can leave the reader with an inconsistent pair of offsets or,
+on 32-bit systems, a torn 64-bit offset, producing an incorrect boot
+timestamp.
 
-Looks like a copy-paste error from the commit 3 years ago.
+Read both offsets under tk_core.seq and retry if an update overlaps
+the sample. Convert the resulting local value to a timespec64 afterward.
 
-NFSv4 trunk discovery uses an unspecified transport type when
-adding server-advertised addresses. If the additional transport
-passes server-identity validation, it can be admitted to the
-client's transport switch.
-
-An isolated loopback test reproduced plaintext application RPC
-transmission for TLS- and mTLS-configured clients, including
-an unpinned TLS-client RPC that selected the added transport.
-
-Assign the TCP-with-TLS class instead. With the fix, the
-plaintext-only test peer receives TLS negotiation probes but
-no application payloads.
-
-Fixes: 75eb6af7acdf ("SUNRPC: Add a TCP-with-TLS RPC transport class")
+Fixes: 7c3f1a573237 ("Introduce boot based time")
+Signed-off-by: Hungyu Lin <dennylin0707@gmail.com>
+Signed-off-by: Thomas Gleixner <tglx@kernel.org>
+Acked-by: John Stultz <jstultz@google.com>
 Cc: stable@vger.kernel.org
-Signed-off-by: Avi Weiss <thnkslprpt@gmail.com>
-Reviewed-by: Benjamin Coddington <bcodding@hammerspace.com>
-Signed-off-by: Anna Schumaker <anna.schumaker@hammerspace.com>
+Link: https://patch.msgid.link/20261030054227.35453-2-dennylin0707@gmail.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/sunrpc/xprtsock.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ kernel/time/timekeeping.c |    8 +++++++-
+ 1 file changed, 7 insertions(+), 1 deletion(-)
 
---- a/net/sunrpc/xprtsock.c
-+++ b/net/sunrpc/xprtsock.c
-@@ -3534,7 +3534,7 @@ static struct rpc_xprt *xs_setup_tcp_tls
- 	transport = container_of(xprt, struct sock_xprt, xprt);
+--- a/kernel/time/timekeeping.c
++++ b/kernel/time/timekeeping.c
+@@ -2296,7 +2296,13 @@ void update_wall_time(void)
+ void getboottime64(struct timespec64 *ts)
+ {
+ 	struct timekeeper *tk = &tk_core.timekeeper;
+-	ktime_t t = ktime_sub(tk->offs_real, tk->offs_boot);
++	unsigned int seq;
++	ktime_t t;
++
++	do {
++		seq = read_seqcount_begin(&tk_core.seq);
++		t = ktime_sub(tk->offs_real, tk->offs_boot);
++	} while (read_seqcount_retry(&tk_core.seq, seq));
  
- 	xprt->prot = IPPROTO_TCP;
--	xprt->xprt_class = &xs_tcp_transport;
-+	xprt->xprt_class = &xs_tcp_tls_transport;
- 	xprt->max_payload = RPC_MAX_FRAGMENT_SIZE;
- 
- 	xprt->bind_timeout = XS_BIND_TO;
+ 	*ts = ktime_to_timespec64(t);
+ }
 
 
