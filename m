@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795621580;
-	b=OSrm/pACXBdfGRshl2x++RhSr8e8zJI+30kyURYxl8wyrZewDQ81yZToAikQoVP5TXa1
-	 Xy7IQqrZJ5wwEdRl4VhHUQsOpj4bBfHSxZ/5H11DA8qRrLboK1oAI5KFIkSHb8GXHGsIy
-	 zmB2kT6k74KY/aJd7LjXlTmAbh9aSkMXH7EDushs5V7Bae7JYSwnX+LCG9/VlusMcFcUt
-	 g/Xg7z4DwkAjTCAEWamGEANGkVUD1G5VvexJJS5FJ+yA4M1LUTFDUXxKeTdV2xxDMPSYB
-	 YqG3i660cGb550aA1mamRurvhXgPcjs2PSHGj9rZpH4NXI+Svjdy6fFfkdZ0+1sTnUQ==
+	t=1795621584;
+	b=lCvouWvn7L/+XgIKnZZCVEFcGOK6rCrTn0xOjyd57GLKFPSVYSlPsBNNPiTR8JBZW4LN
+	 +WF5xRYa+n0Baw7S0zQ+/PVaCnlw/7ZMvyr6HFUH/5zE7f1TIXLmNQ7fBJbl11kvLPAPW
+	 EBjyXcWjsLaRJxk2hpF6+nG+HqY+ukMx3McwkHlt5U6USjJL/LIPscJ1k4dPlQk/XLG3i
+	 T2qs5iBpvEtk7fg4FUKxELim/aqSSm960Ok83s8kbVfqUxhXVXNT3w1z7GH6LBndKtc96
+	 bmr+586jCE2nhXWAWmfzA5iWaCnNYw9YMYtig+O8Lr/1Ag0lcPZONowZLgji5ICYDoQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795621580;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795621584;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=TzaeM/lVTg5dcDxrX4AU67Dj9Vo88K8gR/G/nxIaj0M=;
-	b=BdBCJq1QqFshsKAHPkHiP1rCnGgzF4YhtHjPT1JGWx/upRk1H8Ezqniv/We5gcAViGYK
-	 L7z5vF2cs/aeMO4tWuMndt5QDx4BFkJtkcraE3i9pjMXOzhjz7gPw1hMpDPS+YvxUWFGs
-	 Re8dWmZd1aSunjvzTNGpUJaOa/XmXwO/ED7RLrArP7MzebvY12Lic6VDCDH7qmvA3qYRp
-	 FbL5T6CZvmYs8qX5nvuXWCccYX4cwUE7OlhulIaB8+bGWz08rrKW2x8aZ073Gs0UkF39y
-	 kKXAx0A6Za27+i5bcnmW6T7znkKkF1pv6zp3aBy1VRQil0PrpaxwRU4fo069wuWE3bA==
+	bh=p72vMn5nwrs4bCq5rknZ4QV2WK1N84csIu1mpDQj5r0=;
+	b=LErwVvDDEfaH1HXQzC0nre/imu2fsub+G4HXeYRQhrMPda1O6oaSoqPfpml8Hs0c4g1H
+	 p2p0C/p9wgYr+rWqm9OdAJKB2md55O17dfY6r0wkH1N1nSvh+YHiUmm0TBXSkd9a3LHR8
+	 LOQ203YBvA1S9gdwC0ThZ1KSzdhOU8r/eutBgy/V/9beLnmFm0PcYAKiSQeEHijGQzB+c
+	 ZGM57KnBkzWQrGm+QhTcqb19AUVj0F3Pfw6kbI4+3mo52VWG2z49ldgH+jCJwo3Dqmkxd
+	 AMTD78dpUPvlmG8wNl1fMNWZt4P6ojioa0ZfDzYIy1S7JcKaK1EeN8/32AUap0bUF7w==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=p4k72OYh;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=n5JGrIQC;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CD08D606A32C;
-	Wed, 25 Nov 2026 15:46:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4098F606A321;
+	Wed, 25 Nov 2026 15:46:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=p4k72OYh
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 21C261F000D3;
-	Wed, 25 Nov 2026 15:46:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=n5JGrIQC
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 894441F00A00;
+	Wed, 25 Nov 2026 15:46:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795621580;
-	bh=TzaeM/lVTg5dcDxrX4AU67Dj9Vo88K8gR/G/nxIaj0M=;
+	s=korg; t=1795621584;
+	bh=p72vMn5nwrs4bCq5rknZ4QV2WK1N84csIu1mpDQj5r0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=p4k72OYhWpSkA/JquWr2ShkNaaxyXYDV8t8mjqWaObxLN8jQ1oW/ma5P9x+JF/Ak+
-	 gRYRgmsH0XyslQAb7hRUvJAjYcH0xu6tNYLcMYJpIHj6twtqv+JZGva6HxUWrDrZrs
-	 4+MFh4D95FoGhU3Ja0IwD0CmLFqYhh+hKkjfMm+0=
+	b=n5JGrIQC5hO/l9Fd2Fejb9xiSt0g8XbkXu+y56j2PUC9FBNhR8B4oK3La5dhEdx4J
+	 lNoinbQhHP/kuwhtbCB3qK/ooHe9H/mndIdNdeSswbJavMt5ZwqkT9ey46Oj2wFIf+
+	 n28h1Er32opHgm6r/acraS9vL64Q1G3zFzVOd2L8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Rosen Penev <rosenp@gmail.com>,
+	Munique Feitoza <muniquefeitoz4@gmail.com>,
 	Dave Airlie <airlied@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 272/990] drm/nouveau/fifo: map Kepler video engine contexts non-privileged
-Date: Wed, 25 Nov 2026 15:27:19 +0100
-Message-ID: <20261125143828.462458443@linuxfoundation.org>
+Subject: [PATCH 6.18 273/990] drm/nouveau: Fix CE channel creation on pre-Kepler GPUs
+Date: Wed, 25 Nov 2026 15:27:20 +0100
+Message-ID: <20261125143828.484464321@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143822.072087159@linuxfoundation.org>
 References: <20261125143822.072087159@linuxfoundation.org>
@@ -68,58 +68,60 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Rosen Penev <rosenp@gmail.com>
+From: Munique Feitoza <muniquefeitoz4@gmail.com>
 
-[ Upstream commit 0820004c342af7ca1b01d0b21e0d5d99ad5c10eb ]
+[ Upstream commit a2b7b707d75e605d31fb3d85a6b27f8bb2a01413 ]
 
-Since the engine context rework, gk104_ectx_ctor() maps every engine
-context into the channel's VMM as a privileged page.  The MSVLD,
-MSPDEC and MSPPP falcons on Kepler fetch their context with
-non-privileged requests, so the first method sent to any of them
-faults and the channel is killed:
+Commit 04e0481526e3 ("nouveau/dmem: Fix privileged error in copy engine
+channel") changed nouveau_accel_ce_init() to unconditionally request a
+privileged channel (priv = true) when calling nouveau_channel_new().
 
-  fifo: fault 00 [READ] at 0000000001050000 engine 10 [MSVLD] client 0d [HUB/MSVLD] reason 05 [PRIV_VIOLATION] on channel 9
-  fifo: fault 00 [READ] at 0000000001051000 engine 14 [MSPDEC] client 0b [HUB/MSPDEC] reason 05 [PRIV_VIOLATION] on channel 10
-  fifo: fault 00 [READ] at 0000000001052000 engine 11 [MSPPP] client 0c [HUB/MSPPP] reason 05 [PRIV_VIOLATION] on channel 11
+However, privileged channels (func->ramfc->priv) are only supported on
+Kepler (gk104_chan_ramfc) and newer FIFO implementations. On pre-Kepler
+GPUs that expose a Copy Engine runlist, func->ramfc->priv is false,
+which causes nvkm_chan_new_() to reject the channel creation with
+-EINVAL:
 
-Before the rework, gk104_fifo_gpfifo_engine_ctor() mapped engine
-contexts without the privileged bit.  Restore that for the three video
-engines, and keep the privileged mapping for everything else.
+  nouveau 0000:01:00.0: DRM: failed to create ce channel, -22
 
-Fixes: 8ab849d6dd4c ("drm/nouveau/fifo: add new engine context handling")
-Signed-off-by: Rosen Penev <rosenp@gmail.com>
+Only request a privileged CE channel when device->info.family >=
+NV_DEVICE_INFO_V0_KEPLER.
+
+Fixes: 04e0481526e3 ("nouveau/dmem: Fix privileged error in copy engine channel")
+Signed-off-by: Munique Feitoza <muniquefeitoz4@gmail.com>
 Reviewed-by: Dave Airlie <airlied@redhat.com>
 Signed-off-by: Dave Airlie <airlied@redhat.com>
-Link: https://patch.msgid.link/20261103221529.585436-1-rosenp@gmail.com
+Link: https://patch.msgid.link/20261030202809.28723-1-muniquefeitoz4@gmail.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/nouveau/nvkm/engine/fifo/gk104.c | 13 +++++++++++++
- 1 file changed, 13 insertions(+)
+ drivers/gpu/drm/nouveau/nouveau_drm.c | 7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/nouveau/nvkm/engine/fifo/gk104.c b/drivers/gpu/drm/nouveau/nvkm/engine/fifo/gk104.c
-index 5655eda52a7b5..912eb6c3a13d4 100644
---- a/drivers/gpu/drm/nouveau/nvkm/engine/fifo/gk104.c
-+++ b/drivers/gpu/drm/nouveau/nvkm/engine/fifo/gk104.c
-@@ -180,6 +180,19 @@ gk104_ectx_ctor(struct nvkm_engn *engn, struct nvkm_vctx *vctx)
- 	struct gf100_vmm_map_v0 args = { .priv = 1 };
- 	int ret;
+diff --git a/drivers/gpu/drm/nouveau/nouveau_drm.c b/drivers/gpu/drm/nouveau/nouveau_drm.c
+index d05da2db94a44..d4fe0e4f07985 100644
+--- a/drivers/gpu/drm/nouveau/nouveau_drm.c
++++ b/drivers/gpu/drm/nouveau/nouveau_drm.c
+@@ -336,6 +336,7 @@ static void
+ nouveau_accel_ce_init(struct nouveau_drm *drm)
+ {
+ 	struct nvif_device *device = &drm->client.device;
++	bool priv;
+ 	u64 runm;
+ 	int ret = 0;
  
-+	/* The video falcons access their context with non-privileged
-+	 * requests, and fault with PRIV_VIOLATION on a privileged mapping.
-+	 */
-+	switch (engn->engine->subdev.type) {
-+	case NVKM_ENGINE_MSVLD:
-+	case NVKM_ENGINE_MSPDEC:
-+	case NVKM_ENGINE_MSPPP:
-+		args.priv = 0;
-+		break;
-+	default:
-+		break;
-+	}
+@@ -348,7 +349,11 @@ nouveau_accel_ce_init(struct nouveau_drm *drm)
+ 		return;
+ 	}
+ 
+-	ret = nouveau_channel_new(&drm->client, true, runm, NvDmaFB, NvDmaTT, &drm->cechan);
++	/* priv copy engine only works on kepler and newer. */
++	priv = device->info.family >= NV_DEVICE_INFO_V0_KEPLER;
 +
- 	ret = nvkm_vmm_get(vctx->vmm, 12, vctx->inst->size, &vctx->vma);
++	ret = nouveau_channel_new(&drm->client, priv, runm, NvDmaFB, NvDmaTT,
++				  &drm->cechan);
  	if (ret)
- 		return ret;
+ 		NV_ERROR(drm, "failed to create ce channel, %d\n", ret);
+ }
 -- 
 2.53.0
 
