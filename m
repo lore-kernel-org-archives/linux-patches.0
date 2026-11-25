@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795621055;
-	b=Z1zhoSK3Maa9WoZAboPdp7tJ3vo49EOfcMdfzXwUhaVrKabcQmaTeIf0x0EdysQPcg9k
-	 +LGES+faT1bsO9+TdSIzep3OD8rUnSBBavOOCKyGJAEEGhhxzoMkDTaFTAJIG58xkP+uE
-	 JAGxsZ0zM1mYK7Uhpf31EAs8a4UkSmI+s9A5J1+wBtgPHDX+E6N731K10UVKLtSVJXPjY
-	 c225P0dUEayVC0NkN86w4Mkyl37pEgsrjUj0S1OPFCbmIbCETeYCocezJWmu7vzWN4QRu
-	 LDymWHZE2+2YhdOaBcKPEvs6Tk/32kNFHFDvp9Rybh8nZGUNfCnYy0Cffg9P6ZtGsdg==
+	t=1795621058;
+	b=af+eQq97s6tFlJEqhh5+O3QstGS0DVz9EnWruNlsVOY7wMPF1pdCsvJzg5S/lE/pQHsU
+	 Dt+P5jPk2DLBE9WtATZ+jikRNxlJrVhFOfxHb/16eqA1rhGDZOHun2adDsUKK4ef37DNK
+	 UWQmn46IUjFhpbzU7byuz0kHkplWdUO/KzekoOdO/Fl5IeQfgGgzWowZedLOdUCzLdCmJ
+	 Y0YHJKh4VqYBHSzm6nfPSPXvYgn/BeUpZ8kEGTJeU5GbgTkwFWbdXashu0C8mKmgG6oUQ
+	 PjyBT+A2KxT9qlUuVN8fEnAB1xpPi5kzm8FKNexzga7GrD6nbL/j+s6GEDszWvC+BWQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795621055;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795621058;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=NK07AabU1HqglQiNAAr67HJiADxWxGEo2/MSRavjdUs=;
-	b=HvE+HZ0S/NWu8NY3/Qs6UpIov3F5aJ0de8GmViJJ1TtDA3rGTG2pCancC8LNmks/8VTg
-	 GM9OSD8JxbX2pdaQCQwD/u5JwQrxlunU6lKhk1JjId2XOFI7JnNoJVJPdSzprsPMJSaaz
-	 WfIYVUT8fs8by50ARqj1MgTXy5t0Jd2mrFfjoNI/fDqi9WFitDM4c0CoW0xCiHamduOG7
-	 oWbM6iwIWG+8Ji41eiRkuB1CgAqXdgdtTgTykeGjFx53DOzy5b/5+Zo0MPl3oO9ER2SM9
-	 LfJCbyaz/3kq/cyDwquu2cHpwZdMCVr25sXOtKlJSf/qhuktnlJ/NZdmWQ/dp30bqZQ==
+	bh=Z9WOnTNxcBWgigALNekcolo+hF6olphcIfI0SuR1zp8=;
+	b=KmeA10ZJriv+cPWhlE2+Jdr/qQTSKq8I/eBKaRfau+moMf+dPS9u4/qIUsw8GL9P4C/g
+	 TYRY6ufIrOcDjeG81fNssCo3qk4sWcqE6jf0rxw4k3lTnLhGh1mb9gas6cbG7jY9u/TID
+	 vk5n6g1q7mQXMdnfhiy798ktU+l1TuE5V2TdR4DTF9/iBQaVKmPfQz0mD+yIXmbwe8/BQ
+	 mWqKOdEq9naQGrkZBFbbIskD5i5uO/qzHQhW76BSzRjya9YSRkbX3LhAD338tlcRoGISQ
+	 AAF//K7MWkwCGT/Pyc90siN7Ucgy0w6i+chGtrQ2kkTSx+5GHRcWu4quMlLXvYGjGOg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=G2qEMaHW;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ELQDd5iY;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 67AA8606A32C;
-	Wed, 25 Nov 2026 15:37:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 59DBF606A333;
+	Wed, 25 Nov 2026 15:37:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=G2qEMaHW
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 321A81F000C6;
-	Wed, 25 Nov 2026 15:37:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ELQDd5iY
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6D4BD1F000C6;
+	Wed, 25 Nov 2026 15:37:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795621054;
-	bh=NK07AabU1HqglQiNAAr67HJiADxWxGEo2/MSRavjdUs=;
+	s=korg; t=1795621058;
+	bh=Z9WOnTNxcBWgigALNekcolo+hF6olphcIfI0SuR1zp8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=G2qEMaHWyKNJ3c6GKTDwreq44bTahw8OGcalkMb5kqiHy8q7UuSm4P1+ndIbwN1A8
-	 AoAxX34yzF9GnRlQ9aXANqg/prD9o4Pb6xSc3TDccTuv9n8aRHTqR9DkgOGhIsdGoi
-	 QZpFIoEjoWCTtTsfINHCqIO1lsNIKQ/vIOROXPqo=
+	b=ELQDd5iYkzf6WkSto8SE2fODDQlXu//fURFMUMArdYXjoGEyjuX6XOnRqZRpHshbe
+	 K3Ib4zp43o7EiDZsBulilY2eFrlZpfFkrG5aHn1oVIxwk6/Ke04H7oG/K4gCEBffsl
+	 IvHiv1tNrGCer9sxzUG9qyRssqhGb55Kx66O8nns=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jiakai Xu <xujiakai24@mails.ucas.ac.cn>,
-	Tung Nguyen <tung.quang.nguyen@est.tech>,
+	Thomas Fourier <fourier.thomas@gmail.com>,
+	Alex Elder <elder@riscstar.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 104/990] tipc: reject attaching bearer of different media to the same occupied device
-Date: Wed, 25 Nov 2026 15:24:31 +0100
-Message-ID: <20261125143824.524373416@linuxfoundation.org>
+Subject: [PATCH 6.18 105/990] net: ipa: Fix double free of the interrupt structure on config error
+Date: Wed, 25 Nov 2026 15:24:32 +0100
+Message-ID: <20261125143824.549118733@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143822.072087159@linuxfoundation.org>
 References: <20261125143822.072087159@linuxfoundation.org>
@@ -69,94 +69,76 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Tung Nguyen <tung.quang.nguyen@est.tech>
+From: Thomas Fourier <fourier.thomas@gmail.com>
 
-[ Upstream commit 0a0257228be902ff09608bcaf19ae7c6d58b028f ]
+[ Upstream commit cb284914e749388eef402938bdb3115fe1f6d337 ]
 
-Currently, two bearers of different media types can be added to the
-same device (e.g., "eth:eth0" and "ib:eth0") via tipc command:
+Since ipa_interrupt_init() allocates struct ipa_interrupt in ipa_probe(),
+the structure is owned by ipa_probe() and released with
+ipa_interrupt_exit() on its error paths and in ipa_remove().  The error
+path of ipa_interrupt_config() still frees it with kfree().  If
+ipa_interrupt_config() fails (called from ipa_config() via ipa_setup()),
+ipa_probe() unwinds through err_interrupt_exit, which frees the same
+structure again.
 
-tipc bearer enable media eth dev eth0
-tipc bearer enable media ib dev eth0
+Drop the kfree() from ipa_interrupt_config(); it should only undo what it
+set up itself. Drop the leftover initialization and cleanup of
+ipa->interrupt now managed in ipa_proble() and ipa_remove() of ipa_main.c.
 
-For each command execution, tipc_enable_l2_media() is called:
-
-tipc_enable_l2_media()
- dev_get_by_name()
-  dev_hold()
-
-As a result, device->dev_refcnt is incremented twice, but the second
-bearer replaces the first one. This causes a leak in device->dev_refcnt.
-
-Fix this by rejecting a bearer with a different media type when the
-device is already occupied.
-
-Fixes: cb30a63384bc ("tipc: refactor function tipc_enable_bearer()")
-Reported-by: Jiakai Xu <xujiakai24@mails.ucas.ac.cn>
-Closes: http://lore.kernel.org/netdev/20260918013509.1853952-1-xujiakai24@mails.ucas.ac.cn/
-Signed-off-by: Tung Nguyen <tung.quang.nguyen@est.tech>
-Link: https://patch.msgid.link/20261029030522.8306-1-tung.quang.nguyen@est.tech
+Fixes: ad1be80d7582 ("net: ipa: introduce ipa_interrupt_init()")
+Signed-off-by: Thomas Fourier <fourier.thomas@gmail.com>
+Reviewed-by: Alex Elder <elder@riscstar.com>
+Link: https://patch.msgid.link/20261029082100.17722-2-fourier.thomas@gmail.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/tipc/bearer.c | 33 +++++++++++++++++++++++++++++++++
- 1 file changed, 33 insertions(+)
+ drivers/net/ipa/ipa_interrupt.c | 12 ++----------
+ 1 file changed, 2 insertions(+), 10 deletions(-)
 
-diff --git a/net/tipc/bearer.c b/net/tipc/bearer.c
-index 24dcb8aa32330..e057d0c6786c4 100644
---- a/net/tipc/bearer.c
-+++ b/net/tipc/bearer.c
-@@ -285,17 +285,50 @@ static int tipc_enable_bearer(struct net *net, const char *name,
- 	bearer_id = MAX_BEARERS;
- 	i = MAX_BEARERS;
- 	while (i-- != 0) {
-+		struct net_device *dev;
-+
- 		b = rtnl_dereference(tn->bearer_list[i]);
- 		if (!b) {
- 			bearer_id = i;
- 			continue;
- 		}
- 		if (!strcmp(name, b->name)) {
-+duplicate:
- 			errstr = "already enabled";
- 			NL_SET_ERR_MSG(extack, "Already enabled");
- 			goto rejected;
- 		}
+diff --git a/drivers/net/ipa/ipa_interrupt.c b/drivers/net/ipa/ipa_interrupt.c
+index 245a069970556..dc5315ce31d32 100644
+--- a/drivers/net/ipa/ipa_interrupt.c
++++ b/drivers/net/ipa/ipa_interrupt.c
+@@ -261,10 +261,8 @@ int ipa_interrupt_config(struct ipa *ipa)
+ 	interrupt->enabled = 0;
+ 	interrupt->suspend_enabled = bitmap_zalloc(ipa->endpoint_count,
+ 						   GFP_KERNEL);
+-	if (!interrupt->suspend_enabled) {
+-		ret = -ENOMEM;
+-		goto err_kfree;
+-	}
++	if (!interrupt->suspend_enabled)
++		return -ENOMEM;
  
-+		/* udp media can be used together with any media */
-+		if (b->media->type_id == TIPC_MEDIA_TYPE_UDP ||
-+		    m->type_id == TIPC_MEDIA_TYPE_UDP)
-+			goto priority;
-+
-+		dev = __dev_get_by_name(net, b_names.if_name);
-+
-+		if (!dev) {
-+			res = -ENODEV;
-+			errstr = "no device for the media";
-+			NL_SET_ERR_MSG(extack, "No device for the media");
-+			goto rejected;
-+		}
-+
-+		if (rtnl_dereference(b->media_ptr) == dev) {
-+			char *dev_name = strchr((const char *)b->name, ':') + 1;
-+
-+			/* Not allow altname of occupied device */
-+			if (strcmp(dev_name, b_names.if_name) &&
-+			    b->media->type_id == m->type_id)
-+				goto duplicate;
-+
-+			/* Not allow eth and ib to attach to the same device */
-+			errstr = "same dev for different media";
-+			NL_SET_ERR_MSG(extack,
-+				       "Same dev for different media");
-+			goto rejected;
-+		}
-+
-+priority:
- 		if (b->priority == prio &&
- 		    (++with_this_prio > 2)) {
- 			pr_warn("Bearer <%s>: already 2 bearers with priority %u\n",
+ 	/* Disable IPA interrupt types */
+ 	reg = ipa_reg(ipa, IPA_IRQ_EN);
+@@ -290,8 +288,6 @@ int ipa_interrupt_config(struct ipa *ipa)
+ 		goto err_disable_wakeup;
+ 	}
+ 
+-	ipa->interrupt = interrupt;
+-
+ 	return 0;
+ 
+ err_disable_wakeup:
+@@ -300,8 +296,6 @@ int ipa_interrupt_config(struct ipa *ipa)
+ 	free_irq(interrupt->irq, interrupt);
+ err_free_bitmap:
+ 	bitmap_free(interrupt->suspend_enabled);
+-err_kfree:
+-	kfree(interrupt);
+ 
+ 	return ret;
+ }
+@@ -312,8 +306,6 @@ void ipa_interrupt_deconfig(struct ipa *ipa)
+ 	struct ipa_interrupt *interrupt = ipa->interrupt;
+ 	struct device *dev = ipa->dev;
+ 
+-	ipa->interrupt = NULL;
+-
+ 	dev_pm_clear_wake_irq(dev);
+ 	(void)device_init_wakeup(dev, false);
+ 	free_irq(interrupt->irq, interrupt);
 -- 
 2.53.0
 
