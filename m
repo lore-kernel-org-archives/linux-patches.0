@@ -1,50 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795623500;
-	b=AekaGDv9aHUr4fgEtLL5cvYMOhDScVcIQYITGQpn8MmDn53etOoLMv8wGkj4extBnhQe
-	 9ciZ/lVENmHUx6Ac8u51hJ85gNkla+GwFbb6OP5x3PZMop0orv/TzvOL78D3aGU9gWnAD
-	 dSDcnthbSJ9nLSEhiHjqJrr+Ii87SLbB1+J/L49QxfDWEpKOSyX/+T9dxdJeyUZG65//R
-	 IGCz7uHXci0xtcuItOKONglZJsPRS/+5nt8IfUM3MCG1YcpCDGq2Nzo0agwETQ4HZOFxA
-	 uWrDokDBvo1yjdRFHKAvBSMvhimKXsw8xo0X//KMC1cixJ8LQlcUDa8M7OUCrUT8Izg==
+	t=1795623503;
+	b=iw+MXk5mZ9kY7lIRN9iaOTMiOm7+5cerWZUgwKaCD9J1wojrnLnxfCN61u315pTHmoDu
+	 Mtbbknekk82aqqshufgE5TRfuV78BceRV0bCPHR/QZbtsgZU0dsVGzZafzCzCeB3z7u8f
+	 9+Y0DiV6T1VNHchn2SfCnYhdXtB1U65HVAg6ywZFChcQh0EH80TimYya7bTBq2fip1wlS
+	 +CsUUOyDPmYmCBAPiik5HEYRPApykvyfN2v1l1LEEtH+8NJfUfmc6aJ6MhH+4ZJPQskMJ
+	 xk7cyB9uioO0vBX4HjQw0VB/Q2gY8I6IlJCWYS1lLi441ia1L9zlkUG2Ncm/cQ0cqzQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795623500;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795623503;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=V8sXjnhD3tL2V4wPP35if+Mq46qtoMaHrzmqWatXd3I=;
-	b=KWypFVUBlGdLVnWh8VoOeQJD7Z/LcXUKZrIJmpfXNMKAc8or7ykOdK+ecHP58Qd8758q
-	 nRxLTWGkNDsF1f0cV3WxShmPmHKlCovazfnV5NzS85kn5EjennR8W7Dd9hzYRibncOViw
-	 3SjP/Lzf8vwF65/At1+oH3XUJduKnY1OVYLHo+mRM3BpBUfguRZisXj3S7uocri9VyHCi
-	 SFsmYHwHFFeh2mZb05pERNroYkuLCvC28FMh7Es+sryUTbhBbleu1A0X/1O4JfEYB8rWY
-	 fg1fbkXrB/xyM3EmnYgMZZzFd9QevFqjWw6wp4Jnv7o73PNHXtiAJ96sQMi8D3O3J/A==
+	bh=nXmGzzxnCS22f+ercaHbmUvzlyltd0jr7J80VQksKYs=;
+	b=Jl/ysipecLPIScO4uHI7pp6GFXCt73J399HhTAM360eSp368tNy5AhY3LIkzDrTYbQsc
+	 ncNJR7h8ktRsbAtPYKcRkOKGd2v2J/YP5k+YFJlkqW5h1s51/f8TAdKPY1emkmHh11ijZ
+	 nEYclyuGRT/ytfByz1qEvTJmK0JcdhQGBcO6R1lKqxCEfE8WIPGUxJeLCFrugThiNeHqO
+	 nWJfNd/CIwCV++GgBwqmJC1emjIROezi/lJh0jWqDooo+1Nf9g2MOZoJkPKa+FJJyp5mz
+	 OdFe95cOJWqtb3pbWLts4M5+viRxBfs/5+n5pAZErk8BM/n+uyOGS/ufmVo4CdCBpvA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=GZOdXbY5;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=nF5jdQJc;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 56595606A31E;
-	Wed, 25 Nov 2026 16:18:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2D338606A321;
+	Wed, 25 Nov 2026 16:18:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=GZOdXbY5
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 83A341F000D0;
-	Wed, 25 Nov 2026 16:18:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=nF5jdQJc
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7F1041F000C4;
+	Wed, 25 Nov 2026 16:18:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795623500;
-	bh=V8sXjnhD3tL2V4wPP35if+Mq46qtoMaHrzmqWatXd3I=;
+	s=korg; t=1795623503;
+	bh=nXmGzzxnCS22f+ercaHbmUvzlyltd0jr7J80VQksKYs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=GZOdXbY5B71FmrMRZPlQSG74LKylH69jDInx//LMLTpWuJW7ahRfy3fyXFKudoLZb
-	 1+WWVClttuWrMw7lmGkDARMu5Cr+XTaWA+B3QxCTJbJDa9j9JSCI3o+kQE9UHZD3n+
-	 rMZvA7IFvRmB5aC9fZH1L6yG4TW+IvC2se6DR08c=
+	b=nF5jdQJcAoPpltwPSsXVso/kPEwBrSjcGS/qK1+fm/QkAxNwf4lulLfFl5TWgI7tC
+	 ZgQhi1Iz2b5zjMNPVZxdwv1mRiYbPsswQU3aZNuYPuwcBUcIgnPqF+bERGFm6QeogW
+	 hZPw6JnKFliXxwgzFTHOwTpcChTlgzTG/nfxGxwM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mikulas Patocka <mpatocka@redhat.com>
-Subject: [PATCH 6.18 878/990] dm-thin: fix data corruption if discard races with regular I/O
-Date: Wed, 25 Nov 2026 15:37:25 +0100
-Message-ID: <20261125143842.583495688@linuxfoundation.org>
+	Namjae Jeon <linkinjeon@kernel.org>,
+	Yifan Zhang <yfzhang23@stu.pku.edu.cn>,
+	Paulo Alcantara <pc@manguebit.org>
+Subject: [PATCH 6.18 836/990] smb: client: bound invalid NTLMSSP signature diagnostic
+Date: Wed, 25 Nov 2026 15:36:43 +0100
+Message-ID: <20261125143841.613566830@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143822.072087159@linuxfoundation.org>
 References: <20261125143822.072087159@linuxfoundation.org>
@@ -66,39 +68,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mikulas Patocka <mpatocka@redhat.com>
+From: Yifan Zhang <yfzhang23@stu.pku.edu.cn>
 
-commit 62ee9c09366cad69410330087d990e469dd92314 upstream.
+commit 0584b02669c3e76188097174b4f25ed13723e94c upstream.
 
-In the function break_up_discard_bio, if a discard hits the same block as
-regular I/O, it was intended to skip the discard for the affected range.
-However, the skip code only advances "data_begin", it doesn't advance
-"virt_begin". So, the data_begin and virt_begin variables become
-unsynchronized.
+The NTLMSSP Signature field is an eight-byte binary value and need not be
+NUL-terminated. decode_ntlmssp_challenge() prints it with %s on the
+signature-mismatch path, so the diagnostic can continue beyond the received
+blob until it encounters a zero byte.
 
-process_prepared_discard_passdown_pt1 calculates "data_end =
-m->data_block + (m->virt_end - m->virt_begin);" - if m->data_block is
-incremented and m->virt_begin isn't, it will overshoot the intended
-discard range.
+KASAN reports:
 
+  BUG: KASAN: slab-out-of-bounds in string
+  Read of size 1
+  string
+  vsnprintf
+  _printk
+  decode_ntlmssp_challenge
+
+Print the fixed-width field with the bounded hexadecimal format.
+
+The patched kernel reaches the invalid-signature path and returns -EINVAL
+without a KASAN report.
+
+Fixes: 0b3cc858003b ("[CIFS] NTLMSSP reenabled after move from connect.c to sess.c")
+Reviewed-by: Namjae Jeon <linkinjeon@kernel.org>
+Signed-off-by: Yifan Zhang <yfzhang23@stu.pku.edu.cn>
 Cc: stable@vger.kernel.org
-Fixes: e2dd8aca2d76 ("dm bio prison v1: improve concurrent IO performance")
-Signed-off-by: Mikulas Patocka <mpatocka@redhat.com>
-Assisted-by: Claude:claude-opus-5
+Signed-off-by: Paulo Alcantara <pc@manguebit.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/md/dm-thin.c |    1 +
- 1 file changed, 1 insertion(+)
+ fs/smb/client/sess.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/drivers/md/dm-thin.c
-+++ b/drivers/md/dm-thin.c
-@@ -1705,6 +1705,7 @@ static void break_up_discard_bio(struct
- 			(void) build_key(tc->td, PHYSICAL, data_begin, data_begin + len, &data_key);
- 			if (bio_detain(tc->pool, &data_key, NULL, &data_cell)) {
- 				/* contention, we'll give up with this range */
-+				virt_begin += len;
- 				data_begin += len;
- 				continue;
- 			}
+--- a/fs/smb/client/sess.c
++++ b/fs/smb/client/sess.c
+@@ -934,8 +934,8 @@ int decode_ntlmssp_challenge(char *bcc_p
+ 	}
+ 
+ 	if (memcmp(pblob->Signature, "NTLMSSP", 8)) {
+-		cifs_dbg(VFS, "blob signature incorrect %s\n",
+-			 pblob->Signature);
++		cifs_dbg(VFS, "%s: blob signature incorrect: %8phN\n",
++			 __func__, pblob->Signature);
+ 		return -EINVAL;
+ 	}
+ 	if (pblob->MessageType != NtLmChallenge) {
 
 
