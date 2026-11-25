@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795619960;
-	b=aetZw0XNsokQgABxU1+HHcP/OLNC25QUH3FPhCY6UJvarEfsMQsqLfVGlA9dhQfQeceY
-	 cofVgMHw7+RXM8UbXmH6ellG0NgRJfqbpH8dTJ5viNfEK11NrP3944fR8m5y1EnvzW3a6
-	 RiNZwDBhXtiRhvQScV9/TJVgrA2ew5XyYfXxgNK3rcO4U1K3LLne8kSYaDwLUBwB6NH4j
-	 GfXtImK/2ZjKPRSRm+wZzr4J3ilD0bjeYpHtAsldOiKpXJJgxwpc97KY/pt9CheS3eMdL
-	 nSApU/KYO89+ppTVUkU/oxYbpDkfBhKUHcPS/QwwA0tIXY6f1QzANsaC9ouovvW+gcQ==
+	t=1795619964;
+	b=RSjAedpm54RSLvsSO8glA2dr0010WrWsoaeeHLl0THOAGhv0XX+65t4cpVafNg/NgCE/
+	 IWwZ7qGLhe+MRcHN1ubybokgn78fuC75nbqlGMwX4SK5mpjdt4mlca3wTIMcE3ryWkEz9
+	 4A8vAm4wOZS38f2+BwFUDf/q0OQAK3ofBvKKNqqFSl2wPF02OwSxAtcXcTEf7o09cPyWv
+	 8qI+PnKErDB0KYMyuWJ/Lr3DHf9wXFe+g4bUb1JqU/PZcT0t5P4zwIGN/8IAiuRkxUth8
+	 MNwi9kE+NreuQshpK+6a38qtdo+JLoRse7oG0s7NUzd+5YJBTrsiQP3wT/TJ0+WTw7w==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795619960;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795619964;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=Uh9Y7T1vGtibdWvtnbOaln7QzfodINE5LaxBpJ7gbNU=;
-	b=zKRMwkMkwPc7F7VB9IIfqbc0C3SH5qBIpUwzBQP6toQOoOpffjadxHdG3CiKS4U+wULz
-	 EmiDLx6TtmYHZiA63tgMAbsJ0f6sBk3dALHkjef9rDF0xR7jfXozPso2HCf5IdddBNFBb
-	 fkz8kSP+zMuvwUyojoouXRcuDhoM7vhJfSeo0V29ocYaw/qIUi860egN5jwR3JONKyDjm
-	 qGPoA8BP0qtHg39onzkO5TFbeYawSqUhk3Y8M7fIxZmoifSDNh119ZCLwhln4EUWBz0N6
-	 u4CJ7EHbUjJsc4pxLpS2VxlUeL72dZymLkAot4vsv2obt89UnQZHt5/1mmNkDJO9ymw==
+	bh=pYA5Y69mtm+QcSaYR9s0FuxUY7q5cXe8mT8TKWmtLr4=;
+	b=bITB4x1ogc2Zuy3WyTqwtgNKZOL5AuDDlzzMM67i/zGC9wF+RN6ixP5USN8SnkarTGi3
+	 fYKr73mbkcfRjxPobMx1ThH+5iCYyxsj25wXL6WH3k3Xy/OxZQV9qi6aBuaFGF+1/uge6
+	 PZ2055c98FleyngFqEcXsf/OeFdSiELkiYBWv7gnLH3EwoKzi/J+C6Xe3gjI6eMEJkrK1
+	 ZLiQrEVpBlXeqeX5glEGQGOgGoZlYGniSmSAYXwhiKKpJ5yGI8LH1h5hW43gMf5ZsptDH
+	 zwNbDVv+0Ky6ZMdOcbBSCaUIObAfLaYKIdOWH/xP9lb1+LttTgV3F9PyveqsqcFq2Fg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=pQaK9kl7;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=eLUeCoa7;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C9586606A321;
-	Wed, 25 Nov 2026 15:19:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0B436606A327;
+	Wed, 25 Nov 2026 15:19:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=pQaK9kl7
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 26BF21F000C0;
-	Wed, 25 Nov 2026 15:19:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=eLUeCoa7
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F1C5B1F000D0;
+	Wed, 25 Nov 2026 15:19:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795619960;
-	bh=Uh9Y7T1vGtibdWvtnbOaln7QzfodINE5LaxBpJ7gbNU=;
+	s=korg; t=1795619963;
+	bh=pYA5Y69mtm+QcSaYR9s0FuxUY7q5cXe8mT8TKWmtLr4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=pQaK9kl7qD/nsEiQZKgS09goyU9kcn+zDqzKsx9KZsPcY7iIljaKT5TBzKopUyb54
-	 PC8OwV3cy571Mvf/bw3nnbVlB6XyYhGMsf09h+w1rkQapNKBXngPzOsg4Q4mkxt1OA
-	 wTMrDtygmyTW9kc+WQD3dctV4JJD/eAtN3PxIw4g=
+	b=eLUeCoa7WBv/TiNFqHe3rEv05zf0q74Ix0B+gm3xz41Sf2tStgXjTigvtNhe9hTuu
+	 md1ofS4GiSNJ/QwnOjvR5HNCTvfmaRa+CZZiLxN/AzgCXPgV7gguH6yhQtjAi6HVZH
+	 i0zPepkAgisZFMUOfmavhQ5mZsx/K5R9HjoZnSZg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sashiko <sashiko-bot@kernel.org>,
-	Kuba Piecuch <jpiecuch@google.com>,
-	Andrea Righi <arighi@nvidia.com>,
-	Tejun Heo <tj@kernel.org>
-Subject: [PATCH 7.3 0763/1005] sched_ext: Read exit_kind before flushing in scx_flush_disable_work()
-Date: Wed, 25 Nov 2026 15:35:01 +0100
-Message-ID: <20261125143839.621188413@linuxfoundation.org>
+	Tim Budding <tim.budding@gmail.com>,
+	Xin Long <lucien.xin@gmail.com>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 7.3 0764/1005] sctp: abort unordered partial delivery when its message is skipped
+Date: Wed, 25 Nov 2026 15:35:02 +0100
+Message-ID: <20261125143839.644612859@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143821.729802100@linuxfoundation.org>
 References: <20261125143821.729802100@linuxfoundation.org>
@@ -69,81 +68,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kuba Piecuch <jpiecuch@google.com>
+From: Tim Budding <tim.budding@gmail.com>
 
-commit 3133107d98057595c0af39ff907c852134926912 upstream.
+commit 05852c8b70f2291a50bb3f740a66ce9caf9cb98d upstream.
 
-scx_disable_workfn() sets exit_kind to SCX_EXIT_DONE before it tears the
-scheduler down. scx_flush_disable_work() reads exit_kind after syncing
-disable_irq_work and flushing disable_work, so it can observe DONE from
-a disable_work that was queued after its flush and return while the
-teardown is still running:
+When an I-FORWARD-TSN skips unordered messages on a stream,
+sctp_intl_skip() only aborts the stream's unordered partial delivery if
+the MID being delivered is lower than the skipped MID. If the skipped
+message is the one being partially delivered, partial delivery stays in
+progress: no PARTIAL_DELIVERY_ABORTED is sent, and the next unordered
+message on the stream is delivered as the rest of the abandoned one.
 
-  CPU A                          CPU B
-  -----                          -----
-  scx_vexit()
-    scx_claim_exit() -> true
-                                 bpf_struct_ops_map_link_detach()
-                                   bpf_scx_unreg()
-                                     scx_disable()
-                                       scx_claim_exit() -> false
-                                     scx_flush_disable_work()
-                                       irq_work_sync()      // not queued
-                                       kthread_flush_work() // not queued
-    irq_work_queue()
-  scx_disable_irq_workfn()
-    kthread_queue_work()
-  scx_disable_workfn()
-    exit_kind = SCX_EXIT_DONE
-    scx_root_disable()
-                                       atomic_read() -> SCX_EXIT_DONE
-                                   bpf_map_put()
+Abort the partial delivery when the MID being delivered is at or below
+the skipped MID, as the ordered case already does.
 
-Once bpf_scx_unreg() returns, its caller drops the struct_ops map
-reference, and the struct_ops trampolines can be freed while
-scx_root_disable() is still running and can still call into the BPF
-scheduler, e.g. ops.exit().
+Reproduced on an unmodified kernel with the uo_pd test of the
+sctp_ifwdtsn.sh selftest added later in this series; its partial
+delivery checks pass with this fix. Reproduction and fix done with AI
+assistance.
 
-Read exit_kind before syncing and flushing, with acquire ordering paired
-with the atomic_try_cmpxchg() in scx_disable_workfn(). DONE is only set
-from disable_work, so once it is observed, the following
-kthread_flush_work() sees the queued work and waits for the teardown to
-finish.
-
-This patch was created with the help of an AI coding assistant.
-
-Fixes: d99f7a32f09d ("sched_ext: Fix scx_flush_disable_work() UAF race")
-Cc: stable@vger.kernel.org # v7.1+
-Reported-by: Sashiko <sashiko-bot@kernel.org>
-Closes: https://lore.kernel.org/all/sashiko-outbox-195908@kernel.org/
-Signed-off-by: Kuba Piecuch <jpiecuch@google.com>
-Reviewed-by: Andrea Righi <arighi@nvidia.com>
-Signed-off-by: Tejun Heo <tj@kernel.org>
+Fixes: de60fe910543 ("sctp: implement handle_ftsn for sctp_stream_interleave")
+Cc: stable@vger.kernel.org
+Signed-off-by: Tim Budding <tim.budding@gmail.com>
+Acked-by: Xin Long <lucien.xin@gmail.com>
+Link: https://patch.msgid.link/20261105050225.49292-2-tim.budding@gmail.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/sched/ext/ext.c |    9 ++++++++-
- 1 file changed, 8 insertions(+), 1 deletion(-)
+ net/sctp/stream_interleave.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/kernel/sched/ext/ext.c
-+++ b/kernel/sched/ext/ext.c
-@@ -7131,10 +7131,17 @@ void scx_flush_disable_work(struct scx_s
- {
- 	int kind;
+--- a/net/sctp/stream_interleave.c
++++ b/net/sctp/stream_interleave.c
+@@ -1255,7 +1255,7 @@ static void sctp_intl_skip(struct sctp_u
+ 	struct sctp_stream *stream  = &ulpq->asoc->stream;
  
-+	/*
-+	 * scx_disable_workfn() sets SCX_EXIT_DONE before tearing down. Read
-+	 * exit_kind with acquire ordering (paired with atomic_try_cmpxchg() in
-+	 * scx_disable_workfn()) before syncing and flushing so that, once DONE
-+	 * is seen, the following flush observes the queued work and waits for
-+	 * the teardown to finish.
-+	 */
- 	do {
-+		kind = atomic_read_acquire(&sch->exit_kind);
- 		irq_work_sync(&sch->disable_irq_work);
- 		kthread_flush_work(&sch->disable_work);
--		kind = atomic_read(&sch->exit_kind);
- 	} while (kind != SCX_EXIT_NONE && kind != SCX_EXIT_DONE);
- }
- 
+ 	if (flags & SCTP_FTSN_U_BIT) {
+-		if (sin->pd_mode_uo && MID_lt(sin->mid_uo, mid)) {
++		if (sin->pd_mode_uo && !MID_lt(mid, sin->mid_uo)) {
+ 			sin->pd_mode_uo = 0;
+ 			sctp_intl_stream_abort_pd(ulpq, sid, mid, 0x1,
+ 						  GFP_ATOMIC);
 
 
