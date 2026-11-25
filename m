@@ -1,55 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795625428;
-	b=bsZu0B+pB+MyWjXG/+YzcIjxG6z5AIQ+DVIyS3mjYrXtt1q5+IRYOW9FhBekIFIa9CPy
-	 0wuU9xMU5aGbsSLG3OW/8lSBxuqj0eX514qDXc3KVdo+I83exmS0LZLQBUzpIiI2CpfyP
-	 lrcixtoLqPofrbo8aDbIUUh6bsFvpFyk71lcC1h1p15knvrVVGyzFsmMadU+FP/ERwqpx
-	 U1nU/0uwGfVf6TOvc7KAKIqfaA1C0LZ8y4BHk01VmrW3qHqu3xurm4DSTjRiRnxw2/D+T
-	 LnZTjXTT1vLftF9Ayu147aHmorxg8oawoUXPOrkgZ542yB5Uj1QFxJc9slUJoXVOIWA==
+	t=1795625430;
+	b=mxbTzzGAq8iFp2xLBVT/WlUOiq32elXTPUw3gjGpquDhF3whiT6nGULPeGGRnp93BG66
+	 KuRnpzODRQ/KDGlBaBFrVIECAqi25IOmXque08SMi8AROkjzXk0Jtnv3E+ulPmbKwB4Xo
+	 GgsNTYx30DSyYTm6QroIfyCgd9kNefhl2EIm0oTsyPrfRwHPcH7pTlxM8qo1wv+nF5Vfn
+	 3Zyj5rB+F/MROgPyR2g9mOnm+u/KdhL8z4XVvyNvxSTwKtxVZryxE7oVrshNjhnUp4P1g
+	 Gf7fwMs5NgB3E6KI6ZvgXACr8BRA1lkFYVQ2MjaXNJNzwnRcitSE88iUGRus9aP8xcw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795625428;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795625430;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=bXVeD5SrgiWyV2c3X2pqFCRxdBlZwThBLOGGLj5akjg=;
-	b=n7m1JoRJg98VhOLxULv9ng3RQH+I4ddzR5tT1VI+PlgksRscoXeU9TaDU8REvBCCCcZt
-	 yRCgmdufF52JutqiAU5vrAOizMBzyLwG7hM7eoRau53FH733ee9A5pAiQ6gCs5+MjeGFN
-	 ckjte3u0XBJkP/V68GNqNqwd6ElCwPtMElP4hM3P02mqqk88l+uky43w53l2Wbf/Fa5ID
-	 DzljyvQ1eICkcrPL/gSt5Cwa/FRbSVJUsOezYoLW8suPT/YUnQeAhrd07JgEuxTj7zC0T
-	 zOBJLoY0aqbuT41PLQzf3EQeW1lMKubop4dEm65mVY6nJUeF0AR7ky73sTy8OFA3GrA==
+	bh=i2E++x7xDBV5fXuOxCfbRZWOx3bygB9vlpVPCqGqgA8=;
+	b=nMcdwKe1dkBK99p4ByXwtDnU+WV/gWIP5zCXTU2WiEN/g0/a96rdKO4rlYFZ+fdsuAm4
+	 fkSKTG/I2+OpmcbPa8q5TiFnxFjg6mmAGvlJZ1FZGl1Y2chbHJk9I/UQFizZllKiThj1i
+	 p5AVMyZF5i2Pe/1OjQWxhHHznE4bBuzw5gHxrcyF1MM2urHPlsL2wlq5upg/V3DAdT71x
+	 e000hDqkJicZj34C4DnSQD4Uxq2yQYJY8D56B82Ai+JfV+D4we2rydObSz5VtTuzUhbvY
+	 nWkQAWoprULd+/JoqiMVbuRr3JC2/y1w0PXonT2MPbrjTmZ03xqGn12tamAPPWIoCsg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=zlFwSRMj;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=oMRqMPJh;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0D3AD606A31E;
-	Wed, 25 Nov 2026 16:50:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D0777606A326;
+	Wed, 25 Nov 2026 16:50:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=zlFwSRMj
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 659491F000C4;
-	Wed, 25 Nov 2026 16:50:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=oMRqMPJh
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2DB9D1F000C6;
+	Wed, 25 Nov 2026 16:50:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795625427;
-	bh=bXVeD5SrgiWyV2c3X2pqFCRxdBlZwThBLOGGLj5akjg=;
+	s=korg; t=1795625430;
+	bh=i2E++x7xDBV5fXuOxCfbRZWOx3bygB9vlpVPCqGqgA8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=zlFwSRMjag/wdmP0R39FzTo7uqPyTHnd8aTRLnHhsUEyVXCO6Btj1zP+6IJEPhAH0
-	 9Z+VwZxo8zYQS4gSkLjgUoZO8qLkfxYarIedOe4aG01l+8ozaF8tZ3lYA0XB5xr2gz
-	 Fs1H5Hw43MBpP9+s7wLkYqTrFDprDsSR4v4SJrmI=
+	b=oMRqMPJh1iPwxBWKvVBPRgLs3YJ7rcK6x9sBIP+ZerEWWYx8XtKox/289j7UV8S+b
+	 Ipm1L+D80I4rWJaDkfpRLUkduNuS7eIdc7nuboNZTqeEypUxJ1t/5g1qUXifYQKwJZ
+	 ocOuuxsHTqX10ySBfasp4VLAxIh9/5FB750Bf/yE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Melissa Wen <mwen@igalia.com>,
-	Tvrtko Ursulin <tvrtko.ursulin@igalia.com>,
-	Dan Wheeler <daniel.wheeler@amd.com>,
-	Roman Li <roman.li@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
+	Dmitry Morgun <d.morgun@ispras.ru>,
+	Konstantin Komarov <almaz.alexandrovich@paragon-software.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 468/816] drm/amd/display: declare amdgpu_dm_atomic_state_template as an event class
-Date: Wed, 25 Nov 2026 15:33:36 +0100
-Message-ID: <20261125143900.034721031@linuxfoundation.org>
+Subject: [PATCH 6.12 469/816] fs/ntfs3: check return values in indx_delete_entry()
+Date: Wed, 25 Nov 2026 15:33:37 +0100
+Message-ID: <20261125143900.057525337@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143849.205329330@linuxfoundation.org>
 References: <20261125143849.205329330@linuxfoundation.org>
@@ -71,93 +68,63 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Melissa Wen <mwen@igalia.com>
+From: Dmitry Morgun <d.morgun@ispras.ru>
 
-[ Upstream commit 6c4f8c5cc00326f6c709bff0d640d504c90862ca ]
+[ Upstream commit 131f7d7abf0f10edc6ea6b032f8a3908bdb13ce8 ]
 
-Don't create an amdgpu_dm_atomic_state_template event since this is just
-a template. Declare the template as an event class that will be used by
-actual event tracers.
+When the index tree collapses down to an empty root,
+indx_delete_entry() calls attr_set_size() and ni_remove_attr() for
+both ATTR_ALLOC and ATTR_BITMAP, but their return values are
+overwritten by the following call without being checked.
 
-Fixes: e8a982355f96 ("drm/amd/display: Add tracepoint for amdgpu_dm")
-Signed-off-by: Melissa Wen <mwen@igalia.com>
-Reviewed-by: Tvrtko Ursulin <tvrtko.ursulin@igalia.com>
-Tested-by: Dan Wheeler <daniel.wheeler@amd.com>
-Reviewed-by: Roman Li <roman.li@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-[ sashal: Replaced struct drm_atomic_commit with the older struct drm_atomic_state in the TP_PROTO and the state field of the event class, because the type has not been renamed in this tree. ]
+In most other call sites of these functions the return value is
+checked, so add the same checks here in case an error at this point
+is meaningful.
+
+Found by Linux Verification Center (linuxtesting.org) with SVACE.
+
+Fixes: 82cae269cfa9 ("fs/ntfs3: Add initialization of super block")
+Signed-off-by: Dmitry Morgun <d.morgun@ispras.ru>
+Signed-off-by: Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
+[ sashal: adjusted the two attr_set_size() calls to pass an extra trailing NULL argument to match the older function signature. ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../amd/display/amdgpu_dm/amdgpu_dm_trace.h   | 56 +++++++++----------
- 1 file changed, 26 insertions(+), 30 deletions(-)
+ fs/ntfs3/index.c | 10 ++++++++++
+ 1 file changed, 10 insertions(+)
 
-diff --git a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_trace.h b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_trace.h
-index 113b04678dd37..2f97613a647fb 100644
---- a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_trace.h
-+++ b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_trace.h
-@@ -310,36 +310,32 @@ DEFINE_EVENT(amdgpu_dm_plane_state_template, amdgpu_dm_atomic_update_cursor,
- 	     TP_PROTO(const struct drm_plane_state *state),
- 	     TP_ARGS(state));
+diff --git a/fs/ntfs3/index.c b/fs/ntfs3/index.c
+index 97cbe176a83e5..88a5f336d9040 100644
+--- a/fs/ntfs3/index.c
++++ b/fs/ntfs3/index.c
+@@ -2691,18 +2691,28 @@ int indx_delete_entry(struct ntfs_index *indx, struct ntfs_inode *ni,
  
--TRACE_EVENT(amdgpu_dm_atomic_state_template,
--	    TP_PROTO(const struct drm_atomic_state *state),
--	    TP_ARGS(state),
--
--	    TP_STRUCT__entry(
--			     __field(const struct drm_atomic_state *, state)
--			     __field(bool, allow_modeset)
--			     __field(bool, legacy_cursor_update)
--			     __field(bool, async_update)
--			     __field(bool, duplicated)
--			     __field(int, num_connector)
--			     __field(int, num_private_objs)
--	    ),
--
--	    TP_fast_assign(
--			   __entry->state = state;
--			   __entry->allow_modeset = state->allow_modeset;
--			   __entry->legacy_cursor_update = state->legacy_cursor_update;
--			   __entry->async_update = state->async_update;
--			   __entry->duplicated = state->duplicated;
--			   __entry->num_connector = state->num_connector;
--			   __entry->num_private_objs = state->num_private_objs;
--	    ),
--
--	    TP_printk("state=%p allow_modeset=%d legacy_cursor_update=%d "
--		      "async_update=%d duplicated=%d num_connector=%d "
--		      "num_private_objs=%d",
--		      __entry->state, __entry->allow_modeset, __entry->legacy_cursor_update,
--		      __entry->async_update, __entry->duplicated, __entry->num_connector,
--		      __entry->num_private_objs)
-+DECLARE_EVENT_CLASS(amdgpu_dm_atomic_state_template,
-+		    TP_PROTO(const struct drm_atomic_state *state),
-+		    TP_ARGS(state),
-+		    TP_STRUCT__entry(__field(const struct drm_atomic_state *, state)
-+				     __field(bool, allow_modeset)
-+				     __field(bool, legacy_cursor_update)
-+				     __field(bool, async_update)
-+				     __field(bool, duplicated)
-+				     __field(int, num_connector)
-+				     __field(int, num_private_objs)
-+		    ),
-+		    TP_fast_assign(__entry->state = state;
-+				   __entry->allow_modeset = state->allow_modeset;
-+				   __entry->legacy_cursor_update = state->legacy_cursor_update;
-+				   __entry->async_update = state->async_update;
-+				   __entry->duplicated = state->duplicated;
-+				   __entry->num_connector = state->num_connector;
-+				   __entry->num_private_objs = state->num_private_objs;
-+		    ),
-+		    TP_printk("state=%p allow_modeset=%d legacy_cursor_update=%d "
-+			      "async_update=%d duplicated=%d num_connector=%d "
-+			      "num_private_objs=%d",
-+			      __entry->state, __entry->allow_modeset,
-+			      __entry->legacy_cursor_update, __entry->async_update,
-+			      __entry->duplicated, __entry->num_connector,
-+			      __entry->num_private_objs)
- );
+ 		err = attr_set_size(ni, ATTR_ALLOC, in->name, in->name_len,
+ 				    &indx->alloc_run, 0, NULL, false, NULL);
++		if (err)
++			goto out;
++
+ 		if (in->name == I30_NAME)
+ 			i_size_write(&ni->vfs_inode, 0);
  
- DEFINE_EVENT(amdgpu_dm_atomic_state_template, amdgpu_dm_atomic_commit_tail_begin,
+ 		err = ni_remove_attr(ni, ATTR_ALLOC, in->name, in->name_len,
+ 				     false, NULL);
+ 		run_close(&indx->alloc_run);
++		if (err)
++			goto out;
+ 
+ 		err = attr_set_size(ni, ATTR_BITMAP, in->name, in->name_len,
+ 				    &indx->bitmap_run, 0, NULL, false, NULL);
++		if (err)
++			goto out;
++
+ 		err = ni_remove_attr(ni, ATTR_BITMAP, in->name, in->name_len,
+ 				     false, NULL);
+ 		run_close(&indx->bitmap_run);
++		if (err)
++			goto out;
+ 
+ 		root = indx_get_root(indx, ni, &attr, &mi);
+ 		if (!root) {
 -- 
 2.53.0
 
