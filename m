@@ -1,53 +1,55 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795618754;
-	b=NuZ+ZqXuyLgbBAZICkf9AFRG8VT+F8AP96e2nhCTcMC5jxEqa2M7de2sQ47ZafHiQQ3K
-	 xSA+VLLLVI5aJIf1UKau9UN/CSlT3TZ/wZhaNuMbvdRYmA/DO2x9+l91tVexQfBTaA3KR
-	 pSdX/rshFvtHaIY8ZIDk0v2yy51MDJULSzZVEnLOG1y6tEhRArjNHDx7L1BEw8txK2MVx
-	 ZWySbGOxMDISnpjqT85nyxRuH7Nesq8U57xNAi4f1k2T34uSaIx1UOLzCQorKqhJw55sL
-	 phXoIlIaSYsjidReWcwDBJ4Mq/u6XawJHrQPDWvtebSsstAEaQLq+8k0GXMxUN0FHqw==
+	t=1795618758;
+	b=YAFmXboJZyWYsnc/iREx1HZNL17UfvrYl0UiaRvKYiTaotoUmhN6lu2FVgUiMJ7hr+wr
+	 donHSrdWCi4qNVCKxIC7nuBtrjqOAaCy2IflBVzEiBygiLGtxU4CuS4bhVetXSQtsEKIt
+	 iNFC7UyKyQkjzQy35cEYVU1xlBayGr7OyBC2ZARLUt4ThA/xQDNQhnddXW9RVJHrykiF3
+	 8ZETnmYCSAWaEgG18MAC6VPEX7/732v7MSxBvAynNuO29WhFmLZ4Bv3scbCjjqG4zzI1S
+	 fEhuQzzunS0m+jh/osft6bM0REaYgk1TIp5kI282hX0TbBZgcpj6RQ/HJZljh6LymXA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795618754;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795618758;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=EOwpkPKzV1zqlSFG3DIT5c8aJg9mtaRSpUx4HXIgI/s=;
-	b=VJuFXS3PlfbdOYer+SqErbPggXWVG6oSdXYBnazmPcI6HTDwBZvn0V5SjxvivLVdB3fj
-	 Rw7w0+FQYtcPLuHidLUXPqQP/yD5s6WX14+LoCwfutsFbv4IZA7MVGek5cYS2C1ErJbM/
-	 XHFziPSn89ci7MzLWz24lJJa0DUhogc89Ot0jXDweR7HbWqUpCLEH7ME7URYO+Ul34h2Y
-	 eOnXosUz8I14wzms9UuGTAVrHzTsqmLV6mFVxhRhdJjpLH2mRaITncPhYe20l0yr4Syy4
-	 zlx7SvRKvc9R2fybAQedZdWWoKGDvEcIWB7oR0jCjCdsayRDxA43tDdXXmQRavXTfeQ==
+	bh=d7Wngl4BV5BXV9hsvwagjOdGFU0gbV5qvmz5iO+4kh8=;
+	b=MeCEW1enqeT+7+qMKyLVCB45kjmbNDViYVOlOOQzVth5xTgUNMFhQoipQztfY19GGEIk
+	 3F61w03r7xZVjfwQEWwJjwQoL9OOiBflxeSDvK+cMYwhes7XU7WC/WsuCEeEzI09zGxjD
+	 j5y05d2FDQAC/k2QxBw+aCycjwCvcWvukOhRQ++BrrstHCAyrl1jX4RMKlkynFBGVgwM4
+	 i/gV0BhAnACO+wpFFlZYxvM0devyuE3QuFUFLTxKAiaivcOZ1OjeoIlSpGcQOvurRLh7i
+	 rJVNuJhuKiMbfd7M4WvwtdH+mcDpM/TkXEJl1uM8j+bwZOuYetlZXfNQc3dbwEhP+dA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=tf9Wo+PF;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=QgPSkWwP;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B5FDB606A321;
-	Wed, 25 Nov 2026 14:59:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 07E46606A321;
+	Wed, 25 Nov 2026 14:59:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=tf9Wo+PF
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C94C21F000D0;
-	Wed, 25 Nov 2026 14:59:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=QgPSkWwP
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DE2001F000D1;
+	Wed, 25 Nov 2026 14:59:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795618754;
-	bh=EOwpkPKzV1zqlSFG3DIT5c8aJg9mtaRSpUx4HXIgI/s=;
+	s=korg; t=1795618757;
+	bh=d7Wngl4BV5BXV9hsvwagjOdGFU0gbV5qvmz5iO+4kh8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=tf9Wo+PFeNk/0J9zDYIc26Jy4/uiXIt28WFTdc5QCVrfP5OsoHqYl/PwzmRM+6558
-	 ot2+RpBRwc0tWtEdGFD6PQPbDn4hlzTyOJy3GYlY9yw6RpFO22yo4KpvSIwDHPtl6N
-	 WV6ml/E+rmfqqL+AE4PUEUUuHllyTJ1FiwHfsslI=
+	b=QgPSkWwPHmVN6PmiqfVYgwmLyYo/odVuiVZ4H0eo4+JserFcqRZcqWx4mc1+qUo+i
+	 3zf6UmRFLVM15Dv8HlOdeIOb8e2jZgSwX8MbPR0BLKN3gKSyXmAYNI0kygSphUJY02
+	 GlWLf7o2cSqTNaxpHhCkKziaGCh2dYuajPW3KrBo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alan Previn <alan.previn.teres.alexis@intel.com>,
-	Julia Filipchuk <julia.filipchuk@intel.com>,
-	Rodrigo Vivi <rodrigo.vivi@intel.com>,
+	Dnyaneshwar Bhadane <dnyaneshwar.bhadane@intel.com>,
+	Mallesh Koujalagi <mallesh.koujalagi@intel.com>,
+	Matt Roper <matthew.d.roper@intel.com>,
+	Matthew Brost <matthew.brost@intel.com>,
+	Dave Airlie <airlied@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0379/1005] drm/xe/gsc: Define GSC for NVL-S
-Date: Wed, 25 Nov 2026 15:28:37 +0100
-Message-ID: <20261125143830.616173380@linuxfoundation.org>
+Subject: [PATCH 7.3 0380/1005] drm/xe/pat: Return error from xe_pat_init_early() on unknown platform
+Date: Wed, 25 Nov 2026 15:28:38 +0100
+Message-ID: <20261125143830.639335924@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143821.729802100@linuxfoundation.org>
 References: <20261125143821.729802100@linuxfoundation.org>
@@ -69,35 +71,100 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alan Previn <alan.previn.teres.alexis@intel.com>
+From: Dnyaneshwar Bhadane <dnyaneshwar.bhadane@intel.com>
 
-[ Upstream commit 8a90f0d1098f9a9019f1a076bd1ee4b6c7da7dbd ]
+[ Upstream commit 7539edbca32d63ce309f5e29cb9d595b0959466a ]
 
-NVL-S is identified by GSC major version 108.
-The compatibility version is 0.0.
+xe_pat_init_early() currently only logs an error when the platform's
+graphics version doesn't match any known PAT table, but continues
+probing with an uninitialized pat.ops. This can lead to a NULL
+pointer dereference later when pat.ops is used.
 
-Signed-off-by: Alan Previn <alan.previn.teres.alexis@intel.com>
-Reviewed-by: Julia Filipchuk <julia.filipchuk@intel.com>
-Link: https://patch.msgid.link/20260923183600.1186943-5-alan.previn.teres.alexis@intel.com
-Signed-off-by: Rodrigo Vivi <rodrigo.vivi@intel.com>
-Stable-dep-of: 7539edbca32d ("drm/xe/pat: Return error from xe_pat_init_early() on unknown platform")
+Change xe_pat_init_early() to return an int and propagate -ENODATA
+to xe_device_probe() so the driver fails to load cleanly instead of
+continuing in a broken state.
+
+Fixes: 152d7f2db978 ("drm/xe/pat: Handle unicast vs MCR PAT registers")
+Signed-off-by: Dnyaneshwar Bhadane <dnyaneshwar.bhadane@intel.com>
+Reviewed-by: Mallesh Koujalagi <mallesh.koujalagi@intel.com>
+Link: https://patch.msgid.link/20261012122522.2307625-8-dnyaneshwar.bhadane@intel.com
+Signed-off-by: Matt Roper <matthew.d.roper@intel.com>
+(cherry picked from commit e952337c3dbccf600ddae3bb1d38e996172ac8f8)
+Signed-off-by: Matthew Brost <matthew.brost@intel.com>
+Signed-off-by: Dave Airlie <airlied@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/xe/xe_uc_fw.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/gpu/drm/xe/xe_device.c |  4 +++-
+ drivers/gpu/drm/xe/xe_pat.c    | 11 ++++++++++-
+ drivers/gpu/drm/xe/xe_pat.h    |  4 +++-
+ 3 files changed, 16 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/gpu/drm/xe/xe_uc_fw.c b/drivers/gpu/drm/xe/xe_uc_fw.c
-index a8e6f18cc9b4a..f61910431cf25 100644
---- a/drivers/gpu/drm/xe/xe_uc_fw.c
-+++ b/drivers/gpu/drm/xe/xe_uc_fw.c
-@@ -141,6 +141,7 @@ struct fw_blobs_by_type {
+diff --git a/drivers/gpu/drm/xe/xe_device.c b/drivers/gpu/drm/xe/xe_device.c
+index 6dc02ec55b902..e76edcf15159e 100644
+--- a/drivers/gpu/drm/xe/xe_device.c
++++ b/drivers/gpu/drm/xe/xe_device.c
+@@ -958,7 +958,9 @@ int xe_device_probe(struct xe_device *xe)
  
- /* for the GSC FW we match the compatibility version and not the release one */
- #define XE_GSC_FIRMWARE_DEFS(fw_def, major_ver)		\
-+	fw_def(NOVALAKE_S,	GT_TYPE_ANY,	major_ver(xe,	gsc,	nvl,	108, 0, 0))	\
- 	fw_def(PANTHERLAKE,	GT_TYPE_ANY,	major_ver(xe,	gsc,	ptl,	105, 1, 0))	\
- 	fw_def(LUNARLAKE,	GT_TYPE_ANY,	major_ver(xe,	gsc,	lnl,	104, 1, 0))	\
- 	fw_def(METEORLAKE,	GT_TYPE_ANY,	major_ver(i915,	gsc,	mtl,	102, 1, 0))
+ 	xe_uid_probe(xe);
+ 
+-	xe_pat_init_early(xe);
++	err = xe_pat_init_early(xe);
++	if (err)
++		return err;
+ 
+ 	err = xe_sriov_init(xe);
+ 	if (err)
+diff --git a/drivers/gpu/drm/xe/xe_pat.c b/drivers/gpu/drm/xe/xe_pat.c
+index a5fe1beec652d..0ac64a6a3098a 100644
+--- a/drivers/gpu/drm/xe/xe_pat.c
++++ b/drivers/gpu/drm/xe/xe_pat.c
+@@ -590,7 +590,13 @@ static const struct xe_pat_ops xe3p_xpc_pat_ops = {
+ 	.entry_dump = xe3p_xpc_pat_entry_dump,
+ };
+ 
+-void xe_pat_init_early(struct xe_device *xe)
++/**
++ * xe_pat_init_early() - Init early pat table operation.
++ * @xe: the &xe_device
++ *
++ * Return: 0 on success or a negative error code on failure.
++ */
++int xe_pat_init_early(struct xe_device *xe)
+ {
+ 	xe->pat.idx[XE_CACHE_WB_COMPRESSION] = XE_PAT_INVALID_IDX;
+ 	xe->pat.idx[XE_CACHE_NONE_COMPRESSION] = XE_PAT_INVALID_IDX;
+@@ -688,12 +694,15 @@ void xe_pat_init_early(struct xe_device *xe)
+ 		 */
+ 		drm_err(&xe->drm, "Missing PAT table for platform with graphics version %d.%02d!\n",
+ 			GRAPHICS_VER(xe), GRAPHICS_VERx100(xe) % 100);
++		return -ENODATA;
+ 	}
+ 
++	xe_assert(xe, xe->pat.ops);
+ 	xe_assert(xe, xe->pat.ops->dump);
+ 	xe_assert(xe, xe->pat.ops->program_graphics);
+ 	xe_assert(xe, MEDIA_VER(xe) < 13 || xe->pat.ops->program_media);
+ 	xe_assert(xe, GRAPHICS_VER(xe) < 20 || xe->pat.ops->entry_dump);
++	return 0;
+ }
+ 
+ void xe_pat_init(struct xe_gt *gt)
+diff --git a/drivers/gpu/drm/xe/xe_pat.h b/drivers/gpu/drm/xe/xe_pat.h
+index 7060f66e1d638..6398c3ab48055 100644
+--- a/drivers/gpu/drm/xe/xe_pat.h
++++ b/drivers/gpu/drm/xe/xe_pat.h
+@@ -42,8 +42,10 @@ struct xe_pat_table_entry {
+ /**
+  * xe_pat_init_early - SW initialization, setting up data based on device
+  * @xe: xe device
++ *
++ * Return: 0 on success or a negative error code on failure.
+  */
+-void xe_pat_init_early(struct xe_device *xe);
++int xe_pat_init_early(struct xe_device *xe);
+ 
+ /**
+  * xe_pat_init - Program HW PAT table
 -- 
 2.53.0
 
