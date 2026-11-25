@@ -1,54 +1,55 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795619145;
-	b=eMYjkiekhJ1jDEUMsvxDBmqMAgVl63q7yjXg3FvVNGF9ZBtUfgKvJKCyzySJtMcIs3jM
-	 fOdTCndRprph/otJSIamAjPMItC8ycPfF/dQ0h+PjW6CNhLiexPp4rW5uwnvXPjekUWdo
-	 Gk/b8gq0kwMwQtePYfVskCXnbU+V9dvNwsQZ4MZ6wLjLlm5FCntrjU4c9Xx43QbsgbmAU
-	 D3od05CP/n23Cya2soO/M48tMZjJDRftCeSlJ68VISFYU7RW3qd6uqsD0R3x/aHu5mWDT
-	 QywtBYxAqfoWxbCYAw9ygousZJHn/23jPxRq/tZzyDJ76VfTzUxOzZ922cBGcPeC44Q==
+	t=1795619148;
+	b=dHyCkDisd4AwNhI1xxvknQKFW0/jJIvQ0evmICrAcKBgUeJaF4V6klIpDKeUzVYtJ65N
+	 909Sjus+XK13fgLNn5pdPXSILGYtDYl8rReapZShtTwBPrUu9CNFeOVNv27WcedCCgps8
+	 W+AsQyfGQoQUwV21qKsBzyP/LXjYbz4RDqC4gn570tkAXKEHf96iEoOO5gEPQsPDhxQpV
+	 FNlBtUlsX6qZbJHhEZ8FDul6BUK73e1zDU0A3scxi4XaARPa8T1ZjJ4SAGOgSzzMUZdqI
+	 C3M3Tbd7IcUA/8vzD9gL1syknNWgFHY0K2fnd+lIuoDMvr5hKGayM4NvjlDhkSakaGg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795619145;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795619148;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=Ib2rN8GeYSTbFD/lNVhiInFWl61mdtqX/DQ3EKReoco=;
-	b=oHJQb1KFsSnK81ykELKLLHqKgNprEVibvTCr8XmvgZbhziDKE4DB3kxWe+XIKie3jY3+
-	 PehS+45NWFtTBnzlaadQ9zlIIzfbfKK7ePi5KTpuHaQTgVAvPdVDRo+aFKQRYGaFgB4vR
-	 TQKdXLBALOfQxlc1lsOGys+IH/+iaqhS65a5boDt0W8HrnSTCtoqc8VEZrpj71sR9WQi7
-	 heY9GHDN30Ul4HWaR8D9SvtNNoVW3+A+7CrJO9LhpIvB+c6V16NQUv1bCmzMC9piybIc4
-	 Vz33g71tAqN83913SDiMFw3cjJzDFznDRtFDkk+N3eTMqgmJT5Fgx3dsJUqu/YQ+85g==
+	bh=Mbd0crMK7wPVtRc0ZvOcBjeadlYvec2vREMFFL+/siA=;
+	b=PaxuxQYtesAaLNTGRLAShk1tPByi5hj80H0L3yIH3yAjsv95joL0vO5fwFAlO+pbDnjj
+	 is98SLJY35pNQbtNEiBMUZemjtIwy9dcxTzBLzE9GMfimAQ+vyx4gLN4NM1cJkTg7sDpK
+	 hilNkIrLN9n7J36kmc1BynLJnWyhUUsYRofjSa5yQ9OLuxa5/Eon300ePr0Tj1BKSdleE
+	 gJMvxD1dguGi6f3b66v147zrJ3f0ulDYZPJmUzuwWG1Rxm7mhIiP9ekHJWU+u1CgFokKV
+	 bnxizu665///eQLth/HexehOhrtyYYzpBi7nZSr24xHjNnFmX8lXb47qi3euQpvC8ig==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=KdZt+MIw;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=y5dHlRBR;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 641AE606A321;
-	Wed, 25 Nov 2026 15:05:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6822F606A31E;
+	Wed, 25 Nov 2026 15:05:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=KdZt+MIw
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 78AB41F000C0;
-	Wed, 25 Nov 2026 15:05:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=y5dHlRBR
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4E9781F000CA;
+	Wed, 25 Nov 2026 15:05:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795619145;
-	bh=Ib2rN8GeYSTbFD/lNVhiInFWl61mdtqX/DQ3EKReoco=;
+	s=korg; t=1795619147;
+	bh=Mbd0crMK7wPVtRc0ZvOcBjeadlYvec2vREMFFL+/siA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=KdZt+MIwRi4/vYsllM18MUcyH1z2PM2CHZaD2pYjGzjmv+ULtgb5vn4YKh5I67aCt
-	 WfN2lxhMDbxrLQRiqmsDXWsFMmftuUF1pIr/uOA+QfYLcvk8m1H2O6gTTZO9+tlMfv
-	 0B5mrgXsutOk+QSJrIFO9Bzsrl0SbCNnKr7zO++A=
+	b=y5dHlRBRu+dwfjdVVVjqDj798mkc6KXbml5Oqf0pIguGe2wmBPPMNToduOc7N6uba
+	 LOIVdBiRQm9fqCg1KStmNoMv6fDMQj7QwfKsNWKvTQ34fse9E/jxwUbhuQ70D9gzoJ
+	 E1GIMnj7RMWZKMoBJ9Aqcq9ELCl05Q7sUHM1MHp8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mark Bloch <mbloch@nvidia.com>,
-	Shay Drori <shayd@nvidia.com>,
-	Tariq Toukan <tariqt@nvidia.com>,
+	Kyle Zeng <kylebot@openai.com>,
+	Eric Dumazet <edumazet@kernel.org>,
+	Jiayuan Chen <jiayuan.chen@linux.dev>,
+	Kuniyuki Iwashima <kuniyu@google.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0460/1005] net/mlx5: Lag, free steering resources on LAG destroy failure
-Date: Wed, 25 Nov 2026 15:29:58 +0100
-Message-ID: <20261125143832.521935335@linuxfoundation.org>
+Subject: [PATCH 7.3 0461/1005] net: protect negative destination advice with RCU
+Date: Wed, 25 Nov 2026 15:29:59 +0100
+Message-ID: <20261125143832.545070777@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143821.729802100@linuxfoundation.org>
 References: <20261125143821.729802100@linuxfoundation.org>
@@ -70,50 +71,57 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mark Bloch <mbloch@nvidia.com>
+From: Kyle Zeng <kylebot@openai.com>
 
-[ Upstream commit deceb70d1303105e4368a19b251a6fd94428eb11 ]
+[ Upstream commit 4b77d2792c3e482afa108c08f224ea6fa396d80b ]
 
-When firmware fails to destroy LAG, driver returns before releasing the
-steering resources, leaking the associated software objects.
+SO_CNX_ADVICE calls __dst_negative_advice() while holding the socket
+lock. Connected UDP sends can still invalidate or replace sk_dst_cache
+without that lock. A concurrent sk_dst_check() can drop the final
+destination reference and allow an RCU callback to destroy it while
+__dst_negative_advice() retains only a borrowed pointer. This can cause
+a use-after-free while accessing dst->ops or running the negative_advice
+callback.
 
-The bond is no longer eligible for offload, and the driver cannot
-prevent its teardown. Release the steering resources even if LAG
-destruction fails. Preserve the error logging and return the original
-error after cleanup.
+The writer-side ordering fixed by commit 92f1655aa2b2 ("net: fix
+__dst_negative_advice() race") does not protect this reader from an
+independent cache replacement.
 
-Fixes: da6b0bb0fc73 ("net/mlx5: Lag, use steering to select the affinity port in LAG")
-Signed-off-by: Mark Bloch <mbloch@nvidia.com>
-Reviewed-by: Shay Drori <shayd@nvidia.com>
-Signed-off-by: Tariq Toukan <tariqt@nvidia.com>
-Link: https://patch.msgid.link/20261104183947.772195-1-tariqt@nvidia.com
+Hold an RCU read-side critical section across the lookup and callback.
+This follows the datagram release callbacks and covers IPv4, IPv6, and
+XFRM advice without changing cache-reset or reference-ownership rules.
+
+Fixes: a87cb3e48ee8 ("net: Facility to report route quality of connected sockets")
+Signed-off-by: Kyle Zeng <kylebot@openai.com>
+Signed-off-by: Eric Dumazet <edumazet@kernel.org>
+Reviewed-by: Jiayuan Chen <jiayuan.chen@linux.dev>
+Reviewed-by: Kuniyuki Iwashima <kuniyu@google.com>
+Link: https://patch.msgid.link/20261104131744.1056562-1-edumazet@kernel.org
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/mellanox/mlx5/core/lag/lag.c | 3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+ include/net/sock.h | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/net/ethernet/mellanox/mlx5/core/lag/lag.c b/drivers/net/ethernet/mellanox/mlx5/core/lag/lag.c
-index 4e173b08cb37a..a8ba1c2086063 100644
---- a/drivers/net/ethernet/mellanox/mlx5/core/lag/lag.c
-+++ b/drivers/net/ethernet/mellanox/mlx5/core/lag/lag.c
-@@ -1096,7 +1096,6 @@ int mlx5_deactivate_lag(struct mlx5_lag *ldev)
- 				      "Failed to deactivate VF LAG; driver restart required\n"
- 				      "Make sure all VFs are unbound prior to VF LAG activation or deactivation\n");
- 		}
--		return err;
- 	}
+diff --git a/include/net/sock.h b/include/net/sock.h
+index 60ea55dc18854..f8038be27f003 100644
+--- a/include/net/sock.h
++++ b/include/net/sock.h
+@@ -2214,10 +2214,13 @@ sk_dst_get(const struct sock *sk)
  
- 	if (test_bit(MLX5_LAG_MODE_FLAG_HASH_BASED, &flags)) {
-@@ -1106,7 +1105,7 @@ int mlx5_deactivate_lag(struct mlx5_lag *ldev)
- 	if (mlx5_lag_has_drop_rule(ldev))
- 		mlx5_lag_drop_rule_cleanup(ldev);
+ static inline void __dst_negative_advice(struct sock *sk)
+ {
+-	struct dst_entry *dst = __sk_dst_get(sk);
++	struct dst_entry *dst;
  
--	return 0;
-+	return err;
++	rcu_read_lock();
++	dst = __sk_dst_get(sk);
+ 	if (dst && dst->ops->negative_advice)
+ 		dst->ops->negative_advice(sk, dst);
++	rcu_read_unlock();
  }
  
- bool mlx5_lag_check_prereq(struct mlx5_lag *ldev)
+ static inline void dst_negative_advice(struct sock *sk)
 -- 
 2.53.0
 
