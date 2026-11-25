@@ -1,51 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795619782;
-	b=iztOYZIJVMfvnwZ5bLC78qolUxXxmiK9QonaIkHWc3BYeFz88gpcg6rp5ksd2MCa1g79
-	 gxMa3yev4HJ2gXxKb+9pfDQV1LynO159dCLQsm98AMxgP2E6WzUIC6XenBsDrjIheRevh
-	 7mURJ4GEGbmE0iqb7BMM8dCWyUeJsQvF3cv3vCpDAWeIGXGsjhZQkPcW1Q2aQq5CEqm1m
-	 bv7bGiZ7HUyAlNDlH5U4+a0zusxabTc39xPbGyPMoprZ4dhks5HHaEbFqS7zshmfXsEpq
-	 AIviu/h/WEyLdbXJqsq2ztmWRZr60ETfmrh2ST7M228fcRERDNoBi/821ckFnb5vydw==
+	t=1795619785;
+	b=vqy9k3C7j1IK+fzAjXP2eGxGcHh8ULwbzAT4wprF9DwbGStudRKZDEEBM2fOOMcwOHxI
+	 VXgqjAPApO6wEQDL/ZAb0rfjuiKy051FDQxNkMES+Ph0jwFHewd37zEUkUQw1diVtAtxU
+	 Oz6Pw6JbKbIgBJwq/oRFQR46gpEcaqCn7F8++04mis6uNUW3KtTaoF3awXYs0QvHatkjK
+	 EREn2/W8bs5Vlf8pSDT2ogYIHu42Dw6MYTnupgIhq+yKKsfxZ0fP/CT3byotBCWB6m6/0
+	 njbsD7qkKSelwU7DsaumyeWLrCSgQH9ci7Oi43DjWXsE0snnrQIIRlh23enAqP0I3ZA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795619782;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795619785;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=yIquymBxr8dV5egLyyBIpBs1JJxHVKXWrsovD0X/1Ks=;
-	b=p9Cwxez0RP9idpcJ60sr0iYoTRUl8mlsXVaSk7h2HJWPCrcYVaa33rRzA3PSgHdBx6zi
-	 Tlari3xml+veOa/9mqcPPQymywb3qKY66AapJDxKm5pIlC1Igfk628nFllltMT8n1MFs7
-	 IhE7ycuIiQ2JFXmgxWLT0qx5kajrKHweSMqiaQz66w30vz8zo5x1H3x9OBZcQdWzfCgv6
-	 J7OAchTxkDcADknqnMyMbVvK13+qqpoEdacbIwjQYHYYigM5QNoe9iuEwmPeysBV22zB2
-	 ZViq2eha536VDynT9jqiZ6FOx4avJGCWsRd1IA22BDGX+5D2ioK7l5c9UITAvxt9/CQ==
+	bh=5PdWyNR0FbFQ5zw6Cv1mQEaWXViPj0X0zaQVAML7CkY=;
+	b=L53YBZtspsJrOKByUHpC6j0bRYA67YH0EyoY962pOAeMQUKtCbZ3OZX5vkzhidW6lSVB
+	 JPpa0yrrqSfu01YL3zmRBKYbtLHk+bnYFNdPJGHln1xgTidQYok1W935bbLAC7iFl7SgE
+	 OzTYApPFQpOBDSMQ2kbfZwmYrwxzEALbfRnWigex622G+LgHyC/OY+kHPFae0il8SggG+
+	 i3LUVHHLWCWQUsYydINpSt4b9/Z94Umqom3dDo8CZ/j3vy9BwaM8g96CurkSI4EmQ8EON
+	 M6Q0EpIiBcVisF2qw/AKBAsh12vcHS/RfSWLKrCXkQsd8ugxyzval2OXhmJGikj/Y4A==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=dTMt8D6E;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="F54a+/8h";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 39991606A31E;
-	Wed, 25 Nov 2026 15:16:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 21348606A31E;
+	Wed, 25 Nov 2026 15:16:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=dTMt8D6E
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 64BA81F000C4;
-	Wed, 25 Nov 2026 15:16:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=F54a+/8h
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 67CC71F000C4;
+	Wed, 25 Nov 2026 15:16:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795619781;
-	bh=yIquymBxr8dV5egLyyBIpBs1JJxHVKXWrsovD0X/1Ks=;
+	s=korg; t=1795619784;
+	bh=5PdWyNR0FbFQ5zw6Cv1mQEaWXViPj0X0zaQVAML7CkY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=dTMt8D6EGqzXOFG/7aTjhR9yBpHl/7GdxUt3w+QF72wcbVtdZGd0KfbT8mKGGfGeF
-	 pXOx/CaER651Ir/5qnZ+6pmnp4BL/5LEddt+3H8k2Mvqmjd9RyCEXU8jRVtAMem8z+
-	 I4KecV9EYBxLRDXS4TOZHNOeBkappLEUfn83WbsU=
+	b=F54a+/8hRLC3PEkN4KTwzLw8pIUN4mcKPogibGSBdhJmjaNotCCN4FqM3ZrTiHUBN
+	 TdCk+7VI3SSbdaeNqCW1+iyHIhKdHoSRAPVJ2iW0WOX5GnHFZRkaiP0y1sXM0ZyhHZ
+	 c0VNWYqaP84vKYX1E4hbkIweatht5iTIfPti0p0I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Beata Michalska <beata.michalska@arm.com>,
+	Chris Down <chris@chrisdown.name>,
 	Catalin Marinas <catalin.marinas@arm.com>
-Subject: [PATCH 7.3 0707/1005] arm64: errata: Add Cortex-A715/A720 AMU core counter workaround
-Date: Wed, 25 Nov 2026 15:34:05 +0100
-Message-ID: <20261125143838.321348667@linuxfoundation.org>
+Subject: [PATCH 7.3 0708/1005] arm64: hugetlb: Prevent write fault livelocks on stale TLB entries
+Date: Wed, 25 Nov 2026 15:34:06 +0100
+Message-ID: <20261125143838.344586843@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143821.729802100@linuxfoundation.org>
 References: <20261125143821.729802100@linuxfoundation.org>
@@ -67,153 +67,92 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Beata Michalska <beata.michalska@arm.com>
+From: Chris Down <chris@chrisdown.name>
 
-commit be777145858218f591b4d9d19f3d40d3ecea9de3 upstream.
+commit 3c47ec82540ce89a6fdfd5e0e6d79f35892adfa4 upstream.
 
-On Cortex-A715 (erratum 2738462) and Cortex-A720 (erratum 2738461),
-the AMEVCNTR00 counter may continue incrementing while the core
-remains in WFE with the clocks being enabled. The resulting core
-cycle count may become unreliable.
+In Meta production, we have had tasks get stuck in a fault loop while
+using hugetlb on arm64. During my investigations I found that affected
+tasks share a private hugetlb page.
 
-Add a workaround that effectively treats the AMU counter
-as unavailable.
+Looking at the stuck task states, I found the following ordering:
 
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Beata Michalska <beata.michalska@arm.com>
+  CPU0                                 CPU1
+  ----                                 ----
+  read page
+  [read only entry cached in TLB]
+                                       write page
+                                       hugetlb_fault()
+                                         hugetlb_wp()
+                                         [reuse folio]
+                                         set_huge_ptep_maybe_writable()
+                                           set_huge_ptep_writable()
+                                         [flush local TLB only]
+
+  write page using stale entry
+  hugetlb_fault()
+    huge_ptep_set_access_flags()
+    [entry already writable, no flush]
+  retry write using stale entry
+  [fault indefinitely. well, that's not ideal!]
+
+The reason is that when a write fault makes a non-contiguous hugetlb
+entry writable, it only invalidates the local TLB. However, another CPU
+can keep the old read-only entry, so its write will fault even though
+the page table already permits it. hugetlb_fault() then finds nothing to
+change and leaves the stale entry in place, so the same write keeps
+going round in circles.
+
+This is particularly bad because, if the kernel is copying to user
+memory, the retry stays inside the kernel and the task can't act on the
+pending signal.
+
+It can even remain unkillable while holding locks across the copy,
+resulting in further failures. For example, a read into a hugetlb
+buffer can hold the pipe mutex and block other users of the pipe until
+the loop ends, causing cascading lockups across the machine.
+
+To fix this, when a write fault finds nothing to change in a
+non-contiguous hugetlb entry, let's invalidate the local entry.
+
+Fixes: cb1fa2e99955 ("arm64, tlbflush: don't TLBI broadcast if page reused in write fault")
+Cc: stable@vger.kernel.org
+Signed-off-by: Chris Down <chris@chrisdown.name>
 Signed-off-by: Catalin Marinas <catalin.marinas@arm.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- Documentation/arch/arm64/silicon-errata.rst |    4 +++
- arch/arm64/Kconfig                          |   32 ++++++++++++++++++++++++++++
- arch/arm64/kernel/cpu_errata.c              |   20 +++++++++++++++++
- arch/arm64/kernel/cpufeature.c              |    3 +-
- arch/arm64/kernel/topology.c                |    3 +-
- arch/arm64/tools/cpucaps                    |    1 
- 6 files changed, 61 insertions(+), 2 deletions(-)
+ arch/arm64/mm/hugetlbpage.c |   21 ++++++++++++++++++---
+ 1 file changed, 18 insertions(+), 3 deletions(-)
 
---- a/Documentation/arch/arm64/silicon-errata.rst
-+++ b/Documentation/arch/arm64/silicon-errata.rst
-@@ -168,8 +168,12 @@ stable kernels.
- +----------------+-----------------+-----------------+-----------------------------+
- | ARM            | Cortex-A715     | #2645198        | ARM64_ERRATUM_2645198       |
- +----------------+-----------------+-----------------+-----------------------------+
-+| ARM            | Cortex-A715     | #2738462        | ARM64_ERRATUM_2738461       |
-++----------------+-----------------+-----------------+-----------------------------+
- | ARM            | Cortex-A715     | #3456084        | ARM64_ERRATUM_3194386       |
- +----------------+-----------------+-----------------+-----------------------------+
-+| ARM            | Cortex-A720     | #2738461        | ARM64_ERRATUM_2738461       |
-++----------------+-----------------+-----------------+-----------------------------+
- | ARM            | Cortex-A720     | #3456091        | ARM64_ERRATUM_3194386       |
- +----------------+-----------------+-----------------+-----------------------------+
- | ARM            | Cortex-A720     | #4689339        | ARM64_ERRATUM_3821522       |
---- a/arch/arm64/Kconfig
-+++ b/arch/arm64/Kconfig
-@@ -1048,6 +1048,38 @@ config ARM64_WORKAROUND_BROKEN_AMU_CONST
- 	# making it unreliable. As a result, AMU users should treat it as
- 	# unavailable rather than relying on misleading counter values.
+--- a/arch/arm64/mm/hugetlbpage.c
++++ b/arch/arm64/mm/hugetlbpage.c
+@@ -429,9 +429,24 @@ int huge_ptep_set_access_flags(struct vm
+ 	VM_WARN_ON(!pte_present(pte));
+ 	ncontig = num_contig_ptes(huge_page_size(hstate_vma(vma)), &pgsize);
  
-+config ARM64_WORKAROUND_BROKEN_AMU_CORECNT
-+	bool
-+	# Targeting errata affecting AMEVCNTR00, the AMU core cycle counter.
-+	# On affected CPUs the counter may continue incrementing while core
-+	# remains in WFE with the clocks enabled.
-+	# This may lead to readings of said counter being unreliable.
-+	# How much though depends on the sampling intervals.
+-	if (!pte_cont(pte))
+-		return __ptep_set_access_flags_anysz(vma, addr, ptep, pte,
+-						     dirty, pgsize);
++	if (!pte_cont(pte)) {
++		if (__ptep_set_access_flags_anysz(vma, addr, ptep, pte,
++						  dirty, pgsize))
++			return 1;
 +
-+config ARM64_ERRATUM_2738461
-+	bool "Cortex-A715/Cortex-A720: workaround for AMEVCNTR00 incrementing incorrectly"
-+	depends on ARM64_AMU_EXTN
-+	select ARM64_WORKAROUND_BROKEN_AMU_CORECNT
-+	default y
-+	help
-+	  This option adds the workaround for the following errata:
-+
-+	  * ARM Cortex-A715 erratum 2738462
-+	  * ARM Cortex-A720 erratum 2738461
-+
-+	  On affected cores the AMEVCNTR00 counter (AMU core frequency cycles
-+	  counter) may continue incrementing while the core remains in WFE
-+	  with the clocks being enabled.
-+	  This may result in inaccurate counter readings, with the magnitude
-+	  of the discrepancy depending on the sampling interval.
-+
-+	  With this workaround, reads of the affected counter return 0 in
-+	  the relevant paths. This causes users of the counter to treat it
-+	  as unavailable and is functionally equivalent to firmware disabling
-+	  the affected counter.
-+
-+	  If unsure, say Y.
-+
- config ARM64_ERRATUM_2457168
- 	bool "Cortex-A510: 2457168: workaround for AMEVCNTR01 incrementing incorrectly"
- 	depends on ARM64_AMU_EXTN
---- a/arch/arm64/kernel/cpu_errata.c
-+++ b/arch/arm64/kernel/cpu_errata.c
-@@ -406,6 +406,18 @@ static const struct midr_range workaroun
- };
- #endif /* CONFIG_ARM64_WORKAROUND_BROKEN_AMU_CONSTCNT */
++		/*
++		 * Another CPU may have made the entry writable without
++		 * invalidating our stale read-only TLB entry. To avoid
++		 * indefinitely faulting on this entry, flush it.
++		 */
++		if (dirty)
++			__flush_hugetlb_tlb_range(vma, addr, addr + pgsize,
++						  pgsize,
++						  TLBF_NOWALKCACHE |
++						  TLBF_NOBROADCAST |
++						  TLBF_NONOTIFY);
++		return 0;
++	}
  
-+#ifdef CONFIG_ARM64_WORKAROUND_BROKEN_AMU_CORECNT
-+static const struct midr_range workaround_amu_corecnt_list[] = {
-+#ifdef CONFIG_ARM64_ERRATUM_2738461
-+	/* Cortex-A715 r0p0 - r1p3 */
-+	MIDR_RANGE(MIDR_CORTEX_A715, 0, 0, 1, 3),
-+	/* Cortex-A720 r0p0 - r0p1 */
-+	MIDR_RANGE(MIDR_CORTEX_A720, 0, 0, 0, 1),
-+#endif
-+	{}
-+};
-+#endif /* CONFIG_ARM64_WORKAROUND_BROKEN_AMU_CORECNT */
-+
- #ifdef CONFIG_CAVIUM_ERRATUM_23154
- static const struct midr_range cavium_erratum_23154_cpus[] = {
- 	MIDR_ALL_VERSIONS(MIDR_THUNDERX),
-@@ -949,6 +961,14 @@ const struct arm64_cpu_capabilities arm6
- 		CAP_MIDR_RANGE_LIST(workaround_amu_constcnt_list)
- 	},
- #endif
-+#ifdef CONFIG_ARM64_WORKAROUND_BROKEN_AMU_CORECNT
-+	{
-+		.desc = "Broken AMU AMEVCNTR00 (core cycle counter)",
-+		.capability = ARM64_WORKAROUND_BROKEN_AMU_CORECNT,
-+		.type = ARM64_CPUCAP_WEAK_LOCAL_CPU_FEATURE,
-+		CAP_MIDR_RANGE_LIST(workaround_amu_corecnt_list)
-+	},
-+#endif
- #ifdef CONFIG_ARM64_ERRATUM_2038923
- 	{
- 		.desc = "ARM erratum 2038923",
---- a/arch/arm64/kernel/cpufeature.c
-+++ b/arch/arm64/kernel/cpufeature.c
-@@ -2089,7 +2089,8 @@ static void cpu_amu_enable(struct arm64_
- 		cpumask_set_cpu(smp_processor_id(), &amu_cpus);
- 
- 		/* 0 reference values signal broken/disabled counters */
--		if (!this_cpu_has_cap(ARM64_WORKAROUND_BROKEN_AMU_CONSTCNT))
-+		if (!this_cpu_has_cap(ARM64_WORKAROUND_BROKEN_AMU_CONSTCNT) &&
-+		    !this_cpu_has_cap(ARM64_WORKAROUND_BROKEN_AMU_CORECNT))
- 			update_freq_counters_refs();
- 	}
- }
---- a/arch/arm64/kernel/topology.c
-+++ b/arch/arm64/kernel/topology.c
-@@ -389,7 +389,8 @@ static void cpu_read_corecnt(void *val)
- 	 * counter read is properly handled as an error case by the users of the
- 	 * counter.
- 	 */
--	*(u64 *)val = read_corecnt();
-+	*(u64 *)val = this_cpu_has_cap(ARM64_WORKAROUND_BROKEN_AMU_CORECNT) ?
-+		      0UL : read_corecnt();
- }
- 
- static void cpu_read_constcnt(void *val)
---- a/arch/arm64/tools/cpucaps
-+++ b/arch/arm64/tools/cpucaps
-@@ -132,3 +132,4 @@ WORKAROUND_SPECULATIVE_AT
- WORKAROUND_SPECULATIVE_SSBS
- WORKAROUND_SPECULATIVE_UNPRIV_LOAD
- WORKAROUND_BROKEN_AMU_CONSTCNT
-+WORKAROUND_BROKEN_AMU_CORECNT
+ 	if (!__cont_access_flags_changed(ptep, pte, ncontig))
+ 		return 0;
 
 
