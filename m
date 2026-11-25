@@ -1,50 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795623509;
-	b=ty6xsgbEK4RBbMPFj9H779JMXuKPd6xlUYaodKmO14H48BwtYQyFYD/uidKttQbg8832
-	 PXrODub3xAu/F9wiob3CgQQNqhRwq3d9FFHb8+O3NQUo5Mx0GcQfXiuAziFxwpuM+mZAJ
-	 g7awzmEV/t3ictY+LKnDH++Yt17nwgpcLzEvm5XdTk8FxYn6Oi+1D00JP0IJcehECEYm+
-	 0bl9HXaKDwf6mus6s6lbTex1o7YgEFCmkusgS+WqShBjKdvp2/ouG9UddcT2VhoGqDXu5
-	 +/vv/z7yWuwG4nKz1N31+vrJ3iIwd1Q8D3IaFFcgsMzTPtNlB+DV6w35YtwkCkm6/5Q==
+	t=1795623512;
+	b=rC+Hy+yxGaeD5rnbR6YPzeptVX1kiTF5FhBfZKqZ4V8YkIw9LN95C4OxXMR+eRa4zJyW
+	 nLC/+byopQn2/nmXL7qnv2AX6K6Yoe3EJBt3WbDyNljJMBaDmLJXLVwIznWoUptq1/nS7
+	 I1qkR24UCU5PtA/w9ywCfD4UmjqgtrEJykNMyLyABZZpHrZ7ntkWeuJwazQQ+cbH1mnRT
+	 VLfl5x3RdzHg0DFiRGfq9u5CnI+d65MSNPXv79pkGAfC6Kh10NouLPqF87dBd6YhDAayR
+	 Qj9UhJXiqj/N8ZFbtYUncnKiyGPYdA/+1ok/kRoj0vr0pLmSUAydT4+ulV2a7D1SOwQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795623509;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795623512;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=xYKITj+INStKbk15oGb3SXffurbmB1h+DHbbWrhahp0=;
-	b=F+h18Qso0/k3fy//ufpMw2xzfl4TN2m93Fk/B33W+2Yjxw/Wo4FsrBXF8UU32IfuqPT1
-	 YXi4FWrQyKB36kJ8epKtO+DFy50pKl8GR2w6IbrJ7Rrv772JFaed1I6igS028vgyQEuRx
-	 sqFopbjuFf2IbOiN50xLP0TjPyIv0NeDzPw3DHPn0sXeuKII042KQJFMw8mC2V+OFC/2z
-	 SXG4xKnHVTmuXi7vtxzuccXkpO5368wwd8aym5IStpXwAnfE/wSjwr6E2NghqgcQu5j7T
-	 eC9kudzSS3yf4BrB9k/nNVJptxYkViUTjIef3Vm5IEXcfWsDNRJsF8jSrBKDwaNj6WA==
+	bh=IIlxqAiRKB8q1IuOngwEFnZrQ1ciCDksju/MU+3cig0=;
+	b=qp4aVAQQfxpT5wsVPGUGzv6DxfbDYHLzrdnk9QreLHaTirGP2tQ6NSUNu2ZgnmQthv11
+	 ba4aeEe91eTEVWhJxdTPg2z5C0mrwIvlFh7QK4buzxcyZRYTk0Ng+FAx9aXJgKyjjlbP+
+	 XIvMXkAGqL/MopvQ/9LK6m/B+M36U2BPLYTy2Cid6vvJnPvKYCXA7bFmdf0uQ9HMLGm7A
+	 K7YTR1McmLQHnFKSiTOLCl9IfXB8wi2jQ4XxG3gRrQ1nlI9aND+W732l1RqKqOLrIXonn
+	 aRLWXViDhE7Wkw9bz3hsOeABhGpqdOKurefZnSIPITfayaladi/i9UrYomlDg39yQ9g==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="pd5V/HxS";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="kiejTH/j";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 73641606A31E;
-	Wed, 25 Nov 2026 16:18:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7D612606A31E;
+	Wed, 25 Nov 2026 16:18:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=pd5V/HxS
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 74EC11F000C4;
-	Wed, 25 Nov 2026 16:18:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=kiejTH/j
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 959C51F000C6;
+	Wed, 25 Nov 2026 16:18:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795623509;
-	bh=xYKITj+INStKbk15oGb3SXffurbmB1h+DHbbWrhahp0=;
+	s=korg; t=1795623512;
+	bh=IIlxqAiRKB8q1IuOngwEFnZrQ1ciCDksju/MU+3cig0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=pd5V/HxS75XtXzHfBFk3nnTZi2YysvJvJvIdYNe0QuLwRqqRZtrh4PEb05uRPDa1r
-	 4sDlUmuD1MjxWd1b1YinpkjlqZ0z7K96Jz7Btd9woVAXIOwgKZs//f/aM55w6Hi37a
-	 936+F+AVgYnhrGQUmo7NRQw9wU4/Z2AnJb0Sc1PY=
+	b=kiejTH/jVMqzIs7zMQqX2a5G8nkZxwn02v2yWiXo2eN7vsr4d8SErIQxH3G/c8Bj1
+	 YmZHXydKJ0/uP7UGQbl4/RGB+0qoV7jYY7bN5FdnxTlI8NmMJCIc0UhWFIWf0sOJrh
+	 WG4FJ+tGqEPcOXRiDxjCo2ZnjrR0DuX9uIYssO9c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Paulo Alcantara <pc@manguebit.org>
-Subject: [PATCH 6.18 838/990] smb: client: dont block dying tasks waiting for writeback on close
-Date: Wed, 25 Nov 2026 15:36:45 +0100
-Message-ID: <20261125143841.660362703@linuxfoundation.org>
+	Paulo Alcantara <pc@manguebit.org>,
+	David Howells <dhowells@redhat.com>
+Subject: [PATCH 6.18 839/990] smb: client: dont block dying tasks waiting for writeback on fsync
+Date: Wed, 25 Nov 2026 15:36:46 +0100
+Message-ID: <20261125143841.683651165@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143822.072087159@linuxfoundation.org>
 References: <20261125143822.072087159@linuxfoundation.org>
@@ -68,45 +69,42 @@ Content-Transfer-Encoding: 8bit
 
 From: Paulo Alcantara <pc@manguebit.org>
 
-commit 15ea186abbcd04157c62e0901701870b812bb2bd upstream.
+commit 0df0f24803061b6c2bef0d24de7c63c9cce46a49 upstream.
 
-cifs_flush() waits uninterruptibly for the writeback it starts.  A task
-that gets killed while closing a file on a hard mount with an
-unresponsive server is stuck in D state until the server comes back.  It
-also consumes any writeback error for a caller that is about to exit,
-hiding it from everyone else.
+cifs_fsync() and cifs_strict_fsync() wait uninterruptibly for writeback
+through file_write_and_wait_range().  As with close, a task killed in
+fsync(2) on a hard mount with an unresponsive server is stuck in D state
+until the server comes back.
 
-Wait killably instead.  If the closer gets killed, stop waiting and leave
-the error bits in the mapping for others to see; writeback already in
-flight completes on its own.  Don't wait at all, nor check for errors,
-if it is already dying.
+Wait killably instead, using the same helper as cifs_flush().  The
+writeback keeps going and its errors stay in the mapping; only the dying
+caller stops waiting for it.
 
-This is also needed before letting dying tasks issue their writes from a
-worker, which would otherwise make them wait for every one of them.
-
-Fixes: d3f1322af8f8 ("cifs: wait for writeback to complete in cifs_flush")
 Signed-off-by: Paulo Alcantara <pc@manguebit.org>
+Reviewed-by: David Howells <dhowells@redhat.com>
 Cc: stable@vger.kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/smb/client/file.c |   33 ++++++++++++++++++++++++++++++---
- 1 file changed, 30 insertions(+), 3 deletions(-)
+ fs/smb/client/file.c |   64 +++++++++++++++++++++++++++++++++------------------
+ 1 file changed, 42 insertions(+), 22 deletions(-)
 
 --- a/fs/smb/client/file.c
 +++ b/fs/smb/client/file.c
-@@ -2856,17 +2856,44 @@ fsync_exit:
- 	return rc;
+@@ -2778,6 +2778,45 @@ cifs_get_readable_path(struct cifs_tcon
+ 	return -ENOENT;
  }
  
-+static int cifs_wait_writeback_killable(struct address_space *mapping)
++static int cifs_wait_writeback_killable(struct address_space *mapping,
++					loff_t start, loff_t end)
 +{
++	pgoff_t end_index = end >> PAGE_SHIFT;
++	pgoff_t index = start >> PAGE_SHIFT;
 +	struct folio_batch fbatch;
-+	pgoff_t index = 0;
 +	int rc = 0;
 +
 +	folio_batch_init(&fbatch);
 +	while (!rc &&
-+	       filemap_get_folios_tag(mapping, &index, (pgoff_t)-1,
++	       filemap_get_folios_tag(mapping, &index, end_index,
 +				      PAGECACHE_TAG_WRITEBACK, &fbatch)) {
 +		for (unsigned int i = 0;
 +		     !rc && i < folio_batch_count(&fbatch); i++)
@@ -117,30 +115,79 @@ Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 +	return rc;
 +}
 +
++static int cifs_file_write_and_wait_killable(struct file *file,
++					     loff_t start, loff_t end)
++{
++	struct address_space *mapping = file->f_mapping;
++	int rc, rc2;
++
++	if (end < start)
++		return 0;
++
++	rc = filemap_fdatawrite_range(mapping, start, end);
++	if (cifs_wait_writeback_killable(mapping, start, end))
++		return -EINTR;
++	rc2 = file_check_and_advance_wb_err(file);
++	if (!rc)
++		rc = rc2;
++	return rc;
++}
++
+ /*
+  * Flush data on a strict file.
+  */
+@@ -2789,7 +2828,7 @@ int cifs_strict_fsync(struct file *file,
+ 	unsigned int xid;
+ 	int rc;
+ 
+-	rc = file_write_and_wait_range(file, start, end);
++	rc = cifs_file_write_and_wait_killable(file, start, end);
+ 	if (rc) {
+ 		trace_cifs_fsync_err(inode->i_ino, rc);
+ 		return rc;
+@@ -2821,7 +2860,7 @@ int cifs_fsync(struct file *file, loff_t
+ 	struct inode *inode = file_inode(file);
+ 	struct cifs_sb_info *cifs_sb = CIFS_FILE_SB(file);
+ 
+-	rc = file_write_and_wait_range(file, start, end);
++	rc = cifs_file_write_and_wait_killable(file, start, end);
+ 	if (rc) {
+ 		trace_cifs_fsync_err(file_inode(file)->i_ino, rc);
+ 		return rc;
+@@ -2856,25 +2895,6 @@ fsync_exit:
+ 	return rc;
+ }
+ 
+-static int cifs_wait_writeback_killable(struct address_space *mapping)
+-{
+-	struct folio_batch fbatch;
+-	pgoff_t index = 0;
+-	int rc = 0;
+-
+-	folio_batch_init(&fbatch);
+-	while (!rc &&
+-	       filemap_get_folios_tag(mapping, &index, (pgoff_t)-1,
+-				      PAGECACHE_TAG_WRITEBACK, &fbatch)) {
+-		for (unsigned int i = 0;
+-		     !rc && i < folio_batch_count(&fbatch); i++)
+-			rc = folio_wait_writeback_killable(fbatch.folios[i]);
+-		folio_batch_release(&fbatch);
+-		cond_resched();
+-	}
+-	return rc;
+-}
+-
  /*
   * As file closes, flush all cached write data for this inode checking
   * for write behind errors.
-  */
- int cifs_flush(struct file *file, fl_owner_t id)
- {
-+	struct address_space *mapping = file->f_mapping;
- 	struct inode *inode = file_inode(file);
--	int rc = 0;
-+	int rc = 0, rc2;
- 
--	if (file->f_mode & FMODE_WRITE)
--		rc = filemap_write_and_wait(inode->i_mapping);
-+	if (file->f_mode & FMODE_WRITE) {
-+		rc = filemap_fdatawrite(mapping);
-+		if (fatal_signal_pending(current) ||
-+		    cifs_wait_writeback_killable(mapping))
-+			return 0;
-+		rc2 = filemap_check_errors(mapping);
-+		if (!rc)
-+			rc = rc2;
-+	}
- 
- 	cifs_dbg(FYI, "Flush inode %p file %p rc %d\n", inode, file, rc);
- 	if (rc) {
+@@ -2888,7 +2908,7 @@ int cifs_flush(struct file *file, fl_own
+ 	if (file->f_mode & FMODE_WRITE) {
+ 		rc = filemap_fdatawrite(mapping);
+ 		if (fatal_signal_pending(current) ||
+-		    cifs_wait_writeback_killable(mapping))
++		    cifs_wait_writeback_killable(mapping, 0, LLONG_MAX))
+ 			return 0;
+ 		rc2 = filemap_check_errors(mapping);
+ 		if (!rc)
 
 
