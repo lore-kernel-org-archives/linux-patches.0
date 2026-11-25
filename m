@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795619090;
-	b=kd2Y71nEivumYPIGEE+upRsn8uy77HAmihdKMWtr14ni8N7G82tsBfiX8EjmVRJCYXrv
-	 +SlnCQCdfv3Uf+cUOFmGAIvltUnPFBGP7BLyL+TBU32SRSq7iUT935sQ0m6gLSoX4DgvA
-	 boWdd9KoFItwZyenmYAmgrubzeKZUv10Ejd1YkbmiJUYUiVl/QUc/RE6hkbaSXv3Su63O
-	 OJWaG+a9Q4y1dCMbF6CHt8la09qi3X5aoDSV5GcsJPBvaqKzSaf7KADIZxSpV8ed/0dxz
-	 6iPboWh274/EDIUcSQg+vbdITr+H5IAepSgnGQN6Qz6MylIsv0nxRhrNvGkll/iJ8gA==
+	t=1795619093;
+	b=BoflMJ2qqibHm07fu0QJnl6vy7Iey1CNcLPzdrTrfeHgn64lgYzqi5TPGbvtgXt175JX
+	 VbbamI15Di0Lhj6filmW3MxjVM1t/7/YWWyxVgT6Qh7iYEg1A36hSymjip/JLs2CAMeK0
+	 wZ7JsyYaFVaDr4qojuSZIMMl75IKyLb0+JbF0yUJtEvE6ougvvLK90RBpomCaDNiaA3Gb
+	 hYHs7CPYs2m+x1JmJ6/WJeo+Q+9H10IYSImPT5cjQFH66MXevKCRBVs3Qd0hL7Ag5897C
+	 IN7LAHcFnkuTwmDOG2LaBwQwnFwgJfC8eLNeZ69uaUlzcRs2fBhTZxIvvkSJGlv/YLQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795619090;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795619093;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=6DtPW4g+qBbkpOLCierz3gTuBc//IMrfe64QuXLMc3o=;
-	b=v4JxmjRpfLG2Cw+fhAdUKyLlbCtUGn6f2astvE8P0/UWtH3jm94m5rlbIlO3GKv/xoPT
-	 uZf+486m80UNjkGn5SwX5fcEAPk+QZyZTqSXa31WpUrUGXChVGNuo9EkN/NdOH+hn4V3d
-	 x9idNGXOcRyNIvM8Bm/hv+HRLkwx0AFrz1HYlVwVwzDEx03dHFAXWthtFxBxLo0HHgsRY
-	 XzC3tJLNdpAQ/X4VK0wPs77L+ywbIRxNheTUZArH1/qw9AEP8HabtJ+3+obAYrVvueOAE
-	 LR24iYWIi5j8gZJb74xzYaw22ZFNjw/qi4OL4h46bHsw0J8ncwuWs+cpPU7M1yzMoJw==
+	bh=BCj9eeVr3g59HTncqfOGAwByOWXB0Y4GwkXK6Os736Q=;
+	b=47KACXOj1xd+sRTT1EbN05mPdhbhC4RlSHTShYT0PszrpTevqnUHkyIPy2cYmpyv6uxu
+	 Iw3UDE5cMFzsvEo8OKKV1g8viokXxX0EkeRCabI2M+qut908FAoJc/9B3k4UxLLwh7cvl
+	 hg6U+g0lHD682X4+RHp3lKuVlVLuJS3xBwsNFmrDC9BB1fDii/LUrKdxF3XniiQmh97t6
+	 DXzVUHxwTToyRXFzrHD7n9fuodcmeIJ/zUR1vBw6CqKis3mKXS4oqd1arU2Ol1NpME0KV
+	 0jEB1y75pYvcNhbYxWldL7/tb+Tysl8e6HqqW76g9GA/dVAeT+U5a4qthyLdfir8SIg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=CWT6Yvh5;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=sErarz3B;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A33BE606A31E;
-	Wed, 25 Nov 2026 15:04:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7B5C6606A321;
+	Wed, 25 Nov 2026 15:04:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=CWT6Yvh5
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F1E851F000CA;
-	Wed, 25 Nov 2026 15:04:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=sErarz3B
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C91741F000C4;
+	Wed, 25 Nov 2026 15:04:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795619090;
-	bh=6DtPW4g+qBbkpOLCierz3gTuBc//IMrfe64QuXLMc3o=;
+	s=korg; t=1795619093;
+	bh=BCj9eeVr3g59HTncqfOGAwByOWXB0Y4GwkXK6Os736Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=CWT6Yvh5YgNohX/sXCVEZOOVfBA5gVAJGAzdpHV/VpTkeCr45IKbdnN62QYQ0SO78
-	 nlvRbTLk8CTUJb9x3wFVxI4w0JjLBUl2IyqYMispu6+Hdb9vzQc6FcsBcvvRIJrnDV
-	 1mpnrXud9lPvEbRKMgoKZsgtOzfwI9jAF5vwC+Uo=
+	b=sErarz3BNHxosfnr3MGenI+E8/AJoN8TuyPHgzOQJr2jr5DT+nWwGE1ITomXElgyw
+	 Se5XKDJiiPxtFsHoMlDz0rdY5b8heLcW4W4xqXPoikNGwOiztwm37+ykz6xJZdazGb
+	 JfB73UXzM407O1vo9s4OSozasLG9ZwvYe0OGkuHI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alexander Duyck <alexanderduyck@fb.com>,
-	Willem de Bruijn <willemb@google.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Benjamin Coddington <bcodding@hammerspace.com>,
+	Anna Schumaker <anna.schumaker@hammerspace.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0485/1005] net: Segment CHECKSUM_UNNECESSARY GSO skbs other than fraglist
-Date: Wed, 25 Nov 2026 15:30:23 +0100
-Message-ID: <20261125143833.108728940@linuxfoundation.org>
+Subject: [PATCH 7.3 0486/1005] NFSv4/flexfiles: Reference the device node across DS setup
+Date: Wed, 25 Nov 2026 15:30:24 +0100
+Message-ID: <20261125143833.132922520@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143821.729802100@linuxfoundation.org>
 References: <20261125143821.729802100@linuxfoundation.org>
@@ -69,75 +68,631 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alexander Duyck <alexanderduyck@fb.com>
+From: Benjamin Coddington <ben.coddington@hammerspace.com>
 
-[ Upstream commit fdca4b030c78fa2773a94fda3a6dc3ce5558a727 ]
+[ Upstream commit e85acae4cda89c075bc94520fdcf5901595fffae ]
 
-The netif_needs_gso function lets a GSO skb reach the device unsegmented
-when it is CHECKSUM_PARTIAL or CHECKSUM_UNNECESSARY. The second case was
-added for FCoE, whose transmit path marked CRC offload that way at the
-time. Commit 253aab0597d9 ("fcoe: Use CHECKSUM_PARTIAL to indicate CRC
-offload") moved FCoE back to CHECKSUM_PARTIAL but left the exemption in
-place, with nothing left that needed it. Fraglist GSO, added later, is
-its only user today, as its segments already carry valid checksums.
+The flexfiles I/O setup paths read the mirror's pinned per-stripe device
+node (mirror->dss[dss_id].mirror_ds) repeatedly and locklessly, relying
+on the mirror's lifetime pin.  To prepare for re-resolving that pointer
+in place on CB_NOTIFY_DEVICEID CHANGE, readers must hold their own
+reference on the node they are using rather than trusting the pin.
 
-A TCP GSO skb can still arrive as CHECKSUM_UNNECESSARY without being
-fraglist. Hardware LRO builds its aggregates that way, for example mlx5
-sets SKB_GSO_TCPV4 or SKB_GSO_TCPV6 and CHECKSUM_UNNECESSARY, without
-SKB_GSO_DODGY. IP forwarding and bridging turn LRO off, but a tc mirred
-redirect does not, so such an skb can be sent out another device. It
-has no csum_start and its TCP checksum field is whatever the aggregate
-left there. Drivers that only set up TSO for CHECKSUM_PARTIAL, such as
-fbnic, i40e and ice, then send the whole skb as one oversized frame
-with a bad checksum.
+Replace ff_layout_init_mirror_ds() with ff_layout_get_mirror_ds(), which
+resolves on first use as before but returns the node with its own
+reference held.  Thread the referenced node through
+nfs4_ff_layout_prepare_ds() and the DS selection helpers so each setup
+path snapshots the node once, and drop the reference when setup is done.
 
-Have the validate_xmit_skb function mark any CHECKSUM_UNNECESSARY GSO
-skb other than fraglist as CHECKSUM_NONE, which means the same on
-transmit but is not exempt in the netif_needs_gso function. The
-__skb_gso_segment function then unshares the header and the TCP GSO
-code sets the skb up as CHECKSUM_PARTIAL, so a device with TSO segments
-it in hardware. Without TSO, and for UDP, it is segmented in software.
-The callers of the netif_needs_gso function that decide on segmentation
-for themselves, such as tap, are left as they are.
+No functional change: the pointer is still resolved once and pinned for
+the life of the mirror.  Each reference this adds is released on every
+exit from the path that took it, error paths included.
 
-Found by code inspection. In QEMU with an emulated fbnic, TCPv4 and
-TCPv6 GSO skbs built this way each went out as a single 11 KB frame
-with a bad TCP checksum. With this change they are segmented into
-MSS-sized frames with valid checksums.
-
-Fixes: 253aab0597d9 ("fcoe: Use CHECKSUM_PARTIAL to indicate CRC offload")
-Signed-off-by: Alexander Duyck <alexanderduyck@fb.com>
-Reviewed-by: Willem de Bruijn <willemb@google.com>
-Link: https://patch.msgid.link/179372577673.49909.11253315483074546903.stgit@ahduyck-xeon-server.home.arpa
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Assisted-by: Claude:claude-fable-5
+Signed-off-by: Benjamin Coddington <bcodding@hammerspace.com>
+Signed-off-by: Anna Schumaker <anna.schumaker@hammerspace.com>
+Stable-dep-of: 788c4f628565 ("NFSv4/flexfiles: limit transport disconnects when cancelling I/O")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/core/dev.c | 12 ++++++++++++
- 1 file changed, 12 insertions(+)
+ fs/nfs/flexfilelayout/flexfilelayout.c    | 140 ++++++++++++++--------
+ fs/nfs/flexfilelayout/flexfilelayout.h    |  16 ++-
+ fs/nfs/flexfilelayout/flexfilelayoutdev.c |  74 +++++++-----
+ 3 files changed, 141 insertions(+), 89 deletions(-)
 
-diff --git a/net/core/dev.c b/net/core/dev.c
-index 80d37066bf2bf..6389e360a7a24 100644
---- a/net/core/dev.c
-+++ b/net/core/dev.c
-@@ -4105,6 +4105,18 @@ static struct sk_buff *validate_xmit_skb(struct sk_buff *skb, struct net_device
- 	if (unlikely(!skb))
- 		goto out_null;
+diff --git a/fs/nfs/flexfilelayout/flexfilelayout.c b/fs/nfs/flexfilelayout/flexfilelayout.c
+index 989f30e7d9509..8463021511c17 100644
+--- a/fs/nfs/flexfilelayout/flexfilelayout.c
++++ b/fs/nfs/flexfilelayout/flexfilelayout.c
+@@ -878,7 +878,7 @@ ff_layout_mark_ds_reachable(struct pnfs_layout_segment *lseg, u32 idx, u32 dss_i
+ 		nfs4_mark_deviceid_available(devid);
+ }
  
-+	/* Only fraglist GSO, whose segments already carry valid checksums,
-+	 * can be handed to a device as CHECKSUM_UNNECESSARY. Any other GSO
-+	 * skb has no csum_start for the device to segment from. NONE means
-+	 * the same on transmit, but makes netif_needs_gso() send it to the
-+	 * GSO code, which turns TCP into CHECKSUM_PARTIAL for TSO and
-+	 * segments anything the device cannot offload in software.
-+	 */
-+	if (unlikely(skb->ip_summed == CHECKSUM_UNNECESSARY &&
-+		     skb_is_gso(skb) &&
-+		     !(skb_shinfo(skb)->gso_type & SKB_GSO_FRAGLIST)))
-+		skb->ip_summed = CHECKSUM_NONE;
+-static struct nfs4_pnfs_ds *
++static struct nfs4_ff_layout_ds *
+ ff_layout_choose_ds_for_read(struct pnfs_layout_segment *lseg,
+ 			     u32 start_idx, u32 *best_idx,
+ 			     u64 offset, u32 *dss_id,
+@@ -886,7 +886,9 @@ ff_layout_choose_ds_for_read(struct pnfs_layout_segment *lseg,
+ {
+ 	struct nfs4_ff_layout_segment *fls = FF_LAYOUT_LSEG(lseg);
+ 	struct nfs4_ff_layout_mirror *mirror;
+-	struct nfs4_pnfs_ds *ds = ERR_PTR(-EAGAIN);
++	struct nfs4_ff_layout_ds *mirror_ds;
++	struct nfs4_ff_layout_ds *ret = ERR_PTR(-EAGAIN);
++	struct nfs4_pnfs_ds *ds;
+ 	u32 idx;
+ 
+ 	/* mirrors are initially sorted by efficiency */
+@@ -896,25 +898,32 @@ ff_layout_choose_ds_for_read(struct pnfs_layout_segment *lseg,
+ 			fls->stripe_unit,
+ 			fls->mirror_array[idx]->dss_count,
+ 			offset);
+-		ds = nfs4_ff_layout_prepare_ds(lseg, mirror, *dss_id, false);
+-		if (IS_ERR(ds))
++		mirror_ds = ff_layout_get_mirror_ds(lseg->pls_layout, mirror,
++						    *dss_id);
++		ds = nfs4_ff_layout_prepare_ds(lseg, mirror, mirror_ds,
++					       *dss_id, false);
++		if (IS_ERR(ds)) {
++			nfs4_ff_layout_put_deviceid(mirror_ds);
++			ret = ERR_CAST(ds);
+ 			continue;
++		}
+ 
+ 		if (check_device &&
+-		    nfs4_test_deviceid_unavailable(&mirror->dss[*dss_id].mirror_ds->id_node)) {
++		    nfs4_test_deviceid_unavailable(&mirror_ds->id_node)) {
++			nfs4_ff_layout_put_deviceid(mirror_ds);
+ 			// reinitialize the error state in case if this is the last iteration
+-			ds = ERR_PTR(-EINVAL);
++			ret = ERR_PTR(-EINVAL);
+ 			continue;
+ 		}
+ 
+ 		*best_idx = idx;
+-		break;
++		return mirror_ds;
+ 	}
+ 
+-	return ds;
++	return ret;
+ }
+ 
+-static struct nfs4_pnfs_ds *
++static struct nfs4_ff_layout_ds *
+ ff_layout_choose_any_ds_for_read(struct pnfs_layout_segment *lseg,
+ 				 u32 start_idx, u32 *best_idx,
+ 				 u64 offset, u32 *dss_id)
+@@ -923,7 +932,7 @@ ff_layout_choose_any_ds_for_read(struct pnfs_layout_segment *lseg,
+ 					    offset, dss_id, false);
+ }
+ 
+-static struct nfs4_pnfs_ds *
++static struct nfs4_ff_layout_ds *
+ ff_layout_choose_valid_ds_for_read(struct pnfs_layout_segment *lseg,
+ 				   u32 start_idx, u32 *best_idx,
+ 				   u64 offset, u32 *dss_id)
+@@ -932,34 +941,36 @@ ff_layout_choose_valid_ds_for_read(struct pnfs_layout_segment *lseg,
+ 					    offset, dss_id, true);
+ }
+ 
+-static struct nfs4_pnfs_ds *
++static struct nfs4_ff_layout_ds *
+ ff_layout_choose_best_ds_for_read(struct pnfs_layout_segment *lseg,
+ 				  u32 start_idx, u32 *best_idx,
+ 				  u64 offset, u32 *dss_id)
+ {
+-	struct nfs4_pnfs_ds *ds;
++	struct nfs4_ff_layout_ds *mirror_ds;
+ 
+-	ds = ff_layout_choose_valid_ds_for_read(lseg, start_idx, best_idx,
+-						offset, dss_id);
+-	if (!IS_ERR(ds))
+-		return ds;
++	mirror_ds = ff_layout_choose_valid_ds_for_read(lseg, start_idx,
++							best_idx, offset,
++							dss_id);
++	if (!IS_ERR(mirror_ds))
++		return mirror_ds;
+ 	return ff_layout_choose_any_ds_for_read(lseg, start_idx, best_idx,
+ 						offset, dss_id);
+ }
+ 
+-static struct nfs4_pnfs_ds *
++static struct nfs4_ff_layout_ds *
+ ff_layout_get_ds_for_read(struct nfs_pageio_descriptor *pgio,
+ 			  u32 *best_idx,
+ 			  u64 offset,
+ 			  u32 *dss_id)
+ {
+ 	struct pnfs_layout_segment *lseg = pgio->pg_lseg;
+-	struct nfs4_pnfs_ds *ds;
++	struct nfs4_ff_layout_ds *mirror_ds;
+ 
+-	ds = ff_layout_choose_best_ds_for_read(lseg, pgio->pg_mirror_idx,
+-					       best_idx, offset, dss_id);
+-	if (!IS_ERR(ds) || !pgio->pg_mirror_idx)
+-		return ds;
++	mirror_ds = ff_layout_choose_best_ds_for_read(lseg,
++						      pgio->pg_mirror_idx,
++						      best_idx, offset, dss_id);
++	if (!IS_ERR(mirror_ds) || !pgio->pg_mirror_idx)
++		return mirror_ds;
+ 	return ff_layout_choose_best_ds_for_read(lseg, 0, best_idx,
+ 						 offset, dss_id);
+ }
+@@ -1048,8 +1059,7 @@ ff_layout_pg_init_read(struct nfs_pageio_descriptor *pgio,
+ 			struct nfs_page *req)
+ {
+ 	struct nfs_pgio_mirror *pgm;
+-	struct nfs4_ff_layout_mirror *mirror;
+-	struct nfs4_pnfs_ds *ds;
++	struct nfs4_ff_layout_ds *mirror_ds;
+ 	u32 ds_idx, dss_id;
+ 
+ 	if (NFS_SERVER(pgio->pg_inode)->flags &
+@@ -1071,9 +1081,9 @@ ff_layout_pg_init_read(struct nfs_pageio_descriptor *pgio,
+ 	/* Reset wb_nio, since getting layout segment was successful */
+ 	req->wb_nio = 0;
+ 
+-	ds = ff_layout_get_ds_for_read(pgio, &ds_idx,
+-				       req_offset(req), &dss_id);
+-	if (IS_ERR(ds)) {
++	mirror_ds = ff_layout_get_ds_for_read(pgio, &ds_idx,
++					      req_offset(req), &dss_id);
++	if (IS_ERR(mirror_ds)) {
+ 		if (!ff_layout_no_fallback_to_mds(pgio->pg_lseg))
+ 			goto out_mds;
+ 		pnfs_generic_pg_cleanup(pgio);
+@@ -1083,9 +1093,9 @@ ff_layout_pg_init_read(struct nfs_pageio_descriptor *pgio,
+ 		goto retry;
+ 	}
+ 
+-	mirror = FF_LAYOUT_COMP(pgio->pg_lseg, ds_idx);
+ 	pgm = &pgio->pg_mirrors[0];
+-	pgm->pg_bsize = mirror->dss[dss_id].mirror_ds->ds_versions[0].rsize;
++	pgm->pg_bsize = mirror_ds->ds_versions[0].rsize;
++	nfs4_ff_layout_put_deviceid(mirror_ds);
+ 
+ 	pgio->pg_mirror_idx = ds_idx;
+ 	return;
+@@ -1135,6 +1145,7 @@ ff_layout_pg_init_write(struct nfs_pageio_descriptor *pgio,
+ 			struct nfs_page *req)
+ {
+ 	struct nfs4_ff_layout_mirror *mirror;
++	struct nfs4_ff_layout_ds *mirror_ds;
+ 	struct nfs_pgio_mirror *pgm;
+ 	struct nfs4_pnfs_ds *ds;
+ 	u32 i, dss_id;
+@@ -1166,9 +1177,12 @@ ff_layout_pg_init_write(struct nfs_pageio_descriptor *pgio,
+ 			FF_LAYOUT_LSEG(pgio->pg_lseg)->stripe_unit,
+ 			mirror->dss_count,
+ 			req_offset(req));
++		mirror_ds = ff_layout_get_mirror_ds(pgio->pg_lseg->pls_layout,
++						    mirror, dss_id);
+ 		ds = nfs4_ff_layout_prepare_ds(pgio->pg_lseg, mirror,
+-					       dss_id, true);
++					       mirror_ds, dss_id, true);
+ 		if (IS_ERR(ds)) {
++			nfs4_ff_layout_put_deviceid(mirror_ds);
+ 			if (!ff_layout_no_fallback_to_mds(pgio->pg_lseg))
+ 				goto out_mds;
+ 			pnfs_generic_pg_cleanup(pgio);
+@@ -1178,7 +1192,8 @@ ff_layout_pg_init_write(struct nfs_pageio_descriptor *pgio,
+ 			goto retry;
+ 		}
+ 		pgm = &pgio->pg_mirrors[i];
+-		pgm->pg_bsize = mirror->dss[dss_id].mirror_ds->ds_versions[0].wsize;
++		pgm->pg_bsize = mirror_ds->ds_versions[0].wsize;
++		nfs4_ff_layout_put_deviceid(mirror_ds);
+ 	}
+ 
+ 	if (NFS_SERVER(pgio->pg_inode)->flags &
+@@ -1310,14 +1325,16 @@ static void ff_layout_resend_pnfs_read(struct nfs_pgio_header *hdr)
+ 	u32 idx = hdr->pgio_mirror_idx + 1;
+ 	u32 new_idx = 0;
+ 	u32 dss_id = 0;
+-	struct nfs4_pnfs_ds *ds;
++	struct nfs4_ff_layout_ds *mirror_ds;
+ 
+-	ds = ff_layout_choose_any_ds_for_read(hdr->lseg, idx, &new_idx,
+-					      hdr->args.offset, &dss_id);
+-	if (IS_ERR(ds))
++	mirror_ds = ff_layout_choose_any_ds_for_read(hdr->lseg, idx, &new_idx,
++						     hdr->args.offset, &dss_id);
++	if (IS_ERR(mirror_ds)) {
+ 		pnfs_error_mark_layout_for_return(hdr->inode, hdr->lseg);
+-	else
++	} else {
++		nfs4_ff_layout_put_deviceid(mirror_ds);
+ 		ff_layout_send_layouterror(hdr->lseg);
++	}
+ 	pnfs_read_resend_pnfs(hdr, new_idx);
+ }
+ 
+@@ -2238,6 +2255,7 @@ ff_layout_read_pagelist(struct nfs_pgio_header *hdr)
+ 	struct rpc_clnt *ds_clnt;
+ 	struct nfsd_file *localio;
+ 	struct nfs4_ff_layout_mirror *mirror;
++	struct nfs4_ff_layout_ds *mirror_ds;
+ 	const struct cred *ds_cred;
+ 	loff_t offset = hdr->args.offset;
+ 	u32 idx = hdr->pgio_mirror_idx;
+@@ -2255,22 +2273,24 @@ ff_layout_read_pagelist(struct nfs_pgio_header *hdr)
+ 		FF_LAYOUT_LSEG(lseg)->stripe_unit,
+ 		mirror->dss_count,
+ 		offset);
+-	ds = nfs4_ff_layout_prepare_ds(lseg, mirror, dss_id, false);
++	mirror_ds = ff_layout_get_mirror_ds(lseg->pls_layout, mirror, dss_id);
++	ds = nfs4_ff_layout_prepare_ds(lseg, mirror, mirror_ds, dss_id, false);
+ 	if (IS_ERR(ds)) {
+ 		ds_fatal_error = nfs_error_is_fatal(PTR_ERR(ds));
+ 		goto out_failed;
+ 	}
+ 
+-	ds_clnt = nfs4_ff_find_or_create_ds_client(mirror, ds->ds_clp,
+-						   hdr->inode, dss_id);
++	ds_clnt = nfs4_ff_find_or_create_ds_client(mirror_ds, ds->ds_clp,
++						   hdr->inode);
+ 	if (IS_ERR(ds_clnt))
+ 		goto out_failed;
+ 
+-	ds_cred = ff_layout_get_ds_cred(mirror, &lseg->pls_range, hdr->cred, dss_id);
++	ds_cred = ff_layout_get_ds_cred(mirror, &lseg->pls_range, hdr->cred,
++					mirror_ds, dss_id);
+ 	if (!ds_cred)
+ 		goto out_failed;
+ 
+-	vers = nfs4_ff_layout_ds_version(mirror, dss_id);
++	vers = nfs4_ff_layout_ds_version(mirror_ds);
+ 
+ 	dprintk("%s USE DS: %s cl_count %d vers %d\n", __func__,
+ 		ds->ds_remotestr, refcount_read(&ds->ds_clp->cl_count), vers);
+@@ -2282,7 +2302,8 @@ ff_layout_read_pagelist(struct nfs_pgio_header *hdr)
+ 	if (fh)
+ 		hdr->args.fh = fh;
+ 
+-	nfs4_ff_layout_select_ds_stateid(mirror, dss_id, &hdr->args.stateid);
++	nfs4_ff_layout_select_ds_stateid(mirror, mirror_ds, dss_id,
++					 &hdr->args.stateid);
+ 
+ 	/*
+ 	 * Note that if we ever decide to split across DSes,
+@@ -2305,9 +2326,11 @@ ff_layout_read_pagelist(struct nfs_pgio_header *hdr)
+ 				      &ff_layout_read_call_ops_v4,
+ 			  0, RPC_TASK_SOFTCONN, localio);
+ 	put_cred(ds_cred);
++	nfs4_ff_layout_put_deviceid(mirror_ds);
+ 	return PNFS_ATTEMPTED;
+ 
+ out_failed:
++	nfs4_ff_layout_put_deviceid(mirror_ds);
+ 	if (ff_layout_avoid_mds_available_ds(lseg) && !ds_fatal_error)
+ 		return PNFS_TRY_AGAIN;
+ 	if (ff_layout_no_fallback_to_mds(lseg)) {
+@@ -2333,6 +2356,7 @@ ff_layout_write_pagelist(struct nfs_pgio_header *hdr, int sync)
+ 	struct rpc_clnt *ds_clnt;
+ 	struct nfsd_file *localio;
+ 	struct nfs4_ff_layout_mirror *mirror;
++	struct nfs4_ff_layout_ds *mirror_ds;
+ 	const struct cred *ds_cred;
+ 	loff_t offset = hdr->args.offset;
+ 	int vers;
+@@ -2346,22 +2370,24 @@ ff_layout_write_pagelist(struct nfs_pgio_header *hdr, int sync)
+ 		FF_LAYOUT_LSEG(lseg)->stripe_unit,
+ 		mirror->dss_count,
+ 		offset);
+-	ds = nfs4_ff_layout_prepare_ds(lseg, mirror, dss_id, true);
++	mirror_ds = ff_layout_get_mirror_ds(lseg->pls_layout, mirror, dss_id);
++	ds = nfs4_ff_layout_prepare_ds(lseg, mirror, mirror_ds, dss_id, true);
+ 	if (IS_ERR(ds)) {
+ 		ds_fatal_error = nfs_error_is_fatal(PTR_ERR(ds));
+ 		goto out_failed;
+ 	}
+ 
+-	ds_clnt = nfs4_ff_find_or_create_ds_client(mirror, ds->ds_clp,
+-						   hdr->inode, dss_id);
++	ds_clnt = nfs4_ff_find_or_create_ds_client(mirror_ds, ds->ds_clp,
++						   hdr->inode);
+ 	if (IS_ERR(ds_clnt))
+ 		goto out_failed;
+ 
+-	ds_cred = ff_layout_get_ds_cred(mirror, &lseg->pls_range, hdr->cred, dss_id);
++	ds_cred = ff_layout_get_ds_cred(mirror, &lseg->pls_range, hdr->cred,
++					mirror_ds, dss_id);
+ 	if (!ds_cred)
+ 		goto out_failed;
+ 
+-	vers = nfs4_ff_layout_ds_version(mirror, dss_id);
++	vers = nfs4_ff_layout_ds_version(mirror_ds);
+ 
+ 	dprintk("%s ino %llu sync %d req %zu@%llu DS: %s cl_count %d vers %d\n",
+ 		__func__, hdr->inode->i_ino, sync, (size_t) hdr->args.count,
+@@ -2376,7 +2402,8 @@ ff_layout_write_pagelist(struct nfs_pgio_header *hdr, int sync)
+ 	if (fh)
+ 		hdr->args.fh = fh;
+ 
+-	nfs4_ff_layout_select_ds_stateid(mirror, dss_id, &hdr->args.stateid);
++	nfs4_ff_layout_select_ds_stateid(mirror, mirror_ds, dss_id,
++					 &hdr->args.stateid);
+ 
+ 	/*
+ 	 * Note that if we ever decide to split across DSes,
+@@ -2398,9 +2425,11 @@ ff_layout_write_pagelist(struct nfs_pgio_header *hdr, int sync)
+ 				      &ff_layout_write_call_ops_v4,
+ 			  sync, RPC_TASK_SOFTCONN, localio);
+ 	put_cred(ds_cred);
++	nfs4_ff_layout_put_deviceid(mirror_ds);
+ 	return PNFS_ATTEMPTED;
+ 
+ out_failed:
++	nfs4_ff_layout_put_deviceid(mirror_ds);
+ 	if (ff_layout_avoid_mds_available_ds(lseg) && !ds_fatal_error)
+ 		return PNFS_TRY_AGAIN;
+ 	if (ff_layout_no_fallback_to_mds(lseg)) {
+@@ -2435,6 +2464,7 @@ static int ff_layout_initiate_commit(struct nfs_commit_data *data, int how)
+ 	struct rpc_clnt *ds_clnt;
+ 	struct nfsd_file *localio;
+ 	struct nfs4_ff_layout_mirror *mirror;
++	struct nfs4_ff_layout_ds *mirror_ds = NULL;
+ 	const struct cred *ds_cred;
+ 	u32 idx, dss_id;
+ 	int vers, ret;
+@@ -2447,20 +2477,22 @@ static int ff_layout_initiate_commit(struct nfs_commit_data *data, int how)
+ 	idx = calc_mirror_idx_from_commit(lseg, data->ds_commit_index);
+ 	mirror = FF_LAYOUT_COMP(lseg, idx);
+ 	dss_id = calc_dss_id_from_commit(lseg, data->ds_commit_index);
+-	ds = nfs4_ff_layout_prepare_ds(lseg, mirror, dss_id, true);
++	mirror_ds = ff_layout_get_mirror_ds(lseg->pls_layout, mirror, dss_id);
++	ds = nfs4_ff_layout_prepare_ds(lseg, mirror, mirror_ds, dss_id, true);
+ 	if (IS_ERR(ds))
+ 		goto out_err;
+ 
+-	ds_clnt = nfs4_ff_find_or_create_ds_client(mirror, ds->ds_clp,
+-						   data->inode, dss_id);
++	ds_clnt = nfs4_ff_find_or_create_ds_client(mirror_ds, ds->ds_clp,
++						   data->inode);
+ 	if (IS_ERR(ds_clnt))
+ 		goto out_err;
+ 
+-	ds_cred = ff_layout_get_ds_cred(mirror, &lseg->pls_range, data->cred, dss_id);
++	ds_cred = ff_layout_get_ds_cred(mirror, &lseg->pls_range, data->cred,
++					mirror_ds, dss_id);
+ 	if (!ds_cred)
+ 		goto out_err;
+ 
+-	vers = nfs4_ff_layout_ds_version(mirror, dss_id);
++	vers = nfs4_ff_layout_ds_version(mirror_ds);
+ 
+ 	dprintk("%s ino %llu, how %d cl_count %d vers %d\n", __func__,
+ 		data->inode->i_ino, how, refcount_read(&ds->ds_clp->cl_count),
+@@ -2486,8 +2518,10 @@ static int ff_layout_initiate_commit(struct nfs_commit_data *data, int how)
+ 					       &ff_layout_commit_call_ops_v4,
+ 				   how, RPC_TASK_SOFTCONN, localio);
+ 	put_cred(ds_cred);
++	nfs4_ff_layout_put_deviceid(mirror_ds);
+ 	return ret;
+ out_err:
++	nfs4_ff_layout_put_deviceid(mirror_ds);
+ 	pnfs_generic_prepare_to_resend_writes(data);
+ 	pnfs_generic_commit_release(data);
+ 	return -EAGAIN;
+diff --git a/fs/nfs/flexfilelayout/flexfilelayout.h b/fs/nfs/flexfilelayout/flexfilelayout.h
+index ec69cd1c3ae96..f9e491a0347e1 100644
+--- a/fs/nfs/flexfilelayout/flexfilelayout.h
++++ b/fs/nfs/flexfilelayout/flexfilelayout.h
+@@ -207,9 +207,9 @@ ff_layout_no_read_on_rw(struct pnfs_layout_segment *lseg)
+ }
+ 
+ static inline int
+-nfs4_ff_layout_ds_version(const struct nfs4_ff_layout_mirror *mirror, u32 dss_id)
++nfs4_ff_layout_ds_version(const struct nfs4_ff_layout_ds *mirror_ds)
+ {
+-	return mirror->dss[dss_id].mirror_ds->ds_versions[0].version;
++	return mirror_ds->ds_versions[0].version;
+ }
+ 
+ static inline u32
+@@ -245,23 +245,29 @@ struct nfs_fh *
+ nfs4_ff_layout_select_ds_fh(struct nfs4_ff_layout_mirror *mirror, u32 dss_id);
+ void
+ nfs4_ff_layout_select_ds_stateid(const struct nfs4_ff_layout_mirror *mirror,
++				 const struct nfs4_ff_layout_ds *mirror_ds,
+ 				 u32 dss_id,
+ 				 nfs4_stateid *stateid);
+ 
++struct nfs4_ff_layout_ds *
++ff_layout_get_mirror_ds(struct pnfs_layout_hdr *lo,
++			struct nfs4_ff_layout_mirror *mirror,
++			u32 dss_id);
+ struct nfs4_pnfs_ds *
+ nfs4_ff_layout_prepare_ds(struct pnfs_layout_segment *lseg,
+ 			  struct nfs4_ff_layout_mirror *mirror,
++			  struct nfs4_ff_layout_ds *mirror_ds,
+ 			  u32 dss_id,
+ 			  bool fail_return);
+ 
+ struct rpc_clnt *
+-nfs4_ff_find_or_create_ds_client(struct nfs4_ff_layout_mirror *mirror,
++nfs4_ff_find_or_create_ds_client(const struct nfs4_ff_layout_ds *mirror_ds,
+ 				 struct nfs_client *ds_clp,
+-				 struct inode *inode,
+-				 u32 dss_id);
++				 struct inode *inode);
+ const struct cred *ff_layout_get_ds_cred(struct nfs4_ff_layout_mirror *mirror,
+ 					 const struct pnfs_layout_range *range,
+ 					 const struct cred *mdscred,
++					 const struct nfs4_ff_layout_ds *mirror_ds,
+ 					 u32 dss_id);
+ bool ff_layout_avoid_mds_available_ds(struct pnfs_layout_segment *lseg);
+ bool ff_layout_avoid_read_on_rw(struct pnfs_layout_segment *lseg);
+diff --git a/fs/nfs/flexfilelayout/flexfilelayoutdev.c b/fs/nfs/flexfilelayout/flexfilelayoutdev.c
+index 6cd3859d4a243..3712a47b20d08 100644
+--- a/fs/nfs/flexfilelayout/flexfilelayoutdev.c
++++ b/fs/nfs/flexfilelayout/flexfilelayoutdev.c
+@@ -304,24 +304,33 @@ nfs4_ff_layout_select_ds_fh(struct nfs4_ff_layout_mirror *mirror, u32 dss_id)
+ 
+ void
+ nfs4_ff_layout_select_ds_stateid(const struct nfs4_ff_layout_mirror *mirror,
++				 const struct nfs4_ff_layout_ds *mirror_ds,
+ 				 u32 dss_id,
+ 				 nfs4_stateid *stateid)
+ {
+-	if (nfs4_ff_layout_ds_version(mirror, dss_id) == 4)
++	if (nfs4_ff_layout_ds_version(mirror_ds) == 4)
+ 		nfs4_stateid_copy(stateid, &mirror->dss[dss_id].stateid);
+ }
+ 
+-static bool
+-ff_layout_init_mirror_ds(struct pnfs_layout_hdr *lo,
+-			 struct nfs4_ff_layout_mirror *mirror,
+-			 u32 dss_id)
++/*
++ * Resolve the stripe's deviceid on first use and pin the node on the
++ * mirror.  Returns a node the caller must put, or an ERR_PTR.
++ */
++struct nfs4_ff_layout_ds *
++ff_layout_get_mirror_ds(struct pnfs_layout_hdr *lo,
++			struct nfs4_ff_layout_mirror *mirror,
++			u32 dss_id)
+ {
++	struct nfs4_ff_layout_ds *mirror_ds;
 +
- 	features = netif_skb_features(skb);
- 	skb = validate_xmit_vlan(skb, features);
- 	if (unlikely(!skb))
+ 	if (mirror == NULL)
+-		goto outerr;
+-	if (mirror->dss[dss_id].mirror_ds == NULL) {
++		return ERR_PTR(-ENODEV);
++
++	mirror_ds = mirror->dss[dss_id].mirror_ds;
++	if (mirror_ds == NULL) {
+ 		struct nfs4_deviceid_node *node;
+-		struct nfs4_ff_layout_ds *mirror_ds = ERR_PTR(-ENODEV);
+ 
++		mirror_ds = ERR_PTR(-ENODEV);
+ 		node = nfs4_find_get_deviceid(NFS_SERVER(lo->plh_inode),
+ 				&mirror->dss[dss_id].devid, lo->plh_lc_cred,
+ 				GFP_KERNEL);
+@@ -332,20 +341,23 @@ ff_layout_init_mirror_ds(struct pnfs_layout_hdr *lo,
+ 		if (cmpxchg(&mirror->dss[dss_id].mirror_ds, NULL, mirror_ds) &&
+ 		    mirror_ds != ERR_PTR(-ENODEV))
+ 			nfs4_put_deviceid_node(node);
+-	}
+ 
+-	if (IS_ERR(mirror->dss[dss_id].mirror_ds))
+-		goto outerr;
++		mirror_ds = mirror->dss[dss_id].mirror_ds;
++	}
+ 
+-	return true;
+-outerr:
+-	return false;
++	if (IS_ERR(mirror_ds))
++		return mirror_ds;
++	if (!atomic_inc_not_zero(&mirror_ds->id_node.ref))
++		return ERR_PTR(-ENODEV);
++	return mirror_ds;
+ }
+ 
+ /**
+  * nfs4_ff_layout_prepare_ds - prepare a DS connection for an RPC call
+  * @lseg: the layout segment we're operating on
+  * @mirror: layout mirror describing the DS to use
++ * @mirror_ds: referenced device node for the stripe, from
++ *	ff_layout_get_mirror_ds() (may be an ERR_PTR)
+  * @dss_id: DS stripe id to select stripe to use
+  * @fail_return: return layout on connect failure?
+  *
+@@ -363,6 +375,7 @@ ff_layout_init_mirror_ds(struct pnfs_layout_hdr *lo,
+ struct nfs4_pnfs_ds *
+ nfs4_ff_layout_prepare_ds(struct pnfs_layout_segment *lseg,
+ 			  struct nfs4_ff_layout_mirror *mirror,
++			  struct nfs4_ff_layout_ds *mirror_ds,
+ 			  u32 dss_id,
+ 			  bool fail_return)
+ {
+@@ -372,10 +385,10 @@ nfs4_ff_layout_prepare_ds(struct pnfs_layout_segment *lseg,
+ 	unsigned int max_payload;
+ 	int status = -EAGAIN;
+ 
+-	if (!ff_layout_init_mirror_ds(lseg->pls_layout, mirror, dss_id))
++	if (IS_ERR_OR_NULL(mirror_ds))
+ 		goto noconnect;
+ 
+-	ds = mirror->dss[dss_id].mirror_ds->ds;
++	ds = mirror_ds->ds;
+ 	if (READ_ONCE(ds->ds_clp))
+ 		goto out;
+ 	/* matching smp_wmb() in _nfs4_pnfs_v3/4_ds_connect */
+@@ -384,11 +397,11 @@ nfs4_ff_layout_prepare_ds(struct pnfs_layout_segment *lseg,
+ 	/* FIXME: For now we assume the server sent only one version of NFS
+ 	 * to use for the DS.
+ 	 */
+-	status = nfs4_pnfs_ds_connect(s, ds, &mirror->dss[dss_id].mirror_ds->id_node,
++	status = nfs4_pnfs_ds_connect(s, ds, &mirror_ds->id_node,
+ 			     dataserver_timeo, dataserver_retrans,
+-			     mirror->dss[dss_id].mirror_ds->ds_versions[0].version,
+-			     mirror->dss[dss_id].mirror_ds->ds_versions[0].minor_version,
+-			     mirror->dss[dss_id].mirror_ds->ds_versions[0].tightly_coupled);
++			     mirror_ds->ds_versions[0].version,
++			     mirror_ds->ds_versions[0].minor_version,
++			     mirror_ds->ds_versions[0].tightly_coupled);
+ 
+ 	/* connect success, check rsize/wsize limit */
+ 	if (!status) {
+@@ -401,10 +414,10 @@ nfs4_ff_layout_prepare_ds(struct pnfs_layout_segment *lseg,
+ 		max_payload =
+ 			nfs_block_size(rpc_max_payload(ds->ds_clp->cl_rpcclient),
+ 				       NULL);
+-		if (mirror->dss[dss_id].mirror_ds->ds_versions[0].rsize > max_payload)
+-			mirror->dss[dss_id].mirror_ds->ds_versions[0].rsize = max_payload;
+-		if (mirror->dss[dss_id].mirror_ds->ds_versions[0].wsize > max_payload)
+-			mirror->dss[dss_id].mirror_ds->ds_versions[0].wsize = max_payload;
++		if (mirror_ds->ds_versions[0].rsize > max_payload)
++			mirror_ds->ds_versions[0].rsize = max_payload;
++		if (mirror_ds->ds_versions[0].wsize > max_payload)
++			mirror_ds->ds_versions[0].wsize = max_payload;
+ 		goto out;
+ 	}
+ noconnect:
+@@ -424,11 +437,12 @@ const struct cred *
+ ff_layout_get_ds_cred(struct nfs4_ff_layout_mirror *mirror,
+ 		      const struct pnfs_layout_range *range,
+ 		      const struct cred *mdscred,
++		      const struct nfs4_ff_layout_ds *mirror_ds,
+ 		      u32 dss_id)
+ {
+ 	const struct cred *cred;
+ 
+-	if (mirror && !mirror->dss[dss_id].mirror_ds->ds_versions[0].tightly_coupled) {
++	if (mirror && !mirror_ds->ds_versions[0].tightly_coupled) {
+ 		cred = ff_layout_get_mirror_cred(mirror, range->iomode, dss_id);
+ 		if (!cred)
+ 			cred = get_cred(mdscred);
+@@ -440,20 +454,18 @@ ff_layout_get_ds_cred(struct nfs4_ff_layout_mirror *mirror,
+ 
+ /**
+  * nfs4_ff_find_or_create_ds_client - Find or create a DS rpc client
+- * @mirror: pointer to the mirror
++ * @mirror_ds: device node for the stripe
+  * @ds_clp: nfs_client for the DS
+  * @inode: pointer to inode
+- * @dss_id: DS stripe id
+  *
+  * Find or create a DS rpc client with th MDS server rpc client auth flavor
+  * in the nfs_client cl_ds_clients list.
+  */
+ struct rpc_clnt *
+-nfs4_ff_find_or_create_ds_client(struct nfs4_ff_layout_mirror *mirror,
+-				 struct nfs_client *ds_clp, struct inode *inode,
+-				 u32 dss_id)
++nfs4_ff_find_or_create_ds_client(const struct nfs4_ff_layout_ds *mirror_ds,
++				 struct nfs_client *ds_clp, struct inode *inode)
+ {
+-	switch (mirror->dss[dss_id].mirror_ds->ds_versions[0].version) {
++	switch (mirror_ds->ds_versions[0].version) {
+ 	case 3:
+ 		/* For NFSv3 DS, flavor is set when creating DS connections */
+ 		return ds_clp->cl_rpcclient;
 -- 
 2.53.0
 
