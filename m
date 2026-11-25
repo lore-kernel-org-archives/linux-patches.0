@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795618701;
-	b=Muaa6FAdczL7Y1QsojVg0Tj8a97pGeoWalLtKy7EjI8NprXHlW6tnrJAbej+Vqau6mFs
-	 gt9T6IiEKOddlrXQm4lg8x0WOYyN7YjTyS0devONxGloNc9C6jvETQKE1NN040k1b33ur
-	 a9YzKYSzoS3fWvqWFWZeOryh4ZnVZu00Y/Y8yZ5+D5P6BHe0svMUCMkLOIMjb1Ugok5GE
-	 ZQ/8825VxgIVuuHsMVcQQeiQXofuwtyQY9CBstC6SoaFAFHqOamzmxJhvuFbt6rNQGKIw
-	 XLlaJzjTNPMBvMneSPYgZyzHfHDgLZTa4Vjz01R1ItJhVyJW6L2VFewQ+pZwOUEL11Q==
+	t=1795618705;
+	b=jzPt9Rm/05XtRWcNt9INMwxoeIyIhj7KWD9Z7DWC+CdCCaZk3KvgJnMhYtE0ER1xtumY
+	 kGpyllg9L34cbPmXd1NPQAlskOclOZ3X6f6pPS2g8bFmee/W0r/mD8FOer/1wUYw8Yfm+
+	 IYvYL1e0MURj8l6HHXZndHo++l3ZTEbjX5Q85iTILIF/uKdW1rOJZzmZgF1WJC7wPtH/X
+	 oDuNNaycmZf5T8nlekRsWv6ndjjfndQ+Nrj9zmIwRppuHen+lFCOVtOfHXguWo7yAqoTN
+	 oT6tQw2GglESN+buUFSGPCmCw18VqvYh8RLFUah4WZfI67Y9FfdUEZQN5heKvvZWQdw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795618701;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795618705;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=yX8Nr2U4GlFmin4t+PidZpmg/reKlckwOlmZJym3KBI=;
-	b=NaiZ7Sh8km+SIkFHWcQxRtT6CuGza+SCTi5H7eK/1deVLeN+AqM0FaL9bkwW02CPqTHu
-	 Fjlms6xbahyhllbvCtnWNnYtPDjN0VOfj3mfjmFzzbQEzN2B5xV4rUFaPA+u3X1WHOSU1
-	 ChOVaEwl8f7sGHWFd2IJa0JFLzIAgfs2IpPyJIQ1otvrycF4S6WNAcpZkMEkYKOeWX7G4
-	 Y9n8DjX4r+OPeXBJ7gaw9LYAsShQDUwy78VqYINpVtyDjP2dRbvo4rCKdLFkPmRK6VSnN
-	 FE9POYClNow55Lu/DTijCcGHLXZDt0Gp/KmMO2nxf4yTD+lPbx29S2+Y3EQD/5mAHEA==
+	bh=2S0TDq0bK6h0DxlSjti5HoLhRHXpY9UNjWAfWYfwN0Y=;
+	b=sjG/gGu6Z9ErmvqtuuP+w0qLL501SFewZ+kgMr/SsHREF3fcosS9qaR9yUoC273WDE1I
+	 VphukPM/Mfh9B8hCQP/JyLYgktPKhRaKnvVrOqHJhcXCvBc2SCUAsyZbU/6Vi0p7uLopC
+	 sxt863pSTZ6+gXTbfn4svRT7FsDsg9JokZP/gJ9aHbGn6CPDFS9J2OnuwuledQVpILhQZ
+	 Ef61JVmJSi08Tq0MC/fUiGsoeJTxx4C1al5I2Z87b/O3CZY2lSmBRXMaxtrT+yTU8Lm/u
+	 5Fh1h4KQcCBW3F2XMrrGfrE8h0Drcs7oivTHDQ9sgf+ncAX6Mv9ovKJDVYpkP+Giyqw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Yf0woESZ;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=itIdFl3r;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 535F1606A32A;
-	Wed, 25 Nov 2026 14:58:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0156D606A31E;
+	Wed, 25 Nov 2026 14:58:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Yf0woESZ
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 565EA1F000C0;
-	Wed, 25 Nov 2026 14:58:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=itIdFl3r
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AB9831F000C4;
+	Wed, 25 Nov 2026 14:58:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795618700;
-	bh=yX8Nr2U4GlFmin4t+PidZpmg/reKlckwOlmZJym3KBI=;
+	s=korg; t=1795618704;
+	bh=2S0TDq0bK6h0DxlSjti5HoLhRHXpY9UNjWAfWYfwN0Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Yf0woESZyz/ap2RBbz38MDTkMx9OTSg1MfQ6BkF8K5QWc+s+nGTn1kJKFc36lDRCs
-	 /8EUhIv8jg8tIvECxDIE/3bu4cRhBFdAL+Fy0iZNBrcj6maBPlAlhegkxelwwyCJjJ
-	 ddvqpYJ0aw7Ad94+x4tf/9a4BaeB+B7iqvm9P3dw=
+	b=itIdFl3rGmPE2GOnVvYxfdTswvNekQl33v+MkbbuCOuw9JukKPHMxhJMurdQaYSRo
+	 YP4MmNmSyN9NzBIdGB6iZHgE4KNO9h3B1+mCZW7+5Acr0/uJ4lJ5JRJqqcvPeKypRY
+	 HtyZQmkNI5K8Ysl3hJ9w2SzVxFix7NfRWrhb6Acw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	VEGA <vega@nebusec.ai>,
+	Joas Antonio dos Santos <joasantonio108@gmail.com>,
 	Fernando Fernandez Mancera <fmancera@suse.de>,
 	Pablo Neira Ayuso <pablo@netfilter.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0316/1005] netfilter: x_tables: check target name before accessing verdict
-Date: Wed, 25 Nov 2026 15:27:34 +0100
-Message-ID: <20261125143829.140738275@linuxfoundation.org>
+Subject: [PATCH 7.3 0317/1005] netfilter: nf_conntrack_sip: fix OOB read in ct_sip_parse_transport()
+Date: Wed, 25 Nov 2026 15:27:35 +0100
+Message-ID: <20261125143829.163720458@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143821.729802100@linuxfoundation.org>
 References: <20261125143821.729802100@linuxfoundation.org>
@@ -69,115 +69,58 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Fernando Fernandez Mancera <fmancera@suse.de>
+From: Joas Antonio dos Santos <joasantonio108@gmail.com>
 
-[ Upstream commit 364b200285bb2cc518e3c5efe6591951c05b8e01 ]
+[ Upstream commit 7af52bda65c0bbbf40894aa3df36ac1bb5697984 ]
 
-Non-standard targets may contain only struct xt_entry_target.
-mark_source_chains() nevertheless reads the target as an
-xt_standard_target before checking its name, potentially reading four
-bytes beyond a header-only target.
+ct_sip_parse_transport() compares the value of the "transport=" header
+parameter against "TCP"/"UDP" with strncasecmp(..., 3), but it never
+checks that the parsed value is at least 3 bytes long.
 
-Check that the target is standard before reading its verdict.
-Non-standard targets remain handled as fallthrough rules.
+ct_sip_parse_param() returns matchlen = end - start, where end is the
+next ';' or, when there is no ';', the end of the payload buffer
+(limit = dptr + datalen).  If the "transport=" value is only 1 or 2
+bytes long and runs exactly to the end of the payload (e.g. a REGISTER
+request whose Contact header ends in ";transport=T" with no trailing
+CRLF), matchlen is less than 3 while strncasecmp() still reads up to 3
+bytes, reading 1-2 bytes past the end of the linearized skb data.
 
-See the following KASAN trace:
+Add a matchlen check before the comparison, mirroring the
+sdp_media_type() pattern a few lines below, so short values cannot reach
+strncasecmp().
 
-BUG: KASAN: slab-out-of-bounds in translate_table+0x1660/0x1a40 [ip6_tables]
-Read of size 4 at addr ffff88800ed56ff8 by task rep/432
+The bug was found by LLM-assisted manual review of the SIP helper's
+parsers and confirmed with a userspace ASan harness built from the
+verbatim parser functions, which reports a heap-buffer-overflow read of
+size 2 in strncasecmp() called from ct_sip_parse_transport().
 
-Call Trace:
- kasan_report+0xfa/0x120
- translate_table+0x1660/0x1a40 [ip6_tables]
- do_ip6t_set_ctl+0x667/0xa76 [ip6_tables]
- nf_setsockopt+0x77/0xd0
- do_sock_setsockopt+0x118/0x490
- __sys_setsockopt+0xe4/0x160
- __x64_sys_setsockopt+0xbd/0x190
- do_syscall_64+0xde/0x4f0
- entry_SYSCALL_64_after_hwframe+0x77/0x7f
-
-Allocated by task 432:
- kasan_save_stack+0x2f/0x50
- __kasan_kmalloc+0x7f/0x90
- __kvmalloc_node_noprof+0x1b1/0x5c0
- xt_alloc_table_info+0x3c/0xa0
- do_ip6t_set_ctl+0x5ee/0xa76 [ip6_tables]
- nf_setsockopt+0x77/0xd0
- do_sock_setsockopt+0x118/0x490
- __sys_setsockopt+0xe4/0x160
- __x64_sys_setsockopt+0xbd/0x190
- do_syscall_64+0xde/0x4f0
- entry_SYSCALL_64_after_hwframe+0x77/0x7f
-
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Reported-by: VEGA <vega@nebusec.ai>
-Signed-off-by: Fernando Fernandez Mancera <fmancera@suse.de>
+Fixes: ea45f12a2766d ("[NETFILTER]: nf_conntrack_sip: parse SIP headers properly")
+Link: https://patch.msgid.link/20260815133104.50369-1-joasantonio108@gmail.com/
+Signed-off-by: Joas Antonio dos Santos <joasantonio108@gmail.com>
+Assisted-by: Claude:claude-opus-5-5
+Reviewed-by: Fernando Fernandez Mancera <fmancera@suse.de>
 Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv4/netfilter/arp_tables.c | 5 +++--
- net/ipv4/netfilter/ip_tables.c  | 5 +++--
- net/ipv6/netfilter/ip6_tables.c | 5 +++--
- 3 files changed, 9 insertions(+), 6 deletions(-)
+ net/netfilter/nf_conntrack_sip.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/net/ipv4/netfilter/arp_tables.c b/net/ipv4/netfilter/arp_tables.c
-index db307fa49f3f6..8c5f7cf15045e 100644
---- a/net/ipv4/netfilter/arp_tables.c
-+++ b/net/ipv4/netfilter/arp_tables.c
-@@ -371,11 +371,12 @@ static int mark_source_chains(const struct xt_table_info *newinfo,
- 				e->counters.pcnt = pos;
- 				pos += size;
- 			} else {
--				int newpos = t->verdict;
-+				int newpos;
+diff --git a/net/netfilter/nf_conntrack_sip.c b/net/netfilter/nf_conntrack_sip.c
+index 64bc440b1181f..b05dc8858d094 100644
+--- a/net/netfilter/nf_conntrack_sip.c
++++ b/net/netfilter/nf_conntrack_sip.c
+@@ -701,9 +701,9 @@ static int ct_sip_parse_transport(struct nf_conn *ct, const char *dptr,
  
- 				if (strcmp(t->target.u.user.name,
- 					   XT_STANDARD_TARGET) == 0 &&
--				    newpos >= 0) {
-+				    t->verdict >= 0) {
-+					newpos = t->verdict;
- 					/* This a jump; chase it. */
- 					if (!xt_find_jump_offset(offsets, newpos,
- 								 newinfo->number))
-diff --git a/net/ipv4/netfilter/ip_tables.c b/net/ipv4/netfilter/ip_tables.c
-index 809441cedcedc..b302bd77180a7 100644
---- a/net/ipv4/netfilter/ip_tables.c
-+++ b/net/ipv4/netfilter/ip_tables.c
-@@ -422,11 +422,12 @@ mark_source_chains(const struct xt_table_info *newinfo,
- 				e->counters.pcnt = pos;
- 				pos += size;
- 			} else {
--				int newpos = t->verdict;
-+				int newpos;
- 
- 				if (strcmp(t->target.u.user.name,
- 					   XT_STANDARD_TARGET) == 0 &&
--				    newpos >= 0) {
-+				    t->verdict >= 0) {
-+					newpos = t->verdict;
- 					/* This a jump; chase it. */
- 					if (!xt_find_jump_offset(offsets, newpos,
- 								 newinfo->number))
-diff --git a/net/ipv6/netfilter/ip6_tables.c b/net/ipv6/netfilter/ip6_tables.c
-index 313c4aac377aa..010baaa606657 100644
---- a/net/ipv6/netfilter/ip6_tables.c
-+++ b/net/ipv6/netfilter/ip6_tables.c
-@@ -440,11 +440,12 @@ mark_source_chains(const struct xt_table_info *newinfo,
- 				e->counters.pcnt = pos;
- 				pos += size;
- 			} else {
--				int newpos = t->verdict;
-+				int newpos;
- 
- 				if (strcmp(t->target.u.user.name,
- 					   XT_STANDARD_TARGET) == 0 &&
--				    newpos >= 0) {
-+				    t->verdict >= 0) {
-+					newpos = t->verdict;
- 					/* This a jump; chase it. */
- 					if (!xt_find_jump_offset(offsets, newpos,
- 								 newinfo->number))
+ 	if (ct_sip_parse_param(ct, dptr, dataoff, datalen, "transport=",
+ 			       &matchoff, &matchlen)) {
+-		if (!strncasecmp(dptr + matchoff, "TCP", strlen("TCP")))
++		if (matchlen >= 3 && !strncasecmp(dptr + matchoff, "TCP", 3))
+ 			*proto = IPPROTO_TCP;
+-		else if (!strncasecmp(dptr + matchoff, "UDP", strlen("UDP")))
++		else if (matchlen >= 3 && !strncasecmp(dptr + matchoff, "UDP", 3))
+ 			*proto = IPPROTO_UDP;
+ 		else
+ 			return 0;
 -- 
 2.53.0
 
