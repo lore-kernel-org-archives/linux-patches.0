@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795619826;
-	b=Xh+ZKuuyUCi5Ayywcd0ssHKDc7CVh4PbOKaCTUR3nW0whs21dtEEyyBr3zUO+3Leu3gm
-	 L0sbCVSvbyOZ3a+L5C1qe/aV7tPMLu8q344ufBT1kNH0bOGKJit/iSEA3clz+bkPAf4ml
-	 BX6ePKF8sbw7X4gy3k2MeDUSFwGAQJrdlQ4iMkYP7tPsTCYX2MFlNSQdKcu6NyOMCCopw
-	 4dquNfKVO57z3WLmSZzt5tXZFkrTlltIRRWEhIynob6mZet9KniGzmYEzGDVIRqPIfHMt
-	 T8zbiIgpehJp757+fRVW8g932dc29FoX7Uj/gn7ThBMqYl4je39jZEC0B/F4ldV56sA==
+	t=1795619830;
+	b=hdyHh2HwNGgJbU71G+ENR/2aOJxBvqQJPk2Xdz9kgsonmkgfF5ZFHYlgv8tr9G+Rrli8
+	 wT+YbNHUq7f5yucyDP8u+w37/SBf8bt2Rks6we6/YXj8uwVWeRTn6MkjJiWSyn3NhC17m
+	 k/RToH7NgoA+PgqVRb/j+x2gk4bY/WJjLXVphxrW1b8PSsEQvuAv5mE0JvYJ60Qh5tfpg
+	 JaIKx5jmIOCOOt4kfsOnEoNygp3a7Y4VFaLzEE69r77k9SBQOhcxQSCEQclHjvgR25eR6
+	 rt8TloB7YVehVAnO8lGY3YMME3+5PalY7xOd5Css575lxVxbM2U9HjEzTMn9CDMNtkg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795619826;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795619830;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=IyyuqTlflHEYEAaFYkbCKzDEb1wa3Lp7jmZ2cOyAHuE=;
-	b=DN5C38LBoTePTWMZHpmGKYI3O2yozXKyX6k++xW4gL6AYGt8nHmPnJ4qHKusAO03FUxi
-	 KQNAsJc298s0JCzRIYfxl24YOIAB3/vKJnRGyScO7Q+ToLwjDrrOMGdW7YxkFkV2rOndU
-	 GKffHkfn4jSIl/Qs8dibBlgNE+e47/pXwmMKG6iQtyl/bPQ1CIuNrmqhWX35yA5dSt6jy
-	 SvoKWub+cbqiB4mzvutXfi4HEVRasMSlzvCvAfJ9ZwlkPHra9bT9HdUxykwlirJrs7vH5
-	 qVU+pZo3AnNvd5fA4M3NNJsONJxpGVPjAzl2tBlLNiPRuHcfB9hH+PkeoB0IFhhgukQ==
+	bh=GdlJzTtBAq1PzkYH7MxZAWU8Esjt2X1Eu+1EQnTpHR0=;
+	b=oEBs+9M4RbcgQbT2zly/LEZz98dXLdgZznPFnH/mfIulGty3f0RAEyBtGUVLbGvNjq4n
+	 v7glNqzv/T80lmDrqIUUwQ2TJ8wkbpeSc8aC6khkpnnxZ3aWt4lqyAsq6iFqwqmO1mKPF
+	 AHIZWJKHkIRWeZD4HVK4xr3Vp9KqymYdRGLgt10yUwzFQW2yR7X4Pk8zjUMZfU48E/Bjv
+	 Vxvdlf1aViGAn/+kgF+6qDrafPwxoiEZ1dXI8+ReFEOO+okR0SWjCQsZA3m992xzOq/RA
+	 5KrLhX0pAsgGcGEp72VCCW8UkkGuazIT2Lj7WUnV+ObN7wkG7AywwjnKOeHb/J7cG1g==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=xbQaHQ9c;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=L0z5KCQv;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 84B22606A337;
-	Wed, 25 Nov 2026 15:17:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 27178606A330;
+	Wed, 25 Nov 2026 15:17:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=xbQaHQ9c
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CA11E1F000C0;
-	Wed, 25 Nov 2026 15:17:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=L0z5KCQv
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4E8AD1F000C4;
+	Wed, 25 Nov 2026 15:17:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795619826;
-	bh=IyyuqTlflHEYEAaFYkbCKzDEb1wa3Lp7jmZ2cOyAHuE=;
+	s=korg; t=1795619829;
+	bh=GdlJzTtBAq1PzkYH7MxZAWU8Esjt2X1Eu+1EQnTpHR0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=xbQaHQ9cOzVJCRgtZE46bm1RnMJtGmgohSEsW/1prZbXSw0OTjUc2+x41Dzmj2yfA
-	 OTKHPtKl7zCRYlJT49gfKu1GCyx6VguaKuhGRiZdpTyyNpd+0apW0Ds8n1r4ruhQYk
-	 2LC1qdifYlBSce3r5/5uzhEVUqXDy/gPTX5y3Zwo=
+	b=L0z5KCQvzT/SFIuFJklw9Qr+dZlQBjvRk+zh1Cu3L8rAt0OaQ/2A/19Bd1Z1MJpG0
+	 j6KzMxT6PJzPbMBG2TfnXUOWgN2W9Q3rMotx8Oc1IfyK6wIQ4jnzsoI56CulVdQI5U
+	 ubpA8wkjIWoJOxI1eDK876V8ZrRPKmqp8e+q26vo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhongqiu Han <zhongqiu.han@oss.qualcomm.com>,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
-	Christian Loehle <christian.loehle@arm.com>
-Subject: [PATCH 7.3 0720/1005] cpufreq: Fix updates of cached resolved frequency and index
-Date: Wed, 25 Nov 2026 15:34:18 +0100
-Message-ID: <20261125143838.623893997@linuxfoundation.org>
+	Balasubramani Vivekanandan <balasubramani.vivekanandan@intel.com>,
+	Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>,
+	Heikki Krogerus <heikki.krogerus@linux.intel.com>,
+	Johan Hovold <johan@kernel.org>
+Subject: [PATCH 7.3 0721/1005] software node: only let the owner release a managed node
+Date: Wed, 25 Nov 2026 15:34:19 +0100
+Message-ID: <20261125143838.647740346@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143821.729802100@linuxfoundation.org>
 References: <20261125143821.729802100@linuxfoundation.org>
@@ -68,152 +69,82 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+From: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
 
-commit 75120f31aed010c326b28d7c80d22314df34d9a8 upstream.
+commit f8623ce596492d2e96ca57eeec992938d3d79f00 upstream.
 
-The cached resolved frequency and index, cached_target_freq and
-cached_resolved_idx, respectively, may be updated concurrently if
-cpufreq_driver_resolve_freq() is called by the schedutil governor
-while cpufreq_set_policy() is running for the same policy.  Those
-concurrent updates are not synchronized in any way and the values
-written by cpufreq_set_policy(), if it wins the race, may confuse
-drivers using those policy fields [1].
+device_create_managed_software_node() creates a node whose lifetime is
+tied to the device it was created for. software_node_notify_remove() is
+called for every device that has the node as its fwnode (primary OR
+secondary) and, if the node is managed, unconditionally detaches it from
+that device and drops the creation reference.
 
-To address this, use the observation that the only place where
-cached_target_freq and cached_resolved_idx need to be updated is
-cpufreq_driver_resolve_freq() because the only legitimate users of
-them are .fast_switch() driver callbacks.  Although cached_resolved_idx
-is also used in __cpufreq_driver_target(), that is in fact unnecessary
-and it is better to use a local variable for storing the frequency
-table index in that function.
+This breaks when the node is shared with another device. Example: the
+i2c-designware copies the parent's fwnode to the adapter's struct device.
+When the adapter is deleted, it releases the reference that belongs to
+the owner and the latter ends up with a dangling pointer.
 
-Accordingly, rearrange __resolve_freq() and its callers so that
-cached_target_freq and cached_resolved_idx are only updated in
-cpufreq_driver_resolve_freq().
+Record the device's "manager" and only perform the actual release when
+notify is called for that "owner" device.
 
-The cached_target_freq initialization in cpufreq_set_policy() is still
-needed, but move it after stopping the old governor and before starting
-the new one to avoid racing with cpufreq_driver_resolve_freq().
+Note that it was never the intention that managed software nodes would
+be shared, but descendants reusing ancestor firmware nodes is not
+uncommon and such use is hard to predict when allocating software nodes.
 
-Fixes: f9ccdec24d91 ("cpufreq: Reuse cpufreq_driver_resolve_freq() in __cpufreq_driver_target()")
-Fixes: 151717690694 ("cpufreq: Make policy min/max hard requirements")
-Reported-by: Zhongqiu Han <zhongqiu.han@oss.qualcomm.com>
-Closes: https://lore.kernel.org/linux-pm/20261105140357.1331894-1-zhongqiu.han@oss.qualcomm.com/ [1]
-Co-developed-by: Zhongqiu Han <zhongqiu.han@oss.qualcomm.com>
-Signed-off-by: Zhongqiu Han <zhongqiu.han@oss.qualcomm.com>
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
-Reviewed-by: Christian Loehle <christian.loehle@arm.com>
-Tested-by: Christian Loehle <christian.loehle@arm.com>
-Cc: All applicable <stable@vger.kernel.org> # 342d3a73c5db cpufreq: Force passing target frequency to driver during resume
-Cc: All applicable <stable@vger.kernel.org> # 166207cac451 cpufreq: Cache post-resolution target frequency in __resolve_freq()
-Link: https://patch.msgid.link/3472677.aeNJFYEL58@rafael.j.wysocki
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Reported-by: Balasubramani Vivekanandan <balasubramani.vivekanandan@intel.com>
+Closes: https://lore.kernel.org/all/20261009164241.923756-2-balasubramani.vivekanandan@intel.com/
+Fixes: 151f6ff78cdf ("software node: Provide replacement for device_add_properties()")
+Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
+Fixes: 0f485f88656a ("drm/xe/i2c: use device_create_managed_software_node()")
+Reviewed-by: Balasubramani Vivekanandan <balasubramani.vivekanandan@intel.com>
+Tested-by: Balasubramani Vivekanandan <balasubramani.vivekanandan@intel.com>
+Reviewed-by: Heikki Krogerus <heikki.krogerus@linux.intel.com>
+Cc: stable@vger.kernel.org
+Link: https://patch.msgid.link/20261102-swnode-only-owner-release-v1-1-ee4c9022a629@oss.qualcomm.com
+[ johan: drop temporary variable; skip clearing owner field;
+         mention reuse not intended in commit message ]
+Signed-off-by: Johan Hovold <johan@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/cpufreq/cpufreq.c |   31 ++++++++++++++++++++-----------
- 1 file changed, 20 insertions(+), 11 deletions(-)
+ drivers/base/swnode.c |    7 ++++---
+ 1 file changed, 4 insertions(+), 3 deletions(-)
 
---- a/drivers/cpufreq/cpufreq.c
-+++ b/drivers/cpufreq/cpufreq.c
-@@ -477,7 +477,7 @@ EXPORT_SYMBOL_GPL(cpufreq_disable_fast_s
- static unsigned int __resolve_freq(struct cpufreq_policy *policy,
- 				   unsigned int target_freq,
- 				   unsigned int min, unsigned int max,
--				   unsigned int relation)
-+				   unsigned int relation, unsigned int *idx_p)
- {
- 	unsigned int idx;
+--- a/drivers/base/swnode.c
++++ b/drivers/base/swnode.c
+@@ -29,6 +29,8 @@ struct swnode {
+ 	struct fwnode_handle fwnode;
+ 	const struct software_node *node;
+ 	int id;
++	/* Device the managed node's lifetime is tied to. */
++	struct device *owner;
  
-@@ -487,9 +487,10 @@ static unsigned int __resolve_freq(struc
- 		return target_freq;
+ 	/* hierarchy */
+ 	struct ida child_ids;
+@@ -37,7 +39,6 @@ struct swnode {
+ 	struct swnode *parent;
  
- 	idx = cpufreq_frequency_table_target(policy, target_freq, min, max, relation);
--	policy->cached_resolved_idx = idx;
--	policy->cached_target_freq = policy->freq_table[idx].frequency;
--	return policy->cached_target_freq;
-+	if (idx_p)
-+		*idx_p = idx;
-+
-+	return policy->freq_table[idx].frequency;
- }
+ 	unsigned int allocated:1;
+-	unsigned int managed:1;
+ };
  
- /**
-@@ -520,7 +521,10 @@ unsigned int cpufreq_driver_resolve_freq
- 	if (unlikely(min > max))
- 		min = max;
+ static DEFINE_IDA(swnode_root_ids);
+@@ -1145,7 +1146,7 @@ int device_create_managed_software_node(
+ 	if (IS_ERR(fwnode))
+ 		return PTR_ERR(fwnode);
  
--	return __resolve_freq(policy, target_freq, min, max, CPUFREQ_RELATION_LE);
-+	policy->cached_target_freq = __resolve_freq(policy, target_freq, min, max,
-+						    CPUFREQ_RELATION_LE,
-+						    &policy->cached_resolved_idx);
-+	return policy->cached_target_freq;
- }
- EXPORT_SYMBOL_GPL(cpufreq_driver_resolve_freq);
+-	to_swnode(fwnode)->managed = true;
++	to_swnode(fwnode)->owner = dev;
+ 	set_secondary_fwnode(dev, fwnode);
  
-@@ -2402,12 +2406,13 @@ int __cpufreq_driver_target(struct cpufr
- 			    unsigned int relation)
- {
- 	unsigned int old_target_freq = target_freq;
-+	unsigned int idx = 0;
+ 	if (device_is_registered(dev))
+@@ -1208,7 +1209,7 @@ void software_node_notify_remove(struct
  
- 	if (cpufreq_disabled())
- 		return -ENODEV;
+ 	swnode_put(swnode);
  
- 	target_freq = __resolve_freq(policy, target_freq, policy->min,
--				     policy->max, relation);
-+				     policy->max, relation, &idx);
- 
- 	pr_debug("CPU %u: cur %u kHz -> target %u kHz (req %u kHz, rel %u)\n",
- 		policy->cpu, policy->cur, target_freq, old_target_freq, relation);
-@@ -2437,7 +2442,7 @@ int __cpufreq_driver_target(struct cpufr
- 	if (!cpufreq_driver->target_index)
- 		return -EINVAL;
- 
--	return __target_index(policy, policy->cached_resolved_idx);
-+	return __target_index(policy, idx);
- }
- EXPORT_SYMBOL_GPL(__cpufreq_driver_target);
- 
-@@ -2716,7 +2721,7 @@ static int cpufreq_set_policy(struct cpu
- 	 * concurrently by cpufreq_driver_resolve_freq() during the update.
- 	 */
- 	freq = __resolve_freq(policy, new_data.max, new_data.min, new_data.max,
--			      CPUFREQ_RELATION_H);
-+			      CPUFREQ_RELATION_H, NULL);
- 	if (freq != policy->max) {
- 		WRITE_ONCE(policy->max, freq);
- 		if (need_update_limits)
-@@ -2724,7 +2729,7 @@ static int cpufreq_set_policy(struct cpu
+-	if (swnode->managed) {
++	if (swnode->owner == dev) {
+ 		set_secondary_fwnode(dev, NULL);
+ 		swnode_put(swnode);
  	}
- 
- 	freq = __resolve_freq(policy, new_data.min, new_data.min, new_data.max,
--			      CPUFREQ_RELATION_L);
-+			      CPUFREQ_RELATION_L, NULL);
- 	freq = min(freq, policy->max);
- 	if (freq != policy->min) {
- 		WRITE_ONCE(policy->min, freq);
-@@ -2736,8 +2741,6 @@ static int cpufreq_set_policy(struct cpu
- 
- 	cpufreq_update_pressure(policy);
- 
--	policy->cached_target_freq = UINT_MAX;
--
- 	pr_debug("new min and max freqs are %u - %u kHz\n",
- 		 policy->min, policy->max);
- 
-@@ -2763,6 +2766,12 @@ static int cpufreq_set_policy(struct cpu
- 		cpufreq_exit_governor(policy);
- 	}
- 
-+	/*
-+	 * Initialize cached_target_freq while no governor is running to avoid
-+	 * racing with cpufreq_driver_resolve_freq(), which updates it.
-+	 */
-+	policy->cached_target_freq = UINT_MAX;
-+
- 	/* start new governor */
- 	policy->governor = new_gov;
- 	ret = cpufreq_init_governor(policy);
 
 
