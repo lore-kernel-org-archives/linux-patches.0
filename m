@@ -1,55 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795625058;
-	b=p1xl957OXZ/CfYOHmRKsMpjj4Xrfxyo6s66cGj/iKGl2PEs6I4Uh9/6JV4hwi4znlprE
-	 ODN8OzuMA/LwVSnZoK3Wx4E3Aml75yWagrn30VMxuKRX22HW5o/XulTIcjtus/k4byCJA
-	 Fm6U4lhfsGWJeGFkoCiceGI+XBrJ9M97fELuN8hTxBD3ONXhsU1AD3EpN0ZYgp2mHk0zB
-	 Xl5BUJpV/dw9oKcKWmNCpnTBobrl9u/JaBXF4HKOSt1iToZBUyrnmoeUSWrZjAXb0svZJ
-	 lBwPhVv8Edc2gNksRo9PIYXNetVMldS2/BFSNR8sCWNW6uX8xznslv64YPDdzkB/MWQ==
+	t=1795625061;
+	b=J4Wvw0D4BdZp/HyMVf1ii2fYlBcVc1hftFLG1mgDfCRdR4Jw9yzlYb5EUFqQuggnffnw
+	 E+8sd9kz9Mj27OkjH31W60fy2RVaIBbMzk5liZkv55IIOwWTSE1UQWhy1KCYrd3wsSMJV
+	 /ZcDCxC/ULVJwdVIc+NDIVvg5plTYeio8MYgFscg+jh87ATG93+dDPJUF0tC+smLq+j6O
+	 jxfTkUFjPsEa5ThaggFDzh+V4wrmWV4dzhZIq/6aIldqy/O1t+JGOZOK+SiCLTKKl2cpi
+	 aZPYZFqG/0T40bgGL+PWPZfbgeNN2C0vG0pXynlMHh6Ghf/Lk5jec5et5kXAoQQkSJQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795625058;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795625061;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=uTXF3LVcV5aaOGz4pQBKrwPKwvSqCc7dFvR3tVYqows=;
-	b=OOuwUXUuRqjYrYGbHIdsRq2lou2X00wAhA/bR9/YbeL2cbL37K5WpZG/ioemhWsSyvZY
-	 8ewHSgpCpRZ0EfZBgAq2b3xg2bYWHPBeQDB8Ty7gOZWHEeq8RbR94cq0nXFgPNFGA9V8g
-	 wsm85CJyKR4giarw92SQQhNDKLDr2oe35FBGZl0erC852S2paidzQSg3XfuXdyQIAcQbB
-	 v/IyObm2EcKtHIA/g4tkEeoD1/S7WeZyjAvWnGtlRBwa8gMT2V81zVi48luz2JRya1I2S
-	 w3Q88nYrgcTMkw3wej6Dy2zuMD48yzRj6QHnVjTHMg/rMKNnO2JxvQMWg6wlJ0dLMYQ==
+	bh=yimQGhoKVB2vjb4c9Uu6Rpv1CAx1LsILo+nPgnpFjis=;
+	b=Ct3R+FwBz9mqSBs9RPG3bUCgqlNTJg5JTXkTLyHqzGVXHwcfBQ2utDrQssQpJhrS9cXU
+	 ittVEi7Raa8MzuBDBDcE0Y7zRk7mD12F0PRYgw43hKccTdXupU51gyzwUgvYoe3qBvFrv
+	 zEqnYAM80ewmXsLrtJPK7t1szWyRLVqt8DATfxw28toFccRhYvLG76P+KkVRC36aOrELz
+	 WtynQWBhQhvj94TKkdUCysC77cWmVa9w0MaI6ACsRs8PIDaJ8lCv6EEG4b+sRjv8hoSNR
+	 FdrbWJt17R0B8UB+6zIxkDu79QrBA0GQMCXP9hY7Ow/Wwh+JeLH6RXmfLGGbj+hPjNw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Zv46IClt;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=uTB8tKHL;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A06A4606A334;
-	Wed, 25 Nov 2026 16:44:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D2B78606A331;
+	Wed, 25 Nov 2026 16:44:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Zv46IClt
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DEEB81F01563;
-	Wed, 25 Nov 2026 16:44:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=uTB8tKHL
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 276771F0093E;
+	Wed, 25 Nov 2026 16:44:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795625058;
-	bh=uTXF3LVcV5aaOGz4pQBKrwPKwvSqCc7dFvR3tVYqows=;
+	s=korg; t=1795625061;
+	bh=yimQGhoKVB2vjb4c9Uu6Rpv1CAx1LsILo+nPgnpFjis=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Zv46ICltw2HkfTTguWo5Ddt7Gmmt9qSPEV8KBcfU9uu+pYnxEelRSTfNN1nxbV88Z
-	 vQZ7UBX1bnUzkAmPCfiKBBOBjxohGWXbLIbvBPoQHwEjcIqJzzE2VHYUwe//5v9z5D
-	 yehejE2nc4AbAiGegPInDjyLNHPu6KMl9hN3kv1Q=
+	b=uTB8tKHLNLXoCg5YSIDUs7FcElA+bNgoAsx1MisCXxqMEH83cjxV976VPkRU+m0H6
+	 rHLd8NOOFhpEr4LMV9/mF1srd8TJHJ6hj79tnelJ1lruwztjqiQe7Gx6s6/sGcgqOJ
+	 kAqZUfDyCWsu2he6Y2XDgQzOaKl91sASVDKC+b8Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	sashiko-bot@kernel.org,
-	Hanjun Guo <guohanjun@huawei.com>,
-	Shuai Xue <xueshuai@linux.alibaba.com>,
-	Dave Jiang <dave.jiang@intel.com>,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+	Pengpeng Hou <pengpeng@iscas.ac.cn>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 393/816] ACPI: APEI: GHES: Validate memory error section length before payload access
-Date: Wed, 25 Nov 2026 15:32:21 +0100
-Message-ID: <20261125143858.297420314@linuxfoundation.org>
+Subject: [PATCH 6.12 394/816] ASoC: sta32x: make power restoration transactional
+Date: Wed, 25 Nov 2026 15:32:22 +0100
+Message-ID: <20261125143858.320306753@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143849.205329330@linuxfoundation.org>
 References: <20261125143849.205329330@linuxfoundation.org>
@@ -71,101 +68,190 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dave Jiang <dave.jiang@intel.com>
+From: Pengpeng Hou <pengpeng@iscas.ac.cn>
 
-[ Upstream commit 10338c9085b4939a428a8dc78d2bbf62c161278b ]
+[ Upstream commit 3e71dc4508bc84862dc3644e3b6a5b966bff22ad ]
 
-ghes_do_proc() hands the CPER_SEC_PLATFORM_MEM payload to the report chain,
-arch_apei_report_mem_error() and ghes_handle_memory_failure() without
-checking gdata->error_data_length. All three read validation_bits and
-physical_addr, at offsets 0 and 16, so a shorter section reads past the
-record.
+sta32x_set_bias_level() enables the codec supplies, restores the
+coefficient and register state, and then starts the watchdog. Register
+access errors in the mute and coefficient helpers and the cache replay
+are discarded, allowing DAPM to publish STANDBY for a partially restored
+codec.
 
-Check the length once in ghes_do_proc(), before any consumer runs. Take the
-73-byte struct cper_sec_mem_err_old as the floor: older firmware
-legitimately emits that UEFI 2.1/2.2 layout, and it makes validation_bits
-safe to read.
+Propagate every operation in the local restore transaction, including
+the final standby-state write. Start the watchdog only after that write
+succeeds. On failure, hold reset, mark the cache dirty, disable the
+supplies and report a cleanup failure while preserving the primary
+error. The DAPM bias callback consumes the returned error independently
+of component resume handling.
 
-The fields from "extended" on are absent from that layout, so also require
-whatever length the validation bits claim. Derive it per field rather than
-demanding the full 80 bytes: rank needs only 76, and the BANK_GROUP and
-BANK_ADDRESS bits describe "bank" at offset 38, which every record carries.
-Testing the whole mask against one size, as cper_print_mem() does, gets it
-wrong both ways.
-
-Reported-by: sashiko-bot@kernel.org
-Closes: https://sashiko.dev/#/patchset/20260714231835.303081-1-dave.jiang@intel.com?part=7
-Fixes: ca104edc1784 ("ACPI, APEI, GHES: Cleanup ghes memory error handling")
-Reviewed-by: Hanjun Guo <guohanjun@huawei.com>
-Reviewed-by: Shuai Xue <xueshuai@linux.alibaba.com>
-Signed-off-by: Dave Jiang <dave.jiang@intel.com>
-Link: https://patch.msgid.link/20260904172337.1409775-12-dave.jiang@intel.com
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
-[ sashal: Placed the helper before ghes_do_proc() since ghes_log_hwerr() is absent here, leaving the helper and both length checks unchanged. ]
+Fixes: 54dc6cabe684 ("ASoC: sta32x: preserve coefficient RAM")
+Signed-off-by: Pengpeng Hou <pengpeng@iscas.ac.cn>
+Link: https://patch.msgid.link/20260830141521.33246-1-pengpeng@iscas.ac.cn
+Signed-off-by: Mark Brown <broonie@kernel.org>
+[ sashal: Adapted the hunks to this tree's offsets and dropped the dapm context line, since the function has no dapm local here. ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/acpi/apei/ghes.c | 41 ++++++++++++++++++++++++++++++++++++++++
- 1 file changed, 41 insertions(+)
+ sound/soc/codecs/sta32x.c | 101 +++++++++++++++++++++++++++++---------
+ 1 file changed, 77 insertions(+), 24 deletions(-)
 
-diff --git a/drivers/acpi/apei/ghes.c b/drivers/acpi/apei/ghes.c
-index dd9ea631f6f60..7699a36adfd8b 100644
---- a/drivers/acpi/apei/ghes.c
-+++ b/drivers/acpi/apei/ghes.c
-@@ -787,6 +787,28 @@ int cxl_cper_kfifo_get(struct cxl_cper_work_data *wd)
- }
- EXPORT_SYMBOL_NS_GPL(cxl_cper_kfifo_get, CXL);
- 
-+/*
-+ * The fields from "extended" on are absent from the 73-byte UEFI 2.1/2.2
-+ * layout that older firmware still emits. Return the length needed for the
-+ * fields the validation bits claim, so over-claiming is rejected without
-+ * rejecting an honest short record.
-+ */
-+static u32 ghes_mem_err_min_len(u64 validation_bits)
-+{
-+	u32 len = sizeof(struct cper_sec_mem_err_old);
-+
-+	if (validation_bits & (CPER_MEM_VALID_ROW_EXT | CPER_MEM_VALID_CHIP_ID))
-+		len = offsetof(struct cper_sec_mem_err, rank);
-+	if (validation_bits & CPER_MEM_VALID_RANK_NUMBER)
-+		len = offsetof(struct cper_sec_mem_err, mem_array_handle);
-+	if (validation_bits & CPER_MEM_VALID_CARD_HANDLE)
-+		len = offsetof(struct cper_sec_mem_err, mem_dev_handle);
-+	if (validation_bits & CPER_MEM_VALID_MODULE_HANDLE)
-+		len = sizeof(struct cper_sec_mem_err);
-+
-+	return len;
-+}
-+
- static bool ghes_do_proc(struct ghes *ghes,
- 			 const struct acpi_hest_generic_status *estatus)
+diff --git a/sound/soc/codecs/sta32x.c b/sound/soc/codecs/sta32x.c
+index 122f832d90e05..5a4afd79fc0c7 100644
+--- a/sound/soc/codecs/sta32x.c
++++ b/sound/soc/codecs/sta32x.c
+@@ -345,27 +345,48 @@ static int sta32x_sync_coef_shadow(struct snd_soc_component *component)
  {
-@@ -811,6 +833,25 @@ static bool ghes_do_proc(struct ghes *ghes,
- 		if (guid_equal(sec_type, &CPER_SEC_PLATFORM_MEM)) {
- 			struct cper_sec_mem_err *mem_err = acpi_hest_get_payload(gdata);
+ 	struct sta32x_priv *sta32x = snd_soc_component_get_drvdata(component);
+ 	unsigned int cfud;
+-	int i;
++	int i, ret;
  
-+			/*
-+			 * Check once for all three consumers below. The 73-byte
-+			 * UEFI 2.1/2.2 layout is the floor, matching
-+			 * cper_estatus_print_section() and making
-+			 * validation_bits safe to read.
-+			 */
-+			if (gdata->error_data_length <
-+			    sizeof(struct cper_sec_mem_err_old))
-+				continue;
+ 	/* preserve reserved bits in STA32X_CFUD */
+-	regmap_read(sta32x->regmap, STA32X_CFUD, &cfud);
++	ret = regmap_read(sta32x->regmap, STA32X_CFUD, &cfud);
++	if (ret)
++		return ret;
 +
-+			/* Then require what the claimed fields actually need. */
-+			if (gdata->error_data_length <
-+			    ghes_mem_err_min_len(mem_err->validation_bits)) {
-+				pr_warn_ratelimited(FW_WARN GHES_PFX
-+						    "memory error section too small (%u) for the fields it claims\n",
-+						    gdata->error_data_length);
-+				continue;
-+			}
-+
- 			atomic_notifier_call_chain(&ghes_report_chain, sev, mem_err);
+ 	cfud &= 0xf0;
  
- 			arch_apei_report_mem_error(sev, mem_err);
+ 	for (i = 0; i < STA32X_COEF_COUNT; i++) {
+-		regmap_write(sta32x->regmap, STA32X_CFADDR2, i);
+-		regmap_write(sta32x->regmap, STA32X_B1CF1,
+-			     (sta32x->coef_shadow[i] >> 16) & 0xff);
+-		regmap_write(sta32x->regmap, STA32X_B1CF2,
+-			     (sta32x->coef_shadow[i] >> 8) & 0xff);
+-		regmap_write(sta32x->regmap, STA32X_B1CF3,
+-			     (sta32x->coef_shadow[i]) & 0xff);
++		ret = regmap_write(sta32x->regmap, STA32X_CFADDR2, i);
++		if (ret)
++			return ret;
++
++		ret = regmap_write(sta32x->regmap, STA32X_B1CF1,
++				   (sta32x->coef_shadow[i] >> 16) & 0xff);
++		if (ret)
++			return ret;
++
++		ret = regmap_write(sta32x->regmap, STA32X_B1CF2,
++				   (sta32x->coef_shadow[i] >> 8) & 0xff);
++		if (ret)
++			return ret;
++
++		ret = regmap_write(sta32x->regmap, STA32X_B1CF3,
++				   sta32x->coef_shadow[i] & 0xff);
++		if (ret)
++			return ret;
++
+ 		/*
+ 		 * chip documentation does not say if the bits are
+ 		 * self-clearing, so do it explicitly
+ 		 */
+-		regmap_write(sta32x->regmap, STA32X_CFUD, cfud);
+-		regmap_write(sta32x->regmap, STA32X_CFUD, cfud | 0x01);
++		ret = regmap_write(sta32x->regmap, STA32X_CFUD, cfud);
++		if (ret)
++			return ret;
++
++		ret = regmap_write(sta32x->regmap, STA32X_CFUD, cfud | 0x01);
++		if (ret)
++			return ret;
+ 	}
++
+ 	return 0;
+ }
+ 
+@@ -373,15 +394,24 @@ static int sta32x_cache_sync(struct snd_soc_component *component)
+ {
+ 	struct sta32x_priv *sta32x = snd_soc_component_get_drvdata(component);
+ 	unsigned int mute;
+-	int rc;
++	int restore_ret, ret;
+ 
+ 	/* mute during register sync */
+-	regmap_read(sta32x->regmap, STA32X_MMUTE, &mute);
+-	regmap_write(sta32x->regmap, STA32X_MMUTE, mute | STA32X_MMUTE_MMUTE);
+-	sta32x_sync_coef_shadow(component);
+-	rc = regcache_sync(sta32x->regmap);
+-	regmap_write(sta32x->regmap, STA32X_MMUTE, mute);
+-	return rc;
++	ret = regmap_read(sta32x->regmap, STA32X_MMUTE, &mute);
++	if (ret)
++		return ret;
++
++	ret = regmap_write(sta32x->regmap, STA32X_MMUTE,
++			   mute | STA32X_MMUTE_MMUTE);
++	if (ret)
++		return ret;
++
++	ret = sta32x_sync_coef_shadow(component);
++	if (!ret)
++		ret = regcache_sync(sta32x->regmap);
++
++	restore_ret = regmap_write(sta32x->regmap, STA32X_MMUTE, mute);
++	return ret ?: restore_ret;
+ }
+ 
+ /* work around ESD issue where sta32x resets and loses all configuration */
+@@ -797,8 +827,8 @@ static int sta32x_startup_sequence(struct sta32x_priv *sta32x)
+ static int sta32x_set_bias_level(struct snd_soc_component *component,
+ 				 enum snd_soc_bias_level level)
+ {
+-	int ret;
+ 	struct sta32x_priv *sta32x = snd_soc_component_get_drvdata(component);
++	int cleanup_ret, ret;
+ 
+ 	dev_dbg(component->dev, "level = %d\n", level);
+ 	switch (level) {
+@@ -822,15 +852,28 @@ static int sta32x_set_bias_level(struct snd_soc_component *component,
+ 				return ret;
+ 			}
+ 
+-			sta32x_startup_sequence(sta32x);
+-			sta32x_cache_sync(component);
++			ret = sta32x_startup_sequence(sta32x);
++			if (!ret)
++				ret = sta32x_cache_sync(component);
++			if (ret)
++				goto restore_failed;
++
++			ret = regmap_update_bits(sta32x->regmap, STA32X_CONFF,
++						 STA32X_CONFF_PWDN | STA32X_CONFF_EAPD,
++						 0);
++			if (ret)
++				goto restore_failed;
++
+ 			sta32x_watchdog_start(sta32x);
++			break;
+ 		}
+ 
+ 		/* Power down */
+-		regmap_update_bits(sta32x->regmap, STA32X_CONFF,
+-				   STA32X_CONFF_PWDN | STA32X_CONFF_EAPD,
+-				   0);
++		ret = regmap_update_bits(sta32x->regmap, STA32X_CONFF,
++					 STA32X_CONFF_PWDN | STA32X_CONFF_EAPD,
++					 0);
++		if (ret)
++			return ret;
+ 
+ 		break;
+ 
+@@ -848,6 +891,16 @@ static int sta32x_set_bias_level(struct snd_soc_component *component,
+ 		break;
+ 	}
+ 	return 0;
++
++restore_failed:
++	gpiod_set_value(sta32x->gpiod_nreset, 0);
++	regcache_mark_dirty(sta32x->regmap);
++	cleanup_ret = regulator_bulk_disable(ARRAY_SIZE(sta32x->supplies),
++					     sta32x->supplies);
++	if (cleanup_ret)
++		dev_warn(component->dev, "Failed to disable supplies: %d\n",
++			 cleanup_ret);
++	return ret;
+ }
+ 
+ static const struct snd_soc_dai_ops sta32x_dai_ops = {
 -- 
 2.53.0
 
