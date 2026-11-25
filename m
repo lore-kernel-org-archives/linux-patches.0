@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795625449;
-	b=Y3ZvyzylczD04YNsZQe709bZVcEI/bPABas9hXRJYwXjBV+jtdg8PTwpJUOrKQq/AT3I
-	 ZshR947ij11mmdghms681nyigl4HTxg0UwCfk0ZBMtUyNtdLyc0i5Fc5S+yMPUo2vWBnf
-	 V5dy4C9biF8TGGD2EdQbPJPo57Bj4N18G+H5Ays1lMPIKkO0yRQR8H6yOF/CvsMXk+MVY
-	 uWHUHPLBpw0f8sxVt/cVuQWukfx3BbNl7NVFltrf36lG/zBsLVblu9/EzbysiGgGywBQp
-	 4SDy0jDjt5pm88URYwgcWaKNWs/nbafiQRO/yuzu1VPVhPDIq5oV9lh32fw9Q62kZXA==
+	t=1795625452;
+	b=M+g9I2BIXX1RsHQ8ixTiNHDI5IxG41j6nx4ruFt3sGaV28H68tC3zPlf11vJ5rro+z27
+	 ZcJjwdVvB5Z/gnCBTLGRp816lsrAlACO/J6eLKzxYXdHOLXPcw/C7MGwu56qW3Q60O6i8
+	 Uh5BOTnIEpZf8r48mbCosKS5UTyU/X3n+rE7BKjSLOaKI2Dl/HBPAHzIZpuaq+hwSW0Op
+	 uNWNpBa8Eo4+bKaC8aJ7/1oqr/E3TOwZdoYxw7clL5TUziE93n4VtNr1epB0PeVhvR1QX
+	 oeFmKUSaEeOJAQOSfj5Ih2lHWiLhmIpzFtH6t2esyALgng3NwhGusNs9CJR+C8FPYJg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795625449;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795625452;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=bvWIhaxphOouPFBZ94/kQ9TOF9E/f50rOp28ucVq9G4=;
-	b=tOz02vZZvR1Sn5mn2uif8kteKv4EJx0DzYtSj3VJKHZsBXcJSwz6Wiirjyyw7m0Qpw7h
-	 AtfqKjatMRLtONXjm8mDi53We5GMiQfWxhk65C3WvPwR7M2LtnBQ82Z6qQqg2mopT0aoR
-	 +guo9w5wa64HGdxGUhRkNg8yP/LP1ZvArEUX6B2NdQK3FM4q8lBCgWY8+P0hyJ4VWlBXY
-	 BDCFKZiCjs4Tb1oxb98kKO9AUyA13GS8vB1Twa/lylV2Yw/UDzeaRsDHRLpckZxTSwYUZ
-	 i2UW0L2Fm/lqblOAYFa4Y8eZQisGfiKz84h+FDvZnztkSa0vTwpQPk/jpKgNWGnI88Q==
+	bh=4DJjLd/CYCSIsQV3S8ayKRIJM6s5zVH8o62zrqULwBE=;
+	b=bcl1Pm/Tlgeh1t+mqudT7cv8782B8YPpsToA8c9+o0MNdJEDP4t+gj2qrFjjHffJpfV2
+	 16B7rTNcsv45SI3Rc79vZTyayve3OqKBkFhGqhqaNalLQ9XPpsqOS0/IqQI5dbz8RHZ4x
+	 l4BUKRCW94R7JyY1+4j63vCzEcYekcF5DqsGT0M3tjd4SjtCAolz3CIKPh3fx6oc9CauW
+	 Js6SUO2wLolF6AlMSN9MpoUkjpaPLLwCT2MyQlieLbk5rwLwFSXSgaHeQL/gD+v1J5MxA
+	 uFdn4uQsOTpnbN5sqniNkyPNzQ2fQV0k3txn5tq/Bq6EUiP/LsaymLf7lOehTZrQrsg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=HSesNWE9;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=sdr8m2vV;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8538B606A321;
-	Wed, 25 Nov 2026 16:50:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6D2D1606A321;
+	Wed, 25 Nov 2026 16:50:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=HSesNWE9
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6194E1F000C6;
-	Wed, 25 Nov 2026 16:50:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=sdr8m2vV
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AAE3B1F000C6;
+	Wed, 25 Nov 2026 16:50:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795625448;
-	bh=bvWIhaxphOouPFBZ94/kQ9TOF9E/f50rOp28ucVq9G4=;
+	s=korg; t=1795625452;
+	bh=4DJjLd/CYCSIsQV3S8ayKRIJM6s5zVH8o62zrqULwBE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=HSesNWE9wMnDMjlntNPbsrHLDH7hTIcPOq/LV5aDuD7vDznIaOl0v13KJ459ySyog
-	 jxF8uu3M3Vnq3z9bvzw9EBPlsvRhfiiqwHa3SJN8lP10ANQAlF3GIpyEuOaLiAWUMw
-	 RcGQIVFf78KJ/orXumwd/0Ik3g/Hh85qkKpNU9C0=
+	b=sdr8m2vVnwNs1E04YBdWfuYrYz3by53F8KSnmiVQNoZvi1PDT+schd/3Jie7QgFky
+	 i0r5TUzIKuH8vXxWCKYPx5KISw8PARFoWv+ZCbT6nYYml3JSa97YMcYV2Os+ltPVaA
+	 VN5bIPWtrKczWXLVZee25xIOejSPTIZeK2Hf+N9s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Guopeng Zhang <zhangguopeng@kylinos.cn>,
-	Waiman Long <longman@redhat.com>,
-	Tejun Heo <tj@kernel.org>,
+	Serhat Kumral <serhatkumral1@gmail.com>,
+	Leon Romanovsky <leon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 521/816] cgroup/cpuset: Do housekeeping check before converting invalid partition to valid
-Date: Wed, 25 Nov 2026 15:34:29 +0100
-Message-ID: <20261125143901.246709643@linuxfoundation.org>
+Subject: [PATCH 6.12 522/816] RDMA/mlx5: Validate priority in STEERING_ANCHOR_CREATE handler
+Date: Wed, 25 Nov 2026 15:34:30 +0100
+Message-ID: <20261125143901.270045326@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143849.205329330@linuxfoundation.org>
 References: <20261125143849.205329330@linuxfoundation.org>
@@ -69,48 +68,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Waiman Long <longman@redhat.com>
+From: Serhat Kumral <serhatkumral1@gmail.com>
 
-[ Upstream commit 2c0a5742fc459cd8416607acff4a38a1abcb2e1b ]
+[ Upstream commit bb75e5580b15cd23ededf15683a5ad67d7b61aab ]
 
-When a hotplug event happens or when update_cpumasks_hier() is called, an
-invalid partition may be converted back to valid. However check against
-housekeeping conflict isn't being done which can lead to a partition
-state that violates the housekeeping rules. Update the code to allow
-reviving an invalid partition only if it can pass the housekeeping check.
+In MLX5_IB_METHOD_STEERING_ANCHOR_CREATE, the user-supplied u16 priority
+is passed directly to _get_flow_table() without an upper bound check.
+This can lead to out-of-bounds array accesses on dev->flow_db priority
+tables.
 
-Fixes: 4a74e418881f ("cgroup/cpuset: Check partition conflict with housekeeping setup")
-Reviewed-by: Guopeng Zhang <zhangguopeng@kylinos.cn>
-Signed-off-by: Waiman Long <longman@redhat.com>
-Signed-off-by: Tejun Heo <tj@kernel.org>
-[ sashal: Adapted the call to the older two-argument prstate_housekeeping_conflict() helper, passing the negated partition_root_state so an invalid isolated partition is checked as isolated. ]
+Check that priority does not exceed MLX5_IB_FLOW_LAST_PRIO before calling
+_get_flow_table(), matching the existing validation in raw_fs_rule_add()
+and mlx5_ib_create_flow().
+
+Fixes: 0c6ab0ca9a66 ("RDMA/mlx5: Expose steering anchor to userspace")
+Signed-off-by: Serhat Kumral <serhatkumral1@gmail.com>
+Link: https://patch.msgid.link/20261018144907.20123-1-serhatkumral1@gmail.com
+Signed-off-by: Leon Romanovsky <leon@kernel.org>
+[ sashal: kept the local kzalloc(sizeof(*obj), GFP_KERNEL) line as context since kzalloc_obj() isn't available; the added priority check is identical to upstream. ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/cgroup/cpuset.c | 10 ++++++++--
- 1 file changed, 8 insertions(+), 2 deletions(-)
+ drivers/infiniband/hw/mlx5/fs.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/kernel/cgroup/cpuset.c b/kernel/cgroup/cpuset.c
-index 3662acc2cff89..b1af98c19891e 100644
---- a/kernel/cgroup/cpuset.c
-+++ b/kernel/cgroup/cpuset.c
-@@ -1850,9 +1850,15 @@ static int update_parent_effective_cpumask(struct cpuset *cs, int cmd,
- 			bool exclusive = true;
+diff --git a/drivers/infiniband/hw/mlx5/fs.c b/drivers/infiniband/hw/mlx5/fs.c
+index 186085cfb4e9b..369cea6b31857 100644
+--- a/drivers/infiniband/hw/mlx5/fs.c
++++ b/drivers/infiniband/hw/mlx5/fs.c
+@@ -2427,6 +2427,9 @@ static int UVERBS_HANDLER(MLX5_IB_METHOD_STEERING_ANCHOR_CREATE)(
+ 	if (err)
+ 		return err;
  
- 			/*
--			 * Convert invalid partition to valid has to
--			 * pass the cpu exclusivity test.
-+			 * Convert invalid partition to valid has to pass the
-+			 * cpu exclusivity test as well as the housekeeping
-+			 * check.
- 			 */
-+			if (prstate_housekeeping_conflict(-cs->partition_root_state,
-+							  xcpus)) {
-+				part_error = PERR_HKEEPING;
-+				goto write_error;
-+			}
- 			rcu_read_lock();
- 			cpuset_for_each_child(child, css, parent) {
- 				if (child == cs)
++	if (priority > MLX5_IB_FLOW_LAST_PRIO)
++		return -EINVAL;
++
+ 	obj = kzalloc(sizeof(*obj), GFP_KERNEL);
+ 	if (!obj)
+ 		return -ENOMEM;
 -- 
 2.53.0
 
