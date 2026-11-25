@@ -1,56 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795623359;
-	b=VBEeKKtP1EdoBofK/pyepjSA5m1qSrFD/5TrZZNqrLZVDfSLniUyuNVzgFHCHszJj5gJ
-	 OVcBLhsz9oL+PT//OGJJ5wfPRp+BUHNsxpUlmoZs4ZzcZt9pFXqUJJANNmIBolFDshCDF
-	 ESVb0K+yXtlerZf/p18VYTsfaWVvEqhuTJbw4AqeP7qWEdCsUV1EYqb5gSk57T4N7sFc9
-	 jQEUrFBsjg7f07O2JzeNxzX7bFNtt3qO1p5mqb/vpXcTVycLK3xH4uTlz9ehYo3hA0DXj
-	 zhR1vor54MahbLOK07kRLw3i81T0LtRvwKHRj6ARWBIDDB5K8pS7ovYXWnqrrID7pKg==
+	t=1795623362;
+	b=tnGABhAO7rsNtfwuKAPzQc0Vfx0N3IHmBesT2xmJHlXS/kyQye3NfvWVnd+sSbq7V9yg
+	 hkmqzfTJbJ0CKc1ckOWWwGYvDR6ARVtcTwycJjdgSGiCo11n0+rLoEa7hCFdkjZZIN0r1
+	 0O4zALNszjf4U6HbncOEgmaVnGN/p9gde6n8oRh3vRmOBXm4sBB+pNlIAEq4nqEjTuNW9
+	 Nlu1fielRXM+QTHSCni2ST2ChEZZA/vtjmUqPFQvY+N1nu90jCUpymkDEAEMj3bWxqyI5
+	 lN+rvyEQGSOFQxHCpIZ9JW/JlhDslwNxw639UrGOU8lSU80p38ZdzDsRtQHKDrN/k6Q==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795623359;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795623362;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=EYyx7mI4smUob1mA66Q++r9z03mOUwA/YyxQSyd/1Tk=;
-	b=pK0nvERI0haiEMwqGX/27tB4Vi19f/wEjcqF5m2mqt38ue5zt06QRrntwr3sxAZyZy/F
-	 b3ie0SMrzNz84KG7WwvM/Rd891KsgHyG8aN9JVZaYwpk1LO5Yv9CMJD5kLj95yoze9SdI
-	 js069aM0EOW6wJguARKjN9uQUQgBtHNbxZHnTPSZsm9d33yR85ZLVVfGr5dn/pgIFnMov
-	 NZW5AYf0JcMLmjIVZXy2cLP2IDNO6h40j1stN8rpwvmSeYyKuY965SgdR8CIjYzjB3DGc
-	 Cscrk0Pd3EXUnmdlGhc/zpvTsNUGBsZdE2sHK1Yml8KEKDmbOSzi81UuBpc69PfxGNg==
+	bh=E1bzttuUgLVUXUSBpWq2LJ3y5JaxjMm31rKX6TIl17k=;
+	b=1Orz5+5YVZ9SmBjQClu+XfScA0EL1UQm6cMmw4Wx0CoJjmnwgNvSGymbqFX2KP8eur56
+	 UfW30D4UUUgcrVVqYx+X2wCDwSMUYjzWgHrKRpn9d6+ZJgC4JgtE9weWOG1jD7OgAeqPc
+	 8SbQ7YtYPviXis+8PiNKVDRqr2RaA0c37nooXnyegUtQugSixXYug6nO1g08u49ertk5o
+	 +yWe/Mez+2eCRN2AZyF/mAJeFhEvChKYP1jJGwF4l05pp7i0pbetFbptXdKoKFb3EDHNV
+	 F5F0/UBUJRfywf4vYNnsy9xmSulN6hlZ9LdGZJNe79nVYoahMcUn7LUGoRPePVhld+g==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=hIaXallW;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=O3RPLr2N;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 53DDC606A321;
-	Wed, 25 Nov 2026 16:15:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E49E3606A321;
+	Wed, 25 Nov 2026 16:16:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=hIaXallW
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 60DD41F000C6;
-	Wed, 25 Nov 2026 16:15:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=O3RPLr2N
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2B3BA1F000C0;
+	Wed, 25 Nov 2026 16:16:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795623358;
-	bh=EYyx7mI4smUob1mA66Q++r9z03mOUwA/YyxQSyd/1Tk=;
+	s=korg; t=1795623361;
+	bh=E1bzttuUgLVUXUSBpWq2LJ3y5JaxjMm31rKX6TIl17k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=hIaXallWnTfMEOvYULUgl9lY7xXcnoakXFNSC+WlEO7P4uDKWkhCZUyxfFXOrC42o
-	 XWGyQd7ukycevnQ8IF9aDG5LjRK9XHOD7bYfwLY+6yP6xbKDznWbiR5Y1mf2R3OOp9
-	 xSNhYXpFucBZ2clzCV4aWfoprQR76wYTO44VGlO0=
+	b=O3RPLr2NTnzH90v59QlLWLk8n0N2/5HrgJnmGLlcOvEIJbuemH+F/weq7xyrmBUET
+	 zOgawAwp4XPXvsYeYGcSAAgTO88zPWyjMuK9YEe/Ey9I4uIYZJn2wwNfF7PxCKw/D0
+	 WOJWvhfnuSDJwpNYwAAQ3yBHwEzm1pCT0sG8gTYQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sashiko <sashiko-bot@kernel.org>,
-	Andrea Parri <parri.andrea@gmail.com>,
-	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
-	Ingo Molnar <mingo@kernel.org>,
-	Waiman Long <longman@redhat.com>,
-	Kayra Cizmeci <kayracizmeci@gmail.com>,
-	Juri Lelli <juri.lelli@redhat.com>
-Subject: [PATCH 6.18 788/990] sched/core: Fix cpuset_mutex double unlock in __sched_setscheduler()
-Date: Wed, 25 Nov 2026 15:35:55 +0100
-Message-ID: <20261125143840.504618245@linuxfoundation.org>
+	Tim Budding <tim.budding@gmail.com>,
+	Xin Long <lucien.xin@gmail.com>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 6.18 789/990] sctp: abort unordered partial delivery when its message is skipped
+Date: Wed, 25 Nov 2026 15:35:56 +0100
+Message-ID: <20261125143840.527387569@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143822.072087159@linuxfoundation.org>
 References: <20261125143822.072087159@linuxfoundation.org>
@@ -72,165 +68,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Andrea Parri <parri.andrea@gmail.com>
+From: Tim Budding <tim.budding@gmail.com>
 
-commit f7141257dd67d4936f906a6cfd1d0007721f6898 upstream.
+commit 05852c8b70f2291a50bb3f740a66ce9caf9cb98d upstream.
 
-A sched_setattr() with SCHED_FLAG_KEEP_POLICY on a SCHED_DEADLINE task
-unlocks cpuset_mutex twice if the task's policy changes concurrently:
+When an I-FORWARD-TSN skips unordered messages on a stream,
+sctp_intl_skip() only aborts the stream's unordered partial delivery if
+the MID being delivered is lower than the skipped MID. If the skipped
+message is the one being partially delivered, partial delivery stays in
+progress: no PARTIAL_DELIVERY_ABORTED is sent, and the next unordered
+message on the stream is delivered as the rest of the abandoned one.
 
-  WARNING: bad unlock balance detected!
-  7.4.0-rc1 #1 Not tainted
-  -------------------------------------
-  repro/126 is trying to release lock (cpuset_mutex) at:
-  [<ffffffff9a17cacc>] __sched_setscheduler+0x9cc/0xc40
-  but there are no more locks to release!
-  ...
-  Call Trace:
-   print_unlock_imbalance_bug.part.0+0xfb/0x110
-   lock_release+0x286/0x2e0
-   __mutex_unlock_slowpath+0x1a/0x400
-   __sched_setscheduler+0x9cc/0xc40
-   __x64_sys_sched_setattr+0xa3/0x1b0
-   do_syscall_64+0x106/0x5f0
-   entry_SYSCALL_64_after_hwframe+0x77/0x7f
+Abort the partial delivery when the MID being delivered is at or below
+the skipped MID, as the ordered case already does.
 
-__sched_setscheduler() samples p->policy before taking any lock, and
-restarts from the recheck label if p->policy differs under the rq lock.
-The restart drops cpuset_mutex but leaves cpuset_locked set, so a pass
-that no longer needs the mutex still unlocks it on its way out:
+Reproduced on an unmodified kernel with the uo_pd test of the
+sctp_ifwdtsn.sh selftest added later in this series; its partial
+delivery checks pass with this fix. Reproduction and fix done with AI
+assistance.
 
-  CPU 1                                CPU 2
-  __sched_setscheduler(KEEP_POLICY)
-    policy = p->policy /* DEADLINE */
-                                       __sched_setscheduler(SCHED_OTHER)
-                                         p->policy = SCHED_OTHER
-    cpuset_locked = true
-    cpuset_lock()
-    rq = task_rq_lock(p)
-    oldpolicy != p->policy
-      cpuset_unlock()
-      goto recheck
-    /* no cpuset_lock() this time */
-    ...
-    if (cpuset_locked)
-      cpuset_unlock()
-
-Without CONFIG_DEBUG_MUTEXES, or CONFIG_DEBUG_RT_MUTEXES on PREEMPT_RT,
-nothing warns. The second unlock still clears the owner field regardless
-of who holds the mutex, so another task can lose cpuset_mutex inside its
-critical section. Entering SCHED_DEADLINE needs CAP_SYS_NICE, but a
-racing caller that owns the task does not need it if it samples a policy
-other than SCHED_DEADLINE.
-
-Clear cpuset_locked when dropping the mutex for the restart. This should be
-safe because the flag is only tested on the paths leaving the next pass,
-after that pass has set it again if it took the mutex.
-
-The following program, run as root, reproduces the splat, which no longer
-appears with this applied. On PREEMPT_RT it crashes the kernel within
-seconds, which this also fixes:
-
-  #define _GNU_SOURCE
-  #include <pthread.h>
-  #include <stdint.h>
-  #include <sys/syscall.h>
-  #include <unistd.h>
-
-  struct attr {
-      uint32_t size, policy;
-      uint64_t flags;
-      int32_t nice;
-      uint32_t prio;
-      uint64_t runtime, deadline, period;
-  };
-
-  static volatile int stop;
-  static volatile pid_t target;
-
-  static void set(struct attr a)
-  {
-      a.size = sizeof(a);
-      syscall(SYS_sched_setattr, target, &a, 0);
-  }
-
-  static void *sleeper(void *arg)
-  {
-      target = syscall(SYS_gettid);
-      while (!stop)
-          usleep(1000);
-      return arg;
-  }
-
-  static void *switcher(void *arg)
-  {
-      while (!stop) {
-          /* SCHED_DEADLINE, 2us every 1s */
-          set((struct attr){ .policy = 6, .runtime = 2000,
-                             .deadline = 1000000000,
-                             .period = 1000000000 });
-          set((struct attr){ .policy = 0 }); /* SCHED_OTHER */
-      }
-      return arg;
-  }
-
-  static void *racer(void *arg)
-  {
-      /* KEEP_POLICY | KEEP_PARAMS */
-      while (!stop)
-          set((struct attr){ .flags = 0x18 });
-      return arg;
-  }
-
-  int main(void)
-  {
-      pthread_t t[5];
-      int i;
-
-      pthread_create(&t[0], NULL, sleeper, NULL);
-      while (!target)
-          usleep(100);
-      pthread_create(&t[1], NULL, switcher, NULL);
-      for (i = 2; i < 5; i++)
-          pthread_create(&t[i], NULL, racer, NULL);
-      sleep(30);
-      stop = 1;
-      for (i = 0; i < 5; i++)
-          pthread_join(t[i], NULL);
-      return 0;
-  }
-
-An LLM helped find the PREEMPT_RT crash and write this patch and its test.
-
-Fixes: 111cd11bbc54 ("sched/cpuset: Bring back cpuset_mutex")
-Reported-by: Sashiko <sashiko-bot@kernel.org>
-Signed-off-by: Andrea Parri <parri.andrea@gmail.com>
-Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
-Signed-off-by: Ingo Molnar <mingo@kernel.org>
-Reviewed-by: Waiman Long <longman@redhat.com>
-Reviewed-by: Kayra Cizmeci <kayracizmeci@gmail.com>
-Reviewed-by: Juri Lelli <juri.lelli@redhat.com>
+Fixes: de60fe910543 ("sctp: implement handle_ftsn for sctp_stream_interleave")
 Cc: stable@vger.kernel.org
-Link: https://sashiko.dev/#/patchset/20261016062629.2102883-1-sh_def%40163.com
-Link: https://patch.msgid.link/20261102134606.242743-1-parri.andrea@gmail.com
+Signed-off-by: Tim Budding <tim.budding@gmail.com>
+Acked-by: Xin Long <lucien.xin@gmail.com>
+Link: https://patch.msgid.link/20261105050225.49292-2-tim.budding@gmail.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/sched/syscalls.c |    4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ net/sctp/stream_interleave.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/kernel/sched/syscalls.c
-+++ b/kernel/sched/syscalls.c
-@@ -650,8 +650,10 @@ change:
- 	if (unlikely(oldpolicy != -1 && oldpolicy != p->policy)) {
- 		policy = oldpolicy = -1;
- 		task_rq_unlock(rq, p, &rf);
--		if (cpuset_locked)
-+		if (cpuset_locked) {
- 			cpuset_unlock();
-+			cpuset_locked = false;
-+		}
- 		goto recheck;
- 	}
+--- a/net/sctp/stream_interleave.c
++++ b/net/sctp/stream_interleave.c
+@@ -1255,7 +1255,7 @@ static void sctp_intl_skip(struct sctp_u
+ 	struct sctp_stream *stream  = &ulpq->asoc->stream;
  
+ 	if (flags & SCTP_FTSN_U_BIT) {
+-		if (sin->pd_mode_uo && MID_lt(sin->mid_uo, mid)) {
++		if (sin->pd_mode_uo && !MID_lt(mid, sin->mid_uo)) {
+ 			sin->pd_mode_uo = 0;
+ 			sctp_intl_stream_abort_pd(ulpq, sid, mid, 0x1,
+ 						  GFP_ATOMIC);
 
 
