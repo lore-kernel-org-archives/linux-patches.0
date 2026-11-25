@@ -1,52 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795619720;
-	b=zC5HvGzgHaUZrzTknDXa/mtnU9ExclXILffm3fAMXE6Q5SEja1ZqNKn/HsKGlc0nKVDo
-	 XQ7WIiqMip5FcZTZDcuXRI82R7FbAHeZTA/J5UZICmh/ghcq04CQAj2E6Dm/R0wZhyDcK
-	 oAs4cOeQg3LFVZWMJ8q5Ewu67Txtv1r0uZD+dm48j4vw/DKviZ82aHFBkfQTQu5XDKHGK
-	 1mx03cq09zjG/ivmrzj6wYQ5j2cUPJNseHsIf/FylHlnCOpL9Crhl0k8WopTjdBGUy+N9
-	 xYLDPN0oGzVKvBduQ1VNM8zwTHcuZWZEN84HtzMUH5UK3PYwyY1xafKVSDSEOzMkfNg==
+	t=1795619723;
+	b=xPCWzSpQ+5TNP3JAsMVbK9drmKqBgVC5DUEGccYSFMyqr/wu+KK2NoKhSqz1u+SU0arw
+	 BslpMH5tLS5UyiuVqn4GSE8s2tfXt2fNEab4C9VeYZa6PwrrCmViG0bhHjaKjtbyaHmlp
+	 3q6M0ZhW1k8Rf4Xpc4Esf7bZOHC2ThhmgDhr+i0ta/LHceWWFwyijREr4T38OqBV7brF2
+	 jc9uwHVC7nXcsXdwYVRpVrxaK+mSLUvv6KkTLem0igeDSFLkVQ+wSZ1J9p0oNPZz2JeqL
+	 UUkpJujyY/StnIkEOxLyAUvy/GhO7DMwpQMPYcKzAiL5uDnjbfNLNPFh/qYmZKek1aQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795619720;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795619723;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=Jv9D5XQS+dnR+xCLPt4edmI4PT0QMCIKiqM31eDOFJI=;
-	b=sIkv9tOpdfb6WWvDh5rhspFvNvpMuOoCPrrUag1+RA3Zvzfl+46HoAyUj+9ODOP+Jwxp
-	 IlFS9f984vRRDu4duxFRSG/6XasBJhfAI5UMk7DMdHsdaopxnW1gDVCr/JEtgCgclD/G8
-	 ld8cB85j8qCFmPexxYhtyueMJyPjEA9nDPlvxT4+eH3i4NteZtD1NKAtbv9Z6qY07dcsw
-	 yHA+KWcUpOb7CKVF0c60P/IWdrANCXzs73TV0YpLjBc5Cr8EuDzquM8oEV0xJzKAUVrrl
-	 Pi3ax0pV9VWBg3fSaBUkcxhl7ZUQIuIk5TaNro0g3oG7oN2CFwToA+jVg1agk2bOGow==
+	bh=7aygBLdDYuv/+lMncWbBM7gQoG4yYA9uzLpgjih1BZQ=;
+	b=4EbvSdzAeEpV+Y8EDv/v7Rue3DI1QThKTnPbwewBBJCg9rXxpuB8bD/FsUohnIB/eFkW
+	 d1N6T9qP4SLI9+ntARqWNSgKqqUEJbcRRwxbduyAOAe5IFvgODO0VB6cI3fNP5YW9psEA
+	 AoLThS6u3g6x52z+iDKTD3xgl8m/j1TFKTAF4FkGOUpMEgypwmezbU1tVIqx7NQN2Ewod
+	 moFZn6clNLBOUkQmQm496qLXvmAvINmlWnidOiTSUwpfqWIGqWbbmcOooTAlk0D8LlCXe
+	 UGofMyPPdtA1yxH2EsnJqiMe2xVU42EN5GhEltHkCZZkd7BOlED+OTd7ACEpxR+Za4Q==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=upQ2PKmC;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=yBbMc8uB;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AF5A9606A31E;
-	Wed, 25 Nov 2026 15:15:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BB2A9606A32E;
+	Wed, 25 Nov 2026 15:15:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=upQ2PKmC
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ADF691F000C4;
-	Wed, 25 Nov 2026 15:15:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=yBbMc8uB
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EFE571F000D8;
+	Wed, 25 Nov 2026 15:15:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795619720;
-	bh=Jv9D5XQS+dnR+xCLPt4edmI4PT0QMCIKiqM31eDOFJI=;
+	s=korg; t=1795619723;
+	bh=7aygBLdDYuv/+lMncWbBM7gQoG4yYA9uzLpgjih1BZQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=upQ2PKmCsttlYzItFtcMRrGuZwNDBPnNrFr6QQ5alQdVzJIMgtJ5LdW9rfFpLXf6/
-	 DGBskp31OwPlug46q6t2B4NRgRcA+5xH5tHVLj5PfhA91npCS17wjWaecejqH+v3hz
-	 YScuIO6c3ETMnHJHlfp/QCijG4ffSBKHEXMlEV+A=
+	b=yBbMc8uB/tlHJCDBdZfvj6qJ9RW3C9BRhhfKsRfNFBvGdX+ORE2ZoRsh0tJwciLxm
+	 EOYluvBn9kEy/AFacyNIq462nf7IDKMNb+9/pA/eYbeqIWy1gQR4+jsiunHO3aMICl
+	 CYxePgFOCF5QiBKtDG8RDPDIgGL9/4oRUVO/A3W0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	YuanZhe Liu <25031212351@stu.xidian.edu.cn>,
-	Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>,
+	Zhao Li <enderaoelyther@gmail.com>,
 	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
-Subject: [PATCH 7.3 0685/1005] Bluetooth: hci_qca: fix use-after-free in ibs debugfs files
-Date: Wed, 25 Nov 2026 15:33:43 +0100
-Message-ID: <20261125143837.799170403@linuxfoundation.org>
+Subject: [PATCH 7.3 0686/1005] Bluetooth: L2CAP: Keep recvmsg from resuming a closed channel
+Date: Wed, 25 Nov 2026 15:33:44 +0100
+Message-ID: <20261125143837.822124203@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143821.729802100@linuxfoundation.org>
 References: <20261125143821.729802100@linuxfoundation.org>
@@ -68,62 +67,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: YuanZhe Liu <25031212351@stu.xidian.edu.cn>
+From: Zhao Li <enderaoelyther@gmail.com>
 
-commit eeca795cec6d9c6c193c2c1bd0cb26cde44f9fc3 upstream.
+commit 1f2ac56137c51be0601e18a163d817e02a15913f upstream.
 
-qca_debugfs_init() creates an "ibs" directory under hdev->debugfs and
-stores pointers to fields of struct qca_data in the debugfs files.
-qca_close() frees qca_data without removing that directory, while
-hdev->debugfs is only removed when the HCI device is released. The HCI
-device can outlive the driver data, for example when an HCI socket still
-references it, so reading or writing one of the ibs files then
-dereferences freed memory.
+Reading buffered ERTM data after ACL link loss can clear local busy and
+send a supervisory frame after l2cap_conn_del() has destroyed the HCI
+channel, which oopses on a NULL pointer in hci_send_acl(). The socket still
+owns its L2CAP channel, so its lifetime does not protect the underlying HCI
+channel.
 
-Store the directory dentry in struct qca_data and remove the directory
-with debugfs_remove_recursive() before qca_data is freed.
-debugfs_remove() waits for callers that are already inside the file
-operations, and any later access fails with -EIO instead of reaching the
-debugfs helpers. This covers the two writable files as well.
+Require BT_CONNECTED before clearing local busy in recvmsg. The socket lock
+already held here serializes this check and send with teardown, which
+closes the socket before the HCI channel is destroyed. Continue to allow
+buffered data to be read after disconnection.
 
-Link: https://netdev-ai.bots.linux.dev/sashiko/#/patchset/20261102113654.8724-1-25031212351%40stu.xidian.edu.cn
-Fixes: 0ff252c1976d ("Bluetooth: hciuart: Add support QCA chipset for UART")
-Cc: stable@vger.kernel.org
-Signed-off-by: YuanZhe Liu <25031212351@stu.xidian.edu.cn>
-Reviewed-by: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
+AI assistance was used.
+
+Fixes: 61aa4f5b9f43 ("Bluetooth: Use the transmit state machine for busy state changes")
+Cc: stable@vger.kernel.org # needs adjustments for 5.15
+Signed-off-by: Zhao Li <enderaoelyther@gmail.com>
 Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/bluetooth/hci_qca.c |    5 +++++
- 1 file changed, 5 insertions(+)
+ net/bluetooth/l2cap_sock.c |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
---- a/drivers/bluetooth/hci_qca.c
-+++ b/drivers/bluetooth/hci_qca.c
-@@ -161,6 +161,7 @@ struct qca_data {
- 	struct delayed_work ctrl_memdump_timeout;
- 	struct qca_memdump_info *qca_memdump;
- 	unsigned long flags;
-+	struct dentry *debugfs_ibs_dir;
- 	struct completion drop_ev_comp;
- 	wait_queue_head_t suspend_wait_q;
- 	enum qca_memdump_states memdump_state;
-@@ -665,6 +666,7 @@ static void qca_debugfs_init(struct hci_
- 		return;
+--- a/net/bluetooth/l2cap_sock.c
++++ b/net/bluetooth/l2cap_sock.c
+@@ -1332,7 +1332,8 @@ static int l2cap_sock_recvmsg(struct soc
+ 	 * available.  This avoids resending large numbers of
+ 	 * frames.
+ 	 */
+-	if (test_bit(CONN_LOCAL_BUSY, &pi->chan->conn_state) &&
++	if (sk->sk_state == BT_CONNECTED &&
++	    test_bit(CONN_LOCAL_BUSY, &pi->chan->conn_state) &&
+ 	    atomic_read(&sk->sk_rmem_alloc) <= sk->sk_rcvbuf >> 1)
+ 		l2cap_chan_busy(pi->chan, 0);
  
- 	ibs_dir = debugfs_create_dir("ibs", hdev->debugfs);
-+	qca->debugfs_ibs_dir = ibs_dir;
- 
- 	/* read only */
- 	mode = 0444;
-@@ -744,6 +746,9 @@ static int qca_close(struct hci_uart *hu
- 
- 	hu->priv = NULL;
- 
-+	debugfs_remove_recursive(qca->debugfs_ibs_dir);
-+	qca->debugfs_ibs_dir = NULL;
-+
- 	kfree(qca);
- 
- 	return 0;
 
 
