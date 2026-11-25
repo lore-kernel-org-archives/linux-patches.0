@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795621393;
-	b=GhrJqk3oLu7RFHAuwwTsapu/F01Uv/AegYWiCxPFll++Ev9i7LP2xbWiCf6fdBGqS8c+
-	 y6NEQA9rPsE3x2dvmyluDVKjjRFNfsD8eEZWraxfXYeU2ycvEX5fVVwtHWn1bOvfWbeNd
-	 f5kdN50lFMG8Zv3Er52HIEZsd4MhSADzzca9V82fT7G8mj5w7cmtVsPSeu2CK74AAX+Br
-	 EcpvgMmcmZszNnn86wNBp/Zyr/JYrIwp25RrMqTLoMd1EE4+b5ASS8a/MN5l1BjmY5xME
-	 2UvAayeEA1+aSN6f42BApi+kbX2X6sxIPInpNnVZsObjJ0gQYBAxmY6fq2o2GAf9tKQ==
+	t=1795621396;
+	b=5VG5qjvWH9nhjK3Oq7/PvX2yh/uBl74FgIO5nsdaD3d911YaMC1Gs0KGjqZX/kiKxL14
+	 8AXEJwuHR5q62iKnzY9BelxAx7tTosqdXpm8DRDNQYCNNezxTkABPHPVEdoHRLOLEq7u+
+	 NJPhSGLeisc1AZu4CcF2DTskM72VOIyMK7B7KrZfp6Qe/AkEZXedCkwE+rd8CBNuFxlaR
+	 i2JhQXNPw7MZXsdGX2qoqzlgSkcUfsXnc3GDEXhTPBzN7XBI/LZ4F1VmJhE25b7glrGx7
+	 sb1V32msa1LMWmysFOI7KBn0HTMyHm8kCBqCwQK975wt5p7Ny8xbEVIj4X8wcWef41g==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795621393;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795621396;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=DkXn1nCXA0UXegTBho3vI+rztkvSJJIdx6Q4Bo2ASy0=;
-	b=APvSx4PINdJoz32Cm/26PyXFqIihvL9/z4Rq1XWcMpsW3MjC3iISr3c4Bz/9cbC6McQe
-	 kD04WUVe2LNqFhTR3tEAZeArLk30QioFK/fG6pG7pGUkgZHpMmFoYRi7ONjrehy+E9mvm
-	 cENYWn3P9jrgFIkmzSybOdEK4fk3kJM09esXQhN1W7u4aIsigrpuDVF7ADMYxsliB6sNf
-	 Os0JfiCwJ9YWsXA6GZZW2ewRuvQmqNgCCVhlzG2nGnmTJsoGk7+ZVqPNUQMu7+78tbZSa
-	 fhI35xfHehlx6vAcezhRmuvS+V/l1RgXtWSx0jnNGb7AwythQ5Kp6eEkSPIgVI92FWA==
+	bh=bTXrnNmYUX6yRCtQiCxnIW3iwjdtVT55H5ne3VOA4is=;
+	b=C2l/PjmWOsA71RAeS2WVBTLfNLUNEnd9+plVp4Pz1xm+6fBNAIQ5uB6VUXTAvQpma0I1
+	 oYlRTLwdWfYXJBhfxk67L3rnkR8ILNDerluTTZeSe4E3rAIrtNTsbN/COcG5AkQwHl1t8
+	 49dlUxfSgF30T1Xa3CVv6tSIxRZw+T6NExLOrC42cNBOvXpc8i+nyThlPdiDYmmy9VNTI
+	 fXya5olZBFieRqxDp/PWoeamolHMqLd0UlaTHb11UBLbeN1s8jugrmODAJPHxzP0UAAwN
+	 WJJwdt6qgvM6XSLcibf/nxrMr6nvfAzqnFGeHzjKuzLE6LYbA7CTJvZSWKwz/36gGGQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=l2OTOzmO;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=KVUWEr2u;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CBDED606A331;
-	Wed, 25 Nov 2026 15:43:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 86173606A329;
+	Wed, 25 Nov 2026 15:43:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=l2OTOzmO
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4F8D61F000EF;
-	Wed, 25 Nov 2026 15:43:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=KVUWEr2u
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CA8B71F000F0;
+	Wed, 25 Nov 2026 15:43:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795621392;
-	bh=DkXn1nCXA0UXegTBho3vI+rztkvSJJIdx6Q4Bo2ASy0=;
+	s=korg; t=1795621396;
+	bh=bTXrnNmYUX6yRCtQiCxnIW3iwjdtVT55H5ne3VOA4is=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=l2OTOzmO9bbkiKq8es4d7hiCTEtCeM/63Wq46wCTZs5La2PxtqGA5yoHvSF//waaT
-	 M1bLCFyInijYiSOk+jfYc4xIlysq2IK2M3dS3eIMpC6vwQJhdH4Zg+lIfFrb9+VFqz
-	 fDIvOAX43Rkbug0M5YRSiCnAHk+kKygxz9pw7jvE=
+	b=KVUWEr2uLPmYGJgUUhOIQ/rWPIT+5Vz3VoZCdUQKxVVdUOu7b626KNUhLr88vlmHL
+	 0bw+OWLKckQSMKZME00jJt8hxztmF22ZD3P5ds/Y5U3xUjdQPJdLlmib7ASLySPZk7
+	 C5VSUS/5GjZMTI56JZ8/pPAKJ+BzIlm2TkCAfU48=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bryam Vargas <hexlabsecurity@proton.me>,
-	Simon Horman <horms@kernel.org>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Muna Sinada <muna.sinada@oss.qualcomm.com>,
+	Vasanthakumar Thiagarajan <vasanthakumar.thiagarajan@oss.qualcomm.com>,
+	Jeff Johnson <jeff.johnson@oss.qualcomm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 166/990] net/iucv: take a private, writable frame before rewriting it in place
-Date: Wed, 25 Nov 2026 15:25:33 +0100
-Message-ID: <20261125143825.983629633@linuxfoundation.org>
+Subject: [PATCH 6.18 167/990] wifi: ath12k: generalize GI and LTF fixed rate functions
+Date: Wed, 25 Nov 2026 15:25:34 +0100
+Message-ID: <20261125143826.006912777@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143822.072087159@linuxfoundation.org>
 References: <20261125143822.072087159@linuxfoundation.org>
@@ -69,62 +69,242 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Bryam Vargas <hexlabsecurity@proton.me>
+From: Muna Sinada <muna.sinada@oss.qualcomm.com>
 
-[ Upstream commit f38bce9af9e2a3cced7d303a1476f21c1f42bcb7 ]
+[ Upstream commit 770bff79424beec2edb8e7cc63b0e8d1b1a927a3 ]
 
-afiucv_hs_rcv() rewrites the frame in place -- EBCASC() on four name
-fields, then afiucv_swap_src_dest() swaps them and pushes an Ethernet
-header -- and can hand the same skb to dev_queue_xmit(), without making
-it private first, so a packet socket that also gets the frame reads the
-rewritten names. An ETH_P_ALL tap runs first and leaves af_iucv a
-cloned skb; a socket opened for ETH_P_AF_IUCV sits on a ptype_specific
-list, walked after ptype_base[], so deliver_skb() takes a reference and
-af_iucv runs on an skb that is shared but not cloned.
+Currently, functions in mac.c for setting GI and LTF rates are
+specifically for HE rates.
 
-Unshare, then cow, in that order: skb_cow() can reach
-pskb_expand_head(), which has BUG_ON(skb_shared()). skb_cow() tests
-skb_cloned(), which is what a rewrite of the data needs; skb_cow_head()
-tests only the header. Asking for ETH_HLEN also covers the unchecked
-push in afiucv_swap_src_dest(); on the ordinary path eth_type_trans()
-has already pulled that much, so it only compares.
+Remove any mention of "HE" in such functions in order to allow for
+other modes to utilize the functions. The intention is to prepare for
+the addition of EHT GI and LTF fixed rate settings.
 
-Fixes: 3881ac441f64 ("af_iucv: add HiperSockets transport")
-Closes: https://sashiko.dev/#/patchset/20260813-b4-disp-60433a46-v1-1-509e1200533e@proton.me?part=1
-Signed-off-by: Bryam Vargas <hexlabsecurity@proton.me>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Link: https://patch.msgid.link/20261028-b4-disp-1edbbc34-v3-1-13495411f5b9@proton.me
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Tested-on: QCN9274 hw2.0 PCI WLAN.WBE.1.0.1-00029-QCAHKSWPL_SILICONZ-1
+
+Signed-off-by: Muna Sinada <muna.sinada@oss.qualcomm.com>
+Reviewed-by: Vasanthakumar Thiagarajan <vasanthakumar.thiagarajan@oss.qualcomm.com>
+Link: https://patch.msgid.link/20251024001928.257356-2-muna.sinada@oss.qualcomm.com
+Signed-off-by: Jeff Johnson <jeff.johnson@oss.qualcomm.com>
+Stable-dep-of: 83d689bbe8f9 ("wifi: ath12k: don't advertise EHT-MCS15 to firmware unless we support it")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/iucv/af_iucv.c | 9 +++++++++
- 1 file changed, 9 insertions(+)
+ drivers/net/wireless/ath/ath12k/mac.c | 77 ++++++++++++++-------------
+ drivers/net/wireless/ath/ath12k/mac.h | 14 ++++-
+ drivers/net/wireless/ath/ath12k/wmi.h | 12 ++---
+ 3 files changed, 60 insertions(+), 43 deletions(-)
 
-diff --git a/net/iucv/af_iucv.c b/net/iucv/af_iucv.c
-index 3472bdde31af4..a8601a8782409 100644
---- a/net/iucv/af_iucv.c
-+++ b/net/iucv/af_iucv.c
-@@ -2072,11 +2072,20 @@ static int afiucv_hs_rcv(struct sk_buff *skb, struct net_device *dev,
- 	int err = NET_RX_SUCCESS;
- 	char nullstring[8];
+diff --git a/drivers/net/wireless/ath/ath12k/mac.c b/drivers/net/wireless/ath/ath12k/mac.c
+index e10a3366cd845..af6163169364f 100644
+--- a/drivers/net/wireless/ath/ath12k/mac.c
++++ b/drivers/net/wireless/ath/ath12k/mac.c
+@@ -12043,55 +12043,57 @@ ath12k_mac_get_single_legacy_rate(struct ath12k *ar,
+ }
  
-+	skb = skb_share_check(skb, GFP_ATOMIC);
-+	if (!skb)
-+		return NET_RX_SUCCESS;
+ static int
+-ath12k_mac_set_fixed_rate_gi_ltf(struct ath12k_link_vif *arvif, u8 he_gi, u8 he_ltf)
++ath12k_mac_set_fixed_rate_gi_ltf(struct ath12k_link_vif *arvif, u8 gi, u8 ltf)
+ {
+ 	struct ath12k *ar = arvif->ar;
+-	int ret;
++	int param, ret;
+ 
+ 	lockdep_assert_wiphy(ath12k_ar_to_hw(ar)->wiphy);
+ 
+ 	/* 0.8 = 0, 1.6 = 2 and 3.2 = 3. */
+-	if (he_gi && he_gi != 0xFF)
+-		he_gi += 1;
++	if (gi && gi != 0xFF)
++		gi += 1;
+ 
+ 	ret = ath12k_wmi_vdev_set_param_cmd(ar, arvif->vdev_id,
+-					    WMI_VDEV_PARAM_SGI, he_gi);
++					    WMI_VDEV_PARAM_SGI, gi);
+ 	if (ret) {
+-		ath12k_warn(ar->ab, "failed to set HE GI:%d, error:%d\n",
+-			    he_gi, ret);
++		ath12k_warn(ar->ab, "failed to set GI:%d, error:%d\n",
++			    gi, ret);
+ 		return ret;
+ 	}
+ 	/* start from 1 */
+-	if (he_ltf != 0xFF)
+-		he_ltf += 1;
++	if (ltf != 0xFF)
++		ltf += 1;
 +
- 	if (!pskb_may_pull(skb, sizeof(*trans_hdr))) {
- 		kfree_skb(skb);
- 		return NET_RX_SUCCESS;
++	param = WMI_VDEV_PARAM_HE_LTF;
+ 
+ 	ret = ath12k_wmi_vdev_set_param_cmd(ar, arvif->vdev_id,
+-					    WMI_VDEV_PARAM_HE_LTF, he_ltf);
++					    param, ltf);
+ 	if (ret) {
+-		ath12k_warn(ar->ab, "failed to set HE LTF:%d, error:%d\n",
+-			    he_ltf, ret);
++		ath12k_warn(ar->ab, "failed to set LTF:%d, error:%d\n",
++			    ltf, ret);
+ 		return ret;
+ 	}
+ 	return 0;
+ }
+ 
+ static int
+-ath12k_mac_set_auto_rate_gi_ltf(struct ath12k_link_vif *arvif, u16 he_gi, u8 he_ltf)
++ath12k_mac_set_auto_rate_gi_ltf(struct ath12k_link_vif *arvif, u16 gi, u8 ltf)
+ {
+ 	struct ath12k *ar = arvif->ar;
+ 	int ret;
+-	u32 he_ar_gi_ltf;
++	u32 ar_gi_ltf;
+ 
+-	if (he_gi != 0xFF) {
+-		switch (he_gi) {
+-		case NL80211_RATE_INFO_HE_GI_0_8:
+-			he_gi = WMI_AUTORATE_800NS_GI;
++	if (gi != 0xFF) {
++		switch (gi) {
++		case ATH12K_RATE_INFO_GI_0_8:
++			gi = WMI_AUTORATE_800NS_GI;
+ 			break;
+-		case NL80211_RATE_INFO_HE_GI_1_6:
+-			he_gi = WMI_AUTORATE_1600NS_GI;
++		case ATH12K_RATE_INFO_GI_1_6:
++			gi = WMI_AUTORATE_1600NS_GI;
+ 			break;
+-		case NL80211_RATE_INFO_HE_GI_3_2:
+-			he_gi = WMI_AUTORATE_3200NS_GI;
++		case ATH12K_RATE_INFO_GI_3_2:
++			gi = WMI_AUTORATE_3200NS_GI;
+ 			break;
+ 		default:
+ 			ath12k_warn(ar->ab, "Invalid GI\n");
+@@ -12099,16 +12101,16 @@ ath12k_mac_set_auto_rate_gi_ltf(struct ath12k_link_vif *arvif, u16 he_gi, u8 he_
+ 		}
  	}
  
-+	if (skb_cow(skb, ETH_HLEN)) {
-+		kfree_skb(skb);
-+		return NET_RX_SUCCESS;
+-	if (he_ltf != 0xFF) {
+-		switch (he_ltf) {
+-		case NL80211_RATE_INFO_HE_1XLTF:
+-			he_ltf = WMI_HE_AUTORATE_LTF_1X;
++	if (ltf != 0xFF) {
++		switch (ltf) {
++		case ATH12K_RATE_INFO_1XLTF:
++			ltf = WMI_AUTORATE_LTF_1X;
+ 			break;
+-		case NL80211_RATE_INFO_HE_2XLTF:
+-			he_ltf = WMI_HE_AUTORATE_LTF_2X;
++		case ATH12K_RATE_INFO_2XLTF:
++			ltf = WMI_AUTORATE_LTF_2X;
+ 			break;
+-		case NL80211_RATE_INFO_HE_4XLTF:
+-			he_ltf = WMI_HE_AUTORATE_LTF_4X;
++		case ATH12K_RATE_INFO_4XLTF:
++			ltf = WMI_AUTORATE_LTF_4X;
+ 			break;
+ 		default:
+ 			ath12k_warn(ar->ab, "Invalid LTF\n");
+@@ -12116,15 +12118,15 @@ ath12k_mac_set_auto_rate_gi_ltf(struct ath12k_link_vif *arvif, u16 he_gi, u8 he_
+ 		}
+ 	}
+ 
+-	he_ar_gi_ltf = he_gi | he_ltf;
++	ar_gi_ltf = gi | ltf;
+ 
+ 	ret = ath12k_wmi_vdev_set_param_cmd(ar, arvif->vdev_id,
+ 					    WMI_VDEV_PARAM_AUTORATE_MISC_CFG,
+-					    he_ar_gi_ltf);
++					    ar_gi_ltf);
+ 	if (ret) {
+ 		ath12k_warn(ar->ab,
+-			    "failed to set HE autorate GI:%u, LTF:%u params, error:%d\n",
+-			    he_gi, he_ltf, ret);
++			    "failed to set autorate GI:%u, LTF:%u params, error:%d\n",
++			    gi, ltf, ret);
+ 		return ret;
+ 	}
+ 
+@@ -12149,10 +12151,10 @@ static int ath12k_mac_set_rate_params(struct ath12k_link_vif *arvif,
+ {
+ 	struct ieee80211_bss_conf *link_conf;
+ 	struct ath12k *ar = arvif->ar;
++	bool he_support, gi_ltf_set = false;
+ 	u32 vdev_param;
+ 	u32 param_value;
+ 	int ret;
+-	bool he_support;
+ 
+ 	lockdep_assert_wiphy(ath12k_ar_to_hw(ar)->wiphy);
+ 
+@@ -12206,7 +12208,10 @@ static int ath12k_mac_set_rate_params(struct ath12k_link_vif *arvif,
+ 			ret = ath12k_mac_set_auto_rate_gi_ltf(arvif, he_gi, he_ltf);
+ 		if (ret)
+ 			return ret;
+-	} else {
++		gi_ltf_set = true;
 +	}
 +
- 	trans_hdr = iucv_trans_hdr(skb);
- 	EBCASC(trans_hdr->destAppName, sizeof(trans_hdr->destAppName));
- 	EBCASC(trans_hdr->destUserID, sizeof(trans_hdr->destUserID));
++	if (!gi_ltf_set) {
+ 		vdev_param = WMI_VDEV_PARAM_SGI;
+ 		param_value = ath12k_mac_nlgi_to_wmigi(sgi);
+ 		ret = ath12k_wmi_vdev_set_param_cmd(ar, arvif->vdev_id,
+diff --git a/drivers/net/wireless/ath/ath12k/mac.h b/drivers/net/wireless/ath/ath12k/mac.h
+index c05af40bd7a20..1f689e367c8a1 100644
+--- a/drivers/net/wireless/ath/ath12k/mac.h
++++ b/drivers/net/wireless/ath/ath12k/mac.h
+@@ -1,7 +1,7 @@
+ /* SPDX-License-Identifier: BSD-3-Clause-Clear */
+ /*
+  * Copyright (c) 2018-2021 The Linux Foundation. All rights reserved.
+- * Copyright (c) 2021-2025 Qualcomm Innovation Center, Inc. All rights reserved.
++ * Copyright (c) Qualcomm Technologies, Inc. and/or its subsidiaries.
+  */
+ 
+ #ifndef ATH12K_MAC_H
+@@ -84,6 +84,18 @@ enum ath12k_supported_bw {
+ 	ATH12K_BW_320   = 4,
+ };
+ 
++enum ath12k_gi {
++	ATH12K_RATE_INFO_GI_0_8,
++	ATH12K_RATE_INFO_GI_1_6,
++	ATH12K_RATE_INFO_GI_3_2,
++};
++
++enum ath12k_ltf {
++	ATH12K_RATE_INFO_1XLTF,
++	ATH12K_RATE_INFO_2XLTF,
++	ATH12K_RATE_INFO_4XLTF,
++};
++
+ struct ath12k_mac_get_any_chanctx_conf_arg {
+ 	struct ath12k *ar;
+ 	struct ieee80211_chanctx_conf *chanctx_conf;
+diff --git a/drivers/net/wireless/ath/ath12k/wmi.h b/drivers/net/wireless/ath/ath12k/wmi.h
+index 6468d9738639e..fdb17363a65cc 100644
+--- a/drivers/net/wireless/ath/ath12k/wmi.h
++++ b/drivers/net/wireless/ath/ath12k/wmi.h
+@@ -223,15 +223,15 @@ enum WMI_HOST_WLAN_BAND {
+ };
+ 
+ /* Parameters used for WMI_VDEV_PARAM_AUTORATE_MISC_CFG command.
+- * Used only for HE auto rate mode.
++ * Used for HE and EHT auto rate mode.
+  */
+ enum {
+-	/* HE LTF related configuration */
+-	WMI_HE_AUTORATE_LTF_1X = BIT(0),
+-	WMI_HE_AUTORATE_LTF_2X = BIT(1),
+-	WMI_HE_AUTORATE_LTF_4X = BIT(2),
++	/* LTF related configuration */
++	WMI_AUTORATE_LTF_1X = BIT(0),
++	WMI_AUTORATE_LTF_2X = BIT(1),
++	WMI_AUTORATE_LTF_4X = BIT(2),
+ 
+-	/* HE GI related configuration */
++	/* GI related configuration */
+ 	WMI_AUTORATE_400NS_GI = BIT(8),
+ 	WMI_AUTORATE_800NS_GI = BIT(9),
+ 	WMI_AUTORATE_1600NS_GI = BIT(10),
 -- 
 2.53.0
 
