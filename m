@@ -1,51 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795620190;
-	b=kMpeGQZKByOLbEjrhr8e5p/ReBUlO9NceyVWAdVTk85YWPcDHr8JcLYRTPbTEga8PU/M
-	 CgcVLiIbWkQjz2EkhIJDDWT85eVozYEQcNDmHNrB6lV3gDhikIWOlNvubgpEo/SRdlYly
-	 1wgQ9fDnZeltixDtvN+ZeN08Yz1XyNCQBFkORxevQOIjpa6ErNiLoSYvjJOaAfOcMVTRl
-	 YWGO6a3T/q1i6658GCWBa687XRoLpuq8nazRhThtpHLeLPhA/USTYG2YIEPNjrItrCW9G
-	 ofWKBPn0CnNlMg3NfRsPsQGKmz2CDkDFhrfsu7wKR8w4O9d5kgEG9kLZG8TKS7CsZGQ==
+	t=1795620193;
+	b=2Q2W69OwfE+EHkszXCr3C1h4HZpF5DTpj2BwKxia0U4qaf/obIeA9BskPqjRz8b78NeT
+	 i60TOdIBY9RFLDUxdt7oMZWbOZAFRwh9BGGQcRchyTye/14cvMyUOVsOOKzSqJONh8ax1
+	 FKRLgiC74I/q2iZstZzLV829NKoqKa0joajSzGPJBcSNL7OSaGoKJ86gC9PknmyPc8XoX
+	 veC5cIINmuprtBfQ3442CICMfe5yf37wO93sUbpOmsxP+KXfStcQ4jqD414T6EDayWTxu
+	 z9nN/AHGZvxaUQtWxtDH6p2jm6B5rpNHRBkfXG75+wTu/TKbpTKlNCORv7lkZQhYkTw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795620190;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795620193;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=2oewGqZEp6SGsyebBVxDylVq8gNZaFr0WglFM56Bs14=;
-	b=dC3G9sjaDdALO7FVP0lZERJqpN+fljl9nrz4w5mp3bqkgsd+vDqsfUj/u4tlidbxzd/D
-	 IM+qTjvMz6KHdUXFAcSxW5lDH0FdSCnIncy9piXsdmXdSwnbBFdqmopWJt9TayUsUwTHv
-	 4wdxqPHTmEFtL6waRlj2ht7J2qb8DF/5xAoAaZj4E4YOSZsf3GFUROmuWjCA9+Fu8TKz/
-	 aLbSU58yXlCy7Hyp3bSnJ3q+fMElpx24n/VS+sSx9XYiwHOBJOCsRuB8QaQ1E5XL2EhIo
-	 UKtEP073I4bV3b4hu005mE/7Z4MzXSRdTpcL9LEqwfkRRZ7Vw5jYUwMRjZW9pnoCO0Q==
+	bh=ZQJcduByfQN6Hbz0KFe7GOPn+gutCPXbEIz1xrt6wUc=;
+	b=ukB2Dk4o6VkklIdjSYmo7+4qaqLyqj/WR/T4SpjO1LriCyzQ2WOM9mh/GZ+zCB/Zum82
+	 tqNKKxBM11rF25NtW8tiZHt4Eq3xpbJBEWgMD9xFg4ZTrcInoWoS4hJRraNpoFSXIYv3Q
+	 jdDXLOxIL+fVyVVlPKXPFLFVr1T3OMMX3QBF1m7T9lNKdG9HcNiGtoTQdmxgXqZox8MOk
+	 af+GjVy/D0szpBb6pRwxApWk25xaXRx9qopFDAbaRuAzZc2Dj2IX3vB7Xk8PxTPRt/ETM
+	 xeRv/HxO2pQ3xydqaQUhfgJ9EQ+uR/PQQ2BK+3w8mjXZtQf8bZCGKpn/BrreeakTsQg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=NwdGpe97;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=fsDFQHpS;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 525AB606A329;
-	Wed, 25 Nov 2026 15:23:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7369D606A31E;
+	Wed, 25 Nov 2026 15:23:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=NwdGpe97
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9063B1F000C0;
-	Wed, 25 Nov 2026 15:23:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=fsDFQHpS
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 652661F000C4;
+	Wed, 25 Nov 2026 15:23:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795620190;
-	bh=2oewGqZEp6SGsyebBVxDylVq8gNZaFr0WglFM56Bs14=;
+	s=korg; t=1795620192;
+	bh=ZQJcduByfQN6Hbz0KFe7GOPn+gutCPXbEIz1xrt6wUc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=NwdGpe976hDC7xFoj7EBKAEGAG9AUKGBYqNK7pUhs8SaR5beLhFFrbQ1HHa2fz3pJ
-	 4m3aWISDj8M9+9kJ5ExSETiEIz0R7Cd5XK/79GPBU7erMXuq/MBcC/YJhXEF5kjw4l
-	 +Tjs0JpVZS2AB5ehiUDlBGCNMLmaR9KBQB5SHeRg=
+	b=fsDFQHpSn8wIGr3JBK/WeOvj1bfj2mMUoWnHohRHCJBvElznb6EJ7u5Qr24N+EKCC
+	 eLLl5O/uMCUXNs+FOE+EBztKaxQZuNkn3rY723e8KbidBb4/wQTP5+JD4aag+lhaoo
+	 DbCi6OW9AJEb5Nas1hByRrLiIYwrHPOwXhmcsGkU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhao Li <enderaoelyther@gmail.com>,
-	Johannes Berg <johannes.berg@intel.com>
-Subject: [PATCH 7.3 0793/1005] wifi: mac80211_hwsim: ignore non-generic netlink releases
-Date: Wed, 25 Nov 2026 15:35:31 +0100
-Message-ID: <20261125143840.314152442@linuxfoundation.org>
+	Tristan Madani <tristan@talencesecurity.com>,
+	Jeff Chen <jeff.chen_1@nxp.com>
+Subject: [PATCH 7.3 0794/1005] wifi: nxpwifi: validate scan response TLV sizes before indexed access
+Date: Wed, 25 Nov 2026 15:35:32 +0100
+Message-ID: <20261125143840.337379341@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143821.729802100@linuxfoundation.org>
 References: <20261125143821.729802100@linuxfoundation.org>
@@ -67,43 +67,55 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zhao Li <enderaoelyther@gmail.com>
+From: Tristan Madani <tristmd@gmail.com>
 
-commit 989f47c56e48d442d79497a25ed946d029c4dc53 upstream.
+commit bcc5bbaa6de61a0ccaa57228ca233b4390eca27e upstream.
 
-Closing an unrelated netlink socket can remove mac80211_hwsim radios or
-clear the active wmediumd registration when its port ID matches a generic
-netlink socket.
+The scan response handler indexes into TSF and channel-band TLV arrays
+using a loop counter derived from the number of BSS entries, but never
+checks whether the TLV data is large enough. A firmware response with
+fewer TLV entries than BSS entries leads to reads past the TLV buffer.
 
-mac80211_hwsim_netlink_notify() handles every NETLINK_URELEASE event,
-but netlink port IDs are scoped by protocol. The notifier therefore treats
-a release from another protocol as a MAC80211_HWSIM socket release.
+Add bounds checks that verify each indexed access falls within the
+TLV's declared length before dereferencing.
 
-Ignore release notifications unless they come from NETLINK_GENERIC.
-
-LLM assistance was used to find the bug and review.
-
-Fixes: 7882513bacb1 ("mac80211_hwsim driver support userspace frame tx/rx")
-Fixes: e9ed49bf4c2c ("mac80211-hwsim: Add support for HWSIM_ATTR_DESTROY_RADIO_ON_CLOSE")
+Fixes: 73b01e57ed3e ("wifi: nxp: add nxpwifi driver for IW61x")
 Cc: stable@vger.kernel.org
-Signed-off-by: Zhao Li <enderaoelyther@gmail.com>
-Link: https://patch.msgid.link/20261028141751.6728-2-enderaoelyther@gmail.com
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+Signed-off-by: Tristan Madani <tristan@talencesecurity.com>
+Signed-off-by: Jeff Chen <jeff.chen_1@nxp.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/wireless/virtual/mac80211_hwsim_main.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/net/wireless/nxp/nxpwifi/scan.c |   18 ++++++++++++++----
+ 1 file changed, 14 insertions(+), 4 deletions(-)
 
---- a/drivers/net/wireless/virtual/mac80211_hwsim_main.c
-+++ b/drivers/net/wireless/virtual/mac80211_hwsim_main.c
-@@ -7197,7 +7197,7 @@ static int mac80211_hwsim_netlink_notify
- {
- 	struct netlink_notify *notify = _notify;
+--- a/drivers/net/wireless/nxp/nxpwifi/scan.c
++++ b/drivers/net/wireless/nxp/nxpwifi/scan.c
+@@ -2017,12 +2017,22 @@ int nxpwifi_ret_802_11_scan(struct nxpwi
+ 		 * was received.
+ 		 */
+ 		if (tsf_tlv)
+-			memcpy(&fw_tsf, &tsf_tlv->tsf_data[idx * TSF_DATA_SIZE],
+-			       sizeof(fw_tsf));
++			if ((idx + 1) * TSF_DATA_SIZE <=
++			    le16_to_cpu(tsf_tlv->header.len))
++				memcpy(&fw_tsf,
++				       &tsf_tlv->tsf_data[idx *
++							  TSF_DATA_SIZE],
++				       sizeof(fw_tsf));
  
--	if (state != NETLINK_URELEASE)
-+	if (state != NETLINK_URELEASE || notify->protocol != NETLINK_GENERIC)
- 		return NOTIFY_DONE;
- 
- 	remove_user_radios(notify->portid, hwsim_net_get_netgroup(notify->net));
+ 		if (chan_band_tlv) {
+-			chan_band = &chan_band_tlv->chan_band_param[idx];
+-			radio_type = &chan_band->radio_type;
++			if ((idx + 1) * sizeof(*chan_band) <=
++			    le16_to_cpu(chan_band_tlv->header.len)) {
++				chan_band =
++					&chan_band_tlv->chan_band_param[idx];
++				radio_type = &chan_band->radio_type;
++			} else {
++				radio_type = NULL;
++			}
+ 		} else {
+ 			radio_type = NULL;
+ 		}
 
 
