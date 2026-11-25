@@ -1,42 +1,42 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795618374;
-	b=bM1xewL84ddCL6E1SV5PMu6zCNuQas+4KjFJxq1y9+4l92XMZqDTg9M0agIlI5cZWKmK
-	 HmiMgdy6sjAr/KFH4n3YLyAZyqz8zQNMyNnSZOh118018CuDi1uSwRRwsHKtGz6G8Xjkp
-	 xP0MEv0JbjHqMKbyXq9pzwNv4KAPhhRQOSRhHePnwuujoHV7BRSG9oxgC8EwJo71Tutjd
-	 6lOCcnwaLWymt0Vo8gEPxjqdirH2ItYah8LAL5tPpEd+kkYDBaKnG7Ke5zgNiqk65J6wP
-	 57wMuusW8EbVAq3H7OkTNgxcF+k3kNb321xsR5ReDcT/K7DKEc25wmGvC8Ra3dJb3dw==
+	t=1795618378;
+	b=o11woP1+oK0Sr6bBn7Bh3Nr6+GAw8VJpsMJFeLY0qmoF3Kr1t1LQ4G/ZPzffZN21Hylq
+	 1mCasCdL+SjEI2xe98cavWN8G3s1hpQLlzi68WBFr0P63ayMvGcwQJ6fSpmRNHA0qterV
+	 vNbfgbQwKt4rs7M7p8+EdCbvVfwQUr65PA5Lr9pCJ3b5ujKJe8jLEDHIhBgUzAyEZ9uEA
+	 u0aopikGyGIVTCgg7v65Nt74qO9Qt53KjKPZs4jn4vneRoiCAcUumgC7kQm0RGcr1yLj5
+	 24SfCQuI6BYiss5sKqkelLJc9pVvN3ItyUuKPppZdscCctxGZFJc4CAy+xAxwLF0Dag==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795618374;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795618378;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=3X0USbftzYc+XsVrEeyjz6BEix9LCWN8QLgQtRidxhA=;
-	b=5OO56YBv0yU88uNP2+IUGvw4bxrq9sZA1iXrCQFvT3VRfBRGlJ3TAeobul+le+d3CXbw
-	 mP8TNc4zDFwGOgO2KtGTZCwd1pRntUDRrRvkZeE4mdLB8PJcw443GHZ4tdt8PHQfxP/JL
-	 4L/SS5ctI03CwEV2ITYgXwQwr361YqaZz/BPHFxrire4n3ZoWpNt012QO9cOZ5NpOno0o
-	 WP4oCdlkQxy41PdkZF7AwQvgi0mQkT0DZ1C/PngHIht+XU0SwVoSexZ5e85fMe10xNV2O
-	 IOtFUYv+25rkibPOk/WgbkRYFqEAPyFXphe2izGIxj7V4UMk5EWCPX8n2JzWekAkShQ==
+	bh=B6ueqrnDWNZYiN70AH+FVnQPaGdmZ0RqDj5qUJ+sK+k=;
+	b=um/CyehmZLIX+y9nWitWToMH5ifZbM0PNxNIfDF4usBzEcrdOFA30637GxvGo+2uil1r
+	 yiv3L7nwfMrvgW+NfYngtdi5Y2HCy/NHiB41M3gwHcoqGGApVTmBUOHWJGlNQlbYUMewr
+	 X9YytNrgramSkeGlaA/3ABZY+Qofzu6AQQLwD4d1kx1BddJBmFt7kCBF5Qqmg9NlHxiPM
+	 SFsPlJ0zG+J0WDiT1mW/iJTXI13BXAKJu3UFh29y4QuGs4GOQoMHRQdO11E5fMTwsXV0E
+	 aQ7iRynTpwcWNBrmTN4+hPrDUZDrE4A2sXgKkhWUod0GgayBIcE5nXXvrGfb48BRBkg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=wPwxypGF;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Ey8XD0QU;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C0551606A323;
-	Wed, 25 Nov 2026 14:52:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4E4A0606A335;
+	Wed, 25 Nov 2026 14:52:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=wPwxypGF
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 148B81F000C6;
-	Wed, 25 Nov 2026 14:52:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Ey8XD0QU
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4F9B51F000D2;
+	Wed, 25 Nov 2026 14:52:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795618374;
-	bh=3X0USbftzYc+XsVrEeyjz6BEix9LCWN8QLgQtRidxhA=;
+	s=korg; t=1795618377;
+	bh=B6ueqrnDWNZYiN70AH+FVnQPaGdmZ0RqDj5qUJ+sK+k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=wPwxypGFjPo0TBi5WloMt4+sRP3r1lNhWIcJYnJiVZD+dTS9zuwbfZVgmQqqmwre3
-	 eJk+g5nEQzZTkIHxggeJ1b+lDBVcWeB/17aRnkmFVcmMAkjWl4hVq7i3MDPQy5zMwT
-	 cwsZbAa9NEd9YAm9cC4G7hSlOeO5kEBPw2BTFRgY=
+	b=Ey8XD0QUbXDptZ7CQt53URw2essNOPz5wjmNLT+I5UJhpf8nHTbTIbHWSZAgx4UbL
+	 uq8MBwAmryrMXD72XwYIY8whsW6bn1g6Le4kSxt/wyV8/21wlk2Vt2PF0tFGuzaU6Y
+	 +/fZO6h/RLf8VbwLYgsDMVuBWykjvtRA6M0UMy7g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -44,13 +44,14 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Christoph Hellwig <hch@lst.de>,
 	Sagi Grimberg <sagi@grimberg.me>,
 	Chaitanya Kulkarni <kch@nvidia.com>,
-	Chris Mason <mason@kernel.org>,
+	Hannes Reinecke <hare@kernel.org>,
+	Josef Bacik <josef@toxicpanda.com>,
 	Jens Axboe <axboe@kernel.dk>,
 	Keith Busch <kbusch@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0258/1005] nvmet-rdma: disconnect only established queues
-Date: Wed, 25 Nov 2026 15:26:36 +0100
-Message-ID: <20261125143827.782807394@linuxfoundation.org>
+Subject: [PATCH 7.3 0259/1005] nvmet-tcp: limit the connections accepted per work run
+Date: Wed, 25 Nov 2026 15:26:37 +0100
+Message-ID: <20261125143827.806887133@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143821.729802100@linuxfoundation.org>
 References: <20261125143821.729802100@linuxfoundation.org>
@@ -72,83 +73,68 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chris Mason <mason@kernel.org>
+From: Josef Bacik <josef@toxicpanda.com>
 
-[ Upstream commit 000a9f4492abad6008682b55571ddc31941963e3 ]
+[ Upstream commit a029f1b2fb13e6ac6e1c2f27fba1d80b6e7cac51 ]
 
-Over iWARP, rdma_disconnect() sleeps in iw_cm_disconnect() until the
-ESTABLISHED event of the connection has been handled, and iw_cm handles
-all events of all connections one at a time on iw_cm_wq.
-nvmet_rdma_destroy_port_queues(), nvmet_rdma_remove_one() and
-nvmet_rdma_delete_ctrl() walk the queue list with
-nvmet_rdma_queue_mutex held and call rdma_disconnect() for each, while
-nvmet_rdma_cm_handler() takes the same mutex. If the walk sleeps on a
-queue whose ESTABLISHED is queued behind another queue's event, both
-are stuck and iWARP connection handling is dead until reboot. A peer
-sets that up by connecting in a loop, or over siw by asking for MPA
-peer-to-peer mode and then staying silent, which delays ESTABLISHED
-indefinitely.
+nvmet_tcp_accept_work() loops until there's nothing left to accept, and
+anyone opening and closing connections fast enough keeps it running
+indefinitely, since tearing down a dead connection takes long enough for
+more to arrive. Whoever flushes nvmet_wq waits for it: removing any
+other port of the target does in nvmet_port_release(), and so does
+unloading the rdma and fc modules.
 
-Only call rdma_disconnect() for a queue in NVMET_RDMA_Q_LIVE, which the
-handler sets when it gets ESTABLISHED. A queue that never got there is
-left to the release work: ib_drain_qp() moves the QP to the error
-state, which ends the connection, and rdma_destroy_id() tells the peer.
-Over IB and RoCE the skipped call did nothing more than that.
+Accept a bounded number of connections per run and requeue the work. A
+flush doesn't wait for work queued behind it.
 
-Fixes: f1d4ef7d8883 ("nvmet-rdma: register ib_client to not deadlock in device removal")
-Fixes: fcf73a804c7d ("nvmet-rdma: fix use-after-free when a port is removed")
+Fixes: 872d26a391da ("nvmet-tcp: add NVMe over TCP target driver")
 Cc: Christoph Hellwig <hch@lst.de>
 Cc: Sagi Grimberg <sagi@grimberg.me>
 Cc: Chaitanya Kulkarni <kch@nvidia.com>
+Reviewed-by: Hannes Reinecke <hare@kernel.org>
 Reviewed-by: Christoph Hellwig <hch@lst.de>
-Signed-off-by: Chris Mason <mason@kernel.org>
+Signed-off-by: Josef Bacik <josef@toxicpanda.com>
 Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Keith Busch <kbusch@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/nvme/target/rdma.c | 15 +++++++++++++--
- 1 file changed, 13 insertions(+), 2 deletions(-)
+ drivers/nvme/target/tcp.c | 8 ++++++--
+ 1 file changed, 6 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/nvme/target/rdma.c b/drivers/nvme/target/rdma.c
-index b9e39d1657d29..aab43d2aa0485 100644
---- a/drivers/nvme/target/rdma.c
-+++ b/drivers/nvme/target/rdma.c
-@@ -1694,7 +1694,7 @@ static void nvmet_rdma_queue_established(struct nvmet_rdma_queue *queue)
+diff --git a/drivers/nvme/target/tcp.c b/drivers/nvme/target/tcp.c
+index 8287f19741e80..8788cfd813b8f 100644
+--- a/drivers/nvme/target/tcp.c
++++ b/drivers/nvme/target/tcp.c
+@@ -102,6 +102,7 @@ MODULE_PARM_DESC(tls_handshake_timeout,
+ #define NVMET_TCP_RECV_BUDGET		8
+ #define NVMET_TCP_SEND_BUDGET		8
+ #define NVMET_TCP_IO_WORK_BUDGET	64
++#define NVMET_TCP_ACCEPT_BUDGET		16
  
- static void __nvmet_rdma_queue_disconnect(struct nvmet_rdma_queue *queue)
- {
--	bool disconnect = false;
-+	bool disconnect = false, live = false;
- 	unsigned long flags;
+ enum nvmet_tcp_send_state {
+ 	NVMET_TCP_SEND_DATA_PDU,
+@@ -2073,9 +2074,9 @@ static void nvmet_tcp_accept_work(struct work_struct *w)
+ 	struct nvmet_tcp_port *port =
+ 		container_of(w, struct nvmet_tcp_port, accept_work);
+ 	struct socket *newsock;
+-	int ret;
++	int ret, i;
  
- 	pr_debug("cm_id= %p queue->state= %d\n", queue->cm_id, queue->state);
-@@ -1713,6 +1713,7 @@ static void __nvmet_rdma_queue_disconnect(struct nvmet_rdma_queue *queue)
+-	while (true) {
++	for (i = 0; i < NVMET_TCP_ACCEPT_BUDGET; i++) {
+ 		ret = kernel_accept(port->sock, &newsock, O_NONBLOCK);
+ 		if (ret < 0) {
+ 			if (ret != -EAGAIN)
+@@ -2084,6 +2085,9 @@ static void nvmet_tcp_accept_work(struct work_struct *w)
  		}
- 		fallthrough;
- 	case NVMET_RDMA_Q_LIVE:
-+		live = queue->state == NVMET_RDMA_Q_LIVE;
- 		queue->state = NVMET_RDMA_Q_DISCONNECTING;
- 		disconnect = true;
- 		break;
-@@ -1722,7 +1723,17 @@ static void __nvmet_rdma_queue_disconnect(struct nvmet_rdma_queue *queue)
- 	spin_unlock_irqrestore(&queue->state_lock, flags);
- 
- 	if (disconnect) {
--		rdma_disconnect(queue->cm_id);
-+		/*
-+		 * Over iWARP rdma_disconnect() sleeps until the CM has handled
-+		 * the ESTABLISHED event of this connection. The CM handles the
-+		 * events of all connections one at a time, and our handler
-+		 * takes nvmet_rdma_queue_mutex, which callers of this function
-+		 * hold. So a queue that has not seen the event is left to the
-+		 * release work: ib_drain_qp() moves the queue pair to the error
-+		 * state, which ends the connection.
-+		 */
-+		if (live)
-+			rdma_disconnect(queue->cm_id);
- 		queue_work(nvmet_wq, &queue->release_work);
+ 		nvmet_tcp_alloc_queue(port, newsock);
  	}
++
++	/* There may be more. Come to an end for those who flush nvmet_wq. */
++	queue_work(nvmet_wq, &port->accept_work);
  }
+ 
+ static void nvmet_tcp_listen_data_ready(struct sock *sk)
 -- 
 2.53.0
 
