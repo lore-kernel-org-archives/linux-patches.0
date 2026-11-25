@@ -1,51 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795620665;
-	b=xBcAWnqxaqggrst81fUVtWE2Wnzu2VtIJpD96xD5pnKA2LK3UyfNYFrC4/Ij7SnehGdu
-	 CCwcqKHDa9KQY2gPzuIdEZ775E5KrpCAxXLRE4hc7EUh5el6gJC26Tt0aTC52i3unqk27
-	 kRe+Tn79jZPFLUm6s7iz4IkjJCMhqwQmURG71q4VdgX+Bzb46Y2Hv4XqYiA+CZzG47hVp
-	 5AgX4iAZ/4lTSIInNQ6GDDd8VD1QcI2IJMaMsQKH52lxz0iu9mIn36eeNr0dLQNXw7Wli
-	 shVkWD1J0U5/65Z8LbGQaCfZOUGjluOXzzIm+LIJz5WkM/e6BUHggpPFbhQlZio8hCA==
+	t=1795620668;
+	b=KcSrXuRRanJCujgfvWvOnJpyqtNV52fxakJzRHoDu3eUt3FTELDWyrEB2CYppnLzcaJg
+	 g7nsoYmsOhQlz5muHAPz/hdgmlZQkAnxPeoUgdmgaV8dWiXL+TCr1gZJNJsS96eHPO08Q
+	 29ctK54vBzAIf0NdBWW93XEvouG7MlwSKyAlHDXE6Y0Zoa7BdpKLIVKdoW6ghSrQiLCi+
+	 BPrSrpc9cKpzSPKwksS6hsTEjRrCC0gw3vO6bicN9H1s8/s/CgOExubD0lRc14DUnQ3EA
+	 +fyVfs57V7MCSZGLNeZpoI60Khv8AJGm9e9/ldsTzQ8o8qQ6aPWwdtyP6XsdiO+KYXQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795620665;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795620668;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=+VPA8ruQEF9SG+DX9SAauwFsjLcuWTfOVF7iFvOxtvE=;
-	b=0O7j9rYyHa/yrFxYc7ItHaLPHnZ+AoU2SgBAmD8A4gUMcnJd9bH4UiPaa3C31LJDmMnT
-	 rIOe/+0O11A91Ht4XLAZBGrTVz5972r9OkneuR+IacQOy+6juLmFO9778+NcqCZUA/M7W
-	 NtIdiOCJk4Oy20y55glE8lRCzl7Z6Jc9dYxbaxyeeqA6LJ6OFFu5YP/k7CfZu5mA/6abB
-	 Q671k8ec8kZXeK/JTkPyXFqgbs6kx1G/2P1q6Q5bfJj+ZMDEGp2O9YT9WpD1M7PQLMNio
-	 7bIui+v8m3SCD6t0KiW+a9FtrbBOUpc1KRBj10hcbDEs+l8YDoQdm+51SvMOC3S39qg==
+	bh=9mltg2QSFjXgKtvLKBZmoxCGlXolHCsx7SnHaB4pKCU=;
+	b=Uh34xVy7fpIvAsbs0kCYHQaL35Rsk+OoEMVpb4fYzfDY6sZJz/wBmFDOIKPoSf1d8ORJ
+	 mKvtDbGV2tLHlpmuPVEofAo1b9B0wpGvscyahRC/SWMEnlZ95eq1KNshH8lWEBV8mnmQ8
+	 gs0RtpMBokUDpbHjPWuaS5xBOjbRnsIcWj5SFpyl6bfPtwhNVTY7wzHBKfqXf/LhD4M49
+	 oQ40889VYLbVIaxR4clz6qpCOx+Mrl2Tuhb6zsLP4G5uYUjXxkUfzntH7oRIsLzVwDLkF
+	 TdQLBEJO1xFvCiMpWxR0+NgOLbyt4kkNPBRACsscwVr50gCgUMIyP38yD1HH7dcsMrQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=u5sC+D58;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=giddYZ2I;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6B1B6606A31E;
-	Wed, 25 Nov 2026 15:31:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D15B7606A323;
+	Wed, 25 Nov 2026 15:31:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=u5sC+D58
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 53CDD1F000CF;
-	Wed, 25 Nov 2026 15:31:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=giddYZ2I
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8D9B41F000C4;
+	Wed, 25 Nov 2026 15:31:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795620664;
-	bh=+VPA8ruQEF9SG+DX9SAauwFsjLcuWTfOVF7iFvOxtvE=;
+	s=korg; t=1795620668;
+	bh=9mltg2QSFjXgKtvLKBZmoxCGlXolHCsx7SnHaB4pKCU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=u5sC+D58jf06i+YvkIQyToNjmaNaoON7rywOzCD+bVHS2R3SehBtUaJskYM+5xUKX
-	 C4HYCZcXy36z8G7FgOxykWhljZP/5MxL/1qpQv6v+szdDHOAXImH6A977kPC/9id/W
-	 EsfPrIO73jH/J+q0zobnilNV9cVSxIrmcl9KyoZU=
+	b=giddYZ2Ic87OUdNj22g9IiIaDby6tBsm7Rc1lXzUgEV7aj9rQnKxPfRUCfKuV584g
+	 ctS++NvGUETDjiXgmsk8xP0DoCrQR2X+hHETBTvaIyFCwy5bxnfoUBkRJkDWxgi1h3
+	 TSTtuJer7odQXJK4Yh/D7liaolFMuXjrC6sNTlZ4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Changyul Lee <lcy8047@gmail.com>,
+	Karl Mehltretter <kmehltretter@gmail.com>,
+	Joshua Crofts <joshua.crofts1@gmail.com>,
 	Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>
-Subject: [PATCH 7.3 0994/1005] iio: trigger: free the trigger ID after device_del()
-Date: Wed, 25 Nov 2026 15:38:52 +0100
-Message-ID: <20261125143844.937995118@linuxfoundation.org>
+Subject: [PATCH 7.3 0995/1005] iio: trigger: Return an error when the trigger has no free irq
+Date: Wed, 25 Nov 2026 15:38:53 +0100
+Message-ID: <20261125143844.960213184@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143821.729802100@linuxfoundation.org>
 References: <20261125143821.729802100@linuxfoundation.org>
@@ -67,45 +68,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Changyul Lee <lcy8047@gmail.com>
+From: Karl Mehltretter <kmehltretter@gmail.com>
 
-commit d32bf759801e6df23038dc834622a122ec76a4dd upstream.
+commit dff701806ab6252f6a0fccba880c47cd09602625 upstream.
 
-iio_trigger_unregister() returns the trigger ID to iio_trigger_ida
-before device_del() removes the "trigger<N>" device. A trigger
-registered in between can get the same ID, and its device_add() fails:
+iio_trigger_attach_poll_func() prints an error when all
+CONFIG_IIO_CONSUMERS_PER_TRIGGER irqs of the trigger are in use, but
+returns 0. The buffer of the extra consumer is enabled without a poll
+function.
 
-  sysfs: cannot create duplicate filename '/bus/iio/devices/trigger0'
+Disabling that buffer calls clear_bit() with a negative bit number and
+drops a module reference for the second time. On arm and arm64 the
+clear_bit() goes about 512 MB past the pool bitmap. That is an oops if
+the address is not mapped, and a bit cleared in unrelated memory if it
+is.
 
-For example, adding a sysfs trigger while an hrtimer trigger is being
-removed through configfs, or the other way around, hits this because the
-two paths do not share a lock.
+Return the error from iio_trigger_get_irq().
 
-Free the ID after device_del(), as the error path of
-iio_trigger_register() already does, and drop the "Possible issue in
-here" comment.
-
-Fixes: 1637db44413e ("Staging: IIO: Trigger support added to core.")
-Signed-off-by: Changyul Lee <lcy8047@gmail.com>
+Fixes: 995438233579 ("iio: Fix error handling in iio_trigger_attach_poll_func")
 Cc: stable@vger.kernel.org
+Signed-off-by: Karl Mehltretter <kmehltretter@gmail.com>
+Reviewed-by: Joshua Crofts <joshua.crofts1@gmail.com>
 Signed-off-by: Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/iio/industrialio-trigger.c |    3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+ drivers/iio/industrialio-trigger.c |    1 +
+ 1 file changed, 1 insertion(+)
 
 --- a/drivers/iio/industrialio-trigger.c
 +++ b/drivers/iio/industrialio-trigger.c
-@@ -105,9 +105,8 @@ void iio_trigger_unregister(struct iio_t
- 	scoped_guard(mutex, &iio_trigger_list_lock)
- 		list_del(&trig_info->list);
- 
--	ida_free(&iio_trigger_ida, trig_info->id);
--	/* Possible issue in here */
- 	device_del(&trig_info->dev);
-+	ida_free(&iio_trigger_ida, trig_info->id);
- }
- EXPORT_SYMBOL(iio_trigger_unregister);
+@@ -292,6 +292,7 @@ int iio_trigger_attach_poll_func(struct
+ 	if (pf->irq < 0) {
+ 		pr_err("Could not find an available irq for trigger %s, CONFIG_IIO_CONSUMERS_PER_TRIGGER=%d limit might be exceeded\n",
+ 			trig->name, CONFIG_IIO_CONSUMERS_PER_TRIGGER);
++		ret = pf->irq;
+ 		goto out_put_module;
+ 	}
  
 
 
