@@ -1,64 +1,55 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795620757;
-	b=nUFFt6/k+XpjKZfpOrNHRYSrUEeU5SGWE+eGJr43Aja2Wpw0teJ6o/xBm207Jgi4VcB1
-	 RM2Bg43ZVVLGU1WBg5ZbYBFLv+wh2RUX1wdYdDrr1MVWabz2PMLjHDvTFyvpWLAbo9jnS
-	 5lkXzmnUfF7fHQB1vU14EnfbimjwDSXKgvpMWNnQv0MGXrQzlNuexKwNB+d1An8qQBhG/
-	 wc97e5hPU76gH7LnacNvL1BFjwpZxe4a7mgQiCbx9PfFIgjKOK5LtM1HCFamDKBcrQ1Qu
-	 EW2/q2C7O/0RTIbOrnOsnPVsfgNunt+JiSy+EPSZwERkLrL7pIyLd9KVGDrxmRjuZ7w==
+	t=1795620760;
+	b=Q1zeUUdK/qw79XFfAz/tRHwAanX62VKzzhrPM5iBtPigoQ5sYM4CWy07tfteG7OLcWea
+	 r3aucJLIjYGAwQ8NUji/rKz/AcrfE+zKqm69JT3yUnBHpTvfUi7QmLkkj5YWMmq/o9Wj7
+	 kN9QCuWkTjPWkyVbY1XgUkbNExIaFecokJdIPEs90Hn0bgfMIqYg4uXF7ovySoaYih5Sy
+	 XsLpZK7+N9FHmZWzJ9KjjGPUPSJ6Pq6affhP5j+CKgT76ecZ39IFd0CU1Jq1BfT/yiu76
+	 fXZs8sdOsd3QS9WytG0LzaV1OJd1I6KfGeqxyKvIAAKog5bW9MNBk5Gwdn61o0/0xEQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795620757;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795620760;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=HP+yxls8Y0b5PVdLHjba0/cUyjCChIUB7EQtWUhrUg8=;
-	b=xP9nbJ7tS2kHvBILXRczIygEQaVWy/5fz36CX7x++0Q6Nh+QF9ICuEpz9CAzy+WVCV+L
-	 FjXLkz8nN7iJI6Nr5NOHOneA0p9c03T/2llQpQ2vCN8bk67aXn/0bRn2+WCItWkVT6yb4
-	 BLj4Z32CBqgH9tJ3Zs99en3hppQDtJfADq186s7nYVGMoZNGxEezwdhBzl/cYNDaeTbqO
-	 9nSbKnIwcgGCgrxd4GMvWodW1PZUXcHVnDXP6BFBFIw4D32TpcFhVa/pt6p+b2nC3xw1k
-	 vzJMIflyX4gJVIBAL9Vi42tZs+Bq8hop4yJf3nlMlLYwfXEJ4zXLZpRTW35Ljh7aq+w==
+	bh=ha+3JpBpRd1DRZKdkl+bMkP/thBQG9MIKW7hgmCi1l0=;
+	b=1iVFUnXiXJ3OAOz6Sa4eJsiKZN8dvd3hcUj/HJ2S9tC54l2/Nip5VSTISu0bigU/pnGH
+	 wFUVLtWwjyxNpFT0rz88FWFiK/XdSvABYsTedd3y2sHSXkZnqcZ3PbCXsbNh0VcL5UQzh
+	 tZj+B0f64+BFjpW1gWmbiBL8WWUAR1HFP1n8qN5HlVB6dS0bhwjN84o2bi4f+gtbNNpW2
+	 iR+cqsv6JL/AG4khQghXZjtaSSMHAvBQTHJtE0aq5HoNEGEbnJu8jIYwhG9BsLBBKWEos
+	 AcrJHxA+yZ0VXyyUsEm2L6U89xJkPfxi+VrZCLchigjfEkcx+pkDFSerwSnXz6qhvrA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=bHV5GWKA;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=BRjmqf7D;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6A916606A31E;
-	Wed, 25 Nov 2026 15:32:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5CD5C606A321;
+	Wed, 25 Nov 2026 15:32:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=bHV5GWKA
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 068E31F000CA;
-	Wed, 25 Nov 2026 15:32:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=BRjmqf7D
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8F1531F000C6;
+	Wed, 25 Nov 2026 15:32:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795620756;
-	bh=HP+yxls8Y0b5PVdLHjba0/cUyjCChIUB7EQtWUhrUg8=;
+	s=korg; t=1795620760;
+	bh=ha+3JpBpRd1DRZKdkl+bMkP/thBQG9MIKW7hgmCi1l0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=bHV5GWKAQbjZe7kujFJQVsOMcR8ymnz7ghZEwpuRgzbLbTjjnAGh2SVXAROAoACVK
-	 MwGGAeK4ucLnhqrvWHd4gseDY46pVy3NOc8UhGckXpV8x0jsC6NB0zVm2uruGuahgK
-	 mbfpW3BhS0MV7iwZz2TBPBltNvuxE1cNyVbgBQmo=
+	b=BRjmqf7D6/E/zejrlX7naNXrT8AF6UzWUd+kL7yMZyxfEkiFHzYEurFHuGXBEum3q
+	 59fr9zfH0FyRC3ZBmSDSCR7GbsEyZuRoMs3lVju3oF8Iu+xCV9LASwB/7Tllepqmaa
+	 vwBk5EjX/NqIZzAmrA2ObEPiRdhxUkJKJAbsRdu8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Johannes Weiner <hannes@cmpxchg.org>,
-	Andrew Morton <akpm@linux-foundation.org>,
-	Balbir Singh <balbirs@nvidia.com>,
-	"Vlastimil Babka (SUSE)" <vbabka@kernel.org>,
-	"Matthew Wilcox (Oracle)" <willy@infradead.org>,
-	Salvatore Dipietro <dipiets@amazon.it>,
-	Christoph Hellwig <hch@lst.de>,
-	Dave Chinner <dgc@kernel.org>,
-	Matt Fleming <matt@readmodwrite.com>,
-	Mel Gorman <mgorman@techsingularity.net>,
-	Michal Hocko <mhocko@suse.com>,
-	Suren Baghdasaryan <surenb@google.com>,
-	Brendan Jackman <brendan.jackman@linux.dev>,
-	Zi Yan <ziy@nvidia.com>,
+	Weiming Shi <bestswngs@gmail.com>,
+	Eric Dumazet <edumazet@kernel.org>,
+	Willem de Bruijn <willemb@google.com>,
+	"Michael S. Tsirkin" <mst@redhat.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 005/990] mm: page_alloc: remove ALLOC_NON_BLOCK from ALLOC_RESERVES
-Date: Wed, 25 Nov 2026 15:22:52 +0100
-Message-ID: <20261125143822.209465934@linuxfoundation.org>
+Subject: [PATCH 6.18 006/990] net: always dissect GSO packets in __virtio_net_hdr_to_skb()
+Date: Wed, 25 Nov 2026 15:22:53 +0100
+Message-ID: <20261125143822.232363630@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143822.072087159@linuxfoundation.org>
 References: <20261125143822.072087159@linuxfoundation.org>
@@ -80,110 +71,248 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Johannes Weiner <hannes@cmpxchg.org>
+From: Eric Dumazet <edumazet@kernel.org>
 
-[ Upstream commit fe21f930d1e64d121191673076fc4ebe79fc82d5 ]
+[ Upstream commit 44378d02c5aaae24b60a75fbbb539b4aa4db503d ]
 
-1ebbb21811b7 ("mm/page_alloc: explicitly define how __GFP_HIGH
-non-blocking allocations accesses reserves") stopped handing out reserve
-access for ALLOC_NON_BLOCK on its own: the extra 25% below the min
-watermark is now only granted on top of ALLOC_MIN_RESERVE.  But the flag
-was left in ALLOC_RESERVES, which produces something odd:
+Commit 9e8db5913264 ("net: avoid false positives in untrusted gso
+validation") added a '&& skb->network_header' check before flow-dissecting
+GSO packets without VIRTIO_NET_HDR_F_NEEDS_CSUM in
+__virtio_net_hdr_to_skb(), because some callers (such as tun_get_user(),
+tun_xdp_one(), virtnet_receive_done(), and raw_verify_header()) called
+virtio_net_hdr_*_to_skb() before initializing skb->network_header and
+skb->dev.
 
-With the ALLOC_RESERVES match, __zone_watermark_unusable_free() doesn't
-subtract the free highatomic pages for them.  So in the slowpath, they get
-to consume regular blocks below the min watermark by the number of free
-highatomic pages.  The highatomic reserve is capped at 1% of the zone,
-which on any decently sized machine is a multiple of the min watermark:
-GFP_NOWAIT can drain regular memory to zero.
+Because __alloc_skb() and __build_skb_around() zero-initialize
+skb->network_header to 0 (unlike mac_header and transport_header which
+are initialized to ~0U), those four callers always had
+skb->network_header == 0 and bypassed flow dissection in
+__virtio_net_hdr_to_skb(). More generally, skb->network_header is an
+offset from skb->head (where 0 is also a valid offset whenever
+skb_headroom(skb) is 0), not a boolean flag.
 
-The user-visible result is brutal hiccups during bursts of GFP_NOWAIT
-allocations under memory pressure.  This was found in review and
-reproduced with a synthetic burst, not observed in production, but the
-sequence of events is a realistic one: On a 32G box with an anonymous
-working set, swap, and a filled 290M highatomic reserve, a GFP_NOWAIT
-burst drove regular free memory in the 28G Normal zone (min=60M) to 28M,
-0.8M and 0.6M in three runs.  Swapout failed to allocate its swap table,
-reclaim scanned 13M pages to reclaim 200k, page faults stalled for tens to
-hundreds of milliseconds.  The machine survives it, but not by design:
-direct reclaimers eventually fail and start unreserving highatomic blocks,
-until the allocation succeeds or the reserve is gone and the OOM killer
-runs.  That reserve exists for high-order atomic allocations; here it is
-destroyed to bail out a GFP_NOWAIT consumer that was never entitled to the
-memory.
+Whenever the 'if (gso_type && skb->network_header)' branch was skipped,
+the fallback 'else if (gso_type)' only pulled nh_min_len + thlen (40 bytes
+for TCPv4) without dissecting the packet, without validating ip_proto or
+n_proto, and without setting skb->transport_header.
 
-Remove ALLOC_NON_BLOCK from ALLOC_RESERVES.  With that, the GFP_NOWAIT
-burst is stopped short at the min watermark.  No direct reclaim, no
-stalls, no failed allocations, and the highatomic reserve stays intact for
-the requests it exists for.
+If the packet has a malformed network header, it is not rejected and a
+subsequent skb_probe_transport_header() also fails, leaving
+skb->transport_header at ~0U (0xffff). Similarly, if an IPv4 packet
+carries IP options (ihl > 5) or an IPv6 packet carries extension headers,
+pulling only nh_min_len + thlen can leave the TCP header outside
+skb->head. In both cases, tcp_hdrlen(skb) in skb_gso_transport_seglen()
+reads out-of-bounds:
 
-__zone_watermark_ok() is unaffected, since everything it keys on
-ALLOC_NON_BLOCK is already nested under ALLOC_MIN_RESERVE.  Update the
-flag comments accordingly: ALLOC_NON_BLOCK just means the caller can't
-block; the reserve math belongs with ALLOC_MIN_RESERVE.
+  BUG: KASAN: slab-out-of-bounds in skb_gso_transport_seglen
+  Read of size 2 by task poc/133
+  skb_gso_transport_seglen (net/core/gso.c:155)
+  skb_gso_validate_mac_len (net/core/gso.c:270)
+  tbf_enqueue (net/sched/sch_tbf.c:260)
+  dev_qdisc_enqueue (net/core/dev.c:4227)
+  __dev_queue_xmit (net/core/dev.c:4884)
 
-GFP_ATOMIC order-0 requests have a milder version of the same problem.
-Through ALLOC_MIN_RESERVE they also count the free highatomic pages in
-their watermark check, but rmqueue_buddy() serves them regular pages first
-and only falls back to the reserve once those are gone.  They can still
-push regular free memory to 37.5% of min minus the free highatomic pages
-before the reserve is touched.  Unlike GFP_NOWAIT they are entitled to the
-reserve, so this needs the watermark check and the freelist order reworked
-together, and is left to a separate patch.
+In addition, checking virtio_net_hdr_match_proto() only inside
+'if (!skb->protocol)' before flow dissection both skipped validation when
+skb->protocol was pre-set by the caller and rejected VLAN-tagged frames
+whose outer L2 protocol is ETH_P_8021Q or ETH_P_8021AD.
 
-Link: https://lore.kernel.org/20261028171719.2043421-3-hannes@cmpxchg.org
-Fixes: 1ebbb21811b7 ("mm/page_alloc: explicitly define how __GFP_HIGH non-blocking allocations accesses reserves")
-Signed-off-by: Johannes Weiner <hannes@cmpxchg.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Acked-by: Balbir Singh <balbirs@nvidia.com>
-Reviewed-by: Vlastimil Babka (SUSE) <vbabka@kernel.org>
-Cc: Matthew Wilcox (Oracle) <willy@infradead.org>
-Cc: Salvatore Dipietro <dipiets@amazon.it>
-Cc: Christoph Hellwig <hch@lst.de>
-Cc: Dave Chinner <dgc@kernel.org>
-Cc: Matt Fleming <matt@readmodwrite.com>
-Cc: Mel Gorman <mgorman@techsingularity.net>
-Cc: Michal Hocko <mhocko@suse.com>
-Cc: Suren Baghdasaryan <surenb@google.com>
-Cc: Brendan Jackman <brendan.jackman@linux.dev>
-Cc: Zi Yan <ziy@nvidia.com>
-Cc: <stable@vger.kernel.org>
-[ sashal: Applied the same three edits in mm/internal.h because mm/page_alloc.h does not exist in this tree, with slightly different surrounding flag context. ]
+Fix this by:
+1. Initializing skb->dev and skb->network_header (plus skb->protocol for
+   IFF_TUN) before virtio_net_hdr_*_to_skb() in tun_get_user(),
+   tun_xdp_one(), virtnet_receive_done(), and raw_verify_header(). In
+   tun_get_user(), drop the redundant skb_reset_mac_header(skb) in the
+   IFF_TUN case since __virtio_net_hdr_to_skb() unconditionally resets
+   mac_header.
+2. Removing '&& skb->network_header' and the unvalidated
+   'else if (gso_type)' fallback in __virtio_net_hdr_to_skb() so all GSO
+   packets without VIRTIO_NET_HDR_F_NEEDS_CSUM are flow-dissected, have
+   their transport header pulled into linear data, and have
+   skb->transport_header set.
+3. Moving the virtio_net_hdr_match_proto() check to after
+   skb_flow_dissect_flow_keys_basic(), validating keys.basic.n_proto
+   against hdr_gso_type.
+
+Fixes: 9e8db5913264 ("net: avoid false positives in untrusted gso validation")
+Fixes: d5be7f632bad ("net: validate untrusted gso packets without csum offload")
+Fixes: 924a9bc362a5 ("net: check if protocol extracted by virtio_net_hdr_set_proto is correct")
+Reported-by: Weiming Shi <bestswngs@gmail.com>
+Closes: https://lore.kernel.org/netdev/20260927163117.746432-2-bestswngs@gmail.com/
+Signed-off-by: Eric Dumazet <edumazet@kernel.org>
+Reviewed-by: Willem de Bruijn <willemb@google.com>
+Cc: Michael S. Tsirkin <mst@redhat.com>
+Link: https://patch.msgid.link/20261001191140.2818991-3-edumazet@kernel.org
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- mm/internal.h | 11 +++++------
- 1 file changed, 5 insertions(+), 6 deletions(-)
+ arch/um/drivers/vector_transports.c |  1 +
+ drivers/net/tun.c                   | 23 ++++++-----
+ drivers/net/virtio_net.c            |  2 +
+ include/linux/virtio_net.h          | 60 ++++++++++++-----------------
+ 4 files changed, 42 insertions(+), 44 deletions(-)
 
-diff --git a/mm/internal.h b/mm/internal.h
-index 4a27dac7a42a8..7504592042b23 100644
---- a/mm/internal.h
-+++ b/mm/internal.h
-@@ -1322,12 +1322,11 @@ unsigned int reclaim_clean_pages_from_list(struct zone *zone,
- #define ALLOC_OOM		ALLOC_NO_WATERMARKS
- #endif
+diff --git a/arch/um/drivers/vector_transports.c b/arch/um/drivers/vector_transports.c
+index 0794d23f07cbc..92a127b5d54cb 100644
+--- a/arch/um/drivers/vector_transports.c
++++ b/arch/um/drivers/vector_transports.c
+@@ -209,6 +209,7 @@ static int raw_verify_header(
+ 	if ((vheader->flags & VIRTIO_NET_HDR_F_DATA_VALID) > 0)
+ 		return 1;
  
--#define ALLOC_NON_BLOCK		 0x10 /* Caller cannot block. Allow access
--				       * to 25% of the min watermark or
--				       * 62.5% if __GFP_HIGH is set.
--				       */
-+#define ALLOC_NON_BLOCK		 0x10 /* Caller cannot block. */
- #define ALLOC_MIN_RESERVE	 0x20 /* __GFP_HIGH set. Allow access to 50%
--				       * of the min watermark.
-+				       * of the min watermark, or 62.5% if
-+				       * the caller cannot block either
-+				       * (ALLOC_NON_BLOCK).
- 				       */
- #define ALLOC_CPUSET		 0x40 /* check for correct cpuset */
- #define ALLOC_CMA		 0x80 /* allow allocations from CMA areas */
-@@ -1341,7 +1340,7 @@ unsigned int reclaim_clean_pages_from_list(struct zone *zone,
- #define ALLOC_KSWAPD		0x800 /* allow waking of kswapd, __GFP_KSWAPD_RECLAIM set */
++	skb_set_network_header(skb, ETH_HLEN);
+ 	virtio_net_hdr_to_skb(skb, vheader, virtio_legacy_is_little_endian());
+ 	return 0;
+ }
+diff --git a/drivers/net/tun.c b/drivers/net/tun.c
+index afb02752b257f..7ddb91ede4dad 100644
+--- a/drivers/net/tun.c
++++ b/drivers/net/tun.c
+@@ -1824,12 +1824,7 @@ static ssize_t tun_get_user(struct tun_struct *tun, struct tun_file *tfile,
+ 		}
+ 	}
  
- /* Flags that allow allocations below the min watermark. */
--#define ALLOC_RESERVES (ALLOC_NON_BLOCK|ALLOC_MIN_RESERVE|ALLOC_HIGHATOMIC|ALLOC_OOM)
-+#define ALLOC_RESERVES (ALLOC_MIN_RESERVE|ALLOC_HIGHATOMIC|ALLOC_OOM)
+-	if (tun_vnet_hdr_tnl_to_skb(tun->flags, features, skb, &hdr)) {
+-		atomic_long_inc(&tun->rx_frame_errors);
+-		err = -EINVAL;
+-		goto free_skb;
+-	}
+-
++	skb->dev = tun->dev;
+ 	switch (tun->flags & TUN_TYPE_MASK) {
+ 	case IFF_TUN:
+ 		if (tun->flags & IFF_NO_PI) {
+@@ -1854,9 +1849,8 @@ static ssize_t tun_get_user(struct tun_struct *tun, struct tun_file *tfile,
+ 			}
+ 		}
  
- /* Flags that mean GFP_ATOMIC */
- #define ALLOC_MASK_ATOMIC (ALLOC_NON_BLOCK|ALLOC_MIN_RESERVE)
+-		skb_reset_mac_header(skb);
++		skb_reset_network_header(skb);
+ 		skb->protocol = pi.proto;
+-		skb->dev = tun->dev;
+ 		break;
+ 	case IFF_TAP:
+ 		if (!pskb_may_pull(skb, ETH_HLEN)) {
+@@ -1864,10 +1858,19 @@ static ssize_t tun_get_user(struct tun_struct *tun, struct tun_file *tfile,
+ 			drop_reason = SKB_DROP_REASON_HDR_TRUNC;
+ 			goto drop;
+ 		}
+-		skb->protocol = eth_type_trans(skb, tun->dev);
++		skb_set_network_header(skb, ETH_HLEN);
+ 		break;
+ 	}
+ 
++	if (tun_vnet_hdr_tnl_to_skb(tun->flags, features, skb, &hdr)) {
++		atomic_long_inc(&tun->rx_frame_errors);
++		err = -EINVAL;
++		goto free_skb;
++	}
++
++	if ((tun->flags & TUN_TYPE_MASK) == IFF_TAP)
++		skb->protocol = eth_type_trans(skb, tun->dev);
++
+ 	/* copy skb_ubuf_info for callback when skb has no error */
+ 	if (zerocopy) {
+ 		skb_zcopy_init(skb, msg_control);
+@@ -2481,6 +2484,8 @@ static int tun_xdp_one(struct tun_struct *tun,
+ 
+ 	features = tun_vnet_hdr_guest_features(READ_ONCE(tun->vnet_hdr_sz));
+ 	tnl_hdr = (struct virtio_net_hdr_v1_hash_tunnel *)gso;
++	skb->dev = tun->dev;
++	skb_set_network_header(skb, ETH_HLEN);
+ 	if (tun_vnet_hdr_tnl_to_skb(tun->flags, features, skb, tnl_hdr)) {
+ 		atomic_long_inc(&tun->rx_frame_errors);
+ 		kfree_skb(skb);
+diff --git a/drivers/net/virtio_net.c b/drivers/net/virtio_net.c
+index ea83313caf363..ca0d14df5d79f 100644
+--- a/drivers/net/virtio_net.c
++++ b/drivers/net/virtio_net.c
+@@ -2602,6 +2602,8 @@ static void virtnet_receive_done(struct virtnet_info *vi, struct receive_queue *
+ 		goto frame_err;
+ 	}
+ 
++	skb->dev = dev;
++	skb_set_network_header(skb, ETH_HLEN);
+ 	if (virtio_net_hdr_tnl_to_skb(skb, &hdr->tnl_hdr, vi->rx_tnl,
+ 				      vi->rx_tnl_csum,
+ 				      virtio_is_little_endian(vi->vdev))) {
+diff --git a/include/linux/virtio_net.h b/include/linux/virtio_net.h
+index c381b916c1b54..d6466f96cdd00 100644
+--- a/include/linux/virtio_net.h
++++ b/include/linux/virtio_net.h
+@@ -111,48 +111,38 @@ static inline int __virtio_net_hdr_to_skb(struct sk_buff *skb,
+ 		p_off = nh_min_len + thlen;
+ 		if (!pskb_may_pull(skb, p_off))
+ 			return -EINVAL;
+-	} else {
++	} else if (gso_type) {
+ 		/* gso packets without NEEDS_CSUM do not set transport_offset.
+ 		 * probe and drop if does not match one of the above types.
+ 		 */
+-		if (gso_type && skb->network_header) {
+-			struct flow_keys_basic keys;
+-
+-			if (!skb->protocol) {
+-				__be16 protocol = dev_parse_header_protocol(skb);
+-
+-				if (!protocol)
+-					virtio_net_hdr_set_proto(skb, hdr);
+-				else if (!virtio_net_hdr_match_proto(protocol,
+-								 hdr_gso_type))
+-					return -EINVAL;
+-				else
+-					skb->protocol = protocol;
+-			}
++		struct flow_keys_basic keys;
++
++		if (!skb->protocol) {
++			skb->protocol = dev_parse_header_protocol(skb);
++			if (!skb->protocol)
++				virtio_net_hdr_set_proto(skb, hdr);
++		}
+ retry:
+-			if (!skb_flow_dissect_flow_keys_basic(NULL, skb, &keys,
+-							      NULL, 0, 0, 0,
+-							      0)) {
+-				/* UFO does not specify ipv4 or 6: try both */
+-				if (gso_type & SKB_GSO_UDP &&
+-				    skb->protocol == htons(ETH_P_IP)) {
+-					skb->protocol = htons(ETH_P_IPV6);
+-					goto retry;
+-				}
+-				return -EINVAL;
++		if (!skb_flow_dissect_flow_keys_basic(NULL, skb, &keys,
++						      NULL, 0, 0, 0,
++						      0)) {
++			/* UFO does not specify ipv4 or 6: try both */
++			if (gso_type & SKB_GSO_UDP &&
++			    skb->protocol == htons(ETH_P_IP)) {
++				skb->protocol = htons(ETH_P_IPV6);
++				goto retry;
+ 			}
++			return -EINVAL;
++		}
+ 
+-			p_off = keys.control.thoff + thlen;
+-			if (!pskb_may_pull(skb, p_off) ||
+-			    keys.basic.ip_proto != ip_proto)
+-				return -EINVAL;
++		p_off = keys.control.thoff + thlen;
++		if (!pskb_may_pull(skb, p_off) ||
++		    keys.basic.ip_proto != ip_proto ||
++		    !virtio_net_hdr_match_proto(keys.basic.n_proto,
++						hdr_gso_type))
++			return -EINVAL;
+ 
+-			skb_set_transport_header(skb, keys.control.thoff);
+-		} else if (gso_type) {
+-			p_off = nh_min_len + thlen;
+-			if (!pskb_may_pull(skb, p_off))
+-				return -EINVAL;
+-		}
++		skb_set_transport_header(skb, keys.control.thoff);
+ 	}
+ 
+ 	if (hdr_gso_type != VIRTIO_NET_HDR_GSO_NONE) {
 -- 
 2.53.0
 
