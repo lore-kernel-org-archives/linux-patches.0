@@ -1,55 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795622786;
-	b=cN3aZe66CiXUOiZi1mqv5tvPD/NgJWYbmOVKc93LdHllwYvKPLwsh1Uc9XDIZ/jO36Ka
-	 uZxHXUx+vq9swH8KdAcSAGVWbAkw+PVCop3N1gWjuzfdGODwxJDu4Xkg3qUSDqRZXoYQH
-	 z10LiqiTZh/dOyqAdy9pSJCrU59HI86C6Rh4KlCHkoa+9ZjzKjkcsJGaAYwFDi+pd1/RZ
-	 qAnaFbtueVDBVx88NzvdNtVRzEP+RyxB/ZrZ8fYhwiIa+8dvgiaAcg8eWiJvY7T2bnFIN
-	 YJAi4b9i7gRvgjjGwYOxPEp/wDPuo5sugwXOvmXfqFW+MUH2ki2Bn14DvkcXviZQJ+Q==
+	t=1795622789;
+	b=HM5hVFAmB1ai/05OchTBX2ZDVFSM/BBeS4DAJni4TaVWkj0Lev6IOnMFjq63qfACD5eQ
+	 LyXFj2KjL3XoKji7vG2dkU/mnfBmaPF7+TR9Zab01nAZHCydExGZk47NblE/rYRQLcUut
+	 KVZg1EyEbLv7osY2HN2lFVJ9ngjAOnC9t9Knz4qYA2DmC+a7ErZhzrDxWYSkzMQ90ayQA
+	 C6w0aCU4q0WKS7lRHZLJ8msrsac56+H5q1T4g5hTUuauw5V4shbVYqZalQKossnMBYLIb
+	 Ksqq5GDoMHKxL+pJ4y6OqmDO1R8PgzJG+jZ9ysHs+AdOejhrniBJzylYozVu2KCkeLA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795622786;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795622789;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=JhEPsaRySA1tNX026MJZafzotRxpb5lB5hyUoI1ZWBM=;
-	b=ErV76BnNUuhyo7BCy6REQvxS0vJCjILFZ+RyBpB86MBvHIRxdZd4kW6WuKGrYjS8wMKA
-	 qDl3fiKKROT8P8v/wE5R17T8jbSbJXb844aCAGH2WaenF9j7J2ROh0ZH2Uc1YtolQROrn
-	 Lpr1EAtPNj9wu7/727wUbujIUkxpLZRMHcoHeVBn+8AXlrzAYt5rUqHZHKgY7GZSEUDwl
-	 bBo0KYx4utkLSdSED139ugaFTmyQH3rb/K+OP1Axvt/1bbq09EVWp04b2uEPGrWoFaqyw
-	 PKSafAVsle4qXTg9ofPcUBOCGgRrKm0wqoyueoICdGL3o5MqYwGpkyNTZMtcefzO4Kw==
+	bh=0K4venPjmVvuXREigx/aA1iLTkqgpIi93jFEvJzdTvg=;
+	b=bB1cKA749Ipl/aVD+XgCQoT+JRD3HMWtMjhFVcBogVx+YyMxRpCPLuw9KrRPSv87mgtr
+	 4E80CqDdigqIzOTjQ5t1lkPwWFkm5QxbhFbWG18OWOTWdRi+FH5l6DCnmyGLnqFTCYUk9
+	 L7+Cxg2BZ9ikNBRPtwsgci3WC5ms6kJUOZmqjrnZSHVcLJ4VXH2kXqILmYBABhE2VHihA
+	 uQQYogVvAXD5H5JxRLSiclaWxi8uJEQ9vVBxdNM0fcV80LIAJ85ckYVr1Fp4TL1uWV4D4
+	 H/CRbLO6GQqCmuC6wwoXMJ7PwWacHf5W/HUYJcK1aVSrq3JnjpDXT5DvSTKP9Nm6czA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=zBgKZE2I;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ygP2KCmJ;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6D3FB606A321;
-	Wed, 25 Nov 2026 16:06:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 33808606A323;
+	Wed, 25 Nov 2026 16:06:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=zBgKZE2I
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BF0851F000C6;
-	Wed, 25 Nov 2026 16:06:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ygP2KCmJ
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 857751F000C4;
+	Wed, 25 Nov 2026 16:06:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795622786;
-	bh=JhEPsaRySA1tNX026MJZafzotRxpb5lB5hyUoI1ZWBM=;
+	s=korg; t=1795622789;
+	bh=0K4venPjmVvuXREigx/aA1iLTkqgpIi93jFEvJzdTvg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=zBgKZE2ILFugnP9dhByoibOv38M/5sC7PIG13JsMNlNQC0iF5IFa0fj/VBtTrhQH/
-	 Q3CGY5dYLjjOezSRvDpaFSe/CNdFY4n9GOYJQx/WaIP1dbCUeomlxgVZ6Lm+9elq1n
-	 O0UmjqFMw4AxRgrVqc7bWmwYpEoHBmbryhMcEjxQ=
+	b=ygP2KCmJhNTAUEeyjaXd7jND3FqUup/37izzZHm3qa2DwVylU1i5ZsCrG13G1DYjP
+	 mija0AjduTWQ2a7ojWLJk9q9bHEGFpu9DzUHDLVXd1TQKEoxzKG7J6t0WZdVvRObFR
+	 mjlL6HH3Vb67b181uD6NIlb+RlWri/XbTypbRiR8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+751b587577d0ebca10f2@syzkaller.appspotmail.com,
-	Kuniyuki Iwashima <kuniyu@google.com>,
-	Eric Dumazet <edumazet@kernel.org>,
-	David Ahern <dsahern@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 641/990] ipv6: Protect multiple routes insertion by table lock.
-Date: Wed, 25 Nov 2026 15:33:28 +0100
-Message-ID: <20261125143837.107196990@linuxfoundation.org>
+	Zhiqi Zhang <zhiqizhangg@gmail.com>,
+	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>
+Subject: [PATCH 6.18 650/990] bootconfig: Allow keys with the maximum supported depth
+Date: Wed, 25 Nov 2026 15:33:37 +0100
+Message-ID: <20261125143837.317826639@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143822.072087159@linuxfoundation.org>
 References: <20261125143822.072087159@linuxfoundation.org>
@@ -71,187 +67,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kuniyuki Iwashima <kuniyu@google.com>
+From: Zhiqi Zhang <zhiqizhangg@gmail.com>
 
-[ Upstream commit 4c6fbb1fbafa85029fa789b5b01f39ebcb459d1a ]
+commit cab697164b47eecfa2f146024f5d661f99a1a1e7 upstream.
 
-syzbot reported the warning below. [0]
+xbc_verify_tree() accepts keys with XBC_DEPTH_MAX (16) components,
+but xbc_node_compose_key_after() returns -ERANGE immediately after
+storing the sixteenth component. It rejects the key before discovering
+that there are no more ancestors to collect.
 
-While call_fib6_multipath_entry_notifiers() is called locklessly,
-fib6_siblings could be changed concurrently, leading to the
-warning (and later null-ptr-deref).
+For example, a.b.c.d.e.f.g.h.i.j.k.l.m.n.o.p = value can be attached
+to an initrd successfully. However, bootconfig -l stops listing and
+prints "Failed to compose key -34". In the kernel, the same error
+propagates through copy_xbc_key_value_list() during its length probe,
+so proc_boot_config_init() returns before creating /proc/bootconfig.
 
-Let's protect multiple routes insertion with tb6_lock.
+Check the array capacity before storing the next component. This lets
+exactly XBC_DEPTH_MAX components be composed while retaining the check
+before any out-of-bounds store.
 
-Along with that, __ip6_ins_rt() and ip6_route_del() are changed
-to fib6_add() and fib6_del().
+I found this issue while reviewing bootconfig's depth handling and used
+OpenAI Codex to verify the failure and develop the fix. I reviewed the
+change and wrote and ran the regression tests.
 
-Note that fib6_del() finally calls rt6_multipath_rebalance(),
-which requires rcu_read_lock().
+Link: https://lore.kernel.org/all/20261104073742.21202-2-zhiqizhangg@gmail.com/
 
-[0]:
-i != fen6_info->nsiblings
-WARNING: drivers/net/netdevsim/fib.c:831 at nsim_fib6_event_init drivers/net/netdevsim/fib.c:831 [inline], CPU#0: syz.0.157/6279
-WARNING: drivers/net/netdevsim/fib.c:831 at nsim_fib6_prepare_event drivers/net/netdevsim/fib.c:947 [inline], CPU#0: syz.0.157/6279
-WARNING: drivers/net/netdevsim/fib.c:831 at nsim_fib_event_schedule_work drivers/net/netdevsim/fib.c:1003 [inline], CPU#0: syz.0.157/6279
-WARNING: drivers/net/netdevsim/fib.c:831 at nsim_fib_event_nb+0x1029/0x11d0 drivers/net/netdevsim/fib.c:1043, CPU#0: syz.0.157/6279
-Modules linked in:
-CPU: 0 UID: 0 PID: 6279 Comm: syz.0.157 Not tainted syzkaller #0 PREEMPT(full)
-Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 07/24/2026
-RIP: 0010:nsim_fib6_event_init drivers/net/netdevsim/fib.c:831 [inline]
-RIP: 0010:nsim_fib6_prepare_event drivers/net/netdevsim/fib.c:947 [inline]
-RIP: 0010:nsim_fib_event_schedule_work drivers/net/netdevsim/fib.c:1003 [inline]
-RIP: 0010:nsim_fib_event_nb+0x1029/0x11d0 drivers/net/netdevsim/fib.c:1043
-Code: eb 0d 4d 89 fd e8 b7 c5 6c fa be 01 00 00 00 48 89 df e8 5a 38 85 fd 4d 89 ef 4c 8b 6c 24 20 e9 4a f3 ff ff e8 98 c5 6c fa 90 <0f> 0b 90 e9 db fa ff ff 89 e9 80 e1 07 80 c1 03 38 c1 0f 8c df f0
-RSP: 0018:ffffc900047bef10 EFLAGS: 00010293
-RAX: ffffffff875b59a8 RBX: 0000000000000002 RCX: ffff888079770000
-RDX: 0000000000000000 RSI: 0000000000000002 RDI: 0000000000000001
-RBP: ffffc900047bf0a0 R08: ffff88805c0bb02f R09: 1ffff1100b817605
-R10: dffffc0000000000 R11: ffffed100b817606 R12: dffffc0000000000
-R13: 0000000000000000 R14: 0000000000000001 R15: ffff88802c792000
-FS:  00007f334ba076c0(0000) GS:ffff888123ad0000(0000) knlGS:0000000000000000
-CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
-CR2: 00007f334ba06ff8 CR3: 000000007a5b2000 CR4: 00000000003526f0
-Call Trace:
- <TASK>
- notifier_call_chain+0x1a5/0x3d0 kernel/notifier.c:85
- atomic_notifier_call_chain+0xda/0x180 kernel/notifier.c:223
- call_fib_notifiers+0x31/0x60 net/core/fib_notifier.c:36
- call_fib6_multipath_entry_notifiers+0xf5/0x160 net/ipv6/ip6_fib.c:428
- ip6_route_multipath_add net/ipv6/route.c:5542 [inline]
- inet6_rtm_newroute+0x14f5/0x1a30 net/ipv6/route.c:5664
- rtnetlink_rcv_msg+0x802/0xc00 net/core/rtnetlink.c:7163
- netlink_rcv_skb+0x226/0x4a0 net/netlink/af_netlink.c:2572
- netlink_unicast_kernel net/netlink/af_netlink.c:1335 [inline]
- netlink_unicast+0x7bd/0x940 net/netlink/af_netlink.c:1361
- netlink_sendmsg+0x813/0xb40 net/netlink/af_netlink.c:1916
- sock_sendmsg_nosec+0x14e/0x190 net/socket.c:800
- __sock_sendmsg net/socket.c:818 [inline]
- ____sys_sendmsg+0x54e/0x850 net/socket.c:2715
- ___sys_sendmsg+0x2a5/0x360 net/socket.c:2769
- __sys_sendmmsg+0x273/0x4d0 net/socket.c:2858
- __do_sys_sendmmsg net/socket.c:2885 [inline]
- __se_sys_sendmmsg net/socket.c:2882 [inline]
- __x64_sys_sendmmsg+0xa0/0xc0 net/socket.c:2882
- do_syscall_x64 arch/x86/entry/syscall_64.c:61 [inline]
- do_syscall_64+0x166/0x520 arch/x86/entry/syscall_64.c:84
- entry_SYSCALL_64_after_hwframe+0x77/0x7f
-RIP: 0033:0x7f334ab9e1d9
-Code: ff c3 66 2e 0f 1f 84 00 00 00 00 00 0f 1f 44 00 00 48 89 f8 48 89 f7 48 89 d6 48 89 ca 4d 89 c2 4d 89 c8 4c 8b 4c 24 08 0f 05 <48> 3d 01 f0 ff ff 73 01 c3 48 c7 c1 e8 ff ff ff f7 d8 64 89 01 48
-RSP: 002b:00007f334ba07028 EFLAGS: 00000246 ORIG_RAX: 0000000000000133
-RAX: ffffffffffffffda RBX: 00007f334ae26090 RCX: 00007f334ab9e1d9
-RDX: 04000000000001f2 RSI: 0000200000000000 RDI: 0000000000000004
-RBP: 00007f334ac35888 R08: 0000000000000000 R09: 0000000000000000
-R10: 00000000000000fc R11: 0000000000000246 R12: 0000000000000000
-R13: 00007f334ae26128 R14: 00007f334ae26090 R15: 00007ffd96688aa8
- </TASK>
-
-Fixes: 169fd62799e8 ("ipv6: Get rid of RTNL for SIOCADDRT and RTM_NEWROUTE.")
-Reported-by: syzbot+751b587577d0ebca10f2@syzkaller.appspotmail.com
-Closes: https://lore.kernel.org/all/6adbaed6.67317f00.38c4bc.001b.GAE@google.com/T/
-Signed-off-by: Kuniyuki Iwashima <kuniyu@google.com>
-Reviewed-by: Eric Dumazet <edumazet@kernel.org>
-Reviewed-by: David Ahern <dsahern@kernel.org>
-Link: https://patch.msgid.link/20261027065247.2871134-1-kuniyu@google.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-[ sashal: Dropped the third RT_DEL_REASON_UNSPEC argument from the fib6_del() call in the multipath error path, since this tree's fib6_del() takes only two arguments. ]
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: 76db5a27a827 ("bootconfig: Add Extra Boot Config support")
+Cc: stable@vger.kernel.org
+Signed-off-by: Zhiqi Zhang <zhiqizhangg@gmail.com>
+Signed-off-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/ipv6/ip6_fib.c |  4 ----
- net/ipv6/route.c   | 16 ++++++++++++----
- 2 files changed, 12 insertions(+), 8 deletions(-)
+ lib/bootconfig.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/net/ipv6/ip6_fib.c b/net/ipv6/ip6_fib.c
-index 962d01b9954e4..0ec46c65ee0b5 100644
---- a/net/ipv6/ip6_fib.c
-+++ b/net/ipv6/ip6_fib.c
-@@ -1252,9 +1252,7 @@ static int fib6_add_rt2node(struct fib6_node *fn, struct fib6_info *rt,
- 			fib6_nsiblings++;
- 		}
- 		BUG_ON(fib6_nsiblings != rt->fib6_nsiblings);
--		rcu_read_lock();
- 		rt6_multipath_rebalance(temp_sibling);
--		rcu_read_unlock();
+--- a/lib/bootconfig.c
++++ b/lib/bootconfig.c
+@@ -302,9 +302,9 @@ int __init xbc_node_compose_key_after(st
+ 		node = xbc_node_get_parent(node);
+ 
+ 	while (node && node != root) {
+-		keys[depth++] = xbc_node_index(node);
+ 		if (depth == XBC_DEPTH_MAX)
+ 			return -ERANGE;
++		keys[depth++] = xbc_node_index(node);
+ 		node = xbc_node_get_parent(node);
  	}
- 
- 	/*
-@@ -1298,9 +1296,7 @@ static int fib6_add_rt2node(struct fib6_node *fn, struct fib6_info *rt,
- 						   sibling->fib6_nsiblings - 1);
- 				WRITE_ONCE(rt->fib6_nsiblings, 0);
- 				list_del_rcu(&rt->fib6_siblings);
--				rcu_read_lock();
- 				rt6_multipath_rebalance(next_sibling);
--				rcu_read_unlock();
- 				return err;
- 			}
- 		}
-diff --git a/net/ipv6/route.c b/net/ipv6/route.c
-index ac27f815d497c..4e5e01970ef73 100644
---- a/net/ipv6/route.c
-+++ b/net/ipv6/route.c
-@@ -4894,8 +4894,10 @@ void rt6_multipath_rebalance(struct fib6_info *rt)
- 	if (WARN_ON_ONCE(!first))
- 		return;
- 
-+	rcu_read_lock();
- 	total = rt6_multipath_total_weight(first);
- 	rt6_multipath_upper_bound_set(first, total);
-+	rcu_read_unlock();
- }
- 
- static int fib6_ifup(struct fib6_info *rt, void *p_arg)
-@@ -5432,6 +5434,7 @@ static int ip6_route_multipath_add(struct fib6_config *cfg,
- 	struct fib6_info *rt_notif = NULL, *rt_last = NULL;
- 	struct nl_info *info = &cfg->fc_nlinfo;
- 	struct rt6_nh *nh, *nh_safe;
-+	struct fib6_table *table;
- 	struct fib6_config r_cfg;
- 	struct rtnexthop *rtnh;
- 	LIST_HEAD(rt6_nh_list);
-@@ -5518,10 +5521,12 @@ static int ip6_route_multipath_add(struct fib6_config *cfg,
- 	 */
- 	info->skip_notify_kernel = 1;
- 
-+	table = rt->fib6_table;
-+	spin_lock_bh(&table->tb6_lock);
-+
- 	err_nh = NULL;
- 	list_for_each_entry(nh, &rt6_nh_list, list) {
--		err = __ip6_ins_rt(nh->fib6_info, info, extack);
--
-+		err = fib6_add(&table->tb6_root, nh->fib6_info, info, extack);
- 		if (err) {
- 			if (replace && nhn)
- 				NL_SET_ERR_MSG_MOD(extack,
-@@ -5576,11 +5581,13 @@ static int ip6_route_multipath_add(struct fib6_config *cfg,
- 
- 	/* success ... tell user about new route */
- 	ip6_route_mpath_notify(rt_notif, rt_last, info, nlflags);
-+
-+	spin_unlock_bh(&table->tb6_lock);
- 	goto cleanup;
- 
- add_errout:
- 	/* send notification for routes that were added so that
--	 * the delete notifications sent by ip6_route_del are
-+	 * the delete notifications sent by fib6_del() are
- 	 * coherent
- 	 */
- 	if (rt_notif)
-@@ -5590,9 +5597,10 @@ static int ip6_route_multipath_add(struct fib6_config *cfg,
- 	list_for_each_entry(nh, &rt6_nh_list, list) {
- 		if (err_nh == nh)
- 			break;
--		ip6_route_del(&nh->r_cfg, extack);
-+		fib6_del(nh->fib6_info, &nh->r_cfg.fc_nlinfo);
- 	}
- 
-+	spin_unlock_bh(&table->tb6_lock);
- cleanup:
- 	list_for_each_entry_safe(nh, nh_safe, &rt6_nh_list, list) {
- 		fib6_info_release(nh->fib6_info);
--- 
-2.53.0
-
+ 	if (!node && root)
 
 
