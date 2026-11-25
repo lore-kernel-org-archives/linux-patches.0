@@ -1,51 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795621158;
-	b=IJr4NMXl1rkFoy51nfqMb9paxY5IdTUYXY0eschG7DntlYJgSRGUi/jFSfw+H5xFctch
-	 Bg38n3LcKKLgQrCFx7s5xeyl+NEDEIyCEOeexqCdvS8uf0GRVenRzElq3Sx07d38cK1iC
-	 UU/mL1ozLLkfIJBzudqa5Xje+tcRboXp7b6jFIJPuQT4c9JoDZlaelN6NwoRxzBw6hyoU
-	 88VmXnNJQ6tLKl1GRVpYrX6Knk1U0QE/A0/K8VZs1LRCxlMm8L1l9EeJeA/MRKszEAYFI
-	 xmj+2FNKd7oTkfB9O06z5HmPb9HuUV+4A5KagS65HVB5c/NGP6DKaRvWt3xK0o79xPQ==
+	t=1795621161;
+	b=Vx/OI2A2IUahBZSWlqZ3scsqZW2lFRnftl7J29Xd22Y3VkIJA0f/SvsosvMHjAsGwRtV
+	 j8CDdq/vMh5S6zchEwwO4GbT92mHqnFCKjwD052+21cux4Dgb87eobzwkyR40h0fL/Q0d
+	 H4QLErWkbMBxYHIzcKAl51aVcEo2GGkQdaESyANaZGsqGW/H+QQ/y07sUFTEkv0YAXE+m
+	 OxQpZuYFLgdSzLnBVD/0xaMIlcRmYn0RdkitMoasfi0aQoN2LYz4OH2meaZJ7NGhcUydk
+	 BnmA7wWOQiajcRsEzwY4iULoksiGGFLWiTtkflmZhYS5oOiRpAyEydbIVQ2ks5hS92g==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795621158;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795621161;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=1Lu+2G5g977EOlrBz/BzaiJbc7EZjWxNBZbmTDUuMSQ=;
-	b=uz6Bs3VwH3VQ9bTxT9e6tlu/tUjYReeqs6jQhH0G+BzpWSJlDFoJdcAO2emlVRYmFPVE
-	 r7x+4xcyDCjkkTVhpwS9sttghDoC+7bul1dA7vVOkNLHgWf3IaDVJ+3JQgCc1/LWeb4mv
-	 EC2/Jn2mZPOWxvMHtbMUmv4wqy889HbDpfOxi++HNLDzoFM3SA8NNfUtQGDrpRrY6s2Jm
-	 EiAln3/rwPnAlW8MqRicIfrfA3vqmu1dJfF7MAWHG/5GMwQtEdjzPfWwWFdEY+DuGLM40
-	 nj9vXvpS/QZ8TTlH/jB2sFpDnqUa9kb52mSCF1gj3aRRswBbx9/J6sVLrCESy4B4OWA==
+	bh=oxDwINe6aJdr17LVMj3pz5QJQoAa39T0vU3ZDcef0F0=;
+	b=W1uBq/MrVU8tJQDf2yQq4G03A3YoE5uc0P0QpXiFGD0/ofDlTnugK10oLr9djqtg/gQ7
+	 8wgjmaCF4m0Awf7SAcE1OfW7cmARF5eeYdhCyT4QtN/AxcN4rosRRmtE/ySIvz+vX85y1
+	 UuLonwxG3BySKwzlDtGZ7g9gmFt+IfOjpcT5Bd9o1/3FPGF6nEp08JeGYNYtsY4fbVZ/c
+	 zQlAGXKzMuF66HIKrwd2J/a9lRYgyfD6alMuOEP8zeRN1OZ0xibWAOQXUONTbHSB/WMkl
+	 stYD6ljKXwPQml7IkMMF/lx03zoAjK5eoaDHBr1SKI8BuvWp0KHthGwDikTLj5jLfpw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=bfMeuMlY;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ZM4+gysk;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8C24D606A32C;
-	Wed, 25 Nov 2026 15:39:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D12BB606A6AD;
+	Wed, 25 Nov 2026 15:39:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=bfMeuMlY
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D93C61F0093C;
-	Wed, 25 Nov 2026 15:39:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ZM4+gysk
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 251851F0093C;
+	Wed, 25 Nov 2026 15:39:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795621158;
-	bh=1Lu+2G5g977EOlrBz/BzaiJbc7EZjWxNBZbmTDUuMSQ=;
+	s=korg; t=1795621161;
+	bh=oxDwINe6aJdr17LVMj3pz5QJQoAa39T0vU3ZDcef0F0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=bfMeuMlYI5XqQlTeDMyf0jnURXPgA56bZiCPvqw5tUd35i/DFnpkwREHeftyQ2Eko
-	 blelnbTWO8D7P43S9iO9bFF32a7eqZsymfy0q7IiTEoKoU72s+Xr0Z7/CT6mgBnTxc
-	 f0dZHvpi81+I8gAr39yHwCwE3vwG7EqVV7LFS190=
+	b=ZM4+gysk0OM9pKZzQ1WkTywOyH/4oWUvePiiXW/H7rQUZHUAfJ2EeP+A7XI+FEldl
+	 AO9+YHGnANxG+wBNjes7bh3CtpagMMu0eKEWwH6Hgr66NHkIQcC8+2B+80f4jovrUZ
+	 A8Sl9L0bLS+9kG1T4YphHsC58Sod+bDZ8oyxzx4c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alexei Starovoitov <ast@kernel.org>,
+	Lorenzo Bianconi <lorenzo.bianconi@oss.qualcomm.com>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 113/990] bpf: Refuse to map an arena at address 0
-Date: Wed, 25 Nov 2026 15:24:40 +0100
-Message-ID: <20261125143824.735046260@linuxfoundation.org>
+Subject: [PATCH 6.18 140/990] net: stmmac: copy XDP metadata in AF_XDP zero-copy RX
+Date: Wed, 25 Nov 2026 15:25:07 +0100
+Message-ID: <20261125143825.364898572@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143822.072087159@linuxfoundation.org>
 References: <20261125143822.072087159@linuxfoundation.org>
@@ -67,44 +68,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alexei Starovoitov <ast@kernel.org>
+From: Lorenzo Bianconi <lorenzo.bianconi@oss.qualcomm.com>
 
-[ Upstream commit ca580b034380fa9a69cc973637d1859ec4f5b344 ]
+[ Upstream commit 41d78e9ac0984f0e9577e5312e62400b5a6760c8 ]
 
-The first mmap() of an arena sets user_vm_start and user_vm_end. Each
-subsequent mmap() must use the same range. The value 0 in user_vm_start
-means that the range is not set, but a mapping can start at address 0. Then
-arena_map_mmap() does not check vm_start and sets user_vm_start again. The
-range tree counts pages from user_vm_start. With a new user_vm_start it
-reports allocated pages as free, and apply_range_set_cb() fails with
--EBUSY.
+stmmac_construct_skb_zc() reserves headroom for the XDP metadata and
+records the length reported by the XDP program, but only copies the
+packet data starting at xdp->data. The bytes in
+[xdp->data_meta, xdp->data) are never copied into the new skb, so the
+skb advertises metadata that is not there: after eth_type_trans()
+anchors mac_header, data_meta points at uninitialized headroom instead
+of what the program wrote.
 
-An arena at address 0 is not useful, because the verifier rejects all progs
-that refer to it. Return -EINVAL from arena_get_unmapped_area(). It runs
-before mmap() removes the old mappings in the range.
+Copy the metadata together with the packet data starting at
+xdp->data_meta, leaving skb->data at the start of the frame and the
+metadata immediately before it, and record its length. This keeps
+data_meta valid for the stack and TC BPF after eth_type_trans() anchors
+mac_header.
 
-Fixes: 317460317a02 ("bpf: Introduce bpf_arena.")
-Signed-off-by: Alexei Starovoitov <ast@kernel.org>
-Link: https://patch.msgid.link/20261101190535.1454146-4-alexei.starovoitov@gmail.com
+Fixes: bba2556efad6 ("net: stmmac: Enable RX via AF_XDP zero-copy")
+Signed-off-by: Lorenzo Bianconi <lorenzo.bianconi@oss.qualcomm.com>
+Link: https://patch.msgid.link/20261027-stmmac-xdp-fixes-v2-4-10eae8a093a8@oss.qualcomm.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/bpf/arena.c | 3 +++
- 1 file changed, 3 insertions(+)
+ drivers/net/ethernet/stmicro/stmmac/stmmac_main.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/kernel/bpf/arena.c b/kernel/bpf/arena.c
-index 51227c8d2b1e4..d1f0a7222d941 100644
---- a/kernel/bpf/arena.c
-+++ b/kernel/bpf/arena.c
-@@ -349,6 +349,9 @@ static unsigned long arena_get_unmapped_area(struct file *filp, unsigned long ad
- 	ret = mm_get_unmapped_area(current->mm, filp, addr, len * 2, 0, flags);
- 	if (IS_ERR_VALUE(ret))
- 		return ret;
-+	if (!ret)
-+		/* user_vm_start == 0 means that the user range is not set yet */
-+		return -EINVAL;
- 	if ((ret >> 32) == ((ret + len - 1) >> 32))
- 		return ret;
- 	if (WARN_ON_ONCE(arena->user_vm_start))
+diff --git a/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c b/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
+index a79332f92be79..4d5e3ec64dfa5 100644
+--- a/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
++++ b/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
+@@ -5201,7 +5201,8 @@ static struct sk_buff *stmmac_construct_skb_zc(struct stmmac_channel *ch,
+ 		return NULL;
+ 
+ 	skb_reserve(skb, xdp->data - xdp->data_hard_start);
+-	memcpy(__skb_put(skb, datasize), xdp->data, datasize);
++	__skb_put(skb, datasize);
++	memcpy(skb->data - metasize, xdp->data_meta, datasize + metasize);
+ 	if (metasize)
+ 		skb_metadata_set(skb, metasize);
+ 
 -- 
 2.53.0
 
