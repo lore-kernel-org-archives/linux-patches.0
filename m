@@ -1,53 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795622766;
-	b=RdFpyRBWgkxO/eJ0lXGzLG1NVwJYwK+tvfdRT+/RW7fg6gkeziD21mxkFvMasoeS02P6
-	 wal42yQ7/J0VmN5iGjqODqZOrR6yd0rF8/aBwDV6n94tr2N0LooEQFVYczNAbYzyJHmKC
-	 5gKra9W/JiTVkmvn5DLCJOxejIoJDoSi+SVCyhrDfgj/5HR7RkgBffEGYO86rH/6dtNkv
-	 cszi207gHKn4MMGo1rZANHPtYb6XuDmMSc0DE1+/ajYGMAPUQMAyxwbr1QGSScqS5PO4L
-	 CLfoZf0aJcIyB4+D3/itUMcKOIo4cSntUz8eEv/m8VAZDx9StNwkHpv84fR5ZpQPAww==
+	t=1795622769;
+	b=pJZ+cyEJyeBAafj6ie9v5bD+IDRh6Q0iY3ry2/AiiuyD0gWY7oKYBeqSGphQq8OavSka
+	 dIoPlhqXTtKyuyqx/ORXDVAVRZxjVdLYs9CDvy/uKOzbe3zpSEMoOecrnpdsyXdpE4Hj0
+	 fDTF37MWqbNIIIawgXilURAouoUEm0m/jSsoMsnX/nEyIaV/znwxdWYDdZiWzqW19oVlA
+	 WFt2AUioiJvfNjOSc42e6d9E5jH8833cnnhm70DNcfP4Tihv1p3lqJvtntDO4rS6W077v
+	 YzO3jft7DQ2z9Ei37CO88VUVhkkgUk5Lm5XJztVngCiOgTXZrbiWMt7TsCrhF6hWKtQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795622766;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795622769;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=2vhngm7MsYm+gZuc/qUTwxbGB6G4MoWOXDkABUWEtAQ=;
-	b=JcmxOWj+65yofj9qarugI8D/ti5jbdyG6fCMgtdaZ5acHqkHoJoC4fV1X6KUR6YH/zz9
-	 EpOCMtmpTMsKYMA0RPFNTitYhTiELBxntmrix6QsfJJ8CeYniTy8RF1xbdrhr/O/qEODS
-	 3cruuZzWU+Vs3GqFnQ0H5EHuCGN8Q+8YeOXdqJ6ViUQg2HYs8SSBP5e3yIot/vhHrB915
-	 +G3NBGILsyzY8WQNSBuLtguGCEn6do/9y0VZbRjj3pGaloTVIw04Gd+Z+AqGfui9ZVkwq
-	 7ie+ClfLCWmFeoVLSl5fq/D6xG2dktl9RF/gtQdGbQhzVm73t0H0pivRDPEpyz6dKew==
+	bh=Eg8L3h/xE9fJA49tLF3YCw87nEzG70wRQBbUriFPy3k=;
+	b=UMc44YJpMejgt9qthi1E5VwsPGLey5xu/L1TQeCCiP1M0Nw6KWJcoBQsK+kyyxMMUghS
+	 7pZVL53Ma8zGCYgjVo60NZ6+FwwJ8bSkQLKkLJnK7H1DRuxE52ixnWHLd1BgAR9lOkpzt
+	 Ap18pFuTYjv5Co94hULjNOhvlWr5sKDke/K02d80bqy5Xi5H82ggDPQm7k1j3k36L5ITT
+	 Iho6Do2l/Agi5KM5Nz/iP15jmYnRRZwdFg8eqfK9aYkgxemX1BXd4hdHyrQR3yYmWI3vg
+	 A9cnO9yZ30ub0LngJ4OV3hcs1yqr/Y5wMbI5Stt4tTK38g/PFpQ8Nzfk+Uiw6BaVHwA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=yWWvbsYr;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=F5zNcUWy;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8DD23606A31E;
-	Wed, 25 Nov 2026 16:06:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 62EE9606A31E;
+	Wed, 25 Nov 2026 16:06:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=yWWvbsYr
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DD89C1F000C0;
-	Wed, 25 Nov 2026 16:06:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=F5zNcUWy
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B3E801F000C4;
+	Wed, 25 Nov 2026 16:06:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795622766;
-	bh=2vhngm7MsYm+gZuc/qUTwxbGB6G4MoWOXDkABUWEtAQ=;
+	s=korg; t=1795622769;
+	bh=Eg8L3h/xE9fJA49tLF3YCw87nEzG70wRQBbUriFPy3k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=yWWvbsYrCnmwkO/fLy+RQUM2ljAFCOf8WPICT+VTBLXw3Xjs3xBeJcSlxPJf2m+x+
-	 4bnjjWRoNzqkV5CkBXZogRKZfJDc0OyfwKpzO0NN2XEX5Ap4ArwBsOMnyxSzWqXNza
-	 6Artufw1Uxi01mwfTFvb43sr3s0Vcw1JnXI9RW3c=
+	b=F5zNcUWyZFx22LTAYOk07fNF7sWWd4Qf2Zzmwe+IuPC4b8GMaZ3lzuguhOvzYbisd
+	 QTHExwvydWaHt0CmHIgTolrFpBe44tNOfxdHejQTsE5dvNWNPpwC1LzJKNWpQsiuMY
+	 ENNe3lVSivwiyrAUSvXb6HSGIKBxpvPw9bK7na68=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tejun Heo <tj@kernel.org>,
-	Josef Bacik <josef@toxicpanda.com>,
-	Jens Axboe <axboe@kernel.dk>,
+	Ravindra <ravindra@intel.com>,
+	Sergey Lebedev <lsa.uz@pm.me>,
+	Paul Menzel <pmenzel@molgen.mpg.de>,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 639/990] block: dont enter reclaim under rq_qos_mutex
-Date: Wed, 25 Nov 2026 15:33:26 +0100
-Message-ID: <20261125143837.061553937@linuxfoundation.org>
+Subject: [PATCH 6.18 596/990] Bluetooth: btintel_pcie: fix PM flow for S0ix, S3 and S4
+Date: Wed, 25 Nov 2026 15:32:43 +0100
+Message-ID: <20261125143836.051504128@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143822.072087159@linuxfoundation.org>
 References: <20261125143822.072087159@linuxfoundation.org>
@@ -69,128 +70,161 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Josef Bacik <josef@toxicpanda.com>
+From: Ravindra <ravindra@intel.com>
 
-[ Upstream commit 045cbfc369f5929ed473f7c200dc2e8146569ce5 ]
+[ Upstream commit 2926eb396711f1f843a0aafee6778822f50e9021 ]
 
-ioc_qos_write() and the wbt_lat_usec writers take rq_qos_mutex with the
-queue frozen, blkcg_deactivate_policy() does the same with blkcg_mutex,
-so nothing holding either may wait for IO. blkg_conf_prep() got
-GFP_NOIO for the blkg in commit 5d726c4dbeed, but the
-radix_tree_preload() right after it, the policy init functions and the
-GFP_KERNEL fallback in blkcg_activate_policy() can still enter reclaim
-there. lockdep reports the cycle on the first write to io.max.
+Fix two issues in the PM suspend/resume path:
 
-Use GFP_NOIO for all of them.
+1. S3 was handled the same as S0ix, keeping the controller on the
+   D3hot-style path. That caused resume instability because S3 can
+   remove power from the controller, unlike s2idle/S0ix. Use
+   pm_suspend_target_state to distinguish them: D3_HOT for S0ix and
+   D3_COLD for S3/S4. Add .restore to force FLR-based firmware recovery
+   after S4 and S3 (PM_SUSPEND_MEM), as power is lost. S0ix resumes via
+   a normal D0 transition.
 
-Fixes: 9730763f4756 ("block: correct locking order for protecting blk-wbt parameters")
-Fixes: 5d726c4dbeed ("blk-cgroup: fix possible deadlock while configuring policy")
-Cc: Tejun Heo <tj@kernel.org>
-Signed-off-by: Josef Bacik <josef@toxicpanda.com>
-Acked-by: Tejun Heo <tj@kernel.org>
-Link: https://patch.msgid.link/20261028164415.1262013-35-axboe@kernel.dk
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
-[ sashal: Replaced upstream's kzalloc_obj(*ptr) allocator calls with kzalloc(sizeof(*ptr), GFP_NOIO) in blk-iocost.c and blk-iolatency.c, since this tree lacks kzalloc_obj. ]
+2. During hibernation, .freeze() puts the controller into the D3cold
+   state without any loss of power, and the flow normally continues to
+   .poweroff(). If hibernation instead fails, .thaw() is called to bring
+   the controller back up, and the old code routed it through
+   btintel_pcie_resume(), which forced FLR-based firmware recovery
+   whenever data->pm_sx_event was PM_EVENT_FREEZE. That check was
+   incorrect: since the controller's power was never actually removed on
+   this failed-hibernation path, FLR-based recovery is unnecessary. Remove
+   pm_sx_event and route .thaw through a normal D0 transition instead;
+   FLR-based recovery is retained only in .restore, where genuine S4
+   power loss requires it.
+
+Tested with:
+  S0ix: sudo sh -c 'echo "+40" > /sys/class/rtc/rtc0/wakealarm' && \
+        echo freeze | sudo tee /sys/power/state
+  S3:   sudo rtcwake -m mem  -s 60
+  S4:   sudo rtcwake -m disk -s 60
+
+Fixes: e57362f4911b ("Bluetooth: btintel_pcie: Add support for _suspend() / _resume()")
+Assisted-by: GitHub-Copilot:GPT5
+Signed-off-by: Ravindra <ravindra@intel.com>
+Tested-by: Sergey Lebedev <lsa.uz@pm.me>
+Reviewed-by: Paul Menzel <pmenzel@molgen.mpg.de>
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+[ sashal: Replaced the btintel_pcie_request_reset(data, FLR) call with btintel_pcie_reset() and kept the gp0_received = false resets, because the set_dxstate retry rework is missing here. ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- block/blk-cgroup.c    | 13 +++++++++----
- block/blk-iocost.c    |  5 +++--
- block/blk-iolatency.c |  3 ++-
- block/blk-throttle.c  |  3 ++-
- 4 files changed, 16 insertions(+), 8 deletions(-)
+ drivers/bluetooth/btintel_pcie.c | 45 +++++++++++++++++++++-----------
+ drivers/bluetooth/btintel_pcie.h |  2 --
+ 2 files changed, 30 insertions(+), 17 deletions(-)
 
-diff --git a/block/blk-cgroup.c b/block/blk-cgroup.c
-index 610ea63ad3861..36e6fdad93bd6 100644
---- a/block/blk-cgroup.c
-+++ b/block/blk-cgroup.c
-@@ -917,7 +917,11 @@ int blkg_conf_prep(struct blkcg *blkcg, const struct blkcg_policy *pol,
- 			parent = blkcg_parent(parent);
- 		}
+diff --git a/drivers/bluetooth/btintel_pcie.c b/drivers/bluetooth/btintel_pcie.c
+index 75bbb2bb6be55..3799e5b20d5f7 100644
+--- a/drivers/bluetooth/btintel_pcie.c
++++ b/drivers/bluetooth/btintel_pcie.c
+@@ -13,6 +13,7 @@
+ #include <linux/wait.h>
+ #include <linux/delay.h>
+ #include <linux/interrupt.h>
++#include <linux/suspend.h>
  
--		/* Drop locks to do new blkg allocation with GFP_KERNEL. */
-+		/*
-+		 * Drop the spinlock to allocate the new blkg. rq_qos_mutex and
-+		 * blkcg_mutex stay held, and both are taken with the queue
-+		 * frozen elsewhere: GFP_NOIO.
-+		 */
- 		spin_unlock_irq(&q->queue_lock);
+ #include <linux/unaligned.h>
+ #include <linux/devcoredump.h>
+@@ -2580,10 +2581,12 @@ static int btintel_pcie_suspend_late(struct device *dev, pm_message_t mesg)
  
- 		new_blkg = blkg_alloc(pos, disk, GFP_NOIO);
-@@ -926,7 +930,7 @@ int blkg_conf_prep(struct blkcg *blkcg, const struct blkcg_policy *pol,
- 			goto fail_exit;
- 		}
+ 	data = pci_get_drvdata(pdev);
  
--		if (radix_tree_preload(GFP_KERNEL)) {
-+		if (radix_tree_preload(GFP_NOIO)) {
- 			blkg_free(new_blkg);
- 			ret = -ENOMEM;
- 			goto fail_exit;
-@@ -1646,7 +1650,8 @@ int blkcg_activate_policy(struct gendisk *disk, const struct blkcg_policy *pol)
- 		if (!pd) {
- 			/*
- 			 * GFP_NOWAIT failed.  Free the existing one and
--			 * prealloc for @blkg w/ GFP_KERNEL.
-+			 * prealloc for @blkg w/ GFP_NOIO: blkcg_mutex is held,
-+			 * and a bio based queue has not been frozen above.
- 			 */
- 			if (pinned_blkg)
- 				blkg_put(pinned_blkg);
-@@ -1658,7 +1663,7 @@ int blkcg_activate_policy(struct gendisk *disk, const struct blkcg_policy *pol)
- 			if (pd_prealloc)
- 				pol->pd_free_fn(pd_prealloc);
- 			pd_prealloc = pol->pd_alloc_fn(disk, blkg->blkcg,
--						       GFP_KERNEL);
-+						       GFP_NOIO);
- 			if (pd_prealloc)
- 				goto retry;
- 			else
-diff --git a/block/blk-iocost.c b/block/blk-iocost.c
-index a05e5cfd0ac0f..6c3ba62090477 100644
---- a/block/blk-iocost.c
-+++ b/block/blk-iocost.c
-@@ -2982,11 +2982,12 @@ static int blk_iocost_init(struct gendisk *disk)
- 	struct ioc *ioc;
- 	int i, cpu, ret;
+-	dxstate = (mesg.event == PM_EVENT_SUSPEND ?
+-		   BTINTEL_PCIE_STATE_D3_HOT : BTINTEL_PCIE_STATE_D3_COLD);
+-
+-	data->pm_sx_event = mesg.event;
++	/* S0ix (s2idle) uses D3_HOT; S3, freeze and hibernate use D3_COLD. */
++	if (mesg.event == PM_EVENT_SUSPEND &&
++	    pm_suspend_target_state == PM_SUSPEND_TO_IDLE)
++		dxstate = BTINTEL_PCIE_STATE_D3_HOT;
++	else
++		dxstate = BTINTEL_PCIE_STATE_D3_COLD;
  
--	ioc = kzalloc(sizeof(*ioc), GFP_KERNEL);
-+	/* The caller holds rq_qos_mutex, which is taken with the queue frozen */
-+	ioc = kzalloc(sizeof(*ioc), GFP_NOIO);
- 	if (!ioc)
- 		return -ENOMEM;
+ 	data->gp0_received = false;
  
--	ioc->pcpu_stat = alloc_percpu(struct ioc_pcpu_stat);
-+	ioc->pcpu_stat = alloc_percpu_gfp(struct ioc_pcpu_stat, GFP_NOIO);
- 	if (!ioc->pcpu_stat) {
- 		kfree(ioc);
- 		return -ENOMEM;
-diff --git a/block/blk-iolatency.c b/block/blk-iolatency.c
-index 741c804c217bf..3e0c9ec5df367 100644
---- a/block/blk-iolatency.c
-+++ b/block/blk-iolatency.c
-@@ -761,7 +761,8 @@ static int blk_iolatency_init(struct gendisk *disk)
- 	struct blk_iolatency *blkiolat;
- 	int ret;
+@@ -2622,7 +2625,7 @@ static int btintel_pcie_freeze(struct device *dev)
+ 	return btintel_pcie_suspend_late(dev, PMSG_FREEZE);
+ }
  
--	blkiolat = kzalloc(sizeof(*blkiolat), GFP_KERNEL);
-+	/* The caller holds rq_qos_mutex, which is taken with the queue frozen */
-+	blkiolat = kzalloc(sizeof(*blkiolat), GFP_NOIO);
- 	if (!blkiolat)
- 		return -ENOMEM;
+-static int btintel_pcie_resume(struct device *dev)
++static int btintel_pcie_resume_event(struct device *dev, pm_message_t mesg)
+ {
+ 	struct pci_dev *pdev = to_pci_dev(dev);
+ 	struct btintel_pcie_data *data;
+@@ -2634,15 +2637,12 @@ static int btintel_pcie_resume(struct device *dev)
  
-diff --git a/block/blk-throttle.c b/block/blk-throttle.c
-index 36f8dc324d79f..faf53bf759957 100644
---- a/block/blk-throttle.c
-+++ b/block/blk-throttle.c
-@@ -1327,7 +1327,8 @@ static int blk_throtl_init(struct gendisk *disk)
- 	unsigned int memflags;
- 	int ret;
+ 	start = ktime_get();
  
--	td = kzalloc_node(sizeof(*td), GFP_KERNEL, q->node);
-+	/* The caller holds rq_qos_mutex, which is taken with the queue frozen */
-+	td = kzalloc_node(sizeof(*td), GFP_NOIO, q->node);
- 	if (!td)
- 		return -ENOMEM;
+-	/* When the system enters S4 (hibernate) mode, bluetooth device loses
+-	 * power, which results in the erasure of its loaded firmware.
+-	 * Consequently, function level reset (flr) is required on system
+-	 * resume to bring the controller back into an operational state by
+-	 * initiating a new firmware download.
++	/* S3 and S4 may cut power, erasing the firmware. Force FLR to recover
++	 * instead of a normal D0 transition.
+ 	 */
+-
+-	if (data->pm_sx_event == PM_EVENT_FREEZE ||
+-	    data->pm_sx_event == PM_EVENT_HIBERNATE) {
++	if (mesg.event == PM_EVENT_RESTORE ||
++	    (mesg.event == PM_EVENT_RESUME &&
++	     pm_suspend_target_state == PM_SUSPEND_MEM)) {
+ 		set_bit(BTINTEL_PCIE_CORE_HALTED, &data->flags);
+ 		btintel_pcie_reset(data->hdev);
+ 		return 0;
+@@ -2685,13 +2685,28 @@ static int btintel_pcie_resume(struct device *dev)
+ 	return 0;
+ }
  
++static int btintel_pcie_resume(struct device *dev)
++{
++	return btintel_pcie_resume_event(dev, PMSG_RESUME);
++}
++
++static int btintel_pcie_restore(struct device *dev)
++{
++	return btintel_pcie_resume_event(dev, PMSG_RESTORE);
++}
++
++static int btintel_pcie_thaw(struct device *dev)
++{
++	return btintel_pcie_resume_event(dev, PMSG_THAW);
++}
++
+ static const struct dev_pm_ops btintel_pcie_pm_ops = {
+ 	.suspend = btintel_pcie_suspend,
+ 	.resume = btintel_pcie_resume,
+ 	.freeze = btintel_pcie_freeze,
+-	.thaw = btintel_pcie_resume,
++	.thaw = btintel_pcie_thaw,
+ 	.poweroff = btintel_pcie_hibernate,
+-	.restore = btintel_pcie_resume,
++	.restore = btintel_pcie_restore,
+ };
+ 
+ static struct pci_driver btintel_pcie_driver = {
+diff --git a/drivers/bluetooth/btintel_pcie.h b/drivers/bluetooth/btintel_pcie.h
+index 481de85456e2b..43be595d20b65 100644
+--- a/drivers/bluetooth/btintel_pcie.h
++++ b/drivers/bluetooth/btintel_pcie.h
+@@ -461,7 +461,6 @@ struct btintel_pcie_dump_header {
+  * @txq: TX Queue struct
+  * @rxq: RX Queue struct
+  * @alive_intr_ctxt: Alive interrupt context
+- * @pm_sx_event: PM event on which system got suspended
+  */
+ struct btintel_pcie_data {
+ 	struct pci_dev	*pdev;
+@@ -511,7 +510,6 @@ struct btintel_pcie_data {
+ 	u32	alive_intr_ctxt;
+ 	struct btintel_pcie_dbgc	dbgc;
+ 	struct btintel_pcie_dump_header dmp_hdr;
+-	u8	pm_sx_event;
+ };
+ 
+ static inline u32 btintel_pcie_rd_reg32(struct btintel_pcie_data *data,
 -- 
 2.53.0
 
