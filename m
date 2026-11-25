@@ -1,56 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795622498;
-	b=cEhn+pYYibAhgHiGSMyKiiYOwg9wwdNFaVqOI387V70aeVI03myMRDlENZQwPDLJMsDg
-	 aUPwloTjzHwku1ikQlSHSy3iMiq0BjlrxFsBq+iWNWi9rH8I8sysag7JXii+3b9MM/Ag7
-	 NeZ8R2H7rqh7+A/f+3RxFGWYDRUb3iwjB3kAGzaJEa6posf9s6grnWDd1gl3OoxmUYefU
-	 R6mDA0h9ABW81xMTJPaZQIG+zV8aDzYNSWg1R6CV7ejvDv8mJQtZceo/J0P3YhHf+HP9s
-	 G8sNge1OcdK4cPAL2hjBK6tNMkFSzendOpCnRV+4glvJmb7GW+pgzCi/4jzk+e/W4fA==
+	t=1795622501;
+	b=3hAMVGgD+W/nNmeDDhJCb+GsJ6uaDI4T1Ac3zA67ncEVHCxmn4Dfvqy1DQWLOJiutt/X
+	 L4Lg2o/RoS8DCnRxAZL+W9LMbrm+to9mLyUDAwHu5l5R1tFRn12WCCEaR9eHtSIpaKq8P
+	 tr4ttHYHXxtLtF1HgtoFTmEfqGsaNCjJMxlgIPOt7ePxBLbNWZZUZ/IEssiuzIXM3W8mR
+	 GjAlOR7Jjsv5mVwyyPGWrE4XHTb3PZQmQ4RX9HctuMT8V4+23JiYJxDmvD3DeUf0rpQn9
+	 Jx6pVx9N0bJFavgbMdTzPVUFsGgsCaoY9pFZADLTIkdfCBWq6M4Ui8FNGru7Ibca4Vw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795622498;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795622501;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=gfbjNCNYsEeB2Qnd8KFZxuSbap8H42IpVTaNbAp8otI=;
-	b=whIJFTF4c8B+esq+QAZE+LWni4uDQuM0yxQmf5q7Ju16mblj2LBO1PB/ohCZB1SvgZzt
-	 rZ6GT7F0CIDd5RFmGLWt9MqX6qvKkHtqkwBKfJ3qSkrNExoz9CCuNDtiskvNJ8vs1jvqV
-	 0c6YNttSY2eEhziG9NnZ21tW1AqzAH5WDwFT0o41cNEnsz+Uhqhp+5oWgXgGfYviqQq0j
-	 7HJb14mafcmdiY/ZiFBq7KOcSSRFdD60laZnUqD2zmdVAug6bbqA3sQDWk34WrgnrNOaD
-	 9bk0bfD2Jx0hiKpEqwBWhj2k9wHRZwQm7m+g52a06JiSLkRwkmUuWdQQdke1c14Fnpw==
+	bh=xiu2cEAhd2AfjxW0+IUNEgZ9we94uEEkQrMdO8zZISs=;
+	b=vSbWZgtorwdTGifAQzUZzYJL4B7fuisBmTGD98ApUICuQT23fzW0ae2ThLoEHTf0IJmE
+	 rbYN056LxH6ZT9KcvMHBy/dVy+c+QBVCZszAz/BxBMLJnuhy9gfRvZB9I15HeK56nRAb4
+	 6+BRkoZ9+uAICb6QoMuKV9Osy7mB4TIve0ZfQ6TxJI+S3jE7/imi83ilSqR7ARTD2ZPwn
+	 JDU8yLu5CU2BXl1moiM/Ag+Je2nW7tMm1nZt600lv/gv8OKJM6MktnHfwxJ6rcQKyucSy
+	 B/3lUjJHfrq3CJ2XNsXGBQZPS3F3LUzy48O02b+4I31b+Fd06VMkEsA3/RY6jEUQyew==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=u49waXt2;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=1MRoBE6d;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3A727606A31E;
-	Wed, 25 Nov 2026 16:01:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 832DC606A323;
+	Wed, 25 Nov 2026 16:01:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=u49waXt2
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8CCC11F000C6;
-	Wed, 25 Nov 2026 16:01:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=1MRoBE6d
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ADCBE1F000CF;
+	Wed, 25 Nov 2026 16:01:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795622498;
-	bh=gfbjNCNYsEeB2Qnd8KFZxuSbap8H42IpVTaNbAp8otI=;
+	s=korg; t=1795622501;
+	bh=xiu2cEAhd2AfjxW0+IUNEgZ9we94uEEkQrMdO8zZISs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=u49waXt2/paeXKODxylhN66xukLiFJWUVxa9SdMFSOp5VnSfmxxHdY9C8TmTYLf0Q
-	 51wtaHAXl8+YyNYXCI02kcFFRJrS76hLma0QgJEWcAJ3XURyVpZ7jX7Avy04hjFytR
-	 7m3shN+45KGsZE7THMzdke7HlFMxSVmBKDLbjWYU=
+	b=1MRoBE6d4lsRVYy3sdhO0JcXHq1hoFMu+XvuhIOFgI/Lkv7Ych0j4C61ecqIPtblp
+	 JTisSas8zFfCjPz4u21o+RdOuRQehirCK4yK8hhXkBoKNjn8NJG1VOSV/d0aV8O5jS
+	 3a+ajysAvrrlWjkAI7aTdTY98AuZU8fiGzFwNNQY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Abhishek Dubey <adubey@linux.ibm.com>,
-	Saket Kumar Bhaskar <skb99@linux.ibm.com>,
-	Yeswanth Krishna Tellakula <yeswanth@linux.ibm.com>,
-	R Nageswara Sastry <rnsastry@linux.ibm.com>,
-	Hari Bathini <hbathini@linux.ibm.com>,
+	Venkat Rao Bagalkote <venkat88@linux.ibm.com>,
+	Mukesh Kumar Chaurasiya <mkchauras@gmail.com>,
+	Shrikanth Hegde <sshegde@linux.ibm.com>,
 	Madhavan Srinivasan <maddy@linux.ibm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 558/990] powerpc/bpf: Move out dummy_tramp_addr after Long branch stub
-Date: Wed, 25 Nov 2026 15:32:05 +0100
-Message-ID: <20261125143835.166881156@linuxfoundation.org>
+Subject: [PATCH 6.18 559/990] powerpc/interrupt: Use early_radix_enabled() in NMI real-mode guard
+Date: Wed, 25 Nov 2026 15:32:06 +0100
+Message-ID: <20261125143835.190929518@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143822.072087159@linuxfoundation.org>
 References: <20261125143822.072087159@linuxfoundation.org>
@@ -72,175 +70,93 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Abhishek Dubey <adubey@linux.ibm.com>
+From: Venkat Rao Bagalkote <venkat88@linux.ibm.com>
 
-[ Upstream commit 6652b9941a6c9b6814ca6d2eb153dbf162b89a02 ]
+[ Upstream commit 644ffb02746690c0ebfe143e066f81c9bde2975e ]
 
-Move the long branch address field to the bottom of the long
-branch stub. This allows uninterrupted disassembly until the
-last 4/8 bytes. The last bytes exclusion is logically necessary to
-prevent disassembly failure, otherwise the actual program layout
-is never altered. Hence no effect on overall program size.
-Also, align dummy_tramp_addr field with 8-byte boundary.
+radix_enabled() uses a jump label which is only valid after
+setup_feature_keys() is called. Before that point, on a pSeries
+hash guest, early_check_vec5() clears MMU_FTR_TYPE_RADIX in
+cur_cpu_spec->mmu_features, but the jump label has not yet been patched,
+so radix_enabled() incorrectly returns true.
 
-Following is disassembler output for test program with moved down
-dummy_tramp_addr field:
-.....
-.....
-pc:68    left:44     a6 03 08 7c  :  mtlr 0
-pc:72    left:40     bc ff ff 4b  :  b .-68
-pc:76    left:36     a6 02 68 7d  :  mflr 11
-pc:80    left:32     05 00 9f 42  :  bcl 20, 31, .+4
-pc:84    left:28     a6 02 88 7d  :  mflr 12
-pc:88    left:24     14 00 8c e9  :  ld 12, 20(12)
-pc:92    left:20     a6 03 89 7d  :  mtctr 12
-pc:96    left:16     a6 03 68 7d  :  mtlr 11
-pc:100   left:12     20 04 80 4e  :  bctr
-pc:104   left:8      c0 34 1d 00  :
+The dangerous usage window where it goes wrong in early_setup():
 
-Failure log:
-Can't disasm instruction at offset 104: c0 34 1d 00 00 00 00 c0
-Disassembly logic can truncate at 104, ignoring last 8 bytes.
+    early_setup:
+        configure_exceptions();
+        <exceptions can happen now, and handler enter/exit can be invoked>
+        <those could use radix_enabled(), which returns stale true>
+        setup_feature_keys();
+        <jump labels set up; post this it is safe to use radix_enabled()>
 
-Update the dummy_tramp_addr field offset calculation from the end
-of the program to reflect its new location, for bpf_arch_text_poke()
-to update the actual trampoline's address in this field.
+If an NMI occurs in this window, !radix_enabled() evaluates to false in
+DEFINE_INTERRUPT_HANDLER_NMI. The handler fails to skip NMI entry in real
+mode and attempts to access memory outside the Real Mode Area (RMA),
+hanging the boot.
 
-All BPF trampoline selftests continue to pass with this patch applied.
+Since common interrupt wrappers do not have the context of early or late,
+using early_radix_enabled() is the safer option. It does a plain bitmask
+check against cur_cpu_spec->mmu_features and is correct at all times.
 
-Fixes: d243b62b7bd3 ("powerpc64/bpf: Add support for bpf trampolines")
-Signed-off-by: Abhishek Dubey <adubey@linux.ibm.com>
-Signed-off-by: Saket Kumar Bhaskar <skb99@linux.ibm.com>
-Tested-by: Yeswanth Krishna Tellakula <yeswanth@linux.ibm.com>
-Tested-by: R Nageswara Sastry <rnsastry@linux.ibm.com>
-Reviewed-by: Hari Bathini <hbathini@linux.ibm.com>
-Acked-by: Hari Bathini <hbathini@linux.ibm.com>
+Console logs from a pSeries HASH guest showing values across boot stages:
+
+[    0.000000] DEBUG: after early_init_devtree: early_radix_enabled=0 radix_enabled=1 (mismatch means NMI real-mode check is unsafe!)
+[    0.000000] DEBUG: after configure_exceptions (DANGEROUS WINDOW): early_radix_enabled=0 radix_enabled=1
+[    0.000000] DEBUG: after setup_feature_keys (jump labels initialized): early_radix_enabled=0 radix_enabled=0 (should now match!)
+[    0.057124] DEBUG: post secondary CPU bringup: early_radix_enabled=0 radix_enabled=0 (should match!)
+
+Console logs from a RADIX guest showing values across boot stages:
+
+[    0.000000] DEBUG: after early_init_devtree: early_radix_enabled=1 radix_enabled=1 (mismatch means NMI real-mode check is unsafe!)
+[    0.000000] DEBUG: after configure_exceptions (DANGEROUS WINDOW): early_radix_enabled=1 radix_enabled=1
+[    0.000000] DEBUG: after setup_feature_keys (jump labels initialized): early_radix_enabled=1 radix_enabled=1 (should now match!)
+[    0.057016] DEBUG: post secondary CPU bringup: early_radix_enabled=1 radix_enabled=1 (should match!)
+
+Add the missing #include <asm/mmu.h> in alphabetical order since
+early_radix_enabled() is declared there.
+
+Fixes: 8d0e21012743 ("powerpc/mce: Avoid nmi_enter/exit in real mode on pseries hash")
+Signed-off-by: Venkat Rao Bagalkote <venkat88@linux.ibm.com>
+Reviewed-by: Mukesh Kumar Chaurasiya <mkchauras@gmail.com>
+Reviewed-by: Shrikanth Hegde <sshegde@linux.ibm.com>
 Signed-off-by: Madhavan Srinivasan <maddy@linux.ibm.com>
-Link: https://patch.msgid.link/552225fc257381fb83d282b3040c6ad363246465.1789982239.git.skb99@linux.ibm.com
+Link: https://patch.msgid.link/20260909123240.58786-1-venkat88@linux.ibm.com
+[ sashal: Applied the early_radix_enabled() change in the interrupt_nmi_enter_prepare() and interrupt_nmi_exit_prepare() helpers instead of the DEFINE_INTERRUPT_HANDLER_NMI macro body, since the logic was already refactored there. ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/powerpc/net/bpf_jit_comp.c | 44 ++++++++++++++++++---------------
- 1 file changed, 24 insertions(+), 20 deletions(-)
+ arch/powerpc/include/asm/interrupt.h | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
-diff --git a/arch/powerpc/net/bpf_jit_comp.c b/arch/powerpc/net/bpf_jit_comp.c
-index 4a7f5108fe0fd..f23ed48c4e327 100644
---- a/arch/powerpc/net/bpf_jit_comp.c
-+++ b/arch/powerpc/net/bpf_jit_comp.c
-@@ -52,19 +52,19 @@ asm (
- void bpf_jit_build_fentry_stubs(u32 *image, u32 *fimage, struct codegen_context *ctx)
- {
- 	int ool_stub_idx, long_branch_stub_idx;
--	int ool_stub_sz;
-+	int stub_sz;
+diff --git a/arch/powerpc/include/asm/interrupt.h b/arch/powerpc/include/asm/interrupt.h
+index eb0e4a20b8188..af8c7df0ab9d0 100644
+--- a/arch/powerpc/include/asm/interrupt.h
++++ b/arch/powerpc/include/asm/interrupt.h
+@@ -72,6 +72,7 @@
+ #include <asm/firmware.h>
+ #include <asm/ftrace.h>
+ #include <asm/kprobes.h>
++#include <asm/mmu.h>
+ #include <asm/runlatch.h>
+ 
+ #ifdef CONFIG_PPC_IRQ_SOFT_MASK_DEBUG
+@@ -326,7 +327,7 @@ static inline void interrupt_nmi_enter_prepare(struct pt_regs *regs, struct inte
+ 	 */
+ 	if (IS_ENABLED(CONFIG_PPC_BOOK3S_64) &&
+ 	    firmware_has_feature(FW_FEATURE_LPAR) &&
+-	    !radix_enabled())
++	    !early_radix_enabled())
+ 		return;
  
  	/*
-+	 * The dummy_tramp_addr field is placed at bottom of Long branch stub.
- 	 * Align the mis-aligned dummy_tramp_addr field in the fimage.
- 	 * The alignment NOP must appear before OOL stub, to make
- 	 * ool_stub_idx & long_branch_stub_idx constant from end.
- 	 *
- 	 * The fimage can be non 8-byte aligned, so final alignment depends
--	 * on start of fimage and the stub's instruction count offset. The
--	 * OOL stub size is 4 instructions (with CONFIG_PPC_FTRACE_OUT_OF_LINE)
--	 * or 3 instructions (without) before dummy_tramp_addr.
--	 *
--	 * Emit a NOP here if address is not SZL aligned.
-+	 * on start of fimage and the stub's instruction count. The
-+	 * stubs block has 11 instructions (with CONFIG_PPC_FTRACE_OUT_OF_LINE)
-+	 * or 10 instructions (without) before dummy_tramp_addr field. Emit a
-+	 * NOP if the address of dummy_tramp_addr is non aligned.
- 	 *
- 	 * In pass=0 when image==NULL, conservatively account for space
- 	 * required to accommodate alignment NOP. In case final pass skips
-@@ -72,8 +72,8 @@ void bpf_jit_build_fentry_stubs(u32 *image, u32 *fimage, struct codegen_context
- 	 * jited_len signifies correct program size.
- 	 */
- 
--	ool_stub_sz = IS_ENABLED(CONFIG_PPC_FTRACE_OUT_OF_LINE) ? 16 : 12;
--	if (!image || !IS_ALIGNED((unsigned long)fimage + ctx->idx*4 + ool_stub_sz, SZL))
-+	stub_sz = IS_ENABLED(CONFIG_PPC_FTRACE_OUT_OF_LINE) ? 44 : 40;
-+	if (!image || !IS_ALIGNED((unsigned long)fimage + ctx->idx*4 + stub_sz, SZL))
- 		EMIT(PPC_RAW_NOP());
- 
- 	/*
-@@ -94,28 +94,29 @@ void bpf_jit_build_fentry_stubs(u32 *image, u32 *fimage, struct codegen_context
- 
- 	/*
- 	 * Long branch stub:
--	 *	.long	<dummy_tramp_addr>  // 8-byte aligned
- 	 *	mflr	r11
- 	 *	bcl	20,31,$+4
--	 *	mflr	r12
--	 *	ld	r12, -8-SZL(r12)
-+	 *	mflr	r12	// lr/r12 stores pc of current(this) inst.
-+	 *	ld	r12, 20(r12) // offset(dummy_tramp_addr) from prev inst. is 20
- 	 *	mtctr	r12
--	 *	mtlr	r11 // needed to retain ftrace ABI
-+	 *	mtlr	r11	// needed to retain ftrace ABI
- 	 *	bctr
-+	 *	.long	<dummy_tramp_addr>  // SZL bytes aligned
- 	 */
--	if (image)
--		*((unsigned long *)&image[ctx->idx]) = (unsigned long)dummy_tramp;
--
--	ctx->idx += SZL / 4;
- 	long_branch_stub_idx = ctx->idx;
- 	EMIT(PPC_RAW_MFLR(_R11));
- 	EMIT(PPC_RAW_BCL4());
- 	EMIT(PPC_RAW_MFLR(_R12));
--	EMIT(PPC_RAW_LL(_R12, _R12, -8-SZL));
-+	EMIT(PPC_RAW_LL(_R12, _R12, 20));
- 	EMIT(PPC_RAW_MTCTR(_R12));
- 	EMIT(PPC_RAW_MTLR(_R11));
- 	EMIT(PPC_RAW_BCTR());
- 
-+	if (image)
-+		*((unsigned long *)&image[ctx->idx]) = (unsigned long)dummy_tramp;
-+
-+	ctx->idx += SZL / 4;
-+
- 	if (!bpf_jit_ool_stub) {
- 		bpf_jit_ool_stub = (ctx->idx - ool_stub_idx) * 4;
- 		bpf_jit_long_branch_stub = (ctx->idx - long_branch_stub_idx) * 4;
-@@ -1129,6 +1130,7 @@ static void do_isync(void *info __maybe_unused)
-  * bpf_func:
-  *	[nop|b]	ool_stub
-  * 2. Out-of-line stub:
-+ *	nop	// optional nop for alignment
-  * ool_stub:
-  *	mflr	r0
-  *	[b|bl]	<bpf_prog>/<long_branch_stub>
-@@ -1136,14 +1138,14 @@ static void do_isync(void *info __maybe_unused)
-  *	b	bpf_func + 4
-  * 3. Long branch stub:
-  * long_branch_stub:
-- *	.long	<branch_addr>/<dummy_tramp>
-  *	mflr	r11
-  *	bcl	20,31,$+4
-  *	mflr	r12
-- *	ld	r12, -16(r12)
-+ *	ld	r12, 20(r12)
-  *	mtctr	r12
-  *	mtlr	r11 // needed to retain ftrace ABI
-  *	bctr
-+ *	.long	<branch_addr>/<dummy_tramp>
-  *
-  * dummy_tramp is used to reduce synchronization requirements.
-  *
-@@ -1243,10 +1245,12 @@ int bpf_arch_text_poke(void *ip, enum bpf_text_poke_type poke_type,
- 	 * 1. Update the address in the long branch stub:
- 	 * If new_addr is out of range, we will have to use the long branch stub, so patch new_addr
- 	 * here. Otherwise, revert to dummy_tramp, but only if we had patched old_addr here.
-+	 *
-+	 * dummy_tramp_addr moved to bottom of long branch stub.
- 	 */
- 	if ((new_addr && !is_offset_in_branch_range(new_addr - ip)) ||
- 	    (old_addr && !is_offset_in_branch_range(old_addr - ip)))
--		ret = patch_ulong((void *)(bpf_func_end - bpf_jit_long_branch_stub - SZL),
-+		ret = patch_ulong((void *)(bpf_func_end - SZL), /* SZL: dummy_tramp_addr offset */
- 				  (new_addr && !is_offset_in_branch_range(new_addr - ip)) ?
- 				  (unsigned long)new_addr : (unsigned long)dummy_tramp);
- 	if (ret)
+@@ -355,7 +356,7 @@ static inline void interrupt_nmi_exit_prepare(struct pt_regs *regs, struct inter
+ 		nmi_exit();
+ 	} else if (IS_ENABLED(CONFIG_PPC_BOOK3S_64) &&
+ 		   firmware_has_feature(FW_FEATURE_LPAR) &&
+-		   !radix_enabled()) {
++		   !early_radix_enabled()) {
+ 		// no nmi_exit for a pseries hash guest taking a real mode exception
+ 	} else if (IS_ENABLED(CONFIG_KASAN)) {
+ 		// no nmi_exit for KASAN in real mode
 -- 
 2.53.0
 
