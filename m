@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795620442;
-	b=TPmTMxbDPr09QpN82902Xjn7GtzUwJqjNUYuWQggJKUiP+M4seRu2sZBhyEmzjV79371
-	 JVDIA1+lB+GR2aeeC8rSCFO722Au90cpdIxFlcpb8mfdJADoADw2sNC/jfRgauqRpJO4M
-	 X7yZwyUQ/BH1h/cZHhi3k8FqzEwMBlmgaFmHCtzqlqtE7gfTih8I8O7cHwh2fjWYCi1RF
-	 /t+qiQHBengNAt+lkKGUXZOmp22Nh2vWGE6zPmg40wTsyAw81NYK4jDeQclZX4VSCLLtx
-	 nGTh4gMPgDWCmVDNpQqYVOpVk3AypO9mrKFQhhhF+TSFqEh1FkAk8Fx6iTLKAyaSgfw==
+	t=1795620444;
+	b=sg0fiTz6s748pku2xUAfTZzRm/Yu/QfARY/Oc5PsErmAOm5KS/DxbUWCAwNn43sjhPoT
+	 SCrhqMIuXhAa8h8b808hMCG2fXpnnvCXZ8oWNrCKOlPJM5viPyBMaMe+WYCOu7QHatmHK
+	 nSDs5K5lV/T4jkTfs9rQhUfvjgeMhRV4RqYW6CgJ4BpWxF3/eKHMGc3RISY+RkkcfWFx7
+	 1Bf/8GzeYINFFzq84BshoQefTxBDl8PFCnRIbgZTbYljioK2QMQkEfQ8YTFQ+r7QQ7vw4
+	 rHgwGBDYVwAtB06jFrFUEX8DeIDjPI0Se47iaLRUYzplt1eDFlsP2YUfihA2c2OtdAQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795620442;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795620444;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=+vvgpm7McGJmQUI6BupaPq8BhUejf2VwAUHqGXWXMZA=;
-	b=EdWsVTK2YSu86tmdWVXBTD5SBAR+jj06trPAfb3kFTJmPS78IHa+egDpSj8lEbi2kshJ
-	 U7XoqG8St7ztHMjAEJ563vHAS0MGviFho8coYxGoPBm5TEYwuTxQSctdtNp0II6fFW411
-	 2rQ+GGQPxht5dFYhSks+WoLOv0Zune0q/ciPh716PfRh2ndU6sHz0hprO1szkrBEAg+Df
-	 fpmOrnS+Cu0c42hTCCFEKlaexMwlzMfge8JJLFGQnr5ZftvSD9RnB7+Wpj+MguM8c74pO
-	 tzvZSy5nJW7r+qWDdcuMycDUhrn1FEPdp+1Ur4Y84p7Zy898G5nvGPqxodjHbx5KZHw==
+	bh=nZV44N425CtifR8YCIc1EyjBWWMZhe1bIdS7GJU2WFo=;
+	b=naOtE8s4RLNZaylQsKwgeuoG6hwqaGyqiKAPoB8/+n2TtJ+7CPoe/cLnZiS3WjIy8tSn
+	 Scaq+CzBoNLl1DsYWfU9a8Z9beGd3OHyqXzMWCNoI8j9Y5y8kZJCnf6XEDTL7XIhtni/5
+	 1HDxx8Ud/1ekDijmPaGRs/sLdLrHTwABxe6YaYt+9YZcek92+z601uiBnGFXF99/H1ALO
+	 F2eFUylySXmrHlrdH6uuvIU603KZX1WeFuO0rY1T9TRkRKR/oaMkjFeZ64FrQRJW9A6SV
+	 Tl1H6B++/bsGN0Y/CHiigEhuUmZvjVJ+MNhLSL7owZklvj4INj9rN25WvcCu6xf9ifA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=OzVE225h;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=tWMAyM5o;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E4D36606A323;
-	Wed, 25 Nov 2026 15:27:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9DC46606A31E;
+	Wed, 25 Nov 2026 15:27:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=OzVE225h
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 117CA1F000C6;
-	Wed, 25 Nov 2026 15:27:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=tWMAyM5o
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DA1151F000C0;
+	Wed, 25 Nov 2026 15:27:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795620441;
-	bh=+vvgpm7McGJmQUI6BupaPq8BhUejf2VwAUHqGXWXMZA=;
+	s=korg; t=1795620444;
+	bh=nZV44N425CtifR8YCIc1EyjBWWMZhe1bIdS7GJU2WFo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=OzVE225hVxTvfA8WZ8Rwr9QQW7fKCqlDSar3CfN6Ar29cO1nW+63v1ZGrYdY4aNjj
-	 L4Vfkq53qrz2IolSkQ8W6vOU68KIByCmYnJFUMTac0bM20jnnxkHgSGZNw9D6pJ6Ix
-	 dJEb6+16VuhFY+qnWsB9JTeuLHeacqFIbhs4WjaM=
+	b=tWMAyM5oqDNcp907J7SszXAkS50rn0j6iufXCBewmlPtxqsRqB1DQg9eUSJtk8IU7
+	 FoNhRXR13w6erm949xpepSmFxP0zKKyftPjUh8A9dYU3+XSbtP1qIkKCgqwB3I4Kn4
+	 9pX109l5Jk2YTYqZ22lS9dhKiL5AhTHTaCpMdzNQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	stable <stable@kernel.org>,
-	Joonhoe Kim <26rote@gmail.com>,
-	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
+	Chaz Bailey <charles.s.bailey@gmail.com>,
+	Krishna Kurapati <krishna.kurapati@oss.qualcomm.com>,
 	Heikki Krogerus <heikki.krogerus@linux.intel.com>
-Subject: [PATCH 7.3 0918/1005] usb: typec: mux: fsa4480: Keep the USB 2.0 switch on in DP-only modes
-Date: Wed, 25 Nov 2026 15:37:36 +0100
-Message-ID: <20261125143843.195131336@linuxfoundation.org>
+Subject: [PATCH 7.3 0919/1005] usb: typec: nb7vpq904m: Set client data in probe to avoid crash on remove
+Date: Wed, 25 Nov 2026 15:37:37 +0100
+Message-ID: <20261125143843.218594430@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143821.729802100@linuxfoundation.org>
 References: <20261125143821.729802100@linuxfoundation.org>
@@ -69,50 +69,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Joonhoe Kim <26rote@gmail.com>
+From: Chaz Bailey <charles.s.bailey@gmail.com>
 
-commit 89aaaa26f6985d55676fc5c90440f279733fa132 upstream.
+commit 2022b10726be78849626ea3fa33038ee96a54e46 upstream.
 
-DisplayPort pin assignments C and E give all four SuperSpeed lanes to
-DisplayPort, but the USB 2.0 D+/D- pair is not part of the pin
-assignment and stays available. The FSA4480 sits on that pair, and in
-these modes the driver turns its USB switch off, so a USB 2.0 hub or
-device behind a DisplayPort sink is disconnected as soon as the
-DisplayPort mode is set.
+nb7vpq904m_probe() allocates struct nb7vpq904m, but client data is not
+set during probe.
 
-Configure the USB switch the same way in all DisplayPort modes.
+In nb7vpq904m_remove(), i2c_get_clientdata(client) returns NULL, leading
+to a NULL pointer dereference when accessing nb7->retimer or nb7->sw.
 
-Fixes: c7054c31c1c9 ("usb: typec: fsa4480: rework mux & switch setup to handle more states")
+Set client data upon successful allocation in probe.
+
+Fixes: 88d8f3ac9c67 ("usb: typec: add support for the nb7vpq904m Type-C Linear Redriver")
 Cc: stable <stable@kernel.org>
-Signed-off-by: Joonhoe Kim <26rote@gmail.com>
-Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-Acked-by: Heikki Krogerus <heikki.krogerus@linux.intel.com>
-Link: https://patch.msgid.link/20261022165143.1327-1-26rote@gmail.com
+Signed-off-by: Chaz Bailey <charles.s.bailey@gmail.com>
+Reviewed-by: Krishna Kurapati <krishna.kurapati@oss.qualcomm.com>
+Reviewed-by: Heikki Krogerus <heikki.krogerus@linux.intel.com>
+Link: https://patch.msgid.link/20261016122045.187862-1-charles.s.bailey@gmail.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/typec/mux/fsa4480.c |    9 +--------
- 1 file changed, 1 insertion(+), 8 deletions(-)
+ drivers/usb/typec/mux/nb7vpq904m.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/drivers/usb/typec/mux/fsa4480.c
-+++ b/drivers/usb/typec/mux/fsa4480.c
-@@ -93,16 +93,9 @@ static int fsa4480_set(struct fsa4480 *f
- 		sel = FSA4480_SEL_USB;
- 	} else if (fsa->svid) {
- 		switch (fsa->mode) {
--		/* DP Only */
- 		case TYPEC_DP_STATE_C:
--		case TYPEC_DP_STATE_E:
--			enable |= FSA4480_ENABLE_SBU;
--			if (reverse)
--				sel = FSA4480_SEL_SBU_REVERSE;
--			break;
--
--		/* DP + USB */
- 		case TYPEC_DP_STATE_D:
-+		case TYPEC_DP_STATE_E:
- 		case TYPEC_DP_STATE_F:
- 			enable |= FSA4480_ENABLE_USB | FSA4480_ENABLE_SBU;
- 			sel = FSA4480_SEL_USB;
+--- a/drivers/usb/typec/mux/nb7vpq904m.c
++++ b/drivers/usb/typec/mux/nb7vpq904m.c
+@@ -396,6 +396,7 @@ static int nb7vpq904m_probe(struct i2c_c
+ 		return -ENOMEM;
+ 
+ 	nb7->client = client;
++	i2c_set_clientdata(client, nb7);
+ 
+ 	nb7->regmap = devm_regmap_init_i2c(client, &nb7_regmap);
+ 	if (IS_ERR(nb7->regmap)) {
 
 
