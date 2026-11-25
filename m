@@ -1,51 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795626026;
-	b=sTpXhIUwpoHZ/NIuVYdO3PLXtMcLJ2oLVzxkim8hcRTvjf0zasKJcFQ1Gi5igluo9prz
-	 Jiz0uATM4kK8JlXsTS169AnmIDFAcYV6zUAkLNu44udX3uN/lXKDHwmkLvvf3EZa3k1qx
-	 tANMGiy16mIyK/5YviPcRCTL5ukYWdWIjnqasBDRJYZl1cWAQmZWo3OZC9pdsQui3CgJK
-	 4Nci6t0Fo844AR0xZFxjDiacjacj2famXFFYpWf1jHyyISwZcXqTxvsmtOtcU+MyYwVoq
-	 XPZOonZRQiwVf5DdV/x67f7eh+x/kt4Bg1j73zWtXmoKgbUpno4lZpXJrmaLlXWbnOw==
+	t=1795626029;
+	b=4T7XOgYorL20aCqOMtNPCIHhfAO12zZY7vd+mp/QMu8QR6G/TCAjzNU0E89qttfysEDK
+	 e6PthPtOP5qS1L1/R5epNV/7kbhCkRNeNCUQc93885MbhdNa0070quDYmpU/tAD1IIRHm
+	 BIWP++JYSrz/d1DpJCL/CvCRfLkPDnbWid1DY70Zgclxct7XccZemHjQJIywYA0smZwSM
+	 pHghCkQWv1i9eYbSJ2tq3z0JKW++oIpbdJPmm+xD4U8VI+Rl5SGS1Be2xmQkaPBlwddoB
+	 pvY2BcPao6vqQHoatcco99X4OZRPCABdZdEk1lCUDBqWXrpKNHLgBinMqMiYrIM3cZw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795626026;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795626029;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=ru9pfyK4QTysJlw/7ZjuwOIaVOM4BSRu21wS4St0G2I=;
-	b=gQ2ioV6WyJ/FyBE0azMX0ok+2LhfrnclXJihknu8dw2iisxJJmCCGhxX2usVqPI1CihW
-	 1qOj69NlBVwPS8xypmr6lTARXElo5MRWb/CQ4aRiN2IFifw4qyFXARO6Vha+SME/b80K7
-	 7c8QSnSZDYitPHCs/na7bBhTjH+FWBcIA1Ej1IVwLZyYPhAnG8I77hRSIo5Mb7VN54ESe
-	 wJ2NltyCQgscASkL4x2O+0m+yhoujj7wCZwgQnFjt5IdFuKRqBIhgmdgz6HCaRiUwB5bW
-	 WTdZVfgWt1BZ5Y3M62nc0Je/HIPyFtRbHWqYpLthJ46s2iu8p34lhX6iw+lbBjqLr+g==
+	bh=X82Z9LtdQrF2GUEBdtwx2FdD1axmCpviqyWWgkPc7YA=;
+	b=4K2GRAiCejiecefJ1CuGF+4E2fRgt3VsqEZ9bLs67ML9qIrWQ9foQ/coDze6pLnDjDGY
+	 1tzSfv9URHtE6vZ+A5q677R7i4Cpve/DlZQiFZxvwSCCYMBEV10V+7UKwl6Qj23yLQ8cj
+	 +KqF8UsFvtEypIaYs0cjvoJi8h/uycgPK1tNhdjLcKYnTKACBpCRcMvRIGwLlNxMw7Lu0
+	 L0qCubYZ/VyCW2lLROj5vvm3ktWi/rYUM5xLQssNYbobNVG2fgtvqAtRq6T8icZBWFYG1
+	 i+BAquzKmpwPBFhdl4/3DlQwAPk6QjqkUIdJ05zzWFYMjuVoR89eE7CqRjVBw6YZuRQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=W27e4rUX;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=rzJWHbV+;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 60270606A31E;
-	Wed, 25 Nov 2026 17:00:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 325BC606A321;
+	Wed, 25 Nov 2026 17:00:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=W27e4rUX
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B16B41F000C0;
-	Wed, 25 Nov 2026 17:00:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=rzJWHbV+
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 84DCF1F000C0;
+	Wed, 25 Nov 2026 17:00:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795626026;
-	bh=ru9pfyK4QTysJlw/7ZjuwOIaVOM4BSRu21wS4St0G2I=;
+	s=korg; t=1795626029;
+	bh=X82Z9LtdQrF2GUEBdtwx2FdD1axmCpviqyWWgkPc7YA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=W27e4rUXxxGmJjnKE6d72w2nKj94YYGo59bXN0/PFRS+cL3Z7+Yv0l4g7maIV5fxj
-	 bYsVFsOGdXJgrjoekrKi1hiM1aNqPyxPAdps6qHG4MQTFzMRrfCfVisGgvVyCtwEON
-	 MT1U9olD6Kb5YRuiC1zPX6t6UDw53vDePUwEgkwg=
+	b=rzJWHbV+B10qTlnKaj2uXC+AejGsleD+PB8QewWxoGvwNoixzZ0TEXi8h6Yx8WDmo
+	 3ESCpjolCnNsjbqu1Kvue1PnsHB6TxRDIKdaDN7rWJE6oL6jyzJyvdyzHZ9R998dvO
+	 TKKmh6jJAdI8oXLWSZZiKOTeFyQtvYE+uHo6xpMo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wahid Khan <wahidzk0091@gmail.com>,
+	Zhao Li <enderaoelyther@gmail.com>,
 	Johannes Berg <johannes.berg@intel.com>
-Subject: [PATCH 6.12 662/816] wifi: cfg80211: dont truncate the merged MBSSID profile length
-Date: Wed, 25 Nov 2026 15:36:50 +0100
-Message-ID: <20261125143904.502141177@linuxfoundation.org>
+Subject: [PATCH 6.12 663/816] wifi: mac80211: fix use-after-free when MLO link setup is rolled back
+Date: Wed, 25 Nov 2026 15:36:51 +0100
+Message-ID: <20261125143904.524777611@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143849.205329330@linuxfoundation.org>
 References: <20261125143849.205329330@linuxfoundation.org>
@@ -67,46 +67,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Wahid Khan <wahidzk0091@gmail.com>
+From: Zhao Li <enderaoelyther@gmail.com>
 
-commit 3ea152f3f77eeffc37b2f4423688b4df9136f90c upstream.
+commit a155ef2ef79531c139244289c5b8f15c05d16a0e upstream.
 
-cfg80211_parse_mbssid_data() keeps the length of a non-transmitted BSSID
-profile in a u8. cfg80211_merge_profile() returns a size_t, and it
-concatenates a profile that is split over several Multiple BSSID
-elements, so the merged length can be well above 255 even though every
-single sub-element is at most 255 bytes long.
+Rolling back an MLO link addition can free link containers while RCU
+readers still hold pointers to them. ieee80211_vif_update_links()
+publishes new links before checking for duplicate addresses and calling
+drv_change_vif_links(). If either fails, it restores the old pointers
+and frees the new containers without waiting for readers.
 
-The value is then cut to its low 8 bits. A 300 byte profile is handled
-as a 44 byte one: the elements after the cut are lost from the generated
-non-transmitted BSS, and if the Multiple BSSID-Index element lies past
-the cut the BSS is dropped altogether. Any AP in range can send such a
-profile.
+During a non-MLO to MLO transition, the published link 0 replaces the
+deflink, so existing link 0 users can acquire the new container. Readers
+such as ieee80211_csa_finish() and
+ieee80211_obss_color_collision_notify() can also queue work embedded in
+the link. If they queue after ieee80211_link_stop() cancels that work,
+it remains queued when the container is freed.
 
-The multi-link code further down in the same file already uses a signed
-size type for the profile length. Do the same here, cfg80211_find_ie()
-and cfg80211_gen_new_ie() take a size_t anyway.
+Wait for RCU readers after restoring the old pointers and before
+stopping the new links, so their work is queued before it is cancelled.
 
-Fixes: fe806e4992c9 ("cfg80211: support profile split between elements")
-Cc: stable@vger.kernel.org
-Signed-off-by: Wahid Khan <wahidzk0091@gmail.com>
-Link: https://patch.msgid.link/20261104211451.693451-1-wahidzk0091@gmail.com
+Fixes: d3e2439b0f33 ("wifi: mac80211: fix link manipulation")
+Cc: stable@vger.kernel.org # 7.2.x
+Signed-off-by: Zhao Li <enderaoelyther@gmail.com>
+Link: https://patch.msgid.link/20261026152654.80697-1-enderaoelyther@gmail.com
 Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/wireless/scan.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ net/mac80211/link.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/net/wireless/scan.c
-+++ b/net/wireless/scan.c
-@@ -2497,7 +2497,7 @@ cfg80211_parse_mbssid_data(struct wiphy
- 		if (elem->data[0] < 1 || (int)elem->data[0] > 8)
- 			continue;
- 		for_each_element(sub, elem->data + 1, elem->datalen - 1) {
--			u8 profile_len;
-+			size_t profile_len;
- 
- 			if (sub->id != 0 || sub->datalen < 4) {
- 				/* not a valid BSS profile */
+--- a/net/mac80211/link.c
++++ b/net/mac80211/link.c
+@@ -380,6 +380,8 @@ static int ieee80211_vif_update_links(st
+ 		memcpy(sdata->link, old_data, sizeof(old_data));
+ 		memcpy(sdata->vif.link_conf, old, sizeof(old));
+ 		ieee80211_set_vif_links_bitmaps(sdata, old_links, dormant_links);
++		/* drain RCU readers before cancelling work they may queue */
++		synchronize_rcu();
+ 		for_each_set_bit(link_id, &add, IEEE80211_MLD_MAX_NUM_LINKS) {
+ 			ieee80211_link_debugfs_remove(&links[link_id]->data);
+ 			ieee80211_link_stop(&links[link_id]->data);
 
 
