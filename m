@@ -1,54 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795618925;
-	b=JmaOUD/RqQG0j8giTQ8Lg9Tky9Zw5VhJ8yopocU4F7PHYTfnCeqNYi/OQJknbu3jsDBJ
-	 3JATdcrTG8ptdFBTsX6DrT2Pdxor6o5yMURo/QDI/bKHCgyzgDAjs0Sqq6BGoIadwweLU
-	 OMicop1mf9mdeFqGgdQqO989Evpt8q2R86+J9R5Z0GtK0UfSwdx2Xy1G0QcGOt0bED8uv
-	 bqosdBtuANFgtB4hUrAiO3dZ4QGfhZ7Kw5IKvU34wi5W3Cl9xgmUjQy4XgU9PND0GGSBs
-	 wDnDuJ3OLn4XBYjyn7F3TWAtA1m1I74RooFw56v69t4PEC7o/3NqfgWGRAH3heFgMgw==
+	t=1795618928;
+	b=Ihw7m78IT457yzPw0hxdxWu1qcGuQNTpyKO1zmWu9HOYHnYze5UoNJQVtyjmrqBbHRDO
+	 +bNxTofUAKCYWt4Nm5i0d+EfUC8Y2W4te6PnJ4rw5pYSSS/IC4MQpT7TRoZnRvw9En1px
+	 ygc3ILNHWsX5J6kDipu3vhKSBz+uWa6+UvdxAf2qv9wjj35YVQA+ARw9qR4Js2hTRlkZV
+	 FU9aUQ2CF2oUneTqu4xkRpVu5fcecVGUKjF/i6d/DM6zR52bS3qo9r0TPTtnmUNqiHjZz
+	 0kHakaRhSk006ptq5ZOBsqYiJMWr5XrBjXb7jbXzY6RxJeGAc/R+9mXZzw/HegPA9TQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795618925;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795618928;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=aXVxcRuFQPqL+fKIheq+ASECyNg4vPKK4lyT2elu82Y=;
-	b=d1mg6oLkxYB+povVnvngHz1w1IhykqbUH797+szQeagKai+edpRW7y+ap07gCutme2/O
-	 soI+vCNjaFHIuYqvRnj5wADa9XIqT8x+0Y83Xl7tgMC8ZODK8P3LMX0EKKtRvhkqV58ds
-	 Fo323u21ElEFBty4U7K8IHcUdF7ibaEEi61bwTwywCcWbARuR0FzttaPMtuJ8hvtJPTTX
-	 Zkh4Rvq+Xpx2ph73TmDcLtKp4Z957h1/jNQC87SZdOlKix66US7LCpKVOQeRiVtwtZ17b
-	 k4irvHlMJgGHN54pLXO/WpiCpRtl+vsop39tm5B7Y6Nd0wJfwr8tTB67Q11gttKLGEg==
+	bh=kKT5BvqgEkX1DlwXb2O8ksTDDahqxXKo9nXJ4Z2k82I=;
+	b=wW3dY0IUDqYvw4qif1y7+M1Wnjs5D50ymKyIT8LtQF/lNS5JvlWuUidR1yeQovHmmb6B
+	 41OPWDLKZCFz9O63MCKFWwRtrrHhQYWVTGn/WjElrQwKMoz5BD2M5YNw89wod16xmBBSg
+	 W44hWXwGl7rxmywQQQgTFYK9kGZGe8HlySAG9NsMUU8iOxmJTWjhEYyf7SzrjKwXFVmig
+	 Y39WFZ1SzCw3ApKJNbuSpfiCNgXVQOm2XFK12qfSsvDvbqy3PdiYVzNQYdDR/qZ3O8y/+
+	 DOMAfTqmBlJDnA7vL2zhxMFRPJbsM7deHqdL+HulkSjqTFY73lH+BV7aA0blE7FszkQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=N4NQxsQv;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=fyv5XcY3;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9D02E606A31E;
-	Wed, 25 Nov 2026 15:02:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 30B64606A329;
+	Wed, 25 Nov 2026 15:02:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=N4NQxsQv
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 331431F000CA;
-	Wed, 25 Nov 2026 15:02:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=fyv5XcY3
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7AAA61F000D1;
+	Wed, 25 Nov 2026 15:02:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795618924;
-	bh=aXVxcRuFQPqL+fKIheq+ASECyNg4vPKK4lyT2elu82Y=;
+	s=korg; t=1795618928;
+	bh=kKT5BvqgEkX1DlwXb2O8ksTDDahqxXKo9nXJ4Z2k82I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=N4NQxsQv2JDAjxmW3TtJoEWtVN+SvPzXAgZanaxhUyVjPvoCv/xmm0KiVQNiMH68F
-	 yCtyx9cbMlcUlF0QPhchpOp1Ixfi/vWO82xgpbylmu6tPntbmTomrOOk7AORHFEjHj
-	 rs3pbL7rIrrMkIF6sPJhPLYR6atzjFEcP6WnEGrM=
+	b=fyv5XcY36Bh+3VnhxkfZmuy+u2s3Fnz0ePegNsAh6CHHh/SHuoeiwp9Oqm6xlUgkE
+	 ZCZXhZoDDoGBzRRpucCyDXT61CliPmHofZn3QXOijsITSwYq1i+QHY/kL1UcD3oqhr
+	 ACjJo6LXkYsnTxF/n8z82NerAWeXVvyyLvr/PWFg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Avi Weiss <thnkslprpt@gmail.com>,
-	Jeff Layton <jlayton@kernel.org>,
-	NeilBrown <neil@brown.name>,
 	Anna Schumaker <anna.schumaker@hammerspace.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0432/1005] SUNRPC: wake poll waiters when an empty pipe is unlinked
-Date: Wed, 25 Nov 2026 15:29:30 +0100
-Message-ID: <20261125143831.871723724@linuxfoundation.org>
+Subject: [PATCH 7.3 0433/1005] sunrpc: instantiate rpc_pipefs dentry before publishing it
+Date: Wed, 25 Nov 2026 15:29:31 +0100
+Message-ID: <20261125143831.894588751@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143821.729802100@linuxfoundation.org>
 References: <20261125143821.729802100@linuxfoundation.org>
@@ -72,38 +70,38 @@ Content-Transfer-Encoding: 8bit
 
 From: Avi Weiss <thnkslprpt@gmail.com>
 
-[ Upstream commit 702d55edc017632a0c39c1d4bdd579bdbadfd730 ]
+[ Upstream commit 0cd6e563938a5b2f88ce0008eda32f9617c9d81f ]
 
-When an empty rpc_pipefs pipe is unlinked, rpc_purge_list() returns
-without waking the pipe wait queue. An existing epoll waiter can
-remain blocked even though rpc_pipe_poll() reports EPOLLHUP and
-EPOLLERR for the disconnected pipe.
+rpc_mkpipe_dentry() publishes pipe->dentry before
+d_make_persistent() attaches its inode. A concurrent
+rpc_queue_upcall() or rpc_timeout_upcall_queue() can
+conceivably dereference the dentry while d_inode() is NULL.
 
-Wake the wait queue after clearing RPC_I(inode)->pipe so existing
-poll waiters are notified regardless of whether messages were purged.
+Attach the inode before publishing the dentry, restoring the
+ordering used before the rpc_pipefs conversion refactor.
 
-Fixes: 9842ef3557ab ("SUNRPC: rpc_timeout_upcall_queue should not sleep")
+Fixes: 946e2256775e ("convert rpc_pipefs")
 Signed-off-by: Avi Weiss <thnkslprpt@gmail.com>
-Reviewed-by: Jeff Layton <jlayton@kernel.org>
-Reviewed-by: NeilBrown <neil@brown.name>
 Signed-off-by: Anna Schumaker <anna.schumaker@hammerspace.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/sunrpc/rpc_pipe.c | 1 +
- 1 file changed, 1 insertion(+)
+ net/sunrpc/rpc_pipe.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/net/sunrpc/rpc_pipe.c b/net/sunrpc/rpc_pipe.c
-index 9d349cfbc4831..68b4e040a77d9 100644
+index 68b4e040a77d9..f14cae2952804 100644
 --- a/net/sunrpc/rpc_pipe.c
 +++ b/net/sunrpc/rpc_pipe.c
-@@ -191,6 +191,7 @@ rpc_close_pipes(struct dentry *dentry)
- 	cancel_delayed_work_sync(&pipe->queue_timeout);
- 	rpc_inode_setowner(inode, NULL);
- 	RPC_I(inode)->pipe = NULL;
-+	wake_up(&RPC_I(inode)->waitq);
- 	inode_unlock(inode);
- }
- 
+@@ -666,8 +666,8 @@ int rpc_mkpipe_dentry(struct dentry *parent, const char *name,
+ 	rpci->private = private;
+ 	rpci->pipe = pipe;
+ 	rpc_inode_setowner(inode, private);
+-	pipe->dentry = dentry; // borrowed
+ 	d_make_persistent(dentry, inode);
++	pipe->dentry = dentry; // borrowed
+ 	fsnotify_create(dir, dentry);
+ 	simple_done_creating(dentry);
+ 	return 0;
 -- 
 2.53.0
 
