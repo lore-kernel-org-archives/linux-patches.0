@@ -1,57 +1,61 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795623553;
-	b=gTSpfexdnGCBMkshBaJAWLQubyYMVvqhyQEvDHofYZt6gMLlmVFm1MQUtX7XeiIVKHzJ
-	 +NSb3s7aUXalwPFcnLKtxigtCY9oXjmtXCgD18DtdKOVTM2xZKjhnMKEeDnrii1Od4+zW
-	 EcweHsbb7qAsRmT0J4j4jn4agXIPhmNdVsj5q0bhWae9kr4Ms0pcnPJJcMJJ29SP3JD4k
-	 kL10qeFDWzcQi/vqwViXR/JVUhN1DKHCPKdI2WGK/uMnEJyEIUsR8/Erd9bk2HDnVZNM1
-	 DGk+37/mYf2UEaZtkGL238BRO3/eldgOPRy7OlFhXlFbIXDp1hidn3ykcW2sasSUljw==
+	t=1795623556;
+	b=WJVPY4lZsLhg30s4zpkHQ3Iy0MtctQmnHimAKOTkexe527EMKxQxTOpYQOg3vyt5ArUY
+	 4SOyx1Hz7bxo3jpHh20ye7YtVE7U+7Ih+gfwamFAbR0ZztbczNHovQ7MiXGFst/KHU+FZ
+	 Gc3qt7DFmi4qOmRYngSnvQdI4KSxLvRXPojM16D0iCdrAMIy5cIq9bWnQf2MjG1VaeIs2
+	 E4LokUf5Nb8CIsv1PpM0ktjZntpuhTnSN3LG2M98N20KypAEjDn+Ri1fGQdqx4JDhk/ZS
+	 qyXpBSC7VUNDqHnvlbAbm50ptYYfP8Rhjtf3jhRPH34lZGffxqRKIbZoRTo4+B+JPkA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795623553;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795623556;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=8L6/CEJwnq9LAOjWBWI8KOOsnWHMVUFKic06YImsIMA=;
-	b=pyXvfmuPfskAl5V0u2YDqh3I5y0XEca9SOxVfSDkFGB1HFiE3epDeTSvAlT6iBa/IxVS
-	 U3sq1RZo3TIXy0oPpI392R/JCFeZn7ja9IdrAYDMWx7D0ypONhe1cWRnHoBAjcF2i09zu
-	 vquLJLV0L0F+D7Ja30l83DbMDwNE0B6s0nFtQAJ0SF2X2ef9uVYGxkGlue5atrOjSkGkt
-	 jdQIPuXaEcNAXoQnRIWnNEpdd1y/BkqkCrYHAWZrWzxGhQzGTjjPG8Xzzzu0h6eDNS21S
-	 A+1Q1KZhaTv5TQ3AeX5MqFze8Mgi+cJSvH5r3eU1g9SPtou7Km631dWomzhUYQwpcfQ==
+	bh=lsS9JchZMOul6iBmFZf9DeAR2fG3+eh8IwqrAeQsQQo=;
+	b=eOfVMesuRUPwmg/g/2u28Q9MHIS1dQJDo8XemVtT/5S7Xi6+5UJP5roaxxFypBadlJL8
+	 yQDzyvr4dsuQiQKt+5qsLns09eqzBvcrx2CXYFng/YkI72ek0LoXrB907Mgz4bsXpepMw
+	 LNGl7TTzeU3VAhTwRy1TcPl7o/+0zDmGUE7jNOmmFXU896ZWmFKAldrQH1DpSreNWVYxf
+	 4AftGUbIJXEi0qtVyVzvMSw4sO075AMASmAdj/ELjFHO7w9qZQ8OTc+SeZbsr/oCGwHZy
+	 DTq5+P/RWZUYs3MxaZCVdiqfxnbogh30HV1gdxWwwHbTbobUv2ns1cM1hJx5xd+x60Q==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=fGg9WJS5;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=UwWezXHM;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 23D14606A321;
-	Wed, 25 Nov 2026 16:19:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0F35C606A321;
+	Wed, 25 Nov 2026 16:19:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=fGg9WJS5
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6DB481F000C6;
-	Wed, 25 Nov 2026 16:19:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=UwWezXHM
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 613011F000D0;
+	Wed, 25 Nov 2026 16:19:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795623553;
-	bh=8L6/CEJwnq9LAOjWBWI8KOOsnWHMVUFKic06YImsIMA=;
+	s=korg; t=1795623555;
+	bh=lsS9JchZMOul6iBmFZf9DeAR2fG3+eh8IwqrAeQsQQo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=fGg9WJS5qiBIvoofxnYjEKjQae8/t3XLhzpypHkokDzt/xrq1f95sy/CCIj6PGxNV
-	 wGXXKOVsRvFAZNIH2Z6H1yA0Ezz/MQrhBpmQimFO5QcSxFr9obkSgJodJzs5AuEr0T
-	 ElzwaIytL74C+ElNm3k6iHGmDoqmQnzrIF1O7pLQ=
+	b=UwWezXHM3YdtOVk21kwpmdFe8VejjyGb7OJalhv/rfE4Qdj9RRq8Jwq8VOu5TZwa+
+	 3qTt7XjNQUX6BJOO3izaTpewL0ytU/hHf+LjCAg8sUVig6QEYbfJEMQFEOF+j8YS8F
+	 8nbSWtg3fK9bfd6N7CX3znRbTII1VbYN4wKjIj1o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	stable <stable@kernel.org>,
-	Krzysztof Kozlowski <krzk@kernel.org>,
-	Peter Griffin <peter.griffin@linaro.org>,
-	Alim Akhtar <alim.akhtar@samsung.com>,
 	Jiri Slaby <jirislaby@kernel.org>,
-	Kukjin Kim <kgene.kim@samsung.com>,
-	Thomas Abraham <thomas.abraham@linaro.org>,
-	Josef Bacik <josef@toxicpanda.com>
-Subject: [PATCH 6.18 898/990] serial: samsung: put the previous baud clock
-Date: Wed, 25 Nov 2026 15:37:45 +0100
-Message-ID: <20261125143843.046808816@linuxfoundation.org>
+	Nicolas Pitre <npitre@baylibre.com>,
+	Kees Cook <kees+treewide@kernel.org>,
+	Joshua Rogers <linux@joshua.hu>,
+	Chris Mason <mason@kernel.org>,
+	Helge Deller <deller@gmx.de>,
+	Thomas Zimmermann <tzimmermann@suse.de>,
+	Mingyu Wang <25181214217@stu.xidian.edu.cn>,
+	Randy Dunlap <rdunlap@infradead.org>,
+	Ronan Pigott <ronan@rjp.ie>,
+	Liav Mordouch <liavmordouch@gmail.com>
+Subject: [PATCH 6.18 881/990] vt: serialise the producers of the flip buffer
+Date: Wed, 25 Nov 2026 15:37:28 +0100
+Message-ID: <20261125143842.653162787@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143822.072087159@linuxfoundation.org>
 References: <20261125143822.072087159@linuxfoundation.org>
@@ -73,56 +77,124 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Josef Bacik <josef@toxicpanda.com>
+From: Chris Mason <mason@kernel.org>
 
-commit eedf2cf3505c1562a2fb24f8b997056f023d242b upstream.
+commit 5d1d814408c1c8e797031eac8ddd40de1a9e8e93 upstream.
 
-s3c24xx_serial_getclk() returns the best baud clock with the reference
-which clk_get() has taken.  s3c24xx_serial_set_termios() stores it in
-ourport->baudclk and disables the clock which was there before, but does
-not put it.
+Typing on a virtual console while the console replies to an escape
+sequence can make the kernel write past the end of a buffer. A user who
+can write to the foreground console can cause this on purpose if they
+can also inject key events, through /dev/uinput or by writing to the
+/dev/input/event* node of a keyboard.
 
-clk_get() hands out a new handle on every call, so the new clock never
-equals the old one, and every call of ->set_termios() leaks a handle: a
-struct clk and a copy of the connection name.  Whoever has the port open
-can repeat that at will with tcsetattr().
+Input for a tty goes through the flip buffer of its port. A driver
+inserts the data with tty_insert_flip_*() and then calls
+tty_flip_buffer_push() to pass it on to the line discipline. The insert
+functions take no lock: they check that the current struct tty_buffer
+has room, copy the data to offset ->used, and then advance ->used. So a
+flip buffer supports only one producer at a time, and a driver that has
+several must serialise them.
 
-Put the old clock when it is replaced, and the new one in case it is not
-stored.
+Four functions feed the flip buffer of a virtual console:
 
-Fixes: 5f5a7a5578c5 ("serial: samsung: switch to clkdev based clock lookup")
+- put_queue(), puts_queue() and fn_send_intr() insert typed characters
+  and breaks for the keyboard handler. They run under kbd_event_lock.
+- respond_string() inserts the reply when a program writes an escape
+  sequence that requests one, such as a cursor position report. It runs
+  under the console lock.
+
+The keyboard handler gets its events from the input layer and feeds the
+foreground console. Key events that a program writes to /dev/uinput or
+to an event node reach it in the same way as typed keys.
+
+The keyboard handler and respond_string() share no lock, so they can
+interleave:
+
+    keyboard handler                respond_string()
+    ================                ================
+    room check passes
+                                    room check passes
+    memcpy() to offset used
+    used += len
+                                    memcpy() to offset used
+                                    used += len
+                                      /* used > size of the buffer */
+
+The room check subtracts ->used from the size, and both are unsigned.
+Once ->used exceeds the size, the result wraps, so the check always
+passes, and each later insert lands further past the buffer.
+
+Reproduced as root, with keys from a uinput keyboard and cursor position
+reports on the same console: KFENCE reported an out-of-bounds write
+1,024 bytes past the buffer in under 10 s.
+
+Fix this by taking port->lock, with interrupts disabled, around the
+insert and the push in these four functions. kbd_keycode() already takes
+port->lock under kbd_event_lock, so this lock ordering is not new.
+
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
 Cc: stable <stable@kernel.org>
-Cc: Krzysztof Kozlowski <krzk@kernel.org>
-Cc: Peter Griffin <peter.griffin@linaro.org>
-Cc: Alim Akhtar <alim.akhtar@samsung.com>
 Cc: Jiri Slaby <jirislaby@kernel.org>
-Cc: Kukjin Kim <kgene.kim@samsung.com>
-Cc: Thomas Abraham <thomas.abraham@linaro.org>
-Signed-off-by: Josef Bacik <josef@toxicpanda.com>
+Cc: Nicolas Pitre <npitre@baylibre.com>
+Cc: Kees Cook <kees+treewide@kernel.org>
+Cc: Joshua Rogers <linux@joshua.hu>
+Cc: Chris Mason <mason@kernel.org>
+Cc: Helge Deller <deller@gmx.de>
+Cc: Thomas Zimmermann <tzimmermann@suse.de>
+Cc: Mingyu Wang <25181214217@stu.xidian.edu.cn>
+Cc: Randy Dunlap <rdunlap@infradead.org>
+Cc: Ronan Pigott <ronan@rjp.ie>
+Cc: Liav Mordouch <liavmordouch@gmail.com>
+Signed-off-by: Chris Mason <mason@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Link: https://patch.msgid.link/20261027-tty-llm-v1-22-99b0202ae546@linuxfoundation.org
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Link: https://patch.msgid.link/20261027-tty-llm-v1-1-99b0202ae546@linuxfoundation.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/tty/serial/samsung_tty.c |    3 +++
- 1 file changed, 3 insertions(+)
+ drivers/tty/vt/keyboard.c |    6 ++++++
+ drivers/tty/vt/vt.c       |    2 ++
+ 2 files changed, 8 insertions(+)
 
---- a/drivers/tty/serial/samsung_tty.c
-+++ b/drivers/tty/serial/samsung_tty.c
-@@ -1498,11 +1498,14 @@ static void s3c24xx_serial_set_termios(s
+--- a/drivers/tty/vt/keyboard.c
++++ b/drivers/tty/vt/keyboard.c
+@@ -321,15 +321,20 @@ int kbd_rate(struct kbd_repeat *rpt)
  
- 		if (!IS_ERR(ourport->baudclk)) {
- 			clk_disable_unprepare(ourport->baudclk);
-+			clk_put(ourport->baudclk);
- 			ourport->baudclk = ERR_PTR(-EINVAL);
- 		}
+ /*
+  * Helper Functions.
++ *
++ * A flip buffer allows one producer at a time, and respond_string() in vt.c
++ * feeds the same one under the console lock. So take the lock of the port.
+  */
+ static void put_queue(struct vc_data *vc, int ch)
+ {
++	guard(spinlock_irqsave)(&vc->port.lock);
+ 	tty_insert_flip_char(&vc->port, ch, 0);
+ 	tty_flip_buffer_push(&vc->port);
+ }
  
- 		ourport->baudclk = clk;
- 		ourport->baudclk_rate = clk ? clk_get_rate(clk) : 0;
-+	} else {
-+		clk_put(clk);
- 	}
+ static void puts_queue(struct vc_data *vc, const char *cp)
+ {
++	guard(spinlock_irqsave)(&vc->port.lock);
+ 	tty_insert_flip_string(&vc->port, cp, strlen(cp));
+ 	tty_flip_buffer_push(&vc->port);
+ }
+@@ -589,6 +594,7 @@ static void fn_inc_console(struct vc_dat
  
- 	if (ourport->info->has_divslot) {
+ static void fn_send_intr(struct vc_data *vc)
+ {
++	guard(spinlock_irqsave)(&vc->port.lock);
+ 	tty_insert_flip_char(&vc->port, 0, TTY_BREAK);
+ 	tty_flip_buffer_push(&vc->port);
+ }
+--- a/drivers/tty/vt/vt.c
++++ b/drivers/tty/vt/vt.c
+@@ -1830,6 +1830,8 @@ static void csi_m(struct vc_data *vc)
+ 
+ static void respond_string(const char *p, size_t len, struct tty_port *port)
+ {
++	/* The keyboard handler feeds the same flip buffer. */
++	guard(spinlock_irqsave)(&port->lock);
+ 	tty_insert_flip_string(port, p, len);
+ 	tty_flip_buffer_push(port);
+ }
 
 
