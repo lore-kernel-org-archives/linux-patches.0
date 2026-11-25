@@ -1,52 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795622761;
-	b=SC1EMnM7Fz8bE99IIqEi4Ev7QRYzHTUxdOIQ06+J5JshQ36blQeN4N3SQ3q7ytMYgOSi
-	 Pahi4drwjXcb/PU8CMF39xkC5Nnqfn+rvlH7NBqljEBsBOYLsqo6HcMKO8mVltPd4Qpe4
-	 wvLiDnFcxUHk60U5oZfOrBDGB7jWqlOnzhI73U0SRxK+gOYV5s/3J0qDj/VQOpnQvYMzP
-	 Ad4xldBFd6nPGXptV3+Y2n8fIWtRa4vUK6I2DFwlGDfhHEC1ofZpAr+OdwRM8nqA//hh/
-	 21cB1dyGCYXvhmApGRi+LFJWAwsoXuaQUb+MIx9AfwghbpHSUpBa7VQxMv1y+rQHKSw==
+	t=1795622763;
+	b=KwsYW/IHqMo1HLLXVm6e1dK+6PwdWSvKUs8TctvE881lI0OhmGaHYo6sPGrGZrA+nbcM
+	 STYCWAKydUbpp/Ah+4t189aUWAPZ4m825jWegXTMmwiKyjPRcJ24fd1NxB0+8j01dT8DW
+	 rGkljIwvNWmnAFe4RuBEmMTwlJFGDKEG7FQ2a1WCZR5/Pw+w7yiQPSPbbQ4YEu996axLN
+	 ApuQ06fXuxu6Ln/UxW/vPTXnwF8UbaYhQ96rjWygfAk9TnNxBDXDt9xEom1jMgOgH8nzv
+	 LG3pLefSSkY70IvNhkGDeMDTVAaViquwwMmLxty0ABoIDe5vzRCf8+x4USaAkKhx+Og==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795622761;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795622763;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=k46yHtsYymgyb+9l0pX/+O+Ay8HzbBHIBOoWtweN73c=;
-	b=yjyF2LOtAnYerRdgehNEyvDsP+e7UsLRPIFfaMt35fDAbGmZoxEixoqrzz8eJjrcRh3o
-	 +WHQAgxPCWZr8BdBU4URYinSs1XVRxDl6UGep4Jcb5PFgIzBEUICjff9CkplZq7TYUQ8p
-	 wtg3nloLby+B7y5ZyebcMLxxGwJc01Fv39NLJkWWEB0nsiUX6Nda6rJNpuUC9l7yw7N1j
-	 VUT0xoN7WAkLKlXTs+3trhW5NvNVL5GaHj+keFxuQoEVHwCbz7BisryrO2OahGpurNyDq
-	 OApiOHtcBfV1jQsKKKkeQCgezt5Qwb52tvrYGeoYdn5pHbQ3Y5VWXZCbi2ftGZNsfYA==
+	bh=XRI1/j/MEUiGEQ0Y7EqziBsx7z5Eqo0KivxCfEK0LgE=;
+	b=HcwEgmmYkzzhwdoEOhVrng+lc+EWsHeNfdqJ3YjrsvbGBtVOLcqU1UEMy7fG/Zt1NjIt
+	 vK7z/itJAQr8xuJVTZtTEuncJCVM5d/PRLmQugQ8qREC9MCpxdQJOSNHsHOxH7VkrB8va
+	 cE6FVc6g1au+jop0MVSoAkhCmrYhqPvpIw7FQueSQdrXoazBt3AH+wYaN9YcjT9w4FbjS
+	 sDGy5NyAnaP+fbjyOVfVEGs9qqXOhyf7umXAHxTLCHhqaPt0kCdLQhr06ZPEgEwYlZQmK
+	 VHHHNfNGinM5zI5OJo3i7zlTPffXPt6Fxc6uOfr4NIGB72vs9GCA/xvUFhJhNzaEX9g==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=PHsuvNnP;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=P70PYOah;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E848E606A329;
-	Wed, 25 Nov 2026 16:06:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AC0E6606A321;
+	Wed, 25 Nov 2026 16:06:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=PHsuvNnP
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 448451F000C0;
-	Wed, 25 Nov 2026 16:06:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=P70PYOah
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2259E1F000C4;
+	Wed, 25 Nov 2026 16:06:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795622760;
-	bh=k46yHtsYymgyb+9l0pX/+O+Ay8HzbBHIBOoWtweN73c=;
+	s=korg; t=1795622763;
+	bh=XRI1/j/MEUiGEQ0Y7EqziBsx7z5Eqo0KivxCfEK0LgE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=PHsuvNnP0LtWZe6YyV7hk3+tb8VfSWiC2mNTFFoqe4bX2qDF9Lx262FgGs/gQWzHe
-	 NdhMGtlaTezKSetrHrwsjFPvE0/n2iayx48AvXa9r8g5rC0PLoM4gGzg3kWUlTT09F
-	 kez4SL6GnaKstfLz1w7X3FI5KEhwd1TzAiCIscRA=
+	b=P70PYOahZSOpM4h6gLHfhROEMUYK9r2qtBJXveIjkukLm7JrfrNpEQaHzIV1Ifp9z
+	 hEPWzFQNEZ3CoEuNIVBHAee0mMdDdQ/g8D0b0BoqZx/4TcSmnGqoTr5nCYTUknItAy
+	 Tbg8eNPczknyUcWnn2Sl7bbC1DI6cunsuBtJ3JCQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Rishikesh Jethwani <rjethwani@purestorage.com>,
-	Dave Miller <davem@davem-thinkpadp1gen8.ibmlond.csb>,
+	Namjae Jeon <linkinjeon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 637/990] tls: keep TX and RX hardware offload on the same device
-Date: Wed, 25 Nov 2026 15:33:24 +0100
-Message-ID: <20261125143837.015143132@linuxfoundation.org>
+Subject: [PATCH 6.18 638/990] ksmbd: return complete and aligned stream information
+Date: Wed, 25 Nov 2026 15:33:25 +0100
+Message-ID: <20261125143837.038881639@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143822.072087159@linuxfoundation.org>
 References: <20261125143822.072087159@linuxfoundation.org>
@@ -68,129 +67,281 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Rishikesh Jethwani <rjethwani@purestorage.com>
+From: Namjae Jeon <linkinjeon@kernel.org>
 
-[ Upstream commit 1c8a70075235cd733095532a97f2405037c52a7b ]
+[ Upstream commit 206fc30f71b005156085fd8523ccc84a2c67791b ]
 
-After TX is offloaded on device A, a route change, or a change in the
-usable-slave set of an 802.3ad or balance-xor (layer3+4) bond, can make
-RX setup program device B. tls_device_attach() sees the existing TLS
-destructor and keeps ctx->netdev pointing at A. The RX driver state on B
-is then untracked: tls_dev_resync() and tls_dev_del() are invoked on A
-for a context it never created, and neither socket close nor
-NETDEV_DOWN on B calls tls_dev_del() for B, so the driver context leaks.
-The reverse setup order has the same problem.
+FILE_STREAM_INFORMATION responses are assembled without aligning entries
+and truncated to the client buffer length after the fact. A short query
+can therefore return STATUS_BUFFER_OVERFLOW with an incomplete entry and
+a nonzero NextEntryOffset, which clients may reject as an invalid
+network response. Standalone queries can also exhaust the server
+response buffer and silently omit streams while reporting success.
 
-Check the shared device binding under device_offload_lock before each
-tls_dev_add(). Permit the first attachment and a second direction on the
-same device. Reject a different device, including when the old binding
-was cleared by NETDEV_DOWN: the TLS destructor remains installed and
-tls_device_attach() cannot establish a new binding. Setup then falls
-back to software for the requested direction.
+Allocate the same large response buffer used by other variable-length
+QUERY_INFO classes for stream queries. Pack only complete entries within
+the requested output length and available response space, aligning each
+entry to eight bytes and sizing names after UTF-16 conversion. Return
+STATUS_BUFFER_OVERFLOW when more entries remain, using an SMB2 error
+response if no entry fits.
 
-The RX check precedes allocation and software setup. TX uses its existing
-resource unwind path without calling the driver. Document the shared
-binding and clarify that fallback is per direction.
-
-This issue was discovered during code review and subsequently
-reproduced on hardware using mlx5 and TLS 1.2 AES-GCM-128.
-
-Changing the route between TX and RX setup installed the second
-direction on a different device. Driver traces showed successful adds
-on both devices, but both deletes at socket close targeted the first
-device, leaving an orphaned context on the second. Both setup orders
-reproduced the leak, even though all current core TLS context counters
-returned to zero. No crash was observed.
-
-With the fix, the same tests correctly fall back to software for the
-second direction and leave no orphaned hardware context.
-
-Fixes: 4799ac81e52a ("tls: Add rx inline crypto offload")
-Signed-off-by: Rishikesh Jethwani <rjethwani@purestorage.com>
-Signed-off-by: Dave Miller <davem@davem-thinkpadp1gen8.ibmlond.csb>
-[ sashal: Kept the branch's kzalloc(sizeof(*context), GFP_KERNEL) instead of upstream's kzalloc_obj(*context) and placed the new tls_device_can_attach() check just before it. ]
+Fixes: e2f34481b24d ("cifsd: add server-side procedures for SMB3")
+Fixes: 6b8b79226bc3 ("ksmbd: fix partial file information responses")
+Link: https://github.com/namjaejeon/ksmbd/issues/522#issuecomment-6391152923
+Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
+[ sashal: Only the FILE_STREAM_INFORMATION case was added to the large-response-buffer list in smb2_allocate_rsp_buf(), because FILE_NORMALIZED_NAME_INFORMATION isn't in that list here. ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- Documentation/networking/tls-offload.rst | 16 ++++++++++------
- net/tls/tls_device.c                     | 24 ++++++++++++++++++++++++
- 2 files changed, 34 insertions(+), 6 deletions(-)
+ fs/smb/server/smb2pdu.c | 183 +++++++++++++++++++++++++---------------
+ 1 file changed, 115 insertions(+), 68 deletions(-)
 
-diff --git a/Documentation/networking/tls-offload.rst b/Documentation/networking/tls-offload.rst
-index 7354d48cdf926..7ed28e40f1702 100644
---- a/Documentation/networking/tls-offload.rst
-+++ b/Documentation/networking/tls-offload.rst
-@@ -76,12 +76,16 @@ During driver initialization device sets the ``NETIF_F_HW_TLS_RX`` and
- pointer in the :c:member:`tlsdev_ops` member of the
- :c:type:`struct net_device <net_device>`.
- 
--When TLS cryptographic connection state is installed on a ``ktls`` socket
--(note that it is done twice, once for RX and once for TX direction,
--and the two are completely independent), the kernel checks if the underlying
--network device is offload-capable and attempts the offload. In case offload
--fails the connection is handled entirely in software using the same mechanism
--as if the offload was never tried.
-+TLS cryptographic connection state is installed separately for RX and TX
-+on a ``ktls`` socket. For each direction, the kernel checks if the underlying
-+network device is offload-capable and attempts the offload. If offload fails,
-+that direction is handled in software as if offload had never been tried.
-+
-+Both hardware directions share one device binding. Once one direction is
-+offloaded, the other direction must use the same device. If a route change
-+selects a different device, or ``NETDEV_DOWN`` has cleared the binding,
-+hardware offload of the other direction is declined and it uses software
-+instead.
- 
- Offload request is performed via the :c:member:`tls_dev_add` callback of
- :c:type:`struct tlsdev_ops <tlsdev_ops>`:
-diff --git a/net/tls/tls_device.c b/net/tls/tls_device.c
-index 2c661e17efb8f..c49798486ea52 100644
---- a/net/tls/tls_device.c
-+++ b/net/tls/tls_device.c
-@@ -1030,6 +1030,20 @@ int tls_device_decrypted(struct sock *sk, struct tls_context *tls_ctx)
- 	return tls_device_reencrypt(sk, tls_ctx);
+diff --git a/fs/smb/server/smb2pdu.c b/fs/smb/server/smb2pdu.c
+index 88f07ec22723a..aae6e9adf2e84 100644
+--- a/fs/smb/server/smb2pdu.c
++++ b/fs/smb/server/smb2pdu.c
+@@ -555,7 +555,8 @@ int smb2_allocate_rsp_buf(struct ksmbd_work *work)
+ 		req = smb_get_msg(work->request_buf);
+ 		if ((req->InfoType == SMB2_O_INFO_FILE &&
+ 		     (req->FileInfoClass == FILE_FULL_EA_INFORMATION ||
+-		     req->FileInfoClass == FILE_ALL_INFORMATION)) ||
++		     req->FileInfoClass == FILE_ALL_INFORMATION ||
++		     req->FileInfoClass == FILE_STREAM_INFORMATION)) ||
+ 		    req->InfoType == SMB2_O_INFO_SECURITY)
+ 			sz = large_sz;
+ 	}
+@@ -5255,41 +5256,107 @@ static void get_file_alternate_info(struct ksmbd_work *work,
+ 		cpu_to_le32(struct_size(file_info, FileName, conv_len));
  }
  
-+/* Both directions share ctx->netdev. A second direction must use that
-+ * device; after NETDEV_DOWN clears it, no new direction can be offloaded.
-+ */
-+static bool tls_device_can_attach(struct tls_context *ctx, struct sock *sk,
-+				  struct net_device *netdev)
-+{
-+	struct net_device *ctx_netdev;
++struct smb2_stream_info_buffer {
++	struct smb2_query_info_rsp *rsp;
++	struct smb2_file_stream_info *last;
++	const struct nls_table *local_nls;
++	unsigned int length;
++	unsigned int capacity;
++};
 +
-+	ctx_netdev = rcu_dereference_protected(ctx->netdev,
-+					       lockdep_is_held(&device_offload_lock));
-+	return sk->sk_destruct != tls_device_sk_destruct ||
-+	       ctx_netdev == netdev;
++static int smb2_add_stream_info(struct smb2_stream_info_buffer *buf,
++				const char *name, loff_t size, u64 allocation_size)
++{
++	struct smb2_file_stream_info *file_info;
++	__le16 *utf16_name;
++	size_t name_len = strlen(name);
++	unsigned int offset = ALIGN(buf->length, 8), name_bytes;
++	int conv_len, ret = 0;
++
++	if (offset > buf->capacity ||
++	    buf->capacity - offset < sizeof(*file_info))
++		return -ENOSPC;
++
++	utf16_name = kmalloc_array(name_len + 1, sizeof(*utf16_name),
++				   KSMBD_DEFAULT_GFP);
++	if (!utf16_name)
++		return -ENOMEM;
++
++	conv_len = smbConvertToUTF16(utf16_name, name, name_len,
++				     buf->local_nls, 0);
++	if (conv_len < 0) {
++		ret = conv_len;
++		goto out;
++	}
++
++	name_bytes = conv_len * sizeof(*utf16_name);
++	if (name_bytes > buf->capacity - offset - sizeof(*file_info)) {
++		ret = -ENOSPC;
++		goto out;
++	}
++
++	file_info = (struct smb2_file_stream_info *)&buf->rsp->Buffer[offset];
++	if (buf->last) {
++		memset(&buf->rsp->Buffer[buf->length], 0, offset - buf->length);
++		buf->last->NextEntryOffset =
++			cpu_to_le32((char *)file_info - (char *)buf->last);
++	}
++	file_info->NextEntryOffset = 0;
++	file_info->StreamNameLength = cpu_to_le32(name_bytes);
++	file_info->StreamSize = cpu_to_le64(size);
++	file_info->StreamAllocationSize = cpu_to_le64(allocation_size);
++	memcpy(file_info->StreamName, utf16_name, name_bytes);
++
++	buf->last = file_info;
++	buf->length = offset + sizeof(*file_info) + name_bytes;
++out:
++	kfree(utf16_name);
++	return ret;
 +}
 +
- static void tls_device_attach(struct tls_context *ctx, struct sock *sk,
- 			      struct net_device *netdev)
+ static int get_file_stream_info(struct ksmbd_work *work,
++				struct smb2_query_info_req *req,
+ 				struct smb2_query_info_rsp *rsp,
+-				struct ksmbd_file *fp,
+-				void *rsp_org)
++				struct ksmbd_file *fp)
  {
-@@ -1165,6 +1179,11 @@ int tls_set_device_offload(struct sock *sk)
- 		goto release_lock;
- 	}
+-	struct ksmbd_conn *conn = work->conn;
+-	struct smb2_file_stream_info *file_info;
++	struct smb2_stream_info_buffer buf = {
++		.rsp = rsp,
++		.local_nls = work->conn->local_nls,
++	};
+ 	char *stream_name, *xattr_list = NULL, *stream_buf;
+ 	struct kstat stat;
+ 	const struct path *path = &fp->filp->f_path;
+ 	ssize_t xattr_list_len;
+ 	ssize_t slen;
+ 	loff_t ssize;
+-	int nbytes = 0, streamlen, stream_name_len, next, idx = 0;
++	unsigned int req_output_len = le32_to_cpu(req->OutputBufferLength);
++	int streamlen, idx = 0;
+ 	int buf_free_len;
+ 	int ret;
  
-+	if (!tls_device_can_attach(ctx, sk, netdev)) {
-+		rc = -EOPNOTSUPP;
-+		goto release_lock;
++	if (req_output_len < FILE_STREAM_INFORMATION_SIZE) {
++		rsp->hdr.Status = STATUS_INFO_LENGTH_MISMATCH;
++		return -EINVAL;
 +	}
 +
- 	ctx->priv_ctx_tx = offload_ctx;
- 	rc = netdev->tlsdev_ops->tls_dev_add(netdev, sk, TLS_OFFLOAD_CTX_DIR_TX,
- 					     &ctx->crypto_send.info,
-@@ -1235,6 +1254,11 @@ int tls_set_device_offload_rx(struct sock *sk, struct tls_context *ctx)
- 		goto release_lock;
++	buf_free_len = smb2_calc_max_out_buf_len(work,
++						 offsetof(struct smb2_query_info_rsp, Buffer),
++						 req_output_len);
++	if (buf_free_len < 0)
++		return buf_free_len;
++	buf.capacity = buf_free_len;
++
+ 	ret = vfs_getattr(&fp->filp->f_path, &stat, STATX_BASIC_STATS,
+ 			  AT_STATX_SYNC_AS_STAT);
+ 	if (ret)
+ 		return ret;
+ 
+-	file_info = (struct smb2_file_stream_info *)rsp->Buffer;
+-
+-	buf_free_len = smb2_resp_buf_len(work,
+-			offsetof(struct smb2_query_info_rsp, Buffer));
+-	if (buf_free_len < 0)
+-		goto out;
+-
+ 	xattr_list_len = ksmbd_vfs_listxattr(path->dentry, &xattr_list);
+ 	if (xattr_list_len < 0) {
+-		goto out;
++		goto default_stream;
+ 	} else if (!xattr_list_len) {
+ 		ksmbd_debug(SMB, "empty xattr in the file\n");
+-		goto out;
++		goto default_stream;
  	}
  
-+	if (!tls_device_can_attach(ctx, sk, netdev)) {
-+		rc = -EOPNOTSUPP;
-+		goto release_lock;
+ 	while (idx < xattr_list_len) {
+@@ -5299,69 +5366,49 @@ static int get_file_stream_info(struct ksmbd_work *work,
+ 
+ 		ksmbd_debug(SMB, "%s, len %d\n", stream_name, streamlen);
+ 
+-		if (strncmp(&stream_name[XATTR_USER_PREFIX_LEN],
+-			    STREAM_PREFIX, STREAM_PREFIX_LEN))
++		if (strncmp(stream_name, XATTR_NAME_STREAM,
++			    XATTR_NAME_STREAM_LEN))
+ 			continue;
+ 
+-		stream_name_len = streamlen - (XATTR_USER_PREFIX_LEN +
+-				STREAM_PREFIX_LEN);
+-		streamlen = stream_name_len;
+-
+-		/* plus : size */
+-		streamlen += 1;
+-		stream_buf = kmalloc(streamlen + 1, KSMBD_DEFAULT_GFP);
+-		if (!stream_buf)
+-			break;
+-
+-		streamlen = snprintf(stream_buf, streamlen + 1,
+-				     ":%s", &stream_name[XATTR_NAME_STREAM_LEN]);
+-
+-		next = sizeof(struct smb2_file_stream_info) + streamlen * 2;
+-		/* smbConvertToUTF16() also writes a terminating UTF-16 unit. */
+-		if (next + sizeof(__le16) > buf_free_len) {
+-			kfree(stream_buf);
+-			break;
++		stream_buf = kasprintf(KSMBD_DEFAULT_GFP, ":%s",
++				       &stream_name[XATTR_NAME_STREAM_LEN]);
++		if (!stream_buf) {
++			ret = -ENOMEM;
++			goto out;
+ 		}
+-
+-		file_info = (struct smb2_file_stream_info *)&rsp->Buffer[nbytes];
+-		streamlen  = smbConvertToUTF16((__le16 *)file_info->StreamName,
+-					       stream_buf, streamlen,
+-					       conn->local_nls, 0);
+-		streamlen *= 2;
+-		kfree(stream_buf);
+-		file_info->StreamNameLength = cpu_to_le32(streamlen);
+ 		slen = ksmbd_vfs_xattr_len(file_mnt_idmap(fp->filp),
+ 					   path->dentry, stream_name);
+ 		ssize = slen < 0 ? 0 : (loff_t)slen;
+-		file_info->StreamSize = cpu_to_le64(ssize);
+-		file_info->StreamAllocationSize = cpu_to_le64(ssize);
++		ret = smb2_add_stream_info(&buf, stream_buf, ssize, ssize);
++		kfree(stream_buf);
++		if (ret == -ENOSPC)
++			goto overflow;
++		if (ret)
++			goto out;
 +	}
+ 
+-		nbytes += next;
+-		buf_free_len -= next;
+-		file_info->NextEntryOffset = cpu_to_le32(next);
++default_stream:
++	if (!S_ISDIR(stat.mode)) {
++		ret = smb2_add_stream_info(&buf, "::$DATA", stat.size,
++					   stat.blocks << 9);
++		if (ret == -ENOSPC)
++			goto overflow;
++		if (ret)
++			goto out;
+ 	}
+ 
++	ret = 0;
++	goto out;
 +
- 	context = kzalloc(sizeof(*context), GFP_KERNEL);
- 	if (!context) {
- 		rc = -ENOMEM;
++overflow:
++	rsp->hdr.Status = STATUS_BUFFER_OVERFLOW;
++	/* An empty overflow needs an SMB2 error response. */
++	ret = buf.length ? 0 : -EOVERFLOW;
+ out:
+-	if (!S_ISDIR(stat.mode) &&
+-	    buf_free_len >= sizeof(struct smb2_file_stream_info) + (7 + 1) * 2) {
+-		file_info = (struct smb2_file_stream_info *)
+-			&rsp->Buffer[nbytes];
+-		streamlen = smbConvertToUTF16((__le16 *)file_info->StreamName,
+-					      "::$DATA", 7, conn->local_nls, 0);
+-		streamlen *= 2;
+-		file_info->StreamNameLength = cpu_to_le32(streamlen);
+-		file_info->StreamSize = cpu_to_le64(stat.size);
+-		file_info->StreamAllocationSize = cpu_to_le64(stat.blocks << 9);
+-		nbytes += sizeof(struct smb2_file_stream_info) + streamlen;
+-	}
+-
+-	/* last entry offset should be 0 */
+-	file_info->NextEntryOffset = 0;
++	if (!ret)
++		rsp->OutputBufferLength = cpu_to_le32(buf.length);
+ 	kvfree(xattr_list);
+-
+-	rsp->OutputBufferLength = cpu_to_le32(nbytes);
+-
+-	return 0;
++	return ret;
+ }
+ 
+ static int get_file_internal_info(struct smb2_query_info_rsp *rsp,
+@@ -5646,7 +5693,7 @@ static int smb2_get_info_file(struct ksmbd_work *work,
+ 		break;
+ 
+ 	case FILE_STREAM_INFORMATION:
+-		rc = get_file_stream_info(work, rsp, fp, work->response_buf);
++		rc = get_file_stream_info(work, req, rsp, fp);
+ 		break;
+ 
+ 	case FILE_INTERNAL_INFORMATION:
 -- 
 2.53.0
 
