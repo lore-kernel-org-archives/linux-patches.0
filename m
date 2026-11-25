@@ -1,52 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795623138;
-	b=cxibazj4gc33l6Qfhb3LPEmwO58BUNUdqVg8dr8tdw0FXHJAqdnmiRxyOCvOGD069Xu/
-	 cUaFo0WNKsJe9+Xy7YhNFQ4RDdh5vw8UX0b1zxGdbyvebL1yUzcnfHDLsrkxmZHlMFkSt
-	 a3I21BIS49Em9ggKe4ajIxvSubIQdbl0L6hsbR/hcxiP1I4KouoTef8dl619DH9fbrEeJ
-	 Pto/JycpF1uGAA7ytfgQidG0kIMBXYE2pb2yqeARD/cr+m3to1GXCppU9691No4BemVFn
-	 iklJ7MnDG00q3wraWSOZIQ53cTK9QEmyaD+yXi2F4H2ik2y6jfmzVKqKpMsxh+WBycQ==
+	t=1795623141;
+	b=OJu1alf0ARL24dash2fA7Q81wHzZyU1Kvu0V5k7m7J4By2+4qQOVf11x8M8vWqwCsu1q
+	 ge8zQm8v/+E5H19a3pEOVNTcFtkgkCR4QoXCig69ebz5e4P1wWexD6Ty3bZkhPC55TSBA
+	 Mv/qnvu6HLwj+EFLG/fVwJ+z2Dl6lmheyy8OrEl2HZCVzVMYyQrIIrHiPOWPzRTj5+GhJ
+	 XiJn9w7Wp96oeaThZPG99RMuKSQinexn2eBKS7LupBguDhvNxBhiloUHkYf51ZTmXsu/H
+	 mznmGPKRhtOfeFP1i6tujKIFxVTOv2B2SblkoQ19N7gqKW2yJkDoxzzWd67dHvs4RrA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795623138;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795623141;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=Y2/K4sOjsL6Rd6S7I4ve+kyUzCYG3CzVMKB4DvUGDPk=;
-	b=5Crq3T9NrrA6krBwsCaogA0LJdnPNpenFaF1rqmhbWXdIxAKy+jYIxKjSurilfw7FCsM
-	 EcKOXWhpgj69WegDPSkuMwRRaienF8myVD1/Gcdorl/x5vpI5AJ+pJcmX88njZf9N9XGq
-	 MQfIt+DSLn7d+xRWt6qEM5NrzznSXwstxs85FcGt9vB5S2cfqw1CQx4HuZobv00jn04iY
-	 fXs2p0L8SPXdsJoavhSio4gkNWxbAgiHbOGTtcjYvuugOCxLOlOTU7cFsci3smSpBafSF
-	 P5ohtUQ6IP+zXaFhRpi0t95+gmj4FrO+sGxJvtZLqgErV3NZnHVqz4LprpDRnT1Vp4g==
+	bh=K17lgwMv1Goqo2aQqCKBjtPKnjeQ4q+F8c/F98zwvGQ=;
+	b=wTAmnMXRv3fpNV0po1lpJT1h/dnoqbbovSlGFsP+P+rNlVV2hZ8BkB1jiQePGLbKdcYW
+	 8JSnWE1Ca7lqh0H+Y+LYGc1QjGoz8W9wAdq4Dko/j+ZD2J1U0RIlKMhGxxDxqpzbIql+6
+	 gMvXO1PJ6d8OCyQOAxk75qsWAk8OgmJsvRlZK0v3mpnHDPUFW7II3wEajJ/ZS3jI2sLw0
+	 z8WDt5CxcLCq1+cUISyzNUyafaqKDLYUHGTfRL7bVH0lr0/KsSDaKeA/5BrB6/aLaDPVY
+	 H7HB8b4q+YW7wpo4EMwmkUTG+o+o+XhE/uPasWLne692N+5doBAga7rc5iRwsNcxmZw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=eqV3TCib;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=kJlXXIxj;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0EAC6606A31E;
-	Wed, 25 Nov 2026 16:12:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 60812606A31E;
+	Wed, 25 Nov 2026 16:12:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=eqV3TCib
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E23091F000D2;
-	Wed, 25 Nov 2026 16:12:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=kJlXXIxj
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 316111F000C0;
+	Wed, 25 Nov 2026 16:12:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795623137;
-	bh=Y2/K4sOjsL6Rd6S7I4ve+kyUzCYG3CzVMKB4DvUGDPk=;
+	s=korg; t=1795623140;
+	bh=K17lgwMv1Goqo2aQqCKBjtPKnjeQ4q+F8c/F98zwvGQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=eqV3TCibTSXxIwB+rYj7gEkYG4GwdiphGa2+Ho4mPKyiE7gP7r9Qm5DJBCs620qSR
-	 K8dRrxNQepAZqOrF/tqr193DXbiwU7jHYhZ+2Qr6NGxebjXesFtW8xV/etuWDIKdRC
-	 /om324mmTMNATYf2BJiVHzyvThMrBSaKc77h9QCo=
+	b=kJlXXIxjdcb6bSf8Hp485VhIGZwc/dq1bRoD0tGWMQ+ppMmo8DD4T1MXFv/pLRbMF
+	 I1Ki766PFn0tmz26tfe2USxVZv9p/XBt5Bku0TFhoTWfDZOoUBVji5LcmkSZOgBOZG
+	 IGYj6haL5icUaCJoIH6/xxJzcacLF3hDqXSPjxQY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Takashi Iwai <tiwai@suse.de>,
-	Paul Menzel <pmenzel@molgen.mpg.de>,
+	Eric Biggers <ebiggers@kernel.org>,
 	Jarkko Sakkinen <jarkko@kernel.org>
-Subject: [PATCH 6.18 763/990] tpm: acpi: Fix memory leak at tpm_read_log_acpi() error path
-Date: Wed, 25 Nov 2026 15:35:30 +0100
-Message-ID: <20261125143839.927626052@linuxfoundation.org>
+Subject: [PATCH 6.18 764/990] tpm: Check return value of crypto_kpp_set_secret()
+Date: Wed, 25 Nov 2026 15:35:31 +0100
+Message-ID: <20261125143839.950220483@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143822.072087159@linuxfoundation.org>
 References: <20261125143822.072087159@linuxfoundation.org>
@@ -68,42 +67,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Takashi Iwai <tiwai@suse.de>
+From: Eric Biggers <ebiggers@kernel.org>
 
-commit 03fcb358249dc715124b3616f814ea0ecc6ec36c upstream.
+commit 8cff8f1c89d33e55c9af82177b14f6f9f6a899fe upstream.
 
-When devm_add_action() returns an error, tpm_read_log_acpi() clears
-log->bios_event_log unnecessarily to NULL before calling
-tpm_bios_log_free(), and it would lead to a memory leak of the
-allocated log buffer.
+crypto_kpp_set_secret() can fail, for example if the kernel is booted
+with fips=1 and the broken-by-design FIPS RNG used for ECC private key
+generation doesn't feel like generating random bytes at the moment.
+Check for error, cancelling the TPM session creation rather than
+proceeding with a zero or uninitialized private key.
 
-Fix it by simply jumping to the err.
-
-Cc: stable@vger.kernel.org # v6.18+
-Fixes: a3a860bc0fd6 ("tpm: Change to kvalloc() in eventlog/acpi.c")
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
-Reviewed-by: Paul Menzel <pmenzel@molgen.mpg.de>
+Fixes: 699e3efd6c64 ("tpm: Add HMAC session start and end functions")
+Cc: stable@vger.kernel.org # v6.12+
+Signed-off-by: Eric Biggers <ebiggers@kernel.org>
 Reviewed-by: Jarkko Sakkinen <jarkko@kernel.org>
-Link: https://lore.kernel.org/r/20261109173756.742248-1-tiwai@suse.de
+Link: https://lore.kernel.org/r/20261025211119.138277-1-ebiggers@kernel.org
 Signed-off-by: Jarkko Sakkinen <jarkko@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/char/tpm/eventlog/acpi.c |    4 +---
- 1 file changed, 1 insertion(+), 3 deletions(-)
+ drivers/char/tpm/tpm2-sessions.c |    4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
---- a/drivers/char/tpm/eventlog/acpi.c
-+++ b/drivers/char/tpm/eventlog/acpi.c
-@@ -167,10 +167,8 @@ int tpm_read_log_acpi(struct tpm_chip *c
+--- a/drivers/char/tpm/tpm2-sessions.c
++++ b/drivers/char/tpm/tpm2-sessions.c
+@@ -535,7 +535,9 @@ static int tpm_buf_append_salt(struct tp
  	}
+ 	crypto_ecdh_encode_key(encoded_key, buf_len, &p);
+ 	/* this generates a random private key */
+-	crypto_kpp_set_secret(kpp, encoded_key, buf_len);
++	rc = crypto_kpp_set_secret(kpp, encoded_key, buf_len);
++	if (rc)
++		goto err_free_kpp;
  
- 	ret = devm_add_action(&chip->dev, tpm_bios_log_free, log->bios_event_log);
--	if (ret) {
--		log->bios_event_log = NULL;
-+	if (ret)
- 		goto err;
--	}
- 
- 	return format;
- 
+ 	/* salt is now the public point of this private key */
+ 	req = kpp_request_alloc(kpp, GFP_KERNEL);
 
 
