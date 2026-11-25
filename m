@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795624432;
-	b=zM5LMt4SxSWv82ekEzVpDcUnQ4/ynTEPR/LgBocc6vs2OvuqgW+6hzeWPViynJBrOa8L
-	 k3mp0QXPTZlTLjF0Nap9quGXIpbM+ZNJ2vHP/eysOjVHYi6zOnfC90ifAy0HTqyPFXjJJ
-	 ORQjvNJUp5SLOd7GkP5mcRL/hdLfZQXs1XvJ24gksZK/h3AOoEXb1QAl6XL5/xaLWZJxc
-	 ZL1kOu0HoZxNzksLSN85ecvXNm39EvtFOiTm2UbiKd28I4SBZdqkkbWK8TxBvtx74g5Z0
-	 EJOUkzFjlkFyXYxcxjQ9R0MEsdvXJ7NftITiIZw99eKPcPv1BIDmrCYCZXgB6YEMVEA==
+	t=1795624436;
+	b=rCLmpb0z95XT5xYzw1r1PPMZdqdmc8IcRyuZj8x/qLV1tdMf0aCAeUfcb5roa3wjxJh2
+	 iBbROKvGXTZM8WKWeipT/nuyTSKNLlsFMFXMkcUu9hrxOLMUFfWUQXmv5EWYlUmihbg0+
+	 ZaWEkHyKc+nd36ScUloxrGELhuYt7NtCAc5JOIErcjtzatvcGachpn9AGmsFUMDgacvlD
+	 XRKvvTfC4NNUZf3EhsOMY+fayRQZgw7MvJKTlvrrQ6VO7q1D3hRdSTAeHOk+rSiI2EaOB
+	 gqVnpz2ufjxNU5ibI3DNCZRKMuu9iCg672LCRBnijEror03+6ypKxrAtPCb6PcD1zwQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795624432;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795624436;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=GUWKICuWs4rRBY12SNLw7p6aiSg9Ux9DNMB3hG/E3cI=;
-	b=nxMPD8XykRZkTGdD27XgaiiUmNgG5cwyLr0NXq89Q6Iz2A02xGxKxwCw62L88reNAs2v
-	 xfYU9CJADpz0wQWObvJvOD/tby1ipc9C7+Ct9O5R72+/qgT2qucJWVXvykvB6vp92tkTm
-	 8Qzw4v9G/afNFoeYKAjp7605MyR3MzfA1yPPL7XzI5xU/CCxTLcKJ7JRd2STuyuFchFeW
-	 UzndtjQvPTG1LV46pGFCxlsS7WOLligiqcgFFslgHTfe4lkjE3JMXImtPpPWox5GRhbMl
-	 Z/mWvSI0zd+oUCtC3HDfL9XrK2rbr63qX4uvXTbh58Ugudh6fwZwH4Mjt5Xwr/GNe+Q==
+	bh=aeP74NYbQRNhKWMmmZye3u2iCCI9g6nozmeFu2+ce0E=;
+	b=Z/4xxDIkNwD4UcIx1ziV69bCwNi7tXx3R3OLfQJ5BzSqasmbCkwBY4+UplNT+1p+2ZWq
+	 dJ8nA3fmK3ExAiTfnf61zz390yi2EP/SGzYdAdIm+clybPy5wzCd+UzeNp3fCaI9Jap63
+	 hc8XUht8V6q9UQch2d4mRfnClDfrOmL1EftLs2nuBFVcd5gQF6iS7g+BHwgJDqv0f9SC7
+	 wRcYYJpMPS4V4skx/F/ZuhIOjWZVnNtcxQKuL95+wyV6JFe1Kt/18bmD+9g4HkHJK6yeZ
+	 t/fl7dUBuPH/yCitjGNyEWK3VqJMNGXkIUopscRS+ZNKGJPpsDqn9ed7X7CC3MFVWeQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=z3D64rvZ;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ivr9qHBC;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 235D1606A684;
-	Wed, 25 Nov 2026 16:33:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 132CD606A33A;
+	Wed, 25 Nov 2026 16:33:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=z3D64rvZ
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 472021F000C0;
-	Wed, 25 Nov 2026 16:33:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ivr9qHBC
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A6EE31F000C6;
+	Wed, 25 Nov 2026 16:33:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795624431;
-	bh=GUWKICuWs4rRBY12SNLw7p6aiSg9Ux9DNMB3hG/E3cI=;
+	s=korg; t=1795624435;
+	bh=aeP74NYbQRNhKWMmmZye3u2iCCI9g6nozmeFu2+ce0E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=z3D64rvZ6xp4f9okLRr7KoTf8yk2iqagxrgy/4jHmdF+EmcGKmM/ISg6GdiYEZgGc
-	 dajB5E32h4CLT7pZbzQ7FgRHeY6wXYA8Yg4K0CQWSLIE6ZQyzcITKsZaSsW0TXFmWk
-	 7cWSzpibeojE4cX69IKNdXu/YVH3azlkPX8q8prI=
+	b=ivr9qHBCOhyYpJrgU6IeWQRToRFZQfrYyQWPNkxFx0wanvfd6zTR7ZEVKORJCSCM4
+	 7oKAhD47mGwY4V/Qx3f0R8ofFOc1ij6IXBLxrm8lQ+dvtvbGhpWSM6jtDvI4GV0dT7
+	 oQhoXY8P4lAht1MUH+JlvQTqJnKnCHrLma7N5Mcc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Florian Fainelli <florian.fainelli@broadcom.com>,
+	Alexander Goodkind <alex@goodkind.io>,
+	Simon Horman <horms@kernel.org>,
 	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 191/816] net: dsa: b53: Enable IGMP and MLD control packet CPU copies
-Date: Wed, 25 Nov 2026 15:28:59 +0100
-Message-ID: <20261125143853.615508156@linuxfoundation.org>
+Subject: [PATCH 6.12 192/816] net: ethernet: mediatek: preserve sibling PPE bindings
+Date: Wed, 25 Nov 2026 15:29:00 +0100
+Message-ID: <20261125143853.638377629@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143849.205329330@linuxfoundation.org>
 References: <20261125143849.205329330@linuxfoundation.org>
@@ -68,182 +69,67 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Florian Fainelli <florian.fainelli@broadcom.com>
+From: Alexander Goodkind <alex@goodkind.io>
 
-[ Upstream commit 3362cb822ea750399a15b741713181fd8560bd17 ]
+[ Upstream commit 34cc22a9ce6ae0228dcd09a57df23aea62e22b04 ]
 
-IGMPv2 reports and MLDv1 reports are addressed to the multicast group
-itself. Once the first listener is installed in the ARL table, subsequent
-reports can follow that entry without reaching the CPU. The bridge then
-fails to learn additional listeners, although static MDB forwarding works.
+__mtk_ppe_check_skb() clears entry->hash for flows bound to other
+hardware slots in the same software hash bucket. mtk_flow_offload_stats()
+then skips their hardware counter updates. L2 cleanup also frees sibling
+subflows without invalidating their hardware rules.
 
-Enable the high-level protocol classifiers so that IGMP and MLD control
-packets are copied to the CPU independently of the multicast ARL lookup.
-Retain normal L2 forwarding by clearing the CPU-only forwarding modes,
-and preserve unrelated protocol-control fields.
+Restrict both cleanup paths to entries assigned to the inspected slot.
 
-Handle the BCM5395's 16-bit register and different classifier fields
-separately from the 32-bit layout on the BCM531xx, BCM5301x and newer
-integrated RoboSwitch families, including BCM7445, BCM7278 and BCM4908.
-Export the helper and call it from bcm_sf2_sw_setup() as well, since SF2
-uses its own setup operation instead of b53_setup(). This also restores
-the classifiers after the switch reset on resume. Leave older devices
-with different IGMP controls untouched, and propagate register access
-failures during setup.
+Two UDP trials reproduced the counter failure on a GL-MT3000/MT7981
+running unmodified OpenWrt 25.12.5 with Linux 6.12.94:
 
-The SF2 setup integration and BCM4908 chip gate were updated with
-assistance from OpenAI Codex in response to review feedback.
+1. Start a UDP connection.
+2. Add a control connection in a different hash bucket.
+3. Add a connection in the first connection's hash bucket.
 
-Fixes: 5d65b64a3d97 ("net: dsa: b53: Add support for MDB")
-Signed-off-by: Florian Fainelli <florian.fainelli@broadcom.com>
-Link: https://patch.msgid.link/20261028235100.3892374-2-florian.fainelli@broadcom.com
+AI code review of the original patch identified the cleanup problem
+in L2 subflows.
+
+Full ARM64 builds with allmodconfig and allyesconfig passed before
+and after the patch using GCC 14.2.0 and W=1, without new warnings.
+The builds used CONFIG_WERROR=n because the unmodified ARM64 kernel
+already emits warnings. Hardware testing has not run for this revision.
+
+Fixes: c4f033d9e03e ("net: ethernet: mtk_eth_soc: rework hardware flow table management")
+Fixes: 33fc42de3327 ("net: ethernet: mtk_eth_soc: support creating mac address based offload entries")
+Link: https://github.com/openwrt/openwrt/pull/26107
+Signed-off-by: Alexander Goodkind <alex@goodkind.io>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Link: https://patch.msgid.link/20261030010517.45639-1-alex@goodkind.io
 Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/dsa/b53/b53_common.c | 57 ++++++++++++++++++++++++++++++++
- drivers/net/dsa/b53/b53_priv.h   |  1 +
- drivers/net/dsa/b53/b53_regs.h   | 17 ++++++++++
- drivers/net/dsa/bcm_sf2.c        |  5 +++
- 4 files changed, 80 insertions(+)
+ drivers/net/ethernet/mediatek/mtk_ppe.c | 5 ++---
+ 1 file changed, 2 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/net/dsa/b53/b53_common.c b/drivers/net/dsa/b53/b53_common.c
-index 04027cbefddba..1bc00288612c5 100644
---- a/drivers/net/dsa/b53/b53_common.c
-+++ b/drivers/net/dsa/b53/b53_common.c
-@@ -770,6 +770,59 @@ void b53_brcm_hdr_setup(struct dsa_switch *ds, int port)
- }
- EXPORT_SYMBOL(b53_brcm_hdr_setup);
+diff --git a/drivers/net/ethernet/mediatek/mtk_ppe.c b/drivers/net/ethernet/mediatek/mtk_ppe.c
+index bb01a7355932a..fc1362cd821cd 100644
+--- a/drivers/net/ethernet/mediatek/mtk_ppe.c
++++ b/drivers/net/ethernet/mediatek/mtk_ppe.c
+@@ -754,8 +754,7 @@ void __mtk_ppe_check_skb(struct mtk_ppe *ppe, struct sk_buff *skb, u16 hash)
  
-+int b53_enable_mcast_snooping(struct b53_device *dev)
-+{
-+	u16 val16;
-+	u32 val;
-+	int ret;
-+
-+	/* Older switches use different IGMP controls, not HL_PRTC_CTRL. */
-+	if (is5325(dev) || is5365(dev) || dev->chip_id == BCM5389_DEVICE_ID ||
-+	    is5397_98(dev) || is63xx(dev))
-+		return 0;
-+
-+	/* IGMPv2 and MLDv1 reports use the group's destination MAC. Once
-+	 * the first listener is offloaded, ordinary multicast forwarding
-+	 * can keep subsequent reports from reaching the bridge CPU.
-+	 */
-+
-+	/* BCM5395 has a narrower register and a single IGMP classifier.
-+	 * Its ICMPv6 classifier also covers MLD.
-+	 */
-+	if (dev->chip_id == BCM5395_DEVICE_ID) {
-+		ret = b53_read16(dev, B53_MGMT_PAGE, B53_HL_PRTC_CTRL, &val16);
-+		if (ret)
-+			return ret;
-+
-+		val16 |= HL_PRTC_IGMP_IP_EN_5395 | HL_PRTC_ICMPV6_EN;
-+		/* Zero forwarding modes copy control traffic to the CPU
-+		 * independently of the ARL lookup, retaining L2 forwarding.
-+		 */
-+		val16 &= ~(HL_PRTC_IGMP_FWD_MODE_5395 |
-+			   HL_PRTC_ICMPV6_FWD_MODE);
-+
-+		return b53_write16(dev, B53_MGMT_PAGE, B53_HL_PRTC_CTRL,
-+				   val16);
-+	}
-+
-+	ret = b53_read32(dev, B53_MGMT_PAGE, B53_HL_PRTC_CTRL, &val);
-+	if (ret)
-+		return ret;
-+
-+	val |= HL_PRTC_IGMP_RPTLVE_EN | HL_PRTC_IGMP_QRY_EN |
-+	       HL_PRTC_IGMP_UKN_EN | HL_PRTC_MLD_RPTDONE_EN |
-+	       HL_PRTC_MLD_QRY_EN;
-+	/* Zero forwarding modes copy control traffic to the CPU
-+	 * independently of the ARL lookup, retaining L2 forwarding.
-+	 */
-+	val &= ~(HL_PRTC_IGMP_RPTLVE_FWD_MODE | HL_PRTC_IGMP_QRY_FWD_MODE |
-+		 HL_PRTC_IGMP_UKN_FWD_MODE | HL_PRTC_MLD_RPTDONE_FWD_MODE |
-+		 HL_PRTC_MLD_QRY_FWD_MODE);
-+
-+	return b53_write32(dev, B53_MGMT_PAGE, B53_HL_PRTC_CTRL, val);
-+}
-+EXPORT_SYMBOL(b53_enable_mcast_snooping);
-+
- static void b53_enable_cpu_port(struct b53_device *dev, int port)
- {
- 	u8 port_ctrl;
-@@ -1261,6 +1314,10 @@ static int b53_setup(struct dsa_switch *ds)
- 			b53_disable_port(ds, port);
- 	}
+ 	hlist_for_each_entry_safe(entry, n, head, list) {
+ 		if (entry->type == MTK_FLOW_TYPE_L2_SUBFLOW) {
+-			if (unlikely(FIELD_GET(MTK_FOE_IB1_STATE, hwe->ib1) ==
+-				     MTK_FOE_STATE_BIND))
++			if (entry->hash != hash)
+ 				continue;
  
-+	ret = b53_enable_mcast_snooping(dev);
-+	if (ret)
-+		return ret;
-+
- 	return b53_setup_devlink_resources(ds);
- }
+ 			entry->hash = 0xffff;
+@@ -764,7 +763,7 @@ void __mtk_ppe_check_skb(struct mtk_ppe *ppe, struct sk_buff *skb, u16 hash)
+ 		}
  
-diff --git a/drivers/net/dsa/b53/b53_priv.h b/drivers/net/dsa/b53/b53_priv.h
-index e908397e8b9a0..f981537bc0a1b 100644
---- a/drivers/net/dsa/b53/b53_priv.h
-+++ b/drivers/net/dsa/b53/b53_priv.h
-@@ -336,6 +336,7 @@ static inline int b53_switch_get_reset_gpio(struct b53_device *dev)
- /* Exported functions towards other drivers */
- void b53_imp_vlan_setup(struct dsa_switch *ds, int cpu_port);
- int b53_configure_vlan(struct dsa_switch *ds);
-+int b53_enable_mcast_snooping(struct b53_device *dev);
- void b53_get_strings(struct dsa_switch *ds, int port, u32 stringset,
- 		     uint8_t *data);
- void b53_get_ethtool_stats(struct dsa_switch *ds, int port, uint64_t *data);
-diff --git a/drivers/net/dsa/b53/b53_regs.h b/drivers/net/dsa/b53/b53_regs.h
-index 2dca7dd76eb6b..628fdfae47c84 100644
---- a/drivers/net/dsa/b53/b53_regs.h
-+++ b/drivers/net/dsa/b53/b53_regs.h
-@@ -262,6 +262,23 @@
- /* Revision ID register (8 bit) */
- #define B53_REV_ID			0x40
- 
-+/* High-level protocol control (16 bit on BCM5395, otherwise 32 bit) */
-+#define B53_HL_PRTC_CTRL			0x50
-+#define   HL_PRTC_ICMPV6_EN		BIT(4)
-+#define   HL_PRTC_ICMPV6_FWD_MODE		BIT(5)
-+#define   HL_PRTC_IGMP_IP_EN_5395		BIT(6)
-+#define   HL_PRTC_IGMP_FWD_MODE_5395	BIT(8)
-+#define   HL_PRTC_IGMP_RPTLVE_EN		BIT(9)
-+#define   HL_PRTC_IGMP_RPTLVE_FWD_MODE	BIT(10)
-+#define   HL_PRTC_IGMP_QRY_EN		BIT(11)
-+#define   HL_PRTC_IGMP_QRY_FWD_MODE	BIT(12)
-+#define   HL_PRTC_IGMP_UKN_EN		BIT(13)
-+#define   HL_PRTC_IGMP_UKN_FWD_MODE	BIT(14)
-+#define   HL_PRTC_MLD_RPTDONE_EN		BIT(15)
-+#define   HL_PRTC_MLD_RPTDONE_FWD_MODE	BIT(16)
-+#define   HL_PRTC_MLD_QRY_EN		BIT(17)
-+#define   HL_PRTC_MLD_QRY_FWD_MODE		BIT(18)
-+
- /* Broadcom header RX control (16 bit) */
- #define B53_BRCM_HDR_RX_DIS		0x60
- 
-diff --git a/drivers/net/dsa/bcm_sf2.c b/drivers/net/dsa/bcm_sf2.c
-index e680fff7d23fb..99b44e20c6fee 100644
---- a/drivers/net/dsa/bcm_sf2.c
-+++ b/drivers/net/dsa/bcm_sf2.c
-@@ -1059,6 +1059,7 @@ static int bcm_sf2_sw_setup(struct dsa_switch *ds)
- {
- 	struct bcm_sf2_priv *priv = bcm_sf2_to_priv(ds);
- 	unsigned int port;
-+	int ret;
- 
- 	/* Enable all valid ports and disable those unused */
- 	for (port = 0; port < priv->hw_params.num_ports; port++) {
-@@ -1074,6 +1075,10 @@ static int bcm_sf2_sw_setup(struct dsa_switch *ds)
- 	b53_configure_vlan(ds);
- 	bcm_sf2_enable_acb(ds);
- 
-+	ret = b53_enable_mcast_snooping(priv->dev);
-+	if (ret)
-+		return ret;
-+
- 	return b53_setup_devlink_resources(ds);
- }
- 
+ 		if (found || !mtk_flow_entry_match(ppe->eth, entry, hwe)) {
+-			if (entry->hash != 0xffff)
++			if (entry->hash == hash)
+ 				entry->hash = 0xffff;
+ 			continue;
+ 		}
 -- 
 2.53.0
 
