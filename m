@@ -1,54 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795617950;
-	b=Z+kZBeEUc3ex/9KdNiDNUoBjVkq5eGgRZgntG/WrcscInwZQQIxjOn+rMMc8s7AqNaZm
-	 mqdN2UWASnlcZ3t++dkm9XEbSgrc0v7C5yJSGFi5BiFbe+Pfwa9LbAyAglyA5ZrnWNArb
-	 SYR9aQlDXHjfrGK5RAm7DKF7xGdpV2WAwmn02lMSf4vxigM2J3/Zfqv7PLC6i5THiVlfP
-	 /RR/eoQDLT1lWlHcdLPBgd9FrSzhnJlBZLlachaRt5UD4th75iC6G9SjXihcAriqXGLFh
-	 ASJVCuZyLY7kTVLZNBQF16gjVhouTYWyNlqjUiNhVr47C+OhTU2OGKxKXVqpoxJO4CA==
+	t=1795617954;
+	b=hP689MX+0a5q/pzSP5ZXfGh2LLwDDqCCsBQQFIMP4CXVaEsBWvfHv0AQNRuFA0Uausbo
+	 eLn9oUzW2QCdpYXeHiNaRzB6oiRCIHYX1Vj0qFEHzK1XPNwbjRjhCs9caFGLvkqjvilVn
+	 klJmYhhHdInF0NLu9PKpIhMXnyyTCSpkdpmaIUoFjKui8vScqJTeziiTQSEJy9E5xTjMJ
+	 6pQMnADo0BFICAd9jBDyq71umyT/VBltpPaUs48liNt2FikwtzYIevT4p0pQzvzIwxU0I
+	 YEq8ZvcY+ZRaKd5R3gF2q/6ppiw18Jb8AXWpiPsKK5yTOkh6eBwxW1chD+zeITrC6Ug==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795617950;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795617954;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=Y8GWS5bsG5aBfjxwNVIxeAEEINmrOPgXgAfcl7eYCN4=;
-	b=cL5aCZ4jVM79DnZxs1CPXhrEUS6KCqS96+NJstVu/x7X0GVmJDndkJ87eQ98HntwqsGF
-	 uKBWYVAwysPxkr+NawO0xDPk2BMAW7Z3av8It1eQIf0Xn2gLptll7P97vs8QKhggZl/v5
-	 WTBeS2c6pUO34xH/RVtqe6K8Iou9OJegvFML3FU1rmkkgrFPDqKWF5sv0Jle1IaGXd7oG
-	 JhpQvdJHi9m13X030cZuBsEH+M8qcSxExcm26xSs5D3Dkqu7qj+GqGx90HZTNVBhmTjNn
-	 3txvbXa608exV3tS3a5GeL0a5ou2ipemkssVyDOaREBdvggI/eHK9Gdwa43AHk1gyHg==
+	bh=LOULytElIcCdbknHKWZ9k8xYt2sauWk1H6MtYi8p7wc=;
+	b=H+VqWuJ2RDZS0OINDIz/O9IrZp+5/BCMyCNuMJTPAiDaRYRSSvoU0i9EVxz2KYNufWno
+	 XvHDf0oZxnOjR5+LTnTfSYQ2INjRKSackVjRAhSDRr5yK8qFGl7PwuIv02zBzlUSLqq4X
+	 t4I/n6NswM6nI0nsK1TN/Prot/jDPjNnWY4gUWL5ShxWUb0J4/LnGoN9Y64ox0D4QwfbP
+	 RUT0jwcO86ZIoZYslCF1qdQEdry+sPjfFuD7SZVKdWAd4ZBQbB3pPUk4OTbjl8qOevGJM
+	 p4gb617upz4qSWug61/X72h1AZgbFICCX+gn07g37Tk36cno7Ws2hTAueif7+GOjW2A==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="O0rM/uMD";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=wVADc6Xw;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 85DAB606A323;
-	Wed, 25 Nov 2026 14:45:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8BB40606A31E;
+	Wed, 25 Nov 2026 14:45:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=O0rM/uMD
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AB1151F000C4;
-	Wed, 25 Nov 2026 14:45:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=wVADc6Xw
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2F56C1F000C4;
+	Wed, 25 Nov 2026 14:45:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795617950;
-	bh=Y8GWS5bsG5aBfjxwNVIxeAEEINmrOPgXgAfcl7eYCN4=;
+	s=korg; t=1795617953;
+	bh=LOULytElIcCdbknHKWZ9k8xYt2sauWk1H6MtYi8p7wc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=O0rM/uMDDEChr9bhbnb4Z1c0Yrjk9X+h6x1RGi497IGYC8A86BfGHaG6oTrfz7Y9I
-	 SD7SaPQEbCcsfG9kqMliB6joaNsBIUXdAfCxJKewyMGniLDS4DFImBhLnXNwhwz19Y
-	 k0MUjUi/dkPOcvHXgi6AwLXDlWy7Fpyuk6iYFm4s=
+	b=wVADc6XwMB7LSOLT3+SipvoZz98hkV2OYfuFnBmKvKfffRVtUhQ2aCzx5+N1GquhD
+	 bFrb31p90RElnivdUAOQMDehKssVRo24uMrZUNTpHuBmLKhLsZC4Cf/YW8Brn88d0S
+	 F0IdIcQmIpZ84EdAoKhDAXRs/GStQhj/20+TWlGE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andrew Preece <apreece@meta.com>,
-	Vlad Poenaru <vlad.wing@gmail.com>,
-	Michael Chan <michael.chan@broadcom.com>,
-	Dave Miller <davem@davem-thinkpadp1gen8.ibmlond.csb>,
+	Shawn Guo <shengchao.guo@oss.qualcomm.com>,
+	Marek Szyprowski <m.szyprowski@samsung.com>,
+	Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0127/1005] bnxt_en: Dont keep MSI-X vectors added before FW reserves them
-Date: Wed, 25 Nov 2026 15:24:25 +0100
-Message-ID: <20261125143824.714306641@linuxfoundation.org>
+Subject: [PATCH 7.3 0128/1005] gpio: shared-proxy: Fix race between concurrent first users
+Date: Wed, 25 Nov 2026 15:24:26 +0100
+Message-ID: <20261125143824.737680351@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143821.729802100@linuxfoundation.org>
 References: <20261125143821.729802100@linuxfoundation.org>
@@ -70,140 +69,216 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Vlad Poenaru <vlad.wing@gmail.com>
+From: Shawn Guo <shengchao.guo@oss.qualcomm.com>
 
-[ Upstream commit af449230bd8de936d6e4f759240e787b9aad7cc0 ]
+[ Upstream commit eb70d2419e79b6720fd465b905a2dddd751f2a48 ]
 
-When dynamic MSI-X is supported, bnxt_check_rings() grows the MSI-X
-vectors with bnxt_change_msix() once FW says the new rings would fit,
-and keeps them.  FW only reserves the extra IRQs later, when
-bnxt_reserve_rings() calls __bnxt_reserve_rings().  The MSI-X table
-entries beyond the function's reserved IRQs are not backed until then:
-the MSI message written when the new vectors are activated is lost, and
-the entries read back as zero.  After FW reserves them they are live but
-still zero, so the NQ rings bound to them signal address 0 and every
-completion on those rings is lost.  The next ring change (for example
-ethtool -G) then times out freeing each of those rings and the TX
-watchdog fires:
+The proxy lets a consumer set the line direction and reset the
+default value and vote tally only when usecnt == 1, i.e. when it is
+the sole requester. But request() and direction_output() take the
+descriptor mutex separately. When two consumers probe concurrently,
+both request the line before either configures it, both see
+usecnt == 2, both fall into the shared path, read back the still
+unconfigured direction (input) and fail with -EPERM.
 
-  bnxt_en 0002:01:00.0 eth0: Resp cmpl intr err msg: 0x51
-  bnxt_en 0002:01:00.0 eth0: hwrm_ring_free type 1 failed. rc:fffffff0 err:0
-  ...
-  bnxt_en 0002:01:00.0 eth0: NETDEV WATCHDOG: CPU: 17: transmit queue 18 timed out 5716 ms
+On Nord RRD the two DAC supplies are reg-fixed-voltage regulators
+sharing tlmm GPIO 41. They probe asynchronously and intermittently
+both fail, leaving the codecs without supplies:
 
-On x86 this is hidden: GENERIC_IRQ_RESERVATION_MODE makes the PCI MSI
-domains MSI_FLAG_MUST_REACTIVATE, so the message is composed and written
-again when the IRQ is requested, after FW has reserved the vector.
-Since commit 0d6a7c417983 ("irqchip/gic-v3-its: Enable dynamic MSI-X
-allocation"), arm64 GICv3 systems take the dynamic path as well, but
-write the message only once, at allocation.  On an NVIDIA Grace system
-with a BCM57508, raising the channel count from 18 to 32 left MSI-X
-entries 18-31 all zero, and the 14 rings using them lost their
-interrupts.
+  reg-fixed-voltage regulator-3p3-dac: setup of GPIO (default) failed: -1
+  reg-fixed-voltage regulator-5p0-dac: setup of GPIO (default) failed: -1
 
-Keep the allocation in bnxt_check_rings() as a check that enough vectors
-are available, but free the new vectors again right away when FW manages
-IRQ reservations (BNXT_NEW_RM).  bnxt_reserve_rings() then allocates
-them after __bnxt_reserve_rings() has reserved them.  Without
-BNXT_NEW_RM there is no IRQ reservation and bnxt_reserve_rings() does
-not grow the vectors, so keep the current behaviour there.
+Requesting the line is not evidence that a consumer has claimed it.
+Instead, count proxies that have actually configured the line (set its
+direction or voted for a value) in a new cfgcnt, with a per-proxy
+configured flag, and allow (re)initialization only while no other
+proxy has done so. A consumer obtained with GPIOD_ASIS that votes via
+gpiod_set_value() without ever setting the direction counts as
+configured, so a later user can never reset def_val/votecnt behind its
+vote. The count is dropped when the proxy frees the line.
 
-In bnxt_reserve_rings(), size that allocation from the rings FW actually
-reserved (bnxt_get_num_msix()) instead of the count computed before the
-reservation, so that a partial grant does not activate unreserved
-entries either, at least while no RoCE driver is registered.
-
-The allocation can now fail after FW has committed the reservation.  A
-later open would then find nothing to reserve and return before growing
-the vectors, and bnxt_request_irq() would use irq_tbl[] entries past
-bp->total_irqs, which still hold the freed virqs.  Grow the vectors in
-that case as well, and clear irq_tbl[].vector when trimming.
-
-Fixes: 2d51eb0bd81c ("bnxt_en: Add MSIX check in bnxt_check_rings()")
-Reported-by: Andrew Preece <apreece@meta.com>
-Closes: https://lore.kernel.org/all/20261022193620.2152038-1-vlad.wing@gmail.com/
-Signed-off-by: Vlad Poenaru <vlad.wing@gmail.com>
-Reviewed-by: Michael Chan <michael.chan@broadcom.com>
-Signed-off-by: Dave Miller <davem@davem-thinkpadp1gen8.ibmlond.csb>
+Fixes: e992d54c6f97 ("gpio: shared-proxy: implement the shared GPIO proxy driver")
+Signed-off-by: Shawn Guo <shengchao.guo@oss.qualcomm.com>
+Tested-by: Marek Szyprowski <m.szyprowski@samsung.com>
+Link: https://patch.msgid.link/20261028123448.510401-2-shengchao.guo@oss.qualcomm.com
+Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/broadcom/bnxt/bnxt.c | 34 ++++++++++++++++++++++-
- 1 file changed, 33 insertions(+), 1 deletion(-)
+ drivers/gpio/gpio-shared-proxy.c | 78 ++++++++++++++++++++++++++++----
+ drivers/gpio/gpiolib-shared.h    |  1 +
+ 2 files changed, 70 insertions(+), 9 deletions(-)
 
-diff --git a/drivers/net/ethernet/broadcom/bnxt/bnxt.c b/drivers/net/ethernet/broadcom/bnxt/bnxt.c
-index 94d764230e47d..ab932f7d0d76a 100644
---- a/drivers/net/ethernet/broadcom/bnxt/bnxt.c
-+++ b/drivers/net/ethernet/broadcom/bnxt/bnxt.c
-@@ -11544,6 +11544,7 @@ static int bnxt_change_msix(struct bnxt *bp, int total)
- 		map.index = i - 1;
- 		map.virq = bp->irq_tbl[i - 1].vector;
- 		pci_msix_free_irq(bp->pdev, map);
-+		bp->irq_tbl[i - 1].vector = 0;
- 		bp->total_irqs--;
- 	}
- 	return bp->total_irqs;
-@@ -11721,8 +11722,23 @@ int bnxt_reserve_rings(struct bnxt *bp, bool irq_re_init)
- 	int irqs_required;
- 	int rc;
+diff --git a/drivers/gpio/gpio-shared-proxy.c b/drivers/gpio/gpio-shared-proxy.c
+index bc69b8729d196..2e9ccd8a8d835 100644
+--- a/drivers/gpio/gpio-shared-proxy.c
++++ b/drivers/gpio/gpio-shared-proxy.c
+@@ -21,9 +21,37 @@ struct gpio_shared_proxy_data {
+ 	struct gpio_chip gc;
+ 	struct gpio_shared_desc *shared_desc;
+ 	struct device *dev;
++	bool configured;
+ 	bool voted_change;
+ };
  
--	if (!bnxt_need_reserve_rings(bp))
-+	if (!bnxt_need_reserve_rings(bp)) {
-+		/* FW may already hold the reservation from an earlier
-+		 * reservation that was not followed by growing the dynamic
-+		 * MSI-X vectors, e.g. because the allocation failed.
-+		 */
-+		if (irq_re_init && BNXT_NEW_RM(bp) && bp->irq_tbl &&
-+		    pci_msix_can_alloc_dyn(bp->pdev)) {
-+			irqs_required = bnxt_get_num_msix(bp);
-+			if (irqs_required > bp->total_irqs &&
-+			    bnxt_change_msix(bp, irqs_required) != irqs_required) {
-+				netdev_err(bp->dev, "Unable to allocate %d MSIX vectors, maximum available %d\n",
-+					   irqs_required, bp->total_irqs);
-+				return -ENOSPC;
-+			}
-+		}
- 		return 0;
++/*
++ * A proxy may (re)initialize the line - set its direction and reset the
++ * default value and the vote tally - only while no other proxy has set the
++ * direction or voted for a value. Requesting the line is not enough: consumers
++ * may request concurrently, so counting requests lets every one of them
++ * conclude that it is not first.
++ */
++static bool gpio_shared_proxy_may_init(struct gpio_shared_proxy_data *proxy)
++{
++	unsigned int cfgcnt = proxy->shared_desc->cfgcnt;
++
++	lockdep_assert_held(&proxy->shared_desc->mutex);
++
++	return !cfgcnt || (cfgcnt == 1 && proxy->configured);
++}
++
++static void gpio_shared_proxy_mark_configured(struct gpio_shared_proxy_data *proxy)
++{
++	lockdep_assert_held(&proxy->shared_desc->mutex);
++
++	if (proxy->configured)
++		return;
++
++	proxy->configured = true;
++	proxy->shared_desc->cfgcnt++;
++}
++
+ static int
+ gpio_shared_proxy_set_unlocked(struct gpio_shared_proxy_data *proxy, int value)
+ {
+@@ -117,6 +145,11 @@ static void gpio_shared_proxy_free(struct gpio_chip *gc, unsigned int offset)
+ 
+ 	proxy->shared_desc->usecnt--;
+ 
++	if (proxy->configured) {
++		proxy->configured = false;
++		shared_desc->cfgcnt--;
 +	}
++
+ 	dev_dbg(proxy->dev, "Shared GPIO freed, number of users: %u\n",
+ 		proxy->shared_desc->usecnt);
+ }
+@@ -131,7 +164,7 @@ static int gpio_shared_proxy_set_config(struct gpio_chip *gc,
  
- 	if (BNXT_NEW_RM(bp) && !bnxt_ulp_registered(edev)) {
- 		int ulp_msix = bnxt_get_avail_msix(bp, bp->ulp_num_msix_want);
-@@ -11748,6 +11764,10 @@ int bnxt_reserve_rings(struct bnxt *bp, bool irq_re_init)
- 			rc = bnxt_init_int_mode(bp);
- 		bnxt_ulp_irq_restart(bp, rc);
- 	} else if (irq_change && !rc) {
-+		/* Size the vectors from what FW actually reserved, which
-+		 * can be less than what was requested.
-+		 */
-+		irqs_required = bnxt_get_num_msix(bp);
- 		if (bnxt_change_msix(bp, irqs_required) != irqs_required)
- 			rc = -ENOSPC;
- 	}
-@@ -15107,6 +15127,7 @@ int bnxt_check_rings(struct bnxt *bp, int tx, int rx, bool sh, int tcs,
- 			hwr.cp = min_t(int, hwr.cp, bnxt_get_max_func_irqs(bp));
- 		}
- 		if (hwr.cp > bp->total_irqs) {
-+			int old_total = bp->total_irqs;
- 			int total_msix = bnxt_change_msix(bp, hwr.cp);
+ 	guard(mutex)(&shared_desc->mutex);
  
- 			if (total_msix < hwr.cp) {
-@@ -15114,6 +15135,17 @@ int bnxt_check_rings(struct bnxt *bp, int tx, int rx, bool sh, int tcs,
- 					    hwr.cp, total_msix);
- 				rc = -ENOSPC;
- 			}
-+			/* FW has not reserved the new vectors yet, and writes to
-+			 * MSI-X table entries beyond the reserved IRQs don't
-+			 * stick (seen on BCM57508).  Free them again;
-+			 * bnxt_reserve_rings() allocates them after
-+			 * __bnxt_reserve_rings().  Without the new resource
-+			 * manager there is no IRQ reservation and
-+			 * bnxt_reserve_rings() does not grow the vectors, so
-+			 * keep them.
-+			 */
-+			if (BNXT_NEW_RM(bp))
-+				bnxt_change_msix(bp, old_total);
- 		}
+-	if (shared_desc->usecnt > 1) {
++	if (!gpio_shared_proxy_may_init(proxy)) {
+ 		if (shared_desc->cfg != cfg) {
+ 			dev_dbg(proxy->dev,
+ 				"Shared GPIO's configuration already set, accepting changes but users may conflict!!\n");
+@@ -155,15 +188,21 @@ static int gpio_shared_proxy_direction_input(struct gpio_chip *gc,
+ 	struct gpio_shared_proxy_data *proxy = gpiochip_get_data(gc);
+ 	struct gpio_shared_desc *shared_desc = proxy->shared_desc;
+ 	struct gpio_desc *desc = shared_desc->desc;
+-	int dir;
++	int ret, dir;
+ 
+ 	guard(mutex)(&shared_desc->mutex);
+ 
+-	if (shared_desc->usecnt == 1) {
++	if (gpio_shared_proxy_may_init(proxy)) {
+ 		dev_dbg(proxy->dev,
+-			"Only one user of this shared GPIO, allowing to set direction to input\n");
++			"No other user configured this shared GPIO, allowing to set direction to input\n");
++
++		ret = gpiod_direction_input(desc);
++		if (ret)
++			return ret;
+ 
+-		return gpiod_direction_input(desc);
++		gpio_shared_proxy_mark_configured(proxy);
++
++		return 0;
  	}
- 	return rc;
+ 
+ 	dir = gpiod_get_direction(desc);
+@@ -176,6 +215,8 @@ static int gpio_shared_proxy_direction_input(struct gpio_chip *gc,
+ 		return -EPERM;
+ 	}
+ 
++	gpio_shared_proxy_mark_configured(proxy);
++
+ 	return 0;
+ }
+ 
+@@ -189,18 +230,20 @@ static int gpio_shared_proxy_direction_output(struct gpio_chip *gc,
+ 
+ 	guard(mutex)(&shared_desc->mutex);
+ 
+-	if (shared_desc->usecnt == 1) {
++	if (gpio_shared_proxy_may_init(proxy)) {
+ 		dev_dbg(proxy->dev,
+-			"Only one user of this shared GPIO, allowing to set direction to output with value '%s'\n",
++			"No other user configured this shared GPIO, allowing to set direction to output with value '%s'\n",
+ 			str_high_low(value));
+ 
+ 		ret = gpiod_direction_output(desc, value);
+ 		if (ret)
+ 			return ret;
+ 
++		/* Only this proxy can have voted, so the tally is ours to reset */
+ 		shared_desc->def_val = value;
+ 		shared_desc->votecnt = 0;
+ 		proxy->voted_change = false;
++		gpio_shared_proxy_mark_configured(proxy);
+ 
+ 		return 0;
+ 	}
+@@ -215,7 +258,13 @@ static int gpio_shared_proxy_direction_output(struct gpio_chip *gc,
+ 		return -EPERM;
+ 	}
+ 
+-	return gpio_shared_proxy_set_unlocked(proxy, value);
++	ret = gpio_shared_proxy_set_unlocked(proxy, value);
++	if (ret)
++		return ret;
++
++	gpio_shared_proxy_mark_configured(proxy);
++
++	return 0;
+ }
+ 
+ static int gpio_shared_proxy_get_cansleep(struct gpio_chip *gc,
+@@ -230,10 +279,21 @@ static int gpio_shared_proxy_set_cansleep(struct gpio_chip *gc,
+ 					  unsigned int offset, int value)
+ {
+ 	struct gpio_shared_proxy_data *proxy = gpiochip_get_data(gc);
++	int ret;
+ 
+ 	guard(mutex)(&proxy->shared_desc->mutex);
+ 
+-	return gpio_shared_proxy_set_unlocked(proxy, value);
++	/*
++	 * A GPIOD_ASIS consumer may vote without ever setting the direction;
++	 * count it as configured so a later user can't reset its vote.
++	 */
++	ret = gpio_shared_proxy_set_unlocked(proxy, value);
++	if (ret)
++		return ret;
++
++	gpio_shared_proxy_mark_configured(proxy);
++
++	return 0;
+ }
+ 
+ static int gpio_shared_proxy_get_direction(struct gpio_chip *gc,
+diff --git a/drivers/gpio/gpiolib-shared.h b/drivers/gpio/gpiolib-shared.h
+index 618756f6c6aaf..ae10506b7029f 100644
+--- a/drivers/gpio/gpiolib-shared.h
++++ b/drivers/gpio/gpiolib-shared.h
+@@ -41,6 +41,7 @@ struct gpio_shared_desc {
+ 	struct gpio_desc *desc;
+ 	unsigned long cfg;
+ 	unsigned int usecnt;
++	unsigned int cfgcnt;
+ 	unsigned int votecnt;
+ 	int def_val;
+ 	struct mutex mutex; /* serializes all proxy operations on this descriptor */
 -- 
 2.53.0
 
