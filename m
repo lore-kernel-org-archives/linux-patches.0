@@ -1,54 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795622338;
-	b=2+JQb7okgLgcSRD718POC4YHgaMiUuhrnbU9I4vDAvEBiBLk2eUu07/nk8leUvKsI39l
-	 sTWqzJaS4UVJ1cjv8VixjigRV13qJcfQzBEbpocEKm7W3I/2V6Yu2kr9HSzVapjWtTUFG
-	 x6SkLJ3JLqeHCvGZ+Dv96omnI8msemFM+dDxw+X5WvHemcQ00pnZZpZYnXmosVvXD7Qet
-	 P+S+VJJ0rJ50lUtUTpqcBDjtWwRijNNpsrdlrN5l45/8ktOgombQr7Qr0qcEi1DXmmgWK
-	 kaLD/2pMSSk8F4jpCPOiYfOaNpF69ZCwlp/fOm2SY0X42U2poeilqWJkR7xWpta8FXw==
+	t=1795622341;
+	b=TZHMHn11murl9bDsyww6uv8FjrfzL1w8eOjybWfYyp5P5u3yIj93h7qBUYllegMXXpLg
+	 tCI7aEEK4EkxklSsaCmrj5K7cwZXScFOWS/8KOCuPvINL9CynBVEtVE1F26/xjHu1umGP
+	 YfYVN8jeVHDoS7LAqmQ9XzK3JWIfvYxRvNjXf/oNhaWNcleNn2U5rvmjShkra7eHgdndM
+	 IEa8XgZKRzM0OXKJMpBQsumpcDDYqcnNFFMXXliIrk8FQSr8uNZGPqkSS8O+9f/cMHX3R
+	 CtbKN6V9ezdg2RCjakReBXXfcwW5Rv99GQos0IAdSt5PQTOWIfuLRtzWNlhEKBcyXWw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795622338;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795622341;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=mZ/b/OiNsqKJ2H9aac8nVczKSv3AkpNBQKm5Hyb49Yg=;
-	b=WOa24ObxQ+vqUaYXGUN0k8Gx2RzIFsaF676o2Jyz43/70j2NwPuPH75wZ2dicCU1legi
-	 wJqLMdqbSUItkqiU8X7mtClr52MyoJgyaLies3e+eiIaSHNwwAaIaMDpSHpp+dzdG8t1T
-	 r6/udnjqtu6UJKzEq71Sy1+INySorsZMMIjtUcGkEjBbUyjnArXQMd6BfmX2/bWiv5H2i
-	 4PYvCqbfEZFp1q7/5YNHcWfPINPsXG+6qMlADKsqr02VOuk7FLeUkmRSdfLkXHZQsYw8d
-	 0WgNJuuKBJinN2HtnUr7zDe8mBEudf8d2Ymho/RvNOoq+RZlvNYWt1HnvyODm81HDdw==
+	bh=THk/GBMsz2MKJmuoJNMKK9qO6j29hP/R1b2s2ag0Qno=;
+	b=O6MIuZ1ZFpQvFnZXWT2HZjN/znJa0gkoUOUMYbhi4kxFpspVwC+5/GF1tOcgzp6KkCOF
+	 eD1lJimgKcNLmDwZofSyUaOIuFKp3wj6VOvlAhLTiYi/s7tIzPV76CXfDvh+LXgyqZJdk
+	 u/DQyzo7tJnZFhuypdlwSL3GLonuzH5pk9knD9s7ALfePEK3Fwf3UDiEkq2NYeTgfCCl4
+	 fF4jJVm3Ko1/Y78/xpzfDav3lJMFBcwmFmbUMKjFqXULHZyQ3PDxLRJzJtbsu/kPa1j+t
+	 wxc7yMInWvJ7wwjYHgrbplJE1JBE+Z+CKM4G5cN91QXH50Wz+/Sft+ZSLuAIAe5AD8A==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=AmoNPeXv;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=hOOYJ068;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D29F8606A682;
-	Wed, 25 Nov 2026 15:58:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DD7F4606A336;
+	Wed, 25 Nov 2026 15:59:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=AmoNPeXv
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C57591F000E0;
-	Wed, 25 Nov 2026 15:58:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=hOOYJ068
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EEFB61F000E0;
+	Wed, 25 Nov 2026 15:59:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795622338;
-	bh=mZ/b/OiNsqKJ2H9aac8nVczKSv3AkpNBQKm5Hyb49Yg=;
+	s=korg; t=1795622341;
+	bh=THk/GBMsz2MKJmuoJNMKK9qO6j29hP/R1b2s2ag0Qno=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=AmoNPeXvyFSGi96qq2zp2A5qneU+TACPdoVuWUnV4K4sPhYbVUft0zIsmqof/Nin6
-	 5i/9iBD3VFXtOAXeT3ogBRtDlvB6ciWV60zSL9r1uoJmrNMP0eVDuhDvcEB7DrVc+c
-	 +cKk2kW69kXnsyJfzbzpdTPNtIwnf/h06CLyzsbE=
+	b=hOOYJ0685D00X1Rx3Rxp+MawVdW3RS4pk0l3hqaOvx7Hcmto+mONoI7Ix4/aVOgso
+	 4Z+DP/kb6Fp3/NQHuZjJ9TfvZX2bLkO7As80MgojU3M5IOQ7tyEhWeNohXkZ4FrDH4
+	 S89+PIfiNsH9TxuKdwYbbKGv6/PQ0cikOPcqBZR4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ian Rogers <irogers@google.com>,
-	Matt Turner <mattst88@gmail.com>,
-	Namhyung Kim <namhyung@kernel.org>,
-	Arnaldo Carvalho de Melo <acme@redhat.com>,
+	Golla Nagendra <nagendra.golla@amd.com>,
+	Frank Li <Frank.Li@nxp.com>,
+	Vinod Koul <vkoul@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 507/990] perf thread: Fix live-session detection in thread__e_machine()
-Date: Wed, 25 Nov 2026 15:31:14 +0100
-Message-ID: <20261125143833.976072794@linuxfoundation.org>
+Subject: [PATCH 6.18 508/990] dmaengine: zynqmp_dma: Fix PM rollback on sw_desc_pool alloc failure
+Date: Wed, 25 Nov 2026 15:31:15 +0100
+Message-ID: <20261125143833.999026424@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143822.072087159@linuxfoundation.org>
 References: <20261125143822.072087159@linuxfoundation.org>
@@ -70,93 +69,56 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Matt Turner <mattst88@gmail.com>
+From: Golla Nagendra <nagendra.golla@amd.com>
 
-[ Upstream commit 15917a3a1ce0695f824892c8f9d0dc51408ee580 ]
+[ Upstream commit f2f44b952ea6e0c600e92ea21fcaa83cafeedf6e ]
 
-When the per-thread e_machine cannot be determined from the DSOs in the
-thread's maps, thread__e_machine_endian() decides between reading
-/proc/<pid>/exe and falling back to the recorded session environment:
+If sw_desc_pool allocation fails after pm_runtime_resume_and_get()
+succeeds in zynqmp_dma_alloc_chan_resources(), the error path returns
+without dropping the runtime PM reference.
 
-	bool is_live = machine->machines == NULL;
+Route that failure path through err_pm so the runtime PM reference is
+balanced before returning the error.
 
-	if (!is_live) {
-		/* Check if the session has a data file. */
-		struct perf_session *session = container_of(...);
-
-		is_live = !!session->data;
-	}
-
-Neither half of that works.
-
-The back pointer added by commit a088031c4998 ("perf tools: Add machine to
-machines back pointer") is set by machines__add(), which only ever adds
-guests; the host machine never gets one.  Host-machine threads, which is to
-say almost all of them, therefore see machine->machines == NULL and are
-declared live before the session is consulted at all.
-
-The session test is also inverted.  A session with a perf_data attached is
-one being read from a perf.data file, i.e. exactly the case that is not
-live, while a live session such as 'perf top' passes data=NULL to
-__perf_session__new().
-
-So a file-based session takes the live path and reads /proc/<pid>/exe on
-the analysing host, which at best describes an unrelated process that has
-since been given the recorded pid, and normally just fails, leaving
-e_machine as EM_NONE.  The perf_env fallback that would have supplied the
-recorded architecture is never reached, and thread__e_machine() returns
-EM_HOST.
-
-For a same-architecture recording this is invisible, since EM_HOST is the
-right answer anyway.  Cross-architecture it is not: annotating an Alpha
-perf.data on an x86_64 host selects the x86 struct arch, so the Alpha
-disassembly is matched against the x86 instruction table.  Alpha's 'ret'
-collides with x86's and gets ret_ops, while its calls and branches match
-nothing and are left unparsed, so no call target is resolved and no jump
-arrows are drawn.
-
-Set the back pointer for the host machine and correct the session test.
-The new back pointer does not disturb the other reader of the field,
-machine__findnew_guest_code(), which machine__resolve() only calls when
-!machine__is_host(machine).
-
-Fixes: 70351029b55677eb ("perf thread: Add support for reading the e_machine type for a thread")
-Reviewed-by: Ian Rogers <irogers@google.com>
-Signed-off-by: Matt Turner <mattst88@gmail.com>
-Cc: Namhyung Kim <namhyung@kernel.org>
-Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
-[ sashal: Context-only adaptation: machines__init() returns void here and the function is thread__e_machine() rather than thread__e_machine_endian(), so the two changed lines are placed in that older code. ]
+Fixes: 8982d48af36d ("dmaengine: zynqmp_dma: Fix PM reference leak in zynqmp_dma_alloc_chan_resourc()")
+Signed-off-by: Golla Nagendra <nagendra.golla@amd.com>
+Reviewed-by: Frank Li <Frank.Li@nxp.com>
+Link: https://patch.msgid.link/20260814045616.1661199-2-nagendra.golla@amd.com
+Signed-off-by: Vinod Koul <vkoul@kernel.org>
+[ sashal: Kept the older kcalloc() allocation line in the context instead of upstream's kzalloc_objs(), since that helper doesn't exist here; the fix is otherwise identical. ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/perf/util/machine.c | 1 +
- tools/perf/util/thread.c  | 2 +-
- 2 files changed, 2 insertions(+), 1 deletion(-)
+ drivers/dma/xilinx/zynqmp_dma.c | 10 ++++++++--
+ 1 file changed, 8 insertions(+), 2 deletions(-)
 
-diff --git a/tools/perf/util/machine.c b/tools/perf/util/machine.c
-index 8452d776d994a..091022e9c867f 100644
---- a/tools/perf/util/machine.c
-+++ b/tools/perf/util/machine.c
-@@ -232,6 +232,7 @@ void machine__delete(struct machine *machine)
- void machines__init(struct machines *machines)
- {
- 	machine__init(&machines->host, "", HOST_KERNEL_ID);
-+	machines->host.machines = machines;
- 	machines->guests = RB_ROOT_CACHED;
+diff --git a/drivers/dma/xilinx/zynqmp_dma.c b/drivers/dma/xilinx/zynqmp_dma.c
+index 1f6bb492be6af..7cc5079511188 100644
+--- a/drivers/dma/xilinx/zynqmp_dma.c
++++ b/drivers/dma/xilinx/zynqmp_dma.c
+@@ -484,8 +484,10 @@ static int zynqmp_dma_alloc_chan_resources(struct dma_chan *dchan)
+ 
+ 	chan->sw_desc_pool = kcalloc(ZYNQMP_DMA_NUM_DESCS, sizeof(*desc),
+ 				     GFP_KERNEL);
+-	if (!chan->sw_desc_pool)
+-		return -ENOMEM;
++	if (!chan->sw_desc_pool) {
++		ret = -ENOMEM;
++		goto err_pm;
++	}
+ 
+ 	chan->idle = true;
+ 	chan->desc_free_cnt = ZYNQMP_DMA_NUM_DESCS;
+@@ -517,6 +519,10 @@ static int zynqmp_dma_alloc_chan_resources(struct dma_chan *dchan)
+ 	}
+ 
+ 	return ZYNQMP_DMA_NUM_DESCS;
++
++err_pm:
++	pm_runtime_put_autosuspend(chan->dev);
++	return ret;
  }
  
-diff --git a/tools/perf/util/thread.c b/tools/perf/util/thread.c
-index 9409d32dce04c..bda001ccf571d 100644
---- a/tools/perf/util/thread.c
-+++ b/tools/perf/util/thread.c
-@@ -518,7 +518,7 @@ uint16_t thread__e_machine(struct thread *thread, struct machine *machine)
- 								    struct perf_session,
- 								    machines);
- 
--			is_live = !!session->data;
-+			is_live = !session->data;
- 		}
- 		/* Read from /proc/pid/exe if live. */
- 		if (is_live)
+ /**
 -- 
 2.53.0
 
