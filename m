@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795621181;
-	b=fKJp+IH+ZRB6SYK2hAsO27ZA2s9PdbGVm2Qrb9BSBFR/kE5NR92yqLG/i53DEduL7XD5
-	 vjf9wmPd6ySwL+GRhZGZjzUroz7hbyK+2cxARYblRjJeVNxvroQh1tnNpL+X92kt+iAz/
-	 829tNOtFONIiD17CX9JavUloxS3n4rBQtcJm1swx9hHZXY2BDPphP77t8xnQk+FTWxIM2
-	 i43fphbdl33fZJylqS0BIloe5MD5s4irOPEEd36jRCje7Key+XVotVg1aGKBN4ZyYrnGU
-	 Ot97BXbYbDlDvvczNtyrKQ7j1H14SUPE3IugCM5RRPv/cGI103fEeXb/KmFm0UDQOkA==
+	t=1795621184;
+	b=IUSIkmCmi6QbwOXFVysBA8R12EG5M1nIcoxP9UX8nbkb/IJ/Syptokkvp2eXD6TX+Sxz
+	 x5yy5CNWtYoY2+pOu+ZV4P1syf8XaOYrbe/mxJWOKYRhqLfFUFRuaQdnQjIWZiGheHRjf
+	 tC9j9yGK+2M10iKG1Nuw1D6fWJ40qHttLH9Ka/XxHoxD4JSaq2k/N0RC3muinXmHsvYd2
+	 A5TxjVxqvALG8gwFYGOK3jE1ZImpFtzJHGoqA+8aHSf9DwkPW2SBBVYBmV8/Yky6RYcRj
+	 K5qaB60gs7aM4EdFN4hXrc6ULNFkh0hcYI48x1D++ctXKSGGR4WjNRQRyp7E7/024UQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795621181;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795621184;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=enI3wMeJobprjxr7x/fHvWFFsvcfMu4XWT5T9jj5e1s=;
-	b=Ypa1J9jIEP53lETMNcByjEiBJLu8vqibhwOIh4P12Rgvcx5jftpuZIYoZcYDALUzdGr+
-	 +0G8rlkKi+qiDXsP4BnpzaZuWWrg1n1HEDId4PkYTJz04cpUDqQmDhHTT6RGrO0+iMAex
-	 990UPs0ftFbxKmTD1+fXr+i/p7FmG7QHJbSsoln3t5Ckj3XGLRNEEnCOD9x8Z/Gi1ZhaW
-	 USmmNK2ju9sZjS32NoZXXyulIKmeIrGiQrghaD80DuopfOwMI++WFAj3s4ujNEaBnPzwC
-	 2RV9GRX4CkM60Lmgh2MtA6ZaVlNCUbLHxscvHnmbPN4s1mvvbHNjBGc/vF6qhSpIx8w==
+	bh=Rpfq7bvt2pTqQwsNL2+SGNGO+uwmYpzN1SCuDS7UjoQ=;
+	b=saRCS8br56/SsWsvCMGb4qLHhgPT2lhwjUUhMCznyCQqI34Gggiu9QhdvpWmBVatUW05
+	 kLtuXWj+NiLkBTWWwi/GQWQFzaE2a7iphCY3lBRBLbg8E6hYDa/9FnyRWGFTRDttNbxjE
+	 GU26JqIWzqoVLXtaJBLl8XFLNKtUVdxA4s1Mz9pjjD53C1T4NOsIPP9RyIlFUHIW4v8i9
+	 P7b5BDKOETE/0P1jGLeuqUGDVQYZVKD0sEc95xQLwHXUZuahr1V5OY8MOYMpImzov0dUr
+	 vYE24DLcE5H64s5B+Ojfof8LFFk1kKRMke2GoEZZhVDoMMhRL78EmjVtwQK6+B9Q6IQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=rn8xejcw;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=nJLqC9NJ;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E1610606A329;
-	Wed, 25 Nov 2026 15:39:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A04D2606A329;
+	Wed, 25 Nov 2026 15:39:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=rn8xejcw
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2A2301F000C4;
-	Wed, 25 Nov 2026 15:39:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=nJLqC9NJ
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7F2F11F000CA;
+	Wed, 25 Nov 2026 15:39:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795621180;
-	bh=enI3wMeJobprjxr7x/fHvWFFsvcfMu4XWT5T9jj5e1s=;
+	s=korg; t=1795621184;
+	bh=Rpfq7bvt2pTqQwsNL2+SGNGO+uwmYpzN1SCuDS7UjoQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=rn8xejcwEPxiaN8P049stvFApe4mJsADkq3jE8KnwP58amFwBi+mZnNtqSZQrdtI+
-	 Pgf7BV4ylRIQphSC+fSRUvtarphzUF+RJnxvyOVqUx5kVqyF4L5Rl4l21EG8sMvRYP
-	 G5r5hAGnkVykTzISdyOxhaM9NzKaEYu5xIP3G7zM=
+	b=nJLqC9NJVD+s8zq6SR0RKcConmxBugC0bXkBcDHkrIHYraQ7MmZSZf7cTkQcK3mP0
+	 65vjTFC+Lg8V0IzLz4WqtRFfPSK399vItEQwUqzfJJchICdWq2W/oiwDB4HV7T9onZ
+	 gf98UZiNYYw6ekCouJwKcrh303Pfu/oYV+xNguAo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vladimir Zapolskiy <vz@kernel.org>,
-	Neil Armstrong <neil.armstrong@linaro.org>,
+	Alex Austin <alex.austin@amd.com>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 146/990] drm/panel: visionox-r66451: Wait longer after the panel reset
-Date: Wed, 25 Nov 2026 15:25:13 +0100
-Message-ID: <20261125143825.505810797@linuxfoundation.org>
+Subject: [PATCH 6.18 147/990] sfc: ptp: drop the stale frequency reset in efx_ptp_start()
+Date: Wed, 25 Nov 2026 15:25:14 +0100
+Message-ID: <20261125143825.530990306@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143822.072087159@linuxfoundation.org>
 References: <20261125143822.072087159@linuxfoundation.org>
@@ -68,40 +68,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Vladimir Zapolskiy <vz@kernel.org>
+From: Alex Austin <alex.austin@amd.com>
 
-[ Upstream commit b4b2778d5e175b166e4a27e5df5d61da468ad004 ]
+[ Upstream commit 21d4917cfc8b6837c44d8aa186941a6a16ec17a0 ]
 
-The initialization sequence is sent 10ms after the panel reset is
-deasserted, however on the SM8350-HDK display card the panel does not
-answer a DCS read at that time, as a result the panel initialization
-commands are lost, and the panel does not exit sleep mode and the display
-stays black. With the first command sent about 15ms after the reset
-the panel comes up reliably, so wait 20ms after deasserting the reset.
+FW does not touch the clock frequency state on MC_CMD_PTP_OP_DISABLE or
+MC_CMD_PTP_OP_ENABLE, so the driver doesn't need to either. Doing so
+just desyncs the driver's cached current_adjfreq from what FW still has
+programmed.
 
-Fixes: a6dfab2738fc ("drm/panel: Add driver for Visionox r66451 panel")
-Signed-off-by: Vladimir Zapolskiy <vz@kernel.org>
-Reviewed-by: Neil Armstrong <neil.armstrong@linaro.org>
-Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
-Link: https://patch.msgid.link/20261101212458.2431191-3-vz@kernel.org
+Resetting current_adjfreq to 0 here means the first efx_phc_adjtime()
+call after efx_ptp_start() reprograms the NIC's clock frequency to 0,
+since efx_phc_adjtime() always sends current_adjfreq to FW alongside
+the time step. efx_ptp_start() runs on every SIOCSHWTSTAMP mode change,
+on ifup, and on the reset_required path in efx_ptp_worker(), so each of
+those silently drops any frequency correction the PTP servo had already
+applied.
+
+efx_ptp_start() is also reached from reset recovery, but that is fine:
+on an FLR or PCIe reset FW does not touch the NIC clock, and on a full
+MC reboot the clock is reset to 1970, so a stale current_adjfreq from
+before the reset is hardly consequential - especially as it is bound to
+MAX_PPB, 1000000 ppb.
+
+Fixes: 7c236c43b838 ("sfc: Add support for IEEE-1588 PTP")
+Signed-off-by: Alex Austin <alex.austin@amd.com>
+Link: https://patch.msgid.link/20261026123023.3566549-2-alex.austin@amd.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/panel/panel-visionox-r66451.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/net/ethernet/sfc/ptp.c | 1 -
+ 1 file changed, 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/panel/panel-visionox-r66451.c b/drivers/gpu/drm/panel/panel-visionox-r66451.c
-index 0ce5c670dbb9b..d2cbc60af1179 100644
---- a/drivers/gpu/drm/panel/panel-visionox-r66451.c
-+++ b/drivers/gpu/drm/panel/panel-visionox-r66451.c
-@@ -36,7 +36,7 @@ static void visionox_r66451_reset(struct visionox_r66451 *ctx)
- 	gpiod_set_value_cansleep(ctx->reset_gpio, 1);
- 	usleep_range(10000, 10100);
- 	gpiod_set_value_cansleep(ctx->reset_gpio, 0);
--	usleep_range(10000, 10100);
-+	usleep_range(20000, 21000);
- }
+diff --git a/drivers/net/ethernet/sfc/ptp.c b/drivers/net/ethernet/sfc/ptp.c
+index 4c7222bf26bec..dbd7281f44b3e 100644
+--- a/drivers/net/ethernet/sfc/ptp.c
++++ b/drivers/net/ethernet/sfc/ptp.c
+@@ -1446,7 +1446,6 @@ static int efx_ptp_start(struct efx_nic *efx)
+ 		goto fail;
  
- static int visionox_r66451_on(struct visionox_r66451 *ctx)
+ 	ptp->evt_frag_idx = 0;
+-	ptp->current_adjfreq = 0;
+ 
+ 	return 0;
+ 
 -- 
 2.53.0
 
