@@ -1,54 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795625213;
-	b=dbGtMpjKGIROPOIasOs8ftmKMgAauqjEnn4iisPAzXpPSmaS6Cto12dA4NoUA+geHLqP
-	 +9JBATe+htOE2o6rmZTen4R5DmouOa5Ric8lAbl+PFhyc15rsJe8XUxSF8KSZ92tQ9cfc
-	 JMltFPC2e3tdd8lETk5tgqllTJSBVB5t5DdNW05dqd+cg1pz0FmNaEApqHZBzKRvm8Fvj
-	 9arXzHbrkWqH7bDvBOKHeC+ac8No617rp/pL4mfMVa2Hcws3urSKmF7FP0PdFElvKNu4I
-	 cPg9+zV9G1isHdGNehnypYB617W89YX0KPOaPggRI2yyOhhBA8sz2RTvMIDXdHx2BmQ==
+	t=1795625216;
+	b=jTYCjHJdKxr9EBx64i6P9YWpFIVmJjpCAHR4CD26aKJcNY99WMRgMd3JtwQ7jfLS7pAB
+	 RQf1/h0nYEl2/nx4QjkMjWrHbgDWvoYl3TnR6O3Bx7aBNc7/tGxQwKNGOAJ+XljKSugHh
+	 cRJLv6W+rHvS9RXo9T+kDe7Dc7deeosMYg3g8/yIwPC9lKBKi9l2oiGXUv4FkX9B6+KIw
+	 jH/9+Ezv0/MxQbqQC8xJQZl8lXz3EXyYGOj4+YflOeBD6D0TqT/CPIPjIGXdK/LSMECfh
+	 tSK4qfyPlmN01dSH3wT6AIFyqJfPe7Z1QcgmFsmdF4xXfraSZmdNEYKI9SosbzStxEA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795625213;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795625216;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=bV+fDPSeVGGZhLOuzOxk+1msPMjiZfuh4pD4uHcPFTs=;
-	b=kvQm4+YjUWeQ66eLfUn7xtOoCLF8Z3qE/DE0XEOUW+Qhdhqdw71Pb1ldA8AnUCIdmKd7
-	 ztFqVEjZYeIGn604phOrqtWwwusRxEJ4DgwvTY8oAna5moz3we9s2owCqFFI8PiSu7GDH
-	 yLvlvt4hqQ96+wo5Cou1nKFMLyO/6rzhb5w5p3XJqD7YLEDdhy9NPzOVHrGjBP4N2mmqh
-	 ekK2hjOefMy1UrwCAX98iKwjyROIflmMBZ4Ea9SuokuMDWYYUPUtzwG8c1Se06DV+P11E
-	 fhK6vCmdhQ7L7f4f/l32VlO9kggA0rgWEfyL7tVYjQu7L+L1ADUVcOORVaVx7MOdgvg==
+	bh=PybEl2b8Vfhp50SqWs71TNWX3blLe9F2ntJFc3GARlc=;
+	b=0ytVvIeIQxNHb1y1kWZbma2BPXUOYHYaJSuUx1JOJUvZBcT2sGRZRCbzuBuWcuglPJEd
+	 ivRFdkJHfCX+w9Mqty2Mq83BWicRL30Kdnz8WyoGZvL1bff+KEfGNnYPRrf/YSpxbPRlk
+	 J6VdPhwwi/96proeDsM9M7iP/lb+aWoCLFyi6pmV6yZHbqgNNICsidd7/IIp2i1Y6TEFq
+	 1oR3MN2Dt+RSC0giLqClTUQX+wo3ic+cl+V0W6mOZ4ndhF0444uo57/NpQ1ykB7RWca8y
+	 pcFDpl9eIBBScplcNfoIGoD/eF8z5qCVblWyYwS7nh7LiBENYpoT3HF2nj1I4wez0Mw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=bBsGcOuJ;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=s3P8B5LW;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5D618606A31E;
-	Wed, 25 Nov 2026 16:46:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 29D2A606A323;
+	Wed, 25 Nov 2026 16:46:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=bBsGcOuJ
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AC55F1F000CA;
-	Wed, 25 Nov 2026 16:46:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=s3P8B5LW
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 790181F000C4;
+	Wed, 25 Nov 2026 16:46:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795625213;
-	bh=bV+fDPSeVGGZhLOuzOxk+1msPMjiZfuh4pD4uHcPFTs=;
+	s=korg; t=1795625216;
+	bh=PybEl2b8Vfhp50SqWs71TNWX3blLe9F2ntJFc3GARlc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=bBsGcOuJ1DRkOKI4pSjroqyaWrUTCUqp3ixwxiV2NBiCTi2SuMKfOhzHCdZ7BwXJC
-	 lsE5PeJxX4Tsd6aXzwJSsbqFl9z+CDQrCwKesAld5Rvi00Ft2KK0U/qnuV/hP0iY4Z
-	 ZsMXt5kY/TYHSp8WQZN6kvvecyWyOnsqH4u3LSv0=
+	b=s3P8B5LWfW/AjmP4keKXqwHtZxdPPZPNdIKocZlgxXGMVEp08kHj17R4UQcXrn6AG
+	 jBvOnOFp+CQxdadYD7ZxD4aI0J6K9bTjM6GngquP5imlUviZSw8jkVHFUWa684/CoN
+	 +XZ8KdFLJVQRyZhsYvSvT3fGlB3uk0Pmyqt/QkSM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ian Rogers <irogers@google.com>,
-	Adrian Hunter <adrian.hunter@intel.com>,
-	Song Liu <songliubraving@fb.com>,
-	Arnaldo Carvalho de Melo <acme@redhat.com>,
+	Zipdox <zipdox@zipdox.net>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 443/816] perf evsel: Clamp sample_id size for ksymbol, bpf, and text_poke events
-Date: Wed, 25 Nov 2026 15:33:11 +0100
-Message-ID: <20261125143859.445378082@linuxfoundation.org>
+Subject: [PATCH 6.12 444/816] ALSA: usb-audio: Fix UAC2 mixer unit request handling
+Date: Wed, 25 Nov 2026 15:33:12 +0100
+Message-ID: <20261125143859.469678161@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143849.205329330@linuxfoundation.org>
 References: <20261125143849.205329330@linuxfoundation.org>
@@ -70,153 +68,105 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ian Rogers <irogers@google.com>
+From: Takashi Iwai <tiwai@suse.de>
 
-[ Upstream commit 7c89ea1bd4c612eb5cc2e6c01f77ebfc21d5c95d ]
+[ Upstream commit 0458d97859840506c3688a963dcd4f72b4a23083 ]
 
-On kernels without the fix ("perf/core: Restore header fields in
-sideband output callbacks") to restore event_id.header.size in
-perf_event_ksymbol_output(), perf_event_bpf_output(), and
-perf_event_text_poke_output(), concurrent perf sessions cause those
-sideband records to be emitted with header.size inflated by multiple
-id_header_size increments while the single id_sample is written
-immediately after the event payload. Indexing backwards from
-event->header.size reads uninitialized ring-buffer bytes at the end of
-the record, causing evlist__event2evsel() to fail with -EFAULT.
+For a request for a Mixer Unit on UAC2 (also UAC3), the wValue is
+different from UAC1 and an incompatible value must be passed.
+Namely, UAC1 takes a word consisting of 1-based input channel in the
+high byte and 1-based output channel in the low byte.
+Meanwhile, UAC2/3 takes UAC2_MU_MIXER in the high byte and a MCN
+(0-based bit position of input/output channels) in the low byte.
+The current driver implementation blindly assumes the UAC1 way, hence
+it would cause a firmware error.
 
-Add evsel__event_size() to clamp the effective size used to locate the
-trailing id_sample for PERF_RECORD_KSYMBOL, PERF_RECORD_BPF_EVENT, and
-PERF_RECORD_TEXT_POKE to payload + id_hdr_size while leaving
-event->header.size intact for advancing the ring-buffer/file stream.
+This patch attempts to implement the conversion to UAC2 MCN at
+get_ctl_value_v2() and snd_usb_mixer_set_ctl_value() for mixer units.
+At the points above, the old wValue containing ICN and OCN is
+converted to the corresponding MCN, and it's used as the proper
+wValue.
 
-Fixes: 9aa0bfa370b278a5 ("perf tools: Handle PERF_RECORD_KSYMBOL")
-Fixes: 45178a928a4b7c60 ("perf tools: Handle PERF_RECORD_BPF_EVENT")
-Fixes: 246eba8e9041c477 ("perf tools: Add support for PERF_RECORD_TEXT_POKE")
-Link: https://lore.kernel.org/r/20260929014206.4175245-1-irogers@google.com
-Assisted-by: Antigravity:gemini-3.1-pro
-Signed-off-by: Ian Rogers <irogers@google.com>
-Cc: Adrian Hunter <adrian.hunter@intel.com>
-Cc: Song Liu <songliubraving@fb.com>
-Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
-[ sashal: Adapted to older code by using the evlist->id_pos/is_pos fields and the pointer-walking loop in perf_evsel__parse_id_sample(), swapping in evsel__event_size() for header.size. ]
+Reported-by: Zipdox <zipdox@zipdox.net>
+Closes: https://lore.kernel.org/d46fcac6-bd7e-4fc4-95e1-4e8d39f92ad3@zipdox.net
+Fixes: 23caaf19b11e ("ALSA: usb-mixer: Add support for Audio Class v2.0")
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Link: https://patch.msgid.link/20260930155356.348608-3-tiwai@suse.de
+[ sashal: Context differs: the tail of get_ctl_value_v1() and the neighboring struct field (no get_cur_broken) are older here, but the patch hunks themselves are identical to upstream. ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/perf/util/evlist.c |  6 ++--
- tools/perf/util/evsel.c  | 59 +++++++++++++++++++++++++++++++++++++++-
- tools/perf/util/evsel.h  |  1 +
- 3 files changed, 63 insertions(+), 3 deletions(-)
+ sound/usb/mixer.c | 23 +++++++++++++++++++++++
+ sound/usb/mixer.h |  2 ++
+ 2 files changed, 25 insertions(+)
 
-diff --git a/tools/perf/util/evlist.c b/tools/perf/util/evlist.c
-index dac87dccaaaa5..bdf923e6570af 100644
---- a/tools/perf/util/evlist.c
-+++ b/tools/perf/util/evlist.c
-@@ -701,13 +701,15 @@ static int evlist__event2id(struct evlist *evlist, union perf_event *event, u64
- 	const __u64 *array = event->sample.array;
- 	ssize_t n;
- 
--	n = (event->header.size - sizeof(event->header)) >> 3;
--
- 	if (event->header.type == PERF_RECORD_SAMPLE) {
-+		n = (event->header.size - sizeof(event->header)) >> 3;
- 		if (evlist->id_pos >= n)
- 			return -1;
- 		*id = array[evlist->id_pos];
- 	} else {
-+		u16 size = evsel__event_size(evlist__first(evlist), event);
-+
-+		n = (size - sizeof(event->header)) >> 3;
- 		if (evlist->is_pos > n)
- 			return -1;
- 		n -= evlist->is_pos;
-diff --git a/tools/perf/util/evsel.c b/tools/perf/util/evsel.c
-index 6798db83bf7cc..0cb488017bbbe 100644
---- a/tools/perf/util/evsel.c
-+++ b/tools/perf/util/evsel.c
-@@ -2524,7 +2524,7 @@ static int perf_evsel__parse_id_sample(const struct evsel *evsel,
- 	bool swapped = evsel->needs_swap;
- 	union u64_swap u;
- 
--	array += ((event->header.size -
-+	array += ((evsel__event_size(evsel, event) -
- 		   sizeof(event->header)) / sizeof(u64)) - 1;
- 
- 	if (type & PERF_SAMPLE_IDENTIFIER) {
-@@ -3109,6 +3109,63 @@ u16 evsel__id_hdr_size(const struct evsel *evsel)
- 	return size;
+diff --git a/sound/usb/mixer.c b/sound/usb/mixer.c
+index ae311c95ac023..394d3f1193838 100644
+--- a/sound/usb/mixer.c
++++ b/sound/usb/mixer.c
+@@ -340,6 +340,17 @@ static int get_ctl_value_v1(struct usb_mixer_elem_info *cval, int request,
+ 	return err;
  }
  
-+/*
-+ * Prior to kernel fix, perf_event_ksymbol_output(), perf_event_bpf_output(),
-+ * and perf_event_text_poke_output() in kernel/events/core.c did not save and
-+ * restore event_id.header.size across perf_iterate_sb() iterations. When
-+ * multiple perf_events had attr.ksymbol, attr.bpf_event, or attr.text_poke
-+ * enabled, header.size was incremented by id_header_size for each matching
-+ * event while only a single id_sample was written immediately after the event
-+ * payload. Clamp the effective size used to locate the trailing id_sample to
-+ * payload + id_hdr_size so events recorded on unpatched kernels can be parsed
-+ * without reading uninitialized ring-buffer bytes.
-+ */
-+u16 evsel__event_size(const struct evsel *evsel, const union perf_event *event)
++/* convert the given UAC1 wValue (ICN|OCN) to UAC2 MCN */
++static unsigned char to_mcn(const struct usb_mixer_elem_info *cval,
++			    unsigned int validx)
 +{
-+	u16 size = event->header.size;
-+	u16 id_hdr_size;
-+	size_t payload;
++	unsigned char m = (validx >> 8) & 0xff; /* 1-based input channel */
++	unsigned char v = validx & 0xff; /* 1-based output channel */
 +
-+	if (!evsel->core.attr.sample_id_all)
-+		return size;
-+
-+	switch (event->header.type) {
-+	case PERF_RECORD_KSYMBOL: {
-+		const char *name = event->ksymbol.name;
-+		size_t fixed = offsetof(struct perf_record_ksymbol, name);
-+		size_t max_len, len;
-+
-+		if (size <= fixed)
-+			return size;
-+		max_len = size - fixed;
-+		len = strnlen(name, max_len);
-+		if (len == max_len)
-+			return size;
-+		payload = fixed + PERF_ALIGN(len + 1, sizeof(u64));
-+		break;
-+	}
-+	case PERF_RECORD_BPF_EVENT:
-+		payload = sizeof(struct perf_record_bpf_event);
-+		break;
-+	case PERF_RECORD_TEXT_POKE: {
-+		size_t fixed = offsetof(struct perf_record_text_poke_event, bytes);
-+
-+		if (size < fixed)
-+			return size;
-+		payload = PERF_ALIGN(fixed + (size_t)event->text_poke.old_len +
-+				     event->text_poke.new_len, sizeof(u64));
-+		break;
-+	}
-+	default:
-+		return size;
-+	}
-+
-+	id_hdr_size = evsel__id_hdr_size(evsel);
-+	if (payload + id_hdr_size < size)
-+		return payload + id_hdr_size;
-+	return size;
++	/* num_inputs * num_outputs is guaranteed to be < 256 */
++	return (m - 1) * cval->num_outputs + (v - 1);
 +}
 +
- #ifdef HAVE_LIBTRACEEVENT
- struct tep_format_field *evsel__field(struct evsel *evsel, const char *name)
+ static int get_ctl_value_v2(struct usb_mixer_elem_info *cval, int request,
+ 			    int validx, int *value_ret)
  {
-diff --git a/tools/perf/util/evsel.h b/tools/perf/util/evsel.h
-index dc0d300776f16..7f2f5d85edf70 100644
---- a/tools/perf/util/evsel.h
-+++ b/tools/perf/util/evsel.h
-@@ -435,6 +435,7 @@ int evsel__parse_sample_timestamp(struct evsel *evsel, union perf_event *event,
- 				  u64 *timestamp);
+@@ -352,6 +363,10 @@ static int get_ctl_value_v2(struct usb_mixer_elem_info *cval, int request,
  
- u16 evsel__id_hdr_size(const struct evsel *evsel);
-+u16 evsel__event_size(const struct evsel *evsel, const union perf_event *event);
+ 	val_size = uac2_ctl_value_size(cval->val_type);
  
- static inline struct evsel *evsel__next(struct evsel *evsel)
- {
++	/* correct wValue for UAC2 mixer control with MCN */
++	if (cval->v2_mixer)
++		validx = (UAC2_MU_MIXER << 8) | to_mcn(cval, validx);
++
+ 	if (request == UAC_GET_CUR) {
+ 		bRequest = UAC2_CS_CUR;
+ 		size = val_size;
+@@ -476,6 +491,10 @@ int snd_usb_mixer_set_ctl_value(struct usb_mixer_elem_info *cval,
+ 		}
+ 
+ 		request = UAC2_CS_CUR;
++
++		/* correct wValue for UAC2 mixer control with MCN */
++		if (cval->v2_mixer)
++			validx = (UAC2_MU_MIXER << 8) | to_mcn(cval, validx);
+ 	}
+ 
+ 	value_set = convert_bytes_value(cval, value_set);
+@@ -2208,6 +2227,10 @@ static void build_mixer_unit_ctl(struct mixer_build *state,
+ 
+ 	snd_usb_mixer_elem_init_std(&cval->head, state->mixer, unitid);
+ 	cval->control = in_ch + 1; /* based on 1 */
++	if (state->mixer->protocol == UAC_VERSION_2 ||
++	    state->mixer->protocol == UAC_VERSION_3)
++		cval->v2_mixer = true;
++	cval->num_outputs = num_outs;
+ 	cval->val_type = USB_MIXER_S16;
+ 	for (i = 0; i < num_outs; i++) {
+ 		__u8 *c = uac_mixer_unit_bmControls(desc, state->mixer->protocol);
+diff --git a/sound/usb/mixer.h b/sound/usb/mixer.h
+index 8e5e8da6d480f..00ffefb751d2a 100644
+--- a/sound/usb/mixer.h
++++ b/sound/usb/mixer.h
+@@ -97,6 +97,8 @@ struct usb_mixer_elem_info {
+ 	int cache_val[MAX_CHANNELS];
+ 	u8 initialized;
+ 	u8 min_mute;
++	u8 num_outputs;
++	bool v2_mixer;
+ 	void *private_data;
+ };
+ 
 -- 
 2.53.0
 
