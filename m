@@ -1,42 +1,42 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795618281;
-	b=EM1H/fEPPuWYbl1uHgXus6mfnT9ukZEpduQJaFgBAcSMJJAyGeZv7LrTdP5hb79yjgxR
-	 SgfaeqSa312PrXUkOI6abx5DAb1i57TIDN2rNwk7f1yptE80bKEaJ13wM0u0X6bYAT9XL
-	 VlPPfr+ZU8uaM8zFaO8eGmMuIJmAY3p3WCKAAdpditg1dhkFDEOPqHeXIixHyU8MHc/C4
-	 hAjDNUfauOTGUWaIuQPIdRuMahHB/N/kJyshuC30829bAB7NyI9nOkzmxYukPkldqZh9K
-	 7xdMcu8LfLrYjCvG2OfN10LRxHjbO3YFtKCrfdZTwM3IMvXxNpj5FQu6N+QTASCHkgg==
+	t=1795618284;
+	b=iKEbCz4Oue6uY3HZHJ6NUUBcZCZhKORDsHKJRej0qaJLjEmXqHaBBdafhaWL+S+YUdrG
+	 KnRMOU5OF28OpW00NOCsE1ZOxzJoE61dr0sFFObHluhYx4vr+A4UnAqvf9VQxgJHwdlJ5
+	 8cZHYUO89Y+V7TDk3KGzvXghMJ/Ph5Ds1OBPd1wdZOl++isljzjkci3HWewIyEqMfYiAJ
+	 5pBoDxE2u3k/pE3DULfwYzRp9axTD9MilYUghWGW/i4N65wF1AfqUFTiQOa9fHgN5/hNK
+	 +1U3xebK0SeXgxHIk6PvuooLABiQwZVU8nE0VJ3yCjqVE8qDtwIgOny/zVHVlpCi//g==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795618281;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795618284;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=papwZLwl5w/BytwQ+RjRuSW83GcZFfdbsoiy6M6tWpQ=;
-	b=NJKQaupilUTxTQ7GM5GehMHcZtFMxoWFPYyujOI7W95yLFudqY6gh69hqHt9O3hKN68V
-	 IPQj0IYj+NCKYFgFoH0IcCwMfIu5S1AdS3g0tTQf7MT7ESV7IivZvTN+yIfvsF8E69OmJ
-	 cvW0tqVLtJ0xTCPcwrozUTDqNg2JDmsq+Ha7bgWFgdpSD6ZybZZer6heI1JuH50G2oqsW
-	 I1xpKEYiDre+mE82U+crXUcjGwjMiTFagdgXl4pH/zB4iZKvOXaG1KAnPVUECZMK0ZuDB
-	 qCnPPvDd6k45n064nPHce7RAJb8+Cn+K124S2GmG/1xyn6lXlO/hkWAIqSyWIc8d4VA==
+	bh=0fcav5qdwyS/E+JNRgev5qaqGgKdD6zPEzIZdDGSEuA=;
+	b=bfzUDOHlYK/YH1MZKj0/tcgEFDA8+T6Ubn/EckaaA/45MnCg3z7ruUusTpY4tHQmxvrU
+	 Sb47qf+mL3airNiBpwj54+3hbHqJR1iaGoyidOrfRaCreC+bryOD4jGJ7zOTn5KQQ7aOX
+	 hzUnvVjrNMAo+MvFhYIf341CvyfQU3AD+APd8/twy5pNGHBcbhONXGh5fRuUjtj6iwcrg
+	 PhedVtI8cwnJ4iXCj1QYMJUuubCOFaE34UIeToTIwU4QolRDaWiJYdr/oA7AyxT+SQiBv
+	 h4rpR2JcfekLZU2MPA4QSa3sSUr5oKuu3nVa61hMEBnzOOMTn/IMd/Rfld9Dv6i1biw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="t/ejP/6T";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=nNwKbDPF;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9BD2D606A31E;
-	Wed, 25 Nov 2026 14:51:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D751F606A321;
+	Wed, 25 Nov 2026 14:51:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=t/ejP/6T
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 49F3B1F000CA;
-	Wed, 25 Nov 2026 14:51:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=nNwKbDPF
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C0F511F000CA;
+	Wed, 25 Nov 2026 14:51:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795618280;
-	bh=papwZLwl5w/BytwQ+RjRuSW83GcZFfdbsoiy6M6tWpQ=;
+	s=korg; t=1795618284;
+	bh=0fcav5qdwyS/E+JNRgev5qaqGgKdD6zPEzIZdDGSEuA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=t/ejP/6TnsVCbWLSBy0aOt7IICRZd9nKk4y8h+mA9pyP8ec6+Qp3ZFD3DDzQE6bWF
-	 hWqye99yn5C29AaE2H0wEEweox2mJwvK/wBg4vnmSFjQAKvp/veaqj3y95VhLR3dxL
-	 A1MmTGGmhDTRDb5gEBuymtTX/bZlTgMkvc+F+FrI=
+	b=nNwKbDPFNxid0jHlLv5aSqP/WSQEftjqQ80I2Oosof6vvrxfpTfk7D/F+pUovWBNi
+	 DvSZl37zIRrmAdyaekHhWCRXUb7ITkk8NKNRPXyZuP+Qh52br5ZYZ3/apnGLPkZUum
+	 V7KRN6pRnl6coTN/ycRNDZ0dkb7RFO32hGw15Ujc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -44,9 +44,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Linfeng Sun <linfeng.sun.dev@gmail.com>,
 	"Michael S. Tsirkin" <mst@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0231/1005] vhost-scsi: reject delayed virtqueue setup
-Date: Wed, 25 Nov 2026 15:26:09 +0100
-Message-ID: <20261125143827.151695141@linuxfoundation.org>
+Subject: [PATCH 7.3 0232/1005] vhost: reject backend enable without a kick file
+Date: Wed, 25 Nov 2026 15:26:10 +0100
+Message-ID: <20261125143827.174015161@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143821.729802100@linuxfoundation.org>
 References: <20261125143821.729802100@linuxfoundation.org>
@@ -70,65 +70,36 @@ Content-Transfer-Encoding: 8bit
 
 From: Linfeng Sun <linfeng.sun.dev@gmail.com>
 
-[ Upstream commit a543346b96a174fcee6812ac2764acc8dc993358 ]
+[ Upstream commit 509f6bd229e94fc39506e01be692c4aa22338b49 ]
 
-vhost_scsi_set_endpoint() allocates command pools only for I/O
-virtqueues that are already set up, but publishes the backend for every
-virtqueue. Userspace can complete a skipped queue after attaching the
-endpoint, then kick it with scsi_tags uninitialized and trigger the
-alloc_hint warning in sbitmap_get().
+Enabling a backend without VHOST_SET_VRING_KICK dereferences a NULL
+vq->kick in vhost_poll_start(). Reject the request with -EINVAL.
 
-Delayed virtqueue setup is not supported. Leave skipped I/O virtqueues
-inactive and reject changes to the vring size or addresses while an
-endpoint is attached. Userspace must clear the endpoint before changing
-the vring configuration.
-
-I found this bug myself, though the patch was written with AI assistance.
-
-Fixes: 25b98b64e284 ("vhost scsi: alloc cmds per vq instead of session")
+Fixes: 264ee5aa81ec ("tools/virtio: Add --reset")
 Assisted-by: OpenAI-Codex:GPT-5.6
 Signed-off-by: Linfeng Sun <linfeng.sun.dev@gmail.com>
 Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
-Message-ID: <20261010-fix-warning-in-sbitmap_get-v3-1-33de562d1359@gmail.com>
+Message-ID: <20261011-fix-null-pointer-in-vhost_test_set_backend-v1-1-60b2f12d64c6@gmail.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/vhost/scsi.c | 15 ++++++++++++---
- 1 file changed, 12 insertions(+), 3 deletions(-)
+ drivers/vhost/test.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/drivers/vhost/scsi.c b/drivers/vhost/scsi.c
-index 8a32687f7424b..1274e7734747e 100644
---- a/drivers/vhost/scsi.c
-+++ b/drivers/vhost/scsi.c
-@@ -2135,6 +2135,9 @@ vhost_scsi_set_endpoint(struct vhost_scsi *vs,
- 
- 		for (i = 0; i < vs->dev.nvqs; i++) {
- 			vq = &vs->vqs[i].vq;
-+			if (i >= VHOST_SCSI_VQ_IO && !vs->vqs[i].scsi_cmds)
-+				continue;
-+
- 			mutex_lock(&vq->mutex);
- 			vhost_vq_set_backend(vq, vs_tpg);
- 			vhost_vq_init_access(vq);
-@@ -2496,10 +2499,16 @@ vhost_scsi_ioctl(struct file *f,
- 	default:
- 		mutex_lock(&vs->dev.mutex);
- 		r = vhost_dev_ioctl(&vs->dev, ioctl, argp);
--		if (r == -ENOIOCTLCMD)
--			r = vhost_vring_ioctl(&vs->dev, ioctl, argp);
--		else
-+		if (r == -ENOIOCTLCMD) {
-+			if (vs->vs_tpg &&
-+			    (ioctl == VHOST_SET_VRING_NUM ||
-+			     ioctl == VHOST_SET_VRING_ADDR))
-+				r = -EBUSY;
-+			else
-+				r = vhost_vring_ioctl(&vs->dev, ioctl, argp);
-+		} else {
- 			vhost_scsi_flush(vs);
-+		}
- 		mutex_unlock(&vs->dev.mutex);
- 		return r;
+diff --git a/drivers/vhost/test.c b/drivers/vhost/test.c
+index 24514c8fdee49..15b19e07f811f 100644
+--- a/drivers/vhost/test.c
++++ b/drivers/vhost/test.c
+@@ -287,6 +287,10 @@ static long vhost_test_set_backend(struct vhost_test *n, unsigned index, int fd)
+ 		r = -EFAULT;
+ 		goto err_vq;
  	}
++	if (enable && !vq->kick) {
++		r = -EINVAL;
++		goto err_vq;
++	}
+ 	if (!enable) {
+ 		vhost_poll_stop(&vq->poll);
+ 		backend = vhost_vq_get_backend(vq);
 -- 
 2.53.0
 
