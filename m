@@ -1,42 +1,42 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795618961;
-	b=ae10+wRhUVuKFSVtb51xtxIVwDeHAteetRq7FDKqEPxoDUX5wCbDBlD9rsAhzkxU4IJ1
-	 /jLJXbPNight0vzFDfR5y7HOUwxt+DCNwG78Ch1M/TI65FSRdlL++zz8nF3tqa+NyPgz+
-	 WOlCBqBz/2pcS8zVwiLIIIcfYaHfwDjj9KxMLpeG8mnGdfuJ0w/VM7OfnFdDySD+MSDgP
-	 Ohye6Sn6pcYMpv4L2NYPunht8OeIAwzm6Wbce/uIqM8QokwTMvjP+0cyA4GUFXvYD9QEL
-	 WWjnGfyvkMHieAQBjIl28TtrUAaVP5Eo1E4xwk5eH5Y7UZV3m/wF/wWLLCtfH3hs8BQ==
+	t=1795618964;
+	b=vhil3XlrVaG/zwRP/Skz2QXc55zZSl1YY60PezL2EsFTXQHFNwitmXD36Od3GFubbkm8
+	 iYEHWkHfJoCq0+cABZ5pVXSmpRmdJmDU1r5NOhsGGLUDZr/JS7SExXntWDCfnxUDAbs5J
+	 HxCzNhzmbcGvywSmkjc7LfWbdv3/2h3HBtrtkSEvBP9JwkTiyKcVYnLlo9En8XQH9OJKn
+	 qUFPOTCM+xcnERmVcNHQEC3yvf0eDP7E1ApZgkFLSwkRWr8LmGSm82b6WZdCgV0k1xm3J
+	 kYbHCoWa78j8xkUB5OYCf3G2IzeJNZvpFLyapYA6Yv4a6dn6DVcOieqSjYMMVJJuepw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795618961;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795618964;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Type:Content-Transfer-Encoding;
-	bh=Rrc32RSUypwmIkzI5vlvcfQZOiMLPJ4k430nxHiq3rw=;
-	b=UWiEbmk4Zjvcp38q5fQU/p9nSdJ0XeNjxdCCCjT0phMp2vEZYkvYmqA3+09XRIOUidqh
-	 1mKfA22Dr1CydD2gJR+9kN0DCkXIn0jve9gGB6FEM/uQ1W+KvP21W7+ad6PBAcA3cwUnB
-	 tH+s2hxMbN+YaBws0qo4J7FXqlRLKKntv8Wq1O3jjXFoU0X5abnZ0rcy0pSFzVFLSZwuU
-	 xFEI/X0cGjPR7tezazQ71DLBfq7Rp6Pgr+Vxnqs4Xr1QXFERdPoiOWKlM0HpFPCcRjMzy
-	 xC4gUECoR09Zd0FXU0WlVd7iBnT8FUwr7o89vk3gHuT67ryRfVPppsO3yd3+MpD3AOg==
+	bh=H39KkRwE2mgQCB5QCTizwlQF26nfUir0kwSUPSYldOs=;
+	b=4uNW6R9VPWJVerWQ69dlIPxmpnUedbvhSFazod+X6K+qNWwgrvd1gCSwagftTyzBUuII
+	 IJWGfRFKTg4NtCXj+baVO1aqMvGPEr450h4Es7SCLzak8TXGjWt/5m55OI7c2Ib9ixzdR
+	 NQxYdwlVJfcKMiZs+NnYCQL3/FsyZF4xI0MKT7juQkZ3oV4vAmrnGifU5HvW7Q+lC6B1I
+	 QeWsr+CqrBcgep7ZOrvB8GAvsSmW4kvOEXBV5uqnmro69G2jeXbfMAh8WGnzokamTU4+f
+	 F5tUyumNPztVW1LBkAs0QsTpTTQARVdXu+pEfJgyWFToyHW4C5WabQfqs9yrOAAElTw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="dugK/U2F";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ccmoKrKI;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8C7BF606A323;
-	Wed, 25 Nov 2026 15:02:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B47CB606A323;
+	Wed, 25 Nov 2026 15:02:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=dugK/U2F
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BD1EA1F000C0;
-	Wed, 25 Nov 2026 15:02:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ccmoKrKI
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E1A701F000C4;
+	Wed, 25 Nov 2026 15:02:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795618961;
-	bh=Rrc32RSUypwmIkzI5vlvcfQZOiMLPJ4k430nxHiq3rw=;
+	s=korg; t=1795618964;
+	bh=H39KkRwE2mgQCB5QCTizwlQF26nfUir0kwSUPSYldOs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=dugK/U2FQtwdKkvAOpnXiYduIJ9ErO/QprdRlYvtGNpqB7G4kRK+2/apwDeIQibyu
-	 B0QZU8G4zth2JixD4w04s3aJcoDIUecU4TyflDRTaWEyKIA7/mFnVz2yEGb5voc/BK
-	 fpvCbQVkEPOZimSRacNu+Ain4S2hsq5eU56mvlj0=
+	b=ccmoKrKIUY+qJV4b6me0+8Fly9P1k69YXb7LOqEb5hwbrwszH0473okQPFU4Pf5Tb
+	 RVyNKLcsWU5gP4TPBFxdabESo9F0g5qb4LALhDBXX1zaExtiaSAev9UrSIFBsMv5rC
+	 Lm/oL8UA0rLIR1/uHxRLcvzNSOGq7i4UmlUCTN54=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -45,9 +45,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	=?UTF-8?q?Bj=C3=B6rn=20T=C3=B6pel?= <bjorn@kernel.org>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0443/1005] i40e: xsk: fix xsk_buff_add_frag() error handling in Rx
-Date: Wed, 25 Nov 2026 15:29:41 +0100
-Message-ID: <20261125143832.126029316@linuxfoundation.org>
+Subject: [PATCH 7.3 0444/1005] ice: xsk: fix leaking Rx buffers in multi-buffer path
+Date: Wed, 25 Nov 2026 15:29:42 +0100
+Message-ID: <20261125143832.148865179@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143821.729802100@linuxfoundation.org>
 References: <20261125143821.729802100@linuxfoundation.org>
@@ -72,63 +72,43 @@ Content-Transfer-Encoding: 8bit
 
 From: Maciej Fijalkowski <maciej.fijalkowski@intel.com>
 
-[ Upstream commit a259b7ec09efec032d5521dc2eb751a959c11d15 ]
+[ Upstream commit 8b7bd01b9c56c0d1f65d0e2ad304b775e0d709e3 ]
 
-When xsk_buff_add_frag() fails, i40e_clean_rx_irq_zc() frees the frame
-but stays on the current descriptor, so the next poll restarts from the
-freed head. If the frags array was full, the retry passes on a frame
-missing the freed frags, with its head already on the free list. If the
-buffer is a duplicate, every poll fails the same way and the queue
-stalls.
+ice_clean_rx_irq_zc() consumes a descriptor without freeing its buffer
+when a frag has zero length or when xsk_buff_add_frag() fails, which
+happens if the frags array is full or the fill ring has duplicates.
+Such buffers are lost to user space until the socket is closed.
 
-Free the current buffer along with the frame and move on to the next
-descriptor, as ice does. The rest of the dropped frame is received as
-a new frame. xp_free() skips a duplicate already freed with the frame.
+Free the buffer in both cases. xp_free() skips a duplicate already
+freed with the frame.
 
-Fixes: 1c9ba9c14658 ("i40e: xsk: add RX multi-buffer support")
+Fixes: 1bbc04de607b ("ice: xsk: add RX multi-buffer support")
+Fixes: 93f53db9f9dc ("ice: switch to Page Pool")
 Signed-off-by: Maciej Fijalkowski <maciej.fijalkowski@intel.com>
 Reviewed-by: Björn Töpel <bjorn@kernel.org>
-Link: https://patch.msgid.link/20261102124950.958345-3-maciej.fijalkowski@intel.com
+Link: https://patch.msgid.link/20261102124950.958345-4-maciej.fijalkowski@intel.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/intel/i40e/i40e_xsk.c | 20 ++++++++++++++------
- 1 file changed, 14 insertions(+), 6 deletions(-)
+ drivers/net/ethernet/intel/ice/ice_xsk.c | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/net/ethernet/intel/i40e/i40e_xsk.c b/drivers/net/ethernet/intel/i40e/i40e_xsk.c
-index 9f47388eaba53..624f85851a7d1 100644
---- a/drivers/net/ethernet/intel/i40e/i40e_xsk.c
-+++ b/drivers/net/ethernet/intel/i40e/i40e_xsk.c
-@@ -459,16 +459,24 @@ int i40e_clean_rx_irq_zc(struct i40e_ring *rx_ring, int budget)
- 		xsk_buff_set_size(bi, size);
- 		xsk_buff_dma_sync_for_cpu(bi);
+diff --git a/drivers/net/ethernet/intel/ice/ice_xsk.c b/drivers/net/ethernet/intel/ice/ice_xsk.c
+index 0643017541c35..ea8ac0fcdf6ef 100644
+--- a/drivers/net/ethernet/intel/ice/ice_xsk.c
++++ b/drivers/net/ethernet/intel/ice/ice_xsk.c
+@@ -618,8 +618,11 @@ int ice_clean_rx_irq_zc(struct ice_rx_ring *rx_ring,
  
--		if (!first)
-+		if (++next_to_process == count)
-+			next_to_process = 0;
-+
-+		if (!first) {
- 			first = bi;
--		else if (!xsk_buff_add_frag(first, bi)) {
-+		} else if (!xsk_buff_add_frag(first, bi)) {
-+			/* Drop what has been gathered so far. xp_free() skips
-+			 * @bi if it duplicates a buffer that is already on a
-+			 * pool list. Remaining buffers of this packet, if any,
-+			 * will be processed as a new packet.
-+			 */
+ 		if (!first) {
+ 			first = xdp;
+-		} else if (likely(size) && !xsk_buff_add_frag(first, xdp)) {
++		} else if (unlikely(!size)) {
++			xsk_buff_free(xdp);
++		} else if (!xsk_buff_add_frag(first, xdp)) {
  			xsk_buff_free(first);
--			break;
-+			xsk_buff_free(bi);
-+			next_to_clean = next_to_process;
-+			first = NULL;
-+			continue;
++			xsk_buff_free(xdp);
+ 			first = NULL;
  		}
- 
--		if (++next_to_process == count)
--			next_to_process = 0;
--
- 		if (i40e_is_non_eop(rx_ring, rx_desc))
- 			continue;
  
 -- 
 2.53.0
