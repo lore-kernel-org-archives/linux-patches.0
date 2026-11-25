@@ -1,53 +1,55 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795621547;
-	b=T7PHoU2Yl13D8j5uLIpFJzgI/R0kw0OCvd6eBBKNdGoUtPQuLSewbnECM7fNPFWZ/ayo
-	 0DN88YFOJu/4WXgNfh1KYpZb3xl3vh4pZzHvhtxAV0XIOs5+9FIVaI0fqX+dcfGFzyC9g
-	 nLiGeDqjHRrByWAxayebMeoDD2YS50kVYeXPThPolPfhyIwoQ5zCjN21iayL1iKMK46NO
-	 9eiPTlLQ2WAAvUWmcw6/R5VBw2Eel+/MnD0OvqUwXq7I2q4KmDu8UC61u+9v0ZwqUYf2n
-	 txWJEmpvr0qhr+frVgl++rC9z8DmJRNWwI4JKamPazWT2zlEAU2GdoUB6uGxJpXkFKg==
+	t=1795621551;
+	b=5iBLpHPPvMsfhjR9KP0/jcycqFWdyfVEFf5kfPmzSQJVdGsaiPAyLVLusRl71UYyOraR
+	 fbJMGS/69j0+W3lkd9rb/ddUqjnR5AZtC2TieRKrDOj7IOOXUUtpadzHmWmLpLFf2l8S5
+	 FPV5zhZbTCJxe1qF+DzhwlFlbSXFJRttCVeCl/x14pNdBNc3PeXhzwVZ/SI9tN4VQiiys
+	 Z4ee7FLEL4bp4XPjGwrpw/GV0AHH/AVPD5bxe44wXS0i2vMVmDQxq1Yn3hlFxHbwZNTGD
+	 uap1zMPeavT0Guyg3MYSeoBsUTtUaJBKp9TZKggxtdfqDK1D63grO1qKhGI5tm+Yseg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795621547;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795621551;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=ylwNQiaAJ2jzFtq++9ZtXuBNg4fy7UVr8MZhSM8R/0o=;
-	b=k6fkQ6NtfvkYGbyp0IBI9wxjlO3Vi6a9kGmL/YAUVpSiwo2lrp9ohRn4fyY1RjU3MqdE
-	 bH3k4cOuFupDWZAGf6ebx3lLCCRPe3yEfdNBeTBYD9kQW2KuwHj7/Kian2qjOoJlGCBUt
-	 ESJQbSx9Qt7VcZMobKaqu5o0jWGLrbB/Q23PYNjITwZiAFAAGg438jM8MskEIS0m4jLX5
-	 5D2Ec71hA7fxHPOKRp2maeg8Hiv4bzCZsPLKsivk22Lj93W6A/PH4E06h3pw4c4IaLSPU
-	 Iqs3smkWYmhUUA8ifkPRyEzFC+DSMBCxjT6fn21sle5cU6WtZ0ag1C3qEwc6+0SP5Ag==
+	bh=e0Giet3iLG3Q8i8lrA91RRlkA0P/gS6VHsOTkK+j7PM=;
+	b=R/XnLIlTc8rugqrLn9Dd8bc8ydDddeIRdx/WoqTk11byVnHHclgb0yfJhsrwCI1iKeQb
+	 FeG4b3VkVH2CytsJyqHGXvznEvkSzuuzkXzjK9plewcDo4FDNO/Kycmod+UvAF6nDpY9l
+	 g0C/mqXEhRgBpaYB+LCvtGLep60ubj6dsQDcLIFVnkZlBSYRvT7GSUfm51sfSMmXIF0RE
+	 MVgYgOCD40S9vzX4SZ7qC9iCeQLxzJhe2qqRhADKtm5oqzxv9J6u6VNqX2fK9AoeR90dQ
+	 4Ep/1nmJbCWQTNd0tpRxEOaBHQt+4i+hbPMVWECMeHE/Bk658Idjrz/EB0JHk20dPBA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=URyw5UCU;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="bFH4zxn/";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A2D4B606A321;
-	Wed, 25 Nov 2026 15:45:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F2706606A31E;
+	Wed, 25 Nov 2026 15:45:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=URyw5UCU
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 010051F000C6;
-	Wed, 25 Nov 2026 15:45:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=bFH4zxn/
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CB51B1F000CA;
+	Wed, 25 Nov 2026 15:45:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795621547;
-	bh=ylwNQiaAJ2jzFtq++9ZtXuBNg4fy7UVr8MZhSM8R/0o=;
+	s=korg; t=1795621550;
+	bh=e0Giet3iLG3Q8i8lrA91RRlkA0P/gS6VHsOTkK+j7PM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=URyw5UCUzE7KSX7fbSj/Fzel/3p4BPmfiuJtx0VWP4plpTgloo9G5hkBQuf3aMzBh
-	 Yvl387lclD+Y/LEoh9IyMswYl8BsPYNMK7W4jErGtE0tW+BLG+JJmKiFy1U4OG+mKY
-	 mbW25eVfXJdPcZu7rPxyJk2jav5nJD49tk88kz+E=
+	b=bFH4zxn/Itblc6q5cx19tyfK4P9mNu9OJhraXVx+BSKeltlYCF+YUdj7E7s5aUJgE
+	 PRiH8USgHOd/bWe7TTXE7qDKfHrUM7Qow5L8V6LM4TBDTi4ytg6evztH/Xv01mc2UA
+	 B71wijF+gDWqjyqW8uYPLWJyXcKMXFBbtlyxjwwY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jianan Huang <jnhuang95@gmail.com>,
+	Shao Mingyin <shao.mingyin@zte.com.cn>,
+	"Michael S. Tsirkin" <mst@redhat.com>,
+	Stefan Hajnoczi <stefanha@redhat.com>,
 	Christoph Hellwig <hch@lst.de>,
 	Jens Axboe <axboe@kernel.dk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 214/990] blk-mq: reset queue state on scheduler teardown
-Date: Wed, 25 Nov 2026 15:26:21 +0100
-Message-ID: <20261125143827.102007131@linuxfoundation.org>
+Subject: [PATCH 6.18 215/990] virtio-blk: Fix zone append sector reporting in batched completion
+Date: Wed, 25 Nov 2026 15:26:22 +0100
+Message-ID: <20261125143827.124791687@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143822.072087159@linuxfoundation.org>
 References: <20261125143822.072087159@linuxfoundation.org>
@@ -69,66 +71,83 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jianan Huang <jnhuang95@gmail.com>
+From: Shao Mingyin <shao.mingyin@zte.com.cn>
 
-[ Upstream commit 3a9892bca4dd0182db61702e131cad569b1d71e6 ]
+[ Upstream commit 08a6572441a4e646c96c2b8d8ead9eea0e458332 ]
 
-We observed I/O timeouts with requests stalled in per-CPU software
-queues.
+For zone append, the block layer copies req->__sector back into the
+bio in blk_zone_append_update_request_bio(), so the driver must update
+req->__sector with the sector reported by the device.
+virtblk_request_done() does that, but the batched completion path used
+by virtblk_poll() only unmaps and cleans up the requests before calling
+blk_mq_end_request_batch().
 
-The affected queue had no elevator, but QUEUE_FLAG_SQ_SCHED remained
-set. A failed elevator switch can leave this state when falling back to
-none without clearing the flag. With empty hctx dispatch lists, a
-queue-wide restart on CPU4 would skip requests pending in ctx5/ctx7:
+A zone append completed through polling therefore keeps the sector that
+was assigned at submission time, and the file system or application sees
+the wrong LBA for the written data.
 
-CPU4: blk_mq_run_hw_queues(q)
-  sq_hctx = hctx4
-  hctx4: no pending requests   -> selected
-  hctx5: 9 reads in ctx5       -> skipped
-  hctx7: 3 writes in ctx7      -> skipped
+Move the sector update into a helper and call it from both completion
+paths.
 
-The pending requests may remain undispatched until another event runs
-their hardware queues.
-
-Clear the flag and restore nr_requests and async_depth to the driver
-queue depth in the common scheduler teardown path, covering both
-scheduler exit and failed initialization.
-
-Fixes: 4d337cebcb1c ("blk-mq: avoid to touch q->elevator without any protection")
-Assisted-by: LLM
-Signed-off-by: Jianan Huang <jnhuang95@gmail.com>
+Fixes: 95bfec41bd3d ("virtio-blk: add support for zoned block devices")
+Signed-off-by: Shao Mingyin <shao.mingyin@zte.com.cn>
+Acked-by: Michael S. Tsirkin <mst@redhat.com>
+Reviewed-by: Stefan Hajnoczi <stefanha@redhat.com>
 Reviewed-by: Christoph Hellwig <hch@lst.de>
-Link: https://patch.msgid.link/20261023092611.116795-1-jnhuang95@gmail.com
+Link: https://patch.msgid.link/202610261955196384aSLGuy3_0MiTvlYXVdiC@zte.com.cn
 Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- block/blk-mq-sched.c | 6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+ drivers/block/virtio_blk.c | 20 +++++++++++++++-----
+ 1 file changed, 15 insertions(+), 5 deletions(-)
 
-diff --git a/block/blk-mq-sched.c b/block/blk-mq-sched.c
-index 128f2be9d4207..d18175ffa1b18 100644
---- a/block/blk-mq-sched.c
-+++ b/block/blk-mq-sched.c
-@@ -374,7 +374,7 @@ bool blk_mq_sched_try_insert_merge(struct request_queue *q, struct request *rq,
+diff --git a/drivers/block/virtio_blk.c b/drivers/block/virtio_blk.c
+index 29317945a7c00..8ee96de512395 100644
+--- a/drivers/block/virtio_blk.c
++++ b/drivers/block/virtio_blk.c
+@@ -331,18 +331,25 @@ static inline u8 virtblk_vbr_status(struct virtblk_req *vbr)
+ 	return *((u8 *)&vbr->in_hdr + vbr->in_hdr_len - 1);
  }
- EXPORT_SYMBOL_GPL(blk_mq_sched_try_insert_merge);
  
--/* called in queue's release handler, tagset has gone away */
-+/* Clear scheduler tags and reset queue state. */
- static void blk_mq_sched_tags_teardown(struct request_queue *q, unsigned int flags)
- {
- 	struct blk_mq_hw_ctx *hctx;
-@@ -385,6 +385,10 @@ static void blk_mq_sched_tags_teardown(struct request_queue *q, unsigned int fla
- 
- 	if (blk_mq_is_shared_tags(flags))
- 		q->sched_shared_tags = NULL;
++static inline void virtblk_update_zone_append_sector(struct request *req,
++						     struct virtblk_req *vbr)
++{
++	struct virtio_blk *vblk = req->mq_hctx->queue->queuedata;
 +
-+	blk_queue_flag_clear(QUEUE_FLAG_SQ_SCHED, q);
-+	q->nr_requests = q->tag_set->queue_depth;
-+	q->async_depth = q->tag_set->queue_depth;
- }
++	if (req_op(req) == REQ_OP_ZONE_APPEND)
++		req->__sector = virtio64_to_cpu(vblk->vdev,
++						vbr->in_hdr.zone_append.sector);
++}
++
+ static inline void virtblk_request_done(struct request *req)
+ {
+ 	struct virtblk_req *vbr = blk_mq_rq_to_pdu(req);
+ 	blk_status_t status = virtblk_result(virtblk_vbr_status(vbr));
+-	struct virtio_blk *vblk = req->mq_hctx->queue->queuedata;
  
- void blk_mq_sched_reg_debugfs(struct request_queue *q)
+ 	virtblk_unmap_data(req, vbr);
+ 	virtblk_cleanup_cmd(req);
+ 
+-	if (req_op(req) == REQ_OP_ZONE_APPEND)
+-		req->__sector = virtio64_to_cpu(vblk->vdev,
+-						vbr->in_hdr.zone_append.sector);
++	virtblk_update_zone_append_sector(req, vbr);
+ 
+ 	blk_mq_end_request(req, status);
+ }
+@@ -1213,8 +1220,11 @@ static void virtblk_complete_batch(struct io_comp_batch *iob)
+ 	struct request *req;
+ 
+ 	rq_list_for_each(&iob->req_list, req) {
+-		virtblk_unmap_data(req, blk_mq_rq_to_pdu(req));
++		struct virtblk_req *vbr = blk_mq_rq_to_pdu(req);
++
++		virtblk_unmap_data(req, vbr);
+ 		virtblk_cleanup_cmd(req);
++		virtblk_update_zone_append_sector(req, vbr);
+ 	}
+ 	blk_mq_end_request_batch(iob);
+ }
 -- 
 2.53.0
 
