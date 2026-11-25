@@ -1,42 +1,42 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795625473;
-	b=BXzmX2tBovmGTyYzmuG75RyO8fGfIg//pVIHUxTg7qP+uoOqBcot8R2iAX+7K/VOcpjA
-	 lIb7zEu5CpELTRbqUMVgxjmEh+jcO2HzqPAhWJTD8OGRp+JnAIRNId7+OhtpNtJs4QM3C
-	 sgQsffv6WLiYatffSmH2t5sWilj/k9Mminsl5j3TaQxes9s15J/jHVNVIdHKSExZ6w5cU
-	 uVEN2CUGlzMYPi7YNVa7iWlbF1yIcCm9UmSLSOBTD+XKEFXNXEZWXAZLgP6DbW6Fmrgnk
-	 5JS0HgdmzQgxlpydzL2pPg3g2yMIEcArEorLM8arLEB59EPv+5/W/aGN9gGFiJ7P+lw==
+	t=1795625476;
+	b=zC+uCvZm8owkJs/33Rw6iPqf0AvgTgt187qCZtD+fnZUJoekGGOlIshEW8SEBL+6zHGu
+	 B8/pMkoiXJXSD6RAF3LHxYrh4T8xHDQ026Hr1/9uz+B1wbnqcZ0F+yhndVI9pkuia89SE
+	 iwsBJvx27n0ELxGKcYHZEMqaqI/J9MhEOwsXyy0AI+I3XTg04+rsEiyWTGUO2m3NhYJFd
+	 aquSQBExHkmGARK5SknrIlKoaRvyDZQbqVMlEV8zDiHa7To1zF8nJZlYsI1A/lBXbjza7
+	 ZDNpXzu7sT2ewFPQtMxzy61sh1JWRlydFxA/NtjjP2XpcDjRFxqOzJncdAUhqUGtkBA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795625473;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795625476;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=yw4mQQJv17OzCVQPJXjWPy36h/FEFRwqehPfneXlsbQ=;
-	b=eywsMOGSJnA41fQYODEoQCdk0hDhEkXJkVXQ3xVj7oYBhObLlnTgRpfzu+1sREpI9GiN
-	 nLeE5BE3AEa9VamE65rVMI2AbwJB4wNo4DBCSsxRKKYvT6Q6F4fO9ve3Cz+75xE18OrN0
-	 HzJONh7nJiwbGYCIAYIlT4dKy6/GFsCGc3Xa2pDtxNhmU+h4lqF5dmk8aLx4G3y9/JWE4
-	 L68BUBeJbD+f5J4uM8djlog1YgxMK2SY0H4UsGUygn4cyrxwbVl2+5wALhFRnTYswu+yj
-	 grlE4rq3paG7L6T0lwXQEf4gAaoZfEUT1giFWZnviVGXZiI5xN/umhYfYSQ7CiZgzsQ==
+	bh=moOxJ6rDBPe6BGJhO+AQS7SON/iFpvmoJa8LffQdtvA=;
+	b=dEhk/fseo6xfXkXRT7G9nz+CHendcIrHmEiNwywVbgbLptW+5hsJyCALa/0fzYsVS+Ec
+	 YNp6BmHZ0E8aw/BgGcNQZU4Zs3GQ7vD35lSIzMsHLXPHsXh0lXwdfZn8v3NTC40Ga3YU1
+	 UNwwEuXig8qqJh3hYIhxWHjSmZrfUI9vAo3vV+hDsF2QqqI2G6o+u7yW01lgqdQAhKmHs
+	 5XqjQGhV228zFYFW3SgR09lLdrrA/e9bJDZzzdRaCEwBE2d6a09Et/1IEo05oGY2rfRUY
+	 Jcf/WPIB6lqBwSq/vKKfKRbvr/4LW69ZRDvEFieZ31K6/2LN/R21WCng3mwWrEH3F5g==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="pfAS/kPU";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=oHkAaDLn;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2F364606A31E;
-	Wed, 25 Nov 2026 16:51:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 525BF606A31E;
+	Wed, 25 Nov 2026 16:51:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=pfAS/kPU
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8093B1F000C4;
-	Wed, 25 Nov 2026 16:51:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=oHkAaDLn
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 47FEF1F000CA;
+	Wed, 25 Nov 2026 16:51:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795625473;
-	bh=yw4mQQJv17OzCVQPJXjWPy36h/FEFRwqehPfneXlsbQ=;
+	s=korg; t=1795625475;
+	bh=moOxJ6rDBPe6BGJhO+AQS7SON/iFpvmoJa8LffQdtvA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=pfAS/kPU1UUFOjFjZ6NISNRVcNOh3Xvxixjssk5uH00vxKQW2omtx6aI6wRsYcBTn
-	 8VdLmmumQ/5vwxXphILUX8BYCzrXWJx2EXo2cjsuOqn4jL3glbFHUuZ45tNUVT7UcS
-	 Z6GBdBSLvNqP8ZijidGvjLMAMEgAs8/3lmqs9uf4=
+	b=oHkAaDLnkT/IJsjdXBCZA4EjXKnmvy0LK4A6EvYbRxMEKOxn9FkzDSMyQ3u/FLiC/
+	 eUIOqF5a+D6xeotqBByM7pFvmexiOZ52foWzhia+QdO8m5Isumb+MTtLdkXdS7s5Kg
+	 V3OegrNs/lN7eQ9SurhoGqsfkX80xVYrNbrePMco=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -44,9 +44,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Dairui Zhang <zhangdairui@gmail.com>,
 	Namjae Jeon <linkinjeon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 529/816] ksmbd: cache the resolved share path for durable reconnects
-Date: Wed, 25 Nov 2026 15:34:37 +0100
-Message-ID: <20261125143901.438668857@linuxfoundation.org>
+Subject: [PATCH 6.12 530/816] ksmbd: fix durable reconnects for root shares
+Date: Wed, 25 Nov 2026 15:34:38 +0100
+Message-ID: <20261125143901.460179492@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143849.205329330@linuxfoundation.org>
 References: <20261125143849.205329330@linuxfoundation.org>
@@ -70,157 +70,40 @@ Content-Transfer-Encoding: 8bit
 
 From: Namjae Jeon <linkinjeon@kernel.org>
 
-[ Upstream commit 2a90ba573d41efa82e075ba9ac532bb3ec0519c4 ]
+[ Upstream commit 25e36df831a47597c03c6239fbc71285e7d714c2 ]
 
-A share configured as /a/link/b, with /a/link pointing to /real, is
-opened relative to share->vfs_path at /real/b. However,
-ksmbd_validate_name_reconnect() compares the file's d_path() result
-against the original /a/link/b string and rejects a valid reconnect.
+When a share exports "/", ksmbd_validate_name_reconnect() expects
+another slash after the share path. For a file at /foo, this rejects
+the valid reconnect name "foo" even though the file is in the share.
 
-Render share->vfs_path with d_path() after the existing kern_path()
-lookup and cache a copy in real_path along with its length. Use the
-resolved string for durable reconnect name validation. Keep path and
-path_sz as the configured spelling for existing consumers, including
-the volume serial calculation and path lookups.
+Compare the requested name with the rendered file path after its
+leading slash when the resolved share root is "/". Keep the
+exact-root/empty-name check and reject rendered paths without an
+initial slash.
 
 Fixes: c8efcc786146 ("ksmbd: add support for durable handles v1/v2")
 Reported-by: Dairui Zhang <zhangdairui@gmail.com>
 Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
-[ sashal: Dropped the scoped_with_init_fs() wrapper around the share_config_resolve_path() call because this tree lacks it, and adjusted the include context where <linux/fs_struct.h> is absent. ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/smb/server/mgmt/share_config.c | 43 +++++++++++++++++++++++++++++--
- fs/smb/server/mgmt/share_config.h |  2 ++
- fs/smb/server/vfs_cache.c         | 12 +++++----
- 3 files changed, 50 insertions(+), 7 deletions(-)
+ fs/smb/server/vfs_cache.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/fs/smb/server/mgmt/share_config.c b/fs/smb/server/mgmt/share_config.c
-index 04e8c11e865e9..fee0b784e2f1c 100644
---- a/fs/smb/server/mgmt/share_config.c
-+++ b/fs/smb/server/mgmt/share_config.c
-@@ -8,6 +8,7 @@
- #include <linux/slab.h>
- #include <linux/rwsem.h>
- #include <linux/parser.h>
-+#include <linux/dcache.h>
- #include <linux/namei.h>
- #include <linux/sched.h>
- #include <linux/mm.h>
-@@ -50,6 +51,7 @@ static void kill_share(struct ksmbd_share_config *share)
- 		path_put(&share->vfs_path);
- 	kfree(share->name);
- 	kfree(share->path);
-+	kfree(share->real_path);
- 	kfree(share);
- }
- 
-@@ -124,6 +126,43 @@ static int parse_veto_list(struct ksmbd_share_config *share,
- 	return 0;
- }
- 
-+static int share_config_resolve_path(struct ksmbd_share_config *share)
-+{
-+	char *buf, *path;
-+	int ret;
-+
-+	ret = kern_path(share->path, 0, &share->vfs_path);
-+	if (ret)
-+		return ret;
-+
-+	buf = kmalloc(PATH_MAX, KSMBD_DEFAULT_GFP);
-+	if (!buf) {
-+		ret = -ENOMEM;
-+		goto out;
-+	}
-+
-+	path = d_path(&share->vfs_path, buf, PATH_MAX);
-+	if (IS_ERR(path)) {
-+		ret = PTR_ERR(path);
-+		goto out_buf;
-+	}
-+
-+	path = kstrdup(path, KSMBD_DEFAULT_GFP);
-+	if (!path) {
-+		ret = -ENOMEM;
-+		goto out_buf;
-+	}
-+
-+	share->real_path = path;
-+	share->real_path_sz = strlen(path);
-+out_buf:
-+	kfree(buf);
-+out:
-+	if (ret)
-+		path_put(&share->vfs_path);
-+	return ret;
-+}
-+
- static struct ksmbd_share_config *share_config_request(struct ksmbd_work *work,
- 						       const char *name)
- {
-@@ -212,12 +251,12 @@ static struct ksmbd_share_config *share_config_request(struct ksmbd_work *work,
- 				goto out;
- 			}
- 
--			ret = kern_path(share->path, 0, &share->vfs_path);
-+			ret = share_config_resolve_path(share);
- 			ksmbd_revert_fsids(work);
- 			if (ret) {
- 				ksmbd_debug(SMB, "failed to access '%s'\n",
- 					    share->path);
--				/* Avoid put_path() */
-+				/* No path reference is retained on failure. */
- 				kfree(share->path);
- 				share->path = NULL;
- 			}
-diff --git a/fs/smb/server/mgmt/share_config.h b/fs/smb/server/mgmt/share_config.h
-index d4ac2dd4de204..baa9f9ed91cde 100644
---- a/fs/smb/server/mgmt/share_config.h
-+++ b/fs/smb/server/mgmt/share_config.h
-@@ -16,8 +16,10 @@ struct ksmbd_work;
- struct ksmbd_share_config {
- 	char			*name;
- 	char			*path;
-+	char			*real_path;
- 
- 	unsigned int		path_sz;
-+	unsigned int		real_path_sz;
- 	unsigned int		flags;
- 	struct list_head	veto_list;
- 
 diff --git a/fs/smb/server/vfs_cache.c b/fs/smb/server/vfs_cache.c
-index 2621d2cffe619..b1ee76949a2ea 100644
+index b1ee76949a2ea..52389fff3d4a0 100644
 --- a/fs/smb/server/vfs_cache.c
 +++ b/fs/smb/server/vfs_cache.c
-@@ -1355,6 +1355,8 @@ void ksmbd_free_global_file_table(void)
- int ksmbd_validate_name_reconnect(struct ksmbd_share_config *share,
- 				  struct ksmbd_file *fp, char *name)
- {
-+	const char *share_path = share->real_path;
-+	size_t share_path_sz = share->real_path_sz;
- 	char *pathname, *ab_pathname;
- 	int ret = 0;
- 
-@@ -1371,14 +1373,14 @@ int ksmbd_validate_name_reconnect(struct ksmbd_share_config *share,
- 	if (name) {
- 		size_t len = strlen(ab_pathname);
- 
--		if (len == share->path_sz && !strncmp(ab_pathname, share->path, len)) {
-+		if (len == share_path_sz && !strncmp(ab_pathname, share_path, len)) {
+@@ -1377,6 +1377,10 @@ int ksmbd_validate_name_reconnect(struct ksmbd_share_config *share,
  			/* the durable fp is the share root itself */
  			if (name[0])
  				ret = -EINVAL;
--		} else if (len <= share->path_sz ||
--			   strncmp(ab_pathname, share->path, share->path_sz) ||
--			   ab_pathname[share->path_sz] != '/' ||
--			   strcmp(&ab_pathname[share->path_sz + 1], name)) {
-+		} else if (len <= share_path_sz ||
-+			   strncmp(ab_pathname, share_path, share_path_sz) ||
-+			   ab_pathname[share_path_sz] != '/' ||
-+			   strcmp(&ab_pathname[share_path_sz + 1], name)) {
- 			ret = -EINVAL;
- 		}
- 		if (ret)
++		} else if (share_path_sz == 1 && share_path[0] == '/') {
++			if (ab_pathname[0] != '/' ||
++			    strcmp(ab_pathname + 1, name))
++				ret = -EINVAL;
+ 		} else if (len <= share_path_sz ||
+ 			   strncmp(ab_pathname, share_path, share_path_sz) ||
+ 			   ab_pathname[share_path_sz] != '/' ||
 -- 
 2.53.0
 
