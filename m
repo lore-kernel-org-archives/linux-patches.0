@@ -1,42 +1,42 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795620010;
-	b=kQif0bkkUb81JF+l6Bx87uoDiM2+SCK3oUrxZLAqEe8UcYf8KhzgC9N/T1NFKshmPpNT
-	 ThlenqQ6hwzfbkRVFIyitVJrCCG7msI0zoi5f26g8YeVbt+wlAkzbWRMv+42suXSAeOLT
-	 Yj3RyYHBtiEk2YBNCQe0jkaO3bQ7FHeFbJLl21pgvF+WtpgULJzlf/XMJb2RqClnAxuY2
-	 vt3fneW3zcfj6QITen1wWCxf5Hf/HPCMJbq92++fW6B35FIfr7b86Ft3UZXOF88KyTJP7
-	 BzwIDsjISRL932RuFX775D8TvlPqNZRc9VPJ4J9JYAn6gJkAlicTv3KydSDSBC9GZDA==
+	t=1795620013;
+	b=z6RstgCSZUvSaJf1W7sf0jIngCywWo274wPvXJuBZtngY+O7IyV/JKXDBPF9P+UW7KEo
+	 wj98h9qMNfAZN4A1aHAQqsSvltw31Xqz8PNXPrpknJdZnLWPRV+q43SNH0Qkgytjf8lbf
+	 nS4M1TVNOZOiKfPQcmrzwkyjTuQz1VDLC+oRfgo4XPZDDwbQsmojJ7DZvzlwWNcTTY5jy
+	 7VfmmE4MefGRCqtcRwFh7qKBYBNs2CZNwYsZWQYgQhR1YVmrj/3Y0iCofcglVW/JGMswH
+	 e88YshLt63QS8iOCZkNGcACe2wKDB3hKMOGUVrIR15oshNl4M1vTjXRlddQw2HVjSGg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795620010;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795620013;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=Z0nOLLchb9z3e+hSQNhdKJboZ/PjqT5Oi5zTXQpL9ss=;
-	b=o4TCmmwn4Gg2z2C1DygX7uVChQAKXsUb8RSLgXW1BszEAo6+qJUdR0A24uMFjm9k2bVO
-	 +vz/Rhd0CFJ8uf0m74J7L+W72W/wgyDoiZl7EF1G/IZJ1zKxnTfsA0fyMAgZYwsqftnny
-	 wz/VybkmnTNihENdbVB5wkISaTRnFgORjN5UTGNvRy+3yF0Lh93zT8E+/WC4Ij6nCe+xv
-	 REhVxCCfxVMDDdBW7Qcsk0SpZkSKV7O1Lkcu/P2UzQVkdQvxiHbgotYmmvgaxdc2AWwBr
-	 f2H+HQBDRhVB1eW2GhNOOWoZTeZiL4Qi9ojxM0qiaSQB4FlZ1nNA2+pU4m3/QpydBaQ==
+	bh=r+xk287JjGhrN6RHzK6Msa2C30y9Ovm27Sk6HEgvuGg=;
+	b=CXM89m9SJI4h0g70Hzt78/ESkuxUJ1FmUA52grU84X335r040snSxFbU2rlbsvsP3mu4
+	 9KDXliMQ7IezUwW8e3IyHJSUBjUZTvpjx7F4k0G7ON2VNwfbO767HVOM/kwA8PQUh9/mk
+	 v22C8Kqb6Gan85hXXmpF5vNqU46t08Qmb5vW2cqfac+sdWADmbQP1ruU/FHVovGG6sRMB
+	 jZkdIeQeZTE3SCv5otJmMW07g5egNzvjVaCGYXetzDtdnCQwHtpbTiyplaEfi688NVBBB
+	 OzGpmun7sg36q3Eatq9yzI7cjbbrBVMwuBEL/m/xadZFfiLMZVghHIrHo2/K9qhPooQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="uHmwNbF/";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=XjXC11Tu;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 46ABC606A323;
-	Wed, 25 Nov 2026 15:20:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 18FDF606A323;
+	Wed, 25 Nov 2026 15:20:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=uHmwNbF/
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 585101F000C6;
-	Wed, 25 Nov 2026 15:20:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=XjXC11Tu
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6A94A1F000C4;
+	Wed, 25 Nov 2026 15:20:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795620009;
-	bh=Z0nOLLchb9z3e+hSQNhdKJboZ/PjqT5Oi5zTXQpL9ss=;
+	s=korg; t=1795620013;
+	bh=r+xk287JjGhrN6RHzK6Msa2C30y9Ovm27Sk6HEgvuGg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=uHmwNbF/xAHJZRKwj9Mxsv9bKOzTuOdrdJmfISvqymWXt/sj+c38kH4mS+Ugm17w0
-	 4InIoDmADJxyhA9rKm4X3AmfK9MW0c7su5U7hM/lrjsMs4qlTAYvwopXx9t/1IYKfM
-	 BoAvhLIOrKWU8ini51pXhrXa6oMs2+JKSftzWYW0=
+	b=XjXC11Tucg57fdPP9OO0hbovoCVc/zRDLHhgZ74W0ZXY1KXTOFoauUT5eYUtgonqa
+	 Tom4zgkLPFdAIEoSdHHhL/gPLALx6wmAPF0cF6WzO02ihpWgMvY4Lv4i6e4jeo3niL
+	 uhQ8vQVVkG9agQMnNJ0TpN9hNRaeSxJXfn06Y8DU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -44,9 +44,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Bibo Mao <maobibo@loongson.cn>,
 	Tao Cui <cuitao@kylinos.cn>,
 	Huacai Chen <chenhuacai@loongson.cn>
-Subject: [PATCH 7.3 0778/1005] LoongArch: KVM: Clear device pointer in irqchip destroy callbacks
-Date: Wed, 25 Nov 2026 15:35:16 +0100
-Message-ID: <20261125143839.965828444@linuxfoundation.org>
+Subject: [PATCH 7.3 0779/1005] LoongArch: KVM: Propagate real error code in kvm_pch_pic_create()
+Date: Wed, 25 Nov 2026 15:35:17 +0100
+Message-ID: <20261125143839.988277047@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143821.729802100@linuxfoundation.org>
 References: <20261125143821.729802100@linuxfoundation.org>
@@ -70,73 +70,34 @@ Content-Transfer-Encoding: 8bit
 
 From: Tao Cui <cuitao@kylinos.cn>
 
-commit a9ce1a00afb0402668877d37c04ffd0e53d48832 upstream.
+commit 20f3bf3d3dce16f43b82881293586ce7d73982b6 upstream.
 
-The destroy callbacks of the four irqchip devices free the device
-structure without clearing kvm->arch.{ipi,eiointc,pch_pic,dmsintc},
-leaving a dangling pointer. ops->destroy() is not only called at VM
-teardown but also when KVM_CREATE_DEVICE succeeds and the following
-anon_inode_getfd() fails (e.g. under RLIMIT_NOFILE); the VM stays
-alive, kvm_arch_irqchip_in_kernel() still reports true, and interrupt
-injection dereferences the freed device.
-
-Clear the pointer when destroying.
+The real error code of kvm_setup_default_irq_routing() is replaced by
+kvm_pch_pic_create() with a fixed -ENOMEM. Return the actual error code,
+as kvm_eiointc_create() already does; while the kvm_ipi_create() case is
+fixed separately by "Return the actual error code in kvm_ipi_create()"
+(Chaithanya Lagisetty).
 
 Cc: stable@vger.kernel.org
-Fixes: c532de5a67a7 ("LoongArch: KVM: Add IPI device support")
-Fixes: 2e8b9df82631 ("LoongArch: KVM: Add EIOINTC device support")
 Fixes: e785dfacf7e7 ("LoongArch: KVM: Add PCHPIC device support")
-Fixes: 229132c309d6 ("LoongArch: KVM: Add DMSINTC device support")
 Reviewed-by: Bibo Mao <maobibo@loongson.cn>
 Signed-off-by: Tao Cui <cuitao@kylinos.cn>
 Signed-off-by: Huacai Chen <chenhuacai@loongson.cn>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/loongarch/kvm/intc/dmsintc.c |    1 +
- arch/loongarch/kvm/intc/eiointc.c |    1 +
- arch/loongarch/kvm/intc/ipi.c     |    1 +
- arch/loongarch/kvm/intc/pch_pic.c |    1 +
- 4 files changed, 4 insertions(+)
+ arch/loongarch/kvm/intc/pch_pic.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/arch/loongarch/kvm/intc/dmsintc.c
-+++ b/arch/loongarch/kvm/intc/dmsintc.c
-@@ -166,6 +166,7 @@ static void kvm_dmsintc_destroy(struct k
- 		return;
- 
- 	kfree(dev->kvm->arch.dmsintc);
-+	dev->kvm->arch.dmsintc = NULL;
- 	kfree(dev);
- }
- 
---- a/arch/loongarch/kvm/intc/eiointc.c
-+++ b/arch/loongarch/kvm/intc/eiointc.c
-@@ -675,6 +675,7 @@ static void kvm_eiointc_destroy(struct k
- 
- 	kvm = dev->kvm;
- 	eiointc = kvm->arch.eiointc;
-+	kvm->arch.eiointc = NULL;
- 	mutex_lock(&kvm->slots_lock);
- 	kvm_io_bus_unregister_dev(kvm, KVM_IOCSR_BUS, &eiointc->device);
- 	kvm_io_bus_unregister_dev(kvm, KVM_IOCSR_BUS, &eiointc->device_vext);
---- a/arch/loongarch/kvm/intc/ipi.c
-+++ b/arch/loongarch/kvm/intc/ipi.c
-@@ -444,6 +444,7 @@ static void kvm_ipi_destroy(struct kvm_d
- 
- 	kvm = dev->kvm;
- 	ipi = kvm->arch.ipi;
-+	kvm->arch.ipi = NULL;
- 	mutex_lock(&kvm->slots_lock);
- 	kvm_io_bus_unregister_dev(kvm, KVM_IOCSR_BUS, &ipi->device);
- 	mutex_unlock(&kvm->slots_lock);
 --- a/arch/loongarch/kvm/intc/pch_pic.c
 +++ b/arch/loongarch/kvm/intc/pch_pic.c
-@@ -483,6 +483,7 @@ static void kvm_pch_pic_destroy(struct k
+@@ -444,7 +444,7 @@ static int kvm_pch_pic_create(struct kvm
  
- 	kvm = dev->kvm;
- 	s = kvm->arch.pch_pic;
-+	kvm->arch.pch_pic = NULL;
- 	/* unregister pch pic device and free it's memory */
- 	mutex_lock(&kvm->slots_lock);
- 	kvm_io_bus_unregister_dev(kvm, KVM_MMIO_BUS, &s->device);
+ 	ret = kvm_setup_default_irq_routing(kvm);
+ 	if (ret)
+-		return -ENOMEM;
++		return ret;
+ 
+ 	s = kzalloc_obj(struct loongarch_pch_pic);
+ 	if (!s)
 
 
