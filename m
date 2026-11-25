@@ -1,50 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795619372;
-	b=lb+7Gx1RKzmnaeBNMMpeFLwsalhc5PJnpZuQ3KdoW0YkO9fNG5WU4wZ02oe8VnZ/c1hr
-	 XkoWCx4mkQO5DtHBSFHZAMGOGPCkx9LnaFJCuQdzd42sDr56KKenK8Ed7B2p0CpoLGGJE
-	 97qj1j9VXjxL0qn2jWmK1G0Pi+7jmN8q//Y69k9QGOSpVz7WBh3HivomUBGne2jLVAKUT
-	 A6zmp1F2rhPpgUjmSUeeEdIVPFRNHgAir1d55cKlZk92qg+DWI1zCs0FymUTmyMesnUba
-	 cpGBC/kcyUmhn3QFmNhNhomyPZHFLkK4pvqEDl6cTSeKhUy/FrFLkVUYNHrtW81rlhQ==
+	t=1795619376;
+	b=xLqVC9vrG01GwHM4VxspjzRhoXdxWC6oLYbXMSuA5NKyX0k3bjEYEKvLPmiz3CMiJo+G
+	 VnVHmxN5i0QpXKDHsI5Y2EzyAlTumHuUtWcxvtn13T2PR8Bo12Jy99hFM7YHzIKlCk08D
+	 aAh5URe969H6dZVH5KTObNoTrGw9f72KflTJD/Bykl1Q5g4SvTCs0FyRWmaEGbVLnvXVs
+	 1OBU88KuFcg2bg0l1TRVnIvmPULyefvy/RZpp07GQta20B2nAn0/TDZdFE1tlOIJOxcNp
+	 Z122YgIBtz66StUxMTjdMij4WAzxCtsY8b9ERJjKREvcFZsf6suj2kZKCU1e2BymKIw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795619372;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795619376;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=W6G+0VZY5FYa+TpFRLmIydB95e25gPjPOYi+0gntYLI=;
-	b=3T/v4EC8CVNamS2WJhJz2KJgkD1jWzlNNcrcJto1h9dJiaBUSCp3BfnDeFD6KjfDKf5W
-	 05QVZopfq/TMD5Dg84VzDCLvlj3H2fuaZ5nUI+rLtzbgrV9Nx+wG8ZQHHzVRyqxHOwNQs
-	 GBxv6Srqj0MoF1pRUFBjPMMA4RrE0fbY/0EpMzoI++xXCxvre7BRlw4kDnF089iD1g5rl
-	 XEyExJir8bYrYDJPLux5FU2840wZZczVwWgYz3/D4PzeqZ7wD95upyM5dPczBdNe+QFqh
-	 QEh0KSUVgq743xBGkYur8tcRzk52JXZv2IXeP2xW9GLwq3TbcBRMcuTm91ZDuu8t7fA==
+	bh=DNuwflf6zkLdz0vlFKrQ+4DfdOlFAt9zQ3q8OcgytJI=;
+	b=yVNGE9k1HOvIIKnyCRaVgiq/eR6pe0KDqekOhSlVQdeTCMg4Jr8x/1hpoC7xkMmVk0LA
+	 6ouW7bx2ZT3tQ42actmi6xtlLmsTqhbDl1QaYURa/xoOH9o1izz4k5OMUmnyHhsGTlwVY
+	 dCpZK9Dw2lFLHg/Q/8whYbeWf0VPs6R3boeEg1fVVePBuYi56v5eKGf4gjUDomY2fEX8M
+	 E/FeEKbEvv5zBw3k+3BAthte+C2F79gifCgqMVKWr5IluXw6XXx70hp5Wp9uVzMYt0fvd
+	 Ogwai+yszSfq/m7B6177WEgXLCaykQZJqRwNPglYWWFHp7HGuEfdpbcJ+jhD2aRXsRg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=1JpeoTKM;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=wzFcygow;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4DD97606A323;
-	Wed, 25 Nov 2026 15:09:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EF4BE606A31E;
+	Wed, 25 Nov 2026 15:09:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=1JpeoTKM
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 820971F000CF;
-	Wed, 25 Nov 2026 15:09:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=wzFcygow
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EE9991F000C0;
+	Wed, 25 Nov 2026 15:09:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795619372;
-	bh=W6G+0VZY5FYa+TpFRLmIydB95e25gPjPOYi+0gntYLI=;
+	s=korg; t=1795619375;
+	bh=DNuwflf6zkLdz0vlFKrQ+4DfdOlFAt9zQ3q8OcgytJI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=1JpeoTKMcOZn+9z3BkA4T5s4xh4vQNAE5JaOOgHPK2z1XigWgKYqSw1ptcauJOtVE
-	 +6cwdawVc1fSHLupZvkxrv9frg8Z5BjlhSOn1J2pr5kG8Sqx5nYQvPjxroGqVGWU1+
-	 uj08iV6Cc0JqKcTLrAfaFOfC7jXFdx0wDOB5Myc4=
+	b=wzFcygowwwehynI3tPDKMKu9tRBhDD5qnjfDiDvqbeItENBveFHJ8ludpsq5CQDuR
+	 AF1wKbZFdP3WHr+242aMQ6fbbWVb92PRwkUcvXb3LtmpoX2r7CJJEm3SeilBtKX6XT
+	 bcP4+RXvQCUV2WUxRipJjjfTRjb6Qf6btR/IPDpI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>
-Subject: [PATCH 7.3 0575/1005] kprobes: Validate re-registration earlier in register_kretprobe()
-Date: Wed, 25 Nov 2026 15:31:53 +0100
-Message-ID: <20261125143835.218017980@linuxfoundation.org>
+	Olivier Louvignes <olivier@mgcrea.io>,
+	Ulf Hansson <ulfh@kernel.org>
+Subject: [PATCH 7.3 0576/1005] mmc: jz4740: Remove the host before resetting the controller
+Date: Wed, 25 Nov 2026 15:31:54 +0100
+Message-ID: <20261125143835.241451159@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143821.729802100@linuxfoundation.org>
 References: <20261125143821.729802100@linuxfoundation.org>
@@ -66,158 +67,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Masami Hiramatsu (Google) <mhiramat@kernel.org>
+From: Olivier Louvignes <olivier@mgcrea.io>
 
-commit a553b499f22bf054964d4fd16d136f3d4f836c23 upstream.
+commit 6b8b1e8827837bf4cf1f87219038fddae9e81b0b upstream.
 
-register_kretprobe() only checked for re-registration if rp->kp.addr was
-specified, skipping the check when rp was registered with symbol_name
-and rp->kp.addr was NULL. In that scenario, register_kretprobe()
-proceeded to allocate a new rethook (or kretprobe holder), and when
-register_kprobe(&rp->kp) subsequently failed due to re-registration, the
-error path freed and NULL-ed rp->rh (or rp->rph) on the still-active
-kretprobe, leading to NULL pointer dereferences when the active probe
-was hit.
+jz4740_mmc_remove() masks every interrupt and resets the controller
+before mmc_remove_host(), which removes the card and lets the card's
+driver send its last commands. Those commands then run on a controller
+that was just reset, and can wait out the driver's 5 s request timeout.
 
-Resolve the target address via _kprobe_addr() up-front and check whether
-the probe is already registered at that address via
-check_kprobe_rereg_at() before allocating any resources, and drop the
-WARN_ON_ONCE() in the re-registration check now that re-registration is
-gracefully detected and rejected.
+With an SDIO card that cost 5 s on every unbind: on a HiBy R1 (Ingenic
+X1600, a BCM43430A1 driven by brcmfmac), the CMD52 that
+sdio_release_irq() sends from brcmfmac's remove waited 5.1 s. The
+command had finished (END_CMD_RES set in MSC_STAT), but MSC_IMASK read
+0xffffffff although the request had unmasked END_CMD_RES. MSC_STAT can
+still show IS_RESETTING after jz4740_mmc_reset() returns, so the reset
+most likely completed after that write and undid it.
 
-Link: https://lore.kernel.org/all/179375032568.247640.17429793187163536192.stgit@devnote2/
+Remove the host first, then quiesce the controller, as other host
+drivers do. On the R1, unbinding the Wi-Fi's MSC now takes 0.65 s.
 
-Fixes: 0188b87899ff ("kretprobe: Avoid re-registration of the same kretprobe earlier")
+Fixes: 61bfbdb85687 ("MMC: Add support for the controller on JZ4740 SoCs.")
 Cc: stable@vger.kernel.org
-Signed-off-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
+Signed-off-by: Olivier Louvignes <olivier@mgcrea.io>
+Signed-off-by: Ulf Hansson <ulfh@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/kprobes.c |   72 ++++++++++++++++++++++++++++++-------------------------
- 1 file changed, 40 insertions(+), 32 deletions(-)
+ drivers/mmc/host/jz4740_mmc.c |    5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
---- a/kernel/kprobes.c
-+++ b/kernel/kprobes.c
-@@ -1558,52 +1558,61 @@ _kprobe_addr(kprobe_opcode_t *addr, cons
- 	return addr;
- }
- 
--static kprobe_opcode_t *kprobe_addr(struct kprobe *p)
--{
--	bool on_func_entry;
--
--	return _kprobe_addr(p->addr, p->symbol_name, p->offset, &on_func_entry);
--}
--
- /*
-  * Check the 'p' is valid and return the aggregator kprobe
-  * at the same address.
-  */
--static struct kprobe *__get_valid_kprobe(struct kprobe *p)
-+static struct kprobe *__get_valid_kprobe_at(struct kprobe *p, kprobe_opcode_t *addr)
+--- a/drivers/mmc/host/jz4740_mmc.c
++++ b/drivers/mmc/host/jz4740_mmc.c
+@@ -1151,12 +1151,13 @@ static void jz4740_mmc_remove(struct pla
  {
-+	struct hlist_head *head;
- 	struct kprobe *ap, *list_p;
+ 	struct jz4740_mmc_host *host = platform_get_drvdata(pdev);
  
- 	lockdep_assert_held(&kprobe_mutex);
++	/* The card's driver may still send commands as it goes */
++	mmc_remove_host(host->mmc);
++
+ 	timer_delete_sync(&host->timeout_timer);
+ 	jz4740_mmc_set_irq_enabled(host, 0xff, false);
+ 	jz4740_mmc_reset(host);
  
--	ap = get_kprobe(p->addr);
--	if (unlikely(!ap))
-+	if (unlikely(!addr))
- 		return NULL;
- 
--	if (p == ap)
--		return ap;
+-	mmc_remove_host(host->mmc);
 -
--	list_for_each_entry(list_p, &ap->list, list)
--		if (list_p == p)
--		/* kprobe p is a valid probe */
-+	head = &kprobe_table[hash_ptr(addr, KPROBE_HASH_BITS)];
-+	hlist_for_each_entry_rcu(ap, head, hlist,
-+				 lockdep_is_held(&kprobe_mutex)) {
-+		if (ap == p) {
-+			p->addr = addr;
- 			return ap;
-+		}
-+		if (ap->addr == addr && kprobe_aggrprobe(ap)) {
-+			list_for_each_entry(list_p, &ap->list, list) {
-+				if (list_p == p) {
-+					p->addr = addr;
-+					return ap;
-+				}
-+			}
-+		}
-+	}
+ 	free_irq(host->irq, host);
  
- 	return NULL;
- }
- 
--/*
-- * Warn and return error if the kprobe is being re-registered since
-- * there must be a software bug.
-- */
--static inline int warn_kprobe_rereg(struct kprobe *p)
-+static inline struct kprobe *__get_valid_kprobe(struct kprobe *p)
-+{
-+	return __get_valid_kprobe_at(p, p->addr);
-+}
-+
-+/* Return error if the kprobe is being re-registered */
-+static inline int check_kprobe_rereg_at(struct kprobe *p, kprobe_opcode_t *addr)
- {
- 	guard(mutex)(&kprobe_mutex);
- 
--	if (WARN_ON_ONCE(__get_valid_kprobe(p)))
-+	if (__get_valid_kprobe_at(p, addr))
- 		return -EINVAL;
- 
- 	return 0;
- }
- 
-+static inline int check_kprobe_rereg(struct kprobe *p)
-+{
-+	return check_kprobe_rereg_at(p, p->addr);
-+}
-+
- static int check_ftrace_location(struct kprobe *p)
- {
- 	unsigned long addr = (unsigned long)p->addr;
-@@ -1734,7 +1743,7 @@ int register_kprobe(struct kprobe *p)
- 		return PTR_ERR(addr);
- 	p->addr = addr;
- 
--	ret = warn_kprobe_rereg(p);
-+	ret = check_kprobe_rereg(p);
- 	if (ret)
- 		return ret;
- 
-@@ -2270,20 +2279,19 @@ int register_kretprobe(struct kretprobe
- 	int ret;
- 	int i;
- 	void *addr;
-+	bool on_func_entry;
- 
--	ret = kprobe_on_func_entry(rp->kp.addr, rp->kp.symbol_name, rp->kp.offset);
--	if (ret)
--		return ret;
-+	addr = _kprobe_addr(rp->kp.addr, rp->kp.symbol_name, rp->kp.offset, &on_func_entry);
-+	if (IS_ERR(addr))
-+		return PTR_ERR(addr);
-+
-+	if (!on_func_entry)
-+		return -EINVAL;
- 
--	/* If only 'rp->kp.addr' is specified, check reregistering kprobes */
--	if (rp->kp.addr && warn_kprobe_rereg(&rp->kp))
-+	if (check_kprobe_rereg_at(&rp->kp, addr))
- 		return -EINVAL;
- 
- 	if (kretprobe_blacklist_size) {
--		addr = kprobe_addr(&rp->kp);
--		if (IS_ERR(addr))
--			return PTR_ERR(addr);
--
- 		for (i = 0; kretprobe_blacklist[i].name != NULL; i++) {
- 			if (kretprobe_blacklist[i].addr == addr)
- 				return -EINVAL;
+ 	if (host->use_dma)
 
 
