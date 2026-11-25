@@ -1,51 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795620551;
-	b=lhjCSMKcmOawjd4CiSp67SyQFAbbfpkcl/cTU9+VnFf52cWvvdqB5RtgI6Nm4uOkwlGA
-	 yPlrOvMxOjNVmKXUG4PtrfwBPf3d++8fZ0pYZPGSsM0/RpMmbNcJqfkM9UX/4O9ZwksB5
-	 0q+tCWkDDKKQlosyZlndajSVu4wy6OdRC8jPxxBD6ro0/goU3Oji580YcWkPnkbpmvOLB
-	 BEdN+iiy6YfHU/SGBIQwsPU/hI0L0P3X4lrRygfdxpfEekIRJtD5NDuxyWwx1NYsJQrFZ
-	 o8Tny3Ua3i7oVLHhPBP/6GYe8i0kUV47+Ekr4uGG255oZPcbo6/LVcE4YDc90xAiUOA==
+	t=1795620554;
+	b=i04LKd+Bphp7VVg3XTBYsEnlZZ+Q0Zb8Jdcc79vJgXJeS94PuEnTg0r7EqmTrIevs3c1
+	 WuBGPcFadyxOIWt2+vX6hDdMk0mDy0dBdGpkJFvpze1bCSBA7sQHO2JsnAmzzQVmJpod5
+	 yzz4+GIhnk6JpzSLsJZuxsy/EDGsuvA7c5TdaXRZK191lYFLq/fECukWAlQZ6Tq7SokLq
+	 RWVpLNAazsDl+1kdKX+bU0gSwTI9I6t+BEduURX3vIlE0rhf5uR0U309+MiQAAmomIZf/
+	 UNwTKARsNuDoWqAsTE5gVnMHddQ/JNmQw78GCxS7upK5pZkU+MXLyLJbxF0RMV7+dUg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795620551;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795620554;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=2lTPu8EL3m8AlkXwrSJQpQyOPpYeDhZTMLkzadDT9cQ=;
-	b=JDrKnIqHcZOzQs7sD7Leqm+D7ZEhNwmw1K+u8IFcBLg/ClsXEoaoHYyEIhkAx81XRp28
-	 4F3b/cXGKGImbQnarlpMb8ATNoovK9d0UWhyKLh06vl3K8QUl6Q6iWPmtTHwPMRDO/WA8
-	 7eCi/np79FgGjkwd+g9wYw7gt8qxIyZ4j7R3atShzDi7RneFErPW8fL/0qIt7d1ED003C
-	 aZYLZZKMV4mxadl527XTsBsnBr1TSfkTM2Qg2aiLFjakzHae2OqlR/Wwe9QyO974XVPvL
-	 dUXafCGw9RCbPkjflA6KcKrHpLFvJF2cAHNGzj2uw8yvWUqAQoSaBYKm9HNam8aGP8g==
+	bh=l+ryeFzlvNamrx65QQMQJ5n1m7iYC1FUGPfqNO+Umhw=;
+	b=xyTAz76n3CjwjrMWENw7d7Nb5SbETcc9mnfYSva4jThvDRmNS+hp/NLp+gnv5+4pLhF+
+	 dabqWQRJ5xJRB09MJxVlxHabc+qg0EUCmu5NlVasQrSHyDUifpe6JgBIWprC2nrRnoKJn
+	 O49GcxaLxj6dODkQGM0/RrpEfj+JSAiozB5zBNwmWKj4HGb0KENUnqhfsHsEsJy5LRs9/
+	 IOjcPOLx0VtFi2QRx+r0aitHXbyz2/fxZkNwiPaC7Pyh4zqAaL7/LrlWUBEo45imDhBLl
+	 AQfmrCZQIagJwzPFjT/lxgQ9E8e/T+599BUbZeMrgnGXNd3rgrxOj/MvDLDTaRLNJfw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=cxoYxaKj;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=2lMWH+ck;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 39260606A321;
-	Wed, 25 Nov 2026 15:29:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1E951606A321;
+	Wed, 25 Nov 2026 15:29:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=cxoYxaKj
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 88EE91F000C0;
-	Wed, 25 Nov 2026 15:29:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=2lMWH+ck
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 62C1A1F000C6;
+	Wed, 25 Nov 2026 15:29:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795620551;
-	bh=2lTPu8EL3m8AlkXwrSJQpQyOPpYeDhZTMLkzadDT9cQ=;
+	s=korg; t=1795620553;
+	bh=l+ryeFzlvNamrx65QQMQJ5n1m7iYC1FUGPfqNO+Umhw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=cxoYxaKjPbewmMUlyUl9BLhKWK8Xwp2WUYqIBG2BqxP84DD407N+nozrmx35Ez9ik
-	 5//+USfHSMVLDze3smwGLgK2wSZLl8i8+7h8l5WbznbSUC1qJ06QBCLO82LZPRRTFe
-	 gyp/H4C45RP9ze2d4z+kvSeNQE+0ivvGlKAWnYpw=
+	b=2lMWH+ckCDgSGUQZpDTqhMVhGvuTfiD+VV3mYD0BqlsYkCeiBwMSvzdj2ZYpTxB6r
+	 EWFIWICSOKFrvK6LCfl1GEhF9JHA0zA3sn9oAV3qD3Dvt++WXm4NGgzE0Lj57QLqDP
+	 /fwjUAo3h8R3CJj4HtUoGOU3RJd2xYkAeKzhwNEM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Maksim Salau <maksim.salau@gmail.com>,
+	syzbot+763813d65c7e18c1b6d5@syzkaller.appspotmail.com,
 	Johan Hovold <johan@kernel.org>
-Subject: [PATCH 7.3 0955/1005] USB: serial: upd78f0730: fix NULL-deref on hangup
-Date: Wed, 25 Nov 2026 15:38:13 +0100
-Message-ID: <20261125143844.043094770@linuxfoundation.org>
+Subject: [PATCH 7.3 0956/1005] USB: serial: io_edgeport: fix NULL-deref on early status
+Date: Wed, 25 Nov 2026 15:38:14 +0100
+Message-ID: <20261125143844.066919126@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143821.729802100@linuxfoundation.org>
 References: <20261125143821.729802100@linuxfoundation.org>
@@ -69,70 +69,54 @@ Content-Transfer-Encoding: 8bit
 
 From: Johan Hovold <johan@kernel.org>
 
-commit 0e0b1fcfb80c0490bda7f7eb633ebb5e431c2e16 upstream.
+commit ae22e9b6412e5dc99e1cf8bd13c6176d44c7d42e upstream.
 
-The port tty pointer is cleared on hangup before deasserting the modem
-control signals and should not be used in the dtr_rts() callback.
+The driver submits the interrupt-in URB during probe or on first port
+open, which on completion may submit the bulk-in URB before all ports
+have been opened and their waitqueues have been initialised.
 
-Factor out a new upd78f0730_port_tiocmset() helper that can be used in
-upd78f0730_dtr_rts() to avoid dereferencing a NULL-pointer on hangup
-(e.g. on disconnect).
+If a (malicious) device sends a status message for a port that has not
+yet been opened this may lead to a NULL-pointer dereference in the
+bulk-in completion handler when attempting to wakeup blocked tasks.
 
-This issue was flagged by an LLM.
+Move waitqueue initialisation from open() to port_probe() to address
+this.
 
-Fixes: ea534e0b4047 ("USB: serial: add uPD78F0730 USB to Serial Adaptor Driver")
-Cc: stable@vger.kernel.org	# 4.11
-Cc: Maksim Salau <maksim.salau@gmail.com>
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Reported-by: syzbot+763813d65c7e18c1b6d5@syzkaller.appspotmail.com
+Link: https://lore.kernel.org/6a8818d8.ae6ddae5.3da009.0031.GAE@google.com
+Cc: stable@vger.kernel.org
 Signed-off-by: Johan Hovold <johan@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/serial/upd78f0730.c |   13 +++++++++----
- 1 file changed, 9 insertions(+), 4 deletions(-)
+ drivers/usb/serial/io_edgeport.c |   10 +++++-----
+ 1 file changed, 5 insertions(+), 5 deletions(-)
 
---- a/drivers/usb/serial/upd78f0730.c
-+++ b/drivers/usb/serial/upd78f0730.c
-@@ -201,10 +201,9 @@ static int upd78f0730_tiocmget(struct tt
- 	return res;
- }
+--- a/drivers/usb/serial/io_edgeport.c
++++ b/drivers/usb/serial/io_edgeport.c
+@@ -877,11 +877,6 @@ static int edge_open(struct tty_struct *
+ 		}
+ 	}
  
--static int upd78f0730_tiocmset(struct tty_struct *tty,
-+static int upd78f0730_port_tiocmset(struct usb_serial_port *port,
- 			unsigned int set, unsigned int clear)
- {
--	struct usb_serial_port *port = tty->driver_data;
- 	struct upd78f0730_port_private *private;
- 	struct upd78f0730_set_dtr_rts request;
- 	struct device *dev = &port->dev;
-@@ -238,6 +237,13 @@ static int upd78f0730_tiocmset(struct tt
- 	return res;
- }
+-	/* initialize our wait queues */
+-	init_waitqueue_head(&edge_port->wait_open);
+-	init_waitqueue_head(&edge_port->wait_chase);
+-	init_waitqueue_head(&edge_port->wait_command);
+-
+ 	/* initialize our port settings */
+ 	edge_port->txCredits = 0;	/* Can't send any data yet */
+ 	/* Must always set this bit to enable ints! */
+@@ -2965,6 +2960,11 @@ static int edge_port_probe(struct usb_se
+ 		return -ENOMEM;
  
-+static int upd78f0730_tiocmset(struct tty_struct *tty, unsigned int set, unsigned int clear)
-+{
-+	struct usb_serial_port *port = tty->driver_data;
+ 	spin_lock_init(&edge_port->ep_lock);
 +
-+	return upd78f0730_port_tiocmset(port, set, clear);
-+}
++	init_waitqueue_head(&edge_port->wait_open);
++	init_waitqueue_head(&edge_port->wait_chase);
++	init_waitqueue_head(&edge_port->wait_command);
 +
- static int upd78f0730_break_ctl(struct tty_struct *tty, int break_state)
- {
- 	struct upd78f0730_port_private *private;
-@@ -267,7 +273,6 @@ static int upd78f0730_break_ctl(struct t
+ 	edge_port->port = port;
  
- static void upd78f0730_dtr_rts(struct usb_serial_port *port, int on)
- {
--	struct tty_struct *tty = port->port.tty;
- 	unsigned int set = 0;
- 	unsigned int clear = 0;
- 
-@@ -276,7 +281,7 @@ static void upd78f0730_dtr_rts(struct us
- 	else
- 		clear = TIOCM_DTR | TIOCM_RTS;
- 
--	upd78f0730_tiocmset(tty, set, clear);
-+	upd78f0730_port_tiocmset(port, set, clear);
- }
- 
- static speed_t upd78f0730_get_baud_rate(struct tty_struct *tty)
+ 	usb_set_serial_port_data(port, edge_port);
 
 
