@@ -1,54 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795622010;
-	b=KdMrBLfZj0ntiiF8CjPFNR8iUqEUZ4lPzUt+RsGWpDHwefVgOZE8EBOv0TjrPFMeEybR
-	 NpaG4a4NYcMzEgDH4ybD4VaNx0LH6cqMVNBvevjhc3GWpAzmxTugNIUlh9eOj5iZ29/FO
-	 gFhVDp4iN80k/nwiAltoku0OnUENJYUQEa8V85i72IHBcU9r4zplSIh06qx4hr571GLsL
-	 lZWwI374NIvBqLIoT4zHDF110B+hNtsf4FdHb5pcu2VaO9gHHHRhk2Kg1tEIqEpiGZNaW
-	 UT++fZgIf0wy8g/oUJtrBhlGQWixcMjnyEu8FqDKBRqE0H1HNM91uJbtFW7PqMcpjag==
+	t=1795622013;
+	b=LQ3NpItdM135aGuXpKr+qqbOQj5d8ahCTeCHyJ83q60oRgLrHj9NkfeqHlQ0akI1vBCS
+	 kXXWeCdUnPM5Zzhpy5eppAU1fXqyjDFNfUVijGWekek84LLWEpZ/yiqvZe2WEO7Uo0UDO
+	 a2qjDWek4Q1IvEdpDedn8dqi4Xeg2D4c2kiKWFu+kq0s7xBiis3g8a9PZN7pX0QIXE5LD
+	 LTqO2LBKg0+73De0GD/qcQJm/5XxN5AJIamfUG/567IKSOIQognrk0cLD5ZDrrRvNJdy2
+	 NhtdA5HWNXdQRqE4lvw5sn1W0A+g8cAUPWyVmk5HmHAosX1B2H9bgPqk21Yk5rjRjOw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795622010;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795622013;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=qXsAnBXS/MlxCxpSoN7shTWr/F2ZziAomRSuKZy3EZ0=;
-	b=4sxM5eW+oa9JSYfYF0FwLLG0iiNlE/NR6RQ0YEQqBVFosksIQvbzC4UKSTZje0ePZTKA
-	 1APGjCNHY3+yoOJJpHi/ayd/LN98GPP7lZ4VjK1StrDALTuHUr8KnFijjT5kNPxffRT/X
-	 xQvVa6rpRk7U8CFYi1cAT1aZjkGwB5svAX6pE88jDTmTBZ6VFR5420rOdrraERbOMCqru
-	 NKYgqeIvnD+YY9MiLyG8gdNQ2yHhdsA31Un1GiTixIOA3ZDTROFcDRIbtSiHZfBxHuVED
-	 h5M+GNuk5+2GvrLLQ82/RMhjWAcDuIUoo3tWdpPfyQITGXCcj3EGAVwH0QrlfEwfZlw==
+	bh=+5VzSrWJ5dgJnnjR5nhBLJ5aJJWf8hDfzPz1W1LHRAc=;
+	b=D0FsootT5TLRVnLG6EmIOjG0U83lLhWLNPFp9XqZ4fbI8Ye8J7Xmc5ntfjwM3JYWrsui
+	 BLxANpxqO1M6ZfPJTrquxI8VdkquLD7oDLIXmVcML2Aez0NekA5WvNj6kGsoY4gqJdrB9
+	 GH2B8lSCC3DexCWVEEpf0SbjPwzCzy2zTCk2W1tYCzuIY+AOKq6vutZ31tKalmkTeP8SF
+	 7+C7KsAg80lfjgeVtnGUoW+qn6DeDCU95JcePlPZyo4aZpbqXQ9ixBaVH3IuEHawQvyC9
+	 WHhmfdNqe4EuYqZ5CW024bN0iRRWEKH1o6a4V1eGuF1HBQ8q8u4NYEGlj6pTDYmsQUg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=xOHsc7pZ;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=UuApOwim;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B4138606A329;
-	Wed, 25 Nov 2026 15:53:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CB140606A323;
+	Wed, 25 Nov 2026 15:53:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=xOHsc7pZ
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 554ED1F000CF;
-	Wed, 25 Nov 2026 15:53:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=UuApOwim
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B68B61F000C0;
+	Wed, 25 Nov 2026 15:53:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795622009;
-	bh=qXsAnBXS/MlxCxpSoN7shTWr/F2ZziAomRSuKZy3EZ0=;
+	s=korg; t=1795622013;
+	bh=+5VzSrWJ5dgJnnjR5nhBLJ5aJJWf8hDfzPz1W1LHRAc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=xOHsc7pZlLB3p/ewtIyxUSYWBm7zQxrsNMb0XB4geszLX+XDUC7JL5qZULvxfCawf
-	 AQCKHd9TqbHSTkqnqGGk4D+xFsxdqEjcYdQ688MKkKvcDwGLI8oF+jvdh6wL3jT9C9
-	 foZFwnJQ7AgcO4H4Ez31tj9+9cYwlIPJlGvX+FwA=
+	b=UuApOwimvScPsHmNdwwAwMeMr/3bLwWKBSm44XS1AqjJLJcic90d+33UR3dc67M+H
+	 xuNF5Yv+bOxMeR/jmwKSHKO14V5wgU205sZakNIm44sYfSR4inNOeSmzUIVNAbKCZE
+	 qQXk6HzJIxINgXqvsVNfjnODoyLJkBk4WSV8BSmA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mohammad Rafi Shaik <mohammad.rafi.shaik@oss.qualcomm.com>,
 	Srinivas Kandagatla <srinivas.kandagatla@oss.qualcomm.com>,
-	Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>,
 	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 357/990] ASoC: dt-bindings: qcom: add LPASS LPI MI2S dai ids
-Date: Wed, 25 Nov 2026 15:28:44 +0100
-Message-ID: <20261125143830.453515047@linuxfoundation.org>
+Subject: [PATCH 6.18 358/990] ASoC: qcom: common: validate cpu dai id during parsing
+Date: Wed, 25 Nov 2026 15:28:45 +0100
+Message-ID: <20261125143830.477108757@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143822.072087159@linuxfoundation.org>
 References: <20261125143822.072087159@linuxfoundation.org>
@@ -72,68 +70,115 @@ Content-Transfer-Encoding: 8bit
 
 From: Srinivas Kandagatla <srinivas.kandagatla@oss.qualcomm.com>
 
-[ Upstream commit e46957f27c6004f3ab5ec456f4e848950364ebc1 ]
+[ Upstream commit d49ee8faefecd4d2eb5c6c9f419f4db9488d68aa ]
 
-Add new dai ids entries for LPASS LPI MI2S and SENARY MI2S audio lines.
+lpass ports numbers have been added but the afe/apm driver never got
+updated with new max port value that it uses to store dai specific data.
+There are more than one places these values are cached and always become
+out of sync.
 
-Co-developed-by: Mohammad Rafi Shaik <mohammad.rafi.shaik@oss.qualcomm.com>
-Signed-off-by: Mohammad Rafi Shaik <mohammad.rafi.shaik@oss.qualcomm.com>
+This will result in array out of bounds and weird driver behaviour.
+
+To catch such issues, first add a single place where we can define max
+port and second add a check in common parsing code which can error
+out before corrupting the memory with out of bounds array access.
+
+This should help both avoid and catch these type of mistakes in future.
+
 Signed-off-by: Srinivas Kandagatla <srinivas.kandagatla@oss.qualcomm.com>
-Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
-Link: https://patch.msgid.link/20260402081118.348071-7-srinivas.kandagatla@oss.qualcomm.com
+Link: https://patch.msgid.link/20260402081118.348071-8-srinivas.kandagatla@oss.qualcomm.com
 Signed-off-by: Mark Brown <broonie@kernel.org>
 Stable-dep-of: 704251f9dad3 ("ASoC: qcom: x1e80100: recreate the headset jack on card rebind")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../bindings/sound/qcom,q6dsp-lpass-ports.yaml       |  5 ++++-
- include/dt-bindings/sound/qcom,q6dsp-lpass-ports.h   | 12 ++++++++++++
- 2 files changed, 16 insertions(+), 1 deletion(-)
+ sound/soc/qcom/common.c      | 6 ++++++
+ sound/soc/qcom/common.h      | 3 +++
+ sound/soc/qcom/lpass.h       | 3 ++-
+ sound/soc/qcom/qdsp6/q6afe.h | 3 ++-
+ sound/soc/qcom/qdsp6/q6apm.h | 3 ++-
+ 5 files changed, 15 insertions(+), 3 deletions(-)
 
-diff --git a/Documentation/devicetree/bindings/sound/qcom,q6dsp-lpass-ports.yaml b/Documentation/devicetree/bindings/sound/qcom,q6dsp-lpass-ports.yaml
-index 08c618e7e4281..2b27d6c8f58f1 100644
---- a/Documentation/devicetree/bindings/sound/qcom,q6dsp-lpass-ports.yaml
-+++ b/Documentation/devicetree/bindings/sound/qcom,q6dsp-lpass-ports.yaml
-@@ -126,13 +126,16 @@ patternProperties:
-             reg:
-               contains:
-                 # MI2S DAI ID range PRIMARY_MI2S_RX - QUATERNARY_MI2S_TX and
--                # QUINARY_MI2S_RX - QUINARY_MI2S_TX
-+                # QUINARY_MI2S_RX - QUINARY_MI2S_TX and
-+                # LPI_MI2S_RX_0 - SENARY_MI2S_TX
-                 items:
-                   oneOf:
-                     - minimum: 16
-                       maximum: 23
-                     - minimum: 127
-                       maximum: 128
-+                    - minimum: 137
-+                      maximum: 148
-         then:
-           required:
-             - qcom,sd-lines
-diff --git a/include/dt-bindings/sound/qcom,q6dsp-lpass-ports.h b/include/dt-bindings/sound/qcom,q6dsp-lpass-ports.h
-index 6d1ce7f5da51c..45850f2d43425 100644
---- a/include/dt-bindings/sound/qcom,q6dsp-lpass-ports.h
-+++ b/include/dt-bindings/sound/qcom,q6dsp-lpass-ports.h
-@@ -140,6 +140,18 @@
- #define DISPLAY_PORT_RX_6	134
- #define DISPLAY_PORT_RX_7	135
- #define USB_RX			136
-+#define LPI_MI2S_RX_0		137
-+#define LPI_MI2S_TX_0		138
-+#define LPI_MI2S_RX_1		139
-+#define LPI_MI2S_TX_1		140
-+#define LPI_MI2S_RX_2		141
-+#define LPI_MI2S_TX_2		142
-+#define LPI_MI2S_RX_3		143
-+#define LPI_MI2S_TX_3		144
-+#define LPI_MI2S_RX_4		145
-+#define LPI_MI2S_TX_4		146
-+#define SENARY_MI2S_RX		147
-+#define SENARY_MI2S_TX		148
+diff --git a/sound/soc/qcom/common.c b/sound/soc/qcom/common.c
+index 7ee60a58a3368..cf1f3a767ceef 100644
+--- a/sound/soc/qcom/common.c
++++ b/sound/soc/qcom/common.c
+@@ -120,6 +120,12 @@ int qcom_snd_parse_of(struct snd_soc_card *card)
  
- #define LPASS_CLK_ID_PRI_MI2S_IBIT	1
- #define LPASS_CLK_ID_PRI_MI2S_EBIT	2
+ 		link->id = args.args[0];
+ 
++		if (link->id >= LPASS_MAX_PORT) {
++			dev_err(dev, "%s: Invalid cpu dai id %d\n", link->name, link->id);
++			ret = -EINVAL;
++			goto err;
++		}
++
+ 		if (platform) {
+ 			link->platforms->of_node = of_parse_phandle(platform,
+ 					"sound-dai",
+diff --git a/sound/soc/qcom/common.h b/sound/soc/qcom/common.h
+index 1b8d3f90bffaf..ee6662885593c 100644
+--- a/sound/soc/qcom/common.h
++++ b/sound/soc/qcom/common.h
+@@ -4,8 +4,11 @@
+ #ifndef __QCOM_SND_COMMON_H__
+ #define __QCOM_SND_COMMON_H__
+ 
++#include <dt-bindings/sound/qcom,q6afe.h>
+ #include <sound/soc.h>
+ 
++#define LPASS_MAX_PORT			(SENARY_MI2S_TX + 1)
++
+ int qcom_snd_parse_of(struct snd_soc_card *card);
+ int qcom_snd_wcd_jack_setup(struct snd_soc_pcm_runtime *rtd,
+ 			    struct snd_soc_jack *jack, bool *jack_setup);
+diff --git a/sound/soc/qcom/lpass.h b/sound/soc/qcom/lpass.h
+index de3ec6f594c11..68b71039b9814 100644
+--- a/sound/soc/qcom/lpass.h
++++ b/sound/soc/qcom/lpass.h
+@@ -14,10 +14,11 @@
+ #include <linux/regmap.h>
+ #include <dt-bindings/sound/qcom,lpass.h>
+ #include <dt-bindings/sound/qcom,q6afe.h>
++#include "common.h"
+ #include "lpass-hdmi.h"
+ 
+ #define LPASS_AHBIX_CLOCK_FREQUENCY		131072000
+-#define LPASS_MAX_PORTS			(DISPLAY_PORT_RX_7 + 1)
++#define LPASS_MAX_PORTS			(LPASS_MAX_PORT)
+ #define LPASS_MAX_MI2S_PORTS			(8)
+ #define LPASS_MAX_DMA_CHANNELS			(8)
+ #define LPASS_MAX_HDMI_DMA_CHANNELS		(4)
+diff --git a/sound/soc/qcom/qdsp6/q6afe.h b/sound/soc/qcom/qdsp6/q6afe.h
+index a29abe4ce4368..0b8c3ec1315ca 100644
+--- a/sound/soc/qcom/qdsp6/q6afe.h
++++ b/sound/soc/qcom/qdsp6/q6afe.h
+@@ -2,8 +2,9 @@
+ 
+ #ifndef __Q6AFE_H__
+ #define __Q6AFE_H__
++#include "../common.h"
+ 
+-#define AFE_PORT_MAX		137
++#define AFE_PORT_MAX		(LPASS_MAX_PORT)
+ 
+ #define MSM_AFE_PORT_TYPE_RX 0
+ #define MSM_AFE_PORT_TYPE_TX 1
+diff --git a/sound/soc/qcom/qdsp6/q6apm.h b/sound/soc/qcom/qdsp6/q6apm.h
+index 7ce08b401e310..5cf538397841a 100644
+--- a/sound/soc/qcom/qdsp6/q6apm.h
++++ b/sound/soc/qcom/qdsp6/q6apm.h
+@@ -14,9 +14,10 @@
+ #include <linux/of_platform.h>
+ #include <linux/jiffies.h>
+ #include <linux/soc/qcom/apr.h>
++#include "../common.h"
+ #include "audioreach.h"
+ 
+-#define APM_PORT_MAX		127
++#define APM_PORT_MAX		LPASS_MAX_PORT
+ #define APM_PORT_MAX_AUDIO_CHAN_CNT 8
+ #define PCM_CHANNEL_NULL 0
+ #define PCM_CHANNEL_FL    1	/* Front left channel. */
 -- 
 2.53.0
 
