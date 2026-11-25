@@ -1,51 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795620798;
-	b=kz3kwesRe5ghs7yOCJ8LGwvnfVnmSO88U76Az9b2cogaH7vV+ItMF0ETbi0CwmnIljcm
-	 dKqNFM3ihFxm1pwrz+VsmAdzfAf25bQJthucBcnrZVYFpUugvU1w/eUNywMLkLHBSPVfM
-	 7ZYgiborL7XQSn7fV9dS82EhZVuTWde5HVLIZGAe4Qkpqxfi8sy903icKqpEvNg4Rio84
-	 EV60f/AdZYm6NDrwBHr9s1oAtLhEcSjH9Gwsc9BEwgc+bSJRBi8GG712gwtynYV5q2lL/
-	 2rd7KrrTzNfC2TlLH3KbJALiCpP7hSdgZwbMnEV7QXtg3OYPv+bdh8O6goFAArzuMjw==
+	t=1795620801;
+	b=z/24biKQALB09JIwDpnPNcFg8esP+1FUHHX0P0MatOXABPKSY1js/X53PYr6M+D1+Me2
+	 u7fCVrGjQ6kwXeBl1BElMQmEM+gp2qWd/T+CJ3YVdN/GgsP/5bRjAlXsE59/R7xY62GmU
+	 uLPV2/nqO052gCANUJtDEgzKgT519cack8/yigA2UHk6XhIpbvYAsPOD72Cejkcc4PKfl
+	 HErasxlLRZ29PfJITa0sAZ5Egw9yDOFJllbZxYdSoWDMFBCiwGaGM71TLcMLkXS6GFa1I
+	 tAcREW49Tdf4rgRS0+c5uJPRvFpw2ehJuqjjfKTMZT97ie2Jt9cQNT3JXDBUeimkR7Q==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795620798;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795620801;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=fM3MKErsqSvz2ca2/13LWfEhivqCjB0UiL9N9v/+gAY=;
-	b=StsQh9NcRkadok2a9Cn5L8JWHL2g+nXkybLB+/JQ0UYkVPAvUEGqqKc5mdboJtMqc2ou
-	 JhmMDfYXT/e44EiQ0SK9XKWO4DAsCi73X/IwGjLhWTQ3u33V2WqQINU932DeB0u62Y/2m
-	 XZlxf0KRtoNs2Pq2O0RNaI4mcIASM/uw7JqaCMpLFIhpk1EZggwYTy5zUFz+H8yCb9CI3
-	 70/DI93ujpEFDrl/rHUZctIbQo4ZEatqAxFRylcRQuP3t32bsZSIEsD8q04qNEnEz/JYj
-	 yPgk2hRLunw1PEVo03NpA/RqM+ZM/6MCl3JaDExreB2KIZ6fQkDgK+NCr+v8VfEaMgg==
+	bh=7y7btWLCb9rewHgFiVBzDtk9gX/BenTNLEWTBkZUzOI=;
+	b=rbyw35xl/RlyqCKVOxEmeARE26doWS+ZpjOKgYIQl1FRRxdn/TTI9WT7ndGhfJSk4Wkd
+	 KkFIe3w8Fv6MDzLbIiX2KgFweJb+ZR8jpy1CKJj7yQapN43nCIaUJHhsHKPUE6wK7S6/l
+	 H3a6yq+Un1LQA3fUNMUixn1hrUwnixYDCZfbehhpNpMvydLP5obvqtMexIXcNr0zGB9VW
+	 a3sTm5Ib4cO5GQQA0djk7C81778kcjzBbhJhTwxEYUq1+jWAVg3NHsj3c5M2A/2H9TfKz
+	 qMq6l7uX5TWxQxSn6uqNEkSiMQp4zQ/o5gVX0b3JsoC62wyRGd8nno9ZOaiGMNhsLkA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=JNnO+UcO;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=DR2Bewyw;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5F346606A323;
-	Wed, 25 Nov 2026 15:33:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 84A6A606A32D;
+	Wed, 25 Nov 2026 15:33:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=JNnO+UcO
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 27FFD1F000C0;
-	Wed, 25 Nov 2026 15:33:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=DR2Bewyw
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8F8121F000D3;
+	Wed, 25 Nov 2026 15:33:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795620797;
-	bh=fM3MKErsqSvz2ca2/13LWfEhivqCjB0UiL9N9v/+gAY=;
+	s=korg; t=1795620801;
+	bh=7y7btWLCb9rewHgFiVBzDtk9gX/BenTNLEWTBkZUzOI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=JNnO+UcOYP/nsOhD15oJgyKMQXLXnOHMKznH/mYvkf+T2noHQyPltVPX/gW+QluS+
-	 PMsoPHIN8Laxax9cfRV6jSXx2DodoSD1Uy6V3sk1jaS/7J44bUHmzmR8lXEmG7DuBY
-	 p2d9AJbG6R+KPK+j6zl8pa/WDV8ZrUpyAtglGtSU=
+	b=DR2BewywNL95bvoKPcWCgGyJyPx39UiG9WPLY7BJBI2VMP76Mqmly/RHIGDxCuly2
+	 thdgM6Y8SllcpOvtacJ/6bOz1dHECLrRX7ry4ngxdvZodpoosvbEvVgUEOTbZ7AhIK
+	 Mq3Ek1diHBzJrYUD7inab8AyIwIS3IuuvJuUcMz8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Gabriele Monaco <gmonaco@redhat.com>,
 	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 027/990] sched: Provide idle_rq() helper
-Date: Wed, 25 Nov 2026 15:23:14 +0100
-Message-ID: <20261125143822.723938029@linuxfoundation.org>
+Subject: [PATCH 6.18 028/990] sched/deadline: Fix server stopping with runnable tasks
+Date: Wed, 25 Nov 2026 15:23:15 +0100
+Message-ID: <20261125143822.748141744@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143822.072087159@linuxfoundation.org>
 References: <20261125143822.072087159@linuxfoundation.org>
@@ -67,114 +68,81 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Peter Zijlstra <peterz@infradead.org>
+From: Gabriele Monaco <gmonaco@redhat.com>
 
-[ Upstream commit 1e0a2ba7afb1b60f02599093d84b72ce62ad11c0 ]
+[ Upstream commit ca1e8eede4fc68ce85a9fdce1a6c13ad64933318 ]
 
-A fix for the dl_server 'requires' idle_cpu() usage, which made me
-note that it and available_idle_cpu() are extern function calls.
+The deadline server can currently stop due to idle although fair tasks
+are runnable. This happens essentially when:
 
-And while idle_cpu() is used outside of kernel/sched/,
-available_idle_cpu() is not.
+ * the server is set to idle, a task wakes up, the server stops
+ * a task wakes up, the server sets itself to idle and stops right away
 
-This makes it hard to make idle_cpu() an inline helper, so provide
-idle_rq() and implement idle_cpu() and available_idle_cpu() using
-that.
+Address both cases by clearing the server idle flag whenever a fair task
+wakes up and accounting also for pending tasks in the definition of idle.
 
+Fixes: f5a538c07df2 ("sched/deadline: Fix dl_server stop condition")
+Signed-off-by: Gabriele Monaco <gmonaco@redhat.com>
 Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
+Link: https://patch.msgid.link/20260113085159.114226-3-gmonaco@redhat.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/sched.h   |  1 -
- kernel/sched/sched.h    | 22 ++++++++++++++++++++++
- kernel/sched/syscalls.c | 30 +-----------------------------
- 3 files changed, 23 insertions(+), 30 deletions(-)
+ kernel/sched/deadline.c | 13 +++++++++----
+ 1 file changed, 9 insertions(+), 4 deletions(-)
 
-diff --git a/include/linux/sched.h b/include/linux/sched.h
-index cf5f57cd95104..d3e1262da4354 100644
---- a/include/linux/sched.h
-+++ b/include/linux/sched.h
-@@ -1915,7 +1915,6 @@ static inline int task_nice(const struct task_struct *p)
- extern int can_nice(const struct task_struct *p, const int nice);
- extern int task_curr(const struct task_struct *p);
- extern int idle_cpu(int cpu);
--extern int available_idle_cpu(int cpu);
- extern int sched_setscheduler(struct task_struct *, int, const struct sched_param *);
- extern int sched_setscheduler_nocheck(struct task_struct *, int, const struct sched_param *);
- extern void sched_set_fifo(struct task_struct *p);
-diff --git a/kernel/sched/sched.h b/kernel/sched/sched.h
-index 3a38b9a2c9bca..ad7b72317f0f2 100644
---- a/kernel/sched/sched.h
-+++ b/kernel/sched/sched.h
-@@ -1361,6 +1361,28 @@ static inline u32 sched_rng(void)
- #define cpu_curr(cpu)		(cpu_rq(cpu)->curr)
- #define raw_rq()		raw_cpu_ptr(&runqueues)
+diff --git a/kernel/sched/deadline.c b/kernel/sched/deadline.c
+index 7064c8985b3db..1c677016115a9 100644
+--- a/kernel/sched/deadline.c
++++ b/kernel/sched/deadline.c
+@@ -1434,7 +1434,7 @@ update_stats_dequeue_dl(struct dl_rq *dl_rq, struct sched_dl_entity *dl_se, int
  
-+static inline bool idle_rq(struct rq *rq)
-+{
-+	return rq->curr == rq->idle && !rq->nr_running && !rq->ttwu_pending;
-+}
-+
-+/**
-+ * available_idle_cpu - is a given CPU idle for enqueuing work.
-+ * @cpu: the CPU in question.
-+ *
-+ * Return: 1 if the CPU is currently idle. 0 otherwise.
-+ */
-+static inline bool available_idle_cpu(int cpu)
-+{
-+	if (!idle_rq(cpu_rq(cpu)))
-+		return 0;
-+
-+	if (vcpu_is_preempted(cpu))
-+		return 0;
-+
-+	return 1;
-+}
-+
- #ifdef CONFIG_SCHED_PROXY_EXEC
- static inline void rq_set_donor(struct rq *rq, struct task_struct *t)
+ static void update_curr_dl_se(struct rq *rq, struct sched_dl_entity *dl_se, s64 delta_exec)
  {
-diff --git a/kernel/sched/syscalls.c b/kernel/sched/syscalls.c
-index b044a3aa4a0ad..1c48d7eefee7b 100644
---- a/kernel/sched/syscalls.c
-+++ b/kernel/sched/syscalls.c
-@@ -190,35 +190,7 @@ int task_prio(const struct task_struct *p)
-  */
- int idle_cpu(int cpu)
- {
--	struct rq *rq = cpu_rq(cpu);
--
--	if (rq->curr != rq->idle)
--		return 0;
--
--	if (rq->nr_running)
--		return 0;
--
--	if (rq->ttwu_pending)
--		return 0;
--
--	return 1;
--}
--
--/**
-- * available_idle_cpu - is a given CPU idle for enqueuing work.
-- * @cpu: the CPU in question.
-- *
-- * Return: 1 if the CPU is currently idle. 0 otherwise.
-- */
--int available_idle_cpu(int cpu)
--{
--	if (!idle_cpu(cpu))
--		return 0;
--
--	if (vcpu_is_preempted(cpu))
--		return 0;
--
--	return 1;
-+	return idle_rq(cpu_rq(cpu));
- }
+-	bool idle = rq->curr == rq->idle;
++	bool idle = idle_rq(rq);
+ 	s64 scaled_delta_exec;
  
- /**
+ 	if (unlikely(delta_exec <= 0)) {
+@@ -1617,8 +1617,8 @@ void dl_server_update(struct sched_dl_entity *dl_se, s64 delta_exec)
+  * | 8 |       B:zero_laxity-wait       |     |    |
+  * |   |                                | <---+    |
+  * |   +--------------------------------+          |
+- * |     |              ^     ^           2        |
+- * |     | 7            | 2   +--------------------+
++ * |     |              ^         ^       2        |
++ * |     | 7            | 2, 1    +----------------+
+  * |     v              |
+  * |   +-------------+  |
+  * +-- | C:idle-wait | -+
+@@ -1663,8 +1663,11 @@ void dl_server_update(struct sched_dl_entity *dl_se, s64 delta_exec)
+  *   dl_defer_idle = 0
+  *
+  *
+- * [1] A->B, A->D
++ * [1] A->B, A->D, C->B
+  * dl_server_start()
++ *   dl_defer_idle = 0;
++ *   if (dl_server_active)
++ *     return; // [B]
+  *   dl_server_active = 1;
+  *   enqueue_dl_entity()
+  *     update_dl_entity(WAKEUP)
+@@ -1779,6 +1782,7 @@ void dl_server_update(struct sched_dl_entity *dl_se, s64 delta_exec)
+  *   "B:zero_laxity-wait" -> "C:idle-wait"        [label="7:dl_server_update_idle"]
+  *   "B:zero_laxity-wait" -> "D:running"          [label="3:dl_server_timer"]
+  *   "C:idle-wait" -> "A:init"                    [label="8:dl_server_timer"]
++ *   "C:idle-wait" -> "B:zero_laxity-wait"        [label="1:dl_server_start"]
+  *   "C:idle-wait" -> "B:zero_laxity-wait"        [label="2:dl_server_update"]
+  *   "C:idle-wait" -> "C:idle-wait"               [label="7:dl_server_update_idle"]
+  *   "D:running" -> "A:init"                      [label="4:pick_task_dl"]
+@@ -1804,6 +1808,7 @@ void dl_server_start(struct sched_dl_entity *dl_se)
+ {
+ 	struct rq *rq = dl_se->rq;
+ 
++	dl_se->dl_defer_idle = 0;
+ 	if (!dl_server(dl_se) || dl_se->dl_server_active)
+ 		return;
+ 
 -- 
 2.53.0
 
