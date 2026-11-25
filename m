@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795621067;
-	b=mrxDdURdxDPGIy93nwNkCz+XvEWYdzDlba9icBqCtDdes8mp9viqVQUUrCZgRJ6fcB0x
-	 QrZguKnDYBxLyTVJM/oDFsPVrcQzFXG4/EerOF6mDwxugQaL+CPsYcsenGe1Flfhc1KO2
-	 d3sjSuDRADF/lU63LZprH3kddJaMzsrtiqA4Z6hbwbsH0nck3eK7dl/o3cJrO0euDIxcj
-	 TMQhmsoAWusPfJ3Z60+r+fXA5laQJL6hClfwSEGbohzs7GEVZ+Kbzuha34ZF6EW2pILua
-	 JhtHE6Z4ALHbMMV9KDqx6BFZrC50hDUyj4iqLoEtydxw0DJTJzlV2ySeimmjJ0tmXWA==
+	t=1795621071;
+	b=VHuRjbt0YyJwRck5YwLRKWhVX6MllalnPhp8N8a8yUkHu32phk1gXTCuUSfmrXxyLIUc
+	 Bd66w+jhY2NCh4OmcFehM40qHaCsCmYdvo5qNyUM0iHYuytI+UO7v9wdQ5GVnL9i2rI9L
+	 251Eaffwjv/gXLzzdHsoKqMQMV5hnhHdcV72aqAqyYHpOL7cEQRqaekyYnyuONPcoLN9n
+	 xEGFduct98/kVNIlyK0Akeye9ru6JdFDJ9JR6S5wtfyS58MGax8aIFbjMSleTVU8go771
+	 JfLpCJF++gLggrtVKinJCpS3FBsXxFZEaTbTAzljh8FcsQ+VV04xY0tTKjMnF0VPvVw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795621067;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795621071;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=+U/jXPM32gVaqRMOuQyuCR3ZVZOR4JJdL1Q4rgsMlds=;
-	b=2YcT8C06geJR1hgBAlbq5uglrdAI4ZtYVMYT+rqKws8rqIFVFcs8692bdeOT4b4ZzSol
-	 VAQ9Kq4Sw+3QF3jT3uXKHwrw6M+YAhJBUUlsCMUVKhYTLF9H/cjTG4EA/CSq9fT5tLUyv
-	 r2oq3iA9GLLO2OZi9Ca7v595yLdJrWP65QhxAzlUXgwebrb5cNSBOP2Y80cZUpO80hHLI
-	 XiD/MlqAH4BIw3gNR854Y7qcq8rTnQLQbh16LzRdYXLGcK861HhNM10ufD2kfPmA8AaFA
-	 OVlwBtxj6dzV1M5kePrtsGitPUPKODeGjPao0918+sPtUfisHux5ws7Nx8WNi9X0Iow==
+	bh=NMCSbjtB8XUc6ZKQ29JAPYVxkj9nmkdww3iXuNOuWk4=;
+	b=oUAaq3bso9Y+aRHf99284Hh7CB5mg+JRpQ2gEz7RhRozd737RHZFKXScDPn2qzkIijvy
+	 C37NJBVRLb8/QV3N9QKO5bz0CAbT0fT29EDb3GsZgEmDOrCKAVbeg/eiaSSMrUv5Aa5GK
+	 cZHv2rnk8OnyAfUNhMD1eteH7WFoFqXwPb+jheWNCRYAYZOAeewcoJk14yJ2DzkdBekpc
+	 yp0ZyIUG7ZkLlR+8fWO0huDn1EU8BtfDM0RrNG7NbaAi7TXEwQlBaSYQIeUvBf4oh9XeH
+	 bAqqc4WJOLUFQPIaiu9Lu7YcfWhTkZWVC13QeAIhtvUf2l0SW10MR/0M6fxE9eL0Czw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=AaGcE2RZ;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="k/L8cdFy";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DC0B8606A321;
-	Wed, 25 Nov 2026 15:37:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EF99D606A31E;
+	Wed, 25 Nov 2026 15:37:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=AaGcE2RZ
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DE0F91F000C6;
-	Wed, 25 Nov 2026 15:37:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=k/L8cdFy
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F2CB71F000C0;
+	Wed, 25 Nov 2026 15:37:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795621067;
-	bh=+U/jXPM32gVaqRMOuQyuCR3ZVZOR4JJdL1Q4rgsMlds=;
+	s=korg; t=1795621070;
+	bh=NMCSbjtB8XUc6ZKQ29JAPYVxkj9nmkdww3iXuNOuWk4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=AaGcE2RZHkaiHpamG9m28XJt/1gPstMJDnYJR3b6iUPvKNScdd2l5XZvTu7b46fWA
-	 DszF0YI7YPvlO5Inl54nZBukzknWOZh3Oam6VexREGhtr70T77/OQJrff/Iiv+L+U9
-	 oXak3pS8gmBgTu1f3cC9xWTay1TvRVhkAE7O/YVQ=
+	b=k/L8cdFy0+U07cK0ufATs2QlJRSZkDwVANUQk27QnTLVCY+7FzAFQrYsTqtQh3oyI
+	 XonyFA14fymvij9EKhJ5gV89A56Ys3WzxRdWZmHKp5Cm6BrBZxzj+EqZVIOdCscseT
+	 9YzU09rTBEC3W0+t8hbLXr63BmP03bPG+xla+Pds=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hongjian Dai <daihongjian@kylinsec.com.cn>,
-	Mark Brown <broonie@kernel.org>,
+	Jiri Olsa <jolsa@kernel.org>,
+	Andrii Nakryiko <andrii@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 108/990] spi: pic32-sqi: fail transfer when the BD ring is exhausted
-Date: Wed, 25 Nov 2026 15:24:35 +0100
-Message-ID: <20261125143824.620332192@linuxfoundation.org>
+Subject: [PATCH 6.18 109/990] bpf: Avoid changing callchain in bpf_get_stack_pe
+Date: Wed, 25 Nov 2026 15:24:36 +0100
+Message-ID: <20261125143824.643389447@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143822.072087159@linuxfoundation.org>
 References: <20261125143822.072087159@linuxfoundation.org>
@@ -68,54 +68,131 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hongjian Dai <daihongjian@kylinsec.com.cn>
+From: Jiri Olsa <jolsa@kernel.org>
 
-[ Upstream commit 2066970324a1439e5a2e08c4599098367f8f82cc ]
+[ Upstream commit 347c1d722e3ea4ffa2850585f5c76c6e551eac83 ]
 
-pic32_sqi_one_transfer() silently stopped programming buffer descriptors
-when ring_desc_get() returned NULL and still returned success. The caller
-then marked the last programmed descriptor as the end of the list and
-started the DMA engine, so the hardware transferred only a prefix of the
-requested data while the message completed with status 0.
+There's no need to modify the trace object bpf_get_stack_pe, we just
+need to pass the needed callchain length in separate argument.
 
-The ring holds PESQI_BD_COUNT (256) descriptors of at most
-PESQI_BD_BUF_LEN_MAX (256) bytes each, so messages larger than 64 KiB (or
-with enough SG entries) can exhaust it. Since the driver sets no
-max_message_size/max_transfer_size, the SPI core does not prevent this.
+This way we can have callchain pointers const and remove the trace->nr
+modification and restoration.
 
-Return -ENOMEM instead, and set msg->status so the failure reaches the
-caller rather than being silently truncated.
+Assisted-by: Codex:GPT-5.5
 
-Fixes: 3270ac230f66 ("spi: pic32-sqi: add SPI driver for PIC32 SQI controller.")
-Signed-off-by: Hongjian Dai <daihongjian@kylinsec.com.cn>
-Link: https://patch.msgid.link/F5276982A630220B+20261017075545.95854-1-daihongjian@kylinsec.com.cn
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Signed-off-by: Jiri Olsa <jolsa@kernel.org>
+Signed-off-by: Andrii Nakryiko <andrii@kernel.org>
+Link: https://lore.kernel.org/bpf/20260803210149.296496-12-jolsa@kernel.org
+Stable-dep-of: 007fd460798b ("bpf: Clamp the trace length in __bpf_get_stack() again")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/spi/spi-pic32-sqi.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ kernel/bpf/stackmap.c | 36 +++++++++++++++---------------------
+ 1 file changed, 15 insertions(+), 21 deletions(-)
 
-diff --git a/drivers/spi/spi-pic32-sqi.c b/drivers/spi/spi-pic32-sqi.c
-index a6b5a0ed99c9e..6061e425d09c5 100644
---- a/drivers/spi/spi-pic32-sqi.c
-+++ b/drivers/spi/spi-pic32-sqi.c
-@@ -297,7 +297,7 @@ static int pic32_sqi_one_transfer(struct pic32_sqi *sqi,
- 		/* get ring descriptor */
- 		rdesc = ring_desc_get(sqi);
- 		if (!rdesc)
--			break;
-+			return -ENOMEM;
+diff --git a/kernel/bpf/stackmap.c b/kernel/bpf/stackmap.c
+index 02b6b0e9cb6ce..2749985910855 100644
+--- a/kernel/bpf/stackmap.c
++++ b/kernel/bpf/stackmap.c
+@@ -541,7 +541,7 @@ const struct bpf_func_proto bpf_get_stackid_proto = {
+ 	.arg3_type	= ARG_ANYTHING,
+ };
  
- 		bd = rdesc->bd;
+-static __u64 count_kernel_ip(struct perf_callchain_entry *trace)
++static __u64 count_kernel_ip(const struct perf_callchain_entry *trace)
+ {
+ 	__u64 nr_kernel = 0;
  
-@@ -387,6 +387,7 @@ static int pic32_sqi_one_message(struct spi_controller *host,
- 		ret = pic32_sqi_one_transfer(sqi, msg, xfer);
- 		if (ret) {
- 			dev_err(&spi->dev, "xfer %p err\n", xfer);
-+			msg->status = ret;
- 			goto xfer_out;
- 		}
+@@ -621,15 +621,15 @@ const struct bpf_func_proto bpf_get_stackid_proto_pe = {
+ 	.arg3_type	= ARG_ANYTHING,
+ };
+ 
+-static u32 callchain_store(struct perf_callchain_entry *trace, void *buf,
+-			   u32 elem_size, u64 flags)
++static u32 callchain_store(const struct perf_callchain_entry *trace, u32 trace_nr,
++			   void *buf, u32 elem_size, u64 flags)
+ {
+ 	bool user_build_id = flags & BPF_F_USER_BUILD_ID;
+ 	u32 skip = flags & BPF_F_SKIP_FIELD_MASK;
+-	u32 trace_nr, copy_len;
+-	u64 *ips;
++	const u64 *ips;
++	u32 copy_len;
+ 
+-	trace_nr = trace->nr - skip;
++	trace_nr = trace_nr - skip;
+ 	copy_len = trace_nr * elem_size;
+ 
+ 	ips = trace->ip + skip;
+@@ -713,7 +713,7 @@ static long __bpf_get_stack(struct pt_regs *regs, struct task_struct *task,
+ 		goto err_fault;
  	}
+ 
+-	trace_nr = callchain_store(trace, buf, elem_size, flags);
++	trace_nr = callchain_store(trace, trace->nr, buf, elem_size, flags);
+ 
+ 	/* trace should not be dereferenced after this point */
+ 	if (may_fault)
+@@ -817,8 +817,8 @@ const struct bpf_func_proto bpf_get_task_stack_sleepable_proto = {
+ 	.arg4_type	= ARG_ANYTHING,
+ };
+ 
+-static int __bpf_get_stack_pe(struct perf_callchain_entry *trace, void *buf, u32 size,
+-			      u64 flags)
++static int __bpf_get_stack_pe(const struct perf_callchain_entry *trace, u32 trace_nr,
++			      void *buf, u32 size, u64 flags)
+ {
+ 	bool user_build_id = flags & BPF_F_USER_BUILD_ID;
+ 	u64 skip = flags & BPF_F_SKIP_FIELD_MASK;
+@@ -834,12 +834,12 @@ static int __bpf_get_stack_pe(struct perf_callchain_entry *trace, void *buf, u32
+ 		return -EINVAL;
+ 
+ 	max_depth = stack_map_calculate_max_depth(size, elem_size, flags);
+-	trace->nr = min_t(u32, trace->nr, max_depth);
++	trace_nr = min_t(u32, trace_nr, max_depth);
+ 
+-	if (trace->nr < skip)
++	if (trace_nr < skip)
+ 		return -EFAULT;
+ 
+-	nr_trace = callchain_store(trace, buf, elem_size, flags);
++	nr_trace = callchain_store(trace, trace_nr, buf, elem_size, flags);
+ 	return callchain_finalize(buf, size, nr_trace, elem_size, flags, false /* !may_fault */);
+ }
+ 
+@@ -847,8 +847,8 @@ BPF_CALL_4(bpf_get_stack_pe, struct bpf_perf_event_data_kern *, ctx,
+ 	   void *, buf, u32, size, u64, flags)
+ {
+ 	struct pt_regs *regs = (struct pt_regs *)(ctx->regs);
++	const struct perf_callchain_entry *trace;
+ 	struct perf_event *event = ctx->event;
+-	struct perf_callchain_entry *trace;
+ 	bool kernel, user;
+ 	int err = -EINVAL;
+ 	__u64 nr_kernel;
+@@ -871,13 +871,7 @@ BPF_CALL_4(bpf_get_stack_pe, struct bpf_perf_event_data_kern *, ctx,
+ 	nr_kernel = count_kernel_ip(trace);
+ 
+ 	if (kernel) {
+-		__u64 nr = trace->nr;
+-
+-		trace->nr = nr_kernel;
+-		err = __bpf_get_stack_pe(trace, buf, size, flags);
+-
+-		/* restore nr */
+-		trace->nr = nr;
++		err = __bpf_get_stack_pe(trace, nr_kernel, buf, size, flags);
+ 	} else { /* user */
+ 		u64 skip = flags & BPF_F_SKIP_FIELD_MASK;
+ 
+@@ -885,7 +879,7 @@ BPF_CALL_4(bpf_get_stack_pe, struct bpf_perf_event_data_kern *, ctx,
+ 		if (skip > BPF_F_SKIP_FIELD_MASK)
+ 			goto clear;
+ 		flags = (flags & ~BPF_F_SKIP_FIELD_MASK) | skip;
+-		err = __bpf_get_stack_pe(trace, buf, size, flags);
++		err = __bpf_get_stack_pe(trace, trace->nr, buf, size, flags);
+ 	}
+ 
+ clear:
 -- 
 2.53.0
 
