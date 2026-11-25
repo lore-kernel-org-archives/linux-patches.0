@@ -1,51 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795626295;
-	b=47dOWJrSd8EV7bXE7LE4H99ocdvNdZHyO2mDMVQuel0k8tUt/RGRcSJZgWq2TS73LJy0
-	 Oja5T80x53jDOSJxwq2MjiikaIHBhcwtIVpI+cJWnsSkO01fbAYmKNadzJW2MDdgTkS6p
-	 6TAdP7ZpFz/0H9ywcdqG6ND2nejYlNn+9l+pXpdS8nmwosVnvbnRYQN5KMY3DYM0hNHjV
-	 OdcvSxHHLmA5oh6H165KI+TDidTHGD08w5a4/RGJ8TKyHdV/g2Zzc5mztMzJ9989nxwOt
-	 6dhNnhFsL8XEkeBnb+ywAzQpb2EO2tGm7xo19r6UTgIpc4aOvfA3fX/LRKBT57Qs6ZA==
+	t=1795626298;
+	b=rUb4ur8qRoZOENnUS73sHPmPU5zZqwNaCamlrrZKh/NPR2poeBCKx0T589sDHwnvSwLX
+	 q/x9Fex2kq4X2zMoM2q80mc2ZNg7XDoHZ4nVjQ8BMfUrJDIsGboqZ5YuP/ySiTSy1Vy2V
+	 lZBFPI48ERXJOQNqxPX1K125IO4fG2S6uYCMesB/w59l49K1Uki83Fjmr21zGG9Ij4CxA
+	 dtiChMreBqjIJKklc5gfPZ9FRu5k5fn/HVnaMzQYk/xvEoAswvm/36Smd1654vTpNzMUT
+	 6/qtFVfpO77Gy4sU17CiTBvGME40AFji9Qjed+jCxahtSCZHSOCZDdocKmYxkd5R21A==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795626295;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795626298;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=2YfG5sqAmhexZVdupP6uDuY4JzqtHqJOD7KB/VP/pS0=;
-	b=IPnZ6qSGOfYsp/WbCF/mOCWBglFWbpSDVQuQF6oO4xK467yNN2g4JCbMR9aBgxS7sJCP
-	 WpCf1l2FE8vaDQFKCQVFzrtW0tMRyqlNbaVG0g4gh9lGpniImCskfjomifLAZADRyxVi7
-	 bqQm2H/D1CqnbJe/KTYoGYsu+OBjGKxT7vCO/OtRU+PWh/6hxij0g5bNKQJ4i/pIDR+wf
-	 nEF+OI6rhunVVXKZ5wwodDJs8Pf68RaBgOklCEilO+owjAb223/UQZlxN0Ni4X3pf1254
-	 QPmE24h+2vp5RTJ5s8y1MlPsfWUzvmAEwl2/4kvvR7lucGas8mbusUFc+EHFSVJUPYA==
+	bh=DdFYz8QQQxSP0TuNAZZWwNyjGz/149GYIYRisKdBamo=;
+	b=5lP9m2Qaq7n6pF6dmapdqJ3Uon6liFaXxhsow6R/tbQN0MQrctpf1YKuqHpk+SRrlGtD
+	 Ff4FIV/T0GrJEidxq5h5Imj/i+M2kOUGdFN0xr2IhyF0PBmiExBmOlfLLfEiVfcRP35y3
+	 YqBzovMvvz2XTkwumQ5yKZdKThPqydUoztJXgVksYCDc9Zay+9puyQU+p8bwYoQn5YaBq
+	 1qbh0RdB0d0mitPVWnvfGdXetVLy+mvyL3g6xeoipaqSAblul0WnbV+0BwBfhiczICA+w
+	 q9Xu5LkBuMfLKjcs/wCZsWCESeL+ya7LSzgp0/5+1RliQbZ3Cvd0mwXgR8Sv+CuAbqw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=iyfBKAQw;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=CbYnCnDs;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9EEE0606A32C;
-	Wed, 25 Nov 2026 17:04:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 78059606A321;
+	Wed, 25 Nov 2026 17:04:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=iyfBKAQw
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F0B091F000D1;
-	Wed, 25 Nov 2026 17:04:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=CbYnCnDs
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C75711F000C0;
+	Wed, 25 Nov 2026 17:04:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795626295;
-	bh=2YfG5sqAmhexZVdupP6uDuY4JzqtHqJOD7KB/VP/pS0=;
+	s=korg; t=1795626298;
+	bh=DdFYz8QQQxSP0TuNAZZWwNyjGz/149GYIYRisKdBamo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=iyfBKAQwK7T2U+vMSTJy8eGWfMSGiczYlde+TzG+H6KH718/iRf0AQa9lzjxN1eui
-	 05157MIMtlooKX2B+RdF1OwjtBW/aoaux01bsb+86Qd5wF9DslJ9Gsq2z405Z4iB2q
-	 eXg//Y8w00TNLhxl2XfMordcbzjUhje7g/GO2KjQ=
+	b=CbYnCnDsuf6VVhdF81YhFRQnmBAUWixX7bCk1Qzj/7J4B3j2eHqEFPI4VwsUTl46u
+	 ZuJWG/qAgBc9OEaWfr5ytDykPMEcnzuMqvwuaQ+1OdAG49YIIHER5sW36ZpS/lTcGQ
+	 0m4QjmzH9nmEpm1jYiJmcDsAKVfhQn/s7stYd2XI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shashank Mohan Jain <jain.sm@gmail.com>,
+	Arnav Kapoor <kapoorarnav43@gmail.com>,
+	Andy Shevchenko <andriy.shevchenko@intel.com>,
 	Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>
-Subject: [PATCH 6.12 795/816] iio: magnetometer: mmc35240: leave cache-only mode before the cache sync
-Date: Wed, 25 Nov 2026 15:39:03 +0100
-Message-ID: <20261125143907.574829371@linuxfoundation.org>
+Subject: [PATCH 6.12 796/816] iio: proximity: sx9324: fix out-of-bounds read of scan period table
+Date: Wed, 25 Nov 2026 15:39:04 +0100
+Message-ID: <20261125143907.597239736@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143849.205329330@linuxfoundation.org>
 References: <20261125143849.205329330@linuxfoundation.org>
@@ -67,70 +68,63 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Shashank Mohan Jain <jain.sm@gmail.com>
+From: Arnav Kapoor <kapoorarnav43@gmail.com>
 
-commit 38e05cf38df705b7fa9e8ada931589fa96816f09 upstream.
+commit 7b5f54280f8e6ef07664f6705dd005feefbe87d1 upstream.
 
-mmc35240_resume() marks the register cache dirty and calls
-regcache_sync_region() while the regmap is still in cache-only mode.
-It calls regcache_cache_only(false) only after the sync. This
-ordering has been wrong since the resume support was added; it happened
-to work until regmap started rejecting a sync in cache-only mode.
+The scan period of the SX9324 is selected by the 5 bit wide
+SX9324_REG_GNRL_CTRL0_SCANPERIOD field, so it has 32 possible values.
+sx9324_scan_period_table[] however only has 16 entries, it was copied
+over from the SX9310 driver where the field is only 4 bits wide.
 
-Since commit afc8e3ee8307 ("regcache: Validate cache_only state in
-regcache_sync_region()") a sync in cache-only mode is refused with a
-WARN and -EINVAL. Every resume now gives
+sx9324_wait_for_sample() indexes the table with the raw field value, so
+all the codes from 16 to 31 read past the end of the array. The default
+value of the register is SX9324_REG_GNRL_CTRL0_SCANPERIOD_100MS (0x16,
+i.e. 22), so the out-of-bounds read happens with the default
+configuration of the device. It is only avoided when the device has an
+interrupt line, as the wait is only done in the polling case.
 
-  WARNING: drivers/base/regmap/regcache.c:536 at regcache_sync_region+0x1a4/0x1c0
-  ...
-   mmc35240_resume+0x30/0x70
-   dpm_run_callback+0x7d/0x1c0
-   device_resume+0x175/0x270
-  ...
-  mmc35240 1-0030: Failed to restore control registers
+The value read is then used as the duration of an msleep() call, so the
+sensor is polled with a completely random delay.
 
-and the control registers are not written. If the chip lost its state
-during suspend, it runs with the reset value of CTRL1 while the cache,
-and with it the sampling frequency attribute, still has the configured
-value. Writing the same frequency again does not repair this, because
-regmap_update_bits() finds no difference to the cache.
+Fill the table with the scan periods of all 32 codes, which are the
+periods documented for the corresponding sx9324_samp_freq_table[]
+entries, and add a static assertion to keep both tables in sync.
 
-Leave cache-only mode first, then mark the cache dirty and sync it.
-
-Reproduced in qemu with the driver bound to an i2c-stub device: set
-in_magn_sampling_frequency to 25 (CTRL1 = 0x02), clear CTRL0 and CTRL1
-of the stub behind the driver's back to emulate the power loss, and run
-a suspend/resume cycle with "devices" in /sys/power/pm_test. Without
-this change CTRL1 is still 0x00 after resume and the warning is
-printed. With it, and also with the regcache commit reverted, CTRL1 is
-0x02 again and there is no warning. Not tested on real hardware.
-
-Fixes: 553a776b7908 ("iio: magnetometer: mmc35240: Add PM sleep support")
-Signed-off-by: Shashank Mohan Jain <jain.sm@gmail.com>
+Fixes: 4c18a890dff8 ("iio:proximity:sx9324: Add SX9324 support")
 Cc: stable@vger.kernel.org
+Signed-off-by: Arnav Kapoor <kapoorarnav43@gmail.com>
+Reviewed-by: Andy Shevchenko <andriy.shevchenko@intel.com>
 Signed-off-by: Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/iio/magnetometer/mmc35240.c |    3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+ drivers/iio/proximity/sx9324.c |   13 +++++++++++--
+ 1 file changed, 11 insertions(+), 2 deletions(-)
 
---- a/drivers/iio/magnetometer/mmc35240.c
-+++ b/drivers/iio/magnetometer/mmc35240.c
-@@ -534,14 +534,13 @@ static int mmc35240_resume(struct device
- 	struct mmc35240_data *data = iio_priv(indio_dev);
- 	int ret;
+--- a/drivers/iio/proximity/sx9324.c
++++ b/drivers/iio/proximity/sx9324.c
+@@ -280,11 +280,20 @@ static const struct {
+ 	{ 0, 250000 },  /* 11111: 4 s */
+ };
  
-+	regcache_cache_only(data->regmap, false);
- 	regcache_mark_dirty(data->regmap);
- 	ret = regcache_sync_region(data->regmap, MMC35240_REG_CTRL0,
- 				   MMC35240_REG_CTRL1);
- 	if (ret < 0)
- 		dev_err(dev, "Failed to restore control registers\n");
++/*
++ * The scan period of the SX9324 is selected by the 5-bit wide
++ * SX9324_REG_GNRL_CTRL0_SCANPERIOD field. The values below are the scan
++ * periods in ms of the corresponding sx9324_samp_freq_table[] entries.
++ */
+ static const unsigned int sx9324_scan_period_table[] = {
+-	2,   15,  30,  45,   60,   90,	 120,  200,
+-	400, 600, 800, 1000, 2000, 3000, 4000, 5000,
++	1, 2, 4, 6, 8, 10, 14, 18,			/* 0x00 - 0x07 */
++	22, 26, 30, 34, 38, 42, 46, 50,			/* 0x08 - 0x0f */
++	56, 62, 68, 74, 80, 90, 100, 200,		/* 0x10 - 0x17 */
++	300, 400, 600, 800, 1000, 2000, 3000, 4000,	/* 0x18 - 0x1f */
+ };
  
--	regcache_cache_only(data->regmap, false);
--
- 	return 0;
- }
- 
++static_assert(ARRAY_SIZE(sx9324_scan_period_table) == ARRAY_SIZE(sx9324_samp_freq_table));
++
+ static const struct regmap_range sx9324_writable_reg_ranges[] = {
+ 	/*
+ 	 * To set COMPSTAT for compensation, even if datasheet says register is
 
 
