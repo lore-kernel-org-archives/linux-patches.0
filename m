@@ -1,53 +1,50 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795623665;
-	b=vnn0Fh5eRt4l3BNim0ckO3vTS7iqJPRBXzF58iyOzxUdUKQQi731io1AQD8oEJyTz7ws
-	 ebf8O99XrkPkghkL5Sw8PCxrOhrbIZY3wTKrwWx3E+NxdgWYb2VxWxy6rEZKnqCy8URv1
-	 kHqu3q99Iqay6BBbKRiCHU/X2OIf2qDOl2ssAmmdfRg5SUb6FPtUa8QLYMe7wolTGrefi
-	 2wVr4KY9lHZEnTnvEdHpE6IGiDxLYbxM5aTQ5nKPbwAhAsrDqTVxy8EireRt8iAgrj3wD
-	 DvQef7GhTMpzvv13J2bdKSCVAC+/u1pgKdo4qoI//dtz0yPgOgTOu/V8jkJBs8E8/Bg==
+	t=1795623669;
+	b=iXZZyZGbOAItwFUoPeVygoBlbL3+vkIhOCHDjjwhMqV/iOcJx3p+7F2ZBMmhDC7w/14S
+	 HAK34DH6eU4Ww/kTnukj3nwGSx27jawtTuJyaB4q2HpOOzeRH2Osem/gZfit1cMixeSK4
+	 go8+JAdhZJ4In0FJVOvdmQfr8wzn0k++AcrsGNDG6qP/NayW92LZweH/1urLQ+ReHra5n
+	 Rjsn13wzAYR0O4QSz31kaG40DPvGmiFWVs3mWb/L83URc1Gpbkh7QfHrKlmraUJpKiCD0
+	 Q4YNgpjzuKHdSFSW4hRxuLW65NdD/sTPGqv/KQ7Aaw90N2Jo+pzv5S/HlKaDhgLrOYg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795623665;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795623669;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Type:Content-Transfer-Encoding;
-	bh=hoePwj5f9rehFV8ypoFR84i/Kw4T5sPjdxSsX3ZvQ4U=;
-	b=OjITGb/fdMD293tYIlYGMIm2pTKPl1C1I091E3X5IYtbLQE7AafBXrfwOBMvb2KeIuhg
-	 WMAS+osp6K0GcWpDzyypB6MyDyajlecUZA7Zbr3LfNUMFmmGKV+x2TofhQIPN+cBmG6qx
-	 CsUvnYUbapCnOLlAQO2wfgF7R1KiTpSoqQenjVWqJItDD7xB/T00/W22/US+4XhelpB+2
-	 4mwnt0r7pwif4LWpEpf/uD2gLZBUvfSr3hu/SU9YX0vf9gkaMO9I/vUMfeqqdLWdNfLIn
-	 vjDN3k+lLDwiO/2nHqtM/aa6o2ke97DiUTyEZmYHcrPMrI49gaNBXyK9Eu1r2p4lQ8w==
+	 MIME-Version:Content-Transfer-Encoding;
+	bh=FbgV9badz7z59x86EiwjaNHoH2lZxp8B6wvOnfTOGTU=;
+	b=BgYgkZE7IoTcTfK9zvywZRF+CUu+Atin/ftBxoe3s028E02LuMX0FRn9hdM0mERzxq4A
+	 6NxIeaNydc3fkp7BustWK3+K0hI470EuyQwbcgsxjnr6IXQXsyeokcJCNrbO+OOu567iV
+	 ny4idXnNIpwopHYJR229aPQWX91/ANc37ITSPXrozQcMEMO29HzUyq4V2m5ZGSFJ5Q7cZ
+	 y2XwUMWBovpGXBO69QnCgwUnYhm+MMmX1IBJn2hA+AbHpSuo5P+IHg83JKcSbqATq01gq
+	 PPgUj/6r6i9gvK7KXOfMikGTookO5YTkH2bc6P8yZfM1n2cyV5s8kWQgtVl0pXbn/fg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=zvOqvXX9;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Tx5SBiQw;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B1E39606A685;
-	Wed, 25 Nov 2026 16:21:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 201D5606A333;
+	Wed, 25 Nov 2026 16:21:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=zvOqvXX9
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8886D1F000D2;
-	Wed, 25 Nov 2026 16:21:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Tx5SBiQw
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E50A91F00A00;
+	Wed, 25 Nov 2026 16:21:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795623665;
-	bh=hoePwj5f9rehFV8ypoFR84i/Kw4T5sPjdxSsX3ZvQ4U=;
+	s=korg; t=1795623668;
+	bh=FbgV9badz7z59x86EiwjaNHoH2lZxp8B6wvOnfTOGTU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=zvOqvXX9HBS3eTpADg4CNv1FTpPNbErTteVVLG9ihxByU7ffyYI4XsQyOKahHAmIN
-	 7DyrgCx98v/nRUDl6Vgig8rQ29lFp8f6O1TulalUh9QHK7YT2F+YDRoggQUTjw17o0
-	 usDXiCESiYiyBInTHgGeD+3npViAwL8rI1HH+TfM=
+	b=Tx5SBiQwf7WNDcHjrck/XRCBBw69qCIbB2NQvUPuoW+HYRkPk4ySJu+11DvY/ohij
+	 kzT5TPdnmyu3rxVyJLVoHYi/qOZrVZchaHvUfysb34qRVhMqoo8F4jHkNp+wLFa6jL
+	 1xCDmyvpJt5tQ6m+bfZSHnc1o0Qu8qOlp9pl7q8E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable <stable@kernel.org>,
-	Josef Bacik <josef@toxicpanda.com>,
-	=?UTF-8?q?Nuno=20S=C3=A1?= <nuno.sa@analog.com>,
-	Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>
-Subject: [PATCH 6.18 888/990] iio: addac: ad74413r: fix the values of set_multiple
-Date: Wed, 25 Nov 2026 15:37:35 +0100
-Message-ID: <20261125143842.812475663@linuxfoundation.org>
+	Mikulas Patocka <mpatocka@redhat.com>
+Subject: [PATCH 6.18 879/990] dm-thin: fix leak if __set_snapshot_details fails
+Date: Wed, 25 Nov 2026 15:37:26 +0100
+Message-ID: <20261125143842.605765242@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143822.072087159@linuxfoundation.org>
 References: <20261125143822.072087159@linuxfoundation.org>
@@ -63,49 +60,46 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Josef Bacik <josef@toxicpanda.com>
+From: Mikulas Patocka <mpatocka@redhat.com>
 
-commit e6dfbd84b833ed595a5236b027357e917de28260 upstream.
+commit dfb95816cf6f2f2660af2ec64c65dc204c60b5e7 upstream.
 
-ad74413r_gpio_set_multiple() walks over the lines in the mask and looks up
-the new value of each with
+If __set_snapshot_details fails, the variable td is leaked - this
+prevents any other snapshot with the same id from being created.
 
-	if (*bits & offset)
+Fix this by removing it from the list and freeing it.
 
-offset is the number of the line, not a bit mask.  Line 0 is always driven
-low, line 1 gets the value meant for line 0, line 2 the one meant for line
-1, and line 3 is driven high if either of these two is.
-
-Test the bit which belongs to the line.
-
-Fixes: fea251b6a5db ("iio: addac: add AD74413R driver")
-Cc: stable <stable@kernel.org>
-Signed-off-by: Josef Bacik <josef@toxicpanda.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Reviewed-by: Nuno Sá <nuno.sa@analog.com>
-Signed-off-by: Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>
+Signed-off-by: Mikulas Patocka <mpatocka@redhat.com>
+Assisted-by: Claude:claude-opus-5
+Cc: stable@vger.kernel.org
+Fixes: 991d9fa02da0 ("dm: add thin provisioning target")
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/iio/addac/ad74413r.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/md/dm-thin-metadata.c |    5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
---- a/drivers/iio/addac/ad74413r.c
-+++ b/drivers/iio/addac/ad74413r.c
-@@ -313,7 +313,7 @@ static int ad74413r_gpio_set_multiple(st
- 			return ret;
+--- a/drivers/md/dm-thin-metadata.c
++++ b/drivers/md/dm-thin-metadata.c
+@@ -1225,10 +1225,13 @@ static int __create_snap(struct dm_pool_
+ 	__close_device(td);
  
- 		real_mask |= BIT(real_offset);
--		if (*bits & offset)
-+		if (test_bit(offset, bits))
- 			real_bits |= BIT(real_offset);
- 	}
+ 	if (r)
+-		goto bad;
++		goto bad2;
  
+ 	return 0;
+ 
++bad2:
++	list_del(&td->list);
++	kfree(td);
+ bad:
+ 	dm_btree_remove(&pmd->tl_info, pmd->root, &key, &pmd->root);
+ 	dm_btree_remove(&pmd->details_info, pmd->details_root,
 
 
