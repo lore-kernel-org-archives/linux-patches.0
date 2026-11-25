@@ -1,52 +1,56 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795618546;
-	b=kc+eE279GHyi7aQp4MROiX6zyDs0ssMJNiZI9ubl6HYy0xWtoveW9PA4hqsdYC1sgYgd
-	 2lvRT4ylIgerpyNYlF5Hj/nUfO2DqCam5TrHuZ+TLBtLzAjcW6Zx1IDN1Udmq2VTxTyRA
-	 eUYyGwM+V+Fb27kYuS15Q/oK+nh1J+zFTq9sRvXaS/gY6KptemBOxgDfEBXii4XaYFo4i
-	 FmmRlW2tGOR3FuwL+3M9h8aViGuYTnBM7by59H/zF+vG6IU9xetA+xEFz5os3Ec8S5puV
-	 4yxq85u3qCiDpGcdU+Hfwa5Z/0bBbJAOcY2jYSDf3C7hKOssM2n30xa/w3drSuvy4og==
+	t=1795618549;
+	b=QitdGeSTCQ1GgN+qAaOd+sHZAAYz3PsppeKAacN4xtfqo/M0fXhJLofE82kN6WnoBh/f
+	 7j/kvQpl1TT4NmbmNDASqwjPcS0u6rjU+SifC3ElMqcqLnPdyA4sxuIXNgqsjJhNYdEcT
+	 dL3fs4uQAizXvIBjFJiD2whxneCLvNOpfjbgsKIXebUk5G/gtDYkljFxJqNZ3jr8etXfF
+	 5l9tawdatFdaYC3GJ41CDxc7kM229tKc4kHih2yKgRftNWbRxbCOFg/0VG+qGQjYX1+sL
+	 tmTj92mvkgmOuPpVBcgnFl/zxTcEfmXqM+oPVSkKPhg1j/p7Uqo39BW4MpjIjdPvDSA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795618546;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795618549;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=PTB3ey1toU443RMnxmKLBIRUCJMMtj4DyJs62boGtu4=;
-	b=tZFGgKjk269sE2934mQlnx2fjN2JGcFeiQZTJuoS5GvFgqohlJRg/PArDyjaGYjdvaNz
-	 iKem4yGhQv2H5W34b5e63K0u31tWhmiN0Rka4rPXC22AUhNbCBbEbg9xznqbw2+7ms7EL
-	 4m3LFBgV/IACGBWD/zUuIHga8VBKEwYRbzSZk3KV+2qOohIHX6iX/0QKduZbZ+BhRQXQR
-	 E6Mf/589U31Dg8D0OdA73z3qoSGzZ3i1a7V9vEcde7slQpiUgdDJZrajGXovQyeAWXqd9
-	 h2joA44YLyq2u6GJO3jQ79TW7IOIptCJs7H3C/DV7SQYuwAmHMTftIDzVJv/bzL6tOA==
+	bh=Ky5/DVWCT+V55W5t+UNuzapzNswg5TrugYch6+vkafU=;
+	b=o6sUiDZgrItQRZKVflwpxZUF6BB9zTnOp7/W5xeAKDsLzRp8TIaAZIv8zXyEbNKqAag/
+	 g/mnDK+ACd8Q8Aqc3gLyk580hhH/8lqp1j9hqzjQVFC2Lr0Yu1F1LQcHfTSp6ci7IlQSG
+	 XZe/WMHRENNjisMBbZEjkZ4fQ4DJ32TjDf30X9mylBFeCFbDGwCoGdBSq1RoHjzvZGeGq
+	 wlHufuLrrqHyWUtMu0pg3C4AM9pwKssKO+OtjGoSoa2//0M5XXTcC76Md78DsBrqmt4j4
+	 9EexcOQtz6t6EGzvJv25tBYCZcHzBU4HAZOu8e86LkPuOE1QXxDwoJBKCGlT2DM4chw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ooDCq4vD;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="Fx/WzDNG";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D71BC606A326;
-	Wed, 25 Nov 2026 14:55:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 78376606A32A;
+	Wed, 25 Nov 2026 14:55:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ooDCq4vD
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BA06E1F000CF;
-	Wed, 25 Nov 2026 14:55:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Fx/WzDNG
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AD0D81F000EF;
+	Wed, 25 Nov 2026 14:55:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795618546;
-	bh=PTB3ey1toU443RMnxmKLBIRUCJMMtj4DyJs62boGtu4=;
+	s=korg; t=1795618549;
+	bh=Ky5/DVWCT+V55W5t+UNuzapzNswg5TrugYch6+vkafU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ooDCq4vDPVsSRTtiE5mwfUPmpeyJO/BlpPGWMxy6Bfj4v9aYOfTVF+7WLzk9zYewt
-	 upK1shc7T8ZeX1qEA7NBTT+Dh+l0isKcVp1MDF/HfDXFiJg6ZMo/vHa9Lut60gBZLf
-	 8HVrKzVZvxozOlb4905Chr+dZM4weRSQHkyYRmFQ=
+	b=Fx/WzDNG3X/d0xVmaMpHdj4w2d6DWtr9aKUamSwUAZZ3wR2/JY7Yr2rYFSuBimy4Z
+	 YpRzoMn93tdeHYp8C3QDUivOpXoYwtiv2C/FSRyJo1OGEauu29W31hzzLZQbnxLxJr
+	 Uidwaap+YCnGlOpF7fDs9OrCvF7Ib9eB7Qm6ziWc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Joseph Kain <jkain@nuro.ai>,
-	Dave Miller <davem@davem-thinkpadp1gen8.ibmlond.csb>,
+	Christoph Hellwig <hch@lst.de>,
+	Sagi Grimberg <sagi@grimberg.me>,
+	Chaitanya Kulkarni <kch@nvidia.com>,
+	Chris Mason <mason@kernel.org>,
+	Jens Axboe <axboe@kernel.dk>,
+	Keith Busch <kbusch@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0269/1005] net: stop defer_count outliving the deferred-free list
-Date: Wed, 25 Nov 2026 15:26:47 +0100
-Message-ID: <20261125143828.040187828@linuxfoundation.org>
+Subject: [PATCH 7.3 0260/1005] nvmet-rdma: take a device off the list last
+Date: Wed, 25 Nov 2026 15:26:38 +0100
+Message-ID: <20261125143827.829205570@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143821.729802100@linuxfoundation.org>
 References: <20261125143821.729802100@linuxfoundation.org>
@@ -68,94 +72,60 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Joseph Kain <jkain@nuro.ai>
+From: Chris Mason <mason@kernel.org>
 
-[ Upstream commit 241dec6f9ab74d8c3ef246764f3611666b96b9e1 ]
+[ Upstream commit 86ae3841aea4e29d7ac08d5614ca3823dc8dfbc9 ]
 
-After the llist conversion, rejected frees retain their counter
-increments. A producer racing the counter reset and list detach can
-also leave a count for an skb already drained. Deferred freeing can
-then remain disabled while the list is empty.
+nvmet_rdma_remove_one() disconnects the queues of a device and flushes
+nvmet-wq, but since commit a3dd7d0022c3 it returns right away if the
+device isn't on device_list. nvmet_rdma_free_dev(), run by the release
+work of the last queue, takes the device off that list first and frees
+the SRQs and the PD afterwards. A device removal in between finds
+nothing on the list, returns, and the RDMA core frees the device under
+ib_dealloc_pd().
 
-Undo rejected reservations and subtract only the number of skbs
-drained. Allow admission up to the configured limit. Retain the
-halfway notification and also notify when the reserved count reaches
-the limit, covering reservations published after an earlier purge.
+Free the SRQs and the PD first and unlist the device last, so the
+remove callback finds it and its flush waits for the release work.
 
-Fixes: 844c9db7f7f5 ("net: use llist for sd->defer_list")
-Signed-off-by: Joseph Kain <jkain@nuro.ai>
-Assisted-by: LLM
-Signed-off-by: Dave Miller <davem@davem-thinkpadp1gen8.ibmlond.csb>
+Fixes: a3dd7d0022c3 ("nvmet-rdma: Don't flush system_wq by default during remove_one")
+Cc: Christoph Hellwig <hch@lst.de>
+Cc: Sagi Grimberg <sagi@grimberg.me>
+Cc: Chaitanya Kulkarni <kch@nvidia.com>
+Reviewed-by: Christoph Hellwig <hch@lst.de>
+Signed-off-by: Chris Mason <mason@kernel.org>
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Signed-off-by: Keith Busch <kbusch@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/core/dev.c    |  8 +++++++-
- net/core/skbuff.c | 17 ++++++++++++++---
- 2 files changed, 21 insertions(+), 4 deletions(-)
+ drivers/nvme/target/rdma.c | 11 ++++++++---
+ 1 file changed, 8 insertions(+), 3 deletions(-)
 
-diff --git a/net/core/dev.c b/net/core/dev.c
-index 6ebba16aff1c8..cc95d271a3ec8 100644
---- a/net/core/dev.c
-+++ b/net/core/dev.c
-@@ -6967,16 +6967,22 @@ static void __skb_defer_free_flush(struct skb_defer_node *sdn, int budget)
- {
- 	struct llist_node *free_list;
- 	struct sk_buff *skb, *next;
-+	long n = 0;
+diff --git a/drivers/nvme/target/rdma.c b/drivers/nvme/target/rdma.c
+index aab43d2aa0485..a1914f9a1b30f 100644
+--- a/drivers/nvme/target/rdma.c
++++ b/drivers/nvme/target/rdma.c
+@@ -1197,13 +1197,18 @@ static void nvmet_rdma_free_dev(struct kref *ref)
+ 	struct nvmet_rdma_device *ndev =
+ 		container_of(ref, struct nvmet_rdma_device, ref);
  
- 	if (llist_empty(&sdn->defer_list))
- 		return;
--	atomic_long_set(&sdn->defer_count, 0);
- 	free_list = llist_del_all(&sdn->defer_list);
- 
- 	llist_for_each_entry_safe(skb, next, free_list, ll_node) {
- 		prefetch(next);
- 		napi_consume_skb(skb, budget);
-+		n++;
- 	}
-+	/* Subtract exactly what was drained. Never store an absolute value:
-+	 * mixing one with the relative updates in skb_attempt_defer_free()
-+	 * lets the counter go negative, and it is read as unsigned there.
++	nvmet_rdma_destroy_srqs(ndev);
++	ib_dealloc_pd(ndev->pd);
++
++	/*
++	 * Only delete from the device list once all RDMA resources are torn
++	 * down because nvmet_rdma_remove_one waits for the release work only
++	 * if the device still is on the list.
 +	 */
-+	atomic_long_sub(n, &sdn->defer_count);
+ 	mutex_lock(&device_list_mutex);
+ 	list_del(&ndev->entry);
+ 	mutex_unlock(&device_list_mutex);
+ 
+-	nvmet_rdma_destroy_srqs(ndev);
+-	ib_dealloc_pd(ndev->pd);
+-
+ 	kfree(ndev);
  }
  
- void skb_defer_node_flush(struct skb_defer_node *sdn)
-diff --git a/net/core/skbuff.c b/net/core/skbuff.c
-index 512eddc0fc3d6..54a76d6723fb7 100644
---- a/net/core/skbuff.c
-+++ b/net/core/skbuff.c
-@@ -7408,8 +7408,14 @@ nodefer:	kfree_skb_napi_cache(skb);
- 	defer_max = READ_ONCE(net_hotdata.sysctl_skb_defer_max);
- 	defer_count = atomic_long_inc_return(&sdn->defer_count);
- 
--	if (defer_count >= defer_max)
-+	if (defer_count > defer_max) {
-+		/* Undo the reservation. An llist_add() does not release one --
-+		 * the skb stays charged until a flush subtracts the batch that
-+		 * contains it -- so a rejected free must undo its own.
-+		 */
-+		atomic_long_dec(&sdn->defer_count);
- 		goto nodefer;
-+	}
- 
- 	llist_add(&skb->ll_node, &sdn->defer_list);
- 
-@@ -7418,8 +7424,13 @@ nodefer:	kfree_skb_napi_cache(skb);
- 		return;
- 	}
- 
--	/* Send an IPI every time queue reaches half capacity. */
--	kick = (defer_count - 1) == (defer_max >> 1);
-+	/* Half capacity, plus the skb that fills the queue. Equality alone can
-+	 * be consumed early -- if the producer holding the kick value publishes
-+	 * first, its purge drains only that skb and the reservations published
-+	 * after it match nothing -- which would leave a full queue with nothing
-+	 * pending.
-+	 */
-+	kick = (defer_count - 1) == (defer_max >> 1) || defer_count == defer_max;
- 
- 	/* Make sure to trigger NET_RX_SOFTIRQ on the remote CPU
- 	 * if we are unlucky enough (this seems very unlikely).
 -- 
 2.53.0
 
