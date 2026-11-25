@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795621864;
-	b=Bd/1qVez7OXmKaE8V68MG089K1VWMJwTkQBaAYKgxJGmCR9amA/Txry3SkJXkHCHqdWK
-	 CWCFVUKnDNrKCcMETZbbcdHM0LIMOBBdULorPyQdmfFUrP9M2RVQqQHNM6XU4K6lcOqJB
-	 6tBVNUVJd3/mrBYRwqBUathl0m8uQA9bnyHlRLlnWHXB9PoQ6te6/USQE7Wr/1ofNdjtw
-	 BLm/h2UNp1GHCUBa+gqloTMbPE1anXGMu0C5VMVMJ3SmYqkcZUqgR0Rtgv0qIS+jhEfOq
-	 UGQkMgdkJ9k7ia8Akonxy5auR28tLNLrkKzQgBO8BjUEcRhJi31QiPVid0JWNX9Vwfw==
+	t=1795621868;
+	b=WxcUTYbsoUbiKihS/ShunLRwbeZmUNV2mjAkTR+TEHri/ueL0SJatRp0+k9qr1dMUqbL
+	 aLOOEnhhOI0idpZ1Mp2cLX4LXCqM1l3PTGG5FkoeUsnlSYX+N/U86kX1L7EbiZkxBTttR
+	 yfex/+gdaPtzDsEltEBoIy3dLfhcfX6+QiUhdhfS4yIBdRHaR/IIkHmcLkai89y6vDKLT
+	 80SSriNMDCUd/flKx8Ir7KYT0UsVjWowXXSmnxT/439VlgxHvPeY+AgrcXn1nWvTE3GT2
+	 sP90Wlq68+yhWwtmIvsHrGhHIafuuFyv2I/gTOJkEdT9LrdNvq76sZAVvRyBp9avsGg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795621864;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795621868;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=6irtLqr6hhm26tflcWfIo57BMH+XiY/X3iul4CUnQmI=;
-	b=F7ZoioGJzEhFh6tYLnYpyj3mNf3YC2xQFEazqfydAbQGIyBoCdauVi3QotO4ZNcrAIQH
-	 WD8hPCcspP9BoFpTvmV30HO128ddubHUtTw7dD7lyScdXsDuQVrnOIULQKQvWZ/N8CLEL
-	 dbBoQmOdzPPcv61jElpSOXYqC1RK5I/qYAAn44zvl44P9K1Vw36iHfa5lOOGFLvSkdZBa
-	 59Ji1nJXF+28m4GDAliaBZJG3I/8B2im6fvp1W7lm2Z02tnMXCcaEJcl/h2kUwNN9O1Ae
-	 +H7akTl5ZOwd2PbkOhzkkD1xW3R74PbketfB8ZuSJViSKJIGfgUIIUdQr8qWU7JI4FQ==
+	bh=7EXslM+96TL0fI6yj2KGwBGf9/XRAglSGCruykFMask=;
+	b=jsqpdDNueTeWyajEFin31/7RZzu2YM6+heW+ME5MVyDxbAcGZmoQ4Lkgv3VXhLRgmQFS
+	 LW63iPibRgVrG/1jH8yX5zu7ifNSYOFBRUGrLsMuEhJ7t3RfagHBC08jByTWtO7xY6SpQ
+	 jm3hQweQ4ztBmjycYfn7CeeZmU/j2PATGipu6QoGulVj6zJVGURalE7/pDhgICsZw6huw
+	 KuosJeoQJRMdGO9i9hPo72ivJZ8eyRVonw5TYrSM7Pt0uCxS1E1zu7YK+y7iElO+O2A8f
+	 yRe8i0fxu2mrQSECbPFMO6xsKTAn9O7RR4thBALZkVTRrFiKKCRRXfaJNQJiqhtPu3A==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=bdEdcoIO;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=HnKLtJWc;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 800C5606A321;
-	Wed, 25 Nov 2026 15:51:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1135A606A31E;
+	Wed, 25 Nov 2026 15:51:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=bdEdcoIO
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2F0771F000CA;
-	Wed, 25 Nov 2026 15:51:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=HnKLtJWc
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E82FA1F000C6;
+	Wed, 25 Nov 2026 15:51:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795621863;
-	bh=6irtLqr6hhm26tflcWfIo57BMH+XiY/X3iul4CUnQmI=;
+	s=korg; t=1795621867;
+	bh=7EXslM+96TL0fI6yj2KGwBGf9/XRAglSGCruykFMask=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=bdEdcoIODkr6ce/KRBrYH7rTupiF1fx3YcL7TiMl+Y6e7g6Q7BaZ+DrbJAiz1sy1G
-	 WZlo6oDppiCV390hvfD2hry95zAFT0IVkN2pYUZBPUMkVFRuGPPAp49FkRMYRXPpHN
-	 T4Eq56KiTBD9LEBO7Nq9s5YhCx/bcO8y7TqWeKX4=
+	b=HnKLtJWcDuP+2c8CReXC4I4ZPSXAooNXm/Ixa2TFAT/N7fnrbX9YE0TrgFXXXAY6h
+	 YP2Jdy+B4marAM2w3azhzd5nkxroaumln57T1GaZWY9/QCLjCA6o+o7CZ8Rrp28bQr
+	 k+yTeq5Odm2kx3z4iWECiVh0j7H4mieGtsMLJ90k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andrea Parri <parri.andrea@gmail.com>,
-	Jan Kara <jack@suse.cz>,
-	"Christian Brauner (Amutable)" <brauner@kernel.org>,
+	Andy Shevchenko <andriy.shevchenko@intel.com>,
+	Dmitry Torokhov <dmitry.torokhov@gmail.com>,
+	Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 303/990] iov_iter: take an unsigned long segment count in import_iovec()
-Date: Wed, 25 Nov 2026 15:27:50 +0100
-Message-ID: <20261125143829.189636612@linuxfoundation.org>
+Subject: [PATCH 6.18 352/990] gpiolib: fix GPIO descriptor leak in gpiod_get_array()
+Date: Wed, 25 Nov 2026 15:28:39 +0100
+Message-ID: <20261125143830.339830313@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143822.072087159@linuxfoundation.org>
 References: <20261125143822.072087159@linuxfoundation.org>
@@ -69,90 +69,123 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Andrea Parri <parri.andrea@gmail.com>
+From: Dmitry Torokhov <dmitry.torokhov@gmail.com>
 
-[ Upstream commit 965e5e451146a19f69523fbcbc73d07e401a3775 ]
+[ Upstream commit b2a161687acdc297aa91fec7fa0966b5aecf0d16 ]
 
-readv(), writev() and their positional variants, process_vm_readv(),
-process_vm_writev(), vmsplice(), process_madvise(), vectored aio and
-the btrfs encoded I/O ioctls all take a full-width segment count, and
-all of them hand it to import_iovec() or __import_iovec().  Those take
-an unsigned int count, so on 64-bit kernels the upper 32 bits are
-dropped before iovec_from_user() checks the count against UIO_MAXIOV.
+In gpiod_get_array(), descs->ndescs is used as the loop induction
+variable and is only incremented at the end of each iteration. When
+krealloc() fails on the first iteration (when index is 0),
+descs->desc[0] has already been acquired via gpiod_get_index(), but
+descs->ndescs is still 0. Consequently, gpiod_put_array() frees descs
+without releasing descs->desc[0], leaking the descriptor.
 
-A count of 0x100000001 is therefore imported as one segment: writev()
-on a pipe writes a byte and readv() reads it back, instead of both
-failing with EINVAL.  A count of 0x100000000 returns 0 as an empty
-vector.
+Fix this by using a dedicated loop induction variable and incrementing
+descs->ndescs immediately upon storing the retrieved descriptor.
+Additionally, since the fast-path array_info setup only executes for the
+first element (index 0), simplify the bitmap_set() calls to start at bit
+0 for count bits instead of calculating offsets from the loop index.
 
-import_iovec() was added with an unsigned int count, but the helper it
-wrapped, rw_copy_check_uvector(), took an unsigned long, as does
-iovec_from_user() today.  Until v4.1, readv(), writev(), preadv(),
-pwritev(), process_vm_readv(), process_vm_writev() and vectored aio
-therefore failed these counts with EINVAL, as did vmsplice() until
-v4.18.
-
-Widen nr_segs in both import helpers so the UIO_MAXIOV check sees the
-count the caller passed.  Callers with 32-bit counts are unaffected.
-
-AI assistance was used to find the bug, develop the fix, and run the
-reproducers.
-
-Fixes: bc917be81059 ("saner iov_iter initialization primitives")
-Signed-off-by: Andrea Parri <parri.andrea@gmail.com>
-Link: https://patch.msgid.link/20261026180619.4147910-1-parri.andrea@gmail.com
-Reviewed-by: Jan Kara <jack@suse.cz>
-Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
+Fixes: bf9346f5d47b ("gpiolib: Identify arrays matching GPIO hardware")
+Reviewed-by: Andy Shevchenko <andriy.shevchenko@intel.com>
+Signed-off-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
+Link: https://patch.msgid.link/20261105-b4-gpiolib-free-v3-1-bb47ad58642d@gmail.com
+Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/uio.h | 8 ++++----
- lib/iov_iter.c      | 6 +++---
- 2 files changed, 7 insertions(+), 7 deletions(-)
+ drivers/gpio/gpiolib.c | 34 ++++++++++++++--------------------
+ 1 file changed, 14 insertions(+), 20 deletions(-)
 
-diff --git a/include/linux/uio.h b/include/linux/uio.h
-index 5b127043a1519..5678520f0bfb6 100644
---- a/include/linux/uio.h
-+++ b/include/linux/uio.h
-@@ -362,11 +362,11 @@ struct iovec *iovec_from_user(const struct iovec __user *uvector,
- 		unsigned long nr_segs, unsigned long fast_segs,
- 		struct iovec *fast_iov, bool compat);
- ssize_t import_iovec(int type, const struct iovec __user *uvec,
--		 unsigned nr_segs, unsigned fast_segs, struct iovec **iovp,
--		 struct iov_iter *i);
-+		 unsigned long nr_segs, unsigned int fast_segs,
-+		 struct iovec **iovp, struct iov_iter *i);
- ssize_t __import_iovec(int type, const struct iovec __user *uvec,
--		 unsigned nr_segs, unsigned fast_segs, struct iovec **iovp,
--		 struct iov_iter *i, bool compat);
-+		 unsigned long nr_segs, unsigned int fast_segs,
-+		 struct iovec **iovp, struct iov_iter *i, bool compat);
- int import_ubuf(int type, void __user *buf, size_t len, struct iov_iter *i);
+diff --git a/drivers/gpio/gpiolib.c b/drivers/gpio/gpiolib.c
+index fa2ab0f90dbda..af33ff0778cb9 100644
+--- a/drivers/gpio/gpiolib.c
++++ b/drivers/gpio/gpiolib.c
+@@ -5042,21 +5042,21 @@ struct gpio_descs *__must_check gpiod_get_array(struct device *dev,
+ 	if (!descs)
+ 		return ERR_PTR(-ENOMEM);
  
- static inline void iov_iter_ubuf(struct iov_iter *i, unsigned int direction,
-diff --git a/lib/iov_iter.c b/lib/iov_iter.c
-index b2eb629497a92..a9918931055a8 100644
---- a/lib/iov_iter.c
-+++ b/lib/iov_iter.c
-@@ -1354,8 +1354,8 @@ static ssize_t __import_iovec_ubuf(int type, const struct iovec __user *uvec,
- }
+-	for (descs->ndescs = 0; descs->ndescs < count; descs->ndescs++) {
+-		desc = gpiod_get_index(dev, con_id, descs->ndescs, flags);
++	for (int i = 0; i < count; i++) {
++		desc = gpiod_get_index(dev, con_id, i, flags);
+ 		if (IS_ERR(desc)) {
+ 			gpiod_put_array(descs);
+ 			return ERR_CAST(desc);
+ 		}
  
- ssize_t __import_iovec(int type, const struct iovec __user *uvec,
--		 unsigned nr_segs, unsigned fast_segs, struct iovec **iovp,
--		 struct iov_iter *i, bool compat)
-+		 unsigned long nr_segs, unsigned int fast_segs,
-+		 struct iovec **iovp, struct iov_iter *i, bool compat)
- {
- 	ssize_t total_len = 0;
- 	unsigned long seg;
-@@ -1426,7 +1426,7 @@ ssize_t __import_iovec(int type, const struct iovec __user *uvec,
-  * Return: Negative error code on error, bytes imported on success
-  */
- ssize_t import_iovec(int type, const struct iovec __user *uvec,
--		 unsigned nr_segs, unsigned fast_segs,
-+		 unsigned long nr_segs, unsigned int fast_segs,
- 		 struct iovec **iovp, struct iov_iter *i)
- {
- 	return __import_iovec(type, uvec, nr_segs, fast_segs, iovp, i,
+-		descs->desc[descs->ndescs] = desc;
++		descs->desc[descs->ndescs++] = desc;
+ 
+ 		gdev = gpiod_to_gpio_device(desc);
+ 		/*
+ 		 * If pin hardware number of array member 0 is also 0, select
+ 		 * its chip as a candidate for fast bitmap processing path.
+ 		 */
+-		if (descs->ndescs == 0 && gpiod_hwgpio(desc) == 0) {
++		if (i == 0 && gpiod_hwgpio(desc) == 0) {
+ 			struct gpio_descs *array;
+ 
+ 			bitmap_size = BITS_TO_LONGS(gdev->ngpio > count ?
+@@ -5081,10 +5081,8 @@ struct gpio_descs *__must_check gpiod_get_array(struct device *dev,
+ 			array_info->desc = descs->desc;
+ 			array_info->size = count;
+ 			array_info->gdev = gdev;
+-			bitmap_set(array_info->get_mask, descs->ndescs,
+-				   count - descs->ndescs);
+-			bitmap_set(array_info->set_mask, descs->ndescs,
+-				   count - descs->ndescs);
++			bitmap_set(array_info->get_mask, 0, count);
++			bitmap_set(array_info->set_mask, 0, count);
+ 			descs->info = array_info;
+ 		}
+ 
+@@ -5094,38 +5092,34 @@ struct gpio_descs *__must_check gpiod_get_array(struct device *dev,
+ 
+ 		/* Unmark array members which don't belong to the 'fast' chip */
+ 		if (array_info->gdev != gdev) {
+-			__clear_bit(descs->ndescs, array_info->get_mask);
+-			__clear_bit(descs->ndescs, array_info->set_mask);
++			__clear_bit(i, array_info->get_mask);
++			__clear_bit(i, array_info->set_mask);
+ 		}
+ 		/*
+ 		 * Detect array members which belong to the 'fast' chip
+ 		 * but their pins are not in hardware order.
+ 		 */
+-		else if (gpiod_hwgpio(desc) != descs->ndescs) {
++		else if (gpiod_hwgpio(desc) != i) {
+ 			/*
+ 			 * Don't use fast path if all array members processed so
+ 			 * far belong to the same chip as this one but its pin
+ 			 * hardware number is different from its array index.
+ 			 */
+-			if (bitmap_full(array_info->get_mask, descs->ndescs)) {
++			if (bitmap_full(array_info->get_mask, i)) {
+ 				array_info = NULL;
+ 			} else {
+-				__clear_bit(descs->ndescs,
+-					    array_info->get_mask);
+-				__clear_bit(descs->ndescs,
+-					    array_info->set_mask);
++				__clear_bit(i, array_info->get_mask);
++				__clear_bit(i, array_info->set_mask);
+ 			}
+ 		} else {
+ 			dflags = READ_ONCE(desc->flags);
+ 			/* Exclude open drain or open source from fast output */
+ 			if (test_bit(GPIOD_FLAG_OPEN_DRAIN, &dflags) ||
+ 			    test_bit(GPIOD_FLAG_OPEN_SOURCE, &dflags))
+-				__clear_bit(descs->ndescs,
+-					    array_info->set_mask);
++				__clear_bit(i, array_info->set_mask);
+ 			/* Identify 'fast' pins which require invertion */
+ 			if (gpiod_is_active_low(desc))
+-				__set_bit(descs->ndescs,
+-					  array_info->invert_mask);
++				__set_bit(i, array_info->invert_mask);
+ 		}
+ 	}
+ 	if (array_info)
 -- 
 2.53.0
 
