@@ -1,51 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795619872;
-	b=zVoeLu31xwye7Ah3MwjruSb2wBMcDx2YYL9bxgHDpXYPRTVfImBMyMQfwXKYKelycWK0
-	 WDqkh3JTa+sfBKHmLkzo5EFrhw1eGr1h0fo4LPP0pqzF7jqe9KC+9TEuP7Hf3Ac5vYC0+
-	 TMYPFlLNtWmnObdePNqLOi0uLcj4l/d9q61bg6ctgBvnrgpXtCugvE7IjjsY/dVQrcXnP
-	 snHF7CikbUOXRxMBUm5or/Knl+wbEZM+ebUfPLuTm48tjy+EchvTxavCA2cm7lLi9f2kX
-	 83DrlTdXLZpMf4Tl3et7T5Ho4DKTqecLInwfz4MrXfLiBStnVEGp0B2MlWRdCiuzkeQ==
+	t=1795619875;
+	b=4nWAmPQT6xi/sf05KGikiTo+juGyOEL3RprdfzJyOjVOA82zTCYzemjjpaxBYrEXUEn1
+	 EQqplI6RrDsK1lfBqOjDYyivBEciKmrEag9xftT9VsfVf0oHUU/0WB1Zudcs87kWbD38Z
+	 JmLGHd3F+gBXA2QULCIPcmv9imx7e082KuK/wTeEPalhckp88rpyxO0avp87CUfBJ+AbI
+	 KLr+FvvOsddpPkfPuub3/Fx7GdVyuNnfZVGyN5sH5hGuWz8E/J+1b6eao9uaBLLYDf401
+	 Af3uA9a8hr9DnpJOdas0PSNDrVu7smYXNkf++3aJCR18xIUB+PvM5C/2o53YctLWTsg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795619872;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795619875;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=BzMt+H/mLnu+1He1G8OvCfjUjZl/WWJEm0GcZqToABg=;
-	b=WfkdnD46XXPQQ/QzadwNATSlioXQbBGpv/uBuTVodgLThjipybD5rHoKTJf0ZQTWNJSG
-	 qEonWPIWIMYv8Tq/4AnrBeB7OzxKwXQf9NBqthVENL1sRIDghGxK0NGc0JOvLo14XP4Wa
-	 2TDJdvlNAAGdslDtXgctaeAWPeIYPxDU2ZLUkFjR9Qj/q/qpgdjxP3YZzPRovnwZ1UHlE
-	 M0j6FVEtnjXWFE4Q+yCrX9lcclpkvPuaJdylD6cmSKzPdk0cV4zKE7Q4gXtGqeBgcFJiv
-	 H96PrtZOFc0UFkgnB9uhx3ZMWoG8ThAwwQB/mwDuX9yoyt33MmrIDWZBcqdouoIqdEg==
+	bh=NIPNR8pARlu6+VFKTYFMfcwAMU6+fU6qen/wlL5Ux7I=;
+	b=PUYLEWpu2odHmMG4SG5fxgJiN9Pfa3pAhXwynqyY5xxTGgzdO8IRuol/Cdzl3VedrndO
+	 hxjkExZMys/PlIPgWQVaLSnZKWTRiWq/wvvO+l2sZ4BZ96UPgifXmyIeJOJC6SZM5SsfG
+	 zSg0Ch4hyb8AA/xn2//Asf5zrn6SqR013qDqaudiots3JVMQBNaIPw1lSk4OF/a91qyXD
+	 MLP3XH0ZcCChxoN2QcWNlEwU2DCGnCSbYg4v/mblLyQ5arv2qxyEAP5++NW72+uLXymCl
+	 2tJ2i7tKN93Hy8at5OC2ac29Hz7scIDEBwSzFDxa03S/TPwmzAI1F8538O7v43KkNLA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=gfe0WNuV;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="R/6JbMfC";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 44321606A323;
-	Wed, 25 Nov 2026 15:17:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 919AF606A329;
+	Wed, 25 Nov 2026 15:17:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=gfe0WNuV
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 310341F000C6;
-	Wed, 25 Nov 2026 15:17:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=R/6JbMfC
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8B3911F000C0;
+	Wed, 25 Nov 2026 15:17:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795619871;
-	bh=BzMt+H/mLnu+1He1G8OvCfjUjZl/WWJEm0GcZqToABg=;
+	s=korg; t=1795619875;
+	bh=NIPNR8pARlu6+VFKTYFMfcwAMU6+fU6qen/wlL5Ux7I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=gfe0WNuVUVN0AN3JlNVGkgkWTU9WGZj6H48fKJ/xH6Q6u9xVc4u4HpOyGOyFMzl6v
-	 YrVkfnw2eb1doWlxoQIkxStjRQtcKO9LBlWdS093EPFkmYafMG8OvUvAzdJmnSdLBv
-	 EN/nyKXFbAU4crxn3FRIqUza67Oq50vnzs7LfKRI=
+	b=R/6JbMfCI3aLbK+fUiLlVjGwYrNd88Y1CWXhIN/affA7Ar8OQtK0nrJb5V7e03v8j
+	 99/HbdZk63Vpj4uSeKRk9U9SgTLlXenpkygjHcWMRYxabfVVFQkh/bGYxsMigdxPa3
+	 fR4uDNWrayEuZrvwrMaLtFQnm7TFVzMcSPI/rOJg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vishwaroop A <va@nvidia.com>,
-	Mark Brown <broonie@kernel.org>
-Subject: [PATCH 7.3 0732/1005] spi: tegra210-quad: Unmap DMA buffers on transfer timeout
-Date: Wed, 25 Nov 2026 15:34:30 +0100
-Message-ID: <20261125143838.908058036@linuxfoundation.org>
+	Stanislav Aleksandrov <lightofmysoul@gmail.com>,
+	Guenter Roeck <linux@roeck-us.net>
+Subject: [PATCH 7.3 0733/1005] watchdog: gunyah_wdt: Re-enable the watchdog on resume
+Date: Wed, 25 Nov 2026 15:34:31 +0100
+Message-ID: <20261125143838.931969212@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143821.729802100@linuxfoundation.org>
 References: <20261125143821.729802100@linuxfoundation.org>
@@ -67,71 +67,96 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Vishwaroop A <va@nvidia.com>
+From: Stanislav Aleksandrov <lightofmysoul@gmail.com>
 
-commit d04ad85dd8015713b0b2531b5b934fe67828d741 upstream.
+commit f0dfc756bb46235068279755249131c2a7130111 upstream.
 
-tegra_qspi_start_dma_based_transfer() maps the client TX/RX buffers with
-dma_map_single() via tegra_qspi_dma_map_xfer(). The matching unmap only
-happens in handle_dma_based_xfer(), which runs from the interrupt bottom
-half.
+gunyah_wdt_suspend() disables an active watchdog, and
+gunyah_wdt_resume() enables it again with gunyah_wdt_start(). start()
+first disables the watchdog, which fails with -EINVAL when it is
+already disabled. start() ignores that only while the watchdog is
+inactive, but on resume it is still active for the watchdog core, so
+start() returns before it enables the watchdog:
 
-When wait_for_completion_timeout() expires and tegra_qspi_handle_timeout()
-cannot establish that the hardware finished, it returns an error without
-the bottom half ever having run. Both transfer paths then abort the
-transfer with tegra_qspi_dma_stop(), reset the controller and clear
-curr_xfer, but never unmap the buffers. Every genuine transfer timeout
-therefore leaks the streaming DMA mappings for that chunk, which
-gradually exhausts the IOVA space on systems with an IOMMU in front of
-QSPI.
+  gunyah-wdt gunyah-wdt: gunyah_wdt_start: Failed to stop gunyah wdt -22
 
-Unmap the transfer after stopping DMA on both timeout error paths. The
-unmap is placed after tegra_qspi_dma_stop() so the DMA engine is
-quiesced before the mappings go away.
+So after every system suspend, the watchdog is left disabled.
 
-The recovery paths that do reach handle_dma_based_xfer() unmap there
-themselves. The preceding patch makes tegra_qspi_dma_unmap_xfer() a no-op
-once the mapping is released, so this cleanup cannot unmap twice or run
-against a chunk that was never mapped.
+Move setting the timeout and enabling the watchdog into
+gunyah_wdt_enable(), and call it on resume, where the watchdog is
+already disabled.
 
-Fixes: 921fc1838fb0 ("spi: tegra210-quad: Add support for Tegra210 QSPI controller")
-Cc: stable@vger.kernel.org # with "spi: tegra210-quad: Track DMA mapping state"
-Signed-off-by: Vishwaroop A <va@nvidia.com>
-Link: https://patch.msgid.link/20261026111412.3843954-4-va@nvidia.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Tested on the Samsung Galaxy XR (Qualcomm Halliday) with s2idle and
+deep suspend.
+
+Fixes: ca316e145c35 ("watchdog: Add driver for Gunyah Watchdog")
+Cc: stable@vger.kernel.org
+Signed-off-by: Stanislav Aleksandrov <lightofmysoul@gmail.com>
+Link: https://patch.msgid.link/20261109-gunyah-wdt-resume-v1-1-fbd84545ce92@gmail.com
+Signed-off-by: Guenter Roeck <linux@roeck-us.net>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/spi/spi-tegra210-quad.c |   10 +++++++---
- 1 file changed, 7 insertions(+), 3 deletions(-)
+ drivers/watchdog/gunyah_wdt.c | 27 +++++++++++++++++----------
+ 1 file changed, 17 insertions(+), 10 deletions(-)
 
---- a/drivers/spi/spi-tegra210-quad.c
-+++ b/drivers/spi/spi-tegra210-quad.c
-@@ -1262,10 +1262,12 @@ static int tegra_qspi_combined_seq_xfer(
- 					dev_err(tqspi->dev, "transfer timeout\n");
+diff --git a/drivers/watchdog/gunyah_wdt.c b/drivers/watchdog/gunyah_wdt.c
+index e3c2a2131624..35958594e17c 100644
+--- a/drivers/watchdog/gunyah_wdt.c
++++ b/drivers/watchdog/gunyah_wdt.c
+@@ -62,19 +62,12 @@ static int gunyah_wdt_call(unsigned long func_id, unsigned long arg1,
+ 	return gunyah_error_remap(res.a0);
+ }
  
- 					/* Abort transfer by resetting pio/dma bit */
--					if (tqspi->is_curr_dma_xfer)
-+					if (tqspi->is_curr_dma_xfer) {
- 						tegra_qspi_dma_stop(tqspi);
--					else
-+						tegra_qspi_dma_unmap_xfer(tqspi, xfer);
-+					} else {
- 						tegra_qspi_pio_stop(tqspi);
-+					}
+-static int gunyah_wdt_start(struct watchdog_device *wdd)
++static int gunyah_wdt_enable(struct watchdog_device *wdd)
+ {
+-	unsigned int timeout_ms;
++	unsigned int timeout_ms = wdd->timeout * 1000;
+ 	struct device *dev = wdd->parent;
+ 	int ret;
  
- 					/* Reset controller if timeout happens */
- 					tegra_qspi_reset(tqspi);
-@@ -1379,8 +1381,10 @@ static int tegra_qspi_non_combined_seq_x
- 				WARN_ON(1);
- 				dev_err(tqspi->dev, "transfer timeout\n");
+-	ret = gunyah_wdt_call(GUNYAH_WDT_CONTROL, WDT_CTRL_DISABLE, 0);
+-	if (ret && watchdog_active(wdd)) {
+-		dev_err(dev, "%s: Failed to stop gunyah wdt %d\n", __func__, ret);
+-		return ret;
+-	}
+-
+-	timeout_ms = wdd->timeout * 1000;
+ 	ret = gunyah_wdt_call(GUNYAH_WDT_SET_TIME, timeout_ms, timeout_ms);
+ 	if (ret) {
+ 		dev_err(dev, "%s: Failed to set timeout for gunyah wdt %d\n",
+@@ -89,6 +82,20 @@ static int gunyah_wdt_start(struct watchdog_device *wdd)
+ 	return ret;
+ }
  
--				if (tqspi->is_curr_dma_xfer)
-+				if (tqspi->is_curr_dma_xfer) {
- 					tegra_qspi_dma_stop(tqspi);
-+					tegra_qspi_dma_unmap_xfer(tqspi, xfer);
-+				}
++static int gunyah_wdt_start(struct watchdog_device *wdd)
++{
++	struct device *dev = wdd->parent;
++	int ret;
++
++	ret = gunyah_wdt_call(GUNYAH_WDT_CONTROL, WDT_CTRL_DISABLE, 0);
++	if (ret && watchdog_active(wdd)) {
++		dev_err(dev, "%s: Failed to stop gunyah wdt %d\n", __func__, ret);
++		return ret;
++	}
++
++	return gunyah_wdt_enable(wdd);
++}
++
+ static int gunyah_wdt_stop(struct watchdog_device *wdd)
+ {
+ 	return gunyah_wdt_call(GUNYAH_WDT_CONTROL, WDT_CTRL_DISABLE, 0);
+@@ -224,7 +231,7 @@ static int gunyah_wdt_resume(struct device *dev)
+ 	struct watchdog_device *wdd = dev_get_drvdata(dev);
  
- 				tegra_qspi_handle_error(tqspi);
- 				ret = -EIO;
+ 	if (watchdog_active(wdd))
+-		gunyah_wdt_start(wdd);
++		gunyah_wdt_enable(wdd);
+ 
+ 	return 0;
+ }
+-- 
+2.56.1
+
 
 
