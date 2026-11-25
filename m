@@ -1,51 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795619833;
-	b=aEE4lSxchM+hnO/nod+KmV4+xnK8FOJiWwwrJCtwvfAoGF2twj2UBlY34zhbCrHmDyk6
-	 W4zdCUtHYv25TWXBSdb/ZlVy46XbOgYWbnyRY2vSqXh3uoP8mMMknnlxlWKIlia38y2WC
-	 GevZgSbTSmfaQ07GE9u7paKfiemdIyokT4/EB+iA+M0LF9wVYsrB0ZrIUK2+0ez+CnYj/
-	 xsLuka7K9CamtAx47SP3hVkMrDNjgOq7WCg0fuUwZiJt1FYhrNWKfan3uZhpFqB/GR9uY
-	 1Fl38KLzANi3OVge8s3OqT4WOaH+i+PvkbzPSt+eUML/HZd4s2KbU2SAcTsopSHd4kg==
+	t=1795619837;
+	b=K6mQ5mmGT81IkOxu4PJImo7sPA6jYaQOobgI4ydcGnsPBrb4g21PMfjlMWW9/Rabz0a+
+	 N61zbNRt3S7+Z3ESMOeVyd3HVZncNRjJzUpad57fSgi5Zkdg8J5FyB/20TmWx/IrO4haV
+	 xsSM5Le2T4MSRClGZ70lBORmSGZANS2QlLUVhoTznxVpRDdfe+Jbq5jN+fUVQID58HVsA
+	 kdrbhuZCdKOdj9Qk4V1o4AdWEh7Jel+PeoE81nmZ5Ups2A7oHWMAg+ildhP/0GQ58SsaV
+	 ZeiXXX5YhR86BxBF2CiA+91qPajp4mxcApMMsNZ0dD37sDAEEKWJdbfYCttEKkiYnuQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795619833;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795619837;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=H6RHCQWpSlSHJyqxWm+8OXWemyOzl2CmBrfccYtuZaw=;
-	b=rZ48pUYj38GTzyf62Zx0R32I7hAFwls5byikV3iE191MkmGonrqRJWPixAteqjq+IuSp
-	 QOKxcS7UZGSWTdXFGeCZXcCDUeiLZSsUXU6Js+g2jxJYf2JXtcFz0P/N761d0vqR0MAA2
-	 PbRBLdiqt4bvN5evVS/fp+/OzlkfuhSOJSAt+eHcrQhRdyMDApNEUAdOowXD4pXu7FUV0
-	 +gPIzQPXrUneUVs8CNmpBv4anK3oCi4UzRz62ehA0bcOpRnLNRrlsA5vX9D1o/GL0sxhU
-	 3Ru8ZyTnsl/YSj6jVBWQHoJr9VCIQcYfpwj70lU29Hrg8vWrj2TYVoGmqIvV+No3I1w==
+	bh=gCAMYhewz8NE11HbEreurbbxPgdBcsSwk9hRXfNMF2A=;
+	b=lUcjCHXobmZyXrvAzQesu8DZUjGzZUfc7qsRNCbWeLgoNjeCkK1dksveE7EG8unz+4cI
+	 tXKshPE3sn0Gc9YedwU7yfyTOUQfxvh4sLALsFyKXqYYJBuLTToJM/zha66raWnLqxMau
+	 hpLVEDgcGlRxxM+RNrvouVSuj+kqqVflBYt1zM0uCq0/1l1z63JVokiYdykyfNCkyrYCk
+	 C2ERCGrOj73G4qBQcsrbomlywqJWFaL77rI6cRGcrL0UhABxrMvuxDNj7H/LnRXiqmF6Q
+	 SF63jKWpsRIyLTtgeq5SJjoGVjGkfSXux1slTzwBxjITfq6jWlNqUI0zv3Q2tshNlGw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="2GXd1/DK";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=nGYQhsXy;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5A245606A321;
-	Wed, 25 Nov 2026 15:17:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F10C2606A33E;
+	Wed, 25 Nov 2026 15:17:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=2GXd1/DK
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A5CAC1F000EF;
-	Wed, 25 Nov 2026 15:17:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=nGYQhsXy
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E1FDF1F000D0;
+	Wed, 25 Nov 2026 15:17:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795619833;
-	bh=H6RHCQWpSlSHJyqxWm+8OXWemyOzl2CmBrfccYtuZaw=;
+	s=korg; t=1795619836;
+	bh=gCAMYhewz8NE11HbEreurbbxPgdBcsSwk9hRXfNMF2A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=2GXd1/DKyPe3o1Hof0r+3BziurA8GM1+a90VwqKUsm7gaE3E7fkWAou3hLj/HZ2lA
-	 gAyKsfvjbCl/7d3q5teLy9bOzr44sFCq5qnSz29lbXBMCEfwJRE9zIw9l80nGg1jv3
-	 v8K+/LEpuSTXYWY7Vn42zGnzvUw8Xa+2W+HvBnwA=
+	b=nGYQhsXy8MEUpJ0lVFlgINJa3c9gPYvvupgmNMxU1bMzKHFN9XxC0QhlQuIA7eFna
+	 fgYCGaUMuskTXB/XIW8Thf8+IB0N/64EgYw9qnuwTiRv5tXki+/2/Ym+depDKy3Omn
+	 dMfUZTB40pLkBsep/FdbxGg5U3U8pmM7LwT0cdNA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Josef Bacik <josef@toxicpanda.com>,
-	"Christian Brauner (Amutable)" <brauner@kernel.org>
-Subject: [PATCH 7.3 0695/1005] dcache: wait for a racing eviction of a secondary root
-Date: Wed, 25 Nov 2026 15:33:53 +0100
-Message-ID: <20261125143838.035237597@linuxfoundation.org>
+	Avi Weiss <thnkslprpt@gmail.com>,
+	Benjamin Coddington <bcodding@hammerspace.com>,
+	Anna Schumaker <anna.schumaker@hammerspace.com>
+Subject: [PATCH 7.3 0722/1005] SUNRPC: Fix TCP-with-TLS transport class identification
+Date: Wed, 25 Nov 2026 15:34:20 +0100
+Message-ID: <20261125143838.673638823@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143821.729802100@linuxfoundation.org>
 References: <20261125143821.729802100@linuxfoundation.org>
@@ -67,76 +68,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Josef Bacik <josef@toxicpanda.com>
+From: Avi Weiss <thnkslprpt@gmail.com>
 
-commit 649918e04e0ead9bfc861aacdd2e5b39b5bdf869 upstream.
+commit 0502c7e7f171a8c9c892bdef89e6aa6f44d7b2a3 upstream.
 
-Commit e9895609cb7f ("wind ->s_roots via ->d_sib instead of ->d_hash")
-keeps a secondary root on ->s_roots until dentry_unlist() so that
-shrink_dcache_for_umount() can find one that another thread is evicting
-and wait for it. But do_one_tree() takes every root off the list before
-its dput() which breaks that:
+xs_setup_tcp_tls() assigns the ordinary TCP transport class to
+a TCP-with-TLS transport. When rpc_clnt_add_xprt() is called
+with an unspecified transport type, it inherits the class
+identifier and can create an unencrypted TCP transport.
 
-  thread A                              umount
-  dentry_kill(root), refcount is 0
-    lock_for_kill()
-      spin_trylock(->i_lock) fails
-      spin_unlock(->d_lock)
-                                        shrink_dcache_for_umount()
-                                          dget_dlock(root)
-                                          do_one_tree(root)
-                                            unlink_secondary_root(root)
-      spin_lock(->i_lock)
-                                            dput(root), refcount is 0
-                                              lock_for_kill()
-                                                trylock fails, waits
-      spin_lock(->d_lock)
-      refcount is 0 again, go on
-    lockref_mark_dead()
-    dentry_unlink_inode()
-      drops both locks
-                                                root is dead, give up
-                                          ->s_roots is empty, done
-                                        evict_inodes()
-                                        "Busy inodes after unmount"
-      iput()
+Looks like a copy-paste error from the commit 3 years ago.
 
-Thread A evicts without pinning the superblock. namespace_unlock() does
-that for old mountpoints after dropping namespace_sem, and a secondary
-root goes with its last child.
+NFSv4 trunk discovery uses an unspecified transport type when
+adding server-advertised addresses. If the additional transport
+passes server-identity validation, it can be admitted to the
+client's transport switch.
 
-So only take busy roots off the list. Leave the others to
-dentry_unlist() so that shrink_dcache_for_umount() finds them and waits
-for an eviction in progress. A root that becomes busy after the check is
-picked up again and taken off the list then.
+An isolated loopback test reproduced plaintext application RPC
+transmission for TLS- and mTLS-configured clients, including
+an unpinned TLS-client RPC that selected the added transport.
 
-Fixes: 78db93943210 ("dcache: keep shrink_dcache_for_umount() making progress on busy roots")
-Cc: stable@vger.kernel.org # v7.2+
-Signed-off-by: Josef Bacik <josef@toxicpanda.com>
-Link: https://patch.msgid.link/20261030-work-dcache-ai-v1-2-cd6b86e0ccc7@kernel.org
-Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
+Assign the TCP-with-TLS class instead. With the fix, the
+plaintext-only test peer receives TLS negotiation probes but
+no application payloads.
+
+Fixes: 75eb6af7acdf ("SUNRPC: Add a TCP-with-TLS RPC transport class")
+Cc: stable@vger.kernel.org
+Signed-off-by: Avi Weiss <thnkslprpt@gmail.com>
+Reviewed-by: Benjamin Coddington <bcodding@hammerspace.com>
+Signed-off-by: Anna Schumaker <anna.schumaker@hammerspace.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/dcache.c |    9 +++++++--
- 1 file changed, 7 insertions(+), 2 deletions(-)
+ net/sunrpc/xprtsock.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/fs/dcache.c
-+++ b/fs/dcache.c
-@@ -1816,8 +1816,13 @@ static void do_one_tree(struct dentry *d
- 	d_walk(dentry, dentry, umount_check);
- 	spin_lock(&dentry->d_lock);
- 	__d_drop(dentry);
--	/* A busy root survives the dput() below so don't leave it on ->s_roots. */
--	if (unlikely(!hlist_unhashed(&dentry->d_sib)))
-+	/*
-+	 * A busy root survives the dput() below so don't leave it on ->s_roots.
-+	 * An idle one stays until dentry_unlist() so that umount can wait for
-+	 * a racing eviction, see lock_for_kill().
-+	 */
-+	if (unlikely(dentry->d_lockref.count > 1 &&
-+		     !hlist_unhashed(&dentry->d_sib)))
- 		unlink_secondary_root(dentry);
- 	spin_unlock(&dentry->d_lock);
- 	dput(dentry);
+--- a/net/sunrpc/xprtsock.c
++++ b/net/sunrpc/xprtsock.c
+@@ -3525,7 +3525,7 @@ static struct rpc_xprt *xs_setup_tcp_tls
+ 	transport = container_of(xprt, struct sock_xprt, xprt);
+ 
+ 	xprt->prot = IPPROTO_TCP;
+-	xprt->xprt_class = &xs_tcp_transport;
++	xprt->xprt_class = &xs_tcp_tls_transport;
+ 	xprt->max_payload = RPC_MAX_FRAGMENT_SIZE;
+ 
+ 	xprt->bind_timeout = XS_BIND_TO;
 
 
