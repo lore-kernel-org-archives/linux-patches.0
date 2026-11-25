@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795624032;
-	b=5lZW0+dFn0J4vIogGnuMLb+zCsIxwqEpBqKxZO8uX/SzImu8KAKkYdBtWLJMSGNwyl2W
-	 ckhxX4O2VG+Oy7UamfkffFlpoS9IBERUKInH0OSVxB81r3Sc2fEVoO7hMjAD6wDY01XKz
-	 dg44MGA/kpqqakyzNftgDsRNjkEjNpDtYFUO3JR9K6uGcW/Q34zAqokmQFLD6cja6boqV
-	 weLwMH3/fnRynv0hhB8/JryXeU+eyOLYQUGGmxZREbtO5Kfk32q0PytHRW1RZ3D27UYUD
-	 nkezCOAtwbrcauPxZcofJjO5zV72POj01TBY3n0U9lHUCCoJ2ZQ0fZQ3Oo3Cx3S10Gg==
+	t=1795624035;
+	b=vf8MRTn4xjhp8ltj6TY8J1/SebC/V4mki4qd08AmLPFB287RnYRnVzrlVLD5OgjRPbfJ
+	 c2iYbhx9rq12IyltohxSpWTAn/t7QPLL0H7MbWxTruYmc5rapQ7euB3Lzv1Ind+WTZ6qp
+	 jG11ve774Te+WH8PvCQvgFNL40USM1ePgkwudfMpmt5e5LLSzE0lqY360XmNGAxfUq7xv
+	 YiWHXfmMM0TD4S+reyQ6UAmpFxHoyl7GuaFt99+B5VrhsKVCjddgGb0VlgFe/urTfPRHV
+	 Uq6tiNhWL9IwWw1rM1H3Tkv7g9sSTehFYaNCkR6G49JGOq2LDTm/TnPmR6Q/hctF68A==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795624032;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795624035;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=+VIW4vTs833b1P12duuNum3ZuqvEevWzYL/iqnUl3cU=;
-	b=tPcjloqtC5GNKfaASjVDhQcJLmg2ggFvOlC0dHxhvOhnAPuQfrWBzAMyR5mtHOYTzyYu
-	 T/JIEMNIwaH6Qh6KtmKKJVscOr73+x8l5bcv3UmgAm5WJa+cgxW3ZKmDJYYYKc5dUsG/f
-	 +Vr3JSxwFs6Bx8KdmatcIIlZzztBuYiMa6rfSxc3h08UnL2DWIMptSn1U6ei4yBpQil2U
-	 PdV3h5rxfs2sCo/+grOozbA13mKU+U5AsJepJlUjyMZdCqcxYISETQlga+sEHgPSgfcZj
-	 0oPRybPPgVZPkh3U8DyYLgnQJ7eBzSow0hTguZkCnsjDDbV93+4ULzJxCWJjPMWdLaw==
+	bh=MtmVIbsSd6S7YtCG8BhZUXLPPbHCSuM+MeGtsA6meiE=;
+	b=e4hdGXInZcNZDtkrVVDVlFl2qvrNfoOdYVgXTuP6B6PPTpksKKds4h8VWF3K6s8qJ7mG
+	 rI4RNtym1f4CWvmal7U6bwomXESGlpQoQzTrmby1iISMQBMPE5CbKY3agwPMTjMhWwtL7
+	 17+wRXYjuuGc6TwnBpeReUcYY6q6ZLr+VXYT6yISJKNZSB09GT0srV0X0k7ZljjdoCW35
+	 LvHYwzZojEy5B7tIoW6zP4DjhFG6zGRzMjiWuJbvwjKt6SbyC8vJEEIQ8T/kXlW8xEsp3
+	 R5Vhe+VkVnSNyuOCnrbe9sOD5FGOOgEqCqJbHoI4vZd5zKLRnQyjq3wzPeLtNRTm42w==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=MaYjDHOR;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="Iw/rOeNA";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 59E17606A31E;
-	Wed, 25 Nov 2026 16:27:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B183D606A327;
+	Wed, 25 Nov 2026 16:27:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=MaYjDHOR
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6C4FA1F000D4;
-	Wed, 25 Nov 2026 16:27:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Iw/rOeNA
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A3DD91F000E1;
+	Wed, 25 Nov 2026 16:27:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795624032;
-	bh=+VIW4vTs833b1P12duuNum3ZuqvEevWzYL/iqnUl3cU=;
+	s=korg; t=1795624035;
+	bh=MtmVIbsSd6S7YtCG8BhZUXLPPbHCSuM+MeGtsA6meiE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=MaYjDHOR9nf9xrrnLkOcmiIpw5kk2HSzt2v6WIK87WW8q3sPNSGRA/CpJRUV5PWSN
-	 +l0sqwZOcfpYzIKV92jepF20aYbWmqJ140uBmRCTNZhpWva8E4uN+aKx9KTvglb25u
-	 jZd4PhPSAQHRx+O6obDAixB7jmQlUzWKZH55H0CQ=
+	b=Iw/rOeNAbPbam5f1u0m3HuaB7UhV87qAyyYBMLef7D84xUnZBJIiJ1mnZJcUWZ3lJ
+	 V0YIvCP9IXeDA7RlMsgOQBdaPFdM9JmD+P+nSkuom37DnJZz8of4xe8usHBGJa6KDO
+	 qg5towBmiQ8nA5V+jTKlIBREVej1PJpSapVCHY/c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yuanfu Xie <yuanfuxie@stu.pku.edu.cn>,
-	Dominique Martinet <asmadeus@codewreck.org>,
+	Filippo Falezza <effeffe99@gmail.com>,
+	Loic Poulain <loic.poulain@oss.qualcomm.com>,
+	Jeff Johnson <jeff.johnson@oss.qualcomm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 063/816] 9p: do not store the create fid on special files
-Date: Wed, 25 Nov 2026 15:26:51 +0100
-Message-ID: <20261125143850.679317555@linuxfoundation.org>
+Subject: [PATCH 6.12 064/816] wifi: ath10k: Stop unanswered temperature reads
+Date: Wed, 25 Nov 2026 15:26:52 +0100
+Message-ID: <20261125143850.702242532@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143849.205329330@linuxfoundation.org>
 References: <20261125143849.205329330@linuxfoundation.org>
@@ -68,83 +69,97 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yuanfu Xie <yuanfuxie@stu.pku.edu.cn>
+From: Filippo Falezza <effeffe99@gmail.com>
 
-[ Upstream commit 56894cadf21c34abbba7f74b8f5d78dabf69dd39 ]
+[ Upstream commit 2a87e367c62856b87a90f745c6b7d2eb91e0c51f ]
 
-v9fs_vfs_atomic_open_dotl() always stores the create fid in
-file->private_data after finish_open().  FIFO and device inodes
-already have type-specific file_operations that own that field.
-Overwriting it with the fid makes later read/write/close treat the
-p9_fid as a pipe_inode_info, which corrupts the fid and can use it
-after it has been clunked.  The non-dotl atomic_open path does not
-assign the fid this way.
+Reading the ath10k hwmon temperature sends WMI_PDEV_GET_TEMPERATURE and
+waits up to 5 s (ATH10K_THERMAL_SYNC_TIMEOUT_HZ) for the reply event,
+holding conf_mutex. Not all firmware answers: the WCN3990 firmware
+WLAN.HL.3.3.1-00694-QCAHLSWMTPLZ-1 on a Motorola Moto G 5G Plus
+codename nairo (SM7250) never sends the event, so every read of
+temp1_input stalls for 5 s, logs
 
-Only attach the fid for regular files and directories.  Special
-files do not need the create fid; leave it for the existing
-p9_fid_put() on the out path so it is clunked before return.
+  ath10k_snoc 18800000.wifi: failed to synchronize thermal read
 
-KASAN report, linux-stable 4982d3552a3b:
+and returns -ETIMEDOUT. Tools that read all hwmon sensors, such as
+lm-sensors, hang for 5 s on every run, and configuration changes of the
+interface wait for conf_mutex in the meantime.
 
-BUG: KASAN: slab-use-after-free in anon_pipe_prefill_and_lock+0x376/0x3f0
-Read of size 4 at addr ffff88800ab30538 by task repro/1
+Whether the firmware answers cannot be told from the chip: firmware that
+answers and firmware that does not both advertise
+WMI_SERVICE_THERM_THROT, and WCN3990 firmware differs between devices.
+Instead, remember that the running firmware did not answer, and return
+-EOPNOTSUPP right away on later reads. Forget it when the firmware
+starts, so that a restarted or updated firmware is asked again.
 
-Call Trace:
- <TASK>
- anon_pipe_prefill_and_lock+0x376/0x3f0
- anon_pipe_write+0x127/0x1600
- fifo_pipe_write+0x24/0x300
- vfs_write+0x659/0xd00
- ksys_write+0x10f/0x200
- do_syscall_64+0xdd/0x4a0
- </TASK>
+The first read after each firmware start still takes 5 s when the
+firmware does not answer. Reads on firmware that answers are unchanged.
 
-Fixes: 30d904947459 ("kill struct opendata")
-Signed-off-by: Yuanfu Xie <yuanfuxie@stu.pku.edu.cn>
-Message-ID: <92377346-29E9-46D3-96F5-AABA8A64CD57@stu.pku.edu.cn>
-Signed-off-by: Dominique Martinet <asmadeus@codewreck.org>
+Fixes: e98199a8c27f ("ath10k: enable QCA6174/QCA9377 to read the chip temperature")
+Signed-off-by: Filippo Falezza <effeffe99@gmail.com>
+Reviewed-by: Loic Poulain <loic.poulain@oss.qualcomm.com>
+Link: https://patch.msgid.link/20261027-ath10k-temperature-v2-1-0793e80d73bc@gmail.com
+Signed-off-by: Jeff Johnson <jeff.johnson@oss.qualcomm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/9p/vfs_inode_dotl.c | 24 ++++++++++++++++--------
- 1 file changed, 16 insertions(+), 8 deletions(-)
+ drivers/net/wireless/ath/ath10k/core.c    | 1 +
+ drivers/net/wireless/ath/ath10k/thermal.c | 9 ++++++++-
+ drivers/net/wireless/ath/ath10k/thermal.h | 2 ++
+ 3 files changed, 11 insertions(+), 1 deletion(-)
 
-diff --git a/fs/9p/vfs_inode_dotl.c b/fs/9p/vfs_inode_dotl.c
-index 3f916a8d10540..50327c01da430 100644
---- a/fs/9p/vfs_inode_dotl.c
-+++ b/fs/9p/vfs_inode_dotl.c
-@@ -333,16 +333,24 @@ v9fs_vfs_atomic_open_dotl(struct inode *dir, struct dentry *dentry,
- 	err = finish_open(file, dentry, generic_file_open);
- 	if (err)
+diff --git a/drivers/net/wireless/ath/ath10k/core.c b/drivers/net/wireless/ath/ath10k/core.c
+index f9b51d98d20bb..e3dcf034c8725 100644
+--- a/drivers/net/wireless/ath/ath10k/core.c
++++ b/drivers/net/wireless/ath/ath10k/core.c
+@@ -2979,6 +2979,7 @@ int ath10k_core_start(struct ath10k *ar, enum ath10k_firmware_mode mode,
+ 	clear_bit(ATH10K_FLAG_CRASH_FLUSH, &ar->dev_flags);
+ 
+ 	ar->running_fw = fw;
++	ar->thermal.broken = false;
+ 
+ 	if (!test_bit(ATH10K_FW_FEATURE_NON_BMI,
+ 		      ar->running_fw->fw_file.fw_features)) {
+diff --git a/drivers/net/wireless/ath/ath10k/thermal.c b/drivers/net/wireless/ath/ath10k/thermal.c
+index 8b15ec07b1071..9b81f9ae58d74 100644
+--- a/drivers/net/wireless/ath/ath10k/thermal.c
++++ b/drivers/net/wireless/ath/ath10k/thermal.c
+@@ -75,6 +75,12 @@ static ssize_t ath10k_thermal_show_temp(struct device *dev,
  		goto out;
--	file->private_data = ofid;
-+	/*
-+	 * Special files have type-specific fops that own
-+	 * file->private_data.  The create fid is unused
-+	 * there: leave it for p9_fid_put() on the out
-+	 * path so it is clunked before we return.
-+	 */
-+	if (S_ISREG(inode->i_mode) || S_ISDIR(inode->i_mode)) {
-+		file->private_data = ofid;
- #ifdef CONFIG_9P_FSCACHE
--	if (v9ses->cache & CACHE_FSCACHE) {
--		struct v9fs_inode *v9inode = V9FS_I(inode);
--		fscache_use_cookie(v9fs_inode_cookie(v9inode),
--				   file->f_mode & FMODE_WRITE);
--	}
-+		if (v9ses->cache & CACHE_FSCACHE) {
-+			struct v9fs_inode *v9inode = V9FS_I(inode);
-+			fscache_use_cookie(v9fs_inode_cookie(v9inode),
-+					   file->f_mode & FMODE_WRITE);
-+		}
- #endif
--	v9fs_fid_add_modes(ofid, v9ses->flags, v9ses->cache, flags);
--	v9fs_open_fid_add(inode, &ofid);
-+		v9fs_fid_add_modes(ofid, v9ses->flags, v9ses->cache, flags);
-+		v9fs_open_fid_add(inode, &ofid);
+ 	}
+ 
++	/* Don't stall every read on firmware that never answers */
++	if (ar->thermal.broken) {
++		ret = -EOPNOTSUPP;
++		goto out;
 +	}
- 	file->f_mode |= FMODE_CREATED;
- out:
- 	p9_fid_put(dfid);
++
+ 	reinit_completion(&ar->thermal.wmi_sync);
+ 	ret = ath10k_wmi_pdev_get_temperature(ar);
+ 	if (ret) {
+@@ -90,7 +96,8 @@ static ssize_t ath10k_thermal_show_temp(struct device *dev,
+ 	time_left = wait_for_completion_timeout(&ar->thermal.wmi_sync,
+ 						ATH10K_THERMAL_SYNC_TIMEOUT_HZ);
+ 	if (!time_left) {
+-		ath10k_warn(ar, "failed to synchronize thermal read\n");
++		ath10k_warn(ar, "failed to synchronize thermal read, not asking again until the firmware restarts\n");
++		ar->thermal.broken = true;
+ 		ret = -ETIMEDOUT;
+ 		goto out;
+ 	}
+diff --git a/drivers/net/wireless/ath/ath10k/thermal.h b/drivers/net/wireless/ath/ath10k/thermal.h
+index 1f4de9fbf2b30..d1fb5b958c37c 100644
+--- a/drivers/net/wireless/ath/ath10k/thermal.h
++++ b/drivers/net/wireless/ath/ath10k/thermal.h
+@@ -19,6 +19,8 @@ struct ath10k_thermal {
+ 	/* protected by conf_mutex */
+ 	u32 throttle_state;
+ 	u32 quiet_period;
++	/* the running firmware did not answer a temperature request */
++	bool broken;
+ 	/* temperature value in Celsius degree
+ 	 * protected by data_lock
+ 	 */
 -- 
 2.53.0
 
