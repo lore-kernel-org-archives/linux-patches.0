@@ -1,52 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795623672;
-	b=qCZiD4gE+e91XyJqClr9XIFO7itbaqrDXTgGlctBUFLsUUDQ6iGXwMFfClwhTrA4+j39
-	 T+OJcySLGZ2mhs87MUZrQ1OuWJI6qzVbit5RKj/r8gnhpRaVIhMnvCYJRikHuUmuhF3dD
-	 a5zcDdF+tmrIf1qRR4wuyBu5daQd75Gb+2z37h6LOQnIXZ3KqJP14dqqhf9FEypwykiM3
-	 2B5DK5zwKj5nhjaflxYg42FfURexmjfbnooQaQDT4VI31K1yJUVeyAdH1XYBTs6cBm0Of
-	 5wC5W5WW2WkkYQc07YtsNZGqYj5MW9Y2J4ZJ90zsWUikToo97DaTCaSqP4d8+XyegLw==
+	t=1795623676;
+	b=lpgU2r0h/s/D0EhZ5kQpz3HADNinVOGMKOIxlVisRLYmkpbYt1ZnG1QyUpgvZ1u4WUzr
+	 Hh38yfPTG8upXD/6TboXpwBZ4kuP4XU6mk3gtRbyW8coRKItmnQ62aTAeH6cTDMIJRcSr
+	 ECjicNB7QVvrmEtRNbzbpAvb7tH03zCjlL+AtbBQx57bCUMNXnmdEezuoG0lFZ6n79d65
+	 NZ1s2R/9LKyhdgXqfItfeeJLMcNG8ISre6r6tDD4fY1js5PA+QSeEt3cxxXyB9ZqJPlrp
+	 S2JpZsN2msoUAa+pgM5aVHV2wtRb4ZjSdzUVhfyclPgZkNjHn+KQIg9nW1lG/l3jMTA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795623672;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795623676;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=K5g0LB6ZB29jgqV2n88gRKWSezP3jMeOV1ZGjhVwy5o=;
-	b=I91tVr20fr8a+r1FyBGFYLhVzl63HzsQzCURLaR25f9HpzbdTldcowlJS1f4X0uki8em
-	 Ak1ZJRxFas9S8jT/mz0EL/R12w9YPAKo7JvtXbb1ALQHtT7wgHuYz6HwySUESHXa+oGkx
-	 gBcXXleBbG6HIX5BI/XqQMLQANHPVt40xFWFtdEEOThAIn4jHJ5pX0ehvGCHN5hC4kHFI
-	 jiuqxIJqZlhiT0QEi5+k/53zUSuyvVzj9JOVfPI9RPRMgd00NRt3RfmV7iKUc4JD2Ke6B
-	 gxxmVPmqPPTRPPwTspefCxnZIu13ZqZ+VUiJroQH0N4MmZNxJYS+6im8nxyeixlbwEA==
+	bh=ky6uswKtwOptGnRaT1q6Vea4kMxP5Y368nvTww4azg8=;
+	b=ZG7HdhyzYsDc495vy3xO1DoVLNsnT63zuAUfNo5e0gGRTUrnSAA5KQKTDO1pUOigAWcR
+	 9WTvOFWdAG6/WpRJ3hT2aluNXECSD45gJDUX6Hl++wlq6P3YBtB/zswEyl8dR0Wr+xbPu
+	 y5rvMJ7JoQdbxSlHGkMgPRXmKxJQsrWrDtxi74CZlm3SXrTbtj1VjaPiAEbfif+6T7MYs
+	 45QL8mbxZzdDORaDhdyluLvZT6VtlkUR0eDL9lelLMo6iEB8T/4TwIs/GeIcK5wqsKUcf
+	 M9KEAbsV2Q0I629AiutLYCL9bX8ULaQNshtGBgHxF5Km2CrNKJfmtd0jr8XYCun2oDA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=yezauRCe;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=CAFhQ9ye;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 70523606A680;
-	Wed, 25 Nov 2026 16:21:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 28986606A339;
+	Wed, 25 Nov 2026 16:21:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=yezauRCe
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6B3EB1F000C6;
-	Wed, 25 Nov 2026 16:21:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=CAFhQ9ye
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C32951F000CA;
+	Wed, 25 Nov 2026 16:21:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795623672;
-	bh=K5g0LB6ZB29jgqV2n88gRKWSezP3jMeOV1ZGjhVwy5o=;
+	s=korg; t=1795623675;
+	bh=ky6uswKtwOptGnRaT1q6Vea4kMxP5Y368nvTww4azg8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=yezauRCeuwUqQ/cbpCJwXCvkbQi9evSuzlNECa7pRteDUFWl73m5oGxkLxXHi6CmG
-	 oXVfLeTSUAXVL3Ybn0IgAE9xpb2CnzcxLFHG3W57QJa62Pkc6ctPfsNf1iFCJGuTlO
-	 RefvmXTJdtxPEI8kp8U5qkgP2qiRQLGL9t5cnE1o=
+	b=CAFhQ9yetdan3QYdH7UdlRsxJuzhQq+oB6KmaJFl6d+qpWmrygySkYWr9rft7zlNk
+	 AJGFFZKvukOi9qt3wz3YUP+g8ASkPHuB/CFIt38CXIqzI/L6cyScQ5NgFKIBhj3d4Z
+	 RjwV5s+qDxV9R+VxGn/3jcSYDqIw69RGkCtgtZHw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable <stable@kernel.org>,
-	Josef Bacik <josef@toxicpanda.com>,
-	Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
-Subject: [PATCH 6.18 927/990] w1: netlink: drop the slave after the bus is unlocked
-Date: Wed, 25 Nov 2026 15:38:14 +0100
-Message-ID: <20261125143843.713530161@linuxfoundation.org>
+	syzbot+763813d65c7e18c1b6d5@syzkaller.appspotmail.com,
+	Johan Hovold <johan@kernel.org>
+Subject: [PATCH 6.18 936/990] USB: serial: io_edgeport: fix NULL-deref on early status
+Date: Wed, 25 Nov 2026 15:38:23 +0100
+Message-ID: <20261125143843.918185920@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143822.072087159@linuxfoundation.org>
 References: <20261125143822.072087159@linuxfoundation.org>
@@ -68,62 +67,56 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Josef Bacik <josef@toxicpanda.com>
+From: Johan Hovold <johan@kernel.org>
 
-commit 847fa880a3e1b2fdbbf72d89e830566108457637 upstream.
+commit ae22e9b6412e5dc99e1cf8bd13c6176d44c7d42e upstream.
 
-w1_process_cb() executes the commands of a netlink message with bus_mutex
-held, and drops the reference to the slave which the message was
-addressed to before it unlocks the mutex.  If the slave has been detached
-in the meantime, this is the last reference, and w1_unref_slave() tears
-the slave down on the spot.  That waits
+The driver submits the interrupt-in URB during probe or on first port
+open, which on completion may submit the bulk-in URB before all ports
+have been opened and their waitqueues have been initialised.
 
-- in device_unregister(), for the sysfs callbacks of the slave which are
-  running, and
+If a (malicious) device sends a status message for a port that has not
+yet been opened this may lead to a NULL-pointer dereference in the
+bulk-in completion handler when attempting to wakeup blocked tasks.
 
-- in w1_therm_remove_slave(), for the readers which have taken a
-  reference to the family data,
+Move waitqueue initialisation from open() to port_probe() to address
+this.
 
-and both kinds take bus_mutex to talk to the slave.  Whoever is waiting
-for the mutex at that moment is never going to finish, and neither is the
-thread of the bus master.
-
-Unlock the bus first.  The reference keeps the slave, and with it the
-master, alive until then.
-
-Fixes: d3a8a9dbb903 ("w1: hold bus_mutex in netlink and search")
-Cc: stable <stable@kernel.org>
-Signed-off-by: Josef Bacik <josef@toxicpanda.com>
-Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
-Link: https://patch.msgid.link/20261027-llm-char-misc-w1-v1-6-d2e6bfafb6a4@linuxfoundation.org
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Reported-by: syzbot+763813d65c7e18c1b6d5@syzkaller.appspotmail.com
+Link: https://lore.kernel.org/6a8818d8.ae6ddae5.3da009.0031.GAE@google.com
+Cc: stable@vger.kernel.org
+Signed-off-by: Johan Hovold <johan@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/w1/w1_netlink.c |    8 +++++---
- 1 file changed, 5 insertions(+), 3 deletions(-)
+ drivers/usb/serial/io_edgeport.c |   10 +++++-----
+ 1 file changed, 5 insertions(+), 5 deletions(-)
 
---- a/drivers/w1/w1_netlink.c
-+++ b/drivers/w1/w1_netlink.c
-@@ -478,15 +478,17 @@ static void w1_process_cb(struct w1_mast
- 	if (!cmd || err)
- 		w1_netlink_queue_status(node->block, node->msg, cmd, err);
+--- a/drivers/usb/serial/io_edgeport.c
++++ b/drivers/usb/serial/io_edgeport.c
+@@ -877,11 +877,6 @@ static int edge_open(struct tty_struct *
+ 		}
+ 	}
  
-+	dev->priv = NULL;
-+	mutex_unlock(&dev->bus_mutex);
+-	/* initialize our wait queues */
+-	init_waitqueue_head(&edge_port->wait_open);
+-	init_waitqueue_head(&edge_port->wait_chase);
+-	init_waitqueue_head(&edge_port->wait_command);
+-
+ 	/* initialize our port settings */
+ 	edge_port->txCredits = 0;	/* Can't send any data yet */
+ 	/* Must always set this bit to enable ints! */
+@@ -2965,6 +2960,11 @@ static int edge_port_probe(struct usb_se
+ 		return -ENOMEM;
+ 
+ 	spin_lock_init(&edge_port->ep_lock);
 +
- 	/* ref taken in w1_search_slave or w1_search_master_id when building
--	 * the block
-+	 * the block.  If it is the last one, the slave is removed, which waits
-+	 * for users of the bus.
- 	 */
- 	if (sl)
- 		w1_unref_slave(sl);
- 	else
- 		atomic_dec(&dev->refcnt);
--	dev->priv = NULL;
--	mutex_unlock(&dev->bus_mutex);
++	init_waitqueue_head(&edge_port->wait_open);
++	init_waitqueue_head(&edge_port->wait_chase);
++	init_waitqueue_head(&edge_port->wait_command);
++
+ 	edge_port->port = port;
  
- 	mutex_lock(&dev->list_mutex);
- 	list_del(&async_cmd->async_entry);
+ 	usb_set_serial_port_data(port, edge_port);
 
 
