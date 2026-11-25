@@ -1,42 +1,42 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795621888;
-	b=yFr0xUQ4LpYTKE2wZ1JW9Ieqg3EDEYKeJPRC9B8P31R2y5TM0caHyOU6NI+ewZnz81OH
-	 Urup+PsOCguhgAkPY6BDwaeP8QfMykcB7Kc6w1Lt3W1t+zAKhz5xxvYYOWDsWxEGhM0eJ
-	 yxfQcyKQfCN0xBMGN52WB29UYVxxyS8CeD3cZcLi1FsZn1fJlfZ7s9V8D+AoCcAc3eN4m
-	 qHC74rr57Mnp2gvzMioKa29smjXjgTFRleCLywsYv850yHCMLKxLFysBBKvLBC3l2dB3o
-	 jNN/1/yriQN+uLWZ/NPZ5NLnBHLLNItNmW8wW6m2GvftJ/GjQ6q6JkVLzcadxj5HKhQ==
+	t=1795621891;
+	b=zKzow9TP3NRmluRsrROL0wDqyQ7w+gb7stih4IuKQlu9TRo9mjX2QkAN9Ij0+HlTIAa3
+	 ogKFA10EbicadRGXAR88wNXE3FetH9wjB5GcE7s1LLO/h3YZ8OZkfWxbOEjuqrtCJOyaZ
+	 1USiuJxybvJWoNv04+Nwx9xlgscexv0Ajx0UZ1a8JNhC+7x17Nn/LW7JFqeeRHNnXh+kj
+	 KjGtZVl6oIeHaZue7upfRsrykfJVkTL0rpGnn0jAjwl7cwJZBZy8RQ+qFazXYmRDQ6cux
+	 d66gOaorj4WtozCHtsaEg6lY8qjZOl3fybLzCvCLOUNXLKJJbHJzfuVnRXD62tm/Ydg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795621888;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795621891;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=4WjiEW5Im/HuvyOhuyATvv4bW+lyQof4ThlX6uhnvqw=;
-	b=jaNTOHcTmbm+B+suZpMg6C+m+XJwaU4J9oMMKCLV/j6i4x1mMsfhSMYTfwnvZUhMsCj1
-	 WbSAOtaNhhaaS5HV4nZ2HrKNgU4Dwi5p/xehz8jX0j6eS/IsDetMro02EQU/W3Z5EsE2E
-	 jtiAoznPQkfvH/HR8/Nharfk8LJJjnuK9+KJAwUyBsjnftNycu2aNQa+xD6aXgjY1H3vL
-	 Tm/MbTpXWocRwYcwJpmvG42N3WzH9QnTMyERrAKWY4nYwMgyB0h3DNTBVF1OqmURoWvAX
-	 RJEMwyjKfhS2MNY/lcRQxdcseIAmPTwR3QbHQc2EBz2nGEqr8AFLQ7Yc/VnO50Sd/zA==
+	bh=S3GWw7xo4Sgpo6C6UOmu7FRwGAGMMGNuW12I8ZhTY1k=;
+	b=YnwI/E92wqxKg63cq8phwDXYO1QB3ROEpRsJZrz60ZdEzjmQMhJ++4YmgvRRIKokK4vl
+	 dV3+TuAPGZ5s6NufxZGsSLdt7mo09S+xENWGgjsqZRq2GAnj9f/fqjRCCoeR5jQTo9CC1
+	 hTqwkiG/exXRc4T7soDFfOF7xsV+741qtXLgNK0eCzjt+YFf/Yu5zXaNW/cYZoqjGRkJV
+	 2AxXJwQRgzGcS3mTb79NKi7UARTlgD/bDnf04CN2RdYCqwy3+Lu0WSXAAGGlEu6vd0/MF
+	 UUViiL4gt+LcDWlbYkV0wS8hgip7Mb966Ip0t1GDlNfCukaUOYndleaW/g1G7KESTmQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=lPmp256R;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=P48ThtvN;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5CA18606A333;
-	Wed, 25 Nov 2026 15:51:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DE4E1606A321;
+	Wed, 25 Nov 2026 15:51:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=lPmp256R
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 730BB1F000EE;
-	Wed, 25 Nov 2026 15:51:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=P48ThtvN
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1FF791F000EC;
+	Wed, 25 Nov 2026 15:51:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795621888;
-	bh=4WjiEW5Im/HuvyOhuyATvv4bW+lyQof4ThlX6uhnvqw=;
+	s=korg; t=1795621891;
+	bh=S3GWw7xo4Sgpo6C6UOmu7FRwGAGMMGNuW12I8ZhTY1k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=lPmp256RPDYCHW5lQ60VYsqkT5D6VBD29BE99qqKGdWLcB0A/LPQm/NB/IgRS/Zy4
-	 gTBr2sqMTRIJZpJkPOkxWfUlVg0mcCOfp7cmYccs5BE9xS7qSENao0OR6IfdsRe8Pr
-	 mHy1ivN2Xs6NyAblwQBh6yx91l3o+o2W+kH1W85k=
+	b=P48ThtvNCVqqGizfUfY/2T431a5RCV9Jh8V8eUKc+zoEWpofzexZXDZ+Hk7ruPUi0
+	 7/iT9Xeuay4bRNInoHMOjYuZy4wgTSOgyym0k098yGUk3omwUnlAM9/RQ4RA5FHhDl
+	 Ip7bm8hAz98W8BfK0pR6GjNFHEN/LqlhuJRtgb1s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -45,9 +45,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Johannes Thumshirn <johannes.thumshirn@wdc.com>,
 	David Sterba <dsterba@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 366/990] btrfs: zoned: fix possible UAF in wait_eb_writebacks()
-Date: Wed, 25 Nov 2026 15:28:53 +0100
-Message-ID: <20261125143830.665005177@linuxfoundation.org>
+Subject: [PATCH 6.18 367/990] btrfs: zoned: requeue block group if zone reset bails out
+Date: Wed, 25 Nov 2026 15:28:54 +0100
+Message-ID: <20261125143830.688090835@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143822.072087159@linuxfoundation.org>
 References: <20261125143822.072087159@linuxfoundation.org>
@@ -71,52 +71,108 @@ Content-Transfer-Encoding: 8bit
 
 From: Johannes Thumshirn <johannes.thumshirn@wdc.com>
 
-[ Upstream commit 8ca411c7ad2c02ae65ae208a3f7483d6e0159c4f ]
+[ Upstream commit c5f878eefdd4f559422a68bf49b6f59e7c10e70e ]
 
-wait_eb_writebacks() iterates the fs_info->buffer_tree xarray and waits
-for the writeback of these extent-buffers. Waiting for writeback needs
-to be done without the rcu_read_lock() held (because it can sleep) and
-thus the loop drops the rcu_read_lock() before calling into
-wait_on_extent_buffer_writeback(). But extent_buffers are freed through
-RCU, so if btrfs_release_extent_buffer_rcu() is scheduled while we're
-still waiting on the writeback, the extent_buffer will be freed causing
-a use-after-free.
+btrfs_reset_unused_block_groups() drops the block-group from
+fs_info->unused_bgs before performing the work that can actually fail,
+the actual submission of a REQ_OP_ZONE_RESET.
 
-Similar to what is done in find_extent_buffer_nolock(), get a reference
-to the extent_buffer before calling into
-wait_on_extent_buffer_writeback() so a successful writeback does not
-free the extent_buffer while we still have a reference to it.
+Every failed operation after this leaves the block-group dangling,
+physically reset, but the in-memory structures aren't and it is not
+requeued to be reset on fs_info->unused_bgs.
 
-Fixes: 2dd7e7bc0282 ("btrfs: zoned: wait for extent buffer IOs before finishing a zone")
+Instead of bailing out, re-add this block-group to fs_info->unused_bgs
+list.
+
+Fixes: 453a73c3069a ("btrfs: zoned: reclaim unused zone by zone resetting")
 Reviewed-by: Daniel Vacek <neelx@suse.com>
 Signed-off-by: Johannes Thumshirn <johannes.thumshirn@wdc.com>
 Signed-off-by: David Sterba <dsterba@suse.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/btrfs/zoned.c | 8 ++++++++
- 1 file changed, 8 insertions(+)
+ fs/btrfs/zoned.c | 28 ++++++++++++++++++++++------
+ 1 file changed, 22 insertions(+), 6 deletions(-)
 
 diff --git a/fs/btrfs/zoned.c b/fs/btrfs/zoned.c
-index 0ff693fea47c3..fe35bd531f70f 100644
+index fe35bd531f70f..f25cd3ddbd630 100644
 --- a/fs/btrfs/zoned.c
 +++ b/fs/btrfs/zoned.c
-@@ -2482,8 +2482,16 @@ static void wait_eb_writebacks(struct btrfs_block_group *block_group)
- 			continue;
- 		if (eb->start >= end)
+@@ -3107,6 +3107,8 @@ int btrfs_reset_unused_block_groups(struct btrfs_space_info *space_info, u64 num
+ {
+ 	struct btrfs_fs_info *fs_info = space_info->fs_info;
+ 	const sector_t zone_size_sectors = fs_info->zone_size >> SECTOR_SHIFT;
++	LIST_HEAD(retry_list);
++	int ret = 0;
+ 
+ 	if (!btrfs_is_zoned(fs_info))
+ 		return 0;
+@@ -3148,11 +3150,10 @@ int btrfs_reset_unused_block_groups(struct btrfs_space_info *space_info, u64 num
+ 		}
+ 		if (!found) {
+ 			spin_unlock(&fs_info->unused_bgs_lock);
+-			return 0;
++			goto out;
+ 		}
+ 
+ 		list_del_init(&bg->bg_list);
+-		btrfs_put_block_group(bg);
+ 		spin_unlock(&fs_info->unused_bgs_lock);
+ 
+ 		/*
+@@ -3166,7 +3167,6 @@ int btrfs_reset_unused_block_groups(struct btrfs_space_info *space_info, u64 num
+ 		for (int i = 0; i < map->num_stripes; i++) {
+ 			struct btrfs_io_stripe *stripe = &map->stripes[i];
+ 			unsigned int nofs_flags;
+-			int ret;
+ 
+ 			nofs_flags = memalloc_nofs_save();
+ 			ret = blkdev_zone_mgmt(stripe->dev->bdev, REQ_OP_ZONE_RESET,
+@@ -3176,7 +3176,7 @@ int btrfs_reset_unused_block_groups(struct btrfs_space_info *space_info, u64 num
+ 
+ 			if (ret) {
+ 				up_read(&fs_info->dev_replace.rwsem);
+-				return ret;
++				goto requeue;
+ 			}
+ 		}
+ 		up_read(&fs_info->dev_replace.rwsem);
+@@ -3187,7 +3187,7 @@ int btrfs_reset_unused_block_groups(struct btrfs_space_info *space_info, u64 num
+ 		if (bg->ro) {
+ 			spin_unlock(&bg->lock);
+ 			spin_unlock(&space_info->lock);
+-			continue;
++			goto requeue;
+ 		}
+ 
+ 		reclaimed = bg->alloc_offset;
+@@ -3215,10 +3215,26 @@ int btrfs_reset_unused_block_groups(struct btrfs_space_info *space_info, u64 num
+ 		btrfs_return_free_space(space_info, reclaimed);
+ 		spin_unlock(&space_info->lock);
+ 
++		btrfs_put_block_group(bg);
++
+ 		if (num_bytes <= reclaimed)
  			break;
-+		/*
-+		 * Skip if we can't get the refcount for the extent buffer,
-+		 * i.e. because it was already written back. Otherwise an eb
-+		 * disappering underneath us can cause a use-after-free.
-+		 */
-+		if (!refcount_inc_not_zero(&eb->refs))
-+			continue;
- 		rcu_read_unlock();
- 		wait_on_extent_buffer_writeback(eb);
-+		free_extent_buffer(eb);
- 		rcu_read_lock();
+ 		num_bytes -= reclaimed;
++		continue;
++
++requeue:
++		list_add_tail(&bg->bg_list, &retry_list);
++
++		if (ret)
++			goto out;
  	}
- 	rcu_read_unlock();
+ 
+-	return 0;
++out:
++	if (!list_empty(&retry_list)) {
++		spin_lock(&fs_info->unused_bgs_lock);
++		list_splice_tail(&retry_list, &fs_info->unused_bgs);
++		spin_unlock(&fs_info->unused_bgs_lock);
++	}
++
++	return ret;
+ }
 -- 
 2.53.0
 
