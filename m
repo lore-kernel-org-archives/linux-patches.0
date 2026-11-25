@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795624048;
-	b=jCSfa8hhW0Iorj9IVJRO74cL5zewYKuoEVjKN8c1u8mI779wqrjl2mfRzoUEp5YS6yce
-	 mGrEEAwIMudpF2Qsm+/uFDOjyAqpfImqooyUu5GOnJ7P9BUmcEEcM6VymKly/GUNOq5vs
-	 UAmzw1sxPs4o/5+xamT8OhzSV7oIfwRENLr+SOXZuoeHQxCLCYdlmpbZ7oSyKoCmslYgl
-	 1SOIyrVBIC/1wyye8gub5L9a6xBmrvIUGeGsnS1ecL0naELKKnCyNPyi06Aocl7t4FfsV
-	 miL4WA42aeiiiRoTCDvZOwzW4rPVhTnlcL3Mpwd0juqA8YFdgQ2QppBguJyKgw1LfEw==
+	t=1795624052;
+	b=3MvfEygXPCLGXEs5NUC99EUpCwKMjQ3oi4gYmkfNuluMxB+ElA3jyHLs+61/r0BbLvn+
+	 eaV3nFEqrO3BcnkhL0Rc4/2uv3+IFqbIwlOIhP/uQhV+7NOYZV8lPxPybxu229VvjGmcm
+	 s8yc+7BGmq4+dlpSOGbE4CcRP7gfKX8OpEQpXQjta7lwhOcef8Y/AnZFZE9kYJJmsusuX
+	 VCNlHY6Sk9o3xIeEgo/GpEEvmHn0sxUNubWaLUwMJEVrBaHlDKmL1aQzfb/ENsRK9NF85
+	 UpBAwaI8rcmd9tkjcgEJNqcg6mK4JyL0LALA+LGs9OKTFfFoZ8+WUI0yJOV1KZdc4og==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795624048;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795624052;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=bhFjmDIpajhA8Zismi3czxq0Ff2LeHlylbGTNkrK9ek=;
-	b=QcAstJ0arMIggvoLXg0kB585bIWQ/FqL6rzACiLqeVsK7L5xgUpEtuN9yvi2Px0xp0rh
-	 WZjTVqM17LqeTGbm9UBYoyvC3aMZyNRLhJrZTCYchEG8Ty2zBRLgyVaZESue20E/4rNbf
-	 NS1Hfxg5/YnjUywT4rpdhEQjGgrqWnSL2EJpbOo+pakbiGgHlDB+SOp+1L0tyi+8/3SWz
-	 od3HbzPq3puQ6mm4Qky+XraomycddnPUnu8NKh5NHvBNUDJa6fML2B6usuw994JV8ICyu
-	 3tSh58YNqJOA3dZkSDKKXaKvNqgBQWH7Zc6hmWo61i8bOkcG7wmhuWaSBYbJA7YFgZQ==
+	bh=86JJxIZ/ou1YtRqMg9M1Ai2lXee4qkR4wVmN9+8MSDQ=;
+	b=mLK4gKUa3gr0sAOFLRbtRaWTnXywmZRazDm3zay2OyYV5eqgQQt4y+78SvADgb3zT70s
+	 FNa0U496UVZQhFlbfjj43wY1jesM3TDChtwx7mTiZbQZg/FTb2iXl1tuWksvXwIQAhhBH
+	 E6X88Bbbni+5T6Ng8SKegN9IMDaBemfpcmNAsNScyfwgLFmPt2qW5p8VJUtnr0i1+QB3q
+	 E+yEQg7PI2aOT8hSqQXHCV2b9rVvxI+3zaUHJvG3X6VxQVJhSvyXvpPeWcqJ+xpEtgVh3
+	 tyA88dbf8Ovt9Er9oXj2By0ynI4yZJLC71S//HBrJUe4Xmx4Rn5h7wAY7+tK+RwFlhQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=gnHM0MxC;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=xWgUM2y8;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C8FEC606A323;
-	Wed, 25 Nov 2026 16:27:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 08811606A31E;
+	Wed, 25 Nov 2026 16:27:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=gnHM0MxC
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0418F1F000D1;
-	Wed, 25 Nov 2026 16:27:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=xWgUM2y8
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E42FF1F000C4;
+	Wed, 25 Nov 2026 16:27:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795624048;
-	bh=bhFjmDIpajhA8Zismi3czxq0Ff2LeHlylbGTNkrK9ek=;
+	s=korg; t=1795624051;
+	bh=86JJxIZ/ou1YtRqMg9M1Ai2lXee4qkR4wVmN9+8MSDQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=gnHM0MxCZk/bsBR7xgyV0ojah5yMUC0/6V5mgEANo6CPpA/opXrOrYB1rMRGk+qU+
-	 S/iZMZuhRDsDbAdyutCcsR+o8XddE6kI3HLTfgHYQr/rXDMfTcVLdDseWUMvTC1GXS
-	 vVBaudguBdRB4J9B2BE4dDa6VzrUDVa4KOKkEUXk=
+	b=xWgUM2y8Saywkm3DkOYFt86f61DCr87jGeFewf5jcnTEbFEbhYVCVDoYVAbqB877/
+	 Lljej0m2DS0wtNVk/DLs9T3t8E7XPsdjnG9ZUZID+Dd0QUlpCht13vkd7HGxx0ISf2
+	 QMWACptiHtGrg/t+gw2NhhMWs0UaJOwbypq/JxlQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sashiko <sashiko-bot@kernel.org>,
-	Alexei Starovoitov <ast@kernel.org>,
-	"Jose Fernandez (Anthropic)" <jose.fernandez@linux.dev>,
+	guolingxing <guolingxing@tju.edu.cn>,
+	Qu Wenruo <wqu@suse.com>,
+	David Sterba <dsterba@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 068/816] bpf: Fix jited line info off by the CFI preamble
-Date: Wed, 25 Nov 2026 15:26:56 +0100
-Message-ID: <20261125143850.794957742@linuxfoundation.org>
+Subject: [PATCH 6.12 069/816] btrfs: verity: propagate orphan insertion errors when enabling verity
+Date: Wed, 25 Nov 2026 15:26:57 +0100
+Message-ID: <20261125143850.819478212@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143849.205329330@linuxfoundation.org>
 References: <20261125143849.205329330@linuxfoundation.org>
@@ -69,73 +69,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jose Fernandez (Anthropic) <jose.fernandez@linux.dev>
+From: guolingxing <guolingxing@tju.edu.cn>
 
-[ Upstream commit 3e4279dc5144a5afcda101df23792b13e94c3859 ]
+[ Upstream commit 45a686dff6b91c3667cd8188d3a02c69f62f4d00 ]
 
-With CONFIG_CFI=y, every jited line info entry after a function's
-first is cfi_get_offset() bytes too high on x86-64, riscv64 and arm64,
-so tools that use it show the wrong source line.
+btrfs_begin_enable_verity() ignores the return value of
+btrfs_orphan_add() and unconditionally returns 0. If orphan insertion
+fails, btrfs_orphan_add() aborts the transaction, but the generic
+fs-verity code still proceeds with Merkle tree construction because
+the begin_enable_verity callback reported success.
 
-The JITs count the insn_to_jit_off[] offsets from the start of the
-image. Since the CFI commits below, prog->bpf_func starts
-cfi_get_offset() bytes into the image, and bpf_prog_fill_jited_linfo()
-adds the offsets to prog->bpf_func. s390 corrects its offsets before
-the call, the other three JITs do not.
+Return the error so that fs-verity stops immediately instead of
+continuing after the initialization failure.
 
-Subtract cfi_get_offset() once in bpf_prog_fill_jited_linfo() and drop
-the s390 correction. jited_linfo[0] stays prog->bpf_func, the
-function's ksym address. Without CONFIG_CFI, cfi_get_offset() is 0 and
-nothing changes.
+The transaction is already aborted by btrfs_orphan_add() and the
+handle is released by btrfs_end_transaction(), so no additional
+cleanup is needed.
 
-Fixes: 4f9087f16651 ("x86/cfi,bpf: Fix BPF JIT call")
-Fixes: e63985ecd226 ("bpf, riscv64/cfi: Support kCFI + BPF on riscv64")
-Fixes: 710618c760c0 ("arm64/cfi,bpf: Support kCFI + BPF on arm64")
-Reported-by: Sashiko <sashiko-bot@kernel.org>
-Reported-by: Alexei Starovoitov <ast@kernel.org>
-Signed-off-by: Jose Fernandez (Anthropic) <jose.fernandez@linux.dev>
-Signed-off-by: Alexei Starovoitov <ast@kernel.org>
-Link: https://patch.msgid.link/20261030-b4-arm64-bpf-linfo-cfi-v2-1-4eac83435d4b@linux.dev
-Closes: https://lore.kernel.org/all/20260904014748.C04AA1F000E9@smtp.kernel.org/
-Closes: https://lore.kernel.org/all/DLNXZ2WK7TPD.2RZBUNRS4FA4L@gmail.com/
+Fixes: 705242538ff3 ("btrfs: verity metadata orphan items")
+Signed-off-by: guolingxing <guolingxing@tju.edu.cn>
+Reviewed-by: Qu Wenruo <wqu@suse.com>
+Signed-off-by: David Sterba <dsterba@suse.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/bpf/core.c | 8 +++++---
- 1 file changed, 5 insertions(+), 3 deletions(-)
+ fs/btrfs/verity.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/kernel/bpf/core.c b/kernel/bpf/core.c
-index 643ccb230ddda..df529db44f35c 100644
---- a/kernel/bpf/core.c
-+++ b/kernel/bpf/core.c
-@@ -199,7 +199,9 @@ void bpf_prog_jit_attempt_done(struct bpf_prog *prog)
-  * here is relative to the prog itself instead of the main prog.
-  * This array has one entry for each xlated bpf insn.
-  *
-- * jited_off is the byte off to the end of the jited insn.
-+ * jited_off is the byte off to the end of the jited insn, counted from
-+ * the start of the jited image, which is cfi_get_offset() bytes before
-+ * prog->bpf_func.
-  *
-  * Hence, with
-  * insn_start:
-@@ -213,7 +215,7 @@ void bpf_prog_jit_attempt_done(struct bpf_prog *prog)
-  *
-  * For i > linfo_idx,
-  *
-- * jited_linfo[i] = prog->bpf_func +
-+ * jited_linfo[i] = prog->bpf_func - cfi_get_offset() +
-  *	insn_to_jit_off[linfo[i].insn_off - insn_start - 1]
-  */
- void bpf_prog_fill_jited_linfo(struct bpf_prog *prog,
-@@ -241,7 +243,7 @@ void bpf_prog_fill_jited_linfo(struct bpf_prog *prog,
- 		/* The verifier ensures that linfo[i].insn_off is
- 		 * strictly increasing
- 		 */
--		jited_linfo[i] = prog->bpf_func +
-+		jited_linfo[i] = prog->bpf_func - cfi_get_offset() +
- 			insn_to_jit_off[linfo[i].insn_off - insn_start - 1];
+diff --git a/fs/btrfs/verity.c b/fs/btrfs/verity.c
+index fb0eb6c4fd221..65a17d7e4e53f 100644
+--- a/fs/btrfs/verity.c
++++ b/fs/btrfs/verity.c
+@@ -604,7 +604,7 @@ static int btrfs_begin_enable_verity(struct file *filp)
+ 		set_bit(BTRFS_INODE_VERITY_IN_PROGRESS, &inode->runtime_flags);
+ 	btrfs_end_transaction(trans);
+ 
+-	return 0;
++	return ret;
  }
  
+ /*
 -- 
 2.53.0
 
