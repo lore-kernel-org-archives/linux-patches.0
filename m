@@ -1,54 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795619891;
-	b=SqmBBGFYfyDvHr4D40YB7799kWg4znkd+LH4mLNeCJGKpcRLkOfvdgp+9NI7kaZrl/WS
-	 y6buzS0HiDa9zIln8IqsP3914FCU+XdsxEwn+PzFj+puLw483tbFwAj96/hnh7lwJ0k/n
-	 axP7MG0N4iW/4uq/eujHGEFd4CRLmjGQIfBrTfrFZaKGz9D5dT+Zk9OT02X0UHYOlz0kp
-	 y4gE1l9NzOQG0iJWXo+jkClEKMiX3fzaOhu9jD4dpGIqttUAnidXvO7GdQ6K9MVeedT80
-	 dZGvrGusZ7LU7QGUiRkIgT0xq9D8g7t/ZtxdLS+xjTdUCOLV9KpEL2aL2Bhe7X6Exvg==
+	t=1795619894;
+	b=DfQhAxGRcp3JGgNas2OAGtvB11y4zfgZXN7KGwNyyUDsxJqAE1kF1PKiPi1y7JdenXlK
+	 TZfeHWEJri5mmAYCt9cy1EmMsWIqHcdW3L5IX1n6LlPBW4+kr0ESLpomca67KTyUjI9Di
+	 67Q283I/N3VtIztZnWwRyGtllfHFwHhyCUovc1M47UtjaLHBViQzdPnWKvUl5NNauWsoY
+	 HoUocEo4vyFKYGPqZkZ2BYHpos/4zWNLc4WzaSKfSOmre5B98TUK1Ejci+UVsDscQLDm3
+	 /EUnQ9vKcaJRRRYraoFLSq+gVe2vtHYF6JEWIa5/XN33BBGQsGlUuJlUfmTYptU4c/Q==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795619891;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795619894;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=ae1OqPp+C8UCu1aq2zH2S21FDbosifBBQV3wlab+OzI=;
-	b=yMp946tFQATWipv8iCLhjGSe8RnApV9Gk74efvj1RuLIQcc6LbQxxIxllNZND68O3l86
-	 tJa5+QQHZ5m93V54IdYQuAmHcilgbLWwnS+4Un+ZrI7L5rtTe9HBM+EVKYGhFQuPq4mLy
-	 zoqs3yxA+eRFb/ra2NH8Uml4Z5nabpJjSLZTTQEi1m7NMqFpxM+ByLkHRbut9DGj6pIp5
-	 QKUNdsxZ88L5mGvrJFS5Qv+8PpqaJ7lCzvXl+i/P8rB3Pi64tTTRebYyhV1g3SOoSqKPw
-	 T5d6+Pu3ijqr/qKpDQh6NHGVbSuVSGn61/q+kduFXqAyqv1jZcZNcluvkwV389NgKVg==
+	bh=Om7BDLDWY+28kd5s8wV1BR+lGXEVf3yBHJkB35X8EPw=;
+	b=YCw0eL2BfV3l8RozLJSxKcBktM0kMU5levcxrnrIoO7BLslgWU5oOJOCEK5qC6s7NOrf
+	 abQ0rFXyrqY1emvhj1fUrsem1NWq6q5pWQum2xXwcVThUYTX9QhOnv/HsuQKe3LMpC30z
+	 UIhNdY4U8npu6tQfUzxWp2+RSXa2MmCE3p2aMh80PkHf1Jkmb9nfb5JqKrSU+qXsio/ch
+	 i2PbftlAIwZ3kVlDm97FYquwzAmFIeWrTqQ2FlKITLD0x5Swx9+VN2giKcGyVo/bqSKmj
+	 v1xbisP9JqAZ32XiW2Y7yKa2WMfWllYqidCqmqnYB41fIcWFfZJCWr5iSOwYvwpiNIg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=UcJzepoz;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=eAyyZgv+;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1E547606A31E;
-	Wed, 25 Nov 2026 15:18:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0B3F1606A321;
+	Wed, 25 Nov 2026 15:18:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=UcJzepoz
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E53C91F000CF;
-	Wed, 25 Nov 2026 15:18:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=eAyyZgv+
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2DE961F000C0;
+	Wed, 25 Nov 2026 15:18:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795619890;
-	bh=ae1OqPp+C8UCu1aq2zH2S21FDbosifBBQV3wlab+OzI=;
+	s=korg; t=1795619893;
+	bh=Om7BDLDWY+28kd5s8wV1BR+lGXEVf3yBHJkB35X8EPw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=UcJzepozwH2q7KOSVycWxvvn1GupR0I3/ys/7dhTTgjQH9O2UNlAb/Y2uGaOL8gvb
-	 Q3dt/2Z+d4lblNgQrZjOmeiHU7i0nZn0PLGsAsX2gkuw1opbjxemKL72y0OuyY8bwk
-	 J3pCGK3O583R9qPlUQIZ4bLj1F5moLCdEtX+u7f4=
+	b=eAyyZgv+vkrczFrWUcFEqNnsedUtAqd5oJu855hPspBxwL5wRQ1TgYtl6mgHo8aVJ
+	 wAETHwQ+W1cpVac+zGd22cHSYdgSbg1qrGYhis7YHFbiVGnzV0txAgm8bqhC6SmoOg
+	 qIr/CJr6QhiItlNQ4L2CKF4qkdr7pN87ye0GKB34=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jaeyoung Chung <jjy600901@snu.ac.kr>,
-	Dave Hansen <dave.hansen@linux.intel.com>,
-	Ingo Molnar <mingo@kernel.org>,
-	Linus Torvalds <torvalds@linuxfoundation.org>,
-	"Peter Zijlstra (Intel)" <peterz@infradead.org>
-Subject: [PATCH 7.3 0738/1005] x86/mm: Ensure write visibility during LDT installation
-Date: Wed, 25 Nov 2026 15:34:36 +0100
-Message-ID: <20261125143839.045022980@linuxfoundation.org>
+	Hengyu Liang <hengyul@cs.unc.edu>,
+	"Borislav Petkov (AMD)" <bp@alien8.de>,
+	"Mario Limonciello (AMD)" <superm1@kernel.org>,
+	Thomas Zimmermann <tzimmermann@suse.de>
+Subject: [PATCH 7.3 0739/1005] x86/video: Preserve the default VGA fallback for legacy modes
+Date: Wed, 25 Nov 2026 15:34:37 +0100
+Message-ID: <20261125143839.067880686@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143821.729802100@linuxfoundation.org>
 References: <20261125143821.729802100@linuxfoundation.org>
@@ -70,70 +69,62 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dave Hansen <dave.hansen@linux.intel.com>
+From: Hengyu Liang <hengyul@cs.unc.edu>
 
-commit 0dc2a4dac3d04e9e4479aeb0b46172feab1cca0a upstream.
+commit 3b4c98b47ba7c3c57bcf54fb85f54a854622041c upstream.
 
-During LDT installation, the intent is to overwrite the old per-mm
-LDT value, then send an IPI to the mm user CPUs to have each load
-the new value.
+Commit
 
-But there is an ordering problem: a new mm user CPU sets itself in
-mm_cpumask() and then reads mm->context.ldt. The LDT-installing CPU
-writes mm->context.ldt and then reads mm_cpumask(). But, there is
-nothing which orders the LDT installation side actions. The CPU
-can read mm_cpumask() before its write becomes visible.
+  596b3678326d ("x86/video: Only fall back to vga_default_device() without screen info")
 
-Ensure that new mm user CPUs see the new mm->context.ldt. Make
-mm->context.ldt visible before reading mm_cpumask().
+made video_is_primary_device() rely exclusively on screen_info resources
+whenever any are available.
 
-Also convert the smp_store_release() over to a WRITE_ONCE().
-smp_store_release() has an internal barrier which is weaker than
-the new smp_mb(). Avoid an extra barrier by converting it to
-WRITE_ONCE().
+However, screen_info_resources() also returns legacy I/O and memory ranges for
+VGA text modes. These ranges are not PCI BARs, so pci_find_resource() does not
+find them and the default VGA fallback is skipped. As a result, no device is
+primary in VGA text mode.
 
-Also refresh/correct misleading comments. READ/WRITE_ONCE() do not
-"synchronize" anything themselves.
+On a SeaBIOS QEMU guest with bochs and VKMS, the boot VGA (bochs) loses its
+DRM boot_display attribute. VKMS registers fb0 and bochs registers fb1. VKMS
+is not a PCI device, so it is not primary either. With no primary device,
+fbcon keeps the console on fb0 and never remaps it to bochs. This can be
+checked with:
 
-Reported-by: Jaeyoung Chung <jjy600901@snu.ac.kr>
-Signed-off-by: Dave Hansen <dave.hansen@linux.intel.com>
-Signed-off-by: Ingo Molnar <mingo@kernel.org>
-Tested-by: Jaeyoung Chung <jjy600901@snu.ac.kr>
-Acked-by: Linus Torvalds <torvalds@linuxfoundation.org>
-Acked-by: Peter Zijlstra (Intel) <peterz@infradead.org>
-Cc: <stable@vger.kernel.org>
+  cat /sys/class/drm/card1/boot_display
+  stty -F /dev/tty1 size
+
+Without the fix, boot_display is missing and tty1 is 48 rows by 128 columns.
+With it, boot_display contains 1 and tty1 is 50 rows by 160 columns. VKMS only
+makes the console part visible. Without VKMS, tty1 has the same size with and
+without the fix, but boot_display is still missing without it.
+
+Use resource-based selection only for linear framebuffers. Fall back to
+vga_default_device() for legacy display modes, while keeping EFI and VESA
+framebuffer ownership authoritative.
+
+Fixes: 596b3678326d ("x86/video: Only fall back to vga_default_device() without screen info")
+Signed-off-by: Hengyu Liang <hengyul@cs.unc.edu>
+Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
+Reviewed-by: Mario Limonciello (AMD) <superm1@kernel.org>
+Reviewed-by: Thomas Zimmermann <tzimmermann@suse.de>
+Cc: stable@vger.kernel.org
+Link: https://patch.msgid.link/20261103031630.2085194-1-hengyul@cs.unc.edu
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/kernel/ldt.c |   12 +++++++++---
- 1 file changed, 9 insertions(+), 3 deletions(-)
+ arch/x86/video/video-common.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/arch/x86/kernel/ldt.c
-+++ b/arch/x86/kernel/ldt.c
-@@ -43,7 +43,7 @@ void load_mm_ldt(struct mm_struct *mm)
- {
- 	struct ldt_struct *ldt;
+--- a/arch/x86/video/video-common.c
++++ b/arch/x86/video/video-common.c
+@@ -45,7 +45,7 @@ bool video_is_primary_device(struct devi
  
--	/* READ_ONCE synchronizes with smp_store_release */
-+	/* Pairs with WRITE_ONCE() in install_ldt() */
- 	ldt = READ_ONCE(mm->context.ldt);
- 
- 	/*
-@@ -422,8 +422,14 @@ static void install_ldt(struct mm_struct
- {
- 	mutex_lock(&mm->context.lock);
- 
--	/* Synchronizes with READ_ONCE in load_mm_ldt. */
--	smp_store_release(&mm->context.ldt, ldt);
-+	/*
-+	 * Ensure that new mm user CPUs either see the new LDT value
-+	 * or get an IPI. Make the store visible before reading
-+	 * mm_cpumask(). New mm users make their mm_cpumask() writes
-+	 * visible before reading mm->context.ldt.
-+	 */
-+	WRITE_ONCE(mm->context.ldt, ldt);
-+	smp_mb();
- 
- 	/* Activate the LDT for all CPUs using currents mm. */
- 	on_each_cpu_mask(mm_cpumask(mm), flush_ldt, mm, true);
+ #ifdef CONFIG_SCREEN_INFO
+ 	numres = screen_info_resources(si, res, ARRAY_SIZE(res));
+-	if (numres > 0) {
++	if (numres > 0 && __screen_info_has_lfb(screen_info_video_type(si))) {
+ 		for (i = 0; i < numres; ++i) {
+ 			if (!(res[i].flags & IORESOURCE_MEM))
+ 				continue;
 
 
