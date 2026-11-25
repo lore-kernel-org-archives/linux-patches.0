@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795625071;
-	b=Qa+irCyCJfXlNT5bgws6OUWOanOErEXtmTeRzlA6F5gFhnYGvV/ouLTVW4W/dnS+Wkt4
-	 kQsA2hrclRTJYcncql4mFzTsE8CvPoDvrBuELLeJP3WSIah3Rda0X01z+u5JeCEAMcM85
-	 FsfrOvwh+9Q/iuUVMX5WABoiqYOGt+XTw/NeCMNON2hTAkkywAqbD+qDctC7U+U1kcPIS
-	 tVVf5GhytIHXk6l715lF1IMhsEinmsEwB1iQsEJvz31lbWTQ+eC0WOTcoMerGdTzNwsE2
-	 YuecZ8OuVXF1mTsRN54T+IS4c+dRJHq2RgqGgDOIjo+XvsnuVvWEoZHg576pUxlhi9A==
+	t=1795625074;
+	b=T5QyloEu6d4VGFh2QmMQXWd5DNnkW+swR3+b0CRsb0kTofRO867Xy114NPSwlV+4YkdT
+	 ZC+irxgNqcmWR4cOJfpubAVYEy9choi/I29u4m73uizkfmZl4OvotbP2nD07hminurExY
+	 Hoznjv6UjiR/3dYYW2uzjoC1eNNISFuXgt/PC7vO2HVJ1cPW50fwe2aUXXWrxmSgB1S0F
+	 ahjrsd0sVYFWint0NmMzlhycGmRWP39yeESD4eX64CJaZD342QcpnVCZxG+myV7X7l0cm
+	 rsMBe7Z51Ar+fMXp3Ex2e1CsD1ooj82fxtIFQQXRWWLI2rlIA5kmtMyuAER6duGktrw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795625071;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795625074;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=/L68McXKMsTj18Fh5fx5mdm7L/pUtwqJBe1dLrZfLsM=;
-	b=XASjFnntVAlj+wiW+LBjiuNk0zEVHY8VfteuVPEuHrZJ4qjez4xONxC2rFuJLeIsnsUw
-	 A1djm6V7N0zY54LOnMN4l3vqRsN9WlQVaLm/fdcHUpWD82/t6gmDtVUQzG1bow7pno5f/
-	 RvOxtXxLgR1RNWEMeTT754hEtPw0Bdx5dnC6yalgaEJSHibUL6AVGccMhuHgBZfLBGIQG
-	 JiifWFKLC7rHo71CKQhGbmwxSdAc3dJeTEZOL+3vEaik15ZaJmZKUbPTZCGdZbOIYQq6B
-	 sfeQQImbV9IGSz+fpJZ3LAU/xwqC8u2jD9gwxcKHH1SR2TP+4vJT8K79VG9B0Roc0gg==
+	bh=K2D18nlUML7/a38yFq2KosKsMJ9X5Bzhw4pg3bLRBO4=;
+	b=cityidDewHrajZ9xpr2iKFMLbs9PPsAP/0jLzLgfUeNKZ7vFEtV1uW9X1RgqsECCUUHr
+	 D7JH0iDP6wDiDGvvpHmzeWCma/FiOb/ub1qRD8e7ghl/goSGX2DCUEFmwv5vN00Vdf/74
+	 TWlxCj9+IAlcxYzrjgLRLpiK2rs0hl7kt11KybhchsYsOb8lZJP6dvBEbDKAeitcBrF/X
+	 rEYjM3u3EhNO98U1IRpQDjxFycUwj6d9nmJb8PZtf6PEOnkeLazE5879Bx7ya91syuHvx
+	 er8RtSjgQ2BrhCSDK1RfnHpXZoUrCfFDzvfrdd6LwvzH7o8DrJX0N0QEBMgY8cKz7OQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="Z/ljLrc+";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=gEFgJPRf;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 952EA606A321;
-	Wed, 25 Nov 2026 16:44:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 772BD606A31E;
+	Wed, 25 Nov 2026 16:44:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Z/ljLrc+
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 933301F000C0;
-	Wed, 25 Nov 2026 16:44:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=gEFgJPRf
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BDE821F000C0;
+	Wed, 25 Nov 2026 16:44:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795625071;
-	bh=/L68McXKMsTj18Fh5fx5mdm7L/pUtwqJBe1dLrZfLsM=;
+	s=korg; t=1795625074;
+	bh=K2D18nlUML7/a38yFq2KosKsMJ9X5Bzhw4pg3bLRBO4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Z/ljLrc+FFMiI+7hDCDFzebH/b6cJRk86u/1uRz9zrScYdfAtEuQeSWWm//0VrVMD
-	 m+bsxzmffoIUrKZqoqcVNeKgXtQDZTBRzT5GKYRwuBRHc9quLKBIT0MQlryfJ347rk
-	 YU9x2hKJu1ycVLQzC+UBnkqqiX/GguBa9xeYqeRo=
+	b=gEFgJPRfyhk0NBzUaaFn3E1VYqjzJx2AaK5KjWI2mcwnIj/JyHBhY5xK5r56hndsD
+	 zjBWH/r01qUbWE6DiD22skc4r0g+ZU7V5QO8Zp4wveJCfO/3Zz3U+Q9bYTWo42ZhvU
+	 q5ixPrQI3xdniCuGa0gESY9WedP5z19OuPmyjTwA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Rick Edgecombe <rick.p.edgecombe@intel.com>,
-	Sean Christopherson <seanjc@google.com>,
-	"Borislav Petkov (AMD)" <bp@alien8.de>,
+	Baochen Qiang <baochen.qiang@oss.qualcomm.com>,
+	Rameshkumar Sundaram <rameshkumar.sundaram@oss.qualcomm.com>,
+	Jeff Johnson <jeff.johnson@oss.qualcomm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 370/816] x86/cpuid: Mark CPUID function 0x23 as being indexed
-Date: Wed, 25 Nov 2026 15:31:58 +0100
-Message-ID: <20261125143857.761715821@linuxfoundation.org>
+Subject: [PATCH 6.12 397/816] wifi: ath12k: fix truncated TX buffer DMA address in MSDU ext descriptor
+Date: Wed, 25 Nov 2026 15:32:25 +0100
+Message-ID: <20261125143858.389757388@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143849.205329330@linuxfoundation.org>
 References: <20261125143849.205329330@linuxfoundation.org>
@@ -69,38 +69,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sean Christopherson <seanjc@google.com>
+From: Baochen Qiang <baochen.qiang@oss.qualcomm.com>
 
-[ Upstream commit 108775fa28fe04a16f19a828a779689f3d0ea9f0 ]
+[ Upstream commit 979ecb88ed3528e08dd7f87b90b029374226ca84 ]
 
-Add function 0x23 to the set of CPUID functions that are indexed, as per
-the SDM and the many sub-leafs defined in leaf_types.h.
+ath12k_wifi7_hal_tx_cmd_ext_desc_setup() programs the low 32 bits of the
+TX buffer physical address into HAL_TX_MSDU_EXT_INFO0_BUF_PTR_LO but
+hardcodes the high bits field HAL_TX_MSDU_EXT_INFO1_BUF_PTR_HI to 0x0.
 
-Closes: https://lore.kernel.org/all/213d614fe73e183a230c8f4e0c8fa1cc3d45df39.camel@intel.com
-Reported-by: Rick Edgecombe <rick.p.edgecombe@intel.com>
-Signed-off-by: Sean Christopherson <seanjc@google.com>
-Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
-Tested-by: Rick Edgecombe <rick.p.edgecombe@intel.com>
-Cc: stable@vger.kernel.org
-Link: https://patch.msgid.link/20261022210134.612848-2-seanjc@google.com
-[ sashal: Applied the new case to cpuid_function_is_indexed() in asm/cpuid.h, since the cpuid/api.h header from upstream does not exist in this tree. ]
+dma_addr_t is 64-bit on platforms with CONFIG_ARCH_DMA_ADDR_T_64BIT, so
+whenever a TX buffer is mapped above the 4 GB boundary the upper bits of
+paddr are dropped and the firmware is handed a truncated address,
+leading to potential TX failures.
+
+Write the upper bits of paddr into BUF_PTR_HI to fix this issue.
+
+Issue found during code review, compile tested only.
+
+Fixes: d889913205cf ("wifi: ath12k: driver for Qualcomm Wi-Fi 7 devices")
+Signed-off-by: Baochen Qiang <baochen.qiang@oss.qualcomm.com>
+Reviewed-by: Rameshkumar Sundaram <rameshkumar.sundaram@oss.qualcomm.com>
+Link: https://patch.msgid.link/20260818-ath12k-truncated-tx-dma-addr-v1-1-ead978969371@oss.qualcomm.com
+Signed-off-by: Jeff Johnson <jeff.johnson@oss.qualcomm.com>
+[ sashal: Applied the same one-line BUF_PTR_HI change to dp_tx.c and the ath12k_hal_tx_cmd_ext_desc_setup() name, since this tree has no wifi7 subdirectory or function prefix. ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/include/asm/cpuid.h | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/net/wireless/ath/ath12k/dp_tx.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/arch/x86/include/asm/cpuid.h b/arch/x86/include/asm/cpuid.h
-index ca4243318aadc..3d37bcf6ac2d3 100644
---- a/arch/x86/include/asm/cpuid.h
-+++ b/arch/x86/include/asm/cpuid.h
-@@ -179,6 +179,7 @@ static __always_inline bool cpuid_function_is_indexed(u32 function)
- 	case 0x1d:
- 	case 0x1e:
- 	case 0x1f:
-+	case 0x23:
- 	case 0x24:
- 	case 0x8000001d:
- 		return true;
+diff --git a/drivers/net/wireless/ath/ath12k/dp_tx.c b/drivers/net/wireless/ath/ath12k/dp_tx.c
+index f08ab5a4112c0..2e2f228b74c88 100644
+--- a/drivers/net/wireless/ath/ath12k/dp_tx.c
++++ b/drivers/net/wireless/ath/ath12k/dp_tx.c
+@@ -111,7 +111,7 @@ static void ath12k_hal_tx_cmd_ext_desc_setup(struct ath12k_base *ab,
+ {
+ 	tcl_ext_cmd->info0 = le32_encode_bits(ti->paddr,
+ 					      HAL_TX_MSDU_EXT_INFO0_BUF_PTR_LO);
+-	tcl_ext_cmd->info1 = le32_encode_bits(0x0,
++	tcl_ext_cmd->info1 = le32_encode_bits((u64)ti->paddr >> HAL_ADDR_MSB_REG_SHIFT,
+ 					      HAL_TX_MSDU_EXT_INFO1_BUF_PTR_HI) |
+ 			       le32_encode_bits(ti->data_len,
+ 						HAL_TX_MSDU_EXT_INFO1_BUF_LEN);
 -- 
 2.53.0
 
