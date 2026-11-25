@@ -1,56 +1,55 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795618830;
-	b=g/fsEkP5lIvak4rHqcJ1e1fJRvIZygLg6wVNwO2kN0bt8Wrk2YrkmAqgG90dZEZ1Lmax
-	 bVo7/5ZkfNh4dMa6hx5dhgEhTivZXbAfimqYvkrZA4LRBray3dn56lPYiwn30Yl9sXT/E
-	 D8kHWa8kcKYRb9bCK5uVUhWMvQNYRscNsfWpROW95zc7LVrrWyYrWHintOVlA4sWNN+UV
-	 fJ9n3jbIL0mAC66i+3wD4zIqqtAAHF1SeM1Z+DiYP6hoVcNWeWr0n785yeGNxdY+PkjKV
-	 7GJb9RJolREAvVH8o02M0i+6UGxcEGkALqoJhGCqxnvIop/nMCl7y0LzRRIugxZ4uog==
+	t=1795618833;
+	b=rQCdePnEHJuo7PvfP5L0E9vc/UlgT8pe4p+sRYEtX/p9KJKn3nKUxYvV0aM0YHLzGhok
+	 jv8RpRrEUIjhu6MzgsYcbKQde+xQEdww8q1dGtKFo05yGRZoO0fYsckkCKVpksK1bsjHg
+	 ph+AaHaHLAI/j2lMDbOVdzEMkl2IC72G9UIXj7Mcoh2rH7bxFv/vFP6rhvddqy5uB28mM
+	 pBbHmn+438D8DRCrk7vJd9HyaGGNQy4QDBnf9iyvGz4HyLiodjp4jmI3YuSzx+RQo42Pi
+	 ZxEaABEOVq2WHSMZ2JIZ/SP0rnQoxurljzMZt9VIV4gfyVPo5gtuflpSYHlI6BEopYQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795618830;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795618833;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Type:Content-Transfer-Encoding;
-	bh=pWCZDazaYpyQlr+0Gyw9dvX/6mmM/mzEvY4p94CmLLw=;
-	b=1LPRF1wf/JVNHpEu/x8VNCIlrPZ4jdl4kq9j44WndPdz7TIiMWOsY4oSPgWMxjM4mZi6
-	 7ZlDS6cXx0SS0JifNjrPeTEsBYqe1kkr1Y9mYFq+z8hVdokyGdCEGohe1vXCI7+6BsdxH
-	 w1bWkzkFOW2st4a60gXFwmIFw4Iy5ZdJ8y/85EI4cSGh+6cPZPr19vNN0Fx2C4TLkgc6r
-	 5vpIjLQHNNnHzPFal+gJztxE5TnEJoUT6SU/g5bAvwwIhUMggQpbKZDanqpmYtYcsFnov
-	 FXs1ObqhmVOuB5lxkKVWYed2m9DKqmNUQfPIJ6lXbOpXC54Igeqy4iLPPuQegnL0zeA==
+	 MIME-Version:Content-Transfer-Encoding;
+	bh=R9n+PI8u23uafc2eRpnPZVYTewmcqTC00Ad3IiWnEAg=;
+	b=R2wSgL+0t5qwdv8EeuqU43XkppU/Jmp7rjNRoo4i04MCKg33DdlA7vEVh4b3/VbT9ZrU
+	 pg8gJfIU1mPrYYRfBeHRK6Q51ksl+LqFH28ul9TnLTqmz6n/crE6pyK6ZmW2asZQpVdWs
+	 rSwIbtN1q1BMKnI9JIOxOaaoTz3LOqK/z5gW+zsT/yE9leBahFMCMoFseXbW9TzYomtXx
+	 Km76UU5qxUVQbgACsVEjh+DRd2+2nTcDECMLP5T/tTHefeSCCKy4CwONbe9uBXHZjxuKX
+	 f0pvBvXzNHbxEoVWEC2B+KUo4v0LP45c9A5NwqIX5xR9TEjEvMR0vXPIh4wqvt8JMig==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=hSc0hJbK;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=PhiiUETm;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 68263606A323;
-	Wed, 25 Nov 2026 15:00:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 67FED606A327;
+	Wed, 25 Nov 2026 15:00:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=hSc0hJbK
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 70D7D1F000C0;
-	Wed, 25 Nov 2026 15:00:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=PhiiUETm
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B41761F000C6;
+	Wed, 25 Nov 2026 15:00:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795618830;
-	bh=pWCZDazaYpyQlr+0Gyw9dvX/6mmM/mzEvY4p94CmLLw=;
+	s=korg; t=1795618833;
+	bh=R9n+PI8u23uafc2eRpnPZVYTewmcqTC00Ad3IiWnEAg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=hSc0hJbKBhtIA4HlXtgAdIdwPIGEfIWyCThgLKpRJrX5sHlzQwo+kJnF0ZHQZJPYX
-	 a5AIxd7AbHoUoKaGNGXh/JPVxp/zxdN8QjtqiOgc1LwXFAsJk787kSakaF4cyHzo2t
-	 PsjgenTutS4374fSaj0T6PIIVMtES2uXWvgcPVXU=
+	b=PhiiUETmyIsIq4X4Jm4yAf7YFSYrNSnR8gjlEHl6IHwnKTtneFj9W8dN50sfK8Q10
+	 wfRVCwiB4eh7uQokTyVSBXGDmbxT8fZwyF75DK7P/wnrix+TZINc0qoQtOxDo17r5M
+	 BU0HrVav6U7EuBhv2Tf5IhZJeX78D1qR03UdKTck=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Matthew Auld <matthew.auld@intel.com>,
+	Karthik Poosa <karthik.poosa@intel.com>,
+	Vinay Belgaumkar <vinay.belgaumkar@intel.com>,
 	Matthew Brost <matthew.brost@intel.com>,
-	=?UTF-8?q?Thomas=20Hellstr=C3=B6m?= <thomas.hellstrom@linux.intel.com>,
-	Himal Prasad Ghimiray <himal.prasad.ghimiray@intel.com>,
-	Arvind Yadav <arvind.yadav@intel.com>,
-	Tejas Upadhyay <tejas.upadhyay@intel.com>,
 	Dave Airlie <airlied@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0400/1005] drm/xe: Rebind BOs evicted before the first LR queue
-Date: Wed, 25 Nov 2026 15:28:58 +0100
-Message-ID: <20261125143831.114649382@linuxfoundation.org>
+Subject: [PATCH 7.3 0401/1005] drm/xe: Toggle the D3Cold enable flag at runtime resume
+Date: Wed, 25 Nov 2026 15:28:59 +0100
+Message-ID: <20261125143831.140366597@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143821.729802100@linuxfoundation.org>
 References: <20261125143821.729802100@linuxfoundation.org>
@@ -66,67 +65,54 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 7.3-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Arvind Yadav <arvind.yadav@intel.com>
+From: Vinay Belgaumkar <vinay.belgaumkar@intel.com>
 
-[ Upstream commit b52dcc698250e08eabdc4554a6fdb4d6f909133f ]
+[ Upstream commit e42459b16cbf1cbcebfc1ab406140cca204fd831 ]
 
-A VM bind can evict BOs before the first LR exec queue is added.
-There is no preempt fence to trigger at that point.
+We enable this flag during runtime suspend, need to set it back to
+false early during resume to maintain consistency in pci driver's
+internal state. d3cold_toggle() updates the root port's ability
+to go into d3cold via the dev->no_d3cold flag. With this patch, we
+are ensuring this internal state remains consistent with that of
+the endpoint.
 
-When the queue is added later, its new preempt fence is not triggered.
-The exec IOCTL does not validate or rebind BOs in preempt fence mode,
-and the rebind worker skips that work because no preempt fence is
-waiting. The first exec can then use stale mappings.
+v2: Clarify the commit message (Matt Auld)
+v3: Add fixes (Karthik Poosa)
 
-Trigger the new preempt fence in xe_vm_add_compute_exec_queue() when
-the VM has evicted BOs or pending rebinds. This keeps the queue
-suspended until the rebind worker validates the BOs and restores
-their mappings.
-
-Fixes: dd08ebf6c352 ("drm/xe: Introduce a new DRM driver for Intel GPUs")
-Cc: Matthew Brost <matthew.brost@intel.com>
-Cc: Thomas Hellström <thomas.hellstrom@linux.intel.com>
-Cc: Himal Prasad Ghimiray <himal.prasad.ghimiray@intel.com>
-Reviewed-by: Matthew Brost <matthew.brost@intel.com>
-Signed-off-by: Arvind Yadav <arvind.yadav@intel.com>
-Link: https://patch.msgid.link/20261015162639.3528278-1-arvind.yadav@intel.com
-Signed-off-by: Tejas Upadhyay <tejas.upadhyay@intel.com>
-(cherry picked from commit 928ee5d4fb1f211aa361524801c15b54603fae52)
+Fixes: f026520367be ("drm/xe: Only set PCI d3cold_allowed when we are really allowing.")
+Cc: Matthew Auld <matthew.auld@intel.com>
+Acked-by: Karthik Poosa <karthik.poosa@intel.com>
+Signed-off-by: Vinay Belgaumkar <vinay.belgaumkar@intel.com>
+Reviewed-by: Karthik Poosa <karthik.poosa@intel.com>
+Link: https://patch.msgid.link/20261027174351.619929-6-vinay.belgaumkar@intel.com
+(cherry picked from commit e994e0f1ba52e4be3607ba7f952a8d835f1f6563)
 Signed-off-by: Matthew Brost <matthew.brost@intel.com>
 Signed-off-by: Dave Airlie <airlied@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/xe/xe_vm.c | 9 ++++++++-
- 1 file changed, 8 insertions(+), 1 deletion(-)
+ drivers/gpu/drm/xe/xe_pci.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/drivers/gpu/drm/xe/xe_vm.c b/drivers/gpu/drm/xe/xe_vm.c
-index 99e42bd29e790..90820f5fff283 100644
---- a/drivers/gpu/drm/xe/xe_vm.c
-+++ b/drivers/gpu/drm/xe/xe_vm.c
-@@ -269,8 +269,15 @@ int xe_vm_add_compute_exec_queue(struct xe_vm *vm, struct xe_exec_queue *q)
- 	 * Check to see if a preemption on VM is in flight or userptr
- 	 * invalidation, if so trigger this preempt fence to sync state with
- 	 * other preempt fences on the VM.
-+	 *
-+	 * Also trigger it if eviction or rebinding is pending. BOs evicted
-+	 * before the first exec queue was added had no preempt fence to
-+	 * trigger. Suspend this queue until the rebind worker restores
-+	 * the mappings.
- 	 */
--	wait = __xe_vm_userptr_needs_repin(vm) || preempt_fences_waiting(vm);
-+	wait = __xe_vm_userptr_needs_repin(vm) || preempt_fences_waiting(vm) ||
-+		!list_empty(&vm->gpuvm.evict.list) ||
-+		!list_empty(&vm->rebind_list);
- 	if (wait)
- 		dma_fence_enable_signaling(pfence);
+diff --git a/drivers/gpu/drm/xe/xe_pci.c b/drivers/gpu/drm/xe/xe_pci.c
+index 5d7a0b403ac0d..93438a670ae44 100644
+--- a/drivers/gpu/drm/xe/xe_pci.c
++++ b/drivers/gpu/drm/xe/xe_pci.c
+@@ -1404,6 +1404,9 @@ static int xe_pci_runtime_resume(struct device *dev)
+ 	struct xe_device *xe = pdev_to_xe_device(pdev);
+ 	int err;
  
++	if (xe->d3cold.allowed)
++		d3cold_toggle(pdev, D3COLD_DISABLE);
++
+ 	err = pci_set_power_state(pdev, PCI_D0);
+ 	if (err)
+ 		return err;
 -- 
 2.53.0
 
