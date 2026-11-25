@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795623383;
-	b=3Q0yfdMDDpKy533J/bG/hGFoe93/olmgsyeKRv/oZ72/YNIWURs+8u96SdVsz8GbWFbr
-	 B78Mh7qOLPIbQZsk/DMYkgHeqy9hZRLHlChKAXr4KKREXBuBDp2IY8NFPjPKGy0b1lyGO
-	 vhXibvD3xCGk8ihESKV/v4TLCwb6WRc6QQ++j9ECI0lbDSixoLgclsKB2oo/u6CE6QFoo
-	 G3/qLZkA9AbHszLPH3/fp0PPxCPwOMl/TdtxEDB756GzEz/yaqKH7lzahv+42UVW/P/EH
-	 7IEX9yA0UmIMf0YsHxLswKFjqTy3vG5x5at5WEorDWIIebn/Jx2tCjKaUqagk7yfEVA==
+	t=1795623386;
+	b=qh94/fsnrYsdsdC9BrKPVdrW5U5Lf4e0vAJJEHOhFJeKyYgfIZN0SOoi56OxTbxeY61A
+	 lwwf28zWqrTnRdyGKFMIyES1aHHlElMiwqnZy17JyAzJEwHdUOFk4TsjWurGzXp9LQMh9
+	 kC4dIafNLLSuo9HeqqkNMsecuGh0S7FOsQyunTX0YWBQzsYoORhxbRzTDBgtBANVohbud
+	 FSWwyZFZ0ux+j9i2SM8KhbLjJuaCYgYuHBzBV6X/0/JSLrKzFVAE+F5AvBAIv+2TlHqXK
+	 D3jG7XivC+GQUZD0OkbnNjVcVloB0v9/JXOI6oGqQA860fQzmYJSjjHSG2qEzMwjQqQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795623383;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795623386;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Type:Content-Transfer-Encoding;
-	bh=V+sLH1OgCu5IebbDZuObL05e9iCrqI+CrWKsuew9XY4=;
-	b=FkWmA+Ea/Qc/tqJ+MkJwok5xnTjEa7W5QoK65P165ldgoaPRkk+B9eOD05My5ZbjypVT
-	 KnX4MO33JqtT7mPT7HoennUHbRHO4UKYDpiMLARLtSWx1L5BWl/pqs79xax0Ja//EQen0
-	 zIDboLWbcSsE3XvAntDEjFRBGkW55BftzA5VIdmgJxQZQPox9Zf1/hGgueHmXIBaC6tCD
-	 rcijAqkuDHyteNsE600UFp4O8vPHveIU7nka51LJk9g2txyXpdqjMcG7HR1qURY/ynh1s
-	 czX2/J7dQWpZ+US8Cfth1p5230D9hd9yFV66Og48i/cCt8MKz5Ig85XruxbaMaqjSzw==
+	 MIME-Version:Content-Transfer-Encoding;
+	bh=1J3FOoYiJLCMVxHTJQ7j1fVrPMGMPP/RG9Ty26dPjrI=;
+	b=DKxhOkdl30kZci/F32HxZFxuVlV7udf0p7MJ4t7UbapnjN0dFMU88fOHWnoBMxNWVR/q
+	 R17lIMZ1VVY3Yjmf2WRY9pCg0eqlXiuvdAo2LlhHENCfDFwUVE3oa51dYxh16GwZ+qcH7
+	 XMt9AnCUX7rVIwNrgHIJGNO3SCeGYtIVUuXdFL4H8a/kfn7GBvdrAGv8UbKsYyRrhmD7w
+	 ++7qvkI94EGiu8QZEX+SdKr6q/7iVg/NjzMXUbzF27RR3nOGLsy5OMQ1jhclL/y2oXHDL
+	 ZYkBV/xodQf1nBnaAjEQntyHp21EHwdiKjJwpG7s22pHzWO/RGUBQ3px+S1jMpIPLjA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=aql+bCpR;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=K8q9GVm0;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1DD3A606A321;
-	Wed, 25 Nov 2026 16:16:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7915F606A31E;
+	Wed, 25 Nov 2026 16:16:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=aql+bCpR
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0A1041F000D1;
-	Wed, 25 Nov 2026 16:16:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=K8q9GVm0
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 406AA1F000D0;
+	Wed, 25 Nov 2026 16:16:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795623382;
-	bh=V+sLH1OgCu5IebbDZuObL05e9iCrqI+CrWKsuew9XY4=;
+	s=korg; t=1795623385;
+	bh=1J3FOoYiJLCMVxHTJQ7j1fVrPMGMPP/RG9Ty26dPjrI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=aql+bCpRNqQJcNFuB1Ec+KMo0DfPzp0zlZsS/m7q3By5UpQ2oGKTOdGwWIiF0HrX8
-	 8rud0vqMibBvoH9ZOVcypUm3WbVvf/LlR0nlopBZ7CQFb+7agC1rZmI6wq7CYdalcZ
-	 pViqdDi1sCLA65MytaMFtmyahCpyeFcmSvm9g1X8=
+	b=K8q9GVm0ty/Pcq/ZSsIMv+OGM2pRheK031T94fVAgndNWiQerbZTnkevHIRgOkWKX
+	 Y5Sat8SBEh5ppYCBts7k5tAYb+uh9JVC6Y5w3PwUIWTK8EuoUpwCB15KA5Ytztt8Xl
+	 b3vnNBM9WRjc5eAS4I8eurNUP65Ce3F7T43mzAZQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Fredric Cover <fredric.cover.lkernel@gmail.com>,
+	Giuseppe Piscitelli <ooonea@gmail.com>,
 	Namjae Jeon <linkinjeon@kernel.org>,
 	Paulo Alcantara <pc@manguebit.org>
-Subject: [PATCH 6.18 842/990] smb: client: fix out-of-bounds read in dfs_parse_target_referral()
-Date: Wed, 25 Nov 2026 15:36:49 +0100
-Message-ID: <20261125143841.754027347@linuxfoundation.org>
+Subject: [PATCH 6.18 843/990] smb: client: flush deferred handles of other names before a hard link open
+Date: Wed, 25 Nov 2026 15:36:50 +0100
+Message-ID: <20261125143841.778074297@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143822.072087159@linuxfoundation.org>
 References: <20261125143822.072087159@linuxfoundation.org>
@@ -62,76 +62,53 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Fredric Cover <fredric.cover.lkernel@gmail.com>
+From: Paulo Alcantara <pc@manguebit.org>
 
-commit 86aacc2f3f6ba18e1d87feee24f37c94b3ce863a upstream.
+commit 25912ed3b75dcf5ff623dcb549b925dd0d0948f7 upstream.
 
-dfs_parse_target_referral() decides whether a prefix path remains after
-the consumed part of full_path with:
+Opening a hard link of a file whose other name still holds a deferred,
+leased handle fails with EINVAL over SMB3.  The client caches lease keys
+per inode, but the server ties a lease to the file name it was granted
+under, so reusing the inode's lease key to open a different name of the
+same inode is rejected with STATUS_INVALID_PARAMETER (MS-SMB2 3.3.5.9.11).
 
-	if (strlen(full_path) - ref->path_consumed)
+Commit 262b73ef442e ("smb3 client: fix open hardlink on deferred close
+file error") already closes the inode's deferred handles before such an
+open so the new name can take a fresh lease, but cifs_get_hardlink_path()
+only triggered that flush when a cached handle had the same open flags as
+the new open, so a differently accessed name - written then read, say -
+slipped through and still failed.
 
-strlen() returns size_t, so if path_consumed is larger than the length
-of full_path, the subtraction wraps around to a huge non-zero value.
-The branch is then taken, prepath is set to a pointer past the
-terminating NUL of full_path, and *prepath reads out of bounds.
+Match on the name instead: flush when a cached handle for another name of
+the inode is open, regardless of access mode.
 
-path_consumed can exceed strlen(full_path) when the mount charset is
-not utf8.  The referral code derives path_consumed from the canonical
-path, which is in the DFS cache charset (utf8), but it is applied here
-to full_path, which is in the mount charset.  Each non-ASCII character
-in the consumed part of the path that is longer in utf8 than in the
-mount charset makes the count too large by the difference.
-
-This was reproduced with iocharset=iso8859-1 against a Samba DFS root
-containing a link named "café", mounting with the single Latin-1 byte
-0xe9 in the path.  On an unmodified tree such a mount fails earlier
-with -ENOENT because the path is converted to utf8 twice in
-setup_dfs_ref(); with that fixed ("smb: client: fix double conversion
-of DFS path in setup_dfs_ref()"), the mount reaches this code.
-full_path was 29 bytes while path_consumed was 30:
-
-  BUG: KASAN: slab-out-of-bounds in dfs_parse_target_referral+0x26a/0x270
-  Read of size 1 at addr ffff88810db89d5f by task mount/1743
-  ...
-  The buggy address is located 0 bytes to the right of
-   allocated 31-byte region [ffff88810db89d40, ffff88810db89d5f)
-
-Compare path_consumed against the string length instead of subtracting,
-so that no prefix path is used when the consumed count covers the whole
-string.  With the bounds check in place the same mount succeeds and no
-KASAN report is produced.
-
-This only prevents the out-of-bounds access.  path_consumed is still in
-the wrong units, so a non-ASCII link followed by a path component can
-still produce a wrong prefix path.  That needs a separate fix.
-
-Signed-off-by: Fredric Cover <fredric.cover.lkernel@gmail.com>
+Reported-by: Giuseppe Piscitelli <ooonea@gmail.com>
+Closes: https://lore.kernel.org/r/CACmoRBbDZR3eyEM65j73sWMS7A=T89z1QAvCP=+u0WGzZhwW6g@mail.gmail.com
+Fixes: 262b73ef442e ("smb3 client: fix open hardlink on deferred close file error")
 Cc: stable@vger.kernel.org
 Reviewed-by: Namjae Jeon <linkinjeon@kernel.org>
 Signed-off-by: Paulo Alcantara <pc@manguebit.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/smb/client/dfs.c |    2 +-
+ fs/smb/client/file.c |    2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/fs/smb/client/dfs.c
-+++ b/fs/smb/client/dfs.c
-@@ -33,7 +33,7 @@ int dfs_parse_target_referral(const char
- 	if (WARN_ON_ONCE(!ref->node_name || ref->path_consumed < 0))
- 		return -EINVAL;
+--- a/fs/smb/client/file.c
++++ b/fs/smb/client/file.c
+@@ -2206,7 +2206,7 @@ cifs_get_hardlink_path(struct cifs_tcon
+ 	spin_lock(&cinode->open_file_lock);
  
--	if (strlen(full_path) - ref->path_consumed) {
-+	if ((size_t)ref->path_consumed < strlen(full_path)) {
- 		prepath = full_path + ref->path_consumed;
- 		/* skip initial delimiter */
- 		if (*prepath == '/' || *prepath == '\\')
+ 	list_for_each_entry(open_file, &cinode->openFileList, flist) {
+-		if (file->f_flags == open_file->f_flags) {
++		if (open_file->dentry != file_dentry(file)) {
+ 			rc = -EINVAL;
+ 			break;
+ 		}
 
 
