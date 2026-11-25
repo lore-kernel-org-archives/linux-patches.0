@@ -1,50 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795620172;
-	b=KrDjFLRKRKy715ffF4Ily7tFhPvxFX7dz5Zqb9A1jyiWFQKuM5UMntNabvm10bIxvI+P
-	 7s4KmNwB8v0UTtGiTzji2RA+5y3Z7ouf/0GnV8lmQPdYfgTGkQ1ovotKGTFJj832mLAAJ
-	 mddgVU0Wfi48MH2F8jvzFuehG0HGImMsXYbTqDpB0E01HFEUtCm3Qd0rlW/igSF/o1weN
-	 t7Mf4QRuuYT8FMsAhJ4LjBP4uFIfvH2V17W0sQ3fMN9X8QEsvq3oD7FzSP4o7wvo3yq7S
-	 Ib7xka99CfVj7CzWFKY5gPAdzz5UoNhfNrgjhOhiXgDclpIC9NhN67gj9OxbImGFsLQ==
+	t=1795620174;
+	b=QK+1bb+AI022aOS50usBh+lHuVGlGOAtWKZm4+KU+QW0n6unUDAnPLpfW8JwYQ/Kjwnr
+	 AeQk3aDB3HAi3re6lpN0JFH9mmqDaIQ9hhOkUnn5fZ03R7zNsB/NB/z4408UKYjijF7PY
+	 OOtP1OgFycPMUy6Icw8urrAfbEcUVhW+wT3g+dS1ns1wQaNyH4ZHJpxwJkIZevvdFHncg
+	 Y8TRDJDFFPA76xT6wRLt8CAQBu84TRZflRIBpfpdm5aQgKYJNro9ubLfQo1+g8KZEhEZt
+	 g5UPVV0SQR9qasKaEytK0gxTnCO123p+ErkrnM+UNPPi508rY+azhAuxL6DbKkSCEgQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795620172;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795620174;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=gGYlfY/LqtadTOOptKdVxcclYdgEU6Uri+mH6W3pBFc=;
-	b=jCV4SlUQEOvU7Fx5Rhz2mGew8CxwEYx4YM4TXV0KLlXluSbJLXr91ikHwBnxj8TfG5A9
-	 PVIqGWVHJFslAQK6krODYlZ4LjnayPIb3mntuB2msw0nJz0dZnb5X9qxyA9q8AxzHkM7O
-	 4nuN1tq/2kmlTHzsuM/hON+bdATjUwXzyOiyJ/cy7I05TVye75UqsYuUMndAa7hWdx1Kq
-	 UaCsxjyxGxVutIVitW+6AeeltpMBsg88Aid5QFcfTh0+NfJCxLR9yht/bQCIcXwtNpFHY
-	 CmwmHAA0SWrkdhkHbt7uGuhsIuylLUQthSeU82OpaQfBSYLuyjt8w+jdo+PLvYsTvGg==
+	bh=iyxP5XcOGj0Mr2fMtCiCUYKSFvc51gvqORwNh2jprfQ=;
+	b=VezeVtDVj/GCGbFwzTDCoVNKeFw7ecyCMYKZf5go5cHFddS5VogZVEHvxI1I8hWs5V0k
+	 8D3V0QvdCqajO8j08EZuPl4xxAHgXfxs2XXYsOk+MNdHpjmeZlux2Zw93uZ6Yd1DdeHxR
+	 +XqFGLqX/W0N/nh3G5wMKh/Ive+Fnyhgeytgdxh8K3q8Ccy6d9PYXRxCZJsOuXuXLdDjf
+	 14ynDx1x3wzWcwZDXTENFI5Fr+gMrrBzQ5YoDh468etNBU/WH6lpfAkafDfcs5P3EmWk/
+	 wmI/wDUliZFltjnib0/lYDIT5xWXu5pugZ4mYWD6dxEEx8kayoyLudYM/5iH3CLnR6w==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Q4RbkORb;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=YHtjZ7mi;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1AD9D606A334;
-	Wed, 25 Nov 2026 15:22:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DF1C8606A31E;
+	Wed, 25 Nov 2026 15:22:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Q4RbkORb
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 02B881F000D4;
-	Wed, 25 Nov 2026 15:22:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=YHtjZ7mi
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2E3751F000CF;
+	Wed, 25 Nov 2026 15:22:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795620171;
-	bh=gGYlfY/LqtadTOOptKdVxcclYdgEU6Uri+mH6W3pBFc=;
+	s=korg; t=1795620174;
+	bh=iyxP5XcOGj0Mr2fMtCiCUYKSFvc51gvqORwNh2jprfQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Q4RbkORbF2C88qfigT3ua9KASM1tFOsnqIReG1s1ibTew1Qq2rtHVI+AH5u6kBVuH
-	 DcAuD1hrrkuz0uMsC3Ak8psTsX8H/4Tm9J9vmTt9YuSeeuPcUpoZZhUy2IFyMqcO4m
-	 U71PJ4zhzxQs4ntf7PTZvcq0PvMbdOOGgyGFDer0=
+	b=YHtjZ7miEPyZz8o+TNeaMbTyzJO4iFz4YFlY/wajeAK+8IBM+F0ohtiCB2OlKd6cC
+	 8wTYNDqJEl0OEI7MNFr2SLKJH6B4Wc2Ckdykp5naWmoKBV6iIOCXerbh2lYoqSGP/+
+	 oKQ5HinOKf/ddQgTmUGTJfH82fyB77WuJX6lklqs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Giuseppe Scrivano <giuseppe@scrivano.org>,
 	Amir Goldstein <amir73il@gmail.com>
-Subject: [PATCH 7.3 0830/1005] ovl: do not check the deferred lowerdata redirect on index lookup
-Date: Wed, 25 Nov 2026 15:36:08 +0100
-Message-ID: <20261125143841.164218429@linuxfoundation.org>
+Subject: [PATCH 7.3 0831/1005] ovl: follow lower to lowerdata redirects from any lower layer
+Date: Wed, 25 Nov 2026 15:36:09 +0100
+Message-ID: <20261125143841.187847261@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143821.729802100@linuxfoundation.org>
 References: <20261125143821.729802100@linuxfoundation.org>
@@ -66,76 +67,363 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Amir Goldstein <amir73il@gmail.com>
+From: Giuseppe Scrivano <giuseppe@scrivano.org>
 
-commit 011f67b2b5c366679af023261ee02e284d534a96 upstream.
+commit cbf4ccabcbfdda3da70c10b37e21e99cd2ee0946 upstream.
 
-When a lower metacopy has an absolute redirect into a data-only layer,
-ovl_lookup_layers() defers the data lookup and skips
-ovl_check_follow_redirect(), but leaves the redirect in d->redirect.
-If there is no upper dentry and a sibling hardlink was already copied
-up to the index dir, the index branch calls ovl_check_follow_redirect()
-again and, with redirect_dir=nofollow (e.g. forced by userxattr), fails
-the lookup with -EPERM because of the lower data redirect.
+Commit 5ef7bcdeecc9 ("ovl: relax redirect/metacopy requirements for lower
+-> data redirect") allowed following redirects from a lower layer to a
+data-only layer without redirect_dir=follow and metacopy=on, so that
+data-only layers can be used with userxattr.
 
-Take the lowerdata redirect out of d->redirect at the point where the
-data lookup is deferred, so that the index check only validates the
-redirect and metacopy state of the index entry.
+That fix was incomplete.  Without metacopy=on, a metacopy file with an
+absolute redirect into a data-only layer is followed only from the lowest
+lower layer.  From any other lower layer, the lookup fails with EPERM.
+
+That commit also changed the behavior of redirect_dir=nofollow without
+making it visible to users.  With data-only layers, some redirects are
+followed, although the mount options show redirect_dir=nofollow, or
+show nothing when that is the default.
+
+Add redirect_dir=followdata, which follows only redirects from lower to
+lowerdata, and select it when there are data-only layers, unless
+redirect_dir=follow or redirect_dir=on is in effect, so the redirect
+follow mode in effect is shown in /proc/self/mountinfo.
+
+Without metacopy=on, the absolute redirect of a lower metacopy file stops
+the lookup in the lower layers and the data is looked up in the data-only
+layers.  Data-only layers cannot be used without following redirects,
+so reject an explicit redirect_dir=nofollow with data-only layers.
 
 Fixes: 5ef7bcdeecc9 ("ovl: relax redirect/metacopy requirements for lower -> data redirect")
-Closes: https://sashiko.dev/#/bug/linux-29bea9ea-5376-4e54-88f6-04dabce4db70
 Cc: stable@vger.kernel.org
+Signed-off-by: Giuseppe Scrivano <giuseppe@scrivano.org>
 Signed-off-by: Amir Goldstein <amir73il@gmail.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/overlayfs/namei.c |   11 +++++++----
- 1 file changed, 7 insertions(+), 4 deletions(-)
+ Documentation/filesystems/overlayfs.rst |   24 ++++++++++-------
+ fs/overlayfs/namei.c                    |   24 ++++++++++++++---
+ fs/overlayfs/overlayfs.h                |   15 +++++++++-
+ fs/overlayfs/params.c                   |   45 +++++++++++++++++++++++++-------
+ fs/overlayfs/params.h                   |    2 +
+ fs/overlayfs/super.c                    |   17 +++++++-----
+ 6 files changed, 97 insertions(+), 30 deletions(-)
 
+--- a/Documentation/filesystems/overlayfs.rst
++++ b/Documentation/filesystems/overlayfs.rst
+@@ -236,14 +236,19 @@ Module options (can also be changed thro
+ Mount options:
+ 
+ - "redirect_dir=on":
+-    Redirects are enabled.
++    Redirects are created and followed.
+ - "redirect_dir=follow":
+     Redirects are not created, but followed.
++- "redirect_dir=followdata":
++    Redirects are not created.
++    Only redirects from lower to lowerdata are followed.
+ - "redirect_dir=nofollow":
+     Redirects are not created and not followed.
+ - "redirect_dir=off":
+-    If "redirect_always_follow" is enabled in the kernel/module config,
+-    this "off" translates to "follow", otherwise it translates to "nofollow".
++    Redirects are not created.
++    Which redirects are followed depends on "redirect_always_follow" in the
++    kernel/module config, on data-only lower layers and on the "userxattr"
++    mount option.
+ 
+ When the NFS export feature is enabled, every copied up directory is
+ indexed by the file handle of the lower inode and a file handle of the
+@@ -418,8 +423,8 @@ pointed by REDIRECT. This should not be
+ "trusted." xattrs will require CAP_SYS_ADMIN. But it should be possible
+ for untrusted layers like from a pen drive.
+ 
+-Note: redirect_dir={off|nofollow|follow[*]} and nfs_export=on mount options
+-conflict with metacopy=on, and will result in an error.
++Note: redirect_dir={off|nofollow|followdata|follow[*]} and nfs_export=on
++mount options conflict with metacopy=on, and will result in an error.
+ 
+ [*] redirect_dir=follow only conflicts with metacopy=on if upperdir=... is
+ given.
+@@ -460,10 +465,11 @@ to the absolute path of the "lower data"
+ 
+ Instead of explicitly enabling "metacopy=on" it is sufficient to specify at
+ least one data-only layer to enable redirection of data to a data-only layer.
+-In this case other forms of metacopy are rejected.  Note: this way, data-only
+-layers may be used together with "userxattr", in which case careful attention
+-must be given to privileges needed to change the "user.overlay.redirect" xattr
+-to prevent misuse.
++In this case other forms of metacopy are rejected.  A data-only layer selects
++"redirect_dir=followdata", unless "redirect_dir=follow" or "redirect_dir=on" is
++in effect.  Note: this way, data-only layers may be used together with
++"userxattr", in which case careful attention must be given to privileges needed
++to change the "user.overlay.redirect" xattr to prevent misuse.
+ 
+ Since kernel version v6.8, "data-only" lower layers can also be added using
+ the "datadir+" mount options and the fsconfig syscall from new mount api.
 --- a/fs/overlayfs/namei.c
 +++ b/fs/overlayfs/namei.c
-@@ -27,6 +27,7 @@ struct ovl_lookup_data {
- 	bool last;
- 	char *redirect;
- 	char *upperredirect;
-+	char *lowerdata_redirect;
- 	int metacopy;
- 	/* Referring to last redirect xattr */
- 	bool absolute_redirect;
-@@ -1258,6 +1259,8 @@ static int ovl_lookup_layers(struct ovl_
- 	if (d->metacopy && ctx->ctr && ofs->numdatalayer && d->absolute_redirect) {
- 		d->metacopy = 0;
- 		ctx->ctr++;
-+		d->lowerdata_redirect = d->redirect;
-+		d->redirect = NULL;
- 	} else if (!ovl_check_follow_redirect(d)) {
- 		err = -EPERM;
- 		return err;
-@@ -1374,15 +1377,14 @@ static int ovl_lookup_layers(struct ovl_
- 		};
+@@ -1087,7 +1087,8 @@ static bool ovl_check_follow_redirect(st
+ 		pr_warn_ratelimited("refusing to follow metacopy origin for (%pd2)\n", d->dentry);
+ 		return false;
+ 	}
+-	if ((d->redirect || d->upperredirect) && !ovl_redirect_follow(ofs)) {
++	/* Check follow to lower layer, redirects to lowerdata are not checked here */
++	if ((d->redirect || d->upperredirect) && !ovl_redirect_follow_lower(ofs)) {
+ 		pr_warn_ratelimited("refusing to follow redirect for (%pd2)\n", d->dentry);
+ 		return false;
+ 	}
+@@ -1105,13 +1106,26 @@ struct ovl_lookup_ctx {
+ 	unsigned int ctr;
+ };
  
- 		/* Store lowerdata redirect for lazy lookup */
--		if (ctx->ctr > 1 && !d->is_dir && !ctx->stack[ctx->ctr - 1].dentry)
--			oip.lowerdata_redirect = d->redirect;
-+		if (d->lowerdata_redirect)
-+			oip.lowerdata_redirect = d->lowerdata_redirect;
++/*
++ * Without metacopy=on, the absolute redirect of a lower metacopy file is
++ * followed only into the data-only layers.
++ */
++static bool ovl_is_lowerdata_redirect(struct ovl_lookup_ctx *ctx,
++				      struct ovl_lookup_data *d)
++{
++	struct ovl_fs *ofs = OVL_FS(d->sb);
++
++	return ofs->numdatalayer && !ofs->config.metacopy && ctx->ctr &&
++	       d->metacopy && d->absolute_redirect;
++}
++
+ static int ovl_lookup_layers(struct ovl_lookup_ctx *ctx, struct ovl_lookup_data *d)
+ {
+ 	struct dentry *dentry = ctx->dentry;
+ 	struct ovl_fs *ofs = OVL_FS(dentry->d_sb);
+ 	struct ovl_entry *poe = OVL_E(dentry->d_parent);
+ 	struct ovl_entry *roe = OVL_E(dentry->d_sb->s_root);
+-	bool check_redirect = (ovl_redirect_follow(ofs) || ofs->numdatalayer);
++	bool check_redirect = ovl_redirect_follow(ofs);
+ 	struct dentry *upperdir;
+ 	struct dentry *this;
+ 	struct dentry *origin = NULL;
+@@ -1242,6 +1256,10 @@ static int ovl_lookup_layers(struct ovl_
+ 			ctx->ctr++;
+ 		}
  
- 		inode = ovl_get_inode(dentry->d_sb, &oip);
- 		if (IS_ERR(inode))
- 			return PTR_ERR(inode);
++		/* Lookup of lowerdata in the data-only layers only */
++		if (ovl_is_lowerdata_redirect(ctx, d))
++			d->stop = true;
++
+ 		if (d->stop)
+ 			break;
  
--		if (oip.lowerdata_redirect)
--			d->redirect = NULL;
-+		d->lowerdata_redirect = NULL;
+@@ -1412,7 +1430,7 @@ struct dentry *ovl_lookup(struct inode *
+ {
+ 	struct ovl_fs *ofs = OVL_FS(dentry->d_sb);
+ 	struct ovl_entry *poe = OVL_E(dentry->d_parent);
+-	bool check_redirect = (ovl_redirect_follow(ofs) || ofs->numdatalayer);
++	bool check_redirect = ovl_redirect_follow(ofs);
+ 	int err;
+ 	struct ovl_lookup_ctx ctx = {
+ 		.dentry = dentry,
+--- a/fs/overlayfs/overlayfs.h
++++ b/fs/overlayfs/overlayfs.h
+@@ -75,11 +75,13 @@ enum ovl_entry_flag {
  
- 		ctx->inode = inode;
- 		if (ctx->upperdentry && !uppermetacopy)
-@@ -1435,6 +1437,7 @@ struct dentry *ovl_lookup(struct inode *
- 	dput(ctx.index);
- 	ovl_stack_free(ctx.stack, ctx.ctr);
- 	kfree(d.redirect);
-+	kfree(d.lowerdata_redirect);
+ enum {
+ 	/*
+-	 * "off" mode is never used after mount options are verified. In effect
+-	 * it translates to either "follow" or "nofollow".
++	 * "off" mode is never used after mount options are verified.
++	 * In effect it translates to either "follow", "nofollow" or
++	 * "followdata" (with data-only layers).
+ 	 */
+ 	OVL_REDIRECT_OFF,
+ 	OVL_REDIRECT_FOLLOW,
++	OVL_REDIRECT_FOLLOWDATA,
+ 	OVL_REDIRECT_NOFOLLOW,
+ 	OVL_REDIRECT_ON,
+ };
+@@ -635,11 +637,20 @@ static inline char ovl_get_opaquedir_val
+ 	return ovl_get_dir_xattr_val(ofs, path, OVL_XATTR_OPAQUE);
+ }
  
++/* Are redirects followed into lower layers? */
++static inline bool ovl_redirect_follow_lower(struct ovl_fs *ofs)
++{
++	return ofs->config.redirect_mode == OVL_REDIRECT_FOLLOW ||
++	       ofs->config.redirect_mode == OVL_REDIRECT_ON;
++}
++
++/* Are redirects followed into lower or lowerdata layers? */
+ static inline bool ovl_redirect_follow(struct ovl_fs *ofs)
+ {
+ 	return ofs->config.redirect_mode != OVL_REDIRECT_NOFOLLOW;
+ }
+ 
++/* Are redirects created in upper dir? */
+ static inline bool ovl_redirect_dir(struct ovl_fs *ofs)
+ {
+ 	return ofs->config.redirect_mode == OVL_REDIRECT_ON;
+--- a/fs/overlayfs/params.c
++++ b/fs/overlayfs/params.c
+@@ -107,6 +107,7 @@ static int ovl_xino_def(void)
+ const struct constant_table ovl_parameter_redirect_dir[] = {
+ 	{ "off",	OVL_REDIRECT_OFF      },
+ 	{ "follow",	OVL_REDIRECT_FOLLOW   },
++	{ "followdata",	OVL_REDIRECT_FOLLOWDATA },
+ 	{ "nofollow",	OVL_REDIRECT_NOFOLLOW },
+ 	{ "on",		OVL_REDIRECT_ON       },
+ 	{}
+@@ -117,21 +118,29 @@ static const char *ovl_redirect_mode_nam
+ 	return ovl_parameter_redirect_dir[redirect_mode].name;
+ }
+ 
+-static const char *ovl_redirect_mode(struct ovl_config *config)
++const char *ovl_redirect_mode(struct ovl_config *config)
+ {
+ 	return ovl_redirect_mode_name(config->redirect_mode);
+ }
+ 
+-static int ovl_redirect_follow_mode(void)
++int ovl_redirect_follow_mode(bool follow_lower, size_t nr_data)
+ {
+-	return ovl_redirect_always_follow ? OVL_REDIRECT_FOLLOW :
+-					    OVL_REDIRECT_NOFOLLOW;
++	if (ovl_redirect_always_follow && follow_lower)
++		return OVL_REDIRECT_FOLLOW;
++
++	/* Data-only layers cannot be used without following redirects to them */
++	return nr_data ? OVL_REDIRECT_FOLLOWDATA : OVL_REDIRECT_NOFOLLOW;
+ }
+ 
++/*
++ * The default for show_options() is resolved as if there are no data-only layers,
++ * so that redirect_dir=followdata, which is auto selected with data-only layers,
++ * is displayed in mount options.
++ */
+ static int ovl_redirect_mode_def(void)
+ {
+ 	return ovl_redirect_dir_def ? OVL_REDIRECT_ON :
+-				      ovl_redirect_follow_mode();
++				      ovl_redirect_follow_mode(true, 0);
+ }
+ 
+ static const struct constant_table ovl_parameter_verity[] = {
+@@ -890,6 +899,9 @@ int ovl_fs_params_verify(const struct ov
+ 	struct ovl_opt_set set = ctx->set;
+ 	/* The requested redirect_dir=, for reporting conflicts with it */
+ 	int redirect_opt = config->redirect_mode;
++	/* The redirect follow mode for redirect_dir=off and for the default */
++	int follow_mode = ovl_redirect_follow_mode(!config->userxattr,
++						   ctx->nr_data);
+ 
+ 	/* Workdir/index are useless in non-upper mount */
+ 	if (!config->upperdir) {
+@@ -916,9 +928,12 @@ int ovl_fs_params_verify(const struct ov
+ 		config->uuid = OVL_UUID_NULL;
+ 	}
+ 
+-	/* Resolve redirect_dir=off to the default redirect follow mode */
++	/*
++	 * Resolve redirect_dir=off to the default redirect follow mode.
++	 * With userxattr, redirects are not followed to lower by default.
++	 */
+ 	if (config->redirect_mode == OVL_REDIRECT_OFF)
+-		config->redirect_mode = ovl_redirect_follow_mode();
++		config->redirect_mode = follow_mode;
+ 
+ 	/*
+ 	 * This is to make the logic below simpler.  It doesn't make any other
+@@ -1015,7 +1030,8 @@ int ovl_fs_params_verify(const struct ov
+ 	/* Resolve userxattr -> !redirect && !metacopy dependency */
+ 	if (config->userxattr) {
+ 		if (set.redirect &&
+-		    config->redirect_mode != OVL_REDIRECT_NOFOLLOW) {
++		    config->redirect_mode != OVL_REDIRECT_NOFOLLOW &&
++		    config->redirect_mode != OVL_REDIRECT_FOLLOWDATA) {
+ 			pr_err("conflicting options: userxattr,redirect_dir=%s\n",
+ 			       ovl_redirect_mode_name(redirect_opt));
+ 			return -EINVAL;
+@@ -1030,10 +1046,21 @@ int ovl_fs_params_verify(const struct ov
+ 		 * options must be explicitly enabled if used together with
+ 		 * userxattr.
+ 		 */
+-		config->redirect_mode = OVL_REDIRECT_NOFOLLOW;
++		if (!set.redirect)
++			config->redirect_mode = follow_mode;
+ 		config->metacopy = false;
+ 	}
+ 
++	/* Data-only layers are reached through redirects */
++	if (ctx->nr_data && config->redirect_mode == OVL_REDIRECT_NOFOLLOW) {
++		pr_err("redirect_dir=nofollow is not supported with data-only layers\n");
++		return -EINVAL;
++	}
++	if (!ctx->nr_data && config->redirect_mode == OVL_REDIRECT_FOLLOWDATA) {
++		pr_err("redirect_dir=followdata requires data-only layers\n");
++		return -EINVAL;
++	}
++
+ 	/*
+ 	 * Fail if we don't have trusted xattr capability and a feature was
+ 	 * explicitly requested that requires them.
+--- a/fs/overlayfs/params.h
++++ b/fs/overlayfs/params.h
+@@ -42,3 +42,5 @@ int ovl_fs_params_verify(const struct ov
+ 			 struct ovl_config *config);
+ int ovl_show_options(struct seq_file *m, struct dentry *dentry);
+ const char *ovl_xino_mode(struct ovl_config *config);
++const char *ovl_redirect_mode(struct ovl_config *config);
++int ovl_redirect_follow_mode(bool follow_lower, size_t nr_data);
+--- a/fs/overlayfs/super.c
++++ b/fs/overlayfs/super.c
+@@ -680,7 +680,7 @@ static int ovl_create_volatile_dirty(str
+ }
+ 
+ static int ovl_make_workdir(struct super_block *sb, struct ovl_fs *ofs,
+-			    const struct path *workpath)
++			    const struct path *workpath, size_t nr_data)
+ {
+ 	struct vfsmount *mnt = ovl_upper_mnt(ofs);
+ 	struct dentry *workdir;
+@@ -744,9 +744,11 @@ static int ovl_make_workdir(struct super
  	if (err) {
- 		ovl_free_entry(ctx.oe);
+ 		pr_warn("failed to set xattr on upper\n");
+ 		ofs->noxattr = true;
+-		if (ovl_redirect_follow(ofs)) {
+-			ofs->config.redirect_mode = OVL_REDIRECT_NOFOLLOW;
+-			pr_warn("...falling back to redirect_dir=nofollow.\n");
++		if (ovl_redirect_follow_lower(ofs)) {
++			ofs->config.redirect_mode =
++				ovl_redirect_follow_mode(false, nr_data);
++			pr_warn("...falling back to redirect_dir=%s.\n",
++				ovl_redirect_mode(&ofs->config));
+ 		}
+ 		if (ofs->config.metacopy) {
+ 			ofs->config.metacopy = false;
+@@ -823,7 +825,7 @@ out:
+ 
+ static int ovl_get_workdir(struct super_block *sb, struct ovl_fs *ofs,
+ 			   const struct path *upperpath,
+-			   const struct path *workpath)
++			   const struct path *workpath, size_t nr_data)
+ {
+ 	int err;
+ 
+@@ -852,7 +854,7 @@ static int ovl_get_workdir(struct super_
+ 	if (err)
+ 		return err;
+ 
+-	return ovl_make_workdir(sb, ofs, workpath);
++	return ovl_make_workdir(sb, ofs, workpath, nr_data);
+ }
+ 
+ static int ovl_get_indexdir(struct super_block *sb, struct ovl_fs *ofs,
+@@ -1487,7 +1489,8 @@ static int ovl_fill_super_creds(struct f
+ 			}
+ 		}
+ 
+-		err = ovl_get_workdir(sb, ofs, &ctx->upper, &ctx->work);
++		err = ovl_get_workdir(sb, ofs, &ctx->upper, &ctx->work,
++				      ctx->nr_data);
+ 		if (err)
+ 			return err;
+ 
 
 
