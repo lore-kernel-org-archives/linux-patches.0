@@ -1,51 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795618121;
-	b=jxZ8llDVkbeaavfmpCAo4XR/xVJAWF733h5wUvu/jLUV4kwf9Q0diCf0+xDoQHJ70Fcd
-	 HQdGg0fGG3YlV6Yj7wSYniho5jfXdpXYhcYnErgPib4Eb4U8hOMS425YCsLIsnQySCeLW
-	 orLzzmYG5+K1hqasVUuKCMpxtHeter3A5Z+VtXHnm2u3ll+m/Z85tLY/1arQ5VcToB5/7
-	 ULhqHHbWu3qup8/ycdJYL72XdXUVFO47YE2reLo8YUr6AMBmChLCpER2JCole/8i9pDv4
-	 y/Xu4r3VeOkUEne/spZZYjlokDkkItIvngQWae7nb9o5q1beWyCft9XfVuHoDZjax7w==
+	t=1795618124;
+	b=sR1OYuXgyzZIl6lnxur1B+hU5JYLw2MWOkJrol8KHPaUF3YrEAISNvCqJxpJmYWejZpq
+	 bS+Z+WQK95iuGiK79l6akeI6UFP7vDFpwt5HvNgvxLLRdKuKBokwY8pEO+n/a1veRqs/L
+	 3Vqo19fUg2nsA0fl6GfQ2ZY/jBEEudIm68XIQkBhhdLzbDhV5l21rX6WvSrkhFL5fhDxO
+	 ENWwASbPqSRraLHUpFXtiDjBbyqyvdCuZjLJtx4ah/p9Y33DeVoqxPYKjaCssUcltUg7H
+	 FuySdyfxHPNBwSL31uFXiPmjJyGZLA2BO8o8mCM/fpvFr/BpSWHEGqZDjSThoadt9bg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795618121;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795618124;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=I3anqIaBA7vmEO1fKZzQ0TM7nSHTaEG3QHpfW9/PQ/o=;
-	b=v5E3AV7/vtrhjvJrfb6HhwwFmdneK/jFtrwkLHEXNLfGuPUYzFGQX8Z8e1cciI5gdtU7
-	 necoatOCHGecVFgGz4Cuec/WPWuCjei003/dTuCMoJVNNN3K7YpxePMn873OHzCrxYfNO
-	 rL4euoSxDbK5f8N4/BemF0kxUkNFs/4PokRF2kODs3tTEzna3bGoH6WCsNBydlrLfhQS7
-	 5oVRuJNlgOSejeO6alAiFZl5X59IQKJkH4/KCTJgoVpRI370vXAvKm3/FEJoy47FseBJj
-	 hgvhPGeDBasBPeE9q8XGsr9o1/YrG5qd26snsNlHqzOK11j5xGzBfOSengxxAvF/XRA==
+	bh=dr78bYtjaNj+fUdXzg8ZBkq5laVlRArTpNOKw0MK6h4=;
+	b=JsAfMKbPJIlBuLwEjuOxRKZ+Gmp4QqoVncX7TOqsW+PMXlAMeJIi5IblrsQl8w0LQx3H
+	 A70prGfTsFHJswrbkMzvs0KdcWlsKEQ+y/vJN2kmT3CbR3qigJQkRM61OcQKtZVZ28Xw0
+	 qpnBnHlszCbvnDa0AduUhiATNZ8oxZ76eUPiMomEaqwHNyqKTvxMF/cLrFer3+xfP/65V
+	 K9W1PPFKY/sq0lvRPbQBAGUIdwcxUUYk4hYBkhKVh4lbgaFZZi8ojX/iMKxhNHBcIP1VI
+	 p9woFzE8mEz90HxE7sDWx/szM2rSNmEdK83pqlL4Dr6Pi7roVa7RHvgI5B/vfggBBmQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="mY/9u22H";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=VJ8LdjjE;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C26FD606A31E;
-	Wed, 25 Nov 2026 14:48:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 970D2606A31E;
+	Wed, 25 Nov 2026 14:48:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=mY/9u22H
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1F1EB1F000C4;
-	Wed, 25 Nov 2026 14:48:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=VJ8LdjjE
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E83261F000C4;
+	Wed, 25 Nov 2026 14:48:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795618121;
-	bh=I3anqIaBA7vmEO1fKZzQ0TM7nSHTaEG3QHpfW9/PQ/o=;
+	s=korg; t=1795618124;
+	bh=dr78bYtjaNj+fUdXzg8ZBkq5laVlRArTpNOKw0MK6h4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=mY/9u22HdSfwqwxw/ZmTnheGNLs/Tg0bYCR2MnANPmZA3tiajhABsRYeyjrLfxOqs
-	 WJOM3EkizWQTWiymKJNLO8QBayOUbu091wQNzergUn6ymc34DFRaSxd0femfn1Upe6
-	 NJ1i8HzhAz19sWJcBqioh4NQhMf6UMD+HNPNUuIQ=
+	b=VJ8LdjjE8WeieywC5B9lV46BEDH0nf2ZsXKs+8+QDShhkViDek9m1ARRoXv5O/c45
+	 qZkcVl5b2M0PuTRpmM11EOd1mYHopYHGKGFmmHG/BkCqesyOvaMflxEYT3L5r23j3j
+	 /JJWEvfOeaRYW11GH7xq6Kbt06aHPkfQeY1drNLg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Yonghong Song <yonghong.song@linux.dev>,
 	Alexei Starovoitov <ast@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0180/1005] bpf: Fix the join of fp+0 with a value that is not a pointer to stack
-Date: Wed, 25 Nov 2026 15:25:18 +0100
-Message-ID: <20261125143825.960003384@linuxfoundation.org>
+Subject: [PATCH 7.3 0181/1005] bpf: Rename bpf_call_summary::num_params to arg_slot_cnt
+Date: Wed, 25 Nov 2026 15:25:19 +0100
+Message-ID: <20261125143825.981978967@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143821.729802100@linuxfoundation.org>
 References: <20261125143821.729802100@linuxfoundation.org>
@@ -67,103 +68,116 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alexei Starovoitov <ast@kernel.org>
+From: Yonghong Song <yonghong.song@linux.dev>
 
-[ Upstream commit 6185d4fc6e64439cad415d9bf527f8ffb3fa3db4 ]
+[ Upstream commit c6ff4e06033fede2fd1d41232ae942add649b759 ]
 
-arg_track follows pointers to the stack through registers and spills.
-Scalar evolution and the removal of dead slots rely on it to know which
-slots an insn reads and writes.
+The field 'num_params' counts the argument registers and outgoing
+stack slots a helper or kfunc call takes. The next patch gives a
+16-byte parameter two slots, so the name stops describing what the
+field holds.
 
-Where two paths meet, a register can be fp-N on one path and not a pointer
-to the stack on the other path. There is no value for that. The join adds
-a fake second offset, fp+0: with two offsets no store through the register
-is a certain write. But for fp+0 the fake offset is the offset itself:
+Rename 'num_params' to 'arg_slot_cnt'. No functional change.
 
-  join(fp-8, none) = {fp-8, fp+0}    two offsets
-  join(fp+0, none) = {fp+0}          one offset: "exactly fp+0"
-
-Then a store counts as a certain write to the stack, but at run time it can
-go to other memory:
-
-  r7 = r10, or r7 = map_value + 8 ; arg_track: exactly fp+0
-  *(u64 *)(r10 - 8) = fp-24
-  *(u64 *)(r7 - 8) = map_value    ; arg_track: fp-8 is overwritten
-  r8 = *(u64 *)(r10 - 8)          ; fp-24 or map_value. arg_track: none
-  loop:
-    r1 = *(u64 *)(r10 - 24)       ; the counter of the loop
-    ...
-    *(u64 *)(r8 + 0) = 4096       ; arg_track: not a write to fp-24
-
-Scalar evolution does not see the last store. It gives the counter the
-range of a loop that only increments it. The prog loads, and it accesses
-a map value out of bounds.
-
-Valid progs are rejected as well. The store through r7 makes fp-8 dead, and
-a later read of fp-8 fails with "slot poisoned by dead code elimination".
-
-When the single offset is 0, drop the offsets. The result is a pointer to
-an unknown slot of the frame, and all updates through it are weak.
-
-Veristat sees no difference in selftests, Cilium and sched_ext.
-
-Fixes: bf0c571f7feb ("bpf: introduce forward arg-tracking dataflow analysis")
+Signed-off-by: Yonghong Song <yonghong.song@linux.dev>
+Link: https://lore.kernel.org/r/20260912195232.988528-1-yonghong.song@linux.dev
 Signed-off-by: Alexei Starovoitov <ast@kernel.org>
-Link: https://patch.msgid.link/20261102055913.3598414-2-alexei.starovoitov@gmail.com
+Stable-dep-of: cdefba74b53f ("bpf: Don't trust pointers spilled in slots that a callee can write")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/bpf/liveness.c | 31 +++++++++++++++++--------------
- 1 file changed, 17 insertions(+), 14 deletions(-)
+ include/linux/bpf_verifier.h |  2 +-
+ kernel/bpf/liveness.c        | 10 +++++-----
+ kernel/bpf/verifier.c        |  8 ++++----
+ 3 files changed, 10 insertions(+), 10 deletions(-)
 
+diff --git a/include/linux/bpf_verifier.h b/include/linux/bpf_verifier.h
+index 0eda96e1162f3..baf390c86406c 100644
+--- a/include/linux/bpf_verifier.h
++++ b/include/linux/bpf_verifier.h
+@@ -1053,7 +1053,7 @@ static inline struct bpf_subprog_info *subprog_info(struct bpf_verifier_env *env
+ }
+ 
+ struct bpf_call_summary {
+-	u8 num_params;
++	u8 arg_slot_cnt;
+ 	bool is_void;
+ 	bool fastcall;
+ };
 diff --git a/kernel/bpf/liveness.c b/kernel/bpf/liveness.c
-index acee6f86f8474..e1340e73cbeda 100644
+index e1340e73cbeda..c7aa5c8fc34cf 100644
 --- a/kernel/bpf/liveness.c
 +++ b/kernel/bpf/liveness.c
-@@ -872,6 +872,19 @@ static struct arg_track arg_join_imprecise(struct arg_track a, struct arg_track
- 	return (struct arg_track){ .mask = m, .frame = ARG_IMPRECISE };
- }
- 
-+/*
-+ * 'a' or a value that is not a pointer to stack. A single fp-N gets a fake fp+0,
-+ * to keep stack_use and prevent stack_def. fp+0 itself would stay a single offset.
-+ */
-+static struct arg_track arg_or_none(struct arg_track a)
-+{
-+	if (a.off_cnt != 1)
-+		return a;
-+	if (!a.off[0])
-+		return (struct arg_track){ .frame = a.frame };
-+	return arg_merge_offsets(a, arg_single(a.frame, 0));
-+}
-+
- /* Join two arg_track values at merge points */
- static struct arg_track __arg_track_join(struct arg_track a, struct arg_track b)
+@@ -1596,21 +1596,21 @@ static int record_call_access(struct bpf_verifier_env *env,
  {
-@@ -896,20 +909,10 @@ static struct arg_track __arg_track_join(struct arg_track a, struct arg_track b)
- 	 */
- 	if (a.frame == ARG_NONE && b.frame == ARG_NONE)
- 		return a;
--	if (a.frame >= 0 && b.frame == ARG_NONE) {
--		/*
--		 * When joining single fp-N add fake fp+0 to
--		 * keep stack_use and prevent stack_def
--		 */
--		if (a.off_cnt == 1)
--			return arg_merge_offsets(a, arg_single(a.frame, 0));
--		return a;
--	}
--	if (b.frame >= 0 && a.frame == ARG_NONE) {
--		if (b.off_cnt == 1)
--			return arg_merge_offsets(b, arg_single(b.frame, 0));
--		return b;
--	}
-+	if (a.frame >= 0 && b.frame == ARG_NONE)
-+		return arg_or_none(a);
-+	if (b.frame >= 0 && a.frame == ARG_NONE)
-+		return arg_or_none(b);
+ 	struct bpf_insn *insn = &env->prog->insnsi[insn_idx];
+ 	struct bpf_call_summary cs;
+-	int r, err, num_params = 5;
++	int r, err, arg_slot_cnt = 5;
  
- 	return arg_join_imprecise(a, b);
- }
+ 	if (bpf_pseudo_call(insn))
+ 		return 0;
+ 
+ 	if (bpf_get_call_summary(env, insn, &cs))
+-		num_params = cs.num_params;
++		arg_slot_cnt = cs.arg_slot_cnt;
+ 
+-	for (r = BPF_REG_1; r < BPF_REG_1 + min(num_params, MAX_BPF_FUNC_REG_ARGS); r++) {
++	for (r = BPF_REG_1; r < BPF_REG_1 + min(arg_slot_cnt, MAX_BPF_FUNC_REG_ARGS); r++) {
+ 		err = record_arg_access(env, instance, insn, &at[r], r - 1, insn_idx);
+ 		if (err)
+ 			return err;
+ 	}
+ 
+-	for (r = 0; r < MAX_STACK_ARG_SLOTS && r < num_params - MAX_BPF_FUNC_REG_ARGS; r++) {
++	for (r = 0; r < MAX_STACK_ARG_SLOTS && r < arg_slot_cnt - MAX_BPF_FUNC_REG_ARGS; r++) {
+ 		err = record_arg_access(env, instance, insn, &at[MAX_BPF_REG + r],
+ 					r + MAX_BPF_FUNC_REG_ARGS, insn_idx);
+ 		if (err)
+@@ -2386,7 +2386,7 @@ static void compute_insn_live_regs(struct bpf_verifier_env *env,
+ 			def = ALL_CALLER_SAVED_REGS;
+ 			use = def & ~BIT(BPF_REG_0);
+ 			if (bpf_get_call_summary(env, insn, &cs))
+-				use = GENMASK(min_t(u8, cs.num_params, MAX_BPF_FUNC_REG_ARGS), 1);
++				use = GENMASK(min_t(u8, cs.arg_slot_cnt, MAX_BPF_FUNC_REG_ARGS), 1);
+ 			def = mask_widen(def);
+ 			use = mask_widen(use);
+ 			break;
+diff --git a/kernel/bpf/verifier.c b/kernel/bpf/verifier.c
+index 2ed356a03a57b..4bb0f362f44a8 100644
+--- a/kernel/bpf/verifier.c
++++ b/kernel/bpf/verifier.c
+@@ -17985,11 +17985,11 @@ bool bpf_get_call_summary(struct bpf_verifier_env *env, struct bpf_insn *call,
+ 			       (bpf_verifier_inlines_helper_call(env, call->imm) ||
+ 				bpf_jit_inlines_helper_call(call->imm));
+ 		cs->is_void = fn->ret_type == RET_VOID;
+-		cs->num_params = 0;
++		cs->arg_slot_cnt = 0;
+ 		for (i = 0; i < ARRAY_SIZE(fn->arg_type); ++i) {
+ 			if (fn->arg_type[i] == ARG_DONTCARE)
+ 				break;
+-			cs->num_params++;
++			cs->arg_slot_cnt++;
+ 		}
+ 		return true;
+ 	}
+@@ -18001,7 +18001,7 @@ bool bpf_get_call_summary(struct bpf_verifier_env *env, struct bpf_insn *call,
+ 		if (err < 0)
+ 			/* error would be reported later */
+ 			return false;
+-		cs->num_params = btf_type_vlen(meta.func_proto);
++		cs->arg_slot_cnt = btf_type_vlen(meta.func_proto);
+ 		cs->fastcall = meta.kfunc_flags & KF_FASTCALL;
+ 		cs->is_void = btf_type_is_void(btf_type_by_id(meta.btf, meta.func_proto->type));
+ 		return true;
+@@ -18110,7 +18110,7 @@ static void mark_fastcall_pattern_for_call(struct bpf_verifier_env *env,
+ 	 * - includes R1-R5 if corresponding parameter has is described
+ 	 *   in the function prototype.
+ 	 */
+-	clobbered_regs_mask = GENMASK(cs.num_params, cs.is_void ? 1 : 0);
++	clobbered_regs_mask = GENMASK(cs.arg_slot_cnt, cs.is_void ? 1 : 0);
+ 	/* e.g. if helper call clobbers r{0,1}, expect r{2,3,4,5} in the pattern */
+ 	expected_regs_mask = ~clobbered_regs_mask & ALL_CALLER_SAVED_REGS;
+ 
 -- 
 2.53.0
 
