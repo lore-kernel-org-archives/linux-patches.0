@@ -1,42 +1,42 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795617987;
-	b=ik/g3ZuJZqpC0ad185PwaG3vwiOJ6VD0hsoF8VkZxizpZlrIjYYKaiy5U47WjziLqQJn
-	 GztPWUmpqoNeszjqn8KLzgAIKn+RF4uwhXUzsGGMJOw+Rq6d9Ry0VJMuc594vZfzQ++CQ
-	 yVrXtaCEqMhjy/F17hGO0KryOBbi7frGUTTVLTbr5brR24Jk0lLXkErD8+yxsYDMks2kY
-	 BaoL+ZcTzZDRxhiUN5ufHPEXqUpX4d8Tvo8tBts0dUymy0vgU4MclMpcgx+czajE7bknB
-	 0NsTeAqA8EFI1WRFIY4LXX88LFE4v9alGLhYMtrjjfY3R7QjvmqzQwmt6epiaKW8qAA==
+	t=1795617990;
+	b=girukaPeu7fOnuirgMDv/dD+5UuxdcNDQz5iherpVsaC9PoekRe2+F6DV6lBiOt2B38M
+	 E5FMD5egb2u/WgC197ri8+mjvcbQNBh1wzOdHb2RPTke4z5TEyUjFjAFzzYz3X/wBHHem
+	 0WqKe8WihxJ0gJqIj/IuF8dYpR2mtJq0rXrGGeVdHHpe2RYBmNruBOzZjKzZJ4uu8Jvl7
+	 1azWCuEKoSE9LLEaxyG5Y1P1OM7228tqDsZUkCquRggYJjpNS55u4Z1EpeZlPb+pqghqm
+	 hp2BIpVngvMtY8vj2OB+y/ef0pgpyRL41Ii8k4Q2pgDlVhQfYSJIbcNSVIHYqb58eXQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795617987;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795617990;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=diD/VGIwl6YDUR8QLdxmCarejajYrziqrzQ2y65jC7k=;
-	b=CMynnFFzNp5UyBxU4A850qqb7BXF1tIQVsrvbpxCqR3a+dlZ2wtnX5e1t/GXWUr1/kXp
-	 X8S8sa0FFNt2iS9nSgDzwfUONHcb02ISwyjpuJyz2CzoN075t4WYCL5aNZpamQz5pOyDa
-	 HUwa6hrPt/UniqMhbmLQ2QsgHd9D6Ps7wX5vOhSeqwfH/4w0X83+JwQujTM1u80lhWSpj
-	 88eBMSo8PXI8oAF+2q0YmZdhmB/5pUwAvyW2TkwRtJojNK2/j1dfhrjBWInsWVIUscbOJ
-	 ZpaP9KOvw6tq4YdVoFlNA3Owkr9GDUyXGJznr/veBlp028EB8Oi7fNpQRnujLaj68sA==
+	bh=rc0LZxiJdkVjmOGOdMHoDj0dKwaWuSI2iYgxSqVqOhg=;
+	b=ML3yo2mbT7h2SSkA4Q91n7Yx6y5B7fwpkjfToPMxPQVvJ3/mjkFUhGc+S5UkyvNJD2S0
+	 4ECyFyporxVNmGa/MumG0pNw4OaWze3eegkXsHUort6fsIJ2r4/vDd676mfwmwhc3jneg
+	 bN9fEhWpZcZh14kS1GxxqKtcvIB4B053bk+dwK4QYIgBfUtlr7emhxMAQp3DBWQcL7gG0
+	 8JLVYzvPmYJsjNPhM5nWnokl7ZDNlan6ygD3HTETe8RAOl8NERDpIjYIVDxbffEDgpnVi
+	 NKD/B0YDuBlFxkdqYUTEw8KW8NXZBYKgUmS+iQ6AXpTRta1+dddvOQe8iYuZ89v2QzA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=1iyRmiow;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=15kwUf+X;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3E310606A321;
-	Wed, 25 Nov 2026 14:46:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8F944606A321;
+	Wed, 25 Nov 2026 14:46:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=1iyRmiow
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 20B051F000D0;
-	Wed, 25 Nov 2026 14:46:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=15kwUf+X
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6F80D1F000D0;
+	Wed, 25 Nov 2026 14:46:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795617986;
-	bh=diD/VGIwl6YDUR8QLdxmCarejajYrziqrzQ2y65jC7k=;
+	s=korg; t=1795617990;
+	bh=rc0LZxiJdkVjmOGOdMHoDj0dKwaWuSI2iYgxSqVqOhg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=1iyRmiow2ImOtP1aY5vySI5auy3xXaLFKTrdkphHTRUSvVCiwh03VZroagVHH0WG7
-	 0iJYJE3RUjnw5AYRcLVmQlAqAdBfaMEBsCTR2pTIZlO6AMkNJO0m4pYXMP6IdNdDMb
-	 E1Dog6vl+Bxb5+MeXKqSx6J/ikzB3Y9lgJTlpT2U=
+	b=15kwUf+XQRqgLWwHMA3tAqUlOapf1FfOuFZPy4683E9R0j03fEPlUaza7LTd3TGnE
+	 vmEDM5pKydp3CI0HxLczCBK4WxJvSqVpAh9H02u0BJGTRwtwfpIEBb+IHT57KSrTsW
+	 IDnSxHWYU3XS76GONAVVxlLoQ1n9NiqIcV6wAS2c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -45,9 +45,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Lorenzo Bianconi <lorenzo.bianconi@oss.qualcomm.com>,
 	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0137/1005] net: stmmac: drop split frames on AF_XDP zero-copy RX
-Date: Wed, 25 Nov 2026 15:24:35 +0100
-Message-ID: <20261125143824.948579154@linuxfoundation.org>
+Subject: [PATCH 7.3 0138/1005] net: stmmac: drop multi-buffer frames in XDP mode
+Date: Wed, 25 Nov 2026 15:24:36 +0100
+Message-ID: <20261125143824.972659333@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143821.729802100@linuxfoundation.org>
 References: <20261125143821.729802100@linuxfoundation.org>
@@ -71,112 +71,85 @@ Content-Transfer-Encoding: 8bit
 
 From: Lorenzo Bianconi <lorenzo.bianconi@oss.qualcomm.com>
 
-[ Upstream commit 834ec95308320cbd8c162d86788ab95cc3fd6bf8 ]
+[ Upstream commit 52ffd771e0029c5ad0504b1b4a8b7f932b65eea3 ]
 
-stmmac_rx_zc() assumes a 1:1 mapping between a received frame and an
-XSK pool buffer and drops any frame that spans more than one RX
-descriptor:
+stmmac_rx() runs the XDP program once per descriptor buffer and uses
+skb == NULL as the only marker for the start of a frame. A frame larger
+than one buffer is split by the hardware across several descriptors;
+GMAC4 enables jumbo frames unconditionally (GMAC_CONFIG_JE in
+GMAC_CORE_INIT), so an on-link peer can deliver such a frame even when
+the interface MTU is left at 1500.
 
-        /* XSK pool expects RX frame 1:1 mapped to XSK buffer */
-        if (likely(status & rx_not_ls)) {
-                xsk_buff_free(buf->xdp);
-                buf->xdp = NULL;
-                dirty++;
-                count++;
-                goto read_again;
-        }
+When an XDP verdict ends a non-last descriptor, skb is cleared and the
+next descriptor of the same hardware frame is parsed as a new frame.
+For XDP_CONSUMED this happens via read_again with len preserved, so
+stmmac_rx_buf1_len() then returns min(dma_buf_sz, plen - len) for the
+last descriptor, which can be as small as 0-3 bytes. buf1_len -=
+ETH_FCS_LEN underflows and xdp_prepare_buff() puts data_end far past
+data; on XDP_PASS this produces an skb whose length is close to 4G that
+reaches the network stack (skb->tail and skb->len are 32-bit and wrap
+below skb->end, so skb_over_panic() does not fire). A 4+ byte tail is
+instead offered to the XDP program and delivered as a standalone
+mid-payload Ethernet frame on XDP_PASS. XDP_TX/XDP_REDIRECT instead
+falls through to the next iteration, resetting the running length, so
+the tail is re-parsed as a full-size new frame.
 
-The non-last descriptors are freed and dropped, but the frame is not
-marked as errored. When the poll reaches the last descriptor of the
-same frame, error is still 0, so the fragment is handled as a complete
-frame: it is passed to the XDP program, copied into an skb on XDP_PASS,
-or converted for XDP_TX. The tail starts in the middle of the original
-payload at a predictable offset and, parsed as a fresh frame (len == 0),
-stmmac_rx_buf1_len() reports the full dma_buf_sz length for it even
-though the DMA engine only wrote the tail remainder into that buffer, so
-the reads extend past the received bytes and can reach beyond the end of
-the XSK pool buffer. GMAC4 always enables jumbo frames (GMAC_CONFIG_JE
-in GMAC_CORE_INIT), so an on-link peer can trigger such a split even
-when the interface MTU is left at 1500.
+The same fault exists when a single descriptor uses its second buffer:
+buffer2 is now handed to the hardware for non-SPH frames on GMAC4/XGMAC,
+so a frame up to 2 * dma_buf_sz can land on a single descriptor while the
+XDP program still only sees the first buffer. XDP_TX then transmits a
+truncated frame, and XDP_PASS appends the second buffer only after the
+program has already run over the first one.
 
-Set error when the 1:1 mapping check drops a descriptor, so the
-remaining descriptors of the frame - including the last one - are
-drained and released with xsk_buff_free() instead of being processed as
-a new frame. Account every freed buffer with dirty and count the
-dropped frame once in the poll budget / rx_pkt_n. The direct 1:1
-mapping drop also increments rx_dropped.
+XDP does not support scatter-gather frames until the multi-buffer
+rework, so drop the whole frame instead. When a non-last descriptor is
+seen while an XDP program is attached, mark the frame as errored and
+drain the remaining descriptors, including the last. A descriptor that
+uses its second buffer is dropped directly before the program runs as
+well; in XDP mode it is necessarily the last descriptor of the frame,
+so it does not need the error marker. Removing the re-parse lets both
+XDP verdict branches simply complete the packet via next.
 
-Use a bit test instead of an equality test for discard_frame.
-Commit 644b8437ccef9e ("net: stmmac: dwmac4: report Rx checksum errors
-in status") made dwmac4_wrback_get_rx_status() set discard_frame on
-RDES3_ERROR_SUMMARY and OR in csum_none on RDES1_IP_HDR_ERROR or
-RDES1_IP_PAYLOAD_ERROR, so it can return discard_frame | csum_none.
-The old "status == discard_frame" test missed that value and delivered
-frames with CRC, overflow, watchdog or giant errors to the stack in
-stmmac_rx() - or to XDP/XSK in stmmac_rx_zc() - when they also failed
-the IP checksum. The change therefore affects the regular RX path, not
-only zero-copy. The bit test is also required for the
-discard_frame | rx_not_ls value returned for non-last legacy
-descriptors below.
+The buffers consumed by the discard path are no longer returned to the
+page pool, and the new SG and second-buffer drops do not return them
+either. They stay in rx_q->buf_pool[] and stmmac_rx_refill() reuses them
+in place, allocating only when a slot is empty. This is safe because the
+drop checks run before the buffer is synced for CPU access or
+prefetched. The discard-path change and the in-place reuse apply with or
+without an XDP program attached.
 
-Normalize the legacy normal and enhanced descriptor callbacks to report
-rx_not_ls together with discard_frame for non-last descriptors. This
-allows both stmmac_rx_zc() and stmmac_rx() to drain split frames on
-dwmac100 and dwmac1000 instead of reparsing the final fragment as a new
-packet.
+The !error guard on the discard check also changes the accounting for
+errored multi-descriptor frames on dwmac100/dwmac1000: rx_errors is
+incremented once per frame instead of once per descriptor. This too is
+independent of XDP mode.
 
-Fixes: bba2556efad6 ("net: stmmac: Enable RX via AF_XDP zero-copy")
-Fixes: 644b8437ccef9e ("net: stmmac: dwmac4: report Rx checksum errors in status")
+Note: the subsequent "net: stmmac: rework stmmac_rx to support XDP rx
+multi-buff" accumulates the whole frame into a single xdp_buff and
+supersedes this patch; the fix is kept so the net portion of the series
+stands on its own.
+
+Fixes: 5fabb01207a2 ("net: stmmac: Add initial XDP support")
+Fixes: 88095728511e ("net: stmmac: fix rx Scatter-Gather support")
 Reviewed-by: Nicolai Buchwitz <nb@tipi-net.de>
 Signed-off-by: Lorenzo Bianconi <lorenzo.bianconi@oss.qualcomm.com>
-Link: https://patch.msgid.link/20261027-stmmac-xdp-fixes-v2-2-10eae8a093a8@oss.qualcomm.com
+Link: https://patch.msgid.link/20261027-stmmac-xdp-fixes-v2-3-10eae8a093a8@oss.qualcomm.com
 Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../net/ethernet/stmicro/stmmac/enh_desc.c    |  2 +-
- .../net/ethernet/stmicro/stmmac/norm_desc.c   |  2 +-
- .../net/ethernet/stmicro/stmmac/stmmac_main.c | 21 ++++++++++++-------
- 3 files changed, 15 insertions(+), 10 deletions(-)
+ .../net/ethernet/stmicro/stmmac/stmmac_main.c | 35 ++++++++++---------
+ 1 file changed, 19 insertions(+), 16 deletions(-)
 
-diff --git a/drivers/net/ethernet/stmicro/stmmac/enh_desc.c b/drivers/net/ethernet/stmicro/stmmac/enh_desc.c
-index 023b54b72478f..7ece8d4157a86 100644
---- a/drivers/net/ethernet/stmicro/stmmac/enh_desc.c
-+++ b/drivers/net/ethernet/stmicro/stmmac/enh_desc.c
-@@ -205,7 +205,7 @@ static int enh_desc_get_rx_status(struct stmmac_extra_stats *x,
- 
- 	if (unlikely(!(rdes0 & RDES0_LAST_DESCRIPTOR))) {
- 		x->rx_length++;
--		return discard_frame;
-+		return discard_frame | rx_not_ls;
- 	}
- 
- 	if (unlikely(rdes0 & RDES0_ERROR_SUMMARY)) {
-diff --git a/drivers/net/ethernet/stmicro/stmmac/norm_desc.c b/drivers/net/ethernet/stmicro/stmmac/norm_desc.c
-index c4b613564f87c..d19bf7ca4db38 100644
---- a/drivers/net/ethernet/stmicro/stmmac/norm_desc.c
-+++ b/drivers/net/ethernet/stmicro/stmmac/norm_desc.c
-@@ -70,7 +70,7 @@ static int ndesc_get_rx_status(struct stmmac_extra_stats *x,
- 
- 	if (unlikely(!(rdes0 & RDES0_LAST_DESCRIPTOR))) {
- 		x->rx_length++;
--		return discard_frame;
-+		return discard_frame | rx_not_ls;
- 	}
- 
- 	if (unlikely(rdes0 & RDES0_ERROR_SUMMARY)) {
 diff --git a/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c b/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
-index c637305fdb36d..0d5215860b6d5 100644
+index 0d5215860b6d5..519b166b58c37 100644
 --- a/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
 +++ b/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
-@@ -5621,18 +5621,21 @@ static int stmmac_rx_zc(struct stmmac_priv *priv, int limit, u32 queue)
- 							   &rx_q->dma_erx[entry],
+@@ -5819,18 +5819,23 @@ static int stmmac_rx(struct stmmac_priv *priv, int limit, u32 queue)
  							   status);
  		}
--		if (unlikely(status == discard_frame)) {
--			xsk_buff_free(buf->xdp);
--			buf->xdp = NULL;
--			dirty++;
-+
+ 
+-		if (unlikely(status & discard_frame)) {
+-			page_pool_put_page(rx_q->page_pool, buf->page, 0, true);
+-			buf->page = NULL;
 +		if (unlikely(!error && (status & discard_frame))) {
  			error = 1;
  			if (!priv->hwts_rx_en)
@@ -185,38 +158,54 @@ index c637305fdb36d..0d5215860b6d5 100644
  
 -		if (unlikely(error && (status & rx_not_ls)))
 -			goto read_again;
++		/* We do not support SG in XDP mode */
++		if (unlikely(!error && (status & rx_not_ls) &&
++			     stmmac_xdp_is_enabled(priv))) {
++			rx_dropped++;
++			error = 1;
++		}
+ 
  		if (unlikely(error)) {
-+			xsk_buff_free(buf->xdp);
-+			buf->xdp = NULL;
-+			dirty++;
-+
 +			if (status & rx_not_ls)
 +				goto read_again;
 +
- 			count++;
- 			continue;
+ 			dev_kfree_skb(skb);
+ 			goto next;
  		}
-@@ -5641,8 +5644,9 @@ static int stmmac_rx_zc(struct stmmac_priv *priv, int limit, u32 queue)
- 		if (likely(status & rx_not_ls)) {
- 			xsk_buff_free(buf->xdp);
- 			buf->xdp = NULL;
-+			rx_dropped++;
-+			error = 1;
- 			dirty++;
--			count++;
- 			goto read_again;
- 		}
+@@ -5842,6 +5847,14 @@ static int stmmac_rx(struct stmmac_priv *priv, int limit, u32 queue)
+ 		buf2_len = stmmac_rx_buf2_len(priv, p, status, len);
+ 		len += buf2_len;
  
-@@ -5814,7 +5818,8 @@ static int stmmac_rx(struct stmmac_priv *priv, int limit, u32 queue)
- 							   &rx_q->dma_erx[entry],
- 							   status);
- 		}
--		if (unlikely(status == discard_frame)) {
++		/* Drop the packet if it is split over buf1 and buf2 on a
++		 * single descriptor if the interface is running in XDP mode.
++		 */
++		if (unlikely(stmmac_xdp_is_enabled(priv) && buf2_len)) {
++			rx_dropped++;
++			goto next;
++		}
 +
-+		if (unlikely(status & discard_frame)) {
- 			page_pool_put_page(rx_q->page_pool, buf->page, 0, true);
- 			buf->page = NULL;
- 			error = 1;
+ 		/* ACS is disabled; strip manually. */
+ 		if (likely(!(status & rx_not_ls)))
+ 			len -= ETH_FCS_LEN;
+@@ -5891,17 +5904,7 @@ static int stmmac_rx(struct stmmac_priv *priv, int limit, u32 queue)
+ 							   sync_len, true);
+ 					buf->page = NULL;
+ 					rx_dropped++;
+-
+-					/* Clear skb as it was set as
+-					 * status by XDP program.
+-					 */
+-					skb = NULL;
+-
+-					if (unlikely((status & rx_not_ls)))
+-						goto read_again;
+-
+-					count++;
+-					continue;
++					goto next;
+ 				} else if (xdp_res & (STMMAC_XDP_TX |
+ 						      STMMAC_XDP_REDIRECT)) {
+ 					xdp_status |= xdp_res;
 -- 
 2.53.0
 
