@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795622421;
-	b=e4sCrLMFPN68HZABA+8l8pPUz7mKRBOAjv0XmP/ZGiJfnyRmZdLCDsb0mIJ3BcfwG3GE
-	 LF/CJTUfAIiBrr9Fj088LJPMXGQOh67xW+1JSliUHeqVJOvBrLuW6zkMxpEqqZgGMCU3z
-	 ygKP05I7jXx4/tOk4gWos13oQl3/JyFXYZzTLn3KmF1EKa9TmNtVEKWebLGgztw6yGzGI
-	 lZNHkQIwrwxYiuo0SefeDSOmYgsc3ookBif7ZKuxOXf6Tp01WgSd9RQjLsPRA5vEfQikV
-	 mgBJd6JerOHRzEArEALHflrLtHwhI+DYMQGueyQclrnWRTS9kno5Ezr44FJaQKANf0A==
+	t=1795622424;
+	b=LheQ7bzx4Om1ViOwummWZk4gU4vWVrfn1jyh6QhppK43Lh6Gbs+68FcYVM3ifmGXYGlF
+	 sT7McY8b4poQTgUxS7QAN3QJ2BX02h9PLd1tRi8tImgoKfdRy3W5cCkkUhzw7qS7wzALb
+	 846glAtuz83wEdWDxL0O0SYC7bu8CE4Jphq4WdEUyVMLEmXQkBNZCLIqbfoJho7NUByP+
+	 z6r4kNl04pvvbyS0Hax1dYUzpoTsgaAZMCXwLaZNov5YDHoyiIigCaxmdu53knkMdRd7n
+	 E9M0/ziD8lRiTOlVG9CVpTAFWtwaaUNIHDp7XULjV60jtNyzuo1NsvgV2VaRGAZU74Q==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795622421;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795622424;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=31z7/kRGJCcHZ428j95221ez+f/FKKWYAsrbEzmPXZo=;
-	b=G1lo4AFI1MeOPDaF34RtjslNKp8Go9ab1X5FZOW+rat9rKPA4LXHs5bDgMCIECZRJLE5
-	 SiaNa1WA8PO0jNpXWr/yPiHHhqPDms6u7uh65HNvofDvUa9YqcVddzevGiIh8c1XG3buH
-	 g20B5VMLMFu+jtpV8uyxAueg+dWUIU9UDVpGcC2Ym9BsQKrWA+3NEGjjE55Ge4cedpQAh
-	 izpPXPXvb0n4YXcDPa2dBS7nA3QjfCLuw1fIllC3HXe3AN9azC6E65fpgpk4ZTF3sHvse
-	 +2fGkgpmAVrqlzQ6JovMNcRgJiytGT62D5wFJ9uUA+ZnTe1Z+P4U5q/UdzQWRTKlAYA==
+	bh=66/Si4z5COxVzPSNcdhRjvSxIQ/7/GZb85BhszEOYLw=;
+	b=icNs4jRf2vg1XARsL5TF06ZrSAsmy5qz9TsS+PSdz1y1DJTgYiRIjOleQUWbkR3fuEFN
+	 BwpIULs+qzdg/JvGTCAdArWk4xCIiDN4sZawA6+gDtzOoun/YX1p7zPhRJEHZM2mRwURN
+	 c3N+ztcj+BmPkvTGH0nGzNVKLAhEdHfOM7aQ577haCpQTbAUD5ToeBOSJgHmmm5SstKBP
+	 NxoHYTPDlCE4oR9wzlrUfCaOdB7noLoWx71sB6RkJio+5+b1ajnitLzF5NG15aiV2w0k5
+	 Zh06IW8S32SzZA3/j+VgvtLzEM/G3mJK94c/F2Ecs1ZAZd3wQ53+BJM3rDcnxP3hCaA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Zup+YR9Y;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=HoqzG3bj;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D5F28606A331;
-	Wed, 25 Nov 2026 16:00:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A4902606A31E;
+	Wed, 25 Nov 2026 16:00:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Zup+YR9Y
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E22741F000C6;
-	Wed, 25 Nov 2026 16:00:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=HoqzG3bj
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B7D771F000C4;
+	Wed, 25 Nov 2026 16:00:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795622421;
-	bh=31z7/kRGJCcHZ428j95221ez+f/FKKWYAsrbEzmPXZo=;
+	s=korg; t=1795622424;
+	bh=66/Si4z5COxVzPSNcdhRjvSxIQ/7/GZb85BhszEOYLw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Zup+YR9YALNZZI5KCRQh9S6Lm45Gz2GPHwiHPyy7YAST5u1JzI41hY9oGAh6XaDUo
-	 EeRk2sbUzmt3wUBFqfyk2RBKLvEUFFiVNFjcY2MDbc3dl9qF38qGbBQv+0EnorkFWC
-	 NVZNgIBw1EI9ynpcLbfqTPydZ79TSHisbZzfegwY=
+	b=HoqzG3bjG8v50iWKLLTqtXpiDw9gT/98I/axaoAC7iNc99gvM6aCSd2BU36mmESRN
+	 X0lXd3Kemm+w1doMppiTO1pJ8TU0F3+oLHPG0mbPDmthQ/NzTlz9D/uGPew+0yoLrp
+	 5+UI7ymCKfDIGtFBRZv8VIESKERMtQMN9srZBtvE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Jonghyuk Kim(MalHyuk)" <malhyuk97@gmail.com>,
-	Max Zhen <max.zhen@amd.com>,
-	Lizhi Hou <lizhi.hou@amd.com>,
+	Kumar Kartikeya Dwivedi <memxor@gmail.com>,
+	Alexei Starovoitov <ast@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 531/990] accel/amdxdna: Preallocate hardware context schedulers
-Date: Wed, 25 Nov 2026 15:31:38 +0100
-Message-ID: <20261125143834.531670386@linuxfoundation.org>
+Subject: [PATCH 6.18 532/990] bpf: Check fastcall stack contract once for all stack accesses
+Date: Wed, 25 Nov 2026 15:31:39 +0100
+Message-ID: <20261125143834.554612479@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143822.072087159@linuxfoundation.org>
 References: <20261125143822.072087159@linuxfoundation.org>
@@ -69,329 +68,143 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Lizhi Hou <lizhi.hou@amd.com>
+From: Kumar Kartikeya Dwivedi <memxor@gmail.com>
 
-[ Upstream commit f7afecd54296cf7ad6fa36f692d2a7427e32f25d ]
+[ Upstream commit ec3a69e7c021cd826be8886ba6af4ee3147788fb ]
 
-The hardware context scheduler fence is exposed through
-drm_syncobj_add_point(). After a hardware context is destroyed,
-userspace can still call drm_sched_fence_get_timeline_name() on the
-fence through SYNC_IOC_FILE_INFO. This results in a use-after-free
-when accessing fence->sched->name.
+When the verifier inlines a bpf_fastcall helper or kfunc, it removes the
+spill/fill pairs that clang emitted around the call and lowers the
+subprogram's stack depth so that their slots are no longer part of the
+frame. This is only safe if nothing else accesses those slots or any slot
+below them. check_fastcall_stack_contract() enforces this: an access to
+that region from outside a fastcall pattern disables the rewrite for the
+subprogram. It is called from the four stack load and store paths, and
+two kinds of access escape it.
 
-Preallocate hardware context schedulers and free them during device
-teardown instead. A destroyed hardware context no longer frees its
-scheduler, ensuring that the scheduler remains valid while its fences
-are still accessible.
+Stack buffers passed to helpers and kfuncs are validated by
+check_stack_range_initialized(), which does not call it. If such a buffer
+is the only other access to the region, the rewrite is still applied, the
+JIT reserves a frame that does not contain the buffer, and the helper
+reads or writes live kernel stack below the program's frame. For example,
+without CAP_PERFMON:
 
-Fixes: aac243092b70 ("accel/amdxdna: Add command execution")
-Reported-by: Jonghyuk Kim(MalHyuk) <malhyuk97@gmail.com>
-Link: https://lore.kernel.org/dri-devel/20260902012712.880520-1-malhyuk97@gmail.com/
-Reviewed-by: Max Zhen <max.zhen@amd.com>
-Signed-off-by: Lizhi Hou <lizhi.hou@amd.com>
-Link: https://patch.msgid.link/20260923200501.281208-1-lizhi.hou@amd.com
-[ sashal: Adapted to the older tree by using ndev->xdna, a single firmware-load failure path that unwinds the scheduler init, and dropping the duplicate ndev declaration and assignment in the hwctx functions. ]
+	*(u64 *)(r10 - 8) = r1;
+	call bpf_get_smp_processor_id;
+	r1 = *(u64 *)(r10 - 8);
+	r2 = 0;
+	r3 = r10;
+	r3 += -64;
+	r4 = 8;
+	call bpf_skb_load_bytes;
+
+is accepted with a stack depth of 0 instead of 64.
+
+Some buffers got the check indirectly. For constant-sized outputs in raw
+mode, mark_raw_stack() marks the buffer initialized through ordinary
+byte stores, which call the check. Commit 5da4a9f26fca ("bpf: Preserve
+stack initialization for generic output buffers") limited raw mode to
+programs that may read uninitialized stack, so outputs of programs
+without CAP_PERFMON lost the check, as in the example above. Buffers
+that never used raw mode have lacked the check since fastcall support
+was added: helper inputs such as a map key whose only store is a fastcall
+spill, variable-sized outputs, and buffers at a variable stack offset.
+
+check_stack_read_fixed_off() applies the check to the current frame,
+even when the pointer targets a caller's stack. A callee can therefore
+read a caller's fastcall spill slot without disabling the caller's
+rewrite:
+
+	caller:
+	r1 = 1;
+	*(u64 *)(r10 - 8) = r1;
+	call bpf_get_smp_processor_id;
+	r1 = *(u64 *)(r10 - 8);
+	r1 = r10;
+	r1 += -8;
+	call callee;
+
+	callee:
+	r0 = *(u64 *)(r1 + 0);
+
+The caller's spill and fill are removed and its stack depth drops to 0,
+but the verifier still tracks the slot as holding the spilled constant.
+The callee's load then reads kernel stack outside the caller's frame,
+while the verifier assumes r0 is 1.
+
+Every stack access first goes through check_stack_access_within_bounds():
+loads and stores from check_mem_access(), helper and kfunc buffers from
+check_stack_range_initialized(), and the dynptr, iterator and irq flag
+slots that kfuncs initialize, whose handlers use check_mem_access(). It
+resolves the frame that owns the slots and the lowest offset the access
+can touch, and it is the only place where a frame's stack depth grows.
+Check the contract there, once for every access, and drop the calls from
+the stack read and write paths. Zero-sized buffers touch no stack and
+leave the rewrite enabled.
+
+Fixes: 5b5f51bff1b6 ("bpf: no_caller_saved_registers attribute for helper calls")
+Fixes: 5da4a9f26fca ("bpf: Preserve stack initialization for generic output buffers")
+Signed-off-by: Kumar Kartikeya Dwivedi <memxor@gmail.com>
+Signed-off-by: Alexei Starovoitov <ast@kernel.org>
+Link: https://lore.kernel.org/bpf/85f9995a43edb70c76615280e103dc5325742e88330f36c97962ee35f17e3e32@mail.kernel.org
+Link: https://patch.msgid.link/20260924075352.2343553-2-memxor@gmail.com
+[ sashal: Removed the four old fastcall stack-contract calls and added the single check in check_stack_access_within_bounds(); the code matches upstream, with only hunk context adjusted for surrounding code that differs. ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/accel/amdxdna/aie2_ctx.c | 117 +++++++++++++++++++++++--------
- drivers/accel/amdxdna/aie2_pci.c |   9 ++-
- drivers/accel/amdxdna/aie2_pci.h |   6 +-
- 3 files changed, 99 insertions(+), 33 deletions(-)
+ kernel/bpf/verifier.c | 13 +++++++++----
+ 1 file changed, 9 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/accel/amdxdna/aie2_ctx.c b/drivers/accel/amdxdna/aie2_ctx.c
-index a87b24654c367..fb411887b6470 100644
---- a/drivers/accel/amdxdna/aie2_ctx.c
-+++ b/drivers/accel/amdxdna/aie2_ctx.c
-@@ -7,6 +7,7 @@
- #include <drm/drm_device.h>
- #include <drm/drm_gem.h>
- #include <drm/drm_gem_shmem_helper.h>
-+#include <drm/drm_managed.h>
- #include <drm/drm_print.h>
- #include <drm/drm_syncobj.h>
- #include <linux/hmm.h>
-@@ -62,7 +63,7 @@ static void aie2_hwctx_status_restore(struct amdxdna_hwctx *hwctx)
- static void aie2_hwctx_stop(struct amdxdna_dev *xdna, struct amdxdna_hwctx *hwctx,
- 			    struct drm_sched_job *bad_job)
- {
--	drm_sched_stop(&hwctx->priv->sched, bad_job);
-+	drm_sched_stop(hwctx->priv->sched, bad_job);
- 	aie2_destroy_context(xdna->dev_handle, hwctx);
- }
- 
-@@ -96,7 +97,7 @@ static int aie2_hwctx_restart(struct amdxdna_dev *xdna, struct amdxdna_hwctx *hw
+diff --git a/kernel/bpf/verifier.c b/kernel/bpf/verifier.c
+index 139671b393a05..e146b860f5692 100644
+--- a/kernel/bpf/verifier.c
++++ b/kernel/bpf/verifier.c
+@@ -5230,7 +5230,6 @@ static int check_stack_write_fixed_off(struct bpf_verifier_env *env,
+ 		bpf_mark_stack_write(env, state->frameno, BIT(spi));
  	}
  
- out:
--	drm_sched_start(&hwctx->priv->sched, 0);
-+	drm_sched_start(hwctx->priv->sched, 0);
- 	XDNA_DBG(xdna, "%s restarted, ret %d", hwctx->name, ret);
- 	return ret;
- }
-@@ -528,10 +529,19 @@ static void aie2_ctx_syncobj_destroy(struct amdxdna_hwctx *hwctx)
- 	drm_syncobj_put(hwctx->priv->syncobj);
- }
- 
--int aie2_hwctx_init(struct amdxdna_hwctx *hwctx)
-+void aie2_hwctx_sched_fini(struct amdxdna_dev_hdl *ndev)
- {
--	struct amdxdna_client *client = hwctx->client;
--	struct amdxdna_dev *xdna = client->xdna;
-+	int i;
-+
-+	for (i = 0; i < ndev->priv->hwctx_limit; i++)
-+		drm_sched_fini(&ndev->hwctx_sched[i]);
-+
-+	ida_destroy(&ndev->hwctx_sched_ida);
-+}
-+
-+int aie2_hwctx_sched_init(struct amdxdna_dev_hdl *ndev)
-+{
-+	struct amdxdna_dev *xdna = ndev->xdna;
- 	const struct drm_sched_init_args args = {
- 		.ops = &sched_ops,
- 		.num_rqs = DRM_SCHED_PRIORITY_COUNT,
-@@ -540,10 +550,57 @@ int aie2_hwctx_init(struct amdxdna_hwctx *hwctx)
- 		.name = "amdxdna_js",
- 		.dev = xdna->ddev.dev,
- 	};
--	struct drm_gpu_scheduler *sched;
-+	int i, ret;
-+
-+	ndev->hwctx_sched = drmm_kcalloc(&xdna->ddev, ndev->priv->hwctx_limit,
-+					 sizeof(*ndev->hwctx_sched), GFP_KERNEL);
-+	if (!ndev->hwctx_sched)
-+		return -ENOMEM;
-+
-+	for (i = 0; i < ndev->priv->hwctx_limit; i++) {
-+		ret = drm_sched_init(&ndev->hwctx_sched[i], &args);
-+		if (ret) {
-+			XDNA_ERR(xdna, "Failed to init DRM scheduler. ret %d", ret);
-+			goto fini_sched;
-+		}
-+	}
-+
-+	ida_init(&ndev->hwctx_sched_ida);
-+
-+	return 0;
-+
-+fini_sched:
-+	while (--i >= 0)
-+		drm_sched_fini(&ndev->hwctx_sched[i]);
-+
-+	return ret;
-+}
-+
-+static struct drm_gpu_scheduler *aie2_hwctx_sched_alloc(struct amdxdna_dev_hdl *ndev)
-+{
-+	int ret;
-+
-+	ret = ida_alloc_range(&ndev->hwctx_sched_ida, 0,
-+			      ndev->priv->hwctx_limit - 1, GFP_KERNEL);
-+	if (ret < 0)
-+		return ERR_PTR(ret);
-+
-+	return &ndev->hwctx_sched[ret];
-+}
-+
-+static void aie2_hwctx_sched_free(struct amdxdna_dev_hdl *ndev,
-+				  struct drm_gpu_scheduler *sched)
-+{
-+	ida_free(&ndev->hwctx_sched_ida, sched - ndev->hwctx_sched);
-+}
-+
-+int aie2_hwctx_init(struct amdxdna_hwctx *hwctx)
-+{
-+	struct amdxdna_client *client = hwctx->client;
-+	struct amdxdna_dev *xdna = client->xdna;
-+	struct amdxdna_dev_hdl *ndev = xdna->dev_handle;
- 	struct amdxdna_hwctx_priv *priv;
- 	struct amdxdna_gem_obj *heap;
--	struct amdxdna_dev_hdl *ndev;
- 	int i, ret;
- 
- 	priv = kzalloc(sizeof(*hwctx->priv), GFP_KERNEL);
-@@ -551,13 +608,26 @@ int aie2_hwctx_init(struct amdxdna_hwctx *hwctx)
- 		return -ENOMEM;
- 	hwctx->priv = priv;
- 
-+	priv->sched = aie2_hwctx_sched_alloc(ndev);
-+	if (IS_ERR(priv->sched)) {
-+		ret = PTR_ERR(priv->sched);
-+		goto free_priv;
-+	}
-+
-+	ret = drm_sched_entity_init(&priv->entity, DRM_SCHED_PRIORITY_NORMAL,
-+				    &priv->sched, 1, NULL);
-+	if (ret) {
-+		XDNA_ERR(xdna, "Failed to initial sched entity. ret %d", ret);
-+		goto free_sched;
-+	}
-+
- 	mutex_lock(&client->mm_lock);
- 	heap = client->dev_heap;
- 	if (!heap) {
- 		XDNA_ERR(xdna, "The client dev heap object not exist");
- 		mutex_unlock(&client->mm_lock);
- 		ret = -ENOENT;
--		goto free_priv;
-+		goto free_entity;
- 	}
- 	drm_gem_object_get(to_gobj(heap));
- 	mutex_unlock(&client->mm_lock);
-@@ -590,30 +660,16 @@ int aie2_hwctx_init(struct amdxdna_hwctx *hwctx)
- 		priv->cmd_buf[i] = abo;
+-	check_fastcall_stack_contract(env, state, insn_idx, off);
+ 	mark_stack_slot_scratched(env, spi);
+ 	if (reg && !(off % BPF_REG_SIZE) && reg->type == SCALAR_VALUE && env->bpf_capable) {
+ 		bool reg_value_fits;
+@@ -5349,7 +5348,6 @@ static int check_stack_write_var_off(struct bpf_verifier_env *env,
+ 			return err;
  	}
  
--	sched = &priv->sched;
- 	mutex_init(&priv->io_lock);
+-	check_fastcall_stack_contract(env, state, insn_idx, min_off);
+ 	/* Variable offset writes destroy any spilled pointers in range. */
+ 	for (i = min_off; i < max_off; i++) {
+ 		u8 new_type, *stype;
+@@ -5493,7 +5491,6 @@ static int check_stack_read_fixed_off(struct bpf_verifier_env *env,
+ 	reg = &reg_state->stack[spi].spilled_ptr;
  
- 	fs_reclaim_acquire(GFP_KERNEL);
- 	might_lock(&priv->io_lock);
- 	fs_reclaim_release(GFP_KERNEL);
+ 	mark_stack_slot_scratched(env, spi);
+-	check_fastcall_stack_contract(env, state, env->insn_idx, off);
+ 	err = bpf_mark_stack_read(env, reg_state->frameno, env->insn_idx, BIT(spi));
+ 	if (err)
+ 		return err;
+@@ -5652,7 +5649,6 @@ static int check_stack_read_var_off(struct bpf_verifier_env *env,
+ 	min_off = reg->smin_value + off;
+ 	max_off = reg->smax_value + off;
+ 	mark_reg_stack_read(env, ptr_state, min_off, max_off + size, dst_regno);
+-	check_fastcall_stack_contract(env, ptr_state, env->insn_idx, min_off);
+ 	return 0;
+ }
  
--	ret = drm_sched_init(sched, &args);
--	if (ret) {
--		XDNA_ERR(xdna, "Failed to init DRM scheduler. ret %d", ret);
--		goto free_cmd_bufs;
--	}
--
--	ret = drm_sched_entity_init(&priv->entity, DRM_SCHED_PRIORITY_NORMAL,
--				    &sched, 1, NULL);
--	if (ret) {
--		XDNA_ERR(xdna, "Failed to initial sched entiry. ret %d", ret);
--		goto free_sched;
--	}
--
- 	ret = aie2_hwctx_col_list(hwctx);
- 	if (ret) {
- 		XDNA_ERR(xdna, "Create col list failed, ret %d", ret);
--		goto free_entity;
-+		goto free_cmd_bufs;
+@@ -7688,6 +7684,15 @@ static int check_stack_access_within_bounds(
+ 		return err;
  	}
  
- 	ret = amdxdna_pm_resume_get(xdna);
-@@ -641,7 +697,6 @@ int aie2_hwctx_init(struct amdxdna_hwctx *hwctx)
- 	amdxdna_pm_suspend_put(xdna);
- 
- 	hwctx->status = HWCTX_STAT_INIT;
--	ndev = xdna->dev_handle;
- 	ndev->hwctx_num++;
- 	init_waitqueue_head(&priv->job_free_wq);
- 
-@@ -655,10 +710,6 @@ int aie2_hwctx_init(struct amdxdna_hwctx *hwctx)
- 	amdxdna_pm_suspend_put(xdna);
- free_col_list:
- 	kfree(hwctx->col_list);
--free_entity:
--	drm_sched_entity_destroy(&priv->entity);
--free_sched:
--	drm_sched_fini(&priv->sched);
- free_cmd_bufs:
- 	for (i = 0; i < ARRAY_SIZE(priv->cmd_buf); i++) {
- 		if (!priv->cmd_buf[i])
-@@ -668,6 +719,10 @@ int aie2_hwctx_init(struct amdxdna_hwctx *hwctx)
- 	amdxdna_gem_unpin(heap);
- put_heap:
- 	drm_gem_object_put(to_gobj(heap));
-+free_entity:
-+	drm_sched_entity_destroy(&priv->entity);
-+free_sched:
-+	aie2_hwctx_sched_free(ndev, priv->sched);
- free_priv:
- 	kfree(priv);
- 	return ret;
-@@ -687,10 +742,10 @@ void aie2_hwctx_fini(struct amdxdna_hwctx *hwctx)
- 	aie2_hwctx_wait_for_idle(hwctx);
- 
- 	/* Request fw to destroy hwctx and cancel the rest pending requests */
--	drm_sched_stop(&hwctx->priv->sched, NULL);
-+	drm_sched_stop(hwctx->priv->sched, NULL);
- 	aie2_release_resource(hwctx);
- 	hwctx->status = HWCTX_STAT_STOP;
--	drm_sched_start(&hwctx->priv->sched, 0);
-+	drm_sched_start(hwctx->priv->sched, 0);
- 
- 	mutex_unlock(&xdna->dev_lock);
- 	drm_sched_entity_destroy(&hwctx->priv->entity);
-@@ -701,7 +756,7 @@ void aie2_hwctx_fini(struct amdxdna_hwctx *hwctx)
- 		   atomic64_read(&hwctx->job_free_cnt));
- 	mutex_lock(&xdna->dev_lock);
- 
--	drm_sched_fini(&hwctx->priv->sched);
-+	aie2_hwctx_sched_free(ndev, hwctx->priv->sched);
- 	aie2_ctx_syncobj_destroy(hwctx);
- 
- 	for (idx = 0; idx < ARRAY_SIZE(hwctx->priv->cmd_buf); idx++)
-diff --git a/drivers/accel/amdxdna/aie2_pci.c b/drivers/accel/amdxdna/aie2_pci.c
-index 4a7d1feac6a5e..5a030da5b9d4a 100644
---- a/drivers/accel/amdxdna/aie2_pci.c
-+++ b/drivers/accel/amdxdna/aie2_pci.c
-@@ -502,11 +502,15 @@ static int aie2_init(struct amdxdna_dev *xdna)
- 	ndev->priv = xdna->dev_info->dev_priv;
- 	ndev->xdna = xdna;
- 
-+	ret = aie2_hwctx_sched_init(ndev);
-+	if (ret)
-+		return ret;
++	/*
++	 * Every stack access passes through here, including buffers passed to
++	 * helpers and kfuncs and accesses into a caller's frame, so check the
++	 * fastcall contract of the frame that owns the slots once for all of
++	 * them. Zero-sized accesses touch no stack and keep the rewrite enabled.
++	 */
++	if (access_size)
++		check_fastcall_stack_contract(env, state, env->insn_idx, min_off);
 +
- 	ret = request_firmware(&fw, ndev->priv->fw_path, &pdev->dev);
- 	if (ret) {
- 		XDNA_ERR(xdna, "failed to request_firmware %s, ret %d",
- 			 ndev->priv->fw_path, ret);
--		return ret;
-+		goto free_hwctx_sched;
- 	}
- 
- 	ret = pcim_enable_device(pdev);
-@@ -597,6 +601,8 @@ static int aie2_init(struct amdxdna_dev *xdna)
- 	aie2_hw_stop(xdna);
- release_fw:
- 	release_firmware(fw);
-+free_hwctx_sched:
-+	aie2_hwctx_sched_fini(ndev);
- 
- 	return ret;
- }
-@@ -605,6 +611,7 @@ static void aie2_fini(struct amdxdna_dev *xdna)
- {
- 	amdxdna_pm_fini(xdna);
- 	aie2_hw_stop(xdna);
-+	aie2_hwctx_sched_fini(xdna->dev_handle);
- }
- 
- static int aie2_get_aie_status(struct amdxdna_client *client,
-diff --git a/drivers/accel/amdxdna/aie2_pci.h b/drivers/accel/amdxdna/aie2_pci.h
-index 7d56f4bca3d63..a3f66e87d0a55 100644
---- a/drivers/accel/amdxdna/aie2_pci.h
-+++ b/drivers/accel/amdxdna/aie2_pci.h
-@@ -133,7 +133,7 @@ struct amdxdna_hwctx_priv {
- 	struct amdxdna_gem_obj		*heap;
- 	void				*mbox_chann;
- 
--	struct drm_gpu_scheduler	sched;
-+	struct drm_gpu_scheduler	*sched;
- 	struct drm_sched_entity		entity;
- 
- 	struct mutex			io_lock; /* protect seq and cmd order */
-@@ -173,6 +173,8 @@ struct amdxdna_dev_hdl {
- 	u32				total_col;
- 	struct aie_version		version;
- 	struct aie_metadata		metadata;
-+	struct drm_gpu_scheduler	*hwctx_sched;
-+	struct ida			hwctx_sched_ida;
- 
- 	/* power management and clock*/
- 	enum amdxdna_power_mode_type	pw_mode;
-@@ -293,6 +295,8 @@ int aie2_sync_bo(struct amdxdna_hwctx *hwctx, struct amdxdna_sched_job *job,
- /* aie2_hwctx.c */
- int aie2_hwctx_init(struct amdxdna_hwctx *hwctx);
- void aie2_hwctx_fini(struct amdxdna_hwctx *hwctx);
-+int aie2_hwctx_sched_init(struct amdxdna_dev_hdl *ndev);
-+void aie2_hwctx_sched_fini(struct amdxdna_dev_hdl *ndev);
- int aie2_hwctx_config(struct amdxdna_hwctx *hwctx, u32 type, u64 value, void *buf, u32 size);
- void aie2_hwctx_suspend(struct amdxdna_client *client);
- int aie2_hwctx_resume(struct amdxdna_client *client);
+ 	/* Note that there is no stack access with offset zero, so the needed stack
+ 	 * size is -min_off, not -min_off+1.
+ 	 */
 -- 
 2.53.0
 
