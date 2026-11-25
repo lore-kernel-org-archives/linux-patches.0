@@ -1,55 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795618833;
-	b=rQCdePnEHJuo7PvfP5L0E9vc/UlgT8pe4p+sRYEtX/p9KJKn3nKUxYvV0aM0YHLzGhok
-	 jv8RpRrEUIjhu6MzgsYcbKQde+xQEdww8q1dGtKFo05yGRZoO0fYsckkCKVpksK1bsjHg
-	 ph+AaHaHLAI/j2lMDbOVdzEMkl2IC72G9UIXj7Mcoh2rH7bxFv/vFP6rhvddqy5uB28mM
-	 pBbHmn+438D8DRCrk7vJd9HyaGGNQy4QDBnf9iyvGz4HyLiodjp4jmI3YuSzx+RQo42Pi
-	 ZxEaABEOVq2WHSMZ2JIZ/SP0rnQoxurljzMZt9VIV4gfyVPo5gtuflpSYHlI6BEopYQ==
+	t=1795618837;
+	b=n0ucCUJWu/4GepNEzKlhGCeAp+WE2bCTEHTgPBx2qZt8OJCXpp/YYRzjFBbGNQUuV7bD
+	 HZwwEjKFJgrt6dUrrdwe6rhzgz6FqLEEQVNCQYAJyPjElj583WohZTF7zhPo4kthUhxdo
+	 QFAv1Zb4rI+IG8cZUyxsLAKWu3qxQ8gAshwm47Bdnt0V0DnIRH1jOMMHI504eIRU8nnhG
+	 xC7GnANJyx9ubLG91gT8Id/OFl5vWYGXXyylUpWFiGjQ0v9hUikmxq25l1QuaKg6DGygQ
+	 ZHw56iPPCvZzgUOvOXHvUS2CIq9CeZjQRN6ZeBMKqlhfD+tjlujI2PSu3TzHJj58YdQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795618833;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795618837;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=R9n+PI8u23uafc2eRpnPZVYTewmcqTC00Ad3IiWnEAg=;
-	b=R2wSgL+0t5qwdv8EeuqU43XkppU/Jmp7rjNRoo4i04MCKg33DdlA7vEVh4b3/VbT9ZrU
-	 pg8gJfIU1mPrYYRfBeHRK6Q51ksl+LqFH28ul9TnLTqmz6n/crE6pyK6ZmW2asZQpVdWs
-	 rSwIbtN1q1BMKnI9JIOxOaaoTz3LOqK/z5gW+zsT/yE9leBahFMCMoFseXbW9TzYomtXx
-	 Km76UU5qxUVQbgACsVEjh+DRd2+2nTcDECMLP5T/tTHefeSCCKy4CwONbe9uBXHZjxuKX
-	 f0pvBvXzNHbxEoVWEC2B+KUo4v0LP45c9A5NwqIX5xR9TEjEvMR0vXPIh4wqvt8JMig==
+	bh=Sq23CaTePTR/hi1bxB3pP99Tpu9gGVWGK9KRGM44cB0=;
+	b=N39xVyFxL7sKXY2HW9RIwm41+alDspCiXIFMSMYtgehi5zajQ/FJ0+zahUI8B6Q0a9A9
+	 /9Q3ajYLE20GakFSnbUcC7MolBE+a7jnzQPiLmhio9GYNnot3OnkEppSEtD7mHrBnHe7F
+	 eYf+KRZ3wyPkG2Bh6kqkPe91zNnJXU3Vt+pXJBL+I7sxEXsFPMs3jQZ6JKPWxT+gaRZgg
+	 ui+Fhq/y1S4COMoAlBDYFIbPTk/zlPC4R002t1yLIZrMIZBTVrMTcl6d7MrLDuRa8Jy55
+	 iHAplxH4yiDEfyh7eDGeg2jdDWzrknXG3SAXc0RoI0BTIUpFr8cq4glpc+9QPHMqmMg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=PhiiUETm;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ZjkztWhq;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 67FED606A327;
-	Wed, 25 Nov 2026 15:00:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 04ABB606A321;
+	Wed, 25 Nov 2026 15:00:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=PhiiUETm
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B41761F000C6;
-	Wed, 25 Nov 2026 15:00:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ZjkztWhq
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E80001F000C6;
+	Wed, 25 Nov 2026 15:00:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795618833;
-	bh=R9n+PI8u23uafc2eRpnPZVYTewmcqTC00Ad3IiWnEAg=;
+	s=korg; t=1795618836;
+	bh=Sq23CaTePTR/hi1bxB3pP99Tpu9gGVWGK9KRGM44cB0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=PhiiUETmyIsIq4X4Jm4yAf7YFSYrNSnR8gjlEHl6IHwnKTtneFj9W8dN50sfK8Q10
-	 wfRVCwiB4eh7uQokTyVSBXGDmbxT8fZwyF75DK7P/wnrix+TZINc0qoQtOxDo17r5M
-	 BU0HrVav6U7EuBhv2Tf5IhZJeX78D1qR03UdKTck=
+	b=ZjkztWhqQkkLwWSAaHCjfysqM6RbcHqtibKIt1jZjoHpBP1OTkntp+zqWqw/RFZ7v
+	 qyXYAYUYnuYaERBq0Ko4Z4KwZ+uwMNbxbUNMq0AZ4EzEk+fF9vcfSdC1fZ7ts42Sf+
+	 f0mXpe9998l8lOEk5vSb10/M7axXIJYrOx+FfYcs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Matthew Auld <matthew.auld@intel.com>,
 	Karthik Poosa <karthik.poosa@intel.com>,
 	Vinay Belgaumkar <vinay.belgaumkar@intel.com>,
 	Matthew Brost <matthew.brost@intel.com>,
 	Dave Airlie <airlied@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0401/1005] drm/xe: Toggle the D3Cold enable flag at runtime resume
-Date: Wed, 25 Nov 2026 15:28:59 +0100
-Message-ID: <20261125143831.140366597@linuxfoundation.org>
+Subject: [PATCH 7.3 0402/1005] drm/xe: Access GT MMIO after pcode init
+Date: Wed, 25 Nov 2026 15:29:00 +0100
+Message-ID: <20261125143831.163773647@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143821.729802100@linuxfoundation.org>
 References: <20261125143821.729802100@linuxfoundation.org>
@@ -73,46 +72,71 @@ Content-Transfer-Encoding: 8bit
 
 From: Vinay Belgaumkar <vinay.belgaumkar@intel.com>
 
-[ Upstream commit e42459b16cbf1cbcebfc1ab406140cca204fd831 ]
+[ Upstream commit fc0ba46fd8278ed3e3a2c111b25036cb62dfe078 ]
 
-We enable this flag during runtime suspend, need to set it back to
-false early during resume to maintain consistency in pci driver's
-internal state. d3cold_toggle() updates the root port's ability
-to go into d3cold via the dev->no_d3cold flag. With this patch, we
-are ensuring this internal state remains consistent with that of
-the endpoint.
+Allow pcode initialization to complete before we start poking around
+the GT MMIO space during resume as these accesses go through sgunit.
+We do write to MMIO registers in xe_wa_apply_tile_workarounds(), but
+those are in uncore space. Those accesses remain viable even during
+d3cold suspend.
 
-v2: Clarify the commit message (Matt Auld)
-v3: Add fixes (Karthik Poosa)
+v2: Clarify about xe_wa_apply_tile_workarounds (Karthik Poosa)
+v3: Add fixes tag (Anshuman)
 
-Fixes: f026520367be ("drm/xe: Only set PCI d3cold_allowed when we are really allowing.")
-Cc: Matthew Auld <matthew.auld@intel.com>
-Acked-by: Karthik Poosa <karthik.poosa@intel.com>
-Signed-off-by: Vinay Belgaumkar <vinay.belgaumkar@intel.com>
+Fixes: 95d0883ac810 ("drm/xe: Ensure GT is in C0 during resumes")
+Cc: Karthik Poosa <karthik.poosa@intel.com>
 Reviewed-by: Karthik Poosa <karthik.poosa@intel.com>
-Link: https://patch.msgid.link/20261027174351.619929-6-vinay.belgaumkar@intel.com
-(cherry picked from commit e994e0f1ba52e4be3607ba7f952a8d835f1f6563)
+Signed-off-by: Vinay Belgaumkar <vinay.belgaumkar@intel.com>
+Link: https://patch.msgid.link/20261027174351.619929-7-vinay.belgaumkar@intel.com
+(cherry picked from commit 638d116d755ed89628ad07bde33ae7d7658db834)
 Signed-off-by: Matthew Brost <matthew.brost@intel.com>
 Signed-off-by: Dave Airlie <airlied@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/xe/xe_pci.c | 3 +++
- 1 file changed, 3 insertions(+)
+ drivers/gpu/drm/xe/xe_pm.c | 12 ++++++------
+ 1 file changed, 6 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/gpu/drm/xe/xe_pci.c b/drivers/gpu/drm/xe/xe_pci.c
-index 5d7a0b403ac0d..93438a670ae44 100644
---- a/drivers/gpu/drm/xe/xe_pci.c
-+++ b/drivers/gpu/drm/xe/xe_pci.c
-@@ -1404,6 +1404,9 @@ static int xe_pci_runtime_resume(struct device *dev)
- 	struct xe_device *xe = pdev_to_xe_device(pdev);
- 	int err;
+diff --git a/drivers/gpu/drm/xe/xe_pm.c b/drivers/gpu/drm/xe/xe_pm.c
+index a5289a9df8d25..06ff27641ad19 100644
+--- a/drivers/gpu/drm/xe/xe_pm.c
++++ b/drivers/gpu/drm/xe/xe_pm.c
+@@ -239,9 +239,6 @@ int xe_pm_resume(struct xe_device *xe)
+ 	drm_dbg(&xe->drm, "Resuming device\n");
+ 	trace_xe_pm_resume(xe, __builtin_return_address(0));
  
-+	if (xe->d3cold.allowed)
-+		d3cold_toggle(pdev, D3COLD_DISABLE);
-+
- 	err = pci_set_power_state(pdev, PCI_D0);
+-	for_each_gt(gt, xe, id)
+-		xe_gt_idle_disable_c6(gt);
+-
+ 	for_each_tile(tile, xe, id)
+ 		xe_wa_apply_tile_workarounds(tile);
+ 
+@@ -249,6 +246,9 @@ int xe_pm_resume(struct xe_device *xe)
  	if (err)
  		return err;
+ 
++	for_each_gt(gt, xe, id)
++		xe_gt_idle_disable_c6(gt);
++
+ 	xe_display_pm_resume_early(xe);
+ 
+ 	/*
+@@ -677,13 +677,13 @@ int xe_pm_runtime_resume(struct xe_device *xe)
+ 	xe_rpm_lockmap_acquire(xe);
+ 
+ 	if (xe->d3cold.allowed) {
+-		for_each_gt(gt, xe, id)
+-			xe_gt_idle_disable_c6(gt);
+-
+ 		err = xe_pcode_ready(xe, true);
+ 		if (err)
+ 			goto out;
+ 
++		for_each_gt(gt, xe, id)
++			xe_gt_idle_disable_c6(gt);
++
+ 		xe_display_pm_resume_early(xe);
+ 
+ 		/*
 -- 
 2.53.0
 
