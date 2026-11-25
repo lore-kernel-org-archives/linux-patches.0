@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795622777;
-	b=DZr2XmviJgSh5LvziXy8rV6Ai9wMoHEaOK3yfgvUx3TxpUnFKMSRrguMyY7OnDaKRJF+
-	 Un4zdeRqVj5Au4N9z9o0JmjSTdXwEOGx659OtSju19MIyAYHvI6foxWww62MmQ4/WFRHS
-	 9z9iiBwZ75ZBMsNH0YFbzvIe8v1MH/ucf2Tjkb0w+eHNkicj0Jch7ynwVaSASwfPY06kX
-	 WxWSoiwO2svoWZrRtj/1jcsw3oYSIk895oN5GBBA+iQbySsLboLbBksm4a8fHZaeSieWh
-	 LVtaVp7mVmyi3F2P0+676NYpwh4R7Djd9aVlW3tIZJT6H5p+nuoYiE91necOb/6PEfg==
+	t=1795622780;
+	b=dFoKBrwKQxkQhi8KE2++1Tqfjuk49JVWFO9Bn7LHlVSVewp4xOdppP9Sw9ln7TrJqqWL
+	 U4ctPi1Ez6I6X+hKuxP5YDvc3k6PAvFUlJNWToJfGNT3w7FfVzySIewyeHwLzSC4QCjIn
+	 ug8ujKm8fSTaOxWNO6h9hVjSa0ZZHhliVR9L94C3FBcet35b+Q/FyhO0hcGCWm+ZQrlFY
+	 jHT8BnyVMiOKZ+zTX4dwWQPvgd64vRi5SaTlAYxxONnwo/hVDPMnnKVZej/MAbgNrRLhc
+	 Z0qxrfjD0uCO0HIh6ukrFgHKtP6jrbWKUMQaBbdKq5KlHXri33BmfHK70qZT4vkYrZw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795622777;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795622780;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=FD/nsNkd+BYwhssePftdJIKlJQFOPbwT3eChFBhgoWA=;
-	b=PSDLD/nto/5fCRGdo3C3bp7Hx0W+Jw7tzg2j1sb74SZTqUBjaE3pdD3kAIMyNwcaeZxD
-	 R0fMmeD5WbKsnf1i4oNjaIV5oN46NPFn7pgTHIE5U6sWLqajdcTCiGlRHPtiLw7KFLQXS
-	 2Meij2nGergEU2tb5BUJLGR1EDAi6WwYLu2tjemgRN/O65D8nJRmL8JnZoMvqZXpw1Xc+
-	 AKtWZ2yc0CdJCgLGkIYgrTaQr/F6L5kn+TKLsorLHuRNGs/c4Klrgypy5EcNQDGqKTa3q
-	 J4IIypjPjc+54J+33OjX8vDCW5OadxBYSK9NfDmqQLE+qy3jQ7SYsfRo2yiYrjOC7aQ==
+	bh=vP2aiMFz5Rmzx9TJU2bcyxxba/+DgHsjfXlXfR+9YPU=;
+	b=4sT06ZOITw7s4uuINh0FOrpO1D4fkMx2A7ggCA111DFjJ64Q8V9pPR5Us6lcf4Du48AY
+	 L8AQe8oHW7ZbzG9l1gs6fsR5TC4sMZO5IzxjUlifchgl15ANg5gR7rezDYWN7hfDiKrw7
+	 Nw/HaJrWBaEGSb0ZOkZ7eqVWT65Qb+dZelo5Rq/aiWbmFiVbtx99/r5LP6pyiC6lzy29g
+	 ivuOMXpBaVd4T8WOsbLpUr5SjkF8j9i/U8FwIuG/gM7BMPdGaQvLTj+LeIoawSFehEqDp
+	 x5mV5h9EVx7Z3aDYP/7dRnzlMa37l0cGgwXHLi9tBCGOHXuYLyKJDS5+uZqG1KGtK+Q==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=fGcRBcJM;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=xmRbEM0q;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D4EA0606A321;
-	Wed, 25 Nov 2026 16:06:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A45BC606A326;
+	Wed, 25 Nov 2026 16:06:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=fGcRBcJM
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 324E31F000C4;
-	Wed, 25 Nov 2026 16:06:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=xmRbEM0q
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 01ECC1F000C6;
+	Wed, 25 Nov 2026 16:06:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795622777;
-	bh=FD/nsNkd+BYwhssePftdJIKlJQFOPbwT3eChFBhgoWA=;
+	s=korg; t=1795622780;
+	bh=vP2aiMFz5Rmzx9TJU2bcyxxba/+DgHsjfXlXfR+9YPU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=fGcRBcJMnbvwcl/iayBqOjrht1rSYwC7msxBRgKco/tIjp6fwJ4EgVG8Gaqo4+Y44
-	 Z62oZDiz/+A5AWe7qZvHZ5ph2yFuH+L/2beI8jA4q8v0GXArfSfGByeddyy4JQcb8j
-	 sZFT3rekpb3Dx9w10fGZXadjQVRMD6tT/flDW6xE=
+	b=xmRbEM0qR61Y/dw7Pp5f9btDEFifXpR8zzjODFDmfnrmEmSNr4+vIHpDYB1mKFKHv
+	 OeQXoEe8YG/utc5jyWEa0r9k6D7ZBEwd96zyz7zw2yr8E872X0IgE3ReMu4ForIcy1
+	 dW8KRX4YTQ023j5SFLxEaoGCu5aPWsm6rU8V0/60=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ju Nan <junan76@163.com>,
-	Linus Walleij <linusw@kernel.org>,
+	Petr Oros <poros@redhat.com>,
+	Ivan Vecera <ivecera@redhat.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 599/990] pinctrl: stm32: Fix the unit of the hwspinlock timeout
-Date: Wed, 25 Nov 2026 15:32:46 +0100
-Message-ID: <20261125143836.122997035@linuxfoundation.org>
+Subject: [PATCH 6.18 600/990] dpll: zl3073x: make embedded sync follow the output carrier frequency
+Date: Wed, 25 Nov 2026 15:32:47 +0100
+Message-ID: <20261125143836.146991086@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143822.072087159@linuxfoundation.org>
 References: <20261125143822.072087159@linuxfoundation.org>
@@ -68,90 +69,194 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ju Nan <junan76@163.com>
+From: Ivan Vecera <ivecera@redhat.com>
 
-[ Upstream commit 544b3f8042dd7c18baa48dcb1a393ff8b6742322 ]
+[ Upstream commit bf6f105f2cb6477e36a9312477d0aa32a43aa13d ]
 
-HWSPNLCK_TIMEOUT is passed to hwspin_lock_timeout_in_atomic(), whose
-timeout argument is in milliseconds, not microseconds:
+The eSync period and width are relative to the output carrier, but
+changing the output frequency did not update them, so eSync ran at
+a wrong frequency and duty cycle. For a 1 Hz carrier esync_get()
+returns -EOPNOTSUPP, so eSync left enabled could not be disabled.
 
-  atomic_delay += HWSPINLOCK_RETRY_DELAY_US;
-  if (atomic_delay > to * 1000)
-          return -ETIMEDOUT;
+Factor out zl3073x_out_esync_{is_enabled,enable,disable}() helpers
+and use them in frequency_set() to recompute the eSync period and
+width for the new carrier, or to disable eSync for a 1 Hz carrier.
 
-The hwspinlock core documents this explicitly:
+Also compute the reported pulse width in 64 bits, as
+50 * esync_n_width overflows u32 for low carrier frequencies.
 
-  If the mode is HWLOCK_IN_ATOMIC (called from an atomic context) the
-  timeout is handled with busy-waiting delays, hence shall not exceed
-  few msecs.
+Hit during development, confirmed on an oscilloscope.
 
-Fixes: 290a9f937e5a ("pinctrl: stm32: use the hwspin_lock_timeout_in_atomic() API")
-Signed-off-by: Ju Nan <junan76@163.com>
-Signed-off-by: Linus Walleij <linusw@kernel.org>
-[ sashal: Dropped the two hunks touching the skipped I/O-sync and skew-delay functions (absent here), so only the HWSPNLCK_TIMEOUT_MS rename and the five existing callers apply. ]
+Fixes: ce26d7ca50a5 ("dpll: zl3073x: Add support to get/set frequency on pins")
+Fixes: 634ca2cb06d2 ("dpll: zl3073x: Add support to get/set esync on pins")
+Reviewed-by: Petr Oros <poros@redhat.com>
+Signed-off-by: Ivan Vecera <ivecera@redhat.com>
+Link: https://patch.msgid.link/20261011061211.448373-5-ivecera@redhat.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+[ sashal: adapted new eSync helpers in out.h to open-code clock type get/set with FIELD_GET/FIELD_PREP, and rebased esync_get/esync_set onto the older open-coded form, since the clock type accessors are missing. ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pinctrl/stm32/pinctrl-stm32.c | 12 ++++++------
- 1 file changed, 6 insertions(+), 6 deletions(-)
+ drivers/dpll/zl3073x/dpll.c | 56 ++++++++++++++++++-------------------
+ drivers/dpll/zl3073x/out.h  | 40 ++++++++++++++++++++++++++
+ 2 files changed, 67 insertions(+), 29 deletions(-)
 
-diff --git a/drivers/pinctrl/stm32/pinctrl-stm32.c b/drivers/pinctrl/stm32/pinctrl-stm32.c
-index 384fdc13a504b..8f9935d07e432 100644
---- a/drivers/pinctrl/stm32/pinctrl-stm32.c
-+++ b/drivers/pinctrl/stm32/pinctrl-stm32.c
-@@ -82,7 +82,7 @@
- #define gpio_range_to_bank(chip) \
- 		container_of(chip, struct stm32_gpio_bank, range)
+diff --git a/drivers/dpll/zl3073x/dpll.c b/drivers/dpll/zl3073x/dpll.c
+index c2ea96df3bcb6..75a8584e6368f 100644
+--- a/drivers/dpll/zl3073x/dpll.c
++++ b/drivers/dpll/zl3073x/dpll.c
+@@ -771,7 +771,7 @@ zl3073x_dpll_output_pin_esync_get(const struct dpll_pin *dpll_pin,
+ 	const struct zl3073x_synth *synth;
+ 	const struct zl3073x_out *out;
+ 	u32 synth_freq, out_freq;
+-	u8 clock_type, out_id;
++	u8 out_id;
  
--#define HWSPNLCK_TIMEOUT	1000 /* usec */
-+#define HWSPNLCK_TIMEOUT_MS	1
+ 	out_id = zl3073x_output_pin_out_get(pin->id);
+ 	out = zl3073x_out_state_get(zldev, out_id);
+@@ -794,8 +794,7 @@ zl3073x_dpll_output_pin_esync_get(const struct dpll_pin *dpll_pin,
+ 	esync->range = esync_freq_ranges;
+ 	esync->range_num = ARRAY_SIZE(esync_freq_ranges);
  
- static const char * const stm32_gpio_functions[] = {
- 	"gpio", "af0", "af1",
-@@ -559,7 +559,7 @@ static int stm32_gpio_domain_activate(struct irq_domain *d,
+-	clock_type = FIELD_GET(ZL_OUTPUT_MODE_CLOCK_TYPE, out->mode);
+-	if (clock_type != ZL_OUTPUT_MODE_CLOCK_TYPE_ESYNC) {
++	if (!zl3073x_out_esync_is_enabled(out)) {
+ 		/* No need to read esync data if it is not enabled */
+ 		esync->freq = 0;
+ 		esync->pulse = 0;
+@@ -811,7 +810,7 @@ zl3073x_dpll_output_pin_esync_get(const struct dpll_pin *dpll_pin,
+ 	 * Note that half pulse width is in units of half synth cycles, which
+ 	 * is why it reduces down to be output_div.
+ 	 */
+-	esync->pulse = (50 * out->esync_n_width) / out->div;
++	esync->pulse = div_u64(mul_u32_u32(50, out->esync_n_width), out->div);
  
- 	if (pctl->hwlock) {
- 		ret = hwspin_lock_timeout_in_atomic(pctl->hwlock,
--						    HWSPNLCK_TIMEOUT);
-+						    HWSPNLCK_TIMEOUT_MS);
- 		if (ret) {
- 			dev_err(pctl->dev, "Can't get hwspinlock\n");
- 			return ret;
-@@ -896,7 +896,7 @@ static int stm32_pmx_set_mode(struct stm32_gpio_bank *bank,
+ 	return 0;
+ }
+@@ -828,7 +827,7 @@ zl3073x_dpll_output_pin_esync_set(const struct dpll_pin *dpll_pin,
+ 	struct zl3073x_dpll_pin *pin = pin_priv;
+ 	const struct zl3073x_synth *synth;
+ 	struct zl3073x_out out;
+-	u8 clock_type, out_id;
++	u8 out_id;
+ 	u32 synth_freq;
  
- 	if (pctl->hwlock) {
- 		err = hwspin_lock_timeout_in_atomic(pctl->hwlock,
--						    HWSPNLCK_TIMEOUT);
-+						    HWSPNLCK_TIMEOUT_MS);
- 		if (err) {
- 			dev_err(pctl->dev, "Can't get hwspinlock\n");
- 			goto unlock;
-@@ -1033,7 +1033,7 @@ static int stm32_pconf_set_driving(struct stm32_gpio_bank *bank,
+ 	out_id = zl3073x_output_pin_out_get(pin->id);
+@@ -841,36 +840,18 @@ zl3073x_dpll_output_pin_esync_set(const struct dpll_pin *dpll_pin,
+ 	if (zl3073x_out_is_ndiv(&out))
+ 		return -EOPNOTSUPP;
  
- 	if (pctl->hwlock) {
- 		err = hwspin_lock_timeout_in_atomic(pctl->hwlock,
--						    HWSPNLCK_TIMEOUT);
-+						    HWSPNLCK_TIMEOUT_MS);
- 		if (err) {
- 			dev_err(pctl->dev, "Can't get hwspinlock\n");
- 			goto unlock;
-@@ -1084,7 +1084,7 @@ static int stm32_pconf_set_speed(struct stm32_gpio_bank *bank,
+-	/* Select clock type */
+-	if (freq)
+-		clock_type = ZL_OUTPUT_MODE_CLOCK_TYPE_ESYNC;
+-	else
+-		clock_type = ZL_OUTPUT_MODE_CLOCK_TYPE_NORMAL;
+-
+-	/* Update clock type in output mode */
+-	out.mode &= ~ZL_OUTPUT_MODE_CLOCK_TYPE;
+-	out.mode |= FIELD_PREP(ZL_OUTPUT_MODE_CLOCK_TYPE, clock_type);
+-
+-	/* If esync is being disabled just write mailbox and finish */
+-	if (!freq)
+-		goto write_mailbox;
++	if (!freq) {
++		zl3073x_out_esync_disable(&out);
++		return zl3073x_out_state_set(zldev, out_id, &out);
++	}
  
- 	if (pctl->hwlock) {
- 		err = hwspin_lock_timeout_in_atomic(pctl->hwlock,
--						    HWSPNLCK_TIMEOUT);
-+						    HWSPNLCK_TIMEOUT_MS);
- 		if (err) {
- 			dev_err(pctl->dev, "Can't get hwspinlock\n");
- 			goto unlock;
-@@ -1135,7 +1135,7 @@ static int stm32_pconf_set_bias(struct stm32_gpio_bank *bank,
+ 	/* Get attached synth frequency */
+ 	synth = zl3073x_synth_state_get(zldev, zl3073x_out_synth_get(&out));
+ 	synth_freq = zl3073x_synth_freq_get(synth);
  
- 	if (pctl->hwlock) {
- 		err = hwspin_lock_timeout_in_atomic(pctl->hwlock,
--						    HWSPNLCK_TIMEOUT);
-+						    HWSPNLCK_TIMEOUT_MS);
- 		if (err) {
- 			dev_err(pctl->dev, "Can't get hwspinlock\n");
- 			goto unlock;
+-	/* Compute and update esync period */
+-	out.esync_n_period = synth_freq / (u32)freq / out.div;
+-
+-	/* Half of the period in units of 1/2 synth cycle can be represented by
+-	 * the output_div. To get the supported esync pulse width of 25% of the
+-	 * period the output_div can just be divided by 2. Note that this
+-	 * assumes that output_div is even, otherwise some resolution will be
+-	 * lost.
+-	 */
+-	out.esync_n_width = out.div / 2;
++	/* Enable 1PPS eSync for this pin frequency */
++	zl3073x_out_esync_enable(&out, synth_freq / out.div);
+ 
+-write_mailbox:
+ 	/* Commit output configuration */
+ 	return zl3073x_out_state_set(zldev, out_id, &out);
+ }
+@@ -924,6 +905,23 @@ zl3073x_dpll_output_pin_frequency_set(const struct dpll_pin *dpll_pin,
+ 		/* For 50/50 duty cycle the divisor is equal to width */
+ 		out.width = new_div;
+ 
++		/* The embedded sync period and width are computed relative to
++		 * the output carrier so they have to be adjusted to follow the
++		 * new frequency.
++		 */
++		if (zl3073x_out_esync_is_enabled(&out)) {
++			if (frequency == 1) {
++				/* eSync cannot work on a 1 Hz carrier */
++				zl3073x_out_esync_disable(&out);
++			} else {
++				/* Update esync period and width according to
++				 * the new frequency.
++				 */
++				zl3073x_out_esync_enable(&out,
++							 synth_freq / out.div);
++			}
++		}
++
+ 		/* Commit output configuration */
+ 		return zl3073x_out_state_set(zldev, out_id, &out);
+ 	}
+diff --git a/drivers/dpll/zl3073x/out.h b/drivers/dpll/zl3073x/out.h
+index 318f9bb8da3a0..1f2cda4d37fcf 100644
+--- a/drivers/dpll/zl3073x/out.h
++++ b/drivers/dpll/zl3073x/out.h
+@@ -107,4 +107,44 @@ static inline u8 zl3073x_out_synth_get(const struct zl3073x_out *out)
+ 	return FIELD_GET(ZL_OUTPUT_CTRL_SYNTH_SEL, out->ctrl);
+ }
+ 
++static inline bool zl3073x_out_esync_is_enabled(const struct zl3073x_out *out)
++{
++	u8 clock_type = FIELD_GET(ZL_OUTPUT_MODE_CLOCK_TYPE, out->mode);
++
++	return clock_type == ZL_OUTPUT_MODE_CLOCK_TYPE_ESYNC;
++}
++
++static inline
++void zl3073x_out_esync_enable(struct zl3073x_out *out, u32 base_freq)
++{
++	/* Period is expressed as the number of output divider clock cycles.
++	 * So for 1 Hz the period is equal to base frequency.
++	 */
++	out->esync_n_period = base_freq;
++
++	/* Half of the period in units of 1/2 synth cycle can be represented by
++	 * the output_div. To get the supported esync pulse width of 25% of the
++	 * period the output_div can just be divided by 2. Note that this
++	 * assumes that output_div is even, otherwise some resolution will be
++	 * lost.
++	 */
++	out->esync_n_width = out->div / 2;
++
++	/* Update the clock type */
++	out->mode &= ~ZL_OUTPUT_MODE_CLOCK_TYPE;
++	out->mode |= FIELD_PREP(ZL_OUTPUT_MODE_CLOCK_TYPE,
++				ZL_OUTPUT_MODE_CLOCK_TYPE_ESYNC);
++}
++
++static inline
++void zl3073x_out_esync_disable(struct zl3073x_out *out)
++{
++	/* Just update the clock type. The eSync period and width are
++	 * ignored for this clock type.
++	 */
++	out->mode &= ~ZL_OUTPUT_MODE_CLOCK_TYPE;
++	out->mode |= FIELD_PREP(ZL_OUTPUT_MODE_CLOCK_TYPE,
++				ZL_OUTPUT_MODE_CLOCK_TYPE_NORMAL);
++}
++
+ #endif /* _ZL3073X_OUT_H */
 -- 
 2.53.0
 
