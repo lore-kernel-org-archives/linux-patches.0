@@ -1,42 +1,42 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795621950;
-	b=Es8SdZ2c66/XF/exDDVVW+BBDm32h7/zD9K2pWEguWdxdumAeDM63EzCipqkaJh2Daiq
-	 yJPBJR27rRmfNaRI3sWDsN5Bm8X0mjRsViB3ICrn2EdyCbjGW4oFcg7PBFMZ/yfGKZcLh
-	 jVBMgm9NhUE4mry73MsKWVaqn/EvETnGpdIiTWFprx2LNtDLNUhdI/aSs20uo2JM8q+l8
-	 noKo7AziFy885f8Yu7jOK3tVQhLKwUf8TDntJ3K3EHExLZfsFdVW4acbPGbVGjyHC56Po
-	 F7L2x8nvTTW7vY57akJecrBLgdQMnS+uNg6huo7YzHmPhLeTf6KLcV3b61zuum+fmyA==
+	t=1795621954;
+	b=M5ZMOdS7idT23pJhP5INsEAkJxPVb1RUkug7KfC8w5irUZ7pft8N5hTB8E2JUvcvbHoU
+	 1H/Ggc9Kkz58ssS5zdIxqi3XE8NeRaSlRKD48vCtxDyF76j9KGzgCXZ11t11ZmbwnADEZ
+	 n6eZja6R7rUFgl5o7/OzAGZ+A0UEr1X8JeaX9m+IyA9IHWym5rBZo6YzByKCNEYviYo2k
+	 Y1onOTccFWogDervdcAZiQlHO3Alyviy0tRUlbc777QRFPYhyGDZvmLaepsjw1V1GMRlf
+	 z2bsNdXGh5HnjmwjHcnaL4QJcO30GbyxqRjYY3wBNFaZd3TaJItMJZCjNUKBeqe48MA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795621950;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795621954;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=sFN5q7A8LJbxlFbYlSSB6PpMHs7OicbRjb4xyRCUwI8=;
-	b=jH/oTQcaJKRTU3w/WYfnRT22ZcAf/V+MZIlZgH8GuYm0HnLriv+zEd3dlfJmfK8difXA
-	 Coe9DSiQijEwL/Aa8SM3eR+puM59ZUCpd1qA619G2zP0UJG53xuKXucQ/hGYyDAWeXxsr
-	 2NyzuOj1RjF5cktIMw4722y/kRTld93wdDnTrdhjMHjzijooSl/I+WxyT0Ihf/SK9FCIa
-	 OaICePWhf7+WFENcFxoEqxXlfVv8r3DXWtyGnw7DdrrNsza3qVcPqVeSZzr89HDzwDjgd
-	 /CZRl3P4QUAgrLzCBNAmBMd3VhsIwtVir7k/LqAKenF3/O6NbgVpCteeBhzr6CmWX6Q==
+	bh=jQBex68K2QiXH3Kf/7MEl9XLPhgfuKiEV4NKzI4Jr8s=;
+	b=auFwtQjKXvnRUHncdVrhQ6vfKKBX0oIgvH/14gXQLmblA8GM65lcaCFkEexr5CkuZn/u
+	 /g+hBsxj/3JhoeYx0FUBNYf3/pMrmU54trI+MQisn/1skGjqvC0AKvOzSy8DAHAj8Doed
+	 3pEdX48Nz4Y4r9KSej7+q7071h7FIyUxF2p9DtHVJZcbhkWLeuTYA5ujyjllWJHivNcGN
+	 Uf/Yui+kQNgiQ+J8eh9d3PyH8haPlWReZa//znSsaffBtRkLyu9OnyETa6nEV/kKSYDrz
+	 FlhszoWXLbB9cYfPoTeckEmo5+GbztJ4/2EYUavdV01TXDSzZnEZolUu1/aX0WOu65w==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=1eK1DqsH;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=KPxPWeoD;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 45173606A327;
-	Wed, 25 Nov 2026 15:52:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2F293606A321;
+	Wed, 25 Nov 2026 15:52:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=1eK1DqsH
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 75E1A1F000D4;
-	Wed, 25 Nov 2026 15:52:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=KPxPWeoD
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4DB001F000C4;
+	Wed, 25 Nov 2026 15:52:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795621950;
-	bh=sFN5q7A8LJbxlFbYlSSB6PpMHs7OicbRjb4xyRCUwI8=;
+	s=korg; t=1795621953;
+	bh=jQBex68K2QiXH3Kf/7MEl9XLPhgfuKiEV4NKzI4Jr8s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=1eK1DqsHTG4HwIpBhm2iAO0tg5M8D2dYS8eyvr8mUta1CLWH1o/x5CXlRBCGcV+na
-	 uaaJN02Q0/J9r5hy04t+1S8xWtjIHf9cUKAYoyZDdfLpsrPFe0gxAG/LnIde0DxPbF
-	 VwCdZmfy9KkzAdvJtp/zFjrVoc9KH0XbARjuyShU=
+	b=KPxPWeoDmbhG/8ObEvGbhpvbARltYsLnR/0pKcrhw9p2SO9RNNN91a4qDHRJKgqkb
+	 YW/SzqwvfeK3ACCtaP4fZ9ltG66ACG1IwDfhaV/rzE5F17V/EMwjAyGzd4YhRXFE6c
+	 BmPslh5OZcpNwY4LzghoXleAjsB+u1NgetT+M9YQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -44,9 +44,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Avi Weiss <thnkslprpt@gmail.com>,
 	Anna Schumaker <anna.schumaker@hammerspace.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 382/990] NFS: Fix inverted cross-directory rename check
-Date: Wed, 25 Nov 2026 15:29:09 +0100
-Message-ID: <20261125143831.041606089@linuxfoundation.org>
+Subject: [PATCH 6.18 383/990] NFS: restore directory index when resuming readdir
+Date: Wed, 25 Nov 2026 15:29:10 +0100
+Message-ID: <20261125143831.064845036@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143822.072087159@linuxfoundation.org>
 References: <20261125143822.072087159@linuxfoundation.org>
@@ -70,40 +70,43 @@ Content-Transfer-Encoding: 8bit
 
 From: Avi Weiss <thnkslprpt@gmail.com>
 
-[ Upstream commit b9d518902ff1969f93d2b4787951d98e50ab0181 ]
+[ Upstream commit 89b91409b2342e7629b1271eba315a0f06495247 ]
 
-nfs_rename_is_unsafe_cross_dir() returns false for cross-directory
-renames, causing nfs_rename() to skip nfs_sync_inode() even when
-filehandles may expire on rename. Same-directory renames may instead
-trigger unnecessary synchronization.
+nfs_readdir() restores the cached folio index and cookie when
+resuming directory iteration, but leaves current_index at zero.
+In 32-bit index mode, nfs_readdir_search_for_cookie() then
+reports a folio-relative offset instead of the absolute entry
+position.
 
-Current condition directly contradicts the function name/comments.
+Restore current_index from the saved logical folio index before
+searching the cache.
 
-Return false for same-directory renames so cross-directory renames
-reach the existing filehandle-volatility check. Keep the conservative
-fallback unchanged..
+This solution relies on the current behavior of
+nfs_readdir_seek_next_array(), where folio_index advances by
+one and current_index advances by nfs_readdir_array_maxentries()
+for each full, nonterminal folio.
 
-Fixes: dcd21b609d4ab ("NFS: Avoid flushing data while holding directory locks in nfs_rename()")
+Fixes: f648022faa68e ("NFS: Convert readdir page cache to use a cookie based index")
 Signed-off-by: Avi Weiss <thnkslprpt@gmail.com>
 Signed-off-by: Anna Schumaker <anna.schumaker@hammerspace.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/nfs/dir.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ fs/nfs/dir.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
 diff --git a/fs/nfs/dir.c b/fs/nfs/dir.c
-index 4dc91428c79cc..ca91e48dc7973 100644
+index ca91e48dc7973..bd35069ffe5cd 100644
 --- a/fs/nfs/dir.c
 +++ b/fs/nfs/dir.c
-@@ -2687,7 +2687,7 @@ static bool nfs_rename_is_unsafe_cross_dir(struct dentry *old_dentry,
- {
- 	struct nfs_server *server = NFS_SB(old_dentry->d_sb);
- 
--	if (old_dentry->d_parent != new_dentry->d_parent)
-+	if (old_dentry->d_parent == new_dentry->d_parent)
- 		return false;
- 	if (server->fh_expire_type & NFS_FH_RENAME_UNSAFE)
- 		return !(server->fh_expire_type & NFS_FH_NOEXPIRE_WITH_OPEN);
+@@ -1255,6 +1255,8 @@ static int nfs_readdir(struct file *file, struct dir_context *ctx)
+ 	spin_lock(&file->f_lock);
+ 	desc->dir_cookie = dir_ctx->dir_cookie;
+ 	desc->folio_index = dir_ctx->page_index;
++	desc->current_index = (loff_t)desc->folio_index *
++			      nfs_readdir_array_maxentries();
+ 	desc->last_cookie = dir_ctx->last_cookie;
+ 	desc->attr_gencount = dir_ctx->attr_gencount;
+ 	desc->eof = dir_ctx->eof;
 -- 
 2.53.0
 
