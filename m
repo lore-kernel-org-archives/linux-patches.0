@@ -1,51 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795623307;
-	b=gwGHarFw2T7tOtzpIa+ReOSycPPPp4v7ijNzLa23YYJEhYFTUsynGV12qxAVPZHsZTpW
-	 2B73uwCC6fli2OiY+N2AU0v239ZC15FJShbMxK70uYGebPkQC3mXmBN/YGyDZz9qpozsl
-	 SLE2+08L9Tz2uPBBwVoxeiY7oFR5qAad2Broonk6T3xBVOoMqvObZHYOsrZQgUNRLO3a8
-	 j00CabzIyHhzhk2lUqn30IM86+X0zpT/K5qsvvHRnwiqI4NpkheMCZI0x62o51KgBLvqV
-	 0QsJyOK98oHEnkHB7K9JAZraNQBZL0+7W9b5slRk6p9Su12Gn4vGYy2XvQlR85lFVlg==
+	t=1795623310;
+	b=T5UaaMAVNFxkqZ0RLTgeHmpJDafJlGzaljk4yIWQxZbOHrqs0r/nFLUssNY6KTpM6kzQ
+	 Pk8InrHdfrqkFoHJWk9SsSKzOgrnTrv19SHfru0DSNDwnTLguIy8kC9UjMeHt4rescpuf
+	 UcRnWV+spEbpbNiYVFO8LEYAIS6yx7+CttjvEY19OoxoBxcVzCKm4R/ARTypK6FkcEYtl
+	 g/A0QTh/yE7t3dCR4XF+VvleoZh1ISfvnuK76jntU6qKfxXnyW7Nuu+c9e89hUCopfmuP
+	 aVrsTPOTvHNHXaiwSV8hvENEVDl3EJE7gHqo0AYChzVI2CfISr988ox7oJ21vFLXgMg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795623307;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795623310;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=SYtmeky/x3ToTVb5GaEKWBaT7956L+6tkdlapHN+6BI=;
-	b=e4V/y990AJCUJUw6OBBEVrt0MOU8xR2StEYYBNFnZkhwjYLA4EmoENX/VWxPNH6uQaNr
-	 DxSIIf+38j/4ydiUGBhgKoQeCkqKlmvSAVMcRYdCbww1ndNWw8Kq+9209RTPpxP3ffkDf
-	 AX/4f4G/9w2dr0BMQU1dqK7DgrJJKupu4t3Ix7pl5JYLLxbT766/GREvh7EZoWOCPwjnH
-	 Xx6Yj+fec/4wQSkBQQtexySVdkMCI3XDLVkMEY2pDmg9jg0KFrqDN/2uRNGJ8FJE9KKlp
-	 37/ySMV7OF56s5ckACl/UU9NKEdw1944YII+YR+qdvIa6rkVm6QUJOmh8Z1fqcuYmkg==
+	bh=5/FCg521n8/j8v/3fBnoHWugNprS1lMdyeh110eOUhA=;
+	b=qA/niaomg+X2GBHm38QEYOpyoG629tmzcyML6eAcKAu8ucWIYqeHPYIuiyuuulohNok6
+	 gmMHm96rq8vKPCIZeBYrIc4BosGOg2+h5MzMl2SGnWdTNqiYA5GhjYE7FRY0gjdE1R/l8
+	 roH2gdSocvFP5VRchf2IDR5kfiRBgoj8OlldoN3b3yPXiSn2cWEhSDti+g1MDpzw0Fa7Z
+	 hXqmxZxfiW4sImncu0PXSC6BEj/stS3kFs7f8FAQaCL7evaw3l6yt9kCeVB7IKTpFYLKM
+	 pEhlNxLNOh5PhTF6LjQGorvl7pbSrtdZK4miVE8/Hl84Vt/BCW2k+0D8BPyhrDOEUQA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=VdRcdqry;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=wwNdNRLI;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 64ADB606A326;
-	Wed, 25 Nov 2026 16:15:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1D8B2606A31E;
+	Wed, 25 Nov 2026 16:15:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=VdRcdqry
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 70C611F000C0;
-	Wed, 25 Nov 2026 16:15:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=wwNdNRLI
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 421E81F000C6;
+	Wed, 25 Nov 2026 16:15:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795623307;
-	bh=SYtmeky/x3ToTVb5GaEKWBaT7956L+6tkdlapHN+6BI=;
+	s=korg; t=1795623309;
+	bh=5/FCg521n8/j8v/3fBnoHWugNprS1lMdyeh110eOUhA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=VdRcdqryvf0nsyplGLEuZnrdw1ZEr1b3ONMH1o4NVPitUSsGJR2fjq0AlXKCRsKVb
-	 I1mQooLDD8hOdcuaHL9aDcF1zoguyWD36I3OAhVFLjXNDm9G19hLzQiSTa5vg3KmZJ
-	 wua8QOXSt1rYIV6o6KD/vz9iG8g9pamX2L2GlkBw=
+	b=wwNdNRLIK+ksGJJOuCdt/J3SJwHAA8CjbaeLI0Ian5Ctk7t/kpguvGHuIq27Re1by
+	 DR1ZdK3NNHKBvlBsorc5fJt0f+UM+e8NqYGXnuxcSy4P/3uu+7Byr6t8A9xaB+L+bf
+	 RhBtqHQ2Z0jJGtQ0hOU3v3+eE8bo5HGxpPYyoz9w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Zhao Li <enderaoelyther@gmail.com>,
 	Johannes Berg <johannes.berg@intel.com>
-Subject: [PATCH 6.18 815/990] wifi: mac80211: drain link readers before stopping removed links
-Date: Wed, 25 Nov 2026 15:36:22 +0100
-Message-ID: <20261125143841.132709847@linuxfoundation.org>
+Subject: [PATCH 6.18 816/990] wifi: mac80211: recheck injected headers after removing FCS
+Date: Wed, 25 Nov 2026 15:36:23 +0100
+Message-ID: <20261125143841.155059350@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143822.072087159@linuxfoundation.org>
 References: <20261125143822.072087159@linuxfoundation.org>
@@ -69,60 +69,48 @@ Content-Transfer-Encoding: 8bit
 
 From: Zhao Li <enderaoelyther@gmail.com>
 
-commit 745f5d04395dfc4c311f443c7c04ccb00c436984 upstream.
+commit 339564c7ac50464695dfed847f89d118f4cc1dc5 upstream.
 
-Removing an MLO link can leave work queued on its link container after
-the container is freed.
+Injecting a short frame with IEEE80211_RADIOTAP_F_FCS on a monitor
+interface can pass a truncated 802.11 header to transmit handlers.
 
-ieee80211_tear_down_links() stops each link before the RCU grace period.
-A reader that fetched the link earlier can therefore queue work after
-ieee80211_link_stop() has canceled it. ieee80211_request_smps() and
-ieee80211_csa_finish() can both reach this window.
+ieee80211_monitor_start_xmit() validates the linear 802.11 header before
+parsing radiotap. Radiotap parsing then removes the four-byte FCS without
+rechecking the remaining header length. Software encryption can subtract
+the larger header length and pass the resulting negative length as an
+unsigned size.
 
-Record each removed link while removing its keys and debugfs state. Wait
-for RCU readers, then stop the recorded links so cancellation includes
-work queued by those readers. Free the detached keys after the grace
-period as before.
+Recheck the required linear header length after pulling the radiotap
+header and before handing the frame to the transmit path. Require at
+least addr1, which the transmit path reads even for extension frames
+whose header is shorter.
 
 LLM assistance was used to find the bug and review.
 
-Fixes: efe9c2bfd1a8 ("wifi: mac80211: isolate driver from inactive links")
+Fixes: bddc0c411a45 ("mac80211: Fix NULL ptr deref for injected rate info")
 Cc: stable@vger.kernel.org
 Signed-off-by: Zhao Li <enderaoelyther@gmail.com>
-Link: https://patch.msgid.link/20261028141708.5532-1-enderaoelyther@gmail.com
+Link: https://patch.msgid.link/20261028142101.11994-1-enderaoelyther@gmail.com
 Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/mac80211/link.c |    8 +++++++-
- 1 file changed, 7 insertions(+), 1 deletion(-)
+ net/mac80211/tx.c |    6 ++++++
+ 1 file changed, 6 insertions(+)
 
---- a/net/mac80211/link.c
-+++ b/net/mac80211/link.c
-@@ -179,6 +179,7 @@ struct link_container {
- static void ieee80211_tear_down_links(struct ieee80211_sub_if_data *sdata,
- 				      struct link_container **links, u16 mask)
- {
-+	struct ieee80211_link_data *stop[IEEE80211_MLD_MAX_NUM_LINKS] = {};
- 	struct ieee80211_link_data *link;
- 	LIST_HEAD(keys);
- 	unsigned int link_id;
-@@ -193,11 +194,16 @@ static void ieee80211_tear_down_links(st
- 			continue;
- 		ieee80211_remove_link_keys(link, &keys);
- 		ieee80211_link_debugfs_remove(link);
--		ieee80211_link_stop(link);
-+		stop[link_id] = link;
- 	}
+--- a/net/mac80211/tx.c
++++ b/net/mac80211/tx.c
+@@ -2552,6 +2552,12 @@ netdev_tx_t ieee80211_monitor_start_xmit
+ 	/* remove the injection radiotap header */
+ 	skb_pull(skb, len_rthdr);
  
-+	/* drain RCU readers before cancelling work they may queue */
- 	synchronize_rcu();
- 
-+	for (link_id = 0; link_id < IEEE80211_MLD_MAX_NUM_LINKS; link_id++)
-+		if (stop[link_id])
-+			ieee80211_link_stop(stop[link_id]);
++	/* FCS removal may have shortened the 802.11 header. */
++	hdrlen = max_t(int, hdrlen,
++		       offsetofend(struct ieee80211_hdr, addr1));
++	if (skb_headlen(skb) < hdrlen)
++		goto fail_rcu;
 +
- 	ieee80211_free_key_list(sdata->local, &keys);
- }
+ 	ieee80211_xmit(sdata, NULL, skb);
+ 	rcu_read_unlock();
  
 
 
