@@ -1,52 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795617863;
-	b=YVGsgSUVWmppejxqsvqmelt/L4YovawT+3xvl3wDd9eYJVMxvD0YSLI4OHOyIXI9UPs+
-	 Cgkd2ioBRNrvarQygMvNYybMbikHzMTMY16wJ5BFN/7sVSvj8WUIstALCgpNpa6hnHzB5
-	 hVDZAY6onh+LRdhFPCYi5vblrbYUvXaogO3M/lLxmqXmT+tnZcPNc8FgRz5JAnhIbx9nQ
-	 yQ7mWWqcsGwF7tQfNIo6CuH8/ZwcwDDGC4CoioEnRbnWBYJDz6DhMgA45gwcSrQO5pK1F
-	 2kycjurkIndeBqDNvUrsJG+guGoMl5lj3Dau4xqVyi9oJdpa1OeZB1/uSmuyXtYTGpw==
+	t=1795617867;
+	b=P/et+QXQYbQtiHxYsD4ebf0lfJHxTp+dQql8UTN98oUCW6vkL4aE1DsU8BBLtQ3MH1ts
+	 y8VnvUqc+MA6E9bmmc/xGY4Fwg4BeEohZNfwXV++9T7+xTMFAGdMALDmjrHSY/Afeo3Ju
+	 ESl7RGOXFwEHrLrfvgKnE4OFhEq5TzyW/WL30N85idyh2Wj27mVD/vYvvODOH1wt8P97s
+	 h1jiXx45mk2Y+6PHdjrUAfF0lnQa3xPp+RGXGkgFYuXehuS8P8+SwhHvlOZQmgxo/5aef
+	 ccYkukiEIPKFrbiqs127LW8HMjZoJCHy/5gpBYv7s7+1rn3nebEJocnxK/i94QeMKBA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795617863;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795617867;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=iJuMOqZgrLzesI8JGQ0rcNXhZCihpwA8jVk5qV5alYs=;
-	b=YuRB3Gplg3f6AT11NxiX/9/ss5zknkOMU8dar3RSRv4HlT9FnTw/76kJiaQKJ2WxMs7s
-	 LcL8ICukkndoBWlunK6HqX5WHpzAGNk3vuwtvmXS7ZxiH+FB1FPOHt8oBCTTKgpX9lA79
-	 MV8FqkqFwYQHbtmzeLwGvcc/mpuCN3Py7R8sjvloGY8UzoK1J9vi17Cg5nhbKRB58N3Zu
-	 CvUdBwJWexeUgIiZtazWUCi14Bxb8vXt18+gFn4TvSfFxxKUuog1q34BVrs8r1zOMERRp
-	 nf0iX4M6mbQMTBP9NjmCcptdUhWG87Yn/wCDtW52Mh4MrwduQvj05B0DZz/3OjJWiQQ==
+	bh=QeFTjlOAtIfv4MitFmVdf1kaUXcpIDXRC10uNO0Ye18=;
+	b=O6Y7KaEhYHyl9QvvicCpGjnfvXzuvK/Xyp70M0IC+dotL6oQRXBANzc9mLwe/zNP3h5d
+	 cc+Y41i45G3KBzyl6G8inEE0NMcwVEHs0n2l+nsH95E4pc/JpHkxm7+poXjSFAXFaOCUc
+	 PfeS6U+CPTepW9LV04Du/zGk6JTkA7vsEzum7BHnmngl8HgWL3kUfoyClfrJPG0Ey4i63
+	 LH/4USrEy7WUzQvnXYcaQ1dZ0VXb33XZMov8UdJsC+xoAKsRel9Fajclf1KnwGIMufGwH
+	 UIpy+s0+tDKYfBXh4Q5iM2MYftng0lwob3Ofg/HRidbgXeBAa6FDqaXPskExRhVFfCA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=1oKRNoQe;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=L4sHFZ4N;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9F468606A31E;
-	Wed, 25 Nov 2026 14:44:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 09D78606A31E;
+	Wed, 25 Nov 2026 14:44:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=1oKRNoQe
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EE3861F000D1;
-	Wed, 25 Nov 2026 14:44:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=L4sHFZ4N
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C69491F000D2;
+	Wed, 25 Nov 2026 14:44:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795617863;
-	bh=iJuMOqZgrLzesI8JGQ0rcNXhZCihpwA8jVk5qV5alYs=;
+	s=korg; t=1795617866;
+	bh=QeFTjlOAtIfv4MitFmVdf1kaUXcpIDXRC10uNO0Ye18=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=1oKRNoQeJEbVv6xrDtGyDEXQr3yCmH5r8Gv3crZg64I7SAOFp+97rZ0JE6g/fI7Ti
-	 QU3fHDA1DWho6Lk5WqYzzcE/8zdAJIAtyaq0b+vg8PmU1PwLT2YPvXhFYqcuC4VFN9
-	 +3crXKkLQ+cqMzlLJCJYAWpO2ZI+Xdj/JnYoxjaM=
+	b=L4sHFZ4NlARwbgSCfoIPATLmDxG8a8hUYUct03P93HBsu4KJyjhJKdIkvDQcRSEqu
+	 C0tx+EQloEAGrT5BQaPlF6baZzjignzWC+kgC+QUtsHBEaN5Ywny0PmTnLngLrGHXm
+	 f/Ng3HH+mj8C4+jFbr8faIhlXhFaL3zi/EXt1Ijs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Josef Bacik <josef@toxicpanda.com>,
 	Alexei Starovoitov <ast@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0098/1005] bpf: Clamp the trace length in __bpf_get_stack() again
-Date: Wed, 25 Nov 2026 15:23:56 +0100
-Message-ID: <20261125143824.040746788@linuxfoundation.org>
+Subject: [PATCH 7.3 0099/1005] bpf: Clamp the trace length before the skip test in stackid_init()
+Date: Wed, 25 Nov 2026 15:23:57 +0100
+Message-ID: <20261125143824.064914399@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143821.729802100@linuxfoundation.org>
 References: <20261125143821.729802100@linuxfoundation.org>
@@ -68,79 +67,63 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Josef Bacik <josef@toxicpanda.com>
+From: Alexei Starovoitov <ast@kernel.org>
 
-[ Upstream commit 007fd460798be9af7d4874734f934afa47742f29 ]
+[ Upstream commit a08ba2ab79dffd92c32d3f2dadfc7eba03625a2b ]
 
-get_perf_callchain() and get_callchain_entry_for_task() store a trace in a
-per-CPU entry, one per context. They release the entry before they return
-it. Thus a second user in the same context can write to the entry while the
-first user reads it. preempt_disable() stops only other tasks.
+stackid_init() gives a bucket of the stack map
+min(trace_nr - skip, max_depth - skip) trace entries. Here max_depth is the
+size of a bucket plus skip, but at most perf_event_max_stack. Context
+markers can make trace_nr larger than that, so the skip test can pass when
+max_depth < skip. Then 'max_depth - skip' wraps, and the kernel can write
+after the bucket.
 
-__bpf_get_stack() requests at most max_depth frames. This is skip plus the
-frames that fit in the buffer, but not more than perf_event_max_stack.
-Since the commit below, it copies 'trace->nr - skip' frames with no limit.
-But a second user can store a longer trace. The unwinders of PowerPC add
-context markers that max_depth does not limit. In both cases the copy
-writes after the end of the buffer.
+Clamp trace_nr to max_depth before the skip test, as __bpf_get_stack_pe()
+does. The result changes only when skip >= max_depth. Then it is -EFAULT.
+Until now skip == max_depth could give the id of an empty trace.
 
-Read trace->nr one time. Clamp the value to max_depth before the skip test,
-as __bpf_get_stack_pe() does. Thus when max_depth is less than skip, the
-helper returns -EFAULT, and 'trace_nr - skip' does not underflow. The
-copied frames can still be those of the second user.
+get_perf_callchain() releases the trace, so an NMI can change trace->nr.
+Use READ_ONCE() in bpf_get_stackid(), so the compiler reads it one time.
 
-Fixes: e17d62fedd10 ("bpf: Refactor stack map trace depth calculation into helper function")
-Signed-off-by: Josef Bacik <josef@toxicpanda.com>
+Fixes: 23f852daa4ba ("bpf: Fix stackmap overflow check in __bpf_get_stackid()")
 Signed-off-by: Alexei Starovoitov <ast@kernel.org>
-Link: https://patch.msgid.link/20261101190535.1454146-2-alexei.starovoitov@gmail.com
+Link: https://patch.msgid.link/20261101190535.1454146-3-alexei.starovoitov@gmail.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/bpf/stackmap.c | 24 +++++++++++++++++-------
- 1 file changed, 17 insertions(+), 7 deletions(-)
+ kernel/bpf/stackmap.c | 9 ++++++---
+ 1 file changed, 6 insertions(+), 3 deletions(-)
 
 diff --git a/kernel/bpf/stackmap.c b/kernel/bpf/stackmap.c
-index d09d4c3fe547c..84ccfa9df4637 100644
+index 84ccfa9df4637..118fec76b9c24 100644
 --- a/kernel/bpf/stackmap.c
 +++ b/kernel/bpf/stackmap.c
-@@ -827,14 +827,20 @@ static long __bpf_get_stack(struct pt_regs *regs, struct task_struct *task,
- 					   crosstask, false, 0);
- 	}
+@@ -527,12 +527,14 @@ static int stackid_init(struct stackid *stackid, struct bpf_map *map,
+ 	u32 skip = flags & BPF_F_SKIP_FIELD_MASK;
+ 	u32 max_depth;
  
--	if (unlikely(!trace) || trace->nr < skip) {
--		if (may_fault)
--			rcu_read_unlock();
--		preempt_enable();
--		goto err_fault;
--	}
-+	if (unlikely(!trace))
-+		goto err_unlock;
-+
-+	/*
-+	 * trace->nr can be above max_depth. The per-CPU entry is released
-+	 * already: a tracing program or an NMI which takes a callchain in the
-+	 * same context before the copy below reuses it. And the unwinders of
-+	 * PowerPC store context markers on top of max_depth.
-+	 */
-+	trace_nr = min_t(u32, READ_ONCE(trace->nr), max_depth);
-+	if (trace_nr < skip)
-+		goto err_unlock;
++	max_depth = stack_map_calculate_max_depth(map->value_size, stack_map_data_size(map), flags);
++	/* trace_nr can be above max_depth and max_depth below skip: clamp first */
++	trace_nr = min_t(u32, trace_nr, max_depth);
+ 	if (trace_nr <= skip)
+ 		/* skipping more than usable stack trace */
+ 		return -EFAULT;
  
--	trace_nr = callchain_store(trace, trace->nr, buf, elem_size, flags);
-+	trace_nr = callchain_store(trace, trace_nr, buf, elem_size, flags);
+-	max_depth = stack_map_calculate_max_depth(map->value_size, stack_map_data_size(map), flags);
+-	stackid->nr = min_t(u32, trace_nr - skip, max_depth - skip);
++	stackid->nr = trace_nr - skip;
+ 	stackid->len = stackid->nr * sizeof(u64);
+ 	stackid->ips = trace->ip + skip;
+ 	stackid->hash = jhash2((const u32 *)stackid->ips, stackid->len / sizeof(u32), 0);
+@@ -647,7 +649,8 @@ BPF_CALL_3(bpf_get_stackid, struct pt_regs *, regs, struct bpf_map *, map,
+ 			/* couldn't fetch the stack trace */
+ 			return -EFAULT;
  
- 	/* trace should not be dereferenced after this point */
- 	if (may_fault)
-@@ -843,6 +849,10 @@ static long __bpf_get_stack(struct pt_regs *regs, struct task_struct *task,
+-		err = stackid_fastpath(&stackid, map, trace, trace->nr, flags);
++		/* the entry is released already, an NMI can change trace->nr */
++		err = stackid_fastpath(&stackid, map, trace, READ_ONCE(trace->nr), flags);
+ 		if (err != -ENOENT)
+ 			return err;
  
- 	return callchain_finalize(buf, size, trace_nr, elem_size, flags, may_fault);
- 
-+err_unlock:
-+	if (may_fault)
-+		rcu_read_unlock();
-+	preempt_enable();
- err_fault:
- 	err = -EFAULT;
- clear:
 -- 
 2.53.0
 
