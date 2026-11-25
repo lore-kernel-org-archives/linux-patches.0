@@ -1,54 +1,55 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795617758;
-	b=Lo2P93Ihlz/MnjPX00Uc4zckFQ0Maup0z1DDtFQNmQvUjb2NuS0t65zdrEv//VfRU+NR
-	 CpoZfluz8/xq9dbynug7+II/d+dw+2ScwQjLzW2WyW9fhvWHLWoMPSbz/8Y03ORC9KPUt
-	 dh8Xs2EABe+O8NDJIq10zWEgrH26KB6QqUk9EksR+BNnl5h96CewbPJYgCRtQoomm7IN1
-	 ksvCD6GpkU2CSROri4AYeH60nA9DK79QfqIs9xxFCBiJnVCbVRJsgq6M3o1Wks89oUTLO
-	 bMpGkZLk6Ca52xEsoSTONfQdBGf2EzR4Zc+baXf77AXjqskpQLPaRf1dQTgpToJitbg==
+	t=1795617761;
+	b=3nxxmXGH5xqG4izx1JT9CBOj3hrjcLm/n33Cq3hg4Vee1CEmYodJEZKgge0NuAuIvzll
+	 RQBIbuUt+Gng7lYmccVcVrSGSZPC+p9JtKlxVYS/yGzPl/fa04fj84Lhx+AibGzsII+KA
+	 m7wFdIs9DBJqCfe0FKQ808WSTQXA1rZppvrSUT+bvqTo+eJ6Y+7jnDEZU6+0sFrKh7DVR
+	 hFPZFr7c3lJFZGZKw9qDvVmsTqd1HwsmDX09XQ8ZsL3acBgKHCfWLmMTPljwTeQiXsXD9
+	 EV8jeTr8JEuIbz48mA55ExLRrpLcpx4pQ5eGYWTSzYeXn27RFYv5zU0fL4zSHpSSwOg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795617758;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795617761;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=/vfeXW1APBPmicSbHaeo/eeNqQoBJ1z+6f3jcTJZ/Fs=;
-	b=M4a323lPvoY9kC3ek1mmH/jwBOSN+Vc5evh24fdHUWnLlT2j2oHSAM/B3329WfSrGfHf
-	 sl8M5HDUKm1C6VDnojK0H+8A9tEIMIK+qMcUABDmH/JnLbWhvXu29+fB7JJP22lj31tXZ
-	 HrUoKenDj0mDpmqx46Utz1tCrEhhXKAiMwEymeNYZcr9q7rc9uZalx+MZPvHJkblmrzGf
-	 fnSIJtkNKoafkKscYjaa8o/f/AuDH4c2SQp47SQAOOJMhsNL88QM8a/Z6uad/tLOIq7OQ
-	 Ej+QpbHT9fffK5NfCXzIG9Y1M50yfD9QaRKdaiIj/leOXjfh8Sz2ruo8CA9jvw+5qNw==
+	bh=nf6ISvE6c+rq8Vq/T7bhmw1yFu1UxPJFQiM1aFVgpuA=;
+	b=rHcdeST2AXBYDFHu6RBHgwdEI6wEvBcWW/Wl2b9Le0+EI19ad1Iv77lL4ixhuO8U3cK3
+	 urxH6Q75mhjiZutqLMJ1s0vHD0dixT0QXCw+nlm8srBU4rukqxRBc0984gRkbnfQ7cO4R
+	 dRjPMxrSw2UWefOiGT3qIssDoLCMA43HtbnYH+NUj4Kv7DiamIqOP52pWLRdN+6XoG5F1
+	 kX6zHx82tE9t0QuUoZSJJ/jGVPMEeXmRJA5BwnNWj9OAGJJsJ/ucnTkcLniQ6jpMFRA5b
+	 6aM27idSLsqe9cDyKAoDQhgVqpW3a6V11UPn5Z0Zd5uD/lMfAqS3J/BfLNBu9fthYYw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=PJ51VHgj;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=1dhYritG;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DECA1606A31E;
-	Wed, 25 Nov 2026 14:42:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B73E5606A31E;
+	Wed, 25 Nov 2026 14:42:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=PJ51VHgj
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 877B01F000CA;
-	Wed, 25 Nov 2026 14:42:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=1dhYritG
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D592D1F000E0;
+	Wed, 25 Nov 2026 14:42:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795617758;
-	bh=/vfeXW1APBPmicSbHaeo/eeNqQoBJ1z+6f3jcTJZ/Fs=;
+	s=korg; t=1795617761;
+	bh=nf6ISvE6c+rq8Vq/T7bhmw1yFu1UxPJFQiM1aFVgpuA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=PJ51VHgj/Yn71KNt8Mqjo0mhy64yxrwosn2e0c7ws82d/Sy2h+RtIVlP9JoosBHKM
-	 hYzTa7bXpQeTtw5t9Aj+L9MMaNmJ2GQ0/f4BpxavgVOjFg9r622xkg+0vZPkhGCr50
-	 OCKaIlmk5hVXK0/+pSUvQqdgIp7yAezUFbgn6+V4=
+	b=1dhYritGWkKB/7pXAol7V8DBVYXfS5jz+2BHUUVjEHBMjpcADYVA2T0Sn5vZIJY0a
+	 JCtv6yqD2UULfkjmhkwVw9W0Sp9jr4h1YAvjKUdXyonN09k9wTWYeYvK7xETuGYhPm
+	 B2qYY0Uvyq6wKZR1LaidpVjiwc0V+oJC0tIk4doU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kang Yang <kang.yang@oss.qualcomm.com>,
-	Baochen Qiang <baochen.qiang@oss.qualcomm.com>,
-	Vasanthakumar Thiagarajan <vasanthakumar.thiagarajan@oss.qualcomm.com>,
-	Jeff Johnson <jeff.johnson@oss.qualcomm.com>,
+	Hazley Samsudin <hazleycryilis@gmail.com>,
+	David Ahern <dsahern@kernel.org>,
+	Hangbin Liu <liuhangbin@kylinos.cn>,
+	Andrea Mayer <andrea.mayer@uniroma2.it>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0063/1005] wifi: ath12k: set MSDU payload correctly
-Date: Wed, 25 Nov 2026 15:23:21 +0100
-Message-ID: <20261125143823.218325247@linuxfoundation.org>
+Subject: [PATCH 7.3 0064/1005] seg6: fix transport header for inner IPv4 with IP options
+Date: Wed, 25 Nov 2026 15:23:22 +0100
+Message-ID: <20261125143823.241477315@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143821.729802100@linuxfoundation.org>
 References: <20261125143821.729802100@linuxfoundation.org>
@@ -70,75 +71,203 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kang Yang <kang.yang@oss.qualcomm.com>
+From: Andrea Mayer <andrea.mayer@uniroma2.it>
 
-[ Upstream commit fe74d991f3387febfd57b65c7383d2d49e14e19a ]
+[ Upstream commit 5838f10563d58afca6711edb5e4eda968ca181d9 ]
 
-ath12k_dp_mon_rx_merg_msdus() mistakenly passes head_msdu to
-ath12k_dp_mon_rx_msdus_set_payload() while iterating over all MSDUs in
-the chain.
+The End.DT4, End.DT46 (its IPv4 path only) and End.DX4 behaviors set the
+transport header of the decapsulated IPv4 packet at a fixed 20 bytes, the
+size of an IPv4 header without options. They do not validate the header
+length either. With options, the transport header points at the first
+option byte. The effects include:
+- ping -R sends an echo request with a 60-byte IPv4 header to a local
+  address through an End.DT4 or an End.DX4 SID. Since icmp_rcv()
+  computes the ICMP checksum from the first option byte, the request
+  fails the check and is counted in IcmpInCsumErrors.
+- A UDP datagram can reach a port that an iptables rule drops. The rule
+  checks the UDP header after the full IPv4 header, while the socket
+  lookup reads it at the fixed 20-byte offset.
+- With an inbound AH state, ah_input() reads the AH header at the fixed
+  20-byte offset, but copies the IPv4 header over it with the length in
+  the IHL field. A packet shorter than that length can make ah_input()
+  write past the end of the data, into skb_shared_info when the skb has
+  no tailroom.
 
-As a result, skb_pull() is applied repeatedly to the head MSDU, whereas
-the remaining MSDUs are never adjusted.
+Validate the inner IPv4 header length with the new helper
+seg6_validate_iphdr_len() and set the transport header at that length. A
+packet that is not IPv4, whose header length field is below 5, or whose
+header is truncated, is dropped with a drop reason. The fix is limited to
+the header length, which the transport header relies on. Other checks done
+on IPv4 input, such as the header checksum, the total length and the IP
+options, are not addressed here.
 
-Pass the current MSDU instead so each MSDU is processed exactly once.
+Found by code inspection while reviewing commit 44930446dde4 ("ipv6: seg6:
+clear IPv4 control block on IPIP decapsulation"), as a pre-existing issue
+that Sashiko also reported on v2 of that patch. Without this patch, a
+bpftrace probe on ah_input() shows the reporter's reproducer packet
+written into skb_shared_info. With it, that packet is dropped before
+ah_input(), ping -R no longer fails the ICMP checksum, the UDP datagram
+reaches its real port, and the SRv6 selftests still pass. These effects
+reproduce on an unmodified kernel, without error injection.
 
-Also rename the helper parameter from head_msdu to msdu since the helper
-operates on any MSDU in the chain.
-
-Tested-on: WCN7850 hw2.0 PCI WLAN.HMT.1.1.c7-00108-QCAHMTSWPL_V1.0_V2.0_SILICONZ_UPSTREAM-3
-
-Fixes: 1cf514fdc790 ("wifi: ath12k: use different packet offset for WCN7850")
-Signed-off-by: Kang Yang <kang.yang@oss.qualcomm.com>
-Reviewed-by: Baochen Qiang <baochen.qiang@oss.qualcomm.com>
-Reviewed-by: Vasanthakumar Thiagarajan <vasanthakumar.thiagarajan@oss.qualcomm.com>
-Link: https://patch.msgid.link/20261020-msdupayload-v1-1-1ca9a5936727@oss.qualcomm.com
-Signed-off-by: Jeff Johnson <jeff.johnson@oss.qualcomm.com>
+Fixes: 891ef8dd2a8d ("ipv6: sr: implement additional seg6local actions")
+Fixes: 664d6f86868b ("seg6: add support for the SRv6 End.DT4 behavior")
+Reported-by: Hazley Samsudin <hazleycryilis@gmail.com>
+Closes: https://lore.kernel.org/netdev/20260809221915.2ffc1ecd0f445fcb70270e31@uniroma2.it/
+Reviewed-by: David Ahern <dsahern@kernel.org>
+Reviewed-by: Hangbin Liu <liuhangbin@kylinos.cn>
+Signed-off-by: Andrea Mayer <andrea.mayer@uniroma2.it>
+Link: https://patch.msgid.link/20261028171511.35-1-andrea.mayer@uniroma2.it
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/ath/ath12k/dp_mon.c | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ net/ipv6/seg6_local.c | 69 +++++++++++++++++++++++++++++++++----------
+ 1 file changed, 53 insertions(+), 16 deletions(-)
 
-diff --git a/drivers/net/wireless/ath/ath12k/dp_mon.c b/drivers/net/wireless/ath/ath12k/dp_mon.c
-index db20d27b63338..fdbdad72a3c9f 100644
---- a/drivers/net/wireless/ath/ath12k/dp_mon.c
-+++ b/drivers/net/wireless/ath/ath12k/dp_mon.c
-@@ -186,7 +186,7 @@ ath12k_dp_mon_fill_rx_rate(struct ath12k_pdev_dp *dp_pdev,
+diff --git a/net/ipv6/seg6_local.c b/net/ipv6/seg6_local.c
+index 0c3d1be7f1299..0d952514d095b 100644
+--- a/net/ipv6/seg6_local.c
++++ b/net/ipv6/seg6_local.c
+@@ -149,9 +149,7 @@ struct seg6_end_dt_info {
+ 	int vrf_ifindex;
+ 	int vrf_table;
+ 
+-	/* tunneled packet family (IPv4 or IPv6).
+-	 * Protocol and header length are inferred from family.
+-	 */
++	/* tunneled packet family (IPv4 or IPv6) */
+ 	u16 family;
+ };
+ 
+@@ -1056,6 +1054,40 @@ static int input_action_end_dx6(struct sk_buff *skb,
+ 	return -EINVAL;
  }
  
- static void ath12k_dp_mon_rx_msdus_set_payload(struct ath12k_base *ab,
--					       struct sk_buff *head_msdu,
-+					       struct sk_buff *msdu,
- 					       struct sk_buff *tail_msdu)
++/* Validate the length of the IPv4 header at skb->data (which must point to
++ * the network header) and report that length, options included.
++ * Only the version, the header length and the presence of the whole header
++ * are checked.
++ * The length is written only when SKB_NOT_DROPPED_YET is returned.
++ *
++ * skb pointers may change: after this call, the caller must evaluate again
++ * any pointer into the packet data.
++ */
++static enum skb_drop_reason
++seg6_validate_iphdr_len(struct sk_buff *skb, int *hdrlen)
++{
++	enum skb_drop_reason reason;
++	const struct iphdr *iph;
++	int len;
++
++	reason = pskb_may_pull_reason(skb, sizeof(struct iphdr));
++	if (reason)
++		return reason;
++
++	iph = ip_hdr(skb);
++	if (iph->version != 4 || iph->ihl < 5)
++		return SKB_DROP_REASON_IP_INHDR;
++
++	len = ip_hdrlen(skb);
++
++	reason = pskb_may_pull_reason(skb, len);
++	if (reason)
++		return reason;
++
++	*hdrlen = len;
++	return SKB_NOT_DROPPED_YET;
++}
++
+ static int input_action_end_dx4_finish(struct net *net, struct sock *sk,
+ 				       struct sk_buff *skb)
  {
- 	u32 rx_pkt_offset, l2_hdr_offset, total_offset;
-@@ -200,7 +200,7 @@ static void ath12k_dp_mon_rx_msdus_set_payload(struct ath12k_base *ab,
- 	else
- 		total_offset = rx_pkt_offset + l2_hdr_offset;
+@@ -1085,14 +1117,18 @@ static int input_action_end_dx4_finish(struct net *net, struct sock *sk,
+ static int input_action_end_dx4(struct sk_buff *skb,
+ 				struct seg6_local_lwt *slwt)
+ {
++	SKB_DR(reason);
++	int hdrlen;
++
+ 	if (!decap_and_validate(skb, IPPROTO_IPIP))
+ 		goto drop;
  
--	skb_pull(head_msdu, total_offset);
-+	skb_pull(msdu, total_offset);
+-	if (!pskb_may_pull(skb, sizeof(struct iphdr)))
++	reason = seg6_validate_iphdr_len(skb, &hdrlen);
++	if (reason)
+ 		goto drop;
+ 
+ 	skb->protocol = htons(ETH_P_IP);
+-	skb_set_transport_header(skb, sizeof(struct iphdr));
++	skb_set_transport_header(skb, hdrlen);
+ 	nf_reset_ct(skb);
+ 
+ 	if (static_branch_unlikely(&nf_hooks_lwtunnel_enabled))
+@@ -1102,7 +1138,7 @@ static int input_action_end_dx4(struct sk_buff *skb,
+ 
+ 	return input_action_end_dx4_finish(dev_net(skb->dev), NULL, skb);
+ drop:
+-	kfree_skb(skb);
++	kfree_skb_reason(skb, reason);
+ 	return -EINVAL;
  }
  
- struct sk_buff *
-@@ -261,7 +261,7 @@ ath12k_dp_mon_rx_merg_msdus(struct ath12k_pdev_dp *dp_pdev,
- 		head_frag_list = NULL;
+@@ -1237,16 +1273,24 @@ static struct sk_buff *end_dt_vrf_core(struct sk_buff *skb,
+ 	struct seg6_end_dt_info *info = &slwt->dt_info;
+ 	struct net_device *vrf;
+ 	__be16 protocol;
++	SKB_DR(reason);
+ 	int hdrlen;
  
- 		while (msdu) {
--			ath12k_dp_mon_rx_msdus_set_payload(ab, head_msdu, tail_msdu);
-+			ath12k_dp_mon_rx_msdus_set_payload(ab, msdu, tail_msdu);
+ 	vrf = end_dt_get_vrf_rcu(skb, info);
+ 	if (unlikely(!vrf))
+ 		goto drop;
  
- 			if (!head_frag_list)
- 				head_frag_list = msdu;
-@@ -296,7 +296,7 @@ ath12k_dp_mon_rx_merg_msdus(struct ath12k_pdev_dp *dp_pdev,
- 		msdu = head_msdu;
++	if (unlikely(info->family != AF_UNSPEC && info->family != family)) {
++		pr_warn_once("seg6local: SRv6 End.DT* family mismatch");
++		goto drop;
++	}
++
+ 	switch (family) {
+ 	case AF_INET:
+ 		protocol = htons(ETH_P_IP);
+-		hdrlen = sizeof(struct iphdr);
++		reason = seg6_validate_iphdr_len(skb, &hdrlen);
++		if (unlikely(reason))
++			goto drop;
+ 		break;
+ 	case AF_INET6:
+ 		protocol = htons(ETH_P_IPV6);
+@@ -1258,11 +1302,6 @@ static struct sk_buff *end_dt_vrf_core(struct sk_buff *skb,
+ 		goto drop;
+ 	}
  
- 		while (msdu) {
--			ath12k_dp_mon_rx_msdus_set_payload(ab, head_msdu, tail_msdu);
-+			ath12k_dp_mon_rx_msdus_set_payload(ab, msdu, tail_msdu);
- 			if (qos_pkt) {
- 				dest = skb_push(msdu, sizeof(__le16));
- 				if (!dest)
+-	if (unlikely(info->family != AF_UNSPEC && info->family != family)) {
+-		pr_warn_once("seg6local: SRv6 End.DT* family mismatch");
+-		goto drop;
+-	}
+-
+ 	skb->protocol = protocol;
+ 
+ 	skb_dst_drop(skb);
+@@ -1273,7 +1312,7 @@ static struct sk_buff *end_dt_vrf_core(struct sk_buff *skb,
+ 	return end_dt_vrf_rcv(skb, family, vrf);
+ 
+ drop:
+-	kfree_skb(skb);
++	kfree_skb_reason(skb, reason);
+ 	return ERR_PTR(-EINVAL);
+ }
+ 
+@@ -1286,9 +1325,7 @@ static int input_action_end_dt4(struct sk_buff *skb,
+ 	if (!decap_and_validate(skb, IPPROTO_IPIP))
+ 		goto drop;
+ 
+-	if (!pskb_may_pull(skb, sizeof(struct iphdr)))
+-		goto drop;
+-
++	/* end_dt_vrf_core() validates the inner IPv4 header length */
+ 	skb = end_dt_vrf_core(skb, slwt, AF_INET);
+ 	if (!skb)
+ 		/* packet has been processed and consumed by the VRF */
 -- 
 2.53.0
 
