@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795619484;
-	b=wAqM5xlZBkzfKT2KsdkOVGrqa8gD3SdY1nETxX4mwKVe4K8HoiY26vh6NLA2rspJeG95
-	 pHUXeQmMFIvZCF1CN3sWXL3S1pHWGYAHstZqglU3T8yapaOo0nifveNsXRON5arHzo+mw
-	 z4Ky9ifNh5y2rcPWf1zlYU3st597S+006F7a43dEZV5Sc6t7WLm69KHarqz8DbMo0n/K5
-	 L/Lam6ZgTja5BvzxONOG4yw0FtEPab3gy8TSP6ZQ3ZbT6nm0hhDomE33NO8BYd9Qn0EH4
-	 mJO63TZRX9XyLUVLa8kir+yZcEq0HwRGwGt6Fy5B8KB6Eb5CER6fmT32LBQki0ZbMPA==
+	t=1795619488;
+	b=h8i2vuaQjOzwQ5ZBinufe1QS8l3o5lJsQiDJKoICGic+9r3CXnN0/iL8DlCP8/utTfFj
+	 N2X4l41HTDVa0DPTJx2ZmkVpy680ZEkZK4JMqwf5SgRwe/U7iuLAZMo+k/p+G4ATKJ41X
+	 IoGgiAijfNcqgMeE6ykoBhmWijgJdf0Ipa2W2Lqh4Ogl8jaRDGff9Mkemu1Uukg8Dj2kV
+	 DwISktXSjSZFgxS0Qk6vjYJZSKXZPcMEUe3SPPb1PVFO38m7pyG3nxIzJMDk/gSARMpZH
+	 wj1AHCqNRFGDsyCWjvoX3hYhiGMcUEFJnpAXy1i1Pv9Rm8ZaCCw6Dn/+Lpj+4+e8qog==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795619484;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795619488;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=35mUGGiW9ob4H3hlrzDt/sBNJyh8rhhYLPJ7n2+RHC0=;
-	b=dMh9O4DZWDV8zGJYo9X9fe5yRQD+VSthIDIAnO4F7Mn1cgzgvMRHfMNSi6aq/IuHCmJn
-	 zctlgjZz5QUmMfQD0clepHrgutjNyazXrJesJ3yfaqH5wEfdCosdHefwkNs15uZF4ET4Y
-	 Ih28fFpWnuIhpqfAI4kQMX2mF1O3JTyr07tsxGy0gk03ug2WXooqnJmT/1O3jnJ3jtuv5
-	 Qs7MNuhbnzR5kvIacwQj6Eeir9fsudKURBB9MuhJR2aEtUrUVrs7qGekKuzho663jHApV
-	 XBQmvK49poZh4FhbKzdbiyyW8wr0Rno+xvnN1IATYdzaSCwtT3btfvlfoqrQp39OiaQ==
+	bh=L5EdM1F1EqVw7KZ5CfxjkntirbeLf8S3xPu0xlcNdq0=;
+	b=WBprL6GlIxq7G7pcZFXhJ18qluH5ppDEfBeWGDWl4KHOhrCMS/J58+BT/SyNdP9QtXj/
+	 eWHY8Z7GNdJE94IryFbLS8EZxV9/R7Rh9P4ZXsqb/Adkmb76uzFJwcjF3APGJw5RzCZaS
+	 A8KG7IELw81NiOgz6BuJv1pHLXIPhxQELph/yZ4AghaxheS94r42mBNuQvdVcL9G5Udo7
+	 DnOqt3mfFZAUG645Umvfi7jR7fu/NaMg/WLtiwBJNAJVcgL6EKeEpyb899B6dFs1F8oPN
+	 p2+1Q4D2QogbK972ZbKH6leHv25wCEJNxxF+lpRYVrcEQNnWj9Pgj9nl3DvIjAPk5dQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=I3ijYT8z;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=aluag8xT;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B9A57606A32A;
-	Wed, 25 Nov 2026 15:11:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6F2F8606A323;
+	Wed, 25 Nov 2026 15:11:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=I3ijYT8z
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 162841F000EF;
-	Wed, 25 Nov 2026 15:11:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=aluag8xT
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 57C821F000C4;
+	Wed, 25 Nov 2026 15:11:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795619484;
-	bh=35mUGGiW9ob4H3hlrzDt/sBNJyh8rhhYLPJ7n2+RHC0=;
+	s=korg; t=1795619487;
+	bh=L5EdM1F1EqVw7KZ5CfxjkntirbeLf8S3xPu0xlcNdq0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=I3ijYT8zkkMdPJV3b1EG0CVPQqxX5miXg12mJ73tp4ksgenldT+hfBBSH7pnv08dO
-	 6kJ4+xQXztDgUxGKVqXatCIzXgPTu46+QPf4DBKtfbw3lebX/UPEMi3woke3qctGzP
-	 N7ZsXaDOe2K7cKhp7n24j1id0z4GAJ4GH3+P4DYM=
+	b=aluag8xTJ7ObXuwT4XqY36WgloV4FcNTJF18f+EVQ9Ug401+YEh0NcCnClXWQtEy2
+	 RWHvUKSO0cQj5X+Kh5oo1dZawYzQy9qAIR5ss9ZZEPCrXqDp9qvDxUDVNmLqziGske
+	 wJuSrwLm3tiCGOW2FHgZOaiFMYtfiHI6jSI1lt8I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Qu Wenruo <quwenruo.btrfs@gmx.com>,
+	Cheng Yongkang <teel4res@gmail.com>,
 	Qu Wenruo <wqu@suse.com>,
-	Mani Tofigh <mt4022@columbia.edu>,
 	David Sterba <dsterba@suse.com>
-Subject: [PATCH 7.3 0612/1005] btrfs: fix bio counter and bioc leak when async checksumming fails
-Date: Wed, 25 Nov 2026 15:32:30 +0100
-Message-ID: <20261125143836.079885429@linuxfoundation.org>
+Subject: [PATCH 7.3 0613/1005] btrfs: reject refs=0 subvolume without DEAD in SUBVOL_SYNC_WAIT
+Date: Wed, 25 Nov 2026 15:32:31 +0100
+Message-ID: <20261125143836.105481052@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143821.729802100@linuxfoundation.org>
 References: <20261125143821.729802100@linuxfoundation.org>
@@ -68,73 +69,55 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mani Tofigh <mt4022@columbia.edu>
+From: Cheng Yongkang <teel4res@gmail.com>
 
-commit d27d0039bc1334be8a72c769e14c0b0c3efc317d upstream.
+commit 9a58e56e70f610e29b53821e9c706600e529cca3 upstream.
 
-A single failed checksum allocation can make a later device replace
-hang forever.  btrfs_submit_chunk() takes a dev-replace bio counter
-reference and a bioc before it hands a write to the checksum worker.
-If the checksum fails there (e.g., its allocation fails),
-run_one_async_done() ends the bio but drops neither.  The counter then
-never gets back to zero and the next replace waits for it:
+btrfs_ioctl_subvol_sync() assumes that a cached root with zero
+references has BTRFS_ROOT_SUBVOL_DEAD set, and asserts that before
+waiting for the cleaner. Two states break the assumption:
 
-  [ 8.369] BTRFS info (device ram0): dev_replace from /dev/ram0 (devid 1) to /dev/ram1 finished
-  [41.534] INFO: task btrfscsum:80 blocked for more than 20 seconds.
-  [41.534]  btrfs_rm_dev_replace_blocked+0x135/0x180
-  [41.534]  btrfs_dev_replace_finishing+0xefe/0x13b0
+- A corrupt ROOT_ITEM with zero references and a matching orphan item,
+  on a writable filesystem.
+- A failed subvolume deletion. btrfs_delete_subvolume() zeroes the
+  root references, aborts the transaction, which forces the filesystem
+  read-only, and then clears DEAD again. No on-disk metadata is
+  corrupted in this case.
 
-The worker is only used when CONFIG_BTRFS_EXPERIMENTAL is off and the
-checksum isn't a fast one, e.g., sha256.  We hit it on a sha256
-filesystem.
+With CONFIG_BTRFS_ASSERT=y, both reach a BUG().
 
-We put the bioc and drop the counter in that error branch.  We also
-put the bioc on the synchronous error path and on the btrfs_split_bio()
-error path, which both only drop the counter.  With the fix, the
-replace doesn't hang anymore.
+Change the ASSERT() into a proper rejection to avoid triggering a BUG().
 
-This bug was identified and confirmed with the help of fault-injection
-testing on a deterministic hypervisor currently under development.  Our
-C reproducer however hits it within about 35s.
-
-Fixes: f8a53bb58ec7 ("btrfs: handle checksum generation in the storage layer")
-Fixes: c7c97ceff98c ("btrfs: handle bio_split() errors")
-CC: stable@vger.kernel.org # 6.6+
-Reviewed-by: Qu Wenruo <wqu@suse.com>
-Signed-off-by: Mani Tofigh <mt4022@columbia.edu>
+Fixes: 6c83d153ed86 ("btrfs: add new ioctl to wait for cleaned subvolumes")
+CC: stable@vger.kernel.org
+Suggested-by: Qu Wenruo <quwenruo.btrfs@gmx.com>
+Link: https://lore.kernel.org/linux-btrfs/dd97efe9-91ec-495b-b698-acff1447421c@gmx.com/
+Signed-off-by: Cheng Yongkang <teel4res@gmail.com>
+[ Rework the commit message, drop the ad-hoc RW check. ]
+Signed-off-by: Qu Wenruo <wqu@suse.com>
 Reviewed-by: David Sterba <dsterba@suse.com>
 Signed-off-by: David Sterba <dsterba@suse.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/btrfs/bio.c |    4 ++++
- 1 file changed, 4 insertions(+)
+ fs/btrfs/ioctl.c |    8 ++++++--
+ 1 file changed, 6 insertions(+), 2 deletions(-)
 
---- a/fs/btrfs/bio.c
-+++ b/fs/btrfs/bio.c
-@@ -634,6 +634,8 @@ static void run_one_async_done(struct bt
+--- a/fs/btrfs/ioctl.c
++++ b/fs/btrfs/ioctl.c
+@@ -5173,8 +5173,12 @@ static int btrfs_ioctl_subvol_sync(struc
+ 			return -ENOENT;
  
- 	/* If an error occurred we just want to clean up the bio and move on. */
- 	if (bio->bi_status) {
-+		btrfs_put_bioc(async->bioc);
-+		btrfs_bio_counter_dec(async->bbio->inode->root->fs_info);
- 		btrfs_bio_end_io(async->bbio, bio->bi_status);
- 		return;
- 	}
-@@ -772,6 +774,7 @@ static bool btrfs_submit_chunk(struct bt
- 		split = btrfs_split_bio(fs_info, bbio, map_length);
- 		if (IS_ERR(split)) {
- 			status = errno_to_blk_status(PTR_ERR(split));
-+			btrfs_put_bioc(bioc);
- 			btrfs_bio_counter_dec(fs_info);
- 			goto end_bbio;
- 		}
-@@ -832,6 +835,7 @@ done:
- 	return map_length == length;
- 
- fail:
-+	btrfs_put_bioc(bioc);
- 	btrfs_bio_counter_dec(fs_info);
- 	/*
- 	 * We have split the original bbio, now we have to end both the current
+ 		wait_for_deletion = true;
+-		ASSERT(root_flags & BTRFS_ROOT_SUBVOL_DEAD, "root_flags=0x%llx",
+-		       root_flags);
++		if (unlikely(!(root_flags & BTRFS_ROOT_SUBVOL_DEAD))) {
++			btrfs_err(fs_info,
++				  "subvol %llu has refs 0 without DEAD flag",
++				  args.subvolid);
++			return -EUCLEAN;
++		}
+ 		sched_ret = schedule_timeout_interruptible(HZ);
+ 		/* Early wake up or error. */
+ 		if (sched_ret != 0)
 
 
