@@ -1,54 +1,56 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795621820;
-	b=JGt5i4BLkq/wvY5tf1mQY+VUmn2O7o7TIsBwCSnekSxL/OCaqWG18+4rqc5q7GUv/KKL
-	 r1JeXlpEoApxtoKt8iodRnAYDQol5Xq1xg2j4GE+J29A8ZGTeBnZiKz2ScOSlAT5gBJfb
-	 nDOtt2sUzAQ3xidkWU0cUNVxFyRYR01+/XISBGUXYm+PHpkJ4KifAxMt4BHwfjKBRwaoC
-	 8FNJFhevl14iemFTufVVium8CeED1E+eGb3dXBXYKHXci+ZezoNwGzTyV7BSzkf1pDqk7
-	 XrVyIOfSmSup/wVeqEt4w95z8K+Y/2uQybv8HmDCH378x6ztOcOviHu1qmmckMFfytw==
+	t=1795621822;
+	b=IHbDKghotjh+bmHNJoGl6tYGRXp6j48KTv3I4R1aINatqhYegPOudSDV7Gr94H6DzDpb
+	 0o/WPZnPm1bFDlV9qlvJQP6zJNxFZVca+CZLhtzq0a8DpQWTvi2shXyZV3+FsnsfTFCnN
+	 q7crqMbO9BHcpnp8zJccTm2KPw2044TKsbL89GGjgbPvQ+tBex/UbXe34hTJUJUm56i/c
+	 FONZJ/fNyPYOCoxQxTfF2corWteXGXiPsSke4pDJfHye1lBKZY7Sk+6AJOLpokMEIMbwz
+	 5w2QQmfMH4LUDlyV86MwYEMqzn/H6oBF7qBHi6GJJuMHzbTfQhraCJlKV38x5e6u1oQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795621820;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795621822;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=kgNVtEnHcv6uUTMxX67ECgEKacwLdAw4H9CSvcdTw/4=;
-	b=AZ8AgTdEGsVYCYfsZ+eqBJLDRZmfWBEVTnxd/s5xBKFMmRPB/rI+W+8OLLW3Esh3SPsU
-	 1dRAeMyHyhvYHrJvk2HPOFGT+qIyjLcZ46uUfj6IJr8MdMFsi5zS3FEjWKtmrrfU4Hpvp
-	 Nu1OkLcIE58Wg+5ExE2LdN4PJ+D3qLG3ec36D7ARJ25m/tLgbQ79a9DBEnsfiTLnJHhwp
-	 qwKgnubFY3nMEQGIsZj9KaMdmwvmvLWNlsPBrrfwA0nbCWWXULbxaZqPNJ+0n5P/hVgTB
-	 Fa4upXarYFRrLggd2llVguoYLpzIHBE5olseCjuZCQLMJdwSbtUFynVR0CBXCPVv0hg==
+	bh=XFpd7LpVJhqMPGC1O2RVhdhSKSa/qWuwRQe21jzHb+A=;
+	b=i3VSbIeNSbh+rQZYRrtEvhouGelzaXTl1cBz2ieIh8pMAzhrqAaa55BHEk3aH/GKL+Tc
+	 Ddp8j4E6zGJVkyvAPMAyJtgSSZGLsuyjwY4N5cxLdzE93kxy9OwIQpuA8S2iZvjoIIjGK
+	 kFPO5eSdxLFRCP4kVC7Bf5GFolWgopz+ffpGDQqi+51HVvWe1ttm7If4jxeirLtHCSdbV
+	 9iG26dBg+6gepVtQBf5nh2uI9k/irGc5Qge1dVHg2I9lm+FKJn5Wvgn3hEAlJTOeoz/Us
+	 MaIuOf3AiZqtiNUjjTTYNO9eEd/qpfaGeVsdCV6oWEdlEP7HPH9DL5MZ3jYqiZWUjSQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=uHOlcXkE;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=iFiX8FET;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E9C84606A337;
-	Wed, 25 Nov 2026 15:50:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B43E6606A335;
+	Wed, 25 Nov 2026 15:50:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=uHOlcXkE
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D31901F0093C;
-	Wed, 25 Nov 2026 15:50:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=iFiX8FET
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E773A1F000CA;
+	Wed, 25 Nov 2026 15:50:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795621819;
-	bh=kgNVtEnHcv6uUTMxX67ECgEKacwLdAw4H9CSvcdTw/4=;
+	s=korg; t=1795621822;
+	bh=XFpd7LpVJhqMPGC1O2RVhdhSKSa/qWuwRQe21jzHb+A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=uHOlcXkEkGc12qV6YCBfLhsIbxz6QM2t/n2BK99g9Dkyg7/QUQl7J5vL5Vj6oz66J
-	 mlzsD7SPthZ4JH7DiIxBFbQ/Gn84I8t1AqH3oOLqUPrtKRPRku519FuMDr/dHS9IRg
-	 h/kT79UzYcEzzt4/mDpkXk2gCPWA4Hv5YNGbanZM=
+	b=iFiX8FETtFf6NtJBfiZPHQzhdh9+lsVsfZWODdyFEVmFrzguMaKB8NcpTOARw1ggr
+	 43MdfIR8NcIWR3m2h1OSPjge/sYwbAmbm24Yt1ZDxFfalKZ9jHJaWXMwpIIixxm7Tp
+	 uk8xUJtSBFwp4pTfskceH8OQxQJUYnI1/CgTBoiU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Tvrtko Ursulin <tvrtko.ursulin@igalia.com>,
+	Helen Koike <koike@igalia.com>,
 	Matt Roper <matthew.d.roper@intel.com>,
-	Nitin Gote <nitin.r.gote@intel.com>,
+	Rodrigo Vivi <rodrigo.vivi@intel.com>,
 	Matthew Brost <matthew.brost@intel.com>,
 	Dave Airlie <airlied@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 343/990] drm/xe/tuning: Restrict Anyhit NULL-query tuning to render engines
-Date: Wed, 25 Nov 2026 15:28:30 +0100
-Message-ID: <20261125143830.127231961@linuxfoundation.org>
+Subject: [PATCH 6.18 344/990] drm/xe/lrc: Restore CTX_CS_INDIRECT_CTX_OFFSET programming for pre-Xe2
+Date: Wed, 25 Nov 2026 15:28:31 +0100
+Message-ID: <20261125143830.150453843@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143822.072087159@linuxfoundation.org>
 References: <20261125143822.072087159@linuxfoundation.org>
@@ -70,55 +72,75 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Nitin Gote <nitin.r.gote@intel.com>
+From: Helen Koike <koike@igalia.com>
 
-[ Upstream commit ddef200c67d445f978f323d947c8993570ae4756 ]
+[ Upstream commit badac1974e098dba1a0a7f413e53f5b6ae24ab10 ]
 
-The "Disable NULL query for Anyhit Shader" tuning uses
-xe_rtp_match_first_render_or_compute to program RT_CTRL once per GT.
-On a GT with no render (RCS) engine, that match falls back to a
-compute (CCS) engine instead, so the tuning is still written even
-though RT_CTRL's ray-tracing logic has no hardware behind it there.
+CTX_CS_INDIRECT_CTX_OFFSET default value is not retrieved from the GPU
+by inhibit+context save mechanism since it is not part of the Engine
+Context. Thus, at restore, 0x0 is programmed back to the GPU, which is
+an invalid value according to the PRM.
 
-A CRI compute-only GT hits exactly this path, causing
-igt@xe_debugfs@check-gt-reg-sr to report a save-restore mismatch:
+This causes sporadic hangs on Alder Lake when executing test
+IntelAngleEnd2EndTestCases (error VK_DEVICE_LOST).
 
-  Mismatch on 0xe530, expected 0x400 got 0x0
+Fix it by partially reverting commit c9dfd66cb91e ("drm/xe/lrc: Allow
+INDIRECT_CTX for more engine classes"). Re-add the programming of
+CTX_CS_INDIRECT_CTX_OFFSET for pre-Xe2 (in theory it should apply to all
+platforms, but we got an unexpected behaviour on Xe2 that still requires
+investigation).
 
-Restrict the rule to ENGINE_CLASS(RENDER) so it only applies where
-ray-tracing hardware is actually present. Every other in-tree platform
-in this version range (BMG, LNL, PTL, NVL) always has a render engine,
-which xe_rtp_match_first_render_or_compute already resolves ahead of
-any compute engine, so this is a no-op for them.
-
-Assisted-by: LLM
-Cc: Matt Roper <matthew.d.roper@intel.com>
-Signed-off-by: Nitin Gote <nitin.r.gote@intel.com>
-Fixes: 8d8431298f69 ("drm/xe/xe3: Disable null query for anyhit shader")
+Fixes: c9dfd66cb91e ("drm/xe/lrc: Allow INDIRECT_CTX for more engine classes")
+Suggested-by: Tvrtko Ursulin <tvrtko.ursulin@igalia.com>
+Signed-off-by: Helen Koike <koike@igalia.com>
 Reviewed-by: Matt Roper <matthew.d.roper@intel.com>
-Link: https://patch.msgid.link/20261012171901.19508-6-nitin.r.gote@intel.com
-Signed-off-by: Matt Roper <matthew.d.roper@intel.com>
-(cherry picked from commit 65e2e108e466a2def170797a6d1b4b7849cec3a1)
+Link: https://patch.msgid.link/20261016214112.1647202-1-koike@igalia.com
+Signed-off-by: Rodrigo Vivi <rodrigo.vivi@intel.com>
+(cherry picked from commit b99292acb2dce61ce50d37f54a66d84b768b8927)
 Signed-off-by: Matthew Brost <matthew.brost@intel.com>
 Signed-off-by: Dave Airlie <airlied@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/xe/xe_tuning.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/gpu/drm/xe/regs/xe_lrc_layout.h | 3 +++
+ drivers/gpu/drm/xe/xe_lrc.c             | 8 ++++----
+ 2 files changed, 7 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/gpu/drm/xe/xe_tuning.c b/drivers/gpu/drm/xe/xe_tuning.c
-index a524170a04d02..84e99f6474e61 100644
---- a/drivers/gpu/drm/xe/xe_tuning.c
-+++ b/drivers/gpu/drm/xe/xe_tuning.c
-@@ -100,7 +100,7 @@ static const struct xe_rtp_entry_sr engine_tunings[] = {
- 	},
- 	{ XE_RTP_NAME("Tuning: Disable NULL query for Anyhit Shader"),
- 	  XE_RTP_RULES(GRAPHICS_VERSION_RANGE(2000, XE_RTP_END_VERSION_UNDEFINED),
--		       FUNC(xe_rtp_match_first_render_or_compute)),
-+		       ENGINE_CLASS(RENDER)),
- 	  XE_RTP_ACTIONS(SET(RT_CTRL, DIS_NULL_QUERY))
- 	},
- };
+diff --git a/drivers/gpu/drm/xe/regs/xe_lrc_layout.h b/drivers/gpu/drm/xe/regs/xe_lrc_layout.h
+index b5eff383902c5..1b101edb838bf 100644
+--- a/drivers/gpu/drm/xe/regs/xe_lrc_layout.h
++++ b/drivers/gpu/drm/xe/regs/xe_lrc_layout.h
+@@ -40,4 +40,7 @@
+ #define INDIRECT_CTX_RING_START_UDW	(0x08 + 1)
+ #define INDIRECT_CTX_RING_CTL		(0x0a + 1)
+ 
++#define CTX_INDIRECT_CTX_OFFSET_MASK	REG_GENMASK(15, 6)
++#define CTX_INDIRECT_CTX_OFFSET_DEFAULT	REG_FIELD_PREP(CTX_INDIRECT_CTX_OFFSET_MASK, 0xd)
++
+ #endif
+diff --git a/drivers/gpu/drm/xe/xe_lrc.c b/drivers/gpu/drm/xe/xe_lrc.c
+index 53eadea8ab38d..29a30e83f988c 100644
+--- a/drivers/gpu/drm/xe/xe_lrc.c
++++ b/drivers/gpu/drm/xe/xe_lrc.c
+@@ -1371,15 +1371,15 @@ setup_indirect_ctx(struct xe_lrc *lrc, struct xe_hw_engine *hwe)
+ 	finish_bo(&state);
+ 	kfree(state.buffer);
+ 
+-	/*
+-	 * Enable INDIRECT_CTX leaving INDIRECT_CTX_OFFSET at its default: it
+-	 * varies per engine class, but the default is good enough
+-	 */
+ 	xe_lrc_write_ctx_reg(lrc,
+ 			     CTX_CS_INDIRECT_CTX,
+ 			     (xe_bo_ggtt_addr(lrc->bo) + state.offset) |
+ 			     /* Size in CLs. */
+ 			     (state.written * sizeof(u32) / 64));
++	if (GRAPHICS_VER(lrc_to_xe(lrc)) < 20)
++		xe_lrc_write_ctx_reg(lrc,
++				     CTX_CS_INDIRECT_CTX_OFFSET,
++				     CTX_INDIRECT_CTX_OFFSET_DEFAULT);
+ 
+ 	return 0;
+ }
 -- 
 2.53.0
 
