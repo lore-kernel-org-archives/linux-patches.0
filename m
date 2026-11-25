@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795620378;
-	b=RmYfh+G8yuMu7u2DelFuDk3tJfYOLVgWYHcjdUpIbFWFJAOJ4SULrONFJQIwDPG80a4W
-	 ju87aWATQN/i20AXZ+6JfJBOZfwKnAlBEy9eNZJd1d8XB7wwEY51+gESBOiW6oSkaYfCE
-	 MWBRJOJ6BUwr8NUVlG53QxsZXjqmPi80UoGpTs+Tm4K8dA+IBmBrBqM6mko2TJrsc37LR
-	 ZlhUGqdTAt9+r8g8wxTV8HknvVEsLgzPhd4kJOAnd0d3l/GEwhVuOO4AM5ordc8QmA5nT
-	 30V/WNmicqyUM2O3D7GUWG0v0y56tAHNWDeqNZRDPXHrFNq2teyv8SWtYf7+m8xDDrQ==
+	t=1795620381;
+	b=C5DKA/KtkDnBZwga8/Jqd7MtGRVmOfO0pM83QMrXKcH3rqgCa7Q9djnzq+DoadQjdgB0
+	 suJLON13LLGiKCUXOagMRNW8Qt2YiIzlLmbN7JArkNY1S3JN7eZxLR7fyO/8H6gLmZd/O
+	 ngS49j8cWnbq4EO6DVXlMTObsfNgtykp/BSrfXOooaPNGhI4ncQV/5q5DNJlMTVoyLDhU
+	 e7P86wKReoCTYc77nabNwRKyQUp2wvqD5TDaVCrEELgHPbOKVmdoT9NJpCDpiJp6/oI0T
+	 PJsQQDtIT4AJ+iNJ7se8qyB5bUjdU+Idtz6HRAS3xA/tndv/LnKpwzjb/2J6sroEaJQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795620378;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795620381;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Transfer-Encoding;
-	bh=qWYGzf5Mm9avQHnpZvzCHG36BjtmT/r4yvL2zGcaU24=;
-	b=5h/iym9xKC+sd0vTsDojmFD66gOZHaP6bxEEAazvkFmcVYKxExHQPyrsUwIC3hI0hRqb
-	 sMFRlS/ZtXdCL/4PyXip8YBDKFH6VPxs31ywmu5JPSpLl86wWRrbZM7Lg/QidKFpSfTKS
-	 xzugf96xvmvMNsBTZ4ifqmLngJfjD2U4g6dfaQuWqV5c8rOlMnNaLPHdKs1FnvJ8bHIF0
-	 kECtDnrQ29D0tVZQD9Ak8EqitUc9O1no9FBHy2Y+3wi6RsodArSu2x/++0N8ZAMbp/1+1
-	 tbcbbuQ2ulJSoucpBBfb5H43ghsOB7dGs0D8pUrkTKEOFMguoaTD+aY7mMM8Q7a1SDQ==
+	 MIME-Version:Content-Type:Content-Transfer-Encoding;
+	bh=fg9geOFW5EqatdKLEPcGl0ZCQOtm8shtS4jRTcCpnGA=;
+	b=F6ee4CrocHWHSpL22N9CHQM5RxdVE0yif/ZFh5V/+6X2h9TS09SSbrFVpkeNh7FHrMY7
+	 cfskeuucXbzRTiTU9QMkJoM7B/5mTgD6HoiwKYFVpaUHhuiItuqfKQRygVXt2mR7x82jQ
+	 LibAqqfuagpVUJWtQq/mUjdJB3XrOMuU9AkfPdN8B/vuJYy+ko2hq01bfn+0Igenu6Wdm
+	 cKyJDfSHPKHQ3+IlAystwtrIP8iyMwLxYP2t809Gpfzypg26UgkivhRXldbGofewv7TjN
+	 9p6WZAYCRWb0TLFqplF4X4aejqEwQ6CZjehjNt7C0OZyFGmhDZj/qUfYBCjGNdIKMMQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=TKbEpelo;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=HkdneQNF;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1))
+	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 76F52606A321;
-	Wed, 25 Nov 2026 15:26:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8EC8C606A31E;
+	Wed, 25 Nov 2026 15:26:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=TKbEpelo
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C04B91F000C0;
-	Wed, 25 Nov 2026 15:26:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=HkdneQNF
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9E80C1F000C6;
+	Wed, 25 Nov 2026 15:26:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795620378;
-	bh=qWYGzf5Mm9avQHnpZvzCHG36BjtmT/r4yvL2zGcaU24=;
+	s=korg; t=1795620381;
+	bh=fg9geOFW5EqatdKLEPcGl0ZCQOtm8shtS4jRTcCpnGA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=TKbEpelooMa0KCOtOeKbZlPRyKBhUrHrBbkPelH2Z1GtXsVY49C6Y4dz2TPeFqETU
-	 2SNt791+NIOhNz/poLLkG1ptS/uxEqLdkWcci+toHys5YP/nQbIOl0g6FuCd/EjKco
-	 L6q+2wsL9Py/WRXLIU5zz7ABy0UBZoYuklGNHo/g=
+	b=HkdneQNFmM/ta/jQV3DpKR8KPPKmnoy/eWj5K2N+lQhP6iw0EjfHwUd9TjJ/amE6Z
+	 zihAQstOVyoS9TZP/x9WqxH+kblKxcbisxGDi6EJIfEgVJlbSH/pBOEOwx3dTTfREO
+	 Zvk9QxOH/N0gEDAIa7YhKaBuJgWFccapT51QHWPM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	stable <stable@kernel.org>,
-	Alexander Usyskin <alexander.usyskin@intel.com>,
-	Arnd Bergmann <arnd@arndb.de>,
-	Josef Bacik <josef@toxicpanda.com>
-Subject: [PATCH 7.3 0898/1005] mei: lb: read the MTU once
-Date: Wed, 25 Nov 2026 15:37:16 +0100
-Message-ID: <20261125143842.730780642@linuxfoundation.org>
+	=?UTF-8?q?Antonio=20V=C3=A1zquez=20Blanco?= <antoniovazquezblanco@gmail.com>,
+	Alexander Usyskin <alexander.usyskin@intel.com>
+Subject: [PATCH 7.3 0899/1005] mei: me: add ice lake point LP iTouch DID
+Date: Wed, 25 Nov 2026 15:37:17 +0100
+Message-ID: <20261125143842.752648203@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143821.729802100@linuxfoundation.org>
 References: <20261125143821.729802100@linuxfoundation.org>
@@ -63,74 +62,77 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 7.3-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Josef Bacik <josef@toxicpanda.com>
+From: Antonio Vázquez Blanco <antoniovazquezblanco@gmail.com>
 
-commit 1115120f89f5c22bf49f7423cf158a04a474dd93 upstream.
+commit 73383d06da9a1ded4c85845407cb4029aeecca39 upstream.
 
-mei_cldev_mtu() returns 0 if the client is not connected. A link reset
-disconnects all clients at any time, from the reset work.
+Add the device ID for the Intel Precise Touch & Stylus (iTouch) function
+on Ice Lake Point LP. It appears as PCI device 8086:34e4, next to the
+regular MEI function at 8086:34e0, on Microsoft Surface Pro 7 and
+Surface Laptop 3.
 
-mei_lb_push_payload_v2() asks for the MTU to allocate the request buffer
-and asks again for every chunk. If the reset comes in between,
+Without this entry mei_me does not bind, the touch controller is
+unreachable, and neither the touchscreen nor the pen work. Users
+currently work around this by binding the device by hand at boot:
 
-	chunk_size = min(payload_size - sent_data, 0 - sizeof(*req));
+  echo "8086 34e4 ffffffff ffffffff 0 0 9" > \
+          /sys/bus/pci/drivers/mei_me/new_id
 
-makes the chunk the whole rest of the payload, and the memcpy() behind it
-writes over the end of the buffer. If the reset comes before the first
-call, kzalloc(0) returns ZERO_SIZE_PTR, which passes the NULL check and is
-dereferenced. An MTU not bigger than the request header has the same
-effect as 0.
+where the trailing 9 is the mei_me_cfgs[] index of MEI_ME_PCH12_CFG.
+That is fragile by construction, since the index is positional and any
+reordering of the config array silently changes which config the device
+gets.
 
-Read the MTU once and refuse one which leaves no room for payload. If the
-client has gone, sending the chunk fails.
+This ID was first reported in June 2020, together with Sunrise Point's
+0x9d3e, in "mei: me: Add itouch device IDs for SPT / ICP" [1]. That
+submission was declined over the server platform ID conflict, and the
+Sunrise Point half was subsequently added in commit 372a829862e5 ("mei:
+me: add MEI device for SPT with ITPS capability"). Ice Lake Point was
+never added.
 
-Fixes: 773a43b8627f ("mei: lb: add late binding version 2")
+Use MEI_ME_PCH12_SPS_ITOUCH_CFG, so that the device is reported with the
+correct kind and the SPS firmware exclusion applies. Note this is not the
+config the manual new_id workaround above selects: it reports kind
+"itouch" rather than "mei", and it does not set up a DMA ring.
+
+Link: https://lore.kernel.org/all/20200601155954.764558-1-dorian.stoll@tmsp.io/ [1]
 Cc: stable <stable@kernel.org>
-Cc: Alexander Usyskin <alexander.usyskin@intel.com>
-Cc: Arnd Bergmann <arnd@arndb.de>
-Signed-off-by: Josef Bacik <josef@toxicpanda.com>
+Signed-off-by: Antonio Vázquez Blanco <antoniovazquezblanco@gmail.com>
 Acked-by: Alexander Usyskin <alexander.usyskin@intel.com>
-Link: https://patch.msgid.link/2026102739-boil-startup-145b@gregkh
+Link: https://patch.msgid.link/20261029084859.4537-1-antoniovazquezblanco@gmail.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/misc/mei/mei_lb.c |   12 ++++++++++--
- 1 file changed, 10 insertions(+), 2 deletions(-)
+ drivers/misc/mei/hw-me-regs.h |    1 +
+ drivers/misc/mei/pci-me.c     |    1 +
+ 2 files changed, 2 insertions(+)
 
---- a/drivers/misc/mei/mei_lb.c
-+++ b/drivers/misc/mei/mei_lb.c
-@@ -312,16 +312,24 @@ static int mei_lb_push_payload_v2(struct
- 	size_t chunk_size;
- 	size_t req_size;
- 	ssize_t bytes;
-+	size_t mtu;
- 	int ret;
+--- a/drivers/misc/mei/hw-me-regs.h
++++ b/drivers/misc/mei/hw-me-regs.h
+@@ -94,6 +94,7 @@
+ #define PCI_DEVICE_ID_INTEL_MEI_CDF        0x18D3  /* Cedar Fork */
  
--	struct mei_lb2_req *req __free(kfree) = kzalloc(mei_cldev_mtu(cldev), GFP_KERNEL);
-+	/* The MTU turns into 0 when a link reset disconnects the client */
-+	mtu = mei_cldev_mtu(cldev);
-+	if (mtu <= sizeof(struct mei_lb2_req)) {
-+		dev_err(dev, "MTU is too small: %zu\n", mtu);
-+		return -EMSGSIZE;
-+	}
-+
-+	struct mei_lb2_req *req __free(kfree) = kzalloc(mtu, GFP_KERNEL);
- 	if (!req)
- 		return -ENOMEM;
+ #define PCI_DEVICE_ID_INTEL_MEI_ICP_LP     0x34E0  /* Ice Lake Point LP */
++#define PCI_DEVICE_ID_INTEL_MEI_ICP_LP_3   0x34E4  /* Ice Lake Point LP 3 (iTouch) */
+ #define PCI_DEVICE_ID_INTEL_MEI_ICP_N      0x38E0  /* Ice Lake Point N */
  
- 	first_chunk = MEI_LB2_FLAG_FST_CHUNK;
- 	last_chunk = 0;
- 	do {
--		chunk_size = min(payload_size - sent_data, mei_cldev_mtu(cldev) - sizeof(*req));
-+		chunk_size = min(payload_size - sent_data, mtu - sizeof(*req));
+ #define PCI_DEVICE_ID_INTEL_MEI_JSP_N      0x4DE0  /* Jasper Lake Point N */
+--- a/drivers/misc/mei/pci-me.c
++++ b/drivers/misc/mei/pci-me.c
+@@ -98,6 +98,7 @@ static const struct pci_device_id mei_me
+ 	{ PCI_DEVICE_DATA(INTEL, MEI_CMP_H_3, MEI_ME_PCH8_ITOUCH_CFG) },
  
- 		req_size = struct_size(req, payload, chunk_size);
- 		if (sent_data + chunk_size == payload_size)
+ 	{ PCI_DEVICE_DATA(INTEL, MEI_ICP_LP, MEI_ME_PCH12_CFG) },
++	{ PCI_DEVICE_DATA(INTEL, MEI_ICP_LP_3, MEI_ME_PCH12_SPS_ITOUCH_CFG) },
+ 	{ PCI_DEVICE_DATA(INTEL, MEI_ICP_N, MEI_ME_PCH12_CFG) },
+ 
+ 	{ PCI_DEVICE_DATA(INTEL, MEI_TGP_LP, MEI_ME_PCH15_CFG) },
 
 
