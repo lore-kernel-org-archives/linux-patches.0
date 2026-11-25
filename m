@@ -1,54 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795622610;
-	b=w3k4v1t/IhbW3kLvlET0+0hyeMxRPjTBsHMoVBxZ4LYyhvz7ZKSQfKUDy3f4BOATNm2W
-	 mZWragv8UH2DbYsXo7PZtqgadIUI2CzBRN9FRScSFGOi8Hxmthf66EWnacNd8m4ckkgCt
-	 BLXOJxL8Lx1Cks9wboeCYRXW4Tw7x+qERNa0KJab8Oo4uUloNs0wGYzbfNFlQHPZGBU/x
-	 kTT8+yNwbkuGHVUEAQtXgmP/TpeTJqyypwvowc3+rRQ7a8jOPcCeZuNDydpdUPl3WuonL
-	 Z2384WWVFpFJ7qYphHdDeJDUxlZNraswANN6LDENQ/Br+4BTSqhBVee3fzKOWhKLv3Q==
+	t=1795622613;
+	b=4VnYV0CJlcC7dsM341idz+qtnHeZ7YK1QixmjkQCRi53+28GDWc6kTsIOCCnGkev0Ora
+	 eaxv1HYBo3fuuA0xyjzUT/cX4pC4QjjVz497Fu+qd0YHm1CliDhOueuoIK9gk4OT+2kV1
+	 Lc478U0LTK0+FhO2qdhKyqzqsHxYflZq3X7gczTJLUJWAb1HJkJGCMCdtwWTGXG4tQ5CJ
+	 p1VMqPtpUp+l+cLYlBIj8oeYvELG/UjaYZ9HqOxTNJGFgHwIaTSMN/GfOi5Xsb4yNbAc8
+	 3ey5AecfSm8XQ/fRau2OXo8spKOBX5O4BcHwkZhPg1Os79njChp3VoYHx9oIyvjHoJg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795622610;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795622613;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=wd1Pkgas0ie9zb9XQMAEBOxOEeFG4HgBYNOMNueZRBM=;
-	b=FpagrXm+Y8mlAk7Ovhjreotf5J1zKpyFWFViZkf/jKU/fUEfqMu6WFFleFGehgKsJX0u
-	 oKs4Jnnficr4PKis2Dl/mu+AJE0leNgTxPV2lDiiRbz+0OVi+hruIqbAPEXmZRxUEo/Es
-	 akgeOireaaprnOfPpDmTJCOef4fdirhUNGY5tC0Qs2OtpJKMbjNWIMzF7UjTn/Qx3LTXh
-	 oaqZJtfTFYk2/sTkjW8cYWuT+0RELTpFnFQm0QHrZcq3/y1qpa3bQzxQGFRxbP5N/NsSj
-	 6upaSwW2I8zBDpdhI16URDi74svv/GHeGrMXV+l16lQqHFOv8kv3emeuqu6ruMJZx+Q==
+	bh=ezxC6V/LObDoDAt9rZcWFbS6FJnfeYRh6SQmSWEQ/U4=;
+	b=Ma3wKV6s9mrOtQvKanAk4Fvhc2ILuj4S2bL3foMHwuXFH9/CN4Q03aei49n+UtSiErVD
+	 5hbfDY8se7ab8/PgHrgi8CmYuMECwGc/mrbNFPhI5Gf7mnm/RIS6LQESycesvv2QLy0LQ
+	 0dKWY6zShqOKqydQLmhZGOSVnFy7obVlgLXxqsWi7SURK13Ruha83XYzzrb46uf5X7N8Z
+	 EaLcSy1PNvMG/4jFpcX2cikFI2z/fLpXuyqBRh2FM7javTfKz1oau6/hoTnoduORer+s5
+	 mNVK/EBFn0YapoQHzmNMxiTtT9m6YrpP8LMMqfV7ylfRVYbYcoy44lgHymwqr2HMutw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=bbOdNjCG;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=TmQNJkZC;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 48A0E606A323;
-	Wed, 25 Nov 2026 16:03:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 502BF606A32E;
+	Wed, 25 Nov 2026 16:03:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=bbOdNjCG
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 511821F000C4;
-	Wed, 25 Nov 2026 16:03:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=TmQNJkZC
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7276D1F0093E;
+	Wed, 25 Nov 2026 16:03:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795622609;
-	bh=wd1Pkgas0ie9zb9XQMAEBOxOEeFG4HgBYNOMNueZRBM=;
+	s=korg; t=1795622613;
+	bh=ezxC6V/LObDoDAt9rZcWFbS6FJnfeYRh6SQmSWEQ/U4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=bbOdNjCGAvsOSA1aSmPE7Fd33+H/G2T32q9x6AbL15egy0kb8C6Yl2ZmKlN2OZ/9d
-	 y6V2eHUAP65+/SX9ULMeaDMe9eecilw2O6JU+iSV8/a4+bCAbHBBbuQY4lG6jxv6zn
-	 WYJyr4AgRApogVssmPUhgeZexZz4Uv/eGMKBYc9w=
+	b=TmQNJkZCkwpMM1JR5dzKgdrfuJK8nlQjMl0vEScmh1WxYIXnC1GkNmVD/8cRRXkOy
+	 S+m2B5BgPb7jk+kYwSHuUUy4plVLEAVJy5vdQRY4G2A/xstwijqAhA9ez7zxqwRL3g
+	 RxQYBD2s+h4J22e1+f9uoeh23/otPYn1QiupQP8w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Aaradhana Sahu <aaradhana.sahu@oss.qualcomm.com>,
+	Kang Yang <kang.yang@oss.qualcomm.com>,
 	Baochen Qiang <baochen.qiang@oss.qualcomm.com>,
-	Rameshkumar Sundaram <rameshkumar.sundaram@oss.qualcomm.com>,
+	Vasanthakumar Thiagarajan <vasanthakumar.thiagarajan@oss.qualcomm.com>,
 	Jeff Johnson <jeff.johnson@oss.qualcomm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 590/990] wifi: ath12k: Fix NAPI resource leaks in AHB external IRQ paths
-Date: Wed, 25 Nov 2026 15:32:37 +0100
-Message-ID: <20261125143835.912273606@linuxfoundation.org>
+Subject: [PATCH 6.18 548/990] wifi: ath12k: place dp_mon_mpdu on stack in mon dst reap loop
+Date: Wed, 25 Nov 2026 15:31:55 +0100
+Message-ID: <20261125143834.935811597@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143822.072087159@linuxfoundation.org>
 References: <20261125143822.072087159@linuxfoundation.org>
@@ -70,125 +70,87 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Aaradhana Sahu <aaradhana.sahu@oss.qualcomm.com>
+From: Kang Yang <kang.yang@oss.qualcomm.com>
 
-[ Upstream commit ebc938ba1d5ff33652013b99c7b9a74f05690336 ]
+[ Upstream commit 8b1d2f4c3805b9f1bddd5dc3bd241edd1f9ab2d9 ]
 
-Currently, NAPI instances and their associated netdevs allocated for AHB
-external IRQ groups are not released when external IRQ configuration
-fails. They are also not freed when arch_init() fails after
-ath12k_ahb_config_irq() succeeds during probe, or when the driver is
-unloaded.
+ath12k_wifi7_dp_rx_mon_dest_process() allocates a dp_mon_mpdu with
+kzalloc(GFP_ATOMIC) for each delivered MPDU. On allocation failure
+it breaks out of the reap loop without calling
+ath12k_hal_srng_dst_get_next_entry(), leaving the destination ring
+tail pointer parked on the current entry -- the same entry will
+be peek()ed on every subsequent NAPI schedule, stalling monitor
+RX until the mon_dest_ring_stuck_cnt recovery path resyncs the
+PPDU ID. The head_msdu chain accumulated for this iteration is
+also orphaned since the break bypasses both the delivery and
+the cleanup paths.
 
-Fix this by adding a common cleanup helper to release the NAPI instances
-and associated netdevs. Call it from the external IRQ configuration error
-path, probe error path, and driver cleanup path.
+kmemleak reports these skbs in field testing:
+  kmemleak_alloc()
+  __netdev_alloc_skb()
+  ath12k_dp_rx_bufs_replenish()
+  ath12k_wifi7_dp_rx_mon_dest_process()
 
-Tested-on: IPQ5332 hw1.0 AHB WLAN.WBE.1.6-01275-QCAHKSWPL_SILICONZ-1
+dp_mon_mpdu is used only within a single reap loop iteration and
+is passed synchronously to ath12k_wifi7_dp_mon_rx_deliver(); the
+callee does not retain the pointer. Place it on the stack instead
+of using kzalloc(GFP_ATOMIC). This eliminates the allocation
+failure path (and the ring stall it caused) and saves a
+kzalloc/kfree pair per delivered MPDU.
 
-Fixes: 6cee30f0da75 ("wifi: ath12k: add AHB driver support for IPQ5332")
-Fixes: 614c23e24ee8 ("wifi: ath12k: Support arch-specific DP device allocation")
-Signed-off-by: Aaradhana Sahu <aaradhana.sahu@oss.qualcomm.com>
+Tested-on: WCN7850 hw2.0 PCI WLAN.HMT.1.1.c7-00108-QCAHMTSWPL_V1.0_V2.0_SILICONZ_UPSTREAM-3
+
+Fixes: 72bfbf19b7da ("wifi: ath12k: add support to reap and process mon dest ring")
+Signed-off-by: Kang Yang <kang.yang@oss.qualcomm.com>
 Reviewed-by: Baochen Qiang <baochen.qiang@oss.qualcomm.com>
-Reviewed-by: Rameshkumar Sundaram <rameshkumar.sundaram@oss.qualcomm.com>
-Link: https://patch.msgid.link/20261001045423.493121-1-aaradhana.sahu@oss.qualcomm.com
-[renamed label err_free_irq]
+Reviewed-by: Vasanthakumar Thiagarajan <vasanthakumar.thiagarajan@oss.qualcomm.com>
+Link: https://patch.msgid.link/20260916060325.854-5-kang.yang@oss.qualcomm.com
 Signed-off-by: Jeff Johnson <jeff.johnson@oss.qualcomm.com>
-[ sashal: Dropped the arch_init/arch_deinit parts missing on this branch and routed the ath12k_core_init() failure in probe to the new err_free_ext_napi label. ]
+[ sashal: Replaced the kzalloc'd dp_mon_mpdu with a stack variable, adapted to the pre-wifi7-split file path and function names (ath12k_dp_mon_rx_deliver(ar, ...)). ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/ath/ath12k/ahb.c | 41 ++++++++++++++++++++++++---
- 1 file changed, 37 insertions(+), 4 deletions(-)
+ drivers/net/wireless/ath/ath12k/dp_mon.c | 19 ++++++++-----------
+ 1 file changed, 8 insertions(+), 11 deletions(-)
 
-diff --git a/drivers/net/wireless/ath/ath12k/ahb.c b/drivers/net/wireless/ath/ath12k/ahb.c
-index 1a1195951a140..39cb9901dbd76 100644
---- a/drivers/net/wireless/ath/ath12k/ahb.c
-+++ b/drivers/net/wireless/ath/ath12k/ahb.c
-@@ -183,6 +183,26 @@ static void __ath12k_ahb_ext_irq_disable(struct ath12k_base *ab)
- 	}
- }
+diff --git a/drivers/net/wireless/ath/ath12k/dp_mon.c b/drivers/net/wireless/ath/ath12k/dp_mon.c
+index a9ba30c330833..cfd9ea83887aa 100644
+--- a/drivers/net/wireless/ath/ath12k/dp_mon.c
++++ b/drivers/net/wireless/ath/ath12k/dp_mon.c
+@@ -4278,7 +4278,6 @@ static void ath12k_dp_rx_mon_dest_process(struct ath12k *ar, int mac_id,
+ 	struct ath12k_dp *dp = &ar->ab->dp;
+ 	struct ath12k_base *ab = ar->ab;
+ 	void *ring_entry, *mon_dst_srng;
+-	struct dp_mon_mpdu *tmp_mpdu;
+ 	LIST_HEAD(rx_desc_used_list);
+ 	struct hal_srng *srng;
  
-+static void ath12k_ahb_free_napi_for_group(struct ath12k_ext_irq_grp *irq_grp)
-+{
-+	netif_napi_del(&irq_grp->napi);
-+	free_netdev(irq_grp->napi_ndev);
-+	irq_grp->napi_ndev = NULL;
-+}
-+
-+static void ath12k_ahb_free_napi(struct ath12k_base *ab, int num_ext_irq_grp)
-+{
-+	int i;
-+
-+	for (i = 0; i < num_ext_irq_grp; i++)
-+		ath12k_ahb_free_napi_for_group(&ab->ext_irq_grp[i]);
-+}
-+
-+static void ath12k_ahb_free_ext_napi(struct ath12k_base *ab)
-+{
-+	ath12k_ahb_free_napi(ab, ATH12K_EXT_IRQ_GRP_NUM_MAX);
-+}
-+
- static void ath12k_ahb_ext_grp_enable(struct ath12k_ext_irq_grp *irq_grp)
- {
- 	int i;
-@@ -580,8 +600,10 @@ static int ath12k_ahb_config_ext_irq(struct ath12k_base *ab)
- 		irq_grp->grp_id = i;
- 
- 		irq_grp->napi_ndev = alloc_netdev_dummy(0);
--		if (!irq_grp->napi_ndev)
--			return -ENOMEM;
-+		if (!irq_grp->napi_ndev) {
-+			ret = -ENOMEM;
-+			goto free_napi_ndev;
-+		}
- 
- 		netif_napi_add(irq_grp->napi_ndev, &irq_grp->napi,
- 			       ath12k_ahb_ext_grp_napi_poll);
-@@ -628,12 +650,19 @@ static int ath12k_ahb_config_ext_irq(struct ath12k_base *ab)
- 					       ath12k_ahb_ext_interrupt_handler,
- 					       IRQF_TRIGGER_RISING,
- 					       irq_name[irq_idx], irq_grp);
--			if (ret)
-+			if (ret) {
- 				ath12k_warn(ab, "failed request_irq for %d\n", irq);
-+				ath12k_ahb_free_napi_for_group(irq_grp);
-+				goto free_napi_ndev;
-+			}
+@@ -4341,18 +4340,16 @@ static void ath12k_dp_rx_mon_dest_process(struct ath12k *ar, int mac_id,
  		}
- 	}
  
- 	return 0;
+ 		if (head_msdu && tail_msdu) {
+-			tmp_mpdu = kzalloc(sizeof(*tmp_mpdu), GFP_ATOMIC);
+-			if (!tmp_mpdu)
+-				break;
+-
+-			tmp_mpdu->head = head_msdu;
+-			tmp_mpdu->tail = tail_msdu;
+-			tmp_mpdu->err_bitmap = pmon->err_bitmap;
+-			tmp_mpdu->decap_format = pmon->decap_format;
+-			ath12k_dp_mon_rx_deliver(ar, tmp_mpdu,
++			struct dp_mon_mpdu tmp_mpdu = {
++				.head = head_msdu,
++				.tail = tail_msdu,
++				.err_bitmap = pmon->err_bitmap,
++				.decap_format = pmon->decap_format,
++			};
 +
-+free_napi_ndev:
-+	ath12k_ahb_free_napi(ab, i);
-+	return ret;
- }
++			ath12k_dp_mon_rx_deliver(ar, &tmp_mpdu,
+ 						 &pmon->mon_ppdu_info, napi);
+ 			rx_mon_stats->dest_mpdu_done++;
+-			kfree(tmp_mpdu);
+ 		}
  
- static int ath12k_ahb_config_irq(struct ath12k_base *ab)
-@@ -1071,11 +1100,14 @@ static int ath12k_ahb_probe(struct platform_device *pdev)
- 	ret = ath12k_core_init(ab);
- 	if (ret) {
- 		ath12k_err(ab, "failed to init core: %d\n", ret);
--		goto err_rproc_deconfigure;
-+		goto err_free_ext_napi;
- 	}
- 
- 	return 0;
- 
-+err_free_ext_napi:
-+	ath12k_ahb_free_ext_napi(ab);
-+
- err_rproc_deconfigure:
- 	ath12k_ahb_deconfigure_rproc(ab);
- 
-@@ -1115,6 +1147,7 @@ static void ath12k_ahb_free_resources(struct ath12k_base *ab)
- {
- 	struct platform_device *pdev = ab->pdev;
- 
-+	ath12k_ahb_free_ext_napi(ab);
- 	ath12k_hal_srng_deinit(ab);
- 	ath12k_ce_free_pipes(ab);
- 	ath12k_ahb_resource_deinit(ab);
+ 		ring_entry = ath12k_hal_srng_dst_get_next_entry(ar->ab,
 -- 
 2.53.0
 
