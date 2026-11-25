@@ -1,54 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795625010;
-	b=BNmZixvHeaOXFxOkbgCQwM+qUfuZEyZYJocNf28XsqhkWeyHV3aoT7JooP6CIZKi642c
-	 WkKcH9JSVkvOxX3Xw1iKGe4Q4kSZy8WQS9Cf6acC/RY1w/OstpSUm/ZeCpDEwbjfOlpFw
-	 33H5vmZnBmJ8xpNZhWf10SUya+45lFynAaYJUiQXZxosoPwuKRAGMOIX7I5V7G3pfnWmB
-	 Z6g1MaqbQ61WZ+qxQDVJdOJvtNwNckJUvf5f5O6F2PNtr3GzBIEzBNQoakcmvlO2q/Ma3
-	 xRa8LPQQOIYX7karPl1snsAajhcItlGmomfjFYw6aNUupjO8m+oMWZb0uSTcSWL8nSA==
+	t=1795625014;
+	b=KTEYGyEhudNgcl3LpVEcY8y1ytjjSxJEDMvjr3axRzqtITulMSffy657rEH3M9GLdewd
+	 +8+sIDkmR92FEjc/kdlsnV5yg3fQrE6RqV8xKLJpl1nlo+g3Yfy/4pFyTKJUAmMf2LC4X
+	 61s4Hwab7b6OphqbM3dEOKV372VQ8dD1I79smh9uqCe+XqvslJtF6DrK6DNXHyVufxriK
+	 tTrAOLstdcAJG/WV6J6ImLmCfVqBtTnSI1WyD5kIuR7Jpj6T7a3hMfNg55v79AP3jJ7j1
+	 GywrbQsJ5H5tA5C/GpCh8EJxMyH8xnqUir4zbK/w7SDu1iKu0MXfxeeAUIXFhJnhFhw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795625010;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795625014;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Transfer-Encoding;
-	bh=AwLNl0Fa0x43gGBNqaRU3OLmBhiGgnvMm6AL6w41cgE=;
-	b=usxz4TXmLq9QJoSPTVygPmoH7DvzhCTaLVhY/8DOHGxshS9i4ot0IKJz7y90t/V341bD
-	 K8meugSefPAeIRde3udtUah93QlewC3JkzKHC3nKPLcnn3vpbXnvcp/RYdK9mlmOe6Ga3
-	 pCGQV6J5zUP7EhfqFgjyHR5jm5zCoMWL+VC42I1t50PNX+5AC7cXQ1pqgKH+WRHnCwMMz
-	 tUSQqsmjjCP8Sib3y65705UbzyWCEXPlFK2k0zDDNfx6r9WHmn3HJSJg/JzJUUUlxmC/s
-	 ZLD679yQ8B7SNQj0KdCTouTqdg03ZXpR+JZoAeY9pftclNL5ks7gXBezG115NYqcLZg==
+	 MIME-Version:Content-Type:Content-Transfer-Encoding;
+	bh=Opg11w1JOJLGyhpEJOPauRnNuoC0NYC4tDL4FLUCcyc=;
+	b=kGvEGRW/TvZgL+q1JGYCU/JolaprNYu5wxidqZ8RAaxBvlcOE7wYcD7o9v5LJwxvTjYH
+	 tr2mL5ITyo2E+vV2QhgM3mDjrMThUiZB4PSgjqP3wym5tS0J/+ZFb3fh/Zoz39HEqVn3K
+	 Q7C4n4KginNbjir/Kr9BW3XvGb2FIePVt3BBgLSzasg+F2LRJJIIWeF5uN1ckFdrL8YHN
+	 AJdnX7xNGMBMIO5zXsUjlx8rBWxHGsPubgMv3EtUi33o2hpDfh2Xka1eJdqkz/9dHhiUx
+	 H0Rjtr32E6uwZbN4K8ALCnGUx7MzOsvfALxwMYgWto4vtLX4ecQd8C6SECcwGvcgQww==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Nk6KElrH;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=NyEwgusm;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CE11F606A31E;
-	Wed, 25 Nov 2026 16:43:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 18C1F606A323;
+	Wed, 25 Nov 2026 16:43:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Nk6KElrH
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C1F721F000D1;
-	Wed, 25 Nov 2026 16:43:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=NyEwgusm
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E94FD1F000CF;
+	Wed, 25 Nov 2026 16:43:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795625010;
-	bh=AwLNl0Fa0x43gGBNqaRU3OLmBhiGgnvMm6AL6w41cgE=;
+	s=korg; t=1795625013;
+	bh=Opg11w1JOJLGyhpEJOPauRnNuoC0NYC4tDL4FLUCcyc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Nk6KElrH8G0koWawytYu7jPZiG6wGO/GXSGXqygrCOvtasy8JizZbuZ4n5Gk96Jjs
-	 W8S5W65HUy9tQPuyldT+WncHsrJp3jN+ABwtJ9PDpsbZ4O9nbEWe+9JZqWLTcRM8Ef
-	 h67NgPqH6pool3zzuxqjwRLf+BdxXUFJ8WVyILUo=
+	b=NyEwgusm3pgcs4u6Xdn5uf4i+BCJ6bRbYalUr9H+S8++rSafGdbGMfftm+3KnVFd9
+	 e4Gj8OifmEYdpMkSMPOeLfUT70Hy2x2S8aTNVk47tDiDBlFDObqWmIUvtcoTEJ4Gbj
+	 5HtC4Gn7gzSVwC6Hd0ZoSc75of4kbrE6s6sJt/g0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hannes Reinecke <hare@kernel.org>,
-	Christoph Hellwig <hch@lst.de>,
-	Yingjie Wang <1075151112@qq.com>,
-	Keith Busch <kbusch@kernel.org>,
+	=?UTF-8?q?Jouni=20H=C3=B6gander?= <jouni.hogander@intel.com>,
+	Mika Kahola <mika.kahola@intel.com>,
+	Joonas Lahtinen <joonas.lahtinen@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 378/816] nvmet-tcp: validate the TLS handshake timeout
-Date: Wed, 25 Nov 2026 15:32:06 +0100
-Message-ID: <20261125143857.953756778@linuxfoundation.org>
+Subject: [PATCH 6.12 379/816] drm/i915/psr: Disable linked plane sel fetch as well
+Date: Wed, 25 Nov 2026 15:32:07 +0100
+Message-ID: <20261125143857.977430798@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143849.205329330@linuxfoundation.org>
 References: <20261125143849.205329330@linuxfoundation.org>
@@ -64,128 +63,95 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Yingjie Wang <1075151112@qq.com>
+From: Jouni Högander <jouni.hogander@intel.com>
 
-[ Upstream commit e3e7a85730a4b17efa1e2ff4088443c4753be683 ]
+[ Upstream commit b56721c32eb3ad0f086fdc0f33479be395e43bb9 ]
 
-tls_handshake_timeout is writable but stored as a signed int. Multiplying
-the value by MSEC_PER_SEC and HZ therefore uses signed arithmetic.
+Currently we are not setting linked plane selective area when selective
+fetch is about to be disabled for the UV plane. Fix this by simplifying the
+loop by just handling plane selective fetch disable and area setting same
+way.
 
-With HZ=1000, setting it to 2147484 overflows both multiplications. If
-the handshake request is accepted and remains pending, the timer wheel
-treats the jiffies delay as already expired and queues the timeout work
-on its next advance, while the handshake agent was given about 24.9
-days. Negative values such as -1 cause the same immediate kernel-side
-timeout.
+Also set the update_planes bit based on comparing old and new plane
+selective fetch area. This way both the plane and its linked Y plane are
+updated only when their selective fetch area changed.
 
-Store the parameter as an unsigned int and reject values that cannot be
-represented both by tls_handshake_args::ta_timeout_ms and by a safe
-jiffies delay. Take one snapshot so a concurrent parameter update cannot
-give the handshake agent and delayed work different timeouts. Document
-the accepted range for built-in use.
-
-Negative and oversized values now fail with -EINVAL. Keep zero valid,
-preserving the existing immediate-timeout behavior.
-
-Fixes: 675b453e0241 ("nvmet-tcp: enable TLS handshake upcall")
-Cc: stable@vger.kernel.org
-Reviewed-by: Hannes Reinecke <hare@kernel.org>
-Reviewed-by: Christoph Hellwig <hch@lst.de>
-Signed-off-by: Yingjie Wang <1075151112@qq.com>
-Signed-off-by: Keith Busch <kbusch@kernel.org>
+Fixes: a4f477e6ac17 ("drm/i915/psr: Add proper handling for disabling sel fetch for planes")
+Cc: <stable@vger.kernel.org> # v6.8+
+Assisted-by: GitHub-Copilot:claude-opus-5
+Signed-off-by: Jouni Högander <jouni.hogander@intel.com>
+Reviewed-by: Mika Kahola <mika.kahola@intel.com>
+Link: https://patch.msgid.link/20260929094434.77129-4-jouni.hogander@intel.com
+(cherry picked from commit b10c83af60cbc00ce4112742fd297581233e43cd)
+Signed-off-by: Joonas Lahtinen <joonas.lahtinen@linux.intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../admin-guide/kernel-parameters.txt         |  5 ++++
- drivers/nvme/target/tcp.c                     | 26 ++++++++++++++++---
- 2 files changed, 27 insertions(+), 4 deletions(-)
+ drivers/gpu/drm/i915/display/intel_psr.c | 27 ++++++++++++------------
+ 1 file changed, 13 insertions(+), 14 deletions(-)
 
-diff --git a/Documentation/admin-guide/kernel-parameters.txt b/Documentation/admin-guide/kernel-parameters.txt
-index c0748a3c5aa6e..5f2ecf40fad58 100644
---- a/Documentation/admin-guide/kernel-parameters.txt
-+++ b/Documentation/admin-guide/kernel-parameters.txt
-@@ -4219,6 +4219,11 @@
- 			Valid values range from 0 to the smaller of
- 			UINT_MAX / 1000 and MAX_JIFFY_OFFSET / HZ. Default: 10
+diff --git a/drivers/gpu/drm/i915/display/intel_psr.c b/drivers/gpu/drm/i915/display/intel_psr.c
+index 929113fc12e60..7a9b1baaa4435 100644
+--- a/drivers/gpu/drm/i915/display/intel_psr.c
++++ b/drivers/gpu/drm/i915/display/intel_psr.c
+@@ -2724,21 +2724,14 @@ int intel_psr2_sel_fetch_update(struct intel_atomic_state *state,
  
-+	nvmet_tcp.tls_handshake_timeout=
-+			[NVME] NVMe/TCP target TLS handshake timeout in seconds.
-+			Valid values range from 0 to the smaller of
-+			UINT_MAX / 1000 and MAX_JIFFY_OFFSET / HZ. Default: 10
-+
- 	ohci1394_dma=early	[HW,EARLY] enable debugging via the ohci1394 driver.
- 			See Documentation/core-api/debugging-via-ohci1394.rst for more
- 			info.
-diff --git a/drivers/nvme/target/tcp.c b/drivers/nvme/target/tcp.c
-index ab74d36438888..b46b022a68bc2 100644
---- a/drivers/nvme/target/tcp.c
-+++ b/drivers/nvme/target/tcp.c
-@@ -6,6 +6,7 @@
- #define pr_fmt(fmt) KBUILD_MODNAME ": " fmt
- #include <linux/module.h>
- #include <linux/init.h>
-+#include <linux/jiffies.h>
- #include <linux/slab.h>
- #include <linux/err.h>
- #include <linux/key.h>
-@@ -77,8 +78,24 @@ MODULE_PARM_DESC(idle_poll_period_usecs,
- /*
-  * TLS handshake timeout
-  */
--static int tls_handshake_timeout = 10;
--module_param(tls_handshake_timeout, int, 0644);
-+static unsigned int tls_handshake_timeout = 10;
-+
-+static int tls_handshake_timeout_set(const char *val,
-+				     const struct kernel_param *kp)
-+{
-+	return param_set_uint_minmax(val, kp, 0,
-+		min_t(unsigned long, UINT_MAX / MSEC_PER_SEC,
-+		      MAX_JIFFY_OFFSET / HZ));
-+}
-+
-+static const struct kernel_param_ops tls_handshake_timeout_ops = {
-+	.set = tls_handshake_timeout_set,
-+	.get = param_get_uint,
-+};
-+
-+module_param_cb(tls_handshake_timeout, &tls_handshake_timeout_ops,
-+		&tls_handshake_timeout, 0644);
-+__MODULE_PARM_TYPE(tls_handshake_timeout, "uint");
- MODULE_PARM_DESC(tls_handshake_timeout,
- 		 "nvme TLS handshake timeout in seconds (default 10)");
- #endif
-@@ -1948,6 +1965,7 @@ static int nvmet_tcp_tls_handshake(struct nvmet_tcp_queue *queue)
- {
- 	int ret = -EOPNOTSUPP;
- 	struct tls_handshake_args args;
-+	unsigned int timeout = READ_ONCE(tls_handshake_timeout);
+ 		inter = crtc_state->psr2_su_area;
+ 		sel_fetch_area = &new_plane_state->psr2_sel_fetch_area;
+-		if (!drm_rect_intersect(&inter, &new_plane_state->uapi.dst)) {
+-			/*
+-			 * if plane sel fetch was previously enabled ->
+-			 * disable it
+-			 */
+-			if (drm_rect_height(&old_plane_state->psr2_sel_fetch_area) > 0)
+-				crtc_state->update_planes |= BIT(plane->id);
+-
+-			continue;
++		if (drm_rect_intersect(&inter, &new_plane_state->uapi.dst)) {
++			sel_fetch_area->y1 = inter.y1 - new_plane_state->uapi.dst.y1;
++			sel_fetch_area->y2 = inter.y2 - new_plane_state->uapi.dst.y1;
+ 		}
  
- 	if (queue->state != NVMET_TCP_Q_TLS_HANDSHAKE) {
- 		pr_warn("cannot start TLS in state %d\n", queue->state);
-@@ -1961,7 +1979,7 @@ static int nvmet_tcp_tls_handshake(struct nvmet_tcp_queue *queue)
- 	args.ta_done = nvmet_tcp_tls_handshake_done;
- 	args.ta_data = queue;
- 	args.ta_keyring = key_serial(queue->port->nport->keyring);
--	args.ta_timeout_ms = tls_handshake_timeout * 1000;
-+	args.ta_timeout_ms = timeout * MSEC_PER_SEC;
+-		sel_fetch_area = &new_plane_state->psr2_sel_fetch_area;
+-		sel_fetch_area->y1 = inter.y1 - new_plane_state->uapi.dst.y1;
+-		sel_fetch_area->y2 = inter.y2 - new_plane_state->uapi.dst.y1;
+-		crtc_state->update_planes |= BIT(plane->id);
++		if (!drm_rect_equals(&old_plane_state->psr2_sel_fetch_area,
++				     sel_fetch_area))
++			crtc_state->update_planes |= BIT(plane->id);
  
- 	ret = tls_server_hello_psk(&args, GFP_KERNEL);
- 	if (ret) {
-@@ -1969,7 +1987,7 @@ static int nvmet_tcp_tls_handshake(struct nvmet_tcp_queue *queue)
- 		pr_err("failed to start TLS, err=%d\n", ret);
- 	} else {
- 		queue_delayed_work(nvmet_wq, &queue->tls_handshake_tmo_work,
--				   tls_handshake_timeout * HZ);
-+				   (unsigned long)timeout * HZ);
+ 		/*
+ 		 * Sel_fetch_area is calculated for UV plane. Use
+@@ -2746,16 +2739,22 @@ int intel_psr2_sel_fetch_update(struct intel_atomic_state *state,
+ 		 */
+ 		if (linked) {
+ 			struct intel_plane_state *linked_new_plane_state;
++			struct intel_plane_state *linked_old_plane_state;
+ 			struct drm_rect *linked_sel_fetch_area;
+ 
+ 			linked_new_plane_state = intel_atomic_get_new_plane_state(state, linked);
+ 			if (!linked_new_plane_state)
+ 				return -EINVAL;
+ 
++			linked_old_plane_state = intel_atomic_get_old_plane_state(state, linked);
++
+ 			linked_sel_fetch_area = &linked_new_plane_state->psr2_sel_fetch_area;
+ 			linked_sel_fetch_area->y1 = sel_fetch_area->y1;
+ 			linked_sel_fetch_area->y2 = sel_fetch_area->y2;
+-			crtc_state->update_planes |= BIT(linked->id);
++
++			if (!drm_rect_equals(&linked_old_plane_state->psr2_sel_fetch_area,
++					     linked_sel_fetch_area))
++				crtc_state->update_planes |= BIT(linked->id);
+ 		}
  	}
- 	return ret;
- }
+ 
 -- 
 2.53.0
 
