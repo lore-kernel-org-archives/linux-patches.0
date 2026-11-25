@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795622834;
-	b=NEGt2kSy9GBBQebKMFkSsv8F+GQbHrcnGpe/rL49LI5hDLBNt0nqCljHIw19BKzV3eYv
-	 yYyoDWk244Zz4blWTlxohnpjlJXhJrbqQ4Qmz6UfgckBSFbGqCmNv62Eb+lKUfIR8rQcN
-	 apV+HVPIZ9oR1URKQEmvw5cIRYgpb5fupehxiPHgUhlaGNc83NAUKmmJuIVzzmxI1t2C1
-	 SUVFxF9BLeBxRfJqKHVq52QjGfXIDYxpkWjJ6ubSk3sm1nu8tgrsmL+qnEdqe0qHlVDdk
-	 tMnOC32UJtBum1J62/dR8dEY1VNI0yRpR+YNcfOH9foz+walQNRJLq+KoC9Qp5mZ8gg==
+	t=1795622838;
+	b=dzrHEtLqMjFiDBMmW+v/TfVRNH2gxbUSaxtRsCeJczxZNZy3/xhCGwHd6azY26cqCG8b
+	 2179HIJ/V57anTdF8DPAhMv9e/j+SVNxyI3sDzbiFrdIuEbXTfOWxcfYYcDDc5mV+24gO
+	 sqsSe+qO9wj+y8hsI/gzvOCbPWG3XxQLpTvgUIH0vvRl7JPuRVh6glIXAiVRN4UC+q1iV
+	 JfMIPY89AFwuEBPbT+tcxYa19BHPOweCHiA40/oh5pipX0IhcqLx81cNGtjGJinZjSf6s
+	 OjgEK+9vChS1kOtqSb3IqIxKvicjLMM6hRuercmP2wI9DB52okLxeaUMkRzzOG76OGQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795622834;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795622838;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=os/7UPMusY1NPCehCcVJ4DaMyBFGv4xdW7CETmCoAfk=;
-	b=M154ddaIfx39YCHgEuiM0XzWZozz9QcT5UV/qiswQL/aS3umlBP13xznbnz2CbQCn2gt
-	 ZEQhcZcBIh/8Yf6gyfSwjdt0/rxyFl2tI0aPUZSL1i4gHi8w+yMlBz0gH9W8tLJLlbgnN
-	 5BikPoLvtKLLiWPUsf1h7MPy3HuUbxvSUfvB2kKYKFw09QyNeNGCYmRlSMnQr9bXaMAcx
-	 VYyiH8Qc5oo+SfSuDIbrZ0o3+fyVy/ivq7kszHfYxqyIMyumIduR6zw36KuFcs0fLf5Xr
-	 e+PS5DkTfniIsVfGi5iJLzhQp/Q1NVm4h9+7cbvIkGXaDf2djuMiv4VdOuy+Es9Pnmw==
+	bh=QA32p2NaByUFGQWXxz5C6ODINKOZpt/CooFP4naTdLA=;
+	b=wOpLESosyUsBqjkuUR/8W8rcTTPD+n//d8o4qL3L/aSTXAbKxommzrOFseQm7kmmVA4u
+	 5Hf0x6U7pd4zKzoISXQDm3zgrRrZFWJN2FXjaoa1ZoS8EhSiGeJhjiQqU5aR+q9nyisGt
+	 pIW7ha1lkFTJCl+afxoYSPfPplrj+iGXPNatWGv1FBoj69CgBRqH7H3vQhMPWBBXSP5NQ
+	 wIC++KrF5Fr1oPUBS9QQxCRCCNUdtf6DIkmD+70jRs2w8zqJjuTRLMLX0o6kxQmrkzRw3
+	 geHQk78S60+wLQXAt2zJKuAPNCyyyBCYtUGLo1F60SGH8lHs7KgLy+C5xZUiIfPEVRw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=NrBojs+E;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=JB6cRSCR;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6AD29606A32C;
-	Wed, 25 Nov 2026 16:07:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E9D96606A32C;
+	Wed, 25 Nov 2026 16:07:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=NrBojs+E
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6FA6A1F000C6;
-	Wed, 25 Nov 2026 16:07:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=JB6cRSCR
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B66FC1F000D3;
+	Wed, 25 Nov 2026 16:07:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795622834;
-	bh=os/7UPMusY1NPCehCcVJ4DaMyBFGv4xdW7CETmCoAfk=;
+	s=korg; t=1795622837;
+	bh=QA32p2NaByUFGQWXxz5C6ODINKOZpt/CooFP4naTdLA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=NrBojs+EjiFo6VkranMBIzC7YJ+g3M8AReBPhXr8kl2ms1FHBGly39qP9HXzd2aBm
-	 tSD/jM+db9MN/1BzpRw5WyKvghzdr4uI/SjfBl5yDSpTK7Hhe2FBocfqsy4OZAid9v
-	 QVaqnmdid4+ufxYtQolF+aO3asHSaJMEKYeeDB2s=
+	b=JB6cRSCRNttshtvin0NlVR72ziKLXTlV5zwPlLuqma+atDXBEbqAsfO39ZCByXYhn
+	 f2MvU41iEFL6avbyKyP+3ovdZ86NwMQugLk7oWfpErnpzEhOzFHWI2ZLN8AsHl4WLO
+	 bPI5YYfZSPeMm5Aly5/94WSK8tFdN5MQJ9CXF7aA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Adrian Hunter <adrian.hunter@intel.com>,
-	Ian Ray <ian.ray@gehealthcare.com>,
-	Haibo Chen <haibo.chen@nxp.com>,
+	Igor Velkov <iav@iav.lv>,
+	Neil Armstrong <neil.armstrong@linaro.org>,
 	Ulf Hansson <ulfh@kernel.org>
-Subject: [PATCH 6.18 664/990] mmc: sdhci-esdhc-imx: map unsupported driver type to Type B
-Date: Wed, 25 Nov 2026 15:33:51 +0100
-Message-ID: <20261125143837.643709645@linuxfoundation.org>
+Subject: [PATCH 6.18 665/990] mmc: meson-gx: report busy from DAT0 alone
+Date: Wed, 25 Nov 2026 15:33:52 +0100
+Message-ID: <20261125143837.666577607@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143822.072087159@linuxfoundation.org>
 References: <20261125143822.072087159@linuxfoundation.org>
@@ -69,71 +68,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ian Ray <ian.ray@gehealthcare.com>
+From: Igor Velkov <iav@iav.lv>
 
-commit d35d93c2902592a84347a15deac4d67a323694c9 upstream.
+commit 318fdb75f4dc9d18ae621b9fb25eb11160c95649 upstream.
 
-Since commit 5a52c5701a67 ("mmc: core: Fix host controller programming
-for fixed driver type"), the eMMC driver strength is passed directly to
-mmc_set_driver_type(), which propagates the value through ios.drv_type
-all the way to sdhci_set_ios().  For value 4, SDHCI correctly warns:
+meson_mmc_card_busy() reports busy only while DAT0..3 are all low. A
+busy card drives DAT0 low and leaves DAT1..3 to the pull-ups, and the
+callback is defined as "Check if the card is pulling dat[0] low". So a
+busy card is reported free, and the core, which prefers card_busy over
+CMD13 in mmc_busy_cb(), stops polling after CMD6 and erase at once. The
+controller hides this on R1b commands, where it waits for busy itself.
+Once max_busy_timeout is reported, the core sends the longer waits, the
+120 s BKOPS and 240 s sanitize switches among them, as R1 and has only
+the polling left.
 
-  mmc2: invalid driver type, default to driver type B
+Look at DAT0 only, as sdhci_card_busy() does. The checks around the
+voltage switch in mmc_set_uhs_voltage() still hold: the card drives
+DAT0..3 low together after CMD11 and keeps them low together on
+failure.
 
-The host driver type has no effect on this controller: esdhc_writew_le()
-never programs the driver-type field of SDHCI_HOST_CONTROL2.  Hook
-set_ios() and force drv_type to the always-valid Type B, so that SDHCI
-never sees an unsupported value.
-
-Tested on i.MX8MP (usdhc3, eMMC in HS400) with
-`fixed-emmc-driver-type = <4>`: the warning is gone and the HS_TIMING
-register contains 0x43 as expected.
-
-Fixes: 5a52c5701a67 ("mmc: core: Fix host controller programming for fixed driver type")
-Link: https://lore.kernel.org/all/20260926122908.866-1-ian.ray@gehealthcare.com/
+Fixes: 186cd8b7f586 ("mmc: meson-gx: implement card_busy callback")
 Cc: stable@vger.kernel.org
-Suggested-by: Adrian Hunter <adrian.hunter@intel.com>
-Signed-off-by: Ian Ray <ian.ray@gehealthcare.com>
-Acked-by: Adrian Hunter <adrian.hunter@intel.com>
-Reviewed-by: Haibo Chen <haibo.chen@nxp.com>
+Signed-off-by: Igor Velkov <iav@iav.lv>
+Reviewed-by: Neil Armstrong <neil.armstrong@linaro.org>
 Signed-off-by: Ulf Hansson <ulfh@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/mmc/host/sdhci-esdhc-imx.c |   17 +++++++++++++++++
- 1 file changed, 17 insertions(+)
+ drivers/mmc/host/meson-gx-mmc.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/drivers/mmc/host/sdhci-esdhc-imx.c
-+++ b/drivers/mmc/host/sdhci-esdhc-imx.c
-@@ -1131,6 +1131,20 @@ static void esdhc_reset_tuning(struct sd
- 	}
+--- a/drivers/mmc/host/meson-gx-mmc.c
++++ b/drivers/mmc/host/meson-gx-mmc.c
+@@ -1079,8 +1079,8 @@ static int meson_mmc_card_busy(struct mm
+ 
+ 	regval = readl(host->regs + SD_EMMC_STATUS);
+ 
+-	/* We are only interrested in lines 0 to 3, so mask the other ones */
+-	return !(FIELD_GET(STATUS_DATI, regval) & 0xf);
++	/* The card signals busy on DAT0 alone. */
++	return !(FIELD_GET(STATUS_DATI, regval) & BIT(0));
  }
  
-+static void sdhci_esdhc_imx_set_ios(struct mmc_host *mmc, struct mmc_ios *ios)
-+{
-+	/*
-+	 * This controller has no driver-type control: esdhc_writew_le()
-+	 * discards the driver-type field when writing SDHCI_HOST_CONTROL2.
-+	 * The programmed value is therefore irrelevant, but SDHCI rejects
-+	 * non-SD values such as 4 (eMMC 40 ohm, from fixed-emmc-driver-type).
-+	 * Force an always-valid Type B.
-+	 */
-+	ios->drv_type = MMC_SET_DRIVER_TYPE_B;
-+
-+	sdhci_set_ios(mmc, ios);
-+}
-+
- static void usdhc_init_card(struct mmc_host *mmc, struct mmc_card *card)
- {
- 	struct sdhci_host *host = mmc_priv(mmc);
-@@ -1929,6 +1943,9 @@ static int sdhci_esdhc_imx_probe(struct
- 		host->max_timeout_count = 0xF;
- 	}
- 
-+	/* No SDHCI driver type control */
-+	host->mmc_host_ops.set_ios = sdhci_esdhc_imx_set_ios;
-+
- 	if (imx_data->socdata->flags & ESDHC_FLAG_MAN_TUNING)
- 		sdhci_esdhc_ops.platform_execute_tuning =
- 					esdhc_executing_tuning;
+ static int meson_mmc_voltage_switch(struct mmc_host *mmc, struct mmc_ios *ios)
 
 
