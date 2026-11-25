@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795618523;
-	b=RA8xwVkrVPg+nzkdDhGh5OjOoNXq/tWUolGzPscDt0cds35/niQwqZkyGHMFpZZHlPPo
-	 IUdRdIzx91Izqw7JR2jHf+F/Bouw+fWU1oE3Jm1NpD6WLEzSeyN5/4nW0eWJT5Jls9KK8
-	 99dmbTjXNU/RO3N2OFglznfadv3/zaDykWxUwdy4kG8GVUA6u/R3WGCZwWsF/6kvC6u7V
-	 MBd7P8bm3WabVjwlbSzAMGE44tQK8sRXtEu/nknb28f2EHym8DKgHCRhh4iMa37t0Pyiz
-	 p055hsTdGH4tZWNcxZG3Ce0XKgPrd3pvbdksxvMEJbaaBG0PqDr0vVvorzCE09NGKng==
+	t=1795618527;
+	b=wt/ZpHiatuI2rI2WGpIfPE73oeb2iOwtfOWF60EHNomHrWvcvDcKTBie7VEw9SEBUbNA
+	 o2PJlsbPAHRhB0YH+U2PVtHbU598myfOVx4MKwp8L/76NuNnJoniTyMKZV+pVpDOAS7TV
+	 +4BGDHt7bhR3XEhGguQ4bwS0heE89INRWJGU+nIMjuSRuGzddr42gIS6lXo63d0TkT7X8
+	 vlenH0RfW0mv2Y2ly2d9J9W7PjLHRpkdnsDSHDR7aHXUhzHuyDbius0eeeLTTq/OacrXj
+	 rVKW8AKv0VffKPUCs1czsyVKY1KiZOWsWKH3K/KDqL8WtLpAKPEnmTGRTT+UqpzLEtg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795618523;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795618527;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=QeZTMD05UQG5ezNX9sLx5b8Z3inveNXJYYD/oVMxqhU=;
-	b=Wcnd1bGKinJ0Hz5CTalcM2jGIeOryv3bFGWdRALDCtQfdMlqo4pjTiJywwJqNHbEAbqm
-	 t8jF7rJrtlAQMUeEsRw/fpRfbC/GbBGl5NZ/l78FZQ6BFGCEM6UDEurTQ3Ih+GN1OYo3Z
-	 p/ILKMeSJDluE/IGztdWJUNNH/FKvtpBTmtlGbOD0ttMUxZ0LOZ9RfbQ4+0Tn96c9/m31
-	 jLHuv139KCUOcy7c6Wk+NwldQWxhxnUiqbrBgGuWtavLdS7bf5rSk37cvQOSf4LXTKwLI
-	 mQF2+KVTAJqCLDLix8821M3lyXcescJpYg04Zw/C85peIwUnHO5TTd25Jp7FyufTTGQ==
+	bh=uXqDyTLqewFdN5Hxvuy0vLHZoeC4Zq0lxlwXrNjvnEM=;
+	b=Qs9jw6uppNzuS/mvFCqnpu5hfj92D0tZeXpmWzLhsawHmFiR6ouBvbWuC5WmRCPlw6gv
+	 rPEP2/5n3wjqv+5fvY0iT9CqizZXtGSASJ+/2pPs2y2W+6SWMb7gFqydQAB5yip7haK/h
+	 +Oq1V/O7EUZrr3K5h/IWMpHnry4J4CICiQnsiDXooCCwvQOpVsU83MlFaUtNDLN/pDouo
+	 C3S3BbqHDV3eJrmIc9M/jc9NIXR98hssaIhc44n8iiLCSsS9WNvmhL/uHlBzQfypni+vV
+	 aw7GYtNTS6QRZb1ZAuB+FX8E3bt158eXFX6b9Gm4pSvZVh+USz3CMmG5G9CCmLrV8Fg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=TDZUSUaI;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=bZvNsqq1;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D6100606A32A;
-	Wed, 25 Nov 2026 14:55:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 17F25606A339;
+	Wed, 25 Nov 2026 14:55:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=TDZUSUaI
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D85DF1F000D0;
-	Wed, 25 Nov 2026 14:55:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=bZvNsqq1
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DDB2A1F000D0;
+	Wed, 25 Nov 2026 14:55:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795618523;
-	bh=QeZTMD05UQG5ezNX9sLx5b8Z3inveNXJYYD/oVMxqhU=;
+	s=korg; t=1795618526;
+	bh=uXqDyTLqewFdN5Hxvuy0vLHZoeC4Zq0lxlwXrNjvnEM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=TDZUSUaIyviYiUtB5xFMt1sCcUOaYT2jofR9u/kossWThirJbY4164qj48EiedFAo
-	 07BVFnIUiN7gEtiGbAskJKdNJH/s1upBE28b2ua+2ZvEHwEGNXuJSdiaWls7l5PwGB
-	 S5/oHuMZs/jDEjxIw5Mzic28+oEBVhQVD6o+aPYM=
+	b=bZvNsqq1A6XRkSIuxmVJrT3HinPZFuMkJZeBzaeJO8cWjDHeyRoZ2tgIs4cRrRVWc
+	 qtMqxY3h73aI20Ryn94HxNO0h1VKg6T6LD6HOT8FH2I4rV01kyfhL4UX5adpHFlZLL
+	 5CEx2jaM9fAUxJuBNGWN6kmUVf75j7hqhkuURkpA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chris Chiu <chris.chiu@canonical.com>,
-	Takashi Iwai <tiwai@suse.de>,
+	Jinseob Kim <kimjinseob88@gmail.com>,
+	Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0305/1005] ALSA: hda/realtek: Use inverted mute LED quirk for HP ZBook 8 G2a
-Date: Wed, 25 Nov 2026 15:27:23 +0100
-Message-ID: <20261125143828.880690821@linuxfoundation.org>
+Subject: [PATCH 7.3 0306/1005] gpiolib: reset lookup flags for each hogged line
+Date: Wed, 25 Nov 2026 15:27:24 +0100
+Message-ID: <20261125143828.903337080@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143821.729802100@linuxfoundation.org>
 References: <20261125143821.729802100@linuxfoundation.org>
@@ -68,49 +68,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chris Chiu <chris.chiu@canonical.com>
+From: Jinseob Kim <kimjinseob88@gmail.com>
 
-[ Upstream commit 022e9f8f094279ecd632b3846968790fad7d8ad6 ]
+[ Upstream commit c20464a78162cf8b3a1c9dc7e0d764e535bfe582 ]
 
-HP ZBook 8 G2a (SSIDs 0x103c:0x8f40, 0x103c:0x8f41, 0x103c:0x8f42,
-0x103c:0x8f62) use the Realtek ALC245 codec with a TAS2781 amplifier
-via I2C. They share the same hardware configuration as the related
-0x103c:0x8f94 / 0x103c:0x8f95 models but were left on
-ALC245_FIXUP_HP_TAS2781_I2C_MUTE_LED, which drives the speaker mute
-LED backwards: off when muted and on when unmuted.
+gpiochip_add_hog() initializes lflags once before iterating over the GPIO
+specifiers. In the non-OF path, an active-low line sets GPIO_ACTIVE_LOW,
+but a later active-high line does not clear it. A single firmware hog
+with mixed polarities therefore configures later active-high lines as
+active-low, including inverting their initial output value.
 
-Reassign these SSIDs to ALC245_FIXUP_HP_TAS2781_I2C_MUTE_LED_INVERTED
-so the LED follows mute state correctly.
+Initialize the lookup flags for each line before translating its flags.
+The OF helper already overwrites the flags for each specifier; the
+non-OF path must also start with a fresh value.
 
-Fixes: 9afbbf490322 ("ALSA: hda/realtek - Enable Mute LED and Tas2781 for HP platform")
-Signed-off-by: Chris Chiu <chris.chiu@canonical.com>
-Link: https://patch.msgid.link/20261105025647.1116662-1-chris.chiu@canonical.com
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Codex assisted with identifying the issue and developing the fix.
+
+Fixes: 802c51a83e9a ("gpiolib: fix hogs with multiple lines")
+Signed-off-by: Jinseob Kim <kimjinseob88@gmail.com>
+Link: https://patch.msgid.link/20261104115938.226-1-kimjinseob88@gmail.com
+Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/hda/codecs/realtek/alc269.c | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ drivers/gpio/gpiolib.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/sound/hda/codecs/realtek/alc269.c b/sound/hda/codecs/realtek/alc269.c
-index 2c12ab2f8d206..a54cd3ebaa5cd 100644
---- a/sound/hda/codecs/realtek/alc269.c
-+++ b/sound/hda/codecs/realtek/alc269.c
-@@ -7934,11 +7934,11 @@ static const struct hda_quirk alc269_fixup_tbl[] = {
- 	SND_PCI_QUIRK(0x103c, 0x8f3a, "HP EliteBook 6 G2i", ALC236_FIXUP_HP_GPIO_LED),
- 	SND_PCI_QUIRK(0x103c, 0x8f3c, "HP EliteBook 6 G2a", ALC236_FIXUP_HP_MUTE_LED_MICMUTE_VREF),
- 	SND_PCI_QUIRK(0x103c, 0x8f3d, "HP EliteBook 6 G2a", ALC236_FIXUP_HP_MUTE_LED_MICMUTE_VREF),
--	SND_PCI_QUIRK(0x103c, 0x8f40, "HP ZBook 8 G2a 14", ALC245_FIXUP_HP_TAS2781_I2C_MUTE_LED),
--	SND_PCI_QUIRK(0x103c, 0x8f41, "HP ZBook 8 G2a 16", ALC245_FIXUP_HP_TAS2781_I2C_MUTE_LED),
--	SND_PCI_QUIRK(0x103c, 0x8f42, "HP ZBook 8 G2a 14W", ALC245_FIXUP_HP_TAS2781_I2C_MUTE_LED),
-+	SND_PCI_QUIRK(0x103c, 0x8f40, "HP ZBook 8 G2a 14", ALC245_FIXUP_HP_TAS2781_I2C_MUTE_LED_INVERTED),
-+	SND_PCI_QUIRK(0x103c, 0x8f41, "HP ZBook 8 G2a 16", ALC245_FIXUP_HP_TAS2781_I2C_MUTE_LED_INVERTED),
-+	SND_PCI_QUIRK(0x103c, 0x8f42, "HP ZBook 8 G2a 14W", ALC245_FIXUP_HP_TAS2781_I2C_MUTE_LED_INVERTED),
- 	SND_PCI_QUIRK(0x103c, 0x8f57, "HP Trekker G7JC", ALC287_FIXUP_CS35L41_I2C_2),
--	SND_PCI_QUIRK(0x103c, 0x8f62, "HP ZBook 8 G2a 16W", ALC245_FIXUP_HP_TAS2781_I2C_MUTE_LED),
-+	SND_PCI_QUIRK(0x103c, 0x8f62, "HP ZBook 8 G2a 16W", ALC245_FIXUP_HP_TAS2781_I2C_MUTE_LED_INVERTED),
- 	SND_PCI_QUIRK(0x103c, 0x8f7e, "HP Messi", ALC245_FIXUP_HP_TAS2781_I2C_MUTE_LED),
- 	SND_PCI_QUIRK(0x103c, 0x8f94, "HP ZBook 8 G2a 14", ALC245_FIXUP_HP_TAS2781_I2C_MUTE_LED_INVERTED),
- 	SND_PCI_QUIRK(0x103c, 0x8f95, "HP ZBook 8 G2a 16", ALC245_FIXUP_HP_TAS2781_I2C_MUTE_LED_INVERTED),
+diff --git a/drivers/gpio/gpiolib.c b/drivers/gpio/gpiolib.c
+index 90731a547ed63..b16d6d727ac35 100644
+--- a/drivers/gpio/gpiolib.c
++++ b/drivers/gpio/gpiolib.c
+@@ -975,7 +975,6 @@ int gpiochip_add_hog(struct gpio_chip *gc, struct fwnode_handle *fwnode)
+ 	 */
+ 	u32 cells = 2;
+ 
+-	lflags = GPIO_LOOKUP_FLAGS_DEFAULT;
+ 	dflags = GPIOD_ASIS;
+ 	name = NULL;
+ 
+@@ -1014,6 +1013,8 @@ int gpiochip_add_hog(struct gpio_chip *gc, struct fwnode_handle *fwnode)
+ 	fwnode_property_read_string(fwnode, "line-name", &name);
+ 
+ 	for (unsigned int i = 0; i < num_hogs; i++) {
++		lflags = GPIO_LOOKUP_FLAGS_DEFAULT;
++
+ 		if (is_of_node(fwnode)) {
+ 			/*
+ 			 * OF-nodes need some additional special handling for
 -- 
 2.53.0
 
