@@ -1,51 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795625157;
-	b=BIO8Qy1jFZg36/ePSkSj5AfbO5DCkBO28iVYG23P/EqFDrb90ygp+V/7bgd16jTw2jSW
-	 /IXt2fxvZgqmmVUn1aUEDwQH7GqSzB+Oy7jyYblhA8DthVd0HaJxq39rpfIs5M3WkE/RL
-	 u/d4hweDiJVRXQKjH2MFVt4h2GPVD3GuQ1Mxfb7gZygzaGPrPzccXOfz1R42cKnalMkXf
-	 mD2cOibizEcn8B38p2IcRz91OEfJZWg7MITFdb3yYx9oX9D9Mb4KkDLByPZGtc9kq/AB8
-	 8FQw7c5fWbTrtSD0K1VQAq9c4ofp1PxpS1TNVfat0DfnObTqr7zL4DgjJPuPzVzMmVA==
+	t=1795625160;
+	b=p2XStdOe0LqB0ie28vtG40Fqnoyvg185BEwcBpqfMep1PSIv+1+59sTSLre69gJ2Gxga
+	 r7SR3Uq5aKYSVZT7G9U0p7FCKfibdlNKa1XhArUp+McDU9UlsT6+ez9h8rmtePQfdWgOG
+	 y6KCGvZ3xaDIpzX50yVgmX9OwCnmrPosttiS+D3+dCDp0osKzie7n7VgUoKomvFLn8QS/
+	 kR8P5yHFGwOU2s8QElNzDGaCmfW+cwtxQkUtZlxTZ67yQ9voXXNY3VhRnH7IcI5PVI2+o
+	 X4FUomImVpBGBj0+lSzMv4T/cZkPv0V48dUuExX6LZMob3/hl+uC1GTqUo2Ca5+SHvg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795625157;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795625160;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=/JZl03W+69edSXL91uj+XdqPU8I2QMS76h0AevnJjNY=;
-	b=VogLL9GkHwlWcQKWt22dYDcJG3EkBE+VSqzSCadj+W3/FduV6VvH5hQQBXiIpbT2lps1
-	 6f6nXC6Zigv0gw5AG7R9cf8Rr/Jym91qK5WZJONra6+HA0cuYGvySsKU63Ni6bnC4D8xu
-	 VzmO5MQ5tXA/L+WoDT36aUqHxdsu2UJpUjCSUL2HLdTHfPRRQOECkKzYKjVJAAO5JeNJx
-	 8THiRHI2K5Kh6RMU5BXXaqqpjxAS0HY6sTZi/JStMU/7KbCxt6Ld/0fs9kb0FjEIVllee
-	 fACz8Gxod70cbPvE9jJ2ZDP354NoK+n9WW/4TWJAYPDRMnOQKqljvc8l3jWn/yZl9+Q==
+	bh=is8NU7Wl0JZGOfZ3kCQ8isUbB120Y8lvp76qi/xJZ5c=;
+	b=aPsX40e5wyrobXzMLSdDUUGu1JWt1TFVlMIXUAAmXMNP4GpwFvOcDdjHl1pSh5qkJX3p
+	 4M32/an+UXJDAyoabI4AsoGYwHDsagIaJpqKldrQJz2K6ivZsdLtiVA14Ryi/mUDNaWL6
+	 pn5dNCAmCNGUgVRphs4CuttOk80nZpzx4rxD8NYoNcqS7DaFuIYXCNUcXsPmYGHaeuXMo
+	 Uq+YHmtskIXmvZlJ/cDHYP5hpBtMEF0VIXQusAo3WMcqVCuxC3JtBO8t2MYg3zvyi0uqv
+	 nGDgKTp1u+Yy3PJgDfIKRUZZ2G9Yia3YhX/lsstLNibPbqDnF8t03Of1vVO5xlNaU/g==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=DEm0pPFm;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=II8At2Sb;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 15DA9606A323;
-	Wed, 25 Nov 2026 16:45:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B897F606A33A;
+	Wed, 25 Nov 2026 16:46:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=DEm0pPFm
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5A7761F000C0;
-	Wed, 25 Nov 2026 16:45:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=II8At2Sb
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CACA61F000D0;
+	Wed, 25 Nov 2026 16:45:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795625156;
-	bh=/JZl03W+69edSXL91uj+XdqPU8I2QMS76h0AevnJjNY=;
+	s=korg; t=1795625160;
+	bh=is8NU7Wl0JZGOfZ3kCQ8isUbB120Y8lvp76qi/xJZ5c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=DEm0pPFmcgtav2NHeDxZ/X6rR1TopKo7m8kDdmBjxlpzqDR3vMVrriFBy8qge4YVI
-	 e2hBbh8XojjLJKFtLfEGUIIcXoFfy4aqVgKsX0I3zGGb1DIUaFqGGbXuj2XC+T5a4l
-	 Yx/WSU3/jU4EHte9vZYmPkt5v4vCSY5CuxfIgGwA=
+	b=II8At2SbEuw8pbuOIW74vPm7tjRCB2wSd3uQMYMIlE9N+pHeQ62Sh5wHAX0kujhGr
+	 xJC+0nZZchEM8JalXzsWFAv4GPCaZM2kAq32mIfyB88+Q+BM5UIXqydsALGlj8rKEC
+	 EZzAOuB2LnqGoRPJYJo1gU8YzhZzHXq+Al1YG5CU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alexei Starovoitov <ast@kernel.org>,
+	Hao Sun <sunhao.th@gmail.com>,
+	Kumar Kartikeya Dwivedi <memxor@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 426/816] bpf: Dont converge a loop on an iterator that was created anew
-Date: Wed, 25 Nov 2026 15:32:54 +0100
-Message-ID: <20261125143859.056178542@linuxfoundation.org>
+Subject: [PATCH 6.12 427/816] bpf: Fix uninit read for non-fetch atomics on partially spilled slots
+Date: Wed, 25 Nov 2026 15:32:55 +0100
+Message-ID: <20261125143859.078648487@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143849.205329330@linuxfoundation.org>
 References: <20261125143849.205329330@linuxfoundation.org>
@@ -67,77 +68,92 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alexei Starovoitov <ast@kernel.org>
+From: Hao Sun <sunhao.th@gmail.com>
 
-[ Upstream commit 6f3ee3516305da3043f1787e3890381a54151730 ]
+[ Upstream commit 5a84b4424db8ae07f0ac682ab031c37a91dce50b ]
 
-When the verifier reaches bpf_iter_*_next() in a state that is equal to
-a state that is still being explored it concludes that the loop
-converged, since an active iterator will be drained eventually.
-states_equal() matches ids through idmap, so the same is concluded for
-an iterator that was destroyed and created again since the old state:
+check_stack_read_fixed_off() skips partial spill checks for non-fetch
+atomics; the following prog can be loaded:
 
-  bpf_iter_num_new(&it, 0, 10);
-  loop:
-          if (bpf_ktime_get_ns())
-                  goto remake;
-  next:
-          if (!bpf_iter_num_next(&it))
-                  goto out;
-          goto loop;
-  remake:
-          bpf_iter_num_destroy(&it);
-          bpf_iter_num_new(&it, 0, 10);
-          goto next;
+0: (b7) r1 = 1                        ; R1=1
+1: (63) *(u32 *)(r10 -8) = r1         ; R1=1 R10=fp0 fp-8=????1
+2: (db) lock *(u64 *)(r10 -8) += r1   ; R1=1 R10=fp0 fp-8=mmmmmmmm
+3: (79) r0 = *(u64 *)(r10 -8)         ; R0=scalar() R10=fp0 fp-8=mmmmmmmm
+4: (77) r0 >>= 32                     ; R0=scalar(smin=0,smax=umax=0xffffffff,var_off=(0x0; 0xffffffff))
+5: (95) exit
 
-Such prog is accepted when the call of bpf_iter_num_next() is the first
-prune point after bpf_iter_num_new() and it never returns. Otherwise
-it's rejected with "infinite loop detected".
+When test run:
+	retval=4294967295
 
-Require the iterator to have the same id in both states.
+Note fp-8 is ????1 at #1, yet it becomes fp-8=mmmmmmmm after the
+non-fetching atomic add at #2; hence the high 32 bits are leaked.
 
-Fixes: 06accc8779c1 ("bpf: add support for open-coded iterator loops")
-Signed-off-by: Alexei Starovoitov <ast@kernel.org>
-Link: https://patch.msgid.link/20260924233130.1213812-8-alexei.starovoitov@gmail.com
-[ sashal: Applied the hunk to is_state_visited() in verifier.c since states.c doesn't exist here, using open-coded frame/stack lookups and comparing ref_obj_id instead of id because iterator slots never set id. ]
+Fix by applying the partial load check; after the patch, the
+prog is rejected:
+
+Verification failed: Memory Safety: Uninitialized stack read
+
+Reason:
+  This rejected read uses 8 bytes at stack offset -8, but byte 4 in that range is uninitialized on
+  this path. Programs loaded with CAP_PERFMON can be allowed to read uninitialized stack bytes, but
+  this program is being rejected without that allowance.
+
+At:
+  ...
+      0 | (b7) r1 = 1
+      1 | (63) *(u32 *)(r10 -8) = r1
+  >>> 2 | (db) lock *(u64 *)(r10 -8) += r1
+      3 | (79) r0 = *(u64 *)(r10 -8)
+      4 | (77) r0 >>= 32
+
+This affects CAP_BPF only.
+
+Fixes: 354e8f1970f8 ("bpf: Support <8-byte scalar spill and refill")
+Signed-off-by: Hao Sun <sunhao.th@gmail.com>
+Link: https://lore.kernel.org/bpf/20260924131342.934290-1-sunhao.th@gmail.com
+Signed-off-by: Kumar Kartikeya Dwivedi <memxor@gmail.com>
+[ sashal: Moved the dst_regno < 0 early return after the partial-spill checks, keeping the existing mark_reg_read() and copy_register_state()/subreg_def code and splitting the subreg_def declaration. ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/bpf/verifier.c | 14 ++++++++++++--
- 1 file changed, 12 insertions(+), 2 deletions(-)
+ kernel/bpf/verifier.c | 12 +++++++++---
+ 1 file changed, 9 insertions(+), 3 deletions(-)
 
 diff --git a/kernel/bpf/verifier.c b/kernel/bpf/verifier.c
-index 86482f36329dd..b66d0487444f1 100644
+index b66d0487444f1..63bb703e0a64d 100644
 --- a/kernel/bpf/verifier.c
 +++ b/kernel/bpf/verifier.c
-@@ -18659,8 +18659,9 @@ static int is_state_visited(struct bpf_verifier_env *env, int insn_idx)
- 			 */
- 			if (is_iter_next_insn(env, insn_idx)) {
- 				if (states_equal(env, &sl->state, cur, RANGE_WITHIN)) {
--					struct bpf_func_state *cur_frame;
-+					struct bpf_func_state *cur_frame, *old_frame;
- 					struct bpf_reg_state *iter_state, *iter_reg;
-+					struct bpf_reg_state *old_iter;
- 					int spi;
+@@ -5140,15 +5140,18 @@ static int check_stack_read_fixed_off(struct bpf_verifier_env *env,
+ 			}
  
- 					cur_frame = cur->frame[cur->curframe];
-@@ -18674,7 +18675,16 @@ static int is_state_visited(struct bpf_verifier_env *env, int insn_idx)
- 					 */
- 					spi = __get_spi(iter_reg->off + iter_reg->var_off.value);
- 					iter_state = &func(env, iter_reg)->stack[spi].spilled_ptr;
--					if (iter_state->iter.state == BPF_ITER_STATE_ACTIVE) {
-+					old_frame = sl->state.frame[iter_reg->frameno];
-+					old_iter = &old_frame->stack[spi].spilled_ptr;
-+					/*
-+					 * states_equal() matches ids through idmap.
-+					 * The loop converged only if it's the same
-+					 * iterator. The one that was destroyed and
-+					 * created again starts from the beginning.
-+					 */
-+					if (iter_state->iter.state == BPF_ITER_STATE_ACTIVE &&
-+					    iter_state->ref_obj_id == old_iter->ref_obj_id) {
- 						update_loop_entry(cur, &sl->state);
- 						goto hit;
- 					}
+ 			mark_reg_read(env, reg, reg->parent, REG_LIVE_READ64);
+-			if (dst_regno < 0)
+-				return 0;
+ 
+ 			if (size <= spill_size &&
+ 			    bpf_stack_narrow_access_ok(off, size, spill_size)) {
++				s32 subreg_def;
++
++				if (dst_regno < 0)
++					return 0;
++
+ 				/* The earlier check_reg_arg() has decided the
+ 				 * subreg_def for this insn.  Save it first.
+ 				 */
+-				s32 subreg_def = state->regs[dst_regno].subreg_def;
++				subreg_def = state->regs[dst_regno].subreg_def;
+ 
+ 				copy_register_state(&state->regs[dst_regno], reg);
+ 				state->regs[dst_regno].subreg_def = subreg_def;
+@@ -5180,6 +5183,9 @@ static int check_stack_read_fixed_off(struct bpf_verifier_env *env,
+ 					return -EACCES;
+ 				}
+ 
++				if (dst_regno < 0)
++					return 0;
++
+ 				if (spill_cnt == size &&
+ 				    tnum_is_const(reg->var_off) && reg->var_off.value == 0) {
+ 					__mark_reg_const_zero(env, &state->regs[dst_regno]);
 -- 
 2.53.0
 
