@@ -1,61 +1,50 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795623556;
-	b=WJVPY4lZsLhg30s4zpkHQ3Iy0MtctQmnHimAKOTkexe527EMKxQxTOpYQOg3vyt5ArUY
-	 4SOyx1Hz7bxo3jpHh20ye7YtVE7U+7Ih+gfwamFAbR0ZztbczNHovQ7MiXGFst/KHU+FZ
-	 Gc3qt7DFmi4qOmRYngSnvQdI4KSxLvRXPojM16D0iCdrAMIy5cIq9bWnQf2MjG1VaeIs2
-	 E4LokUf5Nb8CIsv1PpM0ktjZntpuhTnSN3LG2M98N20KypAEjDn+Ri1fGQdqx4JDhk/ZS
-	 qyXpBSC7VUNDqHnvlbAbm50ptYYfP8Rhjtf3jhRPH34lZGffxqRKIbZoRTo4+B+JPkA==
+	t=1795623559;
+	b=dKNMwb5+67KdHbUwzfpXkT/D9TfzF63hZ6GtgacbtboWRTAu9sld+sGDz1SxtcTcMWbC
+	 1DS5Igy+XAomEekHU7ygCy/ec0A+uPRGEZ0n2eqjQN+6upR1DScLh4DhtahUnja/9Hm9a
+	 DPA9JY3XWZDfz2O0CHZy7lg2m3zf+lXtHMpIHzo3EhbdwDx4KTthyhEbYkcNgrr5uj15N
+	 8S2P3MSKsEhBxj3iqSxtNp0AnabnccWln4n9+JCEhGHIoADLp4lHQFMpqsy27Vqc38k63
+	 T7w6vL+TIRuY1pSqd/0YO+v7kE+yj/8TBAfX+VIDO1Wwhpw6MciZ28ETP66MtQX71eQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795623556;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795623559;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=lsS9JchZMOul6iBmFZf9DeAR2fG3+eh8IwqrAeQsQQo=;
-	b=eOfVMesuRUPwmg/g/2u28Q9MHIS1dQJDo8XemVtT/5S7Xi6+5UJP5roaxxFypBadlJL8
-	 yQDzyvr4dsuQiQKt+5qsLns09eqzBvcrx2CXYFng/YkI72ek0LoXrB907Mgz4bsXpepMw
-	 LNGl7TTzeU3VAhTwRy1TcPl7o/+0zDmGUE7jNOmmFXU896ZWmFKAldrQH1DpSreNWVYxf
-	 4AftGUbIJXEi0qtVyVzvMSw4sO075AMASmAdj/ELjFHO7w9qZQ8OTc+SeZbsr/oCGwHZy
-	 DTq5+P/RWZUYs3MxaZCVdiqfxnbogh30HV1gdxWwwHbTbobUv2ns1cM1hJx5xd+x60Q==
+	bh=TcuXaawwx16ZaH5xRqbfEltmd+ngl/D/eGvDawqqeSU=;
+	b=UwDFgomK6M2wjWqR/tjIUvxmX+UcER88AeiDbCjIXa23u8pGSS65iOd1RX2Cn3z7xQgc
+	 ENR3dlNDVGatya24uHoIinVOdJ+4pUkYmA6m6UEgo04qBfgd2DeM78cAqU0lf1ZHj+NZH
+	 zhlV2au+bDFSVrgPpWKm2O0Y+z38z5nz/5yR6+EuM66ZAZKwcSwA0V7HxEA78zvwgqNFv
+	 IxCNn4VsZ3g+tF8wyRM8GiedXjyDwco7MvMtFwdAt/HlLTN1QpCpNRDqJM+Nr5XbDY2A1
+	 5wqGJoYb2TAPwraBfUsbrC4c6twIfUujLCIdBPanbxiYazYa0gdgF9Vvc2CskUNN8aQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=UwWezXHM;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Jn6l5mgq;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0F35C606A321;
-	Wed, 25 Nov 2026 16:19:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E017E606A31E;
+	Wed, 25 Nov 2026 16:19:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=UwWezXHM
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 613011F000D0;
-	Wed, 25 Nov 2026 16:19:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Jn6l5mgq
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 26CF31F000C0;
+	Wed, 25 Nov 2026 16:19:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795623555;
-	bh=lsS9JchZMOul6iBmFZf9DeAR2fG3+eh8IwqrAeQsQQo=;
+	s=korg; t=1795623558;
+	bh=TcuXaawwx16ZaH5xRqbfEltmd+ngl/D/eGvDawqqeSU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=UwWezXHM3YdtOVk21kwpmdFe8VejjyGb7OJalhv/rfE4Qdj9RRq8Jwq8VOu5TZwa+
-	 3qTt7XjNQUX6BJOO3izaTpewL0ytU/hHf+LjCAg8sUVig6QEYbfJEMQFEOF+j8YS8F
-	 8nbSWtg3fK9bfd6N7CX3znRbTII1VbYN4wKjIj1o=
+	b=Jn6l5mgqsJRbOhPJhYjwCEMCS2KL/jTfSqfws7q44dKuA03bSmUztCLa1METyG46v
+	 W/Opp5XUxTRGaMPCCHyzAY7QERItvgjDG5NE2Pu5C5PbPCUuT0wTue4fZhThprhlTC
+	 1G3J6cJj3KglKeojD9cUQ53mTSL87KvRQXzXo034=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable <stable@kernel.org>,
-	Jiri Slaby <jirislaby@kernel.org>,
-	Nicolas Pitre <npitre@baylibre.com>,
-	Kees Cook <kees+treewide@kernel.org>,
-	Joshua Rogers <linux@joshua.hu>,
-	Chris Mason <mason@kernel.org>,
-	Helge Deller <deller@gmx.de>,
-	Thomas Zimmermann <tzimmermann@suse.de>,
-	Mingyu Wang <25181214217@stu.xidian.edu.cn>,
-	Randy Dunlap <rdunlap@infradead.org>,
-	Ronan Pigott <ronan@rjp.ie>,
-	Liav Mordouch <liavmordouch@gmail.com>
-Subject: [PATCH 6.18 881/990] vt: serialise the producers of the flip buffer
-Date: Wed, 25 Nov 2026 15:37:28 +0100
-Message-ID: <20261125143842.653162787@linuxfoundation.org>
+	"Jiri Slaby (SUSE)" <jirislaby@kernel.org>
+Subject: [PATCH 6.18 899/990] tty: fix misapplied compat_ptr() in tty_compat_ioctl()
+Date: Wed, 25 Nov 2026 15:37:46 +0100
+Message-ID: <20261125143843.069744109@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143822.072087159@linuxfoundation.org>
 References: <20261125143822.072087159@linuxfoundation.org>
@@ -77,124 +66,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chris Mason <mason@kernel.org>
+From: Jiri Slaby (SUSE) <jirislaby@kernel.org>
 
-commit 5d1d814408c1c8e797031eac8ddd40de1a9e8e93 upstream.
+commit 895dc0eaa2779ff46a0b2a20b5ce9eb0b1125cb2 upstream.
 
-Typing on a virtual console while the console replies to an escape
-sequence can make the kernel write past the end of a buffer. A user who
-can write to the foreground console can cause this on purpose if they
-can also inject key events, through /dev/uinput or by writing to the
-/dev/input/event* node of a keyboard.
+Since commit f0193d3ea73b below, `cmd` was converted with compat_ptr(),
+while `arg` was passed to ld->ops->ioctl() unmodified. Fix it so `cmd`
+stays `cmd` and `arg` gets converted through compat_ptr() as intended.
 
-Input for a tty goes through the flip buffer of its port. A driver
-inserts the data with tty_insert_flip_*() and then calls
-tty_flip_buffer_push() to pass it on to the line discipline. The insert
-functions take no lock: they check that the current struct tty_buffer
-has room, copy the data to offset ->used, and then advance ->used. So a
-flip buffer supports only one producer at a time, and a driver that has
-several must serialise them.
+Notes:
+2) compat_ptr() did nothing to `cmd`, provided it is uint,
+1) compat_ptr() is no-op everywhere (was different on s390 before
+   8e0b986c59c6 ("s390: Remove compat support")),
+3) `arg` might not have been chopped correctly until 8e0b986c59c6. But I
+   am not sure why noone noticed all those (7) years (from f0193d3ea73b
+   to 8e0b986c59c6)?
 
-Four functions feed the flip buffer of a virtual console:
-
-- put_queue(), puts_queue() and fn_send_intr() insert typed characters
-  and breaks for the keyboard handler. They run under kbd_event_lock.
-- respond_string() inserts the reply when a program writes an escape
-  sequence that requests one, such as a cursor position report. It runs
-  under the console lock.
-
-The keyboard handler gets its events from the input layer and feeds the
-foreground console. Key events that a program writes to /dev/uinput or
-to an event node reach it in the same way as typed keys.
-
-The keyboard handler and respond_string() share no lock, so they can
-interleave:
-
-    keyboard handler                respond_string()
-    ================                ================
-    room check passes
-                                    room check passes
-    memcpy() to offset used
-    used += len
-                                    memcpy() to offset used
-                                    used += len
-                                      /* used > size of the buffer */
-
-The room check subtracts ->used from the size, and both are unsigned.
-Once ->used exceeds the size, the result wraps, so the check always
-passes, and each later insert lands further past the buffer.
-
-Reproduced as root, with keys from a uinput keyboard and cursor position
-reports on the same console: KFENCE reported an out-of-bounds write
-1,024 bytes past the buffer in under 10 s.
-
-Fix this by taking port->lock, with interrupts disabled, around the
-insert and the push in these four functions. kbd_keycode() already takes
-port->lock under kbd_event_lock, so this lock ordering is not new.
-
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Cc: stable <stable@kernel.org>
-Cc: Jiri Slaby <jirislaby@kernel.org>
-Cc: Nicolas Pitre <npitre@baylibre.com>
-Cc: Kees Cook <kees+treewide@kernel.org>
-Cc: Joshua Rogers <linux@joshua.hu>
-Cc: Chris Mason <mason@kernel.org>
-Cc: Helge Deller <deller@gmx.de>
-Cc: Thomas Zimmermann <tzimmermann@suse.de>
-Cc: Mingyu Wang <25181214217@stu.xidian.edu.cn>
-Cc: Randy Dunlap <rdunlap@infradead.org>
-Cc: Ronan Pigott <ronan@rjp.ie>
-Cc: Liav Mordouch <liavmordouch@gmail.com>
-Signed-off-by: Chris Mason <mason@kernel.org>
+Fixes: f0193d3ea73b ("change semantics of ldisc ->compat_ioctl()")
+Signed-off-by: Jiri Slaby (SUSE) <jirislaby@kernel.org>
+Cc: stable@vger.kernel.org # applicable from 4.20 to 6.18 incl
+Assisted-by: LLM
+Link: https://patch.msgid.link/63e9d84a1e8e23852423206cf3f8907aafc88f17.1793704520.git.jirislaby@kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Link: https://patch.msgid.link/20261027-tty-llm-v1-1-99b0202ae546@linuxfoundation.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/tty/vt/keyboard.c |    6 ++++++
- drivers/tty/vt/vt.c       |    2 ++
- 2 files changed, 8 insertions(+)
+ drivers/tty/tty_io.c |    3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
---- a/drivers/tty/vt/keyboard.c
-+++ b/drivers/tty/vt/keyboard.c
-@@ -321,15 +321,20 @@ int kbd_rate(struct kbd_repeat *rpt)
+--- a/drivers/tty/tty_io.c
++++ b/drivers/tty/tty_io.c
+@@ -2996,8 +2996,7 @@ static long tty_compat_ioctl(struct file
+ 	if (ld->ops->compat_ioctl)
+ 		retval = ld->ops->compat_ioctl(tty, cmd, arg);
+ 	if (retval == -ENOIOCTLCMD && ld->ops->ioctl)
+-		retval = ld->ops->ioctl(tty, (unsigned long)compat_ptr(cmd),
+-				arg);
++		retval = ld->ops->ioctl(tty, cmd, (unsigned long)compat_ptr(arg));
+ 	tty_ldisc_deref(ld);
  
- /*
-  * Helper Functions.
-+ *
-+ * A flip buffer allows one producer at a time, and respond_string() in vt.c
-+ * feeds the same one under the console lock. So take the lock of the port.
-  */
- static void put_queue(struct vc_data *vc, int ch)
- {
-+	guard(spinlock_irqsave)(&vc->port.lock);
- 	tty_insert_flip_char(&vc->port, ch, 0);
- 	tty_flip_buffer_push(&vc->port);
- }
- 
- static void puts_queue(struct vc_data *vc, const char *cp)
- {
-+	guard(spinlock_irqsave)(&vc->port.lock);
- 	tty_insert_flip_string(&vc->port, cp, strlen(cp));
- 	tty_flip_buffer_push(&vc->port);
- }
-@@ -589,6 +594,7 @@ static void fn_inc_console(struct vc_dat
- 
- static void fn_send_intr(struct vc_data *vc)
- {
-+	guard(spinlock_irqsave)(&vc->port.lock);
- 	tty_insert_flip_char(&vc->port, 0, TTY_BREAK);
- 	tty_flip_buffer_push(&vc->port);
- }
---- a/drivers/tty/vt/vt.c
-+++ b/drivers/tty/vt/vt.c
-@@ -1830,6 +1830,8 @@ static void csi_m(struct vc_data *vc)
- 
- static void respond_string(const char *p, size_t len, struct tty_port *port)
- {
-+	/* The keyboard handler feeds the same flip buffer. */
-+	guard(spinlock_irqsave)(&port->lock);
- 	tty_insert_flip_string(port, p, len);
- 	tty_flip_buffer_push(port);
- }
+ 	return retval;
 
 
