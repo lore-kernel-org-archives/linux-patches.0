@@ -1,56 +1,55 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795620398;
-	b=zBfQdvZ0Aa6N7M2MUPf8p1/u4UvTHeJQ6M1dMowyxvwHNqk5xrmoYe5nUQy2O8N0JQ58
-	 qHXJ43uXPzKOUHIwOZ4sryKSJC3FV3i5NrVFoIEirzX/SGzesPXbPQoP008Iwsg0tcJNq
-	 FUotUqg9w223wDHHI5k2ofB+P8yx0qZQ0NfjSuZmquNsZ2rBQ8rQsSjpLOL2c7XaeNJQJ
-	 18FHhVW+nqFUS35MA4xfhMWiCvTJwQQ2gZ4k976ztVvO9XTDwSBMGtVcL2bUc7gQ3IkRQ
-	 278bHob4QG3M/dabIsvgwXcuJv1FgMiC7PFQ1KogdcpYtyR189qAmCdjcdwin7Uo/Sw==
+	t=1795620401;
+	b=QqeOMvz1BEVoUKRqtw+vwzjxuFb8whSyYagm9V7NUgwuc8JqZY0KPcxs62VAhPukpn3d
+	 RmFYkhIKGOO2QnxbVagwZF1DgHocVNzMr6MdtI+/Hd3HQ7iKOAwlo1/0SxPMmWfR0D+gn
+	 7Zgv8deAXuFwCevQuTzt4NpoTa1Rs/gOeX1opVe2pOs2HkFbniaKeAb5IkoeF3AnLFQiJ
+	 uE/k8MwP2WST44nvgBRzo4pLa/e3aC0fypaogTY2o5lDpVegeMK/Ti/3a6F5WLVhW6hcB
+	 OveUQ2NJ0/BEBF8z/vvTvN3KxFobhu7loyiWtDzYScEijdR0vVhYSD3FEj7aQvbXRQQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795620398;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795620401;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Type:Content-Transfer-Encoding;
-	bh=88A3kUiY0j+ZOKx0paOL46IzRNNhRqZ25j0Cszl8cAo=;
-	b=5JG9iLweEpuYgO33cCotrzq2ivroH82T+xY3ihVPor5TqaZ4YvcPB3f17+G5zBEeF4d+
-	 ruHtBiL3Y4zr9zasbD7u9WGnGJp0uNQcbOgp7Midil4zdnceHsH8VBqRvHzGfASWjdSq+
-	 M8dNNNMnQl46Actn9jLpcRK+4Ua23iSHNEWmwab5aJ4aqofn1i35k7RjqX+olY2UBJWqo
-	 g+KTFK6JNfj4dllZZul3vSIGI4bJ8AC2SWnMPXYT9hR3hfKVZpigyU66O44uKQKXitysR
-	 mZUDmOVU2Eq5FYGob+HV04QCCYX09US8n3OfcFltOEHHNGY4IqBlPQB4qATvBHmrGBg==
+	 MIME-Version:Content-Transfer-Encoding;
+	bh=HEHSuxStyd+M0iGJD14feKPPtk3nfc0x9AsCj8zgVII=;
+	b=yzW8NKBlFX0AuViydcgVD9qkJwWGTP6ecz/XWLZRT+XnfdC9zmc+tNFeyH10khaOBYzA
+	 ealOEewrmw5hB0Zr3+jpJpLnpTJ22DQSy4FCukZ74iPu3/7uYmnZghrja/hm7SVgWUPQe
+	 1V2grMkfEqL+8BC2tjKHBJtCsLMq6KBuzXbyF+gdX3eC1JjVO7abs9C8iyV55Y44jpD4A
+	 slqtmyutmdbWrKp+kINkoTPSprS4V+9mrURqm2PIIjcsldyr+bzIe7hZ9lJnusiqR21kb
+	 eaYeyVtQJ3yk/gV/RNvAZPNQCGZGgXYLX0HThFa9f0bx1ONKSkiOxjLuVtW5lr3NfZw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=DqzKCZUq;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ueX5tDuQ;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DCE11606A31E;
-	Wed, 25 Nov 2026 15:26:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C577D606A323;
+	Wed, 25 Nov 2026 15:26:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=DqzKCZUq
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 412921F000C0;
-	Wed, 25 Nov 2026 15:26:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ueX5tDuQ
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 02D3F1F000C6;
+	Wed, 25 Nov 2026 15:26:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795620398;
-	bh=88A3kUiY0j+ZOKx0paOL46IzRNNhRqZ25j0Cszl8cAo=;
+	s=korg; t=1795620401;
+	bh=HEHSuxStyd+M0iGJD14feKPPtk3nfc0x9AsCj8zgVII=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=DqzKCZUqmV6Uz3JNpkb94SrCUKyaA3K2VsBnzftVXZnrfaPlr0E87/Hmck5Grp5Hl
-	 ue0GMGLiOmpUi7SjwkiwRmLIWTUnMXJseCRgikI9OzvkHOjnFIoP/UtCpVTK5qITe0
-	 k2KX9S+XEJZVFlNGC9JusHa2jAENoxkDWKS5ZMrg=
+	b=ueX5tDuQRRnFp39qw9bec5ct+l0DZFd7vaVbdv1d9NfSHvXTIBLx/21qzzjl4mc+5
+	 dLV2bpSNX3g33k8W+GmTQnjVKnoAU6Vwb8LTubeWSeJRekxMWOQtPABx9cKtAHXuDd
+	 z9dfreN4+BzbPas3nnNpvI8/krrl9STdlAQmZAHk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	stable <stable@kernel.org>,
-	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
-	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
 	Jiri Slaby <jirislaby@kernel.org>,
-	Heikki Krogerus <heikki.krogerus@linux.intel.com>,
-	Peter Hurley <peter@hurleysoftware.com>,
+	Crescent Hsieh <crescentcy.hsieh@moxa.com>,
+	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
+	Linmao Li <lilinmao@kylinos.cn>,
 	Josef Bacik <josef@toxicpanda.com>
-Subject: [PATCH 7.3 0904/1005] serial: 8250_lpss: dont divide by 0 above 6.25 Mbaud
-Date: Wed, 25 Nov 2026 15:37:22 +0100
-Message-ID: <20261125143842.868191285@linuxfoundation.org>
+Subject: [PATCH 7.3 0905/1005] serial: 8250_mxpcie: handle hangup during break
+Date: Wed, 25 Nov 2026 15:37:23 +0100
+Message-ID: <20261125143842.890750813@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143821.729802100@linuxfoundation.org>
 References: <20261125143821.729802100@linuxfoundation.org>
@@ -66,7 +65,6 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 7.3-stable review patch.  If anyone has any objections, please let me know.
@@ -75,58 +73,76 @@ Content-Transfer-Encoding: 8bit
 
 From: Josef Bacik <josef@toxicpanda.com>
 
-commit 08daebfd63e9054e097eb2653eff9381de43a422 upstream.
+commit 899e3c6e30ff34cf7a260b806fdedb56749e36e9 upstream.
 
-byt_set_termios() derives the clock of the UART from the baud rate in
-the termios, which nobody has looked at yet:
+Ending a software break on a Moxa PCIe port in RS-485 2-wire mode
+dereferences a NULL tty pointer if the port was hung up while the break
+was being sent.
 
-	fuart = baud * 16;
-	...
-	fuart *= rounddown_pow_of_two(fref / fuart);
-	...
-	p->uartclk = fuart;
+send_break() calls ->break_ctl(tty, -1), sleeps for the break duration
+and then calls ->break_ctl(tty, 0), without excluding a concurrent
+hangup. A hangup (a modem DCD drop, or the session leader exiting while
+another process of the session is in TCSBRK/TCSBRKP) runs uart_hangup(),
+which shuts the port down and clears port->state->port.tty. The second
+call still reaches mxpcie8250_software_break_ctl() through
+uart_break_ctl(), which then does:
 
-fref is 100 MHz. For a baud rate above 6250000, which BOTHER allows,
-fref / fuart is 0, and rounddown_pow_of_two(0) shifts 1UL by -1. On x86
-that is 1UL << 63, the product with a multiple of 16 is 0, and so is
-uartclk. serial8250_get_baud_rate() then passes 0 for both limits,
-uart_get_baud_rate() finds no rate which fits, WARNs and returns 0, and
-uart_get_divisor() or dw8250_get_divisor() divide by 16 * 0.
+    struct tty_struct *tty = port->state->port.tty;
+    ...
+    baud = tty_get_baud_rate(tty);
 
-Everybody who may open the tty can oops the kernel with one TCSETS2.
+with tty == NULL.
 
-Don't ask for more than fref. The limits are those of a 100 MHz clock
-then, and uart_get_baud_rate() falls back to the old rate as for any
-other rate that the port cannot do. 8250_mid, which has the same
-formula, treats this case separately.
+The bug was found by code inspection and has not been reproduced.
 
-Fixes: 21947ba654a6 ("serial: 8250_pci: replace switch-case by formula")
+Fix by taking a reference to the port's tty with tty_port_tty_get() and
+only restoring the divisor when a tty is still attached; a hung up port
+is shut down, and the next open programs the divisor again through
+set_termios().
+
+Fixes: ade78d3d253c ("serial: 8250_mxpcie: add break support for RS485 using MUEx50 features")
 Cc: stable <stable@kernel.org>
-Cc: "Ilpo Järvinen" <ilpo.jarvinen@linux.intel.com>
-Cc: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
 Cc: Jiri Slaby <jirislaby@kernel.org>
-Cc: Heikki Krogerus <heikki.krogerus@linux.intel.com>
-Cc: Peter Hurley <peter@hurleysoftware.com>
+Cc: Crescent Hsieh <crescentcy.hsieh@moxa.com>
+Cc: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+Cc: Linmao Li <lilinmao@kylinos.cn>
 Signed-off-by: Josef Bacik <josef@toxicpanda.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Link: https://patch.msgid.link/20261027-tty-llm-v1-16-99b0202ae546@linuxfoundation.org
+Link: https://patch.msgid.link/20261027-tty-llm-v1-17-99b0202ae546@linuxfoundation.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/tty/serial/8250/8250_lpss.c |    3 +++
- 1 file changed, 3 insertions(+)
+ drivers/tty/serial/8250/8250_mxpcie.c |   13 +++++++++----
+ 1 file changed, 9 insertions(+), 4 deletions(-)
 
---- a/drivers/tty/serial/8250/8250_lpss.c
-+++ b/drivers/tty/serial/8250/8250_lpss.c
-@@ -82,6 +82,9 @@ static void byt_set_termios(struct uart_
- 	/* Gracefully handle the B0 case: fall back to B9600 */
- 	fuart = fuart ? fuart : 9600 * 16;
+--- a/drivers/tty/serial/8250/8250_mxpcie.c
++++ b/drivers/tty/serial/8250/8250_mxpcie.c
+@@ -411,7 +411,7 @@ static int mxpcie8250_handle_irq(struct
+ static void mxpcie8250_software_break_ctl(struct uart_port *port, int break_state)
+ {
+ 	struct uart_8250_port *up = up_to_u8250p(port);
+-	struct tty_struct *tty = port->state->port.tty;
++	struct tty_struct *tty;
+ 	unsigned int baud, quot;
+ 	u8 sfr, tx_byte = 0x01;
  
-+	/* Fuart <= Fref: leave it to the core to refuse a higher baud rate */
-+	fuart = min(fuart, fref);
-+
- 	/* Get Fuart closer to Fref */
- 	fuart *= rounddown_pow_of_two(fref / fuart);
+@@ -438,9 +438,14 @@ static void mxpcie8250_software_break_ct
  
+ 		serial_out(up, UART_FCR, UART_FCR_CLEAR_XMIT);
+ 
+-		baud = tty_get_baud_rate(tty);
+-		quot = uart_get_divisor(port, baud);
+-		serial8250_do_set_divisor(port, baud, quot);
++		/* A hangup during the break detaches the tty */
++		tty = tty_port_tty_get(&port->state->port);
++		if (tty) {
++			baud = tty_get_baud_rate(tty);
++			quot = uart_get_divisor(port, baud);
++			serial8250_do_set_divisor(port, baud, quot);
++			tty_kref_put(tty);
++		}
+ 		serial_out(up, UART_LCR, up->lcr);
+ 	}
+ }
 
 
