@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795618248;
-	b=kJer+iQEmZOl8g3PABXxqtCG4IVn85jDKjtI4iAA0NuBLfzhuRIO4yy8RSbm3zW01dyj
-	 9YHSsjbJ2qGwlCsK3mu2ZxDSuTYzxrYKHssmU9abL07UblcuqhmjDCN1Y9sj22yGLbjwj
-	 C4GuuGL3y7ySBTASHNHJaC4rbiRunJQhY3b7LK2B2nAFJRFns4cUnjDODhfQ/8/V5fmGx
-	 pB0hJNP5NZhz4NrALatO6VE0sZnzusfh3mrT64TUj5BC3/M7n+05AYv5D7OefNQxSbyKZ
-	 YaldFNEvrq4mZftFCdU5SBk11iKm/pMO8Ml7SvbAjX07oQ47wshW3KYurjs8d4Y1VEA==
+	t=1795618251;
+	b=jkk8qaEiF0CbBtI1z1W7SxFjHIHiAYIbo9jeeu5Kjimqv3sAT0bzCh6zZTlC9Ejmkgfa
+	 t2xBqfE6IQjg2Ea81Ba1WVTXy5jP3Aj2ypnkuLGuGsh6fgTEQpNeg9piF+mUrlCREx2Se
+	 rXW81nfPMOyUSrctiZhZDgTdnxSmjPkrOa/t41X9hYDbaVGaRn8riZEqtqVfs0DmTLSm8
+	 aBfEbdjFhTJnxjk6ak5EDgaJs6jYPtP5LypDCv0v13l22m9t75Urb86MS0dKNVFh2fVWO
+	 RnP+ZMUo+pfrG2h4o4gQAtj+H0+ovLLOSK7oapUTBg0gAudtVknC3ATovpGrtP3o/VQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795618248;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795618251;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=TxBH+E5rq0h/s/BEiiEPuWq2M4Hs5Hmfqde9LUOi4W8=;
-	b=iyiaDg1nBNZPzyY6fsFbAh9olJLEEUUy8nLm3dMCTjY7xbG6bNo3ZMTx8nleaR3JFX6J
-	 1ui7FTfP09cZfq67HLnqS4bhdc2NYJ62PImS9X5/D7tDNcLchHRTMAhnIiJ0rMHSVCse3
-	 x3Gulnvr3dHabAt4SmHc6Qwqpb2d4pFABnKGB9hac1REJOrWq5Le0dJyaZ79cOcjrCBtE
-	 FzlTXQoE0n26GGjk1Oc0HOkQxde6wMpGZwZQ5NXcK/bSIRWevXUdhkWrReqr2oeN5nMnc
-	 zyvZVxhUktBdSBqjb4RFZBYfqUT6Lj8OFw/ZUh2NloEOGOxS98suTJoLXXbS6NjmBDw==
+	bh=RtRbybSCetn5UBCgkOnnetw2pa4xj8fPxOM/OMVafFU=;
+	b=qnyET16LZsSPsdfFVQWCHD6rYOPWHf+C2kENmmlqDajEyiRy0T3eCoku9zwo6SnF9k/j
+	 xpJjZvtWDWvGzNGFE4ddPrSGYzgs01lzu2JGVNc2i/1vLtkf7c0yCMe4Hig4qLjBscLRh
+	 q9RPvRDdaOmSSL74jWQ/z5+O9G1YOMWEhXwFx9LMkGvWbbdFCJYCEJsSEkZkYAZxscx2W
+	 8Ajn0ZahifNghXTURO6/BFNZVXYLyAvnNKAhleAFbNATRA+1udAEyVLs2woFE1V3ozX2S
+	 CtaKjiHZbvKuGyUEoPD1ptkL7OSmSFQvaDm3qDWE0aqRyYCWsi1XIFV1qRmEqQRmYXA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=lpXJRrd2;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=DhraDJeM;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7870E606A31E;
-	Wed, 25 Nov 2026 14:50:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5F11A606A321;
+	Wed, 25 Nov 2026 14:50:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=lpXJRrd2
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8352E1F000C4;
-	Wed, 25 Nov 2026 14:50:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=DhraDJeM
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 55B071F000C4;
+	Wed, 25 Nov 2026 14:50:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795618248;
-	bh=TxBH+E5rq0h/s/BEiiEPuWq2M4Hs5Hmfqde9LUOi4W8=;
+	s=korg; t=1795618250;
+	bh=RtRbybSCetn5UBCgkOnnetw2pa4xj8fPxOM/OMVafFU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=lpXJRrd2cXAh7Tr7LnF6a325lec/d4Z9inVIJ+6Gs7f+UCjJ4J/9XB7i2xRBOWjEH
-	 HNrW7ikfc9spTbxySi6TeXR1+7pxpztXiiKt6fgjVX3oEP7CFNxyMJ+OWFiyus60J/
-	 NnlWt4gsC1klwt4d3cV6TaNP4gEtVrg8nCoKbaTQ=
+	b=DhraDJeMhe6zyt3YBn4YscdDWpeCwjyHdXbfcvNj/KgdbE7At4kdglpu9xQt8uxSM
+	 ypoYU5c9unAoSqb5EFK+MJT3ocwHyFTOO/YqesTpZD/vQuutzOT9ZVBgGSD4rU4eyE
+	 6OB4XF3PsynyFwSpxR68tOUW8sQFXrcbZfsoQWZY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Maxime Chevallier <maxime.chevallier@bootlin.com>,
-	Lorenzo Bianconi <lorenzo.bianconi@oss.qualcomm.com>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
+	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0174/1005] net: stmmac: initialize est_lock at probe time
-Date: Wed, 25 Nov 2026 15:25:12 +0100
-Message-ID: <20261125143825.818485852@linuxfoundation.org>
+Subject: [PATCH 7.3 0165/1005] regulator: qcom_spmi: dont take a sleeping lock in the SAW IPI
+Date: Wed, 25 Nov 2026 15:25:03 +0100
+Message-ID: <20261125143825.606240569@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143821.729802100@linuxfoundation.org>
 References: <20261125143821.729802100@linuxfoundation.org>
@@ -69,67 +69,122 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Lorenzo Bianconi <lorenzo.bianconi@oss.qualcomm.com>
+From: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
 
-[ Upstream commit 98caed39c1db002b2c34b8040ab765c5fa9c6675 ]
+[ Upstream commit 053c50a7052549aab0d310ad505947db3e211592 ]
 
-priv->est is allocated with devm_kzalloc() on the first TAPRIO REPLACE
-and priv->est_lock is initialized in the same place, which ties the
-validity of the lock to whether TAPRIO has ever been configured. The
-lock is also never destroyed.
+The SAW voltage change runs on CPU 0 from an IPI, but it reaches the SAW
+registers through the syscon regmap, which is protected by a spinlock_t.
+That is a sleeping lock on PREEMPT_RT, and lockdep complains as soon as
+VDD_APCC actually changes voltage:
 
-Initialize priv->est_lock in __stmmac_dvr_probe() next to priv->lock
-and destroy it in stmmac_dvr_remove(). This keeps the lock valid for
-the entire lifetime of the device, independent of the TAPRIO state,
-and removes the lazy initialization from the TAPRIO configuration
-path.
+  BUG: Invalid wait context
+  ...
+  regmap_lock_spinlock+0x18/0x30
+  regmap_read+0x3c/0x78
+  spmi_saw_set_vdd+0x50/0x1ac
+  __flush_smp_call_function_queue+0x1ac/0x334
 
-No functional change intended.
+Map the SAW with a regmap of our own that uses a raw spinlock, and fail
+the probe when that cannot be done instead of carrying an error pointer
+around as the SAW regmap.
 
-Reviewed-by: Maxime Chevallier <maxime.chevallier@bootlin.com>
-Signed-off-by: Lorenzo Bianconi <lorenzo.bianconi@oss.qualcomm.com>
-Link: https://patch.msgid.link/20261029-stmmac-est-fixes-v5-1-85b830a795a9@oss.qualcomm.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
-Stable-dep-of: 23d96de472f7 ("net: stmmac: re-apply taprio offload in __stmmac_open() and stmmac_resume()")
+Fixes: 0caecaa87202 ("regulator: qcom_spmi: Add support for SAW")
+Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+Link: https://patch.msgid.link/20261019-fix-qcom-saw-v1-3-9c7ba3fc2493@oss.qualcomm.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/stmicro/stmmac/stmmac_main.c | 2 ++
- drivers/net/ethernet/stmicro/stmmac/stmmac_tc.c   | 2 --
- 2 files changed, 2 insertions(+), 2 deletions(-)
+ drivers/regulator/Kconfig               |  1 +
+ drivers/regulator/qcom_spmi-regulator.c | 35 +++++++++++++++++++------
+ 2 files changed, 28 insertions(+), 8 deletions(-)
 
-diff --git a/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c b/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
-index f6400d439b9b1..c74dcc2d37dbe 100644
---- a/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
-+++ b/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
-@@ -8145,6 +8145,7 @@ static int __stmmac_dvr_probe(struct device *device,
- 	stmmac_napi_add(ndev);
+diff --git a/drivers/regulator/Kconfig b/drivers/regulator/Kconfig
+index 89789ac7a786c..9e4d3b859ed1b 100644
+--- a/drivers/regulator/Kconfig
++++ b/drivers/regulator/Kconfig
+@@ -1191,6 +1191,7 @@ config REGULATOR_QCOM_SMD_RPM
+ config REGULATOR_QCOM_SPMI
+ 	tristate "Qualcomm SPMI regulator driver"
+ 	depends on SPMI || COMPILE_TEST
++	select REGMAP_MMIO
+ 	help
+ 	  If you say yes to this option, support will be included for the
+ 	  regulators found in Qualcomm SPMI PMICs.
+diff --git a/drivers/regulator/qcom_spmi-regulator.c b/drivers/regulator/qcom_spmi-regulator.c
+index c1a41ce70b363..a04ddb1eac940 100644
+--- a/drivers/regulator/qcom_spmi-regulator.c
++++ b/drivers/regulator/qcom_spmi-regulator.c
+@@ -12,13 +12,13 @@
+ #include <linux/bitops.h>
+ #include <linux/slab.h>
+ #include <linux/of.h>
++#include <linux/of_address.h>
+ #include <linux/of_device.h>
+ #include <linux/platform_device.h>
+ #include <linux/ktime.h>
+ #include <linux/regulator/driver.h>
+ #include <linux/regmap.h>
+ #include <linux/list.h>
+-#include <linux/mfd/syscon.h>
+ #include <linux/io.h>
  
- 	mutex_init(&priv->lock);
-+	mutex_init(&priv->est_lock);
- 	rwlock_init(&priv->ptp_lock);
+ /* Pin control enable input pins. */
+@@ -1335,6 +1335,14 @@ static irqreturn_t spmi_regulator_vs_ocp_isr(int irq, void *data)
  
- 	stmmac_fpe_init(priv);
-@@ -8278,6 +8279,7 @@ void stmmac_dvr_remove(struct device *dev)
+ static struct regmap *saw_regmap;
  
- 	destroy_workqueue(priv->wq);
- 	mutex_destroy(&priv->lock);
-+	mutex_destroy(&priv->est_lock);
- 	bitmap_free(priv->af_xdp_zc_qps);
++static const struct regmap_config saw_regmap_config = {
++	.name = "saw",
++	.reg_bits = 32,
++	.val_bits = 32,
++	.reg_stride = 4,
++	.use_raw_spinlock = true,
++};
++
+ static void spmi_saw_set_vdd(void *data)
+ {
+ 	u32 vctl, data3, avs_ctl, pmic_sts;
+@@ -2504,7 +2512,8 @@ static int qcom_spmi_regulator_probe(struct platform_device *pdev)
+ 	const char *name;
+ 	struct device *dev = &pdev->dev;
+ 	struct device_node *node = pdev->dev.of_node;
+-	struct device_node *syscon, *reg_node;
++	struct device_node *saw, *reg_node;
++	void __iomem *saw_base;
+ 	struct property *reg_prop;
+ 	int ret, lenp;
+ 	struct list_head *vreg_list;
+@@ -2523,12 +2532,22 @@ static int qcom_spmi_regulator_probe(struct platform_device *pdev)
+ 	if (!reg)
+ 		return -ENODEV;
  
- 	pm_runtime_disable(dev);
-diff --git a/drivers/net/ethernet/stmicro/stmmac/stmmac_tc.c b/drivers/net/ethernet/stmicro/stmmac/stmmac_tc.c
-index 399d5cb427005..fc6ec39f2108b 100644
---- a/drivers/net/ethernet/stmicro/stmmac/stmmac_tc.c
-+++ b/drivers/net/ethernet/stmicro/stmmac/stmmac_tc.c
-@@ -1028,8 +1028,6 @@ static int tc_taprio_configure(struct stmmac_priv *priv,
- 					 GFP_KERNEL);
- 		if (!priv->est)
- 			return -ENOMEM;
--
--		mutex_init(&priv->est_lock);
- 	} else {
- 		mutex_lock(&priv->est_lock);
- 		memset(priv->est, 0, sizeof(*priv->est));
+-	syscon = of_parse_phandle(node, "qcom,saw-reg", 0);
+-	if (syscon) {
+-		saw_regmap = syscon_node_to_regmap(syscon);
+-		of_node_put(syscon);
+-		if (IS_ERR(saw_regmap))
+-			dev_err(dev, "ERROR reading SAW regmap\n");
++	saw = of_parse_phandle(node, "qcom,saw-reg", 0);
++	if (saw) {
++		saw_base = devm_of_iomap(dev, saw, 0, NULL);
++		of_node_put(saw);
++		if (IS_ERR(saw_base))
++			return dev_err_probe(dev, PTR_ERR(saw_base),
++					     "failed to map the SAW\n");
++
++		saw_regmap = devm_regmap_init_mmio(dev, saw_base,
++						   &saw_regmap_config);
++		if (IS_ERR(saw_regmap)) {
++			ret = PTR_ERR(saw_regmap);
++			saw_regmap = NULL;
++			return dev_err_probe(dev, ret,
++					     "failed to set the SAW regmap up\n");
++		}
+ 	}
+ 
+ 	for (; reg->name; reg++) {
 -- 
 2.53.0
 
