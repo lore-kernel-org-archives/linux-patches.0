@@ -1,53 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795622981;
-	b=MjKW6CLckgu1n6QA4hEboR+fSFnpo3xPgcc0dZN/b5Gs4fKY1pUsQQZVCw1p/mmxovX4
-	 xQXA79ugEOquttjDEs6nmBzXctH6wZ3RHkgyC/dLukuOkCZ4uBOrlT/iPUm1hYVGNecil
-	 aZ3MbWKrS24vkfiKHre3PSBPua/ptZUBaKizfmhkFPCim94T1yEOBuod1Gk9gkXJHZ84X
-	 GoFq5CCojgBewh1mkNMMINPCyzb1abIa2LF+Afqk1N7iQjWkfyRSIWFaBnFTOAK5W/VXD
-	 v8p6CaTAfMv2vc6iiA8jfmpAUZ4f070fweDnFFhNwmq2Lwkekv0e0rBkK8PW7hPKOXQ==
+	t=1795622985;
+	b=dH5yIyXWUHJ5Bu7dpZjRZEVrl4nb69hVCoJTaUkXRy/qBsujnfwKXIApN2yFxpFMBr0C
+	 h58DkvisMLcNc90nfMTMwWHWjfn7KLnnJ6ogfciwBfKaYvlXJth4x+drwfjKlRoQVpG34
+	 H5Y0uvjbvwBvJjD7Mi0usLHDG+iOmdjFYUmM6EFWiS+JWmTc5Qd1p8Fcvgr++aeaROeCb
+	 GLSKB9/lpVsjRmnbzozxD350MyVIz3m/tS9MR8j5bkUF38yvGx2+QfBIGXHDla2dHXVna
+	 NSdqT8qYYX0loV7Bx5AQLdQyEt2Xtyn55UWLFq9J92tbAh9lBzTmABUZSARqhYuZIzw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795622981;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795622985;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=MPfVsyJWWEyrbumBgVZN3BKdisERgUwb+HaHqzXQs4s=;
-	b=pY/3/CvRs5s6mOGwXB9UyQsEZd3980DMxoccHaRFUV3lhZN9IXXHcROHgm725X3gs7tG
-	 /8Kv8bER7jK1sJvrc0hRqIW/qExo7Ipk0sfCHABX3jMOQUg/X2LSm0PEdHJR01NaYcX5D
-	 5GxYZ5ReMKwFG1yI5sQYvbNvdTuEcwg8FJsPj7NBsrQ6aLzKPcBaBTyN2IWbjWmI6h0zz
-	 nY+M1MvXeapCBBLnGVNpNxE6lueHIo6CL+yekn2JdYZ0vPuw0hc7zncEKBa9425K/jyJ4
-	 /YNe8I1puANidoEX+3Kth7/A/hoDjeuHGOBwHGew7cXKyMhz2Szq/r3kNM7udzFFoxg==
+	bh=r1fqJNutSZeeOC5GCex+IQAy6rHQk6Su76iIzf64d94=;
+	b=Sj8r5f5IhK8UhST2NIldLw7V1+vleu5UTAitswGgt91PdHh2e6lh2f9cn999BPm+Jwrv
+	 /VP1HjffSFmI6o3EefF3W9Na8+OlPi+jZv6GiG17LfwAH0WFeF4KMSEKh42c/XWwN3k51
+	 RvvqR+nxFKeez7qBjnV6Byq1CPlRf0x//VXJ25oxLQt8u/FnjlY7bJ+Twu7qGpq8+1ue6
+	 5QVXaPVscH9/ccnywV7KkUc9JH0WTx2FKaLjGuk6jK+B+7q0wkiEyUgnS4eDMwEcEfD5q
+	 AK5Z/+9Xg/h6EomA4G5G+ehYEasE/jYRc0PKhlsVz+viPeDiIgR0NEDlHFpZNilsLuQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ZR0G32yU;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=mCG8nJXz;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3E032606A321;
-	Wed, 25 Nov 2026 16:09:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1E5CB606A326;
+	Wed, 25 Nov 2026 16:09:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ZR0G32yU
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7F03A1F000CF;
-	Wed, 25 Nov 2026 16:09:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=mCG8nJXz
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B94711F000C6;
+	Wed, 25 Nov 2026 16:09:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795622981;
-	bh=MPfVsyJWWEyrbumBgVZN3BKdisERgUwb+HaHqzXQs4s=;
+	s=korg; t=1795622984;
+	bh=r1fqJNutSZeeOC5GCex+IQAy6rHQk6Su76iIzf64d94=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ZR0G32yU6bVSTZJWLWulUhWRaEgi2NDrWckJ+I+Mb83R8os//Mcapkdo/9uvsv6Yq
-	 B9kPsKjZ0HJWUtk/lQo5uIkqKSDSXuSwX5ctenEiSF4oOfAxbZeRZxi5b5ST/yngbT
-	 qW0zydeq4p3kdASrJBJgYuVKGrVmh1mjYpZ/LV2c=
+	b=mCG8nJXzhLzMtI1qP/iYQMBkwf6iTBY8ha1OOCYfvO9ALxOKdmtFFnAKOzUDqxUKI
+	 t3iTOZky7d7R7VGdYl/0Z4CermlRCBdYqd/Gxz17DsJ84xLYrjyXZ7BqMgp8I1qYwg
+	 8IigLoiznLv+eQJppBHB63yUoYOb252bWopJQSrQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Kyle Zeng <kylebot@openai.com>,
-	Eric Dumazet <edumazet@kernel.org>,
-	"Matthieu Baerts (NGI0)" <matttbe@kernel.org>,
 	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.18 711/990] mptcp: reject DATA_ACKs against a reversed send interval
-Date: Wed, 25 Nov 2026 15:34:38 +0100
-Message-ID: <20261125143838.738594064@linuxfoundation.org>
+Subject: [PATCH 6.18 712/990] ipv4: keep XFRM headers out of corked skb lengths
+Date: Wed, 25 Nov 2026 15:34:39 +0100
+Message-ID: <20261125143838.761777138@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143822.072087159@linuxfoundation.org>
 References: <20261125143822.072087159@linuxfoundation.org>
@@ -71,69 +69,59 @@ Content-Transfer-Encoding: 8bit
 
 From: Kyle Zeng <kylebot@openai.com>
 
-commit d75e5cd72995ec2fa77ec77a593cea28e2490ff1 upstream.
+commit 0f47fce51a98d3d9f439c16861d519a7b833a176 upstream.
 
-ack_update_msk() samples snd_nxt before taking the data lock, but reads
-snd_una after taking it. Concurrent transmission and ACK processing can
-therefore leave the sampled upper bound behind snd_una. Active-open
-completion also exposes a reversed interval when it initializes snd_una
-to IDSN + 1 while the socket-owned state synchronization is deferred.
+__ip_append_data() allocates space for dst.header_len in the first skb,
+but includes that space in skb->len until __ip_make_skb() pulls it.
+Fragment accounting uses an MTU that already excludes the XFRM headers.
+As a result, the next skb can have a fraggap larger than its capped
+datalen, and skb_copy_and_csum_bits() can overwrite its shared info.
 
-A peer-supplied 64-bit Data ACK half a sequence space away can pass both
-wraparound comparisons against such an interval. The resulting snd_una
-can make __mptcp_retrans() inflate a fragment's already_sent field. Later
-ACKs can then underflow data_len and cause out-of-bounds page fragments
-to be passed to TCP.
+For example, five AH tunnel states can reserve 500 bytes while leaving
+an effective MTU of 348. With 40 bytes of IPv4 options, the second skb
+has room for 288 bytes of fragment data but receives a 500-byte gap
+copy. The overwritten shared info is subsequently consumed by the skb
+release paths.
 
-Read snd_nxt after acquiring the data lock and reject reversed intervals
-before checking the received Data ACK. This keeps the interval shorter
-than half the sequence space, so the existing upper-bound check cannot
-accept an advance beyond snd_nxt. Preserve the existing handling of old
-ACKs and keep the transmit fields under their existing socket locking.
+Reserve the XFRM headers together with the link-layer headroom instead.
+This keeps skb->len, the gap-copy offsets and the trim lengths relative
+to the IPv4 packet throughout corking. The network and transport header
+addresses and the headroom available to XFRM at output are unchanged.
+Both paged and linear allocations, including subsequent corked appends,
+use the corrected accounting.
 
+Fixes: 353e5c9abd90 ("ipv4: Fix IPsec slowpath fragmentation problem")
 Cc: stable@vger.kernel.org
-Fixes: 7439d687b79c ("mptcp: avoid a few atomic ops in the rx path")
-Fixes: 3f83d8a77eee ("mptcp: fix more tx path fields initialization")
 Signed-off-by: Kyle Zeng <kylebot@openai.com>
-Signed-off-by: Eric Dumazet <edumazet@kernel.org>
-Reviewed-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
-Link: https://patch.msgid.link/20261104130747.1045741-1-edumazet@kernel.org
+Link: https://patch.msgid.link/20261030042229.74068-1-kylebot@openai.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/mptcp/options.c |   12 ++++++++----
- 1 file changed, 8 insertions(+), 4 deletions(-)
+ net/ipv4/ip_output.c |    8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
---- a/net/mptcp/options.c
-+++ b/net/mptcp/options.c
-@@ -1137,9 +1137,9 @@ static void ack_update_msk(struct mptcp_
- 			   struct sock *ssk,
- 			   struct mptcp_options_received *mp_opt)
- {
--	u64 new_wnd_end, new_snd_una, snd_nxt = READ_ONCE(msk->snd_nxt);
-+	u64 new_wnd_end, new_snd_una, old_snd_una;
- 	struct sock *sk = (struct sock *)msk;
--	u64 old_snd_una;
-+	u64 snd_nxt;
+--- a/net/ipv4/ip_output.c
++++ b/net/ipv4/ip_output.c
+@@ -1151,16 +1151,16 @@ alloc_new_skb:
+ 			 */
+ 			skb->ip_summed = csummode;
+ 			skb->csum = 0;
+-			skb_reserve(skb, hh_len);
++			skb_reserve(skb, hh_len + exthdrlen);
  
- 	mptcp_data_lock(sk);
+ 			/*
+ 			 *	Find where to start putting bytes.
+ 			 */
+-			data = skb_put(skb, fraglen + exthdrlen - pagedlen);
+-			skb_set_network_header(skb, exthdrlen);
++			data = skb_put(skb, fraglen - pagedlen);
++			skb_reset_network_header(skb);
+ 			skb->transport_header = (skb->network_header +
+ 						 fragheaderlen);
+-			data += fragheaderlen + exthdrlen;
++			data += fragheaderlen;
  
-@@ -1148,10 +1148,14 @@ static void ack_update_msk(struct mptcp_
- 	 * more dangerous than missing an ack
- 	 */
- 	old_snd_una = msk->snd_una;
-+	snd_nxt = READ_ONCE(msk->snd_nxt);
- 	new_snd_una = mptcp_expand_seq(old_snd_una, mp_opt->data_ack, mp_opt->ack64);
- 
--	/* ACK for data not even sent yet? Ignore.*/
--	if (unlikely(after64(new_snd_una, snd_nxt)))
-+	/* The active-open state sync can defer the snd_nxt update. Do not
-+	 * accept an ACK against a reversed interval, or beyond snd_nxt.
-+	 */
-+	if (unlikely(before64(snd_nxt, old_snd_una) ||
-+		     after64(new_snd_una, snd_nxt)))
- 		new_snd_una = old_snd_una;
- 
- 	new_wnd_end = new_snd_una + tcp_sk(ssk)->snd_wnd;
+ 			if (fraggap) {
+ 				skb->csum = skb_copy_and_csum_bits(
 
 
