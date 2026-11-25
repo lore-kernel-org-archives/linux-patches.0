@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795619057;
-	b=jNGXmyF6J5oZbZSQUa44z3Zc8rLFiUHl8OhnUZ+tQ5m0JXheIgSXbbipQ5ckcJDZ8FYE
-	 q87reewrECgaPd9EASqP/uyA5Z74rGN5Mzwn/hkRB4XNE72zc5CTjp7I/ro9t6sM4pdb9
-	 Iky3L8J0M6RxGHALTQEo4xVLI0sr5Oc2E7hxUzlHyeY8hZaICYRUB/cHYvoCijjKCcGEK
-	 zqgyyw7dK0Wp8BK1s4grbiyQJGzjKmA86yV9HHiRLwbeBCcNiSutaHfyaw/myN06Dyp+B
-	 GpBp/LmzoD3ZKfrgGVjflG19ml/TBfeJL1GZA19ncrxkIqcJ6h+Lg4D8TL9rRK0j1Cg==
+	t=1795619060;
+	b=2ybE6XJWBBH5lSghfNhJlCIY3N8K7xcC+QZDDbUXzOpYGdDjbAT66+0Djmq3QM9+6Idc
+	 +Dg+Q6F7KZKPUBTUJLapvbNe76LvOOdOwkUht9zgJbq9RhK/gED+q+ldvaChWlG32q7jp
+	 Fb3zzk2v6DsacuPiUXO+MTNCwmxBIf+2bmET5xTPFzgX4hLpD+4gugHFnbxdCPviwXFB3
+	 UCPDugH/QUtFatPW05f5G/djzsc/aPJ5WTH4BvwYHNHIhE9UFHlVLiDcpDXUQ563anqHh
+	 JbVE720ze2+N1oLjfkigKC1SomjaaqzfT0WhGhsaBLGkRzySChJMgy6VMy4SbYYY/kg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795619057;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795619060;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=MDSgpjka6lrFZRCxg9h8eDNMyDPGkGMkfDz6Pi581T8=;
-	b=upGawcUrI8IsbyRJvvcGaRjhlkaPzUhLXk3UgLbDggrRPjAWUwmcEJzZyfDQCn4Mjgw4
-	 QNF8nlfoVnBS+y5QKD2pHjHQWwHV2Bp1XTAVjqQOhS3EsxtL8kFeAFb4/DYhVgj3IDNtS
-	 +T8tzTOig2Hd+htUxY+i524z19aVHqn10ggVjB9LHXgxtf4r6zTs0JIf3c4ZfMdowoHXQ
-	 t7ha/mGPxd18WX1/SwOzUxMuxV6I3jp6ryKQUoMeZQLMWw1A19Xf+pQTzkNUuLiTA5oTl
-	 W5QBByGAUn+LW/hxN8Ra6RftjZgffZYAR30zVt4hyN9YQLuxdQV0Vux67IMdTdNSGDg==
+	bh=qGnIbBSbAH3aVZ5z1oTRspOCO5/ab/8DMjVxjiJhrfc=;
+	b=18M4bS8F3ZyrncHJWPEJrcDu8TVVLVBb9rgwN7cn4IRrxXgHaWEKcVjfBSyMv0jvCQN7
+	 LVGcnsofrPYzDwK1HfRT/CYZQ+rO9Xq4Hsd3nLUSrbDs7zFBJ2JSVl36mbuloP5HAil37
+	 APQONTjpqvNvYpPYcmZW4EOesd74yuVUyFL5Tg/k0Kcy55fS+gfWTOZ2Nx6X2WFG5Y9l8
+	 dar0zf8YrQop94WyjgiaqVX+KGNc6D1rUfA67PuO5NYBQ3SQXxuvywvztsKmde7PRB0aO
+	 pw0mdujY7wBLLefsKB5Ww0xCRjIm9OTV0Er9eAQMeGw5t/KmbtUJCicyUq+4tffleTQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=GK5aTiEo;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=UucEKct3;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ED3EA606A321;
-	Wed, 25 Nov 2026 15:04:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0569C606A31E;
+	Wed, 25 Nov 2026 15:04:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=GK5aTiEo
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4AB491F000C0;
-	Wed, 25 Nov 2026 15:04:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=UucEKct3
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1FE741F000C0;
+	Wed, 25 Nov 2026 15:04:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795619056;
-	bh=MDSgpjka6lrFZRCxg9h8eDNMyDPGkGMkfDz6Pi581T8=;
+	s=korg; t=1795619059;
+	bh=qGnIbBSbAH3aVZ5z1oTRspOCO5/ab/8DMjVxjiJhrfc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=GK5aTiEoWYvCRwjglqvk1gVTF4BKFtoifLrKM/hrhKqtAHjodlTMzOAYe3+27Hc30
-	 GWczmjANYlobfhYCNYlxcAte322PKqA/bfnbkLAsiRfW1tXu0Z04hsFNU8Mi03p0FO
-	 xLqPKJPXgW+7S/SzlVGJir1i/kkxdb7n53xhbyNA=
+	b=UucEKct3FSQ1Hwf//ixW+bb93ZIrlrxh3i9diac6jfSulyWjwwUWg7QxtzuT9hVKU
+	 IZya2QGb38cOvg0BI5Esu4gCXJEgj6wpRD574l5ZoAROh6IBsi8gWRrx1JVex1Rvr6
+	 FEHO25+go0BT1aRN9ov+JslIQBkSKTwq6BIVMJ+U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jeff Layton <jlayton@kernel.org>,
+	Olga Kornievskaia <okorniev@redhat.com>,
 	Anna Schumaker <anna.schumaker@hammerspace.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0475/1005] NFS: stamp after the servers ctime following a CLONE
-Date: Wed, 25 Nov 2026 15:30:13 +0100
-Message-ID: <20261125143832.873662957@linuxfoundation.org>
+Subject: [PATCH 7.3 0476/1005] NFSv4: wake blocking lock waiters when a delegated lock is released
+Date: Wed, 25 Nov 2026 15:30:14 +0100
+Message-ID: <20261125143832.896400553@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143821.729802100@linuxfoundation.org>
 References: <20261125143821.729802100@linuxfoundation.org>
@@ -68,150 +68,80 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jeff Layton <jlayton@kernel.org>
+From: Olga Kornievskaia <okorniev@redhat.com>
 
-[ Upstream commit 23b9cf773211d536147aa53ade68a88d457838ac ]
+[ Upstream commit e8433473eca284bc561373d0a0fff632f76aa594 ]
 
-nfs42_copy_dest_done() stamps the client's own c/mtime when it holds
-delegated timestamps. A server that stamps c/mtime on CLONE (as nfsd did
-before "nfsd: mark the delegation written on COPY/CLONE instead of
-stamping c/mtime", and as btrfs did before "btrfs: honor FMODE_NOCMTIME
-when cloning") can end up with a ctime newer than the client's coarse
-stamp, which it won't move back when the holder returns its times.
+When the client holds a delegation, _nfs4_proc_setlk() caches POSIX
+locks locally and never sends a LOCK to the server. It has to strip
+FL_SLEEP to do so, since that branch runs holding
+sp->so_delegreturn_mutex and nfsi->rwsem and F_SETLKW can block
+indefinitely. A contending waiter is therefore never placed on the VFS
+blocked-lock list, and locks_wake_up_blocks() does not reach it when the
+holder releases.
 
-The stamp didn't survive anyway: nfs_post_op_update_inode() then marks
-ctime invalid, so nfs_fattr_fixup_delegated() keeps the reply's ctime
-and nfs_update_inode() writes it over the stamp. Against a server that
-no longer stamps on CLONE, the client's ctime goes back to its old value
-until DELEGRETURN.
+The waiter blocks in nfs4_retry_setlk() on clp->cl_lock_waitq instead,
+whose only waker is nfs4_callback_notify_lock(). The server never saw a
+LOCK for a cached lock, so it does not know anyone is waiting and will
+never send a CB_NOTIFY_LOCK; nfs4_proc_unlck() returns early without
+sending LOCKU for the same reason. The waiter sleeps out the full
+NFS4_LOCK_MAXTIMEOUT of 30s before retrying a lock that is long free.
 
-- Pass the CLONE reply's attributes to nfs42_copy_dest_done() and raise
-  the cached ctime to the server's before stamping. COPY returns no
-  attributes, so it passes NULL.
-- Stamp before dropping i_lock, so a concurrent refresh can't take the
-  server's times while ctime and mtime are marked invalid.
-- Under delegated timestamps, apply the reply with nfs_refresh_inode(),
-  which doesn't mark ctime invalid.
+Wake cl_lock_waitq when releasing a cached lock. The releasing thread
+cannot tell which waiter wants the lock, so the wakeup names only the
+inode; make the owner comparison in nfs4_wake_lock_waiter() conditional
+on cbnl_valid so that a CB_NOTIFY_LOCK still wakes exactly the owner it
+names. The inode restriction matters: without it every blocked locker
+for the server is woken, and those on non-delegated state each retry
+with a LOCK RPC.
 
-Fixes: 6e7daa3dad29 ("NFSv4.2: fix CLONE/COPY attrs in presence of delegated attributes")
-Signed-off-by: Jeff Layton <jlayton@kernel.org>
+Fixes: a1d617d8f134 ("nfs: allow blocking locks to be awoken by lock callbacks")
+Assisted-by: Claude Opus 5
+Signed-off-by: Olga Kornievskaia <okorniev@redhat.com>
 Signed-off-by: Anna Schumaker <anna.schumaker@hammerspace.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/nfs/delegation.h |  2 ++
- fs/nfs/inode.c      |  6 ++++--
- fs/nfs/nfs42proc.c  | 25 ++++++++++++++++++++-----
- 3 files changed, 26 insertions(+), 7 deletions(-)
+ fs/nfs/nfs4proc.c | 19 ++++++++++++++++---
+ 1 file changed, 16 insertions(+), 3 deletions(-)
 
-diff --git a/fs/nfs/delegation.h b/fs/nfs/delegation.h
-index fba4699952b81..cd6142939d34d 100644
---- a/fs/nfs/delegation.h
-+++ b/fs/nfs/delegation.h
-@@ -95,6 +95,8 @@ void nfs4_inode_make_writeable(struct inode *inode);
- void nfs_update_delegated_atime(struct inode *inode);
- void nfs_update_delegated_mtime(struct inode *inode);
- void nfs_update_delegated_mtime_locked(struct inode *inode);
-+void nfs_delegated_ctime_raise(struct inode *inode,
-+			       const struct nfs_fattr *fattr);
+diff --git a/fs/nfs/nfs4proc.c b/fs/nfs/nfs4proc.c
+index 028459fb6edbf..ebc431906a453 100644
+--- a/fs/nfs/nfs4proc.c
++++ b/fs/nfs/nfs4proc.c
+@@ -7287,8 +7287,15 @@ static int nfs4_proc_unlck(struct nfs4_state *state, int cmd, struct file_lock *
+ 	if (status != 0)
+ 		goto out;
+ 	/* Is this a delegated lock? */
+-	if (test_bit(NFS_LOCK_INITIALIZED, &lsp->ls_flags) == 0)
++	if (test_bit(NFS_LOCK_INITIALIZED, &lsp->ls_flags) == 0) {
++		struct nfs_client *clp = NFS_SERVER(inode)->nfs_client;
++		struct cb_notify_lock_args cbnl = { .cbnl_valid = false };
++
++		/* The server never saw it, so it will not notify waiters */
++		nfs_copy_fh(&cbnl.cbnl_fh, NFS_FH(inode));
++		__wake_up(&clp->cl_lock_waitq, TASK_NORMAL, 0, &cbnl);
+ 		goto out;
++	}
+ 	alloc_seqid = NFS_SERVER(inode)->nfs_client->cl_mvops->alloc_seqid;
+ 	seqid = alloc_seqid(&lsp->ls_seqid, GFP_KERNEL);
+ 	status = -ENOMEM;
+@@ -7708,8 +7715,14 @@ nfs4_wake_lock_waiter(wait_queue_entry_t *wait, unsigned int mode, int flags, vo
+ 		struct nfs_lowner		*lowner = &cbnl->cbnl_owner,
+ 						*wowner = &waiter->owner;
  
- static inline int nfs_have_read_or_write_delegation(struct inode *inode)
- {
-diff --git a/fs/nfs/inode.c b/fs/nfs/inode.c
-index 24ad11d71ec5c..beffa3a2968c8 100644
---- a/fs/nfs/inode.c
-+++ b/fs/nfs/inode.c
-@@ -646,8 +646,8 @@ static struct timespec64 nfs_delegated_stamp(struct inode *inode)
-  * cached ctime to the server's so that the next delegated stamp lands
-  * after it.
-  */
--static void nfs_delegated_ctime_raise(struct inode *inode,
--				      const struct nfs_fattr *fattr)
-+void nfs_delegated_ctime_raise(struct inode *inode,
-+			       const struct nfs_fattr *fattr)
- {
- 	struct timespec64 ctime = inode_get_ctime(inode);
- 
-@@ -655,6 +655,7 @@ static void nfs_delegated_ctime_raise(struct inode *inode,
- 	    timespec64_compare(&fattr->ctime, &ctime) > 0)
- 		inode_set_ctime_to_ts(inode, fattr->ctime);
- }
-+EXPORT_SYMBOL_GPL(nfs_delegated_ctime_raise);
- 
- static void nfs_set_timestamps_to_ts(struct inode *inode, struct iattr *attr)
- {
-@@ -705,6 +706,7 @@ void nfs_update_delegated_mtime_locked(struct inode *inode)
- 	    nfs_have_directory_delegation(inode))
- 		nfs_update_mtime(inode);
- }
-+EXPORT_SYMBOL_GPL(nfs_update_delegated_mtime_locked);
- 
- void nfs_update_delegated_mtime(struct inode *inode)
- {
-diff --git a/fs/nfs/nfs42proc.c b/fs/nfs/nfs42proc.c
-index ab86246fc364f..09b4a6ecad880 100644
---- a/fs/nfs/nfs42proc.c
-+++ b/fs/nfs/nfs42proc.c
-@@ -380,6 +380,7 @@ static int process_copy_commit(struct file *dst, loff_t pos_dst,
-  * @pos: destination offset
-  * @len: copy length
-  * @oldsize: length of the file prior to clone/copy
-+ * @fattr: destination attributes from the reply, or NULL
-  *
-  * Punch a hole in the inode page cache, so that the NFS client will
-  * know to retrieve new data.
-@@ -387,7 +388,7 @@ static int process_copy_commit(struct file *dst, loff_t pos_dst,
-  * invalid cached values for change attribute, ctime, mtime and space used.
-  */
- static void nfs42_copy_dest_done(struct file *file, loff_t pos, loff_t len,
--				 loff_t oldsize)
-+				 loff_t oldsize, const struct nfs_fattr *fattr)
- {
- 	struct inode *inode = file_inode(file);
- 	struct address_space *mapping = file->f_mapping;
-@@ -405,8 +406,12 @@ static void nfs42_copy_dest_done(struct file *file, loff_t pos, loff_t len,
- 					     NFS_INO_INVALID_CTIME |
- 					     NFS_INO_INVALID_MTIME |
- 					     NFS_INO_INVALID_BLOCKS);
-+	/* The server may have stamped c/mtime; stamp after it */
-+	if (fattr && nfs_have_delegated_mtime(inode))
-+		nfs_delegated_ctime_raise(inode, fattr);
-+	/* Before a refresh can see the times invalid and take the server's */
-+	nfs_update_delegated_mtime_locked(inode);
- 	spin_unlock(&inode->i_lock);
--	nfs_update_delegated_mtime(inode);
- }
- 
- static ssize_t _nfs42_proc_copy(struct file *src,
-@@ -506,7 +511,8 @@ static ssize_t _nfs42_proc_copy(struct file *src,
- 			goto out;
- 	}
- 
--	nfs42_copy_dest_done(dst, pos_dst, res->write_res.count, oldsize_dst);
-+	nfs42_copy_dest_done(dst, pos_dst, res->write_res.count, oldsize_dst,
-+			     NULL);
- 	nfs_invalidate_atime(src_inode);
- 	status = res->write_res.count;
- out:
-@@ -1311,8 +1317,17 @@ static int _nfs42_proc_clone(struct rpc_message *msg, struct file *src_f,
- 		/* a zero-length count means clone to EOF in src */
- 		if (count == 0 && res.dst_fattr->valid & NFS_ATTR_FATTR_SIZE)
- 			count = nfs_size_to_loff_t(res.dst_fattr->size) - dst_offset;
--		nfs42_copy_dest_done(dst_f, dst_offset, count, oldsize_dst);
--		status = nfs_post_op_update_inode(dst_inode, res.dst_fattr);
-+		nfs42_copy_dest_done(dst_f, dst_offset, count, oldsize_dst,
-+				     res.dst_fattr);
+-		/* Only wake if the callback was for the same owner. */
+-		if (lowner->id != wowner->id || lowner->s_dev != wowner->s_dev)
 +		/*
-+		 * nfs_post_op_update_inode() would mark ctime invalid, so the
-+		 * reply's ctime would overwrite the delegated stamp.
++		 * Only wake the owner a CB_NOTIFY_LOCK names. A lock cached
++		 * under a delegation is released locally, and the releasing
++		 * thread cannot tell which waiter wants it, so those wakeups
++		 * (cbnl_valid false) name only the inode and wake them all.
 +		 */
-+		if (nfs_have_delegated_mtime(dst_inode))
-+			status = nfs_refresh_inode(dst_inode, res.dst_fattr);
-+		else
-+			status = nfs_post_op_update_inode(dst_inode,
-+							  res.dst_fattr);
- 	}
++		if (cbnl->cbnl_valid &&
++		    (lowner->id != wowner->id || lowner->s_dev != wowner->s_dev))
+ 			return 0;
  
- 	kfree(res.dst_fattr);
+ 		/* Make sure it's for the right inode */
 -- 
 2.53.0
 
