@@ -1,53 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795625398;
-	b=lc7uIlMaAS8GYdmQpWABHKicmk0S5oGrkKG/2jH7ci55iv1sbLQ8EXo8vzOhH0vM+IvC
-	 AYF2qfcJ0WFtXC+Ra1GZlRjTrbUD6ePY2hmVMpmslGgpg+6/kDZMoXrpGnkkgygehMaEt
-	 dfP2RclEWgC2qfJpra25JSukLDqHmV5yLPstqwj61I8Gys9SaFi4ArTDj6eYf89OLun90
-	 FhfY7sZ4xNUgFyI+frrDkaw6eXxaHW2xJmGYmdEaePzSulP6llwe3zLuaVG/9m4KM4P6J
-	 ZDBrlcofm5IUwJQY5DLrCyZnVRJ3c16NdeUpBs2kB6QMb11vMdGnZqLg9z9+AB8IcAA==
+	t=1795625402;
+	b=XRSN7Dg3clwzmZjScTtmQ8GvPmh9B+EaId+1/X0J+ngq4aMgF6s1nbvfmg7Hv3P3uK3I
+	 YOHP7zn6I2g0/ggk6jfStr5g/0bW60pG+V5TYiPmAvHEKp7VGeXF5Lcj3gK6bZc+xJqOE
+	 /8dckehgnf8BrlMkrEDhQnXQd/RD3bS4RHXcnBTxZMn8zjVGCBZBgCNrkV97e0tKltnNl
+	 +DVtWAEcxb+ncF67gc2tbztqBGx77FVppTMSLTU+Swh2NzaE/2rajff5Te4z7/+HlkJB7
+	 aHw0e7KbToyfhZSDWKd9ni2ENIIumwYLLOYaDeFdW+E6+on7XZANZeQehqe9xiHi0lg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795625398;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795625402;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=dqDz2wOHjItIgcc2nh29E4x9cEzkLmEucW66Wd6MBdc=;
-	b=1oi3YghvYBE869RPL1sfxVZhrQt7QFEIGTJ0tdESYkiMCcL36HAJaaxIgj8YWNYj8kcn
-	 C7UtACL4CKezfoLZAwYP0yMIcrZS3QWYioaT/blVh6YSgSffClCoiyP72z8+u0bOomnQ8
-	 +q1DdgPTyX8EDsD/WbOHQKL/OTuBQuIdGdx5KoqLLzK4eczxoMfblGBtNVMAsId4qo84s
-	 aqTPZALtRTgn03rk139kCK2fVkHfoOKAuAJua2NR+7osHYn3J0ZjvFwps4GMOrjhvG2T1
-	 8Tmp52N2sMDYQxWScGJMkw52TmLjsvsOKfYVUtulvD/I4673pE7vjiiKqn9GFN666OA==
+	bh=vVCzer4S/rADYsUsEz2r/3CK/gUDSWGeBDKwUmpJNh0=;
+	b=jfveb5jf6PeXvJUhc64r9u7SyL4nKzyi1lLqqRRbBNlrth6VaWWyAmGn2tsoZih8vbWI
+	 BQ21UCXh9LMu8SHGRM7EudNhHHCJ/M9dOb+dcMQOqCRPm8PpVKdhmOyfyvPRMLAZ7HTlv
+	 C/6bf9VXtIlg8rwlTw3T41acDd2Vly61AzwL80dnupFSgJUZIKkOr4ywG7UCwxiCCnWPh
+	 9h3eov7TQ6tXyAYSEHnGajBT1tjfIgrBBhtR4sZukaqjrmvU2cNl/5eDQnfptV8BPvdf5
+	 HS/+FW2NPwTQZrprxAqdWxZrYg4I0ym3apFiYfb5YMptZVRMWNJWdbnpG/pAORYUcYg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=KnRYe99v;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=nFV03+IK;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6F619606A326;
-	Wed, 25 Nov 2026 16:49:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E5012606A32E;
+	Wed, 25 Nov 2026 16:50:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=KnRYe99v
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AD8911F000EE;
-	Wed, 25 Nov 2026 16:49:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=nFV03+IK
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DB3C01F000CF;
+	Wed, 25 Nov 2026 16:50:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795625398;
-	bh=dqDz2wOHjItIgcc2nh29E4x9cEzkLmEucW66Wd6MBdc=;
+	s=korg; t=1795625401;
+	bh=vVCzer4S/rADYsUsEz2r/3CK/gUDSWGeBDKwUmpJNh0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=KnRYe99vxU7k3cDsX2Smv+HTC/bLbGD2q46Uk9Zu8xHVj3lZTI5ZZ5u0g212y88Os
-	 S/M/xYAZWZygWkD+BXzscA3Y2HcB8TMY9Bwm2uWE/Ixu2Wbp86WJHFyCCiFdC8F8Sp
-	 qYLKiVhp/0DtpdGK2masGua+RBs3V3sLOCmN13ZQ=
+	b=nFV03+IK4YiD2fU9bRWKR7xVhUT9TM48Tgp/sDWfIE889KyBz9b8V1TQK72e16Y15
+	 HmcTRYmQc3OzZHoDxiDtmFjS3R6kNr3kXqY8Qphg9ALQpro689XPsBxgplOGPqCELb
+	 cO2HTcerGY8qYNs/j0SmdlN+d13JCYKCVJQJ9Wio=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eric Dumazet <edumazet@kernel.org>,
-	Kuniyuki Iwashima <kuniyu@google.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Felix Fietkau <nbd@nbd.name>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 502/816] tcp: use the echoed source route in cookie_v4_check()
-Date: Wed, 25 Nov 2026 15:34:10 +0100
-Message-ID: <20261125143900.808525278@linuxfoundation.org>
+Subject: [PATCH 6.12 467/816] wifi: mt76: mt7921: fix of_node reference leaks in regd update
+Date: Wed, 25 Nov 2026 15:33:35 +0100
+Message-ID: <20261125143900.012188052@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143849.205329330@linuxfoundation.org>
 References: <20261125143849.205329330@linuxfoundation.org>
@@ -69,88 +67,131 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eric Dumazet <edumazet@kernel.org>
+From: Felix Fietkau <nbd@nbd.name>
 
-[ Upstream commit 54d574d4afd9de820c8a017665c8095f0f5fdbaa ]
+[ Upstream commit 2f209a8dca88507bc094de370e582adefc55723e ]
 
-When the ACK carries a source route option, cookie_v4_check() routes
-the new socket to opt->faddr, where opt points to the options of the
-received packet.
+mt7921_regd_channel_update() and __mt7921_mcu_set_clc() never
+release the nodes returned by mt76_find_power_limits_node(),
+of_get_child_by_name() and mt76_find_channel_node(). Each regulatory
+domain change and each CLC update on a device with DT power limits
+leaks these references.
 
-ip_options_compile() only fills faddr for options given by
-setsockopt() (when called without an skb), so on receive faddr is 0
-and the lookup is done for daddr 0, which gives a local route.
+Release every node after use. This relies on
+mt76_find_power_limits_node() also returning a reference for the
+fallback node, which it does since commit 3a62c9f7ec3d ("wifi: mt76:
+Fix of_node reference leak in mt76_get_rate_power_limits()").
 
-Use the options echoed by tcp_v4_save_options() instead, as
-inet_csk_route_req() and inet_csk_route_child_sock() do with
-ireq->ireq_opt. Read them after security_inet_conn_request(),
-since CIPSO can replace ireq->ireq_opt there.
-
-The route now goes to the first hop of the source route, so also
-refuse a strict source route through a gateway, as
-inet_csk_route_req() does.
-
-Found by sashiko while reviewing the sk_mc_loop() fix.
-
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Signed-off-by: Eric Dumazet <edumazet@kernel.org>
-Reviewed-by: Kuniyuki Iwashima <kuniyu@google.com>
-Link: https://patch.msgid.link/20261012101029.927296-3-edumazet@kernel.org
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-[ sashal: adjusted the conflict context in cookie_v4_check(): dropped the missing treq local from the declarations and kept sk->sk_uid instead of the sk_uid(sk) helper. ]
+Fixes: 09382d8f8641 ("wifi: mt76: mt7921: update the channel usage when the regd domain changed")
+Link: https://patch.msgid.link/20261007112419.1277594-3-nbd@nbd.name
+Signed-off-by: Felix Fietkau <nbd@nbd.name>
+[ sashal: Moved the mt7921_regd_channel_update() hunks from regd.c (absent here) into init.c, and omitted the 5GHz !sband goto hunk because init.c has no such check. ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv4/syncookies.c | 12 ++++++++++--
- 1 file changed, 10 insertions(+), 2 deletions(-)
+ .../net/wireless/mediatek/mt76/mt7921/init.c  | 26 ++++++++++++++++---
+ .../net/wireless/mediatek/mt76/mt7921/mcu.c   |  7 ++++-
+ 2 files changed, 29 insertions(+), 4 deletions(-)
 
-diff --git a/net/ipv4/syncookies.c b/net/ipv4/syncookies.c
-index 43cf33f282c15..8177725e9dd22 100644
---- a/net/ipv4/syncookies.c
-+++ b/net/ipv4/syncookies.c
-@@ -404,11 +404,11 @@ static struct request_sock *cookie_tcp_check(struct net *net, struct sock *sk,
-  */
- struct sock *cookie_v4_check(struct sock *sk, struct sk_buff *skb)
+diff --git a/drivers/net/wireless/mediatek/mt76/mt7921/init.c b/drivers/net/wireless/mediatek/mt76/mt7921/init.c
+index 276dfb9c26e0d..016ad2c284166 100644
+--- a/drivers/net/wireless/mediatek/mt76/mt7921/init.c
++++ b/drivers/net/wireless/mediatek/mt76/mt7921/init.c
+@@ -60,6 +60,21 @@ static int mt7921_thermal_init(struct mt792x_phy *phy)
+ 	return PTR_ERR_OR_ZERO(hwmon);
+ }
+ 
++static bool
++mt7921_regd_dt_has_channel(struct device_node *band_np,
++			   struct ieee80211_channel *ch)
++{
++	struct device_node *chan_np;
++
++	if (!band_np)
++		return false;
++
++	chan_np = mt76_find_channel_node(band_np, ch);
++	of_node_put(chan_np);
++
++	return !!chan_np;
++}
++
+ static void
+ mt7921_regd_channel_update(struct wiphy *wiphy, struct mt792x_dev *dev)
  {
--	struct ip_options *opt = &TCP_SKB_CB(skb)->header.h4.opt;
- 	const struct tcphdr *th = tcp_hdr(skb);
- 	struct tcp_sock *tp = tcp_sk(sk);
- 	struct inet_request_sock *ireq;
- 	struct net *net = sock_net(sk);
-+	struct ip_options_rcu *opt;
- 	struct request_sock *req;
- 	struct sock *ret = sk;
- 	struct flowi4 fl4;
-@@ -447,6 +447,8 @@ struct sock *cookie_v4_check(struct sock *sk, struct sk_buff *skb)
- 		SKB_DR_SET(reason, SECURITY_HOOK);
- 		goto out_free;
+@@ -79,7 +94,7 @@ mt7921_regd_channel_update(struct wiphy *wiphy, struct mt792x_dev *dev)
+ 		ch = &sband->channels[i];
+ 		cfreq = ch->center_freq;
+ 
+-		if (np && (!band_np || !mt76_find_channel_node(band_np, ch))) {
++		if (np && !mt7921_regd_dt_has_channel(band_np, ch)) {
+ 			ch->flags |= IEEE80211_CHAN_DISABLED;
+ 			continue;
+ 		}
+@@ -88,17 +103,18 @@ mt7921_regd_channel_update(struct wiphy *wiphy, struct mt792x_dev *dev)
+ 		if (IS_UNII_INVALID(0, 5845, 5925))
+ 			ch->flags |= IEEE80211_CHAN_DISABLED;
  	}
-+	/* Load ireq->ireq_opt after the LSM hook, which can replace it. */
-+	opt = rcu_dereference_protected(ireq->ireq_opt, true);
++	of_node_put(band_np);
  
- 	tcp_ao_syncookie(sk, skb, req, AF_INET);
+ 	sband = wiphy->bands[NL80211_BAND_6GHZ];
+ 	if (!sband)
+-		return;
++		goto out;
  
-@@ -459,7 +461,7 @@ struct sock *cookie_v4_check(struct sock *sk, struct sk_buff *skb)
- 	flowi4_init_output(&fl4, ireq->ir_iif, ireq->ir_mark,
- 			   ip_sock_rt_tos(sk), ip_sock_rt_scope(sk),
- 			   IPPROTO_TCP, inet_sk_flowi_flags(sk),
--			   opt->srr ? opt->faddr : ireq->ir_rmt_addr,
-+			   (opt && opt->opt.srr) ? opt->opt.faddr : ireq->ir_rmt_addr,
- 			   ireq->ir_loc_addr, th->source, th->dest, sk->sk_uid);
- 	security_req_classify_flow(req, flowi4_to_flowi_common(&fl4));
- 	rt = ip_route_output_key(net, &fl4);
-@@ -467,6 +469,12 @@ struct sock *cookie_v4_check(struct sock *sk, struct sk_buff *skb)
- 		SKB_DR_SET(reason, IP_OUTNOROUTES);
- 		goto out_free;
+ 	band_np = np ? of_get_child_by_name(np, "txpower-6g") : NULL;
+ 	for (i = 0; i < sband->n_channels; i++) {
+ 		ch = &sband->channels[i];
+ 		cfreq = ch->center_freq;
+ 
+-		if (np && (!band_np || !mt76_find_channel_node(band_np, ch))) {
++		if (np && !mt7921_regd_dt_has_channel(band_np, ch)) {
+ 			ch->flags |= IEEE80211_CHAN_DISABLED;
+ 			continue;
+ 		}
+@@ -110,6 +126,10 @@ mt7921_regd_channel_update(struct wiphy *wiphy, struct mt792x_dev *dev)
+ 		    IS_UNII_INVALID(4, 6875, 7125))
+ 			ch->flags |= IEEE80211_CHAN_DISABLED;
  	}
-+	/* Same check as in inet_csk_route_req(). */
-+	if (opt && opt->opt.is_strictroute && rt->rt_uses_gateway) {
-+		ip_rt_put(rt);
-+		SKB_DR_SET(reason, IP_OUTNOROUTES);
-+		goto out_free;
-+	}
++	of_node_put(band_np);
++
++out:
++	of_node_put(np);
+ }
  
- 	/* Try to redo what tcp_v4_send_synack did. */
- 	req->rsk_window_clamp = READ_ONCE(tp->window_clamp) ? :
+ void mt7921_regd_update(struct mt792x_dev *dev)
+diff --git a/drivers/net/wireless/mediatek/mt76/mt7921/mcu.c b/drivers/net/wireless/mediatek/mt76/mt7921/mcu.c
+index e533f1a3e0cba..0e547a5d020c1 100644
+--- a/drivers/net/wireless/mediatek/mt76/mt7921/mcu.c
++++ b/drivers/net/wireless/mediatek/mt76/mt7921/mcu.c
+@@ -3,6 +3,7 @@
+ 
+ #include <linux/fs.h>
+ #include <linux/firmware.h>
++#include <linux/of.h>
+ #include "mt7921.h"
+ #include "mcu.h"
+ #include "../mt76_connac2_mac.h"
+@@ -1352,6 +1353,7 @@ int __mt7921_mcu_set_clc(struct mt792x_dev *dev, u8 *alpha2,
+ 		.acpi_conf = mt792x_acpi_get_flags(&dev->phy),
+ 		.mtcl_conf = mt792x_acpi_get_mtcl_conf(&dev->phy, alpha2),
+ 	};
++	struct device_node *np;
+ 	int ret, valid_cnt = 0;
+ 	u32 buf_len = 0;
+ 	u8 *pos;
+@@ -1361,8 +1363,11 @@ int __mt7921_mcu_set_clc(struct mt792x_dev *dev, u8 *alpha2,
+ 
+ 	if (dev->phy.chip_cap & MT792x_CHIP_CAP_CLC_EVT_EN)
+ 		req.cap |= CLC_CAP_EVT_EN;
+-	if (mt76_find_power_limits_node(&dev->mt76))
++
++	np = mt76_find_power_limits_node(&dev->mt76);
++	if (np)
+ 		req.cap |= CLC_CAP_DTS_EN;
++	of_node_put(np);
+ 
+ 	buf_len = le32_to_cpu(clc->len) - sizeof(*clc);
+ 	pos = clc->data;
 -- 
 2.53.0
 
