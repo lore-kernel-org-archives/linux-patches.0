@@ -1,51 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795623322;
-	b=K4Zd6VP5eYLZZImnisla8G50ZTLwjlxaAeUZp0D21a+S0JzNpHyVkPjF4Pz0+z8vDzZJ
-	 IGwdFakcCXli+LAJK3fXQRLSTc6rJBgjwd/Lo0/2PLkq0lYMKg40ofYy7V/FjIB01bn28
-	 Gc3bELpWRQiJ67nJqqXI9mQthuCW0Q5mPGWkfVbhpe/rw32tcexUnwAdBV7kbjY95ZsPM
-	 60cFUFBafenv/Qa11GKHQelZCXr9QqM88JqTXdmo8uoO+50Y+GvRjawr0RNHOmkWDeclP
-	 LMo6DxD46d/SExDH7evwNpgdXlFeSM/7mv1aXtzPAH8eqohz5BeTCHqa1AuRSRg2+Qw==
+	t=1795623325;
+	b=og/hpWu83umh5TnGEOZFp0dVHvOxwBCPMIrBpIaqUdNmIbZjZ7CjIkdqAy8DnRL0rX75
+	 DtpYsFN/9GPvywqN6k8paBsmFaEX8Fpj+4+U7X13QpaesCfyhaTbsuaIW8CxMTt8+Ykzh
+	 WokmE1Fiztp+y8alnOzByTy+MO5/8LBSGiBjXMOpSXy3RXzdDM+jVdAmRQdhLojAxP/IA
+	 rrDAnl4nqgxJ64z8Tm6L5TYkzBfJ6i05vMDkwbEGnxFosmD6Tn7proNkag1lYpUOnkBae
+	 sS/AUmmW3X+QBSAH+MZLBrn1YqdkdZszpY/74q/hDAmHFVAvWdFA1aaGtTvtmhbzBnQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795623322;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795623325;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=kwuF0eprlx/FEX9IkMdh+7CJaBb/O2pnQKsVu/7c/a8=;
-	b=oBg0RFwdkeKfQXNijUTCNZx8NqHOFCiw4zmw7b0XjA7UvHBjPE6ks30CU3gqgQMam9QA
-	 wc0CBg+piTFDQysaK+aqDaQ91Jz/0ZKseK5XffY0zQvIiPa0iQZ5OwY6byt092+ev42dY
-	 cFRkx4c4BMQBhGM4mhJzpHKmClZcpSC/q3ucO8ECDPrf/KfOJPwzHTOrrYSRz17iB4lgV
-	 EQsOEMJxYBGjs5SSNc/qmA0KNfiHO84e/7u9/srqw0vnzHNdfH7mxUbi9rvI2DgtFvagy
-	 BPmy1zmrDlQPtF5dkzzkeNijIkXkVVFKfrRYw9cFLv4jH0Jk8bgGKk1w9nI9QucOk+g==
+	bh=gHHvgQg/hB2srbst7861bNdof+fKvEnrmewM/eRtm28=;
+	b=u4bXx4dhiBeZPZFKKEslbZfFpMHMFHi7dyWOEzVUxAw3vxgKdpgHyMlIygt2GijvDVOA
+	 TUcAxHnxJ69nL9ZohLoo6kFKjjdR9PbJalRY0Km+7oJwy/HChrUeTPZyPdsE7KJp/Sn8G
+	 u44FKz3jwUsHp70le1ATRLc7wJIFZHIOgha3vLqaSMv6kLD9abDn6JrO/kJ2EumHgHBpu
+	 iJU8amd79AMv26yqw3VjDkKyVAqhHWv4KOHqJZtlBPNEFirscHGbAfGS3aQ8g4QaVl1ZH
+	 pvQWOsYYoimNuGhbIKEtBDL4J9nTOjTK4GAh8bkXicqeDuJO7Gpcl5BlBUE+ouy5kPA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=j5X449wr;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=fWeDy3oH;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A9655606A323;
-	Wed, 25 Nov 2026 16:15:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9C5AE606A336;
+	Wed, 25 Nov 2026 16:15:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=j5X449wr
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E1B921F000E6;
-	Wed, 25 Nov 2026 16:15:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=fWeDy3oH
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D1C711F000C4;
+	Wed, 25 Nov 2026 16:15:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795623322;
-	bh=kwuF0eprlx/FEX9IkMdh+7CJaBb/O2pnQKsVu/7c/a8=;
+	s=korg; t=1795623325;
+	bh=gHHvgQg/hB2srbst7861bNdof+fKvEnrmewM/eRtm28=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=j5X449wr1z48gIqRJJWxCO4O0i9ofuSZyYYKB1q8B9dseNtyALoQ4QTtyq0x86790
-	 vjXlztOZ28MNBym7ZeHp9p0IwarH6ApVt9R1cjXaRwivbfxK7xUX4JgIEjaINuh4py
-	 F/zSRvNu13nGwTvxWb3VBE9VxYOfAcJ2ymFS/4lA=
+	b=fWeDy3oHLoJy4JY0CulkFOsuwLX/EP1DmL2A0WHxJwVckrQi1JFDwoV+zycbZn2QI
+	 rQyTtUAKnNI50J8EhogIkQLZM/FWzyKK+7m/P5n/yYmhmA8cMAGK1yqrC3IBkzv4Gt
+	 2wWyIGcJkXc/z75MOrqBwyt/dwerJqUDfqhzZvFY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhao Li <enderaoelyther@gmail.com>,
+	Benjamin Berg <benjamin.berg@intel.com>,
 	Johannes Berg <johannes.berg@intel.com>
-Subject: [PATCH 6.18 820/990] wifi: mac80211: restore dormant links when link updates fail
-Date: Wed, 25 Nov 2026 15:36:27 +0100
-Message-ID: <20261125143841.246895372@linuxfoundation.org>
+Subject: [PATCH 6.18 821/990] wifi: mac80211: fix use-after-free on TTLM disconnect
+Date: Wed, 25 Nov 2026 15:36:28 +0100
+Message-ID: <20261125143841.270460730@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143822.072087159@linuxfoundation.org>
 References: <20261125143822.072087159@linuxfoundation.org>
@@ -67,50 +67,107 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zhao Li <enderaoelyther@gmail.com>
+From: Johannes Berg <johannes.berg@intel.com>
 
-commit bb22f3b2d8f8a2f883944f24678cf84e18b162e8 upstream.
+commit 4af2b71495a3f12196cbea1c9a502c62ada867be upstream.
 
-A failed MLO link update can leave the interface with the requested
-dormant-links bitmap instead of its previous one. This can disable active
-links or trigger a bitmap warning during rollback.
+If ieee80211_process_adv_ttlm() disconnects, and some other
+changes were also detected in the beacon, the link update
+to the driver is still done, leading to use-after-free. Fix
+this by returning, like other functions, whether or not the
+update was accepted by the function.
 
-The error path restores the old valid-links bitmap but passes the new
-dormant_links argument to ieee80211_set_vif_links_bitmaps().
-
-Save the old dormant bitmap before changing link state and use it when
-restoring the old configuration.
-
-LLM assistance was used to find the bug and review.
-
-Fixes: 6d543b34dbcf ("wifi: mac80211: Support disabled links during association")
 Cc: stable@vger.kernel.org
-Signed-off-by: Zhao Li <enderaoelyther@gmail.com>
-Link: https://patch.msgid.link/20261028142123.13072-1-enderaoelyther@gmail.com
+Fixes: 702e80470a33 ("wifi: mac80211: support handling of advertised TID-to-link mapping")
+Reviewed-by: Benjamin Berg <benjamin.berg@intel.com>
+Link: https://patch.msgid.link/20261102220313.3cf5e709417b.I339967c7e614057253aa68c005d9ae220577f99a@changeid
 Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/mac80211/link.c |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ net/mac80211/mlme.c |   25 ++++++++++++++-----------
+ 1 file changed, 14 insertions(+), 11 deletions(-)
 
---- a/net/mac80211/link.c
-+++ b/net/mac80211/link.c
-@@ -284,6 +284,7 @@ static int ieee80211_vif_update_links(st
+--- a/net/mac80211/mlme.c
++++ b/net/mac80211/mlme.c
+@@ -7127,15 +7127,15 @@ static void ieee80211_tid_to_link_map_wo
+ 	sdata->u.mgd.ttlm_info.switch_time = 0;
+ }
+ 
+-static void ieee80211_process_adv_ttlm(struct ieee80211_sub_if_data *sdata,
+-					  struct ieee802_11_elems *elems,
+-					  u64 beacon_ts)
++static bool ieee80211_process_adv_ttlm(struct ieee80211_sub_if_data *sdata,
++				       struct ieee802_11_elems *elems,
++				       u64 beacon_ts)
  {
- 	u16 old_links = sdata->vif.valid_links;
- 	u16 old_active = sdata->vif.active_links;
-+	u16 old_dormant = sdata->vif.dormant_links;
- 	unsigned long add = new_links & ~old_links;
- 	unsigned long rem = old_links & ~new_links;
- 	unsigned long sta_rem = rem;
-@@ -390,7 +391,7 @@ static int ieee80211_vif_update_links(st
- 		/* restore config */
- 		memcpy(sdata->link, old_data, sizeof(old_data));
- 		memcpy(sdata->vif.link_conf, old, sizeof(old));
--		ieee80211_set_vif_links_bitmaps(sdata, old_links, dormant_links);
-+		ieee80211_set_vif_links_bitmaps(sdata, old_links, old_dormant);
- 		/* drain RCU readers before cancelling work they may queue */
- 		synchronize_rcu();
- 		for_each_set_bit(link_id, &add, IEEE80211_MLD_MAX_NUM_LINKS) {
+ 	u8 i;
+ 	int ret;
+ 
+ 	if (!ieee80211_vif_is_mld(&sdata->vif))
+-		return;
++		return true;
+ 
+ 	if (!elems->ttlm_num) {
+ 		if (sdata->u.mgd.ttlm_info.switch_time) {
+@@ -7153,14 +7153,14 @@ static void ieee80211_process_adv_ttlm(s
+ 						      0);
+ 			if (ret) {
+ 				sdata_info(sdata, "Failed setting valid/dormant links\n");
+-				return;
++				return true;
+ 			}
+ 			ieee80211_vif_cfg_change_notify(sdata,
+ 							BSS_CHANGED_MLD_VALID_LINKS);
+ 		}
+ 		memset(&sdata->u.mgd.ttlm_info, 0,
+ 		       sizeof(sdata->u.mgd.ttlm_info));
+-		return;
++		return true;
+ 	}
+ 
+ 	for (i = 0; i < elems->ttlm_num; i++) {
+@@ -7172,7 +7172,7 @@ static void ieee80211_process_adv_ttlm(s
+ 
+ 		if (res) {
+ 			__ieee80211_disconnect(sdata);
+-			return;
++			return false;
+ 		}
+ 
+ 		if (ttlm_info.switch_time) {
+@@ -7197,7 +7197,7 @@ static void ieee80211_process_adv_ttlm(s
+ 			 * switch the AP will continue to announce it anyway.
+ 			 */
+ 			if (delay > IEEE80211_ADV_TTLM_ST_UNDERFLOW)
+-				return;
++				return true;
+ 
+ 			delay_usec = ieee80211_tu_to_usec(delay);
+ 
+@@ -7216,9 +7216,11 @@ static void ieee80211_process_adv_ttlm(s
+ 			wiphy_hrtimer_work_queue(sdata->local->hw.wiphy,
+ 						 &sdata->u.mgd.ttlm_work,
+ 						 us_to_ktime(delay_usec));
+-			return;
++			return true;
+ 		}
+ 	}
++
++	return true;
+ }
+ 
+ static void
+@@ -7738,8 +7740,9 @@ static void ieee80211_rx_mgmt_beacon(str
+ 					       elems->cisco_dtpc_elem);
+ 
+ 	ieee80211_ml_reconfiguration(sdata, elems);
+-	ieee80211_process_adv_ttlm(sdata, elems,
+-				      le64_to_cpu(mgmt->u.beacon.timestamp));
++	if (!ieee80211_process_adv_ttlm(sdata, elems,
++					le64_to_cpu(mgmt->u.beacon.timestamp)))
++		goto free;
+ 
+ apply:
+ 	ieee80211_link_info_change_notify(sdata, link, changed);
 
 
