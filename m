@@ -1,53 +1,55 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795623827;
-	b=bw1LiWWr2wVOw42Z6MzyneDu/x4/ZnXxkH7dMsuWNmlSUprurTUt6SDusfM5alMBnqpJ
-	 5apq2osI+Q42/ns20ku32BnvF9rNTNIPh4Yc8gPcgMtlczfjYZA/EGkjJqgmUoRSfhXTK
-	 JtIDBVdLYjMTvz+w+mLnqc6IilbjoSkZ98lFXbhvahz42ztIvGJLTkndG5MyL0Csqv0Zi
-	 Z+56QHIy4Pej/W/vDaq6rO/UIYbEyxz9T4GFCPH6CBM8HRlth6Vua8Oc7Nb0bmkhGS65o
-	 apqg0O8fV9sU6HsOVJZdUfL0oeJN5EvL1KRlhC8VBYZpASVM1esNn3iihlT+SCITu0A==
+	t=1795623830;
+	b=ObFnB83vAU03oSP9tDvC0iJhaUkHHGbC7D3vsw1SsM0loWyAc2dcObOJjFjmZfaS5s8S
+	 bCX526SP0jBzBa8YytANnf9zrJFFUW2qj92lpm7ufpaDjxfv32/+CoAgjnpQHj+FmYmq5
+	 tX8gqM041XeSGQX/Vq4Ux0+Hp3DPbOC07C85/IfG/d4DjQVJIPXoSbvZdeVLKwYXEj2k8
+	 vZASvE3mgWeUi8uvFn/ntB39TyGRT5YWyLwQuc8ExuOvgwxJSEXpGjr6ez4+AUG4H8GJF
+	 psIRLNF1e7lf0hcErh1mg+GvhiEhEM8dLcBbGHw+8XqJjnLEuUimbFugFiu/jjjHfZw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795623827;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795623830;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=fiNarr2gdX4FHSTvylPckE6px7OsLazt7z2UJ5GPdIU=;
-	b=OBrWBwojaJHmC8ZhHMymDuIpae1mwUbyVn2DWLpLI0n2+WagA69GkyVTnHr9r+3pdFrd
-	 t8tznZnBi61BlxsR763Kn/iA1zXOBWQVylyRR3fc+PjxXSfT/v1gkG/Ky/HGU9x/omjEe
-	 wLB5mO9YiMRSFPGbDlbyePkKFvYi8IDZxRK50GOdE7QPVIBS/QAAeJtfz6kGLBD/57QQA
-	 VPfuIDnKt2Y/5FEn8phHWu13EUnpGViyAROieW82Im6vaukNKTt/vsUttCcpCPCLFVyCV
-	 XhyLMQ8FyMltVM5hxbyKnkp3IiiVQI9VYFlfGKOe68+SnXZdEjtFs/PrdPx9m9yNiig==
+	bh=8Y7bNt8HndZcpzN47tsu8e+IQk9s9PYk5awEdY8rjBE=;
+	b=wSSIf7zw4SDlDm/SqXzo+VaK/1LOoGoHpIgYexTXMrL1JS/dE8fbDa/mEw0pt8I+OrEr
+	 yd55s01ysaaxopWJSQq5ak47YBVZ3Nmdl+IOZPSk2z8wr3VZITpC9YxQ2O9KQ7M4b8sWm
+	 TonOcOdOVvGv+39JFbBbJt03hKbLV3AliNsh5CoSQjaRhrhKFqKK/RIMPBmKZ6sOrAjxv
+	 uI6J3yRSfEfTTOxpIx5ud8joLN428HK2FA+LA8uGOppBeSB5yuN0hWMCXQ1R+7iM9rWKc
+	 FLxMakBEIZxWiQ/kCUV5z71y4tDXkoZ0NC+lWz/URoORz6XuFqqB+dy0s7w5jv9fSZA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=nGN2DCCn;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=CKolJ+LG;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9E332606A31E;
-	Wed, 25 Nov 2026 16:23:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6977C606A321;
+	Wed, 25 Nov 2026 16:23:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=nGN2DCCn
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F18551F000C0;
-	Wed, 25 Nov 2026 16:23:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=CKolJ+LG
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C1D731F000C4;
+	Wed, 25 Nov 2026 16:23:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795623827;
-	bh=fiNarr2gdX4FHSTvylPckE6px7OsLazt7z2UJ5GPdIU=;
+	s=korg; t=1795623830;
+	bh=8Y7bNt8HndZcpzN47tsu8e+IQk9s9PYk5awEdY8rjBE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=nGN2DCCnuQsQhSW2dH7CFuoOlk/IZzSClOXM9dFty+6fFmZQzJAnuHFlJwq14gF7d
-	 Q+khKgPLHv0uaBcL/wVXO2DzWp0kG16Nwk99sU0FI+oF24v3Za8SuDSbSgiEqw3T3k
-	 VgaujkEuJG/emqCCYXGwi9qJY3MSt5YLQbNyg4Es=
+	b=CKolJ+LG7mZLZmnrc69m1iG4cErcGOCjF2qYyybdHrm2ml+Q4/4b3fPG5dykED4oG
+	 epIeXyTlimbqEULGybwBiBFM66XRWAeJX0CGseEgsj6LwRpwAHqBV6TuqkANiBjpCw
+	 PgG8yamHNj6tOVXJ1suhjoscIxDoQfJk/cSt9C7g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Steffen Klassert <steffen.klassert@secunet.com>,
-	"Xiang Mei (Microsoft)" <xmei5@asu.edu>,
-	AutonomousCodeSecurity@microsoft.com,
-	"Cen Zhang (Microsoft Security FORGE Labs)" <blbllhy@gmail.com>
-Subject: [PATCH 6.18 985/990] xfrm: hold net_device reference under RCU in bundle creation
-Date: Wed, 25 Nov 2026 15:39:12 +0100
-Message-ID: <20261125143845.050775826@linuxfoundation.org>
+	Andrea Mayer <andrea.mayer@uniroma2.it>,
+	Yuya Kusakabe <yuya.kusakabe@gmail.com>,
+	Justin Iurman <justin.iurman@gmail.com>,
+	Gabriel Goller <g.goller@proxmox.com>,
+	Eric Dumazet <edumazet@google.com>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 6.18 986/990] net: ipv6: keep room for the mac header in dst_dev_overhead()
+Date: Wed, 25 Nov 2026 15:39:13 +0100
+Message-ID: <20261125143845.073041484@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143822.072087159@linuxfoundation.org>
 References: <20261125143822.072087159@linuxfoundation.org>
@@ -69,98 +71,57 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Cen Zhang (Microsoft Security FORGE Labs) <blbllhy@gmail.com>
+From: Yuya Kusakabe <yuya.kusakabe@gmail.com>
 
-commit 9fa903b24b1f46b4ff5443bcd4aca23e5c57f9c1 upstream.
+commit 87cd6b717e4069dca34e0866e57eaeb44d3b173e upstream.
 
-xfrm_bundle_create() and xfrm_create_dummy_bundle() read dst->dev into
-a local pointer without taking a device reference, then pass it to
-xfrm_fill_dst(). A concurrent RTM_DELLINK replaces dst->dev via
-dst_dev_put() and frees the old net_device, causing a use-after-free
-when xfrm6_fill_dst() later dereferences the stale dev pointer.
+The seg6, ioam6 and rpl lwtunnels size their skb_cow_head() request as
+the length they are about to push plus dst_dev_overhead(), then push the
+new headers and rebuild the mac header below them with
+skb_mac_header_rebuild().  That rebuild needs skb->mac_len of headroom,
+but dst_dev_overhead() leaves LL_RESERVED_SPACE() of the egress device,
+16 bytes for plain Ethernet.
 
-  BUG: KASAN: slab-use-after-free in xfrm6_fill_dst+0x82c/0x860
-  (net/ipv6/xfrm6_policy.c:86 netdev_hold())
-  Read of size 8 at addr ffff8880142fe588 by task exploit/153
-  Call Trace:
-   xfrm6_fill_dst+0x82c/0x860
-   xfrm_resolve_and_create_bundle+0x21d4/0x2bd0
-   xfrm_lookup_with_ifid+0x485/0x1640
-   ip6_dst_lookup_flow+0x19b/0x1e0
-   udpv6_sendmsg+0x1443/0x2dd0
+Where the mac header is longer than that, as it is on ingress through a
+VLAN device with reorder_hdr off, the rebuild runs out of room:
+skb_set_mac_header(skb, -skb->mac_len) computes a negative offset,
+stores it unchecked in the u16 skb->mac_header, and the memmove that
+follows writes skb->mac_len bytes about 64 KB past skb->head.
+Forwarding plain ping6 traffic through such a device reproduces it on
+all five seg6 encapsulation modes and on the rpl and ioam6 inline paths;
+skb->mac_header comes back as 65534 on a 704-byte head.
 
-Fix this by reading dst->dev via dst_dev_rcu() and keeping the RCU
-read-side critical section active until xfrm_fill_dst() has taken the
-required device references.
+Return the larger of the two.  The helper already returns skb->mac_len
+when it has no dst, so this only makes the other branch agree, and it
+covers every caller rather than each call site in turn.
 
-Fixes: 25ee3286dcbc ("[IPSEC]: Merge common code into xfrm_bundle_create")
-Fixes: a0073fe18e71 ("xfrm: Add a state resolution packet queue")
-Suggested-by: Steffen Klassert <steffen.klassert@secunet.com>
-Reported-by: Xiang Mei (Microsoft) <xmei5@asu.edu>
-Link: https://lore.kernel.org/all/20260820200245.44312-1-blbllhy@gmail.com/
-Cc: AutonomousCodeSecurity@microsoft.com
-Assisted-by: GitHub-Copilot:claude-opus-4.6
-Signed-off-by: Cen Zhang (Microsoft Security FORGE Labs) <blbllhy@gmail.com>
-Signed-off-by: Steffen Klassert <steffen.klassert@secunet.com>
+Fixes: 40475b63761a ("net: ipv6: seg6_iptunnel: mitigate 2-realloc issue")
+Fixes: dce525185bc9 ("net: ipv6: ioam6_iptunnel: mitigate 2-realloc issue")
+Fixes: 985ec6f5e623 ("net: ipv6: rpl_iptunnel: mitigate 2-realloc issue")
+Suggested-by: Andrea Mayer <andrea.mayer@uniroma2.it>
+Signed-off-by: Yuya Kusakabe <yuya.kusakabe@gmail.com>
+Reviewed-by: Justin Iurman <justin.iurman@gmail.com>
+Reviewed-by: Gabriel Goller <g.goller@proxmox.com>
+Reviewed-by: Eric Dumazet <edumazet@google.com>
+Reviewed-by: Andrea Mayer <andrea.mayer@uniroma2.it>
+Link: https://patch.msgid.link/20260922-seg6-maclen-headroom-v3-1-7b2f982ef79d@gmail.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/xfrm/xfrm_policy.c |   20 +++++++++++++++-----
- 1 file changed, 15 insertions(+), 5 deletions(-)
+ include/net/dst.h |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
---- a/net/xfrm/xfrm_policy.c
-+++ b/net/xfrm/xfrm_policy.c
-@@ -2777,9 +2777,12 @@ static struct dst_entry *xfrm_bundle_cre
- 	xdst0->path = dst;
+--- a/include/net/dst.h
++++ b/include/net/dst.h
+@@ -455,7 +455,8 @@ static inline unsigned int dst_dev_overh
+ 					    struct sk_buff *skb)
+ {
+ 	if (likely(dst))
+-		return LL_RESERVED_SPACE(dst->dev);
++		return max_t(unsigned int, skb->mac_len,
++			     LL_RESERVED_SPACE(dst->dev));
  
- 	err = -ENODEV;
--	dev = dst->dev;
--	if (!dev)
-+	rcu_read_lock();
-+	dev = dst_dev_rcu(dst);
-+	if (!dev) {
-+		rcu_read_unlock();
- 		goto free_dst;
-+	}
- 
- 	xfrm_init_path(xdst0, dst, nfheader_len);
- 	xfrm_init_pmtu(bundle, nx);
-@@ -2787,8 +2790,10 @@ static struct dst_entry *xfrm_bundle_cre
- 	for (xdst_prev = xdst0; xdst_prev != (struct xfrm_dst *)dst;
- 	     xdst_prev = (struct xfrm_dst *) xfrm_dst_child(&xdst_prev->u.dst)) {
- 		err = xfrm_fill_dst(xdst_prev, dev, fl);
--		if (err)
-+		if (err) {
-+			rcu_read_unlock();
- 			goto free_dst;
-+		}
- 
- 		xdst_prev->u.dst.header_len = header_len;
- 		xdst_prev->u.dst.trailer_len = trailer_len;
-@@ -2796,6 +2801,7 @@ static struct dst_entry *xfrm_bundle_cre
- 		trailer_len -= xdst_prev->u.dst.xfrm->props.trailer_len;
- 	}
- 
-+	rcu_read_unlock();
- 	return &xdst0->u.dst;
- 
- put_states:
-@@ -3065,11 +3071,15 @@ static struct xfrm_dst *xfrm_create_dumm
- 	xfrm_init_path((struct xfrm_dst *)dst1, dst, 0);
- 
- 	err = -ENODEV;
--	dev = dst->dev;
--	if (!dev)
-+	rcu_read_lock();
-+	dev = dst_dev_rcu(dst);
-+	if (!dev) {
-+		rcu_read_unlock();
- 		goto free_dst;
-+	}
- 
- 	err = xfrm_fill_dst(xdst, dev, fl);
-+	rcu_read_unlock();
- 	if (err)
- 		goto free_dst;
- 
+ 	return skb->mac_len;
+ }
 
 
