@@ -1,51 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795620617;
-	b=4jZlzWV/l80GCDJGZxipYgN+MDO1P9e36xDRHWdl1DNdYf6DeG+CIXNwHikXnA1gXlS4
-	 vTE1yFo2Dnk1O4C9asGGxzQr/7kuig3Fsb7eXwf56ExPZUWGkGaJG4UaYzOT6Xd1shlsE
-	 eWPKudC7l++8pDTCO3IXSp29xtzZ5USVEpV3gAk2MbVtJsYIZKNitwTVd0UdpVQQkNHw1
-	 P4eOKS8lqWY9Ewlcxjqx6ssWQOK1qLAOgC6X/SiKYrXMhxUy/Syxg2fV+Dt/AcooqvOQA
-	 jyvANJTC8jEyWyokRxsgYU59unAjjotQMLMeqpkX5n5vFH2XcIm5l3HDikCwP0cp7kA==
+	t=1795620620;
+	b=K9Do/uF6Lvk2fwGjKxl4zvWLNwofa6e+JTzZDe5eURCTfYIROjJR3j6SGqH9dI7yIT3g
+	 RP23WaYQo48ZedaBZtIJrrm8UPAUzfaOydLBhkfRGgKrGMELG0elzAHIiwmGUlCpL+yQe
+	 EFjRQAvNbtBz4+2KUt+pw4Bw9mLew3GRC+NEUwyeRIMAnJtHbhsfVpXCfaQqS0+Fr8Uz2
+	 HOTctoCZliVfG/mivGkPFT39CCOq6L1Udov1BDfXhsUvMH9Ie3k2PNIYByyDB04m4t2Bk
+	 PszLq9H1Whl7Q53dP2RulOzfzFUnmnin6rP3HDgjzY+pgeDkn+Qs+nLAT5bQCcJ97TA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795620617;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795620620;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=o98M6tJWcXcd4jGs9cw70Gftu+QCpqKE7/9ZRiEMDa0=;
-	b=EW1XoxlvuzRcr9Osb5/P6t6Dyzb1gxQ1L3qy0ToBL4weHoAsVmSsbPwtq/fgAFB5QtD/
-	 KZjivLlWw356ygj1jQ62dTBCQvwDgHfbeFUO4J456A7JylB53btCrJ91Qfotbtp+euij+
-	 C51xysF+OxtmWZMtlUcUq2VTeJC/fzaGABPgDOdPKykOjt0fiZETWa2oRx+DS9If6HPD3
-	 VNCeIiJrabuR3i4P7agNMwJDc7WeH8JScvRgiFzOZy3gNJmVaBMm0eCG9o1eEBrJRYMyz
-	 4e8f5u5+NJaC95tIuR+Uwc1t75xet66GboR0vwoK04cuIewKJTWN8/9uhAU96GIH0ew==
+	bh=lZEPBVgOsl9f6avuUeW1HaDkaIWuGdfMD28dUkkYhFs=;
+	b=F7SjhjGKDr9SfASnfyAPKVaZcTxVnXRbzDfkTwvCf6du/e4YBGnMqY9yfBWBuFJ0wb5f
+	 0m0d0zrVcQ9b3ECNymSySY9vEx4V5aHbHlVTBm5H/n3JkMTGmqXkBrTbbxOuRnXZUB5L4
+	 EGEngY6ZagykoLA0dYqJqAcWBv0L2RK5DvDLanqpvrIU+3ZaFtlSXK46IzTLRK9AqjvyY
+	 QYAIYQk4aNiZc9bmSPB0HPgtdR9Ye6cnDILviNZlOpy0nlXZFnO+rZIlVyxEYmwBlrdyl
+	 zwczhB2pgOowiI0qwSO2fijgHHeHYJafchi9Vqhu+fhUoBKjHvQCOuH05wFVuKxDW9w==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=urwfxOhj;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=geZ+rSn2;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EC894606A33E;
-	Wed, 25 Nov 2026 15:30:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0EB50606A333;
+	Wed, 25 Nov 2026 15:30:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=urwfxOhj
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1B4E31F000C6;
-	Wed, 25 Nov 2026 15:30:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=geZ+rSn2
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 60B681F000C6;
+	Wed, 25 Nov 2026 15:30:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795620616;
-	bh=o98M6tJWcXcd4jGs9cw70Gftu+QCpqKE7/9ZRiEMDa0=;
+	s=korg; t=1795620619;
+	bh=lZEPBVgOsl9f6avuUeW1HaDkaIWuGdfMD28dUkkYhFs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=urwfxOhjds8EZGG6aiTX1Mc4YZucps0uSNYr3+QgUu1UDxGDxqMxWMKoub/KEB1tc
-	 GkWiWexqfTf9XV7xz4EEBQFHi66OCMjTei+PLGZWovQHXwb5J489pMSef9xr9PVTWn
-	 C/s/ExckUdAgWrGSydeKVR4uDqKBTjGXiWTH5iUI=
+	b=geZ+rSn2/yl1KHFRtVwIZsrQJWZulPXQvmW6qwiu0JqFr9RU74unqF+ncKSROdNVx
+	 A9U/JN7OllFY9bLWZp9FJJI4nSl22QCt/A3SZN7tbOezAfvXlJBOOLdHjDBePf7Xlz
+	 kHsLXY2MgWmYeoJlZpThhwyAesdekaXbxk4ltXbY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vidhu Sarwal <vidhu.linux@gmail.com>,
+	Christopher Hoover <ch@murgatroid.com>,
+	Joshua Crofts <joshua.crofts1@gmail.com>,
+	Srinivas Pandruvada <srinivas.pandruvada@linux.intel.com>,
 	Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>
-Subject: [PATCH 7.3 0975/1005] iio: humidity: am2315: fix negative temperature decoding
-Date: Wed, 25 Nov 2026 15:38:33 +0100
-Message-ID: <20261125143844.503875419@linuxfoundation.org>
+Subject: [PATCH 7.3 0976/1005] iio: humidity: hid-sensor-humidity: Use per-instance callbacks
+Date: Wed, 25 Nov 2026 15:38:34 +0100
+Message-ID: <20261125143844.526915859@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143821.729802100@linuxfoundation.org>
 References: <20261125143821.729802100@linuxfoundation.org>
@@ -67,55 +69,68 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Vidhu Sarwal <vidhu.linux@gmail.com>
+From: Christopher Hoover <ch@murgatroid.com>
 
-commit 0a570feeca37d85fbfd6b4f6e3d9f33e1461c634 upstream.
+commit bbe4f3f668babc9443fc1f075695e43e17ca7976 upstream.
 
-The AM2315/AM2320 report temperature as a sign-magnitude value,
-with bit 15 as the sign and bits 14-0 as the magnitude.
-am2315_read_data() stores the raw value directly in an s16, causing
-negative temperatures to be interpreted as two's complement. Both the
-read_raw and the triggered buffer paths are affected.
+hid-sensor-humidity keeps a single static struct
+hid_sensor_hub_callbacks for all instances and overwrites its pdev in
+every probe, so with two humidity sensors, input reports for one are
+delivered with the other's platform device, and a NULL dereference
+follows once that device is removed.  The same bug was found in
+hid-sensor-temperature, which shares this code.
 
-Decode the sign bit before storing the temperature value. Positive
-readings are unaffected.
+Keep the callbacks in struct hid_humidity_state, as the other HID
+sensor drivers (accel, gyro, als, ...) do.
 
-Fixes: 366a3270c1c5 ("iio: humidity: Add support for AM2315")
-Signed-off-by: Vidhu Sarwal <vidhu.linux@gmail.com>
+Fixes: d7ed89d5aadf ("iio: hid: Add humidity sensor support")
 Cc: stable@vger.kernel.org
+Signed-off-by: Christopher Hoover <ch@murgatroid.com>
+Reviewed-by: Joshua Crofts <joshua.crofts1@gmail.com>
+Acked-by: Srinivas Pandruvada <srinivas.pandruvada@linux.intel.com>
 Signed-off-by: Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/iio/humidity/am2315.c |   12 ++++++++++--
- 1 file changed, 10 insertions(+), 2 deletions(-)
+ drivers/iio/humidity/hid-sensor-humidity.c |   14 +++++++-------
+ 1 file changed, 7 insertions(+), 7 deletions(-)
 
---- a/drivers/iio/humidity/am2315.c
-+++ b/drivers/iio/humidity/am2315.c
-@@ -113,6 +113,7 @@ static int am2315_read_data(struct am231
- 	 */
- 	u8 rx_buf[8];
- 	u16 crc;
-+	u16 temp_raw;
- 
- 	/* First wake up the device. */
- 	am2315_ping(data->client);
-@@ -144,8 +145,15 @@ static int am2315_read_data(struct am231
- 
- 	sensor_data->hum_data = (rx_buf[AM2315_HUM_OFFSET] << 8) |
- 				 rx_buf[AM2315_HUM_OFFSET + 1];
--	sensor_data->temp_data = (rx_buf[AM2315_TEMP_OFFSET] << 8) |
--				  rx_buf[AM2315_TEMP_OFFSET + 1];
-+
-+	/*
-+	 * Temperature is sign-magnitude, not two's complement:
-+	 * bit 15 is the sign, bits 14-0 are the magnitude (x0.1 degC).
-+	 */
-+	temp_raw = (rx_buf[AM2315_TEMP_OFFSET] << 8) |
-+		   rx_buf[AM2315_TEMP_OFFSET + 1];
-+	sensor_data->temp_data = (temp_raw & 0x8000) ?
-+				  -(temp_raw & 0x7fff) : temp_raw;
- 
+--- a/drivers/iio/humidity/hid-sensor-humidity.c
++++ b/drivers/iio/humidity/hid-sensor-humidity.c
+@@ -15,6 +15,7 @@
+ struct hid_humidity_state {
+ 	struct hid_sensor_common common_attributes;
+ 	struct hid_sensor_hub_attribute_info humidity_attr;
++	struct hid_sensor_hub_callbacks callbacks;
+ 	struct {
+ 		s32 humidity_data;
+ 		aligned_s64 timestamp;
+@@ -184,11 +185,6 @@ static int humidity_parse_report(struct
  	return ret;
+ }
+ 
+-static struct hid_sensor_hub_callbacks humidity_callbacks = {
+-	.send_event = &humidity_proc_event,
+-	.capture_sample = &humidity_capture_sample,
+-};
+-
+ /* Function to initialize the processing for usage id */
+ static int hid_humidity_probe(struct platform_device *pdev)
+ {
+@@ -240,9 +236,13 @@ static int hid_humidity_probe(struct pla
+ 
+ 	platform_set_drvdata(pdev, indio_dev);
+ 
+-	humidity_callbacks.pdev = pdev;
++	humid_st->callbacks = (struct hid_sensor_hub_callbacks) {
++		.send_event = humidity_proc_event,
++		.capture_sample = humidity_capture_sample,
++		.pdev = pdev,
++	};
+ 	ret = sensor_hub_register_callback(hsdev, HID_USAGE_SENSOR_HUMIDITY,
+-					   &humidity_callbacks);
++					   &humid_st->callbacks);
+ 	if (ret)
+ 		goto error_remove_trigger;
  
 
 
