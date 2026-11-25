@@ -1,51 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795619681;
-	b=rxR5sUJN4NO59iaQau8jDvzFhaOvi/FVuNCvJ1lDOBnYQpANNrEIhg9yd1ppsS35/mQt
-	 TuR5xcktGmZNDMRxn5DYGLPSM5JIBCZqxeNzC1c2OnJmyY6HP3z0La0Th6KV0eoVgozue
-	 SCuTqGL5dOZ8aJibWKYts81aljYEqLQQj+E1kT5jwRLEtbhCMb4L5iC9Za6/1FBOl1Lmu
-	 LL7j5Ro++ezNFSIC7pOiBS6nHF4hkE5PXeUJBWMgZhBB5yuN9kLS2hvgZ4Ag3kYIB213n
-	 KD3cG4+EQSCHrePiNXYEmxpi7f8BcvmsJAAVQHGt8blRz5wzYwJHp7y3vdIX6zCey+w==
+	t=1795619684;
+	b=20NhQHp1sGoAVfpQY4iEPL9BaFOC8yTpxsImytiUhhFcUo118bII1tVs/Pmg9ea0YOFs
+	 qQk8PkJtKHovwObLqSO394At10FY+Y1B4HudDh0KOM/YlOq7OtaJZaEzfdqJa9P0B67Uy
+	 eSQuML6HaaxqITHCzHEt+DnB21ZYE4hIGImsOwoXaDqA26+/yL3iGUDrZpGO3+tpB2DZ/
+	 Pv6aj6gQFgwa/paceSrvzD44fCpAIE4z7VcG+zQJqrIRcgLsFZM5eLe/YWkKHyESJmyNT
+	 r7byHznSaVUYZiZ3ZLXP6RDysYDpl6Q8Rm9F+kZiiqA60EIvBnguAeMLhWZSmPKRM7g==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795619681;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795619684;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=Ow+RUAWvnV+tBViFy1aN/+G4qZcZ6ocQg3364j7qR+Q=;
-	b=dkFsDIOSHpxvir0iqPedFRjXVIyWTAp6QtfCL17pn3dBJqkJMvWSqxzGet/OoB374lB5
-	 PyG1k/t8Xy4H3vpIpLClVM1UCLxOILdEB9M/1Bfp75Z9GwXerMh0s033qcD7WrFpXM6MI
-	 CpfA+XgM6InilgJX3qtVZeDHJNhh7p8Kaf2IU+9WeNtWpdFaT6sy2+ZY2cC9YHgbDLF3U
-	 GWpZhVLDAG5WCz52xr4vnfYstvDuZ39Iv1cTCKhSgn2PKQvZS2tXfBeKwY6sn/gwO56Yu
-	 uES96h4s0/C1xp/VvqBA9sDiu7rQXNmDtVPfvMu9jOmkM9S9l5pJmmuJ1GoIgoNNW5Q==
+	bh=UwZzMy0wMhZZ8/vUquzgH4xTmC9RWG8Wc+GT+mTd0K4=;
+	b=j6FWMyUbxSK5kCYsvArb1v7mPV0ybVF2cQ3HbdcUXoNpf+XkP5M7CA8hqgrcMV8SuGMi
+	 qKI2QdKamMeKScxbzV4hCvI4c/rJ6WVhJEa5W2wWWIdTMO7tjhU0H1/PbCUzAplpYUpNC
+	 hzHYcnTjd1NwwY8+w6ZZF7JVzfoG6tCTjZA804D4Ywmq5JIFHN0aY6uSTj22OH34wq0UZ
+	 0uPOu6aV8msDW0HBz8XHrrXglkOE/7VcxafUijxPhw9bMLRBTDlRpMFSu5kCl4N4qvVkZ
+	 TgqI6/6L2Bi1xLxbRM+Beaq183x6Hfpge1e/7ZXa9/y02B/4iij7D/F1ZK8TMXhTIMg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=OjkFnShv;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=QyU0wiIT;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A6952606A332;
-	Wed, 25 Nov 2026 15:14:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 80699606A335;
+	Wed, 25 Nov 2026 15:14:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=OjkFnShv
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9C7EB1F000C4;
-	Wed, 25 Nov 2026 15:14:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=QyU0wiIT
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BEC641F00A00;
+	Wed, 25 Nov 2026 15:14:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795619681;
-	bh=Ow+RUAWvnV+tBViFy1aN/+G4qZcZ6ocQg3364j7qR+Q=;
+	s=korg; t=1795619684;
+	bh=UwZzMy0wMhZZ8/vUquzgH4xTmC9RWG8Wc+GT+mTd0K4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=OjkFnShvTMQczyvxH2hTxtjy/fCL22CVglDnlmUFMvuqr9KEqsKVUhks7AWcBghWd
-	 Th+XcFW3ePa+NElNAWwGXD7r4AEPPUbDVcmayKffIv/xcKvGu0dsgdj5VuiQgJFMGZ
-	 rzXe1XqT67xqlW5uo5Rkq3PhmPcqP4ZJWl+yD5eg=
+	b=QyU0wiITgLeh27FNkJM3zfX4T6yeZLz683df53SYidSlQGj190VrH5hoRmq+7pp1Z
+	 E9p9ol672VXkogc9vVuiNcLK2rIGHVySQu/AfFo7jnkvCtSOJJGcdvQ0K2xYHL083J
+	 NCicLB94yIJxqAQ9ZzUc4xrIxUbgdXODfR1bpGSA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wahid Khan <wahidzk0091@gmail.com>,
-	Namjae Jeon <linkinjeon@kernel.org>
-Subject: [PATCH 7.3 0674/1005] ntfs: open the index allocation before reading or writing an index block
-Date: Wed, 25 Nov 2026 15:33:32 +0100
-Message-ID: <20261125143837.542216358@linuxfoundation.org>
+	Joas Antonio dos Santos <joasantonio108@gmail.com>,
+	Simon Horman <horms@kernel.org>,
+	Aaron Conole <aconole@redhat.com>,
+	Eelco Chaudron <echaudron@ovn.org>,
+	Paolo Abeni <pabeni@redhat.com>
+Subject: [PATCH 7.3 0675/1005] openvswitch: advance by the real header length in get_ipv6_ext_hdrs()
+Date: Wed, 25 Nov 2026 15:33:33 +0100
+Message-ID: <20261125143837.566294775@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143821.729802100@linuxfoundation.org>
 References: <20261125143821.729802100@linuxfoundation.org>
@@ -67,95 +70,85 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Wahid Khan <wahidzk0091@gmail.com>
+From: Joas Antonio dos Santos <joasantonio108@gmail.com>
 
-commit bada7bbb11aaa6feba8904cf38ff833453f5b5d9 upstream.
+commit dbce972650ed6348e3d3856e49308aa5603e02a7 upstream.
 
-ntfs_ib_write() and ntfs_ib_read() use icx->ia_ni without checking it.
-ntfs_ir_reparent() only opens the index allocation through
-ntfs_ia_add() when the root is a small index. For a root that is already
-marked as a large index it calls ntfs_ib_write() directly.
+get_ipv6_ext_hdrs() walks the IPv6 extension header chain to fill
+key->ipv6.exthdrs, but advances to the next header with ipv6_optlen()
+whatever the current header is.  That is only right for Hop-by-Hop,
+Destination Options and Routing headers:
 
-The lookup does not open the index allocation either when it ends in the
-root. If the last entry of the root has no child node, ia_ni is still
-NULL when the root has to be moved into an index block, and the write
-dereferences it:
+ - an Authentication Header is ((hdrlen + 2) << 2) bytes long
+   (ipv6_authlen()), so with hdrlen = 4 the walk skips 40 bytes instead
+   of 24 and reads the next "header" from the ICV and payload;
 
-  Oops: general protection fault, KASAN: null-ptr-deref in range
-        [0x0000000000000128-0x000000000000012f]
-  RIP: 0010:ntfs_inode_attr_pwrite+0x52/0x1600
-   ntfs_ir_make_space
-   ntfs_ie_add
-   ntfs_index_add_filename
-   __ntfs_link
-   ntfs_link
-   vfs_link
+ - a Fragment header is always 8 bytes, and the byte read as hdrlen is
+   its Reserved field, which the sender controls and receivers ignore,
+   so a non-zero value makes the walk skip up to 2048 bytes and miss
+   the headers that follow;
 
-A single byte of an image from mkntfs is enough. In a directory that has
-one empty index block, clear INDEX_ENTRY_NODE (flags 3 -> 2) of the last
-entry of the $INDEX_ROOT and link() a file into the directory.
+ - in a non-first fragment nothing after the Fragment header is a
+   header at all, it is the middle of the fragmentable part, yet the
+   walk keeps parsing it as an extension header chain.
 
-Commit 9365c4a1357e ("ntfs: fix NULL dereference on index allocation open failure")
-covers the case where ntfs_ia_open() fails in the lookup. Here it was
-never tried. Open the index allocation on demand in both
-helpers and fail with -EIO if that does not work.
+In all cases the OFPIEH12_* bits stored in key->ipv6.exthdrs depend on
+bytes chosen by the sender rather than on the headers that are actually
+present: payload bytes that look like another AH or a Hop-by-Hop header
+add OFPIEH12_UNREP/OFPIEH12_UNSEQ, and real headers after a Fragment
+header can go unreported.  Flows that match on OVS_KEY_ATTR_IPV6_EXTHDRS
+then classify such packets wrongly.  There is no memory safety issue,
+skb_header_pointer() bounds every read.
 
-ntfs_ia_open() also succeeds for a directory that has no
-$INDEX_ALLOCATION attribute. The inode it returns is then an empty resident
-stub that does not describe an index allocation, so reject that case too.
+Advance by sizeof(struct frag_hdr) for Fragment headers and by
+ipv6_authlen() for AH, and stop at the Fragment header if its offset is
+non-zero, as ipv6_find_hdr() does.
 
-Fixes: 0a8ac0c1fa0b ("ntfs: update directory operations")
-Cc: stable@vger.kernel.org # v7.1+
-Signed-off-by: Wahid Khan <wahidzk0091@gmail.com>
-Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
+Fixes: 28a3f0601727 ("net: openvswitch: IPv6: Add IPv6 extension header support")
+Link: https://lore.kernel.org/all/178905555085.219967.6617611783437228045@kernel.org/
+Cc: stable@vger.kernel.org
+Signed-off-by: Joas Antonio dos Santos <joasantonio108@gmail.com>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Reviewed-by: Aaron Conole <aconole@redhat.com>
+Reviewed-by: Eelco Chaudron <echaudron@ovn.org>
+Link: https://patch.msgid.link/20261102-ovs-exthdrs-v2-1-21ceef6a243d@gmail.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/ntfs/index.c |   22 ++++++++++++++++++++++
- 1 file changed, 22 insertions(+)
+ net/openvswitch/flow.c |   19 ++++++++++++++++++-
+ 1 file changed, 18 insertions(+), 1 deletion(-)
 
---- a/fs/ntfs/index.c
-+++ b/fs/ntfs/index.c
-@@ -99,12 +99,30 @@ static s64 ntfs_ib_pos_to_vcn(struct ntf
- 	return pos >> icx->vcn_size_bits;
+--- a/net/openvswitch/flow.c
++++ b/net/openvswitch/flow.c
+@@ -370,11 +370,28 @@ static void get_ipv6_ext_hdrs(struct sk_
+ 			return;
+ 		}
+ 
++		if (next_type == IPPROTO_FRAGMENT) {
++			struct frag_hdr _fh, *fh;
++
++			fh = skb_header_pointer(skb, start, sizeof(_fh), &_fh);
++			if (!fh)
++				break;
++			/* Only the first fragment has the headers that follow. */
++			if (fh->frag_off & htons(IP6_OFFSET))
++				break;
++			start += sizeof(_fh);
++			next_type = fh->nexthdr;
++			continue;
++		}
++
+ 		hp = skb_header_pointer(skb, start, sizeof(_hdr), &_hdr);
+ 		if (!hp)
+ 			break;
++		if (next_type == IPPROTO_AH)
++			start += ipv6_authlen(hp);
++		else
++			start += ipv6_optlen(hp);
+ 		next_type = hp->nexthdr;
+-		start += ipv6_optlen(hp);
+ 	}
  }
  
-+/* Open the index allocation inode if no earlier step of the operation did. */
-+static int ntfs_icx_ia_ensure(struct ntfs_index_context *icx)
-+{
-+	if (!icx->ia_ni) {
-+		icx->ia_ni = ntfs_ia_open(icx, icx->idx_ni);
-+		if (!icx->ia_ni)
-+			return -EIO;
-+	}
-+	/* Without $INDEX_ALLOCATION the index inode is an empty resident stub. */
-+	if (!NInoNonResident(icx->ia_ni))
-+		return -EIO;
-+	return 0;
-+}
-+
- static int ntfs_ib_write(struct ntfs_index_context *icx, struct index_block *ib)
- {
- 	s64 ret, vcn = le64_to_cpu(ib->index_block_vcn);
- 
- 	ntfs_debug("vcn: %lld\n", vcn);
- 
-+	ret = ntfs_icx_ia_ensure(icx);
-+	if (ret)
-+		return ret;
-+
- 	ret = pre_write_mst_fixup((struct ntfs_record *)ib, icx->block_size);
- 	if (ret)
- 		return -EIO;
-@@ -770,6 +788,10 @@ static int ntfs_ib_read(struct ntfs_inde
- 
- 	ntfs_debug("vcn: %lld\n", vcn);
- 
-+	ret = ntfs_icx_ia_ensure(icx);
-+	if (ret)
-+		return ret;
-+
- 	pos = ntfs_ib_vcn_to_pos(icx, vcn);
- 
- 	ret = ntfs_inode_attr_pread(VFS_I(icx->ia_ni), pos, icx->block_size, (u8 *)dst);
 
 
