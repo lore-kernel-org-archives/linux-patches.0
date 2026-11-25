@@ -1,51 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795620830;
-	b=4EYQn964Jz/8+Skl05tSpXtv1IW5pN8Kor2RRVQrvc0wPhBj8lEMSpMoPxinA9m1m8Nb
-	 lXLBDsXvtMcDR/6CjPdUNqIyKG4PG5lmI/hNAGMquBYso2Aw5X6JSOscyTClUi6ZnQUrQ
-	 Wo9HL7J31AixNEnoVFpuVWoTWSKFfbDbwgLDgvAqQsV3qMgYjLzASKVg5/ukdokqOhII9
-	 hnp9BzhO3+kQ99M2g5R3C3gHwYbxjA7s70HrcXWJrLBfbKQNA17j1weLtToAYJk12DvwJ
-	 0ykL3Qd9jfDCjMACflRhzdz2rVRNf3wsIm6jicUFM6UJgd7ZoWJ5t0+C9+tvfA1Djzw==
+	t=1795620833;
+	b=uW22tZJrwL2yNDcFFGDZ2bGVdfsfeOiM0n2+pnFRFeEqYsEwOroe+qVXTEkNAuvNRXcO
+	 GoWWDQt1EAyDAcvg66skT8WT+CyVT3y/Z021heStM+DvIRzKpJT7Ans+eVGVP5L/pRciA
+	 fEnXDPXgQDiWSI26E/kC67bJb/eGejhfhduTEKZ3J0vZiMZzij3vvoLE+teXpzrX015QG
+	 HvTb/2Nod1NkUtm48MhTaU2W07DV71losmFeARRacIETy0F+tT6RkKQpLmQcm5U2bklmZ
+	 4LRmiY5DM7uJfSQlWYH4uijH0GVWQWNEo8zu6ytT7y+ngLOsOO3KQ3DzoBg0NVtqpyg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795620830;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795620833;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=v1afAzTZdlm0BgFRZpFax12MG5HLBStogOFQknPhVdM=;
-	b=u4XjRcEzMJ7u7rZN/x3+j3eXRd6UconlMdy32H3UVpcXjluYZp2PVIsYC+8A6c/aFhXN
-	 ChK1yibvaTwie24WGgwdWMazyzAwhUfXaP4lD/fiMpnckB9jKD9nYZ9TMR+MyDolDQF1w
-	 l9Y8pzptUT+zsVy1rpO/aJkUyyfF+XoSGK21NPjdqrIGJEmSUPQ02BM5UmC06xGeCoDJq
-	 Q5oVLAzkPkMYSo1FNTr7jVizw8KNbBtlA1o5cuWbLbHd2KfMDqg6I5jSlzUGe0Of30kGq
-	 NLHC7fonxmzLQF9pnDkqnqAABKxLAtxwrxGwvtmPg05LkUI3tsknyHf9c4JoOoOiYxA==
+	bh=Rv7NpDdGs7CTCM9w5N3eY1sFrxJvbAYoH8su9OU+up4=;
+	b=qaVeO+7bxBXcrndx3IJC8KzGmcSZl0MyPA4x8bMUKHELXgP3cVmHwyDgDY4pOAXKw92W
+	 v4wNwA9lXgmty00FioQoR/Blghh5ZZ7B1JTJkcktqpXrccK42b7lgT9EB1P7cHEaIqojM
+	 iATvQ+GekXBq+rYdP6f3fHlY2VSY8ukG0YfEvEoHQCsx3wOwtAZpphfoytQG2VT8v2EV1
+	 BHZB/9B4Sb9TrCVsDd95hF9rf7o/zPPvB+Z/xyo0OulCGg4bfkBzQ83beBWwtHL5Rc0Z1
+	 8NZFE8StTJGrZJozjIkaaOIM7FVIiG7ERfq4vS8949V3R31hD4hVh5b3bgQJAJrO/eQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=i2y+bKsm;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=PIEAdUWZ;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A4322606A31E;
-	Wed, 25 Nov 2026 15:33:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B0CB6606A31E;
+	Wed, 25 Nov 2026 15:33:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=i2y+bKsm
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 892031F000D1;
-	Wed, 25 Nov 2026 15:33:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=PIEAdUWZ
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CC3F41F000C0;
+	Wed, 25 Nov 2026 15:33:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795620830;
-	bh=v1afAzTZdlm0BgFRZpFax12MG5HLBStogOFQknPhVdM=;
+	s=korg; t=1795620833;
+	bh=Rv7NpDdGs7CTCM9w5N3eY1sFrxJvbAYoH8su9OU+up4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=i2y+bKsmQePZcGoE5rOZYeC1VrLcZl8D8Do2bdcXbViskvEF8LYIVQC/0n8b+f/dl
-	 gcMq/6DoXK8Ce+pohIVuJVWWKUxhSCXxGAEyrRt6pf9vWynW/DRy0gP2doLD5kx+A/
-	 an24KUX/RaBWiVXmyrjtFRc6Zisa2MHvNhHwCkK4=
+	b=PIEAdUWZEojsvEJToiOwrm5ivlKqtUJHIQYk9d715adHJ1TQqXHi2cKmaizJE2Bnw
+	 5LRI7m6Co+FCWt98jRjcwACdHlvn7shkKsLFllHgATTqfbS3bEZx2nDrce3wp3Jkwp
+	 B6zxYBVYjZoBLoUhek8wXx+m+NsHgmZUGXaBp/oo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Bernard Pidoux <bernard.f6bvp@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 036/990] rose: reset a call when a DATA packet arrives out of sequence
-Date: Wed, 25 Nov 2026 15:23:23 +0100
-Message-ID: <20261125143822.934020287@linuxfoundation.org>
+Subject: [PATCH 6.18 037/990] ax25: end a REJ recovery count once frames are acknowledged
+Date: Wed, 25 Nov 2026 15:23:24 +0100
+Message-ID: <20261125143822.957833646@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143822.072087159@linuxfoundation.org>
 References: <20261125143822.072087159@linuxfoundation.org>
@@ -69,70 +69,87 @@ Content-Transfer-Encoding: 8bit
 
 From: Bernard Pidoux <bernard.f6bvp@gmail.com>
 
-In state 3, rose_state3_machine() drops a DATA packet whose N(S) is not
-the expected V(R) and says nothing about it: the packet is not queued,
-and at most an RR with the unchanged N(R) goes out later. ROSE never
-sends a DATA packet again, so once a packet has been lost on the way (a
-relay dropped it, or a link was reset under it), every following packet
-is dropped as well, the window of the sender fills up and the call
-hangs until one side clears it.
+Commit a3aa611e37d4 ("ax25: bound REJ-driven fast retransmits with the
+existing N2 counter") counts REJ-driven retransmits in n2count and
+relies on an I frame received in sequence to reset it. A station that
+only sends, such as a BBS forwarding mail, never receives I frames:
+the peer acknowledges with RR. After a single REJ, n2count then stays
+above zero for the rest of the connection, with two effects:
 
-X.25 resets the call when P(S) is not the one expected. Do the same:
-acknowledge what arrived in sequence with rose_enquiry_response(), so
-that the sender frees those packets, then send RESET REQUEST and go to
-state 4, as the other error cases of this function already do. On the
-RESET, the sender sends again the packets it still holds, from N(S) 0.
+ - ax25_calculate_rtt() no longer updates the round trip time (it
+   requires n2count == 0), and with the default linear backoff
+   ax25_calculate_t1() keeps T1 at (2 + 2 * n2count) * rtt instead of
+   2 * rtt;
 
-Tested in two QEMU guests (6.12.94, KASAN and lockdep) linked over a
-serial mkiss port. The calling guest runs a rose module changed for the
-bench only to drop the third DATA packet it sends, keeping it on its
-ack queue as if a relay had lost it; it writes d0 to d5 on the call.
-Before, the called guest received d0 and d1, and the caller still had
-3840 bytes queued 25 s later; after, the called guest received d0 to d5
-in order, without duplicates, and the caller's queue was empty. No
-kernel report.
+ - isolated REJs, even hours apart, add up, and the N2-th one sends
+   a healthy link into the state 4 enquiry.
 
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+An RR, RNR or REJ whose N(R) acknowledges new frames shows the link
+is getting data through, so reset n2count when it moves V(A). A REJ
+storm that makes no progress keeps the same N(R) and is still bounded
+by N2. The reset is done after the acknowledgment is processed, so
+the round trip of retransmitted frames is still not measured.
+
+Fixes: a3aa611e37d4 ("ax25: bound REJ-driven fast retransmits with the existing N2 counter")
 Signed-off-by: Bernard Pidoux <bernard.f6bvp@gmail.com>
 Assisted-by: Claude:claude-opus-5-5
-(cherry picked from commit e15162d237ddecc2c1215f49b76f4cba06bbc2c8)
+(cherry picked from commit 6f10bf991bc130b56339200965d87512b443954a)
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/rose/rose_in.c | 21 +++++++++++++++++++++
- 1 file changed, 21 insertions(+)
+ net/ax25/ax25_std_in.c | 23 +++++++++++++++++++----
+ 1 file changed, 19 insertions(+), 4 deletions(-)
 
-diff --git a/net/rose/rose_in.c b/net/rose/rose_in.c
-index befb4c55e4597..b58f3b2700a69 100644
---- a/net/rose/rose_in.c
-+++ b/net/rose/rose_in.c
-@@ -194,6 +194,27 @@ static int rose_state3_machine(struct sock *sk, struct sk_buff *skb, int framety
- 			if (atomic_read(&sk->sk_rmem_alloc) >
- 			    (sk->sk_rcvbuf >> 1))
- 				rose->condition |= ROSE_COND_OWN_RX_BUSY;
-+		} else {
+diff --git a/net/ax25/ax25_std_in.c b/net/ax25/ax25_std_in.c
+index d0269ece4fc58..92d89d4df0f83 100644
+--- a/net/ax25/ax25_std_in.c
++++ b/net/ax25/ax25_std_in.c
+@@ -190,7 +190,12 @@ static int ax25_std_state3_machine(ax25_cb *ax25, struct sk_buff *skb, int frame
+ 		if (type == AX25_COMMAND && pf)
+ 			ax25_std_enquiry_response(ax25);
+ 		if (ax25_validate_nr(ax25, nr)) {
++			int progress = nr != ax25->va;
++
+ 			ax25_check_iframes_acked(ax25, nr);
++			/* Frames got through: end any REJ recovery count. */
++			if (progress)
++				ax25->n2count = 0;
+ 		} else {
+ 			ax25_std_nr_error_recovery(ax25);
+ 			ax25->state = AX25_STATE_1;
+@@ -202,8 +207,17 @@ static int ax25_std_state3_machine(ax25_cb *ax25, struct sk_buff *skb, int frame
+ 		if (type == AX25_COMMAND && pf)
+ 			ax25_std_enquiry_response(ax25);
+ 		if (ax25_validate_nr(ax25, nr)) {
++			int progress = nr != ax25->va;
++
+ 			ax25_frames_acked(ax25, nr);
+ 			ax25_calculate_rtt(ax25);
 +			/*
-+			 * A DATA packet was lost on the way: a relay dropped
-+			 * it, or a link was reset under it. ROSE never sends a
-+			 * DATA packet again, so the window of the sender would
-+			 * stay full and the call would hang. Acknowledge what
-+			 * arrived in sequence, then reset the call (X.25:
-+			 * invalid P(S)); the sender then sends its
-+			 * unacknowledged packets again.
++			 * Only REJs that make no progress count towards N2:
++			 * a REJ whose N(R) acknowledges new frames shows the
++			 * link is getting data through.
 +			 */
-+			rose_enquiry_response(sk);
-+			rose_write_internal(sk, ROSE_RESET_REQUEST);
-+			rose->condition = 0x00;
-+			rose->vs        = 0;
-+			rose->vr        = 0;
-+			rose->va        = 0;
-+			rose->vl        = 0;
-+			rose->state     = ROSE_STATE_4;
-+			rose_start_t2timer(sk);
-+			rose_stop_idletimer(sk);
-+			break;
- 		}
- 		/*
- 		 * If the window is full, ack the frame, else start the
++			if (progress)
++				ax25->n2count = 0;
+ 			/*
+ 			 * REJ triggers an immediate go-back-N retransmit,
+ 			 * deliberately bypassing the T1/N2 backoff that
+@@ -224,10 +238,11 @@ static int ax25_std_state3_machine(ax25_cb *ax25, struct sk_buff *skb, int frame
+ 			 * once N2 of them have failed to make it through,
+ 			 * fall back to the normal paced state 4 enquiry
+ 			 * (which will genuinely give up and disconnect after
+-			 * N2 further tries if the link stays bad). A single
+-			 * frame accepted in sequence resets the counter (see
+-			 * the AX25_I case below), so an isolated REJ during
+-			 * otherwise healthy traffic never gets close to N2.
++			 * N2 further tries if the link stays bad). A frame
++			 * accepted in sequence (see the AX25_I case below) or
++			 * an RR/RNR/REJ that acknowledges new frames resets
++			 * the counter, so an isolated REJ during otherwise
++			 * healthy traffic never gets close to N2.
+ 			 */
+ 			if (ax25->n2count == ax25->n2) {
+ 				ax25->n2count = 1;
 -- 
 2.53.0
 
