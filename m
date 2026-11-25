@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795625622;
-	b=niOzOjj7kiygd4+3FJRoZOP0N1YumuUGu47XjEEbMpHcNaXpHYTyWya6hs+nfqPm/n2L
-	 gr4Q+2IBNv0qQEvceeapaama4PJC7UAJ5wuFuCIxEIQ1xYJnMlxYKlADu2jLu/tSFFuOg
-	 QrsOi/F5esXavvqhILpYV/XAL5N7phbnzktH/H8Y1IvxrppaBTyZKbRLq6tLdYFEXAvoN
-	 z5MlylWGxC0vxlCnD0HIjQh1J2gv/kzAj4LMB+x6m0Iwnz962H+4YvjgP9grryRMGATzU
-	 UzHmqm7I6pGcODsAaGQit+xqktI32Sr6wrIhmizYqWGcBu0byUk9zcZ3olTxzlw6Fkg==
+	t=1795625625;
+	b=ZWq0OsLvS3IlK3tu33gXA9NqN4Q68gCt0WEY/Chkx86tMq6c6g99cqTzpacNIhqob9/5
+	 TOJOGNcu4dJmY2vYlssmhsui428qUp89ADgbhMb+mRtXI6TsYTCICIZzBnB9g7epVwo3r
+	 PcIiEDmED/fpa1hZJWNqWPYec5YSuSSw9/VnIySb9UYOe1zTDQnpRIgBVaLni2lp/RSbP
+	 uNexGYVhUbDkyHbpqvDsioozAUYETv7a9Ms1NyeV9xFrJmdFy/t16Jw9QaFHJceIBFnhQ
+	 TRP3MzhzKldwr0Nf+p8Fpiy6s8KpnqM6G+AbRgxajw+URZu8+AtEmwUuYTeu2mMNC1A==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795625622;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795625625;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=I7mAwBnroTy7Z9zgy2oRohyGwvPP6mzMhHa74VWhajU=;
-	b=ipWMMigepDRRwpjicFUniUdHNRRlsX8Yi/kSC8rrH1ZgFt1B35dc7u5EeZ/mHCTtN3s3
-	 YzaVsvwkZZvb4qu5FR8j7/5tEhjqbDQSJCLoZHQdAsNIZWcohsvcNhqOLUZuB111kLwsQ
-	 /0K6U1FToIqD7cNHsw4e/thB7NRxz81LL7f5Sqkuf7HOTbSy+oGmMfCHvg5baFreqi3cn
-	 0NXvOfS/a5VlQYHlPhhF6RpLyqiyYbHYvHUlNzuzN+7t2m5KHOMUtLDLevayT2uTdygUS
-	 yV5TQ94GAAz7ROViKLH/IIGsR94D6Kd9+gIkFFgrjhSzd03Z8AQpeVBh3sJzQvYbcbw==
+	bh=nz5gjD35IhvL1gSjJptzR5iUWw9NWrZ5KED9B0g0iHs=;
+	b=2ZXb+/De5MXYPR31YTLuqtDetRP7vmfsejI6NIQs6MYxe8CDQHtMhqGLixcN8G1q75Sk
+	 qJLwE4oC2iNRz/aL2+0Gk2WvLcGy4f2xrSTbJBcWW33QWxK0dH7gEDubDUjtGAR1uiIZC
+	 La1rHkj8TM8YFe1UjpQ5Lh7OAALQdEuS2+BohcjUTGBMOoPLO3FlBUcGibyK+Vh6RtpbG
+	 FLuf6Er6g0b1bHYaIrQ6GVBZLtC1BikFStgQj0jVBIxlivU9kPKSSfAZr/ZtMtW7WnT8R
+	 +/ERHEA5P1n2kThgNi750xxdWoi+kAqJEGguLEKS8Y/fSBVl0gdooSDPQE5JHOv+WqQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="C6UY6HB/";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=uHVxfmZ4;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 192B0606A321;
-	Wed, 25 Nov 2026 16:53:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E877E606A31E;
+	Wed, 25 Nov 2026 16:53:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=C6UY6HB/
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 688651F000C4;
-	Wed, 25 Nov 2026 16:53:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=uHVxfmZ4
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3B67E1F000CA;
+	Wed, 25 Nov 2026 16:53:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795625621;
-	bh=I7mAwBnroTy7Z9zgy2oRohyGwvPP6mzMhHa74VWhajU=;
+	s=korg; t=1795625624;
+	bh=nz5gjD35IhvL1gSjJptzR5iUWw9NWrZ5KED9B0g0iHs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=C6UY6HB/QAhf2owLOgWuYTZzTRGg6uiVA8o1ugg2DQj0X1iQR+deMWfryZ7YHwiNk
-	 s10Hs6tg1fjUoc654Lo1BYKmyOUvjxTkNfl1ncshGucmIR7HNvBb/tjeF7b0wJvi9c
-	 bM7Lt4Vo0uoAfrV8O5G0muTURBRXnl6d6K8s9zro=
+	b=uHVxfmZ44OrJDPkl2qREPTCXqSXdTt49U9SruvRZMPjnR+324AgBuywlG5hD5Ja6Z
+	 jvbL3RLtKCHvLsG+uWP9FGOts+L1CQOIV4Uw7SMP6GU5S0wyrX9gyDz3hA7XYf+SGw
+	 E57COL9aKv0mhDT0GMpV0vXoR1tsiDs4aFK505GY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable@kernel.org,
-	Kyle Zeng <kylebot@openai.com>,
-	Allison Henderson <achender@kernel.org>,
-	Dave Miller <davem@davem-thinkpadp1gen8.ibmlond.csb>
-Subject: [PATCH 6.12 578/816] net/rds: Do not unpin a page after a failed atomic pin
-Date: Wed, 25 Nov 2026 15:35:26 +0100
-Message-ID: <20261125143902.560181077@linuxfoundation.org>
+	Igor Velkov <iav@iav.lv>,
+	Neil Armstrong <neil.armstrong@linaro.org>,
+	Ulf Hansson <ulfh@kernel.org>
+Subject: [PATCH 6.12 561/816] mmc: meson-gx: report the longest busy wait the controller can do
+Date: Wed, 25 Nov 2026 15:35:09 +0100
+Message-ID: <20261125143902.168691042@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143849.205329330@linuxfoundation.org>
 References: <20261125143849.205329330@linuxfoundation.org>
@@ -69,52 +68,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kyle Zeng <kylebot@openai.com>
+From: Igor Velkov <iav@iav.lv>
 
-commit 8d5ce4751fad9499ea408163af7f410f18a85782 upstream.
+commit 18e9f7fb05ada68d491ff49165b9644f790e0e0c upstream.
 
-rds_cmsg_atomic() assumes that a non-NULL output from rds_pin_pages()
-represents a pin that it owns. However, pin_user_pages_fast() can roll
-back a fast-GUP pin after racing fork() and then fail in the slow path,
-for example after a concurrent mprotect(PROT_NONE). The output slot can
-still contain the already-unpinned page.
+The driver does not set max_busy_timeout, so the core takes the host
+for one that can wait for busy indefinitely and sends erase and cache
+flush as R1b with busy timeouts of up to 60 s and 30 s. The CMD_CFG
+timeout field holds at most 32768 ms, so the controller times out first.
 
-The common error path calls unpin_user_page() on that stale pointer.
-This can consume another subsystem's pin and allow the page to be freed
-while it is still in use. A local unprivileged reproducer triggers a
-KASAN use-after-free write through an io_uring registered buffer.
+Report 32768 ms as max_busy_timeout. The core then sizes discards to
+fit and, for a longer wait, sends R1 and polls for busy itself.
 
-Clear page when rds_pin_pages() does not return one. The error path
-continues to release the page on errors after a successful pin, and
-successful requests retain their existing ownership and behavior. All
-four RDS atomic ancillary operations share this path.
-
-The issue was found by an LLM.
-
-Fixes: 15133f6e67d8 ("RDS: Implement atomic operations")
-Cc: stable@kernel.org
-Signed-off-by: Kyle Zeng <kylebot@openai.com>
-Reviewed-by: Allison Henderson <achender@kernel.org>
-Signed-off-by: Dave Miller <davem@davem-thinkpadp1gen8.ibmlond.csb>
+Fixes: 51c5d8447bd7 ("MMC: meson: initial support for GX platforms")
+Cc: stable@vger.kernel.org
+Signed-off-by: Igor Velkov <iav@iav.lv>
+Reviewed-by: Neil Armstrong <neil.armstrong@linaro.org>
+Signed-off-by: Ulf Hansson <ulfh@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/rds/rdma.c |    5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ drivers/mmc/host/meson-gx-mmc.c |    3 +++
+ 1 file changed, 3 insertions(+)
 
---- a/net/rds/rdma.c
-+++ b/net/rds/rdma.c
-@@ -960,8 +960,11 @@ int rds_cmsg_atomic(struct rds_sock *rs,
- 	}
+--- a/drivers/mmc/host/meson-gx-mmc.c
++++ b/drivers/mmc/host/meson-gx-mmc.c
+@@ -1180,6 +1180,9 @@ static int meson_mmc_probe(struct platfo
  
- 	ret = rds_pin_pages(args->local_addr, 1, &page, 1);
--	if (ret != 1)
-+	if (ret != 1) {
-+		/* A failed pin can leave a stale page pointer. */
-+		page = NULL;
- 		goto err;
-+	}
- 	ret = 0;
+ 	mmc->caps |= MMC_CAP_CMD23;
  
- 	sg_set_page(rm->atomic.op_sg, page, 8, offset_in_page(args->local_addr));
++	/* The longest busy wait the CMD_CFG timeout field can hold. */
++	mmc->max_busy_timeout = SD_EMMC_CMD_TIMEOUT_MAX;
++
+ 	if (mmc->caps & MMC_CAP_SDIO_IRQ)
+ 		mmc->caps2 |= MMC_CAP2_SDIO_IRQ_NOTHREAD;
+ 
 
 
