@@ -1,57 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795622978;
-	b=Y6ydONOYKAz7KWvM7nfeNmeSihoe2d/65quvDaRY3gy9pINBsh+5U7YuWGbHhTVC5lAh
-	 hrZXBKmXoo4BgR3nwTH/lf1rQGk108n1I5VgYhMBng3qymQbg4QnstoTenxHEeNXFclkQ
-	 cZrboDnjD50cXyE9Oi1uixxTSWrp9kacdXwkzLJD5L03HbR6vxD+3lEhgMYi2ccWGVeO8
-	 xdKNn/I7F1k1JmLyuVOJ5e4OKGyezxLmOnVxkkWtZtDkOZ9I5SwpH/0yh6nY2/dZ8zLSO
-	 L7zayjZKdtif3zOPJ3MazZS2Vy0wFQ0QhSZ63+eu7uidBcWIDJRhexbhwVcFWJ1Snbw==
+	t=1795622981;
+	b=MjKW6CLckgu1n6QA4hEboR+fSFnpo3xPgcc0dZN/b5Gs4fKY1pUsQQZVCw1p/mmxovX4
+	 xQXA79ugEOquttjDEs6nmBzXctH6wZ3RHkgyC/dLukuOkCZ4uBOrlT/iPUm1hYVGNecil
+	 aZ3MbWKrS24vkfiKHre3PSBPua/ptZUBaKizfmhkFPCim94T1yEOBuod1Gk9gkXJHZ84X
+	 GoFq5CCojgBewh1mkNMMINPCyzb1abIa2LF+Afqk1N7iQjWkfyRSIWFaBnFTOAK5W/VXD
+	 v8p6CaTAfMv2vc6iiA8jfmpAUZ4f070fweDnFFhNwmq2Lwkekv0e0rBkK8PW7hPKOXQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795622978;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795622981;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=W5fO8qt8vd3u7UyryCTvxIx5t9L3PFr6Fz+88L8mgk8=;
-	b=BTaEB3wo3+ssfUOvEumjE7cS5WqBEjl5z4Bdj6fOM0m5UHsPdoeEKFXfxjiAQgxA1XhE
-	 7+kVBScDDSfqLkjBYOH88CuGs+UD2Ms1GxrhxRvWJRl4cb6HzBn95udReFY+gMyErRli9
-	 huvb6FBgNKMXDiLtb9s4uYT5rwaiaQ34SAGn2B3eKB6fn1Z8F43C5pTOtpJPG6Tpv2S4j
-	 Y5WICyu7BvqKnnGLV73EgLcJmBwee6go7w3huC9R95RKtCcJcgQUikztpUocba3wwueZ4
-	 whbqEIxu2wmmjOvsJBoauljgnYeVeJ4xWGjjOaYl7lVuZrb6URKPUCVqa9FErJfzrng==
+	bh=MPfVsyJWWEyrbumBgVZN3BKdisERgUwb+HaHqzXQs4s=;
+	b=pY/3/CvRs5s6mOGwXB9UyQsEZd3980DMxoccHaRFUV3lhZN9IXXHcROHgm725X3gs7tG
+	 /8Kv8bER7jK1sJvrc0hRqIW/qExo7Ipk0sfCHABX3jMOQUg/X2LSm0PEdHJR01NaYcX5D
+	 5GxYZ5ReMKwFG1yI5sQYvbNvdTuEcwg8FJsPj7NBsrQ6aLzKPcBaBTyN2IWbjWmI6h0zz
+	 nY+M1MvXeapCBBLnGVNpNxE6lueHIo6CL+yekn2JdYZ0vPuw0hc7zncEKBa9425K/jyJ4
+	 /YNe8I1puANidoEX+3Kth7/A/hoDjeuHGOBwHGew7cXKyMhz2Szq/r3kNM7udzFFoxg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=MPpIDpMC;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ZR0G32yU;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 64CC9606A331;
-	Wed, 25 Nov 2026 16:09:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3E032606A321;
+	Wed, 25 Nov 2026 16:09:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=MPpIDpMC
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3747E1F000C0;
-	Wed, 25 Nov 2026 16:09:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ZR0G32yU
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7F03A1F000CF;
+	Wed, 25 Nov 2026 16:09:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795622977;
-	bh=W5fO8qt8vd3u7UyryCTvxIx5t9L3PFr6Fz+88L8mgk8=;
+	s=korg; t=1795622981;
+	bh=MPfVsyJWWEyrbumBgVZN3BKdisERgUwb+HaHqzXQs4s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=MPpIDpMC3UHJTB1lUyFZTcX38DIlEvXkN9SpogYUS1lV6o8JM/ix1rZYm7Iygji8K
-	 BcZyiMV6w+YGcZWMlaAdTQw8Yi041dh2KSZLQz1qHAPPW+je5bwK6dHGQBWBrNZDif
-	 cAq9tZVzkcnf2OI3jow7t6G7EoLrX2HwyNeLfgDY=
+	b=ZR0G32yU6bVSTZJWLWulUhWRaEgi2NDrWckJ+I+Mb83R8os//Mcapkdo/9uvsv6Yq
+	 B9kPsKjZ0HJWUtk/lQo5uIkqKSDSXuSwX5ctenEiSF4oOfAxbZeRZxi5b5ST/yngbT
+	 qW0zydeq4p3kdASrJBJgYuVKGrVmh1mjYpZ/LV2c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vega <vega@nebusec.ai>,
-	Sashiko <sashiko-bot@kernel.org>,
-	Zixuan Chai <petalzu987@gmail.com>,
-	Ren Wei <weir@nebusec.ai>,
-	Hangbin Liu <liuhangbin@kylinos.cn>,
-	Pablo Neira Ayuso <pablo@netfilter.org>,
-	Andrea Mayer <andrea.mayer@uniroma2.it>,
+	Kyle Zeng <kylebot@openai.com>,
+	Eric Dumazet <edumazet@kernel.org>,
+	"Matthieu Baerts (NGI0)" <matttbe@kernel.org>,
 	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.18 710/990] seg6: validate state in netfilter continuations
-Date: Wed, 25 Nov 2026 15:34:37 +0100
-Message-ID: <20261125143838.714959733@linuxfoundation.org>
+Subject: [PATCH 6.18 711/990] mptcp: reject DATA_ACKs against a reversed send interval
+Date: Wed, 25 Nov 2026 15:34:38 +0100
+Message-ID: <20261125143838.738594064@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143822.072087159@linuxfoundation.org>
 References: <20261125143822.072087159@linuxfoundation.org>
@@ -73,255 +69,71 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zixuan Chai <petalzu987@gmail.com>
+From: Kyle Zeng <kylebot@openai.com>
 
-commit 549484dd3e80a721d51bd695f22a800d2e05bea1 upstream.
+commit d75e5cd72995ec2fa77ec77a593cea28e2490ff1 upstream.
 
-When nf_hooks_lwtunnel is enabled, End.DX4 sends decapsulated packets
-through NF_INET_PRE_ROUTING. If DNAT changes the inner destination,
-nf_nat_ipv4_pre_routing() drops skb_dst(), and the continuation then
-dereferences the missing dst's lwtstate. This causes a KASAN NULL
-pointer dereference and fatal exception panic.
+ack_update_msk() samples snd_nxt before taking the data lock, but reads
+snd_una after taking it. Concurrent transmission and ACK processing can
+therefore leave the sampled upper bound behind snd_una. Active-open
+completion also exposes a reversed interval when it initializes snd_una
+to IDSN + 1 while the socket-owned state synchronization is deferred.
 
-End.DX6 has the same issue with IPv6 DNAT. In seg6_iptunnel,
-POST_ROUTING SNAT with an outbound XFRM policy can replace the dst before
-the continuation resumes.
+A peer-supplied 64-bit Data ACK half a sequence space away can pass both
+wraparound comparisons against such an interval. The resulting snd_una
+can make __mptcp_retrans() inflate a fragment's already_sent field. Later
+ACKs can then underflow data_len and cause out-of-bounds page fragments
+to be passed to TCP.
 
-Validate the current dst and expected lwtstate type in each NF_HOOK()
-continuation before calling the existing handler. Drop packets with
-missing or incompatible state while preserving direct no-hook paths.
-The helpers return bool because callers only need a validity check.
+Read snd_nxt after acquiring the data lock and reject reversed intervals
+before checking the received Data ACK. This keeps the interval shorter
+than half the sequence space, so the existing upper-bound check cannot
+accept an advance beyond snd_nxt. Preserve the existing handling of old
+ACKs and keep the transmit fields under their existing socket locking.
 
-Testing shows that the End.DX4 DNAT reproducer triggers a KASAN NULL
-pointer dereference without this change and no longer does so with the
-fix. The SNAT+ESP/XFRM reproducer also completes without the reported
-fault. The in-tree End.DX4 netfilter forwarding selftest passes all four
-bidirectional checks with nf_hooks_lwtunnel disabled and enabled.
-
-Fixes: 7a3f5b0de364 ("netfilter: add netfilter hooks to SRv6 data plane")
 Cc: stable@vger.kernel.org
-Reported-by: Vega <vega@nebusec.ai>
-Reported-by: Sashiko <sashiko-bot@kernel.org>
-Closes: https://sashiko.dev/#/patchset/20260720204430.1886091-1-xmei5@asu.edu
-Signed-off-by: Zixuan Chai <petalzu987@gmail.com>
-Signed-off-by: Ren Wei <weir@nebusec.ai>
-Reviewed-by: Hangbin Liu <liuhangbin@kylinos.cn>
-Acked-by: Pablo Neira Ayuso <pablo@netfilter.org>
-Reviewed-by: Andrea Mayer <andrea.mayer@uniroma2.it>
-Link: https://patch.msgid.link/8574739acd6f5d9eb0a5640e893122619e9f79ef.1793726355.git.petalzu987@gmail.com
+Fixes: 7439d687b79c ("mptcp: avoid a few atomic ops in the rx path")
+Fixes: 3f83d8a77eee ("mptcp: fix more tx path fields initialization")
+Signed-off-by: Kyle Zeng <kylebot@openai.com>
+Signed-off-by: Eric Dumazet <edumazet@kernel.org>
+Reviewed-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
+Link: https://patch.msgid.link/20261104130747.1045741-1-edumazet@kernel.org
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/ipv6/seg6_iptunnel.c |   46 +++++++++++++++++++++++++++++++++++----
- net/ipv6/seg6_local.c    |   55 ++++++++++++++++++++++++++++++++++++++++++++---
- 2 files changed, 94 insertions(+), 7 deletions(-)
+ net/mptcp/options.c |   12 ++++++++----
+ 1 file changed, 8 insertions(+), 4 deletions(-)
 
---- a/net/ipv6/seg6_iptunnel.c
-+++ b/net/ipv6/seg6_iptunnel.c
-@@ -18,6 +18,7 @@
- #include <net/ip6_fib.h>
- #include <net/route.h>
- #include <net/seg6.h>
-+#include <net/dst_metadata.h>
- #include <linux/seg6.h>
- #include <linux/seg6_iptunnel.h>
- #include <net/addrconf.h>
-@@ -58,6 +59,21 @@ static inline struct seg6_lwt *seg6_lwt_
- 	return (struct seg6_lwt *)lwt->data;
- }
- 
-+static bool seg6_skb_has_lwtstate(struct sk_buff *skb)
-+{
-+	struct dst_entry *dst;
-+
-+	if (unlikely(!skb_valid_dst(skb)))
-+		return false;
-+
-+	dst = skb_dst(skb);
-+	if (unlikely(!dst->lwtstate ||
-+		     dst->lwtstate->type != LWTUNNEL_ENCAP_SEG6))
-+		return false;
-+
-+	return true;
-+}
-+
- static inline struct seg6_iptunnel_encap *
- seg6_encap_lwtunnel(struct lwtunnel_state *lwt)
+--- a/net/mptcp/options.c
++++ b/net/mptcp/options.c
+@@ -1137,9 +1137,9 @@ static void ack_update_msk(struct mptcp_
+ 			   struct sock *ssk,
+ 			   struct mptcp_options_received *mp_opt)
  {
-@@ -538,6 +554,17 @@ drop:
- 	return err;
- }
+-	u64 new_wnd_end, new_snd_una, snd_nxt = READ_ONCE(msk->snd_nxt);
++	u64 new_wnd_end, new_snd_una, old_snd_una;
+ 	struct sock *sk = (struct sock *)msk;
+-	u64 old_snd_una;
++	u64 snd_nxt;
  
-+static int seg6_input_core_nf(struct net *net, struct sock *sk,
-+			      struct sk_buff *skb)
-+{
-+	if (unlikely(!seg6_skb_has_lwtstate(skb))) {
-+		kfree_skb(skb);
-+		return -EINVAL;
-+	}
-+
-+	return seg6_input_core(net, sk, skb);
-+}
-+
- static int seg6_input_nf(struct sk_buff *skb)
- {
- 	struct net_device *dev = skb_dst_dev(skb);
-@@ -546,10 +573,10 @@ static int seg6_input_nf(struct sk_buff
- 	switch (skb->protocol) {
- 	case htons(ETH_P_IP):
- 		return NF_HOOK(NFPROTO_IPV4, NF_INET_POST_ROUTING, net, NULL,
--			       skb, NULL, dev, seg6_input_core);
-+			       skb, NULL, dev, seg6_input_core_nf);
- 	case htons(ETH_P_IPV6):
- 		return NF_HOOK(NFPROTO_IPV6, NF_INET_POST_ROUTING, net, NULL,
--			       skb, NULL, dev, seg6_input_core);
-+			       skb, NULL, dev, seg6_input_core_nf);
- 	}
+ 	mptcp_data_lock(sk);
  
- 	return -EINVAL;
-@@ -624,6 +651,17 @@ drop:
- 	return err;
- }
+@@ -1148,10 +1148,14 @@ static void ack_update_msk(struct mptcp_
+ 	 * more dangerous than missing an ack
+ 	 */
+ 	old_snd_una = msk->snd_una;
++	snd_nxt = READ_ONCE(msk->snd_nxt);
+ 	new_snd_una = mptcp_expand_seq(old_snd_una, mp_opt->data_ack, mp_opt->ack64);
  
-+static int seg6_output_core_nf(struct net *net, struct sock *sk,
-+			       struct sk_buff *skb)
-+{
-+	if (unlikely(!seg6_skb_has_lwtstate(skb))) {
-+		kfree_skb(skb);
-+		return -EINVAL;
-+	}
-+
-+	return seg6_output_core(net, sk, skb);
-+}
-+
- static int seg6_output_nf(struct net *net, struct sock *sk, struct sk_buff *skb)
- {
- 	struct net_device *dev = skb_dst_dev(skb);
-@@ -631,10 +669,10 @@ static int seg6_output_nf(struct net *ne
- 	switch (skb->protocol) {
- 	case htons(ETH_P_IP):
- 		return NF_HOOK(NFPROTO_IPV4, NF_INET_POST_ROUTING, net, sk, skb,
--			       NULL, dev, seg6_output_core);
-+			       NULL, dev, seg6_output_core_nf);
- 	case htons(ETH_P_IPV6):
- 		return NF_HOOK(NFPROTO_IPV6, NF_INET_POST_ROUTING, net, sk, skb,
--			       NULL, dev, seg6_output_core);
-+			       NULL, dev, seg6_output_core_nf);
- 	}
+-	/* ACK for data not even sent yet? Ignore.*/
+-	if (unlikely(after64(new_snd_una, snd_nxt)))
++	/* The active-open state sync can defer the snd_nxt update. Do not
++	 * accept an ACK against a reversed interval, or beyond snd_nxt.
++	 */
++	if (unlikely(before64(snd_nxt, old_snd_una) ||
++		     after64(new_snd_una, snd_nxt)))
+ 		new_snd_una = old_snd_una;
  
- 	return -EINVAL;
---- a/net/ipv6/seg6_local.c
-+++ b/net/ipv6/seg6_local.c
-@@ -24,6 +24,7 @@
- #include <net/addrconf.h>
- #include <net/ip6_route.h>
- #include <net/dst_cache.h>
-+#include <net/dst_metadata.h>
- #include <net/ip_tunnels.h>
- #ifdef CONFIG_IPV6_SEG6_HMAC
- #include <net/seg6_hmac.h>
-@@ -211,6 +212,21 @@ static struct seg6_local_lwt *seg6_local
- 	return (struct seg6_local_lwt *)lwt->data;
- }
- 
-+static bool seg6_local_skb_has_lwtstate(struct sk_buff *skb)
-+{
-+	struct dst_entry *dst;
-+
-+	if (unlikely(!skb_valid_dst(skb)))
-+		return false;
-+
-+	dst = skb_dst(skb);
-+	if (unlikely(!dst->lwtstate ||
-+		     dst->lwtstate->type != LWTUNNEL_ENCAP_SEG6_LOCAL))
-+		return false;
-+
-+	return true;
-+}
-+
- static struct ipv6_sr_hdr *get_and_validate_srh(struct sk_buff *skb)
- {
- 	struct ipv6_sr_hdr *srh;
-@@ -942,6 +958,17 @@ static int input_action_end_dx6_finish(s
- 	return dst_input(skb);
- }
- 
-+static int input_action_end_dx6_finish_nf(struct net *net, struct sock *sk,
-+					  struct sk_buff *skb)
-+{
-+	if (unlikely(!seg6_local_skb_has_lwtstate(skb))) {
-+		kfree_skb(skb);
-+		return -EINVAL;
-+	}
-+
-+	return input_action_end_dx6_finish(net, sk, skb);
-+}
-+
- /* decapsulate and forward to specified nexthop */
- static int input_action_end_dx6(struct sk_buff *skb,
- 				struct seg6_local_lwt *slwt)
-@@ -962,7 +989,7 @@ static int input_action_end_dx6(struct s
- 	if (static_branch_unlikely(&nf_hooks_lwtunnel_enabled))
- 		return NF_HOOK(NFPROTO_IPV6, NF_INET_PRE_ROUTING,
- 			       dev_net(skb->dev), NULL, skb, skb->dev,
--			       NULL, input_action_end_dx6_finish);
-+			       NULL, input_action_end_dx6_finish_nf);
- 
- 	return input_action_end_dx6_finish(dev_net(skb->dev), NULL, skb);
- drop:
-@@ -1030,6 +1057,17 @@ static int input_action_end_dx4_finish(s
- 	return dst_input(skb);
- }
- 
-+static int input_action_end_dx4_finish_nf(struct net *net, struct sock *sk,
-+					  struct sk_buff *skb)
-+{
-+	if (unlikely(!seg6_local_skb_has_lwtstate(skb))) {
-+		kfree_skb(skb);
-+		return -EINVAL;
-+	}
-+
-+	return input_action_end_dx4_finish(net, sk, skb);
-+}
-+
- static int input_action_end_dx4(struct sk_buff *skb,
- 				struct seg6_local_lwt *slwt)
- {
-@@ -1050,7 +1088,7 @@ static int input_action_end_dx4(struct s
- 	if (static_branch_unlikely(&nf_hooks_lwtunnel_enabled))
- 		return NF_HOOK(NFPROTO_IPV4, NF_INET_PRE_ROUTING,
- 			       dev_net(skb->dev), NULL, skb, skb->dev,
--			       NULL, input_action_end_dx4_finish);
-+			       NULL, input_action_end_dx4_finish_nf);
- 
- 	return input_action_end_dx4_finish(dev_net(skb->dev), NULL, skb);
- drop:
-@@ -1684,6 +1722,17 @@ static int seg6_local_input_core(struct
- 	return rc;
- }
- 
-+static int seg6_local_input_core_nf(struct net *net, struct sock *sk,
-+				    struct sk_buff *skb)
-+{
-+	if (unlikely(!seg6_local_skb_has_lwtstate(skb))) {
-+		kfree_skb(skb);
-+		return -EINVAL;
-+	}
-+
-+	return seg6_local_input_core(net, sk, skb);
-+}
-+
- static int seg6_local_input(struct sk_buff *skb)
- {
- 	if (skb->protocol != htons(ETH_P_IPV6)) {
-@@ -1694,7 +1743,7 @@ static int seg6_local_input(struct sk_bu
- 	if (static_branch_unlikely(&nf_hooks_lwtunnel_enabled))
- 		return NF_HOOK(NFPROTO_IPV6, NF_INET_LOCAL_IN,
- 			       dev_net(skb->dev), NULL, skb, skb->dev, NULL,
--			       seg6_local_input_core);
-+			       seg6_local_input_core_nf);
- 
- 	return seg6_local_input_core(dev_net(skb->dev), NULL, skb);
- }
+ 	new_wnd_end = new_snd_una + tcp_sk(ssk)->snd_wnd;
 
 
