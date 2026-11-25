@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795618527;
-	b=wt/ZpHiatuI2rI2WGpIfPE73oeb2iOwtfOWF60EHNomHrWvcvDcKTBie7VEw9SEBUbNA
-	 o2PJlsbPAHRhB0YH+U2PVtHbU598myfOVx4MKwp8L/76NuNnJoniTyMKZV+pVpDOAS7TV
-	 +4BGDHt7bhR3XEhGguQ4bwS0heE89INRWJGU+nIMjuSRuGzddr42gIS6lXo63d0TkT7X8
-	 vlenH0RfW0mv2Y2ly2d9J9W7PjLHRpkdnsDSHDR7aHXUhzHuyDbius0eeeLTTq/OacrXj
-	 rVKW8AKv0VffKPUCs1czsyVKY1KiZOWsWKH3K/KDqL8WtLpAKPEnmTGRTT+UqpzLEtg==
+	t=1795618530;
+	b=4Xwg8awx/wRgPrgwRL3rQmPWB7bXBkpuHqXmcejlgo0Qpvsc5KWSl1f8AGkdFwNZjRwK
+	 DaA52f+28Uk5esdV9fnAOa25glikPiEEdOyFwhw4zYaqBpJocJHVSRtF2rznihuo7KiEv
+	 9/BVtiPODdn6O6r2sGvOkHgdAqVxO7XgDFwUxsd22DUjMRDtWdfMdWK6r/iGkiXK+uyIS
+	 b2ZgaWXIJ4Hm3vpzhj+xiAnY/8Sz1iKwMbZ/pcHeAag1vnXihJleBBy8y6uUqz85hqwjs
+	 i7QiAi69WprOkbraf6JofPGZbgFU/HQICKpC9pk9+OFG1SAkcS0pSA14cPJTFaW4dgA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795618527;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795618530;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=uXqDyTLqewFdN5Hxvuy0vLHZoeC4Zq0lxlwXrNjvnEM=;
-	b=Qs9jw6uppNzuS/mvFCqnpu5hfj92D0tZeXpmWzLhsawHmFiR6ouBvbWuC5WmRCPlw6gv
-	 rPEP2/5n3wjqv+5fvY0iT9CqizZXtGSASJ+/2pPs2y2W+6SWMb7gFqydQAB5yip7haK/h
-	 +Oq1V/O7EUZrr3K5h/IWMpHnry4J4CICiQnsiDXooCCwvQOpVsU83MlFaUtNDLN/pDouo
-	 C3S3BbqHDV3eJrmIc9M/jc9NIXR98hssaIhc44n8iiLCSsS9WNvmhL/uHlBzQfypni+vV
-	 aw7GYtNTS6QRZb1ZAuB+FX8E3bt158eXFX6b9Gm4pSvZVh+USz3CMmG5G9CCmLrV8Fg==
+	bh=E6FKyEIG0RuQ2D1IlaN5rvJ5Ql+PbQXXMxQmLmNkSw0=;
+	b=o6qD/kiFjWekOO2a0cIezX63Llhd/GgM1NyDrIusr39Zv1yclJIBmp37t7h1VeYh+/0H
+	 ugW4G+ylDWHFpO4jRFX1/hw2lrrWnaN18YOlD1GwneKopWbbLavCNGZLep5NWx/dssUHT
+	 knQD9X4CceuvWJMDE3KXWhWvIjNgQaj2vq+PDt19Cfm6WJSkDaoh6DBiOJK6kl/CQE3XJ
+	 5ZZYlTHrGK/V7AwYM6KKArcCORRHaMLIZoM9jOKz/m/m9ixH+cK4vfB5oYaBPZkczT8Q+
+	 jT4Cc5/k1wGEelYoiwtklWTkPGt2dCVzg/MDjArtJvYcBwUCSuENRz9ZyfM35/c9o2g==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=bZvNsqq1;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=A0hV7eHa;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 17F25606A339;
-	Wed, 25 Nov 2026 14:55:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 62CDB606A326;
+	Wed, 25 Nov 2026 14:55:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=bZvNsqq1
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DDB2A1F000D0;
-	Wed, 25 Nov 2026 14:55:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=A0hV7eHa
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3FA231F000D3;
+	Wed, 25 Nov 2026 14:55:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795618526;
-	bh=uXqDyTLqewFdN5Hxvuy0vLHZoeC4Zq0lxlwXrNjvnEM=;
+	s=korg; t=1795618529;
+	bh=E6FKyEIG0RuQ2D1IlaN5rvJ5Ql+PbQXXMxQmLmNkSw0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=bZvNsqq1A6XRkSIuxmVJrT3HinPZFuMkJZeBzaeJO8cWjDHeyRoZ2tgIs4cRrRVWc
-	 qtMqxY3h73aI20Ryn94HxNO0h1VKg6T6LD6HOT8FH2I4rV01kyfhL4UX5adpHFlZLL
-	 5CEx2jaM9fAUxJuBNGWN6kmUVf75j7hqhkuURkpA=
+	b=A0hV7eHaluezRP1WAWmMo4S6ITWzXnsNKRYJG4mvokyN53HN6zOXi8lOlNkcxo5Nw
+	 nTGmk7EXgRoP132xi0KIcOmYWcZ6pz1Jc+3e+hyjtHg1qsNcdy5G7o2oEx4afoWUjL
+	 feooqSE6S89/mqCZFe/hzZsHjpSi7uKWdUrWLR8A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jinseob Kim <kimjinseob88@gmail.com>,
-	Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>,
+	Colton Pawielski <colton.pawielski@gmail.com>,
+	Daniel Machon <daniel.machon@microchip.com>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0306/1005] gpiolib: reset lookup flags for each hogged line
-Date: Wed, 25 Nov 2026 15:27:24 +0100
-Message-ID: <20261125143828.903337080@linuxfoundation.org>
+Subject: [PATCH 7.3 0307/1005] net: 8139cp: keep Rx masked while NAPI is scheduled
+Date: Wed, 25 Nov 2026 15:27:25 +0100
+Message-ID: <20261125143828.925727495@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143821.729802100@linuxfoundation.org>
 References: <20261125143821.729802100@linuxfoundation.org>
@@ -68,52 +69,58 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jinseob Kim <kimjinseob88@gmail.com>
+From: Colton Pawielski <colton.pawielski@gmail.com>
 
-[ Upstream commit c20464a78162cf8b3a1c9dc7e0d764e535bfe582 ]
+[ Upstream commit 547b1ae5ec50b7d81b05b4219e0db7e56279d65f ]
 
-gpiochip_add_hog() initializes lflags once before iterating over the GPIO
-specifiers. In the non-OF path, an active-low line sets GPIO_ACTIVE_LOW,
-but a later active-high line does not clear it. A single firmware hog
-with mixed polarities therefore configures later active-high lines as
-active-low, including inverting their initial output value.
+cp_rx_poll() calls napi_complete_done() and only then takes cp->lock
+with interrupts disabled to unmask the Rx interrupts. An interrupt
+that is not masked while polling (TxOK, TxErr, ...) can arrive in
+between. cp_interrupt() then sees the Rx status bits, which are still
+set, finds NAPI no longer scheduled, masks Rx and schedules NAPI again.
+cp_rx_poll() then carries on and unmasks Rx anyway.
 
-Initialize the lookup flags for each line before translating its flags.
-The OF helper already overwrites the flags for each specifier; the
-non-OF path must also start with a fresh value.
+>From that point Rx interrupts are enabled while NAPI is scheduled:
+cp_interrupt() leaves the Rx bits for the poll routine, does not mask
+them because napi_schedule_prep() fails, and the level-triggered
+interrupt fires again as soon as it returns. On an SH7751 LANDISK
+under combined Tx/Rx load this interrupt storm was captured with a RAM
+trace right before the board locked up hard.
 
-Codex assisted with identifying the issue and developing the fix.
+Mask Rx in cp_interrupt() whenever Rx status is pending, not only when
+NAPI gets scheduled. If the race leaves Rx unmasked, the next interrupt
+masks it again, and the pending poll unmasks it when it completes.
 
-Fixes: 802c51a83e9a ("gpiolib: fix hogs with multiple lines")
-Signed-off-by: Jinseob Kim <kimjinseob88@gmail.com>
-Link: https://patch.msgid.link/20261104115938.226-1-kimjinseob88@gmail.com
-Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
+Fixes: ab1e7e1d2666 ("8139cp: use napi_complete_done()")
+Signed-off-by: Colton Pawielski <colton.pawielski@gmail.com>
+Reviewed-by: Daniel Machon <daniel.machon@microchip.com>
+Link: https://patch.msgid.link/20261031-b4-8139cp-napi-v2-1-5824797c0fe6@gmail.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpio/gpiolib.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/net/ethernet/realtek/8139cp.c | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/gpio/gpiolib.c b/drivers/gpio/gpiolib.c
-index 90731a547ed63..b16d6d727ac35 100644
---- a/drivers/gpio/gpiolib.c
-+++ b/drivers/gpio/gpiolib.c
-@@ -975,7 +975,6 @@ int gpiochip_add_hog(struct gpio_chip *gc, struct fwnode_handle *fwnode)
- 	 */
- 	u32 cells = 2;
+diff --git a/drivers/net/ethernet/realtek/8139cp.c b/drivers/net/ethernet/realtek/8139cp.c
+index 9016527e229ac..8f81dc7deef1e 100644
+--- a/drivers/net/ethernet/realtek/8139cp.c
++++ b/drivers/net/ethernet/realtek/8139cp.c
+@@ -600,11 +600,11 @@ static irqreturn_t cp_interrupt (int irq, void *dev_instance)
+ 		goto out_unlock;
+ 	}
  
--	lflags = GPIO_LOOKUP_FLAGS_DEFAULT;
- 	dflags = GPIOD_ASIS;
- 	name = NULL;
+-	if (status & (RxOK | RxErr | RxEmpty | RxFIFOOvr))
+-		if (napi_schedule_prep(&cp->napi)) {
+-			cpw16_f(IntrMask, cp_norx_intr_mask);
++	if (status & (RxOK | RxErr | RxEmpty | RxFIFOOvr)) {
++		cpw16_f(IntrMask, cp_norx_intr_mask);
++		if (napi_schedule_prep(&cp->napi))
+ 			__napi_schedule(&cp->napi);
+-		}
++	}
  
-@@ -1014,6 +1013,8 @@ int gpiochip_add_hog(struct gpio_chip *gc, struct fwnode_handle *fwnode)
- 	fwnode_property_read_string(fwnode, "line-name", &name);
- 
- 	for (unsigned int i = 0; i < num_hogs; i++) {
-+		lflags = GPIO_LOOKUP_FLAGS_DEFAULT;
-+
- 		if (is_of_node(fwnode)) {
- 			/*
- 			 * OF-nodes need some additional special handling for
+ 	if (status & (TxOK | TxErr | TxEmpty | SWInt))
+ 		cp_tx(cp);
 -- 
 2.53.0
 
