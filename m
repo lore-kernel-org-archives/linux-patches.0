@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795623741;
-	b=rC5Q9rfnwZsXUW45H7Z/3q2D9NeD1jOhE6RUBLKEKlQkJooxUAp6I9ZsjnD7MJj06B9R
-	 cvVAxQfLKpcV7oHOdkwqMqqZvPIv6iHqM7t7KmIuBdnPekPa/uXG1vfX+c5BSmITBkSBN
-	 W7QmC44Z7RCNzXltNkkRN7T4kGOpBb2LNdlFjTqA9Fy7LD6HIhA4w7UBqGcEClVRwnxu6
-	 w8vgogsGLwarWDAWzh6bl4KX+CCLUq1rbN6wa8YGMgzfxEnfPYXBJGNj+YNV7Y3BKLiRF
-	 r1DerUw2mE97m4vtSQh7ayTcEKTdcUW6WmMUR3Lz+xt/1ntvcLxF+gyBwXd/a7fw8nQ==
+	t=1795623745;
+	b=1DA+lzANsV4TpW5lApgzWyfapiFKaDLUhMm86VlOtZAn1l4rfu7KbVjkpDCTbaqk+nnH
+	 iQMeqCDJ1yJGohFoV2E3LYjIV5XjP0+KuBYrMFjcf1BO3mrkxzMtzD8PPZd2QSWJBkmoE
+	 8KxnVr44yBnPFMuvNZHvN765jHY7GPt9imGzLeFhiare5eEMo39K4GuLIL8cQU1mOYnGA
+	 NpNOOnjGZuHiBxXZaoRM/Y0bN2UPNC3KAPDbcdyDFYGm2VBzJDUymsbYSb/nulp7uotEk
+	 vD6iKdfREhs6ceFjNFcYFA/DxesxwgqzesV9/64xJQppShh3rZJhr2J4pXH8+vBwtwQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795623741;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795623745;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=jj+HooBI/YHWnKQgaCXghjL+rFFbzxs0fkLtf/BmWiI=;
-	b=4gsIFpDdaMt6YupbLKn/Kg0pt2MwVmabE8xQNP2OmP9gz9+Z6E3Aa6IIzhKn/41nyFir
-	 uQxztPzj3mmyNA9ejXz/CTte8by9+YMwO4qxEPVKXfqYNIoSq48JvDID6MmMuFDt+ftA5
-	 NmxkTCEYhETHZxDH709ZNm6DJLOia1DQIjfW/ChmrDIpPnhQO6WDXxZFzFfiZ+7NccFI2
-	 Bl/gjwqAr5fvWPOhH9wzDD1VFiFKAQyRvvZwdiSgoZeFQ8Wx3Tiw/6OGENOuj88cG+my6
-	 79U4ogygnBN7MVOlzsb2m9dyfEnCzqx7UIlMIxNRqL2YGGhvWtJonbzIO4UqqZka8Iw==
+	bh=YTvWnqrEISkfGmU+Q+ZyGfe1uTG6Fjtu3gp4LdiCpR0=;
+	b=UXF3hkKAiXMTaTOBzliyy2gCD8JqeIT787L8k9kIUfiii+zo05MN9Q/FW3rY7JWlWjoA
+	 uoP9ImPbETr5KB5K3Sh/zj/Nr443DKzJBz8ZxVgvk4eMNR7lQqXQVrN//nKmAYla1wLgh
+	 kAsjw+Wy7Cut74mwhnvSSlgZkyehd107p6kPbC6vMyPV0wNj/uQgIC/4ajR7PTUvYnHjD
+	 XXywwdRyt+GC/SjeMlVr00UCAg/x7DYzR1C0kLfkj6B/wyxZUKgOduCmvhVhb8oKHHHD8
+	 NfbHRsFixt2wkH+aQtGGK1r9LNR2j0mUJKtUYYnqJzi88uai6Ob20pfDLibO3DfOaIw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=s2cu7VBa;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=vMkhHtT6;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A9734606A321;
-	Wed, 25 Nov 2026 16:22:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2ABCB606A32E;
+	Wed, 25 Nov 2026 16:22:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=s2cu7VBa
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 029521F0093C;
-	Wed, 25 Nov 2026 16:22:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=vMkhHtT6
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4842F1F000C6;
+	Wed, 25 Nov 2026 16:22:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795623741;
-	bh=jj+HooBI/YHWnKQgaCXghjL+rFFbzxs0fkLtf/BmWiI=;
+	s=korg; t=1795623744;
+	bh=YTvWnqrEISkfGmU+Q+ZyGfe1uTG6Fjtu3gp4LdiCpR0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=s2cu7VBalSym/rFhnH0uVuhtNu6UduQAyB8yIFkKVRX0S2ctJgKmJfV5U8hxWo7ep
-	 CYHfcV8bvBJ3By383qnnUqUa4RbxVL/s4rVkGlA4GEJpMQiAYguglA7QlG6Sgt4bfJ
-	 yLgD43DMNy1hejli8M1kunxiwpzAOGqIAo5ZeNGs=
+	b=vMkhHtT6soR/oCvDLHYinhb+pVldUsnby9+WjaeH5I9kXcy7To6nCrtG3PCHpvM+m
+	 IxKEBQkd5K1B0Pxfj74XBmHdlY7FGFlGHoVpZdmVxYpEgkrznYmIhnzy21XcAAmWL0
+	 Y2Hu76jGzl5PX/CX74WQH0x4dB+F12L4H6tHZPdo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable <stable@kernel.org>,
-	Josef Bacik <josef@toxicpanda.com>,
-	Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
-Subject: [PATCH 6.18 929/990] w1: use the bus mutex for the "rw" file
-Date: Wed, 25 Nov 2026 15:38:16 +0100
-Message-ID: <20261125143843.758944592@linuxfoundation.org>
+	Arnav Kapoor <kapoorarnav43@gmail.com>,
+	Jean-Baptiste Maneyrol <jean-baptiste.maneyrol@tdk.com>,
+	Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>
+Subject: [PATCH 6.18 956/990] iio: imu: inv_mpu6050: fix magnetometer scale of Y and Z axes
+Date: Wed, 25 Nov 2026 15:38:43 +0100
+Message-ID: <20261125143844.381253369@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143822.072087159@linuxfoundation.org>
 References: <20261125143822.072087159@linuxfoundation.org>
@@ -68,80 +68,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Josef Bacik <josef@toxicpanda.com>
+From: Arnav Kapoor <kapoorarnav43@gmail.com>
 
-commit 8599e08648c0b4913ea7b202511f1294d176e793 upstream.
+commit e5f7a6684a23d9b20184a81b4ebded3b3504ccdc upstream.
 
-Commit b02f8bede217 ("W1: split master mutex to avoid deadlocks.") gave
-the bus a mutex of its own, because the lock which protects the list of
-slaves is held while a slave is removed, which waits for the sysfs
-callbacks of the slave, so these must not take it.  It converted all the
-slave drivers, but not the "rw" file of the default family in w1.c,
-which still takes the mutex of the master to talk on the bus.  That has
-two consequences:
+inv_mpu_magn_get_scale() returns st->magn_raw_to_gauss[chan->address],
+where magn_raw_to_gauss[] holds one coefficient per axis, computed in
+inv_magn_init() from the per-axis factory sensitivity adjustment values
+(ASAX, ASAY, ASAZ) of the AK8975/AK8963 magnetometer.
 
-- A deadlock.  w1_process() holds the mutex of the master while it
-  searches the bus and detaches the slaves which have gone:
+However INV_MPU9X50_MAGN_CHAN() never sets .address, so it is 0 for all
+three magnetometer channels. As a result the Y and Z channels report the
+scale computed from the X axis adjustment value, and userspace scales
+the Y and Z readings with the wrong per-axis calibration.
 
-    w1_process()                        read() of .../rw
-      mutex_lock(&dev->mutex)             kernfs active reference
-      w1_search_process()                 rw_read()
-        w1_slave_detach()                   mutex_lock(&master->mutex)
-          w1_unref_slave()                    waits
-            device_unregister()
-              waits for the reference
+Set .address to the axis index (0 for X, 1 for Y, 2 for Z) in the
+channel macro, matching the order used to fill magn_raw_to_gauss[].
 
-  The file is readable for everybody.
-
-- The accesses through this file are not serialised with those of the
-  slave drivers, which take bus_mutex, so that two transactions can get
-  mixed up on the wire.
-
-Take bus_mutex here as well.  It also excludes the search, which takes it
-for every pass.
-
-Fixes: b02f8bede217 ("W1: split master mutex to avoid deadlocks.")
-Cc: stable <stable@kernel.org>
-Signed-off-by: Josef Bacik <josef@toxicpanda.com>
-Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
-Link: https://patch.msgid.link/20261027-llm-char-misc-w1-v1-1-d2e6bfafb6a4@linuxfoundation.org
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: b1392de06184 ("iio: imu: inv_mpu6050: add MPU925x magnetometer support")
+Signed-off-by: Arnav Kapoor <kapoorarnav43@gmail.com>
+Acked-by: Jean-Baptiste Maneyrol <jean-baptiste.maneyrol@tdk.com>
+Cc: stable@vger.kernel.org
+Signed-off-by: Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/w1/w1.c |    8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ drivers/iio/imu/inv_mpu6050/inv_mpu_core.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/drivers/w1/w1.c
-+++ b/drivers/w1/w1.c
-@@ -116,7 +116,7 @@ static ssize_t rw_write(struct file *fil
- {
- 	struct w1_slave *sl = kobj_to_w1_slave(kobj);
- 
--	mutex_lock(&sl->master->mutex);
-+	mutex_lock(&sl->master->bus_mutex);
- 	if (w1_reset_select_slave(sl)) {
- 		count = 0;
- 		goto out_up;
-@@ -125,7 +125,7 @@ static ssize_t rw_write(struct file *fil
- 	w1_write_block(sl->master, buf, count);
- 
- out_up:
--	mutex_unlock(&sl->master->mutex);
-+	mutex_unlock(&sl->master->bus_mutex);
- 	return count;
- }
- 
-@@ -135,9 +135,9 @@ static ssize_t rw_read(struct file *filp
- {
- 	struct w1_slave *sl = kobj_to_w1_slave(kobj);
- 
--	mutex_lock(&sl->master->mutex);
-+	mutex_lock(&sl->master->bus_mutex);
- 	w1_read_block(sl->master, buf, count);
--	mutex_unlock(&sl->master->mutex);
-+	mutex_unlock(&sl->master->bus_mutex);
- 	return count;
- }
- 
+--- a/drivers/iio/imu/inv_mpu6050/inv_mpu_core.c
++++ b/drivers/iio/imu/inv_mpu6050/inv_mpu_core.c
+@@ -1574,6 +1574,8 @@ static const unsigned long inv_mpu_scan_
+ 		.type = IIO_MAGN,					\
+ 		.modified = 1,						\
+ 		.channel2 = _chan2,					\
++		/* index of the axis in magn_raw_to_gauss[] */		\
++		.address = (_chan2) - IIO_MOD_X,			\
+ 		.info_mask_separate = BIT(IIO_CHAN_INFO_SCALE) |	\
+ 				      BIT(IIO_CHAN_INFO_RAW),		\
+ 		.scan_index = _index,					\
 
 
