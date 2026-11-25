@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795624962;
-	b=TB4iLeWKFUZjAna9a7Lx1vxJSPQx2N9YnL/4KDmppGS9YrkI9nIo1fghUI5Fue1ccdRo
-	 /iRgWrjarT89Z//arbS19UwcHDaU+SU9HzQlQxISNcU6fTDS0JlnVGkI+B3UFMfji6sro
-	 eWwtxAjRD/554TiGW8no9SkGbITPWuTtDCN6iMmGXNK1OZqwKM0VFa873xDMChFN3uA/W
-	 l5rrZrimx1Nz0SeL5/Vco8asP+qM1VGwlUWuCIVK2oQulugPvl5XsjL1nv/KOwfgTibHu
-	 p3Alv3r1CEYhEB6gi0ZE5HB3n9spTMvh01XfPEO+FsNyNSX2StdT9CuqfG1Kom4IeCQ==
+	t=1795624965;
+	b=IUtJph0E9A/RQWKGtyT30goj+uf/SjWBgHjprg6BB0Y7oEkkl8feVi4pavXgQc0aujh1
+	 SI+PA2wjepLcczK+6Tyl42F76Mf/5yc2QaHzIkYS0dGSARioSqavp9yEQO3dG0fL5sKR1
+	 M8mKWMjU32JzGg3wsAN3YMHCIc8rd8uno0obELLsROoi3sxVhdamxNVJ3v8v14bQMlfuG
+	 8mfYpzX5YFbG4g9iINWB3Mdap9qA4lRtXuAjlhtqy0pWtHLjCejZqdgTuAji2dHhsEZwF
+	 8I/0M7Shk+FqkXFiSDW8GtNr9eMr0pfoPAVMKxuDrS2eq8wyX1etJXm7DZo8slxDKuw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795624962;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795624965;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=eBjvK8rRNChDIVAYS9+3/VHYVJcf/C2jyGSORS4xKms=;
-	b=FaDxjBbYRnkQHD5oNeEJtXrAPvJx1fYVplwpC+IWmUyGYfVcspqOLex0EIkM+u87KZWV
-	 sVQEK72e8uo1a2uSwzkf4clQVnMGsCU1Ovjzsqd9NSqLYZ+GDrECKihQJLfOPjqiDMETh
-	 lc0JYc6Idz/P2Qytwa/b4yUvp/EkZk7lbbj3ivtYLxvjdTz+qtrKK3TSp/8ZHc+WDbebo
-	 RxtrgTVZi2PjIbB/lVgLkSSzUTDvsbFM8LBImH4hVgJUlNls7md1ylHm9Zy5OBXAgweMu
-	 V4BhDE0g0KPrJp6Gh7wWoYSHkMnpkfV7n6+s0ZPKu60CDxr54SlI1pdoffVkW9qXK6w==
+	bh=/zQPCH3HW2cSZVupvbrrHaXP1OuBemGK9SVcpoPXIzI=;
+	b=jH6jzQHA1xc1y5y8qoA/ecWe3HsrH/luxJaU/X1jqpyeyFsFMJEb3qrAQ5DZmBeiXF70
+	 MxxlkXE9uOUtaNJHw1tVMZx6aVsCVgn7k77Pa7qOW9vjLHzJ5tprl+jztL6YBRxE98USY
+	 oJx0UpjOBo3qnFNPxTHvgO/Jn+Mf8WREFDC8TZhvaLceYwVlcBbsd0Kt9U4KzQKGSTn9g
+	 PWoNjkfAruFULeq/s5lKvmm3XGoZydrybGw7J8uehHNa1w4EbCzIIR6wjp+STJ5i7ojfN
+	 s8Ax5gzZT4DTMFBMEAs+BddDlQrUYoxRDqQK3qBT/NwDcpOV4FFyJfb5PzzWHxjvT6g==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=FfN397Ox;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ZhX71W72;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9EDB7606A32D;
-	Wed, 25 Nov 2026 16:42:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8DC08606A327;
+	Wed, 25 Nov 2026 16:42:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=FfN397Ox
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6708E1F000CA;
-	Wed, 25 Nov 2026 16:42:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ZhX71W72
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C24E51F000E6;
+	Wed, 25 Nov 2026 16:42:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795624961;
-	bh=eBjvK8rRNChDIVAYS9+3/VHYVJcf/C2jyGSORS4xKms=;
+	s=korg; t=1795624965;
+	bh=/zQPCH3HW2cSZVupvbrrHaXP1OuBemGK9SVcpoPXIzI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=FfN397OxDgo+6cKENd7BRgoc4uu0tVGhKhoshg/wX+MFf9RHTvk5Wv4JscUYoz1Qi
-	 MZFPGXsODxGi/ha2MeoE1UdnXO5kNo/Jvb7q1kVptgD4pzwlnF776XPaK6LuA3dR2y
-	 /HYhhJvQKbeaWUAFVuAqZU1U4BMZ4nGPgJ5k9MCs=
+	b=ZhX71W72Smcfwah7RC5h3KzpinMjp7IK9QFuKPY2g1e6mB2a2grRX0IeqkAUAsIhr
+	 hq2xNxQDS33NtjRJxuLBdfmS/0lC6j2gPAJLq896AvYvC1PV1J6T3Zia7tNVkOtYzA
+	 0sGE+2fvVD9+vG+cXSIsoAJAU8EpSkp7i2ElLLhM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Manuel Ebner <manuelebnerli@mailbox.org>,
-	Randy Dunlap <rdunlap@infradead.org>,
-	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>,
+	Jarkko Sakkinen <jarkko@kernel.org>,
+	Guixiong Wei <weiguixiong@bytedance.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 359/816] docs, kprobes: Fix bracket
-Date: Wed, 25 Nov 2026 15:31:47 +0100
-Message-ID: <20261125143857.508743650@linuxfoundation.org>
+Subject: [PATCH 6.12 360/816] KEYS: do not let an unmatched key decide the search result
+Date: Wed, 25 Nov 2026 15:31:48 +0100
+Message-ID: <20261125143857.532005031@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143849.205329330@linuxfoundation.org>
 References: <20261125143849.205329330@linuxfoundation.org>
@@ -69,36 +68,77 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Manuel Ebner <manuelebnerli@mailbox.org>
+From: Guixiong Wei <weiguixiong@bytedance.com>
 
-[ Upstream commit b91a5c16996d089cd07ceaf33b5a621cb94c2c2f ]
+[ Upstream commit 143fe160178c73e43575bff4890d23f84e37146d ]
 
-Remove needless ')'
+With the dns_resolver key type available, put a key named "foo" in a
+fresh session keyring, revoke it, and search for "bar":
 
-Link: https://lore.kernel.org/all/20261112085511.690900-2-manuelebnerli@mailbox.org/
+  keyctl new_session >/dev/null
+  A=$(printf '127.0.0.1\0' | keyctl padd dns_resolver foo @s)
+  keyctl revoke "$A"
+  keyctl search @s dns_resolver bar
 
-Fixes: a1dac767622c ("kprobes.txt: standardize document format")
-Signed-off-by: Manuel Ebner <manuelebnerli@mailbox.org>
-Acked-by: Randy Dunlap <rdunlap@infradead.org>
-Signed-off-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
+Results:
+
+  keyctl_search: Key has been revoked
+
+The search returns -EKEYREVOKED even though there is no key named "bar".
+It should return -ENOKEY.
+
+A dns_resolver search walks the keys in the keyring and uses
+dns_resolver_cmp() to compare their descriptions with the requested
+name. When keyring_search_iterator() sees the revoked "foo" key, it
+records -EKEYREVOKED in ctx->result and skips the key before comparing
+its description. The search continues, but without a match it returns
+the error recorded for "foo".
+
+Call the match callback before checking for invalidated, revoked or
+expired keys. A nonmatching key then leaves ctx->result alone.
+
+Fixes: b2a4df200d57 ("KEYS: Expand the capacity of a keyring")
+Reported-by: Jarkko Sakkinen <jarkko@kernel.org>
+Closes: https://lore.kernel.org/lkml/avDG8G-Jl1YsmfCs@kernel.org/
+Signed-off-by: Guixiong Wei <weiguixiong@bytedance.com>
+Reviewed-by: Jarkko Sakkinen <jarkko@kernel.org>
+Link: https://lore.kernel.org/r/20261109032931.80406-2-weiguixiong@bytedance.com
+Signed-off-by: Jarkko Sakkinen <jarkko@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- Documentation/trace/kprobes.rst | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ security/keys/keyring.c | 12 ++++++------
+ 1 file changed, 6 insertions(+), 6 deletions(-)
 
-diff --git a/Documentation/trace/kprobes.rst b/Documentation/trace/kprobes.rst
-index 5e606730cec63..0b19d82d7d4cb 100644
---- a/Documentation/trace/kprobes.rst
-+++ b/Documentation/trace/kprobes.rst
-@@ -31,7 +31,7 @@ can trap at almost any kernel code address [1]_, specifying a handler
- routine to be invoked when the breakpoint is hit.
+diff --git a/security/keys/keyring.c b/security/keys/keyring.c
+index 74ed1372d22cf..c339b4073ea02 100644
+--- a/security/keys/keyring.c
++++ b/security/keys/keyring.c
+@@ -598,6 +598,12 @@ static int keyring_search_iterator(const void *object, void *iterator_data)
+ 		return 0;
+ 	}
  
- .. [1] some parts of the kernel code can not be trapped, see
--       :ref:`kprobes_blacklist`)
-+       :ref:`kprobes_blacklist`
++	/* A key the caller did not ask for must not decide the result. */
++	if (!ctx->match_data.cmp(key, &ctx->match_data)) {
++		kleave(" = 0 [!match]");
++		return 0;
++	}
++
+ 	/* skip invalidated, revoked and expired keys */
+ 	if (ctx->flags & KEYRING_SEARCH_DO_STATE_CHECK) {
+ 		time64_t expiry = READ_ONCE(key->expiry);
+@@ -617,12 +623,6 @@ static int keyring_search_iterator(const void *object, void *iterator_data)
+ 		}
+ 	}
  
- There are currently two types of probes: kprobes, and kretprobes
- (also called return probes).  A kprobe can be inserted on virtually
+-	/* keys that don't match */
+-	if (!ctx->match_data.cmp(key, &ctx->match_data)) {
+-		kleave(" = 0 [!match]");
+-		return 0;
+-	}
+-
+ 	/* key must have search permissions */
+ 	if (!(ctx->flags & KEYRING_SEARCH_NO_CHECK_PERM) &&
+ 	    key_task_permission(make_key_ref(key, ctx->possessed),
 -- 
 2.53.0
 
