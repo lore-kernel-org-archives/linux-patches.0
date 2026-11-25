@@ -1,56 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795620432;
-	b=3AGRCT8AeLEXR++KbCA3wa1cS4rTkN+Tmw0uFVPYRH5nRvpy7bvwfJJbubURYiK05k8s
-	 7CC4OyN6xhPlhidF/bg043pM4u8aYW/ghX9O3nNUzIQalSJLKOA37nAnuzPluQBCs04V7
-	 Sl5ee0PtwzLRmWGHuKTpY9pvUGo9k7Nygw8RpZSMmnYyt8tEpdSF1EiYfthfAY5cQ5x50
-	 QkNGsrCf/4p/3/d1Cidz80pTNdW+C4HdCmQ5CVaNA/y6f4Vrs1oOKfkbAfiSl2X94s7KZ
-	 Su3AbJiFGvc4+3TpA+PYUIUgCHFhXpjBhFj1zsKpwzVeFBeA0mqPFdTSekHbTrhHQiA==
+	t=1795620435;
+	b=fmSoKUSyc3DHz796xkIEp7ALfp3onO/L6ADCs6GuJKiUouWrrgKrIK2nI7tSOkEYr1ly
+	 Wx49n6lp734z9kdQUQCxFUtz2afz1ZQFVDcHB0LeOOsEUeGdOqloIsAjBdpH3AK/AcGbS
+	 IxSfVE/JPF6tXgXAxvsW3L5V5PwTzkdKccf9zPmaAqIzCe4rzFnuzaCxfTfhzPk0NhkWk
+	 4NfL9JEJVk3JFeZoMq314Dk8cKH+KdfenhSBzMSXxUdZYrbr3YSESEWECqUzRNoOWuzVg
+	 ndu8Gyhr+PfRM9nfh6DQXVDAa07HpKhQwEgjdpvMmxmrtS4/mmdbkLw+87ZPfKIqiEQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795620432;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795620435;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=E0Z7YpXKDFA1apx1Y/nvUfTp/09Q1En55X9FzTceU8w=;
-	b=xZ1xqGmmnOloTM3yL66c8yeON/kHIFkIidBZQEn0H8CX/Jws5PeB117gJFyvUdzyo4ol
-	 qPCByCxDVo3PRtwtkT+fpQ3GOCfCqsIoVMdiOT1beJkC2YW2+Ao5rMNS2xWuL9fX2jNjJ
-	 1Qk0xDVIZt0WRcJ1dvBzaf0+mSf5NNeofaNxHGi3CwHPyb01FNw6+JLDllJTz6LitnLFT
-	 4k6paupa1G4aYtjKNyWkS9XDV3KhZy+v09V4WNNynnkbaPssdbCpIzZr1mzlJTxIKtxnv
-	 NA7NAE1AZR1dxopjFSMoGdb0uHaGQ722yJ9TooBXfCPdrudNtsTFHnG+sdl86l5heoA==
+	bh=EXbrC4MprlhS0EYU9GoX5XzitpoHmPiSRticwmPqaW8=;
+	b=RLbZ3wHdzaINFiXb5jZBKKiFcHhqCeirrbY9Eo5ZPcNNvHWx8SCeRkQkncv+5/Ugjypf
+	 sDGBySkE3R53ND0emnzCisgHxTWw5w+TGJhGjlw3hwkbx8bD7OOKUef7VkX/dB62+iAdS
+	 bN2gc7gW98YVZBk0lDbPHY+vFEZ5BYJUx2YlATavNx7i9RFjTA1zQcswO9YmH1f7gpD5H
+	 Kxk17ARy19tX3EhmXCdBYWTje0fXgzZR+g8xN05wXCeyyzp9vXd7hPEe7wSCJkxOcxF81
+	 oMKWniA0U+8S4e1g7dp/gLk2+K+EH/bgIiPsDA89OeSMKmRVjiCxQFzmbUJRoZED3ng==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=VZJRxXFj;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=OwtQviuL;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DCCB5606A31E;
-	Wed, 25 Nov 2026 15:27:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B9647606A321;
+	Wed, 25 Nov 2026 15:27:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=VZJRxXFj
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0AC331F000C0;
-	Wed, 25 Nov 2026 15:27:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=OwtQviuL
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0F31A1F000D3;
+	Wed, 25 Nov 2026 15:27:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795620432;
-	bh=E0Z7YpXKDFA1apx1Y/nvUfTp/09Q1En55X9FzTceU8w=;
+	s=korg; t=1795620435;
+	bh=EXbrC4MprlhS0EYU9GoX5XzitpoHmPiSRticwmPqaW8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=VZJRxXFjbFq+tHiqoCIxrwQwJacpNbIvakYa/oTPS+RQVCBLxsMQGdDXWJmDBoxFv
-	 n6BJgGAbSKtF2zxpiWjvtvN4MUu9a/Ps89iOF3V+YSnHdrMPrN8zo8kCGePme8Ty0k
-	 Gs0WNEQ8tQuvLzgE9jMef20PIhHwlDnwPWnbBDoQ=
+	b=OwtQviuL37VgYPT6KbkkACZsHxEhxv41k2hRN1imO/z4wNqFwwp49g2d/9NPfqiu9
+	 7CCVuHYW2y8l73WnQMUG+EgQDhuOW2UenUQdOD9HZch5KOSOET6HDdiQPbe/wvlYiO
+	 UYwp2D5F6LpGWiZ4dq48Qza6XvMoH0hor67tmnNo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Mario Limonciello (AMD)" <superm1@kernel.org>,
-	McKenna Fan <blue_sun@tuta.io>,
-	Quinn Schive <quinnschive@hotmail.com>,
-	Bruno Filipe <bmilreu@gmail.com>,
-	Maciej Zonski <me@zonni.pl>,
-	Rishabh Jain <rishabh.jain1198@gmail.com>,
-	Mathias Nyman <mathias.nyman@linux.intel.com>
-Subject: [PATCH 7.3 0915/1005] usb: pci-quirks: always assert xHCI OS ownership
-Date: Wed, 25 Nov 2026 15:37:33 +0100
-Message-ID: <20261125143843.126540111@linuxfoundation.org>
+	Josef Bacik <josef@toxicpanda.com>,
+	Johan Hovold <johan@kernel.org>
+Subject: [PATCH 7.3 0916/1005] USB: serial: garmin_gps: fix deadlock on reset request
+Date: Wed, 25 Nov 2026 15:37:34 +0100
+Message-ID: <20261125143843.149614853@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143821.729802100@linuxfoundation.org>
 References: <20261125143821.729802100@linuxfoundation.org>
@@ -72,88 +67,61 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Rishabh Jain <rishabh.jain1198@gmail.com>
+From: Johan Hovold <johan@kernel.org>
 
-commit 5550405351199fe78f4a3cd606c07f5ad7220e1b upstream.
+commit ab89a9dab02d9553eb0cc27fd3e4a4998acbc8e9 upstream.
 
-The xHCI ownership protocol requires the OS driver to assert the HC OS
-Owned semaphore before using the host controller, then wait for HC BIOS
-Owned to clear if firmware owns it.
+The garmin_gps driver has a reset feature that is supposed to reset the
+device when writing a private reset request packet. The reset is however
+done synchronously from the write() callback (and without holding the
+required device lock) which leads to a deadlock in the line discipline
+when hanging up the port as part of disconnect.
 
-quirk_usb_handoff_xhci() currently asserts OS Owned only when BIOS Owned
-is already set. If firmware leaves BIOS Owned clear, Linux uses the xHC
-while both ownership semaphores remain clear.
+Switch to using the asynchronous reset interface while dropping the
+redundant and synchronous stopping of the interrupt urb (write()
+callbacks are supposed to be atomic and USB core, USB serial core and
+the driver itself will unlink and kill all URBs during disconnect).
 
-The timeout fallback also clears BIOS Owned using the original register
-value, which can clear OS Owned at the same time.
-
-On an AMD PROM21 xHCI controller (1022:43fc), this caused every S3
-resume to terminate Controller Restore State with USBSTS 0x401. Linux
-then reset the host controller, both root hubs and the USB Bluetooth
-adapter.
-
-The controller entered resume ready and halted with USBSTS 0x1.
-Endpoint state, 100 ms save/restore delays, scratchpads, the DCBAA,
-device contexts and command, event and transfer rings were verified not
-to cause the restore error.
-
-Across four S3 cycles, asserting only HC OS Owned changed USBLEGSUP from
-0x00000801 to 0x01000801 and eliminated the restore failure. Testing
-included the unmodified 7.1.8-ogc1.1.fc44.x86_64 distribution kernel
-using a test module that set the HC OS Owned semaphore. The same test
-was repeated after review with the same result. Clearing USBLEGCTLSTS
-was independently verified to be unnecessary.
-
-Always assert OS Owned for controllers using the standard xHCI handoff,
-and leave the existing TI/Renesas forced handoff unchanged. Keep OS
-Owned asserted after the standard handoff, including when forcing BIOS
-Owned clear after a timeout, to prevent firmware from reclaiming the
-controller during subsequent suspends.
-
-Fixes: 66d4eadd8d06 ("USB: xhci: BIOS handoff and HW initialization.")
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Reported-by: Josef Bacik <josef@toxicpanda.com>
+Link: https://lore.kernel.org/2026102733-prayer-drainer-56f3@gregkh
 Cc: stable@vger.kernel.org
-Reviewed-by: Mario Limonciello (AMD) <superm1@kernel.org>
-Tested-by: McKenna Fan <blue_sun@tuta.io>
-Tested-by: Quinn Schive <quinnschive@hotmail.com>
-Tested-by: Bruno Filipe <bmilreu@gmail.com>
-Tested-by: Maciej Zonski <me@zonni.pl>
-Signed-off-by: Rishabh Jain <rishabh.jain1198@gmail.com>
-Signed-off-by: Mathias Nyman <mathias.nyman@linux.intel.com>
-Link: https://patch.msgid.link/20261105175106.241182-4-mathias.nyman@linux.intel.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Reviewed-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Johan Hovold <johan@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/host/pci-quirks.c |   13 ++++++++-----
- 1 file changed, 8 insertions(+), 5 deletions(-)
+ drivers/usb/serial/garmin_gps.c |   12 +++---------
+ 1 file changed, 3 insertions(+), 9 deletions(-)
 
---- a/drivers/usb/host/pci-quirks.c
-+++ b/drivers/usb/host/pci-quirks.c
-@@ -1194,10 +1194,11 @@ static void quirk_usb_handoff_xhci(struc
- 			 && pdev->device == 0x0014)) {
- 		val = (val | XHCI_HC_OS_OWNED) & ~XHCI_HC_BIOS_OWNED;
- 		writel(val, base + ext_cap_offset);
--	}
--
--	/* If the BIOS owns the HC, signal that the OS wants it, and wait */
--	if (val & XHCI_HC_BIOS_OWNED) {
-+	} else {
-+		/*
-+		 * Perform the standard handoff and leave OS ownership set to
-+		 * keep the BIOS at bay during subsequent suspends.
-+		 */
- 		writel(val | XHCI_HC_OS_OWNED, base + ext_cap_offset);
+--- a/drivers/usb/serial/garmin_gps.c
++++ b/drivers/usb/serial/garmin_gps.c
+@@ -818,10 +818,9 @@ static void priv_status_resp(struct usb_
+  * Garmin specific driver functions
+  ******************************************************************************/
  
- 		/* Wait for 1 second with 10 microsecond polling interval */
-@@ -1209,7 +1210,9 @@ static void quirk_usb_handoff_xhci(struc
- 			dev_warn(&pdev->dev,
- 				 "xHCI BIOS handoff failed (BIOS bug ?) %08x\n",
- 				 val);
--			writel(val & ~XHCI_HC_BIOS_OWNED, base + ext_cap_offset);
-+			writel((val | XHCI_HC_OS_OWNED) &
-+			       ~XHCI_HC_BIOS_OWNED,
-+			       base + ext_cap_offset);
- 		}
- 	}
+-static int process_resetdev_request(struct usb_serial_port *port)
++static void process_resetdev_request(struct usb_serial_port *port)
+ {
+ 	unsigned long flags;
+-	int status;
+ 	struct garmin_data *garmin_data_p = usb_get_serial_port_data(port);
+ 
+ 	spin_lock_irqsave(&garmin_data_p->lock, flags);
+@@ -830,13 +829,8 @@ static int process_resetdev_request(stru
+ 	garmin_data_p->serial_num = 0;
+ 	spin_unlock_irqrestore(&garmin_data_p->lock, flags);
+ 
+-	usb_kill_urb(port->interrupt_in_urb);
+-	dev_dbg(&port->dev, "%s - usb_reset_device\n", __func__);
+-	status = usb_reset_device(port->serial->dev);
+-	if (status)
+-		dev_dbg(&port->dev, "%s - usb_reset_device failed: %d\n",
+-			__func__, status);
+-	return status;
++	dev_dbg(&port->dev, "%s - usb_queue_reset_device\n", __func__);
++	usb_queue_reset_device(port->serial->interface);
+ }
+ 
  
 
 
