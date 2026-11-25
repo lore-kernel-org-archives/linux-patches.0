@@ -1,51 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795623714;
-	b=NYQ6J4nRnnRLGyEmL1yX0lWlhK78QZyHy458NMvN0JGN2/Ix04m/jcl/Yq/nzVLXGj/Z
-	 LSMI85r6Fry7uIGPpUojgiPXlg/tK5NvfRenoLhdejOsxSoDN46cl4HzyiNvlMDWBES9f
-	 YagG4gNuO7HeNbNQKSnW0ZK7EdaPjSCVmvQdj2f14r8NwkYPsKR4k5ChOmE0t6V2mDLx/
-	 gTqNJ6VYoNDAV8LVSab27sRrQSZNibl/2cQcTdzrqcnNum1sJrqMG15pluQPfy5elr6Lg
-	 mEdjQabJwXADK+ff9ED9QRtFBIdU3RcSubAxZUsxHfhsFfZOdiSbjI6H+U6x2/Wxnbg==
+	t=1795623717;
+	b=mSCC4WzJ9f7vA9fPILVptK3huTTdpFjAfjuWWU4/XQU2PcjPNTd2nVskvMDIZTlYaIHa
+	 K2o725BJG9agtA0J6ntZWrGObAQXwk6D7xwuIgmCSDr2v0AAqzU6X/lsOFj4GEB6Uqb+a
+	 dzooR9Np2N6hYDc4DhpawmpHUH0hYmgiVZCjNNHguvhhcnr2qL+t//QwgnNvAxbh3vMyz
+	 YCNKMrkYJVrs5CPuE5onAoBRX8KVE0FUnM4HRdnBXiGjZlNlSY8PDziRR9JA8qfiohfh2
+	 y1DoZYl7czluaeHO2QAIo6HjBDSaXjWlUYPVe8YZEQQGe7lrg9isJiV3K7rJ081GOlQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795623714;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795623717;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=G8tBsbTMyUk26q0PiZXgkYXkdn12gTFmBJQNRfz4df8=;
-	b=YHXVSlk4EQGc0zHSL3b5Jgdfs+X63Xu+VjnAKAWoVAUuFYustCTzDpP8+q4EtWNYVpST
-	 20ThyuLyRfXaTL6jk9xt4uHRjkJwnZdR3xolJpN/ivPOCZFJAaQUt0dypG+KE73XfkNWa
-	 9RHMnScQsy0eVR3loX7r6CX1jLd4LBJqJDdOrjbizdmVm31kyO4wdLO3mxk3IEdgs3NR2
-	 qSWdXBRTNUC4mpDlbTdw0+QVElaqGBRnUjXftHUuc0BYpjJc0p+TdQwG8rReJ+NnSpa+x
-	 92N/BuVuKBCVUPxTSUfO+UM+Zi6QFMULtSlznDwnmYEmLfQyFSa+NuQGAO08a/j7QCg==
+	bh=naOL54KgRwAC+0gSyH13uxJu/Zk8a3WXI8iPHLq/TUA=;
+	b=FErs7JZKOfyFxiivQNlt3sP9pxjr6uaifuFtxzrrtmjmtz8HcbSP/L/73ZTyL4B94oma
+	 nTL37WSNWO5KziqOuIfTBUl1Em+cu/+j3rBb7DHT0OvwnRpH5lBox8ufnCnuSLTKENbnF
+	 rRoE+hhEo2n+6ruV4h2CrzccSMJ8JJd+5pX04zR6A48nb1GXHhQ2JAZa/+jOkyIZTg2LY
+	 SQXI0VoqyL4pTZT46PWD4kl+e96npfXllzm3AXWLH5CdU1w/czqkJGuhmmQQE0X3oRTZ1
+	 ceYCFG/D6Vi3upZEdBc13ZkCP1tL+UEl9vZJNfRB+SZvQvPEBCrdm+WqmBV9qadon6A==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=fX3cGadA;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=je8apJIF;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 83C17606A321;
-	Wed, 25 Nov 2026 16:21:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6E0DB606A326;
+	Wed, 25 Nov 2026 16:21:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=fX3cGadA
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8B0651F000D0;
-	Wed, 25 Nov 2026 16:21:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=je8apJIF
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7320B1F000D0;
+	Wed, 25 Nov 2026 16:21:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795623714;
-	bh=G8tBsbTMyUk26q0PiZXgkYXkdn12gTFmBJQNRfz4df8=;
+	s=korg; t=1795623717;
+	bh=naOL54KgRwAC+0gSyH13uxJu/Zk8a3WXI8iPHLq/TUA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=fX3cGadAYE8AWe7sKNdYEcZVmTWHkRHMFMin+I7kJuOQgnrCupt3hn5S/Y1tK6ykP
-	 v1xK0VyLDxMfMeKgZyNs9X5o/1m2ftnigwPch3oIx8sKEHfCvEM/D+e7jAoSAolP/I
-	 y2JmuyYnpU6UnOBEI7lDofIvVq5DQtdmlXlELdwk=
+	b=je8apJIFMahxAp1iSR0pR65VMrnD0bSlf65W3l8ytN5Ixe+xebKXSs+I7GHHXxTbd
+	 3TGrvXi5QwH4eTkgn29lTngrIVRFqO2LrnYHp0H59OrOIelXurlyYwtJ32UoApnwSt
+	 Z6Pkk4eADsrctsZ7TE+r9M4x1LdMndd6eE7NQ4Q8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andrea Amer <and.amer@gmail.com>,
+	Nikhil Gautam <nikhilgtr@gmail.com>,
+	Joshua Crofts <joshua.crofts1@gmail.com>,
+	Matt Ranostay <matt@ranostay.sg>,
 	Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>
-Subject: [PATCH 6.18 947/990] iio: afe: rescale: expose offset if rescaler or source has one
-Date: Wed, 25 Nov 2026 15:38:34 +0100
-Message-ID: <20261125143844.174308737@linuxfoundation.org>
+Subject: [PATCH 6.18 948/990] iio: atlas-ezo: Fix humidity channel read support
+Date: Wed, 25 Nov 2026 15:38:35 +0100
+Message-ID: <20261125143844.197321756@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143822.072087159@linuxfoundation.org>
 References: <20261125143822.072087159@linuxfoundation.org>
@@ -67,38 +69,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Andrea Amer <and.amer@gmail.com>
+From: Nikhil Gautam <nikhilgtr@gmail.com>
 
-commit c293f0db308fe76a0a9b0f6674cd2dea149b03aa upstream.
+commit 0cb3fc8987038a26ac0f581bfa26b16daf6ca6a7 upstream.
 
-A rescale channel advertises IIO_CHAN_INFO_OFFSET only when its own
-offset is non-zero. A child rescale therefore hides a source offset,
-and consumers apply raw * scale and drop it, even though
-rescale_read_raw() folds the source offset in.
+The atlas_ezo_read_raw() function rejects channels that are not of
+type IIO_CONCENTRATION, preventing the relative humidity channel
+from reading raw and scale values.
 
-Expose the attribute when either the rescaler or the source channel
-provides an offset.
+Remove the early channel type check to allow both concentration
+and relative humidity channels to reach the mask-specific handling.
 
-Fixes: a29c3283653b ("iio: afe: rescale: add offset support")
-Signed-off-by: Andrea Amer <and.amer@gmail.com>
+Fixes: dc3ebfcaa51f ("iio: chemical: atlas-ezo-sensor: add humidity sensor support")
+Signed-off-by: Nikhil Gautam <nikhilgtr@gmail.com>
+Reviewed-by: Joshua Crofts <joshua.crofts1@gmail.com>
+Reviewed-by: Matt Ranostay <matt@ranostay.sg>
 Cc: stable@vger.kernel.org
 Signed-off-by: Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/iio/afe/iio-rescale.c |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/iio/chemical/atlas-ezo-sensor.c |    3 ---
+ 1 file changed, 3 deletions(-)
 
---- a/drivers/iio/afe/iio-rescale.c
-+++ b/drivers/iio/afe/iio-rescale.c
-@@ -304,7 +304,8 @@ static int rescale_configure_channel(str
- 	chan->info_mask_separate = BIT(IIO_CHAN_INFO_RAW) |
- 		BIT(IIO_CHAN_INFO_SCALE);
+--- a/drivers/iio/chemical/atlas-ezo-sensor.c
++++ b/drivers/iio/chemical/atlas-ezo-sensor.c
+@@ -117,9 +117,6 @@ static int atlas_ezo_read_raw(struct iio
+ 	struct atlas_ezo_data *data = iio_priv(indio_dev);
+ 	struct i2c_client *client = data->client;
  
--	if (rescale->offset)
-+	if (rescale->offset ||
-+	    iio_channel_has_info(schan, IIO_CHAN_INFO_OFFSET))
- 		chan->info_mask_separate |= BIT(IIO_CHAN_INFO_OFFSET);
- 
- 	/*
+-	if (chan->type != IIO_CONCENTRATION)
+-		return -EINVAL;
+-
+ 	switch (mask) {
+ 	case IIO_CHAN_INFO_RAW: {
+ 		int ret;
 
 
