@@ -1,55 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795619301;
-	b=b4TT0z/jX4IP0O+5Qe3G3s1q7HeO9+TNaJqJghAoYqm5qUSu2EB0YqATfHAvkFLTNjD5
-	 wW3lmT9YTHn6QK/uXz7/BmQVGN0jAHqc14lQEtpo0hq171wCv5Ttz8JWhLFDq5thy1eKS
-	 vcRkeG/EkC1nlvi2cxJHMjUY/itwE2ztVm0YJEOdyOPmjz+vH2b7fBMryOhXmxtzZyaTg
-	 SsO41Jzy5pd0bIdlqFAAuAyo9YkCLAr5tedU+VHvGNeZmpe4WVouIz+3Tz9+NCTCJr5Df
-	 lZuBL06k2uce4+4tc/rRIYzx8T4OU3jfovDrUXUdrDPkW/3wfNQR3bL9vHbGAZYO87w==
+	t=1795619305;
+	b=V0fb2rqXBxyMOAetIEyTnP/liO0kEDIGQNQdNeVR9+hspHzDoi+jWnmalCP6n0x7YhT6
+	 ZmNVRy/Z+jvGzwC32uD/tpOFcG9bXf1EEn0wlQ/8TMOJovQTtUVe28LtUPJouD2I29d4b
+	 7SpuZVml1dj9bUWG/6CDGLK7A2/slk+JRs2/ZbtaTcp6DOMq6TnCq9aF0ct7QPuTMekMj
+	 XcuezTufSCu4q2ApGEIkKDCGE9WY1yJRaUsuEzWzsSHgruunCLYqzvOZsbP0fW6hyseJo
+	 oT33wnSUVjEx45piKHqISqHq82FkEaP1BxZXb3DmVZW3E36iuf0oC8YUQ9Z9G0VgIAQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795619301;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795619305;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=oVsI10rr0ClvP0SOeT+FXkotcQDnIHu7KxkmcBY/tl8=;
-	b=OFox7VnNFepN4zuc5Ts2z+tWigymYbFuG2qbHnLLbRjw6nUc5hJ+swmjQfSoMCGmR5Yf
-	 dLPOhkVYKJBAHa0dP5TEI5QsiLtxsVYYpVPRl4nnlV18mEZexzYqLOMzQI3jVlzCg2Rs7
-	 dZ4zRPvASNeu0J7mlSVIf1SKH8R4tNLyCXw/ZluwS0DrM5JyijyHwhE88hE/6kuK8m7D+
-	 YNXK1IDq1B0Z1SeYUzULF4xyd6fDlxU9EaGjeVy10oOigV73xi5fcKGpTLfdsWaSgnF8g
-	 XYlKZ8UunxB3IMeaIyo81icLepON8CZtzbD0yZuRuSWkSJE4g0x/RXD5n0Jt+RezBxw==
+	bh=VllzmHgt26o1xzOxUizcj6VM7YQIw/aZfyxwo25X1Bw=;
+	b=UzRVCbVa+vCu8gwVZU7pJK5+o93U4x0Z3teFUzU8wzZJPdqPJRlJDOHY6feei4rIeYjD
+	 dQN1zi5BjpuV74R2Uvun+LRbnqkMQpeR+fQDBmqwE43DbgOGJEwavj1wFlpirj5wtHkwF
+	 EXuzGCxvSLQegA/jhCLMBXbP5Lrf3YQP8CSv5p2Im7Zi30iU+7CWTty4BE7CwEimE08xL
+	 2F20NVxnrUVBXLhtwM1E9UhAXEpyynU9j9XOUunxPO1I1SuO5RIwtcxpnBYmV/GtYo6Pr
+	 rgZ4IppYpASz0GuMZrCCk6JUtXwWy5+oq2rczW6O5s4/4+Y9eagA+ZxkEQzLzQ888vA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=qdUt2p7r;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=HCHYvBht;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7C6B8606A321;
-	Wed, 25 Nov 2026 15:08:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 04DEB606A321;
+	Wed, 25 Nov 2026 15:08:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=qdUt2p7r
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CB9EF1F000D2;
-	Wed, 25 Nov 2026 15:08:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=HCHYvBht
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A8B151F000C0;
+	Wed, 25 Nov 2026 15:08:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795619301;
-	bh=oVsI10rr0ClvP0SOeT+FXkotcQDnIHu7KxkmcBY/tl8=;
+	s=korg; t=1795619304;
+	bh=VllzmHgt26o1xzOxUizcj6VM7YQIw/aZfyxwo25X1Bw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=qdUt2p7rwwgq/Xq5aEt8f/CQd1FOu5NHiLutp4ybJLQDrCxXDWz2RldnlPNprVVhH
-	 c7gm0BiVhAZkrTJzKTZsMbRHV3uw9VqOvk7gNcLitljXgrEXMHMTzuDN1xdDPHZuEn
-	 bDpCUPwMBdY8uoupCPftmiUEp7XAxq4ItBlFtYNY=
+	b=HCHYvBhtfak4v4HAjN9SAGXo0/FKa8sWG8/3RaF8Mm//D8bXSKhquoKu9W+uFysF+
+	 hY3J7uOye6GGM1UyUGh5QrFEcISucUj3YTssOSFzTs5B0/6QvotAWdq3foMv/I61UC
+	 oPZtvxXVItKYgUkNte8zvAlmoOXJWJYaiZDwrabQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kyle Zeng <kylebot@openai.com>,
 	Eric Dumazet <edumazet@kernel.org>,
-	Jiayuan Chen <jiayuan.chen@linux.dev>,
 	Kuniyuki Iwashima <kuniyu@google.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0508/1005] tcp: do not resurrect a former listener with SO_ATTACH_REUSEPORT_[CE]BPF
-Date: Wed, 25 Nov 2026 15:30:46 +0100
-Message-ID: <20261125143833.644863008@linuxfoundation.org>
+Subject: [PATCH 7.3 0509/1005] udp: do not use a cross-family sk_rx_dst in early demux
+Date: Wed, 25 Nov 2026 15:30:47 +0100
+Message-ID: <20261125143833.668805961@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143821.729802100@linuxfoundation.org>
 References: <20261125143821.729802100@linuxfoundation.org>
@@ -73,72 +71,86 @@ Content-Transfer-Encoding: 8bit
 
 From: Eric Dumazet <edumazet@kernel.org>
 
-[ Upstream commit 8c011697f76abf3b2302718a7a1c50e36d849f28 ]
+[ Upstream commit 5636e67320563be743d47706ef4914078c27edb2 ]
 
-After listen() + shutdown(), a TCP socket is moved to the closed
-section of its reuseport group, while TCP_NEW_SYN_RECV requests
-can still reference it as rsk_listener.
+A dual-stack UDP socket connected to a v4-mapped address can receive
+both IPv4 packets and IPv6 packets using v4-mapped addresses:
+ip6_rcv_core() no longer rejects a v4-mapped source since commit
+dcc32f4f183a ("ipv6: weaken the v4mapped source check"), which kept
+that check only in tcp_v6_conn_request(). ipv6_portaddr_hash() hashes
+v4-mapped addresses like IPv4 ones, so both early demux handlers find
+the socket, and both __udp4_lib_rcv() and __udp6_lib_rcv() store their
+input dst in the same sk->sk_rx_dst.
 
-If SO_ATTACH_REUSEPORT_[CE]BPF is then used on this socket,
-reuseport_attach_prog() calls reuseport_alloc(), which resurrects
-it into the listening section of a new group, even though the
-socket is still in TCP_CLOSE.
+udp_v6_early_demux() validates the cached dst with dst_check(), but
+ipv4_dst_check() ignores the cookie, so an IPv4 dst gets attached to
+an IPv6 skb. ip6_rcv_finish_core() then skips the route lookup and
+ip_local_deliver() parses the IPv6 header as an IPv4 one: the IPv6
+next header and hop limit are read as a fragment offset, and the IPv4
+protocol is taken from a source address byte.
 
-After close(), the socket stays in that group and the pending
-requests keep it allocated. When the final ACK arrives,
-reuseport_migrate_sock() can select this dead socket and
-inet_csk_clone_lock() clones it. With a ULP like espintcp installed
-while in TCP_CLOSE, the child inherits icsk_ulp_data and sk_destruct
-after tcp_cleanup_ulp() cleared icsk_ulp_ops, leading to a
-use-after-free in espintcp_destruct().
+The reverse direction looks possible too: per-cpu dsts of IPv6 routes
+using nexthop objects have rt->sernum set, and ip6_dst_check() then
+ignores the cookie, so udp_v4_early_demux() can attach an IPv6 dst to
+an IPv4 skb.
 
-As done in commit 8cc3aef0cb19 ("tcp: Do not allow buggy transitions
-between ehash and lhash2."), deny this transition instead of adding
-checks to the fast path.
+Kyle Zeng reported that such a packet can reach XFRM input still
+holding the prefetched, non refcounted, socket set by early demux,
+which can then outlive its RCU grace period.
 
-Only an unhashed former listener is affected. Applications can still
-attach a reuseport prog to a socket that never listened, or to a
-listener (including one that called listen() again after shutdown()).
+Only use the cached dst if its family matches the packet. Otherwise
+fall back to a regular route lookup.
 
-Fixes: 333bb73f620e ("tcp: Keep TCP_CLOSE sockets in the reuseport group.")
-Reported-by: Kyle Zeng <kylebot@openai.com>
+TCP does not have the same problem: sk_ehashfn() hashes a v4-mapped
+socket with inet_ehashfn(), while IPv6 lookups use inet6_ehashfn(),
+so IPv6 packets do not normally find a v4-mapped TCP socket.
+
+Fixes: 5425077d73e0 ("net: ipv6: Add early demux handler for UDP unicast")
+Fixes: c9f2c1ae123a ("udp6: fix socket leak on early demux")
 Signed-off-by: Eric Dumazet <edumazet@kernel.org>
-Reviewed-by: Jiayuan Chen <jiayuan.chen@linux.dev>
 Reviewed-by: Kuniyuki Iwashima <kuniyu@google.com>
-Link: https://patch.msgid.link/20261106084300.2029567-1-edumazet@kernel.org
+Link: https://patch.msgid.link/20261106110135.2161204-1-edumazet@kernel.org
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/core/sock_reuseport.c | 9 +++++++++
- 1 file changed, 9 insertions(+)
+ net/ipv4/udp.c | 5 ++++-
+ net/ipv6/udp.c | 5 ++++-
+ 2 files changed, 8 insertions(+), 2 deletions(-)
 
-diff --git a/net/core/sock_reuseport.c b/net/core/sock_reuseport.c
-index fccbdd0430b05..b9e5648fa4c51 100644
---- a/net/core/sock_reuseport.c
-+++ b/net/core/sock_reuseport.c
-@@ -6,6 +6,7 @@
-  * selecting the socket index from the array of available sockets.
-  */
+diff --git a/net/ipv4/udp.c b/net/ipv4/udp.c
+index b090bd1f59e86..9a91e3533c15c 100644
+--- a/net/ipv4/udp.c
++++ b/net/ipv4/udp.c
+@@ -2849,8 +2849,11 @@ enum skb_drop_reason udp_v4_early_demux(struct sk_buff *skb)
+ 	skb->destructor = sock_pfree;
+ 	dst = rcu_dereference(sk->sk_rx_dst);
  
-+#include <net/inet_connection_sock.h>
- #include <net/ip.h>
- #include <net/sock_reuseport.h>
- #include <linux/bpf.h>
-@@ -692,6 +693,14 @@ int reuseport_attach_prog(struct sock *sk, struct bpf_prog *prog)
- 		if (!sk->sk_reuseport)
- 			return -EINVAL;
+-	if (dst)
++	/* A dual-stack socket can cache an IPv6 dst. */
++	if (dst && dst->ops->family == AF_INET)
+ 		dst = dst_check(dst, 0);
++	else
++		dst = NULL;
+ 	if (dst) {
+ 		u32 itag = 0;
  
-+		/* Do not put a shutdown()ed TCP listener back into the
-+		 * listening section of a reuseport group while it is in
-+		 * TCP_CLOSE: requests can still migrate to it.
-+		 */
-+		if (sk_is_tcp(sk) &&
-+		    inet_csk(sk)->unhashed_state == TCP_LISTEN)
-+			return -EINVAL;
-+
- 		err = reuseport_alloc(sk, false);
- 		if (err)
- 			return err;
+diff --git a/net/ipv6/udp.c b/net/ipv6/udp.c
+index 93478d1ad5769..471cf3fba80eb 100644
+--- a/net/ipv6/udp.c
++++ b/net/ipv6/udp.c
+@@ -1255,8 +1255,11 @@ void udp_v6_early_demux(struct sk_buff *skb)
+ 	skb->destructor = sock_pfree;
+ 	dst = rcu_dereference(sk->sk_rx_dst);
+ 
+-	if (dst)
++	/* A dual-stack socket can cache an IPv4 dst. */
++	if (dst && dst->ops->family == AF_INET6)
+ 		dst = dst_check(dst, sk->sk_rx_dst_cookie);
++	else
++		dst = NULL;
+ 	if (dst) {
+ 		/* set noref for now.
+ 		 * any place which wants to hold dst has to call
 -- 
 2.53.0
 
