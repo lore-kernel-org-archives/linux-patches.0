@@ -1,51 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795620111;
-	b=CRd6Pb9LvfvHV4utMtCbvuCG22GWwcFd1pr5B7AccU+1caJdkMSzFRFMJ+giQoo7zWNg
-	 Pz4nonEmZo0VSbmylxdPtK6ZcLOMd2DPrDBC8Oge1XvI1ateoKsTmdvcg9Pn3TbOsbk9K
-	 1dcc99YlGDkJMbfoXeydQFrOKCdd+AN6HQAcYP8CHOwa05jHrs1EBLE6xwRjHuVwamCjI
-	 qX+xoXcAcJqh2phcShYvCopX0eJp/XKmcypR5oWOjmJWQ/v1PzhsccXVsf6OPq93VEqC0
-	 XIrJI3SGAFW2a2kVO2QWN4+F9lu7WXZQyFohSo1w5nEZjn9nfyT0CBSPjT2N6a0aQyA==
+	t=1795620114;
+	b=YJFyf3UiCFwzE4lkFkx788zIZof073zC8Ae66MkAdSAmKGifOhikEXZhpWR4sneaIxms
+	 droJoCp3zmmj/Nte9a1+26RleuNU07XE6R9GwYV++fJzRaNUhf9YXtgV85vqyrW4pB/J3
+	 8oCl3vxeUPaqjSM8bfh/U2zc9PdfmV1djOgR8xFfmctKAQivwtQzMyxqKw8nENLB3U2GW
+	 BaedHzp408TqtphwnWHY4fbkk5bMvcTXLez8Narop0C1UrXGcKF8HHAw1CuFYBQPRSA6Q
+	 +/nt+hamQmWLoMZdMlz6bF+q/+izxWN/MbCx5sGOdHHPftQIr0ha670bk9tR11bRHzQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795620111;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795620114;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=x1/zk6XYe4aRbW4VWCp92Y7L1cXru/lP12QMD8Bnnyw=;
-	b=lXSQmrQZgA1MWjYUNL2tg3QbqSnX/xEixPU15ZRcVFZznbSFeDOv2c00YgFRGAgfYOHy
-	 TtFneSlfRJVWi2bJmM3YvpuosRgbeTsahqTFBRj/qY5i0vaqZY/vUCXdREX9EfJqJ5yrD
-	 8aXWzipn2jJZ6hzRRcZf6S7tLob+Z1O6V8dLBJOf/5FO50k7eXDDKhCqiTEnEPvX0Dvbx
-	 64LS0kdPhdMu38iYX08Y64qL1DHgYq66bvsYY51f/cRva4NGfKhNasuugwSB9xDJiDWse
-	 2FG2AOOhqIVb1g0yl2eRvwbWS+DP44RdzIBgYho2s7XRSsHMTxNcMKXRIQzRrS1J/1Q==
+	bh=JTK7XbeHAws4upIw07iVHATrefXuu4o6xbi53SldinQ=;
+	b=p3Dwv4nTC0dF1jmmfCzkwZrk2xNzFa+xt3/A5MPSc8jSqtRIGw/+frzN8DYZwVlp3THl
+	 Agnt9y11PkfaFNSUlrJUru24SETdYAVKUPKs+3OuermqyzxTPX11XIbIBPzo8FREwqQk9
+	 kco8GP4cplxZJC3Ltti//+Hzo6BqUbNipCdasHl0PlcLwRML7UJtRyuulSHXKKRu3+T4J
+	 ZqYB4yA2A0l/U5X5s1IhtDdtcRBQK/hybGMZqrR4KHzRC63Rkb3sFldVy0jZZyl8iGSvF
+	 GVdaKIiKZDSyuWDEk50RP0vzBlBLiTdEB+IFWyCneMdhB+Xgni/ttN08UCw2jknwzhg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="WR2/n0D9";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Fof4Oo3F;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A793D606A31E;
-	Wed, 25 Nov 2026 15:21:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4183C606A321;
+	Wed, 25 Nov 2026 15:21:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=WR2/n0D9
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 80D471F000C0;
-	Wed, 25 Nov 2026 15:21:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Fof4Oo3F
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8DB291F000C4;
+	Wed, 25 Nov 2026 15:21:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795620111;
-	bh=x1/zk6XYe4aRbW4VWCp92Y7L1cXru/lP12QMD8Bnnyw=;
+	s=korg; t=1795620114;
+	bh=JTK7XbeHAws4upIw07iVHATrefXuu4o6xbi53SldinQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=WR2/n0D9twjuTM2X6HF7sLtzY9bhraOT3ay54r9DOmJ4h/UERcpOpAc/aRJ663196
-	 fog9V7+mw5QilkalK0CfULxmHUckGSaRDLR+92q4JiJVASNo6gKu8MuTot90L9bhFB
-	 t2qFvEK0MvnR+fVKcBBT5HJelz727uHKmbvsJPEo=
+	b=Fof4Oo3F2+g2+TLYMe5KioBqBtGoUHkpHOwj0RUpXagjuSWu0h2TVbfc/VZa+0hWn
+	 RuFHl6pfx25ANuAPCROhgElhP82gD0KBh8lkmd/z0AoGpCVDYa0bfo2GuyW06w4Rvs
+	 Gs29JBcvTR9qGOpjzXSdhv1vjP4h+7LW6oJ9MdEU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wentao Liang <vulab@iscas.ac.cn>,
+	Linus Walleij <linusw@kernel.org>,
+	Mika Westerberg <westeri@kernel.org>,
 	Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
-Subject: [PATCH 7.3 0812/1005] gpio: keep the chip reference when deferred setup fails
-Date: Wed, 25 Nov 2026 15:35:50 +0100
-Message-ID: <20261125143840.749202255@linuxfoundation.org>
+Subject: [PATCH 7.3 0813/1005] gpio: of: fix potential misconfiguration of hogged lines
+Date: Wed, 25 Nov 2026 15:35:51 +0100
+Message-ID: <20261125143840.772818529@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143821.729802100@linuxfoundation.org>
 References: <20261125143821.729802100@linuxfoundation.org>
@@ -67,68 +68,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Wentao Liang <vulab@iscas.ac.cn>
+From: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
 
-commit 7e899fe007d2ffc753e6aa5bc8f2ae0a802b9e07 upstream.
+commit c62364eeac0f123478fca2f2d8e2424fdcd55032 upstream.
 
-gpiochip_setup_devs() runs once gpiolib has been initialized and
-finishes the registration of the chips that were added before that.
-When the registration of such a chip fails, the function drops the
-reference taken in gpiochip_add_data_with_key() with
-gpio_device_put(), and only then logs the error through &gdev->dev.
+In of_gpiochip_get_lflags() the local variable xlate_flags is declared
+without being initialized before its address is passed to
+of_xlate_and_get_gpiod_flags() when processing a devicetree gpio-hog
+child node. If a driver uses an of_xlate() callback that doesn't update
+the flags argument (like gpiochip_fwd_delay_of_xlate()) we'll end up
+passing that uninitialized value to of_convert_gpio_flags(), potentially
+misconfiguring the hogged GPIO.
 
-For these chips that reference is the last one, so gpiodev_release()
-frees gdev: the dev_err() dereferences freed memory, and the chip is
-still linked in gpio_devices, so the next lookup walks into the freed
-object as well.  Here the registration cannot be undone the way
-gpiochip_add_data_with_key() does it, as the driver already got success
-from gpiochip_add_data() and will call gpiochip_remove(), which unlinks
-the chip and drops the reference.
+Initialize xlate_flags to 0.
 
-Keep the reference and only report the failure.
-
-Fixes: 16fdabe143fc ("gpio: Fix resource leaks on errors in gpiochip_add_data_with_key()")
 Cc: stable@vger.kernel.org
-Assisted-by: DeepSeek-V4.1-Flash and OpenAI Codex
-Signed-off-by: Wentao Liang <vulab@iscas.ac.cn>
-Link: https://patch.msgid.link/20261104025345.1527526-1-vulab@iscas.ac.cn
+Fixes: d1d564ec4992 ("gpio: move hogs into GPIO core")
+Closes: https://sashiko.dev/#/bug/linux-2bb44847-fd6e-406c-878d-9739da2cb8b5
+Reviewed-by: Linus Walleij <linusw@kernel.org>
+Reviewed-by: Mika Westerberg <westeri@kernel.org>
+Link: https://patch.msgid.link/20261105-gpiolib-of-hog-uninitialized-v1-1-fcaeaccefab6@oss.qualcomm.com
 Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpio/gpiolib.c |   13 +++++++++----
- 1 file changed, 9 insertions(+), 4 deletions(-)
+ drivers/gpio/gpiolib-of.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/gpio/gpiolib.c
-+++ b/drivers/gpio/gpiolib.c
-@@ -924,7 +924,8 @@ static const struct device_type gpio_dev
- 
- /*
-  * An initial reference count has been held in gpiochip_add_data_with_key().
-- * The caller should drop the reference via gpio_device_put() on errors.
-+ * A caller that tears the chip down on errors must drop the reference via
-+ * gpio_device_put().
-  */
- static int gpiochip_setup_dev(struct gpio_chip *gc)
+--- a/drivers/gpio/gpiolib-of.c
++++ b/drivers/gpio/gpiolib-of.c
+@@ -725,7 +725,7 @@ int of_gpiochip_get_lflags(struct gpio_c
+ 			   struct fwnode_reference_args *gpiospec,
+ 			   unsigned long *lflags)
  {
-@@ -1100,12 +1101,16 @@ static void gpiochip_setup_devs(void)
- 			continue;
- 		}
- 
-+		/*
-+		 * The reference taken in gpiochip_add_data_with_key() is
-+		 * dropped by gpiochip_remove(): this chip is still registered
-+		 * and its driver has not been told about the failure, so the
-+		 * reference must be kept here.
-+		 */
- 		ret = gpiochip_setup_dev(gc);
--		if (ret) {
--			gpio_device_put(gdev);
-+		if (ret)
- 			dev_err(&gdev->dev,
- 				"Failed to initialize gpio device (%d)\n", ret);
--		}
- 	}
- }
+-	enum of_gpio_flags xlate_flags;
++	enum of_gpio_flags xlate_flags = 0;
+ 	struct of_phandle_args args;
+ 	struct gpio_desc *desc;
  
 
 
