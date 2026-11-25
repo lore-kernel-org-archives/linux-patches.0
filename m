@@ -1,42 +1,42 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795623247;
-	b=4CCy9t1MVvHEAGl0YEGuMnkrKzoER00Rv5LtDtylpeusCsM0NqyXhbUAlBva/dn7SGdx
-	 m+3sRBxpVDjBIO53XGpoauGp+mGAYJ0KITllaMS5G8ET3QHO5s2+AKo//JmWwCHl7nOAf
-	 cQ5hpj8ue5p9DGGWYLMuBwHrInY8D4MlXdmSRXje9XCAtBFZpd5S78JbEGoqo6YL5IZ2X
-	 jUcHzO7XLpZyZwbig3GbsyO3b/hKWj62G8i3t/f06G3EoI7LsEfCjiguve+GwBm2NQ10Q
-	 7xNJaKY8hiL+pYMM/Qyl8NE34VDQNxxkttxm4SmlPz8h4b8sKxKZr7bRjaalqiVUlkQ==
+	t=1795623250;
+	b=AGOABi9GlJv9K60MWGD4b4XHpqPksUrVldk8mMVwa3tDwR+1bThBUM4t4CGfOxdHcWS8
+	 zl3axiZpwLG3AEbi66oCagtWU0/d3nBSXX1OD91aq8kH9N4yEIAkQU8F4raiAKbgUkAsH
+	 mgJTZS99wfR1gQ4B6G0OwC9VuQMDjV2h0ZNacNoZC017+NfbatYaraDsoCCUGtqUnqwrn
+	 ti3Z9tl2HzIleKCyKyclqwmdo1jlxn0d76Fwvmcfikq6Bm7AT9Jgv7MxTPqyv5LCZCLkX
+	 WY/nlB/XfYicb3vRKrEBfQgca6+pIkQ2kBsDio9Kq5IltWuALvMDsK/v1yRPcuhbliQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795623247;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795623250;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=LsJCKeTVgZT1gJBiOsbFFqOvG0WfXkfAC8HjI8XOM/I=;
-	b=Lx7j8QW99/VSDdril6L1Wc9vEAsqLxOIRA8qAA+DOnc8qMJkwAiW/rC7GhBTsshgvVYl
-	 wnlcvoKBGN6RqtRJu14+6jRXP/ur8czroxtCFc30MZx8i+f1jLpEj2qMo+JSFzeVOq4aN
-	 z9XwL1WsoglBl/qajYCPqeq0ZmuKGyYMVZA0PfquGzs0kINV65WR9H3e/naj/lky8WfkC
-	 11tCKgNMYLfzWuumLQrhcvYSlDPX8EHJkLoa6FfCSzKMe6FwR4VSn+7nGI+zFVTviKhS1
-	 +e2Lw7Z/QTPLPd7RoV7kADvormqr3IyULeKq6dx8eN8WpPHNcypLd1kGh1SpF3F/IAQ==
+	bh=icMzqrq/a38eWzZ3zJGd1onK7M2FMj4yew+1KB6wDW8=;
+	b=tUBkwHZdNkUmc3YaJuAqcl0GqErpaIcu7rKeZh/S4lsk62Oc4OeP7F81EwK9Tcx/zhcy
+	 KITqrUed2/j+l937nGlJc/lsJ94rxdQM/5+4nIf9uNqcwuzL87OxIL5nyz2S3f2BA1YQO
+	 W9WOa17Xf3bLp8tefxrKPyBm+nHFDd4+AwAEMgcVotPfdxNGSfrv2pImhUcn1txmSMoMl
+	 hHW3keCNHJ0QZ46nj2UHVxoc8yitg3sNzKnOByQQdK9m532tHCWFntYJFn/QBdVI5ThYi
+	 tUTsgSyFxPcz8+Da5+83YlnXgwSlyN2/6+bANolEYwZa17uwa//ahBRTVrxEAKyOISg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=s8PqjAG3;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=bo8OwTXt;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DFA7A606A321;
-	Wed, 25 Nov 2026 16:14:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EB595606A31E;
+	Wed, 25 Nov 2026 16:14:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=s8PqjAG3
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 96DF11F000C6;
-	Wed, 25 Nov 2026 16:14:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=bo8OwTXt
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D834E1F000C4;
+	Wed, 25 Nov 2026 16:14:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795623246;
-	bh=LsJCKeTVgZT1gJBiOsbFFqOvG0WfXkfAC8HjI8XOM/I=;
+	s=korg; t=1795623249;
+	bh=icMzqrq/a38eWzZ3zJGd1onK7M2FMj4yew+1KB6wDW8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=s8PqjAG3a1q6nSxXovdc1NYipVCRN3yxzY5azScmeBIRxeC1LBxLQFoa/inZ/vhLl
-	 R0oImyIwaCukFfRlF+Oqjj7FTvNdCjNeAf4YrDGwtl8dR8eLPo6aVaUnpxOqbDLgSP
-	 iJ14Ex1edmacAK1DfqWjs8V7MwDHu6lhL2df0qs4=
+	b=bo8OwTXtEA6WURBIUveMzz6rDfkPzwnod1qA5ApCNMgPUx/k+8HXoxECIGpIk78f8
+	 E1RI02T9KRcII9Nxb9rEhi4KkkKyVJzt2sjlnuvgHaeF5E4/2EfJWVpKrBc6kbC9bz
+	 fHZMzFstNyhLrNiv88xpOkxKGmV7X56+6w/sY3KQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -44,9 +44,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Bibo Mao <maobibo@loongson.cn>,
 	Tao Cui <cuitao@kylinos.cn>,
 	Huacai Chen <chenhuacai@loongson.cn>
-Subject: [PATCH 6.18 798/990] LoongArch: KVM: Propagate real error code in kvm_pch_pic_create()
-Date: Wed, 25 Nov 2026 15:36:05 +0100
-Message-ID: <20261125143840.737308825@linuxfoundation.org>
+Subject: [PATCH 6.18 799/990] LoongArch: KVM: Reject repeated PCH-PIC CTRL_INIT
+Date: Wed, 25 Nov 2026 15:36:06 +0100
+Message-ID: <20261125143840.761291328@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143822.072087159@linuxfoundation.org>
 References: <20261125143822.072087159@linuxfoundation.org>
@@ -70,34 +70,63 @@ Content-Transfer-Encoding: 8bit
 
 From: Tao Cui <cuitao@kylinos.cn>
 
-commit 20f3bf3d3dce16f43b82881293586ce7d73982b6 upstream.
+commit 422e532809572ba1043192bf6a0c653bc68b3140 upstream.
 
-The real error code of kvm_setup_default_irq_routing() is replaced by
-kvm_pch_pic_create() with a fixed -ENOMEM. Return the actual error code,
-as kvm_eiointc_create() already does; while the kvm_ipi_create() case is
-fixed separately by "Return the actual error code in kvm_ipi_create()"
-(Chaithanya Lagisetty).
+KVM_DEV_LOONGARCH_PCH_PIC_CTRL_INIT has no guard against repeated
+invocation: every call overwrites pch_pic_base and registers the same
+kvm_io_device on the MMIO bus at the new base address, while the
+kvm_pch_pic_destroy() unregisters only one bus range. After a repeated
+init, MMIO to the stale ranges computes its register offset against the
+new base address and silently reads 0 / drops writes, and the leftover
+bus entries persist until the VM is destroyed.
+
+Reject repeated initialization with -EEXIST, using the initialized
+state of the kvm_io_device as the indicator. The check, the MMIO base
+update and the bus registration are serialized by slots_lock, and the
+real registration error is propagated instead of being replaced with
+-EFAULT. On a registration failure the base addr and the device state
+are rolled back so that a retry can start over.
 
 Cc: stable@vger.kernel.org
-Fixes: e785dfacf7e7 ("LoongArch: KVM: Add PCHPIC device support")
+Fixes: d206d9514873 ("LoongArch: KVM: Add PCHPIC user mode read and write functions")
 Reviewed-by: Bibo Mao <maobibo@loongson.cn>
 Signed-off-by: Tao Cui <cuitao@kylinos.cn>
 Signed-off-by: Huacai Chen <chenhuacai@loongson.cn>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/loongarch/kvm/intc/pch_pic.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ arch/loongarch/kvm/intc/pch_pic.c |   15 ++++++++++++---
+ 1 file changed, 12 insertions(+), 3 deletions(-)
 
 --- a/arch/loongarch/kvm/intc/pch_pic.c
 +++ b/arch/loongarch/kvm/intc/pch_pic.c
-@@ -436,7 +436,7 @@ static int kvm_pch_pic_create(struct kvm
+@@ -273,16 +273,25 @@ static int kvm_pch_pic_init(struct kvm_d
+ 	struct kvm_io_device *device;
+ 	struct loongarch_pch_pic *s = dev->kvm->arch.pch_pic;
  
- 	ret = kvm_setup_default_irq_routing(kvm);
- 	if (ret)
--		return -ENOMEM;
-+		return ret;
+-	s->pch_pic_base = addr;
+ 	device = &s->device;
++	mutex_lock(&kvm->slots_lock);
++	if (s->device.ops) {
++		ret = -EEXIST;
++		goto out;
++	}
++	s->pch_pic_base = addr;
+ 	/* init device by pch pic writing and reading ops */
+ 	kvm_iodevice_init(device, &kvm_pch_pic_ops);
+-	mutex_lock(&kvm->slots_lock);
+ 	/* register pch pic device */
+ 	ret = kvm_io_bus_register_dev(kvm, KVM_MMIO_BUS, addr, PCH_PIC_SIZE, device);
++	if (ret) {
++		s->pch_pic_base = 0;
++		s->device.ops = NULL;
++	}
++out:
+ 	mutex_unlock(&kvm->slots_lock);
  
- 	s = kzalloc(sizeof(struct loongarch_pch_pic), GFP_KERNEL);
- 	if (!s)
+-	return (ret < 0) ? -EFAULT : 0;
++	return ret;
+ }
+ 
+ /* used by user space to get or set pch pic registers */
 
 
