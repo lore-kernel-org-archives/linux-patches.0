@@ -1,52 +1,50 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795626012;
-	b=NIsCuPKudNnrmC6gUk0HUcxyGUVoo01u0MPvL+xuUG2DufcO7tOOrazxxsqS0dWhs8qZ
-	 jNA8xL7MoS99V1aPDN5atmknhs8172DpZVNYItClvxu8HbSrghHzVFQxrABIBkiXunrZb
-	 99qDQkJqM0/hfXVuzLJB6J2iklhQO3zs5ZCGNNnPAf3zU/bt/cRWK1RF8urOxECx1nczi
-	 kgN0F5whFt7wI36vWf1WHHKgR4e3Is+DKNE+yCzHJPcekUacIvo9++lhv8QZvhAm9HfIy
-	 BooLvknmfmg87KnEo6lowMID9pB1OcpvDUZuR/4JYv0UFojN08+nZus8j8emcN4L82A==
+	t=1795626014;
+	b=DSwrVrfktNBv5PtNYOgR0msCTMfSR83hk5LNl6z8NRBMPYncQ6MlrmhIzsyrMNz/ULrv
+	 2ivOYUw/yUgG8VlYV/s4bQ3s9FQwtSEXp6nai20llGURKIGcgLkPj50SRkYOCK5oJeG6F
+	 jhiVSR8FpQCHnXITpDwJPoKqWdz33wZntMbRqdYuD/W/8lcxmgi0vg6yGyZMJyIFjgpLE
+	 NLdfk4UZwddUYHOYJbjDuaBdpJoMYU+FfQxVw8VmjXe+rAcvWegdO+fAPn1lcT+dQEVkh
+	 HTzE74h3ANKqihHAUvJfoacKOKYC/p1GErDD/AyURMt+L19KZKpUybWHW2dMlzMGxBw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795626012;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795626014;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=amfXi1nUUqJREhc5ze7DpaWLH37ip6wDcOTGyGwWMD4=;
-	b=QUINY6tNISg5aVhdwZWeWhRLyscXPLUTZ07QhdXze9JcYO3lbjdkjJ6FddARd94/4JwU
-	 7ENXpByerrFWESYzYTl00RXLH5I3y0F3zA4Wu2IaHx5sPI4k4/Up40QDvPjKMk+tNNV+k
-	 uuBNQKSqMaNUhkXyE2Ik3Mc88WUc+66MSp+OrS7vuK2oNd2Wm06KQC1oGDCc/c31ro4Rj
-	 59TytymaLTUTmK5oxofxuraRzwW8jRG1hCfSIJNnvEH8CUG1U3Q2Ck0VSLaVAQ/+wMYE0
-	 5pDNXFCa3MDwNHi9rxGRcQ80vyPwmAxQzpG4mYKUaOvS7VCdvnjwMXkjljSaDOBOFTQ==
+	bh=hofIljlqqleeCititXt+RZVTJAmADjYRRhpAz6sqdWM=;
+	b=n7sLSlJHJrmddVaXaJNOp9+sU/73VsQGSV4R/D2PuvSZ0wHIhab/Lkbgg9NkhoTIUx9u
+	 wF0AjUg1nUxRZ6Wbhtuma1+b+BqCBHMlJgxhvDblvQZdHMmDKwInH9bKrOSqPNiCSOj67
+	 Wkg5/4563kxWe1jj1gSWyKiLwt+mAuYCFj38wYOOc+JEdGUls7Px2Nhv8mKdTHk8iBz1y
+	 bZZ9CYzerY8PAjX9a+zDeMWa3PwmmhBnmmXjJcQH90n4BR45qe1jSWRQ3XZ76sLyBzjPP
+	 g3CruLsgAVWGsX8nyu8dGUfyDi9lDY2CoWQQwcH7yirjAIBIdXVSWPCtdSdR6bFqj9g==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=AYPfkNXz;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=IeDNOUkg;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EAC48606A321;
-	Wed, 25 Nov 2026 17:00:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D2721606A327;
+	Wed, 25 Nov 2026 17:00:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=AYPfkNXz
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E41641F000D8;
-	Wed, 25 Nov 2026 17:00:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=IeDNOUkg
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 198FD1F000C6;
+	Wed, 25 Nov 2026 17:00:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795626011;
-	bh=amfXi1nUUqJREhc5ze7DpaWLH37ip6wDcOTGyGwWMD4=;
+	s=korg; t=1795626014;
+	bh=hofIljlqqleeCititXt+RZVTJAmADjYRRhpAz6sqdWM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=AYPfkNXzAWbaYdmFvIB2E5dDVacdhGoP5lLfbpmJAWh/upx8NFCYxUjGc2WWqnzir
-	 vVUhlXCofFHp88X+dW3xO3sIBboAOZ7c5UmP1Jj9ZQ/loLuVFZTClnX5TYz61BBZ5k
-	 5wl8x35auNMUmejrRqtsecSIUGGDMj6XMLh8qHug=
+	b=IeDNOUkg2W4qFWJ4wNCFSBxyezdxvwTcgEYkUDzMbaD0oBNrPfjQxPkNn2OvC+0eg
+	 l1daGkdD/ATisaGTLUhIZxNzS+jTf6vqRU9ztbr+je+j+d0zBDZt74B2ySWNDkyya7
+	 VzKYqquOwXDn/9d4+wyhqjq+yZ0YV6MFydPlUGe4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hongyu Jin <hongyu.jin@unisoc.com>,
-	"weijiang.zhou" <weijiang.zhou@unisoc.com>,
 	Mikulas Patocka <mpatocka@redhat.com>
-Subject: [PATCH 6.12 700/816] dm-verity: dont restart or panic on errors during system shutdown
-Date: Wed, 25 Nov 2026 15:37:28 +0100
-Message-ID: <20261125143905.385732782@linuxfoundation.org>
+Subject: [PATCH 6.12 701/816] dm persistent data: test return value of node_copy
+Date: Wed, 25 Nov 2026 15:37:29 +0100
+Message-ID: <20261125143905.408506332@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143849.205329330@linuxfoundation.org>
 References: <20261125143849.205329330@linuxfoundation.org>
@@ -68,85 +66,62 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Weijiang Zhou <weijiang.zhou@unisoc.com>
+From: Mikulas Patocka <mpatocka@redhat.com>
 
-commit 47930d1236d2988cdc580c10d3af21b6b02d7ece upstream.
+commit 624d146d97c5fbe7200ef4b2dd5350ecf57d6b79 upstream.
 
-Commit 252bd1256396 ("dm verity: skip verity work if I/O error when system
-is shutting down") stopped I/O errors during shutdown from triggering a
-restart, since devices may legitimately be gone by then. Errors that reach
-verity_handle_err(), e.g. through a failed hash block read followed by a
-failed FEC attempt, are not covered and still call kernel_restart() or
-panic().
+There were 3 places where the return value of node_copy was not tested.
 
-During a reboot that is both wrong (nothing is corrupt) and harmful: it
-races with the reboot already in progress and replaces its reason with
-"dm-verity device corrupted", which bootloaders such as Android's treat as
-a verity failure and switch the device to EIO mode.
-
-Apply the same shutdown check in verity_handle_err(). Corruption is still
-logged, recorded in hash_failed and reported via uevent, and the I/O still
-fails.
-
-Signed-off-by: Hongyu Jin <hongyu.jin@unisoc.com>
-Signed-off-by: weijiang.zhou <weijiang.zhou@unisoc.com>
 Signed-off-by: Mikulas Patocka <mpatocka@redhat.com>
-Fixes: 252bd1256396 ("dm verity: skip verity work if I/O error when system is shutting down")
+Assisted-by: Claude:claude-opus-5
 Cc: stable@vger.kernel.org
+Fixes: c671ffa55d8b ("dm btree remove: change a bunch of BUG_ON() calls to proper errors")
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/md/dm-verity-target.c |   27 ++++++++++++++++++---------
- 1 file changed, 18 insertions(+), 9 deletions(-)
+ drivers/md/persistent-data/dm-btree-remove.c |   13 ++++++++++---
+ 1 file changed, 10 insertions(+), 3 deletions(-)
 
---- a/drivers/md/dm-verity-target.c
-+++ b/drivers/md/dm-verity-target.c
-@@ -229,6 +229,15 @@ static void verity_hash_at_level(struct
- }
+--- a/drivers/md/persistent-data/dm-btree-remove.c
++++ b/drivers/md/persistent-data/dm-btree-remove.c
+@@ -253,7 +253,9 @@ static int __rebalance2(struct dm_btree_
+ 		/*
+ 		 * Merge
+ 		 */
+-		node_copy(left, right, -nr_right);
++		ret = node_copy(left, right, -nr_right);
++		if (unlikely(ret))
++			return ret;
+ 		left->header.nr_entries = cpu_to_le32(nr_left + nr_right);
+ 		delete_at(parent, r->index);
  
- /*
-+ * Skip verity work in response to I/O error when system is shutting down.
-+ */
-+static inline bool verity_is_system_shutting_down(void)
-+{
-+	return system_state == SYSTEM_HALT || system_state == SYSTEM_POWER_OFF
-+		|| system_state == SYSTEM_RESTART;
-+}
-+
-+/*
-  * Handle verification errors.
-  */
- static int verity_handle_err(struct dm_verity *v, enum verity_block_type type,
-@@ -277,6 +286,15 @@ out:
- 	if (v->mode == DM_VERITY_MODE_LOGGING)
- 		return 0;
- 
-+	/*
-+	 * Devices may already be quiesced (e.g. UFS set offline by its
-+	 * shutdown hook), so a failure here does not imply corruption.  Fail
-+	 * the I/O but do not restart or panic, which would also override the
-+	 * reboot reason of the shutdown already in progress.
-+	 */
-+	if (verity_is_system_shutting_down())
-+		return 1;
-+
- 	if (v->mode == DM_VERITY_MODE_RESTART)
- 		kernel_restart("dm-verity device corrupted");
- 
-@@ -579,15 +597,6 @@ static int verity_verify_io(struct dm_ve
- 	return 0;
- }
- 
--/*
-- * Skip verity work in response to I/O error when system is shutting down.
-- */
--static inline bool verity_is_system_shutting_down(void)
--{
--	return system_state == SYSTEM_HALT || system_state == SYSTEM_POWER_OFF
--		|| system_state == SYSTEM_RESTART;
--}
--
- static void restart_io_error(struct work_struct *w)
+@@ -315,13 +317,16 @@ static int delete_center_node(struct dm_
  {
- 	kernel_restart("dm-verity device has I/O error");
+ 	uint32_t max_entries = le32_to_cpu(left->header.max_entries);
+ 	unsigned int shift = min(max_entries - nr_left, nr_center);
++	int ret;
+ 
+ 	if (nr_left + shift > max_entries) {
+ 		DMERR("node shift out of bounds");
+ 		return -EINVAL;
+ 	}
+ 
+-	node_copy(left, center, -shift);
++	ret = node_copy(left, center, -shift);
++	if (unlikely(ret))
++		return ret;
+ 	left->header.nr_entries = cpu_to_le32(nr_left + shift);
+ 
+ 	if (shift != nr_center) {
+@@ -333,7 +338,9 @@ static int delete_center_node(struct dm_
+ 		}
+ 
+ 		node_shift(right, shift);
+-		node_copy(center, right, shift);
++		ret = node_copy(center, right, shift);
++		if (unlikely(ret))
++			return ret;
+ 		right->header.nr_entries = cpu_to_le32(nr_right + shift);
+ 	}
+ 	*key_ptr(parent, r->index) = right->keys[0];
 
 
