@@ -1,53 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795624809;
-	b=DFJoOZ16Zs1uegMAxK78mxs9LYQDTpkP2+lm0OWvCFcfrWfgNZ5/kel2DAhcEw2LSToi
-	 OUkBURDtCb2AtobSU/mjhORtItoYm8m5RRP9pldJBm2xTiaIRUaLS69TIuNSw8+I45IB7
-	 UHnGhtJ8Tvwa4wzV2wB3zrSCeB0kq1f2dDtPXUrAoFaHPo81c6AlSYvMJCR4kH2Y0B0uh
-	 nm5wt6vhS+M4Y6zluuP2Fd6l7vd4iqQgfruCWiF4eID34duaDdKHdTgyC47IA4iSCC61g
-	 AAbXN5FzcCDEARmWgBO/UGHY8KNzcps+QSs8a0SENZ8/2V+bugYjXh9FQm8c7CNX12w==
+	t=1795624813;
+	b=Hb4vuBtlPPfFrbjR7NnBnmAYtIH0uz3zlw5yc/rQWEpZYqMGuM/7tZl1BCibCV6d+WJ1
+	 gypvdEx76xY6oL7fo4mj37yarn79EzqZfpoAFgKkvQ1VMJAKoSvmEcpMZvpedlVUy+ong
+	 U6DckNbdBAA2YmTid8kS7gJMIjHl5lE2Ztsg2TAv//UJrgv5ztLwabCxdKTGDTz89CF7j
+	 O/9uGwofyt1x4YNBMP67AnRk/Q+i9bfaT7+NsLcS1ScaPwRrDdD7oRmoHQukdE9LNmOqC
+	 0MCKGu3T+zDa2Mg84CDLA0QW8MrkfGfgXIegj8Us8X9zqxyeoFtmyG4oWu2zWwiNc6Q==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795624809;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795624813;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=guK1Jrq2SCAhBP3quR/xUfstV3BEvVNzfJ9yZ9J2IcM=;
-	b=1Xyvc9mH9rXwLV3+ccappxW1xjnh+p6z0Ml/jI1Wlu6lkMHquV06f5QsjdNO2Hft4uE7
-	 TrDizLgaX1N92AsWFi2mlTK54QhuS+sq2x3EN64iGv2A831i1rWrzkn6f5nzS3V8E4v7x
-	 J+k9vsZTzz+LP6KT8cpQHNeew2LDKcxTmjyu3mr8j2kZoSLuAU4me7huE7UYxz6m8xe9g
-	 8zi2Dp/PIey/RQXxIkYw+HgFo7toRcRH7LZJ6zmvgBjFbQmVRdbYd6tkQFt9vqGZBLGRF
-	 DDdxHIGVs7grOHXZow4CLFweUPO8xVzjkmKIBZcUdS59RTE34/Sb6RFOv2SdyN3YsQw==
+	bh=pc6pYcZbYXYzN1/aINRQINMrkacZUp4zDnpgnUxEcZE=;
+	b=EeWGW5xp7YPPSu8vTGb6qBuLmHE7VHCuzYosPfTDVM3HMDh7BOJgPFmGxineE/Ro+QGq
+	 h1bKDBe43LooY2UUiI6xjykWpRZbD11tkKu3AnlIyUbzV257VJ4g4B5IL8YTdNNlQCgn2
+	 H1Sq0VI+19OrNlGDlvHOYaQl0NLvCys9/maq6Faa0WiE7+PyZ+vs9VvLrxc9dFv77aTwe
+	 hq2t7pM1sqrKUSPDHwJMw202O4cNk9Mg51XgfB/nX/eYI+XVlBRZP6cf/KP8fK6ENyb6Z
+	 4L93dzCxDii/aHLuTzOnNGoZAI9n4fV9PyDYfK+yDkeCasfDfDvm1TzwpaujxtEA9mA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Y4AkBu8i;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Plpcbcd4;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6B58A606A33A;
-	Wed, 25 Nov 2026 16:40:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E6222606A33A;
+	Wed, 25 Nov 2026 16:40:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Y4AkBu8i
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AC5BF1F000D2;
-	Wed, 25 Nov 2026 16:40:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Plpcbcd4
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AA1581F000D2;
+	Wed, 25 Nov 2026 16:40:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795624809;
-	bh=guK1Jrq2SCAhBP3quR/xUfstV3BEvVNzfJ9yZ9J2IcM=;
+	s=korg; t=1795624812;
+	bh=pc6pYcZbYXYzN1/aINRQINMrkacZUp4zDnpgnUxEcZE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Y4AkBu8iORWNoKD+DOPc+9NOfITeKdc9F2b+N4L2Vj8l+zLia2pO2deAQ3c2EgyIv
-	 ob1GybJQ2heidf+S2ZlTOUTmj5B3a+8/FcV90o4N47zv3yjzeA4Pw23UTImB5/uF7Y
-	 db/OgE/fhs62U0TjeHzc6wEswizsl3JNAOfbdEmo=
+	b=Plpcbcd4Cux9U6Wabev5OH/jAnznn3qhsFohCbHMNHHFrYMeI+Y1D5SDFq/gkhjg+
+	 7rBXRFMrcfHFVKWEO8B7ajaM8Qjno4KZbt1kpGtL9tYx3IyzuUpgfHMbi7ISMk1wpv
+	 /ezBkTiUFWqyRp4bFhDxStY3/ue7Tm4+qLVb0EdY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Li RongQing <lirongqing@baidu.com>,
-	Hangbin Liu <liuhangbin@kylinos.cn>,
+	Mark Bloch <mbloch@nvidia.com>,
+	Shay Drori <shayd@nvidia.com>,
+	Tariq Toukan <tariqt@nvidia.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 312/816] team: fix promisc/allmulti leak in team_port_add error path
-Date: Wed, 25 Nov 2026 15:31:00 +0100
-Message-ID: <20261125143856.421411459@linuxfoundation.org>
+Subject: [PATCH 6.12 313/816] net/mlx5: Lag, free steering resources on LAG destroy failure
+Date: Wed, 25 Nov 2026 15:31:01 +0100
+Message-ID: <20261125143856.444634493@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143849.205329330@linuxfoundation.org>
 References: <20261125143849.205329330@linuxfoundation.org>
@@ -69,68 +70,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Li RongQing <lirongqing@baidu.com>
+From: Mark Bloch <mbloch@nvidia.com>
 
-[ Upstream commit ff618cb00a645f1e3f89068c5fbda3f3a7f4ae63 ]
+[ Upstream commit deceb70d1303105e4368a19b251a6fd94428eb11 ]
 
-team_port_add() increments the port's promiscuity and allmulti
-counts before calling team_dev_type_check_change(). If the latter
-fails, the error path does not undo these increments, leaving the
-port in promiscuous and allmulti mode even though it was not
-successfully added to the team.
+When firmware fails to destroy LAG, driver returns before releasing the
+steering resources, leaking the associated software objects.
 
-Undo the promiscuity increment under err_set_slave_allmulti and the
-allmulti increment under err_set_dev_type, so each error label only
-reverts what was successfully applied, matching the cleanup performed
-by team_port_del().
+The bond is no longer eligible for offload, and the driver cannot
+prevent its teardown. Release the steering resources even if LAG
+destruction fails. Preserve the error logging and return the original
+error after cleanup.
 
-With the promiscuity rollback now living under err_set_slave_allmulti,
-the inline dev_set_promiscuity(port_dev, -1) in the dev_set_allmulti()
-failure branch becomes redundant: that branch already jumps to
-err_set_slave_allmulti, which undoes the promiscuity increment. Drop
-the inline call to avoid doing it twice.
-
-Found by source code audit.
-
-Fixes: 0ae9cfc454ea ("team: Move team device type change at the end of team_port_add")
-Signed-off-by: Li RongQing <lirongqing@baidu.com>
-Reviewed-by: Hangbin Liu <liuhangbin@kylinos.cn>
-Link: https://patch.msgid.link/20261104015217.2222-1-lirongqing@baidu.com
+Fixes: da6b0bb0fc73 ("net/mlx5: Lag, use steering to select the affinity port in LAG")
+Signed-off-by: Mark Bloch <mbloch@nvidia.com>
+Reviewed-by: Shay Drori <shayd@nvidia.com>
+Signed-off-by: Tariq Toukan <tariqt@nvidia.com>
+Link: https://patch.msgid.link/20261104183947.772195-1-tariqt@nvidia.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/team/team_core.c | 9 +++++----
- 1 file changed, 5 insertions(+), 4 deletions(-)
+ drivers/net/ethernet/mellanox/mlx5/core/lag/lag.c | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
-diff --git a/drivers/net/team/team_core.c b/drivers/net/team/team_core.c
-index a688f122661d2..5a798a2134fbd 100644
---- a/drivers/net/team/team_core.c
-+++ b/drivers/net/team/team_core.c
-@@ -1313,11 +1313,8 @@ static int team_port_add(struct team *team, struct net_device *port_dev,
- 	/* set allmulti level to new slave */
- 	if (dev->flags & IFF_ALLMULTI) {
- 		err = dev_set_allmulti(port_dev, 1);
--		if (err) {
--			if (dev->flags & IFF_PROMISC)
--				dev_set_promiscuity(port_dev, -1);
-+		if (err)
- 			goto err_set_slave_allmulti;
--		}
+diff --git a/drivers/net/ethernet/mellanox/mlx5/core/lag/lag.c b/drivers/net/ethernet/mellanox/mlx5/core/lag/lag.c
+index f055aac1b436a..dd0da4081bad1 100644
+--- a/drivers/net/ethernet/mellanox/mlx5/core/lag/lag.c
++++ b/drivers/net/ethernet/mellanox/mlx5/core/lag/lag.c
+@@ -734,7 +734,6 @@ int mlx5_deactivate_lag(struct mlx5_lag *ldev)
+ 				      "Failed to deactivate VF LAG; driver restart required\n"
+ 				      "Make sure all VFs are unbound prior to VF LAG activation or deactivation\n");
+ 		}
+-		return err;
  	}
  
- 	err = team_dev_type_check_change(dev, port_dev);
-@@ -1343,7 +1340,11 @@ static int team_port_add(struct team *team, struct net_device *port_dev,
- 	return 0;
+ 	if (test_bit(MLX5_LAG_MODE_FLAG_HASH_BASED, &flags)) {
+@@ -744,7 +743,7 @@ int mlx5_deactivate_lag(struct mlx5_lag *ldev)
+ 	if (mlx5_lag_has_drop_rule(ldev))
+ 		mlx5_lag_drop_rule_cleanup(ldev);
  
- err_set_dev_type:
-+	if (dev->flags & IFF_ALLMULTI)
-+		dev_set_allmulti(port_dev, -1);
- err_set_slave_allmulti:
-+	if (dev->flags & IFF_PROMISC)
-+		dev_set_promiscuity(port_dev, -1);
- err_set_slave_promisc:
- 	__team_option_inst_del_port(team, port);
+-	return 0;
++	return err;
+ }
  
+ bool mlx5_lag_check_prereq(struct mlx5_lag *ldev)
 -- 
 2.53.0
 
