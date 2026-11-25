@@ -1,57 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795621655;
-	b=uoFsKmbr0nuxxnBJPN/dzX3IlDnu1/itq8I9bicuCwqOW/Aqick52XZFoWm32fQY91iK
-	 BsyTGwIj1ChbxftNdte8kyoIXbwRbx4DXa9idWTqIMsTdXcZqWn3aXxLL/Q+bOKmnxeRW
-	 Q0ojZ13MvEl0sgTQEZ77IO+dLX8ZS/qwgpjGdeDSGdAb6qpB2VuuM5+aE7LCaPfjRj6Ag
-	 H3GboKLm8M1MQtpPul8vRAmdYG9yMs8BMT1tQbAyDewwGJcD+TYjNQGGb/xaHWEZY5jIa
-	 u24CoWuXHDyVWld0Z2wx+aEFD9W+vCXlba9RLEDd+9zUWGau/8sFViDfOtuTrIlyFmw==
+	t=1795621659;
+	b=GcJ8vJ6bjzQwBrub4tbY1ifvKDH3wR8canuX3WvGelo4iLMCUsk8pjzmWDxb6X3bBohX
+	 Dxg0jXgHPnTx2M+wQ0MMJqWGYRQTlybuDfZZBNJFCM6NdEN4G5MjbgtwivVxC3tHp2ciY
+	 uO+z2BlpSsh6Xzouzs+DZMxY295nQHj/WCQQW4oznNXsxhnc7QHPt121JDhsdcf3I0/i6
+	 lnur2MDwQqq+Z6hMx0pqU/+UPW9bPdtcKsUFBMTdwIBt1mFK70nHdHeMRGvnCoLNV/fbz
+	 KBb0nCS26iXENuoPaSeulUNpdfZ4D3GyTICO+F01eUxJ3XHgHjMhMjz/2YP4EutGMuQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795621655;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795621659;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=VjJJfNo0wLEYbSbaqQOFLdTjKeqHppnqpNSstxF8pOo=;
-	b=XoGhL/3mJdydlp15iTAYl5CiL6PwscfL7kGazbTNH4DjsV/ypUavVHppbT0Sgsn9aeNU
-	 DT2MtnC5/aw6hT4VzfUgr9XKSuJG8F12bg3/DoKIKm+sXAh+PzRCx73g3PuNlZg/BbPjF
-	 foOGlrKnOiI6qHYJy1lx1RLuCw/h2/XcBBoJFEzNHDRx2z+WLrY95ofI8TeC3E/cdBlT1
-	 Rpjk5Gw40HaNaAOGlA6O/UidloMAiCr5TWNoPS6maQIYNeKDN1S1xIt7pq85PwwS8H1XZ
-	 c/mO1dH0L85bQgFWAgmgsaSQItRwB2L+dPUfMhodHzbM4lA4f2e3Gx0IepBvzXtp4oQ==
+	bh=tzyiGzaFM83J3swItMAF75Q1J3nRmhI+LvXxRL8yYbo=;
+	b=1vjfxXg4n0r7oCM34R0pJ/2gXuOLO2LcbBj7AyEzIT5hGs0v6JwbZxmhTavl7blnb9OP
+	 DsrD8DWCGhVlHiquuH/ZZMI/BKfAo34X84JZbD+vydrXNN8qv1EQoRwrY8F0WC0XFHeah
+	 xtNkmpYJ4sVg0fCzuy4Otmv+yi89JlYJYApbujcODKki9UbERmJ/+ZXjK4E+L/V3HJSFS
+	 JQiNHEwpcVe13ObOAxERXgf/bAHX4XIzjBBaz+5oPasCNPU6kBvNu5Htz0JyE27s41/Tf
+	 81ZdgH+9NI70BY1BS06fc/UZnqk6LKewtGKUUYr+ydiwGXivtIbaj8WGPfEZSzb2iTw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=MBWTibh6;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=HooYdn+g;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 639FD606A333;
-	Wed, 25 Nov 2026 15:47:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EFF77606A32E;
+	Wed, 25 Nov 2026 15:47:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=MBWTibh6
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9A7551F000C0;
-	Wed, 25 Nov 2026 15:47:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=HooYdn+g
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D36CE1F000C0;
+	Wed, 25 Nov 2026 15:47:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795621655;
-	bh=VjJJfNo0wLEYbSbaqQOFLdTjKeqHppnqpNSstxF8pOo=;
+	s=korg; t=1795621658;
+	bh=tzyiGzaFM83J3swItMAF75Q1J3nRmhI+LvXxRL8yYbo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=MBWTibh6LKYyczknw3elpzjrRUUOdMiyOof9BbmEkswfwnfafrKDyZTmO0fVEP1OT
-	 NwniOxT33JNY3ct8tLU6GuFbgTtW7FKXeAQH8KrTuxIun7I2VC0y5GVqs2eGmT4uYc
-	 VT8sXcPXMq4UGaoWgXHjnU/YNzbMf/hQJdROT92w=
+	b=HooYdn+gPWDM7Y0p9HetuA+Dqd04dmd90yWX02HGp0XaXociXbSeTS3k8QsGBzcq+
+	 KGNrHa8/qlfal+bPEfEMWGIqS2jpwQFm/n5J+99dtKgiYBSNrIV3uQE4paPRoJrDZh
+	 Zpch/Qme/MGMt1L4WwqF3w3J7u/HXMIbZlmSoEHU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sashiko <sashiko-bot@kernel.org>,
-	Eric Dumazet <edumazet@kernel.org>,
-	Hangbin Liu <liuhangbin@kylinos.cn>,
-	Jiayuan Chen <jiayuan.chen@linux.dev>,
-	Kuniyuki Iwashima <kuniyu@google.com>,
-	Linkui Xiao <xiaolinkui@kylinos.cn>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Rosen Penev <rosenp@gmail.com>,
+	Thomas Bogendoerfer <tsbogend@alpha.franken.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 293/990] tcp: ipv6: free ireq->ipv6_opt after an RCU grace period
-Date: Wed, 25 Nov 2026 15:27:40 +0100
-Message-ID: <20261125143828.952130078@linuxfoundation.org>
+Subject: [PATCH 6.18 294/990] MIPS: Avoid dead code/data elimination when using recordmcount
+Date: Wed, 25 Nov 2026 15:27:41 +0100
+Message-ID: <20261125143828.976714093@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143822.072087159@linuxfoundation.org>
 References: <20261125143822.072087159@linuxfoundation.org>
@@ -73,58 +68,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eric Dumazet <edumazet@kernel.org>
+From: Rosen Penev <rosenp@gmail.com>
 
-[ Upstream commit fafbc4051123d5459ea6950899cec08ed946e278 ]
+[ Upstream commit 255d9dbd936f7db8b963e82429f6e57cd9d48999 ]
 
-ireq->ipv6_opt is only set by calipso_req_setattr(), when a CALIPSO
-NetLabel mapping is configured.
+CONFIG_LD_DEAD_CODE_DATA_ELIMINATION builds with -ffunction-sections,
+placing every function in its own section. recordmcount refuses to use
+weak symbols as section bases, as a strong definition could override
+them, so a weak function alone in its section, such as the generic
+pcibios_fixup_bus() stub, breaks the build:
 
-Request socket migration (net.ipv4.tcp_migrate_req=1, or a
-BPF_SK_REUSEPORT_SELECT_OR_MIGRATE program) clones the request
-socket with inet_reqsk_clone(), so that the old request socket and
-its clone share the same ipv6_opt, then reqsk_migrate_reset() clears
-the pointer in the old one.
+  Cannot find symbol for section 88: .text.pcibios_fixup_bus.
+  drivers/pci/probe.o: failed
 
-Another cpu holding a reference on the old request socket can still
-be using these options, sending a SYNACK from tcp_v6_send_synack()
-or creating a child in tcp_v6_syn_recv_sock(), when the clone
-is freed. tcp_v6_reqsk_destructor() frees ipv6_opt with a plain
-kfree(), leading to a use-after-free.
+MIPS always records mcount locations with recordmcount, so this hits
+any config with the function tracer and dead code elimination enabled,
+e.g. malta_defconfig built with LLVM=1.
 
-Both readers already run under RCU, like their IPv4 counterparts.
-Use kfree_rcu() in tcp_v6_reqsk_destructor(), as commit e3f33b0a1d89
-("ipv4: free inet_opt and ireq_opt after an RCU grace period") did
-for ireq_opt.
+Only offer dead code elimination when recordmcount is not used, as
+powerpc does since commit f8b2336f15f3 ("powerpc: Avoid dead code/data
+elimination when using recordmcount"). In practice this makes it
+unavailable together with the function tracer on MIPS.
 
-Fixes: c905dee62232 ("tcp: Migrate TCP_NEW_SYN_RECV requests at retransmitting SYN+ACKs.")
-Reported-by: Sashiko <sashiko-bot@kernel.org>
-Closes: https://lore.kernel.org/netdev/179369559062.488856.15441115725436277776@kernel.org/
-Signed-off-by: Eric Dumazet <edumazet@kernel.org>
-Reviewed-by: Hangbin Liu <liuhangbin@kylinos.cn>
-Reviewed-by: Jiayuan Chen <jiayuan.chen@linux.dev>
-Reviewed-by: Kuniyuki Iwashima <kuniyu@google.com>
-Tested-by: Linkui Xiao <xiaolinkui@kylinos.cn>
-Link: https://patch.msgid.link/20261103090011.4128420-1-edumazet@kernel.org
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Fixes: c0436b503591 ("MIPS: Enable dead code elimination")
+Signed-off-by: Rosen Penev <rosenp@gmail.com>
+Signed-off-by: Thomas Bogendoerfer <tsbogend@alpha.franken.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv6/tcp_ipv6.c | 2 +-
+ arch/mips/Kconfig | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/net/ipv6/tcp_ipv6.c b/net/ipv6/tcp_ipv6.c
-index fade3907b05da..b07e8d22edcfb 100644
---- a/net/ipv6/tcp_ipv6.c
-+++ b/net/ipv6/tcp_ipv6.c
-@@ -583,7 +583,7 @@ static int tcp_v6_send_synack(const struct sock *sk, struct dst_entry *dst,
- 
- static void tcp_v6_reqsk_destructor(struct request_sock *req)
- {
--	kfree(inet_rsk(req)->ipv6_opt);
-+	kfree_rcu(inet_rsk(req)->ipv6_opt, rcu);
- 	consume_skb(inet_rsk(req)->pktopts);
- }
- 
+diff --git a/arch/mips/Kconfig b/arch/mips/Kconfig
+index fadaeafae98e8..cefaa55ff8bd8 100644
+--- a/arch/mips/Kconfig
++++ b/arch/mips/Kconfig
+@@ -81,7 +81,7 @@ config MIPS
+ 	select HAVE_IRQ_TIME_ACCOUNTING
+ 	select HAVE_KPROBES
+ 	select HAVE_KRETPROBES
+-	select HAVE_LD_DEAD_CODE_DATA_ELIMINATION
++	select HAVE_LD_DEAD_CODE_DATA_ELIMINATION if !FTRACE_MCOUNT_USE_RECORDMCOUNT
+ 	select HAVE_MOD_ARCH_SPECIFIC
+ 	select HAVE_NMI
+ 	select HAVE_PAGE_SIZE_4KB if !CPU_LOONGSON2EF && !CPU_LOONGSON64
 -- 
 2.53.0
 
