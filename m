@@ -1,54 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795624482;
-	b=lN4mxq/Xd48Q9hdKHCf0enV7wYDfGDAHzHF2iU3uNBTd2EOB1gTKY73edyf32OOBckdx
-	 6DbtQzvKaA5Lqhiz62pBZvlYg+qtce5SBcFT+6EaiuYXMD/PahydN3rPG6x7Yj+jJEZBn
-	 CDb5+65RfHdO9nRxNPN4Ob+0fxSxrWY7/g6hjg1yKgx8dT176LHc1YEAZHSnbuffldkmS
-	 BNqubzm+CWQUzqY7Gw1mKM/AKf0UT+d0GCUi4NWLWXIjJiPfbLozD6S4+f/nmrH3xkIK7
-	 /BRrx1oTHrD7VBs27cvnfeWBs1r0IBm0ZcZsBzJ0T2dgxDCF0/zvmsONY1LzsWsOOBQ==
+	t=1795624485;
+	b=YUDwedR3jCLAQkb55QTNDRNWMazW5AyOdDeZkuzCDxJR7eU+4PvI1GsOjai8W91yGiz2
+	 3jm0IPwesyB80CiRly8Iv9WOYjLlTXTBQIJrS14w8lHWlvfqikjdoj1DpZu8+hc+5E4Qe
+	 GC0FxkNv9ps/kxq1Q/pvL9bZp1WkpbbtBLLf0YTThU1sqqXjudGmvTDnuDGPkVP9WwCc7
+	 U4eMmL3WtPjmQD8qJCQvtpAztcsv+of2HtsnP73brJ8+spXTPb0rGdPPT6cHRnzD/7o/H
+	 ygP9HWCUGP8+wmb9lT4DtKnCcFgyO9y0XFgmsE/ywPS7F1zjkQy33p13eNzM0UbQgxw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795624482;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795624485;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=R61BYnYP+lhkC8lpf6QePCS+/EsnGTipc0sArAOymbg=;
-	b=j0bUpMkXdaFPpziH05htMYuYt3tDIJhW5LuiGJef9VzhyJCyQ3mnbPNW+iCxx3np6fNl
-	 r53Czfr0Cyv0s3mfH6RrXumwXaj5lMVIxa0KAfAB67BUzMeOywhatsG0wS3aKCxq3Df8r
-	 Eo5lrBbleQ7xuyhbwx2knxMcI5g2aTq2sZ8QBsp5O6m09TxoWVZzF5h1SG116maSDsQIu
-	 JYlxtLp4hV1Jl498YrzybrEPMhkcjriHVZ6R7YB1ui2/31mkHl/yZ1qp+TqIpMyq3xGwM
-	 yQeZyzFd3fKckN2yH3DHULG9GP0eqNMarn0J5LvMK5pkIeoIv1yCjlT7a99BY20beUQ==
+	bh=lZLSp4TDYz9KN47anS9mT2PpecH0sXrEk4H2rcrubUE=;
+	b=g9IjWuFvG6greX40vW7zCI4OwsXoNUrqb1JGnSX8hfietVlkBLJDd1njlEuf6aQKgq7m
+	 Y9Qc1kuvsASfugS93ig+B3stkJN1WNHu3N9N4BxBP7EhOuoojJHGYEHyrDpOGZyqUoAFm
+	 GGPeioouKsq0LumCpnWFXodbY9+ckAoMv+u9gzFX8OlxkHxyJs82zol1mtqWmgXdap5cH
+	 HTDM8jPvTXnNp6RUmB68oih5XlO9fapwutcZssJ4iZBShCQRLz5Y6iojy731XBi51XoZz
+	 b/4NCZU2XeAl7VgBTbxckbyrbajhDB5ZoiG/XpUBunh0h/y8Ra6FqFIE6KWEfEaLZgw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Ss7cQeNV;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=hTcXEIJU;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B2710606A33B;
-	Wed, 25 Nov 2026 16:34:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 839B9606A33D;
+	Wed, 25 Nov 2026 16:34:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Ss7cQeNV
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 10AB91F000C4;
-	Wed, 25 Nov 2026 16:34:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=hTcXEIJU
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D4E781F000C6;
+	Wed, 25 Nov 2026 16:34:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795624482;
-	bh=R61BYnYP+lhkC8lpf6QePCS+/EsnGTipc0sArAOymbg=;
+	s=korg; t=1795624485;
+	bh=lZLSp4TDYz9KN47anS9mT2PpecH0sXrEk4H2rcrubUE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Ss7cQeNVW3HomH+kdGesYGVEiTynKTt7GcLEmDHHT/f/rfWPELW0eG0kfHw0W4ejx
-	 QnKoxMcW1sfmiRGGiTLZadBVPz0fL9ZQbKFUcXaQwSolhXQYVmi0wWh6K/yQk4pSgq
-	 wwga7pItbhH6q0xXQpE80blk4kVb+mHLh3C23pmc=
+	b=hTcXEIJUQNIPIFa/9zoWaFEvXUJnvqROHvQUiu6UzgBX2b8ZHLJnwgckc/AZ595qp
+	 Km+6nbcMLGEv4/GPAcprijRQhhg8yKqF2a0m8VMGbL2O335CpxhrdGWM8+oZ8Cram+
+	 W2KwcLg9XqUQoVkSEHnsJsqIOOGHVV7dvLTLpgaE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jason Zhang <jdz@google.com>,
-	Kuniyuki Iwashima <kuniyu@google.com>,
-	Ido Schimmel <idosch@nvidia.com>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Eric Dumazet <edumazet@google.com>,
+	Kuniyuki Iwashima <kuniyu@amazon.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 206/816] ipv4: Call rt_add_uncached_list() if !do_cache in ip_route_input_slow().
-Date: Wed, 25 Nov 2026 15:29:14 +0100
-Message-ID: <20261125143853.964304511@linuxfoundation.org>
+Subject: [PATCH 6.12 207/816] inet: reduce inet_csk_clone_lock() indent level
+Date: Wed, 25 Nov 2026 15:29:15 +0100
+Message-ID: <20261125143853.989068817@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143849.205329330@linuxfoundation.org>
 References: <20261125143849.205329330@linuxfoundation.org>
@@ -70,74 +69,94 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kuniyuki Iwashima <kuniyu@google.com>
+From: Eric Dumazet <edumazet@google.com>
 
-[ Upstream commit 4019af3afd72864ec6abbfde2d76e416a64456c2 ]
+[ Upstream commit 55250b83b02aa5ffe602987adb2c05178c87ac63 ]
 
-Since the cited commit, ip_route_input_slow() could call
-rt_dst_alloc() with vrf in the local_input: path.
+Return early from inet_csk_clone_lock() if the socket
+allocation failed, to reduce the indentation level.
 
-If res->fi != NULL and one of the following is true,
-
-  - a non-zero itag from fib_validate_source_reason()
-    (realms/classid)
-  - RTN_BROADCAST with BC_FORWARDING enabled
-
-do_cache is set to false.
-
-Then, the route is not added to rt_uncached_list, so the
-route cannot be removed from rt_flush_dev().
-
-If the route is cached in sk->sk_rx_dst, removing the
-vrf device gets stuck. [0]
-
-Let's call rt_add_uncached_list() if !do_cache in
-ip_route_input_slow().
-
-[0]:
-unregister_netdevice: waiting for vrf0 to become free. Usage count = 2
-ref_tracker: netdev@000000008b304ac4 has 1/1 users at
-     dst_alloc+0x14b/0x490
-     ip_route_input_rcu+0x1540/0x2530
-     ip_route_input_noref+0x5a/0x90
-     ip_rcv_finish_core+0x4b0/0x1140
-     ip_rcv_finish+0xe6/0x190
-     ip_rcv+0x6c/0x130
-     __netif_receive_skb+0x121/0x300
-     process_backlog+0x2df/0x5e0
-     __napi_poll+0x8c/0x380
-     net_rx_action+0x43c/0xab0
-     handle_softirqs+0x19f/0x520
-     do_softirq+0x46/0x60
-     __local_bh_enable_ip+0x79/0x80
-     __dev_queue_xmit+0x1b0e/0x24c0
-     ip_finish_output2+0x8b2/0xcd0
-     ip_output+0xf2/0x1e0
-
-Fixes: f5a0aab84b74 ("net: ipv4: dst for local input routes should use l3mdev if relevant")
-Reported-by: Jason Zhang <jdz@google.com>
-Signed-off-by: Kuniyuki Iwashima <kuniyu@google.com>
-Link: https://patch.msgid.link/20261101064418.2055158-4-kuniyu@google.com
-Reviewed-by: Ido Schimmel <idosch@nvidia.com>
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Signed-off-by: Eric Dumazet <edumazet@google.com>
+Reviewed-by: Kuniyuki Iwashima <kuniyu@amazon.com>
+Link: https://patch.msgid.link/20250212131328.1514243-2-edumazet@google.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Stable-dep-of: 8e069fd3fd39 ("tcp: ipv6: do not read ireq->pktopts from tcp_v6_send_synack()")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv4/route.c | 2 ++
- 1 file changed, 2 insertions(+)
+ net/ipv4/inet_connection_sock.c | 50 ++++++++++++++++++---------------
+ 1 file changed, 27 insertions(+), 23 deletions(-)
 
-diff --git a/net/ipv4/route.c b/net/ipv4/route.c
-index 64fe59730ed8b..9706d36c8388c 100644
---- a/net/ipv4/route.c
-+++ b/net/ipv4/route.c
-@@ -2441,6 +2441,8 @@ out:	return err;
+diff --git a/net/ipv4/inet_connection_sock.c b/net/ipv4/inet_connection_sock.c
+index 61fbcaa913b35..c78291ea4ff6f 100644
+--- a/net/ipv4/inet_connection_sock.c
++++ b/net/ipv4/inet_connection_sock.c
+@@ -1257,39 +1257,43 @@ struct sock *inet_csk_clone_lock(const struct sock *sk,
+ 				 const gfp_t priority)
+ {
+ 	struct sock *newsk = sk_clone_lock(sk, priority);
++	struct inet_connection_sock *newicsk;
  
- 		if (unlikely(!rt_cache_route(nhc, rth)))
- 			rt_add_uncached_list(rth);
-+	} else {
-+		rt_add_uncached_list(rth);
- 	}
- 	skb_dst_set(skb, &rth->dst);
- 	err = 0;
+-	if (newsk) {
+-		struct inet_connection_sock *newicsk = inet_csk(newsk);
++	if (!newsk)
++		return NULL;
+ 
+-		inet_sk_set_state(newsk, TCP_SYN_RECV);
+-		newicsk->icsk_bind_hash = NULL;
+-		newicsk->icsk_bind2_hash = NULL;
++	newicsk = inet_csk(newsk);
+ 
+-		inet_sk(newsk)->inet_dport = inet_rsk(req)->ir_rmt_port;
+-		inet_sk(newsk)->inet_num = inet_rsk(req)->ir_num;
+-		inet_sk(newsk)->inet_sport = htons(inet_rsk(req)->ir_num);
++	inet_sk_set_state(newsk, TCP_SYN_RECV);
++	newicsk->icsk_bind_hash = NULL;
++	newicsk->icsk_bind2_hash = NULL;
+ 
+-		/* listeners have SOCK_RCU_FREE, not the children */
+-		sock_reset_flag(newsk, SOCK_RCU_FREE);
++	inet_sk(newsk)->inet_dport = inet_rsk(req)->ir_rmt_port;
++	inet_sk(newsk)->inet_num = inet_rsk(req)->ir_num;
++	inet_sk(newsk)->inet_sport = htons(inet_rsk(req)->ir_num);
+ 
+-		inet_sk(newsk)->mc_list = NULL;
++	/* listeners have SOCK_RCU_FREE, not the children */
++	sock_reset_flag(newsk, SOCK_RCU_FREE);
+ 
+-		newsk->sk_mark = inet_rsk(req)->ir_mark;
+-		atomic64_set(&newsk->sk_cookie,
+-			     atomic64_read(&inet_rsk(req)->ir_cookie));
++	inet_sk(newsk)->mc_list = NULL;
+ 
+-		newicsk->icsk_retransmits = 0;
+-		newicsk->icsk_backoff	  = 0;
+-		newicsk->icsk_probes_out  = 0;
+-		newicsk->icsk_probes_tstamp = 0;
++	newsk->sk_mark = inet_rsk(req)->ir_mark;
++	atomic64_set(&newsk->sk_cookie,
++		     atomic64_read(&inet_rsk(req)->ir_cookie));
+ 
+-		/* Deinitialize accept_queue to trap illegal accesses. */
+-		memset(&newicsk->icsk_accept_queue, 0, sizeof(newicsk->icsk_accept_queue));
++	newicsk->icsk_retransmits = 0;
++	newicsk->icsk_backoff	  = 0;
++	newicsk->icsk_probes_out  = 0;
++	newicsk->icsk_probes_tstamp = 0;
+ 
+-		inet_clone_ulp(req, newsk, priority);
++	/* Deinitialize accept_queue to trap illegal accesses. */
++	memset(&newicsk->icsk_accept_queue, 0,
++	       sizeof(newicsk->icsk_accept_queue));
++
++	inet_clone_ulp(req, newsk, priority);
++
++	security_inet_csk_clone(newsk, req);
+ 
+-		security_inet_csk_clone(newsk, req);
+-	}
+ 	return newsk;
+ }
+ EXPORT_SYMBOL_GPL(inet_csk_clone_lock);
 -- 
 2.53.0
 
