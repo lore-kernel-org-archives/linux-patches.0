@@ -1,56 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795622298;
-	b=nbyddsaE6ZwHLyPWb3ZJQD5AiS1UdFJjXrndeUqimFc24c2Tq6kvc2XzM5tND12kt6VT
-	 DwiCRoNrEPpyT8uxoAak8gqVNXldAh7Rg2lb07ZWS1NfZySEMhRDgid6uP5dva5RNx4H0
-	 9SI8ccnSQxhJWBcqCfcmRItQVyUnMj6TM7OkEeUQJkt1PcpYYL7Qmgk05Ex8axHjgXhBT
-	 Hhlt0WuVpwu9G44DjK8qKDUsK9vTg1xVGTJ9IeZioWvTzoUcl6v90X4L7WXvmd4KEEAPK
-	 ztVZnHO1cihgHXgljF/HrsbetOjzihAhf5o8MSDlnpY64uqlheAqZLRwIBumglL1eQQ==
+	t=1795622300;
+	b=I8PRiJy8WR4dsWinDdaLUb5xxqB5X5qTx9tWslFCGZ+aUOVlsVQE7CQ+Gtaxav09j4iv
+	 9K+ZL9p/lgo+OF5bW4/kNe/m7/gj+IPoPtMZsOwjeu8nVuqLvzlyJih7R16XBHeg1a95g
+	 c1DSMtLHDpKh5Oeqq57sq8KLMGWPN16EukHi9OzNlFnC4AUXmNJhlwCASEHWMUW42JjVp
+	 CnQfucOPKvPA7On53ydi08KKq5LkGA5by6Vk67oBskEwS13nS1YsOxTfmklqvahrQXEEX
+	 zaCGPCnTiyqsUkz+2aiiKFMM1awnk7u8l4aFhhRhsKYcUnSL6KuWQp1NtWtTz8klnSw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795622298;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795622300;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=TpG1a8bZPXNAW+vd9BllqGc9aM9MMJHcAv/SXyGC4LY=;
-	b=qvlqF5Jw/QXbZPMFmNBOtVhWd/6ArMiiJXZxc1pt9d62/Ek7VOwFHUYb0U637M437pcw
-	 O7KIyBvHxG9JDNrGOrA3FsqWnZv/lhC2m+5ZMYjRar0DtRsmqHL5stkHtvfQcVhy7itnS
-	 UR6MkOhtjoZKXLsqFErWNLMRUm4A5CllyVz43GuYQTEfmVPC/fbbDPdFCH3gfiPf+SIOZ
-	 16XYj/wlTh6AAkzPwWc07YB2r5yfXTVi0BNQ6p1gx2RURMFZ9J11Q9l9ZtCGlIOQqNKvm
-	 0LE9wLZB3gdORHMBm/k7w4tWoGZE+0TXbUQJ5xcFBQaq1GpwepH4vLvDzHdVoPLiQBw==
+	bh=cceHkUfkCVuRndsH+XCtZw4mCUMcas/spdpkUh0TCsI=;
+	b=c3UsieRvho4hMqQc1FMb0jCa16yutHzC6E+pVb1ta9WI2lKyzaZr8AgHlxxlohHKi4PF
+	 SA2dznnDPlSSjdU/tGrxnhxkBMgP/6XlcE0j67t8VwURdOPXoafns3L9Lrd+3qCSiWw5A
+	 rGisQPT8M9wnm/klLZNfeX4YN6HF6VZWuDC9yXkvFwOW59wVAifNiJV115x3o8GdmXvvS
+	 r4e14ProeEn2cEf3+UJvTS3nwXpzA2IUCtQNVJusHEMNqenIQtHZMTYfS/6bJYxeqSEY4
+	 y8C+k9NLLoQCyPv16WO7y+6+IaIzUHn8a4Ut0SP+L2aD+arxc5VeD+tXSfpEgrPYUhQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="jtYMF+/t";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=a9WNol4q;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 03A70606A321;
-	Wed, 25 Nov 2026 15:58:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C3E62606A323;
+	Wed, 25 Nov 2026 15:58:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=jtYMF+/t
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4F5ED1F000C0;
-	Wed, 25 Nov 2026 15:58:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=a9WNol4q
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 188871F000C6;
+	Wed, 25 Nov 2026 15:58:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795622297;
-	bh=TpG1a8bZPXNAW+vd9BllqGc9aM9MMJHcAv/SXyGC4LY=;
+	s=korg; t=1795622300;
+	bh=cceHkUfkCVuRndsH+XCtZw4mCUMcas/spdpkUh0TCsI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=jtYMF+/tvqMVj2umUVQpYug6HXGw7SRPiCcMa2tXIdn/NQ2TXWV/OTBLbmyR0pIjz
-	 tqSlvOWS622M73jVIX4J1W01rci2UC+UJ0cRJOdPMqcxFgRFDiiTOfWbwZgVo9V5KE
-	 glnivC0r/IQcdMEejSl5iG7+kQjrgVmoi55t2HCY=
+	b=a9WNol4qA0pKoQIqnmlUuc8SwMsCTZLYf/lVKBoPmtSi3xgMLr8v68Pbb/vJwrI7j
+	 f3wszLPj8GmufzOK+R7DJGYQ6A29/bOjTTN8zv438P2FnkVcfiz6mk8HgQsiOYkG8L
+	 KzqTCJve2RcGmwPq9s5aKNmgG3hTSaX6rUYwBZQg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hari Bathini <hbathini@linux.ibm.com>,
-	Abhishek Dubey <adubey@linux.ibm.com>,
-	Saket Kumar Bhaskar <skb99@linux.ibm.com>,
-	Yeswanth Krishna Tellakula <yeswanth@linux.ibm.com>,
-	R Nageswara Sastry <rnsastry@linux.ibm.com>,
-	Madhavan Srinivasan <maddy@linux.ibm.com>,
+	stable@kernel.org,
+	Jianping Li <jianping.li@oss.qualcomm.com>,
+	Ekansh Gupta <ekansh.gupta@oss.qualcomm.com>,
+	Srinivas Kandagatla <srini@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 491/990] powerpc/bpf: fix alignment of long branch trampoline address
-Date: Wed, 25 Nov 2026 15:30:58 +0100
-Message-ID: <20261125143833.596997420@linuxfoundation.org>
+Subject: [PATCH 6.18 492/990] misc: fastrpc: Allocate entire reserved memory for Audio PD in probe
+Date: Wed, 25 Nov 2026 15:30:59 +0100
+Message-ID: <20261125143833.620008316@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143822.072087159@linuxfoundation.org>
 References: <20261125143822.072087159@linuxfoundation.org>
@@ -72,211 +70,332 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Abhishek Dubey <adubey@linux.ibm.com>
+From: Jianping Li <jianping.li@oss.qualcomm.com>
 
-[ Upstream commit 04001e8ddb979f463f1c3ca8ac4d6ac59fb48921 ]
+[ Upstream commit 9e47ad9c562e82cabfbb9afa6c2b0dcdf2702a39 ]
 
-Ensure the dummy trampoline address field present between the OOL stub
-and the long branch stub is 4/8-byte aligned, for memory compatibility
-when content loaded to a register.
+Allocating and freeing Audio PD memory from userspace is unsafe because
+the kernel cannot reliably determine when the DSP has finished using the
+memory. Userspace may free buffers while they are still in use by the DSP,
+and remote free requests cannot be safely trusted.
 
-Reported-by: Hari Bathini <hbathini@linux.ibm.com>
-Fixes: d243b62b7bd3 ("powerpc64/bpf: Add support for bpf trampolines")
-Cc: stable@vger.kernel.org
-Signed-off-by: Abhishek Dubey <adubey@linux.ibm.com>
-Signed-off-by: Saket Kumar Bhaskar <skb99@linux.ibm.com>
-Tested-by: Yeswanth Krishna Tellakula <yeswanth@linux.ibm.com>
-Tested-by: R Nageswara Sastry <rnsastry@linux.ibm.com>
-Reviewed-by: Hari Bathini <hbathini@linux.ibm.com>
-Signed-off-by: Madhavan Srinivasan <maddy@linux.ibm.com>
-Link: https://patch.msgid.link/a8257022057cbb71928c960be589e10b89fc0899.1789982239.git.skb99@linux.ibm.com
-[ sashal: Dropped the two fsession prototypes (prepare_for_fsession_fentry() and store_func_meta()) from the context of the bpf_jit.h hunk, since those functions don't exist in this tree. ]
+Additionally, the current implementation allows userspace to repeatedly
+grow the Audio PD heap, but does not support shrinking it. This can lead
+to unbounded memory usage over time, effectively causing a memory leak.
+
+Fix this by allocating the entire Audio PD reserved-memory region during
+rpmsg probe and tying its lifetime to the rpmsg channel. This removes
+userspace-controlled alloc/free and ensures that memory is reclaimed only
+when the DSP process is torn down.
+
+The reserved-memory region is now mandatory for the Audio PD domain.
+Rather than failing rpmsg probe when it is missing, validate it in
+fastrpc_init_create_static_process() and reject only the static-process
+creation. This keeps the fastrpc device probing for all other domains
+even on a misconfigured device tree.
+
+Fixes: 0871561055e66 ("misc: fastrpc: Add support for audiopd")
+Cc: stable@kernel.org
+Signed-off-by: Jianping Li <jianping.li@oss.qualcomm.com>
+Reviewed-by: Ekansh Gupta <ekansh.gupta@oss.qualcomm.com>
+Link: https://lore.kernel.org/all/20260814101955.234238-1-jianping.li@oss.qualcomm.com/
+Signed-off-by: Srinivas Kandagatla <srini@kernel.org>
+Link: https://patch.msgid.link/20261002101220.1084101-3-srinivas.kandagatla@oss.qualcomm.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+[ sashal: Adjusted context for the missing kzalloc_objs and poll-support table by using kcalloc() and anchoring the new probe helper at fastrpc_get_domain_id(). ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/powerpc/net/bpf_jit.h        |  7 +++---
- arch/powerpc/net/bpf_jit_comp.c   | 38 ++++++++++++++++++++++++++-----
- arch/powerpc/net/bpf_jit_comp32.c |  7 +++---
- arch/powerpc/net/bpf_jit_comp64.c |  7 +++---
- 4 files changed, 44 insertions(+), 15 deletions(-)
+ drivers/misc/fastrpc.c | 188 ++++++++++++++++++++++-------------------
+ 1 file changed, 101 insertions(+), 87 deletions(-)
 
-diff --git a/arch/powerpc/net/bpf_jit.h b/arch/powerpc/net/bpf_jit.h
-index ae2c92a8b6e77..4d9cd21510571 100644
---- a/arch/powerpc/net/bpf_jit.h
-+++ b/arch/powerpc/net/bpf_jit.h
-@@ -203,10 +203,11 @@ int bpf_jit_emit_func_call_rel(u32 *image, u32 *fimage, struct codegen_context *
- int bpf_jit_build_body(struct bpf_prog *fp, u32 *image, u32 *fimage, struct codegen_context *ctx,
- 		       u32 *addrs, int pass, bool extra_pass);
- void bpf_jit_build_prologue(u32 *image, struct codegen_context *ctx);
--void bpf_jit_build_epilogue(u32 *image, struct codegen_context *ctx);
--void bpf_jit_build_fentry_stubs(u32 *image, struct codegen_context *ctx);
-+void bpf_jit_build_epilogue(u32 *image, u32 *fimage, struct codegen_context *ctx);
-+void bpf_jit_build_fentry_stubs(u32 *image, u32 *fimage, struct codegen_context *ctx);
- void bpf_jit_realloc_regs(struct codegen_context *ctx);
--int bpf_jit_emit_exit_insn(u32 *image, struct codegen_context *ctx, int tmp_reg, long exit_addr);
-+int bpf_jit_emit_exit_insn(u32 *image, u32 *fimage, struct codegen_context *ctx, int tmp_reg,
-+										long exit_addr);
- 
- int bpf_add_extable_entry(struct bpf_prog *fp, u32 *image, u32 *fimage, int pass,
- 			  struct codegen_context *ctx, int insn_idx,
-diff --git a/arch/powerpc/net/bpf_jit_comp.c b/arch/powerpc/net/bpf_jit_comp.c
-index 829b60ae485ff..4a7f5108fe0fd 100644
---- a/arch/powerpc/net/bpf_jit_comp.c
-+++ b/arch/powerpc/net/bpf_jit_comp.c
-@@ -49,11 +49,35 @@ asm (
- "	.popsection				;"
- );
- 
--void bpf_jit_build_fentry_stubs(u32 *image, struct codegen_context *ctx)
-+void bpf_jit_build_fentry_stubs(u32 *image, u32 *fimage, struct codegen_context *ctx)
- {
- 	int ool_stub_idx, long_branch_stub_idx;
-+	int ool_stub_sz;
- 
- 	/*
-+	 * Align the mis-aligned dummy_tramp_addr field in the fimage.
-+	 * The alignment NOP must appear before OOL stub, to make
-+	 * ool_stub_idx & long_branch_stub_idx constant from end.
-+	 *
-+	 * The fimage can be non 8-byte aligned, so final alignment depends
-+	 * on start of fimage and the stub's instruction count offset. The
-+	 * OOL stub size is 4 instructions (with CONFIG_PPC_FTRACE_OUT_OF_LINE)
-+	 * or 3 instructions (without) before dummy_tramp_addr.
-+	 *
-+	 * Emit a NOP here if address is not SZL aligned.
-+	 *
-+	 * In pass=0 when image==NULL, conservatively account for space
-+	 * required to accommodate alignment NOP. In case final pass skips
-+	 * emitting alignment NOP, the image buffer have 4 spare bytes and
-+	 * jited_len signifies correct program size.
-+	 */
+diff --git a/drivers/misc/fastrpc.c b/drivers/misc/fastrpc.c
+index 9d596f4fd4dcd..3f32e1bf73f88 100644
+--- a/drivers/misc/fastrpc.c
++++ b/drivers/misc/fastrpc.c
+@@ -46,8 +46,6 @@
+ #define ADSP_MMAP_HEAP_ADDR  4
+ /* MAP static DMA buffer on DSP User PD */
+ #define ADSP_MMAP_DMA_BUFFER  6
+-/* Add memory to static PD pool protection thru hypervisor */
+-#define ADSP_MMAP_REMOTE_HEAP_ADDR  8
+ /* Add memory to userPD pool, for user heap */
+ #define ADSP_MMAP_ADD_PAGES 0x1000
+ /* Add memory to userPD pool, for LLC heap */
+@@ -270,10 +268,14 @@ struct fastrpc_channel_ctx {
+ 	struct kref refcount;
+ 	/* Flag if dsp attributes are cached */
+ 	bool valid_attributes;
++	/* Flag if audio PD init mem was allocated */
++	bool audio_init_mem;
++	/* Audio PD reserved remote heap region */
++	phys_addr_t remote_heap_addr;
++	u64 remote_heap_size;
+ 	u32 dsp_attributes[FASTRPC_MAX_DSP_ATTRIBUTES];
+ 	struct fastrpc_device *secure_fdevice;
+ 	struct fastrpc_device *fdevice;
+-	struct fastrpc_buf *remote_heap;
+ 	struct list_head invoke_interrupted_mmaps;
+ 	bool secure;
+ 	bool unsigned_support;
+@@ -1317,15 +1319,24 @@ static int fastrpc_init_create_static_process(struct fastrpc_user *fl,
+ 	struct fastrpc_init_create_static init;
+ 	struct fastrpc_invoke_args *args;
+ 	struct fastrpc_phy_page pages[1];
++	struct fastrpc_channel_ctx *cctx = fl->cctx;
+ 	char *name;
+ 	int err;
+-	bool scm_done = false;
+ 	struct {
+ 		int client_id;
+ 		u32 namelen;
+ 		u32 pageslen;
+ 	} inbuf;
+ 	u32 sc;
++	unsigned long flags;
++	bool sent_heap = false;
 +
-+	ool_stub_sz = IS_ENABLED(CONFIG_PPC_FTRACE_OUT_OF_LINE) ? 16 : 12;
-+	if (!image || !IS_ALIGNED((unsigned long)fimage + ctx->idx*4 + ool_stub_sz, SZL))
-+		EMIT(PPC_RAW_NOP());
-+
++	if (!cctx->remote_heap_addr || !cctx->remote_heap_size) {
++		err = -ENOMEM;
++		dev_err(fl->sctx->dev,
++			"remote heap memory region is not added\n");
++		return err;
++	}
+ 
+ 	args = kcalloc(FASTRPC_CREATE_STATIC_PROCESS_NARGS, sizeof(*args), GFP_KERNEL);
+ 	if (!args)
+@@ -1349,31 +1360,6 @@ static int fastrpc_init_create_static_process(struct fastrpc_user *fl,
+ 	inbuf.client_id = fl->client_id;
+ 	inbuf.namelen = init.namelen;
+ 	inbuf.pageslen = 0;
+-	if (!fl->cctx->remote_heap) {
+-		err = fastrpc_remote_heap_alloc(fl, fl->sctx->dev, init.memlen,
+-						&fl->cctx->remote_heap);
+-		if (err)
+-			goto err_name;
+-
+-		/* Map if we have any heap VMIDs associated with this ADSP Static Process. */
+-		if (fl->cctx->vmcount) {
+-			u64 src_perms = BIT(QCOM_SCM_VMID_HLOS);
+-
+-			err = qcom_scm_assign_mem(fl->cctx->remote_heap->dma_addr,
+-							(u64)fl->cctx->remote_heap->size,
+-							&src_perms,
+-							fl->cctx->vmperms, fl->cctx->vmcount);
+-			if (err) {
+-				dev_err(fl->sctx->dev,
+-					"Failed to assign memory with dma_addr %pad size 0x%llx err %d\n",
+-					&fl->cctx->remote_heap->dma_addr,
+-					fl->cctx->remote_heap->size, err);
+-				goto err_map;
+-			}
+-			scm_done = true;
+-			inbuf.pageslen = 1;
+-		}
+-	}
+ 
+ 	fl->pd = USER_PD;
+ 
+@@ -1385,8 +1371,25 @@ static int fastrpc_init_create_static_process(struct fastrpc_user *fl,
+ 	args[1].length = inbuf.namelen;
+ 	args[1].fd = -1;
+ 
+-	pages[0].addr = fl->cctx->remote_heap->dma_addr;
+-	pages[0].size = fl->cctx->remote_heap->size;
 +	/*
-+	 *	nop     // optional, for alignment of dummy_tramp_addr
- 	 * Out-of-line stub:
- 	 *	mflr	r0
- 	 *	[b|bl]	tramp
-@@ -70,7 +94,7 @@ void bpf_jit_build_fentry_stubs(u32 *image, struct codegen_context *ctx)
++	 * Audio PD is a static PD and retains the remote heap
++	 * information across daemon restarts. Therefore only
++	 * the first attach should provide heap information to
++	 * DSP. Subsequent attaches reuse the previously
++	 * initialized memory pool.
++	 */
++	spin_lock_irqsave(&cctx->lock, flags);
++	if (!cctx->audio_init_mem) {
++		pages[0].addr = cctx->remote_heap_addr;
++		pages[0].size = cctx->remote_heap_size;
++		cctx->audio_init_mem = true;
++		inbuf.pageslen = 1;
++		sent_heap = true;
++	} else {
++		pages[0].addr = 0;
++		pages[0].size = 0;
++	}
++	spin_unlock_irqrestore(&cctx->lock, flags);
  
- 	/*
- 	 * Long branch stub:
--	 *	.long	<dummy_tramp_addr>
-+	 *	.long	<dummy_tramp_addr>  // 8-byte aligned
- 	 *	mflr	r11
- 	 *	bcl	20,31,$+4
- 	 *	mflr	r12
-@@ -81,6 +105,7 @@ void bpf_jit_build_fentry_stubs(u32 *image, struct codegen_context *ctx)
- 	 */
- 	if (image)
- 		*((unsigned long *)&image[ctx->idx]) = (unsigned long)dummy_tramp;
-+
- 	ctx->idx += SZL / 4;
- 	long_branch_stub_idx = ctx->idx;
- 	EMIT(PPC_RAW_MFLR(_R11));
-@@ -97,7 +122,8 @@ void bpf_jit_build_fentry_stubs(u32 *image, struct codegen_context *ctx)
- 	}
- }
- 
--int bpf_jit_emit_exit_insn(u32 *image, struct codegen_context *ctx, int tmp_reg, long exit_addr)
-+int bpf_jit_emit_exit_insn(u32 *image, u32 *fimage, struct codegen_context *ctx,
-+							int tmp_reg, long exit_addr)
- {
- 	if (exit_addr && is_offset_in_branch_range(exit_addr - (long)(ctx->idx * 4))) {
- 		PPC_JMP(exit_addr);
-@@ -106,7 +132,7 @@ int bpf_jit_emit_exit_insn(u32 *image, struct codegen_context *ctx, int tmp_reg,
- 		PPC_JMP(ctx->alt_exit_addr);
- 	} else {
- 		ctx->alt_exit_addr = ctx->idx * 4;
--		bpf_jit_build_epilogue(image, ctx);
-+		bpf_jit_build_epilogue(image, fimage, ctx);
- 	}
+ 	args[2].ptr = (u64)(uintptr_t) pages;
+ 	args[2].length = sizeof(*pages);
+@@ -1404,27 +1407,11 @@ static int fastrpc_init_create_static_process(struct fastrpc_user *fl,
  
  	return 0;
-@@ -237,7 +263,7 @@ struct bpf_prog *bpf_int_jit_compile(struct bpf_prog *fp)
- 	 */
- 	bpf_jit_build_prologue(NULL, &cgctx);
- 	addrs[fp->len] = cgctx.idx * 4;
--	bpf_jit_build_epilogue(NULL, &cgctx);
-+	bpf_jit_build_epilogue(NULL, NULL, &cgctx);
- 
- 	fixup_len = fp->aux->num_exentries * BPF_FIXUP_LEN * 4;
- 	extable_len = fp->aux->num_exentries * sizeof(struct exception_table_entry);
-@@ -276,7 +302,7 @@ struct bpf_prog *bpf_int_jit_compile(struct bpf_prog *fp)
- 			goto out_addrs;
- 		}
- 		addrs[fp->len] = cgctx.idx * 4;
--		bpf_jit_build_epilogue(code_base, &cgctx);
-+		bpf_jit_build_epilogue(code_base, fcode_base, &cgctx);
- 
- 		proglen = cgctx.idx * 4;
- 
-diff --git a/arch/powerpc/net/bpf_jit_comp32.c b/arch/powerpc/net/bpf_jit_comp32.c
-index 3087e744fb250..4b78dd8cfb45e 100644
---- a/arch/powerpc/net/bpf_jit_comp32.c
-+++ b/arch/powerpc/net/bpf_jit_comp32.c
-@@ -194,7 +194,7 @@ static void bpf_jit_emit_common_epilogue(u32 *image, struct codegen_context *ctx
- 
- }
- 
--void bpf_jit_build_epilogue(u32 *image, struct codegen_context *ctx)
-+void bpf_jit_build_epilogue(u32 *image, u32 *fimage, struct codegen_context *ctx)
- {
- 	EMIT(PPC_RAW_MR(_R3, bpf_to_ppc(BPF_REG_0)));
- 
-@@ -202,7 +202,7 @@ void bpf_jit_build_epilogue(u32 *image, struct codegen_context *ctx)
- 
- 	EMIT(PPC_RAW_BLR());
- 
--	bpf_jit_build_fentry_stubs(image, ctx);
-+	bpf_jit_build_fentry_stubs(image, fimage, ctx);
- }
- 
- /* Relative offset needs to be calculated based on final image location */
-@@ -1114,7 +1114,8 @@ int bpf_jit_build_body(struct bpf_prog *fp, u32 *image, u32 *fimage, struct code
- 			 * we'll just fall through to the epilogue.
- 			 */
- 			if (i != flen - 1) {
--				ret = bpf_jit_emit_exit_insn(image, ctx, _R0, exit_addr);
-+				ret = bpf_jit_emit_exit_insn(image, fimage,
-+								ctx, _R0, exit_addr);
- 				if (ret)
- 					return ret;
- 			}
-diff --git a/arch/powerpc/net/bpf_jit_comp64.c b/arch/powerpc/net/bpf_jit_comp64.c
-index 94f3f031d039b..be79bd555e217 100644
---- a/arch/powerpc/net/bpf_jit_comp64.c
-+++ b/arch/powerpc/net/bpf_jit_comp64.c
-@@ -209,7 +209,7 @@ static void bpf_jit_emit_common_epilogue(u32 *image, struct codegen_context *ctx
+ err_invoke:
+-	if (fl->cctx->vmcount && scm_done) {
+-		u64 src_perms = 0;
+-		struct qcom_scm_vmperm dst_perms;
+-		u32 i;
+-
+-		for (i = 0; i < fl->cctx->vmcount; i++)
+-			src_perms |= BIT(fl->cctx->vmperms[i].vmid);
+-
+-		dst_perms.vmid = QCOM_SCM_VMID_HLOS;
+-		dst_perms.perm = QCOM_SCM_PERM_RWX;
+-		err = qcom_scm_assign_mem(fl->cctx->remote_heap->dma_addr,
+-						(u64)fl->cctx->remote_heap->size,
+-						&src_perms, &dst_perms, 1);
+-		if (err)
+-			dev_err(fl->sctx->dev, "Failed to assign memory dma_addr %pad size 0x%llx err %d\n",
+-				&fl->cctx->remote_heap->dma_addr, fl->cctx->remote_heap->size, err);
++	if (sent_heap) {
++		spin_lock_irqsave(&cctx->lock, flags);
++		cctx->audio_init_mem = false;
++		spin_unlock_irqrestore(&cctx->lock, flags);
  	}
+-err_map:
+-	fastrpc_buf_free(fl->cctx->remote_heap);
+-	fl->cctx->remote_heap = NULL;
+-err_name:
+ 	kfree(name);
+ err:
+ 	kfree(args);
+@@ -1920,7 +1907,7 @@ static int fastrpc_req_mmap(struct fastrpc_user *fl, char __user *argp)
+ 	if (copy_from_user(&req, argp, sizeof(req)))
+ 		return -EFAULT;
+ 
+-	if (req.flags != ADSP_MMAP_ADD_PAGES && req.flags != ADSP_MMAP_REMOTE_HEAP_ADDR) {
++	if (req.flags != ADSP_MMAP_ADD_PAGES) {
+ 		dev_err(dev, "flag not supported 0x%x\n", req.flags);
+ 
+ 		return -EINVAL;
+@@ -1931,10 +1918,7 @@ static int fastrpc_req_mmap(struct fastrpc_user *fl, char __user *argp)
+ 		return -EINVAL;
+ 	}
+ 
+-	if (req.flags == ADSP_MMAP_REMOTE_HEAP_ADDR)
+-		err = fastrpc_remote_heap_alloc(fl, dev, req.size, &buf);
+-	else
+-		err = fastrpc_buf_alloc(fl, dev, req.size, &buf);
++	err = fastrpc_buf_alloc(fl, dev, req.size, &buf);
+ 
+ 	if (err) {
+ 		dev_err(dev, "failed to allocate buffer\n");
+@@ -1973,20 +1957,6 @@ static int fastrpc_req_mmap(struct fastrpc_user *fl, char __user *argp)
+ 	/* let the client know the address to use */
+ 	req.vaddrout = rsp_msg.vaddr;
+ 
+-	/* Add memory to static PD pool, protection thru hypervisor */
+-	if (req.flags == ADSP_MMAP_REMOTE_HEAP_ADDR && fl->cctx->vmcount) {
+-		u64 src_perms = BIT(QCOM_SCM_VMID_HLOS);
+-
+-		err = qcom_scm_assign_mem(buf->dma_addr, (u64)buf->size,
+-			&src_perms, fl->cctx->vmperms, fl->cctx->vmcount);
+-		if (err) {
+-			dev_err(fl->sctx->dev,
+-				"Failed to assign memory dma_addr %pad size 0x%llx err %d",
+-				&buf->dma_addr, buf->size, err);
+-			goto err_assign;
+-		}
+-	}
+-
+ 	spin_lock(&fl->lock);
+ 	list_add_tail(&buf->node, &fl->mmaps);
+ 	spin_unlock(&fl->lock);
+@@ -2322,6 +2292,45 @@ static int fastrpc_get_domain_id(const char *domain)
+ 	return -EINVAL;
  }
  
--void bpf_jit_build_epilogue(u32 *image, struct codegen_context *ctx)
-+void bpf_jit_build_epilogue(u32 *image, u32 *fimage, struct codegen_context *ctx)
++static int fastrpc_init_reserved_mem(struct fastrpc_channel_ctx *cctx,
++				     struct device *rdev, u32 domain_id)
++{
++	struct resource res;
++	u64 src_perms;
++	int err;
++
++	/* Only SDSP and ADSP domains use a reserved remote heap region */
++	if (domain_id != SDSP_DOMAIN_ID && domain_id != ADSP_DOMAIN_ID)
++		return 0;
++
++	err = of_reserved_mem_region_to_resource(rdev->of_node, 0, &res);
++	if (err) {
++		/*
++		 * The reserved-memory region is optional at probe time. For
++		 * the Audio PD (ADSP) domain its absence is validated later in
++		 * fastrpc_init_create_static_process(), so keep probing here.
++		 */
++		return 0;
++	}
++
++	/*
++	 * Audio PD (ADSP) is a static PD: cache the region so its lifetime
++	 * is tied to the rpmsg channel instead of being controlled by
++	 * userspace.
++	 */
++	if (domain_id == ADSP_DOMAIN_ID) {
++		cctx->remote_heap_addr = res.start;
++		cctx->remote_heap_size = resource_size(&res);
++	}
++
++	if (!cctx->vmcount)
++		return 0;
++
++	src_perms = BIT(QCOM_SCM_VMID_HLOS);
++	return qcom_scm_assign_mem(res.start, resource_size(&res), &src_perms,
++				  cctx->vmperms, cctx->vmcount);
++}
++
+ static int fastrpc_rpmsg_probe(struct rpmsg_device *rpdev)
  {
- 	bpf_jit_emit_common_epilogue(image, ctx);
+ 	struct device *rdev = &rpdev->dev;
+@@ -2366,21 +2375,9 @@ static int fastrpc_rpmsg_probe(struct rpmsg_device *rpdev)
+ 		}
+ 	}
  
-@@ -218,7 +218,7 @@ void bpf_jit_build_epilogue(u32 *image, struct codegen_context *ctx)
+-	if (domain_id == SDSP_DOMAIN_ID) {
+-		struct resource res;
+-		u64 src_perms;
+-
+-		err = of_reserved_mem_region_to_resource(rdev->of_node, 0, &res);
+-		if (!err) {
+-			src_perms = BIT(QCOM_SCM_VMID_HLOS);
+-
+-			err = qcom_scm_assign_mem(res.start, resource_size(&res), &src_perms,
+-				    data->vmperms, data->vmcount);
+-			if (err)
+-				goto err_free_data;
+-		}
+-
+-	}
++	err = fastrpc_init_reserved_mem(data, rdev, domain_id);
++	if (err)
++		goto err_free_data;
  
- 	EMIT(PPC_RAW_BLR());
+ 	secure_dsp = !(of_property_read_bool(rdev->of_node, "qcom,non-secure-domain"));
+ 	data->secure = secure_dsp;
+@@ -2476,8 +2473,25 @@ static void fastrpc_rpmsg_remove(struct rpmsg_device *rpdev)
+ 	list_for_each_entry_safe(buf, b, &cctx->invoke_interrupted_mmaps, node)
+ 		list_del(&buf->node);
  
--	bpf_jit_build_fentry_stubs(image, ctx);
-+	bpf_jit_build_fentry_stubs(image, fimage, ctx);
- }
+-	if (cctx->remote_heap)
+-		fastrpc_buf_free(cctx->remote_heap);
++	if (cctx->remote_heap_size && cctx->vmcount) {
++		u64 src_perms = 0;
++		int err, i;
++		struct qcom_scm_vmperm dst_perms;
++
++		for (i = 0; i < cctx->vmcount; i++)
++			src_perms |= BIT(cctx->vmperms[i].vmid);
++
++		dst_perms.vmid = QCOM_SCM_VMID_HLOS;
++		dst_perms.perm = QCOM_SCM_PERM_RWX;
++
++		err = qcom_scm_assign_mem(cctx->remote_heap_addr,
++					  cctx->remote_heap_size, &src_perms,
++					  &dst_perms, 1);
++		if (err)
++			dev_err(&rpdev->dev,
++				"Failed to assign memory back to HLOS: addr %pa size %#llx err %d\n",
++				&cctx->remote_heap_addr, cctx->remote_heap_size, err);
++	}
  
- int bpf_jit_emit_func_call_rel(u32 *image, u32 *fimage, struct codegen_context *ctx, u64 func)
-@@ -1461,7 +1461,8 @@ int bpf_jit_build_body(struct bpf_prog *fp, u32 *image, u32 *fimage, struct code
- 			 * we'll just fall through to the epilogue.
- 			 */
- 			if (i != flen - 1) {
--				ret = bpf_jit_emit_exit_insn(image, ctx, tmp1_reg, exit_addr);
-+				ret = bpf_jit_emit_exit_insn(image, fimage, ctx,
-+								tmp1_reg, exit_addr);
- 				if (ret)
- 					return ret;
- 			}
+ 	of_platform_depopulate(&rpdev->dev);
+ 
 -- 
 2.53.0
 
