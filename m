@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795626251;
-	b=oQht/M4V5MLz5k23yZqdFNaqG6TExEWiPJeoyC4T6NhqcUBrcMYmqYltiQGd5pQXk3hW
-	 4fXgSHySo8EEHl7Aso1SmDoz4F5dcpw5z3wvTQ8RoPV5z9dLfDPJXFvaif4Krj7B9FhBy
-	 a+f4Iv2jq2+6UTfrQm6TPSgMdIl5bzqTRvx8jfqXxEQBjfZCfx85/fukhkqFi0DP+kY5S
-	 eq9vXn/IpkyXOF5vJiJISXAv08aGe5/ZfhWwZ75J+sWNB+4gKV/LxsrMVqm1bU/6F3O4r
-	 Ss3BQuhkJVALdI3yLmC9w0WxulW5islI++arUka+ZJmL/OfHS9Qju91Nvd+6hURAhMQ==
+	t=1795626254;
+	b=RQNfnOIJgNBRn0thwNhE0OVx4UEh1RF3nyamaN54MGlxtgHrisOtiTA7aDGWxQFSCe7v
+	 XZQ9FoqMm9UycvcQuD2vk+vZhStsG+3G/pJiZo9ZfTBeeVyQDrrg8bBcFKM9jOQlhwfOt
+	 b+4TtZZKZZvp/QWr/I/zxszu6rrzjswKua4kmVuuLHA0bREPLd1MFHx3IzPO8Jj1Bekvv
+	 q5tvijULzorb1A9EkzLUDJBV7ksHwwlmExBEbha52UZ8ljffqf8Sy4VfR8eG2CLdnpAqr
+	 CjzLRuQmBgl4/MR8mCpOBIrbfiEDEf3nk07eAwsKMsu9Ar80dfhc5wHwhprRDlT7luQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795626251;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795626254;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=5+MsSRv/xPKKny9Iq+6zUiCHpx+zuOMd8CzB/6M1S74=;
-	b=zoYkuoqmVK8UooqrLhWBkn/sea6uu4CitThRgz4yhX3/470nd+BiUHGU1C0FdGesYYCs
-	 /+IMppNCIXAU/8iJgxbt5GXYK0mMwOD7+w0erwHOA7orPY6MVSI2Yy54Eaua0gtiIc2K2
-	 flQGGcFAhJ2KO3G6aKJ2nrjy/CvL6FgKrFFLnFgLMSMICWqPrfGZDlLeqx8obTVmnva60
-	 1DlZEoK1SJsolvDdO7oNs1mE9wDo33D43q+86ZR1glbcSDH3g2mlhvFQNJDouv4uOA1sJ
-	 SWVwOyJxDG//cvi6B4viTgHeIszBOzCU4yr6k+dltqhCRn5K8USfwaC0GD73aPlh6eQ==
+	bh=wjQDkZDRY+nB6RU7pj9tiRbRDBSFfWbciQbLF451xpA=;
+	b=Sby7a6PivQ+zOc3/j+iygRKbRh5EhyCi+Owt2xYvM5uzSvJa3SHbkQtFRiV/jZlb2t3R
+	 2PezXUdHMNWHUruvCfIZagvTWsqldxak0VMKvSVL9KectAFjwrjF+WjwFJjiethjoDVSF
+	 bBBGpajzsw6MWXlLAyWO+NQLlI3pCjdqCitKctSxvMpkGfUkLgvdKU9I9zntp5VD7R2Un
+	 sDjs6lemngymlMoSM34t5S33dJ14hgFpWfAVCuIZM9YscPg8+wagesSTrR2s0G3I01W6u
+	 Oo0P4DL9y8/FYIc8+Y48o9r8WaNNV0eEoYpb4Qj3klaXnPF+/ltV4hDzkT5rz04+k1Q==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=VuV4qoOz;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ZYYzqj28;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 72FBC606A321;
-	Wed, 25 Nov 2026 17:04:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C8C85606A31E;
+	Wed, 25 Nov 2026 17:04:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=VuV4qoOz
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C3D121F000C6;
-	Wed, 25 Nov 2026 17:04:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ZYYzqj28
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AB6041F000D1;
+	Wed, 25 Nov 2026 17:04:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795626251;
-	bh=5+MsSRv/xPKKny9Iq+6zUiCHpx+zuOMd8CzB/6M1S74=;
+	s=korg; t=1795626254;
+	bh=wjQDkZDRY+nB6RU7pj9tiRbRDBSFfWbciQbLF451xpA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=VuV4qoOzwq8fZmGGk0gr5MC08PfJl8BSUZKvrTAFlPAou5FbXDVt7L45wy5X7JZVM
-	 CMiyDW7IwGmCfNMlZ44uy9glQEKB/DFQuamOJhvqkhyEzEyeX6giijyJdrseVIqi0J
-	 QGANP9diA2Ux0fPNTZhCHp1vJsYx4DnN8UzlVqRo=
+	b=ZYYzqj28fc+yC/Ms6Bu7nRCXkzrJQG7NnvF8f7TpPM2pTpKwN1VZsE8SpmIV0XibV
+	 qJSZbloKj/GPKZDw8F4GQHOgz4jvUtxEtVaGr5S32cVDNkQtN2uZ96BgjzF19Q/f0T
+	 cS5ShkWcHqVbfyVxUtk76XOwmUIaZkEEOc9PvPCg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Guangshuo Li <liguangshuo@mail.sdu.edu.cn>,
-	Joshua Crofts <crofts@kernel.org>,
+	Yu-Hsiang Tseng <asas1asas200@gmail.com>,
+	Andy Shevchenko <andriy.shevchenko@intel.com>,
 	Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>
-Subject: [PATCH 6.12 781/816] iio: accel: kxsd9: Fix potential use-after-free on removal
-Date: Wed, 25 Nov 2026 15:38:49 +0100
-Message-ID: <20261125143907.250833365@linuxfoundation.org>
+Subject: [PATCH 6.12 782/816] iio: acpi: Accept comma separated values in ROTM strings
+Date: Wed, 25 Nov 2026 15:38:50 +0100
+Message-ID: <20261125143907.273470491@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143849.205329330@linuxfoundation.org>
 References: <20261125143849.205329330@linuxfoundation.org>
@@ -68,39 +68,100 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Guangshuo Li <liguangshuo@mail.sdu.edu.cn>
+From: Yu-Hsiang Tseng <asas1asas200@gmail.com>
 
-commit fd7334314f63a3a2a4927f209b2ca0e33d111840 upstream.
+commit dd53f1841ecfa2da152cbc31038a5f125b2b9e57 upstream.
 
-Unregistering an IIO device with an active triggered buffer detaches its
-poll function. Freeing the poll function first can therefore make
-iio_device_unregister() access freed memory.
+The ROTM method of the MXC6655 accelerometer on the Higole F9B, an
+Alder Lake-N handheld (AMI BIOS F9D_16G_P800217, DMI strings are all
+"Default string"), separates the values with a comma and a space:
 
-Unregister the device before cleaning up the triggered buffer.
+	Method (ROTM, 0, NotSerialized)
+	{
+	    Name (SBUF, Package (0x03)
+	    {
+	        "-1, 0, 0",
+	        "0, 1, 0",
+	        "0, 0, 1"
+	    })
+	    Return (SBUF)
+	}
 
-This issue was found by our static analysis tool under development.
+iio_read_acpi_mount_matrix() only accepts the space separated form used
+in Microsoft's example ("0 1 0"). It rejects this matrix and mxc4005
+falls back to the identity matrix:
 
-Fixes: 0427a106a98a ("iio: accel: kxsd9: Add triggered buffer handling")
-Signed-off-by: Guangshuo Li <liguangshuo@mail.sdu.edu.cn>
-Reviewed-by: Joshua Crofts <crofts@kernel.org>
-Cc: stable@vger.kernel.org
+	mxc4005 i2c-MXC6655:00: Incorrect ACPI mount matrix string format
+	mxc4005 i2c-MXC6655:00: mounting matrix not found: using identity...
+
+With the X axis not inverted, iio-sensor-proxy reports left-up when the
+device is held right-up and vice versa, so the desktop turns the
+picture upside down whenever the handheld is held in landscape.
+
+It is not the only BIOS written this way. The BOSC0200 on the AYANEO
+Air Plus uses commas in its ROMS method as well, with a space before
+one of them, and its ROMK method has "1, 0,0":
+
+	Method (ROMS, 0, NotSerialized)
+	{
+	    Name (SBUF, Package (0x03)
+	    {
+	        "-1, 0, 0",
+	        "0, -1 , 0",
+	        "0, 0, -1"
+	    })
+	    Return (SBUF)
+	}
+
+The kernel's sscanf() does not support '%*[', so there is no clean way
+to take both separators in a single format string. That leaves either
+a second sscanf() call with a comma format, or normalizing the
+separator first. Do the latter: turn the commas into spaces before
+parsing, so the existing "%d %d %d" format, which already takes any
+amount of white space around the values, keeps working unchanged. The
+strings live in the buffer acpi_evaluate_object() allocated for us, so
+they can be modified in place.
+
+With this change in_accel_mount_matrix on the Higole F9B reads
+"-1, 0, 0; 0, 1, 0; 0, 0, 1" and, with no udev hwdb override, the
+desktop rotates correctly in all four orientations. The AYANEO Air
+Plus was not tested; systemd's hwdb has an entry for it, which
+iio-sensor-proxy prefers over the kernel's matrix.
+
+Link: https://github.com/hhd-dev/hwinfo/blob/d9508123bee46ae3a59dc24826030ef51ea95058/devices/ayaneo_airplus/acpi/decoded/dsdt.dsl
+Cc: stable@vger.kernel.org # 6.10.x
+Signed-off-by: Yu-Hsiang Tseng <asas1asas200@gmail.com>
+Reviewed-by: Andy Shevchenko <andriy.shevchenko@intel.com>
 Signed-off-by: Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/iio/accel/kxsd9.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/iio/industrialio-acpi.c |    9 +++++++++
+ 1 file changed, 9 insertions(+)
 
---- a/drivers/iio/accel/kxsd9.c
-+++ b/drivers/iio/accel/kxsd9.c
-@@ -481,8 +481,8 @@ void kxsd9_common_remove(struct device *
- 	struct iio_dev *indio_dev = dev_get_drvdata(dev);
- 	struct kxsd9_state *st = iio_priv(indio_dev);
+--- a/drivers/iio/industrialio-acpi.c
++++ b/drivers/iio/industrialio-acpi.c
+@@ -5,6 +5,7 @@
+ #include <linux/dev_printk.h>
+ #include <linux/iio/iio.h>
+ #include <linux/sprintf.h>
++#include <linux/string.h>
  
--	iio_triggered_buffer_cleanup(indio_dev);
- 	iio_device_unregister(indio_dev);
-+	iio_triggered_buffer_cleanup(indio_dev);
- 	pm_runtime_get_sync(dev);
- 	pm_runtime_put_noidle(dev);
- 	pm_runtime_disable(dev);
+ /**
+  * iio_read_acpi_mount_matrix() - Read accelerometer mount matrix info from ACPI
+@@ -58,6 +59,14 @@ bool iio_read_acpi_mount_matrix(struct d
+ 		}
+ 
+ 		str = elements[i].string.pointer;
++		/*
++		 * Microsoft's example separates the values with spaces, "0 1 0".
++		 * Some BIOSes use commas instead, with or without spaces around
++		 * them: "0, 1, 0", "0, -1 , 0", "1, 0,0". The string lives in
++		 * the buffer allocated for us above, so turn the commas into
++		 * spaces in place before parsing.
++		 */
++		strreplace(str, ',', ' ');
+ 		if (sscanf(str, "%d %d %d", &val[0], &val[1], &val[2]) != 3) {
+ 			dev_err(dev, "Incorrect ACPI mount matrix string format\n");
+ 			goto out_free_buffer;
 
 
