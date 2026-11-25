@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795617824;
-	b=sogQytRBxGUW2DFEwb8WgkX6QEcHHL5fpcULzPYXPHHIQla6IwZlE6hhC6tag0HiwcVz
-	 64b9y7CexciEtCBD93ks45sbBO56VUHBBAIZVjMXmzd2potqt0LlTaDIhiiPK4KgsZUEl
-	 zyp/lBlLBQnw71dKv8fuveQpXdu7O+kgdv2BapndYh2s02KJ8rRK9xL9rihol7Rssx9Bb
-	 gq6yfbypWuYPcq22DhbvmqXOiaFXYxuyQXIuJhFVBWQ6FXpVnHpJjl0RETGogdZw7bETY
-	 e4+lzbwP9qj7xP4vy33ISGrrnvfyfifoHt/lkURF+FWqzu0ZVOmRS02SAtWY2jf5clg==
+	t=1795617827;
+	b=Cg8Ja+7KB6/iGxxt57MMNsn9k6nNd57+fWA3ys1SnhVyOStFOX7ETPNG2me546oeKVr1
+	 RkHjV7IAC3df8z8+9s3cPb+ft2WCOUTXYJZRGY0luAA/gOyMzcwGZ/5heUtdpJcbKTks6
+	 O3YMv7bb/37dkdVjsGiWnHvcqZeg+ABtAlq0HIqPMPwkF6uORv6rYdHJfdTqCFublI1Wb
+	 tDSLljeryvE+c3CjpfBsjh5yKxp0dqDpxR98x7sFWOpuoBw3ARvz9KUeekTgB8T2hIJb2
+	 ZQTrgAuhKiemhzYsQtfWqJPkcUz5Wk/k6fwGhw/UmHYNuR9EVtD9MJ2HzezAIIR2hJA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795617824;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795617827;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=EJ7cf2kmfDwIBowzcOT0QD3wvowcAuosaaJnSUyMZHA=;
-	b=bDklRHosx9xeVLHd8eMBC/e9jnANOdptFv4ewBoM2ArOlC5ybDjTh1g10LTKSJFxV63s
-	 FOfjbbLwcDlt+5tz/lAc6tkWro71M5bBRG1Mz6UUstsxtz0nGTQlULhByIPVz5cs3/v4u
-	 ANnsMVQg9KHAZvFALxS9QwvZONAhd11/6dSl7NxwN0HLwoy8aCJ2Tjr3seLaqxVy2L11o
-	 4JrHLNC+PMzSs3cbzWVlEv8mupYVkRjmDKbck8rfbwIy9RiW+Go/insSe6B2b9PatjM8n
-	 0lC8Y0o763q3AoJP3Os2bB13DN6Qv1/fTULZNtdFIpLRaQ+wTb3xMP7yiMGkeA4vuzw==
+	bh=SJWiyNp0b1TC6hQE4lEKxRs8qB1ggt+Qo6py6ifJBNE=;
+	b=CbRK8CKCEgpIXf96j0Ik06Qn8mwvm9Q/4s+0RkrbgbBnyvrf1vTp7ASCAoMOt2tEE5l8
+	 XGB4xCxzutIY/FuxONfHdBOtIol5LuvNb6JLN8g1Sok6B76PJOmH1qPyC7ZpxPgvZryCf
+	 VLhb1mJ52Er5cg6B10a4eyiABNGrTDkNwJTIzMy0zs0KbAQw1l38e4kMWNcwiM+a6zSbu
+	 xJFhvGGwvRmCQZR/ESDYme8UiUIgSZcNsiSdDx1A+1/vmW/PiCtCPpriS0U/RfGax6Fic
+	 J2+odcItWCxMkyo7VfUvklLbjpyU65WzgPG7OnqLSRJ9lgyheoO7zZyw3VBNgzAevfg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=fEjGXW1b;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=A+tHjaxg;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C33CE606A31E;
-	Wed, 25 Nov 2026 14:43:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BF201606A31E;
+	Wed, 25 Nov 2026 14:43:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=fEjGXW1b
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C57741F000CA;
-	Wed, 25 Nov 2026 14:43:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=A+tHjaxg
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E240A1F000C4;
+	Wed, 25 Nov 2026 14:43:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795617824;
-	bh=EJ7cf2kmfDwIBowzcOT0QD3wvowcAuosaaJnSUyMZHA=;
+	s=korg; t=1795617827;
+	bh=SJWiyNp0b1TC6hQE4lEKxRs8qB1ggt+Qo6py6ifJBNE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=fEjGXW1bRe89z0diqJlGv8dz+VHEZOKvptDoy+x1i+GZHzZ0LD5GdUCqCtVqZOp4c
-	 fptXBFEdDdnJpjowy/OoJ3+cxlnJ5P1rUvORDgvPuQCMxpAM92suhCO7VNxoE6Ck68
-	 FSmeQFakKRGK2bQx5fsKuLK2HkUflkK7YQYLYJIw=
+	b=A+tHjaxgPJzRp05uJqxOU5hGM/GYGeTRjRaWeI+ls0qglJdkDGsAKgaja654chzzj
+	 +b2o6DBh62EJkM6827o2U3rJopjpRt78ZbM0rZd+AjbxKn7b+AW7iQ1A5+nz+sLPq9
+	 gsWXYDMTYsAjg33igugj6Wx/U3HqLkSliACyY09s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vincent YUE <vince@palmit.com.au>,
-	Laurence Oberman <loberman@redhat.com>,
-	"Martin K. Petersen (Oracle)" <mkp@kernel.org>,
+	guolingxing <guolingxing@tju.edu.cn>,
+	Qu Wenruo <wqu@suse.com>,
+	David Sterba <dsterba@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0087/1005] scsi: mpt3sas: Register devices during SANITIZE
-Date: Wed, 25 Nov 2026 15:23:45 +0100
-Message-ID: <20261125143823.778804231@linuxfoundation.org>
+Subject: [PATCH 7.3 0070/1005] btrfs: verity: propagate orphan insertion errors when enabling verity
+Date: Wed, 25 Nov 2026 15:23:28 +0100
+Message-ID: <20261125143823.382919835@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143821.729802100@linuxfoundation.org>
 References: <20261125143821.729802100@linuxfoundation.org>
@@ -69,57 +69,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Vincent YUE <vince@palmit.com.au>
+From: guolingxing <guolingxing@tju.edu.cn>
 
-[ Upstream commit d58e6d962e5b59297be24d908f41af93f20ec11f ]
+[ Upstream commit 45a686dff6b91c3667cd8188d3a02c69f62f4d00 ]
 
-A SAS disk being sanitized responds to TEST UNIT READY with NOT READY, ASC
-0x04, ASCQ 0x1b. mpt3sas discovery maps this sense to DEVICE_START_UNIT and
-issues START UNIT repeatedly. The drive stays NOT READY until the sanitize
-operation completes, causing discovery to exhaust its retry budget and
-decline SCSI device registration.
+btrfs_begin_enable_verity() ignores the return value of
+btrfs_orphan_add() and unconditionally returns 0. If orphan insertion
+fails, btrfs_orphan_add() aborts the transaction, but the generic
+fs-verity code still proceeds with Merkle tree construction because
+the begin_enable_verity callback reported success.
 
-Allow registration only for the SANITIZE IN PROGRESS sense, so sd/sg can
-expose the target while retaining its actual NOT READY state.  All other
-sense dispositions are unchanged.
+Return the error so that fs-verity stops immediately instead of
+continuing after the initialization failure.
 
-On an LSI SAS3008 with an HGST HUH728080AL4200, unpatched Linux 7.2.11
-retried discovery 145 times without registering the device.  Linux 6.18.55
-registered the same sanitizing drive. With the equivalent 7.2.11 fix the
-disk registered as /dev/sda (0 B) and /dev/sg0 while TEST UNIT READY still
-reported 02/04/1b and 47.32% SANITIZE progress. Another SAS drive continued
-to enumerate.
+The transaction is already aborted by btrfs_orphan_add() and the
+handle is released by btrfs_end_transaction(), so no additional
+cleanup is needed.
 
-This updated variant uses the named 0x041b sense constant introduced in
-newer kernels. It passed static review on the current SCSI for-next branch
-but has not been independently boot-tested there.
-
-Fixes: aee682fad6cd ("scsi: mpt3sas: Improve device discovery and readiness handling for slow devices")
-Assisted-by: LLM
-Signed-off-by: Vincent YUE <vince@palmit.com.au>
-Link: https://patch.msgid.link/20261020210856.42835-1-vince@palmit.com.au
-Reviewed-by: Laurence Oberman <loberman@redhat.com>
-Signed-off-by: Martin K. Petersen (Oracle) <mkp@kernel.org>
+Fixes: 705242538ff3 ("btrfs: verity metadata orphan items")
+Signed-off-by: guolingxing <guolingxing@tju.edu.cn>
+Reviewed-by: Qu Wenruo <wqu@suse.com>
+Signed-off-by: David Sterba <dsterba@suse.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/scsi/mpt3sas/mpt3sas_scsih.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ fs/btrfs/verity.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/scsi/mpt3sas/mpt3sas_scsih.c b/drivers/scsi/mpt3sas/mpt3sas_scsih.c
-index 085d4672db854..a77bbc3d2b666 100644
---- a/drivers/scsi/mpt3sas/mpt3sas_scsih.c
-+++ b/drivers/scsi/mpt3sas/mpt3sas_scsih.c
-@@ -7700,7 +7700,9 @@ _scsih_determine_disposition(struct MPT3SAS_ADAPTER *ioc,
- 				u16 scode = scsi_sense_code(sense_info.asc,
- 							    sense_info.ascq);
+diff --git a/fs/btrfs/verity.c b/fs/btrfs/verity.c
+index c29d92c3bbc3e..87722e5d41868 100644
+--- a/fs/btrfs/verity.c
++++ b/fs/btrfs/verity.c
+@@ -610,7 +610,7 @@ static int btrfs_begin_enable_verity(struct file *filp)
+ 		set_bit(BTRFS_INODE_VERITY_IN_PROGRESS, &inode->runtime_flags);
+ 	btrfs_end_transaction(trans);
  
--				if (scode ==
-+				if (scode == LU_NOT_READY_SANITIZE_IN_PROGRESS)
-+					rc = DEVICE_READY;
-+				else if (scode ==
- 				    LU_NOT_READY_MANUAL_INTERVENTION_REQUIRED ||
- 				    scode ==
- 				    LU_NOT_ACCESSIBLE_TARGET_PORT_IN_STANDBY_STATE ||
+-	return 0;
++	return ret;
+ }
+ 
+ /*
 -- 
 2.53.0
 
