@@ -1,54 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795625714;
-	b=QrPU0UAllAsN1RlKKeEtsJz2MDt7RwHnAhGB/068dQE+Wg3Q20nWPLnjBR3gBW0zbcXn
-	 SArUzHBWkwdbwDuldmcFd9uptHPKGC6vBCYRyjMNPrUxttoEw48g2RNzyZIcCrDaDY/Uw
-	 TlIdoZfTBvdolk7UhkQgtSjlvnWWLJ/4sYypHejXOpHd9m5W25X2e9KaqeFAHIn5uXRGC
-	 y1S2NBA6uthQW/dM9FTQoPB6rJjoqDb74lx39jtlZVeM6+S6BSls0P5NYgTCkbR3Wd0pp
-	 xgC5viPDwumWiuBOVsVD4bc1K+HIMK83f69ybSMnPpgK56ppTLlQT7ANerMpzLmedBw==
+	t=1795625716;
+	b=NwtbocEYm5YsAu8C577wq47KowBgOZu7iQH6TfUdHp2e2YwiwMkNUiNBRaXC9+QHvxnk
+	 W2E3zsxXVv43CazRybg/2LQp240ggZLO0zzxzsvlmrgCif2cFZd1p1ZEZgCjxHEedAKwN
+	 i7mbW/fJ8EU2xg1i5oVyRNwHt5ZZEv4y4RqHXlMNbEbKyuI7Ue70LWDPRch6bSNBk9RSP
+	 fEO1cIxLLH+8hquaJBBSDYwAlY67z7/OmqV9Uief+s1vaAeBfcBq8SUz+fyZ6CracCUjC
+	 zLkdCTNxOwj3hqnFmesIWkq6aUQ0r3rn5lHvjobabbnSSu4oNCMY/9uePJsokOThOsQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795625714;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795625716;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=iaTpVZnxlptgrJ0TvE+OxHIpjuahBDccGHD2ykz1Z/M=;
-	b=I+w7Gtzs8g0ssyt9EhmLNQMRbGRu3VM2vdwYZuImt9vgVlv+7I8R2Vfk+LD6NmHTqSkh
-	 IRRLjil0q7eMMINaF3PGa4kXE5jJIwSiAab7ZIJtm/SiLIRRtyH6ZiawoNEcdmzPR01AK
-	 H2pk0mmXKfbqIlq4stvRM4liufUXm+c+aETHzHhZzCfa8keOS3ZsvmKWZbRw5g6CoeJwI
-	 I/T2JhDtQYNYFEhs9ZoAyNuRY6jRigILW3A8xjWcEY+73vzvyhqu+7YbNStIo2mQJVO56
-	 52XkPykPy6QIQrDoEvXzP33R3YfqJtlrQ6ZGyqplgx0JmY6KtVl38XPgp9SG8PT0k0A==
+	bh=jgeP+o2hvG+At3nI8UKeXiQXZX0BdY34LTFgDQjapaY=;
+	b=GlIORDFRRdaM76tmceTsDSTfQRFVSfqQuXLVMuZB7f7TpjNexRc/ktCWEQZ6kQ/9S4dW
+	 vnt50tMnQvEdHw4Dxil3B3aPoYYP/zN64Xd55lco4RFEfm7gDf/mI5brJKuZiPO49eM/2
+	 4qeWuzPH3KEBvXh/i2LK4g9s5Dq2sYZaA4lclBN3mXSyZlYXO2X5Dx+ItnJF6ykYsxHf5
+	 D+TwqDvrmsTXP2u1tIMagWkAuzgaN99aCAUmwPikUwB95nY/tvW+mXbEoCG6hAt9nJgr6
+	 6ujakmOPcqmpJlxyDjOIySZu/dAZbuC5ZnpDCnBJlCUyGb8y3jyBg6zE8Xmsf18BiMA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=1cwFZ1g+;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=hvco4X+L;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2808F606A326;
-	Wed, 25 Nov 2026 16:55:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AA494606A32E;
+	Wed, 25 Nov 2026 16:55:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=1cwFZ1g+
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3FBF21F000C4;
-	Wed, 25 Nov 2026 16:55:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=hvco4X+L
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 07F1E1F000CA;
+	Wed, 25 Nov 2026 16:55:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795625713;
-	bh=iaTpVZnxlptgrJ0TvE+OxHIpjuahBDccGHD2ykz1Z/M=;
+	s=korg; t=1795625716;
+	bh=jgeP+o2hvG+At3nI8UKeXiQXZX0BdY34LTFgDQjapaY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=1cwFZ1g+2DtW+8ouLV81uUTicRgBHuchhG86VmGkMz4ZsXClNiLvMc30N4FpyLVNb
-	 erQ7wa4NRRY9t1mD6ATMUEwcoFWvfuttHs2++E13zyv0TRNE3ZsvPImlJ20H2M9F0A
-	 vfdUOmmfKqkO5BjMy5NkFnn5UsZo7GeDretasd8I=
+	b=hvco4X+LogmG52efigqdIoEO6xCU96GHvdp73/rO3/BmT427sAuWooAFvDMh0CWTW
+	 rTKfEE7eGlUIIUepkKwc7YxvWPDkGpG6UObLcsHdLnlQbYo8ZyW5Ow3DR9DZF3itCF
+	 fU5bbX9rmR1F/D0g4sBIJ0TsDHiFJ+RHQgrGsSIU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Joas Antonio dos Santos <joasantonio108@gmail.com>,
-	Simon Horman <horms@kernel.org>,
-	Aaron Conole <aconole@redhat.com>,
-	Eelco Chaudron <echaudron@ovn.org>,
-	Paolo Abeni <pabeni@redhat.com>
-Subject: [PATCH 6.12 606/816] openvswitch: advance by the real header length in get_ipv6_ext_hdrs()
-Date: Wed, 25 Nov 2026 15:35:54 +0100
-Message-ID: <20261125143903.206758797@linuxfoundation.org>
+	Mani Tofigh <mt4022@columbia.edu>,
+	"Christian Brauner (Amutable)" <brauner@kernel.org>
+Subject: [PATCH 6.12 564/816] eventpoll: wake the next waiter when a woken waiter is killed
+Date: Wed, 25 Nov 2026 15:35:12 +0100
+Message-ID: <20261125143902.236584891@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143849.205329330@linuxfoundation.org>
 References: <20261125143849.205329330@linuxfoundation.org>
@@ -70,85 +67,72 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Joas Antonio dos Santos <joasantonio108@gmail.com>
+From: Mani Tofigh <mt4022@columbia.edu>
 
-commit dbce972650ed6348e3d3856e49308aa5603e02a7 upstream.
+commit 9f4413e522faed76f4cf610098b2369eb3ba1f1c upstream.
 
-get_ipv6_ext_hdrs() walks the IPv6 extension header chain to fill
-key->ipv6.exthdrs, but advances to the next header with ipv6_optlen()
-whatever the current header is.  That is only right for Hop-by-Hop,
-Destination Options and Routing headers:
+Processes sharing an epoll instance can sleep forever while an event is
+ready.  An event wakes only one waiter, which then wakes the next one in
+ep_done_scan() if events are still ready.  Since commit c257a340ede0
+("fs, epoll: short circuit fetching events if thread has been killed"),
+ep_send_events() returns before the scan when the waiter has a fatal
+signal.  If the woken waiter is killed before it runs, nobody wakes the
+next one:
 
- - an Authentication Header is ((hdrlen + 2) << 2) bytes long
-   (ipv6_authlen()), so with hdrlen = 4 the walk skips 40 bytes instead
-   of 24 and reads the next "header" from the ICV and payload;
+  Task A                     Task B                 Task C
+  epoll_wait(ep, -1)         epoll_wait(ep, -1)
+                                                    write(efd)
+                                                      /* wakes A only */
+                                                    kill(A, SIGKILL)
+  ep_send_events()
+    return -EINTR
+      /* skips ep_done_scan() */
+                             /* still asleep */
 
- - a Fragment header is always 8 bytes, and the byte read as hdrlen is
-   its Reserved field, which the sender controls and receivers ignore,
-   so a non-zero value makes the walk skip up to 2048 bytes and miss
-   the headers that follow;
+B then sleeps until another file on the instance becomes ready, if ever.
+This can hit eg a pre-fork server whose worker gets OOM killed.  Commit
+7fab29e35630 ("fs/epoll: restore waking from ep_done_scan()") fixed the
+same kind of hang when the wakeup in ep_done_scan() was removed.
 
- - in a non-first fragment nothing after the Fragment header is a
-   header at all, it is the middle of the fragmentable part, yet the
-   walk keeps parsing it as an extension header chain.
+Keep the early return so that a dying task still doesn't take events
+nobody will see, but wake the next waiter there if events are ready, as
+ep_done_scan() would have.  With the fix, B gets the event.
 
-In all cases the OFPIEH12_* bits stored in key->ipv6.exthdrs depend on
-bytes chosen by the sender rather than on the headers that are actually
-present: payload bytes that look like another AH or a Hop-by-Hop header
-add OFPIEH12_UNREP/OFPIEH12_UNSEQ, and real headers after a Fragment
-header can go unreported.  Flows that match on OVS_KEY_ATTR_IPV6_EXTHDRS
-then classify such packets wrongly.  There is no memory safety issue,
-skb_header_pointer() bounds every read.
+This bug was identified and confirmed with the help of a deterministic
+hypervisor currently under development.  The C reproducer below however
+hits it within about 2s.
 
-Advance by sizeof(struct frag_hdr) for Fragment headers and by
-ipv6_authlen() for AH, and stop at the Fragment header if its offset is
-non-zero, as ipv6_find_hdr() does.
-
-Fixes: 28a3f0601727 ("net: openvswitch: IPv6: Add IPv6 extension header support")
-Link: https://lore.kernel.org/all/178905555085.219967.6617611783437228045@kernel.org/
+Fixes: c257a340ede0 ("fs, epoll: short circuit fetching events if thread has been killed")
 Cc: stable@vger.kernel.org
-Signed-off-by: Joas Antonio dos Santos <joasantonio108@gmail.com>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Reviewed-by: Aaron Conole <aconole@redhat.com>
-Reviewed-by: Eelco Chaudron <echaudron@ovn.org>
-Link: https://patch.msgid.link/20261102-ovs-exthdrs-v2-1-21ceef6a243d@gmail.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Signed-off-by: Mani Tofigh <mt4022@columbia.edu>
+Link: https://patch.msgid.link/20261103-epoll-killed-waiter-v1-1-36e08c16b8a2@columbia.edu
+Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/openvswitch/flow.c |   19 ++++++++++++++++++-
- 1 file changed, 18 insertions(+), 1 deletion(-)
+ fs/eventpoll.c |   11 +++++++++--
+ 1 file changed, 9 insertions(+), 2 deletions(-)
 
---- a/net/openvswitch/flow.c
-+++ b/net/openvswitch/flow.c
-@@ -374,11 +374,28 @@ static void get_ipv6_ext_hdrs(struct sk_
- 			return;
- 		}
+--- a/fs/eventpoll.c
++++ b/fs/eventpoll.c
+@@ -2074,10 +2074,17 @@ static int ep_send_events(struct eventpo
+ 	/*
+ 	 * Always short-circuit for fatal signals to allow threads to make a
+ 	 * timely exit without the chance of finding more events available and
+-	 * fetching repeatedly.
++	 * fetching repeatedly. The wakeup that got us here may have been the
++	 * only one for the events on ->rdllist, so pass it on to the next
++	 * waiter, as ep_done_scan() would have.
+ 	 */
+-	if (fatal_signal_pending(current))
++	if (fatal_signal_pending(current)) {
++		spin_lock_irq(&ep->lock);
++		if (!list_empty(&ep->rdllist))
++			wake_up(&ep->wq);
++		spin_unlock_irq(&ep->lock);
+ 		return -EINTR;
++	}
  
-+		if (next_type == IPPROTO_FRAGMENT) {
-+			struct frag_hdr _fh, *fh;
-+
-+			fh = skb_header_pointer(skb, start, sizeof(_fh), &_fh);
-+			if (!fh)
-+				break;
-+			/* Only the first fragment has the headers that follow. */
-+			if (fh->frag_off & htons(IP6_OFFSET))
-+				break;
-+			start += sizeof(_fh);
-+			next_type = fh->nexthdr;
-+			continue;
-+		}
-+
- 		hp = skb_header_pointer(skb, start, sizeof(_hdr), &_hdr);
- 		if (!hp)
- 			break;
-+		if (next_type == IPPROTO_AH)
-+			start += ipv6_authlen(hp);
-+		else
-+			start += ipv6_optlen(hp);
- 		next_type = hp->nexthdr;
--		start += ipv6_optlen(hp);
- 	}
- }
+ 	init_poll_funcptr(&pt, NULL);
  
 
 
