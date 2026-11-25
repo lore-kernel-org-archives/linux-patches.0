@@ -1,51 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795626020;
-	b=BSEoWChm1WFLMOcCH4nCDnWV6SJePMEMyuFCohCNXCVKipYpzR0vLfbjnKvUu6xVdKc9
-	 YgLw3WbXjyL20ZzJ4E9GgwxU2d4DaB7kKTgsOw3keFFLlNGH5pCFE4tpCenRaL+YEDtgi
-	 UulgL47M98Nth77w0E9E0z3OZMbk1rGyIcTsEgTDktiC9HjON/8IRg+H7gef74WQNH8ud
-	 Un7HpnYl1FAysx5Id8/4CuyJuvcfgX1IZWymfaGrk3C4pFLN6gzWCr4bgMjMvWr+boOyI
-	 Ssol3SCi5ri9jtfRJBBNjViOowyvxVENcielWp2ZqfTVHlJ2e2mNFBCx25NrXyJf2wg==
+	t=1795626023;
+	b=oNHcNanyprd6ckZvb3clE3t6ZaBsIWREdh1g5a6vIXEQO31ZodUnF6q0960VqoAYAJbx
+	 oJp+N4a5SVhpIUG+bMMhdP572N7o6rkxyP+Pp5Y0x1597gBt6EkH2fzaOexrQ8NR92/yY
+	 U4zihRgD/I4tcvpue7q+BrU0kE1ol4QJKHlTSTF2iMkE7BkgTmNFT6/Ar4w4LSrWdP0cU
+	 bkJ2HfF7uUDstGh4qu6C0xk7GrstVr7py67DmsV1HHVMytnXGTO1xb+70O1N4XWb6DIGM
+	 XYNOQvMsMGHQaoXBxBYaAmXdKLEI+55m1DvlapueM/zzaEFOd1Fka5TfyGmtQWHwBPw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795626020;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795626023;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=KFoqkv76TU11qKnOqbH3qQD5GlIXRVfrnKXOOVh0daA=;
-	b=XgNRw6tYtolzOkTBZt84w6VmKLE8WNDTrgKcjk42L1rcJFjv97qmLeYnoNUwo6LcMFdU
-	 yh0LnXeIjhFxoGej5u+ORfsQM3fEGyE0VP2djDTDn2wkHORj1K5/sT940NRdmbhpmdC/C
-	 ZZzxBBnG82shhWKRw66UP9cTtBznZQuCgFc5xLIGJ8ZO5JqBMRmVdfSenBchsaCmqGquy
-	 2WwMbxzb7LCehXxrKLwijae1UZ37q3TZ8ZnL64FhQ04cS4VyZ+4o6e+qJHk0Xe+rusa95
-	 iqXQjmasB/vC+UQN6yFASXZ4XsoUrcJZSu+IAIMBYvxChrAvXss6eJA1Ffo1OoLgCqw==
+	bh=dRZKA1Ajc3WHJcxzx97A6Cp/P6l20hX9Pl9AT/oty2g=;
+	b=lcMZZEHJwgxDBHhkjUWxEVF0TsaPWAVDTAZBaAICG3UkpDO41bOcWFOPxBkyOSiMOJcF
+	 9lOL5rJZKcQQmJ/Utu1Fbj6gA6271iFvOl9WlMAbqcN6lYjarUC2FWfX0/qTvhJ1728+E
+	 TJPyhnKl5YAt89GzNLB3h+5/DDfmlBLExOdPfMEQnrYmO5TNWR9vNR2a1t8HvCaQttZ7e
+	 DeDLRYLJs5i52CnXppVfVWfiB+K2FfgMHzub7AhxCCkhmzQ21s5KGP+h/J4JEPzo4+q+V
+	 57LVR8Tf1KDxhdLzHEDXPmNQpHmJQKOpC/fLm9Fz+urgVH3N5jWNy+9Gj/pSMQ/1GgA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=QUDjOEFF;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=EG2AaiBu;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D2CEF606A321;
-	Wed, 25 Nov 2026 17:00:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8C1EC606A321;
+	Wed, 25 Nov 2026 17:00:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=QUDjOEFF
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 12CBF1F000C0;
-	Wed, 25 Nov 2026 17:00:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=EG2AaiBu
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DE7BC1F000C4;
+	Wed, 25 Nov 2026 17:00:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795626020;
-	bh=KFoqkv76TU11qKnOqbH3qQD5GlIXRVfrnKXOOVh0daA=;
+	s=korg; t=1795626023;
+	bh=dRZKA1Ajc3WHJcxzx97A6Cp/P6l20hX9Pl9AT/oty2g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=QUDjOEFFZlVz4eyTK/8cnZAnYYNcUsmpU17pvrIQmiJ/+AN30Yx2gI4meyx7VX17h
-	 luTSkMQH2zktvby0nB+FHxG/hD2x4bHh+GjfbIt6/KMOEPUx2vkOeedKhtwfxFbGF1
-	 Xtr0GCNaMOF00Nnq7Vopusf/oZy8wfQTUurSd30c=
+	b=EG2AaiBuiDKkbcGD8LIx7o47nUDGSewix08NGcaACaUGNvtCujpDUtc+Yu+1YJhNK
+	 KE/B0sUEFzJkFLuzDMtelU2sHqgvOe7l7vkVzv0PRVIZd8abW54+mqmGiZs5NX2f8j
+	 RorgyxEJni6JS4/7eZ/QoPZNPvjQ1kDBnse4+oYU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Zhao Li <enderaoelyther@gmail.com>,
 	Johannes Berg <johannes.berg@intel.com>
-Subject: [PATCH 6.12 660/816] wifi: cfg80211: release rejected nontransmitted BSS reference
-Date: Wed, 25 Nov 2026 15:36:48 +0100
-Message-ID: <20261125143904.456568760@linuxfoundation.org>
+Subject: [PATCH 6.12 661/816] wifi: cfg80211: preserve mesh A-MSDU lengths when adding mesh headers
+Date: Wed, 25 Nov 2026 15:36:49 +0100
+Message-ID: <20261125143904.479543531@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143849.205329330@linuxfoundation.org>
 References: <20261125143849.205329330@linuxfoundation.org>
@@ -69,38 +69,58 @@ Content-Transfer-Encoding: 8bit
 
 From: Zhao Li <enderaoelyther@gmail.com>
 
-commit f3c45d5b741a7d7586e639c2f55d2557029f2e1a upstream.
+commit 9083da9dd3223068237395432323b407012aec1f upstream.
 
-Repeated MBSSID reports without an SSID can leak BSS entries outside the
-scan cache, where the BSS entry limit cannot account for them.
+A malformed mesh A-MSDU subframe with a declared payload length near
+65535 bytes can pass validation against a much shorter aggregate.
 
-__cfg80211_bss_update() returns a referenced BSS. If adding it to the
-transmitting BSS list fails, unlinking drops the cache reference, but the
-caller reference is lost when res is cleared.
+ieee80211_amsdu_subframe_length() adds the mesh control length to the
+declared length in a u16, and ieee80211_is_valid_amsdu() stores the
+result in a u16 local. The sum therefore wraps before either walker
+compares it with the remaining aggregate length. The decomposer then
+splits and delivers the malformed aggregate instead of rejecting it.
 
-Release the caller reference before discarding the unlinked BSS.
+Keep the computed length in unsigned int in both the helper and the
+validator so oversized subframes cannot wrap.
 
 LLM assistance was used to find the bug and review.
 
-Fixes: 0b7808818cb9 ("wifi: cfg80211: fix BSS refcounting bugs")
+Fixes: 6e4c0d0460bd ("wifi: mac80211: add a workaround for receiving non-standard mesh A-MSDU")
+Fixes: fe4a6d2db3ba ("wifi: mac80211: implement support for yet another mesh A-MSDU format")
 Cc: stable@vger.kernel.org
 Signed-off-by: Zhao Li <enderaoelyther@gmail.com>
-Link: https://patch.msgid.link/20261028141731.6185-1-enderaoelyther@gmail.com
+Link: https://patch.msgid.link/20261028142149.13834-1-enderaoelyther@gmail.com
 Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/wireless/scan.c |    1 +
- 1 file changed, 1 insertion(+)
+ net/wireless/util.c |    6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
---- a/net/wireless/scan.c
-+++ b/net/wireless/scan.c
-@@ -2354,6 +2354,7 @@ cfg80211_inform_single_bss_data(struct w
- 		if (cfg80211_add_nontrans_list(data->source_bss, &res->pub)) {
- 			if (__cfg80211_unlink_bss(rdev, res)) {
- 				rdev->bss_generation++;
-+				bss_ref_put(rdev, res);
- 				res = NULL;
- 			}
- 		}
+--- a/net/wireless/util.c
++++ b/net/wireless/util.c
+@@ -772,12 +772,12 @@ __ieee80211_amsdu_copy(struct sk_buff *s
+ 	return frame;
+ }
+ 
+-static u16
++static unsigned int
+ ieee80211_amsdu_subframe_length(void *field, u8 mesh_flags, u8 hdr_type)
+ {
+ 	__le16 *field_le = field;
+ 	__be16 *field_be = field;
+-	u16 len;
++	unsigned int len;
+ 
+ 	if (hdr_type >= 2)
+ 		len = le16_to_cpu(*field_le);
+@@ -799,7 +799,7 @@ bool ieee80211_is_valid_amsdu(struct sk_
+ 		    __be16 len;
+ 		    u8 mesh_flags;
+ 		} hdr;
+-		u16 len;
++		unsigned int len;
+ 
+ 		if (sizeof(hdr) > remaining)
+ 			return false;
 
 
