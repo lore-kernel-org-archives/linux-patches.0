@@ -1,51 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795626029;
-	b=4T7XOgYorL20aCqOMtNPCIHhfAO12zZY7vd+mp/QMu8QR6G/TCAjzNU0E89qttfysEDK
-	 e6PthPtOP5qS1L1/R5epNV/7kbhCkRNeNCUQc93885MbhdNa0070quDYmpU/tAD1IIRHm
-	 BIWP++JYSrz/d1DpJCL/CvCRfLkPDnbWid1DY70Zgclxct7XccZemHjQJIywYA0smZwSM
-	 pHghCkQWv1i9eYbSJ2tq3z0JKW++oIpbdJPmm+xD4U8VI+Rl5SGS1Be2xmQkaPBlwddoB
-	 pvY2BcPao6vqQHoatcco99X4OZRPCABdZdEk1lCUDBqWXrpKNHLgBinMqMiYrIM3cZw==
+	t=1795626032;
+	b=A4wOnryqo9wk3foPjtEgAQ1IuEFPT1Cp5ghz5utnjhe5hr8HtQOX1kfHjGUcB3u9JZLh
+	 9575UxpzliKJqaJDBiryvZ0KQq5pVMSbk7uMunnXocdo1/Ko6ooaw4RCDm7BxzCAuXqO5
+	 InLxyv4IIfTRsvfBs2RM7LWc2w5bfgv+l6/M4GVUQEL+5U1NoWkYQ0skMsYnbhZbVLy9I
+	 I2EDyikPicGl3BOh1SRFGi08zyIG3dD9EvxB0nCBOuSvvS2atOxFg7+l1jrcAS6BrUy1i
+	 pgNba+1IPeYVpqrbk0NCSwav4dbEymuQjH7n5pWZbxeR5IZCfZGUacdLhTfMn9sjbWA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795626029;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795626032;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=X82Z9LtdQrF2GUEBdtwx2FdD1axmCpviqyWWgkPc7YA=;
-	b=4K2GRAiCejiecefJ1CuGF+4E2fRgt3VsqEZ9bLs67ML9qIrWQ9foQ/coDze6pLnDjDGY
-	 1tzSfv9URHtE6vZ+A5q677R7i4Cpve/DlZQiFZxvwSCCYMBEV10V+7UKwl6Qj23yLQ8cj
-	 +KqF8UsFvtEypIaYs0cjvoJi8h/uycgPK1tNhdjLcKYnTKACBpCRcMvRIGwLlNxMw7Lu0
-	 L0qCubYZ/VyCW2lLROj5vvm3ktWi/rYUM5xLQssNYbobNVG2fgtvqAtRq6T8icZBWFYG1
-	 i+BAquzKmpwPBFhdl4/3DlQwAPk6QjqkUIdJ05zzWFYMjuVoR89eE7CqRjVBw6YZuRQ==
+	bh=8+KiR38dxxUdh6krx8yS562E6NBNgtjEV/hT/B+JS4M=;
+	b=L09xXUU6J1G/I0lUGoaf0syVG9GDUWPXvGmv0tnZU0j6aY7U9GkJ6J6ky9HDcjcyetpu
+	 d8I3X2kKJ/2PMrEUNXeqgGLweewxApK9OHeICO0V4JOSCNVUf+euV3G9g6FW8A+l8AYpU
+	 fcxMQ3k5HTSj0IXDwpofvjno/12Nw2htfkNKxmeULtDf8+SxgmvXa2u1NUGA3Wnn6Otfk
+	 MOXUmRpJu2vlWY3XQ9Ga2OWHSrgAZ2yFSDSlCdyuxBj6A0Wdp3MF40Y0ixkVPu+IoQs98
+	 4aQGYm+SItmia45Mu2U9qd8yROXFGE08GywrtAlYZp3AgEhkg4eYwIXkPK+cwEuTNxA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=rzJWHbV+;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=vrTxVn9J;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 325BC606A321;
-	Wed, 25 Nov 2026 17:00:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0B8AA606A321;
+	Wed, 25 Nov 2026 17:00:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=rzJWHbV+
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 84DCF1F000C0;
-	Wed, 25 Nov 2026 17:00:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=vrTxVn9J
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5E3301F000C0;
+	Wed, 25 Nov 2026 17:00:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795626029;
-	bh=X82Z9LtdQrF2GUEBdtwx2FdD1axmCpviqyWWgkPc7YA=;
+	s=korg; t=1795626031;
+	bh=8+KiR38dxxUdh6krx8yS562E6NBNgtjEV/hT/B+JS4M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=rzJWHbV+B10qTlnKaj2uXC+AejGsleD+PB8QewWxoGvwNoixzZ0TEXi8h6Yx8WDmo
-	 3ESCpjolCnNsjbqu1Kvue1PnsHB6TxRDIKdaDN7rWJE6oL6jyzJyvdyzHZ9R998dvO
-	 TKKmh6jJAdI8oXLWSZZiKOTeFyQtvYE+uHo6xpMo=
+	b=vrTxVn9JxuWmTb3IAUoyFySPss9Swv2nJKjyiFU8SOJDl1RF3GYsGXNyFDIitV/go
+	 qTjNMCslskZEPmVhlCWEM7CE+Hypr4hF6sEJh+HldRqByAiqRnMACRq+TY1+n+/FBh
+	 uNVnLqy/s8SsC1vpnP5AMCYfmJjyez9/KZ972zjs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Zhao Li <enderaoelyther@gmail.com>,
 	Johannes Berg <johannes.berg@intel.com>
-Subject: [PATCH 6.12 663/816] wifi: mac80211: fix use-after-free when MLO link setup is rolled back
-Date: Wed, 25 Nov 2026 15:36:51 +0100
-Message-ID: <20261125143904.524777611@linuxfoundation.org>
+Subject: [PATCH 6.12 664/816] wifi: mac80211: drain link readers before stopping removed links
+Date: Wed, 25 Nov 2026 15:36:52 +0100
+Message-ID: <20261125143904.548740315@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143849.205329330@linuxfoundation.org>
 References: <20261125143849.205329330@linuxfoundation.org>
@@ -69,44 +69,60 @@ Content-Transfer-Encoding: 8bit
 
 From: Zhao Li <enderaoelyther@gmail.com>
 
-commit a155ef2ef79531c139244289c5b8f15c05d16a0e upstream.
+commit 745f5d04395dfc4c311f443c7c04ccb00c436984 upstream.
 
-Rolling back an MLO link addition can free link containers while RCU
-readers still hold pointers to them. ieee80211_vif_update_links()
-publishes new links before checking for duplicate addresses and calling
-drv_change_vif_links(). If either fails, it restores the old pointers
-and frees the new containers without waiting for readers.
+Removing an MLO link can leave work queued on its link container after
+the container is freed.
 
-During a non-MLO to MLO transition, the published link 0 replaces the
-deflink, so existing link 0 users can acquire the new container. Readers
-such as ieee80211_csa_finish() and
-ieee80211_obss_color_collision_notify() can also queue work embedded in
-the link. If they queue after ieee80211_link_stop() cancels that work,
-it remains queued when the container is freed.
+ieee80211_tear_down_links() stops each link before the RCU grace period.
+A reader that fetched the link earlier can therefore queue work after
+ieee80211_link_stop() has canceled it. ieee80211_request_smps() and
+ieee80211_csa_finish() can both reach this window.
 
-Wait for RCU readers after restoring the old pointers and before
-stopping the new links, so their work is queued before it is cancelled.
+Record each removed link while removing its keys and debugfs state. Wait
+for RCU readers, then stop the recorded links so cancellation includes
+work queued by those readers. Free the detached keys after the grace
+period as before.
 
-Fixes: d3e2439b0f33 ("wifi: mac80211: fix link manipulation")
-Cc: stable@vger.kernel.org # 7.2.x
+LLM assistance was used to find the bug and review.
+
+Fixes: efe9c2bfd1a8 ("wifi: mac80211: isolate driver from inactive links")
+Cc: stable@vger.kernel.org
 Signed-off-by: Zhao Li <enderaoelyther@gmail.com>
-Link: https://patch.msgid.link/20261026152654.80697-1-enderaoelyther@gmail.com
+Link: https://patch.msgid.link/20261028141708.5532-1-enderaoelyther@gmail.com
 Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/mac80211/link.c |    2 ++
- 1 file changed, 2 insertions(+)
+ net/mac80211/link.c |    8 +++++++-
+ 1 file changed, 7 insertions(+), 1 deletion(-)
 
 --- a/net/mac80211/link.c
 +++ b/net/mac80211/link.c
-@@ -380,6 +380,8 @@ static int ieee80211_vif_update_links(st
- 		memcpy(sdata->link, old_data, sizeof(old_data));
- 		memcpy(sdata->vif.link_conf, old, sizeof(old));
- 		ieee80211_set_vif_links_bitmaps(sdata, old_links, dormant_links);
-+		/* drain RCU readers before cancelling work they may queue */
-+		synchronize_rcu();
- 		for_each_set_bit(link_id, &add, IEEE80211_MLD_MAX_NUM_LINKS) {
- 			ieee80211_link_debugfs_remove(&links[link_id]->data);
- 			ieee80211_link_stop(&links[link_id]->data);
+@@ -176,6 +176,7 @@ struct link_container {
+ static void ieee80211_tear_down_links(struct ieee80211_sub_if_data *sdata,
+ 				      struct link_container **links, u16 mask)
+ {
++	struct ieee80211_link_data *stop[IEEE80211_MLD_MAX_NUM_LINKS] = {};
+ 	struct ieee80211_link_data *link;
+ 	LIST_HEAD(keys);
+ 	unsigned int link_id;
+@@ -190,11 +191,16 @@ static void ieee80211_tear_down_links(st
+ 			continue;
+ 		ieee80211_remove_link_keys(link, &keys);
+ 		ieee80211_link_debugfs_remove(link);
+-		ieee80211_link_stop(link);
++		stop[link_id] = link;
+ 	}
+ 
++	/* drain RCU readers before cancelling work they may queue */
+ 	synchronize_rcu();
+ 
++	for (link_id = 0; link_id < IEEE80211_MLD_MAX_NUM_LINKS; link_id++)
++		if (stop[link_id])
++			ieee80211_link_stop(stop[link_id]);
++
+ 	ieee80211_free_key_list(sdata->local, &keys);
+ }
+ 
 
 
