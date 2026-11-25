@@ -1,51 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795625556;
-	b=OjzvdcgRTijGHyNx+QJTkNe97xjK4FjNSBE0/4PXTgY0D1j7O97F0eY4XtNP+BfFAbs1
-	 +r67ptx/RTlwf2GFCIKXHgJx0lROXvOXK7BDsEKVmggDliQcnsMPEzAp/iLVHmZ7cqWzo
-	 hF4G4pbVfxv/NcgH+4bs1EKg13cKuHPb3BIK0cO5ZRNqNhI3SPn3B65jilFGB+KLLpMIK
-	 1y7iOynF7/pJJk6pRkdZGI1lRzBpacdscRaA0oJznBDNJyWy/XrQYHhI7Q20+L2522aBj
-	 OTNfaAiNTPZOeKfmHRBKpVkEKu/BEPE4uSrX1PpDrKbSeQ+bDGQdz144ZDPaIA7U8bg==
+	t=1795625559;
+	b=h4+GzZh44bwdNimCF9Mis/CCUzShSB1NRbFiWGnSjxeI9Vu4E1wSaxnSlm+7oNe8rO/k
+	 fT0hFNyk/ORK737GngyVXTnBsZUzF5jRHBmnkmLxGJR5raIU1mk7xRMPX/pXw3tkdX/hj
+	 7pdMSIVSJ3i03o1/dYB9Jm+bLZVWbY9dpU9pLScXRMeIr5UzUC52RD1yQ6KHYKPnPYW0z
+	 AQ06Q3BgFjqlg6hUagd7R4LTWezsq7tvVyFWjjBsGRI019zPH1jTLIrc6QUc/p5s04zKc
+	 pnRHou8UHu10Y4vSiV91GtB7wwI/NRu+SPolyNeXKHHnpdePD8UOrd3eHgwy5w2BPhA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795625556;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795625559;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=CturaBGzSYSPrO7pSf0eG4zY+k7iEVZfSVtojAA86/o=;
-	b=dDLlD0rfRFAAYj95Xs+x4HWnnq+NHezPBaCVdmb2QAJCbkXQJa6ilL3QBlzVIswpJta7
-	 WbH+QKquNiAb+Qw47IzzwmUW2yCNxfLQj9BjVcf/g7g/tTWD7sOsf0Vr6dpLx3qGwGTWM
-	 miOitUFnGtMD3k60l7dIdXYUqySNjYBXji9JDnsuyZSi+uwS5R6mXyk3lK1VrHvNDq+rF
-	 NPXM9P+bsP32vCKn11jnMGIpBZtP8QBQbv8jOVyiajpVB+sfTkvxjaUJiwhYgt/G7q9ni
-	 R1d0ZUavyOp/+fLyF6o8Qx8eR7PjOORFo/0/aYeOtzSiLqZJn6ZYs7FkyuHId+w2CYg==
+	bh=dIuiRY3aXv2faCd9nQnL2bYgjmgYT7wVv63jCDfAXPQ=;
+	b=ysXEjL87IYiJzcN5KYUAZDaykI0oQC1IoXeB76ws7Pi9NnpYIpj/UY6D/6IOLMyOBhJN
+	 QHiqMkGeQCYfO1uBdpOgUOBxPDrbj6WbGddTgEyz9yOYl2ZtU3lDFxKRhbnd82CTDdibI
+	 UMtgd7aUgJu0HmaaAW/HvanCWM3/xl81sBGOUSWJ22+iSR4D7HWIw0xIdKvaTAOdkeoXO
+	 +hduQhc90rnU4DRaRVj4ZIfCgphg6Cxum2FwP+jzLgg0Ywwf9RkXEisK2lnH0JBsm6Ca+
+	 iCtgY/PYTd+3Evxln4JpUQsHpVWZoKfJA6PdluhkBLFG3lZBcaciWGMsBH0ZcbHh5Vg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="b7x/SF+o";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=IeEKSD76;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 971F1606A321;
-	Wed, 25 Nov 2026 16:52:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C99CC606A323;
+	Wed, 25 Nov 2026 16:52:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=b7x/SF+o
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EAD831F000C0;
-	Wed, 25 Nov 2026 16:52:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=IeEKSD76
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BE45C1F000C4;
+	Wed, 25 Nov 2026 16:52:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795625556;
-	bh=CturaBGzSYSPrO7pSf0eG4zY+k7iEVZfSVtojAA86/o=;
+	s=korg; t=1795625559;
+	bh=dIuiRY3aXv2faCd9nQnL2bYgjmgYT7wVv63jCDfAXPQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=b7x/SF+ow4bES+mGEPPBh5IYl6+mdyrcPJAIJILE07Mq89k3K3wmRWLwjPED3gO1C
-	 nTRvursy6EtG0awxWxGUqni90MOe+gfkL6RKDBoN9GG8N5cjE07hptsVEw2kCcyJLN
-	 i3eZiWnVhXQPeG9LcM9bLx/a7RHqd9Ewtirr6woI=
+	b=IeEKSD76G+wdTbzos8kWBknQunfl5JwBgT/agu2/dmaYv9RhJk80N3p1tQdJ/PZ1u
+	 KVu8Vo23XCvGJCrNLspf2R/h4Bu+C9JNd56r+S/gZz9/sNn6OJGSW7qnkueuTs/+W6
+	 kxJYQ4rNecpLndJA1SFd4dmwbQGzeLfIHKCDCbAU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Gichoon Han <gichoon.han@samsung.com>,
-	Takashi Iwai <tiwai@suse.de>
-Subject: [PATCH 6.12 554/816] ALSA: usb-audio: Drop capture packets with bogus actual_length
-Date: Wed, 25 Nov 2026 15:35:02 +0100
-Message-ID: <20261125143902.006164436@linuxfoundation.org>
+	Jaewon Jung <jaewon8868@gmail.com>,
+	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>,
+	Shuah Khan <skhan@linuxfoundation.org>
+Subject: [PATCH 6.12 555/816] selftests/ftrace: Add missing spaces after ! in probe syntax tests
+Date: Wed, 25 Nov 2026 15:35:03 +0100
+Message-ID: <20261125143902.031057575@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143849.205329330@linuxfoundation.org>
 References: <20261125143849.205329330@linuxfoundation.org>
@@ -67,61 +68,57 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Gichoon Han <gichoon.han@samsung.com>
+From: Jaewon Jung <jaewon8868@gmail.com>
 
-commit eed0e9583a290e6adbe3a8480bdae911f31e1ed9 upstream.
+commit 36990c8fda77d918b1e52d5d6df3a144b552d86e upstream.
 
-retire_capture_urb() copies urb->iso_frame_desc[i].actual_length bytes
-out of urb->transfer_buffer at the packet's offset, but never checks
-that value against the requested packet length.  A host controller
-reporting more data than requested makes memcpy() read past the end
-of the URB transfer buffer.
+Add the missing space between ! and grep. Otherwise, the shell tries
+to run !grep and reports "!grep: not found". This always skips the
+conditional checks without checking for kernel return probe argument
+support.
 
-Commit 06be918062ad ("ALSA: usb-audio: Bound packet copies by the PCM
-buffer size") clamps the count to the PCM ring buffer size, which
-protects the destination.  The source slot is only ep->curpacksize
-bytes per packet, though, so the over-read remains.
-
-This was hit on an ARM32 system (vendor 5.4 kernel; the code path is
-unchanged in mainline) with a full-speed UAC1 microphone behind a
-high-speed hub, i.e. the EHCI siTD path.  sitd_complete() computes
-actual_length as desc->length - SITD_LENGTH(t); the controller
-reported a remaining length larger than the programmed one, the value
-wrapped to ~4G, and the capture copy faulted on the first unmapped
-page after the URB buffer:
-
-  Unable to handle kernel paging request at virtual address e8756000
-  Internal error: Oops: 7 [#1] PREEMPT SMP ARM
-  r3 : 00000000  r2 : 0001e700  r1 : e8756000  r0 : e878fc80
-  Code: ba000002 f5d1f03c f5d1f05c f5d1f07c (e8b151f8)
-
-A packet can never legitimately carry more than its requested length,
-so warn and skip it instead of copying.
-
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Link: https://lore.kernel.org/r/20261025075044.1750113-1-jaewon8868@gmail.com
+Fixes: 25f00e40ce79 ("tracing/probes: Support $argN in return probe (kprobe and fprobe)")
 Cc: stable@vger.kernel.org
-Signed-off-by: Gichoon Han <gichoon.han@samsung.com>
-Link: https://patch.msgid.link/20261110060021.2146383-1-gichoon.han@samsung.com
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Signed-off-by: Jaewon Jung <jaewon8868@gmail.com>
+Acked-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
+Signed-off-by: Shuah Khan <skhan@linuxfoundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/usb/pcm.c |    6 ++++++
- 1 file changed, 6 insertions(+)
+ tools/testing/selftests/ftrace/test.d/dynevent/fprobe_syntax_errors.tc |    4 ++--
+ tools/testing/selftests/ftrace/test.d/kprobe/kprobe_syntax_errors.tc   |    2 +-
+ 2 files changed, 3 insertions(+), 3 deletions(-)
 
---- a/sound/usb/pcm.c
-+++ b/sound/usb/pcm.c
-@@ -1286,6 +1286,12 @@ static void retire_capture_urb(struct sn
- 			// continue;
- 		}
- 		bytes = urb->iso_frame_desc[i].actual_length;
-+		if (unlikely(bytes > urb->iso_frame_desc[i].length)) {
-+			dev_warn_ratelimited(&subs->dev->dev,
-+					     "packet %d: actual_length %u exceeds length %u, dropping\n",
-+					     i, bytes, urb->iso_frame_desc[i].length);
-+			continue;
-+		}
- 		if (subs->stream_offset_adj > 0) {
- 			unsigned int adj = min(subs->stream_offset_adj, bytes);
- 			cp += adj;
+--- a/tools/testing/selftests/ftrace/test.d/dynevent/fprobe_syntax_errors.tc
++++ b/tools/testing/selftests/ftrace/test.d/dynevent/fprobe_syntax_errors.tc
+@@ -34,7 +34,7 @@ check_error 'f vfs_read ^$stack10000'	#
+ 
+ check_error 'f vfs_read ^$arg10000'	# BAD_ARG_NUM
+ 
+-if !grep -q 'kernel return probes support:' README; then
++if ! grep -q 'kernel return probes support:' README; then
+ check_error 'f vfs_read $retval ^$arg1' # BAD_VAR
+ fi
+ check_error 'f vfs_read ^$none_var'	# BAD_VAR
+@@ -101,7 +101,7 @@ if grep -q "<argname>" README; then
+ check_error 'f vfs_read args=^$arg*'		# BAD_VAR_ARGS
+ check_error 'f vfs_read +0(^$arg*)'		# BAD_VAR_ARGS
+ check_error 'f vfs_read $arg* ^$arg*'		# DOUBLE_ARGS
+-if !grep -q 'kernel return probes support:' README; then
++if ! grep -q 'kernel return probes support:' README; then
+ check_error 'f vfs_read%return ^$arg*'		# NOFENTRY_ARGS
+ fi
+ check_error 'f vfs_read ^hoge'			# NO_BTFARG
+--- a/tools/testing/selftests/ftrace/test.d/kprobe/kprobe_syntax_errors.tc
++++ b/tools/testing/selftests/ftrace/test.d/kprobe/kprobe_syntax_errors.tc
+@@ -108,7 +108,7 @@ if grep -q "<argname>" README; then
+ check_error 'p vfs_read args=^$arg*'		# BAD_VAR_ARGS
+ check_error 'p vfs_read +0(^$arg*)'		# BAD_VAR_ARGS
+ check_error 'p vfs_read $arg* ^$arg*'		# DOUBLE_ARGS
+-if !grep -q 'kernel return probes support:' README; then
++if ! grep -q 'kernel return probes support:' README; then
+ check_error 'r vfs_read ^$arg*'			# NOFENTRY_ARGS
+ fi
+ check_error 'p vfs_read+20 ^$arg*'		# NOFENTRY_ARGS
 
 
