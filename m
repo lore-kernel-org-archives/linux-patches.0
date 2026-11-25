@@ -1,55 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795624428;
-	b=Jje5SGSVrpiDkH+WcX0DFhf6z1/FejEtW38r01Jts6+lOBjmXvREZEn4S8DRczbsafvj
-	 ux4wWBT4WKvUHSnbuh+Zl179r7iZ8UQlyL4O5nKxG4slfQ+NAu4GqJ9pIyCJ+uUaCDrHv
-	 Ws8c4h5C+Z6D/I/2Eyz08g2xKNuBj87qvY/k9qwRd3owuyPDhGYQ0C0f1oqYoz6Esk5KH
-	 88u6jynNt9OcIUBO35sZz3R3ntXqkHL+D1P4wMTcx1y2YafdhAgGH4+fVKIgOBH7F75xL
-	 6xscgXOBFwwE2pyZ14YoCXjMwrlEsZy07vmclsEyum27jSfj/mSKFAu5QN3byaO06vw==
+	t=1795624432;
+	b=zM5LMt4SxSWv82ekEzVpDcUnQ4/ynTEPR/LgBocc6vs2OvuqgW+6hzeWPViynJBrOa8L
+	 k3mp0QXPTZlTLjF0Nap9quGXIpbM+ZNJ2vHP/eysOjVHYi6zOnfC90ifAy0HTqyPFXjJJ
+	 ORQjvNJUp5SLOd7GkP5mcRL/hdLfZQXs1XvJ24gksZK/h3AOoEXb1QAl6XL5/xaLWZJxc
+	 ZL1kOu0HoZxNzksLSN85ecvXNm39EvtFOiTm2UbiKd28I4SBZdqkkbWK8TxBvtx74g5Z0
+	 EJOUkzFjlkFyXYxcxjQ9R0MEsdvXJ7NftITiIZw99eKPcPv1BIDmrCYCZXgB6YEMVEA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795624428;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795624432;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=5HySbtZp+rXIqvXR6rELySxeOfvGQVfDSodmgLQDZng=;
-	b=1CO2bfdRYyxQu9viZM2Gp3qoBgSvN5CNO0VxjgXkqPYFRzSCuCq3BLufaP/Jt2FwfUrb
-	 2IkzuK17jlz7ymTpLBVWh6pk8piiSCJUEQsR6YiSqkTBtA8KnDlaMfkjuhzXu3xU8HKkz
-	 /HktsogFUr20fKV55HZwjQC81SQt2kSb/6gS0sclGTB+3HXLv/jbetH2quloO6AkAm3WN
-	 E0PmWrYhhdC/KumygkDJ8Z+ksZ0SNTUMG7WGxSBoHxO6MoJnwKI7bATU7Rp97VyXPyWEV
-	 xtCo0GRMXH8pItkqCLI/3dqtPPS+v+VBD5UxveGqy7fJe1sUhAWEltgEfrkgBCeFKEg==
+	bh=GUWKICuWs4rRBY12SNLw7p6aiSg9Ux9DNMB3hG/E3cI=;
+	b=nxMPD8XykRZkTGdD27XgaiiUmNgG5cwyLr0NXq89Q6Iz2A02xGxKxwCw62L88reNAs2v
+	 xfYU9CJADpz0wQWObvJvOD/tby1ipc9C7+Ct9O5R72+/qgT2qucJWVXvykvB6vp92tkTm
+	 8Qzw4v9G/afNFoeYKAjp7605MyR3MzfA1yPPL7XzI5xU/CCxTLcKJ7JRd2STuyuFchFeW
+	 UzndtjQvPTG1LV46pGFCxlsS7WOLligiqcgFFslgHTfe4lkjE3JMXImtPpPWox5GRhbMl
+	 Z/mWvSI0zd+oUCtC3HDfL9XrK2rbr63qX4uvXTbh58Ugudh6fwZwH4Mjt5Xwr/GNe+Q==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=PpEL4uhx;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=z3D64rvZ;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8B5E5606A33A;
-	Wed, 25 Nov 2026 16:33:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 235D1606A684;
+	Wed, 25 Nov 2026 16:33:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=PpEL4uhx
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D03A81F000C0;
-	Wed, 25 Nov 2026 16:33:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=z3D64rvZ
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 472021F000C0;
+	Wed, 25 Nov 2026 16:33:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795624428;
-	bh=5HySbtZp+rXIqvXR6rELySxeOfvGQVfDSodmgLQDZng=;
+	s=korg; t=1795624431;
+	bh=GUWKICuWs4rRBY12SNLw7p6aiSg9Ux9DNMB3hG/E3cI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=PpEL4uhxvSgB4GYECK4A0Wgk9y2/c5i8VwrEaeMaF4FQGfLAEyu+2Z5KeAVpIFim3
-	 h8WUWbNOfltN2ZIPPXv/ONn0JQYSZam6TWogb5uZky6jYgA1WNjO1Fj59ffXmiby8B
-	 wI5cOOJc91RgQeiS6Knkn/WxVtArDpl2YKEqHHmg=
+	b=z3D64rvZ6xp4f9okLRr7KoTf8yk2iqagxrgy/4jHmdF+EmcGKmM/ISg6GdiYEZgGc
+	 dajB5E32h4CLT7pZbzQ7FgRHeY6wXYA8Yg4K0CQWSLIE6ZQyzcITKsZaSsW0TXFmWk
+	 7cWSzpibeojE4cX69IKNdXu/YVH3azlkPX8q8prI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kyle Zeng <kylebot@openai.com>,
-	Eric Dumazet <edumazet@kernel.org>,
-	Jiayuan Chen <jiayuan.chen@linux.dev>,
-	Kuniyuki Iwashima <kuniyu@google.com>,
+	Florian Fainelli <florian.fainelli@broadcom.com>,
 	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 190/816] tcp: wait for TIME_WAIT teardown before freeing per-netns ehash
-Date: Wed, 25 Nov 2026 15:28:58 +0100
-Message-ID: <20261125143853.592614185@linuxfoundation.org>
+Subject: [PATCH 6.12 191/816] net: dsa: b53: Enable IGMP and MLD control packet CPU copies
+Date: Wed, 25 Nov 2026 15:28:59 +0100
+Message-ID: <20261125143853.615508156@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143849.205329330@linuxfoundation.org>
 References: <20261125143849.205329330@linuxfoundation.org>
@@ -71,95 +68,181 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kyle Zeng <kylebot@openai.com>
+From: Florian Fainelli <florian.fainelli@broadcom.com>
 
-[ Upstream commit 647b81ddefc6364290e67bf33c89d54971f8995e ]
+[ Upstream commit 3362cb822ea750399a15b741713181fd8560bd17 ]
 
-inet_twsk_kill() removes a TIME_WAIT socket from the established hash
-before it finishes using the ehash lock, hashinfo and bind tables, and
-before it drops the death-row reference. A running timer can therefore
-unhash its socket before inet_twsk_purge() reaches it. The purge cannot
-synchronize with that timer, and tcp_sk_exit_batch() can free the
-private ehash and hashinfo while inet_twsk_kill() is still using them.
+IGMPv2 reports and MLDv1 reports are addressed to the multicast group
+itself. Once the first listener is installed in the ARL table, subsequent
+reports can follow that entry without reaching the CPU. The bridge then
+fails to learn additional listeners, although static MDB forwarding works.
 
-An unprivileged reproducer using user and network namespaces, a private
-TCP ehash and a FIN_WAIT2 timer triggers a KASAN slab-use-after-free in
-inet_twsk_kill(). The allocation and free stacks point to
-inet_pernet_hashinfo_alloc() and inet_pernet_hashinfo_free().
+Enable the high-level protocol classifiers so that IGMP and MLD control
+packets are copied to the CPU independently of the multicast ARL lookup.
+Retain normal L2 forwarding by clearing the CPU-only forwarding modes,
+and preserve unrelated protocol-control fields.
 
-Wait for an RCU grace period after purging the whole batch, if one
-netns in the batch uses a private ehash. TIME_WAIT removal runs with
-bottom halves disabled, so this also waits for removers that were
-already invisible to the purge. Keep the wait under
-tcp_exit_batch_mutex, before freeing any private hashinfo.
+Handle the BCM5395's 16-bit register and different classifier fields
+separately from the 32-bit layout on the BCM531xx, BCM5301x and newer
+integrated RoboSwitch families, including BCM7445, BCM7278 and BCM4908.
+Export the helper and call it from bcm_sf2_sw_setup() as well, since SF2
+uses its own setup operation instead of b53_setup(). This also restores
+the classifiers after the switch reset on resume. Leave older devices
+with different IGMP controls untouched, and propagate register access
+failures during setup.
 
-The same window exists with the shared tcp_hashinfo. There, the
-hashinfo memory stays valid, but tcp_sk_exit_batch() can decrement
-tcp_death_row.tw_refcount from 2 to 1 before inet_twsk_kill() drops its
-own reference. This triggers the WARN_ON_ONCE() in tcp_sk_exit_batch(),
-then a refcount_t "decrement hit 0" warning from inet_twsk_kill().
+The SF2 setup integration and BCM4908 chip gate were updated with
+assistance from OpenAI Codex in response to review feedback.
 
-Adding a grace period for the shared case would be costly on busy
-hosts. It is not needed: struct net is freed by a later cleanup_net(),
-after the synchronize_rcu() in ops_undo_list(), so inet_twsk_kill()
-can safely drop the last tw_refcount reference itself.
-Use refcount_dec_if_one() and only warn if tw_refcount is not 1
-after a grace period.
-
-Fixes: d1e5e6408b30 ("tcp: Introduce optional per-netns ehash.")
-Signed-off-by: Kyle Zeng <kylebot@openai.com>
-[edumazet: only call synchronize_net() if one netns in the batch uses a private ehash,
- use refcount_dec_if_one() to avoid a false WARN with the shared ehash]
-Signed-off-by: Eric Dumazet <edumazet@kernel.org>
-Reviewed-by: Jiayuan Chen <jiayuan.chen@linux.dev>
-Reviewed-by: Kuniyuki Iwashima <kuniyu@google.com>
-Link: https://patch.msgid.link/20261030075843.2567707-1-edumazet@kernel.org
+Fixes: 5d65b64a3d97 ("net: dsa: b53: Add support for MDB")
+Signed-off-by: Florian Fainelli <florian.fainelli@broadcom.com>
+Link: https://patch.msgid.link/20261028235100.3892374-2-florian.fainelli@broadcom.com
 Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv4/tcp_ipv4.c | 21 ++++++++++++++++++++-
- 1 file changed, 20 insertions(+), 1 deletion(-)
+ drivers/net/dsa/b53/b53_common.c | 57 ++++++++++++++++++++++++++++++++
+ drivers/net/dsa/b53/b53_priv.h   |  1 +
+ drivers/net/dsa/b53/b53_regs.h   | 17 ++++++++++
+ drivers/net/dsa/bcm_sf2.c        |  5 +++
+ 4 files changed, 80 insertions(+)
 
-diff --git a/net/ipv4/tcp_ipv4.c b/net/ipv4/tcp_ipv4.c
-index b42630611afc7..b92f040a3eaab 100644
---- a/net/ipv4/tcp_ipv4.c
-+++ b/net/ipv4/tcp_ipv4.c
-@@ -3681,6 +3681,7 @@ static int __net_init tcp_sk_init(struct net *net)
+diff --git a/drivers/net/dsa/b53/b53_common.c b/drivers/net/dsa/b53/b53_common.c
+index 04027cbefddba..1bc00288612c5 100644
+--- a/drivers/net/dsa/b53/b53_common.c
++++ b/drivers/net/dsa/b53/b53_common.c
+@@ -770,6 +770,59 @@ void b53_brcm_hdr_setup(struct dsa_switch *ds, int port)
+ }
+ EXPORT_SYMBOL(b53_brcm_hdr_setup);
  
- static void __net_exit tcp_sk_exit_batch(struct list_head *net_exit_list)
- {
-+	bool synced = false;
- 	struct net *net;
- 
- 	/* make sure concurrent calls to tcp_sk_exit_batch from net_cleanup_work
-@@ -3695,9 +3696,27 @@ static void __net_exit tcp_sk_exit_batch(struct list_head *net_exit_list)
- 
- 	tcp_twsk_purge(net_exit_list);
- 
-+	/* inet_twsk_kill() unhashes a twsk before it is done with ehash
-+	 * and bhash, and before it drops its tw_refcount reference,
-+	 * so tcp_twsk_purge() can miss it. Such callers run with BH
-+	 * disabled: wait for them before freeing a private ehash.
++int b53_enable_mcast_snooping(struct b53_device *dev)
++{
++	u16 val16;
++	u32 val;
++	int ret;
++
++	/* Older switches use different IGMP controls, not HL_PRTC_CTRL. */
++	if (is5325(dev) || is5365(dev) || dev->chip_id == BCM5389_DEVICE_ID ||
++	    is5397_98(dev) || is63xx(dev))
++		return 0;
++
++	/* IGMPv2 and MLDv1 reports use the group's destination MAC. Once
++	 * the first listener is offloaded, ordinary multicast forwarding
++	 * can keep subsequent reports from reaching the bridge CPU.
 +	 */
-+	list_for_each_entry(net, net_exit_list, exit_list) {
-+		if (net->ipv4.tcp_death_row.hashinfo->pernet) {
-+			synchronize_net();
-+			synced = true;
-+			break;
-+		}
++
++	/* BCM5395 has a narrower register and a single IGMP classifier.
++	 * Its ICMPv6 classifier also covers MLD.
++	 */
++	if (dev->chip_id == BCM5395_DEVICE_ID) {
++		ret = b53_read16(dev, B53_MGMT_PAGE, B53_HL_PRTC_CTRL, &val16);
++		if (ret)
++			return ret;
++
++		val16 |= HL_PRTC_IGMP_IP_EN_5395 | HL_PRTC_ICMPV6_EN;
++		/* Zero forwarding modes copy control traffic to the CPU
++		 * independently of the ARL lookup, retaining L2 forwarding.
++		 */
++		val16 &= ~(HL_PRTC_IGMP_FWD_MODE_5395 |
++			   HL_PRTC_ICMPV6_FWD_MODE);
++
++		return b53_write16(dev, B53_MGMT_PAGE, B53_HL_PRTC_CTRL,
++				   val16);
 +	}
 +
- 	list_for_each_entry(net, net_exit_list, exit_list) {
- 		inet_pernet_hashinfo_free(net->ipv4.tcp_death_row.hashinfo);
--		WARN_ON_ONCE(!refcount_dec_and_test(&net->ipv4.tcp_death_row.tw_refcount));
-+		/* Without a grace period, a concurrent inet_twsk_kill() might
-+		 * still hold a tw_refcount reference. Let it drop it: struct net
-+		 * is freed by a later cleanup_net(), after an RCU grace period.
-+		 */
-+		if (!refcount_dec_if_one(&net->ipv4.tcp_death_row.tw_refcount))
-+			WARN_ON_ONCE(synced);
- 		tcp_fastopen_ctx_destroy(net);
++	ret = b53_read32(dev, B53_MGMT_PAGE, B53_HL_PRTC_CTRL, &val);
++	if (ret)
++		return ret;
++
++	val |= HL_PRTC_IGMP_RPTLVE_EN | HL_PRTC_IGMP_QRY_EN |
++	       HL_PRTC_IGMP_UKN_EN | HL_PRTC_MLD_RPTDONE_EN |
++	       HL_PRTC_MLD_QRY_EN;
++	/* Zero forwarding modes copy control traffic to the CPU
++	 * independently of the ARL lookup, retaining L2 forwarding.
++	 */
++	val &= ~(HL_PRTC_IGMP_RPTLVE_FWD_MODE | HL_PRTC_IGMP_QRY_FWD_MODE |
++		 HL_PRTC_IGMP_UKN_FWD_MODE | HL_PRTC_MLD_RPTDONE_FWD_MODE |
++		 HL_PRTC_MLD_QRY_FWD_MODE);
++
++	return b53_write32(dev, B53_MGMT_PAGE, B53_HL_PRTC_CTRL, val);
++}
++EXPORT_SYMBOL(b53_enable_mcast_snooping);
++
+ static void b53_enable_cpu_port(struct b53_device *dev, int port)
+ {
+ 	u8 port_ctrl;
+@@ -1261,6 +1314,10 @@ static int b53_setup(struct dsa_switch *ds)
+ 			b53_disable_port(ds, port);
  	}
+ 
++	ret = b53_enable_mcast_snooping(dev);
++	if (ret)
++		return ret;
++
+ 	return b53_setup_devlink_resources(ds);
+ }
+ 
+diff --git a/drivers/net/dsa/b53/b53_priv.h b/drivers/net/dsa/b53/b53_priv.h
+index e908397e8b9a0..f981537bc0a1b 100644
+--- a/drivers/net/dsa/b53/b53_priv.h
++++ b/drivers/net/dsa/b53/b53_priv.h
+@@ -336,6 +336,7 @@ static inline int b53_switch_get_reset_gpio(struct b53_device *dev)
+ /* Exported functions towards other drivers */
+ void b53_imp_vlan_setup(struct dsa_switch *ds, int cpu_port);
+ int b53_configure_vlan(struct dsa_switch *ds);
++int b53_enable_mcast_snooping(struct b53_device *dev);
+ void b53_get_strings(struct dsa_switch *ds, int port, u32 stringset,
+ 		     uint8_t *data);
+ void b53_get_ethtool_stats(struct dsa_switch *ds, int port, uint64_t *data);
+diff --git a/drivers/net/dsa/b53/b53_regs.h b/drivers/net/dsa/b53/b53_regs.h
+index 2dca7dd76eb6b..628fdfae47c84 100644
+--- a/drivers/net/dsa/b53/b53_regs.h
++++ b/drivers/net/dsa/b53/b53_regs.h
+@@ -262,6 +262,23 @@
+ /* Revision ID register (8 bit) */
+ #define B53_REV_ID			0x40
+ 
++/* High-level protocol control (16 bit on BCM5395, otherwise 32 bit) */
++#define B53_HL_PRTC_CTRL			0x50
++#define   HL_PRTC_ICMPV6_EN		BIT(4)
++#define   HL_PRTC_ICMPV6_FWD_MODE		BIT(5)
++#define   HL_PRTC_IGMP_IP_EN_5395		BIT(6)
++#define   HL_PRTC_IGMP_FWD_MODE_5395	BIT(8)
++#define   HL_PRTC_IGMP_RPTLVE_EN		BIT(9)
++#define   HL_PRTC_IGMP_RPTLVE_FWD_MODE	BIT(10)
++#define   HL_PRTC_IGMP_QRY_EN		BIT(11)
++#define   HL_PRTC_IGMP_QRY_FWD_MODE	BIT(12)
++#define   HL_PRTC_IGMP_UKN_EN		BIT(13)
++#define   HL_PRTC_IGMP_UKN_FWD_MODE	BIT(14)
++#define   HL_PRTC_MLD_RPTDONE_EN		BIT(15)
++#define   HL_PRTC_MLD_RPTDONE_FWD_MODE	BIT(16)
++#define   HL_PRTC_MLD_QRY_EN		BIT(17)
++#define   HL_PRTC_MLD_QRY_FWD_MODE		BIT(18)
++
+ /* Broadcom header RX control (16 bit) */
+ #define B53_BRCM_HDR_RX_DIS		0x60
+ 
+diff --git a/drivers/net/dsa/bcm_sf2.c b/drivers/net/dsa/bcm_sf2.c
+index e680fff7d23fb..99b44e20c6fee 100644
+--- a/drivers/net/dsa/bcm_sf2.c
++++ b/drivers/net/dsa/bcm_sf2.c
+@@ -1059,6 +1059,7 @@ static int bcm_sf2_sw_setup(struct dsa_switch *ds)
+ {
+ 	struct bcm_sf2_priv *priv = bcm_sf2_to_priv(ds);
+ 	unsigned int port;
++	int ret;
+ 
+ 	/* Enable all valid ports and disable those unused */
+ 	for (port = 0; port < priv->hw_params.num_ports; port++) {
+@@ -1074,6 +1075,10 @@ static int bcm_sf2_sw_setup(struct dsa_switch *ds)
+ 	b53_configure_vlan(ds);
+ 	bcm_sf2_enable_acb(ds);
+ 
++	ret = b53_enable_mcast_snooping(priv->dev);
++	if (ret)
++		return ret;
++
+ 	return b53_setup_devlink_resources(ds);
+ }
  
 -- 
 2.53.0
