@@ -1,53 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795617752;
-	b=wdRtvUaQXlkqqdby5utLg+0ozVdfghVeq+mljZ74gYhMNRwPwJ3BDq+uKhIHcn8jaYWp
-	 0iZPHRYO4DamFtFQ3hvW+XtCjhwHHrbSpPsPuTrrw6qGHizz5YmgA7sOXo+MTTmT2FlCr
-	 QPc3oaAQOw28Zpdc24pIIp/nS16woZ2g6mWmUd/woB8NqrZ01qGrqIyH9x9y2l6X31zpP
-	 GFLJ4VRGz4UB1++KVFZOZPgMr0UJytkhx6hRgOvG7QC1Lv2nRjAwNluBcMdoKbA8SS/Eo
-	 CzlJ7fasD/IiuIL05epm3RDvPC5g8eo1rBwhLWsBxM1EhI2AVKWP9cQirOvud0eveGg==
+	t=1795617755;
+	b=tHdDv1vslRC6K0OL8VzA8S5QLlId2TgwWMz7vW04AyC5tk9ugiEPMgCQ6WR48eIJ9JAI
+	 FrGpJl/5sAijY22yVUXTAMmVSGIUzg8AUAON1cG0OBn28QjPMQQ7/5iv4k4j8KeO4oBdF
+	 LDiaZxGWeekgAAtmY5QoVzVzxAOJNMJMgACWLsGG+RXYf0W6/q0Gv8Bo4UubKMbbU2fpo
+	 9HlbZwr1dkPp/8Uw4P9gvX9z3oMXFkMKuEkNmTb5/kqQhTwUuHswV6/SKA6o8ygGPb+KA
+	 AYoq2g814lldHbkTIzTc/GaytPu0i+49dJpmjuaKo+yubq2ciBDjp6UXn9CnKPgECIA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795617752;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795617755;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=rL5TKZiCF4HMxV9LbCJC4uZr2PGz8N9mtP/IqHHidVc=;
-	b=1n2VvDdDKWawGuSYQjrf7V4EsGKOAArtE0J/1/jz1tVbhRYtlxlvZCa+afFhOBPq3Qk6
-	 qdyvP2zgg9DWWhqoOkcUidBIuoyXcboI5+R9tqeVuemj10yoyt/d2/xqBz67nlEXfDgHW
-	 Gx7lOwxdp+Gf/fPHwCYnqYZFoFCRJntzddnEVrOJyDImG5LGDi1th1k9t+8UCSs3BaSFq
-	 DL/vn5/yDLeArChDbMYO1wgqyNIX6Q0PssxvOUDwWZa7l/HjjGSextsBmm8bxYxajvzeD
-	 awslsYDNriNqsaDug3KtkkJIgewMJzjV/0cqt0KwqS7pIpCPePiu39YdNS7zKATUmsA==
+	bh=enGcEcF36ZGVkjtBQeafHns38mdbp5qzBikoTd+O9nA=;
+	b=uawyiTtlkc2I9y3Zv53knXsSTGcnpX1M1Fs37+VeSju8+5+k/4luhcLJYKZTJjeKdSQc
+	 K4VvAsP8sxVJ5vVpvbLPAsH0QnCcWPwU/7e/hMi007r9pBCuNu+ZeWJeklYDvGwlGq7+q
+	 7w1TucdC95Cgrn4IL1xHefTAa86rMJ/+R9bG01ju0+bh0KSBQ7blP9rEMAg84hnlCamMa
+	 DrP5ZUun/81aRbv2hygZdcQioukSBdPNknReNUrHXYj07jIneytysawYHQHPRwnDdz59g
+	 cC9snyUn/RvYtRQm8ePc8Di0kiyZl/CBcR+Ps1pOS90jcmFNJQQDG5+sW1HarHW42HQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=b4pHyOcF;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ElsSAP2D;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EF29F606A321;
-	Wed, 25 Nov 2026 14:42:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 615A6606A321;
+	Wed, 25 Nov 2026 14:42:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=b4pHyOcF
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1A12A1F000D3;
-	Wed, 25 Nov 2026 14:42:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ElsSAP2D
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5DA951F000D8;
+	Wed, 25 Nov 2026 14:42:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795617751;
-	bh=rL5TKZiCF4HMxV9LbCJC4uZr2PGz8N9mtP/IqHHidVc=;
+	s=korg; t=1795617754;
+	bh=enGcEcF36ZGVkjtBQeafHns38mdbp5qzBikoTd+O9nA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=b4pHyOcFxBKBLZkIqX+df7achyABw9i1b8a+NdUJQivEhx4IdmpnnzIMr0jLJtCyI
-	 qA4NA5ROSv98iFJO0pjZlsrVhEp3zxjaGR2Xppzw3CigFXZARh3YBEcMzKVwKjbQv+
-	 wYnmdFroF8je7HrkuENZebzGBMdSeNG3i5kkdsSQ=
+	b=ElsSAP2D91993JicmDCd09FxtU1mwXcn440DatEpfRS91FieKbqDX3L3I1DN/xOQT
+	 apmQVmYeUpnnKUxyyiCsQbVXwffdQK9n1hISewtImO74DQ/I6uDFTZEAmYxHOfaUXj
+	 tKiMMJe7P+IsTLLrsCfpxBhzXaxO5m/AC1BxZGwo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Filippo Falezza <effeffe99@gmail.com>,
-	Loic Poulain <loic.poulain@oss.qualcomm.com>,
+	P Praneesh <praneesh.p@oss.qualcomm.com>,
+	Karthikeyan Periyasamy <karthikeyan.periyasamy@oss.qualcomm.com>,
+	Baochen Qiang <baochen.qiang@oss.qualcomm.com>,
 	Jeff Johnson <jeff.johnson@oss.qualcomm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0061/1005] wifi: ath10k: Stop unanswered temperature reads
-Date: Wed, 25 Nov 2026 15:23:19 +0100
-Message-ID: <20261125143823.169938067@linuxfoundation.org>
+Subject: [PATCH 7.3 0062/1005] wifi: ath12k: fix IRQ disable imbalance in AHB ext interrupt handler
+Date: Wed, 25 Nov 2026 15:23:20 +0100
+Message-ID: <20261125143823.193940490@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143821.729802100@linuxfoundation.org>
 References: <20261125143821.729802100@linuxfoundation.org>
@@ -69,97 +70,84 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Filippo Falezza <effeffe99@gmail.com>
+From: P Praneesh <praneesh.p@oss.qualcomm.com>
 
-[ Upstream commit 2a87e367c62856b87a90f745c6b7d2eb91e0c51f ]
+[ Upstream commit 216dd4fc57435726506e250ba2483f31ddc3c01b ]
 
-Reading the ath10k hwmon temperature sends WMI_PDEV_GET_TEMPERATURE and
-waits up to 5 s (ATH10K_THERMAL_SYNC_TIMEOUT_HZ) for the reply event,
-holding conf_mutex. Not all firmware answers: the WCN3990 firmware
-WLAN.HL.3.3.1-00694-QCAHLSWMTPLZ-1 on a Motorola Moto G 5G Plus
-codename nairo (SM7250) never sends the event, so every read of
-temp1_input stalls for 5 s, logs
+On AHB platforms such as IPQ5332, IRQ group 3 maps multiple hardware
+rings to a single NAPI instance. Each ring is assigned its own IRQ
+line, but all IRQs in the group share one napi struct and one poll
+function.
 
-  ath10k_snoc 18800000.wifi: failed to synchronize thermal read
+When two IRQs from the same group fire simultaneously on different
+CPUs, both handlers call ath12k_ahb_ext_grp_disable(), which invokes
+disable_irq_nosync() for every IRQ in the group. This increments the
+interrupt controller's disable reference count for each IRQ twice. The
+single NAPI poll that runs calls ath12k_ahb_ext_grp_enable() once,
+decrementing each count from 2 to 1. Because the count never reaches 0,
+all IRQs in the group remain permanently masked by the interrupt
+controller.
 
-and returns -ETIMEDOUT. Tools that read all hwmon sensors, such as
-lm-sensors, hang for 5 s on every run, and configuration changes of the
-interface wait for conf_mutex in the meantime.
+With no further interrupts, TX completions stop being reaped from the
+WBM release ring. The pending TX descriptor count grows until the WBM
+idle link descriptor pool is exhausted. Once full, TX ring allocation
+fails and no new packets including management frames can be enqueued.
+This causes stations to disassociate with reason 34 (DISASSOC_LOW_ACK)
+and ath12k_mac_flush() to time out:
+"failed to flush transmit queue, data pkts req N pending N"
+where N equals ATH12K_NUM_POOL_TX_DESC(ab).
 
-Whether the firmware answers cannot be told from the chip: firmware that
-answers and firmware that does not both advertise
-WMI_SERVICE_THERM_THROT, and WCN3990 firmware differs between devices.
-Instead, remember that the running firmware did not answer, and return
--EOPNOTSUPP right away on later reads. Forget it when the firmware
-starts, so that a restarted or updated firmware is asked again.
+Fix this by using napi_schedule_prep() to atomically test-and-set
+NAPI_STATE_SCHED before disabling IRQs. Only the first CPU to win the
+atomic operation disables the group and calls __napi_schedule(). Any
+concurrent handler that loses the race skips the disable entirely,
+keeping the reference count balanced. Guard the enable_irq() call in
+the poll routine with the return value of napi_complete_done() to
+prevent an unbalanced enable if the NAPI instance was re-scheduled
+before the poll completed.
 
-The first read after each firmware start still takes 5 s when the
-firmware does not answer. Reads on firmware that answers are unchanged.
+Tested-on: IPQ5332 hw1.0 AHB WLAN.WBE.1.7-00587-QCAHKSWPL_SILICONZ-1
 
-Fixes: e98199a8c27f ("ath10k: enable QCA6174/QCA9377 to read the chip temperature")
-Signed-off-by: Filippo Falezza <effeffe99@gmail.com>
-Reviewed-by: Loic Poulain <loic.poulain@oss.qualcomm.com>
-Link: https://patch.msgid.link/20261027-ath10k-temperature-v2-1-0793e80d73bc@gmail.com
+Fixes: 6cee30f0da75 ("wifi: ath12k: add AHB driver support for IPQ5332")
+Signed-off-by: P Praneesh <praneesh.p@oss.qualcomm.com>
+Reviewed-by: Karthikeyan Periyasamy <karthikeyan.periyasamy@oss.qualcomm.com>
+Reviewed-by: Baochen Qiang <baochen.qiang@oss.qualcomm.com>
+Link: https://patch.msgid.link/20261015084445.3045925-1-praneesh.p@oss.qualcomm.com
 Signed-off-by: Jeff Johnson <jeff.johnson@oss.qualcomm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/ath/ath10k/core.c    | 1 +
- drivers/net/wireless/ath/ath10k/thermal.c | 9 ++++++++-
- drivers/net/wireless/ath/ath10k/thermal.h | 2 ++
- 3 files changed, 11 insertions(+), 1 deletion(-)
+ drivers/net/wireless/ath/ath12k/ahb.c | 11 ++++++-----
+ 1 file changed, 6 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/net/wireless/ath/ath10k/core.c b/drivers/net/wireless/ath/ath10k/core.c
-index 7c2939cbde5f0..a749ae582b0a4 100644
---- a/drivers/net/wireless/ath/ath10k/core.c
-+++ b/drivers/net/wireless/ath/ath10k/core.c
-@@ -2985,6 +2985,7 @@ int ath10k_core_start(struct ath10k *ar, enum ath10k_firmware_mode mode,
- 	clear_bit(ATH10K_FLAG_CRASH_FLUSH, &ar->dev_flags);
+diff --git a/drivers/net/wireless/ath/ath12k/ahb.c b/drivers/net/wireless/ath/ath12k/ahb.c
+index df79f15c1ccae..31009313e07b8 100644
+--- a/drivers/net/wireless/ath/ath12k/ahb.c
++++ b/drivers/net/wireless/ath/ath12k/ahb.c
+@@ -574,8 +574,8 @@ static int ath12k_ahb_ext_grp_napi_poll(struct napi_struct *napi, int budget)
  
- 	ar->running_fw = fw;
-+	ar->thermal.broken = false;
- 
- 	if (!test_bit(ATH10K_FW_FEATURE_NON_BMI,
- 		      ar->running_fw->fw_file.fw_features)) {
-diff --git a/drivers/net/wireless/ath/ath10k/thermal.c b/drivers/net/wireless/ath/ath10k/thermal.c
-index 9bb486f8e9207..9ff7de0abd129 100644
---- a/drivers/net/wireless/ath/ath10k/thermal.c
-+++ b/drivers/net/wireless/ath/ath10k/thermal.c
-@@ -75,6 +75,12 @@ static ssize_t ath10k_thermal_show_temp(struct device *dev,
- 		goto out;
+ 	work_done = ath12k_dp_service_srng(dp, irq_grp, budget);
+ 	if (work_done < budget) {
+-		napi_complete_done(napi, work_done);
+-		ath12k_ahb_ext_grp_enable(irq_grp);
++		if (likely(napi_complete_done(napi, work_done)))
++			ath12k_ahb_ext_grp_enable(irq_grp);
  	}
  
-+	/* Don't stall every read on firmware that never answers */
-+	if (ar->thermal.broken) {
-+		ret = -EOPNOTSUPP;
-+		goto out;
+ 	if (work_done > budget)
+@@ -591,9 +591,10 @@ static irqreturn_t ath12k_ahb_ext_interrupt_handler(int irq, void *arg)
+ 	/* last interrupt received for this group */
+ 	irq_grp->timestamp = jiffies;
+ 
+-	ath12k_ahb_ext_grp_disable(irq_grp);
+-
+-	napi_schedule(&irq_grp->napi);
++	if (napi_schedule_prep(&irq_grp->napi)) {
++		ath12k_ahb_ext_grp_disable(irq_grp);
++		__napi_schedule(&irq_grp->napi);
 +	}
-+
- 	reinit_completion(&ar->thermal.wmi_sync);
- 	ret = ath10k_wmi_pdev_get_temperature(ar);
- 	if (ret) {
-@@ -90,7 +96,8 @@ static ssize_t ath10k_thermal_show_temp(struct device *dev,
- 	time_left = wait_for_completion_timeout(&ar->thermal.wmi_sync,
- 						ATH10K_THERMAL_SYNC_TIMEOUT_HZ);
- 	if (!time_left) {
--		ath10k_warn(ar, "failed to synchronize thermal read\n");
-+		ath10k_warn(ar, "failed to synchronize thermal read, not asking again until the firmware restarts\n");
-+		ar->thermal.broken = true;
- 		ret = -ETIMEDOUT;
- 		goto out;
- 	}
-diff --git a/drivers/net/wireless/ath/ath10k/thermal.h b/drivers/net/wireless/ath/ath10k/thermal.h
-index 1f4de9fbf2b30..d1fb5b958c37c 100644
---- a/drivers/net/wireless/ath/ath10k/thermal.h
-+++ b/drivers/net/wireless/ath/ath10k/thermal.h
-@@ -19,6 +19,8 @@ struct ath10k_thermal {
- 	/* protected by conf_mutex */
- 	u32 throttle_state;
- 	u32 quiet_period;
-+	/* the running firmware did not answer a temperature request */
-+	bool broken;
- 	/* temperature value in Celsius degree
- 	 * protected by data_lock
- 	 */
+ 
+ 	return IRQ_HANDLED;
+ }
 -- 
 2.53.0
 
