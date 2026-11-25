@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795618964;
-	b=vhil3XlrVaG/zwRP/Skz2QXc55zZSl1YY60PezL2EsFTXQHFNwitmXD36Od3GFubbkm8
-	 iYEHWkHfJoCq0+cABZ5pVXSmpRmdJmDU1r5NOhsGGLUDZr/JS7SExXntWDCfnxUDAbs5J
-	 HxCzNhzmbcGvywSmkjc7LfWbdv3/2h3HBtrtkSEvBP9JwkTiyKcVYnLlo9En8XQH9OJKn
-	 qUFPOTCM+xcnERmVcNHQEC3yvf0eDP7E1ApZgkFLSwkRWr8LmGSm82b6WZdCgV0k1xm3J
-	 kYbHCoWa78j8xkUB5OYCf3G2IzeJNZvpFLyapYA6Yv4a6dn6DVcOieqSjYMMVJJuepw==
+	t=1795618968;
+	b=P5KfWJT7wQYkW4SOL+fjBGYVwFlNhyK66TE4TjwiMUFNE8GNUQbbP50G4sZW4fqgGNLI
+	 zVUtKdn0foGdJgH1kPQ4ixtOcwGYhXDT5N4xC9PW1JXQn++u/yirxgMoqSb8mSJNMIQ3H
+	 UBbyVc7PDXF08mlqneIQwJY+XuuX3un0Y6aUveq7PDJtxkYdlTQH+WjYCqePBWD5mbye1
+	 Gdm0wumSMEiFqZ4JMk2sLxQBSsT3RQhGeRtAnQHF0LAff9ej8HyT8ss5bAR83B/EnFGup
+	 gwIdMyxueDoyhE3MnADqM739S2Ryxtkl3O48A7dnLeIAnXKIfXT8mWGPW9GDRNf3ocw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795618964;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795618968;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Type:Content-Transfer-Encoding;
-	bh=H39KkRwE2mgQCB5QCTizwlQF26nfUir0kwSUPSYldOs=;
-	b=4uNW6R9VPWJVerWQ69dlIPxmpnUedbvhSFazod+X6K+qNWwgrvd1gCSwagftTyzBUuII
-	 IJWGfRFKTg4NtCXj+baVO1aqMvGPEr450h4Es7SCLzak8TXGjWt/5m55OI7c2Ib9ixzdR
-	 NQxYdwlVJfcKMiZs+NnYCQL3/FsyZF4xI0MKT7juQkZ3oV4vAmrnGifU5HvW7Q+lC6B1I
-	 QeWsr+CqrBcgep7ZOrvB8GAvsSmW4kvOEXBV5uqnmro69G2jeXbfMAh8WGnzokamTU4+f
-	 F5tUyumNPztVW1LBkAs0QsTpTTQARVdXu+pEfJgyWFToyHW4C5WabQfqs9yrOAAElTw==
+	 MIME-Version:Content-Transfer-Encoding;
+	bh=hf4nS61SG7U88m9VtDgJ5vpmiIoz0GDmdOLhv5PTHL8=;
+	b=LogP3JPEVyVjTARi3ZLlhoDmKyB+F+H4t21l0xfDQ9v3/5huqxve00FTKjh8uAkuO6yv
+	 LuqxmFKi4WNy7YnXsRqko07lrIn9ltB+7sXC8Jj1EF96rHl5PkJao1DCdZ5UXLjzQLDp2
+	 PIhZnNMnVMBl1yQUWJHeu54kyNAbeYN3SbzVDlCm8Y0ss9ADt5VC5z+LLI+B8q7Xm77J7
+	 Dqfm6Ph9CX0jUgOD4chkUcrHEP+3EuxAIF8OAdRlZ8bqcjuKGR7p5XAcdnWgtFfT/C89T
+	 nESKECJnV4+1vw6SQ0S3amfuBzvZA8yjIxJkO/23wqpNLhf+26Q7o0u54qp/Ikvamqg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ccmoKrKI;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Fg8iFHAf;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B47CB606A323;
-	Wed, 25 Nov 2026 15:02:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1E560606A33D;
+	Wed, 25 Nov 2026 15:02:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ccmoKrKI
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E1A701F000C4;
-	Wed, 25 Nov 2026 15:02:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Fg8iFHAf
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 157B81F000C0;
+	Wed, 25 Nov 2026 15:02:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795618964;
-	bh=H39KkRwE2mgQCB5QCTizwlQF26nfUir0kwSUPSYldOs=;
+	s=korg; t=1795618967;
+	bh=hf4nS61SG7U88m9VtDgJ5vpmiIoz0GDmdOLhv5PTHL8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ccmoKrKIUY+qJV4b6me0+8Fly9P1k69YXb7LOqEb5hwbrwszH0473okQPFU4Pf5Tb
-	 RVyNKLcsWU5gP4TPBFxdabESo9F0g5qb4LALhDBXX1zaExtiaSAev9UrSIFBsMv5rC
-	 Lm/oL8UA0rLIR1/uHxRLcvzNSOGq7i4UmlUCTN54=
+	b=Fg8iFHAfBTyM5idpFz48ifEHpj/N8icXznTDg0vgwZ7kb7nf1NDJkhJaMkHkzAuEt
+	 t5AZWIxwXOQUFtbxkuyV87rGdHZsxqa/XXkz5p3ngG0CjRG8+1iWeSNqxHKkfXVlDA
+	 /dsPbb90SWGDE9dTjp4aBdBTAQcrr886m65/wous=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Maciej Fijalkowski <maciej.fijalkowski@intel.com>,
-	=?UTF-8?q?Bj=C3=B6rn=20T=C3=B6pel?= <bjorn@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Andy Shevchenko <andriy.shevchenko@intel.com>,
+	Dmitry Torokhov <dmitry.torokhov@gmail.com>,
+	Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0444/1005] ice: xsk: fix leaking Rx buffers in multi-buffer path
-Date: Wed, 25 Nov 2026 15:29:42 +0100
-Message-ID: <20261125143832.148865179@linuxfoundation.org>
+Subject: [PATCH 7.3 0409/1005] gpiolib: of: return -ENOENT from of_gpio_count() stub
+Date: Wed, 25 Nov 2026 15:29:07 +0100
+Message-ID: <20261125143831.332673562@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143821.729802100@linuxfoundation.org>
 References: <20261125143821.729802100@linuxfoundation.org>
@@ -63,53 +63,49 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 7.3-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Maciej Fijalkowski <maciej.fijalkowski@intel.com>
+From: Dmitry Torokhov <dmitry.torokhov@gmail.com>
 
-[ Upstream commit 8b7bd01b9c56c0d1f65d0e2ad304b775e0d709e3 ]
+[ Upstream commit e20e4b8cda2b4d7dd32dbd2c0875a15d92545f04 ]
 
-ice_clean_rx_irq_zc() consumes a descriptor without freeing its buffer
-when a frag has zero length or when xsk_buff_add_frag() fails, which
-happens if the frags array is full or the fill ring has duplicates.
-Such buffers are lost to user space until the socket is closed.
+gpiod_count() and its firmware backends are expected to return either a
+positive number of GPIOs or a negative error code (-ENOENT) when no
+GPIOs are assigned. However, the !CONFIG_OF_GPIO stub for
+of_gpio_count() returns 0 instead of -ENOENT. This causes gpiod_count()
+to skip the platform_gpio_count() fallback (which triggers when
+count < 0) and erroneously return 0 to callers.
 
-Free the buffer in both cases. xp_free() skips a duplicate already
-freed with the frame.
+Change the stub to return -ENOENT to match the real of_gpio_count()
+implementation and the other error-returning stubs in gpiolib-of.h.
 
-Fixes: 1bbc04de607b ("ice: xsk: add RX multi-buffer support")
-Fixes: 93f53db9f9dc ("ice: switch to Page Pool")
-Signed-off-by: Maciej Fijalkowski <maciej.fijalkowski@intel.com>
-Reviewed-by: Björn Töpel <bjorn@kernel.org>
-Link: https://patch.msgid.link/20261102124950.958345-4-maciej.fijalkowski@intel.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: f626d6dfb709 ("gpio: of: Break out OF-only code")
+Reviewed-by: Andy Shevchenko <andriy.shevchenko@intel.com>
+Signed-off-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
+Link: https://patch.msgid.link/20261105-b4-gpiolib-free-v3-3-bb47ad58642d@gmail.com
+Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/intel/ice/ice_xsk.c | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ drivers/gpio/gpiolib-of.h | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/net/ethernet/intel/ice/ice_xsk.c b/drivers/net/ethernet/intel/ice/ice_xsk.c
-index 0643017541c35..ea8ac0fcdf6ef 100644
---- a/drivers/net/ethernet/intel/ice/ice_xsk.c
-+++ b/drivers/net/ethernet/intel/ice/ice_xsk.c
-@@ -618,8 +618,11 @@ int ice_clean_rx_irq_zc(struct ice_rx_ring *rx_ring,
- 
- 		if (!first) {
- 			first = xdp;
--		} else if (likely(size) && !xsk_buff_add_frag(first, xdp)) {
-+		} else if (unlikely(!size)) {
-+			xsk_buff_free(xdp);
-+		} else if (!xsk_buff_add_frag(first, xdp)) {
- 			xsk_buff_free(first);
-+			xsk_buff_free(xdp);
- 			first = NULL;
- 		}
- 
+diff --git a/drivers/gpio/gpiolib-of.h b/drivers/gpio/gpiolib-of.h
+index 218cfe5bc4ac3..9ca540d93f93b 100644
+--- a/drivers/gpio/gpiolib-of.h
++++ b/drivers/gpio/gpiolib-of.h
+@@ -46,7 +46,7 @@ static inline bool of_gpiochip_instance_match(struct gpio_chip *gc,
+ static inline int of_gpio_count(const struct fwnode_handle *fwnode,
+ 				const char *con_id)
+ {
+-	return 0;
++	return -ENOENT;
+ }
+ static inline int of_gpiochip_get_lflags(struct gpio_chip *chip,
+ 					 struct fwnode_reference_args *gpiospec,
 -- 
 2.53.0
 
