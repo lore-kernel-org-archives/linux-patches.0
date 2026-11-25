@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795620280;
-	b=UXsa1gHpo7oMWQ0NfxTc2LV1fSwP7fnXQOuPY7mq8Cg3NP23cSZ2ujbub3u9eVCf6Clo
-	 BgCXes61JWwM43QbFDXGSaFjTc9KgJ1SatsiQWaEo8J0G2lFo/ul9t2DpuLh6GPi3LzGi
-	 oRAxKz0eoZwMHBDg9/Vy1tirm4UQVlYGFvHfyS8W6Ixg6aEJ7WuVKF+sA66zI8vPHzlyU
-	 zAfXYojkvSiqgVVikMFemk5mVhrgqoqMbIsKKqRMScYxoie911qHidatN22X+rrhFvQwR
-	 ujpy/ZdTvocSDIL+Dt8h5yRQpr3FY2xoS1NnlKOMukxQDne52ixLupVrsctxB3AjNWQ==
+	t=1795620283;
+	b=MNwn3+iRvz9Dxi6odTd/yN7VvikbWBmhC59js5KTvlFMsTyIn85gc2n8/f+vFfXY4l4A
+	 oJpunwVtYhUnFuIbsIGrG7XIAff3DUvIHcWnDPI4G6AYbuue6Eqfmf/2o/HmeBSs/s27b
+	 pmFN9rbsb+MEsjsPET15JJUwiGmOAazB5As4QyuuiB208TM7VIuKAs/+sWWoeSVPl/Gom
+	 CfcFAa6jFlrx8aaQPgSYuud+NLYVispK4MU9wwGnyUAmjh8ubi4APL15op09awW3DSmXZ
+	 YoW/fHgxy1uAW3FlzHHOytRE2MoMQDCAbBVXazR+nPDEK09soS9ebUa6YppCtkS3vuQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795620280;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795620283;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=qniwJuaiKqu8zVSC9f3IFaARrmvT/lO8ngiubz2Mvfs=;
-	b=IkrOArghzYST2uF/tVLYPRyAHiD3eJPheB0Kr3Lb82SXqf7CUVIPAY+G1YsHmjyHiuXq
-	 AmFrc6lBBP4vVNVWRfWTuh94LR/tkqRSAIm7WKrAgvu3JES405yGvG0Dp62DtUTxNLJu8
-	 pMWpi9RQlsEEyjLZUdPdQG7lPTWEiKK9cLjUDL7VGCThSJGrFxP0GQvKUe0zKhFU+mcgd
-	 UBX+5MPegz06igcv+lW3LlKeCNDIY08nzY5L8FS6LqGG48PqYsSVFMmWx+jE9l3BvlI06
-	 dhvoK1316DX6u1hpRs7xJE0v8TGmHgvpgH378PwyIEESgI7Lma8I8Ko+vQKzqYM9oNA==
+	bh=gjw3UqY4fzNNJOeng2Fpe2fbrDMZNNi8+s91LtWJils=;
+	b=cZEnxbxOiKuVidYOh93kiUtpyrW3C2KlO12Q0UQ1V4e8qjXEr5d1bBajNPS5IJ4oYR1H
+	 SBpcz7Rvp27oKHElFwLTvCh4IidCP7QmRADhjJZeMNLa/+OxSswi3cA2XlcdGiOYFUZ+u
+	 MTn5D/CQPyV4gppbMWAyYUMLPKCjBB8UcXt90hpgvMESCKUHhj4/Y6lXj1nmP4jsdJqYq
+	 xURjO4HLNiarW6r9vHTYs711m5uh1YSY/8VkECcEK3qllXXlbFV4oxCMKeGFOG9AXwN0/
+	 oLFkKO0i9iJgUvs9+oT2stx+DMnVJ509FKzo83zOtm2Lu0tHOY4H6dd3lHDG7Bq95YQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=UIi2MJJQ;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="eS/DNfun";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 21C00606A323;
-	Wed, 25 Nov 2026 15:24:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3D4D7606A32E;
+	Wed, 25 Nov 2026 15:24:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=UIi2MJJQ
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F3DDD1F000EF;
-	Wed, 25 Nov 2026 15:24:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=eS/DNfun
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 45CCE1F00A3C;
+	Wed, 25 Nov 2026 15:24:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795620279;
-	bh=qniwJuaiKqu8zVSC9f3IFaARrmvT/lO8ngiubz2Mvfs=;
+	s=korg; t=1795620282;
+	bh=gjw3UqY4fzNNJOeng2Fpe2fbrDMZNNi8+s91LtWJils=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=UIi2MJJQK4Q19/fewSjrDOetswxoq/ETXBf7/wvwNDUTRurHFPdG+JlAw70CA/EoU
-	 IFm9rr/yC/18tLeD7dfn2blVAA6BYDhmkm6dyQdY0c4ihTWQn/i6A/1dk7zk08IKqN
-	 Opqfyyo+7u/i8KDmbKDPrdH42e8UL7ZBoW4Go/ZA=
+	b=eS/DNfun9kovNwisTTOCqPCbARKCiBbVJ/ypYL+dijuQNlvfZPQKes/v46k2lsDzB
+	 ddwHSTkVSLBQcj+FTz9rnrmQxu/uPnXZ3LS4n5EQYlC21VCD5V+WS24qoOcG/xoy7+
+	 MUOLkg0PP2xsNeByfKyDQbVaTfltcmQ1sEjPC3n0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Giuseppe Piscitelli <ooonea@gmail.com>,
-	Namjae Jeon <linkinjeon@kernel.org>,
-	Paulo Alcantara <pc@manguebit.org>
-Subject: [PATCH 7.3 0839/1005] smb: client: flush deferred handles of other names before a hard link open
-Date: Wed, 25 Nov 2026 15:36:17 +0100
-Message-ID: <20261125143841.372047267@linuxfoundation.org>
+	Hongyu Jin <hongyu.jin@unisoc.com>,
+	"weijiang.zhou" <weijiang.zhou@unisoc.com>,
+	Mikulas Patocka <mpatocka@redhat.com>
+Subject: [PATCH 7.3 0866/1005] dm-verity: dont restart or panic on errors during system shutdown
+Date: Wed, 25 Nov 2026 15:36:44 +0100
+Message-ID: <20261125143841.994665939@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143821.729802100@linuxfoundation.org>
 References: <20261125143821.729802100@linuxfoundation.org>
@@ -68,47 +68,85 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Paulo Alcantara <pc@manguebit.org>
+From: Weijiang Zhou <weijiang.zhou@unisoc.com>
 
-commit 25912ed3b75dcf5ff623dcb549b925dd0d0948f7 upstream.
+commit 47930d1236d2988cdc580c10d3af21b6b02d7ece upstream.
 
-Opening a hard link of a file whose other name still holds a deferred,
-leased handle fails with EINVAL over SMB3.  The client caches lease keys
-per inode, but the server ties a lease to the file name it was granted
-under, so reusing the inode's lease key to open a different name of the
-same inode is rejected with STATUS_INVALID_PARAMETER (MS-SMB2 3.3.5.9.11).
+Commit 252bd1256396 ("dm verity: skip verity work if I/O error when system
+is shutting down") stopped I/O errors during shutdown from triggering a
+restart, since devices may legitimately be gone by then. Errors that reach
+verity_handle_err(), e.g. through a failed hash block read followed by a
+failed FEC attempt, are not covered and still call kernel_restart() or
+panic().
 
-Commit 262b73ef442e ("smb3 client: fix open hardlink on deferred close
-file error") already closes the inode's deferred handles before such an
-open so the new name can take a fresh lease, but cifs_get_hardlink_path()
-only triggered that flush when a cached handle had the same open flags as
-the new open, so a differently accessed name - written then read, say -
-slipped through and still failed.
+During a reboot that is both wrong (nothing is corrupt) and harmful: it
+races with the reboot already in progress and replaces its reason with
+"dm-verity device corrupted", which bootloaders such as Android's treat as
+a verity failure and switch the device to EIO mode.
 
-Match on the name instead: flush when a cached handle for another name of
-the inode is open, regardless of access mode.
+Apply the same shutdown check in verity_handle_err(). Corruption is still
+logged, recorded in hash_failed and reported via uevent, and the I/O still
+fails.
 
-Reported-by: Giuseppe Piscitelli <ooonea@gmail.com>
-Closes: https://lore.kernel.org/r/CACmoRBbDZR3eyEM65j73sWMS7A=T89z1QAvCP=+u0WGzZhwW6g@mail.gmail.com
-Fixes: 262b73ef442e ("smb3 client: fix open hardlink on deferred close file error")
+Signed-off-by: Hongyu Jin <hongyu.jin@unisoc.com>
+Signed-off-by: weijiang.zhou <weijiang.zhou@unisoc.com>
+Signed-off-by: Mikulas Patocka <mpatocka@redhat.com>
+Fixes: 252bd1256396 ("dm verity: skip verity work if I/O error when system is shutting down")
 Cc: stable@vger.kernel.org
-Reviewed-by: Namjae Jeon <linkinjeon@kernel.org>
-Signed-off-by: Paulo Alcantara <pc@manguebit.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/smb/client/file.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/md/dm-verity-target.c |   27 ++++++++++++++++++---------
+ 1 file changed, 18 insertions(+), 9 deletions(-)
 
---- a/fs/smb/client/file.c
-+++ b/fs/smb/client/file.c
-@@ -2232,7 +2232,7 @@ cifs_get_hardlink_path(struct cifs_tcon
- 	spin_lock(&cinode->open_file_lock);
+--- a/drivers/md/dm-verity-target.c
++++ b/drivers/md/dm-verity-target.c
+@@ -171,6 +171,15 @@ static void verity_hash_at_level(struct
+ }
  
- 	list_for_each_entry(open_file, &cinode->openFileList, flist) {
--		if (file->f_flags == open_file->f_flags) {
-+		if (open_file->dentry != file_dentry(file)) {
- 			rc = -EINVAL;
- 			break;
- 		}
+ /*
++ * Skip verity work in response to I/O error when system is shutting down.
++ */
++static inline bool verity_is_system_shutting_down(void)
++{
++	return system_state == SYSTEM_HALT || system_state == SYSTEM_POWER_OFF
++		|| system_state == SYSTEM_RESTART;
++}
++
++/*
+  * Handle verification errors.
+  */
+ static int verity_handle_err(struct dm_verity *v, enum verity_block_type type,
+@@ -219,6 +228,15 @@ out:
+ 	if (v->mode == DM_VERITY_MODE_LOGGING)
+ 		return 0;
+ 
++	/*
++	 * Devices may already be quiesced (e.g. UFS set offline by its
++	 * shutdown hook), so a failure here does not imply corruption.  Fail
++	 * the I/O but do not restart or panic, which would also override the
++	 * reboot reason of the shutdown already in progress.
++	 */
++	if (verity_is_system_shutting_down())
++		return 1;
++
+ 	if (v->mode == DM_VERITY_MODE_RESTART)
+ 		kernel_restart("dm-verity device corrupted");
+ 
+@@ -593,15 +611,6 @@ error:
+ 	return r;
+ }
+ 
+-/*
+- * Skip verity work in response to I/O error when system is shutting down.
+- */
+-static inline bool verity_is_system_shutting_down(void)
+-{
+-	return system_state == SYSTEM_HALT || system_state == SYSTEM_POWER_OFF
+-		|| system_state == SYSTEM_RESTART;
+-}
+-
+ static void restart_io_error(struct work_struct *w)
+ {
+ 	kernel_restart("dm-verity device has I/O error");
 
 
