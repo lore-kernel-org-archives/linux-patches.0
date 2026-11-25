@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795624396;
-	b=3zFVaFTUewK7iPTa2N0x+wXxTjnaM9MmSMV/sIYh7x9JpjppG7yyGiEtdfaIfP7OY0RQ
-	 L+v14wlxTFjV0m/D6ydMVNyrMb8Hhjq3OVgS7ZJesuRuBLUVwnb5pLT+sOkZIvC/tykmD
-	 OPOZcB3d003TXLUebQ/qVwYKIEkftsXjN28H8DTWN8/o0VUuMxOkZqPc1BuJuHzgdeMQY
-	 IOCY3AnQvQSvngeQCRK80yIttCKPJHnMlQo8NPTqasaVz5qF24gLaP1vwEtbSaCo3pfOJ
-	 q69N/2iluiGwI5NAbnTtGnI0leL4rzDeK31Au6EwmNMEHlr9sq3cTw12CBvDjJgiB0w==
+	t=1795624399;
+	b=xGyCivZHPSBPeMmg2ThAxnm5bXT3U86DdQdWEPHBeZCOBDcAvlrdRENhHBDi8RwvFLS7
+	 KixC2nlNCATjNRTxTEJNpGKhBeEYPwst7M8bsd8SsbzfeyyBndA/PZEGjedlJ2HthPSGE
+	 rSwZ0fKkxnNXmETkAJFTjun2ct+ZCCv0MzAGJ1yIJiuMuu8B9m7PBmAA9LQKD8Zj9YakC
+	 I+1LHLbyhM+pAJgCf8utcQt1iYanuHDnfF0LjiCBfGucswE5iJvmQUrQETcWFJ3MvlbuT
+	 NJjX+AOxKH89ilUSwZkbqzHjCRNL4wNbLsSwro3uQrpSUBintgLS/N9lv97MIDOhftg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795624396;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795624399;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=I4ImDKagfPHI3f3fshAOgUCsSY5p+UlnxBMB3IvmCTQ=;
-	b=pxFJuQuwoGeboSmv2NbfadWHrjoPoNgsGIOLLS8Uz7WqAi7wJ9DNC4oTz4bvrBxWLBwW
-	 Jhjqom1vdqo2OIxOeMJ7TiRIwrGFJ6UOU4zwCTNeWxKIG2Cwi8HZQtyM65dunJhzxW+wb
-	 R7sHuOXgKG3M/kNSWM72H3xzcVGW10WPUDeObI9ddjnAJd9/FqFZg5Qh5VkpwpMUS5pRf
-	 berCXTmbLypCAQO0ZlXCWthmCCkeQ8MnTpa5z6d9dUOcViJpvIBRa51aHsb1mseXQgcDU
-	 2ThFh+4FIFTebZ3rXXKCLffZYdzgr2UQwwE1oWic57J+UxFYCXsnxGz1GkClypAMUqw==
+	bh=nVx+XlA9zM6+xe46bcSVOzDkXjfuHUYuXiw4vZA2wnI=;
+	b=4aoKrxsiAKU+CuKn0/4kHxgrju55FQiX2ri5sWCXdUye1DG0e4MzrhO51DmHY1B1T+2w
+	 hVSUXjQ6xyBlAX8Znm1RmK3JoLagXwl8kxWqIg1on+GJ0l9D25HjO4ENIaqv+ff2JO/sF
+	 /BbosL0lXo6aWSU8DdvSenEYXDg2VwbMJhrvBkfMXGtO2MYeu5M2rLU7htvPFyNOiLkYO
+	 CXD9Gl0w20TnFE0BN2c8MP3raLPq7vSeEoPFhg4Af6xn0V6+5XE2YuSt/TUAJ9Hu5P4Sg
+	 /BeCQVLXA3wAqzVpsPPJOlago0m7M+7PgphIr2n8RatouVj4LtdYj9LSfR4gzhL4m1w==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=2tVnKjHq;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=cRIeltS2;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 67E2B606A697;
-	Wed, 25 Nov 2026 16:33:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6C412606A6AA;
+	Wed, 25 Nov 2026 16:33:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=2tVnKjHq
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 87BCA1F000C6;
-	Wed, 25 Nov 2026 16:33:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=cRIeltS2
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8B71B1F000D8;
+	Wed, 25 Nov 2026 16:33:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795624396;
-	bh=I4ImDKagfPHI3f3fshAOgUCsSY5p+UlnxBMB3IvmCTQ=;
+	s=korg; t=1795624399;
+	bh=nVx+XlA9zM6+xe46bcSVOzDkXjfuHUYuXiw4vZA2wnI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=2tVnKjHq9feWLynfOaamj0WHcqjzBNWbkhzl+PqkFf3Aix4ppHucezpTJUf3V8Nbs
-	 KKcd+51d4My2qiM3QDsTLrgPi7S5J8i2IRCKXYBBoNijHYhdHnQTbfPHmXomUe8Sca
-	 /iYMKZwC8zVlGp+IoleFtmcSj38Kcd32Kut4mNvE=
+	b=cRIeltS2wuq1TvIPDD8BMinBc9K/Ill/7Q6nhKqePx42wHeKfOFmLlrJp8bCjwFVX
+	 flwlWUYLTPYknr/HmZLVJPNsXs3t/kUL74ZU5f/OMbvK9Xp/dxy30kEV+h6YcyEnec
+	 UVaq+YfaFFL8Fqv64C6Pfc5Z/Jqt4tZ8y8zIphB8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jia Jia <physicalmtea@gmail.com>,
-	Mike Christie <michael.christie@oracle.com>,
+	Maoxia <2312891301@qq.com>,
 	"Michael S. Tsirkin" <mst@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 134/816] vhost-scsi: do not relock event vq mutex on send_evt fallback
-Date: Wed, 25 Nov 2026 15:28:02 +0100
-Message-ID: <20261125143852.304873717@linuxfoundation.org>
+Subject: [PATCH 6.12 135/816] virtio_pci: add missing newline to the pmcsr error message
+Date: Wed, 25 Nov 2026 15:28:03 +0100
+Message-ID: <20261125143852.328508158@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143849.205329330@linuxfoundation.org>
 References: <20261125143849.205329330@linuxfoundation.org>
@@ -69,73 +68,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jia Jia <physicalmtea@gmail.com>
+From: Maoxia <2312891301@qq.com>
 
-[ Upstream commit a016d03a9cfe29aeeba438f32f8e8f63291e3275 ]
+[ Upstream commit 104d58a6d2592898fbb6989732600b07d543a8e5 ]
 
-vhost_scsi_send_evt() is called with the event virtqueue mutex held.
-If the worker is gone, the fallback currently calls
-vhost_scsi_complete_events(), which tries to acquire the same mutex again
-and deadlocks the caller.
+The error message emitted when the PCI power management control
+register cannot be read is not newline-terminated, so the next kernel
+message is appended to it on the same line.
 
-Split event completion into a helper for callers that already hold the
-mutex and a locking wrapper for the event worker. Use the helper on the
-fallback path.
+Add the missing '\n'.
 
-Link: https://lore.kernel.org/all/20260905005352.1E5B01F00A3D@smtp.kernel.org/
-Fixes: b1b2ce58ed23 ("vhost-scsi: Handle vhost_vq_work_queue failures for events")
-Signed-off-by: Jia Jia <physicalmtea@gmail.com>
-Reviewed-by: Mike Christie <michael.christie@oracle.com>
+Fixes: dff4fa0e5785 ("virtio: Add support for no-reset virtio PCI PM")
+Signed-off-by: Maoxia <2312891301@qq.com>
 Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
-Message-ID: <20260915094244.7900-3-physicalmtea@gmail.com>
+Message-ID: <tencent_031B923A83E0DEE884BD05D49030890C0406@qq.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/vhost/scsi.c | 15 +++++++++++----
- 1 file changed, 11 insertions(+), 4 deletions(-)
+ drivers/virtio/virtio_pci_common.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/vhost/scsi.c b/drivers/vhost/scsi.c
-index 5f7480db273a6..b8a726e1a2c78 100644
---- a/drivers/vhost/scsi.c
-+++ b/drivers/vhost/scsi.c
-@@ -508,19 +508,26 @@ vhost_scsi_do_evt_work(struct vhost_scsi *vs, struct vhost_scsi_evt *evt)
- 		vq_err(vq, "Faulted on vhost_scsi_send_event\n");
- }
+diff --git a/drivers/virtio/virtio_pci_common.c b/drivers/virtio/virtio_pci_common.c
+index d88f62d0fb7a2..77f81a000637e 100644
+--- a/drivers/virtio/virtio_pci_common.c
++++ b/drivers/virtio/virtio_pci_common.c
+@@ -636,7 +636,7 @@ static bool vp_supports_pm_no_reset(struct device *dev)
  
--static void vhost_scsi_complete_events(struct vhost_scsi *vs, bool drop)
-+/* Caller must hold the event virtqueue mutex. */
-+static void __vhost_scsi_complete_events(struct vhost_scsi *vs, bool drop)
- {
--	struct vhost_virtqueue *vq = &vs->vqs[VHOST_SCSI_VQ_EVT].vq;
- 	struct vhost_scsi_evt *evt, *t;
- 	struct llist_node *llnode;
- 
--	mutex_lock(&vq->mutex);
- 	llnode = llist_reverse_order(llist_del_all(&vs->vs_event_list));
- 	llist_for_each_entry_safe(evt, t, llnode, list) {
- 		if (!drop)
- 			vhost_scsi_do_evt_work(vs, evt);
- 		vhost_scsi_free_evt(vs, evt);
+ 	pci_read_config_word(pci_dev, pci_dev->pm_cap + PCI_PM_CTRL, &pmcsr);
+ 	if (PCI_POSSIBLE_ERROR(pmcsr)) {
+-		dev_err(dev, "Unable to query pmcsr");
++		dev_err(dev, "Unable to query pmcsr\n");
+ 		return false;
  	}
-+}
-+
-+static void vhost_scsi_complete_events(struct vhost_scsi *vs, bool drop)
-+{
-+	struct vhost_virtqueue *vq = &vs->vqs[VHOST_SCSI_VQ_EVT].vq;
-+
-+	mutex_lock(&vq->mutex);
-+	__vhost_scsi_complete_events(vs, drop);
- 	mutex_unlock(&vq->mutex);
- }
  
-@@ -1595,7 +1602,7 @@ vhost_scsi_send_evt(struct vhost_scsi *vs, struct vhost_virtqueue *vq,
- 
- 	llist_add(&evt->list, &vs->vs_event_list);
- 	if (!vhost_vq_work_queue(vq, &vs->vs_event_work))
--		vhost_scsi_complete_events(vs, true);
-+		__vhost_scsi_complete_events(vs, true);
- }
- 
- static void vhost_scsi_evt_handle_kick(struct vhost_work *work)
 -- 
 2.53.0
 
