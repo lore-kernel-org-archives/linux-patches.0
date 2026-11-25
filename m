@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795617816;
-	b=L3loQyNLftRlEAeKlVjqeFyxZGqfaC8X4L8slbkRJ5beOZJk4c2hHgD6VWUfkoZ2gF8P
-	 HsPbIq6JAMXUqx4vMuA84FER1kQlooMcjuOyNcUSQaQI7WJK7/p+1o0P7bMyOFntDKILk
-	 mMtlye/7xDQgoVJtfy8Pi1Yq3r1O3dzd1WCY+vac+NJMj47F2Qpjazia5cLTWZhr6qEz0
-	 2QtzNxVpZrARNkyffaI2MqFyE24wx2a+Ir8Uy56RwZ6FQnXQ5QtE/OxZ4A3ziUUdaQ02x
-	 1s7vr6NXXyjmmMTCX0kOcs8Vl93fWSDIznsEXM1xgcRJOaEuavZIUaf+BSR22y5pJpg==
+	t=1795617819;
+	b=LWU4AopebTTG8DDTb6dgjL3SlMISyysM7iz1JlIFpdzo2+BC6dYqes3jx1HLABoJ9aLy
+	 EMwA5kZoGfr5jQI16hgdtWUKQ+T8wIKVMbODkw4P/70QrLL1M7AyiYi/nk8sUqfeI2rY0
+	 ZnzPCCd2xbtxzQrFySIUoKrTyE8aYW/tHkl2/2l01aTwf8yGJo9O+stJgaxRzae3a8d2W
+	 FQYL2i91Zj21QnGYsvWS1EiAtIV+458g/jft/SS0vjut1giMzcbh91BRuGk5/zI+/hb/v
+	 Dj6O2EQSHnxa610k9zj6fpVul3AlF3JBlMvWYHowsdpX4zpO+IkV6MEh3+mGxIemKPw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795617816;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795617819;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=rXKUe/776pLa2XqlMnUOQZGH5iQA0H21qQRrXWNpm2k=;
-	b=shD+DSmN8nkqr8iXkQ6YqbvWK3EaEbrdjwDYFEh+LO5Yv2C7CDdE6dSvwWN2BxDzEAYw
-	 Bc6RTDw4f8RQXQXkxdj1kOBFFLWgidMexmlfzf0wgrjBmnyCIibd26fRxUrR4vDIBrMLU
-	 Y3bGdEM13rLgDJEZgMjI0byvKTR04V4Aeh4KnzJZwKrWuRPFHMZ4adU2l68NKQ3bXqxT/
-	 p9GSJRYjzhZLK9FOxB+2EOYtYjkg4nR/uPzmkoY3Sb99S4oFK3yUSocaef0UIjleO0YLy
-	 ej2HEp1Q9yVg4+qPaCI6E+OPxfY5ovt24wIHY0ytfU9UxchKEYG5aVwG5pT5rE7U3eA==
+	bh=6A9NQIB1ZV1KThynGwm+LAuoUVKs1IAyokVJbnN9U0c=;
+	b=eEbB90tiXoaBaLMJ/UjKOKs8MLdducLEPurbvIc0nfhJ0EA1jCqyoQBm6/sk2VZGqQ7+
+	 8k5e1LJgw1TIoN4+9YsDKt2lNhC1dx/KPvclPxyo7oflfKY0b7FV3i6CMmbYrolMZsTEv
+	 3tF4r+nY9sV8xzmPhxHJNLFyKCw4enmRUoBonGwACi4NE/TAKXxdFwg0adUfbCrU3o6Sd
+	 856X7dwwHgHgQADbSt9Y/m0nryfNGcyDtqCg2+p2o3KbexCga4rsr/78xGNvmT5M9tfkG
+	 71oN+gTJE+ZuOLcZQA6GeZRrcbI7QX59ZiReWt+1lzKDH/nlVd2CfTciAnHUXt+zlnw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=kGykqDLD;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=KGu2m5vC;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 07D6E606A321;
-	Wed, 25 Nov 2026 14:43:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 10700606A321;
+	Wed, 25 Nov 2026 14:43:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=kGykqDLD
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DAF7C1F000C6;
-	Wed, 25 Nov 2026 14:43:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=KGu2m5vC
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2D6571F000C4;
+	Wed, 25 Nov 2026 14:43:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795617815;
-	bh=rXKUe/776pLa2XqlMnUOQZGH5iQA0H21qQRrXWNpm2k=;
+	s=korg; t=1795617818;
+	bh=6A9NQIB1ZV1KThynGwm+LAuoUVKs1IAyokVJbnN9U0c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=kGykqDLDElQZ6RLkqH8mP+dZ/aQIu9fH1MNKOEHwzuAfJaZ3VnnqsJU2rG5cVKbYi
-	 2efNHYzNQSKRkRMX6CsoYEyWRb/t/PBryvUm9NY7TZii9NZBlOE9qlWbgzT6Y7CgqE
-	 keAIfCWYv9KPODTyPmBmLSfyrkwAXEr8hzytem4A=
+	b=KGu2m5vClFtz6TQmrj5Zu+570knqfNRVq9h/U008Gy7dX3jNJQObh/sDDLcfL7nBb
+	 DxsKyNjyj0AyGGr5JJrcqakqNk5pyHFpxjvyEI3DKfcBvBTlFYaZsc2BCg/Xz+5F6x
+	 AhZpkI3fh5spK6vpT84fqJsKJ1WUyIY1ODAl2A7M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vadim Fedorenko <vadim.fedorenko@linux.dev>,
-	James Hilliard <james.hilliard1@gmail.com>,
+	Fernando Fernandez Mancera <fmancera@suse.de>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0084/1005] ptp: vclock: preserve missing hardware timestamps
-Date: Wed, 25 Nov 2026 15:23:42 +0100
-Message-ID: <20261125143823.708757813@linuxfoundation.org>
+Subject: [PATCH 7.3 0085/1005] net/smc: fix limit_smc_hs sysctl on big-endian architecture
+Date: Wed, 25 Nov 2026 15:23:43 +0100
+Message-ID: <20261125143823.732045965@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143821.729802100@linuxfoundation.org>
 References: <20261125143821.729802100@linuxfoundation.org>
@@ -69,59 +68,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: James Hilliard <james.hilliard1@gmail.com>
+From: Fernando Fernandez Mancera <fmancera@suse.de>
 
-[ Upstream commit 63787dfd1b5ae720cc30dab5e66c8e4d81ff7391 ]
+[ Upstream commit 162cf592b577cccf04515100563e819d9eba5c4a ]
 
-Socket timestamp delivery converts hardware timestamps to a bound
-virtual clock before checking whether a hardware timestamp is present.
-A zero timestamp means that the packet has no hardware timestamp, but
-timecounter_cyc2time() can turn that zero into a nonzero virtual time.
-The socket then reports a hardware timestamp which was never supplied.
+net->smc.limit_smc_hs is a bool, but its sysctl entry uses
+proc_dointvec_minmax() with .maxlen = sizeof(int), so the handler
+accesses four bytes at the address of a one-byte field.
 
-Return zero without conversion when the input timestamp is absent.
-This also covers skb_get_tx_timestamp(), which checks for an absent
-timestamp after the same conversion.
+On little-endian this works with the extra bytes being written in struct
+padding. On big-endian (tested on s390x) the bool sits at the most
+significant byte of the int therefore the bool stays false and the "1"
+goes into padding. The sysctl reads back 1 but SMC sockets created
+afterwards see limit_smc_hs as disabled.
 
-This was identified during review of virtual clock sampling changes.
+Fix this by using proc_dobool() handler and adjust the maxlen to the
+right value.
 
-Fixes: d7c088265588 ("net: socket: support hardware timestamp conversion to PHC bound")
-Reviewed-by: Vadim Fedorenko <vadim.fedorenko@linux.dev>
-Signed-off-by: James Hilliard <james.hilliard1@gmail.com>
-Link: https://patch.msgid.link/20261026-ptp-vclock-sampling-v6-5-e705612541f1@gmail.com
+Fixes: f8406a2fd279 ("net/smc: add sysctl for smc_limit_hs")
+Signed-off-by: Fernando Fernandez Mancera <fmancera@suse.de>
+Link: https://patch.msgid.link/20261028225350.3753-1-fmancera@suse.de
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/ptp/ptp_vclock.c         | 2 ++
- include/linux/ptp_clock_kernel.h | 2 +-
- 2 files changed, 3 insertions(+), 1 deletion(-)
+ net/smc/smc_sysctl.c | 6 ++----
+ 1 file changed, 2 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/ptp/ptp_vclock.c b/drivers/ptp/ptp_vclock.c
-index 679ae40916f7e..e9cf4da3ed8a4 100644
---- a/drivers/ptp/ptp_vclock.c
-+++ b/drivers/ptp/ptp_vclock.c
-@@ -326,6 +326,8 @@ ktime_t ptp_convert_timestamp(const ktime_t *hwtstamp, int vclock_index)
- 	u64 ns;
- 
- 	ns = ktime_to_ns(*hwtstamp);
-+	if (!ns)
-+		return 0;
- 
- 	srcu_idx = srcu_read_lock(&vclock_srcu);
- 
-diff --git a/include/linux/ptp_clock_kernel.h b/include/linux/ptp_clock_kernel.h
-index 36a27a9105958..56f6ab1855d38 100644
---- a/include/linux/ptp_clock_kernel.h
-+++ b/include/linux/ptp_clock_kernel.h
-@@ -496,7 +496,7 @@ int ptp_get_vclocks_index(int pclock_index, int **vclock_index);
-  * @hwtstamp:     timestamp
-  * @vclock_index: phc index of ptp vclock.
-  *
-- * Returns: converted timestamp, or 0 on error.
-+ * Returns: converted timestamp, or 0 if @hwtstamp is zero or on error.
-  */
- ktime_t ptp_convert_timestamp(const ktime_t *hwtstamp, int vclock_index);
- #else
+diff --git a/net/smc/smc_sysctl.c b/net/smc/smc_sysctl.c
+index 09dad48337f61..f58cf256f61ab 100644
+--- a/net/smc/smc_sysctl.c
++++ b/net/smc/smc_sysctl.c
+@@ -160,11 +160,9 @@ static const struct ctl_table smc_table[] = {
+ 	{
+ 		.procname	= "limit_smc_hs",
+ 		.data		= &init_net.smc.limit_smc_hs,
+-		.maxlen		= sizeof(int),
++		.maxlen		= sizeof(bool),
+ 		.mode		= 0644,
+-		.proc_handler	= proc_dointvec_minmax,
+-		.extra1		= SYSCTL_ZERO,
+-		.extra2		= SYSCTL_ONE,
++		.proc_handler	= proc_dobool,
+ 	},
+ 	{
+ 		.procname	= "smcr_max_send_wr",
 -- 
 2.53.0
 
