@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795625430;
-	b=mxbTzzGAq8iFp2xLBVT/WlUOiq32elXTPUw3gjGpquDhF3whiT6nGULPeGGRnp93BG66
-	 KuRnpzODRQ/KDGlBaBFrVIECAqi25IOmXque08SMi8AROkjzXk0Jtnv3E+ulPmbKwB4Xo
-	 GgsNTYx30DSyYTm6QroIfyCgd9kNefhl2EIm0oTsyPrfRwHPcH7pTlxM8qo1wv+nF5Vfn
-	 3Zyj5rB+F/MROgPyR2g9mOnm+u/KdhL8z4XVvyNvxSTwKtxVZryxE7oVrshNjhnUp4P1g
-	 Gf7fwMs5NgB3E6KI6ZvgXACr8BRA1lkFYVQ2MjaXNJNzwnRcitSE88iUGRus9aP8xcw==
+	t=1795625434;
+	b=B6ciR5ku7DA+TCG6dwXwBosZQ7QAXUZo6UOtvpoqz9cn/NtniCfFh/9Tf0yK2FXgxrzb
+	 rxDsEpoif1XwQ77nv6DCdXUvfY0rsuiyN1hsviTgep65oyuG+LEfR63ASthau+HKSNlOQ
+	 YgmN80zFhnLWHgce7QD1Bqp2rsZzjSHQfol61jQKfXJCD5V8lnYeI/DuSNDxRUFQL57lb
+	 +1FzbQots3hdMcnwI4TWUeUMkQXPdBEjxVyCmlf4Xr45wo+befDL+KecjRQLHVYwyldzp
+	 CejPFW4dAZBPwTxe5AFs01iHZDPiz5UubbrXVMOqjBwiZJL82dTq6C6vTKa+FrqiPGg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795625430;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795625434;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=i2E++x7xDBV5fXuOxCfbRZWOx3bygB9vlpVPCqGqgA8=;
-	b=nMcdwKe1dkBK99p4ByXwtDnU+WV/gWIP5zCXTU2WiEN/g0/a96rdKO4rlYFZ+fdsuAm4
-	 fkSKTG/I2+OpmcbPa8q5TiFnxFjg6mmAGvlJZ1FZGl1Y2chbHJk9I/UQFizZllKiThj1i
-	 p5AVMyZF5i2Pe/1OjQWxhHHznE4bBuzw5gHxrcyF1MM2urHPlsL2wlq5upg/V3DAdT71x
-	 e000hDqkJicZj34C4DnSQD4Uxq2yQYJY8D56B82Ai+JfV+D4we2rydObSz5VtTuzUhbvY
-	 nWkQAWoprULd+/JoqiMVbuRr3JC2/y1w0PXonT2MPbrjTmZ03xqGn12tamAPPWIoCsg==
+	bh=r3UIN0X17gDqd7KlQVEf1AyYke9xfPUuyc+pQLHIyjs=;
+	b=JtRLMMm7cGizNim6Cnz1hY6JYjF8dInMtsh45ctR7ZrmoweAf5w0xqT8f5aQwBZPJA4V
+	 5MRQmOdnqXuWohFlxmZ8PoZEC4WH7FQ8a3peqKOFn9hnKGBpnLIZdHRDaiO+tpTlPSoaw
+	 L6/85LFXhHUmnYplgtET7PadFbpI37CY5cc5xlmWz8uJaH9fM0opw9HOMR53GeDWAeffs
+	 PbFC4UVv10GXZ5TMxj8awT+6OKEMXnfHZLKkYGWO/86N6AZ0uoLNK929nvMNLwHOuUih6
+	 7G8wNMT+27ih2+MV3+tbejjUkEFyDxt/K4VccuWXNhDNY0bIeO6pFO7gnfz0L0HetSg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=oMRqMPJh;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=zsFSxusv;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D0777606A326;
-	Wed, 25 Nov 2026 16:50:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 02D39606A31E;
+	Wed, 25 Nov 2026 16:50:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=oMRqMPJh
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2DB9D1F000C6;
-	Wed, 25 Nov 2026 16:50:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=zsFSxusv
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0B3B41F000D2;
+	Wed, 25 Nov 2026 16:50:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795625430;
-	bh=i2E++x7xDBV5fXuOxCfbRZWOx3bygB9vlpVPCqGqgA8=;
+	s=korg; t=1795625433;
+	bh=r3UIN0X17gDqd7KlQVEf1AyYke9xfPUuyc+pQLHIyjs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=oMRqMPJh1iPwxBWKvVBPRgLs3YJ7rcK6x9sBIP+ZerEWWYx8XtKox/289j7UV8S+b
-	 Ipm1L+D80I4rWJaDkfpRLUkduNuS7eIdc7nuboNZTqeEypUxJ1t/5g1qUXifYQKwJZ
-	 ocOuuxsHTqX10ySBfasp4VLAxIh9/5FB750Bf/yE=
+	b=zsFSxusvm4ycuadJc+m3ONT92mJG+qJjv0L/c2mApOSJTHX8emo0mzeWKMb/oG3W0
+	 nvsoC6n3hksGEVHZB2Z6Qb1yW6fClGujFALUOBq3dDE+ryPlHxwpLDL1XJZDFJj7YN
+	 TcGrhm3GCm+o2oLgx8nQmcStd/3XBgyRPDyvJAP4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dmitry Morgun <d.morgun@ispras.ru>,
-	Konstantin Komarov <almaz.alexandrovich@paragon-software.com>,
+	Lorenzo Bianconi <lorenzo.bianconi@oss.qualcomm.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 469/816] fs/ntfs3: check return values in indx_delete_entry()
-Date: Wed, 25 Nov 2026 15:33:37 +0100
-Message-ID: <20261125143900.057525337@linuxfoundation.org>
+Subject: [PATCH 6.12 470/816] net: stmmac: fix TX coalesce race and div-by-zero in XDP/legacy path
+Date: Wed, 25 Nov 2026 15:33:38 +0100
+Message-ID: <20261125143900.080888641@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143849.205329330@linuxfoundation.org>
 References: <20261125143849.205329330@linuxfoundation.org>
@@ -68,63 +68,193 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dmitry Morgun <d.morgun@ispras.ru>
+From: Lorenzo Bianconi <lorenzo.bianconi@oss.qualcomm.com>
 
-[ Upstream commit 131f7d7abf0f10edc6ea6b032f8a3908bdb13ce8 ]
+[ Upstream commit 237782c3d416b392a12642f32959e9d3c94e0c26 ]
 
-When the index tree collapses down to an empty root,
-indx_delete_entry() calls attr_set_size() and ni_remove_attr() for
-both ATTR_ALLOC and ATTR_BITMAP, but their return values are
-overwritten by the following call without being checked.
+tx_coal_frames[] is written by ethtool (stmmac_set_coalesce) and read
+locklessly from the TX fast path (stmmac_xmit, stmmac_tso_xmit,
+stmmac_xdp_xmit_zc and stmmac_xdp_xmit_xdpf), so pair every access
+with READ_ONCE()/WRITE_ONCE() to mark the intentional data race and
+read a consistent value into a local variable.
 
-In most other call sites of these functions the return value is
-checked, so add the same checks here in case an error at this point
-is meaningful.
+Moreover, ethtool allows disabling TX coalescing by setting
+tx_max_coalesced_frames to 0: guard the modulo operation in
+stmmac_xdp_xmit_xdpf() against a zero tx_coal_frames[queue] to avoid
+a division by zero.
 
-Found by Linux Verification Center (linuxtesting.org) with SVACE.
+Both issues were found by code inspection while extending the XDP TX
+path with multi-buff support, and neither has ever been triggered, so
+they are only theoretical. Tested on the Qualcomm RB3-gen2 board.
 
-Fixes: 82cae269cfa9 ("fs/ntfs3: Add initialization of super block")
-Signed-off-by: Dmitry Morgun <d.morgun@ispras.ru>
-Signed-off-by: Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
-[ sashal: adjusted the two attr_set_size() calls to pass an extra trailing NULL argument to match the older function signature. ]
+Fixes: db2f2842e6f5 ("net: stmmac: add per-queue TX & RX coalesce ethtool support")
+Fixes: be8b38a722e6 ("net: stmmac: Add support for XDP_TX action")
+Signed-off-by: Lorenzo Bianconi <lorenzo.bianconi@oss.qualcomm.com>
+Link: https://patch.msgid.link/20261001-b4-stmmac-xmit-mb-v4-1-664e0c3eb289@oss.qualcomm.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+[ sashal: Dropped the unused sdu_len declaration and kept local declaration blocks as they were, adding only tx_coal, because the surrounding functions differ from upstream. ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ntfs3/index.c | 10 ++++++++++
- 1 file changed, 10 insertions(+)
+ .../ethernet/stmicro/stmmac/stmmac_ethtool.c  | 11 ++---
+ .../net/ethernet/stmicro/stmmac/stmmac_main.c | 41 ++++++++-----------
+ 2 files changed, 24 insertions(+), 28 deletions(-)
 
-diff --git a/fs/ntfs3/index.c b/fs/ntfs3/index.c
-index 97cbe176a83e5..88a5f336d9040 100644
---- a/fs/ntfs3/index.c
-+++ b/fs/ntfs3/index.c
-@@ -2691,18 +2691,28 @@ int indx_delete_entry(struct ntfs_index *indx, struct ntfs_inode *ni,
+diff --git a/drivers/net/ethernet/stmicro/stmmac/stmmac_ethtool.c b/drivers/net/ethernet/stmicro/stmmac/stmmac_ethtool.c
+index 5d94de4670557..4569b950e96b2 100644
+--- a/drivers/net/ethernet/stmicro/stmmac/stmmac_ethtool.c
++++ b/drivers/net/ethernet/stmicro/stmmac/stmmac_ethtool.c
+@@ -979,7 +979,8 @@ static int __stmmac_get_coalesce(struct net_device *dev,
  
- 		err = attr_set_size(ni, ATTR_ALLOC, in->name, in->name_len,
- 				    &indx->alloc_run, 0, NULL, false, NULL);
-+		if (err)
-+			goto out;
-+
- 		if (in->name == I30_NAME)
- 			i_size_write(&ni->vfs_inode, 0);
+ 	if (queue < tx_cnt) {
+ 		ec->tx_coalesce_usecs = priv->tx_coal_timer[queue];
+-		ec->tx_max_coalesced_frames = priv->tx_coal_frames[queue];
++		ec->tx_max_coalesced_frames =
++			READ_ONCE(priv->tx_coal_frames[queue]);
+ 	} else {
+ 		ec->tx_coalesce_usecs = 0;
+ 		ec->tx_max_coalesced_frames = 0;
+@@ -1068,14 +1069,14 @@ static int __stmmac_set_coalesce(struct net_device *dev,
+ 		int i;
  
- 		err = ni_remove_attr(ni, ATTR_ALLOC, in->name, in->name_len,
- 				     false, NULL);
- 		run_close(&indx->alloc_run);
-+		if (err)
-+			goto out;
+ 		for (i = 0; i < tx_cnt; i++) {
+-			priv->tx_coal_frames[i] =
+-				ec->tx_max_coalesced_frames;
++			WRITE_ONCE(priv->tx_coal_frames[i],
++				   ec->tx_max_coalesced_frames);
+ 			priv->tx_coal_timer[i] =
+ 				ec->tx_coalesce_usecs;
+ 		}
+ 	} else if (queue < tx_cnt) {
+-		priv->tx_coal_frames[queue] =
+-			ec->tx_max_coalesced_frames;
++		WRITE_ONCE(priv->tx_coal_frames[queue],
++			   ec->tx_max_coalesced_frames);
+ 		priv->tx_coal_timer[queue] =
+ 			ec->tx_coalesce_usecs;
+ 	}
+diff --git a/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c b/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
+index e17a203290552..81e97ab3178b4 100644
+--- a/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
++++ b/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
+@@ -2504,7 +2504,8 @@ static bool stmmac_xdp_xmit_zc(struct stmmac_priv *priv, u32 queue, u32 budget)
+ 		struct stmmac_metadata_request meta_req;
+ 		struct xsk_tx_metadata *meta = NULL;
+ 		dma_addr_t dma_addr;
+-		bool set_ic;
++		bool set_ic = false;
++		u32 tx_coal;
  
- 		err = attr_set_size(ni, ATTR_BITMAP, in->name, in->name_len,
- 				    &indx->bitmap_run, 0, NULL, false, NULL);
-+		if (err)
-+			goto out;
-+
- 		err = ni_remove_attr(ni, ATTR_BITMAP, in->name, in->name_len,
- 				     false, NULL);
- 		run_close(&indx->bitmap_run);
-+		if (err)
-+			goto out;
+ 		/* We are sharing with slow path and stop XSK TX desc submission when
+ 		 * available TX ring is less than threshold.
+@@ -2555,12 +2556,9 @@ static bool stmmac_xdp_xmit_zc(struct stmmac_priv *priv, u32 queue, u32 budget)
  
- 		root = indx_get_root(indx, ni, &attr, &mi);
- 		if (!root) {
+ 		tx_q->tx_count_frames++;
+ 
+-		if (!priv->tx_coal_frames[queue])
+-			set_ic = false;
+-		else if (tx_q->tx_count_frames % priv->tx_coal_frames[queue] == 0)
++		tx_coal = READ_ONCE(priv->tx_coal_frames[queue]);
++		if (tx_coal && !(tx_q->tx_count_frames % tx_coal))
+ 			set_ic = true;
+-		else
+-			set_ic = false;
+ 
+ 		meta_req.priv = priv;
+ 		meta_req.tx_desc = tx_desc;
+@@ -3161,7 +3159,7 @@ static void stmmac_init_coalesce(struct stmmac_priv *priv)
+ 	for (chan = 0; chan < tx_channel_count; chan++) {
+ 		struct stmmac_tx_queue *tx_q = &priv->dma_conf.tx_queue[chan];
+ 
+-		priv->tx_coal_frames[chan] = STMMAC_TX_FRAMES;
++		WRITE_ONCE(priv->tx_coal_frames[chan], STMMAC_TX_FRAMES);
+ 		priv->tx_coal_timer[chan] = STMMAC_COAL_TX_TIMER;
+ 
+ 		hrtimer_init(&tx_q->txtimer, CLOCK_MONOTONIC, HRTIMER_MODE_REL);
+@@ -4259,9 +4257,9 @@ static netdev_tx_t stmmac_tso_xmit(struct sk_buff *skb, struct net_device *dev)
+ 	struct stmmac_priv *priv = netdev_priv(dev);
+ 	unsigned int first_entry, entry, tx_packets;
+ 	struct stmmac_txq_stats *txq_stats;
++	u32 tx_coal, pay_len, mss, queue;
+ 	int i, first_tx, nfrags, ndesc;
+ 	struct stmmac_tx_queue *tx_q;
+-	u32 pay_len, mss, queue;
+ 	u8 proto_hdr_len, hdr;
+ 	dma_addr_t des;
+ 	bool set_ic;
+@@ -4399,16 +4397,16 @@ static netdev_tx_t stmmac_tso_xmit(struct sk_buff *skb, struct net_device *dev)
+ 	tx_packets = (tx_q->cur_tx + 1) - first_tx;
+ 	tx_q->tx_count_frames += tx_packets;
+ 
++	tx_coal = READ_ONCE(priv->tx_coal_frames[queue]);
+ 	if ((skb_shinfo(skb)->tx_flags & SKBTX_HW_TSTAMP) && priv->hwts_tx_en)
+ 		set_ic = true;
+-	else if (!priv->tx_coal_frames[queue])
++	else if (!tx_coal)
+ 		set_ic = false;
+ 	else if (!netdev_xmit_more())
+ 		set_ic = true;
+-	else if (tx_packets > priv->tx_coal_frames[queue])
++	else if (tx_packets > tx_coal)
+ 		set_ic = true;
+-	else if ((tx_q->tx_count_frames %
+-		  priv->tx_coal_frames[queue]) < tx_packets)
++	else if ((tx_q->tx_count_frames % tx_coal) < tx_packets)
+ 		set_ic = true;
+ 	else
+ 		set_ic = false;
+@@ -4552,6 +4550,7 @@ static netdev_tx_t stmmac_xmit(struct sk_buff *skb, struct net_device *dev)
+ 	struct dma_desc *desc, *first;
+ 	struct stmmac_tx_queue *tx_q;
+ 	bool has_vlan, set_ic;
++	u32 tx_coal;
+ 	int entry, first_tx;
+ 	dma_addr_t des;
+ 
+@@ -4681,16 +4680,16 @@ static netdev_tx_t stmmac_xmit(struct sk_buff *skb, struct net_device *dev)
+ 	tx_packets = (entry + 1) - first_tx;
+ 	tx_q->tx_count_frames += tx_packets;
+ 
++	tx_coal = READ_ONCE(priv->tx_coal_frames[queue]);
+ 	if ((skb_shinfo(skb)->tx_flags & SKBTX_HW_TSTAMP) && priv->hwts_tx_en)
+ 		set_ic = true;
+-	else if (!priv->tx_coal_frames[queue])
++	else if (!tx_coal)
+ 		set_ic = false;
+ 	else if (!netdev_xmit_more())
+ 		set_ic = true;
+-	else if (tx_packets > priv->tx_coal_frames[queue])
++	else if (tx_packets > tx_coal)
+ 		set_ic = true;
+-	else if ((tx_q->tx_count_frames %
+-		  priv->tx_coal_frames[queue]) < tx_packets)
++	else if ((tx_q->tx_count_frames % tx_coal) < tx_packets)
+ 		set_ic = true;
+ 	else
+ 		set_ic = false;
+@@ -4977,7 +4976,7 @@ static int stmmac_xdp_xmit_xdpf(struct stmmac_priv *priv, int queue,
+ 	unsigned int entry = tx_q->cur_tx;
+ 	struct dma_desc *tx_desc;
+ 	dma_addr_t dma_addr;
+-	bool set_ic;
++	u32 tx_coal;
+ 
+ 	if (stmmac_tx_avail(priv, queue) < STMMAC_TX_THRESH(priv))
+ 		return STMMAC_XDP_CONSUMED;
+@@ -5030,12 +5029,8 @@ static int stmmac_xdp_xmit_xdpf(struct stmmac_priv *priv, int queue,
+ 
+ 	tx_q->tx_count_frames++;
+ 
+-	if (tx_q->tx_count_frames % priv->tx_coal_frames[queue] == 0)
+-		set_ic = true;
+-	else
+-		set_ic = false;
+-
+-	if (set_ic) {
++	tx_coal = READ_ONCE(priv->tx_coal_frames[queue]);
++	if (tx_coal && !(tx_q->tx_count_frames % tx_coal)) {
+ 		tx_q->tx_count_frames = 0;
+ 		stmmac_set_tx_ic(priv, tx_desc);
+ 		u64_stats_update_begin(&txq_stats->q_syncp);
 -- 
 2.53.0
 
