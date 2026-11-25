@@ -1,51 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795623760;
-	b=oXwQVJCbinmuCi6ggzTf79YkmD0wh5PfV+b3xqVpkc8rBbN7HlcUu7cfgrpYu65ARSEQ
-	 w/8/UeL6dM4gf1uuzIjggBqemj4wBemL5oBwniNgdycb7aHw8LZt5TWU/+nZQhZY6Uj1y
-	 /4PTUsTpUaLTQkJs05rQMUb6gfG/VZNfeS9tJMCKkkl2gXH7U24cX3AcPKvjiD9qzq4Zz
-	 78fz+QwGyMI5zA4q9Jz40Yk+9ts1voeLXvhMblucm5k9BylnRndNpxCYbeO81wrDmQfQT
-	 Y8oKrkSvr/dKzjRezYeQ2zoPY5bEjZLdvYc3eitPVSUXlXlEJMvR7Wg3489906geGkQ==
+	t=1795623764;
+	b=K5MkY6hdVrfs6veyEup/ZgWZ88/bVmbXZryds/389ep/67iS4JmMZUy0ioG+LPJqifoz
+	 NXs1JSqOHKONlxDqTKjiXJFYvs8H7nhHjfrROQH4ySRyiE9L7MI6P1JAa7GEpqYoJiJ1K
+	 gh8tY3UgJNHhgvLegBA93vzTojHrqNYT8KlmLGi7SZAqd8rElCeGWLYvLaeFqsez03m5u
+	 USqrjiJhDsBJunnHNZ8tl97zKkmBTrEQA/27RHvnbCgSXj5Kimf6/uaO7GRoAthv1/poJ
+	 04b64OHRU7eww1BfU0qdoPtmkdJ1Ualc/pc/3TQqv1p3FYPX/GEIPprjOmHxx7AeH3A==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795623760;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795623764;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Transfer-Encoding;
-	bh=weHOexiQDjLFiKz6mtlC7kCQApxKImNHfP6OxBXIe88=;
-	b=nWWqL37hEsnqSPn7paD1xpzaYxV+9redhh1y3cW1UdX4niYrmdAKIlH1Vh+5NsBA/C0P
-	 c4smwqiXHfLsJCDHb+b+qqhHkVC+gzp/87sP5YbKX7J5ECjJEDkf2RoPpMocGYribgmwe
-	 sZcJTOheyx7iPQQ71DPZa/+mWSOLbuREfVXzsJtRymCHVGVoTkLN8RjWLx+0Gqi2F3jcK
-	 dZVIdZfejzWFh1ESqYCZ6J1ARDNZD28JyBnroyD+W7LtA6PxSCdv8H9l0MXWTCP+iOsJ0
-	 RVsdP0TfjhGXYPoFEAVZA20pjtpzE97bHEjj9giMbhT+WRgyXJNnSdAn5fYJhZH5uNQ==
+	 MIME-Version:Content-Type:Content-Transfer-Encoding;
+	bh=SALp9h9U3ujXm/tjDBxSO6Axhrfyw6LLkGFfvpTGsr4=;
+	b=QnPSA8YMl125Hstdw6DRiZOR97AT8x8sbuF+IcrPvIz27cKk1iQNFlv+XxK1S4m7ZK8e
+	 f4Hakt8XxBUOxUAXSjLoWCBz7zQ2kILLmM5PHlKZ6Hw1u6JS2uIPDG5c1rJubuvXrBAFB
+	 xBMBtSuGZDKO+KUq47616ijvtOVyi7pVSAPOp+GRStLdsTkdI0poBs1pxi/JcSWrrhR/u
+	 syp0D1x78Uup0jd9woKkjw//kLniaNV5emHRAgswfRMA6bMqlEBk2gppvcwWQz/rEH6V9
+	 UTHtVk6sE1LSQYJDjZhNdoY2hFj7HbZMk8TxrhX/DOZHprKRSYxYi1Qb2eBd2qjOBWw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=BV+gouID;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=En7Y3ycD;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 56828606A31E;
-	Wed, 25 Nov 2026 16:22:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 26EA6606A321;
+	Wed, 25 Nov 2026 16:22:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=BV+gouID
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7C4811F000D3;
-	Wed, 25 Nov 2026 16:22:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=En7Y3ycD
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F08BE1F000C6;
+	Wed, 25 Nov 2026 16:22:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795623760;
-	bh=weHOexiQDjLFiKz6mtlC7kCQApxKImNHfP6OxBXIe88=;
+	s=korg; t=1795623763;
+	bh=SALp9h9U3ujXm/tjDBxSO6Axhrfyw6LLkGFfvpTGsr4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=BV+gouIDIS54XXNbGXYR3k3jcbt6mrdvyqzutpBAaZmiu3smaMIY7elKn8OLnQs05
-	 1Fi9v4JmSJdsAJ4MWxhVAUW4JyD61rmiETopxvoUPTUGWOHQUxNEZYfqvf3x7u2cdb
-	 /oNlMVdrWQnXwoNpvQu1y2qwFF9epodIErvg2tAI=
+	b=En7Y3ycDTxtQbDDLexbCM3dgdXuW2TvD6S3X3iMnkqFjyu7cVQMo0zBIUIhif0UAp
+	 bw+Z/aTmvte4h2jNNj+jhL79lOpsQT2Sii5ha6gmCLHItGDsY8bhuFbfaJVLe/kcIr
+	 ZwIHbg4m73Wnxm5EUZN3oMRGPBVXwn6OU5Dm/CKE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shashank Mohan Jain <jain.sm@gmail.com>,
+	Viral Patel <viral8854@gmail.com>,
+	Joshua Crofts <joshua.crofts1@gmail.com>,
 	Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>
-Subject: [PATCH 6.18 961/990] iio: magnetometer: mmc35240: leave cache-only mode before the cache sync
-Date: Wed, 25 Nov 2026 15:38:48 +0100
-Message-ID: <20261125143844.497576441@linuxfoundation.org>
+Subject: [PATCH 6.18 962/990] iio: magnetometer: tlv493d: fix magnetic field scale
+Date: Wed, 25 Nov 2026 15:38:49 +0100
+Message-ID: <20261125143844.519937522@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143822.072087159@linuxfoundation.org>
 References: <20261125143822.072087159@linuxfoundation.org>
@@ -61,76 +62,53 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Shashank Mohan Jain <jain.sm@gmail.com>
+From: Viral Patel <viral8854@gmail.com>
 
-commit 38e05cf38df705b7fa9e8ada931589fa96816f09 upstream.
+commit ef5c183a863bb69bf019a2d2ae0e1bfdaebe6222 upstream.
 
-mmc35240_resume() marks the register cache dirty and calls
-regcache_sync_region() while the regmap is still in cache-only mode.
-It calls regcache_cache_only(false) only after the sync. This
-ordering has been wrong since the resume support was added; it happened
-to work until regmap started rejecting a sync in cache-only mode.
+The TLV493D-A1B6 datasheet specifies a magnetic resolution of
+98 uT/LSB (0.098 mT/LSB). IIO reports magnetic field in Gauss
+(1 mT = 10 G), so the scale should be 0.98 G/LSB.
 
-Since commit afc8e3ee8307 ("regcache: Validate cache_only state in
-regcache_sync_region()") a sync in cache-only mode is refused with a
-WARN and -EINVAL. Every resume now gives
+The driver currently reports 98/1000 = 0.098 G/LSB, which
+under-reports the magnetic field by a factor of 10. The comment
+also gives the resolution as 0.0098 mT (9.8 uT), mixing up units.
 
-  WARNING: drivers/base/regmap/regcache.c:536 at regcache_sync_region+0x1a4/0x1c0
-  ...
-   mmc35240_resume+0x30/0x70
-   dpm_run_callback+0x7d/0x1c0
-   device_resume+0x175/0x270
-  ...
-  mmc35240 1-0030: Failed to restore control registers
+Correct the scale value and the comment.
 
-and the control registers are not written. If the chip lost its state
-during suspend, it runs with the reset value of CTRL1 while the cache,
-and with it the sampling frequency attribute, still has the configured
-value. Writing the same frequency again does not repair this, because
-regmap_update_bits() finds no difference to the cache.
-
-Leave cache-only mode first, then mark the cache dirty and sync it.
-
-Reproduced in qemu with the driver bound to an i2c-stub device: set
-in_magn_sampling_frequency to 25 (CTRL1 = 0x02), clear CTRL0 and CTRL1
-of the stub behind the driver's back to emulate the power loss, and run
-a suspend/resume cycle with "devices" in /sys/power/pm_test. Without
-this change CTRL1 is still 0x00 after resume and the warning is
-printed. With it, and also with the regcache commit reverted, CTRL1 is
-0x02 again and there is no warning. Not tested on real hardware.
-
-Fixes: 553a776b7908 ("iio: magnetometer: mmc35240: Add PM sleep support")
-Signed-off-by: Shashank Mohan Jain <jain.sm@gmail.com>
+Fixes: 106511d280c7 ("iio: magnetometer: add support for Infineon TLV493D 3D Magentic sensor")
+Signed-off-by: Viral Patel <viral8854@gmail.com>
+Reviewed-by: Joshua Crofts <joshua.crofts1@gmail.com>
 Cc: stable@vger.kernel.org
 Signed-off-by: Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/iio/magnetometer/mmc35240.c |    3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+ drivers/iio/magnetometer/tlv493d.c |    6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
---- a/drivers/iio/magnetometer/mmc35240.c
-+++ b/drivers/iio/magnetometer/mmc35240.c
-@@ -533,14 +533,13 @@ static int mmc35240_resume(struct device
- 	struct mmc35240_data *data = iio_priv(indio_dev);
- 	int ret;
- 
-+	regcache_cache_only(data->regmap, false);
- 	regcache_mark_dirty(data->regmap);
- 	ret = regcache_sync_region(data->regmap, MMC35240_REG_CTRL0,
- 				   MMC35240_REG_CTRL1);
- 	if (ret < 0)
- 		dev_err(dev, "Failed to restore control registers\n");
- 
--	regcache_cache_only(data->regmap, false);
--
- 	return 0;
- }
- 
+--- a/drivers/iio/magnetometer/tlv493d.c
++++ b/drivers/iio/magnetometer/tlv493d.c
+@@ -300,11 +300,11 @@ static int tlv493d_read_raw(struct iio_d
+ 		switch (chan->type) {
+ 		case IIO_MAGN:
+ 			/*
+-			 * Magnetic field scale: 0.0098 mTesla (i.e. 9.8 µT)
+-			 * Magnetic field in Gauss: mT * 10 = 0.098.
++			 * Magnetic field scale: 0.098 mTesla (i.e. 98 µT) per LSB.
++			 * In Gauss (1 mT = 10 G): 0.98 G per LSB.
+ 			 */
+ 			*val = 98;
+-			*val2 = 1000;
++			*val2 = 100;
+ 			return IIO_VAL_FRACTIONAL;
+ 		case IIO_TEMP:
+ 			/*
 
 
