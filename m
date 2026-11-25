@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795623800;
-	b=ETGt+sFYNq1SvljPfIjMlIxBqN4Jo0aq7udUJBmPKESo8IBcsYJ60OVkwPtR2tE67III
-	 BsNTUXi76PjJJrz8HkU26s0+QZm1x3bSraASfpGbWmCtOKNfNpX69aIub6G7CFO3E0wft
-	 SHXjeiZ68AOLMa4xjZ40QXvSA0EfCNBpf15V1DvjQyAp88hMTl3T9a7YSxRaNHOmdwM63
-	 63gDEF6LDh7foaXhHCclwguXx+lpreCJ2vWgsHNtsj8p8EZn5bUied077nw+8+3vCyiyh
-	 pYk5ya78ikhEMRxEaXx2uVvKOu/2ZLEZCDC90Ibhw3z9NPwa9E5Dm4U9xuUy6IGMhDg==
+	t=1795623803;
+	b=w3+qQOOKSCIgEUSICkzqQMuRNIuvHagucl5eOFv+na/zdrCvu7fUhzZUNqwnvZoDeE35
+	 ZZ07zHEAs/Oz4ujZNKmheKd0RKQ2eby0Aj/L1qS6vmTsSlwWNSVzp7cHhP4BgNKsVDgFH
+	 GtjsR94WxjtkrdElB2z/4xxN6/cErPPach1ofduAatCJBdEXtHjUiOb7oTgh6ra6+bVw4
+	 40Z0ribMv7upYXpUCTeqHhMnZI0eRyrBEAxqc3tsYLXqMXI2VfkM6i/vpOCeo4m/ZY/bK
+	 AmBCF//Vg9XKG81DXpqeewpyQr2L6dRfMnk7AMuLylBmLKwzKRt5D3fLFCVVWfWXAeQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795623800;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795623803;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=fDplGw26RBqf0Ewppd5VV5kwKcxTNNBnxwcm4/gJ+YI=;
-	b=Ga+EN6gmfZ5o5RQKChwdTaphAZeds7w6oH1L9BhkXLOgqjpqJlmLHosbcs7Wto7STN8D
-	 YzP42xjcWsbJPpDe79+F80myq4uzy7jKDhD7zk1IizFxebPqpwfiakng05XfZR2SDi+F9
-	 9mTOWICb23cZmCkH1fad6vRMnOl7aI761JlwOSXWj7n5CxYCdSvTsGk9ostbtJHFCWEDv
-	 ZLXlxCDe41uwr/u+Fw82ppqIvXJewV2+901glItyLwNIysec6ZhLEganVFxWKzMMChipZ
-	 HgJ4iEvdTLhlzwK7t2MoyE5JVCCnEhPp7r341H3kSJv9rOIAN9ujP37F83AnCPtSF1g==
+	bh=7FkAWs8NynR4igLpyOFh3paBwIsoPWZ31FPi3jFohCY=;
+	b=i/1bWFsNBVIn+oAzju1LprupewAOcg60t3gI9FqEtmGxJ29l+sGf3jcXhiJGgUiJmRlk
+	 6kKPhxBATTkaqO9hf0oABnNYZ+oaajit0sWpwnaLNE+P4tE1VnqTlgikDoh42jmMUWZkA
+	 Lth1iUym9VLHoE3MgFulR8X2DCRWLEfJPq0zmmgsZDIdjhwE43iINVtUqkQK6UpiA9smI
+	 abkVH/U/UaBeZRWKQlPSW7qaqW+WgcVz93kr7kGHF7vfZlzOQXzqP2uR1A5Vzs6iuue5B
+	 iiZrUB/7klNXjHahFw3epYx1iZC/Qry60HkNjU5SILu8JZPnHdHNJwK2BMY91ySN9wQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="Ecex6S/o";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="ANxTgE8/";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0EFCC606A323;
-	Wed, 25 Nov 2026 16:23:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 32BF4606A335;
+	Wed, 25 Nov 2026 16:23:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Ecex6S/o
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 289111F000EB;
-	Wed, 25 Nov 2026 16:23:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ANxTgE8/
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 04B021F000C6;
+	Wed, 25 Nov 2026 16:23:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795623799;
-	bh=fDplGw26RBqf0Ewppd5VV5kwKcxTNNBnxwcm4/gJ+YI=;
+	s=korg; t=1795623802;
+	bh=7FkAWs8NynR4igLpyOFh3paBwIsoPWZ31FPi3jFohCY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Ecex6S/o+KqXI+/72IYtVJMMniHCqtfHPGnup+L+u0fa1djzp8a4EFgo5GH4wXmbq
-	 cv9aMb7mxgXLN+FYakWYCt/16Und7Aa1whu2iSwGKES3gefgRwwCb7tpmw94GqKZAI
-	 aSdjntf5RFlwNgrC1/c8cqSzExz0DkLy/ESw2x2g=
+	b=ANxTgE8/4OK6LC3v68PMD/DAFNVXqRAfbp0lOTOkJGGbGanEbr2CMSxfRPd2DyNhA
+	 EdmG3Go43C1x7I11jNumD+E91KuBZKh5B/ik7q8QMJH4Tul9QHe5OZFQ2Xjvheig3q
+	 ENAAGWFx9Dnn2GUAfh9gCFo+tPu7bFMfwsKiwJMY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mani Tofigh <mt4022@columbia.edu>,
-	Christoph Hellwig <hch@lst.de>,
-	Keith Busch <kbusch@kernel.org>
-Subject: [PATCH 6.18 973/990] nvme: fix deadlock on nvme_subsystems_lock in nvme_init_subsystem()
-Date: Wed, 25 Nov 2026 15:39:00 +0100
-Message-ID: <20261125143844.776751656@linuxfoundation.org>
+	Hyunwoo Kim <imv4bel@gmail.com>,
+	Kuniyuki Iwashima <kuniyu@google.com>,
+	Eric Dumazet <edumazet@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 6.18 974/990] tcp: fix NULL pointer dereference when restarting a Fast Open listener
+Date: Wed, 25 Nov 2026 15:39:01 +0100
+Message-ID: <20261125143844.798902262@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143822.072087159@linuxfoundation.org>
 References: <20261125143822.072087159@linuxfoundation.org>
@@ -68,78 +69,111 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mani Tofigh <mt4022@columbia.edu>
+From: Hyunwoo Kim <imv4bel@gmail.com>
 
-commit ba1213be15c613a1c03db69ea6480ca140a6ca00 upstream.
+commit aa40afa831ebfe45e40a23721711059f2ac584d4 upstream.
 
-Connecting a controller to a new subsystem deadlocks when
-sysfs_create_link() fails in nvme_init_subsystem(), e.g., on an
-allocation failure.  The error path drops the last subsystem reference
-with nvme_subsystems_lock held and nvme_destroy_subsystem() takes the
-same lock again:
+When a valid RST is received for a Fast Open child accepted before the
+three-way handshake completes, reqsk_fastopen_remove() adds the
+request_sock to the listener's RST list if the listener is in TCP_LISTEN.
 
-  nvme nvme0: failed to create sysfs link from subsystem.
-  ============================================
-  WARNING: possible recursive locking detected
-  ...
-  nvmesubsys/95 is trying to acquire lock:
-  (nvme_subsystems_lock){+.+.}-{4:4}, at: nvme_destroy_subsystem+0x1b/0x1e0
+An application can call shutdown(SHUT_RD) on a listener socket.
+inet_csk_listen_stop() checks rskq_rst_head without holding
+fastopenq.lock. If rskq_rst_head is NULL, it does not acquire the lock
+and therefore does not synchronize with an insertion by
+reqsk_fastopen_remove() after that function has passed the TCP_LISTEN
+check.
 
-  but task is already holding lock:
-  (nvme_subsystems_lock){+.+.}-{4:4}, at: nvme_init_identify+0x81e/0x34b0
+The more likely outcome of this race, even without a subsequent
+listen(), is a leak. If reqsk_fastopen_remove() inserts a request_sock
+after inet_csk_listen_stop() observes an empty list and returns, the
+request_sock is stranded in rskq_rst_head and keeps a reference on the
+listener. The socket is already in TCP_CLOSE, so a subsequent close()
+does not call inet_csk_listen_stop() again.
+
+If listen() is called again on the same socket before the delayed list
+insertion, the insertion can overlap the queue initialization in
+reqsk_queue_alloc(). If it occurs after rskq_rst_head is set to NULL but
+before rskq_rst_tail is set to NULL, rskq_rst_head points to the
+request_sock while rskq_rst_tail is NULL.
+
+When a valid RST is later received for another accepted Fast Open child,
+rskq_rst_head is not NULL, so reqsk_fastopen_remove() attempts to write
+the request_sock pointer to rskq_rst_tail->dl_next while rskq_rst_tail is
+NULL. KASAN reports:
+
+  BUG: KASAN: null-ptr-deref in reqsk_fastopen_remove+0x147/0x210
+  Write of size 8 at addr 0000000000000088 by task swapper/3/0
   ...
   Call Trace:
-   __mutex_lock+0x1a2/0x26e0
-   nvme_destroy_subsystem+0x1b/0x1e0
-   nvme_init_identify.cold+0x3bc/0x56f
-   nvme_init_ctrl_finish+0x1bc/0x7a0
-   nvme_loop_configure_admin_queue+0x205/0x2b0
-   nvme_loop_create_ctrl+0x480/0xd10
-   nvmf_dev_write+0x365/0x650
-   vfs_write+0x1e3/0x1250
-   ksys_write+0xfa/0x200
-   do_syscall_64+0xfb/0x590
-   entry_SYSCALL_64_after_hwframe+0x77/0x7f
-  ...
-  INFO: task nvmesubsys:95 blocked for more than 20 seconds.
-  INFO: task nvmesubsys:95 is blocked on a mutex likely owned by task nvmesubsys:95.
+   <IRQ>
+   ...
+   reqsk_fastopen_remove+0x147/0x210
+   tcp_check_req+0xa70/0x1060
+   ...
+   tcp_rcv_state_process+0x1cb/0x2ae0
+   ...
+   tcp_v4_do_rcv+0x1fe/0x740
+   tcp_v4_rcv+0x1744/0x2070
+   ...
+   ip_protocol_deliver_rcu+0x5c/0x280
+   ip_local_deliver_finish+0x171/0x330
+   ip_local_deliver+0x107/0x370
+   ...
+   </IRQ>
 
-Every later controller setup or removal then waits for the lock too.
-The nvme_validate_cntlid() error path for an existing subsystem does the
-same put, and deadlocks the same way if the other references go away in
-between.
+To widen the race window, the issue was reproduced after adding
+mdelay(3000) immediately after reqsk_fastopen_remove() checks that the
+listener is in TCP_LISTEN and immediately after reqsk_queue_alloc() sets
+rskq_rst_head to NULL.
 
-Drop the lock before the put.  For a new subsystem, take it off the list
-first so another controller can't find it in between.  With the fix,
-the connect fails and the next connect works.
+Make inet_csk_listen_stop() acquire fastopenq.lock regardless of the
+value of rskq_rst_head and detach the list while holding the lock. With
+this synchronization, reqsk_fastopen_remove() either inserts the
+request_sock before inet_csk_listen_stop() acquires the lock, in which
+case inet_csk_listen_stop() reclaims it, or sees that the listener is
+not in TCP_LISTEN and does not insert anything.
 
-This bug was identified and confirmed with the help of a deterministic
-hypervisor currently under development.  The C reproducer below however
-hits it within about 30s.
-
-Fixes: 32fd90c40768 ("nvme: change locking for the per-subsystem controller list")
+Fixes: 0536fcc039a8 ("tcp: prepare fastopen code for upcoming listener changes")
 Cc: stable@vger.kernel.org
-Signed-off-by: Mani Tofigh <mt4022@columbia.edu>
-Reviewed-by: Christoph Hellwig <hch@lst.de>
-Signed-off-by: Keith Busch <kbusch@kernel.org>
+Signed-off-by: Hyunwoo Kim <imv4bel@gmail.com>
+Reviewed-by: Kuniyuki Iwashima <kuniyu@google.com>
+Reviewed-by: Eric Dumazet <edumazet@kernel.org>
+Link: https://patch.msgid.link/avMkfJrXhCFXn8M_@v4bel
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/nvme/host/core.c |    4 ++++
- 1 file changed, 4 insertions(+)
+ net/ipv4/inet_connection_sock.c |   20 +++++++++-----------
+ 1 file changed, 9 insertions(+), 11 deletions(-)
 
---- a/drivers/nvme/host/core.c
-+++ b/drivers/nvme/host/core.c
-@@ -3317,7 +3317,11 @@ static int nvme_init_subsystem(struct nv
- 	return 0;
- 
- out_put_subsystem:
-+	if (!found)
-+		list_del_init(&subsys->entry);
-+	mutex_unlock(&nvme_subsystems_lock);
- 	nvme_put_subsystem(subsys);
-+	return ret;
- out_unlock:
- 	mutex_unlock(&nvme_subsystems_lock);
- 	return ret;
+--- a/net/ipv4/inet_connection_sock.c
++++ b/net/ipv4/inet_connection_sock.c
+@@ -1549,17 +1549,15 @@ skip_child_forget:
+ 		if (!has_current_bpf_ctx())
+ 			cond_resched();
+ 	}
+-	if (queue->fastopenq.rskq_rst_head) {
+-		/* Free all the reqs queued in rskq_rst_head. */
+-		spin_lock_bh(&queue->fastopenq.lock);
+-		req = queue->fastopenq.rskq_rst_head;
+-		queue->fastopenq.rskq_rst_head = NULL;
+-		spin_unlock_bh(&queue->fastopenq.lock);
+-		while (req != NULL) {
+-			next = req->dl_next;
+-			reqsk_put(req);
+-			req = next;
+-		}
++	/* Free all the reqs queued in rskq_rst_head. */
++	spin_lock_bh(&queue->fastopenq.lock);
++	req = queue->fastopenq.rskq_rst_head;
++	queue->fastopenq.rskq_rst_head = NULL;
++	spin_unlock_bh(&queue->fastopenq.lock);
++	while (req != NULL) {
++		next = req->dl_next;
++		reqsk_put(req);
++		req = next;
+ 	}
+ 	WARN_ON_ONCE(sk->sk_ack_backlog);
+ }
 
 
