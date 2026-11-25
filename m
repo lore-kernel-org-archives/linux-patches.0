@@ -1,54 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795619157;
-	b=aHWpVLZegDeEsQcKvGLuuwlauC3wh3tGoNRH/J2VbcsHDtDiGp2CU9Qu5paMnI2FJIHu
-	 vOygrbjyjb805s8/DBl5mqOuNsobU32HEYX79SQKQF8Mkt4SOxFe5tXredJUsU36GtxLN
-	 QShcd+iVCBBUzDMhMd9w2TWbw+V/11/xPRmi1pLHzkf01rwUGb0fZwKHJKz29ouLdzWjB
-	 SSHkmQVvG780jNYVOY+MEAWRAkl8nk2U6J/jOPwec2H8+CyAt4DaZToAn9Q92D1lS2jXd
-	 o9gJ3Cn2RdUFOF5zpeiLb7URWVFiPal3abz9C+gIy0kq40OdUsBKKPJtQvl1Opvrr8w==
+	t=1795619160;
+	b=YnmCHHs3g18lQYB+avD+nqpKt6qixnESb/zdYgjXDeoFsBqG+cPWpvAtRQRvGDHwUWYr
+	 9oRdlrHOtdTkk5nTMP8oxzc+P/5VSEtZMy+bwiGqBBGSAFKN+WRgWJj7Ar82xSp1EZXJl
+	 mcqrAGCFy+aRoPs+FxA2dsF5rvLZch21d3p7i7ymGu+Y4q/cXLZz7pNFmFogsmyYPr0rb
+	 7+Qtyn30A/E76TYRG1z+tj7C0u8BzcvuWOB7kiRcW/CwTddQutl5ij6+tFTDdNSviSAkn
+	 Uq74EXLrrHmaV2WNgO9llgeUYxIoaOlds429qFTHWMubR0pmnyFtQoWKhoj7XrceIEw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795619157;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795619160;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=zB0oR45YYPxxt6mBhRI+XFuRnpxJPUOft68tkcahptc=;
-	b=TUJc7AcjFoX0kCDHiORJJGbDVfGje+c+pBTQEkYZzMZqdEDil59oQW7fc3yhPv7RSExO
-	 1k+29aae0JSv8GAC/GIYN5OSl5P6MMkV+BuusvjKRKYq4+dZsQm2g21gKjIWrK5BhmQ48
-	 9n+XnPJP45k5yGNRz0IGsgx++cch4qkFOYLt3eBmCLUi56tHRoHQ8gKkccqnCJbbHqVAj
-	 +QtVDYxLWI3ZEkKgRDjJjaKbyt0IBfU8EPJVW7VmX+ChyY0rD1V7wk5BzKi+c4gGdMa8s
-	 xAuPNwdhpjFXwJwWluTnYJsMmy7XjavyqFP41N5jPE39dzdnMjCPN+RKgbmug3kG1Jw==
+	bh=1+wRnDMTmNQpS16/HY6qMWjqf5puEj6DQ86kp6zNYhw=;
+	b=dThZvD3NPABvXVmu2Vi0fB5ZeWgF4iWoV4wFYnZ6YVkEW1C7yuz6J/PbSwkYrRJoU17M
+	 V5PhB+vyV+amrzTE144cm6RAsaQsGLA2ylbNrqXpMS94MEBJTWNhTzNYT09+D/yFZ2b4l
+	 KPZPmjIk8KwAvMVstZ2ttndLkyuNzZsmwsNf/1aZaK9Uw2d0H24PJ/wOO8BhZrxTnLg9q
+	 899iEmAyErTKtrfYFQ1QUVQUdcDl1p6y9vIkpm7yhJuT1MzUIFqklkV5Gm16qOSDNRSpR
+	 pvAOwDrCbe3+xOZBCsFgoGpxgsXkI++RAdIFGaMUtz1urbHWIjAvKoHXTpns1/wGL2A==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=NzbKd2cP;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=GdTVWOIU;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5F0E0606A31E;
-	Wed, 25 Nov 2026 15:05:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 60614606A321;
+	Wed, 25 Nov 2026 15:06:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=NzbKd2cP
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3A4B71F000D0;
-	Wed, 25 Nov 2026 15:05:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=GdTVWOIU
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 87D691F000C6;
+	Wed, 25 Nov 2026 15:05:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795619156;
-	bh=zB0oR45YYPxxt6mBhRI+XFuRnpxJPUOft68tkcahptc=;
+	s=korg; t=1795619160;
+	bh=1+wRnDMTmNQpS16/HY6qMWjqf5puEj6DQ86kp6zNYhw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=NzbKd2cPQooA4vjRmsefnmAExiVObb1Yv5sZ/IM0sspmEZMbnG0zhNiFlvChobEs7
-	 Ab4P+ridUtjntfpkOkeS8HcsSWkKVLRA+bVPcq+z8+CKr1gsIk3wO64JPOpo16/Jdj
-	 0IUp7poSuGxL4JR+fo+5tEWFyRbow05m24QZ92qo=
+	b=GdTVWOIUpLIFWv2Z+6zcRxSSmnPJhtudkbhgsmbLlNY5xDUe26vbmvSnX47cUo+bx
+	 WWocJaFemVN6UapTwrnDq2GVyiyhAGsjEZc3iEEFg6LSg1se4r+jo3uUzEr+YtBcpy
+	 pH8Vfwh8S0m6K+jYcKPC5STAFSRwqd/FKq+maOQA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Cosmin Ratiu <cratiu@nvidia.com>,
-	Jianbo Liu <jianbol@nvidia.com>,
-	Tariq Toukan <tariqt@nvidia.com>,
+	Kyle Zeng <kylebot@openai.com>,
+	Willem de Bruijn <willemb@google.com>,
+	Eric Dumazet <edumazet@kernel.org>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0501/1005] net/mlx5e: Fix ipsec core device access during profile changes
-Date: Wed, 25 Nov 2026 15:30:39 +0100
-Message-ID: <20261125143833.480649512@linuxfoundation.org>
+Subject: [PATCH 7.3 0510/1005] net: gro: compare skb->protocol in gro_list_prepare()
+Date: Wed, 25 Nov 2026 15:30:48 +0100
+Message-ID: <20261125143833.691968254@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143821.729802100@linuxfoundation.org>
 References: <20261125143821.729802100@linuxfoundation.org>
@@ -70,192 +70,63 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Cosmin Ratiu <cratiu@nvidia.com>
+From: Eric Dumazet <edumazet@kernel.org>
 
-[ Upstream commit 5b310ae1eff7531030b123bfcb192b0176d73075 ]
+[ Upstream commit 511582022bfd07475d0daa209e6e6aa5a940740d ]
 
-Devlink E-Switch mode changes replace the netdev profile without
-unregistering the netdev. XFRM state and policy creation can therefore
-run while mlx5e_priv_cleanup() clears priv with memset() or
-mlx5e_priv_init() initializes it again. Accesses to priv->mdev can
-observe NULL or a torn pointer, and repeated loads may return different
-values.
+gro_list_prepare() checks whether a held packet may belong to the same
+flow as the incoming one by comparing the device, VLAN tag, metadata
+and the link-layer header, using dev->hard_header_len as its length.
 
-Read priv->mdev once in each add callback and use the saved pointer
-throughout the callback, including error unwinding. The core device
-survives the in-place profile change, so a saved non-NULL pointer
-remains valid even if priv is cleared in the meantime.
+On devices without a link-layer header (hard_header_len == 0), such as
+L3 GRE tunnels, no compared byte carries the outer protocol:
+skb->protocol comes from the tunnel header. Packets of different
+protocols can then stay eligible, and the GRO handler selected from the
+incoming skb->protocol parses the held packet with the wrong layout.
 
-A NULL priv->mdev means a profile change is in progress, which only
-happens during an eswitch mode change. Return -EBUSY in that case, as
-mlx5_eswitch_block_mode() does for the same mode change. -EOPNOTSUPP
-would make xfrm_dev_state_add() silently fall back to software for a
-crypto offload SA for its whole lifetime.
+For example, take an IPv4/UDP packet held by UDP GRO and a
+VLAN/IPv4/TCP packet received on the same ipgre device.
+vlan_gro_receive() reads the first four bytes of the held IPv4 header
+as a VLAN header. With crafted values, the held packet survives up to
+tcp_gro_receive(), which uses its UDP header as a TCP header. With a
+short linear part, the FIN/PSH update of the held packet's TCP flags
+can then write into skb_shared_info.
 
-Use WRITE_ONCE() when initializing priv->mdev and when clearing it
-before memset(). This makes the transition to NULL atomic; the
-subsequent bulk clear only writes zero bytes over an already NULL
-pointer. Annotate the READ_ONCE() snapshots with data_race() to allow
-that harmless overlap with the unmarked memset() without suppressing
-checks for the rest of priv.
+The VLAN, GRE, IPv4 and IPv6 GRO handlers compare the next-protocol
+field of their own header, so once the outer protocol matches, the
+inner layers are checked too. Only the outermost protocol was not
+compared.
 
-This fixes the core-device pointer accesses. Protecting the IPsec
-context itself during state and policy creation is handled separately.
+Compare skb->protocol too. On Ethernet devices this is redundant with
+compare_ether_header(), but it is cheap.
 
-This was found by Sashiko, during review of the next patches in the
-series. No attempt was made at reproducing this race, the chances seem
-vanishingly small.
+GUE direct IP encapsulation has a similar issue, but there both packets
+have the same outer protocol, so it is fixed separately in
+gue_gro_receive().
 
-Fixes: 7a9fb35e8c3a ("net/mlx5e: Do not reload ethernet ports when changing eswitch mode")
-Signed-off-by: Cosmin Ratiu <cratiu@nvidia.com>
-Reviewed-by: Jianbo Liu <jianbol@nvidia.com>
-Signed-off-by: Tariq Toukan <tariqt@nvidia.com>
-Link: https://patch.msgid.link/20261105211637.1083978-6-tariqt@nvidia.com
+Fixes: 60769a5dcd87 ("ipv4: gre: add GRO capability")
+Reported-by: Kyle Zeng <kylebot@openai.com>
+Reviewed-by: Willem de Bruijn <willemb@google.com>
+Signed-off-by: Eric Dumazet <edumazet@kernel.org>
+Link: https://patch.msgid.link/20261109164540.3104392-1-edumazet@kernel.org
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../mellanox/mlx5/core/en_accel/ipsec.c       | 38 +++++++++++++------
- .../net/ethernet/mellanox/mlx5/core/en_main.c |  4 +-
- 2 files changed, 30 insertions(+), 12 deletions(-)
+ net/core/gro.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/net/ethernet/mellanox/mlx5/core/en_accel/ipsec.c b/drivers/net/ethernet/mellanox/mlx5/core/en_accel/ipsec.c
-index a8c7f09f903fc..c8c103b0a879a 100644
---- a/drivers/net/ethernet/mellanox/mlx5/core/en_accel/ipsec.c
-+++ b/drivers/net/ethernet/mellanox/mlx5/core/en_accel/ipsec.c
-@@ -773,12 +773,20 @@ static int mlx5e_xfrm_add_state(struct net_device *dev,
- {
- 	struct mlx5e_ipsec_sa_entry *sa_entry = NULL;
- 	bool allow_tunnel_mode = false;
-+	struct mlx5_core_dev *mdev;
- 	struct mlx5e_ipsec *ipsec;
- 	struct mlx5e_priv *priv;
- 	gfp_t gfp;
- 	int err;
+diff --git a/net/core/gro.c b/net/core/gro.c
+index 1b033855a20db..08e4731ddb7e6 100644
+--- a/net/core/gro.c
++++ b/net/core/gro.c
+@@ -374,6 +374,7 @@ static void gro_list_prepare(const struct list_head *head,
+ 		}
  
- 	priv = netdev_priv(dev);
-+	/* Profile cleanup can memset an already NULL mdev. */
-+	mdev = data_race(READ_ONCE(priv->mdev));
-+	/* NULL only during a profile change, which is an eswitch operation. */
-+	if (!mdev) {
-+		NL_SET_ERR_MSG_MOD(extack, "Eswitch busy, can't add state");
-+		return -EBUSY;
-+	}
- 	if (!priv->ipsec)
- 		return -EOPNOTSUPP;
- 
-@@ -797,16 +805,16 @@ static int mlx5e_xfrm_add_state(struct net_device *dev,
- 		return 0;
- 	}
- 
--	err = mlx5e_xfrm_validate_state(priv->mdev, x, extack);
-+	err = mlx5e_xfrm_validate_state(mdev, x, extack);
- 	if (err)
- 		goto err_xfrm;
- 
--	if (!mlx5_eswitch_block_ipsec(priv->mdev)) {
-+	if (!mlx5_eswitch_block_ipsec(mdev)) {
- 		err = -EBUSY;
- 		goto err_xfrm;
- 	}
- 
--	err = mlx5_eswitch_block_mode(priv->mdev);
-+	err = mlx5_eswitch_block_mode(mdev);
- 	if (err)
- 		goto unblock_ipsec;
- 
-@@ -877,9 +885,9 @@ static int mlx5e_xfrm_add_state(struct net_device *dev,
- 
- 	x->xso.offload_handle = (unsigned long)sa_entry;
- 	if (allow_tunnel_mode)
--		mlx5_eswitch_unblock_encap(priv->mdev);
-+		mlx5_eswitch_unblock_encap(mdev);
- 
--	mlx5_eswitch_unblock_mode(priv->mdev);
-+	mlx5_eswitch_unblock_mode(mdev);
- 
- 	return 0;
- 
-@@ -895,11 +903,11 @@ static int mlx5e_xfrm_add_state(struct net_device *dev,
- 	kfree(sa_entry->work);
- unblock_encap:
- 	if (allow_tunnel_mode)
--		mlx5_eswitch_unblock_encap(priv->mdev);
-+		mlx5_eswitch_unblock_encap(mdev);
- unblock_mode:
--	mlx5_eswitch_unblock_mode(priv->mdev);
-+	mlx5_eswitch_unblock_mode(mdev);
- unblock_ipsec:
--	mlx5_eswitch_unblock_ipsec(priv->mdev);
-+	mlx5_eswitch_unblock_ipsec(mdev);
- err_xfrm:
- 	kfree(sa_entry);
- 	NL_SET_ERR_MSG_WEAK_MOD(extack, "Device failed to offload this state");
-@@ -1268,16 +1276,24 @@ static int mlx5e_xfrm_add_policy(struct xfrm_policy *x,
- {
- 	struct net_device *netdev = x->xdo.dev;
- 	struct mlx5e_ipsec_pol_entry *pol_entry;
-+	struct mlx5_core_dev *mdev;
- 	struct mlx5e_priv *priv;
- 	int err;
- 
- 	priv = netdev_priv(netdev);
-+	/* Profile cleanup can memset an already NULL mdev. */
-+	mdev = data_race(READ_ONCE(priv->mdev));
-+	if (!mdev) {
-+		NL_SET_ERR_MSG_MOD(extack, "Eswitch busy, can't add policy");
-+		return -EBUSY;
-+	}
-+
- 	if (!priv->ipsec) {
- 		NL_SET_ERR_MSG_MOD(extack, "Device doesn't support IPsec packet offload");
- 		return -EOPNOTSUPP;
- 	}
- 
--	err = mlx5e_xfrm_validate_policy(priv->mdev, x, extack);
-+	err = mlx5e_xfrm_validate_policy(mdev, x, extack);
- 	if (err)
- 		return err;
- 
-@@ -1288,7 +1304,7 @@ static int mlx5e_xfrm_add_policy(struct xfrm_policy *x,
- 	pol_entry->x = x;
- 	pol_entry->ipsec = priv->ipsec;
- 
--	if (!mlx5_eswitch_block_ipsec(priv->mdev)) {
-+	if (!mlx5_eswitch_block_ipsec(mdev)) {
- 		err = -EBUSY;
- 		goto ipsec_busy;
- 	}
-@@ -1302,7 +1318,7 @@ static int mlx5e_xfrm_add_policy(struct xfrm_policy *x,
- 	return 0;
- 
- err_fs:
--	mlx5_eswitch_unblock_ipsec(priv->mdev);
-+	mlx5_eswitch_unblock_ipsec(mdev);
- ipsec_busy:
- 	kfree(pol_entry);
- 	NL_SET_ERR_MSG_MOD(extack, "Device failed to offload this policy");
-diff --git a/drivers/net/ethernet/mellanox/mlx5/core/en_main.c b/drivers/net/ethernet/mellanox/mlx5/core/en_main.c
-index 38ce7d0a9001e..77c54b1702a90 100644
---- a/drivers/net/ethernet/mellanox/mlx5/core/en_main.c
-+++ b/drivers/net/ethernet/mellanox/mlx5/core/en_main.c
-@@ -6383,7 +6383,7 @@ int mlx5e_priv_init(struct mlx5e_priv *priv,
- 	node = dev_to_node(mlx5_core_dma_dev(mdev));
- 
- 	/* priv init */
--	priv->mdev        = mdev;
-+	WRITE_ONCE(priv->mdev, mdev);
- 	priv->netdev      = netdev;
- 	priv->max_nch     = nch;
- 	priv->max_opened_tc = 1;
-@@ -6468,6 +6468,8 @@ void mlx5e_priv_cleanup(struct mlx5e_priv *priv)
- 		mlx5e_mqprio_rl_free(priv->mqprio_rl);
- 	}
- 
-+	/* Clear atomically before memset() for lockless XFRM readers. */
-+	WRITE_ONCE(priv->mdev, NULL);
- 	memset(priv, 0, sizeof(*priv));
- 	if (destroying) /* restore destroying bit, to allow unload */
- 		set_bit(MLX5E_STATE_DESTROYING, &priv->state);
+ 		diffs = (unsigned long)p->dev ^ (unsigned long)skb->dev;
++		diffs |= p->protocol != skb->protocol;
+ 		diffs |= p->vlan_all ^ skb->vlan_all;
+ 		diffs |= skb_metadata_differs(p, skb);
+ 		if (maclen == ETH_HLEN)
 -- 
 2.53.0
 
