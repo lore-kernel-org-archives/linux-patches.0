@@ -1,51 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795619392;
-	b=HjEE8gcEt9MO6Zav9mD4SJgjEOfe7AfhNuFVCumZoZ2f7EiKJYffl9VfjnYJULFdMuG+
-	 ux46/qd8dw/i63TLndI9Q9+g7HMYU1YrJWK7gSoRT7vb/FC/5PVtBrMxHsUNJ2/B4pk5V
-	 r5LYY10F10lsobYQIJlghX8wevFEf2B50LV5YxZ93JLdjTrMMBnLXibWze2YiYMg8X0Ty
-	 PaZOlXr3brR3AnjywOMTqj4Vz4H5aoRTrmWDWqpfe++jo6w7dHcMuJ0O0wDi8jOQSq4dP
-	 WFAsXA0wUl8kFMap+sjmfUX0ZHq6+tYCyXwLYkCKs2cmJQVm+IGt8qK/ZjcKVS6S+OQ==
+	t=1795619395;
+	b=Z+j/8bM6kAqq0c9vAXsnLOvUKZtVREvjnaVoHMiKzgfUIg7ZUguwrbZpMbcxaoDxiVv7
+	 TBm327m5TPhOhR/DBWkWA1JO+WAcPA0ZOMA4Zc6GEd+P7BhL/RIb0DIPhooJXuWu5g4IN
+	 nkBFMq/7NeJ7afRitDwOXvvA91kwn+rj/vxjHUdXDeIwzkE1cDi9h8SfChblpysAlwUL7
+	 /o8ZIhSnL7gJay3jSY0GUFh8aShwlyT6vojbZwMFpCimqqfzD/Y1S3I18tuj41PPx+Aph
+	 lYEcqmv6fP0THS2pe3+0mwb8M1YoIM+qF8l96YUGx/BhKYoOiFJcFkC7geDOKgwr9Bg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795619392;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795619395;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=MNz1KOwR6n96aCMZyo3IYB0MzFIl7ThI8kPFtwPsjx0=;
-	b=Xb/VjbCgRnJsv8/IuXtCfsrPRUtEYpFb8DiIoHpMjDpmQ4PO4qGZRdg0Ua3G5Dhzg8EJ
-	 SO4axmBTDiL8dDu/wUFes6rpZUwODWgoPIrojSAY/ahOwMvBz04t+mRSvU9m8usJJVYVL
-	 Bpx1cfplbSYPAoaERuoXIVH1OxS6lYP9Hyadl+9/4sPR92ngiMWB6ivAlBouxEmoHURVV
-	 LCWhH4e1dQDkPkoR8zecQd4R1mY8uQ2rfFaOx2UrMOV0ZJ/JPYfCGUZyrHuz9j6gwLYWQ
-	 nBXJnjakWYzci+pgLchSRaQ2rVw4oeflGT4I5W9KbLNN9Gdvg5dnB2AFAepXyJKbzig==
+	bh=oWNdKFh4IvrZ5IFaqHb9KxuNrSBVDkuBG/PgkDdp4nU=;
+	b=Alve6ZEmCLXsuc8zQOG60SYTzG7INauw9Zr/jbISFS/gXfsr+Eg3dfyk85BnHJZ41jtL
+	 j81Xxjqe/qCPOR9ySWB4jCoKkJm+8DJTsVxoaBZG/L13aMQSaC0d7w8uJ77cN3dVEEIrx
+	 2YnMyU8IXeJg+sGZd/O+oWrHorh+rQsaCkYpIOqRFXtXSMc2reT49hCfHWdlkRRJoZxjo
+	 NAjigRddx6bn3TkAM32FDdKxXeibLK4q5tjPA8THt7ceQ1vkdw4vz14xjlRVwc1PLwwtt
+	 OZfoNn1P23wVj3JE1jQgNWyrUVTj8D+HMx0dBaemNgd4zwrn/7GsjiliyoP2cn1Cwdg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=wRZdKFUb;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=tVB1LPp3;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F191C606A31E;
-	Wed, 25 Nov 2026 15:09:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 00C21606A32D;
+	Wed, 25 Nov 2026 15:09:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=wRZdKFUb
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B05AF1F000CF;
-	Wed, 25 Nov 2026 15:09:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=tVB1LPp3
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 039071F000C6;
+	Wed, 25 Nov 2026 15:09:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795619391;
-	bh=MNz1KOwR6n96aCMZyo3IYB0MzFIl7ThI8kPFtwPsjx0=;
+	s=korg; t=1795619394;
+	bh=oWNdKFh4IvrZ5IFaqHb9KxuNrSBVDkuBG/PgkDdp4nU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=wRZdKFUb6KQTsYXCTNLEb69XFzLrVABCfoR/9jNOiQMFl3DuDNXjfaEUloxsyGy8H
-	 EkkXqn5+Up4XjZLa/sW48JBF2tj4skwDBmLwMzA0gGP3ohUIeDTU10lSZJKPH28FH5
-	 ZZ3Fdzr44cHruxJXwqfw3mVK+ivG8rMRIxirexmM=
+	b=tVB1LPp3p08ysxpvDkUh6IerydSRMIVS5GmDj3oKii2GRvF0TwexaF6G98f8mAhTc
+	 7LGjae3JMzc3w5nx1lVakMFGM7dT4QLl/a17wFftFCTkmM6rn0ATHzvaxSPvordN2l
+	 5rP8KW0tzwnS5QO3CRRP4NT1h7GKZEDQ0ZBYiFiM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Runyu Xiao <runyu.xiao@seu.edu.cn>,
+	Adrian Hunter <adrian.hunter@intel.com>,
+	Ian Ray <ian.ray@gehealthcare.com>,
+	Haibo Chen <haibo.chen@nxp.com>,
 	Ulf Hansson <ulfh@kernel.org>
-Subject: [PATCH 7.3 0580/1005] mmc: omap: synchronize clock timer before disabling fclk
-Date: Wed, 25 Nov 2026 15:31:58 +0100
-Message-ID: <20261125143835.335300060@linuxfoundation.org>
+Subject: [PATCH 7.3 0581/1005] mmc: sdhci-esdhc-imx: map unsupported driver type to Type B
+Date: Wed, 25 Nov 2026 15:31:59 +0100
+Message-ID: <20261125143835.359083635@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143821.729802100@linuxfoundation.org>
 References: <20261125143821.729802100@linuxfoundation.org>
@@ -67,52 +69,71 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Runyu Xiao <runyu.xiao@seu.edu.cn>
+From: Ian Ray <ian.ray@gehealthcare.com>
 
-commit c931c51681e33b24bc8d65c6df35b70e1827daa2 upstream.
+commit d35d93c2902592a84347a15deac4d67a323694c9 upstream.
 
-mmc_omap_select_slot() removes clk_timer with timer_delete() before
-switching slots and changing the functional clock state.  timer_delete()
-only removes a pending timer and does not wait for a callback that is
-already running.
+Since commit 5a52c5701a67 ("mmc: core: Fix host controller programming
+for fixed driver type"), the eMMC driver strength is passed directly to
+mmc_set_driver_type(), which propagates the value through ios.drv_type
+all the way to sdhci_set_ios().  For value 4, SDHCI correctly warns:
 
-If mmc_omap_clk_timer() is already running, it can therefore call
-mmc_omap_fclk_enable() while the request or slot-switch path changes the
-same clock state.  During host removal, the same window can overlap the
-final clock shutdown.
+  mmc2: invalid driver type, default to driver type B
 
-Use timer_delete_sync() so the callback has completed before slot switching
-or changing the functional clock state.  Keep the timer restartable for
-normal request handling.
+The host driver type has no effect on this controller: esdhc_writew_le()
+never programs the driver-type field of SDHCI_HOST_CONTROL2.  Hook
+set_ios() and force drv_type to the always-valid Type B, so that SDHCI
+never sees an unsupported value.
 
-Fixes: 0807a9b5739a ("MMC: OMAP: Lazy clock shutdown")
+Tested on i.MX8MP (usdhc3, eMMC in HS400) with
+`fixed-emmc-driver-type = <4>`: the warning is gone and the HS_TIMING
+register contains 0x43 as expected.
+
+Fixes: 5a52c5701a67 ("mmc: core: Fix host controller programming for fixed driver type")
+Link: https://lore.kernel.org/all/20260926122908.866-1-ian.ray@gehealthcare.com/
 Cc: stable@vger.kernel.org
-Signed-off-by: Runyu Xiao <runyu.xiao@seu.edu.cn>
+Suggested-by: Adrian Hunter <adrian.hunter@intel.com>
+Signed-off-by: Ian Ray <ian.ray@gehealthcare.com>
+Acked-by: Adrian Hunter <adrian.hunter@intel.com>
+Reviewed-by: Haibo Chen <haibo.chen@nxp.com>
 Signed-off-by: Ulf Hansson <ulfh@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/mmc/host/omap.c |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/mmc/host/sdhci-esdhc-imx.c |   17 +++++++++++++++++
+ 1 file changed, 17 insertions(+)
 
---- a/drivers/mmc/host/omap.c
-+++ b/drivers/mmc/host/omap.c
-@@ -214,7 +214,7 @@ static void mmc_omap_select_slot(struct
- 	host->mmc = slot->mmc;
- 	spin_unlock_irqrestore(&host->slot_lock, flags);
- no_claim:
--	timer_delete(&host->clk_timer);
-+	timer_delete_sync(&host->clk_timer);
- 	if (host->current_slot != slot || !claimed)
- 		mmc_omap_fclk_offdelay(host->current_slot);
- 
-@@ -273,7 +273,7 @@ static void mmc_omap_release_slot(struct
- 		/* Keeps clock running for at least 8 cycles on valid freq */
- 		mod_timer(&host->clk_timer, jiffies  + HZ/10);
- 	else {
--		timer_delete(&host->clk_timer);
-+		timer_delete_sync(&host->clk_timer);
- 		mmc_omap_fclk_offdelay(slot);
- 		mmc_omap_fclk_enable(host, 0);
+--- a/drivers/mmc/host/sdhci-esdhc-imx.c
++++ b/drivers/mmc/host/sdhci-esdhc-imx.c
+@@ -1142,6 +1142,20 @@ static void esdhc_reset_tuning(struct sd
  	}
+ }
+ 
++static void sdhci_esdhc_imx_set_ios(struct mmc_host *mmc, struct mmc_ios *ios)
++{
++	/*
++	 * This controller has no driver-type control: esdhc_writew_le()
++	 * discards the driver-type field when writing SDHCI_HOST_CONTROL2.
++	 * The programmed value is therefore irrelevant, but SDHCI rejects
++	 * non-SD values such as 4 (eMMC 40 ohm, from fixed-emmc-driver-type).
++	 * Force an always-valid Type B.
++	 */
++	ios->drv_type = MMC_SET_DRIVER_TYPE_B;
++
++	sdhci_set_ios(mmc, ios);
++}
++
+ static void usdhc_init_card(struct mmc_host *mmc, struct mmc_card *card)
+ {
+ 	struct sdhci_host *host = mmc_priv(mmc);
+@@ -1952,6 +1966,9 @@ static int sdhci_esdhc_imx_probe(struct
+ 		host->max_timeout_count = 0xF;
+ 	}
+ 
++	/* No SDHCI driver type control */
++	host->mmc_host_ops.set_ios = sdhci_esdhc_imx_set_ios;
++
+ 	if (imx_data->socdata->flags & ESDHC_FLAG_MAN_TUNING)
+ 		sdhci_esdhc_ops.platform_execute_tuning =
+ 					esdhc_executing_tuning;
 
 
