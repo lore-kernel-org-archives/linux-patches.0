@@ -1,52 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795623199;
-	b=w3zFAi808STEbtcc5dnLIc3ndy4QHWl65Os6/KWtoH1MzmAjZ2LhOSuGc0g1FiaPabKf
-	 biXZQC1JCX4NJhZNU2vJbyITKFmrpphmEGjZW22RDeTn/Y1iv+OrLHJemTB1AAtyi05Ib
-	 wdlLyJY2ejQLt5Y4knGt8iDzSGIqWrIUbNCiLWeCH/9yWzBYAC3cXairvt8MHyWsIZuse
-	 dF43a/IcKw6xE0kmCYVdpFosVndup9qVD7SQGEA6TRlSHs+uyWIYOuvv2B09sXw3lDOnH
-	 KT2vL89mk1pH/4Sd0sqpWQdMuVmvBEGjGr9/ktUnQZlkyvAls6x8ogizT+R62emo+MA==
+	t=1795623202;
+	b=vUbnGjLXEUmU4SBAuQA0cN1SePg0mHWTsSYB6pF/9YXEsQhGoVHCz9ThBHjRKiWAaXWl
+	 LHdA8iYgRD5dOBdAITqyFKBRsNm0jd/VbJD7zw2iQJN2G6F8z4LCDKdb24NCRJRw03ZLa
+	 IBOX3HQnoiTUDCaXEiRkZjbq+k8RtwlBbqZIhyMeo24ybWGYQGOLnk022SOhJVo8oa4R/
+	 9eh4SqEJtu69wky4uSMxOchHW1jLCU5UiXaAhNRGvRl7TnDLrEExtTO/zPEFkNw2mTnLI
+	 pjwfbOWPynsBtI2ggh+jGw7HvDCEJ/89QO7W/ZUk3W4jCB3UwncyebkO4n54EdEPJBg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795623199;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795623202;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=QzN7Fmv1yzVkqPOu0CDr4lBwd06GfC5eGIpwJ3Y1FfY=;
-	b=xluT5BhjaczlQMdVBoTSzhRPNj12jYgTmFj5aDzsSpuf6KAX1y0rF72HCDEeQa/XxVLc
-	 5rc1wSsIJJdksu04Smiq3N/fRmMm6x0HZKl31HcVralTjZ+M/+fA5CTM4ezkWCiQTwyJ3
-	 aHjNKStphnohxKgjREbtRykMfZrquISoZfx9fAqVzFJ/J6QTTPNVkNGO7d6U3Kx/zJgL9
-	 CuGwA8vCBlgu99LMjw6p/7H++lgxApp1FEIJ9ZkUOCWQMOeFBE5khUuQGuYFGbsiCfugq
-	 1hwHq4PeqGr7Fhzh7WCC99+e5hiKltK+GlozllE/Sqwd6z1xtx2Lf0I7xflzb+rT8LA==
+	bh=qlCcFaaPUgO1oyBC5XUYJMYRuLbZqjQBURti5o6er4k=;
+	b=JIg3dDfJklTrmf5X16yS22JT8QdtpD3VVrYmrf4gQXkag6BAyYHetB+im7W8xUpeoDtr
+	 KEjmUW4uuexG5pycykySiALApN2iMwiDAl+QdypC5A2TKY6IPWw71UFE2l52uy9GZmfif
+	 V+2XDPF58zT7Is8qWOYuh/3Y9ERD/smt67URcAlvwreH8Lpgcvn/7LayY+OVa+pDkr/ZW
+	 81IuJn6/uM1X4beG6JeNv4bB/kut+juMAtI5NgGGcRFN/Rw+JsXWN2iKKwRONALoenx4G
+	 1vv0XL00SXs1qjsNKvoFWGD80jPISM6aEfuBVLFZmzX+T6e/3K2w/bp1tQrl+MOn1AQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=BDQBei0S;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=I+u7LlB2;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E9C43606A321;
-	Wed, 25 Nov 2026 16:13:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 87F98606A321;
+	Wed, 25 Nov 2026 16:13:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=BDQBei0S
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3F6BA1F000C4;
-	Wed, 25 Nov 2026 16:13:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=I+u7LlB2
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 917C91F000CA;
+	Wed, 25 Nov 2026 16:13:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795623198;
-	bh=QzN7Fmv1yzVkqPOu0CDr4lBwd06GfC5eGIpwJ3Y1FfY=;
+	s=korg; t=1795623202;
+	bh=qlCcFaaPUgO1oyBC5XUYJMYRuLbZqjQBURti5o6er4k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=BDQBei0S2Fpw/OwnWs+uKkymqT/RLokZkFLb96/FwdLsY6KQEra2r+eiVV8uS2fTA
-	 jpIPyxggf8+XAhp9UzN3E1yc6Co0cs2XffyGy5br1c5T0xmC038dtZHHCzpfEHthtK
-	 pcVeTwye+/nd5MeCSNmMh3VcF6DKNrHuCqmzl7a4=
+	b=I+u7LlB278h5lzn4CRlnuqMRGSSeRZY/bMZtV+lAj+JhIAAQ56AOI+tBt9uE0PJLf
+	 p0XBAgwTBW78vabjYRSgIj+FFvRhyl9vD7znCoTJ4HT5bHtCRXEXZ+2zxsawlVh//A
+	 IpPZG8sTXWsiNIVGwUcZB/037/ldzeZISRDL8QuI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sashiko <sashiko-bot@kernel.org>,
-	Sudeep Holla <sudeep.holla@kernel.org>,
+	Stanislav Aleksandrov <lightofmysoul@gmail.com>,
 	Guenter Roeck <linux@roeck-us.net>
-Subject: [PATCH 6.18 780/990] hwmon: (scmi) Check channel config allocation
-Date: Wed, 25 Nov 2026 15:35:47 +0100
-Message-ID: <20261125143840.320434274@linuxfoundation.org>
+Subject: [PATCH 6.18 781/990] hwmon: (max31760) Fix the local temperature limit registers
+Date: Wed, 25 Nov 2026 15:35:48 +0100
+Message-ID: <20261125143840.342373593@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143822.072087159@linuxfoundation.org>
 References: <20261125143822.072087159@linuxfoundation.org>
@@ -68,64 +67,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sudeep Holla <sudeep.holla@kernel.org>
+From: Stanislav Aleksandrov <lightofmysoul@gmail.com>
 
-commit a2996d892d0150d059d39c683d95d6fd7a37630a upstream.
+commit 028ed93145d9be88eee670088ef13482b5d36c1a upstream.
 
-scmi_hwmon_add_chan_info() can fail to allocate a channel's config
-array. Ignoring that error leaves a channel with a NULL config pointer
-in the hwmon chip info, which hwmon dereferences while registering the
-device.
+temp2_max and temp2_crit use each other's registers, so reading them
+shows the local limits swapped and writing temp2_max changes the
+overtemperature (SHDN) threshold.
 
-Check the helper's return value and abort probe on failure.
+Use the high limit (0x0C) for temp2_max and the overtemperature limit
+(0x08) for temp2_crit.
 
-Reported-by: Sashiko <sashiko-bot@kernel.org>
-Closes: https://sashiko.dev/#/bug/linux-d10ced6b-a6f0-403b-9619-f5a6573f9e7f
-Fixes: b23688aefb8b ("hwmon: add support for sensors exported via ARM SCMI")
+Fixes: 38b04ad02d0d ("drivers: hwmon: Add max31760 fan speed controller driver")
 Cc: stable@vger.kernel.org
-Signed-off-by: Sudeep Holla <sudeep.holla@kernel.org>
-Link: https://patch.msgid.link/20261109151927.1672956-1-sudeep.holla@kernel.org
+Signed-off-by: Stanislav Aleksandrov <lightofmysoul@gmail.com>
+Link: https://patch.msgid.link/20261108-max31760-fixes-v1-1-a61450463059@gmail.com
 Signed-off-by: Guenter Roeck <linux@roeck-us.net>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/hwmon/scmi-hwmon.c |   12 +++++++-----
- 1 file changed, 7 insertions(+), 5 deletions(-)
+ drivers/hwmon/max31760.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/drivers/hwmon/scmi-hwmon.c
-+++ b/drivers/hwmon/scmi-hwmon.c
-@@ -228,8 +228,8 @@ static int scmi_thermal_sensor_register(
+--- a/drivers/hwmon/max31760.c
++++ b/drivers/hwmon/max31760.c
+@@ -27,8 +27,8 @@
  
- static int scmi_hwmon_probe(struct scmi_device *sdev)
- {
--	int i, idx;
- 	u16 nr_sensors;
-+	int i, idx, ret;
- 	enum hwmon_sensor_types type;
- 	struct scmi_sensors *scmi_sensors;
- 	const struct scmi_sensor_info *sensor;
-@@ -297,8 +297,12 @@ static int scmi_hwmon_probe(struct scmi_
- 		if (!nr_count[type])
- 			continue;
+ #define REG_TACH(ch)		(0x52 + (ch) * 2)
+ #define REG_TEMP_INPUT(ch)	(0x56 + (ch) * 2)
+-#define REG_TEMP_MAX(ch)	(0x06 + (ch) * 2)
+-#define REG_TEMP_CRIT(ch)	(0x0A + (ch) * 2)
++#define REG_TEMP_MAX(ch)	((ch) ? 0x0C : 0x06)
++#define REG_TEMP_CRIT(ch)	((ch) ? 0x08 : 0x0A)
  
--		scmi_hwmon_add_chan_info(scmi_hwmon_chan, dev, nr_count[type],
--					 type, hwmon_attributes[type]);
-+		ret = scmi_hwmon_add_chan_info(scmi_hwmon_chan, dev,
-+					       nr_count[type], type,
-+					       hwmon_attributes[type]);
-+		if (ret)
-+			return ret;
-+
- 		*ptr_scmi_ci++ = scmi_hwmon_chan++;
- 
- 		scmi_sensors->info[type] =
-@@ -333,8 +337,6 @@ static int scmi_hwmon_probe(struct scmi_
- 		return PTR_ERR(hwdev);
- 
- 	for (i = 0; i < nr_count_temp; i++) {
--		int ret;
--
- 		sensor = *(scmi_sensors->info[hwmon_temp] + i);
- 		if (!sensor)
- 			continue;
+ #define TEMP11_FROM_REG(reg)	((reg) / 32 * 125)
+ #define TEMP11_TO_REG(val)	(DIV_ROUND_CLOSEST(clamp_val((val), -128000, \
 
 
