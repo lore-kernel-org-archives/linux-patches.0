@@ -1,54 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795620675;
-	b=CzvraG/BTIMdVsnhh0bkQoG/bpw1g7XwDSzrzK0cZdEpB7CrfRea0wkJOCwa5Tk31p8m
-	 KbqM7HCucKZTeeE7mzN7vAgkNM2A1yEWzs4a6dJwae4uJYd1e1vEpV58BKwy9MYx14qoj
-	 XT+1xrE6rhLdJKlsh38N/gP0hJfJrN2RH/tAT3Xr7wtaO6+Zyve6J4s4K1PNMrwyg2hez
-	 vWx5A4FQMTiD/0yhZ7TYO8MxM5iDO2yrxlXx150xcHUymECduP+JLyt6tgmkZCPcXegbV
-	 YvDwGvhQ5/uwT4V30uU5Ac4EQJW9brIPsoEu9LliDzZMQjLSr6LL0B+rXysiPrKB/gA==
+	t=1795620678;
+	b=Kr1ZkkqF2m9Gc2GX5FmgNQ7cmBFgeo9HuWcz+1Z/B1lf4R3wh20L7jyKpDbs+Tt+Ia2R
+	 FE2kgSPpBmEukKVCBC7Ykwj9L0LwvYjW830tDJPIsYx7WX+qS8eGIxrHu5wlFQnArXDoV
+	 eFWt9IKefZpsiym65Tw55cy/azqeAHV+np+dMRtiQjitrXIkVMFtLwjhY49VQRPGOee8h
+	 tRCdjoGbUu9vxiUyS9mNUNrnaoGmeIqPzDoETa6AcZSuE44w5ApII6uTiDyJ5E8/ZuWFH
+	 6pkTqCyU35uOY6f9dhG84iV0D/pswl1A1wg38O7a9anEKpA1Ca32NHPwdGEDFIb/rxQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795620675;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795620678;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=1rPFL42K9z5QQf5kdzHP4LRIOcafsRQ30yqk9GJ9TjU=;
-	b=NSKhhSa4hccAVL7IWo9poiMlI1joaWcKCTK3dTd/E4qB8L7tk9p/uyOFXziNU7q4nz0B
-	 vo73FmF4T73GtbKlRuLkInuoRfvEkpvHKAQMjbN1vTpX5oRC7GB+91c4vA1oTb4J7jjnl
-	 v8aglKgEn4s1DPmADp+cBaIJLCcViFGd4/7YnnhrU4Rz4QgDplsA9NRLZvTG1hv8PRjBE
-	 AKdi0NLmXabJxsR/Te9yRAOkkqV1O4N2VPypNENNnZ63HcaNTTnyGlldgcroZRjAyoYJ1
-	 2OSiXpqgWCOaXZygrwYRw6ZcZAOq7FDgr+kgRf7KzkZ385C34U2q73IrG8MDpX7sgyg==
+	bh=+4zUlId3CxOISWweUDhH0a8hZc3diaxJzg1iVVuHIvs=;
+	b=s7jhLL563ar66rCHzr9xlzuyshXAK5ggXRpKcJGSc2C4tumdF1m7X5BEr3l/ZdDjuRpV
+	 IDBExoUK4aJB/x4cK1hatU/62l77zL3HcaBDoxJXNrq5ZMkP7hI73xrv6c7SdlllITJKb
+	 wI3rmxeKKZhbyw9rwwKbUtTUBLUaFGa2nY8YR6jMa1udoE7kNX7GZ3GfPNSEwzgma+LGf
+	 5hN3+76P/bqSD24IBYrJWB95jQxE94lade/daUnnUD76uaxwiAT0A5XkGCFDvz98R4PQB
+	 lCH4Odot+5QV4cTsp6YzDYlcw43+9pX+nQ9gxcqWh/vD90L0bQ3bH2NlmGLQpfE62iw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ZCQyrMOW;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ZR8zH9UW;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3BE7A606A31E;
-	Wed, 25 Nov 2026 15:31:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7AA01606A321;
+	Wed, 25 Nov 2026 15:31:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ZCQyrMOW
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 55F5F1F000D3;
-	Wed, 25 Nov 2026 15:31:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ZR8zH9UW
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9AE321F000D2;
+	Wed, 25 Nov 2026 15:31:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795620674;
-	bh=1rPFL42K9z5QQf5kdzHP4LRIOcafsRQ30yqk9GJ9TjU=;
+	s=korg; t=1795620678;
+	bh=+4zUlId3CxOISWweUDhH0a8hZc3diaxJzg1iVVuHIvs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ZCQyrMOWkzkKOVoNCC89Rxc/fDqKrYRrHLRsEScVKHS5qiIehDp0Ssd+ezmWHEzmH
-	 YvX7y/KOAl6HwqqKYgfKPBGy8dMZy9wJIwaiozsXemsaPBck8QYCaVTROg8VZ3RxGf
-	 3ggbKqqXQZefFD7PVWOvVzM7GvVtXsZrlOQGTLZQ=
+	b=ZR8zH9UWBIj2tzanypu5iGCJ+ACu6+VpftNJboznhydd7lLCnRjghJQ+kb6ak/YPu
+	 OXT68ofcZ5siKuvrvttoBe1WW8N46UwN+NVc7Cn4bwKcb4dndjyvPaK6KB63L1wFtb
+	 a/iR2K3lFpJyhJe1kEbotF2rufdhbMPeCmOJ6D9Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mohamed Khalfella <mkhalfella@purestorage.com>,
-	Mani Tofigh <mt4022@columbia.edu>,
-	Christoph Hellwig <hch@lst.de>,
-	Nilay Shroff <nilay@linux.ibm.com>,
-	Jens Axboe <axboe@kernel.dk>
-Subject: [PATCH 7.3 0997/1005] blk-mq: take quiesce_lock when removing a queue from the tag set
-Date: Wed, 25 Nov 2026 15:38:55 +0100
-Message-ID: <20261125143845.008313033@linuxfoundation.org>
+	Hyunjung Ko <hj351016@gmail.com>,
+	Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
+Subject: [PATCH 7.3 0998/1005] gpio: mpsse: reject bulk-in endpoints smaller than 3 bytes
+Date: Wed, 25 Nov 2026 15:38:56 +0100
+Message-ID: <20261125143845.031884589@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143821.729802100@linuxfoundation.org>
 References: <20261125143821.729802100@linuxfoundation.org>
@@ -70,109 +67,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mani Tofigh <mt4022@columbia.edu>
+From: Hyunjung Ko <hj351016@gmail.com>
 
-commit 495f22c5a99ac38e527294cdc4f3972718b9bee0 upstream.
+commit f94f85f82e042c89a1e64ed3ff1d591a2bccfa7b upstream.
 
-Unquiescing a tag set can run the hw queues of a queue whose hctxs were
-already freed.  blk_mq_unquiesce_tagset() walks the tag set's queues
-under quiesce_lock and rcu_read_lock().  Commit 71ec3c7d6db8 ("blk-mq:
-quiesce a queue that joins a quiesced tag set") added quiesce_lock to
-the walks and to adding a queue, but blk_mq_del_queue_tag_set() still
-removes a queue without it.  The hctxs are then freed right away since
-RCU only keeps the request_queue itself alive:
+mpsse_read() reads min(len + 2, wMaxPacketSize) bytes and then copies
+len_actual - 2 bytes to the caller. A device that declares a bulk-in
+endpoint with wMaxPacketSize 1 completes the read with len_actual 1, so
+the copy length becomes -1 and memcpy() runs far past the one byte
+buffer on the caller's stack and past bulk_in_buf:
 
-  Task A (controller reset)            Task B (namespace removal)
-  blk_mq_unquiesce_tagset()
-    /* finds q */
-                                       blk_mq_del_queue_tag_set(q)
-                                       blk_mq_release(q)
-                                         /* frees the hctxs */
-    blk_mq_run_hw_queues(q)
-      /* reads freed hctxs */
+  memcpy: detected buffer overflow: 18446744073709551615 byte write of buffer size 1
+  WARNING: lib/string_helpers.c:1036 at __fortify_report+0x6e/0xc0
+  Call Trace:
+   __fortify_panic+0xd/0x10
+   gpio_mpsse_get_multiple+0x767/0x780
+   gpio_mpsse_gpio_get+0xa2/0xf0
+   gpiod_get_raw_value_commit+0xf8/0x1f0
+   gpiod_get_value_cansleep+0x1e/0xa0
+   value_show+0x42/0x90
 
-The window is short.  On PREEMPT_RT quiesce_lock is a sleeping lock and
-the walk can be preempted inside it, which is how it's hit here:
+Reproduced with dummy_hcd and raw-gadget. A read needs room for the two
+status bytes plus at least one data byte, so refuse to bind otherwise.
 
-  [  399.851277] BUG: KASAN: slab-use-after-free in blk_mq_run_hw_queues+0x4bd/0x550
-  [  399.851328] Read of size 8 at addr ff11000003014148 by task kworker/u9:2/116
-  [  399.851352] CPU: 1 UID: 0 PID: 116 Comm: kworker/u9:2 Not tainted 7.3.0-16299-g81cb9aa43246 #1 PREEMPT_RT
-  [  399.851425] Workqueue: nvme-reset-wq nvme_loop_reset_ctrl_work
-  [  399.851441] Call Trace:
-  [  399.851457]  <TASK>
-  [  399.851551]  blk_mq_run_hw_queues+0x4bd/0x550
-  [  399.851564]  blk_mq_unquiesce_tagset+0x128/0x210
-  [  399.851576]  nvme_loop_reset_ctrl_work+0x78/0x4c0
-  [  399.851600]  process_one_work+0x92b/0x16d0
-  [  399.851660]  worker_thread+0x4e6/0xd60
-  [  399.851707]  kthread+0x300/0x3e0
-  [  399.851727]  ret_from_fork+0x4f0/0x6f0
-  [  399.851776]  ret_from_fork_asm+0x1a/0x30
-  [  399.851793]  </TASK>
-  ...
-  [  399.851988] Freed by task 111:
-  [  399.852040]  kfree+0x1b3/0x4b0
-  [  399.852050]  blk_mq_release+0x400/0x550
-  [  399.852060]  blk_put_queue+0x94/0x120
-  [  399.852068]  disk_release+0x1bd/0x3f0
-  [  399.852102]  nvme_free_ns+0x39/0x270
-  [  399.852113]  nvme_remove_nsid_range+0x2d1/0x4a0
-  [  399.852123]  nvme_scan_ns_list+0x2cc/0x390
-  [  399.852134]  nvme_scan_work+0x421/0x9f0
-  ...
-
-With BLK_CGROUP the disk's root blkg holds the queue until a grace
-period later, which hides this for NVMe namespaces.  It's still open
-without BLK_CGROUP, and from reading the code also for queues freed
-without a disk (e.g., SCSI device queues on a UFS host).
-
-Take quiesce_lock around the list_del_rcu() as well so that the walk
-either finishes with a queue before it leaves the list or never sees
-it, and say so in the comment of quiesce_lock.  With the fix, KASAN
-doesn't report the use-after-free anymore.
-
-This bug was identified and confirmed with the help of a deterministic
-hypervisor currently under development.  The C reproducer below however
-hits it about once every 20 minutes on a PREEMPT_RT kernel.
-
-Fixes: 59e25ef2b413 ("block: Use RCU in blk_mq_[un]quiesce_tagset() instead of set->tag_list_lock")
+Fixes: c46a74ff05c0 ("gpio: add support for FTDI's MPSSE as GPIO")
 Cc: stable@vger.kernel.org
-Reviewed-by: Mohamed Khalfella <mkhalfella@purestorage.com>
-Signed-off-by: Mani Tofigh <mt4022@columbia.edu>
-Reviewed-by: Christoph Hellwig <hch@lst.de>
-Reviewed-by: Nilay Shroff <nilay@linux.ibm.com>
-Link: https://patch.msgid.link/20261106-blk-mq-del-quiesce-lock-v2-1-cd4f72a6eb03@columbia.edu
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Signed-off-by: Hyunjung Ko <hj351016@gmail.com>
+Link: https://patch.msgid.link/20261117104110.240112-1-hj351016@gmail.com
+Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- block/blk-mq.c         |    3 +++
- include/linux/blk-mq.h |    3 ++-
- 2 files changed, 5 insertions(+), 1 deletion(-)
+ drivers/gpio/gpio-mpsse.c |    4 ++++
+ 1 file changed, 4 insertions(+)
 
---- a/block/blk-mq.c
-+++ b/block/blk-mq.c
-@@ -4341,7 +4341,10 @@ static void blk_mq_del_queue_tag_set(str
+--- a/drivers/gpio/gpio-mpsse.c
++++ b/drivers/gpio/gpio-mpsse.c
+@@ -676,6 +676,10 @@ static int gpio_mpsse_probe(struct usb_i
+ 	if (err)
+ 		return err;
  
- 	lockdep_assert_held(&set->tag_list_lock);
- 
-+	/* blk_mq_unquiesce_tagset() runs the hctxs, which are not RCU freed */
-+	spin_lock(&set->quiesce_lock);
- 	list_del_rcu(&q->tag_set_list);
-+	spin_unlock(&set->quiesce_lock);
- 	if (list_is_singular(&set->tag_list)) {
- 		/* just transitioned to unshared */
- 		set->flags &= ~BLK_MQ_F_TAG_QUEUE_SHARED;
---- a/include/linux/blk-mq.h
-+++ b/include/linux/blk-mq.h
-@@ -524,7 +524,8 @@ enum hctx_type {
-  * @tag_list:	   List of the request queues that use this tag set. See also
-  *		   request_queue.tag_set_list.
-  * @quiesce_lock:  Serializes blk_mq_[un]quiesce_tagset() against each other
-- *		   and against a request queue being added to @tag_list.
-+ *		   and against a request queue being added to or removed from
-+ *		   @tag_list.
-  * @quiesce_depth: How often blk_mq_quiesce_tagset() has been called without
-  *		   blk_mq_unquiesce_tagset().
-  * @srcu:	   Use as lock when type of the request queue is blocking
++	/* Every read carries two status bytes ahead of the data */
++	if (usb_endpoint_maxp(priv->bulk_in) < 3)
++		return -EINVAL;
++
+ 	priv->bulk_in_buf = devm_kmalloc(dev, usb_endpoint_maxp(priv->bulk_in),
+ 					 GFP_KERNEL);
+ 	if (!priv->bulk_in_buf)
 
 
