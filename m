@@ -1,53 +1,55 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795624684;
-	b=oflDxCwU/dQ/yWfDZeEmMdlIpQSBr3Z9yugDqVG8lJhogns8ROoaInldfz1+ECeycu9J
-	 zlSmIYXwL7Ocq+98yvYAd1O7X2op7hnnv33Pq0Xk754ie8qkOuuV1I1K3BP23lYHw/5H/
-	 eBIX4KMLOnKkQHgiW2TTtRrEESpQQu0rDPet9l0uNFFJQvTYk7EkUCnWK3rEh01Ne6WJr
-	 ch71iOzT5mF+KnlAYpDKrryazSvfxKYDvzVHyQBJ5in113b9P16fMPjnXr9OVhWGeCsiD
-	 1U07sCCZFXydBr16vd0FLzd/bJ1JieAhlT2j9sg/dHchRMAXGj9+Opu2K5u9v3SOV7Q==
+	t=1795624686;
+	b=Ps6mZk4MgMt+NIKCm/7HjIvWg5ikcc0L+hJyqPjDTFT8NYfU4I7OmiZRF/NCIMbVlGt9
+	 4t6MfhhKvCA/1MT4oyiTCrDFSgLSnTjB9NXdT0ekqFzIVqi3vw6MMTLASst2+z8VTayXq
+	 8yr5pnldPvxzmEG9pQpcnNj0F7wiCKG3dVHR+XvXzAVdKBpmVSOLOgsP+HiYrzhq2K2Y4
+	 sODRnUfYab1iBV6hOGWjVlgVH7eintihzEPotq+Cw+/7c2WfWiLve1D9uCR+DZvFi328C
+	 d6VMrecJLYcoyvQSenUzqoRE1zVDQKgfEBoDCUrxTUB5sXNTXseX3Qarjv+I5JZrU4w==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795624684;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795624686;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=jftNaX7CEflR0kJ+nwuj+qAqnLMNEyeLmC32NdzcXh0=;
-	b=2Q9hG+3zaFJPzs7rq/mk6R2Ym4A9gzQQQKetKoVbiyTi23xP3HnhsD4HffpUg7slGJAY
-	 msbECUoGin03F/aYmFRp99Rje6SpfVunyiE6cFtpvifdQ94jRJB5vIobv0DDaA14o/Xfi
-	 nzev/HLtGFRnNSsoKtRHvoGRpYl8FyVB7yoirhiqhjmKeUSu3H0f/TG185vFjGMCnSbIC
-	 WYEyVZooXNWkxWsug+PB/yqkgtlGLaiq4uR+LKap+yTPIx/LxkpBKx28kjy+Oi7eLHivt
-	 zdQch72JD/5glT4Y54Oocg/I2Nrzeyo+HQDCneeXRLsVqUeOmoT/QrrBo7Tco2zOsRw==
+	bh=Cerm2sYqH5JmKtv+DEuQR0Rtq5WZMNFlPJfvHpt+bEc=;
+	b=NzRWNDHl2PPL2hRvFu3aHXNa0XOiaeta8Z9c87H4VG1dHmKjl+zE3A8X4oVskpoGUEb+
+	 qdKwnl74ACNONkiIuWCf7oL7TbxrZ/FGvow4wxCNRAmMwbFAMRPi79cy9REJ6PjgwuRyb
+	 b2d1ppsTx5fGbqSIWmAruTStLrWlm5II0oNF5vLnxIc3y3n1aFuh3NFsfVE18DjuYHxe3
+	 /dFM90YnKQJmqVakmZ/oPSrGkRBUA0HcdhlLV998e0t2QaLvLEZaiZkK95qHm4rcFjKit
+	 JWfOhWhoSmWEVT5o+/E87IWu1bNZfGoeiHtXhS6+8bPSg9D8yl6w4iXl4q9k4gdzr+Q==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=uBlqbCOa;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=RGn+OMZF;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EF1E3606A338;
-	Wed, 25 Nov 2026 16:38:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 99DC9606A339;
+	Wed, 25 Nov 2026 16:38:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=uBlqbCOa
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0CAF31F000C4;
-	Wed, 25 Nov 2026 16:38:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=RGn+OMZF
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C99D21F000C6;
+	Wed, 25 Nov 2026 16:38:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795624683;
-	bh=jftNaX7CEflR0kJ+nwuj+qAqnLMNEyeLmC32NdzcXh0=;
+	s=korg; t=1795624686;
+	bh=Cerm2sYqH5JmKtv+DEuQR0Rtq5WZMNFlPJfvHpt+bEc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=uBlqbCOajxkTh//w40dOYYrDIl/WqYZ2cXUDSPqQlt2mqzoIebrXVT4PBEu3+NBx2
-	 O25NCYQEbJw1j2wU3O1hGBLobDze2bWTctYB6HBo3wYpxiypgvIqFG+xz2KVKR+02g
-	 WZS+GHRaepWZQ8HhZ1kmbXZ4ES5LlfSGU7ova724=
+	b=RGn+OMZFlE7P1WXWVW7a7SwR4qE88vhEyvja3zr8YsB7vP5aTZgpM8Js5VfTg+vBS
+	 tOoa6QSupEzSqxCkWEBGB11o/snliM+k/8M1JB/ApgSOzrW3ztNCLvSh2XM5A3rKIS
+	 jD6G9JT6EthZlLD1GQJ4rYzzbuthmc7CTCrZRs1o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Furong Xu <0x1207@gmail.com>,
-	Andrew Lunn <andrew@lunn.ch>,
+	Alexander Lobakin <aleksander.lobakin@intel.com>,
+	Larysa Zaremba <larysa.zaremba@intel.com>,
+	Yanteng Si <si.yanteng@linux.dev>,
 	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 228/816] net: stmmac: Unexport stmmac_rx_offset() from stmmac.h
-Date: Wed, 25 Nov 2026 15:29:36 +0100
-Message-ID: <20261125143854.484113021@linuxfoundation.org>
+Subject: [PATCH 6.12 229/816] net: stmmac: Switch to zero-copy in non-XDP RX path
+Date: Wed, 25 Nov 2026 15:29:37 +0100
+Message-ID: <20261125143854.507522705@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143849.205329330@linuxfoundation.org>
 References: <20261125143849.205329330@linuxfoundation.org>
@@ -71,66 +73,109 @@ Content-Transfer-Encoding: 8bit
 
 From: Furong Xu <0x1207@gmail.com>
 
-[ Upstream commit e62de01008bd6581788aa155ada043cba0261332 ]
+[ Upstream commit df542f669307918f054a17878ff6dd1ddbb2fe18 ]
 
-stmmac_rx_offset() is referenced in stmmac_main.c only,
-let's move it to stmmac_main.c.
+Avoid memcpy in non-XDP RX path by marking all allocated SKBs to
+be recycled in the upper network stack.
 
-Drop the inline keyword by the way, it is better to let the compiler
-to decide.
-
-Compile tested only.
-No functional change intended.
+This patch brings ~11.5% driver performance improvement in a TCP RX
+throughput test with iPerf tool on a single isolated Cortex-A65 CPU
+core, from 2.18 Gbits/sec increased to 2.43 Gbits/sec.
 
 Signed-off-by: Furong Xu <0x1207@gmail.com>
-Reviewed-by: Andrew Lunn <andrew@lunn.ch>
-Link: https://patch.msgid.link/20250107075448.4039925-1-0x1207@gmail.com
+Reviewed-by: Alexander Lobakin <aleksander.lobakin@intel.com>
+Reviewed-by: Larysa Zaremba <larysa.zaremba@intel.com>
+Reviewed-by: Yanteng Si <si.yanteng@linux.dev>
 Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Stable-dep-of: 6d9b7c85af57 ("net: stmmac: set XDP metadata length on the page_pool RX path")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/stmicro/stmmac/stmmac.h      | 8 --------
- drivers/net/ethernet/stmicro/stmmac/stmmac_main.c | 8 ++++++++
- 2 files changed, 8 insertions(+), 8 deletions(-)
+ drivers/net/ethernet/stmicro/stmmac/stmmac.h  |  1 +
+ .../net/ethernet/stmicro/stmmac/stmmac_main.c | 26 ++++++++++++-------
+ 2 files changed, 18 insertions(+), 9 deletions(-)
 
 diff --git a/drivers/net/ethernet/stmicro/stmmac/stmmac.h b/drivers/net/ethernet/stmicro/stmmac/stmmac.h
-index 8d6507cef53a9..c087accd72726 100644
+index c087accd72726..dcdc4e24002ed 100644
 --- a/drivers/net/ethernet/stmicro/stmmac/stmmac.h
 +++ b/drivers/net/ethernet/stmicro/stmmac/stmmac.h
-@@ -423,14 +423,6 @@ static inline bool stmmac_xdp_is_enabled(struct stmmac_priv *priv)
- 	return !!priv->xdp_prog;
- }
- 
--static inline unsigned int stmmac_rx_offset(struct stmmac_priv *priv)
--{
--	if (stmmac_xdp_is_enabled(priv))
--		return XDP_PACKET_HEADROOM;
--
--	return 0;
--}
--
- void stmmac_disable_rx_queue(struct stmmac_priv *priv, u32 queue);
- void stmmac_enable_rx_queue(struct stmmac_priv *priv, u32 queue);
- void stmmac_disable_tx_queue(struct stmmac_priv *priv, u32 queue);
+@@ -125,6 +125,7 @@ struct stmmac_rx_queue {
+ 	unsigned int cur_rx;
+ 	unsigned int dirty_rx;
+ 	unsigned int buf_alloc_num;
++	unsigned int napi_skb_frag_size;
+ 	dma_addr_t dma_rx_phy;
+ 	u32 rx_tail_addr;
+ 	unsigned int state_saved;
 diff --git a/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c b/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
-index a48c34dcbcd26..c420a449459ed 100644
+index c420a449459ed..818722d5dbcba 100644
 --- a/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
 +++ b/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
-@@ -1324,6 +1324,14 @@ static void stmmac_display_rings(struct stmmac_priv *priv,
- 	stmmac_display_tx_rings(priv, dma_conf);
+@@ -1329,7 +1329,7 @@ static unsigned int stmmac_rx_offset(struct stmmac_priv *priv)
+ 	if (stmmac_xdp_is_enabled(priv))
+ 		return XDP_PACKET_HEADROOM;
+ 
+-	return 0;
++	return NET_SKB_PAD;
  }
  
-+static unsigned int stmmac_rx_offset(struct stmmac_priv *priv)
-+{
-+	if (stmmac_xdp_is_enabled(priv))
-+		return XDP_PACKET_HEADROOM;
-+
-+	return 0;
-+}
-+
  static int stmmac_set_bfsize(int mtu, int bufsize)
- {
- 	int ret = bufsize;
+@@ -2030,17 +2030,21 @@ static int __alloc_dma_rx_desc_resources(struct stmmac_priv *priv,
+ 	struct stmmac_channel *ch = &priv->channel[queue];
+ 	bool xdp_prog = stmmac_xdp_is_enabled(priv);
+ 	struct page_pool_params pp_params = { 0 };
+-	unsigned int num_pages;
++	unsigned int dma_buf_sz_pad, num_pages;
+ 	unsigned int napi_id;
+ 	int ret;
+ 
++	dma_buf_sz_pad = stmmac_rx_offset(priv) + dma_conf->dma_buf_sz +
++			 SKB_DATA_ALIGN(sizeof(struct skb_shared_info));
++	num_pages = DIV_ROUND_UP(dma_buf_sz_pad, PAGE_SIZE);
++
+ 	rx_q->queue_index = queue;
+ 	rx_q->priv_data = priv;
++	rx_q->napi_skb_frag_size = num_pages * PAGE_SIZE;
+ 
+ 	pp_params.flags = PP_FLAG_DMA_MAP | PP_FLAG_DMA_SYNC_DEV;
+ 	pp_params.pool_size = dma_conf->dma_rx_size;
+-	num_pages = DIV_ROUND_UP(dma_conf->dma_buf_sz, PAGE_SIZE);
+-	pp_params.order = ilog2(num_pages);
++	pp_params.order = order_base_2(num_pages);
+ 	pp_params.nid = dev_to_node(priv->device);
+ 	pp_params.dev = priv->device;
+ 	pp_params.dma_dir = xdp_prog ? DMA_BIDIRECTIONAL : DMA_FROM_DEVICE;
+@@ -5696,22 +5700,26 @@ static int stmmac_rx(struct stmmac_priv *priv, int limit, u32 queue)
+ 		}
+ 
+ 		if (!skb) {
++			unsigned int head_pad_len;
++
+ 			/* XDP program may expand or reduce tail */
+ 			buf1_len = ctx.xdp.data_end - ctx.xdp.data;
+ 
+-			skb = napi_alloc_skb(&ch->rx_napi, buf1_len);
++			skb = napi_build_skb(page_address(buf->page),
++					     rx_q->napi_skb_frag_size);
+ 			if (!skb) {
++				page_pool_recycle_direct(rx_q->page_pool,
++							 buf->page);
+ 				rx_dropped++;
+ 				count++;
+ 				goto drain_data;
+ 			}
+ 
+ 			/* XDP program may adjust header */
+-			skb_copy_to_linear_data(skb, ctx.xdp.data, buf1_len);
++			head_pad_len = ctx.xdp.data - ctx.xdp.data_hard_start;
++			skb_reserve(skb, head_pad_len);
+ 			skb_put(skb, buf1_len);
+-
+-			/* Data payload copied into SKB, page ready for recycle */
+-			page_pool_recycle_direct(rx_q->page_pool, buf->page);
++			skb_mark_for_recycle(skb);
+ 			buf->page = NULL;
+ 		} else if (buf1_len) {
+ 			dma_sync_single_for_cpu(priv->device, buf->addr,
 -- 
 2.53.0
 
