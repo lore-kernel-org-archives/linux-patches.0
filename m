@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795619588;
-	b=zfv/OI42Xt5F6qKEw5C8nKVnkF7ue+LpyLiGLqKlHW8UU8EWsA52HkazXwIv6Z9QHUOW
-	 vay9oF/r72sDDiu7TZNW7LI2Fy23H301YuNg3AzrTK6+kta7cvodwg9GYl6bSmo9tURGD
-	 Ddxt6hD5V9LlNhXrqNFvPKqGxokKB7zRa92gEe+f/1viXwYjjsqjVRMc2+E8WeSc0Ny0q
-	 Jw6mtxAKJ23J7pAWxAVadwT/l/V+xJOnFkHUfie0nshuzdsZXjPdEZgcn1/51Wyi+3Two
-	 7WonO0WHIiOcX/pd/otFzVYX3rRmctU9J5QHMnbpKds+qJ0rpIASl3Ti8B0uwKhU9Lg==
+	t=1795619591;
+	b=MlJOhvYCMf+/9kZQ/zkzbqHD4E1jzgQX6lEamO5bddTea60e2AjJf1Fdc1UnTO8n8dZ1
+	 Kh3iaZVLMUovdKqL3y5xGOEB4T655DBuddC90GCK62m9tmXnaaIXZKZkkUTLNfRnOWs+b
+	 NK1XKn/9S7ER7Hxdn0NRyOHS4cdjja5Fv1wlM17bz1L70Ub2267/ULR73ZqqOrJp2QJ2V
+	 KERALVgGMXY13SkM/QrV+uXhbeEn27Koqqg7a9hqvDTq0Rzwrsb706hlHqv9/iwl0B1BW
+	 5sejees2n4oKuJBOcUVKVyO7xVHU2pFGH+OHJNKZwN2ZX4FkgbyscprUsK5CLrS6dkQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795619588;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795619591;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Type:Content-Transfer-Encoding;
-	bh=mdOAhcuGgRFEWlCYjvijkdQ2n4t/4AorPWOEIF5UI+M=;
-	b=JcSMkFsDV+Ir47Bx7yCR66W+BgLQaxWdK7iLWhRmZuv0kpmHqKz2+pObdGKCFu98loKs
-	 56R9KtNzNzIhhlR0nyV7EEkWteyPoaHaTVbr0YLFAbpktrN68PsF0WxukP0vBhyMv2B3G
-	 Ti+anf5irJ1BuqrZ88hb4S/cR/t++GSZeA5uoLXTglVJn+oS7IuQ87fK3yhdVjDondXlP
-	 4Dc00DsH0izDgWCVdLmb9RnVibtvWFgl+OiBCGtAz5ff4umKHrXTcy3qvvg7Hi8KU7K+q
-	 mR/pqWNtLr1+0Vfjz4DYROHD/jj5bYMNAuDSeOUftthm9ynUugXgYmCeqjsj67x7CAw==
+	 MIME-Version:Content-Transfer-Encoding;
+	bh=4x/g0g/HNvlqaixG+docaFQnRguGZzhmwa8MSe/M7uU=;
+	b=zikFdmqhuiqrdR+H3EN313ulb5reaTNsvq3K8e0kgG6hWzeaCL0q3TvgY2M/uJnoEqkk
+	 ZcjrTEcSVSFUfu+hpFG0xyDz1GL3mXUxNSs0qjOTlzsyfWMRg7JtOxHrMTzE77MaGCIV3
+	 viR5E92zMLnug5viTtHSgTFhLx17rAP+Rkf4z4SZiNSY5+OjUlJ1qjTDDz804hVhd8NUU
+	 RliW+Ob7YVA0KL+4ayGwiWIjD4kmpvOqNwJTWgPgXa18053NB23iuIWEl0EOS/neqBEi0
+	 4vxFwCNxUBInxC9lpRlH+D6y88tHPU5S9GyFVSctkVxOYa+8Snu+nEzmn2Co0dG05aQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=tR+SEi3D;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=egflpSZk;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 05115606A329;
-	Wed, 25 Nov 2026 15:13:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4E36E606A323;
+	Wed, 25 Nov 2026 15:13:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=tR+SEi3D
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E33611F000C6;
-	Wed, 25 Nov 2026 15:13:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=egflpSZk
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 32ECC1F000C0;
+	Wed, 25 Nov 2026 15:13:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795619587;
-	bh=mdOAhcuGgRFEWlCYjvijkdQ2n4t/4AorPWOEIF5UI+M=;
+	s=korg; t=1795619590;
+	bh=4x/g0g/HNvlqaixG+docaFQnRguGZzhmwa8MSe/M7uU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=tR+SEi3DNwDzCIISQno833sNo0eaNnfmQv2GbVx6Bc0PGD8vOJ2SZeRsTOuwyGJoO
-	 6HWAw4XDw4XVtYWRk5e5mKXMFKwN2SGfLL/68TQtk0AmqZhFFLx+1hdDxd7JxuYkd1
-	 F0PZuevoE7TaJ+2x9LgRsJwZ1Tb0Nb2KGelqspzM=
+	b=egflpSZkwPEgqNc5bm4yf6XyGAp27wAWR+6i3OUS9F4QbOGepL7S5Km/ZyqhpKrXt
+	 cNRsPLqvQIlmmnZZcqwmlT2cR/JZdB51P8K5ICztf5kb37RzkgQQYY8hKawo2Cdb3L
+	 fB5ozYNDEoLpMvtJPc+6WYz5Ar7TJkSAjA+8Bfvc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?J=C3=A9r=C3=A9my=20Jean?= <Jeremy.Jean@oss.cyber.gouv.fr>,
-	Kuniyuki Iwashima <kuniyu@google.com>,
-	Dmitry Safonov <dima@arista.com>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 7.3 0643/1005] tcp: fix authentication bypass via unsupported TCP auth options
-Date: Wed, 25 Nov 2026 15:33:01 +0100
-Message-ID: <20261125143836.815022225@linuxfoundation.org>
+	Josef Bacik <josef@toxicpanda.com>,
+	"David Hildenbrand (Arm)" <david@kernel.org>,
+	"Vlastimil Babka (SUSE)" <vbabka@kernel.org>
+Subject: [PATCH 7.3 0601/1005] mm/memory_hotplug: resize zones under their seqlock
+Date: Wed, 25 Nov 2026 15:32:19 +0100
+Message-ID: <20261125143835.823260178@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143821.729802100@linuxfoundation.org>
 References: <20261125143821.729802100@linuxfoundation.org>
@@ -63,74 +62,121 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 7.3-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Jérémy Jean <Jeremy.Jean@oss.cyber.gouv.fr>
+From: Josef Bacik <josef@toxicpanda.com>
 
-commit 7cc235fb1251fec1183e3158c60d2e504c2a8e8b upstream.
+commit 58e81bb7de5aac8ec5e4aa21d401e7dafbd4058b upstream.
 
-tcp_inbound_hash() parses both TCP-MD5 and TCP-AO options when at
-least one of the two features is enabled. With TCP_MD5SIG=y and
-TCP_AO=n, a packet carrying an AO option reaches the disabled
-tcp_inbound_ao_hash() stub. That stub returns success, so sockets
-configured to require MD5 authentication end up accepting
-unauthenticated data. A forged AO option skips the unsigned fast
-path, which is the only place where tcp_inbound_hash() can return
-SKB_DROP_REASON_TCP_MD5NOTFOUND.
+With CONFIG_DEBUG_VM the page allocator checks that a page which is
+freed, split or allocated lies within its zone. The check reads
+zone->zone_start_pfn and zone->spanned_pages under zone->span_seqlock, as
+memory hotplug can change the two at any time.
 
-The inverse configuration with TCP_MD5SIG=n and TCP_AO=y has the same
-problem for an MD5 option on AO sockets.
+Commit 27cacaad16c5 ("mm,memory_hotplug: drop unneeded locking") removed
+the write side, since all resizing is serialized by the hotplug lock. That
+leaves the reader without protection. When memory below the start of a
+zone goes online, the start is lowered first and the size is raised
+afterwards. When the lowest memory of a zone goes offline, the size is
+reduced first. In between, the zone seems to end before its last pages. If
+one of them goes through the allocator at that moment, it is reported as
+being outside of the zone triggers VM_BUG_ON_PAGE().
 
-Note that TCP-AO depends on 64BIT: therefore, every 32-bit kernel with
-TCP_MD5SIG=y is in the vulnerable configuration.
+Write the two fields in a write section of the seqlock. Interrupts are
+disabled as pages are freed from interrupts, too, and the reader would
+wait for the writer which it has interrupted.
 
-Make the disabled stubs reject options for the unsupported
-authentication scheme. This matches the real helpers' behavior for
-sockets without keys. It also means that kernels with TCP_MD5SIG=n and
-TCP_AO=y now drop segments carrying an MD5 option on unkeyed sockets,
-as kernels configured with TCP_MD5SIG=y already do.
-
-Fixes: 0a3a809089eb ("net/tcp: Verify inbound TCP-AO signed segments")
+Fixes: 27cacaad16c5 ("mm,memory_hotplug: drop unneeded locking")
 Cc: stable@vger.kernel.org
-Signed-off-by: Jérémy Jean <Jeremy.Jean@oss.cyber.gouv.fr>
-Reviewed-by: Kuniyuki Iwashima <kuniyu@google.com>
-Acked-by: Dmitry Safonov <dima@arista.com>
-Link: https://patch.msgid.link/20261107224733.1104094-2-Jeremy.Jean@oss.cyber.gouv.fr
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Assisted-by: LLM
+Signed-off-by: Josef Bacik <josef@toxicpanda.com>
+Signed-off-by: David Hildenbrand (Arm) <david@kernel.org>
+Link: https://patch.msgid.link/20261103-pgalloc-ai-hotfixes-v2-4-e0d2890ab74f@kernel.org
+Signed-off-by: Vlastimil Babka (SUSE) <vbabka@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- include/net/tcp_ao.h |    3 ++-
- net/ipv4/tcp.c       |    3 ++-
- 2 files changed, 4 insertions(+), 2 deletions(-)
+ mm/memory_hotplug.c |   44 ++++++++++++++++++++++++++++----------------
+ 1 file changed, 28 insertions(+), 16 deletions(-)
 
---- a/include/net/tcp_ao.h
-+++ b/include/net/tcp_ao.h
-@@ -303,7 +303,8 @@ static inline enum skb_drop_reason tcp_i
- 		const struct request_sock *req, int l3index,
- 		const struct tcp_ao_hdr *aoh)
- {
--	return SKB_NOT_DROPPED_YET;
-+	NET_INC_STATS(sock_net(sk), LINUX_MIB_TCPAOKEYNOTFOUND);
-+	return SKB_DROP_REASON_TCP_AOUNEXPECTED;
+--- a/mm/memory_hotplug.c
++++ b/mm/memory_hotplug.c
+@@ -475,6 +475,22 @@ static unsigned long find_biggest_sectio
+ 	return 0;
  }
  
- static inline struct tcp_ao_key *tcp_ao_do_lookup(const struct sock *sk,
---- a/net/ipv4/tcp.c
-+++ b/net/ipv4/tcp.c
-@@ -4974,7 +4974,8 @@ tcp_inbound_md5_hash(const struct sock *
- 		     const void *saddr, const void *daddr,
- 		     int family, int l3index, const __u8 *hash_location)
++/*
++ * The page allocator checks pages against the span of their zone while the
++ * zone is resized, see page_outside_zone_boundaries(). It must not see the
++ * new value of one field together with the old value of the other one.
++ */
++static void zone_set_span(struct zone *zone, unsigned long start_pfn,
++			  unsigned long spanned_pages)
++{
++	unsigned long flags;
++
++	write_seqlock_irqsave(&zone->span_seqlock, flags);
++	zone->zone_start_pfn = start_pfn;
++	zone->spanned_pages = spanned_pages;
++	write_sequnlock_irqrestore(&zone->span_seqlock, flags);
++}
++
+ static void shrink_zone_span(struct zone *zone, unsigned long start_pfn,
+ 			     unsigned long end_pfn)
  {
--	return SKB_NOT_DROPPED_YET;
-+	NET_INC_STATS(sock_net(sk), LINUX_MIB_TCPMD5UNEXPECTED);
-+	return SKB_DROP_REASON_TCP_MD5UNEXPECTED;
+@@ -490,13 +506,10 @@ static void shrink_zone_span(struct zone
+ 		 */
+ 		pfn = find_smallest_section_pfn(nid, zone, end_pfn,
+ 						zone_end_pfn(zone));
+-		if (pfn) {
+-			zone->spanned_pages = zone_end_pfn(zone) - pfn;
+-			zone->zone_start_pfn = pfn;
+-		} else {
+-			zone->zone_start_pfn = 0;
+-			zone->spanned_pages = 0;
+-		}
++		if (pfn)
++			zone_set_span(zone, pfn, zone_end_pfn(zone) - pfn);
++		else
++			zone_set_span(zone, 0, 0);
+ 	} else if (zone_end_pfn(zone) == end_pfn) {
+ 		/*
+ 		 * If the section is biggest section in the zone, it need
+@@ -507,11 +520,10 @@ static void shrink_zone_span(struct zone
+ 		pfn = find_biggest_section_pfn(nid, zone, zone->zone_start_pfn,
+ 					       start_pfn);
+ 		if (pfn)
+-			zone->spanned_pages = pfn - zone->zone_start_pfn + 1;
+-		else {
+-			zone->zone_start_pfn = 0;
+-			zone->spanned_pages = 0;
+-		}
++			zone_set_span(zone, zone->zone_start_pfn,
++				      pfn - zone->zone_start_pfn + 1);
++		else
++			zone_set_span(zone, 0, 0);
+ 	}
  }
  
- #endif
+@@ -703,12 +715,12 @@ static void online_pages_range(unsigned
+ static void __meminit resize_zone_range(struct zone *zone, unsigned long start_pfn,
+ 		unsigned long nr_pages)
+ {
+-	unsigned long old_end_pfn = zone_end_pfn(zone);
++	unsigned long end_pfn = max(start_pfn + nr_pages, zone_end_pfn(zone));
+ 
+-	if (zone_is_empty(zone) || start_pfn < zone->zone_start_pfn)
+-		zone->zone_start_pfn = start_pfn;
++	if (!zone_is_empty(zone) && start_pfn > zone->zone_start_pfn)
++		start_pfn = zone->zone_start_pfn;
+ 
+-	zone->spanned_pages = max(start_pfn + nr_pages, old_end_pfn) - zone->zone_start_pfn;
++	zone_set_span(zone, start_pfn, end_pfn - start_pfn);
+ }
+ 
+ static void __meminit resize_pgdat_range(struct pglist_data *pgdat, unsigned long start_pfn,
 
 
