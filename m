@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795625640;
-	b=DaueyFpgtb1kKchg1ucouRmToSy+EFqi10PhZGUneoUSOqkDJBm59+CT5EDaqA7oWukf
-	 2tSmUxrjRSKU8SKbTImIxiDCU3W0FxzT7lJVXYxPozOcSlsRufPQFfuPRaN9+P5Vd8mky
-	 z7T3/ny5gPhFIBwXaMj8nCV75JeE4ZcKdg9TVFLYRic7JlgktKL0xvhrswWJLrRu2cUQI
-	 caLbWzyisyzeSyFysmyWPQdgY1V8KtjLimWCTpv4FGSLc5X5rorXmdRa6JXyAIjLTVp4k
-	 v59la2ejTlZn3cjzM4tnYxq41OVfI40gJyB9Gxpki4tZpouCCCfmJ3kKUK7jUY8Ojcw==
+	t=1795625643;
+	b=ScXhx1joX66O0YoxynP29twoCQQJNKWdDbjtxsAf4PmsL4Fk99EPBbOZJhVSogHA5p1o
+	 JxE4IZXaW+kzoMXsPvcP3SXtZP0RVOuOgiI+o696ma4GvfZ3HVYts/mzYIEfDBrCC1kVp
+	 0wjlfCRR57RkbEEcOzN5QuT4PO0+6lHHkuSCXjTBkYkHCTI1hhaS42f8aeWXdUA3e3MSU
+	 NkPGg4tR4d2OKw5HMub+iWOqiXozuRCeT6gDSAqyXxkpno+2GMS/JfIvGJOXMspu4ojFR
+	 KAvzCtVn9cuv5Q+rWE//eCFxmUxJNXyVa8vQ2EZqDfd04Nlqi2+JzM8UcmHjXQrjNxw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795625640;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795625643;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=GplOH9ZRusUC/wxCzBqgb+ze1wwCo2DVEOe58msz/SQ=;
-	b=RYQqJR9wkqLnhr2N3ECVCBGYSHyP4ibewLZDusXCQcUZ6rtfPiR1TJcBa0lSHYIa1d33
-	 i2oCaBNri8lgi0VIKYbw6CIWmjp0MctafOFE30vhvmiGl9yrZycaOIMZ1TUEb6X+xfMi8
-	 aupagDya82qOPGcfZHQ5M7uCu671gjaNa57lcqprkMMJOk4N3XtSHATP1JiV1aYTXzjlx
-	 SUgeIjHJ0Blc5JjOipO6/rKJg0RpXpsF5M8bIeLbvdX3FHS/nIVmf9KrQG86rNzmjotEz
-	 x3Y01KUhabvTIAnUDM6jXUD2CvVMh6MFwU9eVv7Lhk4PTYJCT36vzy7ONV0IE8ZGOyw==
+	bh=7cvXgg24xsT7beYIlqqfb/toKOS9yr11SYmhIcVULy8=;
+	b=ndEYeAZLxLVSjItgoWuDPzNjsBdhADh9KTnP24pbsO9kLiK10K9YS0tj3+sU8hqbcT8Z
+	 WvlEcTo84W5NVoOMvcj4Nu9Qq7iNxOMZvCLuBnQBksh20cea5pRis+F5PtxLBUpoDSXr3
+	 u2O7PvzwRAyruXK+gNueUigru/GILGS/RmSvKNkaG5Aq0qm7y9FLzqbVOVbCoQ8v8Jlzk
+	 UAD1/b1MCKZkXAZ59OOg+NGu7Hrj62YkdvQvgYerb5/+8ys7tyRXlQxpokaC97H8g89od
+	 YpYWGIOA92mnAGxNnkOXLgItJGuXK+Wt67N1m0/Cb6DysdCfq01S9ezsAikn8OXstnw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=dhm0+8D8;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Yq7M7fU8;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B3AD1606A31E;
-	Wed, 25 Nov 2026 16:54:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 74ABF606A321;
+	Wed, 25 Nov 2026 16:54:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=dhm0+8D8
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C9A651F000C4;
-	Wed, 25 Nov 2026 16:53:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Yq7M7fU8
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EAB911F000C4;
+	Wed, 25 Nov 2026 16:54:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795625640;
-	bh=GplOH9ZRusUC/wxCzBqgb+ze1wwCo2DVEOe58msz/SQ=;
+	s=korg; t=1795625643;
+	bh=7cvXgg24xsT7beYIlqqfb/toKOS9yr11SYmhIcVULy8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=dhm0+8D8qSU1h7N/q54mBnpRTfE9yJzwCjoVUdKdmblzobisgOjT5yJ4UH9HFJGzU
-	 mfWVJJG1GLp2BIgxOZ0V9rEcUdEpUISKuwTnSJoV38AOMWtW8boxOyDVN+d6ayZkDC
-	 3d/tdE983cbZnDyLX90hxEMEk7mO8RUCAXlTcC5Y=
+	b=Yq7M7fU8IsefjMl8XjEhDr2yjsgEn3dlf7vt5yxHIFwJYIveH/hxRnF3W83V1uVbM
+	 kMfZVro4Cj7il8n6M2Cjj2t3q6j2W11BiBBNlXMNY2VXoHMaziTMSvIKNwPdkIrde+
+	 oGJxExcyKXs56E2p8uMHWWO80oTY53bwNeyNbfvY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Haiyang Zhang <haiyangz@microsoft.com>,
-	Hamza Mahfooz <hamzamahfooz@linux.microsoft.com>,
+	Jerome Mohm <jrmmhm.kernel@eldare.de>,
+	Stefano Garzarella <sgarzare@redhat.com>,
 	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.12 583/816] net: mana: report RX checksum offload for IPv6
-Date: Wed, 25 Nov 2026 15:35:31 +0100
-Message-ID: <20261125143902.673697358@linuxfoundation.org>
+Subject: [PATCH 6.12 584/816] vsock/virtio: clear vqs[] to avoid a UAF on a failed PM restore
+Date: Wed, 25 Nov 2026 15:35:32 +0100
+Message-ID: <20261125143902.696301023@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143849.205329330@linuxfoundation.org>
 References: <20261125143849.205329330@linuxfoundation.org>
@@ -68,59 +68,93 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hamza Mahfooz <hamzamahfooz@linux.microsoft.com>
+From: Jerome Mohm <jrmmhm.kernel@eldare.de>
 
-commit bbcd02741c4cfbf9e1c59b1906f21ef772bd15eb upstream.
+commit 2a24ba1694f14299fbde3fa107e5d56629f2f8b6 upstream.
 
-The hardware validates TCP and UDP checksums for both IPv4 and IPv6 and
-reports the result in rx_tcp_csum_succeed and rx_udp_csum_succeed.
-However, mana_rx_skb() also requires rx_iphdr_csum_succeed before it
-sets CHECKSUM_UNNECESSARY. That bit is only set for IPv4 (since IPv6
-has no header checksum), so IPv6 TCP and UDP traffic is always
-checksummed again in software.
+virtio_vsock_vqs_del() frees the virtqueues but leaves vsock->vqs[]
+pointing at them. If virtio_vsock_restore() then fails, the driver
+stays bound with a dangling vqs[], and the next freeze or unbind
+passes a freed virtqueue to virtqueue_detach_unused_buf():
 
-So, only look at the L4 result. For IPv4 this makes no material
-difference since CHECKSUM_UNNECESSARY only covers the L4 checksum, and
-ip_rcv_core() always verifies the IPv4 header checksum in software.
+  BUG: KASAN: slab-use-after-free in virtqueue_detach_unused_buf
+   virtio_vsock_vqs_del (net/vmw_vsock/virtio_transport.c:785)
+   virtio_vsock_remove
+  Freed by task ...:
+   vp_del_vqs
+   virtio_vsock_freeze
 
-Between two Azure Standard_E16s_v6 VMs (VF enabled), IPv6 TCP and UDP
-packets (including VXLAN over IPv6), now arrive with
-CHECKSUM_UNNECESSARY instead of CHECKSUM_NONE, so GRO no longer
-checksums them in software. Calls to __skb_gro_checksum_complete() on
-the receiver during an 8 second iperf3 run:
+Clear vqs[] after del_vqs() and when virtio_find_vqs() fails. Return
+early from virtio_vsock_vqs_del() when vqs[] is empty: the detach
+loops would pass NULL to virtqueue_detach_unused_buf(), and a second
+del_vqs() would free virtio-mmio's IRQ again, which only WARNs in
+free_irq() ("Trying to free already-free IRQ").
 
-                               before    after
-  TCP/IPv4, 12.2 Gbps              23       28
-  TCP/IPv6, 12.1 Gbps         8728419       25
-  UDP/IPv6, 1.5 Gbps          1071380       20
-  TCP/VXLAN/IPv6, 10.9 Gbps   7934373       18
+Found with the help of Anthropic's Claude and reproduced on virtio-pci
+and virtio-mmio by failing the restore with failslab, without other
+kernel changes; the virtio-mmio WARN was found by the netdev Sashiko
+review and reproduced with v1 of this patch. With this patch neither
+report appears on virtio-pci or virtio-mmio guests, and the vsock
+vmtest.sh single-VM tests pass. A find_vqs() failure after some
+virtqueues were set up was not exercised.
 
+Fixes: bd50c5dc182b ("vsock/virtio: add support for device suspend/resume")
 Cc: stable@vger.kernel.org
-Fixes: ca9c54d2d6a5 ("net: mana: Add a driver for Microsoft Azure Network Adapter (MANA)")
-Reviewed-by: Haiyang Zhang <haiyangz@microsoft.com>
-Signed-off-by: Hamza Mahfooz <hamzamahfooz@linux.microsoft.com>
-Link: https://patch.msgid.link/20261109142856.779955-1-hamzamahfooz@linux.microsoft.com
+Signed-off-by: Jerome Mohm <jrmmhm.kernel@eldare.de>
+Reviewed-by: Stefano Garzarella <sgarzare@redhat.com>
+Link: https://patch.msgid.link/20261109-vsock-restore-uaf-send-v4-1-1df8dfb5d5de@eldare.de
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ethernet/microsoft/mana/mana_en.c |    7 +++----
- 1 file changed, 3 insertions(+), 4 deletions(-)
+ net/vmw_vsock/virtio_transport.c |   16 +++++++++++++---
+ 1 file changed, 13 insertions(+), 3 deletions(-)
 
---- a/drivers/net/ethernet/microsoft/mana/mana_en.c
-+++ b/drivers/net/ethernet/microsoft/mana/mana_en.c
-@@ -1560,10 +1560,9 @@ static void mana_rx_skb(void *buf_va, bo
- 	skb_checksum_none_assert(skb);
- 	skb_record_rx_queue(skb, rxq_idx);
+--- a/net/vmw_vsock/virtio_transport.c
++++ b/net/vmw_vsock/virtio_transport.c
+@@ -690,8 +690,10 @@ static int virtio_vsock_vqs_init(struct
+ 	atomic_set(&vsock->queued_replies, 0);
  
--	if ((ndev->features & NETIF_F_RXCSUM) && cqe->rx_iphdr_csum_succeed) {
--		if (cqe->rx_tcp_csum_succeed || cqe->rx_udp_csum_succeed)
--			skb->ip_summed = CHECKSUM_UNNECESSARY;
--	}
-+	if ((ndev->features & NETIF_F_RXCSUM) &&
-+	    (cqe->rx_tcp_csum_succeed || cqe->rx_udp_csum_succeed))
-+		skb->ip_summed = CHECKSUM_UNNECESSARY;
+ 	ret = virtio_find_vqs(vdev, VSOCK_VQ_MAX, vsock->vqs, vqs_info, NULL);
+-	if (ret < 0)
++	if (ret < 0) {
++		memset(vsock->vqs, 0, sizeof(vsock->vqs));
+ 		return ret;
++	}
  
- 	if (cqe->rx_hashtype != 0 && (ndev->features & NETIF_F_RXHASH)) {
- 		hash_value = cqe->ppi[0].pkt_hash;
+ 	virtio_vsock_update_guest_cid(vsock);
+ 
+@@ -752,11 +754,19 @@ static void virtio_vsock_vqs_del(struct
+ 	vsock->event_run = false;
+ 	mutex_unlock(&vsock->event_lock);
+ 
++	virtio_vsock_skb_queue_purge(&vsock->send_pkt_queue);
++
+ 	/* Flush all device writes and interrupts, device will not use any
+ 	 * more buffers.
+ 	 */
+ 	virtio_reset_device(vdev);
+ 
++	/* After a failed restore no virtqueues are live, and a second
++	 * del_vqs() would free virtio-mmio's IRQ again (a WARN in free_irq()).
++	 */
++	if (!vsock->vqs[VSOCK_VQ_RX])
++		return;
++
+ 	mutex_lock(&vsock->rx_lock);
+ 	while ((skb = virtqueue_detach_unused_buf(vsock->vqs[VSOCK_VQ_RX])))
+ 		kfree_skb(skb);
+@@ -767,10 +777,10 @@ static void virtio_vsock_vqs_del(struct
+ 		kfree_skb(skb);
+ 	mutex_unlock(&vsock->tx_lock);
+ 
+-	virtio_vsock_skb_queue_purge(&vsock->send_pkt_queue);
+-
+ 	/* Delete virtqueues and flush outstanding callbacks if any */
+ 	vdev->config->del_vqs(vdev);
++
++	memset(vsock->vqs, 0, sizeof(vsock->vqs));
+ }
+ 
+ static int virtio_vsock_probe(struct virtio_device *vdev)
 
 
