@@ -1,56 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795622203;
-	b=PGW8jnKzZeDGx+g4pLjkudwwiYNum8YodfRWA0G0Geyb2XjjliRzH1q/iMoFF2PUOZ2U
-	 iMv/uvwQM7Dj1W1kJQq8GlahoWehHv7Uw6/saJ45EviOVPSX7EB7X/nVbsFhRYI1ZEfOM
-	 +RGW+tUR+Wzl/Kvu5yT9OCVTsUtV4IaTb+2y1DtX43oVB8vbTp/AOUEy6iNe/uELbJ3TY
-	 FkksLZoQ0iOxh2Z/UbxO6TpbIDmt5oUlzEEd2ltCj5jyyaccOoiYfK9xbNKl/A17kgjhB
-	 x3SAtOU5A36A3pubj5gEThrqoPm5QOkDURhP9aV+7rvfm2Kzg5CFYzgazEJEuOSwg0A==
+	t=1795622205;
+	b=jtE2Go+kyRBxkM6cqOQ98gZbNpj1vx57VlCEPblHY9ZFju4jd+5GVGtKLw4oQWeNCg1W
+	 Af6JQzIynPtwoBTCK/ggay2Yv9R09Bf0UbHtOUPDHNIzoBt3q1AEZAS04/UTZq+9B9aNe
+	 +wHcUxe3PCyQ2YEe/SEPkGurzXWtJlFa7bugEMZqWbIVlgCWzMAQU0ov4eTnUYxoZ4q85
+	 G0wZAEVEKeHf829n+oe6KDGWopBuNuI5GVgZtSRZMZnqP/zMpd+PyvbLhf1rCBlgmafso
+	 ht75hkkfRvtE+bMo8BudY0olWKhg51R1WIwdHnGbzovnc0hRtbyPPSOdODhp0rksY+g==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795622203;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795622205;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=bewt1pNtGpoKWv2N007f8BQCF1Y2A0jbdHG8cNz+PaU=;
-	b=qmoLoA+fAqDbEjvM/NSYVS/iVp3cSXR6QoRRnHsKMQjPs4v9aB8cowoIFgiTEOCpwEJi
-	 +lLemOsW3Pkz7NRd6I+e4CPCnSgJkeJyEV5XyF1m6GXJ+8NtAw2QRRMYM/72RcYlCIJud
-	 DYKFgRKiaNcar1xjy/sdzWWx3yBLBcEmRrig5oUuP35z/VVpP7XvKMtuwph5jDhPuBKV5
-	 opRGGKByM8Ge6nCvJL9vvdDw7Jlgd9/WIscQ5qfM298NkAzcXZ0tbB1USGhoPlvTk5KVh
-	 5DRerwPFIUorLKwmMN7vsnnFkkzYHGEydh2/N5QOqOZgfc5BgYTCstLfu1Wh3IFW1BQ==
+	bh=CXG4bqgjiIUVrSkfE8s4bl6HRnXF4eQeeAoawOHkyRE=;
+	b=lROOXkHRCiYFQLi83lFMh2fakT2f4iF/AXbodHMJuk49tlJeY/0RFI2sLh9t6/Dpm4bE
+	 obJrx+IKLBL9jOUr7tW3I2XVS6vpV+oW2GYDOrKschsmO6N7pWVgpbFQMblC8HJzjNz9V
+	 abjbzPH6rxoti7K3druzXBdh1VeceGMTGn+gr5xA0oUvazgz6Tzp8Mh0oeNmJrKI969m0
+	 SHbF1QHmWP1o96FspWT5S2K3SR8IF4btU9vWjVHDd1y67qJWw6wfe1JiIUqY1Qx1nJBZO
+	 rJJNSQrxoEzOtq3OliLxIm0VmicluBAlgpFg2MPNAYTvNdOopDoT1puNS7KNTs46aKw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=TVPyazuj;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=SQhp5J2Q;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E686C606A326;
-	Wed, 25 Nov 2026 15:56:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D7D93606A31E;
+	Wed, 25 Nov 2026 15:56:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=TVPyazuj
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EA2BF1F000C4;
-	Wed, 25 Nov 2026 15:56:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=SQhp5J2Q
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CD5CB1F000D0;
+	Wed, 25 Nov 2026 15:56:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795622202;
-	bh=bewt1pNtGpoKWv2N007f8BQCF1Y2A0jbdHG8cNz+PaU=;
+	s=korg; t=1795622205;
+	bh=CXG4bqgjiIUVrSkfE8s4bl6HRnXF4eQeeAoawOHkyRE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=TVPyazujV9sDUafYIRB1tcpp9YJ+/gkJLcf271qMd+PE6ebcunPyEk+6q4CBTKlQf
-	 g9dMFZ/TdhElEKYoCkfiv0EDDCunPPUUGDk42hXtZwQLo8zEkyX3qG+NXFJbc0xipR
-	 QMqy50+TL2kdUM5g+eq2R+BH5khliYkSkfrDbGpw=
+	b=SQhp5J2QCRLkd8Y0hMiefvmZhRZbuq3Ks2qN6HmepwgMTY7CqJdHgLWDyJcFCv1iT
+	 bj/EXb/8x6ksPndQg5510xMDUZ2rAM0LFeRrfBIBQlIZUU9r4rMqR+UU5P1BY2ZPi2
+	 Y3rl0+xsNh/XjiH5nv43llr+lj8aOx8vxCeHXMdE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dnyaneshwar Bhadane <dnyaneshwar.bhadane@intel.com>,
-	Matt Roper <matthew.d.roper@intel.com>,
-	Shekhar Chauhan <shekhar.chauhan@intel.com>,
-	Matt Atwood <matthew.s.atwood@intel.com>,
-	Gustavo Sousa <gustavo.sousa@intel.com>,
-	Matthew Brost <matthew.brost@intel.com>,
+	Junyoung Jang <graypanda.inzag@gmail.com>,
+	Hangbin Liu <liuhangbin@kylinos.cn>,
+	Ido Schimmel <idosch@nvidia.com>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 463/990] drm/xe: Sync Wa_16023105232 in xe_was to match OOB rule
-Date: Wed, 25 Nov 2026 15:30:30 +0100
-Message-ID: <20261125143832.941848233@linuxfoundation.org>
+Subject: [PATCH 6.18 464/990] igmp: use the joined device when leaving a multicast group
+Date: Wed, 25 Nov 2026 15:30:31 +0100
+Message-ID: <20261125143832.966652078@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143822.072087159@linuxfoundation.org>
 References: <20261125143822.072087159@linuxfoundation.org>
@@ -72,61 +70,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Gustavo Sousa <gustavo.sousa@intel.com>
+From: Junyoung Jang <graypanda.inzag@gmail.com>
 
-[ Upstream commit 557c7b4343781cae9725bf26122d29c26ea12f5d ]
+[ Upstream commit 19ec8416a76c08326fe5f814410a1b43046e63be ]
 
-Wa_16023105232 was extended in xe_wa_oob.rules to match extra IP
-releases while the respective entry in xe_was[] was overlooked.
-Update the latter to be in sync with the former.
+When a socket joins a multicast group, the ifindex of the device is
+stored in the socket's membership entry. When leaving,
+ip_mc_leave_group() resolves the device again from the request. If the
+request only specifies an interface address and that address is not
+assigned to any device, no device is found. The membership is still
+matched by address and removed from the socket, but the group is not
+released on the device it was joined on.
 
-Also add comments in the code so that we don't forget to update both
-places if new IP versions are added.
+The group is then leaked on the device until the device is unregistered.
+An unprivileged user can trigger this by joining with an ifindex and a
+non-local address and leaving with the address only. It can also happen
+when a socket joins and leaves with the address only and the address is
+removed in between.
 
-Fixes: c96e0df4e9f5 ("drm/xe/xe3: Add support for media IP version 30.02")
-Fixes: 4fde66699f1c ("drm/xe/xe3: Add support for graphics IP versions 30.04 & 30.05")
-Cc: Dnyaneshwar Bhadane <dnyaneshwar.bhadane@intel.com>
-Cc: Matt Roper <matthew.d.roper@intel.com>
-Cc: Shekhar Chauhan <shekhar.chauhan@intel.com>
-Reviewed-by: Matt Atwood <matthew.s.atwood@intel.com>
-Link: https://patch.msgid.link/20261105-wa_16031259911-v3-2-da6ec790aa29@intel.com
-Signed-off-by: Gustavo Sousa <gustavo.sousa@intel.com>
-(cherry picked from commit 0cfb54f8f4d69efc847641738d25065049160aca)
-Signed-off-by: Matthew Brost <matthew.brost@intel.com>
+Fix by resolving the device from the ifindex stored in the membership,
+like ip_mc_drop_socket() does.
+
+Fixes: 4eba7bb1d72d ("ipv4: igmp: Allow removing groups from a removed interface")
+Signed-off-by: Junyoung Jang <graypanda.inzag@gmail.com>
+Reviewed-by: Hangbin Liu <liuhangbin@kylinos.cn>
+Reviewed-by: Ido Schimmel <idosch@nvidia.com>
+Link: https://patch.msgid.link/20261109125312.2208874-1-graypanda.inzag@gmail.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/xe/xe_wa.c         | 5 +++--
- drivers/gpu/drm/xe/xe_wa_oob.rules | 1 +
- 2 files changed, 4 insertions(+), 2 deletions(-)
+ net/ipv4/igmp.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/gpu/drm/xe/xe_wa.c b/drivers/gpu/drm/xe/xe_wa.c
-index 0a59fd3ef7690..52f7da9e92481 100644
---- a/drivers/gpu/drm/xe/xe_wa.c
-+++ b/drivers/gpu/drm/xe/xe_wa.c
-@@ -675,8 +675,9 @@ static const struct xe_rtp_entry_sr engine_was[] = {
- 	  XE_RTP_ACTIONS(SET(TDL_TSL_CHICKEN, RES_CHK_SPR_DIS))
- 	},
- 	{ XE_RTP_NAME("16023105232"),
--	  XE_RTP_RULES(MEDIA_VERSION_RANGE(1301, 3000), OR,
--		       GRAPHICS_VERSION_RANGE(2001, 3001)),
-+	  /* IP versions need to be in sync with the respective entry in xe_wa_oob.rules. */
-+	  XE_RTP_RULES(MEDIA_VERSION_RANGE(1301, 3002), OR,
-+		       GRAPHICS_VERSION_RANGE(2001, 3005)),
- 	  XE_RTP_ACTIONS(SET(RING_PSMI_CTL(0), RC_SEMA_IDLE_MSG_DISABLE,
- 			     XE_RTP_ACTION_FLAG(ENGINE_BASE)))
- 	},
-diff --git a/drivers/gpu/drm/xe/xe_wa_oob.rules b/drivers/gpu/drm/xe/xe_wa_oob.rules
-index b703055eb6331..598e11ee0ed14 100644
---- a/drivers/gpu/drm/xe/xe_wa_oob.rules
-+++ b/drivers/gpu/drm/xe/xe_wa_oob.rules
-@@ -50,6 +50,7 @@
- 18013179988	GRAPHICS_VERSION(1255)
- 		GRAPHICS_VERSION_RANGE(1270, 1274)
- 1508761755	GRAPHICS_VERSION(1255)
-+# IP versions need to be in sync with the respective entry in xe_wa.c.
- 16023105232	GRAPHICS_VERSION_RANGE(2001, 3005)
- 		MEDIA_VERSION_RANGE(1301, 3002)
- 16026508708	GRAPHICS_VERSION_RANGE(1200, 3005)
+diff --git a/net/ipv4/igmp.c b/net/ipv4/igmp.c
+index 2846c2cee31cc..1c0c3b195af48 100644
+--- a/net/ipv4/igmp.c
++++ b/net/ipv4/igmp.c
+@@ -2446,6 +2446,8 @@ int ip_mc_leave_group(struct sock *sk, struct ip_mreqn *imr)
+ 				iml->multi.imr_address.s_addr)
+ 			continue;
+ 
++		/* The drop request may not resolve to the joined device. */
++		in_dev = inetdev_by_index(net, iml->multi.imr_ifindex);
+ 		(void) ip_mc_leave_src(sk, iml, in_dev);
+ 
+ 		*imlp = iml->next_rcu;
 -- 
 2.53.0
 
