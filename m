@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795622527;
-	b=pEusTjIMuzTFn3CvUL7NiDitdkevlCa0SDwlJDJuZ51hIg7WV3cWpebSDHDJsEMtzdU/
-	 gYTpmYPkhiz5FX87RfccqDk73VSIWPxd4Je6Flgc9pb9ImaquhHOeU2yAmDVJGG88IMHb
-	 90VrEPbAA8h//fxwgoeo9p82EDch9ChSi2UxEzsGgJuPIJ8MnfpIMY9cXyvnblyrg9epy
-	 ViOqXUTbaOsbJMHomRQDFQ73z4TuA40rxDwnQ95EY/JChM2oraPwpNxh+h89rI4UANfdT
-	 a/w6NbuO+Ah58sJafFIU9Txpuz5wnLjQ0iTeTibZEx4wNJvKEngflVhXEnNeCT1bHaw==
+	t=1795622530;
+	b=mrIrIcuF7IrTx0z57ZfK4i4c1gO8WjG9d+ChckJTVXnkZjIsTFbeTs0oMikkEv/ZnD4A
+	 FjxcmBDF8rBwENN+1MzDeT+kijtB/UpmfKmlc5BRfy7WdRLaT9rE9ccaczFp5fyTZCQiW
+	 rhFysqLWdMPOSW5lk4B+MN4JokIBF/7GgTedBeLIiyNThJ6RjP8QFL0VDLZxuYVxZeiYh
+	 wbMXhFsLPllTuq222jic73zuYQlFP2suYfsXeSRftBUVF3k9LhMOkZkfp7qLfUQc0gOXN
+	 MWjOv8ex+rJAX9Ckk8F57UqtDSzmj/oRLgjs6+TPvD7jvDHYwd2sD04Ndv3GUg0yStA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795622527;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795622530;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=s9eAb4ckYMl/ZsLopewTuNgi7v1nyczQK4LaP+W7Mi4=;
-	b=3NB6k1rkKI4/5yVSWE/EckJV1rQnGGyEMF0qEMjuvJiX053vmeCoLIia+IREOV3ghsMi
-	 IWeOHN07ePkpB1C8CV/Dkc9xK4V7KXPwoSE2tFv48OC4CkqvTgKCgsQk/Mdulw9WRxbuf
-	 TSU1tUch6fMLlL+ktd8JdJTcrPWmfjOyWKGDXmBqwEwfAYyZobehlLQ8Op6WizW8HA/Jq
-	 pRgtc4f3b1NwTiXxVd8ySjXs5LQU2DsH6wmLERiw6beGjntY0jaSjQ0TJWvsZUHQIfuNh
-	 u9u+LuOSR/EWrQiZQ6xjoHBexpSuIL9nTSxczOzFa09IJa49X7j5PL5F3Tt/AHR0lPA==
+	bh=CUSiCO0XHUlNSgm8EzcvU5hoNhu5F+juh0Z+CEFzsFY=;
+	b=VVQYxy5ARU+04AFafK2SlMF1NssSxrs9lGbi6/O3mNnid6eu1TS2Is2l9S9Guy3Mbf0U
+	 SFDxZgJYSAhmck9BxaDyfEH3axi817+JvOGFuHw7eSLUTfthFw7Tx7IIvU66tc76ToUE9
+	 Sc5GHGqa36A8GaqW32D1ovr9R3pX5ucSHCQG32cvhlaO2w7ZyEr85W9PezEOsXNMU19Q/
+	 xa8+M1s2mTxlDiP+hdN052WrjIQbgfvcHBM/LXtSRLEK71KEsBm0ClfZZJ5QXo2/lNecI
+	 NVUcpfBa0Ja6IYhsjyf91rrvfAj/YetUud2/ljdsOY9UJJioLcwCRwja/WKj/V679dQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=bdCxaBOB;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=IQIPv4AD;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C8DA6606A31E;
-	Wed, 25 Nov 2026 16:02:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 817FE606A31E;
+	Wed, 25 Nov 2026 16:02:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=bdCxaBOB
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B7F6A1F000C4;
-	Wed, 25 Nov 2026 16:02:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=IQIPv4AD
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BD1AE1F000C4;
+	Wed, 25 Nov 2026 16:02:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795622527;
-	bh=s9eAb4ckYMl/ZsLopewTuNgi7v1nyczQK4LaP+W7Mi4=;
+	s=korg; t=1795622530;
+	bh=CUSiCO0XHUlNSgm8EzcvU5hoNhu5F+juh0Z+CEFzsFY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=bdCxaBOB2a+k8ZqadOjtWxNpeB5DRTEFJr7SJ58zu9mjYisqxno/htHFcnSM5SVF2
-	 OAGRW7e4AvI6vywqQSmqVEH6x31ykYJ25faBStqxz8T9u2KhqtcmKY1nykEngpQ4Gu
-	 iNGOSLvePkIgFpMpRnKq9qUewqkJquF0AmWRwfFs=
+	b=IQIPv4ADcBwWd8ffl1/SniPMpxbLW/yqTVOZSK8tWNaqQKqhz8ZAs9ZzwrZUjY1bc
+	 m5yjj/Gt4OVTibCVKispm315oQjol+pgXsh5Dm/AJhcssu0A3wl1qF+fyCI+0pmCKu
+	 wZsTYZQCsVm3d1BRNPi9K/dRq2aOeusn0V8nZ/M4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nicolin Chen <nicolinc@nvidia.com>,
-	Mostafa Saleh <smostafa@google.com>,
-	Will Deacon <will@kernel.org>,
+	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
+	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
+	Rob Clark <robin.clark@oss.qualcomm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 566/990] iommu/arm-smmu-v3: Dont rb_erase() a never-inserted stream node
-Date: Wed, 25 Nov 2026 15:32:13 +0100
-Message-ID: <20261125143835.356142203@linuxfoundation.org>
+Subject: [PATCH 6.18 567/990] drm/msm/a5xx: dont read the GPMU registers on GPUs without a GPMU
+Date: Wed, 25 Nov 2026 15:32:14 +0100
+Message-ID: <20261125143835.378981511@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143822.072087159@linuxfoundation.org>
 References: <20261125143822.072087159@linuxfoundation.org>
@@ -69,73 +69,127 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Nicolin Chen <nicolinc@nvidia.com>
+From: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
 
-[ Upstream commit 2888520bdcbe0599cfc77b2fad8dc6c95505a3cb ]
+[ Upstream commit 77e3ffcf69065c4ce92c725540e0b4db14f43ad7 ]
 
-arm_smmu_insert_master() skips inserting a stream whose StreamID duplicates
-one the same master already owns (bridged PCI devices can present duplicate
-IDs), leaving that master->streams[i].node zeroed and unlinked from the
-smmu->streams rb-tree.
+Only a530/a540 have a GPMU.  On the other a5xx parts, reading the
+0xa800-0xac60 GPMU aperture during a crashdump resets the board -- on
+sda660 (a512) a GPU hang thus reboots the SoC instead of recovering.
 
-Both the insert error-rollback loop and arm_smmu_remove_master() then call
-rb_erase() on every master->streams[i].node unconditionally. rb_erase() on
-a zeroed node sees a NULL parent, treats the node as the tree root and sets
-root->rb_node = NULL, silently emptying the whole SID tree and breaking SID
-lookups (and DMA) for every other master on the SMMU.
+Split the GPMU block into its own array and collect it only when a GPMU
+is present.
 
-Mark each node with RB_CLEAR_NODE() after sort_nonatomic() reorders the
-array, since sorting relocates the entries and would leave the earlier
-self-referential RB_CLEAR_NODE() pointer stale. An un-inserted node then
-stays RB_EMPTY_NODE() and is skipped in both erase loops; inserted nodes
-are linked by rb_find_add() and erased as before.
-
-Fixes: b00d24997a11 ("iommu/arm-smmu-v3: Fix iommu_device_probe bug due to duplicated stream ids")
+Fixes: e20c9284c8f2 ("drm/msm/adreno: Add support for Adreno 510 GPU")
 Assisted-by: LLM
-Signed-off-by: Nicolin Chen <nicolinc@nvidia.com>
-Reviewed-by: Mostafa Saleh <smostafa@google.com>
-Signed-off-by: Will Deacon <will@kernel.org>
-[ sashal: Placed the RB_CLEAR_NODE() loop right after master->num_streams is set, since this tree has no sort() or build_invs context, and dropped the upstream sort comment. ]
+Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+Patchwork: https://patchwork.freedesktop.org/patch/754867/
+Message-ID: <20260920-a5xx-no-gpmu-v1-1-714200254f76@oss.qualcomm.com>
+Signed-off-by: Rob Clark <robin.clark@oss.qualcomm.com>
+[ sashal: Replaced upstream's kzalloc_obj(*a5xx_state) with kzalloc(sizeof(*a5xx_state), GFP_KERNEL) because the helper doesn't exist here, and kept the added adreno_gpu declaration. ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c | 10 ++++++++--
- 1 file changed, 8 insertions(+), 2 deletions(-)
+ drivers/gpu/drm/msm/adreno/a5xx_gpu.c | 49 +++++++++++++++++++++++++--
+ 1 file changed, 46 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c b/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c
-index 84dff2f06bcd1..8a678910a18cd 100644
---- a/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c
-+++ b/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c
-@@ -3535,6 +3535,9 @@ static int arm_smmu_insert_master(struct arm_smmu_device *smmu,
- 		return -ENOMEM;
- 	master->num_streams = fwspec->num_ids;
- 
-+	for (i = 0; i < fwspec->num_ids; i++)
-+		RB_CLEAR_NODE(&master->streams[i].node);
+diff --git a/drivers/gpu/drm/msm/adreno/a5xx_gpu.c b/drivers/gpu/drm/msm/adreno/a5xx_gpu.c
+index 4a04dc43a8e67..3d123f6e51ab2 100644
+--- a/drivers/gpu/drm/msm/adreno/a5xx_gpu.c
++++ b/drivers/gpu/drm/msm/adreno/a5xx_gpu.c
+@@ -1338,9 +1338,14 @@ static const u32 a5xx_registers[] = {
+ 	0xE800, 0xE806, 0xE810, 0xE89A, 0xE8A0, 0xE8A4, 0xE8AA, 0xE8EB,
+ 	0xE900, 0xE905, 0xEB80, 0xEB8F, 0xEBB0, 0xEBB0, 0xEC00, 0xEC05,
+ 	0xEC08, 0xECE9, 0xECF0, 0xECF0, 0xEA80, 0xEA80, 0xEA82, 0xEAA3,
+-	0xEAA5, 0xEAC2, 0xA800, 0xA800, 0xA820, 0xA828, 0xA840, 0xA87D,
+-	0XA880, 0xA88D, 0xA890, 0xA8A3, 0xA8D0, 0xA8D8, 0xA8E0, 0xA8F5,
+-	0xAC60, 0xAC60, ~0,
++	0xEAA5, 0xEAC2, ~0,
++};
 +
- 	mutex_lock(&smmu->streams_mutex);
- 	for (i = 0; i < fwspec->num_ids; i++) {
- 		struct arm_smmu_stream *new_stream = &master->streams[i];
-@@ -3570,7 +3573,9 @@ static int arm_smmu_insert_master(struct arm_smmu_device *smmu,
++/* GPMU registers, only valid on parts with a GPMU (a530/a540) */
++static const u32 a5xx_gpmu_registers[] = {
++	0xA800, 0xA800, 0xA820, 0xA828, 0xA840, 0xA87D, 0xA880, 0xA88D,
++	0xA890, 0xA8A3, 0xA8D0, 0xA8D8, 0xA8E0, 0xA8F5, 0xAC60, 0xAC60,
++	~0,
+ };
  
- 	if (ret) {
- 		for (i--; i >= 0; i--)
--			rb_erase(&master->streams[i].node, &smmu->streams);
-+			if (!RB_EMPTY_NODE(&master->streams[i].node))
-+				rb_erase(&master->streams[i].node,
-+					 &smmu->streams);
- 		kfree(master->streams);
- 	}
- 	mutex_unlock(&smmu->streams_mutex);
-@@ -3589,7 +3594,8 @@ static void arm_smmu_remove_master(struct arm_smmu_master *master)
+ static void a5xx_dump(struct msm_gpu *gpu)
+@@ -1451,6 +1456,7 @@ struct a5xx_crashdumper {
+ struct a5xx_gpu_state {
+ 	struct msm_gpu_state base;
+ 	u32 *hlsqregs;
++	u32 *gpmuregs;
+ };
  
- 	mutex_lock(&smmu->streams_mutex);
- 	for (i = 0; i < fwspec->num_ids; i++)
--		rb_erase(&master->streams[i].node, &smmu->streams);
-+		if (!RB_EMPTY_NODE(&master->streams[i].node))
-+			rb_erase(&master->streams[i].node, &smmu->streams);
- 	mutex_unlock(&smmu->streams_mutex);
+ static int a5xx_crashdumper_init(struct msm_gpu *gpu,
+@@ -1568,8 +1574,30 @@ static void a5xx_gpu_state_get_hlsq_regs(struct msm_gpu *gpu,
+ 	msm_gem_kernel_put(dumper.bo, gpu->vm);
+ }
  
- 	kfree(master->streams);
++static void a5xx_gpu_state_get_gpmu_regs(struct msm_gpu *gpu,
++		struct a5xx_gpu_state *a5xx_state)
++{
++	u32 count = 0, pos = 0;
++	int i;
++
++	for (i = 0; a5xx_gpmu_registers[i] != ~0; i += 2)
++		count += a5xx_gpmu_registers[i + 1] - a5xx_gpmu_registers[i] + 1;
++
++	a5xx_state->gpmuregs = kcalloc(count, sizeof(u32), GFP_KERNEL);
++	if (!a5xx_state->gpmuregs)
++		return;
++
++	for (i = 0; a5xx_gpmu_registers[i] != ~0; i += 2) {
++		u32 addr;
++
++		for (addr = a5xx_gpmu_registers[i]; addr <= a5xx_gpmu_registers[i + 1]; addr++)
++			a5xx_state->gpmuregs[pos++] = gpu_read(gpu, addr);
++	}
++}
++
+ static struct msm_gpu_state *a5xx_gpu_state_get(struct msm_gpu *gpu)
+ {
++	struct adreno_gpu *adreno_gpu = to_adreno_gpu(gpu);
+ 	struct a5xx_gpu_state *a5xx_state = kzalloc(sizeof(*a5xx_state),
+ 			GFP_KERNEL);
+ 	bool stalled = !!(gpu_read(gpu, REG_A5XX_RBBM_STATUS3) & BIT(24));
+@@ -1585,6 +1613,9 @@ static struct msm_gpu_state *a5xx_gpu_state_get(struct msm_gpu *gpu)
+ 
+ 	a5xx_state->base.rbbm_status = gpu_read(gpu, REG_A5XX_RBBM_STATUS);
+ 
++	if (adreno_is_a530(adreno_gpu) || adreno_is_a540(adreno_gpu))
++		a5xx_gpu_state_get_gpmu_regs(gpu, a5xx_state);
++
+ 	/*
+ 	 * Get the HLSQ regs with the help of the crashdumper, but only if
+ 	 * we are not stalled in an iommu fault (in which case the crashdumper
+@@ -1606,6 +1637,7 @@ static void a5xx_gpu_state_destroy(struct kref *kref)
+ 		struct a5xx_gpu_state, base);
+ 
+ 	kfree(a5xx_state->hlsqregs);
++	kfree(a5xx_state->gpmuregs);
+ 
+ 	adreno_gpu_state_destroy(state);
+ 	kfree(a5xx_state);
+@@ -1634,6 +1666,17 @@ static void a5xx_show(struct msm_gpu *gpu, struct msm_gpu_state *state,
+ 
+ 	adreno_show(gpu, state, p);
+ 
++	if (a5xx_state->gpmuregs) {
++		u32 o, pos = 0;
++
++		drm_printf(p, "registers-gpmu:\n");
++
++		for (i = 0; a5xx_gpmu_registers[i] != ~0; i += 2)
++			for (o = a5xx_gpmu_registers[i]; o <= a5xx_gpmu_registers[i + 1]; o++)
++				drm_printf(p, "  - { offset: 0x%04x, value: 0x%08x }\n",
++					o << 2, a5xx_state->gpmuregs[pos++]);
++	}
++
+ 	/* Dump the additional a5xx HLSQ registers */
+ 	if (!a5xx_state->hlsqregs)
+ 		return;
 -- 
 2.53.0
 
