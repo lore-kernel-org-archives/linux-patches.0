@@ -1,61 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795626061;
-	b=ywNd9WhHi3wHVPagPZuKB+eFLP8Ko0cjCCwA90++h0ZiJejHdomqxh6IlGgUrsDy3FpU
-	 yZm8a0gO8ipuCtvpd0mQw9SnIyGfkWmIV3Nr/80pYvD27Oe2ytggfschP3Zfa9OsJW+oU
-	 xOTxbUXCiuZQznbASUHLN+9f1xS00oZ41g3MgQ01P9pwiWmltf6fJt/3pY5z7V7sUIZG2
-	 vlDlNS3Vu/koFBMEr1kWDi7ffZxm/V8BSiDHg5l5dy5Al28q4ZBJb8c2Kc9LUMETOQGOK
-	 jcyFU17yxDcNZxBXq4FOk9Tkgah3ZklXxNX0WnlQImcZT9DlCSKgKdP5vma7zmsXvZg==
+	t=1795626064;
+	b=2rmQyMXwlLeM3Tg7Ki5UofHiKEcYD+SSmiumBYk29JxemRLTisNpNZe2uRONdbVtiIA/
+	 5MdlU2mZzuqM/fdjCjMwJqsstU0gbHLSsV4CtV74ml0LiM27djmFm9MznLXn490hAQ+G+
+	 X/uMiNF8o2zrT1shD8p8nVQffOvzwjFNyIe5CQHKyUy20H4BpwCTsKR+B5Vcplhm7JmWN
+	 2dcYUokkxbqGZ1lELCPHwEQ+lEswujzrXp0uKVHbb9IOkzQpvl6z8bZB66B3NbokxbEc6
+	 iqaXyBH3L4VCgOQQGV0d+/UFEzmg2QJ5GdkRbvrjawly8YlPLVEdQrYS+SrpABJP6Ng==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795626061;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795626064;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=iVz4+hhelSHXn8lXaalfP8xm2Xes53cXa6OyZGOjDDs=;
-	b=r8+RpZezNhwbFEs0+vy/mGVqSS36RN/7+tIMREQuTnpqOwswFwRXkzPx4gsyT+ddoanX
-	 JjGeulxfseXvk0/iyNK+0l2dUA58Hb/IrHET1ki3Y8Lwm928ehuGhNcQI3cPxklP/3dU7
-	 jUGu/1aEla4OXZwoUKkJ6i0vy8XMDkF13zd8xzePEaXG8BhQhD2gyBp+JMRcNMz6iWWhn
-	 LeB9fwmWb1aZLIO/NBQvIWq5FLSp/1ymjxLD7FK7sjKOubIDeDKAywrsk3TZkHCxYBQPR
-	 gCconMWV0sntloTmWZBFHvyOubxLhx7GxWqAvtgSVwVUUpjLlGxG5/tDbsAUWLf6XvQ==
+	bh=tQ1uNGzDiiw4LwmAQra51rTrXfpG34YsRFT2cCh3Cw4=;
+	b=ufCA18l48nq83IxWsBjYgLZzX9YW3zLgRSHq5uzJvtHfJWE0u1agGCNBCe8bOpV/+9tr
+	 K0n0MoB/kIrgTwXhZyLud1n7YExhaPswYPRq2BYiKj0tutRJX/uqsNWdmP38rR29fodTK
+	 f7wT+SDxIjOyP4JFce1iruPTnu4249lNs7YaTPUULkX/62hk67si2MtfQBVES55DjJlLg
+	 q2t1DMw8GKMSGhvSs87yLpc5a1ZKKD9EiuKO4vKdb2aWg4nC/oPfmjhB+vMjoabWP2O+0
+	 VI6LTz+ci3pkbIAeGuJSzBe97IZ/Um6Q31vTlC38d0muL8wXqQsNVFMntypAIqgSnBg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=jmbtMWP7;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=FGcVcjuu;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3C020606A321;
-	Wed, 25 Nov 2026 17:01:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5C2E8606A331;
+	Wed, 25 Nov 2026 17:01:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=jmbtMWP7
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 81E151F000C6;
-	Wed, 25 Nov 2026 17:01:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=FGcVcjuu
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 621181F000D0;
+	Wed, 25 Nov 2026 17:01:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795626061;
-	bh=iVz4+hhelSHXn8lXaalfP8xm2Xes53cXa6OyZGOjDDs=;
+	s=korg; t=1795626063;
+	bh=tQ1uNGzDiiw4LwmAQra51rTrXfpG34YsRFT2cCh3Cw4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=jmbtMWP7R8Rgx0LEZOScs4hRQ4eJbopw8voi/ZDL2PgM/FrySH2wXZSJ5l8Y5SGoj
-	 ISxngS3ReSYZdPUB4NKxSliaAkVaOW5cBfKeL+msGQ4+IEpo4VHWOzLwSQisagSnRH
-	 Hr56Be1BKINA3e7o6usR7iLVzUVfjSnFDpExCVEM=
+	b=FGcVcjuu8WMhkPKO5wATqpXflx7dXZg3W/L/J8l/QA6Gv9LFoa1uhlhH3+o/G9xXN
+	 jjO8Sv61iz4sR6UDLSrXejwjCtcOEBapYnm7pA/KEmIOdnMY5ib3qujN0Sw8fBxA3Q
+	 +v19LZ+/e8H5tFDdcFLdaJxz6rxWoga8y7kEJXmY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	stable <stable@kernel.org>,
-	Jiri Slaby <jirislaby@kernel.org>,
-	Nicolas Pitre <npitre@baylibre.com>,
-	Kees Cook <kees+treewide@kernel.org>,
-	Joshua Rogers <linux@joshua.hu>,
-	Chris Mason <mason@kernel.org>,
-	Helge Deller <deller@gmx.de>,
-	Thomas Zimmermann <tzimmermann@suse.de>,
-	Mingyu Wang <25181214217@stu.xidian.edu.cn>,
-	Randy Dunlap <rdunlap@infradead.org>,
-	Ronan Pigott <ronan@rjp.ie>,
-	Liav Mordouch <liavmordouch@gmail.com>
-Subject: [PATCH 6.12 720/816] vt: serialise the producers of the flip buffer
-Date: Wed, 25 Nov 2026 15:37:48 +0100
-Message-ID: <20261125143905.843440462@linuxfoundation.org>
+	Josef Bacik <josef@toxicpanda.com>
+Subject: [PATCH 6.12 721/816] comedi: addi_apci_1500: fix clearing of the gate enable
+Date: Wed, 25 Nov 2026 15:37:49 +0100
+Message-ID: <20261125143905.867683466@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143849.205329330@linuxfoundation.org>
 References: <20261125143849.205329330@linuxfoundation.org>
@@ -77,124 +67,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chris Mason <mason@kernel.org>
+From: Josef Bacik <josef@toxicpanda.com>
 
-commit 5d1d814408c1c8e797031eac8ddd40de1a9e8e93 upstream.
+commit ade85ceef46892425a08f3ee52ca06729ee4922e upstream.
 
-Typing on a virtual console while the console replies to an escape
-sequence can make the kernel write past the end of a buffer. A user who
-can write to the foreground console can cause this on purpose if they
-can also inject key events, through /dev/uinput or by writing to the
-/dev/input/event* node of a keyboard.
+INSN_CONFIG_SET_GATE_SRC reads the mode register of the counter/timer,
+is meant to clear the External Gate Enable bit, sets it again if the
+external gate was asked for, and writes the register back.  The mask lacks
+its '~': all the bits but EGE are cleared instead.  So
 
-Input for a tty goes through the flip buffer of its port. A driver
-inserts the data with tty_insert_flip_*() and then calls
-tty_flip_buffer_push() to pass it on to the line discipline. The insert
-functions take no lock: they check that the current struct tty_buffer
-has room, copy the data to offset ->used, and then advance ->used. So a
-flip buffer supports only one producer at a time, and a driver that has
-several must serialise them.
+ - the external gate can be enabled but never be disabled again, and
+ - the instruction wipes the mode (continuous or single cycle, external
+   output, count and trigger enables, retrigger, duty cycle) which
+   INSN_CONFIG_SET_COUNTER_MODE has programmed: the timer silently falls
+   back to a single cycle pulse.
 
-Four functions feed the flip buffer of a virtual console:
+With the right mask, the instruction only changes the gate bit.  An
+application which sets the gate source after the counter mode now keeps
+the mode it has asked for.
 
-- put_queue(), puts_queue() and fn_send_intr() insert typed characters
-  and breaks for the keyboard handler. They run under kbd_event_lock.
-- respond_string() inserts the reply when a program writes an escape
-  sequence that requests one, such as a cursor position report. It runs
-  under the console lock.
-
-The keyboard handler gets its events from the input layer and feeds the
-foreground console. Key events that a program writes to /dev/uinput or
-to an event node reach it in the same way as typed keys.
-
-The keyboard handler and respond_string() share no lock, so they can
-interleave:
-
-    keyboard handler                respond_string()
-    ================                ================
-    room check passes
-                                    room check passes
-    memcpy() to offset used
-    used += len
-                                    memcpy() to offset used
-                                    used += len
-                                      /* used > size of the buffer */
-
-The room check subtracts ->used from the size, and both are unsigned.
-Once ->used exceeds the size, the result wraps, so the check always
-passes, and each later insert lands further past the buffer.
-
-Reproduced as root, with keys from a uinput keyboard and cursor position
-reports on the same console: KFENCE reported an out-of-bounds write
-1,024 bytes past the buffer in under 10 s.
-
-Fix this by taking port->lock, with interrupts disabled, around the
-insert and the push in these four functions. kbd_keycode() already takes
-port->lock under kbd_event_lock, so this lock ordering is not new.
-
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Fixes: a8c66b684efa ("staging: comedi: addi_apci_1500: rewrite the subdevice support functions")
 Cc: stable <stable@kernel.org>
-Cc: Jiri Slaby <jirislaby@kernel.org>
-Cc: Nicolas Pitre <npitre@baylibre.com>
-Cc: Kees Cook <kees+treewide@kernel.org>
-Cc: Joshua Rogers <linux@joshua.hu>
-Cc: Chris Mason <mason@kernel.org>
-Cc: Helge Deller <deller@gmx.de>
-Cc: Thomas Zimmermann <tzimmermann@suse.de>
-Cc: Mingyu Wang <25181214217@stu.xidian.edu.cn>
-Cc: Randy Dunlap <rdunlap@infradead.org>
-Cc: Ronan Pigott <ronan@rjp.ie>
-Cc: Liav Mordouch <liavmordouch@gmail.com>
-Signed-off-by: Chris Mason <mason@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Link: https://patch.msgid.link/20261027-tty-llm-v1-1-99b0202ae546@linuxfoundation.org
+Signed-off-by: Josef Bacik <josef@toxicpanda.com>
+Link: https://patch.msgid.link/20261027-llm-char-misc-comedi-v1-2-1899771ee15b@linuxfoundation.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/tty/vt/keyboard.c |    6 ++++++
- drivers/tty/vt/vt.c       |    2 ++
- 2 files changed, 8 insertions(+)
+ drivers/comedi/drivers/addi_apci_1500.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/tty/vt/keyboard.c
-+++ b/drivers/tty/vt/keyboard.c
-@@ -321,15 +321,20 @@ int kbd_rate(struct kbd_repeat *rpt)
+--- a/drivers/comedi/drivers/addi_apci_1500.c
++++ b/drivers/comedi/drivers/addi_apci_1500.c
+@@ -696,7 +696,7 @@ static int apci1500_timer_insn_config(st
+ 			return -EINVAL;
  
- /*
-  * Helper Functions.
-+ *
-+ * A flip buffer allows one producer at a time, and respond_string() in vt.c
-+ * feeds the same one under the console lock. So take the lock of the port.
-  */
- static void put_queue(struct vc_data *vc, int ch)
- {
-+	guard(spinlock_irqsave)(&vc->port.lock);
- 	tty_insert_flip_char(&vc->port, ch, 0);
- 	tty_flip_buffer_push(&vc->port);
- }
- 
- static void puts_queue(struct vc_data *vc, const char *cp)
- {
-+	guard(spinlock_irqsave)(&vc->port.lock);
- 	tty_insert_flip_string(&vc->port, cp, strlen(cp));
- 	tty_flip_buffer_push(&vc->port);
- }
-@@ -590,6 +595,7 @@ static void fn_inc_console(struct vc_dat
- 
- static void fn_send_intr(struct vc_data *vc)
- {
-+	guard(spinlock_irqsave)(&vc->port.lock);
- 	tty_insert_flip_char(&vc->port, 0, TTY_BREAK);
- 	tty_flip_buffer_push(&vc->port);
- }
---- a/drivers/tty/vt/vt.c
-+++ b/drivers/tty/vt/vt.c
-@@ -1818,6 +1818,8 @@ static void csi_m(struct vc_data *vc)
- 
- static void respond_string(const char *p, size_t len, struct tty_port *port)
- {
-+	/* The keyboard handler feeds the same flip buffer. */
-+	guard(spinlock_irqsave)(&port->lock);
- 	tty_insert_flip_string(port, p, len);
- 	tty_flip_buffer_push(port);
- }
+ 		val = z8536_read(dev, Z8536_CT_MODE_REG(chan));
+-		val &= Z8536_CT_MODE_EGE;
++		val &= ~Z8536_CT_MODE_EGE;
+ 		if (data[1] == 1)
+ 			val |= Z8536_CT_MODE_EGE;
+ 		else if (data[1] > 1)
 
 
