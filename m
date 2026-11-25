@@ -1,50 +1,61 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795620393;
-	b=M0Sz4Fso4z6t9Fd8neOdD+GiEy/JMSNNMPvQ40JImCXjbIYE2rpgkJIW7wIkUxGkOOi9
-	 lMXtP2uXkmAjIVSBidia8fHb8xW4+6wrmHS4UCBTnqZXqnbDk4nz7soZq2O5OVMRehQ6W
-	 XRNh9Jsx1RepueyvhuL/R15bX6pRE11PYNp+bXRsIdIub7aQGeNCPIG9fnN8vfStVqCS4
-	 pRrYzAqY09U8w2M8VOntHpgK5z9Kb9Jk0GaQRxa1DsgusUy5xfo5/nuw5a7BkoDUoaCto
-	 gFpu7LwgTsCz/JFUa2IuwETe2BaOb5xiAUbiKViKPuc0vfoK7bMN8R4nhO1Dhiv/www==
+	t=1795620396;
+	b=2Ix8/9TnMlApf4tHMNxpRRLlzivm/KX/W8IpX61D+Tbe18A9nZ11H4iiqlrEGrWk8JQR
+	 s0bbdlpumG4Zdno0B9E97qgDfuoomREHdj53M0am7kNC7u/lXSBMgRi21PIDlBwrnp/th
+	 n/YwtWdZ4fodfRv3dBi6sSTIwbDyyj/3pDqCb59gNK++gjRBLqrmxbHPigf1zZWP1oBMp
+	 g1tdWigPIfk+8O9fQkLK9+2ZtwAqnaHy+0jNiNIbKZljenJFqBGbr+7ozEAnccg4NL81E
+	 VUn6WKShnEbNEVmMjCsb4OA0WTVXeVEyy5L0ktXFNgr+BqeFITz9Lt44CYrkQBg6rVg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795620393;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795620396;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=vjryKb7mx+EW+nwKiaIIdIgOUn4Es6tXVx8zO+8E1iw=;
-	b=BZ/kLM5pbhHa0EhRRBb+OzLvMxmCUHh3i8lH4q7HGaYiFMSLiRB5XGO4pFY0xzIDTm0A
-	 a4dHK6A1GmmRpQyExS+GRc5xHJokhoF7GW1U0nBsJHRdX/KtS8ILqUUOBJ87KxANcrUdz
-	 o6Rc76yTtB3HSEqhSWxsx7gQRNCcXKfwl+aXl6CJuX8awYBKH75XOxYrY88RdfUbTRAr4
-	 wIsQrQnrb5NeCjlO7yoPo14QWLS/TUivGZS7+JWo1ILU/pntpJPgx3sBsBDfUNyCP78T+
-	 A3Fhmx8LKgEqNkdY52Mm4kztADCzRuy3xvcGMfKj7jXOZo6WPZ6L4WQb42Iks9KbCLQ==
+	bh=rcQEMjpYk1btmslTxRpdzeDt4kvnChF7P91yh8VEMt4=;
+	b=o5d87l9wN5pTOkldCgFFPK9vCfB9GLpvUyoKJ7x6DCSuYVicPAbA+A0KGgB77ZDFBN7V
+	 Lkcdlc1I7WSld6I+i7HuUeSLx0p8UoingfUMv3Mi25kmwQ+puZHy/QeN5JfXwDXroZe+Y
+	 z2/aIs3iQ4zblwXi+QYOPx/DB4VjSsQweAEOTQxOKznDFZgpIz2vjeMhGLfGjhf6BDLYw
+	 OoNuHCEa1GF62qhjek2xQyDya2vtcgkIR0WpBzo3xsb1UscPRYASDgl8zKC8l/kFbQ0Fl
+	 MDyssellPQTuuH05gq+k1pFYLA8J4rH9UyA0j1DKmU1Vl3gSpDoVsD8ZdRDu0Mzx8mg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=D0ijYHuQ;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=EgOWiUSN;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 13092606A31E;
-	Wed, 25 Nov 2026 15:26:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ED7E4606A31E;
+	Wed, 25 Nov 2026 15:26:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=D0ijYHuQ
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 402271F000C4;
-	Wed, 25 Nov 2026 15:26:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=EgOWiUSN
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 109331F000C4;
+	Wed, 25 Nov 2026 15:26:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795620392;
-	bh=vjryKb7mx+EW+nwKiaIIdIgOUn4Es6tXVx8zO+8E1iw=;
+	s=korg; t=1795620395;
+	bh=rcQEMjpYk1btmslTxRpdzeDt4kvnChF7P91yh8VEMt4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=D0ijYHuQzWPl2dlkAXZqk9GgcFRepQlg7aVlaelQ5B85uwfgwGWvyYf5rFiIfJpBM
-	 xfxkENRlwXnldga1EWQMaLMrNsguIwnvs5nxhCDnT3Om+fBWp91fv2CQa6Y9UwwqTX
-	 BDLVJOdeAVharmdyLPD5PQSN7yiCgvPf9VEh1ZSQ=
+	b=EgOWiUSNwFU3+Ixh9LfdBakTNcjUPwvS1khEIX3VxdiEne2NTDnkZIMxqNpxKQ2VP
+	 HtGxNJTu9EppX2wrz8WJsd0N7Z7z04gwkVvqHBbCckvqpf3QGZY1Th5jYKknmBA+j6
+	 UD8LUj+IQQq1vfLjDwpxSfQE6+oOwD3z4ntWBGKs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Jiri Slaby (SUSE)" <jirislaby@kernel.org>
-Subject: [PATCH 7.3 0903/1005] serial: 8250_exar: check priv->gpio properly
-Date: Wed, 25 Nov 2026 15:37:21 +0100
-Message-ID: <20261125143842.844550684@linuxfoundation.org>
+	stable <stable@kernel.org>,
+	Jiri Slaby <jirislaby@kernel.org>,
+	Nicolas Pitre <npitre@baylibre.com>,
+	Kees Cook <kees+treewide@kernel.org>,
+	Joshua Rogers <linux@joshua.hu>,
+	Chris Mason <mason@kernel.org>,
+	Helge Deller <deller@gmx.de>,
+	Thomas Zimmermann <tzimmermann@suse.de>,
+	Mingyu Wang <25181214217@stu.xidian.edu.cn>,
+	Randy Dunlap <rdunlap@infradead.org>,
+	Ronan Pigott <ronan@rjp.ie>,
+	Liav Mordouch <liavmordouch@gmail.com>
+Subject: [PATCH 7.3 0886/1005] vt: serialise the producers of the flip buffer
+Date: Wed, 25 Nov 2026 15:37:04 +0100
+Message-ID: <20261125143842.454497454@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143821.729802100@linuxfoundation.org>
 References: <20261125143821.729802100@linuxfoundation.org>
@@ -66,61 +77,124 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jiri Slaby (SUSE) <jirislaby@kernel.org>
+From: Chris Mason <mason@kernel.org>
 
-commit 0353b51965883cf70dad162908e07395f242000f upstream.
+commit 5d1d814408c1c8e797031eac8ddd40de1a9e8e93 upstream.
 
-priv->gpio is set by platform_device_register_full(), which returns
-error-encoded pointers on failure, not NULL. Sashiko reported:
+Typing on a virtual console while the console replies to an escape
+sequence can make the kernel write past the end of a buffer. A user who
+can write to the foreground console can cause this on purpose if they
+can also inject key events, through /dev/uinput or by writing to the
+/dev/input/event* node of a keyboard.
 
-> Does __xr17v35x_register_gpio() return an ERR_PTR if
-> platform_device_register_full() fails?
->
-> If it does, we might be storing an error pointer directly into
-> priv->gpio in xr17v35x_register_gpio() without validating it with
-> IS_ERR(). Because the error is ignored, the device probe
-> successfully continues.
+Input for a tty goes through the flip buffer of its port. A driver
+inserts the data with tty_insert_flip_*() and then calls
+tty_flip_buffer_push() to pass it on to the line discipline. The insert
+functions take no lock: they check that the current struct tty_buffer
+has room, copy the data to offset ->used, and then advance ->used. So a
+flip buffer supports only one producer at a time, and a driver that has
+several must serialise them.
 
-Before commit 1145d1a0703f ("serial: 8250_exar: use
-platform_device_register_full()"), __xr17v35x_register_gpio()
-returned NULL on any failure (platform_device_alloc(),
-device_add_software_node() or platform_device_add() failing were all
-turned into a NULL return). The plain truthy check in
-xr17v35x_unregister_gpio() matched that convention. That commit
-switched registration to platform_device_register_full(), which
-reports failure as an ERR_PTR() instead of NULL, but the unregister
-check was never updated to match. As a result, a failed registration
-left an error pointer in priv->gpio, and unbind would tear it down as
-if it were a real platform_device, dereferencing the encoded error
-value in device_remove_software_node() and
-platform_device_unregister().
+Four functions feed the flip buffer of a virtual console:
 
-Use IS_ERR_OR_NULL() instead, so both the unset (non-EXAR vendor,
-priv->gpio never assigned) and failed-registration (ERR_PTR) cases
-are skipped.
+- put_queue(), puts_queue() and fn_send_intr() insert typed characters
+  and breaks for the keyboard handler. They run under kbd_event_lock.
+- respond_string() inserts the reply when a program writes an escape
+  sequence that requests one, such as a cursor position report. It runs
+  under the console lock.
 
-Fixes: 1145d1a0703f ("serial: 8250_exar: use platform_device_register_full()")
-Signed-off-by: Jiri Slaby (SUSE) <jirislaby@kernel.org>
-Cc: stable@vger.kernel.org
-Assisted-by: LLM
-Link: https://lore.kernel.org/all/sashiko-outbox-170895@kernel.org/
-Link: https://patch.msgid.link/28c09cf858795491f66667781bf79fb6a603f159.1793704520.git.jirislaby@kernel.org
+The keyboard handler gets its events from the input layer and feeds the
+foreground console. Key events that a program writes to /dev/uinput or
+to an event node reach it in the same way as typed keys.
+
+The keyboard handler and respond_string() share no lock, so they can
+interleave:
+
+    keyboard handler                respond_string()
+    ================                ================
+    room check passes
+                                    room check passes
+    memcpy() to offset used
+    used += len
+                                    memcpy() to offset used
+                                    used += len
+                                      /* used > size of the buffer */
+
+The room check subtracts ->used from the size, and both are unsigned.
+Once ->used exceeds the size, the result wraps, so the check always
+passes, and each later insert lands further past the buffer.
+
+Reproduced as root, with keys from a uinput keyboard and cursor position
+reports on the same console: KFENCE reported an out-of-bounds write
+1,024 bytes past the buffer in under 10 s.
+
+Fix this by taking port->lock, with interrupts disabled, around the
+insert and the push in these four functions. kbd_keycode() already takes
+port->lock under kbd_event_lock, so this lock ordering is not new.
+
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Cc: stable <stable@kernel.org>
+Cc: Jiri Slaby <jirislaby@kernel.org>
+Cc: Nicolas Pitre <npitre@baylibre.com>
+Cc: Kees Cook <kees+treewide@kernel.org>
+Cc: Joshua Rogers <linux@joshua.hu>
+Cc: Chris Mason <mason@kernel.org>
+Cc: Helge Deller <deller@gmx.de>
+Cc: Thomas Zimmermann <tzimmermann@suse.de>
+Cc: Mingyu Wang <25181214217@stu.xidian.edu.cn>
+Cc: Randy Dunlap <rdunlap@infradead.org>
+Cc: Ronan Pigott <ronan@rjp.ie>
+Cc: Liav Mordouch <liavmordouch@gmail.com>
+Signed-off-by: Chris Mason <mason@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Link: https://patch.msgid.link/20261027-tty-llm-v1-1-99b0202ae546@linuxfoundation.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/tty/serial/8250/8250_exar.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/tty/vt/keyboard.c |    6 ++++++
+ drivers/tty/vt/vt.c       |    2 ++
+ 2 files changed, 8 insertions(+)
 
---- a/drivers/tty/serial/8250/8250_exar.c
-+++ b/drivers/tty/serial/8250/8250_exar.c
-@@ -1180,7 +1180,7 @@ static int xr17v35x_register_gpio(struct
+--- a/drivers/tty/vt/keyboard.c
++++ b/drivers/tty/vt/keyboard.c
+@@ -322,15 +322,20 @@ int kbd_rate(struct kbd_repeat *rpt)
  
- static void xr17v35x_unregister_gpio(struct exar8250 *priv)
+ /*
+  * Helper Functions.
++ *
++ * A flip buffer allows one producer at a time, and respond_string() in vt.c
++ * feeds the same one under the console lock. So take the lock of the port.
+  */
+ static void put_queue(struct vc_data *vc, int ch)
  {
--	if (priv->gpio) {
-+	if (!IS_ERR_OR_NULL(priv->gpio)) {
- 		__xr17v35x_unregister_gpio(priv->gpio);
- 		priv->gpio = NULL;
- 	}
++	guard(spinlock_irqsave)(&vc->port.lock);
+ 	tty_insert_flip_char(&vc->port, ch, 0);
+ 	tty_flip_buffer_push(&vc->port);
+ }
+ 
+ static void puts_queue(struct vc_data *vc, const char *cp)
+ {
++	guard(spinlock_irqsave)(&vc->port.lock);
+ 	tty_insert_flip_string(&vc->port, cp, strlen(cp));
+ 	tty_flip_buffer_push(&vc->port);
+ }
+@@ -587,6 +592,7 @@ static void fn_inc_console(struct vc_dat
+ 
+ static void fn_send_intr(struct vc_data *vc)
+ {
++	guard(spinlock_irqsave)(&vc->port.lock);
+ 	tty_insert_flip_char(&vc->port, 0, TTY_BREAK);
+ 	tty_flip_buffer_push(&vc->port);
+ }
+--- a/drivers/tty/vt/vt.c
++++ b/drivers/tty/vt/vt.c
+@@ -1857,6 +1857,8 @@ static void csi_m(struct vc_data *vc)
+ 
+ static void respond_string(const char *p, size_t len, struct tty_port *port)
+ {
++	/* The keyboard handler feeds the same flip buffer. */
++	guard(spinlock_irqsave)(&port->lock);
+ 	tty_insert_flip_string(port, p, len);
+ 	tty_flip_buffer_push(port);
+ }
 
 
