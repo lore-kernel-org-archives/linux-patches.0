@@ -1,42 +1,42 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795624755;
-	b=Er0vBVGkhwHUD+ynD+/3VticIWj12KycC4vVFZGSZ25jGYDMRyhrWdaT6Jt4eRFebXlY
-	 /BS/kTtq32NWvjR7DEM3E+xsDxLQqpfQJtSNCKbSoBJBYjSUCDaMryc0PV1gh1QLquN0L
-	 holYjBgNs8r305PqtPZFHmCx7AE6lvIdWnf3MKUKKnYME64ufwQSlPPYDTdD36U2zP4yS
-	 4sn30f28pRkbK7+VzXHl4zYsFF6hQrjTpV9arMPWOYoNJI0kJ+kEw7dnQmSym6DwDvKr2
-	 CnFR7T+jS8aMab7QZ00AvO0g34wTj+L5iOvSPazj/qzfVooUm49P/2h3Uen9jwFF+BA==
+	t=1795624758;
+	b=SNuCUdORi0XzDAtrI8jE19VCaloG1HbwyYCcCVe8Y/bvbSEca3hN5mK+P+ZAxFQT+wYZ
+	 dkUeiKZMZVMRMCFxwKngxMsQkQQx4DntRQwOtH+0360stABM/aS38M3dDi6VLN7o3dNO1
+	 QecWTdEjKQkAaTS5Qyj1ziZNrFtP3HzuKjESa0G1r9BPN/oc0ZkGp+PIPgYX5jjgi0KlO
+	 LKRCHRqQJ+AfzIbDw/77JXoS8hs3yygGvcVHKHnWKylLFGvyiFZXcprAv0leRXxfWIrV+
+	 RSRpJ3IVemLBRWuz0YC/uAsP9uFMqqJKBG5l04ZYvOK40fMQUvC7MPNDW2x6ecMIfEg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795624755;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795624758;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=V4yVAmtcbvTA0Gg9mksEGB4OX8BRNgc2tCVWcl3Lh5E=;
-	b=AhGbIXYPJqz04l3GXyS5JP7eyZn6k/0GhQKmzsJggAkgqKzPdVzuv3UhJUwaQOivG3bk
-	 95u7h7x6oNCEwrKvdxjl5wAIuOZpauqIfYJSn8Ye96h5IpHiVSHq8gtlzGeWDPgO3YWLZ
-	 RWusN+65pVgBEGdq4ygNKNcmZEZ8iXpY82cBXudz9eexrguUdteFLr9TNzq/rf5jZs1Wm
-	 7kCk8tlWq3YOfwIqkzQOQsp8/mm4j0bAJaI/oumG1k7xumnjqRruq1MTSqlLtQzeErasW
-	 CsoqTouTcH1Nhtt7VzlBsxRuMlOMpQpZBE7WjqjmV+xQnCcZiDKmo0n0wmb/pPdFX+A==
+	bh=MW+FzLbd8ecVLNM7F4bYKrgaf9uUAoUajIiF9O0HtO0=;
+	b=rN/aoJWDrd1Hr5LxGm54NZmT4kVQcfC9cMkGVr4o3hJex/JG1rGF6caoHZ/uh3KdRypr
+	 g1RpLFXmLhR/q0TAXhyhE4C5D4FrX2iUPfSjb5JVLqFmaH2TAhjFH5xccKdeTzLf12Tha
+	 X6vpfqN/NxAjjdeV4vopZDjLvIUADF5++UxR75Aj46jVmm1dzJZ0ALf5AmGRIFRLaxnJR
+	 Llm8sDEuXE5Q8FooqqTnlc/jCUySN+IwNsXCR4nTyd3H+iahx4JA6D4JLzn0BpGnHEYOu
+	 ytkL/+Pe+2RZXSYScIOZEFGIAXymINQUxhH/N7Fe0w1Eo85CJ6xGOPx2W2rDHqCMwyw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=gHWPON7c;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=dWNG8Doi;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 525DE606A33C;
-	Wed, 25 Nov 2026 16:39:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7F519606A336;
+	Wed, 25 Nov 2026 16:39:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=gHWPON7c
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A2DC91F000C4;
-	Wed, 25 Nov 2026 16:39:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=dWNG8Doi
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 788571F000CF;
+	Wed, 25 Nov 2026 16:39:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795624755;
-	bh=V4yVAmtcbvTA0Gg9mksEGB4OX8BRNgc2tCVWcl3Lh5E=;
+	s=korg; t=1795624758;
+	bh=MW+FzLbd8ecVLNM7F4bYKrgaf9uUAoUajIiF9O0HtO0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=gHWPON7c9Pheed8DhqvZGqco5tcnFPJUceSo22wNFgiaH75a5lSrvWgY0ukykczT+
-	 jfyU6hWi+U8uQ2x0tjAMHAqEDop6dtkZg4DdBTF5rs0yHisko1hDPPSD/eXjKxp9xC
-	 jIH/mzIoxpXZWqxsbXatTskHpIsFD435eQe6UFsA=
+	b=dWNG8Doi4zdO8nWJbkRHaC5Sd7IfJA9wiFeVZuUDAaZqwzAMMlOtuYnRaJt68d/ZR
+	 DabkoIJoRCbK6tZIvapFfIVGAHivQdY7QK61nzVFttgBvY21XFvIHZTvOSXq8S/5b5
+	 J7Louk4QTj2hufQdv0gv9X+qYdHnvHRapBn4Sy1c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -44,9 +44,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Avi Weiss <thnkslprpt@gmail.com>,
 	Anna Schumaker <anna.schumaker@hammerspace.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 297/816] NFS: update ctime for atime-only UTIME_NOW requests
-Date: Wed, 25 Nov 2026 15:30:45 +0100
-Message-ID: <20261125143856.080991458@linuxfoundation.org>
+Subject: [PATCH 6.12 298/816] NFS: Fix inverted cross-directory rename check
+Date: Wed, 25 Nov 2026 15:30:46 +0100
+Message-ID: <20261125143856.104121953@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143849.205329330@linuxfoundation.org>
 References: <20261125143849.205329330@linuxfoundation.org>
@@ -70,43 +70,40 @@ Content-Transfer-Encoding: 8bit
 
 From: Avi Weiss <thnkslprpt@gmail.com>
 
-[ Upstream commit a38d7cc8c90f0d093550487c2905b51db0be1522 ]
+[ Upstream commit b9d518902ff1969f93d2b4787951d98e50ab0181 ]
 
-When an NFS client holds a timestamp delegation, utimensat()
-with atime set to UTIME_NOW and mtime set to UTIME_OMIT reaches
-nfs_setattr() with ATTR_TIMES_SET but without ATTR_ATIME_SET.
+nfs_rename_is_unsafe_cross_dir() returns false for cross-directory
+renames, causing nfs_rename() to skip nfs_sync_inode() even when
+filehandles may expire on rename. Same-directory renames may instead
+trigger unnecessary synchronization.
 
-There may be other paths that can reach here as well.
+Current condition directly contradicts the function name/comments.
 
-The delegated-atime fast path treats this as an implicit atime
-update, clears ATTR_ATIME and returns success without updating
-ctime.
+Return false for same-directory renames so cross-directory renames
+reach the existing filehandle-volatility check. Keep the conservative
+fallback unchanged..
 
-Add check for ATTR_TIMES_SET along with ATTR_ATIME_SET (OR) so
-explicit timestamp requests use the normal SETATTR path while
-incidental atime updates can keep using the local shortcut.
-
-Fixes: e12912d94137 ("NFSv4: Add support for delegated atime and mtime attributes")
+Fixes: dcd21b609d4ab ("NFS: Avoid flushing data while holding directory locks in nfs_rename()")
 Signed-off-by: Avi Weiss <thnkslprpt@gmail.com>
 Signed-off-by: Anna Schumaker <anna.schumaker@hammerspace.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/nfs/inode.c | 2 +-
+ fs/nfs/dir.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/fs/nfs/inode.c b/fs/nfs/inode.c
-index f29c4ff16b29f..016c19906bf1e 100644
---- a/fs/nfs/inode.c
-+++ b/fs/nfs/inode.c
-@@ -747,7 +747,7 @@ nfs_setattr(struct mnt_idmap *idmap, struct dentry *dentry,
- 	} else if (nfs_have_delegated_atime(inode) &&
- 		   attr->ia_valid & ATTR_ATIME &&
- 		   !(attr->ia_valid & ATTR_MTIME)) {
--		if (!(attr->ia_valid & ATTR_ATIME_SET)) {
-+		if (!(attr->ia_valid & (ATTR_ATIME_SET | ATTR_TIMES_SET))) {
- 			nfs_update_delegated_atime(inode);
- 			attr->ia_valid &= ~ATTR_ATIME;
- 		}
+diff --git a/fs/nfs/dir.c b/fs/nfs/dir.c
+index 3b07cda9a8f43..1824cc9040d02 100644
+--- a/fs/nfs/dir.c
++++ b/fs/nfs/dir.c
+@@ -2701,7 +2701,7 @@ static bool nfs_rename_is_unsafe_cross_dir(struct dentry *old_dentry,
+ {
+ 	struct nfs_server *server = NFS_SB(old_dentry->d_sb);
+ 
+-	if (old_dentry->d_parent != new_dentry->d_parent)
++	if (old_dentry->d_parent == new_dentry->d_parent)
+ 		return false;
+ 	if (server->fh_expire_type & NFS_FH_RENAME_UNSAFE)
+ 		return !(server->fh_expire_type & NFS_FH_NOEXPIRE_WITH_OPEN);
 -- 
 2.53.0
 
