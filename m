@@ -1,52 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795622942;
-	b=fFPgUVkTkdMj4PnvQ2UWK9zhxwGtOVpsfO2VvvkqFdqO3WQ/jfHr3rJx/Z5QUQXttLF2
-	 /wlbZDUy0T/5bXieRsvfCcBwtSZarh4fsvJY9giFJ11+dj13Jz9saHpktnAhYAJsaxq9f
-	 qLEzmNrXcBhQr4ebyztIx4CCG/OuHtX4btsftAGyCwbESWJGawkAAAf4ri/F0RkJBXff3
-	 u5e+y4v5nkG5n81Rmk0I4a+v2AJTbu3xji67M2VMF8g5a3oz4spmjinN63NhdrZNcpmVu
-	 PIleNVIyfNGIQl87qCHB0p6qzudXOv9qDvAgjC+vREOvdncymHSmXb0F9yOkaNY9AMw==
+	t=1795622946;
+	b=bdhEgtlIF1mIkS6hNsrooBLQrz7vezb8hjMGuRloaA/g+OfPxRLVnAWa/D9xBALfuWAL
+	 y5UCg3TQGVh51y9q0SCeVcnQov6YGg0QBIr+wr1TipgGLhopP3D1wdAyzCKTlq+FHBidz
+	 DtTI++5b6/nmxmS1gSAsNk5miKd0dxlqI2q4KrWVNJ6e7tM8vAXeMeGGZ+RS3CEcOjAr2
+	 TYNW2LthtEO55T9Z0YwijMIsflN4ZqdDFoaGVPTwU9Zzm0eUtE+4oPpxJmJl8lN+ehSql
+	 ZqoIbbdkdl+hYlwvC1/o8Y3330fDmX96/eeH7T5btYtR0pbYXxvxsSPKOxoR2Zz8djA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795622942;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795622946;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=Vg9KimYobsr3PgH60R6LUdSOZ0a3LrU/+pgOQrzqNxk=;
-	b=UOFKIvoqYJBgUrgccmoVRm+rTz5DXtcWiOF49S0PtSfXErlAJVutTConbBLECcSvBnI6
-	 Xu67eXhDi6DkLLw4ohB2pOMblz0eSeYVeCyKK7wfVtBmOQvwYbzcDx/C9yBh1AzJLmPy1
-	 NM9JnZzSGPw4bEuCy3rW9M0f5VwrFQ6ctVaTJPKZFeupQFS7PuVJySLGLrenYebBKIKBO
-	 /idJYuVlNljZ/GDMmRdJRnYC9BgszOBx7AODP0ih6RIUJ5B0v34dKz7oTO2oKeijfmitl
-	 iOS0/PerTf3J9C/ysLZQmY42AxaWv3oUPqcF7xiy+04dmhCluD/A3dLn6+nA5zKpLog==
+	bh=UEbs/ReTdbkf6xhjrSXquOLxYjGOoV71ZtLWwUmmPO0=;
+	b=UUQBJDnHiuR42DbPwQ6KXbSniVxHxZeYUzuDIAi9zAmW4hzerHXK8+ZjJvmJnThYI1VX
+	 c7f8Zl3jhSxaliw7hlAjotFyEkFeZpNbtIHFUdsKspu6MfOAsbxogjrHgaq6M7h8pTBIN
+	 3chbETCgxWcDUl8Hk3t7cGuqxwSFR07yP3B5Gt6Bl1TuvnsyqMJEsG/hQI5u0O1EHtxff
+	 7mqX6/38o/43ffti4FubrdrpupxQa0NyzjdJAG2AULNfPNk9F43K58sVEWwAuZEqMpZoP
+	 h5rwwAN1KK8fRKr2J1XAGplS3ySTG6FAQhhVba2WMk++MrSq/Gpld3tp42T/y7fq2Dw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="s/MDD+9Z";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=FtVarXmG;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B3F62606A327;
-	Wed, 25 Nov 2026 16:09:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3FC34606A31E;
+	Wed, 25 Nov 2026 16:09:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=s/MDD+9Z
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EAE251F000CA;
-	Wed, 25 Nov 2026 16:09:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=FtVarXmG
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1EC511F000F0;
+	Wed, 25 Nov 2026 16:09:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795622942;
-	bh=Vg9KimYobsr3PgH60R6LUdSOZ0a3LrU/+pgOQrzqNxk=;
+	s=korg; t=1795622945;
+	bh=UEbs/ReTdbkf6xhjrSXquOLxYjGOoV71ZtLWwUmmPO0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=s/MDD+9Ze7a0m63dg6zQfrOymq9et44FifmnaJ5NvjzfRKJBH5xUErY566B0sbBHk
-	 KM1qtduKLg8aTisxz0qSNmzpNUKBxoCwMkmH6fP78emTytwAbVCbpIpq1RCh6b+a6g
-	 HXELzMYJBVN/bF6d/SV1iCMQdXl301/HqH7ZeDoA=
+	b=FtVarXmG8fUcRPG1UQelckv/NzvLW8O0m5OR8ryp/nFJ6RsAwSkx9iwfObEsYuTOb
+	 KzLmtcabx6UG5iA05jb3ZlhQTxgxahUDol62k7jYvHz1lRZtzqkm76u+8esObI9dx0
+	 v9jUcaZp+ixe7B/WrhhDaraWEH6W7Y3+a2YKYKxY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Haiyang Zhang <haiyangz@microsoft.com>,
-	Hamza Mahfooz <hamzamahfooz@linux.microsoft.com>,
+	James Clark <jjc@jclark.com>,
+	Maxime Chevallier <maxime.chevallier@bootlin.com>,
+	Lorenzo Bianconi <lorenzo.bianconi@oss.qualcomm.com>,
+	Kory Maincent <kory.maincent@bootlin.com>,
 	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.18 700/990] net: mana: report RX checksum offload for IPv6
-Date: Wed, 25 Nov 2026 15:34:27 +0100
-Message-ID: <20261125143838.481235263@linuxfoundation.org>
+Subject: [PATCH 6.18 701/990] net: stmmac: ptp: fix support for PTP_EXTTS_REQUEST2 ioctl
+Date: Wed, 25 Nov 2026 15:34:28 +0100
+Message-ID: <20261125143838.503091887@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143822.072087159@linuxfoundation.org>
 References: <20261125143822.072087159@linuxfoundation.org>
@@ -68,59 +70,61 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hamza Mahfooz <hamzamahfooz@linux.microsoft.com>
+From: James Clark <jjc@jclark.com>
 
-commit bbcd02741c4cfbf9e1c59b1906f21ef772bd15eb upstream.
+commit b66fca408bf85bb40f48a689daac75421f5283f8 upstream.
 
-The hardware validates TCP and UDP checksums for both IPv4 and IPv6 and
-reports the result in rx_tcp_csum_succeed and rx_udp_csum_succeed.
-However, mana_rx_skb() also requires rx_iphdr_csum_succeed before it
-sets CHECKSUM_UNNECESSARY. That bit is only set for IPv4 (since IPv6
-has no header checksum), so IPv6 TCP and UDP traffic is always
-checksummed again in software.
+Commit 7c571ac57d9d ("net: ptp: introduce .supported_extts_flags to
+ptp_clock_info") modified the PTP core to validate the supported flags
+of external timestamp requests, rather than relying on each driver to
+check them.
 
-So, only look at the L4 result. For IPv4 this makes no material
-difference since CHECKSUM_UNNECESSARY only covers the L4 checksum, and
-ip_rcv_core() always verifies the IPv4 header checksum in software.
+stmmac_enable() and dwmac1000_ptp_enable() ignore the flags, and
+neither stmmac_ptp_clock_ops nor dwmac1000_ptp_clock_ops was given any
+.supported_extts_flags. Since PTP_EXTTS_REQUEST2 always implies
+PTP_STRICT_FLAGS, the core now rejects every PTP_EXTTS_REQUEST2 for
+this driver with -EOPNOTSUPP, where before that commit the same
+requests succeeded. Only the PTP_EXTTS_REQUEST ioctl still works.
 
-Between two Azure Standard_E16s_v6 VMs (VF enabled), IPv6 TCP and UDP
-packets (including VXLAN over IPv6), now arrive with
-CHECKSUM_UNNECESSARY instead of CHECKSUM_NONE, so GRO no longer
-checksums them in software. Calls to __skb_gro_checksum_complete() on
-the receiver during an 8 second iperf3 run:
+Tests on an NXP i.MX 8M Plus (FRDM-IMX8MPLUS, GMAC 5.10a) show that the
+auxiliary snapshot inputs timestamp just the rising edge. The reference
+manuals for the STM32MP13 (GMAC 4.20a) and the Cyclone V HPS (GMAC
+3.70a, which uses dwmac1000_ptp_clock_ops) say the same.
 
-                               before    after
-  TCP/IPv4, 12.2 Gbps              23       28
-  TCP/IPv6, 12.1 Gbps         8728419       25
-  UDP/IPv6, 1.5 Gbps          1071380       20
-  TCP/VXLAN/IPv6, 10.9 Gbps   7934373       18
+Encode this in .supported_extts_flags. A PTP_EXTTS_REQUEST2 for the
+rising edge then succeeds, and one for the falling edge or for both
+edges fails with -EOPNOTSUPP.
 
+Fixes: 7c571ac57d9d ("net: ptp: introduce .supported_extts_flags to ptp_clock_info")
 Cc: stable@vger.kernel.org
-Fixes: ca9c54d2d6a5 ("net: mana: Add a driver for Microsoft Azure Network Adapter (MANA)")
-Reviewed-by: Haiyang Zhang <haiyangz@microsoft.com>
-Signed-off-by: Hamza Mahfooz <hamzamahfooz@linux.microsoft.com>
-Link: https://patch.msgid.link/20261109142856.779955-1-hamzamahfooz@linux.microsoft.com
+Signed-off-by: James Clark <jjc@jclark.com>
+Reviewed-by: Maxime Chevallier <maxime.chevallier@bootlin.com>
+Reviewed-by: Lorenzo Bianconi <lorenzo.bianconi@oss.qualcomm.com>
+Reviewed-by: Kory Maincent <kory.maincent@bootlin.com>
+Link: https://patch.msgid.link/20261104052504.1886335-1-jjc@jclark.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ethernet/microsoft/mana/mana_en.c |    7 +++----
- 1 file changed, 3 insertions(+), 4 deletions(-)
+ drivers/net/ethernet/stmicro/stmmac/stmmac_ptp.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/drivers/net/ethernet/microsoft/mana/mana_en.c
-+++ b/drivers/net/ethernet/microsoft/mana/mana_en.c
-@@ -1978,10 +1978,9 @@ static void mana_rx_skb(void *buf_va, bo
- 	skb_checksum_none_assert(skb);
- 	skb_record_rx_queue(skb, rxq_idx);
- 
--	if ((ndev->features & NETIF_F_RXCSUM) && cqe->rx_iphdr_csum_succeed) {
--		if (cqe->rx_tcp_csum_succeed || cqe->rx_udp_csum_succeed)
--			skb->ip_summed = CHECKSUM_UNNECESSARY;
--	}
-+	if ((ndev->features & NETIF_F_RXCSUM) &&
-+	    (cqe->rx_tcp_csum_succeed || cqe->rx_udp_csum_succeed))
-+		skb->ip_summed = CHECKSUM_UNNECESSARY;
- 
- 	if (cqe->rx_hashtype != 0 && (ndev->features & NETIF_F_RXHASH)) {
- 		hash_value = cqe->ppi[0].pkt_hash;
+--- a/drivers/net/ethernet/stmicro/stmmac/stmmac_ptp.c
++++ b/drivers/net/ethernet/stmicro/stmmac/stmmac_ptp.c
+@@ -302,6 +302,7 @@ const struct ptp_clock_info stmmac_ptp_c
+ 	.n_per_out = 0, /* will be overwritten in stmmac_ptp_register */
+ 	.n_pins = 0,
+ 	.pps = 0,
++	.supported_extts_flags = PTP_RISING_EDGE | PTP_STRICT_FLAGS,
+ 	.adjfine = stmmac_adjust_freq,
+ 	.adjtime = stmmac_adjust_time,
+ 	.gettime64 = stmmac_get_time,
+@@ -319,6 +320,7 @@ const struct ptp_clock_info dwmac1000_pt
+ 	.n_per_out = 0,
+ 	.n_pins = 0,
+ 	.pps = 0,
++	.supported_extts_flags = PTP_RISING_EDGE | PTP_STRICT_FLAGS,
+ 	.adjfine = stmmac_adjust_freq,
+ 	.adjtime = stmmac_adjust_time,
+ 	.gettime64 = stmmac_get_time,
 
 
