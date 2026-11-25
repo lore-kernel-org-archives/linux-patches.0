@@ -1,42 +1,42 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795618790;
-	b=pDeLNOpnyfKjJrBhfT654TVOfsxj/VTWNUftC+3lflpiNa9JTe3sdTYOGSjPLcDG+658
-	 XvIQ95UMlCwizmR9zKZvhW8pPatzaCVFb9GW8c9KNepoRq1nw9BFvZPvkpWAek9KS2JBH
-	 MXXuLEkaIKYZT3gwizs4ltoT2m/hYHhOLvZ/XaNk5TlhTznA9EtgAwCUOBGlij8XLBUOk
-	 fkX/5kRB8OGMaxy5e5Av4paj0fibdTwgkd/y/lHGjMBvsXhYK4QjGh19amB+5F6OQz9Sl
-	 kBsgrzFC/YIzXnG2QN7pFEFKZA2mgC3Oom03cO5ZXjzoz+e/0e1r3UR0Hb0V/zIbMBg==
+	t=1795618793;
+	b=WW58BJD5ERpI9o/xIgkoHwN1EAy6+dFIPgy3JczMk+Fz7GL5v0D6CqJgYMCnWhOytCHR
+	 YXIDU+lABp+OIZQWOeICmS+G0eX9QGsTI0H42WE96wz8dCD2OGU8BXaMNWP0wkIk20FDJ
+	 WU9uADXbG1qqsEtI3ZL0yqkEtqPxlzKlaE5DOeaCex/ubMi2ic5R3U81iIFhAeGygdLZ2
+	 jV9XHqOPz3ewcrIk7Q8DAR7uy/RJAso6Uqw10aUzcME78Io0to9nqBNQo/SGq97juoj+M
+	 b6UB9mvgoBSerP3/Xd20q9BCLsAK9Ob6NsMPpOcMvZ/R96TDjTo3EmNIszc1fchuDTA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795618790;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795618793;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Transfer-Encoding;
-	bh=epVExBwV1+8Rlnp4YAhfw0/z/33OMpOM4klgvSPmn+Y=;
-	b=5q2wX8uri0wYtzasp0Y9mXk8GI9q7TSLrfIXaTznH8JjLUWEBJWYw/BxgIzgRgsMtVp3
-	 Ds0IAG6m64hVopotfNkwmDtDo0CUtTqHY4UeuC4nWZhoOzuQos1T7aF3K3kDdtx418vso
-	 pr8kKiOy4f2QbNepdtmv6jhGgZv5nrRJPU4R24LNMLKrI38am7uvTyqP0cOBprJpc1edw
-	 W+jC4p61WP1va2WreN3twAGKlWMw7yMA5todp883NcDW5u9N2YkEnKUIiZHh9mDeQq3Zk
-	 dk56nCijDTYfrjRonCCY+4dGKwaJjfC63ChSb9jdTUeZEnCgeucNcTzF34EOOoZTuMQ==
+	 MIME-Version:Content-Type:Content-Transfer-Encoding;
+	bh=r0WARS31nuTXbgF1GTjX9E+uSvgsA2p6m9kQ3b/UEwk=;
+	b=QesZJfmwLPy3n5GjlA8XPiPK2CP+82J3kAHMTg/AkIhP54RF7zPtQLMSuIH7ObchtnUi
+	 +0JgCsve/D4ZSLSKW6L+zL2AWb6iHe2NAbtzH1w36yVGROGgFNG+HgrAG7aSbopHuU5ng
+	 mzSu6WRaRDUuRjNS4Y6eCw7NKvGZ2JKmxx488HdjK4ycPIz8wvnxvGDLdXHggQNlEX00L
+	 i3OrSrg5VP8CH6XyOF2zild4+H75C9kkyY96cjW1/hazlxojnlYKaKdNjk95T/A2Zppxb
+	 bzxiN15zbe1bCXrRsmde5M3ntqVEYSMhUMfH08y73lmu7/UInsupxIBWr+Pq9CqZcyw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=GcyEUgqm;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=hHEu04ym;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4B706606A321;
-	Wed, 25 Nov 2026 14:59:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 29A1C606A323;
+	Wed, 25 Nov 2026 14:59:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=GcyEUgqm
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 488601F000C4;
-	Wed, 25 Nov 2026 14:59:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=hHEu04ym
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 749CF1F000D4;
+	Wed, 25 Nov 2026 14:59:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795618789;
-	bh=epVExBwV1+8Rlnp4YAhfw0/z/33OMpOM4klgvSPmn+Y=;
+	s=korg; t=1795618793;
+	bh=r0WARS31nuTXbgF1GTjX9E+uSvgsA2p6m9kQ3b/UEwk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=GcyEUgqm/xDuCAHzQ55uzZfMi8BvK8egMotc5/ZazKeFqwjXdsNpM2AbTxp9msCU3
-	 yH78xWOoWcXUHMzzi6UugQQeN+hb2D9TGtVWHwDRNvqcFo/gQDFGgQURvCHgrWgSSv
-	 OssyKH+Dz0u3/Kd6D5VyEKR1O5TXNR9sHW/0dczA=
+	b=hHEu04ymI16BJ9QDlO9+dCkWM4inKLNkUTpb9IOOv6+yNnqaUaHXohH0j7phItmzU
+	 wtXBbviS1lpCCQJ217A3eabxTkfqiLBY/7QVy4lRWfI6E0gpRtsGEaBH9taJLz+uV2
+	 nlso/pL2aafAjDjB9e+5lPG2Tb2AmdFCqDP9Z2QE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -46,9 +46,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Matthew Brost <matthew.brost@intel.com>,
 	Dave Airlie <airlied@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0389/1005] drm/xe/hwmon: Fix thermal sensor data handling
-Date: Wed, 25 Nov 2026 15:28:47 +0100
-Message-ID: <20261125143830.856196519@linuxfoundation.org>
+Subject: [PATCH 7.3 0390/1005] drm/xe/hwmon: Add helpers to validate thermal sensor readings
+Date: Wed, 25 Nov 2026 15:28:48 +0100
+Message-ID: <20261125143830.880341265@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143821.729802100@linuxfoundation.org>
 References: <20261125143821.729802100@linuxfoundation.org>
@@ -64,6 +64,7 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 7.3-stable review patch.  If anyone has any objections, please let me know.
@@ -72,102 +73,119 @@ Content-Transfer-Encoding: 8bit
 
 From: Karthik Poosa <karthik.poosa@intel.com>
 
-[ Upstream commit d37dcdaa99b18995d74c2381b103e308f21e2565 ]
+[ Upstream commit f2a144e9891b397aebcfc0e88906c29bc079322d ]
 
-Read all required thermal groups in get_mc_temp() and store them in a
-dword-aligned buffer, avoiding unaligned pcode accesses and ensuring
-correct memory controller temperature reporting.
+Add mmio_temp_valid() and mbx_temp_valid() to check whether a temperature
+sensor reading is valid. An MMIO value of 0xFFFFFFFF or a mailbox value of
+0xFF indicates the sensor is unavailable.
 
-Store the pcode thermal data and thermal limit words as little-endian,
-so their per-byte views match the hardware layout on big-endian hosts.
+Gate these checks behind has_temp_sentinel, enabled on CRI currently.
 
-Fixes: 3a0cb885e111 ("drm/xe/hwmon: Expose memory controller temperature")
-Fixes: c332fba805d6 ("drm/xe/hwmon: Expose temperature limits")
 Signed-off-by: Karthik Poosa <karthik.poosa@intel.com>
 Reviewed-by: Rodrigo Vivi <rodrigo.vivi@intel.com>
-Link: https://patch.msgid.link/20261015071434.1063785-4-karthik.poosa@intel.com
+Link: https://patch.msgid.link/20261015071434.1063785-5-karthik.poosa@intel.com
 Signed-off-by: Rodrigo Vivi <rodrigo.vivi@intel.com>
-(cherry picked from commit ca6e33701de8676118f1d039e0c00839d7de13c6)
 Signed-off-by: Matthew Brost <matthew.brost@intel.com>
 Signed-off-by: Dave Airlie <airlied@redhat.com>
+Stable-dep-of: dbd199c775cb ("drm/xe/hwmon: Handle unavailable memory controller sensors")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/xe/xe_hwmon.c | 33 +++++++++++++++++++++------------
- 1 file changed, 21 insertions(+), 12 deletions(-)
+ drivers/gpu/drm/xe/xe_device_types.h |  2 ++
+ drivers/gpu/drm/xe/xe_hwmon.c        | 27 +++++++++++++++++++++++++++
+ drivers/gpu/drm/xe/xe_pci.c          |  2 ++
+ drivers/gpu/drm/xe/xe_pci_types.h    |  1 +
+ 4 files changed, 32 insertions(+)
 
+diff --git a/drivers/gpu/drm/xe/xe_device_types.h b/drivers/gpu/drm/xe/xe_device_types.h
+index e4431f27d43c5..8daccb82ded79 100644
+--- a/drivers/gpu/drm/xe/xe_device_types.h
++++ b/drivers/gpu/drm/xe/xe_device_types.h
+@@ -219,6 +219,8 @@ struct xe_device {
+ 		u8 has_sriov:1;
+ 		/** @info.has_sysctrl: Supports System Controller */
+ 		u8 has_sysctrl:1;
++		/** @info.has_temp_sentinel: Device has temperature-unavailable sentinels */
++		u8 has_temp_sentinel:1;
+ 		/** @info.has_usm: Device has unified shared memory support */
+ 		u8 has_usm:1;
+ 		/** @info.has_64bit_timestamp: Device supports 64-bit timestamps */
 diff --git a/drivers/gpu/drm/xe/xe_hwmon.c b/drivers/gpu/drm/xe/xe_hwmon.c
-index 123aef35aaacd..89e4a8c842d26 100644
+index 89e4a8c842d26..4b55a625affa2 100644
 --- a/drivers/gpu/drm/xe/xe_hwmon.c
 +++ b/drivers/gpu/drm/xe/xe_hwmon.c
-@@ -138,13 +138,17 @@ struct xe_hwmon_thermal_info {
- 	union {
- 		/** @limit: temperatures limits */
- 		u8 limit[TEMP_LIMIT_MAX];
--		/** @data: temperature limits in dwords */
--		u32 data[DIV_ROUND_UP(TEMP_LIMIT_MAX, sizeof(u32))];
-+		/** @data: temperature limits as little-endian dwords */
-+		__le32 data[DIV_ROUND_UP(TEMP_LIMIT_MAX, sizeof(u32))];
- 	};
- 	/** @count: no of temperature sensors available for the platform */
- 	u8 count;
--	/** @value: per-sensor raw mailbox temperature; bit7=sign, bits6:0=magnitude */
--	u8 value[U8_MAX];
-+	union {
-+		/** @value: per-sensor raw mailbox temperature; bit7=sign, bits6:0=magnitude */
-+		u8 value[U8_MAX + 1];
-+		/** @dword: sensor values as little-endian dwords, u32-aligned for pcode reads */
-+		__le32 dword[DIV_ROUND_UP(U8_MAX + 1, sizeof(u32))];
-+	};
- 	/** @vram_label: vram label names */
- 	char vram_label[MAX_VRAM_CHANNELS][MAX_LABEL_SIZE];
- };
-@@ -803,16 +807,17 @@ static const struct hwmon_channel_info * const hwmon_info[] = {
- static int xe_hwmon_pcode_read_thermal_info(struct xe_hwmon *hwmon)
- {
- 	struct xe_tile *root_tile = xe_device_get_root_tile(hwmon->xe);
--	u32 config = 0;
-+	u32 config = 0, data0 = 0, data1 = 0;
- 	int ret;
+@@ -104,6 +104,9 @@ enum sensor_attr_power {
+ /* Index of memory controller in READ_THERMAL_DATA output */
+ #define TEMP_INDEX_MCTRL	2
  
- 	ret = xe_pcode_read(root_tile, PCODE_MBOX(PCODE_THERMAL_INFO, READ_THERMAL_LIMITS, 0),
--			    &hwmon->temp.data[0], &hwmon->temp.data[1]);
-+			    &data0, &data1);
- 	if (ret)
- 		return ret;
- 
--	drm_dbg(&hwmon->xe->drm, "thermal info read val 0x%x val1 0x%x\n",
--		hwmon->temp.data[0], hwmon->temp.data[1]);
-+	drm_dbg(&hwmon->xe->drm, "thermal info read val 0x%x val1 0x%x\n", data0, data1);
-+	hwmon->temp.data[0] = cpu_to_le32(data0);
-+	hwmon->temp.data[1] = cpu_to_le32(data1);
- 
- 	ret = xe_pcode_read(root_tile, PCODE_MBOX(PCODE_THERMAL_INFO, READ_THERMAL_CONFIG, 0),
- 			    &config, NULL);
-@@ -836,16 +841,20 @@ static int mbx_temp_decode(u8 value)
- static int get_mc_temp(struct xe_hwmon *hwmon, long *val)
- {
- 	struct xe_tile *root_tile = xe_device_get_root_tile(hwmon->xe);
--	u32 *dword = (u32 *)hwmon->temp.value;
- 	s32 average = 0;
- 	int ret, i;
- 
--	for (i = 0; i < DIV_ROUND_UP(TEMP_LIMIT_MAX, sizeof(u32)); i++) {
-+	guard(mutex)(&hwmon->hwmon_lock);
++/* Mailbox sentinel reported for an unavailable temperature sensor */
++#define TEMP_MBX_INVALID	0xFF
 +
-+	for (i = 0; i < DIV_ROUND_UP(hwmon->temp.count, sizeof(u32)); i++) {
-+		u32 data = 0;
-+
- 		ret = xe_pcode_read(root_tile, PCODE_MBOX(PCODE_THERMAL_INFO, READ_THERMAL_DATA, i),
--				    (dword + i), NULL);
-+				    &data, NULL);
- 		if (ret)
- 			return ret;
--		drm_dbg(&hwmon->xe->drm, "thermal data for group %d val 0x%x\n", i, dword[i]);
-+		drm_dbg(&hwmon->xe->drm, "thermal data for group %d val 0x%x\n", i, data);
-+		hwmon->temp.dword[i] = cpu_to_le32(data);
- 	}
+ /* Mailbox temperature is sign-magnitude: bit 7 sign, bits 6:0 magnitude. */
+ #define TEMP_MBX_SIGN		BIT(7)
+ #define TEMP_MBX_MAG		GENMASK(6, 0)
+@@ -830,6 +833,30 @@ static int xe_hwmon_pcode_read_thermal_info(struct xe_hwmon *hwmon)
+ 	return ret;
+ }
  
- 	for (i = TEMP_INDEX_MCTRL; i < hwmon->temp.count - 1; i++)
++static inline bool mmio_temp_valid(const struct xe_hwmon *hwmon, u32 value)
++{
++	/*
++	 * On platforms lacking temperature sentinel support, a value of 0 is treated
++	 * as invalid. While 0°C is theoretically possible, it is highly unlikely for
++	 * a discrete GPU in normal environments, making it a reasonable fallback
++	 * indicator for invalid or uninitialized temperature readings.
++	 * All-ones is returned when the device is off the bus, so reject it too.
++	 */
++	if (value == U32_MAX)
++		return false;
++
++	return hwmon->xe->info.has_temp_sentinel || value != 0;
++}
++
++/* Mailbox temperature is sign-magnitude (bit 7 sign, bits 6:0 magnitude). */
++static inline bool mbx_temp_valid(const struct xe_hwmon *hwmon, u8 value)
++{
++	if (value == TEMP_MBX_INVALID)
++		return false;
++
++	return hwmon->xe->info.has_temp_sentinel || value != 0;
++}
++
+ /* Decode an 8-bit sign-magnitude mailbox temperature to degrees Celsius. */
+ static int mbx_temp_decode(u8 value)
+ {
+diff --git a/drivers/gpu/drm/xe/xe_pci.c b/drivers/gpu/drm/xe/xe_pci.c
+index 06e1062ec1705..5d7a0b403ac0d 100644
+--- a/drivers/gpu/drm/xe/xe_pci.c
++++ b/drivers/gpu/drm/xe/xe_pci.c
+@@ -483,6 +483,7 @@ static const struct xe_device_desc cri_desc = {
+ 	.has_soc_remapper_telem = true,
+ 	.has_sriov = true,
+ 	.has_sysctrl = true,
++	.has_temp_sentinel = true,
+ 	.max_gt_per_tile = 2,
+ 	MULTI_LRC_MASK,
+ 	.require_force_probe = true,
+@@ -814,6 +815,7 @@ static int xe_info_init_early(struct xe_device *xe,
+ 	xe->info.has_sriov = xe_configfs_primary_gt_allowed(to_pci_dev(xe->drm.dev)) &&
+ 		desc->has_sriov;
+ 	xe->info.has_sysctrl = desc->has_sysctrl;
++	xe->info.has_temp_sentinel = desc->has_temp_sentinel;
+ 	xe->info.skip_guc_pc = desc->skip_guc_pc;
+ 	xe->info.skip_pcode = desc->skip_pcode;
+ 	xe->info.needs_scratch = desc->needs_scratch;
+diff --git a/drivers/gpu/drm/xe/xe_pci_types.h b/drivers/gpu/drm/xe/xe_pci_types.h
+index fe327323a0be6..7cb372a832941 100644
+--- a/drivers/gpu/drm/xe/xe_pci_types.h
++++ b/drivers/gpu/drm/xe/xe_pci_types.h
+@@ -60,6 +60,7 @@ struct xe_device_desc {
+ 	u8 has_soc_remapper_telem:1;
+ 	u8 has_sriov:1;
+ 	u8 has_sysctrl:1;
++	u8 has_temp_sentinel:1;
+ 	u8 needs_scratch:1;
+ 	u8 skip_guc_pc:1;
+ 	u8 skip_pcode:1;
 -- 
 2.53.0
 
