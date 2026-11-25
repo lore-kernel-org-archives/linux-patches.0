@@ -1,50 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795620096;
-	b=32b9mc8zN6+f8sxGKfSI2pOW0MKwjTqV/Pgsc4/MjJmWwaPb2OMou/xSZmNkN7vrZnV1
-	 o2cKl3SqqTum/GkDGwpyMxphW5gd9RMkOZnFWEBmUhBl9xkrCziSHolJ/47VN/kHiGpvY
-	 UW7f1k0AQd04PVAEbDbOxTtaN1hWH7AS9GhH2UpRFX6NDRr1zFc80K1mGeuI5c7S0gLN/
-	 NearKMDcGzOqQ4QtjN/kzDP6H4JzHf8H9nFCKEAU66gJLEGKqIJGc5LU8AlB2vpqaGaop
-	 k4Uv/8VIJZpMT386RDtQTviU9o2lr6oPhoC3YEjFst57eTmGxzG1rV/o3RpKiFeONBg==
+	t=1795620099;
+	b=vOd8PSsa0lBdNCJBVdu3f+OHD1yJjjPckD9aWZ90cv5fIQzGS0s6nM3gg965gL/xLkz9
+	 LMbQ2CC8BlDPkfXXxuChDoYaDIJYGjG7EblWxmCp1A6DZHEvpwtRCzKbes5IuP3AigM7Y
+	 lYQI16Fw0dSG1ECC4XSmRt5FwyymNGJVYoenbrck5AWZMSvbcybcomDvstB80gv1FoSEq
+	 AaTFIj8/1ebLOKmuNIRazH3ed/2GulGCelUG5I88I6y9Nl6Of3Y2AGa6ZHwKtcgxHrhzB
+	 rWRlmKaKqcN9dmLwLbLO+YyCzrJ8IQJyfyNqkHQ16pw4rPQ9ePp49FyfmXSATjHyZKw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795620096;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795620099;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=S5zCKAqg0BAh7QieNC3YOPDOwEs8r9DjY3+5K8azR0c=;
-	b=IZNgvzmS5WW1dowbh8vwgw4pb4KUA9R0mWJL3YOT58HOUkfWWhecBZUIx8rtTB5CxS6y
-	 qUmwSqKHej0ubL09C/4D+i9Ic2baJw5Ir9Yuk9l02oS+pwtYCEz1vgOnjZmxJRashezXY
-	 pc0YZla2ywWqileT1NWiC7fKyc+FtS7PYOuk9vV86np+Pn7ilKwvAS/3lzJQlYsF3NZWz
-	 5W9MfVHtUKgVOytlnfCAbhK2+bVvSwOW0QL1nUmFXbRMnVjD6U9Qfp5XVzeHfIrTJ8PWc
-	 JXYpFiEtDwG4YZcw8Ad49Tis6u4ocLj/tnumQsavJz5R2Bq9ALjGF51ysBJ3aayvxmw==
+	bh=lKGfqk9voZO74oekC2hCcFb4Wg2ZBkVByMIfxOe3/KE=;
+	b=YZDe1Dy3kjA0xPRc/T7Bk2YhZ98AoT9OgvL7tQe8CTKfJ8p4Jfn8t+cBnAOUNiyySJWn
+	 K7mneVOMP++dvQfwizdIAcmFQgMwGq4PHwgJ8ClXEpnBlLFLXiUwjcX0gLQjTfovgbLP2
+	 TkxgFi29niNmp1T8wl3JuRji5iTadU83MpjqgRA+sT1OwC3ukIkMCftWEFKtre1LnrPdY
+	 NUVyWk7BMkjmH83KLnYcjdHgqcbsqSg0iHciPOJSDDy+cHb+pGkjFqzflZfnJ4I1i1A7n
+	 c4hT99EkRBCEiSc55wZnvNX4MwdBXNj+PEMdNUp56pfCcB9Q/us0xBjR6Fg/8c+aI4w==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="2aU3PJ/8";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="dlWqN96/";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 05809606A323;
-	Wed, 25 Nov 2026 15:21:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4B3EC606A31E;
+	Wed, 25 Nov 2026 15:21:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=2aU3PJ/8
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ED6C11F000CA;
-	Wed, 25 Nov 2026 15:21:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=dlWqN96/
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 230D71F000C6;
+	Wed, 25 Nov 2026 15:21:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795620095;
-	bh=S5zCKAqg0BAh7QieNC3YOPDOwEs8r9DjY3+5K8azR0c=;
+	s=korg; t=1795620098;
+	bh=lKGfqk9voZO74oekC2hCcFb4Wg2ZBkVByMIfxOe3/KE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=2aU3PJ/8Ipes7zuRoQ6mOjVIdkKEpWohJoAL+cmMKTRxWKa/z+ww04RzVnTuL8UAx
-	 mqa3RgGG1Elsai/xXExbShBp73R3GV8so3hGEeKqAU1sflFdQlJnERD1cbBJEDNlBq
-	 glD6HF0p3TmlPFJJ/6/o6cl/a+g4wYxZibKni6Zo=
+	b=dlWqN96/c6aMQ5EeFT9e8eOGkdmRRKxRbvogFbOLkZRpHwn3bjMpoeF7rfNHJGHlZ
+	 LCTfCwvxWI2VgE9r2h8PojB0ed9ELX7w/qe521uLLBO2AaAaSGrrO/xb+aPwpZ3nfD
+	 36vs4Yfshdn0iVBsB5nLvGkcuiY2wGWqPQKQ6IVg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>
-Subject: [PATCH 7.3 0790/1005] tracing/probes: Reject array count on non-dereference string sources
-Date: Wed, 25 Nov 2026 15:35:28 +0100
-Message-ID: <20261125143840.245298372@linuxfoundation.org>
+	Ian Bridges <icb@fastmail.org>,
+	Namjae Jeon <linkinjeon@kernel.org>
+Subject: [PATCH 7.3 0808/1005] ksmbd: evaluate the DACL in order for explicit access requests
+Date: Wed, 25 Nov 2026 15:35:46 +0100
+Message-ID: <20261125143840.658417280@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143821.729802100@linuxfoundation.org>
 References: <20261125143821.729802100@linuxfoundation.org>
@@ -66,44 +67,249 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Masami Hiramatsu (Google) <mhiramat@kernel.org>
+From: Ian Bridges <icb@fastmail.org>
 
-commit 0941144ebeaf3ce46c80711f00e935921eb28b21 upstream.
+commit 20bed0d6ff62d985fe8222958825504b8aad4e88 upstream.
 
-The runtime array loop (FETCH_OP_LP_ARRAY) for string types requires a
-preceding memory dereference instruction so it can advance the pointer
-address on each iteration. Non-dereference string sources such as $comm,
-immediate strings, and eprobe event fields cannot be indexed as pointer
-arrays, but finalize_fetch_insn() still accepts an array count on them
-and emits an invalid FETCH_OP_LP_ARRAY sequence.
+For requests without MAXIMUM_ALLOWED, smb_check_perm_dacl() selects one
+ACE instead of evaluating the DACL in order. When the selected ACE is a
+deny ACE, the function grants the complement of its mask, and deny ACEs
+before it are ignored. The selected ACE can also be inherit-only,
+unsupported, or an NFS mode ACE.
 
-Reject string array counts when the preceding operation is not a memory
-dereference.
+Guest and anonymous sessions also match Authenticated Users. These bugs
+can grant read or write access that the stored DACL does not grant. For
+example, a deny of FILE_READ_DATA grants FILE_WRITE_DATA, and guests can
+read files granted only to Authenticated Users.
 
-Link: https://lore.kernel.org/all/179455855309.403392.4197028577158545202.stgit@devnote2/
+Evaluate explicit requests in DACL order. Use exact SID matching for the
+caller, Everyone, Authenticated Users, OWNER RIGHTS and the caller's
+groups. Match Authenticated Users only for authenticated sessions, and
+ignore the NFS mode SID.
 
-Fixes: 40b53b771806 ("tracing: probeevent: Add array type support")
+An Authenticated Users ACE must still prevent the POSIX ACL fallback
+from replacing the DACL result for guest and anonymous sessions. The ACE
+does not grant them access.
+
+Keep the existing single-ACE behavior when a non-inherit-only object
+deny ACE is present because ksmbd does not parse those ACEs. Guest and
+anonymous sessions do not match Authenticated Users there either.
+MAXIMUM_ALLOWED behavior is unchanged.
+
+Fixes: e2f34481b24d ("cifsd: add server-side procedures for SMB3")
+Fixes: cc2f133e80eb ("ksmbd: fix maximum allowed access checks")
 Cc: stable@vger.kernel.org
-Signed-off-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
+Signed-off-by: Ian Bridges <icb@fastmail.org>
+Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/trace/trace_probe.c |    6 ++++++
- 1 file changed, 6 insertions(+)
+ fs/smb/server/mgmt/user_config.h |    5 +++
+ fs/smb/server/smb2pdu.c          |   11 +++++--
+ fs/smb/server/smbacl.c           |   58 ++++++++++++++++++++++++++++++---------
+ fs/smb/server/smbacl.h           |    2 -
+ 4 files changed, 60 insertions(+), 16 deletions(-)
 
---- a/kernel/trace/trace_probe.c
-+++ b/kernel/trace/trace_probe.c
-@@ -1990,6 +1990,12 @@ static int finalize_fetch_insn(struct fe
- 			 * For the symstr, it doesn't need to dereference, thus
- 			 * it just get the value.
- 			 */
-+			if (parg->count && (code->op != FETCH_OP_DEREF &&
-+					    code->op != FETCH_OP_UDEREF)) {
-+				trace_probe_log_err(ctx->offset + type_offset,
-+						    BAD_STRING);
-+				return -EINVAL;
-+			}
- 			code++;
- 			if (code->op != FETCH_OP_NOP) {
- 				trace_probe_log_err(ctx->offset, TOO_MANY_OPS);
+--- a/fs/smb/server/mgmt/user_config.h
++++ b/fs/smb/server/mgmt/user_config.h
+@@ -67,4 +67,9 @@ struct ksmbd_user *ksmbd_alloc_user(stru
+ void ksmbd_free_user(struct ksmbd_user *user);
+ bool ksmbd_anonymous_user(struct ksmbd_user *user);
+ bool ksmbd_compare_user(struct ksmbd_user *u1, struct ksmbd_user *u2);
++
++static inline bool ksmbd_user_authenticated(struct ksmbd_user *user)
++{
++	return user && !user_guest(user) && !ksmbd_anonymous_user(user);
++}
+ #endif /* __USER_CONFIG_MANAGEMENT_H__ */
+--- a/fs/smb/server/smb2pdu.c
++++ b/fs/smb/server/smb2pdu.c
+@@ -4359,7 +4359,8 @@ static int smb2_handle_app_instance_id(s
+ 	/* Authorize the referenced open even if its name changes meanwhile. */
+ 	old_path = &old_fp->filp->f_path;
+ 	rc = smb_check_perm_dacl(conn, old_path, &maximal_access, 0,
+-				 work->sess->user->uid, false);
++				 work->sess->user->uid,
++				 ksmbd_user_authenticated(work->sess->user), false);
+ 	if (rc) {
+ 		/* Access denial prevents takeover, not the CREATE itself. */
+ 		ksmbd_put_durable_fd(old_fp);
+@@ -4868,14 +4869,17 @@ resolve_path:
+ 	if (file_present && !(req->CreateOptions & FILE_DELETE_ON_CLOSE_LE)) {
+ 		rc = smb_check_perm_dacl(conn, &path, &daccess,
+ 					 req->DesiredAccess,
+-					 sess->user->uid, false);
++					 sess->user->uid,
++					 ksmbd_user_authenticated(sess->user), false);
+ 		if (rc)
+ 			goto err_out;
+ 
+ 		if (maximal_access_ctxt) {
+ 			maximal_access = FILE_MAXIMAL_ACCESS_LE;
+ 			rc = smb_check_perm_dacl(conn, &path, &maximal_access,
+-						 0, sess->user->uid, false);
++						 0, sess->user->uid,
++						 ksmbd_user_authenticated(sess->user),
++						 false);
+ 			if (rc)
+ 				goto err_out;
+ 
+@@ -6158,6 +6162,7 @@ static int process_query_dir_entries(str
+ 			rc = smb_check_perm_dacl(priv->work->conn, &path,
+ 						 &daccess, daccess,
+ 						 priv->work->sess->user->uid,
++						 ksmbd_user_authenticated(priv->work->sess->user),
+ 						 true);
+ 			if (rc) {
+ 				dput(dent);
+--- a/fs/smb/server/smbacl.c
++++ b/fs/smb/server/smbacl.c
+@@ -1471,6 +1471,12 @@ static bool smb_sid_in_group(const struc
+ 	return in_group_p(make_kgid(&init_user_ns, gid));
+ }
+ 
++/* Whether two SIDs are the same SID */
++static bool smb_sid_equal(const struct smb_sid *a, const struct smb_sid *b)
++{
++	return a->num_subauth == b->num_subauth && !compare_sids(a, b);
++}
++
+ /*
+  * compare_sids() compares only the sub-authorities both SIDs have, so it
+  * also matches a shorter or longer SID, such as S-1-3 or S-1-3-4-777
+@@ -1483,7 +1489,7 @@ static bool smb_sid_is_owner_rights(cons
+ 
+ int smb_check_perm_dacl(struct ksmbd_conn *conn, const struct path *path,
+ 			__le32 *pdaccess, __le32 raw_daccess, int uid,
+-			bool strict)
++			bool authenticated, bool strict)
+ {
+ 	struct mnt_idmap *idmap = mnt_idmap(path->mnt);
+ 	struct smb_ntsd *pntsd = NULL;
+@@ -1500,12 +1506,17 @@ int smb_check_perm_dacl(struct ksmbd_con
+ 	unsigned int access_bits = 0, denied = 0, grp_granted = 0;
+ 	unsigned int grp_allowed = 0, grp_denied = 0, bits;
+ 	struct smb_ace *others_ace = NULL;
+-	bool or_ace = false, obj_deny = false, member, counted;
++	bool or_ace = false, obj_deny = false, au_ace = false, member, counted;
+ 	struct posix_acl_entry *pa_entry;
+ 	unsigned int sid_type = SIDOWNER;
+ 	unsigned short ace_size;
+ 	bool is_owner, owner_rights = false;
+ 	bool maximal = *pdaccess & FILE_MAXIMAL_ACCESS_LE;
++	/*
++	 * MAXIMUM_ALLOWED requests match every session against
++	 * Authenticated Users.
++	 */
++	bool authusers = authenticated || maximal;
+ 	vfsuid_t vfsuid;
+ 
+ 	ksmbd_debug(SMB, "check permission using windows acl\n");
+@@ -1557,9 +1568,10 @@ int smb_check_perm_dacl(struct ksmbd_con
+ 
+ 	/*
+ 	 * Evaluate the DACL in order (MS-DTYP 2.5.3.2). access_bits collects
+-	 * the MAXIMUM_ALLOWED result. grp_granted collects what ACEs for the
+-	 * caller's groups, or OWNER RIGHTS for the owner, grant. It is used
+-	 * when the SID lookup and POSIX ACL fallback below do not decide.
++	 * the result for the ACEs that apply to the caller, without its groups
++	 * for MAXIMUM_ALLOWED. grp_granted collects what ACEs for the caller's
++	 * groups, or OWNER RIGHTS for the owner, grant. It is used when the
++	 * SID lookup and POSIX ACL fallback below do not decide.
+ 	 */
+ 	ace = (struct smb_ace *)((char *)pdacl + sizeof(struct smb_acl));
+ 	aces_size = pdacl_size - sizeof(struct smb_acl);
+@@ -1599,10 +1611,18 @@ int smb_check_perm_dacl(struct ksmbd_con
+ 		    (compare_sids(&sid, &ace->sid) &&
+ 		     compare_sids(&sid_unix_NFS_mode, &ace->sid) &&
+ 		     compare_sids(&sid_everyone, &ace->sid) &&
+-		     compare_sids(&sid_authusers, &ace->sid) &&
++		     (!authusers ||
++		      compare_sids(&sid_authusers, &ace->sid)) &&
+ 		     compare_sids(&sid_owner_rights, &ace->sid) &&
+ 		     !member))
+ 			goto next_ace;
++		/* An explicit request counts only SIDs that match exactly */
++		if (!maximal && !member &&
++		    !smb_sid_equal(&sid, &ace->sid) &&
++		    !smb_sid_equal(&sid_everyone, &ace->sid) &&
++		    !(authusers && smb_sid_equal(&sid_authusers, &ace->sid)) &&
++		    !smb_sid_is_owner_rights(&ace->sid))
++			goto next_ace;
+ 
+ 		bits = le32_to_cpu(ace->access_req);
+ 		switch (ace->type) {
+@@ -1620,8 +1640,8 @@ int smb_check_perm_dacl(struct ksmbd_con
+ 		case ACCESS_DENIED_CALLBACK_ACE_TYPE:
+ 			if (counted)
+ 				grp_denied |= ~grp_allowed & bits;
+-			/* access_bits takes no group denials either */
+-			if (!member)
++			/* MAXIMUM_ALLOWED takes no group denials either */
++			if (!(maximal && member))
+ 				denied |= ~access_bits & bits;
+ 			break;
+ 		}
+@@ -1641,8 +1661,14 @@ next_ace:
+ 		    (access_bits & GENERIC_READ_FLAGS) == GENERIC_READ_FLAGS)
+ 			access_bits |= FILE_EXECUTE;
+ 		granted = requested | access_bits;
++	} else if (!obj_deny) {
++		/* An explicit request takes the ordered result */
++		access_bits &= ~denied;
+ 	} else {
+-		/* An explicit request uses only grp_granted and obj_deny */
++		/*
++		 * ksmbd does not parse object deny ACEs, so with one present an
++		 * explicit request keeps the answer of the ACE found below
++		 */
+ 		access_bits = 0;
+ 	}
+ 
+@@ -1673,15 +1699,23 @@ next_ace:
+ 		    !(ace->flags & INHERIT_ONLY_ACE))
+ 			or_ace = true;
+ 		if (!compare_sids(&sid_everyone, &ace->sid) ||
+-		    !compare_sids(&sid_authusers, &ace->sid))
++		    (authusers &&
++		     !compare_sids(&sid_authusers, &ace->sid)))
+ 			others_ace = ace;
++		if (!compare_sids(&sid_authusers, &ace->sid))
++			au_ace = true;
+ 
+ 		ace = (struct smb_ace *)((char *)ace + le16_to_cpu(ace->size));
+ 	}
+ 
+ 	if (IS_ENABLED(CONFIG_FS_POSIX_ACL)) {
+ 		posix_acls = get_inode_acl(d_inode(path->dentry), ACL_TYPE_ACCESS);
+-		if (!IS_ERR_OR_NULL(posix_acls) && !found && !others_ace) {
++		/*
++		 * An Authenticated Users ACE keeps the POSIX ACL from deciding,
++		 * also for sessions that it does not match.
++		 */
++		if (!IS_ERR_OR_NULL(posix_acls) && !found && !others_ace &&
++		    !au_ace) {
+ 			unsigned int id = -1;
+ 
+ 			pa_entry = posix_acls->a_entries;
+@@ -1754,7 +1788,7 @@ next_ace:
+ 		}
+ 	}
+ 
+-	if (!maximal) {
++	if (!maximal && obj_deny) {
+ 		switch (ace->type) {
+ 		case ACCESS_ALLOWED_ACE_TYPE:
+ 			access_bits = le32_to_cpu(ace->access_req);
+--- a/fs/smb/server/smbacl.h
++++ b/fs/smb/server/smbacl.h
+@@ -96,7 +96,7 @@ int smb_inherit_dacl(struct ksmbd_conn *
+ 		     unsigned int uid, unsigned int gid);
+ int smb_check_perm_dacl(struct ksmbd_conn *conn, const struct path *path,
+ 			__le32 *pdaccess, __le32 raw_daccess, int uid,
+-			bool strict);
++			bool authenticated, bool strict);
+ int set_info_sec(struct ksmbd_conn *conn, struct ksmbd_tree_connect *tcon,
+ 		 const struct path *path, struct smb_ntsd *pntsd, int ntsd_len,
+ 		 bool type_check, bool get_write);
 
 
