@@ -1,51 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795617911;
-	b=4GvYk0jf7299k2VO4CqP/elphMMt5c21e3Font76AOMd+1Jw6rOhWRhoqz8KXTWmJERc
-	 EdaGTuGCmC9FgZxm/8JesSM20710fHAlrtPzB4mbFd8vaqrA+z4m2ZAnDRqvKcgS2WM2g
-	 i0DQ20jIk2fzM2nt0OriC3l3/0qCjY0281waYdXETa3iTiAPwDnqWX/SQeRiv1kpGgNEc
-	 2RxNtIRHqSZS1MbnqhiSymIUIHCaUY9NXdgFAa61dJduN0VCLspThk3TYUXR6jzLPByKM
-	 rfNTs7aExRuums/8JK9lsPaD5LKOYEd0M5iEiBi+59Huce4dCUeIad8iuMoj+tMjA7Q==
+	t=1795617914;
+	b=3T04QLhr7riRzNRJqqJhvAuE8gd6R03OJ+XygyGsqjXJyRXhR2xyRNbGiCeIpLuxjyX/
+	 h9AkHBfHLQs9Hog6UngAgfAJp/4X0RBONiJG4nTvRVi6ntzZ9KykGu9W+NwSJMR1YtmD4
+	 jXBZjM4c2ymIARuaCCR++7YGLZtmpSvpxi8VRpyTuhcDsI3Wlc7fqrin+AePcVqLgdPtw
+	 U1xiUF+cKBfJvjPymA2efgLDcEoDaVqlUzi1qih4Qfassf2szsFR2p9Cklvb2KjL9xr3B
+	 gWD+OdSDvUFjr8V17lAv750Xklpg2OJfHdg282eIoBFuZtUIdKdl5wZdflrIg1b3Q3Q==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795617911;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795617914;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=K3CvrJKy8KLvjPDkyBiKbbD6+VJFT/q6zGAc7kUgFGM=;
-	b=qrY2/8/t4xPaIIE8LGIh1t4r5tl7AyF6G0Ouaqb+OF6w9M7Jtwdpia1LMEVbctb2LNBR
-	 dTomyxzuKNsjHQsgybWkCcjai9NttZovpOCFbDXP5Vebf4Aoq1aR/Ih/emy2ACwf2UNbl
-	 S5p/THwVkMdeS0AibJdaWLZRnfI91theDIOELuKSk73sOIgzrn2+Eoh14+8cOfqmg0OMm
-	 7zVIohR8qtZ1Iwk5PG3KgxW++BzLiuuZQW7Djd16f56cyosbXbPwYR5mftvCrr7KoubY8
-	 4kxWnC27Y9YwMEyKuzjRiJ7AQCMNDl9I6KY5lbkpHVCiVfbIF11Df8TDH3Q2+HQZ+5Q==
+	bh=FQ3SNn3euFBXr1t70DIH9OCOui7InRE8Rg9rGRjPIx4=;
+	b=BXqvDcrvRIaI5y+nb2l9AxXaAqFvHfMFaxytevzc9j+kgjAwdsYA/3oXUwysVbKqyKoZ
+	 1FRM1eWwvaj71SC9n4LjdC0wSuPZSH3bJlBf0zegNHAESJUwAsS5r79t/p6JOXKVLcp4k
+	 jZU3euWF6hF/yDJdveUhoDuXYGrNvN5JqBC+8d+sALePGJeVBG9muK42GwgW5n5C5YBNM
+	 ME3jBO1CHlPSSWUkfHtOMtIsNI5Za4ZYYwwcI5Npls6wH7yRFj/pi3gOJMfHAp3XgGYCy
+	 Bq3VEVeehRiEDFin5OAaSkbdHOQLmZ+ZSVPEX6PcLL3E4BS0SUeqILsC9YNFvlUqDVg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=flSmJU2P;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="oG/B8DCN";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B0952606A327;
-	Wed, 25 Nov 2026 14:45:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C04A8606A329;
+	Wed, 25 Nov 2026 14:45:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=flSmJU2P
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 031FC1F000C6;
-	Wed, 25 Nov 2026 14:45:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=oG/B8DCN
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F15BF1F000D0;
+	Wed, 25 Nov 2026 14:45:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795617911;
-	bh=K3CvrJKy8KLvjPDkyBiKbbD6+VJFT/q6zGAc7kUgFGM=;
+	s=korg; t=1795617914;
+	bh=FQ3SNn3euFBXr1t70DIH9OCOui7InRE8Rg9rGRjPIx4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=flSmJU2PsmpGcd6TE9P0/Z+eCnvLdmBiXAx0jx4Nw+iICdzaGewOiVYaNiXIomVEM
-	 ZCVNw4CoiFdKEGak4MxOpwx1gRBl0DUbyLF1LOditVckQEzmAKlSw0tMsbjb8Lvwct
-	 A/a7k1kGQ8SSMilRvDkar9CjhwLaVHZlDeZme6qg=
+	b=oG/B8DCNypfJNCQHmIpdgallwu4z9ZI2E0mzd+KeN9jGA8NPsW+LDrnHCRWVFfXae
+	 odqH3ERELQUaMbTYTVD64F3fvOfhsg6fwIxh+IVcvvLL+NROJfMbzdB8Gbpb+ckNr8
+	 OHxd+VUaibWKw+l2G4KOU0keXDm5LxF6Bie2YdEY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Xiang Mei <xmei5@asu.edu>,
+	Daniel Borkmann <daniel@iogearbox.net>,
 	Alexei Starovoitov <ast@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0112/1005] bpf: Dont leave a stale MAC header in bpf_lwt_push_ip_encap()
-Date: Wed, 25 Nov 2026 15:24:10 +0100
-Message-ID: <20261125143824.367940370@linuxfoundation.org>
+Subject: [PATCH 7.3 0113/1005] bpf: Reset skb->cb after an lwt prog pushes an IP header
+Date: Wed, 25 Nov 2026 15:24:11 +0100
+Message-ID: <20261125143824.392174311@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143821.729802100@linuxfoundation.org>
 References: <20261125143821.729802100@linuxfoundation.org>
@@ -69,56 +71,106 @@ Content-Transfer-Encoding: 8bit
 
 From: Alexei Starovoitov <ast@kernel.org>
 
-[ Upstream commit 701ffd202b9e32942c8cfc065c9fe76ceaccc302 ]
+[ Upstream commit b3ad42f6183286ab376389a5d26edf7ee3bdba27 ]
 
-With BPF_LWT_ENCAP_IP, bpf_lwt_push_encap() pushes a new IP header. The new
-header overwrites the MAC header of a received skb. But skb->mac_header
-continues to point to the same bytes. Code that reads the MAC header after
-the push, for example netfilter, gets bytes of the new header.
+IPCB(skb)->opt holds the offsets from the network header to the IPv4
+options. But bpf_lwt_push_ip_encap() moves the network header and does not
+change IPCB(skb). Then ip_forward_options() and __ip_options_echo() use the
+old offsets on the pushed header. Thus the kernel corrupts the skb and the
+stack. If the family changes, the kernel also reads IP6CB(skb) as
+IPCB(skb), or the reverse. With CONFIG_IPV6_MIP6, it reads IPSKB_FORWARDED
+as frag_max_size and adds a needless fragment header.
 
-  before the push                        | MAC header  | old IP | payload
-                                         ^ mac_header  ^ network_header
-  today                            | new header        | old IP | payload
-                    network_header ^     ^ mac_header
-  this patch, lwt_in | MAC header  | new header        | old IP | payload
-                     ^ mac_header  ^ network_header
-  this patch, lwt_xmit             | new header        | old IP | payload
-                    network_header ^     mac_header is not set
+Reset skb->cb after the prog. bpf_lwt_push_ip_encap() cannot do it, because
+bpf_prog_run_save_cb() can restore skb->cb. For IPv4 in IPv4, clear
+IPCB(skb)->opt as ip_tunnel_xmit() does. If the family changes, clear the
+cb of the new family but keep iif, because ip6_forward() gets the input
+device from it. Behind a VRF, skb->skb_iif is the VRF device and cannot
+replace iif. Do nothing for IPv6 in IPv6, as in seg6_do_srh_encap().
 
-For lwt_in, move the MAC header in front of the new header before the
-memcpy(), as __seg6_do_srh_encap() does. skb_cow_head() already reserves
-len + skb->mac_len bytes.
-
-For lwt_xmit, the output path makes a new MAC header. Thus mark
-skb->mac_header as not set. This is the state of a locally generated skb.
+Do the reset in bpf_input() only after a push. Without a push,
+ip_forward_options() needs the offsets. Do it in bpf_xmit() before each
+reroute, because an lwt_xmit prog can also change the options. Thus after a
+reroute without a push, ip_options_fragment() leaves the options in all
+fragments, and ICMP errors echo none. After BPF_OK or BPF_REDIRECT the skb
+goes to a device, thus bpf_xmit() does no reset. The inner IPv4 checksum
+can still be wrong after ip_rcv_options() changes an option.
 
 Fixes: 52f278774e79 ("bpf: implement BPF_LWT_ENCAP_IP mode in bpf_lwt_push_encap")
+Reported-by: Xiang Mei <xmei5@asu.edu>
+Suggested-by: Daniel Borkmann <daniel@iogearbox.net>
 Signed-off-by: Alexei Starovoitov <ast@kernel.org>
-Link: https://patch.msgid.link/20261101190535.1454146-22-alexei.starovoitov@gmail.com
+Link: https://patch.msgid.link/20261101190535.1454146-23-alexei.starovoitov@gmail.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/core/lwt_bpf.c | 8 ++++++++
- 1 file changed, 8 insertions(+)
+ net/core/lwt_bpf.c | 33 +++++++++++++++++++++++++++++++++
+ 1 file changed, 33 insertions(+)
 
 diff --git a/net/core/lwt_bpf.c b/net/core/lwt_bpf.c
-index da49364ec63de..b9270a08cc6d1 100644
+index b9270a08cc6d1..3a946e8709b16 100644
 --- a/net/core/lwt_bpf.c
 +++ b/net/core/lwt_bpf.c
-@@ -649,6 +649,14 @@ int bpf_lwt_push_ip_encap(struct sk_buff *skb, void *hdr, u32 len, bool ingress)
- 	if (ingress)
- 		skb_postpush_rcsum(skb, iph, len);
- 	skb_reset_network_header(skb);
-+	/*
-+	 * The new header goes over the MAC header. On ingress move it first.
-+	 * On egress the packet gets a new one, so forget the old one.
-+	 */
-+	if (ingress)
-+		skb_mac_header_rebuild(skb);
-+	else
-+		skb_unset_mac_header(skb);
- 	if (is_udp_tunnel) {
- 		size_t iph_sz = ipv4 ? iph->ihl * 4 : sizeof(struct ipv6hdr);
+@@ -85,6 +85,32 @@ static int run_lwt_bpf(struct sk_buff *skb, struct bpf_lwt_prog *lwt,
+ 	return ret;
+ }
  
++/*
++ * skb->cb still describes the IP header that was the first one before the
++ * prog ran. The option offsets in IPCB(skb)->opt are wrong for a pushed
++ * header, and a header of the other family needs the other layout. iif
++ * stays: behind a VRF skb->skb_iif is the L3 master and not the port.
++ * bpf_lwt_push_encap() cannot do this, because bpf_prog_run_save_cb() can
++ * restore skb->cb after the prog.
++ */
++static void bpf_lwt_reset_cb(struct sk_buff *skb, __be16 proto)
++{
++	int iif;
++
++	if (skb->protocol == proto) {
++		if (proto == htons(ETH_P_IP))
++			memset(&IPCB(skb)->opt, 0, sizeof(IPCB(skb)->opt));
++	} else if (skb->protocol == htons(ETH_P_IP)) {
++		iif = IP6CB(skb)->iif;
++		memset(IPCB(skb), 0, sizeof(*IPCB(skb)));
++		IPCB(skb)->iif = iif;
++	} else {
++		iif = IPCB(skb)->iif;
++		memset(IP6CB(skb), 0, sizeof(*IP6CB(skb)));
++		IP6CB(skb)->iif = iif;
++	}
++}
++
+ static int bpf_lwt_input_reroute(struct sk_buff *skb)
+ {
+ 	enum skb_drop_reason reason;
+@@ -124,6 +150,8 @@ static int bpf_lwt_input_reroute(struct sk_buff *skb)
+ static int bpf_input(struct sk_buff *skb)
+ {
+ 	struct dst_entry *dst = skb_dst(skb);
++	__be16 proto = skb->protocol;
++	unsigned int len = skb->len;
+ 	struct bpf_lwt *bpf;
+ 	int ret;
+ 
+@@ -132,6 +160,9 @@ static int bpf_input(struct sk_buff *skb)
+ 		ret = run_lwt_bpf(skb, &bpf->in, dst, NO_REDIRECT);
+ 		if (ret < 0)
+ 			return ret;
++		/* An lwt_in prog can change the length only with a push. */
++		if (skb->len != len)
++			bpf_lwt_reset_cb(skb, proto);
+ 		if (ret == BPF_LWT_REROUTE)
+ 			return bpf_lwt_input_reroute(skb);
+ 	}
+@@ -311,6 +342,8 @@ static int bpf_xmit(struct sk_buff *skb)
+ 		case BPF_REDIRECT:
+ 			return LWTUNNEL_XMIT_DONE;
+ 		case BPF_LWT_REROUTE:
++			/* An lwt_xmit prog can also write to the options. */
++			bpf_lwt_reset_cb(skb, proto);
+ 			return bpf_lwt_xmit_reroute(skb);
+ 		default:
+ 			return ret;
 -- 
 2.53.0
 
