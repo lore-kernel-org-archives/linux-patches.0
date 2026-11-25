@@ -1,52 +1,57 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795623947;
-	b=b1fWh3/hg/1YRLZYZbSdPc/Hl0h+8pJ46XtwYxCCg1WBG9+qsSpvr8WM3ssqLvicij98
-	 M5nBNMQ2CCeHjbZhRYxC6ljIxwffeRK+VInqb3kokchXKZNANILDyGh6Eyt3WdnWRaRRl
-	 mZsACIl9Ylk5lFL9v+a7GC2/y+wtV8VwvCcZjqhcApkweYah4KvQV43jzfJuJrIWLX9GX
-	 8Rx6ObZ4xxRKV7VpRZdNKu8muYupKjiHJKtUtLbYu/cbxHI49JLZ4U5qrdtMpxCo1EDqN
-	 TOqyziw9pNZf/2Re5580CZLEKZb3S+YQiJMURku8mPflDrRwyRSmdGrHNrqUxTICvYQ==
+	t=1795623949;
+	b=DlHiDcccGNc0UEaBVAZodEQSM9jZSUPfgkPlPiorI8SbJE8W11KAf7F9Ft4aGGhtji5u
+	 CpvZyYmxksMh2iQVhxo0gAWyPWvYbPvke8E2sxBAxw/qYQEJaNpKRjSqsdtbHdvsJNrFq
+	 Mbr3CoyDsCy4F2JIdsaRm5BrH/iJ5LNFyCjbHyHVYg//4JEPx2Ly2HZCmLiQcSdbB89/7
+	 8IbXYUVx9Kaouq4t5cWoCdFN6YAZIC/b/AiNlS1zlpzonejjDzIlCdwzkqg2tyU0+/uJP
+	 3z1mVil0BiQg4R/geNCrq1Qm212bk2yJxmOd44uCHLROmXICjWbgfKtGaqgdyhcgH9g==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795623947;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795623949;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=bVAN7Z1jNJSL1L7CAh7yXMAJB/k/i+PNDatqDOcRE5E=;
-	b=LMS2CxY8gwbEhF8vG1ro8JGPkswTSy3GY5gyAdVfNxWPiq/9K7NY8nc01iTxZn4plNsH
-	 H5OYXB+lK/c8OYprbTbF1uzKR9Zw1L979Fq6XFOBiEokDyb82WlOBHnIQF7LOu3JloLn7
-	 WMz4Xp25y7/bs9gX2jZ2/c4BjMC7APtGfgiAHfEaW0o/0u0+H9okrqocvsY+wY2o86QBs
-	 oV0c7x0wkd2a4PeJ4l0ANsKPBI2EDdypMO63wbJXjkAifkPdyKvyc2Y1UOO69MQEdIro6
-	 aUrg8uKgRIXy3CZ7uDgUeLk2uQVpFZ3HaIg5JuOkXfSNW0z9aIKX2UHbgcRwubd3bsw==
+	bh=tpQb+hU5y0NBWR9nmzywwcgcGXeIDeB6Yy3jJgTMe5c=;
+	b=RmcNmcAbwyDAHYJabdpyDSep6XhmS8vfcp7/9f9JEHZiwU71z2qumHzKMVRRSGjB73uP
+	 1CuXboD7OnPvYdndC36tBpkzw9IMS8LrOdILrAYWWKXaD/nFutVApIaZw0ZknyuJCoB/o
+	 m0AY129FIjzDZoDMORb8EhVPs4Fz6JPjBPIcu6p8Qvf4nF/0oqoh2SbDuCNUVt29VaCp4
+	 JG8Q70ZpL53rONso8CfzYDCacihP8pMVCE82BEY+k7EejKTyDheXwNpneagUYKcRYWaN0
+	 ngoJ9j3/xuDP4SfQpEMU/eCJJatVr22saWAGqr3VpVXid0JmhmaVeHTdI10sk1dM04A==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=FnIw6SYd;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=rWjavjen;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 069F5606A31E;
-	Wed, 25 Nov 2026 16:25:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B8EE9606A321;
+	Wed, 25 Nov 2026 16:25:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=FnIw6SYd
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D612B1F000C4;
-	Wed, 25 Nov 2026 16:25:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=rWjavjen
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DCFD11F000C4;
+	Wed, 25 Nov 2026 16:25:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795623946;
-	bh=bVAN7Z1jNJSL1L7CAh7yXMAJB/k/i+PNDatqDOcRE5E=;
+	s=korg; t=1795623949;
+	bh=tpQb+hU5y0NBWR9nmzywwcgcGXeIDeB6Yy3jJgTMe5c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=FnIw6SYd8yGHt+845iVXW+yVVJnetC4CSlCavZNagX1Ji6gLelgbAolMcb/SuudJ8
-	 Lu5uQ4KOyrOshseI3rjDVU/TxTe5zQ24sIEcxfosJLCe/uOibwPc3keW492MQSXGPF
-	 xr5ZNVYFHVFdZvSBf2SmASk5GJ2rsrpkHS5REBy0=
+	b=rWjavjent79NQRZVpXH83JRwltYJprI/N8XXoKJ2AIvhloDFWZXr9OGRh09qJu2OF
+	 ZicjffSP46W/lKA0IIMa3IRL1qtJxOKoFpGrBBQ0mfOwf/P4YbjNnCvDAT48mSS9ox
+	 G+2yTDG8TAfhq41Ia/K92zMUPPyopNS+uRLHDoq8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hakan Abay <hakan.abay84@gmail.com>,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+	Chris Mason <mason@kernel.org>,
+	Pedro Falcato <pfalcato@suse.de>,
+	"Gregory Price (Meta)" <gourry@gourry.net>,
+	Muhammad Usama Anjum <usama.anjum@arm.com>,
+	Lance Yang <lance.yang@linux.dev>,
+	Baolin Wang <baolin.wang@linux.alibaba.com>,
+	"David Hildenbrand (Arm)" <david@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 012/816] ACPI: PM: Add unused power resource quirk for Casper Excalibur G900
-Date: Wed, 25 Nov 2026 15:26:00 +0100
-Message-ID: <20261125143849.500997404@linuxfoundation.org>
+Subject: [PATCH 6.12 003/816] mm/khugepaged: preserve dirty bits when collapsing PTE-mapped THPs
+Date: Wed, 25 Nov 2026 15:25:51 +0100
+Message-ID: <20261125143849.295126443@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143849.205329330@linuxfoundation.org>
 References: <20261125143849.205329330@linuxfoundation.org>
@@ -68,59 +73,65 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hakan Abay <hakan.abay84@gmail.com>
+From: Chris Mason <mason@kernel.org>
 
-[ Upstream commit 23ec17231cc6a83bb11d8660db5bfc5336f53a0e ]
+[ Upstream commit fe2817e3d5ea347214342c9a5cd8bcbff20c0574 ]
 
-On the Casper Excalibur G900, the NVIDIA discrete GPU and the second
-NVMe device become inaccessible when unused ACPI power resources are
-turned off during initialization.
+try_collapse_pte_mapped_thp() clears PTEs without transferring their dirty
+bits to the folio. A shmem read fault can map a clean folio writable, so
+a later store only dirties the PTE. Losing that dirty bit allows reclaim
+to discard modified data.
 
-The failure is similar to the THUNDEROBOT ZERO case addressed by
-commit cd7ef20ba8c6 ("ACPI: PM: Add unused power resource quirk for THUNDEROBOT ZERO").
+The assumption that regular files are read-only is also obsolete since
+commit 1b6444331bebb ("mm/khugepaged: enable clean pagecache folio collapse
+for writable files"). In any case, transferring PTE dirty bits to the folio
+when removing mappings (and while the folio is still mapped) is the right
+thing to do.
 
-Without the quirk, the NVIDIA GPU and the second NVMe device are left
-inaccessible in D3cold and attempts to transition them back to D0 fail.
+Use get_and_clear_ptes() to collect the dirty bits and mark the folio
+dirty before unmapping it. Update the comment.
 
-Add a DMI quirk for the affected Casper Excalibur G900 with NLCC 001
-mainboard to leave unused ACPI power resources on.
+This was reproduced with shmem using MADV_COLLAPSE followed by
+MADV_PAGEOUT.
 
-With the quirk applied, the second NVMe device remains accessible. The
-NVIDIA GPU can enter D3cold while idle and subsequently return to D0
-for accelerated rendering.
+Fix generated by an LLM and sent by Chris Mason in private.
 
-Link: https://bugs.kali.org/view.php?id=9891
-Signed-off-by: Hakan Abay <hakan.abay84@gmail.com>
-Link: https://patch.msgid.link/20261005174939.53873-1-hakan.abay84@gmail.com
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Fixes: 27e1f8273113 ("khugepaged: enable collapse pmd for pte-mapped THP")
+Fixes: 1b6444331bebb ("mm/khugepaged: enable clean pagecache folio collapse for writable files")
+Cc: stable@vger.kernel.org
+Signed-off-by: Chris Mason <mason@kernel.org>
+[ david: adjust comment; simplify description; cover file-thp as well ]
+Reviewed-by: Pedro Falcato <pfalcato@suse.de>
+Reviewed-by: Gregory Price (Meta) <gourry@gourry.net>
+Tested-by: Gregory Price (Meta) <gourry@gourry.net>
+Tested-by: Muhammad Usama Anjum <usama.anjum@arm.com>
+Link: https://patch.msgid.link/20261031-fixes_core-v3-17-d6437171ecc3@kernel.org
+Reviewed-by: Lance Yang <lance.yang@linux.dev>
+Reviewed-by: Baolin Wang <baolin.wang@linux.alibaba.com>
+Signed-off-by: David Hildenbrand (Arm) <david@kernel.org>
+[ sashal: Adapted batched get_and_clear_ptes() handling to the existing single-PTE loop using ptep_get_and_clear(). ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/acpi/power.c | 12 ++++++++++++
- 1 file changed, 12 insertions(+)
+ mm/khugepaged.c | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/acpi/power.c b/drivers/acpi/power.c
-index 754c3936db099..aaa07997fdf31 100644
---- a/drivers/acpi/power.c
-+++ b/drivers/acpi/power.c
-@@ -1061,6 +1061,18 @@ static const struct dmi_system_id dmi_leave_unused_power_resources_on[] = {
- 		}
- 
- 	},
-+	{
-+		/*
-+		 * CASPER EXCALIBUR G900 laptop: Keep unused ACPI power
-+		 * resources on to prevent the NVIDIA dGPU and NVMe #2
-+		 * from becoming inaccessible.
-+		 */
-+		.matches = {
-+			DMI_MATCH(DMI_SYS_VENDOR, "CASPER BILGISAYAR SISTEMLERI"),
-+			DMI_MATCH(DMI_PRODUCT_NAME, "EXCALIBUR G900"),
-+			DMI_MATCH(DMI_BOARD_NAME, "NLCC 001"),
-+		},
-+	},
- 	{}
- };
- 
+diff --git a/mm/khugepaged.c b/mm/khugepaged.c
+index 9b8021d440289..ea94f66cd0377 100644
+--- a/mm/khugepaged.c
++++ b/mm/khugepaged.c
+@@ -1636,9 +1636,10 @@ int collapse_pte_mapped_thp(struct mm_struct *mm, unsigned long addr,
+ 		/*
+ 		 * Must clear entry, or a racing truncate may re-remove it.
+ 		 * TLB flush can be left until pmdp_collapse_flush() does it.
+-		 * PTE dirty? Shmem page is already dirty; file is read-only.
+ 		 */
+-		ptep_clear(mm, addr, pte);
++		ptent = ptep_get_and_clear(mm, addr, pte);
++		if (pte_dirty(ptent))
++			folio_mark_dirty(folio);
+ 		folio_remove_rmap_pte(folio, page, vma);
+ 		nr_ptes++;
+ 	}
 -- 
 2.53.0
 
