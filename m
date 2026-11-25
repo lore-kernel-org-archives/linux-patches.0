@@ -1,53 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795619488;
-	b=h8i2vuaQjOzwQ5ZBinufe1QS8l3o5lJsQiDJKoICGic+9r3CXnN0/iL8DlCP8/utTfFj
-	 N2X4l41HTDVa0DPTJx2ZmkVpy680ZEkZK4JMqwf5SgRwe/U7iuLAZMo+k/p+G4ATKJ41X
-	 IoGgiAijfNcqgMeE6ykoBhmWijgJdf0Ipa2W2Lqh4Ogl8jaRDGff9Mkemu1Uukg8Dj2kV
-	 DwISktXSjSZFgxS0Qk6vjYJZSKXZPcMEUe3SPPb1PVFO38m7pyG3nxIzJMDk/gSARMpZH
-	 wj1AHCqNRFGDsyCWjvoX3hYhiGMcUEFJnpAXy1i1Pv9Rm8ZaCCw6Dn/+Lpj+4+e8qog==
+	t=1795619492;
+	b=PJkd3fKScQmHDrTtR/MqHmxZp4jJ8ULEc3qqwh7MUj7qoRiUmJj41bjhAptDAFBIeP+E
+	 srbdVSE7IzKS6O+VaI0LZPRNUIaIsV6vkglElAgZvs7usHTATkiH/mDZxVpLKJ+zXHYlv
+	 S7gsZqGZvqLVXYGijgnJerlfVQMe4JZU7Kbx1kGJhCBMpqVBalqeEyjCw4d40rWvhDbsg
+	 qTzEQYIo78zyjKfonDaTJn1z/wwuDyeQ1JVfjfNe6HrC/lX99uas5bN1OlHFoqRPrzD6n
+	 hqRDWx6gnrpLK2cgYJLopzbu/0q3K517uy4kWVN3QlaeTV2qt+j77H9ccX4pH6ukqjg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795619488;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795619492;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=L5EdM1F1EqVw7KZ5CfxjkntirbeLf8S3xPu0xlcNdq0=;
-	b=WBprL6GlIxq7G7pcZFXhJ18qluH5ppDEfBeWGDWl4KHOhrCMS/J58+BT/SyNdP9QtXj/
-	 eWHY8Z7GNdJE94IryFbLS8EZxV9/R7Rh9P4ZXsqb/Adkmb76uzFJwcjF3APGJw5RzCZaS
-	 A8KG7IELw81NiOgz6BuJv1pHLXIPhxQELph/yZ4AghaxheS94r42mBNuQvdVcL9G5Udo7
-	 DnOqt3mfFZAUG645Umvfi7jR7fu/NaMg/WLtiwBJNAJVcgL6EKeEpyb899B6dFs1F8oPN
-	 p2+1Q4D2QogbK972ZbKH6leHv25wCEJNxxF+lpRYVrcEQNnWj9Pgj9nl3DvIjAPk5dQ==
+	bh=SswOJmYAXe4oJBHUnFTIF7B2K7okJPc+P5SF+8QQvFE=;
+	b=WJY13vhblU5CWKR2LEpvFYzNC50IzbMLUt1BmKGN/GCkGDXNP8nOn92ta2wJWXD/39e5
+	 L6K39qbj/9KD83aP/gzAzDK/n3P4syMH/pToBEl6npCv5oYXdf5+uNKy5+6KmuseJzHxr
+	 jjSnTiTM7Ps3I46ypITtQ94lPX4C31w7qAor2jSaSj79deCKxFjfgQLlreQnEwn7zogO2
+	 Bi0i0IKdJQRvS4z5Q+q6eC/G8DbyHQjxs7cujm/8JSo2Xva+OsIozEfGonn0h2tuCp6gq
+	 HrfGWf3XHGH3cLhHLu2go9G6EkPzd4dZFQFQoch28ttxB/9+ohWFDLymkVToAdkTIMg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=aluag8xT;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=L9nmiq+r;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6F2F8606A323;
-	Wed, 25 Nov 2026 15:11:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EAE8D606A31E;
+	Wed, 25 Nov 2026 15:11:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=aluag8xT
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 57C821F000C4;
-	Wed, 25 Nov 2026 15:11:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=L9nmiq+r
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D41161F000D1;
+	Wed, 25 Nov 2026 15:11:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795619487;
-	bh=L5EdM1F1EqVw7KZ5CfxjkntirbeLf8S3xPu0xlcNdq0=;
+	s=korg; t=1795619491;
+	bh=SswOJmYAXe4oJBHUnFTIF7B2K7okJPc+P5SF+8QQvFE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=aluag8xTJ7ObXuwT4XqY36WgloV4FcNTJF18f+EVQ9Ug401+YEh0NcCnClXWQtEy2
-	 RWHvUKSO0cQj5X+Kh5oo1dZawYzQy9qAIR5ss9ZZEPCrXqDp9qvDxUDVNmLqziGske
-	 wJuSrwLm3tiCGOW2FHgZOaiFMYtfiHI6jSI1lt8I=
+	b=L9nmiq+r5tGTi+Kjhz8qen/VVnSJhQKlvePfuYjtZqdgZsoSa/hCvO7sY8x3PI7Me
+	 B+QaFufl4c1mZkwil8TlYSmuU5hrdh04AsMH9uUllaxriMTz6dGlsxCHe+Kgf5wCZg
+	 3e1MtK5i6knY3OQO6dcjdhLhydufMLGdMMQTLv3g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Qu Wenruo <quwenruo.btrfs@gmx.com>,
-	Cheng Yongkang <teel4res@gmail.com>,
-	Qu Wenruo <wqu@suse.com>,
-	David Sterba <dsterba@suse.com>
-Subject: [PATCH 7.3 0613/1005] btrfs: reject refs=0 subvolume without DEAD in SUBVOL_SYNC_WAIT
-Date: Wed, 25 Nov 2026 15:32:31 +0100
-Message-ID: <20261125143836.105481052@linuxfoundation.org>
+	Hungyu Lin <dennylin0707@gmail.com>,
+	"Christian Brauner (Amutable)" <brauner@kernel.org>
+Subject: [PATCH 7.3 0614/1005] coda: honor the append state of each write
+Date: Wed, 25 Nov 2026 15:32:32 +0100
+Message-ID: <20261125143836.128464977@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143821.729802100@linuxfoundation.org>
 References: <20261125143821.729802100@linuxfoundation.org>
@@ -69,55 +67,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Cheng Yongkang <teel4res@gmail.com>
+From: Hungyu Lin <dennylin0707@gmail.com>
 
-commit 9a58e56e70f610e29b53821e9c706600e529cca3 upstream.
+commit 87ea037a9166a5842356ce68e3585fc6e756603b upstream.
 
-btrfs_ioctl_subvol_sync() assumes that a cached root with zero
-references has BTRFS_ROOT_SUBVOL_DEAD set, and asserts that before
-waiting for the cleaner. Two states break the assumption:
+coda_open() adds O_APPEND to the container file's f_flags after it has
+been opened, without updating its cached f_iocb_flags. An O_APPEND write
+can therefore overwrite existing data instead of appending. For example,
+writing "Z" to a file containing "abc" produces "Zbc" rather than "abcZ".
 
-- A corrupt ROOT_ITEM with zero references and a matching orphan item,
-  on a writable filesystem.
-- A failed subvolume deletion. btrfs_delete_subvolume() zeroes the
-  root references, aborts the transaction, which forces the filesystem
-  read-only, and then clears DEAD again. No on-disk metadata is
-  corrupted in this case.
+Pass RWF_APPEND or RWF_NOAPPEND to vfs_iter_write() according to the
+incoming IOCB_APPEND state. This also honors changes made with F_SETFL
+and per-write append overrides instead of relying on the container's
+open-time flags.
 
-With CONFIG_BTRFS_ASSERT=y, both reach a BUG().
-
-Change the ASSERT() into a proper rejection to avoid triggering a BUG().
-
-Fixes: 6c83d153ed86 ("btrfs: add new ioctl to wait for cleaned subvolumes")
-CC: stable@vger.kernel.org
-Suggested-by: Qu Wenruo <quwenruo.btrfs@gmx.com>
-Link: https://lore.kernel.org/linux-btrfs/dd97efe9-91ec-495b-b698-acff1447421c@gmx.com/
-Signed-off-by: Cheng Yongkang <teel4res@gmail.com>
-[ Rework the commit message, drop the ad-hoc RW check. ]
-Signed-off-by: Qu Wenruo <wqu@suse.com>
-Reviewed-by: David Sterba <dsterba@suse.com>
-Signed-off-by: David Sterba <dsterba@suse.com>
+Fixes: 164f4064ca81 ("keep iocb_flags() result cached in struct file")
+Cc: stable@vger.kernel.org # 6.9+
+Signed-off-by: Hungyu Lin <dennylin0707@gmail.com>
+Link: https://patch.msgid.link/20261105051406.52442-1-dennylin0707@gmail.com
+Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/btrfs/ioctl.c |    8 ++++++--
- 1 file changed, 6 insertions(+), 2 deletions(-)
+ fs/coda/file.c |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
---- a/fs/btrfs/ioctl.c
-+++ b/fs/btrfs/ioctl.c
-@@ -5173,8 +5173,12 @@ static int btrfs_ioctl_subvol_sync(struc
- 			return -ENOENT;
+--- a/fs/coda/file.c
++++ b/fs/coda/file.c
+@@ -71,6 +71,7 @@ coda_file_write_iter(struct kiocb *iocb,
+ 	struct file *host_file = cfi->cfi_container;
+ 	loff_t ki_pos = iocb->ki_pos;
+ 	size_t count = iov_iter_count(to);
++	rwf_t flags = (iocb->ki_flags & IOCB_APPEND) ? RWF_APPEND : RWF_NOAPPEND;
+ 	ssize_t ret;
  
- 		wait_for_deletion = true;
--		ASSERT(root_flags & BTRFS_ROOT_SUBVOL_DEAD, "root_flags=0x%llx",
--		       root_flags);
-+		if (unlikely(!(root_flags & BTRFS_ROOT_SUBVOL_DEAD))) {
-+			btrfs_err(fs_info,
-+				  "subvol %llu has refs 0 without DEAD flag",
-+				  args.subvolid);
-+			return -EUCLEAN;
-+		}
- 		sched_ret = schedule_timeout_interruptible(HZ);
- 		/* Early wake up or error. */
- 		if (sched_ret != 0)
+ 	ret = venus_access_intent(coda_inode->i_sb, coda_i2f(coda_inode),
+@@ -80,7 +81,7 @@ coda_file_write_iter(struct kiocb *iocb,
+ 		goto finish_write;
+ 
+ 	inode_lock(coda_inode);
+-	ret = vfs_iter_write(cfi->cfi_container, to, &iocb->ki_pos, 0);
++	ret = vfs_iter_write(cfi->cfi_container, to, &iocb->ki_pos, flags);
+ 	coda_inode->i_size = file_inode(host_file)->i_size;
+ 	coda_inode->i_blocks = (coda_inode->i_size + 511) >> 9;
+ 	inode_set_mtime_to_ts(coda_inode, inode_set_ctime_current(coda_inode));
 
 
