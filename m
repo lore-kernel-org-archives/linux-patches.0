@@ -1,54 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795621590;
-	b=q513HFzO6hXOsGKoG6R96QPoc8iD8ozhpHWJeKM7NvQDWxsktLNwxu9iSPJV2i2hIZtR
-	 bSs6HTWjUKcQcWQmlE2K/832+0fwLnH52DHidJFilDo3lOgF7kygfoZtpg/sjVhE2koui
-	 ip6GCx+MwedXXUgi08bish/J1cSz6Q8Tk+0ZD2oDtHt7/88Pg5nv7NVkO49hOE6YX/n07
-	 2SLITjfxGNtqbVy722kP/S/HPNmyIN7EMj71XA5ej2HNwTbj5Buluga+VxVFQTCzEcs/y
-	 OZW78xLC36PJZlEu0wQBoreKXgyViWSuC05NHKviGjDaNY/+fQHWg0y0XL9qkQOO7PA==
+	t=1795621593;
+	b=m+dE1eRf/A476z6bfawO3k26igja/baWJ/GKRQ9cnRd6QgIZD2XO3t3y2eCkhC+5ufxF
+	 dZJXy+WeXT1O1Mom7TWqnoLWbz9Mx1rFyCA/yfxtkoQbH6QynkCGhrKY54bnoblM1ceHx
+	 6L+D/mlvUDRfPV2OGBnGridWDe/fBEVQEQUTIjXTwy0mVCBWzEJcssGDl9Yegb5j2TvRR
+	 qIj1tgwfpH89IvqeOxTSTQjJ6G82eY888MdJvlFBByMH1DpJoFq+SPIJ7dvRCQgRZjmoS
+	 0eyH2Rt8W/yobbI8UeSgyhjXzwindHj5841ZGvaR2IBONVHMVlSFbfq7HIp30dXlOqA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795621590;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795621593;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=4Ld+QUMTEnbCJjG2pNZ5Gex1nMS6TkUsclgQfvGW5bM=;
-	b=M8wmlch9dw6doT/QIqSIBDuOh9Dbj6wMQnnZJr+oEDZxa89FrgbfPiJMb64zEJyTJ1Uz
-	 EBP1iLUfjo97Vn2ckYKSQguufMI+sXGeMNCD3P57ubJxTmF3Skw1A36fvPyDqOlW0XYqP
-	 RvQlbllgBULI6zf5AWj+CTus6yxXJx+McKWbt+Zcuym/BiL6mnFm1RUJ4aLhJa/e0RDVs
-	 sHpn2NiUQt6eRU7DH7usta4TWztohsU1161GWwk0q2NAxWoSaUqER/p+yHg0ropIeRIkT
-	 ZK+D4FONl0mt71KBuZOfASwQvAYuCDqaYZhZUrc770NsrmfaOTar5xBKY+CuidKUyBw==
+	bh=YnNz+GE+btGm8z7icOWgGPjZQ6xDJOp2Jc3yAlUZkmo=;
+	b=ayXm5MdKeAcTEcrNjjBEXAb5NpRDgFsrVbKXT/1G7uD1htzFCnIGf1MzORwc7E2SVnl2
+	 6tmIAAsnirE6hseBUQe0eUYaRQWu8fzcHhLvd1eLXMwhtYul+8EtyySGK946Hm8FM+X9W
+	 8Yqq2DPUyGgBu1xNBCs5c7xV/Zx7JBEZ13zeOsVWcASt+bFfacJS3EuTI6Okfchqn5hhc
+	 dx6LrMZkt3AqTIuVzNQzJV6MbTarFZahLZoOqORrNSiaM3nXwr1sSKjG9mSi+7chgZoyp
+	 klm9rCZp7sg3/tBJi0Jiq+KkBKK2ocx50TPG8eZlp3d/+7P4NP7wpqywV66D1wlw1wA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=l8RtnNtT;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=jkHzcPuU;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BC67F606A32C;
-	Wed, 25 Nov 2026 15:46:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AC37C606A332;
+	Wed, 25 Nov 2026 15:46:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=l8RtnNtT
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0FF961F000C6;
-	Wed, 25 Nov 2026 15:46:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=jkHzcPuU
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EB6CC1F000CA;
+	Wed, 25 Nov 2026 15:46:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795621590;
-	bh=4Ld+QUMTEnbCJjG2pNZ5Gex1nMS6TkUsclgQfvGW5bM=;
+	s=korg; t=1795621593;
+	bh=YnNz+GE+btGm8z7icOWgGPjZQ6xDJOp2Jc3yAlUZkmo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=l8RtnNtTEcTo5LhaGoncJ+C49IIRsZrkvA1KGBiGYFuLUkAl5kpMBDtK5vEcU/KkE
-	 tzHfVx7FYdJcB00ouJIwabJPzEF+2ZJUc2so5O24tpOftK66j5He500KK86a7BMSNW
-	 w42zb0UR6Bl3sFxYQQw3mzQ7ijnHrAqTV9rBXIag=
+	b=jkHzcPuU5I3zxGW0jPqR5zxlQJmEbf8niloZ7uhQFML4qmKsXFPcGglnaVRHJ2uug
+	 Mgyhz6C3vmsijT6aKQ01e5GGnuAhrSHFC6cPL/u/QqR3/gdgBp/eZxJvt5iPsAzilj
+	 uhsJeBxGaSMsHzLrDUD7mfG7zFApPOGS6avvA2Q0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jason Zhang <jdz@google.com>,
-	Kuniyuki Iwashima <kuniyu@google.com>,
-	Ido Schimmel <idosch@nvidia.com>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Richard Fitzgerald <rf@opensource.cirrus.com>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 257/990] ipv6: Flush exception route while replacing nexthop.
-Date: Wed, 25 Nov 2026 15:27:04 +0100
-Message-ID: <20261125143828.112172924@linuxfoundation.org>
+Subject: [PATCH 6.18 275/990] ALSA: hda: cs35l56: Stop cs_dsp before calling cs_dsp_power_down()
+Date: Wed, 25 Nov 2026 15:27:22 +0100
+Message-ID: <20261125143828.530547365@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143822.072087159@linuxfoundation.org>
 References: <20261125143822.072087159@linuxfoundation.org>
@@ -70,113 +68,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kuniyuki Iwashima <kuniyu@google.com>
+From: Richard Fitzgerald <rf@opensource.cirrus.com>
 
-[ Upstream commit 9401b428b5d4dfe1fd5752973fd02b4e9cd05536 ]
+[ Upstream commit 8c63987ac7fe605c337edbf9052cf97e2a415558 ]
 
-The following creates a cyclic reference between IPv6 route
-and nexthop:
+In cs35l56_hda_unbind() call cs_dsp_stop() before cs_dsp_power_down()
+if cs_dsp is in a running state.
 
-  1. create a nexthop A
-  2. create a nexthop group w/ A
-  3. create an IPv6 route with the nexthop group
-  4. create an exception route w/ A
-  5. replace A with a new nexthop B in the nexthop group
-  6. remove the IPv6 route
-  7. replace B with A in the nexthop group
-  8. remove the nexthop group
+cs35l56_hda_runtime_resume() calls cs_dsp_run() if cs_dsp_power_up() has
+previously run successfully. If cs35l56_hda_unbind() is then called while
+in this runtime-resumed state cs_dsp will be running. The code wasn't
+checking for this and was calling cs_dsp_power_down() while still in a
+running state, which is illegal. This is currently fairly harmless for
+the cs35l56 driver. But it doesn't comply with the API, so potentially
+could break with any future changes that expect the correct API use.
 
-Then, removing a device tied to the route gets stuck and
-triggers the splat below. [0]
-
-At 5., fib6_nh_release_dsts() is called, but it does not
-flush exception routes, so the nexthop A continues to grab
-the IPv6 route reference.
-
-  nh_A->rt6i_exception_bucket[] -> rt6_ex->rt6i->from
-
-At 6., fib6_purge_rt() calls rt6_flush_exceptions(), but it
-only purges exceptions tied to nexthop B.  Also, the route is
-unlinked from the nexthop group by list_del_init(&rt->nh_list).
-
-  -> f6i->nh -> nhg->nh_entries[]
-
-At 8., __remove_nexthop_fib() cannot find the IPv6 route, and
-remove_nexthop_group() calls list_del_init(&nhge->nh_list) to
-unlink the group from the nexthop A's nhe->grp_list.
-
-  nhg->nh_entries[] -> nh_A -> ... -> f6i
-
-Here, the nexthop A is reachable from net->nexthop.devhash[],
-but remove_nexthop_from_groups() cannot find the nexthop group,
-leaking the whole chain.
-
-Let's call fib6_nh_flush_exceptions() in fib6_nh_release_dsts().
-
-[0]:
-unregister_netdevice: waiting for gre6 to become free. Usage count = 4
-ref_tracker: netdev@000000009652f190 has 1/3 users at
-     dst_alloc+0x14b/0x490
-     ip6_rt_cache_alloc+0x27b/0x670
-     __ip6_rt_update_pmtu+0x572/0x850
-     ip6_tnl_xmit+0x8c5/0x1b70
-     __gre6_xmit+0x7af/0xaa0
-     ip6gre_tunnel_xmit+0x685/0xdc0
-     dev_hard_start_xmit+0x204/0x5a0
-     __dev_queue_xmit+0xe8a/0x2550
-     ip6_finish_output+0x232/0x570
-     ip6_output+0x226/0x3b0
-     ip6_send_skb+0x133/0x250
-     rawv6_push_pending_frames+0x503/0x6f0
-     rawv6_sendmsg+0xdf0/0x1310
-     sock_sendmsg_nosec+0xde/0x130
-     __sys_sendto+0x27f/0x320
-     __x64_sys_sendto+0xd9/0xf0
-
-Fixes: 7bf4796dd099 ("nexthops: add support for replace")
-Reported-by: Jason Zhang <jdz@google.com>
-Signed-off-by: Kuniyuki Iwashima <kuniyu@google.com>
-Link: https://patch.msgid.link/20261101064418.2055158-2-kuniyu@google.com
-Reviewed-by: Ido Schimmel <idosch@nvidia.com>
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Fixes: fb78d73dde2d4 ("ALSA: hda/cs35l56: Call cs_dsp_power_down() before calling cs_dsp_remove()")
+Signed-off-by: Richard Fitzgerald <rf@opensource.cirrus.com>
+Link: https://patch.msgid.link/20261104122337.1072468-1-rf@opensource.cirrus.com
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv6/route.c | 6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ sound/hda/codecs/side-codecs/cs35l56_hda.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/net/ipv6/route.c b/net/ipv6/route.c
-index af376b9568e2f..c11cf3c65c9f7 100644
---- a/net/ipv6/route.c
-+++ b/net/ipv6/route.c
-@@ -3733,9 +3733,10 @@ void fib6_nh_release(struct fib6_nh *fib6_nh)
- {
- 	struct rt6_exception_bucket *bucket;
+diff --git a/sound/hda/codecs/side-codecs/cs35l56_hda.c b/sound/hda/codecs/side-codecs/cs35l56_hda.c
+index baf286bf7ec83..b55391fed61ac 100644
+--- a/sound/hda/codecs/side-codecs/cs35l56_hda.c
++++ b/sound/hda/codecs/side-codecs/cs35l56_hda.c
+@@ -738,6 +738,8 @@ static void cs35l56_hda_unbind(struct device *dev, struct device *master, void *
+ 	cs_dsp_cleanup_debugfs(&cs35l56->cs_dsp);
+ 	debugfs_remove_recursive(cs35l56->debugfs_root);
+ #endif
++	if (cs35l56->cs_dsp.running)
++		cs_dsp_stop(&cs35l56->cs_dsp);
  
-+	fib6_nh_release_dsts(fib6_nh);
-+
- 	rcu_read_lock();
- 
--	fib6_nh_flush_exceptions(fib6_nh, NULL);
- 	bucket = fib6_nh_get_excptn_bucket(fib6_nh, NULL);
- 	if (bucket) {
- 		rcu_assign_pointer(fib6_nh->rt6i_exception_bucket, NULL);
-@@ -3744,7 +3745,6 @@ void fib6_nh_release(struct fib6_nh *fib6_nh)
- 
- 	rcu_read_unlock();
- 
--	fib6_nh_release_dsts(fib6_nh);
- 	free_percpu(fib6_nh->rt6i_pcpu);
- 
- 	fib_nh_common_release(&fib6_nh->nh_common);
-@@ -3754,6 +3754,8 @@ void fib6_nh_release_dsts(struct fib6_nh *fib6_nh)
- {
- 	int cpu;
- 
-+	fib6_nh_flush_exceptions(fib6_nh, NULL);
-+
- 	if (!fib6_nh->rt6i_pcpu)
- 		return;
- 
+ 	if (cs35l56->base.fw_patched)
+ 		cs_dsp_power_down(&cs35l56->cs_dsp);
 -- 
 2.53.0
 
