@@ -1,55 +1,55 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795618820;
-	b=OBbaRu81PCXOJ8h2Uparx7+uQd2PkeYrL5Z4HpUOzmUXozu9th4oF/KLJCYF/UVgHws8
-	 1veexhPVOebXnz+lGC/CWdjZ0Hb8zXBomca9Vf0VGZ6fsipTuLx2+vjcFHosyfdgG1wp8
-	 f8oj3fitES8CnhwOTz1WbAp0Y/q4vRJiBeJNiIYuB2yfWmpEPd595tWLHU/cmRqMHjZsv
-	 6fkp7VhbVSCDBfWZ306RZJG7kSuQ4Fi3Dq6E/wL8cBG46t+d1uFKnKOen6jZq28JuSIGQ
-	 hqFi5O1OwUQ6G9ac26tL+CKVfR74i0g1HsOZgLzL/AkP75HB4srgiOGs/804hC6sC1w==
+	t=1795618823;
+	b=WNGDPOcQy99bclpW57vevqjtbKz5Wvw4uONtbzr8+zpXHBGit3HQ4SSfG8Qjq3tckyuG
+	 YBsaWaDjJAPxUiYZuknnCJhBC7YxYygQSXiEwOo1Z3S3w/sMHpyll9foeGhAdBT1XtwK1
+	 l3TU5wtQXitv5LqzKz0qEE4rnznDDip+wzQ9gKtNCzrZNjUO3QjLC97T0nklCpE3Ylt2U
+	 XTh3meFv7u8AZaZtEw7f3YVy8o937Qh+3xzYGFU2blLKzcmn8AbstIX9/b4FRw0sumE2b
+	 h14DbUp81kJrTXdh4B/J68NAAr1/z8W1wOCyutx4PT5mvVfN9Yymu2q9ek1aFeH8qNw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795618820;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795618823;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=C9lMdwpSlMFGwUP3rx+jryDtZS4UAWQxevr3dqoGQjo=;
-	b=k3RxYJ2/bL8I1xbtSlMHo/3TqjqPY9/f0QTwUUuBJqvf7oaJt9Ec3TWXQPv3jkSyZ8B9
-	 rocGPjlubvRWt67S/3emAkT+8EQfk2Ww/199lRMk8cqYds9uMMRSvZrJqKI/ZyRWrEP1g
-	 PIvDdAVur+Dr5RTXaK+zql+JHebYTFoBCsDLQ51qFwv3oiZt2+ky0ExiESbpOUaaX1SlB
-	 9I2iaZJiRhATxamIpaEV6lyKU361eIo2fdcEiIciZCqMxJ4pCybo2Uon1+VAaDoagKBwW
-	 E8zWRFzXivDFuhfB3vvNwGkkJoo3rJH52ZIU8Ogt3o2NvIGNJV13F6mfTpBiRexk5sg==
+	bh=OabCfoCrwJJujEF7P2hPrGduZgAnx9DaIuzcZoTIXI0=;
+	b=a+JUlSORvebfgEDt47YSC4ktO6VB/ilRiO4lZ0Zk39IMxcw7NOcrNikyL8Is2D+mIo2S
+	 eBOTVCkp4vupV6e5xpp8h6TzVRnPOzxp8Ynh6txgteLb5ziB+wkd3UtOdYT3n31OEIuo9
+	 h5G9brO+OVLXCNkou3I75GdFizREitssZVRz3hpkQG75vOWwZtfYHTEwdk/30DgG/zxw2
+	 MurF9ELC59jJVqzE9B7Uk4eZtpVRBVxbB813UGRlASm1x2B5yaKNViEzg40AhHmZXBkzo
+	 n/aGtHaZz5lmRUzkx5Rqe9wBIvrLNgH0N2MhkqsAghzI0hDQ+EL6XV3lTm5YH0jUD0g==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=aLkTnZCJ;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=olXwZeM0;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6BDB8606A321;
-	Wed, 25 Nov 2026 15:00:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 88625606A327;
+	Wed, 25 Nov 2026 15:00:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=aLkTnZCJ
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5B3ED1F000C0;
-	Wed, 25 Nov 2026 15:00:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=olXwZeM0
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B4D291F000C0;
+	Wed, 25 Nov 2026 15:00:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795618819;
-	bh=C9lMdwpSlMFGwUP3rx+jryDtZS4UAWQxevr3dqoGQjo=;
+	s=korg; t=1795618823;
+	bh=OabCfoCrwJJujEF7P2hPrGduZgAnx9DaIuzcZoTIXI0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=aLkTnZCJ1YZEUi2TFELE0xHrH9IrDQ+c0c9NKMyaqmqQMxQ0kutYHufs2f0edTV9f
-	 BmbKSZfhD4HD/6RNSP0fNzVN9z0BFeBQ+YlJblyO+ailc2qr22iL3OtM3VEScSfD9w
-	 eswkti/JElzx/zzjsb6Ab1O7mIiBiq9D9xTjMdzQ=
+	b=olXwZeM0CIcbpC8vyelQeX9yX6O6sVH7l5ixJwUCzTkF+ZejYd+6WCNNKFJP0ua1c
+	 nG0X4YKkSPmobDVy+5JBAiBy2pxbrQTnPgUxmQFjNrkZ7AAZs7AfzIKOFfM4+SIHj/
+	 jO+RlxxOMbB1g09pMrT1DAqYtvuvHRyvstXhoqEI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Raag Jadav <raag.jadav@intel.com>,
-	Riana Tauro <riana.tauro@intel.com>,
+	Rodrigo Vivi <rodrigo.vivi@intel.com>,
 	Matt Roper <matthew.d.roper@intel.com>,
 	Matthew Brost <matthew.brost@intel.com>,
 	Dave Airlie <airlied@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0397/1005] drm/xe/hw_error: Guard csc_hw_error_work() with runtime PM
-Date: Wed, 25 Nov 2026 15:28:55 +0100
-Message-ID: <20261125143831.045445207@linuxfoundation.org>
+Subject: [PATCH 7.3 0398/1005] drm/xe: Move xe_device_wedged_fini() registration to xe_device_probe_early()
+Date: Wed, 25 Nov 2026 15:28:56 +0100
+Message-ID: <20261125143831.068518436@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143821.729802100@linuxfoundation.org>
 References: <20261125143821.729802100@linuxfoundation.org>
@@ -73,44 +73,62 @@ Content-Transfer-Encoding: 8bit
 
 From: Raag Jadav <raag.jadav@intel.com>
 
-[ Upstream commit a890a885b982f73e6e984e828ffda06b5121c4b6 ]
+[ Upstream commit 031cc955b33b0d171fe50c870a9e601e80f14cea ]
 
-xe_device_declare_wedged() callers are expected to hold a runtime PM
-reference. Fix it.
+The device can be declared wedged while processing boot-time hardware
+errors, which can result in PM reference leak if driver probe fails
+before xe_device_wedged_fini() is registered.
+
+Early register the required cleanup action and fix this.
 
 Fixes: a7df563b45b0 ("drm/xe/xe_hw_error: Handle CSC Firmware reported Hardware errors")
 Signed-off-by: Raag Jadav <raag.jadav@intel.com>
-Reviewed-by: Riana Tauro <riana.tauro@intel.com>
-Link: https://patch.msgid.link/20261022051303.282805-4-raag.jadav@intel.com
+Reviewed-by: Rodrigo Vivi <rodrigo.vivi@intel.com>
+Link: https://patch.msgid.link/20261022051303.282805-5-raag.jadav@intel.com
 Signed-off-by: Matt Roper <matthew.d.roper@intel.com>
-(cherry picked from commit fc8d229d76102489b6f56538a818c285a87db1e9)
+(cherry picked from commit 6599a0eb0990cde96c4e66a4e1e2ae1b172e85d2)
 Signed-off-by: Matthew Brost <matthew.brost@intel.com>
 Signed-off-by: Dave Airlie <airlied@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/xe/xe_hw_error.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/gpu/drm/xe/xe_device.c | 10 ++++++----
+ 1 file changed, 6 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/gpu/drm/xe/xe_hw_error.c b/drivers/gpu/drm/xe/xe_hw_error.c
-index 5f2abc9485ff5..f726179c22e38 100644
---- a/drivers/gpu/drm/xe/xe_hw_error.c
-+++ b/drivers/gpu/drm/xe/xe_hw_error.c
-@@ -14,6 +14,7 @@
- #include "xe_drm_ras.h"
- #include "xe_hw_error.h"
- #include "xe_mmio.h"
-+#include "xe_pm.h"
- #include "xe_survivability_mode.h"
- 
- #define GT_HW_ERROR_MAX_ERR_BITS		16
-@@ -170,6 +171,7 @@ static void csc_hw_error_work(struct work_struct *work)
- 	struct xe_tile *tile = container_of(work, typeof(*tile), csc_hw_error_work);
- 	struct xe_device *xe = tile_to_xe(tile);
- 
-+	guard(xe_pm_runtime)(xe);
- 	xe_survivability_mode_runtime_enable(xe);
+diff --git a/drivers/gpu/drm/xe/xe_device.c b/drivers/gpu/drm/xe/xe_device.c
+index f161f010d0ef4..7ec5d301f9995 100644
+--- a/drivers/gpu/drm/xe/xe_device.c
++++ b/drivers/gpu/drm/xe/xe_device.c
+@@ -760,6 +760,8 @@ static int xe_device_vram_alloc(struct xe_device *xe)
+ 	return 0;
  }
  
++static void xe_device_wedged_fini(struct drm_device *drm, void *arg);
++
+ /**
+  * xe_device_probe_early: Device early probe
+  * @xe: xe device instance
+@@ -828,6 +830,10 @@ int xe_device_probe_early(struct xe_device *xe)
+ 	if (err)
+ 		return err;
+ 
++	err = drmm_add_action_or_reset(&xe->drm, xe_device_wedged_fini, xe);
++	if (err)
++		return err;
++
+ 	return 0;
+ }
+ ALLOW_ERROR_INJECTION(xe_device_probe_early, ERRNO); /* See xe_pci_probe() */
+@@ -1148,10 +1154,6 @@ int xe_device_probe(struct xe_device *xe)
+ 
+ 	detect_preproduction_hw(xe);
+ 
+-	err = drmm_add_action_or_reset(&xe->drm, xe_device_wedged_fini, xe);
+-	if (err)
+-		goto err_unregister_display;
+-
+ 	/*
+ 	 * Process and log any errors detected by hardware. Possible results can
+ 	 * include declaring the device as wedged, which must be done only after
 -- 
 2.53.0
 
