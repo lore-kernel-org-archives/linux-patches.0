@@ -1,53 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795624881;
-	b=wCFFWattx5dCgFMjKovaLWp0fIlwd2qmXpyVs1jBTHde2WdD+3ruoRG7E5pUWRpWKVKz
-	 rl8Lq9PQ5qafnzG/EoE672CdTTAs3aQ/uKMWT4Ful+ZtCK/qPoJ5YcXDekfz5Wc+YwIoH
-	 QKF/Pdj1Eoxen4Thuk5Zgs7Pk8Wy1nnI7OCcAdPVhrYcWxujLVLWaZryOdOtlca6vWLa4
-	 P9wefpE9t1F8RqB4fY/T27Rf2gksvxe/Yi9f0Wi8HkzCYZcwhop4YBKtlHZkAKcnky/O7
-	 TyIRgBYoNWZuETRXvYk/Wo0dhhpLgrB9xYEG3taHUtDQOPOpkSYRuC+AmVhtmJhrEwQ==
+	t=1795624884;
+	b=Irf7bL9GECoWqcpaBbKkO6y3XOFGADkHfJUBL3a+liQ+RVoj7p14fscmgjnM4+1clMuN
+	 L1RvYgLEU0pRnRmTa5aSPFbuB2Pj6ZAfGoMqyfNgc1qwtW5MydZZjQ1tf8Wu57Y3uiHzC
+	 mKAcxa5CaYQEP8cI9E5XrlHay75V10CHidstAahFbdhXuOoLYT4Ml9qRWawGueCFdVmxM
+	 GTf4m77xHVYu9Tc/Tl1+brwCnJD0ucPHJLacWo197OO9iWimGGQDz6JUhqV5Zie39Lz+W
+	 BzrsVJtx/wRRStp2kxKkkVHpkglctVKVt0JGpt9EpSmc38/n7dGGfayQs378b8LfLBg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795624881;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795624884;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=F2LEAPeLDbrwxMpdlJ7WAitgl4S+eI+DN2GF1krO7Cw=;
-	b=2JOZS7rIT/m11UC1r/UyYBcrFdWafBvPkUiQzA9+olT45FTYRwFZPE9kL75CJgS4p+zc
-	 RdzcCOmnTi+6etqaGlCvkqm4++0R+PgoFp1VghPm3I22kBXKuOJP0pSUQzxRjNIusgee3
-	 U8VwZB4VPba6rJKwU2EiJuAbn+5wbv+k3cBsXqpDZTFPyQz8UAVsMd9i+qZT0J3m7AFaq
-	 lZ4GngW2Su/whRTi+M4PbEEZIJ8Mdrtk83C+KkEB8Kw7HMgEbhufKtGS7THqVDJiNe9LZ
-	 ch7+AaFeMhNXPI8XaKKjCvFVgQAUqyX1YPnI4gHAdXt1mqsNvfJjxE+ZFt8eb4RUj3Q==
+	bh=Ek6Ps5aIHr0dLT+U35A+0ZgV66mYoZ1oJUrhzxkJc78=;
+	b=ZvNnmlppzF7IRVtPwYKU7jYr3XxVkCT5WGxe1V/uX8+0qG8LyiLadRZaTqjliGMlDUF9
+	 rPDpao042bqQ2Msgc+X++0tfXkekzlfxcVYVibTZMGP33wqGXJStOIJ2Lsq+ozhVx7A9q
+	 DnEJfI0SVOLfJsGZ29W1JZnzPpFNDcIQpEgx4FwDWm88fOcykQ0JsPfIFW0p/6a7ZJaje
+	 kEVEwH+NRg8SiuJLwoqHhmFi4Zm7EPZpQ6TRsyJ1ssFlqQK4SPtVB1haVTC/7zxGorl6L
+	 t8GhbJNb+P+nSJJAn3qWeOciCVTp3tmRL0BTDHbip4X/+npZ+mOV8DUECttiYZqqhMg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=e+FIL+t9;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=lZzetHVv;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2DE39606A321;
-	Wed, 25 Nov 2026 16:41:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DBBC1606A31E;
+	Wed, 25 Nov 2026 16:41:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=e+FIL+t9
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 44F101F000C0;
-	Wed, 25 Nov 2026 16:41:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=lZzetHVv
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 732DD1F000C0;
+	Wed, 25 Nov 2026 16:41:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795624880;
-	bh=F2LEAPeLDbrwxMpdlJ7WAitgl4S+eI+DN2GF1krO7Cw=;
+	s=korg; t=1795624884;
+	bh=Ek6Ps5aIHr0dLT+U35A+0ZgV66mYoZ1oJUrhzxkJc78=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=e+FIL+t9Pfaa0R+ZQ+sIdCTxtIOTjT3hUuIsuAb1Hc3sOu8YvuI81yu4q6JxQ8Bz9
-	 pHT0FfFkFWEJFD71zH0ILu8ql0vXjYwJy18NYY2zupLy60y5iZDBE9MM3WTuo4R2t3
-	 bCjRD5XOGhYNZ+zlbm8i6UwEyv1PmOHKNHHYNNOo=
+	b=lZzetHVvz2LMcLveAlDdx6LM+Dom8OxkaQ0T8Xd1ShXGcMyKF85nBV/umPH0eE0P8
+	 /8tMPx4hPKOMd95XwIQJToJUIJHDFw+NTWAsFIiFA/9iWYTdX1NPnURB+exo8ZAAHI
+	 VjygnzV+m99kuKmT+3FJs0wrHk8goHR5jN4j5otM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Kyle Zeng <kylebot@openai.com>,
+	Willem de Bruijn <willemb@google.com>,
 	Eric Dumazet <edumazet@kernel.org>,
-	Kuniyuki Iwashima <kuniyu@google.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 337/816] udp: do not use a cross-family sk_rx_dst in early demux
-Date: Wed, 25 Nov 2026 15:31:25 +0100
-Message-ID: <20261125143856.998936712@linuxfoundation.org>
+Subject: [PATCH 6.12 338/816] net: gro: compare skb->protocol in gro_list_prepare()
+Date: Wed, 25 Nov 2026 15:31:26 +0100
+Message-ID: <20261125143857.021792185@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143849.205329330@linuxfoundation.org>
 References: <20261125143849.205329330@linuxfoundation.org>
@@ -71,86 +72,61 @@ Content-Transfer-Encoding: 8bit
 
 From: Eric Dumazet <edumazet@kernel.org>
 
-[ Upstream commit 5636e67320563be743d47706ef4914078c27edb2 ]
+[ Upstream commit 511582022bfd07475d0daa209e6e6aa5a940740d ]
 
-A dual-stack UDP socket connected to a v4-mapped address can receive
-both IPv4 packets and IPv6 packets using v4-mapped addresses:
-ip6_rcv_core() no longer rejects a v4-mapped source since commit
-dcc32f4f183a ("ipv6: weaken the v4mapped source check"), which kept
-that check only in tcp_v6_conn_request(). ipv6_portaddr_hash() hashes
-v4-mapped addresses like IPv4 ones, so both early demux handlers find
-the socket, and both __udp4_lib_rcv() and __udp6_lib_rcv() store their
-input dst in the same sk->sk_rx_dst.
+gro_list_prepare() checks whether a held packet may belong to the same
+flow as the incoming one by comparing the device, VLAN tag, metadata
+and the link-layer header, using dev->hard_header_len as its length.
 
-udp_v6_early_demux() validates the cached dst with dst_check(), but
-ipv4_dst_check() ignores the cookie, so an IPv4 dst gets attached to
-an IPv6 skb. ip6_rcv_finish_core() then skips the route lookup and
-ip_local_deliver() parses the IPv6 header as an IPv4 one: the IPv6
-next header and hop limit are read as a fragment offset, and the IPv4
-protocol is taken from a source address byte.
+On devices without a link-layer header (hard_header_len == 0), such as
+L3 GRE tunnels, no compared byte carries the outer protocol:
+skb->protocol comes from the tunnel header. Packets of different
+protocols can then stay eligible, and the GRO handler selected from the
+incoming skb->protocol parses the held packet with the wrong layout.
 
-The reverse direction looks possible too: per-cpu dsts of IPv6 routes
-using nexthop objects have rt->sernum set, and ip6_dst_check() then
-ignores the cookie, so udp_v4_early_demux() can attach an IPv6 dst to
-an IPv4 skb.
+For example, take an IPv4/UDP packet held by UDP GRO and a
+VLAN/IPv4/TCP packet received on the same ipgre device.
+vlan_gro_receive() reads the first four bytes of the held IPv4 header
+as a VLAN header. With crafted values, the held packet survives up to
+tcp_gro_receive(), which uses its UDP header as a TCP header. With a
+short linear part, the FIN/PSH update of the held packet's TCP flags
+can then write into skb_shared_info.
 
-Kyle Zeng reported that such a packet can reach XFRM input still
-holding the prefetched, non refcounted, socket set by early demux,
-which can then outlive its RCU grace period.
+The VLAN, GRE, IPv4 and IPv6 GRO handlers compare the next-protocol
+field of their own header, so once the outer protocol matches, the
+inner layers are checked too. Only the outermost protocol was not
+compared.
 
-Only use the cached dst if its family matches the packet. Otherwise
-fall back to a regular route lookup.
+Compare skb->protocol too. On Ethernet devices this is redundant with
+compare_ether_header(), but it is cheap.
 
-TCP does not have the same problem: sk_ehashfn() hashes a v4-mapped
-socket with inet_ehashfn(), while IPv6 lookups use inet6_ehashfn(),
-so IPv6 packets do not normally find a v4-mapped TCP socket.
+GUE direct IP encapsulation has a similar issue, but there both packets
+have the same outer protocol, so it is fixed separately in
+gue_gro_receive().
 
-Fixes: 5425077d73e0 ("net: ipv6: Add early demux handler for UDP unicast")
-Fixes: c9f2c1ae123a ("udp6: fix socket leak on early demux")
+Fixes: 60769a5dcd87 ("ipv4: gre: add GRO capability")
+Reported-by: Kyle Zeng <kylebot@openai.com>
+Reviewed-by: Willem de Bruijn <willemb@google.com>
 Signed-off-by: Eric Dumazet <edumazet@kernel.org>
-Reviewed-by: Kuniyuki Iwashima <kuniyu@google.com>
-Link: https://patch.msgid.link/20261106110135.2161204-1-edumazet@kernel.org
+Link: https://patch.msgid.link/20261109164540.3104392-1-edumazet@kernel.org
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv4/udp.c | 5 ++++-
- net/ipv6/udp.c | 5 ++++-
- 2 files changed, 8 insertions(+), 2 deletions(-)
+ net/core/gro.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/net/ipv4/udp.c b/net/ipv4/udp.c
-index 4fc8263286f2e..af7afbf7a0c64 100644
---- a/net/ipv4/udp.c
-+++ b/net/ipv4/udp.c
-@@ -2678,8 +2678,11 @@ int udp_v4_early_demux(struct sk_buff *skb)
- 	skb->destructor = sock_pfree;
- 	dst = rcu_dereference(sk->sk_rx_dst);
+diff --git a/net/core/gro.c b/net/core/gro.c
+index 6a730b4593e1c..f0817aa5294c3 100644
+--- a/net/core/gro.c
++++ b/net/core/gro.c
+@@ -379,6 +379,7 @@ static void gro_list_prepare(const struct list_head *head,
+ 		}
  
--	if (dst)
-+	/* A dual-stack socket can cache an IPv6 dst. */
-+	if (dst && dst->ops->family == AF_INET)
- 		dst = dst_check(dst, 0);
-+	else
-+		dst = NULL;
- 	if (dst) {
- 		u32 itag = 0;
- 
-diff --git a/net/ipv6/udp.c b/net/ipv6/udp.c
-index db67fc05ca51a..296ea0bb36369 100644
---- a/net/ipv6/udp.c
-+++ b/net/ipv6/udp.c
-@@ -1180,8 +1180,11 @@ void udp_v6_early_demux(struct sk_buff *skb)
- 	skb->destructor = sock_pfree;
- 	dst = rcu_dereference(sk->sk_rx_dst);
- 
--	if (dst)
-+	/* A dual-stack socket can cache an IPv4 dst. */
-+	if (dst && dst->ops->family == AF_INET6)
- 		dst = dst_check(dst, sk->sk_rx_dst_cookie);
-+	else
-+		dst = NULL;
- 	if (dst) {
- 		/* set noref for now.
- 		 * any place which wants to hold dst has to call
+ 		diffs = (unsigned long)p->dev ^ (unsigned long)skb->dev;
++		diffs |= p->protocol != skb->protocol;
+ 		diffs |= p->vlan_all ^ skb->vlan_all;
+ 		diffs |= skb_metadata_differs(p, skb);
+ 		if (maclen == ETH_HLEN)
 -- 
 2.53.0
 
