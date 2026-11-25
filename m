@@ -1,51 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795623655;
-	b=dwwCSegI7j5+p2sg90p0TRQArTIcZ69z5YBrDifkq0Rh8VFwsbC/nD73AxpeFgtKbrMa
-	 Q/je0UFsQ0G4/DpeujkHxVQpT897kZyVa+U+KVaykb/kDXPgYqkaYCRe0ZE2RSrfEhz1s
-	 NrZ3RGbsUMMVshXSRvP0rvk/b0zdKzzeRzvv7z3CuAPm3CzgcSPoUlM4+GxT6GJIxX9pm
-	 5p5RYHtSqDUj2WXRSRd76tTu8zjYflp3pF9NqFn2o85O4/J93zPMC43jP9Y63dC/6DGV8
-	 h2uBAL/mQhB1sEy7I0nBdzpy1woF0gqTdheBYmWERUIO74LoTYN9hKM1VZB9rleh8zw==
+	t=1795623658;
+	b=AI+grXVo1BII2pwxCAfoE92nJuyua7jQHApVLWJ3klt5zlJD8zJTKliPmtQkhUNytbKO
+	 WoYBBmRxGpG3HCH/sOXIOn5gWn+jUBtkufwzRZs71cc5BJQep/4sETfzRfCcKTHNNyCAA
+	 m4bt6iWlPsFVyw168EcuvwxL/9VybsjNNEFxBKf7x5CTuOwqpItF1lpJ7XbJNg6SNRzEM
+	 QHl6WfC8TZn6zVTJPRtO6PglXbMmwpt6dXxVebEyRN/BAr6wQ8bsFrJtsSU23K1KZ+Df2
+	 ukzWLTGtdq6BDMCNw/b1JGCKYoXUlHE1TkQEstFp4BbL6HUNagfukCfrVdAf8aJkZ7w==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795623655;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795623658;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Transfer-Encoding;
-	bh=mPMuFEStvp8nrX4bjxrZDvHCWqoAT7RVTXu8ic4RQGQ=;
-	b=ybHpgmZnpYbz7kVGWlkNq938izNgxak4RY5K9cvCGb+sJjgZpmYOqhYvdGOmyZnJUI2L
-	 O6Ox9UqWOgwFL1xTZINLvci9N7oe0kh7TcV5bTSkDcL9Df8fX7jfVToS91nOgufIMGv4H
-	 bxjLKDhhl2Yo1jSlKlXnb5C14xt1pndIQn2zBYXy9FLLq7YZeUijvaGVXhaW3fG7fh7uX
-	 c3aa4vjH1h7PKEiqIOdKYthSMjQuyE3sxsQUG8VOCx6Ii1XiXHbYw6EKGKnyMpDQLQqwK
-	 y+JsZTva7bwhwUwj4FoxB11ZByWRG2kMNBP86e8Nj45VS43VvAjaxqmZhB0UTPtNOeQ==
+	 MIME-Version:Content-Type:Content-Transfer-Encoding;
+	bh=8borGf0UlJIbSzB5iST+1oBGYI6/AI13Ia8jLsDVrUE=;
+	b=EpQgDcVGVBbc9C33ef7lsl+69gSSKc4ogmKkE4CVSARcf1Y26dXqzC/cPXF4ew+ivhT+
+	 Pac8FRHi5oZVe0/Kq8GHLXtookKu3VqZsOA5LILlaNwhHfcQCsHYHAhhCnlapwgLUzq6q
+	 owYZlWlnwIAfY8wuwe6q0bbTJNzWYyGnP8FeyPztNs2o5P4q2GLiaakiconFcW+oqrgzI
+	 eC7BlwWBYiM+mBRuA+U2FD+h2K2epWzI0kV7CADmV0jUVqJYtJACjIXBI2EIwq107we/k
+	 bOKyPtco4+Ep8zCN7+ZvpKKffp0AG+nByehYWwcLy1Fh2nLZRheNCKyLLthLZVGBPWw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Z+28CjeA;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=1DeoWVs9;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4DB05606A32D;
-	Wed, 25 Nov 2026 16:20:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AD2FA606A684;
+	Wed, 25 Nov 2026 16:20:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Z+28CjeA
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8B7DB1F000D8;
-	Wed, 25 Nov 2026 16:20:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=1DeoWVs9
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DE3131F000D3;
+	Wed, 25 Nov 2026 16:20:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795623655;
-	bh=mPMuFEStvp8nrX4bjxrZDvHCWqoAT7RVTXu8ic4RQGQ=;
+	s=korg; t=1795623658;
+	bh=8borGf0UlJIbSzB5iST+1oBGYI6/AI13Ia8jLsDVrUE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Z+28CjeAHVTdQcVaEMEuVYRpHjZ6EefimzwnjEnD2X51QiOIxK5BaC0DXjgVRI5IF
-	 pvzeioLv+61c4JxpI++8UDR39XjrBP3KmWE/+Wu7Eq/FOvzzJZcAwgl0qkC0om7YFl
-	 wQQbY1lFGOkkc4E0VDlDxPS31jG9qw4cWkBbLzNI=
+	b=1DeoWVs9EtbnXsAI2i95xq5lUMlLL8bWe6t+kdgdS97U0NQozNooz6yx4FqECVoFU
+	 IwFfwNddygL3TotQ4XdksUqBdpyJzu3WNhb6Z7dLbP3fKHbyxKNSqbq193Av86gua2
+	 WIkGypNOLNwdFO/x3L/duYIZYJnLvnDZSyEZtZys=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	stable <stable@kernel.org>,
-	Josef Bacik <josef@toxicpanda.com>
-Subject: [PATCH 6.18 885/990] comedi: vmk80xx: report failed transfers of the K8061
-Date: Wed, 25 Nov 2026 15:37:32 +0100
-Message-ID: <20261125143842.743874963@linuxfoundation.org>
+	Josef Bacik <josef@toxicpanda.com>,
+	=?UTF-8?q?Nuno=20S=C3=A1?= <nuno.sa@analog.com>,
+	Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>
+Subject: [PATCH 6.18 886/990] iio: accel: adxl380: dont stay in standby on -EINVAL
+Date: Wed, 25 Nov 2026 15:37:33 +0100
+Message-ID: <20261125143842.766287812@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143822.072087159@linuxfoundation.org>
 References: <20261125143822.072087159@linuxfoundation.org>
@@ -61,6 +63,7 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.18-stable review patch.  If anyone has any objections, please let me know.
@@ -69,92 +72,61 @@ Content-Transfer-Encoding: 8bit
 
 From: Josef Bacik <josef@toxicpanda.com>
 
-commit 92fa93505576188acc22c5de1999db9a1c70c09b upstream.
+commit 4c56180167ea4d419a0578545bf62110494b563d upstream.
 
-For the K8061 board vmk80xx_read_packet() and vmk80xx_write_packet() call
-vmk80xx_do_bulk_msg(), which ignores the result of its two bulk transfers,
-and return 0. After a timeout, a stall or an unplug the instruction
-handlers therefore go on and hand the old content of usb_rx_buf to user
-space as a fresh sample (analog and digital inputs, counters, PWM and
-output read-back), and writes to the outputs are reported as done.
+adxl380_set_act_inact_threshold() puts the sensor into standby, writes the
+threshold and switches the measurement on again.  A threshold above 8191 is
+refused in between, and the sensor stays in standby: no samples and no
+events until the next write that succeeds.
 
-All callers check the result already, because the K8055 branch of the two
-functions returns that of usb_interrupt_msg(). Return the error of the
-bulk transfers as well, and don't wait for an answer to a command that
-could not be sent.
+adxl380_set_range() has the same problem and a worse one.  It rescales both
+thresholds for the new range.  If one no longer fits it returns -EINVAL
+with the sensor in standby, the new range in the chip, the old one in
+st->range and rescaled thresholds in the driver's state: from the next
+successful write on the samples are reported with the wrong scale.
 
-Fixes: 985cafccbf9b ("Staging: Comedi: vmk80xx: Add k8061 support")
+Switch the measurement on again if the threshold is refused.  In
+adxl380_set_range() see whether the thresholds fit before anything is
+changed.
+
+Fixes: df36de13677a ("iio: accel: add ADXL380 driver")
 Cc: stable <stable@kernel.org>
 Signed-off-by: Josef Bacik <josef@toxicpanda.com>
-Link: https://patch.msgid.link/20261027-llm-char-misc-comedi-v1-5-1899771ee15b@linuxfoundation.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Reviewed-by: Nuno Sá <nuno.sa@analog.com>
+Signed-off-by: Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/comedi/drivers/vmk80xx.c |   25 ++++++++++++-------------
- 1 file changed, 12 insertions(+), 13 deletions(-)
+ drivers/iio/accel/adxl380.c |   11 ++++++++++-
+ 1 file changed, 10 insertions(+), 1 deletion(-)
 
---- a/drivers/comedi/drivers/vmk80xx.c
-+++ b/drivers/comedi/drivers/vmk80xx.c
-@@ -151,7 +151,7 @@ struct vmk80xx_private {
- 	enum vmk80xx_model model;
- };
+--- a/drivers/iio/accel/adxl380.c
++++ b/drivers/iio/accel/adxl380.c
+@@ -341,8 +341,11 @@ static int adxl380_set_act_inact_thresho
+ 		return ret;
  
--static void vmk80xx_do_bulk_msg(struct comedi_device *dev)
-+static int vmk80xx_do_bulk_msg(struct comedi_device *dev)
- {
- 	struct vmk80xx_private *devpriv = dev->private;
- 	struct usb_device *usb = comedi_to_usb_dev(dev);
-@@ -161,6 +161,7 @@ static void vmk80xx_do_bulk_msg(struct c
- 	unsigned int rx_pipe;
- 	size_t tx_size;
- 	size_t rx_size;
-+	int ret;
+ 	ret = adxl380_write_act_inact_threshold(st, act, th);
+-	if (ret)
++	if (ret) {
++		/* Leave standby also if the value was refused */
++		adxl380_set_measure_en(st, true);
+ 		return ret;
++	}
  
- 	tx_addr = devpriv->ep_tx->bEndpointAddress;
- 	rx_addr = devpriv->ep_rx->bEndpointAddress;
-@@ -169,11 +170,13 @@ static void vmk80xx_do_bulk_msg(struct c
- 	tx_size = usb_endpoint_maxp(devpriv->ep_tx);
- 	rx_size = usb_endpoint_maxp(devpriv->ep_rx);
- 
--	usb_bulk_msg(usb, tx_pipe, devpriv->usb_tx_buf, tx_size, NULL,
--		     PACKET_TIMEOUT);
-+	ret = usb_bulk_msg(usb, tx_pipe, devpriv->usb_tx_buf, tx_size, NULL,
-+			   PACKET_TIMEOUT);
-+	if (ret)
-+		return ret;
- 
--	usb_bulk_msg(usb, rx_pipe, devpriv->usb_rx_buf, rx_size, NULL,
--		     PACKET_TIMEOUT);
-+	return usb_bulk_msg(usb, rx_pipe, devpriv->usb_rx_buf, rx_size, NULL,
-+			    PACKET_TIMEOUT);
+ 	return adxl380_set_measure_en(st, true);
  }
+@@ -709,6 +712,12 @@ static int adxl380_set_range(struct adxl
  
- static int vmk80xx_read_packet(struct comedi_device *dev)
-@@ -183,10 +186,8 @@ static int vmk80xx_read_packet(struct co
- 	struct usb_endpoint_descriptor *ep;
- 	unsigned int pipe;
+ 	guard(mutex)(&st->lock);
  
--	if (devpriv->model == VMK8061_MODEL) {
--		vmk80xx_do_bulk_msg(dev);
--		return 0;
--	}
-+	if (devpriv->model == VMK8061_MODEL)
-+		return vmk80xx_do_bulk_msg(dev);
- 
- 	ep = devpriv->ep_rx;
- 	pipe = usb_rcvintpipe(usb, ep->bEndpointAddress);
-@@ -204,10 +205,8 @@ static int vmk80xx_write_packet(struct c
- 
- 	devpriv->usb_tx_buf[0] = cmd;
- 
--	if (devpriv->model == VMK8061_MODEL) {
--		vmk80xx_do_bulk_msg(dev);
--		return 0;
--	}
-+	if (devpriv->model == VMK8061_MODEL)
-+		return vmk80xx_do_bulk_msg(dev);
- 
- 	ep = devpriv->ep_tx;
- 	pipe = usb_sndintpipe(usb, ep->bEndpointAddress);
++	/* The thresholds are rescaled: see that they fit before any change */
++	if (mult_frac(max(st->act_threshold, st->inact_threshold),
++		      adxl380_range_scale_factor_tbl[st->range],
++		      adxl380_range_scale_factor_tbl[range]) > ADXL380_THRESH_MAX)
++		return -EINVAL;
++
+ 	ret = adxl380_set_measure_en(st, false);
+ 	if (ret)
+ 		return ret;
 
 
