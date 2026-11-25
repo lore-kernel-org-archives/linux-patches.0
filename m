@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795619717;
-	b=FqC0yIBPY5ehsVTUbH0VjNK3OmmaKEqZaDE8xhE5VIdIkwsftUkgxBU9tBHBHBFzd5va
-	 CoN/64GIGrAqCXpdYYsnBowM2f+IYdKxt3exO9Ysap6Scb/htq1lDecBFdkA0LR5h9ZfM
-	 K8As1uVeO/w9hYjFdr9wcMsTf/N00w5Ku6/fSg3yjPwJf2wYLakKr0VjxxjUE85kja/jG
-	 SsgDrxiIfGJfM6A8Gnxicmy9GjNcL78yFx6olcWJuaPsYxnPwbNhntw4k6QrqYwfGmi0X
-	 p4swe6/utvBhkKZEyGnDR/NmIDgmMtuM4/5vFOY0VRPA4ZvZYjqoyihFTIswM1unYeQ==
+	t=1795619720;
+	b=zC5HvGzgHaUZrzTknDXa/mtnU9ExclXILffm3fAMXE6Q5SEja1ZqNKn/HsKGlc0nKVDo
+	 XQ7WIiqMip5FcZTZDcuXRI82R7FbAHeZTA/J5UZICmh/ghcq04CQAj2E6Dm/R0wZhyDcK
+	 oAs4cOeQg3LFVZWMJ8q5Ewu67Txtv1r0uZD+dm48j4vw/DKviZ82aHFBkfQTQu5XDKHGK
+	 1mx03cq09zjG/ivmrzj6wYQ5j2cUPJNseHsIf/FylHlnCOpL9Crhl0k8WopTjdBGUy+N9
+	 xYLDPN0oGzVKvBduQ1VNM8zwTHcuZWZEN84HtzMUH5UK3PYwyY1xafKVSDSEOzMkfNg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795619717;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795619720;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=GncAzsxCNo+Q0fH15SZ14hFYHTTp8j9lEbbRUzWIL58=;
-	b=Rc9olpMOpG36lgSFKp4JRil2lwltBfLvydV/rFoYpm8XWQ/pe1MrJ+591cchaus7Dhn7
-	 P7ruyWxeMApE21d24ZvMovetLbCBz3b27JfUcMJlw0eFSOgJTZ3jsRpTVKdzrqsd/5Z/S
-	 rt5WhLWyLApLrcH4jdGOsBolfc3fJ4/vmIGpULmafaXN+NrSITuFORdY+sHFtA5AqUx70
-	 l1LiPtj610Ferm0sPYGKg7+tjBgFhuR0G8ajQDZ8xah/CQodZtgtzAzEhqJoyjOizuKOw
-	 0rOc1MmtojZPknP0aeux5ZW2NqatYZqSMCldS/0AW0VBOliHvUrd0Etb0rENSZNt9Vg==
+	bh=Jv9D5XQS+dnR+xCLPt4edmI4PT0QMCIKiqM31eDOFJI=;
+	b=sIkv9tOpdfb6WWvDh5rhspFvNvpMuOoCPrrUag1+RA3Zvzfl+46HoAyUj+9ODOP+Jwxp
+	 IlFS9f984vRRDu4duxFRSG/6XasBJhfAI5UMk7DMdHsdaopxnW1gDVCr/JEtgCgclD/G8
+	 ld8cB85j8qCFmPexxYhtyueMJyPjEA9nDPlvxT4+eH3i4NteZtD1NKAtbv9Z6qY07dcsw
+	 yHA+KWcUpOb7CKVF0c60P/IWdrANCXzs73TV0YpLjBc5Cr8EuDzquM8oEV0xJzKAUVrrl
+	 Pi3ax0pV9VWBg3fSaBUkcxhl7ZUQIuIk5TaNro0g3oG7oN2CFwToA+jVg1agk2bOGow==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=EXXWkKqz;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=upQ2PKmC;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2910D606A339;
-	Wed, 25 Nov 2026 15:15:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AF5A9606A31E;
+	Wed, 25 Nov 2026 15:15:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=EXXWkKqz
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6426F1F000E6;
-	Wed, 25 Nov 2026 15:15:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=upQ2PKmC
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ADF691F000C4;
+	Wed, 25 Nov 2026 15:15:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795619716;
-	bh=GncAzsxCNo+Q0fH15SZ14hFYHTTp8j9lEbbRUzWIL58=;
+	s=korg; t=1795619720;
+	bh=Jv9D5XQS+dnR+xCLPt4edmI4PT0QMCIKiqM31eDOFJI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=EXXWkKqz85LRBnIEabbnvf8gJRlgsfvUjq3FD18zZbzI9cwaWAd5PTgRrUVp+9Ij/
-	 7P6GtOJKj6dUkfD4uKZnjFVhvqIzR4VL0vlMTawdZl9TpT5g3OHXM6xkmP/olla/eK
-	 hZ9q08wIevxg9ptnJJk0xALGTHdWlIyUGp5R4lpM=
+	b=upQ2PKmCsttlYzItFtcMRrGuZwNDBPnNrFr6QQ5alQdVzJIMgtJ5LdW9rfFpLXf6/
+	 DGBskp31OwPlug46q6t2B4NRgRcA+5xH5tHVLj5PfhA91npCS17wjWaecejqH+v3hz
+	 YScuIO6c3ETMnHJHlfp/QCijG4ffSBKHEXMlEV+A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bin Yu <byu@xidian.edu.cn>,
-	Cheng Wen <wencheng@xidian.edu.cn>,
 	YuanZhe Liu <25031212351@stu.xidian.edu.cn>,
+	Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>,
 	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
-Subject: [PATCH 7.3 0684/1005] Bluetooth: btusb: fix use-after-free in force_poll_sync
-Date: Wed, 25 Nov 2026 15:33:42 +0100
-Message-ID: <20261125143837.775667609@linuxfoundation.org>
+Subject: [PATCH 7.3 0685/1005] Bluetooth: hci_qca: fix use-after-free in ibs debugfs files
+Date: Wed, 25 Nov 2026 15:33:43 +0100
+Message-ID: <20261125143837.799170403@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143821.729802100@linuxfoundation.org>
 References: <20261125143821.729802100@linuxfoundation.org>
@@ -71,73 +70,60 @@ Content-Transfer-Encoding: 8bit
 
 From: YuanZhe Liu <25031212351@stu.xidian.edu.cn>
 
-commit 868c886f45f7c10dc888b94c6993352702a84d04 upstream.
+commit eeca795cec6d9c6c193c2c1bd0cb26cde44f9fc3 upstream.
 
-The force_poll_sync debugfs file uses the driver's struct btusb_data as
-its private data. The file is created under hdev->debugfs and is removed
-only when the HCI device is released, while btusb_disconnect() frees
-btusb_data unconditionally. The HCI device can outlive the driver data,
-for example when an HCI socket still references it, so reading or
-writing the already opened file then dereferences freed memory:
+qca_debugfs_init() creates an "ibs" directory under hdev->debugfs and
+stores pointers to fields of struct qca_data in the debugfs files.
+qca_close() frees qca_data without removing that directory, while
+hdev->debugfs is only removed when the HCI device is released. The HCI
+device can outlive the driver data, for example when an HCI socket still
+references it, so reading or writing one of the ibs files then
+dereferences freed memory.
 
-  BUG: KASAN: slab-use-after-free in force_poll_sync_read+0x129/0x140
-  Read of size 1 at addr ffff88800cfb7038
-  ...
-  Freed by task ...:
-   kfree
-   btusb_disconnect
-
-Remove the debugfs file before the private data is freed.
+Store the directory dentry in struct qca_data and remove the directory
+with debugfs_remove_recursive() before qca_data is freed.
 debugfs_remove() waits for callers that are already inside the file
 operations, and any later access fails with -EIO instead of reaching the
-driver, so the force_poll_sync file can no longer dereference btusb_data
-after it is gone.
+debugfs helpers. This covers the two writable files as well.
 
-Fixes: 800fe5ec302e ("Bluetooth: btusb: Add support for queuing during polling interval")
+Link: https://netdev-ai.bots.linux.dev/sashiko/#/patchset/20261102113654.8724-1-25031212351%40stu.xidian.edu.cn
+Fixes: 0ff252c1976d ("Bluetooth: hciuart: Add support QCA chipset for UART")
 Cc: stable@vger.kernel.org
-Co-developed-by: Bin Yu <byu@xidian.edu.cn>
-Signed-off-by: Bin Yu <byu@xidian.edu.cn>
-Co-developed-by: Cheng Wen <wencheng@xidian.edu.cn>
-Signed-off-by: Cheng Wen <wencheng@xidian.edu.cn>
 Signed-off-by: YuanZhe Liu <25031212351@stu.xidian.edu.cn>
+Reviewed-by: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
 Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/bluetooth/btusb_main.c |   10 ++++++++--
- 1 file changed, 8 insertions(+), 2 deletions(-)
+ drivers/bluetooth/hci_qca.c |    5 +++++
+ 1 file changed, 5 insertions(+)
 
---- a/drivers/bluetooth/btusb_main.c
-+++ b/drivers/bluetooth/btusb_main.c
-@@ -1063,6 +1063,8 @@ struct btusb_data {
- 	int (*disconnect)(struct hci_dev *hdev);
- 
- 	int oob_wake_irq;   /* irq for out-of-band wake-on-bt */
-+
-+	struct dentry *force_poll_sync_dentry;
- };
- 
- static void btusb_reset(struct hci_dev *hdev)
-@@ -4557,8 +4559,9 @@ static int btusb_probe(struct usb_interf
- 
- 	usb_set_intfdata(intf, data);
- 
--	debugfs_create_file("force_poll_sync", 0644, hdev->debugfs, data,
--			    &force_poll_sync_fops);
-+	data->force_poll_sync_dentry =
-+		debugfs_create_file("force_poll_sync", 0644, hdev->debugfs,
-+				    data, &force_poll_sync_fops);
- 
- 	return 0;
- 
-@@ -4599,6 +4602,9 @@ static void btusb_disconnect(struct usb_
- 	if (!data)
+--- a/drivers/bluetooth/hci_qca.c
++++ b/drivers/bluetooth/hci_qca.c
+@@ -161,6 +161,7 @@ struct qca_data {
+ 	struct delayed_work ctrl_memdump_timeout;
+ 	struct qca_memdump_info *qca_memdump;
+ 	unsigned long flags;
++	struct dentry *debugfs_ibs_dir;
+ 	struct completion drop_ev_comp;
+ 	wait_queue_head_t suspend_wait_q;
+ 	enum qca_memdump_states memdump_state;
+@@ -665,6 +666,7 @@ static void qca_debugfs_init(struct hci_
  		return;
  
-+	debugfs_remove(data->force_poll_sync_dentry);
-+	data->force_poll_sync_dentry = NULL;
-+
- 	hdev = data->hdev;
- 	usb_set_intfdata(data->intf, NULL);
+ 	ibs_dir = debugfs_create_dir("ibs", hdev->debugfs);
++	qca->debugfs_ibs_dir = ibs_dir;
  
+ 	/* read only */
+ 	mode = 0444;
+@@ -744,6 +746,9 @@ static int qca_close(struct hci_uart *hu
+ 
+ 	hu->priv = NULL;
+ 
++	debugfs_remove_recursive(qca->debugfs_ibs_dir);
++	qca->debugfs_ibs_dir = NULL;
++
+ 	kfree(qca);
+ 
+ 	return 0;
 
 
