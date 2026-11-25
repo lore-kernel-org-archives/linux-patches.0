@@ -1,59 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795622964;
-	b=zPk2SCdbFAiL03zXsjVRKweIw0nKwA8/rQ0mKvaY7RYHLlIH/w7E1AKdaTvo+MFvmX9z
-	 jvATxsgIVDjXhmyGorjgE9Rt/FvQpalkClufQXF9BaJ/2hCnHxceuNQ0qqPCcpuS2YTTK
-	 kxKWlDRJTnCDXhAkU/qsAndejc8K1e6Xi/yMS6ZzuKpJIaCY5fC4L6db8JeIiVRJ8oJus
-	 uw3jNHURiQc4ia0EP1EnRwSFXszNRkBTRKxb+uxI1wzfdpc5NbG+SyoCsAzLcSZSO9AYD
-	 xXajakN1VXqGfLxH/RjoXGNI0hs7Mw/rNGnh/3rmEPW/CAhGL7dwdmu2lP0oVL4Binw==
+	t=1795622968;
+	b=XtvgOqCnYjCD4fymjgYx3bBlPj7Ab2IHFMP4qj5uMFdplEWx1VTM9y9IQgLUBp4WOaCe
+	 Yy8Kf1cJgy9Fyx351x5ZkHqDsPXP0I5SuGS/49NKdA6OOZ1bA86wcULFLytWZf1nvdbz/
+	 iN17Pcm8DIxXWP6Tww5SuDNGge2cS/VlbQ91+wfj3emnO/8bPt+9XZWFsc+evYxcFcIKi
+	 zvr4hmMeJ52Pfi1o2JeMyJDwjnGr+HVphiFvHLrQ4uivfE49yko5xMuZNIuNPE9h94z9M
+	 wcXK30bf8DulE2GopkxHf/hB8JRnHINFYeuFFfegnX+kQqnvHCxHbpCHLwHL5nEF6ag==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795622964;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795622968;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=tO6Sb8MzESzhRDTH+PbmpCeofEVfsGmsNrAzLkCrdCE=;
-	b=ipqqBQ8vQRlQMQ+Sq3ZyFbBcZxAtrxXJcx4Fso1eiwjqzLRylBHfGuLph8xtHhvAeq7S
-	 DsXOtjop1CbEz9XhkC6sw+fbxnGvqEa8C/qnK4M2e/p/Y/uzgG7DgONEJVjmJVmRSGL4C
-	 YOaRJhNu10fmR+wkwnbk4hdJydsrTSbqV/fKalyd11DJJNzz11J/wSUVgwOTOAzctWhFZ
-	 +YQmbf5Uob9O45KOjt3ZjRaHExU7sHPUjEDHsl7bICTK7aw5dFVvs/Pmeg0gpb/sZICji
-	 RXrCGUNrVS8EIBU13kfj3bqZdZzv7sR/IbmTaw9bQOy2iKuflv0u8dv8REvfvmrDg4g==
+	bh=Xf1umgD6fxo5QAXLrX3tiVyqUteV1f6SeK7q4Adr3p0=;
+	b=PI5yqazv39/+slQdAISPzo4vhoUkb7OKSGfg012i9LUMSQtM9V0xN+S6hm2m81doo94m
+	 w0Q6tzmwAhmgc47k3eE8jE/iY/iLsWiZz1kpZp9pvR468O5EMx2KkukVYHCPDKKsdteic
+	 HJb60FVGsD67ZJ9+GBhVdQ5EsoZqtWdixIx5Z+H/d0Dtui38UVawM9PDqg3PArVpqyTiD
+	 1kgTAalZzGgaGJhYRZgepe5LdaTWv4WRcRtgvgM39qrrO6i8zssyV9nngAh5V8TuuXAZB
+	 Ib9pCXvR3cFNaxLxASGe95iBP9P3JsJGiCYS07n5nopdW4Y79sXH9FfhI1/XB+wOAng==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=xJjW06Gk;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=kwVvTRPA;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AFD2D606A321;
-	Wed, 25 Nov 2026 16:09:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5268F606A331;
+	Wed, 25 Nov 2026 16:09:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=xJjW06Gk
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DB9361F000C6;
-	Wed, 25 Nov 2026 16:09:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=kwVvTRPA
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3CB511F000EB;
+	Wed, 25 Nov 2026 16:09:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795622964;
-	bh=tO6Sb8MzESzhRDTH+PbmpCeofEVfsGmsNrAzLkCrdCE=;
+	s=korg; t=1795622967;
+	bh=Xf1umgD6fxo5QAXLrX3tiVyqUteV1f6SeK7q4Adr3p0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=xJjW06GkeKWeY876zgko4ZsfX93dagU665cbgrhaBMEAEGLEJxPxewV3qYNJTUrGK
-	 XBR/mZQRcn6rLZ7VvwIVvorZZ4PiYY7q26LL7cbgGpyHL7d61ctTkKrHetG/louLLo
-	 VKZ84oAVclerKgVahfTOHIR4yzk6T/YMEFVXHKAQ=
+	b=kwVvTRPAc64HjM7kQ1mYF59yl0ucvZz5vuF79JDpfAIDw15cxH18TUtzG1/LgaR3E
+	 cIwxQnX7d/lgD2AFYjEvsAvrH+OgRw6mJXxAUEcqShJYZ8i0s/doLjjffWVj7l/Kr3
+	 g/GVY1zC08mXozsnIWrBLScHLIM/ZKu4NApaX8Ks=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ilya Maximets <i.maximets@ovn.org>,
-	Sasha Levin <sashal@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>,
-	"David S. Miller" <davem@davemloft.net>,
+	Hyunwoo Kim <imv4bel@gmail.com>,
 	Eric Dumazet <edumazet@kernel.org>,
-	Paolo Abeni <pabeni@redhat.com>,
-	Simon Horman <horms@kernel.org>,
-	Sridhar Samudrala <sridhar.samudrala@intel.com>,
-	Kees Cook <kees@kernel.org>,
-	Jean-Paul Sergent <jpsergent@gmail.com>
-Subject: [PATCH 6.18 689/990] net: dst_metadata: fix memcmp overread in skb_metadata_dst_cmp
-Date: Wed, 25 Nov 2026 15:34:16 +0100
-Message-ID: <20261125143838.227807237@linuxfoundation.org>
+	Kuniyuki Iwashima <kuniyu@google.com>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 6.18 707/990] tcp: do not coalesce segments after FIN
+Date: Wed, 25 Nov 2026 15:34:34 +0100
+Message-ID: <20261125143838.643414868@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143822.072087159@linuxfoundation.org>
 References: <20261125143822.072087159@linuxfoundation.org>
@@ -75,59 +69,129 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jean-Paul Sergent <jpsergent@gmail.com>
+From: Hyunwoo Kim <imv4bel@gmail.com>
 
-commit 74a7db839308dd7d1c3f72dd1e3299784df3affb upstream.
+commit 1c46780dec48893b8c25fd5e33a3127e8dc39dd4 upstream.
 
-Commit 3fcece12bc1b6 ("net: store port/representator id in
-metadata_dst") dropped the options_len equality check when converting
-skb_metadata_dst_cmp() to a type switch, so the memcmp length is taken
-from skb a alone.  When skb b carries fewer options than a, the
-comparison reads past b's allocation.
+A FIN consumes a sequence number. If another FIN segment is coalesced
+into an skb that already carries FIN, end_seq advances to account for
+the additional FIN, but tcp_flags still contains only one FIN bit.
 
-Hit in practice with Cilium geneve GRO aggregation, comparing an skb
-carrying 12 bytes of tunnel options against one carrying none:
+When the preceding gap is filled and tcp_ofo_queue() processes the
+coalesced skb, rcv_nxt advances to the skb's end_seq. When the receive
+path consumes all data in the skb, copied_seq advances by the data
+length and one sequence number for FIN. If three or more FIN segments
+have been coalesced into one skb, tcp_inq() can still return a positive
+value after the receive queue becomes empty and the SOCK_DONE adjustment
+is applied.
 
-  memcmp: detected buffer overflow: 108 byte read of buffer size 96
-  WARNING: CPU: 0 PID: 15 at lib/string_helpers.c:1036 __fortify_report
-   __fortify_panic+0x9/0x10
-   skb_metadata_dst_cmp+0x11b/0x120
-   dev_gro_receive+0x303/0x620
-   gro_cell_poll+0x67/0xa0
+TCP_ZEROCOPY_RECEIVE is another consumer affected by this state.
+tcp_zerocopy_receive() takes its length from tcp_inq() and follows
+skb->next without checking for the end of the receive queue.
 
-Restore the check: unequal options_len means different metadata and no
-aggregation; the memcmp only runs when both sides carry the same
-options length.
+Software kTLS receive is one consumer affected by this state. When
+strp->copy_mode is false, tls_strp_msg_consume() calls the TCP helper
+tcp_read_done() to consume the current TLS record. In the reproducer,
+tcp_read_done() consumed the record data and one FIN before freeing the
+receive skb.
 
-Fixes: 3fcece12bc1b6 ("net: store port/representator id in metadata_dst")
+When kTLS looked for the next record, tcp_inq() reported at least
+TLS_HEADER_SIZE bytes even though the receive queue was empty.
+tcp_recv_skb() returned NULL, so tls_strp_load_anchor_with_queue() hit
+WARN_ON_ONCE() and returned without updating the anchor.
+
+Since tcp_inq() had reported at least TLS_HEADER_SIZE,
+tls_strp_read_sock() proceeded to tls_strp_check_queue_ok().
+skb_shinfo(strp->anchor)->frag_list still pointed to the freed receive
+skb. tls_strp_check_queue_ok() then read TCP_SKB_CB(first)->seq through
+the stale pointer, causing a use-after-free.
+
+The reproducer followed this call path:
+
+  tls_rx_rec_done()
+    tls_strp_msg_consume()
+      tcp_read_done()                       // frees the receive skb
+    tls_strp_check_rcv()
+      tls_strp_read_sock()
+        tls_strp_load_anchor_with_queue()   // returns after WARN_ON_ONCE()
+          tcp_recv_skb() == NULL
+        tls_strp_check_queue_ok()
+          TCP_SKB_CB(first)->seq            // reads the freed receive skb
+
+KASAN reported:
+
+  BUG: KASAN: slab-use-after-free in tls_strp_check_queue_ok.isra.0+0x5f/0x100
+  Read of size 4 at addr ffff888103169ca8 by task ktls-server/71
+  ...
+  Call Trace:
+   <TASK>
+   ...
+   tls_strp_check_queue_ok.isra.0+0x5f/0x100
+   tls_strp_check_rcv+0x2a9/0x400
+   ...
+   tls_sw_recvmsg+0x3ce/0xa10
+   ...
+   sock_recvmsg+0xea/0x100
+   __sys_recvfrom+0x142/0x1f0
+   ...
+   __x64_sys_recvfrom+0x76/0x90
+   do_syscall_64+0xdd/0x4a0
+   entry_SYSCALL_64_after_hwframe+0x77/0x7f
+   ...
+   </TASK>
+  ...
+  Freed by task 71:
+   ...
+   napi_skb_cache_put+0x24/0xf0
+   skb_attempt_defer_free+0x183/0x3b0
+   tcp_read_done+0x2d4/0x340
+   tls_strp_msg_consume+0x45/0x80
+   tls_sw_recvmsg+0x3c4/0xa10
+   ...
+
+In tcp_try_coalesce(), skip coalescing when the destination skb already
+carries FIN. tcp_add_backlog() calls skb_try_coalesce() directly instead
+of using this helper, so add the same check there. Since both paths check
+only the destination skb, a final segment carrying data and FIN can still
+be coalesced into an skb without FIN when the other coalescing checks pass.
+
+Fixes: e93a0435f809 ("tcp: allow segment with FIN in tcp_try_coalesce()")
+Fixes: 4f693b55c3d2 ("tcp: implement coalescing on backlog queue")
 Cc: stable@vger.kernel.org
-Cc: Ilya Maximets <i.maximets@ovn.org>
-Cc: Sasha Levin <sashal@kernel.org>
-Cc: Jakub Kicinski <kuba@kernel.org>
-Cc: "David S. Miller" <davem@davemloft.net>
-Cc: Eric Dumazet <edumazet@kernel.org>
-Cc: Paolo Abeni <pabeni@redhat.com>
-Cc: Simon Horman <horms@kernel.org>
-Cc: Sridhar Samudrala <sridhar.samudrala@intel.com>
-Cc: Kees Cook <kees@kernel.org>
-Signed-off-by: Jean-Paul Sergent <jpsergent@gmail.com>
-Link: https://patch.msgid.link/20261109082410.206140-1-jpsergent@gmail.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Signed-off-by: Hyunwoo Kim <imv4bel@gmail.com>
+Reviewed-by: Eric Dumazet <edumazet@kernel.org>
+Reviewed-by: Kuniyuki Iwashima <kuniyu@google.com>
+Link: https://patch.msgid.link/au3HMfqNW3_DRMqS@v4bel
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- include/net/dst_metadata.h |    2 ++
- 1 file changed, 2 insertions(+)
+ net/ipv4/tcp_input.c |    4 ++++
+ net/ipv4/tcp_ipv4.c  |    2 ++
+ 2 files changed, 6 insertions(+)
 
---- a/include/net/dst_metadata.h
-+++ b/include/net/dst_metadata.h
-@@ -116,6 +116,8 @@ static inline int skb_metadata_dst_cmp(c
- 		return memcmp(&a->u.port_info, &b->u.port_info,
- 			      sizeof(a->u.port_info));
- 	case METADATA_IP_TUNNEL:
-+		if (a->u.tun_info.options_len != b->u.tun_info.options_len)
-+			return 1;
- 		return memcmp(&a->u.tun_info, &b->u.tun_info,
- 			      sizeof(a->u.tun_info) +
- 					 a->u.tun_info.options_len);
+--- a/net/ipv4/tcp_input.c
++++ b/net/ipv4/tcp_input.c
+@@ -5063,6 +5063,10 @@ static bool tcp_try_coalesce(struct sock
+ 	if (!tcp_skb_can_collapse_rx(to, from))
+ 		return false;
+ 
++	/* Nothing follows a FIN. */
++	if (unlikely(TCP_SKB_CB(to)->tcp_flags & TCPHDR_FIN))
++		return false;
++
+ 	if (!skb_try_coalesce(to, from, fragstolen, &delta))
+ 		return false;
+ 
+--- a/net/ipv4/tcp_ipv4.c
++++ b/net/ipv4/tcp_ipv4.c
+@@ -2084,6 +2084,8 @@ bool tcp_add_backlog(struct sock *sk, st
+ 	    ((TCP_SKB_CB(tail)->tcp_flags ^
+ 	      TCP_SKB_CB(skb)->tcp_flags) &
+ 	     (TCPHDR_ECE | TCPHDR_CWR | TCPHDR_AE)) ||
++	    /* Nothing follows a FIN, see tcp_try_coalesce() */
++	    (TCP_SKB_CB(tail)->tcp_flags & TCPHDR_FIN) ||
+ 	    !tcp_skb_can_collapse_rx(tail, skb) ||
+ 	    thtail->doff != th->doff ||
+ 	    memcmp(thtail + 1, th + 1, hdrlen - sizeof(*th)) ||
 
 
