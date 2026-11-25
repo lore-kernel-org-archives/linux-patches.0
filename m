@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795622118;
-	b=fzgAaaeGwGR9Mq4z+ZrLIObXa4msZ3+z/bzUdaTUJbFzbSHXRsV3VDmnNahbze6suqLA
-	 efllTihzs/OTcJkIsfiAKCchlaeetXBs6ce+KmJS1z5c2vhlTCxZmfl+RLTBA4Gi0Qttg
-	 xnL/nBzJ3IHozxUGZ3YOsmKvQuk1V6EGnHRXFC7nbCO/go9iJano7jLQwpgVIluKNYaPr
-	 F4uiHmklpxSoauWoHpR0/mU4qwtk0vEX9b+KSZjv3l3z0EvXVJFPCjc7v7EbnASwVgwPy
-	 fbmPurcjwwH6Js8rF+ir2Nd0KTeOmRfEwRXIrvH0A6j+iuhwkegdPBjIvmlQV/4h0CA==
+	t=1795622121;
+	b=jTO4QDiQfRczRxlaU7TOv6SRjmP4UVzK/Dh1rxt9P79CdfB9P3r/4W3MR2vIVbb5pU8E
+	 lDd9dmFvNE7yHp9iVSL/L2gWDdUT/bEwQ7ePA3wux2cjugV0p6JCWisW9BFjlKgk8VsxB
+	 bQ63JOFhmhyyFPsqi3Adj8fjBSYdwUVz40hcM9pBFB/g9Nx7FKo+sffr2+/5dEu51kBqT
+	 zlk5BFWc+MLcSpTHyCdCRlfs+nOzlqNm0VNJmagDITDrUU8Jdcl70X3BeZeNNvDQQ6t7s
+	 yDHnpAKhlD3zPRhpK7B7swagmoeZdVzijw7u9JSYYTgHM/be6kNSHLp+gPUxtdWQCvA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795622118;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795622121;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=Qm/LSxTAW9PhbuTkJUZw4G2elrYqPjrn56U00hlnazo=;
-	b=JPi4lawbBTzvcJYvB3EeBlbqk8kxvaPtM6We8/49DbOeQQCSu3iReHayxn9YiJ7fQnny
-	 7m3pD0PRunzj6allxwUaz9+34Rq+tdoaEkkYVeuVVRMMFSqTGCqTP5ng6le+Him1tlz8q
-	 YVAi4VM+pA7SOk9lhib9sE6Wxyvpl3VOLQ9lzR3/yAJip+6c6Kh+Kc8zZlscjWbbFRmOp
-	 dYlav4PuDlNryBGKFedBr6ejhaS14wdlGkEdr9WILPart24IPhJQ3A36P6TJOO13vCduW
-	 rZkSw6jDuY5R966EcIaJDGUMUqgF8HlnVGJbObPukWETioHcdl2MwmQjcNIn0RrA7XQ==
+	bh=9pnzx2zYswCj5jNb+6hgyAUn0JqYBdTrXAZthsQeEU0=;
+	b=lKeNyGBys682nJdywslxEjI1zg06FCY0lJaCpVopKRYMfxWLb53v8ucm6xHIGOphHNfy
+	 rt7t10UzrS5gs1+JxudWEbOOd+GwB+04NVmEmTWtRlWec7a6WCvv5RLVkf/7zb58PZxSq
+	 VwDm3LNYN9Gb1uw/cx/5j6Pvop48VwSe8LGd/HOthH7mvRAXy5DzMJ0hboIjOQQdtpc+9
+	 UeMqXMMXqN4oDTD/y3ODur+qzloGhQkXnio4Oci32nFBQ4IVRyTB6b7V5aC2GlZoLfdI5
+	 JTW1z+vssx3mylM4ssuWaUem874bZvAkNGIYd6Q+J7m/dxFqYkUejjR7+Y0+Nc5OzpA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=i1s2z0DP;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=yVaHnhMl;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CF6A9606A32A;
-	Wed, 25 Nov 2026 15:55:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DC19D606A321;
+	Wed, 25 Nov 2026 15:55:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=i1s2z0DP
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B51981F000E1;
-	Wed, 25 Nov 2026 15:55:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=yVaHnhMl
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1A4FE1F000C4;
+	Wed, 25 Nov 2026 15:55:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795622118;
-	bh=Qm/LSxTAW9PhbuTkJUZw4G2elrYqPjrn56U00hlnazo=;
+	s=korg; t=1795622121;
+	bh=9pnzx2zYswCj5jNb+6hgyAUn0JqYBdTrXAZthsQeEU0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=i1s2z0DPMuKnmU24E92Nzd/EDPEdfCc4XFYr+xSFuq8rXFjUh2pFSRSUSRXO2xb4V
-	 IqWP696RNFPrRjs1XYPBDbxbNoadKGpP2hK9pSJXupNtp2awej3mlj9jHfkEAz5SGt
-	 7V699rApDn9ih0EkXI/db0yb47ieHVj8CG9HJYes=
+	b=yVaHnhMlYiqG9l/sTNGzN6rUszrjUdVngYQAdpkY+lV485CLzvqMm2+nT1boLBM0b
+	 OKi1aAN9xRrTsENMwQrMb3RaGN2PBtAJEx9raouysrpGQblbdFijtHAevVYQMnXTnq
+	 ugZTXoYQ3m4DZtAIvsH5c7M/hL9802buVcK1wfMI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Alexander Duyck <alexanderduyck@fb.com>,
+	Willem de Bruijn <willemb@google.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 428/990] fbnic: Wait for the outbound flush to complete on mailbox teardown
-Date: Wed, 25 Nov 2026 15:29:55 +0100
-Message-ID: <20261125143832.120694694@linuxfoundation.org>
+Subject: [PATCH 6.18 429/990] net: Segment CHECKSUM_UNNECESSARY GSO skbs other than fraglist
+Date: Wed, 25 Nov 2026 15:29:56 +0100
+Message-ID: <20261125143832.143795875@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143822.072087159@linuxfoundation.org>
 References: <20261125143822.072087159@linuxfoundation.org>
@@ -70,91 +71,73 @@ Content-Transfer-Encoding: 8bit
 
 From: Alexander Duyck <alexanderduyck@fb.com>
 
-[ Upstream commit c5820a8cf59b03d59f2f5f9b3754ad27a6014a41 ]
+[ Upstream commit fdca4b030c78fa2773a94fda3a6dc3ce5558a727 ]
 
-The fbnic_mbx_reset_desc_ring function drops bus mastering and arms the
-outbound flush for its ring: the write flush for the Rx ring and the
-read flush for the Tx ring. Nothing waits for that flush to finish.
-The fbnic_mbx_clean_desc_ring function goes straight on to unmap and
-free the ring's buffers, so a device read of a Tx buffer, or a write to
-an Rx buffer, can still be outstanding after the buffer is gone. With
-an IOMMU it can also target an IOVA that has been unmapped or reused.
+The netif_needs_gso function lets a GSO skb reach the device unsegmented
+when it is CHECKSUM_PARTIAL or CHECKSUM_UNNECESSARY. The second case was
+added for FCoE, whose transmit path marked CRC offload that way at the
+time. Commit 253aab0597d9 ("fcoe: Use CHECKSUM_PARTIAL to indicate CRC
+offload") moved FCoE back to CHECKSUM_PARTIAL but left the exemption in
+place, with nothing left that needed it. Fraglist GSO, added later, is
+its only user today, as its segments already carry valid checksums.
 
-The PUL link reset status register reports when each direction's flush
-has drained. Poll the done bit for the ring's direction after arming
-the flush and before freeing its buffers. The flush only has to retire
-what the outbound path already holds; the 1ms cap keeps a wedged device
-from spinning.
+A TCP GSO skb can still arrive as CHECKSUM_UNNECESSARY without being
+fraglist. Hardware LRO builds its aggregates that way, for example mlx5
+sets SKB_GSO_TCPV4 or SKB_GSO_TCPV6 and CHECKSUM_UNNECESSARY, without
+SKB_GSO_DODGY. IP forwarding and bridging turn LRO off, but a tc mirred
+redirect does not, so such an skb can be sent out another device. It
+has no csum_start and its TCP checksum field is whatever the aggregate
+left there. Drivers that only set up TSO for CHECKSUM_PARTIAL, such as
+fbnic, i40e and ice, then send the whole skb as one oversized frame
+with a bad checksum.
 
-Every caller of the fbnic_mbx_clean function runs with the datapath
-already down, which matters because the read flush covers all
-outstanding reads, not just the mailbox ones. A device that has lost
-its link reads back as all ones, so the done bit appears set and the
-poll ends on the first pass.
+Have the validate_xmit_skb function mark any CHECKSUM_UNNECESSARY GSO
+skb other than fraglist as CHECKSUM_NONE, which means the same on
+transmit but is not exempt in the netif_needs_gso function. The
+__skb_gso_segment function then unshares the header and the TCP GSO
+code sets the skb up as CHECKSUM_PARTIAL, so a device with TSO segments
+it in hardware. Without TSO, and for UDP, it is segmented in software.
+The callers of the netif_needs_gso function that decide on segmentation
+for themselves, such as tap, are left as they are.
 
-Fixes: 3b12f00ddd08 ("fbnic: Gate AXI read/write enabling on FW mailbox")
+Found by code inspection. In QEMU with an emulated fbnic, TCPv4 and
+TCPv6 GSO skbs built this way each went out as a single 11 KB frame
+with a bad TCP checksum. With this change they are segmented into
+MSS-sized frames with valid checksums.
+
+Fixes: 253aab0597d9 ("fcoe: Use CHECKSUM_PARTIAL to indicate CRC offload")
 Signed-off-by: Alexander Duyck <alexanderduyck@fb.com>
-Link: https://patch.msgid.link/179381517319.9644.1165591016149104577.stgit@ahduyck-xeon-server.home.arpa
+Reviewed-by: Willem de Bruijn <willemb@google.com>
+Link: https://patch.msgid.link/179372577673.49909.11253315483074546903.stgit@ahduyck-xeon-server.home.arpa
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/meta/fbnic/fbnic_csr.h |  4 ++++
- drivers/net/ethernet/meta/fbnic/fbnic_fw.c  | 16 ++++++++++++++++
- 2 files changed, 20 insertions(+)
+ net/core/dev.c | 12 ++++++++++++
+ 1 file changed, 12 insertions(+)
 
-diff --git a/drivers/net/ethernet/meta/fbnic/fbnic_csr.h b/drivers/net/ethernet/meta/fbnic/fbnic_csr.h
-index 9ef4dd9609edf..e93f9ff6f4d14 100644
---- a/drivers/net/ethernet/meta/fbnic/fbnic_csr.h
-+++ b/drivers/net/ethernet/meta/fbnic/fbnic_csr.h
-@@ -960,6 +960,10 @@ enum {
+diff --git a/net/core/dev.c b/net/core/dev.c
+index e4216b78a1a49..91da33c29aa18 100644
+--- a/net/core/dev.c
++++ b/net/core/dev.c
+@@ -4045,6 +4045,18 @@ static struct sk_buff *validate_xmit_skb(struct sk_buff *skb, struct net_device
+ 	if (unlikely(!skb))
+ 		goto out_null;
  
- /* PUL User Registers */
- #define FBNIC_CSR_START_PUL_USER	0x31000	/* CSR section delimiter */
-+#define FBNIC_PUL_USER_IP_LINK_RST_STATUS \
-+					0x31030		/* 0xc40c0 */
-+#define FBNIC_PUL_USER_IP_LINK_RST_STATUS_AW_FLUSH_DONE	CSR_BIT(7)
-+#define FBNIC_PUL_USER_IP_LINK_RST_STATUS_AR_FLUSH_DONE	CSR_BIT(8)
- #define FBNIC_PUL_OB_TLP_HDR_AW_CFG	0x3103d		/* 0xc40f4 */
- #define FBNIC_PUL_OB_TLP_HDR_AW_CFG_FLUSH_MODE	CSR_BIT(20)
- #define FBNIC_PUL_OB_TLP_HDR_AW_CFG_FLUSH	CSR_BIT(19)
-diff --git a/drivers/net/ethernet/meta/fbnic/fbnic_fw.c b/drivers/net/ethernet/meta/fbnic/fbnic_fw.c
-index 36607840de1ee..e642bedd2ffa0 100644
---- a/drivers/net/ethernet/meta/fbnic/fbnic_fw.c
-+++ b/drivers/net/ethernet/meta/fbnic/fbnic_fw.c
-@@ -7,6 +7,7 @@
- #include <linux/dev_printk.h>
- #include <linux/dma-mapping.h>
- #include <linux/gfp.h>
-+#include <linux/iopoll.h>
- #include <linux/types.h>
- 
- #include "fbnic.h"
-@@ -176,10 +177,25 @@ static void fbnic_mbx_unmap_and_free_msg(struct fbnic_dev *fbd, int mbx_idx,
- 
- static void fbnic_mbx_clean_desc_ring(struct fbnic_dev *fbd, int mbx_idx)
- {
-+	u32 flush_done, val;
- 	int i;
- 
- 	fbnic_mbx_reset_desc_ring(fbd, mbx_idx);
- 
-+	/* Arming the flush only starts it. Wait for the outbound path to
-+	 * retire the requests it still holds before the buffers they may
-+	 * target are unmapped and freed. A lost link reads back as all ones,
-+	 * which ends the poll on the first pass.
++	/* Only fraglist GSO, whose segments already carry valid checksums,
++	 * can be handed to a device as CHECKSUM_UNNECESSARY. Any other GSO
++	 * skb has no csum_start for the device to segment from. NONE means
++	 * the same on transmit, but makes netif_needs_gso() send it to the
++	 * GSO code, which turns TCP into CHECKSUM_PARTIAL for TSO and
++	 * segments anything the device cannot offload in software.
 +	 */
-+	flush_done = mbx_idx == FBNIC_IPC_MBX_RX_IDX ?
-+		     FBNIC_PUL_USER_IP_LINK_RST_STATUS_AW_FLUSH_DONE :
-+		     FBNIC_PUL_USER_IP_LINK_RST_STATUS_AR_FLUSH_DONE;
-+	if (read_poll_timeout_atomic(fbnic_rd32, val, val & flush_done, 2,
-+				     1000, false, fbd,
-+				     FBNIC_PUL_USER_IP_LINK_RST_STATUS))
-+		dev_warn(fbd->dev, "Outbound flush did not complete: %08x\n",
-+			 val);
++	if (unlikely(skb->ip_summed == CHECKSUM_UNNECESSARY &&
++		     skb_is_gso(skb) &&
++		     !(skb_shinfo(skb)->gso_type & SKB_GSO_FRAGLIST)))
++		skb->ip_summed = CHECKSUM_NONE;
 +
- 	for (i = FBNIC_IPC_MBX_DESC_LEN; i--;)
- 		fbnic_mbx_unmap_and_free_msg(fbd, mbx_idx, i);
- }
+ 	features = netif_skb_features(skb);
+ 	skb = validate_xmit_vlan(skb, features);
+ 	if (unlikely(!skb))
 -- 
 2.53.0
 
