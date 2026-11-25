@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795626321;
-	b=dzVFuQBatg0sjNj+hTn+CaODarXtuEMqQZLO5RAmfYXeppY7rh31nvN5o/H9jcgOKjAU
-	 M1CQIqQcGnGQDSpU5Kck6sfGHtdXhKYGwIPV4Ns49pWTnO+Mv/moWYOMyWV3EghXkhuuL
-	 WTIqd8eZKe+63qAa42hKryTtOBRnC3mfbR4gthTDhock2056MilNCT2JqWoLGf6RN85lb
-	 iCNumY5hhG79zQQYKz40lQQ8MzG6frjsUTaC6YNjKl9LyretXwO5A6Ifm5EY1Zt2TasTA
-	 OtJJfmscMS7n6zqDRhyjt1DWZ4Tzde2PmuWlCf8Zzh+t7Itvpl9Xs9mv+c0EdfHnqEQ==
+	t=1795626324;
+	b=4yNJeSl7IpOj4M4AJteVVnxsvMypdXY02ip4pilUfss6oSWOwMUAjGwtcfsqhKkgdIxe
+	 tfkMb8vJgZreY6W5wwIHR1JiiSndzOnT5ekaKlDP8Knpq8efUSoFwkKr81OJTKsF5Y2U+
+	 sZZl5/TVKZ9SZode4KqGEs6dbOFt2c7DSfpsTIkcAKt1e0xjDzPjvYtz3bkK9jwShzIcQ
+	 LKNwm49gSnGPNw/BrxVBAOkCpD/uqKkzqYxMAwZBn63mclw7BUTEKR4GI+//P7bX7S9pP
+	 38u7/CXB5qB9j8uQsiVaEOkwEXb9OtbgADvJLyiJ4oZCPkmt+VwPvvP6gZ2/nEcwwCw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795626321;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795626324;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=QYwZ6Da6tEtKEnJbbIPlDKoQy8OmPwBdjWPkbW2jcic=;
-	b=25hkLcaOVIS0be7exDMyDOqRZfwtRfc/tpODUtf2jcB9KFgtk1KqsFsWp0dCi8FU42zB
-	 LJP+EyflfPI6GaGGquqnN1UH0yLncMmF9wh4F616JJtXYt3vIO1Iui/pSAXJfTaF9La7B
-	 PnN46Zeuy4+vyWobShw6O+4l/tc7TeRmGaEWUlOHg8a44cdppQ49Ox9Ak4FdC3EIOhzNJ
-	 scm61elY0s2NnKDfoi/159NDur6CTRdWP8CUrqSulUMy+EzfpX+tmuSZTuJ5HcgG0RYfa
-	 lm4oDdqUXiCBo4muIrLEdDENfkrBEgosLALsTNWfUIPQkxSBRwclMDr2qYXYV6Z8HAQ==
+	bh=vtbMddSTF/q+6aN1EHKkcmKbyvPzahKU4CLXyjQ7ae8=;
+	b=Krufo1U6TV+xQorq0h+xs8sVwaLLZCiesog8Fey3HRUcOfIi3T+RptIMKygbsaJuow1K
+	 K5k/bebavG0J0HszEauF3QYJ3bsLC5cFBY+gr1NRLqLOpJkZH5GrH3KBjdG8zzYszAtqz
+	 LGBuN2Oozl0+jFAZJwDT/aifRNkDkFsXAHZ1Zxk8IY+zZ82FgSGfrh63bPJeQeyt5dBvh
+	 dQyLl2jujql39+jW7DxaiTIgj9V+zpGGpgZ4BJzbBjcHy2QosoNVHW/rHT3nC1XLuEJHr
+	 g/a+fkpNlzhX2rvIzzs0dasAcKJ2ZyPawcpuqgm9Hx8xSV5XVhV43lOjhA4zmSlmNVw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=PpSpwQ2W;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="p/ZAkJw/";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 873E6606A31E;
-	Wed, 25 Nov 2026 17:05:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 14F98606A32A;
+	Wed, 25 Nov 2026 17:05:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=PpSpwQ2W
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1CC131F000D0;
-	Wed, 25 Nov 2026 17:05:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=p/ZAkJw/
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 652D51F000C6;
+	Wed, 25 Nov 2026 17:05:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795626320;
-	bh=QYwZ6Da6tEtKEnJbbIPlDKoQy8OmPwBdjWPkbW2jcic=;
+	s=korg; t=1795626323;
+	bh=vtbMddSTF/q+6aN1EHKkcmKbyvPzahKU4CLXyjQ7ae8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=PpSpwQ2WKIuCmfCS2A/L13NNKN9gB5GFFBF8o9L6T/BAyuey1ZdJJHXwzEjzgG5+B
-	 Gzcb30AIdSiBxuOr64ZGlR1YG+vXCW00MfXI5aAP+mBrt+krbCOy2SeBpx65DKUuJO
-	 M1wgiY/2Bo205RtQKF+KOLs7hJYFZcmUhzfDvtmg=
+	b=p/ZAkJw/Ma4RfIQP9ovsXBpP2PMl7E/fn/mgpXrGPs+M3CxGXdC8SiETWJfkzkC/1
+	 OLko4Z3ygTwkcEdjvRJw6cXJ/+3VyIbUvCxNlnVUnBN9n60ZesY4XfeN2K9R20NVoj
+	 hXdtOQIhSMJlLvml9jhAZ8Lm7QzJ+lO3S/R8ATsk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	syzbot+782b2f1063e38ba8fa6e@syzkaller.appspotmail.com,
 	stable <stable@kernel.org>,
-	Radhey Shyam Pandey <radhey.shyam.pandey@amd.com>,
-	Thinh Nguyen <Thinh.Nguyen@synopsys.com>
-Subject: [PATCH 6.12 759/816] usb: dwc3: xilinx: fix system suspend and resume PHY handling
-Date: Wed, 25 Nov 2026 15:38:27 +0100
-Message-ID: <20261125143906.741763704@linuxfoundation.org>
+	Brian Ellis <brianellis@gotenna.com>
+Subject: [PATCH 6.12 750/816] usb: gadget: u_serial: fix NULL deref in gs_close() after failed open
+Date: Wed, 25 Nov 2026 15:38:18 +0100
+Message-ID: <20261125143906.532724561@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143849.205329330@linuxfoundation.org>
 References: <20261125143849.205329330@linuxfoundation.org>
@@ -68,82 +68,71 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Radhey Shyam Pandey <radhey.shyam.pandey@amd.com>
+From: Brian Ellis <brianellis@gotenna.com>
 
-commit 2fad8d241a6833d0c7aeafa0ab596e83c7b4ec9c upstream.
+commit ea6cf69ad03c8d85138830c0d2c3b946b5ae231d upstream.
 
-System suspend and resume error paths do not handle PHY and clock
-resources correctly. Suspend calls phy_exit() without first powering
-off the PHY and ignores failures, while resume can leave clocks
-enabled if PHY reinitialization fails.
+gs_close() opens with
 
-Propagate errors to the PM core and unwind resources to ensure a
-consistent state on suspend and resume failures.
+	struct gs_port *port = tty->driver_data;
+	...
+	spin_lock_irq(&port->port_lock);
 
-Fixes: d6edcdc1ef06 ("usb: dwc3: xilinx: fix usb3 non-wakeup source resume failure")
+and never checks port.  gs_open() assigns tty->driver_data only on the
+port.count 0 -> 1 edge, so any failure earlier in gs_open() leaves it NULL,
+and tty_open() calls tty_release(), and hence ->close(), when ->open()
+fails.
+
+syzbot hit exactly this on arm64.  Fault injection failed the kfifo_alloc()
+of the write buffer in gs_open():
+
+   __kfifo_alloc_node+0x10c/0x208 lib/kfifo.c:44
+   gs_open+0x144/0x514 drivers/usb/gadget/function/u_serial.c:636
+   tty_open+0x404/0x89c drivers/tty/tty_io.c:2137
+
+and the tty core's close of the failed open then took port_lock through
+the NULL port:
+
+  BUG: unable to handle kernel paging request in gs_close
+  KASAN: null-ptr-deref in range [0x00000000000003a0-0x00000000000003a7]
+  Call trace:
+   spin_lock_irq include/linux/spinlock.h:372 [inline]
+   gs_close+0xac/0x65c drivers/usb/gadget/function/u_serial.c:698
+   tty_release+0x2c4/0xffc drivers/tty/tty_io.c:1745
+   tty_open+0x46c/0x89c drivers/tty/tty_io.c:2146
+
+Return early instead.  There is nothing to release when the open never got
+far enough to claim the port.
+
+Unlike the check reverted by commit f6c7bc4a6823 ("Revert "usb: gadget:
+u_serial: Add null pointer check in gs_start_io""), this is not hiding a
+race: the tty core calls ->close() for an ->open() that failed by design,
+so driver_data is legitimately unset on that path.
+
+Fixes: c1dca562be8a ("usb gadget: split out serial core")
+Reported-by: syzbot+782b2f1063e38ba8fa6e@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=782b2f1063e38ba8fa6e
 Cc: stable <stable@kernel.org>
-Assisted-by: Claude:claude-opus-5
-Signed-off-by: Radhey Shyam Pandey <radhey.shyam.pandey@amd.com>
-Acked-by: Thinh Nguyen <Thinh.Nguyen@synopsys.com>
-Link: https://patch.msgid.link/20260928120015.3152461-2-radhey.shyam.pandey@amd.com
+Assisted-by: LLM
+Signed-off-by: Brian Ellis <brianellis@gotenna.com>
+Link: https://patch.msgid.link/20261013-u_serial-gs-close-null-v4-1-9ea038501994@gotenna.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/dwc3/dwc3-xilinx.c |   24 +++++++++++++++++++++---
- 1 file changed, 21 insertions(+), 3 deletions(-)
+ drivers/usb/gadget/function/u_serial.c |    3 +++
+ 1 file changed, 3 insertions(+)
 
---- a/drivers/usb/dwc3/dwc3-xilinx.c
-+++ b/drivers/usb/dwc3/dwc3-xilinx.c
-@@ -384,13 +384,26 @@ static int __maybe_unused dwc3_xlnx_runt
- static int __maybe_unused dwc3_xlnx_suspend(struct device *dev)
- {
- 	struct dwc3_xlnx *priv_data = dev_get_drvdata(dev);
-+	int ret;
+--- a/drivers/usb/gadget/function/u_serial.c
++++ b/drivers/usb/gadget/function/u_serial.c
+@@ -684,6 +684,9 @@ static void gs_close(struct tty_struct *
+ 	struct gs_port *port = tty->driver_data;
+ 	struct gserial	*gser;
+ 
++	if (!port)
++		return;
 +
-+	ret = phy_power_off(priv_data->usb3_phy);
-+	if (ret < 0)
-+		return ret;
+ 	spin_lock_irq(&port->port_lock);
  
--	phy_exit(priv_data->usb3_phy);
-+	ret = phy_exit(priv_data->usb3_phy);
-+	if (ret < 0)
-+		goto err_phy_power_on;
- 
- 	/* Disable the clocks */
- 	clk_bulk_disable(priv_data->num_clocks, priv_data->clks);
- 
- 	return 0;
-+
-+err_phy_power_on:
-+	if (phy_power_on(priv_data->usb3_phy))
-+		dev_err(dev, "failed to restore PHY power after suspend error\n");
-+
-+	return ret;
- }
- 
- static int __maybe_unused dwc3_xlnx_resume(struct device *dev)
-@@ -404,15 +417,20 @@ static int __maybe_unused dwc3_xlnx_resu
- 
- 	ret = phy_init(priv_data->usb3_phy);
- 	if (ret < 0)
--		return ret;
-+		goto err_clk_disable;
- 
- 	ret = phy_power_on(priv_data->usb3_phy);
- 	if (ret < 0) {
- 		phy_exit(priv_data->usb3_phy);
--		return ret;
-+		goto err_clk_disable;
- 	}
- 
- 	return 0;
-+
-+err_clk_disable:
-+	clk_bulk_disable(priv_data->num_clocks, priv_data->clks);
-+
-+	return ret;
- }
- 
- static const struct dev_pm_ops dwc3_xlnx_dev_pm_ops = {
+ 	if (port->port.count != 1) {
 
 
