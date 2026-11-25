@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795621042;
-	b=x1HZS41SFsA7XAfGLrLugERO+p64BVlctI0B0gI1pISmoaZoX3yPWQfre/tpw0lBgPqd
-	 zSz1n07NFfEKchvv8jJirXBmQWYgsG1TndPrp4QeqqH6gp4p6A4xDHTSpPFLQnOvqV+iB
-	 nbCwsjgQfNo6VDjIAAWQP6+vIVq/twoIdpEMGbVhJyG5IQ0Cw6jnHKfrm4KFXBkC62+/d
-	 RL6Wv7kWcZohsqfwd8hsbHDSmLUASbw+UOPaNCNDlvpy2Pi8j9r4xK8FHtjTINcd7OSjO
-	 3Wj/0xITBQG5pljMSUuWTt6QI7P4yUNJwNRUjdonfmEJoNeLo3crmTku/oh2tslRDjg==
+	t=1795621045;
+	b=w5tkGN7ybDNR+6ViI68PEaOMDyEN5KWRt0vDpsaaRz0rbbNN5kx7KzKiDIabZOwhWYIy
+	 CSPyzVuOW7lk/+gxB2ZhhMCt5wR0TmUoGhm4gizjUfHXUYlovtuzKxjmGcw3mZKOlPHlY
+	 iNNksTwr3S0+sPRW0NMNia4cxPwTVJACTZ5FDQn0IlEkV1dSUoiXjxRT6huKYILBGSNh1
+	 K7VDzAwqcze8u+xoc5e9piWYDVmaA4kk+dEfj9J0K6q4c7shBJw+ECn8EdOX4G5ZQ30S9
+	 WjuMHX/RqgrMfZ/StNyVrAZ3mHRVJYbe8X162dE2/JtGNYdwtgqdmSrSsEvwwj2Ik2Q==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795621042;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795621045;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=+VUSB2iRK/oQmqF+AMG5yQFulzFLwsw85avW0TdDCEk=;
-	b=za3Eo49RF3CSEfCPBmRdFqr4uuLiEqbsmHqEyBIKG3nhEyaqX94UWD7V2K/mQd2UYg3+
-	 b+5SDZJAiHLbFO9oSpNoMVe5XQtLYjTCqaHA4XOGcBjvZjCMetzv7f7bsSKDWUshrKK6s
-	 UD/OoGu3jA8csV0F1YZ0anvKS+S5vvCllNOCWprOqSNTHRuNYIpqUO4j7tfpv2Lrxplxr
-	 T+xoeitUHyRQLz64Vq5UWVuha9vBgDqhex/09+QoIGv9lrnOMZaHIk351sYicx+QpmHaw
-	 tTeSXkq0GmT8aGEjEOd3gj6bVUvt39K+vqojFIMLRMu7V6pNh04sUnFKdRD94JJeZPA==
+	bh=dZ2YM9mC9GiECdlo2KmBZ/APgMaDphBzgaN5IgFNUxc=;
+	b=hWOSK/Z8NmOd/ZtnNWd1em1kTjjcpFxV0b3Y+1r1AqJTS8cIzf/BlpuNDQ09QteiXYQu
+	 D9UlhTXipp0/LGnKwju7fgUcZmtvqbjyhB4lUQvEkcJgqf4HMw09kAaJexRzeEngL7iTb
+	 uQTnDzDZf5Vq1a6k8fC9ln5PGtRwcNQivCQspWVsZBXbgbMJPVkjA7Sa1DvPyHQ991Bef
+	 d1ro3s928uMZdW3i6M/5kr/WAa+ewgNzCrWkt7bnrk2jU+krxFnOdTcfdR+9H/j+1iSK6
+	 VTMX1q1/6lQ69Ai9hqj9gXf2IjocT699bYUowEXqbZQ0trfCt4bfBv4/d0eYQC4vgYg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=RcUAHztq;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=bupzICDR;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4E278606A683;
-	Wed, 25 Nov 2026 15:37:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A1828606A688;
+	Wed, 25 Nov 2026 15:37:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=RcUAHztq
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4719C1F000C4;
-	Wed, 25 Nov 2026 15:37:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=bupzICDR
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 776DA1F000C6;
+	Wed, 25 Nov 2026 15:37:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795621041;
-	bh=+VUSB2iRK/oQmqF+AMG5yQFulzFLwsw85avW0TdDCEk=;
+	s=korg; t=1795621045;
+	bh=dZ2YM9mC9GiECdlo2KmBZ/APgMaDphBzgaN5IgFNUxc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=RcUAHztqvyD2ljVwCvY8oP/YnN/Whs2oMabDzXZTkIGCLhXo4BrFPn/Z0mDXhmF4V
-	 0PhtnTIdUtwosgVyHcsqED5tT8Hv8WyhPTNp/ZB9zSb56h7WszLrq2SDzZXQUDnTZ4
-	 WnoFho/C2b9mTFr+FUt+mzFrmiroolu0kQpnElQ8=
+	b=bupzICDRuPfEBJTtmAp3nLerz5nKq8qKLQTv6ubFjozbj9t0LtL0YwrZCBocsVnfI
+	 kq7Bu1HCyXbMBVs/hqQN99KDz2M0A31qzo8mSAt8AD6My9FgR4VDWA7AL5FgXr6sje
+	 EOFuropDZFZhU3Q51US0vxWfPPnt/cZJgogcQ40Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vadim Fedorenko <vadim.fedorenko@linux.dev>,
-	James Hilliard <james.hilliard1@gmail.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Haobin Wu <853555@gmail.com>,
+	Christian Schoenebeck <linux_oss@crudebyte.com>,
+	Dominique Martinet <asmadeus@codewreck.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 101/990] ptp: vclock: preserve missing hardware timestamps
-Date: Wed, 25 Nov 2026 15:24:28 +0100
-Message-ID: <20261125143824.456643022@linuxfoundation.org>
+Subject: [PATCH 6.18 066/990] 9p: skip intermediate directory entry name copy in p9dirent_read()
+Date: Wed, 25 Nov 2026 15:23:53 +0100
+Message-ID: <20261125143823.635000690@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143822.072087159@linuxfoundation.org>
 References: <20261125143822.072087159@linuxfoundation.org>
@@ -69,59 +69,106 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: James Hilliard <james.hilliard1@gmail.com>
+From: Haobin Wu <853555@gmail.com>
 
-[ Upstream commit 63787dfd1b5ae720cc30dab5e66c8e4d81ff7391 ]
+[ Upstream commit 8bb0279930cc90975f03bad4d83282613e5f57fa ]
 
-Socket timestamp delivery converts hardware timestamps to a bound
-virtual clock before checking whether a hardware timestamp is present.
-A zero timestamp means that the packet has no hardware timestamp, but
-timecounter_cyc2time() can turn that zero into a nonzero virtual time.
-The socket then reports a hardware timestamp which was never supplied.
+v9fs_dir_readdir_dotl() decodes each entry of a Rreaddir reply with
+p9dirent_read(), which parses it through p9pdu_readf("Qqbs"). The 's'
+conversion in p9pdu_vreadf() already allocates a NUL-terminated copy
+of the name from the wire buffer; p9dirent_read() then strscpy()s that
+copy into the fixed 256-byte p9_dirent::d_name and frees the original.
 
-Return zero without conversion when the input timestamp is absent.
-This also covers skb_get_tx_timestamp(), which checks for an absent
-timestamp after the same conversion.
+The wire format carries the name length in 16 bits, so a name longer
+than 255 bytes is valid on the wire and may well be valid on the
+server's filesystem, but it makes strscpy() return -E2BIG.
+v9fs_dir_readdir_dotl() turns that into -EIO and aborts getdents64(),
+so every entry after the long one disappears from the listing.
 
-This was identified during review of virtual clock sampling changes.
+Drop the second copy: keep the string allocated by p9pdu_vreadf() in
+p9_dirent and let v9fs_dir_readdir_dotl(), its only user, free it once
+dir_emit() has consumed it. p9_dirent is a short-lived stack object, so
+the string's lifetime does not change.
 
-Fixes: d7c088265588 ("net: socket: support hardware timestamp conversion to PHC bound")
-Reviewed-by: Vadim Fedorenko <vadim.fedorenko@linux.dev>
-Signed-off-by: James Hilliard <james.hilliard1@gmail.com>
-Link: https://patch.msgid.link/20261026-ptp-vclock-sampling-v6-5-e705612541f1@gmail.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Note that the VFS only rejects names of PATH_MAX bytes or more in
+verify_dirent_name(), so after this change a name between NAME_MAX and
+PATH_MAX is returned by getdents64() even though any later lookup on it
+fails with -ENAMETOOLONG. The next patch skips such entries.
+
+Fixes: 7751bdb3a095 ("9p: readdir implementation for 9p2000.L")
+Closes: https://github.com/microsoft/WSL/issues/41192
+Signed-off-by: Haobin Wu <853555@gmail.com>
+Reviewed-by: Christian Schoenebeck <linux_oss@crudebyte.com>
+Message-ID: <20260918024851.51229-2-853555@gmail.com>
+Signed-off-by: Dominique Martinet <asmadeus@codewreck.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/ptp/ptp_vclock.c         | 2 ++
- include/linux/ptp_clock_kernel.h | 2 +-
- 2 files changed, 3 insertions(+), 1 deletion(-)
+ fs/9p/vfs_dir.c         |  6 +++++-
+ include/net/9p/client.h |  2 +-
+ net/9p/protocol.c       | 12 ++----------
+ 3 files changed, 8 insertions(+), 12 deletions(-)
 
-diff --git a/drivers/ptp/ptp_vclock.c b/drivers/ptp/ptp_vclock.c
-index 1a75a5b9bc058..0ecd63eb729a4 100644
---- a/drivers/ptp/ptp_vclock.c
-+++ b/drivers/ptp/ptp_vclock.c
-@@ -326,6 +326,8 @@ ktime_t ptp_convert_timestamp(const ktime_t *hwtstamp, int vclock_index)
- 	u64 ns;
+diff --git a/fs/9p/vfs_dir.c b/fs/9p/vfs_dir.c
+index 323f85352f6a4..733ec42258bc6 100644
+--- a/fs/9p/vfs_dir.c
++++ b/fs/9p/vfs_dir.c
+@@ -196,8 +196,12 @@ static int v9fs_dir_readdir_dotl(struct file *file, struct dir_context *ctx)
+ 			if (!dir_emit(ctx, curdirent.d_name,
+ 				      strlen(curdirent.d_name),
+ 				      QID2INO(&curdirent.qid),
+-				      curdirent.d_type))
++				      curdirent.d_type)) {
++				kfree(curdirent.d_name);
+ 				return 0;
++			}
++
++			kfree(curdirent.d_name);
  
- 	ns = ktime_to_ns(*hwtstamp);
-+	if (!ns)
-+		return 0;
+ 			ctx->pos = curdirent.d_off;
+ 			rdir->head += err;
+diff --git a/include/net/9p/client.h b/include/net/9p/client.h
+index 838a94218b593..9f3079c6f3867 100644
+--- a/include/net/9p/client.h
++++ b/include/net/9p/client.h
+@@ -268,7 +268,7 @@ struct p9_dirent {
+ 	struct p9_qid qid;
+ 	u64 d_off;
+ 	unsigned char d_type;
+-	char d_name[256];
++	char *d_name;
+ };
  
- 	srcu_idx = srcu_read_lock(&vclock_srcu);
+ struct iov_iter;
+diff --git a/net/9p/protocol.c b/net/9p/protocol.c
+index 0e6603b1ec906..0a97b4de243ab 100644
+--- a/net/9p/protocol.c
++++ b/net/9p/protocol.c
+@@ -771,7 +771,7 @@ int p9dirent_read(struct p9_client *clnt, char *buf, int len,
+ {
+ 	struct p9_fcall fake_pdu;
+ 	int ret;
+-	char *nameptr;
++	char *nameptr = NULL;
  
-diff --git a/include/linux/ptp_clock_kernel.h b/include/linux/ptp_clock_kernel.h
-index 884364596dd32..d199ac4ec1c8f 100644
---- a/include/linux/ptp_clock_kernel.h
-+++ b/include/linux/ptp_clock_kernel.h
-@@ -495,7 +495,7 @@ int ptp_get_vclocks_index(int pclock_index, int **vclock_index);
-  * @hwtstamp:     timestamp
-  * @vclock_index: phc index of ptp vclock.
-  *
-- * Returns: converted timestamp, or 0 on error.
-+ * Returns: converted timestamp, or 0 if @hwtstamp is zero or on error.
-  */
- ktime_t ptp_convert_timestamp(const ktime_t *hwtstamp, int vclock_index);
- #else
+ 	fake_pdu.size = len;
+ 	fake_pdu.capacity = len;
+@@ -786,15 +786,7 @@ int p9dirent_read(struct p9_client *clnt, char *buf, int len,
+ 		return ret;
+ 	}
+ 
+-	ret = strscpy(dirent->d_name, nameptr, sizeof(dirent->d_name));
+-	if (ret < 0) {
+-		p9_debug(P9_DEBUG_ERROR,
+-			 "On the wire dirent name too long: %s\n",
+-			 nameptr);
+-		kfree(nameptr);
+-		return ret;
+-	}
+-	kfree(nameptr);
++	dirent->d_name = nameptr;
+ 
+ 	return fake_pdu.offset;
+ }
 -- 
 2.53.0
 
