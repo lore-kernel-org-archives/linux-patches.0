@@ -1,54 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795625686;
-	b=bfTnfaxEnC6Phu2KE/l03EFdqORRhuBLmGouto1TQW2WBXtalVm5geCqieSO/qEqGSWi
-	 0rF+fwg47oJ6fPwYyAZSqaiQT1Br01gAoaOi2nda2BcJ3z/h6GbKc/N3Hv1ur6ZT4G5LK
-	 jQ7XkH6wRVm87u0vZS9f1NvyWKc1B4hGjzq8jrNSSMFwNVy++HMvSLwTCw/tsV28gylhE
-	 ljKTP4UhVlgSB/V/kbmgQOmnPt1VXACU0hIp+LkWHvMsRZvLIO4DfkKh2oXPIJAeqI5RW
-	 /e82+QYGhmbWwhiXwjJEQUQSzAkiMHahPhMQj3xsb3YWnvme9n1aZrthFkus5cR4Plw==
+	t=1795625688;
+	b=OYwZd2D/5GEdt574L3n3VPKlR6U5oNtHfvZmHe3hHZLLxIjR6F1o1cq3s0HVB95eLCbD
+	 3i+VjyBovxXUGOy+ZtWA3bITefHGJD3AI5/0Yt/XIq6pg6JKRxxiR0W94kh5DCE83z4tB
+	 SV+kLJMj6X4Cl9PZbl+mhwrCAzAQS8iThIrQidjYcqw0OEPecEQOrZEGNq2lsu/OKL7F0
+	 IdhkYugNaq9HYsWMrsBk8m4nzjGxEFb/oTZoRPNsIZ3xH4ltFxMJWAwrwKq/VYb+3u7R8
+	 3bX8fwMhTU5Ly9M87LMrdOKzm9NJcxd2H1h1Xx7u8ynWkB/BVio1D4Zo3PRej9BJvdg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795625686;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795625688;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=6rPCCroXS0LqukR+pmbET9DfMoHxXDg34M+XTaVMaWU=;
-	b=tOa3WHR9SuTUdbVgIasym4jiDPjWtCDQGi60C1FmD12e6Bn/vtme1+0jJ3fwAkwWFqg2
-	 alVLW66WwG2F9MAXNTZj8LORpmux55DB9iuPyB+B4PHq/bDOnVVQKSkfWF8c+UPCkr3VX
-	 DggIC9aWL7SaZLYa4rAT3kh1ZBN2PKgqpjz83zLoA4VJIETkzxRCsN+WgZQhkYVC0wUNh
-	 TWVjaNaSGivsImXTHm/by6ic/co7btuQMp4ni2hm4FCXqicoxP0ZrkJtnT+0Qn2hT526M
-	 EjLRvgNe9Lom1NpbnZkRgnD+XXF3Q7L5eppMmo0JHYQrS8+4CmxndNysTuCjfpna7xg==
+	bh=sgbK9CPOWSn2HrmB6leYscIcfWSxTDc3vsVtM92cuhg=;
+	b=o+GwJ9V40diML97MCVgQmRorarfzOsfRKNUubq7UPEDkRYXo5JrlErrxrzW2Yt55FpxK
+	 8dx9A7JgmSaI/M11P3O3P6BcXyzTLOFOJ11o3xQNLOEi/AplmVIY49SweaTOAYCNuqRjX
+	 o0gu6r9q6DDOoBaFbRwh+/rCksxCUowSZHK+HeW5reooJp0HGF0KqlFgubEwX1eHw3BVB
+	 bDyX6l26I+lP0P09pYRHdXkrsrjNZ3/HZPhXODFd0e7XRrbqhFUKCZp/DIOeNKxGzMtJg
+	 FyZQqbvVKSBUBu/Mebg+hm3/aeX5ehrCCAeAQ6qYEboZX4pJvv0V6o8Y3bGUsioqDLA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=xc22vpVC;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=oA5NvB6g;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2711F606A329;
-	Wed, 25 Nov 2026 16:54:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D8D1A606A321;
+	Wed, 25 Nov 2026 16:54:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=xc22vpVC
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 40F641F000C4;
-	Wed, 25 Nov 2026 16:54:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=oA5NvB6g
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 130C61F000C4;
+	Wed, 25 Nov 2026 16:54:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795625685;
-	bh=6rPCCroXS0LqukR+pmbET9DfMoHxXDg34M+XTaVMaWU=;
+	s=korg; t=1795625688;
+	bh=sgbK9CPOWSn2HrmB6leYscIcfWSxTDc3vsVtM92cuhg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=xc22vpVC29W1q0U+PPeMbWuJ8n+0SKO83GGY5QcnzsDiopyz7WQX7BT+Yxrd1OW/i
-	 nDK8XzbLhGzlNXpeXQUNSgOIkkkGGrhg77tRfmV4uKHWQq3Zv0WfEdOKOU+feEsK8o
-	 e+3MGoT8JTwejkVWKyDwWVEn8ow8bw3jG/OYDq54=
+	b=oA5NvB6gCxuJJXzgeA6YA1Gj4Zz0JSpjZvdpy9lYDG9aC2kTPg30NAFHeTL3u8ExS
+	 rGxehdeo524gONGeQxI6F/uqjxaPVNMcz6HOzwRyjk8h9C9+pNWaEZ3jL6FsEK9M75
+	 D7C0TgKhGrEByb8B0Gm5i9sCsLYG6SaE5qVtHOYk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Erni Sri Satya Vennela <ernis@linux.microsoft.com>,
-	Haiyang Zhang <haiyangz@microsoft.com>,
-	Wei Liu <liuwe@microsoft.com>,
-	Simon Horman <horms@kernel.org>,
-	Dave Miller <davem@davem-thinkpadp1gen8.ibmlond.csb>
-Subject: [PATCH 6.12 597/816] hv_netvsc: Stop PPI parsing on invalid metadata
-Date: Wed, 25 Nov 2026 15:35:45 +0100
-Message-ID: <20261125143902.997362688@linuxfoundation.org>
+	stable@kernel.org,
+	Kyle Zeng <kylebot@openai.com>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 6.12 598/816] net: gro: avoid parsing headers from shared fragments
+Date: Wed, 25 Nov 2026 15:35:46 +0100
+Message-ID: <20261125143903.019925732@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143849.205329330@linuxfoundation.org>
 References: <20261125143849.205329330@linuxfoundation.org>
@@ -70,62 +68,63 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Erni Sri Satya Vennela <ernis@linux.microsoft.com>
+From: Kyle Zeng <kylebot@openai.com>
 
-commit 19a227903e65c7a9c179156485660a4e017575fe upstream.
+commit 44818c9a826d766dc0e21179dc76f229334f1dda upstream.
 
-rndis_get_ppi() uses continue when a per-packet information entry has an
-invalid size or offset, or cannot hold the requested metadata. However,
-the remaining length and entry pointer are only updated at the bottom
-of the loop. Each error path therefore retries the same invalid entry
-indefinitely, repeatedly logging the error and preventing receive
-processing from completing.
+When an skb has an empty linear head, skb_gro_reset_offset() can expose
+the first page fragment directly to GRO header parsers. For an
+SKBFL_SHARED_FRAG skb, those bytes may still be writable through a file
+mapping. Headers validated during receive can therefore differ from the
+headers later copied into the linear head and used during completion.
 
-Return NULL on these validation failures instead of continuing. This
-terminates the lookup when malformed metadata is encountered while
-preserving the existing behavior for valid entries.
+For example, changing an IPv6 destination-options length between the
+short and full header fetches in ipv6_gro_pull_exthdrs() can make
+ipv6_gro_complete() pass an out-of-bounds offset to udp6_gro_complete().
+A userspace reproducer triggered a KASAN slab-out-of-bounds read there
+on an unmodified kernel as UID 1000. The same completion path can write
+the UDP checksum and length through the invalid offset. The packet has
+trusted TCP GSO metadata and spliced file data, so it reaches completion
+without an skb zerocopy destructor or a second GRO packet.
 
-The issue was reported through an internal bug-tracking system and
-confirmed by manual code inspection. The pre-fix hang has not been
-reproduced locally.
+Disable the direct-fragment fast path for skbs with externally writable
+fragments. With an empty linear head, frag0_len remains zero, so
+skb_gro_header_slow() pulls each required header into the linear head
+before it is inspected. Subsequent pulls preserve the validated prefix.
+This covers both gro_receive_skb() and napi_gro_frags(), including other
+protocols using the same helpers. Linear headers and private fragments
+retain their existing fast paths.
 
-Fixes: 44144185951a ("hv_netvsc: Add validation for untrusted Hyper-V values")
-Cc: stable@vger.kernel.org
-Signed-off-by: Erni Sri Satya Vennela <ernis@linux.microsoft.com>
-Reviewed-by: Haiyang Zhang <haiyangz@microsoft.com>
-Reviewed-by: Wei Liu <liuwe@microsoft.com>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Signed-off-by: Dave Miller <davem@davem-thinkpadp1gen8.ibmlond.csb>
+Codex assisted with review of the supplied report, reproducer and draft
+fix, related-path analysis, and this changelog. The patched
+net/core/gro.o builds with W=1 using the supplied x86-64 configuration,
+allyesconfig and allmodconfig. The fix was checked by code-path analysis;
+the reproducer and kernel selftests have not been run on a booted
+patched kernel.
+
+The issue was found by an LLM.
+
+Fixes: dff0b0161ad5 ("net: gro: parse ipv6 ext headers without frag0 invalidation")
+Cc: stable@kernel.org
+Signed-off-by: Kyle Zeng <kylebot@openai.com>
+Link: https://patch.msgid.link/20261031050752.31869-1-kylebot@openai.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/hyperv/rndis_filter.c |    6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ net/core/gro.c |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
---- a/drivers/net/hyperv/rndis_filter.c
-+++ b/drivers/net/hyperv/rndis_filter.c
-@@ -401,12 +401,12 @@ static inline void *rndis_get_ppi(struct
- 		/* Validate ppi_offset and ppi_size */
- 		if (ppi->size > len) {
- 			netdev_err(ndev, "Invalid ppi size: %u\n", ppi->size);
--			continue;
-+			return NULL;
- 		}
+--- a/net/core/gro.c
++++ b/net/core/gro.c
+@@ -418,7 +418,8 @@ static inline void skb_gro_reset_offset(
+ 	headlen = skb_headlen(skb);
+ 	NAPI_GRO_CB(skb)->frag0 = skb->data;
+ 	NAPI_GRO_CB(skb)->frag0_len = headlen;
+-	if (headlen)
++	/* Shared fragments must be pulled into the linear head before parsing. */
++	if (headlen || skb_has_shared_frag(skb))
+ 		return;
  
- 		if (ppi->ppi_offset >= ppi->size) {
- 			netdev_err(ndev, "Invalid ppi_offset: %u\n", ppi->ppi_offset);
--			continue;
-+			return NULL;
- 		}
- 
- 		if (ppi->type == type && ppi->internal == internal) {
-@@ -414,7 +414,7 @@ static inline void *rndis_get_ppi(struct
- 			if (ppi->size - ppi->ppi_offset < ppi_size) {
- 				netdev_err(ndev, "Invalid ppi: size %u ppi_offset %u\n",
- 					   ppi->size, ppi->ppi_offset);
--				continue;
-+				return NULL;
- 			}
- 			return (void *)((ulong)ppi + ppi->ppi_offset);
- 		}
+ 	pinfo = skb_shinfo(skb);
 
 
