@@ -1,42 +1,42 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795621327;
-	b=Kt+EjbHopmiv6kx1bl1RJpr9EuoXXjNoIpBUS5HA1E3nrjwsVcv9+54HB3fQVMP+puyZ
-	 3SZis4fZ1wwgNIS7haIGleOTBdTViwDng7lbvxnU1Cip/SnVm1CWrNdVt9BoDccBptrPA
-	 QeRv/vPCmmtgAefEsmukHyip3gfr6uyWdx/E5wXOLs/p+Nj/YdGYf0E9uYxKe8kACFH7z
-	 Q7UE4vVljEu7OHHmeQzqxPSQhEjaQBrwekNs6KzQV2BP9K3xo4uUv0W9Is4GWv3UAlCcc
-	 SPH32/sOeFTmJiuPPfXTNQBfhw+VP+pvaNqSWgXO3atCGdOblO88E7zgbV4YWaaaaIA==
+	t=1795621329;
+	b=qRTHIfagH0K0bHte2l8Wzi9dYPpFcYNgS81Agu26rNchtAQEEmj/5BffGQ/bWd9qSKUo
+	 imoHvL8CCC+5gZ5Cji0Ah0i4AF5pujndHnR6zr8GOH29eGKmJWvxc5DYExWUi/SKTbyLs
+	 DwzjaHlan7FsGt7xVqCi1npOKLD3CVWIUy4f2hPvvwMRvxLDndvDXVyWOn6Bl+8o77Vcs
+	 ygDEBpogvfNDmuIZIR4e5EWkM8+2Hc2LYiH1kne+7qnRWPlPtb0n1SImqyIRWTx3WCy33
+	 t3hKMAXNS0lbj99wPiobLwGPY430bxzMRHCuapVd03XlRRiFkgBkluC376OsbXSRJhQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795621327;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795621329;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=UBsGQpkLrZzd+eMAa1kc3BUJkKu5D/yX+tYE0kqrphk=;
-	b=2NF9fQtfIHmTjLEHBUtjFEIZsn3A5DhmY2MSO6+alXeG5g9mZgyPmxwfjUOxHV9VQM1z
-	 Ecz8aGHWKai6XaKtKRNjQuZwBt4U4b7C5UrNi3KovOCrvvJopnUu9uwhrqrKghdKsHCEi
-	 usv4JZPSKGG0C+3ivGuJ3ZzgnHhDalnq9DuuIk8aEeHldB+np8KJ1CeI54xQwkt4u3Pf5
-	 /SHx5kOq5M/p80/3oSuchEipeGTN6m7hFaZrY/9tsmG0NGGA7lVYDYpC21KLeyZlNvnwq
-	 W84w3lfTmw0v8BFYucf1Gq4cFtbLRYGiwCDnIGYqsa6Ms0dZCl9gJ3oxtOuZ0erETsg==
+	bh=pki2jLGcsKulCrvPGrf8BBT9o8gDJOhK3Pb7qKJG3eg=;
+	b=vpSjZnvem4Fe/HGzEARa1FoXnj9LSrr7ZrtbhttxzETdDCJNCht7MHpd0rDjqbxpsN6u
+	 /ybuVHSN/LhXBZOc5Z/pcuJY7ONl2H+rKpNjEoqy1fmSKigthITC1M6XfIX7JSERFfeyv
+	 vp4KxFNFxbewEsOGNLB60LDTq2ctxZyV5Ag9R4q21VHhcaaQGcnFbEUFnXVbwzvVZQ3ya
+	 SKHGWmIcv6+NA0evHvVei5zrB+qQEqUGAhsiY1WlYTUqFunUNTmSLvOjd0KsTVU2BH26+
+	 uV7jPiu9urrJcWNxPXBAbO+jeC00Ctq8nWn+G7Pl7vddMxwjHrCVNHuG6l0sDZ9G8GA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=iQjpgU7Q;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="plv/Cb70";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 39739606A6A8;
-	Wed, 25 Nov 2026 15:42:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C4D81606A321;
+	Wed, 25 Nov 2026 15:42:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=iQjpgU7Q
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 448E71F000EF;
-	Wed, 25 Nov 2026 15:42:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=plv/Cb70
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1E5E91F00A3D;
+	Wed, 25 Nov 2026 15:42:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795621326;
-	bh=UBsGQpkLrZzd+eMAa1kc3BUJkKu5D/yX+tYE0kqrphk=;
+	s=korg; t=1795621329;
+	bh=pki2jLGcsKulCrvPGrf8BBT9o8gDJOhK3Pb7qKJG3eg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=iQjpgU7QyJlZilMoul3iFU7UhNdeRDUF+ZGilt+2KzWpuYh3h4fNxPItTPiejL4p2
-	 iRFoW2XK6bSLMHvNmiT5IYjIU/UNps0IWm7MOTq9nLRXG2jyr0fldKQ0ohnnp2qqtO
-	 aaZh4sZL8gWUyfSRPMKQ0Pyw/NP8Rb0sGMiEKl2c=
+	b=plv/Cb70O1QEahVYf+WfltE2HCQb4piIr5FIcm4+V/YTI4flgTwkHI9RBWKO20Uif
+	 SlWtwdYkcgngmvLrPP0cgRwAkAK63W+05k5ePTL/8xINKnZU/Qk9GTLDwyqeMFc6ss
+	 sLFk4X/nmgQ0xFLycBmQMLrp5DUk/wnwNAr5oVFo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -44,9 +44,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Yifan Zhang <yfzhang23@stu.pku.edu.cn>,
 	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 190/990] Bluetooth: validate retained LE Create CIS command length
-Date: Wed, 25 Nov 2026 15:25:57 +0100
-Message-ID: <20261125143826.545709518@linuxfoundation.org>
+Subject: [PATCH 6.18 191/990] Bluetooth: validate retained LE Set CIG Parameters command length
+Date: Wed, 25 Nov 2026 15:25:58 +0100
+Message-ID: <20261125143826.569404320@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143822.072087159@linuxfoundation.org>
 References: <20261125143822.072087159@linuxfoundation.org>
@@ -70,128 +70,59 @@ Content-Transfer-Encoding: 8bit
 
 From: Yifan Zhang <yfzhang23@stu.pku.edu.cn>
 
-[ Upstream commit 1eb52f35fc8fb06ab7f2973fff29cba81f96b947 ]
+[ Upstream commit ed4d302af778b9e2ead28134a2196c09a4ad248a ]
 
-hci_cs_le_create_cis() retrieves the parameters of the previously sent
-command without their length.  It then trusts num_cis and walks the
-flexible cis[] array when a controller reports a failed command.
+hci_cc_le_set_cig_params() validates the controller response but not the
+parameters of the previously sent command.  A short command can claim a
+large num_cis without containing the corresponding cis[] array.  A
+complete successful response then makes the handler read beyond the
+command skb while looking up each CIS ID.
 
-A five-byte HCI command containing only num_cis can therefore make the
-handler read beyond the command skb.  KASAN reports:
+KASAN reports:
 
-  BUG: KASAN: slab-out-of-bounds in hci_cs_le_create_cis
-  Read of size 2
-  hci_cs_le_create_cis
-  hci_cmd_status_evt
+  BUG: KASAN: slab-out-of-bounds in hci_cc_le_set_cig_params
+  Read of size 1
+  hci_cc_le_set_cig_params
+  hci_cmd_complete_evt
   hci_event_packet
 
-Add a length-returning saved-command helper and require the fixed header
-and complete CIS array before walking it.
+Obtain the retained parameter length and require both the fixed header and
+the complete CIS array before using the command data.
 
 The reproducer no longer triggers a KASAN report with this change.
 
-Fixes: 26afbd826ee3 ("Bluetooth: Add initial implementation of CIS connections")
-Closes: https://lore.kernel.org/linux-bluetooth/179317462624.87574.6271582002629080499@stu.pku.edu.cn/
+Fixes: 71e9588435c3 ("Bluetooth: ISO: use correct CIS order in Set CIG Parameters event")
+Closes: https://lore.kernel.org/linux-bluetooth/179317463153.87610.8996555110609321376@stu.pku.edu.cn/
 Signed-off-by: Yifan Zhang <yfzhang23@stu.pku.edu.cn>
 Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/net/bluetooth/hci_core.h |  2 ++
- net/bluetooth/hci_core.c         | 18 ++++++++++++++----
- net/bluetooth/hci_event.c        |  7 ++++++-
- 3 files changed, 22 insertions(+), 5 deletions(-)
+ net/bluetooth/hci_event.c | 7 +++++--
+ 1 file changed, 5 insertions(+), 2 deletions(-)
 
-diff --git a/include/net/bluetooth/hci_core.h b/include/net/bluetooth/hci_core.h
-index c416f7f2af6aa..37b3dc2b4c945 100644
---- a/include/net/bluetooth/hci_core.h
-+++ b/include/net/bluetooth/hci_core.h
-@@ -2330,6 +2330,8 @@ void hci_send_sco(struct hci_conn *conn, struct sk_buff *skb);
- void hci_send_iso(struct hci_conn *conn, struct sk_buff *skb);
- 
- void *hci_sent_cmd_data(struct hci_dev *hdev, __u16 opcode);
-+void *hci_sent_cmd_data_len(struct hci_dev *hdev, __u16 opcode,
-+			    size_t *len);
- void *hci_recv_event_data(struct hci_dev *hdev, __u8 event);
- 
- u32 hci_conn_get_phy(struct hci_conn *conn);
-diff --git a/net/bluetooth/hci_core.c b/net/bluetooth/hci_core.c
-index c19a9fa19e7d3..54a8942a022ec 100644
---- a/net/bluetooth/hci_core.c
-+++ b/net/bluetooth/hci_core.c
-@@ -3175,7 +3175,8 @@ int __hci_cmd_send(struct hci_dev *hdev, u16 opcode, u32 plen,
- EXPORT_SYMBOL(__hci_cmd_send);
- 
- /* Get data from the previously sent command */
--static void *hci_cmd_data(struct sk_buff *skb, __u16 opcode)
-+static void *hci_cmd_data(struct sk_buff *skb, __u16 opcode,
-+			  size_t *len)
- {
- 	struct hci_command_hdr *hdr;
- 
-@@ -3187,23 +3188,32 @@ static void *hci_cmd_data(struct sk_buff *skb, __u16 opcode)
- 	if (hdr->opcode != cpu_to_le16(opcode))
- 		return NULL;
- 
-+	if (len)
-+		*len = skb->len - HCI_COMMAND_HDR_SIZE;
-+
- 	return skb->data + HCI_COMMAND_HDR_SIZE;
- }
- 
- /* Get data from the previously sent command */
--void *hci_sent_cmd_data(struct hci_dev *hdev, __u16 opcode)
-+void *hci_sent_cmd_data_len(struct hci_dev *hdev, __u16 opcode, size_t *len)
- {
- 	void *data;
- 
- 	/* Check if opcode matches last sent command */
--	data = hci_cmd_data(hdev->sent_cmd, opcode);
-+	data = hci_cmd_data(hdev->sent_cmd, opcode, len);
- 	if (!data)
- 		/* Check if opcode matches last request */
--		data = hci_cmd_data(hdev->req_skb, opcode);
-+		data = hci_cmd_data(hdev->req_skb, opcode, len);
- 
- 	return data;
- }
- 
-+/* Get data from the previously sent command */
-+void *hci_sent_cmd_data(struct hci_dev *hdev, __u16 opcode)
-+{
-+	return hci_sent_cmd_data_len(hdev, opcode, NULL);
-+}
-+
- /* Get data from last received event */
- void *hci_recv_event_data(struct hci_dev *hdev, __u8 event)
- {
 diff --git a/net/bluetooth/hci_event.c b/net/bluetooth/hci_event.c
-index 4be09dd9d9597..1897663dfbdb2 100644
+index 1897663dfbdb2..af7f1de7d657d 100644
 --- a/net/bluetooth/hci_event.c
 +++ b/net/bluetooth/hci_event.c
-@@ -4303,6 +4303,7 @@ static void hci_cs_le_create_cis(struct hci_dev *hdev, u8 status)
- {
- 	struct hci_cp_le_create_cis *cp;
+@@ -3853,13 +3853,16 @@ static u8 hci_cc_le_set_cig_params(struct hci_dev *hdev, void *data,
+ 	struct hci_conn *conn;
+ 	u8 status = rp->status;
  	bool pending = false;
 +	size_t len;
  	int i;
  
- 	bt_dev_dbg(hdev, "status 0x%2.2x", status);
-@@ -4310,10 +4311,14 @@ static void hci_cs_le_create_cis(struct hci_dev *hdev, u8 status)
- 	if (!status)
- 		return;
+ 	bt_dev_dbg(hdev, "status 0x%2.2x", rp->status);
  
--	cp = hci_sent_cmd_data(hdev, HCI_OP_LE_CREATE_CIS);
-+	cp = hci_sent_cmd_data_len(hdev, HCI_OP_LE_CREATE_CIS, &len);
- 	if (!cp)
- 		return;
- 
-+	if (len < sizeof(*cp) ||
-+	    len < struct_size(cp, cis, cp->num_cis))
-+		return;
-+
- 	hci_dev_lock(hdev);
- 
- 	/* Remove connection if command failed */
+-	cp = hci_sent_cmd_data(hdev, HCI_OP_LE_SET_CIG_PARAMS);
++	cp = hci_sent_cmd_data_len(hdev, HCI_OP_LE_SET_CIG_PARAMS, &len);
+ 	if (!rp->status &&
+-	    (!cp || rp->num_handles != cp->num_cis ||
++	    (!cp || len < sizeof(*cp) ||
++	     len < struct_size(cp, cis, cp->num_cis) ||
++	     rp->num_handles != cp->num_cis ||
+ 	     rp->cig_id != cp->cig_id ||
+ 	     skb->len < array_size(rp->num_handles, sizeof(*rp->handle)))) {
+ 		bt_dev_err(hdev, "unexpected Set CIG Parameters response data");
 -- 
 2.53.0
 
