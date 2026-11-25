@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795625017;
-	b=su892sN8H6t/Gob19iDlKdFZnyGov7oBAdl2jLENS3VdHZIBp1BKjCoLcpF8M0etfTVW
-	 +wNVftMru71Rc1k4oYgHqXXw1rzB6+sWcFVXw5fj1WPEZs1V6flKR8fFu+gqCFRs9uNla
-	 cT75FJ9+xcmaxc+FC8JS3yv7qnlaOThmLn8MOqb9JP5QvROnwkst3nYkYme1t0jbGCopI
-	 Z8yaNKWtwvDsmLFWWjxgM65cyz+U8WCU2kANn/hLI1WFACR7gdte1oVOEboWQq9KUqbxn
-	 WqvZuyOcTlKwY/9YaDNbN36UVpBxgmaAm4g4ZsCtSCq1rLirXvLFafKO2MiRajYsUCw==
+	t=1795625020;
+	b=rJgA52wsmw4BuAeT4ybIdPXLOZNZ9sE7mHVOytHbLtPe9Y6hR6ptPpb5zFXNJrLbWvYg
+	 HZ67A7ehxsUNuOkccw6Bgc0P2QTusmm3qWty89jclu1Vc32GDLCJc87vyffD5N5aQiB5c
+	 05DHhDaF7KIsh/hL0v4FK/FY+TxBCmAtxr+Rg5eksBlsFZ6yLfv449TkZQzd2Z5McSk0N
+	 /IG+pxxsAttMo2QMmHwNONbEXSav0WaloUgSl8r6KIXWSToO+eHm6iPhiXAJHe0DcioTs
+	 FSwE7sqtPNFdiinnYZIYgqB3AbpSMFE9ooRV05pRqUJ5i9ns1BnsyMSuhikQGpJXNLg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795625017;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795625020;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=aZZkZzMEqHaloYikMBWUPT1K7wqm0hy+azcTt/LRFTE=;
-	b=qoGYOlvZiXOZFFUVIMBzaeWmZ7Bg9rlqqF9xB5wAMVBgx/eB2LC0QDENcS+NHWQo3g+A
-	 rh64YPE8a6kEUhls1qpUELu/NpUdL2VVrNW9QztOpFrd74WuZ4WnsTLt1Cu71FHpNHFss
-	 VHjBjocrOG2RkSy0BCHBAUCCilXsOggebcgM52jnMmsEA0u8258a5AVpgtGNJM31ufIme
-	 u/ZVMOhXBzt2ro5XWmvMEYd91SB9A2N66zEs7kMlTWYCG5LkgKZchcviBKGhpTDfychqM
-	 SVuP3PCSMw135QuVCb5+0i+vbbRZn3+88rOUxzAAu9X42FHiD1Uayep97xAxt0oSvew==
+	bh=lR3EkZb9NnSsfH80uvLwXsqtD755qAfqzy3+SqF04dA=;
+	b=rvOdMzw0OX8dUCuZeagBg2JW0rz0aPug9QDVbLwqnS/Jy8S42Jw445dF/8ccRpH9xK1r
+	 gnD6HxEpLEus76SuNmW1T2t4hrnTiJ+Z+8EPLljHwT1I5QNAAUWBAbmhjhtLlKnJtpbeg
+	 HJqkb65t+cIwPUHQKASC7NIi3vy9CB8UbEmJU/MGlWnQ8wvviLjBUeRAtwqvTwuzZUTVn
+	 2Y2vteZRdVsnADI8FZncnXsEUhYsh08HjeXldVMovQUvhb6xnigevwKCx36BV2fpIaoFo
+	 CQ21rZnsNNbtE8+u1D6UL00Jczt9OAkmFmZMtMrKFgyWG+QjwdGZOrsFnr8zHgkrX5Q==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="n56Sm/XW";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=TgXip8Io;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2B388606A31E;
-	Wed, 25 Nov 2026 16:43:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3757A606A31E;
+	Wed, 25 Nov 2026 16:43:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=n56Sm/XW
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4093C1F000CA;
-	Wed, 25 Nov 2026 16:43:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=TgXip8Io
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6D7461F000CF;
+	Wed, 25 Nov 2026 16:43:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795625016;
-	bh=aZZkZzMEqHaloYikMBWUPT1K7wqm0hy+azcTt/LRFTE=;
+	s=korg; t=1795625020;
+	bh=lR3EkZb9NnSsfH80uvLwXsqtD755qAfqzy3+SqF04dA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=n56Sm/XW+HYWi7MgBMRABRJLXg+h/wsqZt8vNICraehxCfOxV4PcTYZ1dKud0XTFA
-	 46SrqyjNVjMW9N0gzTWJIamgCzYRksxJZoKweWOHM8fnh0Vv9bPIqd/nyOqCea2xnX
-	 FVxkrcDTMzWGUBtK4t78nqf6DMu2hIxqt6103Yd4=
+	b=TgXip8Ioi+w3HXXjqmx1EuDGv5fkdtCWAkQiBL6qZJnZMsdkItqFPbO4DyICon4Pu
+	 /rcDG6Axu5v/HBoejgosBKLI8R2WlS3YWofcJWoNkfsxoVljNNLFvmc/HOQswYJ+Z2
+	 X5Kxd9epuF9TJcQYhYkAjSUbtlWKemGMxzc8C7lA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Daejun Park <daejun7.park@samsung.com>,
-	Christoph Hellwig <hch@lst.de>,
-	Carlos Maiolino <cem@kernel.org>,
+	Cunhao Lu <1579567540@qq.com>,
+	stable@kernel.org,
+	Marc Kleine-Budde <mkl@pengutronix.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 380/816] xfs: refuse a pNFS LAYOUTCOMMIT of a range without blocks
-Date: Wed, 25 Nov 2026 15:32:08 +0100
-Message-ID: <20261125143858.001013742@linuxfoundation.org>
+Subject: [PATCH 6.12 381/816] can: skb: make echo skb freeing safe in any IRQ context
+Date: Wed, 25 Nov 2026 15:32:09 +0100
+Message-ID: <20261125143858.024841753@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143849.205329330@linuxfoundation.org>
 References: <20261125143849.205329330@linuxfoundation.org>
@@ -69,131 +69,99 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Daejun Park <daejun7.park@samsung.com>
+From: Cunhao Lu <1579567540@qq.com>
 
-[ Upstream commit bcf0b7f18ad11e1d410e82ffef678705eff0a317 ]
+[ Upstream commit d743071964920c92af598c87a9e6f4369263ee09 ]
 
-A client can commit a hole in a LAYOUTCOMMIT, because nfsd does not
-check the extents against its layouts. xfs_iomap_write_unwritten() then
-allocates written blocks there. A large hole overruns the block
-reservation and shuts XFS down. A small one exposes stale data.
+can_put_echo_skb() can be called with hardware interrupts disabled. Its
+direct drop paths use kfree_skb(), while can_create_echo_skb() uses
+kfree_skb() when cloning fails and consume_skb() after a successful clone.
+None of these helpers is safe in every IRQ context.
 
-Refuse such a range with -EIO, using XFS_BMAPI_CONVERT_ONLY.
+Use dev_kfree_skb_any() for all drop paths and dev_consume_skb_any() when
+consuming a successfully cloned skb. This preserves the respective skb drop
+and consumed semantics regardless of the caller IRQ context.
 
-Link: https://lore.kernel.org/r/20261014130834.GB15773@lst.de
-Fixes: 527851124d10 ("xfs: implement pNFS export operations")
-Cc: stable@vger.kernel.org
-Signed-off-by: Daejun Park <daejun7.park@samsung.com>
-Reviewed-by: Christoph Hellwig <hch@lst.de>
-Signed-off-by: Carlos Maiolino <cem@kernel.org>
-[ sashal: Replaced the upstream xfs_ioend.c hunk with the same one-line change (extra trailing argument 0) in xfs_aops.c's xfs_end_ioend(), since xfs_ioend.c doesn't exist here. ]
+Signed-off-by: Cunhao Lu <1579567540@qq.com>
+Link: https://patch.msgid.link/tencent_E84809CF236D0137885E7E4E4D58340B3208@qq.com
+Cc: stable@kernel.org
+Fixes: ae64438be192 ("can: dev: fix skb drop check")
+Fixes: 0ae89beb283a ("can: add destructor for self generated skbs")
+Fixes: 3ccd4c6167d3 ("can: Unify droping of invalid tx skbs and netdev stats")
+Fixes: 39549eef3587 ("can: CAN Network device driver and Netlink interface")
+[mkl: also convert can_dropped_invalid_skb(), can_dev_dropped_skb()]
+[mkl: add stable on Cc + add Fixes tags]
+Signed-off-by: Marc Kleine-Budde <mkl@pengutronix.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/xfs/xfs_aops.c  |  2 +-
- fs/xfs/xfs_file.c  |  2 +-
- fs/xfs/xfs_iomap.c | 20 +++++++++++++++++---
- fs/xfs/xfs_iomap.h |  3 ++-
- fs/xfs/xfs_pnfs.c  |  9 ++++++++-
- 5 files changed, 29 insertions(+), 7 deletions(-)
+ drivers/net/can/dev/skb.c | 6 +++---
+ include/linux/can/dev.h   | 2 +-
+ include/linux/can/skb.h   | 4 ++--
+ 3 files changed, 6 insertions(+), 6 deletions(-)
 
-diff --git a/fs/xfs/xfs_aops.c b/fs/xfs/xfs_aops.c
-index ba6b4a180e808..041d83a95d012 100644
---- a/fs/xfs/xfs_aops.c
-+++ b/fs/xfs/xfs_aops.c
-@@ -129,7 +129,7 @@ xfs_end_ioend(
- 	if (ioend->io_flags & IOMAP_F_SHARED)
- 		error = xfs_reflink_end_cow(ip, offset, size);
- 	else if (ioend->io_type == IOMAP_UNWRITTEN)
--		error = xfs_iomap_write_unwritten(ip, offset, size, false);
-+		error = xfs_iomap_write_unwritten(ip, offset, size, false, 0);
- 
- 	if (!error && xfs_ioend_is_append(ioend))
- 		error = xfs_setfilesize(ip, ioend->io_offset, ioend->io_size);
-diff --git a/fs/xfs/xfs_file.c b/fs/xfs/xfs_file.c
-index aba54e3c58366..e05289776090d 100644
---- a/fs/xfs/xfs_file.c
-+++ b/fs/xfs/xfs_file.c
-@@ -539,7 +539,7 @@ xfs_dio_write_end_io(
- 	 * they are converted.
- 	 */
- 	if (flags & IOMAP_DIO_UNWRITTEN) {
--		error = xfs_iomap_write_unwritten(ip, offset, size, true);
-+		error = xfs_iomap_write_unwritten(ip, offset, size, true, 0);
- 		goto out;
+diff --git a/drivers/net/can/dev/skb.c b/drivers/net/can/dev/skb.c
+index b643995fc5369..a39cfdce341ce 100644
+--- a/drivers/net/can/dev/skb.c
++++ b/drivers/net/can/dev/skb.c
+@@ -61,7 +61,7 @@ int can_put_echo_skb(struct sk_buff *skb, struct net_device *dev,
+ 	    (skb->protocol != htons(ETH_P_CAN) &&
+ 	     skb->protocol != htons(ETH_P_CANFD) &&
+ 	     skb->protocol != htons(ETH_P_CANXL))) {
+-		kfree_skb(skb);
++		dev_kfree_skb_any(skb);
+ 		return 0;
  	}
  
-diff --git a/fs/xfs/xfs_iomap.c b/fs/xfs/xfs_iomap.c
-index afd655d8f2ae4..70d7bf0dc4377 100644
---- a/fs/xfs/xfs_iomap.c
-+++ b/fs/xfs/xfs_iomap.c
-@@ -571,7 +571,8 @@ xfs_iomap_write_unwritten(
- 	xfs_inode_t	*ip,
- 	xfs_off_t	offset,
- 	xfs_off_t	count,
--	bool		update_isize)
-+	bool		update_isize,
-+	uint32_t	bmapi_flags)
- {
- 	xfs_mount_t	*mp = ip->i_mount;
- 	xfs_fileoff_t	offset_fsb;
-@@ -633,8 +634,21 @@ xfs_iomap_write_unwritten(
- 		 */
- 		nimaps = 1;
- 		error = xfs_bmapi_write(tp, ip, offset_fsb, count_fsb,
--					XFS_BMAPI_CONVERT, resblks, &imap,
--					&nimaps);
-+					XFS_BMAPI_CONVERT | bmapi_flags,
-+					resblks, &imap, &nimaps);
-+		if (error == -ENOSR && (bmapi_flags & XFS_BMAPI_CONVERT_ONLY)) {
-+			/*
-+			 * Nothing was mapped: the rest of the range starts
-+			 * with a hole or a delalloc extent. Nothing was
-+			 * changed either, but xfs_iext_count_extend() may
-+			 * have logged the inode, and cancelling a dirty
-+			 * transaction shuts the filesystem down. Commit it,
-+			 * as xfs_alloc_file_space() does on -ENOSR.
-+			 */
-+			error = xfs_trans_commit(tp);
-+			xfs_iunlock(ip, XFS_ILOCK_EXCL);
-+			return error ? error : -EIO;
-+		}
- 		if (error)
- 			goto error_on_bmapi_transaction;
- 
-diff --git a/fs/xfs/xfs_iomap.h b/fs/xfs/xfs_iomap.h
-index 4da13440bae9b..eb70f1653776a 100644
---- a/fs/xfs/xfs_iomap.h
-+++ b/fs/xfs/xfs_iomap.h
-@@ -14,7 +14,8 @@ struct xfs_bmbt_irec;
- int xfs_iomap_write_direct(struct xfs_inode *ip, xfs_fileoff_t offset_fsb,
- 		xfs_fileoff_t count_fsb, unsigned int flags,
- 		struct xfs_bmbt_irec *imap, u64 *sequence);
--int xfs_iomap_write_unwritten(struct xfs_inode *, xfs_off_t, xfs_off_t, bool);
-+int xfs_iomap_write_unwritten(struct xfs_inode *ip, xfs_off_t offset,
-+		xfs_off_t count, bool update_isize, uint32_t bmapi_flags);
- xfs_fileoff_t xfs_iomap_eof_align_last_fsb(struct xfs_inode *ip,
- 		xfs_fileoff_t end_fsb);
- 
-diff --git a/fs/xfs/xfs_pnfs.c b/fs/xfs/xfs_pnfs.c
-index fa027574d6de1..4cc5c8b0f935c 100644
---- a/fs/xfs/xfs_pnfs.c
-+++ b/fs/xfs/xfs_pnfs.c
-@@ -315,7 +315,14 @@ xfs_fs_commit_blocks(
- 					(end - 1) >> PAGE_SHIFT);
- 		WARN_ON_ONCE(error);
- 
--		error = xfs_iomap_write_unwritten(ip, start, length, false);
-+		/*
-+		 * A client may only write to blocks that a layout handed out,
-+		 * and xfs_fs_map_blocks() allocates blocks for any hole in a
-+		 * write layout, so refuse to allocate blocks for a hole or a
-+		 * delalloc extent in the committed range.
-+		 */
-+		error = xfs_iomap_write_unwritten(ip, start, length, false,
-+				XFS_BMAPI_CONVERT_ONLY);
- 		if (error)
- 			goto out_drop_iolock;
+@@ -87,7 +87,7 @@ int can_put_echo_skb(struct sk_buff *skb, struct net_device *dev,
+ 	} else {
+ 		/* locking problem with netif_stop_queue() ?? */
+ 		netdev_err(dev, "%s: BUG! echo_skb %d is occupied!\n", __func__, idx);
+-		kfree_skb(skb);
++		dev_kfree_skb_any(skb);
+ 		return -EBUSY;
  	}
+ 
+@@ -368,7 +368,7 @@ bool can_dropped_invalid_skb(struct net_device *dev, struct sk_buff *skb)
+ 	return false;
+ 
+ inval_skb:
+-	kfree_skb(skb);
++	dev_kfree_skb_any(skb);
+ 	dev->stats.tx_dropped++;
+ 	return true;
+ }
+diff --git a/include/linux/can/dev.h b/include/linux/can/dev.h
+index 23492213ea359..30a3512139cb9 100644
+--- a/include/linux/can/dev.h
++++ b/include/linux/can/dev.h
+@@ -160,7 +160,7 @@ static inline bool can_dev_dropped_skb(struct net_device *dev, struct sk_buff *s
+ 	if (priv->ctrlmode & CAN_CTRLMODE_LISTENONLY) {
+ 		netdev_info_once(dev,
+ 				 "interface in listen only mode, dropping skb\n");
+-		kfree_skb(skb);
++		dev_kfree_skb_any(skb);
+ 		dev->stats.tx_dropped++;
+ 		return true;
+ 	}
+diff --git a/include/linux/can/skb.h b/include/linux/can/skb.h
+index 27d0ca115c6c1..1f0c3e8cde907 100644
+--- a/include/linux/can/skb.h
++++ b/include/linux/can/skb.h
+@@ -92,12 +92,12 @@ static inline struct sk_buff *can_create_echo_skb(struct sk_buff *skb)
+ 
+ 	nskb = skb_clone(skb, GFP_ATOMIC);
+ 	if (unlikely(!nskb)) {
+-		kfree_skb(skb);
++		dev_kfree_skb_any(skb);
+ 		return NULL;
+ 	}
+ 
+ 	can_skb_set_owner(nskb, skb->sk);
+-	consume_skb(skb);
++	dev_consume_skb_any(skb);
+ 	return nskb;
+ }
+ 
 -- 
 2.53.0
 
