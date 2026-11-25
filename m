@@ -1,50 +1,50 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795623475;
-	b=btQKwDu/L9AyCP8vIJJ1BHv2JX+yGGZaQR7dMDOyYy/lmZFaGz0vu8rkq3RD7fyWt/+2
-	 wpOm0DE8yAQ/dhULmmyMhOpW4sFww0MC+qhGMNGHjZLQDKnHQKPYnd46iQehEQ9yjPDhp
-	 yg5vlogcANjeJgBh1vbiZPFHdKL3EOa32oyjKmQfntDlBd+e2BHDvKj8+1pzqs5EtwCF3
-	 Wc6KGGHrAsa6hnAtTofkvwx4DIXkYU2hHzIJTxeugqGCHBkKVplmgMUydZgb359lIiL8O
-	 KFas5vEhkquO5tcffBs1ISqtWyoWLJl7jAZ59jRknp44wgGWZ03c3Yk0ctmGarQ9aWg==
+	t=1795623478;
+	b=r+ikUXRiiHKMGSv2SjAxgBP1Zo7RS88ktFmlprop0yqrGPqiaJmGRYcPuqO5/nVd9oiZ
+	 iouLkYhrXDdoBcS59oQZOe+wUFgtCGNyApxguTGYzvbmgHZdOLsmeAJDlaqxB87WVWDEs
+	 SyepFy8wj/f4+g63OREIsHyZjAKPAaInf7LHnIN/0VQ7o+LWLW08WvdBC1znh3k2hlkU0
+	 Rg6ou1rsZwG8EnqE8ox9cHaJceHrl/QC9EkxzKCXHPtbfJmH1CSyzRbaa4D+eab9OY8cQ
+	 kL1eSqm7IL3SZv9XdmhfNdbKDONT+8omxXN4CuQ3f34X4SMq0nUQ7oCmpQc317k6fNw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795623475;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795623478;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=JBH2mbfLViEe66QyO/vg3DM8ockD2C6TFpnN5C00bvc=;
-	b=E4ykJBpDZkPL4RwSsUyEhP0jSSlv+WDRh3o2xMWy8wQZtKKnTbq8OEReRhDZgPHV9Wxh
-	 JdUzr9yRPqCoetwiQs5z3vo212irsZBDjkzfMlnWK2vdMi2By8j7akeTFB9n7VEmK3uHX
-	 tZGmnCzTtH7q92zl5So98F0qUqRY8OubKmWCt6w0xSzY8uknNdgJ+2hQjmOuo7iw6IVMn
-	 oRfa8hN4eanU6/0OCnqSp/79XrbBIykQx1S3SRMz3+n7sik2YFvdYtGiI+ArHtNC7VNHL
-	 l8YULxRSRDoX+4gxV7YSaFCuO0LxmCjLVt9392VskJdPyN2fWawQZ03i/6SabFTCk6Q==
+	bh=DkZAAR0e86n43dNRi1/yOrw9khXd/8BrXSsOizAcsyo=;
+	b=XCAgZwsxStXEm2tH85VUeyvLrbciPptBxM3G4taKHHHQXZSK7U+TVHDBn0Df2WcIN/JQ
+	 kNE3HlFgDhekk1mGnjCweyVn52SgEQm9l26pQNbV0mslSyCvoVKXk5NcxRuV87z3y5P5w
+	 pPIx0oXGixczyUUwXLa8HSrnMAG/IqI8Y1Xq/9RY51vSnbRkYTVcKUxbZFyEheJK6TbKb
+	 nbq3hyskAB6U6PVe6il9IhVyzFIWUg8Iw2wDDvNvFeGgsydCONI6dSiL3iG4T+bTkI5U9
+	 u9gA7QvlbDnIj68mn17AHS11cnkgP9BazUAA02MxbGYmDm7kbspTFNN49i7O7l9xIxA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=xlxqP55g;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=nro0FItK;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1BD7E606A31E;
-	Wed, 25 Nov 2026 16:17:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C632B606A321;
+	Wed, 25 Nov 2026 16:17:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=xlxqP55g
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4AFA91F000CF;
-	Wed, 25 Nov 2026 16:17:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=nro0FItK
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A22A61F000C6;
+	Wed, 25 Nov 2026 16:17:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795623474;
-	bh=JBH2mbfLViEe66QyO/vg3DM8ockD2C6TFpnN5C00bvc=;
+	s=korg; t=1795623478;
+	bh=DkZAAR0e86n43dNRi1/yOrw9khXd/8BrXSsOizAcsyo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=xlxqP55g+HrQqr8myhJa0Xqul3DOZrYLnH+4nJpXaWvjY75cN5UdA+AfteVsllZP0
-	 +hEClsm1xcrOVTpb1kwyr4wtdl8hS4bDsjwePy76KG067o4dHPmGLr/we+rViaCYo6
-	 P6x5xqJfydvdcMyGsD3neUcsxivIoVeSelkb73VE=
+	b=nro0FItKJvsVeki8kCtcApoFKxu+ccNBZznz0hz28EKV29GM08qNRD0/AodcWMQuQ
+	 ta/ZuPdjrZQCt4ewAVDrkFC8OWPIKVlHGP+xDm5YQUvLCZUjxVYOlexN/ogjEJF6mU
+	 27HmLXvBdUySsw7mCXrMmRUBbXMnEga0FQ+CpGdw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Amir Goldstein <amir73il@gmail.com>
-Subject: [PATCH 6.18 835/990] ovl: do not allow nfs_export with data-only layers
-Date: Wed, 25 Nov 2026 15:36:42 +0100
-Message-ID: <20261125143841.591595984@linuxfoundation.org>
+	Mikulas Patocka <mpatocka@redhat.com>
+Subject: [PATCH 6.18 871/990] dm-cache: fix ending a cursor that never began
+Date: Wed, 25 Nov 2026 15:37:18 +0100
+Message-ID: <20261125143842.423561501@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143822.072087159@linuxfoundation.org>
 References: <20261125143822.072087159@linuxfoundation.org>
@@ -66,48 +66,35 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Amir Goldstein <amir73il@gmail.com>
+From: Mikulas Patocka <mpatocka@redhat.com>
 
-commit fba955b070d13e2fdac097577ce3c6ffbeda4ea9 upstream.
+commit 421420758be348cb90715bfaa26e1211a12ff1d0 upstream.
 
-Since data-only layers no longer require metacopy=on, which conflicts
-with nfs_export=on, an overlay with data-only layers can be mounted
-with nfs_export=on.
+If dm_bitset_cursor_begin fails, dm_array_cursor_end(&cmd->hint_cursor)
+is called. However, cmd->hint_cursor was only initialized if the variable
+hints_valid is true. Thus, we must also destroy hint_cursor only if
+hints_valid is true.
 
-Decoding a file handle of a lower metacopy file whose data is in a
-data-only layer builds the inode only from the decoded lower dentry,
-without the lazy lowerdata redirect, so the data of the file would be
-read from the metacopy file in the lower layer.
-
-Fail the mount with explicit nfs_export=on and data-only layers and
-otherwise disable nfs_export with data-only layers.
-
-Fixes: 5ef7bcdeecc9 ("ovl: relax redirect/metacopy requirements for lower -> data redirect")
+Signed-off-by: Mikulas Patocka <mpatocka@redhat.com>
+Assisted-by: Claude:claude-opus-5
 Cc: stable@vger.kernel.org
-Signed-off-by: Amir Goldstein <amir73il@gmail.com>
+Fixes: 629d0a8a1a10 ("dm cache metadata: add "metadata2" feature")
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/overlayfs/params.c |   10 ++++++++++
- 1 file changed, 10 insertions(+)
+ drivers/md/dm-cache-metadata.c |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
---- a/fs/overlayfs/params.c
-+++ b/fs/overlayfs/params.c
-@@ -945,6 +945,16 @@ int ovl_fs_params_verify(const struct ov
+--- a/drivers/md/dm-cache-metadata.c
++++ b/drivers/md/dm-cache-metadata.c
+@@ -1433,7 +1433,8 @@ static int __load_mappings(struct dm_cac
+ 					   from_cblock(cmd->cache_blocks),
+ 					   &cmd->dirty_cursor);
+ 		if (r) {
+-			dm_array_cursor_end(&cmd->hint_cursor);
++			if (hints_valid)
++				dm_array_cursor_end(&cmd->hint_cursor);
+ 			dm_array_cursor_end(&cmd->mapping_cursor);
+ 			return r;
  		}
- 	}
- 
-+	/* Resolve nfs_export -> !data-only layers dependency */
-+	if (config->nfs_export && ctx->nr_data) {
-+		if (set.nfs_export) {
-+			pr_err("NFS export is not supported with data-only layers\n");
-+			return -EINVAL;
-+		}
-+		pr_info("disabling nfs_export due to data-only layers\n");
-+		config->nfs_export = false;
-+	}
-+
- 	/* Resolve nfs_export -> index dependency */
- 	if (config->nfs_export && !config->index) {
- 		if (!config->upperdir &&
 
 
