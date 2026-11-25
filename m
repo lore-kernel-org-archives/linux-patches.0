@@ -1,52 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795625691;
-	b=JIfBeukaUQyFLzH5+eND+pAxsKvreQpP6lN3PG0i+bpQYbXVktkF0T2rOsp/zuvROw8e
-	 CKOOKfonp2EF4oTTh2H+ytaKoT1MNSekm8SCVQ4iMHODyTb6wWMDj/mG0jf5+Quand6AA
-	 3ggk6F86kPgBlucPZuxyvc2MSZqY6GsAe+N3dujvSx4rAbn1FpaBAeFv02ddmyLiKXodl
-	 AfeA5l/NLzGO4TOTEpb2Rmi08XA/nCYSEGY0bn1BWJ71qrDbKxIFGbkAdEi8Go3DRTeg5
-	 LNpl8vcratLzuKP5LsIidDjGTQqGNN7aGjQoQH1gnHEePv6s6PVAFXrf3jf0DpsFGiA==
+	t=1795625694;
+	b=v9RrC/kbbp+3WJuKCczJAGaNLh++Mz/JBCYVPH4yGxprCMIOyO+i7Ng0FPyYCb+kMqc6
+	 r70mvw+dEz4dr2ATFhrGY2SJ9gwGk6kOjT+9CR8EhzICT7sZTGKgOQ3ApEMNuFe4xJX1r
+	 nLutdLbhfsL58rt7CvkAt2RpvAxUTD6P95dRyBJCIG2DMj+Y6PbA4ZFAMp3V5MGnXH9vH
+	 sadNgoBiQRAxzGMcxv1+OTu8rLI4ZHC/qAXs0j4cCnXQQd2lfXf+pQjdFOO7KDRbTqzcd
+	 T+RzDvxveyIIMdQeY+rOzn5Da0+ReJ3Mgte21MDLlHOJPM9jFqoQKsit2FOTcMv3+Gg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795625691;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795625694;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=vpXt8rkrHO4XXymq7u0/yeIBTbXqw3OYdNg3+v3jHBA=;
-	b=IScIdz5914q8InINKa+RkPbfs9qz0bCig9zogMh5xOaaw6mubuqAA5v6+t0zKHZtkTcF
-	 tSdNsP8M2VV7wWMWejCz1JOQExWUBF/DkAWb4puf4k9OhGn1LJ4cCTUxc6DGvpt9MP/68
-	 GCdcILqXI+pSBThvOh/h2clTdkZ039eoa1yV473ghLEVN+jrbXPLfyKNEi88onakh2001
-	 EhKZ/fIhmpo/Vm+rR/+ksfmzl2tUUebHRvFH7tGUBwGPQdyABURZLoS00G2Jbl1mNLedQ
-	 S5hhNCQyF/7dW2tfp+ZxJ83HlWVIw5C3XRjgtPaEgGlEwZmM0MqGosm02Lxoy581Cgg==
+	bh=pjFIqownmICy+YJVXbKjfsS/vSXzxY7BCJC2alTJLhs=;
+	b=xUTuGD6bB//OI37+Q5bcBlKGmt2hpZBmSm4ORFFn0qqtaet8bJw3ENSe92dzHsi4SQFY
+	 ZLdVh/cM5sq445Xwfg3GkZLo4r4ncIj4Qx/fwKj4Rg0sIxZsfVSssxRbjUTQ/nKMfz6/q
+	 jpg/N9WPxK8IOWyXp+fUrxesimoD4lrbWfYChBKg0ZCbpi7LAiPXDPDIRrM3cRqdvSG0N
+	 zenkR7olKs9EZQKUT+RMy4TdmdurxeOmrxRYJuk/HiG9n2YdzENbbLliMucrEZ+XB8ukw
+	 0zAeB1XlCr0DxvtgXkKpdVqYYnFKYEVJZTXvVUsQ/4MlqPb6T6NEw/kqLEDLNSXxk4A==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="1/R55OOg";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=b7D1LSJ6;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 89D6F606A323;
-	Wed, 25 Nov 2026 16:54:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7D5A7606A31E;
+	Wed, 25 Nov 2026 16:54:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=1/R55OOg
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D8C441F000C4;
-	Wed, 25 Nov 2026 16:54:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=b7D1LSJ6
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A6C531F000C4;
+	Wed, 25 Nov 2026 16:54:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795625691;
-	bh=vpXt8rkrHO4XXymq7u0/yeIBTbXqw3OYdNg3+v3jHBA=;
+	s=korg; t=1795625694;
+	bh=pjFIqownmICy+YJVXbKjfsS/vSXzxY7BCJC2alTJLhs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=1/R55OOgDtBiucHaQjSa04EAZsqz9HIid03X7wimXMEcz5zGgl7IHsPwvn54XYVPo
-	 xn4Pk8DtvQmrTVkzFtYslptJTxkLxKrVySQ6RqjUXYB5B48JBr+gor2lWGxy35wwMl
-	 H+aIU4+pM44pQ0yJ6+TjDJsGJBmeXRfjC4Qfm3Pw=
+	b=b7D1LSJ6tUW2uawgl6XR1hDG++87Bit47KlF9ArfsafUfk7bkymcb3uv8kMuS195S
+	 EgNff6FO8HE+GOcPbg8WbwH1Iy8DnEo5Clzz5FE4DhLT6eeX65njVAE2V+x8yck2VX
+	 5C5HIZ4fkqXrT+buzhrnagjOzcBDAUK9KxyEHK7s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chris Mason <mason@kernel.org>,
-	Amir Goldstein <amir73il@gmail.com>,
-	"Christian Brauner (Amutable)" <brauner@kernel.org>
-Subject: [PATCH 6.12 563/816] backing-file: pass RWF_NOAPPEND to synchronous writes
-Date: Wed, 25 Nov 2026 15:35:11 +0100
-Message-ID: <20261125143902.213688707@linuxfoundation.org>
+	Eric Dumazet <edumazet@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 6.12 599/816] net: gro: do not undo remote checksum offload on merged packets
+Date: Wed, 25 Nov 2026 15:35:47 +0100
+Message-ID: <20261125143903.043684039@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143849.205329330@linuxfoundation.org>
 References: <20261125143849.205329330@linuxfoundation.org>
@@ -68,71 +67,99 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chris Mason <mason@kernel.org>
+From: Eric Dumazet <edumazet@kernel.org>
 
-commit afa735786a89bde4959db52f20e3579de54ec740 upstream.
+commit c817ec1b06875b98460fbd19591be541bc3fa924 upstream.
 
-pwritev2() with RWF_NOAPPEND ignores the offset and appends the data on
-an overlayfs or FUSE passthrough file that was opened with O_APPEND, and
-the call still returns success. The flag must make the write go to the
-given offset even though the file is in append mode. Any user who can
-write to the file is affected, with the default mount options.
+skb_gro_flush_final_remcsum() calls skb_gro_remcsum_cleanup() to undo
+the checksum adjustment done by skb_gro_remcsum_process() when the
+packet was not consumed by GRO.
 
-overlayfs and FUSE passthrough forward the reads and writes on their
-files to a backing file on an underlying filesystem, through the helpers
-in fs/backing-file.c.
+When the inner handler merged the packet (NAPI_GRO_CB(skb)->same_flow
+is set), grc->offset can no longer be trusted:
 
-The flag works for the file that the user opened: kiocb_set_rw_flags()
-clears IOCB_APPEND in the write's kiocb. It also copies RWF_NOAPPEND
-into ki_flags, as it does with every RWF_ flag.
+- skb_gro_receive() either gives the frags or the head of the skb
+  to the held packet, or uses __skb_pull(skb, offset) before adding
+  the skb to the frag_list of the held packet.
 
-overlayfs and FUSE passthrough then pass the write on to the backing
-file. They opened it with the open flags of the user's file, so it is in
-append mode too.
+- skb_gro_receive_list() uses skb_pull(skb, skb_gro_offset(skb)).
 
-For a synchronous write, do_backing_file_write_iter() calls
-vfs_iter_write(), which sets up a new kiocb for the backing file. That
-kiocb starts out with IOCB_APPEND set. vfs_iter_write() is only given
-the flags of the user's kiocb that are in BACKING_IOCB_MASK, and
-RWF_NOAPPEND is not one of them. So nothing clears IOCB_APPEND again,
-and the data goes to the end of the file while the call returns success.
+grc->offset is relative to the original skb->data, so the 2-byte
+read-modify-write done by skb_gro_remcsum_cleanup() can land in
+the payload of a packet which now belongs to the GRO packet.
+pskb_may_pull() can also be called on this frag_list member.
 
-An asynchronous write reuses the flags of the user's kiocb and is not
-affected.
+With fraglist GRO, this can also be a use-after-free:
+pskb_may_pull(skb, skb_gro_offset(skb)) in skb_gro_receive_list()
+or udp_gro_receive_segment() releases the first page fragment if it
+only contains headers. NAPI_GRO_CB(skb)->frag0 and frag0_len are not
+updated, so skb_gro_remcsum_cleanup() takes the fast path and writes
+through frag0 into a page the skb no longer holds a reference on.
+The non merged case, where frag0 is used after this pull, is handled
+in the following patch.
 
-Reproduced by calling pwritev2() with RWF_NOAPPEND at offset 0, on an
-overlayfs file and on a FUSE passthrough file opened with O_APPEND: the
-data was at the end of the file afterwards.
+For skbs merged by skb_gro_receive(), the cleanup can be skipped:
+the skb is freed, or its headers are rebuilt from the head skb in
+skb_segment().
 
-Fix this by adding RWF_NOAPPEND to BACKING_IOCB_MASK.
+Fraglist members keep their own inner headers, as skb_segment_list()
+only copies the link-layer and tunnel headers from the head skb.
+Their checksum can not be right in all cases: a packet forwarded with
+its tunnel header needs the original value, while a VXLAN packet
+decapsulated locally needs the adjusted one, as vxlan_remcsum() only
+adjusts the head skb. Make skb_gro_receive_list() refuse packets with
+skb->remcsum_offload set, so that fraglist members never carry an
+adjusted checksum.
 
-Fixes: 73fa7547c70b ("vfs: add RWF_NOAPPEND flag for pwritev2")
+This affects VXLAN (VXLAN_F_REMCSUM_NOPARTIAL) and GUE
+(FOU_F_REMCSUM_NOPARTIAL).
+
+This was found while fixing a report from Taesoo Kim and Cen Zhang,
+who used LLM assisted code analysis and provided reproducers.
+
+Fixes: 26c4f7da3e41 ("net: Fix remcsum in GRO path to not change packet")
 Cc: stable@vger.kernel.org
-Signed-off-by: Chris Mason <mason@kernel.org>
-Signed-off-by: Amir Goldstein <amir73il@gmail.com>
-Link: https://patch.msgid.link/20261101123440.3184069-1-amir73il@gmail.com
-Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
+Signed-off-by: Eric Dumazet <edumazet@kernel.org>
+Link: https://patch.msgid.link/20261104151042.1157782-2-edumazet@kernel.org
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/backing-file.c |    7 ++++++-
- 1 file changed, 6 insertions(+), 1 deletion(-)
+ include/net/gro.h |    8 +++++++-
+ net/core/gro.c    |    7 +++++++
+ 2 files changed, 14 insertions(+), 1 deletion(-)
 
---- a/fs/backing-file.c
-+++ b/fs/backing-file.c
-@@ -103,8 +103,13 @@ struct backing_aio {
+--- a/include/net/gro.h
++++ b/include/net/gro.h
+@@ -354,7 +354,13 @@ static inline void skb_gro_remcsum_clean
+ 	void *ptr;
+ 	size_t plen = grc->offset + sizeof(u16);
  
- static struct kmem_cache *backing_aio_cachep;
+-	if (!grc->delta)
++	/* Once merged, grc->offset can not be trusted: the frags or head
++	 * of this skb now belong to the GRO packet, or skb->data was pulled
++	 * past the headers before adding it to a frag_list.
++	 * skb_gro_receive_list() does not merge packets with an adjusted
++	 * checksum, other merged packets do not use their headers anymore.
++	 */
++	if (!grc->delta || NAPI_GRO_CB(skb)->same_flow)
+ 		return;
  
-+/*
-+ * RWF_NOAPPEND stays set in ki_flags.  Pass it on, because the backing file is
-+ * in append mode as well and a new kiocb for it starts with IOCB_APPEND.
-+ */
- #define BACKING_IOCB_MASK \
--	(IOCB_NOWAIT | IOCB_HIPRI | IOCB_DSYNC | IOCB_SYNC | IOCB_APPEND)
-+	(IOCB_NOWAIT | IOCB_HIPRI | IOCB_DSYNC | IOCB_SYNC | IOCB_APPEND | \
-+	 (__force int) RWF_NOAPPEND)
+ 	ptr = skb_gro_header(skb, plen, grc->offset);
+--- a/net/core/gro.c
++++ b/net/core/gro.c
+@@ -242,6 +242,13 @@ int skb_gro_receive_list(struct sk_buff
+ 		     NAPI_GRO_CB(skb)->flush))
+ 		return -E2BIG;
  
- static rwf_t iocb_to_rw_flags(int flags)
- {
++	/* Fraglist members keep their own headers. Their checksum can not
++	 * be right both for a forwarded packet and for a decapsulated one,
++	 * if remote checksum offload adjusted it.
++	 */
++	if (unlikely(skb->remcsum_offload))
++		return -EINVAL;
++
+ 	if (!pskb_may_pull(skb, skb_gro_offset(skb))) {
+ 		NAPI_GRO_CB(skb)->flush = 1;
+ 		return -ENOMEM;
 
 
