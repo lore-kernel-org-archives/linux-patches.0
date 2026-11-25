@@ -1,51 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795619865;
-	b=k70qnq3K97RajPs4m0knlU77gqbZBh32HJrdDT78LaHU1gdHxrkCXb5Uz44TLjCtPXR2
-	 n2II3HLoZkxwB5UCXheOtIeSftflEJWo9/EZjKNkIzGPLxtGTiaNE6UScU4yisGhKa8qw
-	 3IfRTqW9k//4q8dMB9mTconu2TrE57BO7J6TeFpzTyPxQQ9xDBeC9wbVEdvV4fv9+PO9v
-	 vnp+JxVZ2SpvKj8THxkHTqkgbP+zqwTmle46VZyQTnwHsiQAVjpM1UOboeKOnTFzgwN9N
-	 0ZKZIPtpgYmybRSJmfAAkBfTfYLGWOAiiwG8hJZkfjACfv+D2dgSBNlERGEQwKcBW7g==
+	t=1795619869;
+	b=uMRQLVQnMart0gmuneH7Am6Cw3WkGZ9qdinj1VXft0XI8HwUpFLk2zSewUx25Ls4wZPI
+	 nzRLrU+URMqM0GRJz6OvUtjZ5FwKZAFv13cD/F7Y+21CYBUXRVnC/mUyNtO02Ne88SFQ/
+	 6+/5rTWxXmDUzLwMy/tzvQVqNGArcL4TSJvfLWn4Y2BhSzuuICFDv2z17yL/tzjy9APbi
+	 A63yDcXqVN+RoUvP/y5FvG9t+TYC9m3+8Cj1DsaE7OxBk3JwWdQgQaVn4mJDAMDPrlSdP
+	 na4yU6tmIxphbDDS+hA2uzKIaLVut78H3sHrW3nsOERSw3hwfv3GUqsQ2u1NopcWFUg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795619865;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795619869;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=nE8tvQx1ke0I1US0qieeJpxlhf89RXhcjSHCrHjOJgI=;
-	b=Ri8X/GU8PEKVbYj7eM7dgmRl4OOWJ96Wvz0uG2Uu72HmtZMy5H60jFl9cDBnTzeyzaek
-	 ZK05JzKZdzAwBp2kyxCaMFR2svbQMHU0BaRpDX4v5HQGOyvjwLrcjAV5CGmVbwyeA3F7c
-	 oYtUPYX645Xs9AoxtGKlx02XvMLi+D6WXP8OiPHBa2l+cJqmY+di6cT9Xrqa30M7lIr5m
-	 p7LLlvicvB4jb5mvsEvAhOHFXddoG5fgiTEN0t0qMJvp833kLytTqTknyRtLZYE2276YK
-	 ENVNAqcPtq9xbclpsIdKW2PC+3yRp5sYyI9h9ahFj0Gsw2xzdxzpPLoMaH+ZXbWeDmw==
+	bh=6uGornIN+RJs4EOhWoaWx7wjpVFajibmTH7idb2IU9w=;
+	b=BVaIOcnzmnIMYaI5IZUAL6w4A5NL38l3VGr8pY7joo1kiq4Ha6Enx3Xa8EVYCMd2gKsB
+	 /92GPKaY6LA1UNRJu2CK7jLYguJFZuvWQR4clGuwyTJPL4f8Qb8OnRJvjesWXc68qXMdm
+	 pzek81pTS/2v9korM+0cajyEueTuIwr3n2DyMQ5jv9QCsV2OGNiiraM4ZwOCSOOz/E4C5
+	 KdvgCcPww+FyV5FeF10LPAYi69rxf72ZLgKbBxaNRZwxygk6vd1ctFj+simdJpeazwsnz
+	 AXvaYXcUI0RFBl2dM/PmHZgDQ84cv1Xh6Q4cXHY/0rC+r07CyCfHgxtUy8vsFDNG8Bg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=gg0EfkdC;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ozV8obit;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D9CC5606A31E;
-	Wed, 25 Nov 2026 15:17:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0B08C606A323;
+	Wed, 25 Nov 2026 15:17:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=gg0EfkdC
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C253F1F000C4;
-	Wed, 25 Nov 2026 15:17:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ozV8obit
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0339B1F000CA;
+	Wed, 25 Nov 2026 15:17:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795619865;
-	bh=nE8tvQx1ke0I1US0qieeJpxlhf89RXhcjSHCrHjOJgI=;
+	s=korg; t=1795619868;
+	bh=6uGornIN+RJs4EOhWoaWx7wjpVFajibmTH7idb2IU9w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=gg0EfkdCaPIZs/0nfDHfmXIILOUghrt8/5H5wRRaDym59nD+akmW5UMIqAVfuxbns
-	 nncv6aQdI2ARxdvN6g6YZmibS9JjSpl855Jw2gd34g2sOtFaRAlgEW5sNDwnxa+yqf
-	 dufYoRMQ/fymm+Fy3UVkklYAsjYyABJWmDTaM6eg=
+	b=ozV8obitEQ6zIs6X104W1lrxiSNRfX/taOUaMtHcaU45iL1v8KxZHlGpUXVcUTNn9
+	 IdLinqWF1AQ15+0wgy3OQRwkNS82H8IN+dkJyadAgaI0esaLv9a29PnarbNPCI76Bz
+	 QJgBjDpHCmInt1g/R3FuuYxR6cGZIUQwDrp/LQCs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mark Brown <broonie@kernel.org>,
-	Vishwaroop A <va@nvidia.com>
-Subject: [PATCH 7.3 0731/1005] spi: tegra210-quad: Track DMA mapping state
-Date: Wed, 25 Nov 2026 15:34:29 +0100
-Message-ID: <20261125143838.885276584@linuxfoundation.org>
+	Josef Bacik <josef@toxicpanda.com>,
+	"Christian Brauner (Amutable)" <brauner@kernel.org>
+Subject: [PATCH 7.3 0696/1005] dcache: let umount find a disconnected ex-mountpoint
+Date: Wed, 25 Nov 2026 15:33:54 +0100
+Message-ID: <20261125143838.058390747@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143821.729802100@linuxfoundation.org>
 References: <20261125143821.729802100@linuxfoundation.org>
@@ -67,112 +67,101 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Vishwaroop A <va@nvidia.com>
+From: Josef Bacik <josef@toxicpanda.com>
 
-commit 7b9e6f7bc13c0259b192d0a964e802d4ad53b8b8 upstream.
+commit 32e564e222b7ca3811b2acee404b73fcaf43f312 upstream.
 
-tegra_qspi_dma_unmap_xfer() assumes a streaming mapping is always
-outstanding and recomputes its length from the live
-tqspi->curr_dma_words. Nothing records whether tegra_qspi_dma_map_xfer()
-mapped anything, so neither assumption holds.
+When a mount goes away the reference to its mountpoint is dropped with
+dput_to_list() and namespace_unlock() evicts the dentry after dropping
+namespace_sem. Nothing pins the filesystem at that point so it can be
+unmounted at the same time. That's fine as long as
+shrink_dcache_for_umount() finds the dentry. It then either evicts it
+itself or waits for the eviction to finish.
 
-For a multi-chunk transfer, handle_dma_based_xfer() unmaps the chunk that
-just completed, recalculates the parameters for the next chunk, which
-overwrites curr_dma_words, and re-arms the hardware. If
-tegra_qspi_start_dma_based_transfer() then fails at its
-tegra_qspi_dma_map_xfer() call, nothing is mapped. That early return also
-sits above the smp_store_release() that clears tqspi->trans_status, so the
-previous chunk's QSPI_RDY survives, and the re-arm's return value is never
-checked, so handle_dma_based_xfer() returns IRQ_HANDLED without completing
-the transfer.
+But it can't find a disconnected root as those are neither in the tree
+nor on ->s_roots. And they can be mounted on:
 
-The caller times out, tegra_qspi_handle_timeout() sees the stale QSPI_RDY,
-concludes the transfer completed and calls handle_dma_based_xfer() again.
-No DMA completion arrives, so num_errors is incremented and
-tegra_qspi_dma_unmap_xfer() runs with nothing mapped. t->tx_dma then holds
-either the DMA_MAPPING_ERROR sentinel or, if the RX mapping was the one
-that failed, the preceding chunk's address that has already been released.
-Behind an IOMMU the latter frees an IOVA that may since have been
-reallocated.
+  fd = open_by_handle_at(mnt_fd, handle of a file with no dentry, O_PATH);
+  tree = open_tree(AT_FDCWD, "/tmp/x", OPEN_TREE_CLONE);
+  move_mount(tree, "", fd, "", MOVE_MOUNT_F_EMPTY_PATH |
+			       MOVE_MOUNT_T_EMPTY_PATH);
+  close(fd);
 
-Record whether a mapping is outstanding and the length that was mapped,
-and return early from tegra_qspi_dma_unmap_xfer() when there is nothing to
-release. is_dma_mapped is only updated under tqspi->lock, or on the timeout
-path after synchronize_irq() and cancel_work_sync() have quiesced the ISR
-and the bottom half.
+  thread A                              thread B
+  umount2("/proc/self/fd/<tree>", MNT_DETACH)
+    namespace_unlock()
+      up_write(&namespace_sem)
+                                        umount of the filesystem
+                                          shrink_dcache_for_umount()
+                                          evict_inodes()
+                                          "Busy inodes after unmount"
+      shrink_dentry_list()
+        dentry_kill()
+          iput() of an inode of a superblock that is gone
 
-Also skip releasing the TX mapping on the RX failure path unless a TX
-mapping was created; t->tx_dma is uninitialised when t->tx_buf is NULL.
+So put such a dentry on ->s_roots when it's put on the shrink list. From
+then on it's a secondary root like any other.
 
-Fixes: 921fc1838fb0 ("spi: tegra210-quad: Add support for Tegra210 QSPI controller")
-Suggested-by: Mark Brown <broonie@kernel.org>
-Cc: stable@vger.kernel.org
-Signed-off-by: Vishwaroop A <va@nvidia.com>
-Link: https://patch.msgid.link/20261026111412.3843954-3-va@nvidia.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+This needs the previous patch. Otherwise do_one_tree() takes the dentry
+off ->s_roots and umount doesn't wait for an eviction in progress.
+
+The stable tag is narrower than the Fixes tag on purpose. Before commit
+e9895609cb7f ("wind ->s_roots via ->d_sib instead of ->d_hash") umount
+doesn't wait for a secondary root that is being evicted either.
+
+Fixes: 4edbe133f851 ("make struct mountpoint bear the dentry reference to mountpoint, not struct mount")
+Cc: stable@vger.kernel.org # v7.2+
+Signed-off-by: Josef Bacik <josef@toxicpanda.com>
+Link: https://patch.msgid.link/20261030-work-dcache-ai-v1-3-cd6b86e0ccc7@kernel.org
+Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/spi/spi-tegra210-quad.c |   31 +++++++++++++++++++++++++------
- 1 file changed, 25 insertions(+), 6 deletions(-)
+ fs/dcache.c                    |   16 ++++++++++++++--
+ include/linux/fs/super_types.h |    2 +-
+ 2 files changed, 15 insertions(+), 3 deletions(-)
 
---- a/drivers/spi/spi-tegra210-quad.c
-+++ b/drivers/spi/spi-tegra210-quad.c
-@@ -215,6 +215,17 @@ struct tegra_qspi {
- 	bool					is_packed;
- 	bool					use_dma;
- 
-+	/*
-+	 * Set while a streaming mapping created by
-+	 * tegra_qspi_dma_map_xfer() is outstanding, together with the
-+	 * length that was handed to dma_map_single(). is_curr_dma_xfer
-+	 * only records that the last armed chunk took the DMA path,
-+	 * which is not the same thing: a chunk whose mapping failed
-+	 * leaves the DMA path flagged with nothing mapped.
-+	 */
-+	bool					is_dma_mapped;
-+	unsigned int				dma_map_len;
-+
- 	u32					command1_reg;
- 	u32					dma_control_reg;
- 	u32					def_command1_reg;
-@@ -584,24 +595,32 @@ static int tegra_qspi_dma_map_xfer(struc
- 	if (t->rx_buf) {
- 		t->rx_dma = dma_map_single(tqspi->rx_dma_dev, (void *)rx_buf, len, DMA_FROM_DEVICE);
- 		if (dma_mapping_error(tqspi->rx_dma_dev, t->rx_dma)) {
--			dma_unmap_single(tqspi->tx_dma_dev, t->tx_dma, len, DMA_TO_DEVICE);
-+			if (t->tx_buf)
-+				dma_unmap_single(tqspi->tx_dma_dev, t->tx_dma,
-+						 len, DMA_TO_DEVICE);
- 			return -ENOMEM;
- 		}
- 	}
- 
-+	tqspi->dma_map_len = len;
-+	tqspi->is_dma_mapped = true;
-+
- 	return 0;
- }
- 
- static void tegra_qspi_dma_unmap_xfer(struct tegra_qspi *tqspi, struct spi_transfer *t)
+--- a/fs/dcache.c
++++ b/fs/dcache.c
+@@ -45,7 +45,8 @@
+  * dcache_hash_bucket lock protects:
+  *   - the dcache hash table
+  * s_roots_lock protects:
+- *   - the s_roots list (see __d_move()/dentry_unlist()/d_obtain_root())
++ *   - the s_roots list (see __d_move()/dentry_unlist()/d_obtain_root()/
++ *     dput_to_list())
+  * dentry->d_sb->s_dentry_lru_lock protects:
+  *   - the dcache lru lists and counters
+  * d_lock protects:
+@@ -1101,7 +1102,18 @@ void dput_to_list(struct dentry *dentry,
  {
--	unsigned int len;
--
--	len = DIV_ROUND_UP(tqspi->curr_dma_words * tqspi->bytes_per_word, 4) * 4;
-+	if (!tqspi->is_dma_mapped)
-+		return;
- 
- 	if (t->tx_buf)
--		dma_unmap_single(tqspi->tx_dma_dev, t->tx_dma, len, DMA_TO_DEVICE);
-+		dma_unmap_single(tqspi->tx_dma_dev, t->tx_dma,
-+				 tqspi->dma_map_len, DMA_TO_DEVICE);
- 	if (t->rx_buf)
--		dma_unmap_single(tqspi->rx_dma_dev, t->rx_dma, len, DMA_FROM_DEVICE);
-+		dma_unmap_single(tqspi->rx_dma_dev, t->rx_dma,
-+				 tqspi->dma_map_len, DMA_FROM_DEVICE);
+ 	if (likely(fast_dput(dentry)))
+ 		return;
+-	__move_to_shrink_list(dentry, list);
++	/*
++	 * The list owner need not pin the superblock, so make a disconnected
++	 * root a secondary one for shrink_dcache_for_umount() to find.
++	 */
++	if (__move_to_shrink_list(dentry, list) &&
++	    unlikely(IS_ROOT(dentry) && hlist_unhashed(&dentry->d_sib))) {
++		struct super_block *sb = dentry->d_sb;
 +
-+	tqspi->is_dma_mapped = false;
++		spin_lock(&sb->s_roots_lock);
++		hlist_add_head(&dentry->d_sib, &sb->s_roots);
++		spin_unlock(&sb->s_roots_lock);
++	}
+ 	spin_unlock(&dentry->d_lock);
  }
  
- static int tegra_qspi_start_dma_based_transfer(struct tegra_qspi *tqspi, struct spi_transfer *t)
+--- a/include/linux/fs/super_types.h
++++ b/include/linux/fs/super_types.h
+@@ -173,7 +173,7 @@ struct super_block {
+ 	struct unicode_map			*s_encoding;
+ 	__u16					s_encoding_flags;
+ #endif
+-	struct hlist_head			s_roots;	/* alternate root dentries for NFS */
++	struct hlist_head			s_roots;	/* alternate root dentries for NFS and ex-mountpoints */
+ 	spinlock_t				s_roots_lock;
+ 	struct mount				*s_mounts;	/* list of mounts; _not_ for fs use */
+ 	struct block_device			*s_bdev;	/* can go away once we use an accessor for @s_bdev_file */
 
 
