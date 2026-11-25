@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795624357;
-	b=PLc0+BcGyf8Kzha73EvXgNRSQZakAvjg+DgfmIh+97iO6r+y+3UXIEj45M7cBPmOdbrv
-	 OAHo97a4C4eH851CjTuRkHVcZeaBUwPct+cdzSvefV4OCdDiqem0C2JivIASOp1fbn799
-	 S/+suwkmSN+MsEpNqUZr15BeY8KjYCBnbWqZ3GU0/lBN832Qdg2mmGTVCgyn8r6pirw5X
-	 5yl622ExwQ7X8XtXD2toVO//aXnu21uT+S1eQ+YXnJVCEp3sGBxnLSLKOuSjm7q/GJgX5
-	 hsu/sJb6r7yvjHSliJ+QxYIrS0HYuBG+xH74RqmP/gVHvZmoRwZzKIJlDIHJ9WiiJ3w==
+	t=1795624360;
+	b=icVpQr1suYM+WRgXiZ44RE8WEg2EYjTgPqNFHH5G38Iuu04rCtTFyF+xjoUiUM65GRC8
+	 wrbYRWwPxE8pvnnz8EVh+5U7mMipKuNCuNLU0me5qNWi/ACiLsLwxvHrhB/r9fCTKBYf2
+	 E1sw4VVTfBolEDV44+lVOeT8JjBdAT9E/+dkMSvlD7zV8iPleqZ0sImy6/MJpcsMEGqG5
+	 DHQOa64FbP6g70nLj0v/n5dTt25va5dZqJDp26nt43xekJ0BMDSLzOELkNxyWSXMK8YCO
+	 fbkQtQ+/AbB4oDz+C/SaJ2fjvKVf0DHZo98ARRsav6AM0tFnN8NSnwpAmTZD1SbkkcA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795624357;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795624360;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=bhUEet41Kvi3BaNVUtXawx/rRYsYNU2SGUOl09VMtJI=;
-	b=hawmpJ3xjLF946ZwvM+kGIiG0Yf5GFj/+fOoTdPKV9yXGK6Kpf90tsSthsKfvsWLuLOi
-	 LS4jdga+HwUK1PqYMJzrhVGP8Kk5W6hUQWJTZy9GEC/3gYNQrKgXKg5dY7H9kxvIxzn9P
-	 EokFOgjhlf5Rn7jf7TmjwA5rVq2XeBYfebTkgj85/b71qd75nW/FRG5jlMYzySi+4OFTZ
-	 lPjnEEZm5QzPzJYLnb9sI5ntZiKz1pt3wj1u3zICeurt+KxnhJGsWPWPwcVKzFxd223EI
-	 LY8vxxZabinpyMf0Z+N73+2cttsF6KKQ4Hk4BuggcD6ZtpY8E0VMLsfybsILDnMhT9Q==
+	bh=ApRmExv3xNjeDERWVSaS3Xa+MnWcXcUrPgCIZeMhAWI=;
+	b=DW8oEQ7S9aPPR9MfGkWERd7FoCcekHZMG4COvM2D3R6Nkk9GeYWKQ+9o+eV/8YAN1YYR
+	 JJO4nLjoyT05jFdrVQtRq4o4VlBiAP1MmrWhjXpAe/B50EZ+xS7MU3uJnt/xWWfH0xDcf
+	 FGhG2Gu+LnEc76vRrrbWtqvGb/9PQtbrpSyXt3FzT3chAwJbwEIXjs+A6QEm7XJD0chbB
+	 PFa7e2ly95btevB5NUHyKJ89x+dB+kt3mOb1TOntq89vLGgn0mQxMK7S/M6kZRjCQS55P
+	 W8EgKvPsuEwwVHuEVud85cpYaJ7hEfh4rzjM6T32+PxIML5O4XfQVBNUduJxPzAzaZg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=JyQksgNh;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=XgRhGUtP;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D86F0606A339;
-	Wed, 25 Nov 2026 16:32:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8967D606A33B;
+	Wed, 25 Nov 2026 16:32:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=JyQksgNh
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B74331F000C0;
-	Wed, 25 Nov 2026 16:32:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=XgRhGUtP
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C207D1F000D8;
+	Wed, 25 Nov 2026 16:32:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795624357;
-	bh=bhUEet41Kvi3BaNVUtXawx/rRYsYNU2SGUOl09VMtJI=;
+	s=korg; t=1795624360;
+	bh=ApRmExv3xNjeDERWVSaS3Xa+MnWcXcUrPgCIZeMhAWI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=JyQksgNhSZodjJxK+LzLfGDeClzDIwwXudVBkxbfD8W1Txh3y7PHkXPAomnOgOIw1
-	 x1dLgwuDFpYEHC4w2JaDpOWdgQQq9zx9NBkdioa270GMlXPyYCkC4fAo8fq9V5uHhQ
-	 qDVi0PHGqDE+GOWlgeYMcgp+pMf2gQyDPWi6obVA=
+	b=XgRhGUtP1Y4Ongc3c+U9uFLkwMkYR1PHH6Xjc4BwhyC/S5k+NLux33ncjTqgyvNGY
+	 HCMj/tq520rCt2h5gxC6N/kbNR0HqlFqQSXKp5XKUwhtRJw3nlIhDgkcaYcbvT11yx
+	 xUm4gOl67+uoAdm06uUSITrNC5NY2qmVN6PoybEw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yifan Zhang <yfzhang23@stu.pku.edu.cn>,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
+	Linfeng Sun <linfeng.sun.dev@gmail.com>,
+	"Michael S. Tsirkin" <mst@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 166/816] Bluetooth: validate retained LE Create CIS command length
-Date: Wed, 25 Nov 2026 15:28:34 +0100
-Message-ID: <20261125143853.037277194@linuxfoundation.org>
+Subject: [PATCH 6.12 131/816] vdpa_sim: serialize IOTLB updates with dataplane access
+Date: Wed, 25 Nov 2026 15:27:59 +0100
+Message-ID: <20261125143852.236898717@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143849.205329330@linuxfoundation.org>
 References: <20261125143849.205329330@linuxfoundation.org>
@@ -68,130 +68,94 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yifan Zhang <yfzhang23@stu.pku.edu.cn>
+From: Linfeng Sun <linfeng.sun.dev@gmail.com>
 
-[ Upstream commit 1eb52f35fc8fb06ab7f2973fff29cba81f96b947 ]
+[ Upstream commit 8517ed4429a2eefd002dce00ea46e23e6714350b ]
 
-hci_cs_le_create_cis() retrieves the parameters of the previously sent
-command without their length.  It then trusts num_cis and walks the
-flexible cis[] array when a controller reports a failed command.
+The simulator translates IOTLB entries into iovecs or bvecs under
+iommu_lock, then drops the lock before copying data. A concurrent DMA
+unmap can delete the mapping and release its pinned backing pages while
+the copy is still in progress, leading to a UAF in _copy_from_iter().
 
-A five-byte HCI command containing only num_cis can therefore make the
-handler read beyond the command skb.  KASAN reports:
+Use the existing simulator mutex to serialize DMA map changes with the
+full backend work function. Also make vhost-vdpa stop device access before
+unpinning the backing pages. Otherwise, waiting in the simulator DMA unmap
+callback happens after the pages have already been released and cannot
+protect their lifetime.
 
-  BUG: KASAN: slab-out-of-bounds in hci_cs_le_create_cis
-  Read of size 2
-  hci_cs_le_create_cis
-  hci_cmd_status_evt
-  hci_event_packet
+Keep iommu_lock for the IOTLB table itself and avoid adding a second
+long-lived lock to the simulator.
 
-Add a length-returning saved-command helper and require the fixed header
-and complete CIS array before walking it.
+I found this bug myself, though the patch was written with AI assistance.
 
-The reproducer no longer triggers a KASAN report with this change.
-
-Fixes: 26afbd826ee3 ("Bluetooth: Add initial implementation of CIS connections")
-Closes: https://lore.kernel.org/linux-bluetooth/179317462624.87574.6271582002629080499@stu.pku.edu.cn/
-Signed-off-by: Yifan Zhang <yfzhang23@stu.pku.edu.cn>
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Fixes: 2c53d0f64c06 ("vdpasim: vDPA device simulator")
+Assisted-by: OpenAI-Codex:GPT-5
+Signed-off-by: Linfeng Sun <linfeng.sun.dev@gmail.com>
+Message-ID: <20260911-fix-vdpa-iotlb-lifetime-v3-1-8766d371748e@gmail.com>
+Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/net/bluetooth/hci_core.h |  2 ++
- net/bluetooth/hci_core.c         | 18 ++++++++++++++----
- net/bluetooth/hci_event.c        |  7 ++++++-
- 3 files changed, 22 insertions(+), 5 deletions(-)
+ drivers/vdpa/vdpa_sim/vdpa_sim.c | 4 ++++
+ drivers/vhost/vdpa.c             | 3 ++-
+ 2 files changed, 6 insertions(+), 1 deletion(-)
 
-diff --git a/include/net/bluetooth/hci_core.h b/include/net/bluetooth/hci_core.h
-index f846865db0ca4..b023f0870efaa 100644
---- a/include/net/bluetooth/hci_core.h
-+++ b/include/net/bluetooth/hci_core.h
-@@ -2292,6 +2292,8 @@ void hci_send_sco(struct hci_conn *conn, struct sk_buff *skb);
- void hci_send_iso(struct hci_conn *conn, struct sk_buff *skb);
+diff --git a/drivers/vdpa/vdpa_sim/vdpa_sim.c b/drivers/vdpa/vdpa_sim/vdpa_sim.c
+index f7d346809e749..04dbdb8bf25a7 100644
+--- a/drivers/vdpa/vdpa_sim/vdpa_sim.c
++++ b/drivers/vdpa/vdpa_sim/vdpa_sim.c
+@@ -714,6 +714,7 @@ static int vdpasim_dma_map(struct vdpa_device *vdpa, unsigned int asid,
+ 	if (asid >= vdpasim->dev_attr.nas)
+ 		return -EINVAL;
  
- void *hci_sent_cmd_data(struct hci_dev *hdev, __u16 opcode);
-+void *hci_sent_cmd_data_len(struct hci_dev *hdev, __u16 opcode,
-+			    size_t *len);
- void *hci_recv_event_data(struct hci_dev *hdev, __u8 event);
++	mutex_lock(&vdpasim->mutex);
+ 	spin_lock(&vdpasim->iommu_lock);
+ 	if (vdpasim->iommu_pt[asid]) {
+ 		vhost_iotlb_reset(&vdpasim->iommu[asid]);
+@@ -722,6 +723,7 @@ static int vdpasim_dma_map(struct vdpa_device *vdpa, unsigned int asid,
+ 	ret = vhost_iotlb_add_range_ctx(&vdpasim->iommu[asid], iova,
+ 					iova + size - 1, pa, perm, opaque);
+ 	spin_unlock(&vdpasim->iommu_lock);
++	mutex_unlock(&vdpasim->mutex);
  
- u32 hci_conn_get_phy(struct hci_conn *conn);
-diff --git a/net/bluetooth/hci_core.c b/net/bluetooth/hci_core.c
-index c8b4630bb5563..1ad2ea661e908 100644
---- a/net/bluetooth/hci_core.c
-+++ b/net/bluetooth/hci_core.c
-@@ -3179,7 +3179,8 @@ int __hci_cmd_send(struct hci_dev *hdev, u16 opcode, u32 plen,
- EXPORT_SYMBOL(__hci_cmd_send);
- 
- /* Get data from the previously sent command */
--static void *hci_cmd_data(struct sk_buff *skb, __u16 opcode)
-+static void *hci_cmd_data(struct sk_buff *skb, __u16 opcode,
-+			  size_t *len)
- {
- 	struct hci_command_hdr *hdr;
- 
-@@ -3191,23 +3192,32 @@ static void *hci_cmd_data(struct sk_buff *skb, __u16 opcode)
- 	if (hdr->opcode != cpu_to_le16(opcode))
- 		return NULL;
- 
-+	if (len)
-+		*len = skb->len - HCI_COMMAND_HDR_SIZE;
-+
- 	return skb->data + HCI_COMMAND_HDR_SIZE;
+ 	return ret;
  }
+@@ -734,6 +736,7 @@ static int vdpasim_dma_unmap(struct vdpa_device *vdpa, unsigned int asid,
+ 	if (asid >= vdpasim->dev_attr.nas)
+ 		return -EINVAL;
  
- /* Get data from the previously sent command */
--void *hci_sent_cmd_data(struct hci_dev *hdev, __u16 opcode)
-+void *hci_sent_cmd_data_len(struct hci_dev *hdev, __u16 opcode, size_t *len)
- {
- 	void *data;
++	mutex_lock(&vdpasim->mutex);
+ 	spin_lock(&vdpasim->iommu_lock);
+ 	if (vdpasim->iommu_pt[asid]) {
+ 		vhost_iotlb_reset(&vdpasim->iommu[asid]);
+@@ -741,6 +744,7 @@ static int vdpasim_dma_unmap(struct vdpa_device *vdpa, unsigned int asid,
+ 	}
+ 	vhost_iotlb_del_range(&vdpasim->iommu[asid], iova, iova + size - 1);
+ 	spin_unlock(&vdpasim->iommu_lock);
++	mutex_unlock(&vdpasim->mutex);
  
- 	/* Check if opcode matches last sent command */
--	data = hci_cmd_data(hdev->sent_cmd, opcode);
-+	data = hci_cmd_data(hdev->sent_cmd, opcode, len);
- 	if (!data)
- 		/* Check if opcode matches last request */
--		data = hci_cmd_data(hdev->req_skb, opcode);
-+		data = hci_cmd_data(hdev->req_skb, opcode, len);
- 
- 	return data;
+ 	return 0;
  }
+diff --git a/drivers/vhost/vdpa.c b/drivers/vhost/vdpa.c
+index 33e3100b3836d..f222d58d9ff95 100644
+--- a/drivers/vhost/vdpa.c
++++ b/drivers/vhost/vdpa.c
+@@ -976,6 +976,8 @@ static void vhost_vdpa_pa_unmap(struct vhost_vdpa *v, struct vhost_iotlb *iotlb,
+ 	unsigned long pfn, pinned;
  
-+/* Get data from the previously sent command */
-+void *hci_sent_cmd_data(struct hci_dev *hdev, __u16 opcode)
-+{
-+	return hci_sent_cmd_data_len(hdev, opcode, NULL);
-+}
-+
- /* Get data from last received event */
- void *hci_recv_event_data(struct hci_dev *hdev, __u8 event)
- {
-diff --git a/net/bluetooth/hci_event.c b/net/bluetooth/hci_event.c
-index 533a534d78867..e408c0e1d58bc 100644
---- a/net/bluetooth/hci_event.c
-+++ b/net/bluetooth/hci_event.c
-@@ -4293,6 +4293,7 @@ static void hci_cs_le_create_cis(struct hci_dev *hdev, u8 status)
- {
- 	struct hci_cp_le_create_cis *cp;
- 	bool pending = false;
-+	size_t len;
- 	int i;
- 
- 	bt_dev_dbg(hdev, "status 0x%2.2x", status);
-@@ -4300,10 +4301,14 @@ static void hci_cs_le_create_cis(struct hci_dev *hdev, u8 status)
- 	if (!status)
- 		return;
- 
--	cp = hci_sent_cmd_data(hdev, HCI_OP_LE_CREATE_CIS);
-+	cp = hci_sent_cmd_data_len(hdev, HCI_OP_LE_CREATE_CIS, &len);
- 	if (!cp)
- 		return;
- 
-+	if (len < sizeof(*cp) ||
-+	    len < struct_size(cp, cis, cp->num_cis))
-+		return;
-+
- 	hci_dev_lock(hdev);
- 
- 	/* Remove connection if command failed */
+ 	while ((map = vhost_iotlb_itree_first(iotlb, start, last)) != NULL) {
++		/* Stop device access before releasing the pinned pages. */
++		vhost_vdpa_general_unmap(v, map, asid);
+ 		pinned = PFN_DOWN(map->size);
+ 		for (pfn = PFN_DOWN(map->addr);
+ 		     pinned > 0; pfn++, pinned--) {
+@@ -985,7 +987,6 @@ static void vhost_vdpa_pa_unmap(struct vhost_vdpa *v, struct vhost_iotlb *iotlb,
+ 			unpin_user_page(page);
+ 		}
+ 		atomic64_sub(PFN_DOWN(map->size), &dev->mm->pinned_vm);
+-		vhost_vdpa_general_unmap(v, map, asid);
+ 		vhost_iotlb_map_free(iotlb, map);
+ 	}
+ }
 -- 
 2.53.0
 
