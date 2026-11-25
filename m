@@ -1,51 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795620089;
-	b=CGwuCIufX7JN2S4fFzxMn40875Tc/KyxsA3J6zuK4+J7FNrNYXzV/jl81MibRa28qFI+
-	 wbIazP6yRT62Juuo94++tRVu2kGvf29JG9a81VygpVRR67IpKcvbPjfHVR0EoTMyY297t
-	 9bxImvAAsMLa0S6DcomMJaCj9Txb+uPwPjSf13SzhxiuvpGs4iaVzO97XPEsmdqviPGAt
-	 /REYkWi2MRvWn9rsMBcODWS2pHvisf6iajwELaxZcw10DEezu3cFTKqkMxmF2gwmhQj7y
-	 SL2Vu24vWyOZIYszNuY10l0QR81hxqMfCL5bK1QYVbEEdzh8oH2ZyVJCEm+lRSJoYTQ==
+	t=1795620092;
+	b=yx+ExyH9ywMv4XO6yriD1Ss+e0pe7WeMiFuECP7NbAhEheGdtSRDIYbOjuGuk11DTjsL
+	 +73l4SJJwpLusUDCZrcf6Xx/VHSd/5cXIwV5y1CrfiqKT9HVZT5PGgjH1TVmTs0UmkESr
+	 QALSGSiDkDgDIpzAavQd4cdnURLPuYSIirjPGVMOZzStMUk6WkEuNytn9MtVue8T/KcY3
+	 OnotOwwJo+gNHdlB1ay1blpPQcnQcqmg5REWNg0dCFQ1/m9YPBpZzgCdIBUGyFDYKNdBx
+	 pssWX61J1Lyf0GFy7bbu31uo0XSWuYh3Wj6NXcMoRVNqOhZXCFVEfbrVVJQT5eTuOZg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795620089;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795620092;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=RV9h6GC9GCpZ9MYdAxuh1XpTPerBSXri6+QpqSjGpDY=;
-	b=GcfI5AK58et0ugKPhsaJqbB7fOAYgvurJGteS5uTe66q/FX1C9vjDoaiI9pk5KzEfqW/
-	 taw11aUzFFQgLyUHnL8wJif+ueF+ymZouu6m8l6KRUE/X39jxa0YvxfOlUAkSDzAZi+1F
-	 rWIAB0QlwqOiN1bzWgNmWoUNpj/zZYw7qwlqvCRXuZEyI3viVQqoT4QDUPvqBy/CBUzSk
-	 ULIufqq3Ocz+BN6aTm71QMxkW+iaY+aZl/HPXt4a1UCr40MGEaYdIZYeqvlrtN24TmPa0
-	 qr8EpliR4rtE0szACELS1yQMPcEjt4OJVTXjsqhcSmQjS+OjNOqZa1jbWYi5lvAQ67g==
+	bh=0X25TcfSNxkQ6CW5r369aCTcnv6LqHo8F0pbvQyEsfw=;
+	b=WhyW3iIQvGgw7ARkpsYpvIwMN+7lg5j/B+XhvKWuzmnzSO8KRdCR6vbRDxeBPKT12IEn
+	 ZzncB8e9vowFpbr/gQzIrOZFspUyrjJgM9uABPJsm6mpjJ2hqctQs1WrI9bap21Ef6UlK
+	 xNHj9olA2BWMwElZ4jysceoDC4LJMYZrR7e+wLZyYtc0JWpQ81DxitdvqRsHztqc7XZWy
+	 mhM1VnHnbXSsMIU9O2D7t43sPeSTFz59+J9LkGZscjsn+/mbU4T7BZWMZK1VDFEnqz80c
+	 diRBhImSxjWUdtM/OLAbWeY4iFmUg9gTzY2Zj0+mntU13NYX4qrfZj1BlOVX95ZsNNA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=qt4ra3Mj;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=W6hxyzTv;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A2005606A321;
-	Wed, 25 Nov 2026 15:21:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D5C97606A32C;
+	Wed, 25 Nov 2026 15:21:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=qt4ra3Mj
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B7D501F000C0;
-	Wed, 25 Nov 2026 15:21:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=W6hxyzTv
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8DA511F000CF;
+	Wed, 25 Nov 2026 15:21:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795620089;
-	bh=RV9h6GC9GCpZ9MYdAxuh1XpTPerBSXri6+QpqSjGpDY=;
+	s=korg; t=1795620092;
+	bh=0X25TcfSNxkQ6CW5r369aCTcnv6LqHo8F0pbvQyEsfw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=qt4ra3MjSAx6dyFkywPBfYq8qC+YV2OhHjtE7wojAuOe/g3MBdOrE2jb24DDhvfGD
-	 77DaB24mkBG4kcMscq4BSmC5RI2yg0Afz4xDLUlItfaAX1cpBsFEQml99iU70CNKii
-	 D5WNOsGdZzM90ofjrcFBTwJ3HU1Dp67jy/FFGNvo=
+	b=W6hxyzTvkZ9+FjBwDGwM+2+TcASYJsT2ZZirTLCEt2GLdSdp92X5/7xxizYV5+BJm
+	 ryJWyjeuU/ildRyXicAyMVh60lviDcrYJjszoODZfZrRez5aDyT2xp3NCunDqgIhPM
+	 LJxgMbgPutN/DVDokjmTMoNMw3VknU0wqjtWLpRw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Zhao Li <enderaoelyther@gmail.com>,
 	Johannes Berg <johannes.berg@intel.com>
-Subject: [PATCH 7.3 0806/1005] wifi: mac80211: bound pending IBSS station allocations
-Date: Wed, 25 Nov 2026 15:35:44 +0100
-Message-ID: <20261125143840.611908989@linuxfoundation.org>
+Subject: [PATCH 7.3 0807/1005] wifi: mac80211: bound pending OCB station allocations
+Date: Wed, 25 Nov 2026 15:35:45 +0100
+Message-ID: <20261125143840.635716860@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143821.729802100@linuxfoundation.org>
 References: <20261125143821.729802100@linuxfoundation.org>
@@ -69,9 +69,9 @@ Content-Transfer-Encoding: 8bit
 
 From: Zhao Li <enderaoelyther@gmail.com>
 
-commit 3029ca2112d7bee4d3e3eadd02decdb3eddb9485 upstream.
+commit ee1a5e92dba0a98cabe476c780e3af4f0ab88b27 upstream.
 
-Delaying the IBSS station worker while frames arrive from new peers can
+Delaying the OCB station worker while frames arrive from new peers can
 retain an unbounded number of station allocations.
 
 The receive-side limit counts installed stations, while new allocations
@@ -80,38 +80,48 @@ lock does not cover the interval between allocation and list insertion.
 
 Reserve one of 128 pending slots per interface before allocation. Release
 the reservation on allocation failure, after the worker inserts or frees
-the station, and when disconnect frees the pending list.
+the station, and when leave frees the pending list.
 
 LLM assistance was used to find the bug and review.
 
-Fixes: 8bf11d8d0811 ("mac80211: delay IBSS station insertion")
+Fixes: 239281f803e2 ("mac80211: 802.11p OCB mode support")
 Cc: stable@vger.kernel.org
 Signed-off-by: Zhao Li <enderaoelyther@gmail.com>
-Link: https://patch.msgid.link/20261028142235.15428-3-enderaoelyther@gmail.com
+Link: https://patch.msgid.link/20261028142302.16634-3-enderaoelyther@gmail.com
 Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/mac80211/ibss.c        |   13 ++++++++++++-
- net/mac80211/ieee80211_i.h |    1 +
- 2 files changed, 13 insertions(+), 1 deletion(-)
+ net/mac80211/ieee80211_i.h |    2 ++
+ net/mac80211/ocb.c         |   13 ++++++++++++-
+ 2 files changed, 14 insertions(+), 1 deletion(-)
 
---- a/net/mac80211/ibss.c
-+++ b/net/mac80211/ibss.c
-@@ -684,6 +684,7 @@ static void ieee80211_ibss_disconnect(st
- 		spin_unlock_bh(&ifibss->incomplete_lock);
+--- a/net/mac80211/ieee80211_i.h
++++ b/net/mac80211/ieee80211_i.h
+@@ -697,6 +697,7 @@ struct ieee80211_if_ibss {
+  * @wrkq_flags: OCB deferred task action
+  * @incomplete_lock: delayed STA insertion lock
+  * @incomplete_stations: list of STAs waiting for delayed insertion
++ * @incomplete_sta_count: pending entries and reserved allocations
+  * @joined: indication if the interface is connected to an OCB network
+  */
+ struct ieee80211_if_ocb {
+@@ -705,6 +706,7 @@ struct ieee80211_if_ocb {
  
- 		sta_info_free(local, sta);
-+		atomic_dec(&ifibss->incomplete_sta_count);
- 		spin_lock_bh(&ifibss->incomplete_lock);
- 	}
- 	spin_unlock_bh(&ifibss->incomplete_lock);
-@@ -1177,9 +1178,18 @@ void ieee80211_ibss_rx_no_sta(struct iee
+ 	spinlock_t incomplete_lock;
+ 	struct list_head incomplete_stations;
++	atomic_t incomplete_sta_count;
+ 
+ 	bool joined;
+ };
+--- a/net/mac80211/ocb.c
++++ b/net/mac80211/ocb.c
+@@ -70,9 +70,18 @@ void ieee80211_ocb_rx_no_sta(struct ieee
  	band = chanctx_conf->def.chan->band;
  	rcu_read_unlock();
  
-+	if (!atomic_add_unless(&ifibss->incomplete_sta_count, 1,
-+			       IEEE80211_IBSS_MAX_STA_ENTRIES)) {
-+		net_info_ratelimited("%s: No room for a new IBSS STA entry %pM\n",
++	if (!atomic_add_unless(&ifocb->incomplete_sta_count, 1,
++			       IEEE80211_OCB_MAX_STA_ENTRIES)) {
++		net_info_ratelimited("%s: No room for a new OCB STA entry %pM\n",
 +				     sdata->name, addr);
 +		return;
 +	}
@@ -119,29 +129,27 @@ Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
  	sta = sta_info_alloc(sdata, addr, GFP_ATOMIC);
 -	if (!sta)
 +	if (!sta) {
-+		atomic_dec(&ifibss->incomplete_sta_count);
++		atomic_dec(&ifocb->incomplete_sta_count);
  		return;
 +	}
  
- 	/* make sure mandatory rates are always added */
+ 	/* Add only mandatory rates for now */
  	sband = local->hw.wiphy->bands[band];
-@@ -1636,6 +1646,7 @@ void ieee80211_ibss_work(struct ieee8021
- 			ieee80211_ibss_finish_sta(sta);
+@@ -145,6 +154,7 @@ void ieee80211_ocb_work(struct ieee80211
+ 			ieee80211_ocb_finish_sta(sta);
  			rcu_read_unlock();
  		}
-+		atomic_dec(&ifibss->incomplete_sta_count);
- 		spin_lock_bh(&ifibss->incomplete_lock);
++		atomic_dec(&ifocb->incomplete_sta_count);
+ 		spin_lock_bh(&ifocb->incomplete_lock);
  	}
- 	spin_unlock_bh(&ifibss->incomplete_lock);
---- a/net/mac80211/ieee80211_i.h
-+++ b/net/mac80211/ieee80211_i.h
-@@ -682,6 +682,7 @@ struct ieee80211_if_ibss {
+ 	spin_unlock_bh(&ifocb->incomplete_lock);
+@@ -228,6 +238,7 @@ int ieee80211_ocb_leave(struct ieee80211
+ 		spin_unlock_bh(&ifocb->incomplete_lock);
  
- 	spinlock_t incomplete_lock;
- 	struct list_head incomplete_stations;
-+	atomic_t incomplete_sta_count;
- 
- 	enum {
- 		IEEE80211_IBSS_MLME_SEARCH,
+ 		sta_info_free(local, sta);
++		atomic_dec(&ifocb->incomplete_sta_count);
+ 		spin_lock_bh(&ifocb->incomplete_lock);
+ 	}
+ 	spin_unlock_bh(&ifocb->incomplete_lock);
 
 
