@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795620375;
-	b=AWMqN3+abH1/NFyyZTwbm8rAWb9A0hN9sxOD2RuoE5CxQCVpub1/Wf0a568dCoDni+QC
-	 RykFZHPUZjcTTVXdi57vKGpGm1uaHK9ot6sB9QIHG9QvT3MY4idrJ5ojqBffoCtKAgJeH
-	 CT76TjlyL3hRWsdPHW2hAPC3e51eZ/fZhMYnVoSW8Nb6LVh7RoJ1IU7roCNK60Exdr1Ht
-	 BTu3RxxGDWpxqZAHyd+/vTO/RSGerMVSAgJ9bN0e2KLoVtIC5nQ+jeg9Jio9oLBHsOoyr
-	 f0reh9CfgUrjcLxWYNXu7VpqmcMRTWSCjVZOjq9Ag69MuvBjedQGhdcIkwhUbW7MuVA==
+	t=1795620378;
+	b=RmYfh+G8yuMu7u2DelFuDk3tJfYOLVgWYHcjdUpIbFWFJAOJ4SULrONFJQIwDPG80a4W
+	 ju87aWATQN/i20AXZ+6JfJBOZfwKnAlBEy9eNZJd1d8XB7wwEY51+gESBOiW6oSkaYfCE
+	 MWBRJOJ6BUwr8NUVlG53QxsZXjqmPi80UoGpTs+Tm4K8dA+IBmBrBqM6mko2TJrsc37LR
+	 ZlhUGqdTAt9+r8g8wxTV8HknvVEsLgzPhd4kJOAnd0d3l/GEwhVuOO4AM5ordc8QmA5nT
+	 30V/WNmicqyUM2O3D7GUWG0v0y56tAHNWDeqNZRDPXHrFNq2teyv8SWtYf7+m8xDDrQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795620375;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795620378;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=auXnsghxMLDSFTGwaPye4T8FMw5eDKMjFt+ME+tSgqc=;
-	b=QFwoUca2ostXXzhXKwURyZpCFr0zJ18cgYBl/0vPhQFO+Xq3OMVKLpiNpjZPNt1HGOKo
-	 G7QSIhAIsZfbk6i3OnSLzxADdRXExMcrq2F3N+I+21Bysst8U0EILkt7+wmd+xcoyMvW7
-	 B7XaiHDVidQKa8AbXzTaPMbNjBoSboMRb7LezbU0omPEtXlmcH6gUE5XDBOrNoLpJ7l7e
-	 b5Mi7WBzVmoEmXlHW6e328hUnWtVPsCu8MhlDPxDN7euxd2ylwC1R/FubVc5MxVgnx0s8
-	 sUzOdsKyyCIRmdvGD8Az8Q9FgwUxStAiAVyLdjRpGBxB3DHrCsSmrJkvWv7iRBiVPrA==
+	bh=qWYGzf5Mm9avQHnpZvzCHG36BjtmT/r4yvL2zGcaU24=;
+	b=5h/iym9xKC+sd0vTsDojmFD66gOZHaP6bxEEAazvkFmcVYKxExHQPyrsUwIC3hI0hRqb
+	 sMFRlS/ZtXdCL/4PyXip8YBDKFH6VPxs31ywmu5JPSpLl86wWRrbZM7Lg/QidKFpSfTKS
+	 xzugf96xvmvMNsBTZ4ifqmLngJfjD2U4g6dfaQuWqV5c8rOlMnNaLPHdKs1FnvJ8bHIF0
+	 kECtDnrQ29D0tVZQD9Ak8EqitUc9O1no9FBHy2Y+3wi6RsodArSu2x/++0N8ZAMbp/1+1
+	 tbcbbuQ2ulJSoucpBBfb5H43ghsOB7dGs0D8pUrkTKEOFMguoaTD+aY7mMM8Q7a1SDQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=bJxCMNTh;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=TKbEpelo;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7E186606A31E;
-	Wed, 25 Nov 2026 15:26:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 76F52606A321;
+	Wed, 25 Nov 2026 15:26:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=bJxCMNTh
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6E7EE1F000C6;
-	Wed, 25 Nov 2026 15:26:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=TKbEpelo
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C04B91F000C0;
+	Wed, 25 Nov 2026 15:26:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795620375;
-	bh=auXnsghxMLDSFTGwaPye4T8FMw5eDKMjFt+ME+tSgqc=;
+	s=korg; t=1795620378;
+	bh=qWYGzf5Mm9avQHnpZvzCHG36BjtmT/r4yvL2zGcaU24=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=bJxCMNThGMTWfms+rMPlT8Vnq1y3RhEbi+klt8BESZWM5V+ra1mdUWKRI7DPayoRx
-	 YfbfwY5v9mOeq+RxLhQ95tSUS0qzSFGQ2tkye2QxEahbVojNIiY9MotKEmgIa3VqoF
-	 PFqvJSCP7yWgmoznzEGrFflEmPpYQExTC5q8uNHU=
+	b=TKbEpelooMa0KCOtOeKbZlPRyKBhUrHrBbkPelH2Z1GtXsVY49C6Y4dz2TPeFqETU
+	 2SNt791+NIOhNz/poLLkG1ptS/uxEqLdkWcci+toHys5YP/nQbIOl0g6FuCd/EjKco
+	 L6q+2wsL9Py/WRXLIU5zz7ABy0UBZoYuklGNHo/g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	stable <stable@kernel.org>,
-	Josef Bacik <josef@toxicpanda.com>,
-	Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>
-Subject: [PATCH 7.3 0897/1005] iio: sx9310: use the data of the I2C table
-Date: Wed, 25 Nov 2026 15:37:15 +0100
-Message-ID: <20261125143842.708388585@linuxfoundation.org>
+	Alexander Usyskin <alexander.usyskin@intel.com>,
+	Arnd Bergmann <arnd@arndb.de>,
+	Josef Bacik <josef@toxicpanda.com>
+Subject: [PATCH 7.3 0898/1005] mei: lb: read the MTU once
+Date: Wed, 25 Nov 2026 15:37:16 +0100
+Message-ID: <20261125143842.730780642@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143821.729802100@linuxfoundation.org>
 References: <20261125143821.729802100@linuxfoundation.org>
@@ -70,41 +71,66 @@ Content-Transfer-Encoding: 8bit
 
 From: Josef Bacik <josef@toxicpanda.com>
 
-commit f3fc8718af9189aad13a2ad7f5b256475bb14b21 upstream.
+commit 1115120f89f5c22bf49f7423cf158a04a474dd93 upstream.
 
-sx9310_check_whoami() takes the chip information from
-device_get_match_data(), which only looks at the OF and ACPI tables, and
-dereferences it. For a client which was bound through the i2c_device_id
-table, for instance one created with
+mei_cldev_mtu() returns 0 if the client is not connected. A link reset
+disconnects all clients at any time, from the reset work.
 
-  echo sx9310 0x28 > /sys/bus/i2c/devices/i2c-1/new_device
+mei_lb_push_payload_v2() asks for the MTU to allocate the request buffer
+and asks again for every chunk. If the reset comes in between,
 
-it returns NULL, and the kernel oopses as soon as something at that address
-answers the read of the WHOAMI register.
+	chunk_size = min(payload_size - sent_data, 0 - sizeof(*req));
 
-The I2C table has the same pointers. Use i2c_get_match_data(), which falls
-back to it.
+makes the chunk the whole rest of the payload, and the memcpy() behind it
+writes over the end of the buffer. If the reset comes before the first
+call, kzalloc(0) returns ZERO_SIZE_PTR, which passes the NULL check and is
+dereferenced. An MTU not bigger than the request header has the same
+effect as 0.
 
-Fixes: 21fd3b1373f6 ("iio: proximity: sx9310: Convert enum->pointer for match data table")
+Read the MTU once and refuse one which leaves no room for payload. If the
+client has gone, sending the chunk fails.
+
+Fixes: 773a43b8627f ("mei: lb: add late binding version 2")
 Cc: stable <stable@kernel.org>
+Cc: Alexander Usyskin <alexander.usyskin@intel.com>
+Cc: Arnd Bergmann <arnd@arndb.de>
 Signed-off-by: Josef Bacik <josef@toxicpanda.com>
+Acked-by: Alexander Usyskin <alexander.usyskin@intel.com>
+Link: https://patch.msgid.link/2026102739-boil-startup-145b@gregkh
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Signed-off-by: Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/iio/proximity/sx9310.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/misc/mei/mei_lb.c |   12 ++++++++++--
+ 1 file changed, 10 insertions(+), 2 deletions(-)
 
---- a/drivers/iio/proximity/sx9310.c
-+++ b/drivers/iio/proximity/sx9310.c
-@@ -891,7 +891,7 @@ static int sx9310_check_whoami(struct de
- 	if (ret)
- 		return ret;
+--- a/drivers/misc/mei/mei_lb.c
++++ b/drivers/misc/mei/mei_lb.c
+@@ -312,16 +312,24 @@ static int mei_lb_push_payload_v2(struct
+ 	size_t chunk_size;
+ 	size_t req_size;
+ 	ssize_t bytes;
++	size_t mtu;
+ 	int ret;
  
--	ddata = device_get_match_data(dev);
-+	ddata = i2c_get_match_data(data->client);
- 	if (ddata->whoami != whoami)
- 		return -ENODEV;
+-	struct mei_lb2_req *req __free(kfree) = kzalloc(mei_cldev_mtu(cldev), GFP_KERNEL);
++	/* The MTU turns into 0 when a link reset disconnects the client */
++	mtu = mei_cldev_mtu(cldev);
++	if (mtu <= sizeof(struct mei_lb2_req)) {
++		dev_err(dev, "MTU is too small: %zu\n", mtu);
++		return -EMSGSIZE;
++	}
++
++	struct mei_lb2_req *req __free(kfree) = kzalloc(mtu, GFP_KERNEL);
+ 	if (!req)
+ 		return -ENOMEM;
  
+ 	first_chunk = MEI_LB2_FLAG_FST_CHUNK;
+ 	last_chunk = 0;
+ 	do {
+-		chunk_size = min(payload_size - sent_data, mei_cldev_mtu(cldev) - sizeof(*req));
++		chunk_size = min(payload_size - sent_data, mtu - sizeof(*req));
+ 
+ 		req_size = struct_size(req, payload, chunk_size);
+ 		if (sent_data + chunk_size == payload_size)
 
 
