@@ -1,51 +1,50 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795625971;
-	b=f85cXD+Jp4tua6Thkb3Y5uRQm4v7eNGc8Xe5s4WyVgeRNZNa8xG8rG9ixPwgtvWxEKnC
-	 pp6OhdC3oIazEu+pNSwyDXWn477GHSR91c8bqxHXfqlhTCYio+Ch1elS4fnZ5J3fEx4MC
-	 28Tc2IncrNkCtP07lKlcoVCdMKat7xnl4I83kIZOYjwTHlwT5GoodeVm8A4D2/rkZ4Zad
-	 L/8MFn0T9JMz9StUCRBA5HBMrbsWR+Ugh+dQ7Ao7mV8zbMaufa0rqGK2ZAiuMNhcN+qHz
-	 2aBLwg27QJFmh8+OCTwMWzhvVbtJlELlUchwAlW7ESO2SZxvDNICv6MfHcnel37QB2Q==
+	t=1795625974;
+	b=dutYtMKR7YxAdwMsGoPNf2A2AIcclRq3LWu6DejZv8Z0CEUSMY9wKayPJPrBHxll6VqC
+	 paqDW0ZB0vIwXZG3ebUDRcmdRZgoRJPnGyqy2Pcspolg4YSWuKl97q5f8Twyvu+ZujjLA
+	 iujyz2vrPkMFfJTxYVao0oojPRv9Yr60BUzUIYrSbg67JdY4QRCt3Pypwogcm2u9lQOFX
+	 MTK2A2dP4VDdHwMcFhrvOrVuwecOWOsR5zze2WzYJALcU9zscMnRpW+5Y5KYoVfXeH3Hm
+	 a/LrhTkOzafN6eRrdt5z6kureZBC/Rvcb0zEoictJwARjM8a4YorWOlH5h2z7bcj05w==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795625971;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795625974;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=b//PlFI4x+fEryyAIIEz4PGiJnHuBeEnar/6nd1KdW4=;
-	b=2aZ2u1iRYU3ZBIQDIgU4oBGiXuu1TbLuUWLNH6L2f3vBR1WJXr2td9YbICAtHA5NKT/F
-	 zKJmBreiCkXoQP2USVY9lSAl64qM8JgH+Rpl9DZdJBjXfb/13SW6IPXorl8jNZcImHLJz
-	 at89/64N73qusKrIMT8ew1Q82ihWXMWEj+tProDG6Fq4n35ayC3tINiNNXa73+AT3v4I8
-	 KH9BglN2HkR58739yO5a9P8OPpTLMDo770nxbbb3DvxuagZ7lOF+BAUs2tO226Gnezjg0
-	 ebsunbcY4zym4Xj942UO+p42F1XizZtpMmNFwccvkZxo9yf8HH76QrNGzRUKBDdv4gA==
+	bh=A12mYFa4HiShVlTTOK2dPsA4NIKuV4v/6u6K+EjoC38=;
+	b=oPySq6NCK8eoA8jdCLVw5L6Mf+Raibx1/2rXsoYzJXAenugCHiomZV8rDbKsF4Gl3wDC
+	 y5dVw/wlITGTLL1D1eTQ8oI8ynMrYxznCmy0x2c4vrHZYa0qd5ygH6RLcmDvC4/Qvgd0y
+	 2F5/AmO3sVVZ/pdYCPkSFzw8jXeu71fXDx6u2iM8y7UUf2waI0DtDo4el5/IRdsET8dOr
+	 zme+8toTN1xasVte/2iP8rNbVp47UwNiteIoiTfhVjkq1zoOEpELiYxbbOg/zzBVdwVAn
+	 pIfbFAV9aljhDBZnsY4ALLluZ1x0dvqTUSYGGR9Y6XpCcW42D84BeNYrhVCwYd0adSA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=xSwO19Ln;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="BZ/QO0KH";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7A96B606A31E;
-	Wed, 25 Nov 2026 16:59:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AD690606A321;
+	Wed, 25 Nov 2026 16:59:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=xSwO19Ln
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BB0B11F000D3;
-	Wed, 25 Nov 2026 16:59:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=BZ/QO0KH
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B1D731F000C6;
+	Wed, 25 Nov 2026 16:59:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795625971;
-	bh=b//PlFI4x+fEryyAIIEz4PGiJnHuBeEnar/6nd1KdW4=;
+	s=korg; t=1795625974;
+	bh=A12mYFa4HiShVlTTOK2dPsA4NIKuV4v/6u6K+EjoC38=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=xSwO19LnzsAiJScg9MII0PUzqSsVDpSwInAon+6FJIYyQzsO15GSwLYJeaIrPKM4x
-	 B0rP/x1wNZ89M2l+Dcxiwep+mUuwcmFH+dDKF5cYnJMasEvkRZhzB17hVDdmOIaIQo
-	 1AB2PPdOQ38AliFfqff0vAcaaK70jP/FevFELwao=
+	b=BZ/QO0KHGcrd8Eluwo+F3mCQFP/WFa7VUy7/ytQeGsc1a1z0tKwnJ4ZVZ5J92HqUG
+	 tRg8Oun6mMsv/iZqfd0F4Iw6Vdfb/VhCi9UXryLAnpKbKR9J//Cz6Wjk6es7gpX/nf
+	 p4s62XxRL0dHmoqSEA9WHw/UzG6IY8CJ/ACTwL9M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Joseph Qi <joseph.qi@linux.alibaba.com>,
 	Paulo Alcantara <pc@manguebit.org>
-Subject: [PATCH 6.12 688/816] smb: client: hold the inode across cifs_oplock_break()
-Date: Wed, 25 Nov 2026 15:37:16 +0100
-Message-ID: <20261125143905.108155774@linuxfoundation.org>
+Subject: [PATCH 6.12 689/816] smb: client: issue writes from a worker if the task is dying
+Date: Wed, 25 Nov 2026 15:37:17 +0100
+Message-ID: <20261125143905.133095383@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143849.205329330@linuxfoundation.org>
 References: <20261125143849.205329330@linuxfoundation.org>
@@ -67,62 +66,142 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Joseph Qi <joseph.qi@linux.alibaba.com>
+From: Paulo Alcantara <pc@manguebit.org>
 
-commit fce78321f1b59531cf6fc94860550db1db8dec55 upstream.
+commit 1a747bacf250959703c68fed1bb643f888dd3ad2 upstream.
 
-cifs_oplock_break() drops the handle reference in the middle of the
-handler and keeps using cinode afterwards, to send the break
-acknowledgment and again in cifs_done_oplock_break().  The reference
-cifs_queue_oplock_break() takes is the only pin: the handle holds the
-dentry and the dentry is what keeps the inode alive.
+A task with a fatal signal pending can't send on the socket:
+__smb_send_rqst() refuses it upfront with -ERESTARTSYS, as SIGKILL can't
+be blocked and a send interrupted halfway forces a reconnect.  Writeback,
+however, runs in the context of whoever starts it, so when a dying task
+flushes dirty pages - close() racing with SIGKILL, or fd teardown during
+exit_group() - every write subrequest gets refused:
 
-When that put is the last reference, the dput() in
-cifsFileInfo_put_final() kills an unhashed dentry, drops the last
-i_count and evicts the inode, so the rest of the handler runs on an
-object whose free is only RCU-deferred.  An unhashed dentry that a
-handle still references is an ordinary state: unlinking an open file
-leaves the dentry that way, and so does the dcache teardown at unmount.
+  smb3_write_err: ... offset=0x1400000 len=0x400000 rc=-512
+  cifs_flush_err: ino=... rc=-512
 
-Take a reference on the inode for the lifetime of the handler and drop
-it once the break has been reported.  This also covers the
-cifs_get_tlink() failure path, where the put is followed directly by
-the out label.
+Since the switch to netfslib, a failed upload ends writeback with the
+folios clean, so the data is silently lost: the server ends up with
+20MiB of a 64MiB file while stat(2) reports the full size.
 
-Fixes: b98749cac4a6 ("CIFS: keep FileInfo handle live during oplock break")
-Fixes: 23b26f4408ac ("smb: client: avoid leaking refcount when cifs_sb_tlink() fails")
-Cc: stable@vger.kernel.org
-Signed-off-by: Joseph Qi <joseph.qi@linux.alibaba.com>
+Issue writeback subrequests of dying tasks from a new cifswritebackd
+workqueue instead, like afs does for all of its writes, so they get sent
+from a context with no signals.  Leave direct and unbuffered writes
+alone, as their callers get the error.  Use a dedicated WQ_UNBOUND
+workqueue as the writes may block for long on credits, sends or reopens,
+e.g. on hard mounts with an unresponsive server, and must not hold up
+other cifs work such as reconnects, nor starve the WQ_MEM_RECLAIM
+rescuer of cifsiod_wq.
+
+Fixes: 3ee1a1fc3981 ("cifs: Cut over to using netfslib")
 Signed-off-by: Paulo Alcantara <pc@manguebit.org>
+Cc: stable@vger.kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/smb/client/file.c |    9 +++++++++
- 1 file changed, 9 insertions(+)
+ fs/smb/client/cifsfs.c   |   13 ++++++++++++-
+ fs/smb/client/cifsglob.h |    1 +
+ fs/smb/client/file.c     |   26 +++++++++++++++++++++++++-
+ 3 files changed, 38 insertions(+), 2 deletions(-)
 
---- a/fs/smb/client/file.c
-+++ b/fs/smb/client/file.c
-@@ -3188,6 +3188,14 @@ void cifs_oplock_break(struct work_struc
- 	__u64 persistent_fid, volatile_fid;
- 	__u16 net_fid;
+--- a/fs/smb/client/cifsfs.c
++++ b/fs/smb/client/cifsfs.c
+@@ -158,6 +158,7 @@ struct workqueue_struct	*cifsoplockd_wq;
+ struct workqueue_struct	*deferredclose_wq;
+ struct workqueue_struct	*serverclose_wq;
+ struct workqueue_struct	*cfid_put_wq;
++struct workqueue_struct	*cifs_writeback_wq;
+ __u32 cifs_lock_secret;
  
-+	/*
-+	 * Dropping the handle reference below also drops the dentry
-+	 * reference that pins this inode, and cinode is still needed to
-+	 * acknowledge the break and to report it as complete.  Hold the inode
-+	 * until that is done.
-+	 */
-+	ihold(inode);
+ /*
+@@ -2016,9 +2017,16 @@ init_cifs(void)
+ 		goto out_destroy_serverclose_wq;
+ 	}
+ 
++	cifs_writeback_wq = alloc_workqueue("cifswritebackd",
++					    WQ_UNBOUND | WQ_MEM_RECLAIM, 0);
++	if (!cifs_writeback_wq) {
++		rc = -ENOMEM;
++		goto out_destroy_cfid_put_wq;
++	}
 +
- 	wait_on_bit(&cinode->flags, CIFS_INODE_PENDING_WRITERS,
- 			TASK_UNINTERRUPTIBLE);
+ 	rc = cifs_init_inodecache();
+ 	if (rc)
+-		goto out_destroy_cfid_put_wq;
++		goto out_destroy_writeback_wq;
  
-@@ -3263,6 +3271,7 @@ oplock_break_ack:
- 	cifs_put_tlink(tlink);
- out:
- 	cifs_done_oplock_break(cinode);
-+	iput(inode);
+ 	rc = cifs_init_netfs();
+ 	if (rc)
+@@ -2089,6 +2097,8 @@ out_destroy_netfs:
+ 	cifs_destroy_netfs();
+ out_destroy_inodecache:
+ 	cifs_destroy_inodecache();
++out_destroy_writeback_wq:
++	destroy_workqueue(cifs_writeback_wq);
+ out_destroy_cfid_put_wq:
+ 	destroy_workqueue(cfid_put_wq);
+ out_destroy_serverclose_wq:
+@@ -2134,6 +2144,7 @@ exit_cifs(void)
+ 	destroy_workqueue(fileinfo_put_wq);
+ 	destroy_workqueue(serverclose_wq);
+ 	destroy_workqueue(cfid_put_wq);
++	destroy_workqueue(cifs_writeback_wq);
+ 	destroy_workqueue(cifsiod_wq);
  }
  
- static int cifs_swap_activate(struct swap_info_struct *sis,
+--- a/fs/smb/client/cifsglob.h
++++ b/fs/smb/client/cifsglob.h
+@@ -2051,6 +2051,7 @@ extern struct workqueue_struct *cifsoplo
+ extern struct workqueue_struct *deferredclose_wq;
+ extern struct workqueue_struct *serverclose_wq;
+ extern struct workqueue_struct *cfid_put_wq;
++extern struct workqueue_struct *cifs_writeback_wq;
+ extern __u32 cifs_lock_secret;
+ 
+ extern mempool_t *cifs_sm_req_poolp;
+--- a/fs/smb/client/file.c
++++ b/fs/smb/client/file.c
+@@ -97,10 +97,16 @@ retry:
+ #endif
+ }
+ 
++static bool cifs_writeback_dying(struct netfs_io_subrequest *subreq)
++{
++	return subreq->rreq->origin == NETFS_WRITEBACK &&
++		fatal_signal_pending(current);
++}
++
+ /*
+  * Issue a subrequest to upload to the server.
+  */
+-static void cifs_issue_write(struct netfs_io_subrequest *subreq)
++static void __cifs_issue_write(struct netfs_io_subrequest *subreq)
+ {
+ 	struct cifs_io_subrequest *wdata =
+ 		container_of(subreq, struct cifs_io_subrequest, subreq);
+@@ -134,6 +140,24 @@ fail:
+ 	goto out;
+ }
+ 
++static void cifs_issue_write_worker(struct work_struct *work)
++{
++	struct netfs_io_subrequest *subreq;
++
++	subreq = container_of(work, struct netfs_io_subrequest, work);
++	__cifs_issue_write(subreq);
++}
++
++static void cifs_issue_write(struct netfs_io_subrequest *subreq)
++{
++	if (unlikely(cifs_writeback_dying(subreq))) {
++		subreq->work.func = cifs_issue_write_worker;
++		WARN_ON_ONCE(!queue_work(cifs_writeback_wq, &subreq->work));
++		return;
++	}
++	__cifs_issue_write(subreq);
++}
++
+ static void cifs_netfs_invalidate_cache(struct netfs_io_request *wreq)
+ {
+ 	cifs_invalidate_cache(wreq->inode, 0);
 
 
