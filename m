@@ -1,51 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795620117;
-	b=R7PT8OMpmIRABKqJeDcGJbETDAA7Zk47vGM2Uwq/N9vH9+2FGT2gQzmybVp5Et0gCzhK
-	 RFuWzB7EJX8QWbGtfNcAC/vrblBNTr8ZvEa+jf0a8cLJntGXbHMbxXecpUbXetMmlPYw2
-	 1BsDQ4J7awZlioB2hFvFtAbfqY/b0lSJC5CESGnW1/8kXcL154hBkJF/HxsXCStyyV6Rm
-	 ktUajUvV40pdyAZOo02G78piMsKbL6OUj18eRdN/a50jIOR9/acOaFxuz51kOfYBNTe+G
-	 rBtOvBLHV4rq+HFWp3W9KjvYF8/gwuP/R1BtlZQckt8FHLR2FVvM6Dn7iTG0iTzl2xA==
+	t=1795620120;
+	b=1JvZlxw+Srt85YekdshS/yljeAIp0itELJZXx4OLF3Dc2RsXSvXin28oci5FUjzz2OFM
+	 9modd9lhz5gA9VvZCoCWiknVzRqY+D/R6ZtgvtTLaVud15piCJ0SL1ExN9O3KGxANMWio
+	 bpnnSMOsZnGQPbnuJSlr8JH5/p3088Wt3VX5OdtCBS+sQ+UF3PmesA28uJ19G7KNZrGHj
+	 YRF2rzIdO3bJpBFOKRavpvjd9zbZphHKNhI7jQgzEPtJqmgBLxxUleQEbZNXnGJGLqoIM
+	 /TP2X1go9WLSJHHEuy/pvlptvM6NUmRO8gikB1aWnHodXpgKPsBC4HxIITq9eTfthSQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795620117;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795620120;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=JVk8KwCNemuCbWgLGI5tDfsYPtgxTTQ70ofThI5q5WY=;
-	b=lmUOFin8NVZYLqxriGqJ1rzzckruY9Hx+jtsdZIdMYIRp1X0P3xLR7DS0k0azfsXQYLe
-	 su4wOqBRyuD+BHScLUr5bFMOZLyaj7rgyW5vaMejttV/OFynFQI0esLKw8wbqrdNs1eRh
-	 UsjYvH9bPiOivA2dhmtTPWkVjte2qvBnGhM3Lg8s01q2ax559mL2Ds6w8K6CehjKLEP/9
-	 cBYnqesx7BGyj5sod8ejUPjIWqc3GhkNhVOc+qBcCw4Pn1llvxf4HAKxsADBShA0VPCYO
-	 wLN74XQjzqJ6ATCNWVjMLLtxN4wwWd15CcJXRnNL53QttNeXIyU0c+wEkZTqN7l19ow==
+	bh=gPgpM6alAsldYITZqkFBjJAY8GUOoiYXKD+hKndY5AY=;
+	b=2euExOrZ7XRxzTXqMqzQuwpwscgjsdgdDLy1eGVJdro4trWXHycR4nxTY49xJnOLOxig
+	 vwa6SlChgZot8L7bm2xAQKUHjAqO9MHZbBZXNAV991NCJ3SMEQ0aggVNL53Lek5iBbVFF
+	 uKynG5JLyhVU3gaWEDzb2LaCcZSoB1Hgh3eXm8yfO2IehnDCyY2XhrmYy6qY+erqdj0xn
+	 Fm1dXNwnweOTrDZs/z+yEEqdqvSRtoY80MuYLlE7YTApTX4eM8s5KOtzcFwPOqTTmpE8E
+	 dGVvoAE3OMkKwmVrbWh6h5OaP7FJAnSNaiW3u/ZkzoIGu3N/5/4612zSkZ+DdawIXcw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=veRq8JaA;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=MBULpMmF;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1364B606A321;
-	Wed, 25 Nov 2026 15:21:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 25316606A31E;
+	Wed, 25 Nov 2026 15:21:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=veRq8JaA
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 631581F000C6;
-	Wed, 25 Nov 2026 15:21:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=MBULpMmF
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3A50F1F000C4;
+	Wed, 25 Nov 2026 15:21:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795620116;
-	bh=JVk8KwCNemuCbWgLGI5tDfsYPtgxTTQ70ofThI5q5WY=;
+	s=korg; t=1795620119;
+	bh=gPgpM6alAsldYITZqkFBjJAY8GUOoiYXKD+hKndY5AY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=veRq8JaAwjS3UVtbXHh5Nq0QoVCUP9/eny6OyK92V4FXIRxV5tLJJ2vLZ14fczfNH
-	 TfQXKmpD96QdfjP/SBBkR+eyfTVNLAIpoi6SaalZ1AndznGa7O5cnMy2VawGRS3r0V
-	 peWMVIpC3eP9SnfTaI+HIMrQFeGdC8x5BgjEGYz0=
+	b=MBULpMmFRhfmUfpIEyRGSi6S5FiOSWvJjWh53aV+eVi3QMy1ARrPsRenWbmcf/z/H
+	 sB3jgx3pcmmsJkyw7DLYHSpDNw1lkXTCYMoxq9ltXh9yFzAPwKw+nCFMAD8LjqKwjM
+	 oShRkqB3F1eRB28gU054S/OLPr2Din9BHb2lcSVk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Cunhao Lu <1579567540@qq.com>,
+	Guenter Roeck <linux@roeck-us.net>,
+	Dmitry Torokhov <dmitry.torokhov@gmail.com>,
 	Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
-Subject: [PATCH 7.3 0814/1005] gpio: rockchip: Fix debounce arithmetic for GPIO v2
-Date: Wed, 25 Nov 2026 15:35:52 +0100
-Message-ID: <20261125143840.797462955@linuxfoundation.org>
+Subject: [PATCH 7.3 0815/1005] gpio: sa1100: defer GPIO chip registration to postcore_initcall
+Date: Wed, 25 Nov 2026 15:35:53 +0100
+Message-ID: <20261125143840.820763585@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143821.729802100@linuxfoundation.org>
 References: <20261125143821.729802100@linuxfoundation.org>
@@ -67,66 +68,100 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Cunhao Lu <1579567540@qq.com>
+From: Dmitry Torokhov <dmitry.torokhov@gmail.com>
 
-commit 13467fd6998f5da4f5b4f172f1af3d9c48d5de8f upstream.
+commit 32c89e32b3fef2ee0aa5c4d0b0fb089bb20b3223 upstream.
 
-The debounce interval calculations use unsigned long operands. On 32-bit
-systems, the numerator used to calculate the maximum interval overflows
-before division, while multiplying the requested interval by the clock
-rate overflows before it is assigned to a u64. A zero debounce clock rate
-also causes division by zero.
+Registering the software node and the GPIO chip for the SA-1100 GPIO
+controller during early IRQ initialization causes boot hangs on
+SA-1100 platforms because the software node subsystem has not yet
+been initialized. At that early boot stage, attempting to register
+software nodes dereferences a NULL kset pointer before console or
+driver model initialization.
 
-Use 64-bit arithmetic for both calculations and reject a zero clock rate
-before division.
+Nothing on SA-1100 platforms requests GPIO lines via gpiolib during
+early boot before initcalls run; only the GPIO IRQ controller and
+domain must be initialized during init_IRQ(). Defer registering the
+software node, assigning its firmware node, and registering the GPIO
+chip with gpiolib to postcore_initcall, running after driver and
+gpiolib device initialization and before board consumers register.
 
-At 32768 Hz, a 1 us request rounds to zero divider periods. Subtracting
-one then wraps the divider value to ULONG_MAX. Decrement only a nonzero
-rounded period count so that such requests use the smallest divider
-value.
-
-Fixes: 3bcbd1a85b68 ("gpio/rockchip: support next version gpio controller")
+Fixes: e4671f292ebb ("gpio: sa1100: register software node for GPIO controller")
 Cc: stable@vger.kernel.org
-Signed-off-by: Cunhao Lu <1579567540@qq.com>
-Link: https://patch.msgid.link/20261023-fix-rockchip-gpio-v2-debounce-v1-1-f1141bd5b58f@qq.com
+Reported-by: Guenter Roeck <linux@roeck-us.net>
+Closes: https://lore.kernel.org/r/2a561a27-a3bf-4cac-a4dc-bfbc5c859f45@roeck-us.net
+Signed-off-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
+Tested-by: Guenter Roeck <linux@roeck-us.net>
+Link: https://patch.msgid.link/20261029-sa1100-swnode-fix-v1-1-112f4d83d191@gmail.com
 Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpio/gpio-rockchip.c |   15 ++++++++++-----
- 1 file changed, 10 insertions(+), 5 deletions(-)
+ drivers/gpio/gpio-sa1100.c | 32 +++++++++++++++++++++++++++-----
+ 1 file changed, 27 insertions(+), 5 deletions(-)
 
---- a/drivers/gpio/gpio-rockchip.c
-+++ b/drivers/gpio/gpio-rockchip.c
-@@ -201,20 +201,25 @@ static int rockchip_gpio_set_debounce(st
+diff --git a/drivers/gpio/gpio-sa1100.c b/drivers/gpio/gpio-sa1100.c
+index e4f3bf949b87..1916200ebbd5 100644
+--- a/drivers/gpio/gpio-sa1100.c
++++ b/drivers/gpio/gpio-sa1100.c
+@@ -8,6 +8,7 @@
+ #include <linux/init.h>
+ #include <linux/module.h>
+ #include <linux/io.h>
++#include <linux/printk.h>
+ #include <linux/syscore_ops.h>
+ #include <soc/sa1100/pwer.h>
+ #include <mach/hardware.h>
+@@ -322,7 +323,6 @@ static const int sa1100_gpio_irqs[] __initconst = {
+ void __init sa1100_init_gpio(void)
  {
- 	struct rockchip_pin_bank *bank = gpiochip_get_data(gc);
- 	const struct rockchip_gpio_regs	*reg = bank->gpio_regs;
--	unsigned long flags, div_reg, freq, max_debounce;
-+	unsigned long flags, div_reg, freq;
- 	bool div_debounce_support;
- 	unsigned int cur_div_reg;
--	u64 div;
-+	u64 div, max_debounce;
+ 	struct sa1100_gpio_chip *sgc = &sa1100_gpio_chip;
+-	struct gpio_chip *gc = &sgc->chip;
+ 	int i;
  
- 	if (bank->gpio_type == GPIO_TYPE_V2 && !IS_ERR(bank->db_clk)) {
- 		div_debounce_support = true;
- 		freq = clk_get_rate(bank->db_clk);
--		max_debounce = (GENMASK(23, 0) + 1) * 2 * 1000000 / freq;
-+		if (!freq)
-+			return -EINVAL;
+ 	/* clear all GPIO edge detects */
+@@ -330,10 +330,6 @@ void __init sa1100_init_gpio(void)
+ 	writel_relaxed(0, sgc->membase + R_GRER);
+ 	writel_relaxed(-1, sgc->membase + R_GEDR);
+ 
+-	software_node_register(&sa1100_gpiochip_node);
+-	gc->fwnode = software_node_fwnode(&sa1100_gpiochip_node);
+-	gpiochip_add_data(gc, NULL);
+-
+ 	sa1100_gpio_irqdomain = irq_domain_create_simple(NULL,
+ 			28, IRQ_GPIO0,
+ 			&sa1100_gpio_irqdomain_ops, sgc);
+@@ -342,3 +338,29 @@ void __init sa1100_init_gpio(void)
+ 		irq_set_chained_handler_and_data(sa1100_gpio_irqs[i],
+ 						 sa1100_gpio_handler, sgc);
+ }
 +
-+		div = (u64)(GENMASK(23, 0) + 1) * 2 * USEC_PER_SEC;
-+		max_debounce = div64_u64(div, freq);
- 		if (debounce > max_debounce)
- 			return -EINVAL;
- 
--		div = debounce * freq;
--		div_reg = DIV_ROUND_CLOSEST_ULL(div, 2 * USEC_PER_SEC) - 1;
-+		div = (u64)debounce * freq;
-+		div_reg = DIV_ROUND_CLOSEST_ULL(div, 2 * USEC_PER_SEC);
-+		div_reg = div_reg ? div_reg - 1 : 0;
- 	} else {
- 		div_debounce_support = false;
- 	}
++static int __init sa1100_gpio_init_chip(void)
++{
++	struct gpio_chip *gc = &sa1100_gpio_chip.chip;
++	int error;
++
++	error = software_node_register(&sa1100_gpiochip_node);
++	if (error) {
++		pr_err("failed to register sa1100 gpiochip software node: %d\n",
++		       error);
++		return error;
++	}
++
++	gc->fwnode = software_node_fwnode(&sa1100_gpiochip_node);
++
++	error = gpiochip_add_data(gc, NULL);
++	if (error) {
++		pr_err("failed to add sa1100 gpiochip: %d\n", error);
++		gc->fwnode = NULL;
++		software_node_unregister(&sa1100_gpiochip_node);
++		return error;
++	}
++
++	return 0;
++}
++postcore_initcall(sa1100_gpio_init_chip);
+-- 
+2.56.1
+
 
 
