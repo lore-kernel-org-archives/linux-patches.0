@@ -1,50 +1,50 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795626052;
-	b=m/nwszhSBNev3BaLuDO9fC/7ASFSmwsx0qv6vs6WIXOMJZbwnHULRrF8S0WC+1lWlklP
-	 d3yLEOSblJjYYRjAQ+c1ba8tRcGV66QBsfr+4/NO6ihAC+/YLfRB1RDMQH0Iolsn56Azm
-	 zxIcyolGmYx/CmDski+F9D9+Yi4fFEAhi3p7qG6TEjCKPKr2cOvOJ48a/tpT2+p30Ybn+
-	 nEyvHcQxzZ7P9p6zUVXhBTWnywlHz5X28Oge2ML4fcWQdNHH8wLcdruSawg9K5VXUvcPt
-	 Kd6pszWm91vj4DohJGNxwvmMICK97HrE6gXRuffEsHsSATYryVoXpYB2cPC40HwnxYA==
+	t=1795626056;
+	b=bR9LcUUyiYl200TkGOhcELUWFIOfNxCCwA1hoqIKTXK81jnja/6xLJ63vOq0/QHCQekC
+	 JLTCNcERnWzHz+0cAOTkHTvseUooJM4fNH2roe8u7WgeDhzayG9Y+EuVo88QEf7GcRCFF
+	 opl7Yum8pCNgmdUMn7rN/4hxM3NqLvfXeocO3SLKyS94Ch4ENhEU0Koj9Pbat/kPYOuvE
+	 JUvvgcb9Vwml6VdI4Fm1VjY6vhpH0PoWhoM85g9ld/pj6K26CtiJGe9tH62G9beeMLdA9
+	 Gdwtlyo8uJR313HXCYaikHpoCm/8uBgoVM3HZeEbiWan3620BXbjiPHUrIfXzSDiTdA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795626052;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795626056;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=A1AZcrcc/P8rMExc3vL2LZCiVz7w5lBiKsH9WBYZE+Y=;
-	b=L8dquNCIzbtMgRz3lN/7hDZw8dKc2PPI7ERv9WbM3bHyncZWrNMQCgIXiprAqy5x12sq
-	 vqUfNnyOBAtv+wVOFoedyILgAL9KBsLLADfXNooYGOM1jV+S1CkkY1YkcteTfa/mo7xuQ
-	 TEOBNOFlUuU6r0U6J6DjRyBdgYiYb9tliSwJFnp8TVs08L94b80NaJsMoWW0QFiCKZ8aB
-	 +t4WVIMUU/P5D1jaWIoLGDyAwR+243uPZuCqSEmDB20mIWKPl1wCnnguiaJfx6TKxQ0Ga
-	 m7Li7LdpOxoPBGtnAhL08a3LZMPEyGOuqt6oPyrMKpImx5XA4honODKDVK/cMkJH37A==
+	bh=5fumzzSP+5nKa1LrSzRxWk+zb39+3EoyhNaiE09kfjE=;
+	b=Vtc4nx0u2/ihM30i8tobAgAsbevnwmiCbXBE7ferMU5C7G19QH/baZ/lgH1OoQ74fW79
+	 x0b+kj3yYYKHK7cHItGdGnqFlYHwjIZZewa+XwdxZUe4wKXxlIhnCK2MaUAAULrYs/RFu
+	 46m3yAIfPKkTZPPiZhZbzSeqHk1LaKzuuwc9PevFe7gZYfAI0M8HOFh9dWdBHb83cnZev
+	 aFk63umyHIaAnyOQjHN/1lNUj8WjUIYLi4y4QXpIBy1MU0s7Bc+U6f/mtqZhAsfqDqZ0j
+	 7aKcHh0FOomQ4ioCWPCi/5zZftEasG4nUa2/BZQQb8Qni3cLgXwY3uim/jLFobWYpOA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=D26UYE0E;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=FSCLVjNh;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D4AF6606A31E;
-	Wed, 25 Nov 2026 17:00:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 00405606A31E;
+	Wed, 25 Nov 2026 17:00:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=D26UYE0E
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 312ED1F000C0;
-	Wed, 25 Nov 2026 17:00:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=FSCLVjNh
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 08F681F000C0;
+	Wed, 25 Nov 2026 17:00:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795626052;
-	bh=A1AZcrcc/P8rMExc3vL2LZCiVz7w5lBiKsH9WBYZE+Y=;
+	s=korg; t=1795626055;
+	bh=5fumzzSP+5nKa1LrSzRxWk+zb39+3EoyhNaiE09kfjE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=D26UYE0E9EHBQ36dbPbHtIDS5n/2Q12e+NFIWmx+ukeLhVkzzhwd10pZIUgti+pZ2
-	 dE+vrKuAA9PZGtB4W9xeTfeEhEsHAPGPaFfSs8Pjfysob6hcJsePycNVSgh7o1eaku
-	 jfQR6+64Rb+CAKecLoONNFg39CayVg8jaO2iD5H8=
+	b=FSCLVjNhDz2QqAIdmuINF0d2mn20Sv6RP4jJvJN+Dl/GhYqXynPTajdR3VdAOW8rQ
+	 BNQqgeS/mV7RcJry0CqtkDiGgch7AHHGAR4TIkUTBvrQujIZT/fYX8z/HYS19im9iK
+	 YNyilTKATp9Wz6VsbTQ1omXyV2iYuOth/JEqtUjY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Mikulas Patocka <mpatocka@redhat.com>
-Subject: [PATCH 6.12 717/816] dm-thin: fix data corruption if discard races with regular I/O
-Date: Wed, 25 Nov 2026 15:37:45 +0100
-Message-ID: <20261125143905.773750899@linuxfoundation.org>
+Subject: [PATCH 6.12 718/816] dm-thin: fix leak if __set_snapshot_details fails
+Date: Wed, 25 Nov 2026 15:37:46 +0100
+Message-ID: <20261125143905.797111950@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143849.205329330@linuxfoundation.org>
 References: <20261125143849.205329330@linuxfoundation.org>
@@ -68,37 +68,38 @@ Content-Transfer-Encoding: 8bit
 
 From: Mikulas Patocka <mpatocka@redhat.com>
 
-commit 62ee9c09366cad69410330087d990e469dd92314 upstream.
+commit dfb95816cf6f2f2660af2ec64c65dc204c60b5e7 upstream.
 
-In the function break_up_discard_bio, if a discard hits the same block as
-regular I/O, it was intended to skip the discard for the affected range.
-However, the skip code only advances "data_begin", it doesn't advance
-"virt_begin". So, the data_begin and virt_begin variables become
-unsynchronized.
+If __set_snapshot_details fails, the variable td is leaked - this
+prevents any other snapshot with the same id from being created.
 
-process_prepared_discard_passdown_pt1 calculates "data_end =
-m->data_block + (m->virt_end - m->virt_begin);" - if m->data_block is
-incremented and m->virt_begin isn't, it will overshoot the intended
-discard range.
+Fix this by removing it from the list and freeing it.
 
-Cc: stable@vger.kernel.org
-Fixes: e2dd8aca2d76 ("dm bio prison v1: improve concurrent IO performance")
 Signed-off-by: Mikulas Patocka <mpatocka@redhat.com>
 Assisted-by: Claude:claude-opus-5
+Cc: stable@vger.kernel.org
+Fixes: 991d9fa02da0 ("dm: add thin provisioning target")
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/md/dm-thin.c |    1 +
- 1 file changed, 1 insertion(+)
+ drivers/md/dm-thin-metadata.c |    5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
---- a/drivers/md/dm-thin.c
-+++ b/drivers/md/dm-thin.c
-@@ -1705,6 +1705,7 @@ static void break_up_discard_bio(struct
- 			(void) build_key(tc->td, PHYSICAL, data_begin, data_begin + len, &data_key);
- 			if (bio_detain(tc->pool, &data_key, NULL, &data_cell)) {
- 				/* contention, we'll give up with this range */
-+				virt_begin += len;
- 				data_begin += len;
- 				continue;
- 			}
+--- a/drivers/md/dm-thin-metadata.c
++++ b/drivers/md/dm-thin-metadata.c
+@@ -1225,10 +1225,13 @@ static int __create_snap(struct dm_pool_
+ 	__close_device(td);
+ 
+ 	if (r)
+-		goto bad;
++		goto bad2;
+ 
+ 	return 0;
+ 
++bad2:
++	list_del(&td->list);
++	kfree(td);
+ bad:
+ 	dm_btree_remove(&pmd->tl_info, pmd->root, &key, &pmd->root);
+ 	dm_btree_remove(&pmd->details_info, pmd->details_root,
 
 
