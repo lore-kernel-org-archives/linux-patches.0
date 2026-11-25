@@ -1,42 +1,42 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795622613;
-	b=4VnYV0CJlcC7dsM341idz+qtnHeZ7YK1QixmjkQCRi53+28GDWc6kTsIOCCnGkev0Ora
-	 eaxv1HYBo3fuuA0xyjzUT/cX4pC4QjjVz497Fu+qd0YHm1CliDhOueuoIK9gk4OT+2kV1
-	 Lc478U0LTK0+FhO2qdhKyqzqsHxYflZq3X7gczTJLUJWAb1HJkJGCMCdtwWTGXG4tQ5CJ
-	 p1VMqPtpUp+l+cLYlBIj8oeYvELG/UjaYZ9HqOxTNJGFgHwIaTSMN/GfOi5Xsb4yNbAc8
-	 3ey5AecfSm8XQ/fRau2OXo8spKOBX5O4BcHwkZhPg1Os79njChp3VoYHx9oIyvjHoJg==
+	t=1795622617;
+	b=Dwzqrvl5TNomwbv4BCp378PnAUGK9x0NRk5ZljARh2mwFB4aGp6zx9zymBAmIE5T+/GW
+	 Ah2rinm6b7pZ8NGXgU6dC4rcYahZo1+mGNcnyMigQrYSegHiGWSkz2wPTd8lGxbcYFI0u
+	 OTft7R96H4KfN7YSEue9usUYirZnPpgd7QWiNmO4BCA2b6WFGtt4/6E8rYKlmcFVTnX4a
+	 20XHB8pGZfJR6Bh+l4sDMdUd3IDc1ktG6F9cGBmD6nm4QJe1tL4vNOd7bkOynMnX9h16n
+	 bSNqSoQGNvbkNY8Nl0FX3GOYwYYC1m6HhFiW3+p5kySIKpckcXveB9dwGnGLcQ0jEJQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795622613;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795622617;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=ezxC6V/LObDoDAt9rZcWFbS6FJnfeYRh6SQmSWEQ/U4=;
-	b=Ma3wKV6s9mrOtQvKanAk4Fvhc2ILuj4S2bL3foMHwuXFH9/CN4Q03aei49n+UtSiErVD
-	 5hbfDY8se7ab8/PgHrgi8CmYuMECwGc/mrbNFPhI5Gf7mnm/RIS6LQESycesvv2QLy0LQ
-	 0dKWY6zShqOKqydQLmhZGOSVnFy7obVlgLXxqsWi7SURK13Ruha83XYzzrb46uf5X7N8Z
-	 EaLcSy1PNvMG/4jFpcX2cikFI2z/fLpXuyqBRh2FM7javTfKz1oau6/hoTnoduORer+s5
-	 mNVK/EBFn0YapoQHzmNMxiTtT9m6YrpP8LMMqfV7ylfRVYbYcoy44lgHymwqr2HMutw==
+	bh=sRpeaOJ4RRbywfh3USsDc5STCW0r2UrR6rNWGYeezX8=;
+	b=h+stnMKRwUM2wlyOB27SS+se8Urf2LyJyQhaCDS45xcRUcjCQ7gUMX26KSOlyql7uvNe
+	 9eOrWlViFuIwcGHVm3kbk4pDgiiWQVgsl8BvDnpBGB5R3xyX4ZwpdP61+XfSPw9XGCE7g
+	 j5fmCuA1anhC0TNBy6edoQ1CbcCb33xbv28WUp1xpm6wcqkKNc0iL2F0sxzR0v/9B4Oac
+	 gpeON9Gt2vv017uSyhg2lGqx/DllQ9z53WX/749DgkhfsSlvAeOBuWKJuhRibHdXaaXxl
+	 Pdwgg1w5IBHrdB8ZhQXIkhxKfeRJw+EJb0r5DA5neFoFVIxja/d7rS+IY1lajMje4zw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=TmQNJkZC;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=h0EEpfEU;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 502BF606A32E;
-	Wed, 25 Nov 2026 16:03:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 42C80606A31E;
+	Wed, 25 Nov 2026 16:03:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=TmQNJkZC
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7276D1F0093E;
-	Wed, 25 Nov 2026 16:03:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=h0EEpfEU
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B48881F000D1;
+	Wed, 25 Nov 2026 16:03:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795622613;
-	bh=ezxC6V/LObDoDAt9rZcWFbS6FJnfeYRh6SQmSWEQ/U4=;
+	s=korg; t=1795622616;
+	bh=sRpeaOJ4RRbywfh3USsDc5STCW0r2UrR6rNWGYeezX8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=TmQNJkZCkwpMM1JR5dzKgdrfuJK8nlQjMl0vEScmh1WxYIXnC1GkNmVD/8cRRXkOy
-	 S+m2B5BgPb7jk+kYwSHuUUy4plVLEAVJy5vdQRY4G2A/xstwijqAhA9ez7zxqwRL3g
-	 RxQYBD2s+h4J22e1+f9uoeh23/otPYn1QiupQP8w=
+	b=h0EEpfEU23ZxmxFD/ZTLii5K0ny49Ahpv9QnGf5sTWrjDlwkWsRv1e3qnJKn78ibi
+	 r1DFgvMrl7NJwjy5ypY0w2B5YFo1RP7I2NAhZI6hQEgvdxuUiLi/g1NJcUPAJkAxTQ
+	 72rfdvffhinTOrA3joOJeCa+rQMLA47oXmTq8Mks=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -46,9 +46,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Vasanthakumar Thiagarajan <vasanthakumar.thiagarajan@oss.qualcomm.com>,
 	Jeff Johnson <jeff.johnson@oss.qualcomm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 548/990] wifi: ath12k: place dp_mon_mpdu on stack in mon dst reap loop
-Date: Wed, 25 Nov 2026 15:31:55 +0100
-Message-ID: <20261125143834.935811597@linuxfoundation.org>
+Subject: [PATCH 6.18 549/990] wifi: ath12k: fix skb leak on monitor PPDU ID wraparound
+Date: Wed, 25 Nov 2026 15:31:56 +0100
+Message-ID: <20261125143834.958761732@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143822.072087159@linuxfoundation.org>
 References: <20261125143822.072087159@linuxfoundation.org>
@@ -72,31 +72,31 @@ Content-Transfer-Encoding: 8bit
 
 From: Kang Yang <kang.yang@oss.qualcomm.com>
 
-[ Upstream commit 8b1d2f4c3805b9f1bddd5dc3bd241edd1f9ab2d9 ]
+[ Upstream commit 97b144b82e2388efef1f78269626d61de0480feb ]
 
-ath12k_wifi7_dp_rx_mon_dest_process() allocates a dp_mon_mpdu with
-kzalloc(GFP_ATOMIC) for each delivered MPDU. On allocation failure
-it breaks out of the reap loop without calling
-ath12k_hal_srng_dst_get_next_entry(), leaving the destination ring
-tail pointer parked on the current entry -- the same entry will
-be peek()ed on every subsequent NAPI schedule, stalling monitor
-RX until the mon_dest_ring_stuck_cnt recovery path resyncs the
-PPDU ID. The head_msdu chain accumulated for this iteration is
-also orphaned since the break bypasses both the delivery and
-the cleanup paths.
+ath12k_dp_mon_comp_ppduid() updates *ppdu_id and returns
+msdu_ppdu_id to indicate that a PPDU transition was detected.
 
-kmemleak reports these skbs in field testing:
+When PPDU IDs wrap around, msdu_ppdu_id can be 0. In that case
+the function updates *ppdu_id but returns 0, causing
+ath12k_wifi7_dp_rx_mon_mpdu_pop() to interpret the result as
+"no PPDU update" and continue processing the MPDU.
+
+The MSDUs are then linked into head_msdu while their RX
+descriptors have already been detached. Later,
+ath12k_wifi7_dp_rx_mon_dest_process() detects the PPDU
+mismatch and exits with the partially built MSDU chain,
+leaking the SKBs.
+
+kmemleak reports the leak through:
   kmemleak_alloc()
   __netdev_alloc_skb()
   ath12k_dp_rx_bufs_replenish()
   ath12k_wifi7_dp_rx_mon_dest_process()
 
-dp_mon_mpdu is used only within a single reap loop iteration and
-is passed synchronously to ath12k_wifi7_dp_mon_rx_deliver(); the
-callee does not retain the pointer. Place it on the stack instead
-of using kzalloc(GFP_ATOMIC). This eliminates the allocation
-failure path (and the ring stall it caused) and saves a
-kzalloc/kfree pair per delivered MPDU.
+Fix this by returning a boolean value from
+ath12k_dp_mon_comp_ppduid() so the update notification is
+independent of the actual PPDU ID value.
 
 Tested-on: WCN7850 hw2.0 PCI WLAN.HMT.1.1.c7-00108-QCAHMTSWPL_V1.0_V2.0_SILICONZ_UPSTREAM-3
 
@@ -104,53 +104,50 @@ Fixes: 72bfbf19b7da ("wifi: ath12k: add support to reap and process mon dest rin
 Signed-off-by: Kang Yang <kang.yang@oss.qualcomm.com>
 Reviewed-by: Baochen Qiang <baochen.qiang@oss.qualcomm.com>
 Reviewed-by: Vasanthakumar Thiagarajan <vasanthakumar.thiagarajan@oss.qualcomm.com>
-Link: https://patch.msgid.link/20260916060325.854-5-kang.yang@oss.qualcomm.com
+Link: https://patch.msgid.link/20260916060325.854-6-kang.yang@oss.qualcomm.com
 Signed-off-by: Jeff Johnson <jeff.johnson@oss.qualcomm.com>
-[ sashal: Replaced the kzalloc'd dp_mon_mpdu with a stack variable, adapted to the pre-wifi7-split file path and function names (ath12k_dp_mon_rx_deliver(ar, ...)). ]
+[ sashal: Kept the function static in dp_mon.c and dropped the header hunk, since this tree has no prototype; only the return type changed to bool. ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/ath/ath12k/dp_mon.c | 19 ++++++++-----------
- 1 file changed, 8 insertions(+), 11 deletions(-)
+ drivers/net/wireless/ath/ath12k/dp_mon.c | 15 +++++++--------
+ 1 file changed, 7 insertions(+), 8 deletions(-)
 
 diff --git a/drivers/net/wireless/ath/ath12k/dp_mon.c b/drivers/net/wireless/ath/ath12k/dp_mon.c
-index a9ba30c330833..cfd9ea83887aa 100644
+index cfd9ea83887aa..2cb4e0bb0221a 100644
 --- a/drivers/net/wireless/ath/ath12k/dp_mon.c
 +++ b/drivers/net/wireless/ath/ath12k/dp_mon.c
-@@ -4278,7 +4278,6 @@ static void ath12k_dp_rx_mon_dest_process(struct ath12k *ar, int mac_id,
- 	struct ath12k_dp *dp = &ar->ab->dp;
- 	struct ath12k_base *ab = ar->ab;
- 	void *ring_entry, *mon_dst_srng;
--	struct dp_mon_mpdu *tmp_mpdu;
- 	LIST_HEAD(rx_desc_used_list);
- 	struct hal_srng *srng;
+@@ -1860,24 +1860,23 @@ ath12k_dp_rx_mon_buf_done(struct ath12k_base *ab, struct hal_srng *srng,
+ 	return DP_MON_STATUS_REPLINISH;
+ }
  
-@@ -4341,18 +4340,16 @@ static void ath12k_dp_rx_mon_dest_process(struct ath12k *ar, int mac_id,
- 		}
- 
- 		if (head_msdu && tail_msdu) {
--			tmp_mpdu = kzalloc(sizeof(*tmp_mpdu), GFP_ATOMIC);
--			if (!tmp_mpdu)
--				break;
+-static u32 ath12k_dp_mon_comp_ppduid(u32 msdu_ppdu_id, u32 *ppdu_id)
++static bool ath12k_dp_mon_comp_ppduid(u32 msdu_ppdu_id, u32 *ppdu_id)
+ {
+-	u32 ret = 0;
 -
--			tmp_mpdu->head = head_msdu;
--			tmp_mpdu->tail = tail_msdu;
--			tmp_mpdu->err_bitmap = pmon->err_bitmap;
--			tmp_mpdu->decap_format = pmon->decap_format;
--			ath12k_dp_mon_rx_deliver(ar, tmp_mpdu,
-+			struct dp_mon_mpdu tmp_mpdu = {
-+				.head = head_msdu,
-+				.tail = tail_msdu,
-+				.err_bitmap = pmon->err_bitmap,
-+				.decap_format = pmon->decap_format,
-+			};
-+
-+			ath12k_dp_mon_rx_deliver(ar, &tmp_mpdu,
- 						 &pmon->mon_ppdu_info, napi);
- 			rx_mon_stats->dest_mpdu_done++;
--			kfree(tmp_mpdu);
- 		}
+ 	if ((*ppdu_id < msdu_ppdu_id) &&
+ 	    ((msdu_ppdu_id - *ppdu_id) < DP_NOT_PPDU_ID_WRAP_AROUND)) {
+ 		/* Hold on mon dest ring, and reap mon status ring. */
+ 		*ppdu_id = msdu_ppdu_id;
+-		ret = msdu_ppdu_id;
+-	} else if ((*ppdu_id > msdu_ppdu_id) &&
+-		((*ppdu_id - msdu_ppdu_id) > DP_NOT_PPDU_ID_WRAP_AROUND)) {
++		return true;
++	}
++	if ((*ppdu_id > msdu_ppdu_id) &&
++	    ((*ppdu_id - msdu_ppdu_id) > DP_NOT_PPDU_ID_WRAP_AROUND)) {
+ 		/* PPDU ID has exceeded the maximum value and will
+ 		 * restart from 0.
+ 		 */
+ 		*ppdu_id = msdu_ppdu_id;
+-		ret = msdu_ppdu_id;
++		return true;
+ 	}
+-	return ret;
++	return false;
+ }
  
- 		ring_entry = ath12k_hal_srng_dst_get_next_entry(ar->ab,
+ static
 -- 
 2.53.0
 
