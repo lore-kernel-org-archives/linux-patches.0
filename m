@@ -1,55 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795625371;
-	b=beHdqwNc2Gyl1eyizj/QPEVtEv7TBrrtcDTJCrnyaazYRnP5QNc0fOspRjXxXvcejzmQ
-	 Azv5LPsuTSicReWSCRFqNIOK1KDWQn5o4cSbzmEVx9MKJDK20lKPIw9qsIgLg0jm2t5pG
-	 aB0v+eWHgwU2DSv0zKeHGEjuYsem7RUOKy9Kpy+geDMAzOGFEVUarwpFJqpiy0OvQO2fK
-	 zbTfz+LLWQ+n5p85EB5jleMV6hrYUTUcfqoYwXTsd6abX4EGfgPpBXf8cqnGCyojRFL0L
-	 xvH3Xfao7PkKaShqqbLZY5ULN53hxMXk+swXIq2ILi27adFW6OsUIVZdkdZ3cPfJogQ==
+	t=1795625374;
+	b=RGR18nJhUjURkaW+grI+dj5fqKw7MOymGEoXTzlzKZ31YH1yW482RVKHbhUkTbr/kl5H
+	 RQMPhCwiaHY4irjor8MiQBfejix4w3Up1kf/Y0pr5Z9ejJXLaANB3kPWzRF/mA+ccUPii
+	 d3vcKJSsCESZl6yL2pqOxTVdmZHc8TfonGHrOOD9qlh1CG8JsiJ969Us2zA+1rwRC88R1
+	 6dFUnhstttgPT4W/0lgzOrQW5809tBxJINSFAOAzgq4DVJ8xapsDXbPlPyphq/eZk57ss
+	 QOAfwaej0QlH/O3+vrKci6UCkog3T1KpQpDg8WgK5HsWWrpGF9RKHpErK/caiEzfLCA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795625371;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795625374;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=MwAju13PjaZgpUhceP7UoIBhfyLZzO4rfwzdfL1V2lc=;
-	b=l4CAxEW+Llnj2tcDjYXQH5O3sYnG7UI3SdVcb7AqaitRgKOffIxCgKpZm6n8dEIYw/oT
-	 028iYcV/taJOnPVzVM1DAQmwwFZFNdOiP7pRc0scQqx/3hExOza7DzCtpSHzroDCfigsM
-	 PGmYBC/A5AQmzt8W2QyQjxKsrBwHVLzev9zHOkwSsOE9a6rIWnYiwIrhS96kVsbupBt/z
-	 rgkMgFWgCnRfnztcq806K5WGhNL2I14bgiB9pe4jsv81BHsi0GfdvcHM4S7EFvbMCfJj2
-	 ipSVC8DMIbSqbGPWBM3/WApFqnWRxWPMUijKAXeOWL/BgBhs02oKGYTfmUO02eYMg7A==
+	bh=9+m+BFbgsrzDCAEhrgZeXbgiim0k6WOlux+5APXZtgA=;
+	b=Mm6uxxfnD5ACC6YlScKjCExVwfLqqyA3dEAjv3uXAzk0birpgGmfGO3KdYrz87JhVgnO
+	 T9Db5a5PTcD6KLQqmxphN2SuMgxQZq+pxpBXenncDk1xUH26mEhDw226YnxwT+juIYtU4
+	 csWqMo6eA38QFTsi+25W/ThzlWhi81yrVJR+xTlJr27TzH2HHHm+8yL4zGwtKZC0RhVr0
+	 D8W2vSibJ1WXUn3BppZRvC/YcqRjmlQyq/oUNcgnlQmTTtTAxPx13G9x3OXKrHtAw/3EQ
+	 S7Ae6IgRRgoWQX0sTW+XS8otoW3CJUWkp2orFLncsTTk8WBiC40oP+6kw80Qj38yHBQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=T71kDZ89;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=PiNX44cx;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0118C606A323;
-	Wed, 25 Nov 2026 16:49:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4774B606A31E;
+	Wed, 25 Nov 2026 16:49:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=T71kDZ89
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 13D8B1F000C4;
-	Wed, 25 Nov 2026 16:49:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=PiNX44cx
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 186101F000C4;
+	Wed, 25 Nov 2026 16:49:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795625370;
-	bh=MwAju13PjaZgpUhceP7UoIBhfyLZzO4rfwzdfL1V2lc=;
+	s=korg; t=1795625373;
+	bh=9+m+BFbgsrzDCAEhrgZeXbgiim0k6WOlux+5APXZtgA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=T71kDZ89bBGSFVcRoofMNFKm7tWyT1hVePQnynBAzdTrU87FAKoK5Uri15C30SiMB
-	 OVfw7Cmz9zDHkJed2gGXBrR5WCdPhy266tPydPwLmjeirttO7+4K37BtE6POwNahse
-	 J7L+zVFV3qPXhQ+7PPXt2IS/7I/qxi5FbAE/UvWI=
+	b=PiNX44cxCoCmuxD37ESVwgakDVYdVX6H3K4A564XgBHAKXYVtwC/9Gd2cU4ONlNLz
+	 wEW4W6I4w9Iyu1xo/7Np86vGunHeLFj+oIrFlP7y4t8ho/bgb4lEDnDxPMVzAsdYXN
+	 YaCXsWQ9ch5SemPKV852LWL6bWjaXzIvntpAdDsU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sashiko <sashiko-bot@kernel.org>,
-	Ian Rogers <irogers@google.com>,
-	Namhyung Kim <namhyung@kernel.org>,
-	Remi Bernon <rbernon@codeweavers.com>,
-	Arnaldo Carvalho de Melo <acme@redhat.com>,
+	Pauli Virtanen <pav@iki.fi>,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 493/816] perf symbol: Add missing symsrc__destroy() for libbfd
-Date: Wed, 25 Nov 2026 15:34:01 +0100
-Message-ID: <20261125143900.602684622@linuxfoundation.org>
+Subject: [PATCH 6.12 494/816] Bluetooth: hci_sync: fix mesh adv timeout units
+Date: Wed, 25 Nov 2026 15:34:02 +0100
+Message-ID: <20261125143900.626093194@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143849.205329330@linuxfoundation.org>
 References: <20261125143849.205329330@linuxfoundation.org>
@@ -71,47 +68,55 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Namhyung Kim <namhyung@kernel.org>
+From: Pauli Virtanen <pav@iki.fi>
 
-[ Upstream commit 35477b351e6a697c85dc7d37e5081621889f8e40 ]
+[ Upstream commit 8a8d51eeedebfa5aaaae7720f2fb2aa1a67b8587 ]
 
-When libbfd loaded symbols and there's a pending syms_ss, it'd be lost
-or overwrite existing symbols.  Let's destroy it before breaking the
-loop so that it can safely return from the function.
+Mesh adv instance timeout and duration are in milliseconds, see
+mesh_send_sync, hci_add_adv_instance.  hci_schedule_adv_instance_sync()
+and hci_enable_ext_advertising_sync() ignore this, and scale the timeout
+wrong.
 
-Closes: https://lore.kernel.org/r/sashiko-outbox-162540@kernel.org
-Fixes: eac9a4342e5447ca ("perf symbols: Try reading the symbol table with libbfd")
-Reported-by: Sashiko <sashiko-bot@kernel.org>
-Reviewed-by: Ian Rogers <irogers@google.com>
-Signed-off-by: Namhyung Kim <namhyung@kernel.org>
-Cc: Remi Bernon <rbernon@codeweavers.com>
-Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
+Fix for mesh instances by using msecs_to_jiffies() in
+hci_schedule_adv_instance_sync and fixing the scaling in
+hci_enable_ext_advertising_sync.
+
+Fixes BlueZ "Mesh - Send cancel" test failures.
+
+Fixes: b338d91703fa ("Bluetooth: Implement support for Mesh")
+Assisted-by: opencode:qwen3.8-flash-next sashiko
+Signed-off-by: Pauli Virtanen <pav@iki.fi>
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+[ sashal: Kept the tree's msecs_to_jiffies(timeout * 1000) for the non-mesh case instead of upstream's secs_to_jiffies(timeout), since that helper isn't used in this file here, and added the mesh branch. ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/perf/util/symbol.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ net/bluetooth/hci_sync.c | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
-diff --git a/tools/perf/util/symbol.c b/tools/perf/util/symbol.c
-index ef4594088684a..4de28911bdb52 100644
---- a/tools/perf/util/symbol.c
-+++ b/tools/perf/util/symbol.c
-@@ -1916,7 +1916,7 @@ int dso__load(struct dso *dso, struct map *map)
+diff --git a/net/bluetooth/hci_sync.c b/net/bluetooth/hci_sync.c
+index e51af37b10152..3793fc359a9ff 100644
+--- a/net/bluetooth/hci_sync.c
++++ b/net/bluetooth/hci_sync.c
+@@ -1731,7 +1731,8 @@ int hci_enable_ext_advertising_sync(struct hci_dev *hdev, u8 instance)
+ 	 * scheduling it.
+ 	 */
+ 	if (adv && adv->timeout) {
+-		u16 duration = adv->timeout * MSEC_PER_SEC;
++		u16 duration = adv->mesh ? adv->timeout :
++					   adv->timeout * MSEC_PER_SEC;
  
- 		if (bfdrc > 0) {
- 			ret = 1;
--			break;
-+			goto out_destroy;
- 		}
- 
- 		if (!is_reg || sirc < 0)
-@@ -1981,6 +1981,7 @@ int dso__load(struct dso *dso, struct map *map)
- 			ret += nr_plt;
+ 		/* Time = N * 10 ms */
+ 		set->duration = cpu_to_le16(duration / 10);
+@@ -2191,7 +2192,8 @@ int hci_schedule_adv_instance_sync(struct hci_dev *hdev, u8 instance,
+ 		hdev->adv_instance_timeout = timeout;
+ 		queue_delayed_work(hdev->req_workqueue,
+ 				   &hdev->adv_instance_expire,
+-				   msecs_to_jiffies(timeout * 1000));
++				   adv->mesh ? msecs_to_jiffies(timeout) :
++					       msecs_to_jiffies(timeout * 1000));
  	}
  
-+out_destroy:
- 	for (; ss_pos > 0; ss_pos--)
- 		symsrc__destroy(&ss_[ss_pos - 1]);
- out_free:
+ 	/* If we're just re-scheduling the same instance again then do not
 -- 
 2.53.0
 
