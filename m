@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795618985;
-	b=uiY4lmQeDPT6uHRndlovoRd8uAv7PTjfGB34+Pw8zVgJwBrSYpDuiqRfELv2+X4xjgBw
-	 GFmPMFEW23unVOm6rMbAX9WbYsnCFjXaJsFdWrLXu0rYpAz3UWKhtr9mEuMIfj7jXiva7
-	 CuCvDWMdsEko9VGK+ihPU7MsmjbxW/KP4qi5dTq174v5REQ0CBixMzpMM8y7siBfUFGp4
-	 uTAm4vXIDP3VMpaZaClS4RGq6husc9ps+yNm+2URzr117t2Bs5lqsTDIQ6LYn6QhJCQ6G
-	 DHjLnjfG5iGgEBbzodidelG8SHvuAeyxNVArhDKOjcliZkuGfj9bap74e+VYdcOalOQ==
+	t=1795618988;
+	b=uz348DxXeYVpwFfTVX87FFA+GezaD73JxdWGzm6+ldueOa4w5aM2V1aKUrGwgAj9LiXp
+	 3XsSbMae92sNIFpXq1ol4W1Zh+1nWjJ7q5l6JO4LCNBXA5ctHrI2CIVNAN8DPUV7QwJX1
+	 Z9pYuKaGyLEaBhDraAGQnQAt7sySRu1xe5/NUnZFWjX98Gp9saAmF3Kowu93S06RxcIDw
+	 xHAbice+8i/k1kKegwaHFDsLwDANUGYp1pMCHe/Xlr+S23plFAtska5VOjv2NVHMaI75g
+	 RZGj4pvQUl1ojHySyCgYzUTdlvCYnWv+YZhq3zztH0XklFr+mZgbkzkiAYENJ6JyNbA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795618985;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795618988;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=L72L/4RNg8bcdGiWi1VR/fQdQWqwCN3r+9SrBlyBO6k=;
-	b=LONVmXAsS5SkXUyuFvPCCKQlD5cms2TiMHTFVFiPSi8/PBwm1P9LsdJ5WAbHHVEqtEGR
-	 4fYXQWzZWT+CEXhZj/bf7wKZyNOveWsWFbwYtcby6IjQXZkXyQTpjqmkm7FvK4xp9lPBK
-	 UjNNXYDfsvMx7Fumo+z5HU0fUVaWOxW7Y+D7x7oxSxN7cUPlH+ZLgnK993Zk/UfZj1anC
-	 QJBaFrl1VJ9DPaxIckbUg9T4kvRQdNXUhv0pY6OZ1qjhP8F1Zkkcie6okovpdH8+z4qhC
-	 feGwoP1C69AB79ymYjphiQTQoTAIvT9os2hXDtwhybP55OrjSMj2lJyEYfcLl+UFmxA==
+	bh=PdwPCy5OoWYoxIJl/Mg6a8mFv0U9BziFbOwajEql+lo=;
+	b=NFFyK4L0AdiiLjUUd0j3WEIBrcs1M6Bc7yAxTgX9hrSpbQn0APBpJ72ZEUrNGEs5hNfB
+	 tt8sSIKHQjDKD/kWGHJjw+YlF4wwdS/dbCI9mXRFj64ZxVpCw9Ghux7r4HqfexFz+6kv7
+	 L4R+CXwVuRNTGwmQxMF3S7FbzkbhUg8WiiauLTSiu2beDQETTBhDxxv3GE5h+z9ZtStL2
+	 HTySNul8unS4hfyJ5dVvYmjvhAHl6guBQA7El+vv66gfY2hWewLMWCPE+ea9Fwifr5PUX
+	 jTRfCs7DETK3cpbJJULbuPYRLJ18RfTblWyJRrHRwOwPVcxEsXC8UQIdatEb8n42dIA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=jZy3+VnA;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="mwC9Rn+/";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BED76606A321;
-	Wed, 25 Nov 2026 15:03:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 94B67606A321;
+	Wed, 25 Nov 2026 15:03:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=jZy3+VnA
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1C7471F000C0;
-	Wed, 25 Nov 2026 15:03:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=mwC9Rn+/
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E41511F000C6;
+	Wed, 25 Nov 2026 15:03:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795618985;
-	bh=L72L/4RNg8bcdGiWi1VR/fQdQWqwCN3r+9SrBlyBO6k=;
+	s=korg; t=1795618988;
+	bh=PdwPCy5OoWYoxIJl/Mg6a8mFv0U9BziFbOwajEql+lo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=jZy3+VnAyNE87bPElBsN6D/nfcMrphjAycPERFtpIuLdt9I1ZwwdPF+JYXc3BLsbV
-	 t9oXwN2ma7FLRloGmpBd1qK83OmWebpf1kR7twgO/PNwiHmRFgMVQsBSIRyc0qmWQ+
-	 VnMnyhaG7+ajIbDz6PtDhL+RGIJCR76M9WASgWbo=
+	b=mwC9Rn+/q87iS0kJk/Da86xZQFIWBOFfG+BYqMG9x6bU2HRUtsLgCkju9RKdrJcm9
+	 pAu4c+VeGr2RZtLU6rZZKntYUBfPOugmuw5I5pc7N2tjH/dyIhYPmBJhJ1dGn/eBmA
+	 HkK/wgHMEvraGiU6LWUTGPeBPlV1nm7cp09OiV0I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Stefano Munari <stefanomunari.sm@gmail.com>,
-	Oleksij Rempel <o.rempel@pengutronix.de>,
+	Jiayuan Chen <jiayuan.chen@linux.dev>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0450/1005] net: usb: lan78xx: resume phylink on non-reset USB resume
-Date: Wed, 25 Nov 2026 15:29:48 +0100
-Message-ID: <20261125143832.289276903@linuxfoundation.org>
+Subject: [PATCH 7.3 0451/1005] net: raw: fix ICMP unreachable sent when receive queue is full
+Date: Wed, 25 Nov 2026 15:29:49 +0100
+Message-ID: <20261125143832.312541529@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143821.729802100@linuxfoundation.org>
 References: <20261125143821.729802100@linuxfoundation.org>
@@ -69,72 +68,104 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Stefano Munari <stefanomunari.sm@gmail.com>
+From: Jiayuan Chen <jiayuan.chen@linux.dev>
 
-[ Upstream commit be9587c47db16faaca5415f533637755c65a4eb0 ]
+[ Upstream commit 45441a94d50200f1478c52857725e6df624bf2ad ]
 
-lan78xx_suspend() calls phylink_suspend(dev->phylink, false) on an open
-interface, which always stops phylink and halts the PHY. The matching
-phylink_resume() is only called from lan78xx_reset_resume().
-When the USB device stays powered across system sleep (e.g. s2idle) and
-the USB core calls .resume instead, the link stays down until the interface
-is brought down and up by hand. The ifdown triggers:
+It's found in a raw socket application. When the application doesn't
+read packets in time, the client receives ICMP Protocol Unreachable,
+which makes the client abort the session.
 
-  WARNING: drivers/net/phy/phy.c:1670 at phy_stop+0x44/0xc8
-  called from state HALTED
+The reason is that the server hits the sk_rcvbuf limit, and
+raw_v4_input() skips the socket before setting 'delivered', so it
+returns 0. Then ip_protocol_deliver_rcu() sees 'raw' is 0, thinks no one
+handles this protocol and calls icmp_send() to send ICMP Protocol
+Unreachable.
 
-Move phylink_resume() to the end of lan78xx_resume(), which both resume
-paths go through, and call it only if the resume succeeded and the
-interface was open, mirroring lan78xx_suspend(). As a side effect,
-lan78xx_reset_resume() no longer starts phylink on a closed interface.
+IPv6 has the same issue, ip6_protocol_deliver_rcu() sends ICMPv6
+Parameter Problem instead.
 
-Tested on a Raspberry Pi 3B+ (LAN7515) with s2idle: the link now comes
-back up on its own after resume and ifdown no longer warns.
+Also, we'd better run icmp_filter() and ip_mc_sf_allow() (icmpv6_filter()
+for IPv6) before we check sk_rcvbuf, otherwise packets rejected by
+ICMP_FILTER/ICMPV6_FILTER or the multicast filter are counted in
+sk_drops. So move the check right before skb_clone().
 
-Fixes: e110bc825897 ("net: usb: lan78xx: Convert to PHYLINK for improved PHY and MAC management")
-Signed-off-by: Stefano Munari <stefanomunari.sm@gmail.com>
-Tested-by: Oleksij Rempel <o.rempel@pengutronix.de>
-Link: https://patch.msgid.link/20261102235133.23011-1-stefanomunari.sm@gmail.com
+Fixes: d721812aa875 ("ipv4: raw: check sk->sk_rcvbuf earlier")
+Fixes: 026763ece881 ("ipv6: raw: check sk->sk_rcvbuf earlier")
+Signed-off-by: Jiayuan Chen <jiayuan.chen@linux.dev>
+Link: https://patch.msgid.link/20261104115732.322151-1-jiayuan.chen@linux.dev
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/usb/lan78xx.c | 16 +++++++---------
- 1 file changed, 7 insertions(+), 9 deletions(-)
+ net/ipv4/raw.c | 15 ++++++++-------
+ net/ipv6/raw.c | 15 ++++++++-------
+ 2 files changed, 16 insertions(+), 14 deletions(-)
 
-diff --git a/drivers/net/usb/lan78xx.c b/drivers/net/usb/lan78xx.c
-index af845623bf609..e170c1114d8f2 100644
---- a/drivers/net/usb/lan78xx.c
-+++ b/drivers/net/usb/lan78xx.c
-@@ -5370,6 +5370,12 @@ static int lan78xx_resume(struct usb_interface *intf)
- out:
- 	mutex_unlock(&dev->dev_mutex);
+diff --git a/net/ipv4/raw.c b/net/ipv4/raw.c
+index d756e5e31b90d..f0035f8da3cf2 100644
+--- a/net/ipv4/raw.c
++++ b/net/ipv4/raw.c
+@@ -182,18 +182,19 @@ static int raw_v4_input(struct net *net, struct sk_buff *skb,
+ 				  iph->saddr, iph->daddr, dif, sdif))
+ 			continue;
  
-+	if (!ret && dev_open) {
-+		rtnl_lock();
-+		phylink_resume(dev->phylink);
-+		rtnl_unlock();
-+	}
+-		if (atomic_read(&sk->sk_rmem_alloc) >=
+-		    READ_ONCE(sk->sk_rcvbuf)) {
+-			sk_drops_inc(sk);
+-			continue;
+-		}
+-
+ 		delivered = 1;
+ 		if ((iph->protocol != IPPROTO_ICMP || !icmp_filter(sk, skb)) &&
+ 		    ip_mc_sf_allow(sk, iph->daddr, iph->saddr,
+ 				   skb->dev->ifindex, sdif)) {
+-			struct sk_buff *clone = skb_clone(skb, GFP_ATOMIC);
++			struct sk_buff *clone;
 +
- 	return ret;
- }
++			if (atomic_read(&sk->sk_rmem_alloc) >=
++			    READ_ONCE(sk->sk_rcvbuf)) {
++				sk_drops_inc(sk);
++				continue;
++			}
  
-@@ -5384,15 +5390,7 @@ static int lan78xx_reset_resume(struct usb_interface *intf)
- 	if (ret < 0)
- 		return ret;
++			clone = skb_clone(skb, GFP_ATOMIC);
+ 			/* Not releasing hash table! */
+ 			if (clone)
+ 				raw_rcv(sk, clone);
+diff --git a/net/ipv6/raw.c b/net/ipv6/raw.c
+index bdea825434ea7..00d832c7cdae9 100644
+--- a/net/ipv6/raw.c
++++ b/net/ipv6/raw.c
+@@ -160,12 +160,6 @@ static bool ipv6_raw_deliver(struct sk_buff *skb, int nexthdr)
+ 				  inet6_iif(skb), inet6_sdif(skb)))
+ 			continue;
  
--	ret = lan78xx_resume(intf);
--	if (ret < 0)
--		return ret;
+-		if (atomic_read(&sk->sk_rmem_alloc) >=
+-		    READ_ONCE(sk->sk_rcvbuf)) {
+-			sk_drops_inc(sk);
+-			continue;
+-		}
 -
--	rtnl_lock();
--	phylink_resume(dev->phylink);
--	rtnl_unlock();
--
--	return 0;
-+	return lan78xx_resume(intf);
- }
+ 		delivered = true;
+ 		switch (nexthdr) {
+ 		case IPPROTO_ICMPV6:
+@@ -197,8 +191,15 @@ static bool ipv6_raw_deliver(struct sk_buff *skb, int nexthdr)
+ 		if (filtered < 0)
+ 			break;
+ 		if (filtered == 0) {
+-			struct sk_buff *clone = skb_clone(skb, GFP_ATOMIC);
++			struct sk_buff *clone;
++
++			if (atomic_read(&sk->sk_rmem_alloc) >=
++			    READ_ONCE(sk->sk_rcvbuf)) {
++				sk_drops_inc(sk);
++				continue;
++			}
  
- static const struct usb_device_id products[] = {
++			clone = skb_clone(skb, GFP_ATOMIC);
+ 			/* Not releasing hash table! */
+ 			if (clone)
+ 				rawv6_rcv(sk, clone);
 -- 
 2.53.0
 
