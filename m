@@ -1,56 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795624453;
-	b=XpQXhUrdveAVbX8hJDGAI7mRo11wONVoLUCA96ttJuja5vXAJ72TZWSCThK2bQ3GiIRq
-	 u5sQ1O5VOIuPElZqT7tF8qhTHzDmzn/5FLOAhD4rCWfmR0X8qB2NgRSLKFzBHKi477/86
-	 AGmdQESt9ARtWqs16cDrqFCeApFAstWMS4NZDPutIdmhBa033H8kj9LpaApFXVVmHgFy5
-	 t8HbZ6HUV63BQR4+1Tz3IpqIMitKhSYEOE4nUN9GTl3PKVb1rDgbiv5Wzg2H93s8EQ828
-	 bAjHsWyEHod5Qki/6nKiwLPB9mQqUOExMapoRKY+GmWaNTHfXRh2l/VMK+vNDa/Dc6Q==
+	t=1795624455;
+	b=wXPofI8uLCSug53r/Pp5YaMdZV8+1s8wGrzvUHBpCvE5MmRQs2zqlwvqat4gyQsBK8NO
+	 pUwesJsfO93arEOfaF568Ch4WHqOUoxQPKOva2c5nyXhPDNL88eyXElNQeWwD6FWuoLlc
+	 nekcU9POWn75Ccurzsb2mhfquEp55yb3f28fpa+g3Bb0QZwvqLMxncIYxybJL0NGqdR6Y
+	 D8+pp2zc6BWTtoVOpRy+fHu6w9U4B9wQlgUu9SNwX01UOC1Holif8ESsfldr1hNeDakz0
+	 GRaqg06SEecA9QDb6ueEiRPjy6BkF9W6CSTz4Hn7ahwAVN1hfFt3ozQbbvp3Y7ccMnw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795624453;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795624455;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=TJv5i7wizsTxGx/QsB2m9aIPujGF9eJ5jvkeSACpA/U=;
-	b=tgrAWOjrE6moaAaC96GBWBRHQi17bznNkMDYUKyGa8p2am1akyOnmZ2uNr/7quZtwnQr
-	 gFB965OfODx1h59pFCV4WNX6YDfU0oC1eJEsOQQNLqrtcSq7qT9aTsBFSDbO0R/r8O1X2
-	 1po6sO0lJ1aZKhhfpggV9pePDpClK7WqBhf0ViHZCiXpX0OQ1NSeky6EjmA3h3drF6zwq
-	 UrYoY/jTmTsmySy4jTPPbBcTGUkxoxgznGjOlv0qUEonz0yCY6FpyH0nr20qeY7I9LHT/
-	 xlCKhqFEhWdCq3CVKQuyJ7F5EjyfLgwMc3/90di2F5rVp67EEfZFtVS8cevtbfcfxgQ==
+	bh=2q2jgUFJWhx9SZCsHr1W7JXtoKJH7qAVL9dkhCquemw=;
+	b=ET+1ENBZUKhwRbjJIfVP5uJ39yiAQnbKjmQU2XcNjUNlQ+hhOs3YYjWVQwwdhLxkUkp2
+	 NabmkDa+RLSYqLHGbShLwxDR9lbDtweBdUYW4kUDH7F0WZjUfSxbEjpiFaSRlwHNaBL6Z
+	 ff3/J9738yrtuP2/mY1lTGqwMoxWoS4AmKoe3a1szqmHckRdpgExNYVhd04q9jspk349w
+	 8nDrwI4GZTMwfK/axDalPCNBeMlIwUwl8Y5dDI4qBNanDtsLsv6S+ZkQ5MUWSvi78KiXl
+	 /z8b3LU34kJI4MvWOrmF5JFVuE+S+6muNryW9I9kZo8UE0C9+/nw7WQmRZ+5Hr28H3A==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=OLq3fLua;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=UKeFRkSZ;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 06DD9606A33F;
-	Wed, 25 Nov 2026 16:34:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8AB00606A33D;
+	Wed, 25 Nov 2026 16:34:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=OLq3fLua
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1AC621F000C4;
-	Wed, 25 Nov 2026 16:34:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=UKeFRkSZ
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DC9401F000C0;
+	Wed, 25 Nov 2026 16:34:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795624452;
-	bh=TJv5i7wizsTxGx/QsB2m9aIPujGF9eJ5jvkeSACpA/U=;
+	s=korg; t=1795624455;
+	bh=2q2jgUFJWhx9SZCsHr1W7JXtoKJH7qAVL9dkhCquemw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=OLq3fLua7JseCa7IDELEjsKpj7P7wyKw066/FvrlHmbmzPpCn8d2dOcM8223VcHk3
-	 4uzw6Ds5R61szxrN1UzVlB2VyFLHm+8JajcFJtk+unKc7ovNf70YPgGO8ytYDsirhc
-	 y+SgEPoAJdxDcHgShmBJAMuHMrn9T8/GdtamFIHk=
+	b=UKeFRkSZHsMINQX8NdJvIOXnpTQDchRjSq64UQ/DkXjJQMI5ihJ4W1BxredvTdGxa
+	 BXHUZlkGJYRSu6cJY7ZszBGPx94TFsc7C10aFQtWkfW9noeJYTeZ8rKvfiOVK8lu8T
+	 b0IaOAZuaIep95BpVNpibLxoHEHxJVW47MAnFMcE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christoph Hellwig <hch@lst.de>,
-	Sagi Grimberg <sagi@grimberg.me>,
+	Bjorn Helgaas <bhelgaas@google.com>,
 	Chaitanya Kulkarni <kch@nvidia.com>,
-	Chris Mason <mason@kernel.org>,
-	Jens Axboe <axboe@kernel.dk>,
-	Keith Busch <kbusch@kernel.org>,
+	Christoph Hellwig <hch@lst.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 197/816] nvmet-rdma: queue the release work under the mutex
-Date: Wed, 25 Nov 2026 15:29:05 +0100
-Message-ID: <20261125143853.752867141@linuxfoundation.org>
+Subject: [PATCH 6.12 198/816] nvme: fix various comment typos
+Date: Wed, 25 Nov 2026 15:29:06 +0100
+Message-ID: <20261125143853.776127070@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143849.205329330@linuxfoundation.org>
 References: <20261125143849.205329330@linuxfoundation.org>
@@ -72,64 +69,121 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chris Mason <mason@kernel.org>
+From: Bjorn Helgaas <bhelgaas@google.com>
 
-[ Upstream commit 80095787f776967361cca76357f19e5445e0cd75 ]
+[ Upstream commit 367c240b0a99c7ada700a44345dd3144a02b6164 ]
 
-nvmet_rdma_remove_one() takes the queue mutex, unlists each queue of
-the device and queues its release work, then flushes nvmet-wq. So a
-queue that still holds objects on the device must either be on the
-list or have its release work queued. nvmet_rdma_queue_disconnect()
-breaks that: it unlists the queue under the mutex, drops it, and only
-then calls __nvmet_rdma_queue_disconnect() to queue the work. A device
-removal in that window finds nothing to wait for, and the release work
-then destroys the QP and CQ share on a freed device.
+Fix typos in comments.
 
-Queue the work before dropping the mutex, as nvmet_rdma_remove_one()
-itself does. That's safe now that rdma_disconnect() no longer sleeps on
-an iWARP event that needs the same mutex.
-
-Fixes: f1d4ef7d8883 ("nvmet-rdma: register ib_client to not deadlock in device removal")
-Cc: Christoph Hellwig <hch@lst.de>
-Cc: Sagi Grimberg <sagi@grimberg.me>
-Cc: Chaitanya Kulkarni <kch@nvidia.com>
-Reviewed-by: Christoph Hellwig <hch@lst.de>
-Signed-off-by: Chris Mason <mason@kernel.org>
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
-Signed-off-by: Keith Busch <kbusch@kernel.org>
+Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
+Reviewed-by: Chaitanya Kulkarni <kch@nvidia.com>
+Signed-off-by: Christoph Hellwig <hch@lst.de>
+Stable-dep-of: a4387799d422 ("nvmet-rdma: disconnect a queue on device removal")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/nvme/target/rdma.c | 12 ++++++------
- 1 file changed, 6 insertions(+), 6 deletions(-)
+ drivers/nvme/host/fc.c     | 4 ++--
+ drivers/nvme/host/tcp.c    | 2 +-
+ drivers/nvme/target/fc.c   | 6 +++---
+ drivers/nvme/target/rdma.c | 6 +++---
+ 4 files changed, 9 insertions(+), 9 deletions(-)
 
+diff --git a/drivers/nvme/host/fc.c b/drivers/nvme/host/fc.c
+index 7eb566c6fc557..1cd4bc001f1e6 100644
+--- a/drivers/nvme/host/fc.c
++++ b/drivers/nvme/host/fc.c
+@@ -1364,7 +1364,7 @@ nvme_fc_disconnect_assoc_done(struct nvmefc_ls_req *lsreq, int status)
+  * down, and the related FC-NVME Association ID and Connection IDs
+  * become invalid.
+  *
+- * The behavior of the fc-nvme initiator is such that it's
++ * The behavior of the fc-nvme initiator is such that its
+  * understanding of the association and connections will implicitly
+  * be torn down. The action is implicit as it may be due to a loss of
+  * connectivity with the fc-nvme target, so you may never get a
+@@ -2779,7 +2779,7 @@ nvme_fc_queue_rq(struct blk_mq_hw_ctx *hctx,
+ 	 * as WRITE ZEROES will return a non-zero rq payload_bytes yet
+ 	 * there is no actual payload to be transferred.
+ 	 * To get it right, key data transmission on there being 1 or
+-	 * more physical segments in the sg list. If there is no
++	 * more physical segments in the sg list. If there are no
+ 	 * physical segments, there is no payload.
+ 	 */
+ 	if (blk_rq_nr_phys_segments(rq)) {
+diff --git a/drivers/nvme/host/tcp.c b/drivers/nvme/host/tcp.c
+index c5b0e688fd9af..f6bc2a90592cf 100644
+--- a/drivers/nvme/host/tcp.c
++++ b/drivers/nvme/host/tcp.c
+@@ -2438,7 +2438,7 @@ static int nvme_tcp_configure_io_queues(struct nvme_ctrl *ctrl, bool new)
+ 
+ 	/*
+ 	 * Only start IO queues for which we have allocated the tagset
+-	 * and limitted it to the available queues. On reconnects, the
++	 * and limited it to the available queues. On reconnects, the
+ 	 * queue number might have changed.
+ 	 */
+ 	nr_queues = min(ctrl->tagset->nr_hw_queues + 1, ctrl->queue_count);
+diff --git a/drivers/nvme/target/fc.c b/drivers/nvme/target/fc.c
+index bd2a7f4accfa7..4d77615b55e4a 100644
+--- a/drivers/nvme/target/fc.c
++++ b/drivers/nvme/target/fc.c
+@@ -459,7 +459,7 @@ nvmet_fc_disconnect_assoc_done(struct nvmefc_ls_req *lsreq, int status)
+  * down, and the related FC-NVME Association ID and Connection IDs
+  * become invalid.
+  *
+- * The behavior of the fc-nvme target is such that it's
++ * The behavior of the fc-nvme target is such that its
+  * understanding of the association and connections will implicitly
+  * be torn down. The action is implicit as it may be due to a loss of
+  * connectivity with the fc-nvme host, so the target may never get a
+@@ -2294,7 +2294,7 @@ nvmet_fc_transfer_fcp_data(struct nvmet_fc_tgtport *tgtport,
+ 	ret = tgtport->ops->fcp_op(&tgtport->fc_target_port, fod->fcpreq);
+ 	if (ret) {
+ 		/*
+-		 * should be ok to set w/o lock as its in the thread of
++		 * should be ok to set w/o lock as it's in the thread of
+ 		 * execution (not an async timer routine) and doesn't
+ 		 * contend with any clearing action
+ 		 */
+@@ -2612,7 +2612,7 @@ nvmet_fc_handle_fcp_rqst(struct nvmet_fc_tgtport *tgtport,
+  * and the api of the FC LLDD which may issue a hw command to send the
+  * response, but the LLDD may not get the hw completion for that command
+  * and upcall the nvmet_fc layer before a new command may be
+- * asynchronously received - its possible for a command to be received
++ * asynchronously received - it's possible for a command to be received
+  * before the LLDD and nvmet_fc have recycled the job structure. It gives
+  * the appearance of more commands received than fits in the sq.
+  * To alleviate this scenario, a temporary queue is maintained in the
 diff --git a/drivers/nvme/target/rdma.c b/drivers/nvme/target/rdma.c
-index cff39abc4f981..78b541a6fb089 100644
+index 78b541a6fb089..970452397b5d5 100644
 --- a/drivers/nvme/target/rdma.c
 +++ b/drivers/nvme/target/rdma.c
-@@ -1740,17 +1740,17 @@ static void __nvmet_rdma_queue_disconnect(struct nvmet_rdma_queue *queue)
- 
- static void nvmet_rdma_queue_disconnect(struct nvmet_rdma_queue *queue)
- {
--	bool disconnect = false;
--
-+	/*
-+	 * Queue the release work with &nvmet_rdma_queue_mutex held, so that
-+	 * nvmet_rdma_remove_one() either finds the queue on the list or the
-+	 * work has already been queued.
-+	 */
- 	mutex_lock(&nvmet_rdma_queue_mutex);
- 	if (!list_empty(&queue->queue_list)) {
- 		list_del_init(&queue->queue_list);
--		disconnect = true;
-+		__nvmet_rdma_queue_disconnect(queue);
+@@ -1780,7 +1780,7 @@ static void nvmet_rdma_queue_connect_fail(struct rdma_cm_id *cm_id,
+  * We registered an ib_client to handle device removal for queues,
+  * so we only need to handle the listening port cm_ids. In this case
+  * we nullify the priv to prevent double cm_id destruction and destroying
+- * the cm_id implicitely by returning a non-zero rc to the callout.
++ * the cm_id implicitly by returning a non-zero rc to the callout.
+  */
+ static int nvmet_rdma_device_removal(struct rdma_cm_id *cm_id,
+ 		struct nvmet_rdma_queue *queue)
+@@ -1791,7 +1791,7 @@ static int nvmet_rdma_device_removal(struct rdma_cm_id *cm_id,
+ 		/*
+ 		 * This is a queue cm_id. we have registered
+ 		 * an ib_client to handle queues removal
+-		 * so don't interfear and just return.
++		 * so don't interfere and just return.
+ 		 */
+ 		return 0;
  	}
- 	mutex_unlock(&nvmet_rdma_queue_mutex);
--
--	if (disconnect)
--		__nvmet_rdma_queue_disconnect(queue);
- }
+@@ -1809,7 +1809,7 @@ static int nvmet_rdma_device_removal(struct rdma_cm_id *cm_id,
  
- static void nvmet_rdma_queue_connect_fail(struct rdma_cm_id *cm_id,
+ 	/*
+ 	 * We need to return 1 so that the core will destroy
+-	 * it's own ID.  What a great API design..
++	 * its own ID.  What a great API design..
+ 	 */
+ 	return 1;
+ }
 -- 
 2.53.0
 
