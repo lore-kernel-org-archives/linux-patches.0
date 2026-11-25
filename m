@@ -1,54 +1,55 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795622144;
-	b=0tVcW3HGj6+3cQNgkUf0biHH7Ovpg+LPU8r61YFzVqNm+n7FLLb1hwJ2TSAg0TXpNhYM
-	 JYhGi2ofW2Z7uKlV0BxLRvRRJa377b8ghRa7x835ITKqKzq2Ljgd020qOIWxNrFSMh/Gk
-	 hPgvg8m2u8Tlfzbz8qXHCUQRD8wtUAfJQBrdGSlaBXMHWnP1td+e+uZTQrvxNm30b7W0J
-	 uKOjj5FVYFI6q0OHBSkvTUVYw7uiR6crWDz0PnFkyR2eT4B8SlAxTpsUYZ5S8Ld7OSsVv
-	 q7FeUyYw5V3P87q+6VrW1lg3F/sH3OF1P7uEyagt8hP++LtZjYnDFs+vrtrU6kaSdzQ==
+	t=1795622147;
+	b=4WHgSQpLJaj2tUwZ60ymjRUj/l4MO202ZjfGzCc/itA3nBy+wtjANqeNBG2s3hQN6zBi
+	 m9NhnKz7p7OpjT+fUb6ja5d8wWe4qre9/zJWki3RMVQeqKyXfIn/B8YqPQtbjUJoKS2Fr
+	 2ZTgCnsYIgjWQ7WfgtkG47CmujqmoGAUtl1dufssPKaVE9+wIB2U/fQcZSCbLyXw97jun
+	 yAFnFmaQ/ua1xocHT7KuES5xEnlj7FLCPtZY3QxrC9g2Fmq/Cl55y+K54z9R4PDeHtmyC
+	 e+oHuHHIwEd3XR8iIN+p21yrss3/RZEpw1zxW8PFa6ZDeDtw5HZGGPjuSneIhZb2alA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795622144;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795622147;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=Skf/NOtJOe8TcVt31tKDs/5QzASdZy2DTyKyvgvwQCU=;
-	b=Hrz5AUmJ12HVAHn5bnh0o9IBGQtVjzV6EHLDRzZe8siFMb38bq8EQYYOZXnHMyyT5Ol3
-	 l26vf0183AW+Uxdu7wrpvAPciVh14C96lm5ZeoU6PYH8sdrBMq9YCDuXy/queCJKpTmgA
-	 uIHZPt8XLfOkjMKrEoD4uNJLQ47i6uon/XuAeeXU5crsOFpbn0YAt62BMQZ9720RiLvYu
-	 0itGJSOyuKjZMyrDcwhoBwdtNFRyVzqv/lZQhUdyFfsQ85FGBv6WTaSidOP3EzYsvB58R
-	 3REMyQT+pkrG4F+a3qMQRndHxQB+Y4q0T745BaXLOieC3sQGaH/dtOReprHzhbDvL3w==
+	bh=HWlOzXTdjuc58uu4VskNUt0W022uIleFCrbQSPQi6nY=;
+	b=w4LaZRT1MpgjqplfpN88/ZMlWvyXVPIXoR3fnsHm32gWQfeCpd5EJ+Qg9/KpkS8FZT4d
+	 TflaOUPKg2xqSSVdUxgNona7Vbhya0WMU1G6Ss9w8VRqNOB/YPS+PE/cc4T1heS0eMWZj
+	 XWMmUYkTpqWWoKhqQhAd5mUASCgA67WdE5iDAIDYwyy4wKUeKIqkGS+Vk0jK7AXstEhwc
+	 NCt9CdM9D6kypRmAmJJBIznqm3WsXDdYRNb7LfDpWazm5+vNpL9UIfTTjB8egr+cQ+znz
+	 S+KNEtDJE1xUdIqRj7SFkR6D+Njt9CVajmH+TSFucLlVmvz9j5bMxcPcBbeCHs3eDAg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=DRLgT1hQ;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="IY/qpUCp";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 59959606A32C;
-	Wed, 25 Nov 2026 15:55:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D3F75606A334;
+	Wed, 25 Nov 2026 15:55:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=DRLgT1hQ
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 76BAE1F000C0;
-	Wed, 25 Nov 2026 15:55:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=IY/qpUCp
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B1CB11F000C4;
+	Wed, 25 Nov 2026 15:55:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795622144;
-	bh=Skf/NOtJOe8TcVt31tKDs/5QzASdZy2DTyKyvgvwQCU=;
+	s=korg; t=1795622147;
+	bh=HWlOzXTdjuc58uu4VskNUt0W022uIleFCrbQSPQi6nY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=DRLgT1hQtj1qQDvoW8R06dM3O7etXg+2qA2vTwgsPZeK734EAhOJYK7HIexiPnSza
-	 Q8GIy5mzwigHohSQpFtB/AZNqSBlChCgjf4F//jjjiZZlGpyUMOiyTP8iJ3MjS9nHe
-	 fNeUPam2SNVnjdS3Nt68EVRH5s572L3Sv4yioKik=
+	b=IY/qpUCpS9rfPKqvBloyafJveDm5CXq0jwJ2hfXaGXCW1TcBLI+1MPelCQPOMJq2Q
+	 GrVsL/Q64RyhcAwBbDTyrfnFft5QzQTghPRKbpkdPCWP5ve5MjOs/xa9nNkEVwv3fD
+	 7+T7H5d1XhyeLPxJXYAvpK2zr31hzJGhzRdcN9ms=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Cosmin Ratiu <cratiu@nvidia.com>,
 	Jianbo Liu <jianbol@nvidia.com>,
+	Dragos Tatulea <dtatulea@nvidia.com>,
 	Tariq Toukan <tariqt@nvidia.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 436/990] net/mlx5e: Fix ipsec core device access during profile changes
-Date: Wed, 25 Nov 2026 15:30:03 +0100
-Message-ID: <20261125143832.307542731@linuxfoundation.org>
+Subject: [PATCH 6.18 437/990] net/mlx5e: Serialize TC and IPsec offload exclusion counters
+Date: Wed, 25 Nov 2026 15:30:04 +0100
+Message-ID: <20261125143832.330712936@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143822.072087159@linuxfoundation.org>
 References: <20261125143822.072087159@linuxfoundation.org>
@@ -72,190 +73,181 @@ Content-Transfer-Encoding: 8bit
 
 From: Cosmin Ratiu <cratiu@nvidia.com>
 
-[ Upstream commit 5b310ae1eff7531030b123bfcb192b0176d73075 ]
+[ Upstream commit 717dec565a5e7feab544da5aa77db9da71bc93fe ]
 
-Devlink E-Switch mode changes replace the netdev profile without
-unregistering the netdev. XFRM state and policy creation can therefore
-run while mlx5e_priv_cleanup() clears priv with memset() or
-mlx5e_priv_init() initializes it again. Accesses to priv->mdev can
-observe NULL or a torn pointer, and repeated loads may return different
-values.
+The counters enforcing TC and IPsec packet offload mutual exclusion are
+not consistently serialized. IPsec admission conditionally takes
+mode_lock for writing, while TC admission holds it only for read.
+Neither release path takes the lock, and devices without an eswitch
+cannot rely on it at all.
 
-Read priv->mdev once in each add callback and use the saved pointer
-throughout the callback, including error unwinding. The core device
-survives the in-place profile change, so a saved non-NULL pointer
-remains valid even if priv is cleared in the meantime.
+These are per-core-device counters, separate from the eswitch mode and
+encapsulation reservations protected by mode_lock. Move them into
+mdev->offload_block and protect their checks, increments and decrements
+with a dedicated spinlock that is available even without an eswitch.
+A spinlock is used because some of these functions are called from
+atomic context and is a good fit because the critical sections are and
+will stay really short.
 
-A NULL priv->mdev means a profile change is in progress, which only
-happens during an eswitch mode change. Return -EBUSY in that case, as
-mlx5_eswitch_block_mode() does for the same mode change. -EOPNOTSUPP
-would make xfrm_dev_state_add() silently fall back to software for a
-crypto offload SA for its whole lifetime.
+IPsec admission then no longer needs mode_lock to update these counters.
+Add warnings for unbalanced releases. Keep mlx5_esw_lock() for eswitch
+operation admission and temporary mode/encapsulation reservations.
 
-Use WRITE_ONCE() when initializing priv->mdev and when clearing it
-before memset(). This makes the transition to NULL atomic; the
-subsequent bulk clear only writes zero bytes over an already NULL
-pointer. Annotate the READ_ONCE() snapshots with data_race() to allow
-that harmless overlap with the unmarked memset() without suppressing
-checks for the rest of priv.
+This was found by upstream Sashiko during review of [1], and spun-off
+into a fix from the larger patch.
 
-This fixes the core-device pointer accesses. Protecting the IPsec
-context itself during state and policy creation is handled separately.
+[1]
+https://lore.kernel.org/netdev/178907726586.219967.4695695146458742597@kernel.org/
 
-This was found by Sashiko, during review of the next patches in the
-series. No attempt was made at reproducing this race, the chances seem
-vanishingly small.
-
-Fixes: 7a9fb35e8c3a ("net/mlx5e: Do not reload ethernet ports when changing eswitch mode")
+Fixes: c8e350e62fc5 ("net/mlx5e: Make TC and IPsec offloads mutually exclusive on a netdev")
 Signed-off-by: Cosmin Ratiu <cratiu@nvidia.com>
 Reviewed-by: Jianbo Liu <jianbol@nvidia.com>
+Reviewed-by: Dragos Tatulea <dtatulea@nvidia.com>
 Signed-off-by: Tariq Toukan <tariqt@nvidia.com>
-Link: https://patch.msgid.link/20261105211637.1083978-6-tariqt@nvidia.com
+Link: https://patch.msgid.link/20261105211637.1083978-9-tariqt@nvidia.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../mellanox/mlx5/core/en_accel/ipsec.c       | 38 +++++++++++++------
- .../net/ethernet/mellanox/mlx5/core/en_main.c |  4 +-
- 2 files changed, 30 insertions(+), 12 deletions(-)
+ .../mellanox/mlx5/core/en_accel/ipsec_fs.c    | 43 ++++++-------------
+ .../net/ethernet/mellanox/mlx5/core/en_tc.c   | 18 +++++---
+ .../net/ethernet/mellanox/mlx5/core/main.c    |  1 +
+ include/linux/mlx5/driver.h                   |  8 +++-
+ 4 files changed, 31 insertions(+), 39 deletions(-)
 
-diff --git a/drivers/net/ethernet/mellanox/mlx5/core/en_accel/ipsec.c b/drivers/net/ethernet/mellanox/mlx5/core/en_accel/ipsec.c
-index 2874a50bead6a..611876f204134 100644
---- a/drivers/net/ethernet/mellanox/mlx5/core/en_accel/ipsec.c
-+++ b/drivers/net/ethernet/mellanox/mlx5/core/en_accel/ipsec.c
-@@ -775,12 +775,20 @@ static int mlx5e_xfrm_add_state(struct net_device *dev,
+diff --git a/drivers/net/ethernet/mellanox/mlx5/core/en_accel/ipsec_fs.c b/drivers/net/ethernet/mellanox/mlx5/core/en_accel/ipsec_fs.c
+index be973235c9ff0..5c5b33b01bebf 100644
+--- a/drivers/net/ethernet/mellanox/mlx5/core/en_accel/ipsec_fs.c
++++ b/drivers/net/ethernet/mellanox/mlx5/core/en_accel/ipsec_fs.c
+@@ -2578,45 +2578,26 @@ void mlx5e_accel_ipsec_fs_read_stats(struct mlx5e_priv *priv, void *ipsec_stats)
+ 	}
+ }
+ 
+-#ifdef CONFIG_MLX5_ESWITCH
+ static int mlx5e_ipsec_block_tc_offload(struct mlx5_core_dev *mdev)
  {
- 	struct mlx5e_ipsec_sa_entry *sa_entry = NULL;
- 	bool allow_tunnel_mode = false;
-+	struct mlx5_core_dev *mdev;
- 	struct mlx5e_ipsec *ipsec;
- 	struct mlx5e_priv *priv;
- 	gfp_t gfp;
- 	int err;
+-	struct mlx5_eswitch *esw = mdev->priv.eswitch;
+-	int err = 0;
+-
+-	if (esw) {
+-		err = mlx5_esw_lock(esw);
+-		if (err)
+-			return err;
+-	}
+-
+-	if (mdev->num_block_ipsec) {
+-		err = -EBUSY;
+-		goto unlock;
+-	}
++	int ret = 0;
  
- 	priv = netdev_priv(dev);
-+	/* Profile cleanup can memset an already NULL mdev. */
-+	mdev = data_race(READ_ONCE(priv->mdev));
-+	/* NULL only during a profile change, which is an eswitch operation. */
-+	if (!mdev) {
-+		NL_SET_ERR_MSG_MOD(extack, "Eswitch busy, can't add state");
-+		return -EBUSY;
-+	}
- 	if (!priv->ipsec)
- 		return -EOPNOTSUPP;
+-	mdev->num_block_tc++;
+-
+-unlock:
+-	if (esw)
+-		mlx5_esw_unlock(esw);
+-
+-	return err;
+-}
+-#else
+-static int mlx5e_ipsec_block_tc_offload(struct mlx5_core_dev *mdev)
+-{
+-	if (mdev->num_block_ipsec)
+-		return -EBUSY;
++	spin_lock_bh(&mdev->offload_block.lock);
++	if (mdev->offload_block.num_block_ipsec)
++		ret = -EBUSY;
++	else
++		mdev->offload_block.num_block_tc++;
++	spin_unlock_bh(&mdev->offload_block.lock);
  
-@@ -799,16 +807,16 @@ static int mlx5e_xfrm_add_state(struct net_device *dev,
+-	mdev->num_block_tc++;
+-	return 0;
++	return ret;
+ }
+-#endif
+ 
+ static void mlx5e_ipsec_unblock_tc_offload(struct mlx5_core_dev *mdev)
+ {
+-	mdev->num_block_tc--;
++	spin_lock_bh(&mdev->offload_block.lock);
++	if (!WARN_ON_ONCE(!mdev->offload_block.num_block_tc))
++		mdev->offload_block.num_block_tc--;
++	spin_unlock_bh(&mdev->offload_block.lock);
+ }
+ 
+ int mlx5e_accel_ipsec_fs_add_rule(struct mlx5e_ipsec_sa_entry *sa_entry)
+diff --git a/drivers/net/ethernet/mellanox/mlx5/core/en_tc.c b/drivers/net/ethernet/mellanox/mlx5/core/en_tc.c
+index 83e3e51420afc..9308fb8da7d71 100644
+--- a/drivers/net/ethernet/mellanox/mlx5/core/en_tc.c
++++ b/drivers/net/ethernet/mellanox/mlx5/core/en_tc.c
+@@ -4797,16 +4797,19 @@ static bool is_tc_ipsec_order_check_needed(struct net_device *filter, struct mlx
+ static int mlx5e_tc_block_ipsec_offload(struct net_device *filter, struct mlx5e_priv *priv)
+ {
+ 	struct mlx5_core_dev *mdev = priv->mdev;
++	int ret = 0;
+ 
+ 	if (!is_tc_ipsec_order_check_needed(filter, priv))
  		return 0;
- 	}
  
--	err = mlx5e_xfrm_validate_state(priv->mdev, x, extack);
-+	err = mlx5e_xfrm_validate_state(mdev, x, extack);
- 	if (err)
- 		goto err_xfrm;
+-	if (mdev->num_block_tc)
+-		return -EBUSY;
+-
+-	mdev->num_block_ipsec++;
++	spin_lock_bh(&mdev->offload_block.lock);
++	if (mdev->offload_block.num_block_tc)
++		ret = -EBUSY;
++	else
++		mdev->offload_block.num_block_ipsec++;
++	spin_unlock_bh(&mdev->offload_block.lock);
  
--	if (!mlx5_eswitch_block_ipsec(priv->mdev)) {
-+	if (!mlx5_eswitch_block_ipsec(mdev)) {
- 		err = -EBUSY;
- 		goto err_xfrm;
- 	}
+-	return 0;
++	return ret;
+ }
  
--	err = mlx5_eswitch_block_mode(priv->mdev);
-+	err = mlx5_eswitch_block_mode(mdev);
- 	if (err)
- 		goto unblock_ipsec;
+ static void mlx5e_tc_unblock_ipsec_offload(struct net_device *filter, struct mlx5e_priv *priv)
+@@ -4814,7 +4817,10 @@ static void mlx5e_tc_unblock_ipsec_offload(struct net_device *filter, struct mlx
+ 	if (!is_tc_ipsec_order_check_needed(filter, priv))
+ 		return;
  
-@@ -876,9 +884,9 @@ static int mlx5e_xfrm_add_state(struct net_device *dev,
+-	priv->mdev->num_block_ipsec--;
++	spin_lock_bh(&priv->mdev->offload_block.lock);
++	if (!WARN_ON_ONCE(!priv->mdev->offload_block.num_block_ipsec))
++		priv->mdev->offload_block.num_block_ipsec--;
++	spin_unlock_bh(&priv->mdev->offload_block.lock);
+ }
  
- 	x->xso.offload_handle = (unsigned long)sa_entry;
- 	if (allow_tunnel_mode)
--		mlx5_eswitch_unblock_encap(priv->mdev);
-+		mlx5_eswitch_unblock_encap(mdev);
+ int mlx5e_configure_flower(struct net_device *dev, struct mlx5e_priv *priv,
+diff --git a/drivers/net/ethernet/mellanox/mlx5/core/main.c b/drivers/net/ethernet/mellanox/mlx5/core/main.c
+index 42bc553d034b5..b6878b33cea1b 100644
+--- a/drivers/net/ethernet/mellanox/mlx5/core/main.c
++++ b/drivers/net/ethernet/mellanox/mlx5/core/main.c
+@@ -1833,6 +1833,7 @@ int mlx5_mdev_init(struct mlx5_core_dev *dev, int profile_idx)
+ 	lockdep_register_key(&dev->lock_key);
+ 	mutex_init(&dev->intf_state_mutex);
+ 	lockdep_set_class(&dev->intf_state_mutex, &dev->lock_key);
++	spin_lock_init(&dev->offload_block.lock);
+ 	mutex_init(&dev->mlx5e_res.uplink_netdev_lock);
+ 	mutex_init(&dev->wc_state_lock);
  
--	mlx5_eswitch_unblock_mode(priv->mdev);
-+	mlx5_eswitch_unblock_mode(mdev);
- 
- 	return 0;
- 
-@@ -894,11 +902,11 @@ static int mlx5e_xfrm_add_state(struct net_device *dev,
- 	kfree(sa_entry->work);
- unblock_encap:
- 	if (allow_tunnel_mode)
--		mlx5_eswitch_unblock_encap(priv->mdev);
-+		mlx5_eswitch_unblock_encap(mdev);
- unblock_mode:
--	mlx5_eswitch_unblock_mode(priv->mdev);
-+	mlx5_eswitch_unblock_mode(mdev);
- unblock_ipsec:
--	mlx5_eswitch_unblock_ipsec(priv->mdev);
-+	mlx5_eswitch_unblock_ipsec(mdev);
- err_xfrm:
- 	kfree(sa_entry);
- 	NL_SET_ERR_MSG_WEAK_MOD(extack, "Device failed to offload this state");
-@@ -1267,16 +1275,24 @@ static int mlx5e_xfrm_add_policy(struct xfrm_policy *x,
- {
- 	struct net_device *netdev = x->xdo.dev;
- 	struct mlx5e_ipsec_pol_entry *pol_entry;
-+	struct mlx5_core_dev *mdev;
- 	struct mlx5e_priv *priv;
- 	int err;
- 
- 	priv = netdev_priv(netdev);
-+	/* Profile cleanup can memset an already NULL mdev. */
-+	mdev = data_race(READ_ONCE(priv->mdev));
-+	if (!mdev) {
-+		NL_SET_ERR_MSG_MOD(extack, "Eswitch busy, can't add policy");
-+		return -EBUSY;
-+	}
-+
- 	if (!priv->ipsec) {
- 		NL_SET_ERR_MSG_MOD(extack, "Device doesn't support IPsec packet offload");
- 		return -EOPNOTSUPP;
- 	}
- 
--	err = mlx5e_xfrm_validate_policy(priv->mdev, x, extack);
-+	err = mlx5e_xfrm_validate_policy(mdev, x, extack);
- 	if (err)
- 		return err;
- 
-@@ -1287,7 +1303,7 @@ static int mlx5e_xfrm_add_policy(struct xfrm_policy *x,
- 	pol_entry->x = x;
- 	pol_entry->ipsec = priv->ipsec;
- 
--	if (!mlx5_eswitch_block_ipsec(priv->mdev)) {
-+	if (!mlx5_eswitch_block_ipsec(mdev)) {
- 		err = -EBUSY;
- 		goto ipsec_busy;
- 	}
-@@ -1301,7 +1317,7 @@ static int mlx5e_xfrm_add_policy(struct xfrm_policy *x,
- 	return 0;
- 
- err_fs:
--	mlx5_eswitch_unblock_ipsec(priv->mdev);
-+	mlx5_eswitch_unblock_ipsec(mdev);
- ipsec_busy:
- 	kfree(pol_entry);
- 	NL_SET_ERR_MSG_MOD(extack, "Device failed to offload this policy");
-diff --git a/drivers/net/ethernet/mellanox/mlx5/core/en_main.c b/drivers/net/ethernet/mellanox/mlx5/core/en_main.c
-index 3bbb19712a586..3695498f27e0b 100644
---- a/drivers/net/ethernet/mellanox/mlx5/core/en_main.c
-+++ b/drivers/net/ethernet/mellanox/mlx5/core/en_main.c
-@@ -6205,7 +6205,7 @@ int mlx5e_priv_init(struct mlx5e_priv *priv,
- 	node = dev_to_node(mlx5_core_dma_dev(mdev));
- 
- 	/* priv init */
--	priv->mdev        = mdev;
-+	WRITE_ONCE(priv->mdev, mdev);
- 	priv->netdev      = netdev;
- 	priv->max_nch     = nch;
- 	priv->max_opened_tc = 1;
-@@ -6298,6 +6298,8 @@ void mlx5e_priv_cleanup(struct mlx5e_priv *priv)
- 		mlx5e_mqprio_rl_free(priv->mqprio_rl);
- 	}
- 
-+	/* Clear atomically before memset() for lockless XFRM readers. */
-+	WRITE_ONCE(priv->mdev, NULL);
- 	memset(priv, 0, sizeof(*priv));
- 	if (destroying) /* restore destroying bit, to allow unload */
- 		set_bit(MLX5E_STATE_DESTROYING, &priv->state);
+diff --git a/include/linux/mlx5/driver.h b/include/linux/mlx5/driver.h
+index 647dcf144ae90..14b5fea30da31 100644
+--- a/include/linux/mlx5/driver.h
++++ b/include/linux/mlx5/driver.h
+@@ -780,8 +780,12 @@ struct mlx5_core_dev {
+ 	u32                      vsc_addr;
+ 	struct mlx5_hv_vhca	*hv_vhca;
+ 	struct mlx5_hwmon	*hwmon;
+-	u64			num_block_tc;
+-	u64			num_block_ipsec;
++	struct {
++		/* Protects the fields below. */
++		spinlock_t lock;
++		u64 num_block_tc;
++		u64 num_block_ipsec;
++	} offload_block;
+ #ifdef CONFIG_MLX5_MACSEC
+ 	struct mlx5_macsec_fs *macsec_fs;
+ 	/* MACsec notifier chain to sync MACsec core and IB database */
 -- 
 2.53.0
 
