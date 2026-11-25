@@ -1,51 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795617855;
-	b=S4GGt9LkUJZgZHSCuw56gV8H1LwjWjQEaaJxPvbilKgN+KjI5x2pL2dOno1QxzNflI5+
-	 GzviGj9HEEViAyfOqUUGmfvbcXBjirqSeQ+EMa/qszz1zoHgjp7Vjxq6QeAmDgKtGo0M+
-	 esZbnRhh2ZmuLlkuR90GqpLe/+CiCfPuhtvFVqKIK9RzJ3CpCXbbVwrPMirC4ZdpcYOP5
-	 57NFcQOmFTnhiQdVdGT1JPiX8Cedbmhcu8wIl5WKDCeeAypyqbjXaO+9NuHetRw6Fcy1/
-	 acRgghd3cp6Objv6lJ1An8CUd/ZVj0iEYdYivgOtZCRea5sxAieLLnQYvSAaMhy6vMA==
+	t=1795617858;
+	b=NPTbx90jSMcO1MiBNFa4/0jew7K5tD8w7pVfj/8bkMmfi4nZv9R3LEpwwRDuKmDAG0Ho
+	 IQmV4dDoVRuD6dQFh9LxFMWrwTwTgsIzPUPG6Qv8yltWKCJwK32VSSELFvyZkWe7rkoGt
+	 GZC9qs27EiC10nRRp+UpJ2KoJbwy/nYgF5tSCI9s7NvjUZAlgxT/rYpUOt2m7KfIcbpAH
+	 FGit6i8HpfPc9GWW5Hgjk25VBVfLekLXTdUoRFVMwVHc8Z5mOPKjInyGrWlEAS9MkblpT
+	 sPrJMPCi+SrIbQFDHGwQT/abdx7BxQN+pMoZtvf5VOGCcVvucW/bLM45ElB3LkTsBmg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795617855;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795617858;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=rrPSDUD2atyMwksCtELgUcM50c+fvPDWUBaWW1hWiOk=;
-	b=EuiE1eANwPzCjrb4AMpzO5OxYFJWspkn78nMdMFMYNnIqVyDLzgGIU3rv2ppzJ7GeIiV
-	 HMS1hjiubG0fkkNhz0edR85VR1yMpM658xVLn4rwWRoTYPTEEe9aaX3oFxD0a8WN3yY/x
-	 jtyXNp0JaiIFGgddpzo/waCZ9GBCSBnmnCVFeRUKwV2Z5QMwPTCYigqooQp1/HCldDhVE
-	 5KA2EvrdwyhUKcU4NbWRkzliW3eoA/7p2cRQOxBTbGMWCMV5J1vU5o2OdSF1wYiUYO7eE
-	 gpJZwpS5mVg+VUIJYpnB74nJcSvWeudO3H5oNvsG381plX2jmWtN+pmkkSqSTxJ335w==
+	bh=Ydn4OBI6/GsYhGlsB6InUu9yQ0zvtHnVT/l6K7T9OYI=;
+	b=BkayV7+YHGdZ8Cxhsen1bLamOHIIZshDviD8AW4pgGZtySk4DaCfbKb6n64E2wNUA/PV
+	 luYIi/LqPiljt/dMvRt6WbZt7G7kKt6rSS82GfVOHVgmt50/rgktaM5lPzDCyl/FFAueW
+	 7G75VL9pOOvEaYpl8CJCFN6+DqbxFKL6aHIRW+Y3vbPuUQBLzyU8kJklrAJFb3RyJPP8k
+	 PU7P3WJxQO3Hd7TbnAgHWKUGRU+3etoTYoX1OfwQZi7Qlexb6T/td5rZfIuCoOXXvCn2N
+	 HJSjzErd0zNOrDJmNNlKEj67A/XsDOPsyUOfO17buczoJRYaWdrOjy88/7KeX6UzPDw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=QB56d6Qp;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=amBu3M3K;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 24C02606A31E;
-	Wed, 25 Nov 2026 14:44:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 30DBA606A31E;
+	Wed, 25 Nov 2026 14:44:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=QB56d6Qp
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 65F2D1F000C6;
-	Wed, 25 Nov 2026 14:44:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=amBu3M3K
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3C1C91F000C0;
+	Wed, 25 Nov 2026 14:44:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795617854;
-	bh=rrPSDUD2atyMwksCtELgUcM50c+fvPDWUBaWW1hWiOk=;
+	s=korg; t=1795617857;
+	bh=Ydn4OBI6/GsYhGlsB6InUu9yQ0zvtHnVT/l6K7T9OYI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=QB56d6QpN2RrRqmx1JO+Agf4SJEUuuQ+DLyi0RjfLdswuChRxxtW/2ijGBjqIt9Xr
-	 kUevb3JQivqxNtYjXBSxkrNWZM6WaROSl+VCeKDHPAAoUDB5KR0pm6NlrM9yO/DDI/
-	 ZiUUbJ9FclmvvQNiJOZmeCoiYw2AUr4fzPWzFEF4=
+	b=amBu3M3KJwSyRh2BLvG3HMxoALwQ47D4P29y0opyx4v3eI82FXyJ6XaMyEjqukCBE
+	 uMlGA1Q1hPeg0diWZrWElOwxjDsJcjPgMTEvLx9xSrOWZCBrFmJHvpTO2DyGFwtX2l
+	 WgmzMGbb2o1Uk6jkDjRnxPSBM9DZ4mpWAbrxownM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alexei Starovoitov <ast@kernel.org>,
+	Hongjian Dai <daihongjian@kylinsec.com.cn>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0096/1005] bpf, x86: Fix bpf_throw() in a prog with a private stack
-Date: Wed, 25 Nov 2026 15:23:54 +0100
-Message-ID: <20261125143823.992436314@linuxfoundation.org>
+Subject: [PATCH 7.3 0097/1005] spi: pic32-sqi: fail transfer when the BD ring is exhausted
+Date: Wed, 25 Nov 2026 15:23:55 +0100
+Message-ID: <20261125143824.017513429@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143821.729802100@linuxfoundation.org>
 References: <20261125143821.729802100@linuxfoundation.org>
@@ -67,80 +68,54 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alexei Starovoitov <ast@kernel.org>
+From: Hongjian Dai <daihongjian@kylinsec.com.cn>
 
-[ Upstream commit 91068ed2d3ee0713d7566c7977b995f8a0936bea ]
+[ Upstream commit 2066970324a1439e5a2e08c4599098367f8f82cc ]
 
-When the main prog has a private stack and the prog calls bpf_throw(), it
-returns to the kernel with wrong values in r12, rbx, r13, r14 and r15. The
-kernel crashes soon after that, for example:
+pic32_sqi_one_transfer() silently stopped programming buffer descriptors
+when ring_desc_get() returned NULL and still returned success. The caller
+then marked the last programmed descriptor as the end of the list and
+started the DMA engine, so the hardware transferred only a prefix of the
+requested data while the message completed with status 0.
 
-  BUG: kernel NULL pointer dereference, address: 0000000000000010
-  RIP: 0010:__bpf_prog_test_run_raw_tp+0x125/0x380
+The ring holds PESQI_BD_COUNT (256) descriptors of at most
+PESQI_BD_BUF_LEN_MAX (256) bytes each, so messages larger than 64 KiB (or
+with enough SG entries) can exhaust it. Since the driver sets no
+max_message_size/max_transfer_size, the SPI core does not prevent this.
 
-The main prog of a prog that can throw saves these five registers at its
-entry. bpf_throw() walks the stack to the frame of the main prog and
-gives the stack pointer of that frame to the exception callback, which
-pops the registers from there. In a function with a private stack r9 is
-the frame pointer, and the JIT emits 'push r9' in front of every call
-and 'pop r9' after it. So the stack pointer that bpf_throw() finds is
-8 bytes too low:
+Return -ENOMEM instead, and set msg->status so the failure reaches the
+caller rather than being silently truncated.
 
-  r12
-  rbx
-  r13
-  r14
-  r15  <- the callback has to pop from here
-  r9   <- rsp of the main prog at the call
-
-r15 gets the address of the private stack and every other register gets
-the value of its neighbour.
-
-This happens in tracepoint, raw_tp, perf_event and tracing progs, except
-iterators, and in struct_ops progs that ask for a private stack, when
-the main prog has more than 48 bytes of stack. The throw can be in the
-main prog or in a subprog.
-
-aux->stack_arg_sp_adjust already moves the stack pointer from the
-outgoing stack arguments up to the saved registers. Add the 8 bytes of
-r9 to it when the main prog has a private stack.
-
-A constant is enough. Calls of helpers, kfuncs and subprogs and callx
-all have the push. A prog with tail calls has no private stack, and a
-callback cannot throw. Only the frame of the main prog matters: the
-frames of subprogs are dropped, with or without a private stack. On
-x86-64 a function with stack arguments has no private stack, hence only
-one of the two parts is not zero.
-
-The JITed code does not change.
-
-Fixes: 7d1cd70d4b16 ("bpf, x86: Support private stack in jit")
-Signed-off-by: Alexei Starovoitov <ast@kernel.org>
-Link: https://patch.msgid.link/20261031050558.2410721-2-alexei.starovoitov@gmail.com
+Fixes: 3270ac230f66 ("spi: pic32-sqi: add SPI driver for PIC32 SQI controller.")
+Signed-off-by: Hongjian Dai <daihongjian@kylinsec.com.cn>
+Link: https://patch.msgid.link/F5276982A630220B+20261017075545.95854-1-daihongjian@kylinsec.com.cn
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/net/bpf_jit_comp.c | 7 ++++++-
- 1 file changed, 6 insertions(+), 1 deletion(-)
+ drivers/spi/spi-pic32-sqi.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/arch/x86/net/bpf_jit_comp.c b/arch/x86/net/bpf_jit_comp.c
-index 10f68ee7c9e68..1b56cb973d79e 100644
---- a/arch/x86/net/bpf_jit_comp.c
-+++ b/arch/x86/net/bpf_jit_comp.c
-@@ -1838,8 +1838,13 @@ static int do_jit(struct bpf_verifier_env *env, struct bpf_prog *bpf_prog, int *
- 	 * Arg 6 goes into r9 register, not on stack.
- 	 */
- 	outgoing_rsp = out_stack_arg_cnt > 1 ? (out_stack_arg_cnt - 1) * 8 : 0;
-+	/*
-+	 * bpf_throw() sees rsp of this frame as it is at a call. The callee-saved
-+	 * regs are above the outgoing args, or above r9, which is pushed around
-+	 * every call when the stack is private.
-+	 */
- 	if (bpf_prog->aux->exception_boundary)
--		bpf_prog->aux->stack_arg_sp_adjust = outgoing_rsp;
-+		bpf_prog->aux->stack_arg_sp_adjust = outgoing_rsp + (priv_frame_ptr ? 8 : 0);
- 	emit_sub_rsp(&prog, outgoing_rsp);
+diff --git a/drivers/spi/spi-pic32-sqi.c b/drivers/spi/spi-pic32-sqi.c
+index 5d3921e29461c..35f0c60a31d64 100644
+--- a/drivers/spi/spi-pic32-sqi.c
++++ b/drivers/spi/spi-pic32-sqi.c
+@@ -297,7 +297,7 @@ static int pic32_sqi_one_transfer(struct pic32_sqi *sqi,
+ 		/* get ring descriptor */
+ 		rdesc = ring_desc_get(sqi);
+ 		if (!rdesc)
+-			break;
++			return -ENOMEM;
  
- 	if (arena_vm_start)
+ 		bd = rdesc->bd;
+ 
+@@ -387,6 +387,7 @@ static int pic32_sqi_one_message(struct spi_controller *host,
+ 		ret = pic32_sqi_one_transfer(sqi, msg, xfer);
+ 		if (ret) {
+ 			dev_err(&spi->dev, "xfer %p err\n", xfer);
++			msg->status = ret;
+ 			goto xfer_out;
+ 		}
+ 	}
 -- 
 2.53.0
 
