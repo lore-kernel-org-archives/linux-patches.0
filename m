@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795618297;
-	b=AJeT//bKLGeWrL1NELI0e8lpTyIcR7uz9azqQ2VSmcrRC8dobjAgxLS1usAYe7bqdjf2
-	 XA7+/LrKbYTIF+MyThNbgtS4m/ZeJ/VDt6IDS+eAausOqcS3gQgLpnAPabp4YhTLGHBjZ
-	 yPxASuG3+UtJIC2PSySMqjYWzTwVGxRpa0dUb25APezQE4ImuXL1YMW37LK3oDuLkgx13
-	 Df3s26vsUdY4QNYyadxjhf42lFSRn+1Rht3y0mO2MWQs+6r7EmVT0Vxb70VkSnZmpZYQK
-	 5o0iCR+czlpP7TZPut//tpM7RgZAST/mANR8DFnAVlpVJigyrS4Px6hXMeHo5/SEBvw==
+	t=1795618300;
+	b=213Brgi7lKR3cbL21xF2FuBQeBrOXRQIBsgyskszXwMuOH1cPYXHI8hDst7nln9EaQA7
+	 Zxj5nhN9RHdozUJw5mmUPdXIFgWMTz/UQdMmUuaprkaaZO3QHH/QOQtd9y1G0WtWsWhcD
+	 0sQS49efFTt9AviTENU851HKnCIFHyDw4tA60a+MTZr2HJsLq+8nNxE94/vZZczTyanbi
+	 svY7YvprMLKDbossVUjb4wzq6Eo5BQZPA1WVTXLue6WCA+X0pimvp/WlxJguPM9aEtt3O
+	 mkHpbowFwek7qNPagYRabEzVS5FOeMCRAEahqisL3MjjYD9M3voARILVE/hkxPBi7TQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795618297;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795618300;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=tPw3vypYgZube5QpJaMlIFP+nBI406Zb4kTS2kG7f74=;
-	b=LiNQM8zYed0euPWROgrlp1++uLbcOWCgN0bhM7g9Cd2NVFvZy6Qw++J6M/n1R6va5aRR
-	 bIwi4E06KsP/qyoRIa5rLUDbBSitChrZB3G1SecyIyPuqC/qNdboU6CP9UUXOCqJ0UQSf
-	 uqxKg9zSdZ12i0ozmbiv4gLRqLjGiNoiVxRn6G+pOxSyHmRCIFftJKPZtJwUvCFbZ9/kT
-	 oS9/GIbz33dFqMrGIvP6MyYWF7zyYeOsfK0rgf02xl3EObbdaQQYPG59OS7TWNemZJKbL
-	 ua0S7iydaaJ5sS+DNraUbQliIv5L+mcexqzvJZxdl8b9biPA2+b8rBDqIugMH8J/hQw==
+	bh=p+npFRR6nvPMK1L0om/eDCX8/DAHQ6mZ2GTxev/Dc80=;
+	b=WzUmjo6AZXdIeFYYijipFJnxhEU5z3QSqRqmlQukwxGlrfn0cMvoKgqy3zHF5lEj0HvT
+	 UuXxieot5oPNWSgtAZ0c3mMBHbvb+Rz0vDTXD/CS/l2bDDeEN2YZRMLz+4SAbISmNIwoX
+	 YMdey1v8BZ/nvAWLrtfBNse9FTa1kDVmwrg8m21cqM071DML5Ec7hpZQhi0djDTNZ6mJn
+	 mOtlen+sByVHHZ+jcMb+7LZg2NR9hFwiaA+dEZUxhVATUmxFi6DT9eo9X3Gao5f2rqZpc
+	 vwDGcG2Ah4mJy5zXudE648d8QtsR107sji/z73MObtN/Xr0Fg/mlQNLeW/Ark98vdiQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=egZ5mUYa;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=XdDhfy+C;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 005FA606A31E;
-	Wed, 25 Nov 2026 14:51:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 67EAE606A323;
+	Wed, 25 Nov 2026 14:51:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=egZ5mUYa
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4EC901F000C4;
-	Wed, 25 Nov 2026 14:51:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=XdDhfy+C
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1A4E51F000C4;
+	Wed, 25 Nov 2026 14:51:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795618296;
-	bh=tPw3vypYgZube5QpJaMlIFP+nBI406Zb4kTS2kG7f74=;
+	s=korg; t=1795618299;
+	bh=p+npFRR6nvPMK1L0om/eDCX8/DAHQ6mZ2GTxev/Dc80=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=egZ5mUYaDDTNUYfObZNw+F7PRI6PUJfF7fsDuuW00NGywCmnTpxZUl8tOkAABHLc7
-	 jCS9QGOiYK1uu+XhDAKdPn4mrgXYze9vcs79qZZKekQ2z+GkXJNHl/fBSt804YzPXt
-	 jOb88iJZD/nsUXDQKzBIH4n2Y/k6nEQEz0ULVEkg=
+	b=XdDhfy+Cnku8WjArC+tjntz4+XS+A4SZJ9yqnGU7NqNuqmeWwbsDxNqbWzuqLVjLJ
+	 94tWtb+0219ieXWvIMIkJyTPyY/zHEhGvGaasjjvba9X55Tgwqs1Vvm9Q3tMJMMw36
+	 fS7s3747XP+HjQHdKp+rbzsL6xRlLbK996Xgs4RQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mike Christie <michael.christie@oracle.com>,
-	Jia Jia <physicalmtea@gmail.com>,
-	"Michael S. Tsirkin" <mst@redhat.com>,
+	Josef Bacik <josef@toxicpanda.com>,
+	Jan Kara <jack@suse.cz>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0235/1005] vhost-scsi: fix page reference leak in misaligned I/O fallback
-Date: Wed, 25 Nov 2026 15:26:13 +0100
-Message-ID: <20261125143827.244303422@linuxfoundation.org>
+Subject: [PATCH 7.3 0236/1005] ext2: only flush DIRSYNC directories on every change
+Date: Wed, 25 Nov 2026 15:26:14 +0100
+Message-ID: <20261125143827.268029019@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143821.729802100@linuxfoundation.org>
 References: <20261125143821.729802100@linuxfoundation.org>
@@ -69,56 +68,54 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jia Jia <physicalmtea@gmail.com>
+From: Josef Bacik <josef@toxicpanda.com>
 
-[ Upstream commit 058fc59326af3350c6e830858e56d2aeecabe0a2 ]
+[ Upstream commit 3f57fc2c49ed05ccfc56e4dc9eda41be95925bbd ]
 
-iov_iter_get_pages2() returns a byte count that excludes the offset into
-the first page, but also returns a reference to that page in pages[].
+Every change of an ext2 directory is written to disk before the system call
+returns, whether the directory is DIRSYNC or not: its pages with
+filemap_write_and_wait() and its inode with sync_inode_metadata().
 
-On the misaligned-I/O fallback, vhost_scsi_revert_map_iov_to_sgl() puts
-pages already added to the SG list. The cleanup loop starts at
-pages[npages], but accounts for its first page as PAGE_SIZE bytes
-rather than PAGE_SIZE - offset. If the remaining data starts at a
-non-zero offset, it can finish one page early and leave a page reference
-behind.
+Writes which reach the device for 2000 files, and 200 directories, in a
+directory without DIRSYNC, with the flusher turned off:
 
-Use PAGE_SIZE - offset for the first remaining page and clear offset for
-later pages, as in the mapping loop. Without this, each affected request
-leaks one page reference.
+            create   rename   unlink   mkdir
+    before    4000     8000     4000     800
+    after        0        0        0       0
 
-Fixes: bca939d5bcd0 ("vhost-scsi: Dynamically allocate scatterlists")
-Reviewed-by: Mike Christie <michael.christie@oracle.com>
-Signed-off-by: Jia Jia <physicalmtea@gmail.com>
-Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
-Message-ID: <20261023104035.6686-1-physicalmtea@gmail.com>
+In a directory with chattr +D the numbers are those of "before", before and
+after.
+
+commit bc943f4872a7 ("ext2: Don't flush page immediately for DIRSYNC
+directories") moved the flush from ext2_commit_chunk() to the new
+ext2_handle_dirsync().  The IS_DIRSYNC() check which was around it didn't
+move along.
+
+Fix by putting the check into ext2_handle_dirsync().
+
+Fixes: bc943f4872a7 ("ext2: Don't flush page immediately for DIRSYNC directories")
+Signed-off-by: Josef Bacik <josef@toxicpanda.com>
+Link: https://patch.msgid.link/20261027-b4-ext2-dirsync-v1-1-3dcd012d518d@toxicpanda.com
+Signed-off-by: Jan Kara <jack@suse.cz>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/vhost/scsi.c | 7 ++++++-
- 1 file changed, 6 insertions(+), 1 deletion(-)
+ fs/ext2/dir.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/drivers/vhost/scsi.c b/drivers/vhost/scsi.c
-index 1274e7734747e..6bf1ab773d54e 100644
---- a/drivers/vhost/scsi.c
-+++ b/drivers/vhost/scsi.c
-@@ -900,11 +900,16 @@ vhost_scsi_map_to_sgl(struct vhost_scsi_cmd *cmd,
- 	vhost_scsi_revert_map_iov_to_sgl(iter, *sgl, sg);
+diff --git a/fs/ext2/dir.c b/fs/ext2/dir.c
+index e17bbc7598c14..5de32c221a83b 100644
+--- a/fs/ext2/dir.c
++++ b/fs/ext2/dir.c
+@@ -442,6 +442,9 @@ static int ext2_handle_dirsync(struct inode *dir)
+ {
+ 	int err;
  
- 	iov_iter_revert(iter, bytes);
-+	/*
-+	 * pages[npages] is the first page not added to the SG list.
-+	 * The remaining data starts at offset in that page.
-+	 */
- 	while (bytes) {
--		n = min_t(unsigned int, PAGE_SIZE, bytes);
-+		n = min_t(unsigned int, PAGE_SIZE - offset, bytes);
- 
- 		put_page(pages[npages++]);
- 		bytes -= n;
-+		offset = 0;
- 	}
- 
- 	return -EINVAL;
++	if (!IS_DIRSYNC(dir))
++		return 0;
++
+ 	err = filemap_write_and_wait(dir->i_mapping);
+ 	if (!err)
+ 		err = sync_inode_metadata(dir, 1);
 -- 
 2.53.0
 
