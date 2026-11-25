@@ -1,52 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795621954;
-	b=M5ZMOdS7idT23pJhP5INsEAkJxPVb1RUkug7KfC8w5irUZ7pft8N5hTB8E2JUvcvbHoU
-	 1H/Ggc9Kkz58ssS5zdIxqi3XE8NeRaSlRKD48vCtxDyF76j9KGzgCXZ11t11ZmbwnADEZ
-	 n6eZja6R7rUFgl5o7/OzAGZ+A0UEr1X8JeaX9m+IyA9IHWym5rBZo6YzByKCNEYviYo2k
-	 Y1onOTccFWogDervdcAZiQlHO3Alyviy0tRUlbc777QRFPYhyGDZvmLaepsjw1V1GMRlf
-	 z2bsNdXGh5HnjmwjHcnaL4QJcO30GbyxqRjYY3wBNFaZd3TaJItMJZCjNUKBeqe48MA==
+	t=1795621957;
+	b=JvSYJqrMkO7ivAeonACyOgFBs+6pNk1UDgQ1EZu2wM1omWF51rexnR5QI4v9HSXe6xQ0
+	 SlLWA+ejRnFjafa5ZVczFPpau3NjINp1ve2EnaYq5uD6OD41Wo0VZrWV5QtunVI32zn9k
+	 mNV37W4FYW52kb71K91ZHG2v4WivbwPQZvigzeECpidbaSUiriiSvCUy6DHFW2OscjyY6
+	 rRdwzZdT0zxoc6Hkhe5uYAQt5ZMe9OYDtp+kZrErM5e9IMasCbsoKmKfEx3f34y61s5jU
+	 pwoirGivrEWT+6u7BPefgu1ftxBaCYspmRl9/IDZAuA4rMCuMCZI0kVkkAXinKl92cw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795621954;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795621957;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=jQBex68K2QiXH3Kf/7MEl9XLPhgfuKiEV4NKzI4Jr8s=;
-	b=auFwtQjKXvnRUHncdVrhQ6vfKKBX0oIgvH/14gXQLmblA8GM65lcaCFkEexr5CkuZn/u
-	 /g+hBsxj/3JhoeYx0FUBNYf3/pMrmU54trI+MQisn/1skGjqvC0AKvOzSy8DAHAj8Doed
-	 3pEdX48Nz4Y4r9KSej7+q7071h7FIyUxF2p9DtHVJZcbhkWLeuTYA5ujyjllWJHivNcGN
-	 Uf/Yui+kQNgiQ+J8eh9d3PyH8haPlWReZa//znSsaffBtRkLyu9OnyETa6nEV/kKSYDrz
-	 FlhszoWXLbB9cYfPoTeckEmo5+GbztJ4/2EYUavdV01TXDSzZnEZolUu1/aX0WOu65w==
+	bh=wKZhanop6xCL5OYkOzLterXNf/hfLcBfxSvJkrwWTaU=;
+	b=sUIOKn6JH8h1XSwtYHK9OdQsWAKMv9d/zssiEUOR9cAa7vVAECCFU795H+MN+SOoFse0
+	 GRKodbDqpZpDoFvLSnc54O2AUr4Ddki3Cyh+F2JF2DL88AyxDJjf4RczV9RNmxFUgrwrr
+	 oNNPQfp1qhkg0SJM+XcxYw6yMPBFAe7NmQVDGTrMNlLQm/XMV+JFG9upwDN8RDTVltk3T
+	 sm+Wk43TBBYztRuCNzjWNN4UGfVX0IOxKxWJ0R3bJZDpIEVcspEsnoDt0k+2Fw2zbVotr
+	 ycKE4frBQUjO8/XR7XHiuYrw8PWqz6+4upJ5FjIXp/VhDpgh3XqUCFezDLrFFwXLbQg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=KPxPWeoD;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=tlY0zECn;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2F293606A321;
-	Wed, 25 Nov 2026 15:52:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9090F606A329;
+	Wed, 25 Nov 2026 15:52:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=KPxPWeoD
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4DB001F000C4;
-	Wed, 25 Nov 2026 15:52:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=tlY0zECn
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9769D1F000C0;
+	Wed, 25 Nov 2026 15:52:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795621953;
-	bh=jQBex68K2QiXH3Kf/7MEl9XLPhgfuKiEV4NKzI4Jr8s=;
+	s=korg; t=1795621957;
+	bh=wKZhanop6xCL5OYkOzLterXNf/hfLcBfxSvJkrwWTaU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=KPxPWeoDmbhG/8ObEvGbhpvbARltYsLnR/0pKcrhw9p2SO9RNNN91a4qDHRJKgqkb
-	 YW/SzqwvfeK3ACCtaP4fZ9ltG66ACG1IwDfhaV/rzE5F17V/EMwjAyGzd4YhRXFE6c
-	 BmPslh5OZcpNwY4LzghoXleAjsB+u1NgetT+M9YQ=
+	b=tlY0zECnc0pt08Ij5JZuzYAu5rDUycCvvePnzcIqlGWd1NMjDlMfj9mHNjOMfX68f
+	 EFPIW1JG8s9AjzIaVCqRpJGujNXF847pK0qKCR/i2tFo8lVrFlK+NWVf8vG0MLpJNo
+	 sOxYK3sLILwgKnwenykrsT8Ar0a7WK3eoFk8M7io=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Avi Weiss <thnkslprpt@gmail.com>,
+	Jeff Layton <jlayton@kernel.org>,
+	NeilBrown <neil@brown.name>,
 	Anna Schumaker <anna.schumaker@hammerspace.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 383/990] NFS: restore directory index when resuming readdir
-Date: Wed, 25 Nov 2026 15:29:10 +0100
-Message-ID: <20261125143831.064845036@linuxfoundation.org>
+Subject: [PATCH 6.18 384/990] SUNRPC: wake poll waiters when an empty pipe is unlinked
+Date: Wed, 25 Nov 2026 15:29:11 +0100
+Message-ID: <20261125143831.087011766@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143822.072087159@linuxfoundation.org>
 References: <20261125143822.072087159@linuxfoundation.org>
@@ -70,43 +72,38 @@ Content-Transfer-Encoding: 8bit
 
 From: Avi Weiss <thnkslprpt@gmail.com>
 
-[ Upstream commit 89b91409b2342e7629b1271eba315a0f06495247 ]
+[ Upstream commit 702d55edc017632a0c39c1d4bdd579bdbadfd730 ]
 
-nfs_readdir() restores the cached folio index and cookie when
-resuming directory iteration, but leaves current_index at zero.
-In 32-bit index mode, nfs_readdir_search_for_cookie() then
-reports a folio-relative offset instead of the absolute entry
-position.
+When an empty rpc_pipefs pipe is unlinked, rpc_purge_list() returns
+without waking the pipe wait queue. An existing epoll waiter can
+remain blocked even though rpc_pipe_poll() reports EPOLLHUP and
+EPOLLERR for the disconnected pipe.
 
-Restore current_index from the saved logical folio index before
-searching the cache.
+Wake the wait queue after clearing RPC_I(inode)->pipe so existing
+poll waiters are notified regardless of whether messages were purged.
 
-This solution relies on the current behavior of
-nfs_readdir_seek_next_array(), where folio_index advances by
-one and current_index advances by nfs_readdir_array_maxentries()
-for each full, nonterminal folio.
-
-Fixes: f648022faa68e ("NFS: Convert readdir page cache to use a cookie based index")
+Fixes: 9842ef3557ab ("SUNRPC: rpc_timeout_upcall_queue should not sleep")
 Signed-off-by: Avi Weiss <thnkslprpt@gmail.com>
+Reviewed-by: Jeff Layton <jlayton@kernel.org>
+Reviewed-by: NeilBrown <neil@brown.name>
 Signed-off-by: Anna Schumaker <anna.schumaker@hammerspace.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/nfs/dir.c | 2 ++
- 1 file changed, 2 insertions(+)
+ net/sunrpc/rpc_pipe.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/fs/nfs/dir.c b/fs/nfs/dir.c
-index ca91e48dc7973..bd35069ffe5cd 100644
---- a/fs/nfs/dir.c
-+++ b/fs/nfs/dir.c
-@@ -1255,6 +1255,8 @@ static int nfs_readdir(struct file *file, struct dir_context *ctx)
- 	spin_lock(&file->f_lock);
- 	desc->dir_cookie = dir_ctx->dir_cookie;
- 	desc->folio_index = dir_ctx->page_index;
-+	desc->current_index = (loff_t)desc->folio_index *
-+			      nfs_readdir_array_maxentries();
- 	desc->last_cookie = dir_ctx->last_cookie;
- 	desc->attr_gencount = dir_ctx->attr_gencount;
- 	desc->eof = dir_ctx->eof;
+diff --git a/net/sunrpc/rpc_pipe.c b/net/sunrpc/rpc_pipe.c
+index 0bd1df2ebb479..3a71426e8b76a 100644
+--- a/net/sunrpc/rpc_pipe.c
++++ b/net/sunrpc/rpc_pipe.c
+@@ -191,6 +191,7 @@ rpc_close_pipes(struct dentry *dentry)
+ 	cancel_delayed_work_sync(&pipe->queue_timeout);
+ 	rpc_inode_setowner(inode, NULL);
+ 	RPC_I(inode)->pipe = NULL;
++	wake_up(&RPC_I(inode)->waitq);
+ 	inode_unlock(inode);
+ }
+ 
 -- 
 2.53.0
 
