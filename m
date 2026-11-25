@@ -1,42 +1,42 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795621464;
-	b=njUb6yWcOSTOMNR3xbVXtHd6a8laVmYwVffSYPbb5vwkP01YuVpmFcfT/IyPqgTxKMzI
-	 wlnPs8e2d6CndcBrYq3+ln6NhappE8BFpAWhNPqk0R3EMeKILRLPH9Uf2T4YB+IrcXRPX
-	 ZjYyABimF/U91HijNVLd36wD/MSQT/t9UqnHDahpCIHY7GpK4VhVeP4pelSoei3ppI1F/
-	 +gSUYE4imk36QCG/xwSnen+qBzrP8HD54wPBFH4gJPYmcoJZ7GOXjGwFjWnR+SojSJafN
-	 DDBJWycwVVeKhxAPQn/p6Doy6znAZ9bQLTRvw2V6VOKEzh//JHnyd5jrjqRncDRqHRg==
+	t=1795621467;
+	b=QkM4S37FV3xqC5D9v9XRHq3AyEwblfvbjUmEAfPJf/N/LexVPBZ5bhq/reQXWENip1GP
+	 CKHMlms3lohS7QQgaHEr/rgkOl4hHddo8hJ5vQWwnXNvYoEVA774bTbfk+ftQ+4RaJ0xJ
+	 yr5Iy5lOq0s8s+ZdcUG+ux0oD5xXJrU5dE+Uckf440alH2r8OIyb1BsPk7XvOtG07A4YG
+	 gIp+s50TyfshjzNpkHngH4uvoptG5pVtkaJJKOjuG0DVocurXwTkWpncYxMDvnOmXrcyA
+	 T6pprp8c64uAAZ+PIUfNZcvr5PDinEMYekdgwfpJPk88G38MCwW1zRlIdTbk397liOA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795621464;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795621467;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=ONDvDGO3CmovF2+y04mcxmEA/G5yhNP3klTwDbrAqFw=;
-	b=eN1pbqxV81bcgI6EDjC1T6huiDXaLeycWrQ1ffltc9A4MUvwNjW+o3ja4Srpw+l2144P
-	 NP2+RgIcgrLnCxgajABuTyX6CNKWGaZ8dziys8QQ425QyGn2GT2HzV6KA0zRS3xH5Xl8e
-	 mRYbW7X3XMBSf+CC0BExqs8+cOs6Gu2iDD1C2vGm2zt7/HEY4mbcC9VgW7/HbWminCFzc
-	 mTe+f7AkMou1PbFq8dh/znVEIQfRHl0z7TD/91pmUrqU7A3YBOxg8lmEyT9w50AgfUjPV
-	 8jyVy5NZdiMjL+MRotLEVVdkkINAtB+lAbX87Nx1UuS8loXa76ysNvvSX8S2wWsKRzA==
+	bh=vssCX4GAPu3KFjevKt82YaLoZYzi57ztRs1J2yB7akM=;
+	b=iSnRqeFbA0PVfGJDxi6JharNpb46nfoMV3Ihvyl5R980h0mBfyQ0G/MnOh0+j9fP1dSH
+	 USqcwMqXOOAKMpVcAqqmkgcL517hI0WoPDrK7n+9lQxTLL9Q+JkB1oSK77Ap/ncF1zv2J
+	 S/bmN7nqb0O8ZhmEo9vUA9AXCcxrtMJbcnN6CQ3NbFNtkEEHRGcuS6Pb4m0+8OosvJlL+
+	 4iMhJrxD9Khx0bV7vKWlENGDOeYddTzjSqEIEKzU3TSU+bqm22xy+0YawVb5LaiLZKLMR
+	 6p5mTyKSvRXs57rJ5STsuhERk497Kk7MamU7TNXfgcwWLtsDt5UaetUmQl3P0Qe48gQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=D6uNv8Ak;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=QTj7O4jE;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 36953606A329;
-	Wed, 25 Nov 2026 15:44:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8BFD2606A329;
+	Wed, 25 Nov 2026 15:44:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=D6uNv8Ak
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 555B81F000CA;
-	Wed, 25 Nov 2026 15:44:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=QTj7O4jE
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5D0B31F000CA;
+	Wed, 25 Nov 2026 15:44:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795621463;
-	bh=ONDvDGO3CmovF2+y04mcxmEA/G5yhNP3klTwDbrAqFw=;
+	s=korg; t=1795621466;
+	bh=vssCX4GAPu3KFjevKt82YaLoZYzi57ztRs1J2yB7akM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=D6uNv8AksXbVpPXs+zo5tI2xVHy07Ie21pAn/JXMEoJj4yWRTBgzRgb4odOv+Q8Q6
-	 73NAy62U95GIk7HhxLeDmi98aM2V/BV21lWsQAhS1hT/fegnmqAhyj3RA7HcJWoce+
-	 rDUE0Pdh5+ZRB7ZFbKsKNfv8NOmc+5Vyqt7vx2WY=
+	b=QTj7O4jEig3oL+WBOidXO7CMVBNtlw3qrJlt6GpuworAePsW59lOJ4PiK45jQyzXA
+	 eC320+JJhIa8L028OO29JLVJu/gOuHNFz1iXal+OkdEmDkaXisqH9mT+TCxzJ6PZaH
+	 BPC+huH2ko7bjUKkXCuFG3BQmex53SvdUr0QngAQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -47,9 +47,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Eric Biggers <ebiggers@kernel.org>,
 	Keith Busch <kbusch@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 233/990] nvme-auth: common: add HMAC helper functions
-Date: Wed, 25 Nov 2026 15:26:40 +0100
-Message-ID: <20261125143827.546458817@linuxfoundation.org>
+Subject: [PATCH 6.18 234/990] nvme-auth: common: use crypto library in nvme_auth_augmented_challenge()
+Date: Wed, 25 Nov 2026 15:26:41 +0100
+Message-ID: <20261125143827.569546448@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143822.072087159@linuxfoundation.org>
 References: <20261125143822.072087159@linuxfoundation.org>
@@ -73,12 +73,12 @@ Content-Transfer-Encoding: 8bit
 
 From: Eric Biggers <ebiggers@kernel.org>
 
-[ Upstream commit 4263ca1cae5cebc09ba95375c4a8927bf4b39d49 ]
+[ Upstream commit a67d096fe9761e3e503f40643228bca6d69c7c4e ]
 
-Add some helper functions for computing HMAC-SHA256, HMAC-SHA384, or
-HMAC-SHA512 values using the crypto library instead of crypto_shash.
-These will enable some significant simplifications and performance
-improvements in nvme-auth.
+For the hash and HMAC computations in nvme_auth_augmented_challenge(),
+use the crypto library instead of crypto_shash.  This is simpler,
+faster, and more reliable.  Notably, this eliminates two crypto
+transformation object allocations for every call, which was very slow.
 
 Acked-by: Ard Biesheuvel <ardb@kernel.org>
 Acked-by: Christoph Hellwig <hch@lst.de>
@@ -88,140 +88,129 @@ Signed-off-by: Keith Busch <kbusch@kernel.org>
 Stable-dep-of: 41ad4af45ac9 ("nvmet-auth: keep the old keys if the new ones fail")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/nvme/common/Kconfig |  2 ++
- drivers/nvme/common/auth.c  | 66 +++++++++++++++++++++++++++++++++++++
- include/linux/nvme-auth.h   | 14 ++++++++
- 3 files changed, 82 insertions(+)
+ drivers/nvme/common/auth.c | 96 ++++++++++++++------------------------
+ 1 file changed, 36 insertions(+), 60 deletions(-)
 
-diff --git a/drivers/nvme/common/Kconfig b/drivers/nvme/common/Kconfig
-index d19988c13af5f..1ec507d1f9b5f 100644
---- a/drivers/nvme/common/Kconfig
-+++ b/drivers/nvme/common/Kconfig
-@@ -13,6 +13,8 @@ config NVME_AUTH
- 	select CRYPTO_DH
- 	select CRYPTO_DH_RFC7919_GROUPS
- 	select CRYPTO_HKDF
-+	select CRYPTO_LIB_SHA256
-+	select CRYPTO_LIB_SHA512
- 
- config NVME_AUTH_KUNIT_TEST
- 	tristate "KUnit tests for NVMe authentication" if !KUNIT_ALL_TESTS
 diff --git a/drivers/nvme/common/auth.c b/drivers/nvme/common/auth.c
-index 854711bff7f9a..a8e205b0411bf 100644
+index a8e205b0411bf..28e3de1584611 100644
 --- a/drivers/nvme/common/auth.c
 +++ b/drivers/nvme/common/auth.c
-@@ -12,6 +12,7 @@
- #include <crypto/hash.h>
- #include <crypto/dh.h>
- #include <crypto/hkdf.h>
-+#include <crypto/sha2.h>
- #include <linux/nvme.h>
- #include <linux/nvme-auth.h>
- 
-@@ -234,6 +235,71 @@ void nvme_auth_free_key(struct nvme_dhchap_key *key)
+@@ -300,6 +300,37 @@ void nvme_auth_hmac_final(struct nvme_auth_hmac_ctx *hmac, u8 *out)
  }
- EXPORT_SYMBOL_GPL(nvme_auth_free_key);
+ EXPORT_SYMBOL_GPL(nvme_auth_hmac_final);
  
-+/*
-+ * Start computing an HMAC value, given the algorithm ID and raw key.
-+ *
-+ * The context should be zeroized at the end of its lifetime.  The caller can do
-+ * that implicitly by calling nvme_auth_hmac_final(), or explicitly (needed when
-+ * a context is abandoned without finalizing it) by calling memzero_explicit().
-+ */
-+int nvme_auth_hmac_init(struct nvme_auth_hmac_ctx *hmac, u8 hmac_id,
-+			const u8 *key, size_t key_len)
++static int nvme_auth_hmac(u8 hmac_id, const u8 *key, size_t key_len,
++			  const u8 *data, size_t data_len, u8 *out)
 +{
-+	hmac->hmac_id = hmac_id;
++	struct nvme_auth_hmac_ctx hmac;
++	int ret;
++
++	ret = nvme_auth_hmac_init(&hmac, hmac_id, key, key_len);
++	if (ret == 0) {
++		nvme_auth_hmac_update(&hmac, data, data_len);
++		nvme_auth_hmac_final(&hmac, out);
++	}
++	return ret;
++}
++
++static int nvme_auth_hash(u8 hmac_id, const u8 *data, size_t data_len, u8 *out)
++{
 +	switch (hmac_id) {
 +	case NVME_AUTH_HASH_SHA256:
-+		hmac_sha256_init_usingrawkey(&hmac->sha256, key, key_len);
++		sha256(data, data_len, out);
 +		return 0;
 +	case NVME_AUTH_HASH_SHA384:
-+		hmac_sha384_init_usingrawkey(&hmac->sha384, key, key_len);
++		sha384(data, data_len, out);
 +		return 0;
 +	case NVME_AUTH_HASH_SHA512:
-+		hmac_sha512_init_usingrawkey(&hmac->sha512, key, key_len);
++		sha512(data, data_len, out);
 +		return 0;
 +	}
 +	pr_warn("%s: invalid hash algorithm %d\n", __func__, hmac_id);
 +	return -EINVAL;
 +}
-+EXPORT_SYMBOL_GPL(nvme_auth_hmac_init);
-+
-+void nvme_auth_hmac_update(struct nvme_auth_hmac_ctx *hmac, const u8 *data,
-+			   size_t data_len)
-+{
-+	switch (hmac->hmac_id) {
-+	case NVME_AUTH_HASH_SHA256:
-+		hmac_sha256_update(&hmac->sha256, data, data_len);
-+		return;
-+	case NVME_AUTH_HASH_SHA384:
-+		hmac_sha384_update(&hmac->sha384, data, data_len);
-+		return;
-+	case NVME_AUTH_HASH_SHA512:
-+		hmac_sha512_update(&hmac->sha512, data, data_len);
-+		return;
-+	}
-+	/* Unreachable because nvme_auth_hmac_init() validated hmac_id */
-+	WARN_ON_ONCE(1);
-+}
-+EXPORT_SYMBOL_GPL(nvme_auth_hmac_update);
-+
-+/* Finish computing an HMAC value.  Note that this zeroizes the HMAC context. */
-+void nvme_auth_hmac_final(struct nvme_auth_hmac_ctx *hmac, u8 *out)
-+{
-+	switch (hmac->hmac_id) {
-+	case NVME_AUTH_HASH_SHA256:
-+		hmac_sha256_final(&hmac->sha256, out);
-+		return;
-+	case NVME_AUTH_HASH_SHA384:
-+		hmac_sha384_final(&hmac->sha384, out);
-+		return;
-+	case NVME_AUTH_HASH_SHA512:
-+		hmac_sha512_final(&hmac->sha512, out);
-+		return;
-+	}
-+	/* Unreachable because nvme_auth_hmac_init() validated hmac_id */
-+	WARN_ON_ONCE(1);
-+}
-+EXPORT_SYMBOL_GPL(nvme_auth_hmac_final);
 +
  struct nvme_dhchap_key *nvme_auth_transform_key(
  		const struct nvme_dhchap_key *key, const char *nqn)
  {
-diff --git a/include/linux/nvme-auth.h b/include/linux/nvme-auth.h
-index a4b248c24ccf6..4f9a6599077cc 100644
---- a/include/linux/nvme-auth.h
-+++ b/include/linux/nvme-auth.h
-@@ -7,6 +7,7 @@
- #define _NVME_AUTH_H
+@@ -367,72 +398,17 @@ struct nvme_dhchap_key *nvme_auth_transform_key(
+ }
+ EXPORT_SYMBOL_GPL(nvme_auth_transform_key);
  
- #include <crypto/kpp.h>
-+#include <crypto/sha2.h>
+-static int nvme_auth_hash_skey(int hmac_id, const u8 *skey, size_t skey_len,
+-			       u8 *hkey)
+-{
+-	const char *digest_name;
+-	struct crypto_shash *tfm;
+-	int ret;
+-
+-	digest_name = nvme_auth_digest_name(hmac_id);
+-	if (!digest_name) {
+-		pr_debug("%s: failed to get digest for %d\n", __func__,
+-			 hmac_id);
+-		return -EINVAL;
+-	}
+-	tfm = crypto_alloc_shash(digest_name, 0, 0);
+-	if (IS_ERR(tfm))
+-		return -ENOMEM;
+-
+-	ret = crypto_shash_tfm_digest(tfm, skey, skey_len, hkey);
+-	if (ret < 0)
+-		pr_debug("%s: Failed to hash digest len %zu\n", __func__,
+-			 skey_len);
+-
+-	crypto_free_shash(tfm);
+-	return ret;
+-}
+-
+ int nvme_auth_augmented_challenge(u8 hmac_id, const u8 *skey, size_t skey_len,
+ 				  const u8 *challenge, u8 *aug, size_t hlen)
+ {
+-	struct crypto_shash *tfm;
+-	u8 *hashed_key;
+-	const char *hmac_name;
++	u8 hashed_key[NVME_AUTH_MAX_DIGEST_SIZE];
+ 	int ret;
  
- struct nvme_dhchap_key {
- 	size_t len;
-@@ -23,6 +24,19 @@ const char *nvme_auth_hmac_name(u8 hmac_id);
- const char *nvme_auth_digest_name(u8 hmac_id);
- size_t nvme_auth_hmac_hash_len(u8 hmac_id);
- u8 nvme_auth_hmac_id(const char *hmac_name);
-+struct nvme_auth_hmac_ctx {
-+	u8 hmac_id;
-+	union {
-+		struct hmac_sha256_ctx sha256;
-+		struct hmac_sha384_ctx sha384;
-+		struct hmac_sha512_ctx sha512;
-+	};
-+};
-+int nvme_auth_hmac_init(struct nvme_auth_hmac_ctx *hmac, u8 hmac_id,
-+			const u8 *key, size_t key_len);
-+void nvme_auth_hmac_update(struct nvme_auth_hmac_ctx *hmac, const u8 *data,
-+			   size_t data_len);
-+void nvme_auth_hmac_final(struct nvme_auth_hmac_ctx *hmac, u8 *out);
- 
- u32 nvme_auth_key_struct_size(u32 key_len);
- struct nvme_dhchap_key *nvme_auth_extract_key(const char *secret, u8 key_hash);
+-	hashed_key = kmalloc(hlen, GFP_KERNEL);
+-	if (!hashed_key)
+-		return -ENOMEM;
+-
+-	ret = nvme_auth_hash_skey(hmac_id, skey,
+-				  skey_len, hashed_key);
+-	if (ret < 0)
+-		goto out_free_key;
+-
+-	hmac_name = nvme_auth_hmac_name(hmac_id);
+-	if (!hmac_name) {
+-		pr_warn("%s: invalid hash algorithm %d\n",
+-			__func__, hmac_id);
+-		ret = -EINVAL;
+-		goto out_free_key;
+-	}
+-
+-	tfm = crypto_alloc_shash(hmac_name, 0, 0);
+-	if (IS_ERR(tfm)) {
+-		ret = PTR_ERR(tfm);
+-		goto out_free_key;
+-	}
+-
+-	ret = crypto_shash_setkey(tfm, hashed_key, hlen);
++	ret = nvme_auth_hash(hmac_id, skey, skey_len, hashed_key);
+ 	if (ret)
+-		goto out_free_hash;
+-
+-	ret = crypto_shash_tfm_digest(tfm, challenge, hlen, aug);
+-out_free_hash:
+-	crypto_free_shash(tfm);
+-out_free_key:
+-	kfree_sensitive(hashed_key);
++		return ret;
++	ret = nvme_auth_hmac(hmac_id, hashed_key, hlen, challenge, hlen, aug);
++	memzero_explicit(hashed_key, sizeof(hashed_key));
+ 	return ret;
+ }
+ EXPORT_SYMBOL_GPL(nvme_auth_augmented_challenge);
 -- 
 2.53.0
 
