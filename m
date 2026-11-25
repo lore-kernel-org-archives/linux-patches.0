@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795623853;
-	b=Xb+P052bJovl57bfDTn9sMlu99jI+7ceWqONTKmaE8NCax4y6xOKX98ikZTEkwQ5Oaai
-	 KmAau3A4J/UWE76H45p7ZmRndMpZhd5pK4+QK7AKffOtMKRxR/hmyqqAzs4vHsXMYqIJ5
-	 kxb0IXMRKQqj2gRWaaJox2wgKt9P9AG53DYSi2Jux6Hz0W62HuI2MHYAXCZbjbnUK1kM5
-	 d6O9N8Gp1qbPBooxgEcz4qDEaD6TsyqrfbMSdcN1w2yoHrh5D6yT0tTns7ga/qADcttU2
-	 NkG/LL+oNHbuCOk0n/+sQ2eIahuFFKRBLm/Qv5Rwzv+kwZhf8e678LL/IiwEKIS3ANA==
+	t=1795623856;
+	b=3VanzmsDK99WaNCtNY/9GRmUfDZ+V3vjXWmxzMfhYunrDTBTwIz0PXmXlu7GOX88+Q5P
+	 NiQCwICbwX/mDhxmgo68DvSyZO8KvkOWbF0lZeEcPSA23G1rVIsl+BmADbpX3Q/gZ1hm1
+	 RvcQ9TiT9eGPSHbOktW2keK7WBdomMN0X0IpZlLSCkCtvnjr+CvxOaa4fLuKBKz1Ti9GM
+	 Nw0e+5PMknksMlQm10KO31Mv0kuT1fSchFJtXYZKsBvv7RS2z7yCttUiG8cXc9pmHEKsh
+	 flyXvsNO/PgkRasowuLTFLtYkw92uZHH/9qw30SFosUC6QzIrisQdSepYIBk0NWD2OA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795623853;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795623856;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=ErXkUksoaC2TX7MBxDQI79MoTAuYMoT6PTJrrX6N49M=;
-	b=sLT6Aq1CgYBKsc2QZoX/kcwg3CcnfkJsD179i0JxgnVbCRxcbMzYM8SSu/P4Z/tbdVFy
-	 r/jV3E3mhNcfFBMuHgJiiKj1T3Ja7RPWrb81ll9k6o6nyxzxGdEZm7+O4Dvh1I401exh7
-	 Q1yHW+NZ+8wWWfzGW1WiQspxVXIvhNMbFfcjEWfE9A90igMaAU03mzvRYPEHc+vnNV5ls
-	 FUPmpbE0LKqR8gyX78HbHTXHYvqfSu3z+Y+3+PT2QZ/MT/etrPRdwz/ZGJ8J9jk+gJr8K
-	 LMfEe0UO3HY912+HwhaKJnbGMgQvCx5plHfl1IjbIrw/NXOa/2ghjXVaWJNKza8U8hg==
+	bh=xzIMS1fYRe3NQ6xZLFWXjguyo/AOwuikdKiI1X+nkFI=;
+	b=jH/gDYQJjDeGcUbU33aEtaT/xlwsNo9goqTKcgxjyIxy4Q76f+7TutXvQoPFCz/cuAT/
+	 d5S9jweJW64hlWC3cbNIdHTtAueKqLNnJ4l5KgGQxDROkdTHBATjgHexs5R1XPyIElDC5
+	 xRMX67DlRTMgYHm9CeVu3u/BEIsdazu6DRp28LlHHOnp8ou/rMpEzJ2zzVqXdhZrldwD6
+	 ILiIE2Yrtm7ULtWre2K6aQmVY9GjLAQ6woo7c7rFoTQn1eEx1uaE1hEZ0wR62gSW9RRwH
+	 eK8mUt5Plq0ZLI1y+jlMOKk3ukuytdC3SjAWWi0V2BFc++38pgPCd/BpJp+/IoYJXgQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="LWfcQa/G";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=J8VGy8Ud;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 842F3606A323;
-	Wed, 25 Nov 2026 16:24:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5A6A2606A329;
+	Wed, 25 Nov 2026 16:24:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=LWfcQa/G
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D427A1F000C6;
-	Wed, 25 Nov 2026 16:24:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=J8VGy8Ud
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AC5D51F000C4;
+	Wed, 25 Nov 2026 16:24:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795623853;
-	bh=ErXkUksoaC2TX7MBxDQI79MoTAuYMoT6PTJrrX6N49M=;
+	s=korg; t=1795623856;
+	bh=xzIMS1fYRe3NQ6xZLFWXjguyo/AOwuikdKiI1X+nkFI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=LWfcQa/G7Z6WhD/DWUOL1u9GF4VykNKxXTYXjAqcCM1riDFEUfV9hGk77+xlXbdR0
-	 +efnoN9u6M8yjvcpL0/hAO1RumA1uKf17PNDxomEgcHPvjNRQBEGlNABvqmbfsz9Wl
-	 Fk0/AH3siajh4NITvwGnfCucW2De6wmJ1W493U0o=
+	b=J8VGy8UddqikBitX/drP4WIlgY565BdTleO3OBBNr9ww/6D9FXXZl6HBOVbDBarQw
+	 ARe2Qb7m2g3foJXG11RdlXjWGAawpuYBTKvAfoINIA3LtD28edrvLiYRBH4t5LIjPv
+	 CJgNZkESufbGdCcHsfJJpjYN1kEmQvBj46L/tft8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vinay Belgaumkar <vinay.belgaumkar@intel.com>,
-	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
-	Dapeng Mi <dapeng1.mi@linux.intel.com>
-Subject: [PATCH 6.18 980/990] perf: Fix null pointer access in is_include_guest_event()
-Date: Wed, 25 Nov 2026 15:39:07 +0100
-Message-ID: <20261125143844.936328027@linuxfoundation.org>
+	Baochen Qiang <baochen.qiang@oss.qualcomm.com>,
+	Rameshkumar Sundaram <rameshkumar.sundaram@oss.qualcomm.com>,
+	Jeff Johnson <jeff.johnson@oss.qualcomm.com>
+Subject: [PATCH 6.18 981/990] wifi: ath12k: fix EHT TX MCS limitation due to wrong 20 MHz-only parsing
+Date: Wed, 25 Nov 2026 15:39:08 +0100
+Message-ID: <20261125143844.958833825@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143822.072087159@linuxfoundation.org>
 References: <20261125143822.072087159@linuxfoundation.org>
@@ -68,68 +68,82 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Vinay Belgaumkar <vinay.belgaumkar@intel.com>
+From: Baochen Qiang <baochen.qiang@oss.qualcomm.com>
 
-commit 88aed0422f39b22406f35f1e758cea25e7bbcfb5 upstream.
+commit 60fb2cf51e77bb1c0261160b4be44209d68956b1 upstream.
 
-A typical module unload occurring event when there is an active perf
-connection leads to freeing of the pmu pointer. The call log is something
-like:
- ..
- __pmu_detach_event
- pmu_detach_event
- pmu_detach_events
- perf_pmu_unregister
- ..
+When connecting to an AP configured for EHT 20 MHz with a full EHT
+MCS/NSS map (supporting MCS 0-13)
 
-__pmu_detach_event() sets event->pmu to null. When the perf connection
-finally is closed, the following stack trace is observed:
+Supported EHT-MCS and NSS Set
+    EHT-MCS Map (BW <= 80MHz): 0x444444
+        .... .... .... .... .... 0100 = Rx Max Nss That Supports EHT-MCS 0-9: 4
+        .... .... .... .... 0100 .... = Tx Max Nss That Supports EHT-MCS 0-9: 4
+        .... .... .... 0100 .... .... = Rx Max Nss That Supports EHT-MCS 10-11: 4
+        .... .... 0100 .... .... .... = Tx Max Nss That Supports EHT-MCS 10-11: 4
+        .... 0100 .... .... .... .... = Rx Max Nss That Supports EHT-MCS 12-13: 4
+        0100 .... .... .... .... .... = Tx Max Nss That Supports EHT-MCS 12-13: 4
 
- Oops: general protection fault, kernel NULL pointer dereference
- ...
- RIP: 0010:_free_event+0x3e/0x370
- ...
- Call Trace:
- ...
- perf_event_release_kernel+0x260/0x2d0
- perf_release+0x12/0x20
+TX throughput is observed to be significantly lower than expected.
+Investigation shows that TX rates are limited to EHT MCS 11, even though
+the AP advertises support for EHT MCS 12/13.
 
-A call to mediated_pmu_unaccount_event() inside _free_event() is the root
-cause of this crash. Adding a check inside is_include_guest_event() ensures
-we don't accidentally access a null pmu ptr. In addition to this, we will
-now call mediated_pmu_unaccount_event() before clearing the pmu ptr so that
-nr_include_guest_events counts are maintained correctly.
+The root cause is an incorrect parsing of the Supported EHT-MCS and NSS
+Set element in ath12k_peer_assoc_h_eht().
 
-Fixes: eff95e170275 ("perf: Add APIs to create/release mediated guest vPMUs")
-Assisted-by: Claude:Claude-Sonnet-5
-Signed-off-by: Vinay Belgaumkar <vinay.belgaumkar@intel.com>
-Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
-Reviewed-by: Dapeng Mi <dapeng1.mi@linux.intel.com>
-Link: https://patch.msgid.link/20260904181625.1394082-1-vinay.belgaumkar@intel.com
+IEEE Std 802.11be-2024 Figure 9-1074as describes the format for 20
+MHz-Only Non-AP STAs.
+
+IEEE Std 802.11be-2024 Figure 9-1074at describes the format for all
+other AP and non-AP STAs.
+
+Currently the first format is parsed when the peer advertises no wider
+HE channel width support, without considering whether it is an AP or a
+non-AP STA. This is incorrect: the peer AP's capabilities must be parsed
+using Figure 9-1074at even when it operates on 20 MHz only. Parsing it
+as Figure 9-1074as causes rx_tx_mcs13_max_nss to be interpreted as zero,
+which is then passed to firmware, leading firmware to assume the peer
+does not support MCS 13 and to limit TX rates at MCS 11.
+
+Fix this by parsing the Figure 9-1074as format only when the peer is a
+20 MHz-Only non-AP STA, i.e. when the local interface operates as AP or
+mesh point.
+
+Tested-on: WCN7850 hw2.0 PCI WLAN.HMT.1.1.c5-00302-QCAHMTSWPL_V1.0_V2.0_SILICONZ-1.115823.3
+
+Fixes: 6c95151e2e77 ("wifi: ath12k: Add EHT MCS/NSS rates to Peer Assoc")
+Signed-off-by: Baochen Qiang <baochen.qiang@oss.qualcomm.com>
+Reviewed-by: Rameshkumar Sundaram <rameshkumar.sundaram@oss.qualcomm.com>
+Link: https://patch.msgid.link/20260514-ath12k-fix-20mhz-only-mcs-map-v1-1-a38d4a9b21a2@oss.qualcomm.com
+Signed-off-by: Jeff Johnson <jeff.johnson@oss.qualcomm.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/events/core.c |    4 ++++
- 1 file changed, 4 insertions(+)
+ drivers/net/wireless/ath/ath12k/mac.c |    8 ++++++--
+ 1 file changed, 6 insertions(+), 2 deletions(-)
 
---- a/kernel/events/core.c
-+++ b/kernel/events/core.c
-@@ -6229,6 +6229,9 @@ static DEFINE_MUTEX(perf_mediated_pmu_mu
- /* !exclude_guest event of PMU with PERF_PMU_CAP_MEDIATED_VPMU */
- static inline bool is_include_guest_event(struct perf_event *event)
- {
-+	if (!event->pmu)
-+		return false;
-+
- 	if ((event->pmu->capabilities & PERF_PMU_CAP_MEDIATED_VPMU) &&
- 	    !event->attr.exclude_guest)
- 		return true;
-@@ -12789,6 +12792,7 @@ static void __pmu_detach_event(struct pm
- 	exclusive_event_destroy(event);
- 	module_put(pmu->module);
+--- a/drivers/net/wireless/ath/ath12k/mac.c
++++ b/drivers/net/wireless/ath/ath12k/mac.c
+@@ -3356,7 +3356,9 @@ static void ath12k_peer_assoc_h_eht(stru
+ 		arg->peer_eht_mcs_count++;
+ 		fallthrough;
+ 	default:
+-		if (!(link_sta->he_cap.he_cap_elem.phy_cap_info[0] &
++		if ((vif->type == NL80211_IFTYPE_AP ||
++		     vif->type == NL80211_IFTYPE_MESH_POINT) &&
++		    !(link_sta->he_cap.he_cap_elem.phy_cap_info[0] &
+ 		      IEEE80211_HE_PHY_CAP0_CHANNEL_WIDTH_SET_MASK_ALL)) {
+ 			bw_20 = &eht_cap->eht_mcs_nss_supp.only_20mhz;
  
-+	mediated_pmu_unaccount_event(event);
- 	event->pmu = NULL; /* force fault instead of UAF */
- }
+@@ -3385,7 +3387,9 @@ static void ath12k_peer_assoc_h_eht(stru
+ 	arg->punct_bitmap = ~arvif->punct_bitmap;
+ 	arg->eht_disable_mcs15 = link_conf->eht_disable_mcs15;
  
+-	if (!(link_sta->he_cap.he_cap_elem.phy_cap_info[0] &
++	if ((vif->type == NL80211_IFTYPE_AP ||
++	     vif->type == NL80211_IFTYPE_MESH_POINT) &&
++	    !(link_sta->he_cap.he_cap_elem.phy_cap_info[0] &
+ 	      IEEE80211_HE_PHY_CAP0_CHANNEL_WIDTH_SET_MASK_ALL)) {
+ 		if (bw_20->rx_tx_mcs13_max_nss)
+ 			max_nss = max(max_nss, u8_get_bits(bw_20->rx_tx_mcs13_max_nss,
 
 
