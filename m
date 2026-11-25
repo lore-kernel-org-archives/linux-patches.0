@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795625476;
-	b=zC+uCvZm8owkJs/33Rw6iPqf0AvgTgt187qCZtD+fnZUJoekGGOlIshEW8SEBL+6zHGu
-	 B8/pMkoiXJXSD6RAF3LHxYrh4T8xHDQ026Hr1/9uz+B1wbnqcZ0F+yhndVI9pkuia89SE
-	 iwsBJvx27n0ELxGKcYHZEMqaqI/J9MhEOwsXyy0AI+I3XTg04+rsEiyWTGUO2m3NhYJFd
-	 aquSQBExHkmGARK5SknrIlKoaRvyDZQbqVMlEV8zDiHa7To1zF8nJZlYsI1A/lBXbjza7
-	 ZDNpXzu7sT2ewFPQtMxzy61sh1JWRlydFxA/NtjjP2XpcDjRFxqOzJncdAUhqUGtkBA==
+	t=1795625479;
+	b=OQlMz6RVsQVp/7SNzP1qCVlsyNcyvYYMso49NaLSlCLkYJaR4Ib39WGow/9HPgoM3Ooc
+	 3FUOWBHl2xttGb4yY2F66a52Fl/2E3WyJ9fafjCy9EYIh6DwCCwfTT/5zi7KsIzPxarSn
+	 viokJ+WRg9g5UQATKL8jJKLPnfvqeXO6RRDreRuv2ZfqCzU8oE38EvHEhrdpuLf1+3c0B
+	 kV8xgyiIrZpKQKvT2Z3rqpfJ/zz9G5zWHttCoWsVJJBLimw6aApzwU7qj6A/at0xaPUF+
+	 mBHbUIuu1hzkmmMrIUfhoAj0pMZf8mNq9bYXOJf5Z3jhN7jCmupUXHvIJRIIkaBuSuA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795625476;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795625479;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=moOxJ6rDBPe6BGJhO+AQS7SON/iFpvmoJa8LffQdtvA=;
-	b=dEhk/fseo6xfXkXRT7G9nz+CHendcIrHmEiNwywVbgbLptW+5hsJyCALa/0fzYsVS+Ec
-	 YNp6BmHZ0E8aw/BgGcNQZU4Zs3GQ7vD35lSIzMsHLXPHsXh0lXwdfZn8v3NTC40Ga3YU1
-	 UNwwEuXig8qqJh3hYIhxWHjSmZrfUI9vAo3vV+hDsF2QqqI2G6o+u7yW01lgqdQAhKmHs
-	 5XqjQGhV228zFYFW3SgR09lLdrrA/e9bJDZzzdRaCEwBE2d6a09Et/1IEo05oGY2rfRUY
-	 Jcf/WPIB6lqBwSq/vKKfKRbvr/4LW69ZRDvEFieZ31K6/2LN/R21WCng3mwWrEH3F5g==
+	bh=iWWYEFtkjJ4SVT/Iz8IEcY+OUOkyjPQd2yKKD4Pt3Xs=;
+	b=IRF3AtB5/YjrkQfDPks8a5gr5ITDYNkUWww2GWMMeb/LyB13Jk81I226riY46SMsIaj9
+	 RQ+WqzlTp5HkLQlOyBHK431PwOhIQW0xVFLIyxP8SiBIvcpdA9BXzv6tnYKARWqwQY+29
+	 lUUCeS/wi4JtuiYc/a/3IpXe5KBqg5wwJcYRR56Ky9DiFYXpOszLXbCXjOI9y/KNwcPje
+	 In2Usr+e+ZUTi6TiyNJtVh8ii2d8sjRihVQTvWCInjQZEFc+Ahw9wAjd55JpUH6VaWY9T
+	 CuGLFBbA9U9nAEWMKI3G68O3WLW098qPDj5W/YJip0oTPjsyOHQ0UBUIJMAt+XhaWBQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=oHkAaDLn;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=xAkeQytJ;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 525BF606A31E;
-	Wed, 25 Nov 2026 16:51:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 31E47606A327;
+	Wed, 25 Nov 2026 16:51:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=oHkAaDLn
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 47FEF1F000CA;
-	Wed, 25 Nov 2026 16:51:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=xAkeQytJ
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7985A1F000D2;
+	Wed, 25 Nov 2026 16:51:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795625475;
-	bh=moOxJ6rDBPe6BGJhO+AQS7SON/iFpvmoJa8LffQdtvA=;
+	s=korg; t=1795625479;
+	bh=iWWYEFtkjJ4SVT/Iz8IEcY+OUOkyjPQd2yKKD4Pt3Xs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=oHkAaDLnkT/IJsjdXBCZA4EjXKnmvy0LK4A6EvYbRxMEKOxn9FkzDSMyQ3u/FLiC/
-	 eUIOqF5a+D6xeotqBByM7pFvmexiOZ52foWzhia+QdO8m5Isumb+MTtLdkXdS7s5Kg
-	 V3OegrNs/lN7eQ9SurhoGqsfkX80xVYrNbrePMco=
+	b=xAkeQytJBILOZLkY1EjlJQ4+sjfRbNKwnQcoTWK4CVCtygmvoM5CiQpmn3MIKNwrr
+	 yeacM98JUYY8mPgh8EHxhp81XbIXsoSPczChVt2vRImeCQQqSTDjTSSBPoTSDbFSzk
+	 EGlxr/+OkdOKRZRH2zzr0COwn2omATmqYeSqnByc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dairui Zhang <zhangdairui@gmail.com>,
-	Namjae Jeon <linkinjeon@kernel.org>,
+	Josef Bacik <josef@toxicpanda.com>,
+	Alexei Starovoitov <ast@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 530/816] ksmbd: fix durable reconnects for root shares
-Date: Wed, 25 Nov 2026 15:34:38 +0100
-Message-ID: <20261125143901.460179492@linuxfoundation.org>
+Subject: [PATCH 6.12 513/816] bpf: Let bpf_dynptr_write() mark a global function
+Date: Wed, 25 Nov 2026 15:34:21 +0100
+Message-ID: <20261125143901.060919232@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143849.205329330@linuxfoundation.org>
 References: <20261125143849.205329330@linuxfoundation.org>
@@ -68,42 +68,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Namjae Jeon <linkinjeon@kernel.org>
+From: Josef Bacik <josef@toxicpanda.com>
 
-[ Upstream commit 25e36df831a47597c03c6239fbc71285e7d714c2 ]
+[ Upstream commit 589998616e0f9190ba6f6644a19532c5b2ba66d0 ]
 
-When a share exports "/", ksmbd_validate_name_reconnect() expects
-another slash after the share path. For a file at /foo, this rejects
-the valid reconnect name "foo" even though the file is in the share.
+The caller of a global function loses its packet pointers if the function
+may change packet data. That is found out by a scan for calls of the
+helpers which bpf_helper_changes_pkt_data() lists.
 
-Compare the requested name with the rendered file path after its
-leading slash when the resolved share root is "/". Keep the
-exact-root/empty-name check and reject rendered paths without an
-initial slash.
+bpf_dynptr_write() is not on the list, because it depends on the type of
+the dynptr: check_helper_call() looks at it. The scan cannot do that, and
+so a global function which makes a dynptr from the skb, or gets one as an
+argument, and writes through it counts as harmless. The write can
+reallocate the head of the skb, and the caller goes on with pointers into
+the old one, which has been freed.
 
-Fixes: c8efcc786146 ("ksmbd: add support for durable handles v1/v2")
-Reported-by: Dairui Zhang <zhangdairui@gmail.com>
-Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
+Let every call of bpf_dynptr_write() mark the function, as a tail call
+does. The same mark decides whether a program may replace a function.
+
+Fixes: 51081a3f25c7 ("bpf: track changes_pkt_data property for global functions")
+Signed-off-by: Josef Bacik <josef@toxicpanda.com>
+Signed-off-by: Alexei Starovoitov <ast@kernel.org>
+Link: https://patch.msgid.link/20261017230950.802052-10-alexei.starovoitov@gmail.com
+[ sashal: Ported the change to the CFG code in verifier.c, since cfg.c doesn't exist here, and wrapped the condition in a bpf_helper_call(insn) check because there is no src_reg if/else split. ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/smb/server/vfs_cache.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ kernel/bpf/verifier.c | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
-diff --git a/fs/smb/server/vfs_cache.c b/fs/smb/server/vfs_cache.c
-index b1ee76949a2ea..52389fff3d4a0 100644
---- a/fs/smb/server/vfs_cache.c
-+++ b/fs/smb/server/vfs_cache.c
-@@ -1377,6 +1377,10 @@ int ksmbd_validate_name_reconnect(struct ksmbd_share_config *share,
- 			/* the durable fp is the share root itself */
- 			if (name[0])
- 				ret = -EINVAL;
-+		} else if (share_path_sz == 1 && share_path[0] == '/') {
-+			if (ab_pathname[0] != '/' ||
-+			    strcmp(ab_pathname + 1, name))
-+				ret = -EINVAL;
- 		} else if (len <= share_path_sz ||
- 			   strncmp(ab_pathname, share_path, share_path_sz) ||
- 			   ab_pathname[share_path_sz] != '/' ||
+diff --git a/kernel/bpf/verifier.c b/kernel/bpf/verifier.c
+index 34b82d3eff66f..9818cdbfb9724 100644
+--- a/kernel/bpf/verifier.c
++++ b/kernel/bpf/verifier.c
+@@ -17089,7 +17089,10 @@ static int visit_insn(int t, struct bpf_verifier_env *env)
+ 			mark_prune_point(env, t);
+ 			mark_jmp_point(env, t);
+ 		}
+-		if (bpf_helper_call(insn) && bpf_helper_changes_pkt_data(insn->imm))
++		/* nobody knows yet whether the dynptr is that of an skb */
++		if (bpf_helper_call(insn) &&
++		    (bpf_helper_changes_pkt_data(insn->imm) ||
++		     insn->imm == BPF_FUNC_dynptr_write))
+ 			mark_subprog_changes_pkt_data(env, t);
+ 		if (insn->src_reg == BPF_PSEUDO_KFUNC_CALL) {
+ 			struct bpf_kfunc_call_arg_meta meta;
 -- 
 2.53.0
 
