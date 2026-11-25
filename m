@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795618006;
-	b=geBKCUav+xy4YcBHtbcXfKGZJ1bFFpnKsTXSipLj9TkA0Nm5B3fMPZ8zzlafYikhqG1o
-	 zeJvEeG7r2NU5soZLUj0kT0RZGseszk4zepNjdQZq06dWv+02MNztDbfowIkEBF/AZVef
-	 McsrtM0crYb0JGqdg6dBmTAtjwH3kGarWhKziiidTsciT8CJ6a1uSvVmFXV7c92ZhWu0n
-	 DovhoAKrX6M74kjStA01o35PEn5J+hfQcOVyG3s9k2lTCCrJYnzflm5oojsPmmGHFdCy8
-	 KyA7hrtn2JLjtvaofIidxAG0rHL6kM9spB1NKBSpCMXltx/YBF0Idabk4EJrcn8Ohmw==
+	t=1795618010;
+	b=NqxSZ2fqMsAsI5TXdh1QEZhfGgXL065gMh3QgV6/uFHNL2vlSqiHv8XW6yqMHSEFvMvb
+	 S0lSU9FWMrNRIRXPRPdGl+iPMEEoo1DRQ1dOg4cgkE+QskGHR89PSIDe7Qi/CfKv1TtUC
+	 I6i++pTdw0FEtDBFZfr5X0O4+hzP6CC0gRIF8XJ9W2qCgGmpj0hGzADQrR7VevsPCf/+q
+	 un3cJaSG9pGl6xzEAv49acjB4S4E1kggEkhtM75QQKBu8Y7cy5m82EMU8g0WjlTvrpvwY
+	 ZL3a2QFa/IL7mQ1ZEEQq8/n8q+LApbSGjbusirnubuuK4mZvyM1PyeBYC2CB3r3tmYQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795618006;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795618010;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=QVamIxtijbM+ySHGZDH2SdLlyCw1TojUXOZjhZeYjkE=;
-	b=jIuTNS7/BjuKLg0D6UoZikxj3wN+AEqzE22voLxPrXAxu6kkskGrp6lbivdetTBkZLeL
-	 gU5F27g7bO/FiRT/b2vf5x6qTHTMResxpqsdhqRG4KQBLfjiUUPhCJPa+C+uQtYW3yifl
-	 EMxqa6UXzmdVCoKucjNHIiSdyYvfVk38Zb1FkR6QC03rOs+b7CtpBcqr4xaP2gYotuqIr
-	 hJKVhzuTU4CmOnTA7PVxpGFD7t8uNT/Fe+zdb98pn9r/sPD4h1uOgqKVGFrF/SY9flaN3
-	 7HbSJWAPh7Wn9L0Ci2qVWYeYaH12uD2gyL7Ml64S7OwzTfgm/DT5ROEUqv7rm9rHYsQ==
+	bh=+NroquS5uUMLVgA/0AoIRPX/ee6zotjj+XZWkOfxP7U=;
+	b=oiG0PTlUpXA34+nxVpoQv33ok2ThwE4dLuBHmSDwsnPpulvcXuKxFLpsWI6peHMqa71N
+	 8GgQw3lpjfKhW7XYjlVyvFDZQW6JxodBvLl9hQic+FK7PSBV73fgQlPiwKdy+kmFKvQCO
+	 ojXLdQ26aux1vtVnX0/dcKzoJFsPNAtqnkgQ4RhDG21z65dTIhEGM0CC3sgpoazO9mS10
+	 w4yhROXQ3QLFQnXqZVx7PmHjWQtmw2lTDMxCwobwbP3A6YTQktuaqDEdjalKeivTvKmjW
+	 9E51ggzRs+RO3nzP5A/cJ9Yn4qZ5KAQb1cSM9K2zZ1+SzNtQcnXAZDWsFmCXabj1aDA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=A86Z3Tzp;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=m8cvMX5e;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4629A606A6A3;
-	Wed, 25 Nov 2026 14:46:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 872BB606A31E;
+	Wed, 25 Nov 2026 14:46:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=A86Z3Tzp
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8AB6F1F000CA;
-	Wed, 25 Nov 2026 14:46:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=m8cvMX5e
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CE5941F000C0;
+	Wed, 25 Nov 2026 14:46:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795618006;
-	bh=QVamIxtijbM+ySHGZDH2SdLlyCw1TojUXOZjhZeYjkE=;
+	s=korg; t=1795618009;
+	bh=+NroquS5uUMLVgA/0AoIRPX/ee6zotjj+XZWkOfxP7U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=A86Z3Tzpqy6RmRvzKdjACzy8y+Ug5Q5Dsri6Buk/9UaOgnBoQZFA9NxkGu6xa+ozZ
-	 5cJI2jcNKQ9ChoR2p9aTyHsyASWrpYIF3dYHzyalP/uPIBn94kyQ4+h1wlHryQtdUh
-	 hekUZWQYZ2S0yJm16Uv3zXNw7ggwDxaiJUGJZNtA=
+	b=m8cvMX5eaDEwbnfNcwZsWEH/xEvCG4M0l72U9RYc3yDK+6o/oqwpAZ8XdWQrSO2Rl
+	 MgTwf/dEbQbPQGMV+KFvZg3Ou+hNolrYsQAhyTTlFESPgTnLySWmOjOtrajpAEiJks
+	 eCq4iVbKJ4rvvnaoFvlj9JOjgon/tl3b3+QmDYQ8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Daniel Machon <daniel.machon@microchip.com>,
-	Simon Horman <horms@kernel.org>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Daejun Park <daejun7.park@samsung.com>,
+	Gao Xiang <xiang@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0143/1005] net: lan966x: dont free XDP buffers in fdma tx clear with budget 0
-Date: Wed, 25 Nov 2026 15:24:41 +0100
-Message-ID: <20261125143825.088368544@linuxfoundation.org>
+Subject: [PATCH 7.3 0144/1005] erofs: apply the stacked fs check to extra file-backed devices
+Date: Wed, 25 Nov 2026 15:24:42 +0100
+Message-ID: <20261125143825.111969775@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143821.729802100@linuxfoundation.org>
 References: <20261125143821.729802100@linuxfoundation.org>
@@ -69,57 +68,68 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Daniel Machon <daniel.machon@microchip.com>
+From: Daejun Park <daejun7.park@samsung.com>
 
-[ Upstream commit 263a5514cb9535380734b5e300b298f82570eb57 ]
+[ Upstream commit e9aeaa63fd94b0d2bb9b303be5774b33ca9c01cf ]
 
-lan966x_fdma_tx_clear_buf() runs from the NAPI poll and frees the
-buffers of completed tx DCBs with napi_consume_skb(),
-page_pool_recycle_direct() and xdp_return_frame_bulk().
+erofs_fc_fill_super() rejects a file-backed mount whose image is on a
+file-backed EROFS or on a filesystem with s_stack_depth set. This
+bounds the nesting of reads. Extra devices given by device= are not
+checked. File-backed mounts can still nest through them without limit.
 
-netpoll calls the NAPI poll with a budget of 0 and hardirqs disabled.
-With a budget of 0, a driver cannot call any XDP or page pool API.
+Apply the same check to extra devices.
 
-Before this patch, the XDP_TX pages and ndo_xdp_xmit frames are freed
-regardless of the budget. With netconsole on the port that owns the
-FDMA NAPI, such a buffer is freed with hardirqs disabled, and
-__page_pool_put_page() warns via lockdep_assert_no_hardirq().
-
-Leave the XDP buffers of completed DCBs in place when the budget is 0,
-and free them in the next NAPI poll. napi_consume_skb() already handles
-a budget of 0, so skbs are still freed.
-
-Found by an AI code review agent. Reproduced on a lan9668 board with a
-modified kernel that runs the NAPI poll with a budget of 0 and hardirqs
-disabled. With the fix the warning is gone.
-
-Fixes: 19c6f534f636 ("net: lan966x: Add support for XDP_TX")
-Signed-off-by: Daniel Machon <daniel.machon@microchip.com>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Link: https://patch.msgid.link/20261029-lan966x-fdma-tx-clear-budget-v1-1-38c52d7aab8c@microchip.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Fixes: fb176750266a ("erofs: add file-backed mount support")
+Signed-off-by: Daejun Park <daejun7.park@samsung.com>
+Reviewed-by: Gao Xiang <xiang@kernel.org>
+Signed-off-by: Gao Xiang (Docker) <xiang@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/microchip/lan966x/lan966x_fdma.c | 6 ++++++
- 1 file changed, 6 insertions(+)
+ fs/erofs/super.c | 17 ++++++++++++++---
+ 1 file changed, 14 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/net/ethernet/microchip/lan966x/lan966x_fdma.c b/drivers/net/ethernet/microchip/lan966x/lan966x_fdma.c
-index 5cc9b2321dad5..7bd1338477232 100644
---- a/drivers/net/ethernet/microchip/lan966x/lan966x_fdma.c
-+++ b/drivers/net/ethernet/microchip/lan966x/lan966x_fdma.c
-@@ -354,6 +354,12 @@ static void lan966x_fdma_tx_clear_buf(struct lan966x *lan966x, int weight)
- 		if (!fdma_db_is_done(db))
- 			continue;
+diff --git a/fs/erofs/super.c b/fs/erofs/super.c
+index ce05557bd9983..ee01a5ef85931 100644
+--- a/fs/erofs/super.c
++++ b/fs/erofs/super.c
+@@ -122,6 +122,14 @@ void *erofs_read_metadata(struct super_block *sb, struct erofs_buf *buf,
+ 	return buffer;
+ }
  
-+		/* XDP and page pool APIs can't be used with a budget of 0.
-+		 * Leave these buffers for the next NAPI poll.
-+		 */
-+		if (!weight && !dcb_buf->use_skb)
-+			continue;
++/* see the comment in erofs_fc_fill_super() */
++static bool erofs_is_stacked_file(struct file *file)
++{
++	struct super_block *sb = file_inode(file)->i_sb;
 +
- 		dcb_buf->dev->stats.tx_packets++;
- 		dcb_buf->dev->stats.tx_bytes += dcb_buf->len;
- 
++	return (sb->s_op == &erofs_sops && !sb->s_bdev) || sb->s_stack_depth;
++}
++
+ static int erofs_init_device(struct erofs_buf *buf, struct super_block *sb,
+ 			     struct erofs_device_info *dif, erofs_off_t *pos)
+ {
+@@ -161,6 +169,11 @@ static int erofs_init_device(struct erofs_buf *buf, struct super_block *sb,
+ 		} else if (!S_ISREG(file_inode(file)->i_mode)) {
+ 			fput(file);
+ 			return -EINVAL;
++		} else if (erofs_is_stacked_file(file)) {
++			erofs_err(sb, "%s: file-backed devices cannot be on stacked fses",
++				  dif->path);
++			fput(file);
++			return -EINVAL;
+ 		}
+ 		if (!dif->dax_dev && test_opt(&sbi->opt, DAX_ALWAYS)) {
+ 			erofs_info(sb, "DAX unsupported by %s. Turning off DAX.",
+@@ -701,9 +714,7 @@ static int erofs_fc_fill_super(struct super_block *sb, struct fs_context *fc)
+ 		 * It MUST change if another fs plans to support them, which
+ 		 * may also require adjusting FILESYSTEM_MAX_STACK_DEPTH.
+ 		 */
+-		inode = file_inode(sbi->dif0.file);
+-		if ((inode->i_sb->s_op == &erofs_sops &&
+-		     !inode->i_sb->s_bdev) || inode->i_sb->s_stack_depth) {
++		if (erofs_is_stacked_file(sbi->dif0.file)) {
+ 			erofs_err(sb, "file-backed mounts cannot be applied to stacked fses");
+ 			return -ENOTBLK;
+ 		}
 -- 
 2.53.0
 
