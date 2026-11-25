@@ -1,51 +1,50 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795620025;
-	b=ZSTLfedT7Il/8W7PHelw5uddKhu0itQ10zQbrKhk/yQiv+jnRKFiNyvHQEqXdwFpCdlq
-	 emV/rFtILxZzJL76iUBMGbaM1sAhG/9H1wBCGWehODM9QiMq8PFARbIgz8p15KZId0bFs
-	 h2gCB7Ykc6FfPg3wbsWWkyHRHQH4AClw1T2MIWOEd76PLPmAKHVRj85XiIweeK2BDZDdW
-	 QO/0xog9lEsWSYVgkElaVJgGi94vmDMCoW11ICXe6NO7ipJg+v/QEEVDEiS8TYljtOlvk
-	 5pM2j6BnRLjeIGaFmY6qc2hi74+UBHWezt5Juke9LDMOVeaz576st3PGw4QyeTLDAQA==
+	t=1795620027;
+	b=jaly1UcXHm8nZNFPt/2/clIBYgqWSfjQnItyaCzPRu/unlEIPae4DbbNTS2c2PpTo5pJ
+	 7IsSsjaMcqpyzRUVRzaoWKq0pNv6GuqEkeUtvq9Ws3fHGKnYqKhAGmN1ZqMzdcCQeeMO5
+	 B15HfsQNHNyNVMjTgsAeeYqRhd9Dq4qfYKQwjaMFCEYOdq4+TaUKDFiwB/MzPVeMyikvG
+	 CEP+Fh0+VcTwnBDa5vUk2F9Vq/v3j3lHi1AvlYLaKSEmZ8XXmNUjjUkPmZUQMqpsbzM6t
+	 PoyBz69J4uknYE0QIy2RLVRCOPr7CGiY39SjlyPiMwftlel0htPvEm1gP+nVP2maXNQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795620025;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795620027;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=F1+wQnMhvzNqkkPnfag/F4+VOSfDXYSXO7n9ynf6UNc=;
-	b=weJsb1N1oiSk8SYigSh0Q8AAsxL8XZC6xloynhY2Jt5+yAUSLXrDNmMPQo6CTs0jo9II
-	 G5MUTbHMgK8aze7e4FZpebizCZlDjNCMi2Y6BS55qD19JfS6szt4KNslcd4lBZqPEHRSh
-	 O8gE79djndbkAc2x0nwppB0c/uMomDdIrHufA1mgUowJWNp1adT+Itbv5ZZSolKFNmuGS
-	 yJaXPDRugEs4AGst7KCKxPYgwhheXLQnsSafoY2ZwoxiT2HoM1Vm0HOd+t/KQbQyJfF9B
-	 wTlwrvFuLDBIQtyo7JH5puWnp8q4OB4jRTkC6yBKLSCL4A303ixBX4n9jNJaGiaEXXw==
+	bh=jpSQdfWANoTRqtyDe6afjUaF4+gjHo7fBB82oN0soKg=;
+	b=vFkxD7i/w3Gwkh/OGcuEk4ckr5Yv0ofc/eoRp5t8kf4n1bNSvFw18lYz5PSQ1KuoO08Z
+	 8uO0RXkh1Onga4G9hVmlzUq9PfadZcMO55c4CPXqj7nYaejQ+QuW8RszRIvGGhu2iaUlP
+	 2Auviv0nlaKqxZoR+iOz9T7KQ0Jm2I4cJkUwiFHvARC5/vJT9gWJngMfLdPQspSxATNu3
+	 aVYqoD12NZPjJpf1wYcdw3fyWoDmB+tD5FNgH1975lp1PU0TLA788uADY2VpqOHmtxlNe
+	 MQ5WPDJa91Kifjuq4Z/TvW2e3lh5oyZrEOAKi3CyNfNUbilJanklKr6MnvRNCNXuPZw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=JJAV0id4;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=jwU8TSaR;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E3603606A321;
-	Wed, 25 Nov 2026 15:20:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B7D48606A31E;
+	Wed, 25 Nov 2026 15:20:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=JJAV0id4
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 40F591F000C4;
-	Wed, 25 Nov 2026 15:20:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=jwU8TSaR
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 13CCE1F000C6;
+	Wed, 25 Nov 2026 15:20:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795620024;
-	bh=F1+wQnMhvzNqkkPnfag/F4+VOSfDXYSXO7n9ynf6UNc=;
+	s=korg; t=1795620027;
+	bh=jpSQdfWANoTRqtyDe6afjUaF4+gjHo7fBB82oN0soKg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=JJAV0id4waS19fcu3Xwy+mNvYh0N2cFSUchfXeLKjinWqdZxVGZBdxMnZpRxcclIm
-	 zq7TJI2wlFGDHSLLEbzqrIzVeHi8zor6UGkDb2wIECPa42KDAObSbvGG2cJrtqnLQF
-	 2vOfx8qXMYxtMOFtLzYpCFMhSx8/nNVLeSmNOTG8=
+	b=jwU8TSaRQXgXvkJ5zGLBkMmj4IdQ0OHEd66pDQ6/JAnaxvLwuT828xYA9eGgk/PEX
+	 eOtZ20ISjmtvIcjmLZNsxjvYBSvr6DSJtmuyG+9B2Qs6GKx4T4q+cjP3p5jSAfJD0M
+	 RDZU74QhvOpIGRP+zmKBMunN6L8RYXaIkfei3TfI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sashiko <sashiko-bot@kernel.org>,
 	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>
-Subject: [PATCH 7.3 0782/1005] tracing/uprobes: Fix memory leak of tail in __trace_uprobe_create()
-Date: Wed, 25 Nov 2026 15:35:20 +0100
-Message-ID: <20261125143840.060253059@linuxfoundation.org>
+Subject: [PATCH 7.3 0783/1005] tracing/eprobe: Fix 1-byte signed field fetch in get_event_field()
+Date: Wed, 25 Nov 2026 15:35:21 +0100
+Message-ID: <20261125143840.084042182@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143821.729802100@linuxfoundation.org>
 References: <20261125143821.729802100@linuxfoundation.org>
@@ -69,46 +68,55 @@ Content-Transfer-Encoding: 8bit
 
 From: Masami Hiramatsu (Google) <mhiramat@kernel.org>
 
-commit c15120853eebbda98f3fe1f1e59370439c6c4447 upstream.
+commit a0f836eea463d4c468edb58eedb03911c9c0791d upstream.
 
-When generating a default event name in __trace_uprobe_create(), tail is
-allocated with kstrdup() without __free(kfree). If the subsequent
-kmalloc() for buf fails, the function returns -ENOMEM immediately and
-leaks tail.
+Because the kernel is built with -funsigned-char, plain 'char' is
+unsigned on all architectures. Reading 1-byte signed trace event fields
+via *(char *)addr in get_event_field() therefore zero-extends instead of
+sign-extending negative s8 values.
 
-Declare tail with __free(kfree) so it is automatically freed on all
-exit paths.
+Use explicit fixed-width integer types (s8/u8, s16/u16, s32/u32) when
+reading event fields.
 
-Link: https://lore.kernel.org/all/179455856197.403392.16569431894958507645.stgit@devnote2/
+Link: https://lore.kernel.org/all/179455852542.403392.15666310371702309464.stgit@devnote2/
 
-Reported-by: Sashiko <sashiko-bot@kernel.org>
-Closes: https://lore.kernel.org/all/sashiko-outbox-204240@kernel.org/
-Fixes: 97e8230f89a3 ("tracing: uprobe-event: Allocate string buffers from heap")
+Fixes: 7491e2c44278 ("tracing: Add a probe that attaches to trace events")
 Cc: stable@vger.kernel.org
 Signed-off-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/trace/trace_uprobe.c |    3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+ kernel/trace/trace_eprobe.c |   12 ++++++------
+ 1 file changed, 6 insertions(+), 6 deletions(-)
 
---- a/kernel/trace/trace_uprobe.c
-+++ b/kernel/trace/trace_uprobe.c
-@@ -663,7 +663,7 @@ static int __trace_uprobe_create(int arg
- 	}
- 
- 	if (!event) {
--		char *tail;
-+		char *tail __free(kfree) = NULL;
- 		char *ptr;
- 
- 		tail = kstrdup(kbasename(filename), GFP_KERNEL);
-@@ -679,7 +679,6 @@ static int __trace_uprobe_create(int arg
- 			return -ENOMEM;
- 		snprintf(buf, MAX_EVENT_NAME_LEN, "%c_%s_0x%lx", 'p', tail, offset);
- 		event = buf;
--		kfree(tail);
- 	}
- 
- 	argc -= 2;
+--- a/kernel/trace/trace_eprobe.c
++++ b/kernel/trace/trace_eprobe.c
+@@ -330,21 +330,21 @@ get_event_field(struct fetch_insn *code,
+ 	switch (field->size) {
+ 	case 1:
+ 		if (field->is_signed)
+-			val = *(char *)addr;
++			val = *(s8 *)addr;
+ 		else
+-			val = *(unsigned char *)addr;
++			val = *(u8 *)addr;
+ 		break;
+ 	case 2:
+ 		if (field->is_signed)
+-			val = *(short *)addr;
++			val = *(s16 *)addr;
+ 		else
+-			val = *(unsigned short *)addr;
++			val = *(u16 *)addr;
+ 		break;
+ 	case 4:
+ 		if (field->is_signed)
+-			val = *(int *)addr;
++			val = *(s32 *)addr;
+ 		else
+-			val = *(unsigned int *)addr;
++			val = *(u32 *)addr;
+ 		break;
+ 	default:
+ 		if (field->size == sizeof(long)) {
 
 
