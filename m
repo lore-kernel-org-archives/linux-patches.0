@@ -1,53 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795623588;
-	b=Fotsj+xt47vRPS3C856Eaqel/B7Q7wm7PZL4Z32mqklyvK8NNciWIMjYrlZvI4QW7jCa
-	 GiKZFIiAI57BeO4j723Z2CjzFbA9b1WHBGUFiAY7lfSnkgy91fZzF62hQGJOlbYjBLVMD
-	 Ub7QoPSaq2wEHRZmkdxE/NsFKYMMSH9HwjLjcAfDIIFVwHF4qkixCNBtUYVQ6Wd1LiBgz
-	 EhbMDXleoWzygIyF++oyEY+zrxCrunwWAcdfBWBzmW6ZwfOrL+NS7c7zA4R+/vxVsmOs/
-	 hMRh8n8kmdSj8KNv34caOd+sTTox24jFEaReJlKecrAhkaMqcwZr/P1+CFYsZZyuG+A==
+	t=1795623591;
+	b=gyF1tohVRVwpXkt5OBsZk7rNFm4VHQFsV+AGa13SYQVWQVT4Aztl0dTj7P4+FoTdMONe
+	 4VEdgwOzex7Ngbx1iWfzHusVqWfGn87d1jRt9mMGlP+EXbSxeblsn7HeoTHpw1D6ULZq/
+	 8Rxbx+pTf7KA3ewzyKZ6limZP2i6tk8/IFO03GQWl+kanMAyJ9eBpI5u8+LxtO+vmFEHk
+	 Vk9DLtvZsvQ1jbjEj+g+ECFF9+JuhzPl5opg46Gl0W1zUndVBnnIXLwjiyQyZp2U1FPAV
+	 Y4RjLSY1qhMuXTHN5sT6g2fh963BAFVijqk2j2wnbAZodnqLSjYZTsfpZZ7oOZFaAAQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795623588;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795623591;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=yGWdWg5F7UBEXLuK85ePRU3LvxOs1Li4aoT4k0jfTPw=;
-	b=GCkSWxyYrwEsxwlQHgnDdFvyEftywN+wOaZoLWyBbFlX2tZQ3YLXzffjtqQQiRmBAxqs
-	 rw+hevbcWjl71FKG1lQ+A/IdXnf0vDTxd8bxpgfPIQyrPiG8QZeYb2ibdCYfpj1aYL6lD
-	 F/NKWrW9m92JBeieAfR8r238o58dfvGLSnIkJ7GEvWiqT/DO20AFLV7gWCcHbqKXWXoJR
-	 S5gXtnSpZf1EojOryonQjpubtzTGpYJcSQmE6z4Q5CXqJCIoTzXYP0TiSC/0p68uha0dF
-	 tblSfEceK/XhYAXNNxa4+PkWB/hCt+z3TVVCciKiShSiHCqxLe9sfnoKt9PHguEgMYA==
+	bh=9MOn8L8OFZlm4ftfUW4l0P3jl6yRwoDeQYe5GDuJQqk=;
+	b=PT5uzPLIjdgaYMU4/cfhS72/FVldQbbEjrxKOGFwk1SkfDTFiIeF+EfydDTEnuee1iC+
+	 AO5jW9ldxn55XhdcomQqlRatqvJGLGG7qbdWOXZejWiiClAk5i+CIEyHsEOui0MrLdqvX
+	 HmXLwuPFjRv3w2qm1vzgTGY8/i44G5uE9m+ntG7lm0SANdfCVmwlLGAzfwoX9JzMhjKGc
+	 hggDuXq39z9ReH2tGVvJymPcHsdr+WuONSYfrTwCoO7jchXEhubV8xtgD08accftATr5b
+	 8+jXD00eDqBbb4CyaORFQMJRiN2s8imMbVOrwGtyFekTFwTOib4UAK2IljwHvtCtFSw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=dZU0tO7e;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=RWdOw3e5;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DF9C5606A31E;
-	Wed, 25 Nov 2026 16:19:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 514D4606A31E;
+	Wed, 25 Nov 2026 16:19:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=dZU0tO7e
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3B1BD1F000C0;
-	Wed, 25 Nov 2026 16:19:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=RWdOw3e5
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0B6661F000C6;
+	Wed, 25 Nov 2026 16:19:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795623587;
-	bh=yGWdWg5F7UBEXLuK85ePRU3LvxOs1Li4aoT4k0jfTPw=;
+	s=korg; t=1795623590;
+	bh=9MOn8L8OFZlm4ftfUW4l0P3jl6yRwoDeQYe5GDuJQqk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=dZU0tO7eWuShtkHdTqgRFZgFus3bdIV2hOG4jCm1kbRQI7IyDQ7Cd/nPwua5UEILY
-	 Nu7k+kobHCA6aQI1t17sfyYwLpu7ofxhb5fxlo2mhrtOb91yhu6duWx3IHbeiUyUHr
-	 5bm8Krcg3Iag15ewBN2kx8utuVRTe42FqarP4rbE=
+	b=RWdOw3e5YSBRMOvvTa8KbXshrTUnIg3CkYCgAO2tJDJ8v1f42cThZcSDC9F4zLomr
+	 X5+1zKSHnqYQLHdiJaiGsEEZwIn4FyIAX4ZF+hVWBri0tg9sjvr7YE7ExHItsOIjtl
+	 WEQKF1VRMa7ctNJrq4MWi90omqT6c0+r3SpgLUPk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	stable <stable@kernel.org>,
-	Uttkarsh Aggarwal <uttkarsh.aggarwal@oss.qualcomm.com>,
-	Peter Chen <peter.chen@oss.qualcomm.com>,
-	Heikki Krogerus <heikki.krogeurs@linuc.intel.com>
-Subject: [PATCH 6.18 908/990] usb: typec: ucsi: Set ucsi->connector before enabling notifications
-Date: Wed, 25 Nov 2026 15:37:55 +0100
-Message-ID: <20261125143843.277735310@linuxfoundation.org>
+	Josef Bacik <josef@toxicpanda.com>
+Subject: [PATCH 6.18 882/990] comedi: addi_apci_1500: fix clearing of the gate enable
+Date: Wed, 25 Nov 2026 15:37:29 +0100
+Message-ID: <20261125143842.676476918@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143822.072087159@linuxfoundation.org>
 References: <20261125143822.072087159@linuxfoundation.org>
@@ -69,72 +67,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Uttkarsh Aggarwal <uttkarsh.aggarwal@oss.qualcomm.com>
+From: Josef Bacik <josef@toxicpanda.com>
 
-commit 5b4b83c2ffe8740f6f3e54ea4d4962a62c063ef1 upstream.
+commit ade85ceef46892425a08f3ee52ca06729ee4922e upstream.
 
-In ucsi_init(), ucsi->connector is assigned only after the
-UCSI_SET_NOTIFICATION_ENABLE command completes. But once that command
-is sent, the PPM is free to raise a connector change notification at
-any time, which is handled through:
+INSN_CONFIG_SET_GATE_SRC reads the mode register of the counter/timer,
+is meant to clear the External Gate Enable bit, sets it again if the
+external gate was asked for, and writes the register back.  The mask lacks
+its '~': all the bits but EGE are cleared instead.  So
 
-    ucsi_notify_common() -> ucsi_connector_change()
+ - the external gate can be enabled but never be disabled again, and
+ - the instruction wipes the mode (continuous or single cycle, external
+   output, count and trigger enables, retrigger, duty cycle) which
+   INSN_CONFIG_SET_COUNTER_MODE has programmed: the timer silently falls
+   back to a single cycle pulse.
 
-ucsi_connector_change() indexes into ucsi->connector to get the
-connector and schedule its work item. If this notification arrives
-before ucsi_init() reaches the "ucsi->connector = connector;" line,
-ucsi->connector is still NULL and the driver crashes dereferencing it.
+With the right mask, the instruction only changes the gate bit.  An
+application which sets the gate source after the counter mode now keeps
+the mode it has asked for.
 
-Fix this by setting ucsi->connector right after the connectors are
-registered, before notifications are enabled, so it is always valid
-by the time a connector change event can be delivered. Also clear
-ucsi->connector in the err_unregister path so it isn't left pointing
-at freed memory if a later step in ucsi_init() fails.
-
-Fixes: 0482c34ec6f8 ("usb: ucsi: Fix ucsi->connector race")
+Fixes: a8c66b684efa ("staging: comedi: addi_apci_1500: rewrite the subdevice support functions")
 Cc: stable <stable@kernel.org>
-Signed-off-by: Uttkarsh Aggarwal <uttkarsh.aggarwal@oss.qualcomm.com>
-Reviewed-by: Peter Chen <peter.chen@oss.qualcomm.com>
-Reviewed-by: Heikki Krogerus <heikki.krogeurs@linuc.intel.com>
-Link: https://patch.msgid.link/20260929092939.1806907-1-uttkarsh.aggarwal@oss.qualcomm.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Josef Bacik <josef@toxicpanda.com>
+Link: https://patch.msgid.link/20261027-llm-char-misc-comedi-v1-2-1899771ee15b@linuxfoundation.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/typec/ucsi/ucsi.c |   10 +++++++++-
- 1 file changed, 9 insertions(+), 1 deletion(-)
+ drivers/comedi/drivers/addi_apci_1500.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/usb/typec/ucsi/ucsi.c
-+++ b/drivers/usb/typec/ucsi/ucsi.c
-@@ -2041,6 +2041,14 @@ static int ucsi_init(struct ucsi *ucsi)
- 			goto err_unregister;
- 	}
+--- a/drivers/comedi/drivers/addi_apci_1500.c
++++ b/drivers/comedi/drivers/addi_apci_1500.c
+@@ -696,7 +696,7 @@ static int apci1500_timer_insn_config(st
+ 			return -EINVAL;
  
-+	/*
-+	 * Set ucsi->connector before enabling notifications. A connector
-+	 * change event can be handled as soon as the notifications are
-+	 * enabled below, and ucsi_connector_change() indexes into
-+	 * ucsi->connector, so it must not be NULL at that point.
-+	 */
-+	ucsi->connector = connector;
-+
- 	/* Enable all supported notifications */
- 	ntfy = ucsi_get_supported_notifications(ucsi);
- 	command = UCSI_SET_NOTIFICATION_ENABLE | ntfy;
-@@ -2048,7 +2056,6 @@ static int ucsi_init(struct ucsi *ucsi)
- 	if (ret < 0)
- 		goto err_unregister;
- 
--	ucsi->connector = connector;
- 	ucsi->ntfy = ntfy;
- 
- 	mutex_lock(&ucsi->ppm_lock);
-@@ -2062,6 +2069,7 @@ static int ucsi_init(struct ucsi *ucsi)
- 	return 0;
- 
- err_unregister:
-+	ucsi->connector = NULL;
- 	for (con = connector; con->port; con++)
- 		ucsi_unregister_port(con);
- 	for (i = 0; i < ucsi->cap.num_connectors; i++)
+ 		val = z8536_read(dev, Z8536_CT_MODE_REG(chan));
+-		val &= Z8536_CT_MODE_EGE;
++		val &= ~Z8536_CT_MODE_EGE;
+ 		if (data[1] == 1)
+ 			val |= Z8536_CT_MODE_EGE;
+ 		else if (data[1] > 1)
 
 
