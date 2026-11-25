@@ -1,52 +1,59 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=185.128.210.58
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=91.227.220.155
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795628171;
-	b=AU+k6QBGZXf06VwXsz2jFJiZwN2Q2/Ct0Ifh58jnAaEDrAVMKiBfRNvstqrkr0FySo9K
-	 p69iReYwanvnaPM4fZkw1BCF1aYGo9iJYP9No1Y2gbxq70YSSFHTEqoM0VDweAfZSnj90
-	 WdD5cUhXLrjT82i3SiQDshowkVSMQ/TSzm/bHawR8QNSD8AfrOmT7MmJ+Qd/cOXaKCfCb
-	 PlecUZYqEBicHcN1gQvTuR1+PyUFpgWvIH3xLN+ZjoPtuY2NYOYESzSDr3BbNgDo5hmKN
-	 XbOQ8waxayub1n6RDrUvwblbI6cnJIuyOWcGBf7hSdkrjjspsghJrWSCg7FzT2RGzWg==
+	t=1795628812;
+	b=iCUP7r+3RqoO9ki6orcHPMkhk148FC4xsW0kHKOevy9gjzG8FovFIUJbKfRlTikb9oPV
+	 eIA5MWgxPL7++NkM21+naBLXEX/CewlHYAXyNmtpG54GKZcAU6O9eeh6wF8bA3VxFA3fV
+	 ey5tyehebaYQvUcglBm0jfVQTsd8SvjYbC8UipJpYzxzc6TDGt0EVdAXV6PZx0tR9PHf5
+	 xWChJcazlPxIx8b9t84ITc6y2OkHs36FybNJVoQAWYISv2K1Os8wUC1kt8cuUNGfPJwkh
+	 dE/0qmabIXh0Vc7f/KyNFPVRN0z8Ye+O/cn4lU2I+DXfWO5tqvWpogaaXJM9wOIjqYg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795628171;
-	h=DMARC-Filter:DKIM-Signature:Date:From:To:Cc:Subject:Message-ID:
-	 References:MIME-Version:Content-Type:Content-Disposition:
-	 Content-Transfer-Encoding:In-Reply-To;
-	bh=377pTLSGSXrscJCII3JdwjfQC2zfQbvXJ8yg35cPLEM=;
-	b=JWhKG5PP2lC3RRzApchRL5bUvtX66gTneSRBCKHLiZLifA1zCWGB+UDBJhzWxt1KeZCk
-	 53hsfGaDkviZr9s6pIyZmwMgo5tTi/rVSv3/nJchfwFa0jtgYntHLthwbJk/g0I44MBt+
-	 gTWdTfSnJRZT6I4L9uLpYuIOotSZnKMTtb0ZaVZN3C361S8Ww0zxQzfevh9YTQWpC+5aD
-	 WA5wySKzn+o5nQYfBs/WquK27fY5BkEopM+Fphbvpw+oPTPm4MJjtNgMeZckbO0CC/Swe
-	 BKRFvwKJZepTEzNw3Cwzb89s0uPzwW1rw2sksXqcobSQOS+PpRZ1rArfGXRWiAE5SMw==
+	a=rsa-sha256; c=relaxed/relaxed; t=1795628812;
+	h=DMARC-Filter:Date:DKIM-Signature:From:To:Cc:Subject:Message-ID:
+	 Mail-Followup-To:References:MIME-Version:Content-Type:
+	 Content-Disposition:In-Reply-To;
+	bh=Ygo03uIlk4kdcjHf0vuPvvy+UzzYe9zFGhqQ5pIQmyE=;
+	b=axyjfNz7p854DsRMr54p2bjx6Ni+W6sQOHrRglzphbAuO42m3uCWvfw6AbYZ4vPnYoZN
+	 NTmjIB/BWfjVRTGyAyQEezJYb+PbA+R3ikz8rBWqqVKYSSc8++cQ1wXYGK9Mi8ecCGE5Q
+	 GupsgQ4wKcRexLh0rYRjBl6McpjV/Lx/JlZ8lNg6im0mUVMMvYZ9K7D/gQE8TYtALloR3
+	 Lppa5f8CnHySS3cTfBwz1FGSuJIynkKM/blGIjyrp33hvf6loN3rXn6rtR4in/xa9WQkK
+	 oiC3JxWG/6m3AXyACvJKE1PTbKQsc6GwbwTpf4uPQ569jcEdDrfmO6RYOlc72I214Kg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=librecast.net;
-	spf=pass smtp.mailfrom=librecast.net;
-	dkim=pass header.d=librecast.net header.i=@librecast.net header.a=rsa-sha256 header.s=2026110900 header.b=L6s36W+Z;
-	arc=none smtp.remote-ip=185.128.210.58
-Received: from bregans-0.gladserv.net (bregans-0.gladserv.net [185.128.210.58])
+	dmarc=pass header.from=mareichelt.com;
+	spf=pass smtp.mailfrom=mareichelt.com;
+	dkim=pass header.d=mareichelt.com header.i=@mareichelt.com header.a=rsa-sha256 header.s=202107 header.b=DWFE33A0;
+	arc=none smtp.remote-ip=91.227.220.155
+Received: from mail.antaris-organics.com (mail.antaris-organics.com [91.227.220.155])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange ECDHE (prime256v1) server-signature ECDSA (prime256v1) server-digest SHA256)
+	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 577B2606A31E;
-	Wed, 25 Nov 2026 17:36:09 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 577B2606A31E
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=librecast.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=librecast.net
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 147E7606A321
+	for <patches@lists.linux.dev>; Wed, 25 Nov 2026 17:46:51 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 147E7606A321
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=mareichelt.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=mareichelt.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=librecast.net header.i=@librecast.net header.a=rsa-sha256 header.s=2026110900 header.b=L6s36W+Z
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
-	d=librecast.net; s=2026110900; h=In-Reply-To:Content-Transfer-Encoding:
-	Content-Type:MIME-Version:References:Message-ID:Subject:Cc:To:From:Date:
-	Sender:Reply-To:Content-ID:Content-Description:Resent-Date:Resent-From:
-	Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID:List-Id:List-Help:
-	List-Unsubscribe:List-Subscribe:List-Post:List-Owner:List-Archive;
-	bh=377pTLSGSXrscJCII3JdwjfQC2zfQbvXJ8yg35cPLEM=; t=1795628169; x=1796492169; 
-	b=L6s36W+ZNuXu4T1x2mZXXvNcWriDj32AnoVvWg+UemwD3P0nxANI1Mj5q1qRqw1VRXHTc+dmqMu
-	vnG/UvaK8Zwyi4cU8q6bPTECP7qrgv674wUmAqO2mYMI4uFKgzxop24rMlAA6i/o17QJGg+eOdB/4
-	Hqx4xw1zn1WP2KmPGKNKMatFI1n3zDMrCMAaI+DEktP0m039oD9MyuAE97EdrMTWW1I9uSl5fjgjf
-	9tQuMAcOSg58JVNqjq5DNjTMyXnNv/qWeaWUD5BRQGSZeBAGJNIy6n2SF8ZnhbnMHsny1mSRk0x47
-	F7YwZ+i61lG3+HpQbrg4qbs/gIXsWLcdMc6w==;
-Date: Wed, 25 Nov 2026 18:36:02 +0100
-From: Brett A C Sheffield <bacs@librecast.net>
+	dkim=pass (2048-bit key, unprotected) header.d=mareichelt.com header.i=@mareichelt.com header.a=rsa-sha256 header.s=202107 header.b=DWFE33A0
+Date: Wed, 25 Nov 2026 18:46:42 +0100
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=mareichelt.com;
+	s=202107; t=1795628803;
+	bh=Ygo03uIlk4kdcjHf0vuPvvy+UzzYe9zFGhqQ5pIQmyE=;
+	h=Date:From:To:Cc:Subject:Message-ID:Mail-Followup-To:References:
+	 MIME-Version:Content-Type:Content-Disposition:In-Reply-To:date:
+	 author:from:to:subject:message-id:in-reply-to:references:
+	 mail-followup-to:openpgp:mime-version:content-type:
+	 content-transfer-encoding:author:from:subject:date:to:cc:
+	 resent-author:resent-date:resent-from:resent-sender:resent-to:
+	 resent-cc:resent-reply-to:resent-message-id:in-reply-to:references:
+	 mime-version:content-type:content-transfer-encoding:
+	 content-disposition:content-id:content-description:message-id:
+	 mail-followup-to:openpgp;
+	b=DWFE33A0gw8qIbWy3Lds1OKbdPjABZua/yF/Cx0ODVD67/XD5QTfBVG9laKvTKktD
+	 +DgxDs+1hYKcgSL2oCaYyNf+y2NogV8+5S/+EZck1kGkVW6SR0YQsXi49omrh84fS6
+	 f6tTRn021XUQbxgo7d8HIzopHBBb4uSkLjx1NuJ1SjxnWj9g+hGiAIxY42MBlpH2Hk
+	 vpi2uvnPiG5gj9Zt+b4ZnioEsC/Si82URmTnMMY+sRYY2nbctHmgRLTRVrXryrRrpm
+	 P8Vyxo+7utFrg/SJ96ftQGHCxsy1qokF50NjHpyOwV7NoUUfqT/s6McxZwwCPGqzxn
+	 AgOQYqdRSsIpg==
+From: Markus Reichelt <lkt+2023@mareichelt.com>
 To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Cc: stable@vger.kernel.org, patches@lists.linux.dev,
 	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org,
@@ -56,11 +63,18 @@ Cc: stable@vger.kernel.org, patches@lists.linux.dev,
 	sudipm.mukherjee@gmail.com, rwarsow@gmx.de, conor@kernel.org,
 	hargar@microsoft.com, broonie@kernel.org, achill@achill.org,
 	sr@sladewatkins.com
-Subject: Re: [PATCH 6.18 000/990] 6.18.66-rc1 review
-Message-ID: <awccggbZzLcs9f46@karahi.librecast.net>
-References: <20261125143822.072087159@linuxfoundation.org>
- <awcOeGCwL3jSzG5f@karahi.librecast.net>
- <2026112522-prankish-audience-6229@gregkh>
+Subject: Re: [PATCH 7.3 0000/1005] 7.3.7-rc1 review
+Message-ID: <20261125174642.GD32322@pc21.mareichelt.com>
+Mail-Followup-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+	stable@vger.kernel.org, patches@lists.linux.dev,
+	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org,
+	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org,
+	patches@kernelci.org, lkft-triage@lists.linaro.org,
+	pavel@nabladev.com, jonathanh@nvidia.com, f.fainelli@gmail.com,
+	sudipm.mukherjee@gmail.com, rwarsow@gmx.de, conor@kernel.org,
+	hargar@microsoft.com, broonie@kernel.org, achill@achill.org,
+	sr@sladewatkins.com
+References: <20261125143821.729802100@linuxfoundation.org>
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Post: <mailto:patches@lists.linux.dev>
@@ -70,61 +84,22 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <2026112522-prankish-audience-6229@gregkh>
+In-Reply-To: <20261125143821.729802100@linuxfoundation.org>
 
-On 2026-11-25 18:10, Greg Kroah-Hartman wrote:
-> On Wed, Nov 25, 2026 at 05:36:08PM +0100, Brett A C Sheffield wrote:
-> > On 2026-11-25 15:22, Greg Kroah-Hartman wrote:
-> > > This is the start of the stable review cycle for the 6.18.66 release.
-> > > There are 990 patches in this series, all will be posted as a response
-> > > to this one.  If anyone has any issues with these being applied, please
-> > > let me know.
-> > > 
-> > > Responses should be made by Fri, 27 Nov 2026 14:36:57 +0000.
-> > > Anything received after that time might be too late.
-> > > 
-> > > The whole patch series can be found in one patch at:
-> > > 	https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.18.66-rc1.gz
-> > > or in the git tree and branch at:
-> > > 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.18.y
-> > > and the diffstat can be found below.
-> > 
-> > Similar build failure as for 6.12.120-rc1:
-> > 
-> >   LD [M]  drivers/gpu/drm/amd/amdgpu/amdgpu.o
-> >   AR      drivers/gpu/built-in.a
-> >   AR      drivers/built-in.a
-> > make[1]: *** [/usr/src/linux-stable-rc/Makefile:2051: .] Error 2
-> > make: *** [Makefile:248: __sub-make] Error 2
-> > 
-> > Reverting 4d1bfec69f617f91af00b5cb9b86cae8850049ab fixes the build.
+* Greg Kroah-Hartman <gregkh@linuxfoundation.org> wrote:
+
+> This is the start of the stable review cycle for the 7.3.7 release.
+> There are 1005 patches in this series, all will be posted as a response
+> to this one.  If anyone has any issues with these being applied, please
+> let me know.
 > 
-> Again, can you show the real error?
+> Responses should be made by Fri, 27 Nov 2026 14:36:53 +0000.
+> Anything received after that time might be too late.
 
-fs/nfs/nfs4proc.c: In function ‘nfs4_proc_unlck’:
-fs/nfs/nfs4proc.c:7331:24: error: variable ‘cbnl’ has initializer but incomplete type
- 7331 |                 struct cb_notify_lock_args cbnl = { .cbnl_valid = false };
-      |                        ^~~~~~~~~~~~~~~~~~~
-fs/nfs/nfs4proc.c:7331:54: error: ‘struct cb_notify_lock_args’ has no member named ‘cbnl_valid’
- 7331 |                 struct cb_notify_lock_args cbnl = { .cbnl_valid = false };
-      |                                                      ^~~~~~~~~~
-fs/nfs/nfs4proc.c:7331:67: error: excess elements in struct initializer [-Werror]
- 7331 |                 struct cb_notify_lock_args cbnl = { .cbnl_valid = false };
-      |                                                                   ^~~~~
-fs/nfs/nfs4proc.c:7331:67: note: (near initialization for ‘cbnl’)
-fs/nfs/nfs4proc.c:7331:44: error: storage size of ‘cbnl’ isn’t known
- 7331 |                 struct cb_notify_lock_args cbnl = { .cbnl_valid = false };
-      |                                            ^~~~
-fs/nfs/nfs4proc.c:7335:33: error: ‘struct nfs_client’ has no member named ‘cl_lock_waitq’; did you mean ‘cl_rpcwaitq’?
- 7335 |                 __wake_up(&clp->cl_lock_waitq, TASK_NORMAL, 0, &cbnl);
-      |                                 ^~~~~~~~~~~~~
-      |                                 cl_rpcwaitq
-fs/nfs/nfs4proc.c:7331:44: error: unused variable ‘cbnl’ [-Werror=unused-variable]
- 7331 |                 struct cb_notify_lock_args cbnl = { .cbnl_valid = false };
-      |
+7.3.7-rc1 compiles on x86_64 (Xeon E5-1620 v2, Slackware64-15.0),
+and boots & runs on x86_64 (Xeon Gold 6142, Slackware64-current).
+No regressions observed during boot & my custom tests.
 
--- 
-Brett Sheffield (he/him)
+Tested-by: Markus Reichelt <lkt+2023@mareichelt.com>
