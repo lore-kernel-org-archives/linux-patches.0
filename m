@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795624968;
-	b=2nbZjL7Ip98ra8cPAEhPzMZo9nKnpAPbEepzdxpBsEx3+nKcUYdDi/7n1HkB+5FhaJRN
-	 5OS1TP8J4Fx4/PMnEugqfcDmc40YE/SAiLtjKwd1q+qIme2nIvUXtfya0m5aXKBthkvzo
-	 vjIzhsOnXEFq/o/3pBRBE0yZYb+yy1cYYNNF8XUWv5RDVTmMVWvedPcTss4hICqvvP4qP
-	 znpL+6bAuEBspdCoI/Y9tFGDmK7uA922tlX0H96ynPv+s9YtD20BsTrhwnicSZm5geUEl
-	 l87tML6cbbBYp5uAi+kcJVtNnx5PV3HSDlxCFLkZrn52rvzz2ktYmE1t4YwkguzteNg==
+	t=1795624972;
+	b=MDAZcna6TTwEVq1yBrcCEuSnRNf4EGNBd7V1AnynkPWhLjBdAPRUeogSsInQr5SAyhh0
+	 iniEDX5SPA0JtssiP4mY/6uzkSwyJz4iMFiluwomGRYfuf9w/klv7wMXflGAlP6vWw2Xl
+	 IrdNA3Z7V2OCb4wEFYmLMwYFmaIdX/7tNhyZrB54ULNPJjjo1aBJWJNYnbQOAEDo1Mi8+
+	 xY5Y9SSaM3MosakEjdiRWeOq515oQimEy4JbuE0F5VvSokoZP3McPhzEx/xcL1gvwGzm5
+	 y4tCTN8x3+8nEV+APYQV9mW/9yQi0e5SXAn6JZK5CrBqCaQ39LIqJDlJKynGQi/VwVw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795624968;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795624972;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=TfDFY69S9o05OHDfRDLolt8MrjTEeyzGGRaD/0nFkIk=;
-	b=IFqvePDBbIMhtolLbZkhCF7k7bTa/SGRh0/rRJxKvdGxU0tBhfWgmQUmRA0mQO6QfPYv
-	 Mt8rzFcQg+vjyvSJlcvhaXMqHkBExJhDZUm/FoaquHw4aHpCc3i3Y/sXMesNhDrNMAqeP
-	 vJTDswihuS5b7y2McRUorLKZRP+PlhoWHWEKpWyUQGhCmtOgISZAp6iFjkaCkZE59hOUO
-	 qCnqMu867Gm8WmVHYiwA40zMiGQnReU8ZJYUE7siBSdbNC44I+pJN+0hO9Uq6UBfcYVR+
-	 qwfJALNnHBgrcU007K8PS8EoJErdrOK4GzMwSZWOEJ7dyOy51KopktI5a/6uSOEcVMQ==
+	bh=QRcUuRcvSR+lMEpaMOsYv3ot6mLtoZmhVIfLsML33FY=;
+	b=O/PYmAk40syVXYBNq/juGAxkbJW1SsQpXIb3fiOj0Pdl2eOP5re0v2zrWyXTql4pNSrX
+	 OeYRYWJZNRKtgL7soDoR+xI743x+USFmcuNpl3sV02m6Rkoy+xef05BLdQ3TDY9yBKpsT
+	 SjCQWZ6RXkuL7MHrnfl2ds/yY4HskU7MZKQaBMUtlBjgPH3D/z9YDjZ5SPklwNKso3adk
+	 Ji3J7lgHaXOOM2L7utMhUAEgg6pnv/CUZMCwjiQ3Hs1YB5FTGIASxG3+PFNeQ+6jwoRoN
+	 o2vRVYJ70yqBkpixNZwrDnyU4kXjiXLn0MIIcbKJGrmQGVycUasAwI8o1tefmF6bDIw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=LhcYxkmv;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=uRc3Rjmq;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CCDB6606A31E;
-	Wed, 25 Nov 2026 16:42:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1EA95606A31E;
+	Wed, 25 Nov 2026 16:42:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=LhcYxkmv
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ED3F31F000C4;
-	Wed, 25 Nov 2026 16:42:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=uRc3Rjmq
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1F4C71F000C0;
+	Wed, 25 Nov 2026 16:42:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795624968;
-	bh=TfDFY69S9o05OHDfRDLolt8MrjTEeyzGGRaD/0nFkIk=;
+	s=korg; t=1795624971;
+	bh=QRcUuRcvSR+lMEpaMOsYv3ot6mLtoZmhVIfLsML33FY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=LhcYxkmvNEldtwYC3CkoktOH38YcYoMyQYas/+1yYwW5cL7JeV3IJO6o/WXiUHEU3
-	 wApAPLYIVlI0ZyGFTl68756QREZn7grxYNoFfZoO3tDX/iYrZ89hGK4dB9g50ENqDU
-	 5K+niRFp9yLiEF8vog285L3fdurOyJ21RbGgC+48=
+	b=uRc3Rjmq4xh9XECNqKONZNat9EHUDFT04J8Bq+FLbt522XvBOVWFgI+oEu2DUtrbb
+	 nVvUj8vs3UmnmP9Og70jmO8NKhXX/qRviki3qCxpe3rwBDc7FVVIs2hjXj4KLEdD4j
+	 Xc1DT4lkhQ5pggoYsIh/31whbqXzMkQ5zpAta3Qg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jude Gyimah <jude.gyimah87@gmail.com>,
-	Takashi Iwai <tiwai@suse.de>,
+	Jan Beulich <jbeulich@suse.com>,
+	Juergen Gross <jgross@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 361/816] ALSA: aw2-alsa: select SND_PCM
-Date: Wed, 25 Nov 2026 15:31:49 +0100
-Message-ID: <20261125143857.554158160@linuxfoundation.org>
+Subject: [PATCH 6.12 362/816] Xen/gnttab: improve error handling in gnttab_dma_{alloc,free}_pages()
+Date: Wed, 25 Nov 2026 15:31:50 +0100
+Message-ID: <20261125143857.577262246@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143849.205329330@linuxfoundation.org>
 References: <20261125143849.205329330@linuxfoundation.org>
@@ -68,52 +68,78 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jude Gyimah <jude.gyimah87@gmail.com>
+From: Jan Beulich <jbeulich@suse.com>
 
-[ Upstream commit bca568589ad118a9b0bac086760baee2a41976a5 ]
+[ Upstream commit 2b66f2cc753243a6adb3e9a5c038b0fc59ba7ec9 ]
 
-Several stanzas in sound/pci/Kconfig select SND_PCM.
-SND_AW2 selects nothing at all.
+Both decrease-reservation and populate-physmap can succeed partially. For
+the former this may be pretty unlikely, but clearly the latter can hit
+both out-of-memory conditions in the hypervisor or denial because of the
+allocation exceeding the domain's allowance (there's no interaction with
+the balloon driver here either).
 
-aw2-alsa calls snd_pcm_new, which sound/core/pcm.c provides under SND_PCM.
+In gnttab_dma_free_pages() we simply can't give back to the system what
+hasn't been re-filled with backing memory. For gnttab_dma_alloc_pages()
+both parts of the overall region need dealing with differently.
 
-  aw2-alsa.c:(.text+0x554): undefined reference to `snd_pcm_new'
+While no present caller of gnttab_dma_free_pages() checks its return
+value, also don't use -EFAULT there: It really is an out-of-memory
+condition. (In gnttab_dma_alloc_pages() -EFAULT doesn't look quite right
+either, but I couldn't think of a clearly better error code there.)
 
-4 symbols are undefined in all.
-
-The driver can be built into vmlinux while SND_PCM is a module, in which
-case the symbols are not there at link time.
-
-Select rather than depend on: SND_PCM has no prompt of its own and is only
-ever enabled by a select, so a depends on would leave SND_AW2
-unselectable.
-
-Reproduced on v7.3, arm64, with CONFIG_SND_AW2=y and CONFIG_SND_PCM=m.
-
-Found with kreach, a static check that compares what Kconfig allows
-against the symbols the compiled objects actually reference.
-
-Fixes: 98f2a97f207a ("[ALSA] Emagic Audiowerk 2 ALSA driver.")
-Signed-off-by: Jude Gyimah <jude.gyimah87@gmail.com>
-Link: https://patch.msgid.link/20261113064614.15045-1-jude.gyimah87@gmail.com
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Fixes: 9bdc7304f536 ("xen/grant-table: Allow allocating buffers suitable for DMA")
+Signed-off-by: Jan Beulich <jbeulich@suse.com>
+Reviewed-by: Jan Beulich <jbeulich@suse.com>
+Signed-off-by: Juergen Gross <jgross@suse.com>
+Message-ID: <20261110095605.369848-3-jgross@suse.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/pci/Kconfig | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/xen/grant-table.c | 25 ++++++++++++++++++++++++-
+ 1 file changed, 24 insertions(+), 1 deletion(-)
 
-diff --git a/sound/pci/Kconfig b/sound/pci/Kconfig
-index 787868c9e91b0..cb8af8b54b280 100644
---- a/sound/pci/Kconfig
-+++ b/sound/pci/Kconfig
-@@ -141,6 +141,7 @@ config SND_AU8830
- 
- config SND_AW2
- 	tristate "Emagic Audiowerk 2"
-+	select SND_PCM
- 	help
- 	  Say Y here to include support for Emagic Audiowerk 2 soundcards.
- 
+diff --git a/drivers/xen/grant-table.c b/drivers/xen/grant-table.c
+index 51df0772f989d..90af7a9fd6cf4 100644
+--- a/drivers/xen/grant-table.c
++++ b/drivers/xen/grant-table.c
+@@ -1096,6 +1096,24 @@ int gnttab_dma_alloc_pages(struct gnttab_dma_alloc_args *args)
+ 	ret = xenmem_reservation_decrease(args->nr_pages, args->frames);
+ 	if (ret != args->nr_pages) {
+ 		pr_debug("Failed to decrease reservation for DMA buffer\n");
++		if (ret >= 0) {
++			/* Free the part where decrease didn't work. */
++			size_t done = ret << PAGE_SHIFT;
++
++			if (args->coherent)
++				dma_free_coherent(args->dev, size - done,
++						  args->vaddr + done,
++						  args->dev_bus_addr + done);
++			else
++				dma_free_wc(args->dev, size - done,
++					    args->vaddr + done,
++					    args->dev_bus_addr + done);
++
++			if (!ret) /* Nothing else to do? */
++				return -EFAULT;
++
++			args->nr_pages = ret;
++		}
+ 		ret = -EFAULT;
+ 		goto fail;
+ 	}
+@@ -1129,7 +1147,12 @@ int gnttab_dma_free_pages(struct gnttab_dma_alloc_args *args)
+ 	ret = xenmem_reservation_increase(args->nr_pages, args->frames);
+ 	if (ret != args->nr_pages) {
+ 		pr_debug("Failed to increase reservation for DMA buffer\n");
+-		ret = -EFAULT;
++		/* Can only free what has been re-filled. */
++		if (!ret)
++			return -ENOMEM;
++		if (ret > 0)
++			args->nr_pages = ret;
++		ret = -ENOMEM;
+ 	} else {
+ 		ret = 0;
+ 	}
 -- 
 2.53.0
 
