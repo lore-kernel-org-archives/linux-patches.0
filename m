@@ -1,53 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795619830;
-	b=hdyHh2HwNGgJbU71G+ENR/2aOJxBvqQJPk2Xdz9kgsonmkgfF5ZFHYlgv8tr9G+Rrli8
-	 wT+YbNHUq7f5yucyDP8u+w37/SBf8bt2Rks6we6/YXj8uwVWeRTn6MkjJiWSyn3NhC17m
-	 k/RToH7NgoA+PgqVRb/j+x2gk4bY/WJjLXVphxrW1b8PSsEQvuAv5mE0JvYJ60Qh5tfpg
-	 JaIKx5jmIOCOOt4kfsOnEoNygp3a7Y4VFaLzEE69r77k9SBQOhcxQSCEQclHjvgR25eR6
-	 rt8TloB7YVehVAnO8lGY3YMME3+5PalY7xOd5Css575lxVxbM2U9HjEzTMn9CDMNtkg==
+	t=1795619833;
+	b=aEE4lSxchM+hnO/nod+KmV4+xnK8FOJiWwwrJCtwvfAoGF2twj2UBlY34zhbCrHmDyk6
+	 W4zdCUtHYv25TWXBSdb/ZlVy46XbOgYWbnyRY2vSqXh3uoP8mMMknnlxlWKIlia38y2WC
+	 GevZgSbTSmfaQ07GE9u7paKfiemdIyokT4/EB+iA+M0LF9wVYsrB0ZrIUK2+0ez+CnYj/
+	 xsLuka7K9CamtAx47SP3hVkMrDNjgOq7WCg0fuUwZiJt1FYhrNWKfan3uZhpFqB/GR9uY
+	 1Fl38KLzANi3OVge8s3OqT4WOaH+i+PvkbzPSt+eUML/HZd4s2KbU2SAcTsopSHd4kg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795619830;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795619833;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=GdlJzTtBAq1PzkYH7MxZAWU8Esjt2X1Eu+1EQnTpHR0=;
-	b=oEBs+9M4RbcgQbT2zly/LEZz98dXLdgZznPFnH/mfIulGty3f0RAEyBtGUVLbGvNjq4n
-	 v7glNqzv/T80lmDrqIUUwQ2TJ8wkbpeSc8aC6khkpnnxZ3aWt4lqyAsq6iFqwqmO1mKPF
-	 AHIZWJKHkIRWeZD4HVK4xr3Vp9KqymYdRGLgt10yUwzFQW2yR7X4Pk8zjUMZfU48E/Bjv
-	 Vxvdlf1aViGAn/+kgF+6qDrafPwxoiEZ1dXI8+ReFEOO+okR0SWjCQsZA3m992xzOq/RA
-	 5KrLhX0pAsgGcGEp72VCCW8UkkGuazIT2Lj7WUnV+ObN7wkG7AywwjnKOeHb/J7cG1g==
+	bh=H6RHCQWpSlSHJyqxWm+8OXWemyOzl2CmBrfccYtuZaw=;
+	b=rZ48pUYj38GTzyf62Zx0R32I7hAFwls5byikV3iE191MkmGonrqRJWPixAteqjq+IuSp
+	 QOKxcS7UZGSWTdXFGeCZXcCDUeiLZSsUXU6Js+g2jxJYf2JXtcFz0P/N761d0vqR0MAA2
+	 PbRBLdiqt4bvN5evVS/fp+/OzlkfuhSOJSAt+eHcrQhRdyMDApNEUAdOowXD4pXu7FUV0
+	 +gPIzQPXrUneUVs8CNmpBv4anK3oCi4UzRz62ehA0bcOpRnLNRrlsA5vX9D1o/GL0sxhU
+	 3Ru8ZyTnsl/YSj6jVBWQHoJr9VCIQcYfpwj70lU29Hrg8vWrj2TYVoGmqIvV+No3I1w==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=L0z5KCQv;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="2GXd1/DK";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 27178606A330;
-	Wed, 25 Nov 2026 15:17:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5A245606A321;
+	Wed, 25 Nov 2026 15:17:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=L0z5KCQv
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4E8AD1F000C4;
-	Wed, 25 Nov 2026 15:17:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=2GXd1/DK
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A5CAC1F000EF;
+	Wed, 25 Nov 2026 15:17:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795619829;
-	bh=GdlJzTtBAq1PzkYH7MxZAWU8Esjt2X1Eu+1EQnTpHR0=;
+	s=korg; t=1795619833;
+	bh=H6RHCQWpSlSHJyqxWm+8OXWemyOzl2CmBrfccYtuZaw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=L0z5KCQvzT/SFIuFJklw9Qr+dZlQBjvRk+zh1Cu3L8rAt0OaQ/2A/19Bd1Z1MJpG0
-	 j6KzMxT6PJzPbMBG2TfnXUOWgN2W9Q3rMotx8Oc1IfyK6wIQ4jnzsoI56CulVdQI5U
-	 ubpA8wkjIWoJOxI1eDK876V8ZrRPKmqp8e+q26vo=
+	b=2GXd1/DKyPe3o1Hof0r+3BziurA8GM1+a90VwqKUsm7gaE3E7fkWAou3hLj/HZ2lA
+	 gAyKsfvjbCl/7d3q5teLy9bOzr44sFCq5qnSz29lbXBMCEfwJRE9zIw9l80nGg1jv3
+	 v8K+/LEpuSTXYWY7Vn42zGnzvUw8Xa+2W+HvBnwA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Balasubramani Vivekanandan <balasubramani.vivekanandan@intel.com>,
-	Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>,
-	Heikki Krogerus <heikki.krogerus@linux.intel.com>,
-	Johan Hovold <johan@kernel.org>
-Subject: [PATCH 7.3 0721/1005] software node: only let the owner release a managed node
-Date: Wed, 25 Nov 2026 15:34:19 +0100
-Message-ID: <20261125143838.647740346@linuxfoundation.org>
+	Josef Bacik <josef@toxicpanda.com>,
+	"Christian Brauner (Amutable)" <brauner@kernel.org>
+Subject: [PATCH 7.3 0695/1005] dcache: wait for a racing eviction of a secondary root
+Date: Wed, 25 Nov 2026 15:33:53 +0100
+Message-ID: <20261125143838.035237597@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143821.729802100@linuxfoundation.org>
 References: <20261125143821.729802100@linuxfoundation.org>
@@ -69,82 +67,76 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
+From: Josef Bacik <josef@toxicpanda.com>
 
-commit f8623ce596492d2e96ca57eeec992938d3d79f00 upstream.
+commit 649918e04e0ead9bfc861aacdd2e5b39b5bdf869 upstream.
 
-device_create_managed_software_node() creates a node whose lifetime is
-tied to the device it was created for. software_node_notify_remove() is
-called for every device that has the node as its fwnode (primary OR
-secondary) and, if the node is managed, unconditionally detaches it from
-that device and drops the creation reference.
+Commit e9895609cb7f ("wind ->s_roots via ->d_sib instead of ->d_hash")
+keeps a secondary root on ->s_roots until dentry_unlist() so that
+shrink_dcache_for_umount() can find one that another thread is evicting
+and wait for it. But do_one_tree() takes every root off the list before
+its dput() which breaks that:
 
-This breaks when the node is shared with another device. Example: the
-i2c-designware copies the parent's fwnode to the adapter's struct device.
-When the adapter is deleted, it releases the reference that belongs to
-the owner and the latter ends up with a dangling pointer.
+  thread A                              umount
+  dentry_kill(root), refcount is 0
+    lock_for_kill()
+      spin_trylock(->i_lock) fails
+      spin_unlock(->d_lock)
+                                        shrink_dcache_for_umount()
+                                          dget_dlock(root)
+                                          do_one_tree(root)
+                                            unlink_secondary_root(root)
+      spin_lock(->i_lock)
+                                            dput(root), refcount is 0
+                                              lock_for_kill()
+                                                trylock fails, waits
+      spin_lock(->d_lock)
+      refcount is 0 again, go on
+    lockref_mark_dead()
+    dentry_unlink_inode()
+      drops both locks
+                                                root is dead, give up
+                                          ->s_roots is empty, done
+                                        evict_inodes()
+                                        "Busy inodes after unmount"
+      iput()
 
-Record the device's "manager" and only perform the actual release when
-notify is called for that "owner" device.
+Thread A evicts without pinning the superblock. namespace_unlock() does
+that for old mountpoints after dropping namespace_sem, and a secondary
+root goes with its last child.
 
-Note that it was never the intention that managed software nodes would
-be shared, but descendants reusing ancestor firmware nodes is not
-uncommon and such use is hard to predict when allocating software nodes.
+So only take busy roots off the list. Leave the others to
+dentry_unlist() so that shrink_dcache_for_umount() finds them and waits
+for an eviction in progress. A root that becomes busy after the check is
+picked up again and taken off the list then.
 
-Reported-by: Balasubramani Vivekanandan <balasubramani.vivekanandan@intel.com>
-Closes: https://lore.kernel.org/all/20261009164241.923756-2-balasubramani.vivekanandan@intel.com/
-Fixes: 151f6ff78cdf ("software node: Provide replacement for device_add_properties()")
-Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
-Fixes: 0f485f88656a ("drm/xe/i2c: use device_create_managed_software_node()")
-Reviewed-by: Balasubramani Vivekanandan <balasubramani.vivekanandan@intel.com>
-Tested-by: Balasubramani Vivekanandan <balasubramani.vivekanandan@intel.com>
-Reviewed-by: Heikki Krogerus <heikki.krogerus@linux.intel.com>
-Cc: stable@vger.kernel.org
-Link: https://patch.msgid.link/20261102-swnode-only-owner-release-v1-1-ee4c9022a629@oss.qualcomm.com
-[ johan: drop temporary variable; skip clearing owner field;
-         mention reuse not intended in commit message ]
-Signed-off-by: Johan Hovold <johan@kernel.org>
+Fixes: 78db93943210 ("dcache: keep shrink_dcache_for_umount() making progress on busy roots")
+Cc: stable@vger.kernel.org # v7.2+
+Signed-off-by: Josef Bacik <josef@toxicpanda.com>
+Link: https://patch.msgid.link/20261030-work-dcache-ai-v1-2-cd6b86e0ccc7@kernel.org
+Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/base/swnode.c |    7 ++++---
- 1 file changed, 4 insertions(+), 3 deletions(-)
+ fs/dcache.c |    9 +++++++--
+ 1 file changed, 7 insertions(+), 2 deletions(-)
 
---- a/drivers/base/swnode.c
-+++ b/drivers/base/swnode.c
-@@ -29,6 +29,8 @@ struct swnode {
- 	struct fwnode_handle fwnode;
- 	const struct software_node *node;
- 	int id;
-+	/* Device the managed node's lifetime is tied to. */
-+	struct device *owner;
- 
- 	/* hierarchy */
- 	struct ida child_ids;
-@@ -37,7 +39,6 @@ struct swnode {
- 	struct swnode *parent;
- 
- 	unsigned int allocated:1;
--	unsigned int managed:1;
- };
- 
- static DEFINE_IDA(swnode_root_ids);
-@@ -1145,7 +1146,7 @@ int device_create_managed_software_node(
- 	if (IS_ERR(fwnode))
- 		return PTR_ERR(fwnode);
- 
--	to_swnode(fwnode)->managed = true;
-+	to_swnode(fwnode)->owner = dev;
- 	set_secondary_fwnode(dev, fwnode);
- 
- 	if (device_is_registered(dev))
-@@ -1208,7 +1209,7 @@ void software_node_notify_remove(struct
- 
- 	swnode_put(swnode);
- 
--	if (swnode->managed) {
-+	if (swnode->owner == dev) {
- 		set_secondary_fwnode(dev, NULL);
- 		swnode_put(swnode);
- 	}
+--- a/fs/dcache.c
++++ b/fs/dcache.c
+@@ -1816,8 +1816,13 @@ static void do_one_tree(struct dentry *d
+ 	d_walk(dentry, dentry, umount_check);
+ 	spin_lock(&dentry->d_lock);
+ 	__d_drop(dentry);
+-	/* A busy root survives the dput() below so don't leave it on ->s_roots. */
+-	if (unlikely(!hlist_unhashed(&dentry->d_sib)))
++	/*
++	 * A busy root survives the dput() below so don't leave it on ->s_roots.
++	 * An idle one stays until dentry_unlist() so that umount can wait for
++	 * a racing eviction, see lock_for_kill().
++	 */
++	if (unlikely(dentry->d_lockref.count > 1 &&
++		     !hlist_unhashed(&dentry->d_sib)))
+ 		unlink_secondary_root(dentry);
+ 	spin_unlock(&dentry->d_lock);
+ 	dput(dentry);
 
 
