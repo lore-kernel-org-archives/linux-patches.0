@@ -1,55 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795619815;
-	b=aoQsEoiD4kC7tPgeqltTFr52w5y5ldv8gXokO6uPFuHU2f9NTUfYM36Qv8TequDXpAdG
-	 Va0Wvugs6kqeHeL9iUnNTsIteCI5FfP/1mMMK2a6X94foG6vg39v/aJiff3QWNxel9XgV
-	 gXcROGsuszotZ5D9Xprl4mGLfpouSXdaJctxwy1NrwkqQOIpsRgVy7qLit7bcE3qDP0yw
-	 qLSUeI9TYeNKYGzOG6o6pr+XyKl6TUuKMGKOyGZYbLixCdiy4UNwSMd/1MmdjOFNVPNxx
-	 xITh9ApSO5++gjaZAN82ytosGOHDJxQH9hx4Qt0n1igvEAW+hu5kx9gbTEvaeJHetcA==
+	t=1795619818;
+	b=anKzaLFJVIyDoNe7eFxRJsIlvYuPnrWAoOQ2iHF1mkZFFPoCizI/WntNNIKYuL2lfsRi
+	 JFxhAJr+1UHHigpa93Ai81ZIPGI9LQNBQbpxMvtqbWiq4bX/7QOcSrP7/CJowz4PDV9V2
+	 z8ObOb+EXUfJufxcHJ7q38/Tv1+ul4hIptUViEWzMI08Ii6Uo8iM6IarN9sqKuAT27I4h
+	 GokyjeT9yUzB3TaA3ldOfrbc0oeQE4dIr0i+9fk2P9CJ710kiHoghwysaqzzKm8f4fumc
+	 uQz3nq8HDlUkbBReqKZK10Nj3sJSbUaYolnJyBoBEpcTdYZLxFEY/TsiwHI+HTbKkFA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795619815;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795619818;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=JS6n3qEI6CrqJFVKLDHuTcQwx6v/PRqmf+uN7HAjfHU=;
-	b=1U1OFX8VRBHyxdzegMJDQAKn7sV+BNiFTlATYUBC7txSYYQv0yVjT9Z93VTGAaWqE8c1
-	 lRisghHXVl/8wZYOvEkri3IF2JwFYR/x9DvfNn3xTj59sh3p7yE1kZbX+uO4c7oR1KuTd
-	 vNdTkQymwMWLwnT2R3NAYgac9aLl1UJZqH72YobGZLfbQawmkVcRzVwU2QG58KGX+K6Wx
-	 O7NjjCXO9aQumv+tw4/gg2h5wfNVwSmsUF5hY/edWQU+Q7KqAMnHhM2HOCKScWnfKrUx9
-	 JELix39E9WbKZIHyTM3ujZOQ3egKeb7CGpnzEiKdx1o9N189lxYg2v0IFqZVNY59j/g==
+	bh=HsC9uju/Gsta4xzHSuZ7CYCO1lHI8IJxn1/uPYU1zfA=;
+	b=H/CQTksPdLuMYIJGPmtpzADzkFNKEx1pGKuGeOT6ge4FJll/m0j1du8rYUXpNt30+U7P
+	 AV+k43rooLpOQ3TgEgRItrPjrbzG84WaHj+g/nuhDUhqkZmEthxX7wUqdzHS8ttoW95cA
+	 yrh1f2MUJC+JhoT6owYk6UuDw+XzBR++3MI5Csr9oc8ngSWRke2ouG08OVnQnm5sxnlH/
+	 hDs/JCYIaNXW42VIn/NcOIHBlQwhNTo+Ki/hfXOR4i9IiUQgbL+I36w7LoQKGxRaQYRRw
+	 q43vbtme4b6vgJZXkjWRKUmpj2FaUkniq/Tn8FTItr6h3oObBRsI9i0XHg1G/Ttp/vQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=iZAHOyqx;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=R8WjNEYB;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5BF47606A323;
-	Wed, 25 Nov 2026 15:16:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E83E0606A329;
+	Wed, 25 Nov 2026 15:16:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=iZAHOyqx
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C13A31F000C0;
-	Wed, 25 Nov 2026 15:16:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=R8WjNEYB
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 43A1A1F000C0;
+	Wed, 25 Nov 2026 15:16:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795619814;
-	bh=JS6n3qEI6CrqJFVKLDHuTcQwx6v/PRqmf+uN7HAjfHU=;
+	s=korg; t=1795619817;
+	bh=HsC9uju/Gsta4xzHSuZ7CYCO1lHI8IJxn1/uPYU1zfA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=iZAHOyqxbkW32NfxlJNk8Sh2E3kfCpjfvV/BrGLRilDjVd4DqPvnv0Q+EE8Fvfyfr
-	 eUwl/Qk56U/d6sFtWZML8sX6l1K6pN6S4Oip0ENuU8AgoVJgEojT1kaRK56WZh8FN3
-	 QfbFtzxZUK5pX0QkY649bB+kIDufvR1nWInIhtcI=
+	b=R8WjNEYBy2WWNSqVf2u7o9xEhqViV3WlyVr3fg63VL2vy6+elqyik3RzggH1li1Fy
+	 Vgpa8F0ZRSSJW9jzL6jkZbQhWLc4yD8RNAX6dq0loqDgJRx5lPA/6EpRxkZEALR3hO
+	 BOHh/4+SJ6iEyE0qeOGcUsjJariZV0p/O12tXP0o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zak Brighton Knight <zakbrightonknight@gmail.com>,
-	Doug Smythies <dsmythies@telus.net>,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
-	Zhongqiu Han <zhongqiu.han@oss.qualcomm.com>,
-	Viresh Kumar <viresh.kumar@linaro.org>,
-	Christian Loehle <christian.loehle@arm.com>
-Subject: [PATCH 7.3 0716/1005] cpufreq: intel_pstate: Clear last written P-state value on suspend
-Date: Wed, 25 Nov 2026 15:34:14 +0100
-Message-ID: <20261125143838.529073198@linuxfoundation.org>
+	Li Zhaoxin <lizhaoxin04@baidu.com>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>
+Subject: [PATCH 7.3 0717/1005] cpufreq: intel_pstate: Use rdmsrq_safe() to read MSR_MISC_PWR_MGMT
+Date: Wed, 25 Nov 2026 15:34:15 +0100
+Message-ID: <20261125143838.553675351@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143821.729802100@linuxfoundation.org>
 References: <20261125143821.729802100@linuxfoundation.org>
@@ -71,70 +67,65 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+From: Li Zhaoxin <lizhaoxin04@baidu.com>
 
-commit 02e77af824d5be3a94fdd885835a352f90d24c5c upstream.
+commit 2c0e6f2858d235c99f7ba4621bd176cd67226f00 upstream.
 
-Preserving cpu->pstate.current_pstate across system suspend-resume
-cycles, when running in the passive mode with HWP disabled, is a mistake
-because its value from before system suspend may become stale after the
-subsequent system resume and in some cases it prevents MSR_IA32_PERF_CTL
-from being updated properly after system resume [1].
+Commit ed7cad0504e3 ("cpufreq: intel_pstate: Relocate platform
+preference check") moved the intel_pstate_platform_pwr_mgmt_exists()
+call to the beginning of intel_pstate_init(), right after the vendor
+check, so it now runs before "no_load" (intel_pstate=disable) and the
+other checks.
 
-Address this by clearing cpu->pstate.current_pstate after the governor
-has been stopped during system suspend.
+MSR_MISC_PWR_MGMT is model-specific and KVM does not emulate it. In a
+KVM guest using a CPU model listed in intel_pstate_cpu_oob_ids[] (for
+example "-cpu host" on Emerald Rapids), reading it raises #GP and the
+unchecked rdmsrq() emits a warning with a call trace on every boot, even
+with intel_pstate=disable:
 
-Fixes: 001c76f05b01 ("cpufreq: intel_pstate: Generic governors support")
-Fixes: 4adcf2e5829f ("cpufreq: intel_pstate: Add ->offline and ->online callbacks")
-Link: https://lore.kernel.org/linux-pm/20261027143725.3763827-1-zakbrightonknight@gmail.com/ [1]
-Reported-by: Zak Brighton Knight <zakbrightonknight@gmail.com>
-Reported-by: Doug Smythies <dsmythies@telus.net>
-Cc: All applicable <stable@vger.kernel.org> # 342d3a73c5db cpufreq: Force passing target frequency to driver during resume
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
-Tested-by: Zak Brighton Knight <zakbrightonknight@gmail.com>
-Reviewed-by: Zhongqiu Han <zhongqiu.han@oss.qualcomm.com>
-Acked-by: Viresh Kumar <viresh.kumar@linaro.org>
-Tested-by: Doug Smythies <dsmythies@telus.net>
-Tested-by: Christian Loehle <christian.loehle@arm.com>
-Link: https://patch.msgid.link/14150222.uLZWGnKmhe@rafael.j.wysocki
+  unchecked MSR access error: RDMSR from 0x1aa at rIP: 0xffffffffa4009342 (native_read_msr+0x2/0x50)
+  Call Trace:
+   <TASK>
+   intel_pstate_platform_pwr_mgmt_exists+0x3b/0x220
+   intel_pstate_init+0x1e/0x500
+   do_one_initcall+0x59/0x350
+   ...
+
+Before that commit, such guests typically returned from
+intel_pstate_init() earlier, either because of intel_pstate=disable or
+because intel_pstate_msrs_not_valid() failed on the zero ratios that
+KVM reports in MSR_PLATFORM_INFO by default, so the MSR was not read.
+
+Use rdmsrq_safe() and treat a failing read as "no OOB mode". The
+exception fixup already zeroes the result of a failed unchecked read,
+so apart from the warning going away there is no functional change.
+
+Fixes: ed7cad0504e3 ("cpufreq: intel_pstate: Relocate platform preference check")
+Cc: All applicable <stable@vger.kernel.org>
+Signed-off-by: Li Zhaoxin <lizhaoxin04@baidu.com>
+Link: https://patch.msgid.link/20261104070149.41393-1-lizhaoxin04@baidu.com
 Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/cpufreq/intel_pstate.c |   14 +++++++++++++-
- 1 file changed, 13 insertions(+), 1 deletion(-)
+ drivers/cpufreq/intel_pstate.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
 --- a/drivers/cpufreq/intel_pstate.c
 +++ b/drivers/cpufreq/intel_pstate.c
-@@ -3389,10 +3389,11 @@ static void intel_cpufreq_cpu_exit(struc
- 
- static int intel_cpufreq_suspend(struct cpufreq_policy *policy)
+@@ -3661,12 +3661,12 @@ static struct acpi_platform_list plat_in
+ static bool __init intel_pstate_platform_pwr_mgmt_exists(void)
  {
-+	struct cpudata *cpu = all_cpu_data[policy->cpu];
-+
- 	intel_pstate_suspend(policy);
+ 	const struct x86_cpu_id *id;
+-	u64 misc_pwr;
++	u64 misc_pwr = 0;
+ 	int idx;
  
- 	if (hwp_active) {
--		struct cpudata *cpu = all_cpu_data[policy->cpu];
- 		u64 value = READ_ONCE(cpu->hwp_req_cached);
- 
- 		/*
-@@ -3403,6 +3404,17 @@ static int intel_cpufreq_suspend(struct
- 		value &= ~HWP_DESIRED_PERF(~0L);
- 		wrmsrq_on_cpu(cpu->cpu, MSR_HWP_REQUEST, value);
- 		WRITE_ONCE(cpu->hwp_req_cached, value);
-+	} else {
-+		/*
-+		 * Invalidate the cached P-state value that may be stale when
-+		 * the governor is started again during resume and may prevent
-+		 * MSR_IA32_PERF_CTL from being updated.
-+		 *
-+		 * This does not require synchronization because the core
-+		 * prevents frequency updates for suspended policies from
-+		 * occurring.
-+		 */
-+		cpu->pstate.current_pstate = 0;
- 	}
- 
- 	return 0;
+ 	id = x86_match_cpu(intel_pstate_cpu_oob_ids);
+ 	if (id) {
+-		rdmsrq(MSR_MISC_PWR_MGMT, misc_pwr);
++		rdmsrq_safe(MSR_MISC_PWR_MGMT, &misc_pwr);
+ 		if (misc_pwr & BITMASK_OOB) {
+ 			pr_debug("Bit 8 or 18 in the MISC_PWR_MGMT MSR set\n");
+ 			pr_debug("P states are controlled in Out of Band mode by the firmware/hardware\n");
 
 
