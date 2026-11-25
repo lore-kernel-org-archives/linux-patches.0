@@ -1,42 +1,42 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795622645;
-	b=dWfIJAFJfVSKeH1AXJxDaiy/IFMtqCNyfnUM8HsxLnNGfswpI4SlRg0T+KfI81Yfo6qw
-	 ax8UmYWLt0YLZi9wP4OvONebAuEemte9tdBSrjsN+P1+Rz7FVy7Lofu1v4GydAdtA/4uX
-	 fBC6Jur503k/4D+asTi9sJzt4d0PI9HzZ5c8TrMdG8dgf2YUacKYNiAqpIedCBPRsl0kY
-	 8e4ernYTKq41q8S/7dn80KvdW9KkxpY0xMqvaIGvUkivBErHtjI3O8lx3M8LnMK4msj3v
-	 OnObOEaTBiVTzlfznRmNfj8FgOr/DcGkUYrKs1DW0fZ+Usj2WiO6qrwLbuAIrZLUHjg==
+	t=1795622648;
+	b=28ARHsrWWDYET841oVo+MUGsLQnSVsIrkwoa2drnqUsYPgdbP8xKyUuHIiqvFzaHS6Ih
+	 5/MXUGlFK4c2jdcFFieDC1mpyYs6W/DW5vN8fdFpPHwrf027VdKGtgXmFZFjHW92RPvQt
+	 iK6O15uksDpEDTNUEmGGPsQGuD2kjuuA5Tz6//kxFInn/d5myohY1EuITfe59kNCHLDwT
+	 13WA+/TY3hSpaDQh63pnZkc4pjlYYfXmmC8odxKO4qzlZcdibbks5UsB19EJMYrQpX7Rl
+	 ICSLfzPpXgiDeOSH1ebdSlksvD0MpjPyl5TBDG5bncMseVypmtdtVgh5gEY0Af2L9Bg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795622645;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795622648;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=6tDAorsmyNmukgf2n3ux9dLJulNtCiVf23/kZBrh3Dk=;
-	b=EGeMZ36A8CqRR/TtVEUQdLvR6GnY5N1DszIf/Ib3FZCXxmSHKuxN4fEs0kN83NF0CfVU
-	 Yh925GlLd73HxvyCrDNGEdP7mghYH51jd7IqyiCet09K66TuHAzGaLnZhlLHAw7jjm1Kl
-	 SIgpSbT1hFQZzgqFSFROSYpyK7Q6KyddqjsKxjElJ4LDrQH/XOsENOMO8H2BLpduigNNC
-	 DzBiFncVcxBjm7kZoWfia3J/tnPQwnS/9kWQMXH8/M5p7Qy5elVaEoRoXG2qe0NswN/3q
-	 QydsHoKGl4U3XLKhXJJHqMuaDMywBC73f+8g0G35epCsFACJ0hpYL/X8OwzMDX47Mow==
+	bh=13cQ3GvTFz9W+/NFCslsqvcCNssQcjfjLSu8vTVt4po=;
+	b=Hsbx3Kzj0gaIvuZZOYyj7e5FT5l4R/5M3KYLPH1IXFoH/1RbpjOmad53Tgt8nHRICg3v
+	 8wrikVw94Yf8CpElvWoE9/Z/L9L9xX9S9rBPSz+fc0U4JW0g54LwHQZImdmIASdwkrpNT
+	 XW/5rGroy6HPi9BMjvdqeHVBObuK6PDihU7gsApZnGfasIO0rmLB2f1uML/6lGIZnynnf
+	 iqq6lLG7DfP6O7RoL7vzGVlVqSug0awlKxJmz6HnV2wmsNpfo5gNgipyeFAcrO8GMepdX
+	 PPNC5XB2cCOBOr2CCaaM6mtrTt8wxxveM1wjChxd3LsK7qhhOsb5qcsYxCjvBqQxvDQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=arND6OQ6;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=j0HTufzY;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8E164606A32A;
-	Wed, 25 Nov 2026 16:04:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CDA02606A31E;
+	Wed, 25 Nov 2026 16:04:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=arND6OQ6
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 74F661F000CA;
-	Wed, 25 Nov 2026 16:04:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=j0HTufzY
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B243B1F000D8;
+	Wed, 25 Nov 2026 16:04:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795622645;
-	bh=6tDAorsmyNmukgf2n3ux9dLJulNtCiVf23/kZBrh3Dk=;
+	s=korg; t=1795622648;
+	bh=13cQ3GvTFz9W+/NFCslsqvcCNssQcjfjLSu8vTVt4po=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=arND6OQ6ep09LDglU6rsENOJdgnAZ2iLH3VSClhxI1HpO+EMwaiRagj3xAneHe9pi
-	 Nf5BDU4CciDFnoMoaaeWUPKDmidyM7mEngK2+sW2jn1kEa8aTcZ/QE9Q4A7Dx8rWq1
-	 oOgZUCHKIe/le5uoJLd6s8knIGWTGdMk3S8CFJ48=
+	b=j0HTufzYoL3SO47lBtR/5kdncxRenAa8vZtYSSRf/0oxICQ6bpqht21OaUny+7i6e
+	 UF32HWlP7tU35ycNv7C9EjZqgEU2al3dJUuoAYNSxhYL6O3/5HTXR3fZfluMcusnim
+	 tADiId04ek5Ae29i51WoTcHaFc8JkS7LaKDU0gLg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -44,9 +44,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Josef Bacik <josef@toxicpanda.com>,
 	Alexei Starovoitov <ast@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 604/990] bpf: Assume no bounds for buffers behind a tail call
-Date: Wed, 25 Nov 2026 15:32:51 +0100
-Message-ID: <20261125143836.240723672@linuxfoundation.org>
+Subject: [PATCH 6.18 605/990] bpf: Assume no bounds for a writable tp with tail calls
+Date: Wed, 25 Nov 2026 15:32:52 +0100
+Message-ID: <20261125143836.264568018@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143822.072087159@linuxfoundation.org>
 References: <20261125143822.072087159@linuxfoundation.org>
@@ -70,46 +70,42 @@ Content-Transfer-Encoding: 8bit
 
 From: Josef Bacik <josef@toxicpanda.com>
 
-[ Upstream commit 7fa323d77688e8b62b2f0bf6c3208a2c96d4a5e7 ]
+[ Upstream commit cd0490e671d70326d70c7d36e82388939fd9b071 ]
 
-The bpf_map_elem, bpf_sk_storage_map and sockmap iterators hand the key
-and the value of an element to the program as buffers.  The verifier notes
-how far a program reaches into them, and the iterator compares that with
-the map when the program is attached.  A program that does not touch the
-buffers passes.  It can tail-call another program of the same target,
-which gets the same context, and whose reach nobody compares with the
-map:
+A writable raw tracepoint hands a buffer to the program.  The verifier
+notes how far the program reaches into it, and bpf_probe_register() refuses
+a program that reaches further than the tracepoint allows.  A program that
+does not touch the buffer passes, and can tail-call one of its type that
+reads and writes behind it.
 
-  BUG: KASAN: slab-out-of-bounds in ___bpf_prog_run+0xa46a/0xae80
+Take a BPF_PROG_TYPE_RAW_TRACEPOINT_WRITABLE program with a tail call to
+reach as far as can be, as for the stack, the packet and the buffers of
+iterators.  It cannot be attached any more.  Plain raw tracepoint programs,
+for which the limit is zero, cannot get at the buffer, and a tail call
+stays within one type: they are left alone.
 
-The program array can be filled at any time, so there is nothing to look
-at when the link is made.  For the same reason a program with a tail call
-is taken to use the whole stack and the whole packet.  Take it to reach
-as far as can be into the buffers as well, so that these iterators refuse
-it with -EACCES.
-
-Fixes: d6c4503cc296 ("bpf: Implement bpf iterator for hash maps")
-Fixes: 5ce6e77c7edf ("bpf: Implement bpf iterator for sock local storage map")
-Fixes: 0365351524d7 ("net: Allow iterating sockmap and sockhash")
+Fixes: 9df1c28bb752 ("bpf: add writable context for raw tracepoints")
 Signed-off-by: Josef Bacik <josef@toxicpanda.com>
 Signed-off-by: Alexei Starovoitov <ast@kernel.org>
-Link: https://patch.msgid.link/20261017163745.3341787-26-alexei.starovoitov@gmail.com
-[ sashal: Moved the added max_rdonly_access = U32_MAX line into do_misc_fixups() in verifier.c, since this tree still has the fixups code there and not in a separate file. ]
+Link: https://patch.msgid.link/20261017163745.3341787-28-alexei.starovoitov@gmail.com
+
+[ sashal: Moved the added max_tp_access = U32_MAX lines into do_misc_fixups() in verifier.c, since this tree still has the fixups code there and not in a separate file. ]
+
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
  kernel/bpf/verifier.c | 2 ++
  1 file changed, 2 insertions(+)
 
 diff --git a/kernel/bpf/verifier.c b/kernel/bpf/verifier.c
-index ca27c14004ce3..13da4dd120d74 100644
+index 13da4dd120d74..dc7b4d0280f65 100644
 --- a/kernel/bpf/verifier.c
 +++ b/kernel/bpf/verifier.c
-@@ -23176,6 +23176,8 @@ static int do_misc_fixups(struct bpf_verifier_env *env)
- 			if (!allow_tail_call_in_subprogs(env))
- 				prog->aux->stack_depth = MAX_BPF_STACK;
+@@ -23178,6 +23178,8 @@ static int do_misc_fixups(struct bpf_verifier_env *env)
  			prog->aux->max_pkt_offset = MAX_PACKET_OFF;
-+			prog->aux->max_rdonly_access = U32_MAX;
-+			prog->aux->max_rdwr_access = U32_MAX;
+ 			prog->aux->max_rdonly_access = U32_MAX;
+ 			prog->aux->max_rdwr_access = U32_MAX;
++			if (prog->type == BPF_PROG_TYPE_RAW_TRACEPOINT_WRITABLE)
++				prog->aux->max_tp_access = U32_MAX;
  
  			/* mark bpf_tail_call as different opcode to avoid
  			 * conditional branch in the interpreter for every normal
