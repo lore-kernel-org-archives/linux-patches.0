@@ -1,52 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795620472;
-	b=LUq/cMdj1qalIXlzntW3A9iamVfvNuir1mD0J+qXgqT1q8d515Fd5CdoCh3fVYK+vJ68
-	 N5ZIRGCO4Hd5uyZW3hz8sdWIP6PF19jaXUMMG2TIQGolIP5AJ3Q8Dq8m0QPYj7SBDEZug
-	 MT6fI/jp9Ga19T+QJe5RbVnwWdBFQlHTiG5ZD1kj/RGsJ0Tqr8u2QcWyoDlWxm40I3LQm
-	 4S7Z3MH5W9miIZsiQLCyBPR+t+vqOI4voHOYoOv3xGiVfgG6i5oOWJ+lc/NQJeaIQMitd
-	 qwvA4CrSnnGOw0L5yIvfo6Q4zF3LeGa0AehrYwBO3lP15cPvkC5fXXB3QflmLMh729g==
+	t=1795620474;
+	b=vKZ2k+Nr2p++XSO022h2RBTfAeInUdTxkxzGF37dlHu0ewpUi7Os84CDoJrK8MZXHttH
+	 1mkMVrqQ9t/MwimY2AafgeOJsRTDKfavmdZuRygaQkIWsFYPftSHYI55SLtukgXB3CPG7
+	 4M3SQ2fHwJxJu6tC3jf8vuIIFLVS4IpNnLP9m1nQ1uYXpuKVdddiAkqvQuQOCguLzsYAo
+	 9Am1Fr1tjhV/4FyvZcvlV0Qy3A9Ny0BF/1qahUSgTguQJxj76eNsE7NkTSk0eLLwaIimM
+	 TanFgJjTwcnh6t2hI9HfyIh/PP6UanFof80Y+pgr2VhhAu1v+s5edbdwzSh8nBmgYPQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795620472;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795620474;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=Ir+wEsdnH3GGg0NzMwcdmyfridqiRzwAF6cT/lYlZfg=;
-	b=hj78VHXw3EmhLlxo/72KqaYW8hqDGgdxp58LDClS6VpsY3wg5v6Rzl0VkmXzVYGFweav
-	 wubOmEfYrVOF5qSqwmaYrmxAFs5gnx4m2QrPfjjoXhsMJ8WZQdPFIwc+s7+Bh+yU1Qu2U
-	 XjEolyhMh0o4+B7UVD5VkL9G7nVbfje65DZQSgVzatZwkrECL3B2UA6PgrD3K1PrtTMiV
-	 7uFDE87hqfT2psFNnyNf41uVaZ5mJ5bVLO16mhYoQQtH1uUUsJxyAEt4Ndy9lJwbZAcz3
-	 otqYLc1/smPXz5kyqyB6ym8xk6eq9rosR9WzNZXOaw9jRsdB7Vu8ty830NjjxPYZ66A==
+	bh=k/YneSbEumJlmAq0UcHUoqgiwz8b9otwGTogKSUn3/4=;
+	b=xMi04/gFxdopjyalkpHgK5jsHETFoZwXTsgzbfs95KnOOBDXX26T9lO5Wu3CTT4J1yCs
+	 iV3YcPNj1JPu0yT0t5KoCQNmrFEKI+dDfWOGVzuYir/FXzNGGrwie0wNV5PfQ1173BSQG
+	 EflQ946sYBp97pWWWjauRj4LcgP5ydQgdZSRODZeay/21+ikP8Zswk3Nfn3+wFhyahNss
+	 rrSp/z8/XobUnHaK9YKvq4xCilLuNIsq5W5hwmvHzUeF2XYxAQXcMrPtMY1uKPp6AEWg7
+	 LM57pQXQsGtt1ACbkF5BdBIoVYcReVTCppzd/oDY+OS2p37kKORDr8UvO/bxfWFhUmA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=1NssSrnV;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=saOig2Wa;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E8936606A31E;
-	Wed, 25 Nov 2026 15:27:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A8EF8606A326;
+	Wed, 25 Nov 2026 15:27:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=1NssSrnV
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ED0071F000C0;
-	Wed, 25 Nov 2026 15:27:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=saOig2Wa
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C12BC1F000C0;
+	Wed, 25 Nov 2026 15:27:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795620471;
-	bh=Ir+wEsdnH3GGg0NzMwcdmyfridqiRzwAF6cT/lYlZfg=;
+	s=korg; t=1795620474;
+	bh=k/YneSbEumJlmAq0UcHUoqgiwz8b9otwGTogKSUn3/4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=1NssSrnVvhxrxiWipfcW9HKyAN8Qwq+hEM7x7Q2J2dFnE10Dp78+06eU245KZk2tX
-	 t3tKigHHSminxjFApswpaJb3A/s2hMNpkykiUhnIN3VnycKNWr+WpvvZ7isLpxE99m
-	 BVkTTziF+Nt0WndsIXwF6+rnfQNSwzhtYrBJTnZ8=
+	b=saOig2WaRbeOiydCaf39YBXFavuhMVj4Pl91Bqn1IGgK2kEDMbPRXDzDsRfYgpQfK
+	 Rkw82xsP6HjF2m1r00W24NJ+ppV9EEZGEL8qwNR8JuXQX7l0Oqm/l4rj57VmsqeIIS
+	 kCBelB4nlZv0h7ayxq7T9JC4Gth9pXaTH8h7mSFA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	stable <stable@kernel.org>,
-	Yu Zhang <yuz08559@gmail.com>,
-	Alan Stern <stern@rowland.harvard.edu>
-Subject: [PATCH 7.3 0927/1005] usb: gadget: f_mass_storage: take filesem in nofua store to fix backing-file UAF
-Date: Wed, 25 Nov 2026 15:37:45 +0100
-Message-ID: <20261125143843.402218562@linuxfoundation.org>
+	Sonali Pradhan <sonalipradhan@google.com>
+Subject: [PATCH 7.3 0928/1005] usb: gadget: f_midi: fix UAF race during IN request handling
+Date: Wed, 25 Nov 2026 15:37:46 +0100
+Message-ID: <20261125143843.425232042@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143821.729802100@linuxfoundation.org>
 References: <20261125143821.729802100@linuxfoundation.org>
@@ -68,120 +67,65 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yu Zhang <yuz08559@gmail.com>
+From: Sonali Pradhan <sonalipradhan@google.com>
 
-commit 450fa94d7ae9fc91c3df525f5d1322bf8fecf7b2 upstream.
+commit 78a8d6537f1de34770e460edee360b556ef40427 upstream.
 
-fsg_store_nofua() syncs the LUN's backing file when switching from async
-to sync mode:
+f_midi_disable() drains and frees pre-allocated IN requests from
+in_req_fifo without holding midi->transmit_lock. If f_midi_transmit()
+runs concurrently on the workqueue, f_midi_do_transmit() can peek a
+request from in_req_fifo and write into its buffer while
+f_midi_disable() frees it, leading to a use-after-free.
 
-	if (!nofua && curlun->nofua)
-		fsg_lun_fsync_sub(curlun);
+Additionally, when usb_ep_queue() fails in f_midi_do_transmit() (such
+as with -ESHUTDOWN when the endpoint is disabled concurrently), it
+resets req->length = 0 and returns active instead of the error code,
+causing the do-while loop in f_midi_transmit() to keep spinning under
+midi->transmit_lock until the substream is drained.
 
-fsg_lun_fsync_sub() dereferences curlun->filp (vfs_fsync(filp)). Unlike
-every other store that touches the backing file -- fsg_store_ro() and
-fsg_store_cdrom() (down_read), fsg_store_file() (down_write) --
-fsg_store_nofua() holds no filesem while doing so.
+Fix this by acquiring midi->transmit_lock in f_midi_disable() while
+releasing IN requests from in_req_fifo, and returning the error code
+from f_midi_do_transmit() when usb_ep_queue() fails so f_midi_transmit()
+aborts immediately and drops active substreams.
 
-A concurrent close of the backing file runs under down_write(filesem) and
-does fput(curlun->filp) in fsg_lun_close() (fsg_store_file() with an empty
-path, the SCSI START_STOP eject in do_start_stop(), or forced_eject), so
-it can free the file while fsg_store_nofua() is dereferencing it:
-
-	BUG: KASAN: slab-use-after-free in vfs_fsync+0x20/0xe0
-	 vfs_fsync+0x20/0xe0
-	 fsg_lun_fsync_sub+0xa0/0xd0
-	 fsg_store_nofua+0x138/0x160
-	 configfs_write_iter+0x1a7/0x250
-	 vfs_write+0x5df/0x940
-	Allocated by task 3459:
-	 fsg_store_file+0x150/0x1f0
-	 configfs_write_iter+0x1a7/0x250
-	Freed by task 3459:
-	 __fput+0x456/0x6c0
-	 __fput_deferred+0x10d/0x330
-	 fsg_store_file+0x9e/0x1f0
-	 configfs_write_iter+0x1a7/0x250
-
-Hold filesem for read around the fsync in fsg_store_nofua() so the backing
-file cannot be closed underneath it. The lock is only needed when the
-fsync actually runs, so it is taken only in that branch.
-
-Reproduced on a mass_storage gadget over dummy_hcd by writing lun.N/nofua
-(1 then 0) from one task while another task rewrites and clears lun.N/file.
-
+Fixes: e1e3d7ec5da3 ("usb: gadget: f_midi: pre-allocate IN requests")
 Cc: stable <stable@kernel.org>
-Signed-off-by: Yu Zhang <yuz08559@gmail.com>
-Acked-by: Alan Stern <stern@rowland.harvard.edu>
-Link: https://patch.msgid.link/20261020023050.87701-1-yuz08559@gmail.com
+Signed-off-by: Sonali Pradhan <sonalipradhan@google.com>
+Link: https://patch.msgid.link/20261028074821.579450-1-sonalipradhan@google.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/gadget/function/f_mass_storage.c |    8 ++++++--
- drivers/usb/gadget/function/storage_common.c |    7 +++++--
- drivers/usb/gadget/function/storage_common.h |    3 ++-
- 3 files changed, 13 insertions(+), 5 deletions(-)
+ drivers/usb/gadget/function/f_midi.c |    4 ++++
+ 1 file changed, 4 insertions(+)
 
---- a/drivers/usb/gadget/function/f_mass_storage.c
-+++ b/drivers/usb/gadget/function/f_mass_storage.c
-@@ -2667,8 +2667,9 @@ static ssize_t nofua_store(struct device
- 			   const char *buf, size_t count)
- {
- 	struct fsg_lun		*curlun = fsg_lun_from_dev(dev);
-+	struct rw_semaphore	*filesem = dev_get_drvdata(dev);
+--- a/drivers/usb/gadget/function/f_midi.c
++++ b/drivers/usb/gadget/function/f_midi.c
+@@ -420,6 +420,7 @@ static void f_midi_disable(struct usb_fu
+ 	struct f_midi *midi = func_to_midi(f);
+ 	struct usb_composite_dev *cdev = f->config->cdev;
+ 	struct usb_request *req = NULL;
++	unsigned long flags;
  
--	return fsg_store_nofua(curlun, buf, count);
-+	return fsg_store_nofua(curlun, filesem, buf, count);
+ 	DBG(cdev, "disable\n");
+ 
+@@ -431,8 +432,10 @@ static void f_midi_disable(struct usb_fu
+ 	usb_ep_disable(midi->out_ep);
+ 
+ 	/* release IN requests */
++	spin_lock_irqsave(&midi->transmit_lock, flags);
+ 	while (kfifo_get(&midi->in_req_fifo, &req))
+ 		free_ep_req(midi->in_ep, req);
++	spin_unlock_irqrestore(&midi->transmit_lock, flags);
+ 
+ 	f_midi_drop_out_substreams(midi);
  }
- 
- static ssize_t file_store(struct device *dev, struct device_attribute *attr,
-@@ -3246,7 +3247,10 @@ static ssize_t fsg_lun_opts_nofua_show(s
- static ssize_t fsg_lun_opts_nofua_store(struct config_item *item,
- 				       const char *page, size_t len)
- {
--	return fsg_store_nofua(to_fsg_lun_opts(item)->lun, page, len);
-+	struct fsg_lun_opts *opts = to_fsg_lun_opts(item);
-+	struct fsg_opts *fsg_opts = to_fsg_opts(opts->group.cg_item.ci_parent);
-+
-+	return fsg_store_nofua(opts->lun, &fsg_opts->common->filesem, page, len);
- }
- 
- CONFIGFS_ATTR(fsg_lun_opts_, nofua);
---- a/drivers/usb/gadget/function/storage_common.c
-+++ b/drivers/usb/gadget/function/storage_common.c
-@@ -415,7 +415,8 @@ ssize_t fsg_store_ro(struct fsg_lun *cur
- }
- EXPORT_SYMBOL_GPL(fsg_store_ro);
- 
--ssize_t fsg_store_nofua(struct fsg_lun *curlun, const char *buf, size_t count)
-+ssize_t fsg_store_nofua(struct fsg_lun *curlun, struct rw_semaphore *filesem,
-+			const char *buf, size_t count)
- {
- 	bool		nofua;
- 	int		ret;
-@@ -425,8 +426,10 @@ ssize_t fsg_store_nofua(struct fsg_lun *
- 		return ret;
- 
- 	/* Sync data when switching from async mode to sync */
--	if (!nofua && curlun->nofua)
-+	if (!nofua && curlun->nofua) {
-+		guard(rwsem_read)(filesem);
- 		fsg_lun_fsync_sub(curlun);
-+	}
- 
- 	curlun->nofua = nofua;
- 
---- a/drivers/usb/gadget/function/storage_common.h
-+++ b/drivers/usb/gadget/function/storage_common.h
-@@ -210,7 +210,8 @@ ssize_t fsg_show_cdrom(struct fsg_lun *c
- ssize_t fsg_show_removable(struct fsg_lun *curlun, char *buf);
- ssize_t fsg_store_ro(struct fsg_lun *curlun, struct rw_semaphore *filesem,
- 		     const char *buf, size_t count);
--ssize_t fsg_store_nofua(struct fsg_lun *curlun, const char *buf, size_t count);
-+ssize_t fsg_store_nofua(struct fsg_lun *curlun, struct rw_semaphore *filesem,
-+			const char *buf, size_t count);
- ssize_t fsg_store_file(struct fsg_lun *curlun, struct rw_semaphore *filesem,
- 		       const char *buf, size_t count);
- ssize_t fsg_store_cdrom(struct fsg_lun *curlun, struct rw_semaphore *filesem,
+@@ -661,6 +664,7 @@ static int f_midi_do_transmit(struct f_m
+ 		ERROR(midi, "%s failed to queue req: %d\n",
+ 		      midi->in_ep->name, err);
+ 		req->length = 0; /* Re-use request next time. */
++		return err;
+ 	} else {
+ 		/* Upon success, put request at the back of the queue. */
+ 		kfifo_skip(&midi->in_req_fifo);
 
 
