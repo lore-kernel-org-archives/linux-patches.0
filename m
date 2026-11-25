@@ -1,51 +1,50 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795623350;
-	b=CcSvojacEQlsfdONrvJXebXT32n8c5Ipu8rVYx5E41GVpEx+UlBTee+ZO/H+eAnnaazi
-	 qPEtQHESdZG4MOaEdQGfVo8XmT6c0+gUl9cA/OvBkh4qq2y1lEGsvxN6oxHPq5b/SXnUN
-	 mukdiD01NMjcaFeBaVtdHE5AD7vj43cPq6CrVBU7HomZ6g0Vgk0PGUSkazNZbEZAe/ll1
-	 LgJ9kmnHVUfBMsmQlzFQStd45SnIhk8vFR9el4L0UdrV6DLVIgVZpfAiAO6Rjp9s02qqn
-	 L0cpu+INxnKNXrg9IBzUEpez4fbkn3GqKEToLwdluhzZcWgg797x5ZxzsiEKBU2uWwA==
+	t=1795623353;
+	b=SZmoiyFdCPv/lzFbVsMKkulHMX41NAfJqnqgpGbUJrBUp1QKb72sqNny3eOKqyN4xlY8
+	 RSizjmrWVk1SFkUBuWiOIMbzpwOIupLZZPdmWfRhzlaFUg2NqkNmABlqi3kFcs1yvNJCx
+	 tN1qP8YgYWw0Wsw5sPJmBBmVDQc4ACFopX5nBk0uhUJ4jejulvf8zrRMQEjTq6Je5Hw1g
+	 DZ2I9PHd5Wt517HzrITlNqZn6mqzkq77LIA/fNfjQSgAQnyy4XjuMzz4evtdc+zGv4Su+
+	 vam7qYCYBfmQ+KE0Sv3rRpAEDOHragjm/AUEW96Tdxg1s4skrHEiaNV0jLsiNmi4GvQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795623350;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795623353;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=pY3foZxB5rlR1CuBQ1nzqL5IVBXiKXqfITXMAGoDpMQ=;
-	b=1h7wFjYhrWXuYF624helWQjGDsmxOUfJGby2rJ1bnYYvNOWewsRDaiO/6rziqws0Eb0+
-	 f0IjSYFePhkF5sP/PfefGXBrj+1/cFpRBu5a0agJqBOR3maeYny4MviNF1U93yzIeF3Yz
-	 q4SRilaAMRkOtVAD9HmpBpfoHSSM3GTAGL2Lg3omdyLfeDydxJ/t3mmJ8ZETcJYfMiX88
-	 BQUL5A2LC3LpBZdwTBTwu18yCjKFj3QQ8VwVhPGHQ6QOKgXwdCZrzc5gHprMKa7lUa1Xb
-	 yXZHZ/m1uF+D/E4/0PrbFSht9UZfhNQebcpD04iQUCfsK7ud82D9KiIYSPbFC30FxNA==
+	bh=NTOFYQ9MH5mRfZQVkY4OpcX66apWLVE9FT6R9TYL0fU=;
+	b=XrTxUJuFYqmFoV6m4Q8U975qmUj4IJx92Mnx2h+1IGfsjWfep0yHMB9Zea3nubdN8Ycc
+	 04yjaudefB9SmX3vnn+it/IvQ0zUKM67wCk9lm6daEuoDqrt3BAxZg3kPQPOj0nyxZ96O
+	 yXcOEDSGD7q3k5ySLehtg2BdDdLA4fKOwwdXt4mVzD9Ul4umVMuGJNW9qfivm9L3n5/Zs
+	 dtiI8fwlHc22xyER7yAWuBtxPo8b1o3dbmzwNhkazvrMYoAPQujHWAO6dr4esxvj4HelJ
+	 BZX7AvFun4/ztnzFJnPFTWvhHcN72x7vVhKmAxEYBcyHcN20EFBWgZhRkDsCoXRfX6w==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Vb1YjiHt;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="h/LxBt1Q";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 89DEB606A323;
-	Wed, 25 Nov 2026 16:15:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5EB8B606A326;
+	Wed, 25 Nov 2026 16:15:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Vb1YjiHt
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DB9F31F000C6;
-	Wed, 25 Nov 2026 16:15:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=h/LxBt1Q
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AF60E1F000C0;
+	Wed, 25 Nov 2026 16:15:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795623350;
-	bh=pY3foZxB5rlR1CuBQ1nzqL5IVBXiKXqfITXMAGoDpMQ=;
+	s=korg; t=1795623353;
+	bh=NTOFYQ9MH5mRfZQVkY4OpcX66apWLVE9FT6R9TYL0fU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Vb1YjiHtC/e/kOXoykwuK+0NO/+h89vtXgoGSk6qXt0Yx9GDDzzw/2szkgYgKHIXR
-	 qTzbSEoYB2KytzaPjnNZDQXiBDznOPoNZABT0ttCgkxbPH4BuDYLMuj24SgQTgwJ9/
-	 UpvqI+paALNbmc0oyyjWpXv8g8o/XScZM/aiG8fU=
+	b=h/LxBt1QN4UyhaS/4x82jJMIP8C+OUpZSqIyZztBzSo+27KezLxYbDQ52pf/zirJL
+	 ZIiP4xsCbk8xXVvym05GTAB9yd4qItlTToPHA/pXyVeWDZl3SHNztyoiev2tnNtMss
+	 Sd2yoj5De9yJ4oVpnWsoHn+yP5DUMnbDf8wCN8p0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Linus Walleij <linusw@kernel.org>,
 	Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
-Subject: [PATCH 6.18 828/990] gpio: sodaville: fix use-after-free bug when registering the irqchip
-Date: Wed, 25 Nov 2026 15:36:35 +0100
-Message-ID: <20261125143841.430977250@linuxfoundation.org>
+Subject: [PATCH 6.18 829/990] gpio: virtuser: fix interrupt leak and UAF
+Date: Wed, 25 Nov 2026 15:36:36 +0100
+Message-ID: <20261125143841.453368517@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143822.072087159@linuxfoundation.org>
 References: <20261125143822.072087159@linuxfoundation.org>
@@ -69,42 +68,128 @@ Content-Transfer-Encoding: 8bit
 
 From: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
 
-commit ab9102375b7c77e0c4d33c7594e514454dc9f2b3 upstream.
+commit 24cafd9580627f9f066296f4a6ce1b282a3f425d upstream.
 
-In sdv_register_irqsupport(), if irq_domain_create_legacy() fails during
-device probing, a generic IRQ chip is left registered in the global gc_list
-while its underlying memory is freed, leading to a use-after-free. Use
-the managed variant of irq_setup_generic_chip() to ensure that the chip
-gets unregistered before the memory it uses is freed.
+When configuring interrupt handlers for GPIOs requested by virtual
+users, we never verify if an interrupt has been previously requested and
+just leak it if it was.
+
+We also never free the interrupts at device unbind. This is both a leak
+and a potential UAF bug.
+
+We use atomic_t for the irq field for now reason, it can't be modifying
+or read from atomic context. Let's repurpose the existing consumer_lock
+mutex and serialize access to the irq field. Let's add sanitization of
+input and schedule a tear-down action.
 
 Cc: stable@vger.kernel.org
-Fixes: 9381fc5d655d ("gpio: sodaville: Convert to use managed functions pcim_* and devm_*")
-Closes: https://sashiko.dev/#/bug/linux-2f7ac8b6-5034-4ff1-9afa-5700ff44e3e9
-Reviewed-by: Linus Walleij <linusw@kernel.org>
-Link: https://patch.msgid.link/20261105-gpio-sodaville-use-after-free-v1-1-f572f40feedd@oss.qualcomm.com
+Fixes: 91581c4b3f29 ("gpio: virtuser: new virtual testing driver for the GPIO API")
+Closes: https://sashiko.dev/#/bug/linux-d8935133-0e80-487a-9e00-e748056f595e
+Link: https://patch.msgid.link/20261106-gpio-virtuser-irq-uaf-leak-v1-1-ce9772d8ad0d@oss.qualcomm.com
 Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpio/gpio-sodaville.c |    9 ++++++---
- 1 file changed, 6 insertions(+), 3 deletions(-)
+ drivers/gpio/gpio-virtuser.c |   39 +++++++++++++++++++++++++++++----------
+ 1 file changed, 29 insertions(+), 10 deletions(-)
 
---- a/drivers/gpio/gpio-sodaville.c
-+++ b/drivers/gpio/gpio-sodaville.c
-@@ -166,9 +166,12 @@ static int sdv_register_irqsupport(struc
- 	ct->chip.irq_eoi = irq_gc_eoi;
- 	ct->chip.irq_set_type = sdv_gpio_pub_set_type;
+--- a/drivers/gpio/gpio-virtuser.c
++++ b/drivers/gpio/gpio-virtuser.c
+@@ -58,9 +58,9 @@ struct gpio_virtuser_line_array_data {
+ struct gpio_virtuser_line_data {
+ 	struct gpio_virtuser_attr_data ad;
+ 	char consumer[GPIO_VIRTUSER_NAME_BUF_LEN];
+-	struct mutex consumer_lock;
++	struct mutex lock;
+ 	unsigned int debounce;
+-	atomic_t irq;
++	int irq;
+ 	atomic_t irq_count;
+ };
  
--	irq_setup_generic_chip(sd->gc, IRQ_MSK(SDV_NUM_PUB_GPIOS),
--			IRQ_GC_INIT_MASK_CACHE, IRQ_NOREQUEST,
--			IRQ_LEVEL | IRQ_NOPROBE);
-+	ret = devm_irq_setup_generic_chip(&pdev->dev, sd->gc,
-+					  IRQ_MSK(SDV_NUM_PUB_GPIOS),
-+					  IRQ_GC_INIT_MASK_CACHE, IRQ_NOREQUEST,
-+					  IRQ_LEVEL | IRQ_NOPROBE);
+@@ -612,7 +612,7 @@ static ssize_t gpio_virtuser_consumer_re
+ 
+ 	memset(buf, 0x0, sizeof(buf));
+ 
+-	scoped_guard(mutex, &data->consumer_lock)
++	scoped_guard(mutex, &data->lock)
+ 		ret = snprintf(buf, sizeof(buf), "%s\n", data->consumer);
+ 
+ 	return simple_read_from_buffer(user_buf, size, ppos, buf, ret);
+@@ -640,7 +640,7 @@ static ssize_t gpio_virtuser_consumer_wr
+ 	if (ret)
+ 		return ret;
+ 
+-	scoped_guard(mutex, &data->consumer_lock)
++	scoped_guard(mutex, &data->lock)
+ 		strscpy(data->consumer, buf, sizeof(data->consumer));
+ 
+ 	return count;
+@@ -680,7 +680,12 @@ static int gpio_virtuser_interrupts_set(
+ 	if (val > 1)
+ 		return -EINVAL;
+ 
++	guard(mutex)(&ld->lock);
++
+ 	if (val) {
++		if (ld->irq >= 0)
++			return -EBUSY;
++
+ 		irq = gpiod_to_irq(ld->ad.desc);
+ 		if (irq < 0)
+ 			return irq;
+@@ -694,11 +699,13 @@ static int gpio_virtuser_interrupts_set(
+ 		if (ret)
+ 			return ret;
+ 
+-		atomic_set(&ld->irq, irq);
++		ld->irq = irq;
+ 	} else {
+-		irq = atomic_xchg(&ld->irq, 0);
+-		if (irq)
+-			free_irq(irq, ld);
++		if (ld->irq < 0)
++			return -EBUSY;
++
++		free_irq(ld->irq, ld);
++		ld->irq = -1;
+ 	}
+ 
+ 	return 0;
+@@ -798,6 +805,14 @@ static int gpio_virtuser_dbgfs_init_line
+ 			data->ad.dbgfs_dir, data);
+ }
+ 
++static void gpio_virtuser_free_irq(void *data)
++{
++	struct gpio_virtuser_line_data *ld = data;
++
++	if (ld->irq >= 0)
++		free_irq(ld->irq, ld);
++}
++
+ static int gpio_virtuser_dbgfs_init_line_attrs(struct device *dev,
+ 					       struct gpio_desc *desc,
+ 					       const char *id,
+@@ -814,14 +829,18 @@ static int gpio_virtuser_dbgfs_init_line
+ 
+ 	data->ad.desc = desc;
+ 	strscpy(data->consumer, id);
+-	atomic_set(&data->irq, 0);
++	data->irq = -1;
+ 	atomic_set(&data->irq_count, 0);
+ 
++	ret = devm_add_action_or_reset(dev, gpio_virtuser_free_irq, data);
 +	if (ret)
 +		return ret;
++
+ 	name = devm_kasprintf(dev, GFP_KERNEL, "gpiod:%s:%u", id, index);
+ 	if (!name)
+ 		return -ENOMEM;
  
- 	sd->id = irq_domain_create_legacy(dev_fwnode(&pdev->dev), SDV_NUM_PUB_GPIOS, sd->irq_base,
- 					  0, &irq_domain_sdv_ops, sd);
+-	ret = devm_mutex_init(dev, &data->consumer_lock);
++	ret = devm_mutex_init(dev, &data->lock);
+ 	if (ret)
+ 		return ret;
+ 
 
 
