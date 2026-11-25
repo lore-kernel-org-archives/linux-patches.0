@@ -1,52 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795623192;
-	b=V0Q6ZPkvvCsbeDYie+p2Y1jid1D8+gvvEJxC6xUu52sn9BapkVCMklt8B9qEQAf9i/yt
-	 54YPvLmXhvNrUVc9SZ04bFG2DzgcljD435urufa5eCDmYMS7hTlZ8DTeg4HxJ8+UkOJ47
-	 j2cdLP4rX3XqPjJbfZzlNWCMhh+cOLdezmbYP2IhMDtieNlZpTCuHZdQEk+irouBpz9A3
-	 VtIYi1l0HlApgkGZZ6GeA6du17hgxZMYIvl+WYbyfqhthuDsD0kG1VVpmOGjQudrlZX13
-	 VUCC0fFGVYQGXNYOwzSnF+pSRwR6Q/Lp8NHTA1N0Oc6nVZXdmh1n4Wb5qupogpET8eg==
+	t=1795623196;
+	b=E/VvpQoPGuVABE79zJ4HewcGbiRTWHmvYwvStAYg20zYTz+gXC1cSIbwan+OFodzavUz
+	 Vd/xDrPlJx4LJyfybHRK/DlBdhRslZTyF4ONIdD7ApUb9JrLvcRSVxf2qfINTyd1/JIoo
+	 F91FyC1K2qa1hm810j2OWYvdw62MOMbSI8MK2PQGdueosaP0SDnFhu00VqJTvrfYmMrfc
+	 wdr3vzmnvbVO5pKfJtBzyVStHpzwlVG9PEQhUk9QqmL47/uJPY/hpgtU2Sg69luoF8aeR
+	 MGIVzgSJvq8zQGZKMcjtI5QEmvMrl2rHovK+hDmYTT3PXlby6oskqVqwJpROPr1ZcOA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795623192;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795623196;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=Bh18bE9SV7F9r9vflNmfDJPOYUY8hUvkHSTtaMQQIoE=;
-	b=ARD+uhfmYOY31ke4zoKqRSVHVUA9FCtgAm2tSoW2b1K24HVFDFSf+OWRYTOOxW75b6oD
-	 vYY25b8mfq5BJ0VW1VNbmOpDG0B0M5j+qjWnyyeRP9yWGVJZsEuT2OcC7o7idjO9SXsMg
-	 jdyLBxXZTS+S3dKzYN0XQzaCQ5eYqCGBCRqUuXgS3RxzEDoz7K46ioCAGzFNUkIbmcF74
-	 4anoNekBvFqnn3fq9SVMYrbGbA8YG3VVIdI4lEGtPrlrf7AmJgkwnQ7riJkXs3De2uniW
-	 WHUzvM8rNWjt4dRRUXo9n2YCuvd76Y0jXjxElxT3A0lA/Yyyy1NeRsvbmHW4yl8CTnQ==
+	bh=hquNXv14uotkvI2FceV6lu5xj3aZ2Xd81hFlnOnh0x4=;
+	b=cV3RttqPeDTd7QmWVS0xCrTnO57FOgL64fQCNYp/wypwE3swjfR1cEBRNfTFTyzfhB+b
+	 Mzwg00uOcbD028fsRgbUAe+/v+DRT4okx+9XAMoNpKxazxoXft23rgwXzeWYtsrVdMPDr
+	 RocgWfyAUY2sBbqtg0q7QsbavRuR9U1M6c3fX+loM8yscvs4Zhw4HPpT6NGgeE/7OKlcr
+	 qeld4Qty8c/+4LrgtFvFMa1U1iBL1vaQrj8FThg/4JAMP0faJUAnwtn5/T9sLgJ0M5SWu
+	 fkQnyVY/denknJt5KEmRWeUN8Lyfgz1kWS4K1DIm798YrtxZq8wg7Z20Od7PS4RT5ug==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=FmCKJh7n;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=mgrir0Nz;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 735ED606A327;
-	Wed, 25 Nov 2026 16:13:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4935F606A31E;
+	Wed, 25 Nov 2026 16:13:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=FmCKJh7n
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B89711F000C0;
-	Wed, 25 Nov 2026 16:13:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=mgrir0Nz
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 12FAF1F000C4;
+	Wed, 25 Nov 2026 16:13:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795623192;
-	bh=Bh18bE9SV7F9r9vflNmfDJPOYUY8hUvkHSTtaMQQIoE=;
+	s=korg; t=1795623195;
+	bh=hquNXv14uotkvI2FceV6lu5xj3aZ2Xd81hFlnOnh0x4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=FmCKJh7n01xCGgD2Ei4mJMxZdDIe9XevO+NsNSYDjtg80st6p1LFEonMgIfJiDrYe
-	 axDd4l+Kuaa0wfTwYG3wVQcOrrga6+DY7PZzmKdNQ9YRMZzpGmwigApScvRIpr1mBP
-	 P1MjWZ4gZLpqkLj+oI7j3T1e1gbrKlvvOwAXOvp0=
+	b=mgrir0Nzx1ZXlKnA2efZtIXU+UaAkWl6nRY4/IyeekO0TgPkY909/B/5by9wOkz/9
+	 rhl1ff0F5WLfXaY2twLoqhEx9wk809D9nuf/mLezInno6MHnF04qYRSFtR0G86D/MK
+	 a1SYjKcLnS6cWnSthZZAcKKpHFIMeY+AnZ2v8yYg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Felix Radensky <fradensky@nvidia.com>,
-	Vadim Pasternak <vadimp@nvidia.com>,
+	Pablo Mazzini <pmazzini@gmail.com>,
 	Guenter Roeck <linux@roeck-us.net>
-Subject: [PATCH 6.18 778/990] hwmon: (pmbus/mp2975) Get vout fault limits dynamically
-Date: Wed, 25 Nov 2026 15:35:45 +0100
-Message-ID: <20261125143840.274889218@linuxfoundation.org>
+Subject: [PATCH 6.18 779/990] hwmon: (sy7636a) fix negative temperatures
+Date: Wed, 25 Nov 2026 15:35:46 +0100
+Message-ID: <20261125143840.297416859@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143822.072087159@linuxfoundation.org>
 References: <20261125143822.072087159@linuxfoundation.org>
@@ -68,325 +67,32 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Felix Radensky <fradensky@nvidia.com>
+From: Pablo Mazzini <pmazzini@gmail.com>
 
-commit 00944852275efd39706fe7b9ce75c28edde983eb upstream.
+commit fc8519fab34e162b0c29dacccf73031820878917 upstream.
 
-The over- and under-voltage fault limits of the tracking mode are
-relative to the voltage reference, which follows the VID/AVS requests
-issued to the device and therefore changes at runtime.
+The thermistor readout is a signed 8-bit value in degrees Celsius.
 
-The driver reads the voltage reference once during probe and derives the
-limits from that snapshot, which the PMBus core caches in addition. As a
-result in2_crit and in2_lcrit reflect the operating point at probe, rather
-than the thresholds the device enforces. On systems where the device
-supplies the CPU core voltage, in2_crit was reported anywhere between
-1.15V and 1.70V across identical systems, causing false over-voltage
-reports once the CPU voltage exceeded the value latched at probe.
-
-Read the voltage reference and the over-voltage offset selector whenever
-a limit is requested, and mark both limits with pmbus_set_update(), so
-that the core does not cache them. The voltage reference is available on
-page 3 only. Let the core change the page, so that the page it caches
-matches the device, except for a single rail configuration, for which the
-core does not issue PAGE commands, and the page is changed directly.
-
-With the selector read at runtime, a device configured with an
-unsupported selector no longer fails to probe. The OVP1 threshold, which
-does not depend on the selector, is reported for it instead, with a
-warning.
-
-Clamp the under-voltage limit to zero, since the offset can exceed a low
-voltage reference, while a negative value would be reported as a read
-error.
-
-Fixes: 2c6fcbb21149 ("hwmon: (pmbus) Add support for MPS Multi-phase mp2975 controller")
+Fixes: de34a4053250 ("hwmon: sy7636a: Add temperature driver for sy7636a")
 Cc: stable@vger.kernel.org
-Signed-off-by: Felix Radensky <fradensky@nvidia.com>
-Reviewed-by: Vadim Pasternak <vadimp@nvidia.com>
-Link: https://patch.msgid.link/20261105193200.1570996-1-fradensky@nvidia.com
+Signed-off-by: Pablo Mazzini <pmazzini@gmail.com>
+Link: https://patch.msgid.link/20261108093602.329554-3-pmazzini@gmail.com
 Signed-off-by: Guenter Roeck <linux@roeck-us.net>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/hwmon/pmbus/mp2975.c |  207 +++++++++++++++++++++++--------------------
- 1 file changed, 115 insertions(+), 92 deletions(-)
+ drivers/hwmon/sy7636a-hwmon.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/hwmon/pmbus/mp2975.c
-+++ b/drivers/hwmon/pmbus/mp2975.c
-@@ -110,10 +110,7 @@ struct mp2975_data {
- 	int vout_scale;
- 	int max_phases[MP2975_PAGE_NUM];
- 	int vid_step[MP2975_PAGE_NUM];
--	int vref[MP2975_PAGE_NUM];
--	int vref_off[MP2975_PAGE_NUM];
- 	int vout_max[MP2975_PAGE_NUM];
--	int vout_ov_fixed[MP2975_PAGE_NUM];
- 	int curr_sense_gain[MP2975_PAGE_NUM];
- };
- 
-@@ -466,12 +463,77 @@ static int mp2973_write_word_data(struct
- 	return pmbus_write_word_data(client, 0, PMBUS_SMBALERT_MASK, ret);
- }
- 
-+/*
-+ * Let the PMBus core change the page, so that the page it caches matches the
-+ * device. The core does not issue PAGE commands for a single rail
-+ * configuration, thus change the page directly then.
-+ */
-+static int
-+mp2975_page_set(struct i2c_client *client, struct mp2975_data *data, int page)
-+{
-+	if (data->info.pages > 1)
-+		return pmbus_set_page(client, page, 0xff);
-+
-+	return i2c_smbus_write_byte_data(client, PMBUS_PAGE, page);
-+}
-+
-+/*
-+ * Voltage reference is available on page 3 only. The callers read a register
-+ * of the rail through the core first, thus the core caches the rail page.
-+ */
-+static int
-+mp2975_vref_get(struct i2c_client *client, struct mp2975_data *data, int page)
-+{
-+	int ret, vref;
-+
-+	ret = mp2975_page_set(client, data, 3);
-+	if (ret < 0)
-+		return ret;
-+
-+	vref = i2c_smbus_read_word_data(client, page ? MP2975_MFR_READ_VREF_R2 :
-+						       MP2975_MFR_READ_VREF_R1);
-+
-+	ret = mp2975_page_set(client, data, page);
-+	if (ret < 0)
-+		return ret;
-+
-+	return (vref < 0) ? vref : vref * data->vid_step[page];
-+}
-+
-+static int
-+mp2975_ovp2_offset_get(int ovp_th_set)
-+{
-+	switch ((ovp_th_set & GENMASK(5, 3)) >> 3) {
-+	case 1:
-+		return 140;
-+	case 2:
-+		return 220;
-+	case 4:
-+		return 400;
-+	default:
-+		return -EINVAL;
-+	}
-+}
-+
-+static int
-+mp2975_vout_ovp2_get(struct i2c_client *client, struct mp2975_data *data,
-+		     int page, int vref_off)
-+{
-+	int vref;
-+
-+	vref = mp2975_vref_get(client, data, page);
-+	if (vref < 0)
-+		return vref;
-+
-+	return vref + DIV_ROUND_CLOSEST(vref_off * data->vout_scale, 10);
-+}
-+
- static int mp2975_read_word_data(struct i2c_client *client, int page,
- 				 int phase, int reg)
- {
- 	const struct pmbus_driver_info *info = pmbus_get_driver_info(client);
- 	struct mp2975_data *data = to_mp2975_data(info);
--	int ret;
-+	int ret, ovp1, vref_off, uv_off;
- 
- 	switch (reg) {
- 	case PMBUS_OT_FAULT_LIMIT:
-@@ -488,19 +550,35 @@ static int mp2975_read_word_data(struct
- 		break;
- 	case PMBUS_VOUT_OV_FAULT_LIMIT:
- 		/*
--		 * Register provides two values for over-voltage protection
--		 * threshold for fixed (ovp2) and tracking (ovp1) modes. The
--		 * minimum of these two values is provided as over-voltage
--		 * fault alarm.
-+		 * Device provides dual over-voltage protection. OVP1 is
-+		 * referred to the maximum reference voltage, while OVP2 is
-+		 * referred to the current voltage reference, which is changed
-+		 * at runtime. Protection is tripped by any of them, thus the
-+		 * minimum of the two is exposed as over-voltage fault alarm,
-+		 * and OVP2 is obtained on each read.
- 		 */
- 		ret = mp2975_read_word_helper(client, page, phase,
- 					      MP2975_MFR_OVP_TH_SET,
--					      GENMASK(2, 0));
-+					      GENMASK(5, 0));
- 		if (ret < 0)
- 			return ret;
- 
--		ret = min_t(int, data->vout_max[page] + 50 * (ret + 1),
--			    data->vout_ov_fixed[page]);
-+		ovp1 = data->vout_max[page] + 50 * ((ret & GENMASK(2, 0)) + 1);
-+
-+		/* OVP1 still applies if the OVP2 threshold is unknown. */
-+		vref_off = mp2975_ovp2_offset_get(ret);
-+		if (vref_off < 0) {
-+			dev_warn_once(&client->dev,
-+				      "unsupported OVP2 selector, reporting OVP1 threshold\n");
-+			ret = ovp1;
-+			break;
-+		}
-+
-+		ret = mp2975_vout_ovp2_get(client, data, page, vref_off);
-+		if (ret < 0)
-+			return ret;
-+
-+		ret = min_t(int, ovp1, ret);
- 		break;
- 	case PMBUS_VOUT_UV_FAULT_LIMIT:
- 		ret = mp2975_read_word_helper(client, page, phase,
-@@ -509,8 +587,17 @@ static int mp2975_read_word_data(struct
- 		if (ret < 0)
- 			return ret;
- 
--		ret = DIV_ROUND_CLOSEST(data->vref[page] * 10 - 50 *
--					(ret + 1) * data->vout_scale, 10);
-+		uv_off = 50 * (ret + 1) * data->vout_scale;
-+
-+		ret = mp2975_vref_get(client, data, page);
-+		if (ret < 0)
-+			return ret;
-+
-+		/*
-+		 * Offset can exceed the voltage reference, while a negative
-+		 * value would be reported as a read error.
-+		 */
-+		ret = max_t(int, DIV_ROUND_CLOSEST(ret * 10 - uv_off, 10), 0);
- 		break;
- 	case PMBUS_VIRT_READ_POUT_MAX:
- 		ret = mp2975_read_word_helper(client, page, phase,
-@@ -760,60 +847,6 @@ mp2975_current_sense_gain_get(struct i2c
- }
- 
- static int
--mp2975_vref_get(struct i2c_client *client, struct mp2975_data *data,
--		struct pmbus_driver_info *info)
--{
--	int ret;
--
--	ret = i2c_smbus_write_byte_data(client, PMBUS_PAGE, 3);
--	if (ret < 0)
--		return ret;
--
--	/* Get voltage reference value for rail 1. */
--	ret = i2c_smbus_read_word_data(client, MP2975_MFR_READ_VREF_R1);
--	if (ret < 0)
--		return ret;
--
--	data->vref[0] = ret * data->vid_step[0];
--
--	/* Get voltage reference value for rail 2, if connected. */
--	if (data->info.pages == MP2975_PAGE_NUM) {
--		ret = i2c_smbus_read_word_data(client, MP2975_MFR_READ_VREF_R2);
--		if (ret < 0)
--			return ret;
--
--		data->vref[1] = ret * data->vid_step[1];
--	}
--	return 0;
--}
--
--static int
--mp2975_vref_offset_get(struct i2c_client *client, struct mp2975_data *data,
--		       int page)
--{
--	int ret;
--
--	ret = i2c_smbus_read_word_data(client, MP2975_MFR_OVP_TH_SET);
--	if (ret < 0)
--		return ret;
--
--	switch ((ret & GENMASK(5, 3)) >> 3) {
--	case 1:
--		data->vref_off[page] = 140;
--		break;
--	case 2:
--		data->vref_off[page] = 220;
--		break;
--	case 4:
--		data->vref_off[page] = 400;
--		break;
--	default:
--		return -EINVAL;
--	}
--	return 0;
--}
--
--static int
- mp2975_vout_max_get(struct i2c_client *client, struct mp2975_data *data,
- 		    struct pmbus_driver_info *info, int page)
- {
-@@ -917,25 +950,6 @@ mp2975_vout_per_rail_config_get(struct i
- 		ret = mp2975_vout_max_get(client, data, info, i);
- 		if (ret < 0)
- 			return ret;
--
--		/* Skip if reading Vref is unsupported */
--		if (data->chip_id != mp2975)
--			continue;
--
--		/* Obtain voltage reference offsets. */
--		ret = mp2975_vref_offset_get(client, data, i);
--		if (ret < 0)
--			return ret;
--
--		/*
--		 * Set over-voltage fixed value. Thresholds are provided as
--		 * fixed value, and tracking value. The minimum of them are
--		 * exposed as over-voltage critical threshold.
--		 */
--		data->vout_ov_fixed[i] = data->vref[i] +
--					 DIV_ROUND_CLOSEST(data->vref_off[i] *
--							   data->vout_scale,
--							   10);
- 	}
- 
- 	return 0;
-@@ -1049,11 +1063,6 @@ static int mp2975_probe(struct i2c_clien
- 		if (ret)
- 			return ret;
- 
--		/* Obtain voltage reference values. */
--		ret = mp2975_vref_get(client, data, info);
--		if (ret)
--			return ret;
--
- 		/* Obtain vout over-voltage scales. */
- 		ret = mp2975_vout_ov_scale_get(client, data, info);
- 		if (ret < 0)
-@@ -1070,7 +1079,21 @@ static int mp2975_probe(struct i2c_clien
+--- a/drivers/hwmon/sy7636a-hwmon.c
++++ b/drivers/hwmon/sy7636a-hwmon.c
+@@ -29,7 +29,7 @@ static int sy7636a_read(struct device *d
  	if (ret)
  		return ret;
  
--	return pmbus_do_probe(client, info);
-+	ret = pmbus_do_probe(client, info);
-+	if (ret)
-+		return ret;
-+
-+	/*
-+	 * Vout over- and under-voltage fault limits are relative to the
-+	 * voltage reference, which is changed at runtime. Do not allow the
-+	 * PMBus core to cache them.
-+	 */
-+	if (data->chip_id == mp2975) {
-+		pmbus_set_update(client, PMBUS_VOUT_OV_FAULT_LIMIT, true);
-+		pmbus_set_update(client, PMBUS_VOUT_UV_FAULT_LIMIT, true);
-+	}
-+
-+	return 0;
- }
+-	*temp = reg_val * 1000;
++	*temp = (s8)reg_val * 1000;
  
- static const struct of_device_id mp2975_of_match[] = {
+ 	return 0;
+ }
 
 
