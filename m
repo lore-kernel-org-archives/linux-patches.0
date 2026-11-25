@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795620954;
-	b=s1nXKQtApakA+zpEqArylmnABo+EWowlB5P1W3/fykCjs6/TmiKu51NENiLS8rWj+G1i
-	 y6z9UMTDaX388tJ/PNXnYs/O29OJVVCsXZeDl/uQCIuWIooUOulKLlmRS30EbXTpLXp+R
-	 FFtqblbGF8R8XrBH0zrFgkxlmAuwZOCWZcTwF0amFABZvCwuAtWzNLb0O0iO8mbNiPnwM
-	 Y/TUFYjSProZD0FDiMtzV+dn0fkQKCtpr5bWo/UNl/YL2Co9juZRb5Aymu+yHbxCrnpKH
-	 dBXLwXcgHD2TRzN3BHSdxB+Eddp7lhbtqYn8NZEfwW9WL2FC2S0275G8btXwoFjkYIA==
+	t=1795620957;
+	b=AFlrFvkTo3FuZ+7zLnRa1yQJ6KdndAS0K6Nz7hTJLVTor5DlXehMYrp8AkHBwePMPQjN
+	 hsrvTp6JCkdkmbJm5iMvYc6O7oL+i7pDqBsAbHr5EoF9fcJppssF51xRuy+AcYHmNtUrK
+	 W7n2VYqQVSPvErEvo/Vpe1DtD/kBxd7kb3V9rXSF9EQgO8b5huPru/Zu4GYlx6ijfEuJT
+	 nKS71IQIUlnpkeKMYqs91f8zsTT3S/FmUEdJf4SEeDc8Sv5sQYUVrsJ0WPzedMkxFY/m5
+	 pz8NxWbolZl6fLZ40sdizLe04ahKaN6UvZjulBjik0BAtjVDiMW9mG0ZJx9tYSy+Gkw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795620954;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795620957;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=4fletcACAk0JQBQv4Y+PLbasbrRhedWqViNf0fwJCvM=;
-	b=rg8G4KEaelbKcH0hJBdRqmHyQYG9fxE4NcWroz/nK1AFSdJHBQ3RkHBnHNTniqjswhSb
-	 y8/rTR6osQslbhTlCVMWif9P0cgE9ZJv1DnPLikZAFFC6bzln44+uLtwi8QPFDPvuhp+t
-	 e4xUfhyBVmKmFLt2wF3b9RbSjaE3/uoQUVwedzda+6VEvcBCmXn3Jx58LYA/6UoUJXBk+
-	 gY8/UM54ME0WmiZVMRMeHdajystD7r0FblAboqgnwKhURSrpk0zK3v2IvHNixMtyVsoVa
-	 XOPuvFiBu15ONzR36JfNmYLYWhry3DNgbl22kmMV8Ke2j5L086baMqHs36p/aV+Ysmw==
+	bh=2Awp1KTWMG1kViw/QmT9T/kEFjVFjZkFRD28tDHZAIE=;
+	b=NB2Uy4b6piTV2TF13qF5mkn2iusTW2zQXmGhfLOFjdmRyY95Ad/XUHSJwSMegmVAQKNB
+	 kP31kLntHECwUzEchGNz6qAq91FR/wtg/KTM4Qy0k2VggkReVy0yl/Fy38cMzsjmicqIV
+	 ZkivFi9fZnd6IYgAGd9n2U9JAsLrqnsF3rsZ4IGBrE+sN3t3uBBfds+wlkfOQw6iPJUBU
+	 X9BI3/3rPuyL7GZIkIteG6SizJYgFSDMaw955Taj1CzyyCGsFU+Rf5AtdB8WErYJrkbhZ
+	 Y4Gd9HWhm3hQhrxokM7nHmx0vDsaOYiAg7xMx/J3sR3XZdYlY8ymr4OyUMmMALhf8ZQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=U1UCP+7A;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=CJ1+xxF0;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A07C660A2617;
-	Wed, 25 Nov 2026 15:35:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D680860A2623;
+	Wed, 25 Nov 2026 15:35:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=U1UCP+7A
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 95C451F000D8;
-	Wed, 25 Nov 2026 15:35:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=CJ1+xxF0
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E73EB1F000EE;
+	Wed, 25 Nov 2026 15:35:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795620954;
-	bh=4fletcACAk0JQBQv4Y+PLbasbrRhedWqViNf0fwJCvM=;
+	s=korg; t=1795620957;
+	bh=2Awp1KTWMG1kViw/QmT9T/kEFjVFjZkFRD28tDHZAIE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=U1UCP+7A0gcRbCFVG1TZWMWDrAY+sYgTNPfEwCWpecLHTsdCbUwGOavyxU07xucgJ
-	 Omc/eXNWxWPDNu/F/DBowkna9J10CU6rJ/FXNx2V73PiSLnp/kx+CC93lzZWx79b6j
-	 +rdF9LaMGmYp4jVdtNyd4b4nJX5xZFDsvlFnAR6o=
+	b=CJ1+xxF0DG66Pp7U7lA5IzSLbEwb06KUESzBaeukIQ4CDHHJKjKU/6fBeGY0O4G06
+	 WGdP9M/fykeAdZipzEfDkGXb9FXn5W16F+edyBG0bO2yZFpXa43nJK1ewbcORrkddK
+	 sah0HF//w5CAQ/E1yfw/V42qBkIX9jJeqEA78fpQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Barret Rhoden <brho@google.com>,
+	Remi Pommarel <repk@triplefau.lt>,
 	Dominique Martinet <asmadeus@codewreck.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 076/990] 9p: treat read return values of 0 as EOF
-Date: Wed, 25 Nov 2026 15:24:03 +0100
-Message-ID: <20261125143823.868176367@linuxfoundation.org>
+Subject: [PATCH 6.18 077/990] 9p: Cache negative dentries for lookup performance
+Date: Wed, 25 Nov 2026 15:24:04 +0100
+Message-ID: <20261125143823.892969126@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143822.072087159@linuxfoundation.org>
 References: <20261125143822.072087159@linuxfoundation.org>
@@ -68,53 +68,396 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Barret Rhoden <brho@google.com>
+From: Remi Pommarel <repk@triplefau.lt>
 
-[ Upstream commit a3a6212c7d67baebebd0e4c2cf2ae1b75eb9231e ]
+[ Upstream commit f00e6c1d282578b077b87b88f42e701bc40f2fff ]
 
-If your 9p server shares a synthetic file system such as sysfs, the file
-size from stat often disagrees with the actual file size.
+Not caching negative dentries can result in poor performance for
+workloads that repeatedly look up non-existent paths. Each such
+lookup triggers a full 9P transaction with the server, adding
+unnecessary overhead.
 
-Treat non-error reads of 0 as EOF, except in the case where the request
-was for 0 bytes.
+A typical example is source compilation, where multiple cc1 processes
+are spawned and repeatedly search for the same missing header files
+over and over again.
 
-Tested:
-	git@github.com:hugelgupf/p9.git, served "/" on 10.0.2.2
+This change enables caching of negative dentries, so that lookups for
+known non-existent paths do not require a full 9P transaction. The
+cached negative dentries are retained for a configurable duration
+(expressed in milliseconds), as specified by the ndentry_timeout
+field in struct v9fs_session_info. If set to -1, negative dentries
+are cached indefinitely.
 
-	bash-5.3# mount -t 9p -o trans=tcp,port=12345,cache=none 10.0.2.2 /tmp/foo
-	bash-5.3# cat /tmp/foo/sys/devices/system/cpu/online
-	0-47
+This optimization reduces lookup overhead and improves performance for
+workloads involving frequent access to non-existent paths.
 
-Fixes: eb497943fa21 ("9p: Convert to using the netfs helper lib to do reads and caching")
-Signed-off-by: Barret Rhoden <brho@google.com>
-Message-ID: <20260702090941.1298188-1-brho@google.com>
+Signed-off-by: Remi Pommarel <repk@triplefau.lt>
+Message-ID: <e542317dd03bbadb5249abd3ea6aecfdca692c19.1779355927.git.repk@triplefau.lt>
 Signed-off-by: Dominique Martinet <asmadeus@codewreck.org>
+Stable-dep-of: d037e9c1b40c ("9p: fix kernel-doc warning for enum p9_session_flags")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/9p/vfs_addr.c | 3 +++
- 1 file changed, 3 insertions(+)
+ fs/9p/fid.c             |  11 +++--
+ fs/9p/v9fs.c            |   1 +
+ fs/9p/v9fs.h            |   5 ++
+ fs/9p/v9fs_vfs.h        |  15 ++++++
+ fs/9p/vfs_dentry.c      | 105 ++++++++++++++++++++++++++++++++++------
+ fs/9p/vfs_inode.c       |  12 +++--
+ fs/9p/vfs_super.c       |   1 +
+ include/net/9p/client.h |   2 +
+ 8 files changed, 128 insertions(+), 24 deletions(-)
 
-diff --git a/fs/9p/vfs_addr.c b/fs/9p/vfs_addr.c
-index 0a77ce5d11767..de2b1f8cdc0e6 100644
---- a/fs/9p/vfs_addr.c
-+++ b/fs/9p/vfs_addr.c
-@@ -100,6 +100,7 @@ static void v9fs_issue_read(struct netfs_io_subrequest *subreq)
- 	char *target;
- 	unsigned long long pos = subreq->start + subreq->transferred;
- 	int total = 0, err, len, n;
-+	size_t to_read = iov_iter_count(&subreq->io_iter);
+diff --git a/fs/9p/fid.c b/fs/9p/fid.c
+index f84412290a30c..76242d450aa7c 100644
+--- a/fs/9p/fid.c
++++ b/fs/9p/fid.c
+@@ -20,7 +20,9 @@
  
- 	if (S_ISLNK(rreq->inode->i_mode)) {
- 		/* p9_client_readlink() must not be called for legacy protocols
-@@ -132,6 +133,8 @@ static void v9fs_issue_read(struct netfs_io_subrequest *subreq)
- 		__set_bit(NETFS_SREQ_CLEAR_TAIL, &subreq->flags);
- 	if (pos + total >= i_size_read(rreq->inode))
- 		__set_bit(NETFS_SREQ_HIT_EOF, &subreq->flags);
-+	if (!err && !total && to_read)
-+		__set_bit(NETFS_SREQ_HIT_EOF, &subreq->flags);
- 	if (!err && total) {
- 		subreq->transferred += total;
- 		__set_bit(NETFS_SREQ_MADE_PROGRESS, &subreq->flags);
+ static inline void __add_fid(struct dentry *dentry, struct p9_fid *fid)
+ {
+-	hlist_add_head(&fid->dlist, (struct hlist_head *)&dentry->d_fsdata);
++	struct v9fs_dentry *v9fs_dentry = to_v9fs_dentry(dentry);
++
++	hlist_add_head(&fid->dlist, &v9fs_dentry->head);
+ }
+ 
+ 
+@@ -112,6 +114,7 @@ void v9fs_open_fid_add(struct inode *inode, struct p9_fid **pfid)
+ 
+ static struct p9_fid *v9fs_fid_find(struct dentry *dentry, kuid_t uid, int any)
+ {
++	struct v9fs_dentry *v9fs_dentry = to_v9fs_dentry(dentry);
+ 	struct p9_fid *fid, *ret;
+ 
+ 	p9_debug(P9_DEBUG_VFS, " dentry: %pd (%p) uid %d any %d\n",
+@@ -119,11 +122,9 @@ static struct p9_fid *v9fs_fid_find(struct dentry *dentry, kuid_t uid, int any)
+ 		 any);
+ 	ret = NULL;
+ 	/* we'll recheck under lock if there's anything to look in */
+-	if (dentry->d_fsdata) {
+-		struct hlist_head *h = (struct hlist_head *)&dentry->d_fsdata;
+-
++	if (!hlist_empty(&v9fs_dentry->head)) {
+ 		spin_lock(&dentry->d_lock);
+-		hlist_for_each_entry(fid, h, dlist) {
++		hlist_for_each_entry(fid, &v9fs_dentry->head, dlist) {
+ 			if (any || uid_eq(fid->uid, uid)) {
+ 				ret = fid;
+ 				p9_fid_get(ret);
+diff --git a/fs/9p/v9fs.c b/fs/9p/v9fs.c
+index 60bbe6f6e9b84..a2a01a2ac1fb1 100644
+--- a/fs/9p/v9fs.c
++++ b/fs/9p/v9fs.c
+@@ -403,6 +403,7 @@ static void v9fs_apply_options(struct v9fs_session_info *v9ses,
+ 	v9ses->cache = ctx->session_opts.cache;
+ 	v9ses->uid = ctx->session_opts.uid;
+ 	v9ses->session_lock_timeout = ctx->session_opts.session_lock_timeout;
++	v9ses->ndentry_timeout_ms = ctx->session_opts.ndentry_timeout_ms;
+ }
+ 
+ /**
+diff --git a/fs/9p/v9fs.h b/fs/9p/v9fs.h
+index 6a12445d38582..e630c5111d749 100644
+--- a/fs/9p/v9fs.h
++++ b/fs/9p/v9fs.h
+@@ -91,6 +91,7 @@ enum p9_cache_bits {
+  * @debug: debug level
+  * @afid: authentication handle
+  * @cache: cache mode of type &p9_cache_bits
++ * @ndentry_timeout: Negative dentry lookup cache retention time in ms
+  * @cachetag: the tag of the cache associated with this session
+  * @fscache: session cookie associated with FS-Cache
+  * @uname: string user name to mount hierarchy as
+@@ -101,6 +102,7 @@ enum p9_cache_bits {
+  * @uid: if %V9FS_ACCESS_SINGLE, the numeric uid which mounted the hierarchy
+  * @clnt: reference to 9P network client instantiated for this session
+  * @slist: reference to list of registered 9p sessions
++ * @ndentry_timeout_ms: Negative dentry caching retention time
+  *
+  * This structure holds state for each session instance established during
+  * a sys_mount() .
+@@ -116,6 +118,7 @@ struct v9fs_session_info {
+ 	unsigned short debug;
+ 	unsigned int afid;
+ 	unsigned int cache;
++	unsigned int ndentry_timeout_ms;
+ #ifdef CONFIG_9P_FSCACHE
+ 	char *cachetag;
+ 	struct fscache_volume *fscache;
+@@ -133,6 +136,8 @@ struct v9fs_session_info {
+ 	long session_lock_timeout; /* retry interval for blocking locks */
+ };
+ 
++#define NDENTRY_TIMEOUT_NEVER (-1U)
++
+ /* cache_validity flags */
+ #define V9FS_INO_INVALID_ATTR 0x01
+ 
+diff --git a/fs/9p/v9fs_vfs.h b/fs/9p/v9fs_vfs.h
+index d3aefbec4de6e..83c2335f438da 100644
+--- a/fs/9p/v9fs_vfs.h
++++ b/fs/9p/v9fs_vfs.h
+@@ -28,6 +28,19 @@
+ /* flags for v9fs_stat2inode() & v9fs_stat2inode_dotl() */
+ #define V9FS_STAT2INODE_KEEP_ISIZE 1
+ 
++/**
++ * struct v9fs_dentry - v9fs specific dentry data
++ * @head: List of fid associated with this dentry
++ * @expire_time: Lookup cache expiration time for negative dentries
++ * @rcu: used by kfree_rcu to schedule clean up job
++ */
++struct v9fs_dentry {
++	struct hlist_head head;
++	u64 expire_time;
++	struct rcu_head rcu;
++};
++#define to_v9fs_dentry(d) ((struct v9fs_dentry *)((d)->d_fsdata))
++
+ extern struct file_system_type v9fs_fs_type;
+ extern const struct address_space_operations v9fs_addr_operations;
+ extern const struct file_operations v9fs_file_operations;
+@@ -35,6 +48,8 @@ extern const struct file_operations v9fs_file_operations_dotl;
+ extern const struct file_operations v9fs_dir_operations;
+ extern const struct file_operations v9fs_dir_operations_dotl;
+ extern const struct dentry_operations v9fs_dentry_operations;
++extern void v9fs_ndentry_refresh_timeout(struct dentry *dentry);
++extern void v9fs_dentry_fid_remove(struct dentry *dentry);
+ extern const struct dentry_operations v9fs_cached_dentry_operations;
+ extern struct kmem_cache *v9fs_inode_cache;
+ 
+diff --git a/fs/9p/vfs_dentry.c b/fs/9p/vfs_dentry.c
+index c1acbc98465de..a14821c1206f3 100644
+--- a/fs/9p/vfs_dentry.c
++++ b/fs/9p/vfs_dentry.c
+@@ -23,6 +23,46 @@
+ #include "v9fs_vfs.h"
+ #include "fid.h"
+ 
++/**
++ * v9fs_ndentry_is_expired - Check if negative dentry lookup has expired
++ *
++ * This should be called to know if a negative dentry should be removed from
++ * cache.
++ *
++ * @dentry: dentry in question
++ *
++ */
++static bool v9fs_ndentry_is_expired(struct dentry const *dentry)
++{
++	struct v9fs_session_info *v9ses = v9fs_dentry2v9ses(dentry);
++	struct v9fs_dentry *v9fs_dentry = to_v9fs_dentry(dentry);
++
++	if (v9ses->ndentry_timeout_ms == NDENTRY_TIMEOUT_NEVER)
++		return false;
++
++	return time_before_eq64(v9fs_dentry->expire_time, get_jiffies_64());
++}
++
++/**
++ * v9fs_ndentry_refresh_timeout - Refresh negative dentry lookup cache timeout
++ *
++ * This should be called when a look up yields a negative entry.
++ *
++ * @dentry: dentry in question
++ *
++ */
++void v9fs_ndentry_refresh_timeout(struct dentry *dentry)
++{
++	struct v9fs_session_info *v9ses = v9fs_dentry2v9ses(dentry);
++	struct v9fs_dentry *v9fs_dentry = to_v9fs_dentry(dentry);
++
++	if (v9ses->ndentry_timeout_ms == NDENTRY_TIMEOUT_NEVER)
++		return;
++
++	v9fs_dentry->expire_time = get_jiffies_64() +
++				   msecs_to_jiffies(v9ses->ndentry_timeout_ms);
++}
++
+ /**
+  * v9fs_cached_dentry_delete - called when dentry refcount equals 0
+  * @dentry:  dentry in question
+@@ -33,20 +73,15 @@ static int v9fs_cached_dentry_delete(const struct dentry *dentry)
+ 	p9_debug(P9_DEBUG_VFS, " dentry: %pd (%p)\n",
+ 		 dentry, dentry);
+ 
+-	/* Don't cache negative dentries */
+-	if (d_really_is_negative(dentry))
+-		return 1;
+-	return 0;
+-}
++	if (!d_really_is_negative(dentry))
++		return 0;
+ 
+-/**
+- * v9fs_dentry_release - called when dentry is going to be freed
+- * @dentry:  dentry that is being release
+- *
+- */
++	return v9fs_ndentry_is_expired(dentry);
++}
+ 
+-static void v9fs_dentry_release(struct dentry *dentry)
++static void __v9fs_dentry_fid_remove(struct dentry *dentry)
+ {
++	struct v9fs_dentry *v9fs_dentry = to_v9fs_dentry(dentry);
+ 	struct hlist_node *p, *n;
+ 	struct hlist_head head;
+ 
+@@ -54,13 +89,54 @@ static void v9fs_dentry_release(struct dentry *dentry)
+ 		 dentry, dentry);
+ 
+ 	spin_lock(&dentry->d_lock);
+-	hlist_move_list((struct hlist_head *)&dentry->d_fsdata, &head);
++	hlist_move_list(&v9fs_dentry->head, &head);
+ 	spin_unlock(&dentry->d_lock);
+ 
+ 	hlist_for_each_safe(p, n, &head)
+ 		p9_fid_put(hlist_entry(p, struct p9_fid, dlist));
+ }
+ 
++/**
++ * v9fs_dentry_fid_remove - Release all dentry's fids
++ * @dentry: dentry in question
++ *
++ */
++void v9fs_dentry_fid_remove(struct dentry *dentry)
++{
++	__v9fs_dentry_fid_remove(dentry);
++}
++
++/**
++ * v9fs_dentry_init - Initialize v9fs dentry data
++ * @dentry: dentry in question
++ *
++ */
++static int v9fs_dentry_init(struct dentry *dentry)
++{
++	struct v9fs_dentry *v9fs_dentry = kzalloc(sizeof(*v9fs_dentry),
++						  GFP_KERNEL);
++
++	if (!v9fs_dentry)
++		return -ENOMEM;
++
++	INIT_HLIST_HEAD(&v9fs_dentry->head);
++	dentry->d_fsdata = (void *)v9fs_dentry;
++	return 0;
++}
++
++/**
++ * v9fs_dentry_release - called when dentry is going to be freed
++ * @dentry:  dentry that is being released
++ *
++ */
++static void v9fs_dentry_release(struct dentry *dentry)
++{
++	struct v9fs_dentry *v9fs_dentry = to_v9fs_dentry(dentry);
++
++	__v9fs_dentry_fid_remove(dentry);
++	kfree_rcu(v9fs_dentry, rcu);
++}
++
+ static int __v9fs_lookup_revalidate(struct dentry *dentry, unsigned int flags)
+ {
+ 	struct p9_fid *fid;
+@@ -72,7 +148,7 @@ static int __v9fs_lookup_revalidate(struct dentry *dentry, unsigned int flags)
+ 
+ 	inode = d_inode(dentry);
+ 	if (!inode)
+-		goto out_valid;
++		return !v9fs_ndentry_is_expired(dentry);
+ 
+ 	v9inode = V9FS_I(inode);
+ 	if (v9inode->cache_validity & V9FS_INO_INVALID_ATTR) {
+@@ -113,7 +189,6 @@ static int __v9fs_lookup_revalidate(struct dentry *dentry, unsigned int flags)
+ 			return retval;
+ 		}
+ 	}
+-out_valid:
+ 	p9_debug(P9_DEBUG_VFS, "dentry: %pd (%p) is valid\n", dentry, dentry);
+ 	return 1;
+ }
+@@ -140,12 +215,14 @@ const struct dentry_operations v9fs_cached_dentry_operations = {
+ 	.d_revalidate = v9fs_lookup_revalidate,
+ 	.d_weak_revalidate = __v9fs_lookup_revalidate,
+ 	.d_delete = v9fs_cached_dentry_delete,
++	.d_init = v9fs_dentry_init,
+ 	.d_release = v9fs_dentry_release,
+ 	.d_unalias_trylock = v9fs_dentry_unalias_trylock,
+ 	.d_unalias_unlock = v9fs_dentry_unalias_unlock,
+ };
+ 
+ const struct dentry_operations v9fs_dentry_operations = {
++	.d_init = v9fs_dentry_init,
+ 	.d_release = v9fs_dentry_release,
+ 	.d_unalias_trylock = v9fs_dentry_unalias_trylock,
+ 	.d_unalias_unlock = v9fs_dentry_unalias_unlock,
+diff --git a/fs/9p/vfs_inode.c b/fs/9p/vfs_inode.c
+index 7af14775dffaf..11fbb8686b87d 100644
+--- a/fs/9p/vfs_inode.c
++++ b/fs/9p/vfs_inode.c
+@@ -568,7 +568,7 @@ static int v9fs_remove(struct inode *dir, struct dentry *dentry, int flags)
+ 
+ 		/* invalidate all fids associated with dentry */
+ 		/* NOTE: This will not include open fids */
+-		dentry->d_op->d_release(dentry);
++		v9fs_dentry_fid_remove(dentry);
+ 	}
+ 	return retval;
+ }
+@@ -744,14 +744,16 @@ struct dentry *v9fs_vfs_lookup(struct inode *dir, struct dentry *dentry,
+ 	name = dentry->d_name.name;
+ 	fid = p9_client_walk(dfid, 1, &name, 1);
+ 	p9_fid_put(dfid);
+-	if (fid == ERR_PTR(-ENOENT))
++	if (fid == ERR_PTR(-ENOENT)) {
+ 		inode = NULL;
+-	else if (IS_ERR(fid))
++		v9fs_ndentry_refresh_timeout(dentry);
++	} else if (IS_ERR(fid)) {
+ 		inode = ERR_CAST(fid);
+-	else if (v9ses->cache & (CACHE_META|CACHE_LOOSE))
++	} else if (v9ses->cache & (CACHE_META|CACHE_LOOSE)) {
+ 		inode = v9fs_get_inode_from_fid(v9ses, fid, dir->i_sb);
+-	else
++	} else {
+ 		inode = v9fs_get_new_inode_from_fid(v9ses, fid, dir->i_sb);
++	}
+ 	/*
+ 	 * If we had a rename on the server and a parallel lookup
+ 	 * for the new name, then make sure we instantiate with
+diff --git a/fs/9p/vfs_super.c b/fs/9p/vfs_super.c
+index 315336de6f02a..fde1872662d2f 100644
+--- a/fs/9p/vfs_super.c
++++ b/fs/9p/vfs_super.c
+@@ -327,6 +327,7 @@ static int v9fs_init_fs_context(struct fs_context *fc)
+ 	ctx->session_opts.uid = INVALID_UID;
+ 	ctx->session_opts.dfltuid = V9FS_DEFUID;
+ 	ctx->session_opts.dfltgid = V9FS_DEFGID;
++	ctx->session_opts.ndentry_timeout_ms = 0;
+ 
+ 	/* initialize client options */
+ 	ctx->client_opts.proto_version = p9_proto_2000L;
+diff --git a/include/net/9p/client.h b/include/net/9p/client.h
+index 9f3079c6f3867..0a1de81c8cd8b 100644
+--- a/include/net/9p/client.h
++++ b/include/net/9p/client.h
+@@ -192,6 +192,7 @@ struct p9_rdma_opts {
+  * @dfltgid: default numeric groupid to mount hierarchy as
+  * @uid: if %V9FS_ACCESS_SINGLE, the numeric uid which mounted the hierarchy
+  * @session_lock_timeout: retry interval for blocking locks
++ * @ndentry_timeout_ms: Negative dentry lookup cache retention time in ms
+  *
+  * This strucure holds options which are parsed and will be transferred
+  * to the v9fs_session_info structure when mounted, and therefore largely
+@@ -203,6 +204,7 @@ struct p9_session_opts {
+ 	unsigned short debug;
+ 	unsigned int afid;
+ 	unsigned int cache;
++	unsigned int ndentry_timeout_ms;
+ #ifdef CONFIG_9P_FSCACHE
+ 	char *cachetag;
+ #endif
 -- 
 2.53.0
 
