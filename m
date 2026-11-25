@@ -1,52 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795625440;
-	b=tu5EW3G9EaUMzEtgbBOPNF55cZo/iT2PUZ2/NUXSvoD4aE32czpmC04j2s6md8Ic7Egq
-	 HHzreg4SluRdmcaTQniy0iU/+1y6qU60PuPuQRvP6eHhbW8/QwiqEkN+z6F0aIwo1ua7A
-	 eLU+xi0op8RlXZR5AJSuUK6Q3sDbsopG7wJjJyxkr/6yrGiH8ca45tnsR4qistC0qkuSQ
-	 NFf0u/hpmt36MhLd2WJUOIePS4DKXRgUdvH5AwDyaKSU0cmDirN3whfPo2lpPFhKBegvk
-	 aVkSxIxdvflfO1Pn4wNM2vpDijnamGDwxLUAyIfmj7xkyUu5pKUqzKexPgZ9dF6bEMw==
+	t=1795625443;
+	b=JNMnVQJWV1X1NBOP94TF48M9S4jh1P2lFsfVnflGGAxZ9yl/fkpH1Ncgamzby8sblj49
+	 dV18fithxB+qSYw9o7DJ1EHsWblyAHlVfmH3oDjnAQuxQJtxTF8cjG3NeI5ja7EyPP3AF
+	 0+e0itWnbijWDGIjZNOvXTOzfDUI3IXxATVYkiR3bXp4hWB+ManLeqf+3fEK0XDA7exCh
+	 XnxKN3BEbsFhx8Z3eq4y7IGCwh0B5MB2hiZU4AW1qmxJ+KOTENu1pGc4FdWPwQPs8Y9kU
+	 xBkL/QjoLIURDxDAKvgxpTSCDSLFw/6h8PsgSQUq1+AUEfYovml5txC2DvBSKx6qm6Q==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795625440;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795625443;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=4j/tFm68/NvqXxmeE1Wn0L9Yr6Oc7ClU8aFSUMf6/4c=;
-	b=2nPIinj3FZ7Dn1KmWPB3U+PsJAyc9KgEyZdmH2IcpKEoXkWHlKFjnAeA1X8QL0UuG0f/
-	 nLftDuCWpILHnpcrQQnuUb2SyLXA5cuWdhrjkp7Vu9wLqOwJNrYcJZu9z7naSgpzuzHwN
-	 VzUsYqvE2hMAi/f6ILcUU3PEseuwSv6CMzf7iyM9ttMsZpqCG0AYUSI9BKLzDJRKMoQ6f
-	 EbpjfIw49WhgCOpO7eYuRleWWt0uUiANWR/BDKXudqEcH2zuLXthD4qBbmHksI11wIoRM
-	 LT/KqHjDFo4h4pDrPtHJ0VTIKlUXQ4JgJM9hwQIRu61s1VYGmmw43ETMe26pyyBilCQ==
+	bh=6Ad9yKs/8i5D1PWRXvfLjDAyEteK0gC0e14t5D+3qPI=;
+	b=EtFLZktSgHkTQwgHmfiGscAqDX5iF211krib5QDUPfsFP+4bIFwxUik3WjTeu0PQAq4s
+	 bJXl1u1rUNn9Gwu8A94EaCiUw/h2ROu4Vpam3fbzv0aUuIDUKWLTJqhJW9xrBLi21kDkY
+	 DDpinSBMx7zwmwROvSyX7aAtKWBrWv8epArlr+nwcIxSfzBLhB+Hkhh5a3PkPAo4c5B6n
+	 ZKK3S9haxOYcK8CDKVb8OFfZXaA1ZWtY1W/FG5PXFUht9wHY/OOvw60T7+3733k0sr9ms
+	 MmGu/GDB5rP8gzqlGsRHiAiASX8tgkcip2aQSrpp6/RjENrCDn65G+Kzj+3TFNMBKxQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="CqeQR/Ls";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=yZQjxP58;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2130A606A31E;
-	Wed, 25 Nov 2026 16:50:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1D27B606A321;
+	Wed, 25 Nov 2026 16:50:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=CqeQR/Ls
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4A34B1F000C4;
-	Wed, 25 Nov 2026 16:50:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=yZQjxP58
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1EF2A1F000CF;
+	Wed, 25 Nov 2026 16:50:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795625439;
-	bh=4j/tFm68/NvqXxmeE1Wn0L9Yr6Oc7ClU8aFSUMf6/4c=;
+	s=korg; t=1795625442;
+	bh=6Ad9yKs/8i5D1PWRXvfLjDAyEteK0gC0e14t5D+3qPI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=CqeQR/LsYHM54wfraPwP+drc1/QLC1cYxEYrvd3z9t3lOXqM72D2U4COktZjdWAtd
-	 cKJCPdAz0Z2NwOZAUSKQekIQ7GYVaqsboHWIe57Inm7Sc5MsVWf57nvthGrbHsmHCQ
-	 NLqGjIcaRcFdmDGqRH6kjM/3KcDZBTTfWfm+DvwI=
+	b=yZQjxP58kZivRmmpAqLNThkiF6O0xhbreUDs0A6PlBM2ld6pSm6Uu7V8IcSwvqw6V
+	 V60CIA7/w0f0mzGcdWGIrvO/D3fTWfHt7AxIBP4TkuPkMwWg+JKJ9sxIGLjGAqNVak
+	 K2x5akuae6v6TikzQRk162psmk3NxxpfTVUVgkX0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sashiko <sashiko-bot@kernel.org>,
-	Takashi Iwai <tiwai@suse.de>,
+	Andrei Vagin <avagin@google.com>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	Pavel Tikhomirov <ptikhomirov@virtuozzo.com>,
+	Thomas Gleixner <tglx@linutronix.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 472/816] ALSA: aloop: Avoid a bad mixure of guard() and goto
-Date: Wed, 25 Nov 2026 15:33:40 +0100
-Message-ID: <20261125143900.125691725@linuxfoundation.org>
+Subject: [PATCH 6.12 463/816] proc: report SIGEV_NONE in /proc/pid/timers if target task has died
+Date: Wed, 25 Nov 2026 15:33:31 +0100
+Message-ID: <20261125143859.917569707@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143849.205329330@linuxfoundation.org>
 References: <20261125143849.205329330@linuxfoundation.org>
@@ -68,63 +70,82 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Takashi Iwai <tiwai@suse.de>
+From: Andrei Vagin <avagin@google.com>
 
-[ Upstream commit f7faf5d9b5668919cae84a6247f8f7b4e2c0227c ]
+[ Upstream commit 0a27f795030ce6a2c71525b0544e3b13bba8828e ]
 
-The rewrite of aloop driver code using guard() leaded to a mixture of
-guard() and some goto; although it currently works, it isn't really a
-good match.
+When a posix timer is created targeting a specific thread (using
+SIGEV_SIGNAL | SIGEV_THREAD_ID), it takes a reference to the target struct
+pid in timer->it_pid.  If the target thread subsequently terminates, its
+numeric tid is freed and can be recycled for an unrelated task.  However,
+the timer holds its reference to the original struct pid.
 
-For avoiding the bad match, just move the code using goto into a
-function and wrap it with guard().
+show_timer() in /proc/[pid]/timers previously called pid_nr_ns() directly
+on timer->it_pid without checking whether any task remained attached to
+that struct pid.  As a result:
 
-Fixes: ebd9b6c91d4e ("ALSA: aloop: Use guard() for mutex locks")
-Reported-by: Sashiko <sashiko-bot@kernel.org>
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
-Link: https://patch.msgid.link/20261007172533.14667-6-tiwai@suse.de
-[ sashal: Kept the local kzalloc(sizeof(*dpcm), GFP_KERNEL) call in place of upstream's kzalloc_obj(*dpcm) so the hunk applies; the rest matches upstream. ]
+1. It reported the stale tid, which could mistakenly refer to a recycled
+   pid.
+
+2. In the kernel, expired signals for dead target threads are dropped by
+   posixtimer_send_sigqueue() because posixtimer_get_target() returns
+   NULL, so the timer functionally acts as SIGEV_NONE.
+
+3. Checkpoint/restore tools (CRIU) parsing /proc/[pid]/timers would try
+   to restore a timer with SIGEV_SIGNAL | SIGEV_THREAD_ID targeting a
+   non-existent or unrelated thread.
+
+Check pid_has_task(timer->it_pid, timer->it_pid_type) in show_timer().  If
+the target task has died, override notify to SIGEV_NONE and report PID 0
+(e.g., 'notify: none/pid.0').
+
+Link: https://lore.kernel.org/20260816161216.984580-1-avagin@google.com
+Fixes: 57b8015e07a7 ("posix-timers: Show sigevent info in proc file")
+Signed-off-by: Andrei Vagin <avagin@google.com>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Reviewed-by: Pavel Tikhomirov <ptikhomirov@virtuozzo.com>
+Cc: Thomas Gleixner <tglx@linutronix.de>
+[ sashal: Replaced the missing it_pid_type field with (notify & SIGEV_THREAD_ID) ? PIDTYPE_PID : PIDTYPE_TGID and adapted to the local show_timer() layout, without the guard() lock or posixtimer_valid(). ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/drivers/aloop.c | 11 +++++++++--
- 1 file changed, 9 insertions(+), 2 deletions(-)
+ fs/proc/base.c | 10 +++++++++-
+ 1 file changed, 9 insertions(+), 1 deletion(-)
 
-diff --git a/sound/drivers/aloop.c b/sound/drivers/aloop.c
-index d7857659a7313..fa8d2877516d9 100644
---- a/sound/drivers/aloop.c
-+++ b/sound/drivers/aloop.c
-@@ -1273,7 +1273,7 @@ static const struct loopback_ops loopback_snd_timer_ops = {
- 	.dpcm_info = loopback_snd_timer_dpcm_info,
- };
+diff --git a/fs/proc/base.c b/fs/proc/base.c
+index 427fb5abb07c7..0f58fe8697c4e 100644
+--- a/fs/proc/base.c
++++ b/fs/proc/base.c
+@@ -2527,6 +2527,7 @@ static int show_timer(struct seq_file *m, void *v)
+ 	struct k_itimer *timer;
+ 	struct timers_private *tp = m->private;
+ 	int notify;
++	pid_t nr = 0;
+ 	static const char * const nstr[] = {
+ 		[SIGEV_SIGNAL] = "signal",
+ 		[SIGEV_NONE] = "none",
+@@ -2536,6 +2537,13 @@ static int show_timer(struct seq_file *m, void *v)
+ 	timer = hlist_entry((struct hlist_node *)v, struct k_itimer, list);
+ 	notify = timer->it_sigev_notify;
  
--static int loopback_open(struct snd_pcm_substream *substream)
-+static int __loopback_open(struct snd_pcm_substream *substream)
- {
- 	struct snd_pcm_runtime *runtime = substream->runtime;
- 	struct loopback *loopback = substream->private_data;
-@@ -1282,7 +1282,6 @@ static int loopback_open(struct snd_pcm_substream *substream)
- 	int err = 0;
- 	int dev = get_cable_index(substream);
- 
--	guard(mutex)(&loopback->cable_lock);
- 	dpcm = kzalloc(sizeof(*dpcm), GFP_KERNEL);
- 	if (!dpcm)
- 		return -ENOMEM;
-@@ -1373,6 +1372,14 @@ static int loopback_open(struct snd_pcm_substream *substream)
- 	return err;
- }
- 
-+static int loopback_open(struct snd_pcm_substream *substream)
-+{
-+	struct loopback *loopback = substream->private_data;
++	if (timer->it_pid &&
++	    pid_has_task(timer->it_pid,
++			 (notify & SIGEV_THREAD_ID) ? PIDTYPE_PID : PIDTYPE_TGID))
++		nr = pid_nr_ns(timer->it_pid, tp->ns);
++	else
++		notify = SIGEV_NONE;
 +
-+	guard(mutex)(&loopback->cable_lock);
-+	return __loopback_open(substream);
-+}
-+
- static int loopback_close(struct snd_pcm_substream *substream)
- {
- 	struct loopback *loopback = substream->private_data;
+ 	seq_printf(m, "ID: %d\n", timer->it_id);
+ 	seq_printf(m, "signal: %d/%px\n",
+ 		   timer->sigq->info.si_signo,
+@@ -2543,7 +2551,7 @@ static int show_timer(struct seq_file *m, void *v)
+ 	seq_printf(m, "notify: %s/%s.%d\n",
+ 		   nstr[notify & ~SIGEV_THREAD_ID],
+ 		   (notify & SIGEV_THREAD_ID) ? "tid" : "pid",
+-		   pid_nr_ns(timer->it_pid, tp->ns));
++		   nr);
+ 	seq_printf(m, "ClockID: %d\n", timer->it_clock);
+ 
+ 	return 0;
 -- 
 2.53.0
 
