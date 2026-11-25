@@ -1,42 +1,42 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795618426;
-	b=LIakBNMQV12W0gWPU2H6DgvxK69oKOA77gsbz0c+eqz9e6kjFt8jU5EOk2gSc+NifGFx
-	 q2hiJSAZ3j7qDX7SMPuytFOMgBH4w+UAqe+IEKlYH+nivFa1Pj8oh5tX6Hkh9pNuCHKS8
-	 xvbUYYQ0NRA/CXcdjRrLcEAx3TbbpZGixvOC+NSs9Ixr8D/8pscwMGblJ4x4zNZWbDkc+
-	 mbSELzF57MOW36XsFSG0tqBh9fqPjaAOvXXaP5gHx9zDnEf/TiI8izhI5c2230aPcn5ef
-	 Mrg/vDQt+a5x2lrTb38mCGFcyj4m3Vq5AWZ399eCBRBv4U4sNcMByjXZPXB6fC2RmOw==
+	t=1795618429;
+	b=eDIOa8vkXCYzg3BIIIVmOfx6+4mExk04YKfe/YMAkG+Cf6jRexuNYb9XXLOopckT6p1f
+	 pUvh3gCKLXRyp7e4/w60XiLGjnemf8FthAndsPRyr2W+gwtnzzdmc/jtF9DwbRT9abOME
+	 8bBgmGSLAyLfFuoaP4hCB13Ryl2mJSLcQOK/0ICVlQAos3KZdpihLVhnDyt6bQu4Q1z7V
+	 9Ez8kQnQOS0BGF3pQt84PPLelKU0G2P+b/Zfee1SKXPWFpc1ZrZmmvkI5ip2TjeRRh/5S
+	 oO9sqJkfv4EmHurXY1GbrIczR78jaHEscwC4CojjhEkV4lzdFVy2JjUGANN42Mcd4FQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795618426;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795618429;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=BF9BQhm7SOD5B8VNhda05gWQgBsJnAae5QvgT2/1u3o=;
-	b=28XLo88VB/RHZTbByuyssGFRZm7nU5zK68FyDz+mipchttZqiS/6AwbkLZC2u2Nrx6fe
-	 W3iWqkT3rXXESMWIFnL2WXu64i6n82elV2ZUmo335UrRsyUcjFFlPDPOwFLNqqSGmKMx3
-	 oQNRIbHjyhLOnHN85GGfkhTRjLojO2IYl6cNqUTYem4C+TFddZX/x592akxhgViTieC1Z
-	 cIZwH2YhFq8/J6PXdVxigI65LZ3RLEZkYSH5iNGDTg9GmYBwv3/+nMJfX5nUjiZUcZJjs
-	 wuvLqAyofNrrvgUo8ryQr+TDhWQW55TbNlLn+7VvOYOQyFaGMuKJrF4ujnNoiFF+6CA==
+	bh=Y3f3ebTCtuX/ZdruFrlNDxxajBkNWFPni6QT2R/lo7o=;
+	b=VuZXRr2x4+gimIvi6bZeGp+rCIXRqcyra05TTpow0+No8g8LUUm1soXfgo0f09zrTLQw
+	 uduIXcvyii/S8PHomOKkiPHBwVzLqKHb7RAlMTe1kQcvef0JpF0rOIUSOs5uPec01D5fB
+	 YIt/6hvtbWDIdYwtNvz6UewzXyWcU0VjHwy+cOqUCs60Ro39/RtmkrmHS1aGNyE+Nvc1a
+	 A9m5JaXjfZJtXJWpiJXd6uE1s2l4qmsucshskE80nFmYjDCSpJJ2QThOUBFHRT31Gvquq
+	 6IEytNshr/KGzgMicgLfXsZpmwiRVhC7MzEXvrmbTknAklslFit39GmUPMnPuSjTvUQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=L2EWB8YL;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=biJaxz6u;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2F53E606A326;
-	Wed, 25 Nov 2026 14:53:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2EFD4606A327;
+	Wed, 25 Nov 2026 14:53:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=L2EWB8YL
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2D7801F000C4;
-	Wed, 25 Nov 2026 14:53:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=biJaxz6u
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 77CD21F00A00;
+	Wed, 25 Nov 2026 14:53:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795618425;
-	bh=BF9BQhm7SOD5B8VNhda05gWQgBsJnAae5QvgT2/1u3o=;
+	s=korg; t=1795618429;
+	bh=Y3f3ebTCtuX/ZdruFrlNDxxajBkNWFPni6QT2R/lo7o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=L2EWB8YLYtiNkZdn6f98haxDDiRRnn7aw9XF6/Gs0PVyXFigeq8YrL6jR1jIbukeg
-	 lwzgL+TAjnTdUZxv2tdeKSSpvlXd1USp1ARnow1Zot84r6ZzYmtz0EakiN7KSzkmZp
-	 Y3Vr3sJCJPMENNdGXfZRbIJHS+JsKt5J7jRPE+T8=
+	b=biJaxz6ues947SFAaCruIXmScAi78fFHYPKHpf/CLrtAyotZAIaaSHDE4CKjxbDBT
+	 QXHBDmIlAr6xQSLlmOsjhpnMFQw2FR4OEQ61IS/z+oi7abkmeJGTqRqzG35KZn0w/p
+	 QR/4/rVeH8oxz0PHLXJl1aX6SAsKwof76994gUzQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -46,9 +46,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Ido Schimmel <idosch@nvidia.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0277/1005] ipv4: Batch rt_flush_dev() in netdev_run_todo().
-Date: Wed, 25 Nov 2026 15:26:55 +0100
-Message-ID: <20261125143828.228008053@linuxfoundation.org>
+Subject: [PATCH 7.3 0278/1005] ipv6: Batch rt6_uncached_list_flush_dev() in netdev_run_todo().
+Date: Wed, 25 Nov 2026 15:26:56 +0100
+Message-ID: <20261125143828.252833170@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143821.729802100@linuxfoundation.org>
 References: <20261125143821.729802100@linuxfoundation.org>
@@ -72,14 +72,14 @@ Content-Transfer-Encoding: 8bit
 
 From: Kuniyuki Iwashima <kuniyu@google.com>
 
-[ Upstream commit ca6854799069778fef446d307935f764cc3d3afb ]
+[ Upstream commit f12d2907992db7ba91cc4a1796dce3cffb01318c ]
 
-IPv4 uncached routes are linked to the global per-cpu lists,
-rt_uncached_list.
+IPv6 uncached routes are linked to the global per-cpu lists,
+rt6_uncached_list.
 
-When unregistering a netdev, rt_flush_dev() iterates over the
-potentially long lists to find uncached routes tied to the device
-and swap it with blackhole_netdev.
+When unregistering a netdev, rt6_uncached_list_flush_dev() iterates
+over the potentially long lists to find uncached routes tied to
+the device and swap it with blackhole_netdev.
 
 Since it is called for every device in dying netns under RTNL,
 it adds O(N_dev x (N_cpu + N_route)) costs to any batched device
@@ -87,98 +87,136 @@ unregistration.
 
 Let's call it once per batched device unregistration without RTNL.
 
-Note that rt_flush_dev() must be called after setting dev->reg_state
-to NETREG_UNREGISTERED.  Otherwise, because rt_flush_dev(NULL) runs
-without RTNL, it could race with unregister_netdevice_many_notify()
-and prematurely purge routes for NETREG_UNREGISTERING dev, for
-which flush_all_backlogs() has not been called yet.
+Because it now runs without RTNL, rt->dst.dev and rt->rt6i_idev->dev
+may transition to NETREG_UNREGISTERED at different times.  Thus, we
+must check that both devices are blackhole_netdev before unlinking
+the route; otherwise, the remaining device reference would not be
+flushed when the other device is unregistered.
+
+In addition, since netdev_run_todo() runs even when IPv6 is disabled,
+rt6_uncached_list_flush_dev() must check ipv6_mod_enabled() before
+touching rt6_uncached_list.
+
+Note also that netdev_run_todo() cannot be called before
+rt6_uncached_list is initialised because:
+
+  1. unregister_netdevice_many_notify() panics when
+     dev_boot_phase == 1 (net_dev_init() is subsys_initcall()).
+
+  2. the only device registered before fs_initcall_sync() is
+     loopback and loopback_net_init() panics in case of failure.
 
 Reported-by: Chris J Arges <carges@cloudflare.com>
 Closes: https://lore.kernel.org/netdev/20260917-hash-bucket-route-lists-v3-0-30493a37b6eb@cloudflare.com/
 Signed-off-by: Kuniyuki Iwashima <kuniyu@google.com>
 Reviewed-by: Ido Schimmel <idosch@nvidia.com>
 Tested-by: Chris J Arges <carges@cloudflare.com>
-Link: https://patch.msgid.link/20261001204752.2572265-6-kuniyu@google.com
+Link: https://patch.msgid.link/20261001204752.2572265-7-kuniyu@google.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Stable-dep-of: a0fe1a3f390a ("ipv6: Flush rt->from in rt6_uncached_list_flush_dev().")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/net/route.h |  6 ++++++
- net/core/dev.c      |  4 ++++
- net/ipv4/route.c    | 11 +++++++++--
- 3 files changed, 19 insertions(+), 2 deletions(-)
+ include/net/ip6_route.h |  7 +++++++
+ net/core/dev.c          |  5 ++++-
+ net/ipv6/route.c        | 24 ++++++++++++++++--------
+ 3 files changed, 27 insertions(+), 9 deletions(-)
 
-diff --git a/include/net/route.h b/include/net/route.h
-index 45290177a33c4..b4dfa2dcfd6cc 100644
---- a/include/net/route.h
-+++ b/include/net/route.h
-@@ -129,7 +129,13 @@ struct in_device;
+diff --git a/include/net/ip6_route.h b/include/net/ip6_route.h
+index 5fd0c0e4beac0..cf75208bfaa91 100644
+--- a/include/net/ip6_route.h
++++ b/include/net/ip6_route.h
+@@ -231,6 +231,13 @@ void rt6_multipath_rebalance(struct fib6_info *f6i);
  
- int ip_rt_init(void);
- void rt_cache_flush(struct net *net);
-+#ifdef CONFIG_INET
- void rt_flush_dev(struct net_device *dev);
+ void rt6_uncached_list_add(struct rt6_info *rt);
+ void rt6_uncached_list_del(struct rt6_info *rt);
++#ifdef CONFIG_IPV6
++void rt6_uncached_list_flush_dev(struct net_device *dev);
 +#else
-+static inline void rt_flush_dev(struct net_device *dev)
++static inline void rt6_uncached_list_flush_dev(struct net_device *dev)
 +{
 +}
 +#endif
  
- static inline void inet_sk_init_flowi4(const struct inet_sock *inet,
- 				       struct flowi4 *fl4)
+ static inline const struct rt6_info *skb_rt6_info(const struct sk_buff *skb)
+ {
 diff --git a/net/core/dev.c b/net/core/dev.c
-index cc95d271a3ec8..270adccbdcff5 100644
+index 270adccbdcff5..80d37066bf2bf 100644
 --- a/net/core/dev.c
 +++ b/net/core/dev.c
-@@ -129,6 +129,7 @@
- #include <linux/ip.h>
- #include <net/ip.h>
+@@ -131,6 +131,7 @@
  #include <net/mpls.h>
-+#include <net/route.h>
+ #include <net/route.h>
  #include <linux/ipv6.h>
++#include <net/ip6_route.h>
  #include <linux/in.h>
  #include <linux/jhash.h>
-@@ -11885,6 +11886,9 @@ void netdev_run_todo(void)
+ #include <linux/random.h>
+@@ -11886,8 +11887,10 @@ void netdev_run_todo(void)
  		linkwatch_sync_dev(dev);
  	}
  
-+	if (!list_empty(&list))
-+		rt_flush_dev(NULL);
-+
+-	if (!list_empty(&list))
++	if (!list_empty(&list)) {
+ 		rt_flush_dev(NULL);
++		rt6_uncached_list_flush_dev(NULL);
++	}
+ 
  	cnt = 0;
  	while (!list_empty(&list)) {
- 		dev = netdev_wait_allrefs_any(&list);
-diff --git a/net/ipv4/route.c b/net/ipv4/route.c
-index 1d8fcd19eaf65..67c4fae2384b3 100644
---- a/net/ipv4/route.c
-+++ b/net/ipv4/route.c
-@@ -1589,6 +1589,9 @@ void rt_flush_dev(struct net_device *dev)
- 	struct rtable *rt, *safe;
+diff --git a/net/ipv6/route.c b/net/ipv6/route.c
+index 256b77ac1e6a1..94273e6476885 100644
+--- a/net/ipv6/route.c
++++ b/net/ipv6/route.c
+@@ -158,10 +158,16 @@ void rt6_uncached_list_del(struct rt6_info *rt)
+ 	}
+ }
+ 
+-static void rt6_uncached_list_flush_dev(struct net_device *dev)
++void rt6_uncached_list_flush_dev(struct net_device *dev)
+ {
  	int cpu;
  
++	if (!ipv6_mod_enabled())
++		return;
++
 +	if (dev && dev->dismantle)
 +		return;
 +
  	for_each_possible_cpu(cpu) {
- 		struct uncached_list *ul = &per_cpu(rt_uncached_list, cpu);
- 
-@@ -1597,10 +1600,14 @@ void rt_flush_dev(struct net_device *dev)
- 
- 		spin_lock_bh(&ul->lock);
+ 		struct uncached_list *ul = per_cpu_ptr(&rt6_uncached_list, cpu);
+ 		struct rt6_info *rt, *safe;
+@@ -173,22 +179,24 @@ static void rt6_uncached_list_flush_dev(struct net_device *dev)
  		list_for_each_entry_safe(rt, safe, &ul->head, dst.rt_uncached) {
--			if (rt->dst.dev != dev)
-+			struct net_device *rt_dev = rt->dst.dev;
+ 			struct inet6_dev *rt_idev = rt->rt6i_idev;
+ 			struct net_device *rt_dev = rt->dst.dev;
+-			bool handled = false;
+ 
+-			if (rt_idev && rt_idev->dev == dev) {
++			if (rt_idev &&
++			    (dev ? rt_idev->dev == dev :
++			     READ_ONCE(rt_idev->dev->reg_state) == NETREG_UNREGISTERED)) {
+ 				rt->rt6i_idev = in6_dev_get(blackhole_netdev);
+ 				in6_dev_put(rt_idev);
+-				handled = true;
+ 			}
+ 
+-			if (rt_dev == dev) {
+-				rt->dst.dev = blackhole_netdev;
++			if (dev ? rt_dev == dev :
++			    READ_ONCE(rt_dev->reg_state) == NETREG_UNREGISTERED) {
++				rcu_assign_pointer(rt->dst.dev_rcu, blackhole_netdev);
+ 				netdev_ref_replace(rt_dev, blackhole_netdev,
+ 						   &rt->dst.dev_tracker,
+ 						   GFP_ATOMIC);
+-				handled = true;
+ 			}
+-			if (handled)
 +
-+			if (dev ? rt_dev != dev :
-+			    READ_ONCE(rt_dev->reg_state) != NETREG_UNREGISTERED)
- 				continue;
-+
- 			rcu_assign_pointer(rt->dst.dev_rcu, blackhole_netdev);
--			netdev_ref_replace(dev, blackhole_netdev,
-+			netdev_ref_replace(rt_dev, blackhole_netdev,
- 					   &rt->dst.dev_tracker, GFP_ATOMIC);
- 			list_del_init(&rt->dst.rt_uncached);
++			if (rt->dst.dev == blackhole_netdev &&
++			    (!rt->rt6i_idev || rt->rt6i_idev->dev == blackhole_netdev))
+ 				list_del_init(&rt->dst.rt_uncached);
  		}
+ 		spin_unlock_bh(&ul->lock);
 -- 
 2.53.0
 
