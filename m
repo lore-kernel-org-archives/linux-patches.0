@@ -1,51 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795619356;
-	b=Rx2W44gqcTU6u6L4uqGRIPntNtYL76fBgwfKOJgQ4SqB7FHIY6oAkjBmknbo/Am0gVkz
-	 8/wEOrGgW0DbWdX5ODNERz9DIkkssPCI9Zs2wMvDx5N6MUMc2Ypqf6hL8rc9PupYoKScL
-	 LVfRXTLUWUSiEqeu06hhhE8wTmDdAaxhdQOGV6WXaKXqZrCMyhfz2w6Pvof6vny33D6Ep
-	 BLRP8H8CGyFOL9GX83U7gyqVBSgthI3gKspLrJ0CtL4TDiCX8Iqpr5TMfLpQwgn2yF2Pe
-	 cS8+tDKt63kui6lfWyWi557nOYbvRZlP3sxNJc1s2dMjEL2grpC6TAOE7SPRZh3Huyw==
+	t=1795619359;
+	b=VuT55G4eg8+WJ5d4vNobG3j9V+aBlZjCDXWOADbzw1OHF9QS8pS10HiYmzNWW2gQwoBe
+	 LtTqBNPjeEe7uKE4+7ko/7RMuIb2fPkaIkD25jcxCyEdovYzypPVntn0QjNDia/NdWK9M
+	 SCqaTZrVceqg/u32zWOZJX5ycAK524KS9n1uOCyMJ+GSFT+FX7jKgoZVfXohnQD1IqRKh
+	 cEiU8EeAVPGps3Orn1gGdyptnDFuPKyc3tqW0sYY8Frp5PP0BWhs6RJ9MhCbKaTztfWxi
+	 wJlWBcWWH/3tMFe1WPAVpKc3m//8NFEsCjCdhRXWbW55CtErAzkhfw90mbWm8RvuWnQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795619356;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795619359;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=JL77zS4VNECsc7XkWOxsO3UGn9Er5K3Ll5YhWCQ/X4c=;
-	b=uhFCMkPd57sMUmVJ+Ggq4xgum2F1S3zNbtaR/QP93pIoC2tr+KB/CXWfadphhNz7A2ks
-	 fbhxtmMpy/4DZEqo8+IifE1rp8cRJsx9lK2LfvPjHZHG3wpDinOrRzAJHD5+YBs6VAhSe
-	 ihOV/qsRwD+aveIpd5GrhAumtgGIBO49rW8Eehx6uGpVZZPT49a3hK5Fnprdiz6cmQ/Sf
-	 DIY5i2V7bTVa+mXehTQLfHc1NK8V6UVF96MKSiXppq0I/ukWdVsXGnUqQIsHClMpA3rp+
-	 xMHmwUhVHIdena8QCd0np5YvNIDEwNlJMcWqISmoGe8IRPzIen0zw0IZYAHkFffFY+Q==
+	bh=8j0zix3elYeiCygWAlNrYVtgP7G4gy+1B7R34Y8EDN4=;
+	b=QMg6ETjzRWCjnJ5ht7hiTpkpk0ctg9SKXOagSIi/fn3z8z2sqXYezsJCj+Km8YX9rR8h
+	 loYqfFaYbXLJnDdsLyRAdiariPXJz+adc9WoPOUG4G523mvNQe5yqrlaj/SYs10sUskkz
+	 kzMv3VVg3299FbLJsdE83f/DYJoldNmIQxtILVBPCxdAhC8zr2Zec0mPcEDgzilN9IXSo
+	 RQ2c/vXmH5B/2o8xJtz7B/RXGLvIbDQ3Iqepv+cLWNJiNqNQD2h2a3lkQ4wtIlv1EjiZB
+	 E114BLLYlHhXXjFYHI3qlfNaUgi36cqtLQWmDlIl11bBG6kdPP8PTJcBvfS05yLiuwg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=qnayEiRB;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="pH9/35Ig";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E09B6606A321;
-	Wed, 25 Nov 2026 15:09:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 10F92606A327;
+	Wed, 25 Nov 2026 15:09:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=qnayEiRB
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D13A01F000C4;
-	Wed, 25 Nov 2026 15:09:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=pH9/35Ig
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 116131F000C4;
+	Wed, 25 Nov 2026 15:09:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795619355;
-	bh=JL77zS4VNECsc7XkWOxsO3UGn9Er5K3Ll5YhWCQ/X4c=;
+	s=korg; t=1795619358;
+	bh=8j0zix3elYeiCygWAlNrYVtgP7G4gy+1B7R34Y8EDN4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=qnayEiRBt8IvOyw8u/PDhVNL2u4bOi67vwH8bbxJ66tK0t6W32xFN526v8hUU+QKU
-	 8IE/reNiGb+yoikG/q3JnsR2c75KTtsna3Q0PWx2xy7oV6MzRqKrpQXTbiaQQ8qkNL
-	 EVFUjNCQ8CpY0aAUC9fLtX3KYfDaXdsjjMLAGMe0=
+	b=pH9/35IggmsD7d9GNycoCDsPhDusciRBB90YoLrYDynRWG4HGFYW+TY+h9tbGc8Nv
+	 B5Dgkr3KxwQYB0mEbiVmJeZB3D/7lsuLeftPsTx31iboq72rZJYQd6lVbGrIJFbh8H
+	 9sszFG/McO44VVYSwJS9NePIzCI/uvo9uNSgURsM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andrew Davison <andy@dvsn.net>,
-	Takashi Iwai <tiwai@suse.de>
-Subject: [PATCH 7.3 0570/1005] ALSA: hda: Fix [codec] ID matching in patch files for IDs with bit 31 set
-Date: Wed, 25 Nov 2026 15:31:48 +0100
-Message-ID: <20261125143835.103245023@linuxfoundation.org>
+	Jaewon Jung <jaewon8868@gmail.com>,
+	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>,
+	Shuah Khan <skhan@linuxfoundation.org>
+Subject: [PATCH 7.3 0571/1005] selftests/ftrace: Add missing spaces after ! in probe syntax tests
+Date: Wed, 25 Nov 2026 15:31:49 +0100
+Message-ID: <20261125143835.125918513@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143821.729802100@linuxfoundation.org>
 References: <20261125143821.729802100@linuxfoundation.org>
@@ -67,61 +68,57 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Andrew Davison <andy@dvsn.net>
+From: Jaewon Jung <jaewon8868@gmail.com>
 
-commit fda103c1432f344e1cd548f346d157b1e67ee7c5 upstream.
+commit 36990c8fda77d918b1e52d5d6df3a144b552d86e upstream.
 
-parse_codec_mode() reads the vendor and subsystem IDs of a patch file's
-[codec] line into an int, and skips the check when the value is zero or
-negative, as documented. An ID with bit 31 set, such as SigmaTel's
-0x8384xxxx or Intel's 0x8086xxxx, comes out negative, so it is taken as
-a wildcard and the section is applied to every codec instead of the one
-it names.
+Add the missing space between ! and grep. Otherwise, the shell tries
+to run !grep and reports "!grep: not found". This always skips the
+conditional checks without checking for kernel return probe argument
+support.
 
-This was seen on an OpenPeak OpenFrame 2 with an IDT 92HD75B2X5
-(0x111d7608). A patch file written for the STAC9202 (0x83847632) in the
-related OpenFrame 1 was applied to it, swapping the headphone and
-speaker pin configurations, so auto-mute never muted the speaker.
-
-Read the IDs as long long, so real IDs are compared exactly. Values
-written as negative numbers (e.g. -1) still act as wildcards, as
-documented; a hex value such as 0xffffffff is now compared as written.
-
-Tested on 6.18.60 on an OpenFrame 2, with a rebuilt snd-hda-codec and
-the STAC9202 patch file: user_pin_configs stays empty for the IDT codec,
-and the headphone and line-out pins are assigned as the BIOS sets them.
-Not tested on a STAC9202 itself.
-
-The bug was tracked down and this fix written with an AI coding
-assistant (Claude Code, Claude Opus 5.5), which also ran the tests
-above. I have reviewed the change and the tests.
-
-Fixes: ef940b0403d4 ("ALSA: hda - Allow patching with any vendor/subsystem ids")
+Link: https://lore.kernel.org/r/20261025075044.1750113-1-jaewon8868@gmail.com
+Fixes: 25f00e40ce79 ("tracing/probes: Support $argN in return probe (kprobe and fprobe)")
 Cc: stable@vger.kernel.org
-Signed-off-by: Andrew Davison <andy@dvsn.net>
-Link: https://patch.msgid.link/20261106175518.18629-1-andy@dvsn.net
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Signed-off-by: Jaewon Jung <jaewon8868@gmail.com>
+Acked-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
+Signed-off-by: Shuah Khan <skhan@linuxfoundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/hda/common/sysfs.c |    5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ tools/testing/selftests/ftrace/test.d/dynevent/fprobe_syntax_errors.tc |    4 ++--
+ tools/testing/selftests/ftrace/test.d/kprobe/kprobe_syntax_errors.tc   |    2 +-
+ 2 files changed, 3 insertions(+), 3 deletions(-)
 
---- a/sound/hda/common/sysfs.c
-+++ b/sound/hda/common/sysfs.c
-@@ -512,11 +512,12 @@ static inline int strmatch(const char *a
- static void parse_codec_mode(char *buf, struct hda_bus *bus,
- 			     struct hda_codec **codecp)
- {
--	int vendorid, subid, caddr;
-+	long long vendorid, subid;
-+	int caddr;
- 	struct hda_codec *codec;
+--- a/tools/testing/selftests/ftrace/test.d/dynevent/fprobe_syntax_errors.tc
++++ b/tools/testing/selftests/ftrace/test.d/dynevent/fprobe_syntax_errors.tc
+@@ -33,7 +33,7 @@ check_error 'f vfs_read ^$stack10000'	#
  
- 	*codecp = NULL;
--	if (sscanf(buf, "%i %i %i", &vendorid, &subid, &caddr) == 3) {
-+	if (sscanf(buf, "%lli %lli %i", &vendorid, &subid, &caddr) == 3) {
- 		list_for_each_codec(codec, bus) {
- 			if ((vendorid <= 0 || codec->core.vendor_id == vendorid) &&
- 			    (subid <= 0 || codec->core.subsystem_id == subid) &&
+ check_error 'f vfs_read ^$arg10000'	# BAD_ARG_NUM
+ 
+-if !grep -q 'kernel return probes support:' README; then
++if ! grep -q 'kernel return probes support:' README; then
+ check_error 'f vfs_read $retval ^$arg1' # BAD_VAR
+ fi
+ check_error 'f vfs_read ^$none_var'	# BAD_VAR
+@@ -100,7 +100,7 @@ if grep -q "<argname>" README; then
+ check_error 'f vfs_read args=^$arg*'		# BAD_VAR_ARGS
+ check_error 'f vfs_read +0(^$arg*)'		# BAD_VAR_ARGS
+ check_error 'f vfs_read $arg* ^$arg*'		# DOUBLE_ARGS
+-if !grep -q 'kernel return probes support:' README; then
++if ! grep -q 'kernel return probes support:' README; then
+ check_error 'f vfs_read%return ^$arg*'		# NOFENTRY_ARGS
+ fi
+ check_error 'f vfs_read ^hoge'			# NO_BTFARG
+--- a/tools/testing/selftests/ftrace/test.d/kprobe/kprobe_syntax_errors.tc
++++ b/tools/testing/selftests/ftrace/test.d/kprobe/kprobe_syntax_errors.tc
+@@ -108,7 +108,7 @@ if grep -q "<argname>" README; then
+ check_error 'p vfs_read args=^$arg*'		# BAD_VAR_ARGS
+ check_error 'p vfs_read +0(^$arg*)'		# BAD_VAR_ARGS
+ check_error 'p vfs_read $arg* ^$arg*'		# DOUBLE_ARGS
+-if !grep -q 'kernel return probes support:' README; then
++if ! grep -q 'kernel return probes support:' README; then
+ check_error 'r vfs_read ^$arg*'			# NOFENTRY_ARGS
+ fi
+ check_error 'p vfs_read+20 ^$arg*'		# NOFENTRY_ARGS
 
 
