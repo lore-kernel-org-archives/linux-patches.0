@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795622234;
-	b=oPq+XI6siovP+s7s5vWL86PV9QZq8h4D1pVzsiynstrXTuTJSDjYf7+TOUpVXv2i+r4U
-	 OOhlPBlM0KjiyHE6Drsk1XT0QERX8YIgjg3tsEhrnpHSa7k4Gmr4T1U8FugBxR888I3CD
-	 ZH4cgU+MXl1gQ8ar0ydjh9Yg/sGqKdk4fk8tF5l3aJbh62mklkbXI3rCLuwWqsVPhxK5J
-	 LnN1xEDHE2+UqVC1TnF0vw1CKsj4FhHxEgrKc4R8BjoK8IpdLYweSmpGzvYAsglzjrzoj
-	 /8n89nDc2JWFQbhHUtZ/gQ/1PZzmyQEQ9i//as+cHLsBZXoOGhnI34AYO/hzyzNFelg==
+	t=1795622237;
+	b=hERN+b5Zb/QFV8LybOK0r/QpGudNWXcc0KViu63JYjqhsEzuKUaOT+y55yemFxoLEXYY
+	 Gh604qQboC43Pu9bPCIlfcauBFYiOF02kXZM5ApXcyNbhwlsMig/HSlYQc7iNnkcBbqiM
+	 +V67mHJDrvrkmta9B3olgJkZO1gDX3CSFfZuOz9cx+0ZU4w4IjDBKFdG7ATaYE55CyZb1
+	 3BU+llqtfpnz56XDBHWgoKXWRNPJ/OsBYjGdaiIGHzzcZJuYeIh4W6kV+pViqMbUDgPRj
+	 5JFQdkFHD3ubUgFM4D4XL10MwuQQmp/eh2esdEw8rSwL9ZVDfIe1UVHMyntirAdPg6A==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795622234;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795622237;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=qaUFevb4hhAe1FSBqyKKVwWpHQ3xLzKBtuax6kQ9So8=;
-	b=hSqojpK+0XSGTuw4SmjBGQEA6ntZjeNWr4wZSwxT+o3bGhXuVXT0GGC7egwUuk6eHMIn
-	 7hbnO1T9tQJ9ClEgCOAx44C2gsU796JKgq1zchOHcWsAoh8iiiej/IiPaK/V/2rf5XZkX
-	 iIhw7/JWca8HPpGjviMVPNvhUPmVFgnwSIbK54earcuklaLF8CwKi6P1xEsyTCt3RUJWw
-	 WQpk6Mu/JstGlsX3su9cdssKSpa9MoTm1TF11MuzcZQRhcIhu9XC2XlCKUe61+7ki0Lqz
-	 LL8wdaVF8vqce1Uy5Q3osxfswPYrn/DGV7BQzwBIGrydMkSALUl4JraY7UFj8pnW13A==
+	bh=afdvdfgExHGXdb0VloHPuJc2Aj7ZYcUOJLhshR5DSUM=;
+	b=O1ZsQPgx0SmE1dAlwap9XiWe66qvwM1Wev/fEpEOd2r39UCNUXnnyP6RNYLVtEUOTtDJ
+	 DojPon+/ABQOpF7860CkHvdaCYY0SnrnBG21ODtDT2iQSpSJ/W2q22zFJaM3QJofHOR2s
+	 fbZ5BoCUmE9BI3WQdcHRYQxUAx1RZZWtFuAmGrPt7EQ/W4I7yAqgLiZpwPMSeyv1D0m8m
+	 K/BfNlWt/UClHFEOcvCtFpaLRYaVybHJk1EGh/WiZ28yrF1wFSflfn+1g1zTH3rTIZco/
+	 L3yS9Qap84ooc+qBDKMk1BE81W2hbaUGgWCn8SJfDTLQAJjdYsDhuTNgGmwHV8aPt6w==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=kPLZ4f8p;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=sADzG5iL;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0D7E4606A31E;
-	Wed, 25 Nov 2026 15:57:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1298E606A323;
+	Wed, 25 Nov 2026 15:57:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=kPLZ4f8p
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5ED2F1F000C0;
-	Wed, 25 Nov 2026 15:57:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=sADzG5iL
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3507F1F000CF;
+	Wed, 25 Nov 2026 15:57:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795622233;
-	bh=qaUFevb4hhAe1FSBqyKKVwWpHQ3xLzKBtuax6kQ9So8=;
+	s=korg; t=1795622236;
+	bh=afdvdfgExHGXdb0VloHPuJc2Aj7ZYcUOJLhshR5DSUM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=kPLZ4f8p3Z22GEkBePVvlKyNeeb1kKPsfgjUgjq9n0B2WPG/TresDsziz7GbLDnyb
-	 bAGxLp8QUE43rbqxLOPA0xraTtUygH5yZMWvITwG3efmmOC9unW/UyZLmakoDT26fw
-	 AiaidPn8PZw9WNM2PPq2lHr718e/IJ30EYKLNnBA=
+	b=sADzG5iL+TzL24KvmoLDRWFN6bN8XVrFVzy8XTVyzbIWjO9ITzOmJuieUSzJCYR3Z
+	 m52vDNsIpX3greEUw93UFLx9FocNzXW2d6LitTezXBrOQmuB7+4LtiEgmWa3rc5C1S
+	 1UQT9fpoNJDqaD0FKqTH0ItfkgoIa6rWkjCiT+QI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wenbo Sun <sunwenbo@cmss.chinamobile.com>,
+	syzbot+1994e2ecf323ed90f255@syzkaller.appspotmail.com,
+	Jiahao Xu <xujiahao@cmss.chinamobile.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 472/990] amt: use ipv6_hdr() in amt_mldv1_leave_handler()
-Date: Wed, 25 Nov 2026 15:30:39 +0100
-Message-ID: <20261125143833.151115068@linuxfoundation.org>
+Subject: [PATCH 6.18 473/990] net: usb: cdc_ncm: dont underflow the NDP room check
+Date: Wed, 25 Nov 2026 15:30:40 +0100
+Message-ID: <20261125143833.173906825@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143822.072087159@linuxfoundation.org>
 References: <20261125143822.072087159@linuxfoundation.org>
@@ -68,60 +69,87 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Wenbo Sun <sunwenbo@cmss.chinamobile.com>
+From: Jiahao Xu <xujiahao@cmss.chinamobile.com>
 
-[ Upstream commit 6730fe495c35f174a424ab58cf5fdf99ce4746e9 ]
+[ Upstream commit b507828c7b6135ff7a4b69eba6e33502b4839fb9 ]
 
-In amt_mldv1_leave_handler(), which handles IPv6 MLDv1 Done
-(ICMPV6_MGM_REDUCTION) messages, the source address is mistakenly
-extracted via ip_hdr(skb)->saddr into host.ip4 instead of copying the
-IPv6 source address from ipv6_hdr(skb)->saddr into host.ip6 as
-amt_mldv1_report_handler() does.
+cdc_ncm_ndp16() and cdc_ncm_ndp32() verify that the new NDP and the
+datagram fit into the NTB with an unsigned subtraction:
 
-Because amt_lookup_group() compares the full union amt_addr for v6
-groups, looking up the group with a 32-bit IPv4 header slice fails to
-match the group entry created by amt_mldv1_report_handler(). As a
-result, amt_del_group() is not called when an MLDv1 listener leaves,
-and the AMT relay continues forwarding multicast traffic until the
-group timer expires.
+	if ((ctx->tx_curr_size - skb->len - reserve) < ctx->max_ndp_size)
+		return NULL;
 
-Use ipv6_hdr(skb) and copy ip6h->saddr into host.ip6 so that MLDv1
-Done messages properly match and delete the corresponding IPv6 group.
+Nothing guarantees that skb->len plus the reserve stays below
+tx_curr_size, and when it does not the subtraction wraps around to a
+huge value, the check passes, and the skb_put_zero() of max_ndp_size
+bytes that follows overruns the NTB:
 
-This issue was found via LLM-assisted code review, confirmed by
-reproducing the stale group forwarding in a User-Mode Linux (ARCH=um)
-environment, and verified in UML by testing that AMT relay multicast
-forwarding stops immediately after receiving an MLDv1 Done message.
+  skbuff: skb_over_panic: text:ffff80000db33558 len:428 put:172
+  head:ffff0000c2c66100 tail:0x1ac end:0x140
+  kernel BUG at net/core/skbuff.c:200
+  skb_put_zero include/linux/skbuff.h:2595 [inline]
+  cdc_ncm_ndp16 drivers/net/usb/cdc_ncm.c:1132 [inline]
+  cdc_ncm_fill_tx_frame+0xdf0/0x30e0 drivers/net/usb/cdc_ncm.c:1309
 
-Fixes: b75f7095d4d4 ("amt: add mld report message handler")
-Signed-off-by: Wenbo Sun <sunwenbo@cmss.chinamobile.com>
-Link: https://patch.msgid.link/20261111031147.105834-1-sunwenbo@cmss.chinamobile.com
+Here tx_curr_size is 0x140 = 320, skb->len is already 256 and the
+skb_put_zero() wants another 172 bytes.
+
+Two device controlled settings make this reachable:
+
+  - dwNtbOutMaxSize = 320 caps tx_max at 320.  The lower bound computed
+    in cdc_ncm_check_tx_max() is max_datagram_size + max_ndp_size + the
+    NTH header, but cdc_ncm_setup() clamps tx_max before
+    cdc_ncm_set_dgram_size() runs, so max_datagram_size is still 0 and
+    the bound is only max_ndp_size + the NTH header.  It does not
+    reserve room for one datagram plus one NDP.
+
+  - wNdpOutAlignment = 256 is accepted by cdc_ncm_fix_modulus() as long
+    as it is smaller than tx_max, and cdc_ncm_align_tail() then pads the
+    12 byte NTH header up to 256 bytes right before this check.
+
+An NDP can also be added to an NTB that already holds datagrams through
+cdc_mbim_tx_fixup(), which uses a different signature per MBIM session.
+On plain cdc_ncm the chain lookup in cdc_ncm_ndp16() returns the
+existing NDP for the single signature, so there the create path is
+normally reached for the first datagram of each NTB.
+
+Rewrite the test as an addition, which cannot underflow and gives the
+same answer whenever the original subtraction did not wrap.
+
+Fixes: c78b7c586657 ("net: cdc_ncm: refactoring for tx multiplexing")
+Fixes: 0fa81b304a79 ("cdc_ncm: Implement the 32-bit version of NCM Transfer Block")
+Reported-by: syzbot+1994e2ecf323ed90f255@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=1994e2ecf323ed90f255
+Signed-off-by: Jiahao Xu <xujiahao@cmss.chinamobile.com>
+Link: https://patch.msgid.link/20261111124156.637661-1-xujiahao@cmss.chinamobile.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/amt.c | 5 ++---
- 1 file changed, 2 insertions(+), 3 deletions(-)
+ drivers/net/usb/cdc_ncm.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/net/amt.c b/drivers/net/amt.c
-index 2a8a0c0e78993..e577b205f37b1 100644
---- a/drivers/net/amt.c
-+++ b/drivers/net/amt.c
-@@ -2134,13 +2134,12 @@ static void amt_mldv1_leave_handler(struct amt_dev *amt, struct sk_buff *skb,
- 				    struct amt_tunnel_list *tunnel)
- {
- 	struct mld_msg *mld = (struct mld_msg *)icmp6_hdr(skb);
--	struct iphdr *iph = ip_hdr(skb);
-+	struct ipv6hdr *ip6h = ipv6_hdr(skb);
- 	struct amt_group_node *gnode;
- 	union amt_addr group, host;
+diff --git a/drivers/net/usb/cdc_ncm.c b/drivers/net/usb/cdc_ncm.c
+index ca06525892ac3..5ecd6d951a35f 100644
+--- a/drivers/net/usb/cdc_ncm.c
++++ b/drivers/net/usb/cdc_ncm.c
+@@ -1125,7 +1125,7 @@ static struct usb_cdc_ncm_ndp16 *cdc_ncm_ndp16(struct cdc_ncm_ctx *ctx, struct s
+ 		cdc_ncm_align_tail(skb, ctx->tx_ndp_modulus, 0, ctx->tx_curr_size);
  
- 	memcpy(&group.ip6, &mld->mld_mca, sizeof(struct in6_addr));
--	memset(&host, 0, sizeof(union amt_addr));
--	host.ip4 = iph->saddr;
-+	memcpy(&host.ip6, &ip6h->saddr, sizeof(struct in6_addr));
+ 	/* verify that there is room for the NDP and the datagram (reserve) */
+-	if ((ctx->tx_curr_size - skb->len - reserve) < ctx->max_ndp_size)
++	if (skb->len + reserve + ctx->max_ndp_size > ctx->tx_curr_size)
+ 		return NULL;
  
- 	gnode = amt_lookup_group(tunnel, &group, &host, true);
- 	if (gnode) {
+ 	/* link to it */
+@@ -1180,7 +1180,7 @@ static struct usb_cdc_ncm_ndp32 *cdc_ncm_ndp32(struct cdc_ncm_ctx *ctx, struct s
+ 		cdc_ncm_align_tail(skb, ctx->tx_ndp_modulus, 0, ctx->tx_curr_size);
+ 
+ 	/* verify that there is room for the NDP and the datagram (reserve) */
+-	if ((ctx->tx_curr_size - skb->len - reserve) < ctx->max_ndp_size)
++	if (skb->len + reserve + ctx->max_ndp_size > ctx->tx_curr_size)
+ 		return NULL;
+ 
+ 	/* link to it */
 -- 
 2.53.0
 
