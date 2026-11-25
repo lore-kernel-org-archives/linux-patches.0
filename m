@@ -1,51 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795623335;
-	b=vrQ/kEZyk4BUsShJlfN45gkcyJxx+3SyFTqnMRkd4zYLQOIv4/103MifJKeSYlgphRQh
-	 dVs8jaX7oBESmW6YHs895GXWneleZce3zfJ0u2N0BEsQPSgVBvSVX7p6MpqHQhBtREVww
-	 vKpW8qoq+YbPpcV506JO7PlTxQz7GIyVvwp2Tv//1pxpYeb8HZm4ecUlUnNh4zVe+BSR6
-	 RYX3HltTr5zmUAizXmtQzGXy2MZgzbCy9puXNdRXgcp0jLDdra7t7/g9vSMnTAov6fv/9
-	 33cSixzG92pmvZNFXvTcy1JmzUwervYJfhGgVNW09cuXOIaD2AXrtgkVv212gaKsG5g==
+	t=1795623338;
+	b=B398iTRA2wPHJ2kLGhFHmC6VtHlJYRsTgYDd/Qaia0kGDbSEPtyVx6dYJPUneuAFnHBM
+	 llTsg+H3lbeVXvhmQbc0D9aZk84KruPGXykZMplMovyqrE3FE4zu+OesOux15NMbey0xr
+	 rCd7rwUEVyUHIp16/g2CuWRJOGA3UfPmrB0aLO65ql8n9V67N/VAaQukBjEWYGYW1rLft
+	 JCSPzBpv/CirrRzuERhaLjvTsj5oyBxvwqSmjj4BpU/G7O6UEdxupVr6eAY4XSJovykpq
+	 47gIvYPIyiqLe/1M57gwhZLy7J9zTUBD17P1H4wNfcBTFRxyUOFoaJqdKN8PVjhcdNQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795623335;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795623338;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=PrEloXTYLCef0RaIvC8ueWuYrMUeCeBdtpRxW7N5Lb4=;
-	b=l8g2VcZfMXrHF++ZXWUfjDIeuTenBbburFGTB1btIMxdYsLdsyN6jO81lton1SCCV0WX
-	 5tdVkj/IHA6DosFwTqEAugpWLy8VX23h99+mwLsgWiARDOulaN4syEMR1/peCz58wQRg+
-	 IN21k7kAFBRK168p/36M9eFZyHli87MK9NK0eKH5FJgDh6TeI7xus8hDTL4L9MUjvWRka
-	 0oMKK+v4C+ADZR3iXkhQgIlgeuscX1XEa99Q+CmqQJUzekKWD5dOJwv6sPXeqO4XCXa55
-	 lHclJb26SuxbJ9Eg6/kzSrR+dHwgdFW4mqESoNHzOCx+XqgQHUz0PQocBUE+Ppz3KCA==
+	bh=ppaaMH/tmVQfy6No/XlaR37RMp/LyeCpgxO/bxVZamg=;
+	b=egJmHsWkqt+cE5tRw9O/sgE5rIYqp12K9T5Bp1AKmm6Ebz9ulo31++7XxbtvEzmfX/5p
+	 dMEeQdpCpBxBU+4XqR7YpsV+O8wLbJF+rLyfWMCGaUHvtFW2jrUEKoMOZahFGSBxSJ92M
+	 WB94RUQ/Hj5rbswbFArrZ2pCf5FeKAM4UsW5iIpYZew46d8NTFY6DbUEn9OAuSClCamK6
+	 hsG4ndcQVCR9hm5wvl+CHBCZKL+FBJvIxGUsrWfczBGGGjHFlDGoo//EB+LsJcxLLfGNa
+	 9UNKVris5MiJ0/3MDrSxJhNED3YHeQF1Wh87v2U7nh2RBELQxhBJHRfk9eFazfRAyPA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=M8S5F3jy;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="UpBVMD/+";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5686C606A323;
-	Wed, 25 Nov 2026 16:15:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B32B8606A323;
+	Wed, 25 Nov 2026 16:15:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=M8S5F3jy
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8E15F1F000EB;
-	Wed, 25 Nov 2026 16:15:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=UpBVMD/+
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C06E61F000C0;
+	Wed, 25 Nov 2026 16:15:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795623335;
-	bh=PrEloXTYLCef0RaIvC8ueWuYrMUeCeBdtpRxW7N5Lb4=;
+	s=korg; t=1795623338;
+	bh=ppaaMH/tmVQfy6No/XlaR37RMp/LyeCpgxO/bxVZamg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=M8S5F3jycdcm2lQlLDaT6UmZqb/dsWv6LoY5051QlMjz7/4gnbCFjmP9eY6sN1MIi
-	 KleQvae61ndN7K/pWfnhEWnkQv5WPjt5MWdLmI3nNp8TNX908JRhtI3IfCRFWQLucG
-	 5lp+7Mrsp2Y9xuQCPeTUYsunXaZxND068jGTIZOY=
+	b=UpBVMD/+6XHvodyL5JuV04EPL5MBvIQBYgsACmA2+u5b9zrh6QfnRjM89P+7tB1UZ
+	 mzGrZ+HtaX8E3y+mKnBNHhhqqvgP2n5cwjxCax48ylke1v6wUCZc2L/zSufSrqHg59
+	 7vE/s7IDkgjd3c/M7uTBZ4oG1Tdi3lUFg43TNXac=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhao Li <enderaoelyther@gmail.com>,
-	Johannes Berg <johannes.berg@intel.com>
-Subject: [PATCH 6.18 823/990] wifi: mac80211: bound pending OCB station allocations
-Date: Wed, 25 Nov 2026 15:36:30 +0100
-Message-ID: <20261125143841.314883813@linuxfoundation.org>
+	Aaron Antone <aae@amazon.com>,
+	Billy Tsai <billy_tsai@aspeedtech.com>,
+	Andrew Jeffery <andrew@codeconstruct.com.au>,
+	Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
+Subject: [PATCH 6.18 824/990] gpio: aspeed: Clear only the acked lines G4 interrupt status
+Date: Wed, 25 Nov 2026 15:36:31 +0100
+Message-ID: <20261125143841.337313197@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143822.072087159@linuxfoundation.org>
 References: <20261125143822.072087159@linuxfoundation.org>
@@ -67,89 +69,58 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zhao Li <enderaoelyther@gmail.com>
+From: Billy Tsai <billy_tsai@aspeedtech.com>
 
-commit ee1a5e92dba0a98cabe476c780e3af4f0ab88b27 upstream.
+commit 5d362564bd2982def7e80d7f1e756a97440c7adb upstream.
 
-Delaying the OCB station worker while frames arrive from new peers can
-retain an unbounded number of station allocations.
+The G4 interrupt status registers are write-1-to-clear: writing 0 to a
+bit has no effect and writing 1 clears that line's status flag.
+aspeed_gpio_irq_ack() clears a line's status through
+aspeed_g4_reg_bit_set(), which reads the bank's status register, sets
+the line's bit and writes the whole value back. That write clears every
+interrupt pending in the 32-line bank, not just the acked one.
 
-The receive-side limit counts installed stations, while new allocations
-wait on incomplete_stations until process context inserts them. The list
-lock does not cover the interval between allocation and list insertion.
+aspeed_gpio_irq_handler() reads each bank's status register once and
+dispatches the lines that were set. If another line in the same bank
+latches an edge after that read and before an ack in the bank, the ack
+clears its status and the handler is never called for it, so the edge
+is lost.
 
-Reserve one of 128 pending slots per interface before allocation. Release
-the reservation on allocation failure, after the worker inserts or frees
-the station, and when leave frees the pending list.
+Write only the line's own bit when clearing the interrupt status on G4.
 
-LLM assistance was used to find the bug and review.
-
-Fixes: 239281f803e2 ("mac80211: 802.11p OCB mode support")
+Fixes: 79fc9a2fcc45 ("gpio: aspeed: Create llops to handle hardware access")
 Cc: stable@vger.kernel.org
-Signed-off-by: Zhao Li <enderaoelyther@gmail.com>
-Link: https://patch.msgid.link/20261028142302.16634-3-enderaoelyther@gmail.com
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+Reported-by: Aaron Antone <aae@amazon.com>
+Suggested-by: Aaron Antone <aae@amazon.com>
+Signed-off-by: Billy Tsai <billy_tsai@aspeedtech.com>
+Reviewed-by: Andrew Jeffery <andrew@codeconstruct.com.au>
+Tested-by: Andrew Jeffery <andrew@codeconstruct.com.au>
+Link: https://patch.msgid.link/20261104-gpio-aspeed-irq-status-v1-1-9805645f856d@aspeedtech.com
+Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/mac80211/ieee80211_i.h |    2 ++
- net/mac80211/ocb.c         |   13 ++++++++++++-
- 2 files changed, 14 insertions(+), 1 deletion(-)
+ drivers/gpio/gpio-aspeed.c |   11 +++++++++++
+ 1 file changed, 11 insertions(+)
 
---- a/net/mac80211/ieee80211_i.h
-+++ b/net/mac80211/ieee80211_i.h
-@@ -683,6 +683,7 @@ struct ieee80211_if_ibss {
-  * @wrkq_flags: OCB deferred task action
-  * @incomplete_lock: delayed STA insertion lock
-  * @incomplete_stations: list of STAs waiting for delayed insertion
-+ * @incomplete_sta_count: pending entries and reserved allocations
-  * @joined: indication if the interface is connected to an OCB network
-  */
- struct ieee80211_if_ocb {
-@@ -691,6 +692,7 @@ struct ieee80211_if_ocb {
+--- a/drivers/gpio/gpio-aspeed.c
++++ b/drivers/gpio/gpio-aspeed.c
+@@ -1045,6 +1045,17 @@ static void aspeed_g4_reg_bit_set(struct
+ 	void __iomem *addr = aspeed_gpio_g4_bank_reg(gpio, bank, reg);
+ 	u32 temp;
  
- 	spinlock_t incomplete_lock;
- 	struct list_head incomplete_stations;
-+	atomic_t incomplete_sta_count;
- 
- 	bool joined;
- };
---- a/net/mac80211/ocb.c
-+++ b/net/mac80211/ocb.c
-@@ -70,9 +70,18 @@ void ieee80211_ocb_rx_no_sta(struct ieee
- 	band = chanctx_conf->def.chan->band;
- 	rcu_read_unlock();
- 
-+	if (!atomic_add_unless(&ifocb->incomplete_sta_count, 1,
-+			       IEEE80211_OCB_MAX_STA_ENTRIES)) {
-+		net_info_ratelimited("%s: No room for a new OCB STA entry %pM\n",
-+				     sdata->name, addr);
++	/*
++	 * The interrupt status register is write-1-to-clear. Write only this
++	 * line's bit so that interrupts pending on the other lines of the bank
++	 * stay latched.
++	 */
++	if (reg == reg_irq_status) {
++		if (val)
++			iowrite32(GPIO_BIT(offset), addr);
 +		return;
 +	}
 +
- 	sta = sta_info_alloc(sdata, addr, GFP_ATOMIC);
--	if (!sta)
-+	if (!sta) {
-+		atomic_dec(&ifocb->incomplete_sta_count);
- 		return;
-+	}
- 
- 	/* Add only mandatory rates for now */
- 	sband = local->hw.wiphy->bands[band];
-@@ -142,6 +151,7 @@ void ieee80211_ocb_work(struct ieee80211
- 			ieee80211_ocb_finish_sta(sta);
- 			rcu_read_unlock();
- 		}
-+		atomic_dec(&ifocb->incomplete_sta_count);
- 		spin_lock_bh(&ifocb->incomplete_lock);
- 	}
- 	spin_unlock_bh(&ifocb->incomplete_lock);
-@@ -225,6 +235,7 @@ int ieee80211_ocb_leave(struct ieee80211
- 		spin_unlock_bh(&ifocb->incomplete_lock);
- 
- 		sta_info_free(local, sta);
-+		atomic_dec(&ifocb->incomplete_sta_count);
- 		spin_lock_bh(&ifocb->incomplete_lock);
- 	}
- 	spin_unlock_bh(&ifocb->incomplete_lock);
+ 	if (reg == reg_val)
+ 		temp = gpio->dcache[GPIO_BANK(offset)];
+ 	else
 
 
