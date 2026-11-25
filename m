@@ -1,56 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795626340;
-	b=3ndcbr6dPWDEYLDbdjqfUdkwmJxEgXUf3H893RVsjmoCmZNLiSVD/G8UjDRJlvhnlId3
-	 /SmXIyfKxZ9MaDTgLsPlSisoyNaYeVJPZoaqCvx40xxA7cU6FYmsHhS+gzLd2jO/vqLKa
-	 SWtb5mYB9bG/8Vilokrry+inL7MvFRRiXjhK6JqBB144V7ES8BTcDlUuoslnHwldBgfij
-	 zMBOs1/QY0UkDLEqEYZ1DXh9Xkc2vSW9FvBxVrfTs3EiY0uIwhUp3DbVbghZf9xE4RfkG
-	 F8ofa3Wi+c4VMYz5vXw62plz7gjn0fdWlg6ehoSnaCoN9C125vvBe1GgC+YqTWl1sKA==
+	t=1795626343;
+	b=d/2cL8acZXF2KzaLuoTzuwjedn0vc7GfmYUHdFjD4MBAUqsE29hwmeBHgV2XZZkWHWsJ
+	 iubvcUHjJ3alnm6rb3GRLfQjkxnDtdG1npc4bpRqB4Ae5hXtukbSm9l8LIT3NMZKl7EYm
+	 K70Bgi/Hq2sgv/wviOx02WZ+nj4JBOsJwkJpNT334wnJjPZymF2IcMAN4lxF9TJXgrCTt
+	 jdGbyzWCGhyu0QN2g3IetRihAI3FxwnQX6Iomx7ouFwoITJYo/UEerEPG5WNHDxHdKTj3
+	 g/718d7of8YDrwGXHZShMFoebQ4ndy7/G0Ro/V6gEf92tmFnP1vsuZiEJbN0YWKQi/A==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795626340;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795626343;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=3m0Zvv0bfYv6mjKaFEZhzbwQO0EIp2aY8fE2lyKJoDI=;
-	b=H29tr0RD424iX9sBNKlI4b3YXMnVXMfUnQCz1fY5fNXwpRxvuqVhttWiGvwElSyU8JRi
-	 QqM/IykstiN+CEqObGw7C9/JUuPgf0Mi653oU5qkJ2g+J+Ch0KQ6vR/BYcrJ0r/oPTD8V
-	 qOEWK7x/Vs8Hb6uVwH7uuBwWfwBqfLXbk+vkFo/G93tFhlzggbumQR7MrcwLwr8A59yVf
-	 8tjU/DEDkkFvRMMqXAumfXimYKZn+jc8oHXlBtN0SyhHrNIQWbz7Uze7ZonE5dtSd41bN
-	 rI77HVqmeCawnYFpMRXIOzsLAvSyGx7+6R4EDFKQ6JJlK6wm8AZxevLA4OJh99NGneQ==
+	bh=Lyo5s8tG53jVooZ003Jv+XuduAbpIBvVqgptKIQpWK0=;
+	b=sTimjEEuywnjrF8LJj61eL5AERPB1/SSFjYhD6FrCx9pevm/AzcIJI/1XrNALnJbB6VK
+	 sWXVLl/Djb7AXgkwNNXdo/QFKmQkCKStdz20qsDzEhhNbHSack7KzRXxcutPIwsLNCEG8
+	 k6mCX05rfcPD+To7qTtyyqT/8xCppSV57U9BHGL9yUXlCyTrxrXsbv+rtGmA4q1ndvnlE
+	 V+JMEI4fR9Q1WV/qEIyeXvQrDJYx1Gjp5/CvyMBPHEwHGZ6yR5eBdC+MSC9fc79DuWBUT
+	 1bbYO+O2H5N/EG7k0vkY4PcTIDv3TUiV3pIajkF6x4WcgW3TGIufPxU7jKlm8ziyD8g==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=nL3q1BNm;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Eh+BSqaD;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 875B4606A32C;
-	Wed, 25 Nov 2026 17:05:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 56918606A321;
+	Wed, 25 Nov 2026 17:05:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=nL3q1BNm
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7A94A1F000C4;
-	Wed, 25 Nov 2026 17:05:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Eh+BSqaD
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A78141F000CA;
+	Wed, 25 Nov 2026 17:05:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795626340;
-	bh=3m0Zvv0bfYv6mjKaFEZhzbwQO0EIp2aY8fE2lyKJoDI=;
+	s=korg; t=1795626343;
+	bh=Lyo5s8tG53jVooZ003Jv+XuduAbpIBvVqgptKIQpWK0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=nL3q1BNm5f/EHH657D02YsO8ygKYuIzDRHSRdNCHJdKXWd/21o+UtL1FjITkurozZ
-	 BFxmZUOlelTP31Tp5K6WfdEmk2l7xXu3RZQu13+NwlAMF8DtSgDnx5U7LJzWvZ/+ag
-	 mvDuIhQCISdWs6CjKBN5us5yYHi2NwVzkIyy+7Hg=
+	b=Eh+BSqaDrM9+JBYNKfMPoKhM7084JFAmuLkhg4lT/eYzjRGUeBtp4o4lbIJ6/veiZ
+	 eJoKoGgKngAxOETmT0RQRpCG59eo5ZHmS3UVx5ehwoSTcGkFXVGRIq5U7S3Ogc78hR
+	 aVOYz2Agp1CjSMKNZoa6OJINWKQxqdx/E6gaxblI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jon Hunter <jonathanh@nvidia.com>,
-	Brad Griffis <bgriffis@nvidia.com>,
-	Ido Schimmel <idosch@idosch.org>,
-	Furong Xu <0x1207@gmail.com>,
-	Thierry Reding <treding@nvidia.com>,
-	Ido Schimmel <idosch@nvidia.com>,
+	Daniel Baldin <DBaldin@dspace.de>,
+	Pascal Kneuper <PKneuper@dspace.de>,
 	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.12 812/816] net: stmmac: Apply new page pool parameters when SPH is enabled
-Date: Wed, 25 Nov 2026 15:39:20 +0100
-Message-ID: <20261125143907.965810633@linuxfoundation.org>
+Subject: [PATCH 6.12 813/816] net: stmmac: restore NET_IP_ALIGN in the RX DMA offset
+Date: Wed, 25 Nov 2026 15:39:21 +0100
+Message-ID: <20261125143907.989717262@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143849.205329330@linuxfoundation.org>
 References: <20261125143849.205329330@linuxfoundation.org>
@@ -72,53 +68,87 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Furong Xu <0x1207@gmail.com>
+From: Pascal Kneuper <PKneuper@dspace.de>
 
-commit cb6cc8ed77177c7553c2f8ac8605d32de58f43ac upstream.
+commit 23680bf5f8c69c923546b84a8e6c401bef8b88fe upstream.
 
-Commit df542f669307 ("net: stmmac: Switch to zero-copy in
-non-XDP RX path") makes DMA write received frame into buffer at offset
-of NET_SKB_PAD and sets page pool parameters to sync from offset of
-NET_SKB_PAD. But when Header Payload Split is enabled, the header is
-written at offset of NET_SKB_PAD, while the payload is written at
-offset of zero. Uncorrect offset parameter for the payload breaks dma
-coherence [1] since both CPU and DMA touch the page buffer from offset
-of zero which is not handled by the page pool sync parameter.
+Since the RX path was converted to zero-copy, the page pool page is handed
+to the stack directly as the skb head, and the offset the DMA engine writes
+at is what determines the alignment of the packet headers.
 
-And in case the DMA cannot split the received frame, for example,
-a large L2 frame, pp_params.max_len should grow to match the tail
-of entire frame.
+Before the conversion the payload was copied into an skb obtained from
+napi_alloc_skb(), which reserves NET_SKB_PAD + NET_IP_ALIGN. The
+conversion moved the headroom into stmmac_rx_offset() but did not carry
+over NET_IP_ALIGN, so on architectures where NET_IP_ALIGN is 2 the IP
+header now lands misaligned:
 
-[1] https://lore.kernel.org/netdev/d465f277-bac7-439f-be1d-9a47dfe2d951@nvidia.com/
+  64 (NET_SKB_PAD) + 14 (ethernet) + 20 (IP) = 98
 
-Reported-by: Jon Hunter <jonathanh@nvidia.com>
-Reported-by: Brad Griffis <bgriffis@nvidia.com>
-Suggested-by: Ido Schimmel <idosch@idosch.org>
+Same for the XDP branch:
+
+  256 (XDP_PACKET_HEADROOM) + 14 (ethernet) + 20 (IP) = 290
+
+On ARM32 this is fatal, because ldm and ldrd trap on unaligned addresses
+even when CONFIG_HAVE_EFFICIENT_UNALIGNED_ACCESS is set.
+
+Any received echo request panics the machine, e.g:
+
+  Unhandled fault: alignment exception (0x001) at 0x81873062
+  Internal error: : 1 [#1] SMP ARM
+  Hardware name: Altera SOCFPGA Arria10
+  PC is at icmp_echo+0x38/0xa8
+  LR is at icmp_rcv+0x22c/0x370
+  Call trace:
+   icmp_echo from icmp_rcv+0x22c/0x370
+   icmp_rcv from ip_protocol_deliver_rcu+0x2c/0x224
+   ip_protocol_deliver_rcu from ip_local_deliver+0xc8/0x1a0
+   ip_local_deliver from ip_sublist_rcv_finish+0x3c/0x50
+   ip_sublist_rcv_finish from ip_list_rcv_finish+0x110/0x118
+   ip_list_rcv_finish from ip_list_rcv+0xc8/0xdc
+   ip_list_rcv from __netif_receive_skb_list_core+0x170/0x1c0
+   ...
+   napi_complete_done from stmmac_napi_poll_rx+0xcb0/0x1030
+  Code: e24dd068 e59020a0 e28dc010 e0822001 (e8920003)
+  Kernel panic - not syncing: Fatal exception in interrupt
+
+The faulting instruction is the ldm of *icmp_hdr(skb) in icmp_echo().
+
+Fix by adding NET_IP_ALIGN back to the RX offset, which restores the
+alignment the stack used to get.
+
+Note that commit a955318fe67e ("stmmac: align RX buffers") made a similar
+change in 2021 and was reverted by commit 12d125b4574b ("stmmac: Revert
+"stmmac: align RX buffers"") because it caused packet corruption. That
+patch raised the offset from 0 without adjusting the buffer size
+accounting, so the DMA engine could arguably write past the end of the RX
+buffers, though this was never root caused.
+Commit df542f669307 ("net: stmmac: Switch to zero-copy in non-XDP RX
+path") since derives the page pool allocation from stmmac_rx_offset(), so
+the extra bytes are accounted for.
+
 Fixes: df542f669307 ("net: stmmac: Switch to zero-copy in non-XDP RX path")
-Signed-off-by: Furong Xu <0x1207@gmail.com>
-Tested-by: Jon Hunter <jonathanh@nvidia.com>
-Tested-by: Thierry Reding <treding@nvidia.com>
-Reviewed-by: Ido Schimmel <idosch@nvidia.com>
-Link: https://patch.msgid.link/20250207085639.13580-1-0x1207@gmail.com
+Cc: Daniel Baldin <DBaldin@dspace.de>
+Signed-off-by: Pascal Kneuper <PKneuper@dspace.de>
+Link: https://patch.msgid.link/20260824125014.47862-1-PKneuper@dspace.de
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ethernet/stmicro/stmmac/stmmac_main.c |    5 +++++
- 1 file changed, 5 insertions(+)
+ drivers/net/ethernet/stmicro/stmmac/stmmac_main.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
 --- a/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
 +++ b/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
-@@ -2051,6 +2051,11 @@ static int __alloc_dma_rx_desc_resources
- 	pp_params.offset = stmmac_rx_offset(priv);
- 	pp_params.max_len = STMMAC_MAX_RX_BUF_SIZE(num_pages);
+@@ -1327,9 +1327,9 @@ static void stmmac_display_rings(struct
+ static unsigned int stmmac_rx_offset(struct stmmac_priv *priv)
+ {
+ 	if (stmmac_xdp_is_enabled(priv))
+-		return XDP_PACKET_HEADROOM;
++		return XDP_PACKET_HEADROOM + NET_IP_ALIGN;
  
-+	if (priv->sph) {
-+		pp_params.offset = 0;
-+		pp_params.max_len += stmmac_rx_offset(priv);
-+	}
-+
- 	rx_q->page_pool = page_pool_create(&pp_params);
- 	if (IS_ERR(rx_q->page_pool)) {
- 		ret = PTR_ERR(rx_q->page_pool);
+-	return NET_SKB_PAD;
++	return NET_SKB_PAD + NET_IP_ALIGN;
+ }
+ 
+ static int stmmac_set_bfsize(int mtu, int bufsize)
 
 
