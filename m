@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795624986;
-	b=YL0wM+Hc4Alswftx+UqiK/+GoXEXXWL5q8DdLotcfCApRkrFWZBDsbFAWTuiNXuPaJoX
-	 idvi8WaknHX2XEatxnSdcA4hKGIrppmAC0u9QzA4R5VuiuWqYZTNzw4CrbuG2p1F5ULlS
-	 uFOKavNa1626uWBJ4QD4VqR1rVj6qfpfMz6zfo13QF+79L5cIkkmKx6+3UO8Hlz2/JacS
-	 aRhRyRly4HRjorvIkTEzGEaOWDoo0fHpxItoj95O1BgncTp02OcyUC0limbf2mQDR+22r
-	 GzbwfkJsNuMo80TWZFmKgpNtxR55NzFoa4Zgh2DoEG/wNAyZ3feEOpHrqINzfkm0eSg==
+	t=1795624989;
+	b=bGSYvLn0XzQvjvgm/C0w4gwNqYqX1Qt4dhLJDmV/qmU0Qgi1jhAM+jcBhXsg47aahYjO
+	 2u0txhjAXzf2Qw5Kji0FUEKH5Gz43cO7VDuzHWK8lUnudEo6m1bxi0ehQ194ADxglc5zK
+	 AWCg3eleOYnJq/214IElutu0Vqxr80zGjeTKeXsTx9kuHl1XqPjwSFFNSUXpYHwnEm8n3
+	 GFni6kjLXCMR9xh17yPFfc95IiF7w22yCKZ/sPvjLVQJ3jbHWbze0VdlFUBwmUoEssPqO
+	 pdwK7qATydIjYLDKtyPHJFvxBJuUrhyYqnJMCW27pYpLaLSIavtk6iL0SgZ8oepGojw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795624986;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795624989;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=1SDWS6qNY/H016uozujlpI9i8LfKLu4rKDiER3Djt3Q=;
-	b=GG1ukfSFy5brLe4fUo1u9X+zdJHoo6Dnjz/CnzqbymXjEGYPSspQa0a7RQf9KJRTG3py
-	 9DKLgs300W0X6kDQhnZEHctxdHCfx59vc/OE1MT6c8wDBznoV0Blivi1OCaj1CB6WGN0Q
-	 +eazOWdLr2b1g2tMVOnChJVT01mGu4GzMdHpsLdHvtuS/U1OAIiL+km8/l0IrIc066Psd
-	 dHWkVUngYNgAJf7J0lHxtMRsjjo88jckSWpKi2XnWpM/Ct6H7XJ17KafB9e5aP/m4jW23
-	 O3l2icvIVfxqfAcpLha8caD8HG7H/w50JrqRtHtInBQDEHg7z89ADeWYpWjHZbdqmdw==
+	bh=cnV7w0716s2STzmbZLTFEyTXqtzVghzOxzGo6uKggGk=;
+	b=11o40nsh+ND/cBi5hHxkodaqAUUcJofY+CzV0uG/WMWp+ed3YbIoIMCr/rSWE9ILep/x
+	 vJ8HcJTPy2K83gWs1I3ToW2K7lFVtfp/hiPROHcdghKLfQWzi0P9y2KJ3Bj4s5E0M/OE8
+	 O5kAUjtW9csba3z93zvxZa9sbBmWtmN8GyhBiihBuwY62ea2OfBGOc4WRpwZJAZLMTI6R
+	 V8btd4zWxxb05BDGR0kDimlsyufuquEPRUQseJisOUTvBe4fBZdMkzqXo9aZTDJjjPZhD
+	 MJ1vm+Y7hVDTYDAxsLsWt71fWsCYCa352NUaIITb6/p1YCQevZOoyv4MkMJygLsE2/g==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="UZL/ir+o";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=K2FQW222;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 965E2606A31E;
-	Wed, 25 Nov 2026 16:43:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B100F606A31E;
+	Wed, 25 Nov 2026 16:43:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=UZL/ir+o
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E7CF41F000C6;
-	Wed, 25 Nov 2026 16:43:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=K2FQW222
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B97461F000C4;
+	Wed, 25 Nov 2026 16:43:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795624986;
-	bh=1SDWS6qNY/H016uozujlpI9i8LfKLu4rKDiER3Djt3Q=;
+	s=korg; t=1795624989;
+	bh=cnV7w0716s2STzmbZLTFEyTXqtzVghzOxzGo6uKggGk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=UZL/ir+oKaGQAswsenPLIaNswkpYWWCCA0Avjvhb7B4V/TXbPBlrKpelx7WbA47nC
-	 oYgI1NJxtw8lug+VqB0eTM6mYkfcqhRh1xJqqoGaURGENftFR03pW8xszQD6rOzeVt
-	 45YTDWlBdFGQOoC0RCDOZA2skzhY52K//FPR9q30=
+	b=K2FQW222/2LKMkCqSFjTxVOfq0Mv4zsGf+6S46fsPC0AD0QeInNam+bjzr86c6v4I
+	 5nGK5GUBWu+/g4c7YWji1la4RX4aR7SRvKSvoQah/AQMOIPls0gqfXGBCAR+EpbkXg
+	 thJFu6tGU9yd1J8DNrklVJeMD8O6kSYFWuEuJ5ZA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Umang Pokhriyal <umangpokhriyall@gmail.com>,
-	Willem de Bruijn <willemb@google.com>,
+	Alexander Duyck <alexanderduyck@fb.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 324/816] tun: delete the flow entries of the moved queue on detach
-Date: Wed, 25 Nov 2026 15:31:12 +0100
-Message-ID: <20261125143856.701994707@linuxfoundation.org>
+Subject: [PATCH 6.12 325/816] fbnic: Wait for the outbound flush to complete on mailbox teardown
+Date: Wed, 25 Nov 2026 15:31:13 +0100
+Message-ID: <20261125143856.724612302@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143849.205329330@linuxfoundation.org>
 References: <20261125143849.205329330@linuxfoundation.org>
@@ -69,53 +68,93 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Umang Pokhriyal <umangpokhriyall@gmail.com>
+From: Alexander Duyck <alexanderduyck@fb.com>
 
-[ Upstream commit 4cc0a3f897074cea28dae38f1cd9bb230dae5d86 ]
+[ Upstream commit c5820a8cf59b03d59f2f5f9b3754ad27a6014a41 ]
 
-When a queue is detached, __tun_detach() moves the last queue into the
-freed slot and decrements tun->numqueues. The flow entries that point at
-the old index of the moved queue, now tun->numqueues, are meant to be
-deleted, but the call passes tun->numqueues + 1, an index that never
-exists, so nothing is deleted.
+The fbnic_mbx_reset_desc_ring function drops bus mastering and arms the
+outbound flush for its ring: the write flush for the Rx ring and the
+read flush for the Tx ring. Nothing waits for that flush to finish.
+The fbnic_mbx_clean_desc_ring function goes straight on to unmap and
+free the ring's buffers, so a device read of a Tx buffer, or a write to
+an Rx buffer, can still be outstanding after the buffer is gone. With
+an IOMMU it can also target an IOVA that has been unmapped or reused.
 
-Until those entries are refreshed by a write on their flow or age out,
-tun_automq_select_queue() returns an index past the last queue, and
-netdev_core_pick_tx() sends every such flow to queue 0 and warns:
+The PUL link reset status register reports when each direction's flush
+has drained. Poll the done bit for the ring's direction after arming
+the flush and before freeing its buffers. The flush only has to retire
+what the outbound path already holds; the 1ms cap keeps a wedged device
+from spinning.
 
-  tapq0 selects TX queue 3, but real number of TX queues is 3
+Every caller of the fbnic_mbx_clean function runs with the datapath
+already down, which matters because the read flush covers all
+outstanding reads, not just the mailbox ones. A device that has lost
+its link reads back as all ones, so the done bit appears set and the
+poll ends on the first pass.
 
-Found with an LLM while testing how a VMM detaches tap queues when a
-guest lowers its virtio-net queue pairs. With four queues, 30 flows
-learned on queue 3 and queue 1 detached, all 30 went to queue 0 with the
-warning; with this patch they are spread by hash and no warning is
-printed (3 runs each, in a guest booted on net).
-
-Pass tun->numqueues.
-
-Fixes: 96442e42429e ("tuntap: choose the txq based on rxq")
-Signed-off-by: Umang Pokhriyal <umangpokhriyall@gmail.com>
-Reviewed-by: Willem de Bruijn <willemb@google.com>
-Link: https://patch.msgid.link/20261104174240.138491-1-umangpokhriyall@gmail.com
+Fixes: 3b12f00ddd08 ("fbnic: Gate AXI read/write enabling on FW mailbox")
+Signed-off-by: Alexander Duyck <alexanderduyck@fb.com>
+Link: https://patch.msgid.link/179381517319.9644.1165591016149104577.stgit@ahduyck-xeon-server.home.arpa
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/tun.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/net/ethernet/meta/fbnic/fbnic_csr.h |  4 ++++
+ drivers/net/ethernet/meta/fbnic/fbnic_fw.c  | 16 ++++++++++++++++
+ 2 files changed, 20 insertions(+)
 
-diff --git a/drivers/net/tun.c b/drivers/net/tun.c
-index 461b02721aab9..2ae337ff384e8 100644
---- a/drivers/net/tun.c
-+++ b/drivers/net/tun.c
-@@ -671,7 +671,7 @@ static void __tun_detach(struct tun_file *tfile, bool clean)
- 		}
+diff --git a/drivers/net/ethernet/meta/fbnic/fbnic_csr.h b/drivers/net/ethernet/meta/fbnic/fbnic_csr.h
+index 2da0f5f8882bc..24e29755211e9 100644
+--- a/drivers/net/ethernet/meta/fbnic/fbnic_csr.h
++++ b/drivers/net/ethernet/meta/fbnic/fbnic_csr.h
+@@ -699,6 +699,10 @@ enum {
+ #define FBNIC_MAC_STAT_TX_BROADCAST_H	0x11a4d		/* 0x46934 */
+ /* PUL User Registers */
+ #define FBNIC_CSR_START_PUL_USER	0x31000	/* CSR section delimiter */
++#define FBNIC_PUL_USER_IP_LINK_RST_STATUS \
++					0x31030		/* 0xc40c0 */
++#define FBNIC_PUL_USER_IP_LINK_RST_STATUS_AW_FLUSH_DONE	CSR_BIT(7)
++#define FBNIC_PUL_USER_IP_LINK_RST_STATUS_AR_FLUSH_DONE	CSR_BIT(8)
+ #define FBNIC_PUL_OB_TLP_HDR_AW_CFG	0x3103d		/* 0xc40f4 */
+ #define FBNIC_PUL_OB_TLP_HDR_AW_CFG_FLUSH_MODE	CSR_BIT(20)
+ #define FBNIC_PUL_OB_TLP_HDR_AW_CFG_FLUSH	CSR_BIT(19)
+diff --git a/drivers/net/ethernet/meta/fbnic/fbnic_fw.c b/drivers/net/ethernet/meta/fbnic/fbnic_fw.c
+index 175ad17bd47b5..0bc6d495bfb59 100644
+--- a/drivers/net/ethernet/meta/fbnic/fbnic_fw.c
++++ b/drivers/net/ethernet/meta/fbnic/fbnic_fw.c
+@@ -7,6 +7,7 @@
+ #include <linux/dev_printk.h>
+ #include <linux/dma-mapping.h>
+ #include <linux/gfp.h>
++#include <linux/iopoll.h>
+ #include <linux/types.h>
  
- 		synchronize_net();
--		tun_flow_delete_by_queue(tun, tun->numqueues + 1);
-+		tun_flow_delete_by_queue(tun, tun->numqueues);
- 		/* Drop read queue */
- 		tun_queue_purge(tfile);
- 		tun_set_real_num_queues(tun);
+ #include "fbnic.h"
+@@ -173,10 +174,25 @@ static void fbnic_mbx_unmap_and_free_msg(struct fbnic_dev *fbd, int mbx_idx,
+ 
+ static void fbnic_mbx_clean_desc_ring(struct fbnic_dev *fbd, int mbx_idx)
+ {
++	u32 flush_done, val;
+ 	int i;
+ 
+ 	fbnic_mbx_reset_desc_ring(fbd, mbx_idx);
+ 
++	/* Arming the flush only starts it. Wait for the outbound path to
++	 * retire the requests it still holds before the buffers they may
++	 * target are unmapped and freed. A lost link reads back as all ones,
++	 * which ends the poll on the first pass.
++	 */
++	flush_done = mbx_idx == FBNIC_IPC_MBX_RX_IDX ?
++		     FBNIC_PUL_USER_IP_LINK_RST_STATUS_AW_FLUSH_DONE :
++		     FBNIC_PUL_USER_IP_LINK_RST_STATUS_AR_FLUSH_DONE;
++	if (read_poll_timeout_atomic(fbnic_rd32, val, val & flush_done, 2,
++				     1000, false, fbd,
++				     FBNIC_PUL_USER_IP_LINK_RST_STATUS))
++		dev_warn(fbd->dev, "Outbound flush did not complete: %08x\n",
++			 val);
++
+ 	for (i = FBNIC_IPC_MBX_DESC_LEN; i--;)
+ 		fbnic_mbx_unmap_and_free_msg(fbd, mbx_idx, i);
+ }
 -- 
 2.53.0
 
