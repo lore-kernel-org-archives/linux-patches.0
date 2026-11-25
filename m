@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795625746;
-	b=ay9htFCp4oYBhDYEzFOUbbnMNqiTT0uRztjrXodZy7UXxv+Ak/RfUp/qabnHWsTmvvRn
-	 ri9Qt9ePJ5mNlZrCHCLghy+4rrOhCrW09O4fPRVr66RuvcEzU35o77fAiitdDKfsNxvmH
-	 s5dp4NArK/nQd4GLLwl9bifjfSye8wQQVXPvn4P75dsWTUyw5zdPXj7UCGUXaK85I/n62
-	 NtjgcKQeq84IkMK8IJ/DLldwDL8n+yrs55J9b7qOqhTmJ5ERyi0RP7R27VEf8sXM/qSOj
-	 rdgLHjGc7XSPv0reCf7C9LpW3V6jJnVHAiDPLbVllOl9kgpl69zQ7FBLk0fmLRDfC3Q==
+	t=1795625749;
+	b=YZq970pdZOxdvOq8uBHsViCxJgLV6pgt+kpw5YIueTvwRzr07Ar77dIRKKiSXETNwME3
+	 +3Ebhw6dvUaMX/vJ27nmO6ZvKPWViptQsC0+/M8MyFsOCaeUWeoQQNJtf2nQA1aaFf6TK
+	 SasKj5HYsCtVwB339PmmK996Wm/ZFStJpvXtd9JHsBapmOQPSfdTRuZservz0l5htOxcq
+	 XQ37A/JlBeKJIkNTa8fmsuCwb85vTKY/S39EKSsJUH0ghUz4YPS7T0uelTmRopVWpcbPn
+	 BX79krSEmZEvwHb8OEQK+2H7e2EQZ+QNKW34oYsPZ2pE2m9F96i60uLh4LyEEz21f6g==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795625746;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795625749;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=T3ooOa+ovF5Xoc3z1jLwGRtGSvN2j9hkiuKXJ6redfA=;
-	b=xUm3Ln3CrlvXoJRYIwx4iACJ8DOEtP6mMrc471rLpwWdiijO+H9dxHKDjiNoABMh9AhD
-	 4GioPHvHrjpkHVKhRvf5uHmkIEKlCYkrmLpiz0Yc+/Sy25Euqi43wt4CVPj+N64osFkjO
-	 5BiZfgSY+zbvxqqV/3rwy/QEdUO9CWxr2prGykCWgNSzJqvSua52d6L7cm7x+9tfW6X1z
-	 nwV4NBsyFjhz6+E+9OQ76KfahpxscBbAUZPze97wUOCTJnridiDk+lRYkcS5oBqhpORRJ
-	 eTJRzXgSoyuoaGGIYxYquokXRhUJbFJ5GqL1iTaKB6da0PBXw52fbTkysLAGBiEYGZA==
+	bh=wW9ga8PDNF2LmSrB5w+pQ9nLI00/zc8va/np2izoRG4=;
+	b=3lewy0nuj5yQVYLGotDcxVTponl7zQqKryWgrKpHYHmlySEvwez7FYfmHMaQsq1V0Uoz
+	 YWDdxHGp6Xk15k2iYR3cKDPgZv31/T44WTfcVZ28AbA2BSfg5E9tuA6SCKNi+8N2M/bR6
+	 DuiidWayYVz6+bCxDojqHe6jEj5bWEfUps5zbmiashCf3UdknlniiCtYSl3CxTaNtlMO2
+	 RwuS85w+WKKyaKZHoXEXNrx+cOO/pnBo0Utr3HOyWTnAiUWVLGLxri+nzTwE3FvXkW7xS
+	 LlXlg9xBYAxFKoUOA/DRLuPWWaiAfZiTLdvu4eZ8InKL7bhOZEqGBuumaGaNjSD1Pfg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="HZUIE/TO";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=oxXqdMuj;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D9882606A686;
-	Wed, 25 Nov 2026 16:55:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D81AF606A69C;
+	Wed, 25 Nov 2026 16:55:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=HZUIE/TO
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2BDCE1F000CA;
-	Wed, 25 Nov 2026 16:55:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=oxXqdMuj
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 07FBC1F000E0;
+	Wed, 25 Nov 2026 16:55:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795625746;
-	bh=T3ooOa+ovF5Xoc3z1jLwGRtGSvN2j9hkiuKXJ6redfA=;
+	s=korg; t=1795625749;
+	bh=wW9ga8PDNF2LmSrB5w+pQ9nLI00/zc8va/np2izoRG4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=HZUIE/TO4FFYQXBut7ThVOxJTe0cUtQmVrzIMq6mewvYqEJaaDan+HvtCSmtp/57S
-	 727Yx4Rynv3Oo20WG2VrFro3aGN0fZVuxYsU0q/JQOT/B7Z9oOEe3ueElj4bCrlahU
-	 MOVJEhWntdy5cP76vZXvqFY5z0tHMsYGkcyKJvCM=
+	b=oxXqdMuj/wzxPS0IEydcYAo2zqqtS6cVGgUFXkpmeq3Sit/OrzYLpx7as1tGFi+CU
+	 J6WCWR/san5tm3niNp1xWxIbzHpK4573Y9Sf4Qc66ZO813lz2NpFoDPYhcuf9uxk9n
+	 YJcj0AB3GM3ymVUlGKBep0mdwa/eTZNuxh71dFmY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mark Brown <broonie@kernel.org>,
-	Vladimir Murzin <vladimir.murzin@arm.com>,
-	Catalin Marinas <catalin.marinas@arm.com>
-Subject: [PATCH 6.12 620/816] arm64: suspend: Save POR_EL0 over suspend
-Date: Wed, 25 Nov 2026 15:36:08 +0100
-Message-ID: <20261125143903.533780952@linuxfoundation.org>
+	Li RongQing <lirongqing@baidu.com>,
+	Zhongqiu Han <zhongqiu.han@oss.qualcomm.com>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>
+Subject: [PATCH 6.12 621/816] cpufreq: acpi-cpufreq: fix P-state index mismatch in extract_io()
+Date: Wed, 25 Nov 2026 15:36:09 +0100
+Message-ID: <20261125143903.557041061@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143849.205329330@linuxfoundation.org>
 References: <20261125143849.205329330@linuxfoundation.org>
@@ -68,62 +68,75 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mark Brown <broonie@kernel.org>
+From: Li RongQing <lirongqing@baidu.com>
 
-commit 2386c3dcf13e39d7576eae821af66537332c02de upstream.
+commit 6bc092a0fc4d331a4adbbb664078af149c580834 upstream.
 
-POR_EL0 is a live EL0 register on systems with S1POE but it is not saved
-and restored by cpu_do_suspend()/cpu_do_resume(). This means that the task
-that initiated suspend can return to userspace with an UNKNOWN value. Fix
-this by saving and restoring the value over suspend.
+When policy->freq_table is built in acpi_cpufreq_cpu_init(), entries
+that are not lower in frequency than the previous one are skipped.
+For each remaining entry, freq_table[].driver_data stores the
+original ACPI P-state index, so the index space of freq_table no
+longer matches perf->states[].
 
-This increases the size of struct cpu_suspend_ctx.
+extract_io() currently walks perf->states[] with index i and uses the
+same i to index policy->freq_table[i]. When duplicate frequencies
+exist, this can associate a P-state status with the frequency of a
+different P-state. It can also access an invalid or sentinel entry in
+freq_table when the number of entries in perf->states[] is greater than
+the number of entries remaining in the frequency table.
 
-Fixes: bf83dae90fbc ("arm64: enable the Permission Overlay Extension for EL0")
-Signed-off-by: Mark Brown <broonie@kernel.org>
-Cc: stable@vger.kernel.org
-Reviewed-by: Vladimir Murzin <vladimir.murzin@arm.com>
-Signed-off-by: Catalin Marinas <catalin.marinas@arm.com>
+extract_io() is used on ACPI_ADR_SPACE_SYSTEM_IO platforms by the
+frequency verification path, which is enabled by the
+acpi_pstate_strict module parameter. With the mismatched lookup,
+check_freqs() can fail to match the frequency of the P-state that
+drv_write() has already programmed. It then sleeps through all 100
+iterations - at least ~1 ms of usleep_range() plus 100 cross-CPU
+calls and I/O port reads, all with policy->rwsem held, and
+.target_index() returns -EAGAIN, leaving perf->state at its previous
+value while the hardware is running at the newly requested P-state.
+
+The cpufreq core consequently keeps policy->cur at the old frequency.
+Since __cpufreq_driver_target() returns early when the requested
+frequency equals policy->cur, the driver is not called again for that
+frequency and the control register is not rewritten. The hardware can
+therefore remain at a frequency that differs from the frequency known
+to the cpufreq core.
+
+Fix this by iterating over policy->freq_table and using
+pos->driver_data as the original ACPI P-state index when accessing
+perf->states[], as extract_msr() already does.
+
+Fixes: fe27cb358835 ("[CPUFREQ][2/8] acpi: reorganize code to make MSR support addition easier")
+Signed-off-by: Li RongQing <lirongqing@baidu.com>
+Reviewed-by: Zhongqiu Han <zhongqiu.han@oss.qualcomm.com>
+Cc: All applicable <stable@vger.kernel.org>
+Link: https://patch.msgid.link/20260910111329.2220-2-lirongqing@baidu.com
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/arm64/include/asm/suspend.h |    2 +-
- arch/arm64/mm/proc.S             |    8 ++++++++
- 2 files changed, 9 insertions(+), 1 deletion(-)
+ drivers/cpufreq/acpi-cpufreq.c |    9 ++++-----
+ 1 file changed, 4 insertions(+), 5 deletions(-)
 
---- a/arch/arm64/include/asm/suspend.h
-+++ b/arch/arm64/include/asm/suspend.h
-@@ -2,7 +2,7 @@
- #ifndef __ASM_SUSPEND_H
- #define __ASM_SUSPEND_H
+--- a/drivers/cpufreq/acpi-cpufreq.c
++++ b/drivers/cpufreq/acpi-cpufreq.c
+@@ -200,14 +200,13 @@ static unsigned extract_io(struct cpufre
+ {
+ 	struct acpi_cpufreq_data *data = policy->driver_data;
+ 	struct acpi_processor_performance *perf;
+-	int i;
++	struct cpufreq_frequency_table *pos;
  
--#define NR_CTX_REGS 15
-+#define NR_CTX_REGS 16
- #define NR_CALLEE_SAVED_REGS 12
+ 	perf = to_perf_data(data);
  
- /*
---- a/arch/arm64/mm/proc.S
-+++ b/arch/arm64/mm/proc.S
-@@ -108,6 +108,10 @@ alternative_if ARM64_SME
- 	mrs_s	x2, SYS_TPIDR2_EL0
- 	str	x2, [x0, #112]
- alternative_else_nop_endif
-+alternative_if ARM64_HAS_S1POE
-+	mrs	x2, REG_POR_EL0
-+	str	x2, [x0, #120]
-+alternative_else_nop_endif
- 	ret
- SYM_FUNC_END(cpu_do_suspend)
+-	for (i = 0; i < perf->state_count; i++) {
+-		if (value == perf->states[i].status)
+-			return policy->freq_table[i].frequency;
+-	}
++	cpufreq_for_each_entry(pos, policy->freq_table)
++		if (value == perf->states[pos->driver_data].status)
++			return pos->frequency;
+ 	return 0;
+ }
  
-@@ -150,6 +154,10 @@ alternative_if ARM64_SME
- 	ldr	x2, [x0, #112]
- 	msr_s	SYS_TPIDR2_EL0, x2
- alternative_else_nop_endif
-+alternative_if ARM64_HAS_S1POE
-+	ldr	x2, [x0, #120]
-+	msr	REG_POR_EL0, x2
-+alternative_else_nop_endif
- 
- 	msr	sctlr_el1, x12
- 	set_this_cpu_offset x13
 
 
