@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795618350;
-	b=Opu/s7b+4IpQ8MQb3lcUh93T4XfB58SbdtVBGFCZ9ospDw0CCjhhlgVongZVKOQqCqvI
-	 XnBg2fkabRyPXn23+BZxt/TSQeE3Wrbi3KX8CthWt7WMLi4zHI6fWNQ+oDTx3pKtWatS1
-	 ra0MbO/x7YS3P32khGQrIINqnCn++4PVZVH9Xe7dt/ZHJKcJvv7tTqy0BX+QhNp8N53EN
-	 A24PkPdPYTRFs3stt+MNxzlKOrwkdLXMeJGULu40bFcX6t5W0JDxyRLuL8HR+1m2fUqgi
-	 7u/iP82jEFx95g5BPWAhZNiSmB4ZzENGalzwqQORHo4pn4Z1fh54cR9WqA+LwjAqasw==
+	t=1795618353;
+	b=CnuEED0mIvwMr9IFLXg0t2Lxk3tLfZPYuvKwYFU4ifh6gtvgUfd1uSKJYccLwBesdqGv
+	 vN8pqqKcb2CmWgU+WuHPlR+SI6BDew+RTXbK1eX8Uc/SBjejfgaEI8xQPHlOs9UwCyftk
+	 zmoqPYol8EJmsArQuYmn458Htva68Z7dwC4cFSoJuyvUxeEnQV+e0Pv6E2BXDe5x6qZnl
+	 2D58h5EA7DE9qXJeOp2c+dHqdzK3E3bpXPhz6KYpjlb+ESQi1LqUhX4v72YIonsxYOX2r
+	 9m/Ypbn9qNETEyfCRA9BGWsRSunTEW4msEUf+rk9MKXCIsAt580OoqDQeV3L5Y8BGkw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795618350;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795618353;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=qABNaKa1gSubrUbkP3txkKebS+cZir4scEoAXwM79II=;
-	b=qzcwSdX1dd6lTgKESm0u+dya5vCJ8UwUrji/6X+KK1ZWfkO+wr6ZrbB5zzMbyK41VR5r
-	 MeFpka9C/b6IMgFah+HnoA/wYD5rpUJPTWCQNr4guIOzb4Cc1QCYmY2rURhTXOprgJFUD
-	 1uLUyffZrrmyb4IJz4gNOmLWlj9mQ9BROgXfGFlFuYxPheSO0e5ujbKB/EjWOVyJkNSoQ
-	 +m4o0Oo6iIZH+F7J2wER7pDFwcEwbHjMtagLIWrKLNydroSdcB2q5gr1D7NAehGBChrdR
-	 BKAIFOIuenGYxVEasly+KPlMqQFJSkNi1ikstBQUcDflz/VQ/dfLwS2vAm+0tN/jPOw==
+	bh=rDtn62xPDxLzMtbL0yxNvVBs1QSZyas94Eg7gg77U0U=;
+	b=cqaL/epX+0jfyq+IUNVazy3MpBZWSb7oNJLUIt6QP8BVOKTG1oI8iIyX9ooNcP5wh0Oi
+	 daIib4jWbNyBD6y3IFPLZKfSs653lL72SJBNSyDU1DAh0eRsMAGmVgOo26/Y7QHE5gpNp
+	 AAAk0FhlJ/5OKWC1GRcmC3SKq681S4crFyQFqzTph2yJFNp1Hux7oL19uMYF4xISWEr90
+	 QlQqIYD/Whti4sdHjMFgfunv9BWkL4tmEIaomzdVUKbicaHHCEaxp6zepUXiRNjiYWPIk
+	 ggG7qAM3/drox9MX2cJEnDu3McIsf43GGLHZ1XU3JLXVbmu75dSuH1XhwTgfroi594g==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=MkV1rqRX;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=meKOixtQ;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0DD2E606A321;
-	Wed, 25 Nov 2026 14:52:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3E221606A32C;
+	Wed, 25 Nov 2026 14:52:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=MkV1rqRX
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5D0251F000C0;
-	Wed, 25 Nov 2026 14:52:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=meKOixtQ
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3599A1F000CA;
+	Wed, 25 Nov 2026 14:52:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795618349;
-	bh=qABNaKa1gSubrUbkP3txkKebS+cZir4scEoAXwM79II=;
+	s=korg; t=1795618352;
+	bh=rDtn62xPDxLzMtbL0yxNvVBs1QSZyas94Eg7gg77U0U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=MkV1rqRXAERWuLp/4hqVC3SBeozNyeiFa+puyRzz4yekEbEcOXHNghsd0kEZDQnXp
-	 MN4gFfNQ3xfPPG2kNtDPkZBDEFRdrg3aiFBB8oM4CLLrh5k7OQaNP+eW1FHnBqO0Gu
-	 KYRjK2v2mfthjt4831cwxmw7x1OaDG9eGH9P7RQM=
+	b=meKOixtQK9zht7QiAHuqJ/x7q0o51iJFiybFUhJ3cIWssvq/pACHv1zW7LAjolZ10
+	 N9ECGYe/ARgbOhcJUjj2+z0NDWwNMlLMw5nWnCLQasc4vYTUWIEdEBfSzcNaslu2zo
+	 sR0tJZrGdeONBhEx6IfiKIJeE438toTjxZ3fVSZ8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	ChunYuZhiQiang <chunyuzhiqiang@yinhe.ht>,
-	Vincent Mailhol <mailhol@kernel.org>,
-	Marc Kleine-Budde <mkl@pengutronix.de>,
+	Florian Fainelli <florian.fainelli@broadcom.com>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0251/1005] can: dev: can_tdc_fill_info(): dont read automatic TDCV if interface is down
-Date: Wed, 25 Nov 2026 15:26:29 +0100
-Message-ID: <20261125143827.617296141@linuxfoundation.org>
+Subject: [PATCH 7.3 0252/1005] net: dsa: b53: Enable IGMP and MLD control packet CPU copies
+Date: Wed, 25 Nov 2026 15:26:30 +0100
+Message-ID: <20261125143827.642303071@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143821.729802100@linuxfoundation.org>
 References: <20261125143821.729802100@linuxfoundation.org>
@@ -69,100 +68,182 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: ChunYuZhiQiang <chunyuzhiqiang@yinhe.ht>
+From: Florian Fainelli <florian.fainelli@broadcom.com>
 
-[ Upstream commit f5128a76726105f398d7ee70ee523dd4f68d62f4 ]
+[ Upstream commit 3362cb822ea750399a15b741713181fd8560bd17 ]
 
-The automatic TDCV readback calls into the driver via do_get_auto_tdcv().
-Some drivers, such as xcan_get_auto_tdcv(), read controller registers
-without taking a runtime PM reference, so calling this while the
-interface is down can touch registers whose clocks are gated.
+IGMPv2 reports and MLDv1 reports are addressed to the multicast group
+itself. Once the first listener is installed in the ARL table, subsequent
+reports can follow that entry without reaching the CPU. The bridge then
+fails to learn additional listeners, although static MDB forwarding works.
 
-Gate do_get_auto_tdcv() on netif_running() in can_tdc_fill_info() and
-adjust can_tdc_get_size() and can_data_bittiming_get_size() so that only
-the automatic TDCV size is skipped when the interface is down. The other
-TDC parameters are still reported, as they are meaningful while the
-interface is down.
+Enable the high-level protocol classifiers so that IGMP and MLD control
+packets are copied to the CPU independently of the multicast ARL lookup.
+Retain normal L2 forwarding by clearing the CPU-only forwarding modes,
+and preserve unrelated protocol-control fields.
 
-This is a defensive hardening based on code inspection; the automatic
-TDCV path has not been triggered on hardware.
+Handle the BCM5395's 16-bit register and different classifier fields
+separately from the 32-bit layout on the BCM531xx, BCM5301x and newer
+integrated RoboSwitch families, including BCM7445, BCM7278 and BCM4908.
+Export the helper and call it from bcm_sf2_sw_setup() as well, since SF2
+uses its own setup operation instead of b53_setup(). This also restores
+the classifiers after the switch reset on resume. Leave older devices
+with different IGMP controls untouched, and propagate register access
+failures during setup.
 
-Signed-off-by: ChunYuZhiQiang <chunyuzhiqiang@yinhe.ht>
-Reviewed-by: Vincent Mailhol <mailhol@kernel.org>
-Fixes: e8060f08cd69 ("can: netlink: add can_priv::do_get_auto_tdcv() to retrieve tdcv from device")
-Link: https://patch.msgid.link/20261027065012.191348-2-chunyuzhiqiang@yinhe.ht
-[mkl: fix open parenthesis alignment]
-Signed-off-by: Marc Kleine-Budde <mkl@pengutronix.de>
+The SF2 setup integration and BCM4908 chip gate were updated with
+assistance from OpenAI Codex in response to review feedback.
+
+Fixes: 5d65b64a3d97 ("net: dsa: b53: Add support for MDB")
+Signed-off-by: Florian Fainelli <florian.fainelli@broadcom.com>
+Link: https://patch.msgid.link/20261028235100.3892374-2-florian.fainelli@broadcom.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/can/dev/netlink.c | 17 ++++++++++-------
- 1 file changed, 10 insertions(+), 7 deletions(-)
+ drivers/net/dsa/b53/b53_common.c | 57 ++++++++++++++++++++++++++++++++
+ drivers/net/dsa/b53/b53_priv.h   |  1 +
+ drivers/net/dsa/b53/b53_regs.h   | 17 ++++++++++
+ drivers/net/dsa/bcm_sf2.c        |  5 +++
+ 4 files changed, 80 insertions(+)
 
-diff --git a/drivers/net/can/dev/netlink.c b/drivers/net/can/dev/netlink.c
-index b958c04d53db6..081dfddda0008 100644
---- a/drivers/net/can/dev/netlink.c
-+++ b/drivers/net/can/dev/netlink.c
-@@ -720,7 +720,8 @@ static int can_changelink(struct net_device *dev, struct nlattr *tb[],
- 	return 0;
+diff --git a/drivers/net/dsa/b53/b53_common.c b/drivers/net/dsa/b53/b53_common.c
+index 0880310c9ce3f..e54f6d4d1f7bb 100644
+--- a/drivers/net/dsa/b53/b53_common.c
++++ b/drivers/net/dsa/b53/b53_common.c
+@@ -836,6 +836,59 @@ void b53_brcm_hdr_setup(struct dsa_switch *ds, int port)
  }
+ EXPORT_SYMBOL(b53_brcm_hdr_setup);
  
--static size_t can_tdc_get_size(struct data_bittiming_params *dbt_params,
-+static size_t can_tdc_get_size(const struct net_device *dev,
-+			       struct data_bittiming_params *dbt_params,
- 			       u32 tdc_flags)
++int b53_enable_mcast_snooping(struct b53_device *dev)
++{
++	u16 val16;
++	u32 val;
++	int ret;
++
++	/* Older switches use different IGMP controls, not HL_PRTC_CTRL. */
++	if (is5325(dev) || is5365(dev) || dev->chip_id == BCM5389_DEVICE_ID ||
++	    is5397_98(dev) || is63xx(dev))
++		return 0;
++
++	/* IGMPv2 and MLDv1 reports use the group's destination MAC. Once
++	 * the first listener is offloaded, ordinary multicast forwarding
++	 * can keep subsequent reports from reaching the bridge CPU.
++	 */
++
++	/* BCM5395 has a narrower register and a single IGMP classifier.
++	 * Its ICMPv6 classifier also covers MLD.
++	 */
++	if (dev->chip_id == BCM5395_DEVICE_ID) {
++		ret = b53_read16(dev, B53_MGMT_PAGE, B53_HL_PRTC_CTRL, &val16);
++		if (ret)
++			return ret;
++
++		val16 |= HL_PRTC_IGMP_IP_EN_5395 | HL_PRTC_ICMPV6_EN;
++		/* Zero forwarding modes copy control traffic to the CPU
++		 * independently of the ARL lookup, retaining L2 forwarding.
++		 */
++		val16 &= ~(HL_PRTC_IGMP_FWD_MODE_5395 |
++			   HL_PRTC_ICMPV6_FWD_MODE);
++
++		return b53_write16(dev, B53_MGMT_PAGE, B53_HL_PRTC_CTRL,
++				   val16);
++	}
++
++	ret = b53_read32(dev, B53_MGMT_PAGE, B53_HL_PRTC_CTRL, &val);
++	if (ret)
++		return ret;
++
++	val |= HL_PRTC_IGMP_RPTLVE_EN | HL_PRTC_IGMP_QRY_EN |
++	       HL_PRTC_IGMP_UKN_EN | HL_PRTC_MLD_RPTDONE_EN |
++	       HL_PRTC_MLD_QRY_EN;
++	/* Zero forwarding modes copy control traffic to the CPU
++	 * independently of the ARL lookup, retaining L2 forwarding.
++	 */
++	val &= ~(HL_PRTC_IGMP_RPTLVE_FWD_MODE | HL_PRTC_IGMP_QRY_FWD_MODE |
++		 HL_PRTC_IGMP_UKN_FWD_MODE | HL_PRTC_MLD_RPTDONE_FWD_MODE |
++		 HL_PRTC_MLD_QRY_FWD_MODE);
++
++	return b53_write32(dev, B53_MGMT_PAGE, B53_HL_PRTC_CTRL, val);
++}
++EXPORT_SYMBOL(b53_enable_mcast_snooping);
++
+ static void b53_enable_cpu_port(struct b53_device *dev, int port)
  {
- 	bool tdc_manual = tdc_flags & CAN_CTRLMODE_TDC_MANUAL_MASK;
-@@ -742,7 +743,8 @@ static size_t can_tdc_get_size(struct data_bittiming_params *dbt_params,
+ 	u8 port_ctrl;
+@@ -1334,6 +1387,10 @@ static int b53_setup(struct dsa_switch *ds)
+ 			b53_disable_port(ds, port);
  	}
  
- 	if (tdc_flags) {
--		if (tdc_manual || dbt_params->do_get_auto_tdcv)
-+		if (tdc_manual ||
-+		    (dbt_params->do_get_auto_tdcv && netif_running(dev)))
- 			size += nla_total_size(sizeof(u32));	/* IFLA_CAN_TDCV */
- 		size += nla_total_size(sizeof(u32));		/* IFLA_CAN_TDCO */
- 		if (dbt_params->tdc_const->tdcf_max)
-@@ -752,7 +754,8 @@ static size_t can_tdc_get_size(struct data_bittiming_params *dbt_params,
- 	return size;
++	ret = b53_enable_mcast_snooping(dev);
++	if (ret)
++		return ret;
++
+ 	return b53_setup_devlink_resources(ds);
  }
  
--static size_t can_data_bittiming_get_size(struct data_bittiming_params *dbt_params,
-+static size_t can_data_bittiming_get_size(const struct net_device *dev,
-+					  struct data_bittiming_params *dbt_params,
- 					  u32 tdc_flags)
+diff --git a/drivers/net/dsa/b53/b53_priv.h b/drivers/net/dsa/b53/b53_priv.h
+index 29cca7945df71..c4d2a41c714f6 100644
+--- a/drivers/net/dsa/b53/b53_priv.h
++++ b/drivers/net/dsa/b53/b53_priv.h
+@@ -504,6 +504,7 @@ static inline struct gpio_desc *b53_switch_get_reset_gpio(struct b53_device *dev
+ /* Exported functions towards other drivers */
+ void b53_imp_vlan_setup(struct dsa_switch *ds, int cpu_port);
+ int b53_configure_vlan(struct dsa_switch *ds);
++int b53_enable_mcast_snooping(struct b53_device *dev);
+ void b53_get_strings(struct dsa_switch *ds, int port, u32 stringset,
+ 		     uint8_t *data);
+ void b53_get_ethtool_stats(struct dsa_switch *ds, int port, uint64_t *data);
+diff --git a/drivers/net/dsa/b53/b53_regs.h b/drivers/net/dsa/b53/b53_regs.h
+index 54a278db67c9f..cfdb5ed383260 100644
+--- a/drivers/net/dsa/b53/b53_regs.h
++++ b/drivers/net/dsa/b53/b53_regs.h
+@@ -274,6 +274,23 @@
+ /* Revision ID register (8 bit) */
+ #define B53_REV_ID			0x40
+ 
++/* High-level protocol control (16 bit on BCM5395, otherwise 32 bit) */
++#define B53_HL_PRTC_CTRL			0x50
++#define   HL_PRTC_ICMPV6_EN		BIT(4)
++#define   HL_PRTC_ICMPV6_FWD_MODE		BIT(5)
++#define   HL_PRTC_IGMP_IP_EN_5395		BIT(6)
++#define   HL_PRTC_IGMP_FWD_MODE_5395	BIT(8)
++#define   HL_PRTC_IGMP_RPTLVE_EN		BIT(9)
++#define   HL_PRTC_IGMP_RPTLVE_FWD_MODE	BIT(10)
++#define   HL_PRTC_IGMP_QRY_EN		BIT(11)
++#define   HL_PRTC_IGMP_QRY_FWD_MODE	BIT(12)
++#define   HL_PRTC_IGMP_UKN_EN		BIT(13)
++#define   HL_PRTC_IGMP_UKN_FWD_MODE	BIT(14)
++#define   HL_PRTC_MLD_RPTDONE_EN		BIT(15)
++#define   HL_PRTC_MLD_RPTDONE_FWD_MODE	BIT(16)
++#define   HL_PRTC_MLD_QRY_EN		BIT(17)
++#define   HL_PRTC_MLD_QRY_FWD_MODE		BIT(18)
++
+ /* Broadcom header RX control (16 bit) */
+ #define B53_BRCM_HDR_RX_DIS		0x60
+ 
+diff --git a/drivers/net/dsa/bcm_sf2.c b/drivers/net/dsa/bcm_sf2.c
+index de3efa3ce9a75..f3b56ea87b07b 100644
+--- a/drivers/net/dsa/bcm_sf2.c
++++ b/drivers/net/dsa/bcm_sf2.c
+@@ -1059,6 +1059,7 @@ static int bcm_sf2_sw_setup(struct dsa_switch *ds)
  {
- 	size_t size = 0;
-@@ -764,7 +767,7 @@ static size_t can_data_bittiming_get_size(struct data_bittiming_params *dbt_para
- 	if (dbt_params->data_bitrate_const)		/* IFLA_CAN_{,XL}_DATA_BITRATE_CONST */
- 		size += nla_total_size(sizeof(*dbt_params->data_bitrate_const) *
- 				       dbt_params->data_bitrate_const_cnt);
--	size += can_tdc_get_size(dbt_params, tdc_flags);/* IFLA_CAN_{,XL}_TDC */
-+	size += can_tdc_get_size(dev, dbt_params, tdc_flags);/* IFLA_CAN_{,XL}_TDC */
+ 	struct bcm_sf2_priv *priv = bcm_sf2_to_priv(ds);
+ 	unsigned int port;
++	int ret;
  
- 	return size;
+ 	/* Enable all valid ports and disable those unused */
+ 	for (port = 0; port < priv->hw_params.num_ports; port++) {
+@@ -1074,6 +1075,10 @@ static int bcm_sf2_sw_setup(struct dsa_switch *ds)
+ 	b53_configure_vlan(ds);
+ 	bcm_sf2_enable_acb(ds);
+ 
++	ret = b53_enable_mcast_snooping(priv->dev);
++	if (ret)
++		return ret;
++
+ 	return b53_setup_devlink_resources(ds);
  }
-@@ -825,10 +828,10 @@ static size_t can_get_size(const struct net_device *dev)
- 	size += sizeof(priv->bitrate_max);			/* IFLA_CAN_BITRATE_MAX */
- 	size += can_ctrlmode_ext_get_size();			/* IFLA_CAN_CTRLMODE_EXT */
  
--	size += can_data_bittiming_get_size(&priv->fd,
-+	size += can_data_bittiming_get_size(dev, &priv->fd,
- 					    priv->ctrlmode & CAN_CTRLMODE_FD_TDC_MASK);
- 
--	size += can_data_bittiming_get_size(&priv->xl,
-+	size += can_data_bittiming_get_size(dev, &priv->xl,
- 					    priv->ctrlmode & CAN_CTRLMODE_XL_TDC_MASK);
- 	size += can_pwm_get_size(priv->xl.pwm_const,		/* IFLA_CAN_XL_PWM */
- 				 priv->ctrlmode & CAN_CTRLMODE_XL_TMS);
-@@ -910,7 +913,7 @@ static int can_tdc_fill_info(struct sk_buff *skb, const struct net_device *dev,
- 		if (tdc_manual) {
- 			tdcv = tdc->tdcv;
- 			err = 0;
--		} else if (dbt_params->do_get_auto_tdcv) {
-+		} else if (dbt_params->do_get_auto_tdcv && netif_running(dev)) {
- 			err = dbt_params->do_get_auto_tdcv(dev, &tdcv);
- 		}
- 		if (!err && nla_put_u32(skb, IFLA_CAN_TDC_TDCV, tdcv))
 -- 
 2.53.0
 
