@@ -1,52 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795622249;
-	b=ljW39B8G44mpwB8WVS+CckPshIA9B6ustVzgnDG5oQuNqCTJUpZEOWPRmHdNTwPznhkQ
-	 ulyUTlwg7MHqkroKq5eVwSJQX/qPWabxF6DWjXEnyMf7fLklfnue70Yh4jcsZcjBw3hzi
-	 w7t+XCibr7DuMqKqkIrmx2vrgRq5dMC7L2wU6FTqxbTnLxHijFczylumh6bwr8tTC/ynb
-	 9TcdGalcGSMsc/EfNzpeRuKvxX9NXqfmlnTU/id/8rC2IDSmXcQ3/Kobn3IlXFQlnauSb
-	 R+hLrI4x0AWtQxh4y1LjWbq9RK+lDK0JSJBr3iAcmcXilzVZVcXf9Nui6FZK70GG9KA==
+	t=1795622253;
+	b=YiHxeXCHv5QksCuktsAUuh3ukKo99hIIk5k1AobWmMIHye0tFjNH05ilMlPHyjeejFww
+	 g1oAwiZswsYaQxyxQDuYa1T9xPB2eNH7lzhCGYMuzvT3IJEZA+2O8wJoqBz2ggE/oHKmm
+	 fMRMfEtfL0sLtXqCFh58vaxs6peFsH6jWAb3SAEJsn1Fr60v98xb+BcG+kPSOi2aePquv
+	 jPIsJXwfDNHNHFRjHTIbIkIJpvhJ6zc382HyRTJR41o+qXnMi3jFc+Cw+3uh+xUktGZyk
+	 1YslYjP9X8KADPo2M40ycYBp2elbnAZjDX0BLqjMcihqzza4Gb8fBi6p/yC1blQzgag==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795622249;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795622253;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=Gh3EnRab8ICYw56OdkTjEtC/fmnYIW79LWkibWQKtjI=;
-	b=GuEjgvzNwpsA0Bo0/MJ0Mao2wfVaIo/0XO/wRdJxUvlSmb4ujGgZm6tC6yqJ6XnOefXO
-	 JRDjsmx9uspRT68BXkM7Mo9a5HNT5fDRGCfHH5zFiyRn046Ef24CH1SOjO4iiLhZQ774p
-	 X681v9uB2FipLXWmSXEcJiKGcNuNbdJucEVt2TbRPq+AdwNe3h3dZK/u3N+bYN+E0yx6P
-	 veER8zU2raTexc0X8zIMfcmdJFm1mKWK2vBgFOuyzmDndv2lRrtYHWPPlQbXU8fU08o0Z
-	 iZsljBGOYzaDZcOHpCLuibFR/WJQRnqU2k1ZI+PQScXu7ElMhz5Ak69AmYrk4DqJhEw==
+	bh=+g1pTEMtt9jrPoWOuZw5F+3GqIU6heaO2EB9CKkVs+Y=;
+	b=TrgYmxtKy+Q3Quu7/G45Gi3q9yzfDCdlNOs1hmtMa8vLq9oKcx+oOf8ypk3iEZSp5Tza
+	 zgObVTx3BYh1JcpuKhyYuScD7Lp6yF67KM720W+9GcNb9dSIi626RsugoFQa2SZpp9PLe
+	 /vFPRjx0T35KriIFEqmiBdGNjLJlo7aB2CnBBXl5CrnWvpNlzFD4dZZLjsltRywtaF4O3
+	 I/4ue82PdEm80YzeWAMzY8HuDgzi6znxVV3F4bFoNAzNUXCig7G7Snji/IOmSXEYR/0oy
+	 ttjHrzjY1XYWtq+qkvFISZx7HXzuiyMZjFeaLieV0SV79xlLyQoTizRA+iDL91ImaUQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=vr254s8W;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=0LEmMo21;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AD6FD606A321;
-	Wed, 25 Nov 2026 15:57:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EA2F8606A323;
+	Wed, 25 Nov 2026 15:57:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=vr254s8W
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A2F4A1F000C6;
-	Wed, 25 Nov 2026 15:57:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=0LEmMo21
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D1B2E1F000CA;
+	Wed, 25 Nov 2026 15:57:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795622249;
-	bh=Gh3EnRab8ICYw56OdkTjEtC/fmnYIW79LWkibWQKtjI=;
+	s=korg; t=1795622252;
+	bh=+g1pTEMtt9jrPoWOuZw5F+3GqIU6heaO2EB9CKkVs+Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=vr254s8WrH26rglfBe7AwAEV6+rSRBJMigII6oJEq9WRyZmziOS5wbt7B64jLcxhN
-	 nv0IUftEHSiGEr42kzgoWEr6Kk2nE+Vkurd+1k9czPwcuOOlk6NHpZBGHfBSxVDACe
-	 a52r5gVDg5D3kUjW+SMtAa9NTjm1ctTNZBGl/j+s=
+	b=0LEmMo21MMguAfZ8nU33lundLDxIw5FU7KCYIWvK18oZfGqW8VuUKR92eO+3TldGt
+	 QxUGYFUplhcLqORY8nJK26ZdcdoIK8XltzqkeK0b0rS20w6NtGUZb/cGI9xvPaH+En
+	 2K2vtXwLMul2LZGaM/d/5v8LwYybuQvDgqiZf1lw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Breno Leitao <leitao@debian.org>,
+	Sashiko <sashiko-bot@kernel.org>,
+	Jiri Benc <jbenc@redhat.com>,
+	Eric Dumazet <edumazet@kernel.org>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 450/990] net: ena: Keep the RX buffer mapped if skb allocation fails
-Date: Wed, 25 Nov 2026 15:30:17 +0100
-Message-ID: <20261125143832.633412317@linuxfoundation.org>
+Subject: [PATCH 6.18 477/990] nsh: limit recursion in nsh_gso_segment()
+Date: Wed, 25 Nov 2026 15:30:44 +0100
+Message-ID: <20261125143833.268233733@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143822.072087159@linuxfoundation.org>
 References: <20261125143822.072087159@linuxfoundation.org>
@@ -68,76 +70,106 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Breno Leitao <leitao@debian.org>
+From: Eric Dumazet <edumazet@kernel.org>
 
-[ Upstream commit 3e8e22a1007a6337ba2400b3ea87077947005c20 ]
+[ Upstream commit 3921fb102d78a6d7aa61b8d273e097a1a8026b90 ]
 
-We are seeing the following issue in production on arm64 EC2 hosts
-(m8g.metal-24xl, 64K pages, SMMUv3 in strict mode, 6.18 based kernel).
-Right after a global OOM, the SMMU reports F_TRANSLATION write faults
-from the ENA device, followed by a burst of:
+nsh_gso_segment() calls skb_mac_gso_segment() for the inner packet,
+which calls nsh_gso_segment() again when the next protocol is NSH,
+either directly or behind an inner Ethernet header (ETH_P_TEB).
 
-  WARNING: CPU: 48 PID: 1656834 at drivers/iommu/dma-iommu.c:1242 iommu_dma_unmap_phys+0xf4/0x108
-  Call trace:
-   iommu_dma_unmap_phys+0xf4/0x108 (P)
-   dma_unmap_phys+0x194/0x2a8
-   dma_unmap_page_attrs+0x1c/0x38
-   ena_io_poll+0x7bc/0x1790 [ena]
-   __napi_poll+0x54/0x220
-   net_rx_action+0x250/0x520
+Nothing limits the depth: a GSO packet made of stacked 8-byte NSH
+headers recurses once per header, and a 64KB packet can hold about
+8000 of them, overflowing the kernel stack.
 
-ena_rx_skb() unmaps the RX buffer, or takes an extra page reference to
-reuse it, before napi_build_skb() allocates the skb. If the allocation
-fails, it returns NULL with rx_info->page still set. ena_clean_rx_irq()
-then puts the req_id back on the free list, and ena_alloc_rx_buffer()
-treats the buffer as still mapped and posts its old DMA address to the
-device again.
+Such a packet can be injected with a packet socket using
+PACKET_VNET_HDR, or with tun/tap or virtio_net, as nothing checks
+that a GSO packet with VIRTIO_NET_HDR_F_NEEDS_CSUM carries the
+protocol it claims. It is then segmented in software if the output
+device does not support the GSO type:
 
-With the IOMMU in strict mode, the device then writes to an unmapped
-IOVA, and the next completion of that buffer unmaps it a second time.
-If the IOVA was handed to a new mapping in between, the device can
-write into that buffer instead. On the reuse path, the extra page
-reference is never dropped.
+BUG: TASK stack guard page was hit at ffffcad5c0ab3ff8 (stack is ffffcad5c0ab4000..ffffcad5c0ab8000)
+Oops: stack guard page: 0000 [#1] SMP NOPTI
+CPU: 3 UID: 0 PID: 337 Comm: nsh_gso Tainted: G            E       7.4.0-rc1+ #118 PREEMPT(lazy)
+RIP: 0010:lock_acquire (kernel/locking/lockdep.c:5902)
+Call Trace:
+ <TASK>
+ skb_mac_gso_segment (include/linux/rcupdate.h:309 include/linux/rcupdate.h:849 net/core/gso.c:50)
+ nsh_gso_segment (net/nsh/nsh.c:110) nsh
+ skb_mac_gso_segment (net/core/gso.c:53)
+ nsh_gso_segment (net/nsh/nsh.c:110) nsh
+ [...]
+ skb_mac_gso_segment (net/core/gso.c:53)
+ __skb_gso_segment (net/core/gso.c:129)
+ validate_xmit_skb (net/core/dev.c:4238)
+ __dev_queue_xmit (net/core/dev.c:5087)
+ packet_sendmsg (net/packet/af_packet.c:3157 net/packet/af_packet.c:3189)
+ __sys_sendto (net/socket.c:800 net/socket.c:818 net/socket.c:2283)
+ __x64_sys_sendto (net/socket.c:2290 net/socket.c:2286 net/socket.c:2286)
+ do_syscall_64 (arch/x86/entry/syscall_64.c:61 arch/x86/entry/syscall_64.c:84)
+ entry_SYSCALL_64_after_hwframe (arch/x86/entry/entry_64.S:121)
 
-Allocate the skb before touching rx_info, so that a failed allocation
-leaves the buffer mapped and unchanged for the refill.
+Use gso_recursion_inc_test(), added in commit 006c8b834aed ("net: gso:
+limit recursive IP-in-IP segmentation"), with the same limit as IPv4
+and IPv6. The counter is shared with them: a packet with four NSH
+headers in front of an IPv4 header is still segmented, one more NSH
+header and it is dropped.
 
-Fixes: 9e5269a915a8 ("net: ena: use build_skb() in RX path")
-Fixes: f7d625adeb7b ("net: ena: Add dynamic recycling mechanism for rx buffers")
-Signed-off-by: Breno Leitao <leitao@debian.org>
-Link: https://patch.msgid.link/20261109-ena-rx-skb-alloc-fail-v1-1-aee2927cb51f@debian.org
+The NSH -> ETH_P_TEB -> NSH route is covered as well, as each round
+goes through nsh_gso_segment().
+
+Fixes: c411ed854584 ("nsh: add GSO support")
+Reported-by: Sashiko <sashiko-bot@kernel.org>
+Closes: https://lore.kernel.org/netdev/179443691180.2199510.148246238688217560@kernel.org/
+Cc: Jiri Benc <jbenc@redhat.com>
+Signed-off-by: Eric Dumazet <edumazet@kernel.org>
+Reviewed-by: Jiri Benc <jbenc@redhat.com>
+Link: https://patch.msgid.link/20261112102001.3744643-2-edumazet@kernel.org
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/amazon/ena/ena_netdev.c | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ include/net/gso.h | 2 +-
+ net/nsh/nsh.c     | 7 +++++++
+ 2 files changed, 8 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/net/ethernet/amazon/ena/ena_netdev.c b/drivers/net/ethernet/amazon/ena/ena_netdev.c
-index e35eef9f6ce15..61bac152cf99a 100644
---- a/drivers/net/ethernet/amazon/ena/ena_netdev.c
-+++ b/drivers/net/ethernet/amazon/ena/ena_netdev.c
-@@ -1009,6 +1009,10 @@ static struct sk_buff *ena_rx_skb(struct ena_ring *rx_ring,
+diff --git a/include/net/gso.h b/include/net/gso.h
+index 0749230d414ec..e311a8f5b5a72 100644
+--- a/include/net/gso.h
++++ b/include/net/gso.h
+@@ -19,7 +19,7 @@ struct skb_gso_cb {
+ 	int	encap_level;
+ 	__wsum	csum;
+ 	__u16	csum_start;
+-	/* Number of IPv4/IPv6 GSO handler entries for this packet. */
++	/* Number of IPv4/IPv6/NSH GSO handler entries for this packet. */
+ 	u8	recursion_counter;
+ };
+ #define SKB_GSO_CB_OFFSET	32
+diff --git a/net/nsh/nsh.c b/net/nsh/nsh.c
+index bfb7758063f31..dd4de50fc38c3 100644
+--- a/net/nsh/nsh.c
++++ b/net/nsh/nsh.c
+@@ -9,6 +9,7 @@
+ #include <linux/netdevice.h>
+ #include <linux/skbuff.h>
+ #include <net/gso.h>
++#include <net/ip_tunnels.h>
+ #include <net/nsh.h>
+ #include <net/tun_proto.h>
  
- 	buf_len = SKB_DATA_ALIGN(len + buf_offset + tailroom);
+@@ -84,6 +85,12 @@ static struct sk_buff *nsh_gso_segment(struct sk_buff *skb,
  
-+	skb = ena_alloc_skb(rx_ring, buf_addr, buf_len);
-+	if (unlikely(!skb))
-+		return NULL;
+ 	skb_reset_network_header(skb);
+ 
++	/* NSH can carry NSH (directly, or in an inner Ethernet frame):
++	 * limit the recursion, as IPv4 and IPv6 do.
++	 */
++	if (unlikely(gso_recursion_inc_test(skb, IP_TUNNEL_RECURSION_LIMIT)))
++		goto out;
 +
- 	/* If XDP isn't loaded try to reuse part of the RX buffer */
- 	reuse_rx_buf_page = !is_xdp_loaded &&
- 			    ena_try_rx_buf_page_reuse(rx_info, buf_len, len, pkt_offset);
-@@ -1016,10 +1020,6 @@ static struct sk_buff *ena_rx_skb(struct ena_ring *rx_ring,
- 	if (!reuse_rx_buf_page)
- 		ena_unmap_rx_buff_attrs(rx_ring, rx_info, DMA_ATTR_SKIP_CPU_SYNC);
- 
--	skb = ena_alloc_skb(rx_ring, buf_addr, buf_len);
--	if (unlikely(!skb))
--		return NULL;
--
- 	/* Populate skb's linear part */
- 	skb_reserve(skb, buf_offset);
- 	skb_put(skb, len);
+ 	outer_proto = skb->protocol;
+ 	outer_hlen = skb_mac_header_len(skb);
+ 	mac_len = skb->mac_len;
 -- 
 2.53.0
 
