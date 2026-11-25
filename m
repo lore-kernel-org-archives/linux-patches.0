@@ -1,54 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795621741;
-	b=jRFPHa8JW5KML3+Gy5AORN+E9OtQngTEVjxWBQ+z8yBW2PTk1+PcbIaRvHbvnhUqDB4c
-	 D54bVcLU9/T0msKAQXUQpllgceBS6zNEjLsC3qvNaDfjGd1VPPxdFDpoOHjjtECGJBD0S
-	 3xcfQU9trZaj2a9w7ixVuU3G6naKPXUvy1KpOazAGE+jiZUCodt3As2YGVw6M908Bbnrt
-	 ZWP28WpFUWxI5aIAc8Ysq3c/P/XLkXcjdxtoiVedS9mE343z3NVLt2ppstYee4AJk1XlY
-	 3gLeOPWiPSGE5EEumk9pbYgiZxtSRg+p0fUXQkwWSCt/JfnilEEimHmaRlvDkdi0IMg==
+	t=1795621745;
+	b=0/+nJAARRTDUEsamcXy1RA2SULEAgda4/SwveNHPpZDvrxLNUtIX0MFfZW3sl/Pr2YOz
+	 uj56hZOmfvzu9tZKqaT8QkOB5vyohm5H+TYR+juF3FUHNGYAv0d2egf8i/qWeJwQh4UtX
+	 h5+CuagH6ANtum1Nl23t+1AjqXp5wfxxQJrAaoEAwHHxy21hBjWVeFwg2QW9ZnCUtLSK6
+	 85kfDe7Wgn2+TxTTkgKUpwBFfwUV13OlZnIDErzbErEtqmXd4ht+vwoM8nqzBq4kDfUnq
+	 1jQ3TZrsjvWYGMObJq8o6HwWajdspcXpdX8eyA+FQLguZ8/FKN0RVEHAzssd7mfCzDg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795621741;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795621745;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=h8haKUn7PzPSmW9QWbCDxlib6OoeBybb8F1eu48Fylo=;
-	b=kMdrNJFRUaLWHRtdcwco8oblj4z+KonrMs8MOzDIpHajhmKf0VZiTf4qfALe2D1HWxaI
-	 SsijIEhu9mkqwLryrA4vrtf9X+Lkg2+Rxf2jsYIClTCT96rrNYa0BuyOWswFeQL/vbzv4
-	 UB4kAsEp/Cd7V+wWlVgoTFRy/SGSA0Bf/Ws09Ga2lietJ5PzmrE+fnVQ+DonGo+W2xnrC
-	 7oAmYGJWHos6rSbCPf2voEgKJppIdhnVa7bZa7QaFXI7ycGkeh2hlA26tzi8LTizBiPdw
-	 Ysv1FuqpeoIuekSaE2y93SaNojkSyEj4dHyBa7v2sOskLHo6Dqvy79tQSpQjNKFfMLg==
+	bh=B7mPjl9oWhsi63qK4IFr0yxxS4CuOUAKxUpDcPoQFso=;
+	b=xeocax4VjiZ0NgGc41NI7irbOwi6mqPfcuC+a4Oy+3oWoB9paXZ5islNUdbND73hf/1L
+	 jCfBsfElJq8YSsqlwfwZbI7HbNTp6DdY+6PCZj6ebPOeFuFKZ08bQJA/E3e24Kny75of5
+	 lr30Q9UfjGSYMgXJxIB0gmRZd+b0nnZ6hKzdRWIGIKXN08P9TtQfdjMruHTiiUTRS4IIe
+	 5jz6pTPlzWPnr1G9b2QS9fudb2GvtHMHk8pwdXYBqSrtMvWRa7SmUujTRcf7iLQMfylgB
+	 0ankL26k7JojgJhST1sArXoF+KRdqQH3exLCAs0KAn4EEgSvWS6H0rbHVtU+enH81Gg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=SMUErLjc;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=SfjovmmU;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D95D7606A31E;
-	Wed, 25 Nov 2026 15:49:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1A6DD606A321;
+	Wed, 25 Nov 2026 15:49:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=SMUErLjc
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C536C1F000D1;
-	Wed, 25 Nov 2026 15:49:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=SfjovmmU
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EEE211F000C6;
+	Wed, 25 Nov 2026 15:49:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795621741;
-	bh=h8haKUn7PzPSmW9QWbCDxlib6OoeBybb8F1eu48Fylo=;
+	s=korg; t=1795621744;
+	bh=B7mPjl9oWhsi63qK4IFr0yxxS4CuOUAKxUpDcPoQFso=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=SMUErLjcFLRS9cbZLBszyygNmGssU/bAgx0uj0ptRIkavDm8RAqLlNWTud4Q+JCq8
-	 DaJjU1iGZBLjaPx3t7B58VjpKKRx2XGZHzjFyDroX/nyKiGZSxGR3EQYg22pfaLt+r
-	 cB9mdh5g+5fo0V8i5YqghvK82N1+w4EB/FZX3pz4=
+	b=SfjovmmUhsfVwsY8em8A8uZVv4FMxCS20fkErLKhIiLcI+pPTqdjPYhAgY2c78eeZ
+	 GDseJYMXzOojORtlxgjAsJBkRCgfERHXCpKXW6Vii/VVfCYEE/SkmNE0jJczmsIqcG
+	 bwiZT90AOzBPMsZcqUYVIS6nvxyHS3ew2YulsKrU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jan Kara <jack@suse.cz>,
-	Jeff Layton <jlayton@kernel.org>,
-	Christoph Hellwig <hch@lst.de>,
-	"Christian Brauner (Amutable)" <brauner@kernel.org>,
+	Lifeng Zheng <zhenglifeng1@huawei.com>,
+	Viresh Kumar <viresh.kumar@linaro.org>,
+	Jie Zhan <zhanjie9@hisilicon.com>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 305/990] statx: dont leak STATX_ATTR_CHANGE_MONOTONIC in stx_attributes_mask
-Date: Wed, 25 Nov 2026 15:27:52 +0100
-Message-ID: <20261125143829.237116300@linuxfoundation.org>
+Subject: [PATCH 6.18 323/990] cpufreq: Return -EOPNOTSUPP if no policy supports boost
+Date: Wed, 25 Nov 2026 15:28:10 +0100
+Message-ID: <20261125143829.654971312@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143822.072087159@linuxfoundation.org>
 References: <20261125143822.072087159@linuxfoundation.org>
@@ -70,65 +70,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jeff Layton <jlayton@kernel.org>
+From: Lifeng Zheng <zhenglifeng1@huawei.com>
 
-[ Upstream commit 925d238324c79bcb75ad0add1d1b9d31d5f48115 ]
+[ Upstream commit 77cf053b041fe13d1fdd2e572e16ee7776ff687d ]
 
-STATX_ATTR_CHANGE_MONOTONIC is kernel-internal. cp_statx() strips it
-from stx_attributes but copies attributes_mask verbatim, so it leaks to
-userland on filesystems that advertise it (nfs, ceph), e.g.
-stx_attributes_mask = 0x8000000000303000 on NFS.
+In cpufreq_boost_trigger_state(), if none of the the policies support
+boost, policy_set_boost() will not be called and this function will
+return 0.
 
-Add a new mask constant and apply it to both fields.
+But it is better to return an error to indicate that the platform
+doesn't support boost.
 
-Fixes: a1175d6b1bda ("vfs: plumb i_version handling into struct kstat")
-Reviewed-by: Jan Kara <jack@suse.cz>
-Signed-off-by: Jeff Layton <jlayton@kernel.org>
-Link: https://patch.msgid.link/20261103-statx-v2-1-8b09aa8118ab@kernel.org
-Reviewed-by: Christoph Hellwig <hch@lst.de>
-Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
+Signed-off-by: Lifeng Zheng <zhenglifeng1@huawei.com>
+Acked-by: Viresh Kumar <viresh.kumar@linaro.org>
+Reviewed-by: Jie Zhan <zhanjie9@hisilicon.com>
+[ rjw: Subject and changelog edits ]
+Link: https://patch.msgid.link/20251202072727.1368285-2-zhenglifeng1@huawei.com
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Stable-dep-of: a0cde2b601bc ("cpufreq: Preserve global boost state on failed updates")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/stat.c            | 6 +++---
- include/linux/stat.h | 3 +++
- 2 files changed, 6 insertions(+), 3 deletions(-)
+ drivers/cpufreq/cpufreq.c | 6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
-diff --git a/fs/stat.c b/fs/stat.c
-index 3bc049f0bc3dd..484b61ccc1152 100644
---- a/fs/stat.c
-+++ b/fs/stat.c
-@@ -718,8 +718,7 @@ cp_statx(const struct kstat *stat, struct statx __user *buffer)
- 	/* STATX_CHANGE_COOKIE is kernel-only for now */
- 	tmp.stx_mask = stat->result_mask & ~STATX_CHANGE_COOKIE;
- 	tmp.stx_blksize = stat->blksize;
--	/* STATX_ATTR_CHANGE_MONOTONIC is kernel-only for now */
--	tmp.stx_attributes = stat->attributes & ~STATX_ATTR_CHANGE_MONOTONIC;
-+	tmp.stx_attributes = stat->attributes & ~STATX_ATTR_INTERNAL_MASK;
- 	tmp.stx_nlink = stat->nlink;
- 	tmp.stx_uid = from_kuid_munged(current_user_ns(), stat->uid);
- 	tmp.stx_gid = from_kgid_munged(current_user_ns(), stat->gid);
-@@ -727,7 +726,8 @@ cp_statx(const struct kstat *stat, struct statx __user *buffer)
- 	tmp.stx_ino = stat->ino;
- 	tmp.stx_size = stat->size;
- 	tmp.stx_blocks = stat->blocks;
--	tmp.stx_attributes_mask = stat->attributes_mask;
-+	tmp.stx_attributes_mask = stat->attributes_mask &
-+				  ~STATX_ATTR_INTERNAL_MASK;
- 	tmp.stx_atime.tv_sec = stat->atime.tv_sec;
- 	tmp.stx_atime.tv_nsec = stat->atime.tv_nsec;
- 	tmp.stx_btime.tv_sec = stat->btime.tv_sec;
-diff --git a/include/linux/stat.h b/include/linux/stat.h
-index e3d00e7bb26d9..3f4364808b7f0 100644
---- a/include/linux/stat.h
-+++ b/include/linux/stat.h
-@@ -69,4 +69,7 @@ struct kstat {
- /* file attribute values */
- #define STATX_ATTR_CHANGE_MONOTONIC	0x8000000000000000ULL /* version monotonically increases */
+diff --git a/drivers/cpufreq/cpufreq.c b/drivers/cpufreq/cpufreq.c
+index 002afd47d2d59..46cf3d49b0636 100644
+--- a/drivers/cpufreq/cpufreq.c
++++ b/drivers/cpufreq/cpufreq.c
+@@ -2809,7 +2809,7 @@ static int cpufreq_boost_trigger_state(int state)
+ {
+ 	struct cpufreq_policy *policy;
+ 	unsigned long flags;
+-	int ret = 0;
++	int ret = -EOPNOTSUPP;
  
-+/* mask of STATX_ATTR_* bits that is private to the kernel */
-+#define STATX_ATTR_INTERNAL_MASK	(STATX_ATTR_CHANGE_MONOTONIC)
+ 	/*
+ 	 * Don't compare 'cpufreq_driver->boost_enabled' with 'state' here to
+@@ -2831,6 +2831,10 @@ static int cpufreq_boost_trigger_state(int state)
+ 		if (ret)
+ 			goto err_reset_state;
+ 	}
 +
- #endif
++	if (ret)
++		goto err_reset_state;
++
+ 	cpus_read_unlock();
+ 
+ 	return 0;
 -- 
 2.53.0
 
