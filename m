@@ -1,51 +1,50 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795619340;
-	b=zSU/99HmYXhZTH4eODfbyRIjMmaMpUJuF+IYiCHXa3I/B8TGpurmQBMd8Sdw0p65eo6r
-	 3LZzJ1M99Fd3Zo4krMu1jUkLSnXfVSm5t6tIGpXhp+dP7pPSDLpUJaThrSMO3Jzbz78ti
-	 LI1qVH6eY2ibI/E/xd/76dXDJAboGy6VYA1nS0hfW0MoS6+wRqq1LR44ravXcoouHlPzu
-	 OrOLIl+QeuiBAWvt94C39HB9kl28IMb9B6Yje+eyKQhtBeOljmMEZFmUr7IR7lI854/0i
-	 kM52NyVK8miNQ8R9JTOthMS+ICcKiqrPTAn5YLetQ/6u2pVf6xmwDuVDSVSWf0oiLmg==
+	t=1795619343;
+	b=CWo8ksZXbQNu7tqvrrAdR1cBQ0PjmIbNPD+q4H5qefGFYq2/N48ifXHbwisKgONruNtX
+	 0SJA5eXAJxO+4BKO21O0QrZFj+LUvudfcE8CcR7oiBsNyNu/yTPv1qjccd6TzEZJkWvQ6
+	 9OayUGyPqYlk6OCH80e/mVlpF1bMr31heHe/1v3+KVsSp4UYP68KGfQFwu0djks+fQybm
+	 uGaHGvOAaIIJfvExJ5pi4hez8v4wOyWPOH1grIfYLvK3aCC9yjHqHvVwPf+bS5yuUPkxB
+	 PLk2hJeVWcpU0YKPukUrQYrwSVzYAIz0Nx6ZE2iezCVyxEPH73DSPA3cGz7+4oHIJvw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795619340;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795619343;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=lNqyD715p41JH0eAtTwcE0u73ug5rK1lrDTE64ipfj8=;
-	b=mHtXN64wivpw2B2nCWRtwaEihJ5BoCi6Jf3ejgTHgSip5RqjHrvexixa8+yUoKtgRfot
-	 SVUVxIsw9PACZGfQ6ewyuC3KwGe14+wHPSJNZYwa3FffP3Zs4mJ1ShxXfn8YAJw6TkukK
-	 KYFvcLTXRbWAQg6F9ywJrstgcioT9SMiD0HDsHpemzmK24R858p2i5K+nvHQYC0iKbg+B
-	 ynrH3+CuD8NDNpvZY4NQvN1Ygg292lcSYqMUi1j1qDJNiz4l6qQHiRbjkZuC5CCgQ/Rdv
-	 Yz/Nk7T2xvtOdDd78VkMveh8s07/y3R4/X2Q/YeVdxaSWOZR0sgUCfzmyrjlggu5fkw==
+	bh=6ID9uRbSk3Iw1zdhxTI99G7W42aIef0aTZhhRQwWwGg=;
+	b=ItdtMAJlK0FGwNOYa/fPuC7ToK3w69kowbWn6vOeL9d6dkIosifcAGPcNzSm65vS8XHr
+	 gUN7cbLsO6vKY1VlWu05jUQoI1updpzdb+kO1VMq55PRBaJ3UCFg2OXpYM/SkX9uqaFsV
+	 Ertulc4PaDMYhWnUnZ7vJVwDHy2O72V9ET+L0JhvVMQLDURZ3wbDi6ShLwIfRaPI8wlVW
+	 +0Qs0VnBy0uchrKheDmNNHXcZvNQVkb1vvnrtHzgVFandHrcf43Lkvb4n4xR/GRArnA3R
+	 k1xWPmcH1qOBYwHVGEN5g2AKF1hOyiV10RTA5DcNlH3WetuVfNpq6Mvr7n51jYIuz9Q==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=2ej5PRbc;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ZqHBYG3g;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 35A42606A691;
-	Wed, 25 Nov 2026 15:09:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1C227606A338;
+	Wed, 25 Nov 2026 15:09:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=2ej5PRbc
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EE4681F000C0;
-	Wed, 25 Nov 2026 15:08:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ZqHBYG3g
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 22C2C1F000EE;
+	Wed, 25 Nov 2026 15:09:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795619339;
-	bh=lNqyD715p41JH0eAtTwcE0u73ug5rK1lrDTE64ipfj8=;
+	s=korg; t=1795619342;
+	bh=6ID9uRbSk3Iw1zdhxTI99G7W42aIef0aTZhhRQwWwGg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=2ej5PRbcA8IrRMnS/dV7JxKwLnYRZ+8Pld4pyuwiQ9aDErNjZRzV277dbxoHoG2Sn
-	 AqEpMvnNPPndg+xzRQlf+7GFgwZknw7wSNbT9rqUQp487hXs76GVvHuajPAhmjF/UF
-	 FVex2BkmlPPYMYe31m8r/aJwih/zZXMrwMBPrUgM=
+	b=ZqHBYG3gSUC1UbcrEidK0LsjUQA559BlIsnFFCaK/hBkdmgegq1UAFWsfRazJiPJ+
+	 +y5xtqDxmIT4TFQtbYinMbWx7zA3aSzKhtM+ePSS4lgcTbLbdMKQvKceGMrFcXUQpn
+	 eYEyP1FP9jNGo+ViRxfoY0PHqmerucyYj5VNmKKU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sergei Nizovtsev <snizovtsev@cloudlinux.com>,
 	Takashi Iwai <tiwai@suse.de>
-Subject: [PATCH 7.3 0566/1005] ALSA: caiaq: Kill EP1 URB before unregistering the input device
-Date: Wed, 25 Nov 2026 15:31:44 +0100
-Message-ID: <20261125143835.012139467@linuxfoundation.org>
+Subject: [PATCH 7.3 0567/1005] Revert "ALSA: hda/cs420x: Add CS4208 fixup for MacBookAir 7,2"
+Date: Wed, 25 Nov 2026 15:31:45 +0100
+Message-ID: <20261125143835.035994089@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143821.729802100@linuxfoundation.org>
 References: <20261125143821.729802100@linuxfoundation.org>
@@ -67,124 +66,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sergei Nizovtsev <snizovtsev@cloudlinux.com>
+From: Takashi Iwai <tiwai@suse.de>
 
-commit 5d325345185015024a86abca4cc5fa6a3f75294e upstream.
+commit d1a1f361e08311f6d9a4aea2da2d1bcb3891f4ef upstream.
 
-snd_disconnect() unregisters the input device via
-snd_usb_caiaq_input_disconnect() and only afterwards kills the EP1
-command URB (cdev->ep1_in_urb). The EP1 completion handler
-usb_ep1_command_reply_dispatch() feeds snd_usb_caiaq_input_dispatch()
-for EP1_CMD_READ_{ERP,ANALOG,IO} replies, which report into
-cdev->input_dev. Since commit b04dcbb7f7b1 ("ALSA: caiaq: Use
-snd_card_free_when_closed() at disconnection") the input device is
-unregistered from snd_usb_caiaq_input_disconnect() but cdev->input_dev
-is cleared only later, in snd_usb_caiaq_input_free() from the card
-destructor. As the dispatch guard only tests cdev->input_dev for NULL,
-an EP1 reply that completes after input_unregister_device() but before
-cdev->ep1_in_urb is killed reports into an input device that has
-already been unregistered and, with no evdev client holding it open,
-freed.
+This reverts commit 82cfab6a52621febf36752bd5ed5184f82c96e07.
 
-Normally the window is closed by the USB core: usb_unbind_interface()
-calls usb_disable_interface() before ->disconnect(), which flushes the
-EP1 URB as long as endpoint 0x81 belongs to the interface being
-unbound. But caiaq addresses EP1 through the device-wide pipe
-usb_rcvbulkpipe(usb_dev, 0x1) without checking which interface owns
-the endpoint. If a device declares it in another interface, the URB
-stays live across snd_disconnect() of the interface that owns the card.
+The quirk entry seems matching with other multiple irrelevant models
+that lead to a regression on those.
 
-This needs a crafted device descriptor; a device that has EP1 in the
-interface caiaq is bound to is not affected.
+Maybe we should use HDA_CODEC_QUIRK() entry for the corresponding
+codec SSID, instead.  But let's revert for addressing the regression
+at first.
 
-Kill cdev->ep1_in_urb (and the paired midi_out_urb) before the input
-and audio disconnect helpers, so no EP1 completion can run once the
-input device has been unregistered.
-
-Reproduced under KASAN with raw-gadget + dummy_hcd emulating an Audio
-Kontrol 1 (17cc:0815) with the EP1 bulk pair in interface 1: only
-interface 0 was bound to snd-usb-caiaq and then unbound through sysfs
-while the gadget flooded EP1 with EP1_CMD_READ_ERP replies. With no PCM
-stream running the window is very short and was only hit by stalling
-the unbinding CPU with a kgdb breakpoint at
-snd_usb_caiaq_audio_disconnect(). With the fix applied, the same test
-runs clean.
-
-  BUG: KASAN: slab-use-after-free in input_event+0x3a/0xc0
-  Read of size 8 at addr ffff8880151a4028 by task sh/118
-
-  Call Trace:
-   <IRQ>
-   input_event+0x3a/0xc0
-   snd_usb_caiaq_input_dispatch+0xab2/0xf00
-   usb_ep1_command_reply_dispatch+0x1f3/0x580
-   __usb_hcd_giveback_urb+0x246/0x400
-   dummy_timer+0x1415/0x3380
-   __hrtimer_run_queues+0x39d/0x800
-   hrtimer_run_softirq+0x187/0x2d0
-   handle_softirqs+0x1ff/0x930
-   __irq_exit_rcu+0x15b/0x210
-   irq_exit_rcu+0xe/0x20
-   sysvec_apic_timer_interrupt+0x81/0xb0
-   </IRQ>
-   <TASK>
-   asm_sysvec_apic_timer_interrupt+0x1a/0x20
-  RIP: 0010:snd_usb_caiaq_audio_disconnect+0x0/0x70
-   snd_disconnect+0x81/0x110
-   usb_unbind_interface+0x1a0/0x860
-   device_release_driver_internal+0x2c5/0x470
-   unbind_store+0xde/0x100
-   </TASK>
-
-  Allocated by task 80:
-   input_allocate_device+0x47/0x340
-   snd_usb_caiaq_input_init+0x4c/0x1ac0
-   snd_probe+0xab3/0x1160
-   usb_probe_interface+0x2ea/0x810
-
-  Freed by task 118:
-   kfree+0x1ea/0x5c0
-   input_dev_release+0xab/0xd0
-   device_release+0xcf/0x250
-   kobject_put+0x169/0x320
-   snd_disconnect+0x79/0x110
-   usb_unbind_interface+0x1a0/0x860
-
-Fixes: b04dcbb7f7b1 ("ALSA: caiaq: Use snd_card_free_when_closed() at disconnection")
-Cc: stable@vger.kernel.org
-Signed-off-by: Sergei Nizovtsev <snizovtsev@cloudlinux.com>
-Assisted-by: Claude:claude-opus-4-8
-Link: https://patch.msgid.link/20261112094904.2430318-1-snizovtsev@cloudlinux.com
+Fixes: 82cfab6a5262 ("ALSA: hda/cs420x: Add CS4208 fixup for MacBookAir 7,2")
+Closes: https://lore.kernel.org/71fb1e29-60e1-4522-a071-c53557cea39b@icloud.com
+Closes: https://lore.kernel.org/CABWzDrqrskmtb7MVFgJ54k4WNSqby7Qo3R1XeoVBaJ+djaO1ew@mail.gmail.com
+Cc: <stable@vger.kernel.org>
+Link: https://patch.msgid.link/20261112124844.694544-1-tiwai@suse.de
 Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/usb/caiaq/device.c |   11 ++++++++---
- 1 file changed, 8 insertions(+), 3 deletions(-)
+ sound/hda/codecs/cirrus/cs420x.c |    2 --
+ 1 file changed, 2 deletions(-)
 
---- a/sound/usb/caiaq/device.c
-+++ b/sound/usb/caiaq/device.c
-@@ -593,14 +593,19 @@ static void snd_disconnect(struct usb_in
+--- a/sound/hda/codecs/cirrus/cs420x.c
++++ b/sound/hda/codecs/cirrus/cs420x.c
+@@ -571,7 +571,6 @@ static const struct hda_model_fixup cs42
  
- 	snd_card_disconnect(card);
+ static const struct hda_quirk cs4208_fixup_tbl[] = {
+ 	SND_PCI_QUIRK_VENDOR(0x106b, "Apple", CS4208_MAC_AUTO),
+-	SND_PCI_QUIRK(0x8086, 0x7270, "MacBookAir 7,2", CS4208_MAC_AUTO),
+ 	{} /* terminator */
+ };
  
-+	/*
-+	 * Kill the EP1 URB before disconnecting the input device: its
-+	 * completion reports into cdev->input_dev, which input_disconnect()
-+	 * frees without clearing the pointer.
-+	 */
-+	usb_kill_urb(cdev->ep1_in_urb);
-+	usb_kill_urb(cdev->midi_out_urb);
-+
- #ifdef CONFIG_SND_USB_CAIAQ_INPUT
- 	snd_usb_caiaq_input_disconnect(cdev);
- #endif
- 	snd_usb_caiaq_audio_disconnect(cdev);
- 
--	usb_kill_urb(cdev->ep1_in_urb);
--	usb_kill_urb(cdev->midi_out_urb);
--
- 	snd_card_free_when_closed(card);
- }
+@@ -584,7 +583,6 @@ static const struct hda_quirk cs4208_mac
+ 	SND_PCI_QUIRK(0x106b, 0x7800, "MacPro 6,1", CS4208_MACMINI),
+ 	SND_PCI_QUIRK(0x106b, 0x7b00, "MacBookPro 12,1", CS4208_MBP11),
+ 	SND_PCI_QUIRK(0x106b, 0x7f00, "iMac 16,1", CS4208_MBP11),
+-	SND_PCI_QUIRK(0x8086, 0x7270, "MacBookAir 7,2", CS4208_MBA6),
+ 	{} /* terminator */
+ };
  
 
 
