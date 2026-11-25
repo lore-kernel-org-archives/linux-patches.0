@@ -1,55 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795621616;
-	b=lRZbCcuJSanxFxGnJwgHZBKc03WHZbyi1dBKqoIK6dVXqV7IXTNg6rBfqHLMJS9QZtsk
-	 bZIdyKA7lQtgIIJlrGGcMJMI2UY7RksfTF4UDiVapJTDNvHcbHn0AQqWaJcSswRLmiPFW
-	 jpfJp+PzIHRsvXHjuBBfxj8z8GHduS0YSBxAJ/owpYefJtpo6TTBcD7E+17bhdWnC99W2
-	 Sg/z1WWmwQsmvJzCv9Hu6FX2Ncwtkw/bWAFvrCEZtygVMIypEcTOA1sfAg3dTaXgPDVhI
-	 vT9BXC3d6kWin1cW6nmiHgMgP0zgHDoSNj44MRw95oYd1Rpz5hJ2yz5rGRWyl2AuL2Q==
+	t=1795621620;
+	b=MNiu5LqZ/3U5Y9t2wvpkBsABAXSp1CqKQPgiRKwclQ61aohNAWQNL5FE3pTmez7snTC/
+	 Tf71a1S/wVDsWHMSp41PiC/2ks321gx0S3zxLtosQCG5XPqE9gxezFOFfsIF7yPnRQrNd
+	 EcKS+oTXIPoueXEIGuCVqPsXfXnxPoGgRdhSJfy0VDO87EdTF2KJeFiNbkY77aEdZosP6
+	 t6VvIFxQpqe9Fp5opWN9lkw8yF/g702LkCzDoaZ3/mBRi3EC8tUVC4gMfyMoyxKbDGnpW
+	 RVhE5hFmRh9oZCxRKGyuH/JKvJ21w6UM2q/lnsWaCqOxJY+0yhjL4WfIX1aRww0D50A==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795621616;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795621620;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=mUDmoiR0t+YFPXy72xxsgWJmfBYAw1oGQX1+FooAC+k=;
-	b=yHM7sGJ9G2fEaGEKn45T2eWjhDUtCGc0IHCq/JYrsU2/y4O4ZjKDSXT7W1phBDEAI5sr
-	 vhPN0CYiL1a3vceLUH9ioOmHX1D0fzY7zISoQzuWMQOU+Z1RDWg/5nMno4ET4znQMHnA7
-	 xH/pwNAmDet2V6rtyblLFEjXKmcNVDv7gU1F5eIe2MSpoeeQ2hgwrx2cBJB0aydlE8npw
-	 E+zt3pu4LUCY3stfBFKRuRZX84LN4UT4hyAL78tRv3+oZMeq0A3vJGkTZkF2K85JeE9BR
-	 4KoG6h4VBNgJM+W4GthMCNRV4TZayQuYYaXb8G4rbWqY/tns4a5pe7aoIKbNqra/HvA==
+	bh=yN8NQ3cfYFvH+YrPtD09Pqp/uH7SC2OcKfw1FASL16o=;
+	b=nTiKwSDn2XO2L5Z2VxC0ZQzGvIB9YT/jiBsSdUIQBVwqTN+GiJnqYoddsJXVpKRL4HK2
+	 MGyptA2bPnS4xm1H9yJrLSPphRp0/hpOaqUzc2TcBhVMGgUHrQwEkcF/sFe/cMGbGj8f3
+	 P3QXcXbFFycQL3UvYrOxk7Ix+0z1DgVv2+m2GVLhdqXqm8pl05O+X96p3CIZlF/S0eLXs
+	 q/J8CUOuRrWej0oznrCGrJ3BIJHXc+9KPzinymVFNQrfsdfj+d1DgwYA730Buf5DGX/rg
+	 VbGuLRKIcBiSqXAdq6K4VGMcJn/VCrQ1qEJKcXv6YUO2TZf4ba0VMsVvl6RQYgj70Mw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=j78CJDTp;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=mINYu8TK;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AE3E1606A68E;
-	Wed, 25 Nov 2026 15:46:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E6D9D606A32C;
+	Wed, 25 Nov 2026 15:46:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=j78CJDTp
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 835C91F000D3;
-	Wed, 25 Nov 2026 15:46:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=mINYu8TK
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C8E2B1F000CA;
+	Wed, 25 Nov 2026 15:46:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795621616;
-	bh=mUDmoiR0t+YFPXy72xxsgWJmfBYAw1oGQX1+FooAC+k=;
+	s=korg; t=1795621619;
+	bh=yN8NQ3cfYFvH+YrPtD09Pqp/uH7SC2OcKfw1FASL16o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=j78CJDTprnDth3UU7yWGXPevTAfgcusGZe30XT98GW9Xt0exHf/gBx5a9T0Onbjbv
-	 T6t6wdXD//ZrZaRWWApeTM2c84iSc09kfkHbNak1WdpcDr98mY8fK+bwvDCwhUukAS
-	 7GSTGD6/g1edmxz35CDp8QTt0grNsMwEYvU9Npno=
+	b=mINYu8TK52LY1wr9d2H2fBLxUIrtLMgfiKbiRcWimjZ7SFbdUcWI9Oa0vaOU6M4gk
+	 IiHt6yhX5jkWunwvs/zj/BdvfRGn4jJSgX5B9H6GxgnBhc4okjxaw0s81FZgGsgfvK
+	 XzSywvYL80/Us6Fed6S6wtxkSHFRO9ueNLs6S0lA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lorenzo Bianconi <lorenzo.bianconi@oss.qualcomm.com>,
-	Daniel Machon <daniel.machon@microchip.com>,
-	Nicolai Buchwitz <nb@tipi-net.de>,
-	Maxime Chevallier <maxime.chevallier@bootlin.com>,
+	Ido Schimmel <idosch@nvidia.com>,
+	Cheng Yongkang <teel4res@gmail.com>,
 	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 282/990] net: stmmac: set XDP metadata length on the page_pool RX path
-Date: Wed, 25 Nov 2026 15:27:29 +0100
-Message-ID: <20261125143828.689382503@linuxfoundation.org>
+Subject: [PATCH 6.18 283/990] net: bridge: disable MRP ports before the FDB flush in del_nbp()
+Date: Wed, 25 Nov 2026 15:27:30 +0100
+Message-ID: <20261125143828.714767440@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143822.072087159@linuxfoundation.org>
 References: <20261125143822.072087159@linuxfoundation.org>
@@ -71,71 +69,82 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Lorenzo Bianconi <lorenzo.bianconi@oss.qualcomm.com>
+From: Cheng Yongkang <teel4res@gmail.com>
 
-[ Upstream commit 6d9b7c85af57305ec2bd5907124478867edcc60b ]
+[ Upstream commit 37dfd0efbfffc20a57e41c2eb349ac49b1ca1ff8 ]
 
-stmmac_rx() initializes the XDP buffer with the metadata area valid, so
-an XDP program can reserve metadata with bpf_xdp_adjust_meta() and write
-it in [xdp->data_meta, xdp->data), for example to export the RX hardware
-timestamp obtained from the metadata kfunc. When such a frame is passed
-to the stack, the skb is built in place around the same page with
-napi_build_skb(), but skb_metadata_set() is never called.
+del_nbp() flushes the port's FDB entries before it unregisters the RX
+handler. For a normal port, br_stp_disable_port() moves the port to
+BR_STATE_DISABLED before this cleanup.
 
-napi_build_skb() clears skb_shared_info up to dataref, which includes
-meta_len, so skb_metadata_len() stays zero. The stack and TC BPF then see
-an empty metadata range even though the bytes are present in the skb
-headroom. The AF_XDP zero-copy path already records the length in
-stmmac_construct_skb_zc().
+That does not hold for an MRP ring port. br_set_state() ignores state
+changes while BR_MRP_AWARE_BIT is set, so br_stp_disable_port() leaves
+the port state alone. br_mrp_port_del() then restores forwarding when
+the bridge is up before clearing the bit. A frame received between
+br_fdb_cleanup_by_dst() and netdev_rx_handler_unregister() can therefore
+create a new FDB entry referencing the dying port. Nothing removes that
+entry before destroy_nbp_rcu() frees the port, so a later frame to the
+learned MAC can be forwarded through the freed port.
 
-Record the metadata length after reserving the headroom and adding the
-frame data. No copy is needed because the skb is built over the buffer the
-XDP program wrote to. With the length recorded, the software VLAN
-stripping path can move the metadata together with the MAC header, as it
-already does for zero-copy frames.
+Remove the MRP and CFM instances before disabling the port, so that
+br_stp_disable_port() actually transitions it to BR_STATE_DISABLED.
+With CONFIG_BRIDGE_VLAN_FILTERING=y, synchronize_net() in
+nbp_vlan_group_unpublish() also drains receive paths that could still
+learn with the old state before the final FDB cleanup.
 
-Fixes: e3f9c3e34840 ("net: stmmac: add Rx HWTS metadata to XDP receive pkt")
-Signed-off-by: Lorenzo Bianconi <lorenzo.bianconi@oss.qualcomm.com>
-Reviewed-by: Daniel Machon <daniel.machon@microchip.com>
-Reviewed-by: Nicolai Buchwitz <nb@tipi-net.de>
-Reviewed-by: Maxime Chevallier <maxime.chevallier@bootlin.com>
-Link: https://patch.msgid.link/20261102-stmmac_meatada_pp_path-v1-1-d93cc4f9a864@oss.qualcomm.com
+Found through an LLM-assisted source code analysis workflow and
+reproduced on net with KASAN and CONFIG_BRIDGE_VLAN_FILTERING=y in QEMU.
+A diagnostic switchdev module accepts MRP objects and delays the
+NETDEV_CHANGEUPPER callback for 1.5 s, holding del_nbp() after the FDB
+cleanup and before RX handler removal. The reproducer floods the MRP
+port with rotating source MACs, waits for the port's RCU callback
+through the module's rcu_barrier(), then sends frames to those MACs
+from another port. The unpatched kernel reports:
+
+  BUG: KASAN: slab-use-after-free in br_forward+0xb1/0x820
+  Call Trace:
+   <IRQ>
+   br_forward+0xb1/0x820
+   br_handle_frame_finish+0x148b/0x1e50
+   br_handle_frame+0x90a/0x15c0
+
+With this patch, three runs of six cycles each reach the delay without
+a KASAN report.
+
+Fixes: 6536993371fa ("bridge: mrp: Integrate MRP into the bridge")
+Suggested-by: Ido Schimmel <idosch@nvidia.com>
+Link: https://lore.kernel.org/netdev/20261012123051.GA714215@shredder/
+Closes: https://lore.kernel.org/netdev/20261022090431.3641707-1-teel4res@gmail.com/
+Signed-off-by: Cheng Yongkang <teel4res@gmail.com>
+Reviewed-by: Ido Schimmel <idosch@nvidia.com>
+Link: https://patch.msgid.link/20261101044840.1595584-1-1020691186@qq.com
 Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/stmicro/stmmac/stmmac_main.c | 10 +++++++---
- 1 file changed, 7 insertions(+), 3 deletions(-)
+ net/bridge/br_if.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c b/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
-index 2e7b146895ba8..0e78c1d2fcf1d 100644
---- a/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
-+++ b/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
-@@ -5731,7 +5731,7 @@ static int stmmac_rx(struct stmmac_priv *priv, int limit, u32 queue)
- 		}
+diff --git a/net/bridge/br_if.c b/net/bridge/br_if.c
+index 5bcd1acc5da9b..63d9e28c0eda7 100644
+--- a/net/bridge/br_if.c
++++ b/net/bridge/br_if.c
+@@ -339,13 +339,13 @@ static void del_nbp(struct net_bridge_port *p)
  
- 		if (!skb) {
--			unsigned int head_pad_len;
-+			unsigned int metasize;
+ 	nbp_delete_promisc(p);
  
- 			/* XDP program may expand or reduce tail */
- 			buf1_len = ctx.xdp.data_end - ctx.xdp.data;
-@@ -5748,10 +5748,14 @@ static int stmmac_rx(struct stmmac_priv *priv, int limit, u32 queue)
- 			}
- 
- 			/* XDP program may adjust header */
--			head_pad_len = ctx.xdp.data - ctx.xdp.data_hard_start;
--			skb_reserve(skb, head_pad_len);
-+			skb_reserve(skb,
-+				    ctx.xdp.data - ctx.xdp.data_hard_start);
- 			skb_put(skb, buf1_len);
- 			skb_mark_for_recycle(skb);
++	br_mrp_port_del(br, p);
++	br_cfm_port_del(br, p);
 +
-+			metasize = ctx.xdp.data - ctx.xdp.data_meta;
-+			if (metasize)
-+				skb_metadata_set(skb, metasize);
- 			buf->page = NULL;
- 		} else if (buf1_len) {
- 			dma_sync_single_for_cpu(priv->device, buf->addr,
+ 	spin_lock_bh(&br->lock);
+ 	br_stp_disable_port(p);
+ 	spin_unlock_bh(&br->lock);
+ 
+-	br_mrp_port_del(br, p);
+-	br_cfm_port_del(br, p);
+-
+ 	br_ifinfo_notify(RTM_DELLINK, NULL, p);
+ 
+ 	list_del_rcu(&p->list);
 -- 
 2.53.0
 
