@@ -1,52 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795625873;
-	b=oafCUKO95wjUNzOH4jxd/HpFPbIDczELWTyrrd69Yq+UqGMAvCtq1hMkDPV2moFe+WGw
-	 W67YZ9eKZZJrAqBymbviO/84E8wGINi35U4jDcMehYs7EHFYD28iltwfeLy6nFlNE8el9
-	 fyxmQoyARbybfGH5nXZzUSee7OPN8FpqiKwKepjec+2k3aJQiaTH1VCJcqfufXbVBgr4z
-	 w3OcxxHbF/vs9OF2PL+wnfc820oMrWFsbLu1lxK6vM8aCmWCdLoQYUtHlVT1Osd6L9uOp
-	 ghb0AbNmE8Iyag9QPeqKWin25l1c1cqKyZ+uyIjkjQTm3nxoVO6yVESTnaClJxIR2Mw==
+	t=1795625876;
+	b=1jydHQADHWgAuk6UJuF3t1wBn6gb+iOU/b3Oho+KWvYfo5cKI+yxneRUSh1ouQUfVspx
+	 e+HpW6wx6VNHLNKnaiUb5bom5slRS9nhW0a1pJAeYIm/amP4yVkC19/wBNgUXuGGClXGs
+	 3c//mXcr587+l6SKDaR7YhwlfIAEZgzU9y1dlo7ip/NSRRoLQkVO0sOxR2EjE95tmKl67
+	 fpMYPXQ/NfbJR1IQrdVHNXUEnhmNtxG+rnNuN1QpYzhX06R62p2wKFz4A3bF1yOZ0eNwO
+	 795LvlI8DL8wNxwthwoRtLsTPR8mODtygNjbX/UTlZcA1JPeKdUb+WbndT/0ZFM4Nfw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795625873;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795625876;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Type:Content-Transfer-Encoding;
-	bh=OhKhYOIwvvZgPV5RhUknApJKH/cyKTxcpOAp1dpnVDs=;
-	b=sYLp+y4/9FvwKn+YKAu9vVKaU3ztkdJZ5LsYI54SQj/LgGdz310mIb/aaY+vBmnG+pJ3
-	 8AkbqqFYiE7RiklI4fCAIhe5RCNkc64y3pfQtu7h/wxVa+BXZ3AvMGze8cUMm+am+kULe
-	 qe7k2dq4rL+MCvpGzjt5mQznDatB0y5DFNAAv3VLBpoYzXfCr6RfKgM0PO3h4xvyk3KOM
-	 zwBbJxm93io9MTzgWwTXUlLlRt/Ql2ib9msiTnKlizeQJXmtZktkHZuKX0fxy6fCW7pT+
-	 XDLkg1XWS30Ws8WzHaOHuHLiqirBoxyZAFZeRovtlkLdn4SdnfGWSYHb1Unas5V6Ciw==
+	bh=G+V/1yFjdxCYGDzj+fXepe4xoIXz+PPCxf+J0YckPtM=;
+	b=Ug41xYfZc+X8ekRPQYc4T0hjmBSN9P8w+2QI/KW+RJQ7evHhn0SOAc6r+PdyCxejDqON
+	 Iz/olCEJPApmD9PCpaZloWPizk9Asx8zKXcYdL1HsLN7F+bE2TO8mEf4Z19RXrblMuGOx
+	 Bt0wHknPKr8sFZhLh6hec2uGSFq6nYzBfG1ah+d25+n/zbL5bM4bi8JCtbEdH/TOpx03G
+	 FhDa66eO4bpiwrbb03hrSR/V5+LkbK3ZK5/TShOhOlTKg5Ealrf0J/a3kDmv3DXmfJi8Z
+	 Hz3k9pw6ZF01tf9UkLB2LQGEZbfapvBOoXYx8JWa620EXM40dpQV1IL6VSPATlGXMlQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=jeT4ZLKz;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=0b0x2+Jo;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CBA2C606A327;
-	Wed, 25 Nov 2026 16:57:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A81BB606A31E;
+	Wed, 25 Nov 2026 16:57:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=jeT4ZLKz
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9F57B1F000CF;
-	Wed, 25 Nov 2026 16:57:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=0b0x2+Jo
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E81361F000C0;
+	Wed, 25 Nov 2026 16:57:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795625873;
-	bh=OhKhYOIwvvZgPV5RhUknApJKH/cyKTxcpOAp1dpnVDs=;
+	s=korg; t=1795625876;
+	bh=G+V/1yFjdxCYGDzj+fXepe4xoIXz+PPCxf+J0YckPtM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=jeT4ZLKzO5Ylj1zVtU8tWQqCaCUQV6C/wPUv/fTkPSYssIG1JBY0tlC/wv+AAi0zE
-	 fdqxx8sWr7+3IqOkaZANSFDHeUdwc/XKk/HLOzisDR8XWWhg/EhKgotr1YOAJtLMIf
-	 /RgbqCiXr7i2FUT17y7qHlAKSC/cRFLsKtwh6qw4=
+	b=0b0x2+Jo5yhumYBx3ky2zjeuRHxJt6xoDVyh+SDxR3ZYAFRQIPz/w5TPb4N6mqq0E
+	 Xj1/kf8xqEn9XHywEcX/6w5kmECesysQPDOa/1E/CwCxfX7IwEvGzhFTbMMlbNCcbT
+	 LIRE6IjqjyVesryKhcNyQA4KMK7WgBVJfcYbisyA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	=?UTF-8?q?J=C3=A9r=C3=A9my=20Jean?= <Jeremy.Jean@oss.cyber.gouv.fr>,
-	Sahil Malhotra <sahil.malhotra@nxp.com>,
 	Herbert Xu <herbert@gondor.apana.org.au>
-Subject: [PATCH 6.12 613/816] crypto: caam - reject overlong RSA CRT parameters
-Date: Wed, 25 Nov 2026 15:36:01 +0100
-Message-ID: <20261125143903.369838973@linuxfoundation.org>
+Subject: [PATCH 6.12 614/816] crypto: essiv - fix use-after-free in AEAD path
+Date: Wed, 25 Nov 2026 15:36:02 +0100
+Message-ID: <20261125143903.392304851@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143849.205329330@linuxfoundation.org>
 References: <20261125143849.205329330@linuxfoundation.org>
@@ -71,179 +70,41 @@ Content-Transfer-Encoding: 8bit
 
 From: Jérémy Jean <Jeremy.Jean@oss.cyber.gouv.fr>
 
-commit 828c3b265b6df877dced3dde56ea41daa2e6181e upstream.
+commit e9ce64dce975a14700e835003847415e29918474 upstream.
 
-caam_read_rsa_crt() right-aligns dP, dQ, and qInv in buffers sized
-from the corresponding prime. rsa_parse_priv_key() only bounds these
-integers against n, so a malformed key can provide, for example, a
-two-byte dP with a one-byte p. dstlen - nbytes then underflows and
-memcpy() writes outside the allocation during set_priv_key(). KASAN
-reports a slab-out-of-bounds write in caam_read_rsa_crt().
+The request that ESSIV submits to its wrapped AEAD transform may
+finish before crypto_aead_encrypt() or crypto_aead_decrypt() returns.
+In case this happens, essiv_aead_done() calls aead_request_complete()
+on the original ESSIV request, which can end up freeing the request
+before essiv_aead_crypt() resumes, creating a UAF:
 
-Reject empty or overlong CRT parameters after stripping leading zeros.
-qInv is consumed by CAAM as a p-sized value, so size it from p rather
-than q to match the DMA mapping in set_rsa_priv_f3_pdb(). Let the
-top-level key cleanup handle partial form-3 allocations and return the
-specific error to the caller.
+  BUG: KASAN: slab-use-after-free in essiv_aead_crypt+0x8e6/0x950
+  Read of size 8 at addr ffff888102af1360 by task init/66
 
-Also test nbytes before dereferencing it while stripping zeros, so an
-all-zero integer does not read one byte beyond its input.
+Check the return status before dereferencing rctx after submitting that
+request. If the operation did not return -EINPROGRESS or -EBUSY, then
+the request cannot have been freed yet.
 
-Fixes: 4a651b122adb ("crypto: caam - add support for RSA key form 3")
+Fixes: be1eb7f78aa8 ("crypto: essiv - create wrapper template for ESSIV generation")
 Cc: stable@vger.kernel.org
 Assisted-by: LLM
 Signed-off-by: Jérémy Jean <Jeremy.Jean@oss.cyber.gouv.fr>
-Reviewed-by: Sahil Malhotra <sahil.malhotra@nxp.com>
 Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/crypto/caam/caampkc.c |   79 +++++++++++++++++-------------------------
- 1 file changed, 32 insertions(+), 47 deletions(-)
+ crypto/essiv.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/crypto/caam/caampkc.c
-+++ b/drivers/crypto/caam/caampkc.c
-@@ -880,7 +880,7 @@ static void caam_rsa_free_key(struct caa
+--- a/crypto/essiv.c
++++ b/crypto/essiv.c
+@@ -250,7 +250,7 @@ static int essiv_aead_crypt(struct aead_
+ 	err = enc ? crypto_aead_encrypt(subreq) :
+ 		    crypto_aead_decrypt(subreq);
  
- static void caam_rsa_drop_leading_zeros(const u8 **ptr, size_t *nbytes)
- {
--	while (!**ptr && *nbytes) {
-+	while (*nbytes && !**ptr) {
- 		(*ptr)++;
- 		(*nbytes)--;
- 	}
-@@ -896,22 +896,22 @@ static void caam_rsa_drop_leading_zeros(
-  * @ptr   : pointer to {dP, dQ, qInv} CRT member
-  * @nbytes: length in bytes of {dP, dQ, qInv} CRT member
-  * @dstlen: length in bytes of corresponding p or q prime factor
-+ * @dst   : pointer to the zero-padded output buffer
-  */
--static u8 *caam_read_rsa_crt(const u8 *ptr, size_t nbytes, size_t dstlen)
-+static int caam_read_rsa_crt(const u8 *ptr, size_t nbytes, size_t dstlen,
-+			     u8 **dst)
- {
--	u8 *dst;
--
- 	caam_rsa_drop_leading_zeros(&ptr, &nbytes);
--	if (!nbytes)
--		return NULL;
-+	if (!nbytes || nbytes > dstlen)
-+		return -EINVAL;
- 
--	dst = kzalloc(dstlen, GFP_KERNEL);
--	if (!dst)
--		return NULL;
-+	*dst = kzalloc(dstlen, GFP_KERNEL);
-+	if (!*dst)
-+		return -ENOMEM;
- 
--	memcpy(dst + (dstlen - nbytes), ptr, nbytes);
-+	memcpy(*dst + (dstlen - nbytes), ptr, nbytes);
- 
--	return dst;
-+	return 0;
+-	if (rctx->assoc && err != -EINPROGRESS && err != -EBUSY)
++	if (err != -EINPROGRESS && err != -EBUSY)
+ 		kfree(rctx->assoc);
+ 	return err;
  }
- 
- /**
-@@ -991,6 +991,7 @@ static int caam_rsa_set_priv_key_form(st
- 	size_t p_sz = raw_key->p_sz;
- 	size_t q_sz = raw_key->q_sz;
- 	unsigned aligned_size;
-+	int ret;
- 
- 	rsa_key->p = caam_read_raw_data(raw_key->p, &p_sz);
- 	if (!rsa_key->p)
-@@ -999,57 +1000,39 @@ static int caam_rsa_set_priv_key_form(st
- 
- 	rsa_key->q = caam_read_raw_data(raw_key->q, &q_sz);
- 	if (!rsa_key->q)
--		goto free_p;
-+		return -ENOMEM;
- 	rsa_key->q_sz = q_sz;
- 
- 	aligned_size = ALIGN(raw_key->p_sz, dma_get_cache_alignment());
- 	rsa_key->tmp1 = kzalloc(aligned_size, GFP_KERNEL);
- 	if (!rsa_key->tmp1)
--		goto free_q;
-+		return -ENOMEM;
- 
- 	aligned_size = ALIGN(raw_key->q_sz, dma_get_cache_alignment());
- 	rsa_key->tmp2 = kzalloc(aligned_size, GFP_KERNEL);
- 	if (!rsa_key->tmp2)
--		goto free_tmp1;
-+		return -ENOMEM;
- 
- 	rsa_key->priv_form = FORM2;
- 
--	rsa_key->dp = caam_read_rsa_crt(raw_key->dp, raw_key->dp_sz, p_sz);
--	if (!rsa_key->dp)
--		goto free_tmp2;
--
--	rsa_key->dq = caam_read_rsa_crt(raw_key->dq, raw_key->dq_sz, q_sz);
--	if (!rsa_key->dq)
--		goto free_dp;
--
--	rsa_key->qinv = caam_read_rsa_crt(raw_key->qinv, raw_key->qinv_sz,
--					  q_sz);
--	if (!rsa_key->qinv)
--		goto free_dq;
-+	ret = caam_read_rsa_crt(raw_key->dp, raw_key->dp_sz, p_sz,
-+				&rsa_key->dp);
-+	if (ret)
-+		return ret;
-+
-+	ret = caam_read_rsa_crt(raw_key->dq, raw_key->dq_sz, q_sz,
-+				&rsa_key->dq);
-+	if (ret)
-+		return ret;
-+
-+	ret = caam_read_rsa_crt(raw_key->qinv, raw_key->qinv_sz, p_sz,
-+				&rsa_key->qinv);
-+	if (ret)
-+		return ret;
- 
- 	rsa_key->priv_form = FORM3;
- 
- 	return 0;
--
--free_dq:
--	kfree_sensitive(rsa_key->dq);
--	rsa_key->dq = NULL;
--free_dp:
--	kfree_sensitive(rsa_key->dp);
--	rsa_key->dp = NULL;
--free_tmp2:
--	kfree_sensitive(rsa_key->tmp2);
--	rsa_key->tmp2 = NULL;
--free_tmp1:
--	kfree_sensitive(rsa_key->tmp1);
--	rsa_key->tmp1 = NULL;
--free_q:
--	kfree_sensitive(rsa_key->q);
--	rsa_key->q = NULL;
--free_p:
--	kfree_sensitive(rsa_key->p);
--	rsa_key->p = NULL;
--	return -ENOMEM;
- }
- 
- static int caam_rsa_set_priv_key(struct crypto_akcipher *tfm, const void *key,
-@@ -1067,6 +1050,8 @@ static int caam_rsa_set_priv_key(struct
- 	if (ret)
- 		return ret;
- 
-+	ret = -ENOMEM;
-+
- 	/* Copy key in DMA zone */
- 	rsa_key->d = kmemdup(raw_key.d, raw_key.d_sz, GFP_KERNEL);
- 	if (!rsa_key->d)
-@@ -1103,7 +1088,7 @@ static int caam_rsa_set_priv_key(struct
- 
- err:
- 	caam_rsa_free_key(rsa_key);
--	return -ENOMEM;
-+	return ret;
- }
- 
- static unsigned int caam_rsa_max_size(struct crypto_akcipher *tfm)
 
 
