@@ -1,51 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795625930;
-	b=Du3qkZd/mj/b7edbcvu8xeozOqmloZUh1Qve/cKVS2YFMNoIPwYkfy99RPpYG09Ypo6G
-	 peHT4x1z03DHnhe73pjykSutYOAX3Y3hFOtF7tl7ie9qKQ+bZ3LyrTb64kbvdjEs8ZRQ0
-	 0pToPCaOjB1Aprnuvka3u2w0k4tR0ywirIgzXgOsgDlx0CwQEUlOAXeYxHw3SLYLncZYY
-	 oyETHUJE8fpfhi9tqMZxYZzWhoVM90EG9agDC/kC8Z5ZqrkEbLRAWhzJNNCPReUdLfChj
-	 E3vHAXJtakS0eRaMJYk5m77MI9F8ApakC9zOrJHfaMBeALBjJohbi5dVs05cmYnDNaQ==
+	t=1795625933;
+	b=0CiFuFS3M3AhdSn7RokQbW/AzJeqtS93csMFwGE+2Sod2mRL8Pvax/64c70Y6OAFW9Q6
+	 PyFgaFD2NhNTvDCgZ7I80UulLFSeozFQdnpMCPpFPsE1Hjd2DoaK/P44mzbYoTO6mRe5y
+	 hIg6TA92KyNtjEZByRItIwkdgJMl38r0RROVPCD+M0wbP8oTC0gydHmRZXwWjHQ4byTaG
+	 vOfCZ2N2piYrfZaBOOQec+GHEpHJsJbrAhE7QNvyZid1Ck4QhEiUrywOsQq8CgbyoTjV8
+	 /wePqzE8//Z5KBuTxuFOADGlkJr2MNvKbHHI/lAWlxWUxPdpIE6wNruwxN0cxFxVMrQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795625930;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795625933;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=KUaVHC/MY+H50H/O7VRa4i6YYSYWEdxk9OcUjZBkKZ0=;
-	b=Ui5Ld27q/YHrao96tq1kzaXDHR1oaUpqO5LBYgVwWUta2zKcxzA8A2UGunwx6s9ssTd2
-	 V2U+jNx27TkEhhlgVUiH7XApHcEpfag2jUs6opxso0C6xcBKCOEY4GS7DD9PNnILL4/9m
-	 LP+cPioBZpWz3TzQvPkynBpftQ6NMw6InR01hoEockTIRbir5B7yFFOJjHQMXV/r//OyT
-	 JBm2yLBUUOa/3KwePOcNXzVPDxYQd/Eq3DY3ITrZ8yXe8yAJ+uPLJSka7GJcMq+gRa0ue
-	 pC+CRTTe4yR3uUHCw8r7lMf9u3OSNmsEUeFAWI8Wo7b5/lQAwk2qAjdYBCHa2pOQMxQ==
+	bh=UD3fYAIm94C1Ecb9jhI/Uf9GFneNd+oLeVVYuWt+p60=;
+	b=mEresYxNZ8ViHNzeTA6RxqRaui49Fq0v0S4qKU+Kyh+mK8g8TUdF12jWhe55+s7H27Gs
+	 ts2QePBjvPcczJ0IT4+TB5Y58x+Ovcq41k808ZaVijMsOMBwYreOpLZKM3bM6FekVYyNm
+	 qq8C0vgjASo/OisAAKbtBBu72izGGkvMFDSvTfZHZneUVnEii8RsJFIXa4QpcBnuRoN5+
+	 NrbxPw4XqNn1TtYb+36N+5p0xGmOXn1vMwoxvNH23WpvfcttfOE5Vov93xY+AXxvAE9zm
+	 MrQpE9oENU2STVwV1D/+jMQ6Ba6FBm4BvR2rksWzb/QYqbFE7uE+5GWwy7ih4PDoeYw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=jQSxA4Mh;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=v52LiU4T;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4A3EA606A31E;
-	Wed, 25 Nov 2026 16:58:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A7B86606A31E;
+	Wed, 25 Nov 2026 16:58:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=jQSxA4Mh
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 80AD21F000CF;
-	Wed, 25 Nov 2026 16:58:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=v52LiU4T
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A6ACD1F000C0;
+	Wed, 25 Nov 2026 16:58:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795625930;
-	bh=KUaVHC/MY+H50H/O7VRa4i6YYSYWEdxk9OcUjZBkKZ0=;
+	s=korg; t=1795625933;
+	bh=UD3fYAIm94C1Ecb9jhI/Uf9GFneNd+oLeVVYuWt+p60=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=jQSxA4MhpZ4VxBcXBWVcW53KX0/AuO8LzHEMcCu7pXFJkr1CrxV6DGjaDGXISh1zO
-	 CegkY7N4CicZABVn9toUUzYV5G2cJInoGsavXkqpRnQojPh4I2vnQbea0btypcpRez
-	 wcJnAkyneMT1iBBWxys5/NAfMUng+WR8u3SVfIPQ=
+	b=v52LiU4TOJ1ohHu02s2sxcO8kftoVAgpRetZitWwVqBdlHDSv6R7KkixgW75JnvKm
+	 F86JTqMSqgUkEvFrjiU4aKig9aVaZq22Rf5LZVUSHI2IsBUkwLX342bI7MHUcT3FZc
+	 7lUve3QeGw3ahN2A0I/+HEIRsN+D1kgrqpkaIVSg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yu Zhang <yuz08559@gmail.com>,
-	Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
-Subject: [PATCH 6.12 676/816] gpio: virtuser: remove the debugfs files before freeing the line data
-Date: Wed, 25 Nov 2026 15:37:04 +0100
-Message-ID: <20261125143904.827362281@linuxfoundation.org>
+	Giuseppe Scrivano <giuseppe@scrivano.org>,
+	Amir Goldstein <amir73il@gmail.com>
+Subject: [PATCH 6.12 677/816] ovl: do not always clear absolute_redirect
+Date: Wed, 25 Nov 2026 15:37:05 +0100
+Message-ID: <20261125143904.850839846@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143849.205329330@linuxfoundation.org>
 References: <20261125143849.205329330@linuxfoundation.org>
@@ -67,132 +67,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yu Zhang <yuz08559@gmail.com>
+From: Giuseppe Scrivano <giuseppe@scrivano.org>
 
-commit c2d0710318b8cd57d0ef6088d0ee4bbc1e827fd3 upstream.
+commit 477449a7a5fd1b2fe973fe2978b0c921115a65f3 upstream.
 
-gpio_virtuser_probe() registers the devm action that removes the debugfs
-directory before it allocates the per-line and per-array data that the
-debugfs files point to. devres releases resources in reverse order, so
-on unbind the line data is freed, the consumer_lock mutex is destroyed
-and the GPIO descriptors are put first, and the debugfs files are only
-removed afterwards.
+ovl_check_redirect() clears d->absolute_redirect before it checks that
+the path element has a redirect xattr.  An element without one, such as
+an intermediate directory in a lower layer, then clears the flag set by
+the absolute redirect of a metacopy file found in a higher layer.  The
+lookup of the data in the data-only layers is not deferred any more and
+the lookup fails with -EIO:
 
-A read or write of any of the per-line debugfs files (value, direction,
-consumer, interrupts, ...) that runs in that window dereferences the
-freed data. debugfs_remove_recursive() waits for in-flight file
-operations, but by then the data has already been freed.
+  # l2/f: metacopy, redirect "/dir/file"; l1/dir/ exists, no "file"
+  mount -t overlay none -o metacopy=on,redirect_dir=on,\
+        lowerdir+=l2,lowerdir+=l1,datadir+=data m
+  cat m/f   # Input/output error
 
-Running eight threads that read the per-line debugfs files while
-another task writes 1 and 0 to the configfs "live" attribute triggers
-this within a second on a KASAN kernel, with gpio-sim as the provider:
+Set d->absolute_redirect only when a redirect xattr was read.
 
-  BUG: KASAN: slab-use-after-free in gpio_virtuser_value_get+0x19/0x60
-  Read of size 8 at addr ffff888005109e38 by task vu_race/3479
-  Call Trace:
-   gpio_virtuser_value_get+0x19/0x60
-   simple_attr_read+0x109/0x290
-   debugfs_attr_read+0x5e/0x80
-   full_proxy_read+0xae/0xe0
-   vfs_read+0x1bc/0x7a0
-  Allocated by task 1:
-   devm_kmalloc+0x89/0x1d0
-   gpio_virtuser_probe+0x56f/0x910
-  Freed by task 1:
-   kfree+0x196/0x430
-   release_nodes+0x77/0xa0
-   devres_release_all+0xf3/0x150
-   device_unbind_cleanup+0x18/0x130
-   ...
-   platform_device_unregister+0x3c/0x50
-   gpio_virtuser_device_deactivate+0x3c/0xc0
-
-The same run also reports use-after-free on the freed consumer_lock
-from the consumer attribute.
-
-Register the debugfs removal action after the line data has been set
-up, so that it runs first on unbind, and remove the directory by hand
-on the probe error paths before that point.
-
-Fixes: 91581c4b3f29 ("gpio: virtuser: new virtual testing driver for the GPIO API")
+Fixes: 5436ab0a864e ("ovl: implement lookup in data-only layers")
+Closes: https://sashiko.dev/#/bug/linux-2cc24e0b-fbdc-4cf1-aded-cfd19c2918ee
 Cc: stable@vger.kernel.org
-Signed-off-by: Yu Zhang <yuz08559@gmail.com>
-Link: https://patch.msgid.link/20261102075707.41742-1-yuz08559@gmail.com
-Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
+Signed-off-by: Giuseppe Scrivano <giuseppe@scrivano.org>
+Signed-off-by: Amir Goldstein <amir73il@gmail.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpio/gpio-virtuser.c |   46 +++++++++++++++++++++++++++----------------
- 1 file changed, 29 insertions(+), 17 deletions(-)
+ fs/overlayfs/namei.c |    5 ++---
+ 1 file changed, 2 insertions(+), 3 deletions(-)
 
---- a/drivers/gpio/gpio-virtuser.c
-+++ b/drivers/gpio/gpio-virtuser.c
-@@ -952,38 +952,50 @@ static int gpio_virtuser_probe(struct pl
- 				     "Failed to get the IDs of GPIOs to request\n");
+--- a/fs/overlayfs/namei.c
++++ b/fs/overlayfs/namei.c
+@@ -38,13 +38,12 @@ static int ovl_check_redirect(const stru
+ 	char *buf;
+ 	struct ovl_fs *ofs = OVL_FS(d->sb);
  
- 	dbgfs_entry = debugfs_create_dir(dev_name(dev), gpio_virtuser_dbg_root);
--	ret = devm_add_action_or_reset(dev, gpio_virtuser_debugfs_remove,
--				       dbgfs_entry);
--	if (ret)
--		return ret;
+-	d->absolute_redirect = false;
+ 	buf = ovl_get_redirect_xattr(ofs, path, prelen + strlen(post));
+ 	if (IS_ERR_OR_NULL(buf))
+ 		return PTR_ERR(buf);
  
- 	for (i = 0; i < num_ids; i++) {
- 		descs = devm_gpiod_get_array(dev, ids[i], GPIOD_ASIS);
--		if (IS_ERR(descs))
--			return dev_err_probe(dev, PTR_ERR(descs),
--					     "Failed to request the '%s' GPIOs\n",
--					     ids[i]);
-+		if (IS_ERR(descs)) {
-+			ret = dev_err_probe(dev, PTR_ERR(descs),
-+					    "Failed to request the '%s' GPIOs\n",
-+					    ids[i]);
-+			goto err_remove_debugfs;
-+		}
- 
- 		ret = gpio_virtuser_dbgfs_init_line_array_attrs(dev, descs,
- 								ids[i],
- 								dbgfs_entry);
--		if (ret)
--			return dev_err_probe(dev, ret,
--					     "Failed to setup the debugfs array interface for the '%s' GPIOs\n",
--					     ids[i]);
-+		if (ret) {
-+			dev_err_probe(dev, ret,
-+				      "Failed to setup the debugfs array interface for the '%s' GPIOs\n",
-+				      ids[i]);
-+			goto err_remove_debugfs;
-+		}
- 
- 		for (j = 0; j < descs->ndescs; j++) {
- 			ret = gpio_virtuser_dbgfs_init_line_attrs(dev,
- 							descs->desc[j], ids[i],
- 							j, dbgfs_entry);
--			if (ret)
--				return dev_err_probe(dev, ret,
--						     "Failed to setup the debugfs line interface for the '%s' GPIOs\n",
--						     ids[i]);
-+			if (ret) {
-+				dev_err_probe(dev, ret,
-+					      "Failed to setup the debugfs line interface for the '%s' GPIOs\n",
-+					      ids[i]);
-+				goto err_remove_debugfs;
-+			}
- 		}
- 	}
- 
--	return 0;
-+	/*
-+	 * The debugfs files point to the devres-managed line data allocated
-+	 * above. Register the removal last so that it runs first on unbind,
-+	 * before any of that data is released.
-+	 */
-+	return devm_add_action_or_reset(dev, gpio_virtuser_debugfs_remove,
-+					dbgfs_entry);
-+
-+err_remove_debugfs:
-+	debugfs_remove_recursive(dbgfs_entry);
-+	return ret;
- }
- 
- static const struct of_device_id gpio_virtuser_of_match[] = {
+-	if (buf[0] == '/') {
+-		d->absolute_redirect = true;
++	d->absolute_redirect = buf[0] == '/';
++	if (d->absolute_redirect) {
+ 		/*
+ 		 * One of the ancestor path elements in an absolute path
+ 		 * lookup in ovl_lookup_layer() could have been opaque and
 
 
