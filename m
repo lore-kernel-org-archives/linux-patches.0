@@ -1,54 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795623057;
-	b=w9gD9apTOmz2TI5GtPEjwI/zp6v/JUN6B1T01es202BnXIzPrKKIO2X0mB7v/wS3HrGK
-	 nWtuuBswFwN/PVLaXFyVGsMPH6dZ0J2hfnHgUygMtM18Wag5TA4dW5aJYQGH4r6ooz6U7
-	 DE/lb+m1uRgPdiBVThnQyZqsoOidQxsuJ1/Jfifc6bLejSK+LqMRrsRECZAnnKihinmu0
-	 CzY5EXMFluCjJlMGkuug4y6D1k0Tl6bJCGVVqhlRu9tv5Lzg2OP2nVZ15sX3Mz+bWi436
-	 QC31XKLsb3egdz752Nj4YVyGCT5Y4fbOMCQG+LrvcDwOjKxnnU7fI7h6XHWmcgkL41w==
+	t=1795623060;
+	b=nO49Jn//1mD0QsvJNuidxRCf6yFscRDDh4HFRxUCJMFER3/9EumpL+hq7jmtAB0sDH2c
+	 7vIs2PFx23QvPlbReRpJTpHLix5CDZnJjLpkRu9rxL6MRsjQ8diTNjdgEgIwtpriImRZu
+	 9c/Oyu2g526oOFEh7pIqQKRWJn+vKfEG9oZy3Z42cNzZ6sljPYZQYmPNttqbYuxi9sqH+
+	 l4/ICueYKPqwqqRxWji+9LsQvF6nC2blc7DYZwqCZHCI5Z6MAds/G5Pckq+XIVdmSm7db
+	 Y6u4V4Wl57sIL6jOrRLtTuD+s6QZJQE/CO0pfbSJmjgD19knY396rJcm5zzUBmg4Jqg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795623057;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795623060;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=1Mq6V+ufpSOnWRQY/VvQYYWNqC6lE8vloc+jMktKR1U=;
-	b=bV/ykuml+pXrCgdqTY0ACJeu0BWS22PVgzdDD+8h5VaUGmvKvETEOQ02vYBfeCbfjx3r
-	 BnSuLdmYjKH+GDmzgsC2m0QIyzKNx75UeV+prupN5y9Ce1RUL6utnzaBfwdQ/ieplk2pM
-	 w1E64WEm2aH/zy3TYOpnuZUfcTTrLMVdi3QUPm/Mf5z62L6s/qMISJLfe3Ty0zTHI3G05
-	 jQvxhouNlGexV/+t7QTeDStTVYh6WfmPh00D+Lo0vkLCqcHTFpdIZPF+Cn8mFtNrV5Ez1
-	 m0xNZodvvpySyNgr3ULCnVEj2akR7qdFlI3CXCVsViiY4Nl0ov5w2FhY0iiWgtRN7+w==
+	bh=716JrijMMQAlN1V4meVGy2BtwPvfjmioVCvnGUgvNFw=;
+	b=G9gWyAlthy+4WRatxvekTURr4iECV4w3XMLKoK7wa6BWqCdRLh5xxIR+8+L3gYFshagU
+	 kXyA7CI1GiMBEuaqNh+7Z0ryfVh8T9l4yk/Ksgbdjj8SZ0Hqr7KrWag5yV5tv0XvihCh0
+	 ON4Hy3W2amA61yVyGLfHPM7wfmVSO87hVoqu30Rw25Q1QLyvxFcQuxqaxb06Uv3dfDnKc
+	 4BzfwsrZWvpiHW66F1ooEMtC9f5vVcWWo2DsglgFFPoFiMYXb5VG7dWkTi7NLnjj8HXKc
+	 7GFibgk+rSmpdmXip8g1siHlUYOfupqJbMo1MUC6AbV1s9F5sVPyOMVzykHlh0EoZVw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="o/g/QlY1";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=nkfJiA+W;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 56C01606A321;
-	Wed, 25 Nov 2026 16:10:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 36831606A321;
+	Wed, 25 Nov 2026 16:11:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=o/g/QlY1
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A8A761F000C4;
-	Wed, 25 Nov 2026 16:10:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=nkfJiA+W
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7D5901F000C4;
+	Wed, 25 Nov 2026 16:10:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795623057;
-	bh=1Mq6V+ufpSOnWRQY/VvQYYWNqC6lE8vloc+jMktKR1U=;
+	s=korg; t=1795623060;
+	bh=716JrijMMQAlN1V4meVGy2BtwPvfjmioVCvnGUgvNFw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=o/g/QlY1pF4F+uFi5k5Os20gB1zuEOkEjGZFX379OrXk9GKI0sQiY7DEEnJcwnHgY
-	 h6U0kDKzQ4SaOeAsRzETHe1RZ6M17kIlJtBODDaBGrvLeqTsf4pM+Dje38zzkDUdWX
-	 3r89rB1F0CyvVbXqT6gUuX2VHB8BqfNHuckQTgNc=
+	b=nkfJiA+Wlq9TuoytOCXj1Nhwfvh+QavmUJDzUIZIXm5jSArwfYg/BcU4rkBZm1Nxs
+	 ydGodKKLXT4x0y2Zu5vg6xaYIfTNwXDSvq06AhoWzgLFzo1BkcN/SLyTrPDfXsbRsh
+	 TnL3NNSL1qvuGl3ty2+5SpcGNiiLzjv9YLWTwlMg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Joas Antonio dos Santos <joasantonio108@gmail.com>,
-	Simon Horman <horms@kernel.org>,
-	Aaron Conole <aconole@redhat.com>,
-	Eelco Chaudron <echaudron@ovn.org>,
-	Paolo Abeni <pabeni@redhat.com>
-Subject: [PATCH 6.18 734/990] openvswitch: advance by the real header length in get_ipv6_ext_hdrs()
-Date: Wed, 25 Nov 2026 15:35:01 +0100
-Message-ID: <20261125143839.260631747@linuxfoundation.org>
+	Breno Leitao <leitao@debian.org>,
+	Tariq Toukan <tariqt@nvidia.com>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 6.18 692/990] net/mlx5e: Fix queue stats access to queues without stats
+Date: Wed, 25 Nov 2026 15:34:19 +0100
+Message-ID: <20261125143838.297533204@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143822.072087159@linuxfoundation.org>
 References: <20261125143822.072087159@linuxfoundation.org>
@@ -70,85 +68,69 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Joas Antonio dos Santos <joasantonio108@gmail.com>
+From: Breno Leitao <leitao@debian.org>
 
-commit dbce972650ed6348e3d3856e49308aa5603e02a7 upstream.
+commit 9a24799e219b1699bb1c144248c8c500b9504db5 upstream.
 
-get_ipv6_ext_hdrs() walks the IPv6 extension header chain to fill
-key->ipv6.exthdrs, but advances to the next header with ipv6_optlen()
-whatever the current header is.  That is only right for Hop-by-Hop,
-Destination Options and Routing headers:
+I am seeing the following mlx5e crash in the Meta fleet:
 
- - an Authentication Header is ((hdrlen + 2) << 2) bytes long
-   (ipv6_authlen()), so with hdrlen = 4 the walk skips 40 bytes instead
-   of 24 and reads the next "header" from the ICV and payload;
+  pc : mlx5e_get_queue_stats_rx+0x4c/0xc8
+  Call trace:
+   mlx5e_get_queue_stats_rx+0x4c/0xc8 (P)
+   netdev_stat_queue_sum+0x78/0x480
+   netdev_nl_qstats_get_dump_one+0xf0/0x268
+   netdev_nl_qstats_get_dumpit+0x7c/0x1f8
 
- - a Fragment header is always 8 bytes, and the byte read as hdrlen is
-   its Reserved field, which the sender controls and receivers ignore,
-   so a non-zero value makes the walk skip up to 2048 bytes and miss
-   the headers that follow;
+When dumping device-wide qstats, the core calls the per-queue callbacks
+for every queue below real_num_{rx,tx}_queues, regardless of whether the
+netdev is up. Some of those queues have no stats behind them:
 
- - in a non-first fragment nothing after the Fragment header is a
-   header at all, it is the middle of the fragmentable part, yet the
-   walk keeps parsing it as an extension header chain.
+ - RX stats live in priv->channel_stats[], which only has entries for
+   channels that have been opened (stats_nch). real_num_rx_queues can
+   be larger, for example after the channel count is raised while the
+   netdev is down, or after opening the channels failed part way.
 
-In all cases the OFPIEH12_* bits stored in key->ipv6.exthdrs depend on
-bytes chosen by the sender rather than on the headers that are actually
-present: payload bytes that look like another AH or a Hop-by-Hop header
-add OFPIEH12_UNREP/OFPIEH12_UNSEQ, and real headers after a Fragment
-header can go unreported.  Flows that match on OVS_KEY_ATTR_IPV6_EXTHDRS
-then classify such packets wrongly.  There is no memory safety issue,
-skb_header_pointer() bounds every read.
+ - TX stats are looked up in priv->txq2sq_stats[], which is NULL for
+   SQs that were never activated and for HTB queues while the channels
+   are closed.
 
-Advance by sizeof(struct frag_hdr) for Fragment headers and by
-ipv6_authlen() for AH, and stop at the Fragment header if its offset is
-non-zero, as ipv6_find_hdr() does.
+In both cases the callback dereferences a NULL pointer. The dump needs
+no privileges, so any user can trigger it.
 
-Fixes: 28a3f0601727 ("net: openvswitch: IPv6: Add IPv6 extension header support")
-Link: https://lore.kernel.org/all/178905555085.219967.6617611783437228045@kernel.org/
+Return early for RX queues at or above stats_nch and for TX queues
+without SQ stats.
+
+Fixes: 7b66ae536a78 ("net/mlx5e: Add per queue netdev-genl stats")
 Cc: stable@vger.kernel.org
-Signed-off-by: Joas Antonio dos Santos <joasantonio108@gmail.com>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Reviewed-by: Aaron Conole <aconole@redhat.com>
-Reviewed-by: Eelco Chaudron <echaudron@ovn.org>
-Link: https://patch.msgid.link/20261102-ovs-exthdrs-v2-1-21ceef6a243d@gmail.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Signed-off-by: Breno Leitao <leitao@debian.org>
+Reviewed-by: Tariq Toukan <tariqt@nvidia.com>
+Link: https://patch.msgid.link/20261104-mlx5e-qstats-null-v1-1-a6a003245cec@debian.org
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/openvswitch/flow.c |   19 ++++++++++++++++++-
- 1 file changed, 18 insertions(+), 1 deletion(-)
+ drivers/net/ethernet/mellanox/mlx5/core/en_main.c |    5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
---- a/net/openvswitch/flow.c
-+++ b/net/openvswitch/flow.c
-@@ -370,11 +370,28 @@ static void get_ipv6_ext_hdrs(struct sk_
- 			return;
- 		}
+--- a/drivers/net/ethernet/mellanox/mlx5/core/en_main.c
++++ b/drivers/net/ethernet/mellanox/mlx5/core/en_main.c
+@@ -5413,7 +5413,7 @@ static void mlx5e_get_queue_stats_rx(str
+ 	struct mlx5e_rq_stats *xskrq_stats;
+ 	struct mlx5e_rq_stats *rq_stats;
  
-+		if (next_type == IPPROTO_FRAGMENT) {
-+			struct frag_hdr _fh, *fh;
+-	if (mlx5e_is_uplink_rep(priv) || !mlx5e_stats_nch_read(priv))
++	if (mlx5e_is_uplink_rep(priv) || i >= mlx5e_stats_nch_read(priv))
+ 		return;
+ 
+ 	channel_stats = priv->channel_stats[i];
+@@ -5440,6 +5440,9 @@ static void mlx5e_get_queue_stats_tx(str
+ 	 * inactive sqs.
+ 	 */
+ 	sq_stats = priv->txq2sq_stats[i];
++	if (!sq_stats)
++		return;
 +
-+			fh = skb_header_pointer(skb, start, sizeof(_fh), &_fh);
-+			if (!fh)
-+				break;
-+			/* Only the first fragment has the headers that follow. */
-+			if (fh->frag_off & htons(IP6_OFFSET))
-+				break;
-+			start += sizeof(_fh);
-+			next_type = fh->nexthdr;
-+			continue;
-+		}
-+
- 		hp = skb_header_pointer(skb, start, sizeof(_hdr), &_hdr);
- 		if (!hp)
- 			break;
-+		if (next_type == IPPROTO_AH)
-+			start += ipv6_authlen(hp);
-+		else
-+			start += ipv6_optlen(hp);
- 		next_type = hp->nexthdr;
--		start += ipv6_optlen(hp);
- 	}
+ 	stats->packets = sq_stats->packets;
+ 	stats->bytes = sq_stats->bytes;
  }
- 
 
 
