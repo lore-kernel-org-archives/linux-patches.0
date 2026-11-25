@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795624732;
-	b=EQb6suOS1YKcU36HcM8mucachVCIL7E8yKYwazeO0KqI0hpuK4QnTyyHhu1+i+qKbaA7
-	 bLd4+pHy1TCkH170WxOVOI8Nxrlbtjoom4NfBG61m6oKujRqz7Z0Dqqy4jjWyIx5DlJBK
-	 ggvchXU+qH8uBlNvPOIYpy0b4OOwcMJoxiJSo5vURq24UMPZodzNB+0NjMyCDS1NVBqpn
-	 0df8cmjxYYCLq4gsHzXvaLZ5XF3Fi8oIECvfBJ1lU+ynhscSkfClMOm3ZB7AGtOwRBYwq
-	 7avSd5acf/v2EvYjbnVazKzXUrR9JL2CTSm4OrkOIiA3CO0xJhfW5jILv8Nyr9H6hTw==
+	t=1795624734;
+	b=WJxk8J+XnZ0V8PeywVLVH+43B0BhtL8OabfmCykSD7SjGWv/SZYxGCNJtXsnPzzWFOyk
+	 rnwia55lMlYpHwwsBg6AD7YfBYk0uMHcbhbMgxEOOlfhzyS3tzsCzE37ywjJDi5Tx0rSr
+	 kNs52R190QQ3tM5Om/PIwQq4oLgxCV5BG815peRr2kRrLtxw8ZqyaaMDJyTPRpYiqv9eo
+	 QTVg/6AGAA7MHg06z92gq3QIqamnqwtKp5d1W2zx2rRB/HRfRAhzdB0CWRCAbukVqs9xu
+	 RYI7tYCh1dRg5irOCJtlbQMy+CvWsWm+gLDP85L7pfAT+cCdJjLol40if0ahJdL2ATA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795624732;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795624734;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=vOkjXLcDWCg0tM9fF06RuYLfkfpB2UHtAjdswGCzeNM=;
-	b=PVrdkDIAJWJ39SnMA4q7aDHuSdj4rexU/OcZlm7iBjTuLjSmkahthYWHFxjDeQNOERGc
-	 w6omWxooISC+xH+nuPqqhLgwNz4lgH2HclZtx0UcuwWYkw6D/dAodBNsE5u4R5U9UQrxR
-	 r4oBuszjpqWQpkyRqg11Di/OTLACWHle8SOwdCFr1X2+eOMUSEpWeTJkws+Rphv195qES
-	 epIIzEEBCILI/MzdcGZ+WKasVSkywvZT4zhNDw4DIRvR4y82hei+JexOa1N5/0E1R0b46
-	 0FrrGbtiZ8mO/9YE118AH7nvsVnqYemUXVT3IUWan26BkpmuehoqGtBXYF2NmYGV75Q==
+	bh=ltMNnpS/5ucbY33KNpcihaASHBmROHryzNjuDL2Y+NY=;
+	b=AXYGfqeT9K16060123EVfL/NfMTAA8cFjxxcLXXgAoa8xawnWf9ZpX5eh8G+3BSukXs9
+	 Rc1d9BZOzWGZ05qtACiGc3o5tlFaBSgRXdZ6pqRt6BUsrkn0HwNaEdsNyZU/EWILyXE5m
+	 t8P1bmXl2lvotrKFW5evodQ9uiZPIyPQeab/8AQirbHAHDhOVjyLoW4l8rnT068RSrbc9
+	 0rRV84nXMypNBXw+pgFrLhg9onY+8RzUXoagOSPLBayFpazEZYHB42U1b0F1wdV9YsdlL
+	 J+UQ85Oj0dZWg69wpMDALUcu8mEAHyBBxdYDTI+/soonu5dSXtiJZst5ekI9KCHmEVw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=MZDu7f+5;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="FObR+/Za";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0ADBC606A336;
-	Wed, 25 Nov 2026 16:38:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D4EAC606A33A;
+	Wed, 25 Nov 2026 16:38:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=MZDu7f+5
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5E4591F000D1;
-	Wed, 25 Nov 2026 16:38:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=FObR+/Za
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 303CE1F000D0;
+	Wed, 25 Nov 2026 16:38:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795624731;
-	bh=vOkjXLcDWCg0tM9fF06RuYLfkfpB2UHtAjdswGCzeNM=;
+	s=korg; t=1795624734;
+	bh=ltMNnpS/5ucbY33KNpcihaASHBmROHryzNjuDL2Y+NY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=MZDu7f+5bMLA1MXgQGCCkZcXVnOi5ip5i+/E21SgpCrQx7zd4ho1sNDlB4UIgweaP
-	 R3HTjVPQj6pJ1hNwVXVbLUnV5l8pDQ+pvfVmTpNuGqfgiBOI3CxFvEmJQ4ifKNzbAF
-	 Wk6n2/SW4wFYrPxX5HKbyRO25RNseRpWDFiIaeIM=
+	b=FObR+/ZazY3IyOsGGYv8PDOGL6j6ZMhigJMW6zltCCWXj2eQaxvyYw5rmZyQAoFmD
+	 KISwcjUJKkYNfsBWWG6R6mPxhejh8gTNiNVf3XOnah4bwxr2BZdXeb9HJn3YcuxGl+
+	 kbbu/auq02wJdDKBeSXpgsStN1okc/9SHHbpx7u8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vijendar Mukunda <Vijendar.Mukunda@amd.com>,
-	Mark Brown <broonie@kernel.org>,
+	Damien Le Moal <dlemoal@kernel.org>,
+	Niklas Cassel <cassel@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 290/816] ASoC: SOF: amd: guard adata->sdw dereferences with NULL check in IRQ handler
-Date: Wed, 25 Nov 2026 15:30:38 +0100
-Message-ID: <20261125143855.918877090@linuxfoundation.org>
+Subject: [PATCH 6.12 273/816] ata: libata-scsi: fix MODE SELECT handling of data after the mode page
+Date: Wed, 25 Nov 2026 15:30:21 +0100
+Message-ID: <20261125143855.530203760@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143849.205329330@linuxfoundation.org>
 References: <20261125143849.205329330@linuxfoundation.org>
@@ -68,97 +68,79 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Vijendar Mukunda <Vijendar.Mukunda@amd.com>
+From: Niklas Cassel <cassel@kernel.org>
 
-[ Upstream commit 34ea81a7f284a13d825279fdede36b7f793f9936 ]
+[ Upstream commit 6fde0444d07ec954f3d885375e0402ff2f2e5064 ]
 
-The ACP external IRQ handler is registered before sdw_amd_probe() assigns
-adata->sdw, so a stray interrupt in the probe window could reach the
-adata->sdw->pdev[i] dereference with adata->sdw still NULL.
+ata_scsi_mode_select_xlat() only supports one mode page per MODE SELECT
+command, and rejects a parameter list with data after the mode page with
+INVALID FIELD IN PARAMETER LIST. However:
 
-The same window exists on the teardown side: after sdw_amd_exit() frees
-the context but before adata->sdw is cleared by the caller.
+- It does not set the field pointer, so the sense data reports 0xffff as
+  the FIELD POINTER.
 
-Add NULL checks for adata->sdw in acp_irq_handler() before dereferencing
-->pdev[0] and ->pdev[1], and in amd_sof_handle_acp70_sdw_wake_event() for
-the same reason.  The interrupt-status register write that acknowledges the
-IRQ is kept outside the guard so the hardware bit is always cleared
-regardless of whether the SoundWire context is live.
+- It only checks for data after the mode page after the mode page
+  handler has been called. ata_mselect_control_ata_feature() has then
+  already updated the CDL enabled flag of the device, even though the
+  command is rejected and the CDL setting of the device is not changed.
 
-Fixes: 96eb81851012 ("ASoC: SOF: amd: add interrupt handling for SoundWire manager devices")
-Signed-off-by: Vijendar Mukunda <Vijendar.Mukunda@amd.com>
-Fixes: 1f41bf67bfe3 ("ASoC: SOF: amd: add soundwire wake irq handling")
-Link: https://patch.msgid.link/20261107175339.3547918-3-Vijendar.Mukunda@amd.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+- For the control mode page, ata_mselect_control_spg0() does not need an
+  ATA command, so the check is skipped, and the data after the mode page
+  is silently ignored.
+
+Check for data after the mode page before calling the mode page
+handlers, and set the FIELD POINTER to the first byte after the mode
+page, i.e. to the first byte of the next mode page.
+
+The reason why only one mode page per command is supported is that a
+MODE SELECT command is translated into at most one ATA command, so
+update the comment accordingly.
+
+Fixes: 1b26d29ccd59 ("[libata] scsi: implement MODE SELECT command")
+Reviewed-by: Damien Le Moal <dlemoal@kernel.org>
+Link: https://lore.kernel.org/r/20261103205448.931471-11-cassel@kernel.org
+Signed-off-by: Niklas Cassel <cassel@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/sof/amd/acp.c | 32 ++++++++++++++++++++------------
- 1 file changed, 20 insertions(+), 12 deletions(-)
+ drivers/ata/libata-scsi.c | 18 +++++++++++-------
+ 1 file changed, 11 insertions(+), 7 deletions(-)
 
-diff --git a/sound/soc/sof/amd/acp.c b/sound/soc/sof/amd/acp.c
-index 33eb03051a7b2..a2abcb6d090ce 100644
---- a/sound/soc/sof/amd/acp.c
-+++ b/sound/soc/sof/amd/acp.c
-@@ -403,16 +403,20 @@ static void amd_sof_handle_acp70_sdw_wake_event(struct acp_dev_data *adata)
- 	struct amd_sdw_manager *amd_manager;
+diff --git a/drivers/ata/libata-scsi.c b/drivers/ata/libata-scsi.c
+index 9419df80f39b4..d6b1cdf4dec27 100644
+--- a/drivers/ata/libata-scsi.c
++++ b/drivers/ata/libata-scsi.c
+@@ -4371,6 +4371,17 @@ static unsigned int ata_scsi_mode_select_xlat(struct ata_queued_cmd *qc)
+ 	if (pg_len > len)
+ 		goto invalid_param_len;
  
- 	if (adata->acp70_sdw0_wake_event) {
--		amd_manager = dev_get_drvdata(&adata->sdw->pdev[0]->dev);
--		if (amd_manager)
--			pm_request_resume(amd_manager->dev);
-+		if (adata->sdw) {
-+			amd_manager = dev_get_drvdata(&adata->sdw->pdev[0]->dev);
-+			if (amd_manager)
-+				pm_request_resume(amd_manager->dev);
-+		}
- 		adata->acp70_sdw0_wake_event = 0;
++	/*
++	 * A MODE SELECT command is translated into at most one ATA command, so
++	 * only one mode page per command is supported. Reject any data after
++	 * the mode page before calling the mode page handlers, which may
++	 * already update the device flags.
++	 */
++	if (len > pg_len) {
++		fp = p - buffer + pg_len;
++		goto invalid_param;
++	}
++
+ 	switch (pg) {
+ 	case CACHE_MPAGE:
+ 		if (ata_mselect_caching(qc, p, pg_len, &fp) < 0) {
+@@ -4393,13 +4404,6 @@ static unsigned int ata_scsi_mode_select_xlat(struct ata_queued_cmd *qc)
+ 		goto invalid_param;
  	}
  
- 	if (adata->acp70_sdw1_wake_event) {
--		amd_manager = dev_get_drvdata(&adata->sdw->pdev[1]->dev);
--		if (amd_manager)
--			pm_request_resume(amd_manager->dev);
-+		if (adata->sdw) {
-+			amd_manager = dev_get_drvdata(&adata->sdw->pdev[1]->dev);
-+			if (amd_manager)
-+				pm_request_resume(amd_manager->dev);
-+		}
- 		adata->acp70_sdw1_wake_event = 0;
- 	}
- }
-@@ -504,10 +508,12 @@ static irqreturn_t acp_irq_handler(int irq, void *dev_id)
+-	/*
+-	 * Only one page has changeable data, so we only support setting one
+-	 * page at a time.
+-	 */
+-	if (len > pg_len)
+-		goto invalid_param;
+-
+ 	return 0;
  
- 	val = snd_sof_dsp_read(sdev, ACP_DSP_BAR, desc->ext_intr_stat);
- 	if (val & ACP_SDW0_IRQ_MASK) {
--		amd_manager = dev_get_drvdata(&adata->sdw->pdev[0]->dev);
- 		snd_sof_dsp_write(sdev, ACP_DSP_BAR, desc->ext_intr_stat, ACP_SDW0_IRQ_MASK);
--		if (amd_manager)
--			schedule_work(&amd_manager->amd_sdw_irq_thread);
-+		if (adata->sdw) {
-+			amd_manager = dev_get_drvdata(&adata->sdw->pdev[0]->dev);
-+			if (amd_manager)
-+				schedule_work(&amd_manager->amd_sdw_irq_thread);
-+		}
- 		irq_flag = 1;
- 	}
- 
-@@ -524,11 +530,13 @@ static irqreturn_t acp_irq_handler(int irq, void *dev_id)
- 	if (desc->ext_intr_stat1) {
- 		val = snd_sof_dsp_read(sdev, ACP_DSP_BAR, desc->ext_intr_stat1);
- 		if (val & ACP_SDW1_IRQ_MASK) {
--			amd_manager = dev_get_drvdata(&adata->sdw->pdev[1]->dev);
- 			snd_sof_dsp_write(sdev, ACP_DSP_BAR, desc->ext_intr_stat1,
- 					  ACP_SDW1_IRQ_MASK);
--			if (amd_manager)
--				schedule_work(&amd_manager->amd_sdw_irq_thread);
-+			if (adata->sdw) {
-+				amd_manager = dev_get_drvdata(&adata->sdw->pdev[1]->dev);
-+				if (amd_manager)
-+					schedule_work(&amd_manager->amd_sdw_irq_thread);
-+			}
- 			irq_flag = 1;
- 		}
- 		switch (adata->pci_rev) {
+  invalid_fld:
 -- 
 2.53.0
 
