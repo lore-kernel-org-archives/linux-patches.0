@@ -1,54 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795617771;
-	b=gsX+1pv4fWceYSQHmV8vbphfftO8JlcjMQ4EDz7e8VfBK8Y8qsb23TF3A2kejEFkQ8lD
-	 pBoDUnhQJJ7fpEMCiYvkd9soyWeqca+RNmb3dvFNYZztJJci/4EeNExjJgZ40ERWGDsz2
-	 YtDNzc+tuQfCNnte2bY5t1/tf00DfGVexfsoX5iM3aZjoI5T03YzAw2/PsUVmOULGHADu
-	 DHNyWPFEAVjYsUReQFdSw/S88wZRudPdj2bQvQeljw8uIo3YkBARXThYVkneaqv1sqry4
-	 s0nWkNlFqNOOXb7XcblPx5TeU9fM2/K6t4Kzfh8nz6+6yjcwoJ4pTbJubRb3tmDuvqQ==
+	t=1795617774;
+	b=bDMtYus5Rj0MN1YRddM90Ef2FmMF/tUf6JRd1QK1HGY9rwO+VgcPCWRF/Hop0sn6sFg1
+	 M1+OjVr1RCIHALW3Hn3WquDtcBpf6UjLc11DtyGF1BAaMS4PRLU2TIt1W8T5U2MnyaNJH
+	 /DhhiPgmR2PmNKnDNrs8zQC4mKUT5dIoBKnrtPYCTAfvDuvrI65zQZGBRBnLWWtjji3rB
+	 KlVe9uvLANN4jnETDRJnVrJdpJ9e6jDm3mSdkaUwuGh0YM58DXWdi6gtqZ+YF2vSnnG6q
+	 A2P/G/dtS3VK2mvS0nrIxBAYFIbYT0zMZS6X1jN/nUfJ+HCdKFx/06EIZC2tobMmIFA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795617771;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795617774;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=7yn3EON213Cjgo9cYu5b9IZFVGcAFqxxCyaoNnHEIaE=;
-	b=BQSOlAWNG5LI2q7BnyuNJSQ5KCFV4JNd6u5L9DU60lPO6SNilqWOC6C7aVykcbYtEtxo
-	 Un5FTFr7NkNgmoHLGpu+jgEUtm7QoLSno5OddlcAsRfsy4U6s0AERGgGej9gMHZL+7XdJ
-	 V8oQqF1rVzXw9Hm1Gn+mUNGro9IGkh4ytCtc4ZBc5/4BecRkS4sYrRcRcUuuFXHYZuL1u
-	 1m7hK9ntLeIzYwqXvSkTRNYo7V3d6+aeCGzKIS9jMAuuotyQDxrTx5slbh/JvUtKEVL8w
-	 K+nYZWQxtb0MFPRf5+AB2A3VU7sNtgkZFjrGAUkcK+y174xtuo661qcGg+IGdvhtqdw==
+	bh=dlwBNv18gGlsyO2oEuMX5o0JrzXUnRSl+sk46JW7GU0=;
+	b=Kwg9fInCkroVNBAy2QoIXFTsRZAgMzae+Tu3Ic0kxhFlkNJsTI6v95T7kFv3gu6cw+7T
+	 vGdYybilD3FLYaM06fLmf6cenUnWVjC2RxEzLQTgXhODFVadRvoElFY18Vfb9jQI7EDqN
+	 BfNcx6/L3bTQrG7QHto1MKLcCOFrK5eApcfsqeMlao6GgiWZ5WXWZxY7+amyaMww4pkUG
+	 HfnayVBeok9AA7d3Oz1MhTjqrKjZFZFRYo620J+5jYWQuACeMSQKul4pX0cC4nSlm2TpY
+	 lNUMNKkbqgf7YuuxB9b5MNCchyw1RmBHG/C5GwMMOHf4lRTgDsMBmCszWWrAgYhi+pA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=NNQaQHSu;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ZallGJje;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 71173606A321;
-	Wed, 25 Nov 2026 14:42:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8408D606A323;
+	Wed, 25 Nov 2026 14:42:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=NNQaQHSu
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5D5F31F000C4;
-	Wed, 25 Nov 2026 14:42:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ZallGJje
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 985681F000C4;
+	Wed, 25 Nov 2026 14:42:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795617770;
-	bh=7yn3EON213Cjgo9cYu5b9IZFVGcAFqxxCyaoNnHEIaE=;
+	s=korg; t=1795617774;
+	bh=dlwBNv18gGlsyO2oEuMX5o0JrzXUnRSl+sk46JW7GU0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=NNQaQHSu0ipR0swNSEbsjfCde8xC9pPh+JycyRl/82H65zQSoaeXzNZ4YGYsb8Um1
-	 SzuFsoWtYVuLLLuO2MEDEUUSY4PlXIF1YTixqc97ZhrdqdFChGan8XEdRlI2zmXZv+
-	 MupftWc4ayXKpGa2zb3k07Xm80irgZrgMw7bmgKc=
+	b=ZallGJjeokSZqwsQj7dDz+GleBJbPk42JJxi0t6zrA+7ZYPZNnRSQ9o1YTIVQzsMI
+	 D65JY6HQjLj5hw+IMdFx5NEbh4Plo3FIVpKI5GKT1HHoW3HMTm1t3zaLnJt4M46SSw
+	 3FWoTF+03ap7NB8+CG32Apsoydvb07m5BGDuw3XM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Steven Rostedt <rostedt@goodmis.org>,
-	Daniel Borkmann <daniel@iogearbox.net>,
-	Alexei Starovoitov <ast@kernel.org>,
-	Jiri Olsa <jolsa@kernel.org>,
+	Bitterblue Smith <rtl8821cerfe2@gmail.com>,
+	Ping-Ke Shih <pkshih@realtek.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0067/1005] x86/ftrace: Mark jmp mode by clearing bit 63 of trampoline address
-Date: Wed, 25 Nov 2026 15:23:25 +0100
-Message-ID: <20261125143823.314972405@linuxfoundation.org>
+Subject: [PATCH 7.3 0025/1005] wifi: rtw89: usb: Avoid crash with dynamically added device ID
+Date: Wed, 25 Nov 2026 15:22:43 +0100
+Message-ID: <20261125143822.326259581@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143821.729802100@linuxfoundation.org>
 References: <20261125143821.729802100@linuxfoundation.org>
@@ -70,119 +68,178 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Daniel Borkmann <daniel@iogearbox.net>
+From: Bitterblue Smith <rtl8821cerfe2@gmail.com>
 
-[ Upstream commit 31ac959c915cc7f379d84cf9dadf3664cbcace02 ]
+[ Upstream commit b1827227176821af9bba0cb643728d23328f3660 ]
 
-Since commit 0c3772a8db1f ("x86/ftrace: Implement DYNAMIC_FTRACE_WITH_JMP")
-ftrace_call_replace() emits a jmp instead of a call when bit 0 of the
-target is set, the mark of a direct trampoline that is entered by a jmp.
-ftrace_update_ftrace_func() and arch_ftrace_update_trampoline() use it
-too, for the call of the ftrace callback in ftrace_caller, ftrace_regs_caller
-and the ftrace trampolines, but a callback is a C function and can start
-at an odd address. It does with gcc13 and CONFIG_CC_OPTIMIZE_FOR_SIZE=y:
-gcc13 has no -fmin-function-alignment, so CONFIG_CC_HAS_SANE_FUNCTION_ALIGNMENT
-is not set, and the -falign-functions=16 used in its place does not apply
-to functions optimized for size. Here ftrace_ops_list_func() starts at:
+Adding a device ID via sysfs causes a crash when the device is plugged
+in, because the driver_info pointer is null.
 
-  ffffffff810e0147 T ftrace_ops_list_func
+Check for null driver_info in rtw89_usb_probe() and add a wrapper in
+each driver to pass it a reasonable default value.
 
-ftrace_regs_call then becomes a jmp to the byte before it:
-
-  ftrace_regs_call ffffffff810374f3: e9 4e 8c 0a 00
-
-That byte is the last one of the preceding function's tail jump, and with
-the first two of ftrace_ops_list_func() it decodes as an inc DWORD PTR
-[rcx+0x57], which swallows the push %r15 of the prologue. Entered without
-a return address and one push short, the list function returns through
-the pt_regs that ftrace_regs_caller saved, here to the saved R14:
-
-  BUG: unable to handle page fault for address: ffff888116c29f40
-  #PF: supervisor instruction fetch in kernel mode
-  RIP: 0010:0xffff888116c29f40
-  R13: 0000000000000000 R14: ffff888116c29f40 R15: 0000000000000000
-  Call Trace:
-   ? bpf_trampoline_6442499918+0x1/0x149
-   ? bpf_lsm_file_open+0x5/0x8
-   ? bpf_lsm_file_open+0x5/0x8
-   ? security_file_open+0x19/0x46
-   ? do_dentry_open+0x16c/0x32a
-
-The list function is installed whenever two ftrace_ops are registered,
-and a function that two of them trace calls it. A kprobe next to a BPF
-trampoline is one such case, and with the single ftrace_ops of the BPF
-trampolines every update_ftrace_direct_mod() is another, as it registers
-a stub ops for the sites it modifies. Here, detaching one of several BPF
-LSM programs from a busy hook crashed the tasks that ran the hook during
-the update.
-
-Bit 0 is free only in the direct trampolines that a dyn_ftrace record can
-point to, but bit 63 is set in every kernel text address on x86_64. Thus,
-mark jmp mode by clearing bit 63 instead, so that ftrace_is_jmp() is false
-for any callback, whatever its alignment, and ftrace_regs_caller sets the
-bit again where it cleared bit 0 before. A marked address is not canonical,
-so a return or indirect branch to one that missed ftrace_jmp_get() faults
-instead of running from a byte before its target.
-
-Fixes: 0c3772a8db1f ("x86/ftrace: Implement DYNAMIC_FTRACE_WITH_JMP")
-Suggested-by: Steven Rostedt <rostedt@goodmis.org>
-Signed-off-by: Daniel Borkmann <daniel@iogearbox.net>
-Signed-off-by: Alexei Starovoitov <ast@kernel.org>
-Reviewed-by: Jiri Olsa <jolsa@kernel.org>
-Reviewed-by: Steven Rostedt <rostedt@goodmis.org>
-Link: https://patch.msgid.link/20261028202345.1215859-1-daniel@iogearbox.net
+Signed-off-by: Bitterblue Smith <rtl8821cerfe2@gmail.com>
+Acked-by: Ping-Ke Shih <pkshih@realtek.com>
+Signed-off-by: Ping-Ke Shih <pkshih@realtek.com>
+Link: https://patch.msgid.link/7a537b2e-67d2-40fb-8ef2-fcbc7bbc93af@gmail.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/kernel/ftrace_64.S | 6 +++---
- include/linux/ftrace.h      | 8 +++++---
- 2 files changed, 8 insertions(+), 6 deletions(-)
+ drivers/net/wireless/realtek/rtw89/rtw8851bu.c | 8 +++++++-
+ drivers/net/wireless/realtek/rtw89/rtw8852au.c | 8 +++++++-
+ drivers/net/wireless/realtek/rtw89/rtw8852bu.c | 8 +++++++-
+ drivers/net/wireless/realtek/rtw89/rtw8852cu.c | 8 +++++++-
+ drivers/net/wireless/realtek/rtw89/rtw8922au.c | 8 +++++++-
+ drivers/net/wireless/realtek/rtw89/usb.c       | 5 ++++-
+ drivers/net/wireless/realtek/rtw89/usb.h       | 3 ++-
+ 7 files changed, 41 insertions(+), 7 deletions(-)
 
-diff --git a/arch/x86/kernel/ftrace_64.S b/arch/x86/kernel/ftrace_64.S
-index 62c1c93aa1c6a..4b20673a33959 100644
---- a/arch/x86/kernel/ftrace_64.S
-+++ b/arch/x86/kernel/ftrace_64.S
-@@ -286,9 +286,9 @@ SYM_INNER_LABEL(ftrace_regs_caller_end, SYM_L_GLOBAL)
- 	RET
+diff --git a/drivers/net/wireless/realtek/rtw89/rtw8851bu.c b/drivers/net/wireless/realtek/rtw89/rtw8851bu.c
+index 1e827205f2540..6672ebe68f172 100644
+--- a/drivers/net/wireless/realtek/rtw89/rtw8851bu.c
++++ b/drivers/net/wireless/realtek/rtw89/rtw8851bu.c
+@@ -59,10 +59,16 @@ static const struct usb_device_id rtw_8851bu_id_table[] = {
+ };
+ MODULE_DEVICE_TABLE(usb, rtw_8851bu_id_table);
  
- 1:
--	testb	$1, %al
--	jz	2f
--	andq $0xfffffffffffffffe, %rax
-+	/* See ftrace_jmp_set(), jmp to the trampoline */
-+	btsq	$63, %rax
-+	jc	2f
- 	movq %rax, MCOUNT_REG_SIZE+8(%rsp)
- 	restore_mcount_regs
- 	/* Restore flags */
-diff --git a/include/linux/ftrace.h b/include/linux/ftrace.h
-index b041d9142d2b8..1c2056a1a68b3 100644
---- a/include/linux/ftrace.h
-+++ b/include/linux/ftrace.h
-@@ -618,19 +618,21 @@ static inline void arch_ftrace_set_direct_caller(struct ftrace_regs *fregs,
- #endif /* CONFIG_DYNAMIC_FTRACE_WITH_DIRECT_CALLS */
- 
- #ifdef CONFIG_DYNAMIC_FTRACE_WITH_JMP
-+#define FTRACE_JMP_BIT	BIT(BITS_PER_LONG - 1)
++static int rtw8851bu_probe(struct usb_interface *intf,
++			   const struct usb_device_id *id)
++{
++	return rtw89_usb_probe(intf, id, &rtw89_8851bu_info);
++}
 +
- static inline bool ftrace_is_jmp(unsigned long addr)
+ static struct usb_driver rtw_8851bu_driver = {
+ 	.name = KBUILD_MODNAME,
+ 	.id_table = rtw_8851bu_id_table,
+-	.probe = rtw89_usb_probe,
++	.probe = rtw8851bu_probe,
+ 	.disconnect = rtw89_usb_disconnect,
+ };
+ module_usb_driver(rtw_8851bu_driver);
+diff --git a/drivers/net/wireless/realtek/rtw89/rtw8852au.c b/drivers/net/wireless/realtek/rtw89/rtw8852au.c
+index 065f4e5b17afa..1a2e5dfbaab3c 100644
+--- a/drivers/net/wireless/realtek/rtw89/rtw8852au.c
++++ b/drivers/net/wireless/realtek/rtw89/rtw8852au.c
+@@ -73,10 +73,16 @@ static const struct usb_device_id rtw_8852au_id_table[] = {
+ };
+ MODULE_DEVICE_TABLE(usb, rtw_8852au_id_table);
+ 
++static int rtw8852au_probe(struct usb_interface *intf,
++			   const struct usb_device_id *id)
++{
++	return rtw89_usb_probe(intf, id, &rtw89_8852au_info);
++}
++
+ static struct usb_driver rtw_8852au_driver = {
+ 	.name = KBUILD_MODNAME,
+ 	.id_table = rtw_8852au_id_table,
+-	.probe = rtw89_usb_probe,
++	.probe = rtw8852au_probe,
+ 	.disconnect = rtw89_usb_disconnect,
+ };
+ module_usb_driver(rtw_8852au_driver);
+diff --git a/drivers/net/wireless/realtek/rtw89/rtw8852bu.c b/drivers/net/wireless/realtek/rtw89/rtw8852bu.c
+index de79a19a2824d..550fc4ac7a21f 100644
+--- a/drivers/net/wireless/realtek/rtw89/rtw8852bu.c
++++ b/drivers/net/wireless/realtek/rtw89/rtw8852bu.c
+@@ -73,10 +73,16 @@ static const struct usb_device_id rtw_8852bu_id_table[] = {
+ };
+ MODULE_DEVICE_TABLE(usb, rtw_8852bu_id_table);
+ 
++static int rtw8852bu_probe(struct usb_interface *intf,
++			   const struct usb_device_id *id)
++{
++	return rtw89_usb_probe(intf, id, &rtw89_8852bu_info);
++}
++
+ static struct usb_driver rtw_8852bu_driver = {
+ 	.name = KBUILD_MODNAME,
+ 	.id_table = rtw_8852bu_id_table,
+-	.probe = rtw89_usb_probe,
++	.probe = rtw8852bu_probe,
+ 	.disconnect = rtw89_usb_disconnect,
+ };
+ module_usb_driver(rtw_8852bu_driver);
+diff --git a/drivers/net/wireless/realtek/rtw89/rtw8852cu.c b/drivers/net/wireless/realtek/rtw89/rtw8852cu.c
+index 2dec9b8454815..6f852f4a713e1 100644
+--- a/drivers/net/wireless/realtek/rtw89/rtw8852cu.c
++++ b/drivers/net/wireless/realtek/rtw89/rtw8852cu.c
+@@ -133,10 +133,16 @@ static const struct usb_device_id rtw_8852cu_id_table[] = {
+ };
+ MODULE_DEVICE_TABLE(usb, rtw_8852cu_id_table);
+ 
++static int rtw8852cu_probe(struct usb_interface *intf,
++			   const struct usb_device_id *id)
++{
++	return rtw89_usb_probe(intf, id, &rtw89_8852cu_info);
++}
++
+ static struct usb_driver rtw_8852cu_driver = {
+ 	.name = KBUILD_MODNAME,
+ 	.id_table = rtw_8852cu_id_table,
+-	.probe = rtw89_usb_probe,
++	.probe = rtw8852cu_probe,
+ 	.disconnect = rtw89_usb_disconnect,
+ };
+ module_usb_driver(rtw_8852cu_driver);
+diff --git a/drivers/net/wireless/realtek/rtw89/rtw8922au.c b/drivers/net/wireless/realtek/rtw89/rtw8922au.c
+index 56c79b1ec865f..2cd2b76d19acf 100644
+--- a/drivers/net/wireless/realtek/rtw89/rtw8922au.c
++++ b/drivers/net/wireless/realtek/rtw89/rtw8922au.c
+@@ -74,10 +74,16 @@ static const struct usb_device_id rtw_8922au_id_table[] = {
+ };
+ MODULE_DEVICE_TABLE(usb, rtw_8922au_id_table);
+ 
++static int rtw8922au_probe(struct usb_interface *intf,
++			   const struct usb_device_id *id)
++{
++	return rtw89_usb_probe(intf, id, &rtw89_8922au_info);
++}
++
+ static struct usb_driver rtw_8922au_driver = {
+ 	.name = KBUILD_MODNAME,
+ 	.id_table = rtw_8922au_id_table,
+-	.probe = rtw89_usb_probe,
++	.probe = rtw8922au_probe,
+ 	.disconnect = rtw89_usb_disconnect,
+ };
+ module_usb_driver(rtw_8922au_driver);
+diff --git a/drivers/net/wireless/realtek/rtw89/usb.c b/drivers/net/wireless/realtek/rtw89/usb.c
+index 22a1a988f3073..8dc2c93e502ee 100644
+--- a/drivers/net/wireless/realtek/rtw89/usb.c
++++ b/drivers/net/wireless/realtek/rtw89/usb.c
+@@ -1206,7 +1206,8 @@ static const struct attribute_group rtw89_usb_group = {
+ __ATTRIBUTE_GROUPS(rtw89_usb);
+ 
+ int rtw89_usb_probe(struct usb_interface *intf,
+-		    const struct usb_device_id *id)
++		    const struct usb_device_id *id,
++		    const struct rtw89_driver_info *default_info)
  {
--	return addr & 1;
-+	return !(addr & FTRACE_JMP_BIT);
+ 	const struct rtw89_driver_info *info;
+ 	struct rtw89_dev *rtwdev;
+@@ -1214,6 +1215,8 @@ int rtw89_usb_probe(struct usb_interface *intf,
+ 	int ret;
+ 
+ 	info = (const struct rtw89_driver_info *)id->driver_info;
++	if (!info)
++		info = default_info;
+ 
+ 	rtwdev = rtw89_alloc_ieee80211_hw(&intf->dev,
+ 					  sizeof(struct rtw89_usb), info);
+diff --git a/drivers/net/wireless/realtek/rtw89/usb.h b/drivers/net/wireless/realtek/rtw89/usb.h
+index bdf3125597438..d2af29d068f19 100644
+--- a/drivers/net/wireless/realtek/rtw89/usb.h
++++ b/drivers/net/wireless/realtek/rtw89/usb.h
+@@ -95,7 +95,8 @@ static inline struct rtw89_usb *rtw89_usb_priv(struct rtw89_dev *rtwdev)
  }
  
- static inline unsigned long ftrace_jmp_set(unsigned long addr)
- {
--	return addr | 1UL;
-+	return addr & ~FTRACE_JMP_BIT;
- }
+ int rtw89_usb_probe(struct usb_interface *intf,
+-		    const struct usb_device_id *id);
++		    const struct usb_device_id *id,
++		    const struct rtw89_driver_info *default_info);
+ void rtw89_usb_disconnect(struct usb_interface *intf);
  
- static inline unsigned long ftrace_jmp_get(unsigned long addr)
- {
--	return addr & ~1UL;
-+	return addr | FTRACE_JMP_BIT;
- }
- #else
- static inline bool ftrace_is_jmp(unsigned long addr)
+ #endif
 -- 
 2.53.0
 
