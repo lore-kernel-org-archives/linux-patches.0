@@ -1,53 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795625467;
-	b=B5FrbTFSlhnVcrWwAiwmicKvEV71OL71OlzWYI2o0kaQmGArGafojMRavYuPPHUjMYOT
-	 TnWlGaIGzdD2ezZtsKFXnhHZbOJVwPpLviZLYVVPuqjqfiE1HBAWj4ij99B//OpCLXGdV
-	 koDCQBOsz3Mk0zE3at3ojsthpoJNm3Oc+y5qhsOBxYsXID8eSCOUzSLIR33vJIzEY1CjQ
-	 OkF3tY9zG5HMmstGTStAB69wDmQXj3T++YPmi/319oWxzQOnAUvWhZoEaARiXV2KXx/J/
-	 I5L/slTKS5Tsn5/Iyt3jT1ms8pct5DqygvbrcHwFK5kGov3IY1reIfJiZ4xd3QgsOWA==
+	t=1795625470;
+	b=E7cEIhMZgmdg7MeOhoIzIUJHEhWAzzcPcZyL/2M6OaW0nSfOXkV0MbOFWqKxi9g3pYZa
+	 N/zttVHPxxKw0jmKp2VsrLVqyfsOCXbowceVnbrlHgteA0AFqGAmEGBg0Wk2khpMA0kE7
+	 LZoPS8AafGOfm4PxXGlzd/a6o6wglqZBKHQ9cHXBSualYK/fyWdSONBQ/IZD3LV0UEDEG
+	 p33bf4ByKTeZp13GGVPZzB9jGCil91yXYxtRJ6J2q4s1uddt/4HmKEQaih3HLtV5xenZn
+	 kWaemLCoSJiSR+9a20U+xFo2MzuptyHI+KDsCSMfhYXHxeKBPsPUIe3uJAz52NtEW7A==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795625467;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795625470;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=y8miWesLrv7ejuqWdamAWm4JAa1Exa1uCEv9HJFQ/70=;
-	b=5BN/thke7CwwNRS+7wfoXcDnua4rVPlvtp2jcJwuU2JOp4dHx6NfJdT+uvz27bHSKBLf
-	 oRpPV9yS8fOKbrvzOOmJ3s5bK1mZskfCMR+iSnrCFRE9TVBBkG8cFPA0BJx1B2fjWz55w
-	 YQxqiPyFtnknslK0avkCLrCj1/LBFEVN3QVsa4Wq68glmfyfHwu+nsiZDA15Ahfo008+7
-	 3n5qj2KuW2+rFYxD0IQoNeFPbPDsqMJykx1PoDsfCv+KlfCSO1nWptTqsOzAg3bb08d2Q
-	 mpFbRBoQPDVNVuSMXLQ45yQDAFqgKD88QYQpaKampYix0lWMprgO9VrE2sycewyV2uA==
+	bh=bgTIHSQLsz/9VyFloaAKJ+6Lrg3li5+QPK3hzsuXE/M=;
+	b=CqBoAR5CijAWhtGHOUmNMD12BlW8H+4BpLm2rfpvgqLM9fyqEqvsWCJr9AtWvwWvHoU0
+	 ekSLGS0ki2b8vdw2Mmm6MTTVyjitvop1k2KePW7B370/iaMkH5NBsyqK/oyayT7KGfRm3
+	 SqU2N0WMywKAfG0cJOW2G6ZsKUUn2Yrz4NZP1mGmQlnDrydqhrm3lCyFNwCJP4i5jDZA3
+	 Ei1driQnACTLNXgkogSzjgvRiKzR13llcjiwOAxxK8rLzXCDKHZE0keRQN2QBKtEzGC+g
+	 KltXkJ+FmX0o6EUhxbLZKO/kdNViGRd3vaMcTsXxXl2L+eznwhiSQXOReVpCdLAtWvw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=W5it4mxt;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=xnYgSQHN;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8ED08606A321;
-	Wed, 25 Nov 2026 16:51:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5753A606A31E;
+	Wed, 25 Nov 2026 16:51:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=W5it4mxt
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DE0201F000C4;
-	Wed, 25 Nov 2026 16:51:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=xnYgSQHN
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A7F441F000C6;
+	Wed, 25 Nov 2026 16:51:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795625467;
-	bh=y8miWesLrv7ejuqWdamAWm4JAa1Exa1uCEv9HJFQ/70=;
+	s=korg; t=1795625470;
+	bh=bgTIHSQLsz/9VyFloaAKJ+6Lrg3li5+QPK3hzsuXE/M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=W5it4mxtJXlmYGwPSLsh7/tFb6ZtGC2NrPj5xakEGtzJtnFqotqHSSeeU5eh2HJPU
-	 zYhsigzah/6spKpbYtBogZyjuIAW1B0cSBEWCJ3PpbitBU5MULV16ZIyLuRvri9fHY
-	 DkpBDiEcCsUyBDcve9tRejzi0TirR8x4wUrwsnh0=
+	b=xnYgSQHNTqXkoWXlotz00qXymHGR9852Bs1mYX7ynHzbQbfSCHEldiQzQ7xBCpG+z
+	 SgfJ0i60F7sJKzv+uVPm1b2iLrrVwVhPYhxF7SrV8neS5AH36Kw4KU78uFJa+T1+rY
+	 ReoiNenByUyG8o0Z9j4Ft+epr6JHqk9mt/Bh5KSg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sashiko <sashiko-bot+sashiko@kernel.org>,
-	Henry Hu <huhai@kylinos.cn>,
 	Namjae Jeon <linkinjeon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 527/816] ksmbd: fix iface_list use-after-free during server reset
-Date: Wed, 25 Nov 2026 15:34:35 +0100
-Message-ID: <20261125143901.387883961@linuxfoundation.org>
+Subject: [PATCH 6.12 528/816] ksmbd: disconnect on invalid encryption transform flags
+Date: Wed, 25 Nov 2026 15:34:36 +0100
+Message-ID: <20261125143901.414495838@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143849.205329330@linuxfoundation.org>
 References: <20261125143849.205329330@linuxfoundation.org>
@@ -69,69 +67,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Henry Hu <huhai@kylinos.cn>
+From: Namjae Jeon <linkinjeon@kernel.org>
 
-[ Upstream commit d34d38ab0c62fe4eb9e746420c554e6d0e6f54db ]
+[ Upstream commit 0882f124ae329eefb66b00e63b9043f24c006b0e ]
 
-ksmbd_find_netdev_name_iface_list() walks iface_list for
-fsctl_query_iface_info_ioctl(), which holds RTNL. But during server
-reset, ksmbd_tcp_destroy() unlinks and frees the entries without RTNL,
-and queued SMB requests can still be running at that point. So an
-FSCTL_QUERY_NETWORK_INTERFACE_INFO request can therefore race with
-interface destruction and dereference a freed entry. With debug-only
-instrumentation to make the race deterministic, KASAN reports:
+MS-SMB2 3.3.5.2.1.1 requires the Flags/EncryptionAlgorithm field in an
+SMB2 transform header to be 0x0001. The server must disconnect the
+connection when it has any other value.
 
-   BUG: KASAN: slab-use-after-free in
-   ksmbd_find_netdev_name_iface_list
+smb3_decrypt_req() currently ignores this field. A client with the
+session key can therefore send a correctly authenticated encrypted
+request with invalid flags and have it processed. Check the field
+before looking up the session key or decrypting the request. The caller
+aborts the connection when this check fails.
 
-   ksmbd_find_netdev_name_iface_list
-   fsctl_query_iface_info_ioctl
-   smb2_ioctl
-   handle_ksmbd_work
-
-   Freed by:
-   kfree
-   ksmbd_tcp_destroy
-   ksmbd_conn_transport_destroy
-   kill_server_store
-
-The fix is to detach iface_list to a temporary list under RTNL, then drop
-RTNL before cleanup because the following cleanup may block and hold RTNL
-for a long time.
-
-Fixes: b2d99376c5d6 ("ksmbd: browse interfaces list on FSCTL_QUERY_INTERFACE_INFO IOCTL")
-Reported-by: Sashiko <sashiko-bot+sashiko@kernel.org>
-Link: https://sashiko.dev/#/patchset/20260911163516.6403-1-15815827059%40163.com
-Assisted-by: LLM
-Signed-off-by: Henry Hu <huhai@kylinos.cn>
+Fixes: e2f34481b24d ("cifsd: add server-side procedures for SMB3")
 Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
-[ sashal: Dropped the ksmbd_tcp_stop_listener() context line from the cleanup loop, since that helper doesn't exist here, so the loop starts at list_del(). ]
+[ sashal: Added the transform-header Flags check to smb3_decrypt_req() unchanged, but adjusted the surrounding context because this older code lacks original_msg_size and the compression-header size check. ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/smb/server/transport_tcp.c | 7 ++++++-
- 1 file changed, 6 insertions(+), 1 deletion(-)
+ fs/smb/server/smb2pdu.c | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
-diff --git a/fs/smb/server/transport_tcp.c b/fs/smb/server/transport_tcp.c
-index 65705c8993be0..6dfd70f44cceb 100644
---- a/fs/smb/server/transport_tcp.c
-+++ b/fs/smb/server/transport_tcp.c
-@@ -682,10 +682,15 @@ static void tcp_stop_kthread(struct task_struct *kthread)
- void ksmbd_tcp_destroy(void)
- {
- 	struct interface *iface, *tmp;
-+	LIST_HEAD(iface_list_to_free);
+diff --git a/fs/smb/server/smb2pdu.c b/fs/smb/server/smb2pdu.c
+index e65fe5858a51d..5492e7490a26b 100644
+--- a/fs/smb/server/smb2pdu.c
++++ b/fs/smb/server/smb2pdu.c
+@@ -9572,6 +9572,12 @@ int smb3_decrypt_req(struct ksmbd_work *work)
+ 		return -ECONNABORTED;
+ 	}
  
- 	unregister_netdevice_notifier(&ksmbd_netdev_notifier);
- 
--	list_for_each_entry_safe(iface, tmp, &iface_list, entry) {
-+	rtnl_lock();
-+	list_splice_init(&iface_list, &iface_list_to_free);
-+	rtnl_unlock();
++	if (tr_hdr->Flags != cpu_to_le16(TRANSFORM_FLAG_ENCRYPTED)) {
++		pr_err_ratelimited("Invalid transform flags 0x%04x\n",
++				   le16_to_cpu(tr_hdr->Flags));
++		return -ECONNABORTED;
++	}
 +
-+	list_for_each_entry_safe(iface, tmp, &iface_list_to_free, entry) {
- 		list_del(&iface->entry);
- 		kfree(iface->name);
- 		kfree(iface);
+ 	if (buf_data_size < le32_to_cpu(tr_hdr->OriginalMessageSize)) {
+ 		pr_err("Transform message is broken\n");
+ 		return -ECONNABORTED;
 -- 
 2.53.0
 
