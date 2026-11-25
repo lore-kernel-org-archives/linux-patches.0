@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795621396;
-	b=5VG5qjvWH9nhjK3Oq7/PvX2yh/uBl74FgIO5nsdaD3d911YaMC1Gs0KGjqZX/kiKxL14
-	 8AXEJwuHR5q62iKnzY9BelxAx7tTosqdXpm8DRDNQYCNNezxTkABPHPVEdoHRLOLEq7u+
-	 NJPhSGLeisc1AZu4CcF2DTskM72VOIyMK7B7KrZfp6Qe/AkEZXedCkwE+rd8CBNuFxlaR
-	 i2JhQXNPw7MZXsdGX2qoqzlgSkcUfsXnc3GDEXhTPBzN7XBI/LZ4F1VmJhE25b7glrGx7
-	 sb1V32msa1LMWmysFOI7KBn0HTMyHm8kCBqCwQK975wt5p7Ny8xbEVIj4X8wcWef41g==
+	t=1795621399;
+	b=w7a6/tS2dTsIvyfrL/AG+CvWAkLT+lFJ33RR97JJNWH1a9Kp6HD+j3u4wcLzRYu+UuUP
+	 29vriEv2EBlAcwxWmAv/bcbEKFFYvA7mtUAWp1ckfNEsOgUp5eBE0AwiRJmPxlLu4Dy3z
+	 Lf/VmHLQoquW/XaqQ9Nu4mUoi36j5gstPA2eDNvZTcrsleLtuL7PnJofEAYzmpFZ1qgFN
+	 oyn+XOD7U+eg31+6gzbii60NFKC9FqhKygHENkP3VRWezP82LCenkGHkDplan6TfJjdAl
+	 bRJl4X79F+jA8fTnVrsMnAarai8P9FomrgOtr5sSwnzzfg50WpSGwI5WUgj2yd0W4lA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795621396;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795621399;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=bTXrnNmYUX6yRCtQiCxnIW3iwjdtVT55H5ne3VOA4is=;
-	b=C2l/PjmWOsA71RAeS2WVBTLfNLUNEnd9+plVp4Pz1xm+6fBNAIQ5uB6VUXTAvQpma0I1
-	 oYlRTLwdWfYXJBhfxk67L3rnkR8ILNDerluTTZeSe4E3rAIrtNTsbN/COcG5AkQwHl1t8
-	 49dlUxfSgF30T1Xa3CVv6tSIxRZw+T6NExLOrC42cNBOvXpc8i+nyThlPdiDYmmy9VNTI
-	 fXya5olZBFieRqxDp/PWoeamolHMqLd0UlaTHb11UBLbeN1s8jugrmODAJPHxzP0UAAwN
-	 WJJwdt6qgvM6XSLcibf/nxrMr6nvfAzqnFGeHzjKuzLE6LYbA7CTJvZSWKwz/36gGGQ==
+	bh=LU11iUx3MjVFeClJBj/WKH1z2P/TcxSEsmauaLXNSiQ=;
+	b=VxtkxcJpj9yLTFcNEOGc0HPj1Z7Sg2iDSJt3nBrq0cG9AlbGZpEdrb89OoofYqZZYqhz
+	 pDxfltLts4LSCuyGphQLVMw7mVKJw6I5jJ84R0AlyEFZYDufG/ealr/8Q/ncL8VJx8n/s
+	 epWLtZ0xae50eBpL3foONsNZEu3N7IsNZ5VZZu6zWaC+GbnD/O18bm2kka7rFB5bays/v
+	 yKHXqWwy+Gx1BeSXF+HMPiaC+atxiVj2eNJQcumtjkN7g3uGbktuz4ZV7JrTd0yNTgdcO
+	 UEgbX142XIdqUCfw+6vc7LKMudt/W5QOVY9aKwXAEEOy73ykYia5+zg9n8QFYRzxcqg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=KVUWEr2u;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=oMWSTOPJ;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 86173606A329;
-	Wed, 25 Nov 2026 15:43:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B5EDD606A31E;
+	Wed, 25 Nov 2026 15:43:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=KVUWEr2u
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CA8B71F000F0;
-	Wed, 25 Nov 2026 15:43:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=oMWSTOPJ
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E6D531F000D1;
+	Wed, 25 Nov 2026 15:43:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795621396;
-	bh=bTXrnNmYUX6yRCtQiCxnIW3iwjdtVT55H5ne3VOA4is=;
+	s=korg; t=1795621399;
+	bh=LU11iUx3MjVFeClJBj/WKH1z2P/TcxSEsmauaLXNSiQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=KVUWEr2uLPmYGJgUUhOIQ/rWPIT+5Vz3VoZCdUQKxVVdUOu7b626KNUhLr88vlmHL
-	 0bw+OWLKckQSMKZME00jJt8hxztmF22ZD3P5ds/Y5U3xUjdQPJdLlmib7ASLySPZk7
-	 C5VSUS/5GjZMTI56JZ8/pPAKJ+BzIlm2TkCAfU48=
+	b=oMWSTOPJj5STlzKNNwstPjI/TbET6UorzojEQwsvQ/GtYgXD+Gz5o63mn3QdNjeCU
+	 l6y4tcXPld5/cAI1Ybe21BdhixXrtksc4V8WrgXIXTnnYX8MfpMpxthbAyFqJXoW8B
+	 JtyF2SGgRj4GxHy7gcIMwwF1B4PFeVpfYqbzrx40=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Muna Sinada <muna.sinada@oss.qualcomm.com>,
-	Vasanthakumar Thiagarajan <vasanthakumar.thiagarajan@oss.qualcomm.com>,
-	Jeff Johnson <jeff.johnson@oss.qualcomm.com>,
+	Linfeng Sun <linfeng.sun.dev@gmail.com>,
+	"Michael S. Tsirkin" <mst@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 167/990] wifi: ath12k: generalize GI and LTF fixed rate functions
-Date: Wed, 25 Nov 2026 15:25:34 +0100
-Message-ID: <20261125143826.006912777@linuxfoundation.org>
+Subject: [PATCH 6.18 158/990] vhost: reject invalid IOTLB update permissions
+Date: Wed, 25 Nov 2026 15:25:25 +0100
+Message-ID: <20261125143825.793361946@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143822.072087159@linuxfoundation.org>
 References: <20261125143822.072087159@linuxfoundation.org>
@@ -69,242 +68,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Muna Sinada <muna.sinada@oss.qualcomm.com>
+From: Linfeng Sun <linfeng.sun.dev@gmail.com>
 
-[ Upstream commit 770bff79424beec2edb8e7cc63b0e8d1b1a927a3 ]
+[ Upstream commit b179f21d2d8a60ede29a00472bffdefb0284ef39 ]
 
-Currently, functions in mac.c for setting GI and LTF rates are
-specifically for HE rates.
+vhost_chr_write_iter() validates the type and size of an IOTLB update, but
+does not validate its permission field. An invalid permission can therefore
+reach perm_to_iommu_flags() and trigger its warning in vhost_vdpa_map().
 
-Remove any mention of "HE" in such functions in order to allow for
-other modes to utilize the functions. The intention is to prepare for
-the addition of EHT GI and LTF fixed rate settings.
+Reject IOTLB UPDATE messages whose permission field is empty or contains
+bits outside VHOST_ACCESS_RW before dispatching them to a backend.
 
-Tested-on: QCN9274 hw2.0 PCI WLAN.WBE.1.0.1-00029-QCAHKSWPL_SILICONZ-1
-
-Signed-off-by: Muna Sinada <muna.sinada@oss.qualcomm.com>
-Reviewed-by: Vasanthakumar Thiagarajan <vasanthakumar.thiagarajan@oss.qualcomm.com>
-Link: https://patch.msgid.link/20251024001928.257356-2-muna.sinada@oss.qualcomm.com
-Signed-off-by: Jeff Johnson <jeff.johnson@oss.qualcomm.com>
-Stable-dep-of: 83d689bbe8f9 ("wifi: ath12k: don't advertise EHT-MCS15 to firmware unless we support it")
+Fixes: 4c8cf31885f6 ("vhost: introduce vDPA-based backend")
+Signed-off-by: Linfeng Sun <linfeng.sun.dev@gmail.com>
+Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
+Message-ID: <20260913-fix-vhost_chr_write_iter-v1-1-76bf1f436cfe@gmail.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/ath/ath12k/mac.c | 77 ++++++++++++++-------------
- drivers/net/wireless/ath/ath12k/mac.h | 14 ++++-
- drivers/net/wireless/ath/ath12k/wmi.h | 12 ++---
- 3 files changed, 60 insertions(+), 43 deletions(-)
+ drivers/vhost/vhost.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/net/wireless/ath/ath12k/mac.c b/drivers/net/wireless/ath/ath12k/mac.c
-index e10a3366cd845..af6163169364f 100644
---- a/drivers/net/wireless/ath/ath12k/mac.c
-+++ b/drivers/net/wireless/ath/ath12k/mac.c
-@@ -12043,55 +12043,57 @@ ath12k_mac_get_single_legacy_rate(struct ath12k *ar,
- }
- 
- static int
--ath12k_mac_set_fixed_rate_gi_ltf(struct ath12k_link_vif *arvif, u8 he_gi, u8 he_ltf)
-+ath12k_mac_set_fixed_rate_gi_ltf(struct ath12k_link_vif *arvif, u8 gi, u8 ltf)
- {
- 	struct ath12k *ar = arvif->ar;
--	int ret;
-+	int param, ret;
- 
- 	lockdep_assert_wiphy(ath12k_ar_to_hw(ar)->wiphy);
- 
- 	/* 0.8 = 0, 1.6 = 2 and 3.2 = 3. */
--	if (he_gi && he_gi != 0xFF)
--		he_gi += 1;
-+	if (gi && gi != 0xFF)
-+		gi += 1;
- 
- 	ret = ath12k_wmi_vdev_set_param_cmd(ar, arvif->vdev_id,
--					    WMI_VDEV_PARAM_SGI, he_gi);
-+					    WMI_VDEV_PARAM_SGI, gi);
- 	if (ret) {
--		ath12k_warn(ar->ab, "failed to set HE GI:%d, error:%d\n",
--			    he_gi, ret);
-+		ath12k_warn(ar->ab, "failed to set GI:%d, error:%d\n",
-+			    gi, ret);
- 		return ret;
- 	}
- 	/* start from 1 */
--	if (he_ltf != 0xFF)
--		he_ltf += 1;
-+	if (ltf != 0xFF)
-+		ltf += 1;
-+
-+	param = WMI_VDEV_PARAM_HE_LTF;
- 
- 	ret = ath12k_wmi_vdev_set_param_cmd(ar, arvif->vdev_id,
--					    WMI_VDEV_PARAM_HE_LTF, he_ltf);
-+					    param, ltf);
- 	if (ret) {
--		ath12k_warn(ar->ab, "failed to set HE LTF:%d, error:%d\n",
--			    he_ltf, ret);
-+		ath12k_warn(ar->ab, "failed to set LTF:%d, error:%d\n",
-+			    ltf, ret);
- 		return ret;
- 	}
- 	return 0;
- }
- 
- static int
--ath12k_mac_set_auto_rate_gi_ltf(struct ath12k_link_vif *arvif, u16 he_gi, u8 he_ltf)
-+ath12k_mac_set_auto_rate_gi_ltf(struct ath12k_link_vif *arvif, u16 gi, u8 ltf)
- {
- 	struct ath12k *ar = arvif->ar;
- 	int ret;
--	u32 he_ar_gi_ltf;
-+	u32 ar_gi_ltf;
- 
--	if (he_gi != 0xFF) {
--		switch (he_gi) {
--		case NL80211_RATE_INFO_HE_GI_0_8:
--			he_gi = WMI_AUTORATE_800NS_GI;
-+	if (gi != 0xFF) {
-+		switch (gi) {
-+		case ATH12K_RATE_INFO_GI_0_8:
-+			gi = WMI_AUTORATE_800NS_GI;
- 			break;
--		case NL80211_RATE_INFO_HE_GI_1_6:
--			he_gi = WMI_AUTORATE_1600NS_GI;
-+		case ATH12K_RATE_INFO_GI_1_6:
-+			gi = WMI_AUTORATE_1600NS_GI;
- 			break;
--		case NL80211_RATE_INFO_HE_GI_3_2:
--			he_gi = WMI_AUTORATE_3200NS_GI;
-+		case ATH12K_RATE_INFO_GI_3_2:
-+			gi = WMI_AUTORATE_3200NS_GI;
- 			break;
- 		default:
- 			ath12k_warn(ar->ab, "Invalid GI\n");
-@@ -12099,16 +12101,16 @@ ath12k_mac_set_auto_rate_gi_ltf(struct ath12k_link_vif *arvif, u16 he_gi, u8 he_
- 		}
+diff --git a/drivers/vhost/vhost.c b/drivers/vhost/vhost.c
+index 87079382c9714..f8fc0c1a10009 100644
+--- a/drivers/vhost/vhost.c
++++ b/drivers/vhost/vhost.c
+@@ -1734,7 +1734,8 @@ ssize_t vhost_chr_write_iter(struct vhost_dev *dev,
+ 		goto done;
  	}
  
--	if (he_ltf != 0xFF) {
--		switch (he_ltf) {
--		case NL80211_RATE_INFO_HE_1XLTF:
--			he_ltf = WMI_HE_AUTORATE_LTF_1X;
-+	if (ltf != 0xFF) {
-+		switch (ltf) {
-+		case ATH12K_RATE_INFO_1XLTF:
-+			ltf = WMI_AUTORATE_LTF_1X;
- 			break;
--		case NL80211_RATE_INFO_HE_2XLTF:
--			he_ltf = WMI_HE_AUTORATE_LTF_2X;
-+		case ATH12K_RATE_INFO_2XLTF:
-+			ltf = WMI_AUTORATE_LTF_2X;
- 			break;
--		case NL80211_RATE_INFO_HE_4XLTF:
--			he_ltf = WMI_HE_AUTORATE_LTF_4X;
-+		case ATH12K_RATE_INFO_4XLTF:
-+			ltf = WMI_AUTORATE_LTF_4X;
- 			break;
- 		default:
- 			ath12k_warn(ar->ab, "Invalid LTF\n");
-@@ -12116,15 +12118,15 @@ ath12k_mac_set_auto_rate_gi_ltf(struct ath12k_link_vif *arvif, u16 he_gi, u8 he_
- 		}
+-	if (msg.type == VHOST_IOTLB_UPDATE && msg.size == 0) {
++	if (msg.type == VHOST_IOTLB_UPDATE &&
++	    (!msg.size || !msg.perm || (msg.perm & ~VHOST_ACCESS_RW))) {
+ 		ret = -EINVAL;
+ 		goto done;
  	}
- 
--	he_ar_gi_ltf = he_gi | he_ltf;
-+	ar_gi_ltf = gi | ltf;
- 
- 	ret = ath12k_wmi_vdev_set_param_cmd(ar, arvif->vdev_id,
- 					    WMI_VDEV_PARAM_AUTORATE_MISC_CFG,
--					    he_ar_gi_ltf);
-+					    ar_gi_ltf);
- 	if (ret) {
- 		ath12k_warn(ar->ab,
--			    "failed to set HE autorate GI:%u, LTF:%u params, error:%d\n",
--			    he_gi, he_ltf, ret);
-+			    "failed to set autorate GI:%u, LTF:%u params, error:%d\n",
-+			    gi, ltf, ret);
- 		return ret;
- 	}
- 
-@@ -12149,10 +12151,10 @@ static int ath12k_mac_set_rate_params(struct ath12k_link_vif *arvif,
- {
- 	struct ieee80211_bss_conf *link_conf;
- 	struct ath12k *ar = arvif->ar;
-+	bool he_support, gi_ltf_set = false;
- 	u32 vdev_param;
- 	u32 param_value;
- 	int ret;
--	bool he_support;
- 
- 	lockdep_assert_wiphy(ath12k_ar_to_hw(ar)->wiphy);
- 
-@@ -12206,7 +12208,10 @@ static int ath12k_mac_set_rate_params(struct ath12k_link_vif *arvif,
- 			ret = ath12k_mac_set_auto_rate_gi_ltf(arvif, he_gi, he_ltf);
- 		if (ret)
- 			return ret;
--	} else {
-+		gi_ltf_set = true;
-+	}
-+
-+	if (!gi_ltf_set) {
- 		vdev_param = WMI_VDEV_PARAM_SGI;
- 		param_value = ath12k_mac_nlgi_to_wmigi(sgi);
- 		ret = ath12k_wmi_vdev_set_param_cmd(ar, arvif->vdev_id,
-diff --git a/drivers/net/wireless/ath/ath12k/mac.h b/drivers/net/wireless/ath/ath12k/mac.h
-index c05af40bd7a20..1f689e367c8a1 100644
---- a/drivers/net/wireless/ath/ath12k/mac.h
-+++ b/drivers/net/wireless/ath/ath12k/mac.h
-@@ -1,7 +1,7 @@
- /* SPDX-License-Identifier: BSD-3-Clause-Clear */
- /*
-  * Copyright (c) 2018-2021 The Linux Foundation. All rights reserved.
-- * Copyright (c) 2021-2025 Qualcomm Innovation Center, Inc. All rights reserved.
-+ * Copyright (c) Qualcomm Technologies, Inc. and/or its subsidiaries.
-  */
- 
- #ifndef ATH12K_MAC_H
-@@ -84,6 +84,18 @@ enum ath12k_supported_bw {
- 	ATH12K_BW_320   = 4,
- };
- 
-+enum ath12k_gi {
-+	ATH12K_RATE_INFO_GI_0_8,
-+	ATH12K_RATE_INFO_GI_1_6,
-+	ATH12K_RATE_INFO_GI_3_2,
-+};
-+
-+enum ath12k_ltf {
-+	ATH12K_RATE_INFO_1XLTF,
-+	ATH12K_RATE_INFO_2XLTF,
-+	ATH12K_RATE_INFO_4XLTF,
-+};
-+
- struct ath12k_mac_get_any_chanctx_conf_arg {
- 	struct ath12k *ar;
- 	struct ieee80211_chanctx_conf *chanctx_conf;
-diff --git a/drivers/net/wireless/ath/ath12k/wmi.h b/drivers/net/wireless/ath/ath12k/wmi.h
-index 6468d9738639e..fdb17363a65cc 100644
---- a/drivers/net/wireless/ath/ath12k/wmi.h
-+++ b/drivers/net/wireless/ath/ath12k/wmi.h
-@@ -223,15 +223,15 @@ enum WMI_HOST_WLAN_BAND {
- };
- 
- /* Parameters used for WMI_VDEV_PARAM_AUTORATE_MISC_CFG command.
-- * Used only for HE auto rate mode.
-+ * Used for HE and EHT auto rate mode.
-  */
- enum {
--	/* HE LTF related configuration */
--	WMI_HE_AUTORATE_LTF_1X = BIT(0),
--	WMI_HE_AUTORATE_LTF_2X = BIT(1),
--	WMI_HE_AUTORATE_LTF_4X = BIT(2),
-+	/* LTF related configuration */
-+	WMI_AUTORATE_LTF_1X = BIT(0),
-+	WMI_AUTORATE_LTF_2X = BIT(1),
-+	WMI_AUTORATE_LTF_4X = BIT(2),
- 
--	/* HE GI related configuration */
-+	/* GI related configuration */
- 	WMI_AUTORATE_400NS_GI = BIT(8),
- 	WMI_AUTORATE_800NS_GI = BIT(9),
- 	WMI_AUTORATE_1600NS_GI = BIT(10),
 -- 
 2.53.0
 
