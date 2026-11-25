@@ -1,42 +1,42 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795621885;
-	b=JFofZ9apMLj+6DHoqcakYD0g/wPkW6UlL+Lm4ux4AJO8nkRbYJ98ypnhfcHHOQ6S/uSx
-	 K83zDGBdLXZf8Th6L4DJTg+ILFQae8zOmVhP1V3czY+9kfgLp1my+P/EqNyqlUZfPzzsc
-	 yjN+kV5fMPobL9DR0euYrHrz5G7wqXI/5oBHvNFFkq7rXUPbFZsie7L5aLrUZOYbbxHqd
-	 bH3ZrrooKN33nSTSqzCeiHKbh1sTsPleUtaS0yAC4R8IUAnjACx8dtG2yLNhW6ntNcpVT
-	 prcUfgTcHcbBI2bSjH7JnVotQBKM0lpD7QUEbFMX6XNrdGaK7iuLXsQtiFJgjMOSuwg==
+	t=1795621888;
+	b=yFr0xUQ4LpYTKE2wZ1JW9Ieqg3EDEYKeJPRC9B8P31R2y5TM0caHyOU6NI+ewZnz81OH
+	 Urup+PsOCguhgAkPY6BDwaeP8QfMykcB7Kc6w1Lt3W1t+zAKhz5xxvYYOWDsWxEGhM0eJ
+	 yxfQcyKQfCN0xBMGN52WB29UYVxxyS8CeD3cZcLi1FsZn1fJlfZ7s9V8D+AoCcAc3eN4m
+	 qHC74rr57Mnp2gvzMioKa29smjXjgTFRleCLywsYv850yHCMLKxLFysBBKvLBC3l2dB3o
+	 jNN/1/yriQN+uLWZ/NPZ5NLnBHLLNItNmW8wW6m2GvftJ/GjQ6q6JkVLzcadxj5HKhQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795621885;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795621888;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=rbciyg4PgozQ53GSsB6+w5lTXsgxz8FXKoJKbUGoOpw=;
-	b=wvIPUbWafxO2vmC+lWnV2MJYaZ8uUS7pmNDlq3OCHpPRWuuHRNTFmETtlfXQO2ZuDxMo
-	 q3fMjcQmeEryXbvX2FCfrDml8WgR9Yf2Meg+ik+qI7Cbx1Vfh0bFF8Imw7qebKkUOincw
-	 T7TUnLMXNKxsRuHGCZYyThkxHFXZ7XSfbAFsgKIcMCAs/pjWWKQeHq4vP1yHAsoe/+e41
-	 tFHBwAotGn1TnD9Fzn32giF54nGEOM37CLygD6YOtm2If7oIV+Y8//AczRHzTtnPXxl5c
-	 YqDTYUXeU30FpEsZNCWnhF2IsTazP945EbTjSQKHdrfZXr8EHB5uv6DmLwFLbvGH81A==
+	bh=4WjiEW5Im/HuvyOhuyATvv4bW+lyQof4ThlX6uhnvqw=;
+	b=jaNTOHcTmbm+B+suZpMg6C+m+XJwaU4J9oMMKCLV/j6i4x1mMsfhSMYTfwnvZUhMsCj1
+	 WbSAOtaNhhaaS5HV4nZ2HrKNgU4Dwi5p/xehz8jX0j6eS/IsDetMro02EQU/W3Z5EsE2E
+	 jtiAoznPQkfvH/HR8/Nharfk8LJJjnuK9+KJAwUyBsjnftNycu2aNQa+xD6aXgjY1H3vL
+	 Tm/MbTpXWocRwYcwJpmvG42N3WzH9QnTMyERrAKWY4nYwMgyB0h3DNTBVF1OqmURoWvAX
+	 RJEMwyjKfhS2MNY/lcRQxdcseIAmPTwR3QbHQc2EBz2nGEqr8AFLQ7Yc/VnO50Sd/zA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=JKEkUk2l;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=lPmp256R;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E95D1606A32D;
-	Wed, 25 Nov 2026 15:51:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5CA18606A333;
+	Wed, 25 Nov 2026 15:51:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=JKEkUk2l
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E34001F000D1;
-	Wed, 25 Nov 2026 15:51:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=lPmp256R
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 730BB1F000EE;
+	Wed, 25 Nov 2026 15:51:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795621884;
-	bh=rbciyg4PgozQ53GSsB6+w5lTXsgxz8FXKoJKbUGoOpw=;
+	s=korg; t=1795621888;
+	bh=4WjiEW5Im/HuvyOhuyATvv4bW+lyQof4ThlX6uhnvqw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=JKEkUk2luAvqbyhlTOwB4YFTYaxpDG9bHGSB8kpSRU/UmQQMwm8dEXp9CH6Bg8S4o
-	 fb9icsZlMJx+7KX65KF2q73kg088qrBNd5mzDinL4CIOqaXWbLajTXLaEZsY0SXt0A
-	 0zNuV9WEzpRZrHXw7vSiRFf8Tst2UGIWfuykTT1U=
+	b=lPmp256RPDYCHW5lQ60VYsqkT5D6VBD29BE99qqKGdWLcB0A/LPQm/NB/IgRS/Zy4
+	 gTBr2sqMTRIJZpJkPOkxWfUlVg0mcCOfp7cmYccs5BE9xS7qSENao0OR6IfdsRe8Pr
+	 mHy1ivN2Xs6NyAblwQBh6yx91l3o+o2W+kH1W85k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -45,9 +45,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Johannes Thumshirn <johannes.thumshirn@wdc.com>,
 	David Sterba <dsterba@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 365/990] btrfs: zoned: only change active zone counter on successful (de)activation
-Date: Wed, 25 Nov 2026 15:28:52 +0100
-Message-ID: <20261125143830.642554812@linuxfoundation.org>
+Subject: [PATCH 6.18 366/990] btrfs: zoned: fix possible UAF in wait_eb_writebacks()
+Date: Wed, 25 Nov 2026 15:28:53 +0100
+Message-ID: <20261125143830.665005177@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143822.072087159@linuxfoundation.org>
 References: <20261125143822.072087159@linuxfoundation.org>
@@ -71,125 +71,52 @@ Content-Transfer-Encoding: 8bit
 
 From: Johannes Thumshirn <johannes.thumshirn@wdc.com>
 
-[ Upstream commit 5e79f39fbeea78703ac389c67a810406fa09bc94 ]
+[ Upstream commit 8ca411c7ad2c02ae65ae208a3f7483d6e0159c4f ]
 
-btrfs_zone_activate() unconditionally decrements the reserved_active_zones
-counter regardless if btrfs_dev_set_active_zone() fails to set the zone
-active, i.e. because it raced with another call that already set the bit
-in the bitmask, or not.
+wait_eb_writebacks() iterates the fs_info->buffer_tree xarray and waits
+for the writeback of these extent-buffers. Waiting for writeback needs
+to be done without the rcu_read_lock() held (because it can sleep) and
+thus the loop drops the rcu_read_lock() before calling into
+wait_on_extent_buffer_writeback(). But extent_buffers are freed through
+RCU, so if btrfs_release_extent_buffer_rcu() is scheduled while we're
+still waiting on the writeback, the extent_buffer will be freed causing
+a use-after-free.
 
-This can lead to a double decrement of the counter in case the bit has
-already been set.
+Similar to what is done in find_extent_buffer_nolock(), get a reference
+to the extent_buffer before calling into
+wait_on_extent_buffer_writeback() so a successful writeback does not
+free the extent_buffer while we still have a reference to it.
 
-Only decrement the counter *iff* btrfs_dev_set_active_zone() successfully
-marked the zone in the bitmap.
-
-Mirror this behaviour when clearing the bit again.
-
-Fixes: a7e1ac7bdc5a ("btrfs: zoned: reserve zones for an active metadata/system block group")
+Fixes: 2dd7e7bc0282 ("btrfs: zoned: wait for extent buffer IOs before finishing a zone")
 Reviewed-by: Daniel Vacek <neelx@suse.com>
 Signed-off-by: Johannes Thumshirn <johannes.thumshirn@wdc.com>
 Signed-off-by: David Sterba <dsterba@suse.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/btrfs/zoned.c | 26 ++++++++++++++++++--------
- 1 file changed, 18 insertions(+), 8 deletions(-)
+ fs/btrfs/zoned.c | 8 ++++++++
+ 1 file changed, 8 insertions(+)
 
 diff --git a/fs/btrfs/zoned.c b/fs/btrfs/zoned.c
-index 69ede4e4d0c20..0ff693fea47c3 100644
+index 0ff693fea47c3..fe35bd531f70f 100644
 --- a/fs/btrfs/zoned.c
 +++ b/fs/btrfs/zoned.c
-@@ -1126,11 +1126,13 @@ u64 btrfs_find_allocatable_zones(struct btrfs_device *device, u64 hole_start,
- 	return pos;
- }
- 
--static bool btrfs_dev_set_active_zone(struct btrfs_device *device, u64 pos)
-+static bool btrfs_dev_set_active_zone(struct btrfs_device *device, u64 pos, bool *new)
- {
- 	struct btrfs_zoned_device_info *zone_info = device->zone_info;
- 	unsigned int zno = (pos >> zone_info->zone_size_shift);
- 
-+	*new = false;
-+
- 	/* We can use any number of zones */
- 	if (zone_info->max_active_zones == 0)
- 		return true;
-@@ -1142,23 +1144,29 @@ static bool btrfs_dev_set_active_zone(struct btrfs_device *device, u64 pos)
- 		if (test_and_set_bit(zno, zone_info->active_zones)) {
- 			/* Someone already set the bit */
- 			atomic_inc(&zone_info->active_zones_left);
-+		} else {
-+			*new = true;
- 		}
+@@ -2482,8 +2482,16 @@ static void wait_eb_writebacks(struct btrfs_block_group *block_group)
+ 			continue;
+ 		if (eb->start >= end)
+ 			break;
++		/*
++		 * Skip if we can't get the refcount for the extent buffer,
++		 * i.e. because it was already written back. Otherwise an eb
++		 * disappering underneath us can cause a use-after-free.
++		 */
++		if (!refcount_inc_not_zero(&eb->refs))
++			continue;
+ 		rcu_read_unlock();
+ 		wait_on_extent_buffer_writeback(eb);
++		free_extent_buffer(eb);
+ 		rcu_read_lock();
  	}
- 
- 	return true;
- }
- 
--static void btrfs_dev_clear_active_zone(struct btrfs_device *device, u64 pos)
-+static bool btrfs_dev_clear_active_zone(struct btrfs_device *device, u64 pos)
- {
- 	struct btrfs_zoned_device_info *zone_info = device->zone_info;
- 	unsigned int zno = (pos >> zone_info->zone_size_shift);
- 
- 	/* We can use any number of zones */
- 	if (zone_info->max_active_zones == 0)
--		return;
-+		return false;
- 
--	if (test_and_clear_bit(zno, zone_info->active_zones))
-+	if (test_and_clear_bit(zno, zone_info->active_zones)) {
- 		atomic_inc(&zone_info->active_zones_left);
-+		return true;
-+	}
-+
-+	return false;
- }
- 
- int btrfs_reset_device_zone(struct btrfs_device *device, u64 physical,
-@@ -2384,6 +2392,7 @@ bool btrfs_zone_activate(struct btrfs_block_group *block_group)
- 	u64 physical;
- 	const bool is_data = (block_group->flags & BTRFS_BLOCK_GROUP_DATA);
- 	bool ret;
-+	bool new;
- 	int i;
- 
- 	if (!btrfs_is_zoned(block_group->fs_info))
-@@ -2434,12 +2443,12 @@ bool btrfs_zone_activate(struct btrfs_block_group *block_group)
- 			goto out_unlock;
- 		}
- 
--		if (!btrfs_dev_set_active_zone(device, physical)) {
-+		if (!btrfs_dev_set_active_zone(device, physical, &new)) {
- 			/* Cannot activate the zone */
- 			ret = false;
- 			goto out_unlock;
- 		}
--		if (!is_data)
-+		if (!is_data && new)
- 			zinfo->reserved_active_zones--;
- 	}
- 
-@@ -2486,6 +2495,7 @@ static int call_zone_finish(struct btrfs_block_group *block_group,
- 	struct btrfs_device *device = stripe->dev;
- 	const u64 physical = stripe->physical;
- 	struct btrfs_zoned_device_info *zinfo = device->zone_info;
-+	bool cleared;
- 	int ret;
- 
- 	if (!device->bdev)
-@@ -2507,9 +2517,9 @@ static int call_zone_finish(struct btrfs_block_group *block_group,
- 			return ret;
- 	}
- 
--	if (!(block_group->flags & BTRFS_BLOCK_GROUP_DATA))
-+	cleared = btrfs_dev_clear_active_zone(device, physical);
-+	if (!(block_group->flags & BTRFS_BLOCK_GROUP_DATA) && cleared)
- 		zinfo->reserved_active_zones++;
--	btrfs_dev_clear_active_zone(device, physical);
- 
- 	return 0;
- }
+ 	rcu_read_unlock();
 -- 
 2.53.0
 
