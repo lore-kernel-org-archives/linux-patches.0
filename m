@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795621693;
-	b=K9JClbxBl/Af1Jorg225t0sD6E97rv21FdF8a6PmlJy1ejP7dYlODIGBMnm6dBDssW6z
-	 HVIRmcYFKcEigw2SOqO1zdiNaEGBYayTSfo0gS2X/4159qzFJkW2bYnmnEYYPgs3oxO4z
-	 UKCxbEabRSKT7W84lnwX04FWi8SJsnKvaWDgGBJfkT4hiLFAIsVbTpGT2/uFp5WRGQoEp
-	 /1dxOAHN76E7N035shu3ZmwvcEYX/A6Gs/XQpM8w6xVqlmi9tZXp7uheu+CUPsiZID9zR
-	 NI3tLqIb0YaPtMk96S1RMoKudOYnW5BojLYpJfcCxP7c+0KW0Jv+4mHLkBsd18BLxZg==
+	t=1795621696;
+	b=nERhkXyHEyIKi2/g5/QyCCW9OpZi+oB97QC07OZjVZN832m8XZ+Kgj6y+UYNZQ7HHaOF
+	 N2gFEmDIMd/D4KS85m+EeBm1GZm+SV4DjnMqDlS6rMmxAA5JLS0FwLaPJ8ePuaI1bP10E
+	 hHqkwiFDdrFh7u1VNQODKtWPU/zUJu2wBkIeaaA0UuGf8x2/nHna2zS/34URM1PzNVNrE
+	 +DDKS2sXbS7UQLFDXGN5qP1MCF93ETJemrAExuIpRhoENs1f1qAoQyBAT7rQQlwY2B/fJ
+	 dwKFzW2JsWmoMu5k6uXJGfyN88iaHo6pQhpGb/UraR27E7rVHrnHtCJgYYuVPMdarfw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795621693;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795621696;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=m4I2nQz8n6zAzeQEJwob4OHeEG18IkNjYw2hb/sgc7A=;
-	b=eK8Ht/I+1y1BvChYfbnmrXHDZb5uZmKaEzL+reyralgM4p0MKr9PowfSrW1NY3oqGBza
-	 zfbOVqtpofDMaM6nGcaSP9KQKdQI3IDyd6CxF6zF5u+lSGjC9hKFrNRt5ppYH1UjXj3r1
-	 NtR2dHSmKEe0bJdLapXRBcxQigI/zn+loRqgEIM94LnMjFtHO+AWrapgJQi2hU+V2cL/6
-	 GdqnJ6UXeBofIO9TpbMAmQUUrUaQOVu51VhLNW7P+0j1HXpAMVC6mrUbmL25ffwl8N+0R
-	 SnXPsTpA40f66g9JNIjid65aAkUFQANhNpzs3uDiSnZlKWPqtycxEerw2ITBNlqfgyw==
+	bh=Pgx3GaCWipigFlxxz3RExy37Wqlm2zmNsHLG2rkOY6M=;
+	b=2W5qex9Nccb2vBLN5nVlJ9W/NerCFm62DkgLpW64eywT2wiGLqL0rpQ/s9Vo2Nl0rzNg
+	 IH7q/uCVQBkSLY+RGK3YR/kFnWk1qzz1SPPcWD4EcoP595W0NtL3LEMJVVQL9EgZrHLI5
+	 vqym/YXUaBVExxMItEBRai3wfMsc/G22IqAo6vj6ipH8AVhNiDbzlAR8pVWI5yqbsYcJR
+	 R/zysCGyYe31m3ksjnjo0Em38KB4BP4znIOZRvLowKIZdfyY9I43ECs2rfQpeB+WdOzvB
+	 Cjj6INToAAq0u7D3/08BIZoVNWlsTZijl8T09g0xVge3Cx95FovRZHl4Q2l+CYRVqOQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=uRj6BbLX;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=vQUplfKY;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3A755606A33E;
-	Wed, 25 Nov 2026 15:48:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 40B03606A33F;
+	Wed, 25 Nov 2026 15:48:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=uRj6BbLX
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0AE141F000C4;
-	Wed, 25 Nov 2026 15:48:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=vQUplfKY
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 665F21F000C4;
+	Wed, 25 Nov 2026 15:48:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795621692;
-	bh=m4I2nQz8n6zAzeQEJwob4OHeEG18IkNjYw2hb/sgc7A=;
+	s=korg; t=1795621695;
+	bh=Pgx3GaCWipigFlxxz3RExy37Wqlm2zmNsHLG2rkOY6M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=uRj6BbLXTgSNu9l/8MzuQN+twJbXAbHHRzSSBcrjE6xg2T4TRqZFGiAFPqENZ50Ay
-	 nBIXiAtX3qBENGVdBW6KY3xadnto9ayIUGYWOevokY/wAGa9MvVxxiFo7rx1SEF7Hs
-	 uX7hwTJgoxTOVBCahwcoh0pwVZAVXkWpwigeLtJA=
+	b=vQUplfKYSZ2fiovz1kGyqa1l1+l/GIoEfmDwC+pSG04/7IBAbJCE/KtNW7+B/qrNZ
+	 TYdCTF1JczJoUK5mAQCT+axyeXktgLGRXhWWEdpr5gwgSOTIj/ggqhku4wjdTzXqpr
+	 ufsCiOeb3jC0rbpWUpisJpcEBodUTGZ+M6acfhPI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Richard Fitzgerald <rf@opensource.cirrus.com>,
-	Mark Brown <broonie@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 261/990] firmware: cs_dsp: Fix memory leak on cs_dsp_power_up() error path
-Date: Wed, 25 Nov 2026 15:27:08 +0100
-Message-ID: <20261125143828.207929586@linuxfoundation.org>
+	"Rafael J. Wysocki" <rafael@kernel.org>,
+	Sasha Levin <sashal@kernel.org>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>
+Subject: [PATCH 6.18 262/990] ACPI: scan: Print the offline failure message in acpi_bus_offline()
+Date: Wed, 25 Nov 2026 15:27:09 +0100
+Message-ID: <20261125143828.230777347@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143822.072087159@linuxfoundation.org>
 References: <20261125143822.072087159@linuxfoundation.org>
@@ -68,46 +68,55 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Richard Fitzgerald <rf@opensource.cirrus.com>
+[ Upstream commit b9ea1e921c2721546f53270cffdc6866e20576dd ]
 
-[ Upstream commit 39d31f76ad1b12f1b5e6ef4c15f89e6b3c3f603a ]
+When a physical node of an ACPI device being hot-removed cannot be
+offlined, acpi_bus_offline() passes the physical device back to
+acpi_scan_try_to_offline() through ret_p and the latter prints
+"Offline failed." for it after the namespace walk.  By then
+physical_node_lock is not held anymore, so the device may have been
+unbound from its ACPI companion and freed in the meantime.
 
-If cs_dsp_power_up() fails on or after cs_dsp_load() mark the controls
-disabled and free the alg regions.
+Print the message in acpi_bus_offline() when device_offline() fails in
+the second pass, while physical_node_lock keeps the device bound to its
+ACPI companion and so the reference taken by acpi_bind_one() is still
+held.  acpi_scan_try_to_offline() only needs to know that something
+could not be offlined, so pass the ACPI device back through ret_p
+instead, like in the "Offline disabled." case.
 
-Fixes: f6bc909e7673c ("firmware: cs_dsp: add driver to support firmware loading on Cirrus Logic DSPs")
-Signed-off-by: Richard Fitzgerald <rf@opensource.cirrus.com>
-Link: https://patch.msgid.link/20261104152402.1153795-1-rf@opensource.cirrus.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Fixes: 303bfdb1a14d ("ACPI / scan: Add second pass of companion offlining to hot-remove code")
+Suggested-by: Rafael J. Wysocki <rafael@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
+Link: https://patch.msgid.link/20261029034507.2721580-2-sashal@kernel.org
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/firmware/cirrus/cs_dsp.c | 6 ++++++
- 1 file changed, 6 insertions(+)
+ drivers/acpi/scan.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/firmware/cirrus/cs_dsp.c b/drivers/firmware/cirrus/cs_dsp.c
-index 15710c97f9fb0..0e20f72cfdfcf 100644
---- a/drivers/firmware/cirrus/cs_dsp.c
-+++ b/drivers/firmware/cirrus/cs_dsp.c
-@@ -2745,6 +2745,7 @@ int cs_dsp_power_up(struct cs_dsp *dsp,
- 		    const struct firmware *coeff_firmware, const char *coeff_filename,
- 		    const char *fw_name)
- {
-+	struct cs_dsp_coeff_ctl *ctl;
- 	int ret;
+diff --git a/drivers/acpi/scan.c b/drivers/acpi/scan.c
+index 3893e44005f40..e4bca03a4e476 100644
+--- a/drivers/acpi/scan.c
++++ b/drivers/acpi/scan.c
+@@ -165,8 +165,9 @@ static acpi_status acpi_bus_offline(acpi_handle handle, u32 lvl, void *data,
+ 		if (ret >= 0) {
+ 			pn->put_online = !ret;
+ 		} else {
+-			*ret_p = pn->dev;
++			*ret_p = &device->dev;
+ 			if (second_pass) {
++				dev_warn(pn->dev, "Offline failed.\n");
+ 				status = AE_ERROR;
+ 				break;
+ 			}
+@@ -235,7 +236,6 @@ static int acpi_scan_try_to_offline(struct acpi_device *device)
+ 					 (void **)&errdev);
  
- 	mutex_lock(&dsp->pwr_lock);
-@@ -2789,6 +2790,11 @@ int cs_dsp_power_up(struct cs_dsp *dsp,
- 
- 	return 0;
- err_ena:
-+	list_for_each_entry(ctl, &dsp->ctl_list, list)
-+		ctl->enabled = 0;
-+
-+	cs_dsp_free_alg_regions(dsp);
-+
- 	if (dsp->ops->disable_core)
- 		dsp->ops->disable_core(dsp);
- err_mem:
+ 		if (errdev) {
+-			dev_warn(errdev, "Offline failed.\n");
+ 			acpi_bus_online(handle, 0, NULL, NULL);
+ 			acpi_walk_namespace(ACPI_TYPE_ANY, handle,
+ 					    ACPI_UINT32_MAX, acpi_bus_online,
 -- 
 2.53.0
 
