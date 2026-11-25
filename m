@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795617800;
-	b=NkBIEIzC0cXkV9sAhG9kSCL3AJFL/G3fkC62w1Kvl/orIClR1Fhyp4vRGP49FG6NXngH
-	 jdDwgHuot3Nb0ej9aORyGE8nXBDoOSAtnDnd3kD8G2ar9uAMMJqP81MNvr0J6Dd+zTK0u
-	 oE1ZSdR+AL+H/hgavbkOSXEJeXenZHzvv1bbDBQ6TlSckrnweE8OBof6tuuHjRv2av7jf
-	 d82SNbCD3nTh71fe9zcekYazvxtLEIQ0EeCUOs7o+uhl6aMd7vU5kuYZbdhXLbPdTJ1/w
-	 Ptvb/Bk4WTyXiaDYX1/OhAI2Mu4dCoB8hkjkORw4jKpbq7m55rHPQ2JV1VxKMaYUVMg==
+	t=1795617803;
+	b=D0vYoivsuLUMEQzp6P5jJiCpD2yxm4KrfzJlZI8Ox6w7j93QggQJiEHCC4WFuMbjHIRG
+	 I7ms8/eKe/7POrBH84oah1x4LBfsjIRs87fmKeFVmnmR8Mw+dJTn4ENEUBf10RNsALhoo
+	 7q2ySl5jtL5alj8RHqg5t5Kx/jh+Yv8ex/y7kSWEZBwodOBSwFJx+ZJjkn5uox2SvzWJJ
+	 yYBhcPCzAM5dDQNQ4eHazF8f2Ei4kfX3GuljO1LCMpS7hwYJ50j+K3zDFpLn3h+T5hrt9
+	 fWeS2pAbszJjoSmHaJAmR0rY9M19iqmJM6UFEbS8GMh+8JV4fU/dVctLIQEQ1NpN8Kw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795617800;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795617803;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=rC/w3xMiFWCp3RvzHA1RLDlsVn90igNdwfbrmgSFTiM=;
-	b=n2ow+o2XmPzN6PA+wu8Ao5L4MDBF2Nzk1u5paUxhf7w3LGS7uPmydQ+avn/mhIz1EYj+
-	 CBVZlh5niFlrrFhBDYP1Kl3ZUH/MvyWf6IotLNmPd2FI34ScBTCEEeUUpJ7JsCXcO6QYY
-	 aJhBesqhizWXEe92LY56D3vpnWuYNSR3p0GCM2P43RDIk0thmulTfzCDlYO+whn+BstiU
-	 /swwyZDUf4lwSDnLlAvEdyO7JK1Y0xleNJjhWY9PtTycvzDbo5KHl9sraYGqzeIYieTEf
-	 4uEnyiLkhifSVF7uqpETVzSekAtW1C6w956OEe4LQyPgniW3X1miaI9R0kLpz3PJBlg==
+	bh=2dsC3tnmqARM7KRiWgO9uz6Wiai3wPRTKrzrMyjuKhQ=;
+	b=CKDkawToUyvwnq0hrgniBy2hB/X4EYNn5M+U0eDravfcdhqFFXFfBaB3758uwulwS2MV
+	 KpP7ybltYhWs5U0rgJtNlCBoBeN+QU44V7o+bSOkly9SYv1cp6fF2EdPBqb8uRnjp7eHR
+	 XtJ5SBgbfcyy24JCo6BdQEj4U5JM4oj/geDRZhZxdrFOFpqTsfo0JizLbVpmKvz+MJOFu
+	 9pL6kHy3fyKdGJYLa79ilmlm9uXF1vaNMGGhnqqiGAEuOmSmbHDTK2ZKcwNYhFZpHmCr8
+	 MEa3GhUUx6+6wqvfznNjj/xpmL7B+92azGiQl/fF+Xf6Z6c50DUeb9EB6TcL2LjrNhQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=eLgNKFvb;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=keuO75wP;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8DAAE606A326;
-	Wed, 25 Nov 2026 14:43:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B2990606A31E;
+	Wed, 25 Nov 2026 14:43:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=eLgNKFvb
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 606131F000C6;
-	Wed, 25 Nov 2026 14:43:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=keuO75wP
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B1D211F000C0;
+	Wed, 25 Nov 2026 14:43:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795617799;
-	bh=rC/w3xMiFWCp3RvzHA1RLDlsVn90igNdwfbrmgSFTiM=;
+	s=korg; t=1795617803;
+	bh=2dsC3tnmqARM7KRiWgO9uz6Wiai3wPRTKrzrMyjuKhQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=eLgNKFvb5nBFY5w9UbJSKWr+NbGTmL0KV2tkvO6U1CXdBZf9bWwOkg2OGAA1CGbnp
-	 1G0JjTGl1aofpZgLBbUKQlrMe12XnbTHg4jfGSv7i5iRPDvO8NjD8hNM2eU+K2VBp1
-	 DC5JA7TS6/2THFjboYfbi2X+rjXVzH/PQ/2xUK/g=
+	b=keuO75wP6RuN3s0fJ5XwI8zgv+D00CMKxR4GSBe7VdC4I6YxdRREELs1quybFCvM/
+	 vw/caqOXF0sYCkd8mIV5gta2XjYxuEfccZjzMlW1LilChxBNr9AhVZ5IRpanXGu/Mx
+	 6Z87Fawf04x/hYgMRVZ2MPnyYhSzoVauUWr+ZxaI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhi-Jun You <hujy652@gmail.com>,
+	Vadim Fedorenko <vadim.fedorenko@linux.dev>,
+	James Hilliard <james.hilliard1@gmail.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0079/1005] net: ethernet: mtk_wed: setup WDMA_RING_TX(0) for non-DBDC MT7986
-Date: Wed, 25 Nov 2026 15:23:37 +0100
-Message-ID: <20261125143823.591973860@linuxfoundation.org>
+Subject: [PATCH 7.3 0080/1005] ptp: drain virtual clock sysfs operations before unregistering children
+Date: Wed, 25 Nov 2026 15:23:38 +0100
+Message-ID: <20261125143823.614380980@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143821.729802100@linuxfoundation.org>
 References: <20261125143821.729802100@linuxfoundation.org>
@@ -68,56 +69,82 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zhi-Jun You <hujy652@gmail.com>
+From: James Hilliard <james.hilliard1@gmail.com>
 
-[ Upstream commit dd6efae5529107cc8db277eaeaff5c5f15e6bc15 ]
+[ Upstream commit 0e4a135aebc7686286d87e286499ce55e5bd5aad ]
 
-WDMA_RING_TX(0) is required to set MTK_WED_WDMA_RING_TX for WED RX
-but on a non-DBDC MT7986 it is never setup because idx is 1.
+Parent clock removal walks its virtual clocks before removing the
+n_vclocks sysfs attribute. The mutex taken by ptp_vclock_in_use() is
+released before that walk, so a concurrent sysfs deletion can pick the
+same child and unregister and free its ptp_vclock a second time. A
+reference held by the device iterator does not protect that separately
+allocated virtual clock.
 
-Setting MTK_WED_WDMA_RING_TX with WDMA_RING_TX(1) is not feasible because
-WED still tries to send through WDMA_RING_TX(0). This is verified with
-register dump.
+Remove n_vclocks before walking the children. Removing the attribute
+prevents new stores and drains stores already running, without holding
+n_vclocks_mux across a callback that needs that mutex. Skip virtual
+clocks, which do not have this attribute.
 
-Fix this by calling mtk_wed_wdma_tx_ring_setup if wed is v2 and
-rx_ring[0] is not allocated and reset tx_wdma[0] if it's already
-allocated also add error messages and bail when mtk_wed_start fails.
+This race was found by code inspection of virtual-clock registration
+failure cleanup and parent removal.
 
-Fixes: 4c5de09eb0d0 ("net: ethernet: mtk_wed: add configure wed wo support")
-Signed-off-by: Zhi-Jun You <hujy652@gmail.com>
-Link: https://patch.msgid.link/20261026-wedfix-v6-4-a52f6b15d2fc@gmail.com
+Fixes: bfcbb76b0f59 ("ptp: unregister virtual clocks when unregistering physical clock.")
+Reviewed-by: Vadim Fedorenko <vadim.fedorenko@linux.dev>
+Signed-off-by: James Hilliard <james.hilliard1@gmail.com>
+Link: https://patch.msgid.link/20261026-ptp-vclock-sampling-v6-1-e705612541f1@gmail.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/mediatek/mtk_wed.c | 15 ++++++++++++++-
- 1 file changed, 14 insertions(+), 1 deletion(-)
+ drivers/ptp/ptp_clock.c   | 5 +++++
+ drivers/ptp/ptp_private.h | 1 +
+ drivers/ptp/ptp_sysfs.c   | 6 ++++++
+ 3 files changed, 12 insertions(+)
 
-diff --git a/drivers/net/ethernet/mediatek/mtk_wed.c b/drivers/net/ethernet/mediatek/mtk_wed.c
-index 3044a7a8ea03e..f40ac5794341c 100644
---- a/drivers/net/ethernet/mediatek/mtk_wed.c
-+++ b/drivers/net/ethernet/mediatek/mtk_wed.c
-@@ -2345,7 +2345,20 @@ mtk_wed_start(struct mtk_wed_device *dev, u32 irq_mask)
+diff --git a/drivers/ptp/ptp_clock.c b/drivers/ptp/ptp_clock.c
+index 4111342d64f03..47ffc773065a3 100644
+--- a/drivers/ptp/ptp_clock.c
++++ b/drivers/ptp/ptp_clock.c
+@@ -508,6 +508,11 @@ static int unregister_vclock(struct device *dev, void *data)
  
- 	for (i = 0; i < ARRAY_SIZE(dev->rx_wdma); i++)
- 		if (!dev->rx_wdma[i].desc)
--			mtk_wed_wdma_rx_ring_setup(dev, i, 16, false);
-+			if (mtk_wed_wdma_rx_ring_setup(dev, i, 16, false)) {
-+				dev_err(dev->hw->dev, "wdma rx ring %d setup failed\n", i);
-+				return;
-+			}
-+
+ int ptp_clock_unregister(struct ptp_clock *ptp)
+ {
 +	/*
-+	 * non-DBDC MT7986 allocates only rx_ring[1] and tx_wdma[1] during setup
-+	 * but tx_wdma[0] is also needed for WED to function.
++	 * Stop and drain virtual-clock creation and deletion before walking the
++	 * children. Do not hold n_vclocks_mux while waiting for sysfs callbacks.
 +	 */
-+	if (mtk_wed_is_v2(dev->hw) && !dev->rx_ring[0].desc)
-+		if (mtk_wed_wdma_tx_ring_setup(dev, 0, MTK_WED_WDMA_RING_SIZE, !!dev->tx_wdma[0].desc)) {
-+			dev_err(dev->hw->dev, "wdma tx ring 0 setup failed\n");
-+			return;
-+		}
++	ptp_vclock_remove_sysfs(ptp);
+ 	if (ptp_vclock_in_use(ptp)) {
+ 		device_for_each_child(&ptp->dev, NULL, unregister_vclock);
+ 	}
+diff --git a/drivers/ptp/ptp_private.h b/drivers/ptp/ptp_private.h
+index db4039d642b41..ec8633126d6b8 100644
+--- a/drivers/ptp/ptp_private.h
++++ b/drivers/ptp/ptp_private.h
+@@ -169,6 +169,7 @@ extern const struct attribute_group *ptp_groups[];
  
- 	if (dev->wlan.hw_rro) {
- 		for (i = 0; i < MTK_WED_RX_PAGE_QUEUES; i++) {
+ int ptp_populate_pin_groups(struct ptp_clock *ptp);
+ void ptp_cleanup_pin_groups(struct ptp_clock *ptp);
++void ptp_vclock_remove_sysfs(struct ptp_clock *ptp);
+ 
+ struct ptp_vclock *ptp_vclock_register(struct ptp_clock *pclock);
+ void ptp_vclock_unregister(struct ptp_vclock *vclock);
+diff --git a/drivers/ptp/ptp_sysfs.c b/drivers/ptp/ptp_sysfs.c
+index 7d09256aca724..1b4530be42a20 100644
+--- a/drivers/ptp/ptp_sysfs.c
++++ b/drivers/ptp/ptp_sysfs.c
+@@ -267,6 +267,12 @@ static ssize_t n_vclocks_store(struct device *dev,
+ }
+ static DEVICE_ATTR_RW(n_vclocks);
+ 
++void ptp_vclock_remove_sysfs(struct ptp_clock *ptp)
++{
++	if (!ptp->is_virtual_clock)
++		device_remove_file(&ptp->dev, &dev_attr_n_vclocks);
++}
++
+ static ssize_t max_vclocks_show(struct device *dev,
+ 				struct device_attribute *attr, char *page)
+ {
 -- 
 2.53.0
 
