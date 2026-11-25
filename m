@@ -1,54 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795623009;
-	b=o4G37eejpsld8G6DEi1PsXZp1OtsWCCSZMDlKlpJyAHT3X8BRZ5KJF1imSz5JMWD0TK+
-	 3awoaVW9L44AlqcbWGeOOyQbE27XX9ixi1FeVF9cLymSZ0oH4+GwrXG8EOlopmmNAxIs2
-	 8VzMXUSfV9BR4bxgOHwnu3mUWVoTT1sAdwtnacvQrpsT2tJpZR0mDsiKMjNKHVua0wxI2
-	 bQHxJ0guxsbxntTqi1PQ+oWLiAYgc2NHDVuUEYa44snVJ6OTYJ+3lOoIcvTo24qrWRlCf
-	 7od9q8tF26nbzCWSxkJlm7WVYx5y4pBiEDxBo7Snlq2Vx60WUwklFAYt05Smyoduotg==
+	t=1795623012;
+	b=Yfjo8Ps/0uPdjAAsBoSC4N238PYwrBdKxWMm791Y7bP9SNSzoOoJi6Xf9OtBZNEDcz/4
+	 JnNjESm5S4rm3rpRXFsZ5De9tXAySXYoGYBk+056Emf6I8mMEmNMPf7S9soKw4atwV260
+	 fZ9tPDKZ0TVN23ocxdxKk+OtAlUr1/WBs8ekMq+LzXfz9+ArneawV0MML16dfOzP51fa5
+	 9JUOe1sCBfAs4hjM3H4JJFi15rPJuH9AIrop8NgG1Bz2nGt2Nx+ApQiPblD0IrVpdKJMY
+	 gt6hjAgiEmmdtnjecmptYoXKwUsjPsX2ZT8eVHMUS2UNY7UcP7Wzcbf5PsP5N60xW+w==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795623009;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795623012;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=sP9UwEJRpzlJfyEIkRI3MWbebCeZmk2iNE50x3E99TM=;
-	b=aG+9OcOM7roJJY+Dbysbubgyt1O0XRSVIfQhoWnv0WItyM6J3tC/+Gsar2nKsK7l6tVa
-	 xv1pDE1pRhReeVb0UGGGXmzebSJ9afpt+xLcJuHwxyY104wNRgf/rXxAHDVOkicKa5Vp0
-	 LlNslGPuTn9bfys3y34sMkmKtQBRSBc6iH9SduzVQgcB7YUr3eG1+yyyPUEoJfBiAa3OR
-	 D8AJd8rkESNRyLTcYlLlo7QsGbvSonwshrMb67rbbM0LnbWi1uHa2gWGcaXj4Qj1GqAh7
-	 lMaii2UH2kUr1RyVLSDKVXEErZErswyIuuuBBTJ7hdtLU5QGLTWaBguOVmgDEDIu2pQ==
+	bh=ZzuSYNx+sUDKmlhBAkXxHy8s1zXL/0KPfmnaNag/7Tg=;
+	b=HX/EUSqwN4ZiI8hFXPYqhg0aYWd0hEa1sVxqSX0ipJ1yzq8KT0JtgOXp2EJ8C58Eh0Iy
+	 te0N1S1l/I3mJCNslxxeli1XsBoM9cpKeJaKZHk4kopDNcdKPdprLbLkhBYrrKryqhgel
+	 /7tpJvc0+rea9VDIDvrWphJsvNDppCz4OX+5l4jD+y5rLsUq6vy47vf1+I6/pucKKArM8
+	 hMl7iNm+ImF9VR9mXOZ99ZNEVNvWpfil8kawagssLWrDrKEar0K5QXiUDqAYy5H+3OMCW
+	 zdc3gTKioZehGKkNW+uLHN5OeJGGplg18vh8hN97u8TEQ9XIKEUYltw9E126hQDxXnQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="0hgud/7A";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=r1wwWJTw;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 793B9606A31E;
-	Wed, 25 Nov 2026 16:10:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BAD3C606A31E;
+	Wed, 25 Nov 2026 16:10:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=0hgud/7A
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 79DD31F000C0;
-	Wed, 25 Nov 2026 16:10:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=r1wwWJTw
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9E7561F000D0;
+	Wed, 25 Nov 2026 16:10:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795623009;
-	bh=sP9UwEJRpzlJfyEIkRI3MWbebCeZmk2iNE50x3E99TM=;
+	s=korg; t=1795623012;
+	bh=ZzuSYNx+sUDKmlhBAkXxHy8s1zXL/0KPfmnaNag/7Tg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=0hgud/7AkIEw2a+wpqem3puYLHW45rYrpgKIg5C5ejTS5beDp1o9DC40YIa0fXZDt
-	 DL3PpIqiWDfvIbifejxM3BsblWpKAq8AC5Q4f7PYCNDbGz/0iJXDNTla0SUC9K7s0l
-	 apLUBinDSSSDTirHyEZ6YR7jHpwuxNSdgQ0nCXLg=
+	b=r1wwWJTwBKQ88IY2ETuPEWuhcWF19Jb3j7kVn4aGHxoJwoQqCrMi4tZfJBP6Ph/N0
+	 jjOrN5EPxUFfkNaG7GBYzUNddACwwQk27A0M8glmoRzPywNBs0iF6SQXvmX9fGApUH
+	 Inpi03IBy5SvIgE0/kBuGNjhxdP1YMWBPBCETLjA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Erni Sri Satya Vennela <ernis@linux.microsoft.com>,
-	Haiyang Zhang <haiyangz@microsoft.com>,
-	Wei Liu <liuwe@microsoft.com>,
-	Simon Horman <horms@kernel.org>,
-	Dave Miller <davem@davem-thinkpadp1gen8.ibmlond.csb>
-Subject: [PATCH 6.18 719/990] hv_netvsc: Stop PPI parsing on invalid metadata
-Date: Wed, 25 Nov 2026 15:34:46 +0100
-Message-ID: <20261125143838.922451716@linuxfoundation.org>
+	Andrea Parri <parri.andrea@gmail.com>,
+	Stefano Garzarella <sgarzare@redhat.com>,
+	Luigi Leonardi <leonardi@redhat.com>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 6.18 720/990] hv_sock: Report no unread data before a channel is available
+Date: Wed, 25 Nov 2026 15:34:47 +0100
+Message-ID: <20261125143838.945242892@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143822.072087159@linuxfoundation.org>
 References: <20261125143822.072087159@linuxfoundation.org>
@@ -70,62 +69,66 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Erni Sri Satya Vennela <ernis@linux.microsoft.com>
+From: Andrea Parri <parri.andrea@gmail.com>
 
-commit 19a227903e65c7a9c179156485660a4e017575fe upstream.
+commit 71b06766b7c49ed5f489b8bd104f82ff164d67a3 upstream.
 
-rndis_get_ppi() uses continue when a per-packet information entry has an
-invalid size or offset, or cannot hold the requested metadata. However,
-the remaining length and entry pointer are only updated at the bottom
-of the loop. Each error path therefore retries the same invalid entry
-indefinitely, repeatedly logging the error and preventing receive
-processing from completing.
+The Hyper-V transport is assigned before the asynchronous VMBus channel
+offer completes.  Its zero-initialized hvsock therefore has a NULL chan
+until hvs_open_connection() associates the channel with the socket.
 
-Return NULL on these validation failures instead of continuing. This
-terminates the lookup when malformed metadata is encountered while
-preserving the existing behavior for valid entries.
+SIOCINQ can query the assigned transport while the socket is connecting,
+or after connect() fails once the transport has been assigned.  Unlike
+poll(), that path does not check stream_is_active() before calling the
+transport's stream_has_data callback.  hvs_stream_has_data() then passes
+the NULL channel to hvs_channel_readable_payload(), and any user in the
+guest can trigger an oops:
 
-The issue was reported through an internal bug-tracking system and
-confirmed by manual code inspection. The pre-fix hang has not been
-reproduced locally.
+  BUG: kernel NULL pointer dereference, address: 0000000000000178
+  RIP: 0010:hvs_stream_has_data+0x23/0x120
+  Call Trace:
+   <TASK>
+   ? vsock_ioctl+0x74/0xf0
+   sock_do_ioctl+0x42/0xf0
+   sock_ioctl+0x27d/0x310
+   do_vfs_ioctl+0x700/0x810
+   __x64_sys_ioctl+0x7d/0xf0
 
-Fixes: 44144185951a ("hv_netvsc: Add validation for untrusted Hyper-V values")
+Return zero unread bytes when no channel is available, before accessing
+the receive state or ring.  Leave the existing channel-backed receive
+handling unchanged.
+
+The oops was reproduced on an unmodified v7.4-rc1 kernel in a WSL2
+guest with a small user-space program, available on request.  With this
+patch, the program reports zero unread bytes and the kernel logs nothing.
+Other vsock_test cases were not run, as most of them need a host-side
+peer.
+
+AI assistance was used to identify the issue and develop the fix.
+
+Fixes: f7c722659275 ("vsock: Add support for SIOCINQ ioctl")
 Cc: stable@vger.kernel.org
-Signed-off-by: Erni Sri Satya Vennela <ernis@linux.microsoft.com>
-Reviewed-by: Haiyang Zhang <haiyangz@microsoft.com>
-Reviewed-by: Wei Liu <liuwe@microsoft.com>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Signed-off-by: Dave Miller <davem@davem-thinkpadp1gen8.ibmlond.csb>
+Signed-off-by: Andrea Parri <parri.andrea@gmail.com>
+Reviewed-by: Stefano Garzarella <sgarzare@redhat.com>
+Reviewed-by: Luigi Leonardi <leonardi@redhat.com>
+Link: https://patch.msgid.link/20261106123920.162131-1-parri.andrea@gmail.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/hyperv/rndis_filter.c |    6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ net/vmw_vsock/hyperv_transport.c |    3 +++
+ 1 file changed, 3 insertions(+)
 
---- a/drivers/net/hyperv/rndis_filter.c
-+++ b/drivers/net/hyperv/rndis_filter.c
-@@ -401,12 +401,12 @@ static inline void *rndis_get_ppi(struct
- 		/* Validate ppi_offset and ppi_size */
- 		if (ppi->size > len) {
- 			netdev_err(ndev, "Invalid ppi size: %u\n", ppi->size);
--			continue;
-+			return NULL;
- 		}
+--- a/net/vmw_vsock/hyperv_transport.c
++++ b/net/vmw_vsock/hyperv_transport.c
+@@ -698,6 +698,9 @@ static s64 hvs_stream_has_data(struct vs
+ 	struct hvsock *hvs = vsk->trans;
+ 	s64 ret;
  
- 		if (ppi->ppi_offset >= ppi->size) {
- 			netdev_err(ndev, "Invalid ppi_offset: %u\n", ppi->ppi_offset);
--			continue;
-+			return NULL;
- 		}
++	if (!hvs->chan)
++		return 0;
++
+ 	if (hvs->recv_data_len > 0)
+ 		return hvs->recv_data_len;
  
- 		if (ppi->type == type && ppi->internal == internal) {
-@@ -414,7 +414,7 @@ static inline void *rndis_get_ppi(struct
- 			if (ppi->size - ppi->ppi_offset < ppi_size) {
- 				netdev_err(ndev, "Invalid ppi: size %u ppi_offset %u\n",
- 					   ppi->size, ppi->ppi_offset);
--				continue;
-+				return NULL;
- 			}
- 			return (void *)((ulong)ppi + ppi->ppi_offset);
- 		}
 
 
