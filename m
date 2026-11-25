@@ -1,52 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795623182;
-	b=cJcYbq/QpAURQdvxhYm8TlM5FEMykIFm3Kl0Q+1RHT628afdnuGosOTOSCNXHPtONcOZ
-	 7R7uVnbikcOIbAqVjrQvQwagCAJ8Couh5BEI2lRjj1Rb7V/qVKDyUDd1Rhy7f0ZPhYUoK
-	 cx7BUOVhWFmJk4lTa9ZpSX7j+HIvVVGs0FPftg5DVWDfqMKooedskOKr0bv2j2LF4En75
-	 6m4bbbYI3WJqJNhaQs4mEnONda+AwSP5VkDbSl1Zdl4hd3rGavnMBd8lnryRUHcHjMy8h
-	 4Kwa+M/5BjfeMsLqfFoQDn3UUTgq3kx1ScBtYCl1bJR+XSiLzfsOzzld/Um4dOB8vdA==
+	t=1795623186;
+	b=Ny+kwvkXpoIgkQlsa/i9z84B1yJLrcHLbXRJo3rxT6pogk3T7ILUd1fwER0VmEc6Qkg6
+	 pZ+RMLCJ/J5sr0pCLMGVKr9cRxmKAvwoEFOMcIk8O3wPmt3deDMkAIjZfx0zDxScnArrF
+	 p/73mbDaSoehtJavjHIRLHT9i0Xa4kMVEyyPKZ0zJwq5gFUTyWo0DQNQJ1QPfRz3oezMr
+	 aQPA1YDhbroxwLDqHnf7smMis3dcFbznECLEGTyTkgrGtLL9Vxi/qLY4yCYlqR9o8j3C+
+	 yWLtqQ1faihgVugaU6IPrHhDoc3B2ePtnm2AL+EJX8QdCxLeJ+khcrQMJbtxJBjDEDg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795623182;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795623186;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=5OhKyCOwZ/DxBR0EOpj406fuudY591FXwdL5jG0Y2vY=;
-	b=ICxqaZRDrIqlw982CSQ5CWfPd4BGWWa65yrFYKkMeCeqEXnsBWiDjoLglBcFVMGP4te2
-	 yAKunc6cEO1mGI+NqypTSBqjxAt5pz0deXnjyiTavoUlUEcufGkqKMTn4FytNZBm6v2sS
-	 Rcg1zAg4Z+ufRxka0M3mIm4vTrkGxnHmxA0I4D5yUlqpqXj81SSw3ryeBKKU6EY3m+6gm
-	 YSMQ5go3/Y0XEaM8n006vWCnq/MyzKNgHr3M4BxOdcDpTmBshabju7zI2hTMOb+To+qau
-	 sk9nB0UvxnJ/Va/XXtsCqzjX7d/eym3UxVXKUZAPyFnnuktlJ3BlCU9twwf/G2V9A3g==
+	bh=eW9wM7bs65/Z/73mtoEsXVZ0h5Zs0Y66xpgvp5bU+EI=;
+	b=LJgkS13hCvnHd/dIqyDLxGfuQFX/bmSAOC12daxBOpkDWALRl+gxECHxFUv45EGkIslF
+	 V3e3LOzAglG/2RYhyH3blrQuhQ/xXwhKsEjhCfTp8q/CZ5edII6mxXYhQxmOI4A4aiFqy
+	 cfLRwh8ZhQo6BLkTBxW8I01w3x/H4X9JGzVRFnAjILgEE02WqrWrvH7boM7INWKILxEQx
+	 ljqC4ugiM0VeZbODcgOzIWFO1Re4WNjQyg5uH3OrW+fRnQSn9AEdpGJACEd9C2vIK2nbW
+	 jgUVIbk9+JwrUjN8j79zCWkkCPj6mSKQGU8xMJU/39cXcb7MPWQ86Wwjx1V01VJiH3A==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=qbdcNL2P;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=SR1M9g5o;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BC4F9606A329;
-	Wed, 25 Nov 2026 16:13:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 54DDD606A32A;
+	Wed, 25 Nov 2026 16:13:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=qbdcNL2P
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C36391F000E6;
-	Wed, 25 Nov 2026 16:13:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=SR1M9g5o
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 17B6E1F000C0;
+	Wed, 25 Nov 2026 16:13:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795623182;
-	bh=5OhKyCOwZ/DxBR0EOpj406fuudY591FXwdL5jG0Y2vY=;
+	s=korg; t=1795623185;
+	bh=eW9wM7bs65/Z/73mtoEsXVZ0h5Zs0Y66xpgvp5bU+EI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=qbdcNL2PS3XwibXQcZ5pluGsEmjSPcCTGXBsflXRRNMjBYIdKar+GmSMZrCxNqhae
-	 Ic7kOnViTBHsBpp+n8b3mfj0B/gHHkMC5maWS2xq/+uWkzljyxcuBSkCvhCqNXWBaY
-	 pS9MHZR9UOWhPPT50Luv4eyRQhOenmm83gXsg2kk=
+	b=SR1M9g5oD9zi3DyIRmP3LNgGrc+ME9OVkhPSjf6ZSWKjAoV9kEBlrz6+6H2vEw2GO
+	 w44y1eOEcolj8K+afrZF8WuiSFEUVBQQkrcpZR/0By9flfgHmWtMwC8BTBAYWsLiSh
+	 8Gkifzv0qYJWsuwb1dQqdrz4WPCgVr4o4LAasNMs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Stefano Stabellini <sstabellini@kernel.org>,
-	Yehyeong Lee <yhlee@isslab.korea.ac.kr>,
-	Juergen Gross <jgross@suse.com>
-Subject: [PATCH 6.18 775/990] xen/pvcalls: destroy the per-socket workqueue on release
-Date: Wed, 25 Nov 2026 15:35:42 +0100
-Message-ID: <20261125143840.205429089@linuxfoundation.org>
+	Rupesh Majhi <zoone.rupert@gmail.com>,
+	Guenter Roeck <linux@roeck-us.net>
+Subject: [PATCH 6.18 776/990] hwmon: (aht10) Fix update_interval overflow on 64-bit
+Date: Wed, 25 Nov 2026 15:35:43 +0100
+Message-ID: <20261125143840.229005253@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143822.072087159@linuxfoundation.org>
 References: <20261125143822.072087159@linuxfoundation.org>
@@ -68,49 +67,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yehyeong Lee <yhlee@isslab.korea.ac.kr>
+From: Rupesh Majhi <zoone.rupert@gmail.com>
 
-commit 6b3feb6bfa9ac384f7a3ec25c40b9b4d3da96d25 upstream.
+commit b5c5b67e02406fb48acf57cf2c30a570230fd6aa upstream.
 
-pvcalls_new_active_socket() gives every active socket its own ordered
-workqueue:
+On 64-bit, update_interval writes are clamped to LONG_MAX ms, but
+ms_to_ktime() overflows above 9223372036854 ms and the interval wraps.
+LONG_MAX becomes -1 ms, so every read starts a new measurement and
+update_interval reads back -1.
 
-	map->ioworker.wq = alloc_ordered_workqueue("pvcalls_io", 0);
+Clamp to INT_MAX like sht4x, so the limit is the same on all platforms.
 
-and nothing ever destroys it.  pvcalls_back_release_active() flushes
-map->ioworker.register_work and frees map, but the workqueue and its
-pool_workqueues stay allocated, so a frontend leaks a workqueue per socket
-it connects and releases - a loop a guest can run as long as it likes.
-
-Destroy it right after flush_work(): the IRQ is disabled and sk_data_ready
-restored by then, so nothing can queue new work, and the rings are still
-mapped while it drains - pvcalls_conn_back_read() reads map->ring and
-map->data, which xenbus_unmap_ring_vfree() takes away a few lines later.
-pvcalls_back_ioworker() does not take fedata->socket_lock, which the
-backend_disconnect() caller holds here - only the socket's own
-sk_receive_queue lock - so draining it from this point is safe; the
-flush_work() just above already has the same requirement.
-
-Fixes: 5db4d286a8ef ("xen/pvcalls: implement connect command")
+Fixes: 8c78f0dee437 ("hwmon: Add AHT10 Temperature and Humidity Sensor Driver")
 Cc: stable@vger.kernel.org
-Reviewed-by: Stefano Stabellini <sstabellini@kernel.org>
-Signed-off-by: Yehyeong Lee <yhlee@isslab.korea.ac.kr>
-Signed-off-by: Juergen Gross <jgross@suse.com>
-Message-ID: <20261110125002.46683-3-yhlee@isslab.korea.ac.kr>
+Signed-off-by: Rupesh Majhi <zoone.rupert@gmail.com>
+Link: https://patch.msgid.link/20261108172651.220121-1-zoone.rupert@gmail.com
+Signed-off-by: Guenter Roeck <linux@roeck-us.net>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/xen/pvcalls-back.c |    1 +
- 1 file changed, 1 insertion(+)
+ drivers/hwmon/aht10.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/xen/pvcalls-back.c
-+++ b/drivers/xen/pvcalls-back.c
-@@ -452,6 +452,7 @@ static int pvcalls_back_release_active(s
+--- a/drivers/hwmon/aht10.c
++++ b/drivers/hwmon/aht10.c
+@@ -229,7 +229,7 @@ static int aht10_read_values(struct aht1
+ static ssize_t aht10_interval_write(struct aht10_data *data,
+ 				    long val)
+ {
+-	data->min_poll_interval = ms_to_ktime(clamp_val(val, 2000, LONG_MAX));
++	data->min_poll_interval = ms_to_ktime(clamp_val(val, 2000, INT_MAX));
+ 	return 0;
+ }
  
- 	atomic_set(&map->release, 1);
- 	flush_work(&map->ioworker.register_work);
-+	destroy_workqueue(map->ioworker.wq);
- 
- 	xenbus_unmap_ring_vfree(dev, map->bytes);
- 	xenbus_unmap_ring_vfree(dev, (void *)map->ring);
 
 
