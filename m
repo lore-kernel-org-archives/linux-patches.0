@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795623176;
-	b=VBDDCoMifMhxRfvGHH9foBJNGNk/TLu4zPwUPVbZaXRKJHD3sJCnHh+b8K8yrARbiGiJ
-	 ghHVskgdMBHMwE4sy31d7Xhlrw4uSoPTjtr7a+mQ0EbLdXjWkfrtYgsn6lSSnTvGsTncg
-	 eo4fUcwvz3na+C7Uj7rox6r0F74roTYTNjxAdBlCCTlAUhbTNSXelcKEHThDpkuEjLAzK
-	 j5etDO1AFMmeGrcmMrPZRKhYuUEJeXvrT2Glq+qYRG6oUV5CNSBnJbYjbwf6zYjDIQ6V1
-	 Bt5euS9yz46GqhzWAu59sutU17rnZjlOAXVOMl4Tsl4NYP99jpYvXW4iJ4UsAJO6Hjw==
+	t=1795623179;
+	b=cjgzzYlxZ8m9lzoEcOV6PuBXRHKFRjg4Y/q/hYGxhugkm1Iny65SeuuObtEHB66jtkz8
+	 z6WkHSz/tY7lpFEn/WhdsAKU0iHirQ2iIxKjX67NLuR9kHg1ZaC5ZXL1Rm4velsFpGk4e
+	 N8L8fRCCKDube9GWo+6O9yq3nprxndQ3yfEsgzwPq0YNHs/TfKZk8LbRRinupfUSqMsGe
+	 mkTWLvPNA9sUIUqJs1kXk2AWvBWguOaVt68ApHLBnC7GuJIImTw2v+3G/+zvyrBjdOHsa
+	 lUmv4DXxataoJJeOdeDhSyWwQNRRpQauAMCTvg7dnU3TSnZHYrDxlHnHucoEEpB+/pA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795623176;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795623179;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=2nT4u0Og/XK8IUtf2FQwHVw4ereksRtVRbf7cLMjTz8=;
-	b=eaKtmggnwuASSAxKFCd6r849fgIeFQRVaLiAqZkj4eqV566hXjbP3vkIpbReEpDlyE3A
-	 zQWyUj4pkJp+9Vy2pX6E/cUAke1nnzlXUy+ckIL8bu80y30LfVY0SsYuHKqFkxq+m3QB7
-	 aqho8KZ3o/YrF2GqXnFKFk8z2i3I0juhxeEPJDvorvJ4eF2m6CvcaIr8c6OKgNEAvbcTw
-	 Qas9g5MaFd45G+U7FLrmZLi0mfmp7NcnsJV4pNcKXzqRLIn41wBzK4f5aJHI6IlP5U91p
-	 rlXlzZQnaUliguRf6y/Sk+VbazT1dvVJ+Yw1G7R7srQRcUq2rjdRPcpULP8v5aoaV5w==
+	bh=rsyFPjx57pLlwhued3mtyj3jMQZhpYSjOE2B+JBhjXk=;
+	b=mmwPLvnKqIfd+paZNiD2TA1dBwdaTcFDPm4h4XlqIk/nnYbyxLGmLgVP+WpYwUcXYJsW
+	 jEaGgOiO/PfYzMrjHbX1Bun1aqdsdl1f34Hd3L9w682OCFSjvw8H5CbB4h7Go0TKPyPX6
+	 VryB1p2VXmG1UJ9vXOcAogssgniIl+7CrC6P3AIvO8NZfXYHT1hDoQf3fFjD5Tfhy0wJn
+	 7ail3omOca8O88kHl+USsORhet3qGYsXqfP5VudtdM7NQKtsEH/QqGV0xwIoXlHJ0xPt4
+	 +8/msnsWPzoAmrKrNsXAPw3Dvy05mzS4S0Lk+HP8VkuWtl/CNY2BnjzTs8ANlhOOi6A==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="kUIjSf6/";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=YYkuNHRD;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8265A606A323;
-	Wed, 25 Nov 2026 16:12:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 99FC6606A32D;
+	Wed, 25 Nov 2026 16:12:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=kUIjSf6/
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 07B691F000C6;
-	Wed, 25 Nov 2026 16:12:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=YYkuNHRD
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6213A1F000D1;
+	Wed, 25 Nov 2026 16:12:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795623175;
-	bh=2nT4u0Og/XK8IUtf2FQwHVw4ereksRtVRbf7cLMjTz8=;
+	s=korg; t=1795623178;
+	bh=rsyFPjx57pLlwhued3mtyj3jMQZhpYSjOE2B+JBhjXk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=kUIjSf6/nFz7DIbvVK7a+dasHIWnbSmsiAwjuzaQPgTXX8zO/a4ZR6f8Sc2KHUK+w
-	 fz9MY9QRldR3tyFrhhLRjyakuJdoUKD7tnt6Mat/NqaUl9ty8x1SlqLcDeKW/GhkYe
-	 a0OnNTUFnJCEZZKtBcFfKH3MtGBaUypHF0+t8RWU=
+	b=YYkuNHRDX81C59lwyn0ziUML1Ze1MZIFb9qRySvuPbzoiloJmdcg4NLTYyelTLNEC
+	 bbUZ881q4XitLLjBZHeQxZLBNo9QgMSoISdDQq6Kv1rs2+Cb+mvfio+kVF8k2JkS1q
+	 vE0e0zedG0fYWegFZIIc9XfwFyWS5Kmh0E35lLeE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Stefano Stabellini <sstabellini@kernel.org>,
-	Yehyeong Lee <yhlee@isslab.korea.ac.kr>,
-	Juergen Gross <jgross@suse.com>
-Subject: [PATCH 6.18 774/990] xen/pvcalls: unwind pvcalls_new_active_socket() step by step
-Date: Wed, 25 Nov 2026 15:35:41 +0100
-Message-ID: <20261125143840.181352074@linuxfoundation.org>
+	YuanZhe Liu <25031212351@stu.xidian.edu.cn>,
+	Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Subject: [PATCH 6.18 739/990] Bluetooth: hci_qca: fix use-after-free in ibs debugfs files
+Date: Wed, 25 Nov 2026 15:35:06 +0100
+Message-ID: <20261125143839.376755230@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143822.072087159@linuxfoundation.org>
 References: <20261125143822.072087159@linuxfoundation.org>
@@ -68,167 +68,62 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yehyeong Lee <yhlee@isslab.korea.ac.kr>
+From: YuanZhe Liu <25031212351@stu.xidian.edu.cn>
 
-commit 702ba3c80a8736898813a2c7484d695278aa114d upstream.
+commit eeca795cec6d9c6c193c2c1bd0cb26cde44f9fc3 upstream.
 
-Every error path in pvcalls_new_active_socket() jumps to one shared label
-that does list_del(&map->list) and then hands map to
-pvcalls_back_release_active().  But map comes from kzalloc() and its
-list_head is only published at the very end of the function, after the last
-of those jumps:
+qca_debugfs_init() creates an "ibs" directory under hdev->debugfs and
+stores pointers to fields of struct qca_data in the debugfs files.
+qca_close() frees qca_data without removing that directory, while
+hdev->debugfs is only removed when the HCI device is released. The HCI
+device can outlive the driver data, for example when an HCI socket still
+references it, so reading or writing one of the ibs files then
+dereferences freed memory.
 
-	down(&fedata->socket_lock);
-	list_add_tail(&map->list, &fedata->socket_mappings);
-	up(&fedata->socket_lock);
+Store the directory dentry in struct qca_data and remove the directory
+with debugfs_remove_recursive() before qca_data is freed.
+debugfs_remove() waits for callers that are already inside the file
+operations, and any later access fails with -EIO instead of reaching the
+debugfs helpers. This covers the two writable files as well.
 
-so on the error path map->list is still {NULL, NULL} and __list_del()
-writes through a NULL pointer.
-
-A frontend gets there with one value it owns: the ring_order field of the
-page it granted.  Anything above MAX_RING_ORDER takes the second goto, and
-nothing else in the function has run by then.
-
-The result is an oops in whichever context handled the request - the
-pvcalls-back threaded IRQ handler for PVCALLS_CONNECT, mappass->wq for
-PVCALLS_ACCEPT - and because it happens after down(&fedata->socket_lock)
-that semaphore is never released, so every later operation on the frontend
-blocks on it and the backend never completes backend_disconnect().  (With
-CONFIG_DEBUG_LIST the list_del() only reports and returns, and
-pvcalls_back_release_active() then runs on a map whose irq is still 0 and
-whose bytes, ioworker.wq and saved_data_ready are all NULL.)
-
-A frontend asking for ring_order 5, on a dom0 built with KASAN
-(the request was issued by a test-only change to the frontend):
-
-[  133.728877] pvcalls_new_active_socket frontend requested ring_order 5, which is > MAX (4)
-[  133.732868] Oops: general protection fault, probably for non-canonical address 0xdffffc0000000001: 0000 [#1] SMP KASAN NOPTI
-[  133.737910] KASAN: null-ptr-deref in range [0x0000000000000008-0x000000000000000f]
-[  133.741666] CPU: 0 UID: 0 PID: 133 Comm: irq/39-pvcalls- Not tainted 7.3.0-kCTLblk2-15482-g21a7f44fd076-dirty #1 PREEMPT(full)
-[  133.746986] Hardware name: QEMU Standard PC (Q35 + ICH9, 2009), BIOS 1.16.3-debian-1.16.3-2 04/01/2014
-[  133.751512] RIP: 0010:pvcalls_new_active_socket+0x821/0xb90
-[  133.754237] Code: 48 89 fa 48 c1 ea 03 80 3c 02 00 0f 85 f6 01 00 00 48 8d 79 08 4c 8b 6b 08 48 b8 00 00 00 00 00 fc ff df 48 89 fa 48 c1 ea 03 <80> 3c 02 00 0f 85 14 02 00 00 4c 89 ea 4c 89 69 08 48 b8 00 00 00
-[  133.763126] RSP: 0018:ffffc900004afb38 EFLAGS: 00010202
-[  133.765861] RAX: dffffc0000000000 RBX: ffff88810886c900 RCX: 0000000000000000
-[  133.769348] RDX: 0000000000000001 RSI: 0000000000000246 RDI: 0000000000000008
-[  133.772787] RBP: 1ffff92000095f6b R08: 0000000000000001 R09: fffff52000095f58
-[  133.776260] R10: 0000000000000003 R11: ffff888100077320 R12: ffff88810858b410
-[  133.779823] R13: 0000000000000000 R14: ffff88810858b460 R15: ffff88810858b400
-[  133.783382] FS:  0000000000000000(0000) GS:ffff8881b034c000(0000) knlGS:0000000000000000
-[  133.787351] CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
-[  133.790308] CR2: 00000000006042c0 CR3: 0000000108400001 CR4: 0000000000770ef0
-[  133.793822] PKRU: 55555554
-[  133.795347] Call Trace:
-[  133.796778]  <TASK>
-[  133.798082]  ? __pfx_pvcalls_new_active_socket+0x10/0x10
-[  133.800801]  ? security_socket_post_create+0x4d/0x60
-[  133.803275]  ? release_sock+0x1a/0x1d0
-[  133.805182]  pvcalls_back_event+0x1b09/0x23e0
-[  133.807431]  ? __pfx_pvcalls_back_event+0x10/0x10
-[  133.809814]  ? __pfx__raw_spin_lock_irqsave+0x10/0x10
-[  133.812251]  ? __pfx_pvcalls_back_event+0x10/0x10
-[  133.814554]  irq_thread_fn+0x86/0x150
-[  133.816468]  irq_thread+0x2da/0x580
-[  133.818363]  ? __pfx_irq_thread_fn+0x10/0x10
-[  133.820586]  ? __pfx_irq_thread+0x10/0x10
-[  133.822670]  ? __kthread_parkme+0x88/0x170
-[  133.824803]  ? __pfx_irq_thread+0x10/0x10
-[  133.827153]  ? __pfx_irq_thread+0x10/0x10
-[  133.829304]  kthread+0x2c8/0x3b0
-[  133.831176]  ? recalc_sigpending+0x15c/0x1e0
-[  133.833570]  ? __pfx_kthread+0x10/0x10
-[  133.835572]  ret_from_fork+0x373/0x5b0
-[  133.837581]  ? __pfx_ret_from_fork+0x10/0x10
-[  133.839978]  ? __switch_to+0x3c4/0xb40
-[  133.841984]  ? __pfx_kthread+0x10/0x10
-[  133.843970]  ret_from_fork_asm+0x1a/0x30
-[  133.846031]  </TASK>
-[  133.847420] Modules linked in:
-[  133.849240] ---[ end trace 0000000000000000 ]---
-
-Give each failure its own label, so that only resources that were actually
-acquired are released and the list the map was never added to is left
-alone.  The map is not published anywhere at that point, so the error path
-needs no socket_lock at all.  sock_release() stays in the callee on every
-error path, the way
-commit 8fafac202d18 ("xen/pvcalls-back: fix double frees with pvcalls_new_active_socket()")
-arranged it.
-
-Fixes: 5db4d286a8ef ("xen/pvcalls: implement connect command")
+Link: https://netdev-ai.bots.linux.dev/sashiko/#/patchset/20261102113654.8724-1-25031212351%40stu.xidian.edu.cn
+Fixes: 0ff252c1976d ("Bluetooth: hciuart: Add support QCA chipset for UART")
 Cc: stable@vger.kernel.org
-Reviewed-by: Stefano Stabellini <sstabellini@kernel.org>
-Signed-off-by: Yehyeong Lee <yhlee@isslab.korea.ac.kr>
-Signed-off-by: Juergen Gross <jgross@suse.com>
-Message-ID: <20261110125002.46683-2-yhlee@isslab.korea.ac.kr>
+Signed-off-by: YuanZhe Liu <25031212351@stu.xidian.edu.cn>
+Reviewed-by: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/xen/pvcalls-back.c |   25 +++++++++++++++----------
- 1 file changed, 15 insertions(+), 10 deletions(-)
+ drivers/bluetooth/hci_qca.c |    5 +++++
+ 1 file changed, 5 insertions(+)
 
---- a/drivers/xen/pvcalls-back.c
-+++ b/drivers/xen/pvcalls-back.c
-@@ -337,7 +337,7 @@ static struct sock_mapping *pvcalls_new_
+--- a/drivers/bluetooth/hci_qca.c
++++ b/drivers/bluetooth/hci_qca.c
+@@ -162,6 +162,7 @@ struct qca_data {
+ 	struct delayed_work ctrl_memdump_timeout;
+ 	struct qca_memdump_info *qca_memdump;
+ 	unsigned long flags;
++	struct dentry *debugfs_ibs_dir;
+ 	struct completion drop_ev_comp;
+ 	wait_queue_head_t suspend_wait_q;
+ 	enum qca_memdump_states memdump_state;
+@@ -667,6 +668,7 @@ static void qca_debugfs_init(struct hci_
+ 		return;
  
- 	ret = xenbus_map_ring_valloc(fedata->dev, &ref, 1, &page);
- 	if (ret < 0)
--		goto out;
-+		goto out_map;
- 	map->ring = page;
- 	map->ring_order = map->ring->ring_order;
- 	/* first read the order, then map the data ring */
-@@ -345,19 +345,19 @@ static struct sock_mapping *pvcalls_new_
- 	if (map->ring_order > MAX_RING_ORDER) {
- 		pr_warn("%s frontend requested ring_order %u, which is > MAX (%u)\n",
- 				__func__, map->ring_order, MAX_RING_ORDER);
--		goto out;
-+		goto out_unmap_ring;
- 	}
- 	ret = xenbus_map_ring_valloc(fedata->dev, map->ring->ref,
- 				     (1 << map->ring_order), &page);
- 	if (ret < 0)
--		goto out;
-+		goto out_unmap_ring;
- 	map->bytes = page;
+ 	ibs_dir = debugfs_create_dir("ibs", hdev->debugfs);
++	qca->debugfs_ibs_dir = ibs_dir;
  
- 	ret = bind_interdomain_evtchn_to_irqhandler_lateeoi(
- 			fedata->dev, evtchn,
- 			pvcalls_back_conn_event, 0, "pvcalls-backend", map);
- 	if (ret < 0)
--		goto out;
-+		goto out_unmap_bytes;
- 	map->irq = ret;
+ 	/* read only */
+ 	mode = 0444;
+@@ -742,6 +744,9 @@ static int qca_close(struct hci_uart *hu
  
- 	map->data.in = map->bytes;
-@@ -365,7 +365,7 @@ static struct sock_mapping *pvcalls_new_
+ 	hu->priv = NULL;
  
- 	map->ioworker.wq = alloc_ordered_workqueue("pvcalls_io", 0);
- 	if (!map->ioworker.wq)
--		goto out;
-+		goto out_unbind;
- 	atomic_set(&map->io, 1);
- 	INIT_WORK(&map->ioworker.register_work,	pvcalls_back_ioworker);
- 
-@@ -381,11 +381,16 @@ static struct sock_mapping *pvcalls_new_
- 	write_unlock_bh(&map->sock->sk->sk_callback_lock);
- 
- 	return map;
--out:
--	down(&fedata->socket_lock);
--	list_del(&map->list);
--	pvcalls_back_release_active(fedata->dev, fedata, map);
--	up(&fedata->socket_lock);
++	debugfs_remove_recursive(qca->debugfs_ibs_dir);
++	qca->debugfs_ibs_dir = NULL;
 +
-+out_unbind:
-+	unbind_from_irqhandler(map->irq, map);
-+out_unmap_bytes:
-+	xenbus_unmap_ring_vfree(fedata->dev, map->bytes);
-+out_unmap_ring:
-+	xenbus_unmap_ring_vfree(fedata->dev, (void *)map->ring);
-+out_map:
-+	sock_release(sock);
-+	kfree(map);
- 	return NULL;
- }
+ 	kfree(qca);
  
+ 	return 0;
 
 
