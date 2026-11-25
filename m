@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795617716;
-	b=mf15UkJG31LVDDl0bjR3sB+fgdzvFmgYJ/saACJygUi9UGwnqoQ9f4zbPEv5T9x6Cqxm
-	 5de2sQJiiwpUBBcEMZmlrbbS7U46CcZRvROSYRHdP/70ojmh/oXrLOVMwBKjmkT/5GkxN
-	 AJbvcNV6oXmkx9LWgX/gg5iCUsNGLDObs9CBRP3AwXAxc4M6EAphuB/hOt+P8zxjFoQ8K
-	 DGhlEYbVXUacwdOFY4FNdw05fXdhn4SMXdNdeAsShUenoOpcbHRh20PJHl71WqDu6Homc
-	 dsRjFspvzBZKiWGkDqoleA0/6qf+MHHu3e++GnaUbyJVyMfgWcaMeIq+4vO9Jcjebpg==
+	t=1795617720;
+	b=VaW7NswfI2dOLpXjA4WG+tjqbOEMmISVDpEpdAK+2aKcXj9ELor4XsODKCh/2fBF+ytW
+	 3ycpdvTBknBnAkszXTleH7qZ2W1pyUAlJ1JwCeElwk5BSssl2U38xiYexZE8yNtm/6uTM
+	 vkGc1Ht+pRLMgf8ZMUsarAcMxK0f/C0jM9EZRHniOH05PsUUZ3eH+ClkYCPycmQQB+s/u
+	 ymyWrFw9ORXqWBghufpVNi1/BNwQgoLh2wDqYHBTd9PVsDn3T/qxvsFzwJcTU3VUppXGZ
+	 n24Fa8utUhhuLij2RiLrXI4pELMTMUTqFa+O/6V23ZTOeR8t9wSN6YiwgxKFz8MVQ6g==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795617716;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795617720;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=WXKcuQG58uJZbXlwbxK/zYNHAdJDwIE5tKtQvvubG+g=;
-	b=NKQV52/xutpJPS4QgRBW3346VNEO86uC1CoeAQ7NkIzs24LNouGGXlx6EN6UHlo/Vl9p
-	 2guq6vZVsh/jfiGzTfyEzqiNupkXfbZZUBPlV+fvp8Yvxo7CaRYVR+YQpEaoFW3UmZyLQ
-	 PqWUCJzPhXp3yC14K3IA0wJafacJcd8dlC2mISiGxeOL0mPWtMI2sKQd4+UISs6QMa9fW
-	 OooKFKHNz7NjDv9C2T6E706shSYNKXq5CQtItWCEO5U4a0vCzD5k62G1s369L7lGwdsdq
-	 xk78KLZbohLThftQtA71j5nHfQq9RrGLbwHv6iDZq0VXa50qfFt+dPzN7YD/vhynqfQ==
+	bh=eCUiFgi8QwYEXN6x3EX3gZvSDw+CF7D/5EA3VsbBwiI=;
+	b=cNMNZ/R1iZqQ8dL0HVkheWODYPOEe+IGSe6zICs1FDUDgqCZlp38HYL1SA3I3U3yBe5v
+	 jomy1/FhGOr6Ij0oggKz647nHcYt8bscquAUcB7/SZqbMtilXkTh1tTsBW/yNcPS4su+F
+	 RoXKU/QhLLMXDus85xWdgVoDMek0rPZB9djlpM3nriZISMZpEC3qKxMpbHifUK3komfJU
+	 OWbcT3ynSqZ9BDLgoDvCyB/i/gOy/xxqTeI04kZiLEAwQ9CUyFvklctNzaV8PJXbvdX01
+	 H5kYfwR9TQGBHi5/4dMpVPU9WBj7byKju+HY68mdYN59BqPQNP6+uFnYtNbV+GWPm5Q==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=dXbkMJG8;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=c7Jg4UQq;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C9AD0606A31E;
-	Wed, 25 Nov 2026 14:41:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 24C01606A326;
+	Wed, 25 Nov 2026 14:41:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=dXbkMJG8
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 755421F000C0;
-	Wed, 25 Nov 2026 14:41:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=c7Jg4UQq
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B98601F000C0;
+	Wed, 25 Nov 2026 14:41:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795617716;
-	bh=WXKcuQG58uJZbXlwbxK/zYNHAdJDwIE5tKtQvvubG+g=;
+	s=korg; t=1795617719;
+	bh=eCUiFgi8QwYEXN6x3EX3gZvSDw+CF7D/5EA3VsbBwiI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=dXbkMJG8bek1IvKE2m7zihbaNNeitT41y8TBbBk0+oF3EnhMEU9pYXbnq98Mls6Sh
-	 IKgEaCAwS4JeKI58fD3xpumn+JpJVcwMpuiMyA3HT7CCGqeMaalAcG4cik6SrqBqQ0
-	 c/IAE15OM20NFUgB/XRGz1zJKWOmB/WVRX+lIyvg=
+	b=c7Jg4UQqrdLWVVkfKq0TiJAINHMJ652+TJResI+3/m2jl8mN1s39yiJUuQ9Uv+3oM
+	 FCbKaY1legq+RPqle8Spnqh8ACQ2ITonA+yF74V7uCbEfpIv+tNTxEsCHYS9j7lOn+
+	 5pWMHiZFSZ5RF2Eka9cVqB/szeyabKEIW/LekFt4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Imre Kaloz <kaloz@kernel.org>,
+	Giuseppe Piscitelli <ooonea@gmail.com>,
 	"Martin K. Petersen (Oracle)" <mkp@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0051/1005] scsi: aic7xxx: Fix REQUEST SENSE allocation length on big-endian hosts
-Date: Wed, 25 Nov 2026 15:23:09 +0100
-Message-ID: <20261125143822.935236050@linuxfoundation.org>
+Subject: [PATCH 7.3 0052/1005] scsi: scsi_debug: Drain target cleanup before module exit
+Date: Wed, 25 Nov 2026 15:23:10 +0100
+Message-ID: <20261125143822.959853596@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143821.729802100@linuxfoundation.org>
 References: <20261125143821.729802100@linuxfoundation.org>
@@ -68,39 +68,36 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Imre Kaloz <kaloz@kernel.org>
+From: Giuseppe Piscitelli <ooonea@gmail.com>
 
-[ Upstream commit 9a2690eb4bbea8d7fbc3dfe478fca75fe956abb4 ]
+[ Upstream commit 34c99ce2993971712d89010a948d2f650687b796 ]
 
-The REQUEST SENSE length was taken from sg->len after the AHC_DMA_LAST_SEG
-flag was or-ed in and the value converted to little-endian, so the 8-bit
-field is 0x80 on big-endian hosts and the target is asked for 128 bytes
-into a 32-byte buffer. Use the buffer size, as aic79xx does. On an SGI O2
-with a Fujitsu MAX3147NC, the sense data of its CHECK CONDITIONs during
-probe was lost.
+Target destruction queues cleanup in an exclusive async domain. The module
+loader's async_synchronize_full() does not wait for exclusive domains. Wait
+for target cleanup after removing the hosts and before removing the debugfs
+root and returning from module exit.
 
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Signed-off-by: Imre Kaloz <kaloz@kernel.org>
-Link: https://patch.msgid.link/20261013094253.2956-1-kaloz@kernel.org
+Fixes: b402a0dce64a ("scsi: scsi_debug: Fix create target debugfs failure")
+Signed-off-by: Giuseppe Piscitelli <ooonea@gmail.com>
+Link: https://patch.msgid.link/20261026202342.668361-1-ooonea@gmail.com
 Signed-off-by: Martin K. Petersen (Oracle) <mkp@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/scsi/aic7xxx/aic7xxx_core.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/scsi/scsi_debug.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/scsi/aic7xxx/aic7xxx_core.c b/drivers/scsi/aic7xxx/aic7xxx_core.c
-index 8ad82171e925d..af6115bfb2808 100644
---- a/drivers/scsi/aic7xxx/aic7xxx_core.c
-+++ b/drivers/scsi/aic7xxx/aic7xxx_core.c
-@@ -1097,7 +1097,7 @@ ahc_handle_seqint(struct ahc_softc *ahc, u_int intstat)
- 				sc->byte2 = SCB_GET_LUN(scb) << 5;
- 			sc->unused[0] = 0;
- 			sc->unused[1] = 0;
--			sc->length = sg->len;
-+			sc->length = ahc_get_sense_bufsize(ahc, scb);
- 			sc->control = 0;
+diff --git a/drivers/scsi/scsi_debug.c b/drivers/scsi/scsi_debug.c
+index 8290feadc212b..232b4eccd5a11 100644
+--- a/drivers/scsi/scsi_debug.c
++++ b/drivers/scsi/scsi_debug.c
+@@ -8723,6 +8723,7 @@ static void __exit scsi_debug_exit(void)
  
- 			/*
+ 	sdebug_erase_all_stores(false);
+ 	xa_destroy(per_store_ap);
++	async_synchronize_full_domain(&sdebug_async_domain);
+ 	debugfs_remove(sdebug_debugfs_root);
+ }
+ 
 -- 
 2.53.0
 
