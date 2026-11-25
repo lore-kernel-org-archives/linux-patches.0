@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795625464;
-	b=5XTdVWXEouLxFvp7RyuPTGFNeRJ6Mht9Xm9GZmpyCkraxX9/Z8/Po/WVfNmD6SkzYLT+
-	 ckpTJOYh8F2fIlUN/oxacuQrpfQF1yBX3jh9+Ctt6HzWahYOsZmedPW55++vFqGT7XYbN
-	 47UF5qOUi4N02N1DFZP9jOPDyMFKx1PgXvwzb20QK3wNiI/SfZQ51f2Z0aHnhoeNaA9sD
-	 tbgjo/buLhbjxHleJ1grnVbnnMdgpCuKf/Hn2M/R5WNfRgtzNiLDM1in+8TO/b57+siZ5
-	 tJJ3REBkQS9N058Oj/LKdq87xmeDNy6OXInmiQxWYCNGwIN+EZ6TVgQatoZRP4r/Ofg==
+	t=1795625467;
+	b=B5FrbTFSlhnVcrWwAiwmicKvEV71OL71OlzWYI2o0kaQmGArGafojMRavYuPPHUjMYOT
+	 TnWlGaIGzdD2ezZtsKFXnhHZbOJVwPpLviZLYVVPuqjqfiE1HBAWj4ij99B//OpCLXGdV
+	 koDCQBOsz3Mk0zE3at3ojsthpoJNm3Oc+y5qhsOBxYsXID8eSCOUzSLIR33vJIzEY1CjQ
+	 OkF3tY9zG5HMmstGTStAB69wDmQXj3T++YPmi/319oWxzQOnAUvWhZoEaARiXV2KXx/J/
+	 I5L/slTKS5Tsn5/Iyt3jT1ms8pct5DqygvbrcHwFK5kGov3IY1reIfJiZ4xd3QgsOWA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795625464;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795625467;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=YlXl8UzQ+eRL2OTMAfJYYLwezynukb1j31AKTXaHwHw=;
-	b=m0uoE3I7w73Tn+g02wAgCk1kwADYINRjpAkCpZxdEmS2TBk9vJRlpxkHg/OzE5ENLYlJ
-	 sJOFCfYX78TpJT/F5Ytixdr8K19Et0Hap+dHT0cEhexS51nWvFk4h/yn7Gbr2Hgwi77rS
-	 vvIi7Qg0SgYyDR1I92552IlW32T+LmvAPXRNJx7743hdQZW8QpC+bJxLj6XkYJWyYD7J8
-	 ggHj1rmNsYXqpR1IYp+NM+kXOpSGYr7chv9+G1n5h95gEfLwT7kG3gepgzJ/tNe8eE38F
-	 HLrjN0dBS90yW46RKtqGfz9eKIK6toOzFP1Po0tf7Rm9kp3PnJJgPihJyCC+rRja9wQ==
+	bh=y8miWesLrv7ejuqWdamAWm4JAa1Exa1uCEv9HJFQ/70=;
+	b=5BN/thke7CwwNRS+7wfoXcDnua4rVPlvtp2jcJwuU2JOp4dHx6NfJdT+uvz27bHSKBLf
+	 oRpPV9yS8fOKbrvzOOmJ3s5bK1mZskfCMR+iSnrCFRE9TVBBkG8cFPA0BJx1B2fjWz55w
+	 YQxqiPyFtnknslK0avkCLrCj1/LBFEVN3QVsa4Wq68glmfyfHwu+nsiZDA15Ahfo008+7
+	 3n5qj2KuW2+rFYxD0IQoNeFPbPDsqMJykx1PoDsfCv+KlfCSO1nWptTqsOzAg3bb08d2Q
+	 mpFbRBoQPDVNVuSMXLQ45yQDAFqgKD88QYQpaKampYix0lWMprgO9VrE2sycewyV2uA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=dVE2Wg7y;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=W5it4mxt;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BB992606A31E;
-	Wed, 25 Nov 2026 16:51:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8ED08606A321;
+	Wed, 25 Nov 2026 16:51:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=dVE2Wg7y
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 184461F000C4;
-	Wed, 25 Nov 2026 16:51:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=W5it4mxt
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DE0201F000C4;
+	Wed, 25 Nov 2026 16:51:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795625464;
-	bh=YlXl8UzQ+eRL2OTMAfJYYLwezynukb1j31AKTXaHwHw=;
+	s=korg; t=1795625467;
+	bh=y8miWesLrv7ejuqWdamAWm4JAa1Exa1uCEv9HJFQ/70=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=dVE2Wg7yLghXoZ5kFhj/g9bc4Z+WDHeAFTKAAaITWLsT9Ghp8Zji6q5NR/OLHuJCi
-	 TyMTvavHzau0lduzjVdUazFpsaFyTy5APKXhaTPRbuNFZU86ckhH+RlaLxetN1/vTQ
-	 RruwCP0aJLKpiwkn5quf4gaAE57+ftkw3kkSTFOU=
+	b=W5it4mxtJXlmYGwPSLsh7/tFb6ZtGC2NrPj5xakEGtzJtnFqotqHSSeeU5eh2HJPU
+	 zYhsigzah/6spKpbYtBogZyjuIAW1B0cSBEWCJ3PpbitBU5MULV16ZIyLuRvri9fHY
+	 DkpBDiEcCsUyBDcve9tRejzi0TirR8x4wUrwsnh0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chi Zhiling <chizhiling@kylinos.cn>,
+	Sashiko <sashiko-bot+sashiko@kernel.org>,
+	Henry Hu <huhai@kylinos.cn>,
 	Namjae Jeon <linkinjeon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 526/816] exfat: take bitmap_lock at the start of exfat_alloc_cluster()
-Date: Wed, 25 Nov 2026 15:34:34 +0100
-Message-ID: <20261125143901.363840627@linuxfoundation.org>
+Subject: [PATCH 6.12 527/816] ksmbd: fix iface_list use-after-free during server reset
+Date: Wed, 25 Nov 2026 15:34:35 +0100
+Message-ID: <20261125143901.387883961@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143849.205329330@linuxfoundation.org>
 References: <20261125143849.205329330@linuxfoundation.org>
@@ -68,72 +69,69 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chi Zhiling <chizhiling@kylinos.cn>
+From: Henry Hu <huhai@kylinos.cn>
 
-[ Upstream commit 48acff2eedef7fecdfbd39be1b6f4463a9e43e3e ]
+[ Upstream commit d34d38ab0c62fe4eb9e746420c554e6d0e6f54db ]
 
-exfat_alloc_cluster() checks sbi->used_clusters against the total
-number of data clusters before acquiring sbi->bitmap_lock. A concurrent
-allocation can update sbi->used_clusters after the check but before
-the lock is acquired, making the check stale. This can allow the
-allocation to proceed even though there are not enough free clusters,
-causing it to fail partway through.
+ksmbd_find_netdev_name_iface_list() walks iface_list for
+fsctl_query_iface_info_ioctl(), which holds RTNL. But during server
+reset, ksmbd_tcp_destroy() unlinks and frees the entries without RTNL,
+and queued SMB requests can still be running at that point. So an
+FSCTL_QUERY_NETWORK_INTERFACE_INFO request can therefore race with
+interface destruction and dereference a freed entry. With debug-only
+instrumentation to make the race deterministic, KASAN reports:
 
-Acquire sbi->bitmap_lock before checking sbi->used_clusters so that
-the free-space check and subsequent cluster allocation are serialized
-with concurrent allocations.
+   BUG: KASAN: slab-use-after-free in
+   ksmbd_find_netdev_name_iface_list
 
-Fixes: f55c096f62f1 ("exfat: do not zero the extended part")
-Signed-off-by: Chi Zhiling <chizhiling@kylinos.cn>
+   ksmbd_find_netdev_name_iface_list
+   fsctl_query_iface_info_ioctl
+   smb2_ioctl
+   handle_ksmbd_work
+
+   Freed by:
+   kfree
+   ksmbd_tcp_destroy
+   ksmbd_conn_transport_destroy
+   kill_server_store
+
+The fix is to detach iface_list to a temporary list under RTNL, then drop
+RTNL before cleanup because the following cleanup may block and hold RTNL
+for a long time.
+
+Fixes: b2d99376c5d6 ("ksmbd: browse interfaces list on FSCTL_QUERY_INTERFACE_INFO IOCTL")
+Reported-by: Sashiko <sashiko-bot+sashiko@kernel.org>
+Link: https://sashiko.dev/#/patchset/20260911163516.6403-1-15815827059%40163.com
+Assisted-by: LLM
+Signed-off-by: Henry Hu <huhai@kylinos.cn>
 Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
+[ sashal: Dropped the ksmbd_tcp_stop_listener() context line from the cleanup loop, since that helper doesn't exist here, so the loop starts at list_del(). ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/exfat/fatent.c | 17 ++++++++++-------
- 1 file changed, 10 insertions(+), 7 deletions(-)
+ fs/smb/server/transport_tcp.c | 7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
 
-diff --git a/fs/exfat/fatent.c b/fs/exfat/fatent.c
-index 5cde58a4a503c..d855d4b4c720f 100644
---- a/fs/exfat/fatent.c
-+++ b/fs/exfat/fatent.c
-@@ -326,19 +326,22 @@ int exfat_alloc_cluster(struct inode *inode, unsigned int num_alloc,
- 	struct super_block *sb = inode->i_sb;
- 	struct exfat_sb_info *sbi = EXFAT_SB(sb);
+diff --git a/fs/smb/server/transport_tcp.c b/fs/smb/server/transport_tcp.c
+index 65705c8993be0..6dfd70f44cceb 100644
+--- a/fs/smb/server/transport_tcp.c
++++ b/fs/smb/server/transport_tcp.c
+@@ -682,10 +682,15 @@ static void tcp_stop_kthread(struct task_struct *kthread)
+ void ksmbd_tcp_destroy(void)
+ {
+ 	struct interface *iface, *tmp;
++	LIST_HEAD(iface_list_to_free);
  
-+	mutex_lock(&sbi->bitmap_lock);
+ 	unregister_netdevice_notifier(&ksmbd_netdev_notifier);
+ 
+-	list_for_each_entry_safe(iface, tmp, &iface_list, entry) {
++	rtnl_lock();
++	list_splice_init(&iface_list, &iface_list_to_free);
++	rtnl_unlock();
 +
- 	total_cnt = EXFAT_DATA_CLUSTER_COUNT(sbi);
- 
- 	if (unlikely(total_cnt < sbi->used_clusters)) {
- 		exfat_fs_error_ratelimit(sb,
- 			"%s: invalid used clusters(t:%u,u:%u)\n",
- 			__func__, total_cnt, sbi->used_clusters);
--		return -EIO;
-+		ret = -EIO;
-+		goto unlock;
- 	}
- 
--	if (num_alloc > total_cnt - sbi->used_clusters)
--		return -ENOSPC;
--
--	mutex_lock(&sbi->bitmap_lock);
-+	if (num_alloc > total_cnt - sbi->used_clusters) {
-+		ret = -ENOSPC;
-+		goto unlock;
-+	}
- 
- 	hint_clu = p_chain->dir;
- 	/* find new cluster */
-@@ -408,8 +411,8 @@ int exfat_alloc_cluster(struct inode *inode, unsigned int num_alloc,
- 
- 		if (p_chain->size == num_alloc) {
- 			sbi->clu_srch_ptr = hint_clu;
--			mutex_unlock(&sbi->bitmap_lock);
--			return 0;
-+			ret = 0;
-+			goto unlock;
- 		}
- 
- 		hint_clu = new_clu + 1;
++	list_for_each_entry_safe(iface, tmp, &iface_list_to_free, entry) {
+ 		list_del(&iface->entry);
+ 		kfree(iface->name);
+ 		kfree(iface);
 -- 
 2.53.0
 
