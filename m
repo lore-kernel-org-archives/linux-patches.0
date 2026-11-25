@@ -1,42 +1,42 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795618980;
-	b=PZS5g0rzfeiTklMmPerSeynK1Lfj60oufYvIQfZYQqCCnrHG234YoFskAAARdyxJXfec
-	 aW2GXfh0hz5GdLl1p8pv4HdrOhI5MvfyZF3s1FNoVCK3sPTNAog/kcjkp13TJ3o/+zj8p
-	 pp9NYAkwmk8rMnSqe9XMZ/2lPAWbnqgDOvghUyD83nka8HCQZH06h4brG2eoWbpvjE56X
-	 xgu9QR/WG0Rcz9SDkosCKPG00ym+ZTseluixM9VksWL8Ws/z//wOecyUhsd8aVEBr0CKD
-	 1nkeG5CUWARn2CTSAgNq3sLbkjYSDLoS9CdeuguhmLZddP0oVjEJFjenEriIpZp0c1Q==
+	t=1795618983;
+	b=x33yJKVnklv79E+za3YnhXtGye0KxPi0yqzjkHKoi7TiiBtzzvaYBx/mIz5Q+oRe+kE9
+	 9nRICKK3XcMtT0mWbxeY2ZYyE+AAOzVO0h8caTKeIMQQVrQ8C4Yzon6bsLW20jr6osgFM
+	 i8FB5DJMdpkCjooIY6SmInhLaXhy3xxMlicljTJLujmczQwQqbDVi/WzqZ3a7yGQ3aT77
+	 vcEiWLJIHwdXfJX5o/RF9zmtLeYpQSOuicK4wy8YQf5x4a9Z9Aox4os332QhJvO4wdEwB
+	 x+4I/ozvYVme/UEa3uuj7u6KIPEIC8CT0QhWB8TroGBXS7uRhdN+pT2S5XQLSV6dBrA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795618980;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795618983;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Type:Content-Transfer-Encoding;
-	bh=M9csYQyH9f8paD8Q/OLfAsoIpGfJ/VG9mvkQPRNY588=;
-	b=KCpGftpnIvYTnluZLEVkwGPHhKNlwwk+rCKAUBh7ZlqWDyxYb/r0eqE6wD5eiNJICuKP
-	 6NF+GuOPrDoxgg7FpGcaTozJ8Wuw4DqEVzQNPZVtBa+1p2ixGv2xhd95YL3eesxgLThK3
-	 LvNVABhL9qdNGqbHLZ9tJeibs8BSDtEgh9WfAGzm0oOAE5L8KQ/kLz38jbqKOOH+4vt52
-	 lb7L92ZhmMPR6JcnPO+CpjOyjiGNzUY/jvqhvp6NxxMD7GoYGVTGdRkDO+77Ut0BJrvzi
-	 EU03zxUywe0PlVFrfY2juuVo9mC12i/8Ow1JR55paajQgEFxt9ATCL4iiWuFFihioUw==
+	bh=DfZpmB3hrZ3dtqgcc0cLtIC6IURZSfj+kGCnK46g/Ss=;
+	b=PuVnIaDafaE56wKSLrPnTrra3EHeGL6sQtrx0YMzrwMVlHlgaruKvw4EsvBBAf/HrR8s
+	 OhjoB/t9IRfQE05YHeoOO4KE+5xVT7pTxe+67aUsJaIz4sl2vAjktOOCnth6mHRiNNs1p
+	 Y6o1NHk/CJ2ccC4YpB0KKbQKw113UDgK4HwslZWdUc0S6z1qYeUDAi7MrVYVROGtnuOFZ
+	 EwRM1JGzh/d1Xcwzs9JqKe0gKbcnK/cw6PkvJQF98h7hF84+Ho+fKat0fL2su1way6WMG
+	 4/0q3AjIIN+u2gStl45D4YeJtHqSpd0ZI09UwFi3/mv7qh0lmnkVdeOgJU4aHUwjJRw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Eo2eYec3;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=T2l7ZqRM;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 188F1606A329;
-	Wed, 25 Nov 2026 15:03:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EC2B2606A323;
+	Wed, 25 Nov 2026 15:03:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Eo2eYec3
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 299191F000CF;
-	Wed, 25 Nov 2026 15:02:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=T2l7ZqRM
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 40E1A1F000C6;
+	Wed, 25 Nov 2026 15:03:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795618979;
-	bh=M9csYQyH9f8paD8Q/OLfAsoIpGfJ/VG9mvkQPRNY588=;
+	s=korg; t=1795618982;
+	bh=DfZpmB3hrZ3dtqgcc0cLtIC6IURZSfj+kGCnK46g/Ss=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Eo2eYec3wKoddPHWDKzIW5rGrx+brOs+q2N5QnuS3drQjzaCVRhPL2O93tc5ajkl8
-	 O4GT1SQmJ/3dBcj/X+pdmbazkrK8k7ZIc6AdVfzYQdm9Dh81wT2fTJzkRyQ2Aeqvlg
-	 KEbfoGLGmozYpon6qCCBGmfAON+Ze0NRMge2o1dg=
+	b=T2l7ZqRMoXnqOm3EuYUfqqVj8HXwHi+zvsFMSmssD3sU6HV5fusSI2XOIYa1fCWB6
+	 891MriQd8S1FrrGFGIIAZ0ZIYya3VQKyt2nnsL0jy7/LdRiHb2G6eRYaRtl9la4hcG
+	 xylHXMpi1uYh47skmhcBU6DqhEtDSVlOf1jInZ7Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -45,9 +45,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	=?UTF-8?q?Bj=C3=B6rn=20T=C3=B6pel?= <bjorn@kernel.org>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0448/1005] ice: xsk: free stashed Rx frame when cleaning the ring
-Date: Wed, 25 Nov 2026 15:29:46 +0100
-Message-ID: <20261125143832.243198206@linuxfoundation.org>
+Subject: [PATCH 7.3 0449/1005] idpf: free stashed XSk Rx frame when releasing the queue
+Date: Wed, 25 Nov 2026 15:29:47 +0100
+Message-ID: <20261125143832.265936353@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143821.729802100@linuxfoundation.org>
 References: <20261125143821.729802100@linuxfoundation.org>
@@ -72,48 +72,49 @@ Content-Transfer-Encoding: 8bit
 
 From: Maciej Fijalkowski <maciej.fijalkowski@intel.com>
 
-[ Upstream commit d5e7a86b7cd6c38a628635baace7eb2fdce14a43 ]
+[ Upstream commit 3cbee39da8251098e2631a106fafcaebc7c8e66b ]
 
-ice_clean_rx_irq_zc() stashes a partially received multi-buffer frame
-in rx_ring->xsk, with its frags on pool->xskb_list. next_to_clean is
-already past its buffers, so ice_xsk_clean_rx_ring(), which walks
-next_to_clean..next_to_use, misses the frame, and ice_vsi_cfg_rxq()
-later clears the pointer via ring->xdp.data.
+idpf_xskrq_poll() stashes a partially received multi-buffer frame in
+rxq->xsk, with its frags on pool->xskb_list. Nothing frees or clears
+rxq->xsk on queue release, as idpf_rx_desc_rel() only returns the page
+stash sharing its storage for non-XSk queues.
 
-The buffers are lost to user space and, as the pool outlives the ring
-across ifdown/ifup or a reset, the stale frags are taken as frags of
-the next frame. Before commit 93f53db9f9dc ("ice: switch to Page
-Pool"), the frame was tracked by rx_ring->first_desc and leaked the
-same way.
+On ifdown, the buffers are lost to user space and, as the pool outlives
+the queue, the stale frags are taken as frags of the next frame. If the
+pool is disabled on a running interface, the queue restarts in page
+mode with rxq->xdp.data still pointing to an xskb of the pool, which is
+freed later. The page path then takes it for a partial frame, writes
+frag info through it and returns it to a page pool.
 
-Free the stashed frame when cleaning the ring.
+Free the stashed frame and clear the pointer when the XSk state of the
+queue is cleared, while the pool is still attached.
 
-Fixes: 1bbc04de607b ("ice: xsk: add RX multi-buffer support")
+Fixes: 9705d6552f58 ("idpf: implement Rx path for AF_XDP")
 Signed-off-by: Maciej Fijalkowski <maciej.fijalkowski@intel.com>
 Reviewed-by: Björn Töpel <bjorn@kernel.org>
-Link: https://patch.msgid.link/20261102124950.958345-9-maciej.fijalkowski@intel.com
+Link: https://patch.msgid.link/20261102124950.958345-10-maciej.fijalkowski@intel.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/intel/ice/ice_xsk.c | 5 +++++
+ drivers/net/ethernet/intel/idpf/xsk.c | 5 +++++
  1 file changed, 5 insertions(+)
 
-diff --git a/drivers/net/ethernet/intel/ice/ice_xsk.c b/drivers/net/ethernet/intel/ice/ice_xsk.c
-index bf14ed8f87a3b..0c1ce3e86a45b 100644
---- a/drivers/net/ethernet/intel/ice/ice_xsk.c
-+++ b/drivers/net/ethernet/intel/ice/ice_xsk.c
-@@ -912,6 +912,11 @@ void ice_xsk_clean_rx_ring(struct ice_rx_ring *rx_ring)
- 	if (xdp_rxq_info_is_reg(&rx_ring->xdp_rxq))
- 		xdp_rxq_info_unreg(&rx_ring->xdp_rxq);
+diff --git a/drivers/net/ethernet/intel/idpf/xsk.c b/drivers/net/ethernet/intel/idpf/xsk.c
+index d95d3efdfd36f..5a0a1d8a7a866 100644
+--- a/drivers/net/ethernet/intel/idpf/xsk.c
++++ b/drivers/net/ethernet/intel/idpf/xsk.c
+@@ -134,6 +134,11 @@ void idpf_xsk_clear_queue(void *q, enum virtchnl2_queue_type type)
+ 		if (!idpf_queue_has_clear(XSK, rxq))
+ 			return;
  
-+	if (rx_ring->xsk) {
-+		xsk_buff_free(&rx_ring->xsk->base);
-+		rx_ring->xsk = NULL;
-+	}
++		if (rxq->xsk) {
++			libeth_xsk_buff_free_slow(rxq->xsk);
++			rxq->xsk = NULL;
++		}
 +
- 	while (ntc != ntu) {
- 		struct xdp_buff *xdp = *ice_xdp_buf(rx_ring, ntc);
- 
+ 		rxq->pool = NULL;
+ 		break;
+ 	case VIRTCHNL2_QUEUE_TYPE_RX_BUFFER:
 -- 
 2.53.0
 
