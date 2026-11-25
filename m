@@ -1,52 +1,58 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795625380;
-	b=sipp88R6oL4Is0LzGlY2onZVDvoOMD64t+j/xhEpju4MCXKIDkDBVRp6bPDx/ZQEkHJ9
-	 r4PrhSTJxBV6qGJQao/eZpul/lkysV4yt9BWtU5mduatQJjIdZWMtfqCt0NZ/vdN+vtUz
-	 fl1mqkg2RhL8ewfWVsz2GK8MEhSpDz0/DFSxL7QNF6Oq/pgy7C1GFscUqSozlKzbujLRH
-	 gFiWD/0a+G4uBr/4lJWT21TLTsvUjlQVOZNri7Xz1sOBG3b6vOnRystcmEi4UZAi4Njhg
-	 kJFgJBmm7/pL5j2MH/BEadw8yK9fEmiat/ft5QSbI7ZHNBDjZoQU7iZJ8qIE1FpMKaw==
+	t=1795625383;
+	b=H2hHq1QzGFrzX/4Mhr1P/UrwNyoaPMVOhF8rVkyaMt3aegnp55zmZQLGIFnfjWwek7yS
+	 sUDi9RRPMqZgPzj6SqNWxrwhELQgvaAqj/CTCypqpSE/tkZUIMtur6tqkz3tHXqq28mrr
+	 rXXH/98nDl+oPgc8rdy03o8KYr0MGtw+q6yci+/bfiCLdNO67I8yw5H5xTSKvMkA9WuNr
+	 Sxmx9ykZD8I8u2ZBwS43EnhY/zhzRp3lJSkstH5Xi6eh/Uf1xVzLRntuLHftqvFq35u1N
+	 VI/MC2iAGNNLqcQEJlhK4oB5hXr/3Hn5+BfYhjZwayhSnGff/cDh6tcvjr9nmt3CnQw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795625380;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795625383;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=jsnfnviSjCSjk1zVW6zdy+APwatC1THkP2ETG1YKYLs=;
-	b=TjKvpXxVwR4GsfYnwOuCQDFHi9lZz7kH5UosJ91vvvc8/hzpnEXqv5ZfxuWUN7Em1YZ7
-	 ZeZQOmfjoV+LarSLBsjvk7YyJXs57qf3LbNCmZHJ2jSWiP6PBrfAC5oWzjZhTpFs68Ex6
-	 kfsFGUvWeyKxzOs3Wn/3MiQXXeZq9Q6d5uYZm6KZuHhXA+Y4Icw6eHc8dIQ92PQozQJ2n
-	 sWWYJBI34L3HVFmtniyTyJsYCrP61ZW1VBtE1Y0MelnBD0F+otiglcD+oVQs3PwRRuvct
-	 whogG+hXm7G9tXU7ayi31ssBhh7/M41EMNOTY3QvE/cZl4paiMP1xUqACFPM0KE88BQ==
+	bh=yrfHSKHIJoA27fxBVXEw085l8UHlapjyCWksInN/34c=;
+	b=RbxE4E4g0zIv+zm6o5aB+R/pp6oomn7ubkrkiJuvtHLc8u7z/W9y9wr8rg9/bq3+UGtj
+	 Jcutlt3K9xhu6HwbdH5Q36uAA5JvMQAblDbUkXZmayjEG55JqOLkJjqFmUEmkTBFd0gfb
+	 PLOlTi74s3mVBcubEvNG1CCRUTB65Lo+4MeoR7kLxAxpvh+rrOyww4xPrYrTXGpo97Y6B
+	 vyg4tVPTnm8zNRsjxFFQunBnrab0jBKPLVyoQ69UpQHCix3hKdom+Wtpukrv27a1cZaQo
+	 IDHriTJiIfhBsGNCXB1hKo8NcfTTjwUzXxxmxgjvE932Trqoh23dLsFDmEM/b3bMhag==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=i++yUBRX;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=y4fSsrN9;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 68A5E606A31E;
-	Wed, 25 Nov 2026 16:49:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B9F9E606A327;
+	Wed, 25 Nov 2026 16:49:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=i++yUBRX
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7B3241F000C6;
-	Wed, 25 Nov 2026 16:49:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=y4fSsrN9
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ADFD31F000C6;
+	Wed, 25 Nov 2026 16:49:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795625380;
-	bh=jsnfnviSjCSjk1zVW6zdy+APwatC1THkP2ETG1YKYLs=;
+	s=korg; t=1795625383;
+	bh=yrfHSKHIJoA27fxBVXEw085l8UHlapjyCWksInN/34c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=i++yUBRXTCpVAw3kg2JvBuhRd4LlKDsSDdCsk1Ky4W8pa0IAD05M00epNMhZdV61b
-	 5tv4hWddmphb62i3kpZiQc6UU5D3YyuprkIhUNw/5Juy82D2rvu7bznhTRhW1NMhhy
-	 ERC2DsrB21H5WsH1A5hnz6MECwYuLM4EHaP9cvMg=
+	b=y4fSsrN9+WORa+SFDrmGjalv++IrPRHdUpbB3f6Ppi5vpGqCBlHAonsIw3m9qfkDT
+	 my2uwm/7Yv1P1hdL2pqH6kDoxhKr6JmgT4Fca8FjVJFL2IP72LCH6zMEIcn9fJ6zIC
+	 sKW8H0/TQfGN29mlhjZ53omwWsDkM1RiQv8bnEyE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Donggeun Yoo <donggeunyoo.kernel@gmail.com>,
-	Jason Gunthorpe <jgg@nvidia.com>,
+	David Howells <dhowells@redhat.com>,
+	Marc Dionne <marc.dionne@auristor.com>,
+	Eric Dumazet <edumazet@google.com>,
+	"David S. Miller" <davem@davemloft.net>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Paolo Abeni <pabeni@redhat.com>,
+	Simon Horman <horms@kernel.org>,
+	linux-afs@lists.infradead.org,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 496/816] iommufd: Keep reserved IOVA ranges when a replace within one IOAS fails
-Date: Wed, 25 Nov 2026 15:34:04 +0100
-Message-ID: <20261125143900.671641746@linuxfoundation.org>
+Subject: [PATCH 6.12 497/816] rxrpc: Fix aborting in rxperf test server
+Date: Wed, 25 Nov 2026 15:34:05 +0100
+Message-ID: <20261125143900.693847204@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143849.205329330@linuxfoundation.org>
 References: <20261125143849.205329330@linuxfoundation.org>
@@ -68,85 +74,74 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Donggeun Yoo <donggeunyoo.kernel@gmail.com>
+From: David Howells <dhowells@redhat.com>
 
-[ Upstream commit 1e67cca28490f897788c128c650a6f2cbb565403 ]
+[ Upstream commit 7f15923909866e76608ea6474368570938e783fc ]
 
-iommufd_device_do_replace() installs the group's reserved IOVA ranges in
-the new hwpt's IOAS only when it differs from the old hwpt's IOAS. If the
-replace fails in iommufd_device_do_replace() or
-iommufd_group_do_replace_reserved_iova(), the error paths remove the
-ranges from the new hwpt's IOAS whether or not the IOAS is shared
-between the old and new hwpt, which removes the ranges that the old hwpt
-still needs.
+Fix rxperf_process_call() to always abort if it gets a send error rather
+than only aborting on ENOMEM.
 
-For example, on x86 with intel-iommu, after a replace within a shared
-IOAS fails with -ENODEV, IOMMU_IOAS_IOVA_RANGES goes from
-
-  0x0-0xfedfffff
-  0xfef00000-0xffffffffffff
-
-to
-
-  0x0-0xffffffffffff
-
-and IOMMU_IOAS_MAP at 0xfee00000 succeeds.
-
-Remove the ranges on failure only when the replace installed them, and
-look up the old hwpt_paging before the replace so that the error path
-can compare the IOAS.
-
-Fixes: e88d4ec154a8 ("iommufd: Add iommufd_device_replace()")
-Assisted-by: LLM
-Signed-off-by: Donggeun Yoo <donggeunyoo.kernel@gmail.com>
-Link: https://patch.msgid.link/20260929031402.1998253-1-donggeunyoo.kernel@gmail.com
-Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
-[ sashal: adjusted context: no attach_resv variable or pasid check in this tree, so the error-path IOAS guard uses hwpt_paging and old_hwpt_paging is looked up right after old_hwpt. ]
+Fixes: 75bfdbf2fca3 ("rxrpc: Implement an in-kernel rxperf server for testing purposes")
+Link: https://netdev-ai.bots.linux.dev/sashiko/#/patchset/20260824091645.415423-1-dhowells%40redhat.com
+Signed-off-by: David Howells <dhowells@redhat.com>
+cc: Marc Dionne <marc.dionne@auristor.com>
+cc: Eric Dumazet <edumazet@google.com>
+cc: "David S. Miller" <davem@davemloft.net>
+cc: Jakub Kicinski <kuba@kernel.org>
+cc: Paolo Abeni <pabeni@redhat.com>
+cc: Simon Horman <horms@kernel.org>
+cc: linux-afs@lists.infradead.org
+Link: https://patch.msgid.link/20261006133011.531806-7-dhowells@redhat.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/iommu/iommufd/device.c | 8 +++++---
- 1 file changed, 5 insertions(+), 3 deletions(-)
+ include/trace/events/rxrpc.h |  2 +-
+ net/rxrpc/rxperf.c           | 11 ++++++-----
+ 2 files changed, 7 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/iommu/iommufd/device.c b/drivers/iommu/iommufd/device.c
-index 5dc9fa269e3a8..fd07f7f25e13f 100644
---- a/drivers/iommu/iommufd/device.c
-+++ b/drivers/iommu/iommufd/device.c
-@@ -592,7 +592,8 @@ iommufd_group_do_replace_reserved_iova(struct iommufd_group *igroup,
- 	return 0;
- 
- err_unresv:
--	iommufd_group_remove_reserved_iova(igroup, hwpt_paging);
-+	if (!old_hwpt_paging || hwpt_paging->ioas != old_hwpt_paging->ioas)
-+		iommufd_group_remove_reserved_iova(igroup, hwpt_paging);
- 	return rc;
- }
- 
-@@ -625,6 +626,7 @@ iommufd_device_do_replace(struct iommufd_device *idev, ioasid_t pasid,
+diff --git a/include/trace/events/rxrpc.h b/include/trace/events/rxrpc.h
+index 5e29744e45037..a292b6f08258b 100644
+--- a/include/trace/events/rxrpc.h
++++ b/include/trace/events/rxrpc.h
+@@ -27,8 +27,8 @@
+ 	EM(afs_abort_unmarshal_error,		"afs-unmarshal")	\
+ 	/* rxperf errors */						\
+ 	EM(rxperf_abort_general_error,		"rxperf-error")		\
+-	EM(rxperf_abort_oom,			"rxperf-oom")		\
+ 	EM(rxperf_abort_op_not_supported,	"rxperf-op-notsupp")	\
++	EM(rxperf_abort_send_error,		"rxperf-send-error")	\
+ 	EM(rxperf_abort_unmarshal_error,	"rxperf-unmarshal")	\
+ 	/* RxKAD security errors */					\
+ 	EM(rxkad_abort_1_short_check,		"rxkad1-short-check")	\
+diff --git a/net/rxrpc/rxperf.c b/net/rxrpc/rxperf.c
+index c16afe540d09c..d7215f939bdb3 100644
+--- a/net/rxrpc/rxperf.c
++++ b/net/rxrpc/rxperf.c
+@@ -526,7 +526,7 @@ static int rxperf_process_call(struct rxperf_call *call)
+ 		ret = rxrpc_kernel_send_data(rxperf_socket, call->rxcall, &msg,
+ 					     rxperf_notify_end_reply_tx);
+ 		if (ret < 0)
+-			return ret;
++			goto send_error;
+ 		reply_len -= len;
  	}
  
- 	old_hwpt = igroup->hwpt;
-+	old_hwpt_paging = find_hwpt_paging(old_hwpt);
- 	if (hwpt_paging) {
- 		rc = iommufd_group_do_replace_reserved_iova(igroup, hwpt_paging);
- 		if (rc)
-@@ -635,7 +637,6 @@ iommufd_device_do_replace(struct iommufd_device *idev, ioasid_t pasid,
- 	if (rc)
- 		goto err_unresv;
+@@ -537,10 +537,11 @@ static int rxperf_process_call(struct rxperf_call *call)
+ 	msg.msg_flags = 0;
+ 	ret = rxrpc_kernel_send_data(rxperf_socket, call->rxcall, &msg,
+ 				     rxperf_notify_end_reply_tx);
+-	if (ret == -ENOMEM)
+-		rxrpc_kernel_abort_call(rxperf_socket, call->rxcall,
+-					RXGEN_SS_MARSHAL, -ENOMEM,
+-					rxperf_abort_oom);
++	if (ret == 0)
++		return 0;
++send_error:
++	rxrpc_kernel_abort_call(rxperf_socket, call->rxcall, RXGEN_SS_MARSHAL,
++				ret, rxperf_abort_send_error);
+ 	return ret;
+ }
  
--	old_hwpt_paging = find_hwpt_paging(old_hwpt);
- 	if (old_hwpt_paging &&
- 	    (!hwpt_paging || hwpt_paging->ioas != old_hwpt_paging->ioas))
- 		iommufd_group_remove_reserved_iova(igroup, old_hwpt_paging);
-@@ -656,7 +657,8 @@ iommufd_device_do_replace(struct iommufd_device *idev, ioasid_t pasid,
- 	/* Caller must destroy old_hwpt */
- 	return old_hwpt;
- err_unresv:
--	if (hwpt_paging)
-+	if (hwpt_paging &&
-+	    (!old_hwpt_paging || hwpt_paging->ioas != old_hwpt_paging->ioas))
- 		iommufd_group_remove_reserved_iova(igroup, hwpt_paging);
- err_unlock:
- 	mutex_unlock(&idev->igroup->lock);
 -- 
 2.53.0
 
