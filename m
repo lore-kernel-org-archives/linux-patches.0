@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795623705;
-	b=NDXdyWvwGlvDZkQ1vzx1eLupp0IVpLF130xUvAzfqYQ1Bfvhrdu36AKydMN3ZGrQvNpX
-	 lbVjdL8qpN2+ylul9m6ilp8srCDj6FUQZm2m93Smsn/LK4/vyf6XxhDVRI6PzZZsHnKXH
-	 8sOMD6cxIHwUEpREzVdvWB4lnXUYCoL13EmCsO5S2E7McRR/EAojkh9ED9dksv9kgcou1
-	 1IC37bzdfUneJXspvYuzziRllrPrJkI8GOU2/zjobzadx46tl20W6Kqq66uwTWbmnc+qd
-	 8Py0nif/jOjBsrVhAPhWqkl9SsZb7IzE0Xtom3ipuGNoSdfyLN3pCy03f/LGEcaII2g==
+	t=1795623707;
+	b=j+f5/wpOQVV4XVFs/+8YH0oc6MZma42ykAaBkyOBbtUf609rLx2pEd1jLgNYw/L50I1b
+	 UFCRPm3gwVVGPTP9Vn4pI8pMjKu/4TW2ARDdKPaON8+td6FgCy+GlD8X9l3dyFXVd9sjQ
+	 8XzBOloVHsZ+dUmsOB59A6K5Aeg5YjsCvcMt162VZaZ4Mq9lkfaHm1oSaWCHKvdeGmJUu
+	 G/acXex0iuBZhFTn8ttaBnvx++bVJ4LZgwQYXXaLZneFtMHEkcJ33DenABjeY2v8nSFMq
+	 aqmjGc8lr/kpGj8XIjpZgcLXNsuKGJeyyuEZLs94OnQhq9ynazoIeKkdnKre7M20X4g==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795623705;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795623707;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=/pyij3NP/Ux8dIt7auFNEsxczAg6xdiH0hc+uXSER3k=;
-	b=fdurkjW3EufUouPZnqrEosCxsXJ82k2vZDCcyRDNR7omF9HbO3F11DeRPSpAFVDBJK3W
-	 ovlE+2YAXXhVyl61vZNTjvNiQyIX0i21+RjGVS+pZVVps3kTjiuz4TYnPl8bMIkIqZTMQ
-	 /eC8Zs7MwAFatJOU/96UFwGj29rIPR9fUoOcBOgSdSSNRbMkHyjnBkmA3WlqUx7h4QB8W
-	 4FTvN8nv2eWo5lN5c6j84jyRNgEfH65igOoFnYyZj83AAKET0JYySmESmZN7SHK8oUW0Z
-	 MG8xxT09veeQ5nxpnEHM6QU9Fr5xTQDUUiXSkJ7GvxwHvAgBBLVQUzlx1JZct1uA7DQ==
+	bh=7oOhAKMIQussGGYDbwu00aCbQxiSrrz9i0oDi4lHoWI=;
+	b=nAyFEWZjYnAFHjKIM3fG+F+LqkrkfsF9NFGfA3ThBRXcaekPNvhRNbMyxjt754hmffDq
+	 Om3IWUnT3HB0Mf27YMmALMsaWVPWvMDk2qkqYUMvZRlaEQuA3qerkzXED4WM/6C4et8FW
+	 h572Ombj/qMILD+6zcdR/2ewWdXL78cUha9z+YNJPxpPejSOrO31XzuRSuLsYhvHtcHe0
+	 LPP9UG9IaQUwoB4X4awWgonc4dqKA1vognbRpMqzePYkKr15rSidaEZ4h3YXI1oI7ecUS
+	 356sxKjczFw2cFfF9MCR6ltk3n8G1a24BICLPbEQFU43dCqo5v3yHe1uFoOmOkGzchQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="fi//z0OD";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=mlHYjwbZ;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EF824606A31E;
-	Wed, 25 Nov 2026 16:21:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B9B15606A31E;
+	Wed, 25 Nov 2026 16:21:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=fi//z0OD
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CA6591F000D1;
-	Wed, 25 Nov 2026 16:21:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=mlHYjwbZ
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EFBA61F000D2;
+	Wed, 25 Nov 2026 16:21:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795623704;
-	bh=/pyij3NP/Ux8dIt7auFNEsxczAg6xdiH0hc+uXSER3k=;
+	s=korg; t=1795623707;
+	bh=7oOhAKMIQussGGYDbwu00aCbQxiSrrz9i0oDi4lHoWI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=fi//z0OD/Cd07Vm7hNDeJHsNeqjvpU5nRf6IV1+IKjENaUT5tU6UZ4iqCg52LNoIx
-	 KasCzFovkP3EXOg/JwrNrXvyRc5R26uGUzfaor6PSkUn6TMd4a/mtucG/n0/rbK8Ar
-	 7l2UE/x8P9xDE46B/HJY4nkgsFuZOrcHoP82mzvE=
+	b=mlHYjwbZ3qtUT2BvEbSFhF0oxkpyMyMH63D7GVMkIANG78hznwo4N57nOvboMJ8Dy
+	 tNUIEgnI7Xz5bEZ58yufMA5RazpQQf5GchqeK7GW2mAoX8oHLmSpYNal/YQZ/uuQZH
+	 OPHC7ivVMc1aRbH+Q2lDV1FbujvK4eSwikeTAC5o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Guangshuo Li <liguangshuo@mail.sdu.edu.cn>,
-	Joshua Crofts <crofts@kernel.org>,
-	Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>
-Subject: [PATCH 6.18 945/990] iio: accel: kxsd9: Fix potential use-after-free on removal
-Date: Wed, 25 Nov 2026 15:38:32 +0100
-Message-ID: <20261125143844.126472154@linuxfoundation.org>
+	stable <stable@kernel.org>,
+	Josef Bacik <josef@toxicpanda.com>,
+	Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
+Subject: [PATCH 6.18 928/990] w1: remove the masters files before taking its locks
+Date: Wed, 25 Nov 2026 15:38:15 +0100
+Message-ID: <20261125143843.736918804@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143822.072087159@linuxfoundation.org>
 References: <20261125143822.072087159@linuxfoundation.org>
@@ -68,39 +68,66 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Guangshuo Li <liguangshuo@mail.sdu.edu.cn>
+From: Josef Bacik <josef@toxicpanda.com>
 
-commit fd7334314f63a3a2a4927f209b2ca0e33d111840 upstream.
+commit dfc57752ec53c3cc6105656d3037fb2f5e80e9cc upstream.
 
-Unregistering an IIO device with an active triggered buffer detaches its
-poll function. Freeing the poll function first can therefore make
-iio_device_unregister() access freed memory.
+__w1_remove_master_device() calls w1_destroy_master_attributes() with
+both the mutex of the master and list_mutex held.  Removing the files
+waits for the callbacks which are running, and nearly all of them take
+one of these two locks:
 
-Unregister the device before cleaning up the triggered buffer.
+  __w1_remove_master_device()           read() of .../w1_master_slaves
+    mutex_lock(&dev->mutex)               kernfs active reference
+    mutex_lock(&dev->list_mutex)          w1_master_attribute_show_slaves()
+    w1_destroy_master_attributes()          mutex_lock(&md->list_mutex)
+      sysfs_remove_group()                    waits
+        waits for the reference
 
-This issue was found by our static analysis tool under development.
+The files are readable for everybody, and a bus master goes away when, for
+instance, a DS2490 USB adapter is unplugged.
 
-Fixes: 0427a106a98a ("iio: accel: kxsd9: Add triggered buffer handling")
-Signed-off-by: Guangshuo Li <liguangshuo@mail.sdu.edu.cn>
-Reviewed-by: Joshua Crofts <crofts@kernel.org>
-Cc: stable@vger.kernel.org
-Signed-off-by: Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>
+Remove the files first, before the locks are taken.  That has to be done
+before the slaves are detached and not afterwards: as long as the files
+exist, a write to w1_master_add could attach a new slave behind the back
+of this function, which would then wait for the reference count of the
+master for ever.  And it is done before the thread is stopped, because a
+write to w1_master_search wakes the thread up.
+
+Fixes: c30c9b15187e ("W1: fix deadlocks and remove w1_control_thread")
+Cc: stable <stable@kernel.org>
+Signed-off-by: Josef Bacik <josef@toxicpanda.com>
+Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
+Link: https://patch.msgid.link/20261027-llm-char-misc-w1-v1-2-d2e6bfafb6a4@linuxfoundation.org
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/iio/accel/kxsd9.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/w1/w1_int.c |    8 +++++++-
+ 1 file changed, 7 insertions(+), 1 deletion(-)
 
---- a/drivers/iio/accel/kxsd9.c
-+++ b/drivers/iio/accel/kxsd9.c
-@@ -478,8 +478,8 @@ void kxsd9_common_remove(struct device *
- 	struct iio_dev *indio_dev = dev_get_drvdata(dev);
- 	struct kxsd9_state *st = iio_priv(indio_dev);
+--- a/drivers/w1/w1_int.c
++++ b/drivers/w1/w1_int.c
+@@ -176,6 +176,13 @@ void __w1_remove_master_device(struct w1
+ 	mutex_unlock(&w1_mlock);
  
--	iio_triggered_buffer_cleanup(indio_dev);
- 	iio_device_unregister(indio_dev);
-+	iio_triggered_buffer_cleanup(indio_dev);
- 	pm_runtime_get_sync(dev);
- 	pm_runtime_put_noidle(dev);
- 	pm_runtime_disable(dev);
+ 	set_bit(W1_ABORT_SEARCH, &dev->flags);
++
++	/*
++	 * This waits for the callbacks, which take the locks below. One of
++	 * them wakes the thread up.
++	 */
++	w1_destroy_master_attributes(dev);
++
+ 	kthread_stop(dev->thread);
+ 
+ 	mutex_lock(&dev->mutex);
+@@ -185,7 +192,6 @@ void __w1_remove_master_device(struct w1
+ 		w1_slave_detach(sl);
+ 		mutex_lock(&dev->list_mutex);
+ 	}
+-	w1_destroy_master_attributes(dev);
+ 	mutex_unlock(&dev->list_mutex);
+ 	mutex_unlock(&dev->mutex);
+ 	atomic_dec(&dev->refcnt);
 
 
