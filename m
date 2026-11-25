@@ -1,52 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795617980;
-	b=NYooZns1FJDSxrs3+eo+f0IG+vmobKVZDVj2M3KeZL4/XZuFJoJb4HNnGO5zMKZ22Dcs
-	 B4Rg//3cDzh2Q7Zbila2i+tjCRdzF7GAohaiyUDSVMxMHbTGriPDgogo1UtAaI9JgKst2
-	 E8oeiR0UBw2IIbImI21gjYMnGTwrqC/NxUI215vlpLlzJ/zbCzRQCQ4gczNMQNBeAdv7r
-	 dM3ZHOPFpsjzvmrkjRwXh6u+VDa6BKY9RzbpED9hIaqMuWtcL9n1SZxVeTFkNF0fVn2st
-	 BN2ctGOs1s64Wyb1nym4cuR1W6xmMVw2M/Y14ZjEhajFlHc5m15Z5MFFJ1g+xjUVPFg==
+	t=1795617983;
+	b=HNwOxYEWA41+lELersVonaiu3p+RvyuRD4QNA+drCaauuteFEMBfbN7qLY7y5a+ZZUzx
+	 pJxoaNai9oPIyjEqeSEQ7A/SRB3vsu34Gq0M6Jo7ak80bsQMpNAa1tox39PRRtQaIFZpu
+	 14nWjkKkmirOXoPxxBC+g9gc8tTSoxCo4p0hxRtwuNTHNeUefwW7Q9QqFRcfaNyxBsHGp
+	 6wc+bXMMONOgx67e3QPEPe70K7N5Pw7Wr1H0Wm91QNgoxrecVYGaVMyb2BcB/uB2YXZEj
+	 9HLzz+d4tJAJIQawZmkXFPZQ6OBt98g+ifRp2nqtLG/v/kLO51O+wHODtdwhnIXjmpQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795617980;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795617983;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=rGGUuhkEGwopQsEpY1oUDdMRviYfAlQk7gybIUYEkgc=;
-	b=3vBMi5wY7z301raOZu86ilSu+ONADZ2Hgm84no5ebFU6ZJyj4l9Qu2u0TXxNF7RGws4w
-	 4NHx/j3UM5o9Hvdtt7U5ae714+i7jg6HFWhCJx7p8sW++d84WvemmL2HwWSuEPyI4P/ws
-	 VChtfwX58x5Iitqo7RUPvSDT7E88bvwWssQWcyQRVH79xPPrVq85qNszbwP0XYfIesS32
-	 qcL5mFOZt98vLfZQbeOfom1QFkloLFPm/Al2Jg2Yw3V5AqIeafwoDFvfSvWiRiQPZ/To6
-	 2lLLaZIy2qLzCfF6AGTjiCT7YPrvo8zLYLepqW1GG6uYA4NQnJCjpB/Y9g0QYTaEHvw==
+	bh=0WeIvfuqvJfqEtirXf5Xxty8S1d1/ObFE/kv42iHRhI=;
+	b=lM2E0SaQNoiMfxEq9j+asjDe8RMQnZlz/EArIxOQr4DLKj6g4vou/PX2B8NOfoyuQT68
+	 SeGdm1Nh8WaHKjbuQBI0R1RExYOA9B7DNi3cM5tyJuocYC/JghHTDFzJpjoOeKZilf7ac
+	 ZrD09l+YIlnW+wUqOA5gMW2EhKyyJ5pq+4KpAyGSv8S9rBrPyZCM556Gu5ifi38uTL/mv
+	 cg4RO7fdpVs30HhxqcALdLzhGLIR6SpDxVZoP2uEEY9QTcDHHvR2I3DhCFC0VvhjlXiWk
+	 J0fNEdLwhlVd9uiIXtJBtsslUzq7jKWj5hCAO6V7J+UhM2DNrq+GxM0ymLtvpNGdVFQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ywun+crl;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=UuGAD4KF;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 61D20606A321;
-	Wed, 25 Nov 2026 14:46:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8D3C7606A31E;
+	Wed, 25 Nov 2026 14:46:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ywun+crl
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9E58E1F000CA;
-	Wed, 25 Nov 2026 14:46:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=UuGAD4KF
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 990071F000CA;
+	Wed, 25 Nov 2026 14:46:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795617980;
-	bh=rGGUuhkEGwopQsEpY1oUDdMRviYfAlQk7gybIUYEkgc=;
+	s=korg; t=1795617983;
+	bh=0WeIvfuqvJfqEtirXf5Xxty8S1d1/ObFE/kv42iHRhI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ywun+crlI0FqnzN6sTAKP+n2PDx2EK3FHuGwgyAvZ8Fed+MJnEEcTzuN/4MDPtB5W
-	 vkOD5W68Rd45PD9GNw8OV/aVW5/xZ5atSIpxep+GcidSC7WQ52Oz9YoMGpNhKHyPqZ
-	 9KD0xfNpfJ7hms/y6S3krl+0JCw28deUy4Cl9Lgc=
+	b=UuGAD4KFXAefXAomolmfxl8FPX/BcfsTzTLk573/HaUqZT1UXiFQ2B5VKwbGkUuXf
+	 sTEZq0sxavmCkqUVQcipQGR7CTCPIRtMXAUeGL9BADyXXkSsIO0tbQMBUMSngrQuKk
+	 pm8E9gruR4JP4AtGs5CKecPU30qhcHIy/QjeAQPM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chris Mason <mason@kernel.org>,
-	Alexei Starovoitov <ast@kernel.org>,
+	James Hilliard <james.hilliard1@gmail.com>,
+	Nicolai Buchwitz <nb@tipi-net.de>,
+	Lorenzo Bianconi <lorenzo.bianconi@oss.qualcomm.com>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0118/1005] bpf: Check the offset in bpf_skb_generic_{push,pop}()
-Date: Wed, 25 Nov 2026 15:24:16 +0100
-Message-ID: <20261125143824.507433256@linuxfoundation.org>
+Subject: [PATCH 7.3 0136/1005] net: stmmac: take ownership of saved RX state at poll entry
+Date: Wed, 25 Nov 2026 15:24:34 +0100
+Message-ID: <20261125143824.925399976@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143821.729802100@linuxfoundation.org>
 References: <20261125143821.729802100@linuxfoundation.org>
@@ -68,66 +70,258 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chris Mason <mason@kernel.org>
+From: James Hilliard <james.hilliard1@gmail.com>
 
-[ Upstream commit ee36c9aa44ef300cd651074bd97552b229337f85 ]
+[ Upstream commit 26219e9402c22181f021034f127a8e278d40545f ]
 
-To make room for len bytes at offset off, bpf_skb_generic_push() moves the
-first off bytes and clears len bytes after them. It assumes that the first
-off bytes are in the linear part. But in bpf_skb_adjust_room() off can be
-the end of the IP header, and this header can be in a frag. Then the
-function reads and writes after skb->tail, and can damage skb_shared_info.
+When a saved partial packet completes with a poll budget of one, the
+old loop can leave state_saved and state.skb pointing at an skb that
+has already been delivered or freed. The next poll then reuses that
+pointer, causing a use-after-free or double free.
 
-bpf_skb_generic_pop() checks off + len, but this u32 sum can wrap to a
-small value. bpf_skb_adjust_room() and bpf_skb_change_proto() calculate off
-from skb_mac_header_len(). This length is a very large u32 when
-network_header < mac_header. Then the check can pass, and memmove() reads
-and writes far outside the skb.
+Take the saved state at poll entry and clear the stored ownership
+immediately. Save it again only if the packet remains incomplete,
+including when the next descriptor is still DMA-owned.
 
-Return -ENOMEM from both functions, like the present check, when
-off > skb->len. Thus the sum cannot wrap. In bpf_skb_generic_push() also
-pull the first off bytes into the linear part. Now bpf_skb_adjust_room()
-fails when a prog grows an skb that ends before off. network_header stays
-wrong.
+Track the frame-in-progress flag independently of the status read from
+the next descriptor. The old code keyed the save on the status of the
+last descriptor looked at, so a loop stopped at a DMA-owned descriptor
+(rx status not yet valid) could drop the saved error/length bookkeeping
+in stmmac_rx_zc().
 
-Fixes: 6578171a7ff0 ("bpf: add bpf_skb_change_proto helper")
-Fixes: 2be7e212d541 ("bpf: add bpf_skb_adjust_room helper")
-Signed-off-by: Chris Mason <mason@kernel.org>
-Signed-off-by: Alexei Starovoitov <ast@kernel.org>
-Link: https://patch.msgid.link/20261101190535.1454146-28-alexei.starovoitov@gmail.com
+Drop the saved state both when the queue parameters are reset and when
+the ring is destroyed. stmmac_reset_rx_queue() is reached from
+__stmmac_open(), stmmac_xdp_open(), stmmac_resume() and
+stmmac_enable_rx_queue(); without draining it there, a partial frame
+saved before suspend (or before a queue is disabled and re-enabled)
+survives while cur_rx and dirty_rx are rewound to zero. On the resume
+path the ring is only re-armed in place: stmmac_clear_descriptors()
+sets the ownership bits and stmmac_init_dma_engine() restores the tail
+pointer, but the RX buffer addresses are not reprogrammed. The first
+poll would then resume the stale skb against a ring position that no
+longer matches the descriptors it was built from.
+__free_dma_rx_desc_resources() releases it on teardown.
+
+Apply the same state handling to stmmac_rx_zc(), which also leaves
+state_saved set when a saved frame finishes at the budget boundary.
+That path saves only error and length bookkeeping, not an skb pointer.
+
+Fixes: ec222003bd94 ("net: stmmac: Prepare to add Split Header support")
+Fixes: bba2556efad6 ("net: stmmac: Enable RX via AF_XDP zero-copy")
+Signed-off-by: James Hilliard <james.hilliard1@gmail.com>
+Reviewed-by: Nicolai Buchwitz <nb@tipi-net.de>
+Co-developed-by: Lorenzo Bianconi <lorenzo.bianconi@oss.qualcomm.com>
+Signed-off-by: Lorenzo Bianconi <lorenzo.bianconi@oss.qualcomm.com>
+Link: https://patch.msgid.link/20261027-stmmac-xdp-fixes-v2-1-10eae8a093a8@oss.qualcomm.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/core/filter.c | 9 +++++++--
- 1 file changed, 7 insertions(+), 2 deletions(-)
+ .../net/ethernet/stmicro/stmmac/stmmac_main.c | 72 +++++++++++--------
+ 1 file changed, 42 insertions(+), 30 deletions(-)
 
-diff --git a/net/core/filter.c b/net/core/filter.c
-index d27e73647a8df..7129e7c920a64 100644
---- a/net/core/filter.c
-+++ b/net/core/filter.c
-@@ -3369,6 +3369,10 @@ static const struct bpf_func_proto bpf_skb_vlan_pop_proto = {
+diff --git a/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c b/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
+index 8a8e9f71e6f98..c637305fdb36d 100644
+--- a/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
++++ b/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
+@@ -2151,6 +2151,9 @@ static void __free_dma_rx_desc_resources(struct stmmac_priv *priv,
+ 	else
+ 		dma_free_rx_skbufs(priv, dma_conf, queue);
  
- static int bpf_skb_generic_push(struct sk_buff *skb, u32 off, u32 len)
- {
-+	/* The bytes in front of @off are moved with skb->data. */
-+	if (unlikely(off > skb->len || !pskb_may_pull(skb, off)))
-+		return -ENOMEM;
++	dev_kfree_skb_any(rx_q->state.skb);
++	rx_q->state.skb = NULL;
++	rx_q->state_saved = false;
+ 	rx_q->buf_alloc_num = 0;
+ 	rx_q->xsk_pool = NULL;
+ 
+@@ -5536,12 +5539,12 @@ static int stmmac_rx_zc(struct stmmac_priv *priv, int limit, u32 queue)
+ 	unsigned int count = 0, error = 0, len = 0;
+ 	int dirty = stmmac_rx_dirty(priv, queue);
+ 	unsigned int next_entry = rx_q->cur_rx;
++	bool in_progress = rx_q->state_saved;
+ 	u32 rx_errors = 0, rx_dropped = 0;
+ 	unsigned int desc_size;
+ 	struct bpf_prog *prog;
+ 	bool failure = false;
+ 	int xdp_status = 0;
+-	int status = 0;
+ 
+ 	if (netif_msg_rx_status(priv)) {
+ 		void *rx_head = stmmac_get_rx_desc(priv, rx_q, 0);
+@@ -5552,23 +5555,25 @@ static int stmmac_rx_zc(struct stmmac_priv *priv, int limit, u32 queue)
+ 		stmmac_display_ring(priv, rx_head, priv->dma_conf.dma_rx_size, true,
+ 				    rx_q->dma_rx_phy, desc_size);
+ 	}
 +
- 	/* Caller already did skb_cow() with meta_len+len as headroom,
- 	 * so no need to do it here.
- 	 */
-@@ -3389,9 +3393,10 @@ static int bpf_skb_generic_pop(struct sk_buff *skb, u32 off, u32 len)
- 	void *old_data;
++	if (rx_q->state_saved) {
++		error = rx_q->state.error;
++		len = rx_q->state.len;
++		rx_q->state_saved = false;
++	}
++
+ 	while (count < limit) {
+ 		struct stmmac_rx_buffer *buf;
+ 		struct stmmac_xdp_buff *ctx;
+ 		unsigned int buf1_len = 0;
+ 		struct dma_desc *np, *p;
+-		int entry;
++		int entry, status;
+ 		int res;
  
- 	/* skb_ensure_writable() is not needed here, as we're
--	 * already working on an uncloned skb.
-+	 * already working on an uncloned skb. The first test
-+	 * keeps off + len from wrapping.
- 	 */
--	if (unlikely(!pskb_may_pull(skb, off + len)))
-+	if (unlikely(off > skb->len || !pskb_may_pull(skb, off + len)))
- 		return -ENOMEM;
+-		if (!count && rx_q->state_saved) {
+-			error = rx_q->state.error;
+-			len = rx_q->state.len;
+-		} else {
+-			rx_q->state_saved = false;
++		if (!in_progress) {
+ 			error = 0;
+ 			len = 0;
+ 		}
+-
+ read_again:
+ 		if (count >= limit)
+ 			break;
+@@ -5607,6 +5612,8 @@ static int stmmac_rx_zc(struct stmmac_priv *priv, int limit, u32 queue)
+ 		if (!buf->xdp)
+ 			break;
  
- 	old_data = skb->data;
++		in_progress = status & rx_not_ls;
++
+ 		if (priv->extend_desc) {
+ 			/* Read the extended status after the own bit */
+ 			dma_rmb();
+@@ -5683,7 +5690,7 @@ static int stmmac_rx_zc(struct stmmac_priv *priv, int limit, u32 queue)
+ 		count++;
+ 	}
+ 
+-	if (status & rx_not_ls) {
++	if (in_progress) {
+ 		rx_q->state_saved = true;
+ 		rx_q->state.error = error;
+ 		rx_q->state.len = len;
+@@ -5725,9 +5732,10 @@ static int stmmac_rx(struct stmmac_priv *priv, int limit, u32 queue)
+ 	struct stmmac_rx_queue *rx_q = &priv->dma_conf.rx_queue[queue];
+ 	struct stmmac_channel *ch = &priv->channel[queue];
+ 	unsigned int count = 0, error = 0, len = 0;
+-	int status = 0, coe = priv->hw->rx_csum;
+ 	unsigned int next_entry = rx_q->cur_rx;
++	bool in_progress = rx_q->state_saved;
+ 	enum dma_data_direction dma_dir;
++	int coe = priv->hw->rx_csum;
+ 	unsigned int desc_size;
+ 	struct sk_buff *skb = NULL;
+ 	struct stmmac_xdp_buff ctx;
+@@ -5747,25 +5755,28 @@ static int stmmac_rx(struct stmmac_priv *priv, int limit, u32 queue)
+ 		stmmac_display_ring(priv, rx_head, priv->dma_conf.dma_rx_size, true,
+ 				    rx_q->dma_rx_phy, desc_size);
+ 	}
++
++	if (rx_q->state_saved) {
++		skb = rx_q->state.skb;
++		error = rx_q->state.error;
++		len = rx_q->state.len;
++		rx_q->state.skb = NULL;
++		rx_q->state_saved = false;
++	}
++
+ 	while (count < limit) {
+ 		unsigned int buf1_len = 0, buf2_len = 0;
+ 		enum pkt_hash_types hash_type;
+ 		struct stmmac_rx_buffer *buf;
+ 		struct dma_desc *np, *p;
+-		int entry;
++		int entry, status;
+ 		u32 hash;
+ 
+-		if (!count && rx_q->state_saved) {
+-			skb = rx_q->state.skb;
+-			error = rx_q->state.error;
+-			len = rx_q->state.len;
+-		} else {
+-			rx_q->state_saved = false;
++		if (!in_progress) {
+ 			skb = NULL;
+ 			error = 0;
+ 			len = 0;
+ 		}
+-
+ read_again:
+ 		if (count >= limit)
+ 			break;
+@@ -5794,6 +5805,8 @@ static int stmmac_rx(struct stmmac_priv *priv, int limit, u32 queue)
+ 
+ 		prefetch(np);
+ 
++		in_progress = status & rx_not_ls;
++
+ 		if (priv->extend_desc) {
+ 			/* Read the extended status after the own bit */
+ 			dma_rmb();
+@@ -5811,11 +5824,10 @@ static int stmmac_rx(struct stmmac_priv *priv, int limit, u32 queue)
+ 
+ 		if (unlikely(error && (status & rx_not_ls)))
+ 			goto read_again;
++
+ 		if (unlikely(error)) {
+ 			dev_kfree_skb(skb);
+-			skb = NULL;
+-			count++;
+-			continue;
++			goto next;
+ 		}
+ 
+ 		/* Buffer is good. Go on. */
+@@ -5889,9 +5901,7 @@ static int stmmac_rx(struct stmmac_priv *priv, int limit, u32 queue)
+ 						      STMMAC_XDP_REDIRECT)) {
+ 					xdp_status |= xdp_res;
+ 					buf->page = NULL;
+-					skb = NULL;
+-					count++;
+-					continue;
++					goto next;
+ 				}
+ 			}
+ 		}
+@@ -5948,10 +5958,8 @@ static int stmmac_rx(struct stmmac_priv *priv, int limit, u32 queue)
+ 		/* Remove FCS if needed */
+ 		if (!fcs_stripped && pskb_trim(skb, len)) {
+ 			dev_kfree_skb_any(skb);
+-			skb = NULL;
+ 			rx_dropped++;
+-			count++;
+-			continue;
++			goto next;
+ 		}
+ 
+ 		stmmac_get_rx_hwtstamp(priv, p, np, skb);
+@@ -5976,14 +5984,15 @@ static int stmmac_rx(struct stmmac_priv *priv, int limit, u32 queue)
+ 
+ 		skb_record_rx_queue(skb, queue);
+ 		napi_gro_receive(&ch->rx_napi, skb);
+-		skb = NULL;
+-
+ 		rx_packets++;
+ 		rx_bytes += len;
++next:
++		in_progress = false;
++		skb = NULL;
+ 		count++;
+ 	}
+ 
+-	if (status & rx_not_ls || skb) {
++	if (in_progress || skb) {
+ 		rx_q->state_saved = true;
+ 		rx_q->state.skb = skb;
+ 		rx_q->state.error = error;
+@@ -8295,6 +8304,9 @@ static void stmmac_reset_rx_queue(struct stmmac_priv *priv, u32 queue)
+ {
+ 	struct stmmac_rx_queue *rx_q = &priv->dma_conf.rx_queue[queue];
+ 
++	dev_kfree_skb_any(rx_q->state.skb);
++	rx_q->state.skb = NULL;
++	rx_q->state_saved = false;
+ 	rx_q->cur_rx = 0;
+ 	rx_q->dirty_rx = 0;
+ }
 -- 
 2.53.0
 
