@@ -1,51 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795623907;
-	b=aSSS6qAW8p7/ZrpbQ1lZSWXDR6L3P6M4dScs2ZUzjXbhVraf9uRvwOK5ugmeovMUcMfl
-	 XZmBtn42m/HY2hNx+sRtADyjLZdq8ID8+ujnt1LUoWdMU/WjjBNsQW3CR3H/hSyWwwTYG
-	 oSdRc3vcVS4R88NktORHEUIYQWf3dKwGKSNhFUMFwfI1jUNfGhHyILrLBWTD/nbt7sTer
-	 Q/QnbdEfwcJlNFvfinl6p4jGRir2a6ebIuckWIm/qnxp8TbBrog6eUfx8YxVh7KNffCHu
-	 yzidaocz3nh4tVCvsvUV7U2dNwGfx1NWzkmbhyPjdNreYmzGw+QXrTYt7xocQw5U+9w==
+	t=1795623910;
+	b=zSaBb20WeJ+XPHxRuwBTmFhLHqq02ryoqi3YP0FqMTiMUaVzmkl+sk9FlI3DLf6+Eyzu
+	 sGPuzF5COTUETJCNgpFOMIzR8iPSW8CnKp/C7rM3xDC8UGm+aFQ17LSWeaVj9xlbezY5k
+	 oHWCIbSntpdOd9sQJuy1vyuz3W2tl9gw77lKweAAGPL0XKbgog5aUFCzj/nrYaR121KsZ
+	 OQAqI9Vaa1PcvoUXwURf0SDAfTEqX77fi7rh2j1XljveltRtjqttXyv8cdk5RHGMO1Fr0
+	 Q3t5i+d0dz+8OeS7k1NcGv3dT+zHSR1b8uEo1Uxwwot9z2gilAmcGD+xKrb9XXfKoVQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795623907;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795623910;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=L1TZOSObYU7IIqP/oAILl5WEpXxZIXHamQFRR3BNxbs=;
-	b=v+1qGSy+Icdz9oR4TOgWUb48dJ2dACMfzNSsbu5EjxgTjE3sOrY9HrBh+021xOrpQadY
-	 WSR4CsKFiaJdIh0cWYBKQ7fTKWIADKjhLT/bQvf1l7G6uuP5+3rwce/qyUUtPRJ91So52
-	 fEbV4vfDBE7Y7V+phqsPvgq1VUizPnKge8kyaJQhO0+6opz6Po+F2rf12GviDZSmfz6NH
-	 8trAeSoL2gqtelHCifAwmJ1GHG9XBIUx4XK/nPlCHA0PjNPb7OC5obBKxvk3vC7Ky+D2D
-	 pRTZvgcERDN38RLBbhoy9u9SjrJmKLd/wymzC1u052Hz/lYpJ5cXA4CU8poNHu7q6lg==
+	bh=9Z/hle82Hxm0zrdZIBIP1X20wjuTtJKPMziCm7AA+rk=;
+	b=d0VFHfod+NecKkwxkye40N9CYTmU74+eeCV4tADD2Ba8MEpZv/QDH3IO41AeOmg+AZmU
+	 RH0sgGJAzzpqklpBiOZ0G3dTXbCQdXgdosPreOKwZ5lDThH+eb54QCywibDa7x6mqUR7F
+	 NBC5P11d3+Z4+OqyPo6kDgaPhA25Yq4LU6y9z01EEs11YstFSwFTJz8uvEukOh8ckduVQ
+	 mzVT6sCZzaatQGOQTyJooWSyGeNlkNd+ya21p3Qbecfcmlm1OqoXy0lnEViIDBMkWj0E/
+	 WS8LmVwkemCwwOuuSBhIMYX45E9RQFcjdtfTzrc4Bgsjkrvfr3CxxdPeQs9dfQ2brCw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=FEeZ1qg7;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=kBasdr1W;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C8962606A323;
-	Wed, 25 Nov 2026 16:25:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9ACEA606A321;
+	Wed, 25 Nov 2026 16:25:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=FEeZ1qg7
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 262321F000C4;
-	Wed, 25 Nov 2026 16:25:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=kBasdr1W
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ECD3F1F000C6;
+	Wed, 25 Nov 2026 16:25:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795623907;
-	bh=L1TZOSObYU7IIqP/oAILl5WEpXxZIXHamQFRR3BNxbs=;
+	s=korg; t=1795623910;
+	bh=9Z/hle82Hxm0zrdZIBIP1X20wjuTtJKPMziCm7AA+rk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=FEeZ1qg7fx8pTzbYEP6ORZKAR8G2qdfEWKMYDLMD3kryDggPJ7cGDbKkZYaCFEi3j
-	 M24OU4eWbx6iIoZ+srjZRZ2Mo9ZuBFCobQ1FPiLIt1gva1eo8jm1vGPar/9ihG5SIU
-	 m+Zqw9V+s7FS2qDRsDE6xI0aJZyNwEdt58TdOh4Q=
+	b=kBasdr1WFXDxQRct4Ktdf4HCfMJePZ08J+EfBiIxBCPBOrwowYZksNXO6SxkoodDe
+	 b+zkjGk1wSdrRweO1OVoTL3mYAx00Z5d8Ek49xMUe+j6UQmkzDgcuA3KRxGyd7yIKy
+	 +Rx0T4QxshqoSiHMKlzdD9+pXzKbDoKtX5I1BNjs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Bernard Pidoux <bernard.f6bvp@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 023/816] ax25: drop a message being reassembled when a new one starts
-Date: Wed, 25 Nov 2026 15:26:11 +0100
-Message-ID: <20261125143849.752945530@linuxfoundation.org>
+Subject: [PATCH 6.12 024/816] rose: reset a call when a DATA packet arrives out of sequence
+Date: Wed, 25 Nov 2026 15:26:12 +0100
+Message-ID: <20261125143849.775464919@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143849.205329330@linuxfoundation.org>
 References: <20261125143849.205329330@linuxfoundation.org>
@@ -69,83 +69,70 @@ Content-Transfer-Encoding: 8bit
 
 From: Bernard Pidoux <bernard.f6bvp@gmail.com>
 
-ax25_rx_fragment() only accepts, while a message is being reassembled
-(fragno != 0), the segment numbered fragno - 1. A new first segment, or
-a segment with another number, falls through to "return 0" and is
-freed, but fragno keeps its value. Since every first segment is then
-refused, and no segment can ever match fragno - 1 again, every later
-segmented message of the connection is thrown away, until the
-connection is closed. The I frames carrying them have already been
-acknowledged, so the sender has no way to know.
+In state 3, rose_state3_machine() drops a DATA packet whose N(S) is not
+the expected V(R) and says nothing about it: the packet is not queued,
+and at most an RR with the unchanged N(R) goes out later. ROSE never
+sends a DATA packet again, so once a packet has been lost on the way (a
+relay dropped it, or a link was reset under it), every following packet
+is dropped as well, the window of the sender fills up and the call
+hangs until one side clears it.
 
-This happens whenever the peer gives up a message half way, for
-instance a station on an older kernel that interleaves the segments of
-two messages, or one that fails to allocate a segment in the middle of
-a message.
-
-When a segment does not continue the message being reassembled, purge
-the queue and reset fragno and fraglen. A first segment then starts a
-new message; any other segment is dropped as before.
+X.25 resets the call when P(S) is not the one expected. Do the same:
+acknowledge what arrived in sequence with rose_enquiry_response(), so
+that the sender frees those packets, then send RESET REQUEST and go to
+state 4, as the other error cases of this function already do. On the
+RESET, the sender sends again the packets it still holds, from N(S) 0.
 
 Tested in two QEMU guests (6.12.94, KASAN and lockdep) linked over a
-serial mkiss port; one guest builds the segments itself on an AX.25
-socket with AX25_PIDINCL and sends: a 2 segment message, the first
-segment of a 3 segment message and nothing more, a 2 segment message,
-a 3 segment message without its second segment, a 2 segment message and
-an unsegmented one. Before, the receiver got the first message and the
-unsegmented one only; after, it gets the three complete segmented
-messages and the unsegmented one. No kernel report.
+serial mkiss port. The calling guest runs a rose module changed for the
+bench only to drop the third DATA packet it sends, keeping it on its
+ack queue as if a relay had lost it; it writes d0 to d5 on the call.
+Before, the called guest received d0 and d1, and the caller still had
+3840 bytes queued 25 s later; after, the called guest received d0 to d5
+in order, without duplicates, and the caller's queue was empty. No
+kernel report.
 
 Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
 Signed-off-by: Bernard Pidoux <bernard.f6bvp@gmail.com>
 Assisted-by: Claude:claude-opus-5-5
-(cherry picked from commit bb9180c5adfc874ec340caca45b5f3f4d448fcf8)
+(cherry picked from commit e15162d237ddecc2c1215f49b76f4cba06bbc2c8)
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ax25/ax25_in.c | 30 ++++++++++++++++++++----------
- 1 file changed, 20 insertions(+), 10 deletions(-)
+ net/rose/rose_in.c | 21 +++++++++++++++++++++
+ 1 file changed, 21 insertions(+)
 
-diff --git a/net/ax25/ax25_in.c b/net/ax25/ax25_in.c
-index fd8669e5b7313..068f0c6c54cef 100644
---- a/net/ax25/ax25_in.c
-+++ b/net/ax25/ax25_in.c
-@@ -87,16 +87,26 @@ static int ax25_rx_fragment(ax25_cb *ax25, struct sk_buff *skb)
- 				return 1;
- 			}
+diff --git a/net/rose/rose_in.c b/net/rose/rose_in.c
+index 84025b4b498fe..980f82655c12e 100644
+--- a/net/rose/rose_in.c
++++ b/net/rose/rose_in.c
+@@ -193,6 +193,27 @@ static int rose_state3_machine(struct sock *sk, struct sk_buff *skb, int framety
+ 			if (atomic_read(&sk->sk_rmem_alloc) >
+ 			    (sk->sk_rcvbuf >> 1))
+ 				rose->condition |= ROSE_COND_OWN_RX_BUSY;
++		} else {
++			/*
++			 * A DATA packet was lost on the way: a relay dropped
++			 * it, or a link was reset under it. ROSE never sends a
++			 * DATA packet again, so the window of the sender would
++			 * stay full and the call would hang. Acknowledge what
++			 * arrived in sequence, then reset the call (X.25:
++			 * invalid P(S)); the sender then sends its
++			 * unacknowledged packets again.
++			 */
++			rose_enquiry_response(sk);
++			rose_write_internal(sk, ROSE_RESET_REQUEST);
++			rose->condition = 0x00;
++			rose->vs        = 0;
++			rose->vr        = 0;
++			rose->va        = 0;
++			rose->vl        = 0;
++			rose->state     = ROSE_STATE_4;
++			rose_start_t2timer(sk);
++			rose_stop_idletimer(sk);
++			break;
  		}
--	} else {
--		/* First fragment received */
--		if (*skb->data & AX25_SEG_FIRST) {
--			skb_queue_purge(&ax25->frag_queue);
--			ax25->fragno = *skb->data & AX25_SEG_REM;
--			skb_pull(skb, 1);		/* skip fragno */
--			ax25->fraglen = skb->len;
--			skb_queue_tail(&ax25->frag_queue, skb);
--			return 1;
--		}
-+
-+		/*
-+		 * A new first segment, or a segment out of order: the message
-+		 * being reassembled can no longer be completed. Drop it, or
-+		 * fragno would never come back to 0 and every later segmented
-+		 * message of this connection would be thrown away as well.
-+		 */
-+		skb_queue_purge(&ax25->frag_queue);
-+		ax25->fragno = 0;
-+		ax25->fraglen = 0;
-+	}
-+
-+	/* First fragment received */
-+	if (*skb->data & AX25_SEG_FIRST) {
-+		skb_queue_purge(&ax25->frag_queue);
-+		ax25->fragno = *skb->data & AX25_SEG_REM;
-+		skb_pull(skb, 1);		/* skip fragno */
-+		ax25->fraglen = skb->len;
-+		skb_queue_tail(&ax25->frag_queue, skb);
-+		return 1;
- 	}
- 
- 	return 0;
+ 		/*
+ 		 * If the window is full, ack the frame, else start the
 -- 
 2.53.0
 
