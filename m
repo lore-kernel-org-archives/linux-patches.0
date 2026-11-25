@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795618705;
-	b=jzPt9Rm/05XtRWcNt9INMwxoeIyIhj7KWD9Z7DWC+CdCCaZk3KvgJnMhYtE0ER1xtumY
-	 kGpyllg9L34cbPmXd1NPQAlskOclOZ3X6f6pPS2g8bFmee/W0r/mD8FOer/1wUYw8Yfm+
-	 IYvYL1e0MURj8l6HHXZndHo++l3ZTEbjX5Q85iTILIF/uKdW1rOJZzmZgF1WJC7wPtH/X
-	 oDuNNaycmZf5T8nlekRsWv6ndjjfndQ+Nrj9zmIwRppuHen+lFCOVtOfHXguWo7yAqoTN
-	 oT6tQw2GglESN+buUFSGPCmCw18VqvYh8RLFUah4WZfI67Y9FfdUEZQN5heKvvZWQdw==
+	t=1795618707;
+	b=ZT//xZdkjvrF5r2x/RCAgdB5LYYyS1IunvquUDSpWOePlLUZ2a1vcWZYp/hJDeSe5GIt
+	 s8Ky5uRrv9O04W3Jm3aNcuU7jV+kRTrPliOxDvxlNOGUu2xBVAPC5LH9Cz4B/8d0F3m2S
+	 A3ykmq8UXhM2YAG9d7znneYF4yE1QKRPnhD/lX/Sf0Ox7wj/ULzYUrc59E+coVCIODcO5
+	 9P25hRfBZKGEFgy4gZCu3pQYFb6F4qrI87T+8FvPp03eN8ov2ONxWZ4t7zr/wwafswSsU
+	 +btxoK4q+FoEhPmcYL+9E1ZZRyzN73+K9swpvuoGkPWJd8zmqTeiCRbm8obpzADdmxg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795618705;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795618707;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=2S0TDq0bK6h0DxlSjti5HoLhRHXpY9UNjWAfWYfwN0Y=;
-	b=sjG/gGu6Z9ErmvqtuuP+w0qLL501SFewZ+kgMr/SsHREF3fcosS9qaR9yUoC273WDE1I
-	 VphukPM/Mfh9B8hCQP/JyLYgktPKhRaKnvVrOqHJhcXCvBc2SCUAsyZbU/6Vi0p7uLopC
-	 sxt863pSTZ6+gXTbfn4svRT7FsDsg9JokZP/gJ9aHbGn6CPDFS9J2OnuwuledQVpILhQZ
-	 Ef61JVmJSi08Tq0MC/fUiGsoeJTxx4C1al5I2Z87b/O3CZY2lSmBRXMaxtrT+yTU8Lm/u
-	 5Fh1h4KQcCBW3F2XMrrGfrE8h0Drcs7oivTHDQ9sgf+ncAX6Mv9ovKJDVYpkP+Giyqw==
+	bh=xWbo+YOswebAp4rNcGaLa3fixRiXroZnJU4vUajiddw=;
+	b=IF227w1I1fTxGeTmV2kZ7w3hE/uQw35KFW6gp/YaGQqaEqnwpy/4Mvo4LPIGB6wjy/UK
+	 bzGsn7tZXYzxg0cpZ9PaDTCj5XqxBFx01/NQ29+tcaixuUAbwYOrD7Sl8FYbHD8WnpU6D
+	 yfOO6lnz6hIRpSnCz1Odio043RRpHCT1WmoVU2Zwd7vh02/SOI7IJu6dvq+66N2XUpUeu
+	 Gr9mBGvQCaesKzrpmJ4joxUCP7r3YzI5HkVmkH766KEBFy5cpopVcLGPFVwF1qRgcfpLU
+	 kIlsLhaKfgKN5OdWDAOP5y8uV42EVnuEI3NfZsGc3XLs4cKTPaNXXH/Nxl/dz5n2snQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=itIdFl3r;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=yTkz2paL;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0156D606A31E;
-	Wed, 25 Nov 2026 14:58:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DC141606A321;
+	Wed, 25 Nov 2026 14:58:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=itIdFl3r
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AB9831F000C4;
-	Wed, 25 Nov 2026 14:58:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=yTkz2paL
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EAC181F000C4;
+	Wed, 25 Nov 2026 14:58:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795618704;
-	bh=2S0TDq0bK6h0DxlSjti5HoLhRHXpY9UNjWAfWYfwN0Y=;
+	s=korg; t=1795618707;
+	bh=xWbo+YOswebAp4rNcGaLa3fixRiXroZnJU4vUajiddw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=itIdFl3rGmPE2GOnVvYxfdTswvNekQl33v+MkbbuCOuw9JukKPHMxhJMurdQaYSRo
-	 YP4MmNmSyN9NzBIdGB6iZHgE4KNO9h3B1+mCZW7+5Acr0/uJ4lJ5JRJqqcvPeKypRY
-	 HtyZQmkNI5K8Ysl3hJ9w2SzVxFix7NfRWrhb6Acw=
+	b=yTkz2paLAfiE6Iy1Yn+YvYgumAlkwksgHBKVCnIYugPCsKigkrDOpvjJ7yI9NijD+
+	 s07YwKDfePYV3soljZU/Sp+x48pzdcqZNXm8BorFVz80c3XKYre+N8F5TOGi+11RnV
+	 L4Iy/95nLyeVYc1j/qjyEPphcivbkanNqPq8sCvs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Joas Antonio dos Santos <joasantonio108@gmail.com>,
-	Fernando Fernandez Mancera <fmancera@suse.de>,
-	Pablo Neira Ayuso <pablo@netfilter.org>,
+	Timur Stukan <timur.stukan.linux@gmail.com>,
+	Hangbin Liu <liuhangbin@kylinos.cn>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0317/1005] netfilter: nf_conntrack_sip: fix OOB read in ct_sip_parse_transport()
-Date: Wed, 25 Nov 2026 15:27:35 +0100
-Message-ID: <20261125143829.163720458@linuxfoundation.org>
+Subject: [PATCH 7.3 0308/1005] bonding: 3ad: dont set BOND_LINK_FAIL on a slave that is not up
+Date: Wed, 25 Nov 2026 15:27:26 +0100
+Message-ID: <20261125143828.950674635@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143821.729802100@linuxfoundation.org>
 References: <20261125143821.729802100@linuxfoundation.org>
@@ -69,58 +69,84 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Joas Antonio dos Santos <joasantonio108@gmail.com>
+From: Timur Stukan <timur.stukan.linux@gmail.com>
 
-[ Upstream commit 7af52bda65c0bbbf40894aa3df36ac1bb5697984 ]
+[ Upstream commit 9a65b9c2a97594bcaaf393329807653eff895bbf ]
 
-ct_sip_parse_transport() compares the value of the "transport=" header
-parameter against "TCP"/"UDP" with strncasecmp(..., 3), but it never
-checks that the parsed value is at least 3 bytes long.
+In 802.3ad mode, when bond_update_speed_duplex() fails on NETDEV_UP or
+NETDEV_CHANGE, bond_slave_netdev_event() sets the slave link to FAIL if
+the slave has ever been up (last_link_up != 0), and to DOWN otherwise,
+so that miimon can set it right once speed/duplex are valid.
 
-ct_sip_parse_param() returns matchlen = end - start, where end is the
-next ';' or, when there is no ';', the end of the payload buffer
-(limit = dptr + datalen).  If the "transport=" value is only 1 or 2
-bytes long and runs exactly to the end of the payload (e.g. a REGISTER
-request whose Contact header ends in ";transport=T" with no trailing
-CRLF), matchlen is less than 3 while strncasecmp() still reads up to 3
-bytes, reading 1-2 bytes past the end of the linearized skb data.
+last_link_up is never cleared, so a slave that is currently DOWN but
+was up before is set to FAIL as well. miimon then treats it as a slave
+that is still in use and takes it through the full down path again:
+the link failure count is incremented, "link status definitely down"
+is logged and the 802.3ad port is disabled a second time, although the
+slave has not been up since it went down.
 
-Add a matchlen check before the comparison, mirroring the
-sdp_media_type() pattern a few lines below, so short values cannot reach
-strncasecmp().
+Reproduced in 802.3ad mode with miimon=100 by setting a slave down and
+up again. On NETDEV_UP the speed is still unknown, so the notifier sets
+FAIL, and the next miimon pass sees no carrier and proposes DOWN:
 
-The bug was found by LLM-assisted manual review of the SIP helper's
-parsers and confirmed with a userspace ASan harness built from the
-verbatim parser functions, which reports a heap-buffer-overflow read of
-size 2 in strncasecmp() called from ct_sip_parse_transport().
+	ip link add bond0 type bond mode 802.3ad miimon 100 lacp_rate 1
+	ip link set enp0s3 down
+	ip link set enp0s4 down
+	ip link set enp0s3 master bond0
+	ip link set enp0s4 master bond0
+	ip link set enp0s3 up
+	ip link set enp0s4 up
+	ip link set bond0 up
+	# wait for LACP to settle
+	ip link set enp0s3 down
+	ip link set enp0s3 up
 
-Fixes: ea45f12a2766d ("[NETFILTER]: nf_conntrack_sip: parse SIP headers properly")
-Link: https://patch.msgid.link/20260815133104.50369-1-joasantonio108@gmail.com/
-Signed-off-by: Joas Antonio dos Santos <joasantonio108@gmail.com>
-Assisted-by: Claude:claude-opus-5-5
-Reviewed-by: Fernando Fernandez Mancera <fmancera@suse.de>
-Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
+procfs then shows "Link Failure Count: 2" in enp0s3 slave part. Also in
+dmesg wrote twice: "link status definitely down, disabling slave".
+
+Fix this by setting FAIL only for a slave that is currently UP and
+leaving other states alone. An up slave that loses speed/duplex still
+goes through FAIL as before, and DOWN/BACK slaves are left to miimon,
+as in the other modes.
+
+Fixes: ea53abfab960 ("bonding/802.3ad: fix link_failure_count tracking")
+Signed-off-by: Timur Stukan <timur.stukan.linux@gmail.com>
+Reviewed-by: Hangbin Liu <liuhangbin@kylinos.cn>
+Link: https://patch.msgid.link/20261101145653.63648-1-timur.stukan.linux@gmail.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/netfilter/nf_conntrack_sip.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/net/bonding/bond_main.c | 15 +++++----------
+ 1 file changed, 5 insertions(+), 10 deletions(-)
 
-diff --git a/net/netfilter/nf_conntrack_sip.c b/net/netfilter/nf_conntrack_sip.c
-index 64bc440b1181f..b05dc8858d094 100644
---- a/net/netfilter/nf_conntrack_sip.c
-+++ b/net/netfilter/nf_conntrack_sip.c
-@@ -701,9 +701,9 @@ static int ct_sip_parse_transport(struct nf_conn *ct, const char *dptr,
+diff --git a/drivers/net/bonding/bond_main.c b/drivers/net/bonding/bond_main.c
+index 7019e5d8fdc8e..8212d406f3bc9 100644
+--- a/drivers/net/bonding/bond_main.c
++++ b/drivers/net/bonding/bond_main.c
+@@ -3973,18 +3973,13 @@ static int bond_slave_netdev_event(unsigned long event,
+ 	case NETDEV_CHANGE:
+ 		/* For 802.3ad mode only:
+ 		 * Getting invalid Speed/Duplex values here will put slave
+-		 * in weird state. Mark it as link-fail if the link was
+-		 * previously up or link-down if it hasn't yet come up, and
+-		 * let link-monitoring (miimon) set it right when correct
+-		 * speeds/duplex are available.
++		 * in weird state. Mark an up slave as link-fail and let
++		 * miimon set it right when correct speed/duplex are available.
+ 		 */
+ 		if (bond_update_speed_duplex(slave) &&
+-		    BOND_MODE(bond) == BOND_MODE_8023AD) {
+-			if (slave->last_link_up)
+-				slave->link = BOND_LINK_FAIL;
+-			else
+-				slave->link = BOND_LINK_DOWN;
+-		}
++		    BOND_MODE(bond) == BOND_MODE_8023AD &&
++		    slave->link == BOND_LINK_UP)
++			slave->link = BOND_LINK_FAIL;
  
- 	if (ct_sip_parse_param(ct, dptr, dataoff, datalen, "transport=",
- 			       &matchoff, &matchlen)) {
--		if (!strncasecmp(dptr + matchoff, "TCP", strlen("TCP")))
-+		if (matchlen >= 3 && !strncasecmp(dptr + matchoff, "TCP", 3))
- 			*proto = IPPROTO_TCP;
--		else if (!strncasecmp(dptr + matchoff, "UDP", strlen("UDP")))
-+		else if (matchlen >= 3 && !strncasecmp(dptr + matchoff, "UDP", 3))
- 			*proto = IPPROTO_UDP;
- 		else
- 			return 0;
+ 		if (BOND_MODE(bond) == BOND_MODE_8023AD)
+ 			bond_3ad_adapter_speed_duplex_changed(slave);
 -- 
 2.53.0
 
