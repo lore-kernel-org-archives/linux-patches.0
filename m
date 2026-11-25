@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795618395;
-	b=ZqVBEc+1c4oJg+T88zJ7Z3ELtwcicaNEHpgGbj0WmsYR2WdjF5rbxznMxkqqHRwa1FwC
-	 jYfiFMVUOhKwWwZY3CzAV3dlAbV0I2/CVOopBrGAO4SPF+yVzoU9iEZeVMy1DZJEEZTkx
-	 EG9ShMmnrmVgbFdEV1TsOX2rBHKTpco7+CJ5rwGJsUt/NPrzMpy1DHDVMRcp7/CdmszAb
-	 LEpNgN5We2Y6Xsx3kEfXiIdmH6Dscj8928FuR4Bp7h22MgPCXI/QLVBB85F/Ffl++BuK6
-	 y4yGzYK9Z3g5bgBIpgbfiIdrcYaXqR9W5blrHxqsRH8LvaHrSAPh+oaCzqsxMcaZmMw==
+	t=1795618398;
+	b=oKvHIS7HcuTsyBthmq2/dk4s23YWyuFqtDgGvl3CiW0LVjoVn0H+eHySO5wZztnN2stP
+	 kLJ17dixvXBH+6vUI3auj5mDZlV1/S+tptPWQfU74sJO4yVojAOyYCPp+T1CCCN6SetAA
+	 B0kqaeu8lAwXzRbtHtkGiwU+Ghq5dPGMmdFGz5AIpbJjhv6rZbJcDpqeBDhAMaX1Q8r8u
+	 mJvEfQWpTFeyH1d98hFhmf5afAirvNMR40JE4E3cW/+6sOrJh+ISwHZt+T3ZbrFDa7OGe
+	 vOFGj+6LRZwOqYHUyjm2P+h9ZiiYdy4Baryv3bHyNPaeNzF73L/bu6udLmkWhDNjXRA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795618395;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795618398;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Type:Content-Transfer-Encoding;
-	bh=1uEfZqqbe2SVW28FduVR+/fzAuPn2iE/X3b6M2K0/7I=;
-	b=3NXH8HiP0POO44pB3bERdCRtLL9oyTvFEFgnx5svPDthgZm//x8CaPyHs6tUSG99nIo1
-	 A03mhsZJ2XC4tn0OCHW6V5ivhOF/x9Z2cfXQlZm3kWoJiqHFbSx9HaZMsGX9ShqmLZTuH
-	 EF/umiwWC578GYnhHwbxRF284ecCsqQE1xPgbLMpI2EM/zui3F6rX+aBsXdZsfRBT3DJ3
-	 RF/ZL3ugxVo8u/g9Zr+UrY2J6EWBM+PPdYTimGdtjW+gIE55Zyt/QibSkDBHg4ID/78kl
-	 m3iNExGwquE1rX3aTVUgvlmqsAlK1vWW49yntVElC0rLWsd2v4sjUUTG5F9VbLyNZ7w==
+	 MIME-Version:Content-Transfer-Encoding;
+	bh=6SFQY6PmZey4VU9YRoQuKeQdTTTFsCWClV4mlC+yhiY=;
+	b=fuqcj/9X0k65k7gHdgP5oA1f8lJk0hXvLXwi6nPa47VtF4ST9me8wh5XUIjFhxo+0hsJ
+	 5v2lHT6uroMCuyhzSZyUi0K/+U5WN1pBECO014R105xuspMLfvXx6GmBFKRRa1MdhbzeD
+	 FTOUKne1xfSzSAffmG+e/BHuAfAB88AXeRv6Yro+IiInaUhkm/9F9qLlmGkWrB2G830Ko
+	 PjLrrEnPgrqgMnJuJiCeyBRqDz0620YvDkqGi2Mqx4w10xpl9GGrcrxzhfsUy8rSOK2/Z
+	 FWRIMA2RPJr/gxw95NT+g59JfyvY5cZCdGpKXh+meE8L1AJgAMKbA9odzVvUDRm17zg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=cIVdc7Vj;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=WwM276Kg;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5C190606A31E;
-	Wed, 25 Nov 2026 14:53:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2D2B9606A329;
+	Wed, 25 Nov 2026 14:53:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=cIVdc7Vj
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E73C01F000D1;
-	Wed, 25 Nov 2026 14:53:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=WwM276Kg
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 200341F000D0;
+	Wed, 25 Nov 2026 14:53:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795618394;
-	bh=1uEfZqqbe2SVW28FduVR+/fzAuPn2iE/X3b6M2K0/7I=;
+	s=korg; t=1795618397;
+	bh=6SFQY6PmZey4VU9YRoQuKeQdTTTFsCWClV4mlC+yhiY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=cIVdc7Vj9/WC3nK47QCZ974sR78gf+KgqJUQoqb8YmIZNE4K3FJQTsdOvyiP2IlP3
-	 JWlLt9IKKlNf6Rg6Rmk9NHt9/w5hXXIYkNt1Zab1o2VYhuVAGCafNLAqJutOaUKNxn
-	 nOv4vDPazQp3Uf4ZZ7MErGPw5MjTfu+PK3UpNz9U=
+	b=WwM276KgvvePC9xIKjhfzhYjIjWmlyzcOxdTvPqrbqaWHfVsb4fxwMuzBAO2X/esC
+	 p97RJHzJ2JDYK/xObypSDpzqzLtNJ2JQqR9+N/WYeqnb7qOyMk72v9Ihr6jtBR7aeF
+	 3mjwZjrYpMfP1ziDQMJv6sB2YRAiG4had8Si7fkM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Ville=20Syrj=C3=A4l=C3=A4?= <ville.syrjala@linux.intel.com>,
-	Jani Nikula <jani.nikula@intel.com>,
-	Joonas Lahtinen <joonas.lahtinen@linux.intel.com>,
+	Yifan Zhang <yfzhang23@stu.pku.edu.cn>,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0222/1005] drm/i915/vrr: Fix intel_vrr_dcb_vmin_vblank_start()
-Date: Wed, 25 Nov 2026 15:26:00 +0100
-Message-ID: <20261125143826.942981927@linuxfoundation.org>
+Subject: [PATCH 7.3 0213/1005] Bluetooth: validate retained LE Create CIS command length
+Date: Wed, 25 Nov 2026 15:25:51 +0100
+Message-ID: <20261125143826.731520050@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143821.729802100@linuxfoundation.org>
 References: <20261125143821.729802100@linuxfoundation.org>
@@ -63,62 +62,136 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 7.3-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Ville Syrjälä <ville.syrjala@linux.intel.com>
+From: Yifan Zhang <yfzhang23@stu.pku.edu.cn>
 
-[ Upstream commit 01aa63eade529680cb28fce40f2357bf392a249f ]
+[ Upstream commit 1eb52f35fc8fb06ab7f2973fff29cba81f96b947 ]
 
-intel_vrr_dcb_vmin_vblank_start() may evaluate
-intel_vrr_dcb_vmin_vblank_start_next() twice, and given that
-this is doing hardware access under the hood isn't really
-desired.
+hci_cs_le_create_cis() retrieves the parameters of the previously sent
+command without their length.  It then trusts num_cis and walks the
+flexible cis[] array when a controller reports a failed command.
 
-Even worse, the double evaluation might even cause
-intel_vrr_dcb_vmin_vblank_start() itself to finally
-return -EINVAL (if we race against the DMC hard enough),
-which we definitely never want to do.
+A five-byte HCI command containing only num_cis can therefore make the
+handler read beyond the command skb.  KASAN reports:
 
-Eliminate the double evaluation, guaranteeing a sane
-final return value at the same time.
+  BUG: KASAN: slab-out-of-bounds in hci_cs_le_create_cis
+  Read of size 2
+  hci_cs_le_create_cis
+  hci_cmd_status_evt
+  hci_event_packet
 
-Signed-off-by: Ville Syrjälä <ville.syrjala@linux.intel.com>
-Link: https://patch.msgid.link/20261023165803.31016-2-ville.syrjala@linux.intel.com
-Fixes: c4aba65c26fd ("drm/i915/display: Wait for VRR PUSH status update")
-Reviewed-by: Jani Nikula <jani.nikula@intel.com>
-(cherry picked from commit 9defa95510abce51f68d926b445567784a0a6701)
-Signed-off-by: Joonas Lahtinen <joonas.lahtinen@linux.intel.com>
+Add a length-returning saved-command helper and require the fixed header
+and complete CIS array before walking it.
+
+The reproducer no longer triggers a KASAN report with this change.
+
+Fixes: 26afbd826ee3 ("Bluetooth: Add initial implementation of CIS connections")
+Closes: https://lore.kernel.org/linux-bluetooth/179317462624.87574.6271582002629080499@stu.pku.edu.cn/
+Signed-off-by: Yifan Zhang <yfzhang23@stu.pku.edu.cn>
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/i915/display/intel_vrr.c | 10 +++++++---
- 1 file changed, 7 insertions(+), 3 deletions(-)
+ include/net/bluetooth/hci_core.h |  2 ++
+ net/bluetooth/hci_core.c         | 18 ++++++++++++++----
+ net/bluetooth/hci_event.c        |  7 ++++++-
+ 3 files changed, 22 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/gpu/drm/i915/display/intel_vrr.c b/drivers/gpu/drm/i915/display/intel_vrr.c
-index 6e03122743967..d415915e09f07 100644
---- a/drivers/gpu/drm/i915/display/intel_vrr.c
-+++ b/drivers/gpu/drm/i915/display/intel_vrr.c
-@@ -1170,9 +1170,13 @@ int intel_vrr_safe_window_start(const struct intel_crtc_state *crtc_state)
- static int
- intel_vrr_dcb_vmin_vblank_start(const struct intel_crtc_state *crtc_state)
+diff --git a/include/net/bluetooth/hci_core.h b/include/net/bluetooth/hci_core.h
+index 19870576bd90b..cac282584c616 100644
+--- a/include/net/bluetooth/hci_core.h
++++ b/include/net/bluetooth/hci_core.h
+@@ -2379,6 +2379,8 @@ void hci_send_sco(struct hci_conn *conn, struct sk_buff *skb);
+ void hci_send_iso(struct hci_conn *conn, struct sk_buff *skb);
+ 
+ void *hci_sent_cmd_data(struct hci_dev *hdev, __u16 opcode);
++void *hci_sent_cmd_data_len(struct hci_dev *hdev, __u16 opcode,
++			    size_t *len);
+ void *hci_recv_event_data(struct hci_dev *hdev, __u8 event);
+ 
+ u32 hci_conn_get_phy(struct hci_conn *conn);
+diff --git a/net/bluetooth/hci_core.c b/net/bluetooth/hci_core.c
+index cfc6d3db32bb6..8784c28297ac2 100644
+--- a/net/bluetooth/hci_core.c
++++ b/net/bluetooth/hci_core.c
+@@ -3138,7 +3138,8 @@ int __hci_cmd_send(struct hci_dev *hdev, u16 opcode, u32 plen,
+ EXPORT_SYMBOL(__hci_cmd_send);
+ 
+ /* Get data from the previously sent command */
+-static void *hci_cmd_data(struct sk_buff *skb, __u16 opcode)
++static void *hci_cmd_data(struct sk_buff *skb, __u16 opcode,
++			  size_t *len)
  {
--	return (intel_vrr_dcb_vmin_vblank_start_next(crtc_state) < 0) ?
--		intel_vrr_dcb_vmin_vblank_start_final(crtc_state) :
--		intel_vrr_dcb_vmin_vblank_start_next(crtc_state);
-+	int vblank_start;
+ 	struct hci_command_hdr *hdr;
+ 
+@@ -3150,23 +3151,32 @@ static void *hci_cmd_data(struct sk_buff *skb, __u16 opcode)
+ 	if (hdr->opcode != cpu_to_le16(opcode))
+ 		return NULL;
+ 
++	if (len)
++		*len = skb->len - HCI_COMMAND_HDR_SIZE;
 +
-+	vblank_start = intel_vrr_dcb_vmin_vblank_start_next(crtc_state);
-+	if (vblank_start < 0)
-+		vblank_start = intel_vrr_dcb_vmin_vblank_start_final(crtc_state);
-+
-+	return vblank_start;
+ 	return skb->data + HCI_COMMAND_HDR_SIZE;
  }
  
- int intel_vrr_vmin_safe_window_end(const struct intel_crtc_state *crtc_state)
+ /* Get data from the previously sent command */
+-void *hci_sent_cmd_data(struct hci_dev *hdev, __u16 opcode)
++void *hci_sent_cmd_data_len(struct hci_dev *hdev, __u16 opcode, size_t *len)
+ {
+ 	void *data;
+ 
+ 	/* Check if opcode matches last sent command */
+-	data = hci_cmd_data(hdev->sent_cmd, opcode);
++	data = hci_cmd_data(hdev->sent_cmd, opcode, len);
+ 	if (!data)
+ 		/* Check if opcode matches last request */
+-		data = hci_cmd_data(hdev->req_skb, opcode);
++		data = hci_cmd_data(hdev->req_skb, opcode, len);
+ 
+ 	return data;
+ }
+ 
++/* Get data from the previously sent command */
++void *hci_sent_cmd_data(struct hci_dev *hdev, __u16 opcode)
++{
++	return hci_sent_cmd_data_len(hdev, opcode, NULL);
++}
++
+ /* Get data from last received event */
+ void *hci_recv_event_data(struct hci_dev *hdev, __u8 event)
+ {
+diff --git a/net/bluetooth/hci_event.c b/net/bluetooth/hci_event.c
+index 33d89319db0c3..64db225a9f109 100644
+--- a/net/bluetooth/hci_event.c
++++ b/net/bluetooth/hci_event.c
+@@ -4488,6 +4488,7 @@ static void hci_cs_le_create_cis(struct hci_dev *hdev, u8 status)
+ {
+ 	struct hci_cp_le_create_cis *cp;
+ 	bool pending = false;
++	size_t len;
+ 	int i;
+ 
+ 	bt_dev_dbg(hdev, "status 0x%2.2x", status);
+@@ -4495,10 +4496,14 @@ static void hci_cs_le_create_cis(struct hci_dev *hdev, u8 status)
+ 	if (!status)
+ 		return;
+ 
+-	cp = hci_sent_cmd_data(hdev, HCI_OP_LE_CREATE_CIS);
++	cp = hci_sent_cmd_data_len(hdev, HCI_OP_LE_CREATE_CIS, &len);
+ 	if (!cp)
+ 		return;
+ 
++	if (len < sizeof(*cp) ||
++	    len < struct_size(cp, cis, cp->num_cis))
++		return;
++
+ 	hci_dev_lock(hdev);
+ 
+ 	/* Remove connection if command failed */
 -- 
 2.53.0
 
