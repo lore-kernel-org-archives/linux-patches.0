@@ -1,51 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795623726;
-	b=uc6yhjdvtx305LrXvgOl2YE9xMbYDHy7Typ2KHilD1dTTgY1bnPbmLG09EDUrgjru4eB
-	 oYG16fnO0qDm16UWA5PVKv0yhyqpeSNiGXyrcP/R1ctkEION1BN+EgXsOJ/t691DwQnMZ
-	 4iPsfoNkvx3RDtlGdWPZ1MNYULbpE0PZPuW3yUA54icXzdNICjF0rPV2kr8fPvReKFDX0
-	 wjnCwlZTZwt5N78cKoXeD8Fwjszl9itDzGzmmwBG08y2yiwDZDzZv0cP1rYI9Wrs7qgEq
-	 t6lvTbZT0BFxkxuH42dBEC5ogtOzINnMWkcdrt9ddFgIOqhxFqkToV269xVOrvgEMnA==
+	t=1795623729;
+	b=PnxlopjRNVOUXW9XGpY51bPZoCAU3i1+dAkIR9kAoZfYqgALkWIQXQ7QQFzAEvHtD+hI
+	 XaOsloA8zgWUnAtslciiSxSV+lqB75Q8x4d9ZmtRLfGvuhDqQRMvHUVfQyMCTXlcQ5XU7
+	 d+o8cw0ivTINJPO+vtY7JKArdkYcpZTMlHFpNoso6zJyiRyV6K9ifTTnWcogifE1eqPQb
+	 e5dtnWEE40axT1QAE2+oGsXH59s1VMgSMVoa/DXzHjSkEH1Luyi46fls1zS9HaMHirLVg
+	 /h5KMhmJPay/htfW60MJOBwlOcXb16HRT3+MiV+jps+fA9nx6OvXNDhOMcx3fHlhTdA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795623726;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795623729;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=fzataA2LJkn88mvy44s2ZDkl1WpqojaBGEuqRFJDVu4=;
-	b=b674gtqmAhb1qVk16/d0jDbCsFJikXM92uhsxSHfZC6NTZqGIXfnlltSR41T5oypJ3ap
-	 rBMgEOv02B51PkcGTR5NQ1sPKjo6xaOiFbtp9kVEWG9wSyM1OcfjpKaxiLtmb/GDhjj1E
-	 FgRS1LiCQp34xzj6dQvPLpUlI4o3Kss9Fe2G2LV146p/hQQtQ75pqTMUSIGalfT+gEOe3
-	 b+JRZY8N3nGj2oha46x7HGhDOdDF6abaF8bINYeFacW3jBRYxabi+v8obtKRDIsi+Kof9
-	 nXBnW0qm7VPK1uJQ3R4r33xF5PNJHIxD4KzD1IUkXZZCxNKXYvu7fIG2HBFPjPVVl9A==
+	bh=UX32MCmlTBZampYLALzTaCFTfTUbycLK738QdxOtoYU=;
+	b=Uw2YC6/fmxjAfm35NQEFJaUXECmMoG9G0j/cJifzYbN2RqmpPVSEKPPOldlb93fSFRwh
+	 Bvib3UxEa7t0Zjr8mPKsebXod7/v3DIk1EBTMuJOSPPoLnQze+JX6qJ9PU+7vnbOHRAAl
+	 FDfS+ZWJrJaIAKYZqe4yF8H4fxwptLjbZK350tmWuo6XO74okV7BiXQI6eYgShey0TOmm
+	 MOEJLq1axF1ufN4DShHJLjrWf5xzFRfodPO8+i3SDPb2PAD0lEKFADpHPSDnUt1VVFui0
+	 jvxix8G5CHhnGPeARnQgfeNjT5CzfkLOwC7ZBKReQWazKC3vh6rFgh/kJTCm5wBIu4g==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=zCVMAWj5;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=t38lVjKI;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1F371606A321;
-	Wed, 25 Nov 2026 16:22:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 300A9606A321;
+	Wed, 25 Nov 2026 16:22:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=zCVMAWj5
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1424B1F000C0;
-	Wed, 25 Nov 2026 16:22:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=t38lVjKI
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 47F051F000C4;
+	Wed, 25 Nov 2026 16:22:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795623725;
-	bh=fzataA2LJkn88mvy44s2ZDkl1WpqojaBGEuqRFJDVu4=;
+	s=korg; t=1795623728;
+	bh=UX32MCmlTBZampYLALzTaCFTfTUbycLK738QdxOtoYU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=zCVMAWj5iAV25yhqBx4mBOWu4dp51iIzklHkzz8BL0I/YBO8OGCWvz+trMQKLClCC
-	 KLtMPlam2LHsSxhlDuQMWagGydy0fjnrGWbjCPguMCYCTz8RIVf2y8mwIiMiq5YYzy
-	 zVHJEo7H4QedqPYxHNBATaQXsNfAh72p4wRA5Veo=
+	b=t38lVjKING5S0HNWbmKSm3tN/Keg76XNoH3L+V3Lk44Rl+Vwrq6gcxWMZCybMVyK6
+	 Y27LrKxhHljXC1iSC2/OQzYKVRpFnTj1gpnwXl+o5uztQobgWYvCm0cR6WLpCiYZMm
+	 VpvejyeeKTi2G0lQhO0Y/88Zq70HybvXTV63kRD4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jiale Yao <yaojiale02@163.com>,
+	Maximilian Czirr <maxx-cz@web.de>,
+	Srinivas Pandruvada <srinivas.pandruvada@linux.intel.com>,
 	Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>
-Subject: [PATCH 6.18 951/990] iio: gyro: bmg160: reject duplicate event disable
-Date: Wed, 25 Nov 2026 15:38:38 +0100
-Message-ID: <20261125143844.265678780@linuxfoundation.org>
+Subject: [PATCH 6.18 952/990] iio: hid-sensor: Fix scale for magnetic north heading
+Date: Wed, 25 Nov 2026 15:38:39 +0100
+Message-ID: <20261125143844.288482796@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143822.072087159@linuxfoundation.org>
 References: <20261125143822.072087159@linuxfoundation.org>
@@ -67,38 +68,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jiale Yao <yaojiale02@163.com>
+From: Maximilian Czirr <maxx-cz@web.de>
 
-commit d0c8bd5d18a492d64d05482f4b1700e14df7ff84 upstream.
+commit c72dcaeaabd60e164e7324f80ccb037e879eefdd upstream.
 
-The IIO core does not filter duplicate writes to the event enable
-attribute. bmg160_write_event_config() already ignores repeated enable
-requests, but a repeated disable request still calls
-bmg160_set_power_state(data, false), dropping a runtime PM reference
-that was not acquired for this request. This can underflow the runtime
-PM usage count and trigger a "Runtime PM usage count underflow" warning.
+hid_sensor_format_scale() applies the HID unit exponent only when
+the usage and unit match an entry in unit_conversion[].
 
-Return early when the requested state already matches ev_enable_state.
+Rotation-from-north support uses
+HID_USAGE_SENSOR_ORIENT_COMP_MAGN_NORTH, but that usage has no entry in
+the conversion table. As a result, the unit exponent is ignored and the
+heading can be exposed with a scale of 1 instead of the scale specified
+by the HID descriptor.
 
-Fixes: 22b46c45fb9b ("iio:gyro:bmg160 Gyro Sensor driver")
-Signed-off-by: Jiale Yao <yaojiale02@163.com>
+Add a unitless conversion entry so the HID unit exponent is applied to
+the magnetic north heading. A sensor reporting an exponent of -5 then
+correctly exposes a scale of 0.00001 instead of 1.
+
+Fixes: abea9c62c32f ("iio: hid-sensor-magn-3d: Add support for rotation from north")
 Cc: stable@vger.kernel.org
+Signed-off-by: Maximilian Czirr <maxx-cz@web.de>
+Acked-by: Srinivas Pandruvada <srinivas.pandruvada@linux.intel.com>
 Signed-off-by: Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/iio/gyro/bmg160_core.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/iio/common/hid-sensors/hid-sensor-attributes.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/drivers/iio/gyro/bmg160_core.c
-+++ b/drivers/iio/gyro/bmg160_core.c
-@@ -761,7 +761,7 @@ static int bmg160_write_event_config(str
- 	struct bmg160_data *data = iio_priv(indio_dev);
- 	int ret;
+--- a/drivers/iio/common/hid-sensors/hid-sensor-attributes.c
++++ b/drivers/iio/common/hid-sensors/hid-sensor-attributes.c
+@@ -38,6 +38,8 @@ static const struct {
+ 	{HID_USAGE_SENSOR_COMPASS_3D, 0, 0, 1000000},
+ 	{HID_USAGE_SENSOR_COMPASS_3D, HID_USAGE_SENSOR_UNITS_GAUSS, 1, 0},
  
--	if (state && data->ev_enable_state)
-+	if (state == data->ev_enable_state)
- 		return 0;
- 
- 	mutex_lock(&data->mutex);
++	{HID_USAGE_SENSOR_ORIENT_COMP_MAGN_NORTH, 0, 1, 0},
++
+ 	{HID_USAGE_SENSOR_INCLINOMETER_3D, 0, 0, 17453293},
+ 	{HID_USAGE_SENSOR_INCLINOMETER_3D,
+ 		HID_USAGE_SENSOR_UNITS_DEGREES, 0, 17453293},
 
 
