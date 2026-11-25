@@ -1,53 +1,56 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795624625;
-	b=gBcVD2Yy5zbuz4NkL+lugIVjKLYioG9qT6gyYeMsxOzmzVvzps5dgocQd+bbwPO7yqZ/
-	 tk3aE+PZW5/6Z2M8OhAlwBe4KZU+Q+x5xZ+Oxk7qhNLviOWUNhQC47O2LbIaTN+h9cQOC
-	 2D/ZNWfPyctEt53MiYw3hdshtrAnwScJ6NXe5EtL1C70ZOt7ihspqmOFCy5YdcUjnDVTk
-	 FJQvazgEhKoRsl6gL87dmt+tKASW4k9wsnHUb26D6XFhmWq82HVzhy/KoU4d75i5+F2Hz
-	 ynbJ9BFFCEzfJ3TyBTaNdvNLlizBgF1uOgRR157L6ubViBjxGPHF4OVCsAcwPsg2G3Q==
+	t=1795624627;
+	b=NW81df9l/3tQ7inFkIbzkhK6Ke5crhaouhd/GOhGG/6A318027OAenyYkTzRULkJ6eLv
+	 3UUueskHMdO53F9WyTTvkNEee8nXLovgQsPFqSf1swXg9VXbkvlPxsXf3UT7VdPUfR52X
+	 rrzEiW60cOJfy00Peg1SKZCzBxbIjXQFB0cWBq9NuPLyhS22ww1/QgUo2eZeE40s++2dL
+	 w4Em8ASgiPNizZeCi8vGjg6NfLaWL0Ecl94di80lzk5xbO9K6qfZcTchHQxJNUzjKmA25
+	 r26VjBqLgI4vK6eBj15Am1m0mLQ7Y01VlffEkOmI51V5Y86jI3bJ0nEGFfxA3pT3pTQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795624625;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795624627;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=RpOLTYyNSxcYRDTvepk0cd3pMJHR9dAhK4qyZSZLboI=;
-	b=mTiljfutjsbklm+K8FNoCk4fxxkWQlfy8RUdqnj6nadtq5QW08rzqwbs3Wtr1BLfrlxO
-	 otKpgLi+4fWPzpczeB1JVEjtKaKE8Y+xxGEBJBdTd+nCdfZv/kdZzMbUi2NJg2fmeASoV
-	 +tR++lSOEVlZVMIGKROhVr7GUt9lsV27R0fMJtuLojU5VXhPFniEQGx8PlcW7/6YWQDup
-	 hQSHa+UC9uIeySOx/QRvD9Qcha9PNEt115bSHO/OJddI3KhQzib+/Lb5tkjtI5lIh4jG3
-	 LFnLOlS+cKrNyfXntqC6EcrxalJ/yBzK3OJmqHieypuR8ZRGFbOYJDUiWo8cKXA0FYA==
+	bh=Mh/8MT0tOS8Mpkeb4VDgGaAx9TwLGxUrNq8s5AJCRyQ=;
+	b=OyJDT2CEEW2HRGxOAemQ1Ainse5awp0CvtxBinL/NXsKU+bIdYksWqyNk0GYQ1MhLao6
+	 tJty+QZRc1SfWmST47gfqj7MRjH42sck6jO9OEhfpmxmWRcxokzsXSRMqyXCR9JFcoR+p
+	 KSXBOnGwwrWINXnjosxsN6E2Q77Z+Nao0dSj86vU9G2d32Jd5d8RNcHV8w2EFwfEGzVC3
+	 /eJr4ZHA5Of/bb7+LvM13lWOzbBUxzqpqibKY6ocYXVC6flyVH0TvULOPODiTz15AZlEQ
+	 gft71fExVvNmXJIjvj+1REDa0w3tuEpRRPo7MeknXiQcDi6TkBecLppmk9e+KHek5CQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=0T6E8xMv;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=bFBNddKm;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 090B3606A33B;
-	Wed, 25 Nov 2026 16:37:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C9BBE606A33D;
+	Wed, 25 Nov 2026 16:37:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=0T6E8xMv
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5A02A1F000C6;
-	Wed, 25 Nov 2026 16:37:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=bFBNddKm
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2E87E1F000C6;
+	Wed, 25 Nov 2026 16:37:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795624624;
-	bh=RpOLTYyNSxcYRDTvepk0cd3pMJHR9dAhK4qyZSZLboI=;
+	s=korg; t=1795624627;
+	bh=Mh/8MT0tOS8Mpkeb4VDgGaAx9TwLGxUrNq8s5AJCRyQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=0T6E8xMvC7ck10loFLWyuJj4/Kj9YeqxWAIX25h1+QQs6LmXNZyjM7iZK0GjwhpXD
-	 fo3Hj3CyEa8/boWD3GOYxhVcIzA8AEmIoNIwx8iC/Rkq261N5WlKLsMA9ZSxOElVhl
-	 m1x0fZFy+t6NTBEjcsi8VUlT7oNah23vzOyPyll8=
+	b=bFBNddKmA+V2PU6sEscQn48g/oqIutWBG+xTS9iAqsm8prMpwHV3W+MlRCLn+ww+7
+	 iVdS7WPWysn7MO7kerPMPYQsILS2up5g0Yd1F0w0iL0y+rq3CMq5HIQ0TucPv0ueLN
+	 TDgD/37Xiqt4gk16+Br9VyDrVJrUk94AQQH0MuIg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Thomas Fourier <fourier.thomas@gmail.com>,
-	Tariq Toukan <tariqt@nvidia.com>,
-	Dave Miller <davem@davem-thinkpadp1gen8.ibmlond.csb>,
+	David Laight <david.laight.linux@gmail.com>,
+	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
+	Ingo Molnar <mingo@kernel.org>,
+	Linus Torvalds <torvalds@linux-foundation.org>,
+	Waiman Long <longman@redhat.com>,
+	linux-kernel@vger.kernel.org,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 253/816] net/mlx5e: TC, Fix double free of branch in failure
-Date: Wed, 25 Nov 2026 15:30:01 +0100
-Message-ID: <20261125143855.066327257@linuxfoundation.org>
+Subject: [PATCH 6.12 254/816] locking/osq: Switch osq_wait_next()/atomic_cmpxchg() ordering
+Date: Wed, 25 Nov 2026 15:30:02 +0100
+Message-ID: <20261125143855.088936801@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143849.205329330@linuxfoundation.org>
 References: <20261125143849.205329330@linuxfoundation.org>
@@ -69,42 +72,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Thomas Fourier <fourier.thomas@gmail.com>
+From: Peter Zijlstra <peterz@infradead.org>
 
-[ Upstream commit 31f9b43a3bb3d2201eadd147440252d0912dab21 ]
+[ Upstream commit 1b9e01fcc47aff00d2fd64693c5dcd620eff5865 ]
 
-When allocating the false branch fails in parse_branch_ctrl(), the
-already allocated true branch is freed but attr->branch_true is left
-pointing to it. The caller parse_tc_actions() fails the flow, and
-free_flow_post_acts(), mlx5_free_flow_attr_actions() which calls again
-free_branch_attr() on attr->branch_true.
+The atomic_cmpxchg() in osq_wait_next() removes the current CPU's node
+from the tail of the queue and puts @old_cpu back.
 
-Clear the pointer after freeing it.
+This is very much like an 'unlock', which is RELEASE, rather than
+ACQUIRE.
 
-This bug is theoretical and was compile tested only.
+Additionally, on success (the only case where the ordering is
+effective), this returns NULL which means both callsites will do nothing
+more, there are no subsequent operations to order against.
 
-Fixes: f86488cb4685 ("net/mlx5e: TC, initialize branch flow attributes")
-Signed-off-by: Thomas Fourier <fourier.thomas@gmail.com>
-Reviewed-by: Tariq Toukan <tariqt@nvidia.com>
-Tested-by: Tariq Toukan <tariqt@nvidia.com>
-Signed-off-by: Dave Miller <davem@davem-thinkpadp1gen8.ibmlond.csb>
+Furthermore, the osq_lock() caller will then return false, indicating
+failure to acquire -- the mutex must go block. Again, not making a case
+for ACQUIRE.  Neither atomics nor locks provide ordering on failure.
+
+Since ACQUIRE makes no sense, while RELEASE makes it more symmetric with
+osq_unlock(), switch the ordering. This then makes osq_unlock()
+consistently RELEASE.
+
+Fixes: c55a6ffa6285 ("locking/osq: Relax atomic semantics")
+Suggested-by: David Laight <david.laight.linux@gmail.com>
+Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
+Signed-off-by: Ingo Molnar <mingo@kernel.org>
+Cc: Linus Torvalds <torvalds@linux-foundation.org>
+Cc: Waiman Long <longman@redhat.com>
+Cc: linux-kernel@vger.kernel.org
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/mellanox/mlx5/core/en_tc.c | 1 +
- 1 file changed, 1 insertion(+)
+ kernel/locking/osq_lock.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/net/ethernet/mellanox/mlx5/core/en_tc.c b/drivers/net/ethernet/mellanox/mlx5/core/en_tc.c
-index a5ae179310672..531127dbe800e 100644
---- a/drivers/net/ethernet/mellanox/mlx5/core/en_tc.c
-+++ b/drivers/net/ethernet/mellanox/mlx5/core/en_tc.c
-@@ -4009,6 +4009,7 @@ parse_branch_ctrl(struct flow_action_entry *act, struct mlx5e_tc_act *tc_act,
+diff --git a/kernel/locking/osq_lock.c b/kernel/locking/osq_lock.c
+index 75a6f6133866d..2f2718a278a54 100644
+--- a/kernel/locking/osq_lock.c
++++ b/kernel/locking/osq_lock.c
+@@ -59,7 +59,7 @@ osq_wait_next(struct optimistic_spin_queue *lock,
  
- err_branch_false:
- 	free_branch_attr(flow, attr->branch_true);
-+	attr->branch_true = NULL;
- out_err:
- 	return err;
- }
+ 	for (;;) {
+ 		if (atomic_read(&lock->tail) == curr &&
+-		    atomic_cmpxchg_acquire(&lock->tail, curr, old_cpu) == curr) {
++		    atomic_cmpxchg_release(&lock->tail, curr, old_cpu) == curr) {
+ 			/*
+ 			 * We were the last queued, we moved @lock back. @prev
+ 			 * will now observe @lock and will complete its
 -- 
 2.53.0
 
