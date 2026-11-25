@@ -1,52 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795623253;
-	b=eK7igFXNJS7n2CooD2l0DtwAXi5GAGWo1IeDsmrSGyFM6F4NojLurOot8CgdifzOSYeN
-	 5FijjHZRZpfBa0thrHWEK1EQ3tSU6VKERmhOD5lFM7edUfe5A5sMVYOrz+TIadwxHgQ5Q
-	 1QsOn+NJu83+samFjhC7SEsbN8K7gmuBzfsCZf2/N1gC3M9ogeHwj1O3v/ZKicdKr+q8K
-	 5rZHMhQ+CPdVzZVJfnoclasN1cydAL0l4befM8N4rwsBBK8Y8VqbrUhunU847Qj0T4VSW
-	 zOtCuMOkRGGTgB90DDIF+pOKcUr9DWvZ9Y20WB2Z8trU5ph/NMHpEcC3zbR/oDdx2DA==
+	t=1795623256;
+	b=46RUZad5SMVsBxyzjo1/oSxg9Zo21zg5vB0KfIpwELiQK7cPKPsX/28X1BnPdVutnje6
+	 0RP1e2hG4rAj4i/G0VPO21+xH7zBF37YBbkgZkzqupjfhcinn65G1XfszcbVQVgkBjpsd
+	 ipL1fVgf5Ok/D2e4tbQh8b2qK3uflR242uyN157Kc/dLg2nhkP1P+x/Thun6o7h8bAz89
+	 t8dnX0xZiltPLzu2wVve0x0Yf1heTkgN6Uemw4qm5LCNXfFvnDjd/xufHEvVqtHgKyZCH
+	 pN0VJakEvTf40hZ7LwCsnGDBiCE5RyD7qkT/jPDksVv6ngr3BBB95y5ohG4HO2BF4pQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795623253;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795623256;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=Dvycjd9vPF9Mesvj4PRpFTALWE0ctSfDIYQaHwdVD4c=;
-	b=1Esvzq6DXRjYzr7jGUL2doTOHwhD5wmWkBN1DP4T818Utyj1vX76rTYnl9jY7XbmA+Km
-	 MWnuivZgxZcYst3EmHkz9951Z/dAI7gAbWK6uOS93qrMBOPVszn2aHFwM1NWJ9mSyZtjP
-	 6VcC14DjsFKF51VjRvAgMl9kT/4tFlMKaFlra25yMs4kLwVpJdFYh4uCuW7xIDp2pMWS1
-	 6z35puDH+PT36PQdVpDHHa21dM4gf9XWPm3EEctQXvbpFLq9lnyWjX6X5o5aEuI1zsgKn
-	 AuvqSR53ADX4lEHdMdIJfERRTrXVeYmz5LBNOXxCbvX1Jq20agBz0kVeaFP+CrcyF0Q==
+	bh=YIQ38Tph8XVUc55rvxSsvCQgxPiax+l4UINXIJYP+pg=;
+	b=kqeI+JpUXiZQJB3sNkI1gGSVCJSi7wciiGkIH8vbloTP6tpqkqavXj+SXz/T8NqRHDwc
+	 7ZdmTZL6AjqW2/GRGyQlM3yK0lvFxQhCqzGh+mY980mHH4Blx59PhVktGu3peIBpitG6Y
+	 Z1ZQN4zAQ1KpMlsf8hfrOEgxGcyT8JArQ3GwmmypYVNc9qHxqrFUDKjo3ej4i2mSY+14N
+	 +9SOHgrrBZuoe3Pr4q2np9dr4iX3v1KGc4Hi/ZmxhQHR/YL3H4WY5ZE6C5SHK/uQ3N16v
+	 S9kF/pU8Y6kOE1gN/uc9EJUz9X4LrHZlsJxuFqNTcYEoEOLR4obV/LVn+Ai+gTX/aAQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="yrrhArZ/";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=aW6jMS9j;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 25E07606A31E;
-	Wed, 25 Nov 2026 16:14:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 79325606A31E;
+	Wed, 25 Nov 2026 16:14:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=yrrhArZ/
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1D3401F000C0;
-	Wed, 25 Nov 2026 16:14:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=aW6jMS9j
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 49B941F000C4;
+	Wed, 25 Nov 2026 16:14:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795623252;
-	bh=Dvycjd9vPF9Mesvj4PRpFTALWE0ctSfDIYQaHwdVD4c=;
+	s=korg; t=1795623255;
+	bh=YIQ38Tph8XVUc55rvxSsvCQgxPiax+l4UINXIJYP+pg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=yrrhArZ/1JN28SBd1N3+l2858zOObI4EdK0WjAOleUEzHBDIM87edUL/O5soNBRIy
-	 71JpETVDbyeVG2W4+9o85mPKNMaQSwA2AieWLnH36J5oe6INNqYenn+QuZl+tQhpgq
-	 iGRQjXn2UTktf7Y1RdfR93AX/SwBqL4weOZ9Mrl8=
+	b=aW6jMS9j141hNyX4vWUE8ZKq+NiaL7aloc9Gg4y/YdNLNCrb9PyG/fAmx/afhs2jh
+	 qYb07rPhQPoCdteUmSn5n8Wz72xzM3en5X9VfTQEogYPIvSCvCp/LrZ8EiB3QfnIJT
+	 ouAQeWO0xfgUNrjobHdhexO0J3ixyeffAjPJO0Ks=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Francesco Nigro <nigro.fra@gmail.com>,
-	Paolo Bertinetti <paolobertinetti200f4@proton.me>,
-	"Peter Zijlstra (Intel)" <peterz@infradead.org>
-Subject: [PATCH 6.18 800/990] tracing/perf: Clear stop state in perf_trace_add()
-Date: Wed, 25 Nov 2026 15:36:07 +0100
-Message-ID: <20261125143840.785561713@linuxfoundation.org>
+	Sashiko <sashiko-bot@kernel.org>,
+	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>
+Subject: [PATCH 6.18 801/990] tracing/uprobes: Fix memory leak of tail in __trace_uprobe_create()
+Date: Wed, 25 Nov 2026 15:36:08 +0100
+Message-ID: <20261125143840.808013500@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143822.072087159@linuxfoundation.org>
 References: <20261125143822.072087159@linuxfoundation.org>
@@ -68,54 +67,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Paolo Bertinetti <paolobertinetti200f4@proton.me>
+From: Masami Hiramatsu (Google) <mhiramat@kernel.org>
 
-commit fb3f6b21b04f1e8b8982e90e9bf62db9f0dcb5e4 upstream.
+commit c15120853eebbda98f3fe1f1e59370439c6c4447 upstream.
 
-Since commit 18dbcbfabfff ("perf: Fix the POLL_HUP delivery breakage"),
-__perf_event_overflow() stops the event with pmu->stop() and disables
-it when the PERF_EVENT_IOC_REFRESH limit is reached. When userspace
-re-arms the event with PERF_EVENT_IOC_REFRESH, the event is enabled
-again and pmu->add() is called with PERF_EF_START.
+When generating a default event name in __trace_uprobe_create(), tail is
+allocated with kstrdup() without __free(kfree). If the subsequent
+kmalloc() for buf fails, the function returns -ENOMEM immediately and
+leaks tail.
 
-perf_trace_add() sets PERF_HES_STOPPED when PERF_EF_START is missing,
-but never clears it. The flag set by pmu->stop() stays, and
-perf_tp_event_match() drops every later hit. A tracepoint, kprobe or
-uprobe event re-armed this way delivers only its first overflow. This
-breaks self-profilers such as async-profiler, and the "Event re-armed
-with PERF_EVENT_IOC_REFRESH" perf test fails:
+Declare tail with __free(kfree) so it is automatically freed on all
+exit paths.
 
-  1000 events, count 1, 1 overflows (1 POLL_HUP), re-arm errno 0
-  Tracepoint event : FAILED!
+Link: https://lore.kernel.org/all/179455856197.403392.16569431894958507645.stgit@devnote2/
 
-Set the state from PERF_EF_START on every add, as perf_swevent_add()
-does.
-
-Fixes: 18dbcbfabfff ("perf: Fix the POLL_HUP delivery breakage")
-Closes: https://lore.kernel.org/r/20261021131006.2101248-1-nigro.fra@gmail.com/
-Reported-by: Francesco Nigro <nigro.fra@gmail.com>
-Assisted-by: LLM
-Signed-off-by: Paolo Bertinetti <paolobertinetti200f4@proton.me>
-Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
-Link: https://github.com/async-profiler/async-profiler/issues/1813
+Reported-by: Sashiko <sashiko-bot@kernel.org>
+Closes: https://lore.kernel.org/all/sashiko-outbox-204240@kernel.org/
+Fixes: 97e8230f89a3 ("tracing: uprobe-event: Allocate string buffers from heap")
 Cc: stable@vger.kernel.org
-Link: https://patch.msgid.link/20261103130732.764081-2-paolobertinetti200f4@proton.me
+Signed-off-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/trace/trace_event_perf.c |    3 +--
+ kernel/trace/trace_uprobe.c |    3 +--
  1 file changed, 1 insertion(+), 2 deletions(-)
 
---- a/kernel/trace/trace_event_perf.c
-+++ b/kernel/trace/trace_event_perf.c
-@@ -354,8 +354,7 @@ int perf_trace_add(struct perf_event *p_
- 	struct trace_event_call *tp_event = p_event->tp_event;
- 	struct hw_perf_event *hwc = &p_event->hw;
+--- a/kernel/trace/trace_uprobe.c
++++ b/kernel/trace/trace_uprobe.c
+@@ -666,7 +666,7 @@ static int __trace_uprobe_create(int arg
+ 	}
  
--	if (!(flags & PERF_EF_START))
--		p_event->hw.state = PERF_HES_STOPPED;
-+	hwc->state = (flags & PERF_EF_START) ? 0 : PERF_HES_STOPPED;
+ 	if (!event) {
+-		char *tail;
++		char *tail __free(kfree) = NULL;
+ 		char *ptr;
  
- 	if (is_sampling_event(p_event)) {
- 		hwc->last_period = hwc->sample_period;
+ 		tail = kstrdup(kbasename(filename), GFP_KERNEL);
+@@ -682,7 +682,6 @@ static int __trace_uprobe_create(int arg
+ 			goto fail_mem;
+ 		snprintf(buf, MAX_EVENT_NAME_LEN, "%c_%s_0x%lx", 'p', tail, offset);
+ 		event = buf;
+-		kfree(tail);
+ 	}
+ 
+ 	argc -= 2;
 
 
