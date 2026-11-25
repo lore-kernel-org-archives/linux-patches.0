@@ -1,44 +1,44 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795594429;
-	b=hxqMi4pc3nVzEgQcvCVk7azt9f9nZV+LyveXx17rc9oVyN6lTipV9+CUEIVvfGcXH5j0
-	 aehpqvDc11puKt710PznWh07IUHXOtQc5fyLKexgAawFrwAIVH72Sw/9ylYtpmngSJii4
-	 JKWeU9mToTTsqQCSHAKyJbjW2UT1eJnufpDvJ/E88fRibUmNyrDykcY6Bg+5Er9QZozHb
-	 uNGBqPH8Di6q9FGagvoDbqJl4Au8NY3IQRFww6rGpn+1Elxa6asfgl0Zl6A6n2YnOSbh7
-	 HU+sO2Kbj2qfUNyixjGu+zL78OBLfJ9unt3H68+WdnN1kGyqDZQ4wbwB9zLPj8WFL8A==
+	t=1795594441;
+	b=YgvLnkJ8aXxq9QhL64XhVxtNbOEH4RBuel8Ks0Fm8eo05hu8fL1fb4dMyaMImqLmlI9p
+	 tUt6V4r4BA9449Xz5JkQ/+CCEf0WDcmU6cX9dXNSZ+BAktu9K9yxV8h06zZw30M0eFFMS
+	 AUlKfEt/KCH8Fc0lm3KsdLYu4EM+HAgz2Ohnoik6twTRTsxiVlFZZPxKvV/oCnRn8zrHi
+	 Qas262htVaiI3/Io1Ik0IbKE3hvFpgO9lePkd8b6/EmJOskwRjVq7Z6jnWRve5eO7YOIp
+	 gMnG6+ZDNPRaxMCC1VZkk8QXqqs9Nu3mDJ/RcxOFgG4RJI/WdljPUQbs47kiZoohTFg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795594429;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795594441;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:MIME-Version:Content-Transfer-Encoding;
-	bh=IH2pQOU7oldfAWKlDrprybS+h8ReUbartZTWqF4qC7Q=;
-	b=wXGJdBsQVUsWVfPy6ihnrJFJ0sWz47S5tOZaHyOaR+MThwfXPkD8kjMoceLOoV7WBZ7q
-	 QPdx9R/JcV8cal8Y1S7Y+HC6YngPRpumNNI3nNEKu2zQ105rLAAbNbLBQPRup+6eDshu2
-	 HrMeRzfj2UolnQz0mZbRJM8MXK3ZUB+3G+Lko2G1xc1tdCtD4dgnpAt3iDEspYgRi16iT
-	 weHftgf74UbG/9+FEpanUb1sXuKgKI69lsvkNJeYjtgLnh7WbRRYRryftxkOSFdjh8bQB
-	 dgNVfUv8pV93a0p/XCXVw9t372BIw4UDj6l6ng84dmWYz0jzGEDAJq7JyW6c2oIv71Q==
+	bh=VemvpMjsxU7IG8WaLTB2YhtcJskkfyzuCSEZYtF0GpI=;
+	b=1Hjse40dxGD+OKkCn9knj7kddegpR4wbMfONeuiWzHWlOgXU6a69E3DqQEmjuvkKi3tx
+	 6404/0VR9gPpN1qkcIDicbdA/2cNuLEEzMW0ywvozdeibjOa/Z+mdZPfYAmIHHeSsosDS
+	 cxSGgy87veYYHc9ZN8nMtBA9Va5/v0WxkQfE8XE84dtVVN3tunDtvsB0/2cVu/uPVASVW
+	 McsYnog0ZCcd9JFBKX7yXlnb4xQ/rPEvUxMx9DWLOfKWqYFMOI7WJYdnp61RR4YIuMHSF
+	 Z4GNn8+hpQCkDGXlSECIMAn36Hfuby/06Fcfus7tFGHDmCHioIxLoA1maLKO9XvLalQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b="nPOGZV/+";
+	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=MMEVZ0Az;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1E0F9606A323;
-	Wed, 25 Nov 2026 08:13:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 386A0606A31E;
+	Wed, 25 Nov 2026 08:14:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=nPOGZV/+
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1ADFC1F000EF;
-	Wed, 25 Nov 2026 08:13:36 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=MMEVZ0Az
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7A3501F000D1;
+	Wed, 25 Nov 2026 08:13:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1795594428;
-	bh=IH2pQOU7oldfAWKlDrprybS+h8ReUbartZTWqF4qC7Q=;
+	s=k20260515; t=1795594440;
+	bh=VemvpMjsxU7IG8WaLTB2YhtcJskkfyzuCSEZYtF0GpI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=nPOGZV/+siujRm+SwwxF7viFh28mpzN0iKoMknMGVrb4mzh3N+yNo6Rz9CZFDsyaG
-	 M+c5i0+ENLE5/gX5cpsQ0sFMEXGtOe7jipg5SNEYXwOYk4l1qcTK+Jdz9m+2+p6Wie
-	 r5iNMd1BcWk3Phrht0F2G6qyMlPhAbhuUkqEgQAhIHU1FyOls094vgEwRQX2pSZxuk
-	 6n+sB9tObla4fexnki+YwLWu3LWMfqVbZ1NvrOqiDUA/jBSiFKzowqo7U3Pq6v9srM
-	 vv23ED7Xono+s9PSx1N7hf1CkVHWn5V5Nub0ZmKQoj2adbXHyOREBqIWyKopii00z/
-	 7eYj9jKikFRww==
+	b=MMEVZ0Az8ynv2Z9OT3gk+EAV3onr4iy92vMO4wFDa4/bPvhqMIgzXQv3xDXWyrTon
+	 pkxGAzl9XVYN/4mG0/PnervL7iQz1wimJyPbMMX/hPokAOSXuu9C+4vnCd5DpUe8tW
+	 CW4JIzTzaKlqICjqwuC/+zHOEqyuqIHVsDu3jLLzd8M4oREsf+9yF7pm3aGJgLE8tj
+	 kiO5uYgcSmteqd41S4tnbXUcpphcALhuYohDO98861kbUwTHYL00cdXVFMxYZ2SM46
+	 knQf3sfdFsV3uarL+dgR2xNEIzxkcUJUOaw2JW4lWtY1RNa3wnUMMS/OgL0KSplioC
+	 tyUbdndCgkI7Q==
 From: "Aneesh Kumar K.V (Arm)" <aneesh.kumar@kernel.org>
 To: linux-coco@lists.linux.dev
 Cc: "Aneesh Kumar K.V (Arm)" <aneesh.kumar@kernel.org>,
@@ -75,9 +75,9 @@ Cc: "Aneesh Kumar K.V (Arm)" <aneesh.kumar@kernel.org>,
 	linux-pci@vger.kernel.org,
 	linux-tegra@vger.kernel.org,
 	patches@lists.linux.dev
-Subject: [PATCH v10 10/18] PCI/TSM: Add helpers to prevent disconnect while in use
-Date: Wed, 25 Nov 2026 13:41:13 +0530
-Message-ID: <20261125081121.379481-11-aneesh.kumar@kernel.org>
+Subject: [PATCH v10 11/18] PCI/TSM: Remove the legacy bind and unbind interface
+Date: Wed, 25 Nov 2026 13:41:14 +0530
+Message-ID: <20261125081121.379481-12-aneesh.kumar@kernel.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20261125081121.379481-1-aneesh.kumar@kernel.org>
 References: <20261125081121.379481-1-aneesh.kumar@kernel.org>
@@ -92,210 +92,354 @@ Precedence: list
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Add PCI TEE Security Manager (TSM) helpers that prevent PF0 disconnect
-while a function is in use. Validate the function's TSM association and
-increment PF0's dsm_context_users count on get. Find PF0 through the
-same function and decrement the count on put. Reject disconnect with
--EBUSY until all users have released it.
+Remove pci_tsm_bind(), pci_tsm_unbind(), their callbacks and the pci_tdi
+structure. Device security state will be managed through vIOMMU
+operations.
 
-The caller must prevent removal of the function between get and put, for
-example by keeping its VFIO device open. No per-call allocation is
-needed.
+Remove the bound sysfs attribute and its ABI documentation, since they
+report state maintained by the removed interface.
 
-Cc: Bjorn Helgaas <bhelgaas@google.com>
-Cc: linux-pci@vger.kernel.org
-Cc: Alexey Kardashevskiy <aik@amd.com>
-Cc: Jason Gunthorpe <jgg@ziepe.ca>
-Cc: Lukas Wunner <lukas@wunner.de>
 Signed-off-by: Aneesh Kumar K.V (Arm) <aneesh.kumar@kernel.org>
 ---
- Documentation/ABI/testing/sysfs-bus-pci |  1 +
- drivers/pci/tsm.c                       | 79 ++++++++++++++++++++++---
- include/linux/pci-tsm.h                 | 14 +++++
- 3 files changed, 85 insertions(+), 9 deletions(-)
+ Documentation/ABI/testing/sysfs-bus-pci |  14 ---
+ drivers/pci/tsm.c                       | 150 +-----------------------
+ include/linux/pci-tsm.h                 |  34 +-----
+ 3 files changed, 2 insertions(+), 196 deletions(-)
 
 diff --git a/Documentation/ABI/testing/sysfs-bus-pci b/Documentation/ABI/testing/sysfs-bus-pci
-index be9126e56894..2906257eb610 100644
+index 2906257eb610..ab9083f3b0d3 100644
 --- a/Documentation/ABI/testing/sysfs-bus-pci
 +++ b/Documentation/ABI/testing/sysfs-bus-pci
-@@ -660,6 +660,7 @@ Contact:	linux-coco@lists.linux.dev
- Description:
- 		(WO) Write the name of the TSM device that was specified
- 		to 'connect' to teardown the connection.
-+		The write fails with EBUSY if the TSM is in use.
+@@ -678,20 +678,6 @@ Description:	(RO) Return PCI device name of this device's DSM (Device
+ 		PCIe switch port. This is a "link" TSM attribute, see
+ 		Documentation/ABI/testing/sysfs-class-tsm.
  
- What:		/sys/bus/pci/devices/.../tsm/dsm
- Contact:	linux-coco@lists.linux.dev
+-What:		/sys/bus/pci/devices/.../tsm/bound
+-Contact:	linux-coco@lists.linux.dev
+-Description:	(RO) Return the device name of the TSM when the device is in a
+-		TDISP (TEE Device Interface Security Protocol) operational state
+-		(LOCKED, RUN, or ERROR, not UNLOCKED). Bound devices consume
+-		platform TSM resources and depend on the device's configuration
+-		(e.g. BME (Bus Master Enable) and MSE (Memory Space Enable)
+-		among other settings) to remain stable for the duration of the
+-		bound state. This attribute is only visible for devices that
+-		support TDISP operation, and it is only populated after
+-		successful connect and TSM bind. The TSM bind operation is
+-		initiated by VFIO/IOMMUFD. This is a "link" TSM attribute, see
+-		Documentation/ABI/testing/sysfs-class-tsm.
+-
+ What:		/sys/bus/pci/devices/.../authenticated
+ Contact:	linux-pci@vger.kernel.org
+ Description:
 diff --git a/drivers/pci/tsm.c b/drivers/pci/tsm.c
-index 1423c64dc9c8..73f16a9a78ef 100644
+index 73f16a9a78ef..ddff81554372 100644
 --- a/drivers/pci/tsm.c
 +++ b/drivers/pci/tsm.c
-@@ -292,6 +292,51 @@ static int remove_fn(struct pci_dev *pdev, void *data)
+@@ -337,95 +337,6 @@ void pci_tsm_context_put(struct pci_dev *pdev)
+ }
+ EXPORT_SYMBOL_GPL(pci_tsm_context_put);
+ 
+-/*
+- * Note, this helper only returns an error code and takes an argument for
+- * compatibility with the pci_walk_bus() callback prototype. pci_tsm_unbind()
+- * always succeeds.
+- */
+-static int __pci_tsm_unbind(struct pci_dev *pdev, void *data)
+-{
+-	struct pci_tdi *tdi;
+-	struct pci_tsm_pf0 *tsm_pf0;
+-
+-	lockdep_assert_held(&pci_tsm_rwsem);
+-
+-	if (!pdev->tsm)
+-		return 0;
+-
+-	tsm_pf0 = to_pci_tsm_pf0(pdev->tsm);
+-	guard(mutex)(&tsm_pf0->lock);
+-
+-	tdi = pdev->tsm->tdi;
+-	if (!tdi)
+-		return 0;
+-
+-	to_pci_tsm_ops(pdev->tsm)->unbind(tdi);
+-	pdev->tsm->tdi = NULL;
+-
+-	return 0;
+-}
+-
+-void pci_tsm_unbind(struct pci_dev *pdev)
+-{
+-	guard(rwsem_read)(&pci_tsm_rwsem);
+-	__pci_tsm_unbind(pdev, NULL);
+-}
+-EXPORT_SYMBOL_GPL(pci_tsm_unbind);
+-
+-/**
+- * pci_tsm_bind() - Bind @pdev as a TDI for @kvm
+- * @pdev: PCI device function to bind
+- * @kvm: Private memory attach context
+- * @tdi_id: Identifier (virtual BDF) for the TDI as referenced by the TSM and DSM
+- *
+- * Returns 0 on success, or a negative error code on failure.
+- *
+- * Context: Caller is responsible for constraining the bind lifetime to the
+- * registered state of the device. For example, pci_tsm_bind() /
+- * pci_tsm_unbind() limited to the VFIO driver bound state of the device.
+- */
+-int pci_tsm_bind(struct pci_dev *pdev, struct kvm *kvm, u32 tdi_id)
+-{
+-	struct pci_tsm_pf0 *tsm_pf0;
+-	struct pci_tdi *tdi;
+-
+-	if (!kvm)
+-		return -EINVAL;
+-
+-	guard(rwsem_read)(&pci_tsm_rwsem);
+-
+-	if (!pdev->tsm)
+-		return -EINVAL;
+-
+-	if (!is_link_tsm(pdev->tsm->tsm_dev))
+-		return -ENXIO;
+-
+-	tsm_pf0 = to_pci_tsm_pf0(pdev->tsm);
+-	guard(mutex)(&tsm_pf0->lock);
+-
+-	/* Resolve races to bind a TDI */
+-	if (pdev->tsm->tdi) {
+-		if (pdev->tsm->tdi->kvm != kvm)
+-			return -EBUSY;
+-		return 0;
+-	}
+-
+-	tdi = to_pci_tsm_ops(pdev->tsm)->bind(pdev, kvm, tdi_id);
+-	if (IS_ERR(tdi))
+-		return PTR_ERR(tdi);
+-
+-	pdev->tsm->tdi = tdi;
+-
+-	return 0;
+-}
+-EXPORT_SYMBOL_GPL(pci_tsm_bind);
+-
+-static void pci_tsm_unbind_all(struct pci_dev *pdev)
+-{
+-	pci_tsm_walk_fns_reverse(pdev, __pci_tsm_unbind, NULL);
+-	__pci_tsm_unbind(pdev, NULL);
+-}
+-
+ static int __pci_tsm_disconnect(struct pci_dev *pdev)
+ {
+ 	struct pci_tsm_pf0 *tsm_pf0 = to_pci_tsm_pf0(pdev->tsm);
+@@ -434,8 +345,6 @@ static int __pci_tsm_disconnect(struct pci_dev *pdev)
+ 	/* disconnect() mutually exclusive with subfunction pci_tsm_init() */
+ 	lockdep_assert_held_write(&pci_tsm_rwsem);
+ 
+-	pci_tsm_unbind_all(pdev);
+-
+ 	/*
+ 	 * Refuse to disconnect the link until all contexts have been released.
+ 	 *
+@@ -489,33 +398,6 @@ static ssize_t disconnect_store(struct device *dev,
+ }
+ static DEVICE_ATTR_WO(disconnect);
+ 
+-static ssize_t bound_show(struct device *dev,
+-			  struct device_attribute *attr, char *buf)
+-{
+-	struct pci_dev *pdev = to_pci_dev(dev);
+-	struct pci_tsm_pf0 *tsm_pf0;
+-	struct pci_tsm *tsm;
+-	int rc;
+-
+-	ACQUIRE(rwsem_read_intr, lock)(&pci_tsm_rwsem);
+-	if ((rc = ACQUIRE_ERR(rwsem_read_intr, &lock)))
+-		return rc;
+-
+-	tsm = pdev->tsm;
+-	if (!tsm)
+-		return sysfs_emit(buf, "\n");
+-	tsm_pf0 = to_pci_tsm_pf0(tsm);
+-
+-	ACQUIRE(mutex_intr, ops_lock)(&tsm_pf0->lock);
+-	if ((rc = ACQUIRE_ERR(mutex_intr, &ops_lock)))
+-		return rc;
+-
+-	if (!tsm->tdi)
+-		return sysfs_emit(buf, "\n");
+-	return sysfs_emit(buf, "%s\n", dev_name(&tsm->tsm_dev->dev));
+-}
+-static DEVICE_ATTR_RO(bound);
+-
+ static ssize_t dsm_show(struct device *dev, struct device_attribute *attr,
+ 			char *buf)
+ {
+@@ -570,13 +452,6 @@ static umode_t pci_tsm_attr_visible(struct kobject *kobj,
+ 	if (pci_tsm_link_group_visible(kobj)) {
+ 		struct pci_dev *pdev = to_pci_dev(kobj_to_dev(kobj));
+ 
+-		if (attr == &dev_attr_bound.attr) {
+-			if (is_pci_tsm_pf0(pdev) && has_tee(pdev))
+-				return attr->mode;
+-			if (pdev->tsm && has_tee(pdev->tsm->dsm_dev))
+-				return attr->mode;
+-		}
+-
+ 		if (attr == &dev_attr_dsm.attr) {
+ 			if (is_pci_tsm_pf0(pdev))
+ 				return attr->mode;
+@@ -603,7 +478,6 @@ DEFINE_SYSFS_GROUP_VISIBLE(pci_tsm);
+ static struct attribute *pci_tsm_attrs[] = {
+ 	&dev_attr_connect.attr,
+ 	&dev_attr_disconnect.attr,
+-	&dev_attr_bound.attr,
+ 	&dev_attr_dsm.attr,
+ 	NULL
+ };
+@@ -693,22 +567,6 @@ static struct pci_dev *find_dsm_dev(struct pci_dev *pdev)
+ 	return NULL;
+ }
+ 
+-/**
+- * pci_tsm_tdi_constructor() - base 'struct pci_tdi' initialization for link TSMs
+- * @pdev: PCI device function representing the TDI
+- * @tdi: context to initialize
+- * @kvm: Private memory attach context
+- * @tdi_id: Identifier (virtual BDF) for the TDI as referenced by the TSM and DSM
+- */
+-void pci_tsm_tdi_constructor(struct pci_dev *pdev, struct pci_tdi *tdi,
+-			     struct kvm *kvm, u32 tdi_id)
+-{
+-	tdi->pdev = pdev;
+-	tdi->kvm = kvm;
+-	tdi->tdi_id = tdi_id;
+-}
+-EXPORT_SYMBOL_GPL(pci_tsm_tdi_constructor);
+-
+ /**
+  * pci_tsm_link_constructor() - base 'struct pci_tsm' initialization for link TSMs
+  * @pdev: The PCI device
+@@ -788,12 +646,6 @@ int pci_tsm_register(struct tsm_dev *tsm_dev)
  	return 0;
  }
  
-+/**
-+ * pci_tsm_context_get() - Prevent disconnect of a device's PF0 TSM connection
-+ * @pdev: PCI function whose PF0 TSM connection must remain active
-+ * @tsm_dev: TSM that must manage the device's connection
-+ *
-+ * Verify that @pdev is connected to @tsm_dev and increment the DSM user count.
-+ * Each successful call requires a matching pci_tsm_context_put() for @pdev.
-+ * The caller must prevent removal of @pdev until that put, for example by
-+ * keeping the VFIO device open.
-+ *
-+ * Return: 0 on success, or a negative error code on failure.
-+ */
-+int pci_tsm_context_get(struct pci_dev *pdev, struct tsm_dev *tsm_dev)
-+{
-+	struct pci_tsm_pf0 *pf0;
-+
-+	guard(rwsem_read)(&pci_tsm_rwsem);
-+	if (!pdev->tsm || !is_link_tsm(pdev->tsm->tsm_dev))
-+		return -EOPNOTSUPP;
-+
-+	/* The device must be connected to the TSM requested by the caller. */
-+	if (pdev->tsm->tsm_dev != tsm_dev)
-+		return -EXDEV;
-+
-+	pf0 = to_pci_tsm_pf0(pdev->tsm);
-+	guard(mutex)(&pf0->lock);
-+	pf0->dsm_context_users++;
-+	return 0;
-+}
-+EXPORT_SYMBOL_GPL(pci_tsm_context_get);
-+
-+void pci_tsm_context_put(struct pci_dev *pdev)
-+{
-+	struct pci_tsm_pf0 *pf0;
-+
-+	down_read(&pci_tsm_rwsem);
-+	pf0 = to_pci_tsm_pf0(pdev->tsm);
-+	mutex_lock(&pf0->lock);
-+	if (!WARN_ON(!pf0->dsm_context_users))
-+		pf0->dsm_context_users--;
-+	mutex_unlock(&pf0->lock);
-+	up_read(&pci_tsm_rwsem);
-+}
-+EXPORT_SYMBOL_GPL(pci_tsm_context_put);
-+
- /*
-  * Note, this helper only returns an error code and takes an argument for
-  * compatibility with the pci_walk_bus() callback prototype. pci_tsm_unbind()
-@@ -381,7 +426,7 @@ static void pci_tsm_unbind_all(struct pci_dev *pdev)
- 	__pci_tsm_unbind(pdev, NULL);
+-static void pci_tsm_fn_exit(struct pci_dev *pdev)
+-{
+-	__pci_tsm_unbind(pdev, NULL);
+-	tsm_remove(pdev->tsm);
+-}
+-
+ /**
+  * __pci_tsm_destroy() - destroy the TSM context for @pdev
+  * @pdev: device to cleanup
+@@ -831,7 +683,7 @@ static void __pci_tsm_destroy(struct pci_dev *pdev, struct tsm_dev *tsm_dev)
+ 		if (pci_tsm_disconnect(pdev))
+ 			pci_warn(pdev, "TSM connection is still in use\n");
+ 	} else {
+-		pci_tsm_fn_exit(pdev);
++		tsm_remove(pdev->tsm);
+ 	}
  }
  
--static void __pci_tsm_disconnect(struct pci_dev *pdev)
-+static int __pci_tsm_disconnect(struct pci_dev *pdev)
- {
- 	struct pci_tsm_pf0 *tsm_pf0 = to_pci_tsm_pf0(pdev->tsm);
- 	const struct pci_tsm_ops *ops = to_pci_tsm_ops(pdev->tsm);
-@@ -392,18 +437,29 @@ static void __pci_tsm_disconnect(struct pci_dev *pdev)
- 	pci_tsm_unbind_all(pdev);
- 
- 	/*
--	 * disconnect() is uninterruptible as it may be called for device
--	 * teardown
-+	 * Refuse to disconnect the link until all contexts have been released.
-+	 *
-+	 * disconnect() is uninterruptible as it may also be called for device
-+	 * teardown.
- 	 */
- 	guard(mutex)(&tsm_pf0->lock);
-+	if (tsm_pf0->dsm_context_users)
-+		return -EBUSY;
-+
- 	pci_tsm_walk_fns_reverse(pdev, remove_fn, NULL);
- 	ops->disconnect(pdev);
-+	return 0;
- }
- 
--static void pci_tsm_disconnect(struct pci_dev *pdev)
-+static int pci_tsm_disconnect(struct pci_dev *pdev)
- {
--	__pci_tsm_disconnect(pdev);
-+	int ret = __pci_tsm_disconnect(pdev);
-+
-+	if (ret)
-+		return ret;
-+
- 	tsm_remove(pdev->tsm);
-+	return 0;
- }
- 
- static ssize_t disconnect_store(struct device *dev,
-@@ -425,7 +481,10 @@ static ssize_t disconnect_store(struct device *dev,
- 	if (!sysfs_streq(buf, dev_name(&tsm_dev->dev)))
- 		return -EINVAL;
- 
--	pci_tsm_disconnect(pdev);
-+	rc = pci_tsm_disconnect(pdev);
-+	if (rc)
-+		return rc;
-+
- 	return len;
- }
- static DEVICE_ATTR_WO(disconnect);
-@@ -768,10 +827,12 @@ static void __pci_tsm_destroy(struct pci_dev *pdev, struct tsm_dev *tsm_dev)
- 	else if (tsm_dev != tsm->tsm_dev)
- 		return;
- 
--	if (is_link_tsm(tsm_dev) && is_pci_tsm_pf0(pdev))
--		pci_tsm_disconnect(pdev);
--	else
-+	if (is_link_tsm(tsm_dev) && is_pci_tsm_pf0(pdev)) {
-+		if (pci_tsm_disconnect(pdev))
-+			pci_warn(pdev, "TSM connection is still in use\n");
-+	} else {
- 		pci_tsm_fn_exit(pdev);
-+	}
- }
- 
- void pci_tsm_destroy(struct pci_dev *pdev)
 diff --git a/include/linux/pci-tsm.h b/include/linux/pci-tsm.h
-index 6fe3d0ea875f..38b03d71e3f3 100644
+index 38b03d71e3f3..e6fe099f2cc9 100644
 --- a/include/linux/pci-tsm.h
 +++ b/include/linux/pci-tsm.h
-@@ -110,11 +110,13 @@ struct pci_tsm {
-  * struct pci_tsm_pf0 - Physical Function 0 TDISP link context
-  * @base_tsm: generic core "tsm" context
-  * @lock: mutual exclustion for pci_tsm_ops invocation
-+ * @dsm_context_users: users preventing DSM disconnect
-  * @doe_mb: PCIe Data Object Exchange mailbox
-  */
- struct pci_tsm_pf0 {
- 	struct pci_tsm base_tsm;
- 	struct mutex lock;
-+	unsigned int dsm_context_users;
- 	struct pci_doe_mb *doe_mb;
+@@ -6,7 +6,6 @@
+ 
+ struct pci_tsm;
+ struct tsm_dev;
+-struct kvm;
+ 
+ /*
+  * struct pci_tsm_ops - manage confidential links and security state
+@@ -30,16 +29,12 @@ struct pci_tsm_ops {
+ 	 * @connect: establish / validate a secure connection (e.g. IDE)
+ 	 *	     with the device
+ 	 * @disconnect: teardown the secure link
+-	 * @bind: bind a TDI in preparation for it to be accepted by a TVM
+-	 * @unbind: remove a TDI from secure operation with a TVM
+ 	 *
+ 	 * Context: @probe, @remove, @connect, and @disconnect run under
+ 	 * pci_tsm_rwsem held for write to sync with TSM unregistration and
+ 	 * mutual exclusion of @connect and @disconnect. @connect and
+ 	 * @disconnect additionally run under the DSM lock (struct
+ 	 * pci_tsm_pf0::lock) as well as @probe and @remove of the subfunctions.
+-	 * @bind and @unbind run under pci_tsm_rwsem held for read
+-	 * and the DSM lock.
+ 	 */
+ 	struct_group_tagged(pci_tsm_link_ops, link_ops,
+ 		struct pci_tsm *(*probe)(struct tsm_dev *tsm_dev,
+@@ -47,9 +42,6 @@ struct pci_tsm_ops {
+ 		void (*remove)(struct pci_tsm *tsm);
+ 		int (*connect)(struct pci_dev *pdev);
+ 		void (*disconnect)(struct pci_dev *pdev);
+-		struct pci_tdi *(*bind)(struct pci_dev *pdev,
+-					struct kvm *kvm, u32 tdi_id);
+-		void (*unbind)(struct pci_tdi *tdi);
+ 	);
+ 
+ 	/*
+@@ -69,25 +61,12 @@ struct pci_tsm_ops {
+ 	);
  };
  
-@@ -165,6 +167,8 @@ int pci_tsm_bind(struct pci_dev *pdev, struct kvm *kvm, u32 tdi_id);
- void pci_tsm_unbind(struct pci_dev *pdev);
- void pci_tsm_tdi_constructor(struct pci_dev *pdev, struct pci_tdi *tdi,
- 			     struct kvm *kvm, u32 tdi_id);
-+int pci_tsm_context_get(struct pci_dev *pdev, struct tsm_dev *tsm_dev);
-+void pci_tsm_context_put(struct pci_dev *pdev);
+-/**
+- * struct pci_tdi - Core TEE I/O Device Interface (TDI) context
+- * @pdev: host side representation of guest-side TDI
+- * @kvm: TEE VM context of bound TDI
+- * @tdi_id: Identifier (virtual BDF) for the TDI as referenced by the TSM and DSM
+- */
+-struct pci_tdi {
+-	struct pci_dev *pdev;
+-	struct kvm *kvm;
+-	u32 tdi_id;
+-};
+-
+ /**
+  * struct pci_tsm - Core TSM context for a given PCIe endpoint
+  * @pdev: Back ref to device function, distinguishes type of pci_tsm context
+  * @dsm_dev: PCI Device Security Manager for link operations on @pdev
+  * @tsm_dev: PCI TEE Security Manager device for Link Confidentiality or Device
+  *	     Function Security operations
+- * @tdi: TDI context established by the @bind link operation
+  *
+  * This structure is wrapped by low level TSM driver data and returned by
+  * probe()/lock(), it is freed by the corresponding remove()/unlock().
+@@ -103,7 +82,6 @@ struct pci_tsm {
+ 	struct pci_dev *pdev;
+ 	struct pci_dev *dsm_dev;
+ 	struct tsm_dev *tsm_dev;
+-	struct pci_tdi *tdi;
+ };
+ 
+ /**
+@@ -163,10 +141,6 @@ int pci_tsm_pf0_constructor(struct pci_dev *pdev, struct pci_tsm_pf0 *tsm,
+ void pci_tsm_pf0_destructor(struct pci_tsm_pf0 *tsm);
+ int pci_tsm_doe_transfer(struct pci_dev *pdev, u8 type, const void *req,
+ 			 size_t req_sz, void *resp, size_t resp_sz);
+-int pci_tsm_bind(struct pci_dev *pdev, struct kvm *kvm, u32 tdi_id);
+-void pci_tsm_unbind(struct pci_dev *pdev);
+-void pci_tsm_tdi_constructor(struct pci_dev *pdev, struct pci_tdi *tdi,
+-			     struct kvm *kvm, u32 tdi_id);
+ int pci_tsm_context_get(struct pci_dev *pdev, struct tsm_dev *tsm_dev);
+ void pci_tsm_context_put(struct pci_dev *pdev);
  #else
- static inline int pci_tsm_register(struct tsm_dev *tsm_dev)
- {
-@@ -180,5 +184,15 @@ static inline int pci_tsm_bind(struct pci_dev *pdev, struct kvm *kvm, u64 tdi_id
- static inline void pci_tsm_unbind(struct pci_dev *pdev)
+@@ -177,13 +151,7 @@ static inline int pci_tsm_register(struct tsm_dev *tsm_dev)
+ static inline void pci_tsm_unregister(struct tsm_dev *tsm_dev)
  {
  }
-+static inline int
-+pci_tsm_context_get(struct pci_dev *pdev, struct tsm_dev *tsm_dev)
-+{
-+	return -EOPNOTSUPP;
-+}
+-static inline int pci_tsm_bind(struct pci_dev *pdev, struct kvm *kvm, u64 tdi_id)
+-{
+-	return -ENXIO;
+-}
+-static inline void pci_tsm_unbind(struct pci_dev *pdev)
+-{
+-}
 +
-+static inline void pci_tsm_context_put(struct pci_dev *pdev)
-+{
-+}
-+
- #endif
- #endif /*__PCI_TSM_H */
+ static inline int
+ pci_tsm_context_get(struct pci_dev *pdev, struct tsm_dev *tsm_dev)
+ {
 -- 
 2.43.0
 
