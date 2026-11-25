@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795619515;
-	b=OhuIBBOXoCPgGqMO9nrmz1H8TFGQp+E6AeT+aEexU3bfDkFXdzpYMHY+0qMBVjQilCu/
-	 FcPjnHS2nsKn7an0kk1x4LioEAkQTIFNLXBUnsRY1Sk4KxaODYLVFSlPMruA7TfLtay1D
-	 JX4KuX+hj47WR7HEMioImLMUTL2TAndyxtKVXflJvauXDsWLH1FwXsmtr0yB1tgQixsUP
-	 QiwA9WMUER5COgwD4uBqI0fju9q1ZFk3rdQDvdlfZ3uYskt9jd3qKMma0PMuWwBsxv9bW
-	 OzE8MuqVZL6zC9DWVKQSueNkGxktOmSWcMM8zbB6Q/DTqtvrTdh3bboBax20i0Oa7TQ==
+	t=1795619518;
+	b=UcsGwUaeWGcR3ZB47yEhvFHmUTACP3AtmeDixPEJBITks61rIzmkrAzs9InJ+tHZ5uw0
+	 qkdUROy/I5CMyIAxsvK3OraQUAwMmzNRn4oK6GDr2WBTVmoMfqPZLXfMDhuTO7nty4Q4S
+	 pjOBpfSyUxlWLdoP3/h6j3/3pr7g1RxYFt4J/QaTa1mGx/DFvmvVBTZvpKLf290qJKXiU
+	 oqXAy73CS3ysuXyZn/sDVgZfR5AIEayYoDlXMbSC/UnZXxBYUw/+q0Les4PIPeDNARyEs
+	 JPCDW8pJUa+Th4iJriNU2QGF4170RXA/cSm8RCWq72OBdEfBoREujZ1CW7k7jc/tMwA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795619515;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795619518;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=zp8EnKsGjYDMgazJzdPP8okha89zSfewh6dvqwjtyhg=;
-	b=RaaD4gUUWFDvYDAhWeoTM5NDgy/iq2oCe5El9yufryhEr41MgH8x9aB9kO5Kez4TaGy4
-	 jGdlHClRqTnhbam0vW5MG04gH4iUzLBJZnSLoje/civwE6RN7FnPzOABrZ+wJttWUx09F
-	 N4SC+eO9X7n4DD+8lzxNv5hv4WzIHZRBuCM2ZXTP8mqXK8ohwIlLm3GHfoU1VLbeR5eyc
-	 EZaXivOQ5dcFCBChx2n8giW4u9Y2G4z9NZZOg9xGPNei6N7puFtU+l814pUMsCGjLlgQQ
-	 /xnv02ztwRTyTthMqJWifrCnyEos0Z6ekJRUeM0GWx17PjNSntBW7cR72FIswScvqGA==
+	bh=sA6Z/W7GDO15opDc/rBX6WPn9rshIHXIKm7tqIILbvY=;
+	b=K28H2SKfJ7PbYPMx4jsJLMd63LNvAMJhbhUB2SotoknpN5VoRGgQ5WdnTOlW0IcGHkuq
+	 a/qjtf6MVJB3dVDmYeDwPrfXC89rJjFYckdKcN90S5Q2dCJhHbEu/SAtMIIaUHMOO8TK7
+	 LgqhXYDbQo6zPeRSGPqWdemGIzt26M8RspEo1LdxGBdUoD0itGSbxmS9Z7CwmN8QzxT+T
+	 7yc4JgqAJ+qiV0tMCe9wusps/MPTiOut6wiTJ+Bv8nzPSM8JfsZ1ngVR3p5a+8tGQK2CB
+	 WiQ/Fic88ysI+fX0EjmBnrCRXV+CxoFtwnc7h+v33zreyAbnczTyQsoP0nk1V1F8r7g==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=lgogrfjp;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=xFqMj2Z0;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8F6FB606A31E;
-	Wed, 25 Nov 2026 15:11:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6B3E9606A321;
+	Wed, 25 Nov 2026 15:11:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=lgogrfjp
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A04E31F000C4;
-	Wed, 25 Nov 2026 15:11:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=xFqMj2Z0
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B989A1F000C4;
+	Wed, 25 Nov 2026 15:11:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795619515;
-	bh=zp8EnKsGjYDMgazJzdPP8okha89zSfewh6dvqwjtyhg=;
+	s=korg; t=1795619518;
+	bh=sA6Z/W7GDO15opDc/rBX6WPn9rshIHXIKm7tqIILbvY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=lgogrfjp3d+dW27kJBYXMhLLHyB1JktMaoE6i7HyZx3yf7rbQ4treDiE/qqlI7xSF
-	 np5NcV80fgv3zi2hYdBUv+fT0j+0AtOCZCxQFQ9aHX1hwb5IhA7Bqqref7SBq0fjPp
-	 AkbwjYrvvXPSPaZooqKI56VI76pjBY7T6Gj7tii8=
+	b=xFqMj2Z08Bfjj47Zo0koEz7ySFbOsl4fMtf7uRNegUVLRrXi19P8s1VAEplbE3wsj
+	 Xqc68oEZzVMI2At1EWvtU3mOOLdRYzsXnnIKoBM+Qnd8yAUTyUcQIeK+ATHiDJIO3X
+	 gkn1+BE4EEkUReR7VdIH3AEYxZGIMrXFqxZfDHhA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Breno Leitao <leitao@debian.org>,
+	Dragos Tatulea <dtatulea@nvidia.com>,
 	Tariq Toukan <tariqt@nvidia.com>,
+	Jiabin Deng <dengjiabin2023@gmail.com>,
 	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 7.3 0621/1005] net/mlx5e: Fix queue stats access to queues without stats
-Date: Wed, 25 Nov 2026 15:32:39 +0100
-Message-ID: <20261125143836.294397482@linuxfoundation.org>
+Subject: [PATCH 7.3 0622/1005] net/mlx5e: SHAMPO, Disable end padding when relaxed ordering is supported
+Date: Wed, 25 Nov 2026 15:32:40 +0100
+Message-ID: <20261125143836.317666174@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143821.729802100@linuxfoundation.org>
 References: <20261125143821.729802100@linuxfoundation.org>
@@ -68,69 +69,56 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Breno Leitao <leitao@debian.org>
+From: Jiabin Deng <dengjiabin2023@gmail.com>
 
-commit 9a24799e219b1699bb1c144248c8c500b9504db5 upstream.
+commit 68c183619f24982a635930697bf8e148f2d78f71 upstream.
 
-I am seeing the following mlx5e crash in the Meta fleet:
+When SHAMPO and relaxed ordering writes are enabled, aligned RQ end
+padding can corrupt received TCP data. Due to reordering, alignment
+padding written at the end of one packet can overwrite data from the
+next packet.
 
-  pc : mlx5e_get_queue_stats_rx+0x4c/0xc8
-  Call trace:
-   mlx5e_get_queue_stats_rx+0x4c/0xc8 (P)
-   netdev_stat_queue_sum+0x78/0x480
-   netdev_nl_qstats_get_dump_one+0xf0/0x268
-   netdev_nl_qstats_get_dumpit+0x7c/0x1f8
+The current RQ end padding selection avoids alignment padding for LRO,
+but not for SHAMPO. Extend the condition to SHAMPO to prevent this
+corruption.
 
-When dumping device-wide qstats, the core calls the per-queue callbacks
-for every queue below real_num_{rx,tx}_queues, regardless of whether the
-netdev is up. Some of those queues have no stats behind them:
+The issue was observed in a two-host test using a BlueField-3 NIC and
+an NVIDIA H20 GPU. In the original test with MTU 1500, 354 of 400
+transfers contained corrupted data before the fix. After applying this
+change, all 400 transfers across eight message sizes from 32 KiB to
+4 MiB, with 50 transfers per size, completed successfully, with no
+incorrect bytes or corrupted intervals.
 
- - RX stats live in priv->channel_stats[], which only has entries for
-   channels that have been opened (stats_nch). real_num_rx_queues can
-   be larger, for example after the channel count is raised while the
-   netdev is down, or after opening the channels failed part way.
-
- - TX stats are looked up in priv->txq2sq_stats[], which is NULL for
-   SQs that were never activated and for HTB queues while the channels
-   are closed.
-
-In both cases the callback dereferences a NULL pointer. The dump needs
-no privileges, so any user can trigger it.
-
-Return early for RX queues at or above stats_nch and for TX queues
-without SQ stats.
-
-Fixes: 7b66ae536a78 ("net/mlx5e: Add per queue netdev-genl stats")
-Cc: stable@vger.kernel.org
-Signed-off-by: Breno Leitao <leitao@debian.org>
+Fixes: e5ca8fb08ab2 ("net/mlx5e: Add control path for SHAMPO feature")
+Closes: https://lore.kernel.org/r/CAFxp=AY2cVRQrZvB9WNnigbsobuw11NMG-cagHx0_V+ur2ToFw@mail.gmail.com
+Link: https://lore.kernel.org/r/atZKOtjrb9HKSNHF@dtatulea-c5.nvidia.com
+Suggested-by: Dragos Tatulea <dtatulea@nvidia.com>
+Reviewed-by: Dragos Tatulea <dtatulea@nvidia.com>
 Reviewed-by: Tariq Toukan <tariqt@nvidia.com>
-Link: https://patch.msgid.link/20261104-mlx5e-qstats-null-v1-1-a6a003245cec@debian.org
+Cc: stable@vger.kernel.org
+Signed-off-by: Jiabin Deng <dengjiabin2023@gmail.com>
+Link: https://patch.msgid.link/20261110035723.26587-1-dengjiabin2023@gmail.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ethernet/mellanox/mlx5/core/en_main.c |    5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ drivers/net/ethernet/mellanox/mlx5/core/en/params.c |    5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
---- a/drivers/net/ethernet/mellanox/mlx5/core/en_main.c
-+++ b/drivers/net/ethernet/mellanox/mlx5/core/en_main.c
-@@ -5490,7 +5490,7 @@ static void mlx5e_get_queue_stats_rx(str
- 	struct mlx5e_rq_stats *xskrq_stats;
- 	struct mlx5e_rq_stats *rq_stats;
+--- a/drivers/net/ethernet/mellanox/mlx5/core/en/params.c
++++ b/drivers/net/ethernet/mellanox/mlx5/core/en/params.c
+@@ -911,10 +911,11 @@ static void mlx5e_build_rx_cq_param(stru
  
--	if (mlx5e_is_uplink_rep(priv) || !mlx5e_stats_nch_read(priv))
-+	if (mlx5e_is_uplink_rep(priv) || i >= mlx5e_stats_nch_read(priv))
- 		return;
+ static u8 rq_end_pad_mode(struct mlx5_core_dev *mdev, struct mlx5e_params *params)
+ {
+-	bool lro_en = params->packet_merge.type == MLX5E_PACKET_MERGE_LRO;
++	bool no_pad = params->packet_merge.type == MLX5E_PACKET_MERGE_LRO ||
++		      params->packet_merge.type == MLX5E_PACKET_MERGE_SHAMPO;
+ 	bool ro = MLX5_CAP_GEN(mdev, relaxed_ordering_write);
  
- 	channel_stats = priv->channel_stats[i];
-@@ -5522,6 +5522,9 @@ static void mlx5e_get_queue_stats_tx(str
- 	 * inactive sqs.
- 	 */
- 	sq_stats = priv->txq2sq_stats[i];
-+	if (!sq_stats)
-+		return;
-+
- 	stats->packets = sq_stats->packets;
- 	stats->bytes = sq_stats->bytes;
+-	return ro && lro_en ?
++	return ro && no_pad ?
+ 		MLX5_WQ_END_PAD_MODE_NONE : MLX5_WQ_END_PAD_MODE_ALIGN;
+ }
  
 
 
