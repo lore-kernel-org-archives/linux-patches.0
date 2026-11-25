@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795620697;
-	b=A2EMOzbYwrYR5AbrzN8tn7i6BXwLLgwR+Mh4P+Zl2gQxil+XQt2IYFKeWETj2V+l+w7/
-	 GxmqWCjlM2jjkpJlyMIH9DQMGKD2DhHpoArEL9V5mCfwMD1+bWD6oXoAY6WIyLDAyMjjy
-	 ZWVdjTb1A6fMBVNFdKYEGPDv8/mgTcVCcOmJiTd48BwIKkFTa4Ug/vufFFJlHSYvZYWxq
-	 t4duKrUrkVEZwbm7g+UZ6esTk7+FHB07+dpYvW8v/TErZWoiGzQ7y7aFIJtB0Wmiy1Yev
-	 Sa6f8eGye30w8rk/HvM7yP3kAH9eo4QwzcFyWdhiERP7c5AxV/9rBa7CZP69rYGBgGw==
+	t=1795620700;
+	b=F3Wfd9TWi5rK0S0Rmio0FxZA18s0eBnkfcYN5cv9ybOfln96Sc9Kx+6imLVIxhB4IaqM
+	 mQbTtD2+m50LGU2udt/q04/+EqDapvtqRwNwvxEzaAcqcZUP2waZjICrRHIyOsKFYaRl2
+	 sOMF2hRdoGtLvAly6+RpBuLO5gLC/Soq/HWrNM/SKbBzcUVPZ9FfAB87sI5IkhuREDRdJ
+	 wMAZrHTVxXp3wZNUc5MPmr2G+y4oGb4c/Bnm0N7VjV1/AWDtzAgtIqSFympON+qG1/w1W
+	 +XUmNGPg8fv7zT61hRefpaOWnLLOyx5PeShIhge1NL6mPi/WhT84FpQHX8yfFcKk1LA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795620697;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795620700;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=YQhZsqjhLM7m4lVmO1BnObalQoqbNQujDLlHxnM447A=;
-	b=mFezb+b2aMXTpBAvalTQDS7eUDhOborFN2XVf3jcn/U0GQ8Kvv29Z1MbXbSKBWqMG7Yh
-	 PyNNdsvIvnCr1UnXkDxsH86MwOW9HcKnxkTwc3MPWOG59+TkmWe1zx3h2PQGa5+9I9Np+
-	 PFE1LIZjmP1YDIfCHEoPpggv33SS+8/iCCWG2PSwTaRx7VM0V53ZysYXNQX0pYbLzct5g
-	 UulekfdK92l88gzPoAA8M0lIT2xoQU7WcAM0h1ptNo2iCezJgS/ZhTVUoG3C1wyK1rAEE
-	 2dApsdAiCctr/epvXUONu4+EzrofvuHHIuT/L06L8pZ/YksWDZIwJbRVSrknkoxaTrw==
+	bh=otX5lhHgbHnpd9S+2vmRktPivRoiHETnl5BkFPvXK5s=;
+	b=YcgLaVw1ibB5RofYL0grN7pP+OehLHRLPJ2sILb0w76jtAeTVDHmo9e+g1Dzc7jjAwxJ
+	 qIsjujzVTj4aKklKVeWeyqpybSXJDSSf/EdW+fWQVWMewbpeOXLr7D4d6syd07IMKDgOO
+	 lWSogbUL1xGjhbPLpxb7eg9x8e+ei+Hn9tzYwbR6dgNNS8mhUxfR96B2XDej6DD2l8ow9
+	 zPMVBeCCdmKs0QbXCgmWil1UPb/UXtMnO67DaGewE5HuvF2MesDZ58SjpkzUhrOm4jWKZ
+	 ytLKQ3M5XbxtZQrlqv/Fbtl7GuQ8HKWwEpm5RScQIQ++4/mEZ5A358XBdH10QGtL/kg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ks5Nj8rO;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=j4UL2tBD;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C0C0A606A321;
-	Wed, 25 Nov 2026 15:31:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AF595606A31E;
+	Wed, 25 Nov 2026 15:31:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ks5Nj8rO
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 121D51F000CA;
-	Wed, 25 Nov 2026 15:31:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=j4UL2tBD
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0D5FD1F000C0;
+	Wed, 25 Nov 2026 15:31:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795620697;
-	bh=YQhZsqjhLM7m4lVmO1BnObalQoqbNQujDLlHxnM447A=;
+	s=korg; t=1795620700;
+	bh=otX5lhHgbHnpd9S+2vmRktPivRoiHETnl5BkFPvXK5s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ks5Nj8rOwNlmG0PQuLPm7JSSW6M7+JKxfAsLU7oVhBlhzrFJqcpM5Uvcn1ztMXEai
-	 TAH4WTwyvbv+IvEDdUeqKwcflj7nTiiE1FprUokkqmG/H830ZeNa/5aRUcJ9Hm1s3G
-	 Xc6c1ORxdZYaEvFO4917NIrONEQh4ptFTogNGEA4=
+	b=j4UL2tBDO9HgiNqwbKfDy0VHrQZvTcgBDxrMD7wdhXa0hUU/lP3EXdq4i+qTRFSTg
+	 HcK+99JSX8ztbf2xaSw4bT1V9cXcBGOmQpQwRWNFinD6epeQJT8MXDUzQyYdrtbvBU
+	 yV2+F+VnJaBIY25QI7gayvDzX5q3Bvr+QcUkWXZc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wayne Lin <Wayne.Lin@amd.com>,
-	Thomas Lamprecht <t.lamprecht@proxmox.com>,
-	Alex Deucher <alexander.deucher@amd.com>
-Subject: [PATCH 7.3 1003/1005] drm/amd/display: Dont warn about links without an HPD GPIO
-Date: Wed, 25 Nov 2026 15:39:01 +0100
-Message-ID: <20261125143845.147030535@linuxfoundation.org>
+	"Luiz Capitulino (Red Hat)" <luiz.capitulino@linux.dev>,
+	Michael Ellerman <mpe@kernel.org>,
+	Madhavan Srinivasan <maddy@linux.ibm.com>
+Subject: [PATCH 7.3 1004/1005] powerpc/watchdog: disable watchdog when watchdog_thresh=0
+Date: Wed, 25 Nov 2026 15:39:02 +0100
+Message-ID: <20261125143845.170920139@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143821.729802100@linuxfoundation.org>
 References: <20261125143821.729802100@linuxfoundation.org>
@@ -68,76 +68,90 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Thomas Lamprecht <t.lamprecht@proxmox.com>
+From: Luiz Capitulino (Red Hat) <luiz.capitulino@linux.dev>
 
-commit fb3d0ee0f7cf41488aff58c45f1b31a8f54f3372 upstream.
+commit d513ec3c907b067d4a32b14ec6f73c3e041cb136 upstream.
 
-Since commit def3488eb0fd ("drm/amd/display: refactor HPD to increase
-flexibility"), the link encoder programs the HPD filter, and
-dce110_program_hpd_filter() and dcn10_program_hpd_filter() hit ASSERT(0)
-if the encoder has no HPD GPIO. That is the case if link_get_hpd_gpio()
-finds no usable HPD info for the connector in the VBIOS, where
-program_hpd_filter() used to return early without a warning.
+On powerpc, trying to disable the hardlockup detector with:
 
-This logs a warning with a stack trace on every boot of some systems,
-for example with Ryzen 7 PRO 4750G APUs on ASRock Rack X570D4U and
-X470D4U2-2T boards:
+ # echo 0 > /proc/sys/kernel/watchdog_thresh
 
-  WARNING: drivers/gpu/drm/amd/amdgpu/../display/dc/dio/dcn10/dcn10_link_encoder.c:1514 at dcn10_program_hpd_filter+0x39/0x90 [amdgpu], CPU#7: (udev-worker)/836
-  Call Trace:
-   program_hpd_filter+0x5d/0xb0 [amdgpu]
-   construct_phy+0x96f/0xe60 [amdgpu]
-   link_create+0x1f0/0x240 [amdgpu]
-   create_links+0x164/0x4f0 [amdgpu]
-   dc_create+0x3ba/0x720 [amdgpu]
-   amdgpu_dm_init+0x2c9/0x420 [amdgpu]
+causes an immediate and endless hardlockup detection, eventually leading
+to an unusable system (splat example below). This happens because
+watchdog_calc_timeouts() sets wd_timer_period_ms, wd_panic_timeout_tb
+and wd_smp_panic_timeout_tb to zero, but start_watchdog() still starts
+the timer (with expiry=0) in this code path:
 
-Return false without asserting if there is no HPD GPIO, as before, and
-keep the assertion for failing to lock the pin.
+proc_watchdog_thresh()
+  proc_watchdog_update()
+    __lockup_detector_reconfigure()
+      watchdog_hardlockup_start()
+        start_watchdog_on_cpu()
+          start_watchdog()
+            hrtimer_start() /* wd_timer_period_ms=0 */
 
-Fixes: def3488eb0fd ("drm/amd/display: refactor HPD to increase flexibility")
-Link: https://forum.proxmox.com/threads/kernel-7-0-14-24-and-7-0-14-25-bug-in-amdgpu.187181/
-Reviewed-by: Wayne Lin <Wayne.Lin@amd.com>
-Signed-off-by: Thomas Lamprecht <t.lamprecht@proxmox.com>
-Signed-off-by: Wayne Lin <Wayne.Lin@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-(cherry picked from commit 62ea146c23e14f958744507c37025f1a7f9c041b)
+However, according to Documentation/admin-guide/sysctl/kernel.rst,
+setting watchdog_thresh=0 should disable both the soft and hard lockup
+detectors.
+
+This condition is already checked in __lockup_detector_reconfigure() for
+the soft lockup detector and the arch-independent hardlockup detector,
+what's missing is powerpc performing the same check in start_watchdog().
+
+[  278.110085] watchdog: CPU 0 detected hard LOCKUP on other CPUs 1
+[  278.110086] watchdog: CPU 1 became unstuck TB:33050716089564575
+[  278.110097] CPU: 1 UID: 0 PID: 0 Comm: swapper/1 Kdump: loaded Tainted: G            E       7.4.0-rc1 #1 PREEMPT(full)
+[  278.110103] watchdog: CPU 0 TB:33050716089564185, last SMP heartbeat TB:33050716089563885 (0ms ago)
+[  278.110109] Tainted: [E]=UNSIGNED_MODULE
+[  278.110126] Hardware name: IBM,8375-42A POWER9 (architected) 0x4e0202 0xf000005 of:IBM,FW940.00 (VL940_027) hv:phyp pSeries
+[  278.110136] NIP:  c0000000001bd518 LR: c0000000014dedf8 CTR: 0000000000000000
+[  278.110145] REGS: c000000004b17a80 TRAP: 0900   Tainted: G            E        (7.4.0-rc1)
+[  278.110155] MSR:  800000000280b033 <SF,VEC,VSX,EE,FP,ME,IR,DR,RI,LE>  CR: 22000224  XER: 20040004
+[  278.110189] CFAR: 0000000000000000 IRQMASK: 0
+GPR00: 0000000000000000 c000000004b17d20 c000000001c38100 0000000000000000
+GPR04: 000000000000ffff 0000000000000000 0000000000000000 0000000000000000
+GPR08: 0000000000000000 0000000000000080 0000000000000080 ffffffffffffffff
+GPR12: 0000000000000000 c000000017fff300 0000000000000000 000000002ef3d820
+GPR16: 0000000000000000 0000000000000000 0000000000000000 0000000000000000
+GPR20: 0000000000000000 0000000000000000 0000000000000000 0000000000000001
+GPR24: 0000000000000001 00000040c0a6075e 0000000000000000 0000000000000001
+GPR28: c0000001fdb5b140 0000000000000001 c000000002291968 c000000002291970
+[  278.110306] NIP [c0000000001bd518] plpar_hcall_norets_notrace+0x18/0x2c
+[  278.110319] LR [c0000000014dedf8] check_and_cede_processor+0x48/0x60
+[  278.110333] Call Trace:
+[  278.110338] [c000000004b17d20] [c000000004b17dd0] 0xc000000004b17dd0 (unreliable)
+[  278.110354] [c000000004b17d80] [c0000000014df020] shared_cede_loop+0x70/0x170
+[  278.110367] [c000000004b17dc0] [c0000000014de460] cpuidle_enter_state+0x2f0/0x748
+[  278.110381] [c000000004b17e70] [c000000000fe43b8] cpuidle_enter+0x48/0x70
+[  278.110397] [c000000004b17eb0] [c0000000002cdcf8] call_cpuidle+0x48/0x90
+[  278.110409] [c000000004b17ed0] [c0000000002d6300] cpuidle_idle_call+0x160/0x2d0
+[  278.110422] [c000000004b17f20] [c0000000002d6578] do_idle+0x108/0x1f0
+[  278.110434] [c000000004b17f60] [c0000000002d6938] cpu_startup_entry+0x48/0x50
+[  278.110446] [c000000004b17f90] [c0000000000615c0] start_secondary+0x290/0x2a0
+[  278.110459] [c000000004b17fe0] [c00000000000e258] start_secondary_prolog+0x10/0x14
+
+Fixes: 2104180a5369 ("powerpc/64s: implement arch-specific hardlockup watchdog")
 Cc: stable@vger.kernel.org
+Signed-off-by: Luiz Capitulino (Red Hat) <luiz.capitulino@linux.dev>
+Reviewed-by: Michael Ellerman <mpe@kernel.org>
+Signed-off-by: Madhavan Srinivasan <maddy@linux.ibm.com>
+Link: https://patch.msgid.link/20261104034018.2676750-1-luiz.capitulino@linux.dev
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/display/dc/dce/dce_link_encoder.c         |    5 ++++-
- drivers/gpu/drm/amd/display/dc/dio/dcn10/dcn10_link_encoder.c |    5 ++++-
- 2 files changed, 8 insertions(+), 2 deletions(-)
+ arch/powerpc/kernel/watchdog.c |    3 +++
+ 1 file changed, 3 insertions(+)
 
---- a/drivers/gpu/drm/amd/display/dc/dce/dce_link_encoder.c
-+++ b/drivers/gpu/drm/amd/display/dc/dce/dce_link_encoder.c
-@@ -1841,8 +1841,11 @@ bool dce110_get_hpd_state(struct link_en
+--- a/arch/powerpc/kernel/watchdog.c
++++ b/arch/powerpc/kernel/watchdog.c
+@@ -487,6 +487,9 @@ static void start_watchdog(void *arg)
+ 	if (!(watchdog_enabled & WATCHDOG_HARDLOCKUP_ENABLED))
+ 		return;
  
- bool dce110_program_hpd_filter(struct link_encoder *enc, int delay_on_connect_in_ms, int delay_on_disconnect_in_ms)
- {
-+	if (!enc->hpd_gpio)
-+		return false;
++	if (!watchdog_thresh)
++		return;
 +
- 	/* Setup HPD filtering */
--	if (enc->hpd_gpio && dal_gpio_lock_pin(enc->hpd_gpio) == GPIO_RESULT_OK) {
-+	if (dal_gpio_lock_pin(enc->hpd_gpio) == GPIO_RESULT_OK) {
- 		struct gpio_hpd_config config;
+ 	if (!cpumask_test_cpu(cpu, &watchdog_cpumask))
+ 		return;
  
- 		config.delay_on_connect = delay_on_connect_in_ms;
---- a/drivers/gpu/drm/amd/display/dc/dio/dcn10/dcn10_link_encoder.c
-+++ b/drivers/gpu/drm/amd/display/dc/dio/dcn10/dcn10_link_encoder.c
-@@ -1502,8 +1502,11 @@ bool dcn10_get_hpd_state(struct link_enc
- 
- bool dcn10_program_hpd_filter(struct link_encoder *enc, int delay_on_connect_in_ms, int delay_on_disconnect_in_ms)
- {
-+	if (!enc->hpd_gpio)
-+		return false;
-+
- 	/* Setup HPD filtering */
--	if (enc->hpd_gpio && dal_gpio_lock_pin(enc->hpd_gpio) == GPIO_RESULT_OK) {
-+	if (dal_gpio_lock_pin(enc->hpd_gpio) == GPIO_RESULT_OK) {
- 		struct gpio_hpd_config config;
- 
- 		config.delay_on_connect = delay_on_connect_in_ms;
 
 
