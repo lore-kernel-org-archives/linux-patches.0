@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795621891;
-	b=zKzow9TP3NRmluRsrROL0wDqyQ7w+gb7stih4IuKQlu9TRo9mjX2QkAN9Ij0+HlTIAa3
-	 ogKFA10EbicadRGXAR88wNXE3FetH9wjB5GcE7s1LLO/h3YZ8OZkfWxbOEjuqrtCJOyaZ
-	 1USiuJxybvJWoNv04+Nwx9xlgscexv0Ajx0UZ1a8JNhC+7x17Nn/LW7JFqeeRHNnXh+kj
-	 KjGtZVl6oIeHaZue7upfRsrykfJVkTL0rpGnn0jAjwl7cwJZBZy8RQ+qFazXYmRDQ6cux
-	 d66gOaorj4WtozCHtsaEg6lY8qjZOl3fybLzCvCLOUNXLKJJbHJzfuVnRXD62tm/Ydg==
+	t=1795621895;
+	b=cbs6AjJ8DIoxodkR10T9nZhTpZMhxHTPK+v/O0J3YriSbGQaiY10GHCcEf5ZZj3eTHaM
+	 YJyVRb8Hj3e+7p+esUh1K0ixGSVJYpksh8RXxCNya7ui3urPx3XR23bD1efOP9Tn9vXVi
+	 GicWEjMN4EjgJ65Esbo1Nateoyrk5BxE3PjPDAmPmUXOXjKHHkUrpqoLx6+tYhpnTYdHJ
+	 VWLQa00inmIf5/R9Fy1Uz23Up3EF8czQbAsCfWZZ6ypmNsO1mxLdAegqZ5SeBn5jrZumm
+	 ivS6cRHUMMOUAQ4cjHEMnw3vf0pPsKr1PFDSfHchobswX8X5T/k5/r9Fs7ihh1jADgA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795621891;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795621895;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=S3GWw7xo4Sgpo6C6UOmu7FRwGAGMMGNuW12I8ZhTY1k=;
-	b=YnwI/E92wqxKg63cq8phwDXYO1QB3ROEpRsJZrz60ZdEzjmQMhJ++4YmgvRRIKokK4vl
-	 dV3+TuAPGZ5s6NufxZGsSLdt7mo09S+xENWGgjsqZRq2GAnj9f/fqjRCCoeR5jQTo9CC1
-	 hTqwkiG/exXRc4T7soDFfOF7xsV+741qtXLgNK0eCzjt+YFf/Yu5zXaNW/cYZoqjGRkJV
-	 2AxXJwQRgzGcS3mTb79NKi7UARTlgD/bDnf04CN2RdYCqwy3+Lu0WSXAAGGlEu6vd0/MF
-	 UUViiL4gt+LcDWlbYkV0wS8hgip7Mb966Ip0t1GDlNfCukaUOYndleaW/g1G7KESTmQ==
+	bh=c+TtICV5MasfcYQye/1LSvJcLl7ZdOKtQWOYxRzt7aA=;
+	b=yS35/5WQEKOSaNxtz8vMNhB80quviiSwhVvbmrQylBUH+6WYo+htS3JDU88u3Ho2T0Pe
+	 jQ6jCKHR2R2Jysim6528e26mTEI8anjOx0hbmhpO5VUXzdbluYSDGwAi4/OvhCdEDMJd8
+	 OJqGz7uOrGCtxhctV6EpjEjxhYufjrcZ/AtiXDk85j96lgqoRrbDJbeZONwCsF5Cy/E/o
+	 H9f7M+qdd+M97pytV/3BJ5B2Gn/M7Aensy5nj2alo4n+ARFmcuNSBIHknFx5QcFy5/F5B
+	 NrVANLwFHfj6gAj3u1RFOfCaoID2IrT6giH2cHOZdZ6ZNMalDkMD3Tvnf21X6+AOCAw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=P48ThtvN;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=rJLyovZ0;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DE4E1606A321;
-	Wed, 25 Nov 2026 15:51:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 672E2606A321;
+	Wed, 25 Nov 2026 15:51:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=P48ThtvN
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1FF791F000EC;
-	Wed, 25 Nov 2026 15:51:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=rJLyovZ0
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4C4911F000C4;
+	Wed, 25 Nov 2026 15:51:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795621891;
-	bh=S3GWw7xo4Sgpo6C6UOmu7FRwGAGMMGNuW12I8ZhTY1k=;
+	s=korg; t=1795621894;
+	bh=c+TtICV5MasfcYQye/1LSvJcLl7ZdOKtQWOYxRzt7aA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=P48ThtvNCVqqGizfUfY/2T431a5RCV9Jh8V8eUKc+zoEWpofzexZXDZ+Hk7ruPUi0
-	 7/iT9Xeuay4bRNInoHMOjYuZy4wgTSOgyym0k098yGUk3omwUnlAM9/RQ4RA5FHhDl
-	 Ip7bm8hAz98W8BfK0pR6GjNFHEN/LqlhuJRtgb1s=
+	b=rJLyovZ0mb0+1VWzh+sMzNA4s79b/QO5QaPh/l/Z/U7rPw9BMM5eH6ku1iK6nN9U4
+	 TgoOMtnDVYYeTwWmcbWbADT+EbyVkBs3d7eBuizwgWpCepGOQ2yLuHZNmrGj6yAmj2
+	 K/W5b3iMpBBjF6SzFrSm57uWhKAvxAxtM33zKltg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Daniel Vacek <neelx@suse.com>,
+	Naohiro Aota <naohiro.aota@wdc.com>,
 	Johannes Thumshirn <johannes.thumshirn@wdc.com>,
 	David Sterba <dsterba@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 367/990] btrfs: zoned: requeue block group if zone reset bails out
-Date: Wed, 25 Nov 2026 15:28:54 +0100
-Message-ID: <20261125143830.688090835@linuxfoundation.org>
+Subject: [PATCH 6.18 368/990] btrfs: zoned: dont wait for ordered extents in do_zone_finish()
+Date: Wed, 25 Nov 2026 15:28:55 +0100
+Message-ID: <20261125143830.710635952@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143822.072087159@linuxfoundation.org>
 References: <20261125143822.072087159@linuxfoundation.org>
@@ -71,108 +71,69 @@ Content-Transfer-Encoding: 8bit
 
 From: Johannes Thumshirn <johannes.thumshirn@wdc.com>
 
-[ Upstream commit c5f878eefdd4f559422a68bf49b6f59e7c10e70e ]
+[ Upstream commit bcad7df05237382237ad1517411721d839174009 ]
 
-btrfs_reset_unused_block_groups() drops the block-group from
-fs_info->unused_bgs before performing the work that can actually fail,
-the actual submission of a REQ_OP_ZONE_RESET.
+do_zone_finish() calls btrfs_wait_ordered_roots(), which holds
+fs_info->ordered_operations_mutex while waiting for writeback. It can be
+reached from writeback itself:
 
-Every failed operation after this leaves the block-group dangling,
-physically reset, but the in-memory structures aren't and it is not
-requeued to be reset on fs_info->unused_bgs.
+  cow_file_range()
+  `-> btrfs_reserve_extent()
+    `-> find_free_extent()
+      `-> btrfs_zone_finish_one_bg()
+        `-> do_zone_finish()
 
-Instead of bailing out, re-add this block-group to fs_info->unused_bgs
-list.
+If another task holds the mutex and waits for that writeback, this
+deadlocks.
 
-Fixes: 453a73c3069a ("btrfs: zoned: reclaim unused zone by zone resetting")
-Reviewed-by: Daniel Vacek <neelx@suse.com>
+In general, we want to ensure all writes in the block group to
+complete before finishing the zone, as relocation does. However, the
+current callers do not need the wait (or cannot wait) in do_zone_finish():
+
+- Relocation already waits for reservations and ordered extents itself
+  before calling btrfs_zone_finish().
+- btrfs_delete_unused_bgs() checks that ->reserved is zero and sets the
+  block group read-only while holding groups_sem, so there can be no
+  in-flight data write.
+- btrfs_zone_finish_one_bg() is called from the allocation path and
+  cannot wait.
+
+Dropping the wait is still safe. Once the block group is read-only,
+->reserved can only drop, and for data it only drops after the ordered
+extent's I/O has completed. So if ->reserved is zero, no data write is
+left in flight. If it is non-zero, do_zone_finish() returns -EAGAIN,
+which all callers handle.
+
+This makes btrfs_zone_finish_one_bg() fail with -EAGAIN when it races
+with an allocation in the selected block group.
+
+Fixes: 393f646e34c1 ("btrfs: zoned: finish least available block group on data bg allocation")
+Reviewed-by: Naohiro Aota <naohiro.aota@wdc.com>
 Signed-off-by: Johannes Thumshirn <johannes.thumshirn@wdc.com>
 Signed-off-by: David Sterba <dsterba@suse.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/btrfs/zoned.c | 28 ++++++++++++++++++++++------
- 1 file changed, 22 insertions(+), 6 deletions(-)
+ fs/btrfs/zoned.c | 7 ++++---
+ 1 file changed, 4 insertions(+), 3 deletions(-)
 
 diff --git a/fs/btrfs/zoned.c b/fs/btrfs/zoned.c
-index fe35bd531f70f..f25cd3ddbd630 100644
+index f25cd3ddbd630..65c238d38e5d5 100644
 --- a/fs/btrfs/zoned.c
 +++ b/fs/btrfs/zoned.c
-@@ -3107,6 +3107,8 @@ int btrfs_reset_unused_block_groups(struct btrfs_space_info *space_info, u64 num
- {
- 	struct btrfs_fs_info *fs_info = space_info->fs_info;
- 	const sector_t zone_size_sectors = fs_info->zone_size >> SECTOR_SHIFT;
-+	LIST_HEAD(retry_list);
-+	int ret = 0;
+@@ -2575,9 +2575,10 @@ static int do_zone_finish(struct btrfs_block_group *block_group, bool fully_writ
  
- 	if (!btrfs_is_zoned(fs_info))
- 		return 0;
-@@ -3148,11 +3150,10 @@ int btrfs_reset_unused_block_groups(struct btrfs_space_info *space_info, u64 num
- 		}
- 		if (!found) {
- 			spin_unlock(&fs_info->unused_bgs_lock);
--			return 0;
-+			goto out;
- 		}
+ 		/* Ensure all writes in this block group finish */
+ 		btrfs_wait_block_group_reservations(block_group);
+-		/* No need to wait for NOCOW writers. Zoned mode does not allow that */
+-		btrfs_wait_ordered_roots(fs_info, U64_MAX, block_group);
+-		/* Wait for extent buffers to be written. */
++		/*
++		 * No need to wait for NOCOW writers, as zoned mode does not
++		 * allow that, only wait for extent buffers to be written.
++		 */
+ 		if (is_metadata)
+ 			wait_eb_writebacks(block_group);
  
- 		list_del_init(&bg->bg_list);
--		btrfs_put_block_group(bg);
- 		spin_unlock(&fs_info->unused_bgs_lock);
- 
- 		/*
-@@ -3166,7 +3167,6 @@ int btrfs_reset_unused_block_groups(struct btrfs_space_info *space_info, u64 num
- 		for (int i = 0; i < map->num_stripes; i++) {
- 			struct btrfs_io_stripe *stripe = &map->stripes[i];
- 			unsigned int nofs_flags;
--			int ret;
- 
- 			nofs_flags = memalloc_nofs_save();
- 			ret = blkdev_zone_mgmt(stripe->dev->bdev, REQ_OP_ZONE_RESET,
-@@ -3176,7 +3176,7 @@ int btrfs_reset_unused_block_groups(struct btrfs_space_info *space_info, u64 num
- 
- 			if (ret) {
- 				up_read(&fs_info->dev_replace.rwsem);
--				return ret;
-+				goto requeue;
- 			}
- 		}
- 		up_read(&fs_info->dev_replace.rwsem);
-@@ -3187,7 +3187,7 @@ int btrfs_reset_unused_block_groups(struct btrfs_space_info *space_info, u64 num
- 		if (bg->ro) {
- 			spin_unlock(&bg->lock);
- 			spin_unlock(&space_info->lock);
--			continue;
-+			goto requeue;
- 		}
- 
- 		reclaimed = bg->alloc_offset;
-@@ -3215,10 +3215,26 @@ int btrfs_reset_unused_block_groups(struct btrfs_space_info *space_info, u64 num
- 		btrfs_return_free_space(space_info, reclaimed);
- 		spin_unlock(&space_info->lock);
- 
-+		btrfs_put_block_group(bg);
-+
- 		if (num_bytes <= reclaimed)
- 			break;
- 		num_bytes -= reclaimed;
-+		continue;
-+
-+requeue:
-+		list_add_tail(&bg->bg_list, &retry_list);
-+
-+		if (ret)
-+			goto out;
- 	}
- 
--	return 0;
-+out:
-+	if (!list_empty(&retry_list)) {
-+		spin_lock(&fs_info->unused_bgs_lock);
-+		list_splice_tail(&retry_list, &fs_info->unused_bgs);
-+		spin_unlock(&fs_info->unused_bgs_lock);
-+	}
-+
-+	return ret;
- }
 -- 
 2.53.0
 
