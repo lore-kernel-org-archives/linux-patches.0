@@ -1,59 +1,72 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795621022;
-	b=djhchlDShvG/vRM+K9n4ka4+ExqYYxDlELz5yPSSFantRu7QcSlnVqYIb8RsPgQSnE8e
-	 esK8njgB9otyzKP8WN5yRgg9dCJBpYbfNWBqyy7lsRS7ykTIU6tj/PT2TzqufJ5j4ixRs
-	 BK/RsIck3W05jwNfK0nbm+CLfp5pTT9xTQLIQzpDFJRTN17yyO1fZ/FSQbRZkaqrQVndG
-	 0H5OnfGSiNbjaHaw2EPwgpgjxb9WF5ViUojr/Zjl4ZxV2VY4V/ZTxSafJdQ75fhXUCANy
-	 aHbyrbr5yY/9qLp4F0bo9w8DWX1QcuqTiHlON81P5f+CKGi/fOQ8Zh+Frghyo5O2hhQ==
+	t=1795621023;
+	b=uS5WPdzVRS9gnvjM8oVOFVFs0WfLJfsT7PXsadfODZdUI0dT84gV8O4f8ChAI6xCj7+6
+	 nGN6BP9N+SWrgyfH+1mBhPU31fdLbBKm6CS9YDaRw96OeA1HqKXmld1ZVdrGVp4UDkCFh
+	 4pJq0rwtBXefPYumhGRW/6d8A3etbV4U0SbvqnrttoqtJa4EIWpg+2UVcw72f9RQt6GLr
+	 +CbvZ4vz5OD/5bFW4BAAgVSz1YiibdXBglMv/6khryP8ZVZwBAaYo6+RSfjHuquAZZkB2
+	 ULR5tAa9xi5r1UNeZ6gVsiYKeTWqrLhuHBTbv0x3f7A/sHk33KcYUoecXcn3/nFWwGQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795621022;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795621023;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
-	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Transfer-Encoding;
-	bh=ejkJ829O/dZVLhghSUn07Qr6MnoCClvrc9xcH8JHbls=;
-	b=gPpxO1U1KSq18su3An+fIFeWr9l233qzQgI9rI/7XHkgdQecrWBQeGIJWQBRmFfBG2lv
-	 qAtJfE4PscGesL7L0ObCQt/ftzQpk6vRIF33tqoRPe/SPHdUNnlMtZ6dqeX5Pk21fkY6H
-	 0WbOyCh6H4kJJKC8AaPI/RXkwHQPjmvasf1mdV7WDN9DbUJVyCR8MF4TR/1amOQFWL3y9
-	 u4nn2ddNxjB2tFHN3Csf7tM1NiZqEIb04zXpUulEWKBlE0LtqpYvUefA/7Hj6lZtAjiUD
-	 RjFLaB98BXJON6ZmIFgURSTMlv9YuJQ5lF42qW5iGleA7Sy1an61c9Ce7iv7Siqc35w==
+	 In-Reply-To:References:MIME-Version:Content-Transfer-Encoding;
+	bh=XknmS3WFriM9ON7O0XhdRopyHsB+3B42/3MNNAYS3rA=;
+	b=JHHw+6h6aG0AcKakjDsO+znaa+nxspsOoSSdikPJB/VPyGrSXlohL8TlZkv3Umci/ZO9
+	 i05Urss8wuxdg4DoxacR/U8uzdUZw9pOt5MP8GnbZnqcsDeTRMSVrhxzh8dL9Ob6fXLfP
+	 7j50Cyg95j2GL1G1RcaICUfNLgsCbaqDnw3jWpWZa0EJn7KCr2BLg3xfL8Im4G5ajQ3RJ
+	 5Uh3va4E7ge2g3llrRQITIW1SpDm7cgFp1flrD4gXYRUx2330eq1/y0VYTTzgicWPY4gD
+	 2p4AI9kYBuvj0gYN3zg6oienPccWa4dIySkF1I2FG/alTBngZaeJsyjR5hw9Xk5impg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=rL1S9PCM;
+	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=LyTJ0qc3;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CD4D1606A682;
-	Wed, 25 Nov 2026 15:37:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5C9F6606A32A;
+	Wed, 25 Nov 2026 15:37:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=rL1S9PCM
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DB79C1F000EF;
-	Wed, 25 Nov 2026 15:37:01 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795621022;
-	bh=ejkJ829O/dZVLhghSUn07Qr6MnoCClvrc9xcH8JHbls=;
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=LyTJ0qc3
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 40E1F1F000D3;
+	Wed, 25 Nov 2026 15:37:02 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1795621023;
+	bh=XknmS3WFriM9ON7O0XhdRopyHsB+3B42/3MNNAYS3rA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=rL1S9PCMPayxlvo6ihp9N/t6W8WlDuZuHoF+/apx5j3CXN74ZDx6zME7vpflBD0/I
-	 0OD89nvRFPgA+DYwFq/FcZNpQRo1yaCwbnIffyFVtXlfVhEYNkaQhZVHtSpHz4neDK
-	 /jt/5l0NRcNSuYlQMff/rMC7nvQ1RW+fRfFzb3o0=
-From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-To: stable@vger.kernel.org
-Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+	b=LyTJ0qc3xkMiw1uuPfsXcdcGieUcmy/Mw2VqD4VSzpm/qMLnCWAeYnM7WYeGu78FR
+	 NzG+yBpABw0NeJoW4NJaj8s2G180hU1JWISkO7/dSEriY35ZXjrEQYXPWTvB+/IDve
+	 uUVvOXIEn+0c+ygAGEo8NiftYS0DbAS3stOeskN7bnqbUnn+gRucuRaGgh8+o/j7Zz
+	 rjUJO4a+8L1OKlJzfeiS8LzXr9zoVbpX5Y4FGf+ZQ18PxdW/N2nscThdFldAJPS06l
+	 q/MXTSSYxtN9O6oymsjFnLEh5f0eSMN6A2uuw2yCwgQOLQwLm+BKmU9d2BC9kLw+yp
+	 GCqYZWqSCEgdg==
+From: SJ Park <sj@kernel.org>
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: SJ Park <sj@kernel.org>,
+	stable@vger.kernel.org,
 	patches@lists.linux.dev,
-	Sashiko <sashiko-bot@kernel.org>,
-	Zhi-Jun You <hujy652@gmail.com>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 095/990] net: ethernet: mtk_wed: free up rings during detach
-Date: Wed, 25 Nov 2026 15:24:22 +0100
-Message-ID: <20261125143824.314846531@linuxfoundation.org>
-X-Mailer: git-send-email 2.56.1
+	linux-kernel@vger.kernel.org,
+	torvalds@linux-foundation.org,
+	akpm@linux-foundation.org,
+	linux@roeck-us.net,
+	shuah@kernel.org,
+	patches@kernelci.org,
+	lkft-triage@lists.linaro.org,
+	pavel@nabladev.com,
+	jonathanh@nvidia.com,
+	f.fainelli@gmail.com,
+	sudipm.mukherjee@gmail.com,
+	rwarsow@gmx.de,
+	conor@kernel.org,
+	hargar@microsoft.com,
+	broonie@kernel.org,
+	achill@achill.org,
+	sr@sladewatkins.com
+Subject: Re: [PATCH 6.18 000/990] 6.18.66-rc1 review
+Date: Wed, 25 Nov 2026 07:36:54 -0800
+Message-ID: <20261125153655.90669-1-sj@kernel.org>
+X-Mailer: git-send-email 2.47.3
 In-Reply-To: <20261125143822.072087159@linuxfoundation.org>
-References: <20261125143822.072087159@linuxfoundation.org>
-User-Agent: quilt/0.69
-X-stable: review
-X-Patchwork-Hint: ignore
+References: 
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Post: <mailto:patches@lists.linux.dev>
@@ -65,54 +78,21 @@ Precedence: list
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.18-stable review patch.  If anyone has any objections, please let me know.
+On Wed, 25 Nov 2026 15:22:47 +0100 Greg Kroah-Hartman <gregkh@linuxfoundation.org> wrote:
 
-------------------
+> This is the start of the stable review cycle for the 6.18.66 release.
+> There are 990 patches in this series, all will be posted as a response
+> to this one.  If anyone has any issues with these being applied, please
+> let me know.
 
-From: Zhi-Jun You <hujy652@gmail.com>
+This rc kernel passes DAMON functionality test [1] on my test machine.
 
-[ Upstream commit 5b8d12512cbd3495dbd8c38e8047bb5d716f0f3f ]
+Tested-by: SJ Park <sj@kernel.org>
 
-During __mtk_wed_detach, rx_ring and tx_wdma aren't freed up.
-
-Fix this by add them to mtk_wed_free_rx_rings.
-
-This patch is pulled from mtk-openwrt-feeds to address Sashiko's review
-and edit to rely on ring->desc instead of an extra flag.
-
-Link: https://github.com/mediatek/mtk-openwrt-feeds/blob/main/25.12/files/target/linux/mediatek/patches-6.12/999-wed-04-Fix-reinsert-wifi-module-cause-memory-leak-issue.patch
-Fixes: 4c5de09eb0d0 ("net: ethernet: mtk_wed: add configure wed wo support")
-Reported-by: Sashiko <sashiko-bot@kernel.org>
-Link: https://sashiko.dev/#/message/179000700034.2160803.10594281691384015089%40kernel.org
-Signed-off-by: Zhi-Jun You <hujy652@gmail.com>
-Link: https://patch.msgid.link/20261026-wedfix-v6-3-a52f6b15d2fc@gmail.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
----
- drivers/net/ethernet/mediatek/mtk_wed.c | 8 ++++++++
- 1 file changed, 8 insertions(+)
-
-diff --git a/drivers/net/ethernet/mediatek/mtk_wed.c b/drivers/net/ethernet/mediatek/mtk_wed.c
-index 202ab2f34d56a..e81a62c6029c2 100644
---- a/drivers/net/ethernet/mediatek/mtk_wed.c
-+++ b/drivers/net/ethernet/mediatek/mtk_wed.c
-@@ -949,6 +949,14 @@ mtk_wed_free_ring(struct mtk_wed_device *dev, struct mtk_wed_ring *ring)
- static void
- mtk_wed_free_rx_rings(struct mtk_wed_device *dev)
- {
-+	int i;
-+
-+	for (i = 0; i < ARRAY_SIZE(dev->rx_ring); i++)
-+		mtk_wed_free_ring(dev, &dev->rx_ring[i]);
-+
-+	for (i = 0; i < ARRAY_SIZE(dev->tx_wdma); i++)
-+		mtk_wed_free_ring(dev, &dev->tx_wdma[i]);
-+
- 	mtk_wed_free_rx_buffer(dev);
- 	mtk_wed_free_ring(dev, &dev->rro.ring);
- }
--- 
-2.53.0
+[1] https://github.com/damonitor/damon-tests/tree/next/corr
 
 
+Thanks,
+SJ
 
+[...]
