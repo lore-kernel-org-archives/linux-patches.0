@@ -1,50 +1,50 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795625924;
-	b=1f+aPecphI6O8OYCTA4lEb6zjU+q8vdC91J+7BRNegQ44l3clSBmvQS1fWEJap+Zk9Rl
-	 WepMIVBSA0zHx84rkkk0CWbmdqi0kC3BCU9hJTs1FExxCIt0lYFXiqaWLZpSijPKQKRlR
-	 Uwm2BfiCHqIGJBPRLulTgQRYBDO/kBt6MNqGENPpRngUloCqj2s+yEzd63lBeEZJGp4j0
-	 T5nQ0EoCxVUxur1dchgekLL8Nf9cdR9cpu/WLtoOSik1zh2caNtaDlti52pZQUIGoOe8s
-	 kBju4FbmMRuW98H6lEPyxNTtagtFbJyj1qA+uG1/LIHvI8snGLwJUiX2dxDd4lY8aaw==
+	t=1795625927;
+	b=YM9aROlQ/VZ/rK6n2aV6zf7tSHiWWnAd7TlRMZIupcLUlhHX/bAkD6hS6VXiCZIaAllA
+	 15OHGv2+EaQ22j2CWahyYXfM10B/nbF/3YB+cx1RdRPpSIwlvU1ox1i8jLFQSIPL+NPr+
+	 378W09CDxF3B6juZoXYDTb9cCh4k0qmXJzgOgvRkmb4FilIW4cx4RoY4DlCBiePftosIb
+	 xCBoeSQKTgxdoH6L/4Zq1sGAZLNw2XMUDnqqA1XAOd5N/Id2CXHgU/ya3I6aX5g4Mc3ba
+	 wyBR3zFo6eytOOyMg8fCxZE9nDvRKvbH/i31ecMCBQvvEOsiYUZiXGJFop03Wtp8Dkw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795625924;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795625927;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=MdoJiwT0HHfhzRY7lxW5aeBnofqqeQWR00zUZKh9LAU=;
-	b=d9qjH1fWWRv/KsFHZVX+Et9a8txfP42fHENRt6PM7iY1sGu7a/dXBNb3Pv8nHlNUtYsr
-	 0DS3Oe4BDikvcgMH/GJdcaiM4siolw3OWWqtCwj268NA3/6XCYPiCOZFTR+11IZSJ3u7l
-	 pfsd8njWks01Px6wjIvNTGPHpXDGkbO2rBqUQbx8R+pB/GbK97F9KrOHfI4AU1pTWFoKF
-	 MXlC1y7tRkdPQQ0FBhiyhBUFiY2xTGoD1+Z8cafjB0aWyMbeIjiQOqrGKJZp2T0BjMt69
-	 VtD+rjJmqPQzTYgzRJ4B9dn46RUylue4d0NPg953KsCBT/2RgIW0eqjxtQLmRhT5TGA==
+	bh=/H+S5jAIdVg/mO/7Srru35uY6cixX/rb8/rY0mtcFvU=;
+	b=J+mJCc1dRNd5OgoTGRAegAbuA6P6v0ELiJcr62OyuGm5TN6G52bZQqxiPPrcpWmKV636
+	 8/2mjX9tWBcxlnQcD48oYLLI1GH6t3aMBFofbBHZWPi4+hh/Ve4LUFNGzB2/U1rWAM+Ka
+	 NwtHwLVJ0SinZOO30CQA6++ZlUAokUBVixW7deMJu17+qH3joSP1oiPLRBhrBPQG9BBDK
+	 xWrOySfpOEK7oX96KpXwWwYEY2f4nhsZZ8DevQ0QPHsJmr9lEpGr1GXBWPSICgO99USRV
+	 ytThRxLLSMv2hBGojH7RQe03mDk61b99sCw0ggqENs2lCm9d/zC7vsDk++ryPl2+Whw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="nhkw/FFn";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=BPbJbNvq;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E96D0606A31E;
-	Wed, 25 Nov 2026 16:58:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 934A1606A31E;
+	Wed, 25 Nov 2026 16:58:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=nhkw/FFn
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E30A51F000C0;
-	Wed, 25 Nov 2026 16:58:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=BPbJbNvq
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 57FF31F000C4;
+	Wed, 25 Nov 2026 16:58:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795625923;
-	bh=MdoJiwT0HHfhzRY7lxW5aeBnofqqeQWR00zUZKh9LAU=;
+	s=korg; t=1795625926;
+	bh=/H+S5jAIdVg/mO/7Srru35uY6cixX/rb8/rY0mtcFvU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=nhkw/FFnz5nBVvl6DsMVrV1HydDOOY2JI11HPbUl1SDQ2ngM3FVYTQOH6pDUC6kqq
-	 ho+BYw/PrZOYGGLArXIzNjGMXp3M81ZH25k9QdEGJozsOJjwxcDuMBTj5AkoWyEakc
-	 BATXIeSBEj9oudOgt93MbtQyzoCt0PIcRD6G06co=
+	b=BPbJbNvqHqOVCfKxbL42/s+0RHKVPu2fVEh9AGiz5q6zLq7h90D9bRufU2+pmBq7S
+	 oYf751HabDOeYKTsihPCr010TPg+qxjm9Nu3Ao21NewFQnLgt/mWvKtHpFbhkkZodZ
+	 xs6hRXEhSamXbBXqnmGTWMRoMCSnTGJN0xMva1fE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>
-Subject: [PATCH 6.12 657/816] tracing/probes: Fix user-space dereference string array store type
-Date: Wed, 25 Nov 2026 15:36:45 +0100
-Message-ID: <20261125143904.387099848@linuxfoundation.org>
+	Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
+Subject: [PATCH 6.12 675/816] gpio: virtuser: fix interrupt leak and UAF
+Date: Wed, 25 Nov 2026 15:37:03 +0100
+Message-ID: <20261125143904.803973909@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143849.205329330@linuxfoundation.org>
 References: <20261125143849.205329330@linuxfoundation.org>
@@ -66,57 +66,130 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Masami Hiramatsu (Google) <mhiramat@kernel.org>
+From: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
 
-commit 2721573e6c6faaba2e31f352f2c02ec5f3ecf5e9 upstream.
+commit 24cafd9580627f9f066296f4a6ce1b282a3f425d upstream.
 
-When finalizing a string array argument (e.g. +0u(%reg):string[N]),
-finalize_fetch_insn() advances the instruction pointer to a new slot
-for the store operation before checking whether the preceding operation
-was FETCH_OP_UDEREF. As a result, user-space dereference string arrays
-with type "string" emit FETCH_OP_ST_STRING (kernel memory read) instead
-of FETCH_OP_ST_USTRING.
+When configuring interrupt handlers for GPIOs requested by virtual
+users, we never verify if an interrupt has been previously requested and
+just leak it if it was.
 
-Check for FETCH_OP_UDEREF before advancing the instruction pointer.
+We also never free the interrupts at device unbind. This is both a leak
+and a potential UAF bug.
 
-Link: https://lore.kernel.org/all/179455854396.403392.18073771811100192405.stgit@devnote2/
+We use atomic_t for the irq field for now reason, it can't be modifying
+or read from atomic context. Let's repurpose the existing consumer_lock
+mutex and serialize access to the irq field. Let's add sanitization of
+input and schedule a tear-down action.
 
-Fixes: e65f7ae7f4da ("tracing/probe: Support user-space dereference")
 Cc: stable@vger.kernel.org
-Signed-off-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
+Fixes: 91581c4b3f29 ("gpio: virtuser: new virtual testing driver for the GPIO API")
+Closes: https://sashiko.dev/#/bug/linux-d8935133-0e80-487a-9e00-e748056f595e
+Link: https://patch.msgid.link/20261106-gpio-virtuser-irq-uaf-leak-v1-1-ce9772d8ad0d@oss.qualcomm.com
+Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/trace/trace_probe.c |    6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ drivers/gpio/gpio-virtuser.c |   39 +++++++++++++++++++++++++++++----------
+ 1 file changed, 29 insertions(+), 10 deletions(-)
 
---- a/kernel/trace/trace_probe.c
-+++ b/kernel/trace/trace_probe.c
-@@ -1333,6 +1333,8 @@ static int finalize_fetch_insn(struct fe
+--- a/drivers/gpio/gpio-virtuser.c
++++ b/drivers/gpio/gpio-virtuser.c
+@@ -57,9 +57,9 @@ struct gpio_virtuser_line_array_data {
+ struct gpio_virtuser_line_data {
+ 	struct gpio_virtuser_attr_data ad;
+ 	char consumer[GPIO_VIRTUSER_NAME_BUF_LEN];
+-	struct mutex consumer_lock;
++	struct mutex lock;
+ 	unsigned int debounce;
+-	atomic_t irq;
++	int irq;
+ 	atomic_t irq_count;
+ };
  
- 	/* Store operation */
- 	if (parg->type->is_string) {
-+		bool is_uderef;
+@@ -613,7 +613,7 @@ static ssize_t gpio_virtuser_consumer_re
+ 
+ 	memset(buf, 0x0, sizeof(buf));
+ 
+-	scoped_guard(mutex, &data->consumer_lock)
++	scoped_guard(mutex, &data->lock)
+ 		ret = snprintf(buf, sizeof(buf), "%s\n", data->consumer);
+ 
+ 	return simple_read_from_buffer(user_buf, size, ppos, buf, ret);
+@@ -641,7 +641,7 @@ static ssize_t gpio_virtuser_consumer_wr
+ 	if (ret)
+ 		return ret;
+ 
+-	scoped_guard(mutex, &data->consumer_lock)
++	scoped_guard(mutex, &data->lock)
+ 		strscpy(data->consumer, buf, sizeof(data->consumer));
+ 
+ 	return count;
+@@ -681,7 +681,12 @@ static int gpio_virtuser_interrupts_set(
+ 	if (val > 1)
+ 		return -EINVAL;
+ 
++	guard(mutex)(&ld->lock);
 +
- 		/* Check bad combination of the type and the last fetch_insn. */
- 		if (!strcmp(parg->type->name, "symstr")) {
- 			if (code->op != FETCH_OP_REG && code->op != FETCH_OP_STACK &&
-@@ -1352,6 +1354,7 @@ static int finalize_fetch_insn(struct fe
- 			}
- 		}
+ 	if (val) {
++		if (ld->irq >= 0)
++			return -EBUSY;
++
+ 		irq = gpiod_to_irq(ld->ad.desc);
+ 		if (irq < 0)
+ 			return irq;
+@@ -695,11 +700,13 @@ static int gpio_virtuser_interrupts_set(
+ 		if (ret)
+ 			return ret;
  
-+		is_uderef = (code->op == FETCH_OP_UDEREF);
- 		if (!strcmp(parg->type->name, "symstr") ||
- 		    (code->op == FETCH_OP_IMM || code->op == FETCH_OP_COMM ||
- 		     code->op == FETCH_OP_DATA) || code->op == FETCH_OP_TP_ARG ||
-@@ -1372,8 +1375,7 @@ static int finalize_fetch_insn(struct fe
- 		}
+-		atomic_set(&ld->irq, irq);
++		ld->irq = irq;
+ 	} else {
+-		irq = atomic_xchg(&ld->irq, 0);
+-		if (irq)
+-			free_irq(irq, ld);
++		if (ld->irq < 0)
++			return -EBUSY;
++
++		free_irq(ld->irq, ld);
++		ld->irq = -1;
+ 	}
  
- 		/* If op == DEREF, replace it with STRING */
--		if (!strcmp(parg->type->name, "ustring") ||
--		    code->op == FETCH_OP_UDEREF)
-+		if (!strcmp(parg->type->name, "ustring") || is_uderef)
- 			code->op = FETCH_OP_ST_USTRING;
- 		else if (!strcmp(parg->type->name, "symstr"))
- 			code->op = FETCH_OP_ST_SYMSTR;
+ 	return 0;
+@@ -799,6 +806,14 @@ static int gpio_virtuser_dbgfs_init_line
+ 			data->ad.dbgfs_dir, data);
+ }
+ 
++static void gpio_virtuser_free_irq(void *data)
++{
++	struct gpio_virtuser_line_data *ld = data;
++
++	if (ld->irq >= 0)
++		free_irq(ld->irq, ld);
++}
++
+ static int gpio_virtuser_dbgfs_init_line_attrs(struct device *dev,
+ 					       struct gpio_desc *desc,
+ 					       const char *id,
+@@ -815,14 +830,18 @@ static int gpio_virtuser_dbgfs_init_line
+ 
+ 	data->ad.desc = desc;
+ 	strscpy(data->consumer, id);
+-	atomic_set(&data->irq, 0);
++	data->irq = -1;
+ 	atomic_set(&data->irq_count, 0);
+ 
++	ret = devm_add_action_or_reset(dev, gpio_virtuser_free_irq, data);
++	if (ret)
++		return ret;
++
+ 	name = devm_kasprintf(dev, GFP_KERNEL, "gpiod:%s:%u", id, index);
+ 	if (!name)
+ 		return -ENOMEM;
+ 
+-	ret = devm_mutex_init(dev, &data->consumer_lock);
++	ret = devm_mutex_init(dev, &data->lock);
+ 	if (ret)
+ 		return ret;
+ 
 
 
