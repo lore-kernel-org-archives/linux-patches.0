@@ -1,42 +1,42 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795621725;
-	b=S8fCi9WfXubndYeED/uNeFxwIEki310TIRCLteEXdyW+dmqI6LvhLjHF9hHCLctK0KGr
-	 u+XWbG7VSDt8roru5/C3Gd8bjZqWITGp1q8IWEBWRmy0JdFzeQjgcGxxHJ8UQIvpWBM2p
-	 M5NmqcAJg+dq/h4NQQLjJ078I5nF34ALXaDwfWrVKgkaV9VkwcmpMu0gkZ87I3vX7ZjnT
-	 BqaWNVYDBgYGddT5frPi25s4PHvekDsTbm6sfQNo8yVOwzWCv5XNCP/jnznAlHpZTQKPK
-	 XalkH/Dc8QeXJ2FH0nNnGupffuUhNxTfulYVXfySBQFsmABKdS+PGQR1DNDYbBbq7sQ==
+	t=1795621728;
+	b=X5prjwSIxm4aiNmHgnwc/ambSz4Hf7SysRO02u182eZby4AyX6r5UNTIaxfPtOXCSrHg
+	 6uhtmZwF1VQSbFmleYkXMNbpmDkQmKxdqbTiXgAY8XKJ/ETSDom78boAF2ZMWPeTtYOeQ
+	 OKRmLeaP821pENZhcraVQZZVHkhSd2AZ5dn+cM8A7Z2ci7ySPAGZQR1C5wTjDhHK8jC0J
+	 F7doHudnBgU4XPjaEdvwJD4JA8SIhlkPVzZHKIg5CTFrTw8x2fegXG4SvYDoAWFT7Pz8E
+	 a55MR37E/OoMYFSEG3hdLujYjKGwzdXrCS5WrykWWsUuamIQ5J4surAwL7gXw1oWOJQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795621725;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795621728;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=asB6+/BOR9J4UTAO5QBId8i/rZI+LX63V0dq16on/b4=;
-	b=0P+UQIJYzJLWzSwNs5HcfoCl2qEVz6QN/n5TYENbuTlxkCJqdOz/ZgVCWegBLCycu2Rh
-	 FaNbi5N+DhCoQL1EAN5M/JSH+VICyYd+9GSwe70DcnFPlmGJ5DRk9saVsMjywWxdQjJdY
-	 295U+B+JiDP3aVxAocrXiKVw6RmoOEJCkn49c2q6Zn0fzYt1wWA9VBNSqqHsnMnH2wCsG
-	 gOlFqWodgOtirk+Qa7OI5lPsuJKpyX7n3UaRj0V/swShwn9G674iLzQ595Dm0syC5s5bu
-	 lSKJyfLceUC8Fi2/dTVn58EeUsDQIzMKvp2FqmjGwLRNFgeSPuoM1igQPDjBfg6zeQg==
+	bh=BDLkUgt7FrBq+KFL0yHFk0kjjjhl77LKC0GcoVKOcCE=;
+	b=wu3d5sGaDIgPHf0SQk1wR4+LzqCm7awYdufeRrDtuyaLA202bg5pPo0mCuOq3PSVdpIr
+	 HJsCPZ2e0WBq08kSx2XHyXJwl4/KdqC5q1U7PmiXmYX+MRzkugQLfKwEqsVADz2aN7sVr
+	 6yCHYS1FajiQVFcjDukaJwL4lgGWwVapwN9rimiAnulxkYW+pKqf1NI3MDgZseEZUJ3x1
+	 svZ0MqjIgcolG0wVLtT4rjmbJ5KzBIvELlpaxCu57T2xPEX0JIvH5S/nNagWnR9QrbWCU
+	 S2YZjFZVFfZ9F8YoZugfHyS8bPdk86BwPRJjdNYKJaWSVee6ZY++pB2g2mmrR1MiV2Q==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=qlQGDLcd;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="GOp/OGzH";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9C8C7606A33F;
-	Wed, 25 Nov 2026 15:48:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CC7EB606A339;
+	Wed, 25 Nov 2026 15:48:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=qlQGDLcd
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9E6E91F0089F;
-	Wed, 25 Nov 2026 15:48:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=GOp/OGzH
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F0E511F000C6;
+	Wed, 25 Nov 2026 15:48:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795621725;
-	bh=asB6+/BOR9J4UTAO5QBId8i/rZI+LX63V0dq16on/b4=;
+	s=korg; t=1795621728;
+	bh=BDLkUgt7FrBq+KFL0yHFk0kjjjhl77LKC0GcoVKOcCE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=qlQGDLcd/VBfwoVZCyAbQ1DARC6SuZ9pE1W1zcxXwFgXmf81lMoCpsDXLA7SxjNU6
-	 6D9a5LHuWdQmYYkHHstdX+I2O6VA1L86XmpPtuMSWC36z0oX401oMtG4l+PlZS9O8n
-	 l4ZZ0KHnt9z83SNJPdS5n1HuRL8biA4dVy8h5hK8=
+	b=GOp/OGzHvquDCgjQ/bJOXJAhtebaq1cmCbp7C49Xf2GVb4g7RRfNw2+L87i6yn5BF
+	 lJgdnnFLxobbruzHGYsPJIse26MTPrJ2djvZ7tfdrCbFP+wuBQRhykIJBe44jx3lor
+	 lXQEECVqhSOsOnczsY5DkDMtREJNBTnvNStzmEL4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -48,9 +48,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Waiman Long <longman@redhat.com>,
 	linux-kernel@vger.kernel.org,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 318/990] locking/osq: Switch osq_wait_next()/atomic_cmpxchg() ordering
-Date: Wed, 25 Nov 2026 15:28:05 +0100
-Message-ID: <20261125143829.539500218@linuxfoundation.org>
+Subject: [PATCH 6.18 319/990] locking/osq: Fix unlink queue corruption
+Date: Wed, 25 Nov 2026 15:28:06 +0100
+Message-ID: <20261125143829.562890663@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143822.072087159@linuxfoundation.org>
 References: <20261125143822.072087159@linuxfoundation.org>
@@ -74,27 +74,13 @@ Content-Transfer-Encoding: 8bit
 
 From: Peter Zijlstra <peterz@infradead.org>
 
-[ Upstream commit 1b9e01fcc47aff00d2fd64693c5dcd620eff5865 ]
+[ Upstream commit 408b129aac48b574c0c9d11137a89eefba825d5d ]
 
-The atomic_cmpxchg() in osq_wait_next() removes the current CPU's node
-from the tail of the queue and puts @old_cpu back.
+Very similar to commit 50972fe78f24 ("locking/osq_lock: Fix osq_lock
+queue corruption"), make sure to order the prev->next store against
+the next->prev store.
 
-This is very much like an 'unlock', which is RELEASE, rather than
-ACQUIRE.
-
-Additionally, on success (the only case where the ordering is
-effective), this returns NULL which means both callsites will do nothing
-more, there are no subsequent operations to order against.
-
-Furthermore, the osq_lock() caller will then return false, indicating
-failure to acquire -- the mutex must go block. Again, not making a case
-for ACQUIRE.  Neither atomics nor locks provide ordering on failure.
-
-Since ACQUIRE makes no sense, while RELEASE makes it more symmetric with
-osq_unlock(), switch the ordering. This then makes osq_unlock()
-consistently RELEASE.
-
-Fixes: c55a6ffa6285 ("locking/osq: Relax atomic semantics")
+Fixes: 50972fe78f24 ("locking/osq_lock: Fix osq_lock queue corruption")
 Suggested-by: David Laight <david.laight.linux@gmail.com>
 Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
 Signed-off-by: Ingo Molnar <mingo@kernel.org>
@@ -103,22 +89,94 @@ Cc: Waiman Long <longman@redhat.com>
 Cc: linux-kernel@vger.kernel.org
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/locking/osq_lock.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ kernel/locking/osq_lock.c | 60 +++++++++++++++++++++++++++++----------
+ 1 file changed, 45 insertions(+), 15 deletions(-)
 
 diff --git a/kernel/locking/osq_lock.c b/kernel/locking/osq_lock.c
-index b4233dc2c2b04..98b12d7b79964 100644
+index 98b12d7b79964..2bcc148eb2ddb 100644
 --- a/kernel/locking/osq_lock.c
 +++ b/kernel/locking/osq_lock.c
-@@ -59,7 +59,7 @@ osq_wait_next(struct optimistic_spin_queue *lock,
+@@ -90,6 +90,49 @@ osq_wait_next(struct optimistic_spin_queue *lock,
+ 	}
+ }
  
- 	for (;;) {
- 		if (atomic_read(&lock->tail) == curr &&
--		    atomic_cmpxchg_acquire(&lock->tail, curr, old_cpu) == curr) {
-+		    atomic_cmpxchg_release(&lock->tail, curr, old_cpu) == curr) {
- 			/*
- 			 * We were the last queued, we moved @lock back. @prev
- 			 * will now observe @lock and will complete its
++/*
++ * Set prev->next; this is the counterpart of osq_wait_next() in that
++ * by setting ->next the wait is terminated and progress is resumed.
++ */
++static inline void osq_link_next(struct optimistic_spin_node *prev,
++				 struct optimistic_spin_node *next)
++{
++	/*
++	 * Suppose:
++	 *
++	 *                   tail
++	 *                    |
++	 *                    V
++	 *   CPU1 -> CPU2 -> CPU3:
++	 *   n: 2    n: 3    n: nil
++	 *   p: nil  p: 1    p: 2
++	 *
++	 * And this is CPU2 doing the self-unqueue concurrent against CPU1s
++	 * unlock()/unqueue(). Since 'prev->next == NULL' and CPU1 will be
++	 * stuck in osq_wait_next() until the below store of 'prev->next'.
++	 *
++	 * CPU2				CPU1
++	 *
++	 * next->prev = prev;		osq_wait_next()
++	 * WMB				MB
++	 * prev->next = next;		next->prev = prev
++	 *
++	 * Without the WMB it would be possible to have conflicting stores
++	 * like:
++	 *
++	 * CPU2				CPU1
++	 *
++	 * prev->next = next // CPU1.n = 3
++	 *				next = osq_wait_next() // = 3
++	 *				next->prev = prev // CPU3.p = nil
++	 * next->prev = prev // CPU3.p = 1
++	 *
++	 * Which would result in list corruption.
++	 */
++	smp_wmb();
++	WRITE_ONCE(prev->next, next);
++}
++
+ bool osq_lock(struct optimistic_spin_queue *lock)
+ {
+ 	struct optimistic_spin_node *node = this_cpu_ptr(&osq_node);
+@@ -113,20 +156,7 @@ bool osq_lock(struct optimistic_spin_queue *lock)
+ 
+ 	prev = decode_cpu(old);
+ 	node->prev = prev;
+-
+-	/*
+-	 * osq_lock()			unqueue
+-	 *
+-	 * node->prev = prev		osq_wait_next()
+-	 * WMB				MB
+-	 * prev->next = node		next->prev = prev // unqueue-C
+-	 *
+-	 * Here 'node->prev' and 'next->prev' are the same variable and we need
+-	 * to ensure these stores happen in-order to avoid corrupting the list.
+-	 */
+-	smp_wmb();
+-
+-	WRITE_ONCE(prev->next, node);
++	osq_link_next(prev, node);
+ 
+ 	/*
+ 	 * Normally @prev is untouchable after the above store; because at that
+@@ -202,7 +232,7 @@ bool osq_lock(struct optimistic_spin_queue *lock)
+ 	 */
+ 
+ 	WRITE_ONCE(next->prev, prev);
+-	WRITE_ONCE(prev->next, next);
++	osq_link_next(prev, next);
+ 
+ 	return false;
+ }
 -- 
 2.53.0
 
