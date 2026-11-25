@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795623021;
-	b=cPPLnf4wsc6FYJLRD4XxxlNelmeH66AQl7gDzfKLURVFx9b9/F419q+87a/InYmPfI9a
-	 oxTY0n/nb15MvEfzV3ZzoWvYyRVW050d2l/bw4In12efjcqDDXJmDx48N08xtWMZPNIj/
-	 YFQh4eyJySyrx/F5TNh6pbSClfZHBRtry6OSaSm9pFZUeDU3OsNmnRX6TcC6drhvBRYDF
-	 Wp7iOOytrY9wWfC8+uczoRlZDndXVFYnsj0zBhYAnw+x7Fi8ct3/Z9JLCk0YhItffBvMK
-	 WftyCcgm31fbPgxgjFFRjYj7/eszJke4RrgzqCySvn2metzywfojxFeTPJObg2haUaw==
+	t=1795623025;
+	b=tkyS8BVoTAwEh0VGG1Hkds8onakB45DY3g3+ltRIlI0WeIWIWr9N/rYi/W9QqYFoqbvH
+	 32Rjl9vJ953k+g27wZpUcFoLmY5tqgNmnwt/stwd50Ajs/NmLQqtiVkWYr0i/9/rKHhmq
+	 QnJ7cjcpKv57a/PcornWSFi4HXtWQ9eRco+0TLkHDZbLzrBq4jePqHBsBLDsp85Ppxb+k
+	 LvjOD3gVo4ZTjTPveHdZ/YfsLQyoALBf3fTLV32zgbaRREW6Pj/1nDEi/p2zMWyuYMlWN
+	 G3OzgR9ychj+r/zzSDDYIdt251OqP5ZpTX6/7U5CZHhabEMxklU/rOKrC/bf/0DkdVA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795623021;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795623025;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=hqIVzwaT+lnvnJbS+UyMoK6Og9pLue8qU/aYPsYfj7s=;
-	b=xBobWOCmugufxN7MO+N8l0pYqmW2Pji5fp8vlIghZtAC9KCU50J6LbEXNSWFiYsy5k/1
-	 zSthokSc5b7qSyHvSxfwkbt9zv5BerxprvgJyRBjARIchw03xioGHSosLH1rYKUjOgs/T
-	 JWFvbhVMY/Sell64FFXF8p2edfHRGgJsADy6ylCQihFmWM6hV5N22Yt/WW+ijSs3s0Q+x
-	 06V58V5xY6M3JYiXsdvSWLYmKdJimK9Q32SO/GFovmAlKYi/ubvpZLRpxLIch4F/pOOyA
-	 tooZoNRksa41s/fE+WbOhBbrrvvU8Rsmx7/JRaoOGKFY19ANEQRfskA76qOF4z4Bgrg==
+	bh=8CmpYa93ZijKu0CISptfGay8NQ2eH6YkjOQZ1hZl3Ro=;
+	b=YIflKhoLdL6+Nwp/zimbvLoL1pHfoFu9sblxzvHsmcK5XefWB7Mw8JNi4Xcs2Wynlt2D
+	 Ohg6BWVRs615RhJ3zYKfvYKSkjpxgZW2rY91XzKJBwZHqkeoCpa2wf5CB4QXp3oKloUY1
+	 HFvIHyKXj1k4kx/H/CNmhcWVlWzxVoIKPNbUaYDUa2bwAygqQeNxBJQMuPOsHuUMjpPsU
+	 AaH+zhgIy/q7+V9r3r8RbHL3PXTGnOSoLFgaTO9E87n9xnum6hykO3Ze50yFiKRniVjlz
+	 DjJRfMp1iO+grWc5MIYj+jbeiu5mpOc7r4QFXXSVijcDQLsdpH0hI2tBbIDXaRnQgVQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=IgVwGmLb;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=aYePUVJm;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C39B9606A32D;
-	Wed, 25 Nov 2026 16:10:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 85112606A326;
+	Wed, 25 Nov 2026 16:10:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=IgVwGmLb
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CCA591F000E0;
-	Wed, 25 Nov 2026 16:10:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=aYePUVJm
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 529081F000CF;
+	Wed, 25 Nov 2026 16:10:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795623021;
-	bh=hqIVzwaT+lnvnJbS+UyMoK6Og9pLue8qU/aYPsYfj7s=;
+	s=korg; t=1795623024;
+	bh=8CmpYa93ZijKu0CISptfGay8NQ2eH6YkjOQZ1hZl3Ro=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=IgVwGmLb6ABJq3SiA1DyoQCr6sCpUN9/kCSxQp4AQyhmarLOdFgPL6l06waIcS3sC
-	 B+LrAGckUW47j6gJCYyx/LNftGAKeqVViQ4ElOP0YWttJeO5rFaM/gkyhJmktjzoXM
-	 0d8oqrzDraMOXUzu6sXRCn+eWn4iL4nnqk9cQK9A=
+	b=aYePUVJmH6u1jFMPabF+vJoNFLZcKW3xXkCAjPcEZONZuWqIYVL4W+oBYHjaLmvYT
+	 v62XfHH0xT5BcWXbGb4XvbDrl45w+9rt1INR6TB2OOOSeqEsUhGNQdAFZZKAE5Nlo5
+	 iLjHWBqmR7tTUD1tpUgJV99rVYwqPddvS0RT468c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Taesoo Kim <tsgatesv@gmail.com>,
-	Cen Zhang <cenzhang@linux.microsoft.com>,
-	Eric Dumazet <edumazet@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.18 723/990] net: gro: invalidate frag0 after a pull
-Date: Wed, 25 Nov 2026 15:34:50 +0100
-Message-ID: <20261125143839.011959005@linuxfoundation.org>
+	Vega <vega@nebusec.ai>,
+	Luxing Yin <root@tr0jan.top>,
+	Zihan Xi <zihanx@nebusec.ai>,
+	Pablo Neira Ayuso <pablo@netfilter.org>
+Subject: [PATCH 6.18 724/990] netfilter: nf_dup: preserve guard across NFQUEUE reinjection
+Date: Wed, 25 Nov 2026 15:34:51 +0100
+Message-ID: <20261125143839.034078153@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143822.072087159@linuxfoundation.org>
 References: <20261125143822.072087159@linuxfoundation.org>
@@ -69,182 +69,114 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eric Dumazet <edumazet@kernel.org>
+From: Zihan Xi <zihanx@nebusec.ai>
 
-commit 98d949a15ff9d3fffaa6983223178374aab92db6 upstream.
+commit 82052e5b5ec36504fe1b9c3c28a711a78fcacf37 upstream.
 
-Since commit bd56a29c7a4e ("net: gro: change skb_gro_network_header()"),
-skb_gro_header_slow() no longer invalidates NAPI_GRO_CB(skb)->frag0
-after pskb_may_pull(). skb_gro_may_pull() keeps comparing against the
-frag0_len value set in skb_gro_reset_offset(), assuming that after a
-slow pull, all later accesses are beyond frag0_len.
+NFQUEUE can suspend traversal of a duplicated packet while the task-local
+duplication guard is set. The output call then returns and clears the guard
+before a later verdict resumes hook traversal.
 
-This is not true:
+Save the guard in the queue entry and restore it while reinjection
+continues hook traversal. Preserve and restore the verdict task's prior
+state, including nested synchronous reinjection.
 
-- udp4_gro_receive() and udp6_gro_receive() read the network header
-  with skb_gro_network_header() after udp_gro_udphdr() pulled the
-  UDP header.
-
-- vxlan_gro_receive() calls skb_gro_remcsum_cleanup() at a lower
-  offset after the inner handlers pulled their headers.
-
-- skb_gro_remcsum_process() can pull beyond the inner Ethernet header
-  before eth_gro_receive() reads it.
-
-- napi_frags_skb() calls __skb_pull(skb, ETH_HLEN) after a slow pull,
-  so frag0 still points to the Ethernet header.
-
-If the pull consumed the first page fragment, __skb_pull_tail() released
-it. If the head had to grow, pskb_expand_head() freed the old one.
-These reads, and the 2-byte write in skb_gro_remcsum_cleanup(), then
-access memory the skb no longer holds a reference on.
-
-esp4_gro_receive(), esp6_gro_receive(), skb_gro_receive_list() and
-udp_gro_receive_segment() also pull directly and never invalidated
-frag0.
-
-Add skb_gro_frag0_invalidate(), which only clears frag0_len, and call
-it before each of these pulls. This is a single store in the slow path,
-and frag0 stays non NULL, so skb_gro_network_header() does not need
-a NULL test.
-
-frag0 must be invalidated even if the pull fails: __pskb_pull_tail()
-can return NULL after pskb_expand_head() freed the old head, for
-instance if a frag_list member has to be cloned or pulled.
-
-As frag0 is now invalidated before a pull that can fail,
-gro_try_pull_from_frag0() can see an skb whose linear part does not
-cover skb_gro_offset() while frag0 still points to the start of the
-packet, for instance after skb_gro_remcsum_cleanup() pulled a shorter
-length. Copying from frag0 would then corrupt the headers: only use
-frag0 while frag0_len is not zero, and use pskb_may_pull() otherwise.
-If this pull fails, for instance after a failed pskb_pull() in
-esp4_gro_receive(), do not hold the packet: later GRO lookups and
-gro_complete() handlers expect its headers in the linear part.
-
-This was found by Taesoo Kim and Cen Zhang, using LLM assisted code
-analysis, and confirmed with reproducers.
-
-Fixes: bd56a29c7a4e ("net: gro: change skb_gro_network_header()")
-Fixes: 9fd1ff5d2ac7 ("udp: Support UDP fraglist GRO/GSO.")
+Fixes: cd58bcd9787e ("netfilter: xt_TEE: have cloned packet travel through Xtables too")
 Cc: stable@vger.kernel.org
-Reported-by: Taesoo Kim <tsgatesv@gmail.com>
-Reported-by: Cen Zhang <cenzhang@linux.microsoft.com>
-Signed-off-by: Eric Dumazet <edumazet@kernel.org>
-Link: https://patch.msgid.link/20261104151042.1157782-3-edumazet@kernel.org
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Reported-by: Vega <vega@nebusec.ai>
+Assisted-by: LLM
+Co-developed-by: Luxing Yin <root@tr0jan.top>
+Signed-off-by: Luxing Yin <root@tr0jan.top>
+Signed-off-by: Zihan Xi <zihanx@nebusec.ai>
+Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- include/net/gro.h       |   10 ++++++++++
- net/core/gro.c          |   20 ++++++++++++++++----
- net/ipv4/esp4_offload.c |    1 +
- net/ipv4/udp_offload.c  |    1 +
- net/ipv6/esp6_offload.c |    1 +
- 5 files changed, 29 insertions(+), 4 deletions(-)
+ include/net/netfilter/nf_queue.h |    1 +
+ net/netfilter/nf_queue.c         |    1 +
+ net/netfilter/nfnetlink_queue.c  |   17 ++++++++++++++---
+ 3 files changed, 16 insertions(+), 3 deletions(-)
 
---- a/include/net/gro.h
-+++ b/include/net/gro.h
-@@ -160,9 +160,19 @@ static inline bool skb_gro_may_pull(cons
- 	return likely(hlen <= NAPI_GRO_CB(skb)->frag0_len);
- }
+--- a/include/net/netfilter/nf_queue.h
++++ b/include/net/netfilter/nf_queue.h
+@@ -23,6 +23,7 @@ struct nf_queue_entry {
+ 	struct net_device	*physout;
+ #endif
+ 	struct nf_hook_state	state;
++	bool			in_nf_duplicate;
+ 	bool			nf_ct_is_unconfirmed;
+ 	u16			size; /* sizeof(entry) + saved route keys */
  
-+/* A pull can release the page fragment frag0 points to, or reallocate
-+ * skb->head, even if it fails. Call this before the pull, to make sure later
-+ * skb_gro_header() and skb_gro_network_header() calls no longer use frag0.
-+ */
-+static inline void skb_gro_frag0_invalidate(struct sk_buff *skb)
-+{
-+	NAPI_GRO_CB(skb)->frag0_len = 0;
-+}
+--- a/net/netfilter/nf_queue.c
++++ b/net/netfilter/nf_queue.c
+@@ -218,6 +218,7 @@ static int __nf_queue(struct sk_buff *sk
+ 	*entry = (struct nf_queue_entry) {
+ 		.skb	= skb,
+ 		.skb_dev = skb->dev,
++		.in_nf_duplicate = current->in_nf_duplicate,
+ 		.state	= *state,
+ 		.hook_index = index,
+ 		.size	= sizeof(*entry) + route_key_size,
+--- a/net/netfilter/nfnetlink_queue.c
++++ b/net/netfilter/nfnetlink_queue.c
+@@ -44,6 +44,7 @@
+ #include <net/sock.h>
+ #include <net/tcp_states.h>
+ #include <net/netfilter/nf_queue.h>
++#include <net/net_debug.h>
+ #include <net/netns/generic.h>
+ 
+ #include <linux/atomic.h>
+@@ -351,21 +352,30 @@ static void nf_reinject(struct nf_queue_
+ 	const struct nf_hook_entry *hook_entry;
+ 	const struct nf_hook_entries *hooks;
+ 	struct sk_buff *skb = entry->skb;
++	bool old_in_nf_duplicate;
+ 	const struct net *net;
+ 	unsigned int i;
+ 	int err;
+ 	u8 pf;
+ 
++	DEBUG_NET_WARN_ONCE(current->in_nf_duplicate &&
++			    !entry->in_nf_duplicate,
++			    "%s called with unexpected duplication guard",
++			    __func__);
++	local_bh_disable();
++	old_in_nf_duplicate = current->in_nf_duplicate;
 +
- static inline void *skb_gro_header_slow(struct sk_buff *skb, unsigned int hlen,
- 					unsigned int offset)
- {
-+	skb_gro_frag0_invalidate(skb);
- 	if (!pskb_may_pull(skb, hlen))
- 		return NULL;
+ 	net = entry->state.net;
+ 	pf = entry->state.pf;
  
---- a/net/core/gro.c
-+++ b/net/core/gro.c
-@@ -250,6 +250,7 @@ int skb_gro_receive_list(struct sk_buff
- 	if (unlikely(skb->remcsum_offload))
- 		return -EINVAL;
++	current->in_nf_duplicate = entry->in_nf_duplicate;
+ 	hooks = nf_hook_entries_head(net, pf, entry->state.hook);
  
-+	skb_gro_frag0_invalidate(skb);
- 	if (!pskb_may_pull(skb, skb_gro_offset(skb))) {
- 		NAPI_GRO_CB(skb)->flush = 1;
- 		return -ENOMEM;
-@@ -464,12 +465,19 @@ static void gro_pull_from_frag0(struct s
+ 	i = entry->hook_index;
+ 	if (!hooks || i >= hooks->num_hook_entries) {
+ 		kfree_skb_reason(skb, SKB_DROP_REASON_NETFILTER_DROP);
+ 		nf_queue_entry_free(entry);
+-		return;
++		goto out;
  	}
+ 
+ 	hook_entry = &hooks->hooks[i];
+@@ -388,9 +398,7 @@ next_hook:
+ 	switch (verdict & NF_VERDICT_MASK) {
+ 	case NF_ACCEPT:
+ 	case NF_STOP:
+-		local_bh_disable();
+ 		entry->state.okfn(entry->state.net, entry->state.sk, skb);
+-		local_bh_enable();
+ 		break;
+ 	case NF_QUEUE:
+ 		err = nf_queue(skb, &entry->state, i, verdict);
+@@ -404,6 +412,9 @@ next_hook:
+ 	}
+ 
+ 	nf_queue_entry_free(entry);
++out:
++	current->in_nf_duplicate = old_in_nf_duplicate;
++	local_bh_enable();
  }
  
--static void gro_try_pull_from_frag0(struct sk_buff *skb)
-+static bool gro_try_pull_from_frag0(struct sk_buff *skb)
- {
- 	int grow = skb_gro_offset(skb) - skb_headlen(skb);
- 
--	if (grow > 0)
-+	if (grow <= 0)
-+		return true;
-+
-+	/* frag0 can only be used if no pull happened. */
-+	if (likely(NAPI_GRO_CB(skb)->frag0_len)) {
- 		gro_pull_from_frag0(skb, grow);
-+		return true;
-+	}
-+	return pskb_may_pull(skb, skb_gro_offset(skb));
- }
- 
- static void gro_flush_oldest(struct gro_node *gro, struct list_head *head)
-@@ -571,13 +579,17 @@ found_ptype:
- 	if (NAPI_GRO_CB(skb)->flush)
- 		goto normal;
- 
-+	/* Must be called before setting NAPI_GRO_CB(skb)->{age|last}.
-+	 * A held packet must have its headers in the linear part.
-+	 */
-+	if (unlikely(!gro_try_pull_from_frag0(skb)))
-+		goto normal;
-+
- 	if (unlikely(gro_list->count >= MAX_GRO_SKBS))
- 		gro_flush_oldest(gro, &gro_list->list);
- 	else
- 		gro_list->count++;
- 
--	/* Must be called before setting NAPI_GRO_CB(skb)->{age|last} */
--	gro_try_pull_from_frag0(skb);
- 	NAPI_GRO_CB(skb)->age = jiffies;
- 	NAPI_GRO_CB(skb)->last = skb;
- 	if (!skb_is_gso(skb))
---- a/net/ipv4/esp4_offload.c
-+++ b/net/ipv4/esp4_offload.c
-@@ -37,6 +37,7 @@ static struct sk_buff *esp4_gro_receive(
- 	__be32 seq;
- 	__be32 spi;
- 
-+	skb_gro_frag0_invalidate(skb);
- 	if (!pskb_pull(skb, offset))
- 		return NULL;
- 
---- a/net/ipv4/udp_offload.c
-+++ b/net/ipv4/udp_offload.c
-@@ -759,6 +759,7 @@ static struct sk_buff *udp_gro_receive_s
- 			pp = p;
- 		} else {
- 			if (NAPI_GRO_CB(skb)->is_flist) {
-+				skb_gro_frag0_invalidate(skb);
- 				if (!pskb_may_pull(skb, skb_gro_offset(skb))) {
- 					NAPI_GRO_CB(skb)->flush = 1;
- 					return NULL;
---- a/net/ipv6/esp6_offload.c
-+++ b/net/ipv6/esp6_offload.c
-@@ -64,6 +64,7 @@ static struct sk_buff *esp6_gro_receive(
- 	if (NAPI_GRO_CB(skb)->proto == IPPROTO_UDP)
- 		encap_type = UDP_ENCAP_ESPINUDP;
- 
-+	skb_gro_frag0_invalidate(skb);
- 	if (!pskb_pull(skb, offset))
- 		return NULL;
- 
+ /* return true if the entry has an unconfirmed conntrack attached that isn't owned by us
 
 
