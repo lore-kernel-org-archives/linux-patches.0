@@ -1,51 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795624251;
-	b=IxX7dzNrsE0h00gn8j3dy9JPuy28ZA9bfRDskKhfhorf5hH+Lellt3XXXW4K/emExdJn
-	 dwspdYX/G9UKaOGsQPwRmLCmDTwEz7G9sxmuEBlo+rEkecU71/9TaeEkTu+OSq/JI0Q0p
-	 VC9GmljKXA0ho5WQVsfJIrXWj0XUzwtiOjJaFyqCPW7wdlNu7+LoZlUWAvfaOGNkQNNEI
-	 NfSmfwSvee/z8+dFwOuZ55iqg5prO/+ICNWMpHOi4L47/rjFDiDmGGCTiXhgOm2vGiMWZ
-	 asyrnNKSxzd7UHZgZo62Sl/rA7o4ILkElbiidxZnEGFgwfJVTf27u1wA6cTOonvvvHQ==
+	t=1795624255;
+	b=NJEB7nZ/Ajg0AXk6z66tOR1KzambG+cgNTk4Chq2MxNq+rurzzpOPs1buBAS0YNdhzdT
+	 9LOoEb1eYk0fYwVHNStxIH3Nuh4ukJSJyE5eYryZZ8oeaZkGWaYQyqeUcpEhl8BhsF7TU
+	 DuDiYVf+Hj9R1CxZvgPIA3TRyvMPtVUGZU64pTNIEP+K3C2QoAqfryONUT2+vXFE6e+8+
+	 OgAqJSKd2XC+rsl3+zTo0LNhaU/VHvrNVdcMIitMPki7cgGvrs/wshEZQBPJFH5qsUCFd
+	 KZEG/y98zU6ylU+ZgU3ouWNHCwRk5yy7DYOR8WYrngHn6Q+ZloIndq4ftmHtTPC0zmw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795624251;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795624255;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=nH28SsTyuaQUaw7YFoVOToNvzy3G13MkB1hx8itxsSk=;
-	b=N8Jp0p3tpMujjbxdA6F3KTmiUTOfcHTBaNnUTVDIxZXZc55Qf03LAGsMTZt+eVgLnHer
-	 NFweS67dmhuMjYYKP6qaB0gBMxDVjLrHoBwlQHkIVqpy0YqxzD3vnff1bs78Jllc6g23z
-	 GIw4hxIAx0hmq2F+OW2mkCxD6atLt0PmGXeQP2g4RyHKjijiuh/3ZQ3eiGQmo29ug3oxo
-	 IUqx7+2gPWM1ni39GSQ6TZpRzRhJ9UEqz63yhY/6BnEBbuaA7mWTn+Z2jpbmOv9INQm/l
-	 JM644MZvDBZ6l4a2uNQ96MXVcb1/QanbzwU2F5H19JK6bjV55hnvzeuG2x5eWyTCyUg==
+	bh=xVH1KxEW8uBYI4NLJxn08WdX3zUPHqd4/guzv1EYSMY=;
+	b=csUttx2zRAOrS2njz4W3N2jUWkUYy7tsUlc0HFtiv6wUiCzqjNLPAkYyPnx3vx4pCkmU
+	 h31iIzxtRzrim5gvkiH3oV8op/N7MV3srYlO0PyE3GVaAmlO27msVezecQtdli0C3LwT+
+	 EAlo8PzeWak3dLqDclDBWsHt/2MWPD62vFBwKt65BTD1t9NVfzMh+cb8ERXQsdyFh6xcs
+	 w9+LSMdWq4hVKm2Dwm5443jpur02H2NKN6qUgBTnS7Q65nKE83VX2jpBpXXIAxMqbWML4
+	 6xFQveqVXx+bcTECpl7BSmwcJ/sBUc0AJ4EvYeB8DBC8Wkbp6PvYjmrUOxzUluM9eNg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=h1mtsiz0;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=YCDeO5Ay;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8F447606A330;
-	Wed, 25 Nov 2026 16:30:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E37B8606A332;
+	Wed, 25 Nov 2026 16:30:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=h1mtsiz0
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E0A071F000C6;
-	Wed, 25 Nov 2026 16:30:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=YCDeO5Ay
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3D5CC1F000C0;
+	Wed, 25 Nov 2026 16:30:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795624251;
-	bh=nH28SsTyuaQUaw7YFoVOToNvzy3G13MkB1hx8itxsSk=;
+	s=korg; t=1795624254;
+	bh=xVH1KxEW8uBYI4NLJxn08WdX3zUPHqd4/guzv1EYSMY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=h1mtsiz0myuMhAcQyhqDpI4oUJSMh93dZTrzUp/KCDNsn/gFjArgASAUIWmlDyuC/
-	 VfeuF9LUokTca8QrvBALZYnlc1Kj0f6G0UUZLiURHRA3dm0C64eLMpDvJpFIdbku6m
-	 Aeij9FeQvigTZRocltf9o8IuJH8bPHegoUPmGG+g=
+	b=YCDeO5Ay1asFWWA0W+geJGdtqKmPxzP2irviNfvNPAQIvfNPoxBWPxkBXkzMObjWJ
+	 Ln0gYmarZPEGJq08hlUKkmbIurFoQJQGJms+MpLzSJoiSdRL3gXJXmtArS0hjddLcZ
+	 KV4S6iA0Ls/xnJe7n7buxAhWH6DoffN2u+1Dh2Hs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pablo Neira Ayuso <pablo@netfilter.org>,
+	James Hilliard <james.hilliard1@gmail.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 087/816] netfilter: nft_fwd_netdev: add device and headroom validate with neigh forwarding
-Date: Wed, 25 Nov 2026 15:27:15 +0100
-Message-ID: <20261125143851.235498963@linuxfoundation.org>
+Subject: [PATCH 6.12 078/816] ptp: unwind partially completed virtual clock creation
+Date: Wed, 25 Nov 2026 15:27:06 +0100
+Message-ID: <20261125143851.027010475@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143849.205329330@linuxfoundation.org>
 References: <20261125143849.205329330@linuxfoundation.org>
@@ -67,61 +68,60 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pablo Neira Ayuso <pablo@netfilter.org>
+From: James Hilliard <james.hilliard1@gmail.com>
 
-[ Upstream commit 0a0b35f0bf10b4c2be607465f5c9c12c8681305b ]
+[ Upstream commit 3dea778260e3dddf30651a6913d87a42861346a2 ]
 
-The ttl field has been decremented already and evaluation of this rule
-would proceed, just drop this packet instead if there is no destination
-device to forwards this packet. This is exactly what nf_dup already does
-in this case.
+n_vclocks_store() publishes the new clock count only after every child
+has been registered. If a later registration fails, it returns without
+unregistering the children already created by that request. Those clocks
+are left out of n_vclocks, and a subsequent request can overwrite their
+index entries without removing them.
 
-Moreover, check for headroom and call skb_expand_head() like in the IP
-output path to ensure there is sufficient headroom when forwarding this
-via neigh_xmit().
+Unregister the newly created children in reverse order and clear their
+index entries on failure. Leave the previously installed clocks and
+their count unchanged. The n_vclocks mutex serializes this rollback with
+other sysfs changes, and parent removal drains the store before walking
+the children.
 
-Fixes: d32de98ea70f ("netfilter: nft_fwd_netdev: allow to forward packets via neighbour layer")
-Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
-Stable-dep-of: d6c18cadfc6c ("netfilter: nft_reject: prevent unbounded recursion in output hooks")
+This was found by code inspection while adding initial PHC sample error
+handling to virtual clock registration.
+
+Fixes: 73f37068d540 ("ptp: support ptp physical/virtual clocks conversion")
+Signed-off-by: James Hilliard <james.hilliard1@gmail.com>
+Link: https://patch.msgid.link/20261026-ptp-vclock-sampling-v6-2-e705612541f1@gmail.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/netfilter/nft_fwd_netdev.c | 16 ++++++++++++++--
- 1 file changed, 14 insertions(+), 2 deletions(-)
+ drivers/ptp/ptp_sysfs.c | 8 +++++++-
+ 1 file changed, 7 insertions(+), 1 deletion(-)
 
-diff --git a/net/netfilter/nft_fwd_netdev.c b/net/netfilter/nft_fwd_netdev.c
-index 4bce36c3a6a07..8468bed3e87d2 100644
---- a/net/netfilter/nft_fwd_netdev.c
-+++ b/net/netfilter/nft_fwd_netdev.c
-@@ -101,6 +101,7 @@ static void nft_fwd_neigh_eval(const struct nft_expr *expr,
- 	unsigned int verdict = NF_STOLEN;
- 	struct sk_buff *skb = pkt->skb;
- 	struct net_device *dev;
-+	unsigned int hh_len;
- 	int neigh_table;
+diff --git a/drivers/ptp/ptp_sysfs.c b/drivers/ptp/ptp_sysfs.c
+index 998de4be08ebd..b07274b67294a 100644
+--- a/drivers/ptp/ptp_sysfs.c
++++ b/drivers/ptp/ptp_sysfs.c
+@@ -229,7 +229,7 @@ static ssize_t n_vclocks_store(struct device *dev,
+ 		for (i = 0; i < num - ptp->n_vclocks; i++) {
+ 			vclock = ptp_vclock_register(ptp);
+ 			if (!vclock)
+-				goto out;
++				goto err_register;
  
- 	switch (priv->nfproto) {
-@@ -152,8 +153,19 @@ static void nft_fwd_neigh_eval(const struct nft_expr *expr,
- 	}
+ 			*(ptp->vclock_index + ptp->n_vclocks + i) =
+ 				vclock->clock->index;
+@@ -261,6 +261,12 @@ static ssize_t n_vclocks_store(struct device *dev,
+ 	mutex_unlock(&ptp->n_vclocks_mux);
  
- 	dev = dev_get_by_index_rcu(nft_net(pkt), oif);
--	if (dev == NULL)
--		return;
-+	if (dev == NULL) {
-+		verdict = NF_DROP;
-+		goto out;
-+	}
-+
-+	hh_len = LL_RESERVED_SPACE(dev);
-+	if (unlikely(skb_headroom(skb) < hh_len && dev->header_ops)) {
-+		skb = skb_expand_head(skb, hh_len);
-+		if (!skb) {
-+			verdict = NF_STOLEN;
-+			goto out;
-+		}
-+	}
- 
- 	skb->dev = dev;
- 	skb_clear_tstamp(skb);
+ 	return count;
++err_register:
++	num = i;
++	if (num)
++		device_for_each_child_reverse(dev, &num, unregister_vclock);
++	for (num = 0; num < i; num++)
++		ptp->vclock_index[ptp->n_vclocks + num] = -1;
+ out:
+ 	mutex_unlock(&ptp->n_vclocks_mux);
+ 	return err;
 -- 
 2.53.0
 
