@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795619462;
-	b=B3s3u40xHUu8zvhf/qXfJoK2ZJZblZzjrgCWKXrdlQsSY9Tl1Gcd7KMIDEJYr4bbsElG
-	 VLPAheOMFF7h4hZguFKn7PHocI2lKXKiJbw6JuttCg2S9imKw02CQWIfqcb90n73kcFfp
-	 PRO4otYArlDyQnGmdRjrJvd1l2ojW7G0gwflsnPjbjGbaSdDH6/C/wryYAZcpNycf/Q+b
-	 xYwEETG/DVmmvROCbvYhO5I9cN/LuPoPFoaRmFPb78HKw7akeF984xJQLfH11FyvEpO+O
-	 +fjubY2V7WVlxHKGq1YIHqOdK9d4oQ45JO889xpioxTdc2kKKPZoH93FdGthSBHRmVQ==
+	t=1795619465;
+	b=nqmb1vO2Yl/KLpn68v2lqb/Wjm09l3UaZNkM+wJiHpiIh10WyZOLPWmQjPuIOGr2/8Ac
+	 Ui8Yg6wUHvmLXphpduhyn9wWqfYj6MJa3KTz1jbuskuxjrP+ulatkIx4DD1fnJANwT3+G
+	 TQg6pWtu+bKyad+ZLml0pgyOSwvteKzTcDT04B6X1NJxCbMuS9R8az5Q2+2uTuofJCWJO
+	 26LWB2XpOjFf8DBQhTdNMAaX2hRlZTKsijp1wVJE37NPJnpJlSk0v0Mu1EW5giYeWoT5P
+	 vLJi6BV5lxubkrrS4n8sIocvzQ9w4Z8e2tZJAnw6Eb55dGsewTjhSDtKEygjWxzpoqA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795619462;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795619465;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=NgF5zXiNLuxtBm7VDzvxVUBWgANVTEcwfJ3KMVDsXDM=;
-	b=ES1/nEaflQLgdDvOhZIxVt3Qbcg/lV5opvl4GMFR5kH3YWIm98gSz1e8iwJhtMnPz7u/
-	 WH2nSnzfIR4ebWmlw25WiEbryXk1LaYMyk/vbCaJOkMJVhvvH01pE4dyZM0BqeF88WMU3
-	 DWbtUI+0NBCLdc03lCmzQegggUnOqN16mPQcHJ1+HGOoVQcuB6VbVvgbOs2hAw3mBnDeK
-	 gIzuAIolUhuZ/dFbhPAlJxVRK/VFbdeXTgqmaunOA/MpcFcB2nuCF9b3qP+vWJl3aJyW7
-	 HRM7gJkytMAi1WcLCWZkN2wIJOR3H7RnBf7l2bw+ln38RE8IGagIQ0sDOxAgDoRcU6Q==
+	bh=Wau0WtpN0WYBUSc8CT1vfozR27/pSEakNHAjFqyBFtM=;
+	b=ILRX/ZSpeHR3L/OFIXxKl8g7RfNkZjTeVVxqY08TiXuqrpTMUEploFBAMufifjjeAg/c
+	 m4/gVyAnmOHVsYPVcc3EfvTgeBI505L9JMdzTGtSn3jtzxgirCzGfWz10ht2nPyMFahkY
+	 8KpL9nx4bNT3EkNraTpP2tFukMZ9ySYLCbw2imO2rCTKY4jGR4hQOoA7ORwf422eROlFB
+	 +f6HnLY10cEFH9M+d4NxloXPt0Gh2d4GT0BUibXLJSfjmGibOzYK7qtEyqfEb7WJw4dst
+	 K+hU1NMjQjejmDAm9Vo9L8PRnVpVjf/ibeooFl8ANEPxj73rde3Ec8RRgLGEScrMRug==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="xcoMPvS/";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Cz55sIPA;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 55D4A606A337;
-	Wed, 25 Nov 2026 15:11:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C5347606A32D;
+	Wed, 25 Nov 2026 15:11:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=xcoMPvS/
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9A51E1F000F4;
-	Wed, 25 Nov 2026 15:11:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Cz55sIPA
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 77BD11F00A03;
+	Wed, 25 Nov 2026 15:11:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795619462;
-	bh=NgF5zXiNLuxtBm7VDzvxVUBWgANVTEcwfJ3KMVDsXDM=;
+	s=korg; t=1795619465;
+	bh=Wau0WtpN0WYBUSc8CT1vfozR27/pSEakNHAjFqyBFtM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=xcoMPvS/JKTJuhg1lQdFH26kkukTy8Ydp5hNKgAG/hE+djWuZ39CO+Mjt6RPVjg8h
-	 ucw4+ShIkq3Lc1Gm68GkgI9MEOrlLb1VPhnBD2lT2t1fatK1eXtawF09jWn6AJjhtg
-	 aJVIM14B6DaSqO1OOyNFuaOwgJQ78h0RFuM8lgWk=
+	b=Cz55sIPA9BU2/CWhiP4T2xLG7t5VBnheFo0ZSR7DnCPAwk7dZnfZMS5CL4SMGG9Hh
+	 KLElORnonA3m7fZCCG8SbaGNefxkfnybnkZB5ll0qDsobc8I6pbWNE3C3+5lYCZcWu
+	 cY9tJxA/Hn9Y8dnh4yOyXD9+c8dZXwvjlVT7zGyk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Gregory Price (Meta)" <gourry@gourry.net>,
 	"Vlastimil Babka (SUSE)" <vbabka@kernel.org>,
+	"Gregory Price (Meta)" <gourry@gourry.net>,
 	Zi Yan <ziy@nvidia.com>
-Subject: [PATCH 7.3 0597/1005] mm/page_alloc: retry alloc_contig_pages() when the zonelist is rebuilt
-Date: Wed, 25 Nov 2026 15:32:15 +0100
-Message-ID: <20261125143835.730379058@linuxfoundation.org>
+Subject: [PATCH 7.3 0606/1005] mm/page_alloc: detect zonelist rebuilds from memory hot-add
+Date: Wed, 25 Nov 2026 15:32:24 +0100
+Message-ID: <20261125143835.941235978@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143821.729802100@linuxfoundation.org>
 References: <20261125143821.729802100@linuxfoundation.org>
@@ -70,84 +70,60 @@ Content-Transfer-Encoding: 8bit
 
 From: Gregory Price (Meta) <gourry@gourry.net>
 
-commit da0d7a895e9021dc2cffa90fb6fafd8b9379e544 upstream.
+commit e5db040c3d09c5d85dda70f736d4d1a6714b741e upstream.
 
-Onlining the first block of a zone rebuilds every zonelist in place,
-shifting the slots after the new zone.
-alloc_contig_frozen_pages_noprof() approves a slot by the caller's gfp
-and nodemask, then loads the zone from it:
+The zonelist_update_seq retry was limited to CONFIG_MEMORY_HOTREMOVE,
+presumably because only hot-remove takes zones out of a zonelist.
 
-  CPU 0                             CPU 1
-  alloc_contig_frozen_pages_noprof(GFP_HIGHUSER | __GFP_THISNODE)
-    slot 0 (NORMAL1) approved
-                                    online_pages()
-                                      build_all_zonelists()
-                                        [NORMAL1]
-                                        -> [MOVABLE1, NORMAL1]
-    zone = zonelist_zone(slot 0)    /* MOVABLE1 */
-    alloc_contig_frozen_range(MOVABLE1 pfns)
+However, build_zonerefs_node() rewrites the zonelists in place, so
+onlining the first block of a zone shifts the entries that follow it
+in every zonelist containing that zone.  This can cause a spurious
+allocation failure for a __GFP_THISNODE caller.
 
-A gigantic hugetlb page can then land in ZONE_MOVABLE, and a nodemask
-caller can get a range from another node.  Gigantic pages are kept out
-of ZONE_MOVABLE since commit 79b63f12abcb ("mm, hugetlb: do not allocate
-non-migrateable gigantic pages from movable zones").
+For a node with only ZONE_NORMAL, onlining its first ZONE_MOVABLE block
+rewrites the node's ZONELIST_NOFALLBACK list as:
 
-Check zonelist_update_seq before using each zone, and restart the walk
-if it changed, as the hugetlb pool walk does.  Check again before
-escalating to the pass that may migrate hugetlb pages, so a pass a
-rebuild cut short is redone rather than escalated.
+  [NORMAL, NULL] -> [MOVABLE, NULL] -> [MOVABLE, NORMAL, NULL]
 
-With kprobes holding the walk across the online, the base kernel put the
-1G page in ZONE_MOVABLE in 3 of 3 runs, and this change put it in
-ZONE_NORMAL in 3 of 3.  Direct GFP_KERNEL calls with nodemask {1} and
-{2} got a ZONE_MOVABLE range and a node 1 range on base, 3 of 3 each,
-and neither with this change.
+A concurrent GFP_KERNEL | __GFP_THISNODE allocation can observe the
+intermediate list, skip ZONE_MOVABLE, and find no eligible zone. With
+CONFIG_MEMORY_HOTREMOVE=n, check_retry_zonelist() returns 0 and the
+allocation fails even though the node has free ZONE_NORMAL memory.
 
-Fixes: 5e27a2df03b8 ("mm/page_alloc: add alloc_contig_pages()")
+Gate the sequence checks on CONFIG_MEMORY_HOTPLUG, which covers every
+configuration that rebuilds zonelists after boot.
+
+Fixes: 3d36424b3b58 ("mm/page_alloc: fix race condition between build_all_zonelists and page allocation")
 Cc: stable@vger.kernel.org
-Signed-off-by: Gregory Price (Meta) <gourry@gourry.net>
 Reviewed-by: Vlastimil Babka (SUSE) <vbabka@kernel.org>
-Link: https://patch.msgid.link/20261101021340.2251928-11-gourry@gourry.net
+Signed-off-by: Gregory Price (Meta) <gourry@gourry.net>
+Link: https://patch.msgid.link/20261101021340.2251928-5-gourry@gourry.net
 Acked-by: Zi Yan <ziy@nvidia.com>
 Signed-off-by: Vlastimil Babka (SUSE) <vbabka@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- mm/page_alloc.c |    9 +++++++++
- 1 file changed, 9 insertions(+)
+ mm/page_alloc.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
 --- a/mm/page_alloc.c
 +++ b/mm/page_alloc.c
-@@ -7583,6 +7583,7 @@ struct page *alloc_contig_frozen_pages_n
- 		gfp_t gfp_mask, int nid, nodemask_t *nodemask)
+@@ -4427,7 +4427,7 @@ static DEFINE_SEQLOCK(zonelist_update_se
+ 
+ static unsigned int zonelist_iter_begin(void)
  {
- 	unsigned long ret, pfn, flags;
-+	unsigned int zonelist_cookie;
- 	struct zonelist *zonelist;
- 	struct zone *zone;
- 	struct zoneref *z;
-@@ -7591,8 +7592,13 @@ struct page *alloc_contig_frozen_pages_n
+-	if (IS_ENABLED(CONFIG_MEMORY_HOTREMOVE))
++	if (IS_ENABLED(CONFIG_MEMORY_HOTPLUG))
+ 		return read_seqbegin(&zonelist_update_seq);
  
- retry:
- 	zonelist = node_zonelist(nid, gfp_mask);
-+	zonelist_cookie = zonelist_iter_begin();
- 	for_each_zone_zonelist_nodemask(zone, z, zonelist,
- 					gfp_zone(gfp_mask), nodemask) {
-+		/* A rebuild may have shifted an ineligible zone into this slot. */
-+		if (unlikely(check_retry_zonelist(zonelist_cookie)))
-+			goto retry;
-+
- 		spin_lock_irqsave(&zone->lock, flags);
+ 	return 0;
+@@ -4435,7 +4435,7 @@ static unsigned int zonelist_iter_begin(
  
- 		pfn = ALIGN(zone->zone_start_pfn, nr_pages);
-@@ -7627,6 +7633,9 @@ retry:
- 	 * second pass, we will try moving HugeTLB pages when those pages are
- 	 * smaller than the requested contiguous region size.
- 	 */
-+	/* Redo a pass that a rebuild cut short before escalating. */
-+	if (unlikely(check_retry_zonelist(zonelist_cookie)))
-+		goto retry;
- 	if (skip_hugetlb && skipped_hugetlb) {
- 		skip_hugetlb = false;
- 		goto retry;
+ static unsigned int check_retry_zonelist(unsigned int seq)
+ {
+-	if (IS_ENABLED(CONFIG_MEMORY_HOTREMOVE))
++	if (IS_ENABLED(CONFIG_MEMORY_HOTPLUG))
+ 		return read_seqretry(&zonelist_update_seq, seq);
+ 
+ 	return seq;
 
 
