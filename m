@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795625766;
-	b=gQqqKJY3rOrEul7NU9AX9dJieA7NV0U2QJHExOrFd7iM4kYbIA+KRlA3eZ/24zOJsi2r
-	 xggwb173HmQ4HsF47WUa1vmVaXCzdyAl7EE3j0p/F1vswJlEZb9RMLW5CFR2Qz4BE6B5O
-	 XKnBvGnCaWwNwUTKbwwwEb71MtZ3TK2KBE43Ogfe2ZsBInUQVK/JbUIk+sxr+Uiy9wU59
-	 FEMW0kr4izVqmS1h1bwt5drDUZBaGh/tr+gDXI4Pf+Xhk5ZRTlNE0l5Ol4Mlq+B63Xk8w
-	 NGrNP0sZeTmtnq9Di0xG52N3x1uIRumsNdOUcZHQG3aTjZCAXL4ulO6jYVDcZHtFbVg==
+	t=1795625769;
+	b=fahiwoMUkAZsRwfkAI+pRryo0U0ooqbyPNjMYaRfDhNg8+9a+GVzOcR8VBZKC9oULm/L
+	 R23/EXUYZ5lnilRPpeytfGpBSihK/FOP2BkQFAjq39Vd7DB5ieWpThpinS/ql9pVGHdIk
+	 xXj+2MRfVi2+9xpTojmVHfuPcYfjfUFPyHnrRlywW7ajYvLhg+xFdGUF8cpC/sRfxWn/P
+	 1UD+Bfi6HSzxOnnJ6FY79q+bLgjsWp1qGmMA+I+ruVwL+yGwi3BxTSssm7mkD46980RuX
+	 F6FhqcVALECDx/zqbbdOfD/kgNYfARGtBNKLGUNSHXKVkY3Irr/HMgxgRmDLM/NhnSw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795625766;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795625769;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=ZTS5SAKKhTCUGRvouHMQj6x5xQ1sIdOWhI2Ijn5kWlc=;
-	b=eyJ7WMXWIF8Z2F2Ds5R7vNHapM7WlAAyXm7z+tL6xa9hOjFZjR2+Q9l4U3CfklADnopY
-	 dTk1KnSwjYo13hLR1RkzFvF7m+uUJ7VOfmkGP+qRhsQb5YQAnrDyiqCx52IXVSM9iU8CY
-	 6ewJHiJPUo0oVXiNFBV+4LpZku6B2hcSEyOi+Dzxmplmhl3N/Y1j8mz3DAqyGUoAaddIX
-	 b/cQuK4YVPQLsDURrkRq/1iNwMcvn+w/hp/wWlLdOdADPnm8NRaMeY1QDfrSQe3wCBkp3
-	 UYgK6+7o6PWJ1Doxzs7FeiFz65CDQccI3slHJZ5Fo9jIpN6U9WIbT4exAKC7grZT/3w==
+	bh=GwiV28beGkYXB283CVTahbgxiFjDTq3N0Q0K7A0WOVs=;
+	b=nq+Vq3TilbjSaCJVlhZ2AcdAmplchyK0IEz82o6shGwNKBTwpZrh8bvF3CtkVt3zuL5y
+	 4PoDKKBJrwwQZgzmTGFAXR04YQznazmovYrZ4jc7jNYFmFolUkWtBhcb3GvJFZgblTeCG
+	 T6KQ8UTNBU2N0q484D3BjPSEEPGUlLrpXwmIdyHpksVDptY7BTJKro4KGyO7XOHX6pbNV
+	 864bARFwSVS9P9zBxgEikv1uDLh31jDt2xsAJIQTIdkR074/VkdChLNaAWGbXYGiUqLlE
+	 POjoXbxmugNLQgku9mNWNczDhWZEHW4qXi3iQcxgCPFIGDs+yc2WN6rGcrPNw0j47aQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=s4GCmfEQ;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=kfEel7fy;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 41BEB606A321;
-	Wed, 25 Nov 2026 16:56:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6B6D6606A333;
+	Wed, 25 Nov 2026 16:56:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=s4GCmfEQ
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 564CE1F000C0;
-	Wed, 25 Nov 2026 16:56:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=kfEel7fy
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 667971F000C6;
+	Wed, 25 Nov 2026 16:56:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795625765;
-	bh=ZTS5SAKKhTCUGRvouHMQj6x5xQ1sIdOWhI2Ijn5kWlc=;
+	s=korg; t=1795625768;
+	bh=GwiV28beGkYXB283CVTahbgxiFjDTq3N0Q0K7A0WOVs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=s4GCmfEQ0DnNXDXu7xWoS1fVIeMnKJ4kvolXPciO5JZXiIFh+3z5+OGNFMhvbCPEf
-	 z5gkY34ZQa+KnCK2Hqxgh+UYe/s/OTWxDf/i0yA+LKX7raMLAQiYRVQastdHOxRN/a
-	 uKSUDVpOMMjIOV9e5iLuMBdI6Vsn37UAgnKSIXvI=
+	b=kfEel7fyv4q89ldNlEDMRFVPEB4JUIIJPIFutaTd7qIQV1JYI1Ma56fCV0YGfVLig
+	 Q2pXeVlMXh6kPVboHqJmQQCwgrm8+w4hdpsUfiKAB5EN1TAK0J8cUZ04ykMtNt6FO+
+	 APH6wiYV29R4B7xvja1gbJs2atch8flnWuJIdjRs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hungyu Lin <dennylin0707@gmail.com>,
-	Thomas Gleixner <tglx@kernel.org>,
-	John Stultz <jstultz@google.com>
-Subject: [PATCH 6.12 626/816] timekeeping: Read getboottime64() offsets under the sequence counter
-Date: Wed, 25 Nov 2026 15:36:14 +0100
-Message-ID: <20261125143903.674431043@linuxfoundation.org>
+	Baoli Zhang <baoli.zhang@linux.intel.com>,
+	Peter Ujfalusi <peter.ujfalusi@linux.intel.com>,
+	Mark Brown <broonie@kernel.org>
+Subject: [PATCH 6.12 609/816] ASoC: SOF: ipc4-topology: Fix pin format leak in process widget setup
+Date: Wed, 25 Nov 2026 15:35:57 +0100
+Message-ID: <20261125143903.275983202@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143849.205329330@linuxfoundation.org>
 References: <20261125143849.205329330@linuxfoundation.org>
@@ -68,46 +68,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hungyu Lin <dennylin0707@gmail.com>
+From: Baoli Zhang <baoli.zhang@linux.intel.com>
 
-commit 385b5ec1f31dd39297578eed42be74b07ae74017 upstream.
+commit e5c09fe3f9c8d9da33b177ee432db15b6ab46884 upstream.
 
-getboottime64() computes the wall-clock boot timestamp from offs_real
-minus offs_boot without checking tk_core.seq. A concurrent timekeeping
-update can leave the reader with an inconsistent pair of offsets or,
-on 32-bit systems, a torn 64-bit offset, producing an incorrect boot
-timestamp.
+sof_ipc4_widget_setup_comp_process() allocates the input and output pin
+format arrays via sof_ipc4_get_audio_fmt(). When the following
+sof_ipc4_widget_setup_msg() fails, e.g. because the firmware does not
+provide a module matching the widget UUID, the error path jumps to the
+'err' label, which frees the process struct and clears swidget->private
+but skips sof_ipc4_free_audio_fmt(). The arrays are then unreachable and
+are reported by kmemleak:
 
-Read both offsets under tk_core.seq and retry if an update overlaps
-the sample. Convert the resulting local value to a timespec64 afterward.
+    sof_ipc4_get_audio_fmt+0xc9/0x420 [snd_sof]
+    sof_ipc4_widget_setup_comp_process+0x8e/0x200 [snd_sof]
+    snd_sof_load_topology+0x71a/0x840 [snd_sof]
+    sof_pcm_probe+0x77/0x120 [snd_sof]
+    snd_soc_component_probe+0x21/0x60 [snd_soc_core]
+    ...
 
-Fixes: 7c3f1a573237 ("Introduce boot based time")
-Signed-off-by: Hungyu Lin <dennylin0707@gmail.com>
-Signed-off-by: Thomas Gleixner <tglx@kernel.org>
-Acked-by: John Stultz <jstultz@google.com>
+Jump to 'free_available_fmt' instead, as the other process widget error
+paths after sof_ipc4_get_audio_fmt() already do.
+
+The other IPC4 widget setup functions (pga, mixer, src, asrc) free the
+audio formats in their common error label and are not affected.
+
+Fixes: f9efae954905 ("ASoC: SOF: ipc4-topology: Add support for base config extension")
 Cc: stable@vger.kernel.org
-Link: https://patch.msgid.link/20261030054227.35453-2-dennylin0707@gmail.com
+Signed-off-by: Baoli Zhang <baoli.zhang@linux.intel.com>
+Acked-by: Peter Ujfalusi <peter.ujfalusi@linux.intel.com>
+Link: https://patch.msgid.link/20261109005604.1004362-1-baoli.zhang@linux.intel.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/time/timekeeping.c |    8 +++++++-
- 1 file changed, 7 insertions(+), 1 deletion(-)
+ sound/soc/sof/ipc4-topology.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/kernel/time/timekeeping.c
-+++ b/kernel/time/timekeeping.c
-@@ -2296,7 +2296,13 @@ void update_wall_time(void)
- void getboottime64(struct timespec64 *ts)
- {
- 	struct timekeeper *tk = &tk_core.timekeeper;
--	ktime_t t = ktime_sub(tk->offs_real, tk->offs_boot);
-+	unsigned int seq;
-+	ktime_t t;
-+
-+	do {
-+		seq = read_seqcount_begin(&tk_core.seq);
-+		t = ktime_sub(tk->offs_real, tk->offs_boot);
-+	} while (read_seqcount_retry(&tk_core.seq, seq));
+--- a/sound/soc/sof/ipc4-topology.c
++++ b/sound/soc/sof/ipc4-topology.c
+@@ -1003,7 +1003,7 @@ static int sof_ipc4_widget_setup_comp_pr
  
- 	*ts = ktime_to_timespec64(t);
- }
+ 	ret = sof_ipc4_widget_setup_msg(swidget, &process->msg);
+ 	if (ret)
+-		goto err;
++		goto free_available_fmt;
+ 
+ 	/* parse process init module payload config type from module info */
+ 	fw_module = swidget->module_info;
 
 
