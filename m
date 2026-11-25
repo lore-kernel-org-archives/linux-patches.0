@@ -1,51 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795619691;
-	b=S8KOelCkT7kMn8FhT7iM/IDP99ZaLZEkFeWCB98f+lsM55NaNbjpTpQZXxSeKSTAk7WZ
-	 Otkm5s1zFaekBRBrwh6U5RmwaKGpA+/sqotjuT1dXzsG7BPqt4hZlEDtL2nTkdCOXyRDt
-	 2ow1ApI+km/ccljHiB3Dke6O3zeW0229iISIMDH6H6/+zFWGN/5d5R3va33tWmzEINR3N
-	 G+MGy9fDgyLkBf7oWIkkglUsLV8P2IWPXJYMSvAzOQCT0FDUHx66llpZh6IrUD9klkrfU
-	 yCyqbHOcFiNA4DrbSNph7WKwYd7qCiSyN2ZRM9sYfDCTCWSonxA/u3YBYKDjpFk3LcA==
+	t=1795619694;
+	b=vDCNGH342nixOcAV038hYsOPYuJNVpACI4O1iyWCfxivw9gkfqZXu0HvGociTC6on5yA
+	 4NumMN9LpGQiQm5N5MBoPErx1zQfz/sYZLXkU1qzS6oijY/E6xmXxZMp6auH+7cLin6bb
+	 U6vqWwsXWkt1pjYUv52WFLG5ljSg56FwFoPkz26lQLk/UJHMSD0/NuUmsDC+DOdlHZcOY
+	 CzUrieqxGTIXo3ctKorws2e7h0smuoxSEodgT0a25Im16+5TxNsh1A3XQVIkx1o6utRiI
+	 IFi2nxzabMZ9o90T2DzB+YDwKHS7c+K4d/OOxdgm342JS0Bk8/FtGzkMJQBRo6LesBA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795619691;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795619694;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=BuRBVck36yIprP9V+l6Itmo7TnAW3BUNXFimMcIClU0=;
-	b=A95WaVe1qahLZnz1v0VAxijAHcjPaXhSO1RyJiO3Dnm8S1kFz7q/gAa0/WvcJt4F2op3
-	 7hIuonra4zOCJKovTcOb8iNGNAsQAmGLBiO1MA9iMUWcJXrXdf5OMlWqqGpazv7+xLxbD
-	 Xb8qXa7CVpigZ70p7RZ8lptqJN0P2eDos8PXFsP+vwGHH+Oal5iegX9XQebmY/ccovNVE
-	 70KDNZqt4h8Or7aHNcaXkDBJspGZf8A3moTH0Q+8CxPJIDN/gqjPIWT1LgvfyUeNyVhKd
-	 J95NbPbQjmLh8OReWW+I111WmSjfBUTQl1IZbZdhIyUut+qMTNw7FcmnRrEzOuxdGNQ==
+	bh=yUIOUfI2y3f3YH5HWlOY0Uht+axQViVpso7qOv/PhcU=;
+	b=NTSidCTv6Qxar6IlT/nMP9sKiEKg6cDzwgivb64uT5y2ZPAA4yLvuNi7AEwLokLGvRFb
+	 y5Vh8v1t7uwmCdI+pApyiNU41Ad1E95N8jOFLmVIZ/ibBY6/VFvo0XpwaaGAMC7m2w6DA
+	 H8q0wTrWm6hyVLOiEwSc2NnR03LYhdU8+Qh0biuxQylhcjTVZ/2/1zVrfdKm/Juf3miqp
+	 Sx832uRPd90U/jklacQ+ERlv/LW/yd63IdaHngKVau4Og723vA+9H7WANQdQ5bLngP/SE
+	 kUjtaE43vMaJ679sxGFt0LwFl9s+8O5jN7Zr3eX0zpaqaGsoWl6ECMD5mNBC1Xnl9Ww==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Cw+QXS2E;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="a/LCZUk2";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5B015606A331;
-	Wed, 25 Nov 2026 15:14:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 37F41606A321;
+	Wed, 25 Nov 2026 15:14:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Cw+QXS2E
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0B9391F000E0;
-	Wed, 25 Nov 2026 15:14:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=a/LCZUk2
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 364DC1F000ED;
+	Wed, 25 Nov 2026 15:14:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795619690;
-	bh=BuRBVck36yIprP9V+l6Itmo7TnAW3BUNXFimMcIClU0=;
+	s=korg; t=1795619693;
+	bh=yUIOUfI2y3f3YH5HWlOY0Uht+axQViVpso7qOv/PhcU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Cw+QXS2EAcnS50YalNcqz5hPUO49dETF1doFGBheq9PdlM17aZdpoAEpxXIxCGFIj
-	 j2EGQlBvFWvjLoqni0djDtYC3OzTDgO8+HUzF8s3FSoHo98l6Z93G/k6QVrWK4CVGU
-	 NLmqfPjPseZ2keX+8dOv202dKRJSmuhjxYS+pD1A=
+	b=a/LCZUk2OeiczGKUr0Pn/LILrPCVK3499mnB2WHL2JAmOUDqF5lbRb4/3MBjYdN6i
+	 pGOIPyh832W4FbvNcJVRJcXLipxDQMFffMkLgnZ5TLtsopgZ+Ugk7OQwAf7Ioz5R2l
+	 oJXkNs7RcxY0dI6yZuuZVdxsVngiljgCvROu2lW8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Paolo Bertinetti <paolobertinetti200f4@proton.me>,
-	"Peter Zijlstra (Intel)" <peterz@infradead.org>
-Subject: [PATCH 7.3 0677/1005] perf/hw_breakpoint: Clear stop state in hw_breakpoint_add()
-Date: Wed, 25 Nov 2026 15:33:35 +0100
-Message-ID: <20261125143837.614323197@linuxfoundation.org>
+	Brian Norris <briannorris@chromium.org>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+	Alan Stern <stern@rowland.harvard.edu>
+Subject: [PATCH 7.3 0678/1005] PM: runtime: Update last_busy in rpm_resume() for active devices
+Date: Wed, 25 Nov 2026 15:33:36 +0100
+Message-ID: <20261125143837.638346180@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143821.729802100@linuxfoundation.org>
 References: <20261125143821.729802100@linuxfoundation.org>
@@ -67,46 +68,56 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Paolo Bertinetti <paolobertinetti200f4@proton.me>
+From: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 
-commit 6bea5e29daf123a78ae58cb5926023f4705f396f upstream.
+commit 55b2b8af704f845e01fa2f31ee259b07641ce3a9 upstream.
 
-Since commit 18dbcbfabfff ("perf: Fix the POLL_HUP delivery breakage"),
-__perf_event_overflow() stops the event with pmu->stop() and disables
-it when the PERF_EVENT_IOC_REFRESH limit is reached. When userspace
-re-arms the event with PERF_EVENT_IOC_REFRESH, the event is enabled
-again and pmu->add() is called with PERF_EF_START.
+Setting an autosuspend delay for a device can be expected to cause a
+runtime suspend of the device after calling, say, pm_runtime_put() to
+be deferred, so the time between the last successful attempt to resume
+the device and its subsequent suspend is at least equal to the
+autosuspend delay.
 
-hw_breakpoint_add() sets PERF_HES_STOPPED when PERF_EF_START is
-missing, but never clears it. The flag set by pmu->stop() stays, and
-perf_bp_event() drops every later hit, so a breakpoint re-armed this
-way delivers only its first overflow.
+However, that expectation is only met after the device has been actually
+resumed in rpm_resume() by invoking its runtime resume callback.  If the
+runtime PM status of the device is already "active" when rpm_resume()
+runs for it, the device's last_busy timestamp is not updated which may
+allow a subsequent pm_runtime_put() invocation (or similar) to suspend
+it right away.
 
-Set the state from PERF_EF_START on every add, as perf_swevent_add()
-does.
+This is arguably inconsistent and confusing, so make rpm_resume() also
+update the device's last_busy timestamp when it finds that the device is
+already "active" and it is about to return 1 early.
 
-Fixes: 18dbcbfabfff ("perf: Fix the POLL_HUP delivery breakage")
-Assisted-by: LLM
-Signed-off-by: Paolo Bertinetti <paolobertinetti200f4@proton.me>
-Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
-Cc: stable@vger.kernel.org
-Link: https://patch.msgid.link/20261103130732.764081-3-paolobertinetti200f4@proton.me
+Fixes: 56f487c78015 ("PM / Runtime: Update last_busy in rpm_resume")
+Link: https://lore.kernel.org/linux-pm/CAJZ5v0jTX1FgeS9FCV=+V4uacSgLQBVsSPnU27ybgUGg57GUOA@mail.gmail.com/
+Reported-by: Brian Norris <briannorris@chromium.org>
+Cc: All applicable <stable@vger.kernel.org>
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Acked-by: Alan Stern <stern@rowland.harvard.edu>
+Reviewed-by: Brian Norris <briannorris@chromium.org>
+Tested-by: Brian Norris <briannorris@chromium.org>
+Link: https://patch.msgid.link/13032301.O9o76ZdvQC@rafael.j.wysocki
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/events/hw_breakpoint.c |    3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+ drivers/base/power/runtime.c |    6 ++++++
+ 1 file changed, 6 insertions(+)
 
---- a/kernel/events/hw_breakpoint.c
-+++ b/kernel/events/hw_breakpoint.c
-@@ -968,8 +968,7 @@ static int hw_breakpoint_event_init(stru
+--- a/drivers/base/power/runtime.c
++++ b/drivers/base/power/runtime.c
+@@ -822,6 +822,12 @@ static int rpm_resume(struct device *dev
+ 		pm_runtime_deactivate_timer(dev);
  
- static int hw_breakpoint_add(struct perf_event *bp, int flags)
- {
--	if (!(flags & PERF_EF_START))
--		bp->hw.state = PERF_HES_STOPPED;
-+	bp->hw.state = (flags & PERF_EF_START) ? 0 : PERF_HES_STOPPED;
- 
- 	if (is_sampling_event(bp)) {
- 		bp->hw.last_period = bp->hw.sample_period;
+ 	if (dev->power.runtime_status == RPM_ACTIVE) {
++		/*
++		 * The attempt to resume the device means that it is needed for
++		 * something, so update its last_busy timestamp as in the case
++		 * in which it actually resumes below.
++		 */
++		pm_runtime_mark_last_busy(dev);
+ 		retval = 1;
+ 		goto out;
+ 	}
 
 
