@@ -1,52 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795622375;
-	b=qZ7VDJun7Rz76WuVY2TJXqs0Y6eIzEzCnhEU/dqrItHp7zhJe3piWYP3vadugx2C38vI
-	 sqHjAF9ua3XFbB5FiRq6DLVznhQfMg/N8wI6kQ6JXRQYppaiRuBdHP5Qad5IXuB4YSYjk
-	 22C+wbmVBo3rd8pJ/0g0leUWjbUz5GRP5oT654TWeS7+J/7DMzrZi5MIblJsT1qNOol/H
-	 W3gHGZWWpiKVixO1WJUykHLuxBNN4nyaS9kGVstJvzqYDkoUyW/K2hN3S1pAlwMvxdzFU
-	 w0N7SIoZp+iZNFWOBKDd7GvrGNyKrTsM9eAWQ7FbtEdZ79x+SLfnY4Zc6Fv32UdjS2Q==
+	t=1795622378;
+	b=hzfY7OoEQS3f6vjJY85QUoSWqNeVAqE6oaGCel9rT5IeYLVjTax9bFdoka543yrQFj8q
+	 EOLMzqlV39ERkPUaHyCUvzJw0e5cAxa9FA6jwwoJWkES5va/cWvQuG/Dlnw8lUwSuInPk
+	 li2IeOfFvr43tqGXkL3WKwXkA49Kaxzj0LQEswfjMOF6UMRmaDIVRCqJJcwTMtVtOpo/R
+	 ER87V/Mo4x+UCbXFYKHpTQrW4BsrSqa77ijcEnfvlrsv7dfeWzDXNYrBXxNBLtZ1/SHLb
+	 5YtEkjYaeZNXbe0OjT9zqe5Ys/nHaJdqPhF7QV4eVhVLMzd0CAI2FKv3V4CSbeCwQ7w==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795622375;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795622378;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=PEiMiNmh93MZa3eXYNIU8ed0eFnxypXJ6+ePNdyfnBw=;
-	b=cSOZ3I4EY6in52cxwVZmn8zlyg6AYp3cmC+gUDs5KqOWIBUHJYRaYXG/Qqhia3EJuVGT
-	 RV28Dnb3vrlo1/KtoimBEYR27hCZ5zfz8an4WQeUNQ/7gW/bzqlFLRQAqa7+ai370OWWi
-	 yUgFZYvG6wMRqIo0Sm9VLCqZ6pFsWsiccn0kmVwVzekEY5fbP2k261dVczjqoNzGWNAr2
-	 lH/LOpN/bf01oqD8MUDzEnMyJYY5GyDV06QIlp3hYlmhIWRW+wlaocKoLLOF85A0+fcgE
-	 Cj+3nnn4GlDDO6N3XJX30IzEDCITqF3ntH8yIFHovMAOA7hT/1G+WYXKk4Lzd9mlStA==
+	bh=8xUs+v/YvR0jmqrJJ6gKXKXeBUM7PdBuc/2DaV1ZOwY=;
+	b=NCRFrNMNKm9YDQ+TrBQYwdFseh7TaZGJ/f29hSvo+LtwXe8XFl0Cg3IR4QjElYTWkxgH
+	 fLus4FAedl+Do6s/7EbaF3dvvO5m9wL7dMglYM3eDuHfS39vAIsLESnnrOCs88ZWJOY/g
+	 ezVWaacDBCn3C4RVXMJCvHwfzdbmEYls4CK+F9k6ydTMnWjSuWs61nZtMaUNtysoqspHi
+	 MOjI0dZUe/vqC+Cu4mcg0dXMG39gd0UlNy6doZEyQhCqgkptEfoMdeEGbgJpnrMWOQyzK
+	 LuyOh6y1Kh4xJuSqvRVR05KBGY38RbGH69kwqB/WDfMeuG3hgJqmy3VZFl38le/m2uQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=u5k0R8TR;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="oxN/hSgb";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 166EE606A323;
-	Wed, 25 Nov 2026 15:59:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 93107606A321;
+	Wed, 25 Nov 2026 15:59:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=u5k0R8TR
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 494741F000CF;
-	Wed, 25 Nov 2026 15:59:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=oxN/hSgb
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7D7DF1F000C0;
+	Wed, 25 Nov 2026 15:59:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795622374;
-	bh=PEiMiNmh93MZa3eXYNIU8ed0eFnxypXJ6+ePNdyfnBw=;
+	s=korg; t=1795622378;
+	bh=8xUs+v/YvR0jmqrJJ6gKXKXeBUM7PdBuc/2DaV1ZOwY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=u5k0R8TR2mrGMr12A6ELRzr86RVZdaeyKUs+4ddFkzQig8PByhZPN7gkd2tlLLJLr
-	 V2/4AgVzW89I4tTlsZqUmsPGgBBCRh98488z7CMnqSldwLakJVbxB5/4qkQ5BT2/IK
-	 ltlRHD7QqwwYm7trJ+IlB5uQ/JalLHY1BQE0w7QE=
+	b=oxN/hSgbj2Mf5iT5giqKOdRUJghLMHxt2lM/sOMLHLFaOBosAgC3yONSarMhUADMI
+	 MZiUc/qy5nCq5wD57fAqEfMiIJU/TfHQ00z34fq+Pqfy1Ch4Ecql2iz2jLSeheEcJm
+	 1ANKfCA04Ky1AdUaQHMJC/WxOwhBCeEPdL12nkx8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Max Zhen <max.zhen@amd.com>,
-	Lizhi Hou <lizhi.hou@amd.com>,
+	Guixin Liu <kanie@linux.alibaba.com>,
+	Richard Cheng <icheng@nvidia.com>,
+	Dave Jiang <dave.jiang@intel.com>,
+	Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 517/990] accel/amdxdna: Fix race between unmap and free BO
-Date: Wed, 25 Nov 2026 15:31:24 +0100
-Message-ID: <20261125143834.206218937@linuxfoundation.org>
+Subject: [PATCH 6.18 518/990] cxl/cdat: Fix uninitialized stack use in bandwidth gathering
+Date: Wed, 25 Nov 2026 15:31:25 +0100
+Message-ID: <20261125143834.229386508@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143822.072087159@linuxfoundation.org>
 References: <20261125143822.072087159@linuxfoundation.org>
@@ -68,174 +70,68 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Lizhi Hou <lizhi.hou@amd.com>
+From: Guixin Liu <kanie@linux.alibaba.com>
 
-[ Upstream commit ac18f34f5927e420ae529be72aec86201a262d04 ]
+[ Upstream commit 97b74de26c81885a6447f5fe87641a2a136f8c7c ]
 
-A userspace process can concurrently trigger an unmap, which queues
-hmm_unreg_work, and free BO. If amdxdna_hmm_unreg_work() executes
-list_del(&mapp->node) and is preempted before calling amdxdna_umap_put(),
-amdxdna_hmm_unregister_all() can fail to find the mapping in the list
-and return without calling cancel_work_sync(). This allows object
-destruction to proceed while the worker still holds a pointer to the BO
-in the umap structure.
+cxl_endpoint_gather_bandwidth() and cxl_switch_gather_bandwidth() declare
+access_coordinate arrays on the stack and rely on their helpers to fill
+them. The helpers assign only the bandwidth members, and the combine step
+assigns even those only when both inputs are non-zero. The latency members
+are summed from stack residue on every call, and the bandwidth members
+keep that residue into the region access coordinate sysfs attributes when
+the endpoint CDAT reports no bandwidth.
 
-Moving the work item from struct amdxdna_umap to struct amdxdna_gem_obj.
-The worker no longer holds a pointer to an individual mapping, so there
-is no longer a window where the umap has been unlinked from umap_list but
-work is still pending against it. The work item now lives in the BO
-itself, so use a single cancel_work_sync() in the free path to drain the
-work.
+Zero initialize the arrays. Zero is the value this code already uses for
+"not reported", so an unset member now reads back as unknown rather than as
+a plausible number.
 
-Fixes: 445d20910429 ("accel/amdxdna: Fix unexpected wait when flushing notifier_wq")
-Reviewed-by: Max Zhen <max.zhen@amd.com>
-Signed-off-by: Lizhi Hou <lizhi.hou@amd.com>
-Link: https://patch.msgid.link/20260917154824.1872220-1-lizhi.hou@amd.com
-[ sashal: Adapted the hmm_unreg_work move to the older gem code: the uva field is named userptr, and amdxdna_gem_create_obj() was not relocated since it already follows the worker. ]
+Found by code inspection. Tested on a QEMU CXL topology with two endpoints
+sharing a switch upstream link and HMAT generic-port coordinates for the
+host bridge, which the calculation requires to run at all: with temporary
+printk at the combine sites, the unpatched kernel summed 0xfefefefe, the
+CONFIG_INIT_STACK_ALL_PATTERN stack filler, into the latency members, while
+the patched kernel reports the CDAT latency values there.
+
+Fixes: a5ab0de0ebaa ("cxl: Calculate region bandwidth of targets with shared upstream link")
+Signed-off-by: Guixin Liu <kanie@linux.alibaba.com>
+Reviewed-by: Richard Cheng <icheng@nvidia.com>
+Reviewed-by: Dave Jiang <dave.jiang@intel.com>
+Reviewed-by: Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>
+Link: https://patch.msgid.link/20260831092216.540644-2-kanie@linux.alibaba.com
+Signed-off-by: Dave Jiang <dave.jiang@intel.com>
+[ sashal: Context lines differ because kzalloc_obj(*res_xa) isn't available here, so the existing kzalloc(sizeof(*res_xa), GFP_KERNEL) line was kept while applying the same coords initializer change. ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/accel/amdxdna/amdxdna_gem.c | 47 +++++++++++------------------
- drivers/accel/amdxdna/amdxdna_gem.h |  3 +-
- 2 files changed, 18 insertions(+), 32 deletions(-)
+ drivers/cxl/core/cdat.c | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/accel/amdxdna/amdxdna_gem.c b/drivers/accel/amdxdna/amdxdna_gem.c
-index e416a6ef7304e..cc22981d73598 100644
---- a/drivers/accel/amdxdna/amdxdna_gem.c
-+++ b/drivers/accel/amdxdna/amdxdna_gem.c
-@@ -127,10 +127,8 @@ static bool amdxdna_hmm_invalidate(struct mmu_interval_notifier *mni,
- 
- 	if (range->event == MMU_NOTIFY_UNMAP) {
- 		down_write(&xdna->notifier_lock);
--		if (!mapp->unmapped) {
--			queue_work(xdna->notifier_wq, &mapp->hmm_unreg_work);
--			mapp->unmapped = true;
--		}
-+		mapp->unmapped = true;
-+		queue_work(xdna->notifier_wq, &abo->hmm_unreg_work);
- 		up_write(&xdna->notifier_lock);
- 	}
- 
-@@ -160,13 +158,13 @@ static void amdxdna_hmm_unregister(struct amdxdna_gem_obj *abo,
- 		if (!compare_range(mapp, vma->vm_mm, vma->vm_start, vma->vm_end))
- 			continue;
- 
--		queue_work(xdna->notifier_wq, &mapp->hmm_unreg_work);
- 		mapp->unmapped = true;
-+		queue_work(xdna->notifier_wq, &abo->hmm_unreg_work);
- 	}
- 	up_write(&xdna->notifier_lock);
- }
- 
--static void amdxdna_hmm_unregister_all(struct amdxdna_gem_obj *abo)
-+static void amdxdna_hmm_unreg_umaps(struct amdxdna_gem_obj *abo, bool force)
+diff --git a/drivers/cxl/core/cdat.c b/drivers/cxl/core/cdat.c
+index c4bd6e8a0cf03..abb12d45af111 100644
+--- a/drivers/cxl/core/cdat.c
++++ b/drivers/cxl/core/cdat.c
+@@ -633,9 +633,9 @@ static int cxl_endpoint_gather_bandwidth(struct cxl_region *cxlr,
+ 	struct cxl_port *endpoint = to_cxl_port(cxled->cxld.dev.parent);
+ 	struct cxl_port *parent_port = to_cxl_port(endpoint->dev.parent);
+ 	struct cxl_port *gp_port = to_cxl_port(parent_port->dev.parent);
+-	struct access_coordinate pci_coord[ACCESS_COORDINATE_MAX];
+-	struct access_coordinate sw_coord[ACCESS_COORDINATE_MAX];
+-	struct access_coordinate ep_coord[ACCESS_COORDINATE_MAX];
++	struct access_coordinate pci_coord[ACCESS_COORDINATE_MAX] = { };
++	struct access_coordinate sw_coord[ACCESS_COORDINATE_MAX] = { };
++	struct access_coordinate ep_coord[ACCESS_COORDINATE_MAX] = { };
+ 	struct cxl_memdev *cxlmd = cxled_to_memdev(cxled);
+ 	struct cxl_dev_state *cxlds = cxlmd->cxlds;
+ 	struct pci_dev *pdev = to_pci_dev(cxlds->dev);
+@@ -757,7 +757,7 @@ static struct xarray *cxl_switch_gather_bandwidth(struct cxl_region *cxlr,
  {
- 	struct amdxdna_dev *xdna = to_xdna_dev(to_gobj(abo)->dev);
- 	struct amdxdna_umap *mapp, *tmp;
-@@ -174,16 +172,18 @@ static void amdxdna_hmm_unregister_all(struct amdxdna_gem_obj *abo)
- 
- 	down_write(&xdna->notifier_lock);
- 	list_for_each_entry_safe(mapp, tmp, &abo->mem.umap_list, node) {
-+		if (!force && !mapp->unmapped)
-+			continue;
-+
- 		mapp->unmapped = true;
--		mapp->cleanup = true;
- 		list_move(&mapp->node, &dead);
- 	}
-+	if (list_empty(&abo->mem.umap_list))
-+		abo->mem.userptr = AMDXDNA_INVALID_ADDR;
- 	up_write(&xdna->notifier_lock);
- 
--	list_for_each_entry_safe(mapp, tmp, &dead, node) {
--		cancel_work_sync(&mapp->hmm_unreg_work);
-+	list_for_each_entry_safe(mapp, tmp, &dead, node)
- 		amdxdna_umap_put(mapp);
--	}
- }
- 
- static void amdxdna_umap_release(struct kref *ref)
-@@ -202,24 +202,10 @@ void amdxdna_umap_put(struct amdxdna_umap *mapp)
- 
- static void amdxdna_hmm_unreg_work(struct work_struct *work)
- {
--	struct amdxdna_umap *mapp = container_of(work, struct amdxdna_umap,
--						 hmm_unreg_work);
--	struct amdxdna_gem_obj *abo = mapp->abo;
--	struct amdxdna_dev *xdna;
-+	struct amdxdna_gem_obj *abo = container_of(work, struct amdxdna_gem_obj,
-+						   hmm_unreg_work);
- 
--	xdna = to_xdna_dev(to_gobj(mapp->abo)->dev);
--	down_write(&xdna->notifier_lock);
--	if (mapp->cleanup) {
--		up_write(&xdna->notifier_lock);
--		return;
--	}
--
--	list_del(&mapp->node);
--	if (list_empty(&abo->mem.umap_list))
--		abo->mem.userptr = AMDXDNA_INVALID_ADDR;
--	up_write(&xdna->notifier_lock);
--
--	amdxdna_umap_put(mapp);
-+	amdxdna_hmm_unreg_umaps(abo, false);
- }
- 
- static int amdxdna_hmm_register(struct amdxdna_gem_obj *abo,
-@@ -271,8 +257,6 @@ static int amdxdna_hmm_register(struct amdxdna_gem_obj *abo,
- 	mapp->abo = abo;
- 	kref_init(&mapp->refcnt);
- 
--	INIT_WORK(&mapp->hmm_unreg_work, amdxdna_hmm_unreg_work);
--
- 	ret = mmu_interval_notifier_insert_locked(&mapp->notifier,
- 						  current->mm,
- 						  addr,
-@@ -591,7 +575,9 @@ static void amdxdna_gem_obj_free(struct drm_gem_object *gobj)
- 
- 	XDNA_DBG(xdna, "BO type %d xdna_addr 0x%llx", abo->type, abo->mem.dev_addr);
- 
--	amdxdna_hmm_unregister_all(abo);
-+	/* No notifier survives this, so no new work can be queued. */
-+	amdxdna_hmm_unreg_umaps(abo, true);
-+	cancel_work_sync(&abo->hmm_unreg_work);
- 
- 	if (abo->pinned)
- 		amdxdna_gem_unpin(abo);
-@@ -644,6 +630,7 @@ amdxdna_gem_create_obj(struct drm_device *dev, size_t size)
- 	abo->mem.dev_addr = AMDXDNA_INVALID_ADDR;
- 	abo->mem.size = size;
- 	INIT_LIST_HEAD(&abo->mem.umap_list);
-+	INIT_WORK(&abo->hmm_unreg_work, amdxdna_hmm_unreg_work);
- 
- 	return abo;
- }
-diff --git a/drivers/accel/amdxdna/amdxdna_gem.h b/drivers/accel/amdxdna/amdxdna_gem.h
-index 8d89874f1fca3..b6573ffe8d7cc 100644
---- a/drivers/accel/amdxdna/amdxdna_gem.h
-+++ b/drivers/accel/amdxdna/amdxdna_gem.h
-@@ -11,13 +11,11 @@
- struct amdxdna_umap {
- 	struct mmu_interval_notifier	notifier;
- 	struct hmm_range		range;
--	struct work_struct		hmm_unreg_work;
- 	struct amdxdna_gem_obj		*abo;
- 	struct list_head		node;
- 	struct kref			refcnt;
- 	bool				invalid;
- 	bool				unmapped;
--	bool				cleanup;
- };
- 
- struct amdxdna_mem {
-@@ -38,6 +36,7 @@ struct amdxdna_gem_obj {
- 	bool				pinned;
- 	struct mutex			lock; /* Protects: pinned */
- 	struct amdxdna_mem		mem;
-+	struct work_struct		hmm_unreg_work;
- 
- 	/* Below members is uninitialized when needed */
- 	struct drm_mm			mm; /* For AMDXDNA_BO_DEV_HEAP */
+ 	struct xarray *res_xa __free(free_perf_xa) =
+ 		kzalloc(sizeof(*res_xa), GFP_KERNEL);
+-	struct access_coordinate coords[ACCESS_COORDINATE_MAX];
++	struct access_coordinate coords[ACCESS_COORDINATE_MAX] = { };
+ 	struct cxl_perf_ctx *ctx, *us_ctx;
+ 	unsigned long index, us_index;
+ 	int dev_count = 0;
 -- 
 2.53.0
 
