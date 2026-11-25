@@ -1,42 +1,42 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795620497;
-	b=ymuT6I1AP/W6ju6mAEvMwfr3wYBb6QXutgF2+8cAunV1sKlq5kHH6Qw2n1pkPLw+FX+1
-	 5XxenFS2+/NjoEUe2VTH8hPO3E30gU5Lmp9f+NHJaZGUWHEHJF44DudzAoMkHQAjwVWh5
-	 ngYerrNbySk+hhRfKcqQ0xdAXUSAzt0q+tKRUeUyZVC7s4J1ahBNu0mFnTtOh84V7g5hZ
-	 qxQ4IgyZPrTzAM6qgVTjjATABZ8Y51QoPlC290/MiMoCWW5lSWG58zIX98xpEeOk9y48T
-	 SppFY7KAjQcoJQ1PWFsTOMcGiarrp3Eh8zi2Cbjf/oZp0h88wo/Qtkrbt7iaX82yBDQ==
+	t=1795620500;
+	b=JgIAMd4HiOj1cPM5xEKnD1yuufRkB4/YEwy2QPqQyNoAaSpeJ/QMMWRQCShUlivEchNZ
+	 MERMXg7MLU7KqQCJPZctSnnNs7eiX6c55QMROXWV3zZLBRdfOBcY9nbJyeUZu4VoBsFU2
+	 g4z0GvhZb2ps6PF/GtJb/BiBqMfK5akbKV7kcox/fqjXuHGs/EoBn5QZYJpiwj6VmDG5n
+	 IB6T5JROXEpFVZ2yVpJntUWmADOU8gfOzc02uPh6upIfSByM4e1xQ3EuqXNZe2ifiwB92
+	 rrs+dQsaDJrt8U8Mn4LOEAMRWPjQOC7qwYxulbcNtZtccFoOaU4xudt6+nlkB4H/pCQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795620497;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795620500;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Type:Content-Transfer-Encoding;
-	bh=cXpQxf4REG2yMGUAwKEOTrfdDZJVKydBpULH380wp00=;
-	b=rrJUMjAKH8c8SytTIjP+D4nRSYl7skP2P5418gnZfAll1XH0rZBOGOWv7goUnWX04Pqa
-	 UwHE+sqB/OSqT6WcUh6IfStFcNiA83UznoibplYARlfymEXg+nl7HV9lxaM4Ai/+eGer3
-	 Jr576U7elqeC8t6vbvHMCaC7Nf6mf3HhDFhQ+1EknSfk5ZC6r8x92nIc5xu5xS4qWb8zO
-	 fAwdg1LRVd1tqiY1/o3khK+qRvapG8rbkYDO+Px7/yy/YLvaf1zEKPfZ0viQpEBFyV0Ho
-	 7xwZ6v3xre9nnTQz4d9A7rQnooXJT0RdOOfkX+lX6hnWuEV4wXy6w4u43ggsVRFccBw==
+	bh=slFymNWmLGL5m4FwsGEoESjbjrIV9PpvBmPcHN7TJIU=;
+	b=j2Y/XvCYinuo6eZJpx99PqjhQAbsWkwTrxxsNqUFURfLKnpyvnPLgNOcly5W7anNxP2L
+	 aKBhUe6Snnei7eigD59dj2BWBEwneh9ILW8F1m9e6rgYdnT9u+pPi1Ig0bnl7qnpxmuvQ
+	 w1eiQbf7wHUH+Onv0Aqe8wYwXO29kGO+lpR3SfeUn6qO+1S7kt6qcJKamCQWEQH3HqKBK
+	 QzGZz3QMQfGUV9VUuwA4MoPila0UbEsfIa/BREGgivVnuRtNlD59adA79J9oeziatCXf7
+	 B4jHCeuZFd0zVLsc956Xz3cbi40myGaHxbIXkU2RsXu6/uk1mZRr1lnNaSFlm9T7dpg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=AnPxLd34;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=PXRkjz4v;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 67640606A31E;
-	Wed, 25 Nov 2026 15:28:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 87C2C606A321;
+	Wed, 25 Nov 2026 15:28:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=AnPxLd34
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3383B1F000C0;
-	Wed, 25 Nov 2026 15:28:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=PXRkjz4v
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9035A1F000C0;
+	Wed, 25 Nov 2026 15:28:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795620496;
-	bh=cXpQxf4REG2yMGUAwKEOTrfdDZJVKydBpULH380wp00=;
+	s=korg; t=1795620500;
+	bh=slFymNWmLGL5m4FwsGEoESjbjrIV9PpvBmPcHN7TJIU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=AnPxLd34VfMh784D2Hk2esJyjKAimjOSs8705Krfb2744tfS352H9O2MgpVeSXNzr
-	 MgUqDDS7L6MeLtmSvrQmAqaRCF15v3YJ0UbxXDo+LSVWfrppgq7B2XfyeX+7DAcmKE
-	 celw8Cg961r8WZ98l99y1y+vbww1qKigmBKYscOY=
+	b=PXRkjz4vQSxaHBRWb0BrParUmTIol84QY2NmY+e6YtpN52XXlJtly/01d1CDXhZwh
+	 viuLXp3klNh0JHo9mItQDDB+lMcubCHZ2YDCou8qmiXexfJn9hJruB5nWpNNvULdUj
+	 +S9aOv2DetCdIZgMvUIelJD6QV5tjy5bguJ/aS6s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -45,9 +45,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Josef Bacik <josef@toxicpanda.com>,
 	=?UTF-8?q?Nuno=20S=C3=A1?= <nuno.sa@analog.com>,
 	Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>
-Subject: [PATCH 7.3 0892/1005] iio: accel: adxl380: dont stay in standby on -EINVAL
-Date: Wed, 25 Nov 2026 15:37:10 +0100
-Message-ID: <20261125143842.590882128@linuxfoundation.org>
+Subject: [PATCH 7.3 0893/1005] iio: adc: ad7923: add the AD7927 to the SPI ID table
+Date: Wed, 25 Nov 2026 15:37:11 +0100
+Message-ID: <20261125143842.614192443@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143821.729802100@linuxfoundation.org>
 References: <20261125143821.729802100@linuxfoundation.org>
@@ -72,24 +72,21 @@ Content-Transfer-Encoding: 8bit
 
 From: Josef Bacik <josef@toxicpanda.com>
 
-commit 4c56180167ea4d419a0578545bf62110494b563d upstream.
+commit 594157b4f3f64db5833dee679194c33a5968f92e upstream.
 
-adxl380_set_act_inact_threshold() puts the sensor into standby, writes the
-threshold and switches the measurement on again.  A threshold above 8191 is
-refused in between, and the sensor stays in standby: no samples and no
-events until the next write that succeeds.
+The binding describes the AD7927 as
 
-adxl380_set_range() has the same problem and a worse one.  It rescales both
-thresholds for the new range.  If one no longer fits it returns -EINVAL
-with the sensor in standby, the new range in the chip, the old one in
-st->range and rescaled thresholds in the driver's state: from the next
-successful write on the samples are reported with the wrong scale.
+  compatible = "adi,ad7927", "adi,ad7928";
 
-Switch the measurement on again if the threshold is refused.  In
-adxl380_set_range() see whether the thresholds fit before anything is
-changed.
+The OF match takes the second string. The modalias of the SPI device is
+made from the first one, "ad7927", which is not in the spi_device_id table:
+spi_get_device_id() returns NULL and ad7923_probe() dereferences it for
+the chip information. The module is not loaded automatically either, as the
+uevent of an SPI device says "spi:ad7927".
 
-Fixes: df36de13677a ("iio: accel: add ADXL380 driver")
+Add the name, with the data of the AD7928.
+
+Fixes: 1140f96cd4af ("dt-bindings: iio: adc: ad7923: adjust documentation")
 Cc: stable <stable@kernel.org>
 Signed-off-by: Josef Bacik <josef@toxicpanda.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
@@ -97,36 +94,18 @@ Reviewed-by: Nuno Sá <nuno.sa@analog.com>
 Signed-off-by: Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/iio/accel/adxl380.c |   11 ++++++++++-
- 1 file changed, 10 insertions(+), 1 deletion(-)
+ drivers/iio/adc/ad7923.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/drivers/iio/accel/adxl380.c
-+++ b/drivers/iio/accel/adxl380.c
-@@ -334,8 +334,11 @@ static int adxl380_set_act_inact_thresho
- 		return ret;
- 
- 	ret = adxl380_write_act_inact_threshold(st, act, th);
--	if (ret)
-+	if (ret) {
-+		/* Leave standby also if the value was refused */
-+		adxl380_set_measure_en(st, true);
- 		return ret;
-+	}
- 
- 	return adxl380_set_measure_en(st, true);
- }
-@@ -698,6 +701,12 @@ static int adxl380_set_range(struct adxl
- 
- 	guard(mutex)(&st->lock);
- 
-+	/* The thresholds are rescaled: see that they fit before any change */
-+	if (mult_frac(max(st->act_threshold, st->inact_threshold),
-+		      adxl380_range_scale_factor_tbl[st->range],
-+		      adxl380_range_scale_factor_tbl[range]) > ADXL380_THRESH_MAX)
-+		return -EINVAL;
-+
- 	ret = adxl380_set_measure_en(st, false);
- 	if (ret)
- 		return ret;
+--- a/drivers/iio/adc/ad7923.c
++++ b/drivers/iio/adc/ad7923.c
+@@ -366,6 +366,7 @@ static const struct spi_device_id ad7923
+ 	{ .name = "ad7924", .driver_data = AD7924 },
+ 	{ .name = "ad7908", .driver_data = AD7908 },
+ 	{ .name = "ad7918", .driver_data = AD7918 },
++	{ .name = "ad7927", .driver_data = AD7928 },
+ 	{ .name = "ad7928", .driver_data = AD7928 },
+ 	{ }
+ };
 
 
