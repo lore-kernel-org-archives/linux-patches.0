@@ -1,51 +1,55 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795619818;
-	b=anKzaLFJVIyDoNe7eFxRJsIlvYuPnrWAoOQ2iHF1mkZFFPoCizI/WntNNIKYuL2lfsRi
-	 JFxhAJr+1UHHigpa93Ai81ZIPGI9LQNBQbpxMvtqbWiq4bX/7QOcSrP7/CJowz4PDV9V2
-	 z8ObOb+EXUfJufxcHJ7q38/Tv1+ul4hIptUViEWzMI08Ii6Uo8iM6IarN9sqKuAT27I4h
-	 GokyjeT9yUzB3TaA3ldOfrbc0oeQE4dIr0i+9fk2P9CJ710kiHoghwysaqzzKm8f4fumc
-	 uQz3nq8HDlUkbBReqKZK10Nj3sJSbUaYolnJyBoBEpcTdYZLxFEY/TsiwHI+HTbKkFA==
+	t=1795619820;
+	b=RBbjmfj0hIllA9wTkKbToQdwDyrx+/GmRrbdkW8RPzHIJMcElQmXJwpvVk+QN5+iCTtT
+	 PbGjjns4bCUObXx+dnbNOS+zK22PifntIfZRznhXiytsbtUdMFRQLZg0QO9j4PSstIM60
+	 /H4BySKxp55vmanoXoyTuU8HBx5K8FeQu5zbNYfSgz+A9EkGOVkdM8nfPv3N1L05pymDW
+	 LjRonlhYOiOxLvPAEyubn+pk0gsxG0L9o+pb0iwhc14D3Q9y3W27RnNXv1sYlKYNg3sNz
+	 3LWvlqb6wnxyN8Mn3WeDVTILpGJZXqNvb1VUbXM2pEfzlhqsa7FvOvoUeoQwOeBg8jA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795619818;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795619820;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=HsC9uju/Gsta4xzHSuZ7CYCO1lHI8IJxn1/uPYU1zfA=;
-	b=H/CQTksPdLuMYIJGPmtpzADzkFNKEx1pGKuGeOT6ge4FJll/m0j1du8rYUXpNt30+U7P
-	 AV+k43rooLpOQ3TgEgRItrPjrbzG84WaHj+g/nuhDUhqkZmEthxX7wUqdzHS8ttoW95cA
-	 yrh1f2MUJC+JhoT6owYk6UuDw+XzBR++3MI5Csr9oc8ngSWRke2ouG08OVnQnm5sxnlH/
-	 hDs/JCYIaNXW42VIn/NcOIHBlQwhNTo+Ki/hfXOR4i9IiUQgbL+I36w7LoQKGxRaQYRRw
-	 q43vbtme4b6vgJZXkjWRKUmpj2FaUkniq/Tn8FTItr6h3oObBRsI9i0XHg1G/Ttp/vQ==
+	bh=DBGGSJnkJy2qm9KnpyaVnuYsNQZEk9O1tfiJeRCk6Mw=;
+	b=qdHRbpodkdPGNxhwu6suJyih53qBcjhfamMNyosnNCMWfozSgTyknW7sRo8O5p4zHzI/
+	 MszMizXb4uzJG2XN3taQ6d17npdCHuJb1kEmm1F67RcEB+2Ji59dJunBAzMVNL+FgB33w
+	 7/CW4QcG3TXu3xr57z3ry67FIxPC4b5Hn+2KLXVrJa2F0esr0kEQS63JiENFX0ACHau3K
+	 q+bIvlGbBW0G5xBVc7xbXRPqqazWvvV8aYWV0BSwDj0q5MyR+0H1YJ9w53yQRmnb7i1iq
+	 n8scwhGM8/qgF+P1Eil/oJEW6V8HMUegNdgnHvst+BymMk/eSpRcIA2ZE1LS7B26bSg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=R8WjNEYB;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=jDyWq52P;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E83E0606A329;
-	Wed, 25 Nov 2026 15:16:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AC36B606A321;
+	Wed, 25 Nov 2026 15:17:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=R8WjNEYB
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 43A1A1F000C0;
-	Wed, 25 Nov 2026 15:16:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=jDyWq52P
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0FFCF1F000C0;
+	Wed, 25 Nov 2026 15:16:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795619817;
-	bh=HsC9uju/Gsta4xzHSuZ7CYCO1lHI8IJxn1/uPYU1zfA=;
+	s=korg; t=1795619820;
+	bh=DBGGSJnkJy2qm9KnpyaVnuYsNQZEk9O1tfiJeRCk6Mw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=R8WjNEYBy2WWNSqVf2u7o9xEhqViV3WlyVr3fg63VL2vy6+elqyik3RzggH1li1Fy
-	 Vgpa8F0ZRSSJW9jzL6jkZbQhWLc4yD8RNAX6dq0loqDgJRx5lPA/6EpRxkZEALR3hO
-	 BOHh/4+SJ6iEyE0qeOGcUsjJariZV0p/O12tXP0o=
+	b=jDyWq52PfLcU44CrSrZiQgFE6lWKt+hMQvE4U5OaRff1AKc/ZEa8djzLD2gw3sKEU
+	 tkIfBZBpSNndbABlVvDtTlLvtuAPGl9YRHsScV/aqXQ/V7fcqw510QbLOXVO2HxwFz
+	 g5Qu7SfraF7TwHioeNnor2QQ+WmHNQ2oso5zx5IM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Li Zhaoxin <lizhaoxin04@baidu.com>,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>
-Subject: [PATCH 7.3 0717/1005] cpufreq: intel_pstate: Use rdmsrq_safe() to read MSR_MISC_PWR_MGMT
-Date: Wed, 25 Nov 2026 15:34:15 +0100
-Message-ID: <20261125143838.553675351@linuxfoundation.org>
+	Zak Brighton Knight <zakbrightonknight@gmail.com>,
+	Doug Smythies <dsmythies@telus.net>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+	Zhongqiu Han <zhongqiu.han@oss.qualcomm.com>,
+	Viresh Kumar <viresh.kumar@linaro.org>,
+	Christian Loehle <christian.loehle@arm.com>
+Subject: [PATCH 7.3 0718/1005] cpufreq: Force passing target frequency to driver during resume
+Date: Wed, 25 Nov 2026 15:34:16 +0100
+Message-ID: <20261125143838.577342311@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143821.729802100@linuxfoundation.org>
 References: <20261125143821.729802100@linuxfoundation.org>
@@ -67,65 +71,131 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Li Zhaoxin <lizhaoxin04@baidu.com>
+From: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 
-commit 2c0e6f2858d235c99f7ba4621bd176cd67226f00 upstream.
+commit 342d3a73c5dbc2f1cd0c5142e2d11bda4dc54cd7 upstream.
 
-Commit ed7cad0504e3 ("cpufreq: intel_pstate: Relocate platform
-preference check") moved the intel_pstate_platform_pwr_mgmt_exists()
-call to the beginning of intel_pstate_init(), right after the vendor
-check, so it now runs before "no_load" (intel_pstate=disable) and the
-other checks.
+The policy->cur value preserved across a system suspend-resume cycle
+may become stale in some cases and it may prevent the CPU performance
+scaling logic from being updated due to the target_freq == policy->cur
+check in __cpufreq_driver_target() [1].
 
-MSR_MISC_PWR_MGMT is model-specific and KVM does not emulate it. In a
-KVM guest using a CPU model listed in intel_pstate_cpu_oob_ids[] (for
-example "-cpu host" on Emerald Rapids), reading it raises #GP and the
-unchecked rdmsrq() emits a warning with a call trace on every boot, even
-with intel_pstate=disable:
+To address this, adjust the existing mechanism to force the invocation
+of the driver .target() callback in __cpufreq_driver_target() and make
+cpufreq_resume_policy() use it.
 
-  unchecked MSR access error: RDMSR from 0x1aa at rIP: 0xffffffffa4009342 (native_read_msr+0x2/0x50)
-  Call Trace:
-   <TASK>
-   intel_pstate_platform_pwr_mgmt_exists+0x3b/0x220
-   intel_pstate_init+0x1e/0x500
-   do_one_initcall+0x59/0x350
-   ...
+This involves renaming update_limits in struct cpufreq_policy to
+force_target and moving the driver CPUFREQ_NEED_UPDATE_LIMITS flag check
+from __cpufreq_driver_target() to cpufreq_set_policy(), where it is used
+as a condition for setting policy->force_target.
 
-Before that commit, such guests typically returned from
-intel_pstate_init() earlier, either because of intel_pstate=disable or
-because intel_pstate_msrs_not_valid() failed on the zero ratios that
-KVM reports in MSR_PLATFORM_INFO by default, so the MSR was not read.
+In cpufreq_resume_policy(), policy->force_target is set for drivers that
+implement the .target() callback, but don't implement the .get() one,
+which is the case when the driver callback needs to run if policy->cur
+becomes stale while suspended.
 
-Use rdmsrq_safe() and treat a failing read as "no OOB mode". The
-exception fixup already zeroes the result of a failed unchecked read,
-so apart from the warning going away there is no functional change.
-
-Fixes: ed7cad0504e3 ("cpufreq: intel_pstate: Relocate platform preference check")
-Cc: All applicable <stable@vger.kernel.org>
-Signed-off-by: Li Zhaoxin <lizhaoxin04@baidu.com>
-Link: https://patch.msgid.link/20261104070149.41393-1-lizhaoxin04@baidu.com
+Fixes: 2f0aea936360 ("cpufreq: suspend governors on system suspend/hibernate")
+Link: https://lore.kernel.org/linux-pm/20261027143725.3763827-1-zakbrightonknight@gmail.com/ [1]
+Reported-by: Zak Brighton Knight <zakbrightonknight@gmail.com>
+Reported-by: Doug Smythies <dsmythies@telus.net>
+Cc: All applicable <stable@vger.kernel.org> # eee2a44e4e2b cpufreq: Improve suspend-resume synchronization
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Tested-by: Zak Brighton Knight <zakbrightonknight@gmail.com>
+Reviewed-by: Zhongqiu Han <zhongqiu.han@oss.qualcomm.com>
+Acked-by: Viresh Kumar <viresh.kumar@linaro.org>
+Tested-by: Doug Smythies <dsmythies@telus.net>
+Tested-by: Christian Loehle <christian.loehle@arm.com>
+Link: https://patch.msgid.link/1995295.tdWV9SEqCh@rafael.j.wysocki
 Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/cpufreq/intel_pstate.c |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/cpufreq/cpufreq.c |   33 +++++++++++++++++++++------------
+ include/linux/cpufreq.h   |    4 ++--
+ 2 files changed, 23 insertions(+), 14 deletions(-)
 
---- a/drivers/cpufreq/intel_pstate.c
-+++ b/drivers/cpufreq/intel_pstate.c
-@@ -3661,12 +3661,12 @@ static struct acpi_platform_list plat_in
- static bool __init intel_pstate_platform_pwr_mgmt_exists(void)
- {
- 	const struct x86_cpu_id *id;
--	u64 misc_pwr;
-+	u64 misc_pwr = 0;
- 	int idx;
+--- a/drivers/cpufreq/cpufreq.c
++++ b/drivers/cpufreq/cpufreq.c
+@@ -2027,6 +2027,15 @@ static void cpufreq_resume_policy(struct
+ 	if (!start)
+ 		return;
  
- 	id = x86_match_cpu(intel_pstate_cpu_oob_ids);
- 	if (id) {
--		rdmsrq(MSR_MISC_PWR_MGMT, misc_pwr);
-+		rdmsrq_safe(MSR_MISC_PWR_MGMT, &misc_pwr);
- 		if (misc_pwr & BITMASK_OOB) {
- 			pr_debug("Bit 8 or 18 in the MISC_PWR_MGMT MSR set\n");
- 			pr_debug("P states are controlled in Out of Band mode by the firmware/hardware\n");
++	/*
++	 * Force executing the driver .target() callback, if present, in the
++	 * next invocation of __cpufreq_driver_target() in case policy->cur has
++	 * become stale while suspended, but do it only for drivers without a
++	 * .get() callback for which cpufreq_verify_current_freq() is a NOP.
++	 */
++	if (cpufreq_driver->target && !cpufreq_driver->get)
++		policy->force_target = true;
++
+ 	if (cpufreq_start_governor(policy))
+ 		pr_err("%s: Failed to start governor for CPU%u's policy\n",
+ 		       __func__, policy->cpu);
+@@ -2404,17 +2413,14 @@ int __cpufreq_driver_target(struct cpufr
+ 		policy->cpu, policy->cur, target_freq, old_target_freq, relation);
+ 
+ 	/*
+-	 * This might look like a redundant call as we are checking it again
+-	 * after finding index. But it is left intentionally for cases where
+-	 * exactly same freq is called again and so we can save on few function
+-	 * calls.
++	 * Unless invoking the target callback is forced, skip the update if the
++	 * frequency is not really changing.
+ 	 */
+-	if (target_freq == policy->cur) {
+-		if (!(cpufreq_driver->flags & CPUFREQ_NEED_UPDATE_LIMITS) ||
+-		    !policy->update_limits)
+-			return 0;
+-
+-		policy->update_limits = false;
++	if (policy->force_target) {
++		/* Avoid forcing the driver callback unnecessarily next time. */
++		policy->force_target = false;
++	} else if (target_freq == policy->cur) {
++		return 0;
+ 	}
+ 
+ 	if (cpufreq_driver->target) {
+@@ -2673,6 +2679,7 @@ static int cpufreq_set_policy(struct cpu
+ 			      struct cpufreq_governor *new_gov,
+ 			      unsigned int new_pol)
+ {
++	bool need_update_limits = cpufreq_driver->flags & CPUFREQ_NEED_UPDATE_LIMITS;
+ 	struct cpufreq_policy_data new_data;
+ 	struct cpufreq_governor *old_gov;
+ 	unsigned int freq;
+@@ -2712,7 +2719,8 @@ static int cpufreq_set_policy(struct cpu
+ 			      CPUFREQ_RELATION_H);
+ 	if (freq != policy->max) {
+ 		WRITE_ONCE(policy->max, freq);
+-		policy->update_limits = true;
++		if (need_update_limits)
++			policy->force_target = true;
+ 	}
+ 
+ 	freq = __resolve_freq(policy, new_data.min, new_data.min, new_data.max,
+@@ -2720,7 +2728,8 @@ static int cpufreq_set_policy(struct cpu
+ 	freq = min(freq, policy->max);
+ 	if (freq != policy->min) {
+ 		WRITE_ONCE(policy->min, freq);
+-		policy->update_limits = true;
++		if (need_update_limits)
++			policy->force_target = true;
+ 	}
+ 
+ 	trace_cpu_frequency_limits(policy);
+--- a/include/linux/cpufreq.h
++++ b/include/linux/cpufreq.h
+@@ -146,8 +146,8 @@ struct cpufreq_policy {
+ 	/* Per policy boost supported flag. */
+ 	bool			boost_supported;
+ 
+-	/* Pending policy->min/max update for the driver */
+-	bool			update_limits;
++	/* Force passing target frequency to the driver. */
++	bool			force_target;
+ 
+ 	/* The policy has been suspended. */
+ 	bool			suspended;
 
 
