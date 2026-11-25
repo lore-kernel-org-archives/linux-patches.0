@@ -1,51 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795619646;
-	b=FJFOd2KTl0rD0pzGoj9n8OHWSVB4WbP2GuT9puvzQPkZJ5/FSskBDaUKpCKV97qGStpP
-	 3/n4BQqds3tY3AlY4fZ8khkduas8sRdlzsOQ7pZ89j+g2A8vZkxNgrIZwJcXCR3ChoVSY
-	 cJQEfEW793KP8hZWhAoC9s15397buZZNeApfIu0tHkrK21Dg6Y6xbZV5P4nKJQb/StYLz
-	 pImv00ZXycIUJet1EWLzEHiJ5zRs/Net8qtMbLJL7qdVrr3oDTXlY5L8vGiQy3tg0A/4d
-	 OEXe9GGtku1280XMTmem/1HHoe7K6XVNlXetcNTG3hx5SxiOENm8MduW/InL3OPRafw==
+	t=1795619649;
+	b=ETcn1MhkYzryRXf4mPoWre0KZuzcxjCKt6if3Eyp9QGq+4toheo/x/aI2qu6wBiibs3d
+	 +wjvryJ3HQuBjoO7kjp93svtdsshH7lUSdN8Z4Cz9TUrg30mmayzcKvDG0SQNhjeY86Sa
+	 JwHYQCCKYmsF21Uh9aW2oHfEDRsj9mm/oePlg/hSq7+yAnWGCvI68Gd3pKwGxo58c4AQG
+	 zyQtPF3olE95dw5FbXYWGVH66o+T3XUJhVUXnd4/VAwFhuYLoQHGEp6vbNA4pMQK6J6gX
+	 KknnpHbMvTjInnakkNNcsfiyK9q3ghGOIZSFgl+yZgeqT5Sp/UcQ8r/hhT/EyJpRtFQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795619646;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795619649;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=bg8lFuNgdnjcto3Mb0/0MUs53A5MDUrNHXxWVjPdrHw=;
-	b=MXZaqgqgF62Gts47piNJ70Ph3eczneIKGnjtJD2WdeAE29KILsE3ZF0doXwwjfKUiPDa
-	 Z4fWV9p2tBuLwNr3CpSGP4PHg7mmBdnhG5B4XeW3ADgpFrMycTiG6tvffffp27FE4Sff0
-	 hIfq8CaqQ7qceVRbAfCDavwwR5kT5vQbmhqbCc30LjZuU/37aNyaU9PJVif+9Ew9NxivE
-	 Bmv1Fcd2XpEVHhijdf2Bb2KIE2c4L5g/+nbg386XfXdKvk9thT5TDXOtd8GVVDYbuO5jk
-	 0PC5TKvmMqUrtjMNKW4FOpZQkPHF/FbFfdljT5D6rZcAQCgzituAV5mWGioXxQaw2OQ==
+	bh=ESDkl3atI2u0p64uokrZ94RY3ndBGJeRwUjCbowd2Go=;
+	b=OjQHsp8uQyf4644paX1h2l4K0i0dwzdwIqrJhJWpLb7MQ7ow9M18dSVZRghs2elCV4cN
+	 fY5lZ8HFjVG5AuCx8RlaTXcrx5Pgd26bl1pbvqbRToSgPg02TUtdof4DINvvnDY4SGAhN
+	 NKfiwXcPTHQALu7SPgeyct3nKzQkbe+UxgJQMLnG8zyildZhf4VNURsdKYHLgChlOpUxt
+	 gK4oLUe8WLS7aXyeNesb1Ib3kwHsX7kCGpXzRMIe7AEAuZzp5VdiG9+G//sSyVadv/vLZ
+	 QFIhz5NPTZGUZm5a4pElERiUMyvKUwHyeZl0F4YnI4BioF8QgUfO3HcxXDf74pCD0xg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ruNnMQ8u;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=g020O4il;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 18424606A31E;
-	Wed, 25 Nov 2026 15:14:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EABF7606A32C;
+	Wed, 25 Nov 2026 15:14:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ruNnMQ8u
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 68A981F000D2;
-	Wed, 25 Nov 2026 15:14:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=g020O4il
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3BC261F000D2;
+	Wed, 25 Nov 2026 15:14:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795619645;
-	bh=bg8lFuNgdnjcto3Mb0/0MUs53A5MDUrNHXxWVjPdrHw=;
+	s=korg; t=1795619648;
+	bh=ESDkl3atI2u0p64uokrZ94RY3ndBGJeRwUjCbowd2Go=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ruNnMQ8uykGRUklNNdg0MxMU1iW6kVkLi68regJsXcCx1fKMq9wCO1DOxz2PPzXcn
-	 MSUnNS72nLIX2cObGcOKIMKWtQ8LFKfjfI1tyOhjhO/V0eisDtWW9SP4/12rQ37wC2
-	 1nmdxcFaKEubWCdedvrnogGOYkNwiwl/SxQJrqyI=
+	b=g020O4il3/Bvj/qxG0WHUET2LcHikelNEvAV5Yk9wZKDh8cHlyYFtZLDU/Wyl4all
+	 YCqLWJ1pPoZbPjq95DanEB6bvZ0+3nGAPB3kL5r6pCzKP9qGfVRQlgd8viTjoB5871
+	 bQjyvE3vR3BrGSLi+m0u8hDA1eD8MucKX2fo6xJE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	David Howells <dhowells@redhat.com>,
-	Paulo Alcantara <pc@manguebit.org>
-Subject: [PATCH 7.3 0664/1005] netfs: dont hang a read whose retry is abandoned
-Date: Wed, 25 Nov 2026 15:33:22 +0100
-Message-ID: <20261125143837.303524997@linuxfoundation.org>
+	shaos <shawnq1@163.com>,
+	Victor Nogueira <victor@mojatatu.com>,
+	Jamal Hadi Salim <jhs@mojatatu.com>,
+	Simon Horman <horms@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 7.3 0665/1005] net/sched: sch_teql: reject qdiscs from another network namespace
+Date: Wed, 25 Nov 2026 15:33:23 +0100
+Message-ID: <20261125143837.326889333@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143821.729802100@linuxfoundation.org>
 References: <20261125143821.729802100@linuxfoundation.org>
@@ -67,38 +70,87 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Paulo Alcantara <pc@manguebit.org>
+From: Jamal Hadi Salim <jhs@mojatatu.com>
 
-commit d1bb754ab9e775b0fbb2743d3df425c25a561114 upstream.
+commit 1ae84bdd736f8fab30180159996e1d193f8029ff upstream.
 
-When ->prepare_read() fails while retrying a read, or a subrequest can't
-be allocated, netfs_retry_read_subrequests() marks the remaining
-subrequests failed without reissuing them.  If none was reissued in that
-pass, nothing is in progress any more to wake the collector, which
-returned after the retry, so an offloaded read (readahead, async direct
-I/O) never completes and its folios stay locked.
+Reported by shaos <shawnq1@163.com> with a reproducer, which was
+reproduced and verified in our test environment.
 
-Wake the collector after abandoning, so it collects the failed
-subrequests and completes the request.
+The issue:
+The teql master devices are created once in the initial network
+namespace and their Qdisc_ops are global. teql_qdisc_init() takes the
+teql_master embedded in the registered sch->ops and uses it without
+checking whether the new qdisc's device lives in the same network
+namespace as the master. A qdisc created in another netns can therefore
+attach to the init-net master and change its MTU and flags.
 
-Fixes: e2d46f2ec332 ("netfs: Change the read result collector to only use one work item")
-Reviewed-by: David Howells <dhowells@redhat.com>
-Signed-off-by: Paulo Alcantara <pc@manguebit.org>
+The Fix:
+Reject a teql qdisc whose device is not in the master's network
+namespace with -EOPNOTSUPP and an extack message; same-netns teql still
+works.
+
+Initialize the private skb queue before any validation so every
+constructor failure path, including qdisc_create_dflt(), which resets the
+qdisc before destroying it, sees an initialized empty queue.
+
+Conditions to recreate the bug:
+CONFIG_NET_SCH_TEQL=y, CONFIG_DUMMY=y, CONFIG_USER_NS=y, CONFIG_NET_NS=y.
+As an unprivileged UID, unshare a user and network namespace, create a
+dummy device, set its MTU to 60000, and add a root teql0 qdisc:
+
+  unshare -Urn
+  ip link add dummy0 type dummy
+  ip link set dummy0 mtu 60000
+  tc qdisc add dev dummy0 root teql0
+
+The init-net teql0 device changes from MTU 1500 to 60000. A pfifo control
+on the same device leaves the MTU unchanged, and a direct MTU change on
+init-net teql0 is denied. The namespace needs CAP_NET_ADMIN; no init-net
+privilege is required. With the fix the attach fails with
+"Operation not supported" and the init-net MTU stays 1500.
+
+Fixes: 7316ae88c43d ("net_sched: make traffic control network namespace aware")
+Reported-by: shaos <shawnq1@163.com>
+Link: https://lore.kernel.org/netdev/20261022144830.67948-1-shawnq1@163.com/
+Link: https://netdev-ai.bots.linux.dev/sashiko/#/patchset/SER-NSBD.v1.r2.20261031160050-3%40mojatatu.com
+Link: https://lore.kernel.org/netdev/179366641863.488856.17368571591466000274@kernel.org/
 Cc: stable@vger.kernel.org
+Reviewed-by: Victor Nogueira <victor@mojatatu.com>
+Signed-off-by: Jamal Hadi Salim <jhs@mojatatu.com>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Link: https://patch.msgid.link/SER-NSBD.v3.r0.20261103064310-3@mojatatu.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/netfs/read_retry.c |    1 +
- 1 file changed, 1 insertion(+)
+ net/sched/sch_teql.c |    9 +++++++--
+ 1 file changed, 7 insertions(+), 2 deletions(-)
 
---- a/fs/netfs/read_retry.c
-+++ b/fs/netfs/read_retry.c
-@@ -270,6 +270,7 @@ abandon:
- 		__set_bit(NETFS_SREQ_FAILED, &subreq->flags);
- 		__clear_bit(NETFS_SREQ_NEED_RETRY, &subreq->flags);
- 	}
-+	netfs_wake_collector(rreq);
- }
+--- a/net/sched/sch_teql.c
++++ b/net/sched/sch_teql.c
+@@ -198,6 +198,8 @@ static int teql_qdisc_init(struct Qdisc
+ 	struct Qdisc *first;
+ 	unsigned long flags;
  
- /*
++	skb_queue_head_init(&q->q);
++
+ 	if (dev->hard_header_len > m->dev->hard_header_len)
+ 		return -EINVAL;
+ 
+@@ -209,9 +211,12 @@ static int teql_qdisc_init(struct Qdisc
+ 		return -EOPNOTSUPP;
+ 	}
+ 
+-	q->m = m;
++	if (dev_net(dev) != dev_net(m->dev)) {
++		NL_SET_ERR_MSG_MOD(extack, "teql master is in a different network namespace");
++		return -EOPNOTSUPP;
++	}
+ 
+-	skb_queue_head_init(&q->q);
++	q->m = m;
+ 
+ 	raw_spin_lock_irqsave(&m->slaves_lock, flags);
+ 	first = rcu_dereference_protected(m->slaves, lockdep_is_held(&m->slaves_lock));
 
 
