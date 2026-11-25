@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795622772;
-	b=mTfp2tF3dYZjlAYvAyCBK2yNTNbDq5jCMRq1NPIG3ShftyXFyFoxvvxzLbIKZBeLx6FT
-	 QV8s7Ar6bG7IFVtm2QJUW70FPOATP21G1E05sH1zmC/dnahXYofjVGHr+qAGqkfYMMu7n
-	 kkbl7AwYJdLSkKzBTwjcyfECFZYkgwehTk0xujECK4IR6zq18pziWGsqzPRtdRtKnqvpD
-	 6vYxJopnY5quM+s8dedQ6Dgx8bRmopOFZUB1PzllhBI95IX88vNDlPodsYpJpcE+gSdTF
-	 /06IN5cpfeJkM/BbFZ/IyPKKS6lnNL9c4HXzqvfiHiLPI+XEC13yoxc7Bd2QcL6kxRw==
+	t=1795622775;
+	b=jaLLLUchVRXPHxpMCV0UxjxP6UnDdsMv+aEMf9b7kGSdQOJE5er0slmXdxXKLEjfetHr
+	 X4Fj2FGlYSl2qrsFFGjft6+g4PQvDjJsmhFuR1szX9/ExL5oKaEdqFt4Nhry7yr5NRmse
+	 MXhA08E7G2WLow1Jj+37Bg/C7pTvslgodGO2/vfmo63IuoYSiNlCGQxjhVSWiWfAPij57
+	 K4kt/bzq8q4zoTFL6KM9NbtQKlrWiyqPZKqyHsC9w8KMjC8+wLjNp+6DS6pfL7Mn1nt1r
+	 plzV5oWFvkM4u4OGvZGRsCiYl3QUe1/1PX4QXiaZlmSYL4cXOGzO2WkquIDtQKhcwOQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795622772;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795622775;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=YiVjvMv24OtEJ+inPD3MARagbK/OD6+c1tQhxdSE4Z4=;
-	b=dAmWPMHg1FX2tcwBEeJfykrDB/+0NTrk2tywR0yf8C08/IzHGJHbA5InHHhKW5EM91GV
-	 M6CW8Ck2CbrI4UCStuPGcDPtmPjlgUuHql5SYBQbdJF2tDWbuyMiQdXk3NQT05fdmBxph
-	 H/W3W4wZTUiUtLqNfXFh/N3Tw76ERbidran+kmV0uX/4sGVa/IRvYvkINMESCj/NKmYBJ
-	 ydc+zGz+niB1z1j2u6xIpcdaXr81Q5+0JbVBvOd9Su1dA0MQuitoPSbjMcK7CB8BHYZt5
-	 NwNT7ejSSUeWlZ1NxMBYOwirYjJkaye7S4I9VUlA7Wp4e7dDSvz4Zr5O66S/XvQsujQ==
+	bh=2Dyimly4XMwC4/0v/RkvKKxAMZ4muQXkIxFtR3tBTSc=;
+	b=4+iS16KL5Ak9ddobo6mjiqA85IvHCC37r72uKSxDmGZ875da6LrU8pkU8f8wZI2Ukz27
+	 lXib93NlJND1xl+W1wuOuoHNP5UmUxOppMd/oiePC6AIJhp1KFHtf/56da2mluXy7EgdD
+	 oaV64PfjWS5YCoUirxL87g2/soZdNnbHxNo4TCpx5CjOnjXq1airYPdRi7Ci+sJhwagx+
+	 TEK7ePzD8ECTS89JgV8eQ9++x6q0T2MXwQVeBO/tN82FuJabVbjEJjD9uV33kPEPbFf0/
+	 p++fHW8mdaASc7VGHo0VV434Tevghcp7I+vZ4D3zSUn1Hdzivs3/HLZfHkmKUwSYz/w==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=HwtMgfro;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=OPDRSz3u;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3A829606A327;
-	Wed, 25 Nov 2026 16:06:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0FDFA606A31E;
+	Wed, 25 Nov 2026 16:06:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=HwtMgfro
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8B3941F000C0;
-	Wed, 25 Nov 2026 16:06:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=OPDRSz3u
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 602461F000C4;
+	Wed, 25 Nov 2026 16:06:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795622772;
-	bh=YiVjvMv24OtEJ+inPD3MARagbK/OD6+c1tQhxdSE4Z4=;
+	s=korg; t=1795622774;
+	bh=2Dyimly4XMwC4/0v/RkvKKxAMZ4muQXkIxFtR3tBTSc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=HwtMgfroQ4Hko1V3HbRM2XKsD1wyiYgoFuL/5eqPsvmUnLjWlGnuSKLG8IFelc9bC
-	 roxefVy9eHRsO8pb6ge7ljF5yo9+u7nCQobLO5K7/8J0CO06D7DVk4Azt7knU4oD0e
-	 eZ7uwn7gXfheFDJF9JHwR/t8nT0XhaQacpGN/IZw=
+	b=OPDRSz3uh+yCu1dLPLb6wXoBk+YofBrrib+I3R2+hivvK8rh2dF/m+0HvkMY2Cjg4
+	 PdfJnYg0Vrh2t6wg3wW/zk/LtkusMBvyE352iQ8RQraohM/4dXBoQu7ql6b39qdOOY
+	 vm9biy45/nKzBw+4PL8yxGJP0jky5Qw8/XZVAMbA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kevin Dewald <kevin@simpleble.org>,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
+	Pengpeng Hou <hppiscas@163.com>,
+	Thomas Gleixner <tglx@kernel.org>,
+	Radu Rendec <radu@rendec.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 597/990] Bluetooth: hci_event: Fix LE link drop on remote features command status
-Date: Wed, 25 Nov 2026 15:32:44 +0100
-Message-ID: <20261125143836.075994733@linuxfoundation.org>
+Subject: [PATCH 6.18 598/990] irqchip/mst-intc: Validate the DT interrupt range
+Date: Wed, 25 Nov 2026 15:32:45 +0100
+Message-ID: <20261125143836.099327702@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143822.072087159@linuxfoundation.org>
 References: <20261125143822.072087159@linuxfoundation.org>
@@ -68,81 +69,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kevin Dewald <kevin@simpleble.org>
+From: Pengpeng Hou <hppiscas@163.com>
 
-[ Upstream commit 91638f53ff2b8234195ff27ec913e068269a28e9 ]
+[ Upstream commit 16f25d326e5d3b9fd51bc5e3916ecbffbca63e7b ]
 
-When the local controller supports peripheral-initiated features
-exchange, the LE Read Remote Features procedure also runs for incoming
-connections, and it fails with Unsupported Remote Feature (0x1a) if the
-central does not support that feature. hci_le_remote_feat_complete_evt()
-and hci_le_read_all_remote_features_evt() handle this and let the
-connection transition into connected state.
+The driver takes an inclusive interrupt range from the device tree
+without checking its endpoints. A reversed range wraps the unsigned
+count calculation, and a range larger than MST_INTC_MAX_IRQS exceeds the
+controller capacity used by the driver.
 
-A controller can also return that error in the Command Status event
-instead. An Intel controller does so for a central that does not
-support peripheral-initiated features exchange, presumably because it
-already has the features of the central. hci_cs_le_read_remote_features()
-and hci_cs_le_read_all_remote_features() then confirm the connection as
-failed while it is still in BT_CONFIG, and the hci_conn_drop() in
-le_read_features_complete() disconnects it right away:
+Reject these ranges before calculating nr_irqs or creating the domain.
+Check the difference after ordering the endpoints so the validation
+itself cannot wrap.
 
-  > HCI Event: LE Meta Event (0x3e) plen 31
-      LE Enhanced Connection Complete (0x0a)
-        Status: Success (0x00)
-        Role: Peripheral (0x01)
-  < HCI Command: LE Read Remote Used Features (0x08|0x0016) plen 2
-  > HCI Event: Command Status (0x0f) plen 4
-      LE Read Remote Used Features (0x08|0x0016) ncmd 1
-        Status: Unsupported Remote Feature / Unsupported LMP Feature (0x1a)
-  < HCI Command: Disconnect (0x01|0x0006) plen 3
-        Reason: Remote User Terminated Connection (0x13)
+The issue was found by our static-analysis tool.
 
-Data the central sends afterwards is reported as:
-
-  Bluetooth: hci0: ACL packet for unknown connection handle 3585
-
-Handle Unsupported Remote Feature in the command status the same way as
-in the complete events.
-
-Fixes: 0fe29fd1cd77 ("Bluetooth: Read LE remote features during connection establishment")
-Fixes: a106e50be74b ("Bluetooth: HCI: Add support for LL Extended Feature Set")
-Assisted-by: Claude:claude-opus-5.5
-Signed-off-by: Kevin Dewald <kevin@simpleble.org>
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
-[ sashal: Dropped the hunk for hci_cs_le_read_all_remote_features() (function absent here) and placed the fix inside the nested if (conn) { if (conn->state == BT_CONFIG) } form of hci_cs_le_read_remote_features(). ]
+Fixes: ad4c938c92af ("irqchip/irq-mst: Add MStar interrupt controller support")
+Signed-off-by: Pengpeng Hou <hppiscas@163.com>
+Signed-off-by: Thomas Gleixner <tglx@kernel.org>
+Assisted-by: gpt 5
+Reviewed-by: Radu Rendec <radu@rendec.net>
+Link: https://patch.msgid.link/20260920034236.16229-1-hppiscas@163.com
+[ sashal: Context adjusted: the upstream range check is inserted above this tree's older kzalloc(sizeof(*cd), GFP_KERNEL) call instead of kzalloc_obj(*cd). ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/bluetooth/hci_event.c | 16 ++++++++++++++++
- 1 file changed, 16 insertions(+)
+ drivers/irqchip/irq-mst-intc.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/net/bluetooth/hci_event.c b/net/bluetooth/hci_event.c
-index 3e487963eaff9..797b86f57c6db 100644
---- a/net/bluetooth/hci_event.c
-+++ b/net/bluetooth/hci_event.c
-@@ -2941,6 +2941,22 @@ static void hci_cs_le_read_remote_features(struct hci_dev *hdev, u8 status)
- 	conn = hci_conn_hash_lookup_handle(hdev, __le16_to_cpu(cp->handle));
- 	if (conn) {
- 		if (conn->state == BT_CONFIG) {
-+			/* If the local controller supports peripheral-initiated
-+			 * features exchange, but the remote controller does not,
-+			 * then the controller may already return the error code
-+			 * 0x1a for unsupported remote feature in the command
-+			 * status.
-+			 *
-+			 * Handle it as hci_le_remote_feat_complete_evt() does and
-+			 * allow the connection to transition into connected state.
-+			 */
-+			if (!conn->out &&
-+			    status == HCI_ERROR_UNSUPPORTED_REMOTE_FEATURE &&
-+			    (hdev->le_features[0] & HCI_LE_PERIPHERAL_FEATURES)) {
-+				conn->state = BT_CONNECTED;
-+				status = 0x00;
-+			}
+diff --git a/drivers/irqchip/irq-mst-intc.c b/drivers/irqchip/irq-mst-intc.c
+index 7f760f555a76a..d380030eda935 100644
+--- a/drivers/irqchip/irq-mst-intc.c
++++ b/drivers/irqchip/irq-mst-intc.c
+@@ -263,6 +263,9 @@ static int __init mst_intc_of_init(struct device_node *dn,
+ 	    of_property_read_u32_index(dn, "mstar,irqs-map-range", 1, &irq_end))
+ 		return -EINVAL;
+ 
++	if (irq_end < irq_start || irq_end - irq_start >= MST_INTC_MAX_IRQS)
++		return -EINVAL;
 +
- 			hci_connect_cfm(conn, status);
- 			hci_conn_drop(conn);
- 		}
+ 	cd = kzalloc(sizeof(*cd), GFP_KERNEL);
+ 	if (!cd)
+ 		return -ENOMEM;
 -- 
 2.53.0
 
