@@ -1,51 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795623512;
-	b=rC+Hy+yxGaeD5rnbR6YPzeptVX1kiTF5FhBfZKqZ4V8YkIw9LN95C4OxXMR+eRa4zJyW
-	 nLC/+byopQn2/nmXL7qnv2AX6K6Yoe3EJBt3WbDyNljJMBaDmLJXLVwIznWoUptq1/nS7
-	 I1qkR24UCU5PtA/w9ywCfD4UmjqgtrEJykNMyLyABZZpHrZ7ntkWeuJwazQQ+cbH1mnRT
-	 VLfl5x3RdzHg0DFiRGfq9u5CnI+d65MSNPXv79pkGAfC6Kh10NouLPqF87dBd6YhDAayR
-	 Qj9UhJXiqj/N8ZFbtYUncnKiyGPYdA/+1ok/kRoj0vr0pLmSUAydT4+ulV2a7D1SOwQ==
+	t=1795623515;
+	b=TBwo7C9jZIFqAsDjgN78K+4HlOQyNTpnPK9oxNc8P6QBkD1zLeU5RkI8z7qnJ7bFXxsJ
+	 bEAcKWPQZb+XJ4U37Az4mCwBDl1AfuanS4MgnBxY8vPDzRZpyM+/PeigSu+fnUu396HYw
+	 pzxTLaS7mYlKlJvgDz4c5dJ34uyzlrro0YQdeDmc9TSaoHQxDguuaMQVjRKb3m8DEPmnl
+	 uypyHZlLL888QrqXEvOMN6jxFYrPq70RKWbK9qSTw68J9Ya7UX9y9CAGTQq77MZmjzdSK
+	 vyD2AndpsV672T0rOqQc2tcowPF2+uN2ofJM+5DCybWAO8LusbkxcJnGQOYMsLhA7Kg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795623512;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795623515;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Transfer-Encoding;
-	bh=IIlxqAiRKB8q1IuOngwEFnZrQ1ciCDksju/MU+3cig0=;
-	b=qp4aVAQQfxpT5wsVPGUGzv6DxfbDYHLzrdnk9QreLHaTirGP2tQ6NSUNu2ZgnmQthv11
-	 ba4aeEe91eTEVWhJxdTPg2z5C0mrwIvlFh7QK4buzxcyZRYTk0Ng+FAx9aXJgKyjjlbP+
-	 XIvMXkAGqL/MopvQ/9LK6m/B+M36U2BPLYTy2Cid6vvJnPvKYCXA7bFmdf0uQ9HMLGm7A
-	 K7YTR1McmLQHnFKSiTOLCl9IfXB8wi2jQ4XxG3gRrQ1nlI9aND+W732l1RqKqOLrIXonn
-	 aRLWXViDhE7Wkw9bz3hsOeABhGpqdOKurefZnSIPITfayaladi/i9UrYomlDg39yQ9g==
+	 MIME-Version:Content-Type:Content-Transfer-Encoding;
+	bh=sHq3jSfuWwSI/b/mKj4EEm+FRzc5EwdFwJbP7l8COPA=;
+	b=W+CsIiOSrI4uwenFjt0HB6CLSZAJsndikC+lYQV0fORJMsSGLdWQrO/EsBadXBF94aNk
+	 aXy0jQGQyKTEf29xSdjOmvk/TVIV8FFaa7/S4nSUTx6AEKpXZxPXQv9BkHNFYasLJ68mr
+	 dMfyoosoljSULUdEV9SPi7GFR4to91oqk7Rx2xZqDSvf3YeVJbyAt1lIAGHKjX+2NASxl
+	 kLfZ1MMXN0Typvw6NdSvYXUZsPGWx7X7QtxjgMOShibwRqfY+vSro8yAVcQoBEpds6nHJ
+	 46hiLYuwhMMPwiGAjrTLrXJ/bk5a7GNGp+kE3kRIqtvIbm3wsl5ArC65bgwVB/WYNWg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="kiejTH/j";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=UEPT3q8Q;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7D612606A31E;
-	Wed, 25 Nov 2026 16:18:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 83DBD606A31E;
+	Wed, 25 Nov 2026 16:18:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=kiejTH/j
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 959C51F000C6;
-	Wed, 25 Nov 2026 16:18:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=UEPT3q8Q
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A16431F000C6;
+	Wed, 25 Nov 2026 16:18:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795623512;
-	bh=IIlxqAiRKB8q1IuOngwEFnZrQ1ciCDksju/MU+3cig0=;
+	s=korg; t=1795623515;
+	bh=sHq3jSfuWwSI/b/mKj4EEm+FRzc5EwdFwJbP7l8COPA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=kiejTH/jVMqzIs7zMQqX2a5G8nkZxwn02v2yWiXo2eN7vsr4d8SErIQxH3G/c8Bj1
-	 YmZHXydKJ0/uP7UGQbl4/RGB+0qoV7jYY7bN5FdnxTlI8NmMJCIc0UhWFIWf0sOJrh
-	 WG4FJ+tGqEPcOXRiDxjCo2ZnjrR0DuX9uIYssO9c=
+	b=UEPT3q8Q11B0fpoKcN1opGCi43kQjIxbaov0RAfVnTdyIb7teQVVJmPrz6nWHoskg
+	 U47VB5NkxGUbWKFQtscrl/pTxXsIrr59JRDDWdwgRRO157cyYFSKJtMX7egjBby2Sd
+	 I6mopxYrxIE/Yfi2X1VmGohrbkXpX1hF2ehRE9vA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Paulo Alcantara <pc@manguebit.org>,
-	David Howells <dhowells@redhat.com>
-Subject: [PATCH 6.18 839/990] smb: client: dont block dying tasks waiting for writeback on fsync
-Date: Wed, 25 Nov 2026 15:36:46 +0100
-Message-ID: <20261125143841.683651165@linuxfoundation.org>
+	Fredric Cover <fredric.cover.lkernel@gmail.com>,
+	Namjae Jeon <linkinjeon@kernel.org>,
+	Paulo Alcantara <pc@manguebit.org>
+Subject: [PATCH 6.18 840/990] smb: client: fix double conversion of DFS path in setup_dfs_ref()
+Date: Wed, 25 Nov 2026 15:36:47 +0100
+Message-ID: <20261125143841.707886096@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143822.072087159@linuxfoundation.org>
 References: <20261125143822.072087159@linuxfoundation.org>
@@ -61,133 +62,84 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Paulo Alcantara <pc@manguebit.org>
+From: Fredric Cover <fredric.cover.lkernel@gmail.com>
 
-commit 0df0f24803061b6c2bef0d24de7c63c9cce46a49 upstream.
+commit 92509ce64ffff02d05fe9f3c82b889e1cc500076 upstream.
 
-cifs_fsync() and cifs_strict_fsync() wait uninterruptibly for writeback
-through file_write_and_wait_range().  As with close, a task killed in
-fsync(2) on a hard mount with an unresponsive server is stuck in D state
-until the server comes back.
+setup_dfs_ref() converts the path from the mount charset to the DFS
+cache charset (utf8) via dfs_get_path(), and then passes that already
+converted string to dfs_get_referral().  dfs_cache_find() converts its
+input again, assuming it is still in the mount charset.
 
-Wait killably instead, using the same helper as cifs_flush().  The
-writeback keeps going and its errors stay in the mapping; only the dying
-caller stops waiting for it.
+When the mount charset is not utf8 (iocharset=iso8859-1, or a kernel
+built with a non-utf8 CONFIG_NLS_DEFAULT) and the DFS path contains
+non-ASCII characters, the utf8 bytes are interpreted as mount-charset
+characters and encoded a second time.  For example, "é" is sent as
+c3 83 c2 a9 instead of c3 a9.  The server then fails the second-level
+referral with STATUS_OBJECT_PATH_NOT_FOUND and the mount fails with
+-ENOENT, even though the path exists.
 
-Signed-off-by: Paulo Alcantara <pc@manguebit.org>
-Reviewed-by: David Howells <dhowells@redhat.com>
+Pass the unconverted path to dfs_get_referral() so that it is converted
+exactly once.
+
+Such mounts now get past the second-level referral and reach
+dfs_parse_target_referral(), which is why this change depends on
+"smb: client: fix out-of-bounds read in dfs_parse_target_referral()".
+
+Tested with a Samba DFS root containing a link named "café", mounted
+with iocharset=iso8859-1 and the single Latin-1 byte 0xe9 in the path:
+before, the mount failed with -ENOENT; with both patches applied, it
+succeeds.
+
+Signed-off-by: Fredric Cover <fredric.cover.lkernel@gmail.com>
 Cc: stable@vger.kernel.org
+Reviewed-by: Namjae Jeon <linkinjeon@kernel.org>
+Signed-off-by: Paulo Alcantara <pc@manguebit.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/smb/client/file.c |   64 +++++++++++++++++++++++++++++++++------------------
- 1 file changed, 42 insertions(+), 22 deletions(-)
+ fs/smb/client/dfs.c |   10 +++++-----
+ 1 file changed, 5 insertions(+), 5 deletions(-)
 
---- a/fs/smb/client/file.c
-+++ b/fs/smb/client/file.c
-@@ -2778,6 +2778,45 @@ cifs_get_readable_path(struct cifs_tcon
- 	return -ENOENT;
- }
- 
-+static int cifs_wait_writeback_killable(struct address_space *mapping,
-+					loff_t start, loff_t end)
-+{
-+	pgoff_t end_index = end >> PAGE_SHIFT;
-+	pgoff_t index = start >> PAGE_SHIFT;
-+	struct folio_batch fbatch;
-+	int rc = 0;
-+
-+	folio_batch_init(&fbatch);
-+	while (!rc &&
-+	       filemap_get_folios_tag(mapping, &index, end_index,
-+				      PAGECACHE_TAG_WRITEBACK, &fbatch)) {
-+		for (unsigned int i = 0;
-+		     !rc && i < folio_batch_count(&fbatch); i++)
-+			rc = folio_wait_writeback_killable(fbatch.folios[i]);
-+		folio_batch_release(&fbatch);
-+		cond_resched();
-+	}
-+	return rc;
-+}
-+
-+static int cifs_file_write_and_wait_killable(struct file *file,
-+					     loff_t start, loff_t end)
-+{
-+	struct address_space *mapping = file->f_mapping;
-+	int rc, rc2;
-+
-+	if (end < start)
-+		return 0;
-+
-+	rc = filemap_fdatawrite_range(mapping, start, end);
-+	if (cifs_wait_writeback_killable(mapping, start, end))
-+		return -EINTR;
-+	rc2 = file_check_and_advance_wb_err(file);
-+	if (!rc)
-+		rc = rc2;
-+	return rc;
-+}
-+
- /*
-  * Flush data on a strict file.
-  */
-@@ -2789,7 +2828,7 @@ int cifs_strict_fsync(struct file *file,
- 	unsigned int xid;
+--- a/fs/smb/client/dfs.c
++++ b/fs/smb/client/dfs.c
+@@ -103,6 +103,7 @@ static int setup_dfs_ref(struct dfs_info
+ 	struct cifs_sb_info *cifs_sb = rw->mnt_ctx->cifs_sb;
+ 	struct smb3_fs_context *ctx = rw->mnt_ctx->fs_ctx;
+ 	char *ref_path, *full_path;
++	const char *raw_path;
  	int rc;
  
--	rc = file_write_and_wait_range(file, start, end);
-+	rc = cifs_file_write_and_wait_killable(file, start, end);
- 	if (rc) {
- 		trace_cifs_fsync_err(inode->i_ino, rc);
- 		return rc;
-@@ -2821,7 +2860,7 @@ int cifs_fsync(struct file *file, loff_t
- 	struct inode *inode = file_inode(file);
- 	struct cifs_sb_info *cifs_sb = CIFS_FILE_SB(file);
+ 	set_root_smb_session(rw->mnt_ctx);
+@@ -114,9 +115,10 @@ static int setup_dfs_ref(struct dfs_info
  
--	rc = file_write_and_wait_range(file, start, end);
-+	rc = cifs_file_write_and_wait_killable(file, start, end);
- 	if (rc) {
- 		trace_cifs_fsync_err(file_inode(file)->i_ino, rc);
- 		return rc;
-@@ -2856,25 +2895,6 @@ fsync_exit:
- 	return rc;
+ 	if (!tgt || (tgt->server_type == DFS_TYPE_LINK &&
+ 		     DFS_INTERLINK(tgt->flags)))
+-		ref_path = dfs_get_path(cifs_sb, ctx->UNC);
++		raw_path = ctx->UNC;
+ 	else
+-		ref_path = dfs_get_path(cifs_sb, full_path);
++		raw_path = full_path;
++	ref_path = dfs_get_path(cifs_sb, raw_path);
+ 	if (IS_ERR(ref_path)) {
+ 		rc = PTR_ERR(ref_path);
+ 		kfree(full_path);
+@@ -125,9 +127,7 @@ static int setup_dfs_ref(struct dfs_info
+ 	ref_walk_path(rw) = ref_path;
+ 	ref_walk_fpath(rw) = full_path;
+ 
+-	return dfs_get_referral(rw->mnt_ctx,
+-				ref_walk_path(rw) + 1,
+-				ref_walk_tl(rw));
++	return dfs_get_referral(rw->mnt_ctx, raw_path + 1, ref_walk_tl(rw));
  }
  
--static int cifs_wait_writeback_killable(struct address_space *mapping)
--{
--	struct folio_batch fbatch;
--	pgoff_t index = 0;
--	int rc = 0;
--
--	folio_batch_init(&fbatch);
--	while (!rc &&
--	       filemap_get_folios_tag(mapping, &index, (pgoff_t)-1,
--				      PAGECACHE_TAG_WRITEBACK, &fbatch)) {
--		for (unsigned int i = 0;
--		     !rc && i < folio_batch_count(&fbatch); i++)
--			rc = folio_wait_writeback_killable(fbatch.folios[i]);
--		folio_batch_release(&fbatch);
--		cond_resched();
--	}
--	return rc;
--}
--
- /*
-  * As file closes, flush all cached write data for this inode checking
-  * for write behind errors.
-@@ -2888,7 +2908,7 @@ int cifs_flush(struct file *file, fl_own
- 	if (file->f_mode & FMODE_WRITE) {
- 		rc = filemap_fdatawrite(mapping);
- 		if (fatal_signal_pending(current) ||
--		    cifs_wait_writeback_killable(mapping))
-+		    cifs_wait_writeback_killable(mapping, 0, LLONG_MAX))
- 			return 0;
- 		rc2 = filemap_check_errors(mapping);
- 		if (!rc)
+ static int __dfs_referral_walk(struct dfs_ref_walk *rw)
 
 
