@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795621774;
-	b=fmYtS/aCLEqafjR6Ib5TB6LvWyFdrLKO4Cyx9FKQy7T1W2i9eYbjcbGOOBkAiGzM3Ids
-	 PBQ5mnsOZ8OqnFwrjNMhGt98o/FSvbg28dPl+8KzRdfikQd0ABmGoZD+douCm+momMl7I
-	 PpTQJ3DUBYfkpXWhv0w6O3HTfuY3io9vxcKIvJtjJyF7PHeDDFpk63atn4f5mIiwbQQb8
-	 JWBnLN7MLVGoSfJJxHDMqAkxLFJN0Jhobtc4f5QEgKAwHwYVIAm6cHzbOuNIp1BPOBwPT
-	 9ndMEELheMPfj15UibfGYmMssqEQlxFTePHmsFWy4mgTPckHtzoB1xByEWhjBREGQOA==
+	t=1795621777;
+	b=AlUl7ij2N35Q6/4XYsUgJ49tH5o2/7ngXo9RPCik+zD+FPA6VAfW2hNX1a/hYX/sde2b
+	 fHNMI4Nm6z/zEf14mz26ExdXBLVsYBMMghfiNGK+LB+u8MQ4rtjcA/+fcva108Ik6MV+W
+	 0e1ptrFXeZr+Wkz/y6xV7S/ffLSvM/yW3lzYcKwf8hQZC4V6Pl0rRNAe5Bic63SISehU2
+	 2lFTxpnvBZToNo4ok0Cot4bCt+FNMtFwCnOIqNBSNk29amuEGjNgX6Bxi0+0CnYOEw49H
+	 AHMr/L8eW60TGoAepbB3uSq2Oo6ku3Z4ySSIpBXTsMvAUXuefPU09fZGFxmEEG8Uljw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795621774;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795621777;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=UOHAF7pGgKud9ViroeLA79jU3Xduu+sNnbr6sPVDLSY=;
-	b=PzlaWumFiim5qIu0zk/Lvgs3g8A0o7ApZg38siviK0tGOf5MCblv32C1/Q8PxI2ebIkT
-	 t6BPhhqPtCjRX9FgO6U03+XI6jJAOuJoLr622RBCDE4MjKP+VyBuqq4Rqr3QlbU3UzTRS
-	 /hk0dC5NPZ2Nw4RCldMtaqTE8E4S3XlT2zyrdIBUwoSBgOQe8gHGSx35kzt55jD+LFSCK
-	 fkfjU11QJtd1iiqoqhOFczpkv9k3UW0L1EjK6NSDSgkoZbn8EEkURDNSEqV5eR5lYsEve
-	 r42Yd3NdG0BFRilI9C2mn98ySdzOmkGH/XjlR7wx31ky/FaMJ1/YfvfHJ/tT2QD0g7w==
+	bh=U3mpzy3zIiQNObn8+JDGKC+rfoRRtZTzMCY/ynqV06c=;
+	b=txZIigCLesWwcHNKjXLuHrl/ER9/MxtIZL1RSNGCKzjCU3Qq4gAOmRJ5U8UojHedQzMr
+	 Wp3OkvZfG3jRFvJAAhyHtFIXMXmkRhDWR4lfBwksYF9tt1oKpymwkNMJ1ljOjmwjmzPhB
+	 shXmDEuXrd2N5H7xsm3Z0bV9gUKj7d4jICbwgk45wZZluXdMRSOVEwHNf+7La9/D+Zgbd
+	 r4Sfl/ZxgXqP54zxYDi9QC7Yq10MZ8E7hoylH41dq8DGvjjpGEhGp6UfIq4nzPPee2NXp
+	 xNAztKhwzoJTHHgXD2W/E1SiWYe2vUSbLg+2a4mleIYm3bqVAU26PMRcqfLByhUZZEQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=WYOAjM+x;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=0shttGFl;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2BA9B606A326;
-	Wed, 25 Nov 2026 15:49:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4FC26606A327;
+	Wed, 25 Nov 2026 15:49:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=WYOAjM+x
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 102CC1F000D1;
-	Wed, 25 Nov 2026 15:49:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=0shttGFl
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 59D081F000ED;
+	Wed, 25 Nov 2026 15:49:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795621773;
-	bh=UOHAF7pGgKud9ViroeLA79jU3Xduu+sNnbr6sPVDLSY=;
+	s=korg; t=1795621776;
+	bh=U3mpzy3zIiQNObn8+JDGKC+rfoRRtZTzMCY/ynqV06c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=WYOAjM+xjJB/0fN5QJEGgh5ncOhkfdgR4+1sMGaD96hVFTWvO4nRWBbxEo3gEuT57
-	 QooCcr8t35i2l/qGVU1vdBbVgd0ogxWSN88rBwBX0fvsFFfXOUbP/V5xgcZDQLWTFZ
-	 5R3p/Dp1Vl2ccg+3DVT7sRTiZf7C8pM6Y+sxqgOI=
+	b=0shttGFluwgm0o21q+sLD88dRwETmhveErx1uaacb2zxvUxPucakXV1Tdk7uVUJQ8
+	 wi8Gd75unUT7DFuXGnco9HdgzB4Y8NTel4kXvyJAiHHHicN5MADNOHfXucDarbdTS8
+	 nvIPDbhJVQ0F6yqDD2gqIFRcGbLH7Zss0Nw/VvB4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Damien Le Moal <dlemoal@kernel.org>,
-	Niklas Cassel <cassel@kernel.org>,
+	Siddharth Chintamaneni <sidchintamaneni@gmail.com>,
+	Jan Kara <jack@suse.cz>,
+	"Christian Brauner (Amutable)" <brauner@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 332/990] ata: libata-scsi: fix MODE SELECT handling of data after the mode page
-Date: Wed, 25 Nov 2026 15:28:19 +0100
-Message-ID: <20261125143829.864481291@linuxfoundation.org>
+Subject: [PATCH 6.18 306/990] fs: reject negative offsets for SEEK_DATA and SEEK_HOLE in default_llseek()
+Date: Wed, 25 Nov 2026 15:27:53 +0100
+Message-ID: <20261125143829.259790651@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143822.072087159@linuxfoundation.org>
 References: <20261125143822.072087159@linuxfoundation.org>
@@ -68,79 +69,89 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Niklas Cassel <cassel@kernel.org>
+From: Siddharth Chintamaneni <sidchintamaneni@gmail.com>
 
-[ Upstream commit 6fde0444d07ec954f3d885375e0402ff2f2e5064 ]
+[ Upstream commit 7a5783cfac71b3c12e7fb1c2894dd4538d57d513 ]
 
-ata_scsi_mode_select_xlat() only supports one mode page per MODE SELECT
-command, and rejects a parameter list with data after the mode page with
-INVALID FIELD IN PARAMETER LIST. However:
+In default_llseek(), the range checks for SEEK_DATA and SEEK_HOLE compare
+the signed loff_t offset directly against inode->i_size:
 
-- It does not set the field pointer, so the sense data reports 0xffff as
-  the FIELD POINTER.
+	if (offset >= inode->i_size) {
+		retval = -ENXIO;
+		goto out;
+	}
 
-- It only checks for data after the mode page after the mode page
-  handler has been called. ata_mselect_control_ata_feature() has then
-  already updated the CDL enabled flag of the device, even though the
-  command is rejected and the CDL setting of the device is not changed.
+When a negative offset is supplied to SEEK_HOLE (e.g. lseek(fd, -10,
+SEEK_HOLE) on a sysctl file in /proc/sys), the signed comparison evaluates
+to false and execution proceeds to:
 
-- For the control mode page, ata_mselect_control_spg0() does not need an
-  ATA command, so the check is skipped, and the data after the mode page
-  is silently ignored.
+	offset = inode->i_size;
 
-Check for data after the mode page before calling the mode page
-handlers, and set the FIELD POINTER to the first byte after the mode
-page, i.e. to the first byte of the next mode page.
+This overwrites the negative offset with a non-negative value before the
+final `if (offset >= 0 || unsigned_offsets(file))` check, causing
+default_llseek() to update file->f_pos and return inode->i_size instead of
+failing with -ENXIO. Similarly, for SEEK_DATA on a file with
+FOP_UNSIGNED_OFFSET, a negative offset bypasses the range check and
+succeeds via unsigned_offsets(file).
 
-The reason why only one mode page per command is supported is that a
-MODE SELECT command is translated into at most one ATA command, so
-update the comment accordingly.
+Read the inode size once via i_size_read(inode) after acquiring the inode
+lock and compare (unsigned long long)offset >= eof for both SEEK_DATA and
+SEEK_HOLE, matching must_set_pos().
 
-Fixes: 1b26d29ccd59 ("[libata] scsi: implement MODE SELECT command")
-Reviewed-by: Damien Le Moal <dlemoal@kernel.org>
-Link: https://lore.kernel.org/r/20261103205448.931471-11-cassel@kernel.org
-Signed-off-by: Niklas Cassel <cassel@kernel.org>
+Fixes: 982d816581ee ("fs: add SEEK_HOLE and SEEK_DATA flags")
+Signed-off-by: Siddharth Chintamaneni <sidchintamaneni@gmail.com>
+Link: https://patch.msgid.link/20261101060049.81441-2-sidchintamaneni@gmail.com
+Reviewed-by: Jan Kara <jack@suse.cz>
+Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/ata/libata-scsi.c | 18 +++++++++++-------
- 1 file changed, 11 insertions(+), 7 deletions(-)
+ fs/read_write.c | 10 ++++++----
+ 1 file changed, 6 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/ata/libata-scsi.c b/drivers/ata/libata-scsi.c
-index ce206f90d8bc4..ee0346de04744 100644
---- a/drivers/ata/libata-scsi.c
-+++ b/drivers/ata/libata-scsi.c
-@@ -4359,6 +4359,17 @@ static unsigned int ata_scsi_mode_select_xlat(struct ata_queued_cmd *qc)
- 	if (pg_len > len)
- 		goto invalid_param_len;
+diff --git a/fs/read_write.c b/fs/read_write.c
+index 011fe55c94cdb..96528614d4f33 100644
+--- a/fs/read_write.c
++++ b/fs/read_write.c
+@@ -331,13 +331,15 @@ loff_t default_llseek(struct file *file, loff_t offset, int whence)
+ {
+ 	struct inode *inode = file_inode(file);
+ 	loff_t retval;
++	loff_t eof;
  
-+	/*
-+	 * A MODE SELECT command is translated into at most one ATA command, so
-+	 * only one mode page per command is supported. Reject any data after
-+	 * the mode page before calling the mode page handlers, which may
-+	 * already update the device flags.
-+	 */
-+	if (len > pg_len) {
-+		fp = p - buffer + pg_len;
-+		goto invalid_param;
-+	}
-+
- 	switch (pg) {
- 	case CACHE_MPAGE:
- 		if (ata_mselect_caching(qc, p, pg_len, &fp) < 0) {
-@@ -4381,13 +4392,6 @@ static unsigned int ata_scsi_mode_select_xlat(struct ata_queued_cmd *qc)
- 		goto invalid_param;
+ 	retval = inode_lock_killable(inode);
+ 	if (retval)
+ 		return retval;
++	eof = i_size_read(inode);
+ 	switch (whence) {
+ 		case SEEK_END:
+-			offset += i_size_read(inode);
++			offset += eof;
+ 			break;
+ 		case SEEK_CUR:
+ 			if (offset == 0) {
+@@ -352,7 +354,7 @@ loff_t default_llseek(struct file *file, loff_t offset, int whence)
+ 			 * long as offset isn't at the end of the file then the
+ 			 * offset is data.
+ 			 */
+-			if (offset >= inode->i_size) {
++			if ((unsigned long long)offset >= eof) {
+ 				retval = -ENXIO;
+ 				goto out;
+ 			}
+@@ -363,11 +365,11 @@ loff_t default_llseek(struct file *file, loff_t offset, int whence)
+ 			 * as long as offset isn't i_size or larger, return
+ 			 * i_size.
+ 			 */
+-			if (offset >= inode->i_size) {
++			if ((unsigned long long)offset >= eof) {
+ 				retval = -ENXIO;
+ 				goto out;
+ 			}
+-			offset = inode->i_size;
++			offset = eof;
+ 			break;
  	}
- 
--	/*
--	 * Only one page has changeable data, so we only support setting one
--	 * page at a time.
--	 */
--	if (len > pg_len)
--		goto invalid_param;
--
- 	return 0;
- 
-  invalid_fld:
+ 	retval = -EINVAL;
 -- 
 2.53.0
 
