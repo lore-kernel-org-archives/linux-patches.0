@@ -1,42 +1,42 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795625205;
-	b=W1CIpv/sAIrYnU0IOlmy7J/9mA37V4vFGbz5CEqi4FAA44tDymsce4e2noNRXH2GnLK2
-	 LwmwSrYg8tNufcAeENAeX+NKmlCufsxlaXpeo/aOsfFniKPqnSlpnTE3yj4/q4h1BJcXZ
-	 D8lNpCHQTXK33poVpipDaFLrftKIyxdU/yjxjJQtwWnlbI9ujHOdBi4szTcLa3ibSUpSH
-	 KzOVNqy0P5XaIFe6YJ9UpQ8pt7Eq7tRmsqsfW+AfgDwfchd3dr8lU+dKOLHG7VuOEdFcD
-	 FJJYKtz6w7MAE3Unp2wD64ugKlefNx8URunop/8K1u6FfkdOp6JS975iMr9YhkrJ70g==
+	t=1795625207;
+	b=ICZESUOgD97f6WK/1cz9fS6thnZdsyRaIDnOp8dikAK4hj/AyMV8ZbkWdGItMl8IIyXu
+	 XpFJryoBpAHsjfwzpiYc/xfDEnQw2jwjPw9qUMTYcA9Ch+YcSgvaMGxZrdKQwaA+byhVB
+	 49aPxQ+J2QsuYMuBynnkn1ErPqm5UxqZVGDJixP3I3bkrzPQwYWBmQXyfpHJ0hfmmlOvZ
+	 ZqQUbIAWRTE7GD8eee++BZyoH36KThbyLAhJak26Cx187vxmhWHHCfgmoWFxYAcwgaKYQ
+	 yy5z0fmnFyM7m6V5Hxh5Q5QolkpItJDuKjU4wVVWMzM63cM78B9MFPM3A72PDVbOHrw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795625205;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795625207;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=GisvJYoPTosf5318KzhzqSw5QYWc9eW+8W44X3tFE50=;
-	b=18OEsmMrezOFpYDbmqPU9thJHPcVEApo+N8BYmIYt5RI9vVql0kD9/2H2X3Ui0Y+XM/A
-	 6Lci9YcQf5qY9EK5Dxm6ZG35EaeCGiuCDxn8voPrHQPan0QlEtDRIe6Qq74/QFqKUVo/b
-	 3YFfx5QTjLi8NDRPVDdNHlYRXIcE4tWqDzb0M+Gv4lgQ8N5XIkHFL4lb5BNHLXXkcrePZ
-	 6JDClqFmqcCr1UNHMe78l4XL1XhpybGZknXUkxrxIDugPl1C/+Q1EhjpG+ZeFnl0Ty/Sc
-	 LoXRYq6Sz6SG+UkVNl9Ss26UvUHjJhTou3mT7YCRpJN8U1fUPJPxvEqp8CQul51mK4g==
+	bh=0XsaEDWr9q7b9yWmAnyRxO3KhlQjSwvqn/4CfvpnstU=;
+	b=3+nHbdFlQR4I78jCy5wgWY0QmpG39n3V+au9L/PCWk0un9XGxcAyQk74iKnojgG0qJas
+	 Zk5G8+3o7I3PnhnI60heNsd9YRMSc4D+HBptW5P8hTuJpk0K2Ip3Yg4PMp3ZeU4aMvxLW
+	 aJanLRH2uteB8Yr5olKuzLaT+YFGItKfC94NRfny9JpBVeQd3n3RFjDXicebTLPCPpN/S
+	 cduKvIGiZqlqWD8JVwsxA/XpyPQa0Fa9ZigIYesG2aPnTuZLbgOi27LUXMZeCRE+rp7fU
+	 MYAGBvBiO33X+wkN837496w2wVHo8hztmyOiWQ0D9tVj5Iph5oHwy79zT1uES8h4rBA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=D58+uJFM;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=kprV2d2H;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E27A6606A323;
-	Wed, 25 Nov 2026 16:46:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B527A606A323;
+	Wed, 25 Nov 2026 16:46:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=D58+uJFM
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 390EF1F000CA;
-	Wed, 25 Nov 2026 16:46:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=kprV2d2H
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 08E481F000CF;
+	Wed, 25 Nov 2026 16:46:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795625204;
-	bh=GisvJYoPTosf5318KzhzqSw5QYWc9eW+8W44X3tFE50=;
+	s=korg; t=1795625207;
+	bh=0XsaEDWr9q7b9yWmAnyRxO3KhlQjSwvqn/4CfvpnstU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=D58+uJFMw+TOTYXW//9Dv4Lgt4xo2Ke4QWmB4FwJgkz/b15kGeruMx2w0V00Zghus
-	 SIm5qHf64HcagCLe8h61DosKjisufYO12E14mLwFqWjo2VxdT5dT8pqLSz36ME/26S
-	 pnPsNo/pwVzI/PAsnMjnuCewQTT2I/GEl2sXv7Ts=
+	b=kprV2d2HuMPQ3pwQABQWqMd7Hf5OrZ9XXFr4CMYh5ZOWa+UWdBJk+D/of4MqwIcfa
+	 W3Z/WtuXtlCz+tQzS6teUYZP2BLtqgz60I+jhFxhKPibLMFlirrj5Ez1LD0ixxHSbR
+	 NQukWmWa2EJN/GzGxVUvwsXxoBuY60SFkufdUwrY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -44,9 +44,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Yishai Hadas <yishaih@nvidia.com>,
 	Leon Romanovsky <leon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 440/816] RDMA/mlx5: Fix mlx5_ib_dev_res_init() failure when XRC cap is absent
-Date: Wed, 25 Nov 2026 15:33:08 +0100
-Message-ID: <20261125143859.374317443@linuxfoundation.org>
+Subject: [PATCH 6.12 441/816] RDMA/mlx5: Set QP event handler before firmware QPC insertion
+Date: Wed, 25 Nov 2026 15:33:09 +0100
+Message-ID: <20261125143859.397633306@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143849.205329330@linuxfoundation.org>
 References: <20261125143849.205329330@linuxfoundation.org>
@@ -70,126 +70,152 @@ Content-Transfer-Encoding: 8bit
 
 From: Yishai Hadas <yishaih@nvidia.com>
 
-[ Upstream commit 4354ab7a85d1ddd45a8a3337227fad5b37b44902 ]
+[ Upstream commit 05a078c97eb0bb7158526dae414b853737692485 ]
 
-mlx5_ib_dev_res_init() returns -EOPNOTSUPP when the firmware XRC
-capability is absent, failing driver probe on XRC-less devices.
+Four QP creation paths assigned base->container_mibqp and
+base->mqp.event after the firmware create call that inserts the QP into
+dev->qp_table.tree. A firmware error EQE in that window reaches
+qp->event() with a NULL pointer.
 
-Make XRC optional throughout the devr resource path: initialize cq_lock
-and srq_lock unconditionally (needed for every QP creation), skip xrcd
-allocation and the XRC-type placeholder SRQ (s0) when xrc=0, and guard
-their cleanup paths accordingly.
+Move both assignments before the firmware call.
 
-Fixes: f4375443b786 ("RDMA/mlx5: Get XRCD number directly for the internal use")
+Also set ibqp.qp_num inside mlx5_qpc_create_qp() before
+create_resource_common() so an EQE arriving early does not observe
+qp_num==0.
+
+In addition, add a WARN_ON_ONCE(!qp->event) guard in
+rsc_event_notifier() as a safeguard for future regressions.
+
+Fixes: e126ba97dba9 ("mlx5: Add driver for Mellanox Connect-IB adapters")
 Signed-off-by: Yishai Hadas <yishaih@nvidia.com>
-Link: https://patch.msgid.link/20260915140933.40580-9-yishaih@nvidia.com
+Link: https://patch.msgid.link/20260915140933.40580-14-yishaih@nvidia.com
 Signed-off-by: Leon Romanovsky <leon@kernel.org>
-[ sashal: Wrapped SRQ 0 creation in an XRC capability check as upstream does, but kept this tree's older err=%d, ret error message format instead of upstream's err=%pe. ]
+[ sashal: adjusted one context line in create_raw_packet_qp() to match this branch's create_raw_packet_qp_sq() call, which has no attrs argument; the inserted lines are unchanged. ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/hw/mlx5/main.c | 52 +++++++++++++++++++------------
- 1 file changed, 32 insertions(+), 20 deletions(-)
+ drivers/infiniband/hw/mlx5/qp.c  | 22 ++++++++++------------
+ drivers/infiniband/hw/mlx5/qpc.c | 10 ++++++++++
+ 2 files changed, 20 insertions(+), 12 deletions(-)
 
-diff --git a/drivers/infiniband/hw/mlx5/main.c b/drivers/infiniband/hw/mlx5/main.c
-index 95d65d74dc912..ee58dc153eedc 100644
---- a/drivers/infiniband/hw/mlx5/main.c
-+++ b/drivers/infiniband/hw/mlx5/main.c
-@@ -3101,7 +3101,7 @@ int mlx5_ib_dev_res_srq_init(struct mlx5_ib_dev *dev)
- {
- 	struct mlx5_ib_resources *devr = &dev->devr;
- 	struct ib_srq_init_attr attr;
--	struct ib_srq *s0, *s1;
-+	struct ib_srq *s0 = NULL, *s1;
- 	int ret = 0;
+diff --git a/drivers/infiniband/hw/mlx5/qp.c b/drivers/infiniband/hw/mlx5/qp.c
+index 2a71aed3b25ac..62e1302c7cd58 100644
+--- a/drivers/infiniband/hw/mlx5/qp.c
++++ b/drivers/infiniband/hw/mlx5/qp.c
+@@ -1599,6 +1599,8 @@ static int create_raw_packet_qp(struct mlx5_ib_dev *dev, struct mlx5_ib_qp *qp,
+ 		if (err)
+ 			return err;
  
- 	/*
-@@ -3119,17 +3119,25 @@ int mlx5_ib_dev_res_srq_init(struct mlx5_ib_dev *dev)
- 	if (ret)
- 		goto unlock;
- 
--	memset(&attr, 0, sizeof(attr));
--	attr.attr.max_sge = 1;
--	attr.attr.max_wr = 1;
--	attr.srq_type = IB_SRQT_XRC;
--	attr.ext.cq = devr->c0;
++		sq->base.container_mibqp = qp;
++		sq->base.mqp.event = mlx5_ib_qp_event;
+ 		err = create_raw_packet_qp_sq(dev, udata, sq, in, pd,
+ 					      to_mcq(init_attr->send_cq));
+ 		if (err)
+@@ -1610,9 +1612,6 @@ static int create_raw_packet_qp(struct mlx5_ib_dev *dev, struct mlx5_ib_qp *qp,
+ 			resp->sqn = sq->base.mqp.qpn;
+ 			resp->comp_mask |= MLX5_IB_CREATE_QP_RESP_MASK_SQN;
+ 		}
 -
--	s0 = ib_create_srq(devr->p0, &attr);
--	if (IS_ERR(s0)) {
--		ret = PTR_ERR(s0);
--		mlx5_ib_err(dev, "Couldn't create SRQ 0 for res init, err=%d\n", ret);
--		goto unlock;
-+	/*
-+	 * s0 is an XRC-type placeholder SRQ used as the default XRQN for
-+	 * XRC QPs.  Skip it when XRC is absent; all devr->s0 accesses in
-+	 * qp.c are inside XRC QP paths that the verbs layer blocks before
-+	 * reaching this driver when xrc=0, so NULL is safe.
+-		sq->base.container_mibqp = qp;
+-		sq->base.mqp.event = mlx5_ib_qp_event;
+ 	}
+ 
+ 	if (qp->rq.wqe_cnt) {
+@@ -2058,13 +2057,13 @@ static int create_xrc_tgt_qp(struct mlx5_ib_dev *dev, struct mlx5_ib_qp *qp,
+ 	}
+ 
+ 	base = &qp->trans_qp.base;
++	base->container_mibqp = qp;
++	base->mqp.event = mlx5_ib_qp_event;
+ 	err = mlx5_qpc_create_qp(dev, &base->mqp, in, inlen, out);
+ 	kvfree(in);
+ 	if (err)
+ 		return err;
+ 
+-	base->container_mibqp = qp;
+-	base->mqp.event = mlx5_ib_qp_event;
+ 	if (MLX5_CAP_GEN(mdev, ece_support))
+ 		params->resp.ece_options = MLX5_GET(create_qp_out, out, ece);
+ 
+@@ -2202,14 +2201,14 @@ static int create_dci(struct mlx5_ib_dev *dev, struct ib_pd *pd,
+ 		qp->flags &= ~IB_QP_CREATE_PCI_WRITE_END_PADDING;
+ 	}
+ 
++	base->container_mibqp = qp;
++	base->mqp.event = mlx5_ib_qp_event;
+ 	err = mlx5_qpc_create_qp(dev, &base->mqp, in, inlen, out);
+ 
+ 	kvfree(in);
+ 	if (err)
+ 		goto err_create;
+ 
+-	base->container_mibqp = qp;
+-	base->mqp.event = mlx5_ib_qp_event;
+ 	if (MLX5_CAP_GEN(mdev, ece_support))
+ 		params->resp.ece_options = MLX5_GET(create_qp_out, out, ece);
+ 
+@@ -2398,6 +2397,8 @@ static int create_user_qp(struct mlx5_ib_dev *dev, struct ib_pd *pd,
+ 		qp->flags &= ~IB_QP_CREATE_PCI_WRITE_END_PADDING;
+ 	}
+ 
++	base->container_mibqp = qp;
++	base->mqp.event = mlx5_ib_qp_event;
+ 	if (init_attr->qp_type == IB_QPT_RAW_PACKET ||
+ 	    qp->flags & IB_QP_CREATE_SOURCE_QPN) {
+ 		qp->raw_packet_qp.sq.ubuffer.buf_addr = ucmd->sq_buf_addr;
+@@ -2411,8 +2412,6 @@ static int create_user_qp(struct mlx5_ib_dev *dev, struct ib_pd *pd,
+ 	if (err)
+ 		goto err_create;
+ 
+-	base->container_mibqp = qp;
+-	base->mqp.event = mlx5_ib_qp_event;
+ 	if (MLX5_CAP_GEN(mdev, ece_support))
+ 		params->resp.ece_options = MLX5_GET(create_qp_out, out, ece);
+ 
+@@ -2541,14 +2540,13 @@ static int create_kernel_qp(struct mlx5_ib_dev *dev, struct ib_pd *pd,
+ 	    MLX5_CAP_GEN(mdev, go_back_n))
+ 		MLX5_SET(qpc, qpc, retry_mode, MLX5_QP_RM_GO_BACK_N);
+ 
++	base->container_mibqp = qp;
++	base->mqp.event = mlx5_ib_qp_event;
+ 	err = mlx5_qpc_create_qp(dev, &base->mqp, in, inlen, out);
+ 	kvfree(in);
+ 	if (err)
+ 		goto err_create;
+ 
+-	base->container_mibqp = qp;
+-	base->mqp.event = mlx5_ib_qp_event;
+-
+ 	get_cqs(qp->type, attr->send_cq, attr->recv_cq,
+ 		&send_cq, &recv_cq);
+ 	spin_lock_irqsave(&dev->reset_flow_resource_lock, flags);
+diff --git a/drivers/infiniband/hw/mlx5/qpc.c b/drivers/infiniband/hw/mlx5/qpc.c
+index 67ed45f3ae17f..9272e1ef81135 100644
+--- a/drivers/infiniband/hw/mlx5/qpc.c
++++ b/drivers/infiniband/hw/mlx5/qpc.c
+@@ -146,6 +146,8 @@ static int rsc_event_notifier(struct notifier_block *nb,
+ 	case MLX5_RES_RQ:
+ 	case MLX5_RES_SQ:
+ 		qp = (struct mlx5_core_qp *)common;
++		if (WARN_ON_ONCE(!qp->event))
++			goto out;
+ 		qp->event(qp, event_type);
+ 		/* Need to put resource in event handler */
+ 		return NOTIFY_OK;
+@@ -258,6 +260,14 @@ int mlx5_qpc_create_qp(struct mlx5_ib_dev *dev, struct mlx5_core_qp *qp,
+ 
+ 	qp->uid = MLX5_GET(create_qp_in, in, uid);
+ 	qp->qpn = MLX5_GET(create_qp_out, out, qpn);
++	/* Set ibqp.qp_num before create_resource_common() inserts the QP into
++	 * the radix tree and makes it visible to EQE processing.  The
++	 * assignment in create_qp() happens only after this function returns,
++	 * leaving a window where an arriving EQE would observe qp_num == 0.
++	 * create_qp() still overrides this with 0/1 for QP0/QP1, and sets it
++	 * independently for DCT (which does not go through this function).
 +	 */
-+	if (MLX5_CAP_GEN(dev->mdev, xrc)) {
-+		memset(&attr, 0, sizeof(attr));
-+		attr.attr.max_sge = 1;
-+		attr.attr.max_wr = 1;
-+		attr.srq_type = IB_SRQT_XRC;
-+		attr.ext.cq = devr->c0;
-+
-+		s0 = ib_create_srq(devr->p0, &attr);
-+		if (IS_ERR(s0)) {
-+			ret = PTR_ERR(s0);
-+			mlx5_ib_err(dev, "Couldn't create SRQ 0 for res init, err=%d\n", ret);
-+			goto unlock;
-+		}
- 	}
++	to_mibqp(qp)->ibqp.qp_num = qp->qpn;
  
- 	memset(&attr, 0, sizeof(attr));
-@@ -3141,7 +3149,8 @@ int mlx5_ib_dev_res_srq_init(struct mlx5_ib_dev *dev)
- 	if (IS_ERR(s1)) {
- 		ret = PTR_ERR(s1);
- 		mlx5_ib_err(dev, "Couldn't create SRQ 1 for res init, err=%d\n", ret);
--		ib_destroy_srq(s0);
-+		if (s0)
-+			ib_destroy_srq(s0);
- 		goto unlock;
- 	}
- 
-@@ -3158,8 +3167,11 @@ static int mlx5_ib_dev_res_init(struct mlx5_ib_dev *dev)
- 	struct mlx5_ib_resources *devr = &dev->devr;
- 	int ret;
- 
-+	mutex_init(&devr->cq_lock);
-+	mutex_init(&devr->srq_lock);
-+
- 	if (!MLX5_CAP_GEN(dev->mdev, xrc))
--		return -EOPNOTSUPP;
-+		return 0;
- 
- 	ret = mlx5_cmd_xrcd_alloc(dev->mdev, &devr->xrcdn0, 0);
- 	if (ret)
-@@ -3171,9 +3183,6 @@ static int mlx5_ib_dev_res_init(struct mlx5_ib_dev *dev)
- 		return ret;
- 	}
- 
--	mutex_init(&devr->cq_lock);
--	mutex_init(&devr->srq_lock);
--
- 	return 0;
- }
- 
-@@ -3184,10 +3193,13 @@ static void mlx5_ib_dev_res_cleanup(struct mlx5_ib_dev *dev)
- 	/* After s0/s1 init, they are not unset during the device lifetime. */
- 	if (devr->s1) {
- 		ib_destroy_srq(devr->s1);
--		ib_destroy_srq(devr->s0);
-+		if (devr->s0)
-+			ib_destroy_srq(devr->s0);
-+	}
-+	if (MLX5_CAP_GEN(dev->mdev, xrc)) {
-+		mlx5_cmd_xrcd_dealloc(dev->mdev, devr->xrcdn1, 0);
-+		mlx5_cmd_xrcd_dealloc(dev->mdev, devr->xrcdn0, 0);
- 	}
--	mlx5_cmd_xrcd_dealloc(dev->mdev, devr->xrcdn1, 0);
--	mlx5_cmd_xrcd_dealloc(dev->mdev, devr->xrcdn0, 0);
- 	/* After p0/c0 init, they are not unset during the device lifetime. */
- 	if (devr->c0) {
- 		ib_destroy_cq(devr->c0);
+ 	err = create_resource_common(dev, qp, MLX5_RES_QP);
+ 	if (err)
 -- 
 2.53.0
 
