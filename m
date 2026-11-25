@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795622372;
-	b=UtS9/H5HcjBdzA3LmgvYK818VAWPGgHLPPzV2Zm9omHecbCAjM5PbnP5QVwcjspTG4Rg
-	 NRDm54WcXNDGNcVtxH7cH/oHDieQuyd0zxCaig7Jg0z7gSArvXWnQuTGqluUNS8Z8mNm+
-	 905wQk2Fxeb/1/wTj6R0s37HPo8Ri8z+pfwO7c7wVapIEHvQdMBdUPbMzRhZqgRCT+dh0
-	 +go43+qamMlvJiRSbfKoHrNUy3y5WCwql5O6XoEtrjgPZ5ZUW59xN2ZBFYnHsej11M5AT
-	 NYtGJSt+HquJUR4kc+2QmgDt8L/+8jHSJDRir3VcBfAV4f4C8BfET8nXJBuEboob5iA==
+	t=1795622375;
+	b=qZ7VDJun7Rz76WuVY2TJXqs0Y6eIzEzCnhEU/dqrItHp7zhJe3piWYP3vadugx2C38vI
+	 sqHjAF9ua3XFbB5FiRq6DLVznhQfMg/N8wI6kQ6JXRQYppaiRuBdHP5Qad5IXuB4YSYjk
+	 22C+wbmVBo3rd8pJ/0g0leUWjbUz5GRP5oT654TWeS7+J/7DMzrZi5MIblJsT1qNOol/H
+	 W3gHGZWWpiKVixO1WJUykHLuxBNN4nyaS9kGVstJvzqYDkoUyW/K2hN3S1pAlwMvxdzFU
+	 w0N7SIoZp+iZNFWOBKDd7GvrGNyKrTsM9eAWQ7FbtEdZ79x+SLfnY4Zc6Fv32UdjS2Q==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795622372;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795622375;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=IX67dhVAVPOqcuumhpeAkRkcdb32lQ2mnonIXwac7UY=;
-	b=FA9hQTssLMYt6xxfGPDZ5TgL4GoJQuoYcfhRDdS561yPNmMhh4iWfgFx7yv9J8PocsUt
-	 Pc98leVgIZ01cl4jmllrcLySTwd6OoU04fHRdfSlhqx2isBogm/hWl2m92V2qvGFrTkEa
-	 MKyKPzfZ4wUZlfv0WYBtEhV+rK038pj5CSluHJE8z9v18DnUI6au92RQiy/T82dKyQXgZ
-	 nIVKppeI+OmgsHjawb20eHiVDeFGms8T9UT8BFjIvjVsuwMvJpTywSpAkzTOT1HGamTDp
-	 WbI6ZBnMJMB8dqoqM4j7HjpLdQ/3Vn23Y+rzdX1yESw/rRxPoIEzBZ3390+A7F75ZpA==
+	bh=PEiMiNmh93MZa3eXYNIU8ed0eFnxypXJ6+ePNdyfnBw=;
+	b=cSOZ3I4EY6in52cxwVZmn8zlyg6AYp3cmC+gUDs5KqOWIBUHJYRaYXG/Qqhia3EJuVGT
+	 RV28Dnb3vrlo1/KtoimBEYR27hCZ5zfz8an4WQeUNQ/7gW/bzqlFLRQAqa7+ai370OWWi
+	 yUgFZYvG6wMRqIo0Sm9VLCqZ6pFsWsiccn0kmVwVzekEY5fbP2k261dVczjqoNzGWNAr2
+	 lH/LOpN/bf01oqD8MUDzEnMyJYY5GyDV06QIlp3hYlmhIWRW+wlaocKoLLOF85A0+fcgE
+	 Cj+3nnn4GlDDO6N3XJX30IzEDCITqF3ntH8yIFHovMAOA7hT/1G+WYXKk4Lzd9mlStA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=WGN5DlDQ;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=u5k0R8TR;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2D20E606A327;
-	Wed, 25 Nov 2026 15:59:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 166EE606A323;
+	Wed, 25 Nov 2026 15:59:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=WGN5DlDQ
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D89F81F000CF;
-	Wed, 25 Nov 2026 15:59:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=u5k0R8TR
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 494741F000CF;
+	Wed, 25 Nov 2026 15:59:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795622371;
-	bh=IX67dhVAVPOqcuumhpeAkRkcdb32lQ2mnonIXwac7UY=;
+	s=korg; t=1795622374;
+	bh=PEiMiNmh93MZa3eXYNIU8ed0eFnxypXJ6+ePNdyfnBw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=WGN5DlDQgjl7Bxs6DjwX3cZHPFe4O1e81j81DUQkxYtx0kCPl+O2p5KgB2dTIlrWs
-	 pS/KHJHA0DR3nCoMd8gY840rCd5a8uFWb7CI7p53iAgfqKxD8vbfue9GKBhBhwNvCD
-	 BYAtg+ohj1sp/tWJWaOmYcCEJT9X6QNHm7TPHLFY=
+	b=u5k0R8TR2mrGMr12A6ELRzr86RVZdaeyKUs+4ddFkzQig8PByhZPN7gkd2tlLLJLr
+	 V2/4AgVzW89I4tTlsZqUmsPGgBBCRh98488z7CMnqSldwLakJVbxB5/4qkQ5BT2/IK
+	 ltlRHD7QqwwYm7trJ+IlB5uQ/JalLHY1BQE0w7QE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pengpeng Hou <pengpeng@iscas.ac.cn>,
-	Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>,
-	Vinod Koul <vkoul@kernel.org>,
+	Max Zhen <max.zhen@amd.com>,
+	Lizhi Hou <lizhi.hou@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 516/990] phy: samsung: usbdrd: propagate GS101 PIPE3 lock failures
-Date: Wed, 25 Nov 2026 15:31:23 +0100
-Message-ID: <20261125143834.183521822@linuxfoundation.org>
+Subject: [PATCH 6.18 517/990] accel/amdxdna: Fix race between unmap and free BO
+Date: Wed, 25 Nov 2026 15:31:24 +0100
+Message-ID: <20261125143834.206218937@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143822.072087159@linuxfoundation.org>
 References: <20261125143822.072087159@linuxfoundation.org>
@@ -69,257 +68,174 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pengpeng Hou <pengpeng@iscas.ac.cn>
+From: Lizhi Hou <lizhi.hou@amd.com>
 
-[ Upstream commit 2ef1e78ef7223eb16d9cf20814a1b2873456f671 ]
+[ Upstream commit ac18f34f5927e420ae529be72aec86201a262d04 ]
 
-The GS101 PIPE3 initialization checks the PMA PLL lock and then checks
-the CDR lock. The PLL helper returns an error, but the GS101 PIPE3 init
-path dropped that result. The CDR helper only logged a timeout. PHY
-initialization could therefore still return success after either the PLL
-or the selected receive lane had not locked.
+A userspace process can concurrently trigger an unmap, which queues
+hmm_unreg_work, and free BO. If amdxdna_hmm_unreg_work() executes
+list_del(&mapp->node) and is preempted before calling amdxdna_umap_put(),
+amdxdna_hmm_unregister_all() can fail to find the mapping in the list
+and return without calling cancel_work_sync(). This allows object
+destruction to proceed while the worker still holds a pointer to the BO
+in the umap structure.
 
-Make the in-file SoC-specific phy_init hook return an int so helpers
-with real failure results can propagate them through the existing PHY
-init paths. Keep the register-only helpers returning success and use the
-new return path to report the GS101 CDR wait failure. Other SoC helper
-paths keep their previous success behavior.
+Moving the work item from struct amdxdna_umap to struct amdxdna_gem_obj.
+The worker no longer holds a pointer to an individual mapping, so there
+is no longer a window where the umap has been unlinked from umap_list but
+work is still pending against it. The work item now lives in the BO
+itself, so use a single cancel_work_sync() in the free path to drain the
+work.
 
-Fixes: 32267c29bc7d ("phy: exynos5-usbdrd: support Exynos USBDRD 3.1 combo phy (HS & SS)")
-Signed-off-by: Pengpeng Hou <pengpeng@iscas.ac.cn>
-Reviewed-by: Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>
-Link: https://patch.msgid.link/20260623135349.42739-1-pengpeng@iscas.ac.cn
-Signed-off-by: Vinod Koul <vkoul@kernel.org>
-[ sashal: Dropped the exynosautov920 hunks because that driver support doesn't exist in this tree; the remaining hunks apply unchanged apart from context and offsets. ]
+Fixes: 445d20910429 ("accel/amdxdna: Fix unexpected wait when flushing notifier_wq")
+Reviewed-by: Max Zhen <max.zhen@amd.com>
+Signed-off-by: Lizhi Hou <lizhi.hou@amd.com>
+Link: https://patch.msgid.link/20260917154824.1872220-1-lizhi.hou@amd.com
+[ sashal: Adapted the hmm_unreg_work move to the older gem code: the uva field is named userptr, and amdxdna_gem_create_obj() was not relocated since it already follows the worker. ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/phy/samsung/phy-exynos5-usbdrd.c | 66 +++++++++++++++++-------
- 1 file changed, 47 insertions(+), 19 deletions(-)
+ drivers/accel/amdxdna/amdxdna_gem.c | 47 +++++++++++------------------
+ drivers/accel/amdxdna/amdxdna_gem.h |  3 +-
+ 2 files changed, 18 insertions(+), 32 deletions(-)
 
-diff --git a/drivers/phy/samsung/phy-exynos5-usbdrd.c b/drivers/phy/samsung/phy-exynos5-usbdrd.c
-index 93ac302de1eb0..966a894d91b76 100644
---- a/drivers/phy/samsung/phy-exynos5-usbdrd.c
-+++ b/drivers/phy/samsung/phy-exynos5-usbdrd.c
-@@ -418,7 +418,7 @@ struct exynos5_usbdrd_phy;
- struct exynos5_usbdrd_phy_config {
- 	u32 id;
- 	void (*phy_isol)(struct phy_usb_instance *inst, bool isolate);
--	void (*phy_init)(struct exynos5_usbdrd_phy *phy_drd);
-+	int (*phy_init)(struct exynos5_usbdrd_phy *phy_drd);
- 	unsigned int (*set_refclk)(struct phy_usb_instance *inst);
- };
+diff --git a/drivers/accel/amdxdna/amdxdna_gem.c b/drivers/accel/amdxdna/amdxdna_gem.c
+index e416a6ef7304e..cc22981d73598 100644
+--- a/drivers/accel/amdxdna/amdxdna_gem.c
++++ b/drivers/accel/amdxdna/amdxdna_gem.c
+@@ -127,10 +127,8 @@ static bool amdxdna_hmm_invalidate(struct mmu_interval_notifier *mni,
  
-@@ -655,7 +655,7 @@ exynos5_usbdrd_apply_phy_tunes(struct exynos5_usbdrd_phy *phy_drd,
+ 	if (range->event == MMU_NOTIFY_UNMAP) {
+ 		down_write(&xdna->notifier_lock);
+-		if (!mapp->unmapped) {
+-			queue_work(xdna->notifier_wq, &mapp->hmm_unreg_work);
+-			mapp->unmapped = true;
+-		}
++		mapp->unmapped = true;
++		queue_work(xdna->notifier_wq, &abo->hmm_unreg_work);
+ 		up_write(&xdna->notifier_lock);
  	}
+ 
+@@ -160,13 +158,13 @@ static void amdxdna_hmm_unregister(struct amdxdna_gem_obj *abo,
+ 		if (!compare_range(mapp, vma->vm_mm, vma->vm_start, vma->vm_end))
+ 			continue;
+ 
+-		queue_work(xdna->notifier_wq, &mapp->hmm_unreg_work);
+ 		mapp->unmapped = true;
++		queue_work(xdna->notifier_wq, &abo->hmm_unreg_work);
+ 	}
+ 	up_write(&xdna->notifier_lock);
  }
  
--static void exynos5_usbdrd_pipe3_init(struct exynos5_usbdrd_phy *phy_drd)
-+static int exynos5_usbdrd_pipe3_init(struct exynos5_usbdrd_phy *phy_drd)
+-static void amdxdna_hmm_unregister_all(struct amdxdna_gem_obj *abo)
++static void amdxdna_hmm_unreg_umaps(struct amdxdna_gem_obj *abo, bool force)
  {
- 	u32 reg;
+ 	struct amdxdna_dev *xdna = to_xdna_dev(to_gobj(abo)->dev);
+ 	struct amdxdna_umap *mapp, *tmp;
+@@ -174,16 +172,18 @@ static void amdxdna_hmm_unregister_all(struct amdxdna_gem_obj *abo)
  
-@@ -668,6 +668,8 @@ static void exynos5_usbdrd_pipe3_init(struct exynos5_usbdrd_phy *phy_drd)
- 	reg = readl(phy_drd->reg_phy + EXYNOS5_DRD_PHYTEST);
- 	reg &= ~PHYTEST_POWERDOWN_SSP;
- 	writel(reg, phy_drd->reg_phy + EXYNOS5_DRD_PHYTEST);
+ 	down_write(&xdna->notifier_lock);
+ 	list_for_each_entry_safe(mapp, tmp, &abo->mem.umap_list, node) {
++		if (!force && !mapp->unmapped)
++			continue;
 +
-+	return 0;
+ 		mapp->unmapped = true;
+-		mapp->cleanup = true;
+ 		list_move(&mapp->node, &dead);
+ 	}
++	if (list_empty(&abo->mem.umap_list))
++		abo->mem.userptr = AMDXDNA_INVALID_ADDR;
+ 	up_write(&xdna->notifier_lock);
+ 
+-	list_for_each_entry_safe(mapp, tmp, &dead, node) {
+-		cancel_work_sync(&mapp->hmm_unreg_work);
++	list_for_each_entry_safe(mapp, tmp, &dead, node)
+ 		amdxdna_umap_put(mapp);
+-	}
  }
  
- static void
-@@ -778,7 +780,7 @@ exynos5_usbdrd_usbdp_g2_v4_pma_check_pll_lock(struct exynos5_usbdrd_phy *phy_drd
- 	return err;
- }
+ static void amdxdna_umap_release(struct kref *ref)
+@@ -202,24 +202,10 @@ void amdxdna_umap_put(struct amdxdna_umap *mapp)
  
--static void
-+static int
- exynos5_usbdrd_usbdp_g2_v4_pma_check_cdr_lock(struct exynos5_usbdrd_phy *phy_drd)
+ static void amdxdna_hmm_unreg_work(struct work_struct *work)
  {
- 	static const unsigned int timeout_us = 40000;
-@@ -804,9 +806,11 @@ exynos5_usbdrd_usbdp_g2_v4_pma_check_cdr_lock(struct exynos5_usbdrd_phy *phy_drd
- 			((phy_drd->orientation == TYPEC_ORIENTATION_NORMAL)
- 			 ? 0
- 			 : 2), reg);
-+
-+	return err;
+-	struct amdxdna_umap *mapp = container_of(work, struct amdxdna_umap,
+-						 hmm_unreg_work);
+-	struct amdxdna_gem_obj *abo = mapp->abo;
+-	struct amdxdna_dev *xdna;
++	struct amdxdna_gem_obj *abo = container_of(work, struct amdxdna_gem_obj,
++						   hmm_unreg_work);
+ 
+-	xdna = to_xdna_dev(to_gobj(mapp->abo)->dev);
+-	down_write(&xdna->notifier_lock);
+-	if (mapp->cleanup) {
+-		up_write(&xdna->notifier_lock);
+-		return;
+-	}
+-
+-	list_del(&mapp->node);
+-	if (list_empty(&abo->mem.umap_list))
+-		abo->mem.userptr = AMDXDNA_INVALID_ADDR;
+-	up_write(&xdna->notifier_lock);
+-
+-	amdxdna_umap_put(mapp);
++	amdxdna_hmm_unreg_umaps(abo, false);
  }
  
--static void exynos5_usbdrd_utmi_init(struct exynos5_usbdrd_phy *phy_drd)
-+static int exynos5_usbdrd_utmi_init(struct exynos5_usbdrd_phy *phy_drd)
- {
- 	u32 reg;
+ static int amdxdna_hmm_register(struct amdxdna_gem_obj *abo,
+@@ -271,8 +257,6 @@ static int amdxdna_hmm_register(struct amdxdna_gem_obj *abo,
+ 	mapp->abo = abo;
+ 	kref_init(&mapp->refcnt);
  
-@@ -828,6 +832,8 @@ static void exynos5_usbdrd_utmi_init(struct exynos5_usbdrd_phy *phy_drd)
- 	reg = readl(phy_drd->reg_phy + EXYNOS5_DRD_PHYTEST);
- 	reg &= ~PHYTEST_POWERDOWN_HSP;
- 	writel(reg, phy_drd->reg_phy + EXYNOS5_DRD_PHYTEST);
-+
-+	return 0;
+-	INIT_WORK(&mapp->hmm_unreg_work, amdxdna_hmm_unreg_work);
+-
+ 	ret = mmu_interval_notifier_insert_locked(&mapp->notifier,
+ 						  current->mm,
+ 						  addr,
+@@ -591,7 +575,9 @@ static void amdxdna_gem_obj_free(struct drm_gem_object *gobj)
+ 
+ 	XDNA_DBG(xdna, "BO type %d xdna_addr 0x%llx", abo->type, abo->mem.dev_addr);
+ 
+-	amdxdna_hmm_unregister_all(abo);
++	/* No notifier survives this, so no new work can be queued. */
++	amdxdna_hmm_unreg_umaps(abo, true);
++	cancel_work_sync(&abo->hmm_unreg_work);
+ 
+ 	if (abo->pinned)
+ 		amdxdna_gem_unpin(abo);
+@@ -644,6 +630,7 @@ amdxdna_gem_create_obj(struct drm_device *dev, size_t size)
+ 	abo->mem.dev_addr = AMDXDNA_INVALID_ADDR;
+ 	abo->mem.size = size;
+ 	INIT_LIST_HEAD(&abo->mem.umap_list);
++	INIT_WORK(&abo->hmm_unreg_work, amdxdna_hmm_unreg_work);
+ 
+ 	return abo;
  }
- 
- static int exynos5_usbdrd_phy_init(struct phy *phy)
-@@ -864,7 +870,9 @@ static int exynos5_usbdrd_phy_init(struct phy *phy)
- 	writel(reg, phy_drd->reg_phy + EXYNOS5_DRD_PHYUTMICLKSEL);
- 
- 	/* UTMI or PIPE3 specific init */
--	inst->phy_cfg->phy_init(phy_drd);
-+	ret = inst->phy_cfg->phy_init(phy_drd);
-+	if (ret)
-+		goto disable_clks;
- 
- 	/* reference clock settings */
- 	reg = inst->phy_cfg->set_refclk(inst);
-@@ -887,9 +895,10 @@ static int exynos5_usbdrd_phy_init(struct phy *phy)
- 	reg &= ~PHYCLKRST_PORTRESET;
- 	writel(reg, phy_drd->reg_phy + EXYNOS5_DRD_PHYCLKRST);
- 
-+disable_clks:
- 	clk_bulk_disable_unprepare(phy_drd->drv_data->n_clks, phy_drd->clks);
- 
--	return 0;
-+	return ret;
- }
- 
- static int exynos5_usbdrd_phy_exit(struct phy *phy)
-@@ -1150,7 +1159,7 @@ static void exynos7870_usbdrd_phy_isol(struct phy_usb_instance *inst,
- 			   EXYNOS7870_USB2PHY_ENABLE, val);
- }
- 
--static void exynos7870_usbdrd_utmi_init(struct exynos5_usbdrd_phy *phy_drd)
-+static int exynos7870_usbdrd_utmi_init(struct exynos5_usbdrd_phy *phy_drd)
- {
- 	u32 reg;
- 
-@@ -1238,6 +1247,8 @@ static void exynos7870_usbdrd_utmi_init(struct exynos5_usbdrd_phy *phy_drd)
- 	if (phy_drd->drv_data->phy_tunes)
- 		exynos5_usbdrd_apply_phy_tunes(phy_drd,
- 					       PTS_UTMI_POSTINIT);
-+
-+	return 0;
- }
- 
- static int exynos7870_usbdrd_phy_init(struct phy *phy)
-@@ -1251,11 +1262,11 @@ static int exynos7870_usbdrd_phy_init(struct phy *phy)
- 		return ret;
- 
- 	/* UTMI or PIPE3 specific init */
--	inst->phy_cfg->phy_init(phy_drd);
-+	ret = inst->phy_cfg->phy_init(phy_drd);
- 
- 	clk_bulk_disable_unprepare(phy_drd->drv_data->n_clks, phy_drd->clks);
- 
--	return 0;
-+	return ret;
- }
- 
- static int exynos7870_usbdrd_phy_exit(struct phy *phy)
-@@ -1302,10 +1313,12 @@ static const struct phy_ops exynos7870_usbdrd_phy_ops = {
- 	.owner		= THIS_MODULE,
+diff --git a/drivers/accel/amdxdna/amdxdna_gem.h b/drivers/accel/amdxdna/amdxdna_gem.h
+index 8d89874f1fca3..b6573ffe8d7cc 100644
+--- a/drivers/accel/amdxdna/amdxdna_gem.h
++++ b/drivers/accel/amdxdna/amdxdna_gem.h
+@@ -11,13 +11,11 @@
+ struct amdxdna_umap {
+ 	struct mmu_interval_notifier	notifier;
+ 	struct hmm_range		range;
+-	struct work_struct		hmm_unreg_work;
+ 	struct amdxdna_gem_obj		*abo;
+ 	struct list_head		node;
+ 	struct kref			refcnt;
+ 	bool				invalid;
+ 	bool				unmapped;
+-	bool				cleanup;
  };
  
--static void exynos2200_usbdrd_utmi_init(struct exynos5_usbdrd_phy *phy_drd)
-+static int exynos2200_usbdrd_utmi_init(struct exynos5_usbdrd_phy *phy_drd)
- {
- 	/* Configure non-Samsung IP PHY, responsible for UTMI */
- 	phy_init(phy_drd->hs_phy);
-+
-+	return 0;
- }
+ struct amdxdna_mem {
+@@ -38,6 +36,7 @@ struct amdxdna_gem_obj {
+ 	bool				pinned;
+ 	struct mutex			lock; /* Protects: pinned */
+ 	struct amdxdna_mem		mem;
++	struct work_struct		hmm_unreg_work;
  
- static void exynos2200_usbdrd_link_init(struct exynos5_usbdrd_phy *phy_drd)
-@@ -1405,11 +1418,11 @@ static int exynos2200_usbdrd_phy_init(struct phy *phy)
- 	exynos2200_usbdrd_link_attach_detach_pipe3_phy(inst);
- 
- 	/* UTMI or PIPE3 specific init */
--	inst->phy_cfg->phy_init(phy_drd);
-+	ret = inst->phy_cfg->phy_init(phy_drd);
- 
- 	clk_bulk_disable_unprepare(phy_drd->drv_data->n_clks, phy_drd->clks);
- 
--	return 0;
-+	return ret;
- }
- 
- static int exynos2200_usbdrd_phy_exit(struct phy *phy)
-@@ -1463,7 +1476,7 @@ exynos5_usbdrd_usb_v3p1_pipe_override(struct exynos5_usbdrd_phy *phy_drd)
- 	writel(reg, regs_base + EXYNOS850_DRD_SECPMACTL);
- }
- 
--static void exynos850_usbdrd_utmi_init(struct exynos5_usbdrd_phy *phy_drd)
-+static int exynos850_usbdrd_utmi_init(struct exynos5_usbdrd_phy *phy_drd)
- {
- 	void __iomem *regs_base = phy_drd->reg_phy;
- 	u32 reg;
-@@ -1569,6 +1582,8 @@ static void exynos850_usbdrd_utmi_init(struct exynos5_usbdrd_phy *phy_drd)
- 
- 	if (ss_ports)
- 		exynos5_usbdrd_usb_v3p1_pipe_override(phy_drd);
-+
-+	return 0;
- }
- 
- static int exynos850_usbdrd_phy_init(struct phy *phy)
-@@ -1582,12 +1597,13 @@ static int exynos850_usbdrd_phy_init(struct phy *phy)
- 		return ret;
- 
- 	/* UTMI or PIPE3 specific init */
-+	ret = 0;
- 	scoped_guard(mutex, &phy_drd->phy_mutex)
--		inst->phy_cfg->phy_init(phy_drd);
-+		ret = inst->phy_cfg->phy_init(phy_drd);
- 
- 	clk_bulk_disable_unprepare(phy_drd->drv_data->n_clks, phy_drd->clks);
- 
--	return 0;
-+	return ret;
- }
- 
- static int exynos850_usbdrd_phy_exit(struct phy *phy)
-@@ -1636,11 +1652,12 @@ static const struct phy_ops exynos850_usbdrd_phy_ops = {
- 	.owner		= THIS_MODULE,
- };
- 
--static void exynos5_usbdrd_gs101_pipe3_init(struct exynos5_usbdrd_phy *phy_drd)
-+static int exynos5_usbdrd_gs101_pipe3_init(struct exynos5_usbdrd_phy *phy_drd)
- {
- 	void __iomem *regs_pma = phy_drd->reg_pma;
- 	void __iomem *regs_phy = phy_drd->reg_phy;
- 	u32 reg;
-+	int ret;
- 
- 	exynos5_usbdrd_usbdp_g2_v4_ctrl_pma_ready(phy_drd);
- 
-@@ -1662,8 +1679,11 @@ static void exynos5_usbdrd_gs101_pipe3_init(struct exynos5_usbdrd_phy *phy_drd)
- 		 SECPMACTL_PMA_INIT_SW_RST);
- 	writel(reg, regs_phy + EXYNOS850_DRD_SECPMACTL);
- 
--	if (!exynos5_usbdrd_usbdp_g2_v4_pma_check_pll_lock(phy_drd))
--		exynos5_usbdrd_usbdp_g2_v4_pma_check_cdr_lock(phy_drd);
-+	ret = exynos5_usbdrd_usbdp_g2_v4_pma_check_pll_lock(phy_drd);
-+	if (ret)
-+		return ret;
-+
-+	return exynos5_usbdrd_usbdp_g2_v4_pma_check_cdr_lock(phy_drd);
- }
- 
- static int exynos5_usbdrd_gs101_phy_init(struct phy *phy)
-@@ -1688,7 +1708,15 @@ static int exynos5_usbdrd_gs101_phy_init(struct phy *phy)
- 	 */
- 	exynos5_usbdrd_phy_isol(inst, false);
- 
--	return exynos850_usbdrd_phy_init(phy);
-+	ret = exynos850_usbdrd_phy_init(phy);
-+	if (ret) {
-+		exynos5_usbdrd_phy_isol(inst, true);
-+		if (inst->phy_cfg->id == EXYNOS5_DRDPHY_UTMI)
-+			regulator_bulk_disable(phy_drd->drv_data->n_regulators,
-+					       phy_drd->regulators);
-+	}
-+
-+	return ret;
- }
- 
- static int exynos5_usbdrd_gs101_phy_exit(struct phy *phy)
+ 	/* Below members is uninitialized when needed */
+ 	struct drm_mm			mm; /* For AMDXDNA_BO_DEV_HEAP */
 -- 
 2.53.0
 
