@@ -1,55 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795618843;
-	b=wJEevVPfIdRoqNzfxM0EbGCHmw6QUue6pjKoaqm7TuVc/3E9w6oAC+2MlAVG8EJ5/y3r
-	 +di/hHoLK3bq1M7J2xxITUvcYIh49yU2Hcy3bg/lljbEmsXhkMdWM4uwjDISow09tz674
-	 q+z3h/uRG7JsSpSGPs94/+d8azENny9Bhi/TmrBGO4i245GHSs+97cwMyYDVb4lTgiL4Z
-	 Zngky7zFl/IAX6ioleVmKd3UkOYUH/9OhQ2cimwPNz3F/nDljrHmKCgFMXy1I03O2hP8Y
-	 NQ9GBcMy6ISZh15lQMaGr1SYWbFX4w6bKgxWPGnu242UTG+75xWK4VkaDEm2dT/WC+Q==
+	t=1795618846;
+	b=EsHOnvH6vZozKowr7ej1rKkTEP/9UjfRfjT33QwS2Jp0AjnvjFPmrAmv+27w4aJLYxAj
+	 xIK6ZiwxmBE+isc4sPbj+BRAZTwrmwouLONlI4F0ReeaebYfa9yBpjvhQWIFQ1sFRIAyd
+	 BzyTnpUX0nHppf7NBNKiDk7IlRK60KB0l1zLRDScAlq34iw3P17IlsfkqkULiDPDD6s+U
+	 pwt+/wbXvVHnvbwkpvep7nW8BG+u96ZbB0HL7AzCqsJZ3cAzQmTBqpjMFO7r3NUzGDGlr
+	 mfzOnweyTiWitt1i2VBKt+pqD3ZoEzfQN254x4scNQXDXCRhk+O55f90pnbYCUpyZkQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795618843;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795618846;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Type:Content-Transfer-Encoding;
-	bh=dECGgWJ9KI8manjf6Ax/HIiu4R6mUlY6FKgoY9xNp8k=;
-	b=U5H2fWqNmg/ji1hN9y9NZTWGPPUqbVD+GY321kMOOKecadQB5o3R8eMIx11b3opyFnZo
-	 qS87+M+S8EDPVl+TukLVpIK0AjFJ0VykQ4MA5VRGvMTLsZCVTy8RBV1vHFwUb4oY2gsT6
-	 XYiCYG1lFVlQ7W6Yi6tinlH043AcS/Nkax9jcEvx0D+f4h/Vhd7XezCooAMTpHzCrga0V
-	 x9Eou4qmin81PWsr0j/2QObAFZN93xsle/GaK8hNxNJsz9k1zpcUOU9zVmRTXcQPGkNDJ
-	 u8BIokzjM68WySVDREQvU92b8Z2yoUwVCIZ46h69i1c7LBCiVGDCpJRy4VrGYYn5jAw==
+	 MIME-Version:Content-Transfer-Encoding;
+	bh=lynWKf7Ur/EOgEB3oK4PpH2ZL2ZPpgaFF8IfPoOEk54=;
+	b=OckA7VGISfZ06zeELrQrvZLscM4k8fcpmtbWoBE84K+7E0ieDw8M27cOfUDe/sKlffHF
+	 h3fSgr9PxfG83qUte4OzN7dQP/hLWcUuJI6cYF5xT1R4oC9Wqo8WluHISOwYwI8F00KQi
+	 1mTtUAK/mghRD9YLhGXuymuHi8ClMieA6oHAk9ZZSXQ8hElScKDUcT+fVxWxFmSUySXEY
+	 HWs8mvwL7613N6KY/4yvupvoXvwv+Xx3oLaHOLpHPtQt4XRuesyFu+z0amJpWWdbJLKer
+	 1HHiXWBuwvRZn0s/Omv2ezxHrwrtRyWYggg0XNion+eIWZwQkOZ+55GRbP8+dLQFDaw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=tXGK2pyI;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=dvizMhxR;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6467B606A321;
-	Wed, 25 Nov 2026 15:00:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BB380606A321;
+	Wed, 25 Nov 2026 15:00:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=tXGK2pyI
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3A9A01F000C0;
-	Wed, 25 Nov 2026 15:00:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=dvizMhxR
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 936BF1F000D0;
+	Wed, 25 Nov 2026 15:00:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795618842;
-	bh=dECGgWJ9KI8manjf6Ax/HIiu4R6mUlY6FKgoY9xNp8k=;
+	s=korg; t=1795618846;
+	bh=lynWKf7Ur/EOgEB3oK4PpH2ZL2ZPpgaFF8IfPoOEk54=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=tXGK2pyIA4stcmWMwKAE68rUmC0b1VahYZqmDkcPyBAunZ1wSpzQK3eEFmhrO5xg9
-	 8LQaGjjfH6qhmTFPjM670eokWNIRf9aWs0tTM1QQxIpUyHz07HkzOTMiK83ScplnuX
-	 S5GkYFjHuMX2Lan7xbuMiUbDpi1Q23nEmoTUA0os=
+	b=dvizMhxRmLr5qV6Rr3IbgZRfbJYyvufNn9bHgPoSPWnEEdWxdi4duRsogaWKWFVwj
+	 pSWb+19sEjTxLiR63DWl/88w+VrafRgnfscB4asMar88w0UcdlSD8uJVc8IYjMOJbP
+	 CoGqBrf5QYt8xfSJs1/gT0IFQgMYpayZfEfEYkjM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Matthew Brost <matthew.brost@intel.com>,
-	=?UTF-8?q?Thomas=20Hellstr=C3=B6m?= <thomas.hellstrom@linux.intel.com>,
-	Himal Prasad Ghimiray <himal.prasad.ghimiray@intel.com>,
-	Arvind Yadav <arvind.yadav@intel.com>,
-	Dave Airlie <airlied@redhat.com>,
+	Kyle Pepper <cochcoder@proton.me>,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0404/1005] drm/xe/svm: Preserve default PAT index when resetting VMA attributes
-Date: Wed, 25 Nov 2026 15:29:02 +0100
-Message-ID: <20261125143831.217050290@linuxfoundation.org>
+Subject: [PATCH 7.3 0362/1005] Bluetooth: reject invalid LE supervision timeout relationships
+Date: Wed, 25 Nov 2026 15:28:20 +0100
+Message-ID: <20261125143830.212700261@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143821.729802100@linuxfoundation.org>
 References: <20261125143821.729802100@linuxfoundation.org>
@@ -65,57 +62,75 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 7.3-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Arvind Yadav <arvind.yadav@intel.com>
+From: Kyle Pepper <cochcoder@proton.me>
 
-[ Upstream commit e800602296e8668b4cf143fc12d7cee4b31e64aa ]
+[ Upstream commit c1d50a71cdee90a0c68b7a67221d8aae96d14a0c ]
 
-xe_vma_set_default_attributes() replaces the VMA attributes with a
-default structure. It sets pat_index to the saved default PAT index,
-but leaves default_pat_index zero.
+The LE parameter validator calculates an unsigned maximum latency by
+subtracting one from a truncated quotient. If the quotient is zero,
+this wraps and accepts invalid parameters. Exact quotient boundaries
+also accept equality where the supervision timeout must be greater.
 
-When the saved default is non-zero, the two fields no longer match.
-xe_vma_has_default_mem_attrs() then reports that the reset VMA has
-non-default attributes, triggering a warning in xe_vm_alloc_vma()
-during SVM garbage collection. A later reset also uses the incorrect
-zero value.
+Compare the products directly after checking the field bounds. The
+validated interval and latency limits keep the products within int.
+This enforces the strict timeout relationship without division or
+unsigned subtraction.
 
-Preserve default_pat_index when restoring the default attributes.
+Sashiko identified the underflow while reviewing the soft interval
+preference RFC. The bug is already present in its unpatched base; keep
+this common-validator fix independent of that preference policy.
 
-Fixes: 4a938d3886d6 ("drm/xe: Merge adjacent default-attribute VMAs during garbage collection")
-Cc: Matthew Brost <matthew.brost@intel.com>
-Cc: Thomas Hellström <thomas.hellstrom@linux.intel.com>
-Cc: Himal Prasad Ghimiray <himal.prasad.ghimiray@intel.com>
-Signed-off-by: Arvind Yadav <arvind.yadav@intel.com>
-Reviewed-by: Himal Prasad Ghimiray <himal.prasad.ghimiray@intel.com>
-Signed-off-by: Matthew Brost <matthew.brost@intel.com>
-Link: https://patch.msgid.link/20261027085952.2882874-1-arvind.yadav@intel.com
-(cherry picked from commit ce155027427a0c76be173f19f911b414d9d686bc)
-Signed-off-by: Matthew Brost <matthew.brost@intel.com>
-Signed-off-by: Dave Airlie <airlied@redhat.com>
+Fixes: 8757825b128e ("Bluetooth: hci_check_conn_params() check proper range")
+Assisted-by: LLM
+Signed-off-by: Kyle Pepper <cochcoder@proton.me>
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/xe/xe_svm.c | 1 +
- 1 file changed, 1 insertion(+)
+ include/net/bluetooth/hci_core.h | 13 +++----------
+ 1 file changed, 3 insertions(+), 10 deletions(-)
 
-diff --git a/drivers/gpu/drm/xe/xe_svm.c b/drivers/gpu/drm/xe/xe_svm.c
-index b228a737cfd6d..281b81c28e16d 100644
---- a/drivers/gpu/drm/xe/xe_svm.c
-+++ b/drivers/gpu/drm/xe/xe_svm.c
-@@ -330,6 +330,7 @@ static void xe_vma_set_default_attributes(struct xe_vma *vma)
- 	struct xe_vma_mem_attr default_attr = {
- 		.preferred_loc.devmem_fd = DRM_XE_PREFERRED_LOC_DEFAULT_DEVICE,
- 		.preferred_loc.migration_policy = DRM_XE_MIGRATE_ALL_PAGES,
-+		.default_pat_index = vma->attr.default_pat_index,
- 		.pat_index = vma->attr.default_pat_index,
- 		.atomic_access = DRM_XE_ATOMIC_UNDEFINED,
- 		.purgeable_state = XE_MADV_PURGEABLE_WILLNEED,
+diff --git a/include/net/bluetooth/hci_core.h b/include/net/bluetooth/hci_core.h
+index cac282584c616..3a1169e19eb80 100644
+--- a/include/net/bluetooth/hci_core.h
++++ b/include/net/bluetooth/hci_core.h
+@@ -2320,8 +2320,6 @@ static inline struct smp_irk *hci_get_irk(struct hci_dev *hdev,
+ static inline int hci_check_conn_params(u16 min, u16 max, u16 latency,
+ 					u16 to_multiplier)
+ {
+-	u16 max_latency;
+-
+ 	if (min > max) {
+ 		BT_WARN("min %d > max %d", min, max);
+ 		return -EINVAL;
+@@ -2347,19 +2345,14 @@ static inline int hci_check_conn_params(u16 min, u16 max, u16 latency,
+ 		return -EINVAL;
+ 	}
+ 
+-	if (max >= to_multiplier * 8) {
+-		BT_WARN("max %d >= to_multiplier %d * 8", max, to_multiplier);
+-		return -EINVAL;
+-	}
+-
+-	max_latency = (to_multiplier * 4 / max) - 1;
+ 	if (latency > 499) {
+ 		BT_WARN("latency %d > 499", latency);
+ 		return -EINVAL;
+ 	}
+ 
+-	if (latency > max_latency) {
+-		BT_WARN("latency %d > max_latency %d", latency, max_latency);
++	if ((latency + 1) * max >= to_multiplier * 4) {
++		BT_WARN("latency %d, max %d and timeout %d are incompatible",
++			latency, max, to_multiplier);
+ 		return -EINVAL;
+ 	}
+ 
 -- 
 2.53.0
 
