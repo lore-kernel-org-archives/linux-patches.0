@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795624003;
-	b=gwNQ8PrQBXfY/BUBFJwS3ZYFCmtBWij6HPG9xQxwkaO61EBJdx2chavR8oDC8dRUjfl1
-	 +qNtwfsVaecWZ5FwdLCexRATuBIRKwQJ+UgzrUiOHNPhz+TZrf0QkhhgcxbRI14P3AKb2
-	 h0SEdKPtejClThNnjo15ei9VYfTejE5tZ7+fgDEEq9bqqMno63/BL3jssJuPF0zkr4WWy
-	 I8huc4FtS0czUu1NNg+cablM0FwyWbLyABlMNn0W5gsp76PcI2vV11td8J8XeHsYqDvkC
-	 m/W96LoXb+dGb/ldilWlCP5vwLWA6sI0FM2BSIkoUoL2jgb+kvp4KE7IJoRMWT59ReQ==
+	t=1795624006;
+	b=AJsPZxzJLWgiAkoI/B1WK/jIa7Zb6rNLbxPmwlO9mt1Y4wxgjluOk2a9mw9wW3693deo
+	 Cj/cFClU6kf6muAWbALYqp4yeoP1ErrdlFM4+tlKhDiB7s3zvuotwK1f8RLBCGINqTF4E
+	 oukmNcip/Z+6dWmmamEVuBP2W7EOZQhF31W0tMFFIdQv/bDbSnvJlPEoyJCYDqNmnWZXz
+	 ZnKKbrhIrDR02XOPb2ddfNwuFY0CONSTt4BO0Rab/uCdpb371ZzGeoN93HbAuUNSzx/h9
+	 KhWQi+KG/BbWe0neFByxrKwiSHi+gX7hy0UsxQ/HU5yXYii+TDJA8etaRt+GSA7mCkg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795624003;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795624006;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=0QcHGuvTFxywcucfYOOUB3CYW3bNVylr/qpyXokwPeU=;
-	b=29VcZSevHEBFw4ly4ur6cHjf4CWbS+3GiPoDx0Lr1Awr63urHnfunopgPeaF/UVhYoi9
-	 13MQFut9si9RG31MoRxoAMrZsIN3wBqPQ6gqBm4f1SEoTm99r23wnlIYhDFbqybrvTxsA
-	 v0jJWwvO7cjqu/0ALYUcy5B7mrvL63D3abXiaERB6OvQT6CJRPUdMK8aRC0C6VAqwh2cf
-	 qb7YS/cNcXl7eWNS0OZJhev62tzH0od/mHADDUUdobyReOH5IVGCKqmHEMU/kWuW7HBq9
-	 Fx39TIkWd9qQW78oI4XoeJDmLepjztlfYVbVgih+yCQXzYxeo2+/HH0nna08san6RXQ==
+	bh=tqIjz0yqhBjEp4CJNBJiqRbKwOCpP5X/CfRPyI8OGns=;
+	b=0PZcGfJvGB1jlsmQFfxoSW7iy4wwe4Nq/co0bJDA3S9C1yt6zKy4oLj5S0JZhOjvU6eh
+	 tMKra0Wp2vz9FpVNhZ9tDoD/h0zGVj29ZSW2VvqwMCKq8mZwR6auQs5pW10qEBavLmlys
+	 3M6LqkQOBgecuZoqDDM3hOYuZ4jyegmaxEayt0QG+wvgQX0gZiSvIoHXVGdDUZCXyUAQ9
+	 Or19/ciFdN5I9e12u0iG8uytul2PHRVNuZ0fdSVfmj19ff/LdRmrEhm0R0bstLcO9/x99
+	 2GDDx4NFpU6EPCPeIsGViz4q5MaZYs+Wp/tWfpvMTRoZCLMdPJxNHYkbh7HIW95OROQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=MQWerjMZ;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=cX4YZ6OS;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 66BBE606A327;
-	Wed, 25 Nov 2026 16:26:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 88544606A31E;
+	Wed, 25 Nov 2026 16:26:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=MQWerjMZ
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 604261F000C0;
-	Wed, 25 Nov 2026 16:26:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=cX4YZ6OS
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8E2901F000D2;
+	Wed, 25 Nov 2026 16:26:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795624002;
-	bh=0QcHGuvTFxywcucfYOOUB3CYW3bNVylr/qpyXokwPeU=;
+	s=korg; t=1795624006;
+	bh=tqIjz0yqhBjEp4CJNBJiqRbKwOCpP5X/CfRPyI8OGns=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=MQWerjMZpgk7JPC+xLJbL1LEqa03YiX8gs2szpKEugdESAet5hZHW4MErFf0vnIcH
-	 tc25JUFs4weQxL0ex8RWTGm24G2YBiZfcEz6aQUdmwcPvjKpEfAAdakLyYUz62nJ7R
-	 QZKOoR7tYylH7LfsYniN4Fc+Qb7Z3tr5nNHeAXEQ=
+	b=cX4YZ6OSFEkYeKEJ4x+macW1Ucp8JwaBL15LonsVbfztXXLEz2KJ1pYTJAf2/LfLk
+	 tZ2KvzSJ1Db/zsRWrf+HCGrYHG7n7DOBVQNV6eLK6S0zG+IrtKHUu/vri+/9Bzcfjz
+	 x/rr3xXfOz5M0AREcwmBGUU2/WRLkgclVTbu305M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Haobin Wu <853555@gmail.com>,
-	Christian Schoenebeck <linux_oss@crudebyte.com>,
-	Dominique Martinet <asmadeus@codewreck.org>,
+	Giovanni Vignone <gio@octane.security>,
+	Shubham Antil <shubham@octane.security>,
+	Steffen Klassert <steffen.klassert@secunet.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 055/816] 9p: skip intermediate directory entry name copy in p9dirent_read()
-Date: Wed, 25 Nov 2026 15:26:43 +0100
-Message-ID: <20261125143850.493306943@linuxfoundation.org>
+Subject: [PATCH 6.12 056/816] xfrm: zero-initialise km_event in the replay-notify path
+Date: Wed, 25 Nov 2026 15:26:44 +0100
+Message-ID: <20261125143850.516191309@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143849.205329330@linuxfoundation.org>
 References: <20261125143849.205329330@linuxfoundation.org>
@@ -69,106 +69,69 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Haobin Wu <853555@gmail.com>
+From: Shubham Antil <shubham@octane.security>
 
-[ Upstream commit 8bb0279930cc90975f03bad4d83282613e5f57fa ]
+[ Upstream commit e35a12dffd5da67b6ca12bd23eebdd0570592205 ]
 
-v9fs_dir_readdir_dotl() decodes each entry of a Rreaddir reply with
-p9dirent_read(), which parses it through p9pdu_readf("Qqbs"). The 's'
-conversion in p9pdu_vreadf() already allocates a NUL-terminated copy
-of the name from the wire buffer; p9dirent_read() then strscpy()s that
-copy into the fixed 256-byte p9_dirent::d_name and frees the original.
+xfrm_replay_notify(), xfrm_replay_notify_bmp() and
+xfrm_replay_notify_esn() declare a struct km_event on the stack and
+initialise only its .event and .data.aevent fields, leaving .seq and
+.portid uninitialised. build_aevent() then builds the XFRM_MSG_NEWAE
+message with those fields:
 
-The wire format carries the name length in 16 bits, so a name longer
-than 255 bytes is valid on the wire and may well be valid on the
-server's filesystem, but it makes strscpy() return -E2BIG.
-v9fs_dir_readdir_dotl() turns that into -EIO and aborts getdents64(),
-so every entry after the long one disappears from the listing.
+  nlmsg_put(skb, c->portid, c->seq, ...)
 
-Drop the second copy: keep the string allocated by p9pdu_vreadf() in
-p9_dirent and let v9fs_dir_readdir_dotl(), its only user, free it once
-dir_emit() has consumed it. p9_dirent is a short-lived stack object, so
-the string's lifetime does not change.
+so the netlink header of a replay event carries uninitialised stack
+values rather than defined ones. This was confirmed at runtime rather
+than by inspection alone: the .seq and .portid carried in that header
+hold values that nothing in the replay path assigns.
 
-Note that the VFS only rejects names of PATH_MAX bytes or more in
-verify_dirent_name(), so after this change a name between NAME_MAX and
-PATH_MAX is returned by getdents64() even though any later lookup on it
-fails with -ENAMETOOLONG. The next patch skips such entries.
+The request-driven paths set these header fields from the requester
+(xfrm_get_ae() / xfrm_new_ae()); only the kernel-originated replay path
+leaves them unset. Zero-initialise the event so the header fields are 0,
+the correct value for a kernel-originated notification.
 
-Fixes: 7751bdb3a095 ("9p: readdir implementation for 9p2000.L")
-Closes: https://github.com/microsoft/WSL/issues/41192
-Signed-off-by: Haobin Wu <853555@gmail.com>
-Reviewed-by: Christian Schoenebeck <linux_oss@crudebyte.com>
-Message-ID: <20260918024851.51229-2-853555@gmail.com>
-Signed-off-by: Dominique Martinet <asmadeus@codewreck.org>
+Fixes: f8cd54884e67 ("[IPSEC]: Sync series - core changes")
+Reported-by: Giovanni Vignone <gio@octane.security>
+Assisted-by: Claude:claude-opus-4-8
+Signed-off-by: Shubham Antil <shubham@octane.security>
+Signed-off-by: Steffen Klassert <steffen.klassert@secunet.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/9p/vfs_dir.c         |  6 +++++-
- include/net/9p/client.h |  2 +-
- net/9p/protocol.c       | 12 ++----------
- 3 files changed, 8 insertions(+), 12 deletions(-)
+ net/xfrm/xfrm_replay.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/fs/9p/vfs_dir.c b/fs/9p/vfs_dir.c
-index 323f85352f6a4..733ec42258bc6 100644
---- a/fs/9p/vfs_dir.c
-+++ b/fs/9p/vfs_dir.c
-@@ -196,8 +196,12 @@ static int v9fs_dir_readdir_dotl(struct file *file, struct dir_context *ctx)
- 			if (!dir_emit(ctx, curdirent.d_name,
- 				      strlen(curdirent.d_name),
- 				      QID2INO(&curdirent.qid),
--				      curdirent.d_type))
-+				      curdirent.d_type)) {
-+				kfree(curdirent.d_name);
- 				return 0;
-+			}
-+
-+			kfree(curdirent.d_name);
+diff --git a/net/xfrm/xfrm_replay.c b/net/xfrm/xfrm_replay.c
+index 235bbefc2abae..b8a55af7ca055 100644
+--- a/net/xfrm/xfrm_replay.c
++++ b/net/xfrm/xfrm_replay.c
+@@ -40,7 +40,7 @@ static void xfrm_replay_notify_esn(struct xfrm_state *x, int event);
  
- 			ctx->pos = curdirent.d_off;
- 			rdir->head += err;
-diff --git a/include/net/9p/client.h b/include/net/9p/client.h
-index 838a94218b593..9f3079c6f3867 100644
---- a/include/net/9p/client.h
-+++ b/include/net/9p/client.h
-@@ -268,7 +268,7 @@ struct p9_dirent {
- 	struct p9_qid qid;
- 	u64 d_off;
- 	unsigned char d_type;
--	char d_name[256];
-+	char *d_name;
- };
- 
- struct iov_iter;
-diff --git a/net/9p/protocol.c b/net/9p/protocol.c
-index 0e6603b1ec906..0a97b4de243ab 100644
---- a/net/9p/protocol.c
-+++ b/net/9p/protocol.c
-@@ -771,7 +771,7 @@ int p9dirent_read(struct p9_client *clnt, char *buf, int len,
+ void xfrm_replay_notify(struct xfrm_state *x, int event)
  {
- 	struct p9_fcall fake_pdu;
- 	int ret;
--	char *nameptr;
-+	char *nameptr = NULL;
+-	struct km_event c;
++	struct km_event c = {};
+ 	/* we send notify messages in case
+ 	 *  1. we updated on of the sequence numbers, and the seqno difference
+ 	 *     is at least x->replay_maxdiff, in this case we also update the
+@@ -304,7 +304,7 @@ static void xfrm_replay_advance_bmp(struct xfrm_state *x, __be32 net_seq)
  
- 	fake_pdu.size = len;
- 	fake_pdu.capacity = len;
-@@ -786,15 +786,7 @@ int p9dirent_read(struct p9_client *clnt, char *buf, int len,
- 		return ret;
- 	}
+ static void xfrm_replay_notify_bmp(struct xfrm_state *x, int event)
+ {
+-	struct km_event c;
++	struct km_event c = {};
+ 	struct xfrm_replay_state_esn *replay_esn = x->replay_esn;
+ 	struct xfrm_replay_state_esn *preplay_esn = x->preplay_esn;
  
--	ret = strscpy(dirent->d_name, nameptr, sizeof(dirent->d_name));
--	if (ret < 0) {
--		p9_debug(P9_DEBUG_ERROR,
--			 "On the wire dirent name too long: %s\n",
--			 nameptr);
--		kfree(nameptr);
--		return ret;
--	}
--	kfree(nameptr);
-+	dirent->d_name = nameptr;
+@@ -356,7 +356,7 @@ static void xfrm_replay_notify_bmp(struct xfrm_state *x, int event)
+ static void xfrm_replay_notify_esn(struct xfrm_state *x, int event)
+ {
+ 	u32 seq_diff, oseq_diff;
+-	struct km_event c;
++	struct km_event c = {};
+ 	struct xfrm_replay_state_esn *replay_esn = x->replay_esn;
+ 	struct xfrm_replay_state_esn *preplay_esn = x->preplay_esn;
  
- 	return fake_pdu.offset;
- }
 -- 
 2.53.0
 
